@@ -6,25 +6,21 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.QuantumBounds;
 
 internal sealed class LagrangeGramIdentityDocument : IScribeDocumentDefinition
 {
-    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
-        Header(
-            "D5/S3/QuantumBounds/LagrangeGramIdentity",
-            "The Cauchy-Schwarz defect equals a manifestly nonnegative sum of squares (the coordinate Gram remainder)."),
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create("The Cauchy-Schwarz defect equals a manifestly nonnegative sum of squares (the coordinate Gram remainder).",
         H("Lagrange-Gram Identity"),
         Blocks(
-            DocumentBlock.Describe.Theorem(
+            Describe.Lean(
                 DescribeId.Create("lagrange-gram-identity"),
+                DeclarationHandle.Create("D5/S3/QuantumBounds/LagrangeGramIdentity.lagrange_gram_identity"),
                 H("The Cauchy-Schwarz defect is a sum of squares"),
-                LeanTheorem(
-                    "D5/S3/QuantumBounds/LagrangeGramIdentity.lagrange_gram_identity"),
-                Disp(Seq(
+                StatementSource.FromAuthor(Disp(Seq(
                     Open, Sum, Underscore, Grp(F.Id("i")), Sp, F.Id("u"), Underscore, Grp(F.Id("i")), Caret, Grp(D(2)), Close,
                     Open, Sum, Underscore, Grp(F.Id("i")), Sp, F.Id("v"), Underscore, Grp(F.Id("i")), Caret, Grp(D(2)), Close,
                     Minus, Open, Sum, Underscore, Grp(F.Id("i")), Sp, F.Id("u"), Underscore, Grp(F.Id("i")), F.Id("v"), Underscore, Grp(F.Id("i")), Close, Caret, Grp(D(2)),
                     Eq, Frac, Grp(D(1)), Grp(D(2)), Sp,
                     Sum, Underscore, Grp(F.Id("i")), Sp, Sum, Underscore, Grp(F.Id("j")), Sp,
-                    Open, F.Id("u"), Underscore, Grp(F.Id("i")), F.Id("v"), Underscore, Grp(F.Id("j")), Minus, F.Id("u"), Underscore, Grp(F.Id("j")), F.Id("v"), Underscore, Grp(F.Id("i")), Close, Caret, Grp(D(2)))),
-                DescribeProvenance.RepoDerived(),
+                    Open, F.Id("u"), Underscore, Grp(F.Id("i")), F.Id("v"), Underscore, Grp(F.Id("j")), Minus, F.Id("u"), Underscore, Grp(F.Id("j")), F.Id("v"), Underscore, Grp(F.Id("i")), Close, Caret, Grp(D(2))))),
+                AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
                         "For real families u and v indexed by a finite set, the Cauchy-Schwarz defect "
@@ -35,5 +31,6 @@ internal sealed class LagrangeGramIdentityDocument : IScribeDocumentDefinition
                     Paragraph(Text(
                         "The theorem establishes only this algebraic sum-of-squares identity; it does not "
                         + "instantiate the Cramer-Rao, Robertson-Schrodinger, or quantum Cramer-Rao specialisations "
-                        + "of the note, which require the corresponding inner-product structures.")))))));
+                        + "of the note, which require the corresponding inner-product structures."))),
+                DescribeRole.Theorem))));
 }

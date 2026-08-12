@@ -6,19 +6,15 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.ObserverMemory;
 
 internal sealed class PrimePowerTensorTowerDocument : IScribeDocumentDefinition
 {
-    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
-        Header(
-            "D5/S3/ObserverMemory/PrimePowerTensorTower",
-            "A finite window full-matrix algebra is the tensor product of all of its prime-power full-matrix factors."),
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create("A finite window full-matrix algebra is the tensor product of all of its prime-power full-matrix factors.",
         H("Prime-Power Tensor Tower of a Finite Window Algebra"),
         Blocks(
-            DocumentBlock.Describe.Theorem(
+            Describe.Lean(
                 DescribeId.Create("finite-window-matrix-algebra-splits-into-all-prime-power-factors"),
+                DeclarationHandle.Create("D5/S3/ObserverMemory/PrimePowerTensorTower.prime_power_tensor_factor_decomposition"),
                 H("A finite window matrix algebra splits into all prime-power factors"),
-                LeanTheorem(
-                    "D5/S3/ObserverMemory/PrimePowerTensorTower.prime_power_tensor_factor_decomposition"),
-                FactorizationFormula(),
-                DescribeProvenance.RepoDerived(),
+                StatementSource.FromAuthor(FactorizationFormula()),
+                AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
                         "Let M be a nonzero finite window cardinality. The canonical ZMod.equivPi " +
@@ -30,7 +26,8 @@ internal sealed class PrimePowerTensorTowerDocument : IScribeDocumentDefinition
                         "bases is carried to the global matrix-unit basis, and the map preserves " +
                         "multiplication. This yields a complex algebra equivalence with the actual " +
                         "finite tensor family, not merely an index reordering or a two-factor " +
-                        "clock-and-shift identity.")))))));
+                        "clock-and-shift identity."))),
+                DescribeRole.Theorem))));
 
     private static Formula FactorizationFormula() => Disp(Seq(
         Forall, Sp, F.Id("M"), Gt, F.D(0), Comma, Sp,

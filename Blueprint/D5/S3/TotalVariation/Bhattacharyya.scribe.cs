@@ -6,18 +6,15 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.TotalVariation;
 
 internal sealed class BhattacharyyaDocument : IScribeDocumentDefinition
 {
-    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
-        Header(
-            "D5/S3/TotalVariation/Bhattacharyya",
-            "Finite Bhattacharyya affinity links total variation and relative entropy through the complementary Bretagnolle--Huber bound."),
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create("Finite Bhattacharyya affinity links total variation and relative entropy through the complementary Bretagnolle--Huber bound.",
         H("Bhattacharyya Affinity and the Bretagnolle--Huber Bound"),
         Blocks(
-            DocumentBlock.Describe.Definition(
+            Describe.Lean(
                 DescribeId.Create("finite-bhattacharyya-affinity-is-the-square-root-product-sum"),
+                DeclarationHandle.Create("D5/S3/TotalVariation/Bhattacharyya.bhattacharyya"),
                 H("Finite Bhattacharyya affinity is the square-root product sum"),
-                LeanDefinition(
-                    "D5/S3/TotalVariation/Bhattacharyya.bhattacharyya"),
-                DescribeProvenance.RepoDerived(),
+                StatementSource.FromLean(),
+                AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
                         "For finite real mass functions p and q, the Bhattacharyya coefficient, " +
@@ -30,29 +27,12 @@ internal sealed class BhattacharyyaDocument : IScribeDocumentDefinition
                         "variation to relative entropy. It also provides the natural intermediate " +
                         "for future comparisons with Hellinger distance and Renyi divergence, " +
                         "without defining either notion in the present module."))),
-                Disp(Seq(
-                    Begin, Grp(F.Id("gathered")),
-                    Forall, Sp, Iota, Esc,
-                    OpenBracket,
-                    Operatorname, Grp(F.Id("Fintype")), Open, Iota, Close,
-                    CloseBracket, Comma, RowBreak,
-                    Forall, Sp, F.Id("p"), Comma, Sp, F.Id("q"), Colon, Sp,
-                    Iota, To, Sp, Mathbb, Grp(F.Id("R")), Comma, RowBreak,
-                    Operatorname, Grp(F.Id("BC")), Open,
-                    F.Id("p"), Comma, Sp, F.Id("q"), Close,
-                    Colon, Eq,
-                    Sum, Sp, Underscore, Grp(F.Id("i")), Sp,
-                    Sqrt, Sp, Grp(
-                        F.Id("p"), Open, F.Id("i"), Close,
-                        F.Id("q"), Open, F.Id("i"), Close), Dot,
-                    End, Grp(F.Id("gathered"))))
-            ),
-            DocumentBlock.Describe.Theorem(
+                DescribeRole.Definition),
+            Describe.Lean(
                 DescribeId.Create("normalized-nonnegative-mass-has-self-affinity-one"),
+                DeclarationHandle.Create("D5/S3/TotalVariation/Bhattacharyya.bhattacharyya_self"),
                 H("Normalized nonnegative mass has self-affinity one"),
-                LeanTheorem(
-                    "D5/S3/TotalVariation/Bhattacharyya.bhattacharyya_self"),
-                Disp(Seq(
+                StatementSource.FromAuthor(Disp(Seq(
                     Begin, Grp(F.Id("gathered")),
                     Forall, Sp, Iota, Esc,
                     OpenBracket,
@@ -69,8 +49,8 @@ internal sealed class BhattacharyyaDocument : IScribeDocumentDefinition
                     Sp, Rightarrow, RowBreak,
                     Operatorname, Grp(F.Id("BC")), Open,
                     F.Id("p"), Comma, Sp, F.Id("p"), Close, Eq, D(1), Dot,
-                    End, Grp(F.Id("gathered")))),
-                DescribeProvenance.RepoDerived(),
+                    End, Grp(F.Id("gathered"))))),
+                AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
                         "A new definition must be pinned by identities: inequalities alone do " +
@@ -85,13 +65,13 @@ internal sealed class BhattacharyyaDocument : IScribeDocumentDefinition
                         "q passes this identity perfectly. A single identity initially appeared " +
                         "sufficient and was not; the gap was found by actively seeking a " +
                         "corruption that survives the proposed pin, rather than by assuming that " +
-                        "one identity must suffice.")))),
-            DocumentBlock.Describe.Theorem(
+                        "one identity must suffice."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("pointwise-disjoint-masses-have-zero-affinity"),
+                DeclarationHandle.Create("D5/S3/TotalVariation/Bhattacharyya.bhattacharyya_eq_zero_of_mul_eq_zero"),
                 H("Pointwise-disjoint masses have zero affinity"),
-                LeanTheorem(
-                    "D5/S3/TotalVariation/Bhattacharyya.bhattacharyya_eq_zero_of_mul_eq_zero"),
-                Disp(Seq(
+                StatementSource.FromAuthor(Disp(Seq(
                     Begin, Grp(F.Id("gathered")),
                     Forall, Sp, Iota, Esc,
                     OpenBracket,
@@ -105,8 +85,8 @@ internal sealed class BhattacharyyaDocument : IScribeDocumentDefinition
                     Sp, Rightarrow, RowBreak,
                     Operatorname, Grp(F.Id("BC")), Open,
                     F.Id("p"), Comma, Sp, F.Id("q"), Close, Eq, D(0), Dot,
-                    End, Grp(F.Id("gathered")))),
-                DescribeProvenance.RepoDerived(),
+                    End, Grp(F.Id("gathered"))))),
+                AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
                         "Pointwise disjointness is the second pin. On two opposite Bool point " +
@@ -118,13 +98,13 @@ internal sealed class BhattacharyyaDocument : IScribeDocumentDefinition
                         "that self-affinity cannot test. The caller independently compiled both " +
                         "the surviving corruption and its refutation on the opposite-point-mass " +
                         "instance; the module freezes the refuting identity as a theorem rather " +
-                        "than leaving the issue to an informal example.")))),
-            DocumentBlock.Describe.Theorem(
+                        "than leaving the issue to an informal example."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("probability-affinity-is-at-most-one"),
+                DeclarationHandle.Create("D5/S3/TotalVariation/Bhattacharyya.bhattacharyya_le_one"),
                 H("Probability affinity is at most one"),
-                LeanTheorem(
-                    "D5/S3/TotalVariation/Bhattacharyya.bhattacharyya_le_one"),
-                Disp(Seq(
+                StatementSource.FromAuthor(Disp(Seq(
                     Begin, Grp(F.Id("gathered")),
                     Forall, Sp, Iota, Esc,
                     OpenBracket,
@@ -149,8 +129,8 @@ internal sealed class BhattacharyyaDocument : IScribeDocumentDefinition
                     Operatorname, Grp(F.Id("BC")), Open,
                     F.Id("p"), Comma, Sp, F.Id("q"), Close,
                     Le, Sp, D(1), Dot,
-                    End, Grp(F.Id("gathered")))),
-                DescribeProvenance.RepoDerived(),
+                    End, Grp(F.Id("gathered"))))),
+                AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
                         "For two nonnegative normalized laws, finite Cauchy--Schwarz bounds the " +
@@ -160,13 +140,13 @@ internal sealed class BhattacharyyaDocument : IScribeDocumentDefinition
                     Paragraph(Text(
                         "Both laws are nonnegative and normalized in this statement. These are " +
                         "exactly the hypotheses used to identify the two squared Euclidean norms " +
-                        "with unit mass.")))),
-            DocumentBlock.Describe.Theorem(
+                        "with unit mass."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("total-variation-square-is-controlled-by-affinity"),
+                DeclarationHandle.Create("D5/S3/TotalVariation/Bhattacharyya.total_variation_sq_le_one_sub_bhattacharyya_sq"),
                 H("Total variation square is controlled by affinity"),
-                LeanTheorem(
-                    "D5/S3/TotalVariation/Bhattacharyya.total_variation_sq_le_one_sub_bhattacharyya_sq"),
-                Disp(Seq(
+                StatementSource.FromAuthor(Disp(Seq(
                     Begin, Grp(F.Id("gathered")),
                     Forall, Sp, Iota, Esc,
                     OpenBracket,
@@ -195,8 +175,8 @@ internal sealed class BhattacharyyaDocument : IScribeDocumentDefinition
                     Operatorname, Grp(F.Id("BC")), Open,
                     F.Id("p"), Comma, Sp, F.Id("q"), Close,
                     Caret, Grp(D(2)), Dot,
-                    End, Grp(F.Id("gathered")))),
-                DescribeProvenance.RepoDerived(),
+                    End, Grp(F.Id("gathered"))))),
+                AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
                         "This is the first bridge in the final proof. Factoring each absolute " +
@@ -207,13 +187,13 @@ internal sealed class BhattacharyyaDocument : IScribeDocumentDefinition
                         "The calculation uses both probability laws in full: p and q must each " +
                         "be coordinatewise nonnegative and normalized to total mass one. Their " +
                         "normalizations evaluate the squared sums that arise after " +
-                        "Cauchy--Schwarz.")))),
-            DocumentBlock.Describe.Theorem(
+                        "Cauchy--Schwarz."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("negative-divergence-exponential-is-controlled-by-affinity"),
+                DeclarationHandle.Create("D5/S3/TotalVariation/Bhattacharyya.exp_neg_kl_divergence_le_bhattacharyya_sq"),
                 H("Negative-divergence exponential is controlled by affinity"),
-                LeanTheorem(
-                    "D5/S3/TotalVariation/Bhattacharyya.exp_neg_kl_divergence_le_bhattacharyya_sq"),
-                Disp(Seq(
+                StatementSource.FromAuthor(Disp(Seq(
                     Begin, Grp(F.Id("gathered")),
                     Forall, Sp, Iota, Esc,
                     OpenBracket,
@@ -242,8 +222,8 @@ internal sealed class BhattacharyyaDocument : IScribeDocumentDefinition
                     Operatorname, Grp(F.Id("BC")), Open,
                     F.Id("p"), Comma, Sp, F.Id("q"), Close,
                     Caret, Grp(D(2)), Dot,
-                    End, Grp(F.Id("gathered")))),
-                DescribeProvenance.RepoDerived(),
+                    End, Grp(F.Id("gathered"))))),
+                AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
                         "This is the second bridge. Jensen's inequality is applied with p as the " +
@@ -262,13 +242,13 @@ internal sealed class BhattacharyyaDocument : IScribeDocumentDefinition
                         "one normalized law and a nonnegative reference mass. These hypothesis " +
                         "sets were derived statement by statement rather than copied from the " +
                         "final theorem, continuing the standing practice in this bucket across " +
-                        "five waves.")))),
-            DocumentBlock.Describe.Theorem(
+                        "five waves."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("bretagnolle-huber-complements-pinsker"),
+                DeclarationHandle.Create("D5/S3/TotalVariation/Bhattacharyya.bretagnolle_huber"),
                 H("Bretagnolle--Huber complements Pinsker"),
-                LeanTheorem(
-                    "D5/S3/TotalVariation/Bhattacharyya.bretagnolle_huber"),
-                Disp(Seq(
+                StatementSource.FromAuthor(Disp(Seq(
                     Begin, Grp(F.Id("gathered")),
                     Forall, Sp, Iota, Esc,
                     OpenBracket,
@@ -303,8 +283,8 @@ internal sealed class BhattacharyyaDocument : IScribeDocumentDefinition
                         Exp, Sp, Open, Minus,
                         F.Id("D"), Open, F.Id("p"), Vert, Vert, Sp, F.Id("q"), Close,
                         Close), Dot,
-                    End, Grp(F.Id("gathered")))),
-                DescribeProvenance.RepoDerived(),
+                    End, Grp(F.Id("gathered"))))),
+                AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
                         "The proof is the direct composition of the two bridges. The first gives " +
@@ -325,13 +305,13 @@ internal sealed class BhattacharyyaDocument : IScribeDocumentDefinition
                         "to infinity. The inequalities are complementary, not redundant: Pinsker " +
                         "is sharper for small divergence, whereas Bretagnolle--Huber continues to " +
                         "give nontrivial information when the laws are far apart. All logarithms " +
-                        "are natural, so divergence is measured in nats.")))),
-            DocumentBlock.Describe.Theorem(
+                        "are natural, so divergence is measured in nats."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("bretagnolle-huber-is-strict-on-a-bool-witness"),
+                DeclarationHandle.Create("D5/S3/TotalVariation/Bhattacharyya.bretagnolle_huber_strict_witness"),
                 H("Bretagnolle--Huber is strict on a Bool witness"),
-                LeanTheorem(
-                    "D5/S3/TotalVariation/Bhattacharyya.bretagnolle_huber_strict_witness"),
-                Disp(Seq(
+                StatementSource.FromAuthor(Disp(Seq(
                     Begin, Grp(F.Id("gathered")),
                     F.Id("p"), Eq, Delta, Underscore,
                     Grp(Operatorname, Grp(F.Id("true"))), Comma, Sp,
@@ -345,8 +325,8 @@ internal sealed class BhattacharyyaDocument : IScribeDocumentDefinition
                         Exp, Sp, Open, Minus,
                         F.Id("D"), Open, F.Id("p"), Vert, Vert, Sp, F.Id("q"), Close,
                         Close), Dot,
-                    End, Grp(F.Id("gathered")))),
-                DescribeProvenance.RepoDerived(),
+                    End, Grp(F.Id("gathered"))))),
+                AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
                         "The strictness claim is itself a theorem in the formal module. The " +
@@ -362,11 +342,7 @@ internal sealed class BhattacharyyaDocument : IScribeDocumentDefinition
                         "Bhattacharyya coefficient. The coefficient is a natural bridge for " +
                         "future Hellinger and Renyi comparisons. No Hellinger distance, Renyi " +
                         "divergence, equality analysis of either bound, measure-theoretic " +
-                        "analogue, or other extension is claimed here.")))))));
+                        "analogue, or other extension is claimed here."))),
+                DescribeRole.Theorem))));
 
-    private static LeanDeclarationRef LeanDefinition(string value) =>
-        LeanDeclarationRef.Create(
-            value,
-            expectedKind: LeanDeclarationKind.Definition,
-            requireNoSorry: true);
 }

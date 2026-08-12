@@ -587,9 +587,11 @@ public sealed class EmissionTests
 
         CopyRepositoryLibrary(root);
 
-        if (ScribeEmitter.Emit(root, check: false, TextWriter.Null, TextWriter.Null, report) != 0)
+        var error = new StringWriter();
+        if (ScribeEmitter.Emit(root, check: false, TextWriter.Null, error, report) != 0)
         {
-            throw new InvalidOperationException("fixture emission was not clean");
+            throw new InvalidOperationException(
+                $"fixture emission was not clean: {error.ToString().TrimEnd()}");
         }
     }
 
@@ -639,5 +641,12 @@ public sealed class EmissionTests
                 Path.Combine(destinationDirectory, Path.GetFileName(source.Value)),
                 overwrite: true);
         }
+
+        const string rawReport = ".lake/build/stratalint/raw-lean-report.json";
+        Assert.True(repository.FileExists(RepositoryRelativePath.Create(rawReport)),
+            $"missing projection input {rawReport}");
+        var reportDestination = Path.Combine(destinationRoot, rawReport);
+        TemporaryFileSystem.Directory.CreateDirectory(Path.GetDirectoryName(reportDestination)!);
+        repository.CopyTo(RepositoryRelativePath.Create(rawReport), reportDestination, overwrite: true);
     }
 }

@@ -239,10 +239,15 @@ public sealed class StatementProjectionPilotTests
         var sources = repository.EnumerateFiles(RepositoryRelativePath.Create("Blueprint"), "*.scribe.cs")
             .Select(repository.ReadAllText).ToArray();
 
-        var projected = sources.Sum(source => source.Split(
-            "StatementProjectionFixtureLoader.FromLean(", StringSplitOptions.None).Length - 1);
+        // Projection-derived statements use both the legacy fixture loader and the report-derived source.
+        var projected = sources.Sum(source =>
+            source.Split("StatementProjectionFixtureLoader.FromLean(", StringSplitOptions.None).Length - 1
+            + source.Split("StatementSource.FromLean()", StringSplitOptions.None).Length - 1);
 
-        Assert.Equal(7, projected);
+        // Exclusivity makes this set monotone: projector coverage can add members but cannot remove them.
+        Assert.True(
+            projected >= 7,
+            $"projection-derived statements regressed to {projected}, below the floor of 7");
     }
 
     [LiveReportFact]

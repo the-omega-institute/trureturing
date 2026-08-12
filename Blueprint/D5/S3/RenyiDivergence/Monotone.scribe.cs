@@ -6,18 +6,14 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.RenyiDivergence;
 
 internal sealed class MonotoneDocument : IScribeDocumentDefinition
 {
-    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
-        Header(
-            "D5/S3/RenyiDivergence/Monotone",
-            "Finite Renyi divergence is nondecreasing in its order separately below and above order one under minimal reference-mass hypotheses."),
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create("Finite Renyi divergence is nondecreasing in its order separately below and above order one under minimal reference-mass hypotheses.",
         H("Order Monotonicity of Finite Renyi Divergence"),
         Blocks(
-            DocumentBlock.Describe.Theorem(
+            Describe.Lean(
                 DescribeId.Create("finite-renyi-divergence-is-monotone-below-order-one"),
+                DeclarationHandle.Create("D5/S3/RenyiDivergence/Monotone.renyi_divergence_monotone_of_lt_one"),
                 H("Finite Renyi divergence is monotone below order one"),
-                LeanTheorem(
-                    "D5/S3/RenyiDivergence/Monotone.renyi_divergence_monotone_of_lt_one"),
-                Disp(Seq(
+                StatementSource.FromAuthor(Disp(Seq(
                     Begin, Grp(F.Id("gathered")),
                     Forall, Sp, Iota, Esc,
                     OpenBracket,
@@ -44,8 +40,8 @@ internal sealed class MonotoneDocument : IScribeDocumentDefinition
                     Le, Sp,
                     F.Id("D"), Underscore, Grp(Beta, Sp), Open,
                     F.Id("p"), Vert, Sp, Vert, Sp, F.Id("q"), Close, Dot,
-                    End, Grp(F.Id("gathered")))),
-                DescribeProvenance.RepoDerived(),
+                    End, Grp(F.Id("gathered"))))),
+                AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
                         "The theorem supplies monotonicity in the order on the interval strictly " +
@@ -71,13 +67,13 @@ internal sealed class MonotoneDocument : IScribeDocumentDefinition
                         "quantity alpha-1 reverses the inequality and yields " +
                         "D_alpha(p||q) <= D_beta(p||q). If the supports do not overlap, both " +
                         "power sums and both totalized divergences are zero; otherwise positivity " +
-                        "licenses the logarithmic step.")))),
-            DocumentBlock.Describe.Theorem(
+                        "licenses the logarithmic step."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("finite-renyi-divergence-is-monotone-above-order-one"),
+                DeclarationHandle.Create("D5/S3/RenyiDivergence/Monotone.renyi_divergence_monotone_of_one_lt"),
                 H("Finite Renyi divergence is monotone above order one"),
-                LeanTheorem(
-                    "D5/S3/RenyiDivergence/Monotone.renyi_divergence_monotone_of_one_lt"),
-                Disp(Seq(
+                StatementSource.FromAuthor(Disp(Seq(
                     Begin, Grp(F.Id("gathered")),
                     Forall, Sp, Iota, Esc,
                     OpenBracket,
@@ -103,8 +99,8 @@ internal sealed class MonotoneDocument : IScribeDocumentDefinition
                     Le, Sp,
                     F.Id("D"), Underscore, Grp(Beta, Sp), Open,
                     F.Id("p"), Vert, Sp, Vert, Sp, F.Id("q"), Close, Dot,
-                    End, Grp(F.Id("gathered")))),
-                DescribeProvenance.RepoDerived(),
+                    End, Grp(F.Id("gathered"))))),
+                AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
                         "Above one, the shifted orders are positive and the same Jensen mechanism " +
@@ -147,5 +143,6 @@ internal sealed class MonotoneDocument : IScribeDocumentDefinition
                         "No order-one limit to the classical divergence, straddling monotonicity " +
                         "under absolute continuity, strictness, data-processing inequality for the " +
                         "Renyi family, or measure-theoretic analogue is claimed. All logarithms " +
-                        "are natural, so the units are nats.")))))));
+                        "are natural, so the units are nats."))),
+                DescribeRole.Theorem))));
 }

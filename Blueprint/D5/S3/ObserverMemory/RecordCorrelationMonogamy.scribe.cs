@@ -8,18 +8,15 @@ internal sealed class RecordCorrelationMonogamyDocument : IScribeDocumentDefinit
 {
     private const string LeanPrefix = "D5/S3/ObserverMemory/RecordCorrelationMonogamy.";
 
-    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
-        Header(
-            "D5/S3/ObserverMemory/RecordCorrelationMonogamy",
-            "A perfect Z-address copy in one fixed record pointer eliminates its conjugate X correlation."),
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create("A perfect Z-address copy in one fixed record pointer eliminates its conjugate X correlation.",
         H("Address-Record Correlation Monogamy"),
         Blocks(
-            DocumentBlock.Describe.Theorem(
+            Describe.Lean(
                 DescribeId.Create("a-perfect-address-copy-eliminates-conjugate-correlation"),
+                DeclarationHandle.Create("D5/S3/ObserverMemory/RecordCorrelationMonogamy.record_correlation_monogamy"),
                 H("A perfect address copy eliminates conjugate correlation"),
-                LeanTheorem(LeanPrefix + "record_correlation_monogamy"),
-                MonogamyFormula(),
-                DescribeProvenance.RepoDerived(),
+                StatementSource.FromAuthor(MonogamyFormula()),
+                AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
                         "Let rho be an arbitrary positive semidefinite trace-one matrix on a "
@@ -41,34 +38,34 @@ internal sealed class RecordCorrelationMonogamyDocument : IScribeDocumentDefinit
                         + "Tr(rho(X tensor X)) would make the proposed implication false: a Bell "
                         + "state has both Z-tensor-Z and X-tensor-X correlation equal to one. The "
                         + "theorem makes no diagonal-state restriction and no false Bell-state "
-                        + "claim; it states what one classical address pointer can record.")))
-            ),
-            DocumentBlock.Describe.Theorem(
+                        + "claim; it states what one classical address pointer can record."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("a-nondiagonal-state-has-nonzero-conjugate-correlation"),
+                DeclarationHandle.Create("D5/S3/ObserverMemory/RecordCorrelationMonogamy.coherent_record_anti_vacuity_certificate"),
                 H("A non-diagonal state has nonzero conjugate correlation"),
-                LeanTheorem(LeanPrefix + "coherent_record_anti_vacuity_certificate"),
-                AntiVacuityFormula(),
-                DescribeProvenance.RepoDerived(),
+                StatementSource.FromAuthor(AntiVacuityFormula()),
+                AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "The product state rho_(+0)=|+0><+0| is positive semidefinite and trace one. "
                     + "Its (00,10) entry is 1/2, so it is explicitly non-diagonal. It has "
                     + "C_Z=0 and C_X=1 against the fixed record pointer. Therefore C_X is not "
                     + "identically zero on the theorem's general domain; the main implication "
-                    + "uses the perfect-copy premise.")))
-            ),
-            DocumentBlock.Describe.Theorem(
+                    + "uses the perfect-copy premise."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("a-noisy-address-record-has-three-quarter-correlation"),
+                DeclarationHandle.Create("D5/S3/ObserverMemory/RecordCorrelationMonogamy.three_quarter_address_record_certificate"),
                 H("A noisy address record has three-quarter correlation"),
-                LeanTheorem(LeanPrefix + "three_quarter_address_record_certificate"),
-                WitnessFormula(),
-                DescribeProvenance.RepoDerived(),
+                StatementSource.FromAuthor(WitnessFormula()),
+                AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "The numerical witness assigns 7/16 to each agreeing address pair and 1/16 "
                     + "to each disagreeing pair. Its diagonal embedding is a positive trace-one "
                     + "state with C_Z=3/4 and C_X=0. This explicit leg remains separate from the "
                     + "general-state theorem and supplies the requested nontrivial numerical "
-                    + "reading.")))
-            ))));
+                    + "reading."))),
+                DescribeRole.Theorem))));
 
     private static Formula Correlation(Formula axis, Formula state) => Seq(
         F.Id("C"), Underscore, Grp(axis), Open, state, Close);

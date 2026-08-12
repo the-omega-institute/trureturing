@@ -6,24 +6,20 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.PrimeForms;
 
 internal sealed class FixedFormDiscriminantDocument : IScribeDocumentDefinition
 {
-    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
-        Header(
-            "D5/S3/PrimeForms/FixedFormDiscriminant",
-            "The fixed-point form discriminant of a 2x2 integer matrix equals tr^2 - 4 det; at determinant -1 it is tr^2 + 4."),
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create("The fixed-point form discriminant of a 2x2 integer matrix equals tr^2 - 4 det; at determinant -1 it is tr^2 + 4.",
         H("Fixed-Form Discriminant"),
         Blocks(
-            DocumentBlock.Describe.Theorem(
+            Describe.Lean(
                 DescribeId.Create("det-neg-one-fixed-form-disc"),
+                DeclarationHandle.Create("D5/S3/PrimeForms/FixedFormDiscriminant.det_neg_one_fixed_form_disc"),
                 H("At determinant minus one the fixed-form discriminant is trace squared plus four"),
-                LeanTheorem(
-                    "D5/S3/PrimeForms/FixedFormDiscriminant.det_neg_one_fixed_form_disc"),
-                Disp(Seq(
+                StatementSource.FromAuthor(Disp(Seq(
                     F.Id("a"), F.Id("d"), Minus, F.Id("b"), F.Id("c"), Eq, Minus, D(1),
                     Sp, Rightarrow, Sp,
                     Open, F.Id("d"), Minus, F.Id("a"), Close, Caret, Grp(D(2)), Plus,
                     D(4), F.Id("b"), F.Id("c"), Eq,
-                    Open, F.Id("a"), Plus, F.Id("d"), Close, Caret, Grp(D(2)), Plus, D(4))),
-                DescribeProvenance.RepoDerived(),
+                    Open, F.Id("a"), Plus, F.Id("d"), Close, Caret, Grp(D(2)), Plus, D(4)))),
+                AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
                         "The fixed-point equation x = (a x + b)/(c x + d) of a 2x2 integer matrix [[a,b],[c,d]] "
@@ -34,5 +30,6 @@ internal sealed class FixedFormDiscriminantDocument : IScribeDocumentDefinition
                         "For the pinned odd core of trace 12 j (determinant -1), the discriminant specialises to "
                         + "(12 j)^2 + 4 = 4(36 j^2 + 1), exactly four times the negative-Pell discriminant "
                         + "d_j = 36 j^2 + 1. No claim is made about class-equivalence or the minimum of the core "
-                        + "form beyond this discriminant identity.")))))));
+                        + "form beyond this discriminant identity."))),
+                DescribeRole.Theorem))));
 }

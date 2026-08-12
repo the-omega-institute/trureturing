@@ -6,18 +6,15 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.RenyiDivergence;
 
 internal sealed class BasicDocument : IScribeDocumentDefinition
 {
-    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
-        Header(
-            "D5/S3/RenyiDivergence/Basic",
-            "Finite Renyi divergence is defined for real orders and pinned by complementary half-order, self, and order-two identities."),
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create("Finite Renyi divergence is defined for real orders and pinned by complementary half-order, self, and order-two identities.",
         H("Finite Renyi Divergence"),
         Blocks(
-            DocumentBlock.Describe.Definition(
+            Describe.Lean(
                 DescribeId.Create("finite-renyi-divergence-is-the-logarithmic-power-sum"),
+                DeclarationHandle.Create("D5/S3/RenyiDivergence/Basic.renyiDivergence"),
                 H("Finite Renyi divergence is the logarithmic power sum"),
-                LeanDefinition(
-                    "D5/S3/RenyiDivergence/Basic.renyiDivergence"),
-                DescribeProvenance.RepoDerived(),
+                StatementSource.FromLean(),
+                AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
                         "The repository already contains Kullback--Leibler divergence, the " +
@@ -40,34 +37,12 @@ internal sealed class BasicDocument : IScribeDocumentDefinition
                         "proof of alpha != 1 in the definition would alter every downstream " +
                         "signature; the interpreting theorems already constrain the order where " +
                         "that constraint is mathematically needed."))),
-                Disp(Seq(
-                    Begin, Grp(F.Id("gathered")),
-                    Forall, Sp, Iota, Esc,
-                    OpenBracket,
-                    Operatorname, Grp(F.Id("Fintype")), Open, Iota, Close,
-                    CloseBracket, Comma, RowBreak,
-                    Forall, Sp, Alpha, Sp, InMacro, Sp,
-                    Mathbb, Grp(F.Id("R")), Comma, RowBreak,
-                    Forall, Sp, F.Id("p"), Comma, Sp, F.Id("q"), Colon, Sp,
-                    Iota, To, Sp, Mathbb, Grp(F.Id("R")), Comma, RowBreak,
-                    F.Id("D"), Underscore, Grp(Alpha, Sp), Open,
-                    F.Id("p"), Vert, Sp, Vert, Sp, F.Id("q"), Close,
-                    Colon, Eq,
-                    Frac, Grp(D(1)), Grp(Alpha, Sp, Minus, D(1)),
-                    Log, Sp, Open,
-                    Sum, Sp, Underscore, Grp(F.Id("i")), Sp,
-                    F.Id("p"), Open, F.Id("i"), Close,
-                    Caret, Grp(Alpha, Sp), Sp,
-                    F.Id("q"), Open, F.Id("i"), Close,
-                    Caret, Grp(D(1), Minus, Alpha, Sp), Close, Dot,
-                    End, Grp(F.Id("gathered"))))
-            ),
-            DocumentBlock.Describe.Theorem(
+                DescribeRole.Definition),
+            Describe.Lean(
                 DescribeId.Create("half-order-is-minus-twice-log-bhattacharyya"),
+                DeclarationHandle.Create("D5/S3/RenyiDivergence/Basic.renyi_divergence_one_half"),
                 H("Half order is minus twice log Bhattacharyya"),
-                LeanTheorem(
-                    "D5/S3/RenyiDivergence/Basic.renyi_divergence_one_half"),
-                Disp(Seq(
+                StatementSource.FromAuthor(Disp(Seq(
                     Begin, Grp(F.Id("gathered")),
                     Forall, Sp, Iota, Esc,
                     OpenBracket,
@@ -84,8 +59,8 @@ internal sealed class BasicDocument : IScribeDocumentDefinition
                     Log, Sp, Open,
                     Operatorname, Grp(F.Id("BC")), Open,
                     F.Id("p"), Comma, Sp, F.Id("q"), Close, Close, Dot,
-                    End, Grp(F.Id("gathered")))),
-                DescribeProvenance.RepoDerived(),
+                    End, Grp(F.Id("gathered"))))),
+                AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
                         "At order one half both powers are square roots. Pointwise " +
@@ -114,13 +89,13 @@ internal sealed class BasicDocument : IScribeDocumentDefinition
                         "the half-order bridge is structurally incapable of detecting an exponent " +
                         "swap. The order-two evaluation is therefore a necessary second probe at " +
                         "a different order, not a decorative example. The caller independently " +
-                        "verified this blind spot.")))),
-            DocumentBlock.Describe.Theorem(
+                        "verified this blind spot."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("probability-mass-has-zero-self-divergence"),
+                DeclarationHandle.Create("D5/S3/RenyiDivergence/Basic.renyi_divergence_self"),
                 H("Probability mass has zero self-divergence"),
-                LeanTheorem(
-                    "D5/S3/RenyiDivergence/Basic.renyi_divergence_self"),
-                Disp(Seq(
+                StatementSource.FromAuthor(Disp(Seq(
                     Begin, Grp(F.Id("gathered")),
                     Forall, Sp, Iota, Esc,
                     OpenBracket,
@@ -140,8 +115,8 @@ internal sealed class BasicDocument : IScribeDocumentDefinition
                     F.Id("D"), Underscore, Grp(Alpha, Sp), Open,
                     F.Id("p"), Vert, Sp, Vert, Sp, F.Id("p"), Close,
                     Eq, D(0), Dot,
-                    End, Grp(F.Id("gathered")))),
-                DescribeProvenance.RepoDerived(),
+                    End, Grp(F.Id("gathered"))))),
+                AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
                         "For a nonnegative normalized mass, the two powers recombine to p(i), so " +
@@ -153,13 +128,13 @@ internal sealed class BasicDocument : IScribeDocumentDefinition
                         "the totalized formula. In particular, its alpha = 1 instance records " +
                         "Lean's totalized value and is not an order-one limiting theorem. The " +
                         "identical inputs have identical support, while nonnegativity and unit " +
-                        "mass ensure that the common support is nonempty.")))),
-            DocumentBlock.Describe.Theorem(
+                        "mass ensure that the common support is nonempty."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("point-versus-uniform-has-order-two-divergence-log-two"),
+                DeclarationHandle.Create("D5/S3/RenyiDivergence/Basic.renyi_divergence_two_point_order_two"),
                 H("Point versus uniform has order-two divergence log two"),
-                LeanTheorem(
-                    "D5/S3/RenyiDivergence/Basic.renyi_divergence_two_point_order_two"),
-                Disp(Seq(
+                StatementSource.FromAuthor(Disp(Seq(
                     Begin, Grp(F.Id("gathered")),
                     F.Id("p"), Eq, Delta, Underscore,
                     Grp(Operatorname, Grp(F.Id("true"))), Comma, Sp,
@@ -168,8 +143,8 @@ internal sealed class BasicDocument : IScribeDocumentDefinition
                     F.Id("D"), Underscore, Grp(D(2)), Open,
                     F.Id("p"), Vert, Sp, Vert, Sp, F.Id("q"), Close,
                     Eq, Log, Sp, D(2), Dot,
-                    End, Grp(F.Id("gathered")))),
-                DescribeProvenance.RepoDerived(),
+                    End, Grp(F.Id("gathered"))))),
+                AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
                         "The concrete Bool witness takes p to be the point mass at true and q to " +
@@ -182,13 +157,13 @@ internal sealed class BasicDocument : IScribeDocumentDefinition
                         "closes the coverage analysis. It supplies the distinct order needed to " +
                         "break the exponent-swap symmetry that order one half cannot observe, " +
                         "while its prefactor equal to one explains precisely why it cannot test " +
-                        "the presence of that prefactor.")))),
-            DocumentBlock.Describe.Theorem(
+                        "the presence of that prefactor."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("finite-renyi-divergence-is-nonnegative-below-order-one"),
+                DeclarationHandle.Create("D5/S3/RenyiDivergence/Basic.renyi_divergence_nonneg"),
                 H("Finite Renyi divergence is nonnegative below order one"),
-                LeanTheorem(
-                    "D5/S3/RenyiDivergence/Basic.renyi_divergence_nonneg"),
-                Disp(Seq(
+                StatementSource.FromAuthor(Disp(Seq(
                     Begin, Grp(F.Id("gathered")),
                     Forall, Sp, Iota, Esc,
                     OpenBracket,
@@ -221,8 +196,8 @@ internal sealed class BasicDocument : IScribeDocumentDefinition
                     D(0), Le, Sp,
                     F.Id("D"), Underscore, Grp(Alpha, Sp), Open,
                     F.Id("p"), Vert, Sp, Vert, Sp, F.Id("q"), Close, Dot,
-                    End, Grp(F.Id("gathered")))),
-                DescribeProvenance.RepoDerived(),
+                    End, Grp(F.Id("gathered"))))),
+                AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
                         "For 0 < alpha < 1 and two nonnegative normalized laws, weighted " +
@@ -235,13 +210,13 @@ internal sealed class BasicDocument : IScribeDocumentDefinition
                         "condition supplies a coordinate on which both laws are positive and " +
                         "thereby makes the power sum strictly positive. It is exactly the " +
                         "hypothesis that excludes the disjoint-support flattening recorded " +
-                        "below.")))),
-            DocumentBlock.Describe.Theorem(
+                        "below."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("disjoint-support-is-flattened-by-totalization"),
+                DeclarationHandle.Create("D5/S3/RenyiDivergence/Basic.renyi_divergence_disjoint_support_flattening_witness"),
                 H("Disjoint support is flattened by totalization"),
-                LeanTheorem(
-                    "D5/S3/RenyiDivergence/Basic.renyi_divergence_disjoint_support_flattening_witness"),
-                Disp(Seq(
+                StatementSource.FromAuthor(Disp(Seq(
                     Begin, Grp(F.Id("gathered")),
                     F.Id("p"), Eq, Delta, Underscore,
                     Grp(Operatorname, Grp(F.Id("true"))), Comma, Sp,
@@ -250,8 +225,8 @@ internal sealed class BasicDocument : IScribeDocumentDefinition
                     F.Id("D"), Underscore, Grp(Frac, Grp(D(1)), Grp(D(2))), Open,
                     F.Id("p"), Vert, Sp, Vert, Sp, F.Id("q"), Close,
                     Eq, D(0), Dot,
-                    End, Grp(F.Id("gathered")))),
-                DescribeProvenance.RepoDerived(),
+                    End, Grp(F.Id("gathered"))))),
+                AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
                         "The two point masses are nonnegative and normalized but have disjoint " +
@@ -279,11 +254,7 @@ internal sealed class BasicDocument : IScribeDocumentDefinition
                         "Renyi divergences of real order alpha, their pinning identities, and " +
                         "future monotonicity in the order. No order-one limit, monotonicity in " +
                         "alpha, data-processing inequality for the family, or measure-theoretic " +
-                        "analogue is claimed. All logarithms are natural, so the units are nats.")))))));
+                        "analogue is claimed. All logarithms are natural, so the units are nats."))),
+                DescribeRole.Theorem))));
 
-    private static LeanDeclarationRef LeanDefinition(string value) =>
-        LeanDeclarationRef.Create(
-            value,
-            expectedKind: LeanDeclarationKind.Definition,
-            requireNoSorry: true);
 }

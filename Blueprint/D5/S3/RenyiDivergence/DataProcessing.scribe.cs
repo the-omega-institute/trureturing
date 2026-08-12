@@ -6,18 +6,14 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.RenyiDivergence;
 
 internal sealed class DataProcessingDocument : IScribeDocumentDefinition
 {
-    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
-        Header(
-            "D5/S3/RenyiDivergence/DataProcessing",
-            "Finite nonnegative row-stochastic processing cannot increase Renyi divergence at orders strictly between zero and one under positive overlap."),
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create("Finite nonnegative row-stochastic processing cannot increase Renyi divergence at orders strictly between zero and one under positive overlap.",
         H("Data Processing for Finite Renyi Divergence"),
         Blocks(
-            DocumentBlock.Describe.Theorem(
+            Describe.Lean(
                 DescribeId.Create("half-order-data-processing-is-a-corollary-of-frozen-results"),
+                DeclarationHandle.Create("D5/S3/RenyiDivergence/DataProcessing.renyi_divergence_one_half_channel_le"),
                 H("Half-order data processing is a corollary of frozen results"),
-                LeanTheorem(
-                    "D5/S3/RenyiDivergence/DataProcessing.renyi_divergence_one_half_channel_le"),
-                Disp(Seq(
+                StatementSource.FromAuthor(Disp(Seq(
                     Begin, Grp(F.Id("gathered")),
                     Forall, Sp, F.Id("X"), Comma, Sp, F.Id("Y"), Esc,
                     OpenBracket,
@@ -63,8 +59,8 @@ internal sealed class DataProcessingDocument : IScribeDocumentDefinition
                     Le, Sp,
                     F.Id("D"), Underscore, Grp(Frac, Grp(D(1)), Grp(D(2))), Open,
                     F.Id("p"), Vert, Sp, Vert, Sp, F.Id("q"), Close, Dot,
-                    End, Grp(F.Id("gathered")))),
-                DescribeProvenance.RepoDerived(),
+                    End, Grp(F.Id("gathered"))))),
+                AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
                         "This named theorem is a corollary of frozen results, not a new proof " +
@@ -95,13 +91,13 @@ internal sealed class DataProcessingDocument : IScribeDocumentDefinition
                         "that silently disagreed with an already-frozen special case would " +
                         "signal an error in its formulation; the overlap is precisely where " +
                         "such an error is least costly to detect. The caller reproduced this " +
-                        "compiled check independently.")))),
-            DocumentBlock.Describe.Theorem(
+                        "compiled check independently."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("sub-unit-renyi-divergence-obeys-data-processing"),
+                DeclarationHandle.Create("D5/S3/RenyiDivergence/DataProcessing.renyi_divergence_channel_le_of_lt_one"),
                 H("Sub-unit Renyi divergence obeys data processing"),
-                LeanTheorem(
-                    "D5/S3/RenyiDivergence/DataProcessing.renyi_divergence_channel_le_of_lt_one"),
-                Disp(Seq(
+                StatementSource.FromAuthor(Disp(Seq(
                     Begin, Grp(F.Id("gathered")),
                     Forall, Sp, F.Id("X"), Comma, Sp, F.Id("Y"), Esc,
                     OpenBracket,
@@ -150,8 +146,8 @@ internal sealed class DataProcessingDocument : IScribeDocumentDefinition
                     Le, Sp,
                     F.Id("D"), Underscore, Grp(Alpha, Sp), Open,
                     F.Id("p"), Vert, Sp, Vert, Sp, F.Id("q"), Close, Dot,
-                    End, Grp(F.Id("gathered")))),
-                DescribeProvenance.RepoDerived(),
+                    End, Grp(F.Id("gathered"))))),
+                AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
                         "Processing an observation cannot increase finite Renyi divergence at " +
@@ -205,5 +201,6 @@ internal sealed class DataProcessingDocument : IScribeDocumentDefinition
                     Paragraph(Text(
                         "No order-one limit, data-processing theorem above order one, equality " +
                         "characterization, or measure-theoretic analogue is claimed. All " +
-                        "logarithms are natural, so the units are nats.")))))));
+                        "logarithms are natural, so the units are nats."))),
+                DescribeRole.Theorem))));
 }
