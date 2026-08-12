@@ -94,7 +94,7 @@ internal sealed class RuleEvaluationContext
         RepositorySnapshot forkPoint,
         ValidatedPolicy policy,
         AcceptedLeanClosure lean,
-        AcceptedLeanClosure baselineLean,
+        AcceptedLeanClosure? baselineLean,
         RawChangeSet changes,
         MetaEvaluationProfile metaEvaluation,
         VerifiedScribeEmissions? verifiedScribeEmissions)
@@ -128,7 +128,8 @@ internal sealed class RuleEvaluationContext
 
     internal AcceptedLeanClosure Lean { get; }
 
-    internal AcceptedLeanClosure BaselineLean { get; }
+    // 可空:只有 Hearts.lean 实际变动时才需要旧侧语义,其余情况 CI 无须产出旧侧报告。
+    internal AcceptedLeanClosure? BaselineLean { get; }
 
     internal RawChangeSet Changes { get; }
 
@@ -141,7 +142,7 @@ internal sealed class RuleEvaluationContext
         RepositorySnapshot baseline,
         ValidatedPolicy policy,
         AcceptedLeanClosure lean,
-        AcceptedLeanClosure baselineLean,
+        AcceptedLeanClosure? baselineLean,
         RawChangeSet changes,
         MetaClear metaClear,
         VerifiedScribeEmissions? verifiedScribeEmissions = null,
@@ -162,7 +163,7 @@ internal sealed class RuleEvaluationContext
         RepositorySnapshot baseline,
         ValidatedPolicy policy,
         AcceptedLeanClosure lean,
-        AcceptedLeanClosure baselineLean,
+        AcceptedLeanClosure? baselineLean,
         RawChangeSet changes,
         MetaEvaluationProfile metaEvaluation,
         VerifiedScribeEmissions? verifiedScribeEmissions = null,

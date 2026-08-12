@@ -40,8 +40,6 @@ done
 [[ -n "$BASE_REF" ]] || { echo "harness-gate: --base REV is required" >&2; exit 2; }
 [[ -n "$CANDIDATE_LEAN_REPORT" ]] \
   || { echo "harness-gate: --candidate-lean-report FILE is required" >&2; exit 2; }
-[[ -n "$BASELINE_LEAN_REPORT" ]] \
-  || { echo "harness-gate: --baseline-lean-report FILE is required" >&2; exit 2; }
 [[ -d "$CANDIDATE_ROOT" ]] \
   || { echo "harness-gate: candidate root '$CANDIDATE_ROOT' is absent" >&2; exit 2; }
 [[ -n "$JUDGE_ROOT" ]] || JUDGE_ROOT="$CANDIDATE_ROOT"
@@ -49,8 +47,11 @@ done
   || { echo "harness-gate: judge root '$JUDGE_ROOT' is absent" >&2; exit 2; }
 [[ -f "$CANDIDATE_LEAN_REPORT" ]] \
   || { echo "harness-gate: candidate Lean report '$CANDIDATE_LEAN_REPORT' is absent" >&2; exit 2; }
-[[ -f "$BASELINE_LEAN_REPORT" ]] \
-  || { echo "harness-gate: baseline Lean report '$BASELINE_LEAN_REPORT' is absent" >&2; exit 2; }
+# 旧侧 Lean 报告是可选的:唯一用它的是 Hearts.lean 变动时的语义比对。给了就必须存在。
+if [[ -n "$BASELINE_LEAN_REPORT" ]]; then
+  [[ -f "$BASELINE_LEAN_REPORT" ]] \
+    || { echo "harness-gate: baseline Lean report '$BASELINE_LEAN_REPORT' is absent" >&2; exit 2; }
+fi
 if [[ -n "$GATE_OUTCOME_DIR" ]]; then
   [[ "$GATE_OUTCOME_DIR" == /* && -d "$GATE_OUTCOME_DIR" ]] \
     || { echo "harness-gate: STRATALINT_GATE_OUTCOME_DIR must name an existing absolute directory" >&2; exit 2; }
@@ -59,7 +60,9 @@ fi
 CANDIDATE_ROOT="$(cd "$CANDIDATE_ROOT" && pwd -P)"
 JUDGE_ROOT="$(cd "$JUDGE_ROOT" && pwd -P)"
 CANDIDATE_LEAN_REPORT="$(cd "$(dirname "$CANDIDATE_LEAN_REPORT")" && pwd -P)/$(basename "$CANDIDATE_LEAN_REPORT")"
-BASELINE_LEAN_REPORT="$(cd "$(dirname "$BASELINE_LEAN_REPORT")" && pwd -P)/$(basename "$BASELINE_LEAN_REPORT")"
+if [[ -n "$BASELINE_LEAN_REPORT" ]]; then
+  BASELINE_LEAN_REPORT="$(cd "$(dirname "$BASELINE_LEAN_REPORT")" && pwd -P)/$(basename "$BASELINE_LEAN_REPORT")"
+fi
 CLI_PROJECT_REL="Meta/StrataLint/StrataLint.Cli/StrataLint.Cli.csproj"
 
 resolve_target_path() {
@@ -129,7 +132,7 @@ set +e
   cd "$CANDIDATE_ROOT"
   dotnet "$JUDGE_DLL" check --protected-base "$BASE_REF" \
     --candidate-lean-report "$CANDIDATE_LEAN_REPORT" \
-    --baseline-lean-report "$BASELINE_LEAN_REPORT" \
+    ${BASELINE_LEAN_REPORT:+--baseline-lean-report "$BASELINE_LEAN_REPORT"} \
     --frozen-evidence-root "$JUDGE_ROOT"
 )
 rc=$?
