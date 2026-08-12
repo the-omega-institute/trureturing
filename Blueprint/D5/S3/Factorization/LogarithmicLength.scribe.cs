@@ -23,14 +23,7 @@ internal sealed class LogarithmicLengthDocument : IScribeDocumentDefinition
                 DescribeId.Create("factorization-logarithmic-length"),
                 DeclarationHandle.Create("D5/S3/Factorization/LogarithmicLength.factorizationLogLength"),
                 H("Prime exponents define logarithmic length"),
-                StatementSource.FromAuthor(Disp(Seq(
-                                    Operatorname, Grp(F.Id("factorizationLogLength")),
-                                    Open, F.Id("n"), Close, Eq,
-                                    Sum, Underscore, Grp(F.Id("p")),
-                                    Operatorname, Grp(F.Id("factorization")),
-                                    Open, F.Id("n"), Close,
-                                    Open, F.Id("p"), Close, Sp,
-                                    Operatorname, Grp(F.Id("log")), Open, F.Id("p"), Close))),
+                StatementSource.FromLean(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                                     "The logarithmic length of a natural number is the finite sum over "

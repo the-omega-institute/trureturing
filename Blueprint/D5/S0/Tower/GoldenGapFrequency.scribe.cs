@@ -34,7 +34,7 @@ internal sealed class GoldenGapFrequencyDocument : IScribeDocumentDefinition
                     DescribeId.Create("large-full-gap-count"),
                     DeclarationHandle.Create("D5/S0/Tower/GoldenGapFrequency.largeGapCount"),
                     H("Large full-gap count"),
-                    StatementSource.FromAuthor(FormulaDsl.Id("largeGapCount")),
+                    StatementSource.FromLean(),
                     AssessedProvenance.FromRepo(),
                     Blocks(Paragraph(Text(
                                             "The finite number of boundary-completed gaps equal to the level-Q "
@@ -45,7 +45,7 @@ internal sealed class GoldenGapFrequencyDocument : IScribeDocumentDefinition
                     DescribeId.Create("small-full-gap-count"),
                     DeclarationHandle.Create("D5/S0/Tower/GoldenGapFrequency.smallGapCount"),
                     H("Small full-gap count"),
-                    StatementSource.FromAuthor(FormulaDsl.Id("smallGapCount")),
+                    StatementSource.FromLean(),
                     AssessedProvenance.FromRepo(),
                     Blocks(Paragraph(Text(
                                             "The finite number of boundary-completed gaps equal to the level-Q "

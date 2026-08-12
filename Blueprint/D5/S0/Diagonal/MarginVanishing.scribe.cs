@@ -16,7 +16,7 @@ internal sealed class MarginVanishingDocument : IScribeDocumentDefinition
                     DescribeId.Create("corrected-linear-margin-bound"),
                     DeclarationHandle.Create("D5/S0/Diagonal/MarginVanishing.linearMarginBound"),
                     H("Corrected linear-margin bound"),
-                    StatementSource.FromAuthor(FormulaDsl.Id("linearMarginBound")),
+                    StatementSource.FromLean(),
                     AssessedProvenance.FromRepo(),
                     Blocks(Paragraph(Text(
                                             "At address cardinality A, the bound is A times the exponential of "

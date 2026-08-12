@@ -6,7 +6,7 @@ Signed prime exponents give the additive presentation of positive rationals.
 
 **Definition 1.1 (Signed prime ledgers map to positive rationals).**
 
-$$primeExponentEquivPositiveRational:(Prime \Rightarrow Int) \sim PositiveRational$$
+Lean statement: `D5/S3/Factorization/PositiveRationalGroup.primeExponentEquivPositiveRational`
 
 *Formalization.* `D5/S3/Factorization/PositiveRationalGroup.primeExponentEquivPositiveRational` (`✓ std3`).
 

@@ -21,7 +21,7 @@ internal sealed class GoldenNamesDocument : IScribeDocumentDefinition
                     DescribeId.Create("bounded-zeckendorf-golden-name"),
                     DeclarationHandle.Create("D5/S0/Tower/GoldenNames.GoldenName"),
                     H("Bounded Zeckendorf golden name"),
-                    StatementSource.FromAuthor(FormulaDsl.Id("GoldenName")),
+                    StatementSource.FromLean(),
                     AssessedProvenance.FromRepo(),
                     Blocks(Paragraph(Text(
                                             "The representation is a bounded subtype of the repository's existing "

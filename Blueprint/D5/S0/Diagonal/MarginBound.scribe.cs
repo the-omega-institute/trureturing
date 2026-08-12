@@ -28,7 +28,7 @@ internal sealed class MarginBoundDocument : IScribeDocumentDefinition
                     DescribeId.Create("bernoulli-kl-divergence"),
                     DeclarationHandle.Create("D5/S0/Diagonal/MarginBound.bernoulliKL"),
                     H("Bernoulli KL divergence"),
-                    StatementSource.FromAuthor(FormulaDsl.Id("bernoulliKL")),
+                    StatementSource.FromLean(),
                     AssessedProvenance.FromRepo(),
                     Blocks(Paragraph(Text(
                                             "The scalar Bernoulli divergence is q log(q/p) plus one minus q "
@@ -40,7 +40,7 @@ internal sealed class MarginBoundDocument : IScribeDocumentDefinition
                     DescribeId.Create("finite-margin-failure-probability"),
                     DeclarationHandle.Create("D5/S0/Diagonal/MarginBound.marginFailureProbability"),
                     H("Finite margin-failure probability"),
-                    StatementSource.FromAuthor(FormulaDsl.Id("marginFailureProbability")),
+                    StatementSource.FromLean(),
                     AssessedProvenance.FromRepo(),
                     Blocks(Paragraph(Text(
                                             "The probability is the finite cardinality ratio of listings having "
