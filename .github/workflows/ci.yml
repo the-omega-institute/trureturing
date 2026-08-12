@@ -521,6 +521,8 @@ jobs:
         with:
           path: ~/.elan
           key: ${{ runner.os }}-${{ runner.arch }}-elan-${{ hashFiles('lean-toolchain') }}
+          restore-keys: |
+            ${{ runner.os }}-${{ runner.arch }}-elan-
 
       - name: Install pinned Lean toolchains
         id: old-side-toolchain

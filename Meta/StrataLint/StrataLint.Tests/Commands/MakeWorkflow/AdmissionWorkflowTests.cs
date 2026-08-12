@@ -98,6 +98,21 @@ namespace StrataLint.Tests;
     }
 
     [Fact]
+    public void OldSideShadowElanRestoreCanReuseLeanInspectCache()
+    {
+        var workflow = AdmissionWorkflow();
+        Assert.True(ShadowElanRestoreCanReuseSavedCache(workflow));
+
+        var tampered = workflow.Replace(
+            "          restore-keys: |\n" +
+            "            ${{ runner.os }}-${{ runner.arch }}-elan-\n",
+            "",
+            StringComparison.Ordinal);
+        Assert.NotEqual(workflow, tampered);
+        Assert.False(ShadowElanRestoreCanReuseSavedCache(tampered));
+    }
+
+    [Fact]
     public void ReconcilesStatementProjectionAfterProducingLiveReport()
     {
         var root = FindRepositoryRoot();
@@ -288,6 +303,32 @@ namespace StrataLint.Tests;
             run.Contains("retry_attempt=", StringComparison.Ordinal) &&
             run.Contains("exit_code=", StringComparison.Ordinal);
     }
+
+    private static bool ShadowElanRestoreCanReuseSavedCache(string workflow)
+    {
+        var save = Steps(Job(workflow, "lean-inspect"))["Save elan toolchains (dev push only)"];
+        var saveWith = Assert.IsType<YamlMappingNode>(save.Children[new YamlScalarNode("with")]);
+        var saveKey = Assert.IsType<YamlScalarNode>(saveWith.Children[new YamlScalarNode("key")]).Value!;
+        var hashStart = saveKey.IndexOf("${{ hashFiles(", StringComparison.Ordinal);
+        Assert.True(hashStart > 0, "the elan save key must end in a content hash");
+        var savedPrefix = saveKey[..hashStart];
+
+        var restore = Steps(Job(workflow, "old-side-report-shadow"))["Restore elan and pinned Lean toolchains"];
+        var restoreWith = Assert.IsType<YamlMappingNode>(restore.Children[new YamlScalarNode("with")]);
+        if (!restoreWith.Children.TryGetValue(new YamlScalarNode("restore-keys"), out var restoreKeysNode) ||
+            restoreKeysNode is not YamlScalarNode { Value: string restoreKeys }) return false;
+
+        return restoreKeys.Split('\n', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
+            .Contains(savedPrefix, StringComparer.Ordinal);
+    }
+
+    private static Dictionary<string, YamlMappingNode> Steps(YamlMappingNode job) =>
+        Assert.IsType<YamlSequenceNode>(job.Children[new YamlScalarNode("steps")]).Children
+            .OfType<YamlMappingNode>()
+            .Where(static step => step.Children.ContainsKey(new YamlScalarNode("name")))
+            .ToDictionary(
+                static step => Assert.IsType<YamlScalarNode>(step.Children[new YamlScalarNode("name")]).Value!,
+                StringComparer.Ordinal);
 
     private static bool ShadowRecordArtifactUploadIsRequired(string workflow)
     {
