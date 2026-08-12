@@ -252,6 +252,30 @@ public static class Describe
         AssessedProvenance provenance,
         BlockSequence narrative) =>
         DocumentBlock.Describe.RemarkOn(id, handle, title, provenance, narrative);
+
+    /// <summary>
+    /// Commentary whose subject is an authored formula rather than a Lean declaration.
+    /// </summary>
+    public static DocumentBlock.Describe Remark(
+        DescribeId id,
+        Heading title,
+        Formula formula,
+        AssessedProvenance provenance,
+        BlockSequence narrative) =>
+        DocumentBlock.Describe.AuthoredFormula(
+            id, DescribeKind.Remark, title, formula, provenance, narrative);
+
+    /// <summary>
+    /// An illustration carrying an authored formula. Examples name no declaration.
+    /// </summary>
+    public static DocumentBlock.Describe Example(
+        DescribeId id,
+        Heading title,
+        Formula formula,
+        AssessedProvenance provenance,
+        BlockSequence narrative) =>
+        DocumentBlock.Describe.AuthoredFormula(
+            id, DescribeKind.Example, title, formula, provenance, narrative);
 }
 
 internal static class DescribeVocabulary

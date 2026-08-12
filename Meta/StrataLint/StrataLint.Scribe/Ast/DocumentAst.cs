@@ -286,6 +286,35 @@ public abstract record DocumentBlock
         /// to display that theorem's statement, turning commentary into a restatement — the opposite
         /// of what the invariant is for.
         /// </remarks>
+        /// <summary>
+        /// A remark or example whose subject is an authored formula rather than a Lean declaration.
+        /// </summary>
+        /// <remarks>
+        /// These nodes name nothing Lean owns, so the statement-source exclusivity has no work to do
+        /// here: there is no declaration whose statement could be restated. What they carry is the
+        /// author's own expression, and the provenance assessment is the same one every other node
+        /// makes.
+        /// </remarks>
+        internal static Describe AuthoredFormula(
+            DescribeId id,
+            DescribeKind kind,
+            Heading title,
+            Formula formula,
+            AssessedProvenance provenance,
+            BlockSequence content) =>
+            new(
+                id,
+                kind is DescribeKind.Remark or DescribeKind.Example
+                    ? kind
+                    : throw new ArgumentOutOfRangeException(
+                        nameof(kind),
+                        "An authored-formula Describe is a remark or an example."),
+                title,
+                DescribeStatement.FromFormula(formula ?? throw new ArgumentNullException(nameof(formula))),
+                new DescribeProvenanceSource.Assessed(
+                    provenance ?? throw new ArgumentNullException(nameof(provenance))),
+                content);
+
         internal static Describe RemarkOn(
             DescribeId id,
             DeclarationHandle handle,
