@@ -20,7 +20,7 @@ internal sealed class PrimeCashflowCostDocument : IScribeDocumentDefinition
                 DescribeId.Create("event-length-is-logarithmic-prime-weighted-variation"),
                 DeclarationHandle.Create("D5/S3/Analytic/PrimeCashflowCost.eventLength"),
                 H("Event length is logarithmic prime-weighted variation"),
-                StatementSource.FromAuthor(FormulaDsl.Disp(FormulaDsl.Id("eventLength"))),
+                StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "An event is a finitely supported integer-valued function on the primes. " +
@@ -32,7 +32,7 @@ internal sealed class PrimeCashflowCostDocument : IScribeDocumentDefinition
                 DescribeId.Create("cashflow-cost-is-cumulative-event-length"),
                 DeclarationHandle.Create("D5/S3/Analytic/PrimeCashflowCost.cashflowCost"),
                 H("Cashflow cost is cumulative event length"),
-                StatementSource.FromAuthor(FormulaDsl.Disp(FormulaDsl.Id("cashflowCost"))),
+                StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "The cost at time t is the finite sum of event lengths at all " +

@@ -6,7 +6,7 @@ The decoherence-freeze deposit is positive exactly above its critical inverse te
 
 **Definition 1.1 (The freeze deposit subtracts the temperature-scaled entropy tax).**
 
-Lean statement: `D5/S3/QuantumChannels/DecoherenceFreeze.freezeDeposit`
+$$\operatorname{freezeDeposit}(\beta,\Delta S,\Delta E_{pass})=\Delta E_{pass}-\frac{\Delta S}{\beta}$$
 
 *Formalization.* `D5/S3/QuantumChannels/DecoherenceFreeze.freezeDeposit` (`✓ std3`).
 
@@ -18,7 +18,7 @@ For inverse temperature beta, entropy tax Delta S, and passive-energy shift Delt
 
 **Definition 1.2 (The critical inverse temperature is the entropy-energy ratio).**
 
-Lean statement: `D5/S3/QuantumChannels/DecoherenceFreeze.criticalInverseTemperature`
+$$\operatorname{criticalInverseTemperature}(\Delta S,\Delta E_{pass})=\frac{\Delta S}{\Delta E_{pass}}$$
 
 *Formalization.* `D5/S3/QuantumChannels/DecoherenceFreeze.criticalInverseTemperature` (`✓ std3`).
 

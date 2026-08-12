@@ -13,8 +13,7 @@ internal sealed class JointDepthDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create(
                     "D5/S1/Depth/JointDepth.joint_depth_spec"),
                 H("Admissible joint scale, digit, phase, and depth"),
-                StatementSource.FromAuthor(
-                    FormulaDsl.Disp(FormulaDsl.Id("jointDepthSpec"))),
+                StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "A nonzero golden integer supplies both the logarithmic scale and the admissible W-resolution index. Canonical digits and circle phase come from the natural coordinate, and the dependent finite bucket records the resulting depth without truncating a negative index."))),

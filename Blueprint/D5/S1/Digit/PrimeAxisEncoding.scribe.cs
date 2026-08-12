@@ -12,7 +12,7 @@ internal sealed class PrimeAxisEncodingDocument : IScribeDocumentDefinition
             Describe.Lean(DescribeId.Create("prime-axis-encoding"),
                 DeclarationHandle.Create("D5/S1/Digit/PrimeAxisEncoding.primeAxisEncoding"),
                 H("Prime-axis encoding is the canonical bijection"),
-                StatementSource.FromAuthor(FormulaDsl.Disp(FormulaDsl.Id("primeAxisEncoding"))),
+                StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                                     "Canonical finite-support W rows on every prime axis are equivalent "

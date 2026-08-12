@@ -6,7 +6,7 @@ Finite Renyi divergence is defined for real orders and pinned by complementary h
 
 **Definition 1.1 (Finite Renyi divergence is the logarithmic power sum).**
 
-Lean statement: `D5/S3/RenyiDivergence/Basic.renyiDivergence`
+$$\begin{gathered}\forall \iota\ [\operatorname{Fintype}(\iota)],\\\forall \alpha \in \mathbb{R},\\\forall p, q: \iota\to \mathbb{R},\\D_{\alpha }(p\Vert \Vert q):=\frac{1}{\alpha -1}\log (\sum _{i} p(i)^{\alpha } q(i)^{1-\alpha }).\end{gathered}$$
 
 *Formalization.* `D5/S3/RenyiDivergence/Basic.renyiDivergence` (`✓ std3`).
 
