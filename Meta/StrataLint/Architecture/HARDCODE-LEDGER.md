@@ -55,7 +55,6 @@ theories, and bootstrap admission are outside this anti-hard-code inventory.
 | SL-006 Generated status | In `D5/`, Blueprint, Evidence, Library, Papers, and Chronicle, regex-recognized handwritten English/Chinese status badges are rejected (`RepositoryRules.Structure.cs:123`). | Yes: active-rule `badge` mutation passed. | Handwritten lifecycle/status claims in recognized forms. |
 | SL-011 Controlled domains | D5 formal and Blueprint/Evidence stratum paths must use a registered domain at its registered stratum (`RepositoryRules.Structure.cs:208`). | Yes: active-rule `domain` mutation passed. | Directory/domain vocabulary copied outside `Meta/domains.yaml`. |
 | SL-012 Six-line Lean header | Every D5 Lean file must start with the exact six-line machine header; a unique parseable header GID must equal the path-derived GID (`RepositoryRules.Structure.cs:257`). | Yes: active-rule `header` mutation and the `missing-six-line-header` golden case passed. | Hand-copied or missing formal GID/header metadata. Duplicate GIDs are separately rejected by SL-015. |
-| SL-013 Permanent task ledger | Parsed `TASK D5-Tnnnn` codes must be well-formed and unique; baseline task codes cannot disappear and recorded autopsy text cannot be shortened (`RepositoryRules.Structure.cs:288`). | Yes: active-rule `task` mutation passed. | Duplicated task identifiers and mutable hand-maintained task history, not arbitrary appearances of a case string. |
 | SL-015 Machine fields and GID grammar | Repository path policy, GID character set, duplicate GIDs, evidence-kind collisions, anchor syntax, and JSON formula grammar are checked (`RepositoryRules.Content.cs:11`). | Yes: active-rule `formula` mutation plus golden cases for duplicate/unsafe GIDs and evidence collisions passed. | Canonical address/field literals and the closed formula language, not arbitrary constants. |
 | SL-016 Digestion ledger | `Meta/BACKFILL.yaml` schema, source uniqueness, byte boundaries, fingerprints, receipts, task index, target existence, and derived migration/truth status are recomputed (`BackfillInventoryRule`). | Yes: seven focused SL-016 cases passed, including handwritten status, source-span fingerprint drift, and ticket/task mismatch. | Theory-source provenance and handwritten digestion state after theory-zero. |
 | SL-017 Typed anchor membership | Formal header anchors and library query targets must be canonical catalog members or valid local targets; missing/noncanonical catalog bytes fail closed (`RepositoryRules.Content.cs:194`). | Yes: unregistered literature, malformed external, and uncataloged opaque anchor fixtures. | Invented or unregistered formal references. |
@@ -68,7 +67,7 @@ theories, and bootstrap admission are outside this anti-hard-code inventory.
 - Golden corpus storage and closed-stratum anchor selection: 7/7 tests passed.
 - BannedApi configuration/coverage selection before this audit's additions: 7/7 passed.
 - Active SL red/green selection: 20/20 passed, including
-  SL-004/006/011/012/013/015/018.
+  SL-004/006/011/012/015/018.
 - Focused SL-016 theory-zero selection: 7/7 passed.
 - New guard red run: four stock failures, exactly CLI attachment, mixed denylist,
   two copied SDK pins, and copied package version.

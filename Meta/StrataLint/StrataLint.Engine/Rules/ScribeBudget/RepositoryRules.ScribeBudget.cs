@@ -4,6 +4,8 @@ namespace StrataLint.Engine;
 
 internal static partial class RepositoryRules
 {
+    private const string BlueprintPrefix = "Blueprint/";
+
     private static ImmutableArray<RuleFinding> ScribeLegacyConstructorBudget(RuleEvaluationContext context)
     {
         var paths = context.Changes.Paths
@@ -26,4 +28,8 @@ internal static partial class RepositoryRules
         }
         return findings.ToImmutable();
     }
+
+    private static bool IsBlueprintPath(string path, string suffix) =>
+        path.StartsWith(BlueprintPrefix, StringComparison.Ordinal)
+        && path.EndsWith(suffix, StringComparison.Ordinal);
 }

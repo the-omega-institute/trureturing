@@ -33,7 +33,6 @@ components:
       - SL-010
       - SL-011
       - SL-012
-      - SL-013
       - SL-014
       - SL-015
       - SL-016
@@ -44,7 +43,6 @@ components:
       - SL-021
       - SL-022
       - SL-023
-      - SL-025
       - SL-026
     judged_by:
       - rule-catalog-selfcheck

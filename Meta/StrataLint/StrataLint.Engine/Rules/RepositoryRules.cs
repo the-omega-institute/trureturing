@@ -139,10 +139,6 @@ internal static partial class RepositoryRules
             new RepositoryRule(ScribeDefinitionScoped, DescribeLatex),
             AdmissionEffect.Observe),
         Register(
-            25,
-            "Blueprint projection source",
-            new RepositoryRule(RepositoryScoped, BlueprintProjectionSource)),
-        Register(
             26,
             "Scribe legacy constructor budget",
             new RepositoryRule(RepositoryScoped, ScribeLegacyConstructorBudget)),

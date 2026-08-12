@@ -155,23 +155,23 @@ public sealed class TrustTopologyTests
     {
         var descriptors = RuleCatalog.Default.Descriptors;
 
-        Assert.Equal(25, descriptors.Length);
-        Assert.Equal(25, descriptors.Select(item => item.Id).Distinct().Count());
+        Assert.Equal(23, descriptors.Length);
+        Assert.Equal(23, descriptors.Select(item => item.Id).Distinct().Count());
         Assert.Equal(
-            Enumerable.Range(1, 23).Select(RuleId.CreateKnown)
-                .Append(RuleId.CreateKnown(25)).Append(RuleId.CreateKnown(26)),
+            Enumerable.Range(1, 12).Concat(Enumerable.Range(14, 10))
+                .Select(RuleId.CreateKnown).Append(RuleId.CreateKnown(26)),
             descriptors.Select(item => item.Id));
         Assert.Equal(
             AdmissionEffect.HumanGate,
-            descriptors.Single(item => item.Id.Value == "SL-022").AdmissionEffect);
+            Assert.Single(descriptors, item => item.Id == RuleId.CreateKnown(22)).AdmissionEffect);
         Assert.All(
             descriptors.Where(item => item.Id.Value is not ("SL-007" or "SL-009" or "SL-014" or "SL-022" or "SL-023")),
             item => Assert.Equal(AdmissionEffect.Block, item.AdmissionEffect));
         Assert.Equal(
             AdmissionEffect.Observe,
-            descriptors.Single(item => item.Id.Value == "SL-023").AdmissionEffect);
+            Assert.Single(descriptors, item => item.Id == RuleId.CreateKnown(23)).AdmissionEffect);
         Assert.All(
-            descriptors.Where(item => item.Id.Value is "SL-007" or "SL-009" or "SL-013" or "SL-014"),
+            descriptors.Where(item => item.Id.Value is "SL-007" or "SL-009" or "SL-014"),
             item => Assert.Equal(RuleLifecycle.Deferred, item.Lifecycle));
     }
 

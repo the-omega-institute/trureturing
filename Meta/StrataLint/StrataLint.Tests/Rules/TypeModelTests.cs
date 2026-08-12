@@ -61,20 +61,24 @@ public sealed class TypeModelTests
     [Fact]
     public void RuleAndCaseIdsAreClosedByGrammar()
     {
+        Assert.False(RuleId.TryCreate("SL-013", out _));
         Assert.True(RuleId.TryCreate("SL-022", out _));
         Assert.True(RuleId.TryCreate("SL-023", out _));
         Assert.False(RuleId.TryCreate("SL-024", out _));
-        Assert.True(RuleId.TryCreate("SL-025", out _));
+        Assert.False(RuleId.TryCreate("SL-025", out _));
         Assert.True(CaseId.TryCreate("D5-T0016", out _));
     }
 
     [Theory]
+    [InlineData(12, true)]
+    [InlineData(13, false)]
+    [InlineData(14, true)]
     [InlineData(23, true)]
     [InlineData(24, false)]
-    [InlineData(25, true)]
+    [InlineData(25, false)]
     [InlineData(26, true)]
     [InlineData(27, false)]
-    public void RuleIdKnownDomainPreservesTheIntentionalGapAndUpperBoundary(
+    public void RuleIdKnownDomainPreservesRetiredGapsAndUpperBoundary(
         int number,
         bool expected)
     {

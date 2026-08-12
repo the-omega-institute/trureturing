@@ -121,10 +121,8 @@ public static class BootstrapGate
                 nameof(changeSet));
         }
 
-        // 按 Id 查,不按位置。位置会随目录里任何一条规则的增删而位移,
-        // 而这个 descriptor 必须始终是 SL-022 本身。
-        var descriptor = RuleCatalog.Default.Descriptors
-            .Single(item => item.Id.Value == "SL-022");
+        var descriptor = RuleCatalog.Default.Descriptors.Single(
+            static item => item.Id == RuleId.CreateKnown(22));
         return changeSet.Paths
             .OrderBy(static path => path.Value, StringComparer.Ordinal)
             .Select(path => new Diagnostic(
