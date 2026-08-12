@@ -6,51 +6,49 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Observer;
 
 internal sealed class StateNotPathDocument : IScribeDocumentDefinition
 {
-    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
-        Header(
-            "D5/S3/Observer/StateNotPath",
-            "Classical diagonal iteration and a one-step Hadamard witness separate coherence reachability."),
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "Classical diagonal iteration and a one-step Hadamard witness separate coherence reachability.",
         H("Classical and Quantum Coherence Reachability"),
         Blocks(
-            DocumentBlock.Describe.Theorem(
+            Describe.Lean(
                 DescribeId.Create("classical-diagonal-iterations-preserve-zero-coherence"),
+                DeclarationHandle.Create("D5/S3/Observer/StateNotPath.classical_diagonal_iterates_off_diag_eq_zero"),
                 H("Classical diagonal iterations preserve zero coherence"),
-                LeanTheorem(
-                    "D5/S3/Observer/StateNotPath.classical_diagonal_iterates_off_diag_eq_zero"),
-                ClassicalIterationFormula(),
-                DescribeProvenance.RepoDerived(),
+                StatementSource.FromAuthor(ClassicalIterationFormula()),
+                AssessedProvenance.FromRepo(),
                 Blocks(
-                    Paragraph(Text(
-                        "For a qubit matrix rho, offDiag(rho) is the ordered pair of entries " +
-                        "rho(0,1) and rho(1,0). The classical diagonal channel at a real " +
-                        "retention coefficient c in [0,1] is the existing phase-damping map: " +
-                        "it preserves diagonal entries and scales each off-diagonal entry by c.")),
-                    Paragraph(Text(
-                        "If offDiag(rho) is zero, induction over the standard finite function " +
-                        "iterate shows that every later off-diagonal pair is zero. The statement " +
-                        "quantifies over every coefficient, every finite iteration count, and " +
-                        "every diagonal initial qubit matrix; no positivity or normalization " +
-                        "premise is needed.")))
+                                    Paragraph(Text(
+                                        "For a qubit matrix rho, offDiag(rho) is the ordered pair of entries " +
+                                        "rho(0,1) and rho(1,0). The classical diagonal channel at a real " +
+                                        "retention coefficient c in [0,1] is the existing phase-damping map: " +
+                                        "it preserves diagonal entries and scales each off-diagonal entry by c.")),
+                                    Paragraph(Text(
+                                        "If offDiag(rho) is zero, induction over the standard finite function " +
+                                        "iterate shows that every later off-diagonal pair is zero. The statement " +
+                                        "quantifies over every coefficient, every finite iteration count, and " +
+                                        "every diagonal initial qubit matrix; no positivity or normalization " +
+                                        "premise is needed."))),
+                DescribeRole.Theorem
             ),
-            DocumentBlock.Describe.Theorem(
+            Describe.Lean(
                 DescribeId.Create("one-hadamard-step-creates-exact-coherence"),
+                DeclarationHandle.Create("D5/S3/Observer/StateNotPath.hadamard_basis_zero_off_diag_certificate"),
                 H("One Hadamard step creates exact coherence"),
-                LeanTheorem(
-                    "D5/S3/Observer/StateNotPath.hadamard_basis_zero_off_diag_certificate"),
-                HadamardWitnessFormula(),
-                DescribeProvenance.RepoDerived(),
+                StatementSource.FromAuthor(HadamardWitnessFormula()),
+                AssessedProvenance.FromRepo(),
                 Blocks(
-                    Paragraph(Text(
-                        "The computational basis density matrix has entries 1, 0, 0, 0 and " +
-                        "therefore starts with zero coherence. Applying the existing normalized " +
-                        "Hadamard coordinate conjugation once gives both off-diagonal entries " +
-                        "exactly one half. Hence its offDiag pair is (1/2, 1/2), which is " +
-                        "algebraically nonzero.")),
-                    Paragraph(Text(
-                        "Together, the universal classical preservation theorem and this explicit " +
-                        "one-step witness distinguish the two reachability mechanisms. The result " +
-                        "is solely a finite two-by-two matrix certificate and introduces no new " +
-                        "probability law or measurement premise.")))
+                                    Paragraph(Text(
+                                        "The computational basis density matrix has entries 1, 0, 0, 0 and " +
+                                        "therefore starts with zero coherence. Applying the existing normalized " +
+                                        "Hadamard coordinate conjugation once gives both off-diagonal entries " +
+                                        "exactly one half. Hence its offDiag pair is (1/2, 1/2), which is " +
+                                        "algebraically nonzero.")),
+                                    Paragraph(Text(
+                                        "Together, the universal classical preservation theorem and this explicit " +
+                                        "one-step witness distinguish the two reachability mechanisms. The result " +
+                                        "is solely a finite two-by-two matrix certificate and introduces no new " +
+                                        "probability law or measurement premise."))),
+                DescribeRole.Theorem
             ))));
 
     private static Formula ClassicalIterationFormula() => Disp(Seq(

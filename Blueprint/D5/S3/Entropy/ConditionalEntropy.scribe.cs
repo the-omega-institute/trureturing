@@ -6,26 +6,8 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Entropy;
 
 internal sealed class ConditionalEntropyDocument : IScribeDocumentDefinition
 {
-    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
-        Header(
-            "D5/S3/Entropy/ConditionalEntropy",
-            "Finite conditional entropy in nats is the marginal-weighted entropy of conditional slices and satisfies the entropy chain rule."),
-        H("Conditional Entropy and Its Chain Rule"),
-        Blocks(
-            DocumentBlock.Describe.Definition(
-                DescribeId.Create("conditional-entropy-is-marginal-weighted-slice-entropy"),
-                H("Conditional entropy is marginal-weighted slice entropy"),
-                LeanDefinition(
-                    "D5/S3/Entropy/ConditionalEntropy.conditionalEntropy"),
-                DescribeProvenance.RepoDerived(),
-                Blocks(
-                    Paragraph(Text(
-                        "The definitions of marginal and conditional come from " +
-                        "D5/S3/Divergence/ChainRule; conditionalEntropy is the only new " +
-                        "definition here. It is introduced because the chain rule and queued " +
-                        "conditional results all consume it, not speculatively. The units are " +
-                        "nats because shannonEntropy uses Real.log."))),
-                Disp(Seq(
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create("Finite conditional entropy in nats is the marginal-weighted entropy of conditional slices and satisfies the entropy chain rule.", H("Conditional Entropy and Its Chain Rule"), Blocks(
+            Describe.Lean(DescribeId.Create("conditional-entropy-is-marginal-weighted-slice-entropy"), DeclarationHandle.Create("D5/S3/Entropy/ConditionalEntropy.conditionalEntropy"), H("Conditional entropy is marginal-weighted slice entropy"), StatementSource.FromAuthor(Disp(Seq(
                     Begin, Grp(F.Id("gathered")),
                     Forall, Sp, Iota, Comma, Sp, Kappa, Esc,
                     OpenBracket,
@@ -45,14 +27,14 @@ internal sealed class ConditionalEntropyDocument : IScribeDocumentDefinition
                     Operatorname, Grp(F.Id("conditional")), Open,
                     F.Id("p"), Comma, F.Id("i"), Close,
                     Close, Dot,
-                    End, Grp(F.Id("gathered"))))
-            ),
-            DocumentBlock.Describe.Theorem(
-                DescribeId.Create("joint-entropy-obeys-the-chain-rule"),
-                H("Joint entropy obeys the chain rule"),
-                LeanTheorem(
-                    "D5/S3/Entropy/ConditionalEntropy.entropy_chain_rule"),
-                Disp(Seq(
+                    End, Grp(F.Id("gathered"))))), AssessedProvenance.FromRepo(), Blocks(
+                    Paragraph(Text(
+                        "The definitions of marginal and conditional come from " +
+                        "D5/S3/Divergence/ChainRule; conditionalEntropy is the only new " +
+                        "definition here. It is introduced because the chain rule and queued " +
+                        "conditional results all consume it, not speculatively. The units are " +
+                        "nats because shannonEntropy uses Real.log."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("joint-entropy-obeys-the-chain-rule"), DeclarationHandle.Create("D5/S3/Entropy/ConditionalEntropy.entropy_chain_rule"), H("Joint entropy obeys the chain rule"), StatementSource.FromAuthor(Disp(Seq(
                     Begin, Grp(F.Id("gathered")),
                     Forall, Sp, Iota, Comma, Sp, Kappa, Esc,
                     OpenBracket,
@@ -74,9 +56,7 @@ internal sealed class ConditionalEntropyDocument : IScribeDocumentDefinition
                     Close, Plus,
                     Operatorname, Grp(F.Id("conditionalEntropy")), Open, F.Id("p"), Close,
                     Dot,
-                    End, Grp(F.Id("gathered")))),
-                DescribeProvenance.RepoDerived(),
-                Blocks(
+                    End, Grp(F.Id("gathered"))))), AssessedProvenance.FromRepo(), Blocks(
                     Paragraph(Text(
                         "The joint entropy splits into the marginal entropy plus the " +
                         "marginal-weighted average of the conditional slice entropies. This is " +
@@ -102,7 +82,7 @@ internal sealed class ConditionalEntropyDocument : IScribeDocumentDefinition
                         "This module proves no conditioning bound: the statement that " +
                         "conditioning cannot increase entropy is not proved here. It proves no " +
                         "conditional mutual information, no equality condition, and nothing " +
-                        "beyond two coordinates.")))))));
+                        "beyond two coordinates."))), DescribeRole.Theorem))));
 
     private static LeanDeclarationRef LeanDefinition(string value) =>
         LeanDeclarationRef.Create(

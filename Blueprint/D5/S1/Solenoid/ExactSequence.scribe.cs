@@ -7,24 +7,20 @@ namespace StrataLint.Scribe.Blueprint.D5.S1.Solenoid;
 internal sealed class ExactSequenceDocument : IScribeDocumentDefinition
 {
     public DocumentDefinition Create() =>
-        DocumentDefinition.Create(ScribeDocument.Create(
-            Header(
-                "D5/S1/Solenoid/ExactSequence",
-                "Compatible congruence data form exactly the kernel of the solenoid phase projection."),
-            H("The Solenoid Exact Sequence"),
-            Blocks(
-                DocumentBlock.Describe.Theorem(
+        DocumentDefinition.Create(ScribeNode.Create("Compatible congruence data form exactly the kernel of the solenoid phase projection.",
+H("The Solenoid Exact Sequence"),
+Blocks(
+                Describe.Lean(
                     DescribeId.Create("compatible-congruence-data-form-the-projection-kernel"),
-                    H("Congruence data are exactly the invisible fiber"),
-                    LeanTheorem(
-                        "D5/S1/Solenoid/ExactSequence."
+                    DeclarationHandle.Create("D5/S1/Solenoid/ExactSequence."
                         + "congruence_solenoid_short_exact"),
-                    Disp(Seq(
+                    H("Congruence data are exactly the invisible fiber"),
+                    StatementSource.FromAuthor(Disp(Seq(
                         D(0), Sp, To, Sp, F.Id("CongruenceData"), Sp, To, Sp,
                         F.Id("UniversalSolenoid"), Sp, To, Sp,
                         F.Id("UnitAddCircle"), Sp, To, Sp, D(0), Comma, Sp,
-                        Operatorname, Grp(F.Id("exact")))),
-                    DescribeProvenance.RepoDerived(),
+                        Operatorname, Grp(F.Id("exact"))))),
+                    AssessedProvenance.FromRepo(),
                     Blocks(
                         Paragraph(Text(
                             "A compatible residue at each positive modulus enters the corresponding "
@@ -42,9 +38,9 @@ internal sealed class ExactSequenceDocument : IScribeDocumentDefinition
                             + "profinite-kernel exact sequence. This result is a new assembly from those "
                             + "library primitives rather than a thin wrapper. The source atom explicitly "
                             + "leaves its topological duality layer open; this theorem claims only the "
-                            + "element-level exact sequence.")))
-                )),
-            [
+                            + "element-level exact sequence."))),
+                    DescribeRole.Theorem)),
+[
                 DocumentEdge.Dependency.Create(
                     GidRef.Create("D5/S1/Dynamics/UniversalSolenoid")),
             ]));

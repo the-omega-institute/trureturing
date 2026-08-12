@@ -10,26 +10,23 @@ internal sealed class SyntaxSemanticsBoundaryDocument : IScribeDocumentDefinitio
         LibraryNoteRef.Create("D5/L/Diagonal/lawvere1969diagonal");
 
     public DocumentDefinition Create() =>
-        DocumentDefinition.Create(ScribeDocument.Create(
-            Header(
-                "D5/S0/Computability/SyntaxSemanticsBoundary",
-                "No same-level code type enumerates all predicates on itself."),
+        DocumentDefinition.Create(ScribeNode.Create(
+            "No same-level code type enumerates all predicates on itself.",
             H("The Syntax-Semantics Boundary"),
             Blocks(
-                DocumentBlock.Describe.Theorem(
+                Describe.Lean(
                     DescribeId.Create("same-layer-predicates-are-not-enumerable"),
+                    DeclarationHandle.Create("D5/S0/Computability/SyntaxSemanticsBoundary.same_layer_predicates_not_enumerable"),
                     H("Same-level syntax cannot enumerate full predicate semantics"),
-                    LeanTheorem(
-                        "D5/S0/Computability/SyntaxSemanticsBoundary.same_layer_predicates_not_enumerable"),
-                    Disp(Seq(
+                    StatementSource.FromAuthor(Disp(Seq(
                         Forall, Sp, F.Id("Code"), Comma, Sp,
                         Forall, Sp, F.Id("semantics"), Colon, Sp,
                         F.Id("Code"), To, Sp,
                         Operatorname, Grp(F.Id("Set")), Open, F.Id("Code"), Close,
                         Comma, Sp, Neg,
                         Operatorname, Grp(F.Id("Surjective")),
-                        Open, F.Id("semantics"), Close, Dot)),
-                    DescribeProvenance.LiteratureAttested(Lawvere),
+                        Open, F.Id("semantics"), Close, Dot))),
+                    AssessedProvenance.FromLiterature(Lawvere),
                     Blocks(
                         Paragraph(Text(
                             "Take any type of codes and any proposed interpretation that "
@@ -54,6 +51,6 @@ internal sealed class SyntaxSemanticsBoundaryDocument : IScribeDocumentDefinitio
                             + "A repository search found computability-restricted closure "
                             + "results and finite diagonal escape results, but no existing "
                             + "formal declaration of this unrestricted predicate-enumeration "
-                            + "boundary.")))
-                ))));
+                            + "boundary."))),
+                    DescribeRole.Theorem))));
 }

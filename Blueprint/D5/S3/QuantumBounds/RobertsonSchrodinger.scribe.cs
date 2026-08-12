@@ -9,20 +9,8 @@ internal sealed class RobertsonSchrodingerDocument : IScribeDocumentDefinition
     private static readonly LibraryNoteRef Robertson =
         LibraryNoteRef.Create("D5/L/Quantum/robertson1929uncertainty");
 
-    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
-        Header(
-            "D5/S3/QuantumBounds/RobertsonSchrodinger",
-            "Centered vectors satisfy an exact Robertson-Schrodinger identity with a nonnegative Gram remainder."),
-        H("Robertson-Schrodinger Identity"),
-        Blocks(
-            DocumentBlock.Describe.Theorem(
-                DescribeId.Create("centered-vectors-satisfy-the-robertson-schrodinger-identity"),
-                H("Centered vectors satisfy the Robertson-Schrodinger identity"),
-                LeanTheorem(
-                    "D5/S3/QuantumBounds/RobertsonSchrodinger.robertson_schrodinger"),
-                RobertsonSchrodingerFormula(),
-                DescribeProvenance.LiteratureAttested(Robertson),
-                Blocks(
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create("Centered vectors satisfy an exact Robertson-Schrodinger identity with a nonnegative Gram remainder.", H("Robertson-Schrodinger Identity"), Blocks(
+            Describe.Lean(DescribeId.Create("centered-vectors-satisfy-the-robertson-schrodinger-identity"), DeclarationHandle.Create("D5/S3/QuantumBounds/RobertsonSchrodinger.robertson_schrodinger"), H("Centered vectors satisfy the Robertson-Schrodinger identity"), StatementSource.FromAuthor(RobertsonSchrodingerFormula()), AssessedProvenance.FromLiterature(Robertson), Blocks(
                     Paragraph(Text(
                         "The parent declaration `gram_wedge_identity` applies to arbitrary vectors "
                         + "u and v in any normed additive commutative group with a complex "
@@ -45,8 +33,7 @@ internal sealed class RobertsonSchrodingerDocument : IScribeDocumentDefinition
                         + "discarding G recovers the strengthened lower bound, and discarding both "
                         + "G and the covariance contribution recovers the weaker bound. No "
                         + "finite-dimensional, completeness, spectral, or unbounded-operator domain "
-                        + "theory is asserted.")))
-            ))));
+                        + "theory is asserted."))), DescribeRole.Theorem))));
 
     private static Formula RobertsonSchrodingerFormula() => Disp(Seq(
         Begin, Grp(F.Id("gathered")), Sp,

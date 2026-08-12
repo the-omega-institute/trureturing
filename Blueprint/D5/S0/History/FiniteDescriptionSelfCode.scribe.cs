@@ -6,21 +6,18 @@ namespace StrataLint.Scribe.Blueprint.D5.S0.History;
 
 internal sealed class FiniteDescriptionSelfCodeDocument : IScribeDocumentDefinition
 {
-    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
-        Header(
-            "D5/S0/History/FiniteDescriptionSelfCode",
-            "Finite descriptions correspond exactly to their natural-number self-codes."),
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "Finite descriptions correspond exactly to their natural-number self-codes.",
         H("Finite Description Self-Codes"),
         Blocks(
-            DocumentBlock.Describe.Theorem(
+            Describe.Lean(
                 DescribeId.Create("finite-descriptions-have-lossless-self-codes"),
+                DeclarationHandle.Create("D5/S0/History/FiniteDescriptionSelfCode.finite_description_self_encoding_bijective"),
                 H("Finite descriptions have lossless self-codes"),
-                LeanTheorem(
-                    "D5/S0/History/FiniteDescriptionSelfCode.finite_description_self_encoding_bijective"),
-                Disp(Seq(
+                StatementSource.FromAuthor(Disp(Seq(
                     Operatorname, Grp(F.Id("Bijective")), Open,
-                    Operatorname, Grp(F.Id("selfEncoding")), Close)),
-                DescribeProvenance.RepoDerived(),
+                    Operatorname, Grp(F.Id("selfEncoding")), Close))),
+                AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "A finite low-level description is represented by a finite bit string. " +
                     "Its code space is not all natural numbers by assertion, but the subtype " +
@@ -38,6 +35,6 @@ internal sealed class FiniteDescriptionSelfCodeDocument : IScribeDocumentDefinit
                         "honest wrapper rather than a second encoding proof. Searches for " +
                         "finiteDescriptionSelfCode, kernelSelfCode, and selfEncoding found no " +
                         "dedicated upstream theorem. The source atom is structural and carries " +
-                        "no numerical certificate.")))
-            ))));
+                        "no numerical certificate."))),
+                DescribeRole.Theorem))));
 }

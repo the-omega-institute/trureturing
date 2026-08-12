@@ -6,10 +6,8 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Observer;
 
 internal sealed class MeasurementMarginalDocument : IScribeDocumentDefinition
 {
-    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
-        Header(
-            "D5/S3/Observer/MeasurementMarginal",
-            "A copied address record makes the traced system marginal off-diagonal-free."),
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "A copied address record makes the traced system marginal off-diagonal-free.",
         H("Copied-Record Measurement Marginals"),
         Blocks(
             Paragraph(Text(
@@ -28,31 +26,31 @@ internal sealed class MeasurementMarginalDocument : IScribeDocumentDefinition
                 + "factors, a subsystem partial trace, and an explicit erasure operation. Those generic "
                 + "quantum constructions are deferred to an environment-infrastructure round rather than "
                 + "postulated in this Observer module.")),
-            DocumentBlock.Describe.Theorem(
+            Describe.Lean(
                 DescribeId.Create("copied-record-marginal-is-the-address-block-sum"),
+                DeclarationHandle.Create("D5/S3/Observer/MeasurementMarginal.copied_record_partial_trace_eq_address_blocks"),
                 H("Copied-record marginal is the address-block sum"),
-                LeanTheorem(
-                    "D5/S3/Observer/MeasurementMarginal.copied_record_partial_trace_eq_address_blocks"),
-                CopiedMarginalFormula(),
-                DescribeProvenance.RepoDerived(),
+                StatementSource.FromAuthor(CopiedMarginalFormula()),
+                AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
-                    "The copiedAddressRecord is the delta record that writes system address i into the "
-                    + "matching environment address. Its Gram overlaps are one on equal addresses and zero "
-                    + "otherwise. The retained system marginal is therefore the sum of P_a rho P_a over "
-                    + "the two address projectors. The formula is stated directly so Conditioning remains "
-                    + "the sole owner of the unread-state definition.")))
+                                    "The copiedAddressRecord is the delta record that writes system address i into the "
+                                    + "matching environment address. Its Gram overlaps are one on equal addresses and zero "
+                                    + "otherwise. The retained system marginal is therefore the sum of P_a rho P_a over "
+                                    + "the two address projectors. The formula is stated directly so Conditioning remains "
+                                    + "the sole owner of the unread-state definition."))),
+                DescribeRole.Theorem
             ),
-            DocumentBlock.Describe.Theorem(
+            Describe.Lean(
                 DescribeId.Create("one-copied-address-record-has-zero-off-diagonal-marginal"),
+                DeclarationHandle.Create("D5/S3/Observer/MeasurementMarginal.copied_record_partial_trace_offDiagonal_eq_zero"),
                 H("One copied address record has zero off-diagonal marginal"),
-                LeanTheorem(
-                    "D5/S3/Observer/MeasurementMarginal.copied_record_partial_trace_offDiagonal_eq_zero"),
-                CopiedOffDiagonalFormula(),
-                DescribeProvenance.RepoDerived(),
+                StatementSource.FromAuthor(CopiedOffDiagonalFormula()),
+                AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
-                    "The theorem starts with the explicit controlledRecordJointState for the delta record "
-                    + "and applies traceEnvironment. The derived address-block identity leaves only diagonal "
-                    + "system entries, so every entry with i distinct from j is zero.")))
+                                    "The theorem starts with the explicit controlledRecordJointState for the delta record "
+                                    + "and applies traceEnvironment. The derived address-block identity leaves only diagonal "
+                                    + "system entries, so every entry with i distinct from j is zero."))),
+                DescribeRole.Theorem
             ))));
 
     private static Formula CopiedMarginalFormula() => Disp(Seq(

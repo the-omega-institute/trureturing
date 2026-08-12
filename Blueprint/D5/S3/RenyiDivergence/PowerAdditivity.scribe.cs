@@ -6,18 +6,14 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.RenyiDivergence;
 
 internal sealed class PowerAdditivityDocument : IScribeDocumentDefinition
 {
-    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
-        Header(
-            "D5/S3/RenyiDivergence/PowerAdditivity",
-            "Repeating a finite nonnegative experiment n times multiplies its Renyi divergence exactly by n at every real order, without normalization."),
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create("Repeating a finite nonnegative experiment n times multiplies its Renyi divergence exactly by n at every real order, without normalization.",
         H("Power Additivity of Finite Renyi Divergence"),
         Blocks(
-            DocumentBlock.Describe.Theorem(
+            Describe.Lean(
                 DescribeId.Create("finite-renyi-divergence-is-additive-on-iid-powers"),
+                DeclarationHandle.Create("D5/S3/RenyiDivergence/PowerAdditivity.renyi_divergence_power_additive"),
                 H("Finite Renyi divergence is additive on i.i.d. powers"),
-                LeanTheorem(
-                    "D5/S3/RenyiDivergence/PowerAdditivity.renyi_divergence_power_additive"),
-                Disp(Seq(
+                StatementSource.FromAuthor(Disp(Seq(
                     Begin, Grp(F.Id("gathered")),
                     Forall, Sp, Iota, Esc,
                     OpenBracket,
@@ -46,8 +42,8 @@ internal sealed class PowerAdditivityDocument : IScribeDocumentDefinition
                     F.Id("n"), Sp, Cdot, Sp,
                     F.Id("D"), Underscore, Grp(Alpha, Sp), Open,
                     F.Id("p"), Vert, Sp, Vert, Sp, F.Id("q"), Close, Dot,
-                    End, Grp(F.Id("gathered")))),
-                DescribeProvenance.RepoDerived(),
+                    End, Grp(F.Id("gathered"))))),
+                AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
                         "Repeating an experiment n times multiplies its Renyi divergence by " +
@@ -95,5 +91,6 @@ internal sealed class PowerAdditivityDocument : IScribeDocumentDefinition
                         "No sample-complexity corollary, order-one limit, measure-theoretic " +
                         "analogue, or theorem for non-identical factors is claimed. Products of " +
                         "non-identical factors remain the territory of the frozen binary " +
-                        "additivity theorem.")))))));
+                        "additivity theorem."))),
+                DescribeRole.Theorem))));
 }

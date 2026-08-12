@@ -6,18 +6,15 @@ namespace StrataLint.Scribe.Blueprint.D5.S0.History;
 
 internal sealed class EmptyLedgerConservationDocument : IScribeDocumentDefinition
 {
-    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
-        Header(
-            "D5/S0/History/EmptyLedgerConservation",
-            "Complete detection discipline makes an empty open ledger exclude detectable residuals."),
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "Complete detection discipline makes an empty open ledger exclude detectable residuals.",
         H("Empty Ledger Conservation"),
         Blocks(
-            DocumentBlock.Describe.Theorem(
+            Describe.Lean(
                 DescribeId.Create("empty-ledger-excludes-detectable-residuals"),
+                DeclarationHandle.Create("D5/S0/History/EmptyLedgerConservation.empty_ledger_excludes_detectable_residual"),
                 H("An empty open ledger excludes detectable residuals"),
-                LeanTheorem(
-                    "D5/S0/History/EmptyLedgerConservation.empty_ledger_excludes_detectable_residual"),
-                Disp(Seq(
+                StatementSource.FromAuthor(Disp(Seq(
                     Open,
                     Forall, Sp, F.Id("x"), Comma, F.Id("r"), Comma, Esc,
                     Operatorname, Grp(F.Id("detectable")), Open, F.Id("x"), Comma,
@@ -27,8 +24,8 @@ internal sealed class EmptyLedgerConservationDocument : IScribeDocumentDefinitio
                     Operatorname, Grp(F.Id("OpenLedger")), Open, F.Id("x"), Close,
                     Eq, Emptyset, Rightarrow, Sp, Neg, Exists, Sp, F.Id("r"), Comma,
                     Esc, Operatorname, Grp(F.Id("detectable")), Open, F.Id("x"),
-                    Comma, F.Id("r"), Close)),
-                DescribeProvenance.RepoDerived(),
+                    Comma, F.Id("r"), Close))),
+                AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
                         "Detection discipline requires every residual that can be detected "
@@ -44,6 +41,6 @@ internal sealed class EmptyLedgerConservationDocument : IScribeDocumentDefinitio
                         + "hypothesis into pointwise non-membership, while discipline turns "
                         + "a hypothetical detectable residual into the forbidden membership. "
                         + "No separate ledger implementation or detection algorithm is "
-                        + "introduced.")))
-            ))));
+                        + "introduced."))),
+                DescribeRole.Theorem))));
 }

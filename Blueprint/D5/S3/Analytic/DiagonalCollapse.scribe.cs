@@ -17,19 +17,17 @@ internal sealed class DiagonalCollapseDocument : IScribeDocumentDefinition
                 D(1), Minus, Operatorname, Grp(F.Id("exp")),
                 Open, Minus, Sqrt, Grp(D(5)), F.Id("x"), Close)));
 
-        return DocumentDefinition.Create(ScribeDocument.Create(
-            Header(
-                "D5/S3/Analytic/DiagonalCollapse",
-                "The two-face generating function collapses on the diagonal to a geometric series."),
+        return DocumentDefinition.Create(ScribeNode.Create(
+            "The two-face generating function collapses on the diagonal to a geometric series.",
             H("Diagonal Collapse of the Two-Face Generating Function"),
             Blocks(
-                DocumentBlock.Describe.Theorem(
+                Describe.Lean(
                     DescribeId.Create("the-diagonal-partition-is-a-geometric-series"),
-                    H("The diagonal partition is a geometric series"),
-                    LeanTheorem(
+                    DeclarationHandle.Create(
                         "D5/S3/Analytic/DiagonalCollapse.diagonal_partition_collapse"),
-                    statement,
-                    DescribeProvenance.RepoDerived(),
+                    H("The diagonal partition is a geometric series"),
+                    StatementSource.FromAuthor(statement),
+                    AssessedProvenance.FromRepo(),
                     Blocks(
                         Paragraph(Text(
                             "For every positive real diagonal parameter, sum the two-face "
@@ -47,7 +45,7 @@ internal sealed class DiagonalCollapseDocument : IScribeDocumentDefinition
                             + "diagonal identity. The proof is therefore a new composition of "
                             + "library results rather than a wrapper around an existing combined "
                             + "theorem. The numerical window check reported with the source atom is "
-                            + "not needed because the deposited equality is exact.")))
-                ))));
+                            + "not needed because the deposited equality is exact."))),
+                    DescribeRole.Theorem))));
     }
 }

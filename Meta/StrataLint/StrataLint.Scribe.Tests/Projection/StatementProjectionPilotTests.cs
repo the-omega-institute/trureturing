@@ -239,10 +239,24 @@ public sealed class StatementProjectionPilotTests
         var sources = repository.EnumerateFiles(RepositoryRelativePath.Create("Blueprint"), "*.scribe.cs")
             .Select(repository.ReadAllText).ToArray();
 
-        var projected = sources.Sum(source => source.Split(
-            "StatementProjectionFixtureLoader.FromLean(", StringSplitOptions.None).Length - 1);
+        // Projection-derived statements are written two ways while the migration runs:
+        // the legacy loader call, and StatementSource.FromLean() on the report-derived entry.
+        // Both count.
+        var projected = sources.Sum(source =>
+            source.Split("StatementProjectionFixtureLoader.FromLean(", StringSplitOptions.None).Length - 1
+            + source.Split("StatementSource.FromLean()", StringSplitOptions.None).Length - 1);
 
-        Assert.Equal(9, projected);
+        // A floor, not an equality. Within a fixed exclusivity domain the quantity only grows:
+        // an authored statement is illegal wherever the projector can produce one, so migrations
+        // and projector improvements move declarations in and none leave. Correcting the domain
+        // itself does shrink it — that happened once, when non-theorem declarations were judged
+        // unprojectable because the projector projects a declaration's type and a definition's type
+        // is only its signature. The floor is therefore re-derived from the current domain rather
+        // than presented as monotone. The real enforcement is the emit-time exclusivity check,
+        // which is stronger than any count; this test only catches regression.
+        Assert.True(
+            projected >= 7,
+            $"projection-derived statements regressed to {projected}, below the floor of 7");
     }
 
     [LiveReportFact]
@@ -279,6 +293,61 @@ public sealed class StatementProjectionPilotTests
 
         Assert.Throws<InvalidDataException>(() =>
             StatementProjectionReconciliation.Verify(repository.Path, repository.Catalog()));
+    }
+
+    [Fact]
+    public void EveryPinnedFixtureDeclarationCarriesTheoremKind()
+    {
+        using var pilot = LoadPinnedFixture("statement-projection-pilot-v1.json");
+        using var expansion = LoadPinnedFixture("statement-projection-expansion-v1.json");
+
+        // The engineering CI job runs without a raw Lean report and decides projectability from
+        // these files alone. If a non-theorem were pinned here it would be judged projectable
+        // without a report and unprojectable with one, so the same tree would emit two different
+        // documents depending on which machine built it.
+        foreach (var declaration in ReadFixtureDeclarations(pilot, expansion))
+        {
+            Assert.True(
+                declaration.Value.TryGetProperty("kind", out var kind),
+                $"pinned declaration has no kind: {declaration.Key}");
+            Assert.Equal("theorem", kind.GetString());
+        }
+    }
+
+    [LiveReportFact]
+    public void NonTheoremDeclarationsAreUnprojectableWhenTheReportIsAvailable()
+    {
+        var repositoryRoot = RepositoryAccessor
+            .Discover(RepositoryRootCriterion.LakefileInvalidOperation).Root.FullPath;
+
+        // hellingerSq is a def: its type is the signature (ι → ℝ) → (ι → ℝ) → ℝ, and its defining
+        // body never reaches the projector. Projecting it would render the arrows as nested
+        // quantifiers and present that as the definition.
+        var outcome = StatementProjectionFixtureLoader.WithRepositoryRoot(
+            repositoryRoot,
+            () => StatementProjectionFixtureLoader.Project(
+                LeanDeclarationRef.Create("D5/S3/TotalVariation/Hellinger.hellingerSq")));
+
+        var failed = Assert.IsType<ProjectionOutcome.Unprojectable>(outcome);
+        Assert.Equal("non-propositional-declaration", failed.Reason.Split(':', 2)[0]);
+        Assert.Equal("def", failed.Reason.Split(':', 2)[1]);
+    }
+
+    [Fact]
+    public void TheoremDeclarationsRemainProjectable()
+    {
+        var repositoryRoot = RepositoryAccessor
+            .Discover(RepositoryRootCriterion.LakefileInvalidOperation).Root.FullPath;
+
+        // The companion to the test above: narrowing the exclusivity domain to theorems must not
+        // narrow it past theorems. Without this, judging everything unprojectable would pass.
+        // The subject is pinned, so this holds with or without a raw report.
+        var outcome = StatementProjectionFixtureLoader.WithRepositoryRoot(
+            repositoryRoot,
+            () => StatementProjectionFixtureLoader.Project(
+                LeanDeclarationRef.Create("D5/S1/Solenoid/HiddenFiberCompact.hiddenFiber_closed_compact_seqCompact")));
+
+        Assert.IsType<ProjectionOutcome.Projected>(outcome);
     }
 
     private static JsonDocument LoadPinnedFixture(string name) => JsonDocument.Parse(

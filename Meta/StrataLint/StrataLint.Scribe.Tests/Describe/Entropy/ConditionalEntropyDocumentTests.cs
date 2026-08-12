@@ -18,14 +18,14 @@ public sealed class ConditionalEntropyDocumentTests
         Assert.Equal(
             "D5/S3/Entropy/ConditionalEntropy.entropy_chain_rule",
             Assert.IsType<DescribeStatement.LeanDeclaration>(describes[1].Statement).Value.Value);
-        Assert.All(
-            describes,
-            static describe =>
-                Assert.Equal(DescribeProvenanceKind.RepoDerived, describe.Provenance.Kind));
+        Assert.All(describes, static describe =>
+        {
+            DocumentFactAssertions.RepoDerived(describe);
+            DocumentFactAssertions.Declaration(describe, LeanDeclarationKind.Theorem);
+        });
 
         var conditionalEntropy = LatexWriter.WriteStatement(
-            describes[0].StatementFormula
-                ?? throw new Xunit.Sdk.XunitException("Statement formula is required."));
+            Assert.IsType<StatementSource.Authored>(describes[0].StatementSource).Presentation);
         Assert.Equal(
             @"$$\begin{gathered}\forall \iota, \kappa\ [\operatorname{Fintype}(\iota)] " +
             @"[\operatorname{Fintype}(\kappa)],\\\forall p: \iota\times\kappa\to \mathbb{R},\\" +

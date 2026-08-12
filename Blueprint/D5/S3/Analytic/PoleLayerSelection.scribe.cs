@@ -6,18 +6,16 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Analytic;
 
 internal sealed class PoleLayerSelectionDocument : IScribeDocumentDefinition
 {
-    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
-        Header(
-            "D5/S3/Analytic/PoleLayerSelection",
-            "A shifted inverse-power series selects its pole-layer coefficient by index subtraction."),
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "A shifted inverse-power series selects its pole-layer coefficient by index subtraction.",
         H("Pole-Layer Coefficient Selection"),
         Blocks(
-            DocumentBlock.Describe.Theorem(
+            Describe.Lean(
                 DescribeId.Create("shifted-inverse-power-series-selects-the-pole-layer"),
-                H("A fourth-order shift selects the corresponding coefficient layer"),
-                LeanTheorem(
+                DeclarationHandle.Create(
                     "D5/S3/Analytic/PoleLayerSelection.pole_layer_coefficient"),
-                Disp(Seq(
+                H("A fourth-order shift selects the corresponding coefficient layer"),
+                StatementSource.FromAuthor(Disp(Seq(
                     D(4), F.Id("k"), Leq, Sp, F.Id("a"), Comma, Quad,
                     OpenBracket, F.Id("u"), Caret, F.Id("a"), CloseBracket,
                     Open, Frac, Grp(Open, Minus, D(1), Close, Caret,
@@ -32,8 +30,8 @@ internal sealed class PoleLayerSelectionDocument : IScribeDocumentDefinition
                     OpenBracket, F.Id("u"), Caret,
                     Grp(F.Id("a"), Minus, D(4), F.Id("k")), CloseBracket,
                     F.Id("R"), Open, F.Id("u"), Close, Caret,
-                    Grp(Minus, F.Id("k")))),
-                DescribeProvenance.RepoDerived(),
+                    Grp(Minus, F.Id("k"))))),
+                AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
                         "For a positive order k, a row a at least 4k, a rational-coefficient "
@@ -46,6 +44,6 @@ internal sealed class PoleLayerSelectionDocument : IScribeDocumentDefinition
                         + "no named theorem for the source atom's pole-layer specialization. "
                         + "The declaration proves the exact algebraic selection formula; it "
                         + "does not assert analytic continuation, existence of poles, or the "
-                        + "atom's five external row calculations.")))
-            ))));
+                        + "atom's five external row calculations."))),
+                DescribeRole.Theorem))));
 }

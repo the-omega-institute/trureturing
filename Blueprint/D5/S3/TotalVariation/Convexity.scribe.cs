@@ -6,18 +6,14 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.TotalVariation;
 
 internal sealed class ConvexityDocument : IScribeDocumentDefinition
 {
-    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
-        Header(
-            "D5/S3/TotalVariation/Convexity",
-            "Total variation is jointly convex without mass hypotheses, while squared Hellinger distance is jointly convex on the nonnegative quadrant."),
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create("Total variation is jointly convex without mass hypotheses, while squared Hellinger distance is jointly convex on the nonnegative quadrant.",
         H("Joint Convexity of Total Variation and Squared Hellinger Distance"),
         Blocks(
-            DocumentBlock.Describe.Theorem(
+            Describe.Lean(
                 DescribeId.Create("total-variation-is-jointly-convex-for-arbitrary-real-functions"),
+                DeclarationHandle.Create("D5/S3/TotalVariation/Convexity.total_variation_joint_convex"),
                 H("Total variation is jointly convex for arbitrary real functions"),
-                LeanTheorem(
-                    "D5/S3/TotalVariation/Convexity.total_variation_joint_convex"),
-                Disp(Seq(
+                StatementSource.FromAuthor(Disp(Seq(
                     Begin, Grp(F.Id("gathered")),
                     Forall, Sp, Iota, Esc,
                     OpenBracket,
@@ -47,8 +43,8 @@ internal sealed class ConvexityDocument : IScribeDocumentDefinition
                     Operatorname, Grp(F.Id("TV")), Open,
                     F.Id("p"), Underscore, Grp(D(2)), Comma, Sp,
                     F.Id("q"), Underscore, Grp(D(2)), Close, Dot,
-                    End, Grp(F.Id("gathered")))),
-                DescribeProvenance.RepoDerived(),
+                    End, Grp(F.Id("gathered"))))),
+                AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
                         "The repository already established joint convexity for " +
@@ -83,13 +79,13 @@ internal sealed class ConvexityDocument : IScribeDocumentDefinition
                         "results is charged to a specific operation in the corresponding " +
                         "definition: absolute value costs only nonnegative mixing weights, square " +
                         "root costs the nonnegative quadrant, and division with logarithm also " +
-                        "costs discrete absolute continuity.")))),
-            DocumentBlock.Describe.Theorem(
+                        "costs discrete absolute continuity."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("the-squared-square-root-gap-is-jointly-convex-under-mixing"),
+                DeclarationHandle.Create("D5/S3/TotalVariation/Convexity.sq_sqrt_mix_sub_sqrt_mix_le"),
                 H("The squared square-root gap is jointly convex under mixing"),
-                LeanTheorem(
-                    "D5/S3/TotalVariation/Convexity.sq_sqrt_mix_sub_sqrt_mix_le"),
-                Disp(Seq(
+                StatementSource.FromAuthor(Disp(Seq(
                     Begin, Grp(F.Id("gathered")),
                     Forall, Sp,
                     F.Id("a"), Underscore, Grp(D(1)), Comma, Sp,
@@ -123,8 +119,8 @@ internal sealed class ConvexityDocument : IScribeDocumentDefinition
                     Sqrt, Sp, Grp(F.Id("a"), Underscore, Grp(D(2))), Minus,
                     Sqrt, Sp, Grp(F.Id("b"), Underscore, Grp(D(2))),
                     Close, Caret, Grp(D(2)), Dot,
-                    End, Grp(F.Id("gathered")))),
-                DescribeProvenance.RepoDerived(),
+                    End, Grp(F.Id("gathered"))))),
+                AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
                         "The named scalar lemma sq_sqrt_mix_sub_sqrt_mix_le carries the " +
@@ -145,13 +141,13 @@ internal sealed class ConvexityDocument : IScribeDocumentDefinition
                         "After expanding each squared square-root difference, linear terms agree " +
                         "and that cross-term inequality gives the result. Naming the lemma as a " +
                         "standalone reusable theorem records the unavailable library fact and " +
-                        "keeps it from being buried inside the finite-sum convexity proof.")))),
-            DocumentBlock.Describe.Theorem(
+                        "keeps it from being buried inside the finite-sum convexity proof."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("squared-hellinger-distance-is-jointly-convex-on-the-nonnegative-quadrant"),
+                DeclarationHandle.Create("D5/S3/TotalVariation/Convexity.hellinger_sq_joint_convex"),
                 H("Squared Hellinger distance is jointly convex on the nonnegative quadrant"),
-                LeanTheorem(
-                    "D5/S3/TotalVariation/Convexity.hellinger_sq_joint_convex"),
-                Disp(Seq(
+                StatementSource.FromAuthor(Disp(Seq(
                     Begin, Grp(F.Id("gathered")),
                     Forall, Sp, Iota, Esc,
                     OpenBracket,
@@ -190,8 +186,8 @@ internal sealed class ConvexityDocument : IScribeDocumentDefinition
                     F.Id("H"), Caret, Grp(D(2)), Open,
                     F.Id("p"), Underscore, Grp(D(2)), Comma, Sp,
                     F.Id("q"), Underscore, Grp(D(2)), Close, Dot,
-                    End, Grp(F.Id("gathered")))),
-                DescribeProvenance.RepoDerived(),
+                    End, Grp(F.Id("gathered"))))),
+                AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
                         "Applying the scalar lemma at each coordinate and summing proves joint " +
@@ -217,5 +213,6 @@ internal sealed class ConvexityDocument : IScribeDocumentDefinition
                         "claimed. The module does not separately state convexity in one argument " +
                         "with the other fixed, and it provides no measure-theoretic analogue. It " +
                         "also introduces no normalization assumptions beyond those absent from " +
-                        "the displayed declarations.")))))));
+                        "the displayed declarations."))),
+                DescribeRole.Theorem))));
 }

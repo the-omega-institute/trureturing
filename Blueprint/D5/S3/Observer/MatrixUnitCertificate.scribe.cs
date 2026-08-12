@@ -6,47 +6,46 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Observer;
 
 internal sealed class MatrixUnitCertificateDocument : IScribeDocumentDefinition
 {
-    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
-        Header(
-            "D5/S3/Observer/MatrixUnitCertificate",
-            "Finite Fourier combinations of the cyclic window clock and shift form exact matrix units."),
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "Finite Fourier combinations of the cyclic window clock and shift form exact matrix units.",
         H("Exact Matrix Units from a Finite Weyl Pair"),
         Blocks(
-            DocumentBlock.Describe.Theorem(
+            Describe.Lean(
                 DescribeId.Create("weyl-fourier-matrix-units-multiply-exactly"),
+                DeclarationHandle.Create("D5/S3/Observer/MatrixUnitCertificate.matrix_unit_mul"),
                 H("Weyl Fourier matrix units multiply exactly"),
-                LeanTheorem(
-                    "D5/S3/Observer/MatrixUnitCertificate.matrix_unit_mul"),
-                MatrixUnitRelationFormula(),
-                DescribeProvenance.RepoDerived(),
+                StatementSource.FromAuthor(MatrixUnitRelationFormula()),
+                AssessedProvenance.FromRepo(),
                 Blocks(
-                    Paragraph(Text(
-                        "For each positive window cardinality M, Fourier projection of the " +
-                        "frozen clock V_M onto address i, followed by the frozen shift " +
-                        "U_M^(i-j), defines E_ij. The exponent i-j is forced by the existing " +
-                        "entry convention U_M(r,s) = 1 exactly when r-s = 1.")),
-                    Paragraph(Text(
-                        "The standard Z/MZ characters enumerate the full finite character " +
-                        "group. Exact character orthogonality makes the Fourier projector the " +
-                        "single-entry matrix at (i,i), and the shift moves its nonzero column to " +
-                        "j. Thus E_ij is exactly the standard single-entry matrix at (i,j).")),
-                    Paragraph(Text(
-                        "Consequently E_ij E_kl equals E_il when j=k and is the zero matrix " +
-                        "otherwise. This is an identity of complex matrices for every four " +
-                        "window indices; it has no residual, norm bound, tolerance, or numerical " +
-                        "approximation.")))
+                                    Paragraph(Text(
+                                        "For each positive window cardinality M, Fourier projection of the " +
+                                        "frozen clock V_M onto address i, followed by the frozen shift " +
+                                        "U_M^(i-j), defines E_ij. The exponent i-j is forced by the existing " +
+                                        "entry convention U_M(r,s) = 1 exactly when r-s = 1.")),
+                                    Paragraph(Text(
+                                        "The standard Z/MZ characters enumerate the full finite character " +
+                                        "group. Exact character orthogonality makes the Fourier projector the " +
+                                        "single-entry matrix at (i,i), and the shift moves its nonzero column to " +
+                                        "j. Thus E_ij is exactly the standard single-entry matrix at (i,j).")),
+                                    Paragraph(Text(
+                                        "Consequently E_ij E_kl equals E_il when j=k and is the zero matrix " +
+                                        "otherwise. This is an identity of complex matrices for every four " +
+                                        "window indices; it has no residual, norm bound, tolerance, or numerical " +
+                                        "approximation."))),
+                DescribeRole.Theorem
             ),
-            DocumentBlock.Describe.Theorem(
+            Describe.Lean(
                 DescribeId.Create("diagonal-matrix-units-resolve-the-identity"),
+                DeclarationHandle.Create("D5/S3/Observer/MatrixUnitCertificate.matrix_units_sum_diagonal"),
                 H("Diagonal matrix units resolve the identity"),
-                LeanTheorem(
-                    "D5/S3/Observer/MatrixUnitCertificate.matrix_units_sum_diagonal"),
-                CompletenessFormula(),
-                DescribeProvenance.RepoDerived(),
+                StatementSource.FromAuthor(CompletenessFormula()),
+                AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
-                    "Summing the diagonal Fourier matrix units over every cyclic address gives " +
-                    "the identity matrix exactly. This is the finite-window completeness " +
-                    "relation for the same Weyl-generated family.")))))));
+                                    "Summing the diagonal Fourier matrix units over every cyclic address gives " +
+                                    "the identity matrix exactly. This is the finite-window completeness " +
+                                    "relation for the same Weyl-generated family."))),
+                DescribeRole.Theorem
+            ))));
 
     private static Formula MatrixUnitRelationFormula() => Disp(Seq(
         Begin, Grp(F.Id("gathered")),

@@ -6,10 +6,8 @@ namespace StrataLint.Scribe.Blueprint.D5.S0.Carrier;
 
 internal sealed class NormDocument : IScribeDocumentDefinition
 {
-    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
-        Header(
-            "D5/S0/Carrier/Norm",
-            "The golden norm is multiplicative and agrees with the scaled mathlib norm."),
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "The golden norm is multiplicative and agrees with the scaled mathlib norm.",
         H("Golden Norm"),
         Blocks(
             Paragraph(
@@ -29,13 +27,13 @@ internal sealed class NormDocument : IScribeDocumentDefinition
                 Blocks(Paragraph(Text(
                     "The source groups a^2+b^2 under four roles: the defining two-axis norm, the Gaussian norm, the modulus-four obstruction, and the splitting reading modulo a prime. It states that each role has its own theorem and that norm multiplicativity is the pivot used in the composition step. The vocabulary in which primes congruent to one split, primes congruent to three remain inert, and two ramifies is explicitly interpretive: the classification theorem is said not to depend on that Gaussian-integer language. A separate dynamical role is referenced but not added as a claim of this module.")))
             ),
-            DocumentBlock.Describe.Theorem(
+            Describe.Lean(
                 DescribeId.Create("norm-euclidean-division"),
-                H("Norm-Euclidean division"),
-                LeanTheorem(
+                DeclarationHandle.Create(
                     "D5/S0/Carrier/Euclidean.golden_division"),
-                Disp(Seq(Forall, Sp, F.Id("a"), Comma, F.Id("b"), InMacro, Mathbb, Grp(F.Id("Z")), OpenBracket, Varphi, CloseBracket, Comma, Esc, F.Id("b"), Neq, Sp, D(0), Sp, Rightarrow, Sp, Exists, Sp, F.Id("q"), Comma, F.Id("r"), InMacro, Mathbb, Grp(F.Id("Z")), OpenBracket, Varphi, CloseBracket, Comma, Esc, F.Id("a"), Eq, F.Id("qb"), Plus, F.Id("r"), Sp, Land, Sp, Open, F.Id("r"), Eq, D(0), Sp, Lor, Sp, Lvert, Operatorname, Grp(F.Id("norm")), Open, F.Id("r"), Close, Rvert, Lt, Lvert, Operatorname, Grp(F.Id("norm")), Open, F.Id("b"), Close, Rvert, Close)),
-                DescribeProvenance.LiteratureAttested(
+                H("Norm-Euclidean division"),
+                StatementSource.FromAuthor(Disp(Seq(Forall, Sp, F.Id("a"), Comma, F.Id("b"), InMacro, Mathbb, Grp(F.Id("Z")), OpenBracket, Varphi, CloseBracket, Comma, Esc, F.Id("b"), Neq, Sp, D(0), Sp, Rightarrow, Sp, Exists, Sp, F.Id("q"), Comma, F.Id("r"), InMacro, Mathbb, Grp(F.Id("Z")), OpenBracket, Varphi, CloseBracket, Comma, Esc, F.Id("a"), Eq, F.Id("qb"), Plus, F.Id("r"), Sp, Land, Sp, Open, F.Id("r"), Eq, D(0), Sp, Lor, Sp, Lvert, Operatorname, Grp(F.Id("norm")), Open, F.Id("r"), Close, Rvert, Lt, Lvert, Operatorname, Grp(F.Id("norm")), Open, F.Id("b"), Close, Rvert, Close))),
+                AssessedProvenance.FromLiterature(
                     LibraryNoteRef.Create("D5/L/Carrier/chatland1949euclidean")),
                 Blocks(
                     Paragraph(Text(
@@ -43,15 +41,16 @@ internal sealed class NormDocument : IScribeDocumentDefinition
                     Paragraph(Text(
                         "If the two coordinate errors are `x` and `y`, then each has absolute value at most `1/2`. Completing squares bounds `|x^2 + xy - y^2|` by `5/16`, so multiplicativity of the norm gives a remainder with strictly smaller absolute norm.")),
                     Paragraph(Text(
-                        "The `EuclideanDomain GoldenInt` instance uses this quotient and remainder with Euclidean relation `(N(r)).natAbs < (N(b)).natAbs`.")))
+                        "The `EuclideanDomain GoldenInt` instance uses this quotient and remainder with Euclidean relation `(N(r)).natAbs < (N(b)).natAbs`."))),
+                DescribeRole.Theorem
             ),
-            DocumentBlock.Describe.Theorem(
+            Describe.Lean(
                 DescribeId.Create("principal-ideal-domain"),
-                H("Principal ideal domain"),
-                LeanTheorem(
+                DeclarationHandle.Create(
                     "D5/S0/Carrier/PrincipalIdeal.golden_int_is_pid"),
-                In(Seq(Mathbb, Grp(F.Id("Z")), OpenBracket, Varphi, CloseBracket, F.Text, Grp(Sp, F.Id("is"), Sp, F.Id("a"), Sp, F.Id("principal"), Sp, F.Id("ideal"), Sp, F.Id("domain"), Dot))),
-                DescribeProvenance.LiteratureAttested(
+                H("Principal ideal domain"),
+                StatementSource.FromAuthor(In(Seq(Mathbb, Grp(F.Id("Z")), OpenBracket, Varphi, CloseBracket, F.Text, Grp(Sp, F.Id("is"), Sp, F.Id("a"), Sp, F.Id("principal"), Sp, F.Id("ideal"), Sp, F.Id("domain"), Dot)))),
+                AssessedProvenance.FromLiterature(
                     LibraryNoteRef.Create("D5/L/Carrier/chatland1949euclidean")),
                 Blocks(
                     Paragraph(Text(
@@ -59,18 +58,20 @@ internal sealed class NormDocument : IScribeDocumentDefinition
                     Paragraph(Text(
                         "Mathlib's generic principal-ideal-domain instance then supplies `UniqueFactorizationMonoid GoldenInt`; the formal node records this consequence as `golden_int_is_ufd` without declaring redundant specialized instances.")),
                     Paragraph(Text(
-                        "This result does not classify the units of `GoldenInt`. The converse assertion that every norm-unit is a signed integral power of `phi` remains open in `D5-T0008`.")))
+                        "This result does not classify the units of `GoldenInt`. The converse assertion that every norm-unit is a signed integral power of `phi` remains open in `D5-T0008`."))),
+                DescribeRole.Theorem
             ),
-            DocumentBlock.Describe.Theorem(
+            Describe.Lean(
                 DescribeId.Create("golden-norm-is-power-multiplicative"),
-                H("The golden norm is power-multiplicative"),
-                LeanTheorem(
+                DeclarationHandle.Create(
                     "D5/S0/Carrier/NormPowers.norm_pow"),
-                In(Seq(Forall, Sp, F.Id("x"), InMacro, Mathbb, Grp(F.Id("Z")), OpenBracket, Varphi, CloseBracket, Comma, Esc, Forall, Sp, F.Id("n"), InMacro, Mathbb, Grp(F.Id("N")), Comma, Esc, Operatorname, Grp(F.Id("norm")), Open, F.Id("x"), Caret, Grp(F.Id("n")), Close, Eq, Operatorname, Grp(F.Id("norm")), Open, F.Id("x"), Close, Caret, Grp(F.Id("n")))),
-                DescribeProvenance.RepoDerived(),
+                H("The golden norm is power-multiplicative"),
+                StatementSource.FromAuthor(In(Seq(Forall, Sp, F.Id("x"), InMacro, Mathbb, Grp(F.Id("Z")), OpenBracket, Varphi, CloseBracket, Comma, Esc, Forall, Sp, F.Id("n"), InMacro, Mathbb, Grp(F.Id("N")), Comma, Esc, Operatorname, Grp(F.Id("norm")), Open, F.Id("x"), Caret, Grp(F.Id("n")), Close, Eq, Operatorname, Grp(F.Id("norm")), Open, F.Id("x"), Close, Caret, Grp(F.Id("n"))))),
+                AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
-                        "The golden norm is a monoid homomorphism from `GoldenInt` to the integers, packaged as `normMonoidHom` out of its unit and multiplicativity laws. The norm of a power is therefore the same power of the norm, obtained directly as `map_pow normMonoidHom` rather than by a coordinate induction.")))
+                        "The golden norm is a monoid homomorphism from `GoldenInt` to the integers, packaged as `normMonoidHom` out of its unit and multiplicativity laws. The norm of a power is therefore the same power of the norm, obtained directly as `map_pow normMonoidHom` rather than by a coordinate induction."))),
+                DescribeRole.Theorem
             )),
-        [DocumentEdge.Dependency.Create(GidRef.Create("D5/S0/Carrier/Ring"))]));
+        edges: [DocumentEdge.Dependency.Create(GidRef.Create("D5/S0/Carrier/Ring"))]));
 }

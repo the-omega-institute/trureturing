@@ -6,23 +6,19 @@ namespace StrataLint.Scribe.Blueprint.D5.S1.Phase;
 
 internal sealed class RenormalizationPayloadDocument : IScribeDocumentDefinition
 {
-    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
-        Header(
-            "D5/S1/Phase/RenormalizationPayload",
-            "The two golden face readings uniquely determine their renormalization map."),
-        H("Two-Face Renormalization Is Recoverable"),
-        Blocks(
-            DocumentBlock.Describe.Theorem(
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create("The two golden face readings uniquely determine their renormalization map.",
+H("Two-Face Renormalization Is Recoverable"),
+Blocks(
+            Describe.Lean(
                 DescribeId.Create("two-face-renormalization-is-recoverable"),
+                DeclarationHandle.Create("D5/S1/Phase/RenormalizationPayload.renormalization_payload"),
                 H("Both face readings determine the renormalization map"),
-                LeanTheorem(
-                    "D5/S1/Phase/RenormalizationPayload.renormalization_payload"),
-                Disp(Seq(
+                StatementSource.FromAuthor(Disp(Seq(
                     F.Id("R"), Open, F.Id("x"), Comma, F.Id("y"), Close,
                     Sp, Eq, Sp,
                     Open, Varphi, Sp, F.Id("x"), Comma, Sp,
-                    Psi, Sp, F.Id("y"), Close)),
-                DescribeProvenance.RepoDerived(),
+                    Psi, Sp, F.Id("y"), Close))),
+                AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
                         "Consider a map on two real coordinates. If its first coordinate "
@@ -39,6 +35,6 @@ internal sealed class RenormalizationPayloadDocument : IScribeDocumentDefinition
                         + "this exact two-face recoverability statement, so the Lean theorem "
                         + "is a short new proof rather than a wrapper. The source atom makes a "
                         + "single dependency claim; no analytic limit, model-set density, or "
-                        + "generating-series identity is added here.")))
-            ))));
+                        + "generating-series identity is added here."))),
+                DescribeRole.Theorem))));
 }

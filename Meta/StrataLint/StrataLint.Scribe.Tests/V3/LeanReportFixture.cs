@@ -9,7 +9,7 @@ internal static class LeanReportFixture
     {
         var declarations = documents
             .SelectMany(static document => References(document.Content))
-            .Distinct()
+            .DistinctBy(static reference => reference.Value, StringComparer.Ordinal)
             .GroupBy(static reference => reference.Reference.Path.Value, StringComparer.Ordinal)
             .ToDictionary(
                 static group => group.Key,

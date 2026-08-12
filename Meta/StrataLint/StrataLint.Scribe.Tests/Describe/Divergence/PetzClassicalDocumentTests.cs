@@ -13,7 +13,8 @@ public sealed class PetzClassicalDocumentTests
         Assert.Equal(
             "D5/S3/Divergence/PetzClassical.dpi_defect_zero_iff_posteriors_eq",
             Assert.IsType<DescribeStatement.LeanDeclaration>(describe.Statement).Value.Value);
-        Assert.Equal(DescribeProvenanceKind.RepoDerived, describe.Provenance.Kind);
+        DocumentFactAssertions.RepoDerived(describe);
+        DocumentFactAssertions.Declaration(describe, LeanDeclarationKind.Theorem);
 
         var latex = LatexWriter.WriteStatement(
             describe.StatementFormula
