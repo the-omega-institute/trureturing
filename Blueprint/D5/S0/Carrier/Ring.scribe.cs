@@ -4,10 +4,8 @@ namespace StrataLint.Scribe.Blueprint.D5.S0.Carrier;
 
 internal sealed class RingDocument : IScribeDocumentDefinition
 {
-    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
-        Header(
-            "D5/S0/Carrier/Ring",
-            "Golden integers use integral coordinates with the quadratic relation built into multiplication."),
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "Golden integers use integral coordinates with the quadratic relation built into multiplication.",
         H("Golden Integer Ring"),
         Blocks(
             Paragraph(

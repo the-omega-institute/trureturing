@@ -4,10 +4,8 @@ namespace StrataLint.Scribe.Blueprint.D5.S0.Carrier;
 
 internal sealed class ConjDocument : IScribeDocumentDefinition
 {
-    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
-        Header(
-            "D5/S0/Carrier/Conj",
-            "Golden conjugation is an involutive ring equivalence with integral trace."),
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "Golden conjugation is an involutive ring equivalence with integral trace.",
         H("Golden Conjugation"),
         Blocks(
             Paragraph(

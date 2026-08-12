@@ -11,10 +11,8 @@ internal sealed class GoldenGapFrequencyDocument : IScribeDocumentDefinition
         var largeCount = Call("largeGapCount", q);
         var smallCount = Call("smallGapCount", q);
 
-        return DocumentDefinition.Create(ScribeDocument.Create(
-            Header(
-                "D5/S0/Tower/GoldenGapFrequency",
-                "Boundary-completed golden gaps have exact Fibonacci frequencies."),
+        return DocumentDefinition.Create(ScribeNode.Create(
+            "Boundary-completed golden gaps have exact Fibonacci frequencies.",
             H("Golden Gap Frequency"),
             Blocks(
                 Paragraph(Text(

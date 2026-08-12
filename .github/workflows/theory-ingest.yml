@@ -1,8 +1,7 @@
 # 理论卷自动摄入:PR 触碰 docs/develop/theory/** 时,以 base 侧法官跑 make ingest,
-# 产生的账本对齐 bot-commit 回 PR 分支。
+# 随后由 base 侧闭合判据检查候选树;法官覆盖的 harness/构建元数据路径从判定中排除。
 # 不回写 echo residual 投影:它是允许陈旧的人读快照(CLAUDE.md 第〇节),按需由
 # `make echo-residual-summary` 重发,消费者应调 producer 现算而非读仓内分片。
-# 信任拓扑:代码=base 侧(pull_request_target),PR 侧仅理论卷数据输入;写路径白名单硬校验。
 name: theory-ingest
 
 on:
@@ -13,7 +12,7 @@ on:
 
 permissions:
   actions: read
-  contents: write
+  contents: read
 
 concurrency:
   group: theory-ingest-${{ github.event.pull_request.number }}
@@ -40,40 +39,6 @@ jobs:
           path: candidate
           fetch-depth: 0
           persist-credentials: false
-
-      - name: Enforce candidate data-only boundary
-        shell: bash
-        env:
-          BASE_SHA: ${{ github.event.pull_request.base.sha }}
-          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
-        run: |
-          set -euo pipefail
-          actual="$(git -C candidate rev-parse HEAD)"
-          test "$actual" = "$HEAD_SHA"
-          if ! git -C candidate cat-file -e "$BASE_SHA^{commit}" 2>/dev/null; then
-            git -C candidate fetch --no-tags "$GITHUB_WORKSPACE/judge" "$BASE_SHA"
-          fi
-          bad=()
-          while IFS= read -r -d '' path; do
-            case "$path" in
-              docs/develop/theory/*|Meta/Digestion/atoms/*) ;;
-              *) bad+=("$path") ;;
-            esac
-          done < <(git -C candidate diff --name-only --no-renames -z "$BASE_SHA...$HEAD_SHA")
-          if [[ "${#bad[@]}" -ne 0 ]]; then
-            printf '::error::theory ingest refuses non-data candidate path: %s\n' "${bad[@]}"
-            registry_rejected=false
-            for path in "${bad[@]}"; do
-              if [[ $path == "Meta/registry.yaml" ]]; then
-                registry_rejected=true
-                break
-              fi
-            done
-            if [[ $registry_rejected == true ]]; then
-              printf '%s\n' '::error::THEORY-INGEST-REGISTRY-001: land a separate harness PR that adds the new theory path to Meta/registry.yaml first, then rebase the theory PR and drop its registry diff from the data PR'
-            fi
-            exit 1
-          fi
 
       - name: Install pinned SDK
         uses: actions/setup-dotnet@v4
@@ -180,24 +145,12 @@ jobs:
           cd candidate
           make ingest BASE=HEAD
 
-      - name: Enforce write-path whitelist and commit back
+      - name: Enforce theory ingest closure
         shell: bash
-        env:
-          GH_TOKEN: ${{ github.token }}
         run: |
           set -euo pipefail
-          cd candidate
-          git restore --source=HEAD -- Meta/StrataLint Makefile global.json || true
-          git clean -fd -- Meta/StrataLint
-          changed="$(git status --porcelain)"
-          if [ -z "$changed" ]; then echo "ingest no-op"; exit 0; fi
-          bad="$(git status --porcelain | grep -vE '^.. Meta/Digestion/atoms/.*$' || true)"
-          if [ -n "$bad" ]; then
-            echo "::error::ingest touched paths outside whitelist:"; echo "$bad"; exit 1
-          fi
-          git config user.name "theory-ingest-bot"
-          git config user.email "theory-ingest-bot@users.noreply.github.com"
-          git add Meta/Digestion/atoms
-          git commit -m "chore(digestion): auto-ingest theory update [theory-ingest-bot]"
-          gh auth setup-git
-          git push origin HEAD:${{ github.event.pull_request.head.ref }}
+          "$GITHUB_WORKSPACE/judge/Meta/StrataLint/scripts/workflow/theory-ingest-closure.sh" \
+            "$GITHUB_WORKSPACE/candidate" \
+            --exclude Meta/StrataLint \
+            --exclude Makefile \
+            --exclude global.json

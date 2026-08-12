@@ -6,10 +6,8 @@ namespace StrataLint.Scribe.Blueprint.D5.S0.Carrier;
 
 internal sealed class GoldenRatioDocument : IScribeDocumentDefinition
 {
-    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
-        Header(
-            "D5/S0/Carrier/GoldenRatio",
-            "The real golden ratio satisfies its radical, fixed-point, and conjugate identities."),
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "The real golden ratio satisfies its radical, fixed-point, and conjugate identities.",
         H("Golden Ratio Identities"),
         Blocks(
             Describe.Lean(

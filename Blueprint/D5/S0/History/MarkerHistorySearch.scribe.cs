@@ -4,10 +4,8 @@ namespace StrataLint.Scribe.Blueprint.D5.S0.History;
 
 internal sealed class MarkerHistorySearchDocument : IScribeDocumentDefinition
 {
-    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
-        Header(
-            "D5/S0/History/MarkerHistorySearch",
-            "Marker histories admit exhaustive finite length layers and verified bounded counterexample search."),
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "Marker histories admit exhaustive finite length layers and verified bounded counterexample search.",
         H("Marker History Search"),
         Blocks(
             Paragraph(

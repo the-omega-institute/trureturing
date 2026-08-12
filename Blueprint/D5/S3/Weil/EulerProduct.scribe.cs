@@ -16,18 +16,18 @@ internal sealed class EulerProductDocument : IScribeDocumentDefinition
                     "Under the value map from a one-prime ledger state to a natural prime power, a nonzero exponent at p reads log p, while every non-prime-power value reads zero. This is the classical von Mangoldt coefficient in the repository's single-address coordinates."))), DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("the-logarithmic-derivative-is-the-single-address-heat-trace"), DeclarationHandle.Create("D5/S3/Weil/EulerProduct.single_address_heat_trace_eq_log_derivative"), H("The logarithmic derivative is the single-address heat trace"), StatementSource.FromAuthor(In(Seq(Forall, Sp, F.Id("s"), InMacro, Mathbb, Grp(F.Id("C")), Comma, Esc, D(1), Lt, Re, Open, F.Id("s"), Close, Sp, Rightarrow, Sp, Operatorname, Grp(F.Id("singleAddressHeatTrace")), Open, F.Id("s"), Close, Eq, Minus, Frac, Grp(Operatorname, Grp(F.Id("deriv")), Open, Operatorname, Grp(F.Id("classicalZeta")), Close, Open, F.Id("s"), Close), Grp(Operatorname, Grp(F.Id("classicalZeta")), Open, F.Id("s"), Close)))), AssessedProvenance.FromLiterature(Apostol), Blocks(Paragraph(Text(
                     "In the convergence half-plane with real part greater than one, the L-series of the single-address reading equals minus the derivative of the classical zeta function divided by the zeta function. The statement adds no continuation beyond that half-plane."))), DescribeRole.Proposition),
-            DocumentBlock.Describe.Remark(
+            Describe.Remark(
                 DescribeId.Create("journal-and-ledger-readings"),
+                DeclarationHandle.Create("D5/S3/Weil/EulerProduct.single_address_reading_spec"),
                 H("Journal and ledger readings"),
-                DescribeStatement.FromLean(LeanTheorem("D5/S3/Weil/EulerProduct.single_address_reading_spec")),
-                DescribeProvenance.RepoDerived(),
+                AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "Ordering terms by generated value resembles a chronological journal, while grouping powers by prime address resembles a classified ledger. The single-address theorem supplies the local weight behind that analogy; it does not formalize heat-time cosmology or a theta functional equation.")))),
-            DocumentBlock.Describe.Remark(
+            Describe.Remark(
                 DescribeId.Create("finite-euler-windows-do-not-create-global-zeros"),
+                DeclarationHandle.Create("D5/S3/Weil/EulerProduct.finite_euler_zero_free_and_pole_locus"),
                 H("Finite Euler windows do not create global zeros"),
-                DescribeStatement.FromLean(LeanTheorem("D5/S3/Weil/EulerProduct.finite_euler_zero_free_and_pole_locus")),
-                DescribeProvenance.RepoDerived(),
+                AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "Every regular finite Euler window is nonzero, so no finite set of local factors realizes a nontrivial global zero. This supports only a finite-versus-tail boundary; collective-mode, prime-deletion, dense-phase, and equal-loudness interpretations are not proved here.")))))));
 

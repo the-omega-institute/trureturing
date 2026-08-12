@@ -4,10 +4,8 @@ namespace StrataLint.Scribe.Blueprint.D5.S0.History;
 
 internal sealed class HistoryCarrierDocument : IScribeDocumentDefinition
 {
-    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
-        Header(
-            "D5/S0/History/HistoryCarrier",
-            "Finite marker and event histories preserve the source append direction and low-level encoding."),
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "Finite marker and event histories preserve the source append direction and low-level encoding.",
         H("History Carrier"),
         Blocks(
             Paragraph(

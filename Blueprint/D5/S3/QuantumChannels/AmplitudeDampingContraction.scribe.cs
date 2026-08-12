@@ -12,10 +12,8 @@ internal sealed class AmplitudeDampingContractionDocument : IScribeDocumentDefin
             expectedKind: LeanDeclarationKind.Definition,
             requireNoSorry: true);
 
-    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
-        Header(
-            "D5/S3/QuantumChannels/AmplitudeDampingContraction",
-            "For amplitude damping on the Bloch axis, the SLD coherence contraction ratio is the constant one minus gamma, while the RLD ratio is bounded by one in the open Bloch interval and tends to one at the pure-state boundary."),
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "For amplitude damping on the Bloch axis, the SLD coherence contraction ratio is the constant one minus gamma, while the RLD ratio is bounded by one in the open Bloch interval and tends to one at the pure-state boundary.",
         H("Amplitude-Damping Coherence Contraction Endpoints"),
         Blocks(
             Describe.Lean(

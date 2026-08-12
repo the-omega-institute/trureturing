@@ -111,7 +111,7 @@ cold_root=$(mktemp -d /tmp/oldside-cold-report-cache.XXXXXXXX)
 
 step 级 `always()` 无法在 job timeout、workflow cancellation 或 runner 丢失后自救。因此聚合端必须按 `run_id`/`run_attempt` 与 **job 终态**对账 artifact；一个成员若没有恰好一条 hit/miss 记录，即按**基础设施失败停案**处理，**不得**当作不存在而从 `N` 中消失。job 内最后一个独立 recorder 只负责覆盖仍能执行 step 的早期失败和未写记录路径，不能替代这项聚合端终态对账。
 
-**在聚合端终态对账实现之前，本影子测量的读数不得用于任何判决或工程决策。** 原因：job 级 timeout / cancel / runner loss 无法自产记录；缺样若不被升级为停案，命中率会因幸存者偏差而虚高。因此「进入整侧迁移」的门槛不仅要求命中率与预算达标，**还要求**聚合端已实现，并已按 `run_id` / `run_attempt` / job 终态完成对账。
+聚合端终态对账现已由 `shadow-reconcile` 命令实现（#1400），并按 `run_id` / `run_attempt` / job 终态对账。**但固定窗口尚未闭合且本轮已经停案，因此本影子测量的读数仍不得用于最终判决。** 本轮读数只用于修正原成本估算与指出下一步实验，不授权进入整侧迁移，也不授权取消工程。job 级 timeout / cancel / runner loss 无法自产记录；聚合端仍须把缺样升级为停案，防止命中率因幸存者偏差而虚高。
 
 窗口起点写死为 shadow workflow 首次部署后的首个 workflow `run_id`。从该起点按 `run_id` 严格递增扫描，首次出现的前 40 个不同 PR 构成固定成员集；第 40 个不同 PR 首次出现时立即闭合成员集。闭合后才等待这 40 个 PR 各自被选中的 `run_attempt=1` shadow job 到达终态并计算结果；闭合后到达的任何新 PR、新 SHA 或 rerun 均记录但排除，不扩窗、不替换成员。任一固定成员的被选中 job 取消、基础设施失败、非恰好一个 hit/miss，或 provenance/verify 失败，直接停案，不用后到样本补位。这里的停案只终止本轮测量，不永久禁止重新测量；原窗口内禁止替换或补位任何成员。若要重开，必须取得新授权、选择全新起点并从该起点建立全新的 40-PR 固定窗口；新窗口不得复用原窗口任何已知 hit/miss、墙钟或验证结果，每个成员都须按新窗口规则重新产生结果。
 
@@ -126,9 +126,71 @@ step 级 `always()` 无法在 job timeout、workflow cancellation 或 runner 丢
 
 若且仅若上述吸收条件实测达标，后续方案仍只保留六席共识骨架：树 + report + DAG + ledger 作为不可拆 old-side 能力包整侧同迁；类型上拒绝混侧；迁移必须分步；每一步都须预先给出机器判据与回退点。本报告不决定影子双跑、旧入口 Contract 删除等具体实施设计。
 
-## 7.1 后续未实现：影子测量聚合端终态对账
+## 7.1 首批实测读数：命中率成立，但全冷成本击穿
 
-待实现项是**影子测量聚合端终态对账**：按 `run_id` / `run_attempt` 查询 job 终态，并经 `GET /actions/runs/{run_id}/artifacts` 找到 `old-side-shadow-record-<run_id>-<attempt>`，下载解压后对 `old-side-shadow-record.json` 执行 `jq` 逐行解析，补齐每个成员的最终记录并检查恰好一条。它解锁的是本节的使用禁令；在该聚合端能力落地前，本报告的读数只能用于观察，不能用于任何判决或工程决策。
+影子 job（#1383）、artifact 载体（#1391）、契约测试（#1395）与聚合端 `shadow-reconcile`（#1400）均已合入。截至本次读取，共收集到 **46 条真实记录**；依照本节规则，每个 PR 只取 `run_id` 最小且 `run_attempt=1` 的记录，去重后得到 **22 个不同 PR**。outcome 分布为 `hit=18`、`miss=3`、`miss-error=1`。固定窗口要求 40 个不同 PR，当前仅 **22/40，窗口尚未闭合，因此以下不是最终判决**。
+
+| 判据 | 报告门槛 | 实测 | 结果 |
+|---|---:|---:|---|
+| 在线命中率 | `>= 80%` | **81.8%**（18/22） | 达标 |
+| 摊销 miss 生产预算 `sum(t_i)/N` | `<= 30.0 s/PR` | **111.4 s/PR** | 击穿 3.7× |
+| 单次 miss 上限 `max(t_i)` | `<= 180.0 s` | **881.7 s** | 击穿 4.9× |
+
+去重后三次 miss 的墙钟为 `723.2 s`、`845.0 s`、`881.7 s`，均值 **816.6 s**，中位数 **845.0 s**。未去重的 7 次 miss 范围为 `723.2 ~ 1059.8 s`，均值 **873.7 s**。
+
+本报告原先以本地冷产唯一读数 **149.71 s** 为依据，估出期望摊销 **11.23 s/PR**。真实 CI 全冷 miss 是该本地读数的**约 5.5--5.8 倍**，实测摊销 **111.4 s/PR** 相对原估 **11.23 s/PR** 被低估了约 **10 倍**。
+
+结论的形状必须分成两部分。**命中率假设成立**：内容地址复用确实有效，`81.8% >= 80%`，本报告的核心机制判断被实测证实。**但成本判据在全冷口径下全部击穿，所以“值得做”这个结论不成立。** 二者不矛盾：高命中率意味着 miss 很少，但每次 miss 极贵，三次去重 miss 均为 700 秒以上、均值 816.6 秒，摊销后仍为 `111.4 s/PR`，击穿 `30.0 s/PR` 门槛 3.7 倍。窗口尚未闭合，故这里既不下“工程应当取消”的最终结论，也不下“工程应当继续”的最终结论。
+
+聚合端当前输出为：
+
+```json
+{"WindowClosed":false,"Halted":true,
+ "HaltReason":"PR #1409: job terminal/record reconciliation failed",
+ "N":22,"HitCount":18,...}
+```
+
+停案来自记录 `{"pr_number":1409,"outcome":"miss-error","stage":"toolchain","exit_code":1}`，原因是一次 Lean toolchain 安装失败。失败可见性机制按设计工作：失败写出了记录而非静默消失，聚合端据此停案，没有把该成员从窗口中丢掉。
+
+决定成败的下一个问题是：
+
+> 迁移后的 old-side report 生产**能否复用 `lean-inspect` 已有的 `.lake` / mathlib 缓存**？
+> 能 → 成本接近暖态边际；不能 → 摊销 111.4 s/PR，超门槛 3.7 倍。
+
+这个问题必须在真实迁移拓扑上单独测量。不得把 shadow 的全冷数字代入，因为 shadow 不 restore `.lake` 与 `~/.cache/mathlib`；也不得把本地读数代入，因为本地读数已被真实 CI 全冷 miss 证明低估 5.5 倍以上。本报告没有测迁移后的 old-side report 能否复用 `lean-inspect` 缓存，因为当前独立 shadow job 不处于真实迁移拓扑且不 restore 这些缓存。
+
+因此使用禁令继续有效且范围更精确：聚合端已经实现，但窗口未闭合且已经停案，**本节读数只可用于修正估算与指出下一步实验，仍不得据此下最终判决**。
+
+## 7.2 暖缓存读数：跨树复用机制已证，第三份 report 成本待验证
+
+§7.1 提出的决定性问题，现有 `lean-inspect` CI 数据已经回答了机制部分，不需要新实验。dev push run 在已 restore 构建缓存的**暖态**下，step 耗时实测为：
+
+```text
+Restore candidate and baseline Lean build artifacts   102 s / 108 s
+Produce source-bound canonical Lean reports           209 s / 258 s   ← 产【两份】report
+（部分 run 连这两步都没有：report 地址完全命中，直接复用）
+```
+
+对比 §7.1 的 shadow **全冷**单份 miss **816–873 s**，暖态生产两份 report 的 `209 s / 258 s` 折成单份边际约 **105–129 s**；暖态单份边际与全冷单份 miss 相差约 **7 倍**，差额几乎全是 mathlib 从头编译。这里的 **105–129 s 是由现有两份 report 的 step 总耗时除以二所得的推算，不是迁移后第三份 old-side report 的实测**。
+
+跨树复用来自 `.github/workflows/ci.yml` 的构建缓存配置：
+
+```yaml
+path:  candidate/.lake, baseline/.lake, ~/.cache/mathlib
+key:   ...-lake-<hashFiles(lake-manifest.json)>-<hashFiles(lean-toolchain)>-<head.sha>-<baseline.sha>
+restore-keys:
+       ...-lake-<hashFiles(lake-manifest.json)>-<hashFiles(lean-toolchain)>-
+```
+
+精确 key 绑定 head SHA 与 baseline SHA，但 `restore-keys` 的前缀回退使命中条件只剩 `lake-manifest` 与 `lean-toolchain` 的 hash，**不绑定任何树 SHA**；同时 `~/.cache/mathlib` 是共享路径。因此，只要依赖版本未变，任意树（包括 merge-base 树）都能命中同一份缓存。shadow 的 800+ s 来自另一种口径：它不 restore 这些 `.lake` / mathlib 构建缓存，因而支付了 mathlib 从头编译的全冷成本。
+
+据此，§7.1 的 **111.4 s/PR 是全冷口径，不可直接代入迁移成本估算**。迁移后的 old-side report 若在 `lean-inspect` 内生产，并共享已 restore 的 `.lake` 与 mathlib，其量级**应接近暖态边际而非全冷**；这句话是基于现有 CI 读数与缓存键机制的**推算，不是实测**。我没有测迁移后第三份 old-side report 的实际耗时，因为当前 workflow 尚未生产这第三份 report；剩余不确定性已经缩小为三项待验证：
+
+1. 产**第三份** report 是否与前两份同量级（可能有共享开销，也可能不线性）。
+2. 缓存 `path` 目前只列 `candidate/.lake` 与 `baseline/.lake`，**迁移时须把 old-side 树的 `.lake` 一并纳入**，否则那棵树仍是冷的。
+3. merge-base 树若跨越了依赖升级（`lake-manifest` / `lean-toolchain` 变更），前缀回退不命中。
+
+使用禁令不变：固定窗口仍为 **22/40、未闭合且已停案**，因此仍不得据此下“迁移应当进行”或“工程应当取消”的最终判决。本节只把下一个实验从“未知”缩小为上述三条具体的待验证项。
 
 ## 8. 40 个样本的原始地址
 

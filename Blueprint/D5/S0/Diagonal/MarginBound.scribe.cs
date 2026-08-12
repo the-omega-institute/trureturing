@@ -20,10 +20,8 @@ internal sealed class MarginBoundDocument : IScribeDocumentDefinition
             Call("bernoulliKL", q, p));
         var bound = Multiply(cardA, Call("exp", exponent));
 
-        return DocumentDefinition.Create(ScribeDocument.Create(
-            Header(
-                "D5/S0/Diagonal/MarginBound",
-                "Finite diagonal listings satisfy a corrected KL-Chernoff linear-margin bound."),
+        return DocumentDefinition.Create(ScribeNode.Create(
+            "Finite diagonal listings satisfy a corrected KL-Chernoff linear-margin bound.",
             H("Diagonal Linear Margin Bound"),
             Blocks(
                 Describe.Lean(
