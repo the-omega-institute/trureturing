@@ -6,20 +6,8 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.QuantumBounds;
 
 internal sealed class CHSHSpectrumDocument : IScribeDocumentDefinition
 {
-    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
-        Header(
-            "D5/S3/QuantumBounds/CHSHSpectrum",
-            "A conditional CHSH spectral bound supports an exact cubic coefficient."),
-        H("CHSH Spectrum and Cubic Coefficient"),
-        Blocks(
-            DocumentBlock.Describe.Theorem(
-                DescribeId.Create("the-paired-gap-coefficient-has-a-closed-form"),
-                H("The paired gap coefficient has a closed form"),
-                LeanTheorem(
-                    "D5/S3/QuantumBounds/CHSHSpectrum.chsh_cubic_coefficient"),
-                CubicCoefficientFormula(),
-                DescribeProvenance.RepoDerived(),
-                Blocks(
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create("A conditional CHSH spectral bound supports an exact cubic coefficient.", H("CHSH Spectrum and Cubic Coefficient"), Blocks(
+            Describe.Lean(DescribeId.Create("the-paired-gap-coefficient-has-a-closed-form"), DeclarationHandle.Create("D5/S3/QuantumBounds/CHSHSpectrum.chsh_cubic_coefficient"), H("The paired gap coefficient has a closed form"), StatementSource.FromAuthor(CubicCoefficientFormula()), AssessedProvenance.FromRepo(), Blocks(
                     Paragraph(Text(
                         "Let N, a, and b be real, with 0 < N < 4, a squared equal to 4 + N, "
                         + "and b squared equal to 4 - N. The formal statement starts from the "
@@ -30,14 +18,8 @@ internal sealed class CHSHSpectrumDocument : IScribeDocumentDefinition
                         + "rational function exactly.")),
                     Paragraph(Text(
                         "This is the real-algebra coefficient identity. It introduces no random "
-                        + "state or observable measure and makes no asymptotic assertion.")))),
-            DocumentBlock.Describe.Theorem(
-                DescribeId.Create("landaus-square-law-constrains-the-chsh-spectrum"),
-                H("Landau's square law constrains the CHSH spectrum"),
-                LeanTheorem("D5/S3/QuantumBounds/CHSHSpectrum.chsh_spectrum"),
-                SpectrumFormula(),
-                DescribeProvenance.RepoDerived(),
-                Blocks(
+                        + "state or observable measure and makes no asymptotic assertion."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("landaus-square-law-constrains-the-chsh-spectrum"), DeclarationHandle.Create("D5/S3/QuantumBounds/CHSHSpectrum.chsh_spectrum"), H("Landau's square law constrains the CHSH spectrum"), StatementSource.FromAuthor(SpectrumFormula()), AssessedProvenance.FromRepo(), Blocks(
                     Paragraph(Text(
                         "The formal theorem proves the algebraic kernel under an explicit spectral "
                         + "hypothesis. It takes four finite complex Hermitian involutions, forms "
@@ -56,7 +38,7 @@ internal sealed class CHSHSpectrumDocument : IScribeDocumentDefinition
                         + "tensor-commutator obligation and remains open beyond this module. The "
                         + "epsilon-cubed probability law and its Dirichlet-volume argument are "
                         + "likewise outside this module's scope; no probability formula, volume "
-                        + "coefficient, or limiting error term is asserted here.")))))));
+                        + "coefficient, or limiting error term is asserted here."))), DescribeRole.Theorem))));
 
     private static Formula CubicCoefficientFormula() => Disp(Seq(
         D(0), Lt, F.Id("N"), Lt, D(4), Comma, Quad, Sp,

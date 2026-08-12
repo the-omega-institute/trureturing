@@ -6,18 +6,8 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Divergence;
 
 internal sealed class MarginalMonotoneDocument : IScribeDocumentDefinition
 {
-    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
-        Header(
-            "D5/S3/Divergence/MarginalMonotone",
-            "Taking the first-coordinate marginal cannot increase finite real-valued classical KL divergence."),
-        H("Marginal Monotonicity of Finite Classical KL Divergence"),
-        Blocks(
-            DocumentBlock.Describe.Theorem(
-                DescribeId.Create("first-coordinate-marginal-does-not-increase-finite-classical-kl-divergence"),
-                H("The first-coordinate marginal does not increase finite classical KL divergence"),
-                LeanTheorem(
-                    "D5/S3/Divergence/MarginalMonotone.kl_divergence_marginal_le"),
-                Disp(Seq(
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create("Taking the first-coordinate marginal cannot increase finite real-valued classical KL divergence.", H("Marginal Monotonicity of Finite Classical KL Divergence"), Blocks(
+            Describe.Lean(DescribeId.Create("first-coordinate-marginal-does-not-increase-finite-classical-kl-divergence"), DeclarationHandle.Create("D5/S3/Divergence/MarginalMonotone.kl_divergence_marginal_le"), H("The first-coordinate marginal does not increase finite classical KL divergence"), StatementSource.FromAuthor(Disp(Seq(
                     Begin, Grp(F.Id("gathered")),
                     Forall, Sp, Iota, Comma, Sp, Kappa, Esc,
                     OpenBracket,
@@ -42,9 +32,7 @@ internal sealed class MarginalMonotoneDocument : IScribeDocumentDefinition
                     Sp, Le, Sp,
                     F.Id("D"), Open,
                     F.Id("p"), Vert, Vert, Sp, F.Id("q"), Close, Dot,
-                    End, Grp(F.Id("gathered")))),
-                DescribeProvenance.RepoDerived(),
-                Blocks(
+                    End, Grp(F.Id("gathered"))))), AssessedProvenance.FromRepo(), Blocks(
                     Paragraph(Text(
                         "Let iota and kappa be finite types, and let p and q be strictly " +
                         "positive real functions on their product. Only strict positivity of " +
@@ -74,5 +62,5 @@ internal sealed class MarginalMonotoneDocument : IScribeDocumentDefinition
                     Paragraph(Text(
                         "This module claims monotonicity only under taking the first-coordinate " +
                         "marginal; it does not claim a general data-processing inequality over " +
-                        "arbitrary channels.")))))));
+                        "arbitrary channels."))), DescribeRole.Theorem))));
 }
