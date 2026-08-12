@@ -3,7 +3,7 @@ using Xunit.Sdk;
 
 namespace StrataLint.Tests;
 
-[Trait("Category", "Script")] public sealed class ReportSupervisorTestWatchdogTests
+public sealed class ReportSupervisorTestWatchdogTests
 {
     [Fact]
     public void TimeoutKillsTrackedProcessAndReportsCapturedError()

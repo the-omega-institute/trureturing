@@ -4,7 +4,7 @@ using StrataLint.Engine;
 
 namespace StrataLint.Tests;
 
-[Trait("Category", "Script")] public sealed class CleanLanesCommandTests
+public sealed class CleanLanesCommandTests
 {
     [Fact]
     public void RootUsageListsCleanLanesCommand()

@@ -4,7 +4,7 @@ using System.Text.RegularExpressions;
 
 namespace StrataLint.Tests;
 
-[Trait("Category", "Script")] public sealed class AdmissionWorkflowTests
+public sealed class AdmissionWorkflowTests
 {
     private const string ProjectionTest =
         "StrataLint.Scribe.Tests.StatementProjectionPilotTests.LiveReportMatchesPinnedFixtureWhenAvailable";
