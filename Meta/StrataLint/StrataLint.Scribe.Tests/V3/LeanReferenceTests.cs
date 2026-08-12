@@ -77,21 +77,22 @@ public sealed class LeanReferenceTests
             Heading.Create("Compiled statement fixture"),
             BlockSequence.Create(
             [
-                DocumentBlock.Describe.Theorem(
+                Describe.Lean(
                     DescribeId.Create("compiled-theorem"),
+                    DeclarationHandle.Create(reference.Value),
                     Heading.Create("Compiled theorem"),
-                    reference,
-                    new Formula.Layout(
+                    StatementSource.FromAuthor(new Formula.Layout(
                         FormulaLayoutMode.Inline,
                         new Formula.Relation(
                             new Formula.Symbol(FormulaIdentifier.Create("x")),
                             FormulaRelationOperator.Equal,
-                            new Formula.Symbol(FormulaIdentifier.Create("x")))),
-                    DescribeProvenance.RepoDerived(),
+                            new Formula.Symbol(FormulaIdentifier.Create("x"))))),
+                    AssessedProvenance.FromRepo(),
                     BlockSequence.Create(
                     [
                         DefinitionDsl.Paragraph(DefinitionDsl.Text("Resolved statement.")),
-                    ])
+                    ]),
+                    DescribeRole.Theorem
                 ),
             ]));
 

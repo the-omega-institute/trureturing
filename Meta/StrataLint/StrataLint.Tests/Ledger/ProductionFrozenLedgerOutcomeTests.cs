@@ -16,9 +16,11 @@ public sealed partial class ProductionEnvironmentTests
 
         var outcome = Validate(fixture, CreateGateway(fixture));
 
-        AssertSl008Rejection(
+        var diagnostic = AssertSl008Rejection(
             outcome,
-            "candidate content-addressed ledger does not retain protected baseline file byte-for-byte");
+            "candidate content-addressed ledger does not retain protected baseline file byte-for-byte",
+            path);
+        Assert.DoesNotContain(FrozenLedgerChangeClassifier.LedgerPath, diagnostic.Render(), StringComparison.Ordinal);
     }
 
     // 冻结账本验证器**不是**只比文件字节:它还要拿账本去佐证 baselineDag 里的 Closed 模块。
@@ -68,9 +70,39 @@ public sealed partial class ProductionEnvironmentTests
 
         var outcome = Validate(fixture, CreateGateway(fixture));
 
-        AssertSl008Rejection(
+        var diagnostic = AssertSl008Rejection(
             outcome,
-            "candidate content-addressed ledger does not retain protected baseline file byte-for-byte");
+            "candidate content-addressed ledger does not retain protected baseline file byte-for-byte",
+            path);
+        Assert.DoesNotContain(FrozenLedgerChangeClassifier.LedgerPath, diagnostic.Render(), StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void ProductionValidatorReportsTheFirstPathAndCountForMultipleUnretainedAcceptedFiles()
+    {
+        var fixture = CreateFrozenValidatorFixture();
+        AppendCurrentReattestation(fixture);
+        var acceptedPaths = fixture.CurrentFiles.Keys
+            .Where(FrozenLedgerChangeClassifier.IsAcceptedEventPath)
+            .OrderBy(static path => path, StringComparer.Ordinal)
+            .ToArray();
+        Assert.Equal(3, acceptedPaths.Length);
+        fixture.BaselineFiles.Clear();
+        foreach (var pair in fixture.CurrentFiles)
+        {
+            fixture.BaselineFiles[pair.Key] = pair.Value;
+        }
+        var originalPath = acceptedPaths[0];
+        fixture.CurrentFiles.Remove(acceptedPaths[0]);
+        fixture.CurrentFiles[acceptedPaths[1]] += " ";
+
+        var outcome = Validate(fixture, CreateGateway(fixture));
+
+        var diagnostic = AssertSl008Rejection(
+            outcome,
+            "candidate content-addressed ledger does not retain protected baseline file byte-for-byte (2 baseline accepted files are missing or mutated)",
+            originalPath);
+        Assert.DoesNotContain(FrozenLedgerChangeClassifier.LedgerPath, diagnostic.Render(), StringComparison.Ordinal);
     }
 
     [Fact]
