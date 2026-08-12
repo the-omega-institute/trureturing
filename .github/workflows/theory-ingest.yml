@@ -23,6 +23,11 @@ jobs:
     name: Auto-ingest theory volumes
     runs-on: ubuntu-latest
     timeout-minutes: 30
+    env:
+      THEORY_INGEST_OVERLAY_PATHS: |-
+        Meta/StrataLint
+        Makefile
+        global.json
     steps:
       - name: Check out base (judge code)
         uses: actions/checkout@v4
@@ -49,8 +54,18 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          rsync -a --delete judge/Meta/StrataLint/ candidate/Meta/StrataLint/
-          cp judge/Makefile judge/global.json candidate/
+          mapfile -t overlay_paths <<< "$THEORY_INGEST_OVERLAY_PATHS"
+          for path in "${overlay_paths[@]}"; do
+            source="$GITHUB_WORKSPACE/judge/$path"
+            destination="$GITHUB_WORKSPACE/candidate/$path"
+            if [ -d "$source" ]; then
+              mkdir -p "$destination"
+              rsync -a --delete "$source/" "$destination"
+            else
+              mkdir -p "$(dirname "$destination")"
+              cp "$source" "$destination"
+            fi
+          done
 
       - name: Resolve base canonical Lean report address
         id: lean-report-input
@@ -149,8 +164,10 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
+          closure_args=("$GITHUB_WORKSPACE/candidate")
+          mapfile -t overlay_paths <<< "$THEORY_INGEST_OVERLAY_PATHS"
+          for path in "${overlay_paths[@]}"; do
+            closure_args+=(--exclude "$path")
+          done
           "$GITHUB_WORKSPACE/judge/Meta/StrataLint/scripts/workflow/theory-ingest-closure.sh" \
-            "$GITHUB_WORKSPACE/candidate" \
-            --exclude Meta/StrataLint \
-            --exclude Makefile \
-            --exclude global.json
+            "${closure_args[@]}"
