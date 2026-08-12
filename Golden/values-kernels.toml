@@ -55,10 +55,10 @@ lean_gid = "D5/S3/Constants/Values.cPhi"
 lean_statement_sha256 = "5f9f51e7c0f088361982d9b6725a133695f271cfe45db6a413b8e2a9c5fa9048"
 status = "emitted"
 definition = "-(1/(2*pi))*sum(k>=1,cos(4*pi*k*phi)*cot(pi*k*phi)/k)"
-error = "0.000000011"
+error = "0.00000002050367"
 method = "int-exact+Neumaier+full-window"
-reference_value = "0.045759332"
-reference_error = "0.000000011"
+reference_value = "0.045762523437719"
+reference_error = "0.000000000000001"
 refs = {}
 computation = "cphi"
 term_count = 3524577
@@ -93,7 +93,7 @@ definition = "Sturmian-Dirichlet value at s=0"
 method = "registered-open"
 reference_value = "-0.0862145"
 reference_error = "0.0000005"
-open_reason = "The E(N) sequence and epsilon-Abel extrapolation parameters are not defined executablely; Lean records only the registered reference center."
+open_reason = "This center is a round-143 certificate the source volume has since revoked; it is superseded there by the closed form (27-13*sqrt(5))/24 = -0.086203487812386. Adopting that form would have to change Values.t0, whose module is frozen and whose declared statements Reattest may not alter, so the correction needs a new module and is not carried here."
 refs = {}
 computation = "none"
 
@@ -120,7 +120,7 @@ formula = "2*sqrt(5)*T0+(137-61*sqrt(5))/24"
 method = "registered-open"
 reference_value = "-0.3605727"
 reference_error = "0.00015"
-open_reason = "The Lean relation is exact at the registered T0 reference center, but the underlying T0 computation remains untranslated."
+open_reason = "The Lean relation is exact at the registered T0 center, but that center is revoked upstream (see D5/T0) and this reference is the transcription the source volume marks stale. The relation itself is sound: evaluated at the superseding T0 it yields exactly 7*(1-sqrt(5))/24 = -0.360519826770772, so correcting T0 corrects this with no change of formula."
 refs = { T0 = "D5/T0" }
 computation = "none"
 
@@ -165,7 +165,7 @@ definition = "full-period mean of the exchange-loss profile"
 method = "registered-open"
 reference_value = "-0.00000717"
 reference_error = "0.00000003"
-open_reason = "The D(epsilon) kernel, epsilon grid, and resonance correction are not executablely specified; Lean records only the registered reference center."
+open_reason = "The source volume has revoked this center outright as a fitting artifact of a mis-set period, not as a constant with a corrected value, so there is nothing here left to compute. Retiring the entry would have to drop Values.deltaMean and deltaMean_neg from a frozen module, which Reattest forbids; the entry therefore stays and records the revocation."
 refs = {}
 computation = "none"
 
