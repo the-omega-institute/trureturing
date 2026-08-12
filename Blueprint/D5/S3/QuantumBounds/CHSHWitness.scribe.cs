@@ -6,21 +6,18 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.QuantumBounds;
 
 internal sealed class CHSHWitnessDocument : IScribeDocumentDefinition
 {
-    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
-        Header(
-            "D5/S3/QuantumBounds/CHSHWitness",
-            "A normalized Bell state and fixed Pauli observables attain the positive Tsirelson value."),
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create("A normalized Bell state and fixed Pauli observables attain the positive Tsirelson value.",
         H("A Tight CHSH Witness"),
         Blocks(
-            DocumentBlock.Describe.Theorem(
+            Describe.Lean(
                 DescribeId.Create("the-bell-witness-attains-the-positive-tsirelson-value"),
+                DeclarationHandle.Create("D5/S3/QuantumBounds/CHSHWitness.bell_chsh_value"),
                 H("The Bell witness attains the positive Tsirelson value"),
-                LeanTheorem("D5/S3/QuantumBounds/CHSHWitness.bell_chsh_value"),
-                Disp(Seq(
+                StatementSource.FromAuthor(Disp(Seq(
                     Operatorname, Grp(F.Id("tr")), Open,
                     Rho, Underscore, Grp(F.Id("Bell")), Sp, F.Id("S"), Close,
-                    Eq, D(2), Sqrt, Grp(D(2)), Dot)),
-                DescribeProvenance.RepoDerived(),
+                    Eq, D(2), Sqrt, Grp(D(2)), Dot))),
+                AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
                         "Let A0 be the Pauli Z matrix and A1 the Pauli X matrix. Let B0 be " +
@@ -39,5 +36,6 @@ internal sealed class CHSHWitnessDocument : IScribeDocumentDefinition
                         "Mathlib's tsirelson_inequality is the upstream source for the general CHSH " +
                         "upper bound. This declaration establishes only its explicit finite-dimensional " +
                         "tightness witness: it introduces no operator norm, eigenvalue classification, " +
-                        "spectral order, C-star matrix instance, or second proof of the upper bound.")))))));
+                        "spectral order, C-star matrix instance, or second proof of the upper bound."))),
+                DescribeRole.Theorem))));
 }

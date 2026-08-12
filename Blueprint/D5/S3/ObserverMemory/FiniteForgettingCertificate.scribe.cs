@@ -8,72 +8,69 @@ internal sealed class FiniteForgettingCertificateDocument : IScribeDocumentDefin
 {
     private const string LeanPrefix = "D5/S3/ObserverMemory/FiniteForgettingCertificate.";
 
-    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
-        Header(
-            "D5/S3/ObserverMemory/FiniteForgettingCertificate",
-            "Finite forgetting and recall histories preserve irreversible ledger marks and incompatible-claim separation."),
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create("Finite forgetting and recall histories preserve irreversible ledger marks and incompatible-claim separation.",
         H("Named Cognitive-State Forgetting Certificate"),
         Blocks(
-            DocumentBlock.Describe.Theorem(
+            Describe.Lean(
                 DescribeId.Create("the-cognitive-alphabet-has-six-named-states"),
+                DeclarationHandle.Create("D5/S3/ObserverMemory/FiniteForgettingCertificate.cognitive_state_card"),
                 H("The cognitive alphabet has six named states"),
-                LeanTheorem(LeanPrefix + "cognitive_state_card"),
-                CardFormula(),
-                DescribeProvenance.RepoDerived(),
+                StatementSource.FromAuthor(CardFormula()),
+                AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "The inductive alphabet consists exactly of Remember, NeverKnown, Forgotten, "
                     + "Misremember, Recall, and AccessRevoked. These are semantic constructors, "
                     + "not points of a coordinate product. The count supports the certificate but "
-                    + "does not serve as its principal invariant.")))
-            ),
-            DocumentBlock.Describe.Theorem(
+                    + "does not serve as its principal invariant."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("remember-forget-recall-is-a-nonempty-certified-history"),
+                DeclarationHandle.Create("D5/S3/ObserverMemory/FiniteForgettingCertificate.remember_forget_recall_certificate"),
                 H("Remember-forget-recall is a nonempty certified history"),
-                LeanTheorem(LeanPrefix + "remember_forget_recall_certificate"),
-                ConcreteHistoryFormula(),
-                DescribeProvenance.RepoDerived(),
+                StatementSource.FromAuthor(ConcreteHistoryFormula()),
+                AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "A concrete coherent Remember certificate executes Forget and then Recall as "
                     + "two distinct admitted transitions through Forgotten. The final Recall "
                     + "certificate still carries forgottenLogged and cannot simultaneously carry "
                     + "an open Misremember claim. This supplies an occupied, non-reflexive history "
-                    + "rather than relying on the reflexive case of finite closure.")))
-            ),
-            DocumentBlock.Describe.Theorem(
+                    + "rather than relying on the reflexive case of finite closure."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("access-revocation-is-terminal"),
+                DeclarationHandle.Create("D5/S3/ObserverMemory/FiniteForgettingCertificate.access_revoked_terminal"),
                 H("Access revocation is terminal"),
-                LeanTheorem(LeanPrefix + "access_revoked_terminal"),
-                TerminalFormula(),
-                DescribeProvenance.RepoDerived(),
+                StatementSource.FromAuthor(TerminalFormula()),
+                AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "AccessRevoked has no outgoing admitted action. Its certificate carries a typed "
                     + "revocation reason; this reason-bearing entry separates administrative loss "
-                    + "of access from epistemic Forgotten and cannot be silently rewritten.")))
-            ),
-            DocumentBlock.Describe.Theorem(
+                    + "of access from epistemic Forgotten and cannot be silently rewritten."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("misremember-cannot-jump-directly-to-recall"),
+                DeclarationHandle.Create("D5/S3/ObserverMemory/FiniteForgettingCertificate.misremember_cannot_recall_directly"),
                 H("Misremember cannot jump directly to Recall"),
-                LeanTheorem(LeanPrefix + "misremember_cannot_recall_directly"),
-                IncompatibleArcFormula(),
-                DescribeProvenance.RepoDerived(),
+                StatementSource.FromAuthor(IncompatibleArcFormula()),
+                AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "A false-memory claim must first be retracted to Forgotten. The dynamics has "
                     + "no direct Misremember-to-Recall arc, preventing a single transition from "
-                    + "treating incompatible false and accurate claims as interchangeable.")))
-            ),
-            DocumentBlock.Describe.Theorem(
+                    + "treating incompatible false and accurate claims as interchangeable."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("finite-histories-preserve-the-certificate-invariants"),
+                DeclarationHandle.Create("D5/S3/ObserverMemory/FiniteForgettingCertificate.finite_history_certificate"),
                 H("Finite histories preserve the certificate invariants"),
-                LeanTheorem(LeanPrefix + "finite_history_certificate"),
-                HistoryCertificateFormula(),
-                DescribeProvenance.RepoDerived(),
+                StatementSource.FromAuthor(HistoryCertificateFormula()),
+                AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "For every coherent source and every finite chain of admitted transitions, the "
                     + "target remains coherent. A prior Forgotten mark stays set; a prior "
                     + "reason-bearing AccessRevoked entry keeps the same reason; and the target "
                     + "cannot carry simultaneous active Misremember and Recall claims. This closure "
-                    + "and monotonicity result is the certificate's principal theorem.")))
-            ))));
+                    + "and monotonicity result is the certificate's principal theorem."))),
+                DescribeRole.Theorem))));
 
     private static Formula CardFormula() => Disp(Seq(
         Operatorname, Grp(F.Id("card")), Open, F.Id("CognitiveState"), Close,

@@ -6,18 +6,14 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum;
 
 internal sealed class MatrixInversionDocument : IScribeDocumentDefinition
 {
-    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
-        Header(
-            "D5/S3/Quantum/MatrixInversion",
-            "Weighted matrix inverses factor through an affine segment in noncommutative order."),
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create("Weighted matrix inverses factor through an affine segment in noncommutative order.",
         H("Affine Matrix Inversion"),
         Blocks(
-            DocumentBlock.Describe.Lemma(
+            Describe.Lean(
                 DescribeId.Create("weighted-inverses-factor-through-the-affine-segment"),
+                DeclarationHandle.Create("D5/S3/Quantum/MatrixInversion.positive_definite_inversion_identity"),
                 H("Weighted inverses factor through the affine segment"),
-                LeanTheorem(
-                    "D5/S3/Quantum/MatrixInversion.positive_definite_inversion_identity"),
-                Disp(Seq(
+                StatementSource.FromAuthor(Disp(Seq(
                     Forall, Sp, Rho, Comma, SigmaLower, Sp, InMacro, Sp,
                     F.Id("M"), Underscore, Grp(F.Id("n")), Open, Mathbb, Grp(F.Id("C")), Close,
                     Comma, Esc, Forall, Sp, F.Id("a"), Comma, F.Id("b"), Comma, F.Id("u"),
@@ -41,14 +37,14 @@ internal sealed class MatrixInversionDocument : IScribeDocumentDefinition
                     Open,
                     Open, D(1), Minus, F.Id("u"), Close, Cdot, SigmaLower, Plus,
                     F.Id("u"), Cdot, Rho,
-                    Close, Caret, Grp(Minus, D(1)), Cdot, Rho)),
-                DescribeProvenance.RepoDerived(),
+                    Close, Caret, Grp(Minus, D(1)), Cdot, Rho))),
+                AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "For positive-definite finite square complex matrices rho and sigma, positive real "
                     + "numbers a and b, and u in the closed unit interval, the weighted inverse sum "
                     + "factors through the affine segment. The inverse of the corresponding weighted "
                     + "sum is sigma times the inverse segment times rho, in that order. No commutativity "
                     + "of rho and sigma is assumed. The formal module also exposes the factorization "
-                    + "and affine inverse identity as independent interfaces.")))
-            ))));
+                    + "and affine inverse identity as independent interfaces."))),
+                DescribeRole.Lemma))));
 }

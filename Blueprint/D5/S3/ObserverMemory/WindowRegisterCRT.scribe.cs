@@ -6,19 +6,15 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.ObserverMemory;
 
 internal sealed class WindowRegisterCrtDocument : IScribeDocumentDefinition
 {
-    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
-        Header(
-            "D5/S3/ObserverMemory/WindowRegisterCRT",
-            "Coprime finite window clocks and shifts split into two exact CRT tensor factors."),
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create("Coprime finite window clocks and shifts split into two exact CRT tensor factors.",
         H("Coprime Tensor Factorization of a Window Register"),
         Blocks(
-            DocumentBlock.Describe.Theorem(
+            Describe.Lean(
                 DescribeId.Create("window-register-splits-over-two-coprime-factors"),
+                DeclarationHandle.Create("D5/S3/ObserverMemory/WindowRegisterCRT.window_register_crt_decomposition"),
                 H("A window register splits over two coprime factors"),
-                LeanTheorem(
-                    "D5/S3/ObserverMemory/WindowRegisterCRT.window_register_crt_decomposition"),
-                CrtDecompositionFormula(),
-                DescribeProvenance.RepoDerived(),
+                StatementSource.FromAuthor(CrtDecompositionFormula()),
+                AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
                         "Let m and n be positive coprime window cardinalities. The canonical " +
@@ -35,7 +31,8 @@ internal sealed class WindowRegisterCrtDocument : IScribeDocumentDefinition
                         "is the Kronecker product of the two frozen factor shifts. This theorem " +
                         "is the binary coprime decomposition step, applicable in particular to " +
                         "two distinct prime-power factors; it does not assert an iterated " +
-                        "prime-power tower.")))))));
+                        "prime-power tower."))),
+                DescribeRole.Theorem))));
 
     private static Formula CrtDecompositionFormula() => Disp(Seq(
         Gcd, Open, F.Id("m"), Comma, F.Id("n"), Close, Eq, D(1), Sp,
