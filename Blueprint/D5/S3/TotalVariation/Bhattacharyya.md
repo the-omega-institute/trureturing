@@ -6,7 +6,7 @@ Finite Bhattacharyya affinity links total variation and relative entropy through
 
 **Definition 1.1 (Finite Bhattacharyya affinity is the square-root product sum).**
 
-Lean statement: `D5/S3/TotalVariation/Bhattacharyya.bhattacharyya`
+$$\begin{gathered}\forall \iota\ [\operatorname{Fintype}(\iota)],\\\forall p, q: \iota\to \mathbb{R},\\\operatorname{BC}(p, q):=\sum _{i} \sqrt {p(i)q(i)}.\end{gathered}$$
 
 *Formalization.* `D5/S3/TotalVariation/Bhattacharyya.bhattacharyya` (`✓ std3`).
 

@@ -21,7 +21,7 @@ internal sealed class LogDerivTraceDocument : IScribeDocumentDefinition
                     DeclarationHandle.Create(
                         "D5/S3/Divergence/LogDerivTrace.logDeriv"),
                     H("Integral logarithmic directional derivative"),
-                    StatementSource.FromAuthor(FormulaDsl.Disp(FormulaDsl.Id("logDeriv"))),
+                    StatementSource.WithoutFormula(),
                     AssessedProvenance.FromRepo(),
                     Blocks(
                         Paragraph(Text(

@@ -302,8 +302,7 @@ public abstract record DocumentBlock
                 new DescribeProvenanceSource.Assessed(
                     provenance ?? throw new ArgumentNullException(nameof(provenance))),
                 content,
-                role is DescribeRole.Theorem or DescribeRole.Proposition or DescribeRole.Lemma
-                    ? materialized.Formula : null,
+                materialized.Formula,
                 new DescribeKindSource.ReportDerived(handle, role),
                 materialized.Source);
         }

@@ -16,7 +16,7 @@ internal sealed class GoldenUniformRecurrenceDocument : IScribeDocumentDefinitio
                 DescribeId.Create("golden-recurrence-bound"),
                 DeclarationHandle.Create("D5/S1/Words/GoldenUniformRecurrence.goldenRecurrenceBound"),
                 H("The recurrence window is an explicit Fibonacci quantity"),
-                StatementSource.FromLean(),
+                StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "For a factor length n, let k be the greatest Fibonacci index with "

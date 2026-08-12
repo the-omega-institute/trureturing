@@ -17,7 +17,11 @@ internal sealed class GoldenSubstFixedDocument : IScribeDocumentDefinition
                 DescribeId.Create("substitution-block-start"),
                 DeclarationHandle.Create("D5/S1/Words/GoldenSubstFixed.goldenSubstStart"),
                 H("True-count partial sums locate substitution block starts"),
-                StatementSource.FromLean(),
+                StatementSource.FromAuthor(Disp(Seq(
+                    Operatorname, Grp(F.Id("goldenSubstStart")), Open, F.Id("i"), Close, Eq,
+                    F.Id("i"), Plus,
+                    Operatorname, Grp(F.Id("goldenWindowTrueCount")),
+                    Open, D(0), Comma, F.Id("i"), Close))),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "The image of each true letter has length two, while the image of each "

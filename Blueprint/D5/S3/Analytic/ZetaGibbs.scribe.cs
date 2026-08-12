@@ -20,7 +20,7 @@ internal sealed class ZetaGibbsDocument : IScribeDocumentDefinition
                 DescribeId.Create("logarithmic-energy-has-zeta-boltzmann-weight"),
                 DeclarationHandle.Create("D5/S3/Analytic/ZetaGibbs.weight"),
                 H("Logarithmic energy has zeta Boltzmann weight"),
-                StatementSource.FromAuthor(FormulaDsl.Disp(FormulaDsl.Id("weight"))),
+                StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "For a natural-number state n and real inverse temperature s, the weight " +
@@ -33,7 +33,7 @@ internal sealed class ZetaGibbsDocument : IScribeDocumentDefinition
                 DescribeId.Create("the-partition-function-is-the-total-zeta-weight"),
                 DeclarationHandle.Create("D5/S3/Analytic/ZetaGibbs.partitionFunction"),
                 H("The partition function is the total zeta weight"),
-                StatementSource.FromAuthor(FormulaDsl.Disp(FormulaDsl.Id("partitionFunction"))),
+                StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "The partition function Z(s) is the ENNReal sum of all logarithmic " +
@@ -71,7 +71,7 @@ internal sealed class ZetaGibbsDocument : IScribeDocumentDefinition
                 DescribeId.Create("normalization-produces-the-zeta-pmf"),
                 DeclarationHandle.Create("D5/S3/Analytic/ZetaGibbs.zetaDist"),
                 H("Normalization produces the zeta PMF"),
-                StatementSource.FromAuthor(FormulaDsl.Disp(FormulaDsl.Id("zetaDist"))),
+                StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "For s > 1, PMF.normalize applies to the zeta weight because its total is " +

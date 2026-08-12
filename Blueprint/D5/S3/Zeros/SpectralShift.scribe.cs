@@ -22,7 +22,7 @@ internal sealed class SpectralShiftDocument : IScribeDocumentDefinition
                 DescribeId.Create("a-backward-shift-pulls-coefficients-along-address-addition"),
                 DeclarationHandle.Create("D5/S3/Zeros/SpectralShift.backwardShift"),
                 H("A backward shift pulls coefficients along address addition"),
-                StatementSource.FromAuthor(FormulaDsl.Id("backwardShift")),
+                StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(
                                     Text("For a supplied PrimeAxisTable address u and arbitrary coefficient family x, the definition evaluates x at the normalized table sum a plus u. It is a pointwise family pullback, not a bundled bounded Hilbert-space operator, an adjoint theorem, or the source's basis-level truncating divisibility operator. "),

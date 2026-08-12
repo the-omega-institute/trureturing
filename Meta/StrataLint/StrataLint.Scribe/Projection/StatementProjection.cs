@@ -478,7 +478,7 @@ internal static class StatementProjectionFixtureLoader
     internal const string ProjectorEpoch = "statement-projector-v1";
     internal sealed record Assessment(ProjectionOutcome Outcome, string DeclarationContentDigest);
     private static readonly AsyncLocal<string?> RepositoryRoot = new();
-    private static readonly Dictionary<string, ImmutableDictionary<string, string>> StatementsByRoot =
+    private static readonly Dictionary<string, ImmutableDictionary<string, StatementEntry>> StatementsByRoot =
         new(StringComparer.Ordinal);
     private static readonly ConditionalWeakTable<Formula, LeanDeclarationRef> Derived = new();
 
@@ -487,7 +487,7 @@ internal static class StatementProjectionFixtureLoader
         ArgumentNullException.ThrowIfNull(declaration);
         var declarationName = declaration.Value.Replace('/', '.');
         var statements = StatementsForCurrentRepository();
-        if (!statements.TryGetValue(declarationName, out var encoded))
+        if (!statements.TryGetValue(declarationName, out var entry))
         {
             var matches = statements
                 .Where(pair => pair.Key.EndsWith('.' + declaration.DeclarationName, StringComparison.Ordinal))
@@ -495,8 +495,9 @@ internal static class StatementProjectionFixtureLoader
                 .ToArray();
             if (matches.Length != 1)
                 throw new InvalidOperationException($"Pinned statement-v1 fixture has no unique declaration: {declarationName}");
-            encoded = matches[0];
+            entry = matches[0];
         }
+        var encoded = entry!.Type;
 
         var formula = StatementProjector.Project(StatementV1Decoder.Decode(encoded).Type) switch
         {
@@ -521,7 +522,7 @@ internal static class StatementProjectionFixtureLoader
         ArgumentNullException.ThrowIfNull(declaration);
         var declarationName = declaration.Value.Replace('/', '.');
         var statements = StatementsForCurrentRepository();
-        if (!statements.TryGetValue(declarationName, out var encoded))
+        if (!statements.TryGetValue(declarationName, out var entry))
         {
             var matches = statements.Where(pair => pair.Key.EndsWith('.' + declaration.DeclarationName, StringComparison.Ordinal)).ToArray();
             if (matches.Length != 1)
@@ -531,8 +532,23 @@ internal static class StatementProjectionFixtureLoader
                     new ProjectionOutcome.Unprojectable(missing),
                     Convert.ToHexString(SHA256.HashData(Encoding.UTF8.GetBytes(missing))).ToLowerInvariant());
             }
-            encoded = matches[0].Value;
+            entry = matches[0].Value;
         }
+
+        // The projector projects the declaration's *type*. For a theorem the type is the proposition,
+        // so projecting it restates nothing the author owns. For a def, an inductive, or a structure the
+        // type is only the signature — the defining body never reaches the projector — so a projected
+        // statement there would present a signature as if it were the definition. Judge those
+        // unprojectable, which leaves the author free to state the definition and records the gap.
+        // The check sits after resolution so the short-name fallback above is covered too.
+        if (!string.Equals(entry.Kind, "theorem", StringComparison.Ordinal))
+        {
+            var reason = "non-propositional-declaration:" + entry.Kind;
+            return new Assessment(new ProjectionOutcome.Unprojectable(reason),
+                Convert.ToHexString(SHA256.HashData(Encoding.UTF8.GetBytes(reason))).ToLowerInvariant());
+        }
+
+        var encoded = entry.Type;
         var digest = Convert.ToHexString(SHA256.HashData(Encoding.UTF8.GetBytes(encoded))).ToLowerInvariant();
         try
         {
@@ -568,7 +584,7 @@ internal static class StatementProjectionFixtureLoader
         }
     }
 
-    private static ImmutableDictionary<string, string> StatementsForCurrentRepository()
+    private static ImmutableDictionary<string, StatementEntry> StatementsForCurrentRepository()
     {
         var repositoryRoot = RepositoryRoot.Value ?? FindRepositoryRoot();
         lock (StatementsByRoot)
@@ -583,7 +599,7 @@ internal static class StatementProjectionFixtureLoader
         }
     }
 
-    private static ImmutableDictionary<string, string> LoadStatements(string repositoryRoot)
+    private static ImmutableDictionary<string, StatementEntry> LoadStatements(string repositoryRoot)
     {
         var fixtureDirectory = FixtureDirectory(repositoryRoot);
         var fixtures = new[]
@@ -591,7 +607,7 @@ internal static class StatementProjectionFixtureLoader
             (Name: "statement-projection-pilot-v1.json", Schema: "statement-projection-pilot-fixture-v1"),
             (Name: "statement-projection-expansion-v1.json", Schema: "statement-projection-expansion-fixture-v1")
         };
-        var declarations = ImmutableDictionary.CreateBuilder<string, string>(StringComparer.Ordinal);
+        var declarations = ImmutableDictionary.CreateBuilder<string, StatementEntry>(StringComparer.Ordinal);
         foreach (var fixtureSpec in fixtures)
         {
             var path = Path.Combine(fixtureDirectory, fixtureSpec.Name);
@@ -611,7 +627,15 @@ internal static class StatementProjectionFixtureLoader
                     ?? throw new FormatException($"Projection fixture has a null declaration name: {path}");
                 var statement = declaration.GetProperty("type").GetString()
                     ?? throw new FormatException($"Projection fixture has a null statement-v1 value: {name}");
-                if (!declarations.TryAdd(name, statement))
+                // The kind is load-bearing, not decoration: the engineering CI job runs without a raw
+                // Lean report and decides projectability from this file alone. A pinned entry whose kind
+                // is absent would be judged differently in the two environments, so refuse to load it.
+                var kind = declaration.TryGetProperty("kind", out var kindElement)
+                    ? kindElement.GetString()
+                    : throw new FormatException($"Projection fixture declaration has no kind: {name}");
+                if (string.IsNullOrEmpty(kind))
+                    throw new FormatException($"Projection fixture declaration has an empty kind: {name}");
+                if (!declarations.TryAdd(name, new StatementEntry(statement, kind)))
                     throw new FormatException($"Duplicate projection fixture declaration: {name}");
             }
         }
@@ -624,7 +648,9 @@ internal static class StatementProjectionFixtureLoader
             {
                 var name = declaration.GetProperty("name").GetString()!;
                 var statement = declaration.GetProperty("type").GetString()!;
-                declarations[name] = statement;
+                var kind = declaration.TryGetProperty("kind", out var kindElement)
+                    ? kindElement.GetString() ?? "unknown" : "unknown";
+                declarations[name] = new StatementEntry(statement, kind);
             }
         }
         return declarations.ToImmutable();
@@ -644,6 +670,8 @@ internal static class StatementProjectionFixtureLoader
             "Could not locate repository root containing Golden/Projection statement fixtures.");
     }
 }
+
+internal sealed record StatementEntry(string Type, string Kind);
 
 internal sealed record ProjectionCase(string Name, Formula Formula, string Difference, ImmutableArray<string> Unprojectable);
 internal sealed record ProjectionRun(ImmutableArray<ProjectionCase> Cases, string Report, int NotationSize);
