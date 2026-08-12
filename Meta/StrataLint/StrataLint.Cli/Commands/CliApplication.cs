@@ -1,3 +1,4 @@
+using System.Collections.Immutable;
 using StrataLint.Engine;
 
 namespace StrataLint.Cli;
@@ -72,6 +73,71 @@ internal sealed class SystemCliConsole : ICliConsole
 
 internal static class CliApplication
 {
+    // 这张表是动词的唯一真源:dispatch 查它,USAGE 由它渲染,`CliVerbLinkageTests` 也据它
+    // 判 Makefile 与脚本里的调用是否悬空。此前 USAGE 是手抄的第二份清单,于是它声明了
+    // 五个 dispatch 里不存在的动词(c0-verify、c0-reconcile-trust-root、golden-record、
+    // verify-conservative、evaluate-conservative-corpus),又漏掉了实现着的 dag-render。
+    private static readonly ImmutableDictionary<
+        string,
+        Func<ICliEnvironment, string[], ICliConsole, int>> Handlers =
+        new Dictionary<string, Func<ICliEnvironment, string[], ICliConsole, int>>(StringComparer.Ordinal)
+        {
+            ["align-scribe-receipt"] = static (environment, tail, console) =>
+                RenderCommand(environment.AlignScribeReceipt(tail), console),
+            ["check"] = static (environment, tail, console) =>
+                RenderAdmission(environment.Check(tail), console),
+            ["clean-lanes"] = static (environment, tail, console) =>
+                RenderCommand(environment.CleanLanes(tail), console),
+            ["coverage"] = static (environment, tail, console) =>
+                RenderCommand(environment.Coverage(tail), console),
+            ["cover-atom"] = static (environment, tail, console) =>
+                RenderCommand(environment.CoverAtom(tail), console),
+            ["dag-render"] = static (environment, tail, console) =>
+                RenderCommand(environment.RenderDag(tail), console),
+            ["digest-status"] = static (environment, tail, console) =>
+                RenderCommand(environment.DigestStatus(tail), console),
+            ["echo-verify"] = static (environment, tail, console) =>
+                RenderExplicit(environment.EchoVerify(tail), console),
+            ["emit-formalization-receipt"] = static (environment, tail, console) =>
+                RenderCommand(environment.EmitFormalizationReceipt(tail), console),
+            ["gate-authority"] = static (environment, tail, console) =>
+                RenderExplicit(environment.GateAuthority(tail), console),
+            ["ingest"] = static (environment, tail, console) =>
+                RenderCommand(environment.Ingest(tail), console),
+            ["ledger-append"] = static (environment, tail, console) =>
+                RenderCommand(environment.AppendLedger(tail), console),
+            ["ledger-genesis"] = static (environment, tail, console) =>
+                RenderCommand(environment.GenerateLedger(tail), console),
+            ["ledger-reattest"] = static (environment, tail, console) =>
+                RenderCommand(environment.ReattestLedger(tail), console),
+            ["lean-report-merge"] = static (_, tail, console) =>
+                RenderCommand(LeanReportMergeCommand.Run(tail), console),
+            ["papergen"] = static (environment, tail, console) =>
+                RenderExplicit(environment.Papergen(tail), console),
+            ["perf-append"] = static (environment, tail, console) =>
+                RenderCommand(environment.AppendPerf(tail), console),
+            ["perf-report"] = static (environment, tail, console) =>
+                RenderCommand(environment.PerfReport(tail), console),
+            ["route"] = static (environment, tail, console) =>
+                RenderCommand(environment.Route(tail), console),
+            ["selftest"] = static (environment, tail, console) =>
+                RenderCommand(environment.SelfTest(tail), console),
+            ["show-atom"] = static (environment, tail, console) =>
+                RenderCommand(environment.ShowAtom(tail), console),
+            ["topology"] = static (environment, tail, console) =>
+                RenderTopology(environment.Topology(tail), console),
+            ["validate-blueprint-pins"] = static (environment, tail, console) =>
+                RenderExplicit(environment.ValidateBlueprintPins(tail), console),
+            ["worktree"] = static (environment, tail, console) =>
+                RenderCommand(environment.Worktree(tail), console),
+        }.ToImmutableDictionary(StringComparer.Ordinal);
+
+    internal static ImmutableArray<string> ImplementedCommands { get; } =
+        [.. Handlers.Keys.Order(StringComparer.Ordinal)];
+
+    private static string Usage =>
+        "USAGE: StrataLint " + string.Join('|', ImplementedCommands) + "\n";
+
     internal static int Run(
         IReadOnlyList<string> arguments,
         ICliEnvironment environment,
@@ -106,42 +172,14 @@ internal static class CliApplication
     {
         if (arguments.Count == 0)
         {
-            console.WriteError(
-                "USAGE: StrataLint align-scribe-receipt|c0-reconcile-trust-root|c0-verify|check|clean-lanes|coverage|cover-atom|digest-status|echo-verify|emit-formalization-receipt|ingest|golden-record|lean-report-merge|ledger-genesis|papergen|route|selftest|show-atom|topology|validate-blueprint-pins|worktree|ledger-append|ledger-reattest|perf-append|perf-report|verify-conservative|evaluate-conservative-corpus|gate-authority\n");
+            console.WriteError(Usage);
             return 2;
         }
 
         var tail = arguments.Skip(1).ToArray();
-        return arguments[0] switch
-        {
-            "align-scribe-receipt" => RenderCommand(environment.AlignScribeReceipt(tail), console),
-            "check" => RenderAdmission(environment.Check(tail), console),
-            "clean-lanes" => RenderCommand(environment.CleanLanes(tail), console),
-            "coverage" => RenderCommand(environment.Coverage(tail), console),
-            "cover-atom" => RenderCommand(environment.CoverAtom(tail), console),
-            "emit-formalization-receipt" =>
-                RenderCommand(environment.EmitFormalizationReceipt(tail), console),
-            "dag-render" => RenderCommand(environment.RenderDag(tail), console),
-            "digest-status" => RenderCommand(environment.DigestStatus(tail), console),
-            "echo-verify" => RenderExplicit(environment.EchoVerify(tail), console),
-            "gate-authority" => RenderExplicit(environment.GateAuthority(tail), console),
-            "ingest" => RenderCommand(environment.Ingest(tail), console),
-            "ledger-genesis" => RenderCommand(environment.GenerateLedger(tail), console),
-            "ledger-append" => RenderCommand(environment.AppendLedger(tail), console),
-            "ledger-reattest" => RenderCommand(environment.ReattestLedger(tail), console),
-            "lean-report-merge" => RenderCommand(LeanReportMergeCommand.Run(tail), console),
-            "papergen" => RenderExplicit(environment.Papergen(tail), console),
-            "perf-append" => RenderCommand(environment.AppendPerf(tail), console),
-            "perf-report" => RenderCommand(environment.PerfReport(tail), console),
-            "route" => RenderCommand(environment.Route(tail), console),
-            "selftest" => RenderCommand(environment.SelfTest(tail), console),
-            "show-atom" => RenderCommand(environment.ShowAtom(tail), console),
-            "topology" => RenderTopology(environment.Topology(tail), console),
-            "validate-blueprint-pins" =>
-                RenderExplicit(environment.ValidateBlueprintPins(tail), console),
-            "worktree" => RenderCommand(environment.Worktree(tail), console),
-            _ => UnknownCommand(arguments[0], console),
-        };
+        return Handlers.TryGetValue(arguments[0], out var handler)
+            ? handler(environment, tail, console)
+            : UnknownCommand(arguments[0], console);
     }
 
     private static int RenderTopology(AdmissionTopologyOutcome outcome, ICliConsole console)
