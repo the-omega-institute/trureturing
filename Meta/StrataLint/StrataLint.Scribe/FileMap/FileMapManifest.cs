@@ -32,7 +32,6 @@ internal sealed record FileMapEntry
         ImmutableArray<string> consumedBy,
         ImmutableArray<string> verifiedBy,
         bool residenceViolation,
-        string authority,
         string artifactId,
         string? mode,
         string runtimeDisposition,
@@ -45,7 +44,6 @@ internal sealed record FileMapEntry
         ConsumedBy = consumedBy;
         VerifiedBy = verifiedBy;
         ResidenceViolation = residenceViolation;
-        Authority = authority;
         ArtifactId = artifactId;
         Mode = mode;
         RuntimeDisposition = runtimeDisposition;
@@ -63,8 +61,6 @@ internal sealed record FileMapEntry
     internal ImmutableArray<string> VerifiedBy { get; }
 
     internal bool ResidenceViolation { get; }
-
-    internal string Authority { get; }
 
     internal string ArtifactId { get; }
 
@@ -104,11 +100,11 @@ internal static class FileMapLoader
         "^[A-Za-z][A-Za-z0-9.-]*$",
         RegexOptions.CultureInvariant | RegexOptions.NonBacktracking);
     private static readonly string[] EntryKeys =
-        ["artifact_id", "authority", "consumed_by", "kind", "pattern", "produced_by", "runtime_disposition", "verified_by"];
+        ["artifact_id", "consumed_by", "kind", "pattern", "produced_by", "runtime_disposition", "verified_by"];
     private static readonly string[] ResidenceEntryKeys =
-        ["artifact_id", "authority", "consumed_by", "kind", "pattern", "produced_by", "residence_violation", "runtime_disposition", "verified_by"];
+        ["artifact_id", "consumed_by", "kind", "pattern", "produced_by", "residence_violation", "runtime_disposition", "verified_by"];
     private static readonly string[] RunLocalEntryKeys =
-        ["artifact_id", "authority", "consumed_by", "history_requirement", "kind", "mode", "pattern", "produced_by", "runtime_disposition", "verified_by"];
+        ["artifact_id", "consumed_by", "history_requirement", "kind", "mode", "pattern", "produced_by", "runtime_disposition", "verified_by"];
     private static readonly string[] GeneratedArtifactEntryKeys = RunLocalEntryKeys;
 
     internal static FileMapManifest LoadRepository(string repositoryRoot)
@@ -272,7 +268,6 @@ internal static class FileMapLoader
                     : "generated verified_by must include its producer");
         }
 
-        var authority = RequiredName(table, "authority", location, allowNone: false);
         var artifactId = RequiredName(table, "artifact_id", location, allowNone: true);
         var runtimeDisposition = RequiredString(table, "runtime_disposition", location);
         _ = runtimeDisposition switch
@@ -310,7 +305,6 @@ internal static class FileMapLoader
             consumedBy,
             verifiedBy,
             residenceViolation,
-            authority,
             artifactId,
             mode,
             runtimeDisposition,

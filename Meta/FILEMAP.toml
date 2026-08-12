@@ -12,7 +12,6 @@ kind = "program"
 produced_by = "none"
 consumed_by = ["automation"]
 verified_by = ["make-gate"]
-authority = "self"
 artifact_id = "none"
 runtime_disposition = "committed-source"
 
@@ -22,7 +21,6 @@ kind = "truth"
 produced_by = "none"
 consumed_by = ["Lean", "Scribe", "StrataLint"]
 verified_by = ["lean-build", "lean-inspector"]
-authority = "self"
 artifact_id = "none"
 runtime_disposition = "committed-source"
 
@@ -32,7 +30,6 @@ kind = "program"
 produced_by = "none"
 consumed_by = ["dotnet"]
 verified_by = ["make-gate"]
-authority = "self"
 artifact_id = "none"
 runtime_disposition = "committed-source"
 
@@ -42,7 +39,6 @@ kind = "program"
 produced_by = "none"
 consumed_by = ["Lean"]
 verified_by = ["make-gate"]
-authority = "self"
 artifact_id = "none"
 runtime_disposition = "committed-source"
 
@@ -52,7 +48,6 @@ kind = "program"
 produced_by = "none"
 consumed_by = ["GitHub-Actions"]
 verified_by = ["make-gate"]
-authority = "self"
 artifact_id = "none"
 runtime_disposition = "committed-source"
 
@@ -62,7 +57,6 @@ kind = "program"
 produced_by = "none"
 consumed_by = ["git"]
 verified_by = ["repository-policy"]
-authority = "self"
 artifact_id = "none"
 runtime_disposition = "committed-source"
 
@@ -72,7 +66,6 @@ kind = "program"
 produced_by = "none"
 consumed_by = ["agent"]
 verified_by = ["repository-policy"]
-authority = "self"
 artifact_id = "none"
 runtime_disposition = "committed-source"
 
@@ -82,7 +75,6 @@ kind = "generated"
 produced_by = "ScribeEmitter"
 consumed_by = ["reader"]
 verified_by = ["ScribeEmitter"]
-authority = "self"
 artifact_id = "none"
 runtime_disposition = "committed-source"
 
@@ -92,7 +84,6 @@ kind = "data"
 produced_by = "none"
 consumed_by = ["ScribeEmitter"]
 verified_by = ["ScribeCompiler"]
-authority = "self"
 artifact_id = "none"
 runtime_disposition = "committed-source"
 
@@ -102,7 +93,6 @@ kind = "program"
 produced_by = "none"
 consumed_by = ["agent"]
 verified_by = ["repository-policy"]
-authority = "self"
 artifact_id = "none"
 runtime_disposition = "committed-source"
 
@@ -112,7 +102,6 @@ kind = "truth"
 produced_by = "none"
 consumed_by = ["Lean", "Scribe", "StrataLint"]
 verified_by = ["lean-build", "lean-inspector"]
-authority = "self"
 artifact_id = "none"
 runtime_disposition = "committed-source"
 
@@ -122,7 +111,6 @@ kind = "ledger"
 produced_by = "none"
 consumed_by = ["Admission"]
 verified_by = ["SL-002"]
-authority = "self"
 artifact_id = "none"
 runtime_disposition = "committed-ledger"
 
@@ -132,7 +120,6 @@ kind = "generated"
 produced_by = "ValuesEmitter"
 consumed_by = ["reader"]
 verified_by = ["ValuesEmitter"]
-authority = "value-kernel"
 artifact_id = "A-VALUES"
 runtime_disposition = "committed-source"
 mode = "100644"
@@ -148,7 +135,6 @@ produced_by = "DagEmitter"
 consumed_by = ["reader"]
 runtime_disposition = "run-local"
 verified_by = ["DagEmitter"]
-authority = "Lean"
 
 [[files]]
 pattern = "Generated/FILEMAP.md"
@@ -160,7 +146,6 @@ produced_by = "FileMapEmitter"
 consumed_by = ["reader"]
 runtime_disposition = "run-local"
 verified_by = ["FileMapEmitter"]
-authority = "FILEMAP"
 
 [[files]]
 pattern = "Generated/echo-residuals/*.md"
@@ -168,7 +153,6 @@ kind = "generated"
 produced_by = "EchoVerifyCommand"
 consumed_by = ["reader"]
 verified_by = ["EchoVerifyCommand"]
-authority = "digestion"
 artifact_id = "none"
 runtime_disposition = "run-local"
 
@@ -178,7 +162,6 @@ kind = "generated"
 produced_by = "DagEmitter"
 consumed_by = ["TruthGraphJsonReader"]
 verified_by = ["DagEmitter"]
-authority = "Lean"
 artifact_id = "A-TRUTH"
 runtime_disposition = "run-local"
 mode = "100644"
@@ -190,7 +173,6 @@ kind = "data"
 produced_by = "none"
 consumed_by = ["StatementProjectionFixtureLoader"]
 verified_by = ["StatementProjectionFixtureLoader"]
-authority = "self"
 artifact_id = "none"
 runtime_disposition = "committed-source"
 
@@ -200,7 +182,6 @@ kind = "data"
 produced_by = "none"
 consumed_by = ["TestRegistry"]
 verified_by = ["TestRegistry"]
-authority = "self"
 artifact_id = "none"
 runtime_disposition = "committed-source"
 
@@ -210,7 +191,6 @@ kind = "data"
 produced_by = "none"
 consumed_by = ["GateAuthorityRootCatalogLoader"]
 verified_by = ["GateAuthorityRootCatalogLoader"]
-authority = "self"
 artifact_id = "none"
 runtime_disposition = "committed-source"
 
@@ -220,7 +200,6 @@ kind = "data"
 produced_by = "none"
 consumed_by = ["PerfBudgetLoader"]
 verified_by = ["PerfBudgetLoader"]
-authority = "self"
 artifact_id = "none"
 runtime_disposition = "committed-source"
 
@@ -230,7 +209,6 @@ kind = "data"
 produced_by = "none"
 consumed_by = ["ValuesKernelDataLoader"]
 verified_by = ["ValuesKernelDataLoader"]
-authority = "self"
 artifact_id = "none"
 runtime_disposition = "committed-source"
 
@@ -240,7 +218,6 @@ kind = "data"
 produced_by = "none"
 consumed_by = ["AnchorReferenceRule"]
 verified_by = ["SL-017", "YamlSubsetParser"]
-authority = "self"
 artifact_id = "none"
 runtime_disposition = "committed-source"
 
@@ -250,7 +227,6 @@ kind = "data"
 produced_by = "none"
 consumed_by = ["DescribeRepositoryValidator", "ScribeEmitter"]
 verified_by = ["LibraryNoteCatalog"]
-authority = "self"
 artifact_id = "none"
 runtime_disposition = "committed-source"
 
@@ -260,7 +236,6 @@ kind = "ledger"
 produced_by = "none"
 consumed_by = ["developer"]
 verified_by = ["SL-003"]
-authority = "self"
 artifact_id = "none"
 runtime_disposition = "committed-ledger"
 
@@ -270,7 +245,6 @@ kind = "program"
 produced_by = "none"
 consumed_by = ["developer"]
 verified_by = ["make-gate"]
-authority = "self"
 artifact_id = "none"
 runtime_disposition = "committed-source"
 
@@ -280,7 +254,6 @@ kind = "data"
 produced_by = "none"
 consumed_by = ["BackfillInventoryLoader"]
 verified_by = ["BackfillInventoryLoader"]
-authority = "self"
 artifact_id = "none"
 runtime_disposition = "committed-source"
 
@@ -290,7 +263,6 @@ kind = "data"
 produced_by = "none"
 consumed_by = ["TheoryAtomizerDataLoader"]
 verified_by = ["TheoryAtomizerDataLoader"]
-authority = "self"
 artifact_id = "none"
 runtime_disposition = "committed-source"
 
@@ -300,7 +272,6 @@ kind = "ledger"
 produced_by = "IngestCommand"
 consumed_by = ["DigestionCasStore"]
 verified_by = ["DigestionCasStore"]
-authority = "self"
 artifact_id = "none"
 runtime_disposition = "committed-ledger"
 
@@ -310,7 +281,6 @@ kind = "data"
 produced_by = "IngestCommand"
 consumed_by = ["BackfillInventoryLoader"]
 verified_by = ["BackfillInventoryLoader"]
-authority = "self"
 artifact_id = "none"
 runtime_disposition = "committed-source"
 
@@ -320,7 +290,6 @@ kind = "ledger"
 produced_by = "EmitFormalizationReceiptCommand"
 consumed_by = ["CoverAtomCommand"]
 verified_by = ["DigestionFormalizationReceipt"]
-authority = "self"
 artifact_id = "none"
 runtime_disposition = "committed-ledger"
 
@@ -330,7 +299,6 @@ kind = "data"
 produced_by = "none"
 consumed_by = ["BackfillInventoryLoader"]
 verified_by = ["BackfillInventoryLoader"]
-authority = "self"
 artifact_id = "none"
 runtime_disposition = "committed-source"
 
@@ -340,7 +308,6 @@ kind = "data"
 produced_by = "none"
 consumed_by = ["FileMapEmitter", "FileMapLoader", "FileMapPolicy"]
 verified_by = ["FileMapLoader"]
-authority = "self"
 artifact_id = "none"
 runtime_disposition = "committed-source"
 
@@ -350,7 +317,6 @@ kind = "program"
 produced_by = "none"
 consumed_by = ["developer"]
 verified_by = ["architecture-tests"]
-authority = "self"
 artifact_id = "none"
 runtime_disposition = "committed-source"
 
@@ -360,7 +326,6 @@ kind = "program"
 produced_by = "none"
 consumed_by = ["BannedApiAnalyzers"]
 verified_by = ["architecture-tests"]
-authority = "self"
 artifact_id = "none"
 runtime_disposition = "committed-source"
 
@@ -370,7 +335,6 @@ kind = "ledger"
 produced_by = "none"
 consumed_by = ["ArchitectureTests"]
 verified_by = ["ArchitectureTests"]
-authority = "self"
 artifact_id = "none"
 runtime_disposition = "committed-ledger"
 
@@ -380,7 +344,6 @@ kind = "program"
 produced_by = "none"
 consumed_by = ["developer"]
 verified_by = ["architecture-tests"]
-authority = "self"
 artifact_id = "none"
 runtime_disposition = "committed-source"
 
@@ -390,7 +353,6 @@ kind = "program"
 produced_by = "none"
 consumed_by = ["dotnet"]
 verified_by = ["dotnet-build"]
-authority = "self"
 artifact_id = "none"
 runtime_disposition = "committed-source"
 
@@ -400,7 +362,6 @@ kind = "program"
 produced_by = "none"
 consumed_by = ["dotnet"]
 verified_by = ["dotnet-build"]
-authority = "self"
 artifact_id = "none"
 runtime_disposition = "committed-source"
 
@@ -410,7 +371,6 @@ kind = "generated"
 produced_by = "ScribeEmitter"
 consumed_by = ["ScribeEmitter"]
 verified_by = ["ScribeEmitter"]
-authority = "Scribe"
 artifact_id = "A-SCRIBE"
 runtime_disposition = "run-local"
 mode = "100644"
@@ -422,7 +382,6 @@ kind = "ledger"
 produced_by = "FrozenLedgerCanonicalWriter"
 consumed_by = ["FrozenLedger"]
 verified_by = ["SL-008"]
-authority = "self"
 artifact_id = "none"
 runtime_disposition = "committed-ledger"
 
@@ -432,7 +391,6 @@ kind = "ledger"
 produced_by = "none"
 consumed_by = ["reader"]
 verified_by = ["repository-policy"]
-authority = "self"
 artifact_id = "none"
 runtime_disposition = "committed-ledger"
 
@@ -442,7 +400,6 @@ kind = "program"
 produced_by = "none"
 consumed_by = ["dotnet"]
 verified_by = ["dotnet-test"]
-authority = "self"
 artifact_id = "none"
 runtime_disposition = "committed-source"
 
@@ -452,7 +409,6 @@ kind = "program"
 produced_by = "none"
 consumed_by = ["dotnet"]
 verified_by = ["dotnet-test"]
-authority = "self"
 artifact_id = "none"
 runtime_disposition = "committed-source"
 
@@ -462,7 +418,6 @@ kind = "program"
 produced_by = "none"
 consumed_by = ["CoverageAnalyzer"]
 verified_by = ["make-gate"]
-authority = "self"
 artifact_id = "none"
 runtime_disposition = "committed-source"
 
@@ -472,7 +427,6 @@ kind = "program"
 produced_by = "none"
 consumed_by = ["Lean"]
 verified_by = ["lean-inspector"]
-authority = "self"
 artifact_id = "none"
 runtime_disposition = "committed-source"
 
@@ -482,7 +436,6 @@ kind = "program"
 produced_by = "none"
 consumed_by = ["automation"]
 verified_by = ["make-gate"]
-authority = "self"
 artifact_id = "none"
 runtime_disposition = "committed-source"
 
@@ -492,7 +445,6 @@ kind = "data"
 produced_by = "none"
 consumed_by = ["RegistryLoader"]
 verified_by = ["RegistryLoader"]
-authority = "self"
 artifact_id = "none"
 runtime_disposition = "committed-source"
 
@@ -502,7 +454,6 @@ kind = "data"
 produced_by = "none"
 consumed_by = ["RegistryLoader"]
 verified_by = ["RegistryLoader"]
-authority = "self"
 artifact_id = "none"
 runtime_disposition = "committed-source"
 
@@ -512,7 +463,6 @@ kind = "data"
 produced_by = "none"
 consumed_by = ["PapergenCommand"]
 verified_by = ["PapergenCommand"]
-authority = "self"
 artifact_id = "none"
 runtime_disposition = "committed-source"
 
@@ -522,7 +472,6 @@ kind = "data"
 produced_by = "none"
 consumed_by = ["reader"]
 verified_by = ["SnapshotDecoder"]
-authority = "self"
 artifact_id = "none"
 runtime_disposition = "committed-source"
 
@@ -532,7 +481,6 @@ kind = "program"
 produced_by = "none"
 consumed_by = ["agent"]
 verified_by = ["repository-policy"]
-authority = "self"
 artifact_id = "none"
 runtime_disposition = "committed-source"
 
@@ -542,7 +490,6 @@ kind = "program"
 produced_by = "none"
 consumed_by = ["developer"]
 verified_by = ["repository-policy"]
-authority = "self"
 artifact_id = "none"
 runtime_disposition = "committed-source"
 
@@ -552,7 +499,6 @@ kind = "program"
 produced_by = "none"
 consumed_by = ["harness"]
 verified_by = ["SL-022"]
-authority = "self"
 artifact_id = "none"
 runtime_disposition = "committed-source"
 
@@ -562,7 +508,6 @@ kind = "data"
 produced_by = "none"
 consumed_by = ["TheoryIngestion"]
 verified_by = ["SnapshotDecoder"]
-authority = "self"
 artifact_id = "none"
 runtime_disposition = "committed-source"
 
@@ -572,7 +517,6 @@ kind = "program"
 produced_by = "none"
 consumed_by = ["agent"]
 verified_by = ["repository-policy"]
-authority = "self"
 artifact_id = "none"
 runtime_disposition = "committed-source"
 
@@ -582,7 +526,6 @@ kind = "program"
 produced_by = "none"
 consumed_by = ["Lean"]
 verified_by = ["make-gate"]
-authority = "self"
 artifact_id = "none"
 runtime_disposition = "committed-source"
 
@@ -592,6 +535,5 @@ kind = "program"
 produced_by = "none"
 consumed_by = ["agent"]
 verified_by = ["repository-policy"]
-authority = "self"
 artifact_id = "none"
 runtime_disposition = "committed-source"
