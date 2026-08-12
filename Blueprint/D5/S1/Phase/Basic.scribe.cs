@@ -14,8 +14,6 @@ internal sealed class BasicDocument : IScribeDocumentDefinition
         var phaseValue = new Formula.Modulo(
             Multiply(n, new Formula.Phi()),
             Num(1));
-        var injectivity = LeanTheorem(
-            "D5/S1/Phase/Basic.goldenPhase_injective");
         var opening = Paragraph(
             Ref("D5/S1/Phase/Basic"),
             Text(" maps an integer "),
@@ -76,7 +74,7 @@ Blocks(
                             new Formula.SetBuilder(phaseValue, n, new Formula.Integers())))),
                 Describe.Lean(
                     DescribeId.Create("injectivity"),
-                    DeclarationHandle.Create((injectivity).Value),
+                    DeclarationHandle.Create("D5/S1/Phase/Basic.goldenPhase_injective"),
                     H("Injectivity"),
                     StatementSource.FromAuthor(In(Seq(Forall, Sp, F.Id("n"), Comma, F.Id("m"), Sp, InMacro, Sp, Mathbb, Grp(F.Id("Z")), Comma, Esc, Operatorname, Grp(F.Id("goldenPhase")), Open, F.Id("n"), Close, Eq, Operatorname, Grp(F.Id("goldenPhase")), Open, F.Id("m"), Close, Sp, Rightarrow, Sp, F.Id("n"), Eq, F.Id("m")))),
                     AssessedProvenance.FromRepo(),
