@@ -21,6 +21,36 @@ public sealed class AdmissionWorkflowTests
         Assert.False(BaselineNeedsExactlyLeanInspect(tampered));
     }
 
+    // 法官那棵树必须是候选的分叉点,不是 dev 的当前 tip。用 tip 会让在飞的 PR 被
+    // 分叉之后才落地的规则追溯判决:候选没碰的东西,却要按它没见过的规则受审。
+    // 分叉点同时让法官二进制、冻结账本与 --baseline-lean-report 取自同一棵树,
+    // 因此不会重演 PR #1144(同一份 report 被要求同时是两棵树的 report)。
+    [Fact]
+    public void DevBaselineIsTheForkPointNotTheMovingDevTip()
+    {
+        var workflow = AdmissionWorkflow();
+        var resolve = BaselineResolutionScript(workflow);
+
+        Assert.Contains("merge-base", resolve, StringComparison.Ordinal);
+        Assert.DoesNotContain(
+            "sha=\"${{ github.event.pull_request.base.sha }}\"",
+            resolve,
+            StringComparison.Ordinal);
+    }
+
+    private static string BaselineResolutionScript(string workflow)
+    {
+        var leanInspect = Assert.IsType<YamlMappingNode>(
+            Jobs(workflow).Children[new YamlScalarNode("lean-inspect")]);
+        var steps = Assert.IsType<YamlSequenceNode>(
+            leanInspect.Children[new YamlScalarNode("steps")]);
+        var step = Assert.Single(
+            steps.Children.OfType<YamlMappingNode>(),
+            node => node.Children.TryGetValue(new YamlScalarNode("id"), out var id)
+                && id is YamlScalarNode { Value: "baseline" });
+        return Assert.IsType<YamlScalarNode>(step.Children[new YamlScalarNode("run")]).Value ?? string.Empty;
+    }
+
     [Fact]
     public void ReconcilesStatementProjectionAfterProducingLiveReport()
     {

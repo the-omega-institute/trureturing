@@ -159,7 +159,17 @@ jobs:
         run: |
           set -euo pipefail
           if [[ "$GITHUB_EVENT_NAME" == "pull_request_target" ]]; then
-            sha="${{ github.event.pull_request.base.sha }}"
+            # 法官取候选的**分叉点**,不是 dev 的当前 tip。dev 在候选在飞期间前进时,
+            # tip 上新落地的规则会追溯审判候选没碰过的东西;分叉点让候选只对它出发时
+            # 已存在的 harness 负责。这也让法官二进制、冻结账本与 --baseline-lean-report
+            # 取自同一棵树,故不会重演 PR #1144 的两树一报。
+            base="${{ github.event.pull_request.base.sha }}"
+            head="${{ github.event.pull_request.head.sha }}"
+            git -C candidate fetch --no-tags --quiet origin "$base" 2>/dev/null || true
+            if ! sha="$(git -C candidate merge-base "$base" "$head" 2>/dev/null)"; then
+              printf '%s\n' "cannot resolve fork point between $base and $head" >&2
+              exit 1
+            fi
           else
             sha="${{ github.event.before }}"
             if [[ -z "$sha" || "$sha" =~ ^0+$ ]]; then
