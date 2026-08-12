@@ -16,21 +16,21 @@ public sealed class DocumentStructureTests
             new Inline.Text(TextRun.Create(".")),
         ]));
         var display = new DocumentBlock.DisplayFormula(new Formula.Phi());
-        var proposition = DocumentBlock.Describe.Proposition(
+        var proposition = Describe.Lean(
             DescribeId.Create("embedding-formula"),
+            DeclarationHandle.Create("D5/S1/Scale/Embedding.embedding_apply"),
             Heading.Create("Embedding formula"),
-
-                LeanDeclarationRef.Create("D5/S1/Scale/Embedding.embedding_apply"),
-            InlineEmbedEquality(new Formula.Symbol(FormulaIdentifier.Create("x"))),
-            DescribeProvenance.RepoDerived(),
-            BlockSequence.Create([paragraph])
+            StatementSource.FromAuthor(InlineEmbedEquality(
+                new Formula.Symbol(FormulaIdentifier.Create("x")))),
+            AssessedProvenance.FromRepo(),
+            BlockSequence.Create([paragraph]),
+            DescribeRole.Proposition
         );
-        var theorem = DocumentBlock.Describe.Theorem(
+        var theorem = Describe.Lean(
             DescribeId.Create("embedding-is-injective"),
+            DeclarationHandle.Create("D5/S1/Scale/Embedding.embedding_injective"),
             Heading.Create("Embedding is injective"),
-
-                LeanDeclarationRef.Create("D5/S1/Scale/Embedding.embedding_injective"),
-            new Formula.Layout(
+            StatementSource.FromAuthor(new Formula.Layout(
                 FormulaLayoutMode.Inline,
                 new Formula.Logic(
                     ((Formula.Layout)InlineEmbedEquality(new Formula.Number(0))).Content,
@@ -38,9 +38,10 @@ public sealed class DocumentStructureTests
                     new Formula.Relation(
                         new Formula.Symbol(FormulaIdentifier.Create("x")),
                         FormulaRelationOperator.Equal,
-                        new Formula.Number(0)))),
-            DescribeProvenance.RepoDerived(),
-            BlockSequence.Create([paragraph])
+                        new Formula.Number(0))))),
+            AssessedProvenance.FromRepo(),
+            BlockSequence.Create([paragraph]),
+            DescribeRole.Theorem
         );
         var section = new DocumentBlock.Section(
             Heading.Create("Consequences"),
