@@ -50,6 +50,9 @@ domains:
   Dynamics:
     stratum: S1
     definition: Visible-hidden dynamics of phase trajectories, throat transitions, and jump cocycles.
+  Eigenstructure:
+    stratum: S1
+    definition: Linear endomorphism eigenframes and invariance of their coordinate lines.
   Entropy:
     stratum: S3
     definition: Finite Shannon entropy in nats and its information-theoretic identities and inequalities, including maximum-entropy bounds, mutual information and its independence characterization, subadditivity, and conditional-entropy chain rules.
