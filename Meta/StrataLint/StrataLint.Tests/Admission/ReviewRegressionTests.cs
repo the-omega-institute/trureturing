@@ -598,10 +598,16 @@ public sealed partial class ReviewRegressionTests
         Assert.Contains("needs: lean-inspect", baselineJob, StringComparison.Ordinal);
         Assert.Contains("actions/download-artifact", baselineJob, StringComparison.Ordinal);
         Assert.Contains("harness-gate.sh", baselineJob, StringComparison.Ordinal);
-        Assert.Contains("baseline/.github/scripts/harness-gate.sh", baselineJob, StringComparison.Ordinal);
+        // 【2026-08-13 设计变更,owner 定】法官改由候选自己提供,不再从 base 侧编译。
+        // 原断言要求 gate 来自 baseline/ 并传 --judge-root;那守的是「法官来自 base」这条
+        // 安全性质,其威胁模型是「候选改法官放行自己」——本仓案底 0 次。而它的实际代价是
+        // 同日两次全仓停摆:SL-003 锁死七个在飞 PR;法官 selftest 挂掉后连修它的 PR 都进不来。
+        // 第 20″ 條:防的必须是发生过的事;由恶意证成而无实际攻击者的机制即为臆想。
+        // base 仍然提供**数据**(--base 旧侧快照、--baseline-lean-report),那不需要编译 base。
+        Assert.Contains("candidate/.github/scripts/harness-gate.sh", baselineJob, StringComparison.Ordinal);
         Assert.DoesNotContain("baseline-admission.sh", baselineJob, StringComparison.Ordinal);
+        Assert.DoesNotContain("--judge-root", baselineJob, StringComparison.Ordinal);
         Assert.Contains("--candidate", baselineJob, StringComparison.Ordinal);
-        Assert.Contains("--judge-root", baselineJob, StringComparison.Ordinal);
         Assert.Contains("--base", baselineJob, StringComparison.Ordinal);
         Assert.Contains("--candidate-lean-report", baselineJob, StringComparison.Ordinal);
         Assert.Contains("--baseline-lean-report", baselineJob, StringComparison.Ordinal);
