@@ -54,18 +54,5 @@ internal sealed class MechanicalBalanceDocument : IScribeDocumentDefinition
                 Blocks(Paragraph(Text(
                     "For every pair of starting positions, the integer true-count difference of "
                     + "equal-length windows has absolute value at most one."))),
-                DescribeRole.Theorem),
-            Describe.Lean(
-                DescribeId.Create("golden-specialization"),
-                DeclarationHandle.Create(
-                    "D5/S1/Words/Mechanical/MechanicalBalance.goldenWord_balanced_one_mechanical"),
-                H("The golden balance theorem is a shifted mechanical specialization"),
-                StatementSource.FromAuthor(Equal(Call("goldenWord", Id("i")), Call("mechanicalReadout", Call("inv", Id("phi")), Num(0), Add(Id("i"), Num(1))))),
-                AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text(
-                    "At slope one over the golden ratio and intercept zero, the generic Boolean "
-                    + "readout agrees with the frozen golden word after its existing one-index "
-                    + "shift. The generic balance theorem therefore proves the same balanced-one "
-                    + "statement without an irrationality hypothesis."))),
                 DescribeRole.Theorem))));
 }

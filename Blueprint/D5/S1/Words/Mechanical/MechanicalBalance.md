@@ -54,21 +54,8 @@ $$\operatorname{windowTrueCount}\left(\mathit{alpha}, \mathit{rho}, i, n\right) 
 
 For every pair of starting positions, the integer true-count difference of equal-length windows has absolute value at most one.
 
-**Theorem 1.5 (The golden balance theorem is a shifted mechanical specialization).**
-
-$$\operatorname{goldenWord}\left(i\right) = \operatorname{mechanicalReadout}\left(\operatorname{inv}\left(\mathit{phi}\right), 0, i + 1\right)$$
-
-*Proof.* Machine-checked in Lean as `D5/S1/Words/Mechanical/MechanicalBalance.goldenWord_balanced_one_mechanical` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-At slope one over the golden ratio and intercept zero, the generic Boolean readout agrees with the frozen golden word after its existing one-index shift. The generic balance theorem therefore proves the same balanced-one statement without an irrationality hypothesis.
-
 ## References
 
-- Truth anchor: `D5/S1/Words/Mechanical/MechanicalBalance.goldenWord_balanced_one_mechanical`
 - Truth anchor: `D5/S1/Words/Mechanical/MechanicalBalance.lowerMechanicalLetter`
 - Truth anchor: `D5/S1/Words/Mechanical/MechanicalBalance.lowerMechanicalLetter_eq_zero_or_one`
 - Truth anchor: `D5/S1/Words/Mechanical/MechanicalBalance.lowerMechanicalWindowTrueCount_eq_floor`
