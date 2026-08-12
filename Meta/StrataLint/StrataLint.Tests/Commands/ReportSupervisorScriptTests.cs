@@ -5,7 +5,7 @@ using StrataLint.Engine;
 
 namespace StrataLint.Tests;
 
-[Trait("Category", "Script")] public sealed class ReportSupervisorScriptTests
+public sealed class ReportSupervisorScriptTests
 {
     [Fact]
     public void MissingReportConsumptionFailsClosedWithProducerInstruction()
