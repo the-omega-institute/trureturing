@@ -103,11 +103,13 @@ cold_root=$(mktemp -d /tmp/oldside-cold-report-cache.XXXXXXXX)
 
 本报告现在只授权六席共识的步骤 1：在真实 CI 中增加一个**不供 admission 判决的独立 shadow job**。拓扑写死为：该 job 不得放进 `lean-inspect` 的串行步骤，且 job id **不得出现在 `baseline-admission.needs` 中**；它可以读取/恢复/验证或在 miss 时生产 old-side report，但产物不得供本次 admission 使用。这样影子期内它在依赖图上没有通向 `baseline-admission` 的前置边，结构上不可能延后 admission，测量本身不会改变被测 admission。把它串入 `lean-inspect` 前置链的实现不在本授权内。
 
-在线观测单位写死为**一个真实 PR**，所以 `N` 是窗口内不同 PR 的数量，一个 PR 恰好贡献一个 hit 或 miss。样本包括最终未 merge、workflow 其它 job 失败或后来关闭的 PR，不以 merge 成功为入样条件，避免成功者偏差。对每个 PR，只选择测量起点之后按 GitHub `run_id` 最小的 workflow run，并只取该 run 的 `run_attempt=1`；该记录同时钉死当时的 `head_sha`。同一 PR 的 rerun、re-run failed jobs、取消后重跑和后续新 SHA 触发的 run 都保留原始记录，但一律不进入 `N`、hit/miss 或生产墙钟聚合。首次 miss 后重跑即使命中也不能改写首次样本，因此放行结果不能被重跑预热 cache 操纵。每个入样 shadow job 发出结构化的 restore `hit=1,miss=0` 或 `hit=0,miss=1`；只有 restore 后 provenance/verify 成功才可记 hit，provenance/verify 失败不是 miss 插补而是直接停案。
+在线观测单位写死为**一个真实 PR**，所以 `N` 是窗口内不同 PR 的数量，一个 PR 恰好贡献一个 hit 或 miss。样本包括最终未 merge、workflow 其它 job 失败或后来关闭的 PR，不以 merge 成功为入样条件，避免成功者偏差。对每个 PR，只选择测量起点之后按 GitHub `run_id` 最小的 workflow run，并只取该 run 的 `run_attempt=1`；该记录同时钉死当时的 `head_sha`。同一 PR 的 rerun、re-run failed jobs、取消后重跑和后续新 SHA 触发的 run 都以 artifact 保留原始记录，但一律不进入 `N`、hit/miss 或生产墙钟聚合。首次 miss 后重跑即使命中也不能改写首次样本，因此放行结果不能被重跑预热 cache 操纵。每个入样 shadow job 发出结构化的 restore `hit=1,miss=0` 或 `hit=0,miss=1`；只有 restore 后 provenance/verify 成功才可记 hit，provenance/verify 失败不是 miss 插补而是直接停案。
 
 记录字段契约写死为：`pr_number`、`run_id`、`run_attempt` 为整数，`head_sha`、`address` 为字符串，`wall_seconds` 为非负数或 `null`，`outcome` 的取值域为 `hit|miss|hit-error|miss-error|no-record`。错误记录统一使用字段名 `stage`，不得另写 `failure_stage`；其取值域为 `cache-files|verify|toolchain|produce|unreported-step`，并带 `exit_code`（可取得时为实际整数退出码，无法取得时为 `null`）。`hit`/`miss` 才是有效命中率样本；`hit-error`、`miss-error`、`no-record` 都触发基础设施失败停案。
 
-step 级 `always()` 无法在 job timeout、workflow cancellation 或 runner 丢失后自救。因此聚合端必须按 `run_id`/`run_attempt` 与 **job 终态**对账；一个成员若没有恰好一条 hit/miss 记录，即按**基础设施失败停案**处理，**不得**当作不存在而从 `N` 中消失。job 内最后一个独立 recorder 只负责覆盖仍能执行 step 的早期失败和未写记录路径，不能替代这项聚合端终态对账。
+每个仍能执行 recorder 的 job 都把单行 JSON 上传为 `old-side-shadow-record-<run_id>-<attempt>` artifact，并保留 step summary 供人阅读。聚合端的读取路径写死为：`GET /actions/runs/{run_id}/artifacts`，从响应中找到与 `run_id`、`run_attempt` 对应的 `old-side-shadow-record-<run_id>-<attempt>`，下载并解压其中的 `old-side-shadow-record.json`，再用 `jq` 逐行解析。step summary 不作为聚合输入。
+
+step 级 `always()` 无法在 job timeout、workflow cancellation 或 runner 丢失后自救。因此聚合端必须按 `run_id`/`run_attempt` 与 **job 终态**对账 artifact；一个成员若没有恰好一条 hit/miss 记录，即按**基础设施失败停案**处理，**不得**当作不存在而从 `N` 中消失。job 内最后一个独立 recorder 只负责覆盖仍能执行 step 的早期失败和未写记录路径，不能替代这项聚合端终态对账。
 
 **在聚合端终态对账实现之前，本影子测量的读数不得用于任何判决或工程决策。** 原因：job 级 timeout / cancel / runner loss 无法自产记录；缺样若不被升级为停案，命中率会因幸存者偏差而虚高。因此「进入整侧迁移」的门槛不仅要求命中率与预算达标，**还要求**聚合端已实现，并已按 `run_id` / `run_attempt` / job 终态完成对账。
 
@@ -126,7 +128,7 @@ step 级 `always()` 无法在 job timeout、workflow cancellation 或 runner 丢
 
 ## 7.1 后续未实现：影子测量聚合端终态对账
 
-待实现项是**影子测量聚合端终态对账**，按 `run_id` / `run_attempt` / job 终态补齐每个成员的最终记录。它解锁的是本节的使用禁令；在该聚合端能力落地前，本报告的读数只能用于观察，不能用于任何判决或工程决策。
+待实现项是**影子测量聚合端终态对账**：按 `run_id` / `run_attempt` 查询 job 终态，并经 `GET /actions/runs/{run_id}/artifacts` 找到 `old-side-shadow-record-<run_id>-<attempt>`，下载解压后对 `old-side-shadow-record.json` 执行 `jq` 逐行解析，补齐每个成员的最终记录并检查恰好一条。它解锁的是本节的使用禁令；在该聚合端能力落地前，本报告的读数只能用于观察，不能用于任何判决或工程决策。
 
 ## 8. 40 个样本的原始地址
 
