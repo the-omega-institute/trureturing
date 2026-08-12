@@ -1,10 +1,9 @@
 /- GID: D5/S1/Words/Powers/GoldenCubeExistence
    generality: I
-   mirror-B: none(waiver:formal-kernel-cube-existence)
-   mirror-E: none(waiver:kernel-small-cases-in-formal-module)
+   mirror-B: none(waiver:formal-unit-only)
+   mirror-E: none(waiver:no-numeric-experiment-declared)
    anchors: []
-   digest: Fibonacci substitution lifts one golden cube to a full existence tower.
--/
+   digest: Fibonacci substitution lifts one golden cube to a full existence tower. -/
 
 import D5.S1.Words.Powers.GoldenCubePeriods
 
