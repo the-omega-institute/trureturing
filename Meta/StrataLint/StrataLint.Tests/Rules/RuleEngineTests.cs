@@ -219,8 +219,8 @@ public sealed class RuleEngineTests
         // DirectoryFileLimit. The repository-wide net tolerates DirectoryToleranceLimit above it;
         // an overfull bucket is split pressure, not a correctness fault.
         Assert.Equal(
-            $"directory contains 13 files (admission capacity {RepositoryRules.DirectoryFileLimit}; "
-            + $"the repository-wide net tolerates {RepositoryRules.DirectoryToleranceLimit} — "
+            $"directory contains 13 files (admission limit {RepositoryRules.DirectoryFileLimit}, "
+            + $"repository tolerance {RepositoryRules.DirectoryToleranceLimit}; "
             + "split per CLAUDE.md 8)",
             diagnostic.Message);
     }

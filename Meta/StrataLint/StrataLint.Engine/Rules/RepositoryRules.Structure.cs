@@ -149,9 +149,9 @@ internal static partial class RepositoryRules
             .Where(item => item.Value > DirectoryFileLimit && touched.Contains(item.Key))
             .Select(static item => new RuleFinding(
                 item.Key,
-                $"directory contains {item.Value} files (admission capacity "
-                + $"{DirectoryFileLimit}; the repository-wide net tolerates "
-                + $"{DirectoryToleranceLimit} — split per CLAUDE.md 8)")));
+                $"directory contains {item.Value} files (admission limit "
+                + $"{DirectoryFileLimit}, repository tolerance "
+                + $"{DirectoryToleranceLimit}; split per CLAUDE.md 8)")));
         return findings.ToImmutable();
     }
 
