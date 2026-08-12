@@ -9,18 +9,15 @@ internal sealed class PigeonholeFiberDocument : IScribeDocumentDefinition
     private static readonly LibraryNoteRef Winkler =
         LibraryNoteRef.Create("D5/L/Diagonal/winkler2020pigeonhole");
 
-    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
-        Header(
-            "D5/S0/Diagonal/PigeonholeFiber",
-            "A reading space of smaller cardinality cannot distinguish every object."),
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "A reading space of smaller cardinality cannot distinguish every object.",
         H("Pigeonhole Fibers"),
         Blocks(
-            DocumentBlock.Describe.Theorem(
+            Describe.Lean(
                 DescribeId.Create("finite-reading-has-a-fiber"),
+                DeclarationHandle.Create("D5/S0/Diagonal/PigeonholeFiber.finite_reading_has_fiber"),
                 H("A smaller reading space forces a nontrivial fiber"),
-                LeanTheorem(
-                    "D5/S0/Diagonal/PigeonholeFiber.finite_reading_has_fiber"),
-                Disp(Seq(
+                StatementSource.FromAuthor(Disp(Seq(
                     Operatorname, Grp(F.Id("card")), Open, F.Id("Readings"), Close,
                     Sp, Lt, Sp,
                     Operatorname, Grp(F.Id("card")), Open, F.Id("Objects"), Close,
@@ -31,8 +28,8 @@ internal sealed class PigeonholeFiberDocument : IScribeDocumentDefinition
                     Sp, Land, Sp,
                     F.Id("read"), Open, F.Id("x"), Close,
                     Sp, Eq, Sp,
-                    F.Id("read"), Open, F.Id("y"), Close)),
-                DescribeProvenance.LiteratureAttested(Winkler),
+                    F.Id("read"), Open, F.Id("y"), Close))),
+                AssessedProvenance.FromLiterature(Winkler),
                 Blocks(
                     Paragraph(Text(
                         "For any object type, reading type, and reading map, a strict cardinal "
@@ -45,6 +42,6 @@ internal sealed class PigeonholeFiberDocument : IScribeDocumentDefinition
                         "The source atom's finite-reading phrase describes the intended "
                         + "application. Finiteness is not an additional premise of the Lean "
                         + "theorem; the stated strict cardinal inequality alone carries the "
-                        + "collision conclusion.")))
-            ))));
+                        + "collision conclusion."))),
+                DescribeRole.Theorem))));
 }

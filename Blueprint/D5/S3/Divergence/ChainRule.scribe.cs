@@ -6,18 +6,8 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Divergence;
 
 internal sealed class ChainRuleDocument : IScribeDocumentDefinition
 {
-    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
-        Header(
-            "D5/S3/Divergence/ChainRule",
-            "Finite real-valued classical KL divergence decomposes into marginal and conditional terms."),
-        H("Chain Rule for Finite Classical KL Divergence"),
-        Blocks(
-            DocumentBlock.Describe.Theorem(
-                DescribeId.Create("finite-classical-kl-divergence-obeys-the-chain-rule"),
-                H("Finite classical KL divergence obeys the chain rule"),
-                LeanTheorem(
-                    "D5/S3/Divergence/ChainRule.kl_divergence_chain_rule"),
-                Disp(Seq(
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create("Finite real-valued classical KL divergence decomposes into marginal and conditional terms.", H("Chain Rule for Finite Classical KL Divergence"), Blocks(
+            Describe.Lean(DescribeId.Create("finite-classical-kl-divergence-obeys-the-chain-rule"), DeclarationHandle.Create("D5/S3/Divergence/ChainRule.kl_divergence_chain_rule"), H("Finite classical KL divergence obeys the chain rule"), StatementSource.FromAuthor(Disp(Seq(
                     Begin, Grp(F.Id("gathered")),
                     Forall, Sp, Iota, Comma, Sp, Kappa, Esc,
                     OpenBracket,
@@ -70,9 +60,7 @@ internal sealed class ChainRuleDocument : IScribeDocumentDefinition
                     Vert, Vert, Sp,
                     F.Id("q"), Underscore, Grp(Kappa, Mid, Sp, F.Id("i")),
                     Close, Dot,
-                    End, Grp(F.Id("gathered")))),
-                DescribeProvenance.RepoDerived(),
-                Blocks(
+                    End, Grp(F.Id("gathered"))))), AssessedProvenance.FromRepo(), Blocks(
                     Paragraph(Text(
                         "Let iota and kappa be finite types, and let p and q be strictly " +
                         "positive real functions on their product. Only strict positivity is " +
@@ -98,5 +86,5 @@ internal sealed class ChainRuleDocument : IScribeDocumentDefinition
                         "finite divergence with any measure-valued KL divergence. The " +
                         "ninth-wave theorem D5/S3/Divergence/ProductAdditivity is the special " +
                         "case in which the conditionals do not depend on the first " +
-                        "coordinate.")))))));
+                        "coordinate."))), DescribeRole.Theorem))));
 }

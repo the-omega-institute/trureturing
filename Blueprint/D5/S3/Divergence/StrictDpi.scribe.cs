@@ -6,18 +6,8 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Divergence;
 
 internal sealed class StrictDpiDocument : IScribeDocumentDefinition
 {
-    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
-        Header(
-            "D5/S3/Divergence/StrictDpi",
-            "Posterior disequality makes the finite classical data-processing defect strictly positive."),
-        H("Strict Positivity of the Classical Data-Processing Defect"),
-        Blocks(
-            DocumentBlock.Describe.Theorem(
-                DescribeId.Create("posterior-disequality-makes-the-classical-dpi-defect-positive"),
-                H("Posterior disequality makes the classical DPI defect positive"),
-                LeanTheorem(
-                    "D5/S3/Divergence/StrictDpi.dpi_defect_pos_of_posteriors_ne"),
-                Disp(Seq(
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create("Posterior disequality makes the finite classical data-processing defect strictly positive.", H("Strict Positivity of the Classical Data-Processing Defect"), Blocks(
+            Describe.Lean(DescribeId.Create("posterior-disequality-makes-the-classical-dpi-defect-positive"), DeclarationHandle.Create("D5/S3/Divergence/StrictDpi.dpi_defect_pos_of_posteriors_ne"), H("Posterior disequality makes the classical DPI defect positive"), StatementSource.FromAuthor(Disp(Seq(
                     Begin, Grp(F.Id("gathered")),
                     Forall, Sp, F.Id("X"), Comma, Sp, F.Id("Y"), Esc,
                     OpenBracket,
@@ -70,9 +60,7 @@ internal sealed class StrictDpiDocument : IScribeDocumentDefinition
                     F.Id("D"), Open,
                     F.Id("W"), F.Id("p"), Vert, Vert, Sp,
                     F.Id("W"), F.Id("q"), Close, Dot,
-                    End, Grp(F.Id("gathered")))),
-                DescribeProvenance.RepoDerived(),
-                Blocks(
+                    End, Grp(F.Id("gathered"))))), AssessedProvenance.FromRepo(), Blocks(
                     Paragraph(Text(
                         "Let X and Y be finite alphabets, with X nonempty. Strict DPI assumes " +
                         "strict positivity of p and q and of the stochastic kernel W. This is the " +
@@ -112,5 +100,5 @@ internal sealed class StrictDpiDocument : IScribeDocumentDefinition
                         "This completes the defect cluster opened by PetzClassical: the defect is " +
                         "zero if and only if the posteriors are equal, hence the defect is strictly " +
                         "positive exactly when they differ. The displayed theorem packages the " +
-                        "disequality-to-positivity direction.")))))));
+                        "disequality-to-positivity direction."))), DescribeRole.Theorem))));
 }

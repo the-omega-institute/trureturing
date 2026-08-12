@@ -6,18 +6,8 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Divergence;
 
 internal sealed class PetzClassicalDocument : IScribeDocumentDefinition
 {
-    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
-        Header(
-            "D5/S3/Divergence/PetzClassical",
-            "Zero classical data-processing defect is equivalent to supportwise equality of posteriors."),
-        H("The Classical Petz Equality Condition"),
-        Blocks(
-            DocumentBlock.Describe.Theorem(
-                DescribeId.Create("zero-dpi-defect-is-supportwise-posterior-equality"),
-                H("Zero DPI defect is supportwise posterior equality"),
-                LeanTheorem(
-                    "D5/S3/Divergence/PetzClassical.dpi_defect_zero_iff_posteriors_eq"),
-                Disp(Seq(
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create("Zero classical data-processing defect is equivalent to supportwise equality of posteriors.", H("The Classical Petz Equality Condition"), Blocks(
+            Describe.Lean(DescribeId.Create("zero-dpi-defect-is-supportwise-posterior-equality"), DeclarationHandle.Create("D5/S3/Divergence/PetzClassical.dpi_defect_zero_iff_posteriors_eq"), H("Zero DPI defect is supportwise posterior equality"), StatementSource.FromAuthor(Disp(Seq(
                     Begin, Grp(F.Id("gathered")),
                     Forall, Sp, F.Id("X"), Comma, Sp, F.Id("Y"), Esc,
                     OpenBracket,
@@ -74,9 +64,7 @@ internal sealed class PetzClassicalDocument : IScribeDocumentDefinition
                     Widehat, Grp(F.Id("p")), Underscore, Grp(F.Id("y")),
                     Eq,
                     Widehat, Grp(F.Id("q")), Underscore, Grp(F.Id("y")), Dot,
-                    End, Grp(F.Id("gathered")))),
-                DescribeProvenance.RepoDerived(),
-                Blocks(
+                    End, Grp(F.Id("gathered"))))), AssessedProvenance.FromRepo(), Blocks(
                     Paragraph(Text(
                         "Let X and Y be finite types, with X nonempty. Let p and q be strictly " +
                         "positive normalized real mass functions on X, and let W be a strictly " +
@@ -96,5 +84,5 @@ internal sealed class PetzClassicalDocument : IScribeDocumentDefinition
                     Paragraph(Text(
                         "This declaration proves only the core equality characterization. Bayesian " +
                         "reverse recovery and the permutation-channel specialization are not part of " +
-                        "this declaration; they require separate statements and proofs.")))))));
+                        "this declaration; they require separate statements and proofs."))), DescribeRole.Theorem))));
 }

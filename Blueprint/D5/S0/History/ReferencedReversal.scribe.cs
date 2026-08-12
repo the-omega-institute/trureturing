@@ -6,18 +6,15 @@ namespace StrataLint.Scribe.Blueprint.D5.S0.History;
 
 internal sealed class ReferencedReversalDocument : IScribeDocumentDefinition
 {
-    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
-        Header(
-            "D5/S0/History/ReferencedReversal",
-            "Integer ledgers admit exact, explicitly referenced reversal events."),
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "Integer ledgers admit exact, explicitly referenced reversal events.",
         H("Referenced Reversal Events"),
         Blocks(
-            DocumentBlock.Describe.Theorem(
+            Describe.Lean(
                 DescribeId.Create("group-ledger-reversal-specification"),
+                DeclarationHandle.Create("D5/S0/History/ReferencedReversal.group_ledger_reversal_spec"),
                 H("Group-ledger reversals cancel and record every negative coordinate"),
-                LeanTheorem(
-                    "D5/S0/History/ReferencedReversal.group_ledger_reversal_spec"),
-                Disp(Seq(
+                StatementSource.FromAuthor(Disp(Seq(
                     Operatorname, Grp(F.Id("Bijective")), Open, F.Id("code"), Close,
                     Sp, Land, Sp,
                     Forall, Sp, F.Id("u"), Comma, Sp,
@@ -36,8 +33,8 @@ internal sealed class ReferencedReversalDocument : IScribeDocumentDefinition
                     F.Id("refs"), Open, F.Id("rev"), Open, F.Id("u"), Close,
                     Comma, F.Id("a"), Close, Neq, Emptyset, Sp, Leftrightarrow, Sp,
                     F.Id("delta"), Open, F.Id("rev"), Open, F.Id("u"), Close,
-                    Close, Open, F.Id("a"), Close, Lt, D(0))),
-                DescribeProvenance.RepoDerived(),
+                    Close, Open, F.Id("a"), Close, Lt, D(0)))),
+                AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
                         "The group-completed ledger on any address type is represented by "
@@ -56,6 +53,6 @@ internal sealed class ReferencedReversalDocument : IScribeDocumentDefinition
                         + "a thin wrapper around that algebraic core plus the repository's "
                         + "small referenced-event structure. Mathlib contains no event type "
                         + "that requires audit references on negative coordinates; that "
-                        + "field is the source atom's additional content.")))
-            ))));
+                        + "field is the source atom's additional content."))),
+                DescribeRole.Theorem))));
 }
