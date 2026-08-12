@@ -338,7 +338,7 @@ public sealed partial class MakeWorkflowTests
         // admission 侧此前只有 save 一处,故省了 Distinct;现在它也 restore 同一个 key
         // (关键路径复用报告),两侧遂对称。保留的判据仍是「distinct key 恰好一个且两侧相等」。
         var admissionJob = admission.Split("  lean-inspect:\n", StringSplitOptions.None)[1]
-            .Split("  old-side-report-shadow:\n", StringSplitOptions.None)[0];
+            .Split("  baseline-admission:\n", StringSplitOptions.None)[0];
         var admissionCacheKey = Assert.Single(
             admissionJob.Split('\n')
                 .Where(static line => line.TrimStart().StartsWith(

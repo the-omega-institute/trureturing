@@ -107,7 +107,7 @@ internal static class CliApplication
         if (arguments.Count == 0)
         {
             console.WriteError(
-                "USAGE: StrataLint align-scribe-receipt|c0-reconcile-trust-root|c0-verify|check|clean-lanes|coverage|cover-atom|digest-status|echo-verify|emit-formalization-receipt|ingest|golden-record|lean-report-merge|ledger-genesis|papergen|route|selftest|show-atom|shadow-reconcile [--github <owner/repository> <workflow>]|topology|validate-blueprint-pins|worktree|ledger-append|ledger-reattest|perf-append|perf-report|verify-conservative|evaluate-conservative-corpus|gate-authority\n");
+                "USAGE: StrataLint align-scribe-receipt|c0-reconcile-trust-root|c0-verify|check|clean-lanes|coverage|cover-atom|digest-status|echo-verify|emit-formalization-receipt|ingest|golden-record|lean-report-merge|ledger-genesis|papergen|route|selftest|show-atom|topology|validate-blueprint-pins|worktree|ledger-append|ledger-reattest|perf-append|perf-report|verify-conservative|evaluate-conservative-corpus|gate-authority\n");
             return 2;
         }
 
@@ -136,7 +136,6 @@ internal static class CliApplication
             "route" => RenderCommand(environment.Route(tail), console),
             "selftest" => RenderCommand(environment.SelfTest(tail), console),
             "show-atom" => RenderCommand(environment.ShowAtom(tail), console),
-            "shadow-reconcile" => RenderCommand(ShadowReconcileCommand.Run(tail), console),
             "topology" => RenderTopology(environment.Topology(tail), console),
             "validate-blueprint-pins" =>
                 RenderExplicit(environment.ValidateBlueprintPins(tail), console),
