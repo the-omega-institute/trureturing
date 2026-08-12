@@ -310,7 +310,7 @@ recipe(A11)→ `Meta/papergen`(决定论):拉 Blueprint 散文 + **语法生成�
 
 **样例 3|极值定理(GICT 定理 3.2;轮 154)** p(n)=n+1 复杂度地板 → `D5/S2/Word/Complexity.complexity_floor`;**generality: E**(极值指纹,禁一般化);anchors:[morsehedlund1940symbolic]。
 
-**样例 4|承典(GICT 定理 7.15)** 三距定理 → `D5/S1/Phase/ThreeDistance.three_gap`;generality: G;mathlib 缺 → 先按 A17 准入谓词尽调可准入的 Lean 生态 → 精确命中则按 A14 引入并 import → 仍无命中才登记 `AxiomDebt` / `open` + upstream issue。
+**样例 4|承典(GICT 定理 7.15)** 三距定理 → `D5/S1/Phase/ThreeDistance.three_gap`;generality: G;mathlib 缺则登记 AxiomDebt + 典官 upstream issue。
 
 **样例 5|数值证书旗舰(GICT 定理 5.3;轮 143/151)** C_φ 之 A9 拆分:
 - 假设:`D5/X_Assumptions/Convergence.WindowConv`(全周期窗均收敛速率,REGISTRY: active);
