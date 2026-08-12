@@ -8,7 +8,7 @@ Specialize the general lower-mechanical kernel at slope one over the golden rati
 
 **Theorem 1.1 (The golden slope specializes the generic letter).**
 
-Lean statement: `D5/S1/Words/Mechanical/MechanicalGoldenBridge.lowerMechanicalLetter_golden`
+$$\operatorname{goldenWord}\left(i\right) = \operatorname{mechanicalReadout}\left(\operatorname{inv}\left(\mathit{phi}\right), 0, i + 1\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S1/Words/Mechanical/MechanicalGoldenBridge.lowerMechanicalLetter_golden` (`✓ std3`). ∎
 
@@ -20,7 +20,7 @@ At the frozen golden slope and zero intercept, the generic floor difference is e
 
 **Theorem 1.2 (The generic readout agrees with the shifted golden word).**
 
-Lean statement: `D5/S1/Words/Mechanical/MechanicalGoldenBridge.lowerMechanicalWord_golden`
+$$\operatorname{goldenMechanicalLetter}\left(i + 1\right) = \operatorname{lowerMechanicalLetter}\left(\operatorname{inv}\left(\mathit{phi}\right), 0, i + 1\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S1/Words/Mechanical/MechanicalGoldenBridge.lowerMechanicalWord_golden` (`✓ std3`). ∎
 
@@ -32,7 +32,7 @@ The Boolean generic readout agrees with the frozen golden word at the repository
 
 **Theorem 1.3 (Golden windows are shifted generic windows).**
 
-Lean statement: `D5/S1/Words/Mechanical/MechanicalGoldenBridge.goldenWindowTrueCount_eq_lowerMechanicalWindowTrueCount`
+$$\operatorname{goldenWindowTrueCount}\left(i, n\right) = \operatorname{windowTrueCount}\left(\operatorname{inv}\left(\mathit{phi}\right), 0, i + 1, n\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S1/Words/Mechanical/MechanicalGoldenBridge.goldenWindowTrueCount_eq_lowerMechanicalWindowTrueCount` (`✓ std3`). ∎
 
@@ -44,7 +44,7 @@ The frozen golden true-count function is equal to the generic lower-mechanical c
 
 **Theorem 1.4 (Frozen golden balance follows from the generic theorem).**
 
-Lean statement: `D5/S1/Words/Mechanical/MechanicalGoldenBridge.goldenWord_balanced_one_mechanical`
+$$\operatorname{goldenWindowTrueCount}\left(i, n\right) - \operatorname{goldenWindowTrueCount}\left(j, n\right) = 0 - 1 \lor \left(\operatorname{goldenWindowTrueCount}\left(i, n\right) - \operatorname{goldenWindowTrueCount}\left(j, n\right) = 0 \lor \operatorname{goldenWindowTrueCount}\left(i, n\right) - \operatorname{goldenWindowTrueCount}\left(j, n\right) = 1\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S1/Words/Mechanical/MechanicalGoldenBridge.goldenWord_balanced_one_mechanical` (`✓ std3`). ∎
 
