@@ -6,19 +6,15 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Observer;
 
 internal sealed class WindowCharacterDocument : IScribeDocumentDefinition
 {
-    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
-        Header(
-            "D5/S3/Observer/WindowCharacter",
-            "Nontrivial finite window matrix algebras have no complex-algebra character."),
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create("Nontrivial finite window matrix algebras have no complex-algebra character.",
         H("Absence of Characters on Nontrivial Finite Windows"),
         Blocks(
-            DocumentBlock.Describe.Theorem(
+            Describe.Lean(
                 DescribeId.Create("nontrivial-finite-window-algebras-have-no-character"),
+                DeclarationHandle.Create("D5/S3/Observer/WindowCharacter.window_algebra_has_no_character"),
                 H("Nontrivial finite window algebras have no character"),
-                LeanTheorem(
-                    "D5/S3/Observer/WindowCharacter.window_algebra_has_no_character"),
-                NoCharacterFormula(),
-                DescribeProvenance.RepoDerived(),
+                StatementSource.FromAuthor(NoCharacterFormula()),
+                AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
                         "Let M be a window cardinality greater than one, and suppose that phi is " +
@@ -33,7 +29,8 @@ internal sealed class WindowCharacterDocument : IScribeDocumentDefinition
                         "identity. Their images therefore have M-th power one and are both " +
                         "nonzero, a contradiction. The strict inequality on M supplies exactly " +
                         "the nontriviality of the primitive phase; no statement is made here for " +
-                        "a one-address window or for matrix algebras with unrelated index sets.")))))));
+                        "a one-address window or for matrix algebras with unrelated index sets."))),
+                DescribeRole.Theorem))));
 
     private static Formula NoCharacterFormula() => Disp(Seq(
         Forall, Sp, F.Id("M"), Sp, InMacro, Sp,

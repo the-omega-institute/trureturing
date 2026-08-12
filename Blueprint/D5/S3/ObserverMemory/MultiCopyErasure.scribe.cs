@@ -8,51 +8,48 @@ internal sealed class MultiCopyErasureDocument : IScribeDocumentDefinition
 {
     private const string LeanPrefix = "D5/S3/ObserverMemory/MultiCopyErasure.";
 
-    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
-        Header(
-            "D5/S3/ObserverMemory/MultiCopyErasure",
-            "A finite independent record family keeps a nonzero coherence entry nonzero exactly when every record overlap is nonzero."),
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create("A finite independent record family keeps a nonzero coherence entry nonzero exactly when every record overlap is nonzero.",
         H("Finite Multi-Copy Record Erasure"),
         Blocks(
-            DocumentBlock.Describe.Theorem(
+            Describe.Lean(
                 DescribeId.Create("a-zero-overlap-copy-erases-a-nonzero-entry"),
+                DeclarationHandle.Create("D5/S3/ObserverMemory/MultiCopyErasure.multi_copy_erasure_quantifier"),
                 H("A zero-overlap copy erases a nonzero entry"),
-                LeanTheorem(LeanPrefix + "multi_copy_erasure_quantifier"),
-                ZeroQuantifierFormula(),
-                DescribeProvenance.RepoDerived(),
+                StatementSource.FromAuthor(ZeroQuantifierFormula()),
+                AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "Let a finite family of independent environment records act on one nonzero "
                     + "system matrix entry. Composing the frozen single-record channel once per "
                     + "copy multiplies that entry by the product of all record overlaps. The output "
                     + "is zero exactly when at least one copy has zero overlap at the selected pair "
-                    + "of addresses.")))
-            ),
-            DocumentBlock.Describe.Theorem(
+                    + "of addresses."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("coherence-survives-exactly-when-every-copy-has-nonzero-overlap"),
+                DeclarationHandle.Create("D5/S3/ObserverMemory/MultiCopyErasure.multi_copy_erasure_nonzero_iff"),
                 H("Coherence survives exactly when every copy has nonzero overlap"),
-                LeanTheorem(LeanPrefix + "multi_copy_erasure_nonzero_iff"),
-                NonzeroQuantifierFormula(),
-                DescribeProvenance.RepoDerived(),
+                StatementSource.FromAuthor(NonzeroQuantifierFormula()),
+                AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "For a nonzero input entry, the output remains nonzero if and only if every "
                     + "record factor has nonzero overlap. Thus a family containing a zero-overlap "
                     + "copy erases the selected entry. This statement evaluates the composed "
                     + "record channel on its stated input; it does not apply another channel to "
-                    + "the resulting output.")))
-            ),
-            DocumentBlock.Describe.Theorem(
+                    + "the resulting output."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("two-copies-give-a-nontrivial-erasure-certificate"),
+                DeclarationHandle.Create("D5/S3/ObserverMemory/MultiCopyErasure.two_copy_erasure_certificate"),
                 H("Two copies give a nontrivial erasure certificate"),
-                LeanTheorem(LeanPrefix + "two_copy_erasure_certificate"),
-                WitnessFormula(),
-                DescribeProvenance.RepoDerived(),
+                StatementSource.FromAuthor(WitnessFormula()),
+                AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "For the original equal-superposition density matrix, the family containing "
                     + "one copied-address factor has zero off-diagonal overlap in that factor, and "
                     + "its channel erases the selected entry. The counterfactual family with two "
                     + "address-independent factors is evaluated separately on the same original "
-                    + "matrix and leaves its one-half entry unchanged.")))
-            ))));
+                    + "matrix and leaves its one-half entry unchanged."))),
+                DescribeRole.Theorem))));
 
     private static Formula Overlap(Formula copy) => Seq(
         F.Id("g"), Underscore, Grp(copy), Open, F.Id("i"), Comma, F.Id("j"), Close);
