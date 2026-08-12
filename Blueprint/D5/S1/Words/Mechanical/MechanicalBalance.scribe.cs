@@ -27,7 +27,7 @@ internal sealed class MechanicalBalanceDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create(
                     "D5/S1/Words/Mechanical/MechanicalBalance.lowerMechanicalLetter_eq_zero_or_one"),
                 H("Every letter is zero or one"),
-                StatementSource.WithoutFormula(),
+                StatementSource.FromAuthor(new Formula.Logic(Equal(Call("lowerMechanicalLetter", Id("alpha"), Id("rho"), Id("n")), Num(0)), FormulaLogicOperator.Or, Equal(Call("lowerMechanicalLetter", Id("alpha"), Id("rho"), Id("n")), Num(1)))),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "The two standard floor-add inequalities trap each consecutive floor "
@@ -38,7 +38,7 @@ internal sealed class MechanicalBalanceDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create(
                     "D5/S1/Words/Mechanical/MechanicalBalance.lowerMechanicalWindowTrueCount_eq_floor"),
                 H("Window counts telescope to endpoint floors"),
-                StatementSource.WithoutFormula(),
+                StatementSource.FromAuthor(Equal(Call("windowTrueCount", Id("alpha"), Id("rho"), Id("i"), Id("n")), Subtract(Call("floor", Add(Id("rho"), Multiply(Add(Id("i"), Id("n")), Id("alpha")))), Call("floor", Add(Id("rho"), Multiply(Id("i"), Id("alpha"))))))),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "Replacing each Boolean indicator by its zero-or-one letter makes the finite "
@@ -49,7 +49,7 @@ internal sealed class MechanicalBalanceDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create(
                     "D5/S1/Words/Mechanical/MechanicalBalance.lowerMechanicalWord_balanced_one"),
                 H("Equal-length windows are balanced by one"),
-                StatementSource.WithoutFormula(),
+                StatementSource.FromAuthor(new Formula.Logic(Equal(Subtract(Call("windowTrueCount", Id("alpha"), Id("rho"), Id("i"), Id("n")), Call("windowTrueCount", Id("alpha"), Id("rho"), Id("j"), Id("n"))), Subtract(Num(0), Num(1))), FormulaLogicOperator.Or, new Formula.Logic(Equal(Subtract(Call("windowTrueCount", Id("alpha"), Id("rho"), Id("i"), Id("n")), Call("windowTrueCount", Id("alpha"), Id("rho"), Id("j"), Id("n"))), Num(0)), FormulaLogicOperator.Or, Equal(Subtract(Call("windowTrueCount", Id("alpha"), Id("rho"), Id("i"), Id("n")), Call("windowTrueCount", Id("alpha"), Id("rho"), Id("j"), Id("n"))), Num(1))))),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "For every pair of starting positions, the integer true-count difference of "
@@ -60,7 +60,7 @@ internal sealed class MechanicalBalanceDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create(
                     "D5/S1/Words/Mechanical/MechanicalBalance.goldenWord_balanced_one_mechanical"),
                 H("The golden balance theorem is a shifted mechanical specialization"),
-                StatementSource.WithoutFormula(),
+                StatementSource.FromAuthor(Equal(Call("goldenWord", Id("i")), Call("mechanicalReadout", Call("inv", Id("phi")), Num(0), Add(Id("i"), Num(1))))),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "At slope one over the golden ratio and intercept zero, the generic Boolean "
