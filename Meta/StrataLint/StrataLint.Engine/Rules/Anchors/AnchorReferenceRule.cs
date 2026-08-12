@@ -26,19 +26,25 @@ internal static class AnchorReferenceRule
                 // The Lean import graph is the only authority this rule can check an anchor against,
                 // and it only carries module edges. An anchor shape it cannot decide stays rejected —
                 // that is exactly what the retired registry did to every unregistered anchor.
-                if (parsed.Value is not MathlibAnchor { TargetKind: MathlibTargetKind.Module } module)
+                var moduleName = parsed.Value switch
+                {
+                    LakeModuleAnchor lake => lake.Name,
+                    MathlibAnchor { TargetKind: MathlibTargetKind.Module } mathlib => mathlib.Name,
+                    _ => null,
+                };
+                if (moduleName is null)
                 {
                     findings.Add(new RuleFinding(
                         path.Value,
                         $"anchor '{anchor}' cannot be decided against the Lean import graph; "
-                        + "only mathlib/module anchors are verifiable there"));
+                        + "only lake/module and mathlib/module anchors are verifiable there"));
                     continue;
                 }
 
                 if (!LeanImportClosure.ImportsExternalModule(
                     context.Lean.Report,
                     LeanImportClosure.ModuleName(path),
-                    module.Name.Value))
+                    moduleName.Value))
                 {
                     findings.Add(new RuleFinding(
                         path.Value,

@@ -80,31 +80,17 @@ public sealed class GidRef : IEquatable<GidRef>
 
 public sealed class LeanDeclarationRef : IEquatable<LeanDeclarationRef>
 {
-    private LeanDeclarationRef(
-        GidRef reference,
-        LeanDeclarationKind? expectedKind,
-        bool requireNoSorry)
-    {
-        Reference = reference;
-        ExpectedKind = expectedKind;
-        RequireNoSorry = requireNoSorry;
-    }
+    private LeanDeclarationRef(GidRef reference) => Reference = reference;
 
     public GidRef Reference { get; }
 
     public string Value => Reference.Value;
 
-    public LeanDeclarationKind? ExpectedKind { get; }
-
-    public bool RequireNoSorry { get; }
-
     public string DeclarationName => Value[(Value.LastIndexOf('.') + 1)..];
 
     public static LeanDeclarationRef Create(
         string value,
-        IGidExistenceValidator? existenceValidator = null,
-        LeanDeclarationKind? expectedKind = null,
-        bool requireNoSorry = false)
+        IGidExistenceValidator? existenceValidator = null)
     {
         var reference = GidRef.Create(value, existenceValidator);
         if (!reference.IsFormalDeclaration)
@@ -112,20 +98,18 @@ public sealed class LeanDeclarationRef : IEquatable<LeanDeclarationRef>
             throw new ArgumentException("Value must select a Lean declaration.", nameof(value));
         }
 
-        return new LeanDeclarationRef(reference, expectedKind, requireNoSorry);
+        return new LeanDeclarationRef(reference);
     }
 
     public bool Equals(LeanDeclarationRef? other) =>
         other is not null
-        && Reference.Equals(other.Reference)
-        && ExpectedKind == other.ExpectedKind
-        && RequireNoSorry == other.RequireNoSorry;
+        && Reference.Equals(other.Reference);
 
     public override bool Equals(object? obj) =>
         obj is LeanDeclarationRef other && Equals(other);
 
     public override int GetHashCode() =>
-        HashCode.Combine(Reference, ExpectedKind, RequireNoSorry);
+        Reference.GetHashCode();
 
     public override string ToString() => Value;
 }
