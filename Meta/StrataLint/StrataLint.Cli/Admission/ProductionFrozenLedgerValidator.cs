@@ -160,9 +160,17 @@ internal static class ProductionFrozenLedgerValidator
         ImmutableArray<RepositoryFile> baselineFiles,
         ImmutableArray<RepositoryFile> currentFiles)
     {
-        if (!RetainsBaselineFilesByteForByte(baselineFiles, current))
+        var unretainedBaselineFiles = UnretainedBaselineFiles(baselineFiles, current);
+        if (!unretainedBaselineFiles.IsEmpty)
         {
-            return Reject("candidate content-addressed ledger does not retain protected baseline file byte-for-byte");
+            var firstOffendingPath = unretainedBaselineFiles[0].Path.Value;
+            var reason = "candidate content-addressed ledger does not retain protected baseline file byte-for-byte";
+            if (unretainedBaselineFiles.Length > 1)
+            {
+                reason += $" ({unretainedBaselineFiles.Length} baseline accepted files are missing or mutated)";
+            }
+
+            return Reject(reason, firstOffendingPath);
         }
 
         var baselineLoad = DagLedgerLoader.LoadFiles(baselineFiles);
@@ -305,12 +313,14 @@ internal static class ProductionFrozenLedgerValidator
             : null;
     }
 
-    private static bool RetainsBaselineFilesByteForByte(
+    private static ImmutableArray<RepositoryFile> UnretainedBaselineFiles(
         ImmutableArray<RepositoryFile> baselineFiles,
         RepositorySnapshot current) =>
-        baselineFiles.All(baselineFile =>
-            current.TryGetFile(baselineFile.Path.Value, out var currentFile)
-            && currentFile!.RawBytes.AsSpan().SequenceEqual(baselineFile.RawBytes.AsSpan()));
+        baselineFiles
+            .Where(baselineFile =>
+                !current.TryGetFile(baselineFile.Path.Value, out var currentFile)
+                || !currentFile!.RawBytes.AsSpan().SequenceEqual(baselineFile.RawBytes.AsSpan()))
+            .ToImmutableArray();
 
     private static AdmissionOutcome? ValidateTransition(
         RepositorySnapshot baseline,
@@ -513,7 +523,7 @@ internal static class ProductionFrozenLedgerValidator
             path.Value.StartsWith(FrozenLedgerChangeClassifier.AcceptedRoot + "/", StringComparison.Ordinal)
             && !FrozenLedgerChangeClassifier.IsAcceptedEventPath(path.Value));
 
-    private static AdmissionOutcome Reject(string message)
+    private static AdmissionOutcome Reject(string message, string? path = null)
     {
         var descriptor = RuleCatalog.Default.Descriptors[7];
         return new AdmissionOutcome.RuleRejected(ImmutableArray.Create(new Diagnostic(
@@ -521,7 +531,7 @@ internal static class ProductionFrozenLedgerValidator
             descriptor.Title,
             descriptor.DisplaySeverity,
             descriptor.AdmissionEffect,
-            FrozenLedgerChangeClassifier.LedgerPath,
+            path ?? FrozenLedgerChangeClassifier.AcceptedRoot,
             message)));
     }
 
