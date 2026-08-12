@@ -9,18 +9,16 @@ internal sealed class RationalSpanIsolationDocument : IScribeDocumentDefinition
     private static readonly LibraryNoteRef KrantzParks =
         LibraryNoteRef.Create("D5/L/Analytic/krantzparks2002primer");
 
-    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
-        Header(
-            "D5/S3/Analytic/Isolation/RationalSpanIsolation",
-            "Fixed rational-span levels of a nonconstant real-analytic family are isolated."),
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "Fixed rational-span levels of a nonconstant real-analytic family are isolated.",
         H("Isolation of Fixed Rational-Span Levels"),
         Blocks(
-            DocumentBlock.Describe.Theorem(
+            Describe.Lean(
                 DescribeId.Create("fixed-rational-span-levels-are-isolated"),
-                H("Fixed rational-span levels are isolated"),
-                LeanTheorem(
+                DeclarationHandle.Create(
                     "D5/S3/Analytic/Isolation/RationalSpanIsolation.rational_span_level_set_codiscrete"),
-                Disp(Seq(
+                H("Fixed rational-span levels are isolated"),
+                StatementSource.FromAuthor(Disp(Seq(
                     Begin, Grp(F.Id("gathered")),
                     Forall, Sp, Iota, Sp,
                     OpenBracket, Operatorname, Grp(F.Id("Fintype")),
@@ -47,8 +45,8 @@ internal sealed class RationalSpanIsolationDocument : IScribeDocumentDefinition
                     CloseBrace, Caret, Grp(F.Id("c")), Close,
                     InMacro, Sp, Operatorname, Grp(F.Id("codiscreteWithin")),
                     Open, F.Id("P"), Close, Dot,
-                    End, Grp(F.Id("gathered")))),
-                DescribeProvenance.LiteratureAttested(KrantzParks),
+                    End, Grp(F.Id("gathered"))))),
+                AssessedProvenance.FromLiterature(KrantzParks),
                 Blocks(
                     Paragraph(Text(
                         "Fix a finite family of real values and one rational coefficient for "
@@ -72,6 +70,6 @@ internal sealed class RationalSpanIsolationDocument : IScribeDocumentDefinition
                         + "zero set as the original level set. Krantz and Parks supply the "
                         + "literature anchor for the classical one-variable real-analytic "
                         + "identity and isolated-zero principle; no new analytic proof is "
-                        + "claimed here.")))
-            ))));
+                        + "claimed here."))),
+                DescribeRole.Theorem))));
 }

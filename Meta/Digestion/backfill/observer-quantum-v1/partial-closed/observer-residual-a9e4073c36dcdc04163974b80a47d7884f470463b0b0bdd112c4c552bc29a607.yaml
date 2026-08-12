@@ -4,6 +4,7 @@ fingerprints:
   normalized_sha256: sha256:a9e4073c36dcdc04163974b80a47d7884f470463b0b0bdd112c4c552bc29a607
 cas_ref: sha256:a9e4073c36dcdc04163974b80a47d7884f470463b0b0bdd112c4c552bc29a607
 coverage_gids:
+  - D5/S3/Quantum/Algebra/CovariantCommutator.covariant_commutator_formula
   - D5/S3/Quantum/ObserverCommutator.observer_read_update_commutator_formula
   - D5/S3/Quantum/ObserverAlgebra.observer_read_update_noncommutative
   - D5/S3/Quantum/ObserverAlgebra.observer_update_covariant_group_skeleton
@@ -24,4 +25,3 @@ receipts:
     - discrete-crossed-product-uniqueness
     - continuous-hidden-flow-rigidity-exclusion
     - observer-read-write-forces-structure
-    - abstract-crossed-product-commutator-formula-beyond-register-representation
