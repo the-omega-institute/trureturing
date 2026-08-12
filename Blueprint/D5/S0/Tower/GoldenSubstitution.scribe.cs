@@ -19,7 +19,7 @@ internal sealed class GoldenSubstitutionDocument : IScribeDocumentDefinition
                 Describe.Lean(DescribeId.Create("level-embedding-of-old-names"),
                     DeclarationHandle.Create("D5/S0/Tower/GoldenSubstitution.levelEmbedding"),
                     H("Level embedding of old names"),
-                    StatementSource.FromAuthor(FormulaDsl.Disp(FormulaDsl.Id("levelEmbedding"))),
+                    StatementSource.WithoutFormula(),
                     AssessedProvenance.FromRepo(),
                     Blocks(Paragraph(Text(
                                             "Every level-Q name reappears at level Q plus one with the same value, "
@@ -28,7 +28,7 @@ internal sealed class GoldenSubstitutionDocument : IScribeDocumentDefinition
                 Describe.Lean(DescribeId.Create("inserted-name-indices"),
                     DeclarationHandle.Create("D5/S0/Tower/GoldenSubstitution.insertedNameIndices"),
                     H("Inserted name indices"),
-                    StatementSource.FromAuthor(FormulaDsl.Disp(FormulaDsl.Id("insertedNameIndices"))),
+                    StatementSource.WithoutFormula(),
                     AssessedProvenance.FromRepo(),
                     Blocks(Paragraph(Text(
                                             "The complement of the embedded image: the fresh level-(Q+1) names that "

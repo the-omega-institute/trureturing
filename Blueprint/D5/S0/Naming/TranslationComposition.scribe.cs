@@ -12,7 +12,7 @@ internal sealed class TranslationCompositionDocument : IScribeDocumentDefinition
                 DescribeId.Create("partial-resource-controlled-translation"),
                 DeclarationHandle.Create("D5/S0/Naming/TranslationComposition.Translation"),
                 H("Partial resource-controlled translation"),
-                StatementSource.FromAuthor(FormulaDsl.Id("Translation")),
+                StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "A translation carries a partial name map, an isometric embedding between "
@@ -24,7 +24,7 @@ internal sealed class TranslationCompositionDocument : IScribeDocumentDefinition
                 DescribeId.Create("semantic-composability"),
                 DeclarationHandle.Create("D5/S0/Naming/TranslationComposition.SemanticallyComposable"),
                 H("Semantic composability"),
-                StatementSource.FromAuthor(FormulaDsl.Id("SemanticallyComposable")),
+                StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "At every point of the ordinary composite map domain whose two endpoint "

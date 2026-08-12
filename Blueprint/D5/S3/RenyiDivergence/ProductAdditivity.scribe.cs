@@ -6,18 +6,14 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.RenyiDivergence;
 
 internal sealed class ProductAdditivityDocument : IScribeDocumentDefinition
 {
-    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
-        Header(
-            "D5/S3/RenyiDivergence/ProductAdditivity",
-            "Finite Renyi divergence is additive on products of nonnegative finite mass functions with nonvanishing marginal power sums at every real order."),
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create("Finite Renyi divergence is additive on products of nonnegative finite mass functions with nonvanishing marginal power sums at every real order.",
         H("Product Additivity of Finite Renyi Divergence"),
         Blocks(
-            DocumentBlock.Describe.Theorem(
+            Describe.Lean(
                 DescribeId.Create("finite-renyi-divergence-is-additive-on-products"),
+                DeclarationHandle.Create("D5/S3/RenyiDivergence/ProductAdditivity.renyi_divergence_product_additive"),
                 H("Finite Renyi divergence is additive on products"),
-                LeanTheorem(
-                    "D5/S3/RenyiDivergence/ProductAdditivity.renyi_divergence_product_additive"),
-                Disp(Seq(
+                StatementSource.FromAuthor(Disp(Seq(
                     Begin, Grp(F.Id("gathered")),
                     Forall, Sp, Iota, Comma, Sp, Kappa, Esc,
                     OpenBracket,
@@ -78,8 +74,8 @@ internal sealed class ProductAdditivityDocument : IScribeDocumentDefinition
                     F.Id("D"), Underscore, Grp(Alpha, Sp), Open,
                     F.Id("p"), Apos, Vert, Sp, Vert, Sp,
                     F.Id("q"), Apos, Close, Dot,
-                    End, Grp(F.Id("gathered")))),
-                DescribeProvenance.RepoDerived(),
+                    End, Grp(F.Id("gathered"))))),
+                AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
                         "Independent finite experiments add their Renyi divergences. This " +
@@ -124,5 +120,6 @@ internal sealed class ProductAdditivityDocument : IScribeDocumentDefinition
                     Paragraph(Text(
                         "No n-fold product or i.i.d. form, sample-complexity corollary, " +
                         "order-one limit, or measure-theoretic analogue is claimed. All " +
-                        "logarithms are natural, so the units are nats.")))))));
+                        "logarithms are natural, so the units are nats."))),
+                DescribeRole.Theorem))));
 }

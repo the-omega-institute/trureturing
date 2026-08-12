@@ -6,7 +6,7 @@ Finite conditional entropy in nats is the marginal-weighted entropy of condition
 
 **Definition 1.1 (Conditional entropy is marginal-weighted slice entropy).**
 
-Lean statement: `D5/S3/Entropy/ConditionalEntropy.conditionalEntropy`
+$$\begin{gathered}\forall \iota, \kappa\ [\operatorname{Fintype}(\iota)] [\operatorname{Fintype}(\kappa)],\\\forall p: \iota\times\kappa\to \mathbb{R},\\\operatorname{conditionalEntropy}(p):=\sum_{i}\operatorname{marginal}(p)(i)\operatorname{shannonEntropy}(\operatorname{conditional}(p,i)).\end{gathered}$$
 
 *Formalization.* `D5/S3/Entropy/ConditionalEntropy.conditionalEntropy` (`✓ std3`).
 

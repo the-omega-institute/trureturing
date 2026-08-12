@@ -13,8 +13,7 @@ internal sealed class AlgebraicModelDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create(
                     "D5/S0/Carrier/AlgebraicModel.golden_algebraic_model_spec"),
                 H("Quadratic quotient, conjugation, trace, and norm"),
-                StatementSource.FromAuthor(
-                    FormulaDsl.Disp(FormulaDsl.Id("goldenAlgebraicModelSpec"))),
+                StatementSource.WithoutFormula(),
                 AssessedProvenance.FromLiterature(
                     LibraryNoteRef.Create("D5/L/stewarttall2025algebraic")),
                 Blocks(Paragraph(Text(

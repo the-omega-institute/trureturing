@@ -6,17 +6,14 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.QuantumBounds;
 
 internal sealed class LandauIdentityDocument : IScribeDocumentDefinition
 {
-    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
-        Header(
-            "D5/S3/QuantumBounds/LandauIdentity",
-            "The algebraic Landau identity for the finite-dimensional CHSH operator."),
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create("The algebraic Landau identity for the finite-dimensional CHSH operator.",
         H("Landau Identity for Finite Matrix Observables"),
         Blocks(
-            DocumentBlock.Describe.Theorem(
+            Describe.Lean(
                 DescribeId.Create("the-chsh-square-is-governed-by-local-commutators"),
+                DeclarationHandle.Create("D5/S3/QuantumBounds/LandauIdentity.landau_identity"),
                 H("The CHSH square is governed by local commutators"),
-                LeanTheorem("D5/S3/QuantumBounds/LandauIdentity.landau_identity"),
-                Disp(Seq(
+                StatementSource.FromAuthor(Disp(Seq(
                     Forall, Sp, F.Id("m"), Comma, Sp, F.Id("n"), Comma, Esc,
                     OpenBracket,
                     Operatorname, Grp(F.Id("Fintype")), Open, F.Id("m"), Close,
@@ -104,8 +101,8 @@ internal sealed class LandauIdentityDocument : IScribeDocumentDefinition
                     F.Id("S"), Caret, Grp(D(2)), Eq,
                     D(4), Cdot, Sp,
                     F.Id("I"), Underscore, Grp(F.Id("m"), Times, Sp, F.Id("n")),
-                    Plus, F.Id("C"))),
-                DescribeProvenance.RepoDerived(),
+                    Plus, F.Id("C")))),
+                AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "Let m and n be finite index types with decidable equality. Let A0 and A1 " +
                     "be Hermitian involutions in the m-by-m complex matrices, and let B0 and B1 " +
@@ -116,5 +113,6 @@ internal sealed class LandauIdentityDocument : IScribeDocumentDefinition
                     "context, while the proof uses only the four involution equations. This is " +
                     "the algebraic kernel only: it introduces no state or variance, proves no " +
                     "positivity or norm estimate, and does not establish the three-gap " +
-                    "decomposition, its saturation conditions, or the Tsirelson bound.")))))));
+                    "decomposition, its saturation conditions, or the Tsirelson bound."))),
+                DescribeRole.Theorem))));
 }

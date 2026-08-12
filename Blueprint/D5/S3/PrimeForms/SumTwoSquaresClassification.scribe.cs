@@ -9,21 +9,17 @@ internal sealed class SumTwoSquaresClassificationDocument : IScribeDocumentDefin
     private static readonly LibraryNoteRef Grosswald =
         LibraryNoteRef.Create("D5/L/Arith/grosswald1985representations");
 
-    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
-        Header(
-            "D5/S3/PrimeForms/SumTwoSquaresClassification",
-            "A natural number is a sum of two squares exactly when every prime congruent"
-            + " to three modulo four occurs to an even exponent in its factorization."),
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "A natural number is a sum of two squares exactly when every prime congruent"
+        + " to three modulo four occurs to an even exponent in its factorization.",
         H("Classification of Sums of Two Squares"),
         Blocks(
-            DocumentBlock.Describe.Theorem(
+            Describe.Lean(
                 DescribeId.Create("sum-of-two-squares-classification"),
+                DeclarationHandle.Create("D5/S3/PrimeForms/SumTwoSquaresClassification.eq_sq_add_sq_iff_even_factorization"),
                 H("A natural number is a sum of two squares exactly when its prime factors"
                   + " congruent to three modulo four carry even exponents"),
-                LeanTheorem(
-                    "D5/S3/PrimeForms/SumTwoSquaresClassification."
-                    + "eq_sq_add_sq_iff_even_factorization"),
-                Disp(Seq(
+                StatementSource.FromAuthor(Disp(Seq(
                     Open, Exists, Sp, F.Id("a"), Comma, F.Id("b"), InMacro,
                     Mathbb, Grp(F.Id("N")), Comma, Esc,
                     F.Id("n"), Eq, F.Id("a"), Caret, D(2), Plus, F.Id("b"), Caret, D(2),
@@ -33,8 +29,8 @@ internal sealed class SumTwoSquaresClassificationDocument : IScribeDocumentDefin
                     Open, Operatorname, Grp(F.Id("mod")), Esc, D(4), Close,
                     Sp, Rightarrow, Sp,
                     D(2), Esc, Mid, Esc, F.Id("v"), Underscore, F.Id("q"),
-                    Open, F.Id("n"), Close)),
-                DescribeProvenance.LiteratureAttested(Grosswald),
+                    Open, F.Id("n"), Close))),
+                AssessedProvenance.FromLiterature(Grosswald),
                 Blocks(Paragraph(Text(
                     "A natural number n is a sum of two natural squares if and only if "
                     + "every prime q congruent to three modulo four occurs to an even "
@@ -52,6 +48,6 @@ internal sealed class SumTwoSquaresClassificationDocument : IScribeDocumentDefin
                     + "composition identity is not attributed and is not reproved. "
                     + "Original numerical-certificate disposition: the source theorem is "
                     + "a purely universal biconditional and contains no numerical "
-                    + "certificate.")))
-            ))));
+                    + "certificate."))),
+                DescribeRole.Theorem))));
 }

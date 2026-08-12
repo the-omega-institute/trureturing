@@ -7,19 +7,14 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Observer;
 internal sealed class StreamlineTheoremDocument : IScribeDocumentDefinition
 {
     public DocumentDefinition Create() =>
-        DocumentDefinition.Create(ScribeDocument.Create(
-            Header(
-                "D5/S3/Observer/StreamlineTheorem",
-                "For a supplied solenoid decomposition, the throat offset is continuous exactly when it is constant."),
+        DocumentDefinition.Create(ScribeNode.Create("For a supplied solenoid decomposition, the throat offset is continuous exactly when it is constant.",
             H("Conditional Streamline Rigidity"),
             Blocks(
-                DocumentBlock.Describe.Theorem(
+                Describe.Lean(
                     DescribeId.Create("a-supplied-decomposition-has-a-rigid-throat-offset"),
+                    DeclarationHandle.Create("D5/S3/Observer/StreamlineTheorem.streamline_offset_continuous_iff_constant"),
                     H("A supplied decomposition has a rigid throat offset"),
-                    LeanTheorem(
-                        "D5/S3/Observer/StreamlineTheorem."
-                        + "streamline_offset_continuous_iff_constant"),
-                    Disp(Seq(
+                    StatementSource.FromAuthor(Disp(Seq(
                         Operatorname, Grp(F.Id("IsPreconnected")), Open, F.Id("I"), Close, Sp, Land, Sp,
                         F.Id("t"), Underscore, D(0), Sp, InMacro, Sp, F.Id("I"), Sp, Rightarrow, Esc,
                         Operatorname, Grp(F.Id("ContinuousOn")),
@@ -29,8 +24,8 @@ internal sealed class StreamlineTheoremDocument : IScribeDocumentDefinition
                         F.Id("c"), Underscore, F.Id("d"), Open, F.Id("t"), Close,
                         Sp, Eq, Sp,
                         F.Id("c"), Underscore, F.Id("d"), Open, F.Id("t"),
-                        Underscore, D(0), Close)),
-                    DescribeProvenance.RepoDerived(),
+                        Underscore, D(0), Close))),
+                    AssessedProvenance.FromRepo(),
                     Blocks(
                         Paragraph(Text(
                             "The theorem takes a StreamlineDecomposition as explicit input. It "
@@ -50,26 +45,26 @@ internal sealed class StreamlineTheoremDocument : IScribeDocumentDefinition
                             + "arbitrary continuous solenoid path, choose a canonical visible "
                             + "projection lift, or prove such a choice is canonical. Those "
                             + "existence and canonicity obligations remain open rather than being "
-                            + "inferred from the conditional rigidity statement.")))),
-                DocumentBlock.Describe.Theorem(
+                            + "inferred from the conditional rigidity statement."))),
+                    DescribeRole.Theorem),
+                Describe.Lean(
                     DescribeId.Create("a-nonconstant-hidden-history-is-not-continuous"),
+                    DeclarationHandle.Create("D5/S3/Observer/StreamlineTheorem.nonconstant_offset_not_continuous"),
                     H("A changing hidden address is not continuous"),
-                    LeanTheorem(
-                        "D5/S3/Observer/StreamlineTheorem."
-                        + "nonconstant_offset_not_continuous"),
-                    Disp(Seq(
+                    StatementSource.FromAuthor(Disp(Seq(
                         Operatorname, Grp(F.Id("IsPreconnected")), Open, F.Id("I"), Close, Sp, Land, Sp,
                         F.Id("x"), Comma, Sp, F.Id("y"), InMacro, Sp, F.Id("I"),
                         Comma, Quad, Sp, F.Id("k"), Open, F.Id("x"), Close, Sp, Neq, Sp,
                         F.Id("k"), Open, F.Id("y"), Close, Sp, Rightarrow, Sp, Neg,
                         Operatorname, Grp(F.Id("ContinuousOn")),
-                        Open, F.Id("k"), Comma, Sp, F.Id("I"), Close)),
-                    DescribeProvenance.RepoDerived(),
+                        Open, F.Id("k"), Comma, Sp, F.Id("I"), Close))),
+                    AssessedProvenance.FromRepo(),
                     Blocks(Paragraph(Text(
                         "If two times in the connected interval carry different hidden "
                         + "addresses, continuity would force those values to agree. The explicit "
                         + "contradiction is the negative witness excluding a nonconstant "
-                        + "candidate throat history."))))),
+                        + "candidate throat history."))),
+                    DescribeRole.Theorem)),
             [
                 DocumentEdge.Dependency.Create(
                     GidRef.Create("D5/S3/Arith/HiddenFiberRigidity")),

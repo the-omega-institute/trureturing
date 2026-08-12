@@ -13,7 +13,7 @@ internal sealed class WDigitsDocument : IScribeDocumentDefinition
                 DescribeId.Create("zeckendorf-coordinate-equivalence"),
                 DeclarationHandle.Create("D5/S0/Conventions/WDigits.wEncoding"),
                 H("Every natural has exactly one canonical W-digit representation"),
-                StatementSource.FromAuthor(Id("wEncoding")),
+                StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "Natural numbers are equivalent to canonical Zeckendorf index lists. "

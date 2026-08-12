@@ -39,7 +39,7 @@ internal sealed class GoldenWordDocument : IScribeDocumentDefinition
                 DescribeId.Create("golden-word-diagonal-limit"),
                 DeclarationHandle.Create("D5/S1/Words/GoldenWord.goldenWord"),
                 H("The golden word is read on the tower diagonal"),
-                StatementSource.FromAuthor(FormulaDsl.Disp(FormulaDsl.Id("goldenWord"))),
+                StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "The letter at index i is the ith letter of the finite Fibonacci word at "

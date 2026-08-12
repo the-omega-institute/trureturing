@@ -8,7 +8,7 @@ This module makes the normalization denominator endogenous. Its finite partial-q
 
 **Definition 1.1 (A rational mechanically determines its finite partial-quotient tail).**
 
-Lean statement: `D5/S1/Depth/PartialQuotientExtraction.partialQuotients`
+$$C(q)=\operatorname{OddTail}\!\left(\operatorname{toList}(\operatorname{partDens}(\operatorname{GenContFract.of}(q)))\right)$$
 
 *Formalization.* `D5/S1/Depth/PartialQuotientExtraction.partialQuotients` (`✓ std3`).
 
@@ -20,7 +20,7 @@ GenContFract.of separates the integer head from its positive denominator stream.
 
 **Definition 1.2 (The normalization denominator is the extracted maximum).**
 
-Lean statement: `D5/S1/Depth/PartialQuotientExtraction.aMax`
+$$A(q)=\max C(q)$$
 
 *Formalization.* `D5/S1/Depth/PartialQuotientExtraction.aMax` (`✓ std3`).
 

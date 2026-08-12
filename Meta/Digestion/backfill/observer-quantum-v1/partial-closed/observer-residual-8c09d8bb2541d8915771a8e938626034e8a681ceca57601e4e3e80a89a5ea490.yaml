@@ -4,6 +4,7 @@ fingerprints:
   normalized_sha256: sha256:8c09d8bb2541d8915771a8e938626034e8a681ceca57601e4e3e80a89a5ea490
 cas_ref: sha256:8c09d8bb2541d8915771a8e938626034e8a681ceca57601e4e3e80a89a5ea490
 coverage_gids:
+  - D5/S3/Observer/WindowAlgebra/WindowGeneration.window_generators_adjoin_top
   - D5/S3/Observer/WindowRegister.window_weyl
   - D5/S3/ObserverMemory/PrimePowerTensorTower.prime_power_tensor_factor_decomposition
   - D5/S3/ObserverMemory/WindowRegisterCRT.window_register_crt_decomposition
@@ -22,5 +23,4 @@ receipts:
       source_sha256: sha256:8c09d8bb2541d8915771a8e938626034e8a681ceca57601e4e3e80a89a5ea490
       target_sha256: sha256:89457799a8e0362f3113889e39ef6eeadabe40f2c9e3228af2bffe7d66acda31
   scribe: []
-  unresolved_subitems:
-    - observer-window-generated-structure-claim
+  unresolved_subitems: []
