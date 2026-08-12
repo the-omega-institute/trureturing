@@ -21,6 +21,9 @@
 - 2026-08-12 (SL-003): `Observer/` remained at its 12-file limit. The
   branch-new `OrbitConnesDistance` module opened the `Observer/MetricGeometry/`
   bucket; all 12 existing `Observer/` paths remain in place.
+- 2026-08-12 (SL-003): `Entropy/` was at its 12-file limit. The branch-new
+  `CapacityMonotone` module opened the `Entropy/Forgetting/` bucket; all 12
+  existing `Entropy/` paths remain in place.
 
 ## Buckets
 
@@ -36,3 +39,4 @@
 - `Observer/HiddenFlow/`: continuous hidden-parameter flow exclusion over discrete addresses.
 - `Observer/WindowAlgebra/`: finite read-write generation of window matrix algebras.
 - `Observer/MetricGeometry/`: observable-supremum metrics on observer update orbits.
+- `Entropy/Forgetting/`: finite entropy and uniform-capacity laws under forgetting channels.
