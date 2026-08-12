@@ -212,7 +212,9 @@ public sealed partial class ProductionEnvironmentTests
     }
 
     [Fact]
-    public void CheckRequiresBothPrecomputedLeanReportsForProtectedChanges()
+    // 旧侧 Lean 报告不再是必需参数:它唯一的用途是 Hearts.lean 变动时的语义比对,
+    // 而那个文件近 200 次提交只动过 5 次。候选侧报告仍然必需。
+    public void CheckRequiresThePrecomputedCandidateLeanReportForProtectedChanges()
     {
         var fixture = new RuleFixture();
         fixture.AddBackfillTargets();
@@ -231,7 +233,7 @@ public sealed partial class ProductionEnvironmentTests
 
         var failure = Assert.IsType<AdmissionOutcome.InfrastructureFailure>(outcome);
         Assert.Contains("--candidate-lean-report", failure.Message, StringComparison.Ordinal);
-        Assert.Contains("--baseline-lean-report", failure.Message, StringComparison.Ordinal);
+        Assert.DoesNotContain("--baseline-lean-report", failure.Message, StringComparison.Ordinal);
         Assert.Equal(0, source.CallCount);
     }
 
