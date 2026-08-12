@@ -24,7 +24,7 @@
 | C 编年层 | `Chronicle/` | 评注/判词/史;**append-only,按时间索引** |
 | L 摄入端口 | `Library/` | 文献进 |
 | P 产出端口 | `Papers/` | 论文出 |
-| Meta | `Meta/` | harness 本体(Lint/split/papergen/sweep/词表) |
+| Meta | `Meta/` | harness 本体(Lint/split/sweep/词表) |
 | agents | `agents/` | 八官宪章与上下文包 |
 
 **镜像律**:B/E 不拥有自己的分类学——借用 F 层地址(未形式化者借其*未来*地址);一个数学单元 = 一个地址 × 至多三平面。
@@ -69,7 +69,7 @@ golden-ledger/
 ├── Chronicle/<YYYY>/<MM>/<DD>-<slug>.md  (+ INDEX.md 由 CI 生成, LEGACY.md 旧评注映射)
 ├── Library/{queries.yaml, anchors.bib, MAP.md, notes/<bibkey>.md, <Domain>/<bibkey>.md}
 ├── Papers/{recipes/, frozen/<paper-id>/}(build/ 不入库)
-├── Meta/{StrataLint(含 split/papergen 等子命令位), domains.yaml, registry.yaml, BACKFILL.yaml}
+├── Meta/{StrataLint(含 split 等子命令位), domains.yaml, registry.yaml, BACKFILL.yaml}
 ├── agents/{CONTEXT.md, scout.md…gate.md, theorist.md, echo-template.md, verdict-template.md}
 ├── docs/{CONTRIBUTING.md(防命理墙+可证伪七条), GOVERNANCE.md, history/}
 ├── lakefile.lean  lean-toolchain  .github/workflows/
@@ -91,7 +91,7 @@ golden-ledger/
 
 **A1 理论码** `THEORY := "D"<基本判别式> | "T"<次数>"D"<判别式>`——D5 金、D8 银、D13 铜;由分类器(6.205 不变量)签发,唯一典范可排序;姊妹实例化 = 换 D。**M0 admission 只实例化 D5**;`Metallic/`、`Moduli/` 与其余合法理论码保留为未实例化坐标,压力案 D5-T0009 成立前 route 与 check 均以 SL-021 拒收并报告该案,不得降格为“未知路径”。
 
-**A2 全域标识符 GID(v7.11 规范虚拟地址)** `GID := THEORY "/" [PLANE "/"] PATH ["." DECL] ["--" TAG]`,PLANE∈{F(省),B,E,C,L,P};每个 PATH segment 必须非空且不得为 `.`/`..`;GID 与**语义目标**立总双射,逐平面唯一反解:F:`D5/<S 层>/<疆域>/<模块>[.<DECL>]` ↔ `D5/<S 层>/<疆域>/<模块>.lean` 中之文件或声明;B:`D5/B/<PATH>` ↔ `Blueprint/D5/<PATH>.md`;E:`D5/E/<PATH>.<DECL>--<KIND>` ↔ **唯一单文件** `Evidence/D5/<PATH>.<DECL>.<KIND>`(目录永不充当 E 目标,同一选择子只许一种工件类型),全局常数表为唯一专例 `D5/E/values--json` ↔ `Evidence/D5/values.json`;C:`D5/C/<YYYY-MM-DD>/<slug>` ↔ `Chronicle/<YYYY>/<MM>/<DD>-<slug>.md`;L 根桶:`D5/L/<bibkey>` ↔ `Library/notes/<bibkey>.md`,容量压力裂出的受控疆域桶:`D5/L/<Domain>/<bibkey>` ↔ `Library/<Domain>/<bibkey>.md`,其中 `<Domain>` 必须先入 `Meta/domains.yaml`,且既有根桶地址不迁;P:`D5/P/<paper-id>` ↔ `Papers/recipes/<paper-id>.yaml`,`D5/P/<paper-id>--frozen` ↔ 该冻结包唯一 `manifest.sha256`。F 层工件 GID 即字面 Lean 路径去 `.lean` 后缀,`.DECL` 是该文件内声明选择子;其余平面 GID 是虚拟地址,不得与物理路径混写。例:`D5/S3/Spectral/GapLabeling.gap_label_mem`、`D5/E/S3/Analytic/Cphi.result--json`、`D5/E/values--json`、`D5/C/2026-07-06/r168`、`D5/L/Zeros/coffey2007theta`、`D5/P/D5-P001--frozen`。**papergen/blueprint 只接受全 GID;跨库引用自带理论坐标。** **M0 admission 精确主张**:给定一个受支持且 machine-decide 判词为 admit 的语义 manifest,至多存在一种规范表示与恰一次 admission;不受支持或机器判词非 admit 的 manifest 按 fail-closed 得零次 admission。受 manifest 路由的 JSON/YAML 结构化语义工件现役强制 UTF-8、禁 BOM、对象键字典序、禁行尾空白且末尾恰一 LF;完整 Unicode NFC、默认值与 tag 顺序规范化延后 D5-T0015,故字节规范不得报 full active。
+**A2 全域标识符 GID(v7.11 规范虚拟地址)** `GID := THEORY "/" [PLANE "/"] PATH ["." DECL] ["--" TAG]`,PLANE∈{F(省),B,E,C,L,P};每个 PATH segment 必须非空且不得为 `.`/`..`;GID 与**语义目标**立总双射,逐平面唯一反解:F:`D5/<S 层>/<疆域>/<模块>[.<DECL>]` ↔ `D5/<S 层>/<疆域>/<模块>.lean` 中之文件或声明;B:`D5/B/<PATH>` ↔ `Blueprint/D5/<PATH>.md`;E:`D5/E/<PATH>.<DECL>--<KIND>` ↔ **唯一单文件** `Evidence/D5/<PATH>.<DECL>.<KIND>`(目录永不充当 E 目标,同一选择子只许一种工件类型),全局常数表为唯一专例 `D5/E/values--json` ↔ `Evidence/D5/values.json`;C:`D5/C/<YYYY-MM-DD>/<slug>` ↔ `Chronicle/<YYYY>/<MM>/<DD>-<slug>.md`;L 根桶:`D5/L/<bibkey>` ↔ `Library/notes/<bibkey>.md`,容量压力裂出的受控疆域桶:`D5/L/<Domain>/<bibkey>` ↔ `Library/<Domain>/<bibkey>.md`,其中 `<Domain>` 必须先入 `Meta/domains.yaml`,且既有根桶地址不迁;P:`D5/P/<paper-id>` ↔ `Papers/recipes/<paper-id>.yaml`,`D5/P/<paper-id>--frozen` ↔ 该冻结包唯一 `manifest.sha256`。F 层工件 GID 即字面 Lean 路径去 `.lean` 后缀,`.DECL` 是该文件内声明选择子;其余平面 GID 是虚拟地址,不得与物理路径混写。例:`D5/S3/Spectral/GapLabeling.gap_label_mem`、`D5/E/S3/Analytic/Cphi.result--json`、`D5/E/values--json`、`D5/C/2026-07-06/r168`、`D5/L/Zeros/coffey2007theta`、`D5/P/D5-P001--frozen`。**blueprint 只接受全 GID;跨库引用自带理论坐标。** **M0 admission 精确主张**:给定一个受支持且 machine-decide 判词为 admit 的语义 manifest,至多存在一种规范表示与恰一次 admission;不受支持或机器判词非 admit 的 manifest 按 fail-closed 得零次 admission。受 manifest 路由的 JSON/YAML 结构化语义工件现役强制 UTF-8、禁 BOM、对象键字典序、禁行尾空白且末尾恰一 LF;完整 Unicode NFC、默认值与 tag 顺序规范化延后 D5-T0015,故字节规范不得报 full active。
 **A2.1 字符集律**(SL-015):除 `formula` 外,机器读字段(GID、键、任务/实验/论文码)字符集恒为 `[A-Za-z0-9_/.-]`——禁 `:`(Windows 文件名/git refname 非法)、`#`(YAML/shell 注释、URL fragment)、`@`(refspec 歧义)及一切需转义符;首段 `D<数字>` 即理论码(无歧义);声明分隔 `.` 与 Lean 全限定名同构;GID 可直接作 URL 段与无引号 YAML 值,物理路径只由 A2 双射求得;分支只用任务码(`agent/prover/D5-T0042`),GID 不入 refname;Unicode 仅居散文与 docstring。`formula` 为显式例外,使用独立 ASCII 算术文法:`expr := term (("+"|"-") term)*`;`term := factor (("*"|"/") factor)*`;`factor := number | ref | "sqrt" "(" expr ")" | "(" expr ")" | ("+"|"-") factor`;token 间允许空格,`number` 为十进制整数或小数,`ref` 必须是同记录 `refs` 中声明的 ASCII 键;除此之外的字符、函数或未绑定 ref 一律拒收。
 
 **A3 地层码**(封闭集永不扩容)S0–S4;X_Assumptions/X_Certificates/X_Frontier。普通疆域之地层由 `Meta/domains.yaml` 的 `stratum` 显式给定;语义:S_k 之库内 import 闭包 ⊆ S_{≤k}(同层互引合法,S0 亦然),且闭包最高地层不得高于该疆域地层;X_C 另可引 X_A;X_F 引一切、被引于无。**目录名即纯地层码(v7.8 正名:助记词 Kernel/Axes/… 入各层 INDEX.md 首行)——F 层 GID 与字面仓库路径去 `.lean` 后缀同构。**
@@ -239,7 +239,7 @@ warn→required 的升红义务逐预算结算,只许另开独立 PR/check,不�
 | 算师 Numericist | 跑实验规格;维护 values.json;三出口 | Evidence 全权 | POLICY(最坏项负责) | cron+新规格 |
 | 典官 Librarian | 文献周扫、triage 三出口、axiom-debt 化引用、蓝图锚 | Library/Blueprint 锚 | 无锚不引 | cron |
 | 对手官 Adversary | 审题(回声核对)、判卷(打靶/反例)、审稿(论文主张↔代码状态对质)、K 日复审 | 只评不并 | 不与证师同体 | PR+cron |
-| 书记官 Scribe | Blueprint 同步、C 层记事、papergen 起草、release notes | docs/注释/草稿 | 不碰证明体 | 合并+配方 |
+| 书记官 Scribe | Blueprint 同步、C 层记事、release notes | docs/注释/草稿 | 不碰证明体 | 合并+配方 |
 | **演绎官 Theorist** | 写新数学:新定义/分解/恒等/猜想携动机链入 Frontier;每探索轮必算必检索(全宪章见 11.1) | Frontier 陈述 + Evidence 产物 | 不越 X_A 门控;新陈述必挂三档初判 | cron 探索轮 + 事件 |
 | 门官 Gate(决定论) | CI+合并策略:全部 SL、H7/H9、预算闸、门控执行 | 合并权 | 升格级 PR 无机器绿判词不并 | 一切 PR |
 
@@ -258,9 +258,6 @@ warn→required 的升红义务逐预算结算,只许另开独立 PR/check,不�
 
 ## 6.2 Evidence 实验(自动研究)
 实验规格即工单(A10);算师按规格跑,三出口:观察(C 层笔记+候选 Frontier 猜想 PR)/假设精化(X_A 之 PR,按 machine-decide 四态判词归位)/阴性(负知识归档)。数值投影的共享核、schema、fail-closed loader 与 writer 居 `Meta/StrataLint/StrataLint.Scribe/Values/`;十四项计算实例与参数住 `Golden/values-kernels.toml`(精确 {kφ}、补偿求和、全周期窗平均——审计教训固化,防私造有偏工艺),正式数学内容居 Lean GID,`Evidence/` 只收 Scribe 发射数据。**每轮必算,至此成为 cron。**
-
-## 6.3 Papers 产出(自动写论文)
-recipe(A11)→ `Meta/papergen`(决定论):拉 Blueprint 散文 + **语法生成之状态徽章(猜想印不成定理——防吹牛 by construction)** + Library 引文 + Evidence 图表 → LaTeX → arXiv 包;书记官起草 → 对手官审稿(主张逐条对质代码状态)→ publication-admission;对应机器谓词未落地时该步记具名 `open`,不得以外部签发替代 → frozen 快照(哈希+tag+DOI);发表后勘误以追加页。**书**(GICT 卷等)= `Meta/bookgen` 按配方拼装——构建产物,不入真理源。
 
 ## 6.4 研究飞轮
 ```
@@ -294,8 +291,8 @@ recipe(A11)→ `Meta/papergen`(决定论):拉 Blueprint 散文 + **语法生成�
 
 # 第九部:引导与里程碑
 
-**M0(第一日)**:① lakefile+mathlib 钉版;② S0 四文件当日全证;③ Hearts 精确命题草案按四态语义处理(D5-T0001),机器判词允许后另轮立碑;④ Meta:StrataLint + domains.yaml 现役;split 工具随首次真实容量压力生长(D5-T0004,C# StrataLint 子命令形态),papergen 随首份全可解析 recipe 生长(D5-T0005,同为 C# 形态),本轮立永久工单,不建空壳;⑤ agents 全套(CONTEXT≤2K+八宪章+两模板);⑥ queries.yaml 首批;⑦ 十四常数不落手填中间态,仅接受机器 producer attestation;producer/晋升产物延后 D5-T0003;⑧ Blueprint 骨架;D5-P001 立永久工单(依赖 S3@M3,成稿@M5);⑨ CI:lint+build 真实作业绿(required-check 配置按四态语义记 D5-T0007);⑩ tag E0+旧卷归档按机器判词执行。
-**M1** S1 全证(Zeck 加法闭合为首障)→ **M2** S2+解压定理 → **M3** S3 恰值群+mod5 → **M4** X_A 化数值链(c₁ 条件定理立)→ **M5** blueprint 上线+D5-P001 出稿 → **M∞** Frontier 蚕食;G 层上收 metallic-core。
+**M0(第一日)**:① lakefile+mathlib 钉版;② S0 四文件当日全证;③ Hearts 精确命题草案按四态语义处理(D5-T0001),机器判词允许后另轮立碑;④ Meta:StrataLint + domains.yaml 现役;split 工具随首次真实容量压力生长(D5-T0004,C# StrataLint 子命令形态),本轮立永久工单,不建空壳;⑤ agents 全套(CONTEXT≤2K+八宪章+两模板);⑥ queries.yaml 首批;⑦ 十四常数不落手填中间态,仅接受机器 producer attestation;producer/晋升产物延后 D5-T0003;⑧ Blueprint 骨架;⑨ CI:lint+build 真实作业绿(required-check 配置按四态语义记 D5-T0007);⑩ tag E0+旧卷归档按机器判词执行。
+**M1** S1 全证(Zeck 加法闭合为首障)→ **M2** S2+解压定理 → **M3** S3 恰值群+mod5 → **M4** X_A 化数值链(c₁ 条件定理立)→ **M5** blueprint 上线 → **M∞** Frontier 蚕食;G 层上收 metallic-core。
 
 ---
 
@@ -336,8 +333,6 @@ recipe(A11)→ `Meta/papergen`(决定论):拉 Blueprint 散文 + **语法生成�
 
 **样例 10|文献(轮 157 检索)** `D5/L/bellissard1992gap`:`{claim:"IDS 于谱隙取值于频率模", strata_touched:[D5/S3/Spectral/GapLabeling], license: ok, triage: anchor}`;kraus2012topological 同式(另触 S4/PhysicsDict)。
 
-**样例 11|论文配方(O-14 全卷)** `Papers/recipes/D5-P001.yaml`:
-`{id: D5-P001, decls:[D5/S3/Diffraction/Avoidance.peak_height, ….zero_free_arc, ….dk_bound, ….sharpness], blueprint:[D5/B/S3/Diffraction/*], evidence:[D5/E/S3/Diffraction/Avoidance.zeros_scan--json], narrative_order:[闭式,四款,数据], venue: arXiv-math.NT}`——papers-dry 干跑即验"论文永远可装配"。
 
 **样例 12|通用性三例(理论自分类落地)** ModelSet→G(以 `Zsqrtd d` 陈述,末行特化);Mod5→I(模数为实例值);Hurwitz→E(指纹)——**G 层上收 metallic-core 之路径由此三例定标。**
 
@@ -421,7 +416,6 @@ CONTEXT.md(1 页)→ 各地层 `INDEX.md`(CI 从文件头 digest 行聚合)→ �
 `docs/MISSION.md`:北极星 = 两颗心脏(可仰望不可硬攻);价值序 = **理解 > 数量,诚实 > 速度,负知识与正结果等价记账**;探索靶评分 = 新颖性 × 依赖就绪度 × 结构变现潜力(可开支票否)× 收据潜力;禁令 = 刷 sorry 数、堆平凡引理、追引用。**PLAYBOOK 答"怎么找",MISSION 答"什么值得找"——无此文件,飞轮高速空转。**
 
 ## 11.21 回填溯源清单(消化完整性)
-<!-- BACKFILL_ENTRY_ACCEPTANCE: required=atom_id,cas_ref,coverage_gids,fingerprints,receipts,status;exactly_one=ast_path|boundary;optional=- -->
 `Meta/BACKFILL.yaml` 是 **Digestion Ledger** 唯一真源,现役且仅现役 schema 为 `schema_version: 3` / `ledger: theory-digestion-v1`;旧 anchor/disposition 格式经一次迁移只存于 git 历史,运行时无兼容读者、无双读。每个 source 恰含 `{source_id,path,atomizer,entries}`,其中 `source_id` 全局唯一、文件正名且文件名禁空格;每个原子 entry 的共同必选字段为 `{atom_id,fingerprints:{raw_sha256,normalized_sha256},cas_ref,coverage_gids,receipts,status}`,边界字段互斥二选一:嵌套 `boundary:{ast_path,start_byte,end_byte}` 或顶层 `ast_path`,无 entry 级可选字段。canonical 账本 1035 条 entry 中 1023 条采用顶层 `ast_path`、12 条采用嵌套 `boundary`,且 loader 强制 1035/1035 均携 `cas_ref`;故 THEORY-ERRATUM(11.27)的案件主键 `(cas_ref, atom_id)` 对每条已摄入理论收据成立。raw 指纹绑定原始字节,normalized 指纹只容许 UTF-8 BOM、CRLF/CR→LF 与 Unicode NFC 的受限规范化;二者均为 `sha256:<64 lowercase hex>`。
 
 **双轴状态由机器派生,status 只是受检投影,禁手写冒领。**迁移轴为 `{residual,partial,absorbed}`:仅完成 extract/identify 而无语义目标或收据进展者为 residual;已识别目标 GID 或已有迁移收据但合取未齐者为 partial;原子本地收据与全部 `chain_atoms` 均闭合者才为 absorbed。真值轴为 `{closed,tail,open}`:Lean 闭包 Closed 才是 closed;Tail 只有在 migration 已 absorbed 且 `Meta/StrataLint/Authorizations/digestion-tail/<atom_id>.json` 之 canonical 工件逐字绑定 atom 与全部 Tail GID 时才投影为 **absorbed-tail**,否则一律 open;Tail 不计已证。SL-016 对 source 结构、边界可重现、指纹、目标 GID、收据、双轴重算一致性逐项 fail-closed,任一 stored status 与派生不同即红。
@@ -445,7 +439,7 @@ CONTEXT.md(1 页)→ 各地层 `INDEX.md`(CI 从文件头 digest 行聚合)→ �
 凡 PR/轮次文本中**出现而未解决**之异常(意外数值、顺手发现之张力、失败的旁路尝试),必须当轮立案(工单/issue/黄牌)并在判词"账平声明"中列出案号;门官对含未立案异常之 PR 拒并——**浮账不许静默溜走;"账,平"从此不是一句仪文,是一个可判的谓词:平 ⟺ 浮账集为空。**
 
 ## 11.26 迁移遗孤四条(六审补:v2→v7 全量 diff 清扫,迁移债清零)
-**术语对照表**:`Meta/glossary.csv`(zh↔en 逐词钉死:纤维词=fiber word、避峰=Bragg avoidance、账平=ledger balanced…);Blueprint 与 papergen 引用之,译名漂移 = lint 红——双语项目之唯一译名权威。
+**术语对照表**:`Meta/glossary.csv`(zh↔en 逐词钉死:纤维词=fiber word、避峰=Bragg avoidance、账平=ledger balanced…);Blueprint 引用之,译名漂移 = lint 红——双语项目之唯一译名权威。
 **演替/弃用律**:强化/推广取代旧定理时(先例:6.180 铆钉→6.182 梁),旧陈述**不删**,加 `@[deprecated (since := …)] → 新 GID`;新代码禁引弃用项(lint 警);演替三型(strengthen/generalize/correct,correct 必挂 errata)记于新定理 docstring——**历史不删,新用禁引。**
 **大件数据律**:大于阈值之产物(零点表/谱表)入 LFS 或声明"可再生"(脚本+预算);二者皆无 = CI 红;断链即红——git 内只存哈希与再生方式。
 **继任预案**:`docs/SUCCESSION.md`——维护权移交规则、密钥托管、"若本库十年无人维护"之自动开放遗嘱(归档触发条件)——**理论要活得比我们久,就把这句话写进制度。**

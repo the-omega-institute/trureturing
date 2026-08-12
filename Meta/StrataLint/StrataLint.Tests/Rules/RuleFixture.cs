@@ -14,11 +14,6 @@ internal sealed partial class RuleFixture
         "sha256:2d711642b726b04401627ca9fbac32f5c8530fb1903cc4db02258717921a4881";
     internal const string FixtureCasPath =
         "Meta/Digestion/atoms/sha256/2d711642b726b04401627ca9fbac32f5c8530fb1903cc4db02258717921a4881";
-    internal const string FixtureSpecification = """
-        # Synthetic harness specification
-
-        This neutral fixture exercises governance-document presence and protected-path routing.
-        """ + "\n";
     internal const string FixtureBackfill = """
         schema_version: 3
         ledger: theory-digestion-v1
@@ -56,10 +51,6 @@ internal sealed partial class RuleFixture
             gid: D5/X_Frontier/ValuesProducer
           - case_id: D5-T0004
             gid: D5/X_Frontier/SplitTool
-          - case_id: D5-T0005
-            gid: D5/X_Frontier/PaperGenerator
-          - case_id: D5-T0006
-            gid: D5/X_Frontier/D5P001
           - case_id: D5-T0007
             gid: D5/X_Frontier/RequiredChecks
           - case_id: D5-T0008
@@ -98,7 +89,6 @@ internal sealed partial class RuleFixture
     internal const string ValuesProjectionPath = RepositoryPathPolicy.ValuesProjectionPath;
     internal const string WorkflowPath = RepositoryPathPolicy.WorkflowPath;
     internal const string HarnessGatePath = RepositoryPathPolicy.HarnessGatePath;
-    internal const string SpecificationPath = BootstrapGate.SpecificationPath;
     internal const string SyntheticProtectedPath =
         "Meta/StrataLint/StrataLint.Engine/SyntheticProtected.cs";
     internal const string DefinitionsProjectPath =
@@ -133,7 +123,6 @@ internal sealed partial class RuleFixture
             [FixtureDigestionSourcePath] = FixtureDigestionSource,
             [FixtureCasPath] = FixtureDigestionSource,
         };
-        Files[SpecificationPath] = FixtureSpecification;
         Baseline = new Dictionary<string, string>(Files, StringComparer.Ordinal);
         Reports = new Dictionary<string, LeanFileReport>(StringComparer.Ordinal)
         {

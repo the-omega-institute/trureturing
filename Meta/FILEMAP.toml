@@ -458,15 +458,6 @@ artifact_id = "none"
 runtime_disposition = "committed-source"
 
 [[files]]
-pattern = "Papers/recipes/**"
-kind = "data"
-produced_by = "none"
-consumed_by = ["PapergenCommand"]
-verified_by = ["PapergenCommand"]
-artifact_id = "none"
-runtime_disposition = "committed-source"
-
-[[files]]
 pattern = "README.md"
 kind = "data"
 produced_by = "none"
@@ -495,10 +486,10 @@ runtime_disposition = "committed-source"
 
 [[files]]
 pattern = "docs/develop/spec/**"
-kind = "program"
+kind = "data"
 produced_by = "none"
-consumed_by = ["harness"]
-verified_by = ["SL-022"]
+consumed_by = ["reader"]
+verified_by = ["SnapshotDecoder"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
 
