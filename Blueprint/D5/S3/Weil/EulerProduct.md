@@ -18,7 +18,7 @@ A finite Euler product is nonzero exactly on the locus where every local denomin
 
 **Definition 1.2 (The single-address reading is the von Mangoldt weight).**
 
-Lean statement: `D5/S3/Weil/EulerProduct.single_address_reading_spec`
+$(\forall p, k,\ \operatorname{Prime}(p) \land k\neq0 \Rightarrow \operatorname{singleAddressReading}(p^k)=\log p) \land (\forall n,\ \neg\operatorname{IsPrimePow}(n) \Rightarrow \operatorname{singleAddressReading}(n)=0)$
 
 *Formalization.* `D5/S3/Weil/EulerProduct.single_address_reading_spec` (`✓ std3`).
 

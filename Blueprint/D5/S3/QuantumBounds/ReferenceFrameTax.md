@@ -6,7 +6,7 @@ The flat and sine reference vectors have exact values for the reduced zero-bound
 
 **Definition 1.1 (The nearest-neighbour quadratic form has zero boundary values).**
 
-Lean statement: `D5/S3/QuantumBounds/ReferenceFrameTax.nearestNeighborQuadratic`
+$$Q_{N}(c)=\sum_{m \in \operatorname{Fin}(N)} (\frac{\mathbf{1}_{0<m} c_{m-1}+\mathbf{1}_{m+1<N} c_{m+1}}{2})^{2}$$
 
 *Formalization.* `D5/S3/QuantumBounds/ReferenceFrameTax.nearestNeighborQuadratic` (`✓ std3`).
 

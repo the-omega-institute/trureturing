@@ -17,7 +17,7 @@ internal sealed class GoldenReturnWordsDocument : IScribeDocumentDefinition
                     "D5/S1/Words/ReturnWords/GoldenReturnWords."
                     + "AdjacentGoldenOccurrences"),
                 H("Adjacent occurrences have no intervening start"),
-                StatementSource.FromAuthor(FormulaDsl.Disp(FormulaDsl.Id("AdjacentGoldenOccurrences"))),
+                StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "AdjacentGoldenOccurrences n w i j means that i is strictly before j, "
@@ -30,7 +30,7 @@ internal sealed class GoldenReturnWordsDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create(
                     "D5/S1/Words/ReturnWords/GoldenReturnWords.IsGoldenReturnWord"),
                 H("A return word is the block between adjacent starts"),
-                StatementSource.FromAuthor(FormulaDsl.Disp(FormulaDsl.Id("IsGoldenReturnWord"))),
+                StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "A list r is a return word to w when adjacent occurrences of w start at "
@@ -42,7 +42,7 @@ internal sealed class GoldenReturnWordsDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create(
                     "D5/S1/Words/ReturnWords/GoldenReturnWords.goldenReturnWords"),
                 H("Return words are collected as a set"),
-                StatementSource.FromAuthor(FormulaDsl.Disp(FormulaDsl.Id("goldenReturnWords"))),
+                StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "goldenReturnWords n w is the set of all lists satisfying the return-word "

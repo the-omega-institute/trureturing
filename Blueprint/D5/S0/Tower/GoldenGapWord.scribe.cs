@@ -23,7 +23,7 @@ internal sealed class GoldenGapWordDocument : IScribeDocumentDefinition
                     DescribeId.Create("oriented-fibonacci-replacement"),
                     DeclarationHandle.Create("D5/S0/Tower/GoldenGapWord.subst"),
                     H("Oriented Fibonacci replacement"),
-                    StatementSource.FromAuthor(FormulaDsl.Id("subst")),
+                    StatementSource.WithoutFormula(),
                     AssessedProvenance.FromRepo(),
                     Blocks(Paragraph(Text(
                         "A large letter is replaced by large then small, while a small letter "
@@ -33,7 +33,7 @@ internal sealed class GoldenGapWordDocument : IScribeDocumentDefinition
                     DescribeId.Create("finite-fibonacci-word"),
                     DeclarationHandle.Create("D5/S0/Tower/GoldenGapWord.fibWord"),
                     H("Finite Fibonacci word"),
-                    StatementSource.FromAuthor(FormulaDsl.Id("fibWord")),
+                    StatementSource.WithoutFormula(),
                     AssessedProvenance.FromRepo(),
                     Blocks(Paragraph(Text(
                         "Starting from one large letter, fibWord iterates the oriented "
@@ -43,7 +43,7 @@ internal sealed class GoldenGapWordDocument : IScribeDocumentDefinition
                     DescribeId.Create("boundary-completed-golden-gap-word"),
                     DeclarationHandle.Create("D5/S0/Tower/GoldenGapWord.goldenGapWord"),
                     H("Boundary-completed golden gap word"),
-                    StatementSource.FromAuthor(FormulaDsl.Id("goldenGapWord")),
+                    StatementSource.WithoutFormula(),
                     AssessedProvenance.FromRepo(),
                     Blocks(Paragraph(Text(
                         "This word is defined directly by List.ofFn over Fin(Fib(Q+2)). Each "

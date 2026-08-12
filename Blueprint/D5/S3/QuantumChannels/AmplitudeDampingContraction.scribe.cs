@@ -22,7 +22,8 @@ internal sealed class AmplitudeDampingContractionDocument : IScribeDocumentDefin
                 DescribeId.Create("amplitude-damping-is-affine-on-the-bloch-axis"),
                 DeclarationHandle.Create("D5/S3/QuantumChannels/AmplitudeDampingContraction.dampedAxis"),
                 H("Amplitude damping is affine on the Bloch axis"),
-                StatementSource.FromLean(),
+                StatementSource.FromAuthor(Disp(Seq(
+                    F.Id("u"), Apos, Eq, Open, D(1), Minus, Gamma, Close, F.Id("u"), Plus, Gamma))),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "The amplitude-damping parameter gamma sends an axial Bloch coordinate u "
@@ -33,7 +34,8 @@ internal sealed class AmplitudeDampingContractionDocument : IScribeDocumentDefin
                 DescribeId.Create("the-sld-radial-profile-is-constant"),
                 DeclarationHandle.Create("D5/S3/QuantumChannels/AmplitudeDampingContraction.sldRadialProfile"),
                 H("The SLD radial profile is constant"),
-                StatementSource.FromLean(),
+                StatementSource.FromAuthor(Disp(Seq(
+                    Phi, Underscore, Grp(F.Id("SLD")), Open, F.Id("u"), Close, Eq, D(1)))),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "The SLD radial profile assigns one to every axial coordinate."))),
@@ -43,7 +45,10 @@ internal sealed class AmplitudeDampingContractionDocument : IScribeDocumentDefin
                 DescribeId.Create("the-km-radial-profile-is-the-hyperbolic-ratio"),
                 DeclarationHandle.Create("D5/S3/QuantumChannels/AmplitudeDampingContraction.kmRadialProfile"),
                 H("The KM radial profile is the hyperbolic ratio"),
-                StatementSource.FromLean(),
+                StatementSource.FromAuthor(Disp(Seq(
+                    Phi, Underscore, Grp(F.Id("KM")), Open, F.Id("u"), Close, Eq,
+                    Operatorname, Grp(F.Id("artanh")), Open, F.Id("u"), Close,
+                    Slash, F.Id("u"), Comma, Sp, F.Id("u"), Neq, D(0)))),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "The KM radial profile is artanh of u divided by u away from zero, with "
@@ -54,7 +59,9 @@ internal sealed class AmplitudeDampingContractionDocument : IScribeDocumentDefin
                 DescribeId.Create("the-rld-radial-profile-has-a-quadratic-boundary-pole"),
                 DeclarationHandle.Create("D5/S3/QuantumChannels/AmplitudeDampingContraction.rldRadialProfile"),
                 H("The RLD radial profile has a quadratic boundary pole"),
-                StatementSource.FromLean(),
+                StatementSource.FromAuthor(Disp(Seq(
+                    Phi, Underscore, Grp(F.Id("RLD")), Open, F.Id("u"), Close, Eq,
+                    Frac, Grp(D(1)), Grp(D(1), Minus, F.Id("u"), Caret, D(2))))),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "The RLD radial profile is the reciprocal of one minus the squared axial "
@@ -66,7 +73,12 @@ internal sealed class AmplitudeDampingContractionDocument : IScribeDocumentDefin
                     "the-coherence-ratio-compares-radial-profiles-before-and-after-damping"),
                 DeclarationHandle.Create("D5/S3/QuantumChannels/AmplitudeDampingContraction.coherenceRatio"),
                 H("The coherence ratio compares radial profiles before and after damping"),
-                StatementSource.FromLean(),
+                StatementSource.FromAuthor(Disp(Seq(
+                    F.Id("eta"), Underscore, Grp(Phi), Open, Gamma, Comma, F.Id("u"), Close, Eq,
+                    Open, D(1), Minus, Gamma, Close,
+                    Frac,
+                    Grp(Phi, Open, F.Id("u"), Apos, Close),
+                    Grp(Phi, Open, F.Id("u"), Close)))),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "The axial coherence contraction ratio multiplies the profile quotient at "
@@ -78,7 +90,14 @@ internal sealed class AmplitudeDampingContractionDocument : IScribeDocumentDefin
                     "a-pure-state-boundary-endpoint-combines-an-interior-bound-and-a-one-sided-limit"),
                 DeclarationHandle.Create("D5/S3/QuantumChannels/AmplitudeDampingContraction.HasPureBoundaryEndpoint"),
                 H("A pure-state boundary endpoint combines an interior bound and a one-sided limit"),
-                StatementSource.FromLean(),
+                StatementSource.FromAuthor(Disp(Seq(
+                    Operatorname, Grp(F.Id("Endpoint")), Open, F.Id("r"), Comma, F.Id("b"), Close,
+                    Leftrightarrow, Open,
+                    Forall, Sp, F.Id("u"), InMacro, Open, Minus, D(1), Comma, D(1), Close,
+                    Comma, Sp, F.Id("r"), Open, F.Id("u"), Close, Sp, Le, Sp, F.Id("b"), Close,
+                    Sp, Land, Sp,
+                    Lim, Underscore, Grp(F.Id("u"), To, D(1), Caret, Minus),
+                    F.Id("r"), Open, F.Id("u"), Close, Eq, F.Id("b")))),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "A ratio has boundary endpoint b when it never exceeds b in the open Bloch "

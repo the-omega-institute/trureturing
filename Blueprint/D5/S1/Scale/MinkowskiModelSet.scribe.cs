@@ -12,7 +12,7 @@ internal sealed class MinkowskiModelSetDocument : IScribeDocumentDefinition
                 DescribeId.Create("minkowski-lattice-window-and-labeled-model-set"),
                 DeclarationHandle.Create("D5/S1/Scale/MinkowskiModelSet.minkowski_model_set_spec"),
                 H("Minkowski lattice, window, and labeled model set"),
-                    StatementSource.FromAuthor(FormulaDsl.Id("minkowskiModelSetSpec")),
+                    StatementSource.WithoutFormula(),
                 AssessedProvenance.FromLiterature(
                                     LibraryNoteRef.Create("D5/L/baakefrankgrimm2021three")),
                 Blocks(Paragraph(Text(

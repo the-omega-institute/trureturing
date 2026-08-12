@@ -21,7 +21,7 @@ internal sealed class GoldenGapsDocument : IScribeDocumentDefinition
                     DescribeId.Create("indexed-golden-name-value"),
                     DeclarationHandle.Create("D5/S0/Tower/GoldenGaps.indexedNameValue"),
                     H("Indexed golden name value"),
-                    StatementSource.FromAuthor(FormulaDsl.Id("indexedNameValue")),
+                    StatementSource.WithoutFormula(),
                     AssessedProvenance.FromRepo(),
                     Blocks(Paragraph(Text(
                         "The nth name value under the frozen Fibonacci-interval equivalence, "

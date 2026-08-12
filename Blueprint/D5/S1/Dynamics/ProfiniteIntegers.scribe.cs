@@ -16,7 +16,7 @@ internal sealed class ProfiniteIntegersDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create(
                     "D5/S1/Dynamics/ProfiniteIntegers.ProfiniteIntegers"),
                 H("Profinite integers are compatible residue readings"),
-                StatementSource.FromAuthor(FormulaDsl.Disp(FormulaDsl.Id("ProfiniteIntegers"))),
+                StatementSource.WithoutFormula(),
                 AssessedProvenance.FromLiterature(RibesZalesskii),
                 Blocks(Paragraph(Text(
                     "A point assigns a residue modulo every positive integer. Whenever one "

@@ -16,7 +16,22 @@ internal sealed class BhattacharyyaDocument : IScribeDocumentDefinition
                 DescribeId.Create("finite-bhattacharyya-affinity-is-the-square-root-product-sum"),
                 DeclarationHandle.Create("D5/S3/TotalVariation/Bhattacharyya.bhattacharyya"),
                 H("Finite Bhattacharyya affinity is the square-root product sum"),
-                StatementSource.FromLean(),
+                StatementSource.FromAuthor(Disp(Seq(
+                    Begin, Grp(F.Id("gathered")),
+                    Forall, Sp, Iota, Esc,
+                    OpenBracket,
+                    Operatorname, Grp(F.Id("Fintype")), Open, Iota, Close,
+                    CloseBracket, Comma, RowBreak,
+                    Forall, Sp, F.Id("p"), Comma, Sp, F.Id("q"), Colon, Sp,
+                    Iota, To, Sp, Mathbb, Grp(F.Id("R")), Comma, RowBreak,
+                    Operatorname, Grp(F.Id("BC")), Open,
+                    F.Id("p"), Comma, Sp, F.Id("q"), Close,
+                    Colon, Eq,
+                    Sum, Sp, Underscore, Grp(F.Id("i")), Sp,
+                    Sqrt, Sp, Grp(
+                        F.Id("p"), Open, F.Id("i"), Close,
+                        F.Id("q"), Open, F.Id("i"), Close), Dot,
+                    End, Grp(F.Id("gathered"))))),
                 AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(

@@ -19,7 +19,7 @@ internal sealed class SpectralHilbertDocument : IScribeDocumentDefinition
                 DescribeId.Create("source-pairing-completes-the-coefficient-space"),
                 DeclarationHandle.Create("D5/S3/Weil/SpectralHilbert.source_pairing_eq_tsum"),
                 H("The source pairing completes the coefficient space"),
-                StatementSource.FromAuthor(FormulaDsl.Id("sourcePairing")),
+                StatementSource.WithoutFormula(),
                 AssessedProvenance.FromLiterature(HedenmalmHilbert),
                 Blocks(Paragraph(Text(
                                     "The coefficient space is the square-summable complex lp space indexed by the canonical prime-axis table. Its source pairing is linear in the first displayed coefficient and conjugate-linear in the second, so it is defined by reversing mathlib's inner-product arguments. The subtype coercion supplies the inclusion into the unrestricted coefficient product."))),

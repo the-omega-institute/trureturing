@@ -169,10 +169,24 @@ public abstract record StatementSource
         public ProjectionGap? ProjectionGap { get; }
     }
 
+    /// <summary>
+    /// The node names its Lean declaration and displays no statement formula. Legal only where the
+    /// projector cannot supply one, exactly like <see cref="Authored"/>: whether to author a
+    /// presentation or to show none is a presentation choice, and it is the author's to make only
+    /// where Lean owns nothing to restate.
+    /// </summary>
+    public sealed record NoFormula : StatementSource
+    {
+        internal NoFormula(ProjectionGap? projectionGap) => ProjectionGap = projectionGap;
+
+        public ProjectionGap? ProjectionGap { get; }
+    }
+
     public static StatementSource FromLean() => new LeanDerived();
     public static StatementSource FromAuthor(Formula presentation) => new Authored(presentation, null);
+    public static StatementSource WithoutFormula() => new NoFormula(null);
 
-    internal static (StatementSource Source, Formula Formula) Materialize(
+    internal static (StatementSource Source, Formula? Formula) Materialize(
         StatementSource source,
         LeanDeclarationRef declaration)
     {
@@ -186,14 +200,22 @@ public abstract record StatementSource
             (Authored, ProjectionOutcome.Projected) => throw new InvalidOperationException(
                 $"Authored statement is illegal because Lean projection is available for {declaration.Value}."),
             (Authored authored, ProjectionOutcome.Unprojectable failed) =>
-                (new Authored(authored.Presentation, new ProjectionGap(
-                    StatementProjectionFixtureLoader.ReasonCode(failed.Reason),
-                    StatementProjectionFixtureLoader.OffendingSubject(failed.Reason),
-                    StatementProjectionFixtureLoader.ProjectorEpoch,
-                    assessment.DeclarationContentDigest)), authored.Presentation),
+                (new Authored(authored.Presentation, Gap(failed, assessment)), authored.Presentation),
+            (NoFormula, ProjectionOutcome.Projected) => throw new InvalidOperationException(
+                $"Omitting the statement is illegal because Lean projection is available for {declaration.Value}."),
+            (NoFormula, ProjectionOutcome.Unprojectable failed) =>
+                (new NoFormula(Gap(failed, assessment)), null),
             _ => throw new InvalidOperationException("Unknown statement source or projection outcome."),
         };
     }
+
+    private static ProjectionGap Gap(
+        ProjectionOutcome.Unprojectable failed,
+        StatementProjectionFixtureLoader.Assessment assessment) =>
+        new(StatementProjectionFixtureLoader.ReasonCode(failed.Reason),
+            StatementProjectionFixtureLoader.OffendingSubject(failed.Reason),
+            StatementProjectionFixtureLoader.ProjectorEpoch,
+            assessment.DeclarationContentDigest);
 }
 
 internal abstract record DescribeProvenanceSource

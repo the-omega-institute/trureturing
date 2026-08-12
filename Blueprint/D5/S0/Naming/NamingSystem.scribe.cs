@@ -14,7 +14,7 @@ internal sealed class NamingSystemDocument : IScribeDocumentDefinition
                 DescribeId.Create("partial-naming-system-with-finite-height-layers"),
                 DeclarationHandle.Create("D5/S0/Naming/NamingSystem.NamingSystem"),
                 H("Partial naming system with finite height layers"),
-                StatementSource.FromLean(),
+                StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "A naming system over a measured carrier X consists of a name type N, "

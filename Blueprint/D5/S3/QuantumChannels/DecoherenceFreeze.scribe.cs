@@ -22,7 +22,12 @@ internal sealed class DecoherenceFreezeDocument : IScribeDocumentDefinition
                 DescribeId.Create("the-freeze-deposit-subtracts-the-temperature-scaled-entropy-tax"),
                 DeclarationHandle.Create("D5/S3/QuantumChannels/DecoherenceFreeze.freezeDeposit"),
                 H("The freeze deposit subtracts the temperature-scaled entropy tax"),
-                StatementSource.FromLean(),
+                StatementSource.FromAuthor(Disp(Seq(
+                    Operatorname, Grp(F.Id("freezeDeposit")), Open,
+                    Beta, Comma, Delta, Sp, F.Id("S"), Comma,
+                    Delta, Sp, F.Id("E"), Underscore, Grp(F.Id("pass")), Close,
+                    Eq, Delta, Sp, F.Id("E"), Underscore, Grp(F.Id("pass")), Minus,
+                    Frac, Grp(Delta, Sp, F.Id("S")), Grp(Beta)))),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "For inverse temperature beta, entropy tax Delta S, and passive-energy shift "
@@ -34,7 +39,12 @@ internal sealed class DecoherenceFreezeDocument : IScribeDocumentDefinition
                 DescribeId.Create("the-critical-inverse-temperature-is-the-entropy-energy-ratio"),
                 DeclarationHandle.Create("D5/S3/QuantumChannels/DecoherenceFreeze.criticalInverseTemperature"),
                 H("The critical inverse temperature is the entropy-energy ratio"),
-                StatementSource.FromLean(),
+                StatementSource.FromAuthor(Disp(Seq(
+                    Operatorname, Grp(F.Id("criticalInverseTemperature")), Open,
+                    Delta, Sp, F.Id("S"), Comma,
+                    Delta, Sp, F.Id("E"), Underscore, Grp(F.Id("pass")), Close,
+                    Eq, Frac, Grp(Delta, Sp, F.Id("S")),
+                    Grp(Delta, Sp, F.Id("E"), Underscore, Grp(F.Id("pass")))))),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "The critical inverse temperature is the entropy tax divided by the "
