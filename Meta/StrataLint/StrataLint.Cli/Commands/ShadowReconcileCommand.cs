@@ -7,7 +7,7 @@ namespace StrataLint.Cli;
 
 internal sealed record ShadowRecord(int PrNumber, long RunId, int RunAttempt, string HeadSha, string Outcome, double? WallSeconds);
 internal sealed record ShadowJob(int PrNumber, long RunId, int RunAttempt, bool Terminal, IReadOnlyList<ShadowRecord> Records);
-internal sealed record ShadowRunSnapshot(long RunId, int RunAttempt, int PrNumber, bool Terminal, string HeadSha = "");
+internal sealed record ShadowRunSnapshot(long RunId, int RunAttempt, int? PrNumber, bool Terminal, string HeadSha = "");
 internal sealed record ShadowReconcileResult(bool WindowClosed, bool Halted, string? HaltReason, int N, int HitCount, double HitRate, double AmortisedMissSeconds, double MaxMissSeconds);
 
 internal static class ShadowJobConverter
@@ -19,7 +19,7 @@ internal static class ShadowJobConverter
 
     internal static ShadowJob FromArtifact(ShadowRunSnapshot run, string? artifactJson)
     {
-        if (artifactJson is null) return new(run.PrNumber, run.RunId, run.RunAttempt, run.Terminal, Array.Empty<ShadowRecord>());
+        if (artifactJson is null) return new(run.PrNumber ?? 0, run.RunId, run.RunAttempt, run.Terminal, Array.Empty<ShadowRecord>());
 
         using var document = JsonDocument.Parse(artifactJson);
         var root = document.RootElement;
@@ -41,11 +41,14 @@ internal static class ShadowJobConverter
         double? wallSeconds = wall.ValueKind == JsonValueKind.Number ? wall.GetDouble() : null;
         if (runId != run.RunId || runAttempt != run.RunAttempt)
             throw new JsonException("shadow artifact identity does not match workflow run");
-        if (prNumber != run.PrNumber)
+        // The workflow writes pr_number from github.event.pull_request.number at run time, so the
+        // artifact is the authoritative fact. GitHub's later pull_requests[] lookup is only
+        // corroboration because GitHub clears it after merge; when present, it must still agree.
+        if (run.PrNumber is { } apiPrNumber && prNumber != apiPrNumber)
             throw new JsonException("shadow artifact pull request does not match workflow run");
         if (run.HeadSha.Length != 0 && !string.Equals(headSha, run.HeadSha, StringComparison.Ordinal))
             throw new JsonException("shadow artifact head_sha does not match workflow run");
-        return new(run.PrNumber, run.RunId, run.RunAttempt, run.Terminal,
+        return new(prNumber, run.RunId, run.RunAttempt, run.Terminal,
             new[] { new ShadowRecord(prNumber, runId, runAttempt, headSha, outcome, wallSeconds) });
     }
 
@@ -113,7 +116,7 @@ internal static class ShadowGitHubJson
                 var status = RequiredString(item, "status");
                 var terminal = string.Equals(status, "completed", StringComparison.OrdinalIgnoreCase);
                 var headSha = item.TryGetProperty("head_sha", out var sha) && sha.ValueKind == JsonValueKind.String ? sha.GetString() ?? string.Empty : string.Empty;
-                var prNumber = 0;
+                int? prNumber = null;
                 if (item.TryGetProperty("pull_requests", out var prs) && prs.ValueKind == JsonValueKind.Array)
                 {
                     var first = prs.EnumerateArray().FirstOrDefault();
@@ -151,10 +154,12 @@ internal sealed class ShadowGitHubFetcher
 
     internal IReadOnlyList<ShadowJob> Fetch(string repository, string workflow)
     {
-        var pages = GetPages($"repos/{repository}/actions/workflows/{Uri.EscapeDataString(workflow)}/runs?event=pull_request&per_page=100");
-        var runs = ShadowGitHubJson.ParseRunPages(pages).Where(run => run.PrNumber > 0)
-            .Select(run => run with { Terminal = FetchJobTerminal(repository, run) }).ToArray();
+        var runSnapshots = ShadowGitHubJson.ParseRunPages(
+            GetPages($"repos/{repository}/actions/workflows/{Uri.EscapeDataString(workflow)}/runs?event=pull_request_target&per_page=100"));
         var artifactUrls = FetchArtifacts(repository);
+        var runs = runSnapshots
+            .Where(run => run.PrNumber is not null || artifactUrls.ContainsKey((run.RunId, run.RunAttempt)))
+            .Select(run => run with { Terminal = FetchJobTerminal(repository, run) }).ToArray();
         var artifactJson = artifactUrls.ToDictionary(item => item.Key, item => (string?)ReadArtifactJson(item.Value));
         return ShadowJobConverter.Aggregate(runs, artifactJson);
     }
