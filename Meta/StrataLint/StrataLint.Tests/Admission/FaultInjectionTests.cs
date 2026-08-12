@@ -5,7 +5,7 @@ using StrataLint.Engine;
 
 namespace StrataLint.Tests;
 
-[Trait("Category", "Script")] public sealed class FaultInjectionTests
+public sealed class FaultInjectionTests
 {
     [Fact]
     public void MissingCatalogEntryCannotProduceCompletedRuleSet()

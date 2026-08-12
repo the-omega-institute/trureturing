@@ -68,7 +68,7 @@ public sealed partial class MakeWorkflowTests
         "refactor-p0-0-gate-authority",
     ];
 
-    [Fact, Trait("Category", "Script")]
+    [Fact]
     public void EchoResidualSummaryRunsMakeAndKeepsDiagnosticsOutOfThePasteableBlock()
     {
         if (OperatingSystem.IsWindows()) return;
@@ -527,7 +527,7 @@ public sealed partial class MakeWorkflowTests
         Assert.True(pathIndex < dirnameIndex, "tool PATH must be restored before dirname is invoked");
     }
 
-    [Fact, Trait("Category", "Script")]
+    [Fact]
     public void PerformanceJsonQuoteRemovesUnsupportedControlBytes()
     {
         var root = FindRepositoryRoot();
@@ -549,7 +549,7 @@ public sealed partial class MakeWorkflowTests
         Assert.Equal("\"runid\"", System.Text.Encoding.UTF8.GetString(result.StandardOutput));
     }
 
-    [Fact, Trait("Category", "Script")]
+    [Fact]
     public void PerformanceSpoolIgnoresATmpdirInsideTheRepository()
     {
         var root = FindRepositoryRoot();
