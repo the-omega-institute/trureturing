@@ -221,14 +221,9 @@ internal static partial class RepositoryRules
         }
     }
 
-    // Section-zero boundary. The canonical *address* of the values projection is a
-    // skeletal claim about where a machine-produced artifact lives, so it stays
-    // enforced here. Re-deriving the projection's own bytes from a recomputed producer
-    // attestation was guarding the projection itself, and once the producer and its
-    // declared input closure are governed that check adds no information; the producer
-    // chain (Golden/values-kernels.toml -> CanonicalValuesWriter) now carries it alone.
-    private static ImmutableArray<RuleFinding> Values(RuleEvaluationContext context) =>
-        context.Current.Files.Keys
+    private static ImmutableArray<RuleFinding> Values(RuleEvaluationContext context)
+    {
+        var findings = context.Current.Files.Keys
             .Where(static path =>
                 path.Value.StartsWith("Evidence/D5/values.", StringComparison.Ordinal)
                 && path.Value != RepositoryPathPolicy.ValuesProjectionPath)
@@ -236,5 +231,19 @@ internal static partial class RepositoryRules
             .Select(static path => new RuleFinding(
                 path.Value,
                 "canonical values projection must be Evidence/D5/values.json"))
-            .ToImmutableArray();
+            .ToImmutableArray()
+            .ToBuilder();
+        if (!context.Current.TryGetFile(ValuesKernelBindingValidator.RelativePath, out var values))
+        {
+            findings.Add(new RuleFinding(
+                ValuesKernelBindingValidator.RelativePath,
+                "required values kernel binding data is missing"));
+        }
+        else
+        {
+            findings.AddRange(ValuesKernelBindingValidator.Validate(values.Text, context.Lean.Report));
+        }
+
+        return findings.ToImmutable();
+    }
 }
