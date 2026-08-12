@@ -258,10 +258,4 @@ internal sealed class PinskerDocument : IScribeDocumentDefinition
                         "no continuous or measure-theoretic analogue and no analysis of sharpness " +
                         "or equality cases."))),
                 DescribeRole.Theorem))));
-
-    private static LeanDeclarationRef LeanDefinition(string value) =>
-        LeanDeclarationRef.Create(
-            value,
-            expectedKind: LeanDeclarationKind.Definition,
-            requireNoSorry: true);
 }

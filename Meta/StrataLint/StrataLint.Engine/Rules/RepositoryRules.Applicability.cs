@@ -62,7 +62,8 @@ internal static partial class RepositoryRules
         || LiteratureScoped(artifact, context);
 
     private static bool ValuesScoped(RepositoryFile artifact, RuleApplicabilityContext context) =>
-        artifact.Path.Value.StartsWith("Evidence/D5/values.", StringComparison.Ordinal);
+        artifact.Path.Value == ValuesKernelBindingValidator.RelativePath
+        || artifact.Path.Value.StartsWith("Evidence/D5/values.", StringComparison.Ordinal);
 
     private static bool StructuredOrChronicle(
         RepositoryFile artifact,

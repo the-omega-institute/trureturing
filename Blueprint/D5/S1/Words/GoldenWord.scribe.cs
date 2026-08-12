@@ -108,10 +108,4 @@ internal sealed class GoldenWordDocument : IScribeDocumentDefinition
             DocumentEdge.Dependency.Create(
                 GidRef.Create("D5/S1/Words/GoldenGapPrefix")),
         ]));
-
-    private static LeanDeclarationRef LeanDefinition(string value) =>
-        LeanDeclarationRef.Create(
-            value,
-            expectedKind: LeanDeclarationKind.Definition,
-            requireNoSorry: true);
 }

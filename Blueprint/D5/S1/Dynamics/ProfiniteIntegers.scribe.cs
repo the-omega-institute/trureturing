@@ -50,10 +50,4 @@ internal sealed class ProfiniteIntegersDocument : IScribeDocumentDefinition
                         + "therefore proves the finite-window representative directly rather "
                         + "than restating the upstream integer-image theorem."))),
                 DescribeRole.Theorem))));
-
-    private static LeanDeclarationRef LeanDefinition(string value) =>
-        LeanDeclarationRef.Create(
-            value,
-            expectedKind: LeanDeclarationKind.Definition,
-            requireNoSorry: true);
 }

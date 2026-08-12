@@ -9,12 +9,6 @@ internal sealed class LogarithmicLengthDocument : IScribeDocumentDefinition
     private static readonly LibraryNoteRef Apostol =
         LibraryNoteRef.Create("D5/L/apostol1976introduction");
 
-    private static LeanDeclarationRef LeanDefinition(string value) =>
-        LeanDeclarationRef.Create(
-            value,
-            expectedKind: LeanDeclarationKind.Definition,
-            requireNoSorry: true);
-
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "A natural number's logarithm is the exponent-weighted sum of its prime-factor logarithms.",
         H("Logarithmic Length from Prime Factorization"),

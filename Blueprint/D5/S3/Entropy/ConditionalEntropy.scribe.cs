@@ -83,10 +83,4 @@ internal sealed class ConditionalEntropyDocument : IScribeDocumentDefinition
                         "conditioning cannot increase entropy is not proved here. It proves no " +
                         "conditional mutual information, no equality condition, and nothing " +
                         "beyond two coordinates."))), DescribeRole.Theorem))));
-
-    private static LeanDeclarationRef LeanDefinition(string value) =>
-        LeanDeclarationRef.Create(
-            value,
-            expectedKind: LeanDeclarationKind.Definition,
-            requireNoSorry: true);
 }
