@@ -26,6 +26,10 @@
   opened the local subdomain `Words/ReturnWords/` under the route engine's one-level
   split rule. Existing Words paths remain unmoved, Lean namespaces remain
   `D5.S1.Words`, and the first module is `ReturnWords/GoldenReturnWords.lean`.
+- 2026-08-12 SL-003 split record: `Words/` remained at its 12-Lean-file limit;
+  opened the local subdomain `Words/Palindromes/` under the route engine's one-level
+  split rule. Existing Words paths remain unmoved, Lean namespaces remain
+  `D5.S1.Words`, and the first module is `Palindromes/GoldenPalindromicPrefix.lean`.
 - 2026-08-11 SL-003 split record: `Blueprint/D5/S1/Phase/` was already at its
   12-file limit; opened the local subdomain `Phase/Interference/` under the route
   engine's one-level split rule. Existing Phase paths remain unmoved, and the first
