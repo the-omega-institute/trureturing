@@ -9,6 +9,10 @@
   The branch-new `SumTwoSquares` module opened the `PrimeForms/` bucket; all
   existing `Arith/` paths remain in place.
 
+- 2026-08-12 (SL-003): `Observer/` was at its 12-file limit. The branch-new
+  `ContinuousRigidity` module opened the `Observer/HiddenFlow/` bucket; all 12
+  existing `Observer/` paths remain in place.
+
 ## Buckets
 
 - `Constants/`: canonical real constants and registered reference centers.
@@ -19,3 +23,4 @@
 - `Zeros/`: zeta-zero geometry, symmetry, and local critical-line balance.
 - 2026-08-04 SL-003 分裂记录:Blueprint/D5/S3/Arith 达 12 上限;按"只裂不迁"新增子疆域桶 `Axis/`(组名已入词表),存量 Arith 模块地址全数保留;首件 `Axis/PrimeAxisEscape.lean`。
 - 2026-08-10 SL-003 分裂记录:D5/S3/Arith 达 12 上限;按"只裂不迁"新增子疆域桶 `Factorization/`(组名已入词表),存量 Arith 模块地址全数保留;首件 `Factorization/FreeCommMonoid.lean`。
+- `Observer/HiddenFlow/`: continuous hidden-parameter flow exclusion over discrete addresses.
