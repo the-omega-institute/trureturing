@@ -114,4 +114,32 @@ public sealed partial class TheoryAtomizerTests
             document.Claims.Select(static claim => claim.AstPath).ToArray());
         Assert.Equal(bytes, document.Reassemble().ToArray());
     }
+
+    [Fact]
+    public void ACandidateTheoremLeadCarriesTheSameLocatorAsItsEnrolledForm()
+    {
+        var bytes = Encoding.UTF8.GetBytes(
+            "# PZG\n\n**候签定理 7.1′(A)**。一。\n");
+
+        var document = PzgAtomizer.Atomize(bytes, DigestionTestSupport.Rules);
+
+        Assert.Equal(
+            ["theorem/7.1′"],
+            document.Claims.Select(static claim => claim.AstPath).ToArray());
+        Assert.Equal(bytes, document.Reassemble().ToArray());
+    }
+
+    [Fact]
+    public void TheLongerCandidateTheoremLeadDoesNotShadowThePlainTheoremLead()
+    {
+        var bytes = Encoding.UTF8.GetBytes(
+            "# PZG\n\n**定理 7.1(A)**。一。\n\n**候签定理 7.2(B)**。二。\n");
+
+        var document = PzgAtomizer.Atomize(bytes, DigestionTestSupport.Rules);
+
+        Assert.Equal(
+            ["theorem/7.1", "theorem/7.2"],
+            document.Claims.Select(static claim => claim.AstPath).ToArray());
+        Assert.Equal(bytes, document.Reassemble().ToArray());
+    }
 }

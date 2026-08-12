@@ -30,7 +30,6 @@ internal sealed class DescribeReport
         DescribeNodeStats nodeStats,
         ImmutableArray<DescribeNodeRecord> nodes,
         ImmutableArray<DescribeNodeRecord> suspectedNovel,
-        ImmutableArray<DescribeNodeRecord> unassessed,
         ImmutableArray<DescribeNodeRecord> unprojectable,
         ImmutableArray<DescribeRedFinding> redFindings,
         ImmutableArray<DescribeObservation> observations)
@@ -38,7 +37,6 @@ internal sealed class DescribeReport
         NodeStats = nodeStats;
         Nodes = nodes;
         SuspectedNovel = suspectedNovel;
-        Unassessed = unassessed;
         Unprojectable = unprojectable;
         RedFindings = redFindings;
         Observations = observations;
@@ -52,22 +50,18 @@ internal sealed class DescribeReport
 
     internal ImmutableArray<DescribeNodeRecord> SuspectedNovel { get; }
 
-    internal ImmutableArray<DescribeNodeRecord> Unassessed { get; }
     internal ImmutableArray<DescribeNodeRecord> Unprojectable { get; }
 
     internal ImmutableArray<DescribeRedFinding> RedFindings { get; }
 
     internal ImmutableArray<DescribeObservation> Observations { get; }
 
-    internal int OpenCount => Unassessed.Length;
-
     internal int ProjectionOpenCount => Unprojectable.Length;
 
-    internal string Status => !RedFindings.IsEmpty
-        ? "invalid"
-        : OpenCount > 0
-            ? "needs-classification"
-            : "classified";
+    // Two states, not three. "needs-classification" counted nodes whose provenance was unassessed,
+    // and no node can carry that any more: the interface only accepts an assessed provenance, so the
+    // branch was unreachable and the count it read was structurally zero.
+    internal string Status => RedFindings.IsEmpty ? "classified" : "invalid";
 
     internal static DescribeReport Build(
         string repositoryRoot,
@@ -130,7 +124,6 @@ internal sealed class DescribeReport
             stats,
             orderedNodes,
             orderedNodes.Where(static node => node.Provenance == "suspected-novel").ToImmutableArray(),
-            orderedNodes.Where(static node => node.Provenance == "unassessed").ToImmutableArray(),
             orderedNodes.Where(static node => node.ProjectionFailureReason is not null).ToImmutableArray(),
             DescribeRepositoryValidator.Validate(
                 repositoryRoot,

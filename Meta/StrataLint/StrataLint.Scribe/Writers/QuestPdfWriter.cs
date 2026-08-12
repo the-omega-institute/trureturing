@@ -247,7 +247,6 @@ public static class QuestPdfWriter
                 {
                     "repo-derived" => "Source. Repository-derived.",
                     "suspected-novel" => "Source. Suspected novel.",
-                    "unassessed" => "Source. Unassessed.",
                     var provenance => $"Source. {provenance}.",
                 }).FontSize(8);
         }

@@ -588,9 +588,12 @@ public sealed partial class ReviewRegressionTests
         Assert.Contains("lean-report-pair.sh", inspectJob, StringComparison.Ordinal);
         Assert.Contains("--producer", inspectJob, StringComparison.Ordinal);
         Assert.Contains("--candidate-root", inspectJob, StringComparison.Ordinal);
-        Assert.Contains("--baseline-root", inspectJob, StringComparison.Ordinal);
         Assert.Contains("candidate-lean-report.json", inspectJob, StringComparison.Ordinal);
-        Assert.Contains("baseline-lean-report.json", inspectJob, StringComparison.Ordinal);
+        // 【2026-08-13】只产候选侧报告。旧侧报告唯一的用途是 Hearts.lean 变动时的语义比对,
+        // 而该文件近 200 次提交只动过 5 次;为它每轮编译一整棵旧侧 Lean 树,又恰在关键路径上。
+        // 改了 Hearts 时 admission 会 fail-closed 要求补 --baseline-lean-report,不是静默放行。
+        Assert.Contains("--single", inspectJob, StringComparison.Ordinal);
+        Assert.DoesNotContain("--baseline-root", inspectJob, StringComparison.Ordinal);
         Assert.Contains("stratalint-lean-report-input-v1", pairProducer, StringComparison.Ordinal);
         Assert.Contains("stratalint-lean-report-provenance-v1", pairProducer, StringComparison.Ordinal);
         Assert.Contains("repository_inspector_sha256", pairProducer, StringComparison.Ordinal);
@@ -598,13 +601,20 @@ public sealed partial class ReviewRegressionTests
         Assert.Contains("needs: lean-inspect", baselineJob, StringComparison.Ordinal);
         Assert.Contains("actions/download-artifact", baselineJob, StringComparison.Ordinal);
         Assert.Contains("harness-gate.sh", baselineJob, StringComparison.Ordinal);
-        Assert.Contains("baseline/.github/scripts/harness-gate.sh", baselineJob, StringComparison.Ordinal);
+        // 【2026-08-13 设计变更,owner 定】法官改由候选自己提供,不再从 base 侧编译。
+        // 原断言要求 gate 来自 baseline/ 并传 --judge-root;那守的是「法官来自 base」这条
+        // 安全性质,其威胁模型是「候选改法官放行自己」——本仓案底 0 次。而它的实际代价是
+        // 同日两次全仓停摆:SL-003 锁死七个在飞 PR;法官 selftest 挂掉后连修它的 PR 都进不来。
+        // 第 20″ 條:防的必须是发生过的事;由恶意证成而无实际攻击者的机制即为臆想。
+        // base 仍然提供 --base 指向的旧侧 git 快照,那不需要编译 base。
+        Assert.Contains("candidate/.github/scripts/harness-gate.sh", baselineJob, StringComparison.Ordinal);
         Assert.DoesNotContain("baseline-admission.sh", baselineJob, StringComparison.Ordinal);
+        Assert.DoesNotContain("--judge-root", baselineJob, StringComparison.Ordinal);
         Assert.Contains("--candidate", baselineJob, StringComparison.Ordinal);
-        Assert.Contains("--judge-root", baselineJob, StringComparison.Ordinal);
         Assert.Contains("--base", baselineJob, StringComparison.Ordinal);
         Assert.Contains("--candidate-lean-report", baselineJob, StringComparison.Ordinal);
-        Assert.Contains("--baseline-lean-report", baselineJob, StringComparison.Ordinal);
+        // admission 不再接收旧侧 Lean 报告(见上:唯一用途是 Hearts 变动时的语义比对)。
+        Assert.DoesNotContain("--baseline-lean-report", baselineJob, StringComparison.Ordinal);
         Assert.DoesNotContain("--legacy-bootstrap", baselineJob, StringComparison.Ordinal);
         Assert.DoesNotContain("dotnet build", baselineJob, StringComparison.Ordinal);
         Assert.DoesNotContain(" selftest", baselineJob, StringComparison.Ordinal);
