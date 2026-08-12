@@ -113,6 +113,7 @@ public sealed class EnginePublicSurfaceTests
         "StrataLint.Engine.FrozenRevokePayload",
         "StrataLint.Engine.Generality",
         "StrataLint.Engine.Gid",
+        "StrataLint.Engine.LakeModuleAnchor",
         "StrataLint.Engine.LeanAxiomFacts",
         "StrataLint.Engine.LeanAxiomReport",
         "StrataLint.Engine.LeanClosureValidator",
