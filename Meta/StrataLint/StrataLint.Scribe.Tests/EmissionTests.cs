@@ -642,11 +642,17 @@ public sealed class EmissionTests
                 overwrite: true);
         }
 
+        // The projection loader reads this report when it exists, on top of the pinned
+        // Golden/Projection fixtures. Copy it so a local run sees the same inputs as the
+        // repository, but do not require it: the engineering CI job builds no Lean report, and a
+        // synthetic repository must be constructible without one.
         const string rawReport = ".lake/build/stratalint/raw-lean-report.json";
-        Assert.True(repository.FileExists(RepositoryRelativePath.Create(rawReport)),
-            $"missing projection input {rawReport}");
-        var reportDestination = Path.Combine(destinationRoot, rawReport);
-        TemporaryFileSystem.Directory.CreateDirectory(Path.GetDirectoryName(reportDestination)!);
-        repository.CopyTo(RepositoryRelativePath.Create(rawReport), reportDestination, overwrite: true);
+        var rawReportPath = RepositoryRelativePath.Create(rawReport);
+        if (repository.FileExists(rawReportPath))
+        {
+            var reportDestination = Path.Combine(destinationRoot, rawReport);
+            TemporaryFileSystem.Directory.CreateDirectory(Path.GetDirectoryName(reportDestination)!);
+            repository.CopyTo(rawReportPath, reportDestination, overwrite: true);
+        }
     }
 }
