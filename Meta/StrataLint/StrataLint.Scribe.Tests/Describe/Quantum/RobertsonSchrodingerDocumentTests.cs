@@ -13,10 +13,10 @@ public sealed class RobertsonSchrodingerDocumentTests
         Assert.Equal(
             "D5/S3/QuantumBounds/RobertsonSchrodinger.robertson_schrodinger",
             Assert.IsType<DescribeStatement.LeanDeclaration>(describe.Statement).Value.Value);
-        Assert.Equal(DescribeProvenanceKind.LiteratureAttested, describe.Provenance.Kind);
-        Assert.Equal(
-            "D5/L/Quantum/robertson1929uncertainty",
-            describe.Provenance.LiteratureReference?.Value);
+        DocumentFactAssertions.LiteratureAttested(
+            describe,
+            "D5/L/Quantum/robertson1929uncertainty");
+        DocumentFactAssertions.Declaration(describe, LeanDeclarationKind.Theorem);
 
         var latex = LatexWriter.WriteStatement(
             describe.StatementFormula

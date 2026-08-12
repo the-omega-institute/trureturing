@@ -242,7 +242,7 @@ public sealed class StatementProjectionPilotTests
         var projected = sources.Sum(source => source.Split(
             "StatementProjectionFixtureLoader.FromLean(", StringSplitOptions.None).Length - 1);
 
-        Assert.Equal(9, projected);
+        Assert.Equal(7, projected);
     }
 
     [LiveReportFact]

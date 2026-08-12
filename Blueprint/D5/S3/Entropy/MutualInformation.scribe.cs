@@ -6,18 +6,8 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Entropy;
 
 internal sealed class MutualInformationDocument : IScribeDocumentDefinition
 {
-    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
-        Header(
-            "D5/S3/Entropy/MutualInformation",
-            "Finite classical mutual information in nats is nonnegative for every nonnegative normalized joint mass function."),
-        H("Nonnegativity of Finite Classical Mutual Information"),
-        Blocks(
-            DocumentBlock.Describe.Theorem(
-                DescribeId.Create("finite-classical-mutual-information-is-nonnegative"),
-                H("Finite classical mutual information is nonnegative"),
-                LeanTheorem(
-                    "D5/S3/Entropy/MutualInformation.mutual_information_nonneg"),
-                Disp(Seq(
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create("Finite classical mutual information in nats is nonnegative for every nonnegative normalized joint mass function.", H("Nonnegativity of Finite Classical Mutual Information"), Blocks(
+            Describe.Lean(DescribeId.Create("finite-classical-mutual-information-is-nonnegative"), DeclarationHandle.Create("D5/S3/Entropy/MutualInformation.mutual_information_nonneg"), H("Finite classical mutual information is nonnegative"), StatementSource.FromAuthor(Disp(Seq(
                     Begin, Grp(F.Id("gathered")),
                     Forall, Sp, Iota, Comma, Sp, Kappa, Esc,
                     OpenBracket,
@@ -38,9 +28,7 @@ internal sealed class MutualInformationDocument : IScribeDocumentDefinition
                     Close, Sp, Rightarrow, RowBreak,
                     D(0), Le, Sp,
                     Operatorname, Grp(F.Id("mutualInformation")), Open, F.Id("p"), Close, Dot,
-                    End, Grp(F.Id("gathered")))),
-                DescribeProvenance.RepoDerived(),
-                Blocks(
+                    End, Grp(F.Id("gathered"))))), AssessedProvenance.FromRepo(), Blocks(
                     Paragraph(Text(
                         "Mutual information is the divergence of the joint distribution from " +
                         "the product of its own two marginals. The marginal definition from " +
@@ -79,5 +67,5 @@ internal sealed class MutualInformationDocument : IScribeDocumentDefinition
                         "its marginals, equivalently independence. It does not relate mutual " +
                         "information to Shannon entropy: no I = H(X) + H(Y) - H(X,Y) identity is " +
                         "established here. It says nothing about conditional mutual information " +
-                        "or about more than two coordinates.")))))));
+                        "or about more than two coordinates."))), DescribeRole.Theorem))));
 }

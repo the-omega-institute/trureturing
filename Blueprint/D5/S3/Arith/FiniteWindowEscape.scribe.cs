@@ -6,20 +6,18 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Arith;
 
 internal sealed class FiniteWindowEscapeDocument : IScribeDocumentDefinition
 {
-    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
-        Header(
-            "D5/S3/Arith/FiniteWindowEscape",
-            "Finite prime windows escape; finite readings retain a nonzero kernel difference."),
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "Finite prime windows escape; finite readings retain a nonzero kernel difference.",
         H("Finite-Window Escape and Hidden Fibers"),
         Blocks(
-            DocumentBlock.Describe.Theorem(
+            Describe.Lean(
                 DescribeId.Create(
                     "finite-prime-windows-escape-and-finite-readings-have-hidden-fibers"),
-                H("Finite prime windows escape and finite readings retain hidden differences"),
-                LeanTheorem(
+                DeclarationHandle.Create(
                     "D5/S3/Arith/FiniteWindowEscape."
                     + "finite_window_escape_and_hidden_fiber"),
-                Disp(Seq(
+                H("Finite prime windows escape and finite readings retain hidden differences"),
+                StatementSource.FromAuthor(Disp(Seq(
                     Forall, Sp, F.Id("S"), Subset, Underscore,
                     Grp(Mathrm, Grp(F.Id("fin"))), Mathbb, Grp(F.Id("N")), Comma, Esc,
                     Left, Open, Forall, Sp, F.Id("p"), InMacro, Sp, F.Id("S"), Comma, Esc,
@@ -56,8 +54,8 @@ internal sealed class FiniteWindowEscapeDocument : IScribeDocumentDefinition
                     F.Id("R"), Open, F.Id("y"), Close, Sp, Land, Sp,
                     F.Id("x"), Minus, F.Id("y"), Neq, D(0), Sp, Land, Sp,
                     F.Id("R"), Open, F.Id("x"), Minus, F.Id("y"), Close, Eq, D(0),
-                    Right, Close)),
-                DescribeProvenance.RepoDerived(),
+                    Right, Close))),
+                AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
                         "Fix a finite set S of natural primes, write P_S for its product, and set "
@@ -83,6 +81,6 @@ internal sealed class FiniteWindowEscapeDocument : IScribeDocumentDefinition
                         + "infinitude of G force a repeated reading, while additivity places the "
                         + "resulting nonzero difference in the kernel. The exact conjunction and its "
                         + "packaging as one declaration are repository-derived, and the result has "
-                        + "no numerical certificate.")))
-            ))));
+                        + "no numerical certificate."))),
+                DescribeRole.Theorem))));
 }

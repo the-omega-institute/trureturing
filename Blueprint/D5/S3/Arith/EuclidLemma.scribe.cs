@@ -9,19 +9,17 @@ internal sealed class EuclidLemmaDocument : IScribeDocumentDefinition
     private static readonly LibraryNoteRef Apostol =
         LibraryNoteRef.Create("D5/L/apostol1976introduction");
 
-    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
-        Header(
-            "D5/S3/Arith/EuclidLemma",
-            "A prime dividing a product of two naturals divides one of the factors."),
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "A prime dividing a product of two naturals divides one of the factors.",
         H("Euclid's Lemma on the Prime Axis"),
         Blocks(
-            DocumentBlock.Describe.Lemma(
+            Describe.Lean(
                 DescribeId.Create("prime-dividing-a-product-divides-a-factor"),
-                H("A prime dividing a product divides a factor"),
-                LeanTheorem(
+                DeclarationHandle.Create(
                     "D5/S3/Arith/EuclidLemma.euclid_prime_dvd_mul"),
-                Disp(Seq(Forall, Sp, F.Id("p"), Comma, F.Id("a"), Comma, F.Id("b"), InMacro, Mathbb, Grp(F.Id("N")), Comma, Esc, F.Id("p"), Esc, F.Text, Grp(F.Id("prime")), Sp, Land, Sp, F.Id("p"), Sp, Mid, Sp, F.Id("a"), Cdot, Sp, F.Id("b"), Sp, Rightarrow, Sp, F.Id("p"), Sp, Mid, Sp, F.Id("a"), Sp, Lor, Sp, F.Id("p"), Sp, Mid, Sp, F.Id("b"))),
-                DescribeProvenance.LiteratureAttested(Apostol),
+                H("A prime dividing a product divides a factor"),
+                StatementSource.FromAuthor(Disp(Seq(Forall, Sp, F.Id("p"), Comma, F.Id("a"), Comma, F.Id("b"), InMacro, Mathbb, Grp(F.Id("N")), Comma, Esc, F.Id("p"), Esc, F.Text, Grp(F.Id("prime")), Sp, Land, Sp, F.Id("p"), Sp, Mid, Sp, F.Id("a"), Cdot, Sp, F.Id("b"), Sp, Rightarrow, Sp, F.Id("p"), Sp, Mid, Sp, F.Id("a"), Sp, Lor, Sp, F.Id("p"), Sp, Mid, Sp, F.Id("b")))),
+                AssessedProvenance.FromLiterature(Apostol),
                 Blocks(Paragraph(Text(
                     "For natural numbers, a prime that divides a product divides at least one "
                     + "factor. This is the classical Euclid lemma and the first building block "
@@ -35,6 +33,6 @@ internal sealed class EuclidLemmaDocument : IScribeDocumentDefinition
                     + "deposited atom asserts the truth of the statement, and the proof route "
                     + "may differ from the source's valuation-additivity derivation. Original "
                     + "numerical-certificate disposition: the source lemma is a purely logical "
-                    + "divisibility implication and contains no numerical certificate.")))
-            ))));
+                    + "divisibility implication and contains no numerical certificate."))),
+                DescribeRole.Lemma))));
 }
