@@ -6,10 +6,8 @@ namespace StrataLint.Scribe.Blueprint.D5.S1.Words;
 
 internal sealed class GoldenUniformRecurrenceDocument : IScribeDocumentDefinition
 {
-    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
-        Header(
-            "D5/S1/Words/GoldenUniformRecurrence",
-            "Give an explicit linear window in which every finite golden-word factor recurs."),
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "Give an explicit linear window in which every finite golden-word factor recurs.",
         H("Uniform Recurrence of the Golden Word"),
         Blocks(
             Describe.Lean(

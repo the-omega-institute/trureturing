@@ -4,10 +4,8 @@ namespace StrataLint.Scribe.Blueprint.D5.S0.History;
 
 internal sealed class SpliceEquationsDocument : IScribeDocumentDefinition
 {
-    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
-        Header(
-            "D5/S0/History/SpliceEquations",
-            "Marker-history splicing is pinned by its defining recursion, not by a library alias."),
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "Marker-history splicing is pinned by its defining recursion, not by a library alias.",
         H("Splice Equations"),
         Blocks(
             Paragraph(

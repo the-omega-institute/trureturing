@@ -72,9 +72,4 @@ internal sealed class LogDerivTraceDocument : IScribeDocumentDefinition
             expectedKind: LeanDeclarationKind.Definition,
             requireNoSorry: true);
 
-    private static LeanDeclarationRef LeanTheorem(string value) =>
-        LeanDeclarationRef.Create(
-            value,
-            expectedKind: LeanDeclarationKind.Theorem,
-            requireNoSorry: true);
 }

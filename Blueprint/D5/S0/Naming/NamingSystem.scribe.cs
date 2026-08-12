@@ -4,10 +4,8 @@ namespace StrataLint.Scribe.Blueprint.D5.S0.Naming;
 
 internal sealed class NamingSystemDocument : IScribeDocumentDefinition
 {
-    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
-        Header(
-            "D5/S0/Naming/NamingSystem",
-            "Finite height layers make partial naming systems countable, leaving a null named image."),
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "Finite height layers make partial naming systems countable, leaving a null named image.",
         H("Countable Naming Systems"),
         Blocks(
             Describe.Lean(

@@ -9,10 +9,8 @@ internal sealed class SpectralHilbertDocument : IScribeDocumentDefinition
     private static readonly LibraryNoteRef HedenmalmHilbert =
         LibraryNoteRef.Create("D5/L/hedenmalm1997hilbert");
 
-    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
-        Header(
-            "D5/S3/Weil/SpectralHilbert",
-            "The square-summable zeta coefficient geometry supplies a spectral foundation for Weil positivity."),
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "The square-summable zeta coefficient geometry supplies a spectral foundation for Weil positivity.",
         H("The Spectral Hilbert Foundation"),
         Blocks(
             Describe.Lean(
@@ -75,15 +73,13 @@ internal sealed class SpectralHilbertDocument : IScribeDocumentDefinition
                                     "The equation s plus conjugate w equals one holds exactly for the mirror partner w = 1 - conjugate s. Self-resonance is exactly the critical line, and a parameter on the square-summable side has its mirror strictly outside that side. This is algebra of the kernel's pole-locus equation; it asserts neither meromorphic continuation nor any location of zeta zeros."))),
                 DescribeRole.Theorem
             ),
-            DocumentBlock.Describe.Remark(
+            Describe.Remark(
                 DescribeId.Create("hardy-space-identification"),
+                DeclarationHandle.Create("D5/S3/Weil/SpectralHilbert.labeled_zeta_inner"),
                 H("Hardy-space identification"),
-                DescribeStatement.FromLean(LeanTheorem(
-                    "D5/S3/Weil/SpectralHilbert.labeled_zeta_inner")),
-                DescribeProvenance.LiteratureAttested(HedenmalmHilbert),
+                AssessedProvenance.FromLiterature(HedenmalmHilbert),
                 Blocks(Paragraph(Text(
-                    "The coefficient Hilbert space and its zeta reproducing kernel are the classical Hardy-space geometry of Dirichlet series. The repository supplies a typed translation and combined presentation of that known mathematics, not a novelty claim.")))
-            )),
+                    "The coefficient Hilbert space and its zeta reproducing kernel are the classical Hardy-space geometry of Dirichlet series. The repository supplies a typed translation and combined presentation of that known mathematics, not a novelty claim."))))),
 [
                         DocumentEdge.Dependency.Create(
                             GidRef.Create("D5/S1/Digit/PrimeAxisEncoding")),
