@@ -11,6 +11,36 @@ public sealed class ShadowReconcilerTests
     [Fact] public void BudgetHalts() { var j=Enumerable.Range(1,40).Select(i=>Job(i,i,i==40?"miss":"hit",i==40?1201:null)).ToArray(); Assert.True(ShadowReconciler.Reconcile(j).Halted); }
     [Fact] public void MaxHalts() { var j=Enumerable.Range(1,40).Select(i=>Job(i,i,i==40?"miss":"hit",i==40?181:null)).ToArray(); Assert.True(ShadowReconciler.Reconcile(j).Halted); }
     [Fact] public void MissingRecordHalts() { var j=Enumerable.Range(1,40).Select(i=>i==7?new ShadowJob(7,7,1,true,Array.Empty<ShadowRecord>()):Job(i,i)).ToArray(); Assert.True(ShadowReconciler.Reconcile(j).Halted); }
+    [Fact]
+    public void HaltWithTerminalFailureReportsKnownStatistics()
+    {
+        var j = Enumerable.Range(1, 3).Select(i => i == 3 ? Job(i, i, "miss", 5, terminal: false) : Job(i, i)).ToArray();
+
+        var result = ShadowReconciler.Reconcile(j, windowSize: 3);
+
+        Assert.True(result.Halted);
+        Assert.Equal(3, result.N);
+        Assert.Equal(2, result.HitCount);
+        Assert.Equal(2d / 3d, result.HitRate);
+        Assert.Equal(5d / 3d, result.AmortisedMissSeconds);
+        Assert.Equal(5, result.MaxMissSeconds);
+    }
+
+    [Fact]
+    public void HaltWithMissingRecordReportsNullUnavailableStatistics()
+    {
+        var j = Enumerable.Range(1, 3).Select(i => i == 3 ? new ShadowJob(i, i, 1, true, Array.Empty<ShadowRecord>()) : Job(i, i)).ToArray();
+
+        var result = ShadowReconciler.Reconcile(j, windowSize: 3);
+
+        Assert.True(result.Halted);
+        Assert.Equal(3, result.N);
+        Assert.Equal(2, result.HitCount);
+        Assert.Null(result.HitRate);
+        Assert.Null(result.AmortisedMissSeconds);
+        Assert.Null(result.MaxMissSeconds);
+    }
+
     [Fact] public void FirstAttemptWins() { var j=new[]{Job(1,10,"miss",5),Job(1,11,"hit"),Job(2,20)}; var r=ShadowReconciler.Reconcile(j,2); Assert.True(r.Halted); Assert.Equal(2.5,r.AmortisedMissSeconds); }
 
     [Fact]

@@ -56,7 +56,7 @@ public sealed class ShadowFetchTests
 
         var exception = Assert.Throws<JsonException>(() => ShadowJobConverter.FromArtifact(run, artifact));
 
-        Assert.Equal("shadow artifact pull request does not match workflow run", exception.Message);
+        Assert.Equal("shadow artifact pull request does not match workflow run: api_pr=1433 artifact_pr=1434; run_id=31596893884 run_attempt=1 artifact_ref=<inline>", exception.Message);
     }
 
     [Fact]
@@ -67,7 +67,7 @@ public sealed class ShadowFetchTests
 
         var exception = Assert.Throws<JsonException>(() => ShadowJobConverter.FromArtifact(run, artifact));
 
-        Assert.Equal("shadow artifact identity does not match workflow run", exception.Message);
+        Assert.Equal("shadow artifact identity does not match workflow run: expected_run_id=501 actual_run_id=502 expected_run_attempt=1 actual_run_attempt=1; run_id=501 run_attempt=1 artifact_ref=<inline>", exception.Message);
     }
 
     [Fact]
@@ -78,7 +78,7 @@ public sealed class ShadowFetchTests
 
         var exception = Assert.Throws<JsonException>(() => ShadowJobConverter.FromArtifact(run, artifact));
 
-        Assert.Equal("shadow artifact identity does not match workflow run", exception.Message);
+        Assert.Equal("shadow artifact identity does not match workflow run: expected_run_id=503 actual_run_id=503 expected_run_attempt=1 actual_run_attempt=2; run_id=503 run_attempt=1 artifact_ref=<inline>", exception.Message);
     }
 
     [Fact]
@@ -100,7 +100,8 @@ public sealed class ShadowFetchTests
         var run = new ShadowRunSnapshot(103, 1, 19, true);
         var artifact = "{\"pr_number\":19,\"head_sha\":\"abc\",\"run_id\":103,\"run_attempt\":1,\"wall_seconds\":null,\"address\":\"deadbeef\"}";
 
-        Assert.Throws<JsonException>(() => ShadowJobConverter.FromArtifact(run, artifact));
+        var exception = Assert.Throws<JsonException>(() => ShadowJobConverter.FromArtifact(run, artifact));
+        Assert.Equal("missing or invalid 'outcome'; run_id=103 run_attempt=1 artifact_ref=<inline>", exception.Message);
     }
 
     [Fact]
@@ -109,7 +110,8 @@ public sealed class ShadowFetchTests
         var run = new ShadowRunSnapshot(104, 1, 20, true);
         var artifact = "{\"pr_number\":20,\"head_sha\":\"abc\",\"run_id\":104,\"run_attempt\":1,\"outcome\":\"hit-error\",\"wall_seconds\":null,\"address\":\"deadbeef\"}";
 
-        Assert.Throws<JsonException>(() => ShadowJobConverter.FromArtifact(run, artifact));
+        var exception = Assert.Throws<JsonException>(() => ShadowJobConverter.FromArtifact(run, artifact));
+        Assert.Equal("missing or invalid 'stage'; run_id=104 run_attempt=1 artifact_ref=<inline>", exception.Message);
     }
 
     [Fact]
@@ -206,7 +208,7 @@ public sealed class ShadowFetchTests
 
         var exception = Assert.Throws<JsonException>(() => ShadowJobConverter.FromArtifact(run, artifact));
 
-        Assert.Equal("shadow artifact head_sha does not match workflow run", exception.Message);
+        Assert.Equal("shadow artifact head_sha does not match workflow run: expected_head_sha=expected artifact_head_sha=actual; run_id=403 run_attempt=1 artifact_ref=<inline>", exception.Message);
     }
 
     [Fact]

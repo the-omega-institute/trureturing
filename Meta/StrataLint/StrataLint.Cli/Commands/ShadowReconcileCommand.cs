@@ -8,7 +8,7 @@ namespace StrataLint.Cli;
 internal sealed record ShadowRecord(int PrNumber, long RunId, int RunAttempt, string HeadSha, string Outcome, double? WallSeconds);
 internal sealed record ShadowJob(int PrNumber, long RunId, int RunAttempt, bool Terminal, IReadOnlyList<ShadowRecord> Records);
 internal sealed record ShadowRunSnapshot(long RunId, int RunAttempt, int? PrNumber, bool Terminal, string HeadSha = "");
-internal sealed record ShadowReconcileResult(bool WindowClosed, bool Halted, string? HaltReason, int N, int HitCount, double HitRate, double AmortisedMissSeconds, double MaxMissSeconds);
+internal sealed record ShadowReconcileResult(bool WindowClosed, bool Halted, string? HaltReason, int N, int HitCount, double? HitRate, double? AmortisedMissSeconds, double? MaxMissSeconds);
 
 internal static class ShadowJobConverter
 {
@@ -17,49 +17,59 @@ internal static class ShadowJobConverter
         "hit", "miss", "hit-error", "miss-error", "no-record",
     };
 
-    internal static ShadowJob FromArtifact(ShadowRunSnapshot run, string? artifactJson)
+    internal static ShadowJob FromArtifact(ShadowRunSnapshot run, string? artifactJson, string? artifactRef = null)
     {
         if (artifactJson is null) return new(run.PrNumber ?? 0, run.RunId, run.RunAttempt, run.Terminal, Array.Empty<ShadowRecord>());
 
-        using var document = JsonDocument.Parse(artifactJson);
-        var root = document.RootElement;
-        var prNumber = RequiredInt(root, "pr_number");
-        var runId = RequiredLong(root, "run_id");
-        var runAttempt = RequiredInt(root, "run_attempt");
-        var headSha = RequiredString(root, "head_sha");
-        _ = RequiredString(root, "address");
-        var outcome = RequiredString(root, "outcome");
-        if (!Outcomes.Contains(outcome)) throw new JsonException($"unknown shadow outcome '{outcome}'");
-        if (outcome is "hit-error" or "miss-error" or "no-record")
+        try
         {
-            _ = RequiredString(root, "stage");
-            if (!root.TryGetProperty("exit_code", out var exitCode) || exitCode.ValueKind is not (JsonValueKind.Number or JsonValueKind.Null))
-                throw new JsonException("missing or invalid 'exit_code'");
+            using var document = JsonDocument.Parse(artifactJson);
+            var root = document.RootElement;
+            var prNumber = RequiredInt(root, "pr_number");
+            var runId = RequiredLong(root, "run_id");
+            var runAttempt = RequiredInt(root, "run_attempt");
+            var headSha = RequiredString(root, "head_sha");
+            _ = RequiredString(root, "address");
+            var outcome = RequiredString(root, "outcome");
+            if (!Outcomes.Contains(outcome)) throw new JsonException($"unknown shadow outcome '{outcome}' actual_outcome={outcome}");
+            if (outcome is "hit-error" or "miss-error" or "no-record")
+            {
+                _ = RequiredString(root, "stage");
+                if (!root.TryGetProperty("exit_code", out var exitCode) || exitCode.ValueKind is not (JsonValueKind.Number or JsonValueKind.Null))
+                    throw new JsonException("missing or invalid 'exit_code' expected=number|null actual=missing_or_invalid");
+            }
+            if (!root.TryGetProperty("wall_seconds", out var wall) || wall.ValueKind is not (JsonValueKind.Number or JsonValueKind.Null))
+                throw new JsonException("missing or invalid 'wall_seconds' expected=number|null actual=missing_or_invalid");
+            double? wallSeconds = wall.ValueKind == JsonValueKind.Number ? wall.GetDouble() : null;
+            if (runId != run.RunId || runAttempt != run.RunAttempt)
+                throw new JsonException($"shadow artifact identity does not match workflow run: expected_run_id={run.RunId} actual_run_id={runId} expected_run_attempt={run.RunAttempt} actual_run_attempt={runAttempt}");
+            // The workflow writes pr_number from github.event.pull_request.number at run time, so the
+            // artifact is the authoritative fact. GitHub's later pull_requests[] lookup is only
+            // corroboration because GitHub clears it after merge; when present, it must still agree.
+            if (run.PrNumber is { } apiPrNumber && prNumber != apiPrNumber)
+                throw new JsonException($"shadow artifact pull request does not match workflow run: api_pr={apiPrNumber} artifact_pr={prNumber}");
+            if (run.HeadSha.Length != 0 && !string.Equals(headSha, run.HeadSha, StringComparison.Ordinal))
+                throw new JsonException($"shadow artifact head_sha does not match workflow run: expected_head_sha={run.HeadSha} artifact_head_sha={headSha}");
+            return new(prNumber, run.RunId, run.RunAttempt, run.Terminal,
+                new[] { new ShadowRecord(prNumber, runId, runAttempt, headSha, outcome, wallSeconds) });
         }
-        if (!root.TryGetProperty("wall_seconds", out var wall) || wall.ValueKind is not (JsonValueKind.Number or JsonValueKind.Null))
-            throw new JsonException("missing or invalid 'wall_seconds'");
-        double? wallSeconds = wall.ValueKind == JsonValueKind.Number ? wall.GetDouble() : null;
-        if (runId != run.RunId || runAttempt != run.RunAttempt)
-            throw new JsonException("shadow artifact identity does not match workflow run");
-        // The workflow writes pr_number from github.event.pull_request.number at run time, so the
-        // artifact is the authoritative fact. GitHub's later pull_requests[] lookup is only
-        // corroboration because GitHub clears it after merge; when present, it must still agree.
-        if (run.PrNumber is { } apiPrNumber && prNumber != apiPrNumber)
-            throw new JsonException("shadow artifact pull request does not match workflow run");
-        if (run.HeadSha.Length != 0 && !string.Equals(headSha, run.HeadSha, StringComparison.Ordinal))
-            throw new JsonException("shadow artifact head_sha does not match workflow run");
-        return new(prNumber, run.RunId, run.RunAttempt, run.Terminal,
-            new[] { new ShadowRecord(prNumber, runId, runAttempt, headSha, outcome, wallSeconds) });
+        catch (JsonException exception)
+        {
+            throw new JsonException($"{exception.Message}; run_id={run.RunId} run_attempt={run.RunAttempt} artifact_ref={artifactRef ?? "<inline>"}", exception);
+        }
     }
 
     internal static IReadOnlyList<ShadowJob> Aggregate(
         IEnumerable<ShadowRunSnapshot> runs,
-        IReadOnlyDictionary<(long RunId, int Attempt), string?> artifacts)
+        IReadOnlyDictionary<(long RunId, int Attempt), string?> artifacts,
+        IReadOnlyDictionary<(long RunId, int Attempt), string>? artifactRefs = null)
     {
         return runs.Select(run =>
         {
             artifacts.TryGetValue((run.RunId, run.RunAttempt), out var artifactJson);
-            return FromArtifact(run, artifactJson);
+            string? artifactRef = null;
+            artifactRefs?.TryGetValue((run.RunId, run.RunAttempt), out artifactRef);
+            return FromArtifact(run, artifactJson, artifactRef);
         }).ToArray();
     }
 
@@ -160,13 +170,14 @@ internal sealed class ShadowGitHubFetcher
         var runs = runSnapshots
             .Where(run => run.PrNumber is not null || artifactUrls.ContainsKey((run.RunId, run.RunAttempt)))
             .Select(run => run with { Terminal = FetchJobTerminal(repository, run) }).ToArray();
-        var artifactJson = artifactUrls.ToDictionary(item => item.Key, item => (string?)ReadArtifactJson(item.Value));
-        return ShadowJobConverter.Aggregate(runs, artifactJson);
+        var artifactJson = artifactUrls.ToDictionary(item => item.Key, item => (string?)ReadArtifactJson(item.Value.Url));
+        var artifactRefs = artifactUrls.ToDictionary(item => item.Key, item => item.Value.Name);
+        return ShadowJobConverter.Aggregate(runs, artifactJson, artifactRefs);
     }
 
-    private Dictionary<(long RunId, int Attempt), Uri> FetchArtifacts(string repository)
+    private Dictionary<(long RunId, int Attempt), (Uri Url, string Name)> FetchArtifacts(string repository)
     {
-        var result = new Dictionary<(long, int), Uri>();
+        var result = new Dictionary<(long, int), (Uri, string)>();
         foreach (var page in GetPages($"repos/{repository}/actions/artifacts?per_page=100"))
         {
             using var document = JsonDocument.Parse(page);
@@ -178,7 +189,8 @@ internal sealed class ShadowGitHubFetcher
                 var match = ArtifactName.Match(nameValue.GetString() ?? string.Empty);
                 if (!match.Success || item.TryGetProperty("expired", out var expired) && expired.ValueKind == JsonValueKind.True) continue;
                 if (!item.TryGetProperty("archive_download_url", out var urlValue) || urlValue.ValueKind != JsonValueKind.String) throw new JsonException("shadow artifact has no archive_download_url");
-                result[(long.Parse(match.Groups["run"].Value, CultureInfo.InvariantCulture), int.Parse(match.Groups["attempt"].Value, CultureInfo.InvariantCulture))] = new Uri(urlValue.GetString()!, UriKind.Absolute);
+                result[(long.Parse(match.Groups["run"].Value, CultureInfo.InvariantCulture), int.Parse(match.Groups["attempt"].Value, CultureInfo.InvariantCulture))] =
+                    (new Uri(urlValue.GetString()!, UriKind.Absolute), nameValue.GetString()!);
             }
         }
         return result;
@@ -227,15 +239,18 @@ internal static class ShadowReconciler
         var members = eligibleJobs.OrderBy(j => j.RunId).ThenBy(j => j.RunAttempt).GroupBy(j => j.PrNumber).Select(g => g.First()).Take(windowSize).ToArray();
         var closed = members.Length == windowSize;
         var selected = members.Select(m => m with { Records = m.Records.Where(r => r.RunId == m.RunId && r.RunAttempt == 1).ToArray() }).ToArray();
+        var validRecords = selected.SelectMany(m => m.Records.Where(r => r.Outcome is "hit" or "miss")).ToArray();
+        var hits = validRecords.Count(r => r.Outcome == "hit");
+        var misses = validRecords.Where(r => r.Outcome == "miss").ToArray();
+        var completeRecords = selected.All(m => m.Records.Count(r => r.Outcome is "hit" or "miss") == 1);
         var bad = selected.FirstOrDefault(m => !m.Terminal || m.Records.Count(r => r.Outcome is "hit" or "miss") != 1);
-        if (bad is not null) return new(false, true, $"PR #{bad.PrNumber}: job terminal/record reconciliation failed", selected.Length, 0, 0, 0, 0);
-        var records = selected.Select(m => m.Records.Single(r => r.Outcome is "hit" or "miss")).ToArray();
-        var hits = records.Count(r => r.Outcome == "hit");
-        var misses = records.Where(r => r.Outcome == "miss").ToArray();
-        var budget = misses.Sum(r => r.WallSeconds ?? double.NaN) / records.Length;
-        var max = misses.Length == 0 ? 0 : misses.Max(r => r.WallSeconds ?? double.NaN);
-        string? reason = hits / (double)records.Length < .8 ? "hit rate below 80%" : budget > 30 ? "amortised miss budget above 30.0s/PR" : max > 180 ? "single miss above 180.0s" : null;
-        return new(closed, reason is not null, reason, records.Length, hits, hits / (double)records.Length, budget, max);
+        var n = selected.Length;
+        var hitRate = completeRecords && n != 0 ? hits / (double)n : (double?)null;
+        var budget = completeRecords && n != 0 ? misses.Sum(r => r.WallSeconds ?? double.NaN) / n : (double?)null;
+        var max = completeRecords && n != 0 ? (misses.Length == 0 ? 0 : misses.Max(r => r.WallSeconds ?? double.NaN)) : (double?)null;
+        if (bad is not null) return new(false, true, $"PR #{bad.PrNumber}: job terminal/record reconciliation failed", n, hits, hitRate, budget, max);
+        string? reason = hitRate is { } rate && rate < .8 ? "hit rate below 80%" : budget is { } amortised && amortised > 30 ? "amortised miss budget above 30.0s/PR" : max is { } maximum && maximum > 180 ? "single miss above 180.0s" : null;
+        return new(closed, reason is not null, reason, n, hits, hitRate, budget, max);
     }
 }
 
