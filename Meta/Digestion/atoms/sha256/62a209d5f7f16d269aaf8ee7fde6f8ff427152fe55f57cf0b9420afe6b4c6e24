@@ -1,3 +1,0 @@
-**样例 8|实验规格(6.204 登记之续航靶)** `D5/E/experiments/D5-X0001.spec--yaml`:
-`{id: D5-X0001, hypothesis: "隙宽随 λ 之标度律", method: "N=3000 纤维词哈密顿量 λ∈[0.1,4] 扫描", budget: 30min, tolerance: 1e-3, target_stratum: S3/Spectral, outputs: observation}`
-

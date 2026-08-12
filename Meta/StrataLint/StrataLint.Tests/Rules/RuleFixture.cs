@@ -51,6 +51,10 @@ internal sealed partial class RuleFixture
             gid: D5/X_Frontier/ValuesProducer
           - case_id: D5-T0004
             gid: D5/X_Frontier/SplitTool
+          - case_id: D5-T0005
+            gid: D5/X_Frontier/PaperGenerator
+          - case_id: D5-T0006
+            gid: D5/X_Frontier/D5P001
           - case_id: D5-T0007
             gid: D5/X_Frontier/RequiredChecks
           - case_id: D5-T0008

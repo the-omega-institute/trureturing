@@ -1,3 +1,0 @@
-**样例 11|论文配方(O-14 全卷)** `Papers/recipes/D5-P001.yaml`:
-`{id: D5-P001, decls:[D5/S3/Diffraction/Avoidance.peak_height, ….zero_free_arc, ….dk_bound, ….sharpness], blueprint:[D5/B/S3/Diffraction/*], evidence:[D5/E/S3/Diffraction/Avoidance.zeros_scan--json], narrative_order:[闭式,四款,数据], venue: arXiv-math.NT}`——papers-dry 干跑即验"论文永远可装配"。
-

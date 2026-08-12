@@ -1,6 +1,0 @@
-**样例 5|数值证书旗舰(GICT 定理 5.3;轮 143/151)** C_φ 之 A9 拆分:
-- 假设:`D5/X_Assumptions/Convergence.WindowConv`(全周期窗均收敛速率,REGISTRY: active);
-- 证书:`theorem cphi_bound (h : Assumptions.WindowConv) : |CphiLim − 0.045759332| < 1.1e-8` → 状态=条件定理(语法);
-- 证物:`D5/E/S3/Analytic/Cphi.result--json`(kernels 三件:精确 {kφ}/Kahan/全周期窗——轮 143 工艺固化);
-- 台账:`"D5/Cphi": {value:0.045759332, err:1.1e-8, method:"int-exact+Kahan+full-window", source_pr:…, assumption:"D5/X_Assumptions/Convergence.WindowConv", history:[{value:0.0457626, err:5e-7, pr:r142}]}`——**修订史真实入册。**
-
