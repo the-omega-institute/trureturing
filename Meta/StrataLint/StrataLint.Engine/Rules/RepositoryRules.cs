@@ -31,6 +31,10 @@ internal static partial class RepositoryRules
         + "\\s+提示:[^\\n]+\\n\\s+尸检:(?<autopsy>[^\\n]+) -/",
         RegexOptions.CultureInvariant);
 
+    private static readonly Regex CodexLogReferencePattern = new(
+        "\\[codex-log:(?<path>[^\\]\\s]+)\\]",
+        RegexOptions.CultureInvariant);
+
     private static readonly Regex SafeFieldPattern = new(
         "^[A-Za-z0-9_/.-]+$",
         RegexOptions.CultureInvariant);
@@ -92,6 +96,7 @@ internal static partial class RepositoryRules
         Register(10, "Generality closure", new RepositoryRule(GeneralSource, Generality)),
         Register(11, "Controlled domains", new RepositoryRule(DomainScoped, Domains)),
         Register(12, "Six-line Lean header", new RepositoryRule(Formal, Headers)),
+        Register(13, "Permanent task ledger", new RepositoryRule(Formal, Tasks)),
         Register(
             14,
             "Toolchain upgrade compatibility",
