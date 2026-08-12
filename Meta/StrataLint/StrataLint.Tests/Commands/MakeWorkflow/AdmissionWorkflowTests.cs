@@ -53,6 +53,38 @@ public sealed class AdmissionWorkflowTests
         Assert.Equal(2, installs);
         Assert.Equal(installs, Regex.Matches(workflow, @"elan_install_with_retry\(\) \{").Count);
 
+        // 工具链下载是第二个网络跳,单独失败过(releases.lean-lang.org 返回空响应),
+        // 所以它也必须走重试,而不是裸 `elan toolchain install`。
+        Assert.Equal(installs, Regex.Matches(workflow, @"elan_toolchain_with_retry\(\) \{").Count);
+        Assert.DoesNotContain("\"$HOME/.elan/bin/elan\" toolchain install \"$toolchain\"", workflow, StringComparison.Ordinal);
+
+        // 每一处 ~/.elan 的 restore 都必须有前缀回退。两个 job 的精确 key 由不同表达式算出
+        // (单文件 sha256 vs hashFiles 两文件),永不相等;没有回退,写入方存的缓存读取方
+        // 就够不着,于是每轮都联网重下工具链。实测:仓库里有 695MB 的 elan 缓存,而
+        // engineering job 从来没命中过。
+        // 用 YAML 解析而非正则:step 里的注释会打断任何「key 紧跟 restore-keys」的文本假设。
+        var elanRestores = Jobs(workflow).Children.Values
+            .OfType<YamlMappingNode>()
+            .Where(job => job.Children.ContainsKey(new YamlScalarNode("steps")))
+            .SelectMany(job => ((YamlSequenceNode)job.Children[new YamlScalarNode("steps")])
+                .Children.OfType<YamlMappingNode>())
+            .Where(step => step.Children.TryGetValue(new YamlScalarNode("uses"), out var uses)
+                && uses is YamlScalarNode { Value: not null } u
+                && u.Value.StartsWith("actions/cache/restore@", StringComparison.Ordinal))
+            .Where(step => step.Children.TryGetValue(new YamlScalarNode("with"), out var with)
+                && with is YamlMappingNode w
+                && w.Children.TryGetValue(new YamlScalarNode("path"), out var path)
+                && path is YamlScalarNode { Value: "~/.elan" })
+            .Select(step => (YamlMappingNode)step.Children[new YamlScalarNode("with")])
+            .ToArray();
+
+        Assert.Equal(2, elanRestores.Length);
+        Assert.All(
+            elanRestores,
+            with => Assert.True(
+                with.Children.ContainsKey(new YamlScalarNode("restore-keys")),
+                "an ~/.elan restore without restore-keys can never reach the cache the other job wrote"));
+
         // 用 YAML 解析而非正则:步骤上方的注释会把「name 紧跟 if」的文本假设打断。
         var leanInspect = Assert.IsType<YamlMappingNode>(
             Jobs(workflow).Children[new YamlScalarNode("lean-inspect")]);
