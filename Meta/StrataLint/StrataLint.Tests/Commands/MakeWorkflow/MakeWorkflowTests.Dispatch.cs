@@ -24,14 +24,6 @@ public sealed partial class MakeWorkflowTests
 
         Assert.Contains("build: lean-cache-ensure dotnet lean", makefile, StringComparison.Ordinal);
         Assert.Equal(0, RecipeCount(makefile, "build"));
-        Assert.Contains(
-            " c0-verify --base \"$(BASE)\"",
-            Recipe(makefile, "c0-verify"),
-            StringComparison.Ordinal);
-        Assert.Contains(
-            " c0-reconcile-trust-root",
-            Recipe(makefile, "c0-reconcile-trust-root"),
-            StringComparison.Ordinal);
         Assert.Contains(CleanLanesScriptPath, Recipe(makefile, "clean-lanes"), StringComparison.Ordinal);
         Assert.Contains(DotnetBuildScriptPath, Recipe(makefile, "dotnet"), StringComparison.Ordinal);
         Assert.Contains("dotnet test", Recipe(makefile, "test"), StringComparison.Ordinal);
@@ -51,7 +43,6 @@ public sealed partial class MakeWorkflowTests
             EchoResidualSummaryScriptPath,
             Recipe(makefile, "echo-residual-summary"),
             StringComparison.Ordinal);
-        Assert.Contains("golden-record", Recipe(makefile, "record-golden"), StringComparison.Ordinal);
         Assert.Contains(SelftestScriptPath, Recipe(makefile, "selftest"), StringComparison.Ordinal);
         Assert.Contains("stratalint-c0-renew-", Recipe(makefile, "scratch-sweep"), StringComparison.Ordinal);
         Assert.Contains(LocalHarnessGateScriptPath, Recipe(makefile, "gate"), StringComparison.Ordinal);

@@ -131,7 +131,11 @@ public sealed class ValuesProjectionTests
         Assert.Equal(2, document.RootElement.GetProperty("schema_version").GetInt32());
         var cphi = Assert.Single(constants, static item =>
             item.GetProperty("id").GetString() == "D5/Cphi");
-        Assert.Equal("reference-mismatch-open", cphi.GetProperty("comparison").GetString());
+        // `comparison` is now computed from |value - reference| against the published error rather
+        // than hardcoded per code path. That makes this line the guard on the reference itself: if
+        // the source volume revises a constant and the transcription here is not carried across,
+        // the computed value stops agreeing and this reddens.
+        Assert.Equal("reference-consistent", cphi.GetProperty("comparison").GetString());
         Assert.Equal(3, cphi.GetProperty("kernel_receipts").GetArrayLength());
     }
 
