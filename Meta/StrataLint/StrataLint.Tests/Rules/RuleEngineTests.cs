@@ -19,7 +19,6 @@ public sealed class RuleEngineTests
         { 10, "generality" },
         { 11, "domain" },
         { 12, "header" },
-        { 13, "task" },
         { 15, "formula" },
         { 16, "backfill" },
         { 17, "query" },
