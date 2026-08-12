@@ -529,17 +529,40 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          if [[ ! -x "$HOME/.elan/bin/elan" ]]; then
-            curl --proto '=https' --tlsv1.2 -sSf https://elan.lean-lang.org/elan-init.sh \
-              | sh -s -- -y --default-toolchain none
-          fi
-          toolchain="$(tr -d '\r\n' < lean-toolchain)"
-          test -n "$toolchain"
-          if ! "$HOME/.elan/bin/elan" toolchain list 2>/dev/null | grep -qF "$toolchain"; then
-            "$HOME/.elan/bin/elan" toolchain install "$toolchain"
-          fi
-          "$HOME/.elan/bin/elan" default "$toolchain"
-          "$HOME/.elan/bin/lake" --version
+          install_toolchain() {
+            if [[ ! -x "$HOME/.elan/bin/elan" ]]; then
+              curl --proto '=https' --tlsv1.2 -sSf https://elan.lean-lang.org/elan-init.sh \
+                | sh -s -- -y --default-toolchain none || return $?
+            fi
+            toolchain="$(tr -d '\r\n' < lean-toolchain)" || return $?
+            test -n "$toolchain" || return $?
+            if ! "$HOME/.elan/bin/elan" toolchain list 2>/dev/null | grep -qF "$toolchain"; then
+              "$HOME/.elan/bin/elan" toolchain install "$toolchain" || return $?
+            fi
+            "$HOME/.elan/bin/elan" default "$toolchain" || return $?
+            "$HOME/.elan/bin/lake" --version || return $?
+          }
+
+          max_attempts=3
+          delay_seconds=5
+          attempt=1
+          while true; do
+            status=0
+            install_toolchain || status=$?
+            if [[ "$status" -eq 0 ]]; then
+              if (( attempt > 1 )); then
+                printf '%s\n' "toolchain retry_attempt=$attempt result=success"
+              fi
+              break
+            fi
+            printf '%s\n' "toolchain retry_attempt=$attempt exit_code=$status"
+            if (( attempt >= max_attempts )); then
+              exit 1
+            fi
+            sleep "$delay_seconds"
+            attempt=$((attempt + 1))
+            delay_seconds=$((delay_seconds * 2))
+          done
           echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
 
       - name: Verify cached old-side report
