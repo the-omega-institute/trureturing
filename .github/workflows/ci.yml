@@ -421,13 +421,14 @@ jobs:
           fi
           reports="$RUNNER_TEMP/raw-lean-reports"
           mkdir -p "$reports"
-          "$pair_producer" \
+          # 只产候选侧。旧侧报告唯一的用途是 Hearts.lean 变动时的语义比对,而该文件
+          # 近 200 次提交只动过 5 次 —— 其余每个 PR 都在为它编译一整棵旧侧 Lean 树,
+          # 而那正压在关键路径上。改了 Hearts 时 admission 会 fail-closed 要求补上。
+          "$pair_producer" --single \
             --producer "$producer" \
             --lake-bin "$HOME/.elan/bin/lake" \
             --candidate-root "$GITHUB_WORKSPACE/candidate" \
-            --candidate-output "$reports/candidate-lean-report.json" \
-            --baseline-root "$GITHUB_WORKSPACE/baseline" \
-            --baseline-output "$reports/baseline-lean-report.json"
+            --candidate-output "$reports/candidate-lean-report.json"
 
       - name: Reconcile pinned statement projections with live Lean report
         shell: bash
@@ -576,7 +577,6 @@ jobs:
         run: |
           set -euo pipefail
           sha256sum -c candidate-lean-report.json.sha256
-          sha256sum -c baseline-lean-report.json.sha256
 
       - name: Run the harness gate with the candidate's own judge
         shell: bash
@@ -600,7 +600,6 @@ jobs:
             --candidate "$GITHUB_WORKSPACE/candidate" \
             --base "$DEV_BASELINE_SHA" \
             --candidate-lean-report "$RUNNER_TEMP/raw-lean-reports/candidate-lean-report.json" \
-            --baseline-lean-report "$RUNNER_TEMP/raw-lean-reports/baseline-lean-report.json" \
             2>&1 | tee "$RUNNER_TEMP/gate.log"
           rc="${PIPESTATUS[0]}"
           set -e
