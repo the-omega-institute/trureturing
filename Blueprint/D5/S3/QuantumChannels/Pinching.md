@@ -6,7 +6,7 @@ Standard-basis qubit pinching is an idempotent Hilbert-Schmidt projection with e
 
 **Definition 1.1 (Standard-basis pinching is zero-retention phase damping).**
 
-$$P(\rho)=\operatorname{phaseDamping}(0,\rho)$$
+Lean statement: `D5/S3/QuantumChannels/Pinching.pinching`
 
 *Formalization.* `D5/S3/QuantumChannels/Pinching.pinching` (`✓ std3`).
 
@@ -18,7 +18,7 @@ For an arbitrary complex two-by-two matrix rho, pinching is exactly the existing
 
 **Definition 1.2 (The Hilbert-Schmidt pairing is the trace pairing).**
 
-$$\langle A, B\rangle_{HS}=\operatorname{Tr}(A^{*}B)$$
+Lean statement: `D5/S3/QuantumChannels/Pinching.hilbertSchmidtInner`
 
 *Formalization.* `D5/S3/QuantumChannels/Pinching.hilbertSchmidtInner` (`✓ std3`).
 

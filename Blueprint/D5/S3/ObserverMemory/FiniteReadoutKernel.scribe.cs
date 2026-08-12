@@ -6,23 +6,18 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.ObserverMemory;
 
 internal sealed class FiniteReadoutKernelDocument : IScribeDocumentDefinition
 {
-    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
-        Header(
-            "D5/S3/ObserverMemory/FiniteReadoutKernel",
-            "A linear readout identifies its domain modulo its kernel with its attainable range."),
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create("A linear readout identifies its domain modulo its kernel with its attainable range.",
         H("Finite Readout Kernel"),
         Blocks(
-            DocumentBlock.Describe.Theorem(
+            Describe.Lean(
                 DescribeId.Create("a-readout-is-its-kernel-quotient-projection"),
+                DeclarationHandle.Create("D5/S3/ObserverMemory/FiniteReadoutKernel.finite_readout_quotient_equiv_range"),
                 H("A readout is its kernel-quotient projection"),
-                LeanTheorem(
-                    "D5/S3/ObserverMemory/FiniteReadoutKernel."
-                    + "finite_readout_quotient_equiv_range"),
-                Disp(Seq(
+                StatementSource.FromAuthor(Disp(Seq(
                     Open, F.Id("M"), Slash, Ker, Open, F.Id("readout"), Close, Close,
                     Sp, Equiv, Underscore, F.Id("R"), Sp,
-                    Operatorname, Grp(F.Id("range")), Open, F.Id("readout"), Close, Dot)),
-                DescribeProvenance.RepoDerived(),
+                    Operatorname, Grp(F.Id("range")), Open, F.Id("readout"), Close, Dot))),
+                AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
                         "Let R be a ring, let M and N be R-modules, and let readout be a "
@@ -47,5 +42,6 @@ internal sealed class FiniteReadoutKernelDocument : IScribeDocumentDefinition
                         + "formal statement is the honest module-theoretic generalization. It "
                         + "does not assert that readout is injective or surjective onto all of "
                         + "N, nor does it formalize a separate lattice-collision construction. "
-                        + "The source atom contains no numerical certificate.")))))));
+                        + "The source atom contains no numerical certificate."))),
+                DescribeRole.Theorem))));
 }

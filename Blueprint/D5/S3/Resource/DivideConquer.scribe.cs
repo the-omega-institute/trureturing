@@ -6,18 +6,14 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Resource;
 
 internal sealed class DivideConquerDocument : IScribeDocumentDefinition
 {
-    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
-        Header(
-            "D5/S3/Resource/DivideConquer",
-            "Subadditivity of infimum-defined resource functionals under feasible additive product strategies."),
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create("Subadditivity of infimum-defined resource functionals under feasible additive product strategies.",
         H("The Divide-Conquer Lemma for Resource Functionals"),
         Blocks(
-            DocumentBlock.Describe.Theorem(
+            Describe.Lean(
                 DescribeId.Create("tensor-closed-infimum-resource-functionals-are-subadditive"),
+                DeclarationHandle.Create("D5/S3/Resource/DivideConquer.resource_functional_subadditive"),
                 H("Tensor-closed infimum resource functionals are subadditive"),
-                LeanTheorem(
-                    "D5/S3/Resource/DivideConquer.resource_functional_subadditive"),
-                Disp(Seq(
+                StatementSource.FromAuthor(Disp(Seq(
                     Begin, Grp(F.Id("gathered")),
                     F.Id("F"), Open, F.Id("X"), Close, Colon, Eq, Sp,
                     Operatorname, Grp(F.Id("inf")), Underscore, Grp(
@@ -59,8 +55,8 @@ internal sealed class DivideConquerDocument : IScribeDocumentDefinition
                     F.Id("F"), Open, F.Id("X"), Close,
                     Plus,
                     F.Id("F"), Open, F.Id("Y"), Close, Dot,
-                    End, Grp(F.Id("gathered")))),
-                DescribeProvenance.RepoDerived(),
+                    End, Grp(F.Id("gathered"))))),
+                AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
                         "Let Obj be a type of resource objects and Strat a type of strategies. " +
@@ -78,5 +74,6 @@ internal sealed class DivideConquerDocument : IScribeDocumentDefinition
                         "infima and yields the displayed subadditivity inequality. Since costs " +
                         "lie in the extended nonnegative reals, an empty feasible class has " +
                         "value infinity; the same lattice lemma covers that boundary without " +
-                        "an auxiliary nonemptiness or boundedness assumption.")))))));
+                        "an auxiliary nonemptiness or boundedness assumption."))),
+                DescribeRole.Theorem))));
 }

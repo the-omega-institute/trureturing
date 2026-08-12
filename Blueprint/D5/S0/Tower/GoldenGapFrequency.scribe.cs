@@ -30,23 +30,27 @@ internal sealed class GoldenGapFrequencyDocument : IScribeDocumentDefinition
                         "At an internal index this is the frozen consecutive name-value "
                         + "difference; at the final index it is the remaining interval to one.")))
                 ),
-                DocumentBlock.Describe.Definition(
+                Describe.Lean(
                     DescribeId.Create("large-full-gap-count"),
+                    DeclarationHandle.Create("D5/S0/Tower/GoldenGapFrequency.largeGapCount"),
                     H("Large full-gap count"),
-                    LeanDefinition("D5/S0/Tower/GoldenGapFrequency.largeGapCount"),
-                    DescribeProvenance.RepoDerived(),
+                    StatementSource.FromLean(),
+                    AssessedProvenance.FromRepo(),
                     Blocks(Paragraph(Text(
                         "The finite number of boundary-completed gaps equal to the level-Q "
-                        + "large golden length.")))
+                        + "large golden length."))),
+                    DescribeRole.Definition
                 ),
-                DocumentBlock.Describe.Definition(
+                Describe.Lean(
                     DescribeId.Create("small-full-gap-count"),
+                    DeclarationHandle.Create("D5/S0/Tower/GoldenGapFrequency.smallGapCount"),
                     H("Small full-gap count"),
-                    LeanDefinition("D5/S0/Tower/GoldenGapFrequency.smallGapCount"),
-                    DescribeProvenance.RepoDerived(),
+                    StatementSource.FromLean(),
+                    AssessedProvenance.FromRepo(),
                     Blocks(Paragraph(Text(
                         "The finite number of boundary-completed gaps equal to the level-Q "
-                        + "small golden length.")))
+                        + "small golden length."))),
+                    DescribeRole.Definition
                 ),
                 DocumentBlock.Describe.Theorem(
                     DescribeId.Create("full-gap-counts-are-fibonacci"),

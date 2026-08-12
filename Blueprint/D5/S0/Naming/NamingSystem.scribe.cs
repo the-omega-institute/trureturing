@@ -10,17 +10,19 @@ internal sealed class NamingSystemDocument : IScribeDocumentDefinition
             "Finite height layers make partial naming systems countable, leaving a null named image."),
         H("Countable Naming Systems"),
         Blocks(
-            DocumentBlock.Describe.Definition(
+            Describe.Lean(
                 DescribeId.Create("partial-naming-system-with-finite-height-layers"),
+                DeclarationHandle.Create("D5/S0/Naming/NamingSystem.NamingSystem"),
                 H("Partial naming system with finite height layers"),
-                LeanStructure("D5/S0/Naming/NamingSystem.NamingSystem"),
-                DescribeProvenance.RepoDerived(),
+                StatementSource.FromLean(),
+                AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "A naming system over a measured carrier X consists of a name type N, "
                     + "a partial assignment from N to X represented by an Option-valued map, "
                     + "a natural-valued height, and a proof that every bounded height layer "
                     + "is finite. Uncountability and measure hypotheses are theorem "
-                    + "assumptions rather than fields tied to a special carrier.")))
+                    + "assumptions rather than fields tied to a special carrier."))),
+                DescribeRole.Definition
             ),
             DocumentBlock.Describe.Lemma(
                 DescribeId.Create("finite-height-layers-make-the-name-type-countable"),
@@ -48,9 +50,4 @@ internal sealed class NamingSystemDocument : IScribeDocumentDefinition
                     + "Set.Countable.measure_zero theorem.")))
             ))));
 
-    private static LeanDeclarationRef LeanStructure(string value) =>
-        LeanDeclarationRef.Create(
-            value,
-            expectedKind: LeanDeclarationKind.Inductive,
-            requireNoSorry: true);
 }

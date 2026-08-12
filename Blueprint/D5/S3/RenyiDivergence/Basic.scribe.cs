@@ -12,12 +12,12 @@ internal sealed class BasicDocument : IScribeDocumentDefinition
             "Finite Renyi divergence is defined for real orders and pinned by complementary half-order, self, and order-two identities."),
         H("Finite Renyi Divergence"),
         Blocks(
-            DocumentBlock.Describe.Definition(
+            Describe.Lean(
                 DescribeId.Create("finite-renyi-divergence-is-the-logarithmic-power-sum"),
+                DeclarationHandle.Create("D5/S3/RenyiDivergence/Basic.renyiDivergence"),
                 H("Finite Renyi divergence is the logarithmic power sum"),
-                LeanDefinition(
-                    "D5/S3/RenyiDivergence/Basic.renyiDivergence"),
-                DescribeProvenance.RepoDerived(),
+                StatementSource.FromLean(),
+                AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
                         "The repository already contains Kullback--Leibler divergence, the " +
@@ -40,27 +40,7 @@ internal sealed class BasicDocument : IScribeDocumentDefinition
                         "proof of alpha != 1 in the definition would alter every downstream " +
                         "signature; the interpreting theorems already constrain the order where " +
                         "that constraint is mathematically needed."))),
-                Disp(Seq(
-                    Begin, Grp(F.Id("gathered")),
-                    Forall, Sp, Iota, Esc,
-                    OpenBracket,
-                    Operatorname, Grp(F.Id("Fintype")), Open, Iota, Close,
-                    CloseBracket, Comma, RowBreak,
-                    Forall, Sp, Alpha, Sp, InMacro, Sp,
-                    Mathbb, Grp(F.Id("R")), Comma, RowBreak,
-                    Forall, Sp, F.Id("p"), Comma, Sp, F.Id("q"), Colon, Sp,
-                    Iota, To, Sp, Mathbb, Grp(F.Id("R")), Comma, RowBreak,
-                    F.Id("D"), Underscore, Grp(Alpha, Sp), Open,
-                    F.Id("p"), Vert, Sp, Vert, Sp, F.Id("q"), Close,
-                    Colon, Eq,
-                    Frac, Grp(D(1)), Grp(Alpha, Sp, Minus, D(1)),
-                    Log, Sp, Open,
-                    Sum, Sp, Underscore, Grp(F.Id("i")), Sp,
-                    F.Id("p"), Open, F.Id("i"), Close,
-                    Caret, Grp(Alpha, Sp), Sp,
-                    F.Id("q"), Open, F.Id("i"), Close,
-                    Caret, Grp(D(1), Minus, Alpha, Sp), Close, Dot,
-                    End, Grp(F.Id("gathered"))))
+                DescribeRole.Definition
             ),
             DocumentBlock.Describe.Theorem(
                 DescribeId.Create("half-order-is-minus-twice-log-bhattacharyya"),

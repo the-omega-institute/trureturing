@@ -6,18 +6,14 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.QuantumContext;
 
 internal sealed class QuarticContextWitnessDocument : IScribeDocumentDefinition
 {
-    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
-        Header(
-            "D5/S3/QuantumContext/QuarticContextWitness",
-            "Two exact qutrit contexts give distinct quartic pricing totals for one pure state."),
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create("Two exact qutrit contexts give distinct quartic pricing totals for one pure state.",
         H("An Exact Qutrit Quartic-Context Witness"),
         Blocks(
-            DocumentBlock.Describe.Theorem(
+            Describe.Lean(
                 DescribeId.Create("quartic-pricing-is-context-dependent-on-an-exact-qutrit-witness"),
+                DeclarationHandle.Create("D5/S3/QuantumContext/QuarticContextWitness.quartic_pricing_context_counterexample"),
                 H("Quartic pricing is context-dependent on an exact qutrit witness"),
-                LeanTheorem(
-                    "D5/S3/QuantumContext/QuarticContextWitness.quartic_pricing_context_counterexample"),
-                Disp(Seq(
+                StatementSource.FromAuthor(Disp(Seq(
                     Mathcal, Grp(F.Id("Q")), Underscore, Grp(D(4)),
                     Open, Rho, Comma, Sp, F.Id("C"), Underscore,
                     Grp(Mathrm, Grp(F.Id("std"))), Close,
@@ -25,8 +21,8 @@ internal sealed class QuarticContextWitnessDocument : IScribeDocumentDefinition
                     Sp, Lt, Sp, D(1), Sp, Eq, Sp,
                     Mathcal, Grp(F.Id("Q")), Underscore, Grp(D(4)),
                     Open, Rho, Comma, Sp, F.Id("C"), Underscore,
-                    Grp(Mathrm, Grp(F.Id("aligned"))), Close, Dot)),
-                DescribeProvenance.RepoDerived(),
+                    Grp(Mathrm, Grp(F.Id("aligned"))), Close, Dot))),
+                AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
                         "Let rho be the rank-one qutrit density matrix whose nine entries are " +
@@ -53,5 +49,6 @@ internal sealed class QuarticContextWitnessDocument : IScribeDocumentDefinition
                         "pricing rule, not to an incomplete context or an unnormalized state. " +
                         "The module proves this concrete counterexample only; it asserts no " +
                         "Gleason representation theorem, random-basis statistic, or general " +
-                        "extremal classification.")))))));
+                        "extremal classification."))),
+                DescribeRole.Theorem))));
 }
