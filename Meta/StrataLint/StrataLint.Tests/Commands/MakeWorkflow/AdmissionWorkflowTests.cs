@@ -57,6 +57,18 @@ namespace StrataLint.Tests;
     }
 
     [Fact]
+    public void OldSideShadowMakesAbsoluteLakeAvailableToLeanReport()
+    {
+        var workflow = AdmissionWorkflow();
+        Assert.True(ShadowMakesAbsoluteLakeAvailable(workflow));
+        var tampered = workflow.Replace(
+            "          echo \"$HOME/.elan/bin\" >> \"$GITHUB_PATH\"\n",
+            "",
+            StringComparison.Ordinal);
+        Assert.False(ShadowMakesAbsoluteLakeAvailable(tampered));
+    }
+
+    [Fact]
     public void ReconcilesStatementProjectionAfterProducingLiveReport()
     {
         var root = FindRepositoryRoot();
@@ -207,6 +219,24 @@ namespace StrataLint.Tests;
 
     private static bool ShadowHasNoNeeds(string workflow) =>
         !Job(workflow, "old-side-report-shadow").Children.ContainsKey(new YamlScalarNode("needs"));
+
+    private static bool ShadowMakesAbsoluteLakeAvailable(string workflow)
+    {
+        var shadow = Job(workflow, "old-side-report-shadow");
+        var steps = Assert.IsType<YamlSequenceNode>(shadow.Children[new YamlScalarNode("steps")]);
+        var namedSteps = steps.Children.OfType<YamlMappingNode>().ToDictionary(
+            static step => Assert.IsType<YamlScalarNode>(step.Children[new YamlScalarNode("name")]).Value!,
+            StringComparer.Ordinal);
+        var toolchainRun = Assert.IsType<YamlScalarNode>(namedSteps["Install pinned Lean toolchains"]
+            .Children[new YamlScalarNode("run")]).Value!;
+        var missRun = Assert.IsType<YamlScalarNode>(namedSteps["Produce and verify old-side report on cache miss"]
+            .Children[new YamlScalarNode("run")]).Value!;
+        var exportsElanBin = toolchainRun.Contains(
+            "echo \"$HOME/.elan/bin\" >> \"$GITHUB_PATH\"", StringComparison.Ordinal);
+        var passesAbsoluteLake = missRun.Contains(
+            "LAKE_BIN=\"$HOME/.elan/bin/lake\" make lean-report", StringComparison.Ordinal);
+        return exportsElanBin || passesAbsoluteLake;
+    }
 
     private static bool BaselineNeedsExactlyLeanInspect(string workflow) =>
         Needs(Job(workflow, "baseline-admission")).SequenceEqual(["lean-inspect"], StringComparer.Ordinal);

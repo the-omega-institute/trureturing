@@ -540,6 +540,7 @@ jobs:
           fi
           "$HOME/.elan/bin/elan" default "$toolchain"
           "$HOME/.elan/bin/lake" --version
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
 
       - name: Verify cached old-side report
         id: old-side-hit

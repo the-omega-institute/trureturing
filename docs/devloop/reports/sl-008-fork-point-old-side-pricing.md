@@ -99,6 +99,8 @@ cold_root=$(mktemp -d /tmp/oldside-cold-report-cache.XXXXXXXX)
 
 ## 7. 只授权影子测量与后续共识骨架
 
+本节的 miss 墙钟读数应严格称为 **shadow 全冷 miss-production cost**：shadow 不像现有 `lean-inspect` 那样 restore candidate/baseline 的 `.lake` 与 `~/.cache/mathlib`，因此它包含独立 runner 上的全冷依赖恢复/构建成本。该读数**不得**外推为 `lean-inspect` 已恢复构建缓存后的边际成本；将来做迁移前的端到端闸门时，必须在真实迁移拓扑上另测。
+
 本报告现在只授权六席共识的步骤 1：在真实 CI 中增加一个**不供 admission 判决的独立 shadow job**。拓扑写死为：该 job 不得放进 `lean-inspect` 的串行步骤，且 job id **不得出现在 `baseline-admission.needs` 中**；它可以读取/恢复/验证或在 miss 时生产 old-side report，但产物不得供本次 admission 使用。这样影子期内它在依赖图上没有通向 `baseline-admission` 的前置边，结构上不可能延后 admission，测量本身不会改变被测 admission。把它串入 `lean-inspect` 前置链的实现不在本授权内。
 
 在线观测单位写死为**一个真实 PR**，所以 `N` 是窗口内不同 PR 的数量，一个 PR 恰好贡献一个 hit 或 miss。样本包括最终未 merge、workflow 其它 job 失败或后来关闭的 PR，不以 merge 成功为入样条件，避免成功者偏差。对每个 PR，只选择测量起点之后按 GitHub `run_id` 最小的 workflow run，并只取该 run 的 `run_attempt=1`；该记录同时钉死当时的 `head_sha`。同一 PR 的 rerun、re-run failed jobs、取消后重跑和后续新 SHA 触发的 run 都保留原始记录，但一律不进入 `N`、hit/miss 或生产墙钟聚合。首次 miss 后重跑即使命中也不能改写首次样本，因此放行结果不能被重跑预热 cache 操纵。每个入样 shadow job 发出结构化的 restore `hit=1,miss=0` 或 `hit=0,miss=1`；只有 restore 后 provenance/verify 成功才可记 hit，provenance/verify 失败不是 miss 插补而是直接停案。
