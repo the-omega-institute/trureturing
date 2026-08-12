@@ -3,8 +3,7 @@
    mirror-B: D5/B/S1/Phase/Interference/M468MemberTable
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: The m468 side column is computed from the frozen Jacobi selector; 469 is composite.
- -/
+   digest: The m468 side column comes from the frozen Jacobi selector; 469 composite. -/
 
 import D5.S1.Phase.Interference.ZolotarevSelector
 import D5.S1.Phase.SeatTowerArithmetic
