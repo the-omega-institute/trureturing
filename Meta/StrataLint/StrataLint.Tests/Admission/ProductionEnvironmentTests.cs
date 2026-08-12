@@ -35,7 +35,7 @@ public sealed partial class ProductionEnvironmentTests
             });
         var protectedChange = (AdmissionOutcome.ProtectedSurfaceChange)outcome;
         Assert.Equal(
-            Enumerable.Range(1, 12).Concat(Enumerable.Range(14, 10)).Select(RuleId.CreateKnown).Append(RuleId.CreateKnown(25)).Append(RuleId.CreateKnown(26)),
+            Enumerable.Range(1, 23).Select(RuleId.CreateKnown).Append(RuleId.CreateKnown(25)).Append(RuleId.CreateKnown(26)),
             protectedChange.ContentCertificate.ExecutedRules);
         Assert.Contains(protectedChange.ChangeSet.Paths, item => item.Value == protectedPath);
         Assert.Contains(
@@ -111,7 +111,7 @@ public sealed partial class ProductionEnvironmentTests
 
         var admitted = Assert.IsType<AdmissionOutcome.Admitted>(outcome);
         Assert.Equal(
-            Enumerable.Range(1, 12).Concat(Enumerable.Range(14, 10)).Select(RuleId.CreateKnown).Append(RuleId.CreateKnown(25)).Append(RuleId.CreateKnown(26)),
+            Enumerable.Range(1, 23).Select(RuleId.CreateKnown).Append(RuleId.CreateKnown(25)).Append(RuleId.CreateKnown(26)),
             admitted.Certificate.ExecutedRules);
         Assert.Equal(2, gateway.ReadCount);
         Assert.Equal(0, source.CallCount);
