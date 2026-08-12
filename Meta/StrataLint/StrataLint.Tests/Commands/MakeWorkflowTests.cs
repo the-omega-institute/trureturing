@@ -19,6 +19,7 @@ namespace StrataLint.Tests;
     private const string LeanCacheEnsureScriptPath =
         "Meta/StrataLint/scripts/worktree/lean-cache-ensure.sh";
     private const string IngestScriptPath = "Meta/StrataLint/scripts/ingest.sh";
+    private const string TheoryIngestClosureScriptPath = "Meta/StrataLint/scripts/workflow/theory-ingest-closure.sh";
     private const string EchoResidualSummaryScriptPath =
         "Meta/StrataLint/scripts/report/echo-residual-summary.sh";
     private const string ReportConsumerScriptPath =
@@ -393,136 +394,32 @@ namespace StrataLint.Tests;
     }
 
     [Fact]
-    public void TheoryIngestKeepsCandidateExecutionCredentiallessAndDataOnly()
+    public void TheoryIngestUsesBaseClosureJudgeWithoutWriteback()
     {
         var root = FindRepositoryRoot();
         var workflow = File.ReadAllText(Path.Combine(root, TheoryIngestWorkflowPath));
-        var candidateCheckoutIndex = workflow.IndexOf(
-            "- name: Check out PR head (data + commit target)",
-            StringComparison.Ordinal);
-        var boundaryIndex = workflow.IndexOf(
-            "- name: Enforce candidate data-only boundary",
-            StringComparison.Ordinal);
-        var reportRestoreIndex = workflow.IndexOf(
-            "- name: Restore base canonical Lean report",
-            StringComparison.Ordinal);
-        var commitIndex = workflow.IndexOf(
-            "- name: Enforce write-path whitelist and commit back",
-            StringComparison.Ordinal);
-
-        Assert.True(candidateCheckoutIndex >= 0, "candidate checkout must be explicit");
-        Assert.True(boundaryIndex > candidateCheckoutIndex, "the data boundary must follow checkout");
-        Assert.True(
-            reportRestoreIndex > boundaryIndex,
-            "candidate inputs must be classified before the report is restored");
-        Assert.True(
-            commitIndex > reportRestoreIndex,
-            "write credentials must only appear after candidate report consumption");
-
-        var candidateCheckout = workflow[candidateCheckoutIndex..boundaryIndex];
-        Assert.Contains(
-            "ref: ${{ github.event.pull_request.head.sha }}",
-            candidateCheckout,
-            StringComparison.Ordinal);
-        Assert.Contains("persist-credentials: false", candidateCheckout, StringComparison.Ordinal);
-
-        var boundary = workflow[boundaryIndex..reportRestoreIndex];
-        var theoryDataPattern = string.Concat("docs/develop/", "theory/*");
-        Assert.Contains("BASE_SHA: ${{ github.event.pull_request.base.sha }}", boundary, StringComparison.Ordinal);
-        Assert.Contains("HEAD_SHA: ${{ github.event.pull_request.head.sha }}", boundary, StringComparison.Ordinal);
-        Assert.Contains(theoryDataPattern + "|Meta/Digestion/atoms/*", boundary, StringComparison.Ordinal);
-        Assert.DoesNotContain("echo-residual", boundary, StringComparison.Ordinal);
-        Assert.Contains("diff --name-only --no-renames -z", boundary, StringComparison.Ordinal);
-
-        var reportInstallIndex = workflow.IndexOf(
-            "- name: Install and verify base canonical Lean report",
-            StringComparison.Ordinal);
-        var reportRestoreEnd = workflow.IndexOf(
-            "      - name: ",
-            reportRestoreIndex + "      - name: ".Length,
-            StringComparison.Ordinal);
-        Assert.True(reportRestoreEnd < reportInstallIndex, "report restore must be a single bounded step");
-        var cache = workflow[reportRestoreIndex..reportRestoreEnd];
-        Assert.DoesNotContain("restore-keys:", cache, StringComparison.Ordinal);
-        Assert.DoesNotContain("GH_TOKEN:", workflow[..commitIndex], StringComparison.Ordinal);
-
-        var commit = workflow[commitIndex..];
-        Assert.Contains("GH_TOKEN: ${{ github.token }}", commit, StringComparison.Ordinal);
-        Assert.DoesNotContain("BACKFILL", commit, StringComparison.Ordinal);
-        Assert.Contains("gh auth setup-git", commit, StringComparison.Ordinal);
-        var restoreOverlayIndex = commit.IndexOf(
-            "git restore --source=HEAD -- Meta/StrataLint Makefile global.json",
-            StringComparison.Ordinal);
-        var cleanOverlayIndex = commit.IndexOf(
-            "git clean -fd -- Meta/StrataLint",
-            StringComparison.Ordinal);
-        var inspectChangesIndex = commit.IndexOf(
-            "changed=\"$(git status --porcelain)\"",
-            StringComparison.Ordinal);
-        Assert.True(restoreOverlayIndex >= 0, "tracked judge overlay files must be restored");
-        Assert.True(cleanOverlayIndex > restoreOverlayIndex, "untracked judge overlay files must be removed");
-        Assert.True(inspectChangesIndex > cleanOverlayIndex, "the whitelist must inspect the cleaned candidate");
+        Assert.Contains("contents: read", workflow, StringComparison.Ordinal);
+        Assert.DoesNotContain("Enforce candidate data-only boundary", workflow, StringComparison.Ordinal);
+        Assert.DoesNotContain("Enforce write-path whitelist and commit back", workflow, StringComparison.Ordinal);
+        Assert.DoesNotContain("theory-ingest-bot", workflow, StringComparison.Ordinal);
+        Assert.DoesNotContain("THEORY-INGEST-REGISTRY-001", workflow, StringComparison.Ordinal);
+        var ingestIndex = workflow.IndexOf("make ingest BASE=HEAD", StringComparison.Ordinal);
+        var closureIndex = workflow.IndexOf(TheoryIngestClosureScriptPath, StringComparison.Ordinal);
+        Assert.True(closureIndex > ingestIndex, "closure judge must run after ingest");
+        Assert.Contains("$GITHUB_WORKSPACE/judge/" + TheoryIngestClosureScriptPath, workflow, StringComparison.Ordinal);
+        Assert.Contains("--exclude Meta/StrataLint", workflow, StringComparison.Ordinal);
+        Assert.Contains("--exclude Makefile", workflow, StringComparison.Ordinal);
+        Assert.Contains("--exclude global.json", workflow, StringComparison.Ordinal);
     }
 
     [Fact]
-    public void TheoryIngestRegistryBoundaryExplainsTheRequiredTwoPrRemedy()
+    public void TheoryIngestNoLongerCarriesLegacyBoundaryOrWritebackContracts()
     {
         var root = FindRepositoryRoot();
         var workflow = File.ReadAllText(Path.Combine(root, TheoryIngestWorkflowPath));
-        var boundaryIndex = workflow.IndexOf(
-            "- name: Enforce candidate data-only boundary",
-            StringComparison.Ordinal);
-        var nextStepIndex = workflow.IndexOf("      - name: ", boundaryIndex + 1, StringComparison.Ordinal);
-        Assert.True(boundaryIndex >= 0, "the candidate data-only boundary must exist");
-        Assert.True(nextStepIndex > boundaryIndex, "the candidate data-only boundary must have a bounded body");
-
-        var boundary = workflow[boundaryIndex..nextStepIndex];
-        var caseIndex = boundary.IndexOf("case \"$path\" in", StringComparison.Ordinal);
-        Assert.True(caseIndex >= 0, "the input whitelist case arm must exist");
-        var caseEndIndex = boundary.IndexOf("esac", caseIndex, StringComparison.Ordinal);
-        Assert.True(caseEndIndex > caseIndex, "the input whitelist case arm must be bounded");
-        Assert.DoesNotContain(
-            "Meta/registry.yaml",
-            boundary[caseIndex..caseEndIndex],
-            StringComparison.Ordinal);
-
-        var failureIndex = boundary.IndexOf("if [[ \"${#bad[@]}\" -ne 0 ]]", StringComparison.Ordinal);
-        Assert.True(failureIndex >= 0, "the rejected-path failure block must exist");
-        var failure = boundary[failureIndex..];
-        var registryLoopIndex = failure.IndexOf("for path in \"${bad[@]}\"; do", StringComparison.Ordinal);
-        Assert.True(registryLoopIndex >= 0, "the rejected paths must be checked as native array elements");
-        var registryGuardIndex = failure.IndexOf(
-            "if [[ $path == \"Meta/registry.yaml\" ]]; then",
-            registryLoopIndex,
-            StringComparison.Ordinal);
-        Assert.True(registryGuardIndex > registryLoopIndex, "the registry flag must use exact path equality");
-        var registryLoopEndIndex = failure.IndexOf("done", registryGuardIndex, StringComparison.Ordinal);
-        Assert.True(registryLoopEndIndex > registryGuardIndex, "the registry path loop must be bounded");
-        var remedyGuardIndex = failure.IndexOf(
-            "if [[ $registry_rejected == true ]]; then",
-            registryLoopEndIndex,
-            StringComparison.Ordinal);
-        Assert.True(remedyGuardIndex > registryLoopEndIndex, "the registry remedy must be conditionally guarded");
-        var remedyGuardEndIndex = failure.IndexOf("\n            fi", remedyGuardIndex, StringComparison.Ordinal);
-        Assert.True(remedyGuardEndIndex > remedyGuardIndex, "the registry remedy guard must be bounded");
-        var registryRemedy = failure[remedyGuardIndex..remedyGuardEndIndex];
-        Assert.Contains("THEORY-INGEST-REGISTRY-001", registryRemedy, StringComparison.Ordinal);
-        Assert.Contains(
-            "separate harness PR",
-            registryRemedy,
-            StringComparison.Ordinal);
-        Assert.Contains(
-            "Meta/registry.yaml",
-            registryRemedy,
-            StringComparison.Ordinal);
-        Assert.Contains(
-            "drop its registry diff",
-            registryRemedy,
-            StringComparison.Ordinal);
-        Assert.Contains(
-            "theory ingest refuses non-data candidate path: %s\\n' \"${bad[@]}\"",
-            failure,
-            StringComparison.Ordinal);
+        Assert.DoesNotContain("Enforce candidate data-only boundary", workflow, StringComparison.Ordinal);
+        Assert.DoesNotContain("Enforce write-path whitelist and commit back", workflow, StringComparison.Ordinal);
+        Assert.DoesNotContain("THEORY-INGEST-REGISTRY-001", workflow, StringComparison.Ordinal);
     }
 
     [Fact]
@@ -530,23 +427,7 @@ namespace StrataLint.Tests;
     {
         var root = FindRepositoryRoot();
         var workflow = File.ReadAllText(Path.Combine(root, TheoryIngestWorkflowPath));
-        var commitIndex = workflow.IndexOf(
-            "- name: Enforce write-path whitelist and commit back",
-            StringComparison.Ordinal);
-
-        Assert.True(commitIndex >= 0, "theory ingest writeback must remain");
-        var commit = workflow[commitIndex..];
-        Assert.DoesNotContain("Generated/echo-residuals", commit, StringComparison.Ordinal);
-        Assert.DoesNotMatch(
-            new Regex(
-                "(?m)^\\s*(?:mv|git add)\\b[^\\n]*echo-residual",
-                RegexOptions.CultureInvariant | RegexOptions.NonBacktracking),
-            commit);
-        Assert.Contains(
-            "grep -vE '^.. Meta/Digestion/atoms/.*$'",
-            commit,
-            StringComparison.Ordinal);
-        Assert.Contains("git add Meta/Digestion/atoms", commit, StringComparison.Ordinal);
+        Assert.DoesNotContain("Generated/echo-residuals", workflow, StringComparison.Ordinal);
     }
 
     [Fact]
