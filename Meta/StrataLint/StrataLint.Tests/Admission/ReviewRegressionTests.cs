@@ -588,9 +588,12 @@ public sealed partial class ReviewRegressionTests
         Assert.Contains("lean-report-pair.sh", inspectJob, StringComparison.Ordinal);
         Assert.Contains("--producer", inspectJob, StringComparison.Ordinal);
         Assert.Contains("--candidate-root", inspectJob, StringComparison.Ordinal);
-        Assert.Contains("--baseline-root", inspectJob, StringComparison.Ordinal);
         Assert.Contains("candidate-lean-report.json", inspectJob, StringComparison.Ordinal);
-        Assert.Contains("baseline-lean-report.json", inspectJob, StringComparison.Ordinal);
+        // 【2026-08-13】只产候选侧报告。旧侧报告唯一的用途是 Hearts.lean 变动时的语义比对,
+        // 而该文件近 200 次提交只动过 5 次;为它每轮编译一整棵旧侧 Lean 树,又恰在关键路径上。
+        // 改了 Hearts 时 admission 会 fail-closed 要求补 --baseline-lean-report,不是静默放行。
+        Assert.Contains("--single", inspectJob, StringComparison.Ordinal);
+        Assert.DoesNotContain("--baseline-root", inspectJob, StringComparison.Ordinal);
         Assert.Contains("stratalint-lean-report-input-v1", pairProducer, StringComparison.Ordinal);
         Assert.Contains("stratalint-lean-report-provenance-v1", pairProducer, StringComparison.Ordinal);
         Assert.Contains("repository_inspector_sha256", pairProducer, StringComparison.Ordinal);
@@ -610,7 +613,8 @@ public sealed partial class ReviewRegressionTests
         Assert.Contains("--candidate", baselineJob, StringComparison.Ordinal);
         Assert.Contains("--base", baselineJob, StringComparison.Ordinal);
         Assert.Contains("--candidate-lean-report", baselineJob, StringComparison.Ordinal);
-        Assert.Contains("--baseline-lean-report", baselineJob, StringComparison.Ordinal);
+        // admission 不再接收旧侧 Lean 报告(见上:唯一用途是 Hearts 变动时的语义比对)。
+        Assert.DoesNotContain("--baseline-lean-report", baselineJob, StringComparison.Ordinal);
         Assert.DoesNotContain("--legacy-bootstrap", baselineJob, StringComparison.Ordinal);
         Assert.DoesNotContain("dotnet build", baselineJob, StringComparison.Ordinal);
         Assert.DoesNotContain(" selftest", baselineJob, StringComparison.Ordinal);
