@@ -368,10 +368,4 @@ internal sealed class BhattacharyyaDocument : IScribeDocumentDefinition
                                         "analogue, or other extension is claimed here."))),
                 DescribeRole.Theorem
             ))));
-
-    private static LeanDeclarationRef LeanDefinition(string value) =>
-        LeanDeclarationRef.Create(
-            value,
-            expectedKind: LeanDeclarationKind.Definition,
-            requireNoSorry: true);
 }

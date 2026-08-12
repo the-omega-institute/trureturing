@@ -11,12 +11,6 @@ internal sealed class CompletedZetaDocument : IScribeDocumentDefinition
     private static readonly LibraryNoteRef CoffeyXi =
         LibraryNoteRef.Create("D5/L/Zeros/coffey2007theta");
 
-    private static LeanDeclarationRef LeanDefinition(string value) =>
-        LeanDeclarationRef.Create(
-            value,
-            expectedKind: LeanDeclarationKind.Definition,
-            requireNoSorry: true);
-
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Continuation uniqueness, an entire xi reading, and conditional zero symmetry support the O-6 route.",
         H("Completed Zeta and the Zero-Symmetry Foundation"),
