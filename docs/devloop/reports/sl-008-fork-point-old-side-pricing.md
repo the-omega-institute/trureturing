@@ -103,6 +103,10 @@ cold_root=$(mktemp -d /tmp/oldside-cold-report-cache.XXXXXXXX)
 
 在线观测单位写死为**一个真实 PR**，所以 `N` 是窗口内不同 PR 的数量，一个 PR 恰好贡献一个 hit 或 miss。样本包括最终未 merge、workflow 其它 job 失败或后来关闭的 PR，不以 merge 成功为入样条件，避免成功者偏差。对每个 PR，只选择测量起点之后按 GitHub `run_id` 最小的 workflow run，并只取该 run 的 `run_attempt=1`；该记录同时钉死当时的 `head_sha`。同一 PR 的 rerun、re-run failed jobs、取消后重跑和后续新 SHA 触发的 run 都保留原始记录，但一律不进入 `N`、hit/miss 或生产墙钟聚合。首次 miss 后重跑即使命中也不能改写首次样本，因此放行结果不能被重跑预热 cache 操纵。每个入样 shadow job 发出结构化的 restore `hit=1,miss=0` 或 `hit=0,miss=1`；只有 restore 后 provenance/verify 成功才可记 hit，provenance/verify 失败不是 miss 插补而是直接停案。
 
+记录字段契约写死为：`pr_number`、`run_id`、`run_attempt` 为整数，`head_sha`、`address` 为字符串，`wall_seconds` 为非负数或 `null`，`outcome` 的取值域为 `hit|miss|hit-error|miss-error|no-record`。错误记录统一使用字段名 `stage`，不得另写 `failure_stage`；其取值域为 `cache-files|verify|toolchain|produce|unreported-step`，并带 `exit_code`（可取得时为实际整数退出码，无法取得时为 `null`）。`hit`/`miss` 才是有效命中率样本；`hit-error`、`miss-error`、`no-record` 都触发基础设施失败停案。
+
+step 级 `always()` 无法在 job timeout、workflow cancellation 或 runner 丢失后自救。因此聚合端必须按 `run_id`/`run_attempt` 与 **job 终态**对账；一个成员若没有恰好一条 hit/miss 记录，即按**基础设施失败停案**处理，**不得**当作不存在而从 `N` 中消失。job 内最后一个独立 recorder 只负责覆盖仍能执行 step 的早期失败和未写记录路径，不能替代这项聚合端终态对账。
+
 窗口起点写死为 shadow workflow 首次部署后的首个 workflow `run_id`。从该起点按 `run_id` 严格递增扫描，首次出现的前 40 个不同 PR 构成固定成员集；第 40 个不同 PR 首次出现时立即闭合成员集。闭合后才等待这 40 个 PR 各自被选中的 `run_attempt=1` shadow job 到达终态并计算结果；闭合后到达的任何新 PR、新 SHA 或 rerun 均记录但排除，不扩窗、不替换成员。任一固定成员的被选中 job 取消、基础设施失败、非恰好一个 hit/miss，或 provenance/verify 失败，直接停案，不用后到样本补位。这里的停案只终止本轮测量，不永久禁止重新测量；原窗口内禁止替换或补位任何成员。若要重开，必须取得新授权、选择全新起点并从该起点建立全新的 40-PR 固定窗口；新窗口不得复用原窗口任何已知 hit/miss、墙钟或验证结果，每个成员都须按新窗口规则重新产生结果。
 
 选项写死为 **A（降格 + 另设闸门）**：独立 shadow job 是当前最低成本且不污染 admission 的测量拓扑，但正因为它没有通向 `baseline-admission` 的 `needs` 路径，它在结构上测不到未来串行链的完整端到端增量。机器判据如下；前四项须同时成立，其中第 4 项必须在进入整侧迁移之前由另行授权的串行链实验补测：

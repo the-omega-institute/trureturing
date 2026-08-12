@@ -12,6 +12,51 @@ namespace StrataLint.Tests;
         "StrataLint.Scribe.Tests.DocumentDiscoveryTests.GeneratedMarkdownIsDeterministicAndMatchesTheCommittedTree";
 
     [Fact]
+    public void OldSideShadowHasNoNeedsKey()
+    {
+        var workflow = AdmissionWorkflow();
+        Assert.True(ShadowHasNoNeeds(workflow));
+        var tampered = workflow.Replace("  old-side-report-shadow:\n    name:",
+            "  old-side-report-shadow:\n    needs: lean-inspect\n    name:", StringComparison.Ordinal);
+        Assert.False(ShadowHasNoNeeds(tampered));
+    }
+
+    [Fact]
+    public void OldSideShadowHasNoNeedsPathToBaselineAdmission()
+    {
+        var workflow = AdmissionWorkflow();
+        Assert.True(NoNeedsPath(workflow, "old-side-report-shadow", "baseline-admission"));
+        var tampered = workflow.Replace("    needs: lean-inspect\n    runs-on: ubuntu-latest\n    timeout-minutes: 20",
+            "    needs: [lean-inspect, old-side-report-shadow]\n    runs-on: ubuntu-latest\n    timeout-minutes: 20", StringComparison.Ordinal);
+        Assert.False(NoNeedsPath(tampered, "old-side-report-shadow", "baseline-admission"));
+    }
+
+    [Fact]
+    public void BaselineAdmissionNeedsExactlyLeanInspect()
+    {
+        var workflow = AdmissionWorkflow();
+        Assert.True(BaselineNeedsExactlyLeanInspect(workflow));
+        var tampered = workflow.Replace("    needs: lean-inspect\n    runs-on: ubuntu-latest\n    timeout-minutes: 20",
+            "    needs: [lean-inspect, old-side-report-shadow]\n    runs-on: ubuntu-latest\n    timeout-minutes: 20", StringComparison.Ordinal);
+        Assert.False(BaselineNeedsExactlyLeanInspect(tampered));
+    }
+
+    [Fact]
+    public void OldSideShadowRecordsHitFailuresAndHasFinalNoRecordFallback()
+    {
+        var workflow = AdmissionWorkflow();
+        var shadow = Job(workflow, "old-side-report-shadow");
+        var steps = Assert.IsType<YamlSequenceNode>(shadow.Children[new YamlScalarNode("steps")]);
+        var finalStep = Assert.IsType<YamlMappingNode>(steps.Children[^1]);
+        Assert.Equal("Record unreported old-side shadow outcome",
+            Assert.IsType<YamlScalarNode>(finalStep.Children[new YamlScalarNode("name")]).Value);
+        Assert.Equal("always()", Assert.IsType<YamlScalarNode>(finalStep.Children[new YamlScalarNode("if")]).Value);
+        Assert.Contains("outcome=\"hit-error\"", workflow, StringComparison.Ordinal);
+        Assert.Contains("outcome:\"no-record\"", workflow, StringComparison.Ordinal);
+        Assert.Contains("--arg stage", workflow, StringComparison.Ordinal);
+    }
+
+    [Fact]
     public void ReconcilesStatementProjectionAfterProducingLiveReport()
     {
         var root = FindRepositoryRoot();
@@ -144,6 +189,55 @@ namespace StrataLint.Tests;
             Assert.IsType<YamlScalarNode>(step.Children[new YamlScalarNode("name")]).Value ==
             "Reconcile pinned statement projections with live Lean report");
         return Assert.IsType<YamlScalarNode>(reconciliation.Children[new YamlScalarNode("run")]).Value!;
+    }
+
+    private static string AdmissionWorkflow() =>
+        File.ReadAllText(Path.Combine(FindRepositoryRoot(), ".github", "workflows", "ci.yml"));
+
+    private static YamlMappingNode Jobs(string workflow)
+    {
+        var stream = new YamlStream();
+        stream.Load(new StringReader(workflow));
+        var document = Assert.IsType<YamlMappingNode>(stream.Documents[0].RootNode);
+        return Assert.IsType<YamlMappingNode>(document.Children[new YamlScalarNode("jobs")]);
+    }
+
+    private static YamlMappingNode Job(string workflow, string job) =>
+        Assert.IsType<YamlMappingNode>(Jobs(workflow).Children[new YamlScalarNode(job)]);
+
+    private static bool ShadowHasNoNeeds(string workflow) =>
+        !Job(workflow, "old-side-report-shadow").Children.ContainsKey(new YamlScalarNode("needs"));
+
+    private static bool BaselineNeedsExactlyLeanInspect(string workflow) =>
+        Needs(Job(workflow, "baseline-admission")).SequenceEqual(["lean-inspect"], StringComparer.Ordinal);
+
+    private static bool NoNeedsPath(string workflow, string source, string target)
+    {
+        var jobs = Jobs(workflow);
+        var visited = new HashSet<string>(StringComparer.Ordinal);
+        var pending = new Stack<string>();
+        pending.Push(target);
+        while (pending.TryPop(out var current))
+        {
+            if (!visited.Add(current)) continue;
+            if (current == source) return false;
+            if (!jobs.Children.TryGetValue(new YamlScalarNode(current), out var node) || node is not YamlMappingNode job)
+                continue;
+            foreach (var dependency in Needs(job)) pending.Push(dependency);
+        }
+        return true;
+    }
+
+    private static IEnumerable<string> Needs(YamlMappingNode job)
+    {
+        if (!job.Children.TryGetValue(new YamlScalarNode("needs"), out var needs)) yield break;
+        if (needs is YamlScalarNode scalar)
+        {
+            yield return scalar.Value!;
+            yield break;
+        }
+        foreach (var item in Assert.IsType<YamlSequenceNode>(needs).Children.OfType<YamlScalarNode>())
+            yield return item.Value!;
     }
 
     private static string FindRepositoryRoot()
