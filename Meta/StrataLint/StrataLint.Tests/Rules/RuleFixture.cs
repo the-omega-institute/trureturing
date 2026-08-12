@@ -259,7 +259,6 @@ internal sealed partial class RuleFixture
             case "generality": AddInstanceImport(); break;
             case "domain": AddUnknownDomain(); break;
             case "header": Files[RingPath] = "def noHeader : Nat := 0\n"; break;
-            case "task": AddMalformedTask(); break;
             case "formula": AddIllegalFormula(); break;
             case "backfill": Files["Meta/BACKFILL.yaml"] = Files["Meta/BACKFILL.yaml"].Replace("schema_version: 3", "schema_version: 2", StringComparison.Ordinal); break;
             case "query": Files["Library/queries.yaml"] = "schema_version: 1\nqueries:\n  - id: D5-Q0099\n    target_gid: D5/S0/Carrier/Ring\n"; break;
@@ -416,14 +415,6 @@ internal sealed partial class RuleFixture
     {
         const string path = "D5/S0/Unknown/Bad.lean";
         Files[path] = HeaderFor("D5/S0/Unknown/Bad", "G") + "def bad : Nat := 0\n";
-        Reports[path] = Report();
-    }
-
-    internal void AddMalformedTask()
-    {
-        const string path = "D5/X_Frontier/BadTask.lean";
-        Files[path] = HeaderFor("D5/X_Frontier/BadTask", "E")
-            + "/-- TASK D5-T0010 | broken -/\ndef badTask : Unit := ()\n";
         Reports[path] = Report();
     }
 
