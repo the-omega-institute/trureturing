@@ -19,15 +19,17 @@ internal sealed class GoldenNamesDocument : IScribeDocumentDefinition
                     "A length-Q golden name reuses the canonical W-digit representation and "
                     + "requires every occupied Fibonacci index to be below Q plus two. This is "
                     + "equivalent to a length-Q binary word with no adjacent occupied positions.")),
-                DocumentBlock.Describe.Definition(
+                Describe.Lean(
                     DescribeId.Create("bounded-zeckendorf-golden-name"),
+                    DeclarationHandle.Create("D5/S0/Tower/GoldenNames.GoldenName"),
                     H("Bounded Zeckendorf golden name"),
-                    LeanDefinition("D5/S0/Tower/GoldenNames.GoldenName"),
-                    DescribeProvenance.RepoDerived(),
+                    StatementSource.FromLean(),
+                    AssessedProvenance.FromRepo(),
                     Blocks(Paragraph(Text(
                         "The representation is a bounded subtype of the repository's existing "
                         + "WDigitString type, so Zeckendorf canonicality remains the single "
-                        + "source of the binary nonadjacency constraint.")))
+                        + "source of the binary nonadjacency constraint."))),
+                    DescribeRole.Definition
                 ),
                 DocumentBlock.Describe.Theorem(
                     DescribeId.Create("golden-name-layers-have-fibonacci-cardinality"),

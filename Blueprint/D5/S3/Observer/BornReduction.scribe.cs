@@ -6,30 +6,28 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Observer;
 
 internal sealed class BornReductionDocument : IScribeDocumentDefinition
 {
-    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
-        Header(
-            "D5/S3/Observer/BornReduction",
-            "A rank-one record branch on a rank-one pure state is exactly a squared "
-            + "transition modulus."),
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "A rank-one record branch on a rank-one pure state is exactly a squared "
+            + "transition modulus.",
         H("Rank-One Born Reduction"),
         Blocks(
-            DocumentBlock.Describe.Theorem(
+            Describe.Lean(
                 DescribeId.Create(
-                    "rank-one-pure-state-record-weight-is-a-squared-transition-modulus"),
+                                    "rank-one-pure-state-record-weight-is-a-squared-transition-modulus"),
+                DeclarationHandle.Create("D5/S3/Observer/BornReduction.rank_one_pure_state_modulus_square_reduction"),
                 H("Rank-one pure-state record weight is a squared transition modulus"),
-                LeanTheorem(
-                    "D5/S3/Observer/BornReduction."
-                    + "rank_one_pure_state_modulus_square_reduction"),
-                ReductionFormula(),
-                DescribeProvenance.RepoDerived(),
+                StatementSource.FromAuthor(ReductionFormula()),
+                AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
-                    "Fix one branch k of a finite family P. If its matrix is the rank-one outer "
-                    + "product of phi, while rho is the rank-one outer product of psi, then the "
-                    + "record weight trace(rho P_k) is exactly the squared modulus of their "
-                    + "transition inner product. No measurement axioms or normalization "
-                    + "hypotheses are consumed; for unit vectors the right-hand side is the Born "
-                    + "branch probability. The equality is exact over the complex numbers, with "
-                    + "no approximation or residual term.")))))));
+                                    "Fix one branch k of a finite family P. If its matrix is the rank-one outer "
+                                    + "product of phi, while rho is the rank-one outer product of psi, then the "
+                                    + "record weight trace(rho P_k) is exactly the squared modulus of their "
+                                    + "transition inner product. No measurement axioms or normalization "
+                                    + "hypotheses are consumed; for unit vectors the right-hand side is the Born "
+                                    + "branch probability. The equality is exact over the complex numbers, with "
+                                    + "no approximation or residual term."))),
+                DescribeRole.Theorem
+            ))));
 
     private static Formula ReductionFormula() => Disp(Seq(
         Ambient(),

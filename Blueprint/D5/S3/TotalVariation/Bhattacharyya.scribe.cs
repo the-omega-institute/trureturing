@@ -12,12 +12,12 @@ internal sealed class BhattacharyyaDocument : IScribeDocumentDefinition
             "Finite Bhattacharyya affinity links total variation and relative entropy through the complementary Bretagnolle--Huber bound."),
         H("Bhattacharyya Affinity and the Bretagnolle--Huber Bound"),
         Blocks(
-            DocumentBlock.Describe.Definition(
+            Describe.Lean(
                 DescribeId.Create("finite-bhattacharyya-affinity-is-the-square-root-product-sum"),
+                DeclarationHandle.Create("D5/S3/TotalVariation/Bhattacharyya.bhattacharyya"),
                 H("Finite Bhattacharyya affinity is the square-root product sum"),
-                LeanDefinition(
-                    "D5/S3/TotalVariation/Bhattacharyya.bhattacharyya"),
-                DescribeProvenance.RepoDerived(),
+                StatementSource.FromLean(),
+                AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
                         "For finite real mass functions p and q, the Bhattacharyya coefficient, " +
@@ -30,22 +30,7 @@ internal sealed class BhattacharyyaDocument : IScribeDocumentDefinition
                         "variation to relative entropy. It also provides the natural intermediate " +
                         "for future comparisons with Hellinger distance and Renyi divergence, " +
                         "without defining either notion in the present module."))),
-                Disp(Seq(
-                    Begin, Grp(F.Id("gathered")),
-                    Forall, Sp, Iota, Esc,
-                    OpenBracket,
-                    Operatorname, Grp(F.Id("Fintype")), Open, Iota, Close,
-                    CloseBracket, Comma, RowBreak,
-                    Forall, Sp, F.Id("p"), Comma, Sp, F.Id("q"), Colon, Sp,
-                    Iota, To, Sp, Mathbb, Grp(F.Id("R")), Comma, RowBreak,
-                    Operatorname, Grp(F.Id("BC")), Open,
-                    F.Id("p"), Comma, Sp, F.Id("q"), Close,
-                    Colon, Eq,
-                    Sum, Sp, Underscore, Grp(F.Id("i")), Sp,
-                    Sqrt, Sp, Grp(
-                        F.Id("p"), Open, F.Id("i"), Close,
-                        F.Id("q"), Open, F.Id("i"), Close), Dot,
-                    End, Grp(F.Id("gathered"))))
+                DescribeRole.Definition
             ),
             DocumentBlock.Describe.Theorem(
                 DescribeId.Create("normalized-nonnegative-mass-has-self-affinity-one"),

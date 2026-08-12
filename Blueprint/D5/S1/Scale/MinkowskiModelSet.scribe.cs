@@ -4,21 +4,20 @@ namespace StrataLint.Scribe.Blueprint.D5.S1.Scale;
 
 internal sealed class MinkowskiModelSetDocument : IScribeDocumentDefinition
 {
-    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
-        Header(
-            "D5/S1/Scale/MinkowskiModelSet",
-            "The two real embeddings form a golden lattice whose internal window selects model-set points."),
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "The two real embeddings form a golden lattice whose internal window selects model-set points.",
         H("Golden Minkowski Model Set"),
         Blocks(
-            DocumentBlock.Describe.Definition(
+            Describe.Lean(
                 DescribeId.Create("minkowski-lattice-window-and-labeled-model-set"),
+                DeclarationHandle.Create("D5/S1/Scale/MinkowskiModelSet.minkowski_model_set_spec"),
                 H("Minkowski lattice, window, and labeled model set"),
-                LeanTheorem(
-                    "D5/S1/Scale/MinkowskiModelSet.minkowski_model_set_spec"),
-                DescribeProvenance.LiteratureAttested(
-                    LibraryNoteRef.Create("D5/L/baakefrankgrimm2021three")),
+                    StatementSource.FromAuthor(FormulaDsl.Id("minkowskiModelSetSpec")),
+                AssessedProvenance.FromLiterature(
+                                    LibraryNoteRef.Create("D5/L/baakefrankgrimm2021three")),
                 Blocks(Paragraph(Text(
-                    "The physical and conjugate embeddings give an injective diagonal range. An internal-space window selects physical projections, and the labeled extension pairs selected points with their joint golden coordinates.")))
+                                    "The physical and conjugate embeddings give an injective diagonal range. An internal-space window selects physical projections, and the labeled extension pairs selected points with their joint golden coordinates."))),
+                DescribeRole.Definition
             ),
             DocumentBlock.Describe.Remark(
                 DescribeId.Create("value-and-code-geometries"),
