@@ -10,12 +10,28 @@ internal sealed class HellingerDocument : IScribeDocumentDefinition
         "Intrinsic squared Hellinger distance is pinned on arbitrary finite real functions and compared sharply with total variation.",
         H("Squared Hellinger Distance and Total Variation"),
         Blocks(
-            DocumentBlock.Describe.Definition(
+            Describe.Lean(
                 DescribeId.Create("squared-hellinger-distance-is-intrinsic-square-root-geometry"),
+                DeclarationHandle.Create("D5/S3/TotalVariation/Hellinger.hellingerSq"),
                 H("Squared Hellinger distance is intrinsic square-root geometry"),
-                LeanDefinition(
-                    "D5/S3/TotalVariation/Hellinger.hellingerSq"),
-                DescribeProvenance.RepoDerived(),
+                StatementSource.FromAuthor(Disp(Seq(
+                    Begin, Grp(F.Id("gathered")),
+                    Forall, Sp, Iota, Esc,
+                    OpenBracket,
+                    Operatorname, Grp(F.Id("Fintype")), Open, Iota, Close,
+                    CloseBracket, Comma, RowBreak,
+                    Forall, Sp, F.Id("p"), Comma, Sp, F.Id("q"), Colon, Sp,
+                    Iota, To, Sp, Mathbb, Grp(F.Id("R")), Comma, RowBreak,
+                    F.Id("H"), Caret, Grp(D(2)), Open,
+                    F.Id("p"), Comma, Sp, F.Id("q"), Close,
+                    Colon, Eq,
+                    Sum, Sp, Underscore, Grp(F.Id("i")), Sp,
+                    Open,
+                    Sqrt, Sp, Grp(F.Id("p"), Open, F.Id("i"), Close), Minus,
+                    Sqrt, Sp, Grp(F.Id("q"), Open, F.Id("i"), Close),
+                    Close, Caret, Grp(D(2)), Dot,
+                    End, Grp(F.Id("gathered"))))),
+                AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
                         "For finite real functions p and q, the squared Hellinger distance is " +
@@ -34,30 +50,12 @@ internal sealed class HellingerDocument : IScribeDocumentDefinition
                         "not be selected merely to make its own pinning identity trivial. The " +
                         "bridge to Bhattacharyya affinity is therefore proved between independently " +
                         "defined quantities."))),
-                Disp(Seq(
-                    Begin, Grp(F.Id("gathered")),
-                    Forall, Sp, Iota, Esc,
-                    OpenBracket,
-                    Operatorname, Grp(F.Id("Fintype")), Open, Iota, Close,
-                    CloseBracket, Comma, RowBreak,
-                    Forall, Sp, F.Id("p"), Comma, Sp, F.Id("q"), Colon, Sp,
-                    Iota, To, Sp, Mathbb, Grp(F.Id("R")), Comma, RowBreak,
-                    F.Id("H"), Caret, Grp(D(2)), Open,
-                    F.Id("p"), Comma, Sp, F.Id("q"), Close,
-                    Colon, Eq,
-                    Sum, Sp, Underscore, Grp(F.Id("i")), Sp,
-                    Open,
-                    Sqrt, Sp, Grp(F.Id("p"), Open, F.Id("i"), Close), Minus,
-                    Sqrt, Sp, Grp(F.Id("q"), Open, F.Id("i"), Close),
-                    Close, Caret, Grp(D(2)), Dot,
-                    End, Grp(F.Id("gathered"))))
-            ),
-            DocumentBlock.Describe.Theorem(
+                DescribeRole.Definition),
+            Describe.Lean(
                 DescribeId.Create("squared-hellinger-distance-vanishes-on-the-diagonal"),
+                DeclarationHandle.Create("D5/S3/TotalVariation/Hellinger.hellinger_sq_self"),
                 H("Squared Hellinger distance vanishes on the diagonal"),
-                LeanTheorem(
-                    "D5/S3/TotalVariation/Hellinger.hellinger_sq_self"),
-                Disp(Seq(
+                StatementSource.FromAuthor(Disp(Seq(
                     Begin, Grp(F.Id("gathered")),
                     Forall, Sp, Iota, Esc,
                     OpenBracket,
@@ -67,8 +65,8 @@ internal sealed class HellingerDocument : IScribeDocumentDefinition
                     Iota, To, Sp, Mathbb, Grp(F.Id("R")), Comma, RowBreak,
                     F.Id("H"), Caret, Grp(D(2)), Open,
                     F.Id("p"), Comma, Sp, F.Id("p"), Close, Eq, D(0), Dot,
-                    End, Grp(F.Id("gathered")))),
-                DescribeProvenance.RepoDerived(),
+                    End, Grp(F.Id("gathered"))))),
+                AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
                         "The definition is defended by four identities arranged in layers. Each " +
@@ -79,13 +77,13 @@ internal sealed class HellingerDocument : IScribeDocumentDefinition
                         "This first identity cannot detect a corruption that ignores q entirely, " +
                         "such as summing (sqrt(p(i))-sqrt(p(i)))^2. The corruption also vanishes " +
                         "on every diagonal input, so it passes the self-distance theorem. The next " +
-                        "layer must therefore leave the diagonal.")))),
-            DocumentBlock.Describe.Theorem(
+                        "layer must therefore leave the diagonal."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("probability-hellinger-square-is-twice-one-minus-affinity"),
+                DeclarationHandle.Create("D5/S3/TotalVariation/Hellinger.hellinger_sq_eq_two_sub"),
                 H("Probability Hellinger square is twice one minus affinity"),
-                LeanTheorem(
-                    "D5/S3/TotalVariation/Hellinger.hellinger_sq_eq_two_sub"),
-                Disp(Seq(
+                StatementSource.FromAuthor(Disp(Seq(
                     Begin, Grp(F.Id("gathered")),
                     Forall, Sp, Iota, Esc,
                     OpenBracket,
@@ -112,8 +110,8 @@ internal sealed class HellingerDocument : IScribeDocumentDefinition
                     D(2), Open, D(1), Minus,
                     Operatorname, Grp(F.Id("BC")), Open,
                     F.Id("p"), Comma, Sp, F.Id("q"), Close, Close, Dot,
-                    End, Grp(F.Id("gathered")))),
-                DescribeProvenance.RepoDerived(),
+                    End, Grp(F.Id("gathered"))))),
+                AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
                         "The second layer governs pairs of probability vectors and proves the " +
@@ -124,13 +122,13 @@ internal sealed class HellingerDocument : IScribeDocumentDefinition
                         "Normalization is essential to this coordinate form. Consequently, the " +
                         "identity still cannot inspect a corruption engineered to vanish whenever " +
                         "both total masses equal one. The third layer removes normalization while " +
-                        "retaining the natural nonnegative mass-function domain.")))),
-            DocumentBlock.Describe.Theorem(
+                        "retaining the natural nonnegative mass-function domain."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("nonnegative-hellinger-square-expands-through-affinity"),
+                DeclarationHandle.Create("D5/S3/TotalVariation/Hellinger.hellinger_sq_eq_sum_add_sub_two_bhattacharyya"),
                 H("Nonnegative Hellinger square expands through affinity"),
-                LeanTheorem(
-                    "D5/S3/TotalVariation/Hellinger.hellinger_sq_eq_sum_add_sub_two_bhattacharyya"),
-                Disp(Seq(
+                StatementSource.FromAuthor(Disp(Seq(
                     Begin, Grp(F.Id("gathered")),
                     Forall, Sp, Iota, Esc,
                     OpenBracket,
@@ -152,8 +150,8 @@ internal sealed class HellingerDocument : IScribeDocumentDefinition
                     F.Id("q"), Open, F.Id("i"), Close, Minus,
                     D(2), Operatorname, Grp(F.Id("BC")), Open,
                     F.Id("p"), Comma, Sp, F.Id("q"), Close, Dot,
-                    End, Grp(F.Id("gathered")))),
-                DescribeProvenance.RepoDerived(),
+                    End, Grp(F.Id("gathered"))))),
+                AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
                         "The third layer governs nonnegative finite mass functions without " +
@@ -166,13 +164,13 @@ internal sealed class HellingerDocument : IScribeDocumentDefinition
                         "Off the normalized domain the corruption is exposed. On Unit with p=0 " +
                         "and q=4, it evaluates to 148 while the intrinsic squared Hellinger " +
                         "distance is four. The mass-expansion identity rules it out throughout the " +
-                        "nonnegative, nonnormalized domain.")))),
-            DocumentBlock.Describe.Theorem(
+                        "nonnegative, nonnormalized domain."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("hellinger-square-has-an-all-real-algebraic-expansion"),
+                DeclarationHandle.Create("D5/S3/TotalVariation/Hellinger.hellinger_sq_eq_sum_expanded"),
                 H("Hellinger square has an all-real algebraic expansion"),
-                LeanTheorem(
-                    "D5/S3/TotalVariation/Hellinger.hellinger_sq_eq_sum_expanded"),
-                Disp(Seq(
+                StatementSource.FromAuthor(Disp(Seq(
                     Begin, Grp(F.Id("gathered")),
                     Forall, Sp, Iota, Esc,
                     OpenBracket,
@@ -192,8 +190,8 @@ internal sealed class HellingerDocument : IScribeDocumentDefinition
                     Sqrt, Sp, Grp(F.Id("p"), Open, F.Id("i"), Close),
                     Sqrt, Sp, Grp(F.Id("q"), Open, F.Id("i"), Close),
                     Close, Close, Dot,
-                    End, Grp(F.Id("gathered")))),
-                DescribeProvenance.RepoDerived(),
+                    End, Grp(F.Id("gathered"))))),
+                AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
                         "The fourth and final layer is a pure algebraic expansion valid for every " +
@@ -211,13 +209,13 @@ internal sealed class HellingerDocument : IScribeDocumentDefinition
                     Paragraph(Text(
                         "Every corruption and witness in the four-layer progression was compiled " +
                         "independently by the caller, including the negative-input fact used in " +
-                        "the final case.")))),
-            DocumentBlock.Describe.Theorem(
+                        "the final case."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("the-squared-square-root-gap-contracts-the-absolute-gap"),
+                DeclarationHandle.Create("D5/S3/TotalVariation/Hellinger.sq_sqrt_sub_sqrt_le_abs_sub"),
                 H("The squared square-root gap contracts the absolute gap"),
-                LeanTheorem(
-                    "D5/S3/TotalVariation/Hellinger.sq_sqrt_sub_sqrt_le_abs_sub"),
-                Disp(Seq(
+                StatementSource.FromAuthor(Disp(Seq(
                     Begin, Grp(F.Id("gathered")),
                     Forall, Sp, F.Id("a"), Comma, Sp, F.Id("b"), InMacro, Sp,
                     Mathbb, Grp(F.Id("R")), Comma, RowBreak,
@@ -226,8 +224,8 @@ internal sealed class HellingerDocument : IScribeDocumentDefinition
                     Sqrt, Sp, Grp(F.Id("b")), Close,
                     Caret, Grp(D(2)), Le, Sp,
                     Vert, Sp, F.Id("a"), Minus, F.Id("b"), Sp, Vert, Sp, Dot,
-                    End, Grp(F.Id("gathered")))),
-                DescribeProvenance.RepoDerived(),
+                    End, Grp(F.Id("gathered"))))),
+                AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
                         "The scalar contraction is stated for arbitrary real a and b. No sign " +
@@ -238,13 +236,13 @@ internal sealed class HellingerDocument : IScribeDocumentDefinition
                         "The remaining sign cases are not accidental exceptions. Real.sqrt is " +
                         "zero on nonpositive inputs, so the same inequality remains valid when one " +
                         "or both arguments are negative. This all-real scalar statement is exactly " +
-                        "what permits the lower bracket to inherit no mass-function hypotheses.")))),
-            DocumentBlock.Describe.Theorem(
+                        "what permits the lower bracket to inherit no mass-function hypotheses."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("half-hellinger-square-is-bounded-by-total-variation"),
+                DeclarationHandle.Create("D5/S3/TotalVariation/Hellinger.hellinger_sq_div_two_le_total_variation"),
                 H("Half the Hellinger square is bounded by total variation"),
-                LeanTheorem(
-                    "D5/S3/TotalVariation/Hellinger.hellinger_sq_div_two_le_total_variation"),
-                Disp(Seq(
+                StatementSource.FromAuthor(Disp(Seq(
                     Begin, Grp(F.Id("gathered")),
                     Forall, Sp, Iota, Esc,
                     OpenBracket,
@@ -259,8 +257,8 @@ internal sealed class HellingerDocument : IScribeDocumentDefinition
                     Le, Sp,
                     Operatorname, Grp(F.Id("TV")), Open,
                     F.Id("p"), Comma, Sp, F.Id("q"), Close, Dot,
-                    End, Grp(F.Id("gathered")))),
-                DescribeProvenance.RepoDerived(),
+                    End, Grp(F.Id("gathered"))))),
+                AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
                         "The lower bracket H^2(p,q)/2 <= TV(p,q) holds for arbitrary finite real " +
@@ -271,13 +269,13 @@ internal sealed class HellingerDocument : IScribeDocumentDefinition
                         "This strength follows from deriving the hypothesis set for the statement " +
                         "itself rather than copying assumptions from a neighboring theorem. That " +
                         "discipline has now produced strictly stronger results in six consecutive " +
-                        "waves in this bucket.")))),
-            DocumentBlock.Describe.Theorem(
+                        "waves in this bucket."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("the-upper-bracket-is-the-frozen-affinity-bound-in-hellinger-coordinates"),
+                DeclarationHandle.Create("D5/S3/TotalVariation/Hellinger.total_variation_sq_le_hellinger_sq_sub_quarter"),
                 H("The upper bracket is the frozen affinity bound in Hellinger coordinates"),
-                LeanTheorem(
-                    "D5/S3/TotalVariation/Hellinger.total_variation_sq_le_hellinger_sq_sub_quarter"),
-                Disp(Seq(
+                StatementSource.FromAuthor(Disp(Seq(
                     Begin, Grp(F.Id("gathered")),
                     Forall, Sp, Iota, Esc,
                     OpenBracket,
@@ -310,8 +308,8 @@ internal sealed class HellingerDocument : IScribeDocumentDefinition
                         F.Id("p"), Comma, Sp, F.Id("q"), Close, Close,
                         Caret, Grp(D(2))),
                     Grp(D(4)), Dot,
-                    End, Grp(F.Id("gathered")))),
-                DescribeProvenance.RepoDerived(),
+                    End, Grp(F.Id("gathered"))))),
+                AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
                         "This theorem is not new mathematics. It is the frozen bound " +
@@ -323,13 +321,13 @@ internal sealed class HellingerDocument : IScribeDocumentDefinition
                         "comparison readable beside H^2(p,q)/2 <= TV(p,q). It must not be read as " +
                         "an independent inequality or a second analytic contribution. Unlike the " +
                         "lower bracket, this coordinate rewrite assumes that both inputs are " +
-                        "nonnegative probability vectors.")))),
-            DocumentBlock.Describe.Theorem(
+                        "nonnegative probability vectors."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("the-lower-bracket-is-strict-on-a-bool-witness"),
+                DeclarationHandle.Create("D5/S3/TotalVariation/Hellinger.hellinger_sq_lower_strict_witness"),
                 H("The lower bracket is strict on a Bool witness"),
-                LeanTheorem(
-                    "D5/S3/TotalVariation/Hellinger.hellinger_sq_lower_strict_witness"),
-                Disp(Seq(
+                StatementSource.FromAuthor(Disp(Seq(
                     Begin, Grp(F.Id("gathered")),
                     F.Id("p"), Eq,
                     Delta, Underscore, Grp(Operatorname, Grp(F.Id("true"))), Comma, RowBreak,
@@ -343,8 +341,8 @@ internal sealed class HellingerDocument : IScribeDocumentDefinition
                     Grp(D(2)), Lt,
                     Operatorname, Grp(F.Id("TV")), Open,
                     F.Id("p"), Comma, Sp, F.Id("q"), Close, Dot,
-                    End, Grp(F.Id("gathered")))),
-                DescribeProvenance.RepoDerived(),
+                    End, Grp(F.Id("gathered"))))),
+                AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
                         "The strictness statement is a theorem, not a comment. On Bool, p is the " +
@@ -360,7 +358,8 @@ internal sealed class HellingerDocument : IScribeDocumentDefinition
                         "narrative are nats.")),
                     Paragraph(Text(
                         "No Renyi divergence, Hellinger-to-KL bound, equality analysis, or " +
-                        "measure-theoretic analogue is claimed.")))))));
+                        "measure-theoretic analogue is claimed."))),
+                DescribeRole.Theorem))));
 
     private static LeanDeclarationRef LeanDefinition(string value) =>
         LeanDeclarationRef.Create(

@@ -725,7 +725,6 @@ public sealed class FileMapPolicyTests
         produced_by = "none"
         consumed_by = ["reader"]
         verified_by = [{{string.Join(", ", verifiedBy.Select(static name => $"\"{name}\""))}}]
-        authority = "self"
         runtime_disposition = "committed-source"
         artifact_id = "none"
         """ + "\n";
@@ -742,7 +741,6 @@ public sealed class FileMapPolicyTests
         produced_by = "{{producedBy}}"
         consumed_by = ["{{consumedBy}}"]
         verified_by = ["{{verifiedBy}}"]
-        authority = "self"
         runtime_disposition = "committed-source"
         artifact_id = "none"
         """ + "\n";
@@ -761,7 +759,6 @@ public sealed class FileMapPolicyTests
         produced_by = "{{producedBy}}"
         consumed_by = ["{{consumedBy}}"]
         verified_by = ["{{verifiedBy}}"]
-        authority = "self"
         runtime_disposition = "{{runtimeDisposition}}"
         artifact_id = "{{artifactId}}"
         mode = "100644"

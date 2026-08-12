@@ -48,13 +48,12 @@ internal sealed class RecordEntropyDocument : IScribeDocumentDefinition
                                                 + "by the natural logarithm of two converts the result to bits."))),
                     DescribeRole.Theorem
                 ),
-                DocumentBlock.Describe.Remark(
-                    DescribeId.Create("physical-pushforward-is-out-of-scope"),
-                    H("The physical pushforward is out of scope"),
-                    DescribeStatement.FromLean(LeanTheorem(
-                        "D5/S3/Constants/RecordEntropy.haar_record_entropy_bits")),
-                    DescribeProvenance.RepoDerived(),
-                    Blocks(
+                Describe.Remark(
+                DescribeId.Create("physical-pushforward-is-out-of-scope"),
+                DeclarationHandle.Create("D5/S3/Constants/RecordEntropy.haar_record_entropy_bits"),
+                H("The physical pushforward is out of scope"),
+                AssessedProvenance.FromRepo(),
+                Blocks(
                         Paragraph(Text(
                             "The checked declaration is only a real interval identity for a "
                             + "uniform parameter u. It does not construct Bloch-sphere Haar "
@@ -63,6 +62,5 @@ internal sealed class RecordEntropyDocument : IScribeDocumentDefinition
                             + "an unresolved X_Assumptions question, including how a classical "
                             + "assumption would relate to the no-new-axiom objective. The phrase "
                             + "record entropy carries the intended physical reading in this prose; "
-                            + "the Lean type makes no physical claim and adds no axiom.")))
-                ))));
+                            + "the Lean type makes no physical claim and adds no axiom.")))))));
 }

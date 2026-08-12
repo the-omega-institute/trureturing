@@ -260,8 +260,19 @@ public sealed class DescribeMigrationTests
             var statement = Assert.IsType<DescribeStatement.LeanDeclaration>(node.Statement);
 
             Assert.Equal(item.Declaration, statement.Value.Value);
-            Assert.Equal(LeanDeclarationKind.Theorem, statement.Value.ExpectedKind);
-            Assert.True(statement.Value.RequireNoSorry);
+
+            // The old assertions here read `ExpectedKind == Theorem` and `RequireNoSorry` off the
+            // reference. Both were written at the call site by the `LeanTheorem(...)` helper — the
+            // restatement this facility removes — so they measured what the author had typed, not
+            // what Lean holds. The node is now report-derived, which routes it through
+            // DeclarationCatalog.Resolve: the declaration must exist in the compiled report, resolve
+            // unambiguously, and be sorry-free, and its kind comes from the report. That is strictly
+            // more than the pair it replaces, and it is enforced at emit time — pointing one of these
+            // remarks at a declaration the report does not contain fails `make emit` (verified).
+            var kindSource = Assert.IsType<DescribeKindSource.ReportDerived>(node.KindSource);
+            Assert.Equal(item.Declaration, kindSource.Handle.Value);
+            Assert.Equal(DescribeRole.Remark, kindSource.Role);
+
             Assert.Equal(item.Provenance, node.ProvenanceKind);
             Assert.Equal(item.Reference, node.LiteratureReference?.Value);
         }

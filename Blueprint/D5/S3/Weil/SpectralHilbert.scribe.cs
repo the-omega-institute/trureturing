@@ -73,15 +73,13 @@ internal sealed class SpectralHilbertDocument : IScribeDocumentDefinition
                                     "The equation s plus conjugate w equals one holds exactly for the mirror partner w = 1 - conjugate s. Self-resonance is exactly the critical line, and a parameter on the square-summable side has its mirror strictly outside that side. This is algebra of the kernel's pole-locus equation; it asserts neither meromorphic continuation nor any location of zeta zeros."))),
                 DescribeRole.Theorem
             ),
-            DocumentBlock.Describe.Remark(
+            Describe.Remark(
                 DescribeId.Create("hardy-space-identification"),
+                DeclarationHandle.Create("D5/S3/Weil/SpectralHilbert.labeled_zeta_inner"),
                 H("Hardy-space identification"),
-                DescribeStatement.FromLean(LeanTheorem(
-                    "D5/S3/Weil/SpectralHilbert.labeled_zeta_inner")),
-                DescribeProvenance.LiteratureAttested(HedenmalmHilbert),
+                AssessedProvenance.FromLiterature(HedenmalmHilbert),
                 Blocks(Paragraph(Text(
-                    "The coefficient Hilbert space and its zeta reproducing kernel are the classical Hardy-space geometry of Dirichlet series. The repository supplies a typed translation and combined presentation of that known mathematics, not a novelty claim.")))
-            )),
+                    "The coefficient Hilbert space and its zeta reproducing kernel are the classical Hardy-space geometry of Dirichlet series. The repository supplies a typed translation and combined presentation of that known mathematics, not a novelty claim."))))),
 [
                         DocumentEdge.Dependency.Create(
                             GidRef.Create("D5/S1/Digit/PrimeAxisEncoding")),
