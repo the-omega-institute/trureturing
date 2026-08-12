@@ -17,7 +17,7 @@ internal sealed class MechanicalGoldenBridgeDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create(
                     "D5/S1/Words/Mechanical/MechanicalGoldenBridge.lowerMechanicalLetter_golden"),
                 H("The golden slope specializes the generic letter"),
-                StatementSource.WithoutFormula(),
+                StatementSource.FromAuthor(Equal(Call("goldenWord", Id("i")), Call("mechanicalReadout", Call("inv", Id("phi")), Num(0), Add(Id("i"), Num(1))))),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "At the frozen golden slope and zero intercept, the generic floor "
@@ -28,7 +28,7 @@ internal sealed class MechanicalGoldenBridgeDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create(
                     "D5/S1/Words/Mechanical/MechanicalGoldenBridge.lowerMechanicalWord_golden"),
                 H("The generic readout agrees with the shifted golden word"),
-                StatementSource.WithoutFormula(),
+                StatementSource.FromAuthor(Equal(Call("goldenMechanicalLetter", Add(Id("i"), Num(1))), Call("lowerMechanicalLetter", Call("inv", Id("phi")), Num(0), Add(Id("i"), Num(1))))),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "The Boolean generic readout agrees with the frozen golden word at the "
@@ -39,7 +39,7 @@ internal sealed class MechanicalGoldenBridgeDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create(
                     "D5/S1/Words/Mechanical/MechanicalGoldenBridge.goldenWindowTrueCount_eq_lowerMechanicalWindowTrueCount"),
                 H("Golden windows are shifted generic windows"),
-                StatementSource.WithoutFormula(),
+                StatementSource.FromAuthor(Equal(Call("goldenWindowTrueCount", Id("i"), Id("n")), Call("windowTrueCount", Call("inv", Id("phi")), Num(0), Add(Id("i"), Num(1)), Id("n")))),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "The frozen golden true-count function is equal to the generic lower-"
@@ -50,7 +50,7 @@ internal sealed class MechanicalGoldenBridgeDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create(
                     "D5/S1/Words/Mechanical/MechanicalGoldenBridge.goldenWord_balanced_one_mechanical"),
                 H("Frozen golden balance follows from the generic theorem"),
-                StatementSource.WithoutFormula(),
+                StatementSource.FromAuthor(new Formula.Logic(Equal(Subtract(Call("goldenWindowTrueCount", Id("i"), Id("n")), Call("goldenWindowTrueCount", Id("j"), Id("n"))), Subtract(Num(0), Num(1))), FormulaLogicOperator.Or, new Formula.Logic(Equal(Subtract(Call("goldenWindowTrueCount", Id("i"), Id("n")), Call("goldenWindowTrueCount", Id("j"), Id("n"))), Num(0)), FormulaLogicOperator.Or, Equal(Subtract(Call("goldenWindowTrueCount", Id("i"), Id("n")), Call("goldenWindowTrueCount", Id("j"), Id("n"))), Num(1))))),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "The existing golden balanced-one statement is obtained directly from "
