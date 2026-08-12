@@ -21,12 +21,12 @@ public sealed class DescribeReportTests
             var document = ScribeDocument.Create(
                 DefinitionDsl.Header("D5/S1/Phase/Basic", "Observation fixture."),
                 Heading.Create("Observations"),
-                DefinitionDsl.Blocks(DocumentBlock.Describe.Remark(
+                DefinitionDsl.Blocks(Describe.Remark(
                     DescribeId.Create("same-title"),
+                    DeclarationHandle.Create(
+                        "D5/S1/Scale/Embedding.embedding_injective"),
                     Heading.Create("Same title"),
-                    DescribeStatement.FromLean(DefinitionDsl.LeanTheorem(
-                        "D5/S1/Scale/Embedding.embedding_injective")),
-                    DescribeProvenance.RepoDerived(),
+                    AssessedProvenance.FromRepo(),
                     DefinitionDsl.Blocks(DefinitionDsl.Paragraph(DefinitionDsl.Text("Content."))))));
 
             var report = DescribeReport.Build(root, [document]);
@@ -40,7 +40,7 @@ public sealed class DescribeReportTests
     }
 
     [Fact]
-    public void JsonReportIsAQueryableClassificationLedgerWithGradedObservations()
+    public void JsonReportIsAQueryableAssessedClassificationLedgerWithGradedObservations()
     {
         WithRepository(root =>
         {
@@ -50,10 +50,13 @@ public sealed class DescribeReportTests
                 Heading.Create("Report"),
                 BlockSequence.Create(
                 [
-                    Describe("repository", "Repository", DescribeKind.Definition, DescribeProvenance.RepoDerived()),
-                    Describe("literature", "Literature", DescribeKind.Theorem, DescribeProvenance.LiteratureAttested(literature)),
-                    Describe("candidate", "Candidate", DescribeKind.Lemma, DescribeProvenance.SuspectedNovel()),
-                    Describe("open", "Open", DescribeKind.Remark, DescribeProvenance.Unassessed()),
+                    CreateDescribe("repository", "Repository", DescribeKind.Definition, AssessedProvenance.FromRepo()),
+                    CreateDescribe("literature", "Literature", DescribeKind.Theorem, AssessedProvenance.FromLiterature(literature)),
+                    CreateDescribe(
+                        "candidate",
+                        "Candidate",
+                        DescribeKind.Lemma,
+                        AssessedProvenance.NovelAfterSearch(GidRef.Create("D5/S1/Phase/Basic"))),
                     new DocumentBlock.Paragraph(InlineSequence.Create(
                     [
                         new Inline.Text(TextRun.Create("Code span `x = y` and Unicode φ.")),
@@ -70,14 +73,18 @@ public sealed class DescribeReportTests
             using var json = JsonDocument.Parse(first);
             var rootElement = json.RootElement;
             Assert.Equal("DESCRIBE-NODES", rootElement.GetProperty("case_id").GetString());
-            Assert.Equal("needs-classification", rootElement.GetProperty("status").GetString());
-            Assert.Equal(1, rootElement.GetProperty("open_count").GetInt32());
+            Assert.Equal("classified", rootElement.GetProperty("status").GetString());
+            Assert.Equal(0, rootElement.GetProperty("open_count").GetInt32());
             var stats = rootElement.GetProperty("node_stats");
-            Assert.Equal(4, stats.GetProperty("total").GetInt32());
+            Assert.Equal(3, stats.GetProperty("total").GetInt32());
             Assert.Equal(2, stats.GetProperty("formula_content_slots").GetInt32());
-            Assert.Equal(1, stats.GetProperty("formula_statements").GetInt32());
+            Assert.Equal(0, stats.GetProperty("formula_statements").GetInt32());
+            var byProvenance = stats.GetProperty("by_provenance");
+            Assert.Equal(1, byProvenance.GetProperty("repo-derived").GetInt32());
+            Assert.Equal(1, byProvenance.GetProperty("literature-attested").GetInt32());
+            Assert.Equal(1, byProvenance.GetProperty("suspected-novel").GetInt32());
             Assert.Single(rootElement.GetProperty("suspected_novel").EnumerateArray());
-            Assert.Single(rootElement.GetProperty("unassessed").EnumerateArray());
+            Assert.Empty(rootElement.GetProperty("unassessed").EnumerateArray());
             Assert.Empty(rootElement.GetProperty("red_findings").EnumerateArray());
             var observationCodes = rootElement.GetProperty("observations")
                 .EnumerateArray()
@@ -100,7 +107,11 @@ public sealed class DescribeReportTests
                 Heading.Create("Classified"),
                 BlockSequence.Create(
                 [
-                    Describe("candidate", "Candidate", DescribeKind.Proposition, DescribeProvenance.SuspectedNovel()),
+                    CreateDescribe(
+                        "candidate",
+                        "Candidate",
+                        DescribeKind.Proposition,
+                        AssessedProvenance.NovelAfterSearch(GidRef.Create("D5/S1/Phase/Basic"))),
                 ]));
 
             var report = DescribeReport.Build(root, [document]);
@@ -123,17 +134,18 @@ public sealed class DescribeReportTests
                 Heading.Create("Selector"),
                 BlockSequence.Create(
                 [
-                    DocumentBlock.Describe.Theorem(
+                    Describe.Lean(
                         DescribeId.Create("missing-declaration"),
-                        Heading.Create("Missing declaration"),
-                        LeanDeclarationRef.Create(
+                        DeclarationHandle.Create(
                             "D5/S1/Phase/Basic.missing_declaration"),
-                        InlineIdentity(),
-                        DescribeProvenance.RepoDerived(),
+                        Heading.Create("Missing declaration"),
+                        StatementSource.FromAuthor(InlineIdentity()),
+                        AssessedProvenance.FromRepo(),
                         BlockSequence.Create(
                         [
                             DefinitionDsl.Paragraph(DefinitionDsl.Text("Missing selector fixture.")),
-                        ])
+                        ]),
+                        DescribeRole.Theorem
                     ),
                 ]));
             var leanReport = LeanAxiomReport.Create(
@@ -210,11 +222,11 @@ public sealed class DescribeReportTests
     {
         WithRepository(root =>
         {
-            var existing = Describe(
+            var existing = CreateDescribe(
                 "existing-claim",
                 "Existing",
                 DescribeKind.Remark,
-                DescribeProvenance.RepoDerived());
+                AssessedProvenance.FromRepo());
             var before = ScribeDocument.Create(
                 DefinitionDsl.Header("D5/S1/Phase/Basic", "Before fixture."),
                 Heading.Create("Before"),
@@ -224,11 +236,11 @@ public sealed class DescribeReportTests
                 Heading.Create("After"),
                 BlockSequence.Create(
                 [
-                    Describe(
+                    CreateDescribe(
                         "new-claim",
                         "New",
                         DescribeKind.Remark,
-                        DescribeProvenance.RepoDerived()),
+                        AssessedProvenance.FromRepo()),
                     existing,
                 ]));
 
@@ -242,36 +254,36 @@ public sealed class DescribeReportTests
         });
     }
 
-    private static DocumentBlock.Describe Describe(
+    private static DocumentBlock.Describe CreateDescribe(
         string id,
         string title,
         DescribeKind kind,
-        DescribeProvenance provenance)
+        AssessedProvenance provenance)
     {
         var describeId = DescribeId.Create(id);
         var heading = Heading.Create(title);
         var content = DefinitionDsl.Blocks(
             DefinitionDsl.Paragraph(DefinitionDsl.Text("Typed narrative.")));
-        var lean = DefinitionDsl.LeanTheorem("D5/S1/Phase/Basic.fixture_claim");
+        var handle = DeclarationHandle.Create("D5/S1/Phase/Basic.fixture_claim");
         var latex = InlineIdentity();
         return kind switch
         {
-            DescribeKind.Definition => DocumentBlock.Describe.Definition(
-                describeId, heading, lean, provenance, content),
-            DescribeKind.Theorem => DocumentBlock.Describe.Theorem(
-                describeId, heading, lean, latex, provenance, content),
-            DescribeKind.Proposition => DocumentBlock.Describe.Proposition(
-                describeId, heading, lean, latex, provenance, content),
-            DescribeKind.Lemma => DocumentBlock.Describe.Lemma(
-                describeId, heading, lean, latex, provenance, content),
-            DescribeKind.Example => DocumentBlock.Describe.Example(
+            DescribeKind.Definition => Describe.Lean(
+                describeId, handle, heading, StatementSource.WithoutFormula(),
+                provenance, content, DescribeRole.Definition),
+            DescribeKind.Theorem => Describe.Lean(
+                describeId, handle, heading, StatementSource.FromAuthor(latex),
+                provenance, content, DescribeRole.Theorem),
+            DescribeKind.Proposition => Describe.Lean(
+                describeId, handle, heading, StatementSource.FromAuthor(latex),
+                provenance, content, DescribeRole.Proposition),
+            DescribeKind.Lemma => Describe.Lean(
+                describeId, handle, heading, StatementSource.FromAuthor(latex),
+                provenance, content, DescribeRole.Lemma),
+            DescribeKind.Example => Describe.Example(
                 describeId, heading, new Formula.Phi(), provenance, content),
-            DescribeKind.Remark => DocumentBlock.Describe.Remark(
-                describeId,
-                heading,
-                DescribeStatement.FromFormula(new Formula.Phi()),
-                provenance,
-                content),
+            DescribeKind.Remark => Describe.Remark(
+                describeId, heading, new Formula.Phi(), provenance, content),
             _ => throw new ArgumentOutOfRangeException(nameof(kind)),
         };
     }

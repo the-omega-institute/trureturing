@@ -215,66 +215,6 @@ public abstract record DocumentBlock
 
         public StatementFormulaProvenance FormulaProvenance { get; }
 
-        public static Describe Theorem(
-            DescribeId id,
-            Heading title,
-            LeanDeclarationRef leanRef,
-            Formula formula,
-            DescribeProvenance provenance,
-            BlockSequence content) =>
-            LeanDescribe(id, DescribeKind.Theorem, title, leanRef, provenance, content, formula);
-
-        public static Describe Proposition(
-            DescribeId id,
-            Heading title,
-            LeanDeclarationRef leanRef,
-            Formula formula,
-            DescribeProvenance provenance,
-            BlockSequence content) =>
-            LeanDescribe(id, DescribeKind.Proposition, title, leanRef, provenance, content, formula);
-
-        public static Describe Lemma(
-            DescribeId id,
-            Heading title,
-            LeanDeclarationRef leanRef,
-            Formula formula,
-            DescribeProvenance provenance,
-            BlockSequence content) =>
-            LeanDescribe(id, DescribeKind.Lemma, title, leanRef, provenance, content, formula);
-
-        public static Describe Definition(
-            DescribeId id,
-            Heading title,
-            LeanDeclarationRef leanRef,
-            DescribeProvenance provenance,
-            BlockSequence content,
-            Formula? formula = null) =>
-            LeanDescribe(id, DescribeKind.Definition, title, leanRef, provenance, content, formula);
-
-        public static Describe Example(
-            DescribeId id,
-            Heading title,
-            Formula formula,
-            DescribeProvenance provenance,
-            BlockSequence content) =>
-            new(
-                id,
-                DescribeKind.Example,
-                title,
-                DescribeStatement.FromFormula(formula),
-                Legacy(provenance),
-                content);
-
-        public static Describe Remark(
-            DescribeId id,
-            Heading title,
-            DescribeStatement statement,
-            DescribeProvenance provenance,
-            BlockSequence content) =>
-            new(
-                id, DescribeKind.Remark, title, statement,
-                Legacy(provenance), content);
-
         /// <summary>
         /// A remark about a declaration, naming it by handle rather than by a hand-built reference.
         /// </summary>
@@ -364,34 +304,6 @@ public abstract record DocumentBlock
                 materialized.Source);
         }
 
-        private static Describe LeanDescribe(
-            DescribeId id,
-            DescribeKind kind,
-            Heading title,
-            LeanDeclarationRef leanRef,
-            DescribeProvenance provenance,
-            BlockSequence content,
-            Formula? formula)
-        {
-            ArgumentNullException.ThrowIfNull(leanRef);
-            if (ScribeDescribeContract.RequiresLatex(DescribeVocabulary.CanonicalName(kind)))
-            {
-                ArgumentNullException.ThrowIfNull(formula);
-            }
-
-            return new Describe(
-                id,
-                kind,
-                title,
-                DescribeStatement.FromLean(leanRef),
-                Legacy(provenance),
-                content,
-                formula);
-        }
-
-        private static DescribeProvenanceSource Legacy(DescribeProvenance provenance) =>
-            new DescribeProvenanceSource.Legacy(
-                provenance ?? throw new ArgumentNullException(nameof(provenance)));
     }
 
     internal static BlockSequence ResolveBlocks(BlockSequence content, DeclarationCatalog catalog) =>
