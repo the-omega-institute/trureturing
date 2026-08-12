@@ -681,6 +681,10 @@ token = "复审降级注"
 kind = "ledger"
 
 [[pzg.genres]]
+token = "候签定理"
+kind = "theorem"
+
+[[pzg.genres]]
 token = "前沿引注"
 kind = "frontier-note"
 
