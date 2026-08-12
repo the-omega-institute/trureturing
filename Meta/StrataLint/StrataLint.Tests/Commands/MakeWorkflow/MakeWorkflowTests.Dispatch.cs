@@ -1,10 +1,41 @@
 using System.Text.RegularExpressions;
 using StrataLint.Engine;
+using YamlDotNet.RepresentationModel;
 
 namespace StrataLint.Tests;
 
 public sealed partial class MakeWorkflowTests
 {
+    [Fact]
+    public void EngineeringCheckRunsTheCanonicalMakeTestTargetWithoutAFilter()
+    {
+        var root = FindRepositoryRoot();
+        var makefile = File.ReadAllText(Path.Combine(root, "Makefile"));
+        var workflow = File.ReadAllText(Path.Combine(root, AdmissionWorkflowPath));
+        var engineeringStep = EngineeringTestStep(workflow);
+        var targetMatches = Regex.Matches(
+            engineeringStep,
+            @"(?m)^[ \t]*make[ \t]+-C[ \t]+candidate[ \t]+(?<target>[A-Za-z][A-Za-z0-9_-]*)[ \t]*$",
+            RegexOptions.CultureInvariant | RegexOptions.NonBacktracking);
+
+        Assert.True(
+            targetMatches.Count == 1,
+            "The candidate-engineering test step must invoke exactly one concrete make target so CI cannot silently switch to a different test lane.");
+        var targetMatch = targetMatches[0];
+        Assert.True(
+            !engineeringStep.Contains("--filter", StringComparison.Ordinal),
+            "The candidate-engineering check must call the canonical unfiltered test target; commit 5743d114 filtered Script tests and left those tests unexecuted in CI.");
+
+        var target = targetMatch.Groups["target"].Value;
+        var recipe = Recipe(makefile, target);
+        Assert.True(
+            recipe.Contains("dotnet test", StringComparison.Ordinal),
+            $"The make target '{target}' called by candidate-engineering must be the .NET test target guarded by this invariant.");
+        Assert.True(
+            !recipe.Contains("--filter", StringComparison.Ordinal),
+            $"The canonical make target '{target}' must keep its dotnet test command unfiltered; commit 5743d114 filtered Script tests and CI then had no replacement lane.");
+    }
+
     [Fact]
     public void MakefileIsAThinCompleteDispatchTable()
     {
@@ -57,6 +88,22 @@ public sealed partial class MakeWorkflowTests
             " gate-authority --old-build \"$(OLD_BUILD)\" --out \"$(OUT)\"",
             Recipe(makefile, "refactor-p0-0-gate-authority"),
             StringComparison.Ordinal);
+    }
+
+    private static string EngineeringTestStep(string workflow)
+    {
+        var stream = new YamlStream();
+        stream.Load(new StringReader(workflow));
+        var document = Assert.IsType<YamlMappingNode>(stream.Documents[0].RootNode);
+        var jobs = Assert.IsType<YamlMappingNode>(document.Children[new YamlScalarNode("jobs")]);
+        var engineering = Assert.IsType<YamlMappingNode>(
+            jobs.Children[new YamlScalarNode("candidate-engineering")]);
+        var steps = Assert.IsType<YamlSequenceNode>(engineering.Children[new YamlScalarNode("steps")]);
+        var step = steps.Children.OfType<YamlMappingNode>().Single(candidate =>
+            candidate.Children.TryGetValue(new YamlScalarNode("name"), out var name)
+            && name is YamlScalarNode scalar
+            && scalar.Value == "Run candidate golden and integration tests");
+        return Assert.IsType<YamlScalarNode>(step.Children[new YamlScalarNode("run")]).Value!;
     }
 
     [Fact]
