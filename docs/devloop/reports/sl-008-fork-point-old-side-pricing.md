@@ -166,5 +166,13 @@ SHA 列为 8 位展示，两个 address 为 helper 第一列的完整 64 hex。`
 ## 9. 范围与偏差
 
 - 未修改 `.github/workflows/**`、admission、SL-008 或任何 harness 行为。
-- `git branch -a --contains 6481c5f9`（`EXIT=0`）列出 `remotes/origin/dev`，所以提交 `6481c5f94591cb2c165addc505aaae0f91704da1` 可达；但当前 `origin/dev` tip 的 `Meta/FILEMAP.toml` 已不含 `docs/develop/reports/**` 声明，因为该目录当时被清空，零匹配的 glob 条目必须一并删除。本分支恢复报告时按该可达先例恢复声明；FILEMAP policy 定向测试 44/44 通过。
+- 本报告住在 `docs/devloop/reports/`，与既有的 `ks-finite-window-pricing.md` 同一位置。
+  **`docs/develop/reports/` 是一个从未落地的路径空间**，这一点由一次实际的准入判决坐实：
+  本分支最初把报告放在那里并同时补上 `Meta/FILEMAP.toml` 的 `docs/develop/reports/**` 声明，
+  CI 判 `SL-000 …: unknown top-level artifact`（run `31549130526`，`RULE_REJECTED count=1`）。
+  根因是 base 侧 `RepositoryPathPolicy.cs:77` 只接受 `docs/devloop/`。
+  先前的 `6481c5f94591cb2c165addc505aaae0f91704da1`（`git branch -a --contains` 显示可达）
+  **只新增了 FILEMAP 声明、没有新增任何文件** —— 零匹配的 glob 不触发 `SL-000`，
+  所以它当时能过门，随后又因零匹配被删除。**「历史上存在过一条声明」不等于
+  「该路径空间被 base 谓词支持」**；判据只有一个，就是 base 版 `RepositoryPathPolicy` 的谓词本身。
 - 未测 GitHub Actions 在线 cache inventory；所有命中率均来自指定 40 个 base address 的集合。
