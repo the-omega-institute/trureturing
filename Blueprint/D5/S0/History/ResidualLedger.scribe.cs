@@ -6,25 +6,22 @@ namespace StrataLint.Scribe.Blueprint.D5.S0.History;
 
 internal sealed class ResidualLedgerDocument : IScribeDocumentDefinition
 {
-    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
-        Header(
-            "D5/S0/History/ResidualLedger",
-            "A residual ledger entry consists exactly of its source, detector, four-state status, and next action."),
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "A residual ledger entry consists exactly of its source, detector, four-state status, and next action.",
         H("The Residual Ledger"),
         Blocks(
-            DocumentBlock.Describe.Theorem(
+            Describe.Lean(
                 DescribeId.Create("residual-ledger-entries-have-exactly-four-components"),
+                DeclarationHandle.Create("D5/S0/History/ResidualLedger.residual_ledger_components_bijective"),
                 H("Residual ledger entries are losslessly determined by four components"),
-                LeanTheorem(
-                    "D5/S0/History/ResidualLedger.residual_ledger_components_bijective"),
-                Disp(Seq(
+                StatementSource.FromAuthor(Disp(Seq(
                     Operatorname, Grp(F.Id("ResidualLedgerEntry")),
                     Sp, Sim, Sp,
                     F.Id("Source"), Sp, Times, Sp,
                     F.Id("Detector"), Sp, Times, Sp,
                     Operatorname, Grp(F.Id("ResidualStatus")), Sp, Times, Sp,
-                    F.Id("NextAction"))),
-                DescribeProvenance.RepoDerived(),
+                    F.Id("NextAction")))),
+                AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
                         "A residual ledger entry is a typed workflow object with four fields. "
@@ -40,6 +37,6 @@ internal sealed class ResidualLedgerDocument : IScribeDocumentDefinition
                         + "equivalences and `Equiv.bijective`, but no residual-ledger workflow type. "
                         + "The implementation therefore adds only the source-specific record and "
                         + "uses Mathlib's bijectivity theorem for the final claim. The source atom "
-                        + "contains no numerical certificate.")))
-            ))));
+                        + "contains no numerical certificate."))),
+                DescribeRole.Theorem))));
 }

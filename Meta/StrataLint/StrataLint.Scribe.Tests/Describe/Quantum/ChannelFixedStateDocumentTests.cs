@@ -19,10 +19,10 @@ public sealed class ChannelFixedStateDocumentTests
             @"\operatorname{LinearMap}_{\mathbb{C}}",
             formula,
             StringComparison.Ordinal);
-        Assert.Equal(DescribeProvenanceKind.LiteratureAttested, describe.Provenance.Kind);
-        Assert.Equal(
-            "D5/L/Quantum/watrous2018theory",
-            describe.Provenance.LiteratureReference?.Value);
+        DocumentFactAssertions.LiteratureAttested(
+            describe,
+            "D5/L/Quantum/watrous2018theory");
+        DocumentFactAssertions.Declaration(describe, LeanDeclarationKind.Theorem);
 
         var paragraph = Assert.IsType<DocumentBlock.Paragraph>(Assert.Single(describe.Content.Items));
         Assert.IsType<Inline.Text>(Assert.Single(paragraph.Content.Items));

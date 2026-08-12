@@ -6,22 +6,18 @@ namespace StrataLint.Scribe.Blueprint.D5.S0.Computability;
 
 internal sealed class PropertyObjectDocument : IScribeDocumentDefinition
 {
-    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
-        Header(
-            "D5/S0/Computability/PropertyObject",
-            "Property objects are losslessly equivalent to their seven typed components."),
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "Property objects are losslessly equivalent to their seven typed components.",
         H("Internal Property Objects"),
         Blocks(
-            DocumentBlock.Describe.Theorem(
+            Describe.Lean(
                 DescribeId.Create("property-objects-have-seven-lossless-components"),
+                DeclarationHandle.Create("D5/S0/Computability/PropertyObject.property_object_components_bijective"),
                 H("Property objects have seven lossless components"),
-                LeanTheorem(
-                    "D5/S0/Computability/PropertyObject."
-                    + "property_object_components_bijective"),
-                Disp(Seq(
+                StatementSource.FromAuthor(Disp(Seq(
                     Operatorname, Grp(F.Id("Bijective")), Open,
-                    Operatorname, Grp(F.Id("propertyObjectEquivComponents")), Close)),
-                DescribeProvenance.RepoDerived(),
+                    Operatorname, Grp(F.Id("propertyObjectEquivComponents")), Close))),
+                AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
                         "An internal property object stores exactly seven typed components: "
@@ -39,6 +35,6 @@ internal sealed class PropertyObjectDocument : IScribeDocumentDefinition
                         + "seven-component property object. The Lean module consequently "
                         + "constructs only that local structure equivalence and delegates the "
                         + "final theorem to the library's bijectivity API. The source atom is "
-                        + "a structural definition and carries no numerical certificate.")))
-            ))));
+                        + "a structural definition and carries no numerical certificate."))),
+                DescribeRole.Theorem))));
 }

@@ -6,19 +6,16 @@ namespace StrataLint.Scribe.Blueprint.D5.S0.History;
 
 internal sealed class CancellationLedgerDocument : IScribeDocumentDefinition
 {
-    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
-        Header(
-            "D5/S0/History/CancellationLedger",
-            "Recording a referenced cancellation preserves the prior ledger and appends one new entry."),
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "Recording a referenced cancellation preserves the prior ledger and appends one new entry.",
         H("Append-Only Cancellation Ledgers"),
         Blocks(
-            DocumentBlock.Describe.Theorem(
+            Describe.Lean(
                 DescribeId.Create("recording-a-cancellation-is-append-only"),
+                DeclarationHandle.Create("D5/S0/History/CancellationLedger.record_cancellation_is_append_only"),
                 H("Recording a cancellation is append-only"),
-                LeanTheorem(
-                    "D5/S0/History/CancellationLedger.record_cancellation_is_append_only"),
-                AppendOnlyFormula(),
-                DescribeProvenance.RepoDerived(),
+                StatementSource.FromAuthor(AppendOnlyFormula()),
+                AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
                         "A cancellation entry contains a typed index into the existing event "
@@ -35,8 +32,8 @@ internal sealed class CancellationLedgerDocument : IScribeDocumentDefinition
                         + "upstream declaration packages a referenced cancellation with all "
                         + "three ledger invariants, so the Lean theorem is a declared thin "
                         + "honest wrapper that combines those laws over the repository's event "
-                        + "history carrier. The source atom contains no numerical certificate.")))
-            )),
+                        + "history carrier. The source atom contains no numerical certificate."))),
+                DescribeRole.Theorem)),
         [
             DocumentEdge.Dependency.Create(
                 GidRef.Create("D5/S0/History/HistoryCarrier")),

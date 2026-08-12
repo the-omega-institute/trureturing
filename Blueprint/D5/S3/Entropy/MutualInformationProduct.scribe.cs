@@ -6,18 +6,8 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Entropy;
 
 internal sealed class MutualInformationProductDocument : IScribeDocumentDefinition
 {
-    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
-        Header(
-            "D5/S3/Entropy/MutualInformationProduct",
-            "Finite classical mutual information in nats vanishes on every normalized product mass function."),
-        H("Mutual Information Vanishes on Product Laws"),
-        Blocks(
-            DocumentBlock.Describe.Theorem(
-                DescribeId.Create("mutual-information-vanishes-on-product-laws"),
-                H("Mutual information vanishes on product laws"),
-                LeanTheorem(
-                    "D5/S3/Entropy/MutualInformationProduct.mutual_information_product_eq_zero"),
-                Disp(Seq(
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create("Finite classical mutual information in nats vanishes on every normalized product mass function.", H("Mutual Information Vanishes on Product Laws"), Blocks(
+            Describe.Lean(DescribeId.Create("mutual-information-vanishes-on-product-laws"), DeclarationHandle.Create("D5/S3/Entropy/MutualInformationProduct.mutual_information_product_eq_zero"), H("Mutual information vanishes on product laws"), StatementSource.FromAuthor(Disp(Seq(
                     Begin, Grp(F.Id("gathered")),
                     Forall, Sp, Iota, Comma, Sp, Kappa, Esc,
                     OpenBracket,
@@ -51,9 +41,7 @@ internal sealed class MutualInformationProductDocument : IScribeDocumentDefiniti
                     F.Id("a"), Open, F.Id("i"), Close,
                     F.Id("b"), Open, F.Id("j"), Close,
                     Close, Eq, D(0), Dot,
-                    End, Grp(F.Id("gathered")))),
-                DescribeProvenance.RepoDerived(),
-                Blocks(
+                    End, Grp(F.Id("gathered"))))), AssessedProvenance.FromRepo(), Blocks(
                     Paragraph(Text(
                         "The theorem states that mutual information vanishes on a product joint, " +
                         "the independent case. The factors a and b need only be nonnegative and " +
@@ -92,5 +80,5 @@ internal sealed class MutualInformationProductDocument : IScribeDocumentDefiniti
                         "This is one direction only. It does not prove the converse that vanishing " +
                         "mutual information forces the joint to be a product, equivalently " +
                         "independence. That converse would require the equality case of the " +
-                        "divergence bound, and it is not established here.")))))));
+                        "divergence bound, and it is not established here."))), DescribeRole.Theorem))));
 }

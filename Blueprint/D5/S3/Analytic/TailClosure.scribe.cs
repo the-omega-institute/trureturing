@@ -6,18 +6,16 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Analytic;
 
 internal sealed class TailClosureDocument : IScribeDocumentDefinition
 {
-    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
-        Header(
-            "D5/S3/Analytic/TailClosure",
-            "Vanishing tail budgets force certified readings to converge to the exact value."),
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "Vanishing tail budgets force certified readings to converge to the exact value.",
         H("Vanishing Tail Budgets Close"),
         Blocks(
-            DocumentBlock.Describe.Theorem(
+            Describe.Lean(
                 DescribeId.Create("vanishing-tail-budget-closes"),
-                H("A vanishing tail budget closes the certified readings"),
-                LeanTheorem(
+                DeclarationHandle.Create(
                     "D5/S3/Analytic/TailClosure.vanishing_tail_budget_closes"),
-                Disp(Seq(
+                H("A vanishing tail budget closes the certified readings"),
+                StatementSource.FromAuthor(Disp(Seq(
                     Vert, Sp, F.Id("v"), Minus, F.Id("r"), Open, F.Id("W"), Close,
                     Sp, Vert,
                     Sp, Le, Sp, F.Id("b"), Open, F.Id("W"), Close,
@@ -25,8 +23,8 @@ internal sealed class TailClosureDocument : IScribeDocumentDefinition
                     Sp, To, Sp, D(0),
                     Sp, Rightarrow, Sp,
                     F.Id("r"), Open, F.Id("W"), Close,
-                    Sp, To, Sp, F.Id("v"))),
-                DescribeProvenance.RepoDerived(),
+                    Sp, To, Sp, F.Id("v")))),
+                AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
                         "A certificate on a cofinal family of finite windows gives an exact "
@@ -43,6 +41,6 @@ internal sealed class TailClosureDocument : IScribeDocumentDefinition
                         + "squeeze_zero makes that distance converge to zero, and "
                         + "tendsto_iff_dist_tendsto_zero converts the distance statement into "
                         + "convergence of the certified readings. No independent convergence "
-                        + "argument is re-proved here.")))
-            ))));
+                        + "argument is re-proved here."))),
+                DescribeRole.Theorem))));
 }

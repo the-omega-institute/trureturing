@@ -6,23 +6,19 @@ namespace StrataLint.Scribe.Blueprint.D5.S0.Diagonal;
 
 internal sealed class SelfApplicationFatesDocument : IScribeDocumentDefinition
 {
-    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
-        Header(
-            "D5/S0/Diagonal/SelfApplicationFates",
-            "Every non-degenerate binary fractional self-map has exactly one of four fates, with the live fate characterizing the golden family."),
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "Every non-degenerate binary fractional self-map has exactly one of four fates, with the live fate characterizing the golden family.",
         H("Four Fates of Self-Application"),
         Blocks(
             Paragraph(Text(
                 "A binary fractional map is classified as empty, dead, collapsed, or live by "
                 + "the coefficients and discriminant of its fixed-point polynomial. For every "
                 + "non-degenerate map exactly one classification holds.")),
-            DocumentBlock.Describe.Theorem(
+            Describe.Lean(
                 DescribeId.Create("non-degenerate-self-application-has-four-fates"),
+                DeclarationHandle.Create("D5/S0/Diagonal/SelfApplicationFates.self_application_four_fates"),
                 H("Non-degenerate self-application has exactly one fate"),
-                LeanTheorem(
-                    "D5/S0/Diagonal/SelfApplicationFates."
-                    + "self_application_four_fates"),
-                Disp(Seq(
+                StatementSource.FromAuthor(Disp(Seq(
                     Forall, Sp, F.Id("m"), Comma, Esc,
                     Operatorname, Grp(F.Id("Nondegenerate")), Open, F.Id("m"), Close,
                     Sp, Rightarrow, Sp,
@@ -57,10 +53,11 @@ internal sealed class SelfApplicationFatesDocument : IScribeDocumentDefinition
                     Sp, Rightarrow, Sp,
                     Operatorname, Grp(F.Id("discriminant")), Open, F.Id("m"), Close,
                     Eq, D(1), Caret, D(2), Plus, D(4), Eq, D(5),
-                    Close)),
-                DescribeProvenance.RepoDerived(),
+                    Close))),
+                AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "The live cases are precisely the two golden-family maps, whose fixed-point "
                     + "coefficient triples are (1, -1, -1) and (1, 1, -1). In either case the "
-                    + "discriminant is 1 squared plus 4, hence exactly 5.")))))));
+                    + "discriminant is 1 squared plus 4, hence exactly 5."))),
+                DescribeRole.Theorem))));
 }
