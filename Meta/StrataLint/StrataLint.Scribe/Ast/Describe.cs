@@ -30,7 +30,7 @@ public enum DescribeKind
     Remark,
 }
 
-public enum DescribeRole { Definition, Theorem, Proposition, Lemma }
+public enum DescribeRole { Definition, Theorem, Proposition, Lemma, Remark }
 
 internal abstract record DescribeKindSource
 {
@@ -240,6 +240,18 @@ public static class Describe
             id, title, handle, statementSource,
             provenance ?? throw new ArgumentNullException(nameof(provenance)),
             narrative, role);
+
+    /// <summary>
+    /// Commentary about a declaration, named by handle. Emits a reference and prose, never a formula,
+    /// so it takes no <see cref="StatementSource"/> — see <c>DocumentBlock.Describe.RemarkOn</c>.
+    /// </summary>
+    public static DocumentBlock.Describe Remark(
+        DescribeId id,
+        DeclarationHandle handle,
+        Heading title,
+        AssessedProvenance provenance,
+        BlockSequence narrative) =>
+        DocumentBlock.Describe.RemarkOn(id, handle, title, provenance, narrative);
 }
 
 internal static class DescribeVocabulary

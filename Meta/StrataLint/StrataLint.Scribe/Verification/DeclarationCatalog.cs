@@ -141,6 +141,7 @@ public sealed class DeclarationCatalog
         DescribeRole.Theorem => DescribeKind.Theorem,
         DescribeRole.Proposition => DescribeKind.Proposition,
         DescribeRole.Lemma => DescribeKind.Lemma,
+        DescribeRole.Remark => DescribeKind.Remark,
         _ => throw new ArgumentOutOfRangeException(nameof(role)),
     };
 
