@@ -6,7 +6,7 @@ Locate consecutive Fibonacci-substitution blocks and identify each block pointwi
 
 **Definition 1.1 (True-count partial sums locate substitution block starts).**
 
-$$\operatorname{goldenSubstStart}(i)=i+\operatorname{goldenWindowTrueCount}(0,i)$$
+Lean statement: `D5/S1/Words/GoldenSubstFixed.goldenSubstStart`
 
 *Formalization.* `D5/S1/Words/GoldenSubstFixed.goldenSubstStart` (`✓ std3`).
 

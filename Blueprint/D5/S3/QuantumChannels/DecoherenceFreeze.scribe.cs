@@ -18,37 +18,28 @@ internal sealed class DecoherenceFreezeDocument : IScribeDocumentDefinition
             "The decoherence-freeze deposit is positive exactly above its critical inverse temperature."),
         H("Decoherence-Freeze Critical Temperature Criterion"),
         Blocks(
-            DocumentBlock.Describe.Definition(
+            Describe.Lean(
                 DescribeId.Create("the-freeze-deposit-subtracts-the-temperature-scaled-entropy-tax"),
+                DeclarationHandle.Create("D5/S3/QuantumChannels/DecoherenceFreeze.freezeDeposit"),
                 H("The freeze deposit subtracts the temperature-scaled entropy tax"),
-                LeanDefinition("D5/S3/QuantumChannels/DecoherenceFreeze.freezeDeposit"),
-                DescribeProvenance.RepoDerived(),
+                StatementSource.FromLean(),
+                AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "For inverse temperature beta, entropy tax Delta S, and passive-energy shift "
                     + "Delta E pass, the freeze deposit is the passive-energy shift minus the "
                     + "entropy tax divided by beta."))),
-                Disp(Seq(
-                    Operatorname, Grp(F.Id("freezeDeposit")), Open,
-                    Beta, Comma, Delta, Sp, F.Id("S"), Comma,
-                    Delta, Sp, F.Id("E"), Underscore, Grp(F.Id("pass")), Close,
-                    Eq, Delta, Sp, F.Id("E"), Underscore, Grp(F.Id("pass")), Minus,
-                    Frac, Grp(Delta, Sp, F.Id("S")), Grp(Beta)))
+                DescribeRole.Definition
             ),
-            DocumentBlock.Describe.Definition(
+            Describe.Lean(
                 DescribeId.Create("the-critical-inverse-temperature-is-the-entropy-energy-ratio"),
+                DeclarationHandle.Create("D5/S3/QuantumChannels/DecoherenceFreeze.criticalInverseTemperature"),
                 H("The critical inverse temperature is the entropy-energy ratio"),
-                LeanDefinition(
-                    "D5/S3/QuantumChannels/DecoherenceFreeze.criticalInverseTemperature"),
-                DescribeProvenance.RepoDerived(),
+                StatementSource.FromLean(),
+                AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "The critical inverse temperature is the entropy tax divided by the "
                     + "passive-energy shift."))),
-                Disp(Seq(
-                    Operatorname, Grp(F.Id("criticalInverseTemperature")), Open,
-                    Delta, Sp, F.Id("S"), Comma,
-                    Delta, Sp, F.Id("E"), Underscore, Grp(F.Id("pass")), Close,
-                    Eq, Frac, Grp(Delta, Sp, F.Id("S")),
-                    Grp(Delta, Sp, F.Id("E"), Underscore, Grp(F.Id("pass")))))
+                DescribeRole.Definition
             ),
             DocumentBlock.Describe.Theorem(
                 DescribeId.Create(

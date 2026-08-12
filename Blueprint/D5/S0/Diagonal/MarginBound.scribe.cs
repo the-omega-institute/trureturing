@@ -26,25 +26,29 @@ internal sealed class MarginBoundDocument : IScribeDocumentDefinition
                 "Finite diagonal listings satisfy a corrected KL-Chernoff linear-margin bound."),
             H("Diagonal Linear Margin Bound"),
             Blocks(
-                DocumentBlock.Describe.Definition(
+                Describe.Lean(
                     DescribeId.Create("bernoulli-kl-divergence"),
+                    DeclarationHandle.Create("D5/S0/Diagonal/MarginBound.bernoulliKL"),
                     H("Bernoulli KL divergence"),
-                    LeanDefinition("D5/S0/Diagonal/MarginBound.bernoulliKL"),
-                    DescribeProvenance.RepoDerived(),
+                    StatementSource.FromLean(),
+                    AssessedProvenance.FromRepo(),
                     Blocks(Paragraph(Text(
                         "The scalar Bernoulli divergence is q log(q/p) plus one minus q "
                         + "times log((1-q)/(1-p)). Its local nonnegativity, strict positivity "
-                        + "off the diagonal, and continuity are proved on the open unit square.")))
+                        + "off the diagonal, and continuity are proved on the open unit square."))),
+                    DescribeRole.Definition
                 ),
-                DocumentBlock.Describe.Definition(
+                Describe.Lean(
                     DescribeId.Create("finite-margin-failure-probability"),
+                    DeclarationHandle.Create("D5/S0/Diagonal/MarginBound.marginFailureProbability"),
                     H("Finite margin-failure probability"),
-                    LeanDefinition("D5/S0/Diagonal/MarginBound.marginFailureProbability"),
-                    DescribeProvenance.RepoDerived(),
+                    StatementSource.FromLean(),
+                    AssessedProvenance.FromRepo(),
                     Blocks(Paragraph(Text(
                         "The probability is the finite cardinality ratio of listings having "
                         + "some row at Hamming distance below alpha times the address "
-                        + "cardinality, divided by the cardinality of all listings.")))
+                        + "cardinality, divided by the cardinality of all listings."))),
+                    DescribeRole.Definition
                 ),
                 DocumentBlock.Describe.Theorem(
                     DescribeId.Create("linear-margin-has-corrected-kl-bound"),
@@ -75,9 +79,4 @@ internal sealed class MarginBoundDocument : IScribeDocumentDefinition
             ]));
     }
 
-    private static LeanDeclarationRef LeanDefinition(string value) =>
-        LeanDeclarationRef.Create(
-            value,
-            expectedKind: LeanDeclarationKind.Definition,
-            requireNoSorry: true);
 }
