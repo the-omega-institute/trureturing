@@ -92,6 +92,14 @@ internal static partial class RepositoryRules
         Register(10, "Generality closure", new RepositoryRule(GeneralSource, Generality)),
         Register(11, "Controlled domains", new RepositoryRule(DomainScoped, Domains)),
         Register(12, "Six-line Lean header", new RepositoryRule(Formal, Headers)),
+        // 台账不再执法:11/20 个工单块的尸检是 none,而它曾阻止清理它所描述的东西
+        // (退役 papergen 时删不掉那个「从未建成」的工单)。条目保留、位置不动 ——
+        // 目录里有按位置取 descriptor 的消费者,抽掉一条会让它们静默错位。
+        Register(
+            13,
+            "Permanent task ledger",
+            new RepositoryRule(Formal, NoFindings),
+            deferredCase: CaseId.CreateKnown("D5-T0013")),
         Register(
             14,
             "Toolchain upgrade compatibility",
