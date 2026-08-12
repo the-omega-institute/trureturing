@@ -80,7 +80,8 @@ public sealed class RuleCatalog
     {
         try
         {
-            var expected = Enumerable.Range(1, 23)
+            var expected = Enumerable.Range(1, 12)
+                .Concat(Enumerable.Range(14, 10))
                 .Append(25)
                 .Append(26)
                 .Select(RuleId.CreateKnown)
