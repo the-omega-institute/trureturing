@@ -122,7 +122,8 @@ internal static partial class RepositoryRules
             {
                 findings.Add(new RuleFinding(
                     path.Value,
-                    $"artifact spans {lineCount} lines (soft limit 600, hard limit 800)",
+                    $"artifact spans {lineCount} lines (soft limit {ArtifactSoftLineLimit}, "
+                    + $"hard limit {ArtifactHardLineLimit})",
                     AdmissionEffect.Observe));
             }
 
@@ -148,7 +149,9 @@ internal static partial class RepositoryRules
             .Where(item => item.Value > DirectoryFileLimit && touched.Contains(item.Key))
             .Select(static item => new RuleFinding(
                 item.Key,
-                $"directory contains {item.Value} files (maximum 12)")));
+                $"directory contains {item.Value} files (admission limit "
+                + $"{DirectoryFileLimit}, repository tolerance "
+                + $"{DirectoryToleranceLimit}; split per CLAUDE.md 8)")));
         return findings.ToImmutable();
     }
 

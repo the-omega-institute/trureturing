@@ -249,7 +249,6 @@ public static class CanonicalMarkdownWriter
             {
                 "repo-derived" => "Repository-derived.",
                 "suspected-novel" => "Suspected novel.",
-                "unassessed" => "Unassessed.",
                 var provenance => provenance + ".",
             });
         }

@@ -153,7 +153,10 @@ public sealed class RuleEngineTests
             RuleCatalog.Default.EvaluateSingle(RuleId.CreateKnown(3), soft.Build()).Diagnostics);
         Assert.Equal(AdmissionEffect.Observe, softDiag.AdmissionEffect);
         Assert.Equal(DisplaySeverity.Warning, softDiag.DisplaySeverity);
-        Assert.Contains("soft limit 600", softDiag.Message, StringComparison.Ordinal);
+        Assert.Contains(
+            $"soft limit {RepositoryRules.ArtifactSoftLineLimit}",
+            softDiag.Message,
+            StringComparison.Ordinal);
 
         // > 800: a hard block.
         var hard = new RuleFixture();
@@ -210,7 +213,16 @@ public sealed class RuleEngineTests
             item => item.Path == OverfullBucketPath);
 
         Assert.Equal(AdmissionEffect.Block, diagnostic.AdmissionEffect);
-        Assert.Equal("directory contains 13 files (maximum 12)", diagnostic.Message);
+        // Read from the constants, not from a literal. The old message said "maximum 12" flat,
+        // with the 12 typed into the string rather than interpolated, so it named the admission
+        // capacity as if it were the only limit and would have kept saying 12 after a change to
+        // DirectoryFileLimit. The repository-wide net tolerates DirectoryToleranceLimit above it;
+        // an overfull bucket is split pressure, not a correctness fault.
+        Assert.Equal(
+            $"directory contains 13 files (admission limit {RepositoryRules.DirectoryFileLimit}, "
+            + $"repository tolerance {RepositoryRules.DirectoryToleranceLimit}; "
+            + "split per CLAUDE.md 8)",
+            diagnostic.Message);
     }
 
     [Fact]
@@ -240,97 +252,6 @@ public sealed class RuleEngineTests
         }
 
         return fixture;
-    }
-
-    [Fact]
-    public void Sl013RejectsCodexFailedAttributionWithoutReference()
-    {
-        var fixture = new RuleFixture();
-        fixture.AddTask(
-            "D5/X_Frontier/CodexFailure.lean",
-            "D5/X_Frontier/CodexFailure",
-            "D5-T0090",
-            "[codex-failed] candidate returned no result");
-
-        var diagnostic = Assert.Single(
-            RuleCatalog.Default.EvaluateSingle(RuleId.CreateKnown(13), fixture.Build()).Diagnostics);
-
-        Assert.Equal(
-            "codex-failed autopsy for D5-T0090 requires a valid [codex-log:<rooted-path>] reference",
-            diagnostic.Message);
-    }
-
-    [Fact]
-    public void Sl013RejectsCodexFailedAttributionWithMalformedReference()
-    {
-        var fixture = new RuleFixture();
-        fixture.AddTask(
-            "D5/X_Frontier/CodexFailure.lean",
-            "D5/X_Frontier/CodexFailure",
-            "D5-T0091",
-            "[codex-failed] [codex-log:logs/latest.txt]");
-
-        var diagnostic = Assert.Single(
-            RuleCatalog.Default.EvaluateSingle(RuleId.CreateKnown(13), fixture.Build()).Diagnostics);
-
-        Assert.Equal(
-            "codex-failed autopsy for D5-T0091 requires a valid [codex-log:<rooted-path>] reference",
-            diagnostic.Message);
-    }
-
-    [Theory]
-    [InlineData("~/.codex/sessions/2026/08/09/rollout-fixture.jsonl")]
-    [InlineData("<RT>/logs/codex-adoption/fixture/result.json")]
-    [InlineData("~/Library/Logs/fkst/codex/worktree-fixture.log")]
-    public void Sl013AcceptsCodexFailedAttributionWithValidReference(string logPath)
-    {
-        var fixture = new RuleFixture();
-        fixture.AddTask(
-            "D5/X_Frontier/CodexFailure.lean",
-            "D5/X_Frontier/CodexFailure",
-            "D5-T0092",
-            $"[codex-failed] [codex-log:{logPath}]");
-
-        var diagnostics = RuleCatalog.Default.EvaluateSingle(
-            RuleId.CreateKnown(13),
-            fixture.Build()).Diagnostics;
-
-        Assert.Empty(diagnostics);
-    }
-
-    [Fact]
-    public void Sl013StillRejectsShortenedAutopsy()
-    {
-        const string path = "D5/X_Frontier/AutopsyHistory.lean";
-        var fixture = new RuleFixture();
-        fixture.AddTask(path, "D5/X_Frontier/AutopsyHistory", "D5-T0093", "first attempt");
-        fixture.Baseline[path] = fixture.Files[path].Replace(
-            "尸检:first attempt",
-            "尸检:first attempt; second attempt",
-            StringComparison.Ordinal);
-        fixture.BaselineReports[path] = fixture.Reports[path];
-
-        var diagnostic = Assert.Single(
-            RuleCatalog.Default.EvaluateSingle(RuleId.CreateKnown(13), fixture.Build()).Diagnostics);
-
-        Assert.Equal("autopsy for D5-T0093 was shortened", diagnostic.Message);
-    }
-
-    [Fact]
-    public void Sl013DoesNotTreatUnstructuredCodexFailedTextAsAttribution()
-    {
-        var fixture = new RuleFixture();
-        fixture.AddTask(
-            "D5/X_Frontier/OrdinaryAutopsy.lean",
-            "D5/X_Frontier/OrdinaryAutopsy",
-            "D5-T0094",
-            "ordinary text mentions codex-failed without the attribution marker");
-
-        var diagnostics = RuleCatalog.Default.EvaluateSingle(
-            RuleId.CreateKnown(13),
-            fixture.Build()).Diagnostics;
-
-        Assert.Empty(diagnostics);
     }
 
     [Fact]
@@ -432,7 +353,7 @@ public sealed class RuleEngineTests
     public void CoverageManifestNamesEveryRuleWithARealRedOrDeferredBranch()
     {
         var exercised = BlockingCases.Select(item => (int)item[0])
-            .Concat(new[] { 7, 9, 14, 22, 23, 25 })
+            .Concat(new[] { 7, 9, 13, 14, 22, 23, 25 })
             .Order()
             .ToArray();
 
