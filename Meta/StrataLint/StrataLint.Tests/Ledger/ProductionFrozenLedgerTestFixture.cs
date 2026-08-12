@@ -201,7 +201,10 @@ public sealed partial class ProductionEnvironmentTests
             gateway);
     }
 
-    private static void AssertSl008Rejection(AdmissionOutcome? outcome, string expectedMessage)
+    private static Diagnostic AssertSl008Rejection(
+        AdmissionOutcome? outcome,
+        string expectedMessage,
+        string? expectedPath = null)
     {
         var rejected = Assert.IsType<AdmissionOutcome.RuleRejected>(outcome);
         var diagnostic = Assert.Single(rejected.Diagnostics);
@@ -209,9 +212,11 @@ public sealed partial class ProductionEnvironmentTests
         Assert.Equal("Frozen Hearts semantics", diagnostic.Title);
         Assert.Equal(DisplaySeverity.Error, diagnostic.DisplaySeverity);
         Assert.Equal(AdmissionEffect.Block, diagnostic.AdmissionEffect);
-        Assert.Equal(FrozenLedgerChangeClassifier.LedgerPath, diagnostic.Path);
+        var path = expectedPath ?? FrozenLedgerChangeClassifier.AcceptedRoot;
+        Assert.Equal(path, diagnostic.Path);
         Assert.Equal(expectedMessage, diagnostic.Message);
-        Assert.Equal($"SL-008 {FrozenLedgerChangeClassifier.LedgerPath}: {expectedMessage}", diagnostic.Render());
+        Assert.Equal($"SL-008 {path}: {expectedMessage}", diagnostic.Render());
+        return diagnostic;
     }
 
     private sealed record FrozenValidatorFixture(
