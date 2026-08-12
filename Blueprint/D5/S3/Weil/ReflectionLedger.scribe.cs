@@ -12,25 +12,25 @@ internal sealed class ReflectionLedgerDocument : IScribeDocumentDefinition
             "Conjugate reflection reverses scaling entries around the critical line."),
         H("Conjugate Reflection and Scaling"),
         Blocks(
-            DocumentBlock.Describe.Proposition(
+            Describe.Lean(
                 DescribeId.Create("mirror-fixed-points-lie-on-the-critical-line"),
+                DeclarationHandle.Create("D5/S3/Weil/ReflectionLedger.mirror_fixed_re_eq"),
                 H("Mirror fixed points lie on the critical line"),
-                LeanTheorem(
-                    "D5/S3/Weil/ReflectionLedger.mirror_fixed_re_eq"),
-                In(Seq(Forall, Sp, F.Id("s"), InMacro, Mathbb, Grp(F.Id("C")), Comma, Esc, Operatorname, Grp(F.Id("mirror")), Open, F.Id("s"), Close, Eq, F.Id("s"), Sp, Rightarrow, Sp, Re, Open, F.Id("s"), Close, Eq, Frac, Grp(D(1)), Grp(D(2)))),
-                DescribeProvenance.RepoDerived(),
+                StatementSource.FromAuthor(In(Seq(Forall, Sp, F.Id("s"), InMacro, Mathbb, Grp(F.Id("C")), Comma, Esc, Operatorname, Grp(F.Id("mirror")), Open, F.Id("s"), Close, Eq, F.Id("s"), Sp, Rightarrow, Sp, Re, Open, F.Id("s"), Close, Eq, Frac, Grp(D(1)), Grp(D(2))))),
+                AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
-                    "Conjugate reflection sends a spectral parameter to one minus its conjugate. Every fixed point therefore has real part one half; no zero-location claim is made.")))
+                                    "Conjugate reflection sends a spectral parameter to one minus its conjugate. Every fixed point therefore has real part one half; no zero-location claim is made."))),
+                DescribeRole.Proposition
             ),
-            DocumentBlock.Describe.Theorem(
+            Describe.Lean(
                 DescribeId.Create("mirror-reverses-every-scaling-entry"),
+                DeclarationHandle.Create("D5/S3/Weil/ReflectionLedger.mirror_reversal_spec"),
                 H("The mirror reverses every scaling entry"),
-                LeanTheorem(
-                    "D5/S3/Weil/ReflectionLedger.mirror_reversal_spec"),
-                Disp(Seq(Forall, Sp, F.Id("A"), Esc, OpenBracket, Operatorname, Grp(F.Id("AddMonoid")), Open, F.Id("A"), Close, CloseBracket, Comma, Esc, Forall, Sp, Ell, Colon, F.Id("A"), To, Underscore, Grp(Plus), Mathbb, Grp(F.Id("R")), Comma, Esc, Forall, Sp, F.Id("s"), InMacro, Mathbb, Grp(F.Id("C")), Comma, Esc, Open, Forall, Sp, F.Id("a"), Comma, Operatorname, Grp(F.Id("scalingLedger")), Open, Ell, Comma, Operatorname, Grp(F.Id("mirror")), Open, F.Id("s"), Close, Comma, F.Id("a"), Close, Eq, Minus, Operatorname, Grp(F.Id("scalingLedger")), Open, Ell, Comma, F.Id("s"), Comma, F.Id("a"), Close, Close, Sp, Land, Sp, Open, F.Id("s"), Eq, Operatorname, Grp(F.Id("mirror")), Open, F.Id("s"), Close, Sp, Leftrightarrow, Sp, Re, Open, F.Id("s"), Close, Eq, Frac, Grp(D(1)), Grp(D(2)), Close)),
-                DescribeProvenance.RepoDerived(),
+                StatementSource.FromAuthor(Disp(Seq(Forall, Sp, F.Id("A"), Esc, OpenBracket, Operatorname, Grp(F.Id("AddMonoid")), Open, F.Id("A"), Close, CloseBracket, Comma, Esc, Forall, Sp, Ell, Colon, F.Id("A"), To, Underscore, Grp(Plus), Mathbb, Grp(F.Id("R")), Comma, Esc, Forall, Sp, F.Id("s"), InMacro, Mathbb, Grp(F.Id("C")), Comma, Esc, Open, Forall, Sp, F.Id("a"), Comma, Operatorname, Grp(F.Id("scalingLedger")), Open, Ell, Comma, Operatorname, Grp(F.Id("mirror")), Open, F.Id("s"), Close, Comma, F.Id("a"), Close, Eq, Minus, Operatorname, Grp(F.Id("scalingLedger")), Open, Ell, Comma, F.Id("s"), Comma, F.Id("a"), Close, Close, Sp, Land, Sp, Open, F.Id("s"), Eq, Operatorname, Grp(F.Id("mirror")), Open, F.Id("s"), Close, Sp, Leftrightarrow, Sp, Re, Open, F.Id("s"), Close, Eq, Frac, Grp(D(1)), Grp(D(2)), Close))),
+                AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
-                    "For the entry given by displacement from one half times ledger length, mirroring negates every coordinate. The same theorem identifies the full fixed locus.")))
+                                    "For the entry given by displacement from one half times ledger length, mirroring negates every coordinate. The same theorem identifies the full fixed locus."))),
+                DescribeRole.Theorem
             ),
             DocumentBlock.Describe.Remark(
                 DescribeId.Create("symmetry-channel-is-not-location-force"),
