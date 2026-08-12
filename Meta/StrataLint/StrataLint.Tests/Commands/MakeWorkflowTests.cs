@@ -366,7 +366,7 @@ namespace StrataLint.Tests;
         Assert.True(producerEndIndex > producerIndex, "the cache-miss producer must be a bounded step");
         Assert.True(verifyIndex > producerIndex, "both restored and fresh reports must be verified");
         Assert.Contains(
-            "timeout-minutes: 15",
+            "timeout-minutes: 30",
             workflow[producerIndex..producerEndIndex],
             StringComparison.Ordinal);
         Assert.Single(Regex.Matches(workflow, "id: lean-report-cache"));
@@ -384,7 +384,7 @@ namespace StrataLint.Tests;
         Assert.Contains(LeanReportInputScriptPath, workflow, StringComparison.Ordinal);
         Assert.Contains("\" verify \\", workflow, StringComparison.Ordinal);
         Assert.Contains(".lake/build/stratalint/raw-lean-report.json", workflow, StringComparison.Ordinal);
-        Assert.Contains("timeout-minutes: 30", workflow, StringComparison.Ordinal);
+        Assert.Contains("timeout-minutes: 36", workflow, StringComparison.Ordinal);
         Assert.Contains("actions: read", workflow, StringComparison.Ordinal);
         Assert.DoesNotContain("          make lean\n", workflow, StringComparison.Ordinal);
         Assert.Contains("          make lean-report\n", workflow, StringComparison.Ordinal);
