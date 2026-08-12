@@ -8,7 +8,18 @@ namespace StrataLint.Cli;
 internal sealed record ShadowRecord(int PrNumber, long RunId, int RunAttempt, string HeadSha, string Outcome, double? WallSeconds);
 internal sealed record ShadowJob(int PrNumber, long RunId, int RunAttempt, bool Terminal, IReadOnlyList<ShadowRecord> Records);
 internal sealed record ShadowRunSnapshot(long RunId, int RunAttempt, int PrNumber, bool Terminal, string HeadSha = "");
-internal sealed record ShadowReconcileResult(bool WindowClosed, bool Halted, string? HaltReason, int N, int HitCount, double HitRate, double AmortisedMissSeconds, double MaxMissSeconds);
+internal sealed record ShadowReconcileResult(
+    bool WindowClosed,
+    bool Halted,
+    string? HaltReason,
+    int N,
+    int HitCount,
+    double HitRate,
+    double AmortisedMissSeconds,
+    double MaxMissSeconds)
+{
+    public string WindowStatus { get; init; } = "unknown";
+}
 
 internal static class ShadowJobConverter
 {
@@ -222,14 +233,20 @@ internal static class ShadowReconciler
         var closed = members.Length == windowSize;
         var selected = members.Select(m => m with { Records = m.Records.Where(r => r.RunId == m.RunId && r.RunAttempt == 1).ToArray() }).ToArray();
         var bad = selected.FirstOrDefault(m => !m.Terminal || m.Records.Count(r => r.Outcome is "hit" or "miss") != 1);
-        if (bad is not null) return new(false, true, $"PR #{bad.PrNumber}: job terminal/record reconciliation failed", selected.Length, 0, 0, 0, 0);
+        if (bad is not null) return new ShadowReconcileResult(false, true, $"PR #{bad.PrNumber}: job terminal/record reconciliation failed", selected.Length, 0, 0, 0, 0) { WindowStatus = "invalid" };
         var records = selected.Select(m => m.Records.Single(r => r.Outcome is "hit" or "miss")).ToArray();
+        if (records.Length == 0) return new ShadowReconcileResult(false, false, null, 0, 0, 0, 0, 0) { WindowStatus = "not-started" };
         var hits = records.Count(r => r.Outcome == "hit");
         var misses = records.Where(r => r.Outcome == "miss").ToArray();
-        var budget = misses.Sum(r => r.WallSeconds ?? double.NaN) / records.Length;
-        var max = misses.Length == 0 ? 0 : misses.Max(r => r.WallSeconds ?? double.NaN);
+        var missingMissDuration = misses.FirstOrDefault(r => r.WallSeconds is null || !double.IsFinite(r.WallSeconds.Value));
+        if (missingMissDuration is not null)
+            return new ShadowReconcileResult(false, true, $"PR #{missingMissDuration.PrNumber}: miss record has no finite wall_seconds", records.Length, hits, 0, 0, 0) { WindowStatus = "invalid" };
+        var budget = misses.Sum(r => r.WallSeconds!.Value) / records.Length;
+        if (!double.IsFinite(budget))
+            return new ShadowReconcileResult(false, true, "miss duration total is not finite", records.Length, hits, 0, 0, 0) { WindowStatus = "invalid" };
+        var max = misses.Length == 0 ? 0 : misses.Max(r => r.WallSeconds!.Value);
         string? reason = hits / (double)records.Length < .8 ? "hit rate below 80%" : budget > 30 ? "amortised miss budget above 30.0s/PR" : max > 180 ? "single miss above 180.0s" : null;
-        return new(closed, reason is not null, reason, records.Length, hits, hits / (double)records.Length, budget, max);
+        return new ShadowReconcileResult(closed, reason is not null, reason, records.Length, hits, hits / (double)records.Length, budget, max) { WindowStatus = closed ? "closed" : "open" };
     }
 }
 
