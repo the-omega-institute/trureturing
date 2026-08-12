@@ -3,7 +3,6 @@ using StrataLint.Engine;
 
 namespace StrataLint.Tests;
 
-[Trait("Category", "Script")]
 public sealed class TheoryIngestClosureScriptTests
 {
     [Fact]
