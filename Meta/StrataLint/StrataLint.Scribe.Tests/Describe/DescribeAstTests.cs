@@ -5,7 +5,7 @@ namespace StrataLint.Scribe.Tests;
 public sealed class DescribeAstTests
 {
     [Fact]
-    public void DescribeHasOnlyTheSixPublicKindFactories()
+    public void DescribeHasNoPublicLegacyKindFactories()
     {
         Assert.Empty(typeof(DocumentBlock.Describe).GetConstructors(BindingFlags.Instance | BindingFlags.Public));
 
@@ -15,47 +15,14 @@ public sealed class DescribeAstTests
             .OrderBy(static method => method.Name, StringComparer.Ordinal)
             .ToArray();
 
-        Assert.Equal(
-            ["Definition", "Example", "Lemma", "Proposition", "Remark", "Theorem"],
-            factories.Select(static method => method.Name));
-        Assert.Equal(
-            [
-                typeof(DescribeId), typeof(Heading), typeof(LeanDeclarationRef),
-                typeof(DescribeProvenance), typeof(BlockSequence), typeof(Formula),
-            ],
-            Assert.Single(factories, static method => method.Name == "Definition")
-                .GetParameters().Select(static parameter => parameter.ParameterType));
-        Assert.Equal(
-            [
-                typeof(DescribeId), typeof(Heading), typeof(Formula),
-                typeof(DescribeProvenance), typeof(BlockSequence),
-            ],
-            Assert.Single(factories, static method => method.Name == "Example")
-                .GetParameters().Select(static parameter => parameter.ParameterType));
-        Assert.Equal(
-            [
-                typeof(DescribeId), typeof(Heading), typeof(DescribeStatement),
-                typeof(DescribeProvenance), typeof(BlockSequence),
-            ],
-            Assert.Single(factories, static method => method.Name == "Remark")
-                .GetParameters().Select(static parameter => parameter.ParameterType));
-        foreach (var name in new[] { "Theorem", "Proposition", "Lemma" })
-        {
-            Assert.Equal(
-                [
-                    typeof(DescribeId), typeof(Heading), typeof(LeanDeclarationRef),
-                    typeof(Formula), typeof(DescribeProvenance), typeof(BlockSequence),
-                ],
-                Assert.Single(factories, method => method.Name == name)
-                    .GetParameters().Select(static parameter => parameter.ParameterType));
-        }
+        Assert.Empty(factories);
     }
 
     [Fact]
-    public void TheoremFactoryFailsClosedForNullLatexAtRuntime()
+    public void LeanFacadeFailsClosedForNullStatementSourceAtRuntime()
     {
-        var factory = typeof(DocumentBlock.Describe).GetMethod(
-            "Theorem",
+        var factory = typeof(Describe).GetMethod(
+            nameof(Describe.Lean),
             BindingFlags.Static | BindingFlags.Public);
         Assert.NotNull(factory);
 
@@ -63,11 +30,12 @@ public sealed class DescribeAstTests
             null,
             [
                 DescribeId.Create("required-claim"),
+                DeclarationHandle.Create("D5/S1/Phase/Basic.required_claim"),
                 Heading.Create("Required claim"),
-                DefinitionDsl.LeanTheorem("D5/S1/Phase/Basic.required_claim"),
                 null,
-                DescribeProvenance.RepoDerived(),
+                AssessedProvenance.FromRepo(),
                 DefinitionDsl.Blocks(DefinitionDsl.Paragraph(DefinitionDsl.Text("Content."))),
+                DescribeRole.Theorem,
             ]));
 
         Assert.IsType<ArgumentNullException>(exception.InnerException);
@@ -76,7 +44,7 @@ public sealed class DescribeAstTests
     [Fact]
     public void DescribeNodeCarriesKindStatementProvenanceAndContent()
     {
-        var provenance = DescribeProvenance.RepoDerived();
+        var provenance = AssessedProvenance.FromRepo();
         var content = BlockSequence.Create(
         [
             new DocumentBlock.Paragraph(InlineSequence.Create(
@@ -85,13 +53,11 @@ public sealed class DescribeAstTests
             ])),
         ]);
 
-        var describe = DocumentBlock.Describe.Definition(
+        var describe = Describe.Lean(
             DescribeId.Create("golden-generator"),
+            DeclarationHandle.Create("D5/S1/Phase/Basic.golden_generator"),
             Heading.Create("Golden generator"),
-            DefinitionDsl.LeanTheorem("D5/S1/Phase/Basic.golden_generator"),
-            provenance,
-            content,
-            new Formula.Layout(
+            StatementSource.FromAuthor(new Formula.Layout(
                 FormulaLayoutMode.Inline,
                 new Formula.Relation(
                     new Formula.Power(new Formula.Phi(), new Formula.Number(2)),
@@ -99,12 +65,16 @@ public sealed class DescribeAstTests
                     new Formula.Binary(
                         new Formula.Phi(),
                         FormulaBinaryOperator.Add,
-                        new Formula.Number(1)))));
+                        new Formula.Number(1))))),
+            provenance,
+            content,
+            DescribeRole.Definition);
 
         Assert.Equal("golden-generator", describe.Id.Value);
         Assert.Equal(DescribeKind.Definition, describe.Kind);
         Assert.IsType<DescribeStatement.LeanDeclaration>(describe.Statement);
-        Assert.Equal(DescribeProvenanceKind.RepoDerived, describe.Provenance.Kind);
+        Assert.Equal(DescribeProvenanceKind.RepoDerived, describe.ProvenanceKind);
+        Assert.IsType<AssessedProvenance.RepoDerived>(describe.AssessedProvenance);
         Assert.Same(content, describe.Content);
         Assert.Equal("$\\varphi^{2} = \\varphi + 1$", describe.StatementFormula is null ? null : LatexWriter.WriteStatement(describe.StatementFormula));
     }
@@ -181,8 +151,10 @@ public sealed class DescribeAstTests
     [Fact]
     public void DescribeRejectsMissingRequiredFields()
     {
-        var provenance = DescribeProvenance.RepoDerived();
+        var provenance = AssessedProvenance.FromRepo();
         var id = DescribeId.Create("required-claim");
+        var handle = DeclarationHandle.Create("D5/S1/Phase/Basic.required_claim");
+        var statement = StatementSource.WithoutFormula();
         var content = BlockSequence.Create(
         [
             new DocumentBlock.Paragraph(InlineSequence.Create(
@@ -191,40 +163,48 @@ public sealed class DescribeAstTests
             ])),
         ]);
 
-        Assert.Throws<ArgumentNullException>(() => DocumentBlock.Describe.Definition(
+        Assert.Throws<ArgumentNullException>(() => Describe.Lean(
             null!,
+            handle,
             Heading.Create("Missing ID"),
-            DefinitionDsl.LeanTheorem("D5/S1/Phase/Basic.required_claim"),
+            statement,
             provenance,
-            content));
-        Assert.Throws<ArgumentNullException>(() => DocumentBlock.Describe.Definition(
+            content,
+            DescribeRole.Definition));
+        Assert.Throws<ArgumentNullException>(() => Describe.Lean(
             id,
+            handle,
             null!,
-            DefinitionDsl.LeanTheorem("D5/S1/Phase/Basic.required_claim"),
+            statement,
             provenance,
-            content));
-        Assert.Throws<ArgumentNullException>(() => DocumentBlock.Describe.Definition(
+            content,
+            DescribeRole.Definition));
+        Assert.Throws<ArgumentNullException>(() => Describe.Lean(
             id,
+            handle,
             Heading.Create("Missing statement"),
             null!,
             provenance,
-            content));
-        Assert.Throws<ArgumentNullException>(() => DocumentBlock.Describe.Definition(
+            content,
+            DescribeRole.Definition));
+        Assert.Throws<ArgumentNullException>(() => Describe.Lean(
             id,
+            handle,
             Heading.Create("Missing provenance"),
-            DefinitionDsl.LeanTheorem("D5/S1/Phase/Basic.required_claim"),
+            statement,
             null!,
-            content));
+            content,
+            DescribeRole.Definition));
     }
 
     [Fact]
     public void DocumentRejectsDuplicateDescribeIdsAcrossNestedBlocks()
     {
-        DocumentBlock.Describe Describe(string title) => DocumentBlock.Describe.Remark(
+        DocumentBlock.Describe CreateDescribe(string title) => Describe.Remark(
             DescribeId.Create("same-claim"),
             Heading.Create(title),
-            DescribeStatement.FromFormula(new Formula.Phi()),
-            DescribeProvenance.RepoDerived(),
+            new Formula.Phi(),
+            AssessedProvenance.FromRepo(),
             BlockSequence.Create(
             [
                 DefinitionDsl.Paragraph(DefinitionDsl.Text("Typed content.")),
@@ -235,10 +215,10 @@ public sealed class DescribeAstTests
             Heading.Create("Duplicate IDs"),
             BlockSequence.Create(
             [
-                Describe("First"),
+                CreateDescribe("First"),
                 new DocumentBlock.Section(
                     Heading.Create("Nested"),
-                    BlockSequence.Create([Describe("Second")])),
+                    BlockSequence.Create([CreateDescribe("Second")])),
             ])));
     }
 }
