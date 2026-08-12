@@ -6,7 +6,7 @@ Extending an implementation population can separate verdict columns that previou
 
 **Theorem 1.1 (A new implementation can split two previously identical verdict columns).**
 
-$$\forall I, T, V, r: I \to T \to V, t1, t2, (\operatorname{Nontrivial}(V) \land t1 \neq t2 \land \forall i, r(i, t1) = r(i, t2)) \Rightarrow \exists \widehat{r}, \widehat{r}: \operatorname{Option}(I) \to T \to V, (\forall i, t, \widehat{r}(\operatorname{some}(i), t) = r(i, t)) \land \widehat{r}(\operatorname{none}, t1) \neq \widehat{r}(\operatorname{none}, t2).$$
+$$\forall I, T, V, r: I \to T \to V, t1, t2, (\operatorname{Nontrivial}(V) \land t1 \neq t2 \land \forall i, r(i, t1) = r(i, t2)) \Rightarrow \exists \widehat{r}: \operatorname{Option}(I) \to T \to V, (\forall i, t, \widehat{r}(\operatorname{some}(i), t) = r(i, t)) \land \widehat{r}(\operatorname{none}, t1) \neq \widehat{r}(\operatorname{none}, t2).$$
 
 *Proof.* Machine-checked in Lean as `D5/S0/Naming/VerdictColumnSeparation.verdict_columns_can_split` (`✓ std3`). ∎
 
