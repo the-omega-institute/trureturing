@@ -68,7 +68,6 @@ public sealed class FileMapRunLocalTrackingTests
         produced_by = "PartitionEmitter"
         consumed_by = ["reader"]
         verified_by = ["PartitionEmitter"]
-        authority = "self"
         artifact_id = "none"
         runtime_disposition = "run-local"
 
@@ -81,7 +80,6 @@ public sealed class FileMapRunLocalTrackingTests
         produced_by = "ScribeEmitter"
         consumed_by = ["reader"]
         verified_by = ["ScribeEmitter"]
-        authority = "self"
         artifact_id = "none"
         runtime_disposition = "committed-source"
 

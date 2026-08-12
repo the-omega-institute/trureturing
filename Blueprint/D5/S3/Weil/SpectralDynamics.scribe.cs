@@ -9,10 +9,8 @@ internal sealed class SpectralDynamicsDocument : IScribeDocumentDefinition
     private static readonly LibraryNoteRef HedenmalmHilbert =
         LibraryNoteRef.Create("D5/L/hedenmalm1997hilbert");
 
-    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
-        Header(
-            "D5/S3/Weil/SpectralDynamics",
-            "Coefficient dynamics and zero resonance align spectral geometry on the O-6 path."),
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "Coefficient dynamics and zero resonance align spectral geometry on the O-6 path.",
         H("Spectral Dynamics Toward Weil Positivity"),
         Blocks(
             Describe.Lean(

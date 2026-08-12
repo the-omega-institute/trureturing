@@ -9,10 +9,8 @@ internal sealed class SpectralHilbertDocument : IScribeDocumentDefinition
     private static readonly LibraryNoteRef HedenmalmHilbert =
         LibraryNoteRef.Create("D5/L/hedenmalm1997hilbert");
 
-    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
-        Header(
-            "D5/S3/Weil/SpectralHilbert",
-            "The square-summable zeta coefficient geometry supplies a spectral foundation for Weil positivity."),
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "The square-summable zeta coefficient geometry supplies a spectral foundation for Weil positivity.",
         H("The Spectral Hilbert Foundation"),
         Blocks(
             Describe.Lean(

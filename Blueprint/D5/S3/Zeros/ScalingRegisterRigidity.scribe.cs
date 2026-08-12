@@ -18,10 +18,8 @@ internal sealed class ScalingRegisterRigidityDocument : IScribeDocumentDefinitio
             expectedKind: LeanDeclarationKind.Inductive,
             requireNoSorry: true);
 
-    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
-        Header(
-            "D5/S3/Zeros/ScalingRegisterRigidity",
-            "Typed realization carries analytic uniqueness through the registered action to conditional total-code rigidity."),
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "Typed realization carries analytic uniqueness through the registered action to conditional total-code rigidity.",
         H("Scaling-Register Rigidity"),
         Blocks(
             Describe.Lean(

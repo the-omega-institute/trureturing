@@ -17,10 +17,8 @@ internal sealed class EulerWindowsDocument : IScribeDocumentDefinition
             expectedKind: LeanDeclarationKind.Definition,
             requireNoSorry: true);
 
-    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
-        Header(
-            "D5/S3/Zeros/EulerWindows",
-            "The prime-axis coordinate trace agrees with zeta in its convergence domain, while finite prime windows stay zero-free."),
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "The prime-axis coordinate trace agrees with zeta in its convergence domain, while finite prime windows stay zero-free.",
         H("Euler Windows Below the Completed Zero Reading"),
         Blocks(
             Describe.Lean(

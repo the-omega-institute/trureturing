@@ -6,10 +6,8 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Weil;
 
 internal sealed class ReflectionLedgerDocument : IScribeDocumentDefinition
 {
-    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
-        Header(
-            "D5/S3/Weil/ReflectionLedger",
-            "Conjugate reflection reverses scaling entries around the critical line."),
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "Conjugate reflection reverses scaling entries around the critical line.",
         H("Conjugate Reflection and Scaling"),
         Blocks(
             Describe.Lean(

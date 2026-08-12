@@ -17,10 +17,8 @@ internal sealed class CompletedZetaDocument : IScribeDocumentDefinition
             expectedKind: LeanDeclarationKind.Definition,
             requireNoSorry: true);
 
-    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
-        Header(
-            "D5/S3/Zeros/CompletedZeta",
-            "Continuation uniqueness, an entire xi reading, and conditional zero symmetry support the O-6 route."),
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "Continuation uniqueness, an entire xi reading, and conditional zero symmetry support the O-6 route.",
         H("Completed Zeta and the Zero-Symmetry Foundation"),
         Blocks(
             Describe.Lean(

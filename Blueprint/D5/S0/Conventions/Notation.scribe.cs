@@ -4,10 +4,8 @@ namespace StrataLint.Scribe.Blueprint.D5.S0.Conventions;
 
 internal sealed class NotationDocument : IScribeDocumentDefinition
 {
-    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
-        Header(
-            "D5/S0/Conventions/Notation",
-            "Golden notation remains opt-in and names the carrier, generator, conjugation, and norm."),
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "Golden notation remains opt-in and names the carrier, generator, conjugation, and norm.",
         H("Golden Notation"),
         Blocks(
             Paragraph(

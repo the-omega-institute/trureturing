@@ -15,10 +15,8 @@ internal sealed class LogarithmicLengthDocument : IScribeDocumentDefinition
             expectedKind: LeanDeclarationKind.Definition,
             requireNoSorry: true);
 
-    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
-        Header(
-            "D5/S3/Factorization/LogarithmicLength",
-            "A natural number's logarithm is the exponent-weighted sum of its prime-factor logarithms."),
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "A natural number's logarithm is the exponent-weighted sum of its prime-factor logarithms.",
         H("Logarithmic Length from Prime Factorization"),
         Blocks(
             Describe.Lean(
