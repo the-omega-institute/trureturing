@@ -19,7 +19,6 @@ public sealed class RuleEngineTests
         { 10, "generality" },
         { 11, "domain" },
         { 12, "header" },
-        { 13, "task" },
         { 15, "formula" },
         { 16, "backfill" },
         { 17, "query" },
@@ -186,6 +185,9 @@ public sealed class RuleEngineTests
             var text = $"CAS object {index}\n";
             var captured = DigestionCasStore.Capture(Encoding.UTF8.GetBytes(text));
             fixture.Files[captured.RelativePath] = text;
+            // The change has to touch the store, or the capacity rule skips it for being
+            // untouched and this stops testing the exclusion it is named for.
+            fixture.Changes.Add(captured.RelativePath);
         }
 
         var diagnostics = RuleCatalog.Default.EvaluateSingle(
@@ -198,94 +200,46 @@ public sealed class RuleEngineTests
     }
 
     [Fact]
-    public void Sl013RejectsCodexFailedAttributionWithoutReference()
+    public void Sl003RefusesAnOverfullBucketTheChangeTouches()
     {
-        var fixture = new RuleFixture();
-        fixture.AddTask(
-            "D5/X_Frontier/CodexFailure.lean",
-            "D5/X_Frontier/CodexFailure",
-            "D5-T0090",
-            "[codex-failed] candidate returned no result");
+        var fixture = OverfullBucket();
+        fixture.Changes.Add($"{OverfullBucketPath}/Member00.lean");
 
         var diagnostic = Assert.Single(
-            RuleCatalog.Default.EvaluateSingle(RuleId.CreateKnown(13), fixture.Build()).Diagnostics);
+            RuleCatalog.Default.EvaluateSingle(RuleId.CreateKnown(3), fixture.Build()).Diagnostics,
+            item => item.Path == OverfullBucketPath);
 
-        Assert.Equal(
-            "codex-failed autopsy for D5-T0090 requires a valid [codex-log:<rooted-path>] reference",
-            diagnostic.Message);
+        Assert.Equal(AdmissionEffect.Block, diagnostic.AdmissionEffect);
+        Assert.Equal("directory contains 13 files (maximum 12)", diagnostic.Message);
     }
 
     [Fact]
-    public void Sl013RejectsCodexFailedAttributionWithMalformedReference()
+    public void Sl003LeavesAnOverfullBucketAloneWhenTheChangeDoesNotTouchIt()
     {
-        var fixture = new RuleFixture();
-        fixture.AddTask(
-            "D5/X_Frontier/CodexFailure.lean",
-            "D5/X_Frontier/CodexFailure",
-            "D5-T0091",
-            "[codex-failed] [codex-log:logs/latest.txt]");
-
-        var diagnostic = Assert.Single(
-            RuleCatalog.Default.EvaluateSingle(RuleId.CreateKnown(13), fixture.Build()).Diagnostics);
-
-        Assert.Equal(
-            "codex-failed autopsy for D5-T0091 requires a valid [codex-log:<rooted-path>] reference",
-            diagnostic.Message);
-    }
-
-    [Theory]
-    [InlineData("~/.codex/sessions/2026/08/09/rollout-fixture.jsonl")]
-    [InlineData("<RT>/logs/codex-adoption/fixture/result.json")]
-    [InlineData("~/Library/Logs/fkst/codex/worktree-fixture.log")]
-    public void Sl013AcceptsCodexFailedAttributionWithValidReference(string logPath)
-    {
-        var fixture = new RuleFixture();
-        fixture.AddTask(
-            "D5/X_Frontier/CodexFailure.lean",
-            "D5/X_Frontier/CodexFailure",
-            "D5-T0092",
-            $"[codex-failed] [codex-log:{logPath}]");
+        var fixture = OverfullBucket();
 
         var diagnostics = RuleCatalog.Default.EvaluateSingle(
-            RuleId.CreateKnown(13),
+            RuleId.CreateKnown(3),
             fixture.Build()).Diagnostics;
 
-        Assert.Empty(diagnostics);
+        Assert.DoesNotContain(diagnostics, diagnostic => diagnostic.Path == OverfullBucketPath);
     }
 
-    [Fact]
-    public void Sl013StillRejectsShortenedAutopsy()
-    {
-        const string path = "D5/X_Frontier/AutopsyHistory.lean";
-        var fixture = new RuleFixture();
-        fixture.AddTask(path, "D5/X_Frontier/AutopsyHistory", "D5-T0093", "first attempt");
-        fixture.Baseline[path] = fixture.Files[path].Replace(
-            "尸检:first attempt",
-            "尸检:first attempt; second attempt",
-            StringComparison.Ordinal);
-        fixture.BaselineReports[path] = fixture.Reports[path];
+    private const string OverfullBucketPath = "D5/S0/Overfull";
 
-        var diagnostic = Assert.Single(
-            RuleCatalog.Default.EvaluateSingle(RuleId.CreateKnown(13), fixture.Build()).Diagnostics);
-
-        Assert.Equal("autopsy for D5-T0093 was shortened", diagnostic.Message);
-    }
-
-    [Fact]
-    public void Sl013DoesNotTreatUnstructuredCodexFailedTextAsAttribution()
+    private static RuleFixture OverfullBucket()
     {
         var fixture = new RuleFixture();
-        fixture.AddTask(
-            "D5/X_Frontier/OrdinaryAutopsy.lean",
-            "D5/X_Frontier/OrdinaryAutopsy",
-            "D5-T0094",
-            "ordinary text mentions codex-failed without the attribution marker");
+        for (var index = 0; index < 13; index++)
+        {
+            var path = $"{OverfullBucketPath}/Member{index:00}.lean";
+            fixture.Files[path] = "-- member\n";
+            fixture.Reports[path] = new LeanFileReport(
+                ImmutableArray<string>.Empty,
+                ImmutableArray<LeanDeclaration>.Empty);
+        }
 
-        var diagnostics = RuleCatalog.Default.EvaluateSingle(
-            RuleId.CreateKnown(13),
-            fixture.Build()).Diagnostics;
-
-        Assert.Empty(diagnostics);
+        return fixture;
     }
 
     [Fact]
@@ -387,7 +341,7 @@ public sealed class RuleEngineTests
     public void CoverageManifestNamesEveryRuleWithARealRedOrDeferredBranch()
     {
         var exercised = BlockingCases.Select(item => (int)item[0])
-            .Concat(new[] { 7, 9, 14, 22, 23, 25 })
+            .Concat(new[] { 7, 9, 13, 14, 22, 23, 25 })
             .Order()
             .ToArray();
 

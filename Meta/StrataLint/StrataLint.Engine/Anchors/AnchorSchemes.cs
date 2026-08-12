@@ -6,6 +6,7 @@ public enum AnchorScheme
 {
     Literature,
     Mathlib,
+    Lake,
 }
 
 public enum MathlibTargetKind

@@ -49,18 +49,14 @@ public static class LeanReferenceResolver
         }
 
         var declaration = matches[0];
-        if (reference.ExpectedKind is { } expectedKind)
-        {
-            var expected = ReportKind(expectedKind);
-            if (!string.Equals(expected, declaration.Kind, StringComparison.Ordinal))
-            {
-                throw new InvalidOperationException(
-                    $"Lean declaration {reference.Value} expected {expected}, found {declaration.Kind}.");
-            }
-        }
-
-        if (reference.RequireNoSorry
-            && declaration.Axioms.Contains("sorryAx", StringComparer.Ordinal))
+        // The kind assertion is gone rather than moved. It compared the report against a kind the
+        // author typed at the call site; there is no longer an authored kind to compare, because the
+        // catalog reads the declaration's kind from the report.
+        //
+        // The sorry check is now unconditional. It used to be opt-in through `requireNoSorry`, and
+        // the only production caller never opted in, so it never ran. DeclarationCatalog.Resolve
+        // already refuses a declaration whose axiom closure contains sorryAx; this path now agrees.
+        if (declaration.Axioms.Contains("sorryAx", StringComparer.Ordinal))
         {
             throw new InvalidOperationException(
                 $"Lean declaration {reference.Value} requires a sorry-free axiom closure, "

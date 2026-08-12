@@ -97,7 +97,6 @@ public static class BootstrapGate
 {
     internal const string ProtectedSurfaceMessage =
         "protected-surface change detected (SL-022)";
-    internal const string SpecificationPath = "docs/develop/spec/golden-ledger-repo-spec.md";
     internal const string DefinitionsPathPrefix =
         "Meta/StrataLint/StrataLint.Definitions/";
 
@@ -122,7 +121,10 @@ public static class BootstrapGate
                 nameof(changeSet));
         }
 
-        var descriptor = RuleCatalog.Default.Descriptors[21];
+        // 按 Id 查,不按位置。位置会随目录里任何一条规则的增删而位移,
+        // 而这个 descriptor 必须始终是 SL-022 本身。
+        var descriptor = RuleCatalog.Default.Descriptors
+            .Single(item => item.Id.Value == "SL-022");
         return changeSet.Paths
             .OrderBy(static path => path.Value, StringComparer.Ordinal)
             .Select(path => new Diagnostic(

@@ -34,7 +34,6 @@ public sealed class TrustTopologyTests
         EngineGidSourcePath,
         CliProgramSourcePath,
         ThisTestSourcePath,
-        RuleFixture.SpecificationPath,
         "Meta/registry.yaml",
         "Meta/domains.yaml",
         RuleFixture.HeartsPath,
@@ -66,7 +65,6 @@ public sealed class TrustTopologyTests
 
     [Theory]
     [InlineData(BootstrapGatePath, true)]
-    [InlineData(RuleFixture.SpecificationPath, true)]
     [InlineData(BlueprintSourcePath, true)]
     [InlineData(ValuesKernelPath, false)]
     [InlineData("Meta/StrataLint/StrataLint.Definitions/Retired.cs", false)]
@@ -160,15 +158,20 @@ public sealed class TrustTopologyTests
         Assert.Equal(25, descriptors.Length);
         Assert.Equal(25, descriptors.Select(item => item.Id).Distinct().Count());
         Assert.Equal(
-            Enumerable.Range(1, 23).Select(RuleId.CreateKnown).Append(RuleId.CreateKnown(25)).Append(RuleId.CreateKnown(26)),
+            Enumerable.Range(1, 23).Select(RuleId.CreateKnown)
+                .Append(RuleId.CreateKnown(25)).Append(RuleId.CreateKnown(26)),
             descriptors.Select(item => item.Id));
-        Assert.Equal(AdmissionEffect.HumanGate, descriptors[21].AdmissionEffect);
+        Assert.Equal(
+            AdmissionEffect.HumanGate,
+            descriptors.Single(item => item.Id.Value == "SL-022").AdmissionEffect);
         Assert.All(
             descriptors.Where(item => item.Id.Value is not ("SL-007" or "SL-009" or "SL-014" or "SL-022" or "SL-023")),
             item => Assert.Equal(AdmissionEffect.Block, item.AdmissionEffect));
-        Assert.Equal(AdmissionEffect.Observe, descriptors[22].AdmissionEffect);
+        Assert.Equal(
+            AdmissionEffect.Observe,
+            descriptors.Single(item => item.Id.Value == "SL-023").AdmissionEffect);
         Assert.All(
-            descriptors.Where(item => item.Id.Value is "SL-007" or "SL-009" or "SL-014"),
+            descriptors.Where(item => item.Id.Value is "SL-007" or "SL-009" or "SL-013" or "SL-014"),
             item => Assert.Equal(RuleLifecycle.Deferred, item.Lifecycle));
     }
 

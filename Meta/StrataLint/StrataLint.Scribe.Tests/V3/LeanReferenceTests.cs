@@ -24,19 +24,6 @@ public sealed class LeanReferenceTests
     }
 
     [Fact]
-    public void ExpectedKindMismatchFailsClosed()
-    {
-        var reference = Reference();
-        var report = Report(Declaration(kind: "def"));
-
-        var exception = Assert.Throws<InvalidOperationException>(
-            () => LeanReferenceResolver.Resolve(reference, report));
-
-        Assert.Contains("expected theorem", exception.Message, StringComparison.Ordinal);
-        Assert.Contains("found def", exception.Message, StringComparison.Ordinal);
-    }
-
-    [Fact]
     public void RequiredNoSorryRejectsSorryAxiomClosure()
     {
         var reference = Reference();
@@ -50,20 +37,26 @@ public sealed class LeanReferenceTests
     }
 
     [Fact]
-    public void AxiomClosureProducesHonestBadges()
+    public void AStandardAxiomClosureBadgesAsStd3()
     {
         var strict = LeanReferenceResolver.Resolve(
             Reference(),
             Report(Declaration(axioms: ["propext", "Classical.choice", "Quot.sound"])));
-        var sorry = LeanReferenceResolver.Resolve(
-            LeanDeclarationRef.Create(
-                Gid,
-                expectedKind: LeanDeclarationKind.Theorem,
-                requireNoSorry: false),
-            Report(Declaration(axioms: ["sorryAx"])));
 
         Assert.Equal("✓ std3", strict.AxiomBadge);
-        Assert.Equal("⚠ sorryAx", sorry.AxiomBadge);
+    }
+
+    [Fact]
+    public void ASorryBearingDeclarationIsRefused()
+    {
+        // This used to resolve and carry a "⚠ sorryAx" badge, reachable only by passing
+        // requireNoSorry: false. That opt-out is gone: the sole production caller never passed it,
+        // so the check never ran here, while DeclarationCatalog.Resolve — the path every
+        // report-derived Describe node takes — has always refused a sorryAx closure outright.
+        // The two paths now agree, and a document cannot cite an incomplete proof either way.
+        Assert.Throws<InvalidOperationException>(() => LeanReferenceResolver.Resolve(
+            LeanDeclarationRef.Create(Gid),
+            Report(Declaration(axioms: ["sorryAx"]))));
     }
 
     [Fact]
@@ -108,11 +101,7 @@ public sealed class LeanReferenceTests
         Assert.DoesNotContain(typeRepresentation, text, StringComparison.Ordinal);
     }
 
-    private static LeanDeclarationRef Reference() =>
-        LeanDeclarationRef.Create(
-            Gid,
-            expectedKind: LeanDeclarationKind.Theorem,
-            requireNoSorry: true);
+    private static LeanDeclarationRef Reference() => LeanDeclarationRef.Create(Gid);
 
     private static LeanDeclaration Declaration(
         string kind = "theorem",

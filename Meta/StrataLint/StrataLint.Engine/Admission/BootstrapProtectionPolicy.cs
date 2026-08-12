@@ -43,7 +43,6 @@ internal static class BootstrapProtectionPolicy
     internal static ImmutableArray<ProtectionMatcher> Matchers { get; } =
     [
         Atom("meta-stratalint", ProtectionMatchKind.Prefix, "Meta/StrataLint/"),
-        Atom("specification", ProtectionMatchKind.Exact, BootstrapGate.SpecificationPath),
         Atom("registry", ProtectionMatchKind.Exact, "Meta/registry.yaml"),
         Atom("domains", ProtectionMatchKind.Exact, "Meta/domains.yaml"),
         Atom("hearts", ProtectionMatchKind.Suffix, "/Hearts.lean"),

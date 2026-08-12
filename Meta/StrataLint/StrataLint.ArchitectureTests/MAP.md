@@ -9,9 +9,7 @@
 - `CanonicalSources/FileMap/`: FILEMAP closed-world coverage, producer/loader identity,
   data residence, class-directory purity, and dependency-direction fixtures.
 - `Dependencies/`: compiled assembly dependency direction, retired-assembly absence,
-  final source ownership, whitelist fixtures, and a tripwire on the
-  ledger replay types named along Papergen's direct type references -- a bounded syntactic
-  check with documented gaps, not a proof that the machinery is unreachable.
+  final source ownership, and whitelist fixtures.
 - `Namespaces/`: source path to namespace policy, including Blueprint linked-source conventions.
 - `PublicSurface/`: the exact exported Engine type allowlist.
 
