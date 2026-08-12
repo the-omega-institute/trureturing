@@ -93,10 +93,10 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
                 return new AdmissionOutcome.InfrastructureFailure(bootstrapFailure.Message);
             }
 
-            if (options.CandidateLeanReport is null || options.BaselineLeanReport is null)
+            if (options.CandidateLeanReport is null)
             {
                 return new AdmissionOutcome.InfrastructureFailure(
-                    "check requires --candidate-lean-report FILE and --baseline-lean-report FILE");
+                    "check requires --candidate-lean-report FILE");
             }
 
             var current = Decode(repository.ReadCurrent());
@@ -116,7 +116,11 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
                 current,
                 baseline,
                 candidateLeanReport,
-                RawLeanReportArtifact.ReadFile(options.BaselineLeanReport, baseline),
+                // 旧侧 Lean 报告只有 Hearts.lean 变动时才需要;不给就传 null,
+                // Hearts 规则在那种情况下 fail-closed 报 finding,而不是放行。
+                options.BaselineLeanReport is null
+                    ? null
+                    : RawLeanReportArtifact.ReadFile(options.BaselineLeanReport, baseline),
                 prepared.Changes,
                 bootstrap,
                 verifiedScribeEmissions,
