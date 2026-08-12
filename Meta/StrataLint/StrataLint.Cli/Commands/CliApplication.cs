@@ -31,8 +31,6 @@ internal interface ICliEnvironment
 
     CommandResult EmitFormalizationReceipt(IReadOnlyList<string> arguments);
 
-    ExplicitCommandResult Papergen(IReadOnlyList<string> arguments);
-
     CommandResult Route(IReadOnlyList<string> arguments);
 
     ExplicitCommandResult ValidateBlueprintPins(IReadOnlyList<string> arguments);
@@ -112,8 +110,6 @@ internal static class CliApplication
                 RenderCommand(environment.ReattestLedger(tail), console),
             ["lean-report-merge"] = static (_, tail, console) =>
                 RenderCommand(LeanReportMergeCommand.Run(tail), console),
-            ["papergen"] = static (environment, tail, console) =>
-                RenderExplicit(environment.Papergen(tail), console),
             ["perf-append"] = static (environment, tail, console) =>
                 RenderCommand(environment.AppendPerf(tail), console),
             ["perf-report"] = static (environment, tail, console) =>

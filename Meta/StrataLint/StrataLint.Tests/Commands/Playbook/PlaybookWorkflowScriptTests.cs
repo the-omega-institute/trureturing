@@ -3,7 +3,6 @@ using StrataLint.Engine;
 
 namespace StrataLint.Tests;
 
-[Trait("Category", "Script")]
 public sealed class PlaybookWorkflowScriptTests
 {
     private const string ScriptPath = "Meta/StrataLint/scripts/workflow/playbook-workflows.sh";
