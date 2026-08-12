@@ -153,7 +153,10 @@ public sealed class RuleEngineTests
             RuleCatalog.Default.EvaluateSingle(RuleId.CreateKnown(3), soft.Build()).Diagnostics);
         Assert.Equal(AdmissionEffect.Observe, softDiag.AdmissionEffect);
         Assert.Equal(DisplaySeverity.Warning, softDiag.DisplaySeverity);
-        Assert.Contains("soft limit 600", softDiag.Message, StringComparison.Ordinal);
+        Assert.Contains(
+            $"soft limit {RepositoryRules.ArtifactSoftLineLimit}",
+            softDiag.Message,
+            StringComparison.Ordinal);
 
         // > 800: a hard block.
         var hard = new RuleFixture();
@@ -210,7 +213,16 @@ public sealed class RuleEngineTests
             item => item.Path == OverfullBucketPath);
 
         Assert.Equal(AdmissionEffect.Block, diagnostic.AdmissionEffect);
-        Assert.Equal("directory contains 13 files (maximum 12)", diagnostic.Message);
+        // Read from the constants, not from a literal. The old message said "maximum 12" flat,
+        // with the 12 typed into the string rather than interpolated, so it named the admission
+        // capacity as if it were the only limit and would have kept saying 12 after a change to
+        // DirectoryFileLimit. The repository-wide net tolerates DirectoryToleranceLimit above it;
+        // an overfull bucket is split pressure, not a correctness fault.
+        Assert.Equal(
+            $"directory contains 13 files (admission limit {RepositoryRules.DirectoryFileLimit}, "
+            + $"repository tolerance {RepositoryRules.DirectoryToleranceLimit}; "
+            + "split per CLAUDE.md 8)",
+            diagnostic.Message);
     }
 
     [Fact]
