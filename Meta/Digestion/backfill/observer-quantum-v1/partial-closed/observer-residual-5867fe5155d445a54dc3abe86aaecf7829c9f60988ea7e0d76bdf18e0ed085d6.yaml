@@ -4,6 +4,8 @@ fingerprints:
   normalized_sha256: sha256:5867fe5155d445a54dc3abe86aaecf7829c9f60988ea7e0d76bdf18e0ed085d6
 cas_ref: sha256:5867fe5155d445a54dc3abe86aaecf7829c9f60988ea7e0d76bdf18e0ed085d6
 coverage_gids:
+  - D5/S3/ObserverMemory/LedgerEnvironmentBridge.one_record_channel_is_environment_marginal
+  - D5/S3/ObserverMemory/LedgerEnvironmentBridge.finite_record_channel_is_iterated_decoherence
   - D5/S3/Quantum/Decoherence.phase_damping_composition
   - D5/S3/Quantum/Decoherence.phase_damping_fixed_iff_diagonal
   - D5/S3/Quantum/EnvironmentRecords.trace_environment_controlled_record_eq_phase_damping
