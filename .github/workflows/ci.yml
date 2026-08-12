@@ -464,6 +464,77 @@ jobs:
             ~/.cache/mathlib
           key: ${{ runner.os }}-${{ runner.arch }}-lake-${{ hashFiles('candidate/lake-manifest.json', 'baseline/lake-manifest.json') }}-${{ hashFiles('candidate/lean-toolchain', 'baseline/lean-toolchain') }}-${{ github.event.pull_request.head.sha || github.sha }}-${{ steps.baseline.outputs.sha }}
 
+  old-side-report-shadow:
+    name: Old-side Lean report shadow measurement
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    continue-on-error: true
+    steps:
+      - name: Check out PR with history
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Resolve and check out merge-base (fork point)
+        shell: bash
+        run: |
+          set -euo pipefail
+          git fetch --no-tags origin "${{ github.event.pull_request.base.sha || github.event.before }}"
+          head_sha="${{ github.event.pull_request.head.sha || github.sha }}"
+          base_sha="${{ github.event.pull_request.base.sha || github.event.before }}"
+          fork_sha="$(git merge-base "$head_sha" "$base_sha")"
+          git checkout --detach "$fork_sha"
+          echo "FORK_SHA=$fork_sha" >> "$GITHUB_ENV"
+          echo "HEAD_SHA=$head_sha" >> "$GITHUB_ENV"
+
+      - name: Install pinned SDK and Lean toolchain
+        uses: actions/setup-dotnet@v4
+        with:
+          global-json-file: global.json
+
+      - name: Resolve old-side report input address
+        id: old-side-address
+        shell: bash
+        run: |
+          set -euo pipefail
+          helper="$GITHUB_WORKSPACE/Meta/StrataLint/scripts/report/lean-report-input.sh"
+          test -x "$helper"
+          read -r address _ _ <<< "$("$helper" address --repository "$GITHUB_WORKSPACE")"
+          [[ "$address" =~ ^[0-9a-f]{64}$ ]]
+          echo "address=$address" >> "$GITHUB_OUTPUT"
+
+      - name: Restore old-side canonical report cache
+        id: old-side-cache
+        uses: actions/cache/restore@v4
+        with:
+          path: .canonical-lean-report-cache
+          key: stratalint-canonical-lean-report-v2-${{ steps.old-side-address.outputs.address }}
+
+      - name: Verify cached old-side report
+        if: steps.old-side-cache.outputs.cache-hit == 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+          report="$GITHUB_WORKSPACE/.canonical-lean-report-cache/raw-lean-report.json"
+          for suffix in '' .sha256 .input.attestation .provenance.json; do test -s "${report}${suffix}"; done
+          "$GITHUB_WORKSPACE/Meta/StrataLint/scripts/report/lean-report-input.sh" verify --repository "$GITHUB_WORKSPACE" --report "$report"
+          printf '%s\n' '{"pr_number":'"${{ github.event.pull_request.number || 0 }}"',"head_sha":"'$HEAD_SHA"'","run_id":'"${{ github.run_id }}"',"run_attempt":'"${{ github.run_attempt }}"',"outcome":"hit","wall_seconds":null,"address":"'${{ steps.old-side-address.outputs.address }}'"}' >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Produce and verify old-side report on cache miss
+        if: steps.old-side-cache.outputs.cache-hit != 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+          start_ns="$(date +%s%N)"
+          make lean-report
+          report="$GITHUB_WORKSPACE/.lake/build/stratalint/raw-lean-report.json"
+          "$GITHUB_WORKSPACE/Meta/StrataLint/scripts/report/lean-report-input.sh" verify --repository "$GITHUB_WORKSPACE" --report "$report"
+          end_ns="$(date +%s%N)"
+          wall_seconds="$(awk -v s="$start_ns" -v e="$end_ns" 'BEGIN { printf "%.3f", (e-s)/1000000000 }')"
+          printf '%s\n' '{"pr_number":'"${{ github.event.pull_request.number || 0 }}"',"head_sha":"'$HEAD_SHA"'","run_id":'"${{ github.run_id }}"',"run_attempt":'"${{ github.run_attempt }}"',"outcome":"miss","wall_seconds":'$wall_seconds',"address":"'${{ steps.old-side-address.outputs.address }}'"}' >> "$GITHUB_STEP_SUMMARY"
+
   baseline-admission:
     name: Content-addressed dev baseline admission
     needs: lean-inspect
