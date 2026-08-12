@@ -18,6 +18,9 @@
 - 2026-08-12 (SL-003): `Observer/` remained at its 12-file limit. The
   branch-new `WindowGeneration` module opened the `Observer/WindowAlgebra/`
   bucket; all 12 existing `Observer/` paths remain in place.
+- 2026-08-12 (SL-003): `Entropy/` was at its 12-file limit. The branch-new
+  `CapacityMonotone` module opened the `Entropy/Forgetting/` bucket; all 12
+  existing `Entropy/` paths remain in place.
 
 ## Buckets
 
@@ -32,3 +35,4 @@
 - `Quantum/Algebra/`: representation-independent covariance and commutator algebra.
 - `Observer/HiddenFlow/`: continuous hidden-parameter flow exclusion over discrete addresses.
 - `Observer/WindowAlgebra/`: finite read-write generation of window matrix algebras.
+- `Entropy/Forgetting/`: finite entropy and uniform-capacity laws under forgetting channels.
