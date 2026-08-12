@@ -12,16 +12,17 @@ internal sealed class GoldenUniformRecurrenceDocument : IScribeDocumentDefinitio
             "Give an explicit linear window in which every finite golden-word factor recurs."),
         H("Uniform Recurrence of the Golden Word"),
         Blocks(
-            DocumentBlock.Describe.Definition(
+            Describe.Lean(
                 DescribeId.Create("golden-recurrence-bound"),
+                DeclarationHandle.Create("D5/S1/Words/GoldenUniformRecurrence.goldenRecurrenceBound"),
                 H("The recurrence window is an explicit Fibonacci quantity"),
-                LeanDefinition(
-                    "D5/S1/Words/GoldenUniformRecurrence.goldenRecurrenceBound"),
-                DescribeProvenance.RepoDerived(),
+                StatementSource.FromLean(),
+                AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "For a factor length n, let k be the greatest Fibonacci index with "
                     + "Fib(k) at most n, and define B(n) = 3 Fib(k+5). This bound is "
-                    + "deliberately coarse; no optimality claim is made.")))),
+                    + "deliberately coarse; no optimality claim is made."))),
+                DescribeRole.Definition),
             DocumentBlock.Describe.Theorem(
                 DescribeId.Create("uniform-recurrence-window"),
                 H("Every factor recurs wholly inside every B(n)-window"),

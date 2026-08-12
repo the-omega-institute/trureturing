@@ -14,16 +14,18 @@ internal sealed class MarginVanishingDocument : IScribeDocumentDefinition
                 + "as the address cardinality grows."),
             H("Vanishing Linear-Margin Failure"),
             Blocks(
-                DocumentBlock.Describe.Definition(
+                Describe.Lean(
                     DescribeId.Create("corrected-linear-margin-bound"),
+                    DeclarationHandle.Create("D5/S0/Diagonal/MarginVanishing.linearMarginBound"),
                     H("Corrected linear-margin bound"),
-                    LeanDefinition("D5/S0/Diagonal/MarginVanishing.linearMarginBound"),
-                    DescribeProvenance.RepoDerived(),
+                    StatementSource.FromLean(),
+                    AssessedProvenance.FromRepo(),
                     Blocks(Paragraph(Text(
                         "At address cardinality A, the bound is A times the exponential of "
                         + "minus A minus one times the Bernoulli KL divergence. Its first "
                         + "parameter is the corrected alpha A divided by A minus one, and its "
-                        + "second parameter is the fixed nonzero-choice density.")))
+                        + "second parameter is the fixed nonzero-choice density."))),
+                    DescribeRole.Definition
                 ),
                 DocumentBlock.Describe.Theorem(
                     DescribeId.Create("corrected-bound-vanishes"),
@@ -67,9 +69,4 @@ internal sealed class MarginVanishingDocument : IScribeDocumentDefinition
                 DocumentEdge.Dependency.Create(GidRef.Create("D5/S0/Diagonal/MarginBound")),
             ]));
 
-    private static LeanDeclarationRef LeanDefinition(string value) =>
-        LeanDeclarationRef.Create(
-            value,
-            expectedKind: LeanDeclarationKind.Definition,
-            requireNoSorry: true);
 }

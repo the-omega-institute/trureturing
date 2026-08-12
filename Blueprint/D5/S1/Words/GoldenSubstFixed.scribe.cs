@@ -13,20 +13,17 @@ internal sealed class GoldenSubstFixedDocument : IScribeDocumentDefinition
             + "pointwise with the infinite golden word."),
         H("Pointwise Substitution Fixed Point of the Golden Word"),
         Blocks(
-            DocumentBlock.Describe.Definition(
+            Describe.Lean(
                 DescribeId.Create("substitution-block-start"),
+                DeclarationHandle.Create("D5/S1/Words/GoldenSubstFixed.goldenSubstStart"),
                 H("True-count partial sums locate substitution block starts"),
-                LeanDefinition("D5/S1/Words/GoldenSubstFixed.goldenSubstStart"),
-                DescribeProvenance.RepoDerived(),
+                StatementSource.FromLean(),
+                AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "The image of each true letter has length two, while the image of each "
                     + "false letter has length one. The block for source index i therefore "
                     + "starts at i plus the number of true letters strictly before i."))),
-                Disp(Seq(
-                    Operatorname, Grp(F.Id("goldenSubstStart")), Open, F.Id("i"), Close, Eq,
-                    F.Id("i"), Plus,
-                    Operatorname, Grp(F.Id("goldenWindowTrueCount")),
-                    Open, D(0), Comma, F.Id("i"), Close))
+                DescribeRole.Definition
             ),
             DocumentBlock.Describe.Theorem(
                 DescribeId.Create("consecutive-substitution-block-boundaries"),
@@ -80,9 +77,4 @@ internal sealed class GoldenSubstFixedDocument : IScribeDocumentDefinition
                 GidRef.Create("D5/S1/Words/GoldenWord")),
         ]));
 
-    private static LeanDeclarationRef LeanDefinition(string value) =>
-        LeanDeclarationRef.Create(
-            value,
-            expectedKind: LeanDeclarationKind.Definition,
-            requireNoSorry: true);
 }

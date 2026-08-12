@@ -21,24 +21,17 @@ internal sealed class LogarithmicLengthDocument : IScribeDocumentDefinition
             "A natural number's logarithm is the exponent-weighted sum of its prime-factor logarithms."),
         H("Logarithmic Length from Prime Factorization"),
         Blocks(
-            DocumentBlock.Describe.Definition(
+            Describe.Lean(
                 DescribeId.Create("factorization-logarithmic-length"),
+                DeclarationHandle.Create("D5/S3/Factorization/LogarithmicLength.factorizationLogLength"),
                 H("Prime exponents define logarithmic length"),
-                LeanDefinition(
-                    "D5/S3/Factorization/LogarithmicLength.factorizationLogLength"),
-                DescribeProvenance.RepoDerived(),
+                StatementSource.FromLean(),
+                AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "The logarithmic length of a natural number is the finite sum over "
                     + "its prime-factorization support, weighting the logarithm of each "
                     + "prime by that prime's exponent."))),
-                Disp(Seq(
-                    Operatorname, Grp(F.Id("factorizationLogLength")),
-                    Open, F.Id("n"), Close, Eq,
-                    Sum, Underscore, Grp(F.Id("p")),
-                    Operatorname, Grp(F.Id("factorization")),
-                    Open, F.Id("n"), Close,
-                    Open, F.Id("p"), Close, Sp,
-                    Operatorname, Grp(F.Id("log")), Open, F.Id("p"), Close))
+                DescribeRole.Definition
             ),
             DocumentBlock.Describe.Theorem(
                 DescribeId.Create("factorization-logarithmic-length-equals-log"),
