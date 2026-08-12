@@ -6,7 +6,7 @@ A natural number's logarithm is the exponent-weighted sum of its prime-factor lo
 
 **Definition 1.1 (Prime exponents define logarithmic length).**
 
-$$\operatorname{factorizationLogLength}(n)=\sum_{p}\operatorname{factorization}(n)(p) \operatorname{log}(p)$$
+Lean statement: `D5/S3/Factorization/LogarithmicLength.factorizationLogLength`
 
 *Formalization.* `D5/S3/Factorization/LogarithmicLength.factorizationLogLength` (`✓ std3`).
 
