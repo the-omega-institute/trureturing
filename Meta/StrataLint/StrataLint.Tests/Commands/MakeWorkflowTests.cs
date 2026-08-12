@@ -4,7 +4,7 @@ using StrataLint.Engine;
 
 namespace StrataLint.Tests;
 
-[Trait("Category", "Script")] public sealed partial class MakeWorkflowTests
+public sealed partial class MakeWorkflowTests
 {
     private const string DotnetBuildScriptPath = "Meta/StrataLint/scripts/dotnet-build.sh";
     private const string ScribeScriptPath = "Meta/StrataLint/scripts/scribe.sh";
@@ -68,7 +68,7 @@ namespace StrataLint.Tests;
         "refactor-p0-0-gate-authority",
     ];
 
-    [Fact]
+    [Fact, Trait("Category", "Script")]
     public void EchoResidualSummaryRunsMakeAndKeepsDiagnosticsOutOfThePasteableBlock()
     {
         if (OperatingSystem.IsWindows()) return;
@@ -527,7 +527,7 @@ namespace StrataLint.Tests;
         Assert.True(pathIndex < dirnameIndex, "tool PATH must be restored before dirname is invoked");
     }
 
-    [Fact]
+    [Fact, Trait("Category", "Script")]
     public void PerformanceJsonQuoteRemovesUnsupportedControlBytes()
     {
         var root = FindRepositoryRoot();
@@ -549,7 +549,7 @@ namespace StrataLint.Tests;
         Assert.Equal("\"runid\"", System.Text.Encoding.UTF8.GetString(result.StandardOutput));
     }
 
-    [Fact]
+    [Fact, Trait("Category", "Script")]
     public void PerformanceSpoolIgnoresATmpdirInsideTheRepository()
     {
         var root = FindRepositoryRoot();
