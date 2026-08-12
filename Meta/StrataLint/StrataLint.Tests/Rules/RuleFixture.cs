@@ -87,6 +87,7 @@ internal sealed partial class RuleFixture
         """ + "\n";
 
     internal const string RingPath = "D5/S0/Carrier/Ring.lean";
+    internal const string ValuesBindingPath = "D5/S0/Carrier/ValuesBinding.lean";
     internal const string BlueprintPath = "Blueprint/D5/S0/Carrier/Ring.md";
     internal const string NotationPath = "D5/S0/Conventions/Notation.lean";
     internal const string AssumptionDebtPath = "D5/X_Assumptions/AxiomDebt.lean";
@@ -126,6 +127,8 @@ internal sealed partial class RuleFixture
             ["Meta/registry.yaml"] = TestRegistry.Canonical,
             ["Library/queries.yaml"] = "schema_version: 1\nqueries: []\n",
             [RingPath] = Header + "def goldenRing : Nat := 0\n",
+            [ValuesBindingPath] = HeaderFor("D5/S0/Carrier/ValuesBinding", "I")
+                + "def fixtureValue : Nat := 0\n",
             [BlueprintPath] = "# Golden ring\n",
             [FixtureDigestionSourcePath] = FixtureDigestionSource,
             [FixtureCasPath] = FixtureDigestionSource,
@@ -136,8 +139,30 @@ internal sealed partial class RuleFixture
         {
             [RingPath] = Report(
                 declarations: new[] { new LeanDeclaration("goldenRing", "def", "Nat", ImmutableArray<string>.Empty) }),
+            [ValuesBindingPath] = Report(
+                declarations:
+                [
+                    new LeanDeclaration(
+                        "fixtureValue",
+                        "def",
+                        "Nat",
+                        ImmutableArray.Create("Classical.choice", "Quot.sound", "propext")),
+                ]),
         };
+        var bindingPath = RepoPath.CreateKnown(ValuesBindingPath);
+        var statement = Assert.Single(CanonicalStatementWriter.DeclarationStatementIds(
+            bindingPath,
+            Reports[ValuesBindingPath]));
+        Files[ValuesKernelBindingValidator.RelativePath] = $"""
+            schema_version = 1
+
+            [[constants]]
+            id = "D5/test"
+            lean_gid = "D5/S0/Carrier/ValuesBinding.fixtureValue"
+            lean_statement_sha256 = "{statement.StatementId.Value["sha256:".Length..]}"
+            """ + "\n";
         BaselineReports = new Dictionary<string, LeanFileReport>(Reports, StringComparer.Ordinal);
+        Baseline[ValuesKernelBindingValidator.RelativePath] = Files[ValuesKernelBindingValidator.RelativePath];
         Changes = new List<string> { BlueprintPath };
     }
 
