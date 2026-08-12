@@ -72,9 +72,20 @@ jobs:
           set -euo pipefail
           toolchain="$(tr -d '\r\n' < "$LEAN_TOOLCHAIN_FILE")"
           test -n "$toolchain"
+          elan_install_with_retry() {
+            local attempt
+            for attempt in 1 2 3; do
+              if curl --proto '=https' --tlsv1.2 -sSf https://elan.lean-lang.org/elan-init.sh \
+                | sh -s -- -y --default-toolchain none; then
+                return 0
+              fi
+              printf '%s\n' "elan install attempt $attempt failed" >&2
+              sleep $((attempt * 5))
+            done
+            return 1
+          }
           if [[ ! -x "$HOME/.elan/bin/elan" ]]; then
-            curl --proto '=https' --tlsv1.2 -sSf https://elan.lean-lang.org/elan-init.sh \
-              | sh -s -- -y --default-toolchain none
+            elan_install_with_retry
           fi
           echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
           if ! "$HOME/.elan/bin/elan" toolchain list 2>/dev/null | grep -qF "$toolchain"; then
@@ -306,13 +317,25 @@ jobs:
           key: ${{ runner.os }}-${{ runner.arch }}-elan-${{ hashFiles('candidate/lean-toolchain', 'baseline/lean-toolchain') }}
 
       - name: Install pinned Lean toolchains
+        id: install-elan
         if: steps.report-reuse.outcome != 'success'
         shell: bash
         run: |
           set -euo pipefail
+          elan_install_with_retry() {
+            local attempt
+            for attempt in 1 2 3; do
+              if curl --proto '=https' --tlsv1.2 -sSf https://elan.lean-lang.org/elan-init.sh \
+                | sh -s -- -y --default-toolchain none; then
+                return 0
+              fi
+              printf '%s\n' "elan install attempt $attempt failed" >&2
+              sleep $((attempt * 5))
+            done
+            return 1
+          }
           if [[ ! -x "$HOME/.elan/bin/elan" ]]; then
-            curl --proto '=https' --tlsv1.2 -sSf https://elan.lean-lang.org/elan-init.sh \
-              | sh -s -- -y --default-toolchain none
+            elan_install_with_retry
           fi
           default_toolchain=""
           for toolchain_file in candidate/lean-toolchain baseline/lean-toolchain; do
@@ -454,7 +477,9 @@ jobs:
       # 命中缓存时 elan/lake 目录未被恢复也未被填充,回存会写入空态并污染下一轮;
       # 报告 key 也已存在,重写无意义。三个 save 一律只在真正跑过生产路径时执行。
       - name: Save elan toolchains (dev push only)
-        if: success() && steps.report-reuse.outcome != 'success' && github.event_name == 'push' && github.ref == 'refs/heads/dev'
+        # 不挂在 success() 上:elan 装成功就该存。否则一次下载失败会让 job 红、缓存不写、
+        # 下次继续 miss,故障自我延续。
+        if: always() && steps.install-elan.outcome == 'success' && steps.report-reuse.outcome != 'success' && github.event_name == 'push' && github.ref == 'refs/heads/dev'
         uses: actions/cache/save@v4
         with:
           path: ~/.elan

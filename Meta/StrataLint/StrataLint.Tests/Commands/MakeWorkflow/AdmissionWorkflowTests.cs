@@ -38,6 +38,37 @@ public sealed class AdmissionWorkflowTests
             StringComparison.Ordinal);
     }
 
+    // elan 从上游拉二进制,那一跳会间歇失败。两处安装都必须重试,且 elan 的缓存保存
+    // 不得挂在 success() 上:装成功就该存,否则一次下载失败会让 job 红、缓存不写、
+    // 下次继续 miss —— 故障自我延续。2026-08-13 实测:最近 10 个 run 里 2 个撞它,
+    // dev push 上那次还连带 skip 了 admission(needs: lean-inspect)。
+    [Fact]
+    public void ElanInstallRetriesAndItsCacheSaveDoesNotHangOnJobSuccess()
+    {
+        var workflow = AdmissionWorkflow();
+
+        // 每一处 elan 安装都必须被一个重试循环包住 —— 数的是「安装点」与「重试循环」
+        // 的配对,不是某个标识符出现几次(函数定义与调用各算一次会把计数弄错)。
+        var installs = Regex.Matches(workflow, @"elan-init\.sh").Count;
+        Assert.Equal(2, installs);
+        Assert.Equal(installs, Regex.Matches(workflow, @"for attempt in 1 2 3").Count);
+
+        // 用 YAML 解析而非正则:步骤上方的注释会把「name 紧跟 if」的文本假设打断。
+        var leanInspect = Assert.IsType<YamlMappingNode>(
+            Jobs(workflow).Children[new YamlScalarNode("lean-inspect")]);
+        var steps = Assert.IsType<YamlSequenceNode>(
+            leanInspect.Children[new YamlScalarNode("steps")]);
+        var save = Assert.Single(
+            steps.Children.OfType<YamlMappingNode>(),
+            node => node.Children.TryGetValue(new YamlScalarNode("name"), out var name)
+                && name is YamlScalarNode { Value: not null } scalar
+                && scalar.Value.StartsWith("Save elan toolchains", StringComparison.Ordinal));
+        var condition = Assert.IsType<YamlScalarNode>(
+            save.Children[new YamlScalarNode("if")]).Value ?? string.Empty;
+        Assert.DoesNotContain("success()", condition, StringComparison.Ordinal);
+        Assert.Contains("always()", condition, StringComparison.Ordinal);
+    }
+
     private static string BaselineResolutionScript(string workflow)
     {
         var leanInspect = Assert.IsType<YamlMappingNode>(
