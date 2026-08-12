@@ -190,13 +190,6 @@ internal static partial class CoverAtomCommand
                 verifiedScribeEmissions,
                 baselineDocument);
             RequireNoFindings(evaluation);
-            RequireValidBackfill(
-                finalDocument,
-                finalSnapshot,
-                baseline,
-                LoadPolicy(finalSnapshot),
-                lean,
-                verifiedScribeEmissions);
 
             var finalTarget = EvaluationFor(evaluation, options.AtomId);
             if (target.CoverageGids.Length == 0)
@@ -219,22 +212,20 @@ internal static partial class CoverAtomCommand
                     lean);
             }
 
-            var receipt = DigestionFormalizationReceipt.Load(baseline, options.EnvelopePath);
-            RequireEnvelopeBinding(receipt, options, target);
-            RequireSignatureMatch(
-                receipt,
-                gids.Single(gid => string.Equals(gid.Value, receipt.PrimaryGid, StringComparison.Ordinal)),
+            DigestionFormalizationReceiptVerifier.RequireAuthorizedCoverage(
+                baseline,
+                options.EnvelopePath,
+                target,
+                target.CoverageGids,
+                addedGids,
                 report);
-            var hostedGids = target.CoverageGids.Length == 0
-                ? []
-                : receipt.HostedExtensions
-                    .Select(static extension => extension.Gid)
-                    .Concat(addedGids)
-                    .Distinct(StringComparer.Ordinal);
-            foreach (var hostedGid in hostedGids)
-            {
-                RequireHostedExtensionSignature(receipt, hostedGid, report);
-            }
+            RequireValidBackfill(
+                finalDocument,
+                finalSnapshot,
+                baseline,
+                LoadPolicy(finalSnapshot),
+                lean,
+                verifiedScribeEmissions);
 
             // Gate ②(c): base-owned pre-committed formalization receipt +
             // declaration-signature match (spec §4a). Replaces the old file-level
@@ -532,88 +523,6 @@ internal static partial class CoverAtomCommand
         throw new InvalidOperationException(
             $"align target {target.Entry.AtomId} remains invalid for {gid}: "
             + string.Join(",", targetGaps.Select(static gap => gap.Code)));
-    }
-
-    private static void RequireEnvelopeBinding(
-        DigestionFormalizationReceipt receipt,
-        CoverArguments options,
-        DigestionLedgerEntry target)
-    {
-        if (!string.Equals(receipt.AtomId, options.AtomId, StringComparison.Ordinal))
-        {
-            throw new InvalidOperationException(
-                $"cover envelope atom_id {receipt.AtomId} does not match --cover-atom {options.AtomId}");
-        }
-
-        if (target.CoverageGids.Length > 0
-            && !target.CoverageGids.Contains(receipt.PrimaryGid, StringComparer.Ordinal))
-        {
-            throw new InvalidOperationException(
-                $"cover envelope primary_gid {receipt.PrimaryGid} does not match existing coverage "
-                + $"for atom {options.AtomId}");
-        }
-
-        if (!options.Gids.Contains(receipt.PrimaryGid, StringComparer.Ordinal))
-        {
-            throw new InvalidOperationException(
-                $"cover envelope primary_gid {receipt.PrimaryGid} does not match --gid values");
-        }
-
-        if (!string.Equals(receipt.CasRef, target.Fingerprints.RawSha256, StringComparison.Ordinal)
-            || !string.Equals(receipt.RawSha256, target.Fingerprints.RawSha256, StringComparison.Ordinal))
-        {
-            throw new InvalidOperationException(
-                $"cover envelope fingerprint does not match atom {options.AtomId} "
-                + $"(atom raw {target.Fingerprints.RawSha256})");
-        }
-    }
-
-    private static void RequireSignatureMatch(
-        DigestionFormalizationReceipt receipt,
-        Gid gid,
-        LeanAxiomReport report) =>
-        RequireSignatureMatch(gid, report, receipt.Signature);
-
-    private static void RequireHostedExtensionSignature(
-        DigestionFormalizationReceipt receipt,
-        string gidText,
-        LeanAxiomReport report)
-    {
-        var matches = receipt.HostedExtensions
-            .Where(extension => string.Equals(extension.Gid, gidText, StringComparison.Ordinal))
-            .ToArray();
-        if (matches.Length != 1)
-        {
-            throw new InvalidOperationException(
-                $"cover hosted extension {gidText} has no base-owned pre-committed signature");
-        }
-
-        if (!Gid.TryParse(gidText, out var gid))
-        {
-            throw new InvalidOperationException(
-                $"cover hosted extension GID is invalid: {gidText}");
-        }
-
-        RequireSignatureMatch(gid, report, matches[0].Signature);
-    }
-
-    private static void RequireSignatureMatch(
-        Gid gid,
-        LeanAxiomReport report,
-        DigestionFormalizationSignature pinned)
-    {
-        // By the time this runs the Closed-deletable gate has already established the
-        // declaration exists and is unique, so ResolveSignature is expected to
-        // succeed; its fail-closed throw remains a defensive invariant guard.
-        var deposited = DigestionFormalizationReceipt.ResolveSignature(gid, report);
-        if (deposited != pinned)
-        {
-            throw new InvalidOperationException(
-                $"cover declaration {gid.Value} signature "
-                + $"({deposited.NameKey}, {deposited.Kind}, {deposited.Type}) "
-                + "does not match the pre-committed signature "
-                + $"({pinned.NameKey}, {pinned.Kind}, {pinned.Type})");
-        }
     }
 
     private sealed record CoverArguments(

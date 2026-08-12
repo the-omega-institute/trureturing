@@ -46,30 +46,14 @@ internal static partial class CoverAtomCommand
             throw CrossAtomBinding(gid, conflict.AtomId);
         }
 
-        var receiptPath = EmitFormalizationReceiptCommand.DefaultOutputPrefix
-            + conflict.AtomId
-            + ".v1.json";
-        var receipt = DigestionFormalizationReceipt.Load(baseline, receiptPath);
-        RequireExistingReceiptBinding(receipt, baselineConflict);
-        if (!conflict.CoverageGids.Contains(receipt.PrimaryGid, StringComparer.Ordinal))
-        {
-            throw new InvalidOperationException(
-                $"shared-residual host receipt primary_gid {receipt.PrimaryGid} "
-                + $"is not present in candidate atom {conflict.AtomId} coverage");
-        }
-
-        if (!Gid.TryParse(receipt.PrimaryGid, out var receiptGid)
-            || receiptGid.ToTarget() is not Target.Formal { Declaration: not null })
-        {
-            throw new InvalidOperationException(
-                $"shared-residual host receipt GID must select a Lean declaration: {receipt.PrimaryGid}");
-        }
-
-        RequireSignatureMatch(receipt, receiptGid, report);
-        if (!string.Equals(gid, receipt.PrimaryGid, StringComparison.Ordinal))
-        {
-            RequireHostedExtensionSignature(receipt, gid, report);
-        }
+        DigestionFormalizationReceiptVerifier.RequireAuthorizedCoverage(
+            baseline,
+            DigestionFormalizationReceipt.PathFor(conflict.AtomId),
+            conflict,
+            baselineConflict.CoverageGids,
+            conflict.CoverageGids.Where(candidate =>
+                !baselineConflict.CoverageGids.Contains(candidate, StringComparer.Ordinal)),
+            report);
     }
 
     private static DigestionLedgerEntry LocateEntry(
@@ -88,32 +72,6 @@ internal static partial class CoverAtomCommand
         }
 
         return matches[0];
-    }
-
-    private static void RequireExistingReceiptBinding(
-        DigestionFormalizationReceipt receipt,
-        DigestionLedgerEntry entry)
-    {
-        if (!string.Equals(receipt.AtomId, entry.AtomId, StringComparison.Ordinal))
-        {
-            throw new InvalidOperationException(
-                $"shared-residual host receipt atom_id {receipt.AtomId} "
-                + $"does not match atom {entry.AtomId}");
-        }
-
-        if (!entry.CoverageGids.Contains(receipt.PrimaryGid, StringComparer.Ordinal))
-        {
-            throw new InvalidOperationException(
-                $"shared-residual host receipt primary_gid {receipt.PrimaryGid} "
-                + $"does not match existing coverage for atom {entry.AtomId}");
-        }
-
-        if (!string.Equals(receipt.CasRef, entry.Fingerprints.RawSha256, StringComparison.Ordinal)
-            || !string.Equals(receipt.RawSha256, entry.Fingerprints.RawSha256, StringComparison.Ordinal))
-        {
-            throw new InvalidOperationException(
-                $"shared-residual host receipt fingerprint does not match atom {entry.AtomId}");
-        }
     }
 
     private static InvalidOperationException CrossAtomBinding(string gid, string atomId) =>

@@ -69,7 +69,7 @@ public sealed partial class CoverAtomTests
 
         Assert.False(result.Success);
         Assert.Contains("primary_gid", result.Error, StringComparison.Ordinal);
-        Assert.Contains("existing coverage", result.Error, StringComparison.Ordinal);
+        Assert.Contains("current coverage", result.Error, StringComparison.Ordinal);
         Assert.Equal(before, after);
     }
 

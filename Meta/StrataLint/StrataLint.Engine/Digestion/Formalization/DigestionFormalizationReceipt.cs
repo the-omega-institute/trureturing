@@ -45,6 +45,8 @@ internal sealed record DigestionFormalizationReceipt(
 
     internal const string PathSuffix = ".v1.json";
 
+    internal static string PathFor(string atomId) => RootPath + atomId + PathSuffix;
+
     // Shape-only residence check for the closed-world path policy (SL-000): one
     // lowercase atom-id segment between the canonical root and the versioned
     // suffix. Content validity stays with Load; residence classification stays
@@ -336,5 +338,112 @@ internal sealed record DigestionFormalizationReceipt(
         return value.ValueKind == JsonValueKind.String
             ? value.GetString()!
             : throw new FormatException($"{property} must be a string");
+    }
+}
+
+internal static class DigestionFormalizationReceiptVerifier
+{
+    internal static void RequireAuthorizedCoverage(
+        RepositorySnapshot authority,
+        string receiptPath,
+        DigestionLedgerEntry atom,
+        IEnumerable<string> priorCoverage,
+        IEnumerable<string> addedCoverage,
+        LeanAxiomReport report)
+    {
+        ArgumentNullException.ThrowIfNull(authority);
+        ArgumentException.ThrowIfNullOrWhiteSpace(receiptPath);
+        ArgumentNullException.ThrowIfNull(atom);
+        ArgumentNullException.ThrowIfNull(priorCoverage);
+        ArgumentNullException.ThrowIfNull(addedCoverage);
+        ArgumentNullException.ThrowIfNull(report);
+
+        var canonicalPath = DigestionFormalizationReceipt.PathFor(atom.AtomId);
+        if (!string.Equals(receiptPath, canonicalPath, StringComparison.Ordinal))
+        {
+            throw new FormatException(
+                $"base-owned formalization receipt for atom {atom.AtomId} must use {canonicalPath}");
+        }
+
+        DigestionFormalizationReceipt receipt;
+        try
+        {
+            receipt = DigestionFormalizationReceipt.Load(authority, receiptPath);
+        }
+        catch (Exception exception) when (exception is FormatException or JsonException)
+        {
+            throw new FormatException(
+                $"base-owned formalization receipt for atom {atom.AtomId} is invalid: {exception.Message}",
+                exception);
+        }
+
+        if (!string.Equals(receipt.AtomId, atom.AtomId, StringComparison.Ordinal))
+        {
+            throw new FormatException(
+                $"base-owned formalization receipt atom_id {receipt.AtomId} "
+                + $"does not match atom {atom.AtomId}");
+        }
+
+        if (!string.Equals(receipt.CasRef, atom.CasRef, StringComparison.Ordinal)
+            || !string.Equals(receipt.RawSha256, atom.Fingerprints.RawSha256, StringComparison.Ordinal))
+        {
+            throw new FormatException(
+                $"base-owned formalization receipt fingerprint does not match atom {atom.AtomId}");
+        }
+
+        var prior = priorCoverage.ToImmutableHashSet(StringComparer.Ordinal);
+        var added = addedCoverage.Distinct(StringComparer.Ordinal).ToArray();
+        if (atom.CoverageGids.Length > 0
+            && !atom.CoverageGids.Contains(receipt.PrimaryGid, StringComparer.Ordinal))
+        {
+            throw new FormatException(
+                $"base-owned formalization receipt primary_gid {receipt.PrimaryGid} "
+                + $"is absent from current coverage for atom {atom.AtomId}");
+        }
+
+        if (prior.Count == 0 && !added.Contains(receipt.PrimaryGid, StringComparer.Ordinal))
+        {
+            throw new FormatException(
+                $"base-owned formalization receipt primary_gid {receipt.PrimaryGid} "
+                + "does not match --gid values");
+        }
+
+        if (prior.Count > 0 && !prior.Contains(receipt.PrimaryGid))
+        {
+            throw new FormatException(
+                $"base-owned formalization receipt primary_gid {receipt.PrimaryGid} "
+                + $"does not match existing coverage for atom {atom.AtomId}");
+        }
+
+        var signaturesToCheck = receipt.HostedExtensions
+            .Select(static extension => extension.Gid)
+            .Concat(added)
+            .Append(receipt.PrimaryGid)
+            .Distinct(StringComparer.Ordinal);
+        foreach (var gidText in signaturesToCheck)
+        {
+            var pinned = string.Equals(gidText, receipt.PrimaryGid, StringComparison.Ordinal)
+                ? receipt.Signature
+                : receipt.HostedExtensions
+                    .Where(extension => string.Equals(extension.Gid, gidText, StringComparison.Ordinal))
+                    .Select(static extension => extension.Signature)
+                    .SingleOrDefault()
+                    ?? throw new FormatException(
+                        $"coverage GID {gidText} has no base-owned pre-committed signature");
+            if (!Gid.TryParse(gidText, out var gid))
+            {
+                throw new FormatException($"formalization coverage GID is invalid: {gidText}");
+            }
+
+            var current = DigestionFormalizationReceipt.ResolveSignature(gid, report);
+            if (current != pinned)
+            {
+                throw new FormatException(
+                    $"declaration {gidText} signature "
+                    + $"({current.NameKey}, {current.Kind}, {current.Type}) "
+                    + "does not match the pre-committed signature (base-owned) "
+                    + $"({pinned.NameKey}, {pinned.Kind}, {pinned.Type})");
+            }
+        }
     }
 }

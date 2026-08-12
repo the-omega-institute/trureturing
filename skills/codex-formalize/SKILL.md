@@ -129,7 +129,7 @@ Postcondition: every checklist item has evidence and none is `ASSUMED-UNVERIFIED
 
 If any checklist item cannot be evidenced, end the task as `open` with no deposit, carrying the Step 8 evidence: statement echo, search trace, failed approaches with reasons, and machine diagnostics.
 
-### 7. Deposit, verify, and cover
+### 7. Land PR-1: deposit the proof and receipt
 
 Only after Step 6 passes, run:
 
@@ -140,38 +140,37 @@ make preflight
 
 Both commands must exit 0. Judge them only by exit code.
 
-If `make deposit` or `make preflight` exits nonzero, stop before `cover` and end as `open`. Report the failed command and exit code, machine diagnostics, touched paths, and the actual resulting tree and commit state; `deposit` may already have produced commits before failing.
+If `make deposit` or `make preflight` exits nonzero, stop and end as `open`. Report the failed command and exit code, machine diagnostics, touched paths, and the actual resulting tree and commit state; `deposit` may already have produced commits before failing.
 
-To close the atom, run:
+Push the deposit branch and open PR-1 through the repository door:
 
 ```sh
+git push -u origin <deposit-branch>
+make pr-open HEAD=<deposit-branch> TITLE='<deposit-title>' [BODY=<file>]
+```
+
+Wait until PR-1 is merged and its commit is contained in `origin/dev`. Do not run `make cover` on the deposit branch: the formalization receipt has authority only after it is part of the protected baseline.
+
+Postcondition: PR-1 is merged, and the proof plus `Meta/Digestion/formalizations/<atom_id>.v1.json` are contained in `origin/dev` while the atom remains uncovered.
+
+### 8. Land PR-2: cover from a fresh post-merge lane
+
+Create a fresh independent lane from the landed `origin/dev`, then run:
+
+```sh
+make worktree NAME=<cover-lane> BASE=origin/dev
+cd <created-path-from-output>
 make cover ATOM_ID=<id> GID=<gid>
+make preflight
+git push -u origin <cover-branch>
+make pr-open HEAD=<cover-branch> TITLE='<cover-title>' [BODY=<file>]
 ```
 
-Before reporting commit structure, inspect:
+The receipt must already belong to the protected fork point when PR-2 is admitted. The cover command may begin while a clean fresh lane still has `HEAD` equal to its landed base; it creates the cover commit itself. A receipt introduced only in PR-2 has no authority even if a candidate-local revision is passed as the command's base, because final admission validates against the protected fork point independently of the CLI argument. The door arms auto-merge; after opening either pull request, do not push further changes to that branch.
 
-```sh
-git log --no-merges --grep='^formalize: cover'
-```
+If the dispatched sandbox forbids git writes, state that constraint explicitly and hand the exact two-PR commands above, with substituted arguments, to the caller; do not report `success` as though the work landed. Otherwise report `success` only after both pull requests are opened, with touched paths, door-produced commit subjects, every relevant exit code, and completed fidelity-gate evidence. Or report `open`, naming the stopping step and carrying every evidence class reached; mark each unreached class not run and explain why. There is no third outcome.
 
-Recheck the live history and report what it actually shows; do not turn this observation into a permanent rule.
-
-Postcondition: deposit and preflight exited 0, and cover either exited 0 or its failure is captured as an `open` outcome with diagnostics.
-
-### 8. Push and open the pull request, or report `open`
-
-After `make deposit` and `make preflight` both exit 0 and Step 7 completes, push the current branch and use the repository door:
-
-```sh
-git push -u origin <branch>
-make pr-open HEAD=<branch> TITLE='<title>' [BODY=<file>]
-```
-
-The door arms auto-merge. After it opens the pull request, do not push further changes to that branch: the pull request may already have merged, in which case a later successful push does not put that commit on `dev`. Any further change requires a new branch and a new pull request.
-
-If the dispatched sandbox forbids git writes, state that constraint explicitly and hand the exact `git push` and `make pr-open` invocations above, with substituted arguments, to the caller; do not report `success` as though the work landed. Otherwise report `success` only with the opened pull request, touched paths, door-produced commit subjects, every relevant exit code, and completed fidelity-gate evidence. Or report `open`, naming the stopping step and carrying every evidence class reached; mark each unreached class not run and explain why. There is no third outcome.
-
-Postcondition: the task ends with an opened pull request, or with evidence-complete `open`.
+Postcondition: PR-2 is opened from a fresh post-PR-1 baseline, or the task ends with evidence-complete `open`.
 
 ## Fidelity and non-hollowness gate
 

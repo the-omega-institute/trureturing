@@ -228,14 +228,16 @@ internal static class BackfillInventoryRule
             return;
         }
 
+        BackfillInventoryDocument baselineDocument;
         try
         {
+            baselineDocument = LoadBaselineDocument(context.Baseline);
             var evaluation = DigestionStatusEvaluator.Evaluate(
                 document,
                 context.Current,
                 context.Lean,
                 context.VerifiedScribeEmissions,
-                LoadBaselineDocument(context.Baseline));
+                baselineDocument);
             foreach (var finding in evaluation.Findings)
             {
                 findings.Add(new RuleFinding(BackfillPath, finding));
@@ -244,6 +246,104 @@ internal static class BackfillInventoryRule
         catch (FormatException exception)
         {
             findings.Add(new RuleFinding(BackfillPath, exception.Message));
+            return;
+        }
+
+        var baselineByAtomId = baselineDocument.RequireDigestionEntries()
+            .ToDictionary(static entry => entry.AtomId, StringComparer.Ordinal);
+        foreach (var entry in entries)
+        {
+            var priorCoverage = baselineByAtomId.TryGetValue(entry.AtomId, out var baselineEntry)
+                ? baselineEntry.CoverageGids
+                : ImmutableArray<string>.Empty;
+            var addedCoverage = entry.CoverageGids
+                .Where(gid => !priorCoverage.Contains(gid, StringComparer.Ordinal))
+                .ToArray();
+            if (addedCoverage.Length == 0)
+            {
+                continue;
+            }
+
+            try
+            {
+                DigestionFormalizationReceiptVerifier.RequireAuthorizedCoverage(
+                    context.Baseline,
+                    DigestionFormalizationReceipt.PathFor(entry.AtomId),
+                    entry,
+                    priorCoverage,
+                    addedCoverage,
+                    context.Lean.Report);
+            }
+            catch (Exception exception) when (exception is FormatException or InvalidOperationException)
+            {
+                findings.Add(new RuleFinding(BackfillPath, exception.Message));
+            }
+        }
+
+        ValidateCrossAtomCoverage(
+            context,
+            entries,
+            baselineByAtomId,
+            findings);
+    }
+
+    private static void ValidateCrossAtomCoverage(
+        BackfillInventoryValidationContext context,
+        ImmutableArray<DigestionLedgerEntry> entries,
+        IReadOnlyDictionary<string, DigestionLedgerEntry> baselineByAtomId,
+        ImmutableArray<RuleFinding>.Builder findings)
+    {
+        foreach (var group in entries
+                     .SelectMany(entry => entry.CoverageGids.Select(gid => (Gid: gid, Entry: entry)))
+                     .GroupBy(static item => item.Gid, StringComparer.Ordinal)
+                     .Where(static group => group.Count() > 1))
+        {
+            var owners = group.Select(static item => item.Entry).ToArray();
+            if (owners.All(owner =>
+                    baselineByAtomId.TryGetValue(owner.AtomId, out var baselineOwner)
+                    && baselineOwner.CoverageGids.Contains(group.Key, StringComparer.Ordinal)))
+            {
+                continue;
+            }
+
+            if (owners.Select(static entry => entry.AstPath).Distinct(StringComparer.Ordinal).Count() != 1)
+            {
+                findings.Add(new RuleFinding(
+                    BackfillPath,
+                    $"coverage GID {group.Key} is bound to atoms with different residual paths: "
+                    + string.Join(",", owners.Select(static entry => entry.AtomId))));
+                continue;
+            }
+
+            foreach (var owner in owners)
+            {
+                if (!baselineByAtomId.TryGetValue(owner.AtomId, out var baselineOwner)
+                    || !string.Equals(owner.AstPath, baselineOwner.AstPath, StringComparison.Ordinal)
+                    || owner.Fingerprints != baselineOwner.Fingerprints
+                    || !string.Equals(owner.CasRef, baselineOwner.CasRef, StringComparison.Ordinal))
+                {
+                    findings.Add(new RuleFinding(
+                        BackfillPath,
+                        $"shared coverage GID {group.Key} has no matching fork-point atom {owner.AtomId}"));
+                    continue;
+                }
+
+                try
+                {
+                    DigestionFormalizationReceiptVerifier.RequireAuthorizedCoverage(
+                        context.Baseline,
+                        DigestionFormalizationReceipt.PathFor(owner.AtomId),
+                        owner,
+                        baselineOwner.CoverageGids,
+                        owner.CoverageGids.Where(gid =>
+                            !baselineOwner.CoverageGids.Contains(gid, StringComparer.Ordinal)),
+                        context.Lean.Report);
+                }
+                catch (Exception exception) when (exception is FormatException or InvalidOperationException)
+                {
+                    findings.Add(new RuleFinding(BackfillPath, exception.Message));
+                }
+            }
         }
     }
 
