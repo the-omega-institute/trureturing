@@ -24,7 +24,6 @@
   current single-tree protected-surface gate contract.
 - `Authorization/`: Hearts ledger format, append-only history, and exact SL-008 delta behavior.
 - `Commands/`: command parsing and end-to-end command behavior;
-  `Commands/Papergen/` holds paper recipe validation and
   `Commands/PrOpenScriptTests.cs` holds the focused one-shot PR open/update script contract.
 - `Conservative/`: compatibility coverage for base-owned replay, policy roots,
   contract-epoch schemas/stores, obligation comparison, and conservative certificate

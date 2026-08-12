@@ -13,8 +13,7 @@
 - `Admission/`: repository preparation, topology checks, production admission, and the
   single-tree protected-surface content check used by the baseline gate.
 - `Commands/`: command dispatch, coverage, registry loading, golden snapshot recording,
-  ledger commands, and worktree provisioning; `Commands/Papergen/` holds paper recipe
-  loading and validation.
+  ledger commands, and worktree provisioning.
 - `Conservative/`: compatibility implementation for base-owned replay, TOML golden fixture
   execution/materialization, conservative-extension verification, and contract-epoch
   policy/plan/ledger/evidence obligation accounting from exact commit snapshots. It remains

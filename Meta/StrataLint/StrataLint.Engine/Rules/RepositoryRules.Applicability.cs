@@ -83,7 +83,7 @@ internal static partial class RepositoryRules
             : parts[0];
         return theory is "Metallic" or "Moduli"
             || theory.Length > 1 && theory[0] == 'D' && theory != "D5" && theory[1..].All(char.IsDigit)
-            || artifact.Path.Value is "Meta/split.py" or "Meta/papergen";
+            || artifact.Path.Value == "Meta/split.py";
     }
 
     private static bool BootstrapScoped(RepositoryFile artifact, RuleApplicabilityContext context) =>
