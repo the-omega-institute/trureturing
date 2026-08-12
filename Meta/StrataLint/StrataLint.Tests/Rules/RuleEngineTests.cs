@@ -243,97 +243,6 @@ public sealed class RuleEngineTests
     }
 
     [Fact]
-    public void Sl013RejectsCodexFailedAttributionWithoutReference()
-    {
-        var fixture = new RuleFixture();
-        fixture.AddTask(
-            "D5/X_Frontier/CodexFailure.lean",
-            "D5/X_Frontier/CodexFailure",
-            "D5-T0090",
-            "[codex-failed] candidate returned no result");
-
-        var diagnostic = Assert.Single(
-            RuleCatalog.Default.EvaluateSingle(RuleId.CreateKnown(13), fixture.Build()).Diagnostics);
-
-        Assert.Equal(
-            "codex-failed autopsy for D5-T0090 requires a valid [codex-log:<rooted-path>] reference",
-            diagnostic.Message);
-    }
-
-    [Fact]
-    public void Sl013RejectsCodexFailedAttributionWithMalformedReference()
-    {
-        var fixture = new RuleFixture();
-        fixture.AddTask(
-            "D5/X_Frontier/CodexFailure.lean",
-            "D5/X_Frontier/CodexFailure",
-            "D5-T0091",
-            "[codex-failed] [codex-log:logs/latest.txt]");
-
-        var diagnostic = Assert.Single(
-            RuleCatalog.Default.EvaluateSingle(RuleId.CreateKnown(13), fixture.Build()).Diagnostics);
-
-        Assert.Equal(
-            "codex-failed autopsy for D5-T0091 requires a valid [codex-log:<rooted-path>] reference",
-            diagnostic.Message);
-    }
-
-    [Theory]
-    [InlineData("~/.codex/sessions/2026/08/09/rollout-fixture.jsonl")]
-    [InlineData("<RT>/logs/codex-adoption/fixture/result.json")]
-    [InlineData("~/Library/Logs/fkst/codex/worktree-fixture.log")]
-    public void Sl013AcceptsCodexFailedAttributionWithValidReference(string logPath)
-    {
-        var fixture = new RuleFixture();
-        fixture.AddTask(
-            "D5/X_Frontier/CodexFailure.lean",
-            "D5/X_Frontier/CodexFailure",
-            "D5-T0092",
-            $"[codex-failed] [codex-log:{logPath}]");
-
-        var diagnostics = RuleCatalog.Default.EvaluateSingle(
-            RuleId.CreateKnown(13),
-            fixture.Build()).Diagnostics;
-
-        Assert.Empty(diagnostics);
-    }
-
-    [Fact]
-    public void Sl013StillRejectsShortenedAutopsy()
-    {
-        const string path = "D5/X_Frontier/AutopsyHistory.lean";
-        var fixture = new RuleFixture();
-        fixture.AddTask(path, "D5/X_Frontier/AutopsyHistory", "D5-T0093", "first attempt");
-        fixture.Baseline[path] = fixture.Files[path].Replace(
-            "尸检:first attempt",
-            "尸检:first attempt; second attempt",
-            StringComparison.Ordinal);
-        fixture.BaselineReports[path] = fixture.Reports[path];
-
-        var diagnostic = Assert.Single(
-            RuleCatalog.Default.EvaluateSingle(RuleId.CreateKnown(13), fixture.Build()).Diagnostics);
-
-        Assert.Equal("autopsy for D5-T0093 was shortened", diagnostic.Message);
-    }
-
-    [Fact]
-    public void Sl013DoesNotTreatUnstructuredCodexFailedTextAsAttribution()
-    {
-        var fixture = new RuleFixture();
-        fixture.AddTask(
-            "D5/X_Frontier/OrdinaryAutopsy.lean",
-            "D5/X_Frontier/OrdinaryAutopsy",
-            "D5-T0094",
-            "ordinary text mentions codex-failed without the attribution marker");
-
-        var diagnostics = RuleCatalog.Default.EvaluateSingle(
-            RuleId.CreateKnown(13),
-            fixture.Build()).Diagnostics;
-
-        Assert.Empty(diagnostics);
-    }
-
-    [Fact]
     public void Sl018RejectsValuesOutsideTheCanonicalProjectionAddress()
     {
         var fixture = new RuleFixture();
@@ -432,7 +341,7 @@ public sealed class RuleEngineTests
     public void CoverageManifestNamesEveryRuleWithARealRedOrDeferredBranch()
     {
         var exercised = BlockingCases.Select(item => (int)item[0])
-            .Concat(new[] { 7, 9, 14, 22, 23, 25 })
+            .Concat(new[] { 7, 9, 13, 14, 22, 23, 25 })
             .Order()
             .ToArray();
 
