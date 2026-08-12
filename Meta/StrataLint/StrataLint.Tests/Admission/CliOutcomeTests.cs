@@ -179,9 +179,6 @@ internal sealed class StubCliEnvironment(
     public CommandResult EmitFormalizationReceipt(IReadOnlyList<string> arguments) =>
         new(false, string.Empty, "emit-formalization-receipt is not configured in this fixture");
 
-    public ExplicitCommandResult Papergen(IReadOnlyList<string> arguments) =>
-        new(2, string.Empty, "papergen is not configured in this fixture");
-
     public CommandResult Route(IReadOnlyList<string> arguments) =>
         new(false, string.Empty, "route is not configured in this fixture");
 

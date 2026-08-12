@@ -76,6 +76,38 @@ public sealed class AnchorReferenceRuleTests
     }
 
     [Fact]
+    public void DeclaredDirectLakeModuleImportPasses()
+    {
+        var fixture = FixtureWithAnchor("lake/module/" + Target);
+        fixture.Reports[RuleFixture.RingPath] = LeanReport([Target]);
+
+        Assert.Empty(EvaluateMembership(fixture).Diagnostics);
+    }
+
+    [Fact]
+    public void DeclaredTransitiveLakeModuleImportPasses()
+    {
+        var fixture = FixtureWithAnchor("lake/module/" + Target);
+        fixture.Reports[RuleFixture.RingPath] = LeanReport(["D5.S0.Carrier.Helper"]);
+        fixture.Files["D5/S0/Carrier/Helper.lean"] = "def helper : Nat := 0\n";
+        fixture.Reports["D5/S0/Carrier/Helper.lean"] = LeanReport([Target]);
+
+        Assert.Empty(EvaluateMembership(fixture).Diagnostics);
+    }
+
+    [Fact]
+    public void DeclaredUnreachableLakeModuleImportBlocksWithPathAndCriterion()
+    {
+        var fixture = FixtureWithAnchor("lake/module/" + Target);
+
+        var diagnostic = Assert.Single(EvaluateMembership(fixture).Diagnostics);
+
+        Assert.Equal(RuleFixture.RingPath, diagnostic.Path);
+        Assert.Contains("lake/module/" + Target, diagnostic.Message, StringComparison.Ordinal);
+        Assert.Contains("repository import closure", diagnostic.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
     public void EmptyAnchorsPass()
     {
         var fixture = new RuleFixture();
