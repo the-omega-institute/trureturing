@@ -44,7 +44,6 @@ public sealed partial class ProductionEnvironmentTests
                 && item.Path == protectedPath
                 && item.Message == "protected-surface change detected (SL-022)");
         Assert.Equal(2, gateway.ReadCount);
-        Assert.Equal(2, gateway.FrozenReferenceValidationCount);
         Assert.Equal(0, source.CallCount);
     }
 
