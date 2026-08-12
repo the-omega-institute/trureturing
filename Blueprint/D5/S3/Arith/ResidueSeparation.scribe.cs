@@ -6,19 +6,17 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Arith;
 
 internal sealed class ResidueSeparationDocument : IScribeDocumentDefinition
 {
-    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
-        Header(
-            "D5/S3/Arith/ResidueSeparation",
-            "A modulus above both operands makes the modular reading separate distinct naturals."),
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "A modulus above both operands makes the modular reading separate distinct naturals.",
         H("Separation of Distinct Naturals by a Sufficiently Large Modular Reading"),
         Blocks(
-            DocumentBlock.Describe.Theorem(
+            Describe.Lean(
                 DescribeId.Create("a-modulus-above-both-operands-separates-distinct-residues"),
-                H("A modulus above both operands separates distinct residues"),
-                LeanTheorem(
+                DeclarationHandle.Create(
                     "D5/S3/Arith/ResidueSeparation.residue_separation"),
-                Disp(Seq(Forall, Sp, F.Id("m"), Comma, F.Id("n"), Comma, F.Id("M"), InMacro, Mathbb, Grp(F.Id("N")), Comma, Esc, F.Id("m"), Sp, Neq, Sp, F.Id("n"), Sp, Land, Sp, Max, Open, F.Id("m"), Comma, F.Id("n"), Close, Sp, Lt, Sp, F.Id("M"), Sp, Rightarrow, Sp, Open, F.Id("m"), Sp, Operatorname, Grp(F.Id("mod")), Sp, F.Id("M"), Close, Sp, Neq, Sp, Open, F.Id("n"), Sp, Operatorname, Grp(F.Id("mod")), Sp, F.Id("M"), Close)),
-                DescribeProvenance.RepoDerived(),
+                H("A modulus above both operands separates distinct residues"),
+                StatementSource.FromAuthor(Disp(Seq(Forall, Sp, F.Id("m"), Comma, F.Id("n"), Comma, F.Id("M"), InMacro, Mathbb, Grp(F.Id("N")), Comma, Esc, F.Id("m"), Sp, Neq, Sp, F.Id("n"), Sp, Land, Sp, Max, Open, F.Id("m"), Comma, F.Id("n"), Close, Sp, Lt, Sp, F.Id("M"), Sp, Rightarrow, Sp, Open, F.Id("m"), Sp, Operatorname, Grp(F.Id("mod")), Sp, F.Id("M"), Close, Sp, Neq, Sp, Open, F.Id("n"), Sp, Operatorname, Grp(F.Id("mod")), Sp, F.Id("M"), Close))),
+                AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
                         "The modular reading of a natural number at a modulus M is its remainder on "
@@ -40,6 +38,6 @@ internal sealed class ResidueSeparationDocument : IScribeDocumentDefinition
                         + "readings therefore equal the operands themselves, and their inequality is exactly "
                         + "the given distinctness of m and n transported across the two identities. The "
                         + "argument is purely arithmetic and logical: it invokes only the identity behaviour "
-                        + "of the remainder on its canonical range and asserts no numerical certificate.")))
-            ))));
+                        + "of the remainder on its canonical range and asserts no numerical certificate."))),
+                DescribeRole.Theorem))));
 }

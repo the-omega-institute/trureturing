@@ -6,19 +6,17 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Arith;
 
 internal sealed class WilsonDocument : IScribeDocumentDefinition
 {
-    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
-        Header(
-            "D5/S3/Arith/Wilson",
-            "The factorial of one less than a prime is congruent to minus one modulo that prime."),
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "The factorial of one less than a prime is congruent to minus one modulo that prime.",
         H("Wilson's Theorem"),
         Blocks(
-            DocumentBlock.Describe.Theorem(
+            Describe.Lean(
                 DescribeId.Create("factorial-before-a-prime-is-minus-one-modulo-the-prime"),
-                H("The factorial before a prime is minus one modulo the prime"),
-                LeanTheorem(
+                DeclarationHandle.Create(
                     "D5/S3/Arith/Wilson.wilson_theorem"),
-                Disp(Seq(F.Id("p"), Esc, F.Text, Grp(F.Id("prime")), Quad, Rightarrow, Quad, Sp, Open, F.Id("p"), Minus, D(1), Close, Bang, Equiv, Sp, Minus, D(1), Esc, Open, Operatorname, Grp(F.Id("mod")), Esc, F.Id("p"), Close)),
-                DescribeProvenance.RepoDerived(),
+                H("The factorial before a prime is minus one modulo the prime"),
+                StatementSource.FromAuthor(Disp(Seq(F.Id("p"), Esc, F.Text, Grp(F.Id("prime")), Quad, Rightarrow, Quad, Sp, Open, F.Id("p"), Minus, D(1), Close, Bang, Equiv, Sp, Minus, D(1), Esc, Open, Operatorname, Grp(F.Id("mod")), Esc, F.Id("p"), Close))),
+                AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
                         "For every natural prime p, the natural number factorial (p - 1)! casts "
@@ -33,6 +31,6 @@ internal sealed class WilsonDocument : IScribeDocumentDefinition
                         + "and is therefore 1 or -1; their product leaves -1. The Lean proof "
                         + "constructs the required primality Fact from the explicit hypothesis and "
                         + "assembles this skeleton through Mathlib's ZMod.wilsons_lemma. No "
-                        + "numerical certificate is asserted.")))
-            ))));
+                        + "numerical certificate is asserted."))),
+                DescribeRole.Theorem))));
 }
