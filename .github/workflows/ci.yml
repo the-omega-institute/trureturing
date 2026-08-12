@@ -467,7 +467,7 @@ jobs:
   old-side-report-shadow:
     name: Old-side Lean report shadow measurement
     runs-on: ubuntu-latest
-    timeout-minutes: 25
+    timeout-minutes: 60
     continue-on-error: true
     # 聚合端必须用 run_id/run_attempt 与 job 终态对账；timeout/cancel/runner loss
     # 无法由 step-level always() 自救。没有恰好一条 hit/miss 的成员按基础设施失败停案，
