@@ -3,8 +3,7 @@
    mirror-B: D5/B/S3/DivergenceSupport/LandauerBound
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: An exact heat-entropy balance with nonnegative information and divergence remainders
-   implies the thermodynamic lower bound by discarding those remainders. -/
+   digest: An exact heat-entropy balance with nonnegative information and divergence remainders implies the thermodynamic lower bound by discarding those remainders. -/
 
 import Mathlib
 
