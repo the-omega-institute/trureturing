@@ -20,7 +20,7 @@ The letter at n is the floor at rho+(n+1)alpha minus the floor at rho+n alpha. I
 
 **Theorem 1.2 (Every letter is zero or one).**
 
-Lean statement: `D5/S1/Words/Mechanical/MechanicalBalance.lowerMechanicalLetter_eq_zero_or_one`
+$$\operatorname{lowerMechanicalLetter}\left(\mathit{alpha}, \mathit{rho}, n\right) = 0 \lor \operatorname{lowerMechanicalLetter}\left(\mathit{alpha}, \mathit{rho}, n\right) = 1$$
 
 *Proof.* Machine-checked in Lean as `D5/S1/Words/Mechanical/MechanicalBalance.lowerMechanicalLetter_eq_zero_or_one` (`✓ std3`). ∎
 
@@ -32,7 +32,7 @@ The two standard floor-add inequalities trap each consecutive floor difference b
 
 **Theorem 1.3 (Window counts telescope to endpoint floors).**
 
-Lean statement: `D5/S1/Words/Mechanical/MechanicalBalance.lowerMechanicalWindowTrueCount_eq_floor`
+$$\operatorname{windowTrueCount}\left(\mathit{alpha}, \mathit{rho}, i, n\right) = \operatorname{floor}\left(\mathit{rho} + \left(i + n\right) \cdot \mathit{alpha}\right) - \operatorname{floor}\left(\mathit{rho} + i \cdot \mathit{alpha}\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S1/Words/Mechanical/MechanicalBalance.lowerMechanicalWindowTrueCount_eq_floor` (`✓ std3`). ∎
 
@@ -44,7 +44,7 @@ Replacing each Boolean indicator by its zero-or-one letter makes the finite sum 
 
 **Theorem 1.4 (Equal-length windows are balanced by one).**
 
-Lean statement: `D5/S1/Words/Mechanical/MechanicalBalance.lowerMechanicalWord_balanced_one`
+$$\operatorname{windowTrueCount}\left(\mathit{alpha}, \mathit{rho}, i, n\right) - \operatorname{windowTrueCount}\left(\mathit{alpha}, \mathit{rho}, j, n\right) = 0 - 1 \lor \left(\operatorname{windowTrueCount}\left(\mathit{alpha}, \mathit{rho}, i, n\right) - \operatorname{windowTrueCount}\left(\mathit{alpha}, \mathit{rho}, j, n\right) = 0 \lor \operatorname{windowTrueCount}\left(\mathit{alpha}, \mathit{rho}, i, n\right) - \operatorname{windowTrueCount}\left(\mathit{alpha}, \mathit{rho}, j, n\right) = 1\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S1/Words/Mechanical/MechanicalBalance.lowerMechanicalWord_balanced_one` (`✓ std3`). ∎
 
@@ -56,7 +56,7 @@ For every pair of starting positions, the integer true-count difference of equal
 
 **Theorem 1.5 (The golden balance theorem is a shifted mechanical specialization).**
 
-Lean statement: `D5/S1/Words/Mechanical/MechanicalBalance.goldenWord_balanced_one_mechanical`
+$$\operatorname{goldenWord}\left(i\right) = \operatorname{mechanicalReadout}\left(\operatorname{inv}\left(\mathit{phi}\right), 0, i + 1\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S1/Words/Mechanical/MechanicalBalance.goldenWord_balanced_one_mechanical` (`✓ std3`). ∎
 
