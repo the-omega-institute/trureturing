@@ -99,7 +99,7 @@ public sealed class DescribeMigrationTests
                 throw new ArgumentOutOfRangeException(nameof(node.Kind));
         }
 
-        Assert.NotEqual(DescribeProvenanceKind.Unassessed, node.ProvenanceKind);
+        Assert.NotNull(node.AssessedProvenance);
         if (node.ProvenanceKind == DescribeProvenanceKind.LiteratureAttested)
         {
             Assert.NotNull(node.LiteratureReference);
@@ -164,7 +164,6 @@ public sealed class DescribeMigrationTests
         Assert.Equal(expected.LeanStatements, report.NodeStats.LeanStatements);
         Assert.Equal(expected.ByKind, report.NodeStats.ByKind);
         Assert.Equal(expected.ByProvenance, report.NodeStats.ByProvenance);
-        Assert.Equal(expected.Unassessed, report.OpenCount);
         Assert.Equal(expected.SuspectedNovel, report.SuspectedNovel.Length);
         Assert.Empty(report.SuspectedNovel);
         Assert.Empty(report.RedFindings);
@@ -654,7 +653,7 @@ public sealed class DescribeMigrationTests
         Assert.Equal(
             expected.Total,
             document.RootElement.GetProperty("node_stats").GetProperty("total").GetInt32());
-        Assert.Equal(expected.Unassessed, document.RootElement.GetProperty("open_count").GetInt32());
+        Assert.False(document.RootElement.TryGetProperty("open_count", out _));
     }
 
     [Fact]
@@ -732,7 +731,6 @@ public sealed class DescribeMigrationTests
             nodes.Count(static node => node.Statement is DescribeStatement.LeanDeclaration),
             byKind,
             byProvenance,
-            nodes.Count(static node => node.ProvenanceKind == DescribeProvenanceKind.Unassessed),
             nodes.Count(static node => node.ProvenanceKind == DescribeProvenanceKind.SuspectedNovel));
     }
 
@@ -775,7 +773,6 @@ public sealed class DescribeMigrationTests
         DescribeProvenanceKind.LiteratureAttested => "literature-attested",
         DescribeProvenanceKind.RepoDerived => "repo-derived",
         DescribeProvenanceKind.SuspectedNovel => "suspected-novel",
-        DescribeProvenanceKind.Unassessed => "unassessed",
         _ => throw new ArgumentOutOfRangeException(nameof(provenance)),
     };
 
@@ -786,6 +783,5 @@ public sealed class DescribeMigrationTests
         int LeanStatements,
         IReadOnlyDictionary<string, int> ByKind,
         IReadOnlyDictionary<string, int> ByProvenance,
-        int Unassessed,
         int SuspectedNovel);
 }

@@ -63,6 +63,11 @@ jobs:
         with:
           path: ~/.elan
           key: ${{ runner.os }}-${{ runner.arch }}-elan-${{ steps.lean.outputs.hash }}
+          # 前缀回退:本 job 的精确 key 由 candidate/lean-toolchain 单文件算出,而写入方
+          # (lean-inspect)用 hashFiles(candidate, baseline) 两文件算,两者永不相等。
+          # 没有回退就每轮必 miss、必联网,于是每轮都赌 releases.lean-lang.org 那一跳。
+          restore-keys: |
+            ${{ runner.os }}-${{ runner.arch }}-elan-
 
       - name: Install pinned Lean toolchain for producer integration tests
         shell: bash
@@ -83,12 +88,24 @@ jobs:
             done
             return 1
           }
+          # 工具链本体走 releases.lean-lang.org,那一跳会返回空响应([52] Empty reply
+          # from server)。elan 自己在解析失败时回退,但下载失败不重试。
+          elan_toolchain_with_retry() {
+            for attempt in 1 2 3; do
+              if "$HOME/.elan/bin/elan" toolchain install "$1"; then
+                return 0
+              fi
+              printf '%s\n' "elan toolchain install attempt $attempt failed" >&2
+              sleep 15
+            done
+            return 1
+          }
           if [[ ! -x "$HOME/.elan/bin/elan" ]]; then
             elan_install_with_retry
           fi
           echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
           if ! "$HOME/.elan/bin/elan" toolchain list 2>/dev/null | grep -qF "$toolchain"; then
-            "$HOME/.elan/bin/elan" toolchain install "$toolchain"
+            elan_toolchain_with_retry "$toolchain"
           fi
           "$HOME/.elan/bin/elan" default "$toolchain"
           "$HOME/.elan/bin/lake" --version
@@ -314,6 +331,8 @@ jobs:
         with:
           path: ~/.elan
           key: ${{ runner.os }}-${{ runner.arch }}-elan-${{ hashFiles('candidate/lean-toolchain', 'baseline/lean-toolchain') }}
+          restore-keys: |
+            ${{ runner.os }}-${{ runner.arch }}-elan-
 
       - name: Install pinned Lean toolchains
         id: install-elan
@@ -332,6 +351,18 @@ jobs:
             done
             return 1
           }
+          # 工具链本体走 releases.lean-lang.org,那一跳会返回空响应([52] Empty reply
+          # from server)。elan 自己在解析失败时回退,但下载失败不重试。
+          elan_toolchain_with_retry() {
+            for attempt in 1 2 3; do
+              if "$HOME/.elan/bin/elan" toolchain install "$1"; then
+                return 0
+              fi
+              printf '%s\n' "elan toolchain install attempt $attempt failed" >&2
+              sleep 15
+            done
+            return 1
+          }
           if [[ ! -x "$HOME/.elan/bin/elan" ]]; then
             elan_install_with_retry
           fi
@@ -340,7 +371,7 @@ jobs:
             toolchain="$(tr -d '\r\n' < "$toolchain_file")"
             test -n "$toolchain"
             if ! "$HOME/.elan/bin/elan" toolchain list 2>/dev/null | grep -qF "$toolchain"; then
-              "$HOME/.elan/bin/elan" toolchain install "$toolchain"
+              elan_toolchain_with_retry "$toolchain"
             fi
             default_toolchain="$toolchain"
           done
@@ -547,22 +578,26 @@ jobs:
           sha256sum -c candidate-lean-report.json.sha256
           sha256sum -c baseline-lean-report.json.sha256
 
-      - name: Run the shared baseline harness gate
+      - name: Run the harness gate with the candidate's own judge
         shell: bash
         run: |
           set -euo pipefail
-          gate="$GITHUB_WORKSPACE/baseline/.github/scripts/harness-gate.sh"
+          # 候选用自己的法官审自己的内容。法官程序在 43% 的合并里与 base 逐字节相同,
+          # 那些情况下用哪个是恒等的;其余情况新规则本就该立即对自己生效。
+          # base 仍然提供**数据**(--base 的旧侧快照、--baseline-lean-report),那是 git
+          # 就能给的,不需要编译 base 的代码 —— 而正是那次编译让 dev 一坏就谁都进不来
+          # (2026-08-13 两次:SL-003 锁死七个在飞 PR;法官自检失败后连修它的 PR 也挡在外面)。
+          gate="$GITHUB_WORKSPACE/candidate/.github/scripts/harness-gate.sh"
           if [[ ! -x "$gate" ]]; then
-            printf '%s\n' "content-addressed baseline harness gate is absent" >&2
+            printf '%s\n' "candidate harness gate is absent" >&2
             exit 1
           elif ! grep -qF -- '--candidate-lean-report' "$gate"; then
-            printf '%s\n' "content-addressed baseline gate cannot consume canonical Lean reports" >&2
+            printf '%s\n' "candidate gate cannot consume canonical Lean reports" >&2
             exit 1
           fi
           set +e
           "$gate" \
             --candidate "$GITHUB_WORKSPACE/candidate" \
-            --judge-root "$GITHUB_WORKSPACE/baseline" \
             --base "$DEV_BASELINE_SHA" \
             --candidate-lean-report "$RUNNER_TEMP/raw-lean-reports/candidate-lean-report.json" \
             --baseline-lean-report "$RUNNER_TEMP/raw-lean-reports/baseline-lean-report.json" \
