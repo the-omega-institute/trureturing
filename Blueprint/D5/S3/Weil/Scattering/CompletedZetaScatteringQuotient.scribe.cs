@@ -4,7 +4,7 @@ using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.Weil.Scattering;
 
-internal sealed class ScatteringQuotientDocument : IScribeDocumentDefinition
+internal sealed class CompletedZetaScatteringQuotientDocument : IScribeDocumentDefinition
 {
     public DocumentDefinition Create()
     {
@@ -28,13 +28,13 @@ internal sealed class ScatteringQuotientDocument : IScribeDocumentDefinition
                 Equal(quotientNorm, Num(1))));
 
         return DocumentDefinition.Create(ScribeNode.Create(
-            "A real spectral parameter gives a unit-modulus quotient of the completed zeta reading.",
-            H("Real Spectral Scattering Quotient"),
+            "A real spectral parameter gives a unit-modulus quotient of the classical completed-zeta reading.",
+            H("Completed-Zeta Scattering Quotient"),
             Blocks(
                 Describe.Lean(
                     DescribeId.Create("real-spectral-scattering-quotient-norm"),
                     DeclarationHandle.Create(
-                        "D5/S3/Weil/Scattering/ScatteringQuotient.real_spectral_scattering_quotient_norm"),
+                        "D5/S3/Weil/Scattering/CompletedZetaScatteringQuotient.real_spectral_scattering_quotient_norm"),
                     H("Real spectral scattering quotient has unit norm"),
                     StatementSource.FromAuthor(Disp(statement)),
                     AssessedProvenance.FromRepo(),

@@ -1,14 +1,14 @@
-# Real Spectral Scattering Quotient
+# Completed-Zeta Scattering Quotient
 
 ## Abstract
 
-A real spectral parameter gives a unit-modulus quotient of the completed zeta reading.
+A real spectral parameter gives a unit-modulus quotient of the classical completed-zeta reading.
 
 **Theorem 1.1 (Real spectral scattering quotient has unit norm).**
 
 $$\forall t \in {\mathbb{R}},\; \operatorname{completedZetaReading}\left(\frac{1}{2} + t \cdot i\right) \ne 0 \Rightarrow \left\lVert \frac{\operatorname{completedZetaReading}\left(\frac{1}{2} - t \cdot i\right)}{\operatorname{completedZetaReading}\left(\frac{1}{2} + t \cdot i\right)} \right\rVert = 1$$
 
-*Proof.* Machine-checked in Lean as `D5/S3/Weil/Scattering/ScatteringQuotient.real_spectral_scattering_quotient_norm` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Weil/Scattering/CompletedZetaScatteringQuotient.real_spectral_scattering_quotient_norm` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -20,5 +20,5 @@ The declaration is an honest partial closure. It does not define a scattering ma
 
 ## References
 
-- Truth anchor: `D5/S3/Weil/Scattering/ScatteringQuotient.real_spectral_scattering_quotient_norm`
+- Truth anchor: `D5/S3/Weil/Scattering/CompletedZetaScatteringQuotient.real_spectral_scattering_quotient_norm`
 - Dependency: [D5/S3/Zeros/CompletedZeta](../../Zeros/CompletedZeta.md)

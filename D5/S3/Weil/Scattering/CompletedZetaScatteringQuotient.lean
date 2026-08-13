@@ -1,13 +1,13 @@
-/- GID: D5/S3/Weil/Scattering/ScatteringQuotient
-   generality: G
-   mirror-B: D5/B/S3/Weil/Scattering/ScatteringQuotient
+/- GID: D5/S3/Weil/Scattering/CompletedZetaScatteringQuotient
+   generality: I
+   mirror-B: D5/B/S3/Weil/Scattering/CompletedZetaScatteringQuotient
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: The real spectral scattering quotient of a completed zeta reading has unit norm. -/
+   digest: The classical completed-zeta scattering quotient has unit norm on the critical line. -/
 
 import D5.S3.Zeros.CompletedZeta
 
-namespace D5.S3.Weil.Scattering.ScatteringQuotient
+namespace D5.S3.Weil.Scattering.CompletedZetaScatteringQuotient
 
 open D5.S3.Zeros.CompletedZeta
 open scoped ComplexConjugate
@@ -31,4 +31,4 @@ theorem real_spectral_scattering_quotient_norm (t : ℝ)
   rw [hreflection]
   rw [norm_div, div_self (norm_ne_zero_iff.mpr hden)]
 
-end D5.S3.Weil.Scattering.ScatteringQuotient
+end D5.S3.Weil.Scattering.CompletedZetaScatteringQuotient
