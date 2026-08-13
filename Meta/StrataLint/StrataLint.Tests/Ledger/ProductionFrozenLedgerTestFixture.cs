@@ -8,7 +8,6 @@ public sealed partial class ProductionEnvironmentTests
 {
     private static void SetLedger(Dictionary<string, string> files, string ledger)
     {
-        files.Remove(FrozenLedgerChangeClassifier.LedgerPath);
         foreach (var path in files.Keys
             .Where(FrozenLedgerChangeClassifier.IsAcceptedEventPath)
             .ToArray())

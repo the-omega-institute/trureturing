@@ -17,10 +17,8 @@ public partial record FrozenLedgerChangeOutcome
 
 public static class FrozenLedgerChangeClassifier
 {
-    public const string LedgerPath = "Meta/StrataLint/Golden/Frozen/events.jsonl";
-
     // 一节点一文件的冻结账本落位:目录即账本,文件名即节点身份。
-    public const string AcceptedRoot = "Meta/StrataLint/Golden/Frozen/accepted";
+    public const string AcceptedRoot = "Golden/Frozen/accepted";
 
     public static bool IsAcceptedEventPath(string path) =>
         path.StartsWith(AcceptedRoot + "/", StringComparison.Ordinal)
