@@ -4,6 +4,8 @@ fingerprints:
   normalized_sha256: sha256:088bfe4c5cd78c2e14992a9e652ee75943ca1f696f032e1772cc4e3ce3906226
 cas_ref: sha256:088bfe4c5cd78c2e14992a9e652ee75943ca1f696f032e1772cc4e3ce3906226
 coverage_gids:
+  - D5/S1/Phase/Interference/FixedRayNineteenWitness.fixed_ray_nineteen_witness
+  - D5/S1/Phase/Interference/FixedRayNineteenWitness.no_fixed_ray_character
   - D5/S1/Phase/Interference/M468MemberTable.m468_zero_only_iff_successor_prime
   - D5/S1/Phase/Interference/M468MemberTable.m468_split_prime_characterization
   - D5/S1/Phase/Interference/M468MemberTable.m468TwentyFourMemberTable
@@ -60,9 +62,6 @@ receipts:
     - full-exponent-encoding-clause
     - prediction-trial-postmortem
     - prediction-three-trial-certificate
-    - zolotarev-144-case-certificate
-    - fixed-ray-character-counterexample
-    - fixed-ray-nineteen-witness-certificate
     - jacobi-no-modular-locality-claim
     - nonlocal-reciprocity-walk
     - mod24-j-locality-certificate
