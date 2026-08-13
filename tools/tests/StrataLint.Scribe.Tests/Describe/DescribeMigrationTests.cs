@@ -149,26 +149,6 @@ public sealed class DescribeMigrationTests
         Assert.Empty(projectableHandAuthored);
     }
 
-    [Fact]
-    public void RepositoryReportMatchesAnIndependentAstInventory()
-    {
-        var root = RepositoryAccessor.Discover(RepositoryRootCriterion.GlobalJsonAndBlueprintDirectoryNotFound).Root.FullPath;
-        var expected = DeriveContentInventory();
-        var report = DescribeReport.Build(
-            root,
-            DocumentDefinitions.All.Select(static definition => definition.Document));
-
-        Assert.Equal(expected.Total, report.NodeStats.Total);
-        Assert.Equal(expected.FormulaContentSlots, report.NodeStats.FormulaContentSlots);
-        Assert.Equal(expected.FormulaStatements, report.NodeStats.FormulaStatements);
-        Assert.Equal(expected.LeanStatements, report.NodeStats.LeanStatements);
-        Assert.Equal(expected.ByKind, report.NodeStats.ByKind);
-        Assert.Equal(expected.ByProvenance, report.NodeStats.ByProvenance);
-        Assert.Equal(expected.SuspectedNovel, report.SuspectedNovel.Length);
-        Assert.Empty(report.SuspectedNovel);
-        Assert.Empty(report.RedFindings);
-    }
-
     private static IEnumerable<DocumentBlock.Describe> EnumerateDescribe(BlockSequence blocks)
     {
         foreach (var block in blocks.Items)
@@ -682,33 +662,6 @@ public sealed class DescribeMigrationTests
         Assert.Equal(reference, node.LiteratureReference?.Value);
     }
 
-    private static ContentInventory DeriveContentInventory()
-    {
-        var blocks = DocumentDefinitions.All
-            .SelectMany(static definition => EnumerateBlocks(definition.Document.Content))
-            .ToArray();
-        var nodes = blocks.OfType<DocumentBlock.Describe>().ToArray();
-        var byKind = new SortedDictionary<string, int>(
-            nodes.GroupBy(static node => KindName(node.Kind), StringComparer.Ordinal)
-                .ToDictionary(static group => group.Key, static group => group.Count()),
-            StringComparer.Ordinal);
-        var byProvenance = new SortedDictionary<string, int>(
-            nodes.GroupBy(static node => ProvenanceName(node.ProvenanceKind), StringComparer.Ordinal)
-                .ToDictionary(static group => group.Key, static group => group.Count()),
-            StringComparer.Ordinal);
-
-        return new ContentInventory(
-            nodes.Length,
-            blocks.OfType<DocumentBlock.DisplayFormula>().Count()
-                + blocks.OfType<DocumentBlock.Paragraph>().Sum(static paragraph =>
-                    paragraph.Content.Items.Count(static inline => inline is Inline.InlineFormula)),
-            nodes.Count(static node => node.Statement is DescribeStatement.FormulaAst),
-            nodes.Count(static node => node.Statement is DescribeStatement.LeanDeclaration),
-            byKind,
-            byProvenance,
-            nodes.Count(static node => node.ProvenanceKind == DescribeProvenanceKind.SuspectedNovel));
-    }
-
     private static IEnumerable<DocumentBlock> EnumerateBlocks(BlockSequence blocks)
     {
         foreach (var block in blocks.Items)
@@ -732,31 +685,4 @@ public sealed class DescribeMigrationTests
         }
     }
 
-    private static string KindName(DescribeKind kind) => kind switch
-    {
-        DescribeKind.Definition => "definition",
-        DescribeKind.Theorem => "theorem",
-        DescribeKind.Proposition => "proposition",
-        DescribeKind.Lemma => "lemma",
-        DescribeKind.Example => "example",
-        DescribeKind.Remark => "remark",
-        _ => throw new ArgumentOutOfRangeException(nameof(kind)),
-    };
-
-    private static string ProvenanceName(DescribeProvenanceKind provenance) => provenance switch
-    {
-        DescribeProvenanceKind.LiteratureAttested => "literature-attested",
-        DescribeProvenanceKind.RepoDerived => "repo-derived",
-        DescribeProvenanceKind.SuspectedNovel => "suspected-novel",
-        _ => throw new ArgumentOutOfRangeException(nameof(provenance)),
-    };
-
-    private sealed record ContentInventory(
-        int Total,
-        int FormulaContentSlots,
-        int FormulaStatements,
-        int LeanStatements,
-        IReadOnlyDictionary<string, int> ByKind,
-        IReadOnlyDictionary<string, int> ByProvenance,
-        int SuspectedNovel);
 }

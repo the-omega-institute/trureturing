@@ -375,12 +375,9 @@ public sealed partial class ProductionEnvironmentTests
     [Fact]
     public void SelfTestIsByteStableAcrossTwoPasses()
     {
-        using var temporary = new TemporaryDirectory();
-        Directory.CreateDirectory(Path.Combine(temporary.Path, "Meta"));
-        File.WriteAllText(Path.Combine(temporary.Path, "Meta", "registry.yaml"), TestRegistry.Canonical, new UTF8Encoding(false));
-        File.WriteAllText(Path.Combine(temporary.Path, "Meta", "domains.yaml"), TestRegistry.Domains, new UTF8Encoding(false));
+        var repositoryRoot = TestRepositoryLayout.FindRoot();
         var environment = new ProductionCliEnvironment(
-            temporary.Path,
+            repositoryRoot,
             new FakeRepositoryGateway(RawChangeSet.Create(Array.Empty<string>()), null, null),
             new FakeLeanReportSource(null));
 

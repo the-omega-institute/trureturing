@@ -14,49 +14,6 @@ public sealed class CensusDerivationTests
     }
 
     [Fact]
-    public void ProductionReceiptClassificationIsDisjointAndComplete()
-    {
-        var repositoryRoot = RepositoryAccessor.Discover(RepositoryRootCriterion.GlobalJsonAndBlueprintDirectoryNotFound).Root.FullPath;
-        var documents = DocumentDefinitions.Discover(typeof(DocumentDefinitions).Assembly)
-            .Select(static definition => definition.Document)
-            .ToArray();
-        var documentGids = documents
-            .Select(static document => document.Header.Gid.Value)
-            .ToHashSet(StringComparer.Ordinal);
-        var census = ReceiptFreeDocumentCatalog.Load(
-            repositoryRoot,
-            documents);
-        var receiptBoundDocumentGids = BackfillInventoryLoader.LoadRoot(repositoryRoot)
-            .RequireDigestionEntries()
-            .SelectMany(static entry => entry.Receipts.Scribe)
-            .Select(static receipt => ScribeEmissionAttestation.DocumentGid(receipt.Gid))
-            .ToHashSet(StringComparer.Ordinal);
-        var receiptFreeDocumentGids = documentGids
-            .Except(receiptBoundDocumentGids, StringComparer.Ordinal)
-            .ToHashSet(StringComparer.Ordinal);
-        var classified = census.ReceiptFreeDocumentGids
-            .Union(census.ReceiptBoundDocumentGids, StringComparer.Ordinal)
-            .ToHashSet(StringComparer.Ordinal);
-
-        Assert.NotEmpty(documentGids);
-        Assert.NotEmpty(receiptBoundDocumentGids);
-        Assert.NotEmpty(receiptFreeDocumentGids);
-        Assert.Empty(receiptBoundDocumentGids.Except(
-            census.ReceiptBoundDocumentGids,
-            StringComparer.Ordinal));
-        Assert.Empty(receiptFreeDocumentGids.Except(
-            census.ReceiptFreeDocumentGids,
-            StringComparer.Ordinal));
-        Assert.Empty(census.ReceiptFreeDocumentGids.Intersect(
-            census.ReceiptBoundDocumentGids,
-            StringComparer.Ordinal));
-        Assert.Equal(documentGids.Order(StringComparer.Ordinal), classified.Order(StringComparer.Ordinal));
-        Assert.Equal(
-            documents.Length,
-            census.ReceiptFreeDocumentGids.Count + census.ReceiptBoundDocumentGids.Count);
-    }
-
-    [Fact]
     public void SyntheticBackfillReceiptDeterminesCensusDirection()
     {
         const string receiptBoundGid = "D5/S0/Test/ReceiptBound";

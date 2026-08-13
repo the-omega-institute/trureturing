@@ -15,3 +15,4 @@ dotnet run --project tools/StrataLint.Cli/StrataLint.Cli.csproj --configuration 
 /bin/bash tools/scripts/report/report-consumer.sh --role scribe-consumer --report "$REPORT" -- \
   dotnet run --project tools/StrataLint.Scribe/StrataLint.Scribe.csproj --configuration Release -- emit --check
 dotnet run --project tools/StrataLint.Scribe/StrataLint.Scribe.csproj --configuration Release -- emit-values --check
+dotnet run --project tools/StrataLint.Scribe/StrataLint.Scribe.csproj --configuration Release -- describe-report --check

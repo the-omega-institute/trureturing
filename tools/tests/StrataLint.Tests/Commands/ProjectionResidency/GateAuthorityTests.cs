@@ -1,4 +1,3 @@
-using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
 using StrataLint.Cli;
@@ -65,54 +64,6 @@ public sealed class GateAuthorityTests
     {
         Assert.Throws<FormatException>(() =>
             GateAuthorityRootCatalogLoader.Parse(Encoding.UTF8.GetBytes(text)));
-    }
-
-    [Fact]
-    public void EntrypointsExistAndEveryRootBindsTheCompleteFileBytes()
-    {
-        var root = TestRepositoryLayout.FindRoot();
-        var authority = GateAuthorityProducer.Create(root, OldBuild);
-
-        foreach (var item in authority.Roots)
-        {
-            var path = Path.Combine(root, item.Entrypoint.Replace('/', Path.DirectorySeparatorChar));
-            Assert.True(File.Exists(path), $"missing entrypoint {item.Entrypoint}");
-            Assert.Equal(
-                Convert.ToHexStringLower(SHA256.HashData(File.ReadAllBytes(path))),
-                item.EntrypointBlobSha256);
-        }
-    }
-
-    // The entrypoint check above proves the FILE is there, which is the easy half: when
-    // #1116 deleted the emit-check target and the echo-verify gate step, all three
-    // entrypoints (Makefile, harness-gate.sh, local-harness-gate.sh) still existed and
-    // five root_ids kept naming targets that were gone. gate-authority does not fail
-    // closed on such a root - it hashes the entrypoint blob and emits the root_id
-    // verbatim - so the catalog silently described five things that no longer existed
-    // and had to be cleaned up by hand. A root_id names a target inside its entrypoint,
-    // so requiring the name to still appear there is the cheapest signal that the target
-    // survives. Counter-checked before it was written: all five retired suffixes occur
-    // zero times in their entrypoints today, and all sixteen surviving roots pass.
-    [Fact]
-    public void EveryRootIdNamesSomethingItsEntrypointStillMentions()
-    {
-        var root = TestRepositoryLayout.FindRoot();
-        var roots = GateAuthorityRootCatalogLoader.LoadRepository(root);
-
-        foreach (var item in roots)
-        {
-            var separator = item.RootId.IndexOf('/', StringComparison.Ordinal);
-            Assert.True(separator > 0, $"root id {item.RootId} has no target segment");
-            var target = item.RootId[(separator + 1)..];
-            var body = File.ReadAllText(
-                Path.Combine(root, item.Entrypoint.Replace('/', Path.DirectorySeparatorChar)),
-                Encoding.UTF8);
-
-            Assert.True(
-                body.Contains(target, StringComparison.Ordinal),
-                $"root {item.RootId} names a target its entrypoint {item.Entrypoint} "
-                    + "no longer mentions; the root is stale or the target was renamed");
-        }
     }
 
     [Fact]
@@ -183,6 +134,73 @@ public sealed class GateAuthorityTests
         Assert.Equal(2, GateAuthorityCommand.Run(root, null, Path.Combine(temporary.Path, "a.json")).ExitCode);
         Assert.Equal(2, GateAuthorityCommand.Run(root, OldBuild, null).ExitCode);
         Assert.Equal(2, GateAuthorityCommand.Run(root, OldBuild, temporary.Path).ExitCode);
+    }
+
+    [Fact]
+    public void CheckRejectsAStaleRootTargetInASyntheticRepository()
+    {
+        using var repository = new TemporaryDirectory();
+        var catalog = Path.Combine(repository.Path, "Golden", "gate-authority-roots.toml");
+        Directory.CreateDirectory(Path.GetDirectoryName(catalog)!);
+        File.WriteAllText(catalog, """
+            schema = "gate-authority-roots-v1"
+
+            [[roots]]
+            root_id = "entry.sh/check"
+            entrypoint = "entry.sh"
+            """ + "\n", new UTF8Encoding(false));
+        File.WriteAllText(Path.Combine(repository.Path, "entry.sh"), "#!/bin/sh\n", new UTF8Encoding(false));
+
+        var result = GateAuthorityCommand.Run(repository.Path, ["--check"]);
+
+        Assert.Equal(1, result.ExitCode);
+        Assert.Contains("no longer mentions", result.Error, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void CheckBindsSyntheticEntrypointBytesIntoStrictAuthority()
+    {
+        using var repository = new TemporaryDirectory();
+        var catalog = Path.Combine(repository.Path, "Golden", "gate-authority-roots.toml");
+        Directory.CreateDirectory(Path.GetDirectoryName(catalog)!);
+        File.WriteAllText(catalog, """
+            schema = "gate-authority-roots-v1"
+
+            [[roots]]
+            root_id = "entry.sh/check"
+            entrypoint = "entry.sh"
+            """ + "\n", new UTF8Encoding(false));
+        File.WriteAllText(
+            Path.Combine(repository.Path, "entry.sh"),
+            "#!/bin/sh\ncheck\n",
+            new UTF8Encoding(false));
+
+        var result = GateAuthorityCommand.Run(repository.Path, ["--check"]);
+
+        Assert.Equal(0, result.ExitCode);
+        Assert.Contains("roots=1", result.Output, StringComparison.Ordinal);
+        Assert.Matches("authority_sha256=[0-9a-f]{64}", result.Output);
+    }
+
+    [Fact]
+    public void CheckRejectsInvalidUtf8EntrypointAsSchemaExitTwo()
+    {
+        using var repository = new TemporaryDirectory();
+        var catalog = Path.Combine(repository.Path, "Golden", "gate-authority-roots.toml");
+        Directory.CreateDirectory(Path.GetDirectoryName(catalog)!);
+        File.WriteAllText(catalog, """
+            schema = "gate-authority-roots-v1"
+
+            [[roots]]
+            root_id = "entry.sh/check"
+            entrypoint = "entry.sh"
+            """ + "\n", new UTF8Encoding(false));
+        File.WriteAllBytes(Path.Combine(repository.Path, "entry.sh"), [0xff]);
+
+        var result = GateAuthorityCommand.Run(repository.Path, ["--check"]);
+
+        Assert.Equal(2, result.ExitCode);
+        Assert.Contains("GATE_AUTHORITY_INVALID", result.Error, StringComparison.Ordinal);
     }
 
     private static byte[] ProduceBytes() =>

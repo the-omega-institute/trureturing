@@ -9,13 +9,38 @@ internal static partial class RepositoryRules
     private static ImmutableArray<RuleFinding> BlueprintProjectionSource(
         RuleEvaluationContext context)
     {
+        var markdown = context.Current.Files.Keys
+            .Where(static path => IsBlueprintPath(path.Value, ".md"))
+            .Select(static path => path.Value[..^".md".Length])
+            .ToHashSet(StringComparer.Ordinal);
+        var scribeSources = context.Current.Files.Keys
+            .Where(static path => IsBlueprintPath(path.Value, ".scribe.cs"))
+            .Select(static path => path.Value[..^".scribe.cs".Length])
+            .ToHashSet(StringComparer.Ordinal);
+        var findings = ImmutableArray.CreateBuilder<RuleFinding>();
+        findings.AddRange(markdown
+            .Except(scribeSources, StringComparer.Ordinal)
+            .Order(StringComparer.Ordinal)
+            .Select(static stem => new RuleFinding(
+                stem + ".md",
+                "Blueprint markdown has no matching .scribe.cs source")));
+        findings.AddRange(scribeSources
+            .Except(markdown, StringComparer.Ordinal)
+            .Where(stem => !IsProtectedCandidateOnlyScribeGrowth(
+                context,
+                stem + ".scribe.cs"))
+            .Order(StringComparer.Ordinal)
+            .Select(static stem => new RuleFinding(
+                stem + ".scribe.cs",
+                "Blueprint Scribe source has no matching .md projection")));
+
         var changedMarkdown = context.Changes.Paths
             .Where(static path => IsBlueprintPath(path.Value, ".md"))
             .Where(path => ContentDiffers(context.Current, context.Baseline, path.Value))
             .ToImmutableArray();
         if (changedMarkdown.IsDefaultOrEmpty)
         {
-            return [];
+            return findings.ToImmutable();
         }
 
         var hasChangedScribeSource = context.Changes.Paths.Any(path =>
@@ -24,13 +49,21 @@ internal static partial class RepositoryRules
         var digestionEmissions = hasChangedScribeSource
             ? []
             : ChangedDigestionEmissionPaths(context);
-        return changedMarkdown
+        findings.AddRange(changedMarkdown
             .Where(path => !hasChangedScribeSource && !digestionEmissions.Contains(path.Value))
             .Select(static path => new RuleFinding(
                 path.Value,
-                "Blueprint markdown is a projection: emit it from a Scribe or digestion source change"))
-            .ToImmutableArray();
+                "Blueprint markdown is a projection: emit it from a Scribe or digestion source change")));
+        return findings.ToImmutable();
     }
+
+    private static bool IsProtectedCandidateOnlyScribeGrowth(
+        RuleEvaluationContext context,
+        string path) =>
+        !context.Baseline.TryGetFile(path, out _)
+        && context.Changes.Paths.Any(changed => changed.Value == path)
+        && RepoPath.TryCreate(path, out var repoPath)
+        && BootstrapGate.IsProtected(repoPath);
 
     private static HashSet<string> ChangedDigestionEmissionPaths(RuleEvaluationContext context)
     {
