@@ -33,8 +33,8 @@ The work was performed in the dispatcher-assigned isolated lane:
 pwd -P = /Users/mstudio3/trureturing-diag-lane-a-20260814
 git rev-parse --show-toplevel = /Users/mstudio3/trureturing-diag-lane-a-20260814
 branch = harness/diag-lane-a-20260814
-baseline HEAD after latest origin/dev merge = 12dbe1b00884b183a31522dcd63a71b4e043082a
-origin/dev = 600528ed47fd08001838b5db51de4bb71f12936e
+baseline HEAD integrated before report authoring = 12dbe1b00884b183a31522dcd63a71b4e043082a
+origin/dev integrated at that point = 600528ed47fd08001838b5db51de4bb71f12936e
 git merge-base --is-ancestor origin/dev HEAD: rc 0
 ```
 
