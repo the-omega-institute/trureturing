@@ -1,35 +1,21 @@
 /- GID: D5/S1/Phase/ThreeDistance
    generality: G
    mirror-B: none(waiver:classical-result-tail-is-documented-at-the-formal-site)
-   mirror-E: none(waiver:classical-theorem-carried-by-registered-axiom-debt)
+   mirror-E: none(waiver:upstream-mit-formalization-is-the-proof-source)
    anchors: []
    digest: Golden rotation points have at most three distinct cyclic adjacent gaps. -/
 
-import D5.X_Assumptions.AxiomDebt
-import D5.S1.Dynamics.GoldenFractionalPart
+import D5.S1.Phase.ThreeGap.Main
 
 namespace D5.S1.Phase
 
-open D5.X_Assumptions
-
 /-- The `N` points `{n * phi}` for `0 ≤ n < N`. -/
 noncomputable def goldenOrbit (N : ℕ) : Finset ℝ :=
-  AxiomDebt.fractionalOrbit Real.goldenRatio N
-
-/-- The golden orbit representatives sorted increasingly in `[0, 1)`. -/
-noncomputable def sortedGoldenOrbit (N : ℕ) : List ℝ :=
-  (goldenOrbit N).sort
+  ThreeGap.orbit Real.goldenRatio N
 
 /-- Adjacent gaps of the sorted orbit, including the last-to-first circle gap. -/
 noncomputable def goldenGapValues (N : ℕ) : Finset ℝ :=
-  (AxiomDebt.cyclicGaps (sortedGoldenOrbit N)).toFinset
-
-/-
-FROZEN TAIL D5-T0019: the three-gap theorem is a classical result (Steinhaus
-conjecture, Sós 1957), but pinned mathlib has no implementation. Its single
-registered axiom is in D5/X_Assumptions/AxiomDebt; the same case tracks the
-librarian's upstream formalization issue.
--/
+  (ThreeGap.gaps Real.goldenRatio N).toFinset
 
 /--
 Three-gap theorem for the golden rotation: after sorting `{n * phi}` for
@@ -37,11 +23,6 @@ Three-gap theorem for the golden rotation: after sorting `{n * phi}` for
 distinct lengths.
 -/
 theorem three_gap (N : ℕ) : (goldenGapValues N).card ≤ 3 := by
-  simpa [goldenGapValues, sortedGoldenOrbit, goldenOrbit,
-    D5.S1.Dynamics.goldenFractionalPart,
-    AxiomDebt.fractionalGapValues, AxiomDebt.sortedFractionalOrbit,
-    AxiomDebt.fractionalOrbit] using
-    AxiomDebt.three_gap_classic Real.goldenRatio
-      Real.goldenRatio_irrational N
+  exact ThreeGap.three_gap_card_le_three Real.goldenRatio N
 
 end D5.S1.Phase
