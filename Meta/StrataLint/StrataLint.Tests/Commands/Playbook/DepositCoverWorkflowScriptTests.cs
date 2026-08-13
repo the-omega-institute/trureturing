@@ -402,6 +402,9 @@ public sealed partial class DepositCoverWorkflowScriptTests
         internal const string SecondaryGid =
             "D5/S3/Observer/WindowRegisterCRT.window_register_crt_decomposition";
         internal const string SecondaryLeanPath = "D5/S3/Observer/WindowRegisterCRT.lean";
+        internal const string NewGid = "D5/S2/NewModule.new_module";
+        internal const string NewLeanPath = "D5/S2/NewModule.lean";
+        internal const string NewEmissionPath = "Blueprint/D5/S2/NewModule.md";
         internal const string DefinitionPath = "Blueprint/D5/S0/Carrier/Probe.scribe.cs";
         internal const string EmissionPath = "Blueprint/D5/S0/Carrier/Probe.md";
         internal const string LedgerPath = "Meta/StrataLint/Golden/Frozen/accepted";
@@ -444,6 +447,15 @@ public sealed partial class DepositCoverWorkflowScriptTests
         {
             WriteFile(LeanPath, "theorem probe : True := by\n  trivial\n");
             WriteFile(DefinitionPath, "definition deposited\n");
+        }
+
+        internal void AddNewFormalization(bool withMirror)
+        {
+            WriteFile(NewLeanPath, "theorem new_module : True := by trivial\n");
+            if (withMirror)
+            {
+                WriteFile(NewEmissionPath, "emission: new module\n");
+            }
         }
 
         internal void AddSecondaryFormalization()
@@ -592,7 +604,8 @@ public sealed partial class DepositCoverWorkflowScriptTests
             bool staleReport = false,
             bool invalidReceipt = false,
             string? mutateReceiptAfterPrepare = null,
-            TimeSpan? timeout = null) =>
+            TimeSpan? timeout = null,
+            string baseRevision = "synthetic-base") =>
             BoundedProcessRunner.Run(
                 "/usr/bin/env",
                 [
@@ -601,11 +614,11 @@ public sealed partial class DepositCoverWorkflowScriptTests
                     $"PLAYBOOK_STALE_REPORT={(staleReport ? "1" : "0")}",
                     $"PLAYBOOK_INVALID_RECEIPT={(invalidReceipt ? "1" : "0")}",
                     $"PLAYBOOK_MUTATE_RECEIPT_AFTER_PREPARE={mutateReceiptAfterPrepare ?? string.Empty}",
-                    $"PLAYBOOK_TARGET_MODULE={(gid == SecondaryGid ? SecondaryLeanPath : LeanPath)}",
+                    $"PLAYBOOK_TARGET_MODULE={(gid == SecondaryGid ? SecondaryLeanPath : gid == NewGid ? NewLeanPath : LeanPath)}",
                     "/bin/bash",
                     Path.Combine(Root, ScriptPath),
                     command,
-                    "synthetic-base",
+                    baseRevision,
                     AtomId,
                     gid,
                 ],
