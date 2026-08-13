@@ -23,4 +23,3 @@ The declaration reuses the matrix GNS identity rather than proving it again. Its
 ## References
 
 - Truth anchor: `D5/S3/QuantumStates/GNSStateCone.state_cone_sections`
-- Dependency: [D5/S3/Quantum/GNSMatrix](../Quantum/GNSMatrix.md)
