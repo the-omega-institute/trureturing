@@ -22,7 +22,7 @@ public sealed partial class TheoryAtomizerTests
     [Fact]
     public void ProductionGictAnnotationsDoNotContainMalformedClosedStatusMarkers()
     {
-        var root = FindRepositoryRoot();
+        var root = TestRepositoryLayout.FindRoot();
         var bytes = File.ReadAllBytes(Path.Combine(root, FirstProductionSource));
 
         var document = GictAtomizer.Atomize(bytes, DigestionTestSupport.Rules);

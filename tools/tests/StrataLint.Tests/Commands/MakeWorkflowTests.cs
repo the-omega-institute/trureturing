@@ -69,7 +69,7 @@ public sealed partial class MakeWorkflowTests
     {
         if (OperatingSystem.IsWindows()) return;
 
-        var root = FindRepositoryRoot();
+        var root = TestRepositoryLayout.FindRoot();
         using var fixture = new TemporaryDirectory();
         var reportDirectory = Path.Combine(fixture.Path, "tools", "scripts", "report");
         var cliDirectory = Path.Combine(fixture.Path, "tools", "StrataLint.Cli");
@@ -119,7 +119,7 @@ public sealed partial class MakeWorkflowTests
     [Fact]
     public void EchoProjectionUsesTheFileMapShardGlobNotRegistryInstances()
     {
-        var root = FindRepositoryRoot();
+        var root = TestRepositoryLayout.FindRoot();
         var registry = File.ReadAllText(Path.Combine(root, "Meta", "registry.yaml"));
         var fileMap = File.ReadAllText(Path.Combine(root, "Meta", "FILEMAP.toml"));
         var gitignore = File.ReadAllText(Path.Combine(root, ".gitignore"));
@@ -133,7 +133,7 @@ public sealed partial class MakeWorkflowTests
     [Fact]
     public void CiAndLocalGateReuseCanonicalEntrypoints()
     {
-        var root = FindRepositoryRoot();
+        var root = TestRepositoryLayout.FindRoot();
         var workflow = File.ReadAllText(Path.Combine(root, ".github", "workflows", "ci.yml"));
         var localGate = File.ReadAllText(Path.Combine(root, LocalHarnessGateScriptPath));
         var preflight = File.ReadAllText(Path.Combine(root, PreflightScriptPath));
@@ -208,7 +208,7 @@ public sealed partial class MakeWorkflowTests
     [Fact]
     public void PreflightRefreshesLeanReportAfterDotnetAndBeforeTests()
     {
-        var root = FindRepositoryRoot();
+        var root = TestRepositoryLayout.FindRoot();
         var preflight = File.ReadAllText(Path.Combine(root, PreflightScriptPath));
 
         var dotnetIndex = preflight.IndexOf("CI=true make dotnet", StringComparison.Ordinal);
@@ -227,7 +227,7 @@ public sealed partial class MakeWorkflowTests
     [Fact]
     public void PreflightPinsOneStrictAncestorBeforeExpensiveStagesAndReportsBaseAdvanceAdvisory()
     {
-        var root = FindRepositoryRoot();
+        var root = TestRepositoryLayout.FindRoot();
         var preflight = File.ReadAllText(Path.Combine(root, PreflightScriptPath));
 
         var fetchIndex = preflight.IndexOf("fetch --prune", StringComparison.Ordinal);
@@ -249,7 +249,7 @@ public sealed partial class MakeWorkflowTests
     [Fact]
     public void CiChecksOutCandidateTreesOnlyAndCarriesBaseAsSha()
     {
-        var workflow = File.ReadAllText(Path.Combine(FindRepositoryRoot(), AdmissionWorkflowPath));
+        var workflow = File.ReadAllText(Path.Combine(TestRepositoryLayout.FindRoot(), AdmissionWorkflowPath));
 
         Assert.Equal(3, Regex.Matches(workflow, "uses: actions/checkout@v4").Count);
         Assert.DoesNotContain("path: baseline", workflow, StringComparison.Ordinal);
@@ -261,7 +261,7 @@ public sealed partial class MakeWorkflowTests
     [Fact]
     public void TheoryIngestRunsCandidateIngestWithMergeBaseAndSharedCaches()
     {
-        var root = FindRepositoryRoot();
+        var root = TestRepositoryLayout.FindRoot();
         var admission = File.ReadAllText(Path.Combine(root, AdmissionWorkflowPath));
         var workflow = File.ReadAllText(Path.Combine(root, TheoryIngestWorkflowPath));
         var runnerIndex = workflow.IndexOf("runs-on: ubuntu-24.04-arm", StringComparison.Ordinal);
@@ -349,7 +349,7 @@ public sealed partial class MakeWorkflowTests
     [Fact]
     public void TheoryIngestRunsCandidateClosureWithoutOverlay()
     {
-        var root = FindRepositoryRoot();
+        var root = TestRepositoryLayout.FindRoot();
         var workflow = File.ReadAllText(Path.Combine(root, TheoryIngestWorkflowPath));
         Assert.Contains("contents: read", workflow, StringComparison.Ordinal);
         Assert.DoesNotContain("Enforce candidate data-only boundary", workflow, StringComparison.Ordinal);
@@ -370,7 +370,7 @@ public sealed partial class MakeWorkflowTests
     [Fact]
     public void TheoryIngestNoLongerCarriesLegacyBoundaryOrWritebackContracts()
     {
-        var root = FindRepositoryRoot();
+        var root = TestRepositoryLayout.FindRoot();
         var workflow = File.ReadAllText(Path.Combine(root, TheoryIngestWorkflowPath));
         Assert.DoesNotContain("Enforce candidate data-only boundary", workflow, StringComparison.Ordinal);
         Assert.DoesNotContain("Enforce write-path whitelist and commit back", workflow, StringComparison.Ordinal);
@@ -380,7 +380,7 @@ public sealed partial class MakeWorkflowTests
     [Fact]
     public void TheoryIngestDoesNotRewriteEchoProjection()
     {
-        var root = FindRepositoryRoot();
+        var root = TestRepositoryLayout.FindRoot();
         var workflow = File.ReadAllText(Path.Combine(root, TheoryIngestWorkflowPath));
         Assert.DoesNotContain("Generated/echo-residuals", workflow, StringComparison.Ordinal);
     }
@@ -388,7 +388,7 @@ public sealed partial class MakeWorkflowTests
     [Fact]
     public void LocalGateHonorsExplicitTemporaryDirectory()
     {
-        var root = FindRepositoryRoot();
+        var root = TestRepositoryLayout.FindRoot();
         var localGate = File.ReadAllText(Path.Combine(root, LocalHarnessGateScriptPath));
 
         Assert.Contains(
@@ -400,7 +400,7 @@ public sealed partial class MakeWorkflowTests
     [Fact]
     public void ReportEntrypointsDelegateToTheSingleHostSupervisor()
     {
-        var root = FindRepositoryRoot();
+        var root = TestRepositoryLayout.FindRoot();
         var supervisorName = Path.GetFileName(ReportSupervisorScriptPath);
         var pairName = Path.GetFileName(LeanReportPairScriptPath);
         var producer = File.ReadAllText(Path.Combine(root, LeanReportScriptPath));
@@ -420,7 +420,7 @@ public sealed partial class MakeWorkflowTests
     [Fact]
     public void ScribeWrapperConsumesOnlyAPrecomputedLeanReport()
     {
-        var root = FindRepositoryRoot();
+        var root = TestRepositoryLayout.FindRoot();
         var script = File.ReadAllText(Path.Combine(root, ScribeScriptPath));
 
         Assert.DoesNotContain("lean-inspector/inspect.sh", script, StringComparison.Ordinal);
@@ -437,7 +437,7 @@ public sealed partial class MakeWorkflowTests
     [Fact]
     public void WorktreeAdapterRestoresToolPathBeforeResolvingRepositoryRoot()
     {
-        var root = FindRepositoryRoot();
+        var root = TestRepositoryLayout.FindRoot();
         var script = File.ReadAllText(Path.Combine(root, WorktreeInitScriptPath));
         var pathIndex = script.IndexOf("export PATH=", StringComparison.Ordinal);
         var dirnameIndex = script.IndexOf("dirname", StringComparison.Ordinal);
@@ -449,7 +449,7 @@ public sealed partial class MakeWorkflowTests
     [Fact]
     public void PerformanceJsonQuoteRemovesUnsupportedControlBytes()
     {
-        var root = FindRepositoryRoot();
+        var root = TestRepositoryLayout.FindRoot();
         var script = Path.Combine(root, PerfEventScriptPath);
         var result = BoundedProcessRunner.Run(
             "/bin/bash",
@@ -471,7 +471,7 @@ public sealed partial class MakeWorkflowTests
     [Fact]
     public void PerformanceSpoolIgnoresATmpdirInsideTheRepository()
     {
-        var root = FindRepositoryRoot();
+        var root = TestRepositoryLayout.FindRoot();
         var script = Path.Combine(root, PerfEventScriptPath);
         using var repository = new TemporaryDirectory();
         var result = BoundedProcessRunner.Run(
@@ -521,15 +521,4 @@ public sealed partial class MakeWorkflowTests
             .ToArray();
     }
 
-    private static string FindRepositoryRoot()
-    {
-        for (var current = new DirectoryInfo(AppContext.BaseDirectory);
-             current is not null;
-             current = current.Parent)
-        {
-            if (File.Exists(Path.Combine(current.FullName, "CLAUDE.md"))) return current.FullName;
-        }
-
-        throw new DirectoryNotFoundException("Could not locate repository root.");
-    }
 }

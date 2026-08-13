@@ -9,7 +9,7 @@ public sealed partial class MakeWorkflowTests
     [Fact]
     public void EngineeringCheckRunsTheCanonicalToolsTestTargetWithoutAFilter()
     {
-        var root = FindRepositoryRoot();
+        var root = TestRepositoryLayout.FindRoot();
         var makefile = File.ReadAllText(Path.Combine(root, "Makefile"));
         var workflow = File.ReadAllText(Path.Combine(root, AdmissionWorkflowPath));
         var engineeringStep = EngineeringTestStep(workflow);
@@ -40,7 +40,7 @@ public sealed partial class MakeWorkflowTests
     [Fact]
     public void MakefileIsAThinCompleteDispatchTable()
     {
-        var root = FindRepositoryRoot();
+        var root = TestRepositoryLayout.FindRoot();
         var makefile = File.ReadAllText(Path.Combine(root, "Makefile"));
 
         Assert.Contains(".DEFAULT_GOAL := help", makefile, StringComparison.Ordinal);
@@ -62,7 +62,7 @@ public sealed partial class MakeWorkflowTests
         var mathematicalTestRecipe = Recipe(makefile, "test");
         Assert.DoesNotContain("dotnet test", mathematicalTestRecipe, StringComparison.Ordinal);
         Assert.Contains("tools/scripts/workflow/math-gate.sh", mathematicalTestRecipe, StringComparison.Ordinal);
-        var mathGate = File.ReadAllText(Path.Combine(FindRepositoryRoot(), "tools", "scripts", "workflow", "math-gate.sh"));
+        var mathGate = File.ReadAllText(Path.Combine(TestRepositoryLayout.FindRoot(), "tools", "scripts", "workflow", "math-gate.sh"));
         Assert.DoesNotContain("dotnet test", mathGate, StringComparison.Ordinal);
         Assert.Contains("lake build", mathGate, StringComparison.Ordinal);
         Assert.Contains("make lean-report", mathGate, StringComparison.Ordinal);
@@ -119,7 +119,7 @@ public sealed partial class MakeWorkflowTests
     [Fact]
     public void HelpRunsAndNamesEveryTarget()
     {
-        var root = FindRepositoryRoot();
+        var root = TestRepositoryLayout.FindRoot();
         var result = BoundedProcessRunner.Run(
             "make",
             ["help"],

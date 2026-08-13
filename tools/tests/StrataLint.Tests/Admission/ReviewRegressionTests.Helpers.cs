@@ -55,7 +55,7 @@ public sealed partial class ReviewRegressionTests
             var workflowDirectory = Path.Combine(repositoryRoot, ".github", "workflows");
             Directory.CreateDirectory(workflowDirectory);
             File.Copy(
-                Path.Combine(FindRepositoryRoot(), ".github", "workflows", "ci.yml"),
+                Path.Combine(TestRepositoryLayout.FindRoot(), ".github", "workflows", "ci.yml"),
                 Path.Combine(workflowDirectory, "ci.yml"));
         }
 
@@ -87,20 +87,5 @@ public sealed partial class ReviewRegressionTests
         return stdout;
     }
 
-    private static string FindRepositoryRoot()
-    {
-        var directory = new DirectoryInfo(AppContext.BaseDirectory);
-        while (directory is not null)
-        {
-            if (File.Exists(Path.Combine(directory.FullName, ".github", "workflows", "ci.yml")))
-            {
-                return directory.FullName;
-            }
-
-            directory = directory.Parent;
-        }
-
-        throw new DirectoryNotFoundException("could not locate repository root");
-    }
 
 }

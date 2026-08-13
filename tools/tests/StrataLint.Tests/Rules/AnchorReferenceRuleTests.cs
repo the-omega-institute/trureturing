@@ -143,35 +143,6 @@ public sealed class AnchorReferenceRuleTests
         Assert.Contains("cannot be decided", diagnostic.Message, StringComparison.Ordinal);
     }
 
-    [Fact]
-    // A convenience check, not the enforcement: admission evaluates this rule against the real tree
-    // with the real report, so an unreachable header anchor reds the gate whether or not this runs.
-    // The candidate-engineering job builds no Lean report, so an absent one is not a failure here;
-    // STRATALINT_REQUIRE_LIVE_REPORT=1 makes it one, matching StatementProjectionPilotTests.
-    public void CurrentRepositoryAnchorsAreReachableThroughTheLeanImportGraphWhenAvailable()
-    {
-        var fixture = new RuleFixture();
-        var root = FindRepositoryRoot();
-        var reportPath = Path.Combine(root, ".lake", "build", "stratalint", "raw-lean-report.json");
-        if (!File.Exists(reportPath))
-        {
-            Assert.False(
-                Environment.GetEnvironmentVariable("STRATALINT_REQUIRE_LIVE_REPORT") == "1",
-                "STRATALINT_REQUIRE_LIVE_REPORT=1 requires .lake/build/stratalint/raw-lean-report.json");
-            return;
-        }
-
-        var reports = ReadRawReport(reportPath);
-        foreach (var (relative, report) in reports)
-        {
-            var text = File.ReadAllText(Path.Combine(root, relative), Encoding.UTF8);
-            fixture.Files[relative] = text;
-            fixture.Reports[relative] = report;
-        }
-
-        Assert.Empty(EvaluateMembership(fixture).Diagnostics);
-    }
-
     private static bool IsReachable(params (string Path, string[] Imports)[] files) =>
         LeanImportClosure.ImportsExternalModule(Report(files), "D5.A", Target);
 
@@ -198,29 +169,4 @@ public sealed class AnchorReferenceRuleTests
     private static SingleRuleEvaluation EvaluateMembership(RuleFixture fixture) =>
         RuleCatalog.Default.EvaluateSingle(RuleId.CreateKnown(17), fixture.Build());
 
-    private static Dictionary<string, LeanFileReport> ReadRawReport(string path)
-    {
-        using var document = JsonDocument.Parse(File.ReadAllBytes(path));
-        return document.RootElement.GetProperty("modules").EnumerateArray().ToDictionary(
-            static module => module.GetProperty("source_path").GetString()!,
-            static module => LeanReport(module.GetProperty("imports").EnumerateArray()
-                .Select(static import => import.GetString()!)),
-            StringComparer.Ordinal);
-    }
-
-    private static string FindRepositoryRoot()
-    {
-        for (var current = new DirectoryInfo(AppContext.BaseDirectory);
-             current is not null;
-             current = current.Parent)
-        {
-            if (File.Exists(Path.Combine(current.FullName, "global.json"))
-                && Directory.Exists(Path.Combine(current.FullName, "Blueprint")))
-            {
-                return current.FullName;
-            }
-        }
-
-        throw new DirectoryNotFoundException("Could not locate repository root.");
-    }
 }

@@ -189,7 +189,7 @@ public sealed class LeanReportInputScriptTests
             repository = Path.Combine(temporary.Path, "repository");
             report = Path.Combine(temporary.Path, "raw-lean-report.json");
             script = Path.Combine(
-                FindRepositoryRoot(),
+                TestRepositoryLayout.FindRoot(),
                 "tools", "scripts", "report", "lean-report-input.sh");
             Directory.CreateDirectory(Path.Combine(repository, "D5"));
             Directory.CreateDirectory(Path.Combine(
@@ -341,17 +341,6 @@ public sealed class LeanReportInputScriptTests
 
         public void Dispose() => temporary.Dispose();
 
-        private static string FindRepositoryRoot()
-        {
-            for (var current = new DirectoryInfo(AppContext.BaseDirectory);
-                 current is not null;
-                 current = current.Parent)
-            {
-                if (File.Exists(Path.Combine(current.FullName, "CLAUDE.md"))) return current.FullName;
-            }
-
-            throw new DirectoryNotFoundException("Could not locate repository root.");
-        }
     }
 
     private static string[] Lines(ProcessOutput output) => Encoding.UTF8.GetString(output.StandardOutput)

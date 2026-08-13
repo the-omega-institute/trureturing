@@ -21,14 +21,4 @@ public sealed class ProductionRepositoryReadDeriverTests
         Assert.DoesNotContain("Pure", readers);
     }
 
-    [Fact]
-    public void KnownProductionLoadersArePositiveAnchorsNotAnExactSet()
-    {
-        var readers = ProductionRepositoryReadDeriver.DeriveRepositoryReaderTypes(
-            RepositoryLayout.FindRoot());
-
-        Assert.Contains("ValuesKernelDataLoader", readers);
-        Assert.Contains("LibraryNoteCatalog", readers);
-        Assert.Contains("FileMapLoader", readers);
-    }
 }

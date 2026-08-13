@@ -116,7 +116,7 @@ public sealed class AdmissionWorkflowTests
     [Fact]
     public void ReconcilesStatementProjectionAfterProducingLiveReport()
     {
-        var root = FindRepositoryRoot();
+        var root = TestRepositoryLayout.FindRoot();
         var workflow = File.ReadAllText(Path.Combine(root, ".github", "workflows", "ci.yml"));
         var stream = new YamlStream();
         stream.Load(new StringReader(workflow));
@@ -235,7 +235,7 @@ public sealed class AdmissionWorkflowTests
 
     private static string ReconciliationRun()
     {
-        var workflow = File.ReadAllText(Path.Combine(FindRepositoryRoot(), ".github", "workflows", "ci.yml"));
+        var workflow = File.ReadAllText(Path.Combine(TestRepositoryLayout.FindRoot(), ".github", "workflows", "ci.yml"));
         var stream = new YamlStream();
         stream.Load(new StringReader(workflow));
         var document = Assert.IsType<YamlMappingNode>(stream.Documents[0].RootNode);
@@ -249,7 +249,7 @@ public sealed class AdmissionWorkflowTests
     }
 
     private static string AdmissionWorkflow() =>
-        File.ReadAllText(Path.Combine(FindRepositoryRoot(), ".github", "workflows", "ci.yml"));
+        File.ReadAllText(Path.Combine(TestRepositoryLayout.FindRoot(), ".github", "workflows", "ci.yml"));
 
     private static YamlMappingNode Jobs(string workflow)
     {
@@ -277,16 +277,4 @@ public sealed class AdmissionWorkflowTests
             yield return item.Value!;
     }
 
-    private static string FindRepositoryRoot()
-    {
-        for (var directory = new DirectoryInfo(AppContext.BaseDirectory);
-             directory is not null;
-             directory = directory.Parent)
-        {
-            if (File.Exists(Path.Combine(directory.FullName, "lakefile.toml")))
-                return directory.FullName;
-        }
-
-        throw new InvalidOperationException("Repository root was not found.");
-    }
 }

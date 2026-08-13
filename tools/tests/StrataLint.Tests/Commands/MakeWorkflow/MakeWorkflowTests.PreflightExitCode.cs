@@ -24,7 +24,7 @@ public sealed partial class MakeWorkflowTests
     {
         if (OperatingSystem.IsWindows()) return;
 
-        var root = FindRepositoryRoot();
+        var root = TestRepositoryLayout.FindRoot();
         using var fixture = new TemporaryDirectory();
         var binDirectory = Path.Combine(fixture.Path, "bin");
         Directory.CreateDirectory(binDirectory);

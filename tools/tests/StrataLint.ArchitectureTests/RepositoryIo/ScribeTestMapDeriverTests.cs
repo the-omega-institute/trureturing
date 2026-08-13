@@ -3,6 +3,24 @@ namespace StrataLint.ArchitectureTests;
 public sealed class ScribeTestMapDeriverTests
 {
     [Fact]
+    public void RepositoryMapHasNoUnknownGrowthAndEveryPathIsDeclared()
+    {
+        var map = ScribeTestMapDeriver.DeriveRepository(RepositoryLayout.FindRoot());
+
+        // Baseline observed on phase 4a branch: 280 methods are still conservative
+        // unknowns. Until the parser can resolve them, they must not increase.
+        Assert.InRange(
+            map.Methods.Count(static method => method.IsUnknown),
+            0,
+            280);
+        Assert.All(
+            map.Methods.SelectMany(static method => method.Paths),
+            path => Assert.True(
+                ScribeTestMapDeriver.IsDeclaredPathAllowed(path),
+                $"undeclared repository read path: {path}"));
+    }
+
+    [Fact]
     public void DiscoveryMarkerFollowsRepositoryAccessorSource()
     {
         var map = DeriveDiscoveryWithAccessorMarker("File.Exists(Path.Combine(root, \"PROJECT.md\"))");

@@ -251,7 +251,7 @@ public sealed class LeanReportCacheTests
 
         internal CacheWorld()
         {
-            var repositoryRoot = FindRepositoryRoot();
+            var repositoryRoot = TestRepositoryLayout.FindRoot();
             Repo = Path.Combine(_tmp.Path, "repo");
             CacheRoot = Path.Combine(_tmp.Path, "cache");
             SlotLog = Path.Combine(_tmp.Path, "slot.log");
@@ -435,17 +435,6 @@ public sealed class LeanReportCacheTests
                     | UnixFileMode.OtherRead | UnixFileMode.OtherExecute);
         }
 
-        private static string FindRepositoryRoot()
-        {
-            for (var current = new DirectoryInfo(AppContext.BaseDirectory);
-                 current is not null;
-                 current = current.Parent)
-            {
-                if (File.Exists(Path.Combine(current.FullName, "CLAUDE.md"))) return current.FullName;
-            }
-
-            throw new DirectoryNotFoundException("Could not locate repository root.");
-        }
 
         // Records each invocation, writes a byte-stable canned report + sidecar, and
         // exits 0 in well under a second. Mirrors the inspect.sh contract consumed by

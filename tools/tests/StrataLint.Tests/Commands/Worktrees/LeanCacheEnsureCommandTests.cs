@@ -198,7 +198,7 @@ public sealed class LeanCacheEnsureScriptTests
     {
         if (OperatingSystem.IsWindows()) return;
 
-        var script = Path.Combine(FindRepositoryRoot(), LeanCacheEnsureScriptPath);
+        var script = Path.Combine(TestRepositoryLayout.FindRoot(), LeanCacheEnsureScriptPath);
         using var fixture = new TemporaryDirectory();
         var bin = Path.Combine(fixture.Path, "bin");
         var arguments = Path.Combine(fixture.Path, "dotnet-arguments");
@@ -247,7 +247,7 @@ public sealed class LeanCacheEnsureScriptTests
     {
         if (OperatingSystem.IsWindows()) return;
 
-        var script = Path.Combine(FindRepositoryRoot(), LeanCacheEnsureScriptPath);
+        var script = Path.Combine(TestRepositoryLayout.FindRoot(), LeanCacheEnsureScriptPath);
         using var fixture = new TemporaryDirectory();
         Directory.CreateDirectory(Path.Combine(fixture.Path, ".lake"));
         var marker = Path.Combine(fixture.Path, "dotnet-started");
@@ -268,7 +268,7 @@ public sealed class LeanCacheEnsureScriptTests
     {
         if (OperatingSystem.IsWindows()) return;
 
-        var script = Path.Combine(FindRepositoryRoot(), LeanCacheEnsureScriptPath);
+        var script = Path.Combine(TestRepositoryLayout.FindRoot(), LeanCacheEnsureScriptPath);
         using var fixture = new TemporaryDirectory();
         var shared = Path.Combine(fixture.Path, "shared");
         Directory.CreateDirectory(shared);
@@ -314,15 +314,4 @@ public sealed class LeanCacheEnsureScriptTests
             64 * 1024);
     }
 
-    private static string FindRepositoryRoot()
-    {
-        for (var current = new DirectoryInfo(AppContext.BaseDirectory);
-             current is not null;
-             current = current.Parent)
-        {
-            if (File.Exists(Path.Combine(current.FullName, "CLAUDE.md"))) return current.FullName;
-        }
-
-        throw new DirectoryNotFoundException("Could not locate repository root.");
-    }
 }
