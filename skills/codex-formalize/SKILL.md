@@ -56,7 +56,15 @@ make show-atom ATOM_ID=<id>
 
 Never quote the projection as authoritative. Prefer an atom with few unresolved subitems and an elementary, self-contained statement.
 
-Postcondition: one atom ID is selected and its verified `make show-atom` output is retained as the statement source.
+Triage the claim class before committing to it; each class below is named by landed outcomes, not speculation:
+
+- **Best odds — concrete certificate/computation claims** whose data is inside the atom text (a walk value, a finite identity, explicit witnesses): these close with `decide`/`norm_num` and have the highest landed success rate.
+- **Good odds — claims whose machinery is already frozen**: a bridge, instantiation, or characterization theorem connecting existing declarations.
+- **Definition clauses — only with an earning theorem** (see the thin-deposit taxonomy below); a definition alone is not a target.
+- **Do not encode — institutional/philosophical prose clauses** (governance clauses, postmortem narratives, interpretive premises): they have no mathematical content, and encoding them as generic set/logic predicates is how thin deposits happen. Report them as not-formalizable prose rather than dressing them in Lean.
+- **Do not attempt without a machinery plan — heavy universal claims** (representation theorems, general-dimension obstructions): landed lanes on these either time out or fabricate. If the machinery gap is real, `open` naming the gap is the valuable output.
+
+Postcondition: one atom ID is selected, its claim class is named in the report, and its verified `make show-atom` output is retained as the statement source.
 
 ### 2. Echo the statement before proving it
 
@@ -69,6 +77,8 @@ Postcondition: every source clause has one intended Lean counterpart, or the tas
 ### 3. Search the library before proving
 
 Apply `CLAUDE.md` 11, "library before proof." Search pinned mathlib and the repository's `D5/` declarations for the complete statement and for lemmas that close its dependencies. Record every query verbatim and record whether it hit.
+
+Check the bind path first: the cheapest faithful discharge is an existing frozen theorem, and dozens of residues have been discharged with zero new Lean. If a frozen declaration already covers the residue leg verbatim (not narrower — watch the grader traps below), the correct deliverable is a bind recommendation naming that declaration and the evidence, not a new module. Ledger surgery itself is dispatcher-owned; your report carries the finding.
 
 If the result exists upstream, import and apply it. Do not reprove it: a reproof of an existing declaration creates a second source of truth.
 
@@ -118,13 +128,15 @@ lean_count=$(git ls-files "$lean_dir" | awk 'END { print NR+0 }'); blueprint_cou
 
 Blueprint `.md` projections are excluded from capacity, but `.scribe.cs` sources count. If the natural target directory is full, do not place the module in a semantically wrong directory to evade the limit: split the bucket, register the new domain in `Meta/domains.yaml`, place the module in the new directory, and carry the protected-surface cost for the conservative-extension gate to judge. A protected-surface change is priced work, not a stopping condition. Reserve `open` for what is genuinely unresolvable, such as an ambiguity that cannot be settled without weakening the claim or a proof that will not close, never for work that merely costs more.
 
-Run:
+Iterate with a scoped build (`lake build <YourModuleName>`), then run the canonical door once when the artifacts are final:
 
 ```sh
 make lean
 ```
 
-Judge completion only by exit code, never elapsed time or quiet output.
+Judge completion only by exit code, never elapsed time or quiet output. Full doors cost minutes each; a landed lane died by burning its entire three-hour budget on seventy-two full preflight runs chasing a flaky unrelated test. Iterate scoped, verify canonically once.
+
+Run every shape check NOW, before Step 7: line 6 ends with ` -/`, the generality tag matches the weakest import and the module's nature, the scribe formulas obey the rejection taxonomy, the emitted `.md` mirrors every conjunct. After a successful deposit the module's bytes are pinned by the frozen ledger — a defect found before the ceremony is a free edit; the same defect found after is a full rewind ritual (restore the frozen ledger and receipts from `origin/dev`, re-run the ceremony). Three landed header violations were repaired the expensive way; do not join them.
 
 Postcondition: both source artifacts exist in the observed shape and `make lean` exits 0.
 
@@ -147,7 +159,7 @@ make deposit ATOM_ID=<id> GID=<D5/Path/Module.theorem_name>
 make preflight
 ```
 
-Both commands must exit 0. Judge them only by exit code.
+Both commands must exit 0. Judge them only by exit code, and never pipe a judgment command: `cmd | tail -1` reports the pipe's exit status, not the command's, and three landed incidents (a merge that silently failed, a ceremony run on a stale base, a cover failure read as success) trace to exactly this. Run the command bare, or capture `$?` on the command itself before any formatting.
 
 If `make deposit` or `make preflight` exits nonzero, stop before `cover` and end as `open`. Report the failed command and exit code, machine diagnostics, touched paths, and the actual resulting tree and commit state; `deposit` may already have produced commits before failing.
 
@@ -197,6 +209,8 @@ Before Step 7, the producing seat must answer every item with concrete evidence.
   The formula DSL and writer own tokens that can be valid LaTeX and structurally accepted yet mean something different from the theorem, so `emit` exiting 0 is not evidence that the rendering is faithful.
   A mismatch blocks deposit; resolve it against `Meta/StrataLint/StrataLint.Scribe/Ast/FormulaDsl.cs` and `Meta/StrataLint/StrataLint.Scribe/Writers/LatexWriter.cs`, or end the task `open`.
 
+Finally, run the grader-trap checklist against your own work before sign-off — witness-vs-universal, instance-vs-general, conditional-vs-unconditional, pointwise-vs-operator, proof-internal-vs-addressable-statement, multi-clause residue names, mechanism-vs-outcome — and record for each either "not applicable" or how your statement clears it. Reviewers will run exactly this list; a mismatch you find yourself is a free fix, one they find is a blocked lane.
+
 Any item without evidence blocks deposit. Mark an unverified fact exactly `ASSUMED-UNVERIFIED`; never replace measurement with hedging language. The repository's current signature-match test explicitly leaves this gap open: `CoverAtomEnvelopeTests.cs` says an unchanged pre-committed `theorem t : True` would pass, so compilation, deposit, and cover do not certify fidelity.
 
 ## Earned hard gates (precedent taxonomy)
@@ -226,6 +240,14 @@ A landed pull request consisting of one generic one-line `def` plus two `simp`-t
 - **No island modules.** A module whose only relationship to the repository is its directory path is a second framework wearing repository vocabulary. If your definition names a concept the repository already has machinery for (observers, windows, channels, walks), it must import and connect to that machinery — an "observer" predicate that touches none of the existing observer declarations belongs to nothing and discharges nothing. If the concept genuinely has no repository counterpart yet, say so explicitly and justify why a floating generic definition is worth freezing now rather than when its first theorem arrives.
 - **The external-referee test.** Ask whether the module would survive review as a standalone library contribution: a one-line definition with `simp` examples would be rejected anywhere as content-free. The ceremony cost of a deposit (freeze, receipts, coverage) is justified by content, and "it compiles and is honest" is the floor for a report, not a reason to deposit.
 - **The pull-request body is evidence, not decoration.** Carry the clause-mapping echo, the search trace, and the explicit honest-partial disclosure (what is asserted, what remains open) in the pull-request body. An empty body on a deposit pull request hides exactly the thinness these gates exist to catch.
+
+### Moving base (multiple drivers, hourly-advancing dev)
+
+Several machines drive this repository concurrently and `dev` advances roughly hourly; three landed incidents define the discipline:
+
+- **Merge `origin/dev` and verify before any ceremony**: the only trustworthy sync check is `git merge-base --is-ancestor origin/dev HEAD` — a piped or prettified merge command has silently failed and sent a ceremony onto a stale base.
+- **A capacity or baseline red may be the baseline's fault, not yours**: a candidate diffed against an older base once made another driver's new file look like this lane's twelfth — the remedy was merging newer `dev` and re-pushing, not restructuring. Before treating a structural red as yours, re-sync and re-run.
+- **The remote branch may have been advanced by automation** (update-branch bots): if push is rejected, fetch the branch itself, merge, and push again — never force-push, and never rebase after a deposit (frozen provenance pins the commit lineage; rebasing orphans it).
 
 ### Process honesty
 
