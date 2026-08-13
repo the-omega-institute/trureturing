@@ -9,7 +9,7 @@ public sealed class LeanReportCacheWorkflowTests
     [Fact]
     public void ContentAddressedReuseHasNoPrefixFallback()
     {
-        var root = FindRepositoryRoot();
+        var root = TestRepositoryLayout.FindRoot();
         var workflow = File.ReadAllText(Path.Combine(root, AdmissionWorkflowPath));
         var restoreStep = workflow.Split("      - name: Restore canonical Lean report by input address\n", StringSplitOptions.None)[1]
             .Split("      - name: ", StringSplitOptions.None)[0];
@@ -26,15 +26,4 @@ public sealed class LeanReportCacheWorkflowTests
         Assert.DoesNotContain("--modules-file", pair, StringComparison.Ordinal);
     }
 
-    private static string FindRepositoryRoot()
-    {
-        for (var current = new DirectoryInfo(AppContext.BaseDirectory);
-             current is not null;
-             current = current.Parent)
-        {
-            if (File.Exists(Path.Combine(current.FullName, "CLAUDE.md"))) return current.FullName;
-        }
-
-        throw new DirectoryNotFoundException("Could not locate repository root.");
-    }
 }

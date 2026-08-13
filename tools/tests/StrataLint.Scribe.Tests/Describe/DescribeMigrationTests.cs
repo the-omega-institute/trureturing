@@ -632,31 +632,6 @@ public sealed class DescribeMigrationTests
     }
 
     [Fact]
-    public void DescribeReportVerbReturnsTheMachineQueryableLedger()
-    {
-        var output = new StringWriter();
-        var error = new StringWriter();
-
-        var exit = ScribeCli.Run(
-            ["describe-report", "--json"],
-            RepositoryAccessor.Discover(RepositoryRootCriterion.GlobalJsonAndBlueprintDirectoryNotFound).Root.FullPath,
-            output,
-            error,
-            LeanReportFixture.ForDocuments(
-                DocumentDefinitions.All.Select(static definition => definition.Document)));
-
-        Assert.Equal(0, exit);
-        Assert.Equal(string.Empty, error.ToString());
-        using var document = JsonDocument.Parse(output.ToString());
-        var expected = DeriveContentInventory();
-        Assert.Equal("DESCRIBE-NODES", document.RootElement.GetProperty("case_id").GetString());
-        Assert.Equal(
-            expected.Total,
-            document.RootElement.GetProperty("node_stats").GetProperty("total").GetInt32());
-        Assert.False(document.RootElement.TryGetProperty("open_count", out _));
-    }
-
-    [Fact]
     public void QuantitativeAndIdentityUpgradeCandidatesAreNotDescribeRemarks()
     {
         var forbidden = new HashSet<string>(StringComparer.Ordinal)

@@ -25,7 +25,7 @@ public sealed class CliVerbLinkageTests
     [Fact]
     public void EveryCliVerbTheRepositoryInvokesIsImplemented()
     {
-        var root = FindRepositoryRoot();
+        var root = TestRepositoryLayout.FindRoot();
         var invocations = CollectInvocations(root);
 
         Assert.True(
@@ -156,19 +156,4 @@ public sealed class CliVerbLinkageTests
         }
     }
 
-    private static string FindRepositoryRoot()
-    {
-        var directory = new DirectoryInfo(AppContext.BaseDirectory);
-        while (directory is not null)
-        {
-            if (File.Exists(Path.Combine(directory.FullName, ".github", "workflows", "ci.yml")))
-            {
-                return directory.FullName;
-            }
-
-            directory = directory.Parent;
-        }
-
-        throw new DirectoryNotFoundException("could not locate repository root");
-    }
 }

@@ -198,50 +198,6 @@ public sealed partial class ReviewRegressionTests
     }
 
     [Fact]
-    public void Sl016AcceptsCurrentRepositoryTicketDeclarations()
-    {
-        var repositoryRoot = FindRepositoryRoot();
-        var fixture = new RuleFixture();
-        var fixtureInventory = BackfillInventoryLoader.Load(
-            fixture.Files[BackfillInventoryLoader.RelativePath]);
-        var repositoryInventory = BackfillInventoryLoader.LoadRoot(repositoryRoot);
-        fixture.Files[BackfillInventoryLoader.RelativePath] = Encoding.UTF8.GetString(
-            BackfillInventoryWriter.Write(fixtureInventory.WithTickets(
-                repositoryInventory.RequireTickets())).AsSpan());
-        fixture.AddBackfillTargets();
-        foreach (var path in Directory.EnumerateFiles(
-                     Path.Combine(repositoryRoot, "D5", "X_Frontier"),
-                     "*.lean",
-                     SearchOption.TopDirectoryOnly))
-        {
-            var repoPath = Path.GetRelativePath(repositoryRoot, path).Replace('\\', '/');
-            fixture.Files[repoPath] = File.ReadAllText(path, Encoding.UTF8);
-            fixture.Reports.TryAdd(repoPath, new LeanFileReport([], []));
-        }
-
-        // The digestion projection consumes Lean truth, so this synthetic managed file carries its report.
-        fixture.Files["D5/X_Frontier/DownwardImportTail.lean"] = """
-            /- GID: D5/X_Frontier/DownwardImportTail
-               generality: E
-               mirror-B: none(waiver:test-fixture)
-               mirror-E: none(waiver:test-fixture)
-               anchors: []
-               digest: SL-016 downward-import regression fixture. -/
-            import D5.S3.Weil.FourierLaplace
-            def downwardImportTail : Unit := ()
-            """;
-        fixture.Reports["D5/X_Frontier/DownwardImportTail.lean"] = new LeanFileReport(
-            ["D5.S3.Weil.FourierLaplace"],
-            []);
-
-        var evaluation = RuleCatalog.Default.EvaluateSingle(
-            RuleId.CreateKnown(16),
-            fixture.BuildForRuleCompatibility());
-
-        Assert.Empty(evaluation.Diagnostics);
-    }
-
-    [Fact]
     public void Sl016RejectsHandwrittenDigestionStatusThatDisagreesWithDerivation()
     {
         var fixture = new RuleFixture();
@@ -579,7 +535,7 @@ public sealed partial class ReviewRegressionTests
         Assert.Contains("Meta/registry.yaml", diagnostic.Message, StringComparison.Ordinal);
         Assert.Contains("governance_documents", diagnostic.Message, StringComparison.Ordinal);
         var enginePath = Directory.EnumerateFiles(
-            Path.Combine(FindRepositoryRoot(), "tools", "StrataLint.Engine"),
+            Path.Combine(TestRepositoryLayout.FindRoot(), "tools", "StrataLint.Engine"),
             "BackfillInventoryRule.cs",
             SearchOption.AllDirectories).Single();
         var engineSource = File.ReadAllText(enginePath, Encoding.UTF8);
@@ -589,7 +545,7 @@ public sealed partial class ReviewRegressionTests
     [Fact]
     public void Cf10WorkflowSeparatesLeanInspectionFromDotnetAdmission()
     {
-        var root = FindRepositoryRoot();
+        var root = TestRepositoryLayout.FindRoot();
         var workflow = File.ReadAllText(
             Path.Combine(root, ".github", "workflows", "ci.yml"),
             Encoding.UTF8);

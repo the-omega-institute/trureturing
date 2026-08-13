@@ -107,7 +107,7 @@ internal sealed partial class RuleFixture
 
     internal RuleFixture()
     {
-        var repositoryRoot = FindRepositoryRoot();
+        var repositoryRoot = TestRepositoryLayout.FindRoot();
         Files = new Dictionary<string, string>(StringComparer.Ordinal)
         {
             ["Meta/domains.yaml"] = TestRegistry.Domains,
@@ -522,7 +522,7 @@ internal sealed partial class RuleFixture
 
     internal void AddValuesProjection()
     {
-        var repositoryRoot = FindRepositoryRoot();
+        var repositoryRoot = TestRepositoryLayout.FindRoot();
         Files[ValuesProjectionPath] = File.ReadAllText(
             Path.Combine(repositoryRoot, ValuesProjectionPath),
             Encoding.UTF8);
@@ -572,20 +572,4 @@ internal sealed partial class RuleFixture
            digest: StrataLint fixture. -/
         """;
 
-    private static string FindRepositoryRoot()
-    {
-        var directory = new DirectoryInfo(AppContext.BaseDirectory);
-        while (directory is not null)
-        {
-            if (File.Exists(Path.Combine(directory.FullName, "global.json"))
-                && Directory.Exists(Path.Combine(directory.FullName, "Blueprint")))
-            {
-                return directory.FullName;
-            }
-
-            directory = directory.Parent;
-        }
-
-        throw new DirectoryNotFoundException("could not locate repository root for protected fixtures");
-    }
 }

@@ -72,7 +72,7 @@ public sealed class LeanReportPairScriptTests
     public void PairScriptPinsPerModuleReuseOff()
     {
         var script = File.ReadAllText(Path.Combine(
-            FindRepositoryRoot(), "tools", "scripts", "lean-report-pair.sh"));
+            TestRepositoryLayout.FindRoot(), "tools", "scripts", "lean-report-pair.sh"));
 
         Assert.Contains("Per-module reuse is disabled", script, StringComparison.Ordinal);
         Assert.DoesNotContain("--module-cache-report", script, StringComparison.Ordinal);
@@ -91,17 +91,6 @@ public sealed class LeanReportPairScriptTests
         Assert.True(result.ExitCode == 0, Encoding.UTF8.GetString(result.StandardError));
     }
 
-    private static string FindRepositoryRoot()
-    {
-        for (var current = new DirectoryInfo(AppContext.BaseDirectory);
-             current is not null;
-             current = current.Parent)
-        {
-            if (File.Exists(Path.Combine(current.FullName, "CLAUDE.md"))) return current.FullName;
-        }
-
-        throw new DirectoryNotFoundException("Could not locate repository root.");
-    }
 
     private sealed class LeanReportPairFixture : IDisposable
     {
@@ -152,7 +141,7 @@ public sealed class LeanReportPairScriptTests
 
         internal ProcessOutput Run()
         {
-            var script = Path.Combine(FindRepositoryRoot(), "tools", "scripts", "lean-report-pair.sh");
+            var script = Path.Combine(TestRepositoryLayout.FindRoot(), "tools", "scripts", "lean-report-pair.sh");
             return BoundedProcessRunner.Run(
                 "env",
                 [
@@ -183,7 +172,7 @@ public sealed class LeanReportPairScriptTests
 
         internal ProcessOutput VerifyCandidateManifest()
         {
-            var helper = Path.Combine(FindRepositoryRoot(), InputHelperPath);
+            var helper = Path.Combine(TestRepositoryLayout.FindRoot(), InputHelperPath);
             var manifest = Path.Combine(temporary.Path, "candidate-modules.tsv");
             var generated = BoundedProcessRunner.Run(
                 "bash",
@@ -257,17 +246,6 @@ public sealed class LeanReportPairScriptTests
             File.WriteAllText(path, contents, new UTF8Encoding(false));
         }
 
-        private static string FindRepositoryRoot()
-        {
-            for (var current = new DirectoryInfo(AppContext.BaseDirectory);
-                 current is not null;
-                 current = current.Parent)
-            {
-                if (File.Exists(Path.Combine(current.FullName, "CLAUDE.md"))) return current.FullName;
-            }
-
-            throw new DirectoryNotFoundException("Could not locate repository root.");
-        }
 
         private const string FakeProducer = """
             #!/usr/bin/env bash

@@ -4,13 +4,13 @@ namespace StrataLint.Tests;
 
 internal static class TestRegistry
 {
-    internal const string RelativePath = "Golden/fixture-registry.yaml";
+    internal const string RelativePath = "tools/tests/StrataLint.Tests/Fixtures/fixture-registry.yaml";
 
     // Declared before Canonical on purpose: static fields initialize in declaration
     // order, and LoadRepository decodes through this encoder.
     private static readonly UTF8Encoding StrictUtf8 = new(false, true);
 
-    internal static readonly string Canonical = LoadRepository(FindRepositoryRoot());
+    internal static readonly string Canonical = LoadRepository(TestRepositoryLayout.FindRoot());
 
     internal const string Domains = """
         domains:
@@ -58,18 +58,4 @@ internal static class TestRegistry
         }
     }
 
-    private static string FindRepositoryRoot()
-    {
-        for (var current = new DirectoryInfo(AppContext.BaseDirectory);
-             current is not null;
-             current = current.Parent)
-        {
-            if (File.Exists(Path.Combine(current.FullName, RelativePath)))
-            {
-                return current.FullName;
-            }
-        }
-
-        throw new DirectoryNotFoundException("Could not locate repository root.");
-    }
 }

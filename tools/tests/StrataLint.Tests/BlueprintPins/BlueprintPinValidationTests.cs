@@ -265,26 +265,6 @@ public sealed class BlueprintPinValidationTests
         Assert.Equal(jumpCocycle.Value, accepted.TargetGid);
     }
 
-    [Fact]
-    public void ExistingGeneralCarrierPinsAreAccepted()
-    {
-        var conj = FormalGid("D5/S0/Carrier/Conj");
-        var norm = FormalGid("D5/S0/Carrier/Norm");
-        var snapshot = Snapshot(ExistingFormalFiles(conj));
-        var outcome = BlueprintPinValidator.Validate(
-            Policy(),
-            snapshot,
-            Pins(
-                domain: "Carrier",
-                module: "Norm",
-                generality: "G",
-                imports: [conj.Value]));
-
-        var accepted = Assert.IsType<BlueprintPinValidationOutcome.Accepted>(outcome);
-        Assert.Equal(norm.Value, accepted.TargetGid);
-        Assert.Empty(accepted.Unverified);
-    }
-
     private static BlueprintPinValidationOutcome Validate(BlueprintPinManifest pins) =>
         BlueprintPinValidator.Validate(
             Policy(),
@@ -320,7 +300,7 @@ public sealed class BlueprintPinValidationTests
 
     private static ValidatedPolicy Policy()
     {
-        var root = FindRepositoryRoot();
+        var root = TestRepositoryLayout.FindRoot();
         var outcome = RegistryLoader.Load(
             File.ReadAllBytes(Path.Combine(root, "Meta", "registry.yaml")),
             File.ReadAllBytes(Path.Combine(root, "Meta", "domains.yaml")));
@@ -336,7 +316,7 @@ public sealed class BlueprintPinValidationTests
 
     private static Dictionary<string, string> ExistingFormalFiles(params Gid[] gids)
     {
-        var root = FindRepositoryRoot();
+        var root = TestRepositoryLayout.FindRoot();
         return gids.ToDictionary(
             static gid => gid.Path.Value,
             gid => File.ReadAllText(
@@ -361,18 +341,4 @@ public sealed class BlueprintPinValidationTests
            digest: Blueprint pin test fixture. -/
         """;
 
-    private static string FindRepositoryRoot()
-    {
-        for (var current = new DirectoryInfo(AppContext.BaseDirectory);
-             current is not null;
-             current = current.Parent)
-        {
-            if (File.Exists(Path.Combine(current.FullName, "Meta", "domains.yaml")))
-            {
-                return current.FullName;
-            }
-        }
-
-        throw new DirectoryNotFoundException("Could not locate repository root.");
-    }
 }

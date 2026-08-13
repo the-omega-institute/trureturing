@@ -6,21 +6,6 @@ namespace StrataLint.Tests;
 
 public sealed partial class TheoryAtomizerTests
 {
-    private static string FindRepositoryRoot()
-    {
-        for (var current = new DirectoryInfo(AppContext.BaseDirectory);
-             current is not null;
-             current = current.Parent)
-        {
-            if (File.Exists(Path.Combine(current.FullName, "global.json"))
-                && Directory.Exists(Path.Combine(current.FullName, "Blueprint")))
-            {
-                return current.FullName;
-            }
-        }
-
-        throw new DirectoryNotFoundException("Could not locate repository root.");
-    }
 
     private static DigestionLedgerEntry LedgerEntry(
         string atomId,
