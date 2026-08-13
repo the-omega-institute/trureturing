@@ -605,7 +605,7 @@ public sealed partial class DepositCoverWorkflowScriptTests
             bool invalidReceipt = false,
             string? mutateReceiptAfterPrepare = null,
             TimeSpan? timeout = null,
-            string baseRevision = "synthetic-base") =>
+            string? baseRevision = null) =>
             BoundedProcessRunner.Run(
                 "/usr/bin/env",
                 [
@@ -618,7 +618,7 @@ public sealed partial class DepositCoverWorkflowScriptTests
                     "/bin/bash",
                     Path.Combine(Root, ScriptPath),
                     command,
-                    baseRevision,
+                    baseRevision ?? (command == "deposit" ? "HEAD" : "synthetic-base"),
                     AtomId,
                     gid,
                 ],
