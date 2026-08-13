@@ -4,6 +4,7 @@ fingerprints:
   normalized_sha256: sha256:a6f74e6a8e4132f20ee2a8095395e4f53295446e0f6868b77c5a4aee689b72d5
 cas_ref: sha256:a6f74e6a8e4132f20ee2a8095395e4f53295446e0f6868b77c5a4aee689b72d5
 coverage_gids:
+  - D5/S3/Weil/SpectralHilbert.labeled_zeta_mem_iff
   - D5/S3/Weil/SpectralHilbert.labeled_zeta_inner
 receipts:
   coverage:
@@ -15,6 +16,5 @@ receipts:
       definition_sha256: sha256:c173f7235cb4e9997494fffd0b05f517af7a94e3fb9a659d408839a2936fdae6
       emission_sha256: sha256:ca72bce4fdd41c072f01b70df9e30964f0e13650d582c2701009d6de3edbafb5
   unresolved_subitems:
-    - hls-natural-domain-is-real-part-greater-than-one-half
     - source-theorems-25-2-through-25-5-as-all-one-vector-restatements
     - source-threefold-characterization-unification-claim
