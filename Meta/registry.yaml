@@ -39,6 +39,7 @@ governance_documents:
   - "docs/develop/theory/PERIODIC_TREE_registry.jsonl"
   - "docs/develop/theory/PRICED_INTERFACE_PAPER.md"
   - "docs/develop/theory/PZG_BEDC.md"
+  - "docs/develop/theory/QUANTITATIVE_DIAGONALIZATION_OBSERVER_COMPLETION.md"
 agent_files:
   - "CONTEXT.md"
   - "adversary.md"
