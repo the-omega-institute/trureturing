@@ -1,0 +1,8 @@
+theory: D5
+plane: F
+domain: Depth
+module: IrrationalContinuedFractionNontermination
+generality: G
+selector: ''
+artifact: lean
+tag: ''
