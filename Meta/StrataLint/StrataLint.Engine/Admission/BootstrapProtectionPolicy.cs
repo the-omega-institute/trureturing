@@ -79,37 +79,8 @@ internal static class BootstrapProtectionPolicy
         Atom("github-scripts", ProtectionMatchKind.Prefix, ".github/scripts/"),
     ];
 
-    internal static ImmutableArray<string> ExactExclusions { get; } =
-    [
-        "Meta/StrataLint/Golden/cases/digestion-and-anchors.toml",
-        "Meta/StrataLint/Golden/cases/protected-semantics.toml",
-        "Meta/StrataLint/Golden/cases/structure-and-identities.toml",
-        "Meta/StrataLint/Golden/cases/structured-ledger.toml",
-        "Meta/StrataLint/Golden/values-kernels.toml",
-    ];
-
-    internal static ImmutableArray<string> LegacyPrefixExclusions { get; } =
-    [
-        BootstrapGate.DefinitionsPathPrefix,
-    ];
-
     internal static bool IsProtected(RepoPath path) =>
-        IsProtected(path.Value, Matchers, ExactExclusions, LegacyPrefixExclusions);
-
-    internal static bool IsProtected(
-        string value,
-        ImmutableArray<ProtectionMatcher> matchers,
-        ImmutableArray<string> exactExclusions,
-        ImmutableArray<string> legacyPrefixExclusions)
-    {
-        if (exactExclusions.Contains(value, StringComparer.Ordinal)
-            || legacyPrefixExclusions.Any(prefix => value.StartsWith(prefix, StringComparison.Ordinal)))
-        {
-            return false;
-        }
-
-        return matchers.Any(matcher => matcher.Matches(value));
-    }
+        Matchers.Any(matcher => matcher.Matches(path.Value));
 
     private static ProtectionMatcher Atom(
         string id,

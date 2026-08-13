@@ -55,6 +55,21 @@ require_transaction_arguments() {
   fi
 }
 
+require_new_module_blueprint_mirror() {
+  local mirror_path="Blueprint/${MODULE_PATH%.lean}.md"
+
+  if ! git rev-parse --verify "${BASE}^{commit}" >/dev/null 2>&1; then
+    echo "PLAYBOOK_INVALID base does not resolve to a commit: $BASE" >&2
+    return 2
+  fi
+  git cat-file -e "${BASE}:${MODULE_PATH}" >/dev/null 2>&1 && return 0
+
+  if [[ ! -f "$mirror_path" ]]; then
+    echo "PLAYBOOK_INVALID missing Blueprint mirror: $mirror_path; run make emit" >&2
+    return 1
+  fi
+}
+
 cleanup_transaction_temporaries() {
   local temporary
   for temporary in "${RECEIPT_PATH}.tmp."*; do
@@ -413,6 +428,7 @@ case "$COMMAND" in
     ;;
   deposit)
     require_transaction_arguments
+    require_new_module_blueprint_mirror
     cleanup_transaction_temporaries
     if freeze_exists; then
       printf 'PLAYBOOK_SKIP command=deposit detail=phase-a-already-committed path=%s\n' \

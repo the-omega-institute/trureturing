@@ -50,7 +50,6 @@ public sealed partial class MakeWorkflowTests
         "ingest",
         "echo-residual-summary",
         "selftest",
-        "scratch-sweep",
         "gate",
         "perf-report",
         "deliver-check",
@@ -243,63 +242,15 @@ public sealed partial class MakeWorkflowTests
     }
 
     [Fact]
-    public void AdmissionBaselineCheckoutsRetainFrozenLedgerHistory()
+    public void CiChecksOutCandidateTreesOnlyAndCarriesBaseAsSha()
     {
-        var root = FindRepositoryRoot();
-        var workflow = File.ReadAllText(Path.Combine(root, AdmissionWorkflowPath));
-        const string baselineCheckout =
-            "      - name: Check out content-addressed dev baseline\n";
-        const string candidateCheckout = "      - name: Check out candidate with history\n";
+        var workflow = File.ReadAllText(Path.Combine(FindRepositoryRoot(), AdmissionWorkflowPath));
 
-        var baselineRegions = workflow.Split(baselineCheckout, StringSplitOptions.None);
-        Assert.Equal(3, baselineRegions.Length);
-        foreach (var region in baselineRegions.Skip(1))
-        {
-            var checkout = region[..region.IndexOf("      - name: ", StringComparison.Ordinal)];
-            Assert.Contains("          fetch-depth: 0\n", checkout, StringComparison.Ordinal);
-            Assert.DoesNotContain("          fetch-depth: 1\n", checkout, StringComparison.Ordinal);
-        }
-
-        var candidateRegions = workflow.Split(candidateCheckout, StringSplitOptions.None);
-        Assert.Equal(3, candidateRegions.Length);
-        foreach (var region in candidateRegions.Skip(1))
-        {
-            var checkout = region[..region.IndexOf("      - name: ", StringComparison.Ordinal)];
-            Assert.Contains("          fetch-depth: 0\n", checkout, StringComparison.Ordinal);
-        }
-    }
-
-    // 报告地址的 producer 分量取自**候选**树,而实际执行的 producer 取自**基线**树
-    // (base-owned 判官拓扑要求如此)。push 事件下 baseline = github.event.before,
-    // 即上一个 dev tip,故一次改动 lean-inspector 的合并会让两者不同:报告由旧 producer
-    // 产出却按新 producer 的地址归档 —— 地址声称的输入闭包与实际闭包不符。
-    // `verify` 只重算地址不重跑 producer,RawLeanReportArtifact 只核模块集与 source_sha256,
-    // 二者都拦不住「同一份源、不同 producer 语义」。故缓存的读与写都必须带 producer 一致性守卫。
-    [Fact]
-    public void CanonicalLeanReportCacheIsGatedOnProducerIdentityOnBothReadAndWrite()
-    {
-        var admission = File.ReadAllText(Path.Combine(FindRepositoryRoot(), AdmissionWorkflowPath));
-
-        var guarded = admission.Split('\n')
-            .Where(static line => line.TrimStart().StartsWith("if:", StringComparison.Ordinal)
-                && line.Contains("producer-consistent == 'true'", StringComparison.Ordinal))
-            .ToArray();
-
-        Assert.Equal(2, guarded.Length);
-        Assert.Contains(
-            guarded,
-            static line => !line.Contains("refs/heads/dev", StringComparison.Ordinal));
-        Assert.Contains(
-            guarded,
-            static line => line.Contains("refs/heads/dev", StringComparison.Ordinal));
-        Assert.Contains(
-            "echo \"producer-consistent=",
-            admission,
-            StringComparison.Ordinal);
-
-        var reuseStep = admission.Split("      - name: Restore canonical Lean report by input address\n", StringSplitOptions.None)[1]
-            .Split("      - name: ", StringSplitOptions.None)[0];
-        Assert.Contains("pair-reusable == 'true'", reuseStep, StringComparison.Ordinal);
+        Assert.Equal(3, Regex.Matches(workflow, "uses: actions/checkout@v4").Count);
+        Assert.DoesNotContain("path: baseline", workflow, StringComparison.Ordinal);
+        Assert.DoesNotContain("Check out content-addressed dev baseline", workflow, StringComparison.Ordinal);
+        Assert.Contains("baseline_sha: ${{ steps.base.outputs.sha }}", workflow, StringComparison.Ordinal);
+        Assert.Contains("DEV_BASELINE_SHA: ${{ needs.lean-inspect.outputs.baseline_sha }}", workflow, StringComparison.Ordinal);
     }
 
     [Fact]

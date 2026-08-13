@@ -88,6 +88,33 @@ artifact_id = "none"
 runtime_disposition = "committed-source"
 
 [[files]]
+pattern = "Blueprint/*.csproj"
+kind = "program"
+produced_by = "none"
+consumed_by = ["RepositoryPathPolicy"]
+verified_by = ["RepositoryPathPolicy"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+
+[[files]]
+pattern = "Blueprint/Program.cs"
+kind = "program"
+produced_by = "none"
+consumed_by = ["RepositoryPathPolicy"]
+verified_by = ["RepositoryPathPolicy"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+
+[[files]]
+pattern = "Blueprint/packages.lock.json"
+kind = "program"
+produced_by = "none"
+consumed_by = ["RepositoryPathPolicy"]
+verified_by = ["RepositoryPathPolicy"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+
+[[files]]
 pattern = "CLAUDE.md"
 kind = "program"
 produced_by = "none"
@@ -382,15 +409,6 @@ kind = "ledger"
 produced_by = "FrozenLedgerCanonicalWriter"
 consumed_by = ["FrozenLedger"]
 verified_by = ["SL-008"]
-artifact_id = "none"
-runtime_disposition = "committed-ledger"
-
-[[files]]
-pattern = "Meta/StrataLint/Golden/c0-inaugural-conservative-certificate.json"
-kind = "ledger"
-produced_by = "none"
-consumed_by = ["reader"]
-verified_by = ["repository-policy"]
 artifact_id = "none"
 runtime_disposition = "committed-ledger"
 

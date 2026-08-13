@@ -75,7 +75,6 @@ public sealed partial class MakeWorkflowTests
             Recipe(makefile, "echo-residual-summary"),
             StringComparison.Ordinal);
         Assert.Contains(SelftestScriptPath, Recipe(makefile, "selftest"), StringComparison.Ordinal);
-        Assert.Contains("stratalint-c0-renew-", Recipe(makefile, "scratch-sweep"), StringComparison.Ordinal);
         Assert.Contains(LocalHarnessGateScriptPath, Recipe(makefile, "gate"), StringComparison.Ordinal);
         Assert.Contains(PerfReportScriptPath, Recipe(makefile, "perf-report"), StringComparison.Ordinal);
         Assert.Contains("Golden/perf-budgets.toml", Recipe(makefile, "perf-report"), StringComparison.Ordinal);

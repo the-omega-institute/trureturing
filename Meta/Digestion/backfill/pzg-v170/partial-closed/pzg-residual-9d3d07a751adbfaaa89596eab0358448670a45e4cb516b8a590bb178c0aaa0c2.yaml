@@ -4,6 +4,7 @@ fingerprints:
   normalized_sha256: sha256:9d3d07a751adbfaaa89596eab0358448670a45e4cb516b8a590bb178c0aaa0c2
 cas_ref: sha256:9d3d07a751adbfaaa89596eab0358448670a45e4cb516b8a590bb178c0aaa0c2
 coverage_gids:
+  - D5/S3/Factorization/SolenoidProfiniteKernel.universal_solenoid_profinite_exact
   - D5/S1/Solenoid/ThroatTransitionCocycle.three_lift_difference_cocycle
 receipts:
   coverage:
@@ -15,5 +16,4 @@ receipts:
       definition_sha256: sha256:3ae4df9827822e5d3c062fc21f57410fe02066d78ed48b9bff31151ea811b2bc
       emission_sha256: sha256:bb88ce0c2ec93eca98b3568be04604539b49c8896b271383e3b784efa40e4c6b
   unresolved_subitems:
-    - concrete-solenoid-fiber-kernel-identification
     - multiplicative-to-additive-cocycle-transport

@@ -2,12 +2,18 @@ domains:
   Analytic:
     stratum: S3
     definition: Mellin-transform analysis reconstructing completed zeta from theta-kernel tails.
+  AnalyticClosure:
+    stratum: S3
+    definition: Certified finite-window approximation and tail-budget closure of analytic readings.
   Arith:
     stratum: S3
     definition: Elementary integer arithmetic — prime factorization, divisibility, and modular residue structure — used as foundations by the golden-integer and analytic strata.
   ArithUnits:
     stratum: S3
     definition: Finite-dimensional unit and coprimality structures over prime and composite moduli.
+  Asymptotics:
+    stratum: S0
+    definition: Asymptotic bounds for finite-listing weights and exclusion of nonzero limiting phases.
   Axis:
     stratum: S3
     definition: Prime-axis escape arguments over the natural primes.
