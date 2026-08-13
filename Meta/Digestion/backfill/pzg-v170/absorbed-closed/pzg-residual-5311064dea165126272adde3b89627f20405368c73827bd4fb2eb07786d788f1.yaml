@@ -1,0 +1,17 @@
+ast_path: theorem/16.3
+fingerprints:
+  raw_sha256: sha256:5311064dea165126272adde3b89627f20405368c73827bd4fb2eb07786d788f1
+  normalized_sha256: sha256:5311064dea165126272adde3b89627f20405368c73827bd4fb2eb07786d788f1
+cas_ref: sha256:5311064dea165126272adde3b89627f20405368c73827bd4fb2eb07786d788f1
+coverage_gids:
+  - D5/S0/Computability/TotalOrbitEvaluator.no_computable_total_orbit_evaluator
+receipts:
+  coverage:
+    - gid: D5/S0/Computability/TotalOrbitEvaluator.no_computable_total_orbit_evaluator
+      source_sha256: sha256:5311064dea165126272adde3b89627f20405368c73827bd4fb2eb07786d788f1
+      target_sha256: sha256:235378d0b338715dc0b3284434a72748eca35d95b6ba445314e6b14b531f7075
+  scribe:
+    - gid: D5/S0/Computability/TotalOrbitEvaluator.no_computable_total_orbit_evaluator
+      definition_sha256: sha256:85b06bea0b4adeb931ed476eacc734e59e48b5d5bae19a2fc3ad83405498a905
+      emission_sha256: sha256:954b4043f5a09c7066d4f00be05a9b4deabdf1cd77342c8bfae58bc6411122aa
+  unresolved_subitems: []
