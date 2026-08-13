@@ -4,6 +4,7 @@ fingerprints:
   normalized_sha256: sha256:0e4c1864295a8fa2d7347817f3fa806a80a7669ce7a406684aa5cc3ccdaf1e8a
 cas_ref: sha256:0e4c1864295a8fa2d7347817f3fa806a80a7669ce7a406684aa5cc3ccdaf1e8a
 coverage_gids:
+  - D5/S3/Midline/ZetaHeatTraceBridge.coefficient_eq
   - D5/S3/Weil/SpectralDynamics.vertical_evolution_unitary_group
 receipts:
   coverage:
