@@ -213,7 +213,7 @@ if [[ "$SKIP_ENGINEERING" == "1" ]]; then
   record_timing local engineering-selftest skipped 0
 else
   run_stage engineering-dotnet make -C "$CANDIDATE_ROOT" dotnet
-  run_stage engineering-test make -C "$CANDIDATE_ROOT" test-all
+  run_stage engineering-test make -C "$CANDIDATE_ROOT" test-harness
   run_stage engineering-selftest make -C "$CANDIDATE_ROOT" selftest
 fi
 
@@ -246,6 +246,7 @@ run_stage lean-reports \
   --candidate-output "$CANDIDATE_REPORT" \
   --baseline-root "$JUDGE_ROOT" \
   --baseline-output "$REPORTS/baseline-lean-report.json"
+run_stage projection-check make -C "$CANDIDATE_ROOT" test
 GATE="$JUDGE_ROOT/.github/scripts/harness-gate.sh"
 [[ -x "$GATE" ]] || { echo "local-harness-gate: dev gate is absent" >&2; exit 2; }
 admission_started="$(date +%s)"

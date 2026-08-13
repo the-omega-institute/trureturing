@@ -98,6 +98,27 @@ public sealed class MakeTestExecutionClosureTests
         Assert.Equal(coverage.ExpectedProjects, coverage.ExecutedProjects);
     }
 
+    [Fact]
+    public void ClosureRejectsConditionalOrShortCircuitRecipeAsARedFixture()
+    {
+        var coverage = MakeTestExecutionClosure.Inspect(
+            ThreeXunitProjects(),
+            [Solution("Tests.sln", "One/One.csproj", "Two/Two.csproj", "Three/Three.csproj")],
+            string.Join('\n',
+                "test:",
+                "\t@dotnet test Tests.sln --configuration Release",
+                "test-harness:",
+                "\t@dotnet test Tests.sln --configuration Release",
+                "test-all:",
+                "\t@if [ -n \"$$SKIP_HARNESS\" ]; then $(MAKE) --no-print-directory test; else $(MAKE) --no-print-directory test && $(MAKE) --no-print-directory test-harness; fi",
+                string.Empty),
+            Workflow("make -C candidate test-all"));
+
+        Assert.False(coverage.IsComplete);
+        var finding = Assert.Single(coverage.IncompleteInvocations);
+        Assert.Contains("conditional/short-circuit shell control flow", finding, StringComparison.Ordinal);
+    }
+
     private static RepositoryBuildFile[] ThreeXunitProjects() =>
     [
         XunitProject("One/One.csproj"),
@@ -163,7 +184,8 @@ internal sealed record MakeTestCoverage(
         + $"Missing: {string.Join(", ", MissingProjects)}\n"
         + $"Extra or dangling: {string.Join(", ", ExtraProjects)}\n"
         + $"Incomplete invocations: {string.Join(" | ", IncompleteInvocations)}\n"
-        + "This guard proves project-level closure only; it does not prove xUnit collected every Fact within a covered project.";
+        + "This guard proves project-level closure only; it does not prove xUnit collected every Fact within a covered project."
+        + " Workflow if: conditions and shell control flow are not modeled; conditional or short-circuit recipes are rejected instead of being treated as complete.";
 }
 
 internal static class MakeTestExecutionClosure
@@ -176,6 +198,9 @@ internal static class MakeTestExecutionClosure
         RegexOptions.CultureInvariant | RegexOptions.NonBacktracking);
     private static readonly Regex DotnetTestInvocation = new(
         @"dotnet[ \t]+test(?<arguments>[^\r\n;&|]*)",
+        RegexOptions.CultureInvariant | RegexOptions.NonBacktracking);
+    private static readonly Regex ConditionalShellControlFlow = new(
+        @"&&|\|\||(?m)^\s*@?(?:if|then|else|elif|fi)\b",
         RegexOptions.CultureInvariant | RegexOptions.NonBacktracking);
     private static readonly Regex CommandToken = new(
         "\"[^\"]*\"|'[^']*'|[^ \\t]+",
@@ -269,6 +294,13 @@ internal static class MakeTestExecutionClosure
         if (!targets.TryGetValue(target, out var makeTarget))
         {
             incomplete.Add($"make target is absent: {target}");
+            return;
+        }
+
+        if (ConditionalShellControlFlow.IsMatch(makeTarget.Recipe))
+        {
+            incomplete.Add(
+                $"make target '{target}' uses conditional/short-circuit shell control flow; project closure cannot prove both branches execute");
             return;
         }
 

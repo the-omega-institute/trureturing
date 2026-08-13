@@ -19,7 +19,7 @@ test-harness:
 	@dotnet test Meta/StrataLint/StrataLint.sln --configuration Release --verbosity normal
 
 test-all:
-	@$(MAKE) --no-print-directory test && $(MAKE) --no-print-directory test-harness
+	@set +e; $(MAKE) --no-print-directory test-harness; rc1=$$?; $(MAKE) --no-print-directory test; rc2=$$?; set -e; exit $$((rc1 | rc2))
 
 lean-cache-ensure:
 	@/bin/bash Meta/StrataLint/scripts/worktree/lean-cache-ensure.sh

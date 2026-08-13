@@ -1,3 +1,6 @@
+using StrataLint.Cli;
+using StrataLint.Engine;
+
 namespace StrataLint.Tests;
 
 public sealed class ScribeCheckAdmissionBoundaryTests
@@ -16,6 +19,42 @@ public sealed class ScribeCheckAdmissionBoundaryTests
             File.ReadAllText(Path.Combine(root, path.Replace('/', Path.DirectorySeparatorChar)))));
 
         Assert.Empty(ScribeAdmissionBoundaryPolicy.Inspect(files));
+    }
+
+    [Fact]
+    public void DagRenderDispatchCallsRenderDagWithoutEnteringAdmissionCheck()
+    {
+        var environment = new StubCliEnvironment(
+            new AdmissionOutcome.InfrastructureFailure("check must not be called"));
+        var console = new BufferedConsole();
+
+        CliApplication.Run(["dag-render", "--check"], environment, console);
+
+        Assert.Equal(1, environment.RenderDagCallCount);
+        Assert.Equal(0, environment.CheckCallCount);
+    }
+
+    [Fact]
+    public void DagRenderImplementationDoesNotReferenceAdmissionSymbols()
+    {
+        var root = FindRepositoryRoot();
+        var environment = File.ReadAllText(Path.Combine(
+            root,
+            "Meta/StrataLint/StrataLint.Cli/Admission/ProductionCliEnvironment.cs"));
+        var renderDagStart = environment.IndexOf("public CommandResult RenderDag(", StringComparison.Ordinal);
+        var nextMethod = environment.IndexOf("public CommandResult GenerateLedger(", renderDagStart, StringComparison.Ordinal);
+        Assert.True(renderDagStart >= 0 && nextMethod > renderDagStart);
+        var renderDag = environment[renderDagStart..nextMethod];
+        Assert.DoesNotContain("VerifyScribeForAdmission", renderDag, StringComparison.Ordinal);
+        Assert.DoesNotContain("Check", renderDag, StringComparison.Ordinal);
+
+        var cli = File.ReadAllText(Path.Combine(root, "Meta/StrataLint/StrataLint.Cli/Commands/CliApplication.cs"));
+        var handlerStart = cli.IndexOf("[\"dag-render\"]", StringComparison.Ordinal);
+        var nextHandler = cli.IndexOf("[\"digest-status\"]", handlerStart, StringComparison.Ordinal);
+        Assert.True(handlerStart >= 0 && nextHandler > handlerStart);
+        var handler = cli[handlerStart..nextHandler];
+        Assert.DoesNotContain("VerifyScribeForAdmission", handler, StringComparison.Ordinal);
+        Assert.DoesNotContain("Check", handler, StringComparison.Ordinal);
     }
 
     [Fact]

@@ -124,7 +124,7 @@ jobs:
         run: make -C candidate dotnet
 
       - name: Run candidate golden and integration tests
-        run: make -C candidate test-all
+        run: make -C candidate test-harness
 
       - name: Run candidate selftest twice and compare bytes
         shell: bash
@@ -441,25 +441,7 @@ jobs:
           results="$RUNNER_TEMP/scribe-live-report-reconciliation.trx"
           mkdir -p "$(dirname "$target")"
           cp "$report" "$target"
-          dotnet test candidate/Meta/StrataLint/StrataLint.Scribe.Tests/StrataLint.Scribe.Tests.csproj \
-            --configuration Release \
-            --filter 'FullyQualifiedName=StrataLint.Scribe.Tests.StatementProjectionPilotTests.LiveReportMatchesPinnedFixtureWhenAvailable|FullyQualifiedName=StrataLint.Scribe.Tests.DocumentDiscoveryTests.GeneratedMarkdownIsDeterministicAndMatchesTheCommittedTree' \
-            --logger "trx;LogFileName=$results" \
-            --verbosity normal
-          python3 -c '
-          import sys
-          import xml.etree.ElementTree as ET
-
-          expected = {
-              "StrataLint.Scribe.Tests.StatementProjectionPilotTests.LiveReportMatchesPinnedFixtureWhenAvailable",
-              "StrataLint.Scribe.Tests.DocumentDiscoveryTests.GeneratedMarkdownIsDeterministicAndMatchesTheCommittedTree",
-          }
-          results = ET.parse(sys.argv[1]).getroot().findall(".//{*}UnitTestResult")
-          names = [result.attrib.get("testName") for result in results]
-          outcomes = [result.attrib.get("outcome") for result in results]
-          if len(results) != 2 or set(names) != expected or outcomes != ["Passed", "Passed"]:
-              raise SystemExit(f"expected exactly two passing reconciliation tests {sorted(expected)}; got {list(zip(names, outcomes))}")
-          ' "$results"
+          make -C candidate test
 
       - name: Stage candidate canonical Lean report cache
         shell: bash

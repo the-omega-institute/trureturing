@@ -10,10 +10,11 @@ public sealed class TestSplitCallSiteTests
         var preflight = File.ReadAllText(Path.Combine(root, "Meta/StrataLint/scripts/preflight.sh"));
         var localGate = File.ReadAllText(Path.Combine(root, "Meta/StrataLint/scripts/local-harness-gate.sh"));
 
-        Assert.Contains("make -C candidate test-all", workflow, StringComparison.Ordinal);
+        Assert.Contains("make -C candidate test-harness", workflow, StringComparison.Ordinal);
+        Assert.Contains("make -C candidate test\n", workflow, StringComparison.Ordinal);
         Assert.Contains("CI=true STRATALINT_REQUIRE_LIVE_REPORT=1 make test-all", preflight, StringComparison.Ordinal);
-        Assert.Contains("run_stage engineering-test make -C \"$CANDIDATE_ROOT\" test-all", localGate, StringComparison.Ordinal);
-        Assert.DoesNotContain("make -C candidate test\n", workflow, StringComparison.Ordinal);
+        Assert.Contains("run_stage engineering-test make -C \"$CANDIDATE_ROOT\" test-harness", localGate, StringComparison.Ordinal);
+        Assert.Contains("run_stage projection-check make -C \"$CANDIDATE_ROOT\" test", localGate, StringComparison.Ordinal);
         Assert.DoesNotContain("STRATALINT_REQUIRE_LIVE_REPORT=1 make test\n", preflight, StringComparison.Ordinal);
     }
 

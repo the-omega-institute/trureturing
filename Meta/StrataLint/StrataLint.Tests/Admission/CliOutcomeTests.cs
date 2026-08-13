@@ -147,7 +147,15 @@ internal sealed class StubCliEnvironment(
     ExplicitCommandResult? echoVerify = null,
     ExplicitCommandResult? blueprintPins = null) : ICliEnvironment
 {
-    public AdmissionOutcome Check(IReadOnlyList<string> arguments) => outcome;
+    internal int CheckCallCount { get; private set; }
+
+    internal int RenderDagCallCount { get; private set; }
+
+    public AdmissionOutcome Check(IReadOnlyList<string> arguments)
+    {
+        CheckCallCount++;
+        return outcome;
+    }
 
     public AdmissionTopologyOutcome Topology(IReadOnlyList<string> arguments) =>
         new AdmissionTopologyOutcome.InfrastructureFailure("topology is not configured in this fixture");
@@ -188,8 +196,11 @@ internal sealed class StubCliEnvironment(
     public CommandResult SelfTest(IReadOnlyList<string> arguments) =>
         new(false, string.Empty, "selftest is not configured in this fixture");
 
-    public CommandResult RenderDag(IReadOnlyList<string> arguments) =>
-        new(false, string.Empty, "dag rendering is not configured in this fixture");
+    public CommandResult RenderDag(IReadOnlyList<string> arguments)
+    {
+        RenderDagCallCount++;
+        return new(true, "DAG_RENDERED\n", string.Empty);
+    }
 
     public CommandResult GenerateLedger(IReadOnlyList<string> arguments) =>
         new(false, string.Empty, "ledger generation is not configured in this fixture");

@@ -145,7 +145,8 @@ public sealed partial class MakeWorkflowTests
         var makefile = File.ReadAllText(Path.Combine(root, "Makefile"));
 
         Assert.Contains("make -C candidate dotnet", workflow, StringComparison.Ordinal);
-        Assert.Contains("make -C candidate test-all", workflow, StringComparison.Ordinal);
+        Assert.Contains("make -C candidate test-harness", workflow, StringComparison.Ordinal);
+        Assert.Contains("make -C candidate test\n", workflow, StringComparison.Ordinal);
         Assert.Contains("make -C candidate selftest", workflow, StringComparison.Ordinal);
         Assert.Contains("lean-report-pair.sh", localGate, StringComparison.Ordinal);
         Assert.Contains("--skip-engineering", localGate, StringComparison.Ordinal);

@@ -1,10 +1,11 @@
 using System.Xml.Linq;
 
-namespace StrataLint.Engine;
+namespace StrataLint.Tests;
 
-internal static class ProjectFileClassifier
+// Test-only project classification stays with the tests that consume it, not in Engine.
+public static class ProjectFileClassifier
 {
-    internal static bool IsXunitProject(string content)
+    public static bool IsXunitProject(string content)
     {
         var document = XDocument.Parse(content, LoadOptions.None);
         return document.Descendants().Any(static element =>
