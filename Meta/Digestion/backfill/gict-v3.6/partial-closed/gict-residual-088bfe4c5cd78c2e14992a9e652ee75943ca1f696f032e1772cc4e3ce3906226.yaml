@@ -4,6 +4,7 @@ fingerprints:
   normalized_sha256: sha256:088bfe4c5cd78c2e14992a9e652ee75943ca1f696f032e1772cc4e3ce3906226
 cas_ref: sha256:088bfe4c5cd78c2e14992a9e652ee75943ca1f696f032e1772cc4e3ce3906226
 coverage_gids:
+  - D5/S1/Phase/Interference/M468MemberTable.m468TwentyFourMemberTable
   - D5/S1/Phase/Interference/M1728Countershot.m1728_countershot
   - D5/S1/Phase/Interference/ZolotarevSelector.zolotarev_selector_congruence
   - D5/S1/Phase/SeatTowerArithmetic.mod_twenty_four_eq_zero_or_twelve

@@ -8,6 +8,9 @@ domains:
   ArithUnits:
     stratum: S3
     definition: Finite-dimensional unit and coprimality structures over prime and composite moduli.
+  Asymptotics:
+    stratum: S0
+    definition: Asymptotic bounds for finite-listing weights and exclusion of nonzero limiting phases.
   Axis:
     stratum: S3
     definition: Prime-axis escape arguments over the natural primes.
