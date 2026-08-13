@@ -23,8 +23,7 @@ public sealed class AdmissionWorkflowTests
 
     // 法官那棵树必须是候选的分叉点,不是 dev 的当前 tip。用 tip 会让在飞的 PR 被
     // 分叉之后才落地的规则追溯判决:候选没碰的东西,却要按它没见过的规则受审。
-    // 分叉点同时让法官二进制、冻结账本与 --baseline-lean-report 取自同一棵树,
-    // 因此不会重演 PR #1144(同一份 report 被要求同时是两棵树的 report)。
+    // 分叉点让 append-only 规则只问候选从哪里出发,不会把 dev 后加的条目归罪于候选。
     [Fact]
     public void DevBaselineIsTheForkPointNotTheMovingDevTip()
     {

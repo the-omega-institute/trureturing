@@ -809,7 +809,7 @@ Blueprint markdown 已证有仓内语义 consumer，移出 PR-A；只有独立 P
 
 `joins.truth_anchors` 每项固定为 `{document_repo_path,document_gid,describe_id,lean_declaration_gid,formal_truth_repo_path}`;Describe 来源的锚必须携 `describe_id`,显式文档锚可为 null。每个锚必须经 compiled-artifact report 恰解析一个 Lean declaration,且该 declaration 的模块路径必须恰命中一个 `truth.nodes.repo_path`;零解析、多解析或缺 formal 节点均 fail-closed。Describe truth_anchor **只断言锚定关系**,绝不得解读为“该叙事陈述已获证明”。锚点总数从 assembler 图动态派生,不得硬编码历史读数。根 `deferred_layers` 当前必须逐字等于 `["digestion"]`,显式声明 digestion/1879 原子层未进入 v1;该层归后续版本,不得以字段缺席静默冒充已覆盖。writer 以 DTO 纯投影并发射确定性 UTF-8 canonical bytes;strict reader 拒未知/缺失字段、乱序、重复、跨节悬空及非 canonical bytes。`Generated/DAG.md` 仍只读 formal DAG,与 documents/joins 双投影互不读取。
 
-**Hearts 授权条款:**SL-008 仅在 `D5/X_Frontier/HeartsAuthorizations.md` 中存在与实际唯一新增声明的全名及 canonical statement SHA-256 精确匹配的条目,且 baseline 声明全不变、无额外新增时放行;该账只增不删,无匹配照拒。
+**冻结面条款:**SL-008 只读候选树与 changeset 状态:`D5/X_Frontier/Hearts.lean` 的 Modified/Deleted 一律拒绝;`Meta/StrataLint/Golden/Frozen/accepted/*.json` 只许 Added;候选 accepted Freeze/Reattest 事件中 `input.descriptor_selector` 指向的 `.lean` 模块一旦冻结,Deleted 一律拒绝,Modified 仅在同一 changeset Added 了指向同一路径的 canonical Reattest 事件时放行。Hearts 的规则变更须与规则实现同改并经过 SL-022 保护面;`HeartsAuthorizations.md` 保留 canonical 格式校验,不构成 Hearts 改动豁免。
 
 - **v7.13 R2**(2026-07-17):`HEARTS-AUTH-P0` 将 SL-008 最小松动为 append-only git 授权账上的声明全名+canonical statement SHA-256 精确单增,保留既有声明冻结与防夹带;密码学身份、签名及 nonce 消费机依用户裁决不进入系统,伪造风险归公开史检测、判词可诉勘正与追责。
 - **v7.13 R3**(2026-07-17):`OBSERVER-ATOMIZER-P0` 以零 OBSERVER 账本消费注册窄域 `observer-v1`,并安装 whole-source coarse 退役的身份保全规则;本 epoch 只定义类与红绿 fixture,`gict-v1`/`pzg-v1` 语义与 OBSERVER 账本实例均不变。

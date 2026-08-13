@@ -11,9 +11,7 @@ internal sealed record FrozenRevisionIdentity(string Revision, string CommitOid,
 
 internal sealed record CheckArguments(
     string? ProtectedBase,
-    string? CandidateLeanReport,
-    string? BaselineLeanReport,
-    string? FrozenEvidenceRoot);
+    string? CandidateLeanReport);
 
 internal interface IRepositoryGateway
 {
@@ -116,11 +114,6 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
                 current,
                 baseline,
                 candidateLeanReport,
-                // 旧侧 Lean 报告只有 Hearts.lean 变动时才需要;不给就传 null,
-                // Hearts 规则在那种情况下 fail-closed 报 finding,而不是放行。
-                options.BaselineLeanReport is null
-                    ? null
-                    : RawLeanReportArtifact.ReadFile(options.BaselineLeanReport, baseline),
                 prepared.Changes,
                 bootstrap,
                 verifiedScribeEmissions,
@@ -498,8 +491,6 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
     {
         string? protectedBase = null;
         string? candidateLeanReport = null;
-        string? baselineLeanReport = null;
-        string? frozenEvidenceRoot = null;
         for (var index = 0; index < arguments.Count; index += 2)
         {
             if (index + 1 >= arguments.Count)
@@ -511,8 +502,6 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
             {
                 "--protected-base" when protectedBase is null => 0,
                 "--candidate-lean-report" when candidateLeanReport is null => 1,
-                "--baseline-lean-report" when baselineLeanReport is null => 2,
-                "--frozen-evidence-root" when frozenEvidenceRoot is null => 3,
                 _ => throw CheckUsage(),
             };
             switch (target)
@@ -523,36 +512,15 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
                 case 1:
                     candidateLeanReport = arguments[index + 1];
                     break;
-                case 2:
-                    baselineLeanReport = arguments[index + 1];
-                    break;
-                case 3:
-                    frozenEvidenceRoot = RequireDirectory(
-                        arguments[index + 1],
-                        "frozen evidence root");
-                    break;
             }
         }
 
-        return new CheckArguments(
-            protectedBase,
-            candidateLeanReport,
-            baselineLeanReport,
-            frozenEvidenceRoot);
-    }
-
-    private static string RequireDirectory(string path, string label)
-    {
-        var full = Path.GetFullPath(path);
-        return Directory.Exists(full)
-            ? full
-            : throw new DirectoryNotFoundException($"{label} is absent: {full}");
+        return new CheckArguments(protectedBase, candidateLeanReport);
     }
 
     private static InvalidOperationException CheckUsage() => new(
         "USAGE: StrataLint check [--protected-base REV] "
-        + "--candidate-lean-report FILE --baseline-lean-report FILE "
-        + "[--frozen-evidence-root DIR]");
+        + "--candidate-lean-report FILE");
 
     private static RepositorySnapshot Decode(RawRepositorySnapshot raw) =>
         SnapshotDecoder.Decode(raw) switch

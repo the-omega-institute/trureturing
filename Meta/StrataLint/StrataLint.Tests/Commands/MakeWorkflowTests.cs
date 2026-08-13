@@ -159,6 +159,7 @@ public sealed partial class MakeWorkflowTests
         Assert.Contains("$CANDIDATE_ROOT/Meta/StrataLint/lean-inspector/inspect.sh", localGate, StringComparison.Ordinal);
         Assert.Contains("--candidate-lean-report", localGate, StringComparison.Ordinal);
         Assert.DoesNotContain("--baseline-lean-report", localGate, StringComparison.Ordinal);
+        Assert.DoesNotContain("--frozen-evidence-root", localGate, StringComparison.Ordinal);
         Assert.DoesNotContain("--judge-root", localGate, StringComparison.Ordinal);
         Assert.DoesNotContain("worktree add", localGate, StringComparison.Ordinal);
         Assert.DoesNotContain("verify-conservative", sharedGate, StringComparison.Ordinal);
