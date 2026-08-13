@@ -13,6 +13,11 @@ public sealed partial class ProductionEnvironmentTests
         File.WriteAllText(outside, "keep");
         var output = Path.Combine(temporary.Path, "Generated", "echo-residuals");
         Directory.CreateDirectory(output);
+        Directory.CreateDirectory(Path.Combine(temporary.Path, "agents"));
+        File.WriteAllText(
+            Path.Combine(temporary.Path, "agents", "echo-template.md"),
+            "Remark-closure guard numerical certificate independently testable identity "
+                + "upgrade-candidate retained_residual unresolved_subitems\n");
         File.WriteAllText(Path.Combine(output, "stale.md"), "remove");
         File.WriteAllText(Path.Combine(output, "keep.txt"), "keep");
         var fixture = new RuleFixture();

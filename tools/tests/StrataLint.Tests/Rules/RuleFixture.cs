@@ -84,6 +84,7 @@ internal sealed partial class RuleFixture
     internal const string RingPath = "D5/S0/Carrier/Ring.lean";
     internal const string ValuesBindingPath = "D5/S0/Carrier/ValuesBinding.lean";
     internal const string BlueprintPath = "Blueprint/D5/S0/Carrier/Ring.md";
+    internal const string BlueprintSourcePath = "Blueprint/D5/S0/Carrier/Ring.scribe.cs";
     internal const string NotationPath = "D5/S0/Conventions/Notation.lean";
     internal const string AssumptionDebtPath = "D5/X_Assumptions/AxiomDebt.lean";
     internal const string HeartsPath = "D5/X_Frontier/Hearts.lean";
@@ -120,6 +121,7 @@ internal sealed partial class RuleFixture
             [ValuesBindingPath] = HeaderFor("D5/S0/Carrier/ValuesBinding", "I")
                 + "def fixtureValue : Nat := 0\n",
             [BlueprintPath] = "# Golden ring\n",
+            [BlueprintSourcePath] = "// synthetic Scribe definition\n",
             [FixtureDigestionSourcePath] = FixtureDigestionSource,
             [FixtureCasPath] = FixtureDigestionSource,
         };

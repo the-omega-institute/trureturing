@@ -18,6 +18,19 @@ public sealed class PerfCommandTests
     }
 
     [Fact]
+    public void ReportCheckValidatesBudgetSchemaWithoutALedger()
+    {
+        using var directory = new TemporaryDirectory();
+        var budgets = Path.Combine(directory.Path, "perf-budgets.toml");
+        File.WriteAllText(budgets, "schema = \"wrong\"\nbudgets = []\n", new UTF8Encoding(false));
+
+        var result = PerfReportCommand.Run(["--check", "--budgets", budgets]);
+
+        Assert.False(result.Success);
+        Assert.Contains("schema", result.Error, StringComparison.Ordinal);
+    }
+
+    [Fact]
     public void ReportRendersComparableAndObservationColumnsSeparately()
     {
         using var ledgerHome = new TemporaryDirectory();

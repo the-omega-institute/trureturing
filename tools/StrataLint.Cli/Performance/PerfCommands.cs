@@ -41,7 +41,16 @@ internal static class PerfReportCommand
     {
         try
         {
-            var (ledger, recentCount, budgetPath) = ParseArguments(arguments);
+            var (ledger, recentCount, budgetPath, check) = ParseArguments(arguments);
+            if (check && ledger is null)
+            {
+                var catalog = PerfBudgetLoader.LoadFile(budgetPath!);
+                return new CommandResult(
+                    true,
+                    $"PERF_REPORT_CHECK schema={PerfBudgetLoader.Schema} budgets={catalog.Budgets.Count}\n",
+                    string.Empty);
+            }
+
             var events = File.Exists(ledger)
                 ? File.ReadLines(ledger)
                     .Where(static line => !string.IsNullOrWhiteSpace(line))
@@ -70,44 +79,53 @@ internal static class PerfReportCommand
         }
     }
 
-    private static (string Ledger, int RecentCount, string? BudgetPath) ParseArguments(
+    private static (string? Ledger, int RecentCount, string? BudgetPath, bool Check) ParseArguments(
         IReadOnlyList<string> arguments)
     {
         string? ledger = null;
         string? budgetPath = null;
+        var check = false;
         var recentCount = 10;
-        for (var index = 0; index < arguments.Count; index += 2)
+        for (var index = 0; index < arguments.Count; index++)
         {
-            if (index + 1 >= arguments.Count) throw Usage();
             switch (arguments[index])
             {
-                case "--ledger" when ledger is null:
-                    ledger = arguments[index + 1];
+                case "--check" when !check:
+                    check = true;
                     break;
-                case "--recent" when int.TryParse(
-                    arguments[index + 1],
-                    NumberStyles.None,
-                    CultureInfo.InvariantCulture,
-                    out var parsed) && parsed > 0:
+                case "--ledger" when ledger is null:
+                    if (++index >= arguments.Count) throw Usage();
+                    ledger = arguments[index];
+                    break;
+                case "--recent" when ++index < arguments.Count
+                    && int.TryParse(
+                        arguments[index],
+                        NumberStyles.None,
+                        CultureInfo.InvariantCulture,
+                        out var parsed)
+                    && parsed > 0:
                     recentCount = parsed;
                     break;
                 case "--budgets" when budgetPath is null:
-                    budgetPath = arguments[index + 1];
+                    if (++index >= arguments.Count) throw Usage();
+                    budgetPath = arguments[index];
                     break;
                 default:
                     throw Usage();
             }
         }
 
-        if (string.IsNullOrWhiteSpace(ledger)) throw Usage();
+        if (check && budgetPath is null) throw Usage();
+        if (!check && string.IsNullOrWhiteSpace(ledger)) throw Usage();
         return (
-            Path.GetFullPath(ledger),
+            ledger is null ? null : Path.GetFullPath(ledger),
             recentCount,
-            budgetPath is null ? null : Path.GetFullPath(budgetPath));
+            budgetPath is null ? null : Path.GetFullPath(budgetPath),
+            check);
     }
 
     private static InvalidOperationException Usage() => new(
-        "USAGE: StrataLint perf-report --ledger FILE [--recent N] [--budgets FILE]");
+        "USAGE: StrataLint perf-report [--check] --budgets FILE | --ledger FILE [--recent N] [--budgets FILE]");
 }
 
 internal static class PerfReportRenderer

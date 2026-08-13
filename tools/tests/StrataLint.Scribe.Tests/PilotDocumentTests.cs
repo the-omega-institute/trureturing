@@ -9,39 +9,22 @@ public sealed class DocumentDiscoveryTests
     private const string PhaseSourcePath = "Blueprint/D5/S1/Phase/Basic.scribe.cs";
 
     [Fact]
-    public void FilesystemAndRegisteredDefinitionsFormACanonicalBijection()
+    public void RepositorySourceBijectionRejectsAnUnregisteredScribeSource()
     {
-        var repository = RepositoryAccessor.Discover(RepositoryRootCriterion.GlobalJsonAndBlueprintDirectoryNotFound);
-        var filesystemSources = repository
-            .EnumerateFiles(RepositoryRelativePath.Create("Blueprint"), "*.scribe.cs")
-            .Select(static path => path.Value)
-            .Order(StringComparer.Ordinal)
+        var registered = DocumentDefinitions.All;
+        var filesystemSources = registered
+            .Select(static definition =>
+                ScribeEmissionAttestation.DefinitionPath(definition.Document.Header.Gid.Value))
+            .Append("Blueprint/D5/S9/Synthetic/Unregistered.scribe.cs")
             .ToArray();
-        var registrations = DocumentDefinitions.All
-            .Select(static definition => new
-            {
-                Definition = definition,
-                Source = CanonicalSourcePath(definition.SourcePath),
-            })
-            .ToArray();
-        var registeredSources = registrations.Select(static item => item.Source).ToArray();
 
-        Assert.Equal(filesystemSources.Length, filesystemSources.Distinct(StringComparer.Ordinal).Count());
-        Assert.Equal(registeredSources.Length, registeredSources.Distinct(StringComparer.Ordinal).Count());
-        Assert.Equal(filesystemSources, registeredSources);
+        var findings = DocumentDefinitions.CheckRepositorySourceBijection(
+            filesystemSources,
+            registered);
+
         Assert.Equal(
-            registeredSources.Order(StringComparer.Ordinal),
-            registeredSources);
-
-        foreach (var registration in registrations)
-        {
-            var source = registration.Source;
-            var gid = source["Blueprint/".Length..^".scribe.cs".Length];
-            var markdown = source[..^".scribe.cs".Length] + ".md";
-
-            Assert.Equal(gid, registration.Definition.Document.Header.Gid.Value);
-            Assert.Equal(markdown, registration.Definition.RelativePath.Value);
-        }
+            ["unregistered Scribe source: Blueprint/D5/S9/Synthetic/Unregistered.scribe.cs"],
+            findings);
     }
 
     [Fact]

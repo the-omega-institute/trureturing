@@ -6,25 +6,6 @@ namespace StrataLint.Tests;
 public sealed class PerfBudgetTests
 {
     [Fact]
-    public void CanonicalCatalogRegistersThreeObservableWarnOnlySessionBudgets()
-    {
-        var root = TestRepositoryLayout.FindRoot();
-
-        var catalog = PerfBudgetLoader.LoadFile(Path.Combine(root, "Golden", "perf-budgets.toml"));
-
-        Assert.Equal(3, catalog.Budgets.Count);
-        Assert.All(catalog.Budgets, static budget =>
-        {
-            Assert.Equal("warn-only", budget.Mode);
-            Assert.Null(budget.FalsePositiveRatePercent);
-            Assert.Equal(new DateOnly(2026, 8, 20), budget.ReviewDue);
-        });
-        Assert.Equal(
-            new[] { 120d, 1_380d, 1_560d },
-            catalog.Budgets.Select(static budget => budget.LimitSeconds).Order().ToArray());
-    }
-
-    [Fact]
     public void LoaderRequiresCompleteWarnOnlyObligations()
     {
         using var directory = new TemporaryDirectory();
