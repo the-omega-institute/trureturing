@@ -4,6 +4,7 @@ fingerprints:
   normalized_sha256: sha256:819d8f05f192d081658df28c99756a44dade1464f4ceaee6ca95d6af0637f372
 cas_ref: sha256:819d8f05f192d081658df28c99756a44dade1464f4ceaee6ca95d6af0637f372
 coverage_gids:
+  - D5/S3/Constants/PentagonCosines.pentagon_golden_cosines
   - D5/S0/Carrier/GoldenDiscriminant.golden_discriminant_spec
 receipts:
   coverage:
@@ -12,7 +13,6 @@ receipts:
       target_sha256: sha256:a87db21d2aecb91502d9d85d9c3fe27ce1ef893c2405075909a44ebb5baf6178
   scribe: []
   unresolved_subitems:
-    - jones-wall-four-cos-squared-pi-over-five-equals-phi-squared
     - maximal-real-subfield-of-q-zeta-five-equals-q-sqrt-five
     - definition-and-evaluation-of-lagrange-number-of-phi-as-sqrt-nine-minus-four
     - markov-discriminant-law
