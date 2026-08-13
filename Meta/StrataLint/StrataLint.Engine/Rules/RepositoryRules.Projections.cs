@@ -13,19 +13,54 @@ internal static partial class RepositoryRules
             .Where(static path => IsBlueprintPath(path.Value, ".md"))
             .Where(path => ContentDiffers(context.Current, context.Baseline, path.Value))
             .ToImmutableArray();
-        if (changedMarkdown.IsDefaultOrEmpty
-            || !context.Changes.Paths
-                .Where(static path => IsBlueprintPath(path.Value, ".scribe.cs"))
-                .Any(path => ContentDiffers(context.Current, context.Baseline, path.Value)))
+        if (changedMarkdown.IsDefaultOrEmpty)
         {
-            return changedMarkdown
-                .Select(static path => new RuleFinding(
-                    path.Value,
-                    "Blueprint markdown is a projection: emit it from a .scribe.cs change"))
-                .ToImmutableArray();
+            return [];
         }
 
-        return [];
+        var hasChangedScribeSource = context.Changes.Paths.Any(path =>
+            IsBlueprintPath(path.Value, ".scribe.cs")
+            && ContentDiffers(context.Current, context.Baseline, path.Value));
+        var digestionEmissions = hasChangedScribeSource
+            ? []
+            : ChangedDigestionEmissionPaths(context);
+        return changedMarkdown
+            .Where(path => !hasChangedScribeSource && !digestionEmissions.Contains(path.Value))
+            .Select(static path => new RuleFinding(
+                path.Value,
+                "Blueprint markdown is a projection: emit it from a Scribe or digestion source change"))
+            .ToImmutableArray();
+    }
+
+    private static HashSet<string> ChangedDigestionEmissionPaths(RuleEvaluationContext context)
+    {
+        var atomIds = context.Changes.Paths
+            .Where(path => BackfillInventoryLoader.IsCanonicalPath(path.Value)
+                && path.Value.EndsWith(".yaml", StringComparison.Ordinal)
+                && ContentDiffers(context.Current, context.Baseline, path.Value))
+            .Select(static path => path.Value[(path.Value.LastIndexOf('/') + 1)..^".yaml".Length])
+            .ToHashSet(StringComparer.Ordinal);
+        if (atomIds.Count == 0)
+        {
+            return [];
+        }
+
+        try
+        {
+            return BackfillInventoryLoader.Load(context.Current)
+                .RequireDigestionEntries()
+                .Where(entry => atomIds.Contains(entry.AtomId))
+                .SelectMany(static entry => entry.CoverageGids)
+                .Select(static gid => (Gid: gid, Separator: gid.LastIndexOf('.')))
+                .Where(static item => item.Separator > item.Gid.LastIndexOf('/'))
+                .Select(static item => item.Gid[..item.Separator])
+                .Select(ScribeEmissionAttestation.EmissionPath)
+                .ToHashSet(StringComparer.Ordinal);
+        }
+        catch (FormatException)
+        {
+            return [];
+        }
     }
 
     private static bool IsBlueprintPath(string path, string suffix) =>

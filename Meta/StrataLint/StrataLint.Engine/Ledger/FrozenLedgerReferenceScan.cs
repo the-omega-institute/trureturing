@@ -141,6 +141,42 @@ public partial record FrozenLedgerReferenceScanOutcome
 
 public static partial class FrozenLedger
 {
+    internal static FrozenLedgerInput? ParseAcceptedEventInput(
+        string eventType,
+        JsonElement payload)
+    {
+        if (eventType == "Genesis")
+        {
+            RequireObjectFields(
+                payload,
+                "Genesis payload",
+                FrozenLedgerReferenceProjection.GenesisPayloadFields);
+            return null;
+        }
+
+        if (eventType is "Freeze" or "Reattest")
+        {
+            RequireEventPayloadFields(payload, eventType);
+            if (!payload.TryGetProperty("input", out var input))
+            {
+                throw new FormatException($"{eventType} payload is missing input fields.");
+            }
+
+            return ParseInput(input);
+        }
+
+        if (eventType == "Revoke")
+        {
+            RequireObjectFields(
+                payload,
+                "Revoke payload",
+                FrozenLedgerReferenceProjection.RevokePayloadFields);
+            return null;
+        }
+
+        throw new FormatException($"Unknown frozen event type {eventType}.");
+    }
+
     public static FrozenLedgerReferenceScanOutcome ScanReferences(FrozenLedgerSyntax syntax)
     {
         ArgumentNullException.ThrowIfNull(syntax);

@@ -6,7 +6,7 @@ using StrataLint.Tests;
 
 namespace StrataLint.ArchitectureTests;
 
-public sealed class FileMapPolicyTests
+public sealed partial class FileMapPolicyTests
 {
     [Theory]
     [InlineData("Blueprint/Trureturing.Content.csproj")]
@@ -264,61 +264,6 @@ public sealed class FileMapPolicyTests
         var finding = Assert.Single(FileMapPolicy.InspectDirectoryKinds(manifest, [path]));
 
         Assert.Equal("FILEMAP-DIRECTORY-KIND", finding.Code);
-    }
-
-    [Fact]
-    public void ExactProtectedResidenceCountIsAccepted()
-    {
-        const string path = "Meta/StrataLint/Golden/known.toml";
-        var manifest = Parse(1, ResidenceEntry(path));
-
-        Assert.Empty(FileMapPolicy.InspectDirectoryKinds(manifest, [path]));
-    }
-
-    [Fact]
-    public void AdditionalProtectedResidenceViolationIsRejected()
-    {
-        var manifest = Parse(
-            1,
-            ResidenceEntry("Meta/StrataLint/Golden/*.toml"));
-
-        var finding = Assert.Single(FileMapPolicy.InspectDirectoryKinds(
-            manifest,
-            [
-                "Meta/StrataLint/Golden/known.toml",
-                "Meta/StrataLint/Golden/new.toml",
-            ]));
-
-        Assert.Equal("FILEMAP-RESIDENCE-DRIFT", finding.Code);
-    }
-
-    [Fact]
-    public void MissingProtectedResidenceViolationIsRejected()
-    {
-        const string path = "Meta/StrataLint/Golden/known.toml";
-        var manifest = Parse(2, ResidenceEntry(path));
-
-        var finding = Assert.Single(FileMapPolicy.InspectDirectoryKinds(manifest, [path]));
-
-        Assert.Equal("FILEMAP-RESIDENCE-DRIFT", finding.Code);
-    }
-
-    [Fact]
-    public void ResidenceInventoryIncludesOnlyMarkedProtectedData()
-    {
-        const string externalPath = "Data/known.toml";
-        const string unmarkedPath = "Meta/StrataLint/Golden/other.toml";
-        const string markedPath = "Meta/StrataLint/Golden/values.toml";
-        var manifest = Parse(
-            ResidenceEntry(externalPath),
-            Entry(unmarkedPath, "data", "none", "reader", "SnapshotDecoder"),
-            ResidenceEntry(markedPath));
-
-        var violations = FileMapPolicy.ResidenceViolations(
-            manifest,
-            [externalPath, markedPath, unmarkedPath]);
-
-        Assert.Equal([markedPath], violations);
     }
 
     [Fact]
@@ -774,7 +719,7 @@ public sealed class FileMapPolicyTests
         produced_by = "{{producedBy}}"
         consumed_by = ["{{consumedBy}}"]
         verified_by = ["{{verifiedBy}}"]
-        runtime_disposition = "committed-source"
+        runtime_disposition = "{{(kind == "ledger" ? "committed-ledger" : "committed-source")}}"
         artifact_id = "none"
         """ + "\n";
 

@@ -4,7 +4,7 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../../../.." && pwd -P)"
 PROJECT="Meta/StrataLint/StrataLint.Cli/StrataLint.Cli.csproj"
 REPORT=".lake/build/stratalint/raw-lean-report.json"
-FROZEN_LEDGER="Meta/StrataLint/Golden/Frozen/accepted"
+FROZEN_LEDGER="Golden/Frozen/accepted"
 COMMAND="${1:-}"
 BASE="${2:-origin/dev}"
 ATOM_ID="${3:-}"

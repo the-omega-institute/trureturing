@@ -195,6 +195,15 @@ mode = "100644"
 history_requirement = "not-required"
 
 [[files]]
+pattern = "Golden/Frozen/accepted/*.json"
+kind = "ledger"
+produced_by = "FrozenLedgerCanonicalWriter"
+consumed_by = ["FrozenLedger"]
+verified_by = ["SL-008"]
+artifact_id = "none"
+runtime_disposition = "committed-ledger"
+
+[[files]]
 pattern = "Golden/Projection/*.json"
 kind = "data"
 produced_by = "none"
@@ -402,15 +411,6 @@ artifact_id = "A-SCRIBE"
 runtime_disposition = "run-local"
 mode = "100644"
 history_requirement = "not-required"
-
-[[files]]
-pattern = "Meta/StrataLint/Golden/Frozen/accepted/*.json"
-kind = "ledger"
-produced_by = "FrozenLedgerCanonicalWriter"
-consumed_by = ["FrozenLedger"]
-verified_by = ["SL-008"]
-artifact_id = "none"
-runtime_disposition = "committed-ledger"
 
 [[files]]
 pattern = "Meta/StrataLint/StrataLint.*/**"

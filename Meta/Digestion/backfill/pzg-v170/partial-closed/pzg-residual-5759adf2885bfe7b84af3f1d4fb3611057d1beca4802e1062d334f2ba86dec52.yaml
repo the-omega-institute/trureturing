@@ -4,6 +4,9 @@ fingerprints:
   normalized_sha256: sha256:5759adf2885bfe7b84af3f1d4fb3611057d1beca4802e1062d334f2ba86dec52
 cas_ref: sha256:5759adf2885bfe7b84af3f1d4fb3611057d1beca4802e1062d334f2ba86dec52
 coverage_gids:
+  - D5/S3/Zeros/ToySpectrum/OffLineToySpectrum.toy_spectrum_satisfies_formal_polynomial_symmetries
+  - D5/S3/Zeros/ToySpectrum/OffLineToySpectrum.li_positivity_distinguishes_the_off_line_toy_spectrum
+  - D5/S3/Zeros/ToySpectrum/OffLineToySpectrum.explicit_off_line_j_invariant_four_point_counterexample
   - D5/S3/Weil/ReflectionLedger.mirror_fixed_re_eq
 receipts:
   coverage:
@@ -15,10 +18,8 @@ receipts:
       definition_sha256: sha256:2227a3b6e764a7cc4f7ac9ec4a18c4f3e7a8b41605ae2b3cf0b42ce64214e66f
       emission_sha256: sha256:b55ff89324eabc4d1d004776405cc56133f4f335342c40bc512c7b99695d7296
   unresolved_subitems:
-    - explicit-off-line-j-invariant-four-point-counterexample
     - toy-spectrum-satisfies-five-symmetries-certificate
     - symmetry-chain-cannot-distinguish-rh-worlds
-    - li-positivity-distinguishes-the-off-line-toy-spectrum
     - antiunitary-symmetry-present-selfadjoint-hamiltonian-absent
     - wigner-classification-does-not-produce-hamiltonian
     - rh-fixed-locus-formulation-as-conceptual-not-mathematical-advance

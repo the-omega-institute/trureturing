@@ -46,3 +46,5 @@
 - `Observer/MetricGeometry/`: observable-supremum metrics on observer update orbits, including
   `VisiblePhaseInfinity.lean` for the ENNReal visible-phase infinity shadow.
 - `Entropy/Forgetting/`: finite entropy and uniform-capacity laws under forgetting channels.
+- 2026-08-13 SL-003 分裂记录:D5/S3/Zeros 达 12 上限;按"只裂不迁"新增子疆域桶 `Zeros/ToySpectrum/`,存量 Zeros 模块地址全数保留;首件 `ToySpectrum/OffLineToySpectrum.lean`。
+- `Zeros/ToySpectrum/`: explicit finite toy zero-spectra separating set-level symmetry from critical-line containment.
