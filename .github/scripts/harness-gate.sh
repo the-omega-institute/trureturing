@@ -123,6 +123,29 @@ admission_status="passed"
 if [[ "$rc" -ne 0 && "$rc" -ne 3 ]]; then admission_status="failed"; fi
 mark admission "$admission_status"
 
+set +e
+(
+  cd "$CANDIDATE_ROOT"
+  dotnet "$JUDGE_DLL" filemap-conform
+)
+conform_rc=$?
+set -e
+conform_status="passed"
+if [[ "$conform_rc" -ne 0 ]]; then conform_status="failed"; fi
+mark filemap-conform "$conform_status"
+
+case "$rc" in
+  1) exit_with_gate_outcome semantic-violation 1 ;;
+  2) exit_with_gate_outcome infrastructure-failure 2 ;;
+esac
+
+case "$conform_rc" in
+  0) ;;
+  1) exit_with_gate_outcome semantic-violation 1 ;;
+  2) exit_with_gate_outcome infrastructure-failure 2 ;;
+  *) exit "$conform_rc" ;;
+esac
+
 if [[ $rc -eq 0 ]]; then
   summary "### Admission: content fully validated, no protected-surface change"
   exit_with_gate_outcome admitted 0
@@ -133,8 +156,4 @@ if [[ $rc -eq 3 ]]; then
   exit_with_gate_outcome protected-surface-change 3
 fi
 
-case "$rc" in
-  1) exit_with_gate_outcome semantic-violation 1 ;;
-  2) exit_with_gate_outcome infrastructure-failure 2 ;;
-  *) exit "$rc" ;;
-esac
+exit "$rc"

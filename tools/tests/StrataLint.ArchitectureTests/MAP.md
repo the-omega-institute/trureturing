@@ -34,12 +34,12 @@ The root contains only shared repository discovery, test metadata, and this map.
   `Golden/cases`. A separate consistency anchor keeps
   `GoldenStratum`, Engine `Stratum`, and both closed `IsStratum` predicates equal to
   the explicit `S0` through `S4` five-member alphabet.
-- FILEMAP: every tracked or unignored file matches exactly one `Meta/FILEMAP.toml`
-  pattern; registry root membership is equal to tracked root files; generated artifacts
-  match the canonical producer inventory; every data verifier resolves
-  to an existing program file; generated and Golden class directories remain pure.
-  The closed `RESIDENCE-EPOCH` sentinel requires the protected-surface residence
-  violation inventory to remain empty.
+- FILEMAP: production `StrataLint filemap-conform` checks every tracked file against
+  exactly one `Meta/FILEMAP.toml` pattern, aligns registry roots, joins generated
+  inventory, resolves actors and data verifiers, enforces declared modes and directory
+  kinds, closes run-local tracking and residence drift, and validates dependency and
+  `.gitignore` policy. Architecture tests retain synthetic red/green fixtures for the
+  production policy rather than scanning the repository.
 - Dependency direction: machine-readable data is rejected when its decoded text names a
   concrete generated path, and a simple single-module Lean import is rejected when it
   resolves to a generated `.lean` file.

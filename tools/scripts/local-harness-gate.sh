@@ -202,6 +202,29 @@ admission_status="passed"
 if [[ "$gate_rc" -ne 0 && "$gate_rc" -ne 3 ]]; then admission_status="failed"; fi
 record_timing local admission "$admission_status" "$(( $(date +%s) - admission_started ))"
 
+CANDIDATE_CLI="$(dotnet msbuild "$CANDIDATE_ROOT/tools/StrataLint.Cli/StrataLint.Cli.csproj" \
+  -getProperty:TargetPath \
+  -property:Configuration=Release \
+  -verbosity:quiet)"
+conform_started="$(date +%s)"
+set +e
+(
+  cd "$CANDIDATE_ROOT"
+  dotnet "$CANDIDATE_CLI" filemap-conform
+)
+conform_rc=$?
+set -e
+conform_status="passed"
+if [[ "$conform_rc" -ne 0 ]]; then conform_status="failed"; fi
+record_timing local filemap-conform "$conform_status" "$(( $(date +%s) - conform_started ))"
+
+if [[ "$gate_rc" -ne 0 && "$gate_rc" -ne 3 ]]; then
+  exit "$gate_rc"
+fi
+if [[ "$conform_rc" -ne 0 ]]; then
+  exit "$conform_rc"
+fi
+
 if [[ $gate_rc -eq 3 ]]; then
   printf '%s\n' "local-harness-gate: protected-surface change (SL-022)" >&2
   exit 0

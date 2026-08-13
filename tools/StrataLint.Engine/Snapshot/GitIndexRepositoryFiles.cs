@@ -7,16 +7,17 @@ internal static class GitIndexRepositoryFiles
     private static readonly UTF8Encoding StrictUtf8 = new(false, true);
 
     internal static IReadOnlyList<(string RelativePath, string FullPath)> Enumerate(
-        string repositoryRoot) => ReadPaths(repositoryRoot)
-        .Select(path => (
-            RelativePath: path,
+        string repositoryRoot) => EnumerateTracked(repositoryRoot)
+        .Select(entry => (
+            RelativePath: entry.RelativePath,
             FullPath: Path.Combine(
                 repositoryRoot,
-                path.Replace('/', Path.DirectorySeparatorChar))))
+                entry.RelativePath.Replace('/', Path.DirectorySeparatorChar))))
         .Where(static file => File.Exists(file.FullPath))
         .ToArray();
 
-    private static IReadOnlyList<string> ReadPaths(string repositoryRoot)
+    internal static IReadOnlyList<(string RelativePath, string Mode)> EnumerateTracked(
+        string repositoryRoot)
     {
         var result = BoundedProcessRunner.Run(
             "git",
@@ -32,7 +33,7 @@ internal static class GitIndexRepositoryFiles
                     : "git ls-files --stage failed");
         }
 
-        var paths = new HashSet<string>(StringComparer.Ordinal);
+        var paths = new Dictionary<string, string>(StringComparer.Ordinal);
         foreach (var entry in SplitNul(result.StandardOutput))
         {
             var tab = Array.IndexOf(entry, (byte)'\t');
@@ -43,14 +44,17 @@ internal static class GitIndexRepositoryFiles
 
             var metadata = StrictUtf8.GetString(entry.AsSpan(0, tab)).Split(' ');
             var path = StrictUtf8.GetString(entry.AsSpan(tab + 1));
-            if (metadata.Length != 3 || metadata[2] != "0" || !paths.Add(path))
+            if (metadata.Length != 3 || metadata[2] != "0" || !paths.TryAdd(path, metadata[0]))
             {
                 throw new InvalidOperationException(
                     $"unmerged or duplicate repository entry: {path}");
             }
         }
 
-        return paths.Order(StringComparer.Ordinal).ToArray();
+        return paths
+            .OrderBy(static pair => pair.Key, StringComparer.Ordinal)
+            .Select(static pair => (RelativePath: pair.Key, Mode: pair.Value))
+            .ToArray();
     }
 
     private static IEnumerable<byte[]> SplitNul(byte[] bytes)
