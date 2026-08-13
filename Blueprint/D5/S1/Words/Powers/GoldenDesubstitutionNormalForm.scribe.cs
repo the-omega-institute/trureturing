@@ -18,7 +18,7 @@ internal sealed class GoldenDesubstitutionNormalFormDocument : IScribeDocumentDe
                 H("One golden desubstitution step"),
                 StatementSource.FromAuthor(Disp(Seq(
                     Operatorname, Grp(F.Id("desubStep")), Open, F.Id("x"), Comma, Sp,
-                    F.Id("y"), Close, Iff, F.Id("x"), Neq, D(0), Sp, Land, Sp,
+                    F.Id("y"), Close, Iff, Sp, F.Id("x"), Neq, D(0), Sp, Land, Sp,
                     Operatorname, Grp(F.Id("goldenSubstStart")), Open, F.Id("y"), Close,
                     Eq, F.Id("x")))),
                 AssessedProvenance.FromRepo(),
