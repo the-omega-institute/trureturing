@@ -37,6 +37,46 @@ public sealed class AdmissionWorkflowTests
             StringComparison.Ordinal);
     }
 
+    [Fact]
+    public void CandidateEngineeringScopesPullRequestsButAlwaysRunsPushes()
+    {
+        var engineering = Job(AdmissionWorkflow(), "candidate-engineering");
+        var steps = Assert.IsType<YamlSequenceNode>(
+            engineering.Children[new YamlScalarNode("steps")]).Children
+            .OfType<YamlMappingNode>()
+            .ToArray();
+        Assert.True(steps.Length > 3);
+        Assert.Equal("Check out candidate", StepName(steps[0]));
+
+        var scope = steps[1];
+        Assert.Equal("scope", Assert.IsType<YamlScalarNode>(
+            scope.Children[new YamlScalarNode("id")]).Value);
+        var scopeScript = Assert.IsType<YamlScalarNode>(
+            scope.Children[new YamlScalarNode("run")]).Value ?? string.Empty;
+        Assert.Contains("merge-base", scopeScript, StringComparison.Ordinal);
+        Assert.Contains("git -C candidate diff", scopeScript, StringComparison.Ordinal);
+        Assert.Contains("--no-renames", scopeScript, StringComparison.Ordinal);
+        Assert.Matches(
+            "(?s)if \\[\\[ \"\\$GITHUB_EVENT_NAME\" == \"push\" \\]\\]; then.*?run=\"true\"",
+            scopeScript);
+
+        var summary = steps[^1];
+        Assert.Equal("Summarize candidate engineering scope", StepName(summary));
+        Assert.Equal("always()", Assert.IsType<YamlScalarNode>(
+            summary.Children[new YamlScalarNode("if")]).Value);
+        var summaryScript = Assert.IsType<YamlScalarNode>(
+            summary.Children[new YamlScalarNode("run")]).Value ?? string.Empty;
+        Assert.Contains("$SCOPE_PATHS", summaryScript, StringComparison.Ordinal);
+        Assert.Contains("$GITHUB_STEP_SUMMARY", summaryScript, StringComparison.Ordinal);
+
+        Assert.All(
+            steps[2..^1],
+            step => Assert.Contains(
+                "steps.scope.outputs.run == 'true'",
+                Assert.IsType<YamlScalarNode>(step.Children[new YamlScalarNode("if")]).Value,
+                StringComparison.Ordinal));
+    }
+
     // elan 从上游拉二进制,那一跳会间歇失败。两处安装都必须重试,且 elan 的缓存保存
     // 不得挂在 success() 上:装成功就该存,否则一次下载失败会让 job 红、缓存不写、
     // 下次继续 miss —— 故障自我延续。2026-08-13 实测:最近 10 个 run 里 2 个撞它,
@@ -261,6 +301,9 @@ public sealed class AdmissionWorkflowTests
 
     private static YamlMappingNode Job(string workflow, string job) =>
         Assert.IsType<YamlMappingNode>(Jobs(workflow).Children[new YamlScalarNode(job)]);
+
+    private static string StepName(YamlMappingNode step) =>
+        Assert.IsType<YamlScalarNode>(step.Children[new YamlScalarNode("name")]).Value ?? string.Empty;
 
     private static bool BaselineNeedsExactlyLeanInspect(string workflow) =>
         Needs(Job(workflow, "baseline-admission")).SequenceEqual(["lean-inspect"], StringComparer.Ordinal);
