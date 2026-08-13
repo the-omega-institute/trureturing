@@ -15,23 +15,6 @@ public abstract record DagLedgerLoadOutcome
     public sealed record Invalid(string Message) : DagLedgerLoadOutcome;
 }
 
-public sealed record DagLedgerFileEvent(
-    string Identity,
-    string EventHash,
-    string EventType,
-    JsonElement Payload,
-    int SchemaVersion,
-    FrozenLedgerLineSyntax Syntax);
-
-public abstract record DagLedgerFilesLoadOutcome
-{
-    private DagLedgerFilesLoadOutcome() { }
-
-    public sealed record Loaded(ImmutableArray<DagLedgerFileEvent> Events) : DagLedgerFilesLoadOutcome;
-
-    public sealed record Invalid(string Message) : DagLedgerFilesLoadOutcome;
-}
-
 public static class DagLedgerLoader
 {
     private static readonly UTF8Encoding StrictUtf8 = new(false, true);
@@ -91,76 +74,8 @@ public static class DagLedgerLoader
         }
     }
 
-    public static DagLedgerFilesLoadOutcome LoadFiles(IEnumerable<RepositoryFile> files)
-    {
-        ArgumentNullException.ThrowIfNull(files);
-        try
-        {
-            var events = ImmutableArray.CreateBuilder<DagLedgerFileEvent>();
-            var identities = new HashSet<string>(StringComparer.Ordinal);
-            var hashes = new HashSet<string>(StringComparer.Ordinal);
-            foreach (var file in files.OrderBy(static file => file.Path.Value, StringComparer.Ordinal))
-            {
-                var bytes = file.RawBytes.AsSpan();
-                _ = StrictUtf8.GetString(bytes);
-                if (bytes.Length < 2
-                    || bytes[^1] != (byte)'\n'
-                    || bytes[..^1].Contains((byte)'\n')
-                    || bytes.Contains((byte)'\r'))
-                {
-                    throw new FormatException(
-                        "Content-addressed frozen event file must contain exactly one LF-terminated JSON object.");
-                }
-
-                using var document = JsonDocument.Parse(bytes[..^1].ToArray());
-                if (!FrozenLedgerCanonicalWriter.ValidateDagEvent(
-                    document.RootElement,
-                    out var identity,
-                    out var eventHash,
-                    out var validationMessage))
-                {
-                    throw new FormatException(validationMessage);
-                }
-
-                if (!hashes.Add(eventHash))
-                {
-                    throw new FormatException("Content-addressed frozen event event_hash is duplicated.");
-                }
-
-                if (!identities.Add(identity))
-                {
-                    throw new FormatException("Content-addressed frozen event identity is duplicated.");
-                }
-
-                // 文件名承载裸摘要,不含 "sha256:" 前缀:冒号在 Windows 上是保留字符,
-                // 带冒号的路径无法 check out;仓内既有内容寻址先例 Meta/Digestion/atoms/sha256/<64hex>
-                // 也是「目录名承载算法、文件名是裸摘要」。
-                var fileName = file.Path.Value[(file.Path.Value.LastIndexOf('/') + 1)..];
-                if (!string.Equals(
-                        fileName,
-                        FrozenLedgerChangeClassifier.AcceptedFileName(identity),
-                        StringComparison.Ordinal))
-                {
-                    throw new FormatException("Content-addressed frozen event file name does not match event identity.");
-                }
-
-                var value = document.RootElement.Clone();
-                events.Add(new DagLedgerFileEvent(
-                    identity,
-                    eventHash,
-                    value.GetProperty("event_type").GetString()!,
-                    value.GetProperty("payload").Clone(),
-                    value.GetProperty("schema_version").GetInt32(),
-                    new FrozenLedgerLineSyntax(ImmutableArray.CreateRange(bytes.ToArray()), value)));
-            }
-
-            return new DagLedgerFilesLoadOutcome.Loaded(events.ToImmutable());
-        }
-        catch (Exception exception) when (exception is DecoderFallbackException or JsonException or FormatException)
-        {
-            return new DagLedgerFilesLoadOutcome.Invalid(exception.Message);
-        }
-    }
+    public static DagLedgerFilesLoadOutcome LoadFiles(IEnumerable<RepositoryFile> files) =>
+        FrozenAcceptedEventLoader.LoadFiles(files);
 
     public static string? ValidateClosedDag(ImmutableArray<DagLedgerFileEvent> events)
     {

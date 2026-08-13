@@ -1,13 +1,11 @@
 #!/usr/bin/env bash
 # Shared .NET admission gate. Lean inspection is a predecessor data-producing
-# stage; this program consumes its two canonical reports and never invokes Lean.
+# stage; this program consumes the candidate canonical report and never invokes Lean.
 set -euo pipefail
 
 CANDIDATE_ROOT="."
-JUDGE_ROOT=""
 BASE_REF=""
 CANDIDATE_LEAN_REPORT=""
-BASELINE_LEAN_REPORT=""
 GATE_OUTCOME_DIR="${STRATALINT_GATE_OUTCOME_DIR:-}"
 
 exit_with_gate_outcome() {
@@ -29,10 +27,8 @@ exit_with_gate_outcome() {
 while [[ $# -gt 0 ]]; do
   case "$1" in
     --candidate) CANDIDATE_ROOT="$2"; shift 2 ;;
-    --judge-root) JUDGE_ROOT="$2"; shift 2 ;;
     --base) BASE_REF="$2"; shift 2 ;;
     --candidate-lean-report) CANDIDATE_LEAN_REPORT="$2"; shift 2 ;;
-    --baseline-lean-report) BASELINE_LEAN_REPORT="$2"; shift 2 ;;
     *) echo "harness-gate: unknown arg '$1'" >&2; exit 2 ;;
   esac
 done
@@ -42,27 +38,15 @@ done
   || { echo "harness-gate: --candidate-lean-report FILE is required" >&2; exit 2; }
 [[ -d "$CANDIDATE_ROOT" ]] \
   || { echo "harness-gate: candidate root '$CANDIDATE_ROOT' is absent" >&2; exit 2; }
-[[ -n "$JUDGE_ROOT" ]] || JUDGE_ROOT="$CANDIDATE_ROOT"
-[[ -d "$JUDGE_ROOT" ]] \
-  || { echo "harness-gate: judge root '$JUDGE_ROOT' is absent" >&2; exit 2; }
 [[ -f "$CANDIDATE_LEAN_REPORT" ]] \
   || { echo "harness-gate: candidate Lean report '$CANDIDATE_LEAN_REPORT' is absent" >&2; exit 2; }
-# 旧侧 Lean 报告是可选的:唯一用它的是 Hearts.lean 变动时的语义比对。给了就必须存在。
-if [[ -n "$BASELINE_LEAN_REPORT" ]]; then
-  [[ -f "$BASELINE_LEAN_REPORT" ]] \
-    || { echo "harness-gate: baseline Lean report '$BASELINE_LEAN_REPORT' is absent" >&2; exit 2; }
-fi
 if [[ -n "$GATE_OUTCOME_DIR" ]]; then
   [[ "$GATE_OUTCOME_DIR" == /* && -d "$GATE_OUTCOME_DIR" ]] \
     || { echo "harness-gate: STRATALINT_GATE_OUTCOME_DIR must name an existing absolute directory" >&2; exit 2; }
 fi
 
 CANDIDATE_ROOT="$(cd "$CANDIDATE_ROOT" && pwd -P)"
-JUDGE_ROOT="$(cd "$JUDGE_ROOT" && pwd -P)"
 CANDIDATE_LEAN_REPORT="$(cd "$(dirname "$CANDIDATE_LEAN_REPORT")" && pwd -P)/$(basename "$CANDIDATE_LEAN_REPORT")"
-if [[ -n "$BASELINE_LEAN_REPORT" ]]; then
-  BASELINE_LEAN_REPORT="$(cd "$(dirname "$BASELINE_LEAN_REPORT")" && pwd -P)/$(basename "$BASELINE_LEAN_REPORT")"
-fi
 CLI_PROJECT_REL="Meta/StrataLint/StrataLint.Cli/StrataLint.Cli.csproj"
 
 resolve_target_path() {
@@ -108,19 +92,19 @@ mark() {
   _t0=$now
 }
 
-dotnet restore "$JUDGE_ROOT/Meta/StrataLint/StrataLint.sln" --locked-mode
+dotnet restore "$CANDIDATE_ROOT/Meta/StrataLint/StrataLint.sln" --locked-mode
 mark restore-judge
 dotnet build \
-  "$JUDGE_ROOT/Meta/StrataLint/StrataLint.sln" \
+  "$CANDIDATE_ROOT/Meta/StrataLint/StrataLint.sln" \
   --no-restore \
   --configuration Release \
   --warnaserror
 mark build-judge
-JUDGE_DLL="$(resolve_target_path "$JUDGE_ROOT")"
+JUDGE_DLL="$(resolve_target_path "$CANDIDATE_ROOT")"
 
 selftest_dir="$(mktemp -d)"
 (
-  cd "$JUDGE_ROOT"
+  cd "$CANDIDATE_ROOT"
   dotnet "$JUDGE_DLL" selftest > "$selftest_dir/a"
   dotnet "$JUDGE_DLL" selftest > "$selftest_dir/b"
 )
@@ -131,9 +115,7 @@ set +e
 (
   cd "$CANDIDATE_ROOT"
   dotnet "$JUDGE_DLL" check --protected-base "$BASE_REF" \
-    --candidate-lean-report "$CANDIDATE_LEAN_REPORT" \
-    ${BASELINE_LEAN_REPORT:+--baseline-lean-report "$BASELINE_LEAN_REPORT"} \
-    --frozen-evidence-root "$JUDGE_ROOT"
+    --candidate-lean-report "$CANDIDATE_LEAN_REPORT"
 )
 rc=$?
 set -e
