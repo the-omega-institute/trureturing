@@ -47,7 +47,7 @@ fi
 
 CANDIDATE_ROOT="$(cd "$CANDIDATE_ROOT" && pwd -P)"
 CANDIDATE_LEAN_REPORT="$(cd "$(dirname "$CANDIDATE_LEAN_REPORT")" && pwd -P)/$(basename "$CANDIDATE_LEAN_REPORT")"
-CLI_PROJECT_REL="Meta/StrataLint/StrataLint.Cli/StrataLint.Cli.csproj"
+CLI_PROJECT_REL="tools/StrataLint.Cli/StrataLint.Cli.csproj"
 
 resolve_target_path() {
   local root="$1"
@@ -92,10 +92,10 @@ mark() {
   _t0=$now
 }
 
-dotnet restore "$CANDIDATE_ROOT/Meta/StrataLint/StrataLint.sln" --locked-mode
+dotnet restore "$CANDIDATE_ROOT/tools/StrataLint.sln" --locked-mode
 mark restore-judge
 dotnet build \
-  "$CANDIDATE_ROOT/Meta/StrataLint/StrataLint.sln" \
+  "$CANDIDATE_ROOT/tools/StrataLint.sln" \
   --no-restore \
   --configuration Release \
   --warnaserror

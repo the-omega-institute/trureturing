@@ -34,24 +34,24 @@ entrypoint = ".github/scripts/harness-gate.sh"
 
 [[roots]]
 root_id = "local-harness-gate.sh/admission"
-entrypoint = "Meta/StrataLint/scripts/local-harness-gate.sh"
+entrypoint = "tools/scripts/local-harness-gate.sh"
 
 [[roots]]
 root_id = "local-harness-gate.sh/engineering-dotnet"
-entrypoint = "Meta/StrataLint/scripts/local-harness-gate.sh"
+entrypoint = "tools/scripts/local-harness-gate.sh"
 
 [[roots]]
 root_id = "local-harness-gate.sh/engineering-selftest"
-entrypoint = "Meta/StrataLint/scripts/local-harness-gate.sh"
+entrypoint = "tools/scripts/local-harness-gate.sh"
 
 [[roots]]
 root_id = "local-harness-gate.sh/engineering-test"
-entrypoint = "Meta/StrataLint/scripts/local-harness-gate.sh"
+entrypoint = "tools/scripts/local-harness-gate.sh"
 
 [[roots]]
 root_id = "local-harness-gate.sh/lean-reports"
-entrypoint = "Meta/StrataLint/scripts/local-harness-gate.sh"
+entrypoint = "tools/scripts/local-harness-gate.sh"
 
 [[roots]]
 root_id = "local-harness-gate.sh/setup"
-entrypoint = "Meta/StrataLint/scripts/local-harness-gate.sh"
+entrypoint = "tools/scripts/local-harness-gate.sh"

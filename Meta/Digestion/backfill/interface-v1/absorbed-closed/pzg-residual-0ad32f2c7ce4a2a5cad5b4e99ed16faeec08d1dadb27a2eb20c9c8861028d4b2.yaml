@@ -1,0 +1,17 @@
+ast_path: lemma/3.2
+fingerprints:
+  raw_sha256: sha256:0ad32f2c7ce4a2a5cad5b4e99ed16faeec08d1dadb27a2eb20c9c8861028d4b2
+  normalized_sha256: sha256:0ad32f2c7ce4a2a5cad5b4e99ed16faeec08d1dadb27a2eb20c9c8861028d4b2
+cas_ref: sha256:0ad32f2c7ce4a2a5cad5b4e99ed16faeec08d1dadb27a2eb20c9c8861028d4b2
+coverage_gids:
+  - D5/S0/Diagonal/CaptureIntersectionCardinality.capture_intersection_cardinality
+receipts:
+  coverage:
+    - gid: D5/S0/Diagonal/CaptureIntersectionCardinality.capture_intersection_cardinality
+      source_sha256: sha256:0ad32f2c7ce4a2a5cad5b4e99ed16faeec08d1dadb27a2eb20c9c8861028d4b2
+      target_sha256: sha256:4503a6d1d7d71a1c8d33358e2208dd409c9025f49353800ef6cfe7aef6dc930b
+  scribe:
+    - gid: D5/S0/Diagonal/CaptureIntersectionCardinality.capture_intersection_cardinality
+      definition_sha256: sha256:127d36e830486522eeffd3b60875bfbb0392266d23617244f4ceaf370935a631
+      emission_sha256: sha256:d77f168779aa170941949d9299fd6e91e2e9378988c29e15acd70db73d3fd96d
+  unresolved_subitems: []

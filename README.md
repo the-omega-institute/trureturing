@@ -8,20 +8,21 @@ Developer commands have one top-level entry point:
 make help
 ```
 
-Canonical helper scripts live under `Meta/StrataLint/scripts/`, the existing
-baseline-admitted harness prefix; the Makefile contains routing only.
+Harness programs live under `tools/`, harness tests under `tools/tests/`, and
+canonical helper scripts under `tools/scripts/`. `Meta/` contains only FILEMAP,
+registry/domain data, and the digestion ledger. The Makefile contains routing only.
 
 StrataLint commands:
 
 ```text
-Meta/StrataLint/lean-inspector/inspect.sh --repository ROOT --output REPORT
-Meta/StrataLint check [--protected-base REV] --candidate-lean-report FILE
-Meta/StrataLint coverage [--json]
-Meta/StrataLint ledger-genesis --revision EXACT_COMMIT_OID
-Meta/StrataLint route MANIFEST|-
-Meta/StrataLint selftest
-Meta/StrataLint topology
-Meta/StrataLint worktree --branch NAME --path DIR [--base REV] [--skip-restore]
+tools/lean-inspector/inspect.sh --repository ROOT --output REPORT
+dotnet run --project tools/StrataLint.Cli/StrataLint.Cli.csproj --configuration Release -- check [--protected-base REV] --candidate-lean-report FILE
+dotnet run --project tools/StrataLint.Cli/StrataLint.Cli.csproj --configuration Release -- coverage [--json]
+dotnet run --project tools/StrataLint.Cli/StrataLint.Cli.csproj --configuration Release -- ledger-genesis --revision EXACT_COMMIT_OID
+dotnet run --project tools/StrataLint.Cli/StrataLint.Cli.csproj --configuration Release -- route MANIFEST|-
+dotnet run --project tools/StrataLint.Cli/StrataLint.Cli.csproj --configuration Release -- selftest
+dotnet run --project tools/StrataLint.Cli/StrataLint.Cli.csproj --configuration Release -- topology
+dotnet run --project tools/StrataLint.Cli/StrataLint.Cli.csproj --configuration Release -- worktree --branch NAME --path DIR [--base REV] [--skip-restore]
 ```
 
 Lean inspection and .NET admission are separate programs. The inspector runs in
