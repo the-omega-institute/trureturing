@@ -35,8 +35,6 @@ public sealed class TrustTopologyTests
         "Meta/domains.yaml",
         RuleFixture.HeartsPath,
         RepositoryPathPolicy.AssumptionRegistryPath,
-        "Meta/StrataLint/Golden/rules.json",
-        FrozenLedgerChangeClassifier.AcceptedRoot,
         SolutionPath,
         EngineProjectPath,
         "global.json",
@@ -78,6 +76,18 @@ public sealed class TrustTopologyTests
     {
         var clear = Assert.IsType<BootstrapOutcome.Clear>(
             BootstrapGate.Evaluate(RawChangeSet.Create([UnprotectedTruthGraphPath])));
+
+        Assert.NotNull(clear.Capability);
+    }
+
+    [Fact]
+    public void AddedAcceptedFragmentDoesNotProduceSl022Diagnostics()
+    {
+        var path = FrozenLedgerChangeClassifier.AcceptedPath(
+            "sha256:" + new string('a', 64));
+
+        var clear = Assert.IsType<BootstrapOutcome.Clear>(
+            BootstrapGate.Evaluate(RawChangeSet.Create([path])));
 
         Assert.NotNull(clear.Capability);
     }

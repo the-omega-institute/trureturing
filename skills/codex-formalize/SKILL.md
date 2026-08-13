@@ -115,7 +115,7 @@ Write the Lean module and its `.scribe.cs` mirror using the live template. Disco
 A new theorem must go in a new Lean module. Before writing into an existing module, check whether it has an active Freeze event:
 
 ```sh
-module_path='D5/path/Module.lean'; grep -l -F "$module_path" Meta/StrataLint/Golden/Frozen/accepted/*.json
+module_path='D5/path/Module.lean'; grep -l -F "$module_path" Golden/Frozen/accepted/*.json
 ```
 
 Exit 0 with an accepted-record path means frozen; exit 1 with no output means not frozen (any other result is a failed check). The frozen ledger pins the module's declaration set, not just its bytes, so it refuses adding a declaration to a frozen module. Reattest covers changed bytes with an unchanged declaration set; it is not an escape hatch for adding a declaration. If the atom genuinely belongs inside an existing frozen module, do not edit it: end `open`, naming that module and the frozen-ledger constraint.
@@ -253,7 +253,7 @@ Several machines drive this repository concurrently and `dev` advances roughly h
 ### Process honesty
 
 - **Never claim a build result without its exit code.** A seat once reported `lake` green while the build failed; since then the dispatcher re-runs the build at collection and a false green is a terminal lane offense. Report the command and the exit code; quiet output and elapsed time are not evidence.
-- **Never touch `Meta/Digestion/**`.** Ledger surgery (coverage, residue removal, state moves) is exclusively the dispatcher's; a seat once edited it and the change was reverted wholesale. The same applies to `Meta/StrataLint/Golden/Frozen/**` and formalization receipts.
+- **Never touch `Meta/Digestion/**`.** Ledger surgery (coverage, residue removal, state moves) is exclusively the dispatcher's; a seat once edited it and the change was reverted wholesale. The same applies to `Golden/Frozen/**` and formalization receipts.
 - **When a dispatcher assigns output paths, write exactly those.** `result.json` (a conclusion envelope, no logs inline) and `done.sentinel` at the assigned paths are the deliverable; your final prose message is not. A sentinel written while you keep running is worse than no sentinel — write it last, then stop.
 
 ## Prohibitions

@@ -467,7 +467,7 @@ internal static class FileMapPolicy
                 && kind is not FileMapKind.Generated
                 || path.StartsWith("Golden/Projection/", StringComparison.Ordinal)
                     && kind is not FileMapKind.Data
-                || path.StartsWith("Meta/StrataLint/Golden/Frozen/", StringComparison.Ordinal)
+                || FrozenLedgerChangeClassifier.IsAcceptedEventPath(path)
                     && kind is not FileMapKind.Ledger)
             {
                 findings.Add(new FileMapFinding(

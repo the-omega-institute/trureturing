@@ -144,7 +144,8 @@ public sealed class FileMapManifestTests
 
     private const string BlueprintPath = "Blueprint/D5/S0/Carrier/Ring.md";
     private const string FormalPath = "D5/S0/Carrier/Ring.lean";
-    private const string FrozenLedgerPath = "Meta/StrataLint/Golden/Frozen/events.jsonl";
+    private const string FrozenLedgerPath =
+        "Golden/Frozen/accepted/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.json";
     private const string RuleCatalogPath =
         "Meta/StrataLint/StrataLint.Engine/Rules/RuleCatalog.cs";
 
@@ -179,7 +180,7 @@ public sealed class FileMapManifestTests
             artifact_id = "none"
 
             [[files]]
-            pattern = "Meta/StrataLint/Golden/*.toml"
+            pattern = "Meta/StrataLint/FixtureData/*.toml"
             kind = "data"
             produced_by = "none"
             consumed_by = ["TomlGoldenLoader"]
@@ -189,7 +190,7 @@ public sealed class FileMapManifestTests
             artifact_id = "none"
 
             [[files]]
-            pattern = "Meta/StrataLint/Golden/Frozen/**/*.jsonl"
+            pattern = "Golden/Frozen/accepted/*.json"
             kind = "ledger"
             produced_by = "FrozenLedgerCanonicalWriter"
             consumed_by = ["FrozenLedger"]
@@ -221,9 +222,9 @@ public sealed class FileMapManifestTests
         Assert.Equal(FileMapKind.Ledger, Assert.Single(
             manifest.Match(FrozenLedgerPath)).Kind);
         Assert.Equal(FileMapKind.Data, Assert.Single(
-            manifest.Match("Meta/StrataLint/Golden/fixture.toml")).Kind);
+            manifest.Match("Meta/StrataLint/FixtureData/fixture.toml")).Kind);
         Assert.True(Assert.Single(
-            manifest.Match("Meta/StrataLint/Golden/fixture.toml")).ResidenceViolation);
+            manifest.Match("Meta/StrataLint/FixtureData/fixture.toml")).ResidenceViolation);
         Assert.Equal(FileMapKind.Program, Assert.Single(
             manifest.Match(RuleCatalogPath)).Kind);
         Assert.Empty(manifest.Match("unclassified.bin"));

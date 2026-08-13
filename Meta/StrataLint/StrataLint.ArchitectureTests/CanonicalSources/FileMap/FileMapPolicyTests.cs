@@ -266,10 +266,25 @@ public sealed class FileMapPolicyTests
         Assert.Equal("FILEMAP-DIRECTORY-KIND", finding.Code);
     }
 
+    [Theory]
+    [InlineData("ledger", false)]
+    [InlineData("data", true)]
+    public void AcceptedLedgerDirectoryRequiresLedgerEntries(string kind, bool hasFinding)
+    {
+        var path = FrozenLedgerChangeClassifier.AcceptedPath(
+            "sha256:" + new string('a', 64));
+        var manifest = Parse(Entry(path, kind, "FrozenLedgerCanonicalWriter", "FrozenLedger", "SL-008"));
+
+        var findings = FileMapPolicy.InspectDirectoryKinds(manifest, [path]);
+
+        Assert.Equal(hasFinding, findings.Any(
+            static finding => finding.Code == "FILEMAP-DIRECTORY-KIND"));
+    }
+
     [Fact]
     public void ExactProtectedResidenceCountIsAccepted()
     {
-        const string path = "Meta/StrataLint/Golden/known.toml";
+        const string path = "Meta/StrataLint/FixtureData/known.toml";
         var manifest = Parse(1, ResidenceEntry(path));
 
         Assert.Empty(FileMapPolicy.InspectDirectoryKinds(manifest, [path]));
@@ -280,13 +295,13 @@ public sealed class FileMapPolicyTests
     {
         var manifest = Parse(
             1,
-            ResidenceEntry("Meta/StrataLint/Golden/*.toml"));
+            ResidenceEntry("Meta/StrataLint/FixtureData/*.toml"));
 
         var finding = Assert.Single(FileMapPolicy.InspectDirectoryKinds(
             manifest,
             [
-                "Meta/StrataLint/Golden/known.toml",
-                "Meta/StrataLint/Golden/new.toml",
+                "Meta/StrataLint/FixtureData/known.toml",
+                "Meta/StrataLint/FixtureData/new.toml",
             ]));
 
         Assert.Equal("FILEMAP-RESIDENCE-DRIFT", finding.Code);
@@ -295,7 +310,7 @@ public sealed class FileMapPolicyTests
     [Fact]
     public void MissingProtectedResidenceViolationIsRejected()
     {
-        const string path = "Meta/StrataLint/Golden/known.toml";
+        const string path = "Meta/StrataLint/FixtureData/known.toml";
         var manifest = Parse(2, ResidenceEntry(path));
 
         var finding = Assert.Single(FileMapPolicy.InspectDirectoryKinds(manifest, [path]));
@@ -307,8 +322,8 @@ public sealed class FileMapPolicyTests
     public void ResidenceInventoryIncludesOnlyMarkedProtectedData()
     {
         const string externalPath = "Data/known.toml";
-        const string unmarkedPath = "Meta/StrataLint/Golden/other.toml";
-        const string markedPath = "Meta/StrataLint/Golden/values.toml";
+        const string unmarkedPath = "Meta/StrataLint/FixtureData/other.toml";
+        const string markedPath = "Meta/StrataLint/FixtureData/values.toml";
         var manifest = Parse(
             ResidenceEntry(externalPath),
             Entry(unmarkedPath, "data", "none", "reader", "SnapshotDecoder"),
