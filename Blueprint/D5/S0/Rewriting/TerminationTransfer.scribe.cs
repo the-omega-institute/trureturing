@@ -32,7 +32,7 @@ internal sealed class TerminationTransferDocument : IScribeDocumentDefinition
                         Operatorname, Grp(F.Id("WellFounded")), Open,
                         Operatorname, Grp(F.Id("swap")), Open, F.Id("s"), Close, Close,
                         Sp, Land, Sp,
-                        F.Text, Grp(F.Id("s"), Sp, F.Id("quasi-commutes"), Sp,
+                        F.Text, Grp(F.Id("s"), Sp, F.Id("quasi"), Sp, F.Id("commutes"), Sp,
                             F.Id("ahead"), Sp, F.Id("of"), Sp, F.Id("r")),
                         Sp, Rightarrow, Sp,
                         Operatorname, Grp(F.Id("WellFounded")), Open,
