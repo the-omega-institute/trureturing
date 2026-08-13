@@ -261,6 +261,12 @@ internal sealed partial class RuleFixture
 
     internal RuleEvaluationContext Build(
         ValidatedPolicy? suppliedPolicy = null,
+        VerifiedScribeEmissions? verifiedScribeEmissions = null) =>
+        Build(RawChangeSet.Create(Changes), suppliedPolicy, verifiedScribeEmissions);
+
+    internal RuleEvaluationContext Build(
+        RawChangeSet changes,
+        ValidatedPolicy? suppliedPolicy = null,
         VerifiedScribeEmissions? verifiedScribeEmissions = null)
     {
         var current = Decode(Files);
@@ -274,16 +280,22 @@ internal sealed partial class RuleFixture
             policy = RegistryLoadAssert.Accepted(policyOutcome).Policy;
         }
         var lean = AcceptLean(current, Reports);
-        var baselineLean = AcceptLean(baseline, BaselineReports);
-        var bootstrap = BootstrapGate.Evaluate(RawChangeSet.Create(Changes));
-        var meta = Assert.IsType<BootstrapOutcome.Clear>(bootstrap).Capability;
+        var bootstrap = BootstrapGate.Evaluate(changes);
+        var meta = bootstrap switch
+        {
+            BootstrapOutcome.Clear clear => MetaEvaluationProfile.ForClear(clear.Capability),
+            BootstrapOutcome.ProtectedSurfaceVerificationRequired protectedSurface =>
+                MetaEvaluationProfile.ForProtectedSurface(protectedSurface.ChangeSet),
+            BootstrapOutcome.InfrastructureFailure failure =>
+                throw new InvalidOperationException(failure.Message),
+            _ => throw new InvalidOperationException("unknown bootstrap outcome"),
+        };
         return RuleEvaluationContext.Create(
             current,
             baseline,
             policy,
             lean,
-            baselineLean,
-            RawChangeSet.Create(Changes),
+            changes,
             meta,
             verifiedScribeEmissions);
     }
@@ -303,7 +315,6 @@ internal sealed partial class RuleFixture
             baseline,
             policy,
             AcceptedLeanClosure.Create(LeanAxiomReport.Create(Reports)),
-            AcceptedLeanClosure.Create(LeanAxiomReport.Create(BaselineReports)),
             RawChangeSet.Create(Changes),
             meta);
     }
@@ -323,7 +334,6 @@ internal sealed partial class RuleFixture
             baseline,
             policy,
             AcceptedLeanClosure.Create(LeanAxiomReport.Create(Reports)),
-            AcceptedLeanClosure.Create(LeanAxiomReport.Create(BaselineReports)),
             RawChangeSet.Create(Changes),
             MetaEvaluationProfile.ForProtectedSurface(meta));
     }
@@ -377,6 +387,8 @@ internal sealed partial class RuleFixture
     internal void ChangeHeartSignature()
     {
         const string path = HeartsPath;
+        // 新 SL-008 只看 changeset 状态:红 fixture 必须把 Hearts 标记为 Modified。
+        Changes.Add(path);
         Baseline[path] = HeaderFor("D5/X_Frontier/Hearts", "E") + "theorem heart : True := by sorry\n";
         Files[path] = HeaderFor("D5/X_Frontier/Hearts", "E") + "theorem heart : False := by sorry\n";
         BaselineReports[path] = Report(declarations: new[]
