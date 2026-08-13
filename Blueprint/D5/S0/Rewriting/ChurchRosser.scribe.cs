@@ -49,7 +49,7 @@ internal sealed class ChurchRosserDocument : IScribeDocumentDefinition
                             "The Newman corollary composes this equivalence with the frozen "
                             + "D5/S0/Rewriting/NewmanConfluence.newman_confluent theorem; "
                             + "Mathlib's Relation.church_rosser remains a stronger sufficient criterion."))),
-                    DescribeRole.Theorem)),
+                    DescribeRole.Theorem),
                 Describe.Lean(
                     DescribeId.Create("newman-termination-and-local-confluence-imply-church-rosser"),
                     DeclarationHandle.Create("D5/S0/Rewriting/ChurchRosser.newman_church_rosser"),
@@ -57,7 +57,7 @@ internal sealed class ChurchRosserDocument : IScribeDocumentDefinition
                     StatementSource.FromAuthor(Disp(Seq(
                         Operatorname, Grp(F.Id("WellFounded")), Open,
                         Operatorname, Grp(F.Id("swap")), Open, F.Id("r"), Close, Close,
-                        Sp, Land, Sp, Text("local confluence"), Sp, Rightarrow, Sp,
+                        Sp, Land, Sp, F.Text, Grp(F.Id("locally"), Sp, F.Id("confluent")), Sp, Rightarrow, Sp,
                         Open, Forall, Sp, F.Id("a"), Comma, Sp, F.Id("b"), Comma, Sp,
                         Operatorname, Grp(F.Id("EqvGen")), Open, F.Id("r"), Close,
                         Open, F.Id("a"), Comma, Sp, F.Id("b"), Close, Sp, Iff, Sp,
@@ -68,5 +68,5 @@ internal sealed class ChurchRosserDocument : IScribeDocumentDefinition
                     Blocks(Paragraph(Text(
                         "This theorem is a one-composition corollary of the generic equivalence "
                         + "and the frozen Newman confluence theorem."))),
-                    DescribeRole.Theorem)))));
+                    DescribeRole.Theorem))));
 }
