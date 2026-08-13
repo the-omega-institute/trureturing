@@ -35,7 +35,7 @@ public sealed class FileMapEmitterTests
             artifact_id = "none"
 
             [[files]]
-            pattern = "Meta/StrataLint/Golden/*.toml"
+            pattern = "Meta/StrataLint/FixtureData/*.toml"
             kind = "data"
             produced_by = "none"
             consumed_by = ["TomlGoldenLoader"]
@@ -63,7 +63,7 @@ public sealed class FileMapEmitterTests
             markdown,
             StringComparison.Ordinal);
         Assert.Contains(
-            "[Meta/StrataLint/Golden/*.toml | data | residence_violation=true]",
+            "[Meta/StrataLint/FixtureData/*.toml | data | residence_violation=true]",
             markdown,
             StringComparison.Ordinal);
     }

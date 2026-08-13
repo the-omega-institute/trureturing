@@ -407,7 +407,7 @@ public sealed partial class DepositCoverWorkflowScriptTests
         internal const string NewEmissionPath = "Blueprint/D5/S2/NewModule.md";
         internal const string DefinitionPath = "Blueprint/D5/S0/Carrier/Probe.scribe.cs";
         internal const string EmissionPath = "Blueprint/D5/S0/Carrier/Probe.md";
-        internal const string LedgerPath = "Meta/StrataLint/Golden/Frozen/accepted";
+        internal const string LedgerPath = FrozenLedgerChangeClassifier.AcceptedRoot;
         internal const string BackfillPath = "Meta/BACKFILL.yaml";
         internal const string ReceiptRelativePath = "Meta/Digestion/formalizations/atom-1.v1.json";
 
