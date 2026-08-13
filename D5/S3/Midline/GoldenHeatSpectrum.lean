@@ -9,7 +9,24 @@ import Mathlib
 import D5.S3.Analytic.GoldenEulerBeta
 import D5.S3.Midline.UniversalHeatTrace
 
-/- Provenance: Native proof over pinned mathlib. -/
+/- Provenance: Native proof over pinned mathlib.
+   Search receipt (2026-08-13): searched this repository's D5 tree for an existing
+   golden heat spectrum (`goldenSpectrum`, `golden_heat`, `IsHeatAbscissa` applied
+   to a golden length function, and `o5Beta` outside its defining module) — miss:
+   `UniversalHeatTrace` carries only the generic machinery and `ZetaHeatTraceBridge`
+   instantiates it at `primeAxisLogLength`, so no golden instance existed. Searched
+   pinned mathlib for the prime-series criterion and the summability infrastructure —
+   hits, all imported and applied rather than re-proved: `Nat.Primes.summable_rpow`
+   (Mathlib/NumberTheory/SumPrimeReciprocals.lean, the exact `r < -1` criterion used
+   on both the convergence and the divergence side), `Real.rpow_def_of_pos`,
+   `Real.rpow_le_rpow_of_exponent_le`, `Real.rpow_le_rpow_of_nonpos`,
+   `summable_prod_of_nonneg`, `summable_geometric_of_lt_one`, `tsum_mul_right`,
+   `Equiv.prodComm`. Reused frozen repository results rather than reproving them:
+   `D5.S3.Analytic.GoldenEulerBeta.{o5Beta, o5_beta_power_law, o5_beta_growth}` and
+   `D5.S3.Midline.UniversalHeatTrace.{IsHeatAbscissa, heatCoefficient,
+   heat_coefficient_mem_of_abscissa, not_heat_coefficient_mem_of_abscissa}`.
+   Miss: no library or repository theorem gives this spectrum's abscissa, so the
+   two-sided abscissa proof here is native. -/
 
 namespace D5.S3.Midline.GoldenHeatSpectrum
 
