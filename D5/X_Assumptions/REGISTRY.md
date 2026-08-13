@@ -2,14 +2,29 @@
 
 | assumption | status | statement_gid | approved_by | approved_at |
 |---|---|---|---|---|
-| Assumptions.ThreeGap | active | D5/X_Assumptions/AxiomDebt.three_gap_classic | user-PR-PD | 2026-07-12 |
+| Assumptions.ThreeGap | proven | D5/S1/Phase/ThreeDistance.three_gap | user-sshx-D5-T0019 | 2026-08-13 |
 | Assumptions.FourierLaplaceEntire | proven | D5/S3/Fourier/PaleyWiener.fourier_laplace_entire_classic | user-sshx-D5-T0018 | 2026-07-12 |
 | Assumptions.WeilExplicitFormula | active | D5/X_Assumptions/AxiomDebt.weil_explicit_formula_classic | user-sshx-D5-T0018 | 2026-07-14 |
 
-`D5-T0019` records the librarian upstream-formalization issue. Source: the
-Steinhaus three-gap conjecture, proved by V. T. Sós, *Acta Math. Acad. Sci.
-Hungar.* 8 (1957), 461-472. The pinned mathlib v4.31.0 tree has no three-gap or
-three-distance theorem; this row carries that classical result as AxiomDebt.
+`D5-T0019` is discharged by the MIT-licensed upstream formalization ported in
+`D5/S1/Phase/ThreeGap` (Copyright (c) 2026 Dirk Kunert,
+https://github.com/dkunert/three-gap-theorem-lean); `D5/S1/Phase/ThreeDistance.three_gap`
+is the direct application and carries no assumption. Mathematical source: the
+Steinhaus three-gap conjecture, proved by V. T. Sos, *Acta Math. Acad. Sci.
+Hungar.* 8 (1957), 461-472.
+
+Adoption form and retirement condition, per spec A17.2. The proof is vendored
+rather than taken as a Lake dependency because the upstream pins
+`leanprover/lean4:v4.29.1` while this repository pins `v4.31.0`, and Lake
+resolves one revision per package name under a global toolchain, so the machine
+comparison rejects the dependency form outright. Retirement condition, stated
+against this repository's own pin so that it can actually fire: delete
+`D5/S1/Phase/ThreeGap` and apply the library declaration directly once a mathlib
+revision this repository has upgraded to contains an equivalent statement. It is
+deliberately not phrased as "delete when upstream accepts it", which A17.2
+forbids: mathlib PR #40037 (`feat(NumberTheory): the three-gap (Steinhaus)
+theorem`, +625 lines) was closed unmerged on 2026-06-09 under the mathlib
+AI-contribution standards, so upstream inclusion carries no determinate date.
 
 `D5-T0018-C` recorded the pinned-mathlib bridge from smooth compact support to
 an entire complex Fourier-Laplace transform, and is now `proven`: the bridge is
