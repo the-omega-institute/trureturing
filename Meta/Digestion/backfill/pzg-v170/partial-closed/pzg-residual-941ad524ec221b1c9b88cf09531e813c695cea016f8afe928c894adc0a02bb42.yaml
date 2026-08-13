@@ -4,6 +4,7 @@ fingerprints:
   normalized_sha256: sha256:941ad524ec221b1c9b88cf09531e813c695cea016f8afe928c894adc0a02bb42
 cas_ref: sha256:941ad524ec221b1c9b88cf09531e813c695cea016f8afe928c894adc0a02bb42
 coverage_gids:
+  - D5/S3/Weil/SpectralHilbert.labeled_zeta_inner
   - D5/S3/Weil/EulerProduct.finite_euler_zero_free_and_pole_locus
   - D5/S3/Zeros/EulerWindows.finite_euler_window_ne_zero
 receipts:
