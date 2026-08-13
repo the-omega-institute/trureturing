@@ -25,7 +25,7 @@ The wrap is not decoration. The fiber quantizes `phaseCoordinate`, whose codomai
 half-open arcs through the representative chosen by `AddCircle.equivIco (1 : ℝ) 0`. The
 cut point is a choice of fundamental domain, not a feature of the space: arcs `k - 1`
 and `0` meet at it. The same reading is already load-bearing elsewhere in this stratum
--- `D5/S1/Phase/ThreeDistance` measures the golden orbit with `ThreeGap.gaps`,
+-- `D5/S1/Phase/ThreeDistance` measures the golden orbit with `AxiomDebt.cyclicGaps`,
 whose gap list includes the last-to-first gap. A distance that reports `k - 1` for that
 adjacency would contradict the object it is meant to measure, which is why
 `linearPhaseDist` is rejected. `phaseDist_rotate` records the structural counterpart:
