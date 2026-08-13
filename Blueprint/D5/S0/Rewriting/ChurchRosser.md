@@ -2,48 +2,38 @@
 
 ## Abstract
 
-Global confluence is equivalent to the Church-Rosser characterization that convertibility is exactly joinability.
+Global confluence is equivalent to the Church-Rosser convertibility-iff-joinability characterization.
 
 **Theorem 1.1 (Confluence iff convertibility is joinability).**
 
-$$\begin{aligned}
-&\left(\forall h,a,b,\;\operatorname{ReflTransGen}(r)(h,a)\land\operatorname{ReflTransGen}(r)(h,b)\Rightarrow\\
-&\qquad\exists c,\;\operatorname{ReflTransGen}(r)(a,c)\land\operatorname{ReflTransGen}(r)(b,c)\right)\\
-&\quad\Longleftrightarrow\quad
-\left(\forall a,b,\;\operatorname{EqvGen}(r)(a,b)\Longleftrightarrow
-\operatorname{Join}(\operatorname{ReflTransGen}(r))(a,b)\right).
-\end{aligned}$$
+$$(\forall h, a, b, \operatorname{ReflTransGen}(r)(h, a) \land \operatorname{ReflTransGen}(r)(h, b) \Rightarrow \exists c, \operatorname{ReflTransGen}(r)(a, c) \land \operatorname{ReflTransGen}(r)(b, c).\iff (\forall a, b, \operatorname{EqvGen}(r)(a, b) \iff \operatorname{Join} \operatorname{ReflTransGen}(r)(a, b)).$$
 
 *Proof.* Machine-checked in Lean as `D5/S0/Rewriting/ChurchRosser.confluent_iff_church_rosser` (`✓ std3`). ∎
 
+*Citation.* Alonzo Church and J. B. Rosser (1936). *Some Properties of Conversion*. DOI: [10.1090/S0002-9947-1936-1501858-0](https://doi.org/10.1090/S0002-9947-1936-1501858-0).
+
+*Commentary.*
+
+The forward direction makes joinability an equivalence via Relation.equivalence_join, then eliminates EqvGen by its closure constructors.
+
+The reverse direction turns two reductions from one source into a convertibility path through that source. No termination hypothesis is needed.
+
+The Newman corollary composes this equivalence with the frozen D5/S0/Rewriting/NewmanConfluence.newman_confluent theorem; Mathlib's Relation.church_rosser remains a stronger sufficient criterion.
+
 **Theorem 1.2 (Newman to Church-Rosser).**
 
-Termination of `r` together with local confluence implies
-`EqvGen(r)(a,b) ↔ Join(ReflTransGen(r))(a,b)` for every `a,b`.
+$$\operatorname{WellFounded}(\operatorname{swap}(r)) \land \text{locally confluent} \Rightarrow (\forall a, b, \operatorname{EqvGen}(r)(a, b) \iff \operatorname{Join} \operatorname{ReflTransGen}(r)(a, b).$$
 
-*Proof.* This is the composition of Theorem 1.1 with the frozen
-`D5/S0/Rewriting/NewmanConfluence.newman_confluent` theorem. ∎
+*Proof.* Machine-checked in Lean as `D5/S0/Rewriting/ChurchRosser.newman_church_rosser` (`✓ std3`). ∎
 
-**Theorem 1.3 (Mathlib sufficient route).**
+*Citation.* M. H. A. Newman (1942). *On Theories with a Combinatorial Definition of "Equivalence"*. DOI: [10.2307/1968867](https://doi.org/10.2307/1968867).
 
-Mathlib's ReflGen/ReflTransGen diamond condition implies global confluence;
-it is a sufficient condition rather than the biconditional above.
+*Commentary.*
 
-*Proof.* Machine-checked as `D5/S0/Rewriting/ChurchRosser.mathlib_church_rosser_confluent`,
-using `Relation.church_rosser`. ∎
-
-## Commentary
-
-The forward proof sends every reflexive-transitive reduction into `EqvGen`,
-uses `Relation.equivalence_join` to obtain the equivalence structure on
-joinability, and eliminates the equivalence closure by its rel/refl/symm/trans
-constructors. For the reverse direction, two reductions from a common source
-give a convertibility path through that source. The generic equivalence needs no
-termination hypothesis.
+This theorem is a one-composition corollary of the generic equivalence and the frozen Newman confluence theorem.
 
 ## References
 
 - Truth anchor: `D5/S0/Rewriting/ChurchRosser.confluent_iff_church_rosser`
-- Newman corollary: `D5/S0/Rewriting/ChurchRosser.newman_church_rosser`
-- Dependency: `D5/S0/Rewriting/NewmanConfluence`
-- Mathlib anchor: `Mathlib.Logic.Relation`
+- Truth anchor: `D5/S0/Rewriting/ChurchRosser.newman_church_rosser`
+- Dependency: [D5/S0/Rewriting/NewmanConfluence](NewmanConfluence.md)
