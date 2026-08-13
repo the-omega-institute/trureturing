@@ -13,11 +13,7 @@ dotnet:
 	@/bin/bash tools/scripts/dotnet-build.sh
 
 test: lean-cache-ensure
-	@lake build
-	@$(MAKE) lean-report
-	@dotnet run --project tools/StrataLint.Cli/StrataLint.Cli.csproj --configuration Release -- check --candidate-lean-report "$(abspath .lake/build/stratalint/raw-lean-report.json)"
-	@/bin/bash tools/scripts/report/report-consumer.sh --role scribe-consumer --report "$(abspath .lake/build/stratalint/raw-lean-report.json)" -- dotnet run --project tools/StrataLint.Scribe/StrataLint.Scribe.csproj --configuration Release -- emit --check
-	@dotnet run --project tools/StrataLint.Scribe/StrataLint.Scribe.csproj --configuration Release -- emit-values --check
+	@/bin/bash tools/scripts/math-gate.sh
 
 tools-test:
 	@dotnet test tools/StrataLint.sln --configuration Release --verbosity normal

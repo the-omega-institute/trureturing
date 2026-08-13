@@ -62,7 +62,7 @@ public sealed partial class MakeWorkflowTests
             #!/usr/bin/env bash
             target="${1:-}"
             case "${PREFLIGHT_SCENARIO:-}:$target" in
-              semantic-test:test) exit 41 ;;
+              semantic-test:tools-test) exit 41 ;;
               semantic-gate:gate) exit 42 ;;
               timeout:lean-report) exit 124 ;;
               signal-term:lean-report) kill -TERM "$PPID"; exit 0 ;;
