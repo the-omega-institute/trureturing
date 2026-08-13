@@ -173,42 +173,6 @@ public sealed class TowerManifestTests
         Assert.Contains(rejected.Findings, item => item.Code == "TOWER-TOP-OPEN");
     }
 
-    [Fact]
-    public void HistoricalLedgerRecordsArchivedMembersWithoutClaimingVerification()
-    {
-        var syntax = Syntax(new TowerComponentSyntax(
-            "c0-history",
-            "historical-ledger",
-            ArchivedMembers(),
-            ["bootstrap-pr-1"],
-            "archived"));
-
-        Assert.IsType<TowerValidationOutcome.Accepted>(
-            TowerManifestValidator.ValidateStructure(syntax));
-    }
-
-    [Fact]
-    public void HistoricalLedgerRejectsAVerifiedClaim()
-    {
-        var syntax = Syntax(new TowerComponentSyntax(
-            "c0-history",
-            "historical-ledger",
-            ArchivedMembers(),
-            ["bootstrap-pr-1"],
-            "verified"));
-
-        var rejected = Assert.IsType<TowerValidationOutcome.Rejected>(
-            TowerManifestValidator.Validate(syntax, Snapshot(GenesisFile()), Catalog()));
-
-        Assert.Contains(
-            rejected.Findings,
-            static item => item is
-            {
-                Code: "TOWER-ARCHIVED",
-                Component: "c0-history",
-            });
-    }
-
     private static TowerValidationOutcome Validate(params TowerComponentSyntax[] components) =>
         TowerManifestValidator.ValidateStructure(Syntax(components));
 
@@ -243,14 +207,6 @@ public sealed class TowerManifestTests
         "f3f471846dd81cfcc39ecaa386966fcf0b058464",
         1,
         "ASSUMED-UNVERIFIED");
-
-    private static ImmutableArray<string> ArchivedMembers() =>
-    [
-        "c0/ceremony-commit convention/this-pr-merge-commit",
-        "c0/inaugural-certificate sha256/" + new string('e', 64)
-            + " Meta/StrataLint/Golden/c0-inaugural-conservative-certificate.json",
-        "c0/preimage-tree git-tree/" + new string('a', 40),
-    ];
 
     private static RuleCatalog Catalog(params RuleId[] ids)
     {

@@ -179,22 +179,22 @@ public sealed class FileMapManifestTests
             artifact_id = "none"
 
             [[files]]
-            pattern = "Meta/StrataLint/Golden/Frozen/**/*.jsonl"
-            kind = "ledger"
-            produced_by = "FrozenLedgerCanonicalWriter"
-            consumed_by = ["FrozenLedger"]
-            verified_by = ["SL-008"]
-            runtime_disposition = "committed-ledger"
-            artifact_id = "none"
-
-            [[files]]
-            pattern = "Meta/StrataLint/Golden/cases/**/*.toml"
+            pattern = "Meta/StrataLint/Golden/*.toml"
             kind = "data"
             produced_by = "none"
             consumed_by = ["TomlGoldenLoader"]
             verified_by = ["TomlGoldenLoader"]
             residence_violation = true
             runtime_disposition = "committed-source"
+            artifact_id = "none"
+
+            [[files]]
+            pattern = "Meta/StrataLint/Golden/Frozen/**/*.jsonl"
+            kind = "ledger"
+            produced_by = "FrozenLedgerCanonicalWriter"
+            consumed_by = ["FrozenLedger"]
+            verified_by = ["SL-008"]
+            runtime_disposition = "committed-ledger"
             artifact_id = "none"
 
             [[files]]
@@ -221,9 +221,9 @@ public sealed class FileMapManifestTests
         Assert.Equal(FileMapKind.Ledger, Assert.Single(
             manifest.Match(FrozenLedgerPath)).Kind);
         Assert.Equal(FileMapKind.Data, Assert.Single(
-            manifest.Match("Meta/StrataLint/Golden/cases/structure.toml")).Kind);
+            manifest.Match("Meta/StrataLint/Golden/fixture.toml")).Kind);
         Assert.True(Assert.Single(
-            manifest.Match("Meta/StrataLint/Golden/cases/structure.toml")).ResidenceViolation);
+            manifest.Match("Meta/StrataLint/Golden/fixture.toml")).ResidenceViolation);
         Assert.Equal(FileMapKind.Program, Assert.Single(
             manifest.Match(RuleCatalogPath)).Kind);
         Assert.Empty(manifest.Match("unclassified.bin"));
