@@ -13,7 +13,7 @@ dotnet:
 	@/bin/bash tools/scripts/dotnet-build.sh
 
 test: lean-cache-ensure
-	@/bin/bash tools/scripts/math-gate.sh
+	@/bin/bash tools/scripts/workflow/math-gate.sh
 
 tools-test:
 	@dotnet test tools/StrataLint.sln --configuration Release --verbosity normal

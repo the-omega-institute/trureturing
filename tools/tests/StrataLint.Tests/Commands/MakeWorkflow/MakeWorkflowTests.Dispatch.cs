@@ -61,8 +61,8 @@ public sealed partial class MakeWorkflowTests
         // make test 是薄委托;数学门链条的唯一真源在 math-gate.sh 里,断言脚本本体。
         var mathematicalTestRecipe = Recipe(makefile, "test");
         Assert.DoesNotContain("dotnet test", mathematicalTestRecipe, StringComparison.Ordinal);
-        Assert.Contains("tools/scripts/math-gate.sh", mathematicalTestRecipe, StringComparison.Ordinal);
-        var mathGate = File.ReadAllText(Path.Combine(FindRepositoryRoot(), "tools", "scripts", "math-gate.sh"));
+        Assert.Contains("tools/scripts/workflow/math-gate.sh", mathematicalTestRecipe, StringComparison.Ordinal);
+        var mathGate = File.ReadAllText(Path.Combine(FindRepositoryRoot(), "tools", "scripts", "workflow", "math-gate.sh"));
         Assert.DoesNotContain("dotnet test", mathGate, StringComparison.Ordinal);
         Assert.Contains("lake build", mathGate, StringComparison.Ordinal);
         Assert.Contains("make lean-report", mathGate, StringComparison.Ordinal);
