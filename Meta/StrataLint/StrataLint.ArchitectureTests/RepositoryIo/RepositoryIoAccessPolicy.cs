@@ -2,7 +2,6 @@ using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using StrataLint.Engine;
-using System.Xml.Linq;
 
 namespace StrataLint.ArchitectureTests;
 
@@ -87,7 +86,7 @@ internal static class RepositoryIoAccessPolicy
     internal static IReadOnlyList<RepositoryIoTestProject> ClassifyTestProjects(
         IEnumerable<(string RelativePath, string Content)> projects,
         IReadOnlySet<string> exemptions) => projects
-        .Where(static project => IsXunitProject(project.Content))
+        .Where(static project => ProjectFileClassifier.IsXunitProject(project.Content))
         .Select(project =>
         {
             var name = Path.GetFileNameWithoutExtension(project.RelativePath);
@@ -97,14 +96,6 @@ internal static class RepositoryIoAccessPolicy
                 exemptions.Contains(name));
         })
         .ToArray();
-
-    private static bool IsXunitProject(string content)
-    {
-        var document = XDocument.Parse(content, LoadOptions.None);
-        return document.Descendants().Any(static element =>
-            element.Name.LocalName == "PackageReference"
-            && string.Equals((string?)element.Attribute("Include"), "xunit", StringComparison.OrdinalIgnoreCase));
-    }
 
     internal static IReadOnlyList<RepositoryIoAccessFinding> InspectSource(
         string path,
