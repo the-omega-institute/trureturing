@@ -197,6 +197,7 @@ public sealed partial class FrozenLedgerTests
             ["kernel_verdict"] = nameof(TruthState.Closed),
             ["new_axiom_closure"] = new JsonArray(
                 fixture.CandidateNode.AxiomClosure.Select(static item => JsonValue.Create(item)).ToArray()),
+            ["new_frozen_node_id"] = fixture.CandidateNode.FrozenNodeId.Value,
             ["new_input"] = Input(
                 fixture.CandidateNode,
                 GitOid('c'),
@@ -204,8 +205,13 @@ public sealed partial class FrozenLedgerTests
                 sourceBlob,
                 new[] { GitOid('4'), GitOid('5'), GitOid('6') }),
             ["new_statement_id"] = fixture.CandidateNode.StatementId.Value,
+            ["new_prerequisite_frozen_node_ids"] = new JsonArray(
+                fixture.CandidateNode.PrerequisiteFrozenNodeIds
+                    .Select(static item => JsonValue.Create(item.Value)).ToArray()),
+            ["new_witness_id"] = fixture.CandidateNode.WitnessId.Value,
             ["old_axiom_closure"] = new JsonArray(
                 fixture.BaselineNode.AxiomClosure.Select(static item => JsonValue.Create(item)).ToArray()),
+            ["old_frozen_node_id"] = fixture.BaselineNode.FrozenNodeId.Value,
             ["old_input"] = Input(
                 fixture.BaselineNode,
                 GitOid('a'),
@@ -213,6 +219,10 @@ public sealed partial class FrozenLedgerTests
                 sourceBlob,
                 new[] { GitOid('1'), GitOid('2'), GitOid('3') }),
             ["old_statement_id"] = fixture.BaselineNode.StatementId.Value,
+            ["old_prerequisite_frozen_node_ids"] = new JsonArray(
+                fixture.BaselineNode.PrerequisiteFrozenNodeIds
+                    .Select(static item => JsonValue.Create(item.Value)).ToArray()),
+            ["old_witness_id"] = fixture.BaselineNode.WitnessId.Value,
             ["previous_attestation_event_hash"] = freeze.EventHash,
         };
     }
