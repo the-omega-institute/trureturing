@@ -4,6 +4,8 @@ fingerprints:
   normalized_sha256: sha256:5ec2a607d8f2b06f9ba8f1dbdec0b8dd7469f06a3b9d6a933c3f15dc450b735b
 cas_ref: sha256:5ec2a607d8f2b06f9ba8f1dbdec0b8dd7469f06a3b9d6a933c3f15dc450b735b
 coverage_gids:
+  - D5/S1/Phase/Interference/M468MemberTable.m468_zero_only_iff_successor_prime
+  - D5/S1/Phase/Interference/M468MemberTable.m468_split_prime_characterization
   - D5/S1/Phase/Interference/M468MemberTable.m468TwentyFourMemberTable
   - D5/S1/Phase/Interference/M1728Countershot.m1728_countershot
   - D5/S1/Phase/Interference/ZolotarevSelector.zolotarev_selector_congruence
@@ -42,9 +44,7 @@ receipts:
     - mod-48-boundary-counterexample
     - m1728-minus-forty-eight-countershot
     - m468-twenty-four-member-table
-    - m468-split-prime-side-selector-equivalence
     - m-side-prime-observer-clause
-    - zero-only-prime-equivalence
     - three-prime-orbit-singleton-bijection
     - three-prime-three-orbit-count
     - m4788-second-floor-classification
@@ -54,7 +54,6 @@ receipts:
     - full-exponent-encoding-clause
     - prediction-trial-postmortem
     - prediction-three-trial-certificate
-    - zolotarev-congruence-to-selector-numerator
     - zolotarev-144-case-certificate
     - fixed-ray-character-counterexample
     - fixed-ray-nineteen-witness-certificate
