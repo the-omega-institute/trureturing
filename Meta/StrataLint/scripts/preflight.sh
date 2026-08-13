@@ -55,7 +55,7 @@ finish_preflight() {
     status="passed"
   else
     case "$rc" in
-      124|130|143) declaration="FAIL:INFRASTRUCTURE" ;;
+      124|129|130|143) declaration="FAIL:INFRASTRUCTURE" ;;
       126|127) declaration="FAIL:TOOLCHAIN" ;;
       *)
         if [[ -n "$PREFLIGHT_GATE_OUTCOME_DIR" ]] \

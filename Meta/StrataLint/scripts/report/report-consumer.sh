@@ -3,6 +3,16 @@ set -euo pipefail
 
 ROLE=""
 REPORT=""
+
+report_bundle_suffixes() {
+  printf '%s\n' '' .sha256 .input.attestation .provenance.json
+}
+
+if [[ "${1:-}" == "--bundle-suffixes" ]]; then
+  report_bundle_suffixes
+  exit 0
+fi
+
 while [[ $# -gt 0 ]]; do
   case "$1" in
     --role) ROLE="$2"; shift 2 ;;
@@ -30,13 +40,13 @@ trap 'exit 130' INT
 trap 'exit 143' TERM
 
 SNAPSHOT_REPORT="$SNAPSHOT_ROOT/$(basename "$REPORT")"
-for suffix in '' .sha256 .input.attestation .provenance.json; do
+while IFS= read -r suffix; do
   [[ -f "${REPORT}${suffix}" ]] || {
     echo "report-consumer: raw Lean report bundle is incomplete at ${REPORT}${suffix}; run make lean-report first" >&2
     exit 2
   }
   cp "${REPORT}${suffix}" "${SNAPSHOT_REPORT}${suffix}"
-done
+done < <(report_bundle_suffixes)
 "$INPUT_VERIFIER" verify --repository "$ROOT" --report "$SNAPSHOT_REPORT"
 set +e
 "$SUPERVISOR" --role "$ROLE" -- env STRATALINT_LEAN_REPORT="$SNAPSHOT_REPORT" "$@"

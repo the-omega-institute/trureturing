@@ -99,7 +99,7 @@ public sealed class MakeTestExecutionClosureTests
     }
 
     [Fact]
-    public void ClosureRejectsConditionalOrShortCircuitRecipeAsARedFixture()
+    public void LexicalGuardRejectsConditionalOrShortCircuitRecipeAsAWordBoundaryRedFixture()
     {
         var coverage = MakeTestExecutionClosure.Inspect(
             ThreeXunitProjects(),
@@ -117,6 +117,29 @@ public sealed class MakeTestExecutionClosureTests
         Assert.False(coverage.IsComplete);
         var finding = Assert.Single(coverage.IncompleteInvocations);
         Assert.Contains("conditional/short-circuit shell control flow", finding, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void ClosureRejectsConditionalRecipeThatOmitsAProjectAsAClosureViolationRedFixture()
+    {
+        var coverage = MakeTestExecutionClosure.Inspect(
+            ThreeXunitProjects(),
+            [Solution("Tests.sln", "One/One.csproj", "Two/Two.csproj", "Three/Three.csproj")],
+            string.Join('\n',
+                "test:",
+                "\t@dotnet test Tests.sln --configuration Release",
+                "test-harness:",
+                "\t@dotnet test Tests.sln --configuration Release",
+                "test-all:",
+                "\t@if [ -n \"$$FAST\" ]; then dotnet test One/One.csproj; fi",
+                string.Empty),
+            Workflow("make -C candidate test-all"));
+
+        Assert.False(coverage.IsComplete);
+        Assert.Equal(["Three/Three.csproj", "Two/Two.csproj"], coverage.MissingProjects);
+        var finding = Assert.Single(coverage.IncompleteInvocations);
+        Assert.Contains("project closure cannot prove the conditional target covers the full test set", finding, StringComparison.Ordinal);
+        Assert.DoesNotContain("conditional/short-circuit shell control flow", finding, StringComparison.Ordinal);
     }
 
     private static RepositoryBuildFile[] ThreeXunitProjects() =>
@@ -299,6 +322,15 @@ internal static class MakeTestExecutionClosure
 
         if (ConditionalShellControlFlow.IsMatch(makeTarget.Recipe))
         {
+            if (makeTarget.Recipe.Contains(".csproj", StringComparison.Ordinal)
+                && !makeTarget.Recipe.Contains(".sln", StringComparison.Ordinal))
+            {
+                foreach (Match invocation in DotnetTestInvocation.Matches(makeTarget.Recipe))
+                    InspectDotnetTest(invocation.Value, projects, solutions, executed, incomplete);
+                incomplete.Add(
+                    $"project closure cannot prove the conditional target covers the full test set: {makeTarget.Recipe.Trim()}");
+                return;
+            }
             incomplete.Add(
                 $"make target '{target}' uses conditional/short-circuit shell control flow; project closure cannot prove both branches execute");
             return;
@@ -348,6 +380,12 @@ internal static class MakeTestExecutionClosure
             || token.EndsWith(".csproj", StringComparison.OrdinalIgnoreCase));
         if (input is null)
         {
+            if (invocation.Contains('$', StringComparison.Ordinal))
+            {
+                incomplete.Add(
+                    $"project closure cannot prove the conditional target covers the full test set: {invocation.Trim()}");
+                return;
+            }
             incomplete.Add($"dotnet test has no explicit solution or project: {invocation.Trim()}");
             return;
         }

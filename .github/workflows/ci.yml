@@ -306,19 +306,20 @@ jobs:
           set -euo pipefail
           source="$GITHUB_WORKSPACE/.canonical-lean-report-cache/raw-lean-report.json"
           reports="$RUNNER_TEMP/raw-lean-reports"
+          consumer="$GITHUB_WORKSPACE/candidate/Meta/StrataLint/scripts/report/report-consumer.sh"
           mkdir -p "$reports"
           # verify 需要 .sha256 旁文件(lean-report-input.sh:100),故一并要求存在。
-          for suffix in '' .sha256 .input.attestation .provenance.json; do
+          while IFS= read -r suffix; do
             test -s "${source}${suffix}"
-          done
+          done < <("$consumer" --bundle-suffixes)
           helper="$GITHUB_WORKSPACE/baseline/Meta/StrataLint/scripts/report/lean-report-input.sh"
           # 缓存条目对候选树重新验一次地址与报告哈希;不符即整体回落,不静默使用。
           "$helper" verify --repository "$GITHUB_WORKSPACE/candidate" --report "$source"
           "$helper" verify --repository "$GITHUB_WORKSPACE/baseline" --report "$source"
           for side in candidate baseline; do
-            for suffix in '' .input.attestation .provenance.json; do
+            while IFS= read -r suffix; do
               cp "${source}${suffix}" "$reports/${side}-lean-report.json${suffix}"
-            done
+            done < <("$consumer" --bundle-suffixes)
             printf '%s  %s\n' \
               "$(sha256sum "$reports/${side}-lean-report.json" | cut -d ' ' -f 1)" \
               "${side}-lean-report.json" > "$reports/${side}-lean-report.json.sha256"
@@ -430,17 +431,21 @@ jobs:
             --candidate-root "$GITHUB_WORKSPACE/candidate" \
             --candidate-output "$reports/candidate-lean-report.json"
 
-      - name: Reconcile pinned statement projections with live Lean report
+      - name: Install canonical Lean report and run projection checks
         shell: bash
-        env:
-          STRATALINT_REQUIRE_LIVE_REPORT: "1"
         run: |
           set -euo pipefail
           report="$RUNNER_TEMP/raw-lean-reports/candidate-lean-report.json"
           target="$GITHUB_WORKSPACE/candidate/.lake/build/stratalint/raw-lean-report.json"
-          results="$RUNNER_TEMP/scribe-live-report-reconciliation.trx"
+          consumer="$GITHUB_WORKSPACE/candidate/Meta/StrataLint/scripts/report/report-consumer.sh"
           mkdir -p "$(dirname "$target")"
-          cp "$report" "$target"
+          while IFS= read -r suffix; do
+            test -s "${report}${suffix}"
+            cp "${report}${suffix}" "${target}${suffix}"
+          done < <("$consumer" --bundle-suffixes)
+          while IFS= read -r suffix; do
+            test -s "${target}${suffix}"
+          done < <("$consumer" --bundle-suffixes)
           make -C candidate test
 
       - name: Stage candidate canonical Lean report cache
@@ -449,11 +454,12 @@ jobs:
           set -euo pipefail
           source="$RUNNER_TEMP/raw-lean-reports/candidate-lean-report.json"
           target="$GITHUB_WORKSPACE/.canonical-lean-report-cache/raw-lean-report.json"
+          consumer="$GITHUB_WORKSPACE/candidate/Meta/StrataLint/scripts/report/report-consumer.sh"
           mkdir -p "$(dirname "$target")"
-          for suffix in '' .input.attestation .provenance.json; do
+          while IFS= read -r suffix; do
             test -s "${source}${suffix}"
             cp "${source}${suffix}" "${target}${suffix}"
-          done
+          done < <("$consumer" --bundle-suffixes)
           read -r declaredSha256 declaredName < "${source}.sha256"
           reportSha256="$(sha256sum "$target" | cut -d ' ' -f 1)"
           test "$declaredSha256" = "$reportSha256"

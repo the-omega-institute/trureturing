@@ -19,7 +19,7 @@ test-harness:
 	@dotnet test Meta/StrataLint/StrataLint.sln --configuration Release --verbosity normal
 
 test-all:
-	@set +e; $(MAKE) --no-print-directory test-harness; rc1=$$?; $(MAKE) --no-print-directory test; rc2=$$?; set -e; exit $$((rc1 | rc2))
+	@set +e; $(MAKE) --no-print-directory test-harness; rc1=$$?; $(MAKE) --no-print-directory test; rc2=$$?; set -e; printf '%s\n' "test-all: test-harness=$$rc1 test=$$rc2"; infra=0; for code in 124 126 127 129 130 143; do if [ "$$rc1" -eq "$$code" ]; then infra="$$rc1"; break; fi; if [ "$$rc2" -eq "$$code" ]; then infra="$$rc2"; break; fi; done; if [ "$$infra" -ne 0 ]; then exit "$$infra"; fi; if [ "$$rc1" -ne 0 ] || [ "$$rc2" -ne 0 ]; then exit 1; fi; exit 0
 
 lean-cache-ensure:
 	@/bin/bash Meta/StrataLint/scripts/worktree/lean-cache-ensure.sh

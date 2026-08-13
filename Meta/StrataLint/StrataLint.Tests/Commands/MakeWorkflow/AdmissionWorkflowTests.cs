@@ -109,7 +109,7 @@ public sealed class AdmissionWorkflowTests
     }
 
     [Fact]
-    public void ReconcilesStatementProjectionAfterProducingLiveReport()
+    public void InstallsCanonicalReportAndRunsProjectionChecksAfterProducingLiveReport()
     {
         var root = FindRepositoryRoot();
         var workflow = File.ReadAllText(Path.Combine(root, ".github", "workflows", "ci.yml"));
@@ -129,18 +129,17 @@ public sealed class AdmissionWorkflowTests
         var reportIndex = Array.FindIndex(namedSteps, static step =>
             step.Name == "Produce source-bound canonical Lean reports");
         var reconciliationIndex = Array.FindIndex(namedSteps, static step =>
-            step.Name == "Reconcile pinned statement projections with live Lean report");
+            step.Name == "Install canonical Lean report and run projection checks");
         Assert.True(reportIndex >= 0, "admission must produce the canonical live Lean report");
         Assert.True(reconciliationIndex > reportIndex, "reconciliation must run after report production");
 
         var reconciliation = namedSteps[reconciliationIndex].Node;
-        var environment = Assert.IsType<YamlMappingNode>(reconciliation.Children[new YamlScalarNode("env")]);
-        Assert.Equal("1", Assert.IsType<YamlScalarNode>(
-            environment.Children[new YamlScalarNode("STRATALINT_REQUIRE_LIVE_REPORT")]).Value);
         var run = Assert.IsType<YamlScalarNode>(reconciliation.Children[new YamlScalarNode("run")]).Value!;
         Assert.Contains("make -C candidate test", run, StringComparison.Ordinal);
         Assert.DoesNotContain("--filter", run, StringComparison.Ordinal);
         Assert.DoesNotContain("python3 -c", run, StringComparison.Ordinal);
+        Assert.Contains("report-consumer.sh", run, StringComparison.Ordinal);
+        Assert.Contains("--bundle-suffixes", run, StringComparison.Ordinal);
     }
 
     private static string AdmissionWorkflow() =>

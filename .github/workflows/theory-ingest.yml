@@ -137,16 +137,17 @@ jobs:
           set -euo pipefail
           source="$GITHUB_WORKSPACE/.canonical-lean-report-cache/raw-lean-report.json"
           report="$GITHUB_WORKSPACE/candidate/.lake/build/stratalint/raw-lean-report.json"
+          consumer="$GITHUB_WORKSPACE/candidate/Meta/StrataLint/scripts/report/report-consumer.sh"
           if [[ "${{ steps.lean-report-cache.outputs.cache-hit }}" == "true" ]]; then
             mkdir -p "$(dirname "$report")"
-            for suffix in '' .sha256 .input.attestation .provenance.json; do
+            while IFS= read -r suffix; do
               test -s "${source}${suffix}"
               cp "${source}${suffix}" "${report}${suffix}"
-            done
+            done < <("$consumer" --bundle-suffixes)
           fi
-          for suffix in '' .sha256 .input.attestation .provenance.json; do
+          while IFS= read -r suffix; do
             test -s "${report}${suffix}"
-          done
+          done < <("$consumer" --bundle-suffixes)
           "$GITHUB_WORKSPACE/candidate/Meta/StrataLint/scripts/report/lean-report-input.sh" verify \
             --repository "$GITHUB_WORKSPACE/candidate" \
             --report "$report"
