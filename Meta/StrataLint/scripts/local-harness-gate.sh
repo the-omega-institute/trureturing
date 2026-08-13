@@ -44,9 +44,7 @@ LOCAL_TIMING_FILE="$TMP_ROOT/local-gate-timing.jsonl"
 SHARED_TIMING_FILE="$TMP_ROOT/shared-gate-timing.jsonl"
 PERF_TMP="$(perf_make_spool_dir "$CANDIDATE_ROOT" stratalint-local-gate-perf 2>/dev/null || true)"
 PERF_EVENT_SPOOL=""
-JUDGE_ROOT=""
 BASE_SHA=""
-CREATED_JUDGE=0
 : > "$LOCAL_TIMING_FILE"
 if [[ -n "$PERF_TMP" ]]; then
   PERF_EVENT_SPOOL="$PERF_TMP/events.jsonl"
@@ -94,9 +92,6 @@ run_stage() {
 }
 
 cleanup() {
-  if [[ "$CREATED_JUDGE" == "1" && -n "$JUDGE_ROOT" ]]; then
-    git -C "$CANDIDATE_ROOT" worktree remove --force "$JUDGE_ROOT" >/dev/null 2>&1 || true
-  fi
   rm -rf -- "$TMP_ROOT"
   if [[ -n "$PERF_TMP" ]]; then rm -rf -- "$PERF_TMP"; fi
 }
@@ -138,14 +133,9 @@ trap 'exit 129' HUP
 trap 'exit 130' INT
 trap 'exit 143' TERM
 
-prepare_judge() {
+prepare_base() {
   if [[ ! "$BASE_REF" =~ ^[0-9a-fA-F]{40}$ ]]; then
     OBSERVED_BASE_REF="$BASE_REF"
-  fi
-  local remote="${BASE_REF%%/*}"
-  if [[ "$remote" != "$BASE_REF" ]] \
-    && git -C "$CANDIDATE_ROOT" remote | grep -Fxq "$remote"; then
-    git -C "$CANDIDATE_ROOT" fetch --prune "$remote"
   fi
   BASE_SHA="$(git -C "$CANDIDATE_ROOT" rev-parse --verify "${BASE_REF}^{commit}")"
   local candidate_sha
@@ -156,56 +146,10 @@ prepare_judge() {
     return 1
   fi
 
-  local current_path=""
-  local current_head=""
-  local current_branch=""
-  while IFS= read -r -d '' field; do
-    case "$field" in
-      worktree\ *) current_path="${field#worktree }" ;;
-      HEAD\ *) current_head="${field#HEAD }" ;;
-      branch\ *) current_branch="${field#branch }" ;;
-      "")
-        if [[ -z "$JUDGE_ROOT" \
-          && "$current_head" == "$BASE_SHA" \
-          && "$current_branch" == "refs/heads/dev" \
-          && -d "$current_path" ]] \
-          && git -C "$current_path" diff --quiet \
-          && git -C "$current_path" diff --cached --quiet; then
-          JUDGE_ROOT="$current_path"
-        fi
-        current_path=""
-        current_head=""
-        current_branch=""
-        ;;
-    esac
-  done < <(git -C "$CANDIDATE_ROOT" worktree list --porcelain -z)
-
-  if [[ -z "$JUDGE_ROOT" ]]; then
-    JUDGE_ROOT="$TMP_ROOT/dev-judge"
-    git -C "$CANDIDATE_ROOT" worktree add --detach "$JUDGE_ROOT" "$BASE_SHA"
-    CREATED_JUDGE=1
-    # Warm the freshly-created judge worktree's Lean build cache from the candidate so
-    # the baseline report build is INCREMENTAL (rebuild only the base-vs-candidate diffs)
-    # instead of a COLD full compile of the whole D5 project. Measured on this repo: a
-    # cold baseline build takes ~2h and starves the devloop implement codex (it burns its
-    # whole timeout at the `make preflight` finish gate with "no baseline output"), while a
-    # warm build is ~8s. lake is content-addressed, so a warmed `.lake` yields byte-identical
-    # oleans for unchanged sources and rebuilds exactly the changed ones — the baseline report
-    # is the same, only fast. Prefer an APFS clone (near-instant, space-shared) and fall back
-    # to a plain copy; never fail the gate on a copy error (that just falls back to the cold
-    # build). Only the newly-created judge is warmed; a reused existing worktree is untouched.
-    if [[ -d "$CANDIDATE_ROOT/.lake" && ! -e "$JUDGE_ROOT/.lake" ]]; then
-      cp -cR "$CANDIDATE_ROOT/.lake" "$JUDGE_ROOT/.lake" 2>/dev/null \
-        || cp -R "$CANDIDATE_ROOT/.lake" "$JUDGE_ROOT/.lake" 2>/dev/null \
-        || true
-    fi
-  fi
-
-  printf '[local-gate] candidate=%s judge=%s base=%s\n' \
-    "$CANDIDATE_ROOT" "$JUDGE_ROOT" "$BASE_SHA" >&2
+  printf '[local-gate] candidate=%s base=%s\n' "$CANDIDATE_ROOT" "$BASE_SHA" >&2
 }
 
-run_stage setup prepare_judge
+run_stage setup prepare_base
 
 if [[ "$SKIP_ENGINEERING" == "1" ]]; then
   record_timing local engineering-dotnet skipped 0
@@ -222,19 +166,14 @@ LAKE_BIN="${LAKE_BIN:-$(command -v lake || true)}"
   || { echo "local-harness-gate: an absolute lake executable is required" >&2; exit 2; }
 REPORTS="$TMP_ROOT/reports"
 mkdir -p "$REPORTS"
-PRODUCER="$JUDGE_ROOT/Meta/StrataLint/lean-inspector/inspect.sh"
+PRODUCER="$CANDIDATE_ROOT/Meta/StrataLint/lean-inspector/inspect.sh"
 [[ -x "$PRODUCER" ]] \
   || { echo "local-harness-gate: dev Lean producer is absent" >&2; exit 2; }
 PAIR_PRODUCER="$CANDIDATE_ROOT/Meta/StrataLint/scripts/lean-report-pair.sh"
 [[ -x "$PAIR_PRODUCER" ]] \
   || { echo "local-harness-gate: candidate Lean report pair helper is absent" >&2; exit 2; }
 
-# User-private content-addressed report cache. Turns the unchanging base-tree
-# (redrive) report into a cache hit so it skips the serialized global Lean slot.
-# The base MUST be user-private (not a predictable world-writable /tmp path):
-# the pair helper only trusts a root it owns and that is not group/other-writable,
-# because re-verification anchors public tree inputs, not a secret. Local-only:
-# CI never runs this gate and the pair helper ignores the env when unset.
+# User-private content-addressed report cache for local producer runs.
 export STRATALINT_REPORT_CACHE_ROOT="${STRATALINT_REPORT_CACHE_ROOT:-${XDG_CACHE_HOME:-$HOME/.cache}/stratalint-lean-report-cache}"
 
 CANDIDATE_REPORT="$CANDIDATE_ROOT/.lake/build/stratalint/raw-lean-report.json"
@@ -244,18 +183,15 @@ run_stage lean-reports \
   --lake-bin "$LAKE_BIN" \
   --candidate-root "$CANDIDATE_ROOT" \
   --candidate-output "$CANDIDATE_REPORT" \
-  --baseline-root "$JUDGE_ROOT" \
-  --baseline-output "$REPORTS/baseline-lean-report.json"
-GATE="$JUDGE_ROOT/.github/scripts/harness-gate.sh"
+  --single
+GATE="$CANDIDATE_ROOT/.github/scripts/harness-gate.sh"
 [[ -x "$GATE" ]] || { echo "local-harness-gate: dev gate is absent" >&2; exit 2; }
 admission_started="$(date +%s)"
 set +e
-STRATALINT_TIMING="$SHARED_TIMING_FILE" "$GATE" \
+  STRATALINT_TIMING="$SHARED_TIMING_FILE" "$GATE" \
   --candidate "$CANDIDATE_ROOT" \
-  --judge-root "$JUDGE_ROOT" \
   --base "$BASE_SHA" \
-  --candidate-lean-report "$CANDIDATE_REPORT" \
-  --baseline-lean-report "$REPORTS/baseline-lean-report.json"
+  --candidate-lean-report "$CANDIDATE_REPORT"
 gate_rc=$?
 set -e
 if [[ -s "$SHARED_TIMING_FILE" ]]; then

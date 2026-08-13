@@ -58,7 +58,7 @@ gh_create() {
 }
 
 pr_open_main() {
-  local head="" title="" body_file="" url number state
+  local head="" title="" body_file="" url number
   while [[ $# -gt 0 ]]; do
     case "$1" in
       --head) [[ $# -ge 2 ]] || { receipt "usage: pr.sh open --head HEAD --title TITLE [--body-file FILE]"; return 2; }; head="$2"; shift 2 ;;
@@ -86,57 +86,10 @@ pr_open_main() {
     return 1
   fi
   gh_local auto-merge pr merge "$number" --repo "$PR_REPO" --auto --merge || return $?
-  gh_local merge-state pr view "$number" --repo "$PR_REPO" \
-    --json mergeStateStatus --jq '.mergeStateStatus' || return $?
-  state="$BOUNDED_OUTPUT"
-  if [[ "$state" == BEHIND ]]; then
-    gh_local update-branch api -X PUT "repos/$PR_REPO/pulls/$number/update-branch" || return $?
-  fi
   printf '%s\n' "$number"
 }
 
-update_usage() { receipt "usage: pr.sh update [--pr N]"; }
-
-update_one() {
-  local number="$1"
-  if ! gh_local update-branch api -X PUT "repos/$PR_REPO/pulls/$number/update-branch"; then
-    receipt "pr.sh update: PR #$number update-branch failed"
-    return 1
-  fi
-}
-
-pr_update_main() {
-  local requested="" rows="" number state updated=0 failed=0
-  if [[ $# -gt 0 ]]; then
-    [[ $# -eq 2 && "$1" == --pr && "${2:-}" =~ ^[1-9][0-9]*$ ]] || { update_usage; return 2; }
-    requested="$2"
-  fi
-  if [[ -n "$requested" ]]; then
-    gh_local pr-view pr view "$requested" --repo "$PR_REPO" \
-      --json mergeStateStatus,autoMergeRequest \
-      --jq 'select(.autoMergeRequest != null) | .mergeStateStatus' || return $?
-    state="$BOUNDED_OUTPUT"
-    if [[ "$state" == BEHIND ]]; then update_one "$requested" || return $?; updated=1; fi
-  else
-    gh_local pr-list pr list --repo "$PR_REPO" --state open --limit 1000 \
-      --json number,mergeStateStatus,autoMergeRequest \
-      --jq '.[] | select(.autoMergeRequest != null) | [.number,.mergeStateStatus] | @tsv' || return $?
-    rows="$BOUNDED_OUTPUT"
-    while IFS=$'\t' read -r number state; do
-      [[ -n "$number" ]] || continue
-      if [[ "$state" == BEHIND ]]; then
-        if update_one "$number"; then updated=$((updated + 1)); else failed=1; fi
-      fi
-    done <<< "$rows"
-  fi
-  if [[ "$updated" -eq 0 ]]; then receipt "pr.sh update: none"; fi
-  return "$failed"
-}
-
-# One door, two verbs: SL-003 caps this directory at 12 files, and the two flows already
-# shared the bounded-runner and the repository address, so they are one tool.
 case "${1:-}" in
   open) shift; pr_open_main "$@" ;;
-  update) shift; pr_update_main "$@" ;;
-  *) receipt "usage: pr.sh open --head HEAD --title TITLE [--body-file FILE] | pr.sh update [--pr N]"; exit 2 ;;
+  *) receipt "usage: pr.sh open --head HEAD --title TITLE [--body-file FILE]"; exit 2 ;;
 esac
