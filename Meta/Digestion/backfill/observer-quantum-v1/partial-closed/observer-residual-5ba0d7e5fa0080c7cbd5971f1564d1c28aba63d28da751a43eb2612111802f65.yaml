@@ -17,7 +17,6 @@ receipts:
   coverage: []
   scribe: []
   unresolved_subitems:
-    - connes-metric-d-L-orbit-distance
     - streamline-infinity-at-nonintegral-fiber-offset
     - center-type-infinity-across-visible-phase
     - rieffel-metric-bundle-over-torus
