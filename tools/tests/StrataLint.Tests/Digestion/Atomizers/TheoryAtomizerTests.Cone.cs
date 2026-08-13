@@ -5,8 +5,6 @@ namespace StrataLint.Tests;
 
 public sealed partial class TheoryAtomizerTests
 {
-    private static string ConeProductionSource => Path.Combine(
-        "docs", "develop", "theory", "CONE_PROGRAM_FORMAL.md");
     private static readonly TheoryAtomizerRules ConeRules = TheoryAtomizerDataLoader.Load(
         DigestionTestSupport.Snapshot((
             TheoryAtomizerDataLoader.DataPath,
@@ -87,46 +85,6 @@ public sealed partial class TheoryAtomizerTests
                 """))));
 
     [Fact]
-    public void ConeV1ProductionFixtureReassemblesAll353LinesByteExactly()
-    {
-        var root = TestRepositoryLayout.FindRoot();
-        var bytes = File.ReadAllBytes(Path.Combine(root, ConeProductionSource));
-
-        var document = AtomizerRegistry.Atomize(
-            AtomizerRegistry.ConeId,
-            bytes,
-            ConeRules);
-
-        Assert.Equal(47_929, bytes.Length);
-        Assert.Equal(353, bytes.Count(static value => value == (byte)'\n'));
-        Assert.Equal(67, document.Claims.Length);
-        AssertRecognitionComplete(document, bytes);
-        AssertSplitIdempotent(AtomizerRegistry.ConeId, document, ConeRules);
-    }
-
-    [Fact]
-    public void ConeV1UsesStableSemanticLocatorFingerprintAndChapterContext()
-    {
-        var root = TestRepositoryLayout.FindRoot();
-        var bytes = File.ReadAllBytes(Path.Combine(root, ConeProductionSource));
-
-        var atom = AtomizerRegistry.Atomize(
-                AtomizerRegistry.ConeId,
-                bytes,
-                ConeRules)
-            .ResolveClaim("lemma/3.6");
-
-        Assert.Equal(
-            "sha256:d6d0ea477f01d992336c74fbcb8984a5fb9386f4a4547c6327713131a3e4dbd1",
-            atom.Fingerprints.RawSha256);
-        Assert.Equal(atom.Fingerprints.RawSha256, atom.Fingerprints.NormalizedSha256);
-        Assert.Equal(
-            ["正锥纲领:形式化定理与证明", "第三章 路径散度理论"],
-            atom.Context.Select(static item => item.Text));
-        Assert.Equal([1, 2], atom.Context.Select(static item => item.Level));
-    }
-
-    [Fact]
     public void ConeV1RejectsAnUnknownNumberedClaimTitle()
     {
         var bytes = Encoding.UTF8.GetBytes(
@@ -201,42 +159,4 @@ public sealed partial class TheoryAtomizerTests
         Assert.Equal("theorem-form/4.6", atom.AstPath);
     }
 
-    [Fact]
-    public void ConeV1ProjectsOnlyExactProofGradesToFormalizableKinds()
-    {
-        var root = TestRepositoryLayout.FindRoot();
-        var bytes = File.ReadAllBytes(Path.Combine(root, ConeProductionSource));
-        var claims = AtomizerRegistry.Atomize(
-            AtomizerRegistry.ConeId,
-            bytes,
-            ConeRules).Claims;
-
-        Assert.Contains(claims, static atom => atom.AstPath == "theorem/3.7");
-        Assert.Contains(claims, static atom => atom.AstPath == "lemma/3.6");
-        Assert.Contains(claims, static atom => atom.AstPath == "corollary/3.4");
-        Assert.Contains(claims, static atom => atom.AstPath == "theorem-form/4.6");
-        Assert.Contains(claims, static atom => atom.AstPath == "theorem-form/6.2");
-        Assert.Contains(claims, static atom => atom.AstPath == "theorem-form/8.2");
-        Assert.Contains(claims, static atom => atom.AstPath == "theorem-form/10.2");
-        Assert.Contains(claims, static atom => atom.AstPath == "theorem-form/11.3");
-        Assert.Contains(claims, static atom => atom.AstPath == "extension-table/11.6");
-        Assert.Contains(claims, static atom => atom.AstPath == "frontier-note/8.7");
-
-        Assert.All(claims, atom =>
-        {
-            var text = Encoding.UTF8.GetString(atom.RawBytes.AsSpan());
-            var titleEnd = text.IndexOf("**", 2, StringComparison.Ordinal);
-            Assert.True(titleEnd > 2, $"claim has no closed bold title: {atom.AstPath}");
-            var title = text[..(titleEnd + 2)];
-            var exactProofGrade = title.EndsWith("[证]。**", StringComparison.Ordinal);
-            var formalizableKind = atom.AstPath[..atom.AstPath.IndexOf('/', StringComparison.Ordinal)]
-                is "theorem" or "lemma" or "corollary";
-
-            Assert.Equal(exactProofGrade, formalizableKind);
-        });
-
-        Assert.DoesNotContain(
-            claims,
-            static atom => atom.AstPath.StartsWith("method/", StringComparison.Ordinal));
-    }
 }

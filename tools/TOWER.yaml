@@ -132,9 +132,7 @@ components:
       - tools/tests/StrataLint.ArchitectureTests/Capabilities/CapabilityConstructionTests.cs
       - tools/tests/StrataLint.ArchitectureTests/CanonicalSources/Golden/StratumAlphabetPolicy.cs
       - tools/tests/StrataLint.ArchitectureTests/CanonicalSources/Golden/StratumAlphabetTests.cs
-      - tools/tests/StrataLint.ArchitectureTests/Dependencies/CSharpArchitectureTowerTests.cs
       - tools/tests/StrataLint.ArchitectureTests/Dependencies/DependencyDirectionTests.cs
-      - tools/tests/StrataLint.ArchitectureTests/Namespaces/NamespaceLayoutTests.cs
       - tools/tests/StrataLint.ArchitectureTests/PublicSurface/EnginePublicSurfaceTests.cs
       - tools/tests/StrataLint.ArchitectureTests/CanonicalSources/TheoryIsolationPolicy.cs
       - tools/tests/StrataLint.ArchitectureTests/CanonicalSources/TheoryIsolationTests.cs

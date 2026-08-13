@@ -62,6 +62,29 @@ public static class DocumentDefinitions
             () => DiscoverCore(assembly));
     }
 
+    internal static string[] CheckRepositorySourceBijection(
+        IEnumerable<string> filesystemSources,
+        IEnumerable<DocumentDefinition> definitions)
+    {
+        ArgumentNullException.ThrowIfNull(filesystemSources);
+        ArgumentNullException.ThrowIfNull(definitions);
+        var actual = filesystemSources
+            .Select(static path => path.Replace('\\', '/'))
+            .ToHashSet(StringComparer.Ordinal);
+        var registered = definitions
+            .Select(static definition => ScribeEmissionAttestation.DefinitionPath(
+                definition.Document.Header.Gid.Value))
+            .ToHashSet(StringComparer.Ordinal);
+        return actual
+            .Except(registered, StringComparer.Ordinal)
+            .Select(static path => $"unregistered Scribe source: {path}")
+            .Concat(registered
+                .Except(actual, StringComparer.Ordinal)
+                .Select(static path => $"registered Scribe source is missing: {path}"))
+            .Order(StringComparer.Ordinal)
+            .ToArray();
+    }
+
     private static ImmutableArray<DocumentDefinition> DiscoverCore(Assembly assembly)
     {
         var definitions = assembly.GetTypes()

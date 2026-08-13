@@ -537,27 +537,6 @@ public sealed class EmissionTests
         Assert.Contains("emit|emit-values|filemap [--check]", error.ToString(), StringComparison.Ordinal);
     }
 
-    [Fact]
-    public void EveryBlueprintMarkdownHasExactlyOneDiscoveredScribeDefinition()
-    {
-        var repository = RepositoryAccessor.Discover(RepositoryRootCriterion.GlobalJsonAndBlueprintInvalidOperation);
-        var markdownPaths = repository
-            .EnumerateFiles(RepositoryRelativePath.Create("Blueprint"), "*.md")
-            .Select(static path => path.Value)
-            .Order(StringComparer.Ordinal)
-            .ToArray();
-        var definitionPaths = DocumentDefinitions.All
-            .Select(static definition => definition.RelativePath.Value)
-            .Order(StringComparer.Ordinal)
-            .ToArray();
-
-        Assert.Equal(markdownPaths, definitionPaths);
-        Assert.All(markdownPaths, path => Assert.True(
-            repository.FileExists(RepositoryRelativePath.Create(
-                path[..^".md".Length] + ".scribe.cs")),
-            $"missing Scribe definition for {path}"));
-    }
-
     private const string CandidateOnlyGid = "D5/S9/Candidate/PrimeFactorization";
 
     private static string Sha256(byte[] bytes) =>

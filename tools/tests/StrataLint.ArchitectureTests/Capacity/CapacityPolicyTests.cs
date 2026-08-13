@@ -4,25 +4,6 @@ namespace StrataLint.ArchitectureTests;
 
 public sealed class CapacityPolicyTests
 {
-    // GREEN: SL-003's admission rule owns the per-change line and touched-directory
-    // limits. This test keeps the separate full-repository tolerance net for buckets
-    // that can overflow only after concurrent changes are combined.
-    [Fact]
-    public void RepositoryDirectoriesStayWithinCapacityTolerance()
-    {
-        var findings = CapacityPolicy.InspectRepository(RepositoryLayout.FindRoot())
-            .Where(static finding => finding.Message.StartsWith("directory contains", StringComparison.Ordinal))
-            .ToArray();
-
-        Assert.True(
-            findings.Length == 0,
-            "SL-003 repository directory tolerance violations (split the bucket):"
-                + Environment.NewLine
-                + string.Join(
-                    Environment.NewLine,
-                    findings.Select(static finding => $"{finding.Path}: {finding.Message}")));
-    }
-
     // RED: an artifact one line past the hard limit must be flagged.
     [Fact]
     public void OversizeArtifactIsRejectedByRedFixture()

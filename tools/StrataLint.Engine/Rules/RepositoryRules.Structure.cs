@@ -146,7 +146,15 @@ internal static partial class RepositoryRules
             .Select(static path => DirectoryOf(path.Value))
             .ToHashSet(StringComparer.Ordinal);
         findings.AddRange(directories
-            .Where(item => item.Value > DirectoryFileLimit && touched.Contains(item.Key))
+            .Where(static item => item.Value > DirectoryToleranceLimit)
+            .Select(static item => new RuleFinding(
+                item.Key,
+                $"directory contains {item.Value} files (repository tolerance "
+                + $"{DirectoryToleranceLimit}; split per CLAUDE.md 8)")));
+        findings.AddRange(directories
+            .Where(item => item.Value > DirectoryFileLimit
+                && item.Value <= DirectoryToleranceLimit
+                && touched.Contains(item.Key))
             .Select(static item => new RuleFinding(
                 item.Key,
                 $"directory contains {item.Value} files (admission limit "
