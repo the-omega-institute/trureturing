@@ -55,7 +55,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          helper="$GITHUB_WORKSPACE/candidate/Meta/StrataLint/scripts/report/lean-report-input.sh"
+          helper="$GITHUB_WORKSPACE/candidate/tools/scripts/report/lean-report-input.sh"
           test -x "$helper"
           read -r address _ <<< "$("$helper" address --repository "$GITHUB_WORKSPACE/candidate")"
           [[ "$address" =~ ^[0-9a-f]{64}$ ]]
@@ -132,7 +132,7 @@ jobs:
           for suffix in '' .sha256 .input.attestation .provenance.json; do
             test -s "${report}${suffix}"
           done
-          "$GITHUB_WORKSPACE/candidate/Meta/StrataLint/scripts/report/lean-report-input.sh" verify \
+          "$GITHUB_WORKSPACE/candidate/tools/scripts/report/lean-report-input.sh" verify \
             --repository "$GITHUB_WORKSPACE/candidate" \
             --report "$report"
           printf '%s\n' \
@@ -150,5 +150,5 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          "$GITHUB_WORKSPACE/candidate/Meta/StrataLint/scripts/workflow/theory-ingest-closure.sh" \
+          "$GITHUB_WORKSPACE/candidate/tools/scripts/workflow/theory-ingest-closure.sh" \
             "$GITHUB_WORKSPACE/candidate"
