@@ -4,6 +4,7 @@ fingerprints:
   normalized_sha256: sha256:227d06253ab1ea9dc06f8121378fb433b01737466585e507f09608027a2b61ae
 cas_ref: sha256:227d06253ab1ea9dc06f8121378fb433b01737466585e507f09608027a2b61ae
 coverage_gids:
+  - D5/S1/Deficit/DeficitThreeValued.deficit_three_valued
   - D5/S1/Deficit/DeficitInteger.deficit_integer
 receipts:
   coverage:
@@ -17,4 +18,3 @@ receipts:
   unresolved_subitems:
     - triangular-window-45150-pair-scan-certificate
     - exact-deficit-value-distribution
-    - global-absolute-deficit-at-most-one-conjecture
