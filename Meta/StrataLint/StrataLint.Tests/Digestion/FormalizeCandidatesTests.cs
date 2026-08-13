@@ -31,6 +31,25 @@ public sealed class FormalizeCandidatesTests
         Assert.Equal(DigestionAtomStatusMarkerKind.Absent, atom.StatusMarker.Kind);
     }
 
+    [Theory]
+    [InlineData("〔定理·证 + 证书〕")]
+    [InlineData("〔closed·数值(五仪终审)+ 解析证明待办;v3.7 改版〕")]
+    public void FormalizeCandidatesIncludeAtomsWithNonStatusGictAnnotations(string annotation)
+    {
+        var entry = Entry("source", "gict-annotation", "定理", "7.12", status: annotation);
+
+        var result = Run([entry]);
+
+        Assert.True(result.Success, result.Error);
+        using var json = JsonDocument.Parse(result.Output);
+        Assert.Equal(
+            "gict-annotation",
+            Assert.Single(json.RootElement.GetProperty("candidates").EnumerateArray())
+                .GetProperty("atom_id")
+                .GetString());
+        Assert.Empty(json.RootElement.GetProperty("withheld").EnumerateArray());
+    }
+
     [Fact]
     public void FormalizeCandidatesIncludesOnlyAtomizerFormalizableKinds()
     {
