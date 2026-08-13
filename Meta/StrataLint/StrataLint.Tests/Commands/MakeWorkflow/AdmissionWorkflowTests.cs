@@ -110,7 +110,7 @@ public sealed class AdmissionWorkflowTests
         var step = Assert.Single(
             steps.Children.OfType<YamlMappingNode>(),
             node => node.Children.TryGetValue(new YamlScalarNode("id"), out var id)
-                && id is YamlScalarNode { Value: "baseline" });
+                && id is YamlScalarNode { Value: "base" });
         return Assert.IsType<YamlScalarNode>(step.Children[new YamlScalarNode("run")]).Value ?? string.Empty;
     }
 
