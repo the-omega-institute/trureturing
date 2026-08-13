@@ -7,6 +7,36 @@ namespace StrataLint.Tests;
 public sealed class TypeModelTests
 {
     [Theory]
+    [InlineData("Blueprint/Trureturing.Content.csproj")]
+    [InlineData("Blueprint/packages.lock.json")]
+    public void BlueprintContentCompositionBuildFilesAreClosedWorldRegistered(string value)
+    {
+        var path = RepoPath.CreateKnown(value);
+
+        Assert.Null(RepositoryPathPolicy.Validate(path, Policy()));
+        Assert.False(RepositoryPathPolicy.TryResolve(path, out _));
+    }
+
+    [Theory]
+    [InlineData("Blueprint/D5/Foo.csproj")]
+    [InlineData("Blueprint/random.txt")]
+    [InlineData("Blueprint/sub/x.csproj")]
+    public void BlueprintContentCompositionBuildFileNeighborsRemainSl000Blocked(string value)
+    {
+        var path = RepoPath.CreateKnown(value);
+
+        var issue = Assert.IsType<RepositoryPathIssue>(
+            RepositoryPathPolicy.Validate(path, Policy()));
+
+        Assert.Equal("SL-000", issue.RuleId.Value);
+        Assert.Equal(value, issue.Path);
+        Assert.Equal(
+            "noncanonical Blueprint artifact: path is not a canonical semantic artifact",
+            issue.Message);
+        Assert.False(RepositoryPathPolicy.TryResolve(path, out _));
+    }
+
+    [Theory]
     [InlineData("Generated/echo-residuals/source-a.md", true)]
     [InlineData("Generated/echo-residuals/a/b.md", false)]
     [InlineData("Generated/echo-residuals/a.txt", false)]

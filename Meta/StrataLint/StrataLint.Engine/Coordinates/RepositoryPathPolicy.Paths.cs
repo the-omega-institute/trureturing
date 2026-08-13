@@ -166,6 +166,9 @@ internal static partial class RepositoryPathPolicy
             && string.Equals(gid.Path.Value, markdownPath, StringComparison.Ordinal);
     }
 
+    private static bool IsBlueprintContentCompositionBuildFile(string path) =>
+        path is "Blueprint/Trureturing.Content.csproj" or "Blueprint/packages.lock.json";
+
     private static string InferParseFailure(string path, string label)
     {
         var fileName = path[(path.LastIndexOf('/') + 1)..];

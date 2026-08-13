@@ -8,6 +8,24 @@ namespace StrataLint.ArchitectureTests;
 
 public sealed class FileMapPolicyTests
 {
+    [Theory]
+    [InlineData("Blueprint/Trureturing.Content.csproj")]
+    [InlineData("Blueprint/packages.lock.json")]
+    public void FutureBlueprintContentBuildFilesHaveExactProgramClassifications(string value)
+    {
+        var manifest = FileMapLoader.LoadRepository(RepositoryLayout.FindRoot());
+
+        var entry = Assert.Single(manifest.Match(value));
+
+        Assert.Equal(value, entry.Pattern);
+        Assert.Equal(FileMapKind.Program, entry.Kind);
+        Assert.Equal("none", entry.ProducedBy);
+        Assert.Equal("dotnet", Assert.Single(entry.ConsumedBy));
+        Assert.Equal("dotnet-test", Assert.Single(entry.VerifiedBy));
+        Assert.Equal("none", entry.ArtifactId);
+        Assert.Equal("committed-source", entry.RuntimeDisposition);
+    }
+
     [Fact]
     public void RepositoryFilesConformToTheCanonicalFileMap()
     {

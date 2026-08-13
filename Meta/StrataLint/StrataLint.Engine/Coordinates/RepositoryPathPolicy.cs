@@ -87,6 +87,11 @@ internal static partial class RepositoryPathPolicy
             return null;
         }
 
+        if (IsBlueprintContentCompositionBuildFile(value))
+        {
+            return null;
+        }
+
         if (TryDescribeSemanticPath(value, out var gidText, out var label, out var reason))
         {
             if (reason is not null
