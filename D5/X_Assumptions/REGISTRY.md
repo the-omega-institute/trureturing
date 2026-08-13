@@ -4,7 +4,7 @@
 |---|---|---|---|---|
 | Assumptions.ThreeGap | proven | D5/S1/Phase/ThreeDistance.three_gap | user-sshx-D5-T0019 | 2026-08-13 |
 | Assumptions.FourierLaplaceEntire | proven | D5/S3/Fourier/PaleyWiener.fourier_laplace_entire_classic | user-sshx-D5-T0018 | 2026-07-12 |
-| Assumptions.WeilExplicitFormula | active | D5/X_Assumptions/AxiomDebt.weil_explicit_formula_classic | user-sshx-D5-T0018 | 2026-07-14 |
+| Assumptions.WeilExplicitFormula | proven | D5/S3/Weil/ZetaBridge/ClassicExplicitFormula.weil_explicit_formula | user-sshx-D5-T0018 | 2026-07-14 |
 
 `D5-T0019` is discharged by the MIT-licensed upstream formalization ported in
 `D5/S1/Phase/ThreeGap` (Copyright (c) 2026 Dirk Kunert,
@@ -35,13 +35,33 @@ Society Colloquium Publications 19 (1934). The statement fixes the
 angular-frequency kernel `exp(-i*z*x)` and carries only that classical input;
 it does not assume a Weil identity or RH.
 
-`D5-T0018-F` records the classical Weil explicit formula absent from pinned
-mathlib v4.31.0. Source: A. Weil, "Sur les 'formules explicites' de la theorie
-des nombres premiers", *Comm. Sem. Math. Univ. Lund* (M. Riesz volume, 1952),
-252-265. The G-level foundation signature expands every field of the concrete
-`ZeroData`, the smooth/even/compact test conditions, the symmetric cutoff
-convergence, the archimedean integrability condition, and the exact formulas
-for `zeroSum`, `poleTerm`, `primeTerm`, and `archimedeanTerm`. The I-level
-`D5/S3/Weil/WeilIdentity` theorem proves the named specialization in the frozen
-angular-frequency convention. Neither statement asserts positivity, RH, or an
+`D5-T0018-F` is discharged by the hypothesis-free theorem
+`Zeta23.WeilEF.EF_lit_zetaZeroConfig` ported from
+`anthropics/zeta-23-lean` at immutable commit
+`3635e74826a4c1fcece7d1cd2b6fa75e43a00510`. The routed bridge
+`D5/S3/Weil/ZetaBridge/ClassicExplicitFormula.weil_explicit_formula` translates
+the upstream zero subtype, analytic multiplicity, Fourier convention, and
+unconditional `tsum` into this repository's frozen `ZeroData`, symmetric
+cutoff, and pole/prime/archimedean terms. `D5/S3/Weil/WeilIdentity` applies that
+bridge directly and carries no assumption. Source: A. Weil, "Sur les 'formules
+explicites' de la theorie des nombres premiers", *Comm. Sem. Math. Univ. Lund*
+(M. Riesz volume, 1952), 252-265. Neither theorem asserts positivity, RH, or an
 O-6 conclusion.
+
+Adoption form and retirement condition, per spec A17.2. The proof is vendored
+rather than taken as a Lake dependency because the upstream pins
+`leanprover/lean4:v4.33.0-rc2` and mathlib
+`51e6992efd06126df61a496bebf8f49482a4e129`, while this repository pins
+`v4.31.0` and mathlib `fabf563a7c95a166b8d7b6efca11c8b4dc9d911f`; the
+machine comparison therefore rejects the dependency form. The port is
+Apache-2.0, Copyright 2026 Anthropic, PBC; the retained license and NOTICE are
+`D5/S3/Weil/ZetaCore/LICENSE` and `D5/S3/Weil/ZetaCore/NOTICE`. The NOTICE keeps
+the complete derivation chain Zeta23 <- PrimeNumberTheoremAnd <- mathlib, and
+ported files retain their source and modification notices. The port obeys the
+ordinary GID routing, six-line header, import-order, and capacity rules, and
+the bridge theorem's axiom closure contains only `propext`, `Classical.choice`,
+and `Quot.sound`. Retirement condition, stated against this repository's own
+pin so that it can actually fire: delete the vendored Zeta23 modules and bridge,
+then cite the library declaration directly once a mathlib revision this
+repository has upgraded to contains an equivalent hypothesis-free explicit
+formula. It is deliberately not conditioned on upstream acceptance by mathlib.
