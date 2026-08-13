@@ -16,8 +16,7 @@ open D5.S3.Fourier
 
 /-
 D5-T0018-C (discharged): the transform is concrete, and its entire-extension
-proof is now native in `D5/S3/Fourier/PaleyWiener`, no longer a classical
-tail carried by AxiomDebt.lean.
+proof is native in `D5/S3/Fourier/PaleyWiener`; no classical assumption remains.
 -/
 
 /-- A smooth compactly supported Weil test has an entire Fourier-Laplace transform. -/
