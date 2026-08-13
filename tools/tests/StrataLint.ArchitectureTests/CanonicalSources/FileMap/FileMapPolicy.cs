@@ -476,7 +476,10 @@ internal static class FileMapPolicy
                     $"class directory contains {KindName(kind)} content"));
             }
 
+            // 数据居所律(CLAUDE.md 第 6 条)自身豁免「测试项目内部的合成 fixture(装置非
+            // canonical 数据)」,故 tools/tests/ 不入 data-residence 判定。
             if (path.StartsWith("tools/", StringComparison.Ordinal)
+                && !path.StartsWith("tools/tests/", StringComparison.Ordinal)
                 && kind is FileMapKind.Data
                 && !entry.ResidenceViolation)
             {

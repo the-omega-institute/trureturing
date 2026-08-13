@@ -68,11 +68,11 @@ public sealed class ValuesProjectionTests
             reference_value = "{referenceValue}"
             reference_error = "0"
             error = "0"
-            """ + "refs = {}\n" + $"""
+            """ + "\nrefs = {}\n" + $"""
             computation = "{computation}"
             {computationFields}
             """;
-        TemporaryFileSystem.File.WriteAllText(path, text);
+        TemporaryFileSystem.File.WriteAllText(path, text.TrimEnd('\n') + "\n");
         var definition = Assert.Single(ValuesKernelDataLoader.LoadFile(path));
         directory.Delete(recursive: true);
         return definition;
