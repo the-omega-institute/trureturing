@@ -40,9 +40,9 @@ internal sealed class TotalOrbitEvaluatorDocument : IScribeDocumentDefinition
                     Paragraph(Text(
                         "This is an honest partial closure of clause (iii) of the source theorem. "
                         + "The output swap is instantiated by successor, a computable map with no "
-                        + "fixed natural number. Clauses (i) and (ii), concerning predicate "
-                        + "enumeration and binary streams, remain unresolved by this deposit and "
-                        + "the source atom must therefore remain partial and open.")),
+                        + "fixed natural number. By itself this declaration does not prove clauses "
+                        + "(i) and (ii), concerning the explicit Boolean diagonal and failure of a "
+                        + "history-indexed stream enumeration.")),
                     Paragraph(Text(
                         "Pinned Mathlib was searched before proving. Function.cantor_surjective is "
                         + "an exact hit for clause (i). Nat.Partrec.Code.fixed_point and the "
@@ -58,6 +58,14 @@ internal sealed class TotalOrbitEvaluatorDocument : IScribeDocumentDefinition
                         + "recursive function. The library fixed-point theorem supplies a code "
                         + "whose behavior equals that diagonal function. Specializing the equality "
                         + "at zero and rewriting with the evaluator premise forces a natural "
-                        + "number to equal its successor."))),
+                        + "number to equal its successor.")),
+                    Paragraph(Text(
+                        "The complementary hosted declaration "
+                        + "D5.S0.Computability.BooleanStreamDiagonal."
+                        + "boolean_stream_diagonal_exceeds_every_history constructs the source's "
+                        + "Boolean diagonal D(h) = not(P(h,h)), proves that it differs from every "
+                        + "history row, derives non-surjectivity of the stream listing, and gives "
+                        + "the corresponding Boolean evaluator contradiction. The source atom is "
+                        + "fully represented only when coverage receipts bind both declarations."))),
                 DescribeRole.Theorem))));
 }
