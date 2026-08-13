@@ -18,7 +18,6 @@ receipts:
       target_sha256: sha256:520db05df3f4606150d67b80c6b51ac763a71c485b93b0acff8561afa686d853
   scribe: []
   unresolved_subitems:
-    - pythagorean-input-validator-clause
     - pin-angle-formula
     - numerical-double-check-certificate
     - fabricated-input-rejection-certificate
