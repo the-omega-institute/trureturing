@@ -1595,8 +1595,7 @@ p_0\mapsto p_1\mapsto\cdots
 \[
 \delta_{\mathrm{br}}(\tau,\sigma)
 =
-\min\{h:\mathfrak N_h(\tau)
-eq
+\min\{h:\mathfrak N_h(\tau)\neq
 \mathfrak N_h(\sigma)\}.
 \]
 定理 17.6 保证有限非共轭系统的该最小值存在。
@@ -1705,3 +1704,731 @@ E(a,a),
 6. 深度截断逆系与稳定界。
 
 在 proof term 与冻结收据出现以前，本追加部分不得标记为 `Closed`。
+
+---
+
+# 19. 追加：最小确定性观察者完成、Nerode 细化与 Koopman 闭包
+
+前文从两个方向恢复了有限确定性动力学：一方面，带对角代数的线性化 \((\mathcal D_Y,L_\tau)\) 保留每条有向边；另一方面，深度递增的分支码在 projective limit 中恢复完整函数图。本节研究一个更接近有限观察者的问题：给定一个可能过粗的读出
+\[
+q:Y\to O,
+\]
+观察者只看到
+\[
+q(y),\ q(\tau y),\ q(\tau^2y),\ldots,
+\]
+那么需要保留多少有限历史，才能得到一个封闭、确定、自然且最小的有效状态空间？
+
+本节证明：对有限系统，全部无限未来读出所定义的完成必在有限步稳定；稳定商是包含于 \(\ker q\) 的最大 \(\tau\)-同余，也是使扭曲对角自然下降的最小确定性观察者完成。其对偶对象是由初始读出代数在 Koopman 拉回下生成的最小不变交换代数。
+
+设 \(Y\) 为非空有限集合，\(\tau:Y\to Y\)，并将 \(O\) 替换为实际像 \(q(Y)\)，故可假设 \(q:Y\twoheadrightarrow O\)。
+
+## 19.1 有限未来词与分辨关系
+
+对 \(m\ge0\)，定义长度 \(m+1\) 的未来读出词
+\[
+W_m(y)
+=
+\bigl(q(y),q(\tau y),\ldots,q(\tau^m y)\bigr)
+\in O^{m+1}.
+\]
+定义等价关系
+\[
+y\equiv_m y'
+\iff
+W_m(y)=W_m(y').
+\]
+记商类数为
+\[
+c_m=|Y/{\equiv_m}|=|W_m(Y)|.
+\]
+
+### 定理 19.1（有限观察细化与稳定界）
+
+关系族 \((\equiv_m)_{m\ge0}\) 满足：
+
+1. \(\equiv_{m+1}\subseteq\equiv_m\)；
+2. \(c_{m+1}\ge c_m\)；
+3. 存在最小整数 \(m_*\ge0\)，使
+   \[
+   \equiv_{m_*}=\equiv_{m_*+1};
+   \]
+4. 该稳定指标满足
+   \[
+   \boxed{
+   m_*
+   \le
+   c_{m_*}-c_0
+   \le
+   |Y|-|O|.}
+   \]
+
+### 证明
+
+若两个点的长度 \(m+2\) 读出词相同，则其前 \(m+1\) 项相同，所以第一项成立。关系细化只能增加商类数，得到第二项。
+
+商类数是介于 \(|O|=c_0\) 与 \(|Y|\) 之间的非降整数序列，故最终稳定。取第一个满足相邻两项相等的指标为 \(m_*\)。在此之前每一步都严格增加至少一个商类，因此
+\[
+c_{m_*}\ge c_0+m_*.
+\]
+整理即得所述界。\(\square\)
+
+### 定理 19.2（一次稳定即永久稳定）
+
+若
+\[
+\equiv_m=\equiv_{m+1},
+\]
+则 \(\equiv_m\) 对 \(\tau\) 稳定：
+\[
+y\equiv_m y'
+\Longrightarrow
+\tau(y)\equiv_m\tau(y').
+\]
+并且
+\[
+\boxed{
+\equiv_{m+r}=\equiv_m
+\quad\text{对全部 }r\ge0.}
+\]
+
+### 证明
+
+设 \(y\equiv_m y'\)。由于 \(\equiv_m=\equiv_{m+1}\)，还有
+\[
+q(\tau^{m+1}y)=q(\tau^{m+1}y').
+\]
+而原来的 \(m\)-等价已经给出
+\[
+q(\tau^ky)=q(\tau^ky')
+\quad(0\le k\le m).
+\]
+因此
+\[
+q(\tau^k(\tau y))
+=
+q(\tau^k(\tau y'))
+\quad(0\le k\le m),
+\]
+即 \(\tau y\equiv_m\tau y'\)。反复应用该稳定性，所有后续读出也相同，故不会再发生进一步细化。\(\square\)
+
+## 19.2 最大不可分同余与 greatest-fixed-point 公式
+
+定义无限未来不可分关系
+\[
+y\equiv_\infty y'
+\iff
+q(\tau^ky)=q(\tau^ky')
+\quad\text{对全部 }k\ge0.
+\]
+
+在 \(Y\times Y\) 的关系格上定义单调算子
+\[
+\Phi(R)
+=
+\ker q
+\cap
+(\tau\times\tau)^{-1}(R).
+\]
+这里
+\[
+(y,y')\in(\tau\times\tau)^{-1}(R)
+\iff
+(\tau y,\tau y')\in R.
+\]
+
+### 定理 19.3（有限 Kleene 下降与最大同余）
+
+有递推式
+\[
+\boxed{
+\equiv_{m+1}=\Phi(\equiv_m),
+\qquad
+\equiv_0=\ker q.}
+\]
+并且
+\[
+\boxed{
+\equiv_\infty
+=
+\bigcap_{m\ge0}\equiv_m
+=
+\equiv_{m_*}.}
+\]
+关系 \(\equiv_\infty\) 是包含于 \(\ker q\) 的最大 \(\tau\)-同余，即：
+
+1. \(\equiv_\infty\subseteq\ker q\)；
+2. \(y\equiv_\infty y'\Rightarrow\tau y\equiv_\infty\tau y'\)；
+3. 若等价关系 \(R\subseteq\ker q\) 且
+   \[
+   yRy'\Longrightarrow\tau y\,R\,\tau y',
+   \]
+   则
+   \[
+   R\subseteq\equiv_\infty.
+   \]
+
+等价地，
+\[
+\boxed{
+\equiv_\infty=\nu R.\,\Phi(R),}
+\]
+即它是 \(\Phi\) 的最大不动点。
+
+### 证明
+
+\(y\equiv_{m+1}y'\) 当且仅当当前读出相同，并且从下一状态开始的前 \(m+1\) 个读出相同；这正是
+\[
+(y,y')\in\ker q
+\quad\text{且}\quad
+(\tau y,\tau y')\in\equiv_m.
+\]
+故递推式成立。
+
+无限未来相同显然等价于属于全部有限关系。由定理 19.2，有限关系在 \(m_*\) 后稳定，所以交等于 \(\equiv_{m_*}\)。前两项由定义直接得到。
+
+若 \(R\) 是包含于 \(\ker q\) 的 \(\tau\)-同余，则 \(yRy'\) 蕴含
+\[
+\tau^ky\,R\,\tau^ky'
+\]
+对全部 \(k\) 成立；又 \(R\subseteq\ker q\)，所以全部未来读出相同。故 \(R\subseteq\equiv_\infty\)。这同时证明 greatest-fixed-point 表述。\(\square\)
+
+该定理把“从无限未来完成观察者”化为一个有限稳定的不动点计算：在有限系统中，无穷交并不要求无限存储，而在最多 \(|Y|-|O|\) 次严格细化后闭合。
+
+## 19.3 最小确定性观察者完成
+
+定义完成状态空间
+\[
+Z_q=Y/{\equiv_\infty},
+\qquad
+\pi_q:Y\twoheadrightarrow Z_q.
+\]
+由定理 19.3，\(\tau\) 在商上良定义：
+\[
+\overline\tau([y])=[\tau(y)].
+\]
+当前读出也下降为
+\[
+\overline q([y])=q(y).
+\]
+于是
+\[
+\boxed{
+\pi_q\tau=\overline\tau\pi_q,
+\qquad
+q=\overline q\pi_q.}
+\]
+
+### 定理 19.4（最小确定性完成的泛性质）
+
+设另一个有限确定性实现由满射
+\[
+r:Y\twoheadrightarrow W
+\]
+给出，并存在
+\[
+\sigma:W\to W,
+\qquad
+o:W\to O
+\]
+使
+\[
+r\tau=\sigma r,
+\qquad
+q=or.
+\]
+则存在唯一满射
+\[
+h:W\twoheadrightarrow Z_q
+\]
+满足
+\[
+\boxed{
+\pi_q=hr,
+\qquad
+h\sigma=\overline\tau h,
+\qquad
+\overline qh=o.}
+\]
+
+因此 \(Z_q\) 在所有精确、确定且保留原读出的完成中状态数最小：
+\[
+\boxed{|Z_q|\le|W|.}
+\]
+
+### 证明
+
+若 \(r(y)=r(y')\)，则由动力学交换性
+\[
+r(\tau^ky)=r(\tau^ky')
+\]
+对全部 \(k\) 成立；再由 \(q=or\)，全部未来读出相同。因此
+\[
+\ker r\subseteq\equiv_\infty=\ker\pi_q.
+\]
+故 \(\pi_q\) 在每个 \(r\)-纤维上常值，唯一因子化为 \(h\circ r\)。\(r\) 与 \(\pi_q\) 均满射，故 \(h\) 满射。其余两个交换式在 \(r(Y)=W\) 上逐点验证即可。\(\square\)
+
+这里的方向值得强调：任意更精细的隐藏状态实现 \(W\) 都满射到 \(Z_q\)。所以 \(Z_q\) 不是恢复原始微观状态 \(Y\) 的最大模型，而是保留全部未来可预测读出所需的**最小充分状态**。
+
+## 19.4 无限 itinerary 的 projective completion
+
+定义无限读出轨迹
+\[
+\mathcal I_q(y)
+=
+\bigl(q(\tau^ky)\bigr)_{k\ge0}
+\in O^{\mathbb N}.
+\]
+令左移算子为
+\[
+S((o_0,o_1,o_2,\ldots))
+=(o_1,o_2,o_3,\ldots).
+\]
+则
+\[
+\boxed{
+\mathcal I_q\tau=S\mathcal I_q.}
+\]
+
+令
+\[
+X_m=W_m(Y)
+\subseteq O^{m+1}
+\]
+并以删除最后一项的映射
+\[
+\partial_m:X_{m+1}\to X_m
+\]
+组成逆系。
+
+### 定理 19.5（itinerary 完成定理）
+
+有自然动力同构
+\[
+\boxed{
+Z_q
+\cong
+\mathcal I_q(Y)
+\cong
+\varprojlim_m X_m.}
+\]
+并且在稳定深度 \(m_*\) 上，坐标投影已经是双射：
+\[
+\boxed{
+\mathcal I_q(Y)
+\xrightarrow{\ \cong\ }
+X_{m_*}.}
+\]
+因此有限系统的无限未来完成在有限层即终止。
+
+### 证明
+
+\(\mathcal I_q\) 的核正是 \(\equiv_\infty\)，所以它诱导 \(Z_q\) 到其像的双射，并与 \(\overline\tau\) 和移位相容。
+
+任意实际无限轨迹显然给出兼容的有限前缀族。反之，设 \((x_m)_m\) 是兼容前缀族。令
+\[
+F_m=\{y\in Y:W_m(y)=x_m\}.
+\]
+每个 \(F_m\) 非空，且兼容性给出下降链
+\[
+F_0\supseteq F_1\supseteq F_2\supseteq\cdots.
+\]
+有限集合中的非空下降链交非空；取 \(y\) 属于其交，则全部前缀均来自 \(\mathcal I_q(y)\)。故逆极限恰为实际轨迹像。
+
+在 \(m_*\) 处，\(W_{m_*}\) 的核已经等于 \(\equiv_\infty\)，故其像与 \(Z_q\) 双射。\(\square\)
+
+定义未来分辨时间
+\[
+d_q(y,y')
+=
+\min\{k\ge0:q(\tau^ky)\neq q(\tau^ky')\}
+\]
+用于非等价点对。则
+\[
+\boxed{
+m_*
+=
+\max_{y\not\equiv_\infty y'}d_q(y,y')}
+\]
+（若没有可分辨点对，约定右侧为零）。所以 \(m_*\) 是所有未来可分辨状态对中的最晚首次分离时刻。
+
+## 19.5 对角自然性的最小修复
+
+取任意地址集 \(A\)。对 \(Y\)-值评价表与输出逐点定义
+\[
+P_q(E)(a,b)=\pi_q(E(a,b)),
+\qquad
+Q_q(u)(a)=\pi_q(u(a)).
+\]
+
+### 定理 19.6（完成商上的对角自然性）
+
+对所有评价表 \(E:A\times A\to Y\)，
+\[
+\boxed{
+Q_q\Delta_\tau(E)
+=
+\Delta_{\overline\tau}P_q(E).}
+\]
+
+### 证明
+
+逐坐标有
+\[
+\begin{aligned}
+Q_q\Delta_\tau(E)(a)
+&=\pi_q(\tau(E(a,a)))\\
+&=\overline\tau(\pi_q(E(a,a)))\\
+&=\Delta_{\overline\tau}P_q(E)(a).
+\end{aligned}
+\]
+\(\square\)
+
+### 定理 19.7（最小自然化）
+
+设满射 \(r:Y\twoheadrightarrow W\) 保留原读出，即 \(q=or\)。若存在 \(\sigma:W\to W\)，使对任意非空地址集和任意评价表都有
+\[
+Q_r\Delta_\tau
+=
+\Delta_\sigma P_r,
+\]
+则 \(r\tau=\sigma r\)，并存在唯一满射 \(h:W\twoheadrightarrow Z_q\) 使 \(\pi_q=hr\)。
+
+### 证明
+
+取单点地址集 \(A=\{*\}\)，并令 \(E(*,*)=y\)。自然性立即给出
+\[
+r(\tau(y))=\sigma(r(y))
+\]
+对全部 \(y\) 成立。随后应用定理 19.4。\(\square\)
+
+所以 \(Z_q\) 不仅是最小预测状态，也是使原扭曲对角通过该观察界面严格自然下降的最小状态完成。
+
+## 19.6 Koopman 可观测代数的最小闭包
+
+令
+\[
+\mathcal B_0
+=
+q^*(\mathbb C^O)
+=
+\{f\circ q:f:O\to\mathbb C\}
+\subseteq\mathbb C^Y
+\]
+为当前读出可测代数。令 Koopman 拉回为
+\[
+K_\tau f=f\circ\tau.
+\]
+定义
+\[
+\mathcal B_m
+=
+\operatorname{alg}^*
+\bigl(
+\mathcal B_0,
+K_\tau\mathcal B_0,
+\ldots,
+K_\tau^m\mathcal B_0
+\bigr),
+\]
+其中 \(\operatorname{alg}^*\) 表示生成的含幺、共轭封闭交换代数。
+
+### 定理 19.8（有限词代数定理）
+
+\(\mathcal B_m\) 恰由在 \(W_m\)-纤维上常值的复函数组成。因此
+\[
+\boxed{
+\mathcal B_m
+\cong
+\mathbb C^{X_m},
+\qquad
+\dim\mathcal B_m=c_m.}
+\]
+
+### 证明
+
+每个生成元只依赖某个坐标 \(q(\tau^ky)\)，所以 \(\mathcal B_m\) 中的函数都在相同未来词的纤维上常值。
+
+反之，对任意实际词
+\[
+w=(w_0,\ldots,w_m)\in X_m,
+\]
+其纤维指示函数可写为
+\[
+\mathbf1_{W_m^{-1}(w)}(y)
+=
+\prod_{k=0}^{m}
+\mathbf1_{\{w_k\}}(q(\tau^ky)).
+\]
+右侧属于 \(\mathcal B_m\)。这些互不相交的纤维指示函数张成全部纤维常值函数。\(\square\)
+
+### 定理 19.9（最小 Koopman 不变闭包）
+
+链
+\[
+\mathcal B_0
+\subseteq
+\mathcal B_1
+\subseteq\cdots
+\]
+在 \(m_*\) 处稳定，并且
+\[
+\boxed{
+K_\tau(\mathcal B_{m_*})
+\subseteq
+\mathcal B_{m_*}.}
+\]
+此外
+\[
+\boxed{
+\mathcal B_{m_*}
+=
+\bigcap
+\{\mathcal C:\mathcal B_0\subseteq\mathcal C,
+\ K_\tau\mathcal C\subseteq\mathcal C,
+\ \mathcal C\text{ 为含幺 }*\text{-子代数}\}.}
+\]
+并有自然同构
+\[
+\boxed{
+\mathcal B_{m_*}
+\cong
+\mathbb C^{Z_q}.}
+\]
+
+### 证明
+
+由定理 19.8，代数维数为 \(c_m\)，所以与关系稳定同步稳定。又
+\[
+K_\tau(\mathcal B_m)
+\subseteq
+\mathcal B_{m+1};
+\]
+在 \(m_*\) 处两代数相等，故得到不变性。
+
+任何包含 \(\mathcal B_0\) 且对 \(K_\tau\) 不变的子代数都包含全部 \(K_\tau^k\mathcal B_0\)，从而包含每个 \(\mathcal B_m\)，特别包含稳定代数。最后，\(W_{m_*}\) 与 \(Z_q\) 具有相同纤维，故其函数代数同构。\(\square\)
+
+因此状态侧与可观测侧给出同一个完成：
+\[
+\boxed{
+Z_q
+\quad\longleftrightarrow\quad
+\mathbb C^{Z_q}=\mathcal B_{m_*}.}
+\]
+前者是最小充分状态空间，后者是原始读出代数的最小 Koopman 不变闭包。
+
+## 19.7 完成深度、熵成本与最小记忆
+
+令 \(Y_0\) 是在 \(Y\) 上取值的随机变量，定义
+\[
+O_k=q(\tau^kY_0),
+\qquad
+\mathbf O_m=(O_0,\ldots,O_m).
+\]
+
+### 定理 19.10（完成信息的链式分解）
+
+对全部 \(m\ge0\)，
+\[
+\boxed{
+H(\mathbf O_m)
+=
+H(O_0)
++
+\sum_{k=1}^{m}
+H(O_k\mid O_0,\ldots,O_{k-1}).}
+\]
+在稳定深度，\(\mathbf O_{m_*}\) 与完成状态 \(\pi_q(Y_0)\) 双射对应，所以
+\[
+\boxed{
+H(\pi_q(Y_0)\mid O_0)
+=
+\sum_{k=1}^{m_*}
+H(O_k\mid O_0,\ldots,O_{k-1}).}
+\]
+
+### 证明
+
+第一式是 Shannon 链式法则。由于 \(W_{m_*}\) 与 \(\pi_q\) 具有相同纤维，它们的随机变量通过像集上的双射互相确定，故熵相同。又 \(O_0\) 是 \(\mathbf O_{m_*}\) 的函数，因此
+\[
+H(\mathbf O_{m_*})-H(O_0)
+=H(\mathbf O_{m_*}\mid O_0)
+=H(\pi_q(Y_0)\mid O_0).
+\]
+代入链式法则。\(\square\)
+
+若 \(Y_0\) 满支撑，则还有一个纯信息论的稳定判据。
+
+### 定理 19.11（条件熵零判据）
+
+假设 \(Y_0\) 在每个 \(y\in Y\) 上概率为正。则
+\[
+\boxed{
+m_*
+=
+\min\{m\ge0:
+H(O_{m+1}\mid O_0,\ldots,O_m)=0\}.}
+\]
+
+### 证明
+
+若关系在 \(m\) 处稳定，则下一读出是当前词 \(W_m\) 的确定函数，所以条件熵为零。
+
+反之，条件熵为零意味着在每个具有正概率的词纤维上，下一读出几乎处处唯一。满支撑使每个实际状态均具有正概率，因此同一 \(W_m\)-纤维中的任意两个状态都有相同下一读出，即 \(\equiv_m=\equiv_{m+1}\)。取最小指标即得。\(\square\)
+
+### 推论 19.12（最小完成的概率成本）
+
+对任意其他精确确定性完成 \(r:Y\to W\)，以同一随机初态推前，有
+\[
+\boxed{
+H(r(Y_0)\mid O_0)
+\ge
+H(\pi_q(Y_0)\mid O_0).}
+\]
+
+### 证明
+
+定理 19.4 给出 \(\pi_q(Y_0)=h(r(Y_0))\)。在给定 \(O_0\) 后应用确定性数据处理或条件熵单调性。\(\square\)
+
+因此
+\[
+\boxed{
+C_{\mathrm{det}}(q,\tau;Y_0)
+:=H(\pi_q(Y_0)\mid q(Y_0))}
+\]
+是给定分布下，把当前读出补成精确确定性状态所需的最小平均附加信息。最坏情形的附加存储可由
+\[
+\boxed{
+\left\lceil
+\log_2
+\max_{o\in O}
+|\overline q^{-1}(o)|
+\right\rceil}
+\]
+比特实现；它依赖观察映射与动力学，不是普适常数，也不等同于光速。
+
+## 19.8 无记忆随机闭包的严格边界
+
+有人可能试图不扩充状态，只在粗读出集合 \(O\) 上引入随机 Markov 核
+\[
+K(o,o')
+\]
+来模拟隐藏确定动力学。若要求该核对所有初始分布都有效，则随机化并不能绕过同余障碍。
+
+### 定理 19.13（分布无关 Markov 闭包判据）
+
+下列条件等价：
+
+1. 存在 Markov 核 \(K\) 于 \(O\)，使对每个 \(Y\) 上初始分布 \(\mu\)，
+   \[
+   q_*(\tau_*\mu)
+   =K_*(q_*\mu);
+   \]
+2. \(q\) 本身已经是确定性因子，即存在 \(\sigma:O\to O\) 满足
+   \[
+   q\tau=\sigma q;
+   \]
+3. \(m_*=0\)。
+
+此时唯一可取的有效核在每个可达读出上是确定性的：
+\[
+K(o,-)=\delta_{\sigma(o)}.
+\]
+
+### 证明
+
+若 2 成立，取确定性核即可，故 2 推出 1。若 1 成立，取点质量 \(\mu=\delta_y\)，得到
+\[
+K(q(y),-)=\delta_{q(\tau y)}.
+\]
+若 \(q(y)=q(y')\)，同一个核行必须同时等于
+\[
+\delta_{q(\tau y)}
+\quad\text{和}\quad
+\delta_{q(\tau y')},
+\]
+故两个下一读出相同。于是 \(q\tau\) 在 \(q\)-纤维上常值，定义 \(\sigma(q(y))=q(\tau y)\) 即得 2。条件 2 正是 \(\ker q\) 已经为 \(\tau\)-同余，也就是第一次细化不再改变关系，故与 3 等价。\(\square\)
+
+所以当 \(m_*>0\) 时，一个只看当前粗读出的、分布无关且无记忆的随机模型不可能精确复现全部初始条件。此时只能：
+
+- 使用依赖特定分布或时间的条件核；
+- 接受近似误差；
+- 或把状态扩充到最小完成 \(Z_q\)。
+
+---
+
+# 20. 追加：观察者的六重审计与有限完成原则
+
+前文的五重审计还没有单独检查“当前观察状态是否足以封闭未来预测”。本节加入第六项：
+
+6. **预测闭合性**：当前观察是否本身构成一个分布无关的确定或 Markov 状态；若否，最小完成深度 \(m_*\)、完成状态 \(Z_q\) 与完成信息成本是多少。
+
+于是有限确定性观察者至少需要区分：
+\[
+\boxed{
+\begin{aligned}
+&\text{对角自然性},\\
+&\text{扭曲忠实性},\\
+&\text{全局单值命名},\\
+&\text{瞬态容量可见性},\\
+&\text{分支关联可见性},\\
+&\text{预测闭合性}.
+\end{aligned}}
+\]
+
+六者仍然互不等同。特别地：
+
+- 一个观察可以与对角算子自然交换，却把扭曲商掉；
+- 一个观察可以保留周期与瞬态容量，却丢失分支关联；
+- 一个观察可以在每一时刻给出合法读数，却不构成无记忆状态；
+- 无限未来 itinerary 可以区分完成状态，但在有限系统中该完成必于有限深度 \(m_*\) 稳定；
+- 完成状态只恢复所有未来读出可区分的信息，不保证恢复微观状态 \(Y\)。
+
+本节得到状态侧、代数侧、信息侧和对角侧的四重等价接口：
+\[
+\boxed{
+\begin{aligned}
+Z_q
+&=Y/{\equiv_\infty}\\
+&\cong\mathcal I_q(Y)\\
+&\cong\varprojlim_m W_m(Y),
+\end{aligned}}
+\]
+\[
+\boxed{
+\mathbb C^{Z_q}
+=\text{包含 }q^*\mathbb C^O
+\text{ 的最小 Koopman 不变 }*\text{-代数},}
+\]
+以及
+\[
+\boxed{
+Q_q\Delta_\tau
+=\Delta_{\overline\tau}P_q.}
+\]
+
+因此，对有限观察者而言，“完成”并非必须预设一个实际可访问的无限对象。它可以严格定义为有限读出关系的最大稳定不动点；所谓无限未来只提供该不动点的外在表示，而有限性保证它最终由一个有限词长度完全决定。
+
+## 20.1 严格边界
+
+1. 本节使用的是未来读出等价，它是数学预测分类，不表示物理观察者可以从现在直接读取未来。
+2. 有限步稳定依赖 \(Y\) 有限；无限状态、连续系统或无限精度读出不保证存在有限 \(m_*\)。
+3. \(Z_q\) 是相对于指定 \(q\) 的最小预测完成，不是观察者无关的绝对本体空间。
+4. 条件熵成本依赖初始分布；最坏状态数与平均信息成本不能混为一谈。
+5. 分布特定的随机粗粒化可能暂时闭合，但定理 19.13 排除的是对全部初始分布统一有效的无记忆核。
+6. 本节没有推出量子测量的唯一模型、光速信息率、Riemann 假设或任何 Weil 正性。
+
+## 20.2 形式化状态
+
+定理 19.1—19.13 及第 20 节结论均给出完整纸面证明，尚未成为 Lean 真源。推荐形式化顺序为：
+
+1. 有限未来词关系及其稳定界；
+2. greatest-fixed-point 与最大同余定理；
+3. 最小完成商的泛性质；
+4. 有限词逆系与 itinerary 极限；
+5. Koopman 生成代数及维数公式；
+6. 完成条件熵恒等式；
+7. 分布无关 Markov 闭包判据；
+8. 对角自然性的最小修复。
+
+在 proof term、依赖闭包与冻结收据出现以前，本追加部分不得标记为 `Closed`。
