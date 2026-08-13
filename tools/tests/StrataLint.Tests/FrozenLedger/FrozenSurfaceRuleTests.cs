@@ -117,6 +117,7 @@ public sealed class FrozenSurfaceRuleTests
 
         var diagnostic = Assert.Single(evaluation.Diagnostics);
         Assert.Equal(FrozenPath, diagnostic.Path);
+        Assert.Equal(AdmissionEffect.Block, diagnostic.AdmissionEffect);
         Assert.Contains(FrozenPath, diagnostic.Message, StringComparison.Ordinal);
         Assert.Contains("1 declaration statement identity drift", diagnostic.Message, StringComparison.Ordinal);
     }
@@ -179,9 +180,9 @@ public sealed class FrozenSurfaceRuleTests
     public void Sl008RejectsDeletedFrozenModuleEvenWithMatchingAddedReattest()
     {
         var fixture = FrozenFixture();
+        var reattestPath = AddEvent(fixture, "Reattest", ReattestedNodeId, FrozenPath);
         fixture.Files.Remove(FrozenPath);
         fixture.Reports.Remove(FrozenPath);
-        var reattestPath = AddEvent(fixture, "Reattest", ReattestedNodeId, FrozenPath);
 
         var evaluation = Evaluate(
             fixture,
