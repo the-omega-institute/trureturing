@@ -5,51 +5,17 @@
    anchors: []
    digest: Register the classical three-gap and Weil explicit-formula debts; the Fourier-Laplace debt is discharged (proved in D5/S3/Fourier/PaleyWiener). -/
 
-import Mathlib.Algebra.Order.Floor.Ring
-import Mathlib.Algebra.Order.Archimedean.Real.Basic
 import Mathlib.Analysis.Complex.Exponential
 import Mathlib.Analysis.Distribution.SchwartzSpace.Basic
 import Mathlib.Analysis.SpecialFunctions.Gamma.Digamma
-import Mathlib.Data.Finset.Sort
 import Mathlib.MeasureTheory.Integral.Bochner.Basic
 import Mathlib.NumberTheory.ArithmeticFunction.VonMangoldt
 import Mathlib.NumberTheory.LSeries.RiemannZeta
-import Mathlib.NumberTheory.Real.Irrational
 
 namespace D5.X_Assumptions.AxiomDebt
 
 open Filter MeasureTheory
 open scoped ComplexConjugate ContDiff
-
-/-- The first `N` fractional parts of the rotation by `alpha`. -/
-noncomputable def fractionalOrbit (alpha : ℝ) (N : ℕ) : Finset ℝ :=
-  (Finset.range N).image fun n : ℕ => Int.fract ((n : ℝ) * alpha)
-
-/-- The orbit representatives in increasing order in `[0, 1)`. -/
-noncomputable def sortedFractionalOrbit (alpha : ℝ) (N : ℕ) : List ℝ :=
-  (fractionalOrbit alpha N).sort
-
-/-- Successive linear gaps together with the wrap-around gap on the unit circle. -/
-def cyclicGaps : List ℝ → List ℝ
-  | [] => []
-  | x :: xs =>
-      (x :: xs).zipWith (fun a b => b - a) xs ++
-        [1 - (x :: xs).getLast (List.cons_ne_nil x xs) + x]
-
-/-- The set of distinct cyclic gap lengths in the first `N` points of a rotation. -/
-noncomputable def fractionalGapValues (alpha : ℝ) (N : ℕ) : Finset ℝ :=
-  (cyclicGaps (sortedFractionalOrbit alpha N)).toFinset
-
-/--
-The classical three-gap theorem (Steinhaus conjecture; Sós 1957): an irrational
-rotation cuts the unit circle into intervals of at most three distinct lengths.
-
-AxiomDebt case `D5-T0019`. The pinned mathlib tree contains no three-gap or
-three-distance theorem; the librarian upstream-formalization issue is tracked by
-the same case. This is a classical-result tail, not a repository-specific premise.
--/
-axiom three_gap_classic (alpha : ℝ) (hirrational : Irrational alpha) (N : ℕ) :
-    (fractionalGapValues alpha N).card ≤ 3
 
 /-
 AxiomDebt case `D5-T0018-C` (DISCHARGED). Pinned mathlib supplies smooth
