@@ -26,6 +26,9 @@ internal static partial class RepositoryRules
                 "Blueprint markdown has no matching .scribe.cs source")));
         findings.AddRange(scribeSources
             .Except(markdown, StringComparer.Ordinal)
+            .Where(stem => !IsProtectedCandidateOnlyScribeGrowth(
+                context,
+                stem + ".scribe.cs"))
             .Order(StringComparer.Ordinal)
             .Select(static stem => new RuleFinding(
                 stem + ".scribe.cs",
@@ -53,6 +56,14 @@ internal static partial class RepositoryRules
                 "Blueprint markdown is a projection: emit it from a Scribe or digestion source change")));
         return findings.ToImmutable();
     }
+
+    private static bool IsProtectedCandidateOnlyScribeGrowth(
+        RuleEvaluationContext context,
+        string path) =>
+        !context.Baseline.TryGetFile(path, out _)
+        && context.Changes.Paths.Any(changed => changed.Value == path)
+        && RepoPath.TryCreate(path, out var repoPath)
+        && BootstrapGate.IsProtected(repoPath);
 
     private static HashSet<string> ChangedDigestionEmissionPaths(RuleEvaluationContext context)
     {

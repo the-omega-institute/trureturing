@@ -403,12 +403,15 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
                         $"SELFTEST FAIL governance={finding}\n")));
             }
 
-            var rules = string.Join(",", RuleCatalog.Default.Descriptors.Select(static item => item.Id.Value));
+            var rules = string.Join(",", RuleCatalog.Default.Descriptors
+                .Select(static item => item.Id.Value)
+                .Order(StringComparer.Ordinal));
             var deferred = string.Join(
                 ",",
                 RuleCatalog.Default.Descriptors
                     .Where(static item => item.Lifecycle is RuleLifecycle.Deferred)
-                    .Select(static item => $"{item.Id.Value}:{item.DeferredCase?.Value}"));
+                    .Select(static item => $"{item.Id.Value}:{item.DeferredCase?.Value}")
+                    .Order(StringComparer.Ordinal));
             var output = "SELFTEST PASS\n"
                 + $"CANONICAL_REGISTRY {registry.Policy.RegistrySha256}\n"
                 + $"CANONICAL_DOMAINS {registry.Policy.DomainsSha256}\n"

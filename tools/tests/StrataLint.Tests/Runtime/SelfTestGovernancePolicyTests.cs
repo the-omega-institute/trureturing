@@ -24,7 +24,7 @@ public sealed class SelfTestGovernancePolicyTests
               judge: open
               reason: fixture
               genesis_event: sha256:0000000000000000000000000000000000000000000000000000000000000000
-              commit: 0000000000000000000000000000000000000000
+              commit: f000000000000000000000000000000000000000
               pull_request: 1
               verification: ASSUMED-UNVERIFIED
             """;
@@ -32,7 +32,7 @@ public sealed class SelfTestGovernancePolicyTests
         Assert.Empty(SelfTestGovernancePolicy.InspectTower(tower));
         Assert.Contains(
             SelfTestGovernancePolicy.InspectTower(tower.Replace(
-                "                  - banned-api-analyzers\n",
+                "      - banned-api-analyzers\n",
                 string.Empty,
                 StringComparison.Ordinal)),
             finding => finding.Contains("judged_by", StringComparison.Ordinal));

@@ -289,7 +289,8 @@ internal static partial class SelfTestGovernancePolicy
     {
         var toolsRoot = Path.Combine(repositoryRoot, "tools");
         foreach (var path in Directory.EnumerateFiles(toolsRoot, "*.cs", SearchOption.AllDirectories)
-                     .Where(static path => !IsBuildOutput(path)))
+                     .Where(static path => !IsBuildOutput(path))
+                     .Order(StringComparer.Ordinal))
         {
             var project = FindProject(path, toolsRoot);
             var relative = Path.GetRelativePath(repositoryRoot, path)
@@ -372,7 +373,9 @@ internal static partial class SelfTestGovernancePolicy
     {
         for (var current = Directory.GetParent(path); current is not null; current = current.Parent)
         {
-            var projects = Directory.EnumerateFiles(current.FullName, "*.csproj").ToArray();
+            var projects = Directory.EnumerateFiles(current.FullName, "*.csproj")
+                .Order(StringComparer.Ordinal)
+                .ToArray();
             if (projects.Length > 1)
             {
                 throw new FormatException($"multiple project owners for {path}");
