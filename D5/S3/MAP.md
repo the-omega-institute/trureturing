@@ -32,6 +32,10 @@
   split-only, no-move change opened `Zeros/Symmetry/`; all existing `Zeros/`
   paths remain unmoved. First module: `Symmetry/ZetaConjugationCovariance.lean`,
   proving conjugation and conjugate-reflection covariance for zeta readings.
+- 2026-08-14 (SL-003): `Weil/` was at its 12-Lean-file limit. The split-only,
+  no-move change opened `Weil/PrimeAddress/`; all existing `Weil/` paths remain
+  unmoved. First module: `PrimeAddress/PrimeAddress.lean`, connecting finite
+  Euler modifications, zero amplitudes, ramified silence, and prime readings.
 
 ## Buckets
 
@@ -40,6 +44,7 @@
 - `Quantum/`: finite-dimensional operator-algebra and probability structures.
 - `PrimeForms/`: representations of prime numbers by integral quadratic forms.
 - `Weil/`: classical zeta conventions, test functions, and explicit-formula machinery.
+- `Weil/PrimeAddress/`: finite prime modifications, ramified-character silence, and prime-address amplitudes.
 - `Zeros/`: zeta-zero geometry, symmetry, and local critical-line balance.
 - `Zeros/Endpoints/`: endpoint-value certificates for completed-zeta readings.
 - `Zeros/Symmetry/`: conjugation and reflection covariance of zeta readings.
