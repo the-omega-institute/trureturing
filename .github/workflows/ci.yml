@@ -48,8 +48,93 @@ jobs:
           persist-credentials: false
           path: candidate
 
+      - name: Decide candidate engineering scope
+        id: scope
+        shell: bash
+        run: |
+          set -euo pipefail
+          engineering_triggers=(
+            "tools"
+            "Makefile"
+            ".github"
+            "global.json"
+            "Directory.Build.props"
+            "Directory.Packages.props"
+            "lean-toolchain"
+            "lakefile.toml"
+            "lake-manifest.json"
+            "Golden/Projection"
+            "Meta/FILEMAP.toml"
+          )
+          run="true"
+          reason="dev push always runs the union engineering check"
+          base_sha="not-applicable"
+          changed_count="0"
+          changed_detail="all paths (dev push union check)"
+          matched_detail="all paths (dev push union check)"
+          if [[ "$GITHUB_EVENT_NAME" == "push" ]]; then
+            run="true"
+          elif [[ "$GITHUB_EVENT_NAME" == "pull_request_target" ]]; then
+            base="${{ github.event.pull_request.base.sha }}"
+            head="${{ github.event.pull_request.head.sha }}"
+            git -C candidate fetch --no-tags --quiet origin "$base" 2>/dev/null || true
+            if ! base_sha="$(git -C candidate merge-base "$base" "$head" 2>/dev/null)"; then
+              printf '%s\n' "cannot resolve fork point between $base and $head" >&2
+              exit 1
+            fi
+            if [[ -z "$base_sha" || "$base_sha" =~ ^0+$ ]]; then
+              printf '%s\n' "pull request has no content-addressable merge-base" >&2
+              exit 1
+            fi
+            mapfile -d '' -t changed_paths < <(
+              git -C candidate diff --name-only -z --no-renames --diff-filter=ACDMRTUXB "$base_sha" "$head"
+            )
+            changed_count="${#changed_paths[@]}"
+            changed_detail=""
+            matched_detail=""
+            quoted_path=""
+            for path in "${changed_paths[@]}"; do
+              printf -v quoted_path '%q' "$path"
+              printf 'ENGINEERING_SCOPE_CHANGED %s\n' "$quoted_path"
+              changed_detail="$changed_detail$quoted_path; "
+              for trigger in "${engineering_triggers[@]}"; do
+                if [[ "$path" == "$trigger" || "$path" == "$trigger/"* ]]; then
+                  matched_detail="$matched_detail$quoted_path -> $trigger; "
+                fi
+              done
+            done
+            if [[ -z "$changed_detail" ]]; then
+              changed_detail="none"
+            fi
+            if [[ -n "$matched_detail" ]]; then
+              run="true"
+              reason="merge-base diff intersects the harness trigger set"
+            else
+              run="false"
+              reason="merge-base diff does not intersect the harness trigger set"
+              matched_detail="none"
+            fi
+          else
+            run="true"
+            reason="unrecognized event fails closed to the full engineering check"
+            changed_detail="all paths (fail-closed event handling)"
+            matched_detail="all paths (fail-closed event handling)"
+          fi
+          printf 'ENGINEERING_SCOPE event=%s run=%s base=%s changed=%s reason=%s\n' \
+            "$GITHUB_EVENT_NAME" "$run" "$base_sha" "$changed_count" "$reason"
+          printf 'ENGINEERING_SCOPE_PATHS %s\n' "$changed_detail"
+          printf 'ENGINEERING_SCOPE_MATCHES %s\n' "$matched_detail"
+          echo "run=$run" >> "$GITHUB_OUTPUT"
+          echo "event=$GITHUB_EVENT_NAME" >> "$GITHUB_OUTPUT"
+          echo "base_sha=$base_sha" >> "$GITHUB_OUTPUT"
+          echo "changed_count=$changed_count" >> "$GITHUB_OUTPUT"
+          echo "paths=$changed_detail" >> "$GITHUB_OUTPUT"
+          echo "reason=$reason" >> "$GITHUB_OUTPUT"
+          echo "matches=$matched_detail" >> "$GITHUB_OUTPUT"
+
       - name: Resolve pinned Lean toolchain
         id: lean
+        if: steps.scope.outputs.run == 'true'
         shell: bash
         env:
           LEAN_TOOLCHAIN_FILE: candidate/lean-toolchain
@@ -60,6 +145,7 @@ jobs:
           echo "hash=$(sha256sum "$LEAN_TOOLCHAIN_FILE" | cut -d ' ' -f 1)" >> "$GITHUB_OUTPUT"
 
       - name: Restore elan and pinned Lean toolchain
+        if: steps.scope.outputs.run == 'true'
         uses: actions/cache/restore@v4
         with:
           path: ~/.elan
@@ -70,6 +156,7 @@ jobs:
 
       - name: Install pinned Lean toolchain for producer integration tests
         id: install-elan
+        if: steps.scope.outputs.run == 'true'
         shell: bash
         env:
           LEAN_TOOLCHAIN_FILE: ${{ steps.lean.outputs.file }}
@@ -111,26 +198,32 @@ jobs:
           "$HOME/.elan/bin/lake" --version
 
       - name: Install pinned SDK
+        if: steps.scope.outputs.run == 'true'
         uses: actions/setup-dotnet@v4
         with:
           global-json-file: candidate/global.json
 
       - name: Restore candidate locked dependencies
+        if: steps.scope.outputs.run == 'true'
         run: |
           dotnet restore candidate/tools/tests/CompileFailProof/CompileFailProof.csproj --locked-mode
           dotnet restore candidate/tools/tests/BannedApiCompileFailProof/BannedApiCompileFailProof.csproj --locked-mode
 
       - name: Build candidate with warnings as errors
+        if: steps.scope.outputs.run == 'true'
         run: make -C candidate dotnet
 
       - name: Run candidate golden and integration tests
+        if: steps.scope.outputs.run == 'true'
         run: make -C candidate tools-test
 
       - name: Run candidate selftest twice and compare bytes
+        if: steps.scope.outputs.run == 'true'
         shell: bash
         run: make -C candidate selftest
 
       - name: Prove missing capability does not compile
+        if: steps.scope.outputs.run == 'true'
         shell: bash
         run: |
           set +e
@@ -143,6 +236,7 @@ jobs:
           grep -F "MetaClear" <<<"$output"
 
       - name: Prove banned deterministic APIs do not compile
+        if: steps.scope.outputs.run == 'true'
         shell: bash
         run: |
           proof="candidate/tools/tests/BannedApiCompileFailProof/BannedApiViolations.cs"
@@ -166,11 +260,40 @@ jobs:
           done
 
       - name: Save elan toolchain for engineering checks (dev push only)
-        if: always() && steps.install-elan.outcome == 'success' && github.event_name == 'push' && github.ref == 'refs/heads/dev'
+        if: steps.scope.outputs.run == 'true' && always() && steps.install-elan.outcome == 'success' && github.event_name == 'push' && github.ref == 'refs/heads/dev'
         uses: actions/cache/save@v4
         with:
           path: ~/.elan
           key: ${{ runner.os }}-${{ runner.arch }}-elan-${{ steps.lean.outputs.hash }}
+
+      - name: Summarize candidate engineering scope
+        if: always()
+        shell: bash
+        env:
+          SCOPE_EVENT: ${{ steps.scope.outputs.event }}
+          SCOPE_RUN: ${{ steps.scope.outputs.run }}
+          SCOPE_BASE: ${{ steps.scope.outputs.base_sha }}
+          SCOPE_CHANGED_COUNT: ${{ steps.scope.outputs.changed_count }}
+          SCOPE_PATHS: ${{ steps.scope.outputs.paths }}
+          SCOPE_REASON: ${{ steps.scope.outputs.reason }}
+          SCOPE_MATCHES: ${{ steps.scope.outputs.matches }}
+        run: |
+          set -euo pipefail
+          result="$SCOPE_RUN"
+          if [[ -z "$result" ]]; then
+            result="unavailable"
+          fi
+          {
+            printf '%s\n' '## Candidate engineering scope'
+            printf '\n'
+            printf -- '- Event: %s\n' "$SCOPE_EVENT"
+            printf -- '- Run engineering: %s\n' "$result"
+            printf -- '- Merge-base: %s\n' "$SCOPE_BASE"
+            printf -- '- Changed paths: %s\n' "$SCOPE_CHANGED_COUNT"
+            printf -- '- Path detail: %s\n' "$SCOPE_PATHS"
+            printf -- '- Trigger matches: %s\n' "$SCOPE_MATCHES"
+            printf -- '- Decision: %s\n' "$SCOPE_REASON"
+          } >> "$GITHUB_STEP_SUMMARY"
 
   lean-inspect:
     name: Canonical Lean report production
