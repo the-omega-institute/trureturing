@@ -22,8 +22,6 @@ internal static class FileMapPolicy
         "Meta/StrataLint/StrataLint.Scribe/FileMap/FileMapManifest.cs";
     private const string LibraryNoteCatalogPath =
         "Meta/StrataLint/StrataLint.Scribe/Library/LibraryNoteCatalog.cs";
-    private const string PapergenCommandPath =
-        "Meta/StrataLint/StrataLint.Cli/Commands/Papergen/PapergenCommand.cs";
     private const string RegistryLoaderPath =
         "Meta/StrataLint/StrataLint.Cli/Commands/RegistryLoader.cs";
     private const string ScribeProjectPath =
@@ -42,8 +40,8 @@ internal static class FileMapPolicy
         "Meta/StrataLint/StrataLint.Scribe/Values/ValuesKernelDataLoader.cs";
     private const string YamlSubsetParserPath =
         "Meta/StrataLint/StrataLint.Engine/Coordinates/YamlSubsetParser.cs";
-    private const string C0CertificatePath =
-        "Meta/StrataLint/Golden/c0-inaugural-conservative-certificate.json";
+    private const string RepositoryPathPolicyPath =
+        "Meta/StrataLint/StrataLint.Engine/Coordinates/RepositoryPathPolicy.cs";
 
     private static readonly Regex LeanImportPattern = new(
         "(?m)^\\s*import\\s+(?<module>[A-Za-z0-9_.]+)\\s*$",
@@ -56,7 +54,6 @@ internal static class FileMapPolicy
             ["FileMapLoader"] = FileMapLoaderPath,
             ["GateAuthorityRootCatalogLoader"] = GateAuthorityRootCatalogLoaderPath,
             ["LibraryNoteCatalog"] = LibraryNoteCatalogPath,
-            ["PapergenCommand"] = PapergenCommandPath,
             ["PerfBudgetLoader"] = PerfBudgetLoaderPath,
             ["RegistryLoader"] = RegistryLoaderPath,
             ["ScribeCompiler"] = ScribeProjectPath,
@@ -68,13 +65,25 @@ internal static class FileMapPolicy
             ["YamlSubsetParser"] = YamlSubsetParserPath,
         };
 
-    // FILEMAP names the producer, consumers and verifiers of every generated artifact,
-    // but those names were free text that nothing checked, so they went stale the moment
-    // the named type was deleted: #1112 removed ValuesProjectionLoader and its FILEMAP
-    // consumer entry kept naming it. A declaration nobody verifies is a claim
-    // about the system that can quietly stop being true. This resolves each name as a
-    // rule rather than a hand-kept table: it must be a declared type in the tracked C#
-    // sources, or one of the few deliberate non-type words.
+    private static readonly IReadOnlyDictionary<string, string> ProgramActorImplementations =
+        new Dictionary<string, string>(StringComparer.Ordinal)
+        {
+            ["RepositoryPathPolicy"] = RepositoryPathPolicyPath,
+        };
+
+    private static readonly ImmutableHashSet<string> ProgramActorWords =
+        [
+            "GitHub-Actions", "Lean", "Scribe", "StrataLint", "agent", "architecture-tests",
+            "automation", "BannedApiAnalyzers", "CoverageAnalyzer", "developer", "dotnet",
+            "git", "make-gate", "repository-policy", "dotnet-build", "dotnet-test",
+            "lean-build", "lean-inspector", "reader",
+        ];
+
+    // FILEMAP names the producer, consumers and verifiers of every generated artifact
+    // and every protected program entry. A declaration nobody verifies is a claim about
+    // the system that can quietly stop being true. Resolve names against live declarations
+    // or the small closed vocabulary of external commands; RepositoryPathPolicy additionally
+    // binds the Blueprint build-root actor to its source file.
     private static readonly ImmutableHashSet<string> GeneratedActorWords =
         ["reader", "harness-gate", "none"];
 
@@ -103,25 +112,48 @@ internal static class FileMapPolicy
 
     internal static IReadOnlyList<FileMapFinding> InspectDeclaredActors(
         FileMapManifest manifest,
-        IReadOnlySet<string> declaredTypes)
+        IReadOnlySet<string> declaredTypes,
+        string repositoryRoot)
     {
         ArgumentNullException.ThrowIfNull(manifest);
         ArgumentNullException.ThrowIfNull(declaredTypes);
+        ArgumentException.ThrowIfNullOrWhiteSpace(repositoryRoot);
         var findings = new List<FileMapFinding>();
         foreach (var entry in manifest.Entries.Where(
-            static item => item.Kind is FileMapKind.Generated))
+            static item => item.Kind is FileMapKind.Generated or FileMapKind.Program))
         {
             var declared = new List<(string Field, string Name)> { ("produced_by", entry.ProducedBy) };
             declared.AddRange(entry.ConsumedBy.Select(static name => ("consumed_by", name)));
             declared.AddRange(entry.VerifiedBy.Select(static name => ("verified_by", name)));
             foreach (var (field, name) in declared.Where(item =>
                 !GeneratedActorWords.Contains(item.Name)
+                && !ProgramActorWords.Contains(item.Name)
                 && !declaredTypes.Contains(item.Name)))
             {
                 findings.Add(new FileMapFinding(
                     "FILEMAP-ACTOR-DANGLING",
                     entry.Pattern,
                     $"{field} names {name}, which is neither a declared type nor a deliberate word"));
+            }
+
+            if (entry.Kind is FileMapKind.Program)
+            {
+                foreach (var name in declared.Select(static item => item.Name)
+                    .Where(ProgramActorImplementations.ContainsKey))
+                {
+                    var implementation = ProgramActorImplementations[name];
+                    var implementationPath = Absolute(repositoryRoot, implementation);
+                    if (!File.Exists(implementationPath)
+                        || !File.ReadAllText(implementationPath).Contains(
+                            "IsBlueprintContentCompositionBuildFile",
+                            StringComparison.Ordinal))
+                    {
+                        findings.Add(new FileMapFinding(
+                            "FILEMAP-PROGRAM-ACTOR",
+                            entry.Pattern,
+                            $"program actor {name} has no live Blueprint composition consumer: {implementation}"));
+                    }
+                }
             }
         }
 
@@ -159,7 +191,7 @@ internal static class FileMapPolicy
 
         return InspectCoverage(manifest, paths)
             .Concat(registryFindings)
-            .Concat(InspectDeclaredActors(manifest, DeclaredTypeNames(repositoryRoot, paths)))
+            .Concat(InspectDeclaredActors(manifest, DeclaredTypeNames(repositoryRoot, paths), repositoryRoot))
             .Concat(InspectDataVerifiers(manifest, availableVerifiers))
             .Concat(InspectDataVerifierNames(manifest, availableVerifiers))
             .Concat(InspectGeneratedInventory(manifest, paths, GeneratedArtifactInventory.All))
@@ -433,12 +465,9 @@ internal static class FileMapPolicy
             var kind = entry.Kind;
             if (path.Split('/').Contains("Generated", StringComparer.Ordinal)
                 && kind is not FileMapKind.Generated
-                || path.StartsWith("Golden/cases/", StringComparison.Ordinal)
-                    && kind is not FileMapKind.Data
                 || path.StartsWith("Golden/Projection/", StringComparison.Ordinal)
                     && kind is not FileMapKind.Data
-                || (path.StartsWith("Meta/StrataLint/Golden/Frozen/", StringComparison.Ordinal)
-                        || path == C0CertificatePath)
+                || path.StartsWith("Meta/StrataLint/Golden/Frozen/", StringComparison.Ordinal)
                     && kind is not FileMapKind.Ledger)
             {
                 findings.Add(new FileMapFinding(

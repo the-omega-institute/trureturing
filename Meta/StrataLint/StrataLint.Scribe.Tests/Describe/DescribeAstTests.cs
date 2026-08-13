@@ -133,7 +133,6 @@ public sealed class DescribeAstTests
                 DescribeProvenanceKind.LiteratureAttested,
                 DescribeProvenanceKind.RepoDerived,
                 DescribeProvenanceKind.SuspectedNovel,
-                DescribeProvenanceKind.Unassessed,
             ],
             Enum.GetValues<DescribeProvenanceKind>());
     }

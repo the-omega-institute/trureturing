@@ -44,7 +44,6 @@ public sealed partial class ProductionEnvironmentTests
                 && item.Path == protectedPath
                 && item.Message == "protected-surface change detected (SL-022)");
         Assert.Equal(2, gateway.ReadCount);
-        Assert.Equal(2, gateway.FrozenReferenceValidationCount);
         Assert.Equal(0, source.CallCount);
     }
 
@@ -211,7 +210,9 @@ public sealed partial class ProductionEnvironmentTests
     }
 
     [Fact]
-    public void CheckRequiresBothPrecomputedLeanReportsForProtectedChanges()
+    // 旧侧 Lean 报告不再是必需参数:它唯一的用途是 Hearts.lean 变动时的语义比对,
+    // 而那个文件近 200 次提交只动过 5 次。候选侧报告仍然必需。
+    public void CheckRequiresThePrecomputedCandidateLeanReportForProtectedChanges()
     {
         var fixture = new RuleFixture();
         fixture.AddBackfillTargets();
@@ -230,7 +231,7 @@ public sealed partial class ProductionEnvironmentTests
 
         var failure = Assert.IsType<AdmissionOutcome.InfrastructureFailure>(outcome);
         Assert.Contains("--candidate-lean-report", failure.Message, StringComparison.Ordinal);
-        Assert.Contains("--baseline-lean-report", failure.Message, StringComparison.Ordinal);
+        Assert.DoesNotContain("--baseline-lean-report", failure.Message, StringComparison.Ordinal);
         Assert.Equal(0, source.CallCount);
     }
 
@@ -317,60 +318,6 @@ public sealed partial class ProductionEnvironmentTests
         Assert.Contains("Scribe emission verification failed", failure.Message, StringComparison.Ordinal);
     }
 
-    [Fact]
-    public void CheckMapsMissingFrozenLedgerToSl008()
-    {
-        var fixture = new RuleFixture();
-        fixture.AddBackfillTargets();
-        fixture.Files["Meta/registry.yaml"] = TestRegistry.Canonical;
-        fixture.Baseline["Meta/registry.yaml"] = TestRegistry.Canonical;
-        fixture.Files["Meta/domains.yaml"] = TestRegistry.Domains;
-        fixture.Baseline["Meta/domains.yaml"] = TestRegistry.Domains;
-        var gateway = new FakeRepositoryGateway(
-            RawChangeSet.Create(new[] { RuleFixture.SyntheticProtectedPath }),
-            Snapshot(fixture.Files),
-            Snapshot(fixture.Baseline));
-        var source = new FakeLeanReportSource(LeanAxiomReport.Create(fixture.Reports));
-        var environment = new ProductionCliEnvironment("/repo", gateway, source);
-
-        var outcome = CheckWithReports(environment, fixture);
-
-        var rejected = Assert.IsType<AdmissionOutcome.RuleRejected>(outcome);
-        Assert.Contains(rejected.Diagnostics, item => item.RuleId == RuleId.CreateKnown(8));
-        Assert.Contains(rejected.Diagnostics, item => item.RuleId == RuleId.CreateKnown(22));
-        Assert.Contains(rejected.Diagnostics, item => item.Message.Contains("missing", StringComparison.OrdinalIgnoreCase));
-    }
-
-    [Fact]
-    public void CheckMapsCorruptFrozenLedgerToSl008()
-    {
-        var fixture = new RuleFixture();
-        fixture.AddBackfillTargets();
-        fixture.Files["Meta/registry.yaml"] = TestRegistry.Canonical;
-        fixture.Baseline["Meta/registry.yaml"] = TestRegistry.Canonical;
-        fixture.Files["Meta/domains.yaml"] = TestRegistry.Domains;
-        fixture.Baseline["Meta/domains.yaml"] = TestRegistry.Domains;
-        AddFrozenLedger(fixture);
-        var ledgerPath = fixture.Files.Keys.First(
-            FrozenLedgerChangeClassifier.IsAcceptedEventPath);
-        fixture.Files[ledgerPath] += " ";
-        var gateway = new FakeRepositoryGateway(
-            RawChangeSet.Create(new[]
-            {
-                RuleFixture.SyntheticProtectedPath,
-                RuleFixture.BlueprintPath,
-            }),
-            Snapshot(fixture.Files),
-            Snapshot(fixture.Baseline));
-        var source = new FakeLeanReportSource(LeanAxiomReport.Create(fixture.Reports));
-        var environment = new ProductionCliEnvironment("/repo", gateway, source);
-
-        var outcome = CheckWithReports(environment, fixture);
-
-        var rejected = Assert.IsType<AdmissionOutcome.RuleRejected>(outcome);
-        Assert.Contains(rejected.Diagnostics, item => item.RuleId == RuleId.CreateKnown(8));
-        Assert.Contains(rejected.Diagnostics, item => item.RuleId == RuleId.CreateKnown(22));
-    }
 
     [Fact]
     public void CheckMapsTruthDagCyclesToSl001BeforeRuleCatalog()

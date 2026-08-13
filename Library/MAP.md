@@ -18,6 +18,10 @@
   classification deposit added the `grosswald1985representations` note. That
   pressure-causing note opened the controlled `Arith/` bucket; all 12 paths
   already present before the overflow remain in `notes/`.
+- 2026-08-13 (SL-003): `notes/` was at its 12-file limit when the generic
+  Morse-Hedlund deposit added the `morsehedlund1940symbolic` note. That
+  pressure-causing note opened the controlled `Words/` bucket; all 12 paths
+  already present before the overflow remain in `notes/`.
 
 ## Buckets
 
@@ -27,3 +31,4 @@
 - `Quantum/`: literature specific to finite-dimensional quantum information.
 - `Arith/`: literature specific to classical arithmetic and quadratic
   representations.
+- `Words/`: literature specific to symbolic dynamics and word combinatorics.

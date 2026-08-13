@@ -10,8 +10,6 @@ internal static partial class RepositoryPathPolicy
     internal const string LibraryMapPath = "Library/MAP.md";
     internal const string WorkflowPath = ".github/workflows/ci.yml";
     internal const string TheoryIngestWorkflowPath = ".github/workflows/theory-ingest.yml";
-    // 已撤役 workflow(GITHUB_TOKEN 防递归判负,PR #241);常量保留以维持保守扩展(旧树 admit 不翻),移除须走义务会计。
-    internal const string AutoUpdateBranchWorkflowPath = ".github/workflows/auto-update-branch.yml";
     internal const string HarnessGatePath = ".github/scripts/harness-gate.sh";
 
     internal static ImmutableArray<Diagnostic> Evaluate(
@@ -19,7 +17,7 @@ internal static partial class RepositoryPathPolicy
         ValidatedPolicy policy,
         RuleDescriptor sl015)
     {
-        return snapshot.Files.Keys
+        var diagnostics = snapshot.Files.Keys
             .OrderBy(static path => path.Value, StringComparer.Ordinal)
             .Select(path => Validate(path, policy))
             .OfType<RepositoryPathIssue>()
@@ -39,6 +37,25 @@ internal static partial class RepositoryPathPolicy
                     issue.Path,
                     issue.Message))
             .ToImmutableArray();
+
+        var compositionProjects = snapshot.Files.Keys
+            .Where(static path => IsBlueprintContentCompositionBuildFile(path.Value)
+                && path.Value.EndsWith(".csproj", StringComparison.Ordinal))
+            .OrderBy(static path => path.Value, StringComparer.Ordinal)
+            .ToArray();
+        if (compositionProjects.Length > 1)
+        {
+            diagnostics = diagnostics.AddRange(
+                compositionProjects.Skip(1).Select(path => new Diagnostic(
+                    sl015.Id,
+                    sl015.Title,
+                    sl015.DisplaySeverity,
+                    sl015.AdmissionEffect,
+                    path.Value,
+                    "Blueprint composition root allows at most one direct .csproj")));
+        }
+
+        return diagnostics;
     }
 
     internal static RepositoryPathIssue? Validate(RepoPath path, ValidatedPolicy policy)
@@ -58,12 +75,11 @@ internal static partial class RepositoryPathPolicy
 
         if (value is "Meta/domains.yaml" or "Meta/BACKFILL.yaml" or "Meta/registry.yaml"
             or LibraryMapPath or "Library/queries.yaml" or AssumptionRegistryPath
-            or "Meta/split.py" or "Meta/papergen"
+            or "Meta/split.py"
             or "Golden/fixture-registry.yaml" or "Golden/values-kernels.toml"
             or WorkflowPath or TheoryIngestWorkflowPath
-            or AutoUpdateBranchWorkflowPath
             or ".github/CODEOWNERS"
-            or ".github/scripts/baseline-admission.sh" or HarnessGatePath
+            or HarnessGatePath
             || value.StartsWith("Meta/StrataLint/", StringComparison.Ordinal)
             || DigestionCasStore.IsCanonicalPath(value)
             || BackfillInventoryLoader.IsCanonicalPath(value)
@@ -75,7 +91,6 @@ internal static partial class RepositoryPathPolicy
             || value.StartsWith(".claude/skills/", StringComparison.Ordinal)
             || value.StartsWith(".codex/skills/", StringComparison.Ordinal)
             || value.StartsWith("docs/devloop/", StringComparison.Ordinal)
-            || IsGoldenCaseData(value)
             || IsGoldenProjectionData(value)
             || IsCanonicalFutureCoordinate(value))
         {
@@ -83,6 +98,11 @@ internal static partial class RepositoryPathPolicy
         }
 
         if (IsCanonicalBlueprintDefinitionSource(value))
+        {
+            return null;
+        }
+
+        if (IsBlueprintContentCompositionBuildFile(value))
         {
             return null;
         }
@@ -263,21 +283,6 @@ internal static partial class RepositoryPathPolicy
         }
 
         return policy.Domains.TryGetValue(domain, out var registered) && registered == stratum;
-    }
-
-    private static bool IsGoldenCaseData(string path)
-    {
-        const string prefix = "Golden/cases/";
-        const string suffix = ".toml";
-        if (!path.StartsWith(prefix, StringComparison.Ordinal)
-            || !path.EndsWith(suffix, StringComparison.Ordinal))
-        {
-            return false;
-        }
-
-        var stem = path[prefix.Length..^suffix.Length];
-        return stem.Length > 0 && stem.All(static character =>
-            char.IsAsciiLetterOrDigit(character) || character is '_' or '-');
     }
 
     private static bool IsGoldenProjectionData(string path)

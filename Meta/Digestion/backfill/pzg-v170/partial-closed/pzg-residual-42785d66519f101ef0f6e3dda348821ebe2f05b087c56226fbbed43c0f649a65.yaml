@@ -17,7 +17,6 @@ receipts:
   unresolved_subitems:
     - bounded-adjoint-operator-construction
     - basis-subtraction-and-truncation-action
-    - joint-operator-eigenvector-statement
     - bloch-wave-and-brillouin-phase-interpretation
     - bost-connes-identification
     - numerical-window-certificate

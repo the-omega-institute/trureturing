@@ -4,6 +4,8 @@ fingerprints:
   normalized_sha256: sha256:941ad524ec221b1c9b88cf09531e813c695cea016f8afe928c894adc0a02bb42
 cas_ref: sha256:941ad524ec221b1c9b88cf09531e813c695cea016f8afe928c894adc0a02bb42
 coverage_gids:
+  - D5/S3/Weil/SpectralHilbert.labeled_zeta_inner
+  - D5/S3/Weil/EulerProduct.finite_euler_zero_free_and_pole_locus
   - D5/S3/Zeros/EulerWindows.finite_euler_window_ne_zero
 receipts:
   coverage:
@@ -15,7 +17,6 @@ receipts:
       definition_sha256: sha256:72d7b5d8dbd26af1c3ef49969e3c9e2f870296684d178c2b76f93a102f658ade
       emission_sha256: sha256:04f11a17f4ad46a59b40536368a46dc933995818155ee06b48e4a7d3d389afc2
   unresolved_subitems:
-    - full-plane-zero-freeness-and-pole-lattice
     - all-prime-axis-tail-participation
     - critical-strip-euler-product-divergence-and-nonapproximation
     - epsilon-window-event-necessity

@@ -4,6 +4,7 @@ fingerprints:
   normalized_sha256: sha256:5ba0d7e5fa0080c7cbd5971f1564d1c28aba63d28da751a43eb2612111802f65
 cas_ref: sha256:5ba0d7e5fa0080c7cbd5971f1564d1c28aba63d28da751a43eb2612111802f65
 coverage_gids:
+  - D5/S3/Observer/MetricGeometry/WindowObserverDistance.window_observer_distance_eq_cycle_distance
   - D5/S3/Observer/MetricGeometry/VisiblePhaseInfinity.hiddenTranslation_visible_phase_witness
   - D5/S3/Observer/MetricGeometry/OrbitConnesDistance.orbit_connes_distance_eq
   - D5/S3/Observer/ObserverMetric.commute_iff_updateDefect_eq_zero
@@ -16,7 +17,6 @@ receipts:
   coverage: []
   scribe: []
   unresolved_subitems:
-    - connes-metric-d-L-orbit-distance
     - streamline-infinity-at-nonintegral-fiber-offset
     - center-type-infinity-across-visible-phase
     - rieffel-metric-bundle-over-torus

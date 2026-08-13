@@ -9,13 +9,13 @@ public sealed class LibraryNoteTests
     {
         var reference = LibraryNoteRef.Create("D5/L/sos1957threegap");
         var bucketed = LibraryNoteRef.Create("D5/L/Weil/sample2026paper");
-        var provenance = DescribeProvenance.LiteratureAttested(reference);
+        var provenance = AssessedProvenance.FromLiterature(reference);
 
         Assert.Equal("D5/L/sos1957threegap", reference.Value);
         Assert.Equal("sos1957threegap", reference.BibKey.Value);
         Assert.Equal("lit/sos1957threegap", reference.Anchor.CanonicalString);
-        Assert.Equal(DescribeProvenanceKind.LiteratureAttested, provenance.Kind);
-        Assert.Same(reference, provenance.LiteratureReference);
+        Assert.IsType<AssessedProvenance.LiteratureAttested>(provenance);
+        Assert.Same(reference, ((AssessedProvenance.LiteratureAttested)provenance).NoteRef);
         Assert.Equal("sample2026paper", bucketed.BibKey.Value);
         Assert.Equal("Library/Weil/sample2026paper.md", bucketed.Reference.Path.Value);
         Assert.Throws<ArgumentException>(() => LibraryNoteRef.Create("D5/S1/Phase/Basic"));

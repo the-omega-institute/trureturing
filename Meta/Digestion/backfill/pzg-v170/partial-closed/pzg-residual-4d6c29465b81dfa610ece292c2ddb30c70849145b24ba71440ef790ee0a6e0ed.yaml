@@ -4,6 +4,8 @@ fingerprints:
   normalized_sha256: sha256:4d6c29465b81dfa610ece292c2ddb30c70849145b24ba71440ef790ee0a6e0ed
 cas_ref: sha256:4d6c29465b81dfa610ece292c2ddb30c70849145b24ba71440ef790ee0a6e0ed
 coverage_gids:
+  - D5/S3/Zeros/CompletedZeta.zero_quartet_scaling_spec
+  - D5/S3/Zeros/ZeroGeometry.mirror_pair_distinct_iff_off_line_and_cancels
   - D5/S3/Weil/ReflectionLedger.mirror_reversal_spec
 receipts:
   coverage:
@@ -17,7 +19,6 @@ receipts:
   unresolved_subitems:
     - half-density-cut-as-universal-measurement-midline
     - zero-set-invariance-under-conjugate-reflection
-    - zero-orbit-length-one-versus-two-classification
     - omega-flow-length-weight-trace-transformation-chain
     - zeta-as-trace-of-exp-minus-s-times-length
     - zeta-trace-numerical-certificate-at-two-point-five

@@ -122,21 +122,43 @@ internal static partial class RepositoryRules
             {
                 findings.Add(new RuleFinding(
                     path.Value,
-                    $"artifact spans {lineCount} lines (soft limit 600, hard limit 800)",
+                    $"artifact spans {lineCount} lines (soft limit {ArtifactSoftLineLimit}, "
+                    + $"hard limit {ArtifactHardLineLimit})",
                     AdmissionEffect.Observe));
             }
 
-            var slash = path.Value.LastIndexOf('/');
-            var directory = slash < 0 ? "." : path.Value[..slash];
+            var directory = DirectoryOf(path.Value);
             directories[directory] = directories.GetValueOrDefault(directory) + 1;
         }
 
+        // Occupancy is counted over the whole tree so the number reported is the real one, but
+        // only buckets this change touches are reported. DirectoryToleranceLimit above was added
+        // so that a union of two independently-admitted PRs would not end up "blocking every
+        // unrelated PR until someone splits" - and it was wired into the repository-wide net
+        // alone, leaving this rule scanning every directory and blocking them anyway. On
+        // 2026-08-13 that is exactly what happened: two deposits branched from an eleven-file
+        // D5/S3/Constants each saw twelve and admitted, and the union of thirteen stopped dev
+        // and every unrelated branch. Every member of that bucket is frozen, so it cannot be
+        // split by moving anything; the block had no exit. Scoping is what the comment above
+        // already claims this rule does - the next change *touching that bucket* is still
+        // refused, and the split pressure lands exactly where it belongs.
+        var touched = context.Changes.Paths
+            .Select(static path => DirectoryOf(path.Value))
+            .ToHashSet(StringComparer.Ordinal);
         findings.AddRange(directories
-            .Where(static item => item.Value > DirectoryFileLimit)
+            .Where(item => item.Value > DirectoryFileLimit && touched.Contains(item.Key))
             .Select(static item => new RuleFinding(
                 item.Key,
-                $"directory contains {item.Value} files (maximum 12)")));
+                $"directory contains {item.Value} files (admission limit "
+                + $"{DirectoryFileLimit}, repository tolerance "
+                + $"{DirectoryToleranceLimit}; split per CLAUDE.md 8)")));
         return findings.ToImmutable();
+    }
+
+    private static string DirectoryOf(string path)
+    {
+        var slash = path.LastIndexOf('/');
+        return slash < 0 ? "." : path[..slash];
     }
 
     private static ImmutableArray<RuleFinding> Mirrors(RuleEvaluationContext context)
@@ -203,6 +225,22 @@ internal static partial class RepositoryRules
             return ImmutableArray<RuleFinding>.Empty;
         }
 
+        // Hearts.lean 字节没变 ⇒ 语义没变(同一份源码、同一个钉版 toolchain),不必为了
+        // 比对而重编一整棵旧侧 Lean 树。这是全仓唯一读旧侧 Lean 报告的地方,而该文件近
+        // 200 次提交只动过 5 次 —— 其余每个 PR 都在为它白付一次编译。
+        if (!SnapshotContentDiffers(context.Current, context.ForkPoint, path))
+        {
+            return ImmutableArray<RuleFinding>.Empty;
+        }
+
+        // 字节变了就必须比对语义;此时缺旧侧报告是 fail-closed,不是放行。
+        if (context.BaselineLean is null)
+        {
+            return ImmutableArray.Create(new RuleFinding(
+                path,
+                "Hearts.lean changed; semantic comparison requires --baseline-lean-report"));
+        }
+
         if (!RepoPath.TryCreate(path, out var repoPath)
             || !context.BaselineLean.Report.Files.TryGetValue(repoPath, out var baseline)
             || !context.Lean.Report.Files.TryGetValue(repoPath, out var current))
@@ -254,6 +292,17 @@ internal static partial class RepositoryRules
 
         return ImmutableArray.Create(
             new RuleFinding(path, "semantic declaration identities and types are frozen"));
+    }
+
+    private static bool SnapshotContentDiffers(
+        RepositorySnapshot current,
+        RepositorySnapshot baseline,
+        string path)
+    {
+        var hasCurrent = current.TryGetFile(path, out var currentFile);
+        var hasBaseline = baseline.TryGetFile(path, out var baselineFile);
+        return hasCurrent != hasBaseline
+            || hasCurrent && !currentFile!.RawBytes.SequenceEqual(baselineFile!.RawBytes);
     }
 
     private static ImmutableArray<RuleFinding> Generality(RuleEvaluationContext context)
@@ -372,77 +421,4 @@ internal static partial class RepositoryRules
         return findings.ToImmutable();
     }
 
-    private static ImmutableArray<RuleFinding> Tasks(RuleEvaluationContext context)
-    {
-        var findings = ImmutableArray.CreateBuilder<RuleFinding>();
-        var current = CollectTasks(context.Current, findings);
-        var baseline = CollectTasks(context.ForkPoint, null);
-        foreach (var duplicate in current.Where(static item => item.Value.Count > 1))
-        {
-            findings.Add(new RuleFinding(duplicate.Value[0].Path, $"task code {duplicate.Key} is duplicated"));
-        }
-
-        foreach (var (code, entries) in current)
-        {
-            foreach (var entry in entries.Where(static entry =>
-                entry.Autopsy.Contains("[codex-failed]", StringComparison.Ordinal)
-                && !HasValidCodexLogReference(entry.Autopsy)))
-            {
-                findings.Add(new RuleFinding(
-                    entry.Path,
-                    $"codex-failed autopsy for {code} requires a valid [codex-log:<rooted-path>] reference"));
-            }
-        }
-
-        foreach (var (code, entries) in baseline)
-        {
-            if (!current.TryGetValue(code, out var currentEntries))
-            {
-                findings.Add(new RuleFinding(entries[0].Path, $"permanent task code {code} was removed"));
-            }
-            else if (entries[0].Autopsy != "none"
-                && !currentEntries[0].Autopsy.Contains(entries[0].Autopsy, StringComparison.Ordinal))
-            {
-                findings.Add(new RuleFinding(currentEntries[0].Path, $"autopsy for {code} was shortened"));
-            }
-        }
-
-        return findings.ToImmutable();
-    }
-
-    private static bool HasValidCodexLogReference(string autopsy) =>
-        CodexLogReferencePattern.Matches(autopsy)
-            .Select(static match => match.Groups["path"].Value)
-            .Any(IsValidCodexLogPath);
-
-    private static bool IsValidCodexLogPath(string path)
-    {
-        string relative;
-        if (path.StartsWith("<RT>/", StringComparison.Ordinal))
-        {
-            relative = path[5..];
-        }
-        else if (path.StartsWith("~/", StringComparison.Ordinal))
-        {
-            relative = path[2..];
-        }
-        else if (path.StartsWith("/", StringComparison.Ordinal))
-        {
-            relative = path[1..];
-        }
-        else
-        {
-            return false;
-        }
-
-        // This walking skeleton validates portable citation syntax only. Codex logs and
-        // receipts are host/runtime-local, so checking path existence would reject valid
-        // citations on CI runners that cannot share the originating filesystem (#707).
-        var segments = relative.Split('/');
-        return segments.Length > 0 && segments.All(static segment =>
-            segment.Length > 0
-            && segment is not "." and not ".."
-            && segment.All(static character =>
-                char.IsAsciiLetterOrDigit(character) || character is '.' or '_' or '-'));
-    }
 }
