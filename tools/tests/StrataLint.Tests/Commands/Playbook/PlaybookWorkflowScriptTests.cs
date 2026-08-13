@@ -98,7 +98,7 @@ public sealed class PlaybookWorkflowScriptTests
 
         internal PlaybookFixture()
         {
-            var root = FindRepositoryRoot();
+            var root = TestRepositoryLayout.FindRoot();
             callsPath = Path.Combine(temporary.Path, "calls");
             binPath = Path.Combine(temporary.Path, "bin");
             Directory.CreateDirectory(binPath);
@@ -152,14 +152,4 @@ public sealed class PlaybookWorkflowScriptTests
         public void Dispose() => temporary.Dispose();
     }
 
-    private static string FindRepositoryRoot()
-    {
-        var directory = new DirectoryInfo(AppContext.BaseDirectory);
-        while (directory is not null && !File.Exists(Path.Combine(directory.FullName, "Makefile")))
-        {
-            directory = directory.Parent;
-        }
-
-        return directory?.FullName ?? throw new InvalidOperationException("repository root not found");
-    }
 }

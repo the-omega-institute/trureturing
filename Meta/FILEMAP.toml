@@ -213,15 +213,6 @@ artifact_id = "none"
 runtime_disposition = "committed-source"
 
 [[files]]
-pattern = "Golden/fixture-registry.yaml"
-kind = "data"
-produced_by = "none"
-consumed_by = ["TestRegistry"]
-verified_by = ["TestRegistry"]
-artifact_id = "none"
-runtime_disposition = "committed-source"
-
-[[files]]
 pattern = "Golden/gate-authority-roots.toml"
 kind = "data"
 produced_by = "none"
@@ -548,10 +539,46 @@ artifact_id = "none"
 runtime_disposition = "committed-source"
 
 [[files]]
-pattern = "tools/tests/StrataLint.*/**"
+pattern = "tools/tests/StrataLint.*/**/*.cs"
 kind = "program"
 produced_by = "none"
 consumed_by = ["dotnet"]
 verified_by = ["dotnet-test"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+
+[[files]]
+pattern = "tools/tests/StrataLint.*/**/*.csproj"
+kind = "program"
+produced_by = "none"
+consumed_by = ["dotnet"]
+verified_by = ["dotnet-test"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+
+[[files]]
+pattern = "tools/tests/StrataLint.*/**/*.json"
+kind = "program"
+produced_by = "none"
+consumed_by = ["dotnet"]
+verified_by = ["dotnet-test"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+
+[[files]]
+pattern = "tools/tests/StrataLint.*/**/*.md"
+kind = "program"
+produced_by = "none"
+consumed_by = ["dotnet"]
+verified_by = ["dotnet-test"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+
+[[files]]
+pattern = "tools/tests/StrataLint.Tests/Fixtures/fixture-registry.yaml"
+kind = "data"
+produced_by = "none"
+consumed_by = ["TestRegistry"]
+verified_by = ["TestRegistry"]
 artifact_id = "none"
 runtime_disposition = "committed-source"

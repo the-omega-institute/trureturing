@@ -20,7 +20,7 @@ public sealed partial class TheoryAtomizerTests
     [Fact]
     public void ObserverStateNotPathExtentMatchesFrozenCasBytes()
     {
-        var root = FindRepositoryRoot();
+        var root = TestRepositoryLayout.FindRoot();
         var golden = File.ReadAllBytes(Path.Combine(
             root,
             DigestionCasStore.RootPath,
@@ -36,7 +36,7 @@ public sealed partial class TheoryAtomizerTests
     [Fact]
     public void ObserverAdapterRecognizesEveryProductionClaim()
     {
-        var root = FindRepositoryRoot();
+        var root = TestRepositoryLayout.FindRoot();
         var bytes = File.ReadAllBytes(Path.Combine(root, ThirdProductionSource));
 
         var document = AtomizerRegistry.Atomize(AtomizerRegistry.ObserverId, bytes, DigestionTestSupport.Rules);

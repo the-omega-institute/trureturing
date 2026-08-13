@@ -481,7 +481,7 @@ public sealed class BackfillInventoryLoaderTests
     [Fact]
     public void CanonicalWriterRoundTripsTheCurrentLedgerByteExact()
     {
-        var root = FindRepositoryRoot();
+        var root = TestRepositoryLayout.FindRoot();
         var path = Path.Combine(root, BackfillInventoryLoader.RelativePath);
         if (File.Exists(path))
         {
@@ -506,7 +506,7 @@ public sealed class BackfillInventoryLoaderTests
     [Fact]
     public void CanonicalLedgerE2StoresEveryReceiptPreimageInCas()
     {
-        var root = FindRepositoryRoot();
+        var root = TestRepositoryLayout.FindRoot();
         var document = BackfillInventoryLoader.LoadRoot(root);
         var entries = document.RequireDigestionEntries();
 
@@ -538,7 +538,7 @@ public sealed class BackfillInventoryLoaderTests
     [Fact]
     public void RemarkBatchUpgradeCandidatesRemainResidualWithNamedUnresolvedClaims()
     {
-        var root = FindRepositoryRoot();
+        var root = TestRepositoryLayout.FindRoot();
         var entries = BackfillInventoryLoader.LoadRoot(root)
             .RequireDigestionEntries();
         string[] expectedPaths =
@@ -570,7 +570,7 @@ public sealed class BackfillInventoryLoaderTests
     [Fact]
     public void StatementEchoForbidsRemarkClosureOfCertificatesAndTestableIdentities()
     {
-        var root = FindRepositoryRoot();
+        var root = TestRepositoryLayout.FindRoot();
         var echo = File.ReadAllText(Path.Combine(root, "agents", "echo-template.md"));
 
         Assert.Contains("Remark-closure guard", echo, StringComparison.Ordinal);
@@ -581,21 +581,6 @@ public sealed class BackfillInventoryLoaderTests
         Assert.Contains("unresolved_subitems", echo, StringComparison.Ordinal);
     }
 
-    private static string FindRepositoryRoot()
-    {
-        for (var current = new DirectoryInfo(AppContext.BaseDirectory);
-             current is not null;
-             current = current.Parent)
-        {
-            if (File.Exists(Path.Combine(current.FullName, "global.json"))
-                && Directory.Exists(Path.Combine(current.FullName, "Blueprint")))
-            {
-                return current.FullName;
-            }
-        }
-
-        throw new DirectoryNotFoundException("Could not locate repository root.");
-    }
 
     private static bool TryLoadEntry(string yaml)
     {
