@@ -15,6 +15,7 @@
   carrying the digit-gas root-unit criteria.
 - `Scale/`: real embeddings and logarithmic scales of golden integers.
 - `Solenoid/`: compact solenoid models and hidden-fiber constructions.
+- `Words/Complexity/`: general finite-alphabet factor-complexity theorems.
 - `Words/ReturnWords/`: return blocks between adjacent occurrences of golden factors.
 
 - 2026-07-30 SL-003 分裂记录:Digit 桶达 12 上限;按"只裂不迁"新增子疆域桶 `Deficit/`(组名已入词表),存量 Digit 模块地址全数保留;首件 `Deficit/DeficitInteger.lean`。
@@ -30,6 +31,10 @@
   opened the local subdomain `Words/Palindromes/` under the route engine's one-level
   split rule. Existing Words paths remain unmoved, Lean namespaces remain
   `D5.S1.Words`, and the first module is `Palindromes/GoldenPalindromicPrefix.lean`.
+- 2026-08-13 SL-003 split record: `Words/` remained at its 12-Lean-file limit;
+  opened the local subdomain `Words/Complexity/` for generic word-combinatorics
+  theorems. Existing Words paths remain unmoved, and the first module is
+  `Complexity/MorseHedlund.lean`.
 - 2026-08-11 SL-003 split record: `Blueprint/D5/S1/Phase/` was already at its
   12-file limit; opened the local subdomain `Phase/Interference/` under the route
   engine's one-level split rule. Existing Phase paths remain unmoved, and the first
