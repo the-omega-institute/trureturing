@@ -17,10 +17,10 @@ governance_documents:
   - "Generated/truth-graph.v1.json"
   - "Meta/Digestion/atomizers.toml"
   - "Meta/FILEMAP.toml"
-  - "tools/Generated/scribe-emissions.v1.json"
   - "docs/CONTRIBUTING.md"
   - "docs/GOVERNANCE.md"
   - "docs/develop/spec/golden-ledger-repo-spec.md"
+  - "tools/Generated/scribe-emissions.v1.json"
 agent_files:
   - "CONTEXT.md"
   - "adversary.md"
