@@ -21,7 +21,7 @@ This file is Codex-specific packaging of repository obligations; it has no autho
 - The applicable `agents/*.md` role charter - owns role-specific duties.
 - `agents/echo-template.md` - owns the statement-echo record.
 - `make help` - owns the live catalogue of canonical doors.
-- `Meta/StrataLint/` - owns executable admission and repository enforcement.
+- `tools/` - owns executable admission and repository enforcement.
 
 ## State machine
 
@@ -32,17 +32,17 @@ Follow these steps in order. Do not pass a step until its postcondition holds.
 Run:
 
 ```sh
-eval "$(sed -n '/^export PATH=/p' Meta/StrataLint/scripts/local-harness-gate.sh)"
+eval "$(sed -n '/^export PATH=/p' tools/scripts/local-harness-gate.sh)"
 # If not already in a dispatcher-assigned isolated lane:
 make worktree NAME=<lane> && cd <created-path-from-output>
 pwd -P && git rev-parse --show-toplevel && make dotnet
 ```
 
-Re-read the current `export PATH` from `Meta/StrataLint/scripts/local-harness-gate.sh` for every task rather than trusting a list quoted elsewhere; its `/usr/sbin` entry must survive because the report supervisor requires `lsof`, which lives there. If a dispatcher already assigned an isolated lane, do not create a second one: confirm the existing lane with the same `pwd -P` / `git rev-parse --show-toplevel` check. Otherwise, the `make worktree` output is JSON whose `path` field names the created path; substitute that value for `<created-path-from-output>` and work only there.
+Re-read the current `export PATH` from `tools/scripts/local-harness-gate.sh` for every task rather than trusting a list quoted elsewhere; its `/usr/sbin` entry must survive because the report supervisor requires `lsof`, which lives there. If a dispatcher already assigned an isolated lane, do not create a second one: confirm the existing lane with the same `pwd -P` / `git rev-parse --show-toplevel` check. Otherwise, the `make worktree` output is JSON whose `path` field names the created path; substitute that value for `<created-path-from-output>` and work only there.
 
 Build through the canonical `make dotnet` door because `make show-atom` runs the Release CLI with `--no-build`.
 
-Before any deposit, require `git status --short` to print nothing except the intended formalization changes. Prefer a fully clean tree before beginning the task. The deposit workflow in `Meta/StrataLint/scripts/workflow/playbook-workflows.sh` stages with `git add -A` in both `commit_phase_a_if_needed` and `commit_all_if_needed`; therefore every change in the tree can enter a deposit commit.
+Before any deposit, require `git status --short` to print nothing except the intended formalization changes. Prefer a fully clean tree before beginning the task. The deposit workflow in `tools/scripts/workflow/playbook-workflows.sh` stages with `git add -A` in both `commit_phase_a_if_needed` and `commit_all_if_needed`; therefore every change in the tree can enter a deposit commit.
 
 Postcondition: the pinned toolchain is on PATH; `pwd -P` and `git rev-parse --show-toplevel` agree with the assigned or created isolated lane; `make dotnet` has built the CLI so `make show-atom` succeeds; and no unrelated or unexplained change is present.
 
@@ -207,7 +207,7 @@ Before Step 7, the producing seat must answer every item with concrete evidence.
 - Clause fidelity: place the authoritative atom clauses beside the Lean clauses one-to-one, mapping every clause to an exact Lean binder, hypothesis, or conclusion. The dropped-or-weakened set must be empty; any weakening, omission, or unresolved ambiguity forces `open` before deposit.
 - Rendered-statement fidelity: read the emitted Blueprint `.md` for this document and compare its displayed statement against the Lean declaration symbol by symbol; use a neighbouring landed mirror as a shape check.
   The formula DSL and writer own tokens that can be valid LaTeX and structurally accepted yet mean something different from the theorem, so `emit` exiting 0 is not evidence that the rendering is faithful.
-  A mismatch blocks deposit; resolve it against `Meta/StrataLint/StrataLint.Scribe/Ast/FormulaDsl.cs` and `Meta/StrataLint/StrataLint.Scribe/Writers/LatexWriter.cs`, or end the task `open`.
+  A mismatch blocks deposit; resolve it against `tools/StrataLint.Scribe/Ast/FormulaDsl.cs` and `tools/StrataLint.Scribe/Writers/LatexWriter.cs`, or end the task `open`.
 
 Finally, run the grader-trap checklist against your own work before sign-off — witness-vs-universal, instance-vs-general, conditional-vs-unconditional, pointwise-vs-operator, proof-internal-vs-addressable-statement, multi-clause residue names, mechanism-vs-outcome — and record for each either "not applicable" or how your statement clears it. Reviewers will run exactly this list; a mismatch you find yourself is a free fix, one they find is a blocked lane.
 
@@ -264,7 +264,7 @@ Several machines drive this repository concurrently and `dev` advances roughly h
 - Never hand-edit generated projections; their canonical producers own them.
 - Never hand-edit the frozen ledger; the deposit door owns it.
 - Never add a declaration to a module with an active Freeze event; the frozen ledger owns this constraint.
-- Never exceed directory capacity; `Meta/StrataLint/StrataLint.Engine/Rules/RepositoryRules.Structure.cs` owns this rule.
+- Never exceed directory capacity; `tools/StrataLint.Engine/Rules/RepositoryRules.Structure.cs` owns this rule.
 - Never hand-edit formalization receipts; the deposit and cover doors own them.
 - Never edit `Meta/Digestion/**` from a producing seat; digestion-ledger surgery is dispatcher-owned.
 - Never weaken the echoed statement to make a proof close; the statement echo and this fidelity gate own that obligation.
@@ -272,10 +272,10 @@ Several machines drive this repository concurrently and `dev` advances roughly h
 
 ## What this skill does not own
 
-- Path policy is owned by `Meta/StrataLint/StrataLint.Engine/Coordinates/RepositoryPathPolicy.cs` and its registered policy data.
-- Capacity limits are owned by `Meta/StrataLint/StrataLint.Engine/Rules/RepositoryRules.Structure.cs`.
+- Path policy is owned by `tools/StrataLint.Engine/Coordinates/RepositoryPathPolicy.cs` and its registered policy data.
+- Capacity limits are owned by `tools/StrataLint.Engine/Rules/RepositoryRules.Structure.cs`.
 - Lean header shape is owned by the live harness and demonstrated by the latest landed deposit.
 - Import direction is owned by the repository specification and its StrataLint rules.
-- Admission, freezing, receipts, coverage, and status are owned by the canonical `make` doors and `Meta/StrataLint/`.
+- Admission, freezing, receipts, coverage, and status are owned by the canonical `make` doors and `tools/`.
 
 This skill names each concern's owner without reproducing its definitions or thresholds. The prohibitions above are pointers that carry the owner's name. Discover each concern's current form from its owner; the harness is the judge.

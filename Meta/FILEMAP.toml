@@ -2,7 +2,7 @@ schema_version = 2
 
 [residence_policy]
 case_id = "RESIDENCE-EPOCH"
-desired = "data-must-live-outside-Meta/StrataLint"
+desired = "data-must-live-outside-tools"
 known_violation_count = 0
 status = "closed"
 
@@ -195,6 +195,15 @@ mode = "100644"
 history_requirement = "not-required"
 
 [[files]]
+pattern = "Golden/Frozen/accepted/*.json"
+kind = "ledger"
+produced_by = "FrozenLedgerCanonicalWriter"
+consumed_by = ["FrozenLedger"]
+verified_by = ["SL-008"]
+artifact_id = "none"
+runtime_disposition = "committed-ledger"
+
+[[files]]
 pattern = "Golden/Projection/*.json"
 kind = "data"
 produced_by = "none"
@@ -339,125 +348,6 @@ artifact_id = "none"
 runtime_disposition = "committed-source"
 
 [[files]]
-pattern = "Meta/StrataLint/ARCHITECTURE.md"
-kind = "program"
-produced_by = "none"
-consumed_by = ["developer"]
-verified_by = ["architecture-tests"]
-artifact_id = "none"
-runtime_disposition = "committed-source"
-
-[[files]]
-pattern = "Meta/StrataLint/Architecture/*.txt"
-kind = "program"
-produced_by = "none"
-consumed_by = ["BannedApiAnalyzers"]
-verified_by = ["architecture-tests"]
-artifact_id = "none"
-runtime_disposition = "committed-source"
-
-[[files]]
-pattern = "Meta/StrataLint/Architecture/HARDCODE-LEDGER.md"
-kind = "ledger"
-produced_by = "none"
-consumed_by = ["ArchitectureTests"]
-verified_by = ["ArchitectureTests"]
-artifact_id = "none"
-runtime_disposition = "committed-ledger"
-
-[[files]]
-pattern = "Meta/StrataLint/Architecture/MAP.md"
-kind = "program"
-produced_by = "none"
-consumed_by = ["developer"]
-verified_by = ["architecture-tests"]
-artifact_id = "none"
-runtime_disposition = "committed-source"
-
-[[files]]
-pattern = "Meta/StrataLint/BannedApiCompileFailProof/**"
-kind = "program"
-produced_by = "none"
-consumed_by = ["dotnet"]
-verified_by = ["dotnet-build"]
-artifact_id = "none"
-runtime_disposition = "committed-source"
-
-[[files]]
-pattern = "Meta/StrataLint/CompileFailProof/**"
-kind = "program"
-produced_by = "none"
-consumed_by = ["dotnet"]
-verified_by = ["dotnet-build"]
-artifact_id = "none"
-runtime_disposition = "committed-source"
-
-[[files]]
-pattern = "Meta/StrataLint/Generated/scribe-emissions.v1.json"
-kind = "generated"
-produced_by = "ScribeEmitter"
-consumed_by = ["ScribeEmitter"]
-verified_by = ["ScribeEmitter"]
-artifact_id = "A-SCRIBE"
-runtime_disposition = "run-local"
-mode = "100644"
-history_requirement = "not-required"
-
-[[files]]
-pattern = "Golden/Frozen/accepted/*.json"
-kind = "ledger"
-produced_by = "FrozenLedgerCanonicalWriter"
-consumed_by = ["FrozenLedger"]
-verified_by = ["SL-008"]
-artifact_id = "none"
-runtime_disposition = "committed-ledger"
-
-[[files]]
-pattern = "Meta/StrataLint/StrataLint.*/**"
-kind = "program"
-produced_by = "none"
-consumed_by = ["dotnet"]
-verified_by = ["dotnet-test"]
-artifact_id = "none"
-runtime_disposition = "committed-source"
-
-[[files]]
-pattern = "Meta/StrataLint/StrataLint.sln"
-kind = "program"
-produced_by = "none"
-consumed_by = ["dotnet"]
-verified_by = ["dotnet-test"]
-artifact_id = "none"
-runtime_disposition = "committed-source"
-
-[[files]]
-pattern = "Meta/StrataLint/TOWER.yaml"
-kind = "program"
-produced_by = "none"
-consumed_by = ["CoverageAnalyzer"]
-verified_by = ["make-gate"]
-artifact_id = "none"
-runtime_disposition = "committed-source"
-
-[[files]]
-pattern = "Meta/StrataLint/lean-inspector/**"
-kind = "program"
-produced_by = "none"
-consumed_by = ["Lean"]
-verified_by = ["lean-inspector"]
-artifact_id = "none"
-runtime_disposition = "committed-source"
-
-[[files]]
-pattern = "Meta/StrataLint/scripts/**"
-kind = "program"
-produced_by = "none"
-consumed_by = ["automation"]
-verified_by = ["make-gate"]
-artifact_id = "none"
-runtime_disposition = "committed-source"
-
-[[files]]
 pattern = "Meta/domains.yaml"
 kind = "data"
 produced_by = "none"
@@ -544,5 +434,124 @@ kind = "program"
 produced_by = "none"
 consumed_by = ["agent"]
 verified_by = ["repository-policy"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+
+[[files]]
+pattern = "tools/ARCHITECTURE.md"
+kind = "program"
+produced_by = "none"
+consumed_by = ["developer"]
+verified_by = ["architecture-tests"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+
+[[files]]
+pattern = "tools/Architecture/*.txt"
+kind = "program"
+produced_by = "none"
+consumed_by = ["BannedApiAnalyzers"]
+verified_by = ["architecture-tests"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+
+[[files]]
+pattern = "tools/Architecture/HARDCODE-LEDGER.md"
+kind = "ledger"
+produced_by = "none"
+consumed_by = ["ArchitectureTests"]
+verified_by = ["ArchitectureTests"]
+artifact_id = "none"
+runtime_disposition = "committed-ledger"
+
+[[files]]
+pattern = "tools/Architecture/MAP.md"
+kind = "program"
+produced_by = "none"
+consumed_by = ["developer"]
+verified_by = ["architecture-tests"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+
+[[files]]
+pattern = "tools/Generated/scribe-emissions.v1.json"
+kind = "generated"
+produced_by = "ScribeEmitter"
+consumed_by = ["ScribeEmitter"]
+verified_by = ["ScribeEmitter"]
+artifact_id = "A-SCRIBE"
+runtime_disposition = "run-local"
+mode = "100644"
+history_requirement = "not-required"
+
+[[files]]
+pattern = "tools/StrataLint.*/**"
+kind = "program"
+produced_by = "none"
+consumed_by = ["dotnet"]
+verified_by = ["dotnet-test"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+
+[[files]]
+pattern = "tools/StrataLint.sln"
+kind = "program"
+produced_by = "none"
+consumed_by = ["dotnet"]
+verified_by = ["dotnet-test"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+
+[[files]]
+pattern = "tools/TOWER.yaml"
+kind = "program"
+produced_by = "none"
+consumed_by = ["CoverageAnalyzer"]
+verified_by = ["make-gate"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+
+[[files]]
+pattern = "tools/lean-inspector/**"
+kind = "program"
+produced_by = "none"
+consumed_by = ["Lean"]
+verified_by = ["lean-inspector"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+
+[[files]]
+pattern = "tools/scripts/**"
+kind = "program"
+produced_by = "none"
+consumed_by = ["automation"]
+verified_by = ["make-gate"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+
+[[files]]
+pattern = "tools/tests/BannedApiCompileFailProof/**"
+kind = "program"
+produced_by = "none"
+consumed_by = ["dotnet"]
+verified_by = ["dotnet-build"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+
+[[files]]
+pattern = "tools/tests/CompileFailProof/**"
+kind = "program"
+produced_by = "none"
+consumed_by = ["dotnet"]
+verified_by = ["dotnet-build"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+
+[[files]]
+pattern = "tools/tests/StrataLint.*/**"
+kind = "program"
+produced_by = "none"
+consumed_by = ["dotnet"]
+verified_by = ["dotnet-test"]
 artifact_id = "none"
 runtime_disposition = "committed-source"

@@ -17,7 +17,7 @@ governance_documents:
   - "Generated/truth-graph.v1.json"
   - "Meta/Digestion/atomizers.toml"
   - "Meta/FILEMAP.toml"
-  - "Meta/StrataLint/Generated/scribe-emissions.v1.json"
+  - "tools/Generated/scribe-emissions.v1.json"
   - "docs/CONTRIBUTING.md"
   - "docs/GOVERNANCE.md"
   - "docs/develop/spec/golden-ledger-repo-spec.md"

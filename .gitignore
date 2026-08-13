@@ -16,4 +16,4 @@ __pycache__/
 /Generated/DAG.md
 /Generated/FILEMAP.md
 /Generated/echo-residuals/
-/Meta/StrataLint/Generated/scribe-emissions.v1.json
+/tools/Generated/scribe-emissions.v1.json
