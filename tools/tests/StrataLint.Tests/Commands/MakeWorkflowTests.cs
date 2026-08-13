@@ -117,20 +117,6 @@ public sealed partial class MakeWorkflowTests
 
 
     [Fact]
-    public void EchoProjectionUsesTheFileMapShardGlobNotRegistryInstances()
-    {
-        var root = TestRepositoryLayout.FindRoot();
-        var registry = File.ReadAllText(Path.Combine(root, "Meta", "registry.yaml"));
-        var fileMap = File.ReadAllText(Path.Combine(root, "Meta", "FILEMAP.toml"));
-        var gitignore = File.ReadAllText(Path.Combine(root, ".gitignore"));
-
-        Assert.DoesNotContain("Generated/echo-residual", registry, StringComparison.Ordinal);
-        Assert.Contains("pattern = \"Generated/echo-residuals/*.md\"", fileMap, StringComparison.Ordinal);
-        Assert.Contains(".echo-review.md", gitignore, StringComparison.Ordinal);
-        Assert.Contains(".sshx-*", gitignore, StringComparison.Ordinal);
-    }
-
-    [Fact]
     public void CiAndLocalGateReuseCanonicalEntrypoints()
     {
         var root = TestRepositoryLayout.FindRoot();
@@ -155,6 +141,14 @@ public sealed partial class MakeWorkflowTests
         Assert.Contains("gate_stage_timing", sharedGate, StringComparison.Ordinal);
         Assert.Contains("mark restore-judge", sharedGate, StringComparison.Ordinal);
         Assert.Contains("mark build-judge", sharedGate, StringComparison.Ordinal);
+        Assert.Contains("filemap-conform", sharedGate, StringComparison.Ordinal);
+        Assert.Contains("filemap-conform", localGate, StringComparison.Ordinal);
+        Assert.True(
+            sharedGate.IndexOf("filemap-conform", StringComparison.Ordinal)
+                > sharedGate.IndexOf(" check --protected-base", StringComparison.Ordinal));
+        Assert.True(
+            localGate.IndexOf("filemap-conform", StringComparison.Ordinal)
+                > localGate.IndexOf("\"$GATE\"", StringComparison.Ordinal));
         Assert.DoesNotContain("PrAEffectiveness", makefile, StringComparison.Ordinal);
         Assert.DoesNotContain("STRATALINT_TIMING:-1", sharedGate, StringComparison.Ordinal);
         Assert.Contains("$CANDIDATE_ROOT/.github/scripts/harness-gate.sh", localGate, StringComparison.Ordinal);

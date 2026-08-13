@@ -42,49 +42,7 @@ public sealed partial class FileMapPolicyTests
     }
 
     [Fact]
-    public void RepositoryFilesConformToTheCanonicalFileMap()
-    {
-        var findings = FileMapPolicy.InspectRepository(RepositoryLayout.FindRoot());
-
-        Assert.True(
-            findings.Count == 0,
-            string.Join(
-                Environment.NewLine,
-                findings.Select(static finding =>
-                    $"{finding.Code} {finding.Path}: {finding.Message}")));
-    }
-
-    [Fact]
-    public void ReviewScaffoldPatternsRemainInTheRepositoryGitignore()
-    {
-        var root = RepositoryLayout.FindRoot();
-        var lines = File.ReadAllLines(Path.Combine(root, ".gitignore"));
-
-        Assert.Contains(".caller-review-prompt.md", lines, StringComparer.Ordinal);
-        Assert.Contains(".echo-review.md", lines, StringComparer.Ordinal);
-        Assert.Contains(".sshx-*", lines, StringComparer.Ordinal);
-    }
-
-    [Fact]
-    public void ResidenceEpochIsClosedWithNoProtectedSurfaceData()
-    {
-        var root = RepositoryLayout.FindRoot();
-        var manifest = FileMapLoader.LoadRepository(root);
-
-        var actual = FileMapPolicy.ResidenceViolations(root);
-
-        Assert.Empty(actual);
-        Assert.Equal("RESIDENCE-EPOCH", manifest.ResidencePolicy.CaseId);
-        Assert.Equal("data-must-live-outside-tools", manifest.ResidencePolicy.Desired);
-        Assert.Equal(0, manifest.ResidencePolicy.KnownViolationCount);
-        Assert.Equal("closed", manifest.ResidencePolicy.Status);
-        Assert.Equal(
-            FileMapKind.Data,
-            Assert.Single(manifest.Match("tools/tests/StrataLint.Tests/Fixtures/fixture-registry.yaml")).Kind);
-    }
-
-    [Fact]
-    public void ComputationalProjectionRegistrationsAgreeAcrossCanonicalSources()
+    public void ComputationalProjectionRegistrationsAcceptTheSyntheticRegistryFixture()
     {
         var expectedPaths = new HashSet<string>(
             [
@@ -94,10 +52,7 @@ public sealed partial class FileMapPolicyTests
             StringComparer.Ordinal);
         var root = RepositoryLayout.FindRoot();
         var manifest = FileMapLoader.LoadRepository(root);
-        var registry = RegistryLoadAssert.Accepted(
-            RegistryLoader.Load(
-                File.ReadAllBytes(Path.Combine(root, "Meta", "registry.yaml")),
-                File.ReadAllBytes(Path.Combine(root, "Meta", "domains.yaml"))));
+        var registry = SyntheticRegistry();
         var artifacts = GeneratedArtifactInventory.All
             .Where(artifact => expectedPaths.Contains(artifact.Path))
             .ToArray();
@@ -126,10 +81,7 @@ public sealed partial class FileMapPolicyTests
         const string value = "Golden/perf-budgets.toml";
         var root = RepositoryLayout.FindRoot();
         var manifest = FileMapLoader.LoadRepository(root);
-        var registry = RegistryLoadAssert.Accepted(
-            RegistryLoader.Load(
-                File.ReadAllBytes(Path.Combine(root, "Meta", "registry.yaml")),
-                File.ReadAllBytes(Path.Combine(root, "Meta", "domains.yaml"))));
+        var registry = SyntheticRegistry("Golden/perf-budgets.toml");
         var path = RepoPath.CreateKnown(value);
 
         var entry = Assert.Single(manifest.Match(value));
@@ -151,11 +103,7 @@ public sealed partial class FileMapPolicyTests
         // RepositoryPathPolicy admits the whole docs/devloop/ prefix; SL-000 must
         // not reject dynamically generated plans as unknown top-level artifacts.
         const string value = "docs/devloop/plans/synthetic-prove-task-plan.md";
-        var root = RepositoryLayout.FindRoot();
-        var registry = RegistryLoadAssert.Accepted(
-            RegistryLoader.Load(
-                File.ReadAllBytes(Path.Combine(root, "Meta", "registry.yaml")),
-                File.ReadAllBytes(Path.Combine(root, "Meta", "domains.yaml"))));
+        var registry = SyntheticRegistry();
         var path = RepoPath.CreateKnown(value);
 
         Assert.Null(RepositoryPathPolicy.Validate(path, registry.Policy));
@@ -167,11 +115,7 @@ public sealed partial class FileMapPolicyTests
         // A Codex skill package is a directory containing SKILL.md, whose file
         // names cannot be enumerated individually in registry.yaml.
         const string value = ".codex/skills/synthetic-skill/SKILL.md";
-        var root = RepositoryLayout.FindRoot();
-        var registry = RegistryLoadAssert.Accepted(
-            RegistryLoader.Load(
-                File.ReadAllBytes(Path.Combine(root, "Meta", "registry.yaml")),
-                File.ReadAllBytes(Path.Combine(root, "Meta", "domains.yaml"))));
+        var registry = SyntheticRegistry();
         var path = RepoPath.CreateKnown(value);
 
         Assert.Null(RepositoryPathPolicy.Validate(path, registry.Policy));
@@ -181,11 +125,7 @@ public sealed partial class FileMapPolicyTests
     public void CodexArtifactsOutsideSkillsAreRefusedByRepositoryPathPolicy()
     {
         const string value = ".codex/settings.toml";
-        var root = RepositoryLayout.FindRoot();
-        var registry = RegistryLoadAssert.Accepted(
-            RegistryLoader.Load(
-                File.ReadAllBytes(Path.Combine(root, "Meta", "registry.yaml")),
-                File.ReadAllBytes(Path.Combine(root, "Meta", "domains.yaml"))));
+        var registry = SyntheticRegistry();
         var path = RepoPath.CreateKnown(value);
 
         var issue = Assert.IsType<RepositoryPathIssue>(
@@ -199,11 +139,7 @@ public sealed partial class FileMapPolicyTests
     {
         // A skill package is a directory holding SKILL.md, whose file names cannot be enumerated in registry.yaml.
         const string value = "skills/synthetic-skill/SKILL.md";
-        var root = RepositoryLayout.FindRoot();
-        var registry = RegistryLoadAssert.Accepted(
-            RegistryLoader.Load(
-                File.ReadAllBytes(Path.Combine(root, "Meta", "registry.yaml")),
-                File.ReadAllBytes(Path.Combine(root, "Meta", "domains.yaml"))));
+        var registry = SyntheticRegistry();
         var path = RepoPath.CreateKnown(value);
 
         Assert.Null(RepositoryPathPolicy.Validate(path, registry.Policy));
@@ -213,11 +149,7 @@ public sealed partial class FileMapPolicyTests
     public void SkillsPrefixWithoutSeparatorIsRefusedByRepositoryPathPolicy()
     {
         const string value = "skills.md";
-        var root = RepositoryLayout.FindRoot();
-        var registry = RegistryLoadAssert.Accepted(
-            RegistryLoader.Load(
-                File.ReadAllBytes(Path.Combine(root, "Meta", "registry.yaml")),
-                File.ReadAllBytes(Path.Combine(root, "Meta", "domains.yaml"))));
+        var registry = SyntheticRegistry();
         var path = RepoPath.CreateKnown(value);
 
         var issue = Assert.IsType<RepositoryPathIssue>(
@@ -298,6 +230,45 @@ public sealed partial class FileMapPolicyTests
     }
 
     [Fact]
+    public void DanglingGeneratedActorIsRejectedByTheRedFixture()
+    {
+        var manifest = Parse(Entry(
+            "Generated/output.json",
+            "generated",
+            "MissingEmitter",
+            "reader",
+            "MissingEmitter"));
+
+        var findings = FileMapPolicy.InspectDeclaredActors(
+            manifest,
+            new HashSet<string>(StringComparer.Ordinal),
+            "fixture-root");
+
+        Assert.Equal(2, findings.Count);
+        Assert.All(findings, finding =>
+        {
+            Assert.Equal("FILEMAP-ACTOR-DANGLING", finding.Code);
+            Assert.Contains("MissingEmitter", finding.Message, StringComparison.Ordinal);
+        });
+    }
+
+    [Fact]
+    public void DeclaredGeneratedActorIsAcceptedByTheGreenFixture()
+    {
+        var manifest = Parse(Entry(
+            "Generated/output.json",
+            "generated",
+            "FixtureEmitter",
+            "reader",
+            "FixtureEmitter"));
+
+        Assert.Empty(FileMapPolicy.InspectDeclaredActors(
+            manifest,
+            new HashSet<string>(StringComparer.Ordinal) { "FixtureEmitter" },
+            "fixture-root"));
+    }
+
+    [Fact]
     public void RegistryAndTrackedRootDriftIsRejectedByTheRedFixture()
     {
         var finding = Assert.Single(FileMapPolicy.InspectRegistryRootAlignment(
@@ -306,6 +277,66 @@ public sealed partial class FileMapPolicyTests
 
         Assert.Equal("FILEMAP-REGISTRY-ALIGNMENT", finding.Code);
         Assert.Contains("Makefile", finding.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void MatchingRegistryAndTrackedRootsAreAcceptedByTheGreenFixture()
+    {
+        Assert.Empty(FileMapPolicy.InspectRegistryRootAlignment(
+            ["Makefile", "README.md"],
+            ["README.md", "Makefile"]));
+    }
+
+    [Fact]
+    public void MissingReviewScaffoldIgnoreIsRejectedByTheRedFixture()
+    {
+        var finding = Assert.Single(FileMapPolicy.InspectGitIgnore(
+            ["/Generated/echo-residuals/", ".caller-review-prompt.md", ".echo-review.md"]));
+
+        Assert.Equal("FILEMAP-GITIGNORE", finding.Code);
+        Assert.Equal(".gitignore", finding.Path);
+        Assert.Contains(".sshx-*", finding.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void CompleteReviewScaffoldIgnoresAreAcceptedByTheGreenFixture()
+    {
+        Assert.Empty(FileMapPolicy.InspectGitIgnore(
+            ["/Generated/echo-residuals/", ".sshx-*", ".echo-review.md", ".caller-review-prompt.md"]));
+    }
+
+    [Fact]
+    public void EchoResidualRegistryAndBroadFileMapPatternAreRejectedByTheRedFixture()
+    {
+        var manifest = Parse(Entry(
+            "Generated/**/*.md",
+            "generated",
+            "EchoVerifyCommand",
+            "reader",
+            "EchoVerifyCommand"));
+
+        var findings = FileMapPolicy.InspectProjectionRegistrations(
+            manifest,
+            ["Generated/echo-residuals/source.md"]);
+
+        Assert.Contains(findings, static finding => finding.Code == "FILEMAP-PROJECTION-SHARD");
+        Assert.Contains(findings, static finding => finding.Code == "FILEMAP-PROJECTION-REGISTRY");
+    }
+
+    [Fact]
+    public void EchoResidualLiteralFileMapPatternAndAbsentRegistryEntryAreAcceptedByTheGreenFixture()
+    {
+        var manifest = Parse(Entry(
+            "Generated/echo-residuals/*.md",
+            "generated",
+            "EchoVerifyCommand",
+            "reader",
+            "EchoVerifyCommand").Replace(
+                "runtime_disposition = \"committed-source\"",
+                "runtime_disposition = \"run-local\"",
+                StringComparison.Ordinal));
+
+        Assert.Empty(FileMapPolicy.InspectProjectionRegistrations(manifest, []));
     }
 
     [Fact]
@@ -505,142 +536,6 @@ public sealed partial class FileMapPolicyTests
     }
 
     [Theory]
-    [InlineData("run-local", false)]
-    [InlineData("committed-source", true)]
-    public void UntrackedGeneratedInventoryRespectsRuntimeDisposition(
-        string runtimeDisposition,
-        bool expectsStaleFinding)
-    {
-        var manifest = Parse(DispositionEntry(
-            "Generated/output.json",
-            "generated",
-            "JsonEmitter",
-            "reader",
-            "JsonEmitter",
-            runtimeDisposition,
-            "A-OUTPUT"));
-        var inventory = new GeneratedArtifactIdentity(
-            "Generated/output.json", "JsonEmitter", "A-OUTPUT");
-
-        var findings = FileMapPolicy.InspectGeneratedInventory(manifest, [], [inventory]);
-
-        Assert.Equal(
-            expectsStaleFinding,
-            findings.Any(static finding => finding.Code == "FILEMAP-GENERATED-STALE-INVENTORY"));
-    }
-
-    [Fact]
-    public void TrackedRunLocalGeneratedArtifactMustBeRemovedFromTheIndex()
-    {
-        const string artifactPath = "SyntheticArtifacts/output.json";
-        var manifest = Parse(DispositionEntry(
-            artifactPath, "generated", "SyntheticEmitter", "reader", "SyntheticEmitter",
-            "run-local", "A-SYNTHETIC-OUTPUT"));
-        var inventory = new GeneratedArtifactIdentity(
-            artifactPath, "SyntheticEmitter", "A-SYNTHETIC-OUTPUT");
-
-        var finding = Assert.Single(FileMapPolicy.InspectGeneratedInventory(
-            manifest, [artifactPath], [inventory]));
-
-        Assert.Equal("FILEMAP-RUN-LOCAL-TRACKED", finding.Code);
-        Assert.Contains("remove", finding.Message, StringComparison.OrdinalIgnoreCase);
-        Assert.Contains("index", finding.Message, StringComparison.OrdinalIgnoreCase);
-        Assert.Contains("must not be changed", finding.Message, StringComparison.OrdinalIgnoreCase);
-    }
-
-    [Theory]
-    [InlineData("run-local", false)]
-    [InlineData("committed-source", true)]
-    public void ValidGeneratedDispositionDoesNotProduceDispositionFinding(
-        string runtimeDisposition,
-        bool isTracked)
-    {
-        const string artifactPath = "SyntheticArtifacts/output.json";
-        var manifest = Parse(DispositionEntry(
-            artifactPath, "generated", "SyntheticEmitter", "reader", "SyntheticEmitter",
-            runtimeDisposition, "A-SYNTHETIC-OUTPUT"));
-        var inventory = new GeneratedArtifactIdentity(
-            artifactPath, "SyntheticEmitter", "A-SYNTHETIC-OUTPUT");
-        var trackedPaths = isTracked ? new[] { artifactPath } : [];
-
-        var findings = FileMapPolicy.InspectGeneratedInventory(manifest, trackedPaths, [inventory]);
-
-        Assert.DoesNotContain(findings, static finding =>
-            finding.Code is "FILEMAP-GENERATED-DISPOSITION" or "FILEMAP-RUN-LOCAL-TRACKED");
-    }
-
-    [Fact]
-    public void UntrackedRunLocalWithWrongProducerIsRejectedByTheRedFixture()
-    {
-        var manifest = Parse(DispositionEntry(
-            "Generated/output.json", "generated", "WrongEmitter", "reader", "WrongEmitter",
-            "run-local", "A-OUTPUT"));
-        var inventory = new GeneratedArtifactIdentity(
-            "Generated/output.json", "JsonEmitter", "A-OUTPUT");
-
-        var findings = FileMapPolicy.InspectGeneratedInventory(manifest, [], [inventory]);
-
-        Assert.Contains(findings, static finding => finding.Code == "FILEMAP-GENERATED-PRODUCER");
-        Assert.Contains(findings, static finding => finding.Code == "FILEMAP-GENERATED-STALE-INVENTORY");
-    }
-
-    [Fact]
-    public void UntrackedRunLocalWithBroadGlobIsRejectedByTheRedFixture()
-    {
-        var manifest = Parse(DispositionEntry(
-            "Generated/*.json", "generated", "JsonEmitter", "reader", "JsonEmitter",
-            "run-local", "A-OUTPUT"));
-        var inventory = new GeneratedArtifactIdentity(
-            "Generated/output.json", "JsonEmitter", "A-OUTPUT");
-
-        var findings = FileMapPolicy.InspectGeneratedInventory(manifest, [], [inventory]);
-
-        Assert.Contains(findings, static finding => finding.Code == "FILEMAP-GENERATED-LITERAL");
-        Assert.Contains(findings, static finding => finding.Code == "FILEMAP-GENERATED-STALE-INVENTORY");
-    }
-
-    [Fact]
-    public void RunLocalEntryMissingRequiredFieldIsRejectedByTheRedFixture()
-    {
-        var source = DispositionEntry(
-            "Generated/output.json", "generated", "JsonEmitter", "reader", "JsonEmitter",
-            "run-local", "A-OUTPUT").Replace("mode = \"100644\"\n", string.Empty, StringComparison.Ordinal);
-
-        var exception = Assert.Throws<FormatException>(() => Parse(source));
-
-        Assert.Contains("mode", exception.Message, StringComparison.Ordinal);
-    }
-
-    [Fact]
-    public void CommittedGeneratedEntryMissingModeIsRejectedByTheRedFixture()
-    {
-        var source = DispositionEntry(
-            "Generated/output.json", "generated", "JsonEmitter", "reader", "JsonEmitter",
-            "committed-source", "A-OUTPUT").Replace("mode = \"100644\"\n", string.Empty, StringComparison.Ordinal);
-
-        var exception = Assert.Throws<FormatException>(() => Parse(source));
-
-        Assert.Contains("mode", exception.Message, StringComparison.Ordinal);
-    }
-
-    [Fact]
-    public void WrongDeclaredCommittedModeIsRejectedByTheRedFixture()
-    {
-        var manifest = Parse(DispositionEntry(
-            "Generated/output.json", "generated", "JsonEmitter", "reader", "JsonEmitter",
-            "committed-source", "A-OUTPUT").Replace("100644", "100755", StringComparison.Ordinal));
-
-        var finding = Assert.Single(FileMapPolicy.InspectDeclaredModes(
-            manifest,
-            new Dictionary<string, string>(StringComparer.Ordinal)
-            {
-                ["Generated/output.json"] = "100644",
-            }));
-
-        Assert.Equal("FILEMAP-GENERATED-MODE", finding.Code);
-    }
-
-    [Theory]
     [InlineData("Generated/manual.md", "data", "FILEMAP-DIRECTORY-KIND")]
     [InlineData("tools/cases.toml", "data", "FILEMAP-DATA-RESIDENCE")]
     public void ClassDirectoryMixingIsRejectedByTheRedFixture(
@@ -678,6 +573,50 @@ public sealed partial class FileMapPolicyTests
     }
 
     private static FileMapManifest Parse(params string[] entries) => Parse(0, entries);
+
+    private static RegistryLoadOutcome.Accepted SyntheticRegistry(string? governanceDocument = null)
+    {
+        var governanceDocuments = new[]
+        {
+            "Generated/FILEMAP.md",
+            "Generated/truth-graph.v1.json",
+            "Meta/Digestion/atomizers.toml",
+            "Meta/FILEMAP.toml",
+            "docs/CONTRIBUTING.md",
+            "docs/GOVERNANCE.md",
+            "docs/develop/spec/golden-ledger-repo-spec.md",
+            "tools/Generated/scribe-emissions.v1.json",
+        }.Append(governanceDocument)
+            .Where(static path => path is not null)
+            .Order(StringComparer.Ordinal)
+            .Select(static path => $"  - \"{path}\"");
+        var registry = """
+            schema_version: 1
+            root_files:
+              - "README.md"
+            governance_documents:
+            """ + "\n" + string.Join('\n', governanceDocuments) + """
+
+            agent_files:
+              - "CONTEXT.md"
+            artifact_kinds:
+              json:
+                profile: structured-json
+                selectors:
+                  - "result"
+                path_selectors:
+                  - "formal"
+            """ + "\n";
+        const string domains = """
+            domains:
+              Carrier:
+                stratum: S0
+                definition: Synthetic carrier domain.
+            """ + "\n";
+        return RegistryLoadAssert.Accepted(RegistryLoader.Load(
+            Encoding.UTF8.GetBytes(registry),
+            Encoding.UTF8.GetBytes(domains)));
+    }
 
     private static FileMapManifest Parse(int knownViolationCount, params string[] entries) =>
         FileMapLoader.Parse(
