@@ -4,6 +4,7 @@ fingerprints:
   normalized_sha256: sha256:df5fb8e33f6d6d19b72635ef1038798cf41031f12ddd4430d39e987c561cef98
 cas_ref: sha256:df5fb8e33f6d6d19b72635ef1038798cf41031f12ddd4430d39e987c561cef98
 coverage_gids:
+  - D5/S3/Zeros/ToySpectrum/QuadraticCollisionModel.quadratic_collision_model_certificate
   - D5/S3/Weil/SpectralDynamics.zero_quartet_resonance_spec
 receipts:
   coverage:
