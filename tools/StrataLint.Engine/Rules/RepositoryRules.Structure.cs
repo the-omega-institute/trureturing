@@ -257,6 +257,20 @@ internal static partial class RepositoryRules
             .Where(static path => path is not null)
             .Select(static path => path!)
             .ToImmutableHashSet(StringComparer.Ordinal);
+        if (context.Changes.Paths.Any(static path => IsFrozenEnvironmentPin(path.Value)))
+        {
+            try
+            {
+                findings.AddRange(FrozenStatementIdentityDrift(context, events));
+            }
+            catch (FormatException exception)
+            {
+                findings.Add(new RuleFinding(
+                    FrozenLedgerChangeClassifier.AcceptedRoot,
+                    "candidate frozen ledger is invalid: " + exception.Message));
+            }
+        }
+
         var addedEventPaths = context.Changes.Entries
             .Where(static change => change.Kind == RawChangeKind.Added
                 && FrozenLedgerChangeClassifier.IsAcceptedEventPath(change.Path.Value))
@@ -295,6 +309,105 @@ internal static partial class RepositoryRules
         }
 
         return findings.ToImmutable();
+    }
+
+    private static bool IsFrozenEnvironmentPin(string path) =>
+        path is "lean-toolchain" or "lakefile.toml" or "lakefile.lean" or "lake-manifest.json";
+
+    private static ImmutableArray<RuleFinding> FrozenStatementIdentityDrift(
+        RuleEvaluationContext context,
+        ImmutableArray<DagLedgerFileEvent> events)
+    {
+        var supersededAttestations = events
+            .Where(static item => item.EventType == "Reattest")
+            .Select(static item => RequiredLedgerString(item.Payload, "previous_attestation_event_hash"))
+            .ToImmutableHashSet(StringComparer.Ordinal);
+        var revokedNodeIds = events
+            .Where(static item => item.EventType == "Revoke")
+            .SelectMany(static item => RequiredLedgerStringArray(item.Payload, "affected_frozen_node_ids"))
+            .ToImmutableHashSet(StringComparer.Ordinal);
+        var activeByPath = new Dictionary<string, ImmutableArray<FrozenDeclarationStatement>>(
+            StringComparer.Ordinal);
+        foreach (var attestation in events
+            .Where(static item => item.EventType is "Freeze" or "Reattest")
+            .Where(item => !supersededAttestations.Contains(item.EventHash)
+                && !revokedNodeIds.Contains(item.Identity)))
+        {
+            var path = attestation.Input?.DescriptorSelector
+                ?? throw new FormatException("active frozen attestation is missing descriptor_selector.");
+            if (!activeByPath.TryAdd(path, FrozenLedger.ParseDeclarationStatementIds(attestation.Payload)))
+            {
+                throw new FormatException($"multiple active frozen attestations target {path}.");
+            }
+        }
+
+        var findings = ImmutableArray.CreateBuilder<RuleFinding>();
+        foreach (var (pathText, expected) in activeByPath.OrderBy(
+            static item => item.Key,
+            StringComparer.Ordinal))
+        {
+            if (!RepoPath.TryCreate(pathText, out var path))
+            {
+                throw new FormatException($"active frozen attestation has invalid descriptor_selector {pathText}.");
+            }
+
+            var actual = context.Lean.Report.Files.TryGetValue(path, out var report)
+                ? CanonicalStatementWriter.DeclarationStatementIds(path, report)
+                : ImmutableArray<FrozenDeclarationStatement>.Empty;
+            var driftCount = DeclarationStatementDriftCount(expected, actual);
+            if (driftCount > 0)
+            {
+                findings.Add(new RuleFinding(
+                    pathText,
+                    $"frozen module {pathText} has {driftCount} declaration statement identity "
+                    + $"drift{(driftCount == 1 ? string.Empty : "s")} after Lean environment pin change"));
+            }
+        }
+
+        return findings.ToImmutable();
+    }
+
+    private static int DeclarationStatementDriftCount(
+        ImmutableArray<FrozenDeclarationStatement> expected,
+        ImmutableArray<FrozenDeclarationStatement> actual)
+    {
+        var expectedByName = expected.ToDictionary(
+            static item => item.DeclarationNameKey,
+            StringComparer.Ordinal);
+        var actualByName = actual.ToDictionary(
+            static item => item.DeclarationNameKey,
+            StringComparer.Ordinal);
+        return expectedByName.Keys
+            .Union(actualByName.Keys, StringComparer.Ordinal)
+            .Count(name => !expectedByName.TryGetValue(name, out var expectedDeclaration)
+                || !actualByName.TryGetValue(name, out var actualDeclaration)
+                || expectedDeclaration != actualDeclaration);
+    }
+
+    private static string RequiredLedgerString(JsonElement value, string property)
+    {
+        if (!value.TryGetProperty(property, out var child) || child.ValueKind != JsonValueKind.String)
+        {
+            throw new FormatException($"frozen ledger field {property} must be a string.");
+        }
+
+        return child.GetString()
+            ?? throw new FormatException($"frozen ledger field {property} must not be null.");
+    }
+
+    private static ImmutableArray<string> RequiredLedgerStringArray(JsonElement value, string property)
+    {
+        if (!value.TryGetProperty(property, out var child) || child.ValueKind != JsonValueKind.Array)
+        {
+            throw new FormatException($"frozen ledger field {property} must be an array.");
+        }
+
+        return child.EnumerateArray()
+            .Select(item => item.ValueKind == JsonValueKind.String
+                ? item.GetString()
+                    ?? throw new FormatException($"frozen ledger field {property} contains null.")
+                : throw new FormatException($"frozen ledger field {property} must contain strings."))
+            .ToImmutableArray();
     }
 
     private static ImmutableArray<RuleFinding> Generality(RuleEvaluationContext context)
