@@ -16,7 +16,7 @@
 
 ## 摘要
 
-本文研究对角自应用在投影、限制、粗粒化与逆极限完成下是否保持自然。对每个观察尺度 \(i\)，设 \(\mathcal T_i\) 为评价表空间，\(\mathcal U_i\) 为对角输出空间，\(\Delta_i:\mathcal T_i	o\mathcal U_i\) 为扭曲对角算子；对细尺度 \(j\succeq i\)，分别以
+本文研究对角自应用在投影、限制、粗粒化与逆极限完成下是否保持自然。对每个观察尺度 \(i\)，设 \(\mathcal T_i\) 为评价表空间，\(\mathcal U_i\) 为对角输出空间，\(\Delta_i:\mathcal T_i\to\mathcal U_i\) 为扭曲对角算子；对细尺度 \(j\succeq i\)，分别以
 \[
 P_{j,i}:\mathcal T_j\to\mathcal T_i,
 \qquad
@@ -104,7 +104,7 @@ Q_{j,i}\circ\Delta_j
 - `D5/S0/Diagonal/TypicalDensity.typical_density_failure_probability_tendsto_zero`；
 - `D5/S0/Diagonal/EquivariantEscape.equivariant_escaped_card`。
 
-设有限地址集 \(A\) 满足 \(|A|=n\)，有限值集 \(Y\) 满足 \(|Y|=q\)，扭曲 \(	au:Y	o Y\) 有 \(k\) 个不动点。现有形式化结果给出逃逸评价表数量
+设有限地址集 \(A\) 满足 \(|A|=n\)，有限值集 \(Y\) 满足 \(|Y|=q\)，扭曲 \(\tau:Y\to Y\) 有 \(k\) 个不动点。现有形式化结果给出逃逸评价表数量
 \[
 (q^n-k)^n.
 \]
@@ -160,7 +160,7 @@ D_A(E)(a)=E(a,a).
 
 ### 定义 3.3（值扭曲与扭曲对角）
 
-给定 \(	au:Y\to Y\)，定义逐点扭曲
+给定 \(\tau:Y\to Y\)，定义逐点扭曲
 \[
 \Theta_\tau:\mathcal U(A,Y)\to\mathcal U(A,Y),
 \qquad
@@ -177,7 +177,7 @@ D_A(E)(a)=E(a,a).
 \Delta(E)(a)=\tau(E(a,a)).
 \]
 
-当 \(	au\) 无不动点时，\(\Delta(E)\) 不可能等于任何一行 \(E(a,-)\)。一般 \(	au\) 有不动点时，是否逃逸成为定量计数问题。
+当 \(\tau\) 无不动点时，\(\Delta(E)\) 不可能等于任何一行 \(E(a,-)\)。一般 \(\tau\) 有不动点时，是否逃逸成为定量计数问题。
 
 ### 定义 3.4（多尺度对角系统）
 
@@ -436,7 +436,9 @@ P_{i_m,i_r}E
 #### 证明
 
 对 \(m\) 归纳。\(m=1\) 时为恒等式。归纳步先对中间尺度 \(i_1\) 使用定理 4.3，再对
-\(arepsilon^\Delta_{i_m,i_1}(E)\)
+\(
+\varepsilon^\Delta_{i_m,i_1}(E)
+\)
 应用归纳假设，并乘上 \(L_1\)。整理指标即得。 \(\square\)
 
 这个推论将“观察者逐层压缩”变成了可审计的误差账本：整体缺陷由每一层真正产生的局部缺陷控制，而不是由“观察”这个词自动产生。
@@ -1086,7 +1088,7 @@ L_n(\rho)
 
 ### 引理 8.8（相位复现）
 
-对任意 \(	heta\in\mathbb R\)，存在严格递增整数序列
+对任意 \(\theta\in\mathbb R\)，存在严格递增整数序列
 \[
 n_k\to\infty
 \]
@@ -1536,3 +1538,793 @@ q\notin S.
 4. X.-J. Li, “The Positivity of a Sequence of Numbers and the Riemann Hypothesis,” *Journal of Number Theory* 65 (1997), 325–333. DOI: 10.1006/jnth.1997.2137.
 5. E. Bombieri and J. C. Lagarias, “Complements to Li’s Criterion for the Riemann Hypothesis,” *Journal of Number Theory* 77 (1999), 274–287. DOI: 10.1006/jnth.1999.2392.
 6. A. Weil, “Sur les ‘formules explicites’ de la théorie des nombres premiers,” *Communications du Séminaire Mathématique de l’Université de Lund*, supplément (1952), 252–265.
+
+---
+
+## 附录 A　对合、商余与界面：连续结构如何产生离散极性
+
+本附录把“取反是一种商余结构”收紧为一个可证明的命题。精确结论不是“取反等于取商”，而是：
+
+\[
+\boxed{
+\text{对合型取反是在轨道商的纤维内交换两点；}
+\quad
+\text{离散极性是相对于一个截面或界面所选出的纤维坐标。}
+}
+\]
+
+这里的“商”是对合轨道的等价类；“余”不是欧几里得除法中的算术余数，而是选定命名截面以后剩下的 \(\mathbb Z_2\) 极性坐标。若不存在全局连续截面，该极性只能局部定义，或必须通过切开界面、允许不连续、引入随机性等方式显现。
+
+本附录只处理满足
+\[
+\sigma^2=\mathrm{id}
+\]
+的对合型取反。一般扭曲可能具有更长周期、固定点或不可逆性，不能自动约化为一个二值余坐标。
+
+### A.1 对合与轨道商
+
+#### 定义 A.1（对合与固定界面）
+
+设 \(X\) 为集合。映射
+\[
+\sigma:X\to X
+\]
+称为对合，若
+\[
+\sigma(\sigma(x))=x
+\]
+对所有 \(x\in X\) 成立。其固定点集为
+\[
+\operatorname{Fix}(\sigma)
+=
+\{x\in X:\sigma(x)=x\}.
+\]
+
+定义等价关系
+\[
+x\sim_\sigma y
+\iff
+y=x\ \text{或}\ y=\sigma(x).
+\]
+轨道商记为
+\[
+B=X/\langle\sigma\rangle,
+\]
+商映射记为
+\[
+\pi:X\to B,
+\qquad
+\pi(x)=[x].
+\]
+
+#### 命题 A.2（商纤维结构）
+
+对任意 \(x\in X\)，
+\[
+\boxed{
+\pi(\sigma x)=\pi(x),
+}
+\]
+并且
+\[
+\boxed{
+\pi^{-1}(\pi(x))=\{x,\sigma x\}.
+}
+\]
+若 \(x\notin\operatorname{Fix}(\sigma)\)，该纤维有两个不同元素；若 \(x\in\operatorname{Fix}(\sigma)\)，该纤维退化为单点。
+
+##### 证明
+
+由等价关系定义，\(x\sim_\sigma\sigma x\)，所以二者具有同一商类。反过来，若 \(y\in\pi^{-1}(\pi(x))\)，则 \(y\sim_\sigma x\)，故 \(y=x\) 或 \(y=\sigma x\)。固定点与非固定点情形立即得到。 \(\square\)
+
+因此，\(\sigma\) 不改变商坐标 \([x]\)，只在同一商纤维内部交换代表元。固定界面是二点纤维坍缩成一点的位置。
+
+### A.2 极性比特与命名截面的等价
+
+记
+\[
+\mathbb S^0=\{-1,+1\}.
+\]
+
+#### 定义 A.3（极性函数）
+
+若 \(\sigma\) 无固定点，称函数
+\[
+\chi:X\to\mathbb S^0
+\]
+为一个极性函数，若
+\[
+\boxed{
+\chi(\sigma x)=-\chi(x)
+}
+\]
+对所有 \(x\) 成立。
+
+#### 定理 A.4（极性—截面对应）
+
+设 \(\sigma\) 无固定点。下列两类数据自然一一对应：
+
+1. 极性函数 \(\chi:X\to\mathbb S^0\)；
+2. 商映射的截面
+   \[
+   s:B\to X,
+   \qquad
+   \pi\circ s=\mathrm{id}_B.
+   \]
+
+##### 证明
+
+先由极性函数构造截面。每个轨道 \(b\in B\) 有两个元素 \(x,\sigma x\)，且
+\[
+\chi(\sigma x)=-\chi(x).
+\]
+所以轨道中恰有一个元素的极性为 \(+1\)。定义 \(s_\chi(b)\) 为该唯一元素。显然 \(\pi(s_\chi(b))=b\)。
+
+反之，给定截面 \(s\)。对任意 \(x\in X\)，命题 A.2 给出
+\[
+x=s(\pi x)
+\quad\text{或}\quad
+x=\sigma(s(\pi x)).
+\]
+由于 \(\sigma\) 无固定点，两种情形互斥。定义
+\[
+\chi_s(x)
+=
+\begin{cases}
++1,&x=s(\pi x),\\
+-1,&x=\sigma(s(\pi x)).
+\end{cases}
+\]
+则直接有 \(\chi_s(\sigma x)=-\chi_s(x)\)。两个构造互为逆。 \(\square\)
+
+#### 推论 A.5（商—余正规形）
+
+选定截面 \(s\) 后，映射
+\[
+\Phi_s:B\times\mathbb S^0\to X
+\]
+定义为
+\[
+\Phi_s(b,+1)=s(b),
+\qquad
+\Phi_s(b,-1)=\sigma(s(b)).
+\]
+它是双射，并且在该坐标中
+\[
+\boxed{
+\sigma(b,\varepsilon)=(b,-\varepsilon).
+}
+\]
+
+##### 证明
+
+每个商纤维恰有两个不同元素 \(s(b)\) 与 \(\sigma s(b)\)，所以 \(\Phi_s\) 在每个纤维上双射；不同商类的纤维互不相交。对合公式由定义立即成立。 \(\square\)
+
+这给出“商余”一词的精确含义：
+
+\[
+\boxed{
+x\longleftrightarrow([x],\varepsilon_s(x)).}
+\]
+
+商坐标 \([x]\) 是不随取反改变的无向内容；\(\varepsilon_s(x)\) 是依赖命名截面 \(s\) 的离散余坐标。没有选定截面时，不存在一个规范的全局 \(\varepsilon\)。
+
+#### 命题 A.6（命名之间的 \(\mathbb Z_2\) 变换）
+
+若 \(s,t:B\to X\) 是两个截面，则存在唯一函数
+\[
+g:B\to\mathbb S^0
+\]
+使
+\[
+t(b)=\Phi_s(b,g(b)).
+\]
+
+##### 证明
+
+对每个 \(b\)，\(t(b)\) 与 \(s(b)\) 位于同一个二点纤维，因此 \(t(b)\) 唯一等于 \(s(b)\) 或 \(\sigma s(b)\)。分别令 \(g(b)=+1\) 或 \(-1\) 即得。 \(\square\)
+
+所以“命名”不是改变商对象，而是改变各商纤维中哪一侧被称为正。不同命名之间的差异由一个 \(\mathbb Z_2\)-值函数记录。
+
+### A.3 连续空间中的全局离散极性障碍
+
+#### 定理 A.7（连通空间不能连续地产生非平凡离散读数）
+
+设 \(X\) 为非空连通拓扑空间，\(D\) 为离散空间。任意连续映射
+\[
+f:X\to D
+\]
+都是常值。
+
+##### 证明
+
+连续像 \(f(X)\) 必为连通集。离散空间的连通子集只能是单点，因此 \(f(X)\) 为单点。 \(\square\)
+
+#### 推论 A.8（无全局连续极性）
+
+设 \(X\) 非空且连通，\(\sigma:X\to X\) 为连续对合。不存在连续极性函数
+\[
+\chi:X\to\mathbb S^0
+\]
+满足
+\[
+\chi(\sigma x)=-\chi(x).
+\]
+
+##### 证明
+
+由定理 A.7，\(\chi\) 必为常值 \(c\in\{\pm1\}\)。于是极性条件要求 \(c=-c\)，矛盾。 \(\square\)
+
+这说明：一个非平凡离散极性不能作为从连通连续对象到二点集合的全局连续确定函数自动出现。要从连续结构中“抠出”离散对象，至少必须引入界面、切口、局部截面、不连续阈值、随机抽样，或使定义域本身分裂成不同连通分支。
+
+### A.4 界面切割定理
+
+#### 定理 A.9（反不变连续量产生离散极性）
+
+设 \(X\) 为拓扑空间，\(\sigma:X\to X\) 为连续对合，\(h:X\to\mathbb R\) 连续并满足
+\[
+\boxed{
+h(\sigma x)=-h(x).
+}
+\]
+定义
+\[
+\mathcal I=h^{-1}(0),
+\]
+\[
+X_+=h^{-1}((0,\infty)),
+\qquad
+X_-=h^{-1}((-\infty,0)).
+\]
+则：
+
+1. \(\mathcal I\) 闭且 \(\sigma\)-不变；
+2. \(X_+\) 与 \(X_-\) 是开集，且
+   \[
+   \sigma(X_+)=X_-,
+   \qquad
+   \sigma(X_-)=X_+;
+   \]
+3. 每个固定点都位于界面：
+   \[
+   \operatorname{Fix}(\sigma)\subseteq\mathcal I;
+   \]
+4. 在 \(X\setminus\mathcal I\) 上定义
+   \[
+   \chi_h(x)=\operatorname{sgn}(h(x))\in\mathbb S^0,
+   \]
+   则 \(\chi_h\) 连续且
+   \[
+   \chi_h(\sigma x)=-\chi_h(x).
+   \]
+
+##### 证明
+
+因为 \(\{0\}\) 闭且 \(h\) 连续，\(\mathcal I\) 闭。若 \(h(x)=0\)，则 \(h(\sigma x)=-h(x)=0\)，故界面不变。正、负半轴为开集，所以 \(X_\pm\) 开；反不变性把正值送到负值并反之。若 \(\sigma x=x\)，则
+\[
+h(x)=h(\sigma x)=-h(x),
+\]
+故 \(h(x)=0\)。最后，\(\chi_h^{-1}(+1)=X_+\) 与 \(\chi_h^{-1}(-1)=X_-\) 在子空间 \(X\setminus\mathcal I\) 中均开，因此 \(\chi_h\) 连续；反不变性给出极性翻转。 \(\square\)
+
+若 \(h\) 同时取正值和负值，则 \(X\setminus\mathcal I\) 至少被 \(X_+\) 与 \(X_-\) 分成两个非空开闭部分。离散极性因此不是无界面的连续坐标，而是连续量跨越零界面以后产生的分区标签。
+
+### A.5 三个基本模型
+
+#### 例 A.10（实数反射）
+
+取
+\[
+X=\mathbb R,
+\qquad
+\sigma(x)=-x,
+\qquad
+h(x)=x.
+\]
+则
+\[
+\mathcal I=\{0\},
+\qquad
+X/\langle\sigma\rangle\cong[0,\infty)
+\]
+由商坐标 \(|x|\) 实现。在 \(\mathbb R\setminus\{0\}\) 上，
+\[
+x\longleftrightarrow(|x|,\operatorname{sgn}x),
+\]
+而取反只改变第二坐标：
+\[
+(|x|,\varepsilon)\longmapsto(|x|,-\varepsilon).
+\]
+在 \(x=0\) 处，两点纤维坍缩为一点，极性消失。
+
+#### 例 A.11（布尔取反）
+
+取
+\[
+X=\{0,1\},
+\qquad
+\sigma(0)=1,
+\quad
+\sigma(1)=0.
+\]
+轨道商只有一个点。因此布尔对象没有剩余的非平凡商坐标，全部信息都是二值纤维极性。这解释了为什么布尔取反看起来像一个原始离散操作：它是“商底空间退化为一点”时的纯纤维交换。
+
+#### 例 A.12（圆周上的对径对合）
+
+取
+\[
+X=S^1,
+\qquad
+\sigma(z)=-z.
+\]
+该对合无固定点，商映射可由
+\[
+z\longmapsto z^2
+\]
+表示，每个商纤维为 \(\{z,-z\}\)。但 \(S^1\) 连通，所以由推论 A.8，不存在连续的全局极性函数
+\[
+\chi:S^1\to\mathbb S^0.
+\]
+这说明即使每个纤维都恰有两点，也不必存在全局连续的“正片/负片”命名。离散余坐标可能只能在局部坐标图中选择。
+
+### A.6 扭曲对角的商影子
+
+以下定理把本附录直接接回正文的对角算子。
+
+#### 定理 A.13（对合对角的商影子恒等式）
+
+设 \(\tau:Y\to Y\) 为对合，
+\[
+\pi:Y\to Y/\langle\tau\rangle
+\]
+为轨道商。对地址集 \(A\)，令
+\[
+\Pi_A:Y^A\to(Y/\langle\tau\rangle)^A
+\]
+为逐点商映射。则对任意评价表
+\[
+E:A\times A\to Y,
+\]
+有
+\[
+\boxed{
+\Pi_A(\Delta_\tau E)
+=
+\Pi_A(D_AE).
+}
+\]
+
+##### 证明
+
+对任意 \(a\in A\)，
+\[
+\begin{aligned}
+\Pi_A(\Delta_\tau E)(a)
+&=
+\pi(\tau(E(a,a)))\\
+&=
+\pi(E(a,a))\\
+&=
+\Pi_A(D_AE)(a),
+\end{aligned}
+\]
+其中第二步使用 \(\pi\circ\tau=\pi\)。逐点相等即得。 \(\square\)
+
+因此，扭曲对角与未扭曲对角在轨道商上具有完全相同的影子。对角逃逸所使用的变化发生在商纤维内部；任何只读取商类的观察者都看不见该变化。
+
+#### 推论 A.14（极性通道精确翻转）
+
+若 \(\tau\) 无固定点，且选定极性函数
+\[
+\chi:Y\to\mathbb S^0,
+\qquad
+\chi(\tau y)=-\chi(y),
+\]
+令
+\[
+\Chi_A:Y^A\to(\mathbb S^0)^A
+\]
+为逐点极性读取，则
+\[
+\boxed{
+\Chi_A(\Delta_\tau E)
+=-\Chi_A(D_AE)
+}
+\]
+逐坐标成立。
+
+##### 证明
+
+对任意 \(a\)，
+\[
+\chi(\Delta_\tau E(a))
+=
+\chi(\tau(E(a,a)))
+=
+-\chi(E(a,a)).
+\]
+\(\square\)
+
+结合推论 A.5，在选定截面以后可写
+\[
+D_AE(a)=(b_a,\varepsilon_a),
+\]
+\[
+\boxed{
+\Delta_\tau E(a)=(b_a,-\varepsilon_a).
+}
+\]
+所以对合型对角化的正规形是：**商坐标保持不变，离散余坐标逐点翻转。**
+
+### A.7 自然性不等于忠实性
+
+正文以
+\[
+Q\Delta=\Delta P
+\]
+衡量对角算子是否与观察投影交换。但交换并不自动说明观察者保存了扭曲信息。
+
+#### 定义 A.15（扭曲不变与扭曲分离）
+
+给定 \(Q:Y\to Z\)：
+
+- 若
+  \[
+  Q(\tau y)=Q(y)
+  \]
+  对所有 \(y\) 成立，称 \(Q\) 为 \(\tau\)-不变；
+- 若
+  \[
+  y\notin\operatorname{Fix}(\tau)
+  \Longrightarrow
+  Q(\tau y)\neq Q(y),
+  \]
+  称 \(Q\) 为 \(\tau\)-分离。
+
+#### 定理 A.16（盲自然性）
+
+若 \(Q:Y\to Z\) 为 \(\tau\)-不变，并令粗层扭曲为恒等映射，则
+\[
+\boxed{
+Q_A\Delta_\tau
+=
+Q_AD_A.
+}
+\]
+更一般地，任何经由 \(Q\) 因子化的观察量都无法区分 \(y\) 与 \(\tau y\)。
+
+##### 证明
+
+第一式逐点为
+\[
+Q(\tau(E(a,a)))=Q(E(a,a)).
+\]
+若观察量写成 \(F\circ Q\)，则
+\[
+F(Q(\tau y))=F(Q(y)).
+\]
+\(\square\)
+
+因此对角缺陷为零至少有两种完全不同的原因：
+
+1. **忠实自然性**：投影保持了全部相关结构，并且仍能区分扭曲前后；
+2. **盲自然性**：投影先把 \(y\) 与 \(\tau y\) 商掉，因而变化在观察层中不可见。
+
+定义度量空间 \((Z,d_Z)\) 上的扭曲分离边际
+\[
+\operatorname{sep}_\tau(Q)
+=
+\inf_{y\notin\operatorname{Fix}(\tau)}
+ d_Z(Qy,Q\tau y).
+\]
+只要存在非固定点，\(\tau\)-不变映射必有
+\[
+\operatorname{sep}_\tau(Q)=0.
+\]
+而取值于二点离散空间的极性函数满足每个非固定点的分离距离为 \(1\)。
+
+所以正文的自然性缺陷应与一个独立的忠实性条件配合读取：
+
+\[
+\boxed{
+\text{零缺陷只证明交换，不证明信息未被商掉。}
+}
+\]
+
+### A.8 Li–Cayley 镜像是精确的连续—离散界面模型
+
+定义
+\[
+J:\mathbb C^*\to\mathbb C^*,
+\qquad
+J(z)=\frac1{\overline z}.
+\]
+
+#### 定理 A.17（镜像对合与单位圆界面）
+
+映射 \(J\) 是连续对合，其固定点集恰为单位圆：
+\[
+\boxed{
+\operatorname{Fix}(J)=S^1.
+}
+\]
+定义连续径向坐标
+\[
+b(z)=\log|z|.
+\]
+则
+\[
+\boxed{
+b(Jz)=-b(z).}
+\]
+因此
+\[
+\mathbb C^*_+=\{|z|>1\},
+\qquad
+\mathbb C^*_- =\{|z|<1\}
+\]
+被 \(J\) 交换，而单位圆 \(|z|=1\) 是极性消失的固定界面。
+
+##### 证明
+
+直接计算
+\[
+J(Jz)
+=
+\frac1{\overline{1/\overline z}}
+=z.
+\]
+又
+\[
+Jz=z
+\iff
+z\overline z=1
+\iff
+|z|=1.
+\]
+最后
+\[
+b(Jz)
+=
+\log\left|\frac1{\overline z}\right|
+=
+-\log|z|.
+\]
+其余结论由定理 A.9 得到。 \(\square\)
+
+#### 定理 A.18（镜像轨道商的显式参数）
+
+映射
+\[
+q:\mathbb C^*\to[0,\infty)\times S^1,
+\]
+\[
+q(z)
+=
+\left(
+|\log|z||,
+\frac z{|z|}
+\right)
+\]
+在 \(J\)-轨道上常值，并且恰好分离不同轨道。因此它诱导自然同胚
+\[
+\boxed{
+\mathbb C^*/\langle J\rangle
+\cong
+[0,\infty)\times S^1.
+}
+\]
+
+##### 证明
+
+极坐标给出同胚
+\[
+\Phi:\mathbb C^*\to\mathbb R\times S^1,
+\qquad
+\Phi(z)=\left(\log|z|,\frac z{|z|}\right),
+\]
+其逆为
+\[
+(u,\omega)\longmapsto e^u\omega.
+\]
+在该坐标中，
+\[
+J(u,\omega)=(-u,\omega).
+\]
+实轴关于 \(u\mapsto-u\) 的轨道商由 \(|u|\) 与 \([0,\infty)\) 同胚，因此乘上不变的角坐标 \(\omega\) 即得结论。 \(\square\)
+
+这个商坐标恰好保留：
+
+- 角相位 \(z/|z|\)；
+- 离单位圆的无向径向深度 \(|\log|z||\)。
+
+被商掉的是“位于单位圆内侧还是外侧”的极性比特。
+
+#### 推论 A.19（临界线是 Li–Cayley 极性界面）
+
+对
+\[
+C(s)=1-\frac1s
+\]
+定义
+\[
+\beta_C(s)=\log|C(s)|.
+\]
+对镜像
+\[
+\mathfrak m(s)=1-\overline s
+\]
+有
+\[
+\boxed{
+\beta_C(\mathfrak m(s))=-\beta_C(s).
+}
+\]
+并且
+\[
+\boxed{
+\beta_C(s)=0
+\iff
+\Re s=\frac12.
+}
+\]
+此外
+\[
+\beta_C(s)>0
+\iff
+\Re s<\frac12,
+\]
+\[
+\beta_C(s)<0
+\iff
+\Re s>\frac12.
+\]
+
+##### 证明
+
+由正文定理 8.3，
+\[
+C(\mathfrak m(s))
+=
+\frac1{\overline{C(s)}}.
+\]
+取模并取对数得到反不变性。其余等价由定理 8.2 得到。 \(\square\)
+
+因此 Riemann 假设可严格写成
+\[
+\boxed{
+\forall\rho\in Z_{\mathrm{nt}},
+\quad
+\beta_C(\rho)=0.
+}
+\]
+也就是说：所有非平凡零点都落在镜像对合的固定界面上。离线零点及其镜像具有相同的无向商坐标
+\[
+\left(
+|\beta_C|,
+\frac{C(\rho)}{|C(\rho)|}
+\right),
+\]
+但具有相反的内外极性。
+
+#### 推论 A.20（Li 探针的双曲放大形式）
+
+若
+\[
+C(\rho)=e^{\beta+i\theta},
+\qquad
+\beta=\beta_C(\rho),
+\]
+则正文的四元轨道贡献可写成
+\[
+\boxed{
+L_n(\rho)
+=
+4-4\cosh(n\beta)\cos(n\theta).
+}
+\]
+
+##### 证明
+
+令 \(r=e^\beta\)。则
+\[
+r^n+r^{-n}
+=e^{n\beta}+e^{-n\beta}
+=2\cosh(n\beta).
+\]
+代入定理 8.7 即得。 \(\square\)
+
+这个公式说明，高阶 Li 探针并不是简单翻转一个布尔标签。它把连续的反不变径向坐标 \(\beta\) 放大为 \(\cosh(n\beta)\)，再由相位 \(\theta\) 决定该放大在具体阶数上如何显现。离散极性
+\[
+\operatorname{sgn}\beta
+\]
+只是对“位于界面哪一侧”的粗粒化；真正控制指数尺度的是连续商余深度 \(|\beta|\)。
+
+### A.9 连续状态到离散结果的结构边界
+
+#### 定理 A.21（非平凡离散测量不能只是连通空间上的连续确定函数）
+
+设 \(X\) 为非空连通状态空间，\(D\) 为至少含两个点的有限离散结果集。不存在非恒定连续确定读出
+\[
+m:X\to D.
+\]
+
+##### 证明
+
+这是定理 A.7 的直接应用。 \(\square\)
+
+因此，从连续状态获得非平凡离散结果的模型，必须至少采用以下一种结构：
+
+1. **界面阈值**：先以连续量 \(h:X\to\mathbb R\) 描述状态，再以 \(\operatorname{sgn}h\) 离散化；读出在 \(h=0\) 的界面处不连续或退化；
+2. **分支/扇区**：定义域在相关尺度上已经不连通；
+3. **局部命名**：离散纤维只在局部截面中有标签，不存在全局连续极性；
+4. **随机读出**：连续地映射到概率单纯形 \(\Delta(D)\)，再由一次抽样产生离散结果。
+
+有限维量子测量的 Born 映射
+\[
+\rho
+\longmapsto
+\left(
+\operatorname{Tr}(\rho P_i)
+\right)_i
+\]
+属于第四类：状态到概率向量的映射是连续的，而单次结果不是一个由连通态空间连续确定的离散坐标。这个事实不把经典与量子约化成坐标变换；它只说明“连续对象直接连续地产生确定离散标签”不是一个非平凡模型。
+
+### A.10 本附录的闭合结论
+
+#### 结论 G：对合型取反的正规形
+
+在选定截面的自由对合系统中，
+\[
+\boxed{
+\text{对象}
+=
+\text{轨道商坐标}
++
+\mathbb Z_2\text{ 极性坐标},
+}
+\]
+且
+\[
+\boxed{
+\text{取反}
+=
+\text{保持商坐标并翻转极性坐标}.
+}
+\]
+
+#### 结论 H：离散极性需要命名或界面
+
+在连通连续空间上不存在全局连续的非平凡二值极性。可观察的离散标签必须来自截面、切口、界面、不连续粗粒化、连通分支或随机抽样。
+
+#### 结论 I：对角化在商上可能完全不可见
+
+对合扭曲满足
+\[
+\boxed{
+\Pi_A\Delta_\tau
+=
+\Pi_AD_A.
+}
+\]
+所以商观察者可以给出零缺陷，同时把逃逸所依赖的全部纤维极性完全删除。自然性与忠实性必须分开审计。
+
+#### 结论 J：Li–Cayley 给出精确实例
+
+镜像
+\[
+z\mapsto\frac1{\overline z}
+\]
+保持轨道商坐标
+\[
+\left(
+|\log|z||,
+\frac z{|z|}
+\right)
+\]
+并翻转径向极性。单位圆是固定界面，RH 等价于全部非平凡零点的 Cayley 像都位于该界面。Li 探针以
+\[
+\cosh(n\beta_C)
+\]
+放大连续径向缺陷，而不是仅仅操作一个离散布尔位。
+
+本附录的定理 A.2—A.21 均为完整纸面证明，尚未新增为 Lean 真源；它们不得在获得形式证明与冻结收据以前被标记为 `Closed`。
