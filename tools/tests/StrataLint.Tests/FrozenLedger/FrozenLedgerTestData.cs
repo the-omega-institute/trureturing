@@ -28,7 +28,11 @@ internal static class FrozenLedgerTestData
                 module.Imports.Select(ModuleNameFor).ToImmutableArray(),
                 declarationNames
                     .Order(StringComparer.Ordinal)
-                    .Select(name => new LeanDeclaration(name, "theorem", "True", module.Axioms)
+                    .Select(name => new LeanDeclaration(
+                        name,
+                        module.Kind,
+                        module.StatementMaterial,
+                        module.Axioms)
                     {
                         NameKey = module.OpaqueNameKeys ? NameKeyFor(name) : $"ns(n0,{name.Length}:{name})",
                         IncludeInStatement = module.Excluded.IsDefaultOrEmpty
@@ -118,7 +122,22 @@ internal static class FrozenLedgerTestData
             excluded is null
                 ? ImmutableArray<string>.Empty
                 : excluded.Order(StringComparer.Ordinal).ToImmutableArray(),
-            opaqueNameKeys);
+            opaqueNameKeys,
+            "theorem",
+            "True");
+
+    internal static ModuleSpec ModuleWithReport(
+        string name,
+        string source,
+        string statementMaterial,
+        IEnumerable<string>? axioms = null,
+        IEnumerable<string>? declarations = null,
+        string kind = "theorem") =>
+        Module(name, source, axioms: axioms, declarations: declarations) with
+        {
+            Kind = kind,
+            StatementMaterial = statementMaterial,
+        };
 
     /// Deliberately not derivable from the declaration name. A key an implementation could
     /// assemble from the selector would let it skip the report resolver entirely and still match.
@@ -251,5 +270,7 @@ internal static class FrozenLedgerTestData
         string? BaseTreeOid,
         ImmutableArray<string> Declarations = default,
         ImmutableArray<string> Excluded = default,
-        bool OpaqueNameKeys = false);
+        bool OpaqueNameKeys = false,
+        string Kind = "theorem",
+        string StatementMaterial = "True");
 }
