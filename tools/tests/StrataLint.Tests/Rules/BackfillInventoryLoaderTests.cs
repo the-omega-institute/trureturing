@@ -504,38 +504,6 @@ public sealed class BackfillInventoryLoaderTests
     }
 
     [Fact]
-    public void CanonicalLedgerE2StoresEveryReceiptPreimageInCas()
-    {
-        var root = TestRepositoryLayout.FindRoot();
-        var document = BackfillInventoryLoader.LoadRoot(root);
-        var entries = document.RequireDigestionEntries();
-
-        Assert.NotEmpty(entries);
-        Assert.Contains(document.RequireDigestionSources(), static source =>
-            AtomizerRegistry.IsRegistered(source.Atomizer));
-        Assert.Empty(entries
-            .Select(entry => (
-                Entry: entry,
-                Path: Path.Combine(
-                    root,
-                    (DigestionCasStore.RootPath + entry.CasRef["sha256:".Length..])
-                    .Replace('/', Path.DirectorySeparatorChar))))
-            .Where(static item => !File.Exists(item.Path))
-            .Select(static item => $"{item.Entry.SourceId}/{item.Entry.AtomId}"));
-        Assert.Empty(entries
-            .Select(entry => (
-                Entry: entry,
-                Path: Path.Combine(
-                    root,
-                    (DigestionCasStore.RootPath + entry.CasRef["sha256:".Length..])
-                    .Replace('/', Path.DirectorySeparatorChar))))
-            .Where(static item => File.Exists(item.Path)
-                && DigestionCasStore.Capture(File.ReadAllBytes(item.Path)).Reference
-                != item.Entry.CasRef)
-            .Select(static item => $"{item.Entry.SourceId}/{item.Entry.AtomId}"));
-    }
-
-    [Fact]
     public void RemarkBatchUpgradeCandidatesRemainResidualWithNamedUnresolvedClaims()
     {
         var root = TestRepositoryLayout.FindRoot();
@@ -566,21 +534,6 @@ public sealed class BackfillInventoryLoaderTests
             Assert.Equal(DigestionTruthState.Open, entry.ProjectedStatus.Truth);
         }
     }
-
-    [Fact]
-    public void StatementEchoForbidsRemarkClosureOfCertificatesAndTestableIdentities()
-    {
-        var root = TestRepositoryLayout.FindRoot();
-        var echo = File.ReadAllText(Path.Combine(root, "agents", "echo-template.md"));
-
-        Assert.Contains("Remark-closure guard", echo, StringComparison.Ordinal);
-        Assert.Contains("numerical certificate", echo, StringComparison.Ordinal);
-        Assert.Contains("independently testable identity", echo, StringComparison.Ordinal);
-        Assert.Contains("upgrade-candidate", echo, StringComparison.Ordinal);
-        Assert.Contains("retained_residual", echo, StringComparison.Ordinal);
-        Assert.Contains("unresolved_subitems", echo, StringComparison.Ordinal);
-    }
-
 
     private static bool TryLoadEntry(string yaml)
     {

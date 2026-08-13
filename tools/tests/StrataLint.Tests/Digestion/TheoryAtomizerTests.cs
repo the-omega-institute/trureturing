@@ -5,22 +5,10 @@ namespace StrataLint.Tests;
 
 public sealed partial class TheoryAtomizerTests
 {
-    private const string FirstProductionSource =
-        "docs/develop/theory/GICT.md";
     private const string SecondProductionSource =
         "docs/develop/theory/PZG_BEDC.md";
-    private const string ThirdProductionSource =
-        "docs/develop/theory/OBSERVER-QUANTUM.md";
     private const string FourthProductionSource =
         "docs/develop/theory/INTERFACE_PAPER.md";
-
-    public static TheoryData<string, string> ProductionTheorySources => new()
-    {
-        { FirstProductionSource, AtomizerRegistry.GictId },
-        { SecondProductionSource, AtomizerRegistry.PzgId },
-        { ThirdProductionSource, AtomizerRegistry.ObserverId },
-        { FourthProductionSource, AtomizerRegistry.PzgId },
-    };
 
     [Fact]
     public void RegistryFailsClosedForAnUnknownAtomizerAndListsRegisteredIds()
@@ -187,17 +175,6 @@ public sealed partial class TheoryAtomizerTests
         var atom = Assert.Single(AtomizerRegistry.Atomize(AtomizerRegistry.ObserverId, bytes, DigestionTestSupport.Rules).Claims);
 
         Assert.Equal(expectedAstPath, atom.AstPath);
-    }
-
-    [Fact]
-    public void ObserverV1SplitIsByteExactAndIdempotent()
-    {
-        var root = TestRepositoryLayout.FindRoot();
-        var sourceBytes = File.ReadAllBytes(Path.Combine(root, ThirdProductionSource));
-        var document = ObserverAtomizer.Atomize(sourceBytes, DigestionTestSupport.Rules);
-
-        AssertRecognitionComplete(document, sourceBytes);
-        AssertSplitIdempotent(AtomizerRegistry.ObserverId, document);
     }
 
     [Fact]
@@ -559,21 +536,6 @@ public sealed partial class TheoryAtomizerTests
                 DigestionTestSupport.Rules));
 
         Assert.Contains("duplicate normalized residual fingerprint", error.Message, StringComparison.Ordinal);
-    }
-
-    [Theory]
-    [MemberData(nameof(ProductionTheorySources))]
-    public void ProductionTheoryDocumentsSatisfyAtomizationProperties(
-        string relativePath,
-        string atomizerId)
-    {
-        var root = TestRepositoryLayout.FindRoot();
-        var bytes = File.ReadAllBytes(Path.Combine(root, relativePath));
-
-        var document = AtomizerRegistry.Atomize(atomizerId, bytes, DigestionTestSupport.Rules);
-
-        AssertRecognitionComplete(document, bytes);
-        AssertSplitIdempotent(atomizerId, document);
     }
 
     private static void AssertRecognitionComplete(

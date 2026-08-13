@@ -69,6 +69,7 @@ public sealed partial class MakeWorkflowTests
         Assert.Contains(" check --candidate-lean-report ", mathGate, StringComparison.Ordinal);
         Assert.Contains(" emit --check", mathGate, StringComparison.Ordinal);
         Assert.Contains(" emit-values --check", mathGate, StringComparison.Ordinal);
+        Assert.Contains(" describe-report --check", mathGate, StringComparison.Ordinal);
         Assert.Contains("dotnet test tools/StrataLint.sln", Recipe(makefile, "tools-test"), StringComparison.Ordinal);
         Assert.Equal(
             $"\t@/bin/bash {LeanCacheEnsureScriptPath}",

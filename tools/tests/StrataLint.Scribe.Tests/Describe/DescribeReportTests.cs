@@ -1,3 +1,4 @@
+using System.Collections.Immutable;
 using System.Text;
 using System.Text.Json;
 using StrataLint.Engine;
@@ -7,6 +8,83 @@ namespace StrataLint.Scribe.Tests;
 public sealed class DescribeReportTests
 {
     private const string FormalPath = "D5/S1/Phase/Basic.lean";
+
+    [Fact]
+    public void ContentCheckRejectsLinearFormulaTokensAndBucketNamespace()
+    {
+        WithRepository(root =>
+        {
+            var blueprint = Path.Combine(root, "Blueprint", "D5", "S1", "Phase");
+            TemporaryFileSystem.Directory.CreateDirectory(blueprint);
+            TemporaryFileSystem.File.WriteAllText(
+                Path.Combine(blueprint, "Basic.scribe.cs"),
+                "namespace Wrong;\n// FormulaToken\n");
+
+            var findings = DescribeContentGovernance.ValidateSources(root);
+
+            Assert.Contains(findings, finding => finding.Code == "linear-formula-token");
+            Assert.Contains(findings, finding => finding.Code == "blueprint-namespace");
+        });
+    }
+
+    [Fact]
+    public void IndependentInventoryRejectsMismatchedStatsAndSuspectedNovelNodes()
+    {
+        var document = ScribeDocument.Create(
+            DefinitionDsl.Header("D5/S1/Phase/Basic", "Inventory fixture."),
+            Heading.Create("Inventory"),
+            BlockSequence.Create(
+            [
+                CreateDescribe(
+                    "candidate",
+                    "Candidate",
+                    DescribeKind.Remark,
+                    AssessedProvenance.NovelAfterSearch(
+                        GidRef.Create("D5/S1/Phase/Basic"))),
+            ]));
+        var mismatched = new DescribeNodeStats(
+            0,
+            0,
+            0,
+            0,
+            ImmutableSortedDictionary<string, int>.Empty,
+            ImmutableSortedDictionary<string, int>.Empty);
+
+        var findings = DescribeContentGovernance.ValidateIndependentInventory(
+            [document],
+            mismatched);
+
+        Assert.Contains(findings, finding => finding.Code == "describe-ast-inventory");
+        Assert.Contains(findings, finding => finding.Code == "suspected-novel");
+    }
+
+    [Fact]
+    public void ReferencedLibraryNoteRequiresANonemptyLocatorSection()
+    {
+        WithRepository(root =>
+        {
+            var literature = LibraryNoteRef.Create("D5/L/sos1957threegap");
+            var document = ScribeDocument.Create(
+                DefinitionDsl.Header("D5/S1/Phase/Basic", "Locator fixture."),
+                Heading.Create("Locator"),
+                BlockSequence.Create(
+                [
+                    CreateDescribe(
+                        "literature",
+                        "Literature",
+                        DescribeKind.Remark,
+                        AssessedProvenance.FromLiterature(literature)),
+                ]));
+            var inspection = LibraryNoteCatalog.Inspect(root);
+
+            var findings = DescribeContentGovernance.ValidateReferencedNoteLocators(
+                root,
+                [document],
+                inspection);
+
+            Assert.Contains(findings, finding => finding.Code == "incomplete-library-locator");
+        });
+    }
 
     [Fact]
     public void ReportObservesTitleDerivedIdsAndCrossModuleDeclarationsWithoutBlocking()

@@ -126,6 +126,49 @@ public sealed class RuleEngineTests
     }
 
     [Fact]
+    public void Sl016ChecksMissingCasBlobBeforeOtherReceiptValidationCanReturnEarly()
+    {
+        var fixture = new RuleFixture();
+        fixture.AddBackfillTargets();
+        fixture.Files.Remove(RuleFixture.FixtureCasPath);
+        fixture.Files[BackfillInventoryLoader.RelativePath] = fixture.Files[
+                BackfillInventoryLoader.RelativePath]
+            .Replace(
+                "                coverage_gids:\n                  - D5/S0/Carrier/BackfillTarget",
+                "                coverage_gids:\n                  - D5/S0/Carrier/BackfillTarget\n                  - D5/S0/Carrier/BackfillTarget",
+                StringComparison.Ordinal);
+
+        var diagnostics = RuleCatalog.Default.EvaluateSingle(
+            RuleId.CreateKnown(16),
+            fixture.Build()).Diagnostics;
+
+        Assert.Contains(diagnostics, diagnostic => diagnostic.Message ==
+            $"entry {RuleFixture.FixtureAtomId} CAS blob is missing: {RuleFixture.FixtureCasPath}");
+    }
+
+    [Fact]
+    public void Sl016ChecksCasBlobHashBeforeOtherReceiptValidationCanReturnEarly()
+    {
+        var fixture = new RuleFixture();
+        fixture.AddBackfillTargets();
+        fixture.Files[RuleFixture.FixtureCasPath] = "corrupt";
+        fixture.Files[BackfillInventoryLoader.RelativePath] = fixture.Files[
+                BackfillInventoryLoader.RelativePath]
+            .Replace(
+                "                coverage_gids:\n                  - D5/S0/Carrier/BackfillTarget",
+                "                coverage_gids:\n                  - D5/S0/Carrier/BackfillTarget\n                  - D5/S0/Carrier/BackfillTarget",
+                StringComparison.Ordinal);
+
+        var diagnostics = RuleCatalog.Default.EvaluateSingle(
+            RuleId.CreateKnown(16),
+            fixture.Build()).Diagnostics;
+
+        Assert.Contains(diagnostics, diagnostic => diagnostic.Message.Contains(
+            $"entry {RuleFixture.FixtureAtomId} CAS blob hash mismatch: {RuleFixture.FixtureCasPath}",
+            StringComparison.Ordinal));
+    }
+
+    [Fact]
     public void Sl001AllowsContentToImportTheAssumptionFoundationButNotTheReverse()
     {
         // Stratum content -> X_Assumptions (carrying a registered classical debt): allowed.
@@ -257,12 +300,28 @@ public sealed class RuleEngineTests
         Assert.DoesNotContain(diagnostics, diagnostic => diagnostic.Path == OverfullBucketPath);
     }
 
+    [Fact]
+    public void Sl003RejectsRepositoryBucketBeyondToleranceEvenWhenUntouched()
+    {
+        var fixture = OverfullBucket(RepositoryRules.DirectoryToleranceLimit + 1);
+
+        var diagnostic = Assert.Single(
+            RuleCatalog.Default.EvaluateSingle(RuleId.CreateKnown(3), fixture.Build()).Diagnostics,
+            item => item.Path == OverfullBucketPath);
+
+        Assert.Equal(AdmissionEffect.Block, diagnostic.AdmissionEffect);
+        Assert.Contains(
+            $"repository tolerance {RepositoryRules.DirectoryToleranceLimit}",
+            diagnostic.Message,
+            StringComparison.Ordinal);
+    }
+
     private const string OverfullBucketPath = "D5/S0/Overfull";
 
-    private static RuleFixture OverfullBucket()
+    private static RuleFixture OverfullBucket(int count = 13)
     {
         var fixture = new RuleFixture();
-        for (var index = 0; index < 13; index++)
+        for (var index = 0; index < count; index++)
         {
             var path = $"{OverfullBucketPath}/Member{index:00}.lean";
             fixture.Files[path] = "-- member\n";
@@ -377,6 +436,30 @@ public sealed class RuleEngineTests
         fixture.Baseline[sourcePath] = "// baseline source\n";
 
         Assert.Empty(EvaluateSl025(fixture));
+    }
+
+    [Fact]
+    public void Sl025RejectsBlueprintMarkdownWithoutMatchingScribeSource()
+    {
+        var fixture = new RuleFixture();
+        fixture.Files.Remove(RuleFixture.BlueprintSourcePath);
+
+        var diagnostic = Assert.Single(EvaluateSl025(fixture), item =>
+            item.Path == RuleFixture.BlueprintPath);
+
+        Assert.Equal("Blueprint markdown has no matching .scribe.cs source", diagnostic.Message);
+    }
+
+    [Fact]
+    public void Sl025RejectsScribeSourceWithoutMatchingBlueprintMarkdown()
+    {
+        var fixture = new RuleFixture();
+        fixture.Files.Remove(RuleFixture.BlueprintPath);
+
+        var diagnostic = Assert.Single(EvaluateSl025(fixture), item =>
+            item.Path == RuleFixture.BlueprintSourcePath);
+
+        Assert.Equal("Blueprint Scribe source has no matching .md projection", diagnostic.Message);
     }
 
     private static ImmutableArray<Diagnostic> EvaluateSl025(RuleFixture fixture)
