@@ -30,9 +30,10 @@ concurrency:
   group: ci-${{ github.event.pull_request.number || github.sha }}
   cancel-in-progress: true
 
-# Trust topology: the pull_request_target workflow, Lean producer, and .NET judge
-# all come from the content-addressed dev base. Candidate engineering is only a
-# signal. Admission consumes immutable raw reports produced in a predecessor job.
+# Trust topology: pull_request_target supplies the event context; candidate-owned
+# Lean producer and .NET judge inspect candidate content. Candidate engineering is
+# only a signal. Admission consumes immutable raw reports from the predecessor job;
+# the protected base exists only as the merge-base SHA passed to the gate.
 jobs:
   candidate-engineering:
     name: Candidate harness engineering checks
@@ -63,13 +64,12 @@ jobs:
         with:
           path: ~/.elan
           key: ${{ runner.os }}-${{ runner.arch }}-elan-${{ steps.lean.outputs.hash }}
-          # 前缀回退:本 job 的精确 key 由 candidate/lean-toolchain 单文件算出,而写入方
-          # (lean-inspect)用 hashFiles(candidate, baseline) 两文件算,两者永不相等。
-          # 没有回退就每轮必 miss、必联网,于是每轮都赌 releases.lean-lang.org 那一跳。
+          # 前缀回退保留,让候选工程 job 可以复用 inspect job 写入的相近工具链缓存。
           restore-keys: |
             ${{ runner.os }}-${{ runner.arch }}-elan-
 
       - name: Install pinned Lean toolchain for producer integration tests
+        id: install-elan
         shell: bash
         env:
           LEAN_TOOLCHAIN_FILE: ${{ steps.lean.outputs.file }}
@@ -165,12 +165,19 @@ jobs:
             ((index += 1))
           done
 
+      - name: Save elan toolchain for engineering checks (dev push only)
+        if: always() && steps.install-elan.outcome == 'success' && github.event_name == 'push' && github.ref == 'refs/heads/dev'
+        uses: actions/cache/save@v4
+        with:
+          path: ~/.elan
+          key: ${{ runner.os }}-${{ runner.arch }}-elan-${{ steps.lean.outputs.hash }}
+
   lean-inspect:
     name: Canonical Lean report production
     runs-on: ubuntu-24.04-arm
     timeout-minutes: 45
     outputs:
-      baseline_sha: ${{ steps.baseline.outputs.sha }}
+      baseline_sha: ${{ steps.base.outputs.sha }}
     steps:
       - name: Check out candidate with history
         uses: actions/checkout@v4
@@ -180,8 +187,8 @@ jobs:
           persist-credentials: false
           path: candidate
 
-      - name: Resolve dev baseline content address
-        id: baseline
+      - name: Resolve dev merge-base content address
+        id: base
         shell: bash
         run: |
           set -euo pipefail
@@ -204,80 +211,25 @@ jobs:
             fi
           fi
           if [[ -z "$sha" || "$sha" =~ ^0+$ ]]; then
-            printf '%s\n' "event has no content-addressable dev baseline" >&2
+            printf '%s\n' "event has no content-addressable base SHA" >&2
             exit 1
           fi
           echo "sha=$sha" >> "$GITHUB_OUTPUT"
-
-      - name: Check out content-addressed dev baseline
-        uses: actions/checkout@v4
-        with:
-          ref: ${{ steps.baseline.outputs.sha }}
-          fetch-depth: 0
-          persist-credentials: false
-          path: baseline
-
-      - name: Verify baseline checkout
-        shell: bash
-        run: |
-          set -euo pipefail
-          actual="$(git -C baseline rev-parse HEAD)"
-          test "$actual" = "${{ steps.baseline.outputs.sha }}"
-          printf '%s\n' "Lean producer base content address: $actual" >> "$GITHUB_STEP_SUMMARY"
 
       - name: Resolve candidate canonical Lean report address
         id: lean-report-input
         shell: bash
         run: |
           set -euo pipefail
-          helper="$GITHUB_WORKSPACE/baseline/Meta/StrataLint/scripts/report/lean-report-input.sh"
+          helper="$GITHUB_WORKSPACE/candidate/Meta/StrataLint/scripts/report/lean-report-input.sh"
           test -x "$helper"
-          read -r address candidateProducer _ \
+          read -r address _ _ \
             <<< "$("$helper" address --repository "$GITHUB_WORKSPACE/candidate")"
           [[ "$address" =~ ^[0-9a-f]{64}$ ]]
           echo "address=$address" >> "$GITHUB_OUTPUT"
           # 报告地址的原像是 producer(MSBuild 求值的 Cli/Engine Compile 集 + 声明的
           # project/build/lock/global 输入 + inspector)、Lean 源(Trureturing.lean +
           # D5/**/*.lean)与 config(toolchain/lake-manifest/lakefile)三者的清单哈希。
-          # 两侧同址 ⇒ 两份报告按定义逐字节相同,一份缓存可同时充当两份;不同址则不复用。
-          if grep -Fq -- '--baseline)' "$helper" 2>/dev/null; then
-            read -r baselineAddress baselineProducer _ \
-              <<< "$("$helper" address --repository "$GITHUB_WORKSPACE/baseline" --baseline)"
-            [[ "$baselineAddress" =~ ^[0-9a-f]{64}$ ]]
-          else
-            # The first dev push after this workflow lands executes the predecessor's
-            # helper. Preserve that helper's old call shape and disable all reuse.
-            read -r baselineAddress baselineProducer _ \
-              <<< "$("$helper" address --repository "$GITHUB_WORKSPACE/baseline")"
-            [[ "$baselineAddress" =~ ^[0-9a-f]{64}$ ]]
-            echo "producer-consistent=false" >> "$GITHUB_OUTPUT"
-            echo "pair-reusable=false" >> "$GITHUB_OUTPUT"
-            printf '%s\n' "canonical Lean report cache disabled: baseline helper predates expanded producer identity; using full production" >> "$GITHUB_STEP_SUMMARY"
-            exit 0
-          fi
-          # 地址的 producer 分量取自**候选**树,而实际执行的 producer 取自**基线**树
-          # (base-owned 判官拓扑要求如此)。push 事件下 baseline = github.event.before,
-          # 即上一个 dev tip(见 `Resolve dev baseline content address`),故一次改动了
-          # lean-inspector 的合并会让两者不同:报告由**旧** producer 产出,却按**新** producer
-          # 的地址归档 —— 地址声称的输入闭包与实际闭包不符,即第〇节合取②的违反。
-          # `lean-report-input.sh verify` 只重算地址、不重跑 producer;`RawLeanReportArtifact`
-          # 只核模块集与 source_sha256。二者都拦不住「同一份源、不同 producer 语义」。
-          # 故 producer 不一致时既不写也不读该缓存,回落完整生产路径。
-          # lean-inspector/ 全史仅改 2 次,其一(953733cb)正是改变 axiom 闭包收集方式的
-          # 语义改动 —— 频次低不构成豁免(第 20 条:检测机制绝不降级)。
-          if [[ "$candidateProducer" == "$baselineProducer" ]]; then
-            echo "producer-consistent=true" >> "$GITHUB_OUTPUT"
-          else
-            echo "producer-consistent=false" >> "$GITHUB_OUTPUT"
-            candidate_prefix="$(printf '%s' "$candidateProducer" | cut -c1-12)"
-            baseline_prefix="$(printf '%s' "$baselineProducer" | cut -c1-12)"
-            printf '%s\n' "canonical Lean report cache disabled: candidate producer $candidate_prefix != executed baseline producer $baseline_prefix" >> "$GITHUB_STEP_SUMMARY"
-          fi
-          if [[ "$address" == "$baselineAddress" ]]; then
-            echo "pair-reusable=true" >> "$GITHUB_OUTPUT"
-          else
-            echo "pair-reusable=false" >> "$GITHUB_OUTPUT"
-          fi
 
       # 一事不再理:报告是其输入闭包的纯函数,而该闭包已被内容寻址(上一步)。
       # dev push 早已把结果按同一 key 存下(下方 Save 步),theory-ingest 也已在读它;
@@ -289,13 +241,12 @@ jobs:
       # 报告不可能被静默接受,最坏是红,不是假绿。
       - name: Restore canonical Lean report by input address
         id: report-cache
-        if: steps.lean-report-input.outputs.pair-reusable == 'true' && steps.lean-report-input.outputs.producer-consistent == 'true'
         uses: actions/cache/restore@v4
         with:
           path: .canonical-lean-report-cache
           key: stratalint-canonical-lean-report-v2-${{ steps.lean-report-input.outputs.address }}
 
-      - name: Serve both canonical Lean reports from the cached address
+      - name: Serve candidate canonical Lean report from the cached address
         id: report-reuse
         if: steps.report-cache.outputs.cache-hit == 'true'
         # 这一步失败必须**回落**到完整生产路径,而不是让整个 job 红:缓存是加速,不是权威。
@@ -311,18 +262,15 @@ jobs:
           for suffix in '' .sha256 .input.attestation .provenance.json; do
             test -s "${source}${suffix}"
           done
-          helper="$GITHUB_WORKSPACE/baseline/Meta/StrataLint/scripts/report/lean-report-input.sh"
+          helper="$GITHUB_WORKSPACE/candidate/Meta/StrataLint/scripts/report/lean-report-input.sh"
           # 缓存条目对候选树重新验一次地址与报告哈希;不符即整体回落,不静默使用。
           "$helper" verify --repository "$GITHUB_WORKSPACE/candidate" --report "$source"
-          "$helper" verify --repository "$GITHUB_WORKSPACE/baseline" --report "$source"
-          for side in candidate baseline; do
-            for suffix in '' .input.attestation .provenance.json; do
-              cp "${source}${suffix}" "$reports/${side}-lean-report.json${suffix}"
-            done
-            printf '%s  %s\n' \
-              "$(sha256sum "$reports/${side}-lean-report.json" | cut -d ' ' -f 1)" \
-              "${side}-lean-report.json" > "$reports/${side}-lean-report.json.sha256"
+          for suffix in '' .input.attestation .provenance.json; do
+            cp "${source}${suffix}" "$reports/candidate-lean-report.json${suffix}"
           done
+          printf '%s  %s\n' \
+            "$(sha256sum "$reports/candidate-lean-report.json" | cut -d ' ' -f 1)" \
+            "candidate-lean-report.json" > "$reports/candidate-lean-report.json.sha256"
           printf '%s\n' "canonical Lean reports served from cached input address" >> "$GITHUB_STEP_SUMMARY"
 
       - name: Restore elan and pinned Lean toolchains
@@ -330,7 +278,7 @@ jobs:
         uses: actions/cache/restore@v4
         with:
           path: ~/.elan
-          key: ${{ runner.os }}-${{ runner.arch }}-elan-${{ hashFiles('candidate/lean-toolchain', 'baseline/lean-toolchain') }}
+          key: ${{ runner.os }}-${{ runner.arch }}-elan-${{ hashFiles('candidate/lean-toolchain') }}
           restore-keys: |
             ${{ runner.os }}-${{ runner.arch }}-elan-
 
@@ -367,14 +315,12 @@ jobs:
             elan_install_with_retry
           fi
           default_toolchain=""
-          for toolchain_file in candidate/lean-toolchain baseline/lean-toolchain; do
-            toolchain="$(tr -d '\r\n' < "$toolchain_file")"
-            test -n "$toolchain"
-            if ! "$HOME/.elan/bin/elan" toolchain list 2>/dev/null | grep -qF "$toolchain"; then
-              elan_toolchain_with_retry "$toolchain"
-            fi
-            default_toolchain="$toolchain"
-          done
+          toolchain="$(tr -d '\r\n' < candidate/lean-toolchain)"
+          test -n "$toolchain"
+          if ! "$HOME/.elan/bin/elan" toolchain list 2>/dev/null | grep -qF "$toolchain"; then
+            elan_toolchain_with_retry "$toolchain"
+          fi
+          default_toolchain="$toolchain"
           "$HOME/.elan/bin/elan" default "$default_toolchain"
           "$HOME/.elan/bin/lake" --version
 
@@ -383,47 +329,32 @@ jobs:
         with:
           global-json-file: candidate/global.json
 
-      - name: Restore candidate and baseline Lean build artifacts
+      - name: Restore candidate Lean build artifacts
         if: steps.report-reuse.outcome != 'success'
 
         uses: actions/cache/restore@v4
         with:
           path: |
             candidate/.lake
-            baseline/.lake
             ~/.cache/mathlib
-          key: ${{ runner.os }}-${{ runner.arch }}-lake-${{ hashFiles('candidate/lake-manifest.json', 'baseline/lake-manifest.json') }}-${{ hashFiles('candidate/lean-toolchain', 'baseline/lean-toolchain') }}-${{ github.event.pull_request.head.sha || github.sha }}-${{ steps.baseline.outputs.sha }}
+          key: ${{ runner.os }}-${{ runner.arch }}-lake-${{ hashFiles('candidate/lake-manifest.json') }}-${{ hashFiles('candidate/lean-toolchain') }}-${{ github.event.pull_request.head.sha || github.sha }}
           restore-keys: |
-            ${{ runner.os }}-${{ runner.arch }}-lake-${{ hashFiles('candidate/lake-manifest.json', 'baseline/lake-manifest.json') }}-${{ hashFiles('candidate/lean-toolchain', 'baseline/lean-toolchain') }}-
+            ${{ runner.os }}-${{ runner.arch }}-lake-${{ hashFiles('candidate/lake-manifest.json') }}-${{ hashFiles('candidate/lean-toolchain') }}-
 
       - name: Produce source-bound canonical Lean reports
         if: steps.report-reuse.outcome != 'success'
         shell: bash
         run: |
           set -euo pipefail
-          producer="$GITHUB_WORKSPACE/baseline/Meta/StrataLint/lean-inspector/inspect.sh"
-          if [[ ! -x "$producer" || ! -f "$GITHUB_WORKSPACE/baseline/Meta/StrataLint/lean-inspector/Inspector.lean" ]]; then
-            if git -C candidate log --format=%H "${{ steps.baseline.outputs.sha }}" -- Meta/StrataLint/lean-inspector/inspect.sh | grep -q .; then
-              printf '%s\n' "baseline Lean producer disappeared after its recorded introduction" >&2
-              exit 1
-            fi
-            producer="$GITHUB_WORKSPACE/candidate/Meta/StrataLint/lean-inspector/inspect.sh"
-            echo "::warning title=Lean producer bootstrap::The predecessor predates the producer; using canonical dev candidate for its one-time introduction run."
-          fi
-          pair_producer="$GITHUB_WORKSPACE/baseline/Meta/StrataLint/scripts/lean-report-pair.sh"
-          if [[ ! -x "$pair_producer" ]]; then
-            if git -C candidate log --format=%H "${{ steps.baseline.outputs.sha }}" -- Meta/StrataLint/scripts/lean-report-pair.sh | grep -q .; then
-              printf '%s\n' "baseline Lean report pair helper disappeared after its recorded introduction" >&2
-              exit 1
-            fi
-            pair_producer="$GITHUB_WORKSPACE/candidate/Meta/StrataLint/scripts/lean-report-pair.sh"
-            echo "::warning title=Lean report pair bootstrap::The predecessor predates input-address reuse; using the newly admitted helper for its one-time introduction run."
-          fi
+          producer="$GITHUB_WORKSPACE/candidate/Meta/StrataLint/lean-inspector/inspect.sh"
+          pair_producer="$GITHUB_WORKSPACE/candidate/Meta/StrataLint/scripts/lean-report-pair.sh"
+          test -x "$producer"
+          test -f "$GITHUB_WORKSPACE/candidate/Meta/StrataLint/lean-inspector/Inspector.lean"
+          test -x "$pair_producer"
           reports="$RUNNER_TEMP/raw-lean-reports"
           mkdir -p "$reports"
-          # 只产候选侧。旧侧报告唯一的用途是 Hearts.lean 变动时的语义比对,而该文件
-          # 近 200 次提交只动过 5 次 —— 其余每个 PR 都在为它编译一整棵旧侧 Lean 树,
-          # 而那正压在关键路径上。改了 Hearts 时 admission 会 fail-closed 要求补上。
+          # 只产候选侧。base 只作为 merge-base SHA 传给 admission gate 的 diff 语义,
+          # 不再为它编译或上传第二份 Lean 报告。
           "$pair_producer" --single \
             --producer "$producer" \
             --lake-bin "$HOME/.elan/bin/lake" \
@@ -477,7 +408,7 @@ jobs:
           test "$declaredSha256" = "$reportSha256"
           test "$declaredName" = "$(basename "$source")"
           printf '%s  %s\n' "$reportSha256" "$(basename "$target")" > "${target}.sha256"
-          "$GITHUB_WORKSPACE/baseline/Meta/StrataLint/scripts/report/lean-report-input.sh" verify \
+          "$GITHUB_WORKSPACE/candidate/Meta/StrataLint/scripts/report/lean-report-input.sh" verify \
             --repository "$GITHUB_WORKSPACE/candidate" \
             --report "$target"
 
@@ -489,7 +420,7 @@ jobs:
       # 命中缓存时 elan/lake 目录未被恢复也未被填充,回存会写入空态并污染下一轮;
       # 报告 key 也已存在,重写无意义。三个 save 一律只在真正跑过生产路径时执行。
       - name: Save candidate canonical Lean report (dev push only)
-        if: success() && steps.report-reuse.outcome != 'success' && steps.lean-report-input.outputs.producer-consistent == 'true' && github.event_name == 'push' && github.ref == 'refs/heads/dev'
+        if: success() && steps.report-reuse.outcome != 'success' && github.event_name == 'push' && github.ref == 'refs/heads/dev'
         uses: actions/cache/save@v4
         with:
           path: .canonical-lean-report-cache
@@ -513,7 +444,7 @@ jobs:
         uses: actions/cache/save@v4
         with:
           path: ~/.elan
-          key: ${{ runner.os }}-${{ runner.arch }}-elan-${{ hashFiles('candidate/lean-toolchain', 'baseline/lean-toolchain') }}
+          key: ${{ runner.os }}-${{ runner.arch }}-elan-${{ hashFiles('candidate/lean-toolchain') }}
 
       # 命中缓存时 elan/lake 目录未被恢复也未被填充,回存会写入空态并污染下一轮;
       # 报告 key 也已存在,重写无意义。三个 save 一律只在真正跑过生产路径时执行。
@@ -525,15 +456,16 @@ jobs:
         with:
           path: |
             candidate/.lake
-            baseline/.lake
             ~/.cache/mathlib
-          key: ${{ runner.os }}-${{ runner.arch }}-lake-${{ hashFiles('candidate/lake-manifest.json', 'baseline/lake-manifest.json') }}-${{ hashFiles('candidate/lean-toolchain', 'baseline/lean-toolchain') }}-${{ github.event.pull_request.head.sha || github.sha }}-${{ steps.baseline.outputs.sha }}
+          key: ${{ runner.os }}-${{ runner.arch }}-lake-${{ hashFiles('candidate/lake-manifest.json') }}-${{ hashFiles('candidate/lean-toolchain') }}-${{ github.event.pull_request.head.sha || github.sha }}
 
   baseline-admission:
     name: Content-addressed dev baseline admission
     needs: lean-inspect
     runs-on: ubuntu-latest
     timeout-minutes: 20
+    env:
+      DEV_BASELINE_SHA: ${{ needs.lean-inspect.outputs.baseline_sha }}
     steps:
       - name: Check out candidate with history
         uses: actions/checkout@v4
@@ -543,27 +475,10 @@ jobs:
           persist-credentials: false
           path: candidate
 
-      - name: Check out content-addressed dev baseline
-        uses: actions/checkout@v4
-        with:
-          ref: ${{ needs.lean-inspect.outputs.baseline_sha }}
-          fetch-depth: 0
-          persist-credentials: false
-          path: baseline
-
-      - name: Verify baseline checkout
-        shell: bash
-        run: |
-          set -euo pipefail
-          actual="$(git -C baseline rev-parse HEAD)"
-          test "$actual" = "${{ needs.lean-inspect.outputs.baseline_sha }}"
-          echo "DEV_BASELINE_SHA=$actual" >> "$GITHUB_ENV"
-          printf '%s\n' "Baseline judge content address: $actual" >> "$GITHUB_STEP_SUMMARY"
-
       - name: Install pinned SDK
         uses: actions/setup-dotnet@v4
         with:
-          global-json-file: baseline/global.json
+          global-json-file: candidate/global.json
 
       - name: Download canonical Lean reports
         uses: actions/download-artifact@v4
@@ -580,12 +495,14 @@ jobs:
 
       - name: Run the harness gate with the candidate's own judge
         shell: bash
+        env:
+          STRATALINT_TIMING: ${{ runner.temp }}/gate-timing.jsonl
         run: |
           set -euo pipefail
           # 候选用自己的法官审自己的内容。法官程序在 43% 的合并里与 base 逐字节相同,
           # 那些情况下用哪个是恒等的;其余情况新规则本就该立即对自己生效。
-          # base 仍然提供**数据**(旧侧快照与旧侧 Lean 报告),那是 git
-          # 就能给的,不需要编译 base 的代码 —— 而正是那次编译让 dev 一坏就谁都进不来
+          # base 仍然只提供一个 immutable SHA 给 diff 语义,不需要 checkout 或编译 base 代码
+          # —— 而正是那次编译让 dev 一坏就谁都进不来
           # (2026-08-13 两次:SL-003 锁死七个在飞 PR;法官自检失败后连修它的 PR 也挡在外面)。
           gate="$GITHUB_WORKSPACE/candidate/.github/scripts/harness-gate.sh"
           if [[ ! -x "$gate" ]]; then
@@ -612,3 +529,12 @@ jobs:
             printf '%s\n' "### protected-surface change (SL-022); content checks passed" >> "$GITHUB_STEP_SUMMARY"
           fi
           exit 0
+
+      - name: Upload gate timing
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: gate-timing
+          path: ${{ runner.temp }}/gate-timing.jsonl
+          if-no-files-found: warn
+          retention-days: 7
