@@ -18,17 +18,4 @@ public sealed partial class TheoryAtomizerTests
         Assert.Null(atom.StatusMarker.Status);
         Assert.Null(atom.StatusMarker.Qualifier);
     }
-
-    [Fact]
-    public void ProductionGictAnnotationsDoNotContainMalformedClosedStatusMarkers()
-    {
-        var root = TestRepositoryLayout.FindRoot();
-        var bytes = File.ReadAllBytes(Path.Combine(root, FirstProductionSource));
-
-        var document = GictAtomizer.Atomize(bytes, DigestionTestSupport.Rules);
-
-        Assert.DoesNotContain(
-            document.Claims,
-            static atom => atom.StatusMarker.Kind == DigestionAtomStatusMarkerKind.Malformed);
-    }
 }

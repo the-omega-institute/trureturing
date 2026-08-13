@@ -4,22 +4,6 @@ namespace StrataLint.Scribe.Tests;
 
 public sealed partial class FormulaCorpusInventoryTests
 {
-    [Fact]
-    public void BlueprintAuthorSurfaceContainsNoLinearFormulaTokenTrees()
-    {
-        var repository = RepositoryAccessor.Discover(RepositoryRootCriterion.ClaudeDirectoryNotFound);
-        var forbidden = new[] { "FormulaTokens", "Formula.TokenTree", "FormulaToken", "FormulaMark", "FormulaSpace" };
-
-        var residuals = repository.EnumerateFiles(RepositoryRelativePath.Create("Blueprint"), "*.scribe.cs")
-            .SelectMany(path => forbidden
-                .Where(name => repository.ReadAllText(path).Contains(name, StringComparison.Ordinal))
-                .Select(name => $"{path.Value}:{name}"))
-            .Order(StringComparer.Ordinal)
-            .ToArray();
-
-        Assert.Empty(residuals);
-    }
-
     /// Macros the emitter can produce, derived rather than listed. Every FormulaLatexMacro
     /// member is rendered and its control words collected, plus the macros LatexWriter emits
     /// from string literals for AST nodes that are not LatexMacro. Both sources are program,

@@ -21,6 +21,17 @@ internal static class EchoVerifyCommand
         ArgumentNullException.ThrowIfNull(arguments);
         try
         {
+            var templatePath = Path.Combine(repositoryRoot, "agents", "echo-template.md");
+            var templateFindings = EchoTemplatePolicy.Validate(File.ReadAllText(templatePath, Encoding.UTF8));
+            if (templateFindings.Count > 0)
+            {
+                return new ExplicitCommandResult(
+                    1,
+                    string.Empty,
+                    string.Concat(templateFindings.Select(static finding =>
+                        $"ECHO_TEMPLATE_INVALID {finding}\n")));
+            }
+
             var baseRevision = Parse(arguments);
             var prepared = repository.Prepare(baseRevision);
             var summary = DigestStatusCommand.Run(
@@ -120,6 +131,28 @@ internal static class EchoVerifyCommand
 
     private static InvalidOperationException Usage() => new(
         "USAGE: StrataLint echo-verify --emit --base REV");
+}
+
+internal static class EchoTemplatePolicy
+{
+    private static readonly string[] RequiredVocabulary =
+    [
+        "Remark-closure guard",
+        "numerical certificate",
+        "independently testable identity",
+        "upgrade-candidate",
+        "retained_residual",
+        "unresolved_subitems",
+    ];
+
+    internal static IReadOnlyList<string> Validate(string text)
+    {
+        ArgumentNullException.ThrowIfNull(text);
+        return RequiredVocabulary
+            .Where(term => !text.Contains(term, StringComparison.Ordinal))
+            .Select(static term => $"agents/echo-template.md is missing required term '{term}'")
+            .ToArray();
+    }
 }
 
 internal static class EchoResidualBlock

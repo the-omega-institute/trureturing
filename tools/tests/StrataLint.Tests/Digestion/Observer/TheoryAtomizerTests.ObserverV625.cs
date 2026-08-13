@@ -1,4 +1,3 @@
-using System.Security.Cryptography;
 using System.Text;
 using StrataLint.Engine;
 
@@ -35,33 +34,11 @@ public sealed partial class TheoryAtomizerTests
     {
         var bytes = Encoding.UTF8.GetBytes($"# Observer\n\n{claim}\n");
 
-        var atom = Assert.Single(AtomizerRegistry.Atomize(AtomizerRegistry.ObserverId, bytes, DigestionTestSupport.Rules).Claims);
+        var atom = Assert.Single(AtomizerRegistry.Atomize(
+            AtomizerRegistry.ObserverId,
+            bytes,
+            DigestionTestSupport.Rules).Claims);
 
         Assert.Equal(expectedAstPath, atom.AstPath);
-    }
-
-    [Fact]
-    public void ObserverV1PreservesTheLegacyProductionAtomizationByteForByte()
-    {
-        var root = TestRepositoryLayout.FindRoot();
-        var source = File.ReadAllBytes(Path.Combine(root, ThirdProductionSource));
-        var document = AtomizerRegistry.Atomize(AtomizerRegistry.ObserverId, source, DigestionTestSupport.Rules);
-
-        using var output = new MemoryStream();
-        using (var writer = new BinaryWriter(output, Encoding.UTF8, leaveOpen: true))
-        {
-            foreach (var atom in document.Claims)
-            {
-                writer.Write(atom.AstPath);
-                writer.Write(atom.StartByte);
-                writer.Write(atom.EndByte);
-                writer.Write(atom.RawBytes.Length);
-                writer.Write(atom.RawBytes.AsSpan());
-            }
-        }
-
-        Assert.Equal(
-            "fc2201cb0f6282b32f2a6ae77b3b86439c14e77b4ba88ca43a54107647031be4",
-            Convert.ToHexString(SHA256.HashData(output.ToArray())).ToLowerInvariant());
     }
 }

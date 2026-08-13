@@ -223,7 +223,15 @@ internal static class BackfillInventoryRule
             }
         }
 
-        if (findings.Count > 0)
+        var hasStructuralFindings = findings.Count > 0;
+        // CAS integrity is part of SL-016 itself, so it must run even when another
+        // receipt-shape finding below would otherwise return before status derivation.
+        foreach (var finding in DigestionCasStore.Evaluate(document, context.Current).Findings)
+        {
+            findings.Add(new RuleFinding(BackfillPath, finding));
+        }
+
+        if (hasStructuralFindings)
         {
             return;
         }
