@@ -72,9 +72,8 @@ internal sealed class SystemCliConsole : ICliConsole
 internal static class CliApplication
 {
     // 这张表是动词的唯一真源:dispatch 查它,USAGE 由它渲染,`CliVerbLinkageTests` 也据它
-    // 判 Makefile 与脚本里的调用是否悬空。此前 USAGE 是手抄的第二份清单,于是它声明了
-    // 五个 dispatch 里不存在的动词(c0-verify、c0-reconcile-trust-root、golden-record、
-    // verify-conservative、evaluate-conservative-corpus),又漏掉了实现着的 dag-render。
+    // 判 Makefile 与脚本里的调用是否悬空。此前 USAGE 是手抄的第二份清单,既包含悬空
+    // 动词,又漏掉了已实现的动词。
     private static readonly ImmutableDictionary<
         string,
         Func<ICliEnvironment, string[], ICliConsole, int>> Handlers =

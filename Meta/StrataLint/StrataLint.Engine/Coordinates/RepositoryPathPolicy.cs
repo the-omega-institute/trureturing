@@ -10,8 +10,6 @@ internal static partial class RepositoryPathPolicy
     internal const string LibraryMapPath = "Library/MAP.md";
     internal const string WorkflowPath = ".github/workflows/ci.yml";
     internal const string TheoryIngestWorkflowPath = ".github/workflows/theory-ingest.yml";
-    // 已撤役 workflow(GITHUB_TOKEN 防递归判负,PR #241);常量保留以维持保守扩展(旧树 admit 不翻),移除须走义务会计。
-    internal const string AutoUpdateBranchWorkflowPath = ".github/workflows/auto-update-branch.yml";
     internal const string HarnessGatePath = ".github/scripts/harness-gate.sh";
 
     internal static ImmutableArray<Diagnostic> Evaluate(
@@ -80,9 +78,8 @@ internal static partial class RepositoryPathPolicy
             or "Meta/split.py"
             or "Golden/fixture-registry.yaml" or "Golden/values-kernels.toml"
             or WorkflowPath or TheoryIngestWorkflowPath
-            or AutoUpdateBranchWorkflowPath
             or ".github/CODEOWNERS"
-            or ".github/scripts/baseline-admission.sh" or HarnessGatePath
+            or HarnessGatePath
             || value.StartsWith("Meta/StrataLint/", StringComparison.Ordinal)
             || DigestionCasStore.IsCanonicalPath(value)
             || BackfillInventoryLoader.IsCanonicalPath(value)
@@ -94,7 +91,6 @@ internal static partial class RepositoryPathPolicy
             || value.StartsWith(".claude/skills/", StringComparison.Ordinal)
             || value.StartsWith(".codex/skills/", StringComparison.Ordinal)
             || value.StartsWith("docs/devloop/", StringComparison.Ordinal)
-            || IsGoldenCaseData(value)
             || IsGoldenProjectionData(value)
             || IsCanonicalFutureCoordinate(value))
         {
@@ -287,21 +283,6 @@ internal static partial class RepositoryPathPolicy
         }
 
         return policy.Domains.TryGetValue(domain, out var registered) && registered == stratum;
-    }
-
-    private static bool IsGoldenCaseData(string path)
-    {
-        const string prefix = "Golden/cases/";
-        const string suffix = ".toml";
-        if (!path.StartsWith(prefix, StringComparison.Ordinal)
-            || !path.EndsWith(suffix, StringComparison.Ordinal))
-        {
-            return false;
-        }
-
-        var stem = path[prefix.Length..^suffix.Length];
-        return stem.Length > 0 && stem.All(static character =>
-            char.IsAsciiLetterOrDigit(character) || character is '_' or '-');
     }
 
     private static bool IsGoldenProjectionData(string path)

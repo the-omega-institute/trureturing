@@ -50,7 +50,6 @@ public sealed partial class MakeWorkflowTests
         "ingest",
         "echo-residual-summary",
         "selftest",
-        "scratch-sweep",
         "gate",
         "perf-report",
         "deliver-check",
