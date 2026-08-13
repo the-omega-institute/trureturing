@@ -41,6 +41,8 @@ public sealed partial class MakeWorkflowTests
         "help",
         "dotnet",
         "test",
+        "test-harness",
+        "test-all",
         "lean-cache-ensure",
         "lean",
         "lean-report",
@@ -143,7 +145,7 @@ public sealed partial class MakeWorkflowTests
         var makefile = File.ReadAllText(Path.Combine(root, "Makefile"));
 
         Assert.Contains("make -C candidate dotnet", workflow, StringComparison.Ordinal);
-        Assert.Contains("make -C candidate test", workflow, StringComparison.Ordinal);
+        Assert.Contains("make -C candidate test-all", workflow, StringComparison.Ordinal);
         Assert.Contains("make -C candidate selftest", workflow, StringComparison.Ordinal);
         Assert.Contains("lean-report-pair.sh", localGate, StringComparison.Ordinal);
         Assert.Contains("--skip-engineering", localGate, StringComparison.Ordinal);
@@ -210,7 +212,7 @@ public sealed partial class MakeWorkflowTests
         var dotnetIndex = preflight.IndexOf("CI=true make dotnet", StringComparison.Ordinal);
         var leanReportIndex = preflight.IndexOf("make lean-report", StringComparison.Ordinal);
         var testIndex = preflight.IndexOf(
-            "CI=true STRATALINT_REQUIRE_LIVE_REPORT=1 make test",
+            "CI=true STRATALINT_REQUIRE_LIVE_REPORT=1 make test-all",
             StringComparison.Ordinal);
 
         Assert.True(dotnetIndex >= 0, "preflight must build the .NET report consumer");
@@ -508,6 +510,8 @@ public sealed partial class MakeWorkflowTests
         Assert.Contains(".lake/build/stratalint/raw-lean-report.json", script, StringComparison.Ordinal);
         Assert.DoesNotContain("CHECK_ARGS=()", script, StringComparison.Ordinal);
         Assert.Contains("emit|emit-values|filemap) run_scribe \"$1\"", script, StringComparison.Ordinal);
+        Assert.Contains("emit|check)", script, StringComparison.Ordinal);
+        Assert.Contains("usage: scribe.sh emit|check", script, StringComparison.Ordinal);
         Assert.Contains("canonical) generators=(emit emit-values filemap dag)", script, StringComparison.Ordinal);
         Assert.Contains("for generator in \"${generators[@]}\"", script, StringComparison.Ordinal);
     }

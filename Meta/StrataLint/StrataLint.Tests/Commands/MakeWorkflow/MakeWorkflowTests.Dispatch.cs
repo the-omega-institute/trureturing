@@ -28,6 +28,11 @@ public sealed partial class MakeWorkflowTests
 
         var target = targetMatch.Groups["target"].Value;
         var recipe = Recipe(makefile, target);
+        if (!recipe.Contains("dotnet test", StringComparison.Ordinal))
+        {
+            Assert.Contains("$(MAKE) --no-print-directory test-harness", recipe, StringComparison.Ordinal);
+            recipe = Recipe(makefile, "test-harness");
+        }
         Assert.True(
             recipe.Contains("dotnet test", StringComparison.Ordinal),
             $"The make target '{target}' called by candidate-engineering must be the .NET test target guarded by this invariant.");
@@ -57,7 +62,14 @@ public sealed partial class MakeWorkflowTests
         Assert.Equal(0, RecipeCount(makefile, "build"));
         Assert.Contains(CleanLanesScriptPath, Recipe(makefile, "clean-lanes"), StringComparison.Ordinal);
         Assert.Contains(DotnetBuildScriptPath, Recipe(makefile, "dotnet"), StringComparison.Ordinal);
-        Assert.Contains("dotnet test", Recipe(makefile, "test"), StringComparison.Ordinal);
+        Assert.Equal(
+            $"\t@/bin/bash {ScribeScriptPath} check",
+            Recipe(makefile, "test"));
+        Assert.Equal(
+            "\t@dotnet test Meta/StrataLint/StrataLint.sln --configuration Release --verbosity normal",
+            Recipe(makefile, "test-harness"));
+        Assert.Contains("$(MAKE) --no-print-directory test", Recipe(makefile, "test-all"), StringComparison.Ordinal);
+        Assert.Contains("$(MAKE) --no-print-directory test-harness", Recipe(makefile, "test-all"), StringComparison.Ordinal);
         Assert.Equal(
             $"\t@/bin/bash {LeanCacheEnsureScriptPath}",
             Recipe(makefile, "lean-cache-ensure"));

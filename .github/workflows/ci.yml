@@ -124,7 +124,7 @@ jobs:
         run: make -C candidate dotnet
 
       - name: Run candidate golden and integration tests
-        run: make -C candidate test
+        run: make -C candidate test-all
 
       - name: Run candidate selftest twice and compare bytes
         shell: bash

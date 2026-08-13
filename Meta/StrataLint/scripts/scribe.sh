@@ -11,19 +11,24 @@ ORDER="${STRATALINT_PR_A_ORDER:-canonical}"
 PARALLELISM="${STRATALINT_PR_A_PARALLELISM:-1}"
 
 case "$MODE" in
-  emit) ;;
-  *) echo "usage: scribe.sh emit" >&2; exit 2 ;;
+  emit|check) ;;
+  *) echo "usage: scribe.sh emit|check" >&2; exit 2 ;;
 esac
 
 [[ "$PARALLELISM" =~ ^(1|4)$ ]] \
   || { echo "scribe: STRATALINT_PR_A_PARALLELISM must be 1 or 4" >&2; exit 2; }
 
 run_scribe() {
-  local command=(dotnet run --project "$PROJECT" --configuration Release -- "$1")
+  local generator="$1"
+  local mode="$2"
+  local command=(dotnet run --project "$PROJECT" --configuration Release -- "$generator")
   if [[ "${STRATALINT_PR_A_NO_BUILD:-0}" == "1" ]]; then
-    command=(dotnet run --no-build --project "$PROJECT" --configuration Release -- "$1")
+    command=(dotnet run --no-build --project "$PROJECT" --configuration Release -- "$generator")
   fi
-  if [[ "$1" == "emit" ]]; then
+  if [[ "$mode" == "check" ]]; then
+    command+=(--check)
+  fi
+  if [[ "$generator" == "emit" ]]; then
     "$CONSUMER" --role scribe-consumer --report "$LEAN_REPORT" -- "${command[@]}"
   else
     "${command[@]}"
@@ -37,13 +42,16 @@ run_dag() {
   if [[ "${STRATALINT_PR_A_NO_BUILD:-0}" == "1" ]]; then
     command=(dotnet run --no-build --project "$CLI_PROJECT" --configuration Release -- dag-render)
   fi
+  if [[ "$1" == "check" ]]; then
+    command+=(--check)
+  fi
   "${command[@]}"
 }
 
 run_generator() {
   case "$1" in
-    emit|emit-values|filemap) run_scribe "$1" ;;
-    dag) run_dag ;;
+    emit|emit-values|filemap) run_scribe "$1" "$MODE" ;;
+    dag) run_dag "$MODE" ;;
     *) echo "scribe: unknown generator '$1'" >&2; return 2 ;;
   esac
 }

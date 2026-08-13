@@ -213,7 +213,7 @@ if [[ "$SKIP_ENGINEERING" == "1" ]]; then
   record_timing local engineering-selftest skipped 0
 else
   run_stage engineering-dotnet make -C "$CANDIDATE_ROOT" dotnet
-  run_stage engineering-test make -C "$CANDIDATE_ROOT" test
+  run_stage engineering-test make -C "$CANDIDATE_ROOT" test-all
   run_stage engineering-selftest make -C "$CANDIDATE_ROOT" selftest
 fi
 
