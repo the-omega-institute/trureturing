@@ -1,78 +1,101 @@
-# 观察者账本量子力学·续编
-## 定量对角化与投影完成接口
-### Quantitative Diagonalization and the Observer–Completion Interface
+# 投影与完成下的对角化
+## 自然性、缺陷分解及其素数—Li–Cayley 应用
+### Diagonalization under Projection and Completion: Naturality, Defect Decomposition, and Prime–Li–Cayley Applications
 
-> **文档状态。** 本文位于 `docs/develop/theory`，是理论摄入的参考输入，不是数学真源。Lean 内核中的声明、证明项与公理闭包仍是唯一承重数学。本文严格区分：`[已证·Lean]`、`[存量·理论]`、`[定义·新]`、`[命题·待证]`、`[猜想]` 与 `[边界]`。
+**作者：** Auric  
+**机构：** The Omega Institute  
+**日期：** 2026-08-13
+
+> **文档地位。** 本文是 `docs/develop/theory` 中的正式论文稿与理论摄入源，不是 Lean 数学真源。文中标记为“仓库已形式化”的结果，以现有 Lean 声明为准；本文新增定理均给出完整纸面证明，但在获得 Lean 证明项、依赖闭包与冻结收据以前，不得在仓库治理层宣称为 `Closed`。
 >
-> **续编位置。** 本文不是另起炉灶，而是接续 [GICT](./GICT.md) VII.4–VII.7 的“不动点—定义—分类—自应用”链，以及 [OBSERVER-QUANTUM](./OBSERVER-QUANTUM.md) 第 2 节与 §§42–47 的“有限读数—对角逃逸—可数账本/不可数世界接缝”。
+> **理论承接。** 本文续接 [GICT](./GICT.md) 中的不动点—对角化链和 [OBSERVER-QUANTUM](./OBSERVER-QUANTUM.md) 中的有限观察—完成结构，但不把二者仅凭语义相似直接等同。本文给出它们之间唯一需要的类型化接口，并证明其基本性质。
 >
-> **去重纪律。** 已有冻结声明若足以承担某一结论，本文只绑定和复用，不以“更强、更漂亮、少一个假设”为理由制造重复模块。只有当下游某个具名消费者确实需要新签名时，才提出新的 Lean 声明。
+> **核心非主张。** 本文没有证明 Riemann 假设，没有把光速定义成信息处理率，没有把量子上下文性等同于 Cantor 对角化，也没有把欧几里得素数证明冒充为自应用表对角化。
 
 ---
 
 ## 摘要
 
-存量理论已经分别拥有两台发动机：
-
-1. **定量对角化**：对角逃逸不再只是“存在一个漏项”，而有精确数量、同时捕获乘积律、完整 Hamming 距离剖面、典型边距浓缩与群作用下的轨道分解；
-2. **观察者完成结构**：有限观察是带纤维的读数，solenoid 是逆极限型对象，连续路径具有可见实流与恒定隐藏偏移，有限循环窗口具有精确观察者距离。
-
-尚未建立的不是又一个“对角定理”，而是两台发动机之间的**类型正确接口**：
-
-> 当一个整体评价系统被投影、限制、粗粒化或完成时，对角操作是否随之自然下降？若不下降，差异由哪一种结构失配造成，能否被精确计量并沿尺度复合？
-
-本文把这一缺口写成自然性方块：
-
-$$
-\boxed{
-Q_{j,i}\circ\Delta_j
-\quad\text{versus}\quad
-\Delta_i\circ P_{j,i}
-}
-$$
-
-其中 $P_{j,i}$ 投影评价表，$Q_{j,i}$ 投影对角输出，$\Delta_i$ 是第 $i$ 层的扭曲对角算子。两条路径的距离称为**对角投影缺陷**：
-
-$$
-\boxed{
-\varepsilon^{\Delta}_{j,i}(E)
+本文研究对角自应用在投影、限制、粗粒化与逆极限完成下是否保持自然。对每个观察尺度 \(i\)，设 \(\mathcal T_i\) 为评价表空间，\(\mathcal U_i\) 为对角输出空间，\(\Delta_i:\mathcal T_i	o\mathcal U_i\) 为扭曲对角算子；对细尺度 \(j\succeq i\)，分别以
+\[
+P_{j,i}:\mathcal T_j\to\mathcal T_i,
+\qquad
+Q_{j,i}:\mathcal U_j\to\mathcal U_i
+\]
+投影完整评价表与已生成的对角输出。本文定义对角投影缺陷
+\[
+\varepsilon^\Delta_{j,i}(E)
 =
 d_i\!\left(
-Q_{j,i}(\Delta_jE),
-\Delta_i(P_{j,i}E)
-\right).
-}
-$$
+Q_{j,i}\Delta_j(E),
+\Delta_iP_{j,i}(E)
+\right),
+\]
+并证明三类一般定理。
 
-本文进一步把总缺陷拆成两个独立来源：
+第一，总缺陷分解为“对角读取失配”与“扭曲自然性失配”：
+\[
+\varepsilon^\Delta_{j,i}(E)
+\le
+\varepsilon^\tau_{j,i}(D_jE)
++
+L_i\varepsilon^D_{j,i}(E).
+\]
+第二，缺陷沿尺度满足复合不等式，从而得到加权 telescoping bound。第三，严格自然的有限层对角族唯一下降到逆极限；在有限层投影可由极限满射提升时，极限对角算子的存在反过来强制有限层自然性。由此，对角缺陷被刻画为对角算子下降到完成对象的精确障碍，而非模糊的“观察误差”。
 
-- **对角读取缺陷**：投影是否保持“取自坐标”这一操作；
-- **扭曲自然性缺陷**：值变换是否与输出投影交换。
-
-这使“先整体自指再观察”与“先有限观察再自指”的差别不再是一句哲学判断，而成为可证明为零、可构造正反例、可沿尺度累积、也可能阻止极限算子存在的数学对象。
+本文进一步证明：坐标限制型观察严格保持对角化；非线性商聚合则可以分别破坏对角读取与值扭曲，并给出最小布尔反例。作为算术应用，本文将欧几里得构造
+\[
+1+\prod_{p\in S}p
+\]
+刻画为有限素数账本的同时逃逸，并严格区分它与自应用对角化。作为谱应用，本文研究 Li–Cayley 坐标
+\[
+C(s)=1-\frac1s,
+\]
+证明临界线恰映到单位圆，函数方程反射变成倒数反射，临界线零点的 Li 镜像对贡献坍缩为模平方；任一离线零点四元轨道则沿某个整数探针子序列产生趋于负无穷的局部贡献。最后，本文证明固定阶截断收敛不足以支持阶数随截断增长的“对角探测”，给出统一对角极限定理与反例，并据此精确定位从 Li 判据走向 RH 所缺失的是全局余项控制，而不是再发明一个对角比喻。
 
 ---
 
-# 第一部　继承账：存量理论已经有什么
+## 1. 引言
 
-## 1.1 存量理论承接矩阵
+经典对角论证解决的是一个定性问题：给定一族候选对象，能否利用候选族自己的评价结构构造一个不在该族中的对象？Cantor、Gödel、Turing 与 Lawvere 的不同版本共享同一机制：读取第 \(a\) 个候选在第 \(a\) 个位置上的值，再施加一个适当扭曲。
 
-| 存量位置 | 已有内容 | 当前地位 | 本文如何使用 |
-|---|---|---|---|
-| GICT VII.4–VII.6 | 坐标系不动性、定义算子、分类坐标化、Lawvere/对角线、自应用四衣 | `[存量·理论]`，部分有经典锚与有限证书 | 提供“为什么研究自应用”的语义背景，不重复定义其哲学含义 |
-| GICT 7.9–7.12 | 塔即环、自指四命运、自量之钟 | `[存量·理论]` | 只保留为历史来源；本文不把黄金方程等同于一般对角算子 |
-| OBSERVER-QUANTUM §2 | finite readout、读数纤维、整体自逼近、可见圆与隐藏纤维 | `[存量·理论]` | 提供观察投影的原始语义；本文把它类型化为 $P,Q$ |
-| OBSERVER-QUANTUM §§42–47 | 对角线、逃逸率、边距、可数账本与不可数世界接缝 | `[存量·理论]`，其中若干结论已有 Lean 锚 | 本文不再宣称“发现可定量对角化”，而研究其跨尺度自然性 |
-| 评注 27.559 | 归纳/逆极限、状态限制、有限观察的对偶极限叙事 | `[存量·理论/证书]`，并非本文新增的 Lean 定理 | 提供完成方向；本文只新增“对角算子能否下降到该极限”的问题 |
-| `D5/S0/Diagonal/*` | 精确逃逸、捕获、距离与浓缩 | `[已证·Lean]` | 作为定量内核直接复用 |
-| `D5/S1/Solenoid/*` | 路径分解、路径轨道分类 | `[已证·Lean]` | 作为 projective/hidden-fiber 应用载体，不自动等同量子态空间 |
-| `D5/S3/Observer/MetricGeometry/*` | 整数轨道、有限循环窗口、跨可见相位的扩展距离 | `[已证·Lean]` | 提供有限层候选度量；尚缺尺度间映射 |
+本仓库已经将这一机制推进到有限定量层。`D5/S0/Diagonal` 中现有 Lean 声明覆盖：
 
-## 1.2 已证 Lean 锚点
+- 逃逸评价表的精确数量；
+- 多行同时捕获的乘积律；
+- 完整 Hamming 距离剖面；
+- 最小逃逸边距的浓缩；
+- 带轨道分解输入的等变计数。
 
-本文依赖但不复制以下声明：
+另一方面，仓库已经拥有有限观察者窗口、solenoid 逆极限与路径分支等结构。但这两组结果并不会自动融合。一个有限观察者看到的评价表与完整系统中的评价表属于不同类型；“先在整体上对角化再投影”与“先投影再对角化”也不必相同。
 
-### `[已证·Lean]` 有限定量对角化
+本文的主问题因此不是“万物是否都能被称为对角化”，而是下面这个可证明、可反驳的交换问题：
+\[
+\boxed{
+Q_{j,i}\circ\Delta_j
+\stackrel{?}{=}
+\Delta_i\circ P_{j,i}.
+}
+\]
+
+这一问题有三个优点。
+
+第一，它区分了真正的结构桥与语言类比。第二，它允许精确测量局部—整体失配。第三，它直接决定有限层对角算子能否下降到 projective completion。
+
+本文的另一目标，是把近期讨论中的两个算术直觉放回严格位置：
+
+1. 欧几里得素数构造确实是有限账本逃逸，但一般不是自应用评价表的对角化；
+2. Li 系数确实提供一族能放大离线零点径向缺陷的整数探针，但“为每个零点选择一个阶数”仍不等于全局 Li 正性，更不等于 RH 证明。
+
+---
+
+## 2. 仓库中的已证承重结果
+
+本文复用而不重复以下 Lean 结果。
+
+### 2.1 有限定量对角化
+
+现有声明包括：
 
 - `D5/S0/Diagonal/EscapeCount.escaped_listing_card`；
 - `D5/S0/Diagonal/CaptureCount.capture_inter_card`；
@@ -81,1115 +104,1434 @@ $$
 - `D5/S0/Diagonal/TypicalDensity.typical_density_failure_probability_tendsto_zero`；
 - `D5/S0/Diagonal/EquivariantEscape.equivariant_escaped_card`。
 
-最后一个声明带有具名的 `OrbitDecomposition` 输入；本文不得把它改写成“任意群作用自动得到该乘积公式”。
+设有限地址集 \(A\) 满足 \(|A|=n\)，有限值集 \(Y\) 满足 \(|Y|=q\)，扭曲 \(	au:Y	o Y\) 有 \(k\) 个不动点。现有形式化结果给出逃逸评价表数量
+\[
+(q^n-k)^n.
+\]
+因此均匀随机表的逃逸概率为
+\[
+\left(1-\frac{k}{q^n}\right)^n.
+\]
+本文不重新证明该精确计数，而把它作为有限层输入。
 
-### `[已证·Lean]` 观察者有限窗口
+### 2.2 观察者有限窗口
 
-- `D5/S3/Observer/MetricGeometry/WindowObserverDistance.window_observer_distance_eq_cycle_distance`。
+现有声明
+`D5/S3/Observer/MetricGeometry/WindowObserverDistance.window_observer_distance_eq_cycle_distance`
+证明：有限循环窗口中，由一步更新缺陷单位球定义的对偶观察者距离，精确等于循环图距离。
 
-它证明单一有限循环窗口内部的观察者对偶距离等于循环图距离。它尚未给出不同窗口尺寸之间的 canonical bonding map。
+### 2.3 Solenoid 路径分支
 
-### `[已证·Lean]` solenoid 路径分支
+现有声明
+`D5/S1/Solenoid/PathOrbitClassification.path_joined_iff_real_flow_orbit`
+证明：universal solenoid 中两个点路径连通，当且仅当它们位于同一实流轨道。该结论分类路径分支，但本身没有定义评价表、扭曲或量子状态表示。
 
-- `D5/S1/Solenoid/PathOrbitClassification.path_joined_iff_real_flow_orbit`。
+### 2.4 Zeta/Li/Weil 基础
 
-它分类路径连通性，不自动提供评价表、对角扭曲或量子状态表示。
+本文后半部分使用仓库中已存在的三类接口：
 
-## 1.3 唯一新增缺口
-
-存量理论已经同时拥有：
-
-$$
-\text{对角算子}
-\qquad\text{与}\qquad
-\text{有限观察/逆极限}.
-$$
-
-但尚未拥有以下方块的统一、可复用形式：
-
-$$
-\begin{CD}
-\mathcal T_j @>{\Delta_j}>> \mathcal O_j\\
-@V{P_{j,i}}VV @VV{Q_{j,i}}V\\
-\mathcal T_i @>>{\Delta_i}> \mathcal O_i.
-\end{CD}
-$$
-
-本文的新增对象只有一个：**该方块的自然性、失败方式和定量缺陷**。
+- `D5/S3/Analytic/LiCausalTrichotomy`：Cayley 坐标、整数 Li symbol 与一侧 Laguerre 因果包；
+- `D5/S3/Weil/ZeroSum`：不预设 RH 的非平凡零点数据、反射/共轭对称与对称截断零点和；
+- `D5/S3/Weil/WeilIdentity`：通过登记的经典 Weil 显式公式输入，连接零点端、素数端、极点端与 Archimedean 端；该输入不含 Weil 正性或 RH。
 
 ---
 
-# 第二部　类型化内核：先把箭头写对
+## 3. 对角系统与观察投影
 
-## 2.1 `[定义·新]` 评价表空间
+### 定义 3.1（评价表与输出空间）
 
-给定地址类型 $A$ 与值类型 $Y$，定义评价表空间
-
-$$
-\mathcal T(A,Y)=Y^{A\times A}.
-$$
-
-元素
-
-$$
-E:A\times A\to Y
-$$
-
-可等价写成 curried 形式 $A\to A\to Y$。本文使用二元形式，是为了显式记录对角嵌入。
-
-## 2.2 `[定义·新]` 对角读取
-
-定义对角嵌入
-
-$$
-\delta_A:A\to A\times A,
+给定地址集 \(A\) 与值集 \(Y\)，定义
+\[
+\mathcal T(A,Y)=Y^{A\times A},
 \qquad
-\delta_A(a)=(a,a).
-$$
+\mathcal U(A,Y)=Y^A.
+\]
 
-对角读取算子为拉回
+元素 \(E\in\mathcal T(A,Y)\) 称为评价表。其第一个坐标可以理解为候选/命名者，第二个坐标可以理解为被评价地址。
 
-$$
-D_A=\delta_A^*:
-\mathcal T(A,Y)\to Y^A,
-$$
-
-即
-
-$$
-D_A(E)(a)=E(a,a).
-$$
-
-## 2.3 `[定义·新]` 扭曲后作用
-
-给定扭曲
-
-$$
-\tau:Y\to Y,
-$$
-
-定义逐点后作用
-
-$$
-T_\tau:Y^A\to Y^A,
-\qquad
-T_\tau(u)=\tau\circ u.
-$$
-
-## 2.4 `[定义·新]` 扭曲对角算子
+### 定义 3.2（对角读取）
 
 定义
+\[
+D_A:\mathcal T(A,Y)\to\mathcal U(A,Y),
+\qquad
+D_A(E)(a)=E(a,a).
+\]
 
-$$
-\boxed{
-\Delta_{A,Y,\tau}=T_\tau\circ D_A.
-}
-$$
+### 定义 3.3（值扭曲与扭曲对角）
 
-所以
-
-$$
-\Delta_{A,Y,\tau}(E)(a)=\tau(E(a,a)).
-$$
-
-这与现有 `D5/S0/Diagonal/EscapeCount.diagonal` 的数学内容一致；未来 Lean 实现应优先复用或包装现有声明，不另造同义核心。
-
-## 2.5 `[定义·新]` 捕获、逃逸与边距
-
-一行 $E(a,-)$ 捕获对角对象，指
-
-$$
-E(a,-)=\Delta(E).
-$$
-
-评价表逃逸，指
-
-$$
-\Delta(E)\notin\operatorname{range}(a\mapsto E(a,-)).
-$$
-
-若输出函数空间带代价 $c_A$，定义行边距
-
-$$
-\operatorname{margin}_a(E)
+给定 \(	au:Y\to Y\)，定义逐点扭曲
+\[
+\Theta_\tau:\mathcal U(A,Y)\to\mathcal U(A,Y),
+\qquad
+\Theta_\tau(u)=\tau\circ u,
+\]
+以及扭曲对角算子
+\[
+\Delta_{A,Y,\tau}
 =
-c_A(E(a,-),\Delta(E)),
-$$
+\Theta_\tau\circ D_A.
+\]
+因此
+\[
+\Delta(E)(a)=\tau(E(a,a)).
+\]
 
-以及最小边距
+当 \(	au\) 无不动点时，\(\Delta(E)\) 不可能等于任何一行 \(E(a,-)\)。一般 \(	au\) 有不动点时，是否逃逸成为定量计数问题。
 
-$$
-\operatorname{margin}(E)
-=
-\inf_{a\in A}\operatorname{margin}_a(E).
-$$
+### 定义 3.4（多尺度对角系统）
 
-`[边界]` KL divergence 等对象不是对称度量；若使用散度，本文称其为 cost/defect，而不使用只有度量才成立的“距离零当且仅当相等”等结论，除非已另证严格性。
+令 \(I\) 为预序。对每个尺度 \(i\in I\)，给定：
 
----
-
-# 第三部　多尺度观察系统
-
-## 3.1 `[定义·新]` 尺度范畴
-
-令 $I$ 为一个预序或小范畴。符号 $j\succeq i$ 表示 $j$ 是比 $i$ 更细、信息更多或窗口更大的层。
-
-每层给定：
-
-$$
-(A_i,Y_i,\tau_i),
-$$
-
-评价表与对角输出空间：
-
-$$
+\[
+A_i,\quad Y_i,\quad \tau_i:Y_i\to Y_i,
+\]
+\[
 \mathcal T_i=Y_i^{A_i\times A_i},
 \qquad
-\mathcal O_i=Y_i^{A_i},
-$$
+\mathcal U_i=Y_i^{A_i},
+\]
+\[
+D_i:\mathcal T_i\to\mathcal U_i,
+\qquad
+\Theta_i:\mathcal U_i\to\mathcal U_i,
+\qquad
+\Delta_i=\Theta_iD_i.
+\]
 
-以及对角算子：
-
-$$
-\Delta_i:\mathcal T_i\to\mathcal O_i.
-$$
-
-## 3.2 `[定义·新]` 两类投影
-
-对 $j\succeq i$，分别给出：
-
-$$
+对每个 \(j\succeq i\)，给定表投影与输出投影
+\[
 P_{j,i}:\mathcal T_j\to\mathcal T_i,
-$$
-
-$$
-Q_{j,i}:\mathcal O_j\to\mathcal O_i.
-$$
-
-两者承担不同职责：
-
-- $P$ 投影完整评价表；
-- $Q$ 投影已经取完对角后的输出函数。
-
-它们必须满足恒等与复合律：
-
-$$
-P_{i,i}=\operatorname{id},
 \qquad
-P_{k,i}=P_{j,i}\circ P_{k,j},
-$$
-
-$$
-Q_{i,i}=\operatorname{id},
+Q_{j,i}:\mathcal U_j\to\mathcal U_i,
+\]
+并要求
+\[
+P_{i,i}=\mathrm{id},
 \qquad
-Q_{k,i}=Q_{j,i}\circ Q_{k,j}.
-$$
+P_{k,i}=P_{j,i}P_{k,j},
+\]
+\[
+Q_{i,i}=\mathrm{id},
+\qquad
+Q_{k,i}=Q_{j,i}Q_{k,j}
+\]
+对 \(k\succeq j\succeq i\) 成立。
 
-不能只给一个模糊的“观察投影”并在需要时同时扮演二者；这正是旧稿类型不闭合之处。
+这里必须保留 \(P\) 与 \(Q\) 两类映射。评价表投影可能使用两个地址坐标；对角输出投影只作用于一个地址坐标。把二者写成同一个模糊“观察映射”会掩盖对角读取是否被保持这一核心问题。
 
-## 3.3 `[定义·新]` 严格对角自然性
+### 定义 3.5（对角投影缺陷）
 
-称尺度系统严格对角自然，若对所有 $j\succeq i$：
-
-$$
-\boxed{
-Q_{j,i}\circ\Delta_j
-=
-\Delta_i\circ P_{j,i}.
-}
-$$
-
-这表示整体/细层先做对角化再观察，与先观察再在粗层做对角化完全一致。
-
-## 3.4 `[定义·新]` 对角投影缺陷
-
-若 $\mathcal O_i$ 上给定扩展伪度量或具名 cost $d_i$，定义
-
-$$
-\boxed{
-\varepsilon^{\Delta}_{j,i}(E)
+设每个 \(\mathcal U_i\) 配备伪度量 \(d_i\)。定义
+\[
+\varepsilon^\Delta_{j,i}(E)
 =
 d_i\!\left(
-Q_{j,i}(\Delta_jE),
-\Delta_i(P_{j,i}E)
+Q_{j,i}\Delta_j(E),
+\Delta_iP_{j,i}(E)
 \right).
-}
-$$
+\]
 
-必须同时记录 $d_i$ 的性质：metric、pseudometric、ENNReal extended metric、asymmetric divergence，或一般非负 cost。不同性质允许的推论不同。
+如果 \(d_i\) 是扩展度量，允许缺陷为 \(+\infty\)。如果使用 KL 等非对称散度，则后续只保留其实际满足的性质，不能直接调用对称性或三角不等式。
 
----
-
-# 第四部　缺陷解剖：不是一个误差桶
-
-## 4.1 `[定义·新]` 对角读取缺陷
-
-记
-
-$$
-D_i:\mathcal T_i\to Y_i^{A_i}
-$$
-
-为未扭曲的对角读取，并把 $Q_{j,i}$ 同时视为对应函数空间的输出投影。定义
-
-$$
-\varepsilon^{D}_{j,i}(E)
-=
-d_i\!\left(
-Q_{j,i}(D_jE),
-D_i(P_{j,i}E)
-\right).
-$$
-
-它只测量：**观察投影是否保留“取自坐标”**。
-
-## 4.2 `[定义·新]` 扭曲自然性缺陷
+### 定义 3.6（读取缺陷与扭曲缺陷）
 
 定义
-
-$$
-\varepsilon^{T}_{j,i}(u)
+\[
+\varepsilon^D_{j,i}(E)
 =
 d_i\!\left(
-Q_{j,i}(T_{\tau_j}u),
-T_{\tau_i}(Q_{j,i}u)
+Q_{j,i}D_j(E),
+D_iP_{j,i}(E)
+\right),
+\]
+以及对 \(u\in\mathcal U_j\)
+\[
+\varepsilon^\tau_{j,i}(u)
+=
+d_i\!\left(
+Q_{j,i}\Theta_j(u),
+\Theta_iQ_{j,i}(u)
 \right).
-$$
-
-它只测量：**值扭曲是否与输出投影交换**。
-
-## 4.3 `[命题·待证]` 总缺陷分解不等式
-
-假设：
-
-1. $d_i$ 满足三角不等式；
-2. $T_{\tau_i}$ 关于 $d_i$ 是 $L_i$-Lipschitz。
-
-则应有
-
-$$
-\boxed{
-\varepsilon^{\Delta}_{j,i}(E)
-\le
-\varepsilon^{T}_{j,i}(D_jE)
-+
-L_i\,\varepsilon^{D}_{j,i}(E).
-}
-$$
-
-证明路线只有一个三角分解：
-
-$$
-QTD
-\longrightarrow
-TQD
-\longrightarrow
-TDP.
-$$
-
-这条命题是本文第一优先 Lean 目标，因为它把“观察造成了缺陷”拆成两个可独立证伪的来源，而不是定义一个新数再证明它等于自己。
-
-## 4.4 `[命题·待证]` 严格自然性推论
-
-若
-
-$$
-\varepsilon^{D}_{j,i}(E)=0
-$$
-
-且
-
-$$
-\varepsilon^{T}_{j,i}(D_jE)=0,
-$$
-
-则
-
-$$
-\varepsilon^{\Delta}_{j,i}(E)=0.
-$$
-
-若 $d_i$ 只是伪度量，只能推出两条路径在该伪度量下不可区分；不能未经分离性证明就推出函数相等。
-
-## 4.5 `[命题·待证]` 尺度复合不等式
-
-设 $k\preceq i\preceq j$，且 $Q_{i,k}$ 是 $L^Q_{i,k}$-Lipschitz。由 $P,Q$ 的复合律，预期：
-
-$$
-\boxed{
-\varepsilon^{\Delta}_{j,k}(E)
-\le
-L^Q_{i,k}\,\varepsilon^{\Delta}_{j,i}(E)
-+
-\varepsilon^{\Delta}_{i,k}(P_{j,i}E).
-}
-$$
-
-这条不等式把全尺度缺陷控制为局部尺度缺陷之和。对链
-
-$$
-i_0\preceq i_1\preceq\cdots\preceq i_m
-$$
-
-反复应用可得到加权 telescoping bound。它是把“观察者逐层展开”从叙述变成可计算账本的关键。
+\]
 
 ---
 
-# 第五部　限制与商：两类观察不能混为一谈
+## 4. 缺陷分解与尺度复合
 
-## 5.1 `[命题·待证]` 嵌入限制系统严格交换
+### 定理 4.1（总缺陷分解）
 
-若有限窗口通过嵌入
+假设 \(d_i\) 满足三角不等式，且 \(\Theta_i\) 关于 \(d_i\) 是 \(L_i\)-Lipschitz，即
+\[
+d_i(\Theta_i x,\Theta_i y)
+\le
+L_i d_i(x,y).
+\]
+则对任意 \(E\in\mathcal T_j\)，
+\[
+\boxed{
+\varepsilon^\Delta_{j,i}(E)
+\le
+\varepsilon^\tau_{j,i}(D_jE)
++
+L_i\varepsilon^D_{j,i}(E).
+}
+\]
 
-$$
-\iota_{i,j}:A_i\hookrightarrow A_j
-$$
+#### 证明
 
-进入细层，并定义
+由 \(\Delta_j=\Theta_jD_j\) 与 \(\Delta_i=\Theta_iD_i\)，
+\[
+\varepsilon^\Delta_{j,i}(E)
+=
+d_i\!\left(
+Q_{j,i}\Theta_jD_jE,
+\Theta_iD_iP_{j,i}E
+\right).
+\]
+在两端之间插入 \(\Theta_iQ_{j,i}D_jE\)，由三角不等式，
+\[
+\begin{aligned}
+\varepsilon^\Delta_{j,i}(E)
+&\le
+d_i\!\left(
+Q_{j,i}\Theta_jD_jE,
+\Theta_iQ_{j,i}D_jE
+\right)\\
+&\quad+
+d_i\!\left(
+\Theta_iQ_{j,i}D_jE,
+\Theta_iD_iP_{j,i}E
+\right).
+\end{aligned}
+\]
+第一项按定义等于
+\[
+\varepsilon^\tau_{j,i}(D_jE).
+\]
+第二项由 \(\Theta_i\) 的 Lipschitz 性至多为
+\[
+L_i
+d_i\!\left(
+Q_{j,i}D_jE,
+D_iP_{j,i}E
+\right)
+=
+L_i\varepsilon^D_{j,i}(E).
+\]
+合并即得。 \(\square\)
 
-$$
+### 推论 4.2（严格自然性判据）
+
+若
+\[
+Q_{j,i}D_j=D_iP_{j,i}
+\]
+且
+\[
+Q_{j,i}\Theta_j=\Theta_iQ_{j,i},
+\]
+则
+\[
+Q_{j,i}\Delta_j=\Delta_iP_{j,i}.
+\]
+
+#### 证明
+
+两项缺陷同时为零，定理 4.1 给出总缺陷为零。若 \(d_i\) 是分离的度量，则两函数相等。也可直接作算子复合：
+\[
+Q\Delta
+=
+Q\Theta_jD_j
+=
+\Theta_iQD_j
+=
+\Theta_iD_iP
+=
+\Delta_iP.
+\]
+\(\square\)
+
+### 定理 4.3（尺度复合不等式）
+
+设 \(k\preceq i\preceq j\)，且 \(Q_{i,k}\) 是 \(L^Q_{i,k}\)-Lipschitz。则
+\[
+\boxed{
+\varepsilon^\Delta_{j,k}(E)
+\le
+L^Q_{i,k}\varepsilon^\Delta_{j,i}(E)
++
+\varepsilon^\Delta_{i,k}(P_{j,i}E).
+}
+\]
+
+#### 证明
+
+利用投影复合律，
+\[
+Q_{j,k}=Q_{i,k}Q_{j,i},
+\qquad
+P_{j,k}=P_{i,k}P_{j,i}.
+\]
+在
+\[
+Q_{i,k}Q_{j,i}\Delta_jE
+\]
+与
+\[
+\Delta_kP_{i,k}P_{j,i}E
+\]
+之间插入
+\[
+Q_{i,k}\Delta_iP_{j,i}E.
+\]
+由三角不等式，
+\[
+\begin{aligned}
+\varepsilon^\Delta_{j,k}(E)
+&\le
+d_k\!\left(
+Q_{i,k}Q_{j,i}\Delta_jE,
+Q_{i,k}\Delta_iP_{j,i}E
+\right)\\
+&\quad+
+d_k\!\left(
+Q_{i,k}\Delta_iP_{j,i}E,
+\Delta_kP_{i,k}P_{j,i}E
+\right).
+\end{aligned}
+\]
+第一项由 \(Q_{i,k}\) 的 Lipschitz 性至多为
+\[
+L^Q_{i,k}\varepsilon^\Delta_{j,i}(E),
+\]
+第二项正是
+\[
+\varepsilon^\Delta_{i,k}(P_{j,i}E).
+\]
+故结论成立。 \(\square\)
+
+### 推论 4.4（加权 telescoping bound）
+
+对尺度链
+\[
+i_m\succeq i_{m-1}\succeq\cdots\succeq i_0,
+\]
+设 \(Q_{i_r,i_{r-1}}\) 的 Lipschitz 常数为 \(L_r\)。则
+\[
+\boxed{
+\varepsilon^\Delta_{i_m,i_0}(E)
+\le
+\sum_{r=1}^{m}
+\left(
+\prod_{s=1}^{r-1}L_s
+\right)
+\varepsilon^\Delta_{i_r,i_{r-1}}
+\!\left(
+P_{i_m,i_r}E
+\right).
+}
+\]
+
+#### 证明
+
+对 \(m\) 归纳。\(m=1\) 时为恒等式。归纳步先对中间尺度 \(i_1\) 使用定理 4.3，再对
+\(arepsilon^\Delta_{i_m,i_1}(E)\)
+应用归纳假设，并乘上 \(L_1\)。整理指标即得。 \(\square\)
+
+这个推论将“观察者逐层压缩”变成了可审计的误差账本：整体缺陷由每一层真正产生的局部缺陷控制，而不是由“观察”这个词自动产生。
+
+---
+
+## 5. 限制观察严格自然，商聚合可以破坏自然性
+
+### 定理 5.1（坐标限制自然性）
+
+设 \(\iota:A_i\hookrightarrow A_j\) 为地址嵌入，\(q:Y_j\to Y_i\) 为值映射。定义
+\[
 P_{j,i}(E)(a,b)
 =
-q_{j,i}(E(\iota a,\iota b)),
-$$
-
-$$
+q(E(\iota a,\iota b)),
+\]
+\[
 Q_{j,i}(u)(a)
 =
-q_{j,i}(u(\iota a)),
-$$
-
-同时值投影与扭曲交换：
-
-$$
-q_{j,i}\circ\tau_j
-=
-\tau_i\circ q_{j,i},
-$$
-
-则预期严格成立：
-
-$$
+q(u(\iota a)).
+\]
+若
+\[
+q\circ\tau_j=\tau_i\circ q,
+\]
+则
+\[
+\boxed{
 Q_{j,i}\Delta_j
 =
 \Delta_iP_{j,i}.
-$$
+}
+\]
 
-这里自然性的来源是
+#### 证明
 
-$$
-(\iota a,\iota a)
-=
-(\iota\times\iota)(a,a).
-$$
+对任意 \(E\in\mathcal T_j\) 与 \(a\in A_i\)，
+\[
+\begin{aligned}
+Q_{j,i}\Delta_j(E)(a)
+&=
+q\!\left(
+\Delta_j(E)(\iota a)
+\right)\\
+&=
+q\!\left(
+\tau_j(E(\iota a,\iota a))
+\right)\\
+&=
+\tau_i\!\left(
+q(E(\iota a,\iota a))
+\right)\\
+&=
+\tau_i\!\left(
+P_{j,i}(E)(a,a)
+\right)\\
+&=
+\Delta_iP_{j,i}(E)(a).
+\end{aligned}
+\]
+逐点相等即得。 \(\square\)
 
-这应成为第一个无缺陷正例。
+### 解释 5.2
 
-## 5.2 `[边界]` 商投影没有 canonical 表投影
+有限观察本身不会必然制造对角缺陷。若观察只是保留原系统中的一组坐标，且值扭曲与读取映射自然交换，则“先整体自指再观察”与“先观察再自指”严格相同。
 
-若观察是满射/粗粒化
+因此任何把缺陷归因于观察者的理论，都必须明确指出至少一个非自然结构：
 
-$$
-r_{j,i}:A_j\twoheadrightarrow A_i,
-$$
+- 地址被识别或合并；
+- 非对角信息被聚合进粗层自坐标；
+- 值扭曲与粗粒化不交换；
+- 使用的代价只识别商类而不识别函数本身。
 
-仅凭 $r_{j,i}$ 不能自然地把任意细层表
+### 命题 5.3（最小读取反例）
 
-$$
-E_j:A_j\times A_j\to Y_j
-$$
-
-变成粗层表。还必须选择聚合规则，例如求和、平均、最大值、条件期望或代表元。
-
-因此“完成对象有投影”不自动意味着“评价表有对角自然投影”。聚合规则就是新增结构，也可能正是缺陷来源。
-
-## 5.3 `[命题·待证]` 最小对角读取反例
-
-取：
-
-$$
-A_j=\{0,1\},
+令细地址集 \(A_f=\{0,1\}\)，粗地址集 \(A_c=\{*\}\)，值集 \(Y=\{0,1\}\)。在布尔值上使用离散度量。定义
+\[
+P(E)=\bigvee_{a,b\in A_f}E(a,b),
 \qquad
-A_i=\{*\},
+Q(u)=\bigvee_{a\in A_f}u(a).
+\]
+取评价表
+\[
+E(0,0)=0,\quad E(1,1)=0,\quad
+E(0,1)=1,\quad E(1,0)=0.
+\]
+则
+\[
+Q(D_fE)=0,
 \qquad
-Y=\{0,1\}.
-$$
-
-把两个细地址全部压到 $*$，并令粗层聚合为所有矩阵元的 OR。取细层表：
-
-$$
-E(0,0)=0,
-\quad
-E(1,1)=0,
-\quad
-E(0,1)=1,
-\quad
-E(1,0)=0.
-$$
-
-则：
-
-$$
-Q(D_jE)=0,
-$$
-
-但
-
-$$
-D_i(P_{j,i}E)=1.
-$$
-
+D_c(P(E))=1.
+\]
 因此
+\[
+\boxed{
+\varepsilon^D_{f,c}(E)=1.
+}
+\]
 
-$$
-\varepsilon^D_{j,i}(E)>0.
-$$
+#### 证明
 
-这个反例隔离了纯粹的“聚合混入非对角数据”问题，不需要量子、solenoid 或无限对象。
+细层对角为 \((0,0)\)，其 OR 为 \(0\)。而全表包含非对角元 \(E(0,1)=1\)，故表聚合 \(P(E)=1\)。粗层只有一个坐标，所以其对角读取仍为 \(1\)。离散距离因此为 \(1\)。 \(\square\)
 
-## 5.4 `[命题·待证]` 最小扭曲反例
+### 命题 5.4（最小扭曲反例）
 
-仍取布尔值，以 OR 聚合输出，扭曲为 `Bool.not`。对
-
-$$
+仍令
+\[
+Q(u_0,u_1)=u_0\lor u_1,
+\]
+并令细层和粗层扭曲都为布尔取反。对
+\[
 u=(0,1)
-$$
-
+\]
 有
+\[
+Q(\neg u)=Q(1,0)=1,
+\]
+但
+\[
+\neg Q(u)=\neg1=0.
+\]
+故
+\[
+\boxed{
+\varepsilon^\tau_{f,c}(u)=1.
+}
+\]
 
-$$
-Q(\neg u)=1,
-\qquad
-\neg Q(u)=0.
-$$
-
-所以即使对角读取本身被保持，非线性粗粒化也可能与扭曲不交换。
-
-这两个最小反例应分别落 Lean，防止所有失败都被塞进一个不可解释的总 defect。
+这两个反例分别隔离了读取失配与扭曲失配。它们说明商映射 \(A_f\twoheadrightarrow A_c\) 本身不足以决定表投影；选择 OR、平均、最大值、条件期望或代表元都会引入额外数学结构。
 
 ---
 
-# 第六部　投影完成：无穷不是先验算子
+## 6. 对角算子下降到逆极限的充要结构
 
-## 6.1 `[定义·新]` projective completion
-
-给定表空间逆系
-
-$$
-(\mathcal T_i,P_{j,i})
-$$
-
-和输出空间逆系
-
-$$
-(\mathcal O_i,Q_{j,i}),
-$$
-
-定义
-
-$$
+设
+\[
+(\mathcal T_i,P_{j,i}),
+\qquad
+(\mathcal U_i,Q_{j,i})
+\]
+为集合范畴中的逆系。记
+\[
 \mathcal T_\infty=\varprojlim_i\mathcal T_i,
 \qquad
-\mathcal O_\infty=\varprojlim_i\mathcal O_i.
-$$
+\mathcal U_\infty=\varprojlim_i\mathcal U_i,
+\]
+其坐标投影分别为
+\[
+\pi_i^\mathcal T:\mathcal T_\infty\to\mathcal T_i,
+\qquad
+\pi_i^\mathcal U:\mathcal U_\infty\to\mathcal U_i.
+\]
 
-本文的“完成”首先只指这种 projective completion；它不自动等同 Cauchy 完备化、Stone–Čech 紧化、profinite completion 或物理宇宙的先验整体。
+### 定理 6.1（严格自然族的唯一下降）
 
-## 6.2 `[命题·待证/标准极限机制]` 相容对角族诱导唯一极限算子
-
-若每个有限层都有
-
-$$
-\Delta_i:\mathcal T_i\to\mathcal O_i
-$$
-
-且严格自然：
-
-$$
-Q_{j,i}\Delta_j
-=
-\Delta_iP_{j,i},
-$$
-
-则由逆极限的泛性质，应存在唯一映射
-
-$$
+若
+\[
+Q_{j,i}\Delta_j=\Delta_iP_{j,i}
+\]
+对所有 \(j\succeq i\) 成立，则存在唯一映射
+\[
 \boxed{
 \Delta_\infty:
-\mathcal T_\infty\to\mathcal O_\infty
+\mathcal T_\infty\to\mathcal U_\infty
 }
-$$
-
+\]
 满足
-
-$$
-\pi_i^{\mathcal O}\Delta_\infty
+\[
+\pi_i^\mathcal U\Delta_\infty
 =
-\Delta_i\pi_i^{\mathcal T}.
-$$
+\Delta_i\pi_i^\mathcal T
+\]
+对所有 \(i\) 成立。
 
-显式地：
+#### 证明
 
-$$
-\Delta_\infty((E_i)_i)
+取任意相容族
+\[
+E=(E_i)_i\in\mathcal T_\infty.
+\]
+定义
+\[
+\Delta_\infty(E)
 =
 (\Delta_i(E_i))_i.
-$$
-
-`[边界]` 这不是一个全新的范畴论原理；项目新增工作的价值在于为具体评价、观察和扭曲验证自然性条件，而不是重新命名逆极限泛性质。
-
-## 6.3 `[定义·新]` 极限存在的障碍读法
-
-若存在 $j\succeq i$ 与 $E_j$ 使
-
-$$
+\]
+需要验证右侧属于 \(\mathcal U_\infty\)。对 \(j\succeq i\)，
+\[
 Q_{j,i}\Delta_j(E_j)
-\neq
-\Delta_iP_{j,i}(E_j),
-$$
-
-则有限层对角输出不形成相容族，不能按上述公式直接定义 $\Delta_\infty$。
-
-所以 defect 的第一含义不是“物理误差”，而是：
-
-$$
-\boxed{
-\text{对角算子下降到 projective limit 的障碍。}
-}
-$$
-
-## 6.4 `[猜想]` 近似自然性与近似极限
-
-若局部缺陷沿一个 cofinal chain 可求和：
-
-$$
-\sum_m
-w_m\,
-\varepsilon^\Delta_{i_{m+1},i_m}
-<\infty,
-$$
-
-并且输出空间在相应 metric/cost 结构下完备，预期可以构造一个近似相容的极限输出，且总偏差受该级数控制。
-
-在给出明确的 metric inverse-limit construction 以前，这一条保持猜想状态。
-
-## 6.5 `[存量·语义的精确翻译]` “从无穷开始”
-
-一个整体元素
-
-$$
-x_\infty\in\varprojlim X_i
-$$
-
-不是“无限大数”，而是一族已经彼此相容的有限坐标：
-
-$$
-x_\infty=(x_i)_i.
-$$
-
-有限观察者只读其中某个 $x_i$。因此“整体先在、局部逐层显现”可以被严格翻译成 projective-coordinate 语言；但这只是一个数学模型，不是宇宙本体已被实验确认的结论。
-
----
-
-# 第七部　接回观察者存量理论
-
-## 7.1 有限读数纤维
-
-OBSERVER-QUANTUM 已把有限观察写成带纤维的读数：多个完整历史可压入同一读数。本文将其分成两个不同问题：
-
-1. 读数是否丢信息；
-2. 读数是否保持对角操作。
-
-第一问由纤维大小、熵或条件分布描述；第二问由 $\varepsilon^\Delta$ 描述。二者可能相关，但不是同一个定义。
-
-## 7.2 有限循环窗口
-
-`window_observer_distance_eq_cycle_distance` 给出固定 $M$ 内部的精确距离：
-
-$$
-d_M(a,b)=d_{\mathrm{cycle},M}(a,b).
-$$
-
-要形成多尺度理论，还缺：
-
-- 哪些 $M,N$ 之间允许比较；
-- 是嵌入、模商还是其他 coarse-graining；
-- 观测量如何在窗口间推送/拉回；
-- $d_M$ 与 $d_N$ 之间是否 Lipschitz；
-- 对角评价表在这些映射下如何投影。
-
-在这些箭头没有定义以前，“有限窗口趋向 solenoid”只能是研究目标，不能由单窗口距离定理自动推出。
-
-## 7.3 solenoid 路径分支
-
-`path_joined_iff_real_flow_orbit` 已经证明：
-
-$$
-x\sim_{\mathrm{path}}y
-\iff
-\exists t,\ y=\operatorname{realFlow}(t)+x.
-$$
-
-它说明隐藏核偏移标签路径分支。要接入本文，还需构造：
-
-- 有限商/有限窗口上的评价表 $E_i$；
-- 相容扭曲 $\tau_i$；
-- 表投影 $P_{j,i}$ 与输出投影 $Q_{j,i}$；
-- 区分同一实流轨道与不同隐藏偏移时的 defect。
-
-路径分类本身不提供这些数据。
-
-## 7.4 跨可见相位的无穷距离
-
-现有 hidden-translation 模型中，跨可见相位的观察者扩展距离可等于 $\infty$。其直接原因是半范数零核包含能分离两点的非恒定观测量。
-
-本文不得把该 $\infty$ 自动解释为：
-
-- 对角完成缺陷发散；
-- 物理能量无穷；
-- type-II$_\infty$ 分类；
-- 超选择定律。
-
-只有构造了同一状态空间上的 $P,Q,\Delta,d$，才能比较两种“无穷”。
-
----
-
-# 第八部　量子分支：局部—整体障碍不自动等于对角障碍
-
-## 8.1 `[存量·理论]` 上下文性的位置
-
-Kochen–Specker/上下文性通常表达：一族局部合法赋值不能拼成全局非上下文赋值。这是 local-to-global obstruction。
-
-对角化表达：一个自索引评价表经扭曲后生成不在行像中的对象。这是 self-application obstruction。
-
-二者可以相关，但不是定义上相同。
-
-## 8.2 `[定义·新]` 可对角化上下文性适配器
-
-若要把一个上下文模型接入本文，必须额外给出：
-
-1. 上下文/事件的自索引地址类型 $A$；
-2. 局部赋值如何组成二元评价表 $E(a,b)$；
-3. 一个来源于原模型而非人为安装的扭曲 $\tau$；
-4. 对角逃逸如何推出不存在全局截面；
-5. 反方向是否成立，或只是一种充分证书。
-
-缺少这些数据时，只能说两者都表现局部—整体张力，不能说“量子就是对角化”。
-
-## 8.3 `[定义·新]` 到经典模型集合的距离
-
-令 $\mathcal C$ 为具名的经典非上下文模型集合，量子/经验数据为 $Q$。定义：
-
-$$
-\delta_{\mathrm{ctx}}(Q)
 =
-\inf_{C\in\mathcal C}c(Q,C).
-$$
-
-这是一种 contextuality cost。它与 $\varepsilon^\Delta$ 是两个不同量：
-
-- $\delta_{\mathrm{ctx}}$ 比较量子数据与经典模型集合；
-- $\varepsilon^\Delta$ 比较两种操作顺序。
-
-未来只有在证明二者的上界、下界或等价定理后，才能合并叙述。
-
-## 8.4 `[边界]` 经典/量子不只是坐标变换
-
-更换测量基具有坐标意味，但非交换可观测代数、上下文性与 Bell 型限制不能一般地被普通坐标变换消除。本文研究的是“观察顺序是否保持自指结构”，不宣称经典与量子仅是 $0$ 原点和 $\infty$ 原点的替换。
-
-## 8.5 `[开放]` 几何层与矩阵量子层仍缺表示桥
-
-当前 solenoid/观察者几何与有限密度矩阵/通道模型之间，仍缺至少：
-
-- Hilbert 空间 $\mathcal H$；
-- 表示 $\pi:C(\Sigma)\to B(\mathcal H)$；
-- 实现更新的幺正或通道；
-- 状态空间上的距离；
-- 将 finite readout 与量子测量联系起来的定理。
-
-对角投影理论可以组织这些证明责任，但不能替代它们。
-
----
-
-# 第九部　信息率与光速：只允许条件桥
-
-## 9.1 `[定义·新]` 因果过滤
-
-给定离散因果图或局域系统、观察者轨迹 $\gamma(t)$，定义可访问窗口：
-
-$$
-W_O(t)\subseteq A.
-$$
-
-要求：
-
-$$
-t_1\le t_2
-\Longrightarrow
-W_O(t_1)\subseteq W_O(t_2).
-$$
-
-若系统有最大传播半径 $v_{\max}$，则窗口扩张受因果球控制。
-
-## 9.2 `[命题·待证]` 有限字母表的原始信息流上界
-
-若每个新进入窗口的局部单元只有 $q$ 个可能值，则在不加入相关结构时，新增原始状态容量至多：
-
-$$
-\Delta I_O(t)
-\le
-|W_O(t+1)\setminus W_O(t)|\log q.
-$$
-
-若再证明窗口新增壳层的大小受传播速度、边界面积与局部密度控制，才能得到一个含 $v_{\max}$ 的速率上界。
-
-## 9.3 `[边界]` 光速不是固定比特率
-
-现有物理中的 $c$ 首先约束因果传播。即使未来把 $v_{\max}$ 取为 $c$，观察者信息率仍一般依赖：
-
-- 可访问边界面积；
-- 自由度密度；
-- 局部维数/字母表；
-- 噪声与相关性；
-- 记录和处理机制。
-
-所以本文禁止无条件写：
-
-$$
-R_O=c.
-$$
-
-可以研究的是条件式：
-
-$$
-R_O
-\le
-F(c,\text{geometry},\text{capacity},\text{noise}).
-$$
-
-## 9.4 `[存量·语义]` 光速作为理想边界
-
-在 rapidity 等坐标中，$v\to c$ 可对应坐标趋于无穷；这支持“有限边界可代表某坐标中的理想无穷远”的几何直觉。但它不证明 $c$ 本身是无穷，也不直接参与对角投影缺陷定义。
-
----
-
-# 第十部　Zeckendorf、正规化与 solenoid：先分开交换子
-
-## 10.1 `[定义·新]` 正规化—投影缺陷
-
-设 $N$ 为数位正规化，$\pi_i$ 为有限数位窗口，$N_i$ 为有限层正规化。先独立研究：
-
-$$
-\varepsilon^N_i(x)
+\Delta_iP_{j,i}(E_j)
 =
-d_i(\pi_iN(x),N_i\pi_i(x)).
-$$
-
-它测量进位传播穿过窗口边界造成的不自然性。
-
-## 10.2 `[边界]` 进位缺额不自动是对角缺陷
-
-三值黄金缺额、底层进位计数与相位 cocycle 已有自己的定义。除非另行构造评价表 $E$、扭曲 $\tau$ 并证明：
-
-$$
-\varepsilon^N_i
-\quad\text{控制或等于}\quad
-\varepsilon^\Delta_i,
-$$
-
-否则不得把“进位缺额”改名为“对角完成缺陷”。
-
-## 10.3 `[开放]` 复合交换子
-
-真正可研究的复合对象是：
-
-$$
-\pi_iN\Delta
-\quad\text{versus}\quad
-N_i\Delta_iP_i.
-$$
-
-其总缺陷预期可再分解为：
-
-$$
-\text{对角投影缺陷}
-+
-\text{正规化投影缺陷}
-+
-\text{Lipschitz 放大项}.
-$$
-
-这会把黄金数位主线接入统一框架，而不是仅靠词语“完成、缺额、逃逸”相似。
-
----
-
-# 第十一部　计算理论与有限误差几何
-
-## 11.1 `[已证·Lean/经典机制]` 不存在可计算全能求值器
-
-现有 `D5/S0/Computability/TotalOrbitEvaluator.no_computable_total_orbit_evaluator` 使用部分递归代码固定点与后继变换，排除能够在所有代码—输入对上给出总正确值的可计算求值器。
-
-该结果属于经典不可计算性链，本文不重复证明。
-
-## 11.2 `[开放]` 从不存在推进到误差几何
-
-新的消费者问题是：给定有限资源、有限代码集或有限记录，任何近似求值器至少必须付出什么代价？候选量包括：
-
-- 最少错误坐标数；
-- 与对角程序的 Hamming 边距；
-- 允许错误率下的最大覆盖规模；
-- 记录固定后剩余候选数；
-- 捕获事件之间的相关结构。
-
-这些问题可复用 `D5/S0/Diagonal` 的计数工具，但需要先证明程序语义模型与自由函数表模型之间的桥。
-
----
-
-# 第十二部　解析数论与 RH：最后接入
-
-任何 $\zeta$/RH 适配器必须明确给出：
-
-1. 地址/候选空间 $A$；
-2. 值空间 $Y$；
-3. 评价 $E(a,b)$ 的经典解析数论意义；
-4. 扭曲 $\tau$ 的非人为来源；
-5. 有限窗口与完成对象；
-6. 对角逃逸或 defect 与经典 $\zeta$ 零点条件之间的双向桥。
-
-尤其必须证明类似：
-
-$$
-\text{具名对角障碍}
-\iff
-\operatorname{Re}\rho=\frac12
-$$
-
-或一个足以推出它的严格定理。没有该桥时，对角化只能作为解释语言，不能计作 RH 推进。
-
----
-
-# 第十三部　Lean 路线：只实现具名消费者需要的最小签名
-
-## 13.1 目录建议
-
-```text
-D5/S0/Diagonal/Projection/
-  Basic.lean
-  Naturality.lean
-  Defect.lean
-  RestrictionSystem.lean
-  QuotientCounterexample.lean
-  ProjectiveLimit.lean
-```
-
-目录名称只是建议；若仓库现有层级已有可复用位置，应服从现有 MAP 与 FILEMAP，而不是为本文另造分类。
-
-## 13.2 第一批声明候选
-
-### A. 通用定义
-
-```lean
-def diagonalRead ...
-def diagonalOperator ...
-def diagonalProjectionDefect ...
-```
-
-在添加前必须先检查 `EscapeCount.diagonal` 等已有声明能否直接承担消费者。
-
-### B. 缺陷分解
-
-```lean
-theorem diagonalProjectionDefect_le
-    ... :
-    totalDefect E ≤ twistDefect (diagonalRead E) + L * readDefect E
-```
-
-### C. 尺度复合
-
-```lean
-theorem diagonalProjectionDefect_comp_le ...
-```
-
-### D. 限制系统零缺陷
-
-```lean
-theorem restriction_diagonal_natural ...
-```
-
-### E. 两个最小反例
-
-```lean
-theorem quotient_or_read_defect_pos ...
-theorem or_not_twist_defect_pos ...
-```
-
-### F. 极限诱导
-
-```lean
-def projectiveLimitDiagonal ...
-theorem projectiveLimitDiagonal_unique ...
-```
-
-若 Mathlib 已有一般 inverse-limit/map API，应直接实例化，不复制一般范畴论定理。
-
-## 13.3 反重复门
-
-每个待实现声明必须回答：
-
-1. 哪个具名下游定理会使用它？
-2. 现有 frozen theorem 为什么不能直接满足该消费者？
-3. 新声明是否只是旧声明的重排、去假设或 `Eq.symm`？
-4. 两边对象是否有独立锚，而非定义后自证？
-5. 反例是否来自给定结构，而非人为造一个必然成立的 classifier？
-
-答不出时，正确产物是 bind report 或 open residual，不是新模块。
-
----
-
-# 第十四部　阶段计划与杀死条件
-
-## 阶段 0：存量绑定审计
-
-- 建立 GICT、OBSERVER、PZG 与 Lean 声明的承接表；
-- 删除被已有 frozen theorem 完整覆盖的“新命题”；
-- 给每个真正新增目标指定消费者。
-
-## 阶段 1：纯有限自然性
-
-完成：
-
-- 类型化 $D,T,\Delta,P,Q$；
-- 总缺陷分解；
-- 尺度复合不等式；
-- 嵌入正例；
-- OR 商反例；
-- OR/NOT 扭曲反例。
-
-这是最小可发表数学核。
-
-## 阶段 2：projective limit
-
-- 相容对角族诱导唯一极限映射；
-- 失败时 defect 作为下降障碍；
-- 近似自然性的可求和版本是否成立。
-
-## 阶段 3：观察者有限窗口
-
-- 选择具名尺度系统；
-- 定义窗口间 $P,Q$；
-- 证明 metric Lipschitz 常数；
-- 计算 defect。
-
-## 阶段 4：solenoid
-
-- 采用仓库既有 projective presentation；
-- 接入路径分支与 hidden kernel；
-- 比较同分支/跨分支缺陷。
-
-## 阶段 5：上下文与量子
-
-- 先证明 local-to-global 模型适配器；
-- 再比较 contextuality cost 与 diagonal defect；
-- 最后才谈经典极限。
-
-## 阶段 6：因果信息率
-
-- 建立离散因果窗口容量上界；
-- 单独验证与相对论/光速的物理桥。
-
-## 阶段 7：解析数论
-
-只有双向语义桥出现后才进入。
-
-## 杀死条件
-
-以下任何一项成立，都应收缩或终止相应分支：
-
-1. 新缺陷只是不自然映射的定义展开，不能产生独立分类或界；
-2. 所有自然实例都严格交换，正 defect 只能靠任意聚合器人为制造；
-3. 现有范畴论/approximate naturality 文献已完整覆盖全部一般定理，而项目没有新的具体实例；
-4. 观察者窗口之间不存在自然、物理或算术上具名的尺度映射；
-5. quantum contextuality 适配器只能单向类比，无法给出原理论语义桥；
-6. 信息率高度依赖任意编码，无法形成不变量；
-7. solenoid 与矩阵量子层始终缺少表示定理；
-8. RH 适配器无法把 defect 与经典零点性质连接。
-
-失败本身必须进入判负账，不得通过改名扩大主张。
-
----
-
-# 第十五部　论文拆分
-
-## A. Finite Quantitative Diagonalization
-
-整理既有 Lean 成果：精确逃逸、捕获乘积律、距离剖面、浓缩与等变推广。本文不为该论文重复制造定理。
-
-## B. Diagonal Operators Across Observation Scales
-
-本文真正新增的数学论文：
-
-- 对角读取/扭曲分解；
-- 投影自然性；
-- 总 defect bound；
-- 尺度复合；
-- restriction/quotient 二分；
-- 最小反例。
-
-## C. Projective Completion of Diagonal Systems
-
-- 相容有限算子诱导极限算子；
-- defect 作为下降障碍；
-- 近似自然性与可求和误差。
-
-## D. Observer Windows and Solenoidal Realizations
-
-- 具名窗口尺度系统；
-- finite observer metric；
-- solenoid projective presentation；
-- hidden-fiber defect。
-
-## E. Quantitative Contextuality Interface
-
-只有 contextuality cost 与 diagonal defect 之间出现非平凡定理后独立成文。
-
-## F. Causal Observer Information Bounds
-
-只发表条件速率上界，不把 $c$ 定义成比特率。
-
----
-
-# 总判词
-
-存量理论已经说清：
-
-- 自应用如何生成对角逃逸；
-- 对角逃逸如何被定量；
-- 有限观察如何压缩完整历史；
-- 逆极限如何组织相容有限截面；
-- solenoid 如何把可见实流与隐藏地址分层。
-
-本文不再重复这些结论。它只补一条尚未被类型化的接缝：
-
-$$
+\Delta_i(E_i),
+\]
+其中最后一步使用 \(E\) 的相容性。因此
+\((\Delta_i(E_i))_i\)
+是相容族，定义良好。坐标等式由定义立即成立。
+
+若 \(\widetilde\Delta_\infty\) 也满足全部坐标等式，则对每个 \(E\) 与每个 \(i\)，
+\[
+\pi_i^\mathcal U\widetilde\Delta_\infty(E)
+=
+\Delta_i(E_i)
+=
+\pi_i^\mathcal U\Delta_\infty(E).
+\]
+逆极限中的元素由全部坐标唯一决定，故两映射相等。 \(\square\)
+
+### 定理 6.2（满射坐标下的反向判据）
+
+假设每个
+\[
+\pi_j^\mathcal T:\mathcal T_\infty\to\mathcal T_j
+\]
+均为满射。若存在映射
+\[
+\Delta_\infty:\mathcal T_\infty\to\mathcal U_\infty
+\]
+满足
+\[
+\pi_i^\mathcal U\Delta_\infty
+=
+\Delta_i\pi_i^\mathcal T
+\]
+对所有 \(i\) 成立，则有限层严格自然：
+\[
 \boxed{
 Q_{j,i}\Delta_j
-\quad\text{是否等于}\quad
-\Delta_iP_{j,i}？
+=
+\Delta_iP_{j,i}.
 }
-$$
+\]
 
-相等时，对角化可以穿过观察并下降到完成对象；不等时，总缺陷可被拆成：
+#### 证明
 
-$$
+固定 \(j\succeq i\) 与任意 \(E_j\in\mathcal T_j\)。由 \(\pi_j^\mathcal T\) 满射，存在
+\[
+E_\infty\in\mathcal T_\infty
+\]
+使
+\[
+\pi_j^\mathcal T(E_\infty)=E_j.
+\]
+于是
+\[
+\begin{aligned}
+Q_{j,i}\Delta_j(E_j)
+&=
+Q_{j,i}\Delta_j\pi_j^\mathcal T(E_\infty)\\
+&=
+Q_{j,i}\pi_j^\mathcal U\Delta_\infty(E_\infty)\\
+&=
+\pi_i^\mathcal U\Delta_\infty(E_\infty)\\
+&=
+\Delta_i\pi_i^\mathcal T(E_\infty)\\
+&=
+\Delta_iP_{j,i}\pi_j^\mathcal T(E_\infty)\\
+&=
+\Delta_iP_{j,i}(E_j).
+\end{aligned}
+\]
+因 \(E_j\) 任意，算子相等。 \(\square\)
+
+### 推论 6.3（缺陷的障碍意义）
+
+在坐标投影满射的逆系中，下列两件事等价：
+
+1. 有限层对角算子严格自然；
+2. 存在唯一按坐标实现全部 \(\Delta_i\) 的极限对角算子。
+
+因此非零对角投影缺陷不是“无限对象中的神秘误差”，而是有限层算子不能下降到 projective completion 的精确证书。
+
+若坐标投影不满射，则只需在可提升到极限的评价表上验证自然性。一个不可提升的孤立有限反例，不足以否定极限空间上的坐标算子。
+
+---
+
+## 7. 欧几里得素数构造：有限账本逃逸，而非自动的自应用对角化
+
+### 定义 7.1（素数账本逃逸数）
+
+设 \(S\) 为有限素数集合，定义
+\[
+P_S=\prod_{p\in S}p,
+\qquad
+N_S=P_S+1.
+\]
+空积取 \(1\)。
+
+### 定理 7.2（同时整除逃逸）
+
+对每个 \(p\in S\)，
+\[
+N_S\equiv1\pmod p.
+\]
+因此
+\[
+p\nmid N_S.
+\]
+
+#### 证明
+
+因 \(p\mid P_S\)，有
+\[
+P_S\equiv0\pmod p.
+\]
+两边加一即得
+\[
+N_S\equiv1\pmod p.
+\]
+故 \(p\) 不整除 \(N_S\)。 \(\square\)
+
+### 定理 7.3（新素因子提取）
+
+若 \(q\) 是 \(N_S\) 的任一素因子，则
+\[
 \boxed{
-\text{对角读取失配}
-+
-\text{扭曲自然性失配}.
+q\notin S.
 }
-$$
+\]
 
-这条接缝提供了一个可证伪、可分层、可落 Lean 的统一研究方向：
+#### 证明
 
-> **研究自指对角算子在有限观察、粗粒化与 projective completion 下的自然性，以及自然性失败时的定量障碍。**
+反设 \(q\in S\)。则 \(q\mid P_S\)。又因 \(q\mid N_S=P_S+1\)，所以
+\[
+q\mid (P_S+1)-P_S=1,
+\]
+这与 \(q\) 为素数矛盾。 \(\square\)
 
-它是对存量 GICT—Observer 理论的严格续编，不是用“对角化”重新命名所有分支。
+### 推论 7.4（严格增长的素数账本）
+
+固定一个素因子选择函数，例如最小素因子：
+\[
+\delta_{\mathbb P}(S)
+=
+\operatorname{minFac}(N_S).
+\]
+定义
+\[
+S_{n+1}
+=
+S_n\cup\{\delta_{\mathbb P}(S_n)\}.
+\]
+则
+\[
+|S_{n+1}|=|S_n|+1,
+\]
+因而得到无限多个互不相同的素数。
+
+### 命题 7.5（剩余坐标解释）
+
+定义有限剩余坐标空间
+\[
+R_S=\prod_{p\in S}\mathbb Z/p\mathbb Z
+\]
+与剩余映射
+\[
+r_S:\mathbb Z\to R_S.
+\]
+则
+\[
+r_S(P_S)=0,
+\qquad
+r_S(N_S)=\mathbf1.
+\]
+所以 \(+1\) 把“被全部已有素数整除”的零向量同时移动到每个坐标上的 \(1\)。
+
+### 结构边界 7.6
+
+欧几里得构造与表对角化共享“针对有限名单逐坐标逃逸”的结构，但两者不是同一个算子：
+
+- 表对角化包含自应用读取 \(E(a,a)\)；
+- 欧几里得构造没有候选评价自身的二维表；
+- 素数来自对逃逸整数再次作不可约分解，而不是来自取反本身。
+
+因此最准确的表述是
+\[
+\boxed{
+\text{有限账本逃逸}
++
+\text{因子分解}
+=
+\text{新素数见证}.
+}
+\]
+若要把它实现为一般 \(\Delta=\Theta D\) 的严格实例，必须额外构造一个依赖于素数坐标的评价表编码与解码交换图。
+
+---
+
+## 8. Li–Cayley 坐标中的零点几何
+
+本节只讨论经典完成 zeta/xi 函数的非平凡零点几何。设
+\[
+s=\beta+i\gamma,
+\qquad
+s\neq0.
+\]
+
+### 定义 8.1（Li–Cayley 坐标）
+
+定义
+\[
+\boxed{
+C(s)=1-\frac1s=\frac{s-1}{s}.
+}
+\]
+
+### 定理 8.2（临界线—单位圆等价）
+
+有恒等式
+\[
+\boxed{
+|C(s)|^2-1
+=
+\frac{1-2\beta}{\beta^2+\gamma^2}.
+}
+\]
+从而
+\[
+\boxed{
+\Re s=\frac12
+\iff
+|C(s)|=1.
+}
+\]
+并且
+\[
+\Re s>\frac12
+\iff
+|C(s)|<1,
+\]
+\[
+\Re s<\frac12
+\iff
+|C(s)|>1.
+\]
+
+#### 证明
+
+直接计算：
+\[
+|C(s)|^2
+=
+\frac{|s-1|^2}{|s|^2}
+=
+\frac{(\beta-1)^2+\gamma^2}{\beta^2+\gamma^2}.
+\]
+减去 \(1\) 得
+\[
+\frac{(\beta-1)^2-\beta^2}{\beta^2+\gamma^2}
+=
+\frac{1-2\beta}{\beta^2+\gamma^2}.
+\]
+分母严格为正，故符号只由 \(1-2\beta\) 决定。 \(\square\)
+
+这一恒等式给出一个严格坐标解释：临界线是 \(0\) 与 \(1\) 的等距垂直平分线，而 \(C\) 把这条线送到单位圆。
+
+### 定理 8.3（反射与共轭）
+
+对 \(s\neq0,1\)，
+\[
+\boxed{
+C(1-s)=C(s)^{-1}.
+}
+\]
+同时
+\[
+\boxed{
+C(\overline s)=\overline{C(s)},
+}
+\]
+因此
+\[
+\boxed{
+C(1-\overline s)=\overline{C(s)}^{-1}.
+}
+\]
+
+#### 证明
+
+第一式：
+\[
+C(1-s)
+=
+1-\frac1{1-s}
+=
+\frac{-s}{1-s}
+=
+\frac{s}{s-1}
+=
+\frac1{C(s)}.
+\]
+第二式由复共轭与加减乘除交换立即成立。第三式由前两式复合得到。 \(\square\)
+
+因此函数方程反射
+\[
+s\mapsto1-\overline s
+\]
+在 \(C\)-平面中变成反演
+\[
+z\mapsto\frac1{\overline z},
+\]
+其不动点恰是单位圆。
+
+### 定义 8.4（第 \(n\) 阶 Li 探针）
+
+对 \(n\ge1\)，定义
+\[
+A_n(s)
+=
+1-C(s)^n.
+\]
+
+仓库 `LiCausalTrichotomy` 中的 `liSymbol` 使用相反号
+\[
+C(s)^n-1=-A_n(s)
+\]
+的规范；二者只差整体负号，但在对接既有声明时必须保持规范显式。
+
+### 定理 8.5（镜像乘积恒等式）
+
+对 \(s\neq0,1\)，
+\[
+\boxed{
+A_n(s)+A_n(1-s)
+=
+A_n(s)A_n(1-s).
+}
+\]
+
+#### 证明
+
+令 \(z=C(s)\)。由定理 8.3，
+\[
+C(1-s)=z^{-1}.
+\]
+于是
+\[
+A_n(s)+A_n(1-s)
+=
+(1-z^n)+(1-z^{-n})
+=
+2-z^n-z^{-n},
+\]
+而
+\[
+A_n(s)A_n(1-s)
+=
+(1-z^n)(1-z^{-n})
+=
+2-z^n-z^{-n}.
+\]
+故二者相等。 \(\square\)
+
+### 推论 8.6（临界线上的模平方坍缩）
+
+若
+\[
+\Re s=\frac12,
+\]
+则
+\[
+1-s=\overline s,
+\]
+并且
+\[
+A_n(1-s)=\overline{A_n(s)}.
+\]
+因此
+\[
+\boxed{
+2\Re A_n(s)
+=
+|A_n(s)|^2
+\ge0.
+}
+\]
+
+#### 证明
+
+临界线条件给出 \(1-s=\overline s\)。由定理 8.3，
+\[
+A_n(\overline s)=\overline{A_n(s)}.
+\]
+代入定理 8.5 即得
+\[
+A_n(s)+\overline{A_n(s)}
+=
+A_n(s)\overline{A_n(s)}.
+\]
+左边是 \(2\Re A_n(s)\)，右边是 \(|A_n(s)|^2\)。 \(\square\)
+
+这解释了临界线零点对在 Li/Weil 正性中出现平方结构的局部来源：倒数镜像在单位圆上退化为复共轭。
+
+### 定理 8.7（零点四元轨道贡献）
+
+设
+\[
+z=C(\rho)=re^{i\theta},
+\qquad r>0.
+\]
+考虑形式四元轨道
+\[
+\rho,\quad\overline\rho,\quad1-\rho,\quad1-\overline\rho.
+\]
+其第 \(n\) 阶 Li 探针总贡献为
+\[
+\boxed{
+L_n(\rho)
+=
+4-2(r^n+r^{-n})\cos(n\theta).
+}
+\]
+
+#### 证明
+
+四个 Cayley 坐标分别为
+\[
+z,\quad\overline z,\quad z^{-1},\quad\overline z^{-1}.
+\]
+因此
+\[
+\begin{aligned}
+L_n(\rho)
+&=
+4-
+\left(
+z^n+\overline z^n+z^{-n}+\overline z^{-n}
+\right)\\
+&=
+4-
+2r^n\cos(n\theta)
+-
+2r^{-n}\cos(n\theta),
+\end{aligned}
+\]
+即所述公式。 \(\square\)
+
+若 \(r=1\)，则
+\[
+L_n(\rho)
+=
+4-4\cos(n\theta)
+=
+8\sin^2\!\left(\frac{n\theta}{2}\right)
+\ge0.
+\]
+
+### 引理 8.8（相位复现）
+
+对任意 \(	heta\in\mathbb R\)，存在严格递增整数序列
+\[
+n_k\to\infty
+\]
+使
+\[
+e^{in_k\theta}\to1,
+\qquad
+\cos(n_k\theta)\to1.
+\]
+
+#### 证明
+
+令
+\[
+\alpha=\frac{\theta}{2\pi}.
+\]
+若 \(\alpha\in\mathbb Q\)，取其分母的正整数倍即可使
+\[
+n_k\alpha\in\mathbb Z.
+\]
+
+若 \(\alpha\notin\mathbb Q\)，由 Dirichlet 有理逼近，对每个 \(N\) 存在
+\[
+1\le q_N\le N
+\]
+使
+\[
+\|q_N\alpha\|_{\mathbb R/\mathbb Z}\le\frac1N.
+\]
+若 \(q_N\) 没有无界子序列，则有某个固定正整数 \(q\) 在无穷多个 \(N\) 上出现，从而
+\[
+\|q\alpha\|_{\mathbb R/\mathbb Z}=0,
+\]
+这与 \(\alpha\) 无理矛盾。因此可取 \(q_{N_k}\to\infty\)。令
+\[
+n_k=q_{N_k},
+\]
+则 \(n_k\alpha\) 到整数的距离趋于零，故
+\[
+e^{2\pi i n_k\alpha}=e^{in_k\theta}\to1.
+\]
+\(\square\)
+
+### 定理 8.9（离线四元轨道的局部指数暴露）
+
+若
+\[
+|C(\rho)|=r\neq1,
+\]
+则存在整数子序列 \(n_k\to\infty\)，使
+\[
+\boxed{
+L_{n_k}(\rho)\to-\infty.
+}
+\]
+
+#### 证明
+
+由引理 8.8，取 \(n_k\) 使
+\[
+\cos(n_k\theta)\to1.
+\]
+故对充分大的 \(k\)，
+\[
+\cos(n_k\theta)\ge\frac12.
+\]
+又因 \(r\neq1\)，
+\[
+r^{n_k}+r^{-n_k}\to\infty.
+\]
+由定理 8.7，
+\[
+L_{n_k}(\rho)
+=
+4-2(r^{n_k}+r^{-n_k})\cos(n_k\theta)
+\le
+4-(r^{n_k}+r^{-n_k}),
+\]
+右侧趋于 \(-\infty\)。 \(\square\)
+
+这个定理是局部的：它只说明一个离线零点轨道能够被某个整数阶探针指数放大。它没有控制其他所有零点的总贡献，也没有自动证明某个完整 Li 系数为负。
+
+---
+
+## 9. Li 判据中的真正对角问题：探针阶数与完成截断能否同时取极限
+
+### 9.1 经典 Li 判据
+
+对完成 zeta/xi 函数的非平凡零点，Li 系数按对称规范写作
+\[
+\lambda_n
+=
+\sum_\rho
+\left[
+1-\left(1-\frac1\rho\right)^n
+\right].
+\]
+Li 定理及 Bombieri–Lagarias 推广给出经典等价：
+\[
+\boxed{
+\mathrm{RH}
+\iff
+\lambda_n\ge0
+\quad
+\text{对全部 }n\ge1.
+}
+\]
+
+本文不重新证明这一经典判据。本文新增的是：把有限零点截断与随截断增长的探针阶数区分开，并证明固定阶收敛不足以支持“对角选择”。
+
+### 定义 9.1（Li 截断与完成缺陷）
+
+令
+\[
+\lambda_{n,T}
+=
+\sum_{\rho\in Z_T}
+\left[
+1-C(\rho)^n
+\right],
+\]
+其中 \(Z_T\) 是关于反射与共轭封闭的有限对称零点截断。若固定 \(n\) 时
+\[
+\lambda_{n,T}\to\lambda_n,
+\]
+定义
+\[
+\varepsilon^{\mathrm{Li}}_{n,T}
+=
+|\lambda_n-\lambda_{n,T}|.
+\]
+
+仓库 `ZeroSum` 已经提供一般 Weil 测试函数下的对称有限截断框架，但把 Li 探针直接纳入现有 `WeilTestFunction` 仍需处理测试函数类差异：当前 Weil bundle 要求偶、光滑、紧支撑；一侧 Laguerre Li 包并非紧支撑且并非偶函数。
+
+### 定理 9.2（统一控制允许对角取极限）
+
+设 \((X,d)\) 为度量空间，\(x_{n,T},x_n\in X\)。设 \(n(T)\) 为任意整数选择。若存在集合 \(N_T\subseteq\mathbb N\) 满足
+\[
+n(T)\in N_T
+\]
+且
+\[
+\sup_{n\in N_T}d(x_{n,T},x_n)\to0,
+\]
+则
+\[
+\boxed{
+d(x_{n(T),T},x_{n(T)})\to0.
+}
+\]
+
+#### 证明
+
+对每个 \(T\)，
+\[
+d(x_{n(T),T},x_{n(T)})
+\le
+\sup_{n\in N_T}d(x_{n,T},x_n).
+\]
+右侧趋于零，结论成立。 \(\square\)
+
+### 命题 9.3（逐点收敛不足以支持对角选择）
+
+存在实数阵列 \(x_{n,T}\) 与极限 \(x_n\)，使对每个固定 \(n\)，
+\[
+x_{n,T}\to x_n,
+\]
+但存在 \(n(T)\to\infty\) 满足
+\[
+|x_{n(T),T}-x_{n(T)}|=1
+\]
+对全部 \(T\) 成立。
+
+#### 证明
+
+定义
+\[
+x_n=0,
+\qquad
+x_{n,T}
+=
+\begin{cases}
+0,&n\le T,\\
+1,&n>T.
+\end{cases}
+\]
+固定 \(n\) 后，当 \(T\ge n\) 时 \(x_{n,T}=0=x_n\)，故逐点收敛成立。但取
+\[
+n(T)=T+1,
+\]
+则
+\[
+x_{n(T),T}=1,
+\qquad
+x_{n(T)}=0.
+\]
+故误差恒为 \(1\)。 \(\square\)
+
+### 推论 9.4（有限 Li 验证的逻辑边界）
+
+即使对每个固定 \(n\) 都已证明
+\[
+\lambda_{n,T}\to\lambda_n,
+\]
+也不能仅由此推出
+\[
+\lambda_{n(T),T}-\lambda_{n(T)}\to0
+\]
+对增长阶数 \(n(T)\) 成立。任何利用高阶 Li 探针暴露高位离线零点的论证，都必须给出与 \(n\) 联合的截断余项估计。
+
+### 定理 9.5（离线轨道的全局支配条件）
+
+固定一个离线四元轨道 \(\mathcal O_\rho\)，记其贡献为 \(L_n(\rho)\)，并把其余零点贡献记为
+\[
+R_n
+=
+\lambda_n-L_n(\rho).
+\]
+若存在由定理 8.9 得到的子序列 \(n_k\)，满足
+\[
+\frac{|R_{n_k}|}
+{r^{n_k}+r^{-n_k}}
+\longrightarrow0,
+\]
+则
+\[
+\boxed{
+\lambda_{n_k}<0
+}
+\]
+对充分大的 \(k\) 成立。
+
+#### 证明
+
+沿该子序列，
+\[
+\cos(n_k\theta)\to1,
+\]
+所以
+\[
+\frac{L_{n_k}(\rho)}
+{r^{n_k}+r^{-n_k}}
+=
+\frac4{r^{n_k}+r^{-n_k}}
+-
+2\cos(n_k\theta)
+\longrightarrow-2.
+\]
+而假设给出
+\[
+\frac{R_{n_k}}
+{r^{n_k}+r^{-n_k}}
+\longrightarrow0.
+\]
+因此
+\[
+\frac{\lambda_{n_k}}
+{r^{n_k}+r^{-n_k}}
+\longrightarrow-2,
+\]
+最终必为负。 \(\square\)
+
+定理 9.5 精确定位了从“局部离线零点可被指数放大”到“完整 Li 系数出现负值”的缺口：必须控制其余全部零点、正则化顺序或等价的素数端余项。这个缺口与 RH 本身同等关键，不能被“对角化”一词绕过。
+
+---
+
+## 10. 素数端、零点端与显式公式
+
+素数账本逃逸与 Li 零点探针通过显式公式处于同一研究图中，但两者承担不同角色：
+
+\[
+\text{有限素数/素数幂账本}
+\longleftrightarrow
+\text{测试函数}
+\longleftrightarrow
+\text{零点谱}.
+\]
+
+在仓库当前约定下，`WeilIdentity` 给出
+\[
+\operatorname{zeroSum}
+=
+\operatorname{poleTerm}
+-
+\operatorname{primeTerm}
++
+\operatorname{archimedeanTerm},
+\]
+其经典等式来自登记的 `weil_explicit_formula_classic` 外部输入。该输入没有断言正性，也没有断言 RH。
+
+因此一条真正闭合的 RH 证明链必须至少包含：
+
+1. 合法测试函数类中的 Li/Weil 探针；
+2. 零点端 Li 系数或等价二次型；
+3. 素数端与 Archimedean 端的精确表达；
+4. 对全部探针阶数成立的非负性；
+5. 截断、极限与正则化顺序的联合控制。
+
+本文完成的是第 1—2 项之间的局部几何分析，以及第 5 项中“逐点收敛不允许对角选阶”的一般逻辑定理。本文没有完成第 4 项。
+
+---
+
+## 11. 观察者与量子解释的严格边界
+
+### 11.1 观察者效应不是自动缺陷
+
+定理 5.1 表明：若观察只是坐标限制，且扭曲自然，则对角缺陷严格为零。因此“有限观察者”不会仅因有限而改变自指结构。
+
+真正产生缺陷的是具体的非自然机制，例如：
+
+- 多个微观地址被合并；
+- 非对角相关被聚合到粗层自坐标；
+- 扭曲与条件期望、阈值、OR、最大化等非线性操作不交换；
+- 观测代价只在商空间中分离状态。
+
+### 11.2 对角缺陷不等于量子上下文性
+
+量子上下文性通常研究局部测量上下文能否拼接成全局非上下文赋值。对角缺陷研究
+\[
+Q\Delta
+\quad\text{与}\quad
+\Delta P
+\]
+是否相等。二者可以在某个具体模型中建立映射，但在给出双向定理以前不能视为同一概念。
+
+### 11.3 有限观察者距离可作为 \(d_i\)，但不自动给出跨尺度系统
+
+`WindowObserverDistance` 为单个有限循环窗口提供自然度量。要把它用于本文的 \(d_i\)，还必须给出不同窗口之间的 \(P_{j,i},Q_{j,i}\) 并验证 Lipschitz 常数。单窗口精确距离并不自动形成逆系。
+
+### 11.4 Solenoid 提供完成载体，不自动提供量子态空间
+
+solenoid 的路径分支分类适合作为 projective completion 的具体几何载体。但要应用定理 6.1，仍必须构造：
+
+- 有限层评价表；
+- 表投影与输出投影；
+- 有限层扭曲；
+- 与 solenoid bonding maps 相容的自然性证明。
+
+在这些对象出现以前，“隐藏核”“量子地址”与“对角完成”只是潜在适配，不是已证同一性。
+
+---
+
+## 12. 主要结论
+
+本文得到以下闭合结论。
+
+### 结论 A：对角化的局部—整体失配有两个独立来源
+
+\[
+\boxed{
+\varepsilon^\Delta
+\le
+\varepsilon^\tau
++
+L\varepsilon^D.
+}
+\]
+
+因此对角缺陷不是一个不可分析的整体误差；它由自坐标读取失配与值扭曲失配组成。
+
+### 结论 B：缺陷可以沿观察尺度精确记账
+
+\[
+\boxed{
+\varepsilon^\Delta_{j,k}
+\le
+L^Q_{i,k}\varepsilon^\Delta_{j,i}
++
+\varepsilon^\Delta_{i,k}\circ P_{j,i}.
+}
+\]
+
+### 结论 C：严格自然性正是极限对角算子存在的条件
+
+在坐标投影满射的逆系中，
+\[
+\boxed{
+\text{有限层严格自然}
+\iff
+\text{存在坐标兼容的极限对角算子}.
+}
+\]
+
+### 结论 D：素数来自账本逃逸后的不可约提取
+
+\[
+\boxed{
+S
+\longmapsto
+1+\prod_{p\in S}p
+\longmapsto
+q\notin S.
+}
+\]
+这是一种有限坐标逃逸，但不是无需编码即可等同的自应用表对角化。
+
+### 结论 E：RH 在 Li–Cayley 坐标中是单位圆饱和
+
+\[
+\boxed{
+\Re\rho=\frac12
+\iff
+\left|1-\frac1\rho\right|=1.
+}
+\]
+临界线轨道产生模平方非负贡献；离线轨道则沿某个整数阶子序列产生局部负无穷放大。
+
+### 结论 F：局部可探测不等于全局已排除
+
+固定阶截断收敛不允许阶数随截断任意增长。要从离线轨道的局部暴露推出完整 Li 系数为负，必须控制其他零点或素数端余项。这个联合控制是 RH 路线中的实质问题。
+
+---
+
+## 13. 形式化状态说明
+
+本文的下列输入已经存在 Lean 证明：
+
+- 有限逃逸计数、捕获乘积律、距离剖面与浓缩；
+- 有限循环窗口观察者距离；
+- solenoid 路径轨道分类；
+- 临界线上的 Cayley 单位模；
+- 整数 Li symbol 的因果包；
+- 零点反射/共轭对称截断；
+- 通过登记经典输入得到的 Weil 显式公式。
+
+本文新增并已在纸面完整证明、但尚未声明为 Lean 真源的结果是：
+
+- 总缺陷分解定理；
+- 尺度复合与 telescoping bound；
+- 限制自然性定理；
+- 两个最小布尔反例；
+- 逆极限下降与满射反向判据；
+- 素数账本逃逸的本文类型化表述；
+- Li–Cayley 镜像乘积、四元轨道公式与局部指数暴露；
+- 统一对角取极限定理、逐点反例与全局支配条件。
+
+在这些声明被形式化以前，本文应作为论文稿与理论来源读取，而不应被 Blueprint 或 frozen ledger 自动投影成 `Closed`。
+
+---
+
+## 参考文献
+
+1. G. Cantor, “Über eine elementare Frage der Mannigfaltigkeitslehre,” *Jahresbericht der Deutschen Mathematiker-Vereinigung* 1 (1891), 75–78.
+2. F. W. Lawvere, “Diagonal Arguments and Cartesian Closed Categories,” in *Category Theory, Homology Theory and their Applications II*, Lecture Notes in Mathematics 92, Springer, 1969, 134–145.
+3. Euclid, *Elements*, Book IX, Proposition 20.
+4. X.-J. Li, “The Positivity of a Sequence of Numbers and the Riemann Hypothesis,” *Journal of Number Theory* 65 (1997), 325–333. DOI: 10.1006/jnth.1997.2137.
+5. E. Bombieri and J. C. Lagarias, “Complements to Li’s Criterion for the Riemann Hypothesis,” *Journal of Number Theory* 77 (1999), 274–287. DOI: 10.1006/jnth.1999.2392.
+6. A. Weil, “Sur les ‘formules explicites’ de la théorie des nombres premiers,” *Communications du Séminaire Mathématique de l’Université de Lund*, supplément (1952), 252–265.
