@@ -166,8 +166,25 @@ internal static partial class RepositoryPathPolicy
             && string.Equals(gid.Path.Value, markdownPath, StringComparison.Ordinal);
     }
 
-    private static bool IsBlueprintContentCompositionBuildFile(string path) =>
-        path is "Blueprint/Trureturing.Content.csproj" or "Blueprint/packages.lock.json";
+    internal static bool IsBlueprintContentCompositionBuildFile(string path)
+    {
+        const string prefix = "Blueprint/";
+        if (!path.StartsWith(prefix, StringComparison.Ordinal))
+        {
+            return false;
+        }
+
+        var leaf = path[prefix.Length..];
+        if (leaf.Length == 0 || leaf.Contains('/', StringComparison.Ordinal))
+        {
+            return false;
+        }
+
+        return leaf.EndsWith(".csproj", StringComparison.Ordinal)
+            && leaf.Length > ".csproj".Length
+            || string.Equals(leaf, "Program.cs", StringComparison.Ordinal)
+            || string.Equals(leaf, "packages.lock.json", StringComparison.Ordinal);
+    }
 
     private static string InferParseFailure(string path, string label)
     {

@@ -8,6 +8,9 @@ public sealed class TypeModelTests
 {
     [Theory]
     [InlineData("Blueprint/Trureturing.Content.csproj")]
+    [InlineData("Blueprint/Another.Content.csproj")]
+    [InlineData("Blueprint/trureturing.content.csproj")]
+    [InlineData("Blueprint/Program.cs")]
     [InlineData("Blueprint/packages.lock.json")]
     public void BlueprintContentCompositionBuildFilesAreClosedWorldRegistered(string value)
     {
@@ -21,6 +24,17 @@ public sealed class TypeModelTests
     [InlineData("Blueprint/D5/Foo.csproj")]
     [InlineData("Blueprint/random.txt")]
     [InlineData("Blueprint/sub/x.csproj")]
+    [InlineData("Blueprint/Trureturing.Content.sln")]
+    [InlineData("Blueprint/Trureturing.Content.slnx")]
+    [InlineData("Blueprint/D5/Trureturing.Content.csproj")]
+    [InlineData("Blueprint/FOO.CSPROJ")]
+    [InlineData("Blueprint/Foo.csproj.bak")]
+    [InlineData("Blueprint/.csproj")]
+    [InlineData("Blueprint/Directory.Build.props")]
+    [InlineData("Blueprint/Directory.Build.targets")]
+    [InlineData("Blueprint/NuGet.Config")]
+    [InlineData("Blueprint/.editorconfig")]
+    [InlineData("Blueprint/Main.cs")]
     public void BlueprintContentCompositionBuildFileNeighborsRemainSl000Blocked(string value)
     {
         var path = RepoPath.CreateKnown(value);
@@ -34,6 +48,41 @@ public sealed class TypeModelTests
             "noncanonical Blueprint artifact: path is not a canonical semantic artifact",
             issue.Message);
         Assert.False(RepositoryPathPolicy.TryResolve(path, out _));
+    }
+
+    [Fact]
+    public void BlueprintCompositionRootAllowsOnlyOneDirectProject()
+    {
+        var snapshot = Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(
+            RawRepositorySnapshot.Create([
+                RawRepositoryEntry.FromText("Blueprint/One.csproj", "<Project />\n"),
+                RawRepositoryEntry.FromText("Blueprint/Two.csproj", "<Project />\n"),
+            ]))).Snapshot;
+
+        var descriptor = new RuleDescriptor(
+            RuleId.CreateKnown(15),
+            "test",
+            DisplaySeverity.Error,
+            "test",
+            AdmissionEffect.Observe,
+            RuleLifecycle.Active,
+            null);
+        var finding = Assert.Single(RepositoryPathPolicy.Evaluate(snapshot, Policy(), descriptor));
+
+        Assert.Equal("Blueprint/Two.csproj", finding.Path);
+        Assert.Equal("Blueprint composition root allows at most one direct .csproj", finding.Message);
+    }
+
+    [Fact]
+    public void BlueprintCompositionRootUsesOrdinalExtensionAndRejectsDirectoryShape()
+    {
+        Assert.True(RepositoryPathPolicy.IsBlueprintContentCompositionBuildFile(
+            "Blueprint/trureturing.content.csproj"));
+        Assert.False(RepositoryPathPolicy.IsBlueprintContentCompositionBuildFile(
+            "Blueprint/FOO.CSPROJ"));
+        var exception = Assert.Throws<ArgumentException>(
+            () => RepoPath.CreateKnown("Blueprint/Trureturing.Content.csproj/"));
+        Assert.Equal("Invalid repository path. (Parameter 'value')", exception.Message);
     }
 
     [Theory]

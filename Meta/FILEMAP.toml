@@ -88,11 +88,20 @@ artifact_id = "none"
 runtime_disposition = "committed-source"
 
 [[files]]
-pattern = "Blueprint/Trureturing.Content.csproj"
+pattern = "Blueprint/*.csproj"
 kind = "program"
 produced_by = "none"
-consumed_by = ["dotnet"]
-verified_by = ["dotnet-test"]
+consumed_by = ["RepositoryPathPolicy"]
+verified_by = ["RepositoryPathPolicy"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+
+[[files]]
+pattern = "Blueprint/Program.cs"
+kind = "program"
+produced_by = "none"
+consumed_by = ["RepositoryPathPolicy"]
+verified_by = ["RepositoryPathPolicy"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
 
@@ -100,8 +109,8 @@ runtime_disposition = "committed-source"
 pattern = "Blueprint/packages.lock.json"
 kind = "program"
 produced_by = "none"
-consumed_by = ["dotnet"]
-verified_by = ["dotnet-test"]
+consumed_by = ["RepositoryPathPolicy"]
+verified_by = ["RepositoryPathPolicy"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
 
