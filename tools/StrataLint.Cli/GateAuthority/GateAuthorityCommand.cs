@@ -204,7 +204,10 @@ internal static class GateAuthorityCommand
             return new ExplicitCommandResult(0, string.Empty, string.Empty);
         }
         catch (Exception exception) when (
-            exception is IOException or UnauthorizedAccessException or FormatException)
+            exception is IOException
+                or UnauthorizedAccessException
+                or FormatException
+                or DecoderFallbackException)
         {
             return new ExplicitCommandResult(2, string.Empty, $"GATE_AUTHORITY_INVALID {exception.Message}\n");
         }
@@ -212,6 +215,11 @@ internal static class GateAuthorityCommand
 
     internal static ExplicitCommandResult Run(string repositoryRoot, IReadOnlyList<string> arguments)
     {
+        if (arguments.Count == 1 && arguments[0] == "--check")
+        {
+            return Check(repositoryRoot);
+        }
+
         if (arguments.Count != 4
             || arguments[0] != "--old-build"
             || arguments[2] != "--out")
@@ -222,8 +230,97 @@ internal static class GateAuthorityCommand
         return Run(repositoryRoot, arguments[1], arguments[3]);
     }
 
+    private static ExplicitCommandResult Check(string repositoryRoot)
+    {
+        try
+        {
+            var definitions = GateAuthorityRootCatalogLoader.LoadRepository(repositoryRoot);
+            var initialFindings = definitions
+                .SelectMany(definition => CheckRoot(repositoryRoot, definition, null))
+                .Order(StringComparer.Ordinal)
+                .ToArray();
+            if (initialFindings.Length != 0)
+            {
+                return InvalidContent(initialFindings);
+            }
+
+            var authority = GateAuthorityProducer.Create(repositoryRoot, new string('0', 64));
+            var bytes = GateAuthorityProducer.Write(authority);
+            if (GateAuthorityReader.Validate(bytes, null, definitions) != 0)
+            {
+                throw new FormatException("generated authority failed strict validation");
+            }
+
+            var findings = definitions.Zip(authority.Roots)
+                .SelectMany(pair => CheckRoot(
+                    repositoryRoot,
+                    pair.First,
+                    pair.Second.EntrypointBlobSha256))
+                .Order(StringComparer.Ordinal)
+                .ToArray();
+            return findings.Length == 0
+                ? new ExplicitCommandResult(
+                    0,
+                    $"GATE_AUTHORITY_CHECK roots={definitions.Length} "
+                        + $"authority_sha256={GateAuthorityReader.AuthoritySha256(bytes)}\n",
+                    string.Empty)
+                : InvalidContent(findings);
+        }
+        catch (Exception exception) when (
+            exception is IOException
+                or UnauthorizedAccessException
+                or FormatException
+                or DecoderFallbackException)
+        {
+            return new ExplicitCommandResult(
+                2,
+                string.Empty,
+                $"GATE_AUTHORITY_INVALID {exception.Message}\n");
+        }
+    }
+
+    private static IEnumerable<string> CheckRoot(
+        string repositoryRoot,
+        GateAuthorityRootDefinition definition,
+        string? expectedBlobSha256)
+    {
+        var path = Path.Combine(
+            repositoryRoot,
+            definition.Entrypoint.Replace('/', Path.DirectorySeparatorChar));
+        if (!File.Exists(path))
+        {
+            return [$"root={definition.RootId} entrypoint={definition.Entrypoint} is missing"];
+        }
+
+        var bytes = File.ReadAllBytes(path);
+        var blobSha256 = Convert.ToHexStringLower(SHA256.HashData(bytes));
+        if (expectedBlobSha256 is not null
+            && !string.Equals(blobSha256, expectedBlobSha256, StringComparison.Ordinal))
+        {
+            return [$"root={definition.RootId} entrypoint={definition.Entrypoint} blob sha changed during check"];
+        }
+
+        var separator = definition.RootId.IndexOf('/', StringComparison.Ordinal);
+        if (separator <= 0 || separator == definition.RootId.Length - 1)
+        {
+            return [$"root={definition.RootId} has no target segment"];
+        }
+
+        var target = definition.RootId[(separator + 1)..];
+        var body = new UTF8Encoding(false, true).GetString(bytes);
+        return body.Contains(target, StringComparison.Ordinal)
+            ? []
+            : [$"root={definition.RootId} entrypoint={definition.Entrypoint} no longer mentions target={target}"];
+    }
+
+    private static ExplicitCommandResult InvalidContent(IEnumerable<string> findings) => new(
+        1,
+        string.Empty,
+        string.Concat(findings.Select(static finding =>
+            $"GATE_AUTHORITY_STALE {finding}\n")));
+
     private static ExplicitCommandResult Usage() => new(
         2,
         string.Empty,
-        "USAGE: StrataLint gate-authority --old-build SHA256 --out FILE\n");
+        "USAGE: StrataLint gate-authority --check | --old-build SHA256 --out FILE\n");
 }

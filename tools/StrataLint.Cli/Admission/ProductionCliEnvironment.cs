@@ -393,6 +393,16 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
                 return new CommandResult(false, string.Empty, "SELFTEST FAIL invariant mismatch\n");
             }
 
+            var governanceFindings = SelfTestGovernancePolicy.InspectRepository(repositoryRoot);
+            if (governanceFindings.Length > 0)
+            {
+                return new CommandResult(
+                    false,
+                    string.Empty,
+                    string.Concat(governanceFindings.Select(static finding =>
+                        $"SELFTEST FAIL governance={finding}\n")));
+            }
+
             var rules = string.Join(",", RuleCatalog.Default.Descriptors.Select(static item => item.Id.Value));
             var deferred = string.Join(
                 ",",
@@ -402,6 +412,7 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
             var output = "SELFTEST PASS\n"
                 + $"CANONICAL_REGISTRY {registry.Policy.RegistrySha256}\n"
                 + $"CANONICAL_DOMAINS {registry.Policy.DomainsSha256}\n"
+                + "GOVERNANCE tower=pass banned-api=pass banned-symbols=pass tools-namespace=pass\n"
                 + $"RULES {rules}\n"
                 + $"DEFERRED {deferred}\n";
             return new CommandResult(true, output, string.Empty);

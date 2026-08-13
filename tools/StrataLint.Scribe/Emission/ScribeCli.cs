@@ -26,9 +26,12 @@ public static class ScribeCli
         var command = arguments.Count == 0 ? string.Empty : arguments[0];
         if (command == "describe-report")
         {
-            var json = arguments.Count == 2
-                && string.Equals(arguments[1], "--json", StringComparison.Ordinal);
-            if (arguments.Count is < 1 or > 2 || (arguments.Count == 2 && !json))
+            var options = arguments.Skip(1).ToArray();
+            var json = options.Contains("--json", StringComparer.Ordinal);
+            var describeCheck = options.Contains("--check", StringComparer.Ordinal);
+            if (options.Length > 2
+                || options.Distinct(StringComparer.Ordinal).Count() != options.Length
+                || options.Any(static option => option is not ("--json" or "--check")))
             {
                 error.WriteLine(Usage);
                 return 2;
@@ -42,7 +45,8 @@ public static class ScribeCli
                 var report = DescribeReport.Build(
                     repositoryRoot,
                     DocumentDefinitions.All.Select(static definition => definition.Document),
-                    reportMaterial);
+                    reportMaterial,
+                    validateContentGovernance: describeCheck);
                 output.Write(json
                     ? DescribeReportWriter.WriteJson(report)
                     : DescribeReportWriter.WriteText(report));
@@ -97,7 +101,7 @@ public static class ScribeCli
 
     private const string Usage =
         "usage: dotnet run --project tools/StrataLint.Scribe -- "
-        + "emit|emit-values|filemap [--check] | describe-report [--json]";
+        + "emit|emit-values|filemap [--check] | describe-report [--json] [--check]";
 
     private static string FindRepositoryRoot(string workingDirectory)
     {

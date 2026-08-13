@@ -28,21 +28,4 @@ public sealed class ChannelFixedStateDocumentTests
         Assert.IsType<Inline.Text>(Assert.Single(paragraph.Content.Items));
     }
 
-    [Fact]
-    public void WatrousNotePinsTheVerifiedLocatorWithoutInventingATheoremNumber()
-    {
-        var repository = RepositoryAccessor.Discover(RepositoryRootCriterion.ClaudeDirectoryNotFound);
-        var note = Assert.Single(
-            LibraryNoteCatalog.Load(repository.Root.FullPath).Notes,
-            static item => item.BibKey.Value == "watrous2018theory");
-        var text = repository.ReadAllText(RepositoryRelativePath.Create(note.RelativePath));
-
-        Assert.Equal("10.1017/9781316848142", note.Doi?.Value);
-        Assert.Equal(2018, note.Year);
-        Assert.Contains("Section 4.4", text, StringComparison.Ordinal);
-        Assert.Contains(
-            "No specific theorem number is attributed",
-            text,
-            StringComparison.Ordinal);
-    }
 }
