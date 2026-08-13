@@ -24,7 +24,6 @@ governance_documents:
   - "Library/MAP.md"
   - "Meta/Digestion/atomizers.toml"
   - "Meta/FILEMAP.toml"
-  - "Meta/StrataLint/Generated/scribe-emissions.v1.json"
   - "docs/CONTRIBUTING.md"
   - "docs/GOVERNANCE.md"
   - "docs/develop/spec/golden-ledger-repo-spec.md"
@@ -39,6 +38,7 @@ governance_documents:
   - "docs/develop/theory/PERIODIC_TREE_registry.jsonl"
   - "docs/develop/theory/PRICED_INTERFACE_PAPER.md"
   - "docs/develop/theory/PZG_BEDC.md"
+  - "tools/Generated/scribe-emissions.v1.json"
 agent_files:
   - "CONTEXT.md"
   - "adversary.md"

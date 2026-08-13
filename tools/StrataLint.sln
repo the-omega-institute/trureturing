@@ -1,0 +1,49 @@
+
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StrataLint.Engine", "StrataLint.Engine/StrataLint.Engine.csproj", "{E2F4B19B-65AA-4D27-8319-58448E8C0E47}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StrataLint.Cli", "StrataLint.Cli/StrataLint.Cli.csproj", "{41A4D7E4-06DD-4E89-A052-D5DC46D8D073}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StrataLint.Tests", "tests/StrataLint.Tests/StrataLint.Tests.csproj", "{7B712EF8-0E6F-4F14-972D-51518C355D44}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StrataLint.Scribe", "StrataLint.Scribe/StrataLint.Scribe.csproj", "{8F559351-871D-44A0-8D99-6CE7C83D7001}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StrataLint.Scribe.Tests", "tests/StrataLint.Scribe.Tests/StrataLint.Scribe.Tests.csproj", "{B26A0B2F-7288-4C1F-AE3F-C8742C534876}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StrataLint.ArchitectureTests", "tests/StrataLint.ArchitectureTests/StrataLint.ArchitectureTests.csproj", "{1597A91E-2EAD-4E6E-BA67-1EAFA7182300}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E2F4B19B-65AA-4D27-8319-58448E8C0E47}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E2F4B19B-65AA-4D27-8319-58448E8C0E47}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E2F4B19B-65AA-4D27-8319-58448E8C0E47}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E2F4B19B-65AA-4D27-8319-58448E8C0E47}.Release|Any CPU.Build.0 = Release|Any CPU
+		{41A4D7E4-06DD-4E89-A052-D5DC46D8D073}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{41A4D7E4-06DD-4E89-A052-D5DC46D8D073}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{41A4D7E4-06DD-4E89-A052-D5DC46D8D073}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{41A4D7E4-06DD-4E89-A052-D5DC46D8D073}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7B712EF8-0E6F-4F14-972D-51518C355D44}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7B712EF8-0E6F-4F14-972D-51518C355D44}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7B712EF8-0E6F-4F14-972D-51518C355D44}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7B712EF8-0E6F-4F14-972D-51518C355D44}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8F559351-871D-44A0-8D99-6CE7C83D7001}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8F559351-871D-44A0-8D99-6CE7C83D7001}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8F559351-871D-44A0-8D99-6CE7C83D7001}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8F559351-871D-44A0-8D99-6CE7C83D7001}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B26A0B2F-7288-4C1F-AE3F-C8742C534876}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B26A0B2F-7288-4C1F-AE3F-C8742C534876}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B26A0B2F-7288-4C1F-AE3F-C8742C534876}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B26A0B2F-7288-4C1F-AE3F-C8742C534876}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1597A91E-2EAD-4E6E-BA67-1EAFA7182300}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1597A91E-2EAD-4E6E-BA67-1EAFA7182300}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1597A91E-2EAD-4E6E-BA67-1EAFA7182300}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1597A91E-2EAD-4E6E-BA67-1EAFA7182300}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
