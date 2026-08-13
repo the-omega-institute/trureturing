@@ -53,28 +53,6 @@ internal static class TowerActualValidator
         ImmutableArray<TowerFinding>.Builder findings,
         ImmutableArray<TowerCheck>.Builder checks)
     {
-        if (component.Kind == "historical-ledger")
-        {
-            ValidateHistoricalLedger(component, findings, checks);
-            return;
-        }
-
-        if (component.Kind == "future-gate")
-        {
-            if (component.Verification != "ASSUMED-UNVERIFIED")
-            {
-                findings.Add(new TowerFinding(
-                    "TOWER-ASSUMPTION",
-                    component.Id,
-                    "future gate must be marked ASSUMED-UNVERIFIED"));
-            }
-            else
-            {
-                checks.Add(new TowerCheck(component.Id, component.Verification, "future conservative-extension gate"));
-            }
-            return;
-        }
-
         if (component.Verification != "verified")
         {
             findings.Add(new TowerFinding(
@@ -106,39 +84,6 @@ internal static class TowerActualValidator
                     component.Id,
                     $"unknown component kind {component.Kind}"));
                 break;
-        }
-    }
-
-    // A historical ledger records what a retired ceremony once established. It is a
-    // structured description, not a live consumer: the shape is checked, the members
-    // are not opened, no digest is recomputed, and no phase is claimed to be running.
-    private static void ValidateHistoricalLedger(
-        TowerComponentSyntax component,
-        ImmutableArray<TowerFinding>.Builder findings,
-        ImmutableArray<TowerCheck>.Builder checks)
-    {
-        if (component.Verification != "archived")
-        {
-            findings.Add(new TowerFinding(
-                "TOWER-ARCHIVED",
-                component.Id,
-                "historical ledger must be marked archived, not verified"));
-        }
-
-        if (component.Members.IsDefaultOrEmpty)
-        {
-            findings.Add(new TowerFinding(
-                "TOWER-ARCHIVED",
-                component.Id,
-                "historical ledger must record at least one archived member"));
-        }
-
-        if (!findings.Any(item => item.Component == component.Id))
-        {
-            checks.Add(new TowerCheck(
-                component.Id,
-                component.Verification,
-                "Archived history; no live producer, consumer, or verification claim"));
         }
     }
 

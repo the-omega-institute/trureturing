@@ -4,6 +4,7 @@ fingerprints:
   normalized_sha256: sha256:7de29f3405ccdbc2c1589a2c5c920f082cb315e5a04d741b93ff716018191994
 cas_ref: sha256:7de29f3405ccdbc2c1589a2c5c920f082cb315e5a04d741b93ff716018191994
 coverage_gids:
+  - D5/S3/Zeros/CompletedZeta.xi_reading_reflection
   - D5/S3/Zeros/CompletedZeta.zero_quartet_scaling_spec
 receipts:
   coverage:
