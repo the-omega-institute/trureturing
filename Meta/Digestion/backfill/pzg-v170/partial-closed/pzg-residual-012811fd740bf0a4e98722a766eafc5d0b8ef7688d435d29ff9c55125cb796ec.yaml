@@ -4,6 +4,8 @@ fingerprints:
   normalized_sha256: sha256:012811fd740bf0a4e98722a766eafc5d0b8ef7688d435d29ff9c55125cb796ec
 cas_ref: sha256:012811fd740bf0a4e98722a766eafc5d0b8ef7688d435d29ff9c55125cb796ec
 coverage_gids:
+  - D5/S3/Zeros/Symmetry/ZetaConjugationCovariance.completed_riemann_zeta_one_sub_conj
+  - D5/S3/Zeros/Symmetry/ZetaConjugationCovariance.riemann_zeta_conj
   - D5/S3/Weil/ReflectionLedger.mirror_reversal_spec
 receipts:
   coverage:
@@ -20,8 +22,6 @@ receipts:
     - numeric-symmetry-and-information-antisymmetry-coexist
     - wigner-unitary-or-antiunitary-dichotomy
     - information-flow-reversal-forces-antiunitary-time-reversal
-    - real-zeta-coefficients-imply-conjugation-covariance
-    - completed-lambda-antiunitary-covariance
     - lambda-antiunitary-covariance-numerical-certificate
     - critical-line-existence-from-information-reversal
     - rh-as-zero-set-subset-of-antilinear-fixed-line
