@@ -1,6 +1,6 @@
 /- GID: D5/S1/Phase/ThreeGap/Foundations
    generality: G
-   mirror-B: D5/B/S1/Phase/ThreeGap/Foundations
+   mirror-B: none(waiver:formal-unit-only)
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    digest: Port the MIT three-gap orbit, sorting, and return foundations. -/

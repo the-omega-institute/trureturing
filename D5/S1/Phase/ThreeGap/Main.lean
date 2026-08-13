@@ -1,6 +1,6 @@
 /- GID: D5/S1/Phase/ThreeGap/Main
    generality: G
-   mirror-B: D5/B/S1/Phase/ThreeGap/Main
+   mirror-B: none(waiver:formal-unit-only)
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    digest: Port the MIT final three-gap theorem and expose its card bound. -/

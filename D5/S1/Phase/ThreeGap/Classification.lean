@@ -1,6 +1,6 @@
 /- GID: D5/S1/Phase/ThreeGap/Classification
    generality: G
-   mirror-B: D5/B/S1/Phase/ThreeGap/Classification
+   mirror-B: none(waiver:formal-unit-only)
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    digest: Port the MIT forward, backward, and corner gap classification. -/
