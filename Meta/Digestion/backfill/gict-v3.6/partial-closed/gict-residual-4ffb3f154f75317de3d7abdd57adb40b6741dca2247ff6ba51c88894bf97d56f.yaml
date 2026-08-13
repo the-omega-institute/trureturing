@@ -23,7 +23,6 @@ receipts:
   scribe: []
   unresolved_subitems:
     - pythagorean-closure-for-orbit-parameters
-    - pythagorean-input-validator-clause
     - pin-angle-formula
     - numerical-double-check-certificate
     - fabricated-input-rejection-certificate
