@@ -12,10 +12,10 @@ public sealed partial class MakeWorkflowTests
         @"(?m)^\s*(?:(?:local|export|readonly)\s+)*(?<name>[A-Za-z_][A-Za-z0-9_]*)=",
         RegexOptions.CultureInvariant);
     private static readonly Regex ReadBinding = new(
-        @"(?m)^\s*(?:(?:[A-Za-z_][A-Za-z0-9_]*=[^\s]*)\s+)*read(?:\s+-[A-Za-z]+)*(?:\s+-[a-zA-Z]\s+\S+)*\s+(?<names>[A-Za-z_][A-Za-z0-9_]*(?:\s+[A-Za-z_][A-Za-z0-9_]*)*)",
+        @"(?m)^\s*(?:while\s+)?(?:(?:[A-Za-z_][A-Za-z0-9_]*=[^\s]*)\s+)*read(?:\s+-[A-Za-z]+)*(?:\s+-[a-zA-Z]\s+\S+)*\s+(?<names>[A-Za-z_][A-Za-z0-9_]*(?:\s+[A-Za-z_][A-Za-z0-9_]*)*)",
         RegexOptions.CultureInvariant);
     private static readonly Regex ForBinding = new(
-        @"(?m)^\s*(?:(?:[A-Za-z_][A-Za-z0-9_]*=[^\s]*)\s+)*for\s+(?<name>[A-Za-z_][A-Za-z0-9_]*)\s+in\b",
+        @"(?m)^\s*(?:while\s+)?(?:(?:[A-Za-z_][A-Za-z0-9_]*=[^\s]*)\s+)*for\s+(?<name>[A-Za-z_][A-Za-z0-9_]*)\s+in\b",
         RegexOptions.CultureInvariant);
     private static readonly Regex MapfileBinding = new(
         @"(?m)^\s*mapfile\b[^\r\n]*?\s(?<name>[A-Za-z_][A-Za-z0-9_]*)\s*(?:<|$)",
