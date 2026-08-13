@@ -1,11 +1,9 @@
 using System.Collections.Immutable;
-using System.Diagnostics;
 using System.Text.RegularExpressions;
-using StrataLint.Cli;
 using StrataLint.Engine;
 using StrataLint.Scribe;
 
-namespace StrataLint.ArchitectureTests;
+namespace StrataLint.Cli;
 
 internal sealed record FileMapFinding(string Code, string Path, string Message);
 
@@ -100,6 +98,9 @@ internal static class FileMapPolicy
         @"\b(?:class|record|interface|struct)\s+([A-Za-z_][A-Za-z0-9_]*)",
         RegexOptions.CultureInvariant);
 
+    private static readonly ImmutableHashSet<string> RequiredGitIgnoreLines =
+        [".caller-review-prompt.md", ".echo-review.md", ".sshx-*", "/Generated/echo-residuals/"];
+
     private static ImmutableHashSet<string> DeclaredTypeNames(
         string repositoryRoot,
         IEnumerable<string> trackedPaths) =>
@@ -188,9 +189,15 @@ internal static class FileMapPolicy
                 "FILEMAP-REGISTRY-ALIGNMENT",
                 "Meta/registry.yaml",
                 "registry failed to load before FILEMAP alignment")];
+        var projectionRegistrationFindings = registry is RegistryLoadOutcome.Accepted registryAccepted
+            ? InspectProjectionRegistrations(
+                manifest,
+                registryAccepted.Policy.GovernanceDocuments.Select(static path => path.Value))
+            : [];
 
         return InspectCoverage(manifest, paths)
             .Concat(registryFindings)
+            .Concat(projectionRegistrationFindings)
             .Concat(InspectDeclaredActors(manifest, DeclaredTypeNames(repositoryRoot, paths), repositoryRoot))
             .Concat(InspectDataVerifiers(manifest, availableVerifiers))
             .Concat(InspectDataVerifierNames(manifest, availableVerifiers))
@@ -198,6 +205,7 @@ internal static class FileMapPolicy
             .Concat(InspectDeclaredModes(manifest, trackedModes))
             .Concat(InspectDirectoryKinds(manifest, paths))
             .Concat(InspectDependencies(manifest, files))
+            .Concat(InspectGitIgnore(File.ReadAllLines(Absolute(repositoryRoot, ".gitignore"))))
             .OrderBy(static finding => finding.Path, StringComparer.Ordinal)
             .ThenBy(static finding => finding.Code, StringComparer.Ordinal)
             .ToArray();
@@ -378,6 +386,51 @@ internal static class FileMapPolicy
                 $"registry-only [{string.Join(", ", registryOnly)}]; "
                 + $"tracked-only [{string.Join(", ", trackedOnly)}]"),
         ];
+    }
+
+    internal static IReadOnlyList<FileMapFinding> InspectGitIgnore(IEnumerable<string> lines)
+    {
+        ArgumentNullException.ThrowIfNull(lines);
+        var actual = lines.ToHashSet(StringComparer.Ordinal);
+        return RequiredGitIgnoreLines
+            .Where(line => !actual.Contains(line))
+            .Order(StringComparer.Ordinal)
+            .Select(line => new FileMapFinding(
+                "FILEMAP-GITIGNORE",
+                ".gitignore",
+                $"required run-local scaffold ignore is absent: {line}"))
+            .ToArray();
+    }
+
+    internal static IReadOnlyList<FileMapFinding> InspectProjectionRegistrations(
+        FileMapManifest manifest,
+        IEnumerable<string> registryGovernanceDocuments)
+    {
+        ArgumentNullException.ThrowIfNull(manifest);
+        ArgumentNullException.ThrowIfNull(registryGovernanceDocuments);
+        const string pattern = "Generated/echo-residuals/*.md";
+        const string representative = "Generated/echo-residuals/synthetic.md";
+        var findings = new List<FileMapFinding>();
+        if (manifest.Match(representative) is not
+            [{ Pattern: pattern, Kind: FileMapKind.Generated, RuntimeDisposition: "run-local" }])
+        {
+            findings.Add(new FileMapFinding(
+                "FILEMAP-PROJECTION-SHARD",
+                representative,
+                $"run-local echo residuals require the literal FILEMAP shard pattern {pattern}"));
+        }
+
+        foreach (var path in registryGovernanceDocuments
+            .Where(static path => path.StartsWith("Generated/echo-residual", StringComparison.Ordinal))
+            .Order(StringComparer.Ordinal))
+        {
+            findings.Add(new FileMapFinding(
+                "FILEMAP-PROJECTION-REGISTRY",
+                path,
+                "run-local echo residuals must not be enumerated in registry governance documents"));
+        }
+
+        return findings;
     }
 
     internal static IReadOnlyList<FileMapFinding> InspectCoverage(
@@ -596,66 +649,17 @@ internal static class FileMapPolicy
         || path.EndsWith(".json", StringComparison.Ordinal)
         || path.EndsWith(".scribe.cs", StringComparison.Ordinal);
 
-    private static string[] TrackedPaths(string repositoryRoot)
-    {
-        var startInfo = new ProcessStartInfo("git")
-        {
-            RedirectStandardOutput = true,
-            RedirectStandardError = true,
-            UseShellExecute = false,
-        };
-        startInfo.ArgumentList.Add("-C");
-        startInfo.ArgumentList.Add(repositoryRoot);
-        startInfo.ArgumentList.Add("ls-files");
-        startInfo.ArgumentList.Add("--cached");
-        startInfo.ArgumentList.Add("--others");
-        startInfo.ArgumentList.Add("--exclude-standard");
-        startInfo.ArgumentList.Add("-z");
-        using var process = Process.Start(startInfo)
-            ?? throw new InvalidOperationException("could not start git ls-files for FILEMAP");
-        var output = process.StandardOutput.ReadToEnd();
-        var error = process.StandardError.ReadToEnd();
-        process.WaitForExit();
-        if (process.ExitCode != 0)
-        {
-            throw new InvalidOperationException(
-                $"git ls-files failed with exit {process.ExitCode}: {error}");
-        }
-
-        return output.Split('\0', StringSplitOptions.RemoveEmptyEntries)
-            .Order(StringComparer.Ordinal)
+    private static string[] TrackedPaths(string repositoryRoot) =>
+        GitIndexRepositoryFiles.Enumerate(repositoryRoot)
+            .Select(static file => file.RelativePath)
             .ToArray();
-    }
 
-    private static IReadOnlyDictionary<string, string> TrackedModes(string repositoryRoot)
-    {
-        var startInfo = new ProcessStartInfo("git")
-        {
-            RedirectStandardOutput = true,
-            RedirectStandardError = true,
-            UseShellExecute = false,
-        };
-        startInfo.ArgumentList.Add("-C");
-        startInfo.ArgumentList.Add(repositoryRoot);
-        startInfo.ArgumentList.Add("ls-files");
-        startInfo.ArgumentList.Add("--stage");
-        startInfo.ArgumentList.Add("-z");
-        using var process = Process.Start(startInfo)
-            ?? throw new InvalidOperationException("could not start git ls-files --stage for FILEMAP");
-        var output = process.StandardOutput.ReadToEnd();
-        var error = process.StandardError.ReadToEnd();
-        process.WaitForExit();
-        if (process.ExitCode != 0)
-        {
-            throw new InvalidOperationException(
-                $"git ls-files --stage failed with exit {process.ExitCode}: {error}");
-        }
-
-        return output.Split('\0', StringSplitOptions.RemoveEmptyEntries)
-            .Select(static line => line.Split([' ', '\t'], 4, StringSplitOptions.RemoveEmptyEntries))
-            .Where(static fields => fields.Length == 4 && fields[2] == "0")
-            .ToDictionary(static fields => fields[3], static fields => fields[0], StringComparer.Ordinal);
-    }
+    private static IReadOnlyDictionary<string, string> TrackedModes(string repositoryRoot) =>
+        GitIndexRepositoryFiles.EnumerateTracked(repositoryRoot)
+            .ToDictionary(
+                static entry => entry.RelativePath,
+                static entry => entry.Mode,
+                StringComparer.Ordinal);
 
     private static string KindName(FileMapKind kind) => kind.ToString().ToLowerInvariant();
 

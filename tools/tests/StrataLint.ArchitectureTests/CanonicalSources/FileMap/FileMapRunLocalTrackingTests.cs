@@ -1,4 +1,5 @@
 using System.Text;
+using StrataLint.Cli;
 using StrataLint.Scribe;
 using StrataLint.Tests;
 
@@ -12,15 +13,6 @@ public sealed class FileMapRunLocalTrackingTests
     private const string TrackedMessage =
         "run-local artifact must be removed from the Git index; "
         + "the FILEMAP declaration must not be changed to make this finding go away";
-
-    [Fact]
-    public void RepositoryHasNoTrackedRunLocalArtifacts()
-    {
-        var findings = FileMapPolicy.InspectRepository(RepositoryLayout.FindRoot());
-
-        Assert.DoesNotContain(findings, static finding =>
-            finding.Code == "FILEMAP-RUN-LOCAL-TRACKED");
-    }
 
     [Fact]
     public void TrackedDataKeyedRunLocalMemberMustBeRemovedFromTheIndex()

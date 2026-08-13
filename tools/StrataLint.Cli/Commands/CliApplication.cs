@@ -23,6 +23,8 @@ internal interface ICliEnvironment
 
     ExplicitCommandResult GateAuthority(IReadOnlyList<string> arguments);
 
+    ExplicitCommandResult FileMapConform(IReadOnlyList<string> arguments);
+
     CommandResult Ingest(IReadOnlyList<string> arguments);
 
     CommandResult CoverAtom(IReadOnlyList<string> arguments);
@@ -99,6 +101,8 @@ internal static class CliApplication
                 RenderCommand(environment.EmitFormalizationReceipt(tail), console),
             ["gate-authority"] = static (environment, tail, console) =>
                 RenderExplicit(environment.GateAuthority(tail), console),
+            ["filemap-conform"] = static (environment, tail, console) =>
+                RenderExplicit(environment.FileMapConform(tail), console),
             ["ingest"] = static (environment, tail, console) =>
                 RenderCommand(environment.Ingest(tail), console),
             ["ledger-append"] = static (environment, tail, console) =>

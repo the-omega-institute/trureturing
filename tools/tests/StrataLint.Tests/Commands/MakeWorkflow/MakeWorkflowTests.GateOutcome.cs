@@ -108,6 +108,7 @@ public sealed partial class MakeWorkflowTests
             esac
             if [[ "${2:-}" == selftest ]]; then printf 'selftest\n'; exit 0; fi
             if [[ "${2:-}" == check ]]; then exit "$PREFLIGHT_ADMISSION_RC"; fi
+            if [[ "${2:-}" == filemap-conform ]]; then exit 0; fi
             echo "unexpected dotnet invocation: $*" >&2
             exit 91
             """);

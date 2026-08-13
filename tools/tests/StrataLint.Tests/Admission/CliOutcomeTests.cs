@@ -145,7 +145,8 @@ public sealed class CliOutcomeTests
 internal sealed class StubCliEnvironment(
     AdmissionOutcome outcome,
     ExplicitCommandResult? echoVerify = null,
-    ExplicitCommandResult? blueprintPins = null) : ICliEnvironment
+    ExplicitCommandResult? blueprintPins = null,
+    ExplicitCommandResult? fileMapConform = null) : ICliEnvironment
 {
     public AdmissionOutcome Check(IReadOnlyList<string> arguments) => outcome;
 
@@ -166,6 +167,9 @@ internal sealed class StubCliEnvironment(
 
     public ExplicitCommandResult GateAuthority(IReadOnlyList<string> arguments) =>
         new(2, string.Empty, "gate authority is not configured in this fixture");
+
+    public ExplicitCommandResult FileMapConform(IReadOnlyList<string> arguments) =>
+        fileMapConform ?? new(2, string.Empty, "filemap conformance is not configured in this fixture");
 
     public CommandResult Ingest(IReadOnlyList<string> arguments) =>
         new(false, string.Empty, "ingest is not configured in this fixture");
