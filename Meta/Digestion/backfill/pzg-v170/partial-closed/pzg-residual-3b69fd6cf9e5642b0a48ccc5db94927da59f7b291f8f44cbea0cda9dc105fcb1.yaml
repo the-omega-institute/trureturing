@@ -4,6 +4,8 @@ fingerprints:
   normalized_sha256: sha256:3b69fd6cf9e5642b0a48ccc5db94927da59f7b291f8f44cbea0cda9dc105fcb1
 cas_ref: sha256:3b69fd6cf9e5642b0a48ccc5db94927da59f7b291f8f44cbea0cda9dc105fcb1
 coverage_gids:
+  - D5/S3/Analytic/PrimeCashflowCost.cashflow_cost_strict_at_event
+  - D5/S3/Weil/SpectralHilbert.labeled_zeta_mem_iff
   - D5/S3/Weil/SpectralDynamics.critical_line_characterizations
 receipts:
   coverage:
