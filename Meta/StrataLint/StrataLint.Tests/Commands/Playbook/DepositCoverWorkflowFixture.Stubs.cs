@@ -42,7 +42,7 @@ public sealed partial class DepositCoverWorkflowScriptTests
                 fi
                 printf '{"event_type": "Freeze", "payload": {"case_id": "active-frozen/%s", "frozen_node_id": "sha256:%s", "input": {"descriptor_blob_oid": "%s"}, "node_path": "%s"}}\n' \
                   "$event_id" "$event_id" "$descriptor_blob_oid" "$target_module" \
-                  > "Meta/StrataLint/Golden/Frozen/accepted/${event_id}.json"
+                  > "Golden/Frozen/accepted/${event_id}.json"
                 if [[ -n ${PLAYBOOK_MUTATE_RECEIPT_AFTER_PREPARE:-} ]]; then
                   printf '%s' "$PLAYBOOK_MUTATE_RECEIPT_AFTER_PREPARE" \
                     > Meta/Digestion/formalizations/atom-1.v1.json
