@@ -43,15 +43,6 @@ artifact_id = "none"
 runtime_disposition = "committed-source"
 
 [[files]]
-pattern = ".codex/**"
-kind = "program"
-produced_by = "none"
-consumed_by = ["agent"]
-verified_by = ["repository-policy"]
-artifact_id = "none"
-runtime_disposition = "committed-source"
-
-[[files]]
 pattern = ".github/**"
 kind = "program"
 produced_by = "none"
