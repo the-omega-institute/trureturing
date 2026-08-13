@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S0/Rewriting/TerminationTransfer
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [mathlib/module/Mathlib.Logic.Relation]
+   anchors: []
    digest: Quasi-commuting terminating relations have a terminating union. -/
 
 import Mathlib
