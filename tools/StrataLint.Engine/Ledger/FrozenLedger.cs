@@ -105,6 +105,34 @@ public sealed record FrozenRevokePayload(
     ImmutableArray<string> RootCaseIds,
     ImmutableArray<FrozenNodeId> RootFrozenNodeIds);
 
+public sealed record FrozenEnvironmentPins(
+    string LakeManifestBlobOid,
+    string LakefileBlobOid,
+    RepoPath LakefilePath,
+    string LeanToolchainBlobOid);
+
+public sealed record FrozenEnvironmentRecoordinatePayload(
+    string CaseId,
+    ImmutableArray<FrozenDeclarationStatement> NewDeclarationStatementIds,
+    ImmutableArray<FrozenDeclarationStatement> OldDeclarationStatementIds,
+    FrozenEnvironmentPins NewEnvironment,
+    FrozenEnvironmentPins OldEnvironment,
+    string EquivalenceStatus,
+    string KernelVerdict,
+    ImmutableArray<string> NewAxiomClosure,
+    FrozenNodeId NewFrozenNodeId,
+    FrozenLedgerInput NewInput,
+    ImmutableArray<FrozenNodeId> NewPrerequisiteFrozenNodeIds,
+    StatementId NewStatementId,
+    WitnessId NewWitnessId,
+    ImmutableArray<string> OldAxiomClosure,
+    FrozenNodeId OldFrozenNodeId,
+    FrozenLedgerInput OldInput,
+    ImmutableArray<FrozenNodeId> OldPrerequisiteFrozenNodeIds,
+    StatementId OldStatementId,
+    WitnessId OldWitnessId,
+    string PreviousAttestationEventHash);
+
 [Union(EnableImplicitConversions = false)]
 public partial record FrozenLedgerEvent
 {
@@ -125,6 +153,12 @@ public partial record FrozenLedgerEvent
         string EventHash,
         string PreviousHash,
         FrozenReattestPayload Payload);
+
+    public partial record EnvironmentRecoordinate(
+        int Sequence,
+        string EventHash,
+        string PreviousHash,
+        FrozenEnvironmentRecoordinatePayload Payload);
 
     public partial record Revoke(
         int Sequence,
@@ -200,7 +234,8 @@ public sealed class FrozenLedgerConsistent
 internal sealed record FrozenActiveEntry(
     FrozenNodeMaterial Material,
     FrozenFreezePayload Payload,
-    string LastAttestationEventHash);
+    string LastAttestationEventHash,
+    bool AxiomClosureKnown = true);
 
 [Union(EnableImplicitConversions = false)]
 public partial record FrozenLedgerValidationOutcome

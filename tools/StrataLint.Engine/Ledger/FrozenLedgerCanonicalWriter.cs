@@ -397,6 +397,57 @@ internal static class FrozenLedgerCanonicalWriter
             root_frozen_node_ids = payload.RootFrozenNodeIds.Select(static id => id.Value),
         });
 
+    internal static JsonElement EnvironmentRecoordinateElement(
+        FrozenEnvironmentRecoordinatePayload payload) =>
+        JsonSerializer.SerializeToElement(new
+        {
+            case_id = payload.CaseId,
+            declaration_statement_ids = new
+            {
+                @new = DeclarationStatementIdsElement(payload.NewDeclarationStatementIds),
+                old = DeclarationStatementIdsElement(payload.OldDeclarationStatementIds),
+            },
+            environment = new
+            {
+                @new = EnvironmentPinsElement(payload.NewEnvironment),
+                old = EnvironmentPinsElement(payload.OldEnvironment),
+            },
+            equivalence_status = payload.EquivalenceStatus,
+            kernel_verdict = payload.KernelVerdict,
+            new_axiom_closure = payload.NewAxiomClosure,
+            new_frozen_node_id = payload.NewFrozenNodeId.Value,
+            new_input = InputElement(payload.NewInput),
+            new_prerequisite_frozen_node_ids = payload.NewPrerequisiteFrozenNodeIds
+                .Select(static id => id.Value),
+            new_statement_id = payload.NewStatementId.Value,
+            new_witness_id = payload.NewWitnessId.Value,
+            old_axiom_closure = payload.OldAxiomClosure,
+            old_frozen_node_id = payload.OldFrozenNodeId.Value,
+            old_input = InputElement(payload.OldInput),
+            old_prerequisite_frozen_node_ids = payload.OldPrerequisiteFrozenNodeIds
+                .Select(static id => id.Value),
+            old_statement_id = payload.OldStatementId.Value,
+            old_witness_id = payload.OldWitnessId.Value,
+            previous_attestation_event_hash = payload.PreviousAttestationEventHash,
+        });
+
+    private static object DeclarationStatementIdsElement(
+        ImmutableArray<FrozenDeclarationStatement> declarations) =>
+        declarations.Select(static declaration => new
+        {
+            declaration_name_key = declaration.DeclarationNameKey,
+            kind = declaration.Kind,
+            statement_id = declaration.StatementId.Value,
+        });
+
+    private static object EnvironmentPinsElement(FrozenEnvironmentPins environment) => new
+    {
+        lake_manifest_blob_oid = environment.LakeManifestBlobOid,
+        lakefile_blob_oid = environment.LakefileBlobOid,
+        lakefile_path = environment.LakefilePath.Value,
+        lean_toolchain_blob_oid = environment.LeanToolchainBlobOid,
+    };
+
     internal static JsonElement EvidenceElement(RevocationEvidence evidence) => evidence switch
     {
         RevocationEvidence.KernelWitnessFailure item => JsonSerializer.SerializeToElement(new
