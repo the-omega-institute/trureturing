@@ -24,6 +24,10 @@
 - 2026-08-12 (SL-003): `Entropy/` was at its 12-file limit. The branch-new
   `CapacityMonotone` module opened the `Entropy/Forgetting/` bucket; all 12
   existing `Entropy/` paths remain in place.
+- 2026-08-13 (SL-003): `Zeros/` was at its 12-Lean-file limit. The split-only,
+  no-move change opened `Zeros/Endpoints/`; all existing `Zeros/` paths remain
+  unmoved. First module: `Endpoints/XiEndpointValues.lean`, an addressable
+  certificate for the pole-removed xi reading's endpoint values.
 
 ## Buckets
 
@@ -33,6 +37,7 @@
 - `PrimeForms/`: representations of prime numbers by integral quadratic forms.
 - `Weil/`: classical zeta conventions, test functions, and explicit-formula machinery.
 - `Zeros/`: zeta-zero geometry, symmetry, and local critical-line balance.
+- `Zeros/Endpoints/`: endpoint-value certificates for completed-zeta readings.
 - 2026-08-04 SL-003 分裂记录:Blueprint/D5/S3/Arith 达 12 上限;按"只裂不迁"新增子疆域桶 `Axis/`(组名已入词表),存量 Arith 模块地址全数保留;首件 `Axis/PrimeAxisEscape.lean`。
 - 2026-08-10 SL-003 分裂记录:D5/S3/Arith 达 12 上限;按"只裂不迁"新增子疆域桶 `Factorization/`(组名已入词表),存量 Arith 模块地址全数保留;首件 `Factorization/FreeCommMonoid.lean`。
 - `Quantum/Algebra/`: representation-independent covariance and commutator algebra.
