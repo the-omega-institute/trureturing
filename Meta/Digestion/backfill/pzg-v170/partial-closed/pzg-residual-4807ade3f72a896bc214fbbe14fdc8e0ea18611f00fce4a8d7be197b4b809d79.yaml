@@ -4,6 +4,7 @@ fingerprints:
   normalized_sha256: sha256:4807ade3f72a896bc214fbbe14fdc8e0ea18611f00fce4a8d7be197b4b809d79
 cas_ref: sha256:4807ade3f72a896bc214fbbe14fdc8e0ea18611f00fce4a8d7be197b4b809d79
 coverage_gids:
+  - D5/S3/Zeros/ScalingRegisterRigidity.realized_same_germ_same_total_code_excludes_scaling_register
   - D5/S3/Zeros/ZeroGeometry.global_factor_clearing_forces_critical_line
 receipts:
   coverage:
@@ -11,5 +12,4 @@ receipts:
       source_sha256: sha256:4807ade3f72a896bc214fbbe14fdc8e0ea18611f00fce4a8d7be197b4b809d79
       target_sha256: sha256:f5fa23f5e88014c485cf5f1fd4dac3bd2998ca1d5c31bb1af635abf0c3602cb9
   scribe: []
-  unresolved_subitems:
-    - address-dependent-inverse-scaling-register-governance-exclusion
+  unresolved_subitems: []
