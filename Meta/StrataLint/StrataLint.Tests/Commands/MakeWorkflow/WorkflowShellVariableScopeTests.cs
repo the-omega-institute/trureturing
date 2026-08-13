@@ -12,7 +12,7 @@ public sealed partial class MakeWorkflowTests
         @"(?m)^\s*(?:(?:local|export|readonly)\s+)*(?<name>[A-Za-z_][A-Za-z0-9_]*)=",
         RegexOptions.CultureInvariant);
     private static readonly Regex ReadBinding = new(
-        @"(?m)^\s*read(?:\s+-[A-Za-z]+)*(?:\s+-[a-zA-Z]\s+\S+)*\s+(?<names>[A-Za-z_][A-Za-z0-9_]*(?:\s+[A-Za-z_][A-Za-z0-9_]*)*)",
+        @"(?m)^\s*(?:(?:[A-Za-z_][A-Za-z0-9_]*=[^\s]+)\s+)*read(?:\s+-[A-Za-z]+)*(?:\s+-[a-zA-Z]\s+\S+)*\s+(?<names>[A-Za-z_][A-Za-z0-9_]*(?:\s+[A-Za-z_][A-Za-z0-9_]*)*)",
         RegexOptions.CultureInvariant);
     private static readonly Regex ForBinding = new(
         @"(?m)^\s*for\s+(?<name>[A-Za-z_][A-Za-z0-9_]*)\s+in\b",
