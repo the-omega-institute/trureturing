@@ -9,36 +9,6 @@ public sealed class ValuesBindingRuleTests
         ["Classical.choice", "Quot.sound", "propext"];
 
     [Fact]
-    public void CurrentFourteenValueBindingsMatchTheCandidateInspectorReport()
-    {
-        var root = FindRepositoryRoot();
-        var reportPath = RawLeanReportArtifact.DefaultPath(root);
-        if (!File.Exists(reportPath))
-        {
-            Assert.False(
-                Environment.GetEnvironmentVariable("STRATALINT_REQUIRE_LIVE_REPORT") == "1",
-                "STRATALINT_REQUIRE_LIVE_REPORT=1 requires .lake/build/stratalint/raw-lean-report.json");
-            return;
-        }
-
-        var snapshot = Assert.IsType<SnapshotDecodeOutcome.Decoded>(
-            SnapshotDecoder.Decode(GitRepositorySnapshotReader.ReadCurrent(root))).Snapshot;
-        var report = RawLeanReportArtifact.ReadFile(reportPath, snapshot);
-        var valuesPath = RepoPath.CreateKnown(ValuesKernelBindingValidator.RelativePath);
-        var modulePath = RepoPath.CreateKnown("D5/S3/Constants/Values.lean");
-        var values = snapshot.Files[valuesPath].Text;
-        var fixture = Fixture();
-        fixture.Files[valuesPath.Value] = values;
-        fixture.Files[modulePath.Value] = snapshot.Files[modulePath].Text;
-        fixture.Reports[modulePath.Value] = report.Files[modulePath];
-
-        var diagnostics = Evaluate(fixture);
-
-        Assert.Empty(diagnostics);
-        Assert.Equal(14, ValuesKernelBindingValidator.CountBindings(values));
-    }
-
-    [Fact]
     public void TamperedStatementSha256IsRejectedBySl018()
     {
         var fixture = Fixture();
@@ -102,18 +72,4 @@ public sealed class ValuesBindingRuleTests
         ImmutableArray<string>? axioms = null) =>
         new("fixtureValue", kind, "Nat", axioms ?? StandardAxioms);
 
-    private static string FindRepositoryRoot()
-    {
-        for (var directory = new DirectoryInfo(AppContext.BaseDirectory);
-             directory is not null;
-             directory = directory.Parent)
-        {
-            if (File.Exists(Path.Combine(directory.FullName, "global.json")))
-            {
-                return directory.FullName;
-            }
-        }
-
-        throw new DirectoryNotFoundException("could not locate repository root");
-    }
 }

@@ -192,7 +192,7 @@ public sealed partial class TheoryAtomizerTests
     [Fact]
     public void ObserverV1SplitIsByteExactAndIdempotent()
     {
-        var root = FindRepositoryRoot();
+        var root = TestRepositoryLayout.FindRoot();
         var sourceBytes = File.ReadAllBytes(Path.Combine(root, ThirdProductionSource));
         var document = ObserverAtomizer.Atomize(sourceBytes, DigestionTestSupport.Rules);
 
@@ -567,7 +567,7 @@ public sealed partial class TheoryAtomizerTests
         string relativePath,
         string atomizerId)
     {
-        var root = FindRepositoryRoot();
+        var root = TestRepositoryLayout.FindRoot();
         var bytes = File.ReadAllBytes(Path.Combine(root, relativePath));
 
         var document = AtomizerRegistry.Atomize(atomizerId, bytes, DigestionTestSupport.Rules);
@@ -699,7 +699,7 @@ public sealed partial class TheoryAtomizerTests
     [Fact]
     public void InterfacePaperDialectExhaustsNumberedClaimsWithStableKindsAndFingerprints()
     {
-        var root = FindRepositoryRoot();
+        var root = TestRepositoryLayout.FindRoot();
         var bytes = File.ReadAllBytes(Path.Combine(root, FourthProductionSource));
 
         var document = AtomizerRegistry.Atomize(
@@ -740,7 +740,7 @@ public sealed partial class TheoryAtomizerTests
     [Fact]
     public void InterfacePaperDialectPreservesDuplicateBlocksAsDistinctOccurrences()
     {
-        var root = FindRepositoryRoot();
+        var root = TestRepositoryLayout.FindRoot();
         var bytes = File.ReadAllBytes(Path.Combine(root, FourthProductionSource));
 
         var document = AtomizerRegistry.Atomize(

@@ -8,7 +8,7 @@ public sealed class PerfBudgetTests
     [Fact]
     public void CanonicalCatalogRegistersThreeObservableWarnOnlySessionBudgets()
     {
-        var root = FindRepositoryRoot();
+        var root = TestRepositoryLayout.FindRoot();
 
         var catalog = PerfBudgetLoader.LoadFile(Path.Combine(root, "Golden", "perf-budgets.toml"));
 
@@ -210,13 +210,4 @@ public sealed class PerfBudgetTests
 
         """;
 
-    private static string FindRepositoryRoot()
-    {
-        var current = new DirectoryInfo(AppContext.BaseDirectory);
-        while (current is not null && !File.Exists(Path.Combine(current.FullName, "CLAUDE.md")))
-        {
-            current = current.Parent;
-        }
-        return current?.FullName ?? throw new InvalidOperationException("repository root not found");
-    }
 }

@@ -149,7 +149,7 @@ public sealed class ReportSupervisorScriptTests
     {
         using var fixture = new ReportSupervisorFixture();
         using var temporary = new TemporaryDirectory();
-        var root = FindRepositoryRoot();
+        var root = TestRepositoryLayout.FindRoot();
         var library = Path.Combine(root, "tools", "scripts", "perf-event-lib.sh");
         var spool = Path.Combine(temporary.Path, "events.jsonl");
         var target = Path.Combine(temporary.Path, "StrataLint.dll");
@@ -786,15 +786,4 @@ public sealed class ReportSupervisorScriptTests
         }
     }
 
-    private static string FindRepositoryRoot()
-    {
-        for (var current = new DirectoryInfo(AppContext.BaseDirectory);
-             current is not null;
-             current = current.Parent)
-        {
-            if (File.Exists(Path.Combine(current.FullName, "CLAUDE.md"))) return current.FullName;
-        }
-
-        throw new DirectoryNotFoundException("Could not locate repository root.");
-    }
 }

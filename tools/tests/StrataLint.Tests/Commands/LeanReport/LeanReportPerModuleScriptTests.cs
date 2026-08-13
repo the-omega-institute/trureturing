@@ -17,7 +17,7 @@ public sealed class LeanReportPerModuleScriptTests
     {
         if (OperatingSystem.IsWindows()) return;
         using var temporary = new TemporaryDirectory();
-        var root = FindRepositoryRoot();
+        var root = TestRepositoryLayout.FindRoot();
         var repository = Path.Combine(temporary.Path, "repo");
         Directory.CreateDirectory(Path.Combine(repository, "D5"));
         Directory.CreateDirectory(Path.Combine(repository, "tools", "lean-inspector"));
@@ -55,7 +55,7 @@ public sealed class LeanReportPerModuleScriptTests
     {
         if (OperatingSystem.IsWindows()) return;
         using var temporary = new TemporaryDirectory();
-        var root = FindRepositoryRoot();
+        var root = TestRepositoryLayout.FindRoot();
         var repository = Path.Combine(temporary.Path, "repo");
         Directory.CreateDirectory(Path.Combine(repository, "D5"));
         Write(repository, "Trureturing.lean", "import D5.Probe\n");
@@ -207,10 +207,4 @@ public sealed class LeanReportPerModuleScriptTests
         File.WriteAllText(path, contents, new UTF8Encoding(false));
     }
 
-    private static string FindRepositoryRoot()
-    {
-        for (var current = new DirectoryInfo(AppContext.BaseDirectory); current is not null; current = current.Parent)
-            if (File.Exists(Path.Combine(current.FullName, "CLAUDE.md"))) return current.FullName;
-        throw new DirectoryNotFoundException("Could not locate repository root.");
-    }
 }

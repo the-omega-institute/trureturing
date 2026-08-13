@@ -143,7 +143,7 @@ public sealed class RawLeanReportArtifactTests
             Encoding.UTF8.GetString(build.StandardOutput) + Encoding.UTF8.GetString(build.StandardError));
         var output = Path.Combine(repository.Path, "raw-lean-report.json");
         var inspector = Path.Combine(
-            FindRepositoryRoot(),
+            TestRepositoryLayout.FindRoot(),
             "tools", "lean-inspector",
             "Inspector.lean");
         var sourceHash = "sha256:" + Convert.ToHexStringLower(
@@ -184,18 +184,4 @@ public sealed class RawLeanReportArtifactTests
         return Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(raw)).Snapshot;
     }
 
-    private static string FindRepositoryRoot()
-    {
-        for (var directory = new DirectoryInfo(AppContext.BaseDirectory);
-             directory is not null;
-             directory = directory.Parent)
-        {
-            if (File.Exists(Path.Combine(directory.FullName, "global.json")))
-            {
-                return directory.FullName;
-            }
-        }
-
-        throw new DirectoryNotFoundException("could not locate repository root");
-    }
 }

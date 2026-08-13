@@ -89,7 +89,7 @@ public sealed partial class TheoryAtomizerTests
     [Fact]
     public void ConeV1ProductionFixtureReassemblesAll353LinesByteExactly()
     {
-        var root = FindRepositoryRoot();
+        var root = TestRepositoryLayout.FindRoot();
         var bytes = File.ReadAllBytes(Path.Combine(root, ConeProductionSource));
 
         var document = AtomizerRegistry.Atomize(
@@ -107,7 +107,7 @@ public sealed partial class TheoryAtomizerTests
     [Fact]
     public void ConeV1UsesStableSemanticLocatorFingerprintAndChapterContext()
     {
-        var root = FindRepositoryRoot();
+        var root = TestRepositoryLayout.FindRoot();
         var bytes = File.ReadAllBytes(Path.Combine(root, ConeProductionSource));
 
         var atom = AtomizerRegistry.Atomize(
@@ -204,7 +204,7 @@ public sealed partial class TheoryAtomizerTests
     [Fact]
     public void ConeV1ProjectsOnlyExactProofGradesToFormalizableKinds()
     {
-        var root = FindRepositoryRoot();
+        var root = TestRepositoryLayout.FindRoot();
         var bytes = File.ReadAllBytes(Path.Combine(root, ConeProductionSource));
         var claims = AtomizerRegistry.Atomize(
             AtomizerRegistry.ConeId,

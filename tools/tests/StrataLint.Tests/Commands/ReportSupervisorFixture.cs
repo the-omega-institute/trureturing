@@ -208,7 +208,7 @@ internal sealed class ReportSupervisorFixture : IDisposable
     }
 
     internal string Root => temporary.Path;
-    internal string RepositoryRoot => FindRepositoryRoot();
+    internal string RepositoryRoot => TestRepositoryLayout.FindRoot();
     internal string Supervisor => Path.Combine(
         RepositoryRoot, "tools", "scripts", "report", "report-supervisor.sh");
     internal string MetricsLog => Path.Combine(Root, "metrics.jsonl");
@@ -420,17 +420,6 @@ internal sealed class ReportSupervisorFixture : IDisposable
 
     public void Dispose() => temporary.Dispose();
 
-    private static string FindRepositoryRoot()
-    {
-        for (var current = new DirectoryInfo(AppContext.BaseDirectory);
-             current is not null;
-             current = current.Parent)
-        {
-            if (File.Exists(Path.Combine(current.FullName, "CLAUDE.md"))) return current.FullName;
-        }
-
-        throw new DirectoryNotFoundException("Could not locate repository root.");
-    }
 
     private static string FindPerformanceConfiguration()
     {
