@@ -194,13 +194,12 @@ internal static partial class RepositoryRules
 
     private static ImmutableArray<RuleFinding> Hearts(RuleEvaluationContext context)
     {
-        const string path = HeartsPath;
-        ImmutableArray<HeartsAuthorizationEntry> authorizations;
         try
         {
-            authorizations = HeartsAuthorizationLedger.ReadAppendOnly(
-                context.Current,
-                context.ForkPoint);
+            if (context.Current.TryGetFile(HeartsAuthorizationLedger.Path, out var authorizationFile))
+            {
+                _ = HeartsAuthorizationLedger.Read(authorizationFile.Text);
+            }
         }
         catch (FormatException exception)
         {
@@ -208,101 +207,86 @@ internal static partial class RepositoryRules
                 new RuleFinding(HeartsAuthorizationLedger.Path, exception.Message));
         }
 
-        var hadBaseline = context.ForkPoint.TryGetFile(path, out _);
-        var hasCurrent = context.Current.TryGetFile(path, out _);
-        if (hadBaseline && !hasCurrent)
+        var findings = ImmutableArray.CreateBuilder<RuleFinding>();
+        foreach (var change in context.Changes.Entries)
         {
-            return ImmutableArray.Create(new RuleFinding(path, "frozen Hearts.lean was deleted"));
-        }
-
-        if (!hadBaseline && hasCurrent)
-        {
-            return ImmutableArray.Create(new RuleFinding(path, "new Hearts.lean requires a human-gated baseline"));
-        }
-
-        if (!hadBaseline)
-        {
-            return ImmutableArray<RuleFinding>.Empty;
-        }
-
-        // Hearts.lean 字节没变 ⇒ 语义没变(同一份源码、同一个钉版 toolchain),不必为了
-        // 比对而重编一整棵旧侧 Lean 树。这是全仓唯一读旧侧 Lean 报告的地方,而该文件近
-        // 200 次提交只动过 5 次 —— 其余每个 PR 都在为它白付一次编译。
-        if (!SnapshotContentDiffers(context.Current, context.ForkPoint, path))
-        {
-            return ImmutableArray<RuleFinding>.Empty;
-        }
-
-        // 字节变了就必须比对语义;此时缺旧侧报告是 fail-closed,不是放行。
-        if (context.BaselineLean is null)
-        {
-            return ImmutableArray.Create(new RuleFinding(
-                path,
-                "Hearts.lean changed; semantic comparison requires --baseline-lean-report"));
-        }
-
-        if (!RepoPath.TryCreate(path, out var repoPath)
-            || !context.BaselineLean.Report.Files.TryGetValue(repoPath, out var baseline)
-            || !context.Lean.Report.Files.TryGetValue(repoPath, out var current))
-        {
-            return ImmutableArray.Create(new RuleFinding(path, "protected Hearts baseline has no semantic report"));
-        }
-
-        if (!string.IsNullOrEmpty(baseline.Error))
-        {
-            return ImmutableArray.Create(new RuleFinding(path, "protected Hearts baseline has no semantic report"));
-        }
-
-        if (!string.IsNullOrEmpty(current.Error))
-        {
-            return ImmutableArray.Create(new RuleFinding(path, $"Hearts semantic report failed: {current.Error}"));
-        }
-
-        if (CanonicalStatementWriter.WriteModule(repoPath, baseline).AsSpan()
-            .SequenceEqual(CanonicalStatementWriter.WriteModule(repoPath, current).AsSpan()))
-        {
-            return ImmutableArray<RuleFinding>.Empty;
-        }
-
-        var baselineStatements = CanonicalStatementWriter.DeclarationStatementIds(repoPath, baseline);
-        var currentStatements = CanonicalStatementWriter.DeclarationStatementIds(repoPath, current);
-        var addedStatements = currentStatements.Except(baselineStatements).ToImmutableArray();
-        var isExactSingleAppend = currentStatements.Length == baselineStatements.Length + 1
-            && addedStatements.Length == 1
-            && baselineStatements.All(currentStatements.Contains);
-        if (isExactSingleAppend)
-        {
-            var addedStatement = addedStatements[0];
-            var declarations = current.Declarations
-                .Where(declaration => declaration.IncludeInStatement
-                    && declaration.NameKey == addedStatement.DeclarationNameKey
-                    && declaration.Kind == addedStatement.Kind)
-                .ToImmutableArray();
-            if (declarations.Length == 1)
+            if (change.Path.Value == HeartsPath
+                && change.Kind is RawChangeKind.Modified or RawChangeKind.Deleted)
             {
-                if (authorizations.Any(entry =>
-                    entry.StatementName == declarations[0].Name
-                    && entry.StatementSha256
-                        == addedStatement.StatementId.Value["sha256:".Length..]))
-                {
-                    return ImmutableArray<RuleFinding>.Empty;
-                }
+                findings.Add(new RuleFinding(
+                    change.Path.Value,
+                    "Hearts.lean is immutable; change SL-008 in the same changeset and pass the "
+                    + "SL-022 protected-surface gate"));
+            }
+
+            if (FrozenLedgerChangeClassifier.IsAcceptedEventPath(change.Path.Value)
+                && change.Kind is RawChangeKind.Modified or RawChangeKind.Deleted)
+            {
+                findings.Add(new RuleFinding(
+                    change.Path.Value,
+                    "accepted frozen-ledger event files are append-only; run ledger-reattest to "
+                    + "add a new event and do not modify an already-frozen fragment"));
             }
         }
 
-        return ImmutableArray.Create(
-            new RuleFinding(path, "semantic declaration identities and types are frozen"));
-    }
+        var acceptedFiles = context.Current.Files
+            .Where(static item => FrozenLedgerChangeClassifier.IsAcceptedEventPath(item.Key.Value))
+            .Select(static item => item.Value)
+            .ToImmutableArray();
+        var loadOutcome = FrozenAcceptedEventLoader.LoadFiles(acceptedFiles);
+        if (loadOutcome is DagLedgerFilesLoadOutcome.Invalid invalid)
+        {
+            findings.Add(new RuleFinding(
+                FrozenLedgerChangeClassifier.AcceptedRoot,
+                "candidate frozen ledger is invalid: " + invalid.Message));
+            return findings.ToImmutable();
+        }
 
-    private static bool SnapshotContentDiffers(
-        RepositorySnapshot current,
-        RepositorySnapshot baseline,
-        string path)
-    {
-        var hasCurrent = current.TryGetFile(path, out var currentFile);
-        var hasBaseline = baseline.TryGetFile(path, out var baselineFile);
-        return hasCurrent != hasBaseline
-            || hasCurrent && !currentFile!.RawBytes.SequenceEqual(baselineFile!.RawBytes);
+        var events = ((DagLedgerFilesLoadOutcome.Loaded)loadOutcome).Events;
+        var frozenPaths = events
+            .Where(static item => item.EventType is "Freeze" or "Reattest")
+            .Select(static item => item.Input?.DescriptorSelector)
+            .Where(static path => path is not null)
+            .Select(static path => path!)
+            .ToImmutableHashSet(StringComparer.Ordinal);
+        var addedEventPaths = context.Changes.Entries
+            .Where(static change => change.Kind == RawChangeKind.Added
+                && FrozenLedgerChangeClassifier.IsAcceptedEventPath(change.Path.Value))
+            .Select(static change => change.Path)
+            .ToImmutableHashSet();
+        var reattestedPaths = events
+            .Where(item => item.EventType == "Reattest"
+                && addedEventPaths.Contains(item.SourcePath))
+            .Select(static item => item.Input?.DescriptorSelector)
+            .Where(static path => path is not null)
+            .Select(static path => path!)
+            .ToImmutableHashSet(StringComparer.Ordinal);
+
+        foreach (var change in context.Changes.Entries)
+        {
+            var path = change.Path.Value;
+            if (!path.EndsWith(".lean", StringComparison.Ordinal) || !frozenPaths.Contains(path))
+            {
+                continue;
+            }
+
+            if (change.Kind == RawChangeKind.Deleted)
+            {
+                findings.Add(new RuleFinding(
+                    path,
+                    "already-frozen module was deleted; deletion is not supported (revocation "
+                    + "flow remains open) and the frozen fragment must not be changed"));
+            }
+            else if (change.Kind == RawChangeKind.Modified && !reattestedPaths.Contains(path))
+            {
+                findings.Add(new RuleFinding(
+                    path,
+                    $"already-frozen module must not be modified without a matching added "
+                    + $"Reattest event; run ledger-reattest for {path}"));
+            }
+        }
+
+        return findings.ToImmutable();
     }
 
     private static ImmutableArray<RuleFinding> Generality(RuleEvaluationContext context)

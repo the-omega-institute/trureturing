@@ -324,9 +324,50 @@ public sealed partial class ReviewRegressionTests
 
         Assert.Contains(prepared.Changes.Paths, path => path.Value == "Meta/StrataLint/Gate.txt");
         Assert.Contains(prepared.Changes.Paths, path => path.Value == "notes/Gate.txt");
+        Assert.Contains(prepared.Changes.Entries, change =>
+            change.Path.Value == "Meta/StrataLint/Gate.txt"
+            && change.Kind == RawChangeKind.Deleted);
+        Assert.Contains(prepared.Changes.Entries, change =>
+            change.Path.Value == "notes/Gate.txt"
+            && change.Kind == RawChangeKind.Added);
         var verification = Assert.IsType<BootstrapOutcome.ProtectedSurfaceVerificationRequired>(
             BootstrapGate.Evaluate(prepared.Changes));
         Assert.Contains(verification.ChangeSet.Paths, path => path.Value == "Meta/StrataLint/Gate.txt");
+    }
+
+    [Fact]
+    public void Cf2MultipleCopiesFromOneSourceProduceOneSourceChange()
+    {
+        using var repository = new TemporaryDirectory();
+        RunGit(repository.Path, "init");
+        RunGit(repository.Path, "config", "user.email", "stratalint@example.invalid");
+        RunGit(repository.Path, "config", "user.name", "StrataLint Tests");
+        File.WriteAllText(
+            Path.Combine(repository.Path, "source.txt"),
+            "copy source\n",
+            new UTF8Encoding(false));
+        RunGit(repository.Path, "add", ".");
+        RunGit(repository.Path, "commit", "-m", "baseline");
+        var baseline = RunGit(repository.Path, "rev-parse", "HEAD").Trim();
+        File.Copy(
+            Path.Combine(repository.Path, "source.txt"),
+            Path.Combine(repository.Path, "copy-one.txt"));
+        File.Copy(
+            Path.Combine(repository.Path, "source.txt"),
+            Path.Combine(repository.Path, "copy-two.txt"));
+        RunGit(repository.Path, "add", ".");
+        RunGit(repository.Path, "commit", "-m", "candidate");
+
+        var prepared = new GitRepositoryGateway(repository.Path).Prepare(baseline);
+
+        var source = Assert.Single(
+            prepared.Changes.Entries,
+            change => change.Path.Value == "source.txt");
+        Assert.Equal(RawChangeKind.Copied, source.Kind);
+        Assert.Contains(prepared.Changes.Entries, change =>
+            change.Path.Value == "copy-one.txt" && change.Kind == RawChangeKind.Added);
+        Assert.Contains(prepared.Changes.Entries, change =>
+            change.Path.Value == "copy-two.txt" && change.Kind == RawChangeKind.Added);
     }
 
     [Theory]
@@ -442,7 +483,6 @@ public sealed partial class ReviewRegressionTests
         using var temporary = new TemporaryDirectory();
         var fixture = new RuleFixture();
         fixture.AddBackfillTargets();
-        var baselineReport = LeanAxiomReport.Create(fixture.BaselineReports);
         fixture.SetRingDeclaration("invented", "theorem", "unregistered.axiom");
         var currentReport = LeanAxiomReport.Create(fixture.Reports);
         var gateway = new FakeRepositoryGateway(
@@ -454,24 +494,15 @@ public sealed partial class ReviewRegressionTests
             gateway,
             new FakeLeanReportSource(null));
         var candidateReportPath = Path.Combine(temporary.Path, "candidate.json");
-        var baselineReportPath = Path.Combine(temporary.Path, "baseline.json");
         File.WriteAllBytes(
             candidateReportPath,
             RawLeanReportArtifact.Write(
                 Assert.IsType<SnapshotDecodeOutcome.Decoded>(
                     SnapshotDecoder.Decode(Snapshot(fixture.Files))).Snapshot,
                 currentReport).AsSpan());
-        File.WriteAllBytes(
-            baselineReportPath,
-            RawLeanReportArtifact.Write(
-                Assert.IsType<SnapshotDecodeOutcome.Decoded>(
-                    SnapshotDecoder.Decode(Snapshot(fixture.Baseline))).Snapshot,
-                baselineReport).AsSpan());
-
         var outcome = environment.Check(new[]
         {
             "--candidate-lean-report", candidateReportPath,
-            "--baseline-lean-report", baselineReportPath,
         });
 
         var rejected = Assert.IsType<AdmissionOutcome.RuleRejected>(outcome);
@@ -589,9 +620,7 @@ public sealed partial class ReviewRegressionTests
         Assert.Contains("--producer", inspectJob, StringComparison.Ordinal);
         Assert.Contains("--candidate-root", inspectJob, StringComparison.Ordinal);
         Assert.Contains("candidate-lean-report.json", inspectJob, StringComparison.Ordinal);
-        // 【2026-08-13】只产候选侧报告。旧侧报告唯一的用途是 Hearts.lean 变动时的语义比对,
-        // 而该文件近 200 次提交只动过 5 次;为它每轮编译一整棵旧侧 Lean 树,又恰在关键路径上。
-        // 改了 Hearts 时 admission 会 fail-closed 要求补 --baseline-lean-report,不是静默放行。
+        // Lean inspection produces the candidate report only.
         Assert.Contains("--single", inspectJob, StringComparison.Ordinal);
         Assert.DoesNotContain("--baseline-root", inspectJob, StringComparison.Ordinal);
         Assert.Contains("stratalint-lean-report-input-v1", pairProducer, StringComparison.Ordinal);
@@ -602,7 +631,7 @@ public sealed partial class ReviewRegressionTests
         Assert.Contains("actions/download-artifact", baselineJob, StringComparison.Ordinal);
         Assert.Contains("harness-gate.sh", baselineJob, StringComparison.Ordinal);
         // 【2026-08-13 设计变更,owner 定】法官改由候选自己提供,不再从 base 侧编译。
-        // 原断言要求 gate 来自 baseline/ 并传 --judge-root;那守的是「法官来自 base」这条
+        // 原断言要求 gate 来自 baseline;那守的是「法官来自 base」这条
         // 安全性质,其威胁模型是「候选改法官放行自己」——本仓案底 0 次。而它的实际代价是
         // 同日两次全仓停摆:SL-003 锁死七个在飞 PR;法官 selftest 挂掉后连修它的 PR 都进不来。
         // 第 20″ 條:防的必须是发生过的事;由恶意证成而无实际攻击者的机制即为臆想。
@@ -612,7 +641,6 @@ public sealed partial class ReviewRegressionTests
         Assert.Contains("--candidate", baselineJob, StringComparison.Ordinal);
         Assert.Contains("--base", baselineJob, StringComparison.Ordinal);
         Assert.Contains("--candidate-lean-report", baselineJob, StringComparison.Ordinal);
-        // admission 不再接收旧侧 Lean 报告(见上:唯一用途是 Hearts 变动时的语义比对)。
         Assert.DoesNotContain("--baseline-lean-report", baselineJob, StringComparison.Ordinal);
         Assert.DoesNotContain("--legacy-bootstrap", baselineJob, StringComparison.Ordinal);
         Assert.DoesNotContain("dotnet build", baselineJob, StringComparison.Ordinal);
@@ -624,7 +652,9 @@ public sealed partial class ReviewRegressionTests
         Assert.Contains("set -euo pipefail", gate, StringComparison.Ordinal);
         Assert.Contains("check --protected-base", gate, StringComparison.Ordinal);
         Assert.Contains("--candidate-lean-report", gate, StringComparison.Ordinal);
-        Assert.Contains("--baseline-lean-report", gate, StringComparison.Ordinal);
+        Assert.DoesNotContain("--baseline-lean-report", gate, StringComparison.Ordinal);
+        Assert.DoesNotContain("--frozen-evidence-root", gate, StringComparison.Ordinal);
+        Assert.DoesNotContain("--judge-root", gate, StringComparison.Ordinal);
         Assert.DoesNotContain("--legacy-bootstrap", gate, StringComparison.Ordinal);
         Assert.DoesNotContain("verify-conservative", gate, StringComparison.Ordinal);
         Assert.Contains(

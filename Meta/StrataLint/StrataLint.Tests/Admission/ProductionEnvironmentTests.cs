@@ -89,24 +89,17 @@ public sealed partial class ProductionEnvironmentTests
             currentRaw,
             baselineRaw);
         var candidateReport = Path.Combine(temporary.Path, "candidate.json");
-        var baselineReport = Path.Combine(temporary.Path, "baseline.json");
         File.WriteAllBytes(
             candidateReport,
             RawLeanReportArtifact.Write(
                 Decode(currentRaw),
                 LeanAxiomReport.Create(fixture.Reports)).AsSpan());
-        File.WriteAllBytes(
-            baselineReport,
-            RawLeanReportArtifact.Write(
-                Decode(baselineRaw),
-                LeanAxiomReport.Create(fixture.BaselineReports)).AsSpan());
         var source = new FakeLeanReportSource(null);
         var environment = new ProductionCliEnvironment("/repo", gateway, source);
 
         var outcome = environment.Check(new[]
         {
             "--candidate-lean-report", candidateReport,
-            "--baseline-lean-report", baselineReport,
         });
 
         var admitted = Assert.IsType<AdmissionOutcome.Admitted>(outcome);
@@ -146,17 +139,11 @@ public sealed partial class ProductionEnvironmentTests
         var currentRaw = Snapshot(fixture.Files);
         var baselineRaw = Snapshot(fixture.Baseline);
         var candidateReport = Path.Combine(temporary.Path, "candidate.json");
-        var baselineReport = Path.Combine(temporary.Path, "baseline.json");
         File.WriteAllBytes(
             candidateReport,
             RawLeanReportArtifact.Write(
                 Decode(currentRaw),
                 LeanAxiomReport.Create(fixture.Reports)).AsSpan());
-        File.WriteAllBytes(
-            baselineReport,
-            RawLeanReportArtifact.Write(
-                Decode(baselineRaw),
-                LeanAxiomReport.Create(fixture.BaselineReports)).AsSpan());
         var environment = new ProductionCliEnvironment(
             "/repo",
             new FakeRepositoryGateway(
@@ -170,7 +157,6 @@ public sealed partial class ProductionEnvironmentTests
             [
                 "check",
                 "--candidate-lean-report", candidateReport,
-                "--baseline-lean-report", baselineReport,
             ],
             environment,
             console);
@@ -201,7 +187,6 @@ public sealed partial class ProductionEnvironmentTests
         {
             "--merge-base", "0000000000000000000000000000000000000000",
             "--candidate-lean-report", "candidate.json",
-            "--baseline-lean-report", "baseline.json",
         });
 
         var failure = Assert.IsType<AdmissionOutcome.InfrastructureFailure>(outcome);
@@ -210,8 +195,7 @@ public sealed partial class ProductionEnvironmentTests
     }
 
     [Fact]
-    // 旧侧 Lean 报告不再是必需参数:它唯一的用途是 Hearts.lean 变动时的语义比对,
-    // 而那个文件近 200 次提交只动过 5 次。候选侧报告仍然必需。
+    // Admission consumes the candidate report only; the candidate report remains required.
     public void CheckRequiresThePrecomputedCandidateLeanReportForProtectedChanges()
     {
         var fixture = new RuleFixture();
@@ -421,21 +405,14 @@ public sealed partial class ProductionEnvironmentTests
     {
         using var temporary = new TemporaryDirectory();
         var candidateReport = Path.Combine(temporary.Path, "candidate.json");
-        var baselineReport = Path.Combine(temporary.Path, "baseline.json");
         File.WriteAllBytes(
             candidateReport,
             RawLeanReportArtifact.Write(
                 Decode(Snapshot(fixture.Files)),
                 LeanAxiomReport.Create(fixture.Reports)).AsSpan());
-        File.WriteAllBytes(
-            baselineReport,
-            RawLeanReportArtifact.Write(
-                Decode(Snapshot(fixture.Baseline)),
-                LeanAxiomReport.Create(fixture.BaselineReports)).AsSpan());
         return environment.Check(new[]
         {
             "--candidate-lean-report", candidateReport,
-            "--baseline-lean-report", baselineReport,
         });
     }
 

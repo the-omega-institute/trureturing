@@ -108,9 +108,7 @@ internal sealed partial class GitRepositoryGateway : IRepositoryGateway
         // 「旧侧」有两个不同的问题,须用两个不同的提交回答,不可合并成一个:
         //
         //   Revision —— 「候选在扩展哪个受保护状态?」答案只能是 protected base 本身。
-        //       准入的旧侧快照由它解出,而 CI 恰恰也从同一个 pull_request.base.sha
-        //       产出 --baseline-lean-report。二者必须是同一棵树,否则同一份 report
-        //       被要求同时是两棵树的 report,报出 INFRASTRUCTURE_FAILURE(PR #1144)。
+        //       准入的旧侧快照由它解出;旧侧 Lean 已不参与 admission。
         //
         //   changeBase —— 「候选自己改了什么?」答案是 merge-base。dev 在候选在飞
         //       期间前进时,protected base 不再是候选祖先,拿它做 diff 会把 dev 的
@@ -132,7 +130,7 @@ internal sealed partial class GitRepositoryGateway : IRepositoryGateway
                 "protected base equals clean candidate HEAD; history comparison would be vacuous");
         }
 
-        var paths = ParseChangedPaths(GitBytes(
+        var changes = ParseChanges(GitBytes(
                 "diff",
                 "--name-status",
                 "-z",
@@ -141,11 +139,12 @@ internal sealed partial class GitRepositoryGateway : IRepositoryGateway
                 "--find-copies-harder",
                 changeBase,
                 "--"))
-            .Concat(ParseNulStrings(GitBytes("ls-files", "--others", "--exclude-standard", "-z")))
-            .Distinct(StringComparer.Ordinal)
-            .Order(StringComparer.Ordinal)
+            .Concat(ParseNulStrings(GitBytes("ls-files", "--others", "--exclude-standard", "-z"))
+                .Select(static path => (Path: path, Kind: RawChangeKind.Added)))
+            .Distinct()
+            .OrderBy(static change => change.Path, StringComparer.Ordinal)
             .ToArray();
-        return new PreparedRepository(revision, changeBase, RawChangeSet.Create(paths));
+        return new PreparedRepository(revision, changeBase, RawChangeSet.CreateWithKinds(changes));
     }
 
     public RawRepositorySnapshot ReadCurrent() => GitRepositorySnapshotReader.ReadCurrent(root);
@@ -379,7 +378,7 @@ internal sealed partial class GitRepositoryGateway : IRepositoryGateway
     private static bool IsObjectId(string value) =>
         value.Length is 40 or 64 && value.All(char.IsAsciiHexDigit);
 
-    private static IEnumerable<string> ParseChangedPaths(byte[] bytes)
+    private static IEnumerable<(string Path, RawChangeKind Kind)> ParseChanges(byte[] bytes)
     {
         var fields = SplitNul(bytes).Select(static item => StrictUtf8.GetString(item)).ToArray();
         for (var index = 0; index < fields.Length;)
@@ -391,10 +390,27 @@ internal sealed partial class GitRepositoryGateway : IRepositoryGateway
                 throw new InvalidOperationException("git diff emitted invalid name-status metadata");
             }
 
-            for (var pathIndex = 0; pathIndex < pathCount; pathIndex++)
+            if (status[0] == 'R')
             {
-                yield return fields[index++];
+                yield return (fields[index++], RawChangeKind.Deleted);
+                yield return (fields[index++], RawChangeKind.Added);
+                continue;
             }
+
+            if (status[0] == 'C')
+            {
+                yield return (fields[index++], RawChangeKind.Copied);
+                yield return (fields[index++], RawChangeKind.Added);
+                continue;
+            }
+
+            var path = fields[index++];
+            yield return (path, status[0] switch
+            {
+                'A' => RawChangeKind.Added,
+                'D' => RawChangeKind.Deleted,
+                _ => RawChangeKind.Modified,
+            });
         }
     }
 

@@ -9,13 +9,11 @@ internal static class MissingCapability
         RepositorySnapshot baseline,
         ValidatedPolicy policy,
         AcceptedLeanClosure lean,
-        AcceptedLeanClosure baselineLean,
         RawChangeSet changes) =>
         AdmissionPipeline.Evaluate(
             current,
             baseline,
             policy,
             lean,
-            baselineLean,
             changes);
 }

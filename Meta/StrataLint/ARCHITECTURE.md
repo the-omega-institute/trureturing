@@ -6,12 +6,11 @@ the candidate's workflow definition; candidate checkout credentials are not pers
 For pull requests targeting `dev`, the baseline is the exact
 `github.event.pull_request.base.sha`; for pushes to `dev`, it is the exact
 `github.event.before` SHA (or the candidate parent when the first branch-creation event
-has an all-zero `before`). A Lean-native predecessor job uses the base producer to build
-both trees and emit source-bound canonical reports. It uploads the reports, SHA-256
-sidecars, and complete phase logs. The .NET admission job downloads and verifies those
-artifacts, builds the content-addressed baseline judge with locked dependencies, and runs
-its DLL from the candidate repository with `check --protected-base <dev-baseline-sha>`
-plus `--candidate-lean-report <file>` and `--baseline-lean-report <file>`. The admission
+has an all-zero `before`). A Lean-native predecessor job builds the candidate tree and
+emits its source-bound canonical report. It uploads the report, SHA-256 sidecar, and
+complete phase logs. The .NET admission job downloads and verifies that artifact, builds
+the candidate judge with locked dependencies, and runs its DLL from the candidate repository
+with `check --protected-base <dev-baseline-sha> --candidate-lean-report <file>`. The admission
 job installs no Lean tooling and starts no Lean process. Candidate build, tests, and
 selftest are engineering signals only and cannot issue admission.
 
