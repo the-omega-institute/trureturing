@@ -9,7 +9,22 @@
 `D5-T0019` is discharged by the MIT-licensed upstream formalization ported in
 `D5/S1/Phase/ThreeGap` (Copyright (c) 2026 Dirk Kunert,
 https://github.com/dkunert/three-gap-theorem-lean); `D5/S1/Phase/ThreeDistance.three_gap`
-is the direct application and carries no assumption.
+is the direct application and carries no assumption. Mathematical source: the
+Steinhaus three-gap conjecture, proved by V. T. Sos, *Acta Math. Acad. Sci.
+Hungar.* 8 (1957), 461-472.
+
+Adoption form and retirement condition, per spec A17.2. The proof is vendored
+rather than taken as a Lake dependency because the upstream pins
+`leanprover/lean4:v4.29.1` while this repository pins `v4.31.0`, and Lake
+resolves one revision per package name under a global toolchain, so the machine
+comparison rejects the dependency form outright. Retirement condition, stated
+against this repository's own pin so that it can actually fire: delete
+`D5/S1/Phase/ThreeGap` and apply the library declaration directly once a mathlib
+revision this repository has upgraded to contains an equivalent statement. It is
+deliberately not phrased as "delete when upstream accepts it", which A17.2
+forbids: mathlib PR #40037 (`feat(NumberTheory): the three-gap (Steinhaus)
+theorem`, +625 lines) was closed unmerged on 2026-06-09 under the mathlib
+AI-contribution standards, so upstream inclusion carries no determinate date.
 
 `D5-T0018-C` recorded the pinned-mathlib bridge from smooth compact support to
 an entire complex Fourier-Laplace transform, and is now `proven`: the bridge is
