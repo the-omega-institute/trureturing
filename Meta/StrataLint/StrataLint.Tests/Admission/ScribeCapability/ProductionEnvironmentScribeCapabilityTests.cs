@@ -109,7 +109,6 @@ public sealed partial class ProductionEnvironmentTests
         var current = Decode(Snapshot(fixture.Files));
         var baseline = Decode(Snapshot(fixture.Baseline));
         var currentReport = LeanAxiomReport.Create(fixture.Reports);
-        var baselineReport = LeanAxiomReport.Create(fixture.BaselineReports);
         var changes = RawChangeSet.Create([newScribePath]);
         var bootstrap = BootstrapGate.Evaluate(changes);
         var verifiedScribeEmissions = ProductionCliEnvironment.VerifyScribeForAdmission(
@@ -121,7 +120,6 @@ public sealed partial class ProductionEnvironmentTests
             current,
             baseline,
             currentReport,
-            baselineReport,
             changes,
             bootstrap,
             verifiedScribeEmissions).Outcome;
