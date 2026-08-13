@@ -4,6 +4,8 @@ fingerprints:
   normalized_sha256: sha256:df5fb8e33f6d6d19b72635ef1038798cf41031f12ddd4430d39e987c561cef98
 cas_ref: sha256:df5fb8e33f6d6d19b72635ef1038798cf41031f12ddd4430d39e987c561cef98
 coverage_gids:
+  - D5/S3/Zeros/ToySpectrum/QuadraticCollisionModel.off_line_zeros_born_in_pairs_not_created
+  - D5/S3/Zeros/ToySpectrum/QuadraticCollisionModel.quadratic_collision_model_certificate
   - D5/S3/Weil/SpectralDynamics.zero_quartet_resonance_spec
 receipts:
   coverage:
@@ -23,7 +25,5 @@ receipts:
     - positivity-or-selfadjointness-required-for-real-coordinate
     - de-bruijn-newman-heat-flow-conserves-moving-zero-count
     - online-zero-collision-produces-off-line-conjugate-pair
-    - quadratic-collision-model-certificate
-    - off-line-zeros-born-in-pairs-not-created
     - rh-as-no-zero-collision-in-heat-flow
     - de-bruijn-newman-constant-zero-criticality-claim
