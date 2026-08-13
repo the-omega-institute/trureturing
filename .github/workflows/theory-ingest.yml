@@ -1,5 +1,5 @@
-# 理论卷自动摄入:PR 触碰 docs/develop/theory/** 时,以 base 侧法官跑 make ingest,
-# 随后由 base 侧闭合判据检查候选树;法官覆盖的 harness/构建元数据路径从判定中排除。
+# 理论卷自动摄入:PR 触碰 docs/develop/theory/** 时,在候选树跑 make ingest,
+# base 只以 merge-base SHA 参与对象级 diff。
 # 不回写 echo residual 投影:它是允许陈旧的人读快照(CLAUDE.md 第〇节),按需由
 # `make echo-residual-summary` 重发,消费者应调 producer 现算而非读仓内分片。
 name: theory-ingest
@@ -21,21 +21,9 @@ concurrency:
 jobs:
   auto-ingest:
     name: Auto-ingest theory volumes
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04-arm
     timeout-minutes: 36
-    env:
-      THEORY_INGEST_OVERLAY_PATHS: |-
-        Meta/StrataLint
-        Makefile
-        global.json
     steps:
-      - name: Check out base (judge code)
-        uses: actions/checkout@v4
-        with:
-          ref: ${{ github.event.pull_request.base.sha }}
-          path: judge
-          persist-credentials: false
-
       - name: Check out PR head (data + commit target)
         uses: actions/checkout@v4
         with:
@@ -45,29 +33,24 @@ jobs:
           fetch-depth: 0
           persist-credentials: false
 
-      - name: Install pinned SDK
-        uses: actions/setup-dotnet@v4
-        with:
-          global-json-file: judge/global.json
-
-      - name: Overlay judge harness onto candidate data
+      - name: Resolve merge-base SHA
+        id: base
         shell: bash
         run: |
           set -euo pipefail
-          mapfile -t overlay_paths <<< "$THEORY_INGEST_OVERLAY_PATHS"
-          for path in "${overlay_paths[@]}"; do
-            source="$GITHUB_WORKSPACE/judge/$path"
-            destination="$GITHUB_WORKSPACE/candidate/$path"
-            if [ -d "$source" ]; then
-              mkdir -p "$destination"
-              rsync -a --delete "$source/" "$destination"
-            else
-              mkdir -p "$(dirname "$destination")"
-              cp "$source" "$destination"
-            fi
-          done
+          base="${{ github.event.pull_request.base.sha }}"
+          head="${{ github.event.pull_request.head.sha }}"
+          git -C candidate fetch --no-tags --quiet origin "$base" 2>/dev/null || true
+          sha="$(git -C candidate merge-base "$base" "$head")"
+          test -n "$sha"
+          echo "sha=$sha" >> "$GITHUB_OUTPUT"
 
-      - name: Resolve base canonical Lean report address
+      - name: Install pinned SDK
+        uses: actions/setup-dotnet@v4
+        with:
+          global-json-file: candidate/global.json
+
+      - name: Resolve candidate canonical Lean report address
         id: lean-report-input
         shell: bash
         run: |
@@ -78,7 +61,7 @@ jobs:
           [[ "$address" =~ ^[0-9a-f]{64}$ ]]
           echo "address=$address" >> "$GITHUB_OUTPUT"
 
-      - name: Restore base canonical Lean report
+      - name: Restore candidate canonical Lean report
         id: lean-report-cache
         uses: actions/cache/restore@v4
         with:
@@ -91,6 +74,8 @@ jobs:
         with:
           path: ~/.elan
           key: ${{ runner.os }}-${{ runner.arch }}-elan-${{ hashFiles('candidate/lean-toolchain') }}
+          restore-keys: |
+            ${{ runner.os }}-${{ runner.arch }}-elan-
 
       - name: Install pinned Lean toolchain on cache miss
         if: steps.lean-report-cache.outputs.cache-hit != 'true'
@@ -116,11 +101,11 @@ jobs:
           path: |
             candidate/.lake
             ~/.cache/mathlib
-          key: ${{ runner.os }}-${{ runner.arch }}-lake-${{ hashFiles('candidate/lake-manifest.json', 'candidate/lean-toolchain') }}-${{ github.event.pull_request.head.sha }}
+          key: ${{ runner.os }}-${{ runner.arch }}-lake-${{ hashFiles('candidate/lake-manifest.json') }}-${{ hashFiles('candidate/lean-toolchain') }}-${{ github.event.pull_request.head.sha }}
           restore-keys: |
-            ${{ runner.os }}-${{ runner.arch }}-lake-${{ hashFiles('candidate/lake-manifest.json', 'candidate/lean-toolchain') }}-
+            ${{ runner.os }}-${{ runner.arch }}-lake-${{ hashFiles('candidate/lake-manifest.json') }}-${{ hashFiles('candidate/lean-toolchain') }}-
 
-      - name: Produce base canonical Lean report on cache miss
+      - name: Produce candidate canonical Lean report on cache miss
         if: steps.lean-report-cache.outputs.cache-hit != 'true'
         # Budget basis: 895s measured cold build; 30m step = 2.01x, 36m job = 30m + 4x the measured 1.2m remainder.
         timeout-minutes: 30
@@ -131,7 +116,7 @@ jobs:
           export PATH="$HOME/.elan/bin:$PATH"
           make lean-report
 
-      - name: Install and verify base canonical Lean report
+      - name: Install and verify candidate canonical Lean report
         shell: bash
         run: |
           set -euo pipefail
@@ -154,21 +139,16 @@ jobs:
             "Lean report input address: sha256:${{ steps.lean-report-input.outputs.address }}" \
             >> "$GITHUB_STEP_SUMMARY"
 
-      - name: Run ingest with base judge
+      - name: Run ingest with merge-base SHA
         shell: bash
         run: |
           set -euo pipefail
           cd candidate
-          make ingest BASE=HEAD
+          make ingest BASE=${{ steps.base.outputs.sha }}
 
       - name: Enforce theory ingest closure
         shell: bash
         run: |
           set -euo pipefail
-          closure_args=("$GITHUB_WORKSPACE/candidate")
-          mapfile -t overlay_paths <<< "$THEORY_INGEST_OVERLAY_PATHS"
-          for path in "${overlay_paths[@]}"; do
-            closure_args+=(--exclude "$path")
-          done
-          "$GITHUB_WORKSPACE/judge/Meta/StrataLint/scripts/workflow/theory-ingest-closure.sh" \
-            "${closure_args[@]}"
+          "$GITHUB_WORKSPACE/candidate/Meta/StrataLint/scripts/workflow/theory-ingest-closure.sh" \
+            "$GITHUB_WORKSPACE/candidate"
