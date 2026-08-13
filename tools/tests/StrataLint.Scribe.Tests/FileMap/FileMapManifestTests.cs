@@ -180,6 +180,15 @@ public sealed class FileMapManifestTests
             artifact_id = "none"
 
             [[files]]
+            pattern = "Golden/Frozen/accepted/*.json"
+            kind = "ledger"
+            produced_by = "FrozenLedgerCanonicalWriter"
+            consumed_by = ["FrozenLedger"]
+            verified_by = ["SL-008"]
+            runtime_disposition = "committed-ledger"
+            artifact_id = "none"
+
+            [[files]]
             pattern = "tools/FixtureData/*.toml"
             kind = "data"
             produced_by = "none"
@@ -187,15 +196,6 @@ public sealed class FileMapManifestTests
             verified_by = ["TomlGoldenLoader"]
             residence_violation = true
             runtime_disposition = "committed-source"
-            artifact_id = "none"
-
-            [[files]]
-            pattern = "Golden/Frozen/accepted/*.json"
-            kind = "ledger"
-            produced_by = "FrozenLedgerCanonicalWriter"
-            consumed_by = ["FrozenLedger"]
-            verified_by = ["SL-008"]
-            runtime_disposition = "committed-ledger"
             artifact_id = "none"
 
             [[files]]
