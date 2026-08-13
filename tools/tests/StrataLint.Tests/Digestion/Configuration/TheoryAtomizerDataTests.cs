@@ -191,7 +191,7 @@ public sealed class TheoryAtomizerDataTests
     public void LocatorKindAlphabetIsClosedInProgram()
     {
         Assert.Equal(
-            new[] { "axiom", "consequence", "contract", "corollary", "criterion", "definition", "entry", "example", "extension-table", "frontier-note", "ledger", "lemma", "note", "observation", "principle", "proposition", "remark", "route", "specification", "survey", "theorem", "theorem-form" },
+            new[] { "algorithm", "axiom", "consequence", "contract", "corollary", "criterion", "definition", "entry", "example", "extension-table", "frontier-note", "ledger", "lemma", "note", "observation", "principle", "proposition", "remark", "route", "specification", "survey", "theorem", "theorem-form" },
             TheoryAtomizerRules.AllowedKinds.Order(StringComparer.Ordinal));
     }
 

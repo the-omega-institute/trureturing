@@ -25,7 +25,7 @@ internal sealed class TheoryAtomizerRules
         StringComparer.Ordinal, "theorem", "definition", "proposition", "lemma", "corollary",
         "observation", "survey", "note", "remark", "ledger", "entry", "axiom", "example",
         "criterion", "consequence", "principle", "specification", "contract", "theorem-form",
-        "frontier-note", "extension-table", "route");
+        "frontier-note", "extension-table", "route", "algorithm");
 
     internal TheoryAtomizerRules(
         ImmutableArray<AtomizerMapping> observerClaimPrefixes,
