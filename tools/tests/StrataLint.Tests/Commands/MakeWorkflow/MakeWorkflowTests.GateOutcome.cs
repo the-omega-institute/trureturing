@@ -16,7 +16,7 @@ public sealed partial class MakeWorkflowTests
     {
         if (OperatingSystem.IsWindows()) return;
 
-        var root = FindRepositoryRoot();
+        var root = TestRepositoryLayout.FindRoot();
         using var fixture = new TemporaryDirectory();
         var candidateRoot = Path.Combine(fixture.Path, "candidate");
         var homeDirectory = Path.Combine(fixture.Path, "home");
@@ -140,7 +140,7 @@ public sealed partial class MakeWorkflowTests
         var gateDirectory = Path.Combine(candidateRoot, ".github", "scripts");
         Directory.CreateDirectory(gateDirectory);
         File.Copy(
-            Path.Combine(FindRepositoryRoot(), ".github", "scripts", "harness-gate.sh"),
+            Path.Combine(TestRepositoryLayout.FindRoot(), ".github", "scripts", "harness-gate.sh"),
             Path.Combine(gateDirectory, "harness-gate.sh"));
         File.SetUnixFileMode(
             Path.Combine(gateDirectory, "harness-gate.sh"),

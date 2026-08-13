@@ -20,7 +20,7 @@ public sealed class GateAuthorityTests
     [Fact]
     public void RepositoryCatalogHasFourteenUniqueUtf8SortedRoots()
     {
-        var roots = GateAuthorityRootCatalogLoader.LoadRepository(FindRepositoryRoot());
+        var roots = GateAuthorityRootCatalogLoader.LoadRepository(TestRepositoryLayout.FindRoot());
 
         Assert.Equal(14, roots.Length);
         Assert.Equal(
@@ -70,7 +70,7 @@ public sealed class GateAuthorityTests
     [Fact]
     public void EntrypointsExistAndEveryRootBindsTheCompleteFileBytes()
     {
-        var root = FindRepositoryRoot();
+        var root = TestRepositoryLayout.FindRoot();
         var authority = GateAuthorityProducer.Create(root, OldBuild);
 
         foreach (var item in authority.Roots)
@@ -96,7 +96,7 @@ public sealed class GateAuthorityTests
     [Fact]
     public void EveryRootIdNamesSomethingItsEntrypointStillMentions()
     {
-        var root = FindRepositoryRoot();
+        var root = TestRepositoryLayout.FindRoot();
         var roots = GateAuthorityRootCatalogLoader.LoadRepository(root);
 
         foreach (var item in roots)
@@ -178,7 +178,7 @@ public sealed class GateAuthorityTests
     [Fact]
     public void CommandRejectsMissingArgumentsAndUnwritableOutputAsUsage()
     {
-        var root = FindRepositoryRoot();
+        var root = TestRepositoryLayout.FindRoot();
         using var temporary = new TemporaryDirectory();
         Assert.Equal(2, GateAuthorityCommand.Run(root, null, Path.Combine(temporary.Path, "a.json")).ExitCode);
         Assert.Equal(2, GateAuthorityCommand.Run(root, OldBuild, null).ExitCode);
@@ -186,13 +186,13 @@ public sealed class GateAuthorityTests
     }
 
     private static byte[] ProduceBytes() =>
-        GateAuthorityProducer.Write(GateAuthorityProducer.Create(FindRepositoryRoot(), OldBuild));
+        GateAuthorityProducer.Write(GateAuthorityProducer.Create(TestRepositoryLayout.FindRoot(), OldBuild));
 
     private static int ValidateAuthority(byte[] bytes, string? expectedAuthoritySha256) =>
         GateAuthorityReader.Validate(
             bytes,
             expectedAuthoritySha256,
-            GateAuthorityRootCatalogLoader.LoadRepository(FindRepositoryRoot()));
+            GateAuthorityRootCatalogLoader.LoadRepository(TestRepositoryLayout.FindRoot()));
 
     private static byte[] WriteMutation(string oldBuild, IEnumerable<JsonElement> roots) =>
         StructuredCanonicalWriter.WriteJson(JsonSerializer.SerializeToElement(new
@@ -202,16 +202,6 @@ public sealed class GateAuthorityTests
             roots = roots.Select(root => root.Clone()),
         })).ToArray();
 
-    private static string FindRepositoryRoot()
-    {
-        var directory = new DirectoryInfo(AppContext.BaseDirectory);
-        while (directory is not null && !File.Exists(Path.Combine(directory.FullName, "CLAUDE.md")))
-        {
-            directory = directory.Parent;
-        }
-
-        return directory?.FullName ?? throw new InvalidOperationException("repository root not found");
-    }
 
     private sealed class ByteArrayComparer : IComparer<byte[]>
     {

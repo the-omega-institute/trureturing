@@ -43,7 +43,7 @@ public sealed partial class TheoryAtomizerTests
     [Fact]
     public void ObserverV1PreservesTheLegacyProductionAtomizationByteForByte()
     {
-        var root = FindRepositoryRoot();
+        var root = TestRepositoryLayout.FindRoot();
         var source = File.ReadAllBytes(Path.Combine(root, ThirdProductionSource));
         var document = AtomizerRegistry.Atomize(AtomizerRegistry.ObserverId, source, DigestionTestSupport.Rules);
 

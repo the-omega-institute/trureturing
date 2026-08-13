@@ -304,7 +304,7 @@ public sealed class TypeModelTests
     }
 
     [Theory]
-    [InlineData("Golden/fixture-registry.yaml")]
+    [InlineData("tools/tests/StrataLint.Tests/Fixtures/fixture-registry.yaml")]
     [InlineData("Golden/Projection/x.json")]
     [InlineData("Golden/Frozen/accepted/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.json")]
     [InlineData("Golden/values-kernels.toml")]

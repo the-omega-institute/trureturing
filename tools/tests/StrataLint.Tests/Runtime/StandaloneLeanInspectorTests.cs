@@ -237,7 +237,7 @@ public sealed class StandaloneLeanInspectorTests
                 "lean",
                 "--run",
                 Path.Combine(
-                    FindRepositoryRoot(),
+                    TestRepositoryLayout.FindRoot(),
                     "tools", "lean-inspector",
                     "Inspector.lean"),
                 "--output",
@@ -268,18 +268,4 @@ public sealed class StandaloneLeanInspectorTests
         }
     }
 
-    private static string FindRepositoryRoot()
-    {
-        for (var directory = new DirectoryInfo(AppContext.BaseDirectory);
-             directory is not null;
-             directory = directory.Parent)
-        {
-            if (File.Exists(Path.Combine(directory.FullName, "global.json")))
-            {
-                return directory.FullName;
-            }
-        }
-
-        throw new DirectoryNotFoundException("could not locate repository root");
-    }
 }

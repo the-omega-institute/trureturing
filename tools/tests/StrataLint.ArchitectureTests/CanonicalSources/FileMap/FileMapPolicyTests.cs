@@ -78,7 +78,9 @@ public sealed partial class FileMapPolicyTests
         Assert.Equal("data-must-live-outside-tools", manifest.ResidencePolicy.Desired);
         Assert.Equal(0, manifest.ResidencePolicy.KnownViolationCount);
         Assert.Equal("closed", manifest.ResidencePolicy.Status);
-        Assert.Equal(FileMapKind.Data, Assert.Single(manifest.Match("Golden/fixture-registry.yaml")).Kind);
+        Assert.Equal(
+            FileMapKind.Data,
+            Assert.Single(manifest.Match("tools/tests/StrataLint.Tests/Fixtures/fixture-registry.yaml")).Kind);
     }
 
     [Fact]

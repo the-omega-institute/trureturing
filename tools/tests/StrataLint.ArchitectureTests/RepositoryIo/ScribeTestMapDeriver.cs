@@ -38,12 +38,49 @@ internal sealed record ScribeTestMap(IReadOnlyList<ScribeTestMethod> Methods)
 
 internal static class ScribeTestMapDeriver
 {
-    private const string ProjectPrefix = "tools/tests/StrataLint.Scribe.Tests/";
+    internal static readonly IReadOnlyList<string> ProjectPrefixes =
+    [
+        "tools/tests/StrataLint.ArchitectureTests/",
+        "tools/tests/StrataLint.Scribe.Tests/",
+        "tools/tests/StrataLint.Tests/",
+    ];
+
+    // This is the read surface used by the test-map path filter. Entries are either
+    // exact files or directory roots; adding a new repository read requires updating
+    // this declaration and its review-visible guard.
+    internal static readonly IReadOnlyList<string> DeclaredPathWhitelist =
+    [
+        "Blueprint",
+        "CLAUDE.md",
+        "D5",
+        "D5/X_Frontier/ValuesProducer.lean",
+        "Generated",
+        "Golden",
+        "Golden/Projection",
+        "Golden/values-kernels.toml",
+        "Library",
+        "Meta",
+        "Meta/Digestion/backfill",
+        "Meta/FILEMAP.toml",
+        "global.json",
+        "lakefile.toml",
+        "lean-toolchain",
+        "tools",
+        "tools/tests/StrataLint.ArchitectureTests",
+        "tools/tests/StrataLint.Scribe.Tests",
+        "tools/tests/StrataLint.Tests",
+        "tools/tests/StrataLint.Tests/Fixtures/fixture-registry.yaml",
+    ];
+
+    internal static bool IsDeclaredPathAllowed(string path) =>
+        DeclaredPathWhitelist.Any(allowed => path == allowed
+            || path.StartsWith(allowed + "/", StringComparison.Ordinal));
 
     internal static ScribeTestMap DeriveRepository(string repositoryRoot)
     {
         var sources = GitIndexRepositoryFiles.Enumerate(repositoryRoot)
-            .Where(static file => file.RelativePath.StartsWith(ProjectPrefix, StringComparison.Ordinal)
+            .Where(file => ProjectPrefixes.Any(prefix =>
+                    file.RelativePath.StartsWith(prefix, StringComparison.Ordinal))
                 && file.RelativePath.EndsWith(".cs", StringComparison.Ordinal))
             .Select(file => new TestMapSource(file.RelativePath, File.ReadAllText(file.FullPath)))
             .ToArray();

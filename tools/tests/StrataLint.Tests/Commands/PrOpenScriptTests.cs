@@ -108,17 +108,7 @@ public sealed class PrOpenScriptTests
 
     private static string Text(byte[] bytes) => Encoding.UTF8.GetString(bytes);
 
-    internal static string RepositoryRoot()
-    {
-        for (var current = new DirectoryInfo(AppContext.BaseDirectory);
-             current is not null;
-             current = current.Parent)
-        {
-            if (File.Exists(Path.Combine(current.FullName, "CLAUDE.md"))) return current.FullName;
-        }
-
-        throw new DirectoryNotFoundException("Could not locate repository root.");
-    }
+    internal static string RepositoryRoot() => TestRepositoryLayout.FindRoot();
 
     private sealed class PrScriptFixture : IDisposable
     {
@@ -149,7 +139,7 @@ public sealed class PrOpenScriptTests
 
         private ProcessOutput Run(string[] arguments)
         {
-            var script = Path.Combine(FindRepositoryRoot(), "tools", "scripts", "pr.sh");
+            var script = Path.Combine(TestRepositoryLayout.FindRoot(), "tools", "scripts", "pr.sh");
             return BoundedProcessRunner.Run(
                 "env",
                 [
@@ -176,8 +166,6 @@ public sealed class PrOpenScriptTests
                 "chmod", ["+x", path], temporary.Path, TimeSpan.FromSeconds(30), 4096);
             Assert.Equal(0, chmod.ExitCode);
         }
-
-        private static string FindRepositoryRoot() => PrOpenScriptTests.RepositoryRoot();
 
         private const string FakeGh = """
             #!/usr/bin/env bash

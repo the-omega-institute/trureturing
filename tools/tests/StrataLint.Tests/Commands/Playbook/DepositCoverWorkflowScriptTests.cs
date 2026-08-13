@@ -704,7 +704,7 @@ public sealed partial class DepositCoverWorkflowScriptTests
 
         private void CopyScript()
         {
-            var root = FindRepositoryRoot();
+            var root = TestRepositoryLayout.FindRoot();
             var target = Path.Combine(Root, ScriptPath);
             Directory.CreateDirectory(Path.GetDirectoryName(target)!);
             File.Copy(Path.Combine(root, ScriptPath), target);
@@ -750,15 +750,5 @@ public sealed partial class DepositCoverWorkflowScriptTests
 
         public void Dispose() => temporary.Dispose();
 
-        private static string FindRepositoryRoot()
-        {
-            var directory = new DirectoryInfo(AppContext.BaseDirectory);
-            while (directory is not null && !File.Exists(Path.Combine(directory.FullName, "Makefile")))
-            {
-                directory = directory.Parent;
-            }
-
-            return directory?.FullName ?? throw new InvalidOperationException("repository root not found");
-        }
     }
 }
