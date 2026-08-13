@@ -1,6 +1,6 @@
 /- GID: D5/S0/Rewriting/HindleyRosen
    generality: G
-   mirror-B: Blueprint/D5/S0/Rewriting/HindleyRosen.scribe.cs
+   mirror-B: D5/B/S0/Rewriting/HindleyRosen
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: [mathlib/module/Mathlib.Logic.Relation]
    digest: Strongly commuting confluent relations have a confluent union. -/
