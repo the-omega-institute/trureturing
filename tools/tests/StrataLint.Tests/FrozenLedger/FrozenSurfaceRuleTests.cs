@@ -88,6 +88,52 @@ public sealed class FrozenSurfaceRuleTests
     }
 
     [Fact]
+    public void Sl008KeepsChangedFileGuardWhenEnvironmentPinsAreUnchanged()
+    {
+        var fixture = FrozenFixture();
+
+        var evaluation = Evaluate(fixture, (FrozenPath, RawChangeKind.Modified));
+
+        var diagnostic = Assert.Single(evaluation.Diagnostics);
+        Assert.Equal(FrozenPath, diagnostic.Path);
+        Assert.Contains("already-frozen module", diagnostic.Message, StringComparison.Ordinal);
+        Assert.Contains("ledger-reattest", diagnostic.Message, StringComparison.Ordinal);
+    }
+
+    [Theory]
+    [InlineData("lean-toolchain")]
+    [InlineData("lakefile.toml")]
+    [InlineData("lakefile.lean")]
+    [InlineData("lake-manifest.json")]
+    public void Sl008RejectsAmbientDriftInUnchangedFrozenModuleWhenEnvironmentPinChanges(
+        string environmentPin)
+    {
+        var fixture = FrozenFixture();
+        DriftFrozenStatementIdentity(fixture);
+        fixture.Baseline[environmentPin] = "baseline pin\n";
+        fixture.Files[environmentPin] = "candidate pin\n";
+
+        var evaluation = Evaluate(fixture, (environmentPin, RawChangeKind.Modified));
+
+        var diagnostic = Assert.Single(evaluation.Diagnostics);
+        Assert.Equal(FrozenPath, diagnostic.Path);
+        Assert.Equal(AdmissionEffect.Block, diagnostic.AdmissionEffect);
+        Assert.Contains(FrozenPath, diagnostic.Message, StringComparison.Ordinal);
+        Assert.Contains("1 declaration statement identity drift", diagnostic.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void Sl008KeepsChangedFileScopeForAmbientDriftWhenEnvironmentPinsAreUnchanged()
+    {
+        var fixture = FrozenFixture();
+        DriftFrozenStatementIdentity(fixture);
+
+        var evaluation = Evaluate(fixture);
+
+        Assert.Empty(evaluation.Diagnostics);
+    }
+
+    [Fact]
     public void Sl008AllowsModifiedFrozenModuleWithMatchingAddedReattest()
     {
         var fixture = FrozenFixture();
@@ -134,9 +180,9 @@ public sealed class FrozenSurfaceRuleTests
     public void Sl008RejectsDeletedFrozenModuleEvenWithMatchingAddedReattest()
     {
         var fixture = FrozenFixture();
+        var reattestPath = AddEvent(fixture, "Reattest", ReattestedNodeId, FrozenPath);
         fixture.Files.Remove(FrozenPath);
         fixture.Reports.Remove(FrozenPath);
-        var reattestPath = AddEvent(fixture, "Reattest", ReattestedNodeId, FrozenPath);
 
         var evaluation = Evaluate(
             fixture,
@@ -166,12 +212,27 @@ public sealed class FrozenSurfaceRuleTests
         return fixture;
     }
 
+    private static void DriftFrozenStatementIdentity(RuleFixture fixture) =>
+        fixture.Reports[FrozenPath] = new LeanFileReport(
+            [],
+            [new LeanDeclaration("goldenRing", "def", "Int", [])]);
+
     private static string AddEvent(
         RuleFixture fixture,
         string eventType,
         string frozenNodeId,
         string descriptorSelector)
     {
+        var declarationStatementIds = CanonicalStatementWriter.DeclarationStatementIds(
+                RepoPath.CreateKnown(descriptorSelector),
+                fixture.Reports[descriptorSelector])
+            .Select(static declaration => new
+            {
+                declaration_name_key = declaration.DeclarationNameKey,
+                kind = declaration.Kind,
+                statement_id = declaration.StatementId.Value,
+            })
+            .ToArray();
         var input = new
         {
             base_commit_oid = "git-sha1:" + new string('1', 40),
@@ -187,7 +248,7 @@ public sealed class FrozenSurfaceRuleTests
             {
                 case_class = "active-frozen",
                 case_id = "delta-v0.1/freeze",
-                declaration_statement_ids = Array.Empty<object>(),
+                declaration_statement_ids = declarationStatementIds,
                 evaluation = "admission",
                 expected = new
                 {
@@ -208,7 +269,7 @@ public sealed class FrozenSurfaceRuleTests
             "Reattest" => JsonSerializer.SerializeToElement(new
             {
                 case_id = "delta-v0.1/reattest",
-                declaration_statement_ids = Array.Empty<object>(),
+                declaration_statement_ids = declarationStatementIds,
                 frozen_node_id = frozenNodeId,
                 input,
                 input_fingerprint = "sha256:" + new string('4', 64),
