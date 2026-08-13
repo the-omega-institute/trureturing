@@ -4,6 +4,7 @@ fingerprints:
   normalized_sha256: sha256:e42f5ac3e7503fed4e2a8a69a79a0d2e2a494043c89317d057a687f1621e12d4
 cas_ref: sha256:e42f5ac3e7503fed4e2a8a69a79a0d2e2a494043c89317d057a687f1621e12d4
 coverage_gids:
+  - D5/S3/Weil/SpectralDynamics.critical_line_characterizations
   - D5/S3/Weil/ReflectionLedger.mirror_reversal_spec
 receipts:
   coverage:

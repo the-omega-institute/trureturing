@@ -413,15 +413,6 @@ artifact_id = "none"
 runtime_disposition = "committed-ledger"
 
 [[files]]
-pattern = "Meta/StrataLint/Golden/c0-inaugural-conservative-certificate.json"
-kind = "ledger"
-produced_by = "none"
-consumed_by = ["reader"]
-verified_by = ["repository-policy"]
-artifact_id = "none"
-runtime_disposition = "committed-ledger"
-
-[[files]]
 pattern = "Meta/StrataLint/StrataLint.*/**"
 kind = "program"
 produced_by = "none"
