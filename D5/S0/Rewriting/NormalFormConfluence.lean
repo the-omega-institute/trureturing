@@ -1,6 +1,6 @@
 /- GID: D5/S0/Rewriting/NormalFormConfluence
    generality: G
-   mirror-B: Blueprint/D5/S0/Rewriting/NormalFormConfluence.scribe.cs
+   mirror-B: D5/B/S0/Rewriting/NormalFormConfluence
    mirror-E: none(waiver:no-numeric-experiment-declared)
    anchors: []
    digest: Confluence makes reachable or equivalent normal forms unique. -/
