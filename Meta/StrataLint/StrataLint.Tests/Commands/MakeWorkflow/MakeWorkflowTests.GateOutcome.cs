@@ -84,17 +84,6 @@ public sealed partial class MakeWorkflowTests
               "rev-parse --verify base^{commit}"|"rev-parse --verify 0000000000000000000000000000000000000001^{commit}") printf '%040d\n' 1 ;;
               "rev-parse --verify HEAD^{commit}"|"rev-parse --verify HEAD") printf '%040d\n' 2 ;;
               "merge-base --is-ancestor "*) exit 0 ;;
-              "worktree list --porcelain -z") exit 0 ;;
-              "worktree add --detach "*)
-                judge="$4"
-                mkdir -p "$judge/.github/scripts" "$judge/Meta/StrataLint/lean-inspector" "$judge/bin"
-                cp "$PREFLIGHT_GATE" "$judge/.github/scripts/harness-gate.sh"
-                chmod +x "$judge/.github/scripts/harness-gate.sh"
-                printf '#!/usr/bin/env bash\nexit 0\n' > "$judge/Meta/StrataLint/lean-inspector/inspect.sh"
-                chmod +x "$judge/Meta/StrataLint/lean-inspector/inspect.sh"
-                : > "$judge/bin/judge.dll"
-                ;;
-              "worktree remove --force "*) exit 0 ;;
               *) echo "unexpected git invocation: $*" >&2; exit 90 ;;
             esac
             """);
@@ -113,11 +102,7 @@ public sealed partial class MakeWorkflowTests
                 ;;
               msbuild)
                 project_root="${2%%/Meta/StrataLint/*}"
-                if [[ "$*" == *"/candidate/"* ]]; then
-                  printf '%s/bin/candidate.dll\n' "$project_root"
-                else
-                  printf '%s/bin/judge.dll\n' "$project_root"
-                fi
+                printf '%s/bin/candidate.dll\n' "$project_root"
                 exit 0
                 ;;
             esac
@@ -152,6 +137,20 @@ public sealed partial class MakeWorkflowTests
     [System.Runtime.Versioning.UnsupportedOSPlatform("windows")]
     private static void WriteGateOutcomeReportPair(string candidateRoot)
     {
+        var gateDirectory = Path.Combine(candidateRoot, ".github", "scripts");
+        Directory.CreateDirectory(gateDirectory);
+        File.Copy(
+            Path.Combine(FindRepositoryRoot(), ".github", "scripts", "harness-gate.sh"),
+            Path.Combine(gateDirectory, "harness-gate.sh"));
+        File.SetUnixFileMode(
+            Path.Combine(gateDirectory, "harness-gate.sh"),
+            UnixFileMode.UserRead | UnixFileMode.UserWrite | UnixFileMode.UserExecute);
+        var producerDirectory = Path.Combine(candidateRoot, "Meta", "StrataLint", "lean-inspector");
+        Directory.CreateDirectory(producerDirectory);
+        WriteExecutable(
+            Path.Combine(producerDirectory, "inspect.sh"),
+            "#!/usr/bin/env bash\nexit 0");
+        File.WriteAllText(Path.Combine(producerDirectory, "Inspector.lean"), "fixture\n");
         var script = Path.Combine(candidateRoot, "Meta", "StrataLint", "scripts", "lean-report-pair.sh");
         WriteExecutable(
             script,
@@ -160,13 +159,12 @@ public sealed partial class MakeWorkflowTests
             while [[ $# -gt 0 ]]; do
               case "$1" in
                 --candidate-output) candidate_output="$2"; shift 2 ;;
-                --baseline-output) baseline_output="$2"; shift 2 ;;
+                --single) shift ;;
                 *) shift 2 ;;
               esac
             done
-            mkdir -p "$(dirname "$candidate_output")" "$(dirname "$baseline_output")"
+            mkdir -p "$(dirname "$candidate_output")"
             printf '{}\n' > "$candidate_output"
-            printf '{}\n' > "$baseline_output"
             """);
     }
 }
