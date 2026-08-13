@@ -58,9 +58,10 @@ require_transaction_arguments() {
 require_new_module_blueprint_mirror() {
   local mirror_path="Blueprint/${MODULE_PATH%.lean}.md"
 
-  # Synthetic test bases and legacy callers may not resolve to a local commit;
-  # only a resolvable base can establish whether this module is new.
-  git rev-parse --verify "${BASE}^{commit}" >/dev/null 2>&1 || return 0
+  if ! git rev-parse --verify "${BASE}^{commit}" >/dev/null 2>&1; then
+    echo "PLAYBOOK_INVALID base does not resolve to a commit: $BASE" >&2
+    return 2
+  fi
   git cat-file -e "${BASE}:${MODULE_PATH}" >/dev/null 2>&1 && return 0
 
   if [[ ! -f "$mirror_path" ]]; then
