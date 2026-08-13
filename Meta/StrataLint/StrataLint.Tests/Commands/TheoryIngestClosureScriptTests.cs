@@ -16,7 +16,7 @@ public sealed class TheoryIngestClosureScriptTests
     }
 
     [Fact]
-    public void BaseHarnessOverlayOnlyExitsZero()
+    public void DirtyHarnessPathFailsAndNamesExactPath()
     {
         using var fixture = new TheoryIngestClosureFixture();
         fixture.Write("Meta/StrataLint/judge.sh", "judge");
@@ -25,7 +25,11 @@ public sealed class TheoryIngestClosureScriptTests
 
         var result = fixture.Run();
 
-        Assert.Equal(0, result.ExitCode);
+        Assert.NotEqual(0, result.ExitCode);
+        Assert.Contains(
+            "Meta/StrataLint/judge.sh",
+            Encoding.UTF8.GetString(result.StandardError),
+            StringComparison.Ordinal);
     }
 
     [Fact]
@@ -74,10 +78,7 @@ public sealed class TheoryIngestClosureScriptTests
                 "Meta", "StrataLint", "scripts", "workflow", "theory-ingest-closure.sh");
             return BoundedProcessRunner.Run(
                 "bash",
-                [script, repository.Path,
-                 "--exclude", "Meta/StrataLint",
-                 "--exclude", "Makefile",
-                 "--exclude", "global.json"],
+                [script, repository.Path],
                 repository.Path,
                 TimeSpan.FromSeconds(30),
                 1024 * 1024);
