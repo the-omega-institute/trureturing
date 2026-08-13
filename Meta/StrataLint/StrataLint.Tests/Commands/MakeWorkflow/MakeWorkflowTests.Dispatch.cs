@@ -81,8 +81,7 @@ public sealed partial class MakeWorkflowTests
         Assert.Contains(WorktreeInitScriptPath, Recipe(makefile, "worktree"), StringComparison.Ordinal);
         Assert.Contains(PrOpenScriptPath, Recipe(makefile, "pr-open"), StringComparison.Ordinal);
         Assert.Contains("--head \"$(HEAD)\"", Recipe(makefile, "pr-open"), StringComparison.Ordinal);
-        Assert.Contains(PrUpdateScriptPath, Recipe(makefile, "pr-update"), StringComparison.Ordinal);
-        Assert.Contains("--pr \"$(PR)\"", Recipe(makefile, "pr-update"), StringComparison.Ordinal);
+        Assert.DoesNotContain("pr-update", makefile, StringComparison.Ordinal);
         Assert.Contains(
             " gate-authority --old-build \"$(OLD_BUILD)\" --out \"$(OUT)\"",
             Recipe(makefile, "refactor-p0-0-gate-authority"),
@@ -122,11 +121,6 @@ public sealed partial class MakeWorkflowTests
         Assert.Contains("dry-run", output, StringComparison.Ordinal);
         Assert.Contains("FORCE=1", output, StringComparison.Ordinal);
         Assert.Contains("values", output, StringComparison.OrdinalIgnoreCase);
-        var prUpdateHelp = Assert.Single(
-            output.Split('\n'),
-            static line => line.StartsWith("make pr-update ", StringComparison.Ordinal));
-        Assert.Contains("BEHIND", prUpdateHelp, StringComparison.Ordinal);
-        Assert.Contains("auto-merge armed", prUpdateHelp, StringComparison.Ordinal);
-        Assert.Contains("once", prUpdateHelp, StringComparison.Ordinal);
+        Assert.DoesNotContain("pr-update", output, StringComparison.Ordinal);
     }
 }
