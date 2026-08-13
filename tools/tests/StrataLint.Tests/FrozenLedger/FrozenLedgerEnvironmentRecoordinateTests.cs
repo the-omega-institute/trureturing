@@ -21,6 +21,10 @@ public sealed partial class FrozenLedgerTests
             new FrozenGenesisDescriptor(GitOid('e'), RuleCatalog.Default.RootSha256));
         var syntax = LoadedEnvironmentLedger(bytes.AsSpan());
 
+        Assert.Equal(
+            "1a2d7262bb5474dd624e73c0d3620aab3a659b856c2945ca3e4e394c05a8d1cc",
+            Convert.ToHexStringLower(System.Security.Cryptography.SHA256.HashData(bytes.AsSpan())));
+
         var accepted = Assert.IsType<FrozenLedgerValidationOutcome.Accepted>(
             ValidateHistory(syntax, catalog)).Capability;
 
