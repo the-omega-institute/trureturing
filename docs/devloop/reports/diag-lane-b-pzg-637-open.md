@@ -3,11 +3,13 @@
 Outcome: open, with no formalization deposit.
 
 This report records the isolated lane `harness/diag-formalize-b` at
-`/Users/mstudio3/trureturing-diag-formalize-b`. The lane includes
-`origin/dev` at `9caf9b15670b4ddd4813407f6aa89bcf4b304a0e`; its current pre-report
-HEAD is merge commit `a3fb7d4f6fdfa488603c85e350eaccb59ab53801`.
-`git merge-base --is-ancestor origin/dev HEAD` exited `0`, and the worktree
-was clean before this report was added.
+`/Users/mstudio3/trureturing-diag-formalize-b`. Atom inspection began after
+merging `origin/dev` at `9caf9b15670b4ddd4813407f6aa89bcf4b304a0e`. The
+final pre-delivery sync fetched `origin/dev` at
+`600528ed47fd08001838b5db51de4bb71f12936e` and merged it in lane commit
+`402a14625cb669b210158183fd602ee837f057df`.
+`git merge-base --is-ancestor origin/dev HEAD` exited `0` after both syncs,
+and the worktree was clean before this report was added.
 
 ## Atom and authoritative statement
 
@@ -120,6 +122,19 @@ Exit `0`. Pinned mathlib contains generic cyclic trace identities and the
 `SpecialLinearGroup` type. It does not contain the atom's assembled
 Hamiltonian trace map, Fricke surface correspondence, or bounded-orbit
 spectrum theorem.
+
+The final `origin/dev` merge added `D5/S1/FixedPoints/ThreeCycleGap.lean` and
+`D5/S1/Solenoid/RealFlowRecurrence.lean`. The following targeted post-merge
+search checked whether either addition changes this atom's library result:
+
+```text
+rg -n -i "trace|fricke|SL₂|SL2|bounded orbit|spectrum|Z_qc|Zqc|zqc|Hamiltonian|finite[- ]dimensional" D5/S1/FixedPoints/ThreeCycleGap.lean D5/S1/Solenoid/RealFlowRecurrence.lean Blueprint/D5/S1/FixedPoints/ThreeCycleGap.md Blueprint/D5/S1/Solenoid/RealFlowRecurrence.md
+```
+
+Exit `1`, with zero hits. Direct inspection confirmed that the first module
+proves a least/greatest fixed-point gap for a three-state operator and the
+second proves factorial recurrence of a solenoid real flow; neither supplies
+any missing 6.37 clause.
 
 Repository history also shows that the two relevant precursors were already
 deposited separately in commits `fbe2d68c913cca15992e7edff14cfcdcb4d9e4b0`
