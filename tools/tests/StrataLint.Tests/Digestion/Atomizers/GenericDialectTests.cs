@@ -142,4 +142,62 @@ public sealed class GenericDialectTests
 
         Assert.Contains("ghost-volume", error.Message, StringComparison.Ordinal);
     }
+
+    private const string HeadingDialectId = "heading-probe";
+
+    private static string HeadingProbeDialect => $$"""
+        [[dialect]]
+        id = "{{HeadingDialectId}}"
+        claim = "^(?<kind>\\p{L}+)\\s+(?<number>[0-9]+(?:\\.[0-9]+)+)"
+        target = "heading"
+
+        [[dialect.genre]]
+        dialect = "{{HeadingDialectId}}"
+        token = "定理"
+        kind = "theorem"
+        """;
+
+    [Fact]
+    public void AHeadingTargetDialectDigestsClaimsFromHeadingsOnly()
+    {
+        var rules = Load(RulesWith(HeadingProbeDialect));
+        var bytes = Encoding.UTF8.GetBytes(
+            "# 探针卷\n\n## 定理 1.1(甲)\n\n定理 9.9(乙)开头的正文段落。\n\n### 证明\n\n略。\n");
+
+        var document = AtomizerRegistry.Atomize($"dialect:{HeadingDialectId}", bytes, rules);
+
+        Assert.Equal(
+            ["theorem/1.1"],
+            document.Claims.Select(static claim => claim.AstPath).ToArray());
+        Assert.Equal(bytes, document.Reassemble().ToArray());
+    }
+
+    [Fact]
+    public void AnUnregisteredGenreOnAHeadingStillFailsClosed()
+    {
+        var rules = Load(RulesWith(HeadingProbeDialect));
+        var bytes = Encoding.UTF8.GetBytes("# 探针卷\n\n## 未登记体 1.1(甲)\n");
+
+        var error = Assert.Throws<TheorySourceFormatException>(() =>
+            AtomizerRegistry.Atomize($"dialect:{HeadingDialectId}", bytes, rules));
+
+        Assert.Contains(HeadingDialectId, error.Message, StringComparison.Ordinal);
+        Assert.Contains("未登记体", error.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void AnUnknownDialectTargetIsRefusedAtLoad()
+    {
+        var invalid = """
+            [[dialect]]
+            id = "bad-target"
+            claim = "^(?<kind>\\p{L}+)\\s+(?<number>[0-9]+)"
+            target = "table"
+            """;
+
+        var error = Assert.Throws<FormatException>(() => Load(RulesWith(invalid)));
+
+        Assert.Contains("bad-target", error.Message, StringComparison.Ordinal);
+        Assert.Contains("table", error.Message, StringComparison.Ordinal);
+    }
 }
