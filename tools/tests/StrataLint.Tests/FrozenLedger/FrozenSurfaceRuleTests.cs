@@ -100,15 +100,20 @@ public sealed class FrozenSurfaceRuleTests
         Assert.Contains("ledger-reattest", diagnostic.Message, StringComparison.Ordinal);
     }
 
-    [Fact]
-    public void Sl008RejectsAmbientDriftInUnchangedFrozenModuleWhenEnvironmentPinChanges()
+    [Theory]
+    [InlineData("lean-toolchain")]
+    [InlineData("lakefile.toml")]
+    [InlineData("lakefile.lean")]
+    [InlineData("lake-manifest.json")]
+    public void Sl008RejectsAmbientDriftInUnchangedFrozenModuleWhenEnvironmentPinChanges(
+        string environmentPin)
     {
         var fixture = FrozenFixture();
         DriftFrozenStatementIdentity(fixture);
-        fixture.Baseline["lean-toolchain"] = "leanprover/lean4:v4.31.0\n";
-        fixture.Files["lean-toolchain"] = "leanprover/lean4:v4.33.0\n";
+        fixture.Baseline[environmentPin] = "baseline pin\n";
+        fixture.Files[environmentPin] = "candidate pin\n";
 
-        var evaluation = Evaluate(fixture, ("lean-toolchain", RawChangeKind.Modified));
+        var evaluation = Evaluate(fixture, (environmentPin, RawChangeKind.Modified));
 
         var diagnostic = Assert.Single(evaluation.Diagnostics);
         Assert.Equal(FrozenPath, diagnostic.Path);
