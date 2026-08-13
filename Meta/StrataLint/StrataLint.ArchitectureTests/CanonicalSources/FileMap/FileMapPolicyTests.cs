@@ -269,7 +269,7 @@ public sealed class FileMapPolicyTests
     [Fact]
     public void ExactProtectedResidenceCountIsAccepted()
     {
-        const string path = "Meta/StrataLint/Golden/cases/known.toml";
+        const string path = "Meta/StrataLint/Golden/known.toml";
         var manifest = Parse(1, ResidenceEntry(path));
 
         Assert.Empty(FileMapPolicy.InspectDirectoryKinds(manifest, [path]));
@@ -280,13 +280,13 @@ public sealed class FileMapPolicyTests
     {
         var manifest = Parse(
             1,
-            ResidenceEntry("Meta/StrataLint/Golden/cases/**/*.toml"));
+            ResidenceEntry("Meta/StrataLint/Golden/*.toml"));
 
         var finding = Assert.Single(FileMapPolicy.InspectDirectoryKinds(
             manifest,
             [
-                "Meta/StrataLint/Golden/cases/known.toml",
-                "Meta/StrataLint/Golden/cases/new.toml",
+                "Meta/StrataLint/Golden/known.toml",
+                "Meta/StrataLint/Golden/new.toml",
             ]));
 
         Assert.Equal("FILEMAP-RESIDENCE-DRIFT", finding.Code);
@@ -295,7 +295,7 @@ public sealed class FileMapPolicyTests
     [Fact]
     public void MissingProtectedResidenceViolationIsRejected()
     {
-        const string path = "Meta/StrataLint/Golden/cases/known.toml";
+        const string path = "Meta/StrataLint/Golden/known.toml";
         var manifest = Parse(2, ResidenceEntry(path));
 
         var finding = Assert.Single(FileMapPolicy.InspectDirectoryKinds(manifest, [path]));

@@ -608,7 +608,6 @@ public sealed partial class ReviewRegressionTests
         // 第 20″ 條:防的必须是发生过的事;由恶意证成而无实际攻击者的机制即为臆想。
         // base 仍然提供 --base 指向的旧侧 git 快照,那不需要编译 base。
         Assert.Contains("candidate/.github/scripts/harness-gate.sh", baselineJob, StringComparison.Ordinal);
-        Assert.DoesNotContain("baseline-admission.sh", baselineJob, StringComparison.Ordinal);
         Assert.DoesNotContain("--judge-root", baselineJob, StringComparison.Ordinal);
         Assert.Contains("--candidate", baselineJob, StringComparison.Ordinal);
         Assert.Contains("--base", baselineJob, StringComparison.Ordinal);

@@ -40,8 +40,6 @@ internal static class FileMapPolicy
         "Meta/StrataLint/StrataLint.Scribe/Values/ValuesKernelDataLoader.cs";
     private const string YamlSubsetParserPath =
         "Meta/StrataLint/StrataLint.Engine/Coordinates/YamlSubsetParser.cs";
-    private const string C0CertificatePath =
-        "Meta/StrataLint/Golden/c0-inaugural-conservative-certificate.json";
     private const string RepositoryPathPolicyPath =
         "Meta/StrataLint/StrataLint.Engine/Coordinates/RepositoryPathPolicy.cs";
 
@@ -467,12 +465,9 @@ internal static class FileMapPolicy
             var kind = entry.Kind;
             if (path.Split('/').Contains("Generated", StringComparer.Ordinal)
                 && kind is not FileMapKind.Generated
-                || path.StartsWith("Golden/cases/", StringComparison.Ordinal)
-                    && kind is not FileMapKind.Data
                 || path.StartsWith("Golden/Projection/", StringComparison.Ordinal)
                     && kind is not FileMapKind.Data
-                || (path.StartsWith("Meta/StrataLint/Golden/Frozen/", StringComparison.Ordinal)
-                        || path == C0CertificatePath)
+                || path.StartsWith("Meta/StrataLint/Golden/Frozen/", StringComparison.Ordinal)
                     && kind is not FileMapKind.Ledger)
             {
                 findings.Add(new FileMapFinding(

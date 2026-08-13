@@ -95,10 +95,6 @@ internal sealed partial class RuleFixture
     internal const string HarnessGatePath = RepositoryPathPolicy.HarnessGatePath;
     internal const string SyntheticProtectedPath =
         "Meta/StrataLint/StrataLint.Engine/SyntheticProtected.cs";
-    internal const string DefinitionsProjectPath =
-        "Meta/StrataLint/StrataLint.Definitions/StrataLint.Definitions.csproj";
-    internal const string DefinitionsLockPath =
-        "Meta/StrataLint/StrataLint.Definitions/packages.lock.json";
 
     private const string Header = """
         /- GID: D5/S0/Carrier/Ring
