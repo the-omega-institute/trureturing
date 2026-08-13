@@ -94,6 +94,22 @@ public sealed partial class FrozenLedgerTests
         Assert.Contains("axiom", rejected.Message, StringComparison.OrdinalIgnoreCase);
     }
 
+    [Fact]
+    public void EnvironmentRecoordinateRejectsModuleStatementIdUnlinkedFromDeclarations()
+    {
+        var fixture = EnvironmentFixture();
+        var payload = EnvironmentPayload(fixture);
+        payload["new_statement_id"] = Sha256("unlinked-module-statement");
+
+        var rejected = Assert.IsType<FrozenLedgerValidationOutcome.Rejected>(
+            ValidateCandidate(
+                LoadedEnvironmentLedger(AppendEnvironmentEvent(fixture, payload).AsSpan()),
+                fixture.Baseline,
+                fixture.CandidateCatalog));
+
+        Assert.Contains("declaration statement", rejected.Message, StringComparison.OrdinalIgnoreCase);
+    }
+
     [Theory]
     [InlineData("equivalence_status", false)]
     [InlineData("unexpected", true)]
@@ -120,6 +136,74 @@ public sealed partial class FrozenLedgerTests
     }
 
     [Fact]
+    public void EnvironmentRecoordinateRejectsMissingNestedEnvironmentPin()
+    {
+        var fixture = EnvironmentFixture();
+        var payload = EnvironmentPayload(fixture);
+        payload["environment"]!["new"]!.AsObject().Remove("lakefile_blob_oid");
+
+        var rejected = Assert.IsType<FrozenLedgerValidationOutcome.Rejected>(
+            ValidateCandidate(
+                LoadedEnvironmentLedger(AppendEnvironmentEvent(fixture, payload).AsSpan()),
+                fixture.Baseline,
+                fixture.CandidateCatalog));
+
+        Assert.Contains("field", rejected.Message, StringComparison.OrdinalIgnoreCase);
+    }
+
+    [Fact]
+    public void EnvironmentRecoordinateRejectsNestedUnknownField()
+    {
+        var fixture = EnvironmentFixture();
+        var payload = EnvironmentPayload(fixture);
+        payload["declaration_statement_ids"]!["old"]![0]!["unknown"] = "forbidden";
+
+        var rejected = Assert.IsType<FrozenLedgerValidationOutcome.Rejected>(
+            ValidateCandidate(
+                LoadedEnvironmentLedger(AppendEnvironmentEvent(fixture, payload).AsSpan()),
+                fixture.Baseline,
+                fixture.CandidateCatalog));
+
+        Assert.Contains("field", rejected.Message, StringComparison.OrdinalIgnoreCase);
+    }
+
+    [Fact]
+    public void EnvironmentRecoordinateRejectsWrongFieldType()
+    {
+        var fixture = EnvironmentFixture();
+        var payload = EnvironmentPayload(fixture);
+        payload["kernel_verdict"] = 1;
+
+        var rejected = Assert.IsType<FrozenLedgerValidationOutcome.Rejected>(
+            ValidateCandidate(
+                LoadedEnvironmentLedger(AppendEnvironmentEvent(fixture, payload).AsSpan()),
+                fixture.Baseline,
+                fixture.CandidateCatalog));
+
+        Assert.Contains("string", rejected.Message, StringComparison.OrdinalIgnoreCase);
+    }
+
+    [Theory]
+    [InlineData("equivalence_status", "equivalence-proved")]
+    [InlineData("kernel_verdict", "Open")]
+    public void EnvironmentRecoordinateRejectsUnsupportedSemanticClaims(string field, string value)
+    {
+        var fixture = EnvironmentFixture();
+        var payload = EnvironmentPayload(fixture);
+        payload[field] = value;
+
+        var rejected = Assert.IsType<FrozenLedgerValidationOutcome.Rejected>(
+            ValidateCandidate(
+                LoadedEnvironmentLedger(AppendEnvironmentEvent(fixture, payload).AsSpan()),
+                fixture.Baseline,
+                fixture.CandidateCatalog));
+
+        Assert.Contains(field == "equivalence_status" ? "equivalence" : "Closed",
+            rejected.Message,
+            StringComparison.OrdinalIgnoreCase);
+    }
+
+    [Fact]
     public void EnvironmentRecoordinateCannotCoverOrRewriteAnExistingFreeze()
     {
         var fixture = EnvironmentFixture();
@@ -142,18 +226,34 @@ public sealed partial class FrozenLedgerTests
         IEnumerable<string>? candidateAxioms = null,
         IEnumerable<string>? candidateDeclarations = null)
     {
-        var baselineCatalog = BuildCatalog(ModuleWithReport(
-            "A",
-            RecoordinateSource,
-            "old-elaborated-expression",
-            baselineAxioms,
-            new[] { "a" }));
-        var candidateCatalog = BuildCatalog(ModuleWithReport(
-            "A",
-            candidateSource,
-            "new-elaborated-expression",
-            candidateAxioms ?? baselineAxioms,
-            candidateDeclarations ?? new[] { "a" }));
+        var baselineCatalog = BuildCatalogWithEnvironment(
+            "leanprover/lean4:v4.31.0\n",
+            "[package]\nname = \"old\"\n",
+            "{\"version\":\"old\"}\n",
+            GitOid('a'),
+            GitOid('b'),
+            ModuleWithReport(
+                "A",
+                RecoordinateSource,
+                "old-elaborated-expression",
+                baselineAxioms,
+                new[] { "a" }));
+        var candidateCatalog = BuildCatalogWithEnvironment(
+            "leanprover/lean4:v4.33.0\n",
+            "[package]\nname = \"new\"\n",
+            "{\"version\":\"new\"}\n",
+            GitOid('a'),
+            GitOid('b'),
+            ModuleWithReport(
+                "A",
+                candidateSource,
+                "new-elaborated-expression",
+                candidateAxioms ?? baselineAxioms,
+                candidateDeclarations ?? new[] { "a" }) with
+            {
+                BaseCommitOid = GitOid('c'),
+                BaseTreeOid = GitOid('d'),
+            });
         var baselineBytes = FrozenLedgerGenerator.GenerateGenesis(
             baselineCatalog,
             new FrozenGenesisDescriptor(GitOid('e'), RuleCatalog.Default.RootSha256));
@@ -183,7 +283,6 @@ public sealed partial class FrozenLedgerTests
     private static JsonObject EnvironmentPayload(EnvironmentRecoordinateFixture fixture)
     {
         var freeze = Assert.IsType<FrozenLedgerEvent.Freeze>(fixture.Baseline.Events[1]);
-        var sourceBlob = fixture.BaselineNode.Attestation.SourceBlobOid;
         return new JsonObject
         {
             ["case_id"] = freeze.Payload.CaseId,
@@ -194,20 +293,23 @@ public sealed partial class FrozenLedgerTests
             },
             ["environment"] = new JsonObject
             {
-                ["new"] = EnvironmentPins('4', '5', '6'),
-                ["old"] = EnvironmentPins('1', '2', '3'),
+                ["new"] = EnvironmentPins(fixture.CandidateCatalog.Environment),
+                ["old"] = EnvironmentPins(fixture.BaselineCatalog.Environment),
             },
             ["equivalence_status"] = UnprovedEquivalence,
             ["kernel_verdict"] = nameof(TruthState.Closed),
             ["new_axiom_closure"] = new JsonArray(
                 fixture.CandidateNode.AxiomClosure.Select(static item => JsonValue.Create(item)).ToArray()),
             ["new_frozen_node_id"] = fixture.CandidateNode.FrozenNodeId.Value,
+            ["new_imports"] = new JsonArray(),
             ["new_input"] = Input(
                 fixture.CandidateNode,
-                GitOid('c'),
-                GitOid('d'),
-                sourceBlob,
-                new[] { GitOid('4'), GitOid('5'), GitOid('6') }),
+                fixture.CandidateNode.Attestation.BaseCommitOid
+                    ?? fixture.CandidateCatalog.Environment.OriginCommitOid,
+                fixture.CandidateNode.Attestation.BaseTreeOid
+                    ?? fixture.CandidateCatalog.Environment.OriginTreeOid,
+                fixture.CandidateNode.Attestation.SourceBlobOid,
+                EnvironmentOidSet(fixture.CandidateCatalog.Environment)),
             ["new_statement_id"] = fixture.CandidateNode.StatementId.Value,
             ["new_prerequisite_frozen_node_ids"] = new JsonArray(
                 fixture.CandidateNode.PrerequisiteFrozenNodeIds
@@ -216,27 +318,31 @@ public sealed partial class FrozenLedgerTests
             ["old_axiom_closure"] = new JsonArray(
                 fixture.BaselineNode.AxiomClosure.Select(static item => JsonValue.Create(item)).ToArray()),
             ["old_frozen_node_id"] = fixture.BaselineNode.FrozenNodeId.Value,
+            ["old_imports"] = new JsonArray(),
             ["old_input"] = Input(
                 fixture.BaselineNode,
-                GitOid('a'),
-                GitOid('b'),
-                sourceBlob,
-                new[] { GitOid('1'), GitOid('2'), GitOid('3') }),
+                fixture.BaselineNode.Attestation.BaseCommitOid
+                    ?? fixture.BaselineCatalog.Environment.OriginCommitOid,
+                fixture.BaselineNode.Attestation.BaseTreeOid
+                    ?? fixture.BaselineCatalog.Environment.OriginTreeOid,
+                fixture.BaselineNode.Attestation.SourceBlobOid,
+                EnvironmentOidSet(fixture.BaselineCatalog.Environment)),
             ["old_statement_id"] = fixture.BaselineNode.StatementId.Value,
             ["old_prerequisite_frozen_node_ids"] = new JsonArray(
                 fixture.BaselineNode.PrerequisiteFrozenNodeIds
                     .Select(static item => JsonValue.Create(item.Value)).ToArray()),
             ["old_witness_id"] = fixture.BaselineNode.WitnessId.Value,
             ["previous_attestation_event_hash"] = freeze.EventHash,
+            ["source_sha256"] = Sha256Raw(RecoordinateSource),
         };
     }
 
-    private static JsonObject EnvironmentPins(char toolchain, char lakefile, char manifest) => new()
+    private static JsonObject EnvironmentPins(FrozenEnvironmentAttestation environment) => new()
     {
-        ["lake_manifest_blob_oid"] = GitOid(manifest),
-        ["lakefile_blob_oid"] = GitOid(lakefile),
-        ["lakefile_path"] = "lakefile.toml",
-        ["lean_toolchain_blob_oid"] = GitOid(toolchain),
+        ["lake_manifest_blob_oid"] = environment.LakeManifestBlobOid,
+        ["lakefile_blob_oid"] = environment.LakefileBlobOid,
+        ["lakefile_path"] = environment.LakefilePath,
+        ["lean_toolchain_blob_oid"] = environment.LeanToolchainBlobOid,
     };
 
     private static JsonObject Input(
@@ -262,6 +368,17 @@ public sealed partial class FrozenLedgerTests
             ["kind"] = item.Kind,
             ["statement_id"] = item.StatementId.Value,
         }).ToArray());
+
+    private static IEnumerable<string> EnvironmentOidSet(FrozenEnvironmentAttestation environment)
+    {
+        yield return environment.LakeManifestBlobOid;
+        yield return environment.LakefileBlobOid!;
+        yield return environment.LeanToolchainBlobOid;
+    }
+
+    private static string Sha256Raw(string value) =>
+        "sha256:" + Convert.ToHexStringLower(
+            System.Security.Cryptography.SHA256.HashData(System.Text.Encoding.UTF8.GetBytes(value)));
 
     private static FrozenLedgerSyntax LoadedEnvironmentLedger(ReadOnlySpan<byte> bytes) =>
         Assert.IsType<DagLedgerLoadOutcome.Loaded>(DagLedgerLoader.Load(bytes)).Syntax;

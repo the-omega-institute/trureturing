@@ -292,6 +292,20 @@ public static class RevocationPlanner
             }
         }
 
+        foreach (var recoordinate in events.OfType<FrozenLedgerEvent.EnvironmentRecoordinate>())
+        {
+            foreach (var prerequisite in recoordinate.Payload.NewPrerequisiteFrozenNodeIds)
+            {
+                if (!reverse.TryGetValue(prerequisite, out var dependents))
+                {
+                    dependents = new HashSet<FrozenNodeId>();
+                    reverse.Add(prerequisite, dependents);
+                }
+
+                dependents.Add(recoordinate.Payload.NewFrozenNodeId);
+            }
+        }
+
         var affected = new HashSet<FrozenNodeId>();
         var pending = new Stack<FrozenNodeId>(orderedRoots.Reverse());
         while (pending.TryPop(out var current))

@@ -121,17 +121,20 @@ public sealed record FrozenEnvironmentRecoordinatePayload(
     string KernelVerdict,
     ImmutableArray<string> NewAxiomClosure,
     FrozenNodeId NewFrozenNodeId,
+    ImmutableArray<string> NewImports,
     FrozenLedgerInput NewInput,
     ImmutableArray<FrozenNodeId> NewPrerequisiteFrozenNodeIds,
     StatementId NewStatementId,
     WitnessId NewWitnessId,
     ImmutableArray<string> OldAxiomClosure,
     FrozenNodeId OldFrozenNodeId,
+    ImmutableArray<string> OldImports,
     FrozenLedgerInput OldInput,
     ImmutableArray<FrozenNodeId> OldPrerequisiteFrozenNodeIds,
     StatementId OldStatementId,
     WitnessId OldWitnessId,
-    string PreviousAttestationEventHash);
+    string PreviousAttestationEventHash,
+    string SourceSha256);
 
 [Union(EnableImplicitConversions = false)]
 public partial record FrozenLedgerEvent
@@ -235,7 +238,8 @@ internal sealed record FrozenActiveEntry(
     FrozenNodeMaterial Material,
     FrozenFreezePayload Payload,
     string LastAttestationEventHash,
-    bool AxiomClosureKnown = true);
+    bool AxiomClosureKnown = true,
+    FrozenEnvironmentPins? Environment = null);
 
 [Union(EnableImplicitConversions = false)]
 public partial record FrozenLedgerValidationOutcome

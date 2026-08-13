@@ -19,6 +19,12 @@ public sealed partial class FrozenLedgerTests
             ["Genesis"] = OidProperties(typeof(FrozenGenesisPayload)),
             ["Freeze"] = inputFields,
             ["Reattest"] = inputFields,
+            ["EnvironmentRecoordinate"] = OidProperties(typeof(FrozenLedgerInput), "new_input")
+                .Concat(OidProperties(typeof(FrozenLedgerInput), "old_input"))
+                .Concat(OidProperties(typeof(FrozenEnvironmentPins), "environment.new"))
+                .Concat(OidProperties(typeof(FrozenEnvironmentPins), "environment.old"))
+                .Order(StringComparer.Ordinal)
+                .ToArray(),
             ["Revoke"] = typeof(RevocationEvidence).GetNestedTypes()
                 .SelectMany(static type => OidProperties(type, "evidence[]"))
                 .Distinct(StringComparer.Ordinal)
@@ -69,6 +75,10 @@ public sealed partial class FrozenLedgerTests
         AssertUnknownPayloadFieldRejected(genesisSyntax.RawBytes, 0);
         AssertUnknownPayloadFieldRejected(genesisSyntax.RawBytes, 1);
         AssertUnknownPayloadFieldRejected(reattest, 2);
+        var recoordinateFixture = EnvironmentFixture();
+        AssertUnknownPayloadFieldRejected(
+            AppendEnvironmentEvent(recoordinateFixture),
+            recoordinateFixture.Baseline.Events.Length);
         AssertUnknownPayloadFieldRejected(genesisSyntax.Lines[0].RawBytes.AddRange(revokeLine), 1);
     }
 

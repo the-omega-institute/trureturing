@@ -64,9 +64,15 @@ public static class FrozenContentAddress
                 var statement = StatementId.Create(FrozenContentHash.Compute(
                     FrozenHashDomains.Statement,
                     CanonicalStatementWriter.WriteModule(node.RepoPath, declarationStatementIds).AsSpan()));
-                var witness = WitnessId.Create(FrozenContentHash.Compute(
-                    FrozenHashDomains.Witness,
-                    WriteWitness(node.RepoPath, statement, report, source, environment, attestation).AsSpan()));
+                var witness = ComputeWitnessId(
+                    node.RepoPath,
+                    statement,
+                    report.Imports,
+                    report.Declarations.SelectMany(static declaration => declaration.Axioms),
+                    attestation.SourceBlobOid,
+                    "sha256:" + Convert.ToHexStringLower(SHA256.HashData(source.RawBytes.AsSpan())),
+                    environment.LeanToolchainBlobOid,
+                    environment.LakeManifestBlobOid);
                 var axiomClosure = report.Declarations
                     .SelectMany(static declaration => declaration.Axioms)
                     .Distinct(StringComparer.Ordinal)
@@ -79,9 +85,7 @@ public static class FrozenContentAddress
                             $"Closed module {node.RepoPath.Value} depends on non-frozen {path.Value}."))
                     .OrderBy(static id => id.Value, StringComparer.Ordinal)
                     .ToImmutableArray();
-                var frozen = FrozenNodeId.Create(FrozenContentHash.Compute(
-                    FrozenHashDomains.FrozenNode,
-                    WriteFrozenNode(node.RepoPath, statement, witness, prerequisites).AsSpan()));
+                var frozen = ComputeFrozenNodeId(node.RepoPath, statement, witness, prerequisites);
                 materialByPath.Add(node.RepoPath, new FrozenNodeMaterial(
                     node.RepoPath,
                     declarationStatementIds,
@@ -133,6 +137,24 @@ public static class FrozenContentAddress
 
         ValidateGitBlobOid(environment.LeanToolchainBlobOid, toolchain.RawBytes.AsSpan(), "lean-toolchain");
         ValidateGitBlobOid(environment.LakeManifestBlobOid, manifest.RawBytes.AsSpan(), "lake-manifest.json");
+        if ((environment.LakefilePath is null) != (environment.LakefileBlobOid is null))
+        {
+            throw new FormatException("Frozen lakefile attestation must provide both path and blob OID.");
+        }
+
+        if (environment.LakefilePath is not null)
+        {
+            if (environment.LakefilePath is not ("lakefile.toml" or "lakefile.lean")
+                || !snapshot.TryGetFile(environment.LakefilePath, out var lakefile))
+            {
+                throw new FormatException("Frozen lakefile attestation has no matching source file.");
+            }
+
+            ValidateGitBlobOid(
+                environment.LakefileBlobOid!,
+                lakefile.RawBytes.AsSpan(),
+                environment.LakefilePath);
+        }
     }
 
     private static (
@@ -203,33 +225,34 @@ public static class FrozenContentAddress
         return (openCases.ToImmutable(), tailRegistrations.ToImmutable());
     }
 
-    private static ImmutableArray<byte> WriteWitness(
+    internal static WitnessId ComputeWitnessId(
         RepoPath path,
         StatementId statement,
-        LeanFileReport report,
-        RepositoryFile source,
-        FrozenEnvironmentAttestation environment,
-        FrozenModuleAttestation attestation)
+        IEnumerable<string> imports,
+        IEnumerable<string> axiomClosure,
+        string sourceBlobOid,
+        string sourceSha256,
+        string leanToolchainBlobOid,
+        string lakeManifestBlobOid)
     {
         var material = JsonSerializer.SerializeToElement(new
         {
-            axiom_closure = report.Declarations
-                .SelectMany(static declaration => declaration.Axioms)
-                .Distinct(StringComparer.Ordinal)
-                .Order(StringComparer.Ordinal),
-            imports = report.Imports.Distinct(StringComparer.Ordinal).Order(StringComparer.Ordinal),
-            lake_manifest_blob_oid = environment.LakeManifestBlobOid,
-            lean_toolchain_blob_oid = environment.LeanToolchainBlobOid,
+            axiom_closure = axiomClosure.Distinct(StringComparer.Ordinal).Order(StringComparer.Ordinal),
+            imports = imports.Distinct(StringComparer.Ordinal).Order(StringComparer.Ordinal),
+            lake_manifest_blob_oid = lakeManifestBlobOid,
+            lean_toolchain_blob_oid = leanToolchainBlobOid,
             module_path = path.Value,
             schema = "witness-v1",
-            source_blob_oid = attestation.SourceBlobOid,
-            source_sha256 = "sha256:" + Convert.ToHexStringLower(SHA256.HashData(source.RawBytes.AsSpan())),
+            source_blob_oid = sourceBlobOid,
+            source_sha256 = sourceSha256,
             statement_id = statement.Value,
         });
-        return StructuredCanonicalWriter.WriteJson(material);
+        return WitnessId.Create(FrozenContentHash.Compute(
+            FrozenHashDomains.Witness,
+            StructuredCanonicalWriter.WriteJson(material).AsSpan()));
     }
 
-    private static ImmutableArray<byte> WriteFrozenNode(
+    internal static FrozenNodeId ComputeFrozenNodeId(
         RepoPath path,
         StatementId statement,
         WitnessId witness,
@@ -243,7 +266,9 @@ public static class FrozenContentAddress
             statement_id = statement.Value,
             witness_id = witness.Value,
         });
-        return StructuredCanonicalWriter.WriteJson(material);
+        return FrozenNodeId.Create(FrozenContentHash.Compute(
+            FrozenHashDomains.FrozenNode,
+            StructuredCanonicalWriter.WriteJson(material).AsSpan()));
     }
 
     internal static void ValidateGitBlobOid(string oid, ReadOnlySpan<byte> bytes, string label)
