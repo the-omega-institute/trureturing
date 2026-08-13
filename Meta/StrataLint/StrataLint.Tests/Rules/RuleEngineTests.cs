@@ -288,7 +288,7 @@ public sealed class RuleEngineTests
 
         Assert.Equal(RuleFixture.BlueprintPath, diagnostic.Path);
         Assert.Equal(
-            "Blueprint markdown is a projection: emit it from a .scribe.cs change",
+            "Blueprint markdown is a projection: emit it from a Scribe or digestion source change",
             diagnostic.Message);
     }
 
@@ -303,6 +303,39 @@ public sealed class RuleEngineTests
         fixture.Changes.Add(sourcePath);
 
         Assert.Empty(EvaluateSl025(fixture));
+    }
+
+    [Fact]
+    public void Sl025AcceptsChangedBlueprintMarkdownWithChangedDigestionLedgerSource()
+    {
+        const string sourcePath =
+            "Meta/Digestion/backfill/delta-v0.1/partial-closed/delta-atom.yaml";
+        var fixture = new RuleFixture();
+        fixture.UseValidDirectoryBackfill();
+        fixture.Files[RuleFixture.BlueprintPath] = "# Changed golden ring\n";
+        fixture.Files[sourcePath] = fixture.Files[sourcePath].Replace(
+            "D5/S0/Carrier/BackfillTarget",
+            "D5/S0/Carrier/Ring.goldenRing",
+            StringComparison.Ordinal);
+        fixture.Changes.Add(sourcePath);
+
+        Assert.Empty(EvaluateSl025(fixture));
+    }
+
+    [Fact]
+    public void Sl025RejectsChangedBlueprintMarkdownWithUnrelatedDigestionLedgerSource()
+    {
+        const string sourcePath =
+            "Meta/Digestion/backfill/delta-v0.1/partial-closed/delta-atom.yaml";
+        var fixture = new RuleFixture();
+        fixture.UseValidDirectoryBackfill();
+        fixture.Files[RuleFixture.BlueprintPath] = "# Changed golden ring\n";
+        fixture.Files[sourcePath] += "\n";
+        fixture.Changes.Add(sourcePath);
+
+        var diagnostic = Assert.Single(EvaluateSl025(fixture));
+
+        Assert.Equal(RuleFixture.BlueprintPath, diagnostic.Path);
     }
 
     [Fact]
@@ -329,7 +362,8 @@ public sealed class RuleEngineTests
     private static ImmutableArray<Diagnostic> EvaluateSl025(RuleFixture fixture)
     {
         Assert.True(RuleId.TryCreate("SL-025", out var ruleId));
-        var context = fixture.Changes.Any(path => path.EndsWith(".scribe.cs", StringComparison.Ordinal))
+        var context = fixture.Changes.Any(path =>
+                path.EndsWith(".scribe.cs", StringComparison.Ordinal))
             ? fixture.BuildForProtectedRuleCompatibility()
             : fixture.Build();
         return RuleCatalog.Default.EvaluateSingle(ruleId!, context).Diagnostics;
