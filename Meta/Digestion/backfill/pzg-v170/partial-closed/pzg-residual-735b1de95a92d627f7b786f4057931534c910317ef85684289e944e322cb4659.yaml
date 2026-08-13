@@ -4,6 +4,11 @@ fingerprints:
   normalized_sha256: sha256:735b1de95a92d627f7b786f4057931534c910317ef85684289e944e322cb4659
 cas_ref: sha256:735b1de95a92d627f7b786f4057931534c910317ef85684289e944e322cb4659
 coverage_gids:
+  - D5/S3/Weil/PrimeAddress/PrimeAddress.zeta_has_no_silent_prime_address
+  - D5/S3/Weil/PrimeAddress/PrimeAddress.dirichlet_l_functions_silence_ramified_primes
+  - D5/S3/Weil/PrimeAddress/PrimeAddress.zero_contribution_amplitude_x_beta_cos_gamma_log_x
+  - D5/S3/Weil/PrimeAddress/PrimeAddress.prime_seven_deletion_preserves_nontrivial_zeta_zeros
+  - D5/S3/Weil/PrimeAddress/PrimeAddress.finite_prime_modification_preserves_global_zero_set
   - D5/S3/Zeros/CompletedZeta.zero_quartet_scaling_spec
   - D5/S3/Weil/EulerProduct.finite_euler_zero_free_and_pole_locus
 receipts:
@@ -17,14 +22,10 @@ receipts:
       emission_sha256: sha256:e996c1d6f3fdfa4eb491bb2b3e86e4b7450755e62996a1b9e41f4995ca74c6a3
   unresolved_subitems:
     - finite-euler-window-at-first-zero-numerical-certificate
-    - prime-seven-deletion-preserves-nontrivial-zeta-zeros
     - prime-deletion-numerical-invariance-certificate
-    - finite-prime-modification-preserves-global-zero-set
     - log-prime-rational-independence-from-unique-factorization
     - weyl-dense-winding-of-zero-prime-phases
     - zero-as-infinite-dimensional-kronecker-torus-orbit
-    - zero-contribution-amplitude-x-beta-cos-gamma-log-x
     - rh-equal-loudness-square-root-x-bound
     - dirichlet-l-functions-silence-ramified-primes
-    - zeta-has-no-silent-prime-address
     - bragg-peaks-invariant-under-finite-modification
