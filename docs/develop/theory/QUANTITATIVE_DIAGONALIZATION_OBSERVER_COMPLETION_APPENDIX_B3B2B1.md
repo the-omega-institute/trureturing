@@ -67,18 +67,105 @@ C(\rho)=e^{\beta+i\theta}.
 
 被放大的不是侧别符号 \(\operatorname{sgn}\beta\)，而是函数方程镜像商中保留的连续深度 \(|\beta|\)。
 
-## 推论 B3B2B1.3（自然阶尺度）
+## 定理 B3B2B1.3（给定放大阈值的精确阶数）
 
-当 \(|\beta|\ll1\) 时，使双曲因子显著离开常数量级需要
+设 \(|\beta|>0\)、\(H\ge1\)。定义
 \[
-n|\beta|\gtrsim1.
+t_H(\beta)
+=
+\frac{\operatorname{arcosh}(H)}{|\beta|}
 \]
-因此局部自然阶尺度为
+和最小整数阈值
 \[
-\boxed{n\asymp|\beta|^{-1}.}
+n_H(\beta)
+=
+\left\lceil
+\frac{\operatorname{arcosh}(H)}{|\beta|}
+\right\rceil.
+\]
+则对任意实数 \(t\ge0\)，
+\[
+\boxed{
+\cosh(t|\beta|)\ge H
+\iff
+t\ge t_H(\beta).}
+\]
+并且对任意整数 \(n\ge0\)，
+\[
+\boxed{
+\cosh(n|\beta|)\ge H
+\iff
+n\ge n_H(\beta).}
 \]
 
-这只是局部尺度估计，不含相位对齐成本，也不含其他零点贡献。
+### 证明
+
+函数 \(\cosh\) 在 \([0,\infty)\) 上严格递增，且
+\[
+\operatorname{arcosh}:[1,\infty)\to[0,\infty)
+\]
+是其反函数。由于 \(t|\beta|\ge0\)，有
+\[
+\cosh(t|\beta|)\ge H
+\iff
+t|\beta|\ge\operatorname{arcosh}(H).
+\]
+除以正数 \(|\beta|\) 得第一式。
+
+若 \(n\) 为整数，则第一式给出
+\[
+\cosh(n|\beta|)\ge H
+\iff
+n\ge t_H(\beta).
+\]
+整数 \(n\) 满足右式，当且仅当
+\[
+n\ge\lceil t_H(\beta)\rceil=n_H(\beta).
+\]
+\(\square\)
+
+## 推论 B3B2B1.4（小深度下的严格倒数尺度）
+
+固定 \(H>1\)。则
+\[
+\boxed{
+\frac{\operatorname{arcosh}(H)}{|\beta|}
+\le
+n_H(\beta)
+<
+rac{\operatorname{arcosh}(H)}{|\beta|}+1.}
+\]
+因此当 \(|\beta|\downarrow0\) 时，
+\[
+\boxed{
+|eta|\,n_H(eta)
+\longrightarrow
+\operatorname{arcosh}(H).}
+\]
+
+### 证明
+
+第一组不等式是上取整函数的标准性质
+\[
+x\le\lceil x\rceil<x+1.
+\]
+乘以 \(|\beta|\) 得
+\[
+\operatorname{arcosh}(H)
+\le
+|eta|n_H(eta)
+<
+\operatorname{arcosh}(H)+|eta|.
+\]
+令 \(|\beta|\downarrow0\)，由夹逼定理得到极限。 \(\square\)
+
+所以“检测阶与深度倒数同阶”不再只是启发式：对任意固定双曲放大阈值 \(H>1\)，其最小整数阶具有精确首项
+\[
+n_H(\beta)
+\sim
+\frac{\operatorname{arcosh}(H)}{|\beta|}.
+\]
+该结论仍只控制径向双曲因子；若还要求具体 Li 贡献为负并达到指定幅度，则必须同时控制相位复现和其他零点贡献。
 
 ---
 
@@ -86,11 +173,15 @@ n|\beta|\gtrsim1.
 
 1. 任意非零 Li–Cayley 无向深度都可被整数谐波子序列放大；
 2. 放大率由 \(\cosh(n|\beta|)\) 控制；
-3. 该结论不区分临界线左侧与右侧；
-4. 它是单轨道局部结论，不自动推出完整 Li 系数变负。
+3. 达到固定双曲阈值 \(H\) 的最小整数阶精确为
+   \[
+   \left\lceil\operatorname{arcosh}(H)/|\beta|\right\rceil;
+   \]
+4. 该结论不区分临界线左侧与右侧；
+5. 它是单轨道局部结论，不自动推出完整 Li 系数变负。
 
 ---
 
 ## 形式化状态
 
-B3B2B1.1—B3B2B1.3 均为完整纸面证明，尚未新增为 Lean 真源。
+B3B2B1.1—B3B2B1.4 均为完整纸面证明，尚未新增为 Lean 真源。
