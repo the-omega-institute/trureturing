@@ -220,8 +220,6 @@ fi
 LAKE_BIN="${LAKE_BIN:-$(command -v lake || true)}"
 [[ -n "$LAKE_BIN" && "$LAKE_BIN" == /* && -x "$LAKE_BIN" ]] \
   || { echo "local-harness-gate: an absolute lake executable is required" >&2; exit 2; }
-REPORTS="$TMP_ROOT/reports"
-mkdir -p "$REPORTS"
 PRODUCER="$JUDGE_ROOT/Meta/StrataLint/lean-inspector/inspect.sh"
 [[ -x "$PRODUCER" ]] \
   || { echo "local-harness-gate: dev Lean producer is absent" >&2; exit 2; }
@@ -244,18 +242,15 @@ run_stage lean-reports \
   --lake-bin "$LAKE_BIN" \
   --candidate-root "$CANDIDATE_ROOT" \
   --candidate-output "$CANDIDATE_REPORT" \
-  --baseline-root "$JUDGE_ROOT" \
-  --baseline-output "$REPORTS/baseline-lean-report.json"
-GATE="$JUDGE_ROOT/.github/scripts/harness-gate.sh"
-[[ -x "$GATE" ]] || { echo "local-harness-gate: dev gate is absent" >&2; exit 2; }
+  --single
+GATE="$CANDIDATE_ROOT/.github/scripts/harness-gate.sh"
+[[ -x "$GATE" ]] || { echo "local-harness-gate: candidate gate is absent" >&2; exit 2; }
 admission_started="$(date +%s)"
 set +e
 STRATALINT_TIMING="$SHARED_TIMING_FILE" "$GATE" \
   --candidate "$CANDIDATE_ROOT" \
-  --judge-root "$JUDGE_ROOT" \
   --base "$BASE_SHA" \
-  --candidate-lean-report "$CANDIDATE_REPORT" \
-  --baseline-lean-report "$REPORTS/baseline-lean-report.json"
+  --candidate-lean-report "$CANDIDATE_REPORT"
 gate_rc=$?
 set -e
 if [[ -s "$SHARED_TIMING_FILE" ]]; then

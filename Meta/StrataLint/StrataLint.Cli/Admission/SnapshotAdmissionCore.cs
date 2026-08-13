@@ -6,9 +6,7 @@ namespace StrataLint.Cli;
 internal sealed record SnapshotAdmissionEvaluation(
     AdmissionOutcome Outcome,
     AcceptedLeanClosure? CurrentLean,
-    AcceptedLeanClosure? BaselineLean,
-    AcyclicTruthDag? CurrentDag,
-    AcyclicTruthDag? BaselineDag);
+    AcyclicTruthDag? CurrentDag);
 
 internal static class SnapshotAdmissionCore
 {
@@ -16,8 +14,6 @@ internal static class SnapshotAdmissionCore
         RepositorySnapshot current,
         RepositorySnapshot baseline,
         LeanAxiomReport currentReport,
-        // 可空:旧侧 Lean 报告只有 Hearts.lean 变动时才需要,CI 默认不再产它。
-        LeanAxiomReport? baselineReport,
         RawChangeSet changes,
         BootstrapOutcome bootstrap,
         VerifiedScribeEmissions? verifiedScribeEmissions,
@@ -49,30 +45,13 @@ internal static class SnapshotAdmissionCore
                     throw new InvalidOperationException(failure.Message),
             };
             var lean = ValidateLean(current, currentReport);
-            var baselineLean = baselineReport is null ? null : ValidateLean(baseline, baselineReport);
             var dagOutcome = AcyclicTruthDag.Build(current, lean);
             if (dagOutcome is DagBuildOutcome.Rejected rejectedDag)
             {
                 return new SnapshotAdmissionEvaluation(
                     RejectCycle(rejectedDag.Witness, sl022Diagnostics),
                     lean,
-                    baselineLean,
-                    null,
                     null);
-            }
-
-            // 旧侧 DAG 的无环性在 base 自己合入时就判过了,同一输入不再判第二次
-            // (第Ⅵ節 一事不再理)。没有旧侧 Lean 报告时跳过,而不是拿它当失败。
-            DagBuildOutcome? baselineDagOutcome = null;
-            if (baselineLean is not null)
-            {
-                baselineDagOutcome = AcyclicTruthDag.Build(baseline, baselineLean);
-                if (baselineDagOutcome is DagBuildOutcome.Rejected baselineRejected)
-                {
-                    return Failure(
-                        "protected baseline truth DAG is cyclic: "
-                        + string.Join(" -> ", baselineRejected.Witness.Select(static path => path.Value)));
-                }
             }
 
             var admission = bootstrap switch
@@ -82,7 +61,6 @@ internal static class SnapshotAdmissionCore
                     baseline,
                     registry.Policy,
                     lean,
-                    baselineLean,
                     changes,
                     clear.Capability,
                     verifiedScribeEmissions,
@@ -93,7 +71,6 @@ internal static class SnapshotAdmissionCore
                         baseline,
                         registry.Policy,
                         lean,
-                        baselineLean,
                         changes,
                         protectedSurfaceVerification.ChangeSet,
                         verifiedScribeEmissions,
@@ -109,9 +86,7 @@ internal static class SnapshotAdmissionCore
             return new SnapshotAdmissionEvaluation(
                 admission,
                 lean,
-                baselineLean,
-                ((DagBuildOutcome.Accepted)dagOutcome).Capability,
-                (baselineDagOutcome as DagBuildOutcome.Accepted)?.Capability);
+                ((DagBuildOutcome.Accepted)dagOutcome).Capability);
         }
         catch (Exception exception)
         {
@@ -121,8 +96,6 @@ internal static class SnapshotAdmissionCore
 
     private static SnapshotAdmissionEvaluation Failure(string message) => new(
         new AdmissionOutcome.InfrastructureFailure(message),
-        null,
-        null,
         null,
         null);
 

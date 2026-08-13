@@ -156,9 +156,11 @@ public sealed partial class MakeWorkflowTests
         Assert.Contains("mark build-judge", sharedGate, StringComparison.Ordinal);
         Assert.DoesNotContain("PrAEffectiveness", makefile, StringComparison.Ordinal);
         Assert.DoesNotContain("STRATALINT_TIMING:-1", sharedGate, StringComparison.Ordinal);
-        Assert.Contains("$JUDGE_ROOT/.github/scripts/harness-gate.sh", localGate, StringComparison.Ordinal);
+        Assert.Contains("$CANDIDATE_ROOT/.github/scripts/harness-gate.sh", localGate, StringComparison.Ordinal);
         Assert.Contains("--candidate-lean-report", localGate, StringComparison.Ordinal);
-        Assert.Contains("--baseline-lean-report", localGate, StringComparison.Ordinal);
+        Assert.DoesNotContain("--baseline-lean-report", localGate, StringComparison.Ordinal);
+        Assert.DoesNotContain("--frozen-evidence-root", localGate, StringComparison.Ordinal);
+        Assert.DoesNotContain("--judge-root", localGate, StringComparison.Ordinal);
         Assert.DoesNotContain("verify-conservative", sharedGate, StringComparison.Ordinal);
         Assert.Contains("STRATALINT_GATE_OUTCOME_DIR", sharedGate + preflight, StringComparison.Ordinal);
         Assert.Contains("gate-outcome-v1", sharedGate + preflight, StringComparison.Ordinal);

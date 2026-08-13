@@ -15,7 +15,7 @@ StrataLint commands:
 
 ```text
 Meta/StrataLint/lean-inspector/inspect.sh --repository ROOT --output REPORT
-Meta/StrataLint check [--protected-base REV] --candidate-lean-report FILE --baseline-lean-report FILE
+Meta/StrataLint check [--protected-base REV] --candidate-lean-report FILE
 Meta/StrataLint coverage [--json]
 Meta/StrataLint ledger-genesis --revision EXACT_COMMIT_OID
 Meta/StrataLint route MANIFEST|-
@@ -26,7 +26,8 @@ Meta/StrataLint worktree --branch NAME --path DIR [--base REV] [--skip-restore]
 
 Lean inspection and .NET admission are separate programs. The inspector runs in
 the pinned Lean environment and emits source-bound canonical JSON plus a SHA-256
-sidecar; `check` consumes candidate and baseline reports without invoking Lean.
+sidecar; `check` consumes the candidate report without invoking Lean. Baseline and fork-point
+state remain Git object snapshots used by repository rules.
 
 `worktree` fetches a remote base, compares the exact `lean-toolchain` and
 `lake-manifest.json` bytes, and only then copies `.lake` from a matching worktree.

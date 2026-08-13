@@ -39,26 +39,6 @@ internal static partial class HeartsAuthorizationLedger
         return entries.ToImmutable();
     }
 
-    internal static ImmutableArray<HeartsAuthorizationEntry> ReadAppendOnly(
-        RepositorySnapshot current,
-        RepositorySnapshot baseline)
-    {
-        ArgumentNullException.ThrowIfNull(current);
-        ArgumentNullException.ThrowIfNull(baseline);
-        if (baseline.TryGetFile(Path, out var baselineFile)
-            && (!current.TryGetFile(Path, out var currentFile)
-                || currentFile.RawBytes.Length < baselineFile.RawBytes.Length
-                || !currentFile.RawBytes.AsSpan()[..baselineFile.RawBytes.Length]
-                    .SequenceEqual(baselineFile.RawBytes.AsSpan())))
-        {
-            throw new FormatException("Hearts authorization ledger is append-only");
-        }
-
-        return current.TryGetFile(Path, out var candidateFile)
-            ? Read(candidateFile.Text)
-            : ImmutableArray<HeartsAuthorizationEntry>.Empty;
-    }
-
     private static HeartsAuthorizationEntry ReadRow(string row)
     {
         var parts = row.Split('|');
