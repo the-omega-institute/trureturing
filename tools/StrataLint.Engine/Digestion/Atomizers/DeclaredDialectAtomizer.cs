@@ -21,9 +21,14 @@ internal static class DeclaredDialectAtomizer
         ArgumentNullException.ThrowIfNull(rules);
         var dialect = Require(atomizerId, rules);
         var pattern = new Regex(dialect.ClaimPattern, RegexOptions.CultureInvariant);
-        return MarkdownAstAtomizer.Atomize(
-            bytes,
-            paragraph => Identify(paragraph, dialect, pattern));
+        return dialect.HeadingClaims
+            ? MarkdownAstAtomizer.Atomize(
+                bytes,
+                static _ => null,
+                identifyHeading: heading => Identify(heading, dialect, pattern))
+            : MarkdownAstAtomizer.Atomize(
+                bytes,
+                paragraph => Identify(paragraph, dialect, pattern));
     }
 
     internal static DeclaredDialect Require(string atomizerId, TheoryAtomizerRules rules)

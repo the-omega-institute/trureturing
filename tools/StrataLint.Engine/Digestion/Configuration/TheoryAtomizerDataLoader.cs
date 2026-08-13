@@ -9,11 +9,15 @@ internal sealed record AtomizerMapping(string Token, string Value);
 /// <summary>
 /// A dialect declared entirely in data: one claim pattern plus the genres it may name.
 /// A volume in a new shape is digested by adding one of these, not by writing an atomizer.
+/// <see cref="HeadingClaims"/> selects which block kind carries the claims: a volume
+/// states them either as paragraph leads or as headings, never mixed, so the target is a
+/// property of the dialect rather than of the pattern.
 /// </summary>
 internal sealed record DeclaredDialect(
     string Id,
     string ClaimPattern,
-    ImmutableArray<AtomizerMapping> Genres);
+    ImmutableArray<AtomizerMapping> Genres,
+    bool HeadingClaims);
 
 internal sealed class TheoryAtomizerRules
 {
@@ -21,7 +25,7 @@ internal sealed class TheoryAtomizerRules
         StringComparer.Ordinal, "theorem", "definition", "proposition", "lemma", "corollary",
         "observation", "survey", "note", "remark", "ledger", "entry", "axiom", "example",
         "criterion", "consequence", "principle", "specification", "contract", "theorem-form",
-        "frontier-note", "extension-table", "route");
+        "frontier-note", "extension-table", "route", "algorithm");
 
     internal TheoryAtomizerRules(
         ImmutableArray<AtomizerMapping> observerClaimPrefixes,
@@ -240,7 +244,25 @@ internal static class TheoryAtomizerDataLoader
         var builder = ImmutableDictionary.CreateBuilder<string, DeclaredDialect>(StringComparer.Ordinal);
         foreach (var row in declarations)
         {
-            RequireFields(row, "id", "claim");
+            var target = row.GetValueOrDefault("target");
+            if (target is not null)
+            {
+                RequireFields(row, "id", "claim", "target");
+                if (target != "heading")
+                {
+                    // The target alphabet is closed: the only declared alternative to the
+                    // paragraph default is heading claims, and an unknown value must not
+                    // silently fall back to either.
+                    throw new FormatException(
+                        $"Dialect '{row.GetValueOrDefault("id")}' names unknown claim target '{target}'. "
+                        + "Accepted targets: heading.");
+                }
+            }
+            else
+            {
+                RequireFields(row, "id", "claim");
+            }
+
             if (!ids.Add(row["id"]))
             {
                 throw new FormatException($"Duplicate dialect id '{row["id"]}'.");
@@ -297,7 +319,11 @@ internal static class TheoryAtomizerDataLoader
                 .OrderByDescending(static item => item.Token.Length)
                 .ThenBy(static item => item.Token, StringComparer.Ordinal)
                 .ToImmutableArray();
-            builder.Add(row["id"], new DeclaredDialect(row["id"], row["claim"], genres));
+            builder.Add(row["id"], new DeclaredDialect(
+                row["id"],
+                row["claim"],
+                genres,
+                row.GetValueOrDefault("target") == "heading"));
         }
 
         return builder.ToImmutable();
