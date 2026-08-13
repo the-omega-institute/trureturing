@@ -140,7 +140,10 @@ public sealed partial class MakeWorkflowTests
         var makefile = File.ReadAllText(Path.Combine(root, "Makefile"));
 
         Assert.Contains("make -C candidate dotnet", workflow, StringComparison.Ordinal);
-        Assert.Contains("make -C candidate test", workflow, StringComparison.Ordinal);
+        // expand 窗口:engineering 测试腿按候选布局探测(tools → tools-test,旧布局 → test)。
+        Assert.Contains("target=test", workflow, StringComparison.Ordinal);
+        Assert.Contains("[ -d candidate/tools ] && target=tools-test", workflow, StringComparison.Ordinal);
+        Assert.Contains("make -C candidate \"$target\"", workflow, StringComparison.Ordinal);
         Assert.Contains("make -C candidate selftest", workflow, StringComparison.Ordinal);
         Assert.Contains("lean-report-pair.sh", localGate, StringComparison.Ordinal);
         Assert.Contains("--single", localGate, StringComparison.Ordinal);
@@ -332,7 +335,8 @@ public sealed partial class MakeWorkflowTests
             admission,
             StringComparison.Ordinal);
         Assert.Contains("steps.lean-report-cache.outputs.cache-hit", workflow, StringComparison.Ordinal);
-        Assert.Contains(LeanReportInputScriptPath, workflow, StringComparison.Ordinal);
+        Assert.Contains("$hroot/scripts/report/lean-report-input.sh", workflow, StringComparison.Ordinal);
+        Assert.Contains("hroot=\"$GITHUB_WORKSPACE/candidate/tools\"", workflow, StringComparison.Ordinal);
         Assert.Contains("\" verify \\", workflow, StringComparison.Ordinal);
         Assert.Contains(".lake/build/stratalint/raw-lean-report.json", workflow, StringComparison.Ordinal);
         Assert.Contains("timeout-minutes: 36", workflow, StringComparison.Ordinal);
@@ -355,10 +359,10 @@ public sealed partial class MakeWorkflowTests
         Assert.DoesNotContain("theory-ingest-bot", workflow, StringComparison.Ordinal);
         Assert.DoesNotContain("THEORY-INGEST-REGISTRY-001", workflow, StringComparison.Ordinal);
         var ingestIndex = workflow.IndexOf("make ingest BASE=${{ steps.base.outputs.sha }}", StringComparison.Ordinal);
-        var closureIndex = workflow.IndexOf(TheoryIngestClosureScriptPath, StringComparison.Ordinal);
+        var closureIndex = workflow.IndexOf(
+            "$hroot/scripts/workflow/theory-ingest-closure.sh", StringComparison.Ordinal);
         Assert.True(ingestIndex >= 0, "ingest must receive the resolved merge-base SHA");
         Assert.True(closureIndex > ingestIndex, "closure must run after ingest");
-        Assert.Contains("$GITHUB_WORKSPACE/candidate/" + TheoryIngestClosureScriptPath, workflow, StringComparison.Ordinal);
         Assert.DoesNotContain("THEORY_INGEST_OVERLAY_PATHS", workflow, StringComparison.Ordinal);
         Assert.DoesNotContain("Overlay judge", workflow, StringComparison.Ordinal);
         Assert.DoesNotContain("rsync", workflow, StringComparison.Ordinal);

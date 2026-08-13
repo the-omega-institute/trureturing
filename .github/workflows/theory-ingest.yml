@@ -55,7 +55,9 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          helper="$GITHUB_WORKSPACE/candidate/Meta/StrataLint/scripts/report/lean-report-input.sh"
+          hroot="$GITHUB_WORKSPACE/candidate/tools"
+          [ -d "$hroot" ] || hroot="$GITHUB_WORKSPACE/candidate/Meta/StrataLint"
+          helper="$hroot/scripts/report/lean-report-input.sh"
           test -x "$helper"
           read -r address _ <<< "$("$helper" address --repository "$GITHUB_WORKSPACE/candidate")"
           [[ "$address" =~ ^[0-9a-f]{64}$ ]]
@@ -132,7 +134,9 @@ jobs:
           for suffix in '' .sha256 .input.attestation .provenance.json; do
             test -s "${report}${suffix}"
           done
-          "$GITHUB_WORKSPACE/candidate/Meta/StrataLint/scripts/report/lean-report-input.sh" verify \
+          hroot="$GITHUB_WORKSPACE/candidate/tools"
+          [ -d "$hroot" ] || hroot="$GITHUB_WORKSPACE/candidate/Meta/StrataLint"
+          "$hroot/scripts/report/lean-report-input.sh" verify \
             --repository "$GITHUB_WORKSPACE/candidate" \
             --report "$report"
           printf '%s\n' \
@@ -150,5 +154,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          "$GITHUB_WORKSPACE/candidate/Meta/StrataLint/scripts/workflow/theory-ingest-closure.sh" \
+          hroot="$GITHUB_WORKSPACE/candidate/tools"
+          [ -d "$hroot" ] || hroot="$GITHUB_WORKSPACE/candidate/Meta/StrataLint"
+          "$hroot/scripts/workflow/theory-ingest-closure.sh" \
             "$GITHUB_WORKSPACE/candidate"

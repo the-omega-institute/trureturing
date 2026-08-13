@@ -117,14 +117,19 @@ jobs:
 
       - name: Restore candidate locked dependencies
         run: |
-          dotnet restore candidate/Meta/StrataLint/CompileFailProof/CompileFailProof.csproj --locked-mode
-          dotnet restore candidate/Meta/StrataLint/BannedApiCompileFailProof/BannedApiCompileFailProof.csproj --locked-mode
+          proofs="candidate/tools/tests"
+          [ -d "$proofs" ] || proofs="candidate/Meta/StrataLint"
+          dotnet restore "$proofs/CompileFailProof/CompileFailProof.csproj" --locked-mode
+          dotnet restore "$proofs/BannedApiCompileFailProof/BannedApiCompileFailProof.csproj" --locked-mode
 
       - name: Build candidate with warnings as errors
         run: make -C candidate dotnet
 
       - name: Run candidate golden and integration tests
-        run: make -C candidate test
+        run: |
+          target=test
+          [ -d candidate/tools ] && target=tools-test
+          make -C candidate "$target"
 
       - name: Run candidate selftest twice and compare bytes
         shell: bash
@@ -134,7 +139,9 @@ jobs:
         shell: bash
         run: |
           set +e
-          output="$(dotnet build candidate/Meta/StrataLint/CompileFailProof/CompileFailProof.csproj --no-restore --configuration Release 2>&1)"
+          proofs="candidate/tools/tests"
+          [ -d "$proofs" ] || proofs="candidate/Meta/StrataLint"
+          output="$(dotnet build "$proofs/CompileFailProof/CompileFailProof.csproj" --no-restore --configuration Release 2>&1)"
           status=$?
           set -e
           printf '%s\n' "$output"
@@ -145,9 +152,11 @@ jobs:
       - name: Prove banned deterministic APIs do not compile
         shell: bash
         run: |
-          proof="candidate/Meta/StrataLint/BannedApiCompileFailProof/BannedApiViolations.cs"
+          proofs="candidate/tools/tests"
+          [ -d "$proofs" ] || proofs="candidate/Meta/StrataLint"
+          proof="$proofs/BannedApiCompileFailProof/BannedApiViolations.cs"
           set +e
-          output="$(dotnet build candidate/Meta/StrataLint/BannedApiCompileFailProof/BannedApiCompileFailProof.csproj --no-restore --configuration Release 2>&1)"
+          output="$(dotnet build "$proofs/BannedApiCompileFailProof/BannedApiCompileFailProof.csproj" --no-restore --configuration Release 2>&1)"
           status=$?
           set -e
           printf '%s\n' "$output"
@@ -221,7 +230,9 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          helper="$GITHUB_WORKSPACE/candidate/Meta/StrataLint/scripts/report/lean-report-input.sh"
+          hroot="$GITHUB_WORKSPACE/candidate/tools"
+          [ -d "$hroot" ] || hroot="$GITHUB_WORKSPACE/candidate/Meta/StrataLint"
+          helper="$hroot/scripts/report/lean-report-input.sh"
           test -x "$helper"
           read -r address _ _ \
             <<< "$("$helper" address --repository "$GITHUB_WORKSPACE/candidate")"
@@ -262,7 +273,9 @@ jobs:
           for suffix in '' .sha256 .input.attestation .provenance.json; do
             test -s "${source}${suffix}"
           done
-          helper="$GITHUB_WORKSPACE/candidate/Meta/StrataLint/scripts/report/lean-report-input.sh"
+          hroot="$GITHUB_WORKSPACE/candidate/tools"
+          [ -d "$hroot" ] || hroot="$GITHUB_WORKSPACE/candidate/Meta/StrataLint"
+          helper="$hroot/scripts/report/lean-report-input.sh"
           # 缓存条目对候选树重新验一次地址与报告哈希;不符即整体回落,不静默使用。
           "$helper" verify --repository "$GITHUB_WORKSPACE/candidate" --report "$source"
           for suffix in '' .input.attestation .provenance.json; do
@@ -346,10 +359,12 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          producer="$GITHUB_WORKSPACE/candidate/Meta/StrataLint/lean-inspector/inspect.sh"
-          pair_producer="$GITHUB_WORKSPACE/candidate/Meta/StrataLint/scripts/lean-report-pair.sh"
+          hroot="$GITHUB_WORKSPACE/candidate/tools"
+          [ -d "$hroot" ] || hroot="$GITHUB_WORKSPACE/candidate/Meta/StrataLint"
+          producer="$hroot/lean-inspector/inspect.sh"
+          pair_producer="$hroot/scripts/lean-report-pair.sh"
           test -x "$producer"
-          test -f "$GITHUB_WORKSPACE/candidate/Meta/StrataLint/lean-inspector/Inspector.lean"
+          test -f "$hroot/lean-inspector/Inspector.lean"
           test -x "$pair_producer"
           reports="$RUNNER_TEMP/raw-lean-reports"
           mkdir -p "$reports"
@@ -372,7 +387,9 @@ jobs:
           results="$RUNNER_TEMP/scribe-live-report-reconciliation.trx"
           mkdir -p "$(dirname "$target")"
           cp "$report" "$target"
-          dotnet test candidate/Meta/StrataLint/StrataLint.Scribe.Tests/StrataLint.Scribe.Tests.csproj \
+          scribe_tests="candidate/tools/tests/StrataLint.Scribe.Tests"
+          [ -d "$scribe_tests" ] || scribe_tests="candidate/Meta/StrataLint/StrataLint.Scribe.Tests"
+          dotnet test "$scribe_tests/StrataLint.Scribe.Tests.csproj" \
             --configuration Release \
             --filter 'FullyQualifiedName=StrataLint.Scribe.Tests.StatementProjectionPilotTests.LiveReportMatchesPinnedFixtureWhenAvailable|FullyQualifiedName=StrataLint.Scribe.Tests.DocumentDiscoveryTests.GeneratedMarkdownIsDeterministicAndMatchesTheCommittedTree' \
             --logger "trx;LogFileName=$results" \
@@ -408,7 +425,9 @@ jobs:
           test "$declaredSha256" = "$reportSha256"
           test "$declaredName" = "$(basename "$source")"
           printf '%s  %s\n' "$reportSha256" "$(basename "$target")" > "${target}.sha256"
-          "$GITHUB_WORKSPACE/candidate/Meta/StrataLint/scripts/report/lean-report-input.sh" verify \
+          hroot="$GITHUB_WORKSPACE/candidate/tools"
+          [ -d "$hroot" ] || hroot="$GITHUB_WORKSPACE/candidate/Meta/StrataLint"
+          "$hroot/scripts/report/lean-report-input.sh" verify \
             --repository "$GITHUB_WORKSPACE/candidate" \
             --report "$target"
 
