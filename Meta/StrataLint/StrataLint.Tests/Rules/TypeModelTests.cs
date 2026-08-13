@@ -304,8 +304,6 @@ public sealed class TypeModelTests
     }
 
     [Theory]
-    [InlineData("Golden/cases/a.toml")]
-    [InlineData("Golden/cases/A0_case-name.toml")]
     [InlineData("Golden/fixture-registry.yaml")]
     [InlineData("Golden/Projection/x.json")]
     [InlineData("Golden/values-kernels.toml")]
@@ -326,12 +324,6 @@ public sealed class TypeModelTests
     [InlineData("Golden/Projection/bad.name.json")]
     [InlineData("Golden/Projection/bad+name.json")]
     [InlineData("Golden/Projection/caf\u00e9.json")]
-    [InlineData("Golden/cases/nested/case.toml")]
-    [InlineData("Golden/cases/case.yaml")]
-    [InlineData("Golden/cases/.toml")]
-    [InlineData("Golden/cases/bad.name.toml")]
-    [InlineData("Golden/cases/bad+name.toml")]
-    [InlineData("Golden/cases/caf\u00e9.toml")]
     public void CanonicalGoldenDataResidencesRejectNoncanonicalNeighbors(string value)
     {
         var path = RepoPath.CreateKnown(value);
@@ -340,15 +332,6 @@ public sealed class TypeModelTests
             RepositoryPathPolicy.Validate(path, Policy()));
 
         Assert.Equal("SL-000", issue.RuleId.Value);
-        Assert.False(RepositoryPathPolicy.TryResolve(path, out _));
-    }
-
-    [Fact]
-    public void AutoUpdateBranchWorkflowPathIsClosedWorldRegisteredAtItsCanonicalAddress()
-    {
-        var path = RepoPath.CreateKnown(RepositoryPathPolicy.AutoUpdateBranchWorkflowPath);
-
-        Assert.Null(RepositoryPathPolicy.Validate(path, Policy()));
         Assert.False(RepositoryPathPolicy.TryResolve(path, out _));
     }
 

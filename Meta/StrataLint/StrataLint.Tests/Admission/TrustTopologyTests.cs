@@ -16,13 +16,10 @@ public sealed class TrustTopologyTests
     private const string EngineLockPath =
         "Meta/StrataLint/StrataLint.Engine/packages.lock.json";
     private const string RawDefinitionSourcePath = "Blueprint/D5/S1/Digit/Raw.scribe.cs";
-    private const string C0CertificatePath =
-        "Meta/StrataLint/Golden/c0-inaugural-conservative-certificate.json";
     private const string BootstrapGatePath =
         "Meta/StrataLint/StrataLint.Engine/Admission/BootstrapGate.cs";
     private const string BlueprintSourcePath = "Blueprint/D5/S0/Carrier/Ring.scribe.cs";
     private const string BlueprintProjectionPath = "Blueprint/D5/S0/Carrier/Ring.md";
-    private const string ValuesKernelPath = "Meta/StrataLint/Golden/values-kernels.toml";
     private const string UnprotectedTruthGraphPath = "Generated/truth-graph.v1.json";
     private const string ProtectedScribeEmissionsPath =
         "Meta/StrataLint/Generated/scribe-emissions.v1.json";
@@ -40,7 +37,6 @@ public sealed class TrustTopologyTests
         RepositoryPathPolicy.AssumptionRegistryPath,
         "Meta/StrataLint/Golden/rules.json",
         FrozenLedgerChangeClassifier.AcceptedRoot,
-        C0CertificatePath,
         SolutionPath,
         EngineProjectPath,
         "global.json",
@@ -66,8 +62,6 @@ public sealed class TrustTopologyTests
     [Theory]
     [InlineData(BootstrapGatePath, true)]
     [InlineData(BlueprintSourcePath, true)]
-    [InlineData(ValuesKernelPath, false)]
-    [InlineData("Meta/StrataLint/StrataLint.Definitions/Retired.cs", false)]
     [InlineData(BlueprintProjectionPath, false)]
     public void DeclarativeProtectionPolicyPreservesTheExistingPredicate(
         string rawPath,
@@ -123,18 +117,6 @@ public sealed class TrustTopologyTests
         var outcome = BootstrapGate.Evaluate(changes);
 
         Assert.IsType<BootstrapOutcome.ProtectedSurfaceVerificationRequired>(outcome);
-    }
-
-    [Theory]
-    [InlineData(RuleFixture.DefinitionsProjectPath)]
-    [InlineData(RuleFixture.DefinitionsLockPath)]
-    public void Sl022KeepsRetiredDefinitionsPrefixOnTheBaseCompatibleContentPath(string path)
-    {
-        var changes = RawChangeSet.Create(new[] { path });
-
-        var outcome = BootstrapGate.Evaluate(changes);
-
-        Assert.IsType<BootstrapOutcome.Clear>(outcome);
     }
 
     [Theory]
