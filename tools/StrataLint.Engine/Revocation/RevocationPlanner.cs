@@ -278,9 +278,18 @@ public static class RevocationPlanner
         }
 
         var reverse = new Dictionary<FrozenNodeId, HashSet<FrozenNodeId>>();
-        foreach (var freeze in events.OfType<FrozenLedgerEvent.Freeze>())
+        var eventArray = events.ToImmutableArray();
+        var currentEdges = eventArray.Any(static item =>
+                item is FrozenLedgerEvent.EnvironmentRecoordinate)
+            ? activeEntries.Values.Select(static entry => (
+                Node: entry.Material.FrozenNodeId,
+                Prerequisites: entry.Material.PrerequisiteFrozenNodeIds))
+            : eventArray.OfType<FrozenLedgerEvent.Freeze>().Select(static freeze => (
+                Node: freeze.Payload.FrozenNodeId,
+                Prerequisites: freeze.Payload.PrerequisiteFrozenNodeIds));
+        foreach (var (node, prerequisites) in currentEdges)
         {
-            foreach (var prerequisite in freeze.Payload.PrerequisiteFrozenNodeIds)
+            foreach (var prerequisite in prerequisites)
             {
                 if (!reverse.TryGetValue(prerequisite, out var dependents))
                 {
@@ -288,21 +297,7 @@ public static class RevocationPlanner
                     reverse.Add(prerequisite, dependents);
                 }
 
-                dependents.Add(freeze.Payload.FrozenNodeId);
-            }
-        }
-
-        foreach (var recoordinate in events.OfType<FrozenLedgerEvent.EnvironmentRecoordinate>())
-        {
-            foreach (var prerequisite in recoordinate.Payload.NewPrerequisiteFrozenNodeIds)
-            {
-                if (!reverse.TryGetValue(prerequisite, out var dependents))
-                {
-                    dependents = new HashSet<FrozenNodeId>();
-                    reverse.Add(prerequisite, dependents);
-                }
-
-                dependents.Add(recoordinate.Payload.NewFrozenNodeId);
+                dependents.Add(node);
             }
         }
 
