@@ -8,7 +8,7 @@
 import Mathlib.Algebra.ContinuedFractions.Computation.TerminatesIffRat
 import Mathlib.NumberTheory.Real.Irrational
 
-namespace D5.S1.Depth
+namespace D5.S1.Depth.IrrationalContinuedFractionNontermination
 
 /- Provenance: Thin wrapper around Mathlib's rationality criterion. -/
 
@@ -18,4 +18,4 @@ theorem irrational_continued_fraction_nontermination {x : ℝ} (hx : Irrational 
   rcases (GenContFract.terminates_iff_rat x).mp hterm with ⟨q, hq⟩
   exact hx ⟨q, hq.symm⟩
 
-end D5.S1.Depth
+end D5.S1.Depth.IrrationalContinuedFractionNontermination
