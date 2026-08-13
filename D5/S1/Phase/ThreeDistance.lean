@@ -9,7 +9,7 @@ import D5.S1.Phase.ThreeGap.Main
 
 namespace D5.S1.Phase
 
-/-- The `N` points `{n * phi}` for `0 ≤ n < N`. -/
+/-- The `N` orbit points `{n * phi}` for `0 ≤ n < N`. -/
 noncomputable def goldenOrbit (N : ℕ) : Finset ℝ :=
   ThreeGap.orbit Real.goldenRatio N
 
