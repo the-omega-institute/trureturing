@@ -87,6 +87,15 @@ internal sealed record DigestionAtomStatusMarker(
         var markerStart = titleEnd + 3 + whitespaceLength;
         var markerEnd = atomText.IndexOf('〕', markerStart);
         var marker = markerEnd < 0 ? atomText[markerStart..] : atomText[markerStart..markerEnd];
+        var namespaceMarker = marker.AsSpan().TrimStart();
+        if (!namespaceMarker.StartsWith("closed", StringComparison.Ordinal)
+            || (namespaceMarker.Length > "closed".Length
+                && namespaceMarker["closed".Length] is not (';' or '；')
+                && !char.IsWhiteSpace(namespaceMarker["closed".Length])))
+        {
+            return Absent;
+        }
+
         var separator = marker.IndexOf(';', StringComparison.Ordinal);
         var status = separator < 0 ? marker : marker[..separator];
         var qualifier = separator < 0 ? null : marker[(separator + 1)..];
