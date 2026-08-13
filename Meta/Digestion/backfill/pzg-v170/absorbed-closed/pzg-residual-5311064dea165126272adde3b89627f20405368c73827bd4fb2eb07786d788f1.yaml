@@ -5,13 +5,20 @@ fingerprints:
 cas_ref: sha256:5311064dea165126272adde3b89627f20405368c73827bd4fb2eb07786d788f1
 coverage_gids:
   - D5/S0/Computability/TotalOrbitEvaluator.no_computable_total_orbit_evaluator
+  - D5/S0/Computability/Diagonalization/BooleanStreamDiagonal.boolean_stream_diagonal_exceeds_every_history
 receipts:
   coverage:
     - gid: D5/S0/Computability/TotalOrbitEvaluator.no_computable_total_orbit_evaluator
       source_sha256: sha256:5311064dea165126272adde3b89627f20405368c73827bd4fb2eb07786d788f1
       target_sha256: sha256:235378d0b338715dc0b3284434a72748eca35d95b6ba445314e6b14b531f7075
+    - gid: D5/S0/Computability/Diagonalization/BooleanStreamDiagonal.boolean_stream_diagonal_exceeds_every_history
+      source_sha256: sha256:5311064dea165126272adde3b89627f20405368c73827bd4fb2eb07786d788f1
+      target_sha256: sha256:d3de74e948cb907fa15635dc3555fe172bdcd9bdb19321b2604137c1d8a7de77
   scribe:
     - gid: D5/S0/Computability/TotalOrbitEvaluator.no_computable_total_orbit_evaluator
       definition_sha256: sha256:85b06bea0b4adeb931ed476eacc734e59e48b5d5bae19a2fc3ad83405498a905
       emission_sha256: sha256:954b4043f5a09c7066d4f00be05a9b4deabdf1cd77342c8bfae58bc6411122aa
+    - gid: D5/S0/Computability/Diagonalization/BooleanStreamDiagonal.boolean_stream_diagonal_exceeds_every_history
+      definition_sha256: sha256:ee060a76651330803b236de9f6255e2d6e0645b08a873a0bfcf6f6862bf83a04
+      emission_sha256: sha256:88346a47ef1d58e2623f7bfb374eff5df796393e500a9d6596f36f3a8d1aaec1
   unresolved_subitems: []
