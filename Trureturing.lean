@@ -11,7 +11,6 @@ import D5.S0.Diagonal.MarginBound
 import D5.S0.Diagonal.MarginVanishing
 import D5.S0.Diagonal.EscapeAsymptotics
 import D5.S0.Diagonal.EquivariantEscape
-import D5.S0.Asymptotics.FiniteProgramLevelSet
 import D5.S0.Naming.NamingSystem
 import D5.S0.Tower.ConstantArms
 import D5.S0.Tower.ChampionExtremality
