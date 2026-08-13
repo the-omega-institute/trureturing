@@ -1595,7 +1595,8 @@ p_0\mapsto p_1\mapsto\cdots
 \[
 \delta_{\mathrm{br}}(\tau,\sigma)
 =
-\min\{h:\mathfrak N_h(\tau)\neq
+\min\{h:\mathfrak N_h(\tau)
+eq
 \mathfrak N_h(\sigma)\}.
 \]
 定理 17.6 保证有限非共轭系统的该最小值存在。
@@ -2432,3 +2433,15 @@ Q_q\Delta_\tau
 8. 对角自然性的最小修复。
 
 在 proof term、依赖闭包与冻结收据出现以前，本追加部分不得标记为 `Closed`。
+
+## 20.3 append-only 排版勘误说明
+
+为严格保留提交 `1f8b203d4a4edef41d1d702ff94a0cc25ef38aca` 以前的正文原字节，第 17.2 节历史文本中的关系符被保留为断行形式。其数学意图应读作
+\[
+\boxed{
+\delta_{\mathrm{br}}(\tau,\sigma)
+=
+\min\{h:\mathfrak N_h(\tau)\neq
+\mathfrak N_h(\sigma)\}.}
+\]
+本说明只在文件末尾追加，不回写或覆盖旧段落。
