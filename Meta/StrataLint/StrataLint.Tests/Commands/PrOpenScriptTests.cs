@@ -21,9 +21,9 @@ public sealed class PrOpenScriptTests
     }
 
     [Fact]
-    public void PrOpenCreatesArmsAndUpdatesABehindPullRequestWithTokenIsolation()
+    public void PrOpenCreatesAndArmsPullRequestWithTokenIsolation()
     {
-        using var fixture = new PrScriptFixture { MergeState = "BEHIND" };
+        using var fixture = new PrScriptFixture();
 
         var result = fixture.RunOpen("--head", "topic", "--title", "A title");
 
@@ -33,11 +33,9 @@ public sealed class PrOpenScriptTests
             [
                 "pr create --repo owner/repo --base dev --head topic --title A title --fill-first|token=app-token",
                 "pr merge 42 --repo owner/repo --auto --merge|token=none",
-                "pr view 42 --repo owner/repo --json mergeStateStatus --jq .mergeStateStatus|token=none",
-                "api -X PUT repos/owner/repo/pulls/42/update-branch|token=none",
             ],
             fixture.Invocations);
-        Assert.Contains("COMMAND_FINISHED deadline_kind=api step=update-branch", Text(result.StandardError), StringComparison.Ordinal);
+        Assert.DoesNotContain("update-branch", Text(result.StandardError), StringComparison.Ordinal);
     }
 
     [Fact]
@@ -88,54 +86,12 @@ public sealed class PrOpenScriptTests
         Assert.EndsWith("|token=none", fixture.Invocations[0], StringComparison.Ordinal);
     }
 
-    [Fact]
-    public void PrUpdateOnlyUpdatesBehindArmedPullRequests()
-    {
-        using var fixture = new PrScriptFixture
-        {
-            ListOutput = "11\tBEHIND\n12\tCLEAN\n13\tBLOCKED\n",
-        };
-
-        var result = fixture.RunUpdate();
-
-        Assert.Equal(0, result.ExitCode);
-        Assert.Equal(2, fixture.Invocations.Count);
-        Assert.StartsWith("pr list --repo owner/repo --state open", fixture.Invocations[0], StringComparison.Ordinal);
-        Assert.Equal("api -X PUT repos/owner/repo/pulls/11/update-branch|token=none", fixture.Invocations[1]);
-    }
-
-    [Fact]
-    public void PrUpdateNamesFailedPullRequest()
-    {
-        using var fixture = new PrScriptFixture
-        {
-            ListOutput = "17\tBEHIND\n",
-            FailStep = "update",
-        };
-
-        var result = fixture.RunUpdate();
-
-        Assert.NotEqual(0, result.ExitCode);
-        Assert.Contains("PR #17 update-branch failed", Text(result.StandardError), StringComparison.Ordinal);
-    }
-
-    [Fact]
-    public void PrUpdateWithNoArmedPullRequestsIsAnExplicitNoOp()
-    {
-        using var fixture = new PrScriptFixture();
-
-        var result = fixture.RunUpdate();
-
-        Assert.Equal(0, result.ExitCode);
-        Assert.Contains("none", Text(result.StandardError), StringComparison.OrdinalIgnoreCase);
-    }
-
     // The tests below inject PR_OPEN_REPO, so nothing here exercises the production
     // default. That default is what the canonical `make pr-open` front gate actually
     // uses, and a wrong value points the whole gate at a repository that does not
     // exist; it shipped wrong once. Pin it against the real remote.
     [Fact]
-    public void PrOpenAndPrUpdateDefaultToTheRealRepository()
+    public void PrOpenDefaultsToTheRealRepository()
     {
         var script = File.ReadAllText(
             Path.Combine(RepositoryRoot(), "Meta", "StrataLint", "scripts", "pr.sh"),
@@ -148,18 +104,6 @@ public sealed class PrOpenScriptTests
         Assert.Contains("PR_BASE=\"${PR_OPEN_BASE:-dev}\"", script, StringComparison.Ordinal);
         // Exactly one copy of the address lives in the tool.
         Assert.Equal(1, script.Split("PR_REPO=").Length - 1);
-    }
-
-    [Fact]
-    public void PrUpdateCanInspectOnePullRequest()
-    {
-        using var fixture = new PrScriptFixture { MergeState = "BEHIND" };
-
-        var result = fixture.RunUpdate("--pr", "23");
-
-        Assert.Equal(0, result.ExitCode);
-        Assert.StartsWith("pr view 23 --repo owner/repo", fixture.Invocations[0], StringComparison.Ordinal);
-        Assert.Equal("api -X PUT repos/owner/repo/pulls/23/update-branch|token=none", fixture.Invocations[1]);
     }
 
     private static string Text(byte[] bytes) => Encoding.UTF8.GetString(bytes);
@@ -194,17 +138,12 @@ public sealed class PrOpenScriptTests
         internal string Body => Path.Combine(temporary.Path, "body.md");
         internal string MissingBody => Path.Combine(temporary.Path, "missing.md");
         internal string FailStep { get; set; } = "";
-        internal string ListOutput { get; set; } = "";
-        internal string MergeState { get; set; } = "CLEAN";
         internal bool AppTokenFails { get; set; }
         internal IReadOnlyList<string> Invocations =>
             File.Exists(invocations) ? File.ReadAllLines(invocations) : [];
 
         internal ProcessOutput RunOpen(params string[] arguments) =>
             Run([.. new[] { "open" }, .. arguments]);
-
-        internal ProcessOutput RunUpdate(params string[] arguments) =>
-            Run([.. new[] { "update" }, .. arguments]);
 
         public void Dispose() => temporary.Dispose();
 
@@ -221,8 +160,6 @@ public sealed class PrOpenScriptTests
                     "PR_OPEN_TIMEOUT_SECONDS=5",
                     $"PR_TEST_INVOCATIONS={invocations}",
                     $"PR_TEST_FAIL_STEP={FailStep}",
-                    $"PR_TEST_LIST={ListOutput}",
-                    $"PR_TEST_MERGE_STATE={MergeState}",
                     $"PR_TEST_APP_FAIL={(AppTokenFails ? "1" : "0")}",
                     "bash", script,
                     .. arguments,
@@ -254,11 +191,6 @@ public sealed class PrOpenScriptTests
                 ;;
               *" pr merge "*)
                 [[ "$PR_TEST_FAIL_STEP" != merge ]] || exit 42
-                ;;
-              *" pr list "*) printf '%b' "$PR_TEST_LIST" ;;
-              *" pr view "*) printf '%s\n' "$PR_TEST_MERGE_STATE" ;;
-              *" api -X PUT "*)
-                [[ "$PR_TEST_FAIL_STEP" != update ]] || exit 43
                 ;;
             esac
             """;

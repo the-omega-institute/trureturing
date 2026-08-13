@@ -63,7 +63,14 @@ public sealed class CoverageCommandTests
     {
         var genesis = FrozenLedgerCanonicalWriter.WriteDagEvent(
             "Genesis",
-            JsonSerializer.SerializeToElement(new { }));
+            JsonSerializer.SerializeToElement(new
+            {
+                generator_blob_oid = "git-sha1:" + new string('a', 40),
+                origin_commit_oid = "git-sha1:" + new string('b', 40),
+                origin_tree_oid = "git-sha1:" + new string('c', 40),
+                protocol_version = 1,
+                rule_catalog_root = "sha256:" + new string('d', 64),
+            }));
         var files = new Dictionary<string, string>(StringComparer.Ordinal)
         {
             [RuleFixture.WorkflowPath] = """

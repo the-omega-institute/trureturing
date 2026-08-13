@@ -34,7 +34,6 @@ public sealed partial class MakeWorkflowTests
     private const string AdmissionWorkflowPath = ".github/workflows/ci.yml";
     private const string TheoryIngestWorkflowPath = ".github/workflows/theory-ingest.yml";
     private const string PrOpenScriptPath = "Meta/StrataLint/scripts/pr.sh open";
-    private const string PrUpdateScriptPath = "Meta/StrataLint/scripts/pr.sh update";
 
     private static readonly string[] Targets =
     [
@@ -60,7 +59,6 @@ public sealed partial class MakeWorkflowTests
         "show-atom",
         "worktree",
         "pr-open",
-        "pr-update",
         "refactor-p0-0-gate-authority",
     ];
 
@@ -145,6 +143,7 @@ public sealed partial class MakeWorkflowTests
         Assert.Contains("make -C candidate test", workflow, StringComparison.Ordinal);
         Assert.Contains("make -C candidate selftest", workflow, StringComparison.Ordinal);
         Assert.Contains("lean-report-pair.sh", localGate, StringComparison.Ordinal);
+        Assert.Contains("--single", localGate, StringComparison.Ordinal);
         Assert.Contains("--skip-engineering", localGate, StringComparison.Ordinal);
         Assert.Contains("GATE_ARGS=\"--skip-engineering\"", preflight, StringComparison.Ordinal);
         Assert.DoesNotContain("refactor-pr-a-required", localGate, StringComparison.Ordinal);
@@ -157,10 +156,12 @@ public sealed partial class MakeWorkflowTests
         Assert.DoesNotContain("PrAEffectiveness", makefile, StringComparison.Ordinal);
         Assert.DoesNotContain("STRATALINT_TIMING:-1", sharedGate, StringComparison.Ordinal);
         Assert.Contains("$CANDIDATE_ROOT/.github/scripts/harness-gate.sh", localGate, StringComparison.Ordinal);
+        Assert.Contains("$CANDIDATE_ROOT/Meta/StrataLint/lean-inspector/inspect.sh", localGate, StringComparison.Ordinal);
         Assert.Contains("--candidate-lean-report", localGate, StringComparison.Ordinal);
         Assert.DoesNotContain("--baseline-lean-report", localGate, StringComparison.Ordinal);
         Assert.DoesNotContain("--frozen-evidence-root", localGate, StringComparison.Ordinal);
         Assert.DoesNotContain("--judge-root", localGate, StringComparison.Ordinal);
+        Assert.DoesNotContain("worktree add", localGate, StringComparison.Ordinal);
         Assert.DoesNotContain("verify-conservative", sharedGate, StringComparison.Ordinal);
         Assert.Contains("STRATALINT_GATE_OUTCOME_DIR", sharedGate + preflight, StringComparison.Ordinal);
         Assert.Contains("gate-outcome-v1", sharedGate + preflight, StringComparison.Ordinal);
@@ -256,27 +257,27 @@ public sealed partial class MakeWorkflowTests
     }
 
     [Fact]
-    public void TheoryIngestRestoresOrProducesBaseCanonicalReportInOneJob()
+    public void TheoryIngestRunsCandidateIngestWithMergeBaseAndSharedCaches()
     {
         var root = FindRepositoryRoot();
         var admission = File.ReadAllText(Path.Combine(root, AdmissionWorkflowPath));
         var workflow = File.ReadAllText(Path.Combine(root, TheoryIngestWorkflowPath));
-        var overlayIndex = workflow.IndexOf(
-            "- name: Overlay judge harness onto candidate data",
-            StringComparison.Ordinal);
+        var runnerIndex = workflow.IndexOf("runs-on: ubuntu-24.04-arm", StringComparison.Ordinal);
         var addressIndex = workflow.IndexOf(
-            "- name: Resolve base canonical Lean report address",
+            "- name: Resolve candidate canonical Lean report address",
             StringComparison.Ordinal);
         var restoreIndex = workflow.IndexOf(
-            "- name: Restore base canonical Lean report",
+            "- name: Restore candidate canonical Lean report",
             StringComparison.Ordinal);
         var verifyIndex = workflow.IndexOf(
-            "- name: Install and verify base canonical Lean report",
+            "- name: Install and verify candidate canonical Lean report",
             StringComparison.Ordinal);
-        var ingestIndex = workflow.IndexOf("          make ingest BASE=HEAD\n", StringComparison.Ordinal);
+        var baseIndex = workflow.IndexOf("- name: Resolve merge-base SHA", StringComparison.Ordinal);
+        var ingestIndex = workflow.IndexOf("          make ingest BASE=${{ steps.base.outputs.sha }}\n", StringComparison.Ordinal);
 
-        Assert.True(overlayIndex >= 0, "theory ingest must overlay the base judge");
-        Assert.True(addressIndex > overlayIndex, "report address must use the overlaid base judge");
+        Assert.True(runnerIndex >= 0, "theory ingest must use the arm runner");
+        Assert.True(baseIndex >= 0, "theory ingest must resolve a merge-base SHA");
+        Assert.True(addressIndex > baseIndex, "report address must follow base resolution");
         Assert.True(restoreIndex > addressIndex, "report restore must use the resolved address");
         Assert.True(verifyIndex > restoreIndex, "restored report must be verified before consumption");
         Assert.True(ingestIndex > verifyIndex, "ingest must only consume a verified canonical report");
@@ -306,7 +307,7 @@ public sealed partial class MakeWorkflowTests
         Assert.Equal(admissionCacheKey, ingestCacheKey);
 
         var producerIndex = workflow.IndexOf(
-            "- name: Produce base canonical Lean report on cache miss",
+            "- name: Produce candidate canonical Lean report on cache miss",
             StringComparison.Ordinal);
         var producerEndIndex = workflow.IndexOf(
             "      - name: ",
@@ -344,7 +345,7 @@ public sealed partial class MakeWorkflowTests
     }
 
     [Fact]
-    public void TheoryIngestUsesSingleOverlaySourceForBaseClosureWithoutWriteback()
+    public void TheoryIngestRunsCandidateClosureWithoutOverlay()
     {
         var root = FindRepositoryRoot();
         var workflow = File.ReadAllText(Path.Combine(root, TheoryIngestWorkflowPath));
@@ -353,49 +354,15 @@ public sealed partial class MakeWorkflowTests
         Assert.DoesNotContain("Enforce write-path whitelist and commit back", workflow, StringComparison.Ordinal);
         Assert.DoesNotContain("theory-ingest-bot", workflow, StringComparison.Ordinal);
         Assert.DoesNotContain("THEORY-INGEST-REGISTRY-001", workflow, StringComparison.Ordinal);
-        var ingestIndex = workflow.IndexOf("make ingest BASE=HEAD", StringComparison.Ordinal);
+        var ingestIndex = workflow.IndexOf("make ingest BASE=${{ steps.base.outputs.sha }}", StringComparison.Ordinal);
         var closureIndex = workflow.IndexOf(TheoryIngestClosureScriptPath, StringComparison.Ordinal);
-        Assert.True(closureIndex > ingestIndex, "closure judge must run after ingest");
-        Assert.Contains("$GITHUB_WORKSPACE/judge/" + TheoryIngestClosureScriptPath, workflow, StringComparison.Ordinal);
-
-        const string overlaySource = "THEORY_INGEST_OVERLAY_PATHS";
-        var overlayIndex = workflow.IndexOf(
-            "      - name: Overlay judge harness onto candidate data",
-            StringComparison.Ordinal);
-        var overlayEndIndex = workflow.IndexOf(
-            "      - name: ",
-            overlayIndex + "      - name: ".Length,
-            StringComparison.Ordinal);
-        Assert.True(overlayIndex >= 0, "the judge overlay step must exist");
-        Assert.True(overlayEndIndex > overlayIndex, "the judge overlay step must be bounded");
-
-        var overlayStep = workflow[overlayIndex..overlayEndIndex];
-        var closureStep = workflow[workflow.LastIndexOf(
-            "      - name: Enforce theory ingest closure",
-            StringComparison.Ordinal)..];
-        Assert.Single(Regex.Matches(
-            workflow,
-            $@"(?m)^\s*{overlaySource}:\s*\|-\s*$",
-            RegexOptions.CultureInvariant | RegexOptions.NonBacktracking));
-        var overlayDeclaration = workflow[
-            workflow.IndexOf($"      {overlaySource}: |-", StringComparison.Ordinal)..overlayIndex];
-        Assert.Contains("Meta/StrataLint\n", overlayDeclaration, StringComparison.Ordinal);
-        Assert.DoesNotContain("Meta/StrataLint/\n", overlayDeclaration, StringComparison.Ordinal);
-        Assert.Equal(3, Regex.Matches(workflow, overlaySource).Count);
-        Assert.Contains($"\"${overlaySource}\"", overlayStep, StringComparison.Ordinal);
-        Assert.Contains($"\"${overlaySource}\"", closureStep, StringComparison.Ordinal);
-        Assert.Contains("if [ -d \"$source\" ]", overlayStep, StringComparison.Ordinal);
-        Assert.Contains("rsync -a --delete \"$source/\" \"$destination\"", overlayStep, StringComparison.Ordinal);
-        Assert.Contains("cp \"$source\" \"$destination\"", overlayStep, StringComparison.Ordinal);
-        Assert.Single(Regex.Matches(overlayStep, @"(?m)^\s*rsync\b"));
-        Assert.Single(Regex.Matches(overlayStep, @"(?m)^\s*cp\b"));
-        Assert.Contains("closure_args+=(--exclude \"$path\")", closureStep, StringComparison.Ordinal);
-        Assert.DoesNotContain("${path%/}", closureStep, StringComparison.Ordinal);
-        Assert.DoesNotMatch(
-            new Regex(
-                @"(?m)--exclude\s+[\""']?[A-Za-z0-9_.-]+(?:/[A-Za-z0-9_.-]+)*/?[\""']?(?:\s|\\|$)",
-                RegexOptions.CultureInvariant | RegexOptions.NonBacktracking),
-            closureStep);
+        Assert.True(ingestIndex >= 0, "ingest must receive the resolved merge-base SHA");
+        Assert.True(closureIndex > ingestIndex, "closure must run after ingest");
+        Assert.Contains("$GITHUB_WORKSPACE/candidate/" + TheoryIngestClosureScriptPath, workflow, StringComparison.Ordinal);
+        Assert.DoesNotContain("THEORY_INGEST_OVERLAY_PATHS", workflow, StringComparison.Ordinal);
+        Assert.DoesNotContain("Overlay judge", workflow, StringComparison.Ordinal);
+        Assert.DoesNotContain("rsync", workflow, StringComparison.Ordinal);
+        Assert.DoesNotContain("--exclude", workflow, StringComparison.Ordinal);
     }
 
     [Fact]

@@ -387,6 +387,8 @@ internal sealed partial class RuleFixture
     internal void ChangeHeartSignature()
     {
         const string path = HeartsPath;
+        // 新 SL-008 只看 changeset 状态:红 fixture 必须把 Hearts 标记为 Modified。
+        Changes.Add(path);
         Baseline[path] = HeaderFor("D5/X_Frontier/Hearts", "E") + "theorem heart : True := by sorry\n";
         Files[path] = HeaderFor("D5/X_Frontier/Hearts", "E") + "theorem heart : False := by sorry\n";
         BaselineReports[path] = Report(declarations: new[]
