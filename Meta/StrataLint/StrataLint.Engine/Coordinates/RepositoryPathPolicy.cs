@@ -19,7 +19,7 @@ internal static partial class RepositoryPathPolicy
         ValidatedPolicy policy,
         RuleDescriptor sl015)
     {
-        return snapshot.Files.Keys
+        var diagnostics = snapshot.Files.Keys
             .OrderBy(static path => path.Value, StringComparer.Ordinal)
             .Select(path => Validate(path, policy))
             .OfType<RepositoryPathIssue>()
@@ -39,6 +39,25 @@ internal static partial class RepositoryPathPolicy
                     issue.Path,
                     issue.Message))
             .ToImmutableArray();
+
+        var compositionProjects = snapshot.Files.Keys
+            .Where(static path => IsBlueprintContentCompositionBuildFile(path.Value)
+                && path.Value.EndsWith(".csproj", StringComparison.Ordinal))
+            .OrderBy(static path => path.Value, StringComparer.Ordinal)
+            .ToArray();
+        if (compositionProjects.Length > 1)
+        {
+            diagnostics = diagnostics.AddRange(
+                compositionProjects.Skip(1).Select(path => new Diagnostic(
+                    sl015.Id,
+                    sl015.Title,
+                    sl015.DisplaySeverity,
+                    sl015.AdmissionEffect,
+                    path.Value,
+                    "Blueprint composition root allows at most one direct .csproj")));
+        }
+
+        return diagnostics;
     }
 
     internal static RepositoryPathIssue? Validate(RepoPath path, ValidatedPolicy policy)
@@ -83,6 +102,11 @@ internal static partial class RepositoryPathPolicy
         }
 
         if (IsCanonicalBlueprintDefinitionSource(value))
+        {
+            return null;
+        }
+
+        if (IsBlueprintContentCompositionBuildFile(value))
         {
             return null;
         }
