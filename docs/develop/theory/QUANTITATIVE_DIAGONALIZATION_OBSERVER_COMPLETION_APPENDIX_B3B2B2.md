@@ -8,15 +8,23 @@
 
 > 本文接续 [附录 B3B2B1](./QUANTITATIVE_DIAGONALIZATION_OBSERVER_COMPLETION_APPENDIX_B3B2B1.md)。本文精确写出从单个离线镜像轨道的局部负增长到完整 Li 系数变负所需的余项条件，并重申固定阶截断收敛不足以支持增长探针阶数。
 >
-> 本文不证明所述余项条件对 Riemann zeta 成立。
+> 本文不证明所述余项条件对 Riemann zeta 成立。文中使用序关系 \(<,\ge\) 时，均显式工作于反射—共轭对称求和规范下的实 Li 系数与实轨道贡献。
 
 ---
 
 ## 1. 全局支配条件
 
-把一个候选离线镜像四元轨道的贡献记为 \(L_n(\rho)\)，其余全部贡献记为
+在反射—共轭对称的求和规范下，设
 \[
-R_n=\lambda_n-L_n(\rho).
+\lambda_n\in\mathbb R
+\]
+为完整 Li 系数，
+\[
+L_n(\rho)\in\mathbb R
+\]
+为一个候选离线镜像四元轨道的贡献，并定义实余项
+\[
+R_n=\lambda_n-L_n(\rho)\in\mathbb R.
 \]
 设
 \[
@@ -47,14 +55,14 @@ C(\rho)=e^{\beta+i\theta},
 \[
 \frac{R_{n_k}}{\cosh(n_k|\beta|)}\to0.
 \]
-所以
+所以在实数中
 \[
 \frac{\lambda_{n_k}}{\cosh(n_k|\beta|)}
 =
 \frac{L_{n_k}+R_{n_k}}{\cosh(n_k|\beta|)}
 \to-4.
 \]
-分母为正，故最终 \(\lambda_{n_k}<0\)。 \(\square\)
+因此该比值最终小于零。分母 \(\cosh(n_k|\beta|)\) 严格为正，故最终 \(\lambda_{n_k}<0\)。 \(\square\)
 
 该定理把缺口收紧为一个明确比较：其余全部轨道和正则化项是否低于离线轨道的双曲尺度。
 
@@ -67,7 +75,7 @@ C(\rho)=e^{\beta+i\theta},
 
 ### 证明
 
-否则由定理 B3B2B2.1 得到最终负 Li 系数，矛盾。 \(\square\)
+否则由定理 B3B2B2.1 得到最终负 Li 系数，与全阶非负性矛盾。 \(\square\)
 
 这不是抵消机制的构造，而是对任何潜在抵消机制必须达到的最小指数规模约束。
 
@@ -75,7 +83,7 @@ C(\rho)=e^{\beta+i\theta},
 
 ## 2. 截断与增长探针
 
-令 \(\lambda_{n,T}\) 为高度 \(T\) 的对称有限截断。固定 \(n\) 时的收敛
+令 \(\lambda_{n,T}\in\mathbb R\) 为高度 \(T\) 的反射—共轭对称有限截断。固定 \(n\) 时的收敛
 \[
 \lambda_{n,T}\to\lambda_n
 \]
@@ -87,12 +95,12 @@ C(\rho)=e^{\beta+i\theta},
 \[
 \boxed{
 \sup_{n\in N_T}
-|\lambda_{n,T}-\lambda_n|	o0,}
+|\lambda_{n,T}-\lambda_n|\to0,}
 \]
 则
 \[
 \boxed{
-|\lambda_{n(T),T}-\lambda_{n(T)}|	o0.}
+|\lambda_{n(T),T}-\lambda_{n(T)}|\to0.}
 \]
 
 ### 证明
@@ -107,7 +115,7 @@ C(\rho)=e^{\beta+i\theta},
 
 ## 命题 B3B2B2.4（逐点收敛不足）
 
-存在阵列 \(x_{n,T}\) 与极限 \(x_n\)，使每个固定 \(n\) 都有 \(x_{n,T}\to x_n\)，但取 \(n(T)=T+1\) 时误差恒为一。
+存在实阵列 \(x_{n,T}\) 与实极限 \(x_n\)，使每个固定 \(n\) 都有 \(x_{n,T}\to x_n\)，但取 \(n(T)=T+1\) 时误差恒为一。
 
 ### 证明
 
@@ -158,11 +166,11 @@ e^{n|\beta|}
 
 ### 结论 B3B2B2-A
 
-局部离线轨道变成完整负 Li 系数的充分条件，是其余贡献相对于 \(\cosh(n|\beta|)\) 为低阶。
+局部离线轨道变成完整负 Li 系数的充分条件，是其余实贡献相对于 \(\cosh(n|\beta|)\) 为低阶。
 
 ### 结论 B3B2B2-B
 
-若坚持全部 Li 系数非负，则任何离线轨道都要求其余贡献在相位复现阶数上实现同阶指数抵消。
+若坚持全部实 Li 系数非负，则任何离线轨道都要求其余贡献在相位复现阶数上实现同阶指数抵消。
 
 ### 结论 B3B2B2-C
 
