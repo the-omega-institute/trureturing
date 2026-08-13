@@ -6,8 +6,11 @@ namespace StrataLint.Scribe.Blueprint.D5.S0.Rewriting;
 
 internal sealed class ChurchRosserDocument : IScribeDocumentDefinition
 {
-    private static readonly LibraryNoteRef Relation =
-        LibraryNoteRef.Create("D5/L/Rewriting/mathlib-relation");
+    private static readonly LibraryNoteRef ChurchRosser1936 =
+        LibraryNoteRef.Create("D5/L/Rewriting/churchrosser1936properties");
+
+    private static readonly LibraryNoteRef Newman1942 =
+        LibraryNoteRef.Create("D5/L/Rewriting/newman1942theories");
 
     public DocumentDefinition Create() =>
         DocumentDefinition.Create(ScribeNode.Create(
@@ -37,7 +40,7 @@ internal sealed class ChurchRosserDocument : IScribeDocumentDefinition
                         Operatorname, Grp(F.Id("Join")), Sp,
                         Operatorname, Grp(F.Id("ReflTransGen")), Open, F.Id("r"), Close,
                         Open, F.Id("a"), Comma, Sp, F.Id("b"), Close, Close, Dot))),
-                    AssessedProvenance.FromLiterature(Relation),
+                    AssessedProvenance.FromLiterature(ChurchRosser1936),
                     Blocks(
                         Paragraph(Text(
                             "The forward direction makes joinability an equivalence via "
@@ -64,7 +67,7 @@ internal sealed class ChurchRosserDocument : IScribeDocumentDefinition
                         Operatorname, Grp(F.Id("Join")), Sp,
                         Operatorname, Grp(F.Id("ReflTransGen")), Open, F.Id("r"), Close,
                         Open, F.Id("a"), Comma, Sp, F.Id("b"), Close, Dot))),
-                    AssessedProvenance.FromLiterature(Relation),
+                    AssessedProvenance.FromLiterature(Newman1942),
                     Blocks(Paragraph(Text(
                         "This theorem is a one-composition corollary of the generic equivalence "
                         + "and the frozen Newman confluence theorem."))),
