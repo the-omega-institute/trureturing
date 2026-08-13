@@ -982,3 +982,726 @@ x_{n,T}=
 6. A. Weil, “Sur les ‘formules explicites’ de la théorie des nombres premiers,” *Communications du Séminaire Mathématique de l’Université de Lund*, supplément (1952), 252–265.
 7. E. Artin and B. Mazur, “On Periodic Points,” *Annals of Mathematics* 81 (1965), 82–99.
 8. N. Jacobson, *Basic Algebra I*, for Fitting decomposition and Jordan theory.
+
+---
+
+# 16. 追加：带对角代数的完全重构与分支敏感完成
+
+本节严格采用追加式更新。前文已经证明，迹谱与秩谱共同确定线性化 \(L_\tau\) 的复 Jordan 形，却不能恢复带基函数图。本节回答三个后续问题：
+
+1. 线性化究竟遗忘了哪一项结构；
+2. 加回什么最小观察界面以后，可以完整恢复有限自映射；
+3. 完整函数图能否由一族有限深度观察通过 projective completion 重构。
+
+核心答案是：**遗失的不是更多本征值，而是标准基所定义的对角可观测代数及其分支关联。**
+
+## 16.1 对角代数与箭头的非零角块
+
+令
+\[
+V_Y=\mathbb C^Y.
+\]
+对函数 \(f:Y\to\mathbb C\)，定义对角乘法算子
+\[
+M_f e_y=f(y)e_y.
+\]
+全部此类算子组成交换代数
+\[
+\mathcal D_Y=\{M_f:f\in\mathbb C^Y\}.
+\]
+对每个 \(y\in Y\)，令
+\[
+P_y=M_{\mathbf1_{\{y\}}}.
+\]
+则 \((P_y)_{y\in Y}\) 是 \(\mathcal D_Y\) 的全部最小非零幂等元，并满足
+\[
+P_yP_z=\delta_{yz}P_y,
+\qquad
+\sum_yP_y=I.
+\]
+
+沿用
+\[
+L_\tau e_y=e_{\tau(y)}.
+\]
+
+### 定理 16.1（对角角块重构公式）
+
+对任意 \(y,z\in Y\)，
+\[
+\boxed{
+P_zL_\tau P_y\neq0
+\iff
+z=\tau(y).}
+\]
+更精确地，若 \(z=\tau(y)\)，则 \(P_zL_\tau P_y\) 将 \(e_y\) 送到 \(e_z\)；否则该角块为零。
+
+### 证明
+
+对任意基向量 \(e_w\)，
+\[
+P_y e_w=\delta_{yw}e_y.
+\]
+所以
+\[
+P_zL_\tau P_y e_w
+=
+\delta_{yw}P_z e_{\tau(y)}
+=
+\delta_{yw}\delta_{z,\tau(y)}e_z.
+\]
+该算子非零当且仅当 \(z=\tau(y)\)。\(\square\)
+
+因此完整函数图的每条箭头都被编码为一个非零角块：
+\[
+\boxed{
+y\longmapsto\tau(y)
+\quad\Longleftrightarrow\quad
+P_{\tau(y)}L_\tau P_y\neq0.}
+\]
+
+### 定理 16.2（对角代数上的协变关系）
+
+定义函数拉回
+\[
+\alpha_\tau(f)=f\circ\tau.
+\]
+则
+\[
+\boxed{
+M_fL_\tau
+=
+L_\tau M_{\alpha_\tau(f)}}
+\]
+对全部 \(f:Y\to\mathbb C\) 成立。
+
+### 证明
+
+逐基向量计算：
+\[
+M_fL_\tau e_y
+=f(\tau(y))e_{\tau(y)},
+\]
+而
+\[
+L_\tau M_{f\circ\tau}e_y
+=f(\tau(y))e_{\tau(y)}.
+\]
+\(\square\)
+
+这说明离散动力学同时具有两种互补表示：
+
+- 状态侧：\(L_\tau\) 把基状态向前送；
+- 可观测侧：\(\alpha_\tau\) 把函数向后拉。
+
+## 16.2 带对角界面的线性化是完全不变量
+
+### 定理 16.3（对角界面保持的相似等价于函数共轭）
+
+设
+\[
+\tau:Y\to Y,
+\qquad
+\sigma:Z\to Z
+\]
+为有限自映射。下列条件等价：
+
+1. 存在双射 \(\phi:Y\to Z\)，满足
+   \[
+   \phi\circ\tau=\sigma\circ\phi;
+   \]
+2. 存在线性同构 \(U:V_Y\to V_Z\)，满足
+   \[
+   UL_\tau U^{-1}=L_\sigma,
+   \qquad
+   U\mathcal D_YU^{-1}=\mathcal D_Z.
+   \]
+
+### 证明
+
+若有函数共轭 \(\phi\)，定义置换线性同构
+\[
+Ue_y=e_{\phi(y)}.
+\]
+则
+\[
+UL_\tau e_y=e_{\phi(\tau(y))}
+=e_{\sigma(\phi(y))}
+=L_\sigma Ue_y.
+\]
+同时 \(U\) 把对角最小投影 \(P_y\) 送到 \(P_{\phi(y)}\)，故保持对角代数。
+
+反之，设 \(U\) 满足条件 2。共轭映射把 \(\mathcal D_Y\) 的最小非零幂等元双射到 \(\mathcal D_Z\) 的最小非零幂等元，所以存在唯一双射 \(\phi:Y\to Z\)，使
+\[
+UP_yU^{-1}=P_{\phi(y)}.
+\]
+由定理 16.1，
+\[
+z=\tau(y)
+\iff
+P_zL_\tau P_y\neq0.
+\]
+对该角块施加 \(U(-)U^{-1}\)，得到
+\[
+P_{\phi(z)}L_\sigma P_{\phi(y)}\neq0
+\iff
+\phi(z)=\sigma(\phi(y)).
+\]
+取 \(z=\tau(y)\)，即得
+\[
+\phi(\tau(y))=\sigma(\phi(y)).
+\]
+\(\square\)
+
+### 推论 16.4（前文反例的精确缺失项）
+
+前文两个八点系统的 \(L_{\tau_A}\) 与 \(L_{\tau_B}\) 可以具有相同 Jordan 形，但不存在同时把
+\[
+(L_{\tau_A},\mathcal D_Y)
+\]
+送到
+\[
+(L_{\tau_B},\mathcal D_Y)
+\]
+的对角代数保持相似。
+
+因此“带基函数图”与“无基线性相似类”之间的差异，精确等于是否保留标准基诱导的极小对角投影及其角块关联。
+
+## 16.3 精确商观察等价于不变可观测子代数
+
+令 \(\phi:Y\twoheadrightarrow Z\) 为满射。定义由该观察产生的子代数
+\[
+\mathcal A_\phi
+=
+\{g\circ\phi:g:Z\to\mathbb C\}
+\subseteq\mathbb C^Y.
+\]
+它恰由在每个 \(\phi\)-纤维上常值的可观测量组成。
+
+### 定理 16.5（因子—不变子代数对应）
+
+对有限自映射 \(\tau:Y\to Y\)，下列条件等价：
+
+1. 存在唯一映射 \(\sigma:Z\to Z\)，满足
+   \[
+   \phi\tau=\sigma\phi;
+   \]
+2. 可观测子代数在拉回动力学下不变：
+   \[
+   \alpha_\tau(\mathcal A_\phi)
+   \subseteq
+   \mathcal A_\phi.
+   \]
+
+此时对全部 \(g:Z\to\mathbb C\)，
+\[
+\boxed{
+\alpha_\tau(g\circ\phi)
+=(g\circ\sigma)\circ\phi.}
+\]
+
+### 证明
+
+若有 \(\phi\tau=\sigma\phi\)，则
+\[
+\alpha_\tau(g\circ\phi)
+=g\circ\phi\circ\tau
+=g\circ\sigma\circ\phi
+\in\mathcal A_\phi.
+\]
+
+反之，假设 \(\mathcal A_\phi\) 不变。若 \(\phi(y)=\phi(y')\)，则对任意 \(g:Z\to\mathbb C\)，函数
+\[
+(g\circ\phi)\circ\tau
+\]
+属于 \(\mathcal A_\phi\)，故在 \(y,y'\) 上取值相同：
+\[
+g(\phi(\tau(y)))=g(\phi(\tau(y'))).
+\]
+有限集合上的复值函数分离点，所以
+\[
+\phi(\tau(y))=\phi(\tau(y')).
+\]
+于是可定义
+\[
+\sigma(\phi(y))=\phi(\tau(y)).
+\]
+该定义良好；\(\phi\) 满射给出唯一性。\(\square\)
+
+这条定理把“观察者是否看到一个封闭动力学”改写成纯代数判据：
+\[
+\boxed{
+\text{精确因子观察}
+\iff
+\text{观察可测代数对 }\alpha_\tau\text{ 不变}.}
+\]
+
+## 16.4 瞬态可观测过滤与 Jordan 信息损失
+
+定义
+\[
+\mathcal A_k
+=
+\operatorname{im}(\alpha_\tau^k)
+\subseteq\mathbb C^Y.
+\]
+
+### 定理 16.6（瞬态可观测过滤）
+
+对全部 \(k\ge0\)：
+
+1. \(\mathcal A_k\) 是含常数的交换子代数；
+2. \(\mathcal A_{k+1}\subseteq\mathcal A_k\)；
+3. \(h\in\mathcal A_k\) 当且仅当
+   \[
+   \tau^k(y)=\tau^k(y')
+   \Longrightarrow
+   h(y)=h(y');
+   \]
+4. 有维数恒等式
+   \[
+   \boxed{
+   \dim\mathcal A_k
+   =|\tau^k(Y)|
+   =\operatorname{rank}(L_\tau^k).}
+   \]
+
+### 证明
+
+\(\alpha_\tau\) 是含幺代数同态，因此其像为子代数；又
+\[
+\operatorname{im}\alpha^{k+1}
+\subseteq
+\operatorname{im}\alpha^k.
+\]
+若 \(h=f\circ\tau^k\)，则它显然在 \(\tau^k\) 的纤维上常值。
+
+反之，若 \(h\) 在每个纤维上常值，可在像集 \(\tau^k(Y)\) 上定义
+\[
+f(z)=h(y)
+\quad\text{其中 }\tau^k(y)=z,
+\]
+并把 \(f\) 任意延拓到整个 \(Y\)。于是 \(h=f\circ\tau^k\)。所以
+\[
+\mathcal A_k\cong\mathbb C^{\tau^k(Y)},
+\]
+维数为像集基数。最后使用定理 8.1。\(\square\)
+
+另有
+\[
+\ker\alpha_\tau^k
+=
+\{f:f|_{\tau^k(Y)}=0\},
+\qquad
+\dim\ker\alpha_\tau^k
+=|Y|-|\tau^k(Y)|.
+\]
+
+定义第 \(k\) 步可观测自由度损失
+\[
+\ell_k
+=
+\dim\mathcal A_{k-1}-\dim\mathcal A_k
+=
+|\tau^{k-1}(Y)|-|\tau^k(Y)|.
+\]
+
+### 定理 16.7（信息损失层与零 Jordan 链）
+
+\[
+\boxed{
+\ell_k
+=
+\operatorname{rank}(L_\tau^{k-1})
+-
+\operatorname{rank}(L_\tau^k)}
+\]
+等于大小至少为 \(k\) 的零特征值 Jordan 块数。因此大小恰为 \(k\) 的零 Jordan 块数为
+\[
+\boxed{
+\ell_k-\ell_{k+1}.}
+\]
+并且
+\[
+\boxed{
+\sum_{k\ge1}\ell_k
+=|Y|-|P_\tau|.}
+\]
+
+### 证明
+
+第一式由定理 16.6 得到；Jordan 块解释由定理 8.3；最后一式由像集基数下降链 telescoping：
+\[
+\sum_{k=1}^{N}
+(|\tau^{k-1}(Y)|-|\tau^k(Y)|)
+=|Y|-|\tau^N(Y)|,
+\]
+取稳定的 \(N\) 即得。\(\square\)
+
+所以零 Jordan 块不再只是线性代数正规形，而有直接的观察者含义：
+
+> 大小至少为 \(k\) 的块数，等于第 \(k\) 次更新时新丢失的独立可观测方向数。
+
+## 16.5 熵与相对熵的逐步遗忘恒等式
+
+令随机变量 \(X_0\) 取值于有限集 \(Y\)，定义确定动力学轨迹
+\[
+X_k=\tau^k(X_0).
+\]
+
+### 定理 16.8（Shannon 遗忘 telescoping）
+
+对每个 \(k\ge1\)，
+\[
+\boxed{
+H(X_{k-1})-H(X_k)
+=H(X_{k-1}\mid X_k).}
+\]
+因此对任意 \(N\)：
+\[
+\boxed{
+H(X_0)-H(X_N)
+=
+\sum_{k=1}^{N}H(X_{k-1}\mid X_k).}
+\]
+
+### 证明
+
+因为 \(X_k\) 是 \(X_{k-1}\) 的确定函数，
+\[
+H(X_k\mid X_{k-1})=0.
+\]
+所以
+\[
+H(X_{k-1},X_k)=H(X_{k-1}).
+\]
+另一方面，链式法则给出
+\[
+H(X_{k-1},X_k)
+=H(X_k)+H(X_{k-1}\mid X_k).
+\]
+两式相等即得单步恒等式；求和后中间熵相消。\(\square\)
+
+注意一般只有
+\[
+H(X_k)\le\log|\tau^k(Y)|,
+\]
+等号要求 \(X_k\) 在像集上均匀。维数损失 \(\ell_k\) 与实际 Shannon 损失因此是不同层次：前者是可用坐标容量，后者还依赖概率分布。
+
+### 定理 16.9（KL 数据处理损失的纤维分解）
+
+设 \(P_0,Q_0\) 为 \(Y\) 上分布，且 \(Q_0\) 满支撑。令 \(P_k,Q_k\) 为经 \(\tau^k\) 推前后的分布。则
+\[
+\boxed{
+D(P_{k-1}\Vert Q_{k-1})
+-
+D(P_k\Vert Q_k)
+=
+\sum_{z}P_k(z)
+D(P_{k-1\mid z}\Vert Q_{k-1\mid z}),}
+\]
+其中条件分布限制在纤维
+\[
+\tau^{-1}(z).
+\]
+
+### 证明
+
+把 \(X_k=\tau(X_{k-1})\) 与 \(Y_k=\tau(Y_{k-1})\) 分别置于联合分布
+\[
+(x,\tau(x)).
+\]
+确定嵌入不改变相对熵。对两个联合分布应用有限 KL 链式法则，边缘项是 \(D(P_k\Vert Q_k)\)，条件项正是各纤维内的平均散度。\(\square\)
+
+因此一次确定性更新造成的 KL 收缩，不是抽象损失；它恰等于被合并到同一后继状态的条件分布差异。
+
+---
+
+# 17. 分支敏感的完整函数图不变量
+
+前文的迹—秩双谱只记录周期长度与瞬态链的线性块大小，却不记录不同前像分支如何附着。现在构造一个精确恢复完整有限函数图的组合不变量。
+
+令
+\[
+P=P_\tau
+\]
+为周期点集。对任意 \(y\in Y\)，定义非周期子节点集合
+\[
+\operatorname{Ch}_\tau(y)
+=
+\{x\in Y\setminus P:\tau(x)=y\}.
+\]
+排除周期点的目的，是在周期根处删除来自前一个周期点的循环边，只保留真正附着的瞬态入树。
+
+关系
+\[
+x\prec y
+\iff
+x\in\operatorname{Ch}_\tau(y)
+\]
+是良基的：若存在由非周期点组成的闭链，这些点便是周期点，矛盾。
+
+## 定义 17.1（递归分支码）
+
+令分支码取值于遗传有限多重集。沿良基关系递归定义
+\[
+\boxed{
+\mathcal C_\tau(y)
+=
+\multiset{\mathcal C_\tau(x):x\in\operatorname{Ch}_\tau(y)}.}
+\]
+叶节点的码为空多重集；父节点的码是全部子树码的无序多重集。
+
+### 定理 17.2（根树分类）
+
+两个以 \(y,z\) 为根、边方向朝向根的有限瞬态入树同构，当且仅当
+\[
+\boxed{
+\mathcal C_\tau(y)=\mathcal C_\sigma(z).}
+\]
+
+### 证明
+
+按树高归纳。高度零时两者都无子节点，码均为空多重集，结论显然。
+
+设结论对高度小于 \(h\) 的树成立。若两棵高度至多 \(h\) 的根树同构，同构把根的子节点双射到根的子节点，并保持各子树同构；由归纳假设，子树码逐一相等，所以根码的多重集相等。
+
+反之，若根码多重集相等，可按每一种子树码匹配相同重数的子节点。归纳假设为每对匹配子节点给出根树同构。将这些互不相交的同构连同根映射合并，得到整棵根树同构。\(\square\)
+
+## 定义 17.3（装饰循环 necklace）
+
+设一个连通分量的唯一周期为
+\[
+p_0\mapsto p_1\mapsto\cdots
+\mapsto p_{d-1}\mapsto p_0.
+\]
+定义其装饰循环词
+\[
+(\mathcal C_\tau(p_0),\ldots,
+\mathcal C_\tau(p_{d-1})),
+\]
+并只保留其循环旋转等价类：
+\[
+\boxed{
+\mathcal N_\tau(C)
+=
+[\mathcal C_\tau(p_0),\ldots,
+\mathcal C_\tau(p_{d-1})]_{\mathrm{cyc}}.}
+\]
+整个系统的不变量 \(\mathfrak N(\tau)\) 是全部连通分量 necklace 的多重集。
+
+### 定理 17.4（装饰 necklace 完全分类有限自映射）
+
+对有限自映射
+\[
+\tau:Y\to Y,
+\qquad
+\sigma:Z\to Z,
+\]
+下列条件等价：
+
+1. 存在双射 \(\phi:Y\to Z\)，满足
+   \[
+   \phi\tau=\sigma\phi;
+   \]
+2. 装饰循环多重集相等：
+   \[
+   \boxed{
+   \mathfrak N(\tau)=\mathfrak N(\sigma).}
+   \]
+
+### 证明
+
+函数共轭把每个连通分量送到连通分量，把唯一有向周期送到同长度有向周期；在选定周期起点后，共轭只能产生循环旋转。它还把每个周期点附着的瞬态入树送到同构入树。由定理 17.2，necklace 装饰保持，因此 1 推出 2。
+
+反之，若 necklace 多重集相等，可逐分量配对。对一对相同 necklace，选择一个实现相等的循环旋转，把对应周期点逐一匹配。每对周期点的分支码相同，定理 17.2 给出附着入树的根保持同构。周期与各附着树两两只在根处相交，所以这些映射合并成整个分量的函数图同构。再对全部分量取并，得到全局共轭。\(\square\)
+
+这一定理精确补足前文的非完整性：
+
+- 迹谱只保留 necklace 的长度；
+- 秩谱只保留全部入树的某些总体链长信息；
+- 装饰 necklace 保留每棵树的完整分支类型及其沿周期的排列。
+
+## 17.1 有限深度观察与 projective completion
+
+定义深度 \(h\) 的截断分支码：
+\[
+\mathcal C_\tau^{(0)}(y)=\bullet,
+\]
+\[
+\boxed{
+\mathcal C_\tau^{(h+1)}(y)
+=
+\multiset{
+\mathcal C_\tau^{(h)}(x):
+ x\in\operatorname{Ch}_\tau(y)}.}
+\]
+令 \(\mathfrak N_h(\tau)\) 为用 \(\mathcal C^{(h)}\) 装饰周期所得的 necklace 多重集。
+
+### 定理 17.5（深度截断分类）
+
+\(\mathcal C^{(h)}(y)\) 完全分类以 \(y\) 为根、只保留前 \(h\) 层的瞬态入树。并且存在自然截断映射
+\[
+\partial_h:
+\mathcal C^{(h+1)}\to\mathcal C^{(h)}
+\]
+使
+\[
+\partial_h(\mathfrak N_{h+1}(\tau))
+=
+\mathfrak N_h(\tau).
+\]
+
+### 证明
+
+第一项对 \(h\) 归纳，证明与定理 17.2 相同，只把完整子树换成深度截断子树。第二项通过把每个子码递归截断一层定义；多重集与循环旋转均保持该操作。\(\square\)
+
+### 定理 17.6（有限系统的分支完成定理）
+
+若 \(|Y|=q\)，则
+\[
+\boxed{
+\mathfrak N_q(\tau)
+}
+已经确定完整函数图。更一般地，族
+\[
+(\mathfrak N_h(\tau))_{h\ge0}
+\]
+的 projective limit 与完整装饰 necklace \(\mathfrak N(\tau)\) 等价。
+
+### 证明
+
+任意瞬态反向链中的非周期点互不相同，所以其长度不超过
+\[
+|Y|-|P_\tau|\le q-1.
+\]
+截断码从深度超过最大树高以后稳定；由于 \(\mathcal C^{(0)}\) 使用根标记，深度 \(q\) 必已越过全部瞬态树。于是 \(\mathfrak N_q\) 等于完整装饰数据，定理 17.4 给出分类。
+
+兼容族的极限逐根恢复稳定的完整分支码，再恢复每个装饰 necklace；反向由完整码的所有有限截断显然得到。\(\square\)
+
+因此“完成”在这里获得一个完全有限可检验的含义：
+
+\[
+\boxed{
+\text{完整函数图}
+=
+\varprojlim_h
+\text{深度 }h\text{ 的有限分支观察}.}
+\]
+
+## 17.2 前文反例的最小分支分辨深度
+
+对两个非共轭系统，若它们的周期长度相同，定义
+\[
+\delta_{\mathrm{br}}(\tau,\sigma)
+=
+\min\{h:\mathfrak N_h(\tau)
+eq
+\mathfrak N_h(\sigma)\}.
+\]
+定理 17.6 保证有限非共轭系统的该最小值存在。
+
+对命题 8.5 的两个八点系统：
+
+- 深度零只看见一个固定点循环；
+- 深度一只看见根有三个瞬态子节点；
+- 深度二读取三个子节点各自拥有的叶子数。
+
+两者在深度二分别出现
+\[
+\{3,1,0\}
+\quad\text{与}\quad
+\{2,2,0\},
+\]
+所以
+\[
+\boxed{
+\delta_{\mathrm{br}}(\tau_A,\tau_B)=2.}
+\]
+
+这给出比“Jordan 形相同但函数图不同”更细的结论：它们需要一个能向后读取两层前像分支的观察者才会被区分。
+
+---
+
+# 18. 观察者的五重审计与新闭合结论
+
+前文四重审计仍不足以判断完整函数图是否被保存。必须加入第五项：
+
+5. **分支关联可见性**：观察者是否保留
+   \[
+   (\mathfrak N_h(\tau))_{h\ge0}
+   \]
+   或至少保留达到系统最大瞬态高度所需的有限深度。
+
+因此更新后的严格区分为
+\[
+\boxed{
+\text{交换性}
+\neq
+\text{扭曲忠实性}
+\neq
+\text{全局可命名性}
+\neq
+\text{瞬态容量保持}
+\neq
+\text{分支关联保持}.}
+\]
+
+迹—秩双谱可以完全通过前四项中的周期与容量审计，却仍在第五项失败。带对角代数的线性化或完整装饰 necklace 则通过第五项并恢复整个有限函数图。
+
+## 18.1 两种完全重构的等价视图
+
+本节得到了两个形式不同但信息等价的完整描述：
+
+### 算子—界面描述
+
+\[
+\boxed{(\mathcal D_Y,L_\tau)}
+\]
+通过最小投影角块恢复每条箭头。
+
+### 组合—完成描述
+
+\[
+\boxed{\mathfrak N(\tau)}
+\]
+通过周期 necklace 与递归前像树恢复每个连通分量。
+
+二者都比 Jordan 形更强，原因相同：它们保留了基状态之间“谁指向谁”的关联，而不是只保留无基线性相似信息。
+
+## 18.2 与对角化主线的关系
+
+对角化读取的是
+\[
+E(a,a),
+\]
+因此天然依赖被命名的地址对角。若随后把所有最小地址投影商掉，仅保留一个无基谱对象，则对角逃逸仍可能在总计数中存在，但其具体分支来源已经无法定位。
+
+于是得到一个新的结构结论：
+\[
+\boxed{
+\text{定量对角统计给出全局逃逸量；
+对角代数与分支完成给出逃逸发生在哪些地址关系上。}}
+\]
+
+前者是容量层，后者是关联层。完整观察者必须同时拥有二者。
+
+## 18.3 严格边界
+
+1. 本节只分类有限确定性自映射；随机核、量子通道与连续流需要相应的可观测代数和路径/分支对象。
+2. \((\mathcal D_Y,L_\tau)\) 的完全性依赖保留整个对角代数；只保留其维数或某个低维子代数仍会丢失图信息。
+3. 有限深度分支观察在达到稳定深度以前不是完整不变量；“所有已检查深度相同”不能替代统一稳定上界。
+4. 这些重构定理不改变 Li–Cayley/RH 部分的全局余项缺口，也不把有限动力学 zeta 与 Riemann zeta 等同。
+
+## 18.4 追加部分的形式化状态
+
+定理 16.1—16.9、17.2—17.6 及第 18 节结论均给出完整纸面证明，但尚未成为 Lean 真源。适合的形式化顺序为：
+
+1. 有限对角代数与角块重构；
+2. 因子—不变子代数对应；
+3. \(\operatorname{im}\alpha_\tau^k\) 的维数公式；
+4. 递归多重集树码；
+5. 装饰循环 necklace 分类；
+6. 深度截断逆系与稳定界。
+
+在 proof term 与冻结收据出现以前，本追加部分不得标记为 `Closed`。
