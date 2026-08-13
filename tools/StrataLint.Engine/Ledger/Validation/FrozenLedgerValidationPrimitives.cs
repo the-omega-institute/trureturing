@@ -154,7 +154,7 @@ public static partial class FrozenLedger
         return result;
     }
 
-    private static ImmutableArray<FrozenDeclarationStatement> ParseDeclarationStatementIds(
+    internal static ImmutableArray<FrozenDeclarationStatement> ParseDeclarationStatementIds(
         JsonElement payload)
     {
         var value = payload.GetProperty("declaration_statement_ids");
