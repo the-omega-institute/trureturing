@@ -31,6 +31,15 @@ public sealed class EchoVerifyCommandTests
     }
 
     [Fact]
+    public void EchoTemplatePolicyRejectsMissingResidualVocabulary()
+    {
+        var findings = EchoTemplatePolicy.Validate("# Statement Echo\n");
+
+        Assert.Contains(findings, finding =>
+            finding.Contains("Remark-closure guard", StringComparison.Ordinal));
+    }
+
+    [Fact]
     public void AggregateAndShardsPreserveSyntheticResidualDistribution()
     {
         var evaluation = new DigestionLedgerEvaluation([

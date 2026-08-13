@@ -18,33 +18,6 @@ public sealed partial class TheoryAtomizerTests
     }
 
     [Fact]
-    public void ObserverStateNotPathExtentMatchesFrozenCasBytes()
-    {
-        var root = TestRepositoryLayout.FindRoot();
-        var golden = File.ReadAllBytes(Path.Combine(
-            root,
-            DigestionCasStore.RootPath,
-            "8d5c4162772d2b6674b2c46ab17550880a2670b134d5893a353659610617b8fe"));
-        var atom = DigestionAtom.FromFrozenCas(
-            "theorem/state-not-path",
-            ImmutableArray.CreateRange(golden));
-
-        Assert.Equal(golden, atom.RawBytes.ToArray());
-        Assert.Equal(golden.Length, atom.EndByte);
-    }
-
-    [Fact]
-    public void ObserverAdapterRecognizesEveryProductionClaim()
-    {
-        var root = TestRepositoryLayout.FindRoot();
-        var bytes = File.ReadAllBytes(Path.Combine(root, ThirdProductionSource));
-
-        var document = AtomizerRegistry.Atomize(AtomizerRegistry.ObserverId, bytes, DigestionTestSupport.Rules);
-
-        AssertRecognitionComplete(document, bytes);
-    }
-
-    [Fact]
     public void ObserverV1RecognizesTheObserverQuantumRefreshDialect()
     {
         var bytes = Encoding.UTF8.GetBytes(

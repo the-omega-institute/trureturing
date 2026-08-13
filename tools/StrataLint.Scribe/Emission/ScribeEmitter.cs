@@ -108,6 +108,26 @@ public static class ScribeEmitter
             var repositoryDefinitions = DocumentDefinitions.Discover(
                 typeof(DocumentDefinitions).Assembly,
                 repositoryRoot);
+            if (check && !tolerateAbsentDocuments)
+            {
+                var blueprintRoot = Path.Combine(repositoryRoot, "Blueprint");
+                var sourceFindings = DocumentDefinitions.CheckRepositorySourceBijection(
+                    Directory.EnumerateFiles(
+                            blueprintRoot,
+                            "*.scribe.cs",
+                            SearchOption.AllDirectories)
+                        .Select(path => Path.GetRelativePath(repositoryRoot, path)),
+                    repositoryDefinitions);
+                if (sourceFindings.Length != 0)
+                {
+                    foreach (var finding in sourceFindings)
+                    {
+                        error.WriteLine(finding);
+                    }
+
+                    return new ScribeEmissionRun(1, null);
+                }
+            }
             var definitions = tolerateAbsentDocuments
                 ? repositoryDefinitions
                     .Where(definition => File.Exists(Path.Combine(

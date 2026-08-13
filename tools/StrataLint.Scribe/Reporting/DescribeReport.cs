@@ -66,7 +66,8 @@ internal sealed class DescribeReport
     internal static DescribeReport Build(
         string repositoryRoot,
         IEnumerable<ScribeDocument> documents,
-        StrataLint.Engine.LeanAxiomReport? leanReport = null)
+        StrataLint.Engine.LeanAxiomReport? leanReport = null,
+        bool validateContentGovernance = false)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(repositoryRoot);
         ArgumentNullException.ThrowIfNull(documents);
@@ -120,16 +121,30 @@ internal sealed class DescribeReport
             orderedNodes.Count(static node => node.StatementKind == "lean-declaration"),
             byKind,
             byProvenance);
+        var redFindings = DescribeRepositoryValidator.Validate(
+            repositoryRoot,
+            material,
+            leanReport,
+            libraryInspection).ToBuilder();
+        if (validateContentGovernance)
+        {
+            redFindings.AddRange(DescribeContentGovernance.Validate(
+                repositoryRoot,
+                material,
+                stats,
+                libraryInspection));
+        }
+
         return new DescribeReport(
             stats,
             orderedNodes,
             orderedNodes.Where(static node => node.Provenance == "suspected-novel").ToImmutableArray(),
             orderedNodes.Where(static node => node.ProjectionFailureReason is not null).ToImmutableArray(),
-            DescribeRepositoryValidator.Validate(
-                repositoryRoot,
-                material,
-                leanReport,
-                libraryInspection),
+            redFindings
+                .OrderBy(static finding => finding.Path, StringComparer.Ordinal)
+                .ThenBy(static finding => finding.Code, StringComparer.Ordinal)
+                .ThenBy(static finding => finding.Message, StringComparer.Ordinal)
+                .ToImmutableArray(),
             observations
                 .OrderBy(static item => item.Path, StringComparer.Ordinal)
                 .ThenBy(static item => item.Code, StringComparer.Ordinal)
