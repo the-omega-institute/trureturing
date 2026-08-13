@@ -72,6 +72,15 @@ Apply `CLAUDE.md` 11, "library before proof." Search pinned mathlib and the repo
 
 If the result exists upstream, import and apply it. Do not reprove it: a reproof of an existing declaration creates a second source of truth.
 
+Search for the statement shape, not the module name. A landed lane died reproving a frozen theorem in strictly weaker form (it added a derivable `Odd d` hypothesis) even though it had been told to read that exact module: reading a module and greping for the identity are different acts, and only the second one protects you. Grep `D5/` for the hypothesis pattern and the conclusion pattern of your target, for example:
+
+```sh
+grep -rn "≡ -1 \[ZMOD" D5/ --include='*.lean'
+grep -rn "jacobiSym\|J(" D5/ --include='*.lean' | grep -i <conclusion-token>
+```
+
+If the identity already exists in equal or stronger form, the correct output is the reuse or an `open`/abstain naming the frozen declaration — never a new module. A hypothesis derivable from your other hypotheses (parity from a congruence, coprimality from an inverse relation) must be derived, not assumed: assuming it makes your theorem strictly weaker than the source claim and reviewers reject it as a weaker duplicate.
+
 Postcondition: the search trace is recorded and every hit is either reused or accompanied by a concrete explanation of why it is not the same claim.
 
 If the search cannot be completed faithfully, end the task as `open` with no deposit, carrying the Step 8 evidence: statement echo, search trace, failed approaches with reasons, and machine diagnostics.
@@ -189,6 +198,30 @@ Before Step 7, the producing seat must answer every item with concrete evidence.
 
 Any item without evidence blocks deposit. Mark an unverified fact exactly `ASSUMED-UNVERIFIED`; never replace measurement with hedging language. The repository's current signature-match test explicitly leaves this gap open: `CoverAtomEnvelopeTests.cs` says an unchanged pre-committed `theorem t : True` would pass, so compilation, deposit, and cover do not certify fidelity.
 
+## Earned hard gates (precedent taxonomy)
+
+Every entry below names a failure class that actually occurred in landed rounds of this repository. These are not hypothetical defenses; they are the recurring ways seats fail review. The owners named in "What this skill does not own" still win on current thresholds — this section tells you where lanes die.
+
+### Mathematical content
+
+- **Definitional tautology (the most common kill, seven landed cases).** Never define a thing as the formula you then "prove"; never install the conclusion by definition; never prove an iff whose two sides you defined to coincide. Both sides of every equation and iff must have independent anchors: a frozen declaration, a mathlib declaration, or data present in the authoritative atom text.
+- **Invented-classifier variant.** Defining your own key or equivalence (for example a `Setoid.ker` quotient of a tuple you chose) and then proving bijectivity or a count over its quotient proves nothing: the result is true by construction for any injective key, and the arithmetic coordinates you computed go unused. If the subject's own orbit/class notion is not in the repository, the honest outcome is `open` naming the missing carrier — reviewers reject the invented one 2-1 or worse.
+- **Fabrication ban.** If a concrete datum your theorem needs — a case list, a walk, a witness pair, the meaning of a symbol — is not derivable from the authoritative atom text plus in-repo frozen definitions, do not invent it. Exhibiting concrete numerals you computed yourself from in-repo definitions is derivation and is fine; conjuring a list the source only attests is fabrication. End `open` naming precisely the missing datum.
+- **Witness-vs-universal honesty.** An `∃`-witness does not discharge a universal claim; an instance (dim 4, a fixed modulus, an 18-ray set) does not discharge a general claim; a conditional theorem does not discharge its unconditional attestation. State exactly what you proved; graders run a named-trap checklist (witness-vs-universal, instance-vs-general, conditional-vs-unconditional, pointwise-vs-operator, proof-internal-vs-addressable-statement, multi-clause residue names, mechanism-vs-outcome) and a mismatch is a blocker, not a nuance.
+- **Unused hypotheses are dishonest signatures.** A binder the proof never uses gets stripped at collection; write the minimal true signature.
+
+### Artifact shape
+
+- **Header law (three landed violations).** The six-line header sits at byte zero and the digest is a SINGLE line ending ` -/` on line 6. A wrapped digest is a violation; ` -/` alone on line 7 is the same violation. Copy the shape from the latest landed deposit commit, then verify your file's line 6 ends with ` -/`.
+- **Generality tag follows the weakest import and the module's nature (two landed blockers).** A concrete-instance module (fixed modulus, fixed witness set) is `generality: I`; a general theorem module is `G`; a `G` tag on a file importing `I`-level facts is a violation. Compare your nearest landed neighbors before writing the tag.
+- **Scribe formula rejection taxonomy (dozens of mechanical rejections; owner `FormulaDsl.cs`/`LatexWriter.cs` wins on current tokens):** `F.Id` arguments are strictly alphabetic; `D()` takes one digit per argument (`D(2,3)` never `D(23)`); `Sp` is required after macro and relation tokens (`Neg`, `Neq`, `Vert`, `Lvert`, `Rvert`, `Forall`, `InMacro`, `Exists` after `Neg`, …) before `F.Id`/`Operatorname`; `Star` not `Ast`; `Neg` not `Not`; the `FormulaDsl` usings are required; no private string-to-Formula helpers; the displayed formula must mirror every conjunct of the Lean statement — mirror-value swaps (two constants exchanged between clauses) are a landed reviewer catch, so read your emitted `.md` value by value.
+
+### Process honesty
+
+- **Never claim a build result without its exit code.** A seat once reported `lake` green while the build failed; since then the dispatcher re-runs the build at collection and a false green is a terminal lane offense. Report the command and the exit code; quiet output and elapsed time are not evidence.
+- **Never touch `Meta/Digestion/**`.** Ledger surgery (coverage, residue removal, state moves) is exclusively the dispatcher's; a seat once edited it and the change was reverted wholesale. The same applies to `Meta/StrataLint/Golden/Frozen/**` and formalization receipts.
+- **When a dispatcher assigns output paths, write exactly those.** `result.json` (a conclusion envelope, no logs inline) and `done.sentinel` at the assigned paths are the deliverable; your final prose message is not. A sentinel written while you keep running is worse than no sentinel — write it last, then stop.
+
 ## Prohibitions
 
 - No `sorry` outside `D5/X_Frontier/`; the Lean admission harness owns this rule.
@@ -199,6 +232,7 @@ Any item without evidence blocks deposit. Mark an unverified fact exactly `ASSUM
 - Never add a declaration to a module with an active Freeze event; the frozen ledger owns this constraint.
 - Never exceed directory capacity; `Meta/StrataLint/StrataLint.Engine/Rules/RepositoryRules.Structure.cs` owns this rule.
 - Never hand-edit formalization receipts; the deposit and cover doors own them.
+- Never edit `Meta/Digestion/**` from a producing seat; digestion-ledger surgery is dispatcher-owned.
 - Never weaken the echoed statement to make a proof close; the statement echo and this fidelity gate own that obligation.
 - Never invent a "needs human review" outcome; `CLAUDE.md` 22 forbids human-review gates outright.
 
