@@ -5,6 +5,13 @@ namespace StrataLint.Engine;
 
 public static partial class FrozenLedger
 {
+    private sealed class HistoryFinalStateException(
+        ImmutableArray<RepoPath> paths,
+        string message) : FormatException(message)
+    {
+        internal ImmutableArray<RepoPath> Paths { get; } = paths;
+    }
+
     public static FrozenLedgerValidationOutcome ValidateHistory(
         FrozenLedgerSyntax syntax,
         FrozenMaterialCatalog catalog,
@@ -229,30 +236,37 @@ public static partial class FrozenLedger
             var actualByPath = active.Values.ToDictionary(static entry => entry.Material.RepoPath);
             var missing = expectedByPath.Keys.Except(actualByPath.Keys)
                 .OrderBy(static path => path.Value, StringComparer.Ordinal)
-                .Select(static path => path.Value)
-                .ToArray();
+                .ToImmutableArray();
             if (requireCompleteCatalog && missing.Length > 0)
             {
-                throw new FormatException("Closed modules are missing Freeze events: " + string.Join(", ", missing));
+                throw new HistoryFinalStateException(
+                    missing,
+                    "Closed modules are missing Freeze events: "
+                    + string.Join(", ", missing.Select(static path => path.Value))
+                    + "; run ledger-append to append the missing Freeze events.");
             }
 
             var outside = actualByPath.Keys.Except(expectedByPath.Keys)
                 .OrderBy(static path => path.Value, StringComparer.Ordinal)
-                .Select(static path => path.Value)
-                .ToArray();
+                .ToImmutableArray();
             if (outside.Length > 0)
             {
-                throw new FormatException(
+                throw new HistoryFinalStateException(
+                    outside,
                     "Active frozen history contains modules outside the current Closed catalog: "
-                    + string.Join(", ", outside));
+                    + string.Join(", ", outside.Select(static path => path.Value))
+                    + "; append Revoke before replacing or removing their Freeze events.");
             }
 
-            foreach (var (caseId, entry) in active.ToArray())
+            foreach (var (caseId, entry) in active.OrderBy(
+                static item => item.Value.Material.RepoPath.Value,
+                StringComparer.Ordinal).ToArray())
             {
                 var material = expectedByPath[entry.Material.RepoPath];
-                if (HistoricalActiveFreezeMatches(entry.Payload, material)
-                    && (entry.Environment is null
-                        || EnvironmentMatches(entry.Environment, catalog.Environment)))
+                var materialMatches = HistoricalActiveFreezeMatches(entry.Payload, material);
+                var environmentMatches = entry.Environment is null
+                    || EnvironmentMatches(entry.Environment, catalog.Environment);
+                if (materialMatches && environmentMatches)
                 {
                     active[caseId] = entry with { Material = material };
                     continue;
@@ -263,14 +277,30 @@ public static partial class FrozenLedger
                     continue;
                 }
 
-                if (!allowPendingReattestation
-                    || entry.Payload.StatementId != material.StatementId
+                if (entry.Payload.StatementId != material.StatementId
                     || !entry.Payload.DeclarationStatementIds.SequenceEqual(
                         material.DeclarationStatementIds))
                 {
-                    throw new FormatException(
-                        $"Active module {material.RepoPath.Value} statement identity changed or lacks a matching Reattest event.");
+                    throw new HistoryFinalStateException(
+                        ImmutableArray.Create(material.RepoPath),
+                        $"Active module {material.RepoPath.Value} statement identity changed; append Revoke before the replacement Freeze.");
                 }
+
+                if (allowPendingReattestation)
+                {
+                    continue;
+                }
+
+                if (!environmentMatches)
+                {
+                    throw new HistoryFinalStateException(
+                        ImmutableArray.Create(material.RepoPath),
+                        $"Active module {material.RepoPath.Value} environment pins changed; run ledger-recoordinate before ledger-append.");
+                }
+
+                throw new HistoryFinalStateException(
+                    ImmutableArray.Create(material.RepoPath),
+                    $"Active module {material.RepoPath.Value} has material/blob drift and lacks a matching Reattest event; run ledger-append to close it with Reattest in the same transaction.");
             }
 
             var activeEntries = active.ToImmutableDictionary(StringComparer.Ordinal);
@@ -294,7 +324,13 @@ public static partial class FrozenLedger
         catch (Exception exception) when (
             exception is FormatException or JsonException or InvalidOperationException or KeyNotFoundException)
         {
-            return new FrozenLedgerValidationOutcome.Rejected(exception.Message);
+            var rejected = new FrozenLedgerValidationOutcome.Rejected(exception.Message);
+            return exception is HistoryFinalStateException finalState
+                ? rejected with
+                {
+                    HistoryFailurePaths = finalState.Paths,
+                }
+                : rejected;
         }
     }
 

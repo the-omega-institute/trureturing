@@ -136,8 +136,26 @@ internal static class DagLedgerCommandPreparation
         var report = truth.Report;
         var lean = truth.Lean;
         var dag = truth.Dag;
-        var environment = BuildEnvironment(snapshot, baselineSyntax);
         var currentIdentity = Ask(repository.ResolveCurrentRevision);
+        var catalog = BuildCatalog(snapshot, lean, dag, baselineSyntax, currentIdentity);
+
+        return new DagLedgerCandidateMaterial(
+            ledgerPath,
+            baselineBytes,
+            baselineSyntax,
+            catalog,
+            report,
+            snapshot);
+    }
+
+    internal static FrozenMaterialCatalog BuildCatalog(
+        RepositorySnapshot snapshot,
+        AcceptedLeanClosure lean,
+        AcyclicTruthDag dag,
+        FrozenLedgerSyntax ledgerSyntax,
+        FrozenRevisionIdentity currentIdentity)
+    {
+        var environment = BuildEnvironment(snapshot, ledgerSyntax);
         if (currentIdentity.CommitOid.StartsWith("git-sha256:", StringComparison.Ordinal)
             != environment.OriginCommitOid.StartsWith("git-sha256:", StringComparison.Ordinal))
         {
@@ -166,14 +184,7 @@ internal static class DagLedgerCommandPreparation
             FrozenMaterialOutcome.Rejected rejected => throw new InvalidOperationException(rejected.Message),
             _ => throw new InvalidOperationException("unknown frozen material outcome"),
         };
-
-        return new DagLedgerCandidateMaterial(
-            ledgerPath,
-            baselineBytes,
-            baselineSyntax,
-            catalog,
-            report,
-            snapshot);
+        return catalog;
     }
 
     /// Reads the repository, validates the Lean closure and builds the truth DAG -- the part of
@@ -224,7 +235,7 @@ internal static class DagLedgerCommandPreparation
     /// and callers classifying failures cannot tell the two apart otherwise -- both arrive as
     /// IOException or InvalidOperationException. Reference validation is not routed through here:
     /// its refusals are about the ledger's contents.
-    private static T Ask<T>(Func<T> gatewayCall)
+    internal static T Ask<T>(Func<T> gatewayCall)
     {
         try
         {

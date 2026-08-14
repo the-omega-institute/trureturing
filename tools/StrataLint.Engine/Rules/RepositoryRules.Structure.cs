@@ -232,7 +232,7 @@ internal static partial class RepositoryRules
             {
                 findings.Add(new RuleFinding(
                     change.Path.Value,
-                    "accepted frozen-ledger event files are append-only; run ledger-reattest to "
+                    "accepted frozen-ledger event files are append-only; run ledger-append to "
                     + "add a new event and do not modify an already-frozen fragment"));
             }
         }
@@ -304,7 +304,7 @@ internal static partial class RepositoryRules
                 findings.Add(new RuleFinding(
                     path,
                     $"already-frozen module must not be modified without a matching added "
-                    + $"Reattest event; run ledger-reattest for {path}"));
+                    + $"Reattest event; run ledger-append to reconcile {path}"));
             }
         }
 

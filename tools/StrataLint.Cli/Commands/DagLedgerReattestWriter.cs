@@ -59,10 +59,11 @@ internal static class DagLedgerReattestWriter
                     "accepted event files changed while ledger-reattest was validating them");
             }
 
-            DagLedgerAppendWriter.WriteNewEvents(
+            var scratchWarning = DagLedgerAppendWriter.WriteNewEvents(
                 context.LedgerPath,
                 candidateSyntax.Lines,
-                context.Baseline.Events.Length);
+                context.Baseline.Events.Length,
+                context.BaselineBytes);
             var appended = candidate.Events
                 .Skip(context.Baseline.Events.Length)
                 .OfType<FrozenLedgerEvent.Reattest>()
@@ -71,7 +72,7 @@ internal static class DagLedgerReattestWriter
                 + $"events={candidate.Events.Length} head={candidate.HeadHash}\n"
                 + string.Concat(appended.Select(item =>
                     $"REATTESTED {context.Baseline.ActiveEntries[item.Payload.CaseId].Material.RepoPath.Value}\n"));
-            return new CommandResult(true, output, string.Empty);
+            return new CommandResult(true, output, scratchWarning);
         }
         // Preparation marks report and repository faults now. Without these two the wrapped
         // forms escape this catch and the command loses its own diagnostic.
@@ -89,7 +90,7 @@ internal static class DagLedgerReattestWriter
             return new CommandResult(
                 false,
                 string.Empty,
-                "LEDGER_REATTEST_FAILED " + (exception.InnerException ?? exception).Message + "\n");
+                DagLedgerAppendWriter.RenderFailure("LEDGER_REATTEST_FAILED", exception));
         }
     }
 }

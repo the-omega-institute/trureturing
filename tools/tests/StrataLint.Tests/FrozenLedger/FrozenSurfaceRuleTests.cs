@@ -59,7 +59,8 @@ public sealed class FrozenSurfaceRuleTests
 
         var diagnostic = Assert.Single(evaluation.Diagnostics);
         Assert.Equal(eventPath, diagnostic.Path);
-        Assert.Contains("ledger-reattest", diagnostic.Message, StringComparison.Ordinal);
+        Assert.Contains("ledger-append", diagnostic.Message, StringComparison.Ordinal);
+        Assert.DoesNotContain("ledger-reattest", diagnostic.Message, StringComparison.Ordinal);
         Assert.Contains("already-frozen fragment", diagnostic.Message, StringComparison.Ordinal);
     }
 
@@ -83,7 +84,7 @@ public sealed class FrozenSurfaceRuleTests
 
         var diagnostic = Assert.Single(evaluation.Diagnostics);
         Assert.Equal(FrozenPath, diagnostic.Path);
-        Assert.Contains("ledger-reattest", diagnostic.Message, StringComparison.Ordinal);
+        Assert.Contains("ledger-append", diagnostic.Message, StringComparison.Ordinal);
         Assert.Contains("already-frozen module", diagnostic.Message, StringComparison.Ordinal);
     }
 
@@ -97,7 +98,7 @@ public sealed class FrozenSurfaceRuleTests
         var diagnostic = Assert.Single(evaluation.Diagnostics);
         Assert.Equal(FrozenPath, diagnostic.Path);
         Assert.Contains("already-frozen module", diagnostic.Message, StringComparison.Ordinal);
-        Assert.Contains("ledger-reattest", diagnostic.Message, StringComparison.Ordinal);
+        Assert.Contains("ledger-append", diagnostic.Message, StringComparison.Ordinal);
     }
 
     [Theory]
@@ -235,7 +236,7 @@ public sealed class FrozenSurfaceRuleTests
 
         Assert.Contains(evaluation.Diagnostics, diagnostic =>
             diagnostic.Path == FrozenPath
-            && diagnostic.Message.Contains("ledger-reattest", StringComparison.Ordinal));
+            && diagnostic.Message.Contains("ledger-append", StringComparison.Ordinal));
     }
 
     [Fact]

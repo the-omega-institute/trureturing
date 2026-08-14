@@ -48,7 +48,7 @@ public static partial class FrozenLedgerGenerator
         return result.ToImmutable();
     }
 
-    public static ImmutableArray<byte> AppendMissingFreezes(
+    public static ImmutableArray<byte> ReconcileToCatalog(
         FrozenLedgerConsistent baseline,
         FrozenMaterialCatalog candidateCatalog)
     {
@@ -57,24 +57,15 @@ public static partial class FrozenLedgerGenerator
         var activeByPath = baseline.ActiveEntries.Values.ToDictionary(
             static entry => entry.Material.RepoPath,
             static entry => entry.Material);
-        foreach (var (path, active) in activeByPath)
-        {
-            if (candidateCatalog.ByPath.TryGetValue(path, out var candidate)
-                && active.FrozenNodeId != candidate.FrozenNodeId)
-            {
-                throw new InvalidOperationException(
-                    $"Active module {path.Value} changed identity; append Revoke before the replacement Freeze.");
-            }
-        }
-
-        var payloads = candidateCatalog.ClosedNodes
+        var reattestations = PlanReattestations(baseline, candidateCatalog);
+        var freezes = candidateCatalog.ClosedNodes
             .Where(node => !activeByPath.ContainsKey(node.RepoPath))
             .Select(node => FrozenLedgerCanonicalWriter.FreezePayload(candidateCatalog.Environment, node))
             .OrderBy(static payload => payload.CaseClass, StringComparer.Ordinal)
             .ThenBy(static payload => payload.CaseId, StringComparer.Ordinal)
             .Select(static payload => (Type: "Freeze", Payload: FrozenLedgerCanonicalWriter.FreezeElement(payload)))
             .ToImmutableArray();
-        return Append(baseline, payloads);
+        return Append(baseline, reattestations.AddRange(freezes));
     }
 
     public static ImmutableArray<byte> AppendReattestation(
@@ -107,6 +98,13 @@ public static partial class FrozenLedgerGenerator
     {
         ArgumentNullException.ThrowIfNull(baseline);
         ArgumentNullException.ThrowIfNull(candidateCatalog);
+        return Append(baseline, PlanReattestations(baseline, candidateCatalog));
+    }
+
+    private static ImmutableArray<(string Type, JsonElement Payload)> PlanReattestations(
+        FrozenLedgerConsistent baseline,
+        FrozenMaterialCatalog candidateCatalog)
+    {
         var activeByPath = baseline.ActiveEntries.Values.ToDictionary(
             static entry => entry.Material.RepoPath);
         var payloads = ImmutableArray.CreateBuilder<(string Type, JsonElement Payload)>();
@@ -117,14 +115,14 @@ public static partial class FrozenLedgerGenerator
             if (!candidateCatalog.ByPath.TryGetValue(path, out var candidate))
             {
                 throw new InvalidOperationException(
-                    $"Active module {path.Value} is no longer Closed; Reattest cannot change truth state.");
+                    $"Active module {path.Value} is no longer Closed; append Revoke before running ledger-append because Reattest cannot change truth state.");
             }
 
             if (entry.Payload.StatementId != candidate.StatementId
                 || !entry.Payload.DeclarationStatementIds.SequenceEqual(candidate.DeclarationStatementIds))
             {
                 throw new InvalidOperationException(
-                    $"Active module {path.Value} statement identity changed; Reattest is forbidden.");
+                    $"Active module {path.Value} statement identity changed; append Revoke before running ledger-append because Reattest is forbidden.");
             }
 
             if (entry.Material.FrozenNodeId == candidate.FrozenNodeId
@@ -148,7 +146,7 @@ public static partial class FrozenLedgerGenerator
                         != candidateCatalog.Environment.LakefileBlobOid)
                 {
                     throw new InvalidOperationException(
-                        $"Active module {path.Value} environment changed; Reattest is forbidden.");
+                        $"Active module {path.Value} environment changed; run ledger-recoordinate before ledger-append because Reattest is forbidden.");
                 }
 
                 input = input with
@@ -165,7 +163,7 @@ public static partial class FrozenLedgerGenerator
             payloads.Add(("Reattest", FrozenLedgerCanonicalWriter.ReattestElement(payload)));
         }
 
-        return Append(baseline, payloads.ToImmutable());
+        return payloads.ToImmutable();
     }
 
     private static FrozenReattestPayload ExtendedReattestPayload(

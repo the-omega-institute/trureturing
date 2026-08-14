@@ -244,7 +244,7 @@ public sealed partial class RevocationTests
                 receipts.Store));
         Assert.Contains("prefix", deletedTombstone.Message, StringComparison.OrdinalIgnoreCase);
 
-        var resurrectBytes = FrozenLedgerGenerator.AppendMissingFreezes(revoked, baselineCatalog);
+        var resurrectBytes = FrozenLedgerGenerator.ReconcileToCatalog(revoked, baselineCatalog);
         var resurrected = Assert.IsType<FrozenLedgerValidationOutcome.Rejected>(
             ValidateCandidate(Load(resurrectBytes), baseline, baselineCatalog, receipts.Store));
         Assert.Contains("reused", resurrected.Message, StringComparison.OrdinalIgnoreCase);
@@ -254,7 +254,7 @@ public sealed partial class RevocationTests
             source: "theorem a : True := by exact True.intro\n"));
         var correctedNode = Assert.Single(correctedCatalog.ClosedNodes);
         Assert.NotEqual(oldNode.FrozenNodeId, correctedNode.FrozenNodeId);
-        var correctedBytes = FrozenLedgerGenerator.AppendMissingFreezes(revoked, correctedCatalog);
+        var correctedBytes = FrozenLedgerGenerator.ReconcileToCatalog(revoked, correctedCatalog);
         var corrected = Assert.IsType<FrozenLedgerValidationOutcome.Accepted>(
             ValidateCandidate(Load(correctedBytes), baseline, correctedCatalog, receipts.Store)).Capability;
         Assert.Equal(correctedNode.FrozenNodeId, Assert.Single(corrected.ActiveFrozenNodes).FrozenNodeId);

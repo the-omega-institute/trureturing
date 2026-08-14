@@ -123,14 +123,9 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
                 bootstrap,
                 verifiedScribeEmissions,
                 forkPoint);
-            var admission = evaluation.Outcome;
-            if (admission is not AdmissionOutcome.Admitted
-                && admission is not AdmissionOutcome.ProtectedSurfaceChange)
-            {
-                return admission;
-            }
-
-            return admission;
+            return ApplyFrozenLedgerFinalStateGate(
+                evaluation,
+                (lean, dag) => ValidateFrozenLedgerFinalState(current, lean, dag));
         }
         catch (Exception exception)
         {
@@ -165,18 +160,41 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
                 continue;
             }
 
-            var inputs = loaded.Events
-                .Where(static item => item.Input is not null)
-                .Select(static item => item.Input!)
-                .ToImmutableArray();
-            if (inputs.IsEmpty)
+            var inputs = ImmutableArray.CreateBuilder<FrozenLedgerInput>();
+            var environmentReferences = ImmutableArray.CreateBuilder<FrozenEnvironmentReference>();
+            foreach (var item in loaded.Events)
+            {
+                if (item.EventType == FrozenLedger.EnvironmentRecoordinateEventType)
+                {
+                    var recoordinate = FrozenLedger.ParseEnvironmentRecoordinate(item.Payload);
+                    inputs.Add(recoordinate.OldInput);
+                    inputs.Add(recoordinate.NewInput);
+                    environmentReferences.Add(new FrozenEnvironmentReference(
+                        recoordinate.OldInput,
+                        recoordinate.OldEnvironment,
+                        recoordinate.SourceSha256));
+                    environmentReferences.Add(new FrozenEnvironmentReference(
+                        recoordinate.NewInput,
+                        recoordinate.NewEnvironment,
+                        recoordinate.SourceSha256));
+                }
+                else if (item.Input is { } input)
+                {
+                    inputs.Add(input);
+                }
+            }
+
+            if (inputs.Count == 0)
             {
                 continue;
             }
 
             try
             {
-                repository.ValidateFrozenReferences(FrozenLedgerReferenceSet.Create(inputs, []));
+                repository.ValidateFrozenReferences(FrozenLedgerReferenceSet.Create(
+                    inputs.ToImmutable(),
+                    environmentReferences.ToImmutable(),
+                    []));
             }
             catch (FrozenReferenceRejectionException exception)
             {
@@ -195,6 +213,121 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
         return diagnostics.Count == 0
             ? null
             : new AdmissionOutcome.RuleRejected(diagnostics.ToImmutable());
+    }
+
+    private AdmissionOutcome? ValidateFrozenLedgerFinalState(
+        RepositorySnapshot current,
+        AcceptedLeanClosure lean,
+        AcyclicTruthDag dag)
+    {
+        try
+        {
+            var syntax = DagLedgerCommandPreparation.LoadLedgerFiles(
+                current.Files.Values.Where(static file =>
+                    FrozenLedgerChangeClassifier.IsAcceptedEventPath(file.Path.Value)),
+                "current frozen ledger");
+            var catalog = DagLedgerCommandPreparation.BuildCatalog(
+                current,
+                lean,
+                dag,
+                syntax,
+                DagLedgerCommandPreparation.Ask(repository.ResolveCurrentRevision));
+            var references = DagLedgerCommandPreparation.ScanReferences(
+                syntax,
+                "current frozen ledger");
+
+            // Added-event anchors were validated above. Existing accepted files are an admitted,
+            // byte-preserved prefix, so the full replay capability is assembled locally and never
+            // asks the repository gateway to resolve old remote anchors again (#1712).
+            var trustedReplayReferences = TrustedFrozenGitReferences.CreateForTrustedAdapter(
+                references.Inputs,
+                references.EnvironmentReferences);
+            return FrozenLedger.ValidateHistory(syntax, catalog, trustedReplayReferences) switch
+            {
+                FrozenLedgerValidationOutcome.Accepted => null,
+                FrozenLedgerValidationOutcome.Rejected rejected => FrozenLedgerRuleRejection(
+                    rejected.HistoryFailurePaths.IsEmpty
+                        ? ImmutableArray.Create(
+                            RepoPath.CreateKnown(FrozenLedgerChangeClassifier.AcceptedRoot))
+                        : rejected.HistoryFailurePaths,
+                    rejected.Message),
+                _ => throw new InvalidOperationException("unknown frozen history validation outcome"),
+            };
+        }
+        catch (DagLedgerCommandPreparation.RepositoryUnavailableException exception)
+        {
+            return new AdmissionOutcome.InfrastructureFailure(
+                (exception.InnerException ?? exception).Message);
+        }
+        catch (Exception exception) when (
+            exception is ArgumentException
+                or FormatException
+                or InvalidOperationException
+                or JsonException
+                or KeyNotFoundException)
+        {
+            return FrozenLedgerRuleRejection(
+                ImmutableArray.Create(
+                    RepoPath.CreateKnown(FrozenLedgerChangeClassifier.AcceptedRoot)),
+                exception.Message);
+        }
+    }
+
+    private static AdmissionOutcome.RuleRejected FrozenLedgerRuleRejection(
+        ImmutableArray<RepoPath> paths,
+        string message) =>
+        new(paths.Select(path => new Diagnostic(
+            RuleId.CreateKnown(8),
+            "Frozen Hearts semantics",
+            DisplaySeverity.Error,
+            AdmissionEffect.Block,
+            path.Value,
+            message)).ToImmutableArray());
+
+    internal static AdmissionOutcome MergeFrozenLedgerRejection(
+        AdmissionOutcome admission,
+        AdmissionOutcome.RuleRejected frozenRejection) => admission switch
+        {
+            AdmissionOutcome.Admitted => frozenRejection,
+            AdmissionOutcome.ProtectedSurfaceChange protectedChange =>
+                new AdmissionOutcome.RuleRejected(
+                    protectedChange.Sl022Diagnostics
+                        .AddRange(frozenRejection.Diagnostics)
+                        .ToImmutableArray()),
+            AdmissionOutcome.RuleRejected rejected => new AdmissionOutcome.RuleRejected(
+                rejected.Diagnostics
+                    .AddRange(frozenRejection.Diagnostics)
+                    .ToImmutableArray()),
+            _ => throw new InvalidOperationException(
+                "unknown admission outcome while merging frozen-ledger rejection"),
+        };
+
+    internal static AdmissionOutcome ApplyFrozenLedgerFinalStateGate(
+        SnapshotAdmissionEvaluation evaluation,
+        Func<AcceptedLeanClosure, AcyclicTruthDag, AdmissionOutcome?> validateFinalState)
+    {
+        var admission = evaluation.Outcome;
+        if (admission is not AdmissionOutcome.Admitted
+            && admission is not AdmissionOutcome.ProtectedSurfaceChange)
+        {
+            return admission;
+        }
+
+        if (evaluation.CurrentLean is null || evaluation.CurrentDag is null)
+        {
+            return new AdmissionOutcome.InfrastructureFailure(
+                "frozen-ledger final-state invariant failed: admitted evaluation lacks the "
+                + "current Lean closure or truth DAG");
+        }
+
+        return validateFinalState(evaluation.CurrentLean, evaluation.CurrentDag) switch
+        {
+            null => admission,
+            AdmissionOutcome.RuleRejected frozenRejection =>
+                MergeFrozenLedgerRejection(admission, frozenRejection),
+            AdmissionOutcome.InfrastructureFailure infrastructureFailure => infrastructureFailure,
+            _ => throw new InvalidOperationException("unknown frozen-ledger final-state outcome"),
+        };
     }
 
     public AdmissionTopologyOutcome Topology(IReadOnlyList<string> arguments)
