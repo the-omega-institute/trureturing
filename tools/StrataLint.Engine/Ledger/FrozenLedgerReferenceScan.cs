@@ -8,12 +8,14 @@ public sealed class FrozenLedgerReferenceSet
 {
     private FrozenLedgerReferenceSet(
         ImmutableArray<FrozenLedgerInput> inputs,
+        ImmutableArray<FrozenEnvironmentReference> environmentReferences,
         ImmutableArray<string> revocationReceiptBlobOids,
         ImmutableArray<string> commitOids,
         ImmutableArray<string> treeOids,
         ImmutableArray<string> blobOids)
     {
         Inputs = inputs;
+        EnvironmentReferences = environmentReferences;
         RevocationReceiptBlobOids = revocationReceiptBlobOids;
         CommitOids = commitOids;
         TreeOids = treeOids;
@@ -21,6 +23,8 @@ public sealed class FrozenLedgerReferenceSet
     }
 
     public ImmutableArray<FrozenLedgerInput> Inputs { get; }
+
+    public ImmutableArray<FrozenEnvironmentReference> EnvironmentReferences { get; }
 
     public ImmutableArray<string> RevocationReceiptBlobOids { get; }
 
@@ -32,15 +36,8 @@ public sealed class FrozenLedgerReferenceSet
 
     internal static FrozenLedgerReferenceSet Create(
         ImmutableArray<FrozenLedgerInput> inputs,
-        ImmutableArray<string> receiptOids)
-    {
-        var commits = inputs.Select(static input => input.BaseCommitOid);
-        var trees = inputs.Select(static input => input.BaseTreeOid);
-        var blobs = inputs.Select(static input => input.DescriptorBlobOid)
-            .Concat(inputs.SelectMany(static input => input.SupportingBlobOids))
-            .Concat(receiptOids);
-        return Create(inputs, receiptOids, commits, trees, blobs);
-    }
+        ImmutableArray<string> receiptOids) =>
+        Create(inputs, ImmutableArray<FrozenEnvironmentReference>.Empty, receiptOids);
 
     internal static FrozenLedgerReferenceSet Create(
         ImmutableArray<FrozenLedgerInput> inputs,
@@ -48,8 +45,37 @@ public sealed class FrozenLedgerReferenceSet
         IEnumerable<string> commitOids,
         IEnumerable<string> treeOids,
         IEnumerable<string> blobOids) =>
+        Create(
+            inputs,
+            ImmutableArray<FrozenEnvironmentReference>.Empty,
+            receiptOids,
+            commitOids,
+            treeOids,
+            blobOids);
+
+    internal static FrozenLedgerReferenceSet Create(
+        ImmutableArray<FrozenLedgerInput> inputs,
+        ImmutableArray<FrozenEnvironmentReference> environmentReferences,
+        ImmutableArray<string> receiptOids)
+    {
+        var commits = inputs.Select(static input => input.BaseCommitOid);
+        var trees = inputs.Select(static input => input.BaseTreeOid);
+        var blobs = inputs.Select(static input => input.DescriptorBlobOid)
+            .Concat(inputs.SelectMany(static input => input.SupportingBlobOids))
+            .Concat(receiptOids);
+        return Create(inputs, environmentReferences, receiptOids, commits, trees, blobs);
+    }
+
+    internal static FrozenLedgerReferenceSet Create(
+        ImmutableArray<FrozenLedgerInput> inputs,
+        ImmutableArray<FrozenEnvironmentReference> environmentReferences,
+        ImmutableArray<string> receiptOids,
+        IEnumerable<string> commitOids,
+        IEnumerable<string> treeOids,
+        IEnumerable<string> blobOids) =>
         new(
             inputs,
+            environmentReferences,
             receiptOids,
             Sorted(commitOids),
             Sorted(treeOids),
@@ -95,6 +121,16 @@ internal static class FrozenLedgerReferenceProjection
         "graph_root", "root_case_ids", "root_frozen_node_ids",
     ];
 
+    internal static string[] EnvironmentRecoordinatePayloadFields { get; } =
+    [
+        "case_id", "declaration_statement_ids", "environment", "equivalence_status",
+        "kernel_verdict", "new_axiom_closure", "new_frozen_node_id", "new_imports", "new_input",
+        "new_prerequisite_frozen_node_ids", "new_statement_id", "new_witness_id",
+        "old_axiom_closure", "old_frozen_node_id", "old_imports", "old_input",
+        "old_prerequisite_frozen_node_ids", "old_statement_id", "old_witness_id",
+        "previous_attestation_event_hash", "source_sha256",
+    ];
+
     internal static ImmutableDictionary<string, string[]> OidFields { get; } =
         new Dictionary<string, string[]>(StringComparer.Ordinal)
         {
@@ -122,8 +158,30 @@ internal static class FrozenLedgerReferenceProjection
             [
                 "evidence[].receipt_blob_oid",
             ],
+            [FrozenLedger.EnvironmentRecoordinateEventType] =
+            [
+                "environment.new.lake_manifest_blob_oid",
+                "environment.new.lakefile_blob_oid",
+                "environment.new.lean_toolchain_blob_oid",
+                "environment.old.lake_manifest_blob_oid",
+                "environment.old.lakefile_blob_oid",
+                "environment.old.lean_toolchain_blob_oid",
+                "new_input.base_commit_oid",
+                "new_input.base_tree_oid",
+                "new_input.descriptor_blob_oid",
+                "new_input.supporting_blob_oids",
+                "old_input.base_commit_oid",
+                "old_input.base_tree_oid",
+                "old_input.descriptor_blob_oid",
+                "old_input.supporting_blob_oids",
+            ],
         }.ToImmutableDictionary(StringComparer.Ordinal);
 }
+
+public sealed record FrozenEnvironmentReference(
+    FrozenLedgerInput Input,
+    FrozenEnvironmentPins Environment,
+    string SourceSha256);
 
 [Union(EnableImplicitConversions = false)]
 public partial record FrozenLedgerReferenceScanOutcome
@@ -165,6 +223,11 @@ public static partial class FrozenLedger
             return ParseInput(input);
         }
 
+        if (eventType == EnvironmentRecoordinateEventType)
+        {
+            return ParseEnvironmentRecoordinate(payload).NewInput;
+        }
+
         if (eventType == "Revoke")
         {
             RequireObjectFields(
@@ -189,6 +252,7 @@ public static partial class FrozenLedger
             }
 
             var inputs = ImmutableArray.CreateBuilder<FrozenLedgerInput>();
+            var environmentReferences = ImmutableArray.CreateBuilder<FrozenEnvironmentReference>();
             var receipts = ImmutableHashSet.CreateBuilder<string>(StringComparer.Ordinal);
             var commits = ImmutableHashSet.CreateBuilder<string>(StringComparer.Ordinal);
             var trees = ImmutableHashSet.CreateBuilder<string>(StringComparer.Ordinal);
@@ -287,6 +351,22 @@ public static partial class FrozenLedger
                         blobs.Add(oid);
                     }
                 }
+                else if (eventType == EnvironmentRecoordinateEventType)
+                {
+                    var recoordinate = ParseEnvironmentRecoordinate(payload);
+                    inputs.Add(recoordinate.OldInput);
+                    inputs.Add(recoordinate.NewInput);
+                    environmentReferences.Add(new FrozenEnvironmentReference(
+                        recoordinate.OldInput,
+                        recoordinate.OldEnvironment,
+                        recoordinate.SourceSha256));
+                    environmentReferences.Add(new FrozenEnvironmentReference(
+                        recoordinate.NewInput,
+                        recoordinate.NewEnvironment,
+                        recoordinate.SourceSha256));
+                    AddInputReferences(recoordinate.OldInput, commits, trees, blobs);
+                    AddInputReferences(recoordinate.NewInput, commits, trees, blobs);
+                }
                 else
                 {
                     throw new FormatException($"Unknown frozen event type {eventType}.");
@@ -297,6 +377,7 @@ public static partial class FrozenLedger
 
             return new FrozenLedgerReferenceScanOutcome.Accepted(FrozenLedgerReferenceSet.Create(
                 inputs.ToImmutable(),
+                environmentReferences.ToImmutable(),
                 receipts.Order(StringComparer.Ordinal).ToImmutableArray(),
                 commits,
                 trees,

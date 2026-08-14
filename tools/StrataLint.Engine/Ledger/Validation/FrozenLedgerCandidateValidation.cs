@@ -147,6 +147,23 @@ public static partial class FrozenLedger
                         previousHash,
                         reattest));
                 }
+                else if (eventType == EnvironmentRecoordinateEventType)
+                {
+                    var recoordinate = ValidateEnvironmentRecoordinate(
+                        payload,
+                        active,
+                        trustedReferences,
+                        catalog);
+                    active[recoordinate.CaseId] = ApplyEnvironmentRecoordinate(
+                        active[recoordinate.CaseId],
+                        recoordinate,
+                        eventHash);
+                    events.Add(new FrozenLedgerEvent.EnvironmentRecoordinate(
+                        sequence,
+                        eventHash,
+                        previousHash,
+                        recoordinate));
+                }
                 else if (eventType == "Revoke")
                 {
                     var revoke = ParseRevoke(

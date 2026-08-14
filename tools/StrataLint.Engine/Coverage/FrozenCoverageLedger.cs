@@ -27,7 +27,7 @@ public static class FrozenCoverageLedger
                 var root = line.Value;
                 var eventType = RequiredString(root, "event_type");
                 var payload = RequiredObject(root, "payload");
-                if (!sawGenesis && eventType is "Freeze" or "Reattest" or "Revoke")
+                if (!sawGenesis && eventType is "Freeze" or "Reattest" or "EnvironmentRecoordinate" or "Revoke")
                 {
                     throw new FormatException($"{eventType} event occurs before Genesis");
                 }
@@ -55,6 +55,18 @@ public static class FrozenCoverageLedger
                         }
                         break;
                     case "Reattest":
+                        break;
+                    case "EnvironmentRecoordinate":
+                        var oldNodeId = RequiredString(payload, "old_frozen_node_id");
+                        var newNodeId = RequiredString(payload, "new_frozen_node_id");
+                        if (!FrozenHashSyntax.IsSha256(oldNodeId)
+                            || !FrozenHashSyntax.IsSha256(newNodeId)
+                            || !active.Remove(oldNodeId, out var recoordinatedPath)
+                            || !active.TryAdd(newNodeId, recoordinatedPath))
+                        {
+                            throw new FormatException(
+                                "EnvironmentRecoordinate has invalid or inactive node identities");
+                        }
                         break;
                     case "Revoke":
                         foreach (var node in RequiredStrings(payload, "affected_frozen_node_ids"))
