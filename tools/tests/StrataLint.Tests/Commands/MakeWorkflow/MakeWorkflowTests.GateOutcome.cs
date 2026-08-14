@@ -218,7 +218,6 @@ public sealed partial class MakeWorkflowTests
             while [[ $# -gt 0 ]]; do
               case "$1" in
                 --candidate-output) candidate_output="$2"; shift 2 ;;
-                --single) shift ;;
                 *) shift 2 ;;
               esac
             done
