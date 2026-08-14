@@ -35,55 +35,43 @@ branch = harness/diag-month-r5-b
 The reviewed report commit before this final-base replay was:
 
 ```text
-0feb74b9a5ac35b6dd83c9b881defea203343dd8
+56d7cb89213d8c8cc78cbc67c5abe47e367dafa9
 ```
 
 The exact assigned integration base and the branch merge point are distinct:
 
 ```text
-origin/dev                   = 9014d6103a180f6347cb6d092b078ca1560958cf
-final-base replay merge HEAD = e6ba3731b7e00326f275f3ac4b3ad3cda7ed06a2
+origin/dev                   = 82a22f50e60bbbda2312b6dc8365679ee1a3ec6e
+final-base replay merge HEAD = dfac9323bbf6b3ed4f48bfba064fb58c0e4b1d97
 ```
 
 `origin/dev` resolved to the exact assigned SHA before the merge. That commit
 was merged non-destructively into the reviewed report commit with:
 
 ```sh
-git merge --no-edit 9014d6103a180f6347cb6d092b078ca1560958cf
+git merge --no-edit 82a22f50e60bbbda2312b6dc8365679ee1a3ec6e
 ```
 
-Exit `0`; there were no conflicts. The merge commit has parents `0feb74b9` and
-`9014d610`. The incoming range from the preceding base
-`f94e87a89fd0a681936647038edf285f21eee916` has 270 changed paths. Its large
-component is the QDO ingestion: 114 new content-addressed atom blobs and 115
-paths under `Meta/Digestion/backfill/qdo-v1/`, together with the QDO atomizer,
-source declaration, and reference volume. The range also contains unrelated
-Git-revision/frozen-anchor tooling changes and their tests.
-
-The incoming PZG receipt and partial-record changes named by this replay are
-keyed to other atoms:
+Exit `0`; there were no conflicts. The merge commit has parents `56d7cb89` and
+`82a22f50`. The incoming range from the preceding base
+`9014d6103a180f6347cb6d092b078ca1560958cf` contains exactly:
 
 ```text
-6e7e6e80...  AffordableRegionAgreement.affordable_region_agreement
-a6b11f64...  SearchableWindowDecision.searchable_window_forall_decidable
-d8fd2d6f...  GoldenMidlineFactorization.golden_midline_factorization
-42785d66...  BackwardShiftOperator coverage on the shift-operator carrier
+A Blueprint/D5/S1/Deficit/Displacement/GoldenSubstStartSharpness.md
+A Blueprint/D5/S1/Deficit/Displacement/GoldenSubstStartSharpness.scribe.cs
+A D5/S1/Deficit/Displacement/GoldenSubstStartSharpness.lean
 ```
 
-The `42785d66...` backfill delta adds three backward-shift coverage GIDs and
-removes only its bounded-adjoint and basis-subtraction unresolved items. The
-range also adds GoldenSubstitutionOrbit and FourPointPowerDefect declarations,
-but none of these paths or atom IDs is the selected hidden-motion atom
-`85ace51c6a4dd01566ad4ee14028fc48bba25db190a01a8d09917eb4d6262f52`.
-
-A path-scoped `git diff --name-status f94e87a8..9014d610` over this report, the
-selected atom's canonical record, and all three rejected candidate paths exited
-`0` with no output. The selected record resolves to the same blob at both
-endpoints:
+The range contains no digestion record, formalization receipt, hidden-motion
+carrier, report, or rejected-candidate path. A path-scoped
+`git diff --name-status 9014d610..82a22f50` over this report, the selected
+atom's canonical record, the entire `D5/S3/Observer/HiddenFlow` carrier, and all
+three rejected candidate paths exited `0` with no output. The selected record
+resolves to the same blob at both endpoints:
 
 ```text
-f94e87a8: 9f66c6fb5e79b27689b9ec9b4c8b7c6f2aa5d352
 9014d610: 9f66c6fb5e79b27689b9ec9b4c8b7c6f2aa5d352
+82a22f50: 9f66c6fb5e79b27689b9ec9b4c8b7c6f2aa5d352
 ```
 
 Thus the incoming range neither changes the selected atom's status data nor
@@ -91,23 +79,23 @@ touches or restores a candidate artifact.
 
 `git merge-base origin/dev HEAD` returned the exact `origin/dev` SHA above, and
 `git merge-base --is-ancestor origin/dev HEAD` exited `0`. Thus `origin/dev` is
-the candidate-status base, while `e6ba3731` is the branch merge commit on which
+the candidate-status base, while `dfac9323` is the branch merge commit on which
 this final evidence refresh was prepared; the refresh commit is its descendant.
 Immediately after the merge, all three rejected-path absence tests exited `0`.
 
 Fresh bare `make lean-report` on the exact merged base exited `0` with:
 
 ```text
-input_address = sha256:bdb5001081468f123f50a4dd126daa1fa36e05a16a101106c6d883a60cd033eb
-report_sha256 = 6f04896a66cee2f912b6feaf1f52f662badbd4dbf20b444a8b07843344ec73d8
+input_address = sha256:0a9de7f48c13d3da15657f9615e7faba79b183712e22f9eebc7ce4a769cb81d3
+report_sha256 = 7ad53ea4e0bf474f49b4312cf27453d6b9885920a9c263991d157c65ee79323f
 mode = cached
 source_side = candidate
 ```
 
-Because this base changes CLI admission sources, the Release CLI was rebuilt
-before the status checks; the build exited `0` with zero warnings and zero
-errors. The final bare `make gate BASE=origin/dev` run is reserved for after
-this report commit, so the report does not preclaim its terminal result.
+The final-base `make show-atom` and selected candidate projection checks both
+exited `0`. The final bare `make lean-report` and
+`make gate BASE=origin/dev` runs are reserved for after this report commit, so
+the report does not preclaim their terminal results.
 
 ## Atom and authoritative statement
 
@@ -207,9 +195,9 @@ the restored current placement.
 
 ## Current candidate and receipt status
 
-The exact canonical backfill record on final base `9014d610` still has empty
-coverage and receipts. `make show-atom` exited `0` after the Release rebuild and
-verified matching raw, normalized, and CAS hashes for the selected atom.
+The exact canonical backfill record on final base `82a22f50` still has empty
+coverage and receipts. `make show-atom` exited `0` after the merge and verified
+matching raw, normalized, and CAS hashes for the selected atom.
 
 The exact final-base candidate projection exited `0` and reported:
 
@@ -226,10 +214,10 @@ selected_withheld_matches = []
 selected_recorded_formalizations = []
 ```
 
-The final projection includes the newly ingested QDO corpus and totals 230
-candidates; the incoming PZG receipts belong to the differently keyed atoms
-listed above. The selected atom therefore remains exactly one `residual-open`
-candidate; no incoming receipt, coverage GID, or deposited artifact closes it.
+These values exactly match the preceding `9014d610` projection because the
+incoming range contains no digestion or formalization path. The selected atom
+therefore remains exactly one `residual-open` candidate; no incoming receipt,
+coverage GID, or deposited artifact closes it.
 
 ## Clause-level statement echo
 
