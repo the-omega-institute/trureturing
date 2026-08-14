@@ -4,6 +4,7 @@ fingerprints:
   normalized_sha256: sha256:735b1de95a92d627f7b786f4057931534c910317ef85684289e944e322cb4659
 cas_ref: sha256:735b1de95a92d627f7b786f4057931534c910317ef85684289e944e322cb4659
 coverage_gids:
+  - D5/S3/Weil/PrimeAddress/PrimeLogIndependence.prime_log_rational_independence
   - D5/S3/Weil/PrimeAddress/PrimeAddress.zeta_has_no_silent_prime_address
   - D5/S3/Weil/PrimeAddress/PrimeAddress.dirichlet_l_functions_silence_ramified_primes
   - D5/S3/Weil/PrimeAddress/PrimeAddress.zero_contribution_amplitude_x_beta_cos_gamma_log_x
@@ -23,7 +24,6 @@ receipts:
   unresolved_subitems:
     - finite-euler-window-at-first-zero-numerical-certificate
     - prime-deletion-numerical-invariance-certificate
-    - log-prime-rational-independence-from-unique-factorization
     - weyl-dense-winding-of-zero-prime-phases
     - zero-as-infinite-dimensional-kronecker-torus-orbit
     - rh-equal-loudness-square-root-x-bound
