@@ -1,0 +1,19 @@
+### 定理 19.2（一次稳定即永久稳定）
+
+若
+\[
+\equiv_m=\equiv_{m+1},
+\]
+则 \(\equiv_m\) 对 \(\tau\) 稳定：
+\[
+y\equiv_m y'
+\Longrightarrow
+\tau(y)\equiv_m\tau(y').
+\]
+并且
+\[
+\boxed{
+\equiv_{m+r}=\equiv_m
+\quad\text{对全部 }r\ge0.}
+\]
+

@@ -1,0 +1,16 @@
+## 定理 5.2（群值对角逃逸）
+
+固定 \(h\in G\)，定义
+\[
+\Delta_h(E)(a)=h\cdot E(a,a).
+\]
+则
+\[
+\boxed{
+\Pi_A\Delta_h(E)=\Pi_AD(E),}
+\qquad
+\boxed{
+\Gamma_A\Delta_h(E)=h\,\Gamma_AD(E).}
+\]
+若 \(h\neq e\)，自由性使 \(\Delta_h(E)\) 对所有评价表确定性逃逸。
+

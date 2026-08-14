@@ -1,0 +1,40 @@
+### 定理 21.6（双容量单调性）
+
+对全部 \(t\ge0\)，
+
+\[
+\boxed{
+r_{t+1}\le r_t,
+\qquad
+p_{t+1}\le p_t.}
+\]
+
+两条整数序列最终稳定，且
+
+\[
+\boxed{
+\lim_{t\to\infty}r_t=|P_F|,}
+\]
+
+\[
+\boxed{
+\lim_{t\to\infty}p_t
+=
+\left|
+P_F/{\equiv_\infty}
+\right|.}
+\]
+
+若定义线性化
+
+\[
+L_F e_y=e_{F(y)},
+\]
+
+则
+
+\[
+\boxed{
+r_t=\operatorname{rank}(L_F^t).}
+\]
+

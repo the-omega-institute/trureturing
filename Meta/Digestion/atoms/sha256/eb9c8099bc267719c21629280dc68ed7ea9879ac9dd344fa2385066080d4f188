@@ -1,0 +1,20 @@
+### 推论 22.3（规范映射的恒等与复合）
+
+有
+\[
+\boxed{\kappa_{q,q}=\mathrm{id}_{Z_q}.}
+\]
+若
+\[
+q\succeq_{\mathrm{obs}}r
+\succeq_{\mathrm{obs}}s,
+\]
+则
+\[
+\boxed{
+\kappa_{q,s}
+=
+\kappa_{r,s}\circ\kappa_{q,r}.
+}
+\]
+

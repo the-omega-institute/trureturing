@@ -1,0 +1,26 @@
+### 定理 21.3（预测分区的一步稳定）
+
+若某个 \(m\) 满足
+
+\[
+\boxed{
+\equiv_m=\equiv_{m+1},}
+\]
+
+则：
+
+\[
+y\equiv_m y'
+\Longrightarrow
+F(y)\equiv_m F(y'),
+\]
+
+并且
+
+\[
+\boxed{
+\equiv_{m+r}=\equiv_m
+\quad
+\text{对全部 }r\ge0.}
+\]
+

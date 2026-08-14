@@ -1,0 +1,44 @@
+### 定理 22.7（同余内核定理）
+
+\(\mathsf C_\tau\) 满足：
+
+1. \(\mathsf C_\tau(R)\) 是等价关系；
+2. 它是 \(\tau\)-同余：
+   \[
+   y\,\mathsf C_\tau(R)\,y'
+   \Longrightarrow
+   \tau y\,\mathsf C_\tau(R)\,\tau y';
+   \]
+3. 它收缩原关系：
+   \[
+   \boxed{\mathsf C_\tau(R)\subseteq R;}
+   \]
+4. 它对包含关系单调：
+   \[
+   R\subseteq S
+   \Longrightarrow
+   \mathsf C_\tau(R)\subseteq\mathsf C_\tau(S);
+   \]
+5. 它幂等：
+   \[
+   \boxed{
+   \mathsf C_\tau(\mathsf C_\tau(R))
+   =
+   \mathsf C_\tau(R);
+   }
+   \]
+6. 它是包含于 \(R\) 的最大 \(\tau\)-同余。
+
+等价地，若 \(\operatorname{Cong}_\tau(Y)\) 表示全部 \(\tau\)-同余，则对每个
+\[
+S\in\operatorname{Cong}_\tau(Y)
+\]
+有
+\[
+\boxed{
+S\subseteq R
+\iff
+S\subseteq\mathsf C_\tau(R).
+}
+\]
+

@@ -1,0 +1,57 @@
+### 定理 25.3（最小 Moore 行为实现的泛性质）
+
+设另一个受控实现由满射
+\[
+r:Y\twoheadrightarrow W
+\]
+以及转移
+\[
+G_u:W\to W
+\quad(u\in U)
+\]
+和读出
+\[
+o:W\to O
+\]
+给出，满足
+\[
+\boxed{
+rF_u=G_ur
+\quad(\forall u\in U),
+}
+\]
+\[
+\boxed{
+q=or.
+}
+\]
+则存在唯一满射
+\[
+\boxed{
+h:W\twoheadrightarrow Z_{q,U}
+}
+\]
+使
+\[
+\boxed{
+\pi_{q,U}=hr,
+}
+\]
+\[
+\boxed{
+hG_u=\overline F_uh
+\quad(\forall u\in U),
+}
+\]
+\[
+\boxed{
+\overline qh=o.
+}
+\]
+特别地，
+\[
+\boxed{
+|Z_{q,U}|\le|W|.
+}
+\]
+

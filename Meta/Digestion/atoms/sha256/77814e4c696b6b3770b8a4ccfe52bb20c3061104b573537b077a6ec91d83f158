@@ -1,0 +1,20 @@
+### 定理 21.10（长期平均质量的循环公式）
+
+若从 \(a\in A\) 出发最终进入周期
+
+\[
+C_a=(p_0,\ldots,p_{\lambda-1}),
+\]
+
+则
+
+\[
+\boxed{
+\lim_{T\to\infty}
+\frac1T
+\sum_{t=0}^{T-1}v(F^t(a))
+=
+\frac1\lambda
+\sum_{j=0}^{\lambda-1}v(p_j).}
+\]
+

@@ -1,0 +1,25 @@
+### 定理 22.12（融合完成嵌入与兼容像）
+
+\(J_I\) 是单射，并与各分量动力学交换。其像恰为兼容子集
+\[
+\boxed{
+\operatorname{Comp}_I
+=
+\left\{
+(z_i)_{i\in I}:
+\exists y\in Y,\quad
+\pi_{q_i}(y)=z_i\ \forall i
+\right\}.
+}
+\]
+因此
+\[
+\boxed{
+Z_{q_I}
+\cong
+\operatorname{Comp}_I
+\subseteq
+\prod_{i\in I}Z_{q_i}.
+}
+\]
+

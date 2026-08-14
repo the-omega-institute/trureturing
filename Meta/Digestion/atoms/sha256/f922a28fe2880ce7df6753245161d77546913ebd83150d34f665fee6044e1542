@@ -1,0 +1,23 @@
+### 定理 24.4（有限未来截断公式）
+
+对全部 \(m\ge0\)，
+\[
+\boxed{
+p_{m+1}(y,y')
+=
+\max_{0\le k\le m}
+\gamma^k
+d_O(q\tau^k y,q\tau^k y').
+}
+\]
+并且
+\[
+\boxed{
+0
+\le
+d_\gamma(y,y')-p_{m+1}(y,y')
+\le
+\gamma^{m+1}D.
+}
+\]
+
