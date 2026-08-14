@@ -156,9 +156,9 @@ if [[ "$SKIP_ENGINEERING" == "1" ]]; then
   record_timing local engineering-test skipped 0
   record_timing local engineering-selftest skipped 0
 else
-  run_stage engineering-dotnet make -C "$CANDIDATE_ROOT" dotnet
-  run_stage engineering-test make -C "$CANDIDATE_ROOT" tools-test
-  run_stage engineering-selftest make -C "$CANDIDATE_ROOT" selftest
+  run_stage engineering-dotnet make -C "$CANDIDATE_ROOT/tools" dotnet
+  run_stage engineering-test make -C "$CANDIDATE_ROOT/tools" test
+  run_stage engineering-selftest make -C "$CANDIDATE_ROOT/tools" selftest
 fi
 
 LAKE_BIN="${LAKE_BIN:-$(command -v lake || true)}"

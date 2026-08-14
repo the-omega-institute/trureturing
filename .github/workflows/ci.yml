@@ -211,16 +211,16 @@ jobs:
 
       - name: Build candidate with warnings as errors
         if: steps.scope.outputs.run == 'true'
-        run: make -C candidate dotnet
+        run: make -C candidate/tools dotnet
 
       - name: Run candidate golden and integration tests
         if: steps.scope.outputs.run == 'true'
-        run: make -C candidate tools-test
+        run: make -C candidate/tools test
 
       - name: Run candidate selftest twice and compare bytes
         if: steps.scope.outputs.run == 'true'
         shell: bash
-        run: make -C candidate selftest
+        run: make -C candidate/tools selftest
 
       - name: Prove missing capability does not compile
         if: steps.scope.outputs.run == 'true'

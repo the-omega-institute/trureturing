@@ -69,12 +69,29 @@ public sealed class AdmissionWorkflowTests
         Assert.Contains("$SCOPE_PATHS", summaryScript, StringComparison.Ordinal);
         Assert.Contains("$GITHUB_STEP_SUMMARY", summaryScript, StringComparison.Ordinal);
 
+        Assert.Equal(
+            "make -C candidate/tools dotnet",
+            StepScript(steps, "Build candidate with warnings as errors"));
+        Assert.Equal(
+            "make -C candidate/tools test",
+            StepScript(steps, "Run candidate golden and integration tests"));
+        Assert.Equal(
+            "make -C candidate/tools selftest",
+            StepScript(steps, "Run candidate selftest twice and compare bytes"));
+
         Assert.All(
             steps[2..^1],
             step => Assert.Contains(
                 "steps.scope.outputs.run == 'true'",
                 Assert.IsType<YamlScalarNode>(step.Children[new YamlScalarNode("if")]).Value,
                 StringComparison.Ordinal));
+    }
+
+    private static string StepScript(IEnumerable<YamlMappingNode> steps, string name)
+    {
+        var step = Assert.Single(steps, candidate => StepName(candidate) == name);
+        return Assert.IsType<YamlScalarNode>(step.Children[new YamlScalarNode("run")]).Value
+            ?? string.Empty;
     }
 
     // elan 从上游拉二进制,那一跳会间歇失败。两处安装都必须重试,且 elan 的缓存保存
