@@ -1,0 +1,13 @@
+## 定理 8.2（Fitting 分解）
+
+取 \(N\) 使 \(\tau^N(Y)=P_\tau\)。则
+\[
+\boxed{
+V=\ker L_\tau^N\oplus\operatorname{im}L_\tau^N.}
+\]
+第一部分上 \(L_\tau\) 幂零；第二部分等于
+\[
+\operatorname{span}\{e_p:p\in P_\tau\}
+\]
+且 \(L_\tau\) 的限制为周期核置换。
+

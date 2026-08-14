@@ -1,0 +1,14 @@
+## 定理 3.1（坐标限制自然性）
+
+设地址嵌入 \(\iota:A_i\hookrightarrow A_j\)、值映射 \(q:Y_j\to Y_i\)，并定义
+\[
+P(E)(a,b)=q(E(\iota a,\iota b)),
+\qquad
+Q(u)(a)=q(u(\iota a)).
+\]
+若 \(q\tau_j=\tau_iq\)，则
+\[
+\boxed{Q\Delta_j=\Delta_iP.}
+\]
+这是逐坐标恒等式。因此“有限”本身不会制造缺陷。
+

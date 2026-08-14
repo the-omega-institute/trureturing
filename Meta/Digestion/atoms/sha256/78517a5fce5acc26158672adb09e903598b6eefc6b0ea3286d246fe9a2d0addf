@@ -1,0 +1,26 @@
+### 定理 24.12（对角自然性缺陷等于半共轭缺陷）
+
+对每个 \(E\) 与 \(a\in A\)，
+\[
+\boxed{
+d_Z\left(
+Q_\pi\Delta_\tau(E)(a),
+\Delta_\sigma P_\pi(E)(a)
+\right)
+\le
+\delta.
+}
+\]
+并且
+\[
+\boxed{
+\sup_E\sup_{a\in A}
+d_Z\left(
+Q_\pi\Delta_\tau(E)(a),
+\Delta_\sigma P_\pi(E)(a)
+\right)
+=
+\delta.
+}
+\]
+

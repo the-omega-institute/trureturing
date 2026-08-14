@@ -1,0 +1,14 @@
+### 定理 24.2（Bellman 最大方程）
+
+有
+\[
+\boxed{
+d_\gamma(y,y')
+=
+\max\left\{
+d_O(qy,qy'),
+\gamma d_\gamma(\tau y,\tau y')
+\right\}.
+}
+\]
+

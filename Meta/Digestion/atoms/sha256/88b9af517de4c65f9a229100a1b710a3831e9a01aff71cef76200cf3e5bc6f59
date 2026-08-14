@@ -1,0 +1,13 @@
+## 定理 8.1（迹与秩的组合意义）
+
+对任意 \(r\ge1\)、\(k\ge0\)，
+\[
+\boxed{
+\operatorname{Tr}(L_\tau^r)
+=|\operatorname{Fix}(\tau^r)|,}
+\qquad
+\boxed{
+\operatorname{rank}(L_\tau^k)
+=|\tau^k(Y)|.}
+\]
+

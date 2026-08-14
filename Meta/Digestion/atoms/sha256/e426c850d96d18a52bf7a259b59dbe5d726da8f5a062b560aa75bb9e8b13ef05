@@ -1,0 +1,31 @@
+## 定理 5.3（商观察的信息损失）
+
+设 \(Y\) 是有限自由 \(G\)-集，随机变量 \(Z\) 取值于 \(Y\)。令
+\[
+B=\pi(Z),\qquad \Gamma=\gamma_s(Z).
+\]
+则
+\[
+\boxed{
+H(Z)=H(B)+H(\Gamma\mid B).}
+\]
+商观察丢失的不是固定的 \(\log|G|\)，而是条件余信息
+\[
+\boxed{
+H(Z)-H(\pi Z)=H(\Gamma\mid\pi Z).}
+\]
+仅在各纤维条件均匀时等于 \(\log|G|\)。
+
+对两个分布 \(P,Q\)，经典相对熵链式法则为
+\[
+\boxed{
+D(P\Vert Q)
+=
+D(P_B\Vert Q_B)
++
+\sum_bP_B(b)D(P_{\Gamma\mid b}\Vert Q_{\Gamma\mid b}).}
+\]
+所以商投影的数据处理损失正是条件余分布的平均散度。
+
+---
+

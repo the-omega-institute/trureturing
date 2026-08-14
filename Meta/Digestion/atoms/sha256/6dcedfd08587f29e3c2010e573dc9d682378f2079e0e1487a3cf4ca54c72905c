@@ -1,0 +1,10 @@
+## 定理 8.4（迹谱与秩谱确定线性相似类）
+
+给定 \(|Y|\)，完整数据
+\[
+(\operatorname{Tr}(L_\tau^r))_{r\ge1}
+\quad\text{和}\quad
+(\operatorname{rank}(L_\tau^k))_{k\ge0}
+\]
+唯一确定 \(L_\tau\) 在 \(\mathbb C\) 上的 Jordan 标准形。
+

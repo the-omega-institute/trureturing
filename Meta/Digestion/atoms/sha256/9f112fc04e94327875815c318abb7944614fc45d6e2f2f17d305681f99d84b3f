@@ -1,0 +1,16 @@
+### 定理 16.8（Shannon 遗忘 telescoping）
+
+对每个 \(k\ge1\)，
+\[
+\boxed{
+H(X_{k-1})-H(X_k)
+=H(X_{k-1}\mid X_k).}
+\]
+因此对任意 \(N\)：
+\[
+\boxed{
+H(X_0)-H(X_N)
+=
+\sum_{k=1}^{N}H(X_{k-1}\mid X_k).}
+\]
+
