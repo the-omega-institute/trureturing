@@ -8,39 +8,6 @@ namespace StrataLint.ArchitectureTests;
 
 public sealed partial class FileMapPolicyTests
 {
-    [Theory]
-    [InlineData("Blueprint/Trureturing.Content.csproj")]
-    [InlineData("Blueprint/Another.Content.csproj")]
-    [InlineData("Blueprint/Program.cs")]
-    [InlineData("Blueprint/packages.lock.json")]
-    public void FutureBlueprintContentBuildFilesHaveCategoryProgramClassifications(string value)
-    {
-        var manifest = FileMapLoader.LoadRepository(RepositoryLayout.FindRoot());
-
-        var entry = Assert.Single(manifest.Match(value));
-
-        Assert.Equal(FileMapKind.Program, entry.Kind);
-        Assert.Equal("none", entry.ProducedBy);
-        Assert.Equal("RepositoryPathPolicy", Assert.Single(entry.ConsumedBy));
-        Assert.Equal("RepositoryPathPolicy", Assert.Single(entry.VerifiedBy));
-        Assert.Equal("none", entry.ArtifactId);
-        Assert.Equal("committed-source", entry.RuntimeDisposition);
-    }
-
-    [Fact]
-    public void BlueprintProgramActorIsBackedByTheLivePathPolicyConsumer()
-    {
-        var manifest = FileMapLoader.LoadRepository(RepositoryLayout.FindRoot());
-        var entry = Assert.Single(manifest.Match("Blueprint/Future.Content.csproj"));
-
-        Assert.Equal("RepositoryPathPolicy", Assert.Single(entry.ConsumedBy));
-        Assert.Equal("RepositoryPathPolicy", Assert.Single(entry.VerifiedBy));
-        Assert.True(RepositoryPathPolicy.IsBlueprintContentCompositionBuildFile(
-            "Blueprint/Future.Content.csproj"));
-        Assert.False(RepositoryPathPolicy.IsBlueprintContentCompositionBuildFile(
-            "Blueprint/D5/Future.Content.csproj"));
-    }
-
     [Fact]
     public void ComputationalProjectionRegistrationsAcceptTheSyntheticRegistryFixture()
     {
@@ -166,16 +133,6 @@ public sealed partial class FileMapPolicyTests
         Assert.Equal(
             FileMapKind.Data,
             Assert.Single(manifest.Match("Library/Weil/sample2026paper.md")).Kind);
-    }
-
-    [Fact]
-    public void LibrarySplitLedgerIsClassifiedAsLedger()
-    {
-        var manifest = FileMapLoader.LoadRepository(RepositoryLayout.FindRoot());
-
-        Assert.Equal(
-            FileMapKind.Ledger,
-            Assert.Single(manifest.Match("Library/MAP.md")).Kind);
     }
 
     [Fact]

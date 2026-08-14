@@ -88,33 +88,6 @@ artifact_id = "none"
 runtime_disposition = "committed-source"
 
 [[files]]
-pattern = "Blueprint/*.csproj"
-kind = "program"
-produced_by = "none"
-consumed_by = ["RepositoryPathPolicy"]
-verified_by = ["RepositoryPathPolicy"]
-artifact_id = "none"
-runtime_disposition = "committed-source"
-
-[[files]]
-pattern = "Blueprint/Program.cs"
-kind = "program"
-produced_by = "none"
-consumed_by = ["RepositoryPathPolicy"]
-verified_by = ["RepositoryPathPolicy"]
-artifact_id = "none"
-runtime_disposition = "committed-source"
-
-[[files]]
-pattern = "Blueprint/packages.lock.json"
-kind = "program"
-produced_by = "none"
-consumed_by = ["RepositoryPathPolicy"]
-verified_by = ["RepositoryPathPolicy"]
-artifact_id = "none"
-runtime_disposition = "committed-source"
-
-[[files]]
 pattern = "CLAUDE.md"
 kind = "program"
 produced_by = "none"
@@ -256,15 +229,6 @@ consumed_by = ["DescribeRepositoryValidator", "ScribeEmitter"]
 verified_by = ["LibraryNoteCatalog"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
-
-[[files]]
-pattern = "Library/MAP.md"
-kind = "ledger"
-produced_by = "none"
-consumed_by = ["developer"]
-verified_by = ["SL-003"]
-artifact_id = "none"
-runtime_disposition = "committed-ledger"
 
 [[files]]
 pattern = "Makefile"
@@ -456,15 +420,6 @@ artifact_id = "none"
 runtime_disposition = "committed-ledger"
 
 [[files]]
-pattern = "tools/Architecture/MAP.md"
-kind = "program"
-produced_by = "none"
-consumed_by = ["developer"]
-verified_by = ["architecture-tests"]
-artifact_id = "none"
-runtime_disposition = "committed-source"
-
-[[files]]
 pattern = "tools/Generated/scribe-emissions.v1.json"
 kind = "generated"
 produced_by = "ScribeEmitter"
@@ -567,15 +522,6 @@ runtime_disposition = "committed-source"
 
 [[files]]
 pattern = "tools/tests/StrataLint.*/**/*.json"
-kind = "program"
-produced_by = "none"
-consumed_by = ["dotnet"]
-verified_by = ["dotnet-test"]
-artifact_id = "none"
-runtime_disposition = "committed-source"
-
-[[files]]
-pattern = "tools/tests/StrataLint.*/**/*.md"
 kind = "program"
 produced_by = "none"
 consumed_by = ["dotnet"]
