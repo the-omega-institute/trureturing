@@ -4,6 +4,7 @@ fingerprints:
   normalized_sha256: sha256:42785d66519f101ef0f6e3dda348821ebe2f05b087c56226fbbed43c0f649a65
 cas_ref: sha256:42785d66519f101ef0f6e3dda348821ebe2f05b087c56226fbbed43c0f649a65
 coverage_gids:
+  - D5/S3/Zeros/ShiftOperators/BackwardShiftOperator.backward_shift_sourcePairing_adjoint
   - D5/S3/Zeros/SpectralShift.labeled_zeta_vector_backward_shift_eigen
 receipts:
   coverage:
