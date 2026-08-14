@@ -1,0 +1,11 @@
+### 定理 22.9（同余内核—Koopman 闭包对偶）
+
+有
+\[
+\boxed{
+\mathsf K_\tau(\mathcal A_R)
+=
+\mathcal A_{\mathsf C_\tau(R)}.
+}
+\]
+

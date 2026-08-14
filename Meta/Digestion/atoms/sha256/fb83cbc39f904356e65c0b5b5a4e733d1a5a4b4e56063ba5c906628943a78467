@@ -1,0 +1,22 @@
+### 定理 16.7（信息损失层与零 Jordan 链）
+
+\[
+\boxed{
+\ell_k
+=
+\operatorname{rank}(L_\tau^{k-1})
+-
+\operatorname{rank}(L_\tau^k)}
+\]
+等于大小至少为 \(k\) 的零特征值 Jordan 块数。因此大小恰为 \(k\) 的零 Jordan 块数为
+\[
+\boxed{
+\ell_k-\ell_{k+1}.}
+\]
+并且
+\[
+\boxed{
+\sum_{k\ge1}\ell_k
+=|Y|-|P_\tau|.}
+\]
+

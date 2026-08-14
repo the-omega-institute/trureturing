@@ -1,0 +1,32 @@
+### 定理 25.8（干预自然性的最小性反向判据）
+
+设满射
+\[
+r:Y\twoheadrightarrow W
+\]
+保留原读出：
+\[
+q=or.
+\]
+若对每个 \(u\in U\) 存在
+\[
+G_u:W\to W
+\]
+使对任意非空地址集与任意评价表都有
+\[
+\boxed{
+Q_r\Delta_{F_u}
+=
+\Delta_{G_u}P_r,
+}
+\]
+则
+\[
+rF_u=G_ur
+\quad(\forall u),
+\]
+并存在唯一满射
+\[
+W\twoheadrightarrow Z_{q,U}.
+\]
+

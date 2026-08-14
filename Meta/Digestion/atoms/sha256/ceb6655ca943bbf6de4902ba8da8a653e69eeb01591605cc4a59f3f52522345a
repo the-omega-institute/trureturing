@@ -1,0 +1,22 @@
+## 定义 17.3（装饰循环 necklace）
+
+设一个连通分量的唯一周期为
+\[
+p_0\mapsto p_1\mapsto\cdots
+\mapsto p_{d-1}\mapsto p_0.
+\]
+定义其装饰循环词
+\[
+(\mathcal C_\tau(p_0),\ldots,
+\mathcal C_\tau(p_{d-1})),
+\]
+并只保留其循环旋转等价类：
+\[
+\boxed{
+\mathcal N_\tau(C)
+=
+[\mathcal C_\tau(p_0),\ldots,
+\mathcal C_\tau(p_{d-1})]_{\mathrm{cyc}}.}
+\]
+整个系统的不变量 \(\mathfrak N(\tau)\) 是全部连通分量 necklace 的多重集。
+

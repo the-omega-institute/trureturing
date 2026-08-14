@@ -1,0 +1,13 @@
+### 定理 27.2（最小共同精化的泛性质）
+
+若某完成 \(W\) 同时精化 \(Z_{q_1}\) 与 \(Z_{q_2}\)，即存在满射
+\[
+W\twoheadrightarrow Z_{q_i}
+\]
+且这些映射与同一个原始投影 \(Y\to W\) 相容，则存在唯一满射
+\[
+\boxed{
+W\twoheadrightarrow Z_{\mathrm{fuse}}.
+}
+\]
+

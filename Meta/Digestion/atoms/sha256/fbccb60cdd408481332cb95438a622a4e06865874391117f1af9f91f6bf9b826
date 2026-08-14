@@ -1,0 +1,21 @@
+### 定理 24.6（首差异公式）
+
+若 \(yR_qy'\)，则
+\[
+d_\gamma(y,y')=0.
+\]
+若二者可分辨，且
+\[
+d_q(y,y')
+=
+\min\{k:q\tau^k y\ne q\tau^k y'\},
+\]
+则
+\[
+\boxed{
+d_\gamma(y,y')
+=
+\gamma^{d_q(y,y')}.
+}
+\]
+
