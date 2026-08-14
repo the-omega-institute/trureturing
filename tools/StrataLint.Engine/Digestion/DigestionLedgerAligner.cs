@@ -111,8 +111,7 @@ internal static class DigestionLedgerAligner
         findings.AddRange(cas.Findings);
         var inheritedEntries = InheritedEntries(baselineDocument);
         foreach (var entry in document.RequireDigestionEntries()
-                     .Where(entry => !IsNestedClauseEntry(entry)
-                         && cas.ValidAtomIds.Contains(entry.AtomId)
+                     .Where(entry => cas.ValidAtomIds.Contains(entry.AtomId)
                          && inheritedEntries.Contains(CanonicalEntry(entry))))
         {
             var path = DigestionCasStore.RootPath + entry.CasRef["sha256:".Length..];
@@ -182,15 +181,15 @@ internal static class DigestionLedgerAligner
                         : source.Atomizer == AtomizerRegistry.NoAtomizerId
                             && entry.Boundary is not null
                                 ? DigestionReceiptAlignment.LegacyBoundary
-                                : !IsNestedClauseEntry(entry)
-                                    && cas.ValidAtomIds.Contains(entry.AtomId)
+                                : cas.ValidAtomIds.Contains(entry.AtomId)
                                     && inheritedEntries.Contains(CanonicalEntry(entry))
                                     ? DigestionReceiptAlignment.Seen
                                     : DigestionReceiptAlignment.Rejected;
                 }
 
                 var registeredAtomizer = AtomizerRegistry.IsRegistered(source.Atomizer);
-                var hasNestedClauseEntries = source.Entries.Any(IsNestedClauseEntry);
+                var hasAuthoredClauseChains = source.Entries.Any(static entry =>
+                    entry.Receipts.ChainAtoms.Length > 0);
                 var coarseReplacementObligations =
                     coarseReplacementObligationsBySource.GetValueOrDefault(source.SourceId, []);
                 var unprovenCasEntries = source.Entries.Where(entry =>
@@ -198,7 +197,7 @@ internal static class DigestionLedgerAligner
                     && !inheritedEntries.Contains(CanonicalEntry(entry))).ToArray();
                 if (((mode == DigestionAlignmentMode.Admission
                         && unprovenCasEntries.Length == 0
-                        && !hasNestedClauseEntries)
+                        && !hasAuthoredClauseChains)
                         || !registeredAtomizer)
                     && coarseReplacementObligations.Length == 0)
                 {
@@ -251,7 +250,7 @@ internal static class DigestionLedgerAligner
                 if (mode == DigestionAlignmentMode.Admission
                     && coarseReplacementObligations.Length == 0
                     && unprovenCasEntries.All(entry => matchedAtoms.ContainsKey(entry.AtomId))
-                    && !hasNestedClauseEntries)
+                    && !hasAuthoredClauseChains)
                 {
                     return;
                 }
@@ -382,8 +381,7 @@ internal static class DigestionLedgerAligner
                 }
 
                 foreach (var entry in source.Entries.Where(entry =>
-                             !IsNestedClauseEntry(entry)
-                             && cas.ValidAtomIds.Contains(entry.AtomId)))
+                             cas.ValidAtomIds.Contains(entry.AtomId)))
                 {
                     if (claims.TryGetValue(entry.AstPath, out var atom)
                         && FingerprintsMatch(atom.Fingerprints, entry.Fingerprints))
@@ -402,7 +400,8 @@ internal static class DigestionLedgerAligner
                     snapshot,
                     alignments,
                     matchedAtoms,
-                    verifiedClausePlanParents);
+                    verifiedClausePlanParents,
+                    findings);
 
                 var registration = AtomizerRegistry.Require(source.Atomizer);
                 foreach (var atom in atomized.Claims.Where(atom => !matchedAstPaths.Contains(atom.AstPath)))
@@ -705,57 +704,134 @@ internal static class DigestionLedgerAligner
         RepositorySnapshot snapshot,
         IDictionary<string, DigestionReceiptAlignment> alignments,
         IDictionary<string, DigestionAtom> matchedAtoms,
-        ISet<string> verifiedClausePlanParents)
+        ISet<string> verifiedClausePlanParents,
+        ICollection<string> findings)
     {
         var byId = source.Entries.ToDictionary(static entry => entry.AtomId, StringComparer.Ordinal);
         var plansByParent = clausePlans.ToDictionary(static plan => plan.ParentAstPath, StringComparer.Ordinal);
-        foreach (var parent in source.Entries.Where(entry =>
-                     entry.Receipts.ChainAtoms.Length > 0
-                     && validAtomIds.Contains(entry.AtomId)
-                     && alignments.TryGetValue(entry.AtomId, out var alignment)
-                     && alignment == DigestionReceiptAlignment.Seen))
+        var plannedChildPaths = clausePlans
+            .SelectMany(static plan => plan.Children)
+            .Select(static child => child.AstPath)
+            .ToHashSet(StringComparer.Ordinal);
+        foreach (var plannedEntry in source.Entries.Where(entry => plannedChildPaths.Contains(entry.AstPath)))
         {
-            if (!plansByParent.TryGetValue(parent.AstPath, out var plan)
-                || plan.Children.Length < 2
-                || parent.Receipts.ChainAtoms.Length != plan.Children.Length
-                || parent.Receipts.ChainAtoms.Distinct(StringComparer.Ordinal).Count()
-                    != parent.Receipts.ChainAtoms.Length)
+            alignments[plannedEntry.AtomId] = DigestionReceiptAlignment.Rejected;
+            matchedAtoms.Remove(plannedEntry.AtomId);
+        }
+
+        foreach (var parent in source.Entries.Where(static entry => entry.Receipts.ChainAtoms.Length > 0))
+        {
+            foreach (var childId in parent.Receipts.ChainAtoms)
             {
+                if (byId.ContainsKey(childId))
+                {
+                    alignments[childId] = DigestionReceiptAlignment.Rejected;
+                    matchedAtoms.Remove(childId);
+                }
+            }
+
+            if (!validAtomIds.Contains(parent.AtomId))
+            {
+                RejectClauseChain(parent, "parent CAS proof is invalid", findings);
+                continue;
+            }
+
+            if (!alignments.TryGetValue(parent.AtomId, out var parentAlignment)
+                || parentAlignment != DigestionReceiptAlignment.Seen)
+            {
+                RejectClauseChain(parent, "parent is not structurally aligned", findings);
+                continue;
+            }
+
+            if (!plansByParent.TryGetValue(parent.AstPath, out var plan))
+            {
+                RejectClauseChain(parent, $"no recomputed plan exists for {parent.AstPath}", findings);
+                continue;
+            }
+
+            if (plan.Children.Length < 2)
+            {
+                RejectClauseChain(parent, "recomputed plan has fewer than two children", findings);
+                continue;
+            }
+
+            if (parent.Receipts.ChainAtoms.Length != plan.Children.Length)
+            {
+                RejectClauseChain(
+                    parent,
+                    $"chain cardinality {parent.Receipts.ChainAtoms.Length} does not match recomputed plan "
+                    + $"cardinality {plan.Children.Length}",
+                    findings);
+                continue;
+            }
+
+            if (parent.Receipts.ChainAtoms.Distinct(StringComparer.Ordinal).Count()
+                != parent.Receipts.ChainAtoms.Length)
+            {
+                RejectClauseChain(parent, "chain contains duplicate child atom_ids", findings);
                 continue;
             }
 
             var plannedChildren = plan.Children.ToDictionary(static child => child.AstPath, StringComparer.Ordinal);
             var accepted = new List<(string AtomId, DigestionLedgerEntry Entry, RepositoryFile Blob)>();
-            var validChain = true;
+            string? rejectionReason = null;
             foreach (var childId in parent.Receipts.ChainAtoms)
             {
-                if (!byId.TryGetValue(childId, out var child)
-                    || !validAtomIds.Contains(childId)
-                    || !plannedChildren.Remove(child.AstPath, out var plannedChild)
-                    || child.Fingerprints != plannedChild.Fingerprints)
+                if (!byId.TryGetValue(childId, out var child))
                 {
-                    validChain = false;
+                    rejectionReason = $"listed child {childId} is absent from source {source.SourceId}";
+                    break;
+                }
+
+                if (!validAtomIds.Contains(childId))
+                {
+                    rejectionReason = $"listed child {childId} has invalid CAS proof";
+                    break;
+                }
+
+                if (!plannedChildren.Remove(child.AstPath, out var plannedChild))
+                {
+                    rejectionReason = $"listed child {childId} ast_path {child.AstPath} "
+                        + "is not an unclaimed recomputed plan member";
+                    break;
+                }
+
+                if (child.Fingerprints != plannedChild.Fingerprints)
+                {
+                    rejectionReason = $"listed child {childId} fingerprint differs from recomputed plan member "
+                        + plannedChild.AstPath;
                     break;
                 }
 
                 var childPath = DigestionCasStore.RootPath + child.CasRef["sha256:".Length..];
                 if (!snapshot.TryGetFile(childPath, out var childBlob))
                 {
-                    validChain = false;
+                    rejectionReason = $"listed child {childId} CAS blob is missing: {childPath}";
                     break;
                 }
 
                 if (child.Fingerprints != DigestionFingerprint.Compute(childBlob.RawBytes.AsSpan()))
                 {
-                    validChain = false;
+                    rejectionReason = $"listed child {childId} CAS bytes disagree with its fingerprints";
                     break;
                 }
 
                 accepted.Add((childId, child, childBlob));
             }
 
-            if (!validChain || plannedChildren.Count != 0)
+            if (rejectionReason is not null)
             {
+                RejectClauseChain(parent, rejectionReason, findings);
+                continue;
+            }
+
+            if (plannedChildren.Count != 0)
+            {
+                RejectClauseChain(
+                    parent,
+                    "chain does not cover recomputed plan members: "
+                    + string.Join(", ", plannedChildren.Keys.Order(StringComparer.Ordinal)),
+                    findings);
                 continue;
             }
 
@@ -771,8 +847,11 @@ internal static class DigestionLedgerAligner
         }
     }
 
-    private static bool IsNestedClauseEntry(DigestionLedgerEntry entry) =>
-        entry.AstPath.Contains("/clause/", StringComparison.Ordinal);
+    private static void RejectClauseChain(
+        DigestionLedgerEntry parent,
+        string reason,
+        ICollection<string> findings) =>
+        findings.Add($"entry {parent.AtomId} malformed clause chain: {reason}");
 
     private static int UniqueSubspanStart(ReadOnlySpan<byte> parent, ReadOnlySpan<byte> child)
     {

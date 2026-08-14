@@ -28,6 +28,19 @@ internal static class DigestionIngestor
             snapshot,
             baselineDocument,
             DigestionAlignmentMode.Ingest);
+        var unverifiedChainParent = migrationDocument.RequireDigestionEntries().FirstOrDefault(entry =>
+            entry.Receipts.ChainAtoms.Length > 0
+            && !alignment.VerifiedClausePlanParents.Contains(entry.AtomId));
+        if (unverifiedChainParent is not null)
+        {
+            var findingPrefix = $"entry {unverifiedChainParent.AtomId} malformed clause chain:";
+            var reason = alignment.Findings.FirstOrDefault(finding =>
+                finding.StartsWith(findingPrefix, StringComparison.Ordinal));
+            throw new FormatException(
+                $"ingest clause chain parent {unverifiedChainParent.AtomId} lacks verified clause-plan proof"
+                + (reason is null ? string.Empty : $": {reason}"));
+        }
+
         if (alignment.Findings.Length > 0)
         {
             throw new FormatException(
@@ -137,6 +150,13 @@ internal static class DigestionIngestor
 
                     var (parent, parentIndex) = parentIndexes[0];
                     if (parent.Receipts.ChainAtoms.Length > 0)
+                    {
+                        continue;
+                    }
+
+                    if (parent.ProjectedStatus != new DigestionStatus(
+                            DigestionMigrationState.Residual,
+                            DigestionTruthState.Open))
                     {
                         continue;
                     }

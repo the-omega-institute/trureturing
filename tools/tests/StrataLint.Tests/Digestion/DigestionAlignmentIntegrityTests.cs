@@ -303,6 +303,110 @@ public sealed partial class DigestionAlignmentTests
 
         Assert.Equal(DigestionReceiptAlignment.Rejected, result.AlignmentFor(firstId));
         Assert.Null(result.AtomFor(firstId));
+        Assert.Contains(result.Findings, finding => finding.Contains(
+            "entry parent malformed clause chain",
+            StringComparison.Ordinal));
+    }
+
+    [Fact]
+    public void Sl016PublishesMalformedAuthoredClauseChainFinding()
+    {
+        var (sourceBytes, _, candidate, parentCapture, childCapture) = MalformedPzgClauseSubset();
+        var fixture = new RuleFixture();
+        fixture.AddBackfillTargets();
+        fixture.Files[RuleFixture.FixtureDigestionSourcePath] = Encoding.UTF8.GetString(sourceBytes);
+        fixture.Files[parentCapture.RelativePath] = Encoding.UTF8.GetString(parentCapture.Bytes.AsSpan());
+        fixture.Files[childCapture.RelativePath] = Encoding.UTF8.GetString(childCapture.Bytes.AsSpan());
+        fixture.Files[BackfillInventoryLoader.RelativePath] = Encoding.UTF8.GetString(
+            BackfillInventoryWriter.WriteForIngest(candidate).AsSpan())
+            .Replace("docs/source.md", RuleFixture.FixtureDigestionSourcePath, StringComparison.Ordinal);
+
+        var evaluation = RuleCatalog.Default.EvaluateSingle(
+            RuleId.CreateKnown(16),
+            fixture.Build());
+
+        Assert.Contains(evaluation.Diagnostics, diagnostic => diagnostic.Message.Contains(
+            "entry parent malformed clause chain",
+            StringComparison.Ordinal));
+    }
+
+    [Fact]
+    public void IngestRejectsUnverifiedNonemptyClauseChain()
+    {
+        var (sourceBytes, baseline, candidate, parentCapture, childCapture) = MalformedPzgClauseSubset();
+
+        var exception = Assert.Throws<FormatException>(() => DigestionIngestor.Plan(
+            candidate,
+            Snapshot(sourceBytes, [parentCapture, childCapture]),
+            baseline));
+
+        Assert.Contains(
+            "ingest clause chain parent parent lacks verified clause-plan proof",
+            exception.Message,
+            StringComparison.Ordinal);
+        Assert.Contains("entry parent malformed clause chain", exception.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void AdmissionPreservesInheritedRegisteredClauseLocatorNotClaimedByAPlan()
+    {
+        var bytes = Encoding.UTF8.GetBytes("registered locator");
+        var atom = Atom("theorem/clause/fixture", bytes);
+        var captured = DigestionCasStore.Capture(bytes);
+        var ledger = BackfillInventoryLoader.Load(Ledger(
+            [],
+            CasEntry("registered-locator", atom, captured.Reference)));
+
+        var result = DigestionLedgerAligner.Evaluate(
+            ledger,
+            Snapshot(bytes, [captured]),
+            ledger,
+            DigestionAlignmentMode.Admission,
+            _ => (_, _) => Atomized(atom));
+
+        Assert.Equal(
+            DigestionReceiptAlignment.Seen,
+            result.AlignmentFor("registered-locator"));
+        Assert.Empty(result.Findings);
+    }
+
+    [Fact]
+    public void IngestDoesNotDecomposeAbsorbedClosedClausePlanParent()
+    {
+        const string claim = """
+            **定理 18.7(已闭合链)**。first clause。
+
+            **推论:第二子句**;the full plan has two clauses。
+
+            """;
+        var sourceBytes = Encoding.UTF8.GetBytes("# PZG\n\n" + claim);
+        var atomized = PzgAtomizer.Atomize(sourceBytes, DigestionTestSupport.Rules);
+        var parent = Assert.Single(atomized.Claims);
+        Assert.Single(atomized.ClausePlans);
+        var captured = DigestionCasStore.Capture(parent.RawBytes.AsSpan());
+        var loaded = BackfillInventoryLoader.Load(
+            Ledger([], CasEntry("parent", parent, captured.Reference))
+                .Replace(AtomizerRegistry.GictId, AtomizerRegistry.PzgId, StringComparison.Ordinal));
+        var source = Assert.Single(loaded.RequireDigestionSources());
+        var absorbedParent = Assert.Single(source.Entries) with
+        {
+            ProjectedStatus = new DigestionStatus(
+                DigestionMigrationState.Absorbed,
+                DigestionTruthState.Closed),
+        };
+        var ledger = loaded.WithDigestionSources(
+            [source with { Entries = [absorbedParent] }]);
+
+        var plan = DigestionIngestor.Plan(
+            ledger,
+            Snapshot(sourceBytes, [captured]),
+            ledger);
+
+        var result = Assert.Single(Assert.Single(plan.Document.RequireDigestionSources()).Entries);
+        Assert.Equal(absorbedParent, result);
+        Assert.Empty(result.Receipts.ChainAtoms);
+        Assert.Equal(0, plan.ResidualOpenAdded);
+        Assert.Empty(plan.CasObjects);
     }
 
     [Fact]
@@ -459,27 +563,35 @@ public sealed partial class DigestionAlignmentTests
     public void AdmissionRejectsUnverifiedNestedChildSpans(string defect)
     {
         var parentBytes = Encoding.UTF8.GetBytes(defect == "non-unique" ? "abcabc" : "abcdef");
-        var childByteSets = defect switch
+        var parent = Atom("theorem/1.1", parentBytes);
+        DigestionAtom[] children = defect switch
         {
-            "outside" => new[] { Encoding.UTF8.GetBytes("xyz") },
-            "non-unique" => new[] { Encoding.UTF8.GetBytes("abc") },
-            "overlap" => new[] { Encoding.UTF8.GetBytes("abcd"), Encoding.UTF8.GetBytes("cdef") },
+            "outside" =>
+            [
+                SpannedAtom(parent, 0, 3, 1),
+                new DigestionAtom(
+                    $"{parent.AstPath}/clause/2",
+                    3,
+                    7,
+                    ImmutableArray.CreateRange(Encoding.UTF8.GetBytes("defx")),
+                    DigestionFingerprint.Compute(Encoding.UTF8.GetBytes("defx")),
+                    parent.Context),
+            ],
+            "non-unique" => [SpannedAtom(parent, 0, 3, 1), SpannedAtom(parent, 3, 6, 2)],
+            "overlap" => [SpannedAtom(parent, 0, 4, 1), SpannedAtom(parent, 2, 6, 2)],
             _ => throw new ArgumentOutOfRangeException(nameof(defect)),
         };
-        var parent = Atom("theorem/1.1", parentBytes);
         var parentCapture = DigestionCasStore.Capture(parentBytes);
         var baseline = BackfillInventoryLoader.Load(Ledger(
             [],
             CasEntry("parent", parent, parentCapture.Reference)));
         var source = Assert.Single(baseline.RequireDigestionSources());
         var parentEntry = Assert.Single(source.Entries);
-        var childCaptures = childByteSets
-            .Select(static bytes => DigestionCasStore.Capture(bytes))
+        var childCaptures = children
+            .Select(static child => DigestionCasStore.Capture(child.RawBytes.AsSpan()))
             .ToArray();
-        var children = childByteSets.Select((bytes, index) =>
-            Atom($"theorem/1.1/clause/{index + 1}", bytes)).ToArray();
-        var childIds = childCaptures.Select(static capture =>
-            "gict-residual-" + capture.Reference["sha256:".Length..]).ToImmutableArray();
+        var childIds = childCaptures.Select((capture, index) =>
+            "gict-residual-" + capture.Reference["sha256:".Length..] + $"-{index + 1}").ToImmutableArray();
         var candidate = baseline.WithDigestionSources(
         [
             source with
@@ -502,14 +614,24 @@ public sealed partial class DigestionAlignmentTests
 
         var result = DigestionLedgerAligner.Evaluate(
             candidate,
-            Snapshot(parentBytes, childCaptures.Prepend(parentCapture)),
+            Snapshot(
+                parentBytes,
+                childCaptures
+                    .Prepend(parentCapture)
+                    .DistinctBy(static capture => capture.RelativePath, StringComparer.Ordinal)),
             baseline,
             DigestionAlignmentMode.Admission,
-            _ => (_, _) => Atomized(parent));
+            _ => (_, _) => new AtomizedTheoryDocument(
+                [parent],
+                [new DigestionSlice(true, parent.RawBytes)],
+                [new DigestionClausePlan(parent.AstPath, children.ToImmutableArray())]));
 
         Assert.All(childIds, childId => Assert.Equal(
             DigestionReceiptAlignment.Rejected,
             result.AlignmentFor(childId)));
+        Assert.Contains(result.Findings, finding => finding.Contains(
+            defect == "non-unique" ? "not a unique parent sub-span" : "clause plan",
+            StringComparison.Ordinal));
     }
 
     [Fact]
@@ -624,6 +746,49 @@ public sealed partial class DigestionAlignmentTests
     private static AtomizedTheoryDocument Atomized(DigestionAtom atom) => new(
         [atom],
         [new DigestionSlice(true, atom.RawBytes)]);
+
+    private static (
+        byte[] SourceBytes,
+        BackfillInventoryDocument Baseline,
+        BackfillInventoryDocument Candidate,
+        DigestionCasObject ParentCapture,
+        DigestionCasObject ChildCapture) MalformedPzgClauseSubset()
+    {
+        const string claim = """
+            **定理 18.7(链验证)**。first clause。
+
+            **推论:第二子句**;the full plan has two clauses。
+
+            """;
+        var sourceBytes = Encoding.UTF8.GetBytes("# PZG\n\n" + claim);
+        var atomized = PzgAtomizer.Atomize(sourceBytes, DigestionTestSupport.Rules);
+        var parent = Assert.Single(atomized.Claims);
+        var first = Assert.Single(atomized.ClausePlans).Children[0];
+        var parentCapture = DigestionCasStore.Capture(parent.RawBytes.AsSpan());
+        var childCapture = DigestionCasStore.Capture(first.RawBytes.AsSpan());
+        var baseline = BackfillInventoryLoader.Load(
+            Ledger([], CasEntry("parent", parent, parentCapture.Reference))
+                .Replace(AtomizerRegistry.GictId, AtomizerRegistry.PzgId, StringComparison.Ordinal));
+        var source = Assert.Single(baseline.RequireDigestionSources());
+        var parentEntry = Assert.Single(source.Entries);
+        var childId = "pzg-residual-" + childCapture.Reference["sha256:".Length..];
+        var candidate = baseline.WithDigestionSources(
+        [
+            source with
+            {
+                Entries =
+                [
+                    parentEntry with
+                    {
+                        Receipts = parentEntry.Receipts with { ChainAtoms = [childId] },
+                        ReceiptSyntax = null,
+                    },
+                    ChildEntry(parentEntry, childId, first, childCapture.Reference),
+                ],
+            },
+        ]);
+        return (sourceBytes, baseline, candidate, parentCapture, childCapture);
+    }
 
     private static DigestionLedgerEntry ChildEntry(
         DigestionLedgerEntry parent,
