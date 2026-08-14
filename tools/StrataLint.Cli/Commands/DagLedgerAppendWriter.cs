@@ -110,12 +110,11 @@ internal static class DagLedgerAppendWriter
         }
     }
 
-    internal static ImmutableArray<PendingEventFile> PrepareNewEvents(
+    internal static IEnumerable<PendingEventFile> PrepareNewEvents(
         string directory,
         IEnumerable<FrozenLedgerLineSyntax> lines,
         int skip = 0)
     {
-        var result = ImmutableArray.CreateBuilder<PendingEventFile>();
         var linearToDagHash = new Dictionary<string, string>(StringComparer.Ordinal);
         var sequence = 0;
         foreach (var line in lines)
@@ -143,10 +142,8 @@ internal static class DagLedgerAppendWriter
                 payload,
                 encoded.Hash);
             var path = Path.Combine(directory, identity[7..] + ".json");
-            result.Add(new PendingEventFile(path, encoded.Bytes));
+            yield return new PendingEventFile(path, encoded.Bytes);
         }
-
-        return result.ToImmutable();
     }
 
 }

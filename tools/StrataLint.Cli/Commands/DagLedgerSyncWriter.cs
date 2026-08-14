@@ -63,7 +63,7 @@ internal static class DagLedgerSyncWriter
             var pending = DagLedgerAppendWriter.PrepareNewEvents(
                 context.LedgerPath,
                 candidateSyntax.Lines,
-                context.Baseline.Events.Length);
+                context.Baseline.Events.Length).ToImmutableArray();
             PublishAtomically(context.LedgerPath, pending, candidateBytes);
 
             var suffix = candidate.Events.Skip(context.Baseline.Events.Length).ToImmutableArray();
