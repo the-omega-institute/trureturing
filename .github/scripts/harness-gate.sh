@@ -6,6 +6,7 @@ set -euo pipefail
 CANDIDATE_ROOT="."
 BASE_REF=""
 CANDIDATE_LEAN_REPORT=""
+JUDGE_DLL=""
 GATE_OUTCOME_DIR="${STRATALINT_GATE_OUTCOME_DIR:-}"
 
 exit_with_gate_outcome() {
@@ -29,6 +30,7 @@ while [[ $# -gt 0 ]]; do
     --candidate) CANDIDATE_ROOT="$2"; shift 2 ;;
     --base) BASE_REF="$2"; shift 2 ;;
     --candidate-lean-report) CANDIDATE_LEAN_REPORT="$2"; shift 2 ;;
+    --judge-dll) JUDGE_DLL="$2"; shift 2 ;;
     *) echo "harness-gate: unknown arg '$1'" >&2; exit 2 ;;
   esac
 done
@@ -47,6 +49,11 @@ fi
 
 CANDIDATE_ROOT="$(cd "$CANDIDATE_ROOT" && pwd -P)"
 CANDIDATE_LEAN_REPORT="$(cd "$(dirname "$CANDIDATE_LEAN_REPORT")" && pwd -P)/$(basename "$CANDIDATE_LEAN_REPORT")"
+if [[ -n "$JUDGE_DLL" ]]; then
+  [[ -f "$JUDGE_DLL" ]] \
+    || { echo "harness-gate: external judge DLL '$JUDGE_DLL' is absent" >&2; exit 2; }
+  JUDGE_DLL="$(cd "$(dirname "$JUDGE_DLL")" && pwd -P)/$(basename "$JUDGE_DLL")"
+fi
 CLI_PROJECT_REL="tools/StrataLint.Cli/StrataLint.Cli.csproj"
 
 resolve_target_path() {
@@ -92,15 +99,19 @@ mark() {
   _t0=$now
 }
 
-dotnet restore "$CANDIDATE_ROOT/tools/StrataLint.sln" --locked-mode
-mark restore-judge
-dotnet build \
-  "$CANDIDATE_ROOT/tools/StrataLint.sln" \
-  --no-restore \
-  --configuration Release \
-  --warnaserror
-mark build-judge
-JUDGE_DLL="$(resolve_target_path "$CANDIDATE_ROOT")"
+if [[ -z "$JUDGE_DLL" ]]; then
+  dotnet restore "$CANDIDATE_ROOT/tools/StrataLint.sln" --locked-mode
+  mark restore-judge
+  dotnet build \
+    "$CANDIDATE_ROOT/tools/StrataLint.sln" \
+    --no-restore \
+    --configuration Release \
+    --warnaserror
+  mark build-judge
+  JUDGE_DLL="$(resolve_target_path "$CANDIDATE_ROOT")"
+else
+  mark cached-judge
+fi
 
 selftest_dir="$(mktemp -d)"
 (

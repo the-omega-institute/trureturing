@@ -330,6 +330,74 @@ public sealed class StatementProjectionPilotTests
     }
 
     [Fact]
+    public void ProjectionsCheckReturnsZeroForMatchingPinnedFixtures()
+    {
+        using var repository = TemporaryRepository.WithReport(
+            type: "statement-v1(uparams=[],type=es(l0))");
+        var output = new StringWriter();
+        var error = new StringWriter();
+
+        var exit = ScribeCli.Run(
+            ["projections", "--check", "--report", "live-report.json"],
+            repository.Path,
+            output,
+            error,
+            repository.Report());
+
+        Assert.Equal(0, exit);
+        Assert.Empty(error.ToString());
+    }
+
+    [Fact]
+    public void ProjectionsCheckPrintsEveryPinnedFixtureMismatchAndReturnsOne()
+    {
+        using var repository = TemporaryRepository.WithReport(
+            type: "statement-v1(uparams=[],type=es(l1))");
+        repository.AddPinnedDeclaration(
+            "D5.Test.missing",
+            "statement-v1(uparams=[],type=es(l2))");
+        var error = new StringWriter();
+
+        var exit = ScribeCli.Run(
+            ["projections", "--check", "--report", "live-report.json"],
+            repository.Path,
+            TextWriter.Null,
+            error,
+            repository.Report());
+
+        Assert.Equal(1, exit);
+        Assert.Equal(
+            [
+                "pinned statement projection differs from live report: D5.Test.declaration",
+                "pinned statement projection is missing from live report: D5.Test.missing",
+            ],
+            error.ToString().Split(Environment.NewLine, StringSplitOptions.RemoveEmptyEntries));
+    }
+
+    [Theory]
+    [InlineData("projections")]
+    [InlineData("projections", "--check")]
+    [InlineData("projections", "--report", "live-report.json")]
+    [InlineData("projections", "--check", "--report")]
+    [InlineData("projections", "--check", "--report", "live-report.json", "extra")]
+    public void ProjectionsCheckRejectsOpenArgumentShapesWithExitTwo(params string[] arguments)
+    {
+        var error = new StringWriter();
+
+        var exit = ScribeCli.Run(
+            arguments,
+            TemporaryFileSystem.Directory.GetCurrentDirectory(),
+            TextWriter.Null,
+            error);
+
+        Assert.Equal(2, exit);
+        Assert.Contains(
+            "projections --check --report <file>",
+            error.ToString(),
+            StringComparison.Ordinal);
+    }
+
+    [Fact]
     public void EveryPinnedFixtureDeclarationCarriesTheoremKind()
     {
         using var pilot = LoadPinnedFixture("statement-projection-pilot-v1.json");
@@ -425,6 +493,7 @@ public sealed class StatementProjectionPilotTests
     private sealed class TemporaryRepository : IDisposable
     {
         private readonly DirectoryInfo root = TemporaryFileSystem.Directory.CreateTempSubdirectory("stratalint-statement-reconciliation-");
+        private readonly List<(string Name, string Type)> pinnedDeclarations = [];
 
         public string Path => root.FullName;
 
@@ -433,20 +502,32 @@ public sealed class StatementProjectionPilotTests
             var repository = new TemporaryRepository();
             TemporaryFileSystem.Directory.CreateDirectory(System.IO.Path.Combine(repository.Path, "Golden", "Projection"));
             TemporaryFileSystem.Directory.CreateDirectory(System.IO.Path.Combine(repository.Path, ".lake", "build", "stratalint"));
-            TemporaryFileSystem.File.WriteAllText(
-                System.IO.Path.Combine(repository.Path, "Golden", "Projection", "statement-projection-pilot-v1.json"),
-                $$"""{"schema":"statement-projection-pilot-fixture-v1","declarations":[{"name":"D5.Test.declaration","type":"{{type}}"}]}""");
+            TemporaryFileSystem.Directory.CreateDirectory(System.IO.Path.Combine(repository.Path, "Blueprint"));
+            TemporaryFileSystem.File.WriteAllText(System.IO.Path.Combine(repository.Path, "global.json"), "{}\n");
             TemporaryFileSystem.File.WriteAllText(
                 System.IO.Path.Combine(repository.Path, "Golden", "Projection", "statement-projection-expansion-v1.json"),
                 """{"schema":"statement-projection-expansion-fixture-v1","declarations":[]}""");
             TemporaryFileSystem.File.WriteAllText(
                 System.IO.Path.Combine(repository.Path, ".lake", "build", "stratalint", "raw-lean-report.json"),
                 """{"modules":[{"declarations":[{"name":"D5.Test.declaration","type":"statement-v1(uparams=[],type=es(l0))"}]}]}""");
+            repository.AddPinnedDeclaration("D5.Test.declaration", type);
             return repository;
         }
 
-        public DeclarationCatalog Catalog(string kind = "theorem") => DeclarationCatalog.Create(
-            LeanAxiomReport.Create(new Dictionary<string, LeanFileReport>
+        public void AddPinnedDeclaration(string name, string type)
+        {
+            pinnedDeclarations.Add((name, type));
+            var declarations = string.Join(
+                ",",
+                pinnedDeclarations.Select(static item =>
+                    $$"""{"name":{{JsonSerializer.Serialize(item.Name)}},"type":{{JsonSerializer.Serialize(item.Type)}}}"""));
+            TemporaryFileSystem.File.WriteAllText(
+                System.IO.Path.Combine(Path, "Golden", "Projection", "statement-projection-pilot-v1.json"),
+                $$"""{"schema":"statement-projection-pilot-fixture-v1","declarations":[{{declarations}}]}""");
+        }
+
+        public LeanAxiomReport Report(string kind = "theorem") => LeanAxiomReport.Create(
+            new Dictionary<string, LeanFileReport>
             {
                 ["D5/Test.lean"] = new(
                     [],
@@ -455,7 +536,10 @@ public sealed class StatementProjectionPilotTests
                         kind,
                         "statement-v1(uparams=[],type=es(l0))",
                         [])]),
-            }));
+            });
+
+        public DeclarationCatalog Catalog(string kind = "theorem") =>
+            DeclarationCatalog.Create(Report(kind));
 
         public void Dispose() => root.Delete(recursive: true);
     }

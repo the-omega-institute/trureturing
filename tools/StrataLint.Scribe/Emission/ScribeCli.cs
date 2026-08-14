@@ -24,6 +24,44 @@ public static class ScribeCli
         ArgumentNullException.ThrowIfNull(error);
 
         var command = arguments.Count == 0 ? string.Empty : arguments[0];
+        if (command == "projections")
+        {
+            if (arguments.Count != 4
+                || !string.Equals(arguments[1], "--check", StringComparison.Ordinal)
+                || !string.Equals(arguments[2], "--report", StringComparison.Ordinal)
+                || string.IsNullOrWhiteSpace(arguments[3]))
+            {
+                error.WriteLine(Usage);
+                return 2;
+            }
+
+            try
+            {
+                var repositoryRoot = FindRepositoryRoot(workingDirectory);
+                var report = leanReport ?? LeanCompiledArtifactReports.ReadRepository(
+                    repositoryRoot,
+                    arguments[3]);
+                var findings = StatementProjectionReconciliation.Check(
+                    repositoryRoot,
+                    DeclarationCatalog.Create(report));
+                foreach (var finding in findings)
+                {
+                    error.WriteLine(finding);
+                }
+                return findings.IsEmpty ? 0 : 1;
+            }
+            catch (Exception exception) when (
+                exception is IOException
+                    or UnauthorizedAccessException
+                    or ArgumentException
+                    or FormatException
+                    or InvalidOperationException)
+            {
+                error.WriteLine(exception.Message);
+                return 2;
+            }
+        }
+
         if (command == "describe-report")
         {
             var options = arguments.Skip(1).ToArray();
@@ -101,7 +139,8 @@ public static class ScribeCli
 
     private const string Usage =
         "usage: dotnet run --project tools/StrataLint.Scribe -- "
-        + "emit|emit-values|filemap [--check] | describe-report [--json] [--check]";
+        + "emit|emit-values|filemap [--check] | describe-report [--json] [--check] "
+        + "| projections --check --report <file>";
 
     private static string FindRepositoryRoot(string workingDirectory)
     {
