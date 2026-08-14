@@ -76,8 +76,8 @@ git merge --no-edit origin/dev
 ```
 
 Exit `0`; the merge completed without conflict as
-`35319d8e91761d771df459081c80164ebc29f57b`. Its second parent and the final
-synchronized content base are:
+`35319d8e91761d771df459081c80164ebc29f57b`. Its second parent and the
+then-current synchronized content base were:
 
 ```text
 origin/dev = 5b69e67602e7cc960dc63a110ab1766fb64b19ec
@@ -97,7 +97,56 @@ fraction, golden/adic, matrix-tower, anyon, Gleason, trace, revival,
 Lagrange-Markov, or selected-atom declaration. Neither PR changes a clause
 disposition below.
 
-The fresh authoritative partition command on this base was:
+`origin/dev` next advanced through PR #1713. The clean report branch again
+synchronized non-destructively with:
+
+```sh
+git merge --no-edit origin/dev
+```
+
+Exit `0`; the merge completed without conflict as
+`362d925db24864e0c859c478a252f65d15bdd1be`, with synchronized content base
+`88fb4a9cc3d56cf08747a948ffc014af57a0e4cd`. PR #1713 added
+`WideVacuumBand`, its Scribe source and projection, seven accepted-freeze
+records, and one PZG formalization receipt. Its theorem derives arbitrarily
+wide gaps between record entry cost and least consistent-program cost from a
+finite low-cost-program cover whose consistency fibers leave an admissible
+record uncovered. It defines no observer window, continued fraction, return
+dynamics, adic update, operator algebra, trace, or revival score. The PZG
+receipt names a different source and atom. Neither the theorem nor the receipt
+changes a selected-atom clause disposition.
+
+The canonical Lean report at that intermediate base completed with exit `0`:
+
+```text
+input_address = sha256:0809776a5451e2aee72c2d615493b63c9e98e3248189c42de2ff8b312f2eeceb
+report_sha256 = 8a14bbe84a26f00ee026c7f7d1acfec6d18d2cf01910ff01d256a1f712115c29
+```
+
+While the ensuing authoritative candidate scan was running, `origin/dev`
+advanced through PR #1714. The still-clean report branch synchronized once
+more with the same non-destructive merge command. Exit `0`; the merge completed
+without conflict as `8602b3e37b234f95c179af27d8c98f989452124b`. Its second
+parent and the actual final synchronized content base are:
+
+```text
+origin/dev = 4551a412d3dfbf5bcaa25755e34bbf8481c1a3e8
+merge-base(origin/dev, HEAD) = 4551a412d3dfbf5bcaa25755e34bbf8481c1a3e8
+```
+
+PR #1714 added only `GoldenDesubstitutionClosedForms`, its Scribe source, and
+its projection. Its two public theorems quantify over a nonzero natural `n`
+and prove scalar identities
+`lambdaPlus n = log (nS n) - goldenConj * log n` and
+`lambdaMinus n = log (nS n) - goldenRatio * log n`. Zeckendorf data enters
+only through decoding each prime-factor exponent's substitution displacement.
+The module defines no observer/window carrier, return-time set or frequency,
+adic update or minimality, Fibonacci matrix tower, tensor/anyon carrier,
+algebra trace, record dynamics, or revival score. Thus its golden and
+Zeckendorf vocabulary does not supply any missing observer-window bridge, and
+no clause disposition below changes.
+
+The fresh authoritative partition command on the actual final base was:
 
 ```sh
 dotnet run --no-build --project tools/StrataLint.Cli/StrataLint.Cli.csproj \
@@ -130,14 +179,13 @@ D5/S3/Weil/ZetaBridge/ConvolutionSquareOrbitBounds.lean
 ```
 
 No inference was drawn from either stale report. The canonical Lean-report door
-was rerun after each failure. The final-base refresh completed from the
-content-addressed cache with:
+was rerun after each failure. The actual final-base refresh completed with:
 
 ```text
 make lean-report
 exit = 0
-input_address = sha256:2256ae9089f4582f3400a060768cabbebf0ad000ac16a3c86081fe8269d2578b
-report_sha256 = beaac53b34d66b39ba97b43dfa0030a0ab9002c3e7f036d31eaf55703cc0ec70
+input_address = sha256:7c06971ecfda1ceb649b61deda7af1a48eaeb0f42542ec8887d09e95c0c977bf
+report_sha256 = d1fc400f4d539060fdf1af46aaba31228b1ef2d382588eaa7e38c4fdb32054d5
 ```
 
 The exact selected-ID content search outside this report again exited `1`.
@@ -197,11 +245,11 @@ counterpart and current disposition of each clause are as follows.
 | `素 qudit 可分解` | The exact source factorization claim, including whether “prime” means a prime dimension, all prime-power address factors, and whether decomposition must be nontrivial | Related but not identical. `prime_power_tensor_factor_decomposition` factors a full `M`-window matrix algebra over all prime-power factors. At prime `M` this has one factor, and the source does not state the intended factorization semantics. Selecting one interpretation would weaken or invent the clause. |
 | `Born 经 Gleason 条件推出` | An explicit Gleason/frame-function hypothesis and a theorem deriving the Born valuation under that hypothesis | Missing. `rank_one_pure_state_modulus_square_reduction` reduces an already defined Born record weight to a squared modulus. `PublicLedgerDescent` explicitly calls itself pre-Gleason and asserts no positivity, representation, or Born-rule uniqueness. Pinned mathlib has no quantum Gleason theorem. |
 | `记录周期性完美复活` | A defined record state/dynamics and a periodic perfect-revival equality | Partial generator recurrence only. `cyclic_window_generators_recur` proves the finite clock and shift each return to identity after `M` steps. It does not define or prove perfect revival of a record. |
-| `Zeckendorf 窗塔 + adic 更新; 更新极小` | A golden window-tower carrier, an adic update, and a minimality theorem on that carrier | Missing. Focused D5 and pinned-mathlib searches found no such dynamical/operator-algebra carrier. Padic and adic-valuation hits are unrelated. |
+| `Zeckendorf 窗塔 + adic 更新; 更新极小` | A golden window-tower carrier, an adic update, and a minimality theorem on that carrier | Missing. Focused D5 and pinned-mathlib searches found no such dynamical/operator-algebra carrier. `GoldenDesubstitutionClosedForms` uses Zeckendorf decoding only on natural-number prime-factor exponents to prove scalar logarithmic face-length identities; it defines no window tower, update, or minimality predicate. Padic and adic-valuation hits are unrelated. |
 | `更新极小 => 无经典核 (Z=C)` | The golden minimal-update implication and scalar-center equality on the golden algebra | Missing. Finite cyclic scalar-commutant and center theorems concern different carriers. No theorem transfers them to a golden minimal adic algebra. |
 | `双塔 M_(F_(n+1)) direct-sum M_(F_n)` | A golden finite-level algebra and an equality/equivalence with the direct sum of two consecutive Fibonacci full-matrix blocks | Missing. The existing `PrimePowerTensorTower` is a tensor factorization of one cyclic full matrix algebra, not a two-block Fibonacci direct sum. A prior focused report for GICT 6.42 found no such carrier or theorem. |
-| `Sturmian 双回归时钟; 回归时间恰取相邻 Fibonacci 双值` | A return-time set on the same golden tower, equal to `{fib k, fib (k+1)}` for the source-admitted windows/cylinders | Partial. For every occurring positive-length golden factor, `golden_occurrence_gap_set_encard_eq_two` proves that the adjacent-gap set has exactly two values. For every pair of adjacent occurrences, `GoldenCubePeriodsInternal.golden_adjacent_gap_is_fib` proves that its gap is `fib q` for some `q >= 2`. Both declarations are frozen. Their conjunction does not prove that the two Fibonacci indices are consecutive, so it does not identify the set with `{fib k, fib (k+1)}` for one `k`. The related GICT source also leaves the zero-length convention unstated, while the repository proves the zero-length gap spectrum is the singleton `{1}`. |
-| `比 -> phi` | Frequencies of those same two return values and convergence of their ratio to the golden ratio | Numerical sequence limit only. `fibonacci_return_ratio_tendsto` proves `fib(n+1)/fib(n) -> phi`; it does not define return frequencies or connect them to the golden tower/cylinder carrier. |
+| `Sturmian 双回归时钟; 回归时间恰取相邻 Fibonacci 双值` | A return-time set on the same golden tower, equal to `{fib k, fib (k+1)}` for the source-admitted windows/cylinders | Partial. For every occurring positive-length golden factor, `golden_occurrence_gap_set_encard_eq_two` proves that the adjacent-gap set has exactly two values. For every pair of adjacent occurrences, `GoldenCubePeriodsInternal.golden_adjacent_gap_is_fib` proves that its gap is `fib q` for some `q >= 2`. Both declarations are frozen. Their conjunction does not prove that the two Fibonacci indices are consecutive, so it does not identify the set with `{fib k, fib (k+1)}` for one `k`. `GoldenDesubstitutionClosedForms` has no occurrence, gap, clock, or return-time definition. The related GICT source also leaves the zero-length convention unstated, while the repository proves the zero-length gap spectrum is the singleton `{1}`. |
+| `比 -> phi` | Frequencies of those same two return values and convergence of their ratio to the golden ratio | Numerical sequence limit only. `fibonacci_return_ratio_tendsto` proves `fib(n+1)/fib(n) -> phi`; it does not define return frequencies or connect them to the golden tower/cylinder carrier. The `goldenRatio` coefficient in `lambdaMinus_eq_log_nS_sub_goldenRatio_log` is a scalar multiplier, not a return-value ratio or frequency limit. |
 | `寄存器不可张量分解 (= Fibonacci 任意子融合空间,量子维数 phi)` | A golden-register carrier, a theorem excluding tensor decompositions, an equivalence with a Fibonacci-anyon fusion-space carrier, and a quantum-dimension computation | Missing. No D5, pinned dependency, or public Lean-code-index hit defined the anyon/fusion carrier or this equivalence. Prime-power factorization of the cyclic branch cannot prove tensor indecomposability of the golden branch. |
 | `定价无条件唯一 (单代数唯一迹)` | A simple golden algebra, a trace/pricing interface, existence, and unconditional uniqueness | Missing. Searches found no golden crossed-product/AF/Bratteli-Vershik algebra or unique-trace theorem. `PublicLedgerDescent` gives conditional uniqueness of a descended finite valuation from compatibility/additivity hypotheses, which is a different statement. |
 | `F_(n+1) phi^(-n) + F_n phi^(-(n+1)) = 1` | The exact Fibonacci/golden partition identity for every level | Exactly available as `D5.S1.Recurrence.GoldenPartition.fibonacci_golden_partition`. This closes only this conjunct. |
@@ -447,6 +495,11 @@ write/compile stage.
   cardinality two and that each value is `fib q` for some `q >= 2`; they do not
   prove that the two indices are consecutive. A pure sequence ratio also does
   not prove frequencies on the return carrier.
+- **Use the golden desubstitution closed forms as the Zeckendorf/return
+  bridge:** rejected. Their domain is natural-number ledger exponents and their
+  conclusions are two scalar logarithmic face-length formulas. They contain no
+  observer window, Sturmian occurrence, return time, adic action, tower, or
+  frequency statement.
 - **Use the partition identity to cover unconditional unique pricing:**
   rejected. A scalar identity does not construct an algebra trace or prove its
   uniqueness.
@@ -526,6 +579,9 @@ unresolved and forces the `open` outcome.
   indices are consecutive or identify the set as one adjacent pair.
 - **Sequence ratio vs return frequency:** `fib(n+1)/fib(n) -> phi` does not
   count frequencies of return values on a Sturmian tower.
+- **Exponent displacement vs return dynamics:** a Zeckendorf decode of
+  prime-factor exponents inside a scalar logarithmic identity does not define
+  a Zeckendorf window tower, an adic update, or a return-time theorem.
 - **Subsequence limit vs full spectrum:** a golden Fibonacci score limit cannot
   replace exact Lagrange-Markov spectrum classification or global ordering.
 - **Exact identity vs uniqueness:** the golden partition identity does not
