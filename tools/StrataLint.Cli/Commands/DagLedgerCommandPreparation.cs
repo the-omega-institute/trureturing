@@ -135,8 +135,37 @@ internal static class DagLedgerCommandPreparation
         var report = truth.Report;
         var lean = truth.Lean;
         var dag = truth.Dag;
-        var environment = BuildEnvironment(snapshot, baselineSyntax);
-        var currentIdentity = Ask(repository.ResolveCurrentRevision);
+        var catalog = BuildCatalog(
+            snapshot,
+            lean,
+            dag,
+            baselineSyntax,
+            Ask(repository.ResolveCurrentRevision));
+
+        return new DagLedgerCandidateMaterial(
+            ledgerPath,
+            baselineBytes,
+            baselineSyntax,
+            catalog,
+            report,
+            snapshot);
+    }
+
+    /// Reads the repository, validates the Lean closure and builds the truth DAG -- the part of
+    /// Prepare that any DAG consumer needs, without the frozen-ledger work. Callers that only want
+    /// the graph (the DAG projection command) share this assembly line rather than growing a
+    /// second, drifting copy of it.
+    /// The frozen material catalog for a snapshot. Prepare needs it for the writer path and the
+    /// admission final-state gate needs it for the read-only path; they share this one assembly
+    /// line rather than growing a second, drifting copy of the attestation algebra.
+    internal static FrozenMaterialCatalog BuildCatalog(
+        RepositorySnapshot snapshot,
+        AcceptedLeanClosure lean,
+        AcyclicTruthDag dag,
+        FrozenLedgerSyntax ledgerSyntax,
+        FrozenRevisionIdentity currentIdentity)
+    {
+        var environment = BuildEnvironment(snapshot, ledgerSyntax);
         if (currentIdentity.CommitOid.StartsWith("git-sha256:", StringComparison.Ordinal)
             != environment.OriginCommitOid.StartsWith("git-sha256:", StringComparison.Ordinal))
         {
@@ -159,26 +188,14 @@ internal static class DagLedgerCommandPreparation
                 BaseTreeOid = currentIdentity.TreeOid,
             })
             .ToImmutableArray();
-        var catalog = FrozenContentAddress.Build(snapshot, lean, dag, environment, attestations) switch
+        return FrozenContentAddress.Build(snapshot, lean, dag, environment, attestations) switch
         {
             FrozenMaterialOutcome.Accepted accepted => accepted.Capability,
             FrozenMaterialOutcome.Rejected rejected => throw new InvalidOperationException(rejected.Message),
             _ => throw new InvalidOperationException("unknown frozen material outcome"),
         };
-
-        return new DagLedgerCandidateMaterial(
-            ledgerPath,
-            baselineBytes,
-            baselineSyntax,
-            catalog,
-            report,
-            snapshot);
     }
 
-    /// Reads the repository, validates the Lean closure and builds the truth DAG -- the part of
-    /// Prepare that any DAG consumer needs, without the frozen-ledger work. Callers that only want
-    /// the graph (the DAG projection command) share this assembly line rather than growing a
-    /// second, drifting copy of it.
     internal static TruthContext BuildTruth(
         IRepositoryGateway repository,
         ILeanReportSource leanReportSource)
@@ -223,7 +240,7 @@ internal static class DagLedgerCommandPreparation
     /// and callers classifying failures cannot tell the two apart otherwise -- both arrive as
     /// IOException or InvalidOperationException. Reference validation is not routed through here:
     /// its refusals are about the ledger's contents.
-    private static T Ask<T>(Func<T> gatewayCall)
+    internal static T Ask<T>(Func<T> gatewayCall)
     {
         try
         {
