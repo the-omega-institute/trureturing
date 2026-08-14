@@ -127,7 +127,7 @@ While the ensuing authoritative candidate scan was running, `origin/dev`
 advanced through PR #1714. The still-clean report branch synchronized once
 more with the same non-destructive merge command. Exit `0`; the merge completed
 without conflict as `8602b3e37b234f95c179af27d8c98f989452124b`. Its second
-parent and the actual final synchronized content base are:
+parent and the then-current historical content checkpoint were:
 
 ```text
 origin/dev = 4551a412d3dfbf5bcaa25755e34bbf8481c1a3e8
@@ -146,22 +146,96 @@ algebra trace, record dynamics, or revival score. Thus its golden and
 Zeckendorf vocabulary does not supply any missing observer-window bridge, and
 no clause disposition below changes.
 
-The fresh authoritative partition command on the actual final base was:
+After the prior report commit, `origin/dev` advanced through PRs #1715 and
+#1716. The clean report branch synchronized with the same non-destructive merge
+command. Exit `0`; the merge completed without conflict as
+`2d7cd75dcb29bd2193049f01f15f4b9204fe717f`, whose second parent was the
+then-current content base:
+
+```text
+origin/dev = f94e87a89fd0a681936647038edf285f21eee916
+```
+
+PR #1715 added `PrimeLogIndependence`, proving integer and rational linear
+independence of prime logarithms, plus only a PZG backfill update. This is a
+scalar linear-independence result, not a prime-qudit tensor decomposition or an
+observer-window theorem. PR #1716 added `GoldenContractionRadicalBound`, whose
+public bounds are
+`-phi^-2 * log(rad n) <= log(nS n) - phi * log n <= phi^-1 * log(rad n)`
+and `|lambdaMinus n| <= phi^-1 * log(rad n)`. These are scalar inequalities on
+natural-number prime-factor data; they define no observer carrier, adic update,
+return-time dynamics, tensor/anyon algebra, trace, revival quantity, or
+spectrum. Neither PR changes a clause disposition below.
+
+The bare Lean-report door at that intermediate f94 base completed with exit
+`0`:
+
+```text
+input_address = sha256:a869ce251abcc700b0770c03c20bd8c6a3c240a1a42c87165495b5a5f1f92e55
+report_sha256 = e71f3c30b659d7e260d814de12caeac6e5a0e28f16cb034ab55bbaabf4940d29
+```
+
+No completed f94 candidate projection is claimed: that scan was superseded by
+the subsequent content advance before a retained terminal candidate result.
+
+`origin/dev` then advanced over the exact range `f94e87a8..9014d610`. The clean
+report branch synchronized as merge commit
+`4a48dd63e71c38043155adfe631d804b8b58878b`, whose second parent is the final
+content base. The final ancestry is:
+
+```text
+synchronization merge HEAD = 4a48dd63e71c38043155adfe631d804b8b58878b
+origin/dev = 9014d6103a180f6347cb6d092b078ca1560958cf
+merge-base(origin/dev, HEAD) = 9014d6103a180f6347cb6d092b078ca1560958cf
+```
+
+That range added `dialect:qdo` heading grammar and ingested the QDO source as
+114 content-addressed atoms plus 114 residual-open records (`115` changed QDO
+backfill paths including `source.toml`). It also added batch Git revision reads
+and the frozen-anchor guard with tests. These changes legitimately alter the
+global digestion ledger, but the exact diff over the observer source and
+`Meta/Digestion/backfill/observer-quantum-v1` is empty.
+
+The incoming Lean modules whose names could be mistaken for selected-atom
+carriers do not overlap its semantics:
+
+- `GoldenMidlineFactorization` proves only the scalar real identity
+  `1 / (2 * phi^2) = (1 / 2) * (1 / phi^2)`.
+- `GoldenSubstitutionOrbit` iterates the arithmetic map `nS : Nat -> Nat`,
+  preserves the prime radical, and bounds `lambdaMinus` and accumulated
+  logarithmic displacement. Its “orbit” is not an observer or adic action and
+  has no return-time or Fibonacci-frequency data.
+- `SearchableWindowDecision` quantifies over arbitrary `Input` and `Output`
+  types, a predicate `domain`, and a Boolean-query selector; it proves that the
+  selected verdict is true iff a universal decidable test holds on the domain.
+  Its “window” is a generic searchable domain, not an observer window or a
+  continued-fraction branch classifier.
+
+The other incoming Lean modules (`AffordableRegionAgreement`,
+`BackwardShiftOperator`, and `FourPointPowerDefect`) concern unrelated
+resource-order, shift-operator, and zeta-zero power-defect statements. Thus no
+Lean addition in the range supplies an observer-window carrier, adic
+minimality, Fibonacci return data, tensor/anyon algebra, unique trace, revival
+dynamics, or Lagrange-Markov spectrum bridge.
+
+The fresh authoritative partition command on the exact final base was:
 
 ```sh
 dotnet run --no-build --project tools/StrataLint.Cli/StrataLint.Cli.csproj \
-  --configuration Release -- digest-status --formalize-candidates --base origin/dev
+  --configuration Release -- digest-status --formalize-candidates \
+  --base 9014d6103a180f6347cb6d092b078ca1560958cf
 ```
 
 Exit `0`. Its schema was `stratalint-formalize-candidates-v3`, and its ledger
 address was:
 
 ```text
-sha256:92c7b162f1956e991864a0aef8e84a34cd5983a9ef7b8f0107570bdd6e5745dc
+sha256:04195d8065a46fdd1c6118555d98bb00b8d24099d3319628744667640d59780b
 ```
 
 For `observer-quantum-v1`, the final-base rerun reported exactly one candidate,
-the selected atom below, with no recorded formalization and no withheld atom.
+the selected atom below. The withheld list was empty, the selected-occurrence
+list contained only that candidate, and no formalization was recorded.
 
 The first partition attempt after PR #1705 failed closed with exit `2` and:
 
@@ -179,21 +253,24 @@ D5/S3/Weil/ZetaBridge/ConvolutionSquareOrbitBounds.lean
 ```
 
 No inference was drawn from either stale report. The canonical Lean-report door
-was rerun after each failure. The actual final-base refresh completed with:
+was rerun after each failure. The fresh bare final-base refresh completed with:
 
 ```text
 make lean-report
 exit = 0
-input_address = sha256:7c06971ecfda1ceb649b61deda7af1a48eaeb0f42542ec8887d09e95c0c977bf
-report_sha256 = d1fc400f4d539060fdf1af46aaba31228b1ef2d382588eaa7e38c4fdb32054d5
+mode = cached
+input_address = sha256:bdb5001081468f123f50a4dd126daa1fa36e05a16a101106c6d883a60cd033eb
+report_sha256 = 6f04896a66cee2f912b6feaf1f52f662badbd4dbf20b444a8b07843344ec73d8
 ```
 
 The exact selected-ID content search outside this report again exited `1`.
 The canonical residual-open record's raw, normalized, and CAS fingerprints
-still equal the selected hash, while `coverage_gids`, `receipts.coverage`, and
-`receipts.scribe` remain empty. The filtered candidate output contains the
-selected atom only as the single current candidate. Thus the synchronized
-base adds no deposit, bind, partial cover, or withheld status for this atom.
+still equal the selected hash. The canonical YAML parsed with
+`coverage_gids: []`, and empty coverage, Scribe, and unresolved receipt arrays.
+The global candidate-ledger address changed because QDO was ingested, while the
+filtered observer output still contains only the selected atom as the single
+current candidate. Thus the synchronized base adds no deposit, bind, partial
+cover, or withheld status for this atom.
 
 ## Atom identity and authoritative statement
 
@@ -213,7 +290,7 @@ make show-atom \
   ATOM_ID=observer-residual-36a5eee4b1574c9abf9adf009d72fc27d059e918b32d281dfe0aaf07028189cf
 ```
 
-It exited `0` after the fast-forward and reported:
+It exited `0` on the exact final base and reported:
 
 ```text
 raw_sha256=sha256:36a5eee4b1574c9abf9adf009d72fc27d059e918b32d281dfe0aaf07028189cf
@@ -237,23 +314,23 @@ counterpart and current disposition of each clause are as follows.
 
 | Authoritative clause | Required faithful Lean counterpart | Current evidence and disposition |
 |---|---|---|
-| `观察者窗口分两族` | A defined type of observer windows and an exhaustive, disjoint or otherwise fully specified two-branch classification | Missing. The repository has cyclic and golden component carriers, but no common `ObserverWindow` carrier or exhaustive classification theorem. |
+| `观察者窗口分两族` | A defined type of observer windows and an exhaustive, disjoint or otherwise fully specified two-branch classification | Missing. The repository has cyclic and golden component carriers, but no common `ObserverWindow` carrier or exhaustive classification theorem. `SearchableWindowDecision` uses “window” only for an arbitrary predicate-defined input domain and proves a Boolean universal-test decision; it has no observer, tower, continued-fraction, or two-branch structure. |
 | `窗口塔的连分数,有理或全 1` | A continued-fraction map from every observer window tower, with an iff or exhaustive alternative connecting rational termination to the cyclic branch and an all-one expansion to the golden branch | Partial arithmetic only. Pinned mathlib has `GenContFract.terminates_iff_rat`; `D5.S1.Depth.GoldenContinuedFraction.golden_ratio_continued_fraction` proves the golden ratio has all-one coefficients. No declaration maps windows or towers to those arithmetic cases, proves they are exhaustive, or identifies the resulting branches. |
 | `更新冻结可见相位 => 经典核 C(T)` | Definitions of update, visible phase, freezing, and classical kernel, plus the stated implication and an algebra equivalence with continuous circle functions | Partial cyclic algebra only. `continuous_window_center_eq_phase_functions` identifies the center of a continuous cyclic matrix bundle with scalar phase functions. It does not define the source's classical-kernel predicate or derive that center from a frozen visible coordinate. |
 | `单塔全矩阵窗` | A cyclic branch tower whose finite window algebra is one full matrix algebra | Substantive component available: `window_generators_adjoin_top` proves the clock and shift generate the full finite matrix algebra. No branch-classification bridge binds it to the source premise. |
 | `绕行时钟 U^M=z` | A cyclic update whose cardinal power equals the central visible winding phase | Substantive component available: `winding_shift_pow_card` and `central_winding_certificate` prove this for the repository's concrete continuous cyclic observable. This does not prove the surrounding branch implication or the whole conjunction. |
-| `素 qudit 可分解` | The exact source factorization claim, including whether “prime” means a prime dimension, all prime-power address factors, and whether decomposition must be nontrivial | Related but not identical. `prime_power_tensor_factor_decomposition` factors a full `M`-window matrix algebra over all prime-power factors. At prime `M` this has one factor, and the source does not state the intended factorization semantics. Selecting one interpretation would weaken or invent the clause. |
+| `素 qudit 可分解` | The exact source factorization claim, including whether “prime” means a prime dimension, all prime-power address factors, and whether decomposition must be nontrivial | Related but not identical. `prime_power_tensor_factor_decomposition` factors a full `M`-window matrix algebra over all prime-power factors. At prime `M` this has one factor, and the source does not state the intended factorization semantics. `PrimeLogIndependence` concerns integer/rational linear independence of scalar prime logarithms, not qudit tensor factors. Selecting one interpretation would weaken or invent the clause. |
 | `Born 经 Gleason 条件推出` | An explicit Gleason/frame-function hypothesis and a theorem deriving the Born valuation under that hypothesis | Missing. `rank_one_pure_state_modulus_square_reduction` reduces an already defined Born record weight to a squared modulus. `PublicLedgerDescent` explicitly calls itself pre-Gleason and asserts no positivity, representation, or Born-rule uniqueness. Pinned mathlib has no quantum Gleason theorem. |
 | `记录周期性完美复活` | A defined record state/dynamics and a periodic perfect-revival equality | Partial generator recurrence only. `cyclic_window_generators_recur` proves the finite clock and shift each return to identity after `M` steps. It does not define or prove perfect revival of a record. |
-| `Zeckendorf 窗塔 + adic 更新; 更新极小` | A golden window-tower carrier, an adic update, and a minimality theorem on that carrier | Missing. Focused D5 and pinned-mathlib searches found no such dynamical/operator-algebra carrier. `GoldenDesubstitutionClosedForms` uses Zeckendorf decoding only on natural-number prime-factor exponents to prove scalar logarithmic face-length identities; it defines no window tower, update, or minimality predicate. Padic and adic-valuation hits are unrelated. |
-| `更新极小 => 无经典核 (Z=C)` | The golden minimal-update implication and scalar-center equality on the golden algebra | Missing. Finite cyclic scalar-commutant and center theorems concern different carriers. No theorem transfers them to a golden minimal adic algebra. |
+| `Zeckendorf 窗塔 + adic 更新; 更新极小` | A golden window-tower carrier, an adic update, and a minimality theorem on that carrier | Missing. Focused D5 and pinned-mathlib searches found no such dynamical/operator-algebra carrier. `GoldenDesubstitutionClosedForms` uses Zeckendorf decoding only on natural-number prime-factor exponents to prove scalar logarithmic face-length identities. `GoldenSubstitutionOrbit` iterates that arithmetic `nS : Nat -> Nat` map, preserves the prime radical, and propagates logarithmic bounds; it defines no observer window, adic action, return carrier, or minimality predicate. Padic and adic-valuation hits are unrelated. |
+| `更新极小 => 无经典核 (Z=C)` | The golden minimal-update implication and scalar-center equality on the golden algebra | Missing. Finite cyclic scalar-commutant and center theorems concern different carriers. `GoldenMidlineFactorization` is only a scalar reassociation of `1 / (2 * phi^2)`, and `GoldenContractionRadicalBound` supplies scalar logarithmic inequalities; neither defines an algebra, update, minimality, or center. No theorem transfers the cyclic results to a golden minimal adic algebra. |
 | `双塔 M_(F_(n+1)) direct-sum M_(F_n)` | A golden finite-level algebra and an equality/equivalence with the direct sum of two consecutive Fibonacci full-matrix blocks | Missing. The existing `PrimePowerTensorTower` is a tensor factorization of one cyclic full matrix algebra, not a two-block Fibonacci direct sum. A prior focused report for GICT 6.42 found no such carrier or theorem. |
 | `Sturmian 双回归时钟; 回归时间恰取相邻 Fibonacci 双值` | A return-time set on the same golden tower, equal to `{fib k, fib (k+1)}` for the source-admitted windows/cylinders | Partial. For every occurring positive-length golden factor, `golden_occurrence_gap_set_encard_eq_two` proves that the adjacent-gap set has exactly two values. For every pair of adjacent occurrences, `GoldenCubePeriodsInternal.golden_adjacent_gap_is_fib` proves that its gap is `fib q` for some `q >= 2`. Both declarations are frozen. Their conjunction does not prove that the two Fibonacci indices are consecutive, so it does not identify the set with `{fib k, fib (k+1)}` for one `k`. `GoldenDesubstitutionClosedForms` has no occurrence, gap, clock, or return-time definition. The related GICT source also leaves the zero-length convention unstated, while the repository proves the zero-length gap spectrum is the singleton `{1}`. |
-| `比 -> phi` | Frequencies of those same two return values and convergence of their ratio to the golden ratio | Numerical sequence limit only. `fibonacci_return_ratio_tendsto` proves `fib(n+1)/fib(n) -> phi`; it does not define return frequencies or connect them to the golden tower/cylinder carrier. The `goldenRatio` coefficient in `lambdaMinus_eq_log_nS_sub_goldenRatio_log` is a scalar multiplier, not a return-value ratio or frequency limit. |
+| `比 -> phi` | Frequencies of those same two return values and convergence of their ratio to the golden ratio | Numerical sequence limit only. `fibonacci_return_ratio_tendsto` proves `fib(n+1)/fib(n) -> phi`; it does not define return frequencies or connect them to the golden tower/cylinder carrier. The `goldenRatio` coefficients in the desubstitution, radical-bound, and arithmetic-orbit modules are scalar multipliers, not return-value ratios or frequency limits. |
 | `寄存器不可张量分解 (= Fibonacci 任意子融合空间,量子维数 phi)` | A golden-register carrier, a theorem excluding tensor decompositions, an equivalence with a Fibonacci-anyon fusion-space carrier, and a quantum-dimension computation | Missing. No D5, pinned dependency, or public Lean-code-index hit defined the anyon/fusion carrier or this equivalence. Prime-power factorization of the cyclic branch cannot prove tensor indecomposability of the golden branch. |
 | `定价无条件唯一 (单代数唯一迹)` | A simple golden algebra, a trace/pricing interface, existence, and unconditional uniqueness | Missing. Searches found no golden crossed-product/AF/Bratteli-Vershik algebra or unique-trace theorem. `PublicLedgerDescent` gives conditional uniqueness of a descended finite valuation from compatibility/additivity hypotheses, which is a different statement. |
 | `F_(n+1) phi^(-n) + F_n phi^(-(n+1)) = 1` | The exact Fibonacci/golden partition identity for every level | Exactly available as `D5.S1.Recurrence.GoldenPartition.fibonacci_golden_partition`. This closes only this conjunct. |
-| `复活受 Lagrange 极值压制` | A defined revival quantity and a theorem comparing it to the relevant Lagrange extremum | Partial golden Diophantine estimates only. `golden_hurwitz_bound` proves an effective rational-approximation bound, and `golden_fibonacci_revival_score_tendsto` proves a Fibonacci-subsequence score limit. The latter explicitly states that no full Lagrange-Markov classification or global optimality is asserted. |
+| `复活受 Lagrange 极值压制` | A defined revival quantity and a theorem comparing it to the relevant Lagrange extremum | Partial golden Diophantine estimates only. `golden_hurwitz_bound` proves an effective rational-approximation bound, and `golden_fibonacci_revival_score_tendsto` proves a Fibonacci-subsequence score limit. The latter explicitly states that no full Lagrange-Markov classification or global optimality is asserted. Bounds on `lambdaMinus` along an arithmetic `nS` orbit do not define a revival score or spectrum. |
 | `经典核存在 iff 更新冻结某公共坐标` | Common definitions of classical kernel, update, public/common coordinate, and freezing, with both implications | Missing. Phase-center and cyclic-invariance results do not provide either direction of this global iff on the source carrier. |
 | `q ||q Delta|| 之等级表恰为 Lagrange-Markov 谱` | Definitions of the allowed `Delta`, score, ranking/table equivalence, and the exact Lagrange-Markov spectrum identification | Missing. The precise D5/mathlib search found no positive declaration; its only D5 hit was the `GoldenRevivalScore` comment explicitly disclaiming this classification. Public Sourcegraph search also returned `matchCount=0`. |
 | `phi 坐首席` | A defined order/extremality statement within that spectrum and a proof that the golden ratio is first/extremal | Partial Hurwitz evidence only. `golden_hurwitz_bound` and the Fibonacci score limit do not construct or order the spectrum, so they cannot prove this ranking clause. |
@@ -455,14 +532,14 @@ The required history inspection was:
 
 ```sh
 git log --no-merges -20 --format='%H %s' --grep='^formalize: deposit'
-git show bdd8130402c4c91fa8effd2696bb09d8c93b657d
+git show 4813e833027e17f30e7b1c4c5144d87514114086
 ```
 
 The latest matching deposit is:
 
 ```text
-bdd8130402c4c91fa8effd2696bb09d8c93b657d
-formalize: deposit D5/S1/Words/Mechanical/GoldenFiberPrefixBound.golden_fiber_prefix_sum_le
+4813e833027e17f30e7b1c4c5144d87514114086
+formalize: deposit D5/S0/Computability/Searchability/SearchableWindowDecision.searchable_window_forall_decidable
 ```
 
 It adds one new Lean module, one Blueprint `.scribe.cs` source, and one emitted
@@ -500,6 +577,22 @@ write/compile stage.
   conclusions are two scalar logarithmic face-length formulas. They contain no
   observer window, Sturmian occurrence, return time, adic action, tower, or
   frequency statement.
+- **Use `SearchableWindowDecision` as the observer-window classifier:**
+  rejected. Its arbitrary predicate-defined `Input` domain and Boolean selector
+  decide one universal test; no observer carrier, continued fraction, cyclic/
+  golden branch, or classification implication occurs in its statement.
+- **Use `GoldenSubstitutionOrbit` as the golden adic/return dynamics:**
+  rejected. It iterates `nS` on natural numbers, preserves prime radicals, and
+  bounds scalar logarithmic displacement. It has no adic carrier, minimality,
+  Sturmian return set, return frequency, or observer record.
+- **Promote the new scalar golden facts into carrier bridges:** rejected.
+  `GoldenMidlineFactorization` is a real-number factorization identity and
+  `GoldenContractionRadicalBound` gives radical-controlled scalar inequalities;
+  neither constructs a window tower, algebra center, trace, revival dynamics,
+  or spectrum.
+- **Use prime-log linear independence as prime-qudit factorization:** rejected.
+  Linear independence of the real numbers `log p` supplies no matrix-algebra or
+  tensor-product decomposition.
 - **Use the partition identity to cover unconditional unique pricing:**
   rejected. A scalar identity does not construct an algebra trace or prove its
   uniqueness.
@@ -582,6 +675,15 @@ unresolved and forces the `open` outcome.
 - **Exponent displacement vs return dynamics:** a Zeckendorf decode of
   prime-factor exponents inside a scalar logarithmic identity does not define
   a Zeckendorf window tower, an adic update, or a return-time theorem.
+- **Generic searchable window vs observer window:** a selector for arbitrary
+  Boolean queries over a predicate-defined domain is not a continued-fraction
+  classifier for observer towers.
+- **Arithmetic orbit vs adic observer dynamics:** iterating `nS : Nat -> Nat`
+  and bounding logarithmic displacement does not prove minimality, return times,
+  return frequencies, or record revival on the source carrier.
+- **Scalar phi/radical identities vs operator-algebra structure:** real-number
+  factorization and contraction bounds do not construct matrix towers, centers,
+  tensor/anyon carriers, traces, or spectra.
 - **Subsequence limit vs full spectrum:** a golden Fibonacci score limit cannot
   replace exact Lagrange-Markov spectrum classification or global ordering.
 - **Exact identity vs uniqueness:** the golden partition identity does not
