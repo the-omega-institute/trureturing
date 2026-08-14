@@ -1,0 +1,15 @@
+### 定理 24.13（近似半共轭复合）
+
+复合映射
+\[
+\rho\pi:Y\to W
+\]
+满足
+\[
+\boxed{
+\delta(\rho\pi;\tau,\omega)
+\le
+K\delta_1+\delta_2.
+}
+\]
+

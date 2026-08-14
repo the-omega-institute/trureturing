@@ -1,0 +1,20 @@
+### 定理 19.5（itinerary 完成定理）
+
+有自然动力同构
+\[
+\boxed{
+Z_q
+\cong
+\mathcal I_q(Y)
+\cong
+\varprojlim_m X_m.}
+\]
+并且在稳定深度 \(m_*\) 上，坐标投影已经是双射：
+\[
+\boxed{
+\mathcal I_q(Y)
+\xrightarrow{\ \cong\ }
+X_{m_*}.}
+\]
+因此有限系统的无限未来完成在有限层即终止。
+

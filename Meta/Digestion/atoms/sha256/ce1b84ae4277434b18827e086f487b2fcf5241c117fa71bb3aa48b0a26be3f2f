@@ -1,0 +1,15 @@
+### 定理 16.2（对角代数上的协变关系）
+
+定义函数拉回
+\[
+\alpha_\tau(f)=f\circ\tau.
+\]
+则
+\[
+\boxed{
+M_fL_\tau
+=
+L_\tau M_{\alpha_\tau(f)}}
+\]
+对全部 \(f:Y\to\mathbb C\) 成立。
+

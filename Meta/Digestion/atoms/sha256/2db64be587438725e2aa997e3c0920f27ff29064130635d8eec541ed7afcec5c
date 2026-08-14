@@ -1,0 +1,12 @@
+### 定理 19.8（有限词代数定理）
+
+\(\mathcal B_m\) 恰由在 \(W_m\)-纤维上常值的复函数组成。因此
+\[
+\boxed{
+\mathcal B_m
+\cong
+\mathbb C^{X_m},
+\qquad
+\dim\mathcal B_m=c_m.}
+\]
+
