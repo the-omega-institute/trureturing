@@ -1,0 +1,41 @@
+## 定理 5.1（群商—余正规形）
+
+选定截面 \(s:B\to X\) 后，每个 \(x\) 唯一写成
+\[
+x=\gamma_s(x)\cdot s(\pi x),
+\qquad
+\gamma_s(x)\in G.
+\]
+故
+\[
+\boxed{X\cong B\times G},
+\qquad
+\boxed{h\cdot(b,g)=(b,hg).}
+\]
+
+若 \(t(b)=g(b)\cdot s(b)\)，则
+\[
+\boxed{
+\gamma_t(x)=\gamma_s(x)g(\pi x)^{-1}.}
+\]
+
+若作用由同胚给出且 \(X\) Hausdorff，则 \(X\to B\) 为有限覆盖。连续全局截面、连续 \(G\)-值余坐标与等变平凡化
+\[
+X\cong B\times G
+\]
+三者等价。若 \(X\) 连通而 \(|G|>1\)，三者均不存在。
+
+局部截面 \(s_i\) 在交集上满足
+\[
+s_i=g_{ij}\cdot s_j,
+\]
+其中
+\[
+g_{ik}=g_{ij}g_{jk}.
+\]
+规范变化 \(s_i'=h_i\cdot s_i\) 给出
+\[
+\boxed{g'_{ij}=h_i g_{ij}h_j^{-1}.}
+\]
+全局截面存在当且仅当 cocycle 可规范化为单位元。闭路提升若返回到 \(m\cdot x\) 且 \(m\neq e\)，则全局单值化不可能。圆周双覆盖 \(z\mapsto z^2\) 是最小例子。
+

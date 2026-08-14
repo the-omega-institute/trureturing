@@ -1,0 +1,11 @@
+## 定理 2.1（缺陷分解）
+
+若 \(\Theta_i\) 为 \(L_i\)-Lipschitz，则
+\[
+\boxed{
+\varepsilon^\Delta_{j,i}(E)
+\le
+\varepsilon^\tau_{j,i}(D_jE)
++L_i\varepsilon^D_{j,i}(E).}
+\]
+

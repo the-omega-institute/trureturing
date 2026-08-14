@@ -40,6 +40,11 @@
   split-only, no-move change opened `Zeros/Detection/`; all existing `Zeros/`
   paths remain unmoved. First module: `Detection/DetectionRadiusCertificate.lean`,
   certifying the exact visibility scale and radius at beta = 0.51 and gamma = 10^12.
+- 2026-08-14 (SL-003): `Zeros/` remained at its 12-Lean-file limit. The
+  split-only, no-move change opened `Zeros/ShiftOperators/`; all existing
+  `Zeros/` paths remain unmoved. First module:
+  `ShiftOperators/BackwardShiftOperator.lean`, realizing the frozen coefficient
+  pullback as a bounded adjoint with truncated basis-ket action.
 - 2026-08-14 (SL-003): `Weil/` remained at its 12-Lean-file limit. The A17.2
   Zeta23 explicit-formula port opened cohesive `Weil/Zeta*` subdomain buckets;
   all existing `Weil/` paths remain unmoved. The port retains its upstream
@@ -72,6 +77,8 @@
 - `Zeros/Endpoints/`: endpoint-value certificates for completed-zeta readings.
 - `Zeros/Symmetry/`: conjugation and reflection covariance of zeta readings.
 - `Zeros/Detection/`: exact arithmetic certificates for zero-detection scales.
+- `Zeros/ShiftOperators/`: bounded multiplicative address shifts and their
+  Hilbert-space adjoint and basis actions.
 - 2026-08-04 SL-003 分裂记录:Blueprint/D5/S3/Arith 达 12 上限;按"只裂不迁"新增子疆域桶 `Axis/`(组名已入词表),存量 Arith 模块地址全数保留;首件 `Axis/PrimeAxisEscape.lean`。
 - 2026-08-10 SL-003 分裂记录:D5/S3/Arith 达 12 上限;按"只裂不迁"新增子疆域桶 `Factorization/`(组名已入词表),存量 Arith 模块地址全数保留;首件 `Factorization/FreeCommMonoid.lean`。
 - `Quantum/Algebra/`: representation-independent covariance and commutator algebra.

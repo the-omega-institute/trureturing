@@ -1,0 +1,15 @@
+## 定理 2.2（尺度复合）
+
+若 \(k\preceq i\preceq j\)，且 \(Q_{i,k}\) 为 \(L^Q_{i,k}\)-Lipschitz，则
+\[
+\boxed{
+\varepsilon^\Delta_{j,k}(E)
+\le
+L^Q_{i,k}\varepsilon^\Delta_{j,i}(E)
++
+\varepsilon^\Delta_{i,k}(P_{j,i}E).}
+\]
+证明是在两端之间插入 \(Q_{i,k}\Delta_iP_{j,i}E\)。反复应用得到加权 telescoping bound。
+
+---
+

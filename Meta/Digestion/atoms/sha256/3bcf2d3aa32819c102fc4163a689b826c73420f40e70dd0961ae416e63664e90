@@ -1,0 +1,22 @@
+### 定理 16.5（因子—不变子代数对应）
+
+对有限自映射 \(\tau:Y\to Y\)，下列条件等价：
+
+1. 存在唯一映射 \(\sigma:Z\to Z\)，满足
+   \[
+   \phi\tau=\sigma\phi;
+   \]
+2. 可观测子代数在拉回动力学下不变：
+   \[
+   \alpha_\tau(\mathcal A_\phi)
+   \subseteq
+   \mathcal A_\phi.
+   \]
+
+此时对全部 \(g:Z\to\mathbb C\)，
+\[
+\boxed{
+\alpha_\tau(g\circ\phi)
+=(g\circ\sigma)\circ\phi.}
+\]
+

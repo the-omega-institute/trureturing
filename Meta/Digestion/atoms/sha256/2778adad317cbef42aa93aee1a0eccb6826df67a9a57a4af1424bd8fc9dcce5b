@@ -1,0 +1,32 @@
+### 定理 21.2（闭环有限生成的最终周期性）
+
+设 \(Y\) 有限，\(F:Y\to Y\)。对任意初态 \(y_0\)，存在整数
+
+\[
+\mu\ge0,
+\qquad
+\lambda\ge1,
+\qquad
+\mu+\lambda\le |Y|,
+\]
+
+使
+
+\[
+\boxed{
+F^{t+\lambda}(y_0)=F^t(y_0)
+\quad
+\text{对全部 }t\ge\mu.}
+\]
+
+从而任意确定读出 \(q:Y\to O\) 的输出序列也最终周期：
+
+\[
+\boxed{
+q(F^{t+\lambda}(y_0))
+=
+q(F^t(y_0))
+\quad
+(t\ge\mu).}
+\]
+

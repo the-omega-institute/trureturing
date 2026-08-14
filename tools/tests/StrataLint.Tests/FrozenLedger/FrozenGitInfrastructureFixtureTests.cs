@@ -197,7 +197,9 @@ public sealed class FrozenGitInfrastructureFixtureTests
             string fileName,
             IReadOnlyList<string> arguments,
             string workingDirectory,
-            TimeSpan timeout) => throw exception;
+            TimeSpan timeout,
+            int maximumOutputBytes = GitRepositoryGateway.DefaultGitOutputBytes,
+            ReadOnlyMemory<byte> standardInput = default) => throw exception;
     }
 
     private sealed class DelegateGitProcessRunner(
@@ -207,7 +209,9 @@ public sealed class FrozenGitInfrastructureFixtureTests
             string fileName,
             IReadOnlyList<string> arguments,
             string workingDirectory,
-            TimeSpan timeout) => run(arguments);
+            TimeSpan timeout,
+            int maximumOutputBytes = GitRepositoryGateway.DefaultGitOutputBytes,
+            ReadOnlyMemory<byte> standardInput = default) => run(arguments);
     }
 }
 

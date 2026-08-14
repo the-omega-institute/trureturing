@@ -1,0 +1,13 @@
+### 定理 17.6（有限系统的分支完成定理）
+
+若 \(|Y|=q\)，则
+\[
+\boxed{
+\mathfrak N_q(\tau)
+}
+已经确定完整函数图。更一般地，族
+\[
+(\mathfrak N_h(\tau))_{h\ge0}
+\]
+的 projective limit 与完整装饰 necklace \(\mathfrak N(\tau)\) 等价。
+

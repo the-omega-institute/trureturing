@@ -1,0 +1,14 @@
+### 定理 17.5（深度截断分类）
+
+\(\mathcal C^{(h)}(y)\) 完全分类以 \(y\) 为根、只保留前 \(h\) 层的瞬态入树。并且存在自然截断映射
+\[
+\partial_h:
+\mathcal C^{(h+1)}\to\mathcal C^{(h)}
+\]
+使
+\[
+\partial_h(\mathfrak N_{h+1}(\tau))
+=
+\mathfrak N_h(\tau).
+\]
+

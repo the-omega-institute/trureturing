@@ -1,0 +1,19 @@
+### 定理 25.1（受控行为关系递推）
+
+有
+\[
+\boxed{
+R_0^U=\ker q,
+}
+\]
+\[
+\boxed{
+R_{m+1}^U
+=
+\ker q
+\cap
+\bigcap_{u\in U}
+(F_u\times F_u)^{-1}(R_m^U).
+}
+\]
+

@@ -1,0 +1,28 @@
+### 定理 22.5（预测完成的幂等性）
+
+在系统
+\[
+(Z_q,\overline\tau_q,\overline q)
+\]
+上重新定义无限未来等价：
+\[
+z\widehat R_q z'
+\iff
+\overline q(\overline\tau_q^k z)
+=
+\overline q(\overline\tau_q^k z')
+\quad\text{对全部 }k\ge0.
+\]
+则
+\[
+\boxed{
+\widehat R_q=\Delta_{Z_q},
+}
+\]
+其中 \(\Delta_{Z_q}\) 是相等关系。因此再次取预测完成不会产生新的状态识别：
+\[
+\boxed{
+Z_{\overline q}\cong Z_q.
+}
+\]
+

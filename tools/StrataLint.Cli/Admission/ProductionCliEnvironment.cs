@@ -98,6 +98,11 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
             }
 
             var current = Decode(repository.ReadCurrent());
+            if (ValidateAddedFrozenLedgerAnchors(prepared.Changes, current) is { } anchorRejection)
+            {
+                return anchorRejection;
+            }
+
             var baseline = Decode(repository.ReadRevision(prepared.Revision));
             // fork point 只需树,不需要 Lean report:append-only 保留性检查比的是文件字节。
             var forkPoint = string.Equals(prepared.ChangeBase, prepared.Revision, StringComparison.Ordinal)
@@ -131,6 +136,65 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
         {
             return new AdmissionOutcome.InfrastructureFailure(exception.Message);
         }
+    }
+
+    /// Added accepted-ledger events name Git objects as their provenance anchors. ledger-append
+    /// verifies them only on the producing machine, where a commit that never reached the remote
+    /// still resolves; the admission clone holds only pushed objects, so validating the added
+    /// events here rejects an unpublishable anchor at the gate instead of letting it freeze and
+    /// strand every other driver's ledger-append (issue #1712). Scoped to added events only: the
+    /// existing ledger's anchors are attested history, not part of this changeset.
+    private AdmissionOutcome? ValidateAddedFrozenLedgerAnchors(
+        RawChangeSet changes,
+        RepositorySnapshot current)
+    {
+        var diagnostics = ImmutableArray.CreateBuilder<Diagnostic>();
+        foreach (var change in changes.Entries)
+        {
+            if (change.Kind != RawChangeKind.Added
+                || !FrozenLedgerChangeClassifier.IsAcceptedEventPath(change.Path.Value)
+                || !current.TryGetFile(change.Path.Value, out var file))
+            {
+                continue;
+            }
+
+            // A file that does not even load is the frozen-surface rule's verdict, not this
+            // guard's; letting the snapshot core report it keeps one violation one voice.
+            if (FrozenAcceptedEventLoader.LoadFiles([file]) is not DagLedgerFilesLoadOutcome.Loaded loaded)
+            {
+                continue;
+            }
+
+            var inputs = loaded.Events
+                .Where(static item => item.Input is not null)
+                .Select(static item => item.Input!)
+                .ToImmutableArray();
+            if (inputs.IsEmpty)
+            {
+                continue;
+            }
+
+            try
+            {
+                repository.ValidateFrozenReferences(FrozenLedgerReferenceSet.Create(inputs, []));
+            }
+            catch (FrozenReferenceRejectionException exception)
+            {
+                diagnostics.Add(new Diagnostic(
+                    RuleId.CreateKnown(8),
+                    "Frozen Hearts semantics",
+                    DisplaySeverity.Error,
+                    AdmissionEffect.Block,
+                    change.Path.Value,
+                    "added frozen-ledger event references a Git object this repository cannot "
+                    + "resolve; freeze from a pushed base or publish the anchor commit first: "
+                    + exception.Message));
+            }
+        }
+
+        return diagnostics.Count == 0
+            ? null
+            : new AdmissionOutcome.RuleRejected(diagnostics.ToImmutable());
     }
 
     public AdmissionTopologyOutcome Topology(IReadOnlyList<string> arguments)

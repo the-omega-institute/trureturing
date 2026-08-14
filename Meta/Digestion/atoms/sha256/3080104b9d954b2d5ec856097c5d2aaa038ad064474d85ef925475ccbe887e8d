@@ -1,0 +1,21 @@
+### 定理 19.10（完成信息的链式分解）
+
+对全部 \(m\ge0\)，
+\[
+\boxed{
+H(\mathbf O_m)
+=
+H(O_0)
++
+\sum_{k=1}^{m}
+H(O_k\mid O_0,\ldots,O_{k-1}).}
+\]
+在稳定深度，\(\mathbf O_{m_*}\) 与完成状态 \(\pi_q(Y_0)\) 双射对应，所以
+\[
+\boxed{
+H(\pi_q(Y_0)\mid O_0)
+=
+\sum_{k=1}^{m_*}
+H(O_k\mid O_0,\ldots,O_{k-1}).}
+\]
+
