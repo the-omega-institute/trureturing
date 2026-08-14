@@ -180,11 +180,11 @@ the subsequent content advance before a retained terminal candidate result.
 
 `origin/dev` then advanced over the exact range `f94e87a8..9014d610`. The clean
 report branch synchronized as merge commit
-`4a48dd63e71c38043155adfe631d804b8b58878b`, whose second parent is the final
-content base. The final ancestry is:
+`4a48dd63e71c38043155adfe631d804b8b58878b`, whose second parent became the
+next audited content checkpoint. The ancestry at that synchronization was:
 
 ```text
-synchronization merge HEAD = 4a48dd63e71c38043155adfe631d804b8b58878b
+synchronization merge = 4a48dd63e71c38043155adfe631d804b8b58878b
 origin/dev = 9014d6103a180f6347cb6d092b078ca1560958cf
 merge-base(origin/dev, HEAD) = 9014d6103a180f6347cb6d092b078ca1560958cf
 ```
@@ -218,12 +218,37 @@ Lean addition in the range supplies an observer-window carrier, adic
 minimality, Fibonacci return data, tensor/anyon algebra, unique trace, revival
 dynamics, or Lagrange-Markov spectrum bridge.
 
+For the final quiet-base replay, `origin/dev` advanced only through PR #1728 to
+`82a22f50e60bbbda2312b6dc8365679ee1a3ec6e`. The clean report branch merged
+that exact base non-destructively. Exit `0`; the merge completed without
+conflict as `08404334ae07087f88bee7718681015aa690705d`. Its second parent and the
+final ancestry are:
+
+```text
+synchronization merge = 08404334ae07087f88bee7718681015aa690705d
+origin/dev = 82a22f50e60bbbda2312b6dc8365679ee1a3ec6e
+merge-base(origin/dev, HEAD) = 82a22f50e60bbbda2312b6dc8365679ee1a3ec6e
+```
+
+PR #1728 added only `GoldenSubstStartSharpness`, its Scribe source, and its
+projection. Full inspection found six scalar substitution-start results: the
+exact formula
+`goldenSubstStart v - phi*v = phi^-1 - fract((v+1)*phi)`; its closed
+`[-phi^-2, phi^-1]` error window; odd- and even-Fibonacci-index formulas for
+the fractional part of `fib k * phi`; and epsilon-sharpness of both window
+endpoints along Fibonacci-index witnesses. These declarations do not define an
+observer-window or adic carrier, an occurrence-gap return set, consecutive
+Fibonacci return indices or their frequencies, tensor/anyon structure, a
+trace, record revival, or a Lagrange-Markov spectrum bridge. The exact diff
+over the observer source, observer backfill, and formalization receipts is
+empty, and the selected-ID content search outside this report exits `1`.
+
 The fresh authoritative partition command on the exact final base was:
 
 ```sh
 dotnet run --no-build --project tools/StrataLint.Cli/StrataLint.Cli.csproj \
   --configuration Release -- digest-status --formalize-candidates \
-  --base 9014d6103a180f6347cb6d092b078ca1560958cf
+  --base 82a22f50e60bbbda2312b6dc8365679ee1a3ec6e
 ```
 
 Exit `0`. Its schema was `stratalint-formalize-candidates-v3`, and its ledger
@@ -259,8 +284,8 @@ was rerun after each failure. The fresh bare final-base refresh completed with:
 make lean-report
 exit = 0
 mode = cached
-input_address = sha256:bdb5001081468f123f50a4dd126daa1fa36e05a16a101106c6d883a60cd033eb
-report_sha256 = 6f04896a66cee2f912b6feaf1f52f662badbd4dbf20b444a8b07843344ec73d8
+input_address = sha256:0a9de7f48c13d3da15657f9615e7faba79b183712e22f9eebc7ce4a769cb81d3
+report_sha256 = 7ad53ea4e0bf474f49b4312cf27453d6b9885920a9c263991d157c65ee79323f
 ```
 
 The exact selected-ID content search outside this report again exited `1`.
@@ -322,15 +347,15 @@ counterpart and current disposition of each clause are as follows.
 | `素 qudit 可分解` | The exact source factorization claim, including whether “prime” means a prime dimension, all prime-power address factors, and whether decomposition must be nontrivial | Related but not identical. `prime_power_tensor_factor_decomposition` factors a full `M`-window matrix algebra over all prime-power factors. At prime `M` this has one factor, and the source does not state the intended factorization semantics. `PrimeLogIndependence` concerns integer/rational linear independence of scalar prime logarithms, not qudit tensor factors. Selecting one interpretation would weaken or invent the clause. |
 | `Born 经 Gleason 条件推出` | An explicit Gleason/frame-function hypothesis and a theorem deriving the Born valuation under that hypothesis | Missing. `rank_one_pure_state_modulus_square_reduction` reduces an already defined Born record weight to a squared modulus. `PublicLedgerDescent` explicitly calls itself pre-Gleason and asserts no positivity, representation, or Born-rule uniqueness. Pinned mathlib has no quantum Gleason theorem. |
 | `记录周期性完美复活` | A defined record state/dynamics and a periodic perfect-revival equality | Partial generator recurrence only. `cyclic_window_generators_recur` proves the finite clock and shift each return to identity after `M` steps. It does not define or prove perfect revival of a record. |
-| `Zeckendorf 窗塔 + adic 更新; 更新极小` | A golden window-tower carrier, an adic update, and a minimality theorem on that carrier | Missing. Focused D5 and pinned-mathlib searches found no such dynamical/operator-algebra carrier. `GoldenDesubstitutionClosedForms` uses Zeckendorf decoding only on natural-number prime-factor exponents to prove scalar logarithmic face-length identities. `GoldenSubstitutionOrbit` iterates that arithmetic `nS : Nat -> Nat` map, preserves the prime radical, and propagates logarithmic bounds; it defines no observer window, adic action, return carrier, or minimality predicate. Padic and adic-valuation hits are unrelated. |
+| `Zeckendorf 窗塔 + adic 更新; 更新极小` | A golden window-tower carrier, an adic update, and a minimality theorem on that carrier | Missing. Focused D5 and pinned-mathlib searches found no such dynamical/operator-algebra carrier. `GoldenDesubstitutionClosedForms` uses Zeckendorf decoding only on natural-number prime-factor exponents to prove scalar logarithmic face-length identities. `GoldenSubstitutionOrbit` iterates that arithmetic `nS : Nat -> Nat` map, preserves the prime radical, and propagates logarithmic bounds. `GoldenSubstStartSharpness` gives exact scalar substitution-start errors and sharp endpoints. None defines an observer window, adic action, return carrier, or minimality predicate. Padic and adic-valuation hits are unrelated. |
 | `更新极小 => 无经典核 (Z=C)` | The golden minimal-update implication and scalar-center equality on the golden algebra | Missing. Finite cyclic scalar-commutant and center theorems concern different carriers. `GoldenMidlineFactorization` is only a scalar reassociation of `1 / (2 * phi^2)`, and `GoldenContractionRadicalBound` supplies scalar logarithmic inequalities; neither defines an algebra, update, minimality, or center. No theorem transfers the cyclic results to a golden minimal adic algebra. |
 | `双塔 M_(F_(n+1)) direct-sum M_(F_n)` | A golden finite-level algebra and an equality/equivalence with the direct sum of two consecutive Fibonacci full-matrix blocks | Missing. The existing `PrimePowerTensorTower` is a tensor factorization of one cyclic full matrix algebra, not a two-block Fibonacci direct sum. A prior focused report for GICT 6.42 found no such carrier or theorem. |
-| `Sturmian 双回归时钟; 回归时间恰取相邻 Fibonacci 双值` | A return-time set on the same golden tower, equal to `{fib k, fib (k+1)}` for the source-admitted windows/cylinders | Partial. For every occurring positive-length golden factor, `golden_occurrence_gap_set_encard_eq_two` proves that the adjacent-gap set has exactly two values. For every pair of adjacent occurrences, `GoldenCubePeriodsInternal.golden_adjacent_gap_is_fib` proves that its gap is `fib q` for some `q >= 2`. Both declarations are frozen. Their conjunction does not prove that the two Fibonacci indices are consecutive, so it does not identify the set with `{fib k, fib (k+1)}` for one `k`. `GoldenDesubstitutionClosedForms` has no occurrence, gap, clock, or return-time definition. The related GICT source also leaves the zero-length convention unstated, while the repository proves the zero-length gap spectrum is the singleton `{1}`. |
-| `比 -> phi` | Frequencies of those same two return values and convergence of their ratio to the golden ratio | Numerical sequence limit only. `fibonacci_return_ratio_tendsto` proves `fib(n+1)/fib(n) -> phi`; it does not define return frequencies or connect them to the golden tower/cylinder carrier. The `goldenRatio` coefficients in the desubstitution, radical-bound, and arithmetic-orbit modules are scalar multipliers, not return-value ratios or frequency limits. |
+| `Sturmian 双回归时钟; 回归时间恰取相邻 Fibonacci 双值` | A return-time set on the same golden tower, equal to `{fib k, fib (k+1)}` for the source-admitted windows/cylinders | Partial. For every occurring positive-length golden factor, `golden_occurrence_gap_set_encard_eq_two` proves that the adjacent-gap set has exactly two values. For every pair of adjacent occurrences, `GoldenCubePeriodsInternal.golden_adjacent_gap_is_fib` proves that its gap is `fib q` for some `q >= 2`. Both declarations are frozen. Their conjunction does not prove that the two Fibonacci indices are consecutive, so it does not identify the set with `{fib k, fib (k+1)}` for one `k`. `GoldenSubstStartSharpness` evaluates scalar fractional parts at Fibonacci indices; it has no occurrence, gap, clock, or return-time definition. The related GICT source also leaves the zero-length convention unstated, while the repository proves the zero-length gap spectrum is the singleton `{1}`. |
+| `比 -> phi` | Frequencies of those same two return values and convergence of their ratio to the golden ratio | Numerical sequence limit only. `fibonacci_return_ratio_tendsto` proves `fib(n+1)/fib(n) -> phi`; it does not define return frequencies or connect them to the golden tower/cylinder carrier. The `goldenRatio` coefficients and Fibonacci-index fractional parts in the desubstitution, radical-bound, arithmetic-orbit, and sharpness modules are scalar data, not return-value ratios or frequency limits. |
 | `寄存器不可张量分解 (= Fibonacci 任意子融合空间,量子维数 phi)` | A golden-register carrier, a theorem excluding tensor decompositions, an equivalence with a Fibonacci-anyon fusion-space carrier, and a quantum-dimension computation | Missing. No D5, pinned dependency, or public Lean-code-index hit defined the anyon/fusion carrier or this equivalence. Prime-power factorization of the cyclic branch cannot prove tensor indecomposability of the golden branch. |
 | `定价无条件唯一 (单代数唯一迹)` | A simple golden algebra, a trace/pricing interface, existence, and unconditional uniqueness | Missing. Searches found no golden crossed-product/AF/Bratteli-Vershik algebra or unique-trace theorem. `PublicLedgerDescent` gives conditional uniqueness of a descended finite valuation from compatibility/additivity hypotheses, which is a different statement. |
 | `F_(n+1) phi^(-n) + F_n phi^(-(n+1)) = 1` | The exact Fibonacci/golden partition identity for every level | Exactly available as `D5.S1.Recurrence.GoldenPartition.fibonacci_golden_partition`. This closes only this conjunct. |
-| `复活受 Lagrange 极值压制` | A defined revival quantity and a theorem comparing it to the relevant Lagrange extremum | Partial golden Diophantine estimates only. `golden_hurwitz_bound` proves an effective rational-approximation bound, and `golden_fibonacci_revival_score_tendsto` proves a Fibonacci-subsequence score limit. The latter explicitly states that no full Lagrange-Markov classification or global optimality is asserted. Bounds on `lambdaMinus` along an arithmetic `nS` orbit do not define a revival score or spectrum. |
+| `复活受 Lagrange 极值压制` | A defined revival quantity and a theorem comparing it to the relevant Lagrange extremum | Partial golden Diophantine estimates only. `golden_hurwitz_bound` proves an effective rational-approximation bound, and `golden_fibonacci_revival_score_tendsto` proves a Fibonacci-subsequence score limit. The latter explicitly states that no full Lagrange-Markov classification or global optimality is asserted. Arithmetic-orbit bounds and sharpness of a scalar substitution-error window do not define a revival score or spectrum. |
 | `经典核存在 iff 更新冻结某公共坐标` | Common definitions of classical kernel, update, public/common coordinate, and freezing, with both implications | Missing. Phase-center and cyclic-invariance results do not provide either direction of this global iff on the source carrier. |
 | `q ||q Delta|| 之等级表恰为 Lagrange-Markov 谱` | Definitions of the allowed `Delta`, score, ranking/table equivalence, and the exact Lagrange-Markov spectrum identification | Missing. The precise D5/mathlib search found no positive declaration; its only D5 hit was the `GoldenRevivalScore` comment explicitly disclaiming this classification. Public Sourcegraph search also returned `matchCount=0`. |
 | `phi 坐首席` | A defined order/extremality statement within that spectrum and a proof that the golden ratio is first/extremal | Partial Hurwitz evidence only. `golden_hurwitz_bound` and the Fibonacci score limit do not construct or order the spectrum, so they cannot prove this ranking clause. |
@@ -585,11 +610,16 @@ write/compile stage.
   rejected. It iterates `nS` on natural numbers, preserves prime radicals, and
   bounds scalar logarithmic displacement. It has no adic carrier, minimality,
   Sturmian return set, return frequency, or observer record.
+- **Use Fibonacci-index witnesses from `GoldenSubstStartSharpness` as the
+  return-time theorem:** rejected. Those witnesses evaluate fractional parts
+  and approach the two scalar substitution-error endpoints. They do not arise
+  as occurrence gaps, do not identify a two-value return set with consecutive
+  Fibonacci indices, and do not count return frequencies.
 - **Promote the new scalar golden facts into carrier bridges:** rejected.
   `GoldenMidlineFactorization` is a real-number factorization identity and
-  `GoldenContractionRadicalBound` gives radical-controlled scalar inequalities;
-  neither constructs a window tower, algebra center, trace, revival dynamics,
-  or spectrum.
+  `GoldenContractionRadicalBound` and `GoldenSubstStartSharpness` give
+  radical-controlled inequalities and sharp scalar errors; none constructs a
+  window tower, algebra center, trace, revival dynamics, or spectrum.
 - **Use prime-log linear independence as prime-qudit factorization:** rejected.
   Linear independence of the real numbers `log p` supplies no matrix-algebra or
   tensor-product decomposition.
@@ -681,6 +711,9 @@ unresolved and forces the `open` outcome.
 - **Arithmetic orbit vs adic observer dynamics:** iterating `nS : Nat -> Nat`
   and bounding logarithmic displacement does not prove minimality, return times,
   return frequencies, or record revival on the source carrier.
+- **Fibonacci-index fractional parts vs Fibonacci returns:** using `fib k` as
+  an index in a scalar sharpness witness does not make it an occurrence-gap
+  return time, prove adjacent return indices, or supply return frequencies.
 - **Scalar phi/radical identities vs operator-algebra structure:** real-number
   factorization and contraction bounds do not construct matrix towers, centers,
   tensor/anyon carriers, traces, or spectra.
