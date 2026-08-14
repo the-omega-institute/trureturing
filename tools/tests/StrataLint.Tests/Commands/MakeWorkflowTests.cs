@@ -145,7 +145,7 @@ public sealed partial class MakeWorkflowTests
             StringComparison.Ordinal);
         Assert.Contains("make -C tools selftest", preflight, StringComparison.Ordinal);
         Assert.Contains("lean-report-pair.sh", localGate, StringComparison.Ordinal);
-        Assert.Contains("--single", localGate, StringComparison.Ordinal);
+        Assert.DoesNotContain("--single", localGate, StringComparison.Ordinal);
         Assert.Contains("--skip-engineering", localGate, StringComparison.Ordinal);
         Assert.Contains("GATE_ARGS=\"--skip-engineering\"", preflight, StringComparison.Ordinal);
         Assert.DoesNotContain("refactor-pr-a-required", localGate, StringComparison.Ordinal);
