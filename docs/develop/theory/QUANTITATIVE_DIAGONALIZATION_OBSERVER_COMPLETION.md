@@ -13319,3 +13319,1911 @@ Kochen–Specker、Gleason、Naimark、Stinespring 与 GNS 等一般结果应作
 6. 本节不把量子上下文性、Bell 非局域性与 Cantor 对角化视为同一定理。
 7. 本节不从界面相对性推出 Riemann 假设、光速信息率或意识模型。
 8. 本节新增定理均为纸面结论；在获得 kernel verification 以前不得标记为 `Closed`。
+
+---
+
+# 31. 追加：算子 Hilbert 坐标塔、互补对角与三类量子闭合缺陷
+
+## 31.0 研究定位
+
+第 30 节把相对性、商余、概率与量子上下文统一到“观察界面及其完成”之下，但仍留下一个关键歧义：若两个上下文的去相干通道交换，是否说明它们在物理上兼容？答案是否定的。事实上，两组互相无偏基（mutually unbiased bases, MUB）的锐利投影是最大互补的，但对应去相干通道的复合都等于完全退极化通道，因此两种顺序完全相同。
+
+这迫使本文把“上下文差异”拆成三种彼此独立的结构：
+
+1. **锐利不兼容度**：组成上下文的投影是否能够共同对角化；
+2. **粗粒化顺序缺陷**：先按哪个上下文丢弃相干是否影响结果；
+3. **全局拼接障碍**：全部局部统计是否存在一个统一的非上下文全局模型。
+
+本节首先把有限维量子状态空间嵌入算子 Hilbert 空间，证明一次基测量恰好是到一个 \((d-1)\)-维“经典对角坐标平面”的正交投影；其余 \(d^2-d\) 个实方向是该上下文看不见的相干余量。随后证明，成套 MUB 上下文在算子 Hilbert 空间中形成正交商余塔：每增加一个最大互补坐标系，恰好抽取一个新的 \((d-1)\)-维正交切片；若存在完整的 \(d+1\) 组 MUB，则这些局部经典对角平面正交直和成全部无迹 Hermitian 算子空间，从而完成量子态层析。
+
+在此基础上，本节给出五组新推导：
+
+- 单一锐利上下文的状态自由度可见率为 \(1/(d+1)\)，线性余量率为 \(d/(d+1)\)；
+- \(m\) 组 MUB 的状态无关余维率为 \(1-m/(d+1)\)；
+- 状态的 Hilbert–Schmidt 余质量按每个新增概率坐标的二次偏差精确递减；
+- 对任意 Lipschitz 自指算子或动力学，观察自然性缺陷由尚未捕获的余质量控制；
+- 重复“酉演化—投影界面”产生的熵增，逐步恰等于每轮被删除的相对熵相干。
+
+本节不声称这些组成部分各自都是新发现。MUB 层析、算子 Hilbert 几何、条件期望、量子相干和上下文性均有成熟文献。本文的候选贡献是把它们接入同一个“对角—商余—观察完成”演算，并识别出一个此前框架中的错误替代：**去相干通道交换子不能作为锐利上下文不兼容性的统一度量。**
+
+以下固定
+
+\[
+\mathscr H=\mathbb C^d,
+\qquad
+d\ge2.
+\]
+
+所有新增结论均为纸面证明，未经 Lean kernel 验证不得标记为 `Closed`。
+
+---
+
+## 31.1 状态不是一个概率向量，而是算子 Hilbert 空间中的点
+
+令
+
+\[
+\operatorname{Herm}_d
+=
+\{X\in M_d(\mathbb C):X=X^*\}
+\]
+
+视为实 Hilbert 空间，内积为
+
+\[
+\langle X,Y\rangle_{\mathrm{HS}}
+=
+\operatorname{Tr}(XY).
+\]
+
+其无迹子空间为
+
+\[
+\operatorname{Herm}_d^0
+=
+\{X\in\operatorname{Herm}_d:\operatorname{Tr}X=0\}.
+\]
+
+维数为
+
+\[
+\boxed{
+\dim_{\mathbb R}\operatorname{Herm}_d=d^2,
+\qquad
+\dim_{\mathbb R}\operatorname{Herm}_d^0=d^2-1.
+}
+\]
+
+任意密度矩阵唯一写成
+
+\[
+\boxed{
+\rho=\frac{I}{d}+X_\rho,
+\qquad
+X_\rho\in\operatorname{Herm}_d^0.
+}
+\]
+
+这里 \(I/d\) 是共同的仿射原点，而 \(X_\rho\) 携带全部可变状态信息。其 Hilbert–Schmidt 长度满足
+
+\[
+\boxed{
+\|X_\rho\|_2^2
+=
+\operatorname{Tr}(\rho^2)-\frac1d.
+}
+\]
+
+所以偏离最大混合态的总二次信息量就是 purity excess。
+
+### 定义 31.1（基上下文的对角平面）
+
+取一组正交规范基
+
+\[
+\mathcal B=(|b_1\rangle,\ldots,|b_d\rangle),
+\]
+
+并令
+
+\[
+P_j^{\mathcal B}=|b_j\rangle\langle b_j|.
+\]
+
+定义该上下文的无迹对角平面
+
+\[
+\boxed{
+\mathcal D_{\mathcal B}^0
+=
+\left\{
+\sum_{j=1}^d x_jP_j^{\mathcal B}:
+x_j\in\mathbb R,\ 
+\sum_jx_j=0
+\right\}.
+}
+\]
+
+显然
+
+\[
+\boxed{
+\dim_{\mathbb R}\mathcal D_{\mathcal B}^0=d-1.
+}
+\]
+
+定义去相干／pinching 映射
+
+\[
+\boxed{
+\mathbb E_{\mathcal B}(X)
+=
+\sum_{j=1}^d
+P_j^{\mathcal B}XP_j^{\mathcal B}.
+}
+\]
+
+### 定理 31.2（一次基测量是算子 Hilbert 正交投影）
+
+\(\mathbb E_{\mathcal B}\) 是 \(\operatorname{Herm}_d\) 上到
+
+\[
+\mathcal D_{\mathcal B}
+=
+\mathbb RI\oplus\mathcal D_{\mathcal B}^0
+\]
+
+的 Hilbert–Schmidt 正交投影。限制到 \(\operatorname{Herm}_d^0\) 时，它是到 \(\mathcal D_{\mathcal B}^0\) 的正交投影。
+
+#### 证明
+
+由投影正交性，
+
+\[
+\mathbb E_{\mathcal B}^2(X)
+=
+\sum_{j,k}P_jP_kXP_kP_j
+=
+\sum_jP_jXP_j
+=
+\mathbb E_{\mathcal B}(X).
+\]
+
+又因为
+
+\[
+\operatorname{Tr}\!\left(
+Y\mathbb E_{\mathcal B}(X)
+\right)
+=
+\sum_j\operatorname{Tr}(YP_jXP_j)
+=
+\sum_j\operatorname{Tr}(P_jYP_jX)
+=
+\operatorname{Tr}\!\left(
+\mathbb E_{\mathcal B}(Y)X
+\right),
+\]
+
+故 \(\mathbb E_{\mathcal B}\) 对 Hilbert–Schmidt 内积自伴。幂等且自伴即为正交投影。其像恰为在 \(\mathcal B\) 中对角的 Hermitian 算子。由于保持迹，限制到无迹空间后的像为 \(\mathcal D_{\mathcal B}^0\)。 \(\square\)
+
+设
+
+\[
+p_j^{\mathcal B}(\rho)
+=
+\operatorname{Tr}(\rho P_j^{\mathcal B}).
+\]
+
+则
+
+\[
+\boxed{
+\mathbb E_{\mathcal B}(\rho)
+=
+\sum_jp_j^{\mathcal B}(\rho)P_j^{\mathcal B}.
+}
+\]
+
+所以一组测量概率并不是整个状态，而只确定状态在一个 \((d-1)\)-维经典对角平面上的投影。
+
+### 推论 31.3（单上下文的线性可见率与余量率）
+
+在无迹状态方向空间 \(\operatorname{Herm}_d^0\) 中，一组秩一 PVM 最多可见
+
+\[
+d-1
+\]
+
+个独立实方向，留下
+
+\[
+d^2-d
+\]
+
+个正交余方向。因此
+
+\[
+\boxed{
+\text{visible ratio}
+=
+\frac{d-1}{d^2-1}
+=
+\frac1{d+1},
+}
+\]
+
+\[
+\boxed{
+\text{remainder ratio}
+=
+\frac{d^2-d}{d^2-1}
+=
+\frac d{d+1}.
+}
+\]
+
+这里的比例是线性维数比例，不是任意具体状态的概率质量比例。
+
+这给出一个精确修正：
+
+\[
+\boxed{
+\text{一个量子概率向量通常只暴露状态线性自由度的 }1/(d+1).
+}
+\]
+
+其余部分不是“没有定义”，而是相对于该坐标系仍处于非对角余空间。
+
+---
+
+## 31.2 纯态概率映射的纤维就是相对相位余坐标
+
+在纯态层，取射影空间
+
+\[
+\mathbb{CP}^{d-1}
+\]
+
+并定义基概率映射
+
+\[
+q_{\mathcal B}:
+\mathbb{CP}^{d-1}
+\longrightarrow
+\Delta_{d-1},
+\]
+
+\[
+q_{\mathcal B}([\psi])
+=
+\left(
+|\langle b_1,\psi\rangle|^2,
+\ldots,
+|\langle b_d,\psi\rangle|^2
+\right).
+\]
+
+### 定理 31.4（内点概率纤维为 \((d-1)\)-环面）
+
+若
+
+\[
+p=(p_1,\ldots,p_d)
+\in\operatorname{int}\Delta_{d-1},
+\qquad
+p_j>0,
+\]
+
+则
+
+\[
+\boxed{
+q_{\mathcal B}^{-1}(p)
+\cong
+\mathbb T^{d-1}.
+}
+\]
+
+#### 证明
+
+任意位于该纤维的单位向量可写成
+
+\[
+\psi
+=
+\sum_{j=1}^d
+\sqrt{p_j}e^{i\theta_j}|b_j\rangle.
+\]
+
+全部 \(\theta_j\in\mathbb R/2\pi\mathbb Z\) 可自由选择，但共同平移
+
+\[
+(\theta_1,\ldots,\theta_d)
+\mapsto
+(\theta_1+\alpha,\ldots,\theta_d+\alpha)
+\]
+
+只改变全局相位，在 \(\mathbb{CP}^{d-1}\) 中代表同一点。因此纤维为
+
+\[
+\mathbb T^d/\mathbb T
+\cong
+\mathbb T^{d-1}.
+\]
+
+\(\square\)
+
+所以对于纯态：
+
+\[
+\boxed{
+\text{概率坐标}
+=
+\text{模长平方},
+}
+\]
+
+\[
+\boxed{
+\text{余坐标}
+=
+\text{相对相位}.
+}
+\]
+
+维数核对为
+
+\[
+2d-2
+=
+(d-1)+(d-1).
+\]
+
+在概率单纯形边界上，零振幅坐标不再携带相位，纤维退化为更低维环面。
+
+这使“概率是投影”获得一个非常具体的商余形式：
+
+\[
+\boxed{
+\mathbb{CP}^{d-1}
+\longrightarrow
+\Delta_{d-1}
+}
+\]
+
+忘掉的不是一个抽象神秘变量，而是相对于该基的相对相位纤维。
+
+---
+## 31.3 互相无偏基在算子 Hilbert 空间中给出正交对角平面
+
+取两组正交基
+
+\[
+\mathcal B=(|b_j\rangle)_j,
+\qquad
+\mathcal C=(|c_k\rangle)_k.
+\]
+
+定义重叠矩阵
+
+\[
+M_{jk}
+=
+|\langle b_j,c_k\rangle|^2
+=
+\operatorname{Tr}(P_j^{\mathcal B}P_k^{\mathcal C}).
+\]
+
+\(M\) 是双随机矩阵。
+
+两基互相无偏，是指
+
+\[
+\boxed{
+M_{jk}=\frac1d
+\qquad
+\forall j,k.
+}
+\]
+
+### 定理 31.5（MUB 等价于无迹对角平面正交）
+
+下列命题等价：
+
+1. \(\mathcal B,\mathcal C\) 互相无偏；
+2. \(\mathcal D_{\mathcal B}^0\perp\mathcal D_{\mathcal C}^0\) 于 Hilbert–Schmidt 内积；
+3. 对任意 \(X\in\operatorname{Herm}_d^0\)，
+
+   \[
+   \mathbb E_{\mathcal B}\mathbb E_{\mathcal C}(X)=0
+   =
+   \mathbb E_{\mathcal C}\mathbb E_{\mathcal B}(X);
+   \]
+
+4. 对任意 \(X\in\operatorname{Herm}_d\)，
+
+   \[
+   \boxed{
+   \mathbb E_{\mathcal B}\mathbb E_{\mathcal C}(X)
+   =
+   \mathbb E_{\mathcal C}\mathbb E_{\mathcal B}(X)
+   =
+   \frac{\operatorname{Tr}X}{d}I.
+   }
+   \]
+
+#### 证明
+
+若两基互相无偏，取
+
+\[
+A=\sum_ja_jP_j^{\mathcal B},
+\qquad
+B=\sum_kb_kP_k^{\mathcal C},
+\]
+
+且
+
+\[
+\sum_ja_j=\sum_kb_k=0.
+\]
+
+则
+
+\[
+\langle A,B\rangle_{\mathrm{HS}}
+=
+\sum_{j,k}a_jb_kM_{jk}
+=
+\frac1d
+\left(\sum_ja_j\right)
+\left(\sum_kb_k\right)
+=
+0.
+\]
+
+故 1 推出 2。正交投影到两个正交子空间的复合为零，故 2 推出 3。
+
+对任意 \(X\)，写
+
+\[
+X=\frac{\operatorname{Tr}X}{d}I+X_0,
+\qquad
+\operatorname{Tr}X_0=0.
+\]
+
+两映射均固定 \(I\)，而在 \(X_0\) 上复合为零，故得到 4。
+
+最后，令 \(X=P_k^{\mathcal C}\)。由 4，
+
+\[
+\mathbb E_{\mathcal B}(P_k^{\mathcal C})
+=
+\sum_jM_{jk}P_j^{\mathcal B}
+=
+\frac Id,
+\]
+
+比较各 \(P_j^{\mathcal B}\) 系数得到 \(M_{jk}=1/d\)，故 4 推出 1。 \(\square\)
+
+### 关键反例 31.6（去相干通道交换不等于锐利兼容）
+
+当 \(\mathcal B,\mathcal C\) 为 MUB 时，
+
+\[
+\boxed{
+[\mathbb E_{\mathcal B},\mathbb E_{\mathcal C}]=0,
+}
+\]
+
+因为两种复合都等于完全退极化投影
+
+\[
+X\mapsto\frac{\operatorname{Tr}X}{d}I.
+\]
+
+然而任意非平凡 \(P_j^{\mathcal B},P_k^{\mathcal C}\) 一般满足
+
+\[
+[P_j^{\mathcal B},P_k^{\mathcal C}]\ne0.
+\]
+
+所以
+
+\[
+\boxed{
+\text{粗粒化顺序无差异}
+\not\Rightarrow
+\text{锐利测量兼容}.
+}
+\]
+
+事实上，MUB 是最大互补的锐利坐标系，却给出零去相干顺序缺陷。由此，第 30 节所定义的
+
+\[
+\mathbb E_i\mathbb E_j-\mathbb E_j\mathbb E_i
+\]
+
+只能测量“丢弃信息的顺序是否重要”，不能单独充当上下文不兼容度。
+
+---
+
+## 31.4 锐利不兼容度、坐标冗余与投影交换子的精确公式
+
+定义中心化投影
+
+\[
+\widetilde P_j^{\mathcal B}
+=
+P_j^{\mathcal B}-\frac Id,
+\qquad
+\widetilde P_k^{\mathcal C}
+=
+P_k^{\mathcal C}-\frac Id.
+\]
+
+则
+
+\[
+\left\langle
+\widetilde P_j^{\mathcal B},
+\widetilde P_k^{\mathcal C}
+\right\rangle_{\mathrm{HS}}
+=
+M_{jk}-\frac1d.
+\]
+
+定义对角平面冗余能量
+
+\[
+\boxed{
+\mathcal R(\mathcal B,\mathcal C)
+=
+\sum_{j,k}
+\left(M_{jk}-\frac1d\right)^2.
+}
+\]
+
+利用双随机性，
+
+\[
+\boxed{
+\mathcal R(\mathcal B,\mathcal C)
+=
+\sum_{j,k}M_{jk}^2-1.
+}
+\]
+
+由于任意双随机矩阵满足
+
+\[
+1\le\sum_{j,k}M_{jk}^2\le d,
+\]
+
+故
+
+\[
+0\le\mathcal R\le d-1.
+\]
+
+- \(\mathcal R=0\) 当且仅当两基互相无偏；
+- \(\mathcal R=d-1\) 当且仅当 \(M\) 为置换矩阵，即两基相同到相位与重标记。
+
+定义归一化锐利不兼容度
+
+\[
+\boxed{
+\mathcal I(\mathcal B,\mathcal C)
+=
+1-\frac{\mathcal R(\mathcal B,\mathcal C)}{d-1}
+=
+\frac{
+d-\sum_{j,k}M_{jk}^2
+}{
+d-1
+}.
+}
+\]
+
+于是
+
+\[
+\boxed{
+0\le\mathcal I\le1,
+}
+\]
+
+\[
+\boxed{
+\mathcal I=0
+\iff
+\text{同一锐利上下文},
+}
+\]
+
+\[
+\boxed{
+\mathcal I=1
+\iff
+\text{MUB 最大互补上下文}.
+}
+\]
+
+### 定理 31.7（聚合投影交换子公式）
+
+对秩一上下文，
+
+\[
+\boxed{
+\sum_{j,k}
+\left\|
+[P_j^{\mathcal B},P_k^{\mathcal C}]
+\right\|_2^2
+=
+2(d-1)\mathcal I(\mathcal B,\mathcal C).
+}
+\]
+
+#### 证明
+
+对两个秩一投影 \(P,Q\)，若
+
+\[
+m=\operatorname{Tr}(PQ),
+\]
+
+直接计算得
+
+\[
+\|[P,Q]\|_2^2
+=
+2m(1-m).
+\]
+
+因此
+
+\[
+\sum_{j,k}\|[P_j,Q_k]\|_2^2
+=
+2\sum_{j,k}M_{jk}(1-M_{jk}).
+\]
+
+又因
+
+\[
+\sum_{j,k}M_{jk}=d,
+\]
+
+故
+
+\[
+2\sum_{j,k}M_{jk}(1-M_{jk})
+=
+2\left(
+d-\sum_{j,k}M_{jk}^2
+\right)
+=
+2(d-1)\mathcal I.
+\]
+
+\(\square\)
+
+因此本节得到三种必须分开的量：
+
+\[
+\boxed{
+\begin{aligned}
+\mathcal I(\mathcal B,\mathcal C)
+&=\text{锐利投影不兼容度},\\
+\mathcal O_{\mathcal B,\mathcal C}(\rho)
+&=
+\|
+\mathbb E_{\mathcal B}\mathbb E_{\mathcal C}(\rho)
+-
+\mathbb E_{\mathcal C}\mathbb E_{\mathcal B}(\rho)
+\|
+=\text{粗粒化顺序缺陷},\\
+\mathcal G
+&=\text{多上下文全局拼接／非上下文模型缺陷}.
+\end{aligned}
+}
+\]
+
+MUB 给出
+
+\[
+\mathcal I=1,
+\qquad
+\mathcal O=0.
+\]
+
+相同基给出
+
+\[
+\mathcal I=0,
+\qquad
+\mathcal O=0.
+\]
+
+因此 \(\mathcal O\) 甚至不能按 \(\mathcal I\) 单调排序。全局 contextuality 又不能由任意单个成对量完全决定；一般化非上下文性中，测量不兼容既非必要也非充分条件。故“量子上下文缺陷”必须是多分量审计，而不是一个被过度命名的交换子。
+
+---
+## 31.5 MUB 对角塔：每个新坐标系抽出一个正交经典切片
+
+设
+
+\[
+\mathcal B_1,\ldots,\mathcal B_m
+\]
+
+两两互相无偏。定义
+
+\[
+\boxed{
+S_m
+=
+\bigoplus_{\ell=1}^{m}
+\mathcal D_{\mathcal B_\ell}^0
+\subseteq
+\operatorname{Herm}_d^0,
+}
+\]
+
+以及余空间
+
+\[
+\boxed{
+R_m=S_m^\perp.
+}
+\]
+
+由定理 31.5，直和为正交直和。因此
+
+\[
+\boxed{
+\dim S_m=m(d-1),
+}
+\]
+
+\[
+\boxed{
+\dim R_m
+=
+d^2-1-m(d-1)
+=
+(d-1)(d+1-m).
+}
+\]
+
+由此定义状态无关的维数逃逸率
+
+\[
+\boxed{
+r_m^{\mathrm{dim}}
+=
+\frac{\dim R_m}{d^2-1}
+=
+1-\frac{m}{d+1}.
+}
+\]
+
+以及已完成比例
+
+\[
+\boxed{
+v_m^{\mathrm{dim}}
+=
+\frac{\dim S_m}{d^2-1}
+=
+\frac{m}{d+1}.
+}
+\]
+
+这给出一个有限量子系统中的精确“观察完成速度”：
+
+> 每增加一个最大互补锐利坐标系，恰好增加 \(1/(d+1)\) 的线性状态自由度覆盖。
+
+注意这不是物理时间速度，而是上下文精化深度。
+
+对状态
+
+\[
+X_\rho=\rho-\frac Id
+\]
+
+定义状态相关余质量
+
+\[
+\boxed{
+r_m^{(2)}(\rho)
+=
+\|P_{R_m}X_\rho\|_2^2.
+}
+\]
+
+### 定理 31.8（概率偏差—余质量 Pythagoras 恒等式）
+
+令
+
+\[
+p_{\ell j}
+=
+\operatorname{Tr}
+\left(
+\rho P_j^{\mathcal B_\ell}
+\right).
+\]
+
+则
+
+\[
+\boxed{
+\operatorname{Tr}(\rho^2)-\frac1d
+=
+\sum_{\ell=1}^{m}
+\sum_{j=1}^{d}
+\left(
+p_{\ell j}-\frac1d
+\right)^2
++
+r_m^{(2)}(\rho).
+}
+\]
+
+#### 证明
+
+\(\mathbb E_{\mathcal B_\ell}X_\rho\) 是 \(X_\rho\) 在第 \(\ell\) 个无迹对角平面上的正交投影，并且
+
+\[
+\mathbb E_{\mathcal B_\ell}X_\rho
+=
+\sum_j
+\left(
+p_{\ell j}-\frac1d
+\right)
+P_j^{\mathcal B_\ell}.
+\]
+
+因为各对角平面彼此正交，
+
+\[
+P_{S_m}X_\rho
+=
+\sum_{\ell=1}^m
+\mathbb E_{\mathcal B_\ell}X_\rho.
+\]
+
+又
+
+\[
+\left\|
+\mathbb E_{\mathcal B_\ell}X_\rho
+\right\|_2^2
+=
+\sum_j
+\left(
+p_{\ell j}-\frac1d
+\right)^2.
+\]
+
+最后应用
+
+\[
+\|X_\rho\|_2^2
+=
+\|P_{S_m}X_\rho\|_2^2
++
+\|P_{R_m}X_\rho\|_2^2.
+\]
+
+\(\square\)
+
+所以每个新坐标系所捕获的并不是“又一份重复概率”，而是一个与此前全部 MUB 对角平面正交的二次状态分量。
+
+### 推论 31.9（单步概率创新）
+
+增加第 \(m+1\) 个 MUB 上下文时，
+
+\[
+\boxed{
+r_m^{(2)}(\rho)
+-
+r_{m+1}^{(2)}(\rho)
+=
+\sum_j
+\left(
+p_{m+1,j}-\frac1d
+\right)^2.
+}
+\]
+
+这正是第 28 节商余塔递推
+
+\[
+R_m
+=
+\mathcal D_{\mathcal B_{m+1}}^0
+\oplus
+R_{m+1}
+\]
+
+在量子状态层析中的具体实现。
+
+---
+
+## 31.6 完整 MUB 集、最小层析深度与显式状态重构
+
+任意秩一正交基测量只产生 \(d-1\) 个独立概率参数，而一般密度矩阵具有 \(d^2-1\) 个实参数。因此，仅使用非退化正交基测量时，信息完备至少需要
+
+\[
+\boxed{
+\frac{d^2-1}{d-1}
+=
+d+1
+}
+\]
+
+组测量上下文。
+
+### 定理 31.10（完整 MUB 集达到最小基层析深度）
+
+若存在
+
+\[
+d+1
+\]
+
+组两两 MUB
+
+\[
+\mathcal B_1,\ldots,\mathcal B_{d+1},
+\]
+
+则
+
+\[
+\boxed{
+\operatorname{Herm}_d^0
+=
+\bigoplus_{\ell=1}^{d+1}
+\mathcal D_{\mathcal B_\ell}^0.
+}
+\]
+
+因此
+
+\[
+R_{d+1}=\{0\},
+\]
+
+而全部基概率唯一确定 \(\rho\)。
+
+#### 证明
+
+各子空间两两正交，每个维数为 \(d-1\)，总维数为
+
+\[
+(d+1)(d-1)=d^2-1,
+\]
+
+恰等于 \(\operatorname{Herm}_d^0\) 的维数。 \(\square\)
+
+### 推论 31.11（显式 MUB 重构公式）
+
+在完整 MUB 集下，
+
+\[
+\boxed{
+\rho
+=
+\frac Id
++
+\sum_{\ell=1}^{d+1}
+\sum_{j=1}^{d}
+\left(
+p_{\ell j}-\frac1d
+\right)
+P_j^{\mathcal B_\ell}.
+}
+\]
+
+#### 证明
+
+右侧第二项正是 \(X_\rho\) 在所有正交对角平面上的分量之和。 \(\square\)
+
+### 推论 31.12（完整 MUB 的 purity 概率恒等式）
+
+\[
+\boxed{
+\sum_{\ell=1}^{d+1}
+\sum_{j=1}^{d}
+\left(
+p_{\ell j}-\frac1d
+\right)^2
+=
+\operatorname{Tr}(\rho^2)-\frac1d.
+}
+\]
+
+等价地，
+
+\[
+\boxed{
+\sum_{\ell=1}^{d+1}
+\sum_{j=1}^{d}
+p_{\ell j}^2
+=
+1+\operatorname{Tr}(\rho^2).
+}
+\]
+
+所以完整 MUB 概率族不仅重构状态，还把整体 purity 精确分解为各局部经典坐标图的二次偏差总和。
+
+当 \(d\) 为素数幂时已知存在完整 \(d+1\) 组 MUB。对于一般非素数幂维数，特别是 \(d=6\)，完整集存在性截至本文版本仍是开放问题。因此本节不能把 \(d+1\) MUB 塔假定为所有维数中的普适物理结构。在缺乏完整 MUB 时，可以使用一般信息完备 POVM、互补 frame 或非正交上下文，并以 Gram–Schur 创新代替严格正交增量。
+
+---
+## 31.7 对角自指与动力学的自然性缺陷由层析余质量控制
+
+MUB 对角塔不仅重构状态，还可以控制任意状态操作在有限观察坐标中的降阶误差。
+
+令
+
+\[
+P_m:
+\operatorname{Herm}_d^0
+\to S_m
+\]
+
+为正交投影。
+
+设
+
+\[
+F:
+\operatorname{Herm}_d^0
+\to
+\operatorname{Herm}_d^0
+\]
+
+为 \(L_F\)-Lipschitz 映射：
+
+\[
+\|F(X)-F(Y)\|_2
+\le
+L_F\|X-Y\|_2.
+\]
+
+定义其第 \(m\) 层压缩模型
+
+\[
+\boxed{
+F_m
+=
+P_mF|_{S_m}.
+}
+\]
+
+定义自然性缺陷
+
+\[
+\boxed{
+\partial_mF(X)
+=
+\|
+P_mF(X)
+-
+F_m(P_mX)
+\|_2.
+}
+\]
+
+### 定理 31.13（余质量控制自然性缺陷）
+
+\[
+\boxed{
+\partial_mF(X)
+\le
+L_F
+\|(I-P_m)X\|_2.
+}
+\]
+
+对密度矩阵 \(X=X_\rho\)，
+
+\[
+\boxed{
+\partial_mF(X_\rho)
+\le
+L_F
+\sqrt{
+r_m^{(2)}(\rho)
+}.
+}
+\]
+
+#### 证明
+
+由 \(F_m(P_mX)=P_mF(P_mX)\)，
+
+\[
+\partial_mF(X)
+=
+\|
+P_m(F(X)-F(P_mX))
+\|_2.
+\]
+
+正交投影为收缩，故
+
+\[
+\partial_mF(X)
+\le
+\|F(X)-F(P_mX)\|_2
+\le
+L_F\|X-P_mX\|_2.
+\]
+
+\(\square\)
+
+这条定理把第 30 节的抽象界
+
+\[
+\text{自然性缺陷}
+\le
+\text{观察余量}
+\]
+
+在量子层析塔中完全具体化。若 \(F\) 是自指／对角操作，则它控制“先在完整状态空间自指再观察”与“先投影到有限概率坐标再自指”的误差；若 \(F\) 是动力学，则它控制有限观察层的有效演化误差。
+
+在完整 MUB 集存在时，
+
+\[
+P_{d+1}=I,
+\]
+
+因此
+
+\[
+\boxed{
+\partial_{d+1}F=0
+}
+\]
+
+对任意 \(F\) 成立。这里的零缺陷不是因为操作本身简单，而是因为观察坐标已经信息完备，不再有状态余量。
+
+### 定理 31.14（自然性缺陷的复合 Leibniz 界）
+
+设 \(F,G\) 分别具有局部压缩 \(F_m,G_m\)，并且 \(F_m\) 为 \(L_m(F)\)-Lipschitz。则
+
+\[
+\boxed{
+\partial_m(F\circ G)(X)
+\le
+\partial_mF(GX)
++
+L_m(F)\partial_mG(X),
+}
+\]
+
+其中局部复合取 \(F_m\circ G_m\)。
+
+#### 证明
+
+插入中间项 \(F_m(P_mGX)\)：
+
+\[
+\begin{aligned}
+&
+\|P_mFGX-F_mG_mP_mX\|_2
+\\
+&\le
+\|P_mFGX-F_mP_mGX\|_2
++
+\|F_mP_mGX-F_mG_mP_mX\|_2
+\\
+&\le
+\partial_mF(GX)
++
+L_m(F)\partial_mG(X).
+\end{aligned}
+\]
+
+\(\square\)
+
+### 推论 31.15（时间迭代误差）
+
+若 \(F_m\) 的 Lipschitz 常数不超过 \(L\)，则
+
+\[
+\boxed{
+\partial_m(F^n)(X)
+\le
+\sum_{k=0}^{n-1}
+L^{n-1-k}
+\partial_mF(F^kX).
+}
+\]
+
+若沿轨道单步缺陷均不超过 \(\varepsilon_m\)，则
+
+\[
+\boxed{
+\partial_m(F^n)(X)
+\le
+\begin{cases}
+n\varepsilon_m,&L=1,\\[1mm]
+\dfrac{1-L^n}{1-L}\varepsilon_m,&0\le L<1,\\[3mm]
+\dfrac{L^n-1}{L-1}\varepsilon_m,&L>1.
+\end{cases}
+}
+\]
+
+这把“时间”与“有限坐标自然性”连接起来：
+
+- 收缩动力学会使有限观察误差饱和；
+- 等距动力学最多线性累计局部缺陷；
+- 扩张动力学可能指数放大未观察余量。
+
+该结论仍是模型误差传播，不等同于物理光速或普适时间箭头。
+
+---
+
+## 31.8 重复投影界面产生的熵箭头：每一步熵增恰等于被删除相干
+
+令
+
+\[
+U:\mathscr H\to\mathscr H
+\]
+
+为酉算子，固定上下文 \(\mathcal B\)，并定义离散时间演化
+
+\[
+\boxed{
+\rho_{n+1}
+=
+\mathbb E_{\mathcal B}
+\left(
+U\rho_nU^*
+\right).
+}
+\]
+
+整体酉演化本身保持 von Neumann 熵：
+
+\[
+S(U\rho U^*)=S(\rho).
+\]
+
+对去相干映射有标准恒等式
+
+\[
+\boxed{
+D(\sigma\|
+\mathbb E_{\mathcal B}\sigma)
+=
+S(\mathbb E_{\mathcal B}\sigma)-S(\sigma).
+}
+\]
+
+### 定理 31.16（熵生产—相干删除恒等式）
+
+对每个 \(n\)，
+
+\[
+\boxed{
+S(\rho_{n+1})-S(\rho_n)
+=
+D\!\left(
+U\rho_nU^*
+\big\|
+\mathbb E_{\mathcal B}(U\rho_nU^*)
+\right)
+\ge0.
+}
+\]
+
+因此
+
+\[
+\boxed{
+S(\rho_N)-S(\rho_0)
+=
+\sum_{n=0}^{N-1}
+D\!\left(
+U\rho_nU^*
+\big\|
+\mathbb E_{\mathcal B}(U\rho_nU^*)
+\right).
+}
+\]
+
+#### 证明
+
+令
+
+\[
+\sigma_n=U\rho_nU^*.
+\]
+
+则
+
+\[
+\rho_{n+1}
+=
+\mathbb E_{\mathcal B}\sigma_n.
+\]
+
+利用去相干相对熵恒等式和酉熵不变性：
+
+\[
+\begin{aligned}
+S(\rho_{n+1})-S(\rho_n)
+&=
+S(\mathbb E_{\mathcal B}\sigma_n)-S(\sigma_n)
+\\
+&=
+D(\sigma_n\|
+\mathbb E_{\mathcal B}\sigma_n).
+\end{aligned}
+\]
+
+求和即得。 \(\square\)
+
+这给出一个严格的时间箭头分解：
+
+\[
+\boxed{
+\text{熵增}
+=
+\text{每一步由观察界面删除的相干总量}.
+}
+\]
+
+若没有 \(\mathbb E_{\mathcal B}\)，则酉动力学熵不变。若 \(U\) 保持对角代数，并且 \(\rho_0\) 已在该代数中，则所有相对熵项均为零，熵不增加。
+
+所以本模型中的不可逆性不来自 Hilbert 空间本身，而来自
+
+\[
+\boxed{
+\text{可逆整体动力学}
++
+\text{重复非单射界面投影}.
+}
+\]
+
+### 定理 31.17（投影后动力学退化为 unistochastic Markov 链）
+
+从第一步以后，
+
+\[
+\rho_n
+=
+\sum_jp_{n,j}P_j^{\mathcal B}.
+\]
+
+定义
+
+\[
+\boxed{
+T_{kj}
+=
+|\langle b_k,Ub_j\rangle|^2.
+}
+\]
+
+则 \(T\) 为双随机矩阵，并且
+
+\[
+\boxed{
+p_{n+1}=Tp_n.
+}
+\]
+
+#### 证明
+
+若
+
+\[
+\rho_n=\sum_jp_{n,j}P_j,
+\]
+
+则
+
+\[
+p_{n+1,k}
+=
+\operatorname{Tr}
+\left(
+P_kU\rho_nU^*
+\right)
+=
+\sum_j
+|\langle b_k,Ub_j\rangle|^2p_{n,j}.
+\]
+
+酉矩阵各行各列模平方和为一，故 \(T\) 双随机。 \(\square\)
+
+因此，一旦每一步都将状态投影回同一个经典对角上下文，量子过程在可见层变成一个经典 Markov 链。双随机性给出
+
+\[
+p_{n+1}\prec p_n,
+\]
+
+故 Shannon 熵满足
+
+\[
+\boxed{
+H(p_{n+1})\ge H(p_n).
+}
+\]
+
+若 \(T\) primitive，则
+
+\[
+p_n\to
+\left(
+\frac1d,\ldots,\frac1d
+\right)
+\]
+
+并且
+
+\[
+H(p_n)\to\log d.
+\]
+
+这不是量子力学所有时间箭头的唯一解释，而是一个精确模型，展示了概率、熵、投影与时间如何从同一界面递推中出现。
+
+---
+
+## 31.9 不能再使用一个“上下文缺陷”概括所有量子非经典性
+
+本节的 MUB 反例要求对第 30 节作 append-only 收紧。至少存在以下四个不同问题：
+
+### 1. 锐利兼容性
+
+问投影是否共同可测／共同对角化：
+
+\[
+[P_j^{\mathcal B},P_k^{\mathcal C}]=0.
+\]
+
+对应量：
+
+\[
+\mathcal I(\mathcal B,\mathcal C).
+\]
+
+### 2. 粗粒化顺序性
+
+问两次信息删除的顺序是否重要：
+
+\[
+\mathbb E_{\mathcal B}
+\mathbb E_{\mathcal C}
+\stackrel{?}{=}
+\mathbb E_{\mathcal C}
+\mathbb E_{\mathcal B}.
+\]
+
+对应状态依赖量：
+
+\[
+\mathcal O_{\mathcal B,\mathcal C}(\rho).
+\]
+
+### 3. 层析冗余
+
+问两个坐标系抽取的线性状态方向有多少重合：
+
+\[
+\mathcal R(\mathcal B,\mathcal C)
+=
+\sum_{jk}(M_{jk}-1/d)^2.
+\]
+
+MUB 使其为零，因此每个上下文带来最大正交创新。
+
+### 4. 全局 contextuality
+
+问一个测量情景的全部局部统计是否存在统一的非上下文全局实现。这是多上下文、多操作等价关系与概率约束的全局问题，不能由任意一对基的交换子或 dephasing 顺序完全决定。
+
+因此建议将量子上下文审计记录为向量
+
+\[
+\boxed{
+\mathfrak C
+=
+\left(
+\mathcal I,\mathcal O,\mathcal R,\mathcal G
+\right),
+}
+\]
+
+而不是单一标量。
+
+特别地，
+
+\[
+\boxed{
+\mathcal I=1,\quad
+\mathcal O=0,\quad
+\mathcal R=0
+}
+\]
+
+是 MUB 对的规范签名：
+
+- 锐利投影最大不兼容；
+- 两次完全去相干顺序却无差别；
+- 两个概率坐标平面在线性层析意义下完全无冗余。
+
+这一签名揭示“互补”不是单纯的不交换，而是：
+
+\[
+\boxed{
+\text{局部经典坐标最大不同，同时携带最大独立信息}.
+}
+\]
+
+---
+## 31.10 熵的三重分家：状态混合、测量不确定性与相干余量
+
+为避免把“熵”当成唯一无序标量，本节区分：
+
+### 状态熵
+
+\[
+\boxed{
+S(\rho)=-\operatorname{Tr}(\rho\log\rho).
+}
+\]
+
+它测量状态本身的混合度，基无关。
+
+### 上下文结果熵
+
+\[
+\boxed{
+H_{\mathcal B}(\rho)
+=
+-\sum_jp_j^{\mathcal B}\log p_j^{\mathcal B}.
+}
+\]
+
+它依赖观察坐标系。纯态可以有
+
+\[
+S(\rho)=0
+\]
+
+但在某个 MUB 上有
+
+\[
+H_{\mathcal B}(\rho)=\log d.
+\]
+
+### 相对熵相干
+
+\[
+\boxed{
+C_{\mathcal B}(\rho)
+=
+D(\rho\|
+\mathbb E_{\mathcal B}\rho)
+=
+S(\mathbb E_{\mathcal B}\rho)-S(\rho).
+}
+\]
+
+它测量相对于指定对角代数被删除的跨扇区关系。
+
+最大混合态满足
+
+\[
+S(I/d)=\log d
+\]
+
+但对所有基都有
+
+\[
+C_{\mathcal B}(I/d)=0.
+\]
+
+所以：
+
+\[
+\boxed{
+\text{高状态熵不等于高量子相干，}
+}
+\]
+
+\[
+\boxed{
+\text{高测量熵也不等于状态本身高度混合.}
+}
+\]
+
+MUB 塔的二次恒等式使用的是 purity／Hilbert–Schmidt 质量，而不是 Shannon 或 von Neumann 熵。不同熵可以通过不等式关联，但不得直接互换定义。
+
+---
+
+## 31.11 无限维推广的正确边界
+
+有限维完整 MUB 塔提供了一个清洁模型，但不能未经证明直接推广到任意无限维 Hilbert 空间。
+
+无限维中需要分别处理：
+
+1. 是否存在合适的互补基、frame 或 POVM；
+2. 对角子空间的闭合性；
+3. 测量映射是否有 frame 上下界；
+4. 状态是否为迹类，二次量是否有限；
+5. 无限概率坐标族是否满足统一能量界；
+6. 形式相容坐标是否确实来自一个正常状态；
+7. 动力学与各条件期望的定义域是否稳定。
+
+合理推广是：在一个 von Neumann 代数 \(\mathcal A\) 中取一族正常条件期望
+
+\[
+\mathbb E_i:\mathcal A\to\mathcal C_i,
+\]
+
+令可见算子子空间逐层增长，并在 \(L^2(\mathcal A,\omega)\) 或标准形式 Hilbert 空间中研究其正交余量。完成不能只取普通集合逆极限，还必须加入正常性、能量或平方可和条件。这与第 28 节的 bounded-energy inverse limit 完全一致。
+
+---
+
+## 31.12 与既有文献的边界及候选新贡献
+
+以下事实属于成熟理论，不应重新命名为本项目独有发现：
+
+- 一组基测量只给出状态在该基上的概率；
+- \(d+1\) 组完整 MUB 可用于最优量子态层析；
+- 素数幂维数存在完整 MUB 集；
+- 去相干是到交换子代数的条件期望／投影；
+- relative entropy of coherence 等于去相干熵增；
+- 重复测量可诱导经典 Markov 动力学；
+- contextuality 与 measurement incompatibility 不是同一概念。
+
+本稿的候选新贡献位于它们的组合方式：
+
+1. 把 MUB 对角代数组织成第 28 节意义下的严格正交商余塔；
+2. 同时定义状态无关的余维率和状态相关的 Hilbert–Schmidt 余质量；
+3. 由余质量给出自指对角操作与动力学降阶误差的统一 Lipschitz 界；
+4. 识别并证明“MUB 最大不兼容但去相干交换子为零”的框架反例；
+5. 将锐利不兼容、粗粒化顺序、层析冗余与全局 contextuality 拆成四维审计；
+6. 把重复投影的熵箭头写成逐步删除相干的精确 telescoping identity；
+7. 将坐标精化时间与物理动力时间明确分离，再通过自然性缺陷研究二者耦合。
+
+是否具有发表意义仍取决于进一步文献审计、非平凡推广以及至少一个不能由现有 MUB／资源理论定理直接重写得到的新结果。
+
+---
+## 31.13 建议形式化模块
+
+建议按以下顺序进入 Lean：
+
+1. `HermitianTracelessDimension`
+   \[
+   \dim_{\mathbb R}\operatorname{Herm}_d^0=d^2-1.
+   \]
+
+2. `BasisDephasingOrthogonalProjection`
+   \[
+   \mathbb E_{\mathcal B}^2=\mathbb E_{\mathcal B}
+   =
+   \mathbb E_{\mathcal B}^*.
+   \]
+
+3. `SingleContextVisibleRemainderDimension`
+   \[
+   \dim\mathcal D_{\mathcal B}^0=d-1,
+   \quad
+   \dim R_{\mathcal B}=d^2-d.
+   \]
+
+4. `PureStateProbabilityFiber`
+   内点纤维
+   \[
+   q_{\mathcal B}^{-1}(p)\cong\mathbb T^{d-1}.
+   \]
+
+5. `MUBDiagonalSubspaceOrthogonal`
+   \[
+   \mathcal B\perp_{\mathrm{MUB}}\mathcal C
+   \iff
+   \mathcal D_{\mathcal B}^0
+   \perp
+   \mathcal D_{\mathcal C}^0.
+   \]
+
+6. `MUBDephasingComposition`
+   \[
+   \mathbb E_{\mathcal B}\mathbb E_{\mathcal C}(X)
+   =
+   \operatorname{Tr}(X)I/d.
+   \]
+
+7. `SharpIncompatibilityCommutatorSum`
+   \[
+   \sum_{jk}\|[P_j,Q_k]\|_2^2
+   =
+   2(d-1)\mathcal I.
+   \]
+
+8. `MUBTowerDimension`
+   \[
+   \dim R_m=(d-1)(d+1-m).
+   \]
+
+9. `MUBProbabilityPythagoras`
+   \[
+   \operatorname{Tr}\rho^2-\frac1d
+   =
+   \sum_{\ell,j}(p_{\ell j}-1/d)^2+r_m^{(2)}(\rho).
+   \]
+
+10. `CompleteMUBTomography`
+    \[
+    \rho
+    =
+    I/d+\sum_{\ell,j}(p_{\ell j}-1/d)P_{\ell j}.
+    \]
+
+11. `ResidualControlsNaturality`
+    \[
+    \partial_mF(X)
+    \le
+    L_F\|(I-P_m)X\|_2.
+    \]
+
+12. `NaturalityDefectComposition`
+    \[
+    \partial_m(FG)
+    \le
+    \partial_mF\circ G
+    +
+    L_m(F)\partial_mG.
+    \]
+
+13. `RepeatedDephasingEntropyProduction`
+    \[
+    S(\rho_{n+1})-S(\rho_n)
+    =
+    D(U\rho_nU^*\|
+    \mathbb E_{\mathcal B}(U\rho_nU^*)).
+    \]
+
+14. `RepeatedDephasingUnistochastic`
+    \[
+    p_{n+1}=Tp_n,
+    \qquad
+    T_{kj}=|\langle b_k,Ub_j\rangle|^2.
+    \]
+
+MUB 完整集的存在应在素数幂维数中通过具名经典接口接入；一般维数中不得无条件实例化。
+
+---
+
+## 31.14 最终统一式
+
+本节得到一个比“概率是投影”更精确的层次：
+
+\[
+\boxed{
+\text{量子态}
+=
+\text{最大混合原点}
++
+\text{全部算子 Hilbert 方向}.
+}
+\]
+
+\[
+\boxed{
+\text{一个测量坐标系}
+=
+\text{到一个 }(d-1)\text{-维经典对角平面的正交投影}.
+}
+\]
+
+\[
+\boxed{
+\text{概率}
+=
+\text{该对角投影的坐标}.
+}
+\]
+
+\[
+\boxed{
+\text{相干}
+=
+\text{仍留在其正交余空间中的状态分量}.
+}
+\]
+
+\[
+\boxed{
+\text{MUB}
+=
+\text{彼此正交、冗余为零的局部经典坐标平面}.
+}
+\]
+
+\[
+\boxed{
+\text{完整 MUB 层析}
+=
+\text{用 }d+1\text{ 个局部经典对角完成全部量子状态方向}.
+}
+\]
+
+\[
+\boxed{
+\text{自然性缺陷}
+\le
+\text{尚未被坐标塔捕获的余质量}.
+}
+\]
+
+\[
+\boxed{
+\text{重复测量熵增}
+=
+\text{每轮投影删除的相干相对熵之和}.
+}
+\]
+
+而最重要的修正是：
+
+\[
+\boxed{
+\text{锐利不兼容}
+\neq
+\text{去相干顺序缺陷}
+\neq
+\text{层析冗余}
+\neq
+\text{全局 contextuality}.
+}
+\]
+
+因此，量子力学不能只解释为“多个投影不交换”，也不能只解释为“概率来自投影”。更完整的结构是：
+
+\[
+\boxed{
+\text{量子力学}
+=
+\text{一族局部经典对角坐标}
++
+\text{这些坐标的余相干}
++
+\text{它们之间的互补几何}
++
+\text{无法由单一全局经典坐标同时实现的拼接结构}.
+}
+\]
+
+在这个意义上，坐标系、概率、熵、时间、逃逸率、Hilbert 空间与对角化确实属于同一个研究对象的不同投影；但它们只有在各自的类型、缺陷量与完成条件被严格区分以后，才构成可检验的新数学，而不是词语上的统一。
+
+## 31.15 参考接口与严格非主张
+
+参考接口：
+
+- I. D. Ivanović, *Geometrical description of quantal state determination*, 1981.
+- W. K. Wootters and B. D. Fields, *Optimal state-determination by mutually unbiased measurements*, 1989.
+- R. B. A. Adamson and A. M. Steinberg, *Improving Quantum State Estimation with Mutually Unbiased Bases*, 2010.
+- D. McNulty and S. Weigert, *Mutually Unbiased Bases in Composite Dimensions — A Review*, 2026.
+- J. H. Selby et al., *Contextuality without Incompatibility*, 2023.
+
+严格非主张：
+
+1. 本节不声称一般维数都存在完整 \(d+1\) 组 MUB。
+2. 本节不把层析精化指标 \(m\) 等同于物理时间。
+3. 本节不把 Hilbert–Schmidt 余质量等同于 Shannon 熵、von Neumann 熵或任意操作性资源单调量。
+4. 本节不把 dephasing 通道交换当作锐利测量兼容性。
+5. 本节不把 pairwise measurement incompatibility 等同于 generalized contextuality。
+6. 本节不把重复投影模型中的熵增解释为所有封闭量子宇宙的基本时间箭头。
+7. 本节不从有限维层析完成推出无限维正常状态空间的自动完成。
+8. 本节新增结论均为纸面定理；在 Lean proof term、依赖闭包、admission 与冻结收据齐备前不得标记为 `Closed`。
