@@ -51,6 +51,41 @@ public sealed partial class FrozenLedgerTests
     }
 
     [Fact]
+    public void EnvironmentRecoordinateAcceptsEnvironmentChangeWithoutStatementDrift()
+    {
+        var fixture = EnvironmentFixture(candidateStatementMaterial: "old-elaborated-expression");
+        Assert.Equal(fixture.BaselineNode.StatementId, fixture.CandidateNode.StatementId);
+
+        var accepted = Assert.IsType<FrozenLedgerValidationOutcome.Accepted>(
+            ValidateCandidate(
+                LoadedEnvironmentLedger(AppendEnvironmentEvent(fixture).AsSpan()),
+                fixture.Baseline,
+                fixture.CandidateCatalog)).Capability;
+
+        Assert.IsType<FrozenLedgerEvent.EnvironmentRecoordinate>(accepted.Events[^1]);
+        Assert.NotEqual(
+            fixture.BaselineNode.WitnessId,
+            accepted.ActiveFrozenNodes.Single().WitnessId);
+    }
+
+    [Fact]
+    public void EnvironmentRecoordinateRejectsUnchangedEnvironmentWithoutStatementDrift()
+    {
+        var fixture = EnvironmentFixture(
+            candidateStatementMaterial: "old-elaborated-expression",
+            reuseBaselineEnvironment: true);
+        Assert.Equal(fixture.BaselineNode.StatementId, fixture.CandidateNode.StatementId);
+
+        var rejected = Assert.IsType<FrozenLedgerValidationOutcome.Rejected>(
+            ValidateCandidate(
+                LoadedEnvironmentLedger(AppendEnvironmentEvent(fixture).AsSpan()),
+                fixture.Baseline,
+                fixture.CandidateCatalog));
+
+        Assert.Contains("environment", rejected.Message, StringComparison.OrdinalIgnoreCase);
+    }
+
+    [Fact]
     public void EnvironmentRecoordinateRejectsDifferentSourceBlob()
     {
         var fixture = EnvironmentFixture(candidateSource: RecoordinateSource + "-- changed\n");
@@ -224,7 +259,9 @@ public sealed partial class FrozenLedgerTests
         string candidateSource = RecoordinateSource,
         IEnumerable<string>? baselineAxioms = null,
         IEnumerable<string>? candidateAxioms = null,
-        IEnumerable<string>? candidateDeclarations = null)
+        IEnumerable<string>? candidateDeclarations = null,
+        string candidateStatementMaterial = "new-elaborated-expression",
+        bool reuseBaselineEnvironment = false)
     {
         var baselineCatalog = BuildCatalogWithEnvironment(
             "leanprover/lean4:v4.31.0\n",
@@ -239,15 +276,21 @@ public sealed partial class FrozenLedgerTests
                 baselineAxioms,
                 new[] { "a" }));
         var candidateCatalog = BuildCatalogWithEnvironment(
-            "leanprover/lean4:v4.33.0\n",
-            "[package]\nname = \"new\"\n",
-            "{\"version\":\"new\"}\n",
+            reuseBaselineEnvironment
+                ? "leanprover/lean4:v4.31.0\n"
+                : "leanprover/lean4:v4.33.0\n",
+            reuseBaselineEnvironment
+                ? "[package]\nname = \"old\"\n"
+                : "[package]\nname = \"new\"\n",
+            reuseBaselineEnvironment
+                ? "{\"version\":\"old\"}\n"
+                : "{\"version\":\"new\"}\n",
             GitOid('a'),
             GitOid('b'),
             ModuleWithReport(
                 "A",
                 candidateSource,
-                "new-elaborated-expression",
+                candidateStatementMaterial,
                 candidateAxioms ?? baselineAxioms,
                 candidateDeclarations ?? new[] { "a" }) with
             {

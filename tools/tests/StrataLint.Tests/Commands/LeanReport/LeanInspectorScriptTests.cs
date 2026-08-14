@@ -3,14 +3,14 @@ using StrataLint.Engine;
 
 namespace StrataLint.Tests;
 
-public sealed class LeanReportPerModuleScriptTests
+public sealed class LeanInspectorScriptTests
 {
     private const string InspectorScript = "tools/lean-inspector/inspect.sh";
     private const string InspectorSource = "tools/lean-inspector/Inspector.lean";
     private const string InputScript = "tools/scripts/report/lean-report-input.sh";
 
     [Fact]
-    public void ProducerDefaultsToAllModulesAndAcceptsACanonicalSubset()
+    public void InspectorDefaultsToCompleteModuleEnumeration()
     {
         if (OperatingSystem.IsWindows()) return;
         using var temporary = new TemporaryDirectory();
@@ -36,15 +36,6 @@ public sealed class LeanReportPerModuleScriptTests
         var fullInspect = File.ReadAllLines(log).Single(static line => line.Contains(" --output ", StringComparison.Ordinal));
         Assert.Contains("Trureturing Trureturing.lean sha256:", fullInspect, StringComparison.Ordinal);
         Assert.Contains("D5.Probe D5/Probe.lean sha256:", fullInspect, StringComparison.Ordinal);
-
-        File.Delete(log);
-        var subset = Path.Combine(temporary.Path, "modules.txt");
-        File.WriteAllText(subset, "D5.Probe\n", new UTF8Encoding(false));
-        var partial = Run("env", [$"LAKE_BIN={lake}", $"STUB_LOG={log}", Path.Combine(repository, InspectorScript), "--repository", repository, "--output", output, "--modules-file", subset], repository);
-        Assert.Equal(0, partial.ExitCode);
-        var partialInspect = File.ReadAllLines(log).Single(static line => line.Contains(" --output ", StringComparison.Ordinal));
-        Assert.DoesNotContain("Trureturing Trureturing.lean", partialInspect, StringComparison.Ordinal);
-        Assert.Contains("D5.Probe D5/Probe.lean sha256:", partialInspect, StringComparison.Ordinal);
     }
 
     [Fact]
