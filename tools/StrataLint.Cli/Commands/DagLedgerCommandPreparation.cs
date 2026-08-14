@@ -278,6 +278,15 @@ internal static class DagLedgerCommandPreparation
                 Encoding.UTF8.GetString(bytes));
         }).ToImmutableArray();
 
+    internal static RepositoryFile CreateLedgerRepositoryFile(
+        string path,
+        ImmutableArray<byte> bytes) =>
+        new(
+            RepoPath.CreateKnown(
+                $"{FrozenLedgerChangeClassifier.AcceptedRoot}/{Path.GetFileName(path)}"),
+            bytes,
+            Encoding.UTF8.GetString(bytes.AsSpan()));
+
     internal static FrozenLedgerSyntax LoadLedgerFiles(
         IEnumerable<RepositoryFile> files,
         string label)
