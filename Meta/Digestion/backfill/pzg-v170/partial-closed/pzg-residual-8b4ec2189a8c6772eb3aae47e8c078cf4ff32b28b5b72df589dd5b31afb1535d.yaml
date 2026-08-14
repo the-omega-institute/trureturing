@@ -4,6 +4,7 @@ fingerprints:
   normalized_sha256: sha256:8b4ec2189a8c6772eb3aae47e8c078cf4ff32b28b5b72df589dd5b31afb1535d
 cas_ref: sha256:8b4ec2189a8c6772eb3aae47e8c078cf4ff32b28b5b72df589dd5b31afb1535d
 coverage_gids:
+  - D5/S3/Zeros/Detection/DetectionRadiusCertificate.detection_radius_ten_to_the_1200_certificate
   - D5/S3/Weil/SpectralDynamics.zero_quartet_resonance_spec
 receipts:
   coverage:
@@ -17,7 +18,6 @@ receipts:
   unresolved_subitems:
     - off-line-zero-existence-as-omniscient-truth-versus-priced-uncertainty
     - detection-radius-logarithmic-law
-    - detection-radius-ten-to-the-1200-certificate
     - off-line-zero-causes-prime-counting-fluctuations
     - off-line-zero-exists-only-at-heat-time-zero
     - any-positive-heat-flow-immediately-restores-line
