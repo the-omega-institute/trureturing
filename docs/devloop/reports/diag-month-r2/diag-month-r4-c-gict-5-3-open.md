@@ -3,10 +3,12 @@
 Outcome: `open`, with no formalization deposit, bind, or partial cover.
 
 The selected atom is an indivisible six-clause exact-value and analytic-
-certificate theorem. Two frozen declarations carry its algebraic `T0/C_phi`
-relation and exact `c1` chain, but the current repository has no addressable
-theorem for either the `W(phi)` cotangent sum or the `S(phi)` double series.
-The existing exact-value module also does not bridge its closed-form
+certificate theorem. Two frozen declarations carry an algebraic `T0/C_phi`
+relation and an exact `c1` chain over that algebraic `T0` carrier, but the
+current repository has no addressable theorem for either the `W(phi)`
+cotangent sum or the `S(phi)` double series. The existing exact-value module
+also supplies neither the bridge from `sturmianDirichletValue` to the source's
+analytic Sturmian-Dirichlet `T0` semantics nor the bridge from its closed-form
 `twistedCotangentConstant` to the independently defined infinite series
 `D5.S3.Constants.Values.cPhi`. A union of the existing declarations therefore
 does not cover the atom.
@@ -103,11 +105,15 @@ clause is as follows.
    value, but its attestation says the noncomputable real is not kernel-
    evaluated; it is evidence, not a proof of this decimal or equality.
 2. **`T0 = (27 - 13 sqrt(5))/24`.**
-   `D5/S3/Constants/SturmianDirichletValue.sturmianDirichletValue` is exactly
-   this real. The older `D5/S3/Constants/Values.t0` is the revoked rational
-   center `-172429/2000000`; it is not the source's corrected `T0` and cannot
-   be substituted. No addressable Lean theorem bounds the difference between
-   the exact corrected value and the printed `-0.0862034884...`.
+   `D5/S3/Constants/SturmianDirichletValue.sturmianDirichletValue` is defined
+   to be exactly this algebraic real. It is an algebraic carrier only: the
+   declaration's name does not prove that it denotes the source's analytic
+   Sturmian-Dirichlet `T0`, and the repository has no independent definition
+   of those corrected source semantics plus an equality bridge. The older
+   `D5/S3/Constants/Values.t0` is the revoked rational center
+   `-172429/2000000`; it is not the source's corrected `T0` and cannot supply
+   that bridge. No addressable Lean theorem bounds the difference between the
+   algebraic carrier and the printed `-0.0862034884...`.
 3. **`W(phi) := sum_k cot(pi*k*phi)/k = -pi/(6*phi^2) =
    -zeta(2)/(pi*phi^2)`.**
    Missing. No D5 declaration defines this arithmetic cotangent series,
@@ -117,8 +123,10 @@ clause is as follows.
    convention implicit, so inventing them would be a fidelity choice.
 4. **`c1 = 2 sqrt(5)*T0 + E = 7(1-sqrt(5))/24 = -7/(12 phi)`.**
    `D5/S3/Constants/COneExactValue.c_one_exact_value` proves all three exact
-   equalities using the corrected `sturmianDirichletValue` and
-   `D5/S3/Constants/Values.e`. It also proves
+   equalities using the algebraic `sturmianDirichletValue` carrier and
+   `D5/S3/Constants/Values.e`. This closes the separate algebraic `c1` atom,
+   but it does not identify that carrier with the source's analytic `T0`
+   semantics. It also proves
    `|cOne - (-0.36051983)| < 0.000000005`, certifying that rounded
    eight-decimal approximation only. It does not state or certify the source's
    full `-0.3605198268...` string; no addressable theorem for all ten printed
@@ -126,8 +134,9 @@ clause is as follows.
 5. **`T0 = (phi - 7/4) + C_phi`.**
    `D5/S3/Constants/SturmianDirichletValue.sturmian_dirichlet_value_eq` proves
    this equality for `sturmianDirichletValue` and
-   `twistedCotangentConstant`. It is an exact algebraic carrier. It does not
-   supply the missing equality to the series-defined `Values.cPhi`.
+   `twistedCotangentConstant`. It is an exact relation between two algebraic
+   carriers. It supplies neither the missing source-semantics bridge for `T0`
+   nor the missing equality to the series-defined `Values.cPhi`.
 6. **`S(phi) := sum_k sum'_m 1/(k^2*phi^2-m^2) = -pi^2/(12*phi)`.**
    Missing. No D5 declaration defines the iterated double series, proves its
    convergence/regularization, explains the primed `m` domain or exclusion,
@@ -178,8 +187,8 @@ D5/S3/Constants/Values.lean
 
 The first two modules are frozen respectively by
 `Golden/Frozen/accepted/e59e8421...fff468.json` and
-`Golden/Frozen/accepted/42933100...4ba1.json`. They already belong to other
-atoms through these receipts:
+`Golden/Frozen/accepted/42933100...4ba1.json`. Formalization receipts exist for
+these other atoms:
 
 ```text
 gict-residual-228a7f280bf95887cf17e56aa905271a296652359c181b02cea31fdbc058cc02
@@ -189,10 +198,19 @@ gict-residual-45e31c3cabaddbfed2ca2e23a531aa253486f6f486ffb02abd78caf211de50ef
   -> D5/S3/Constants/COneExactValue.c_one_exact_value
 ```
 
-The selected atom ID has no current report, formalization receipt, backfill
-entry, or Freeze record occurrence. A bare exact-ID search over those paths
-exited `1` with no output. The separate receipts are partial-carrier evidence,
-not coverage of this six-clause atom.
+A formalization receipt is not by itself an executed digestion-ledger coverage
+receipt. The `228a...` `T0` atom remains under `residual-open` with
+`coverage_gids: []` and empty coverage receipts. The `45e31...` `c1` atom is
+under `absorbed-closed` with `c_one_exact_value` in `coverage_gids` and a
+matching coverage receipt. Thus the latter is absorbed/covered, while the
+former is only a formalized algebraic carrier and remains uncovered.
+
+The selected `6964...` atom does have a canonical backfill entry: it is under
+`residual-open` with `coverage_gids: []` and empty coverage, Scribe, and
+unresolved-subitem receipt lists. Before this report it had no prior report,
+formalization receipt, Freeze record, or executed coverage. The two other
+formalization receipts are carrier evidence, not coverage of this six-clause
+atom.
 
 The final current-tree shape search on base `75357758` was:
 
@@ -205,7 +223,9 @@ rg -n --regexp \
 It exited `0` only because it found the `Values.cPhi` comment and the
 MetallicFamily Scribe/Markdown statement that cotangent reciprocity,
 convergence, special-value reductions, and numerical certificates remain
-unresolved. It found no theorem shape for `W`, `S`, or the `cPhi` bridge.
+unresolved. It found no theorem shape for `W`, `S`, the `cPhi` bridge, or a
+bridge from the algebraic `sturmianDirichletValue` to the source's analytic
+`T0` semantics.
 
 `D5/S3/Fourier/ReductionKernel.reduction_kernel_golden` is a pointwise finite
 trigonometric identity. `D5/S3/Fourier/CotangentHeckeIdentity.cotangent_double_angle`
@@ -218,9 +238,10 @@ special-value theorem.
 The bounded all-reference audit covered `1494` local and remote refs when the
 searches below ran. The final synchronized audit inventory contained `1500`
 refs; the six added refs accompanied unrelated deposits, and final current-
-tree plus exact selected-atom report/receipt searches were repeated on
-`75357758` with no new carrier or selected-atom occurrence. Exact
-atom history was limited to theory ingestion/backfill commits:
+tree plus exact selected-atom report/formalization/Freeze/coverage searches
+were repeated on `75357758` with no new carrier or such selected-atom
+occurrence; its canonical residual-open backfill row remained. Exact atom
+history was limited to theory ingestion/backfill commits:
 
 ```sh
 git log --all --oneline \
@@ -249,8 +270,10 @@ MetallicFamily Scribe/Markdown unresolved-subitems statement. No addressable
 The corresponding exact double-series search for `k^2 phi^2-m^2`,
 `pi^2/(12 phi)`, and `double-series` exited `1` with no output. The bridge
 search for `twistedCotangentConstant` together with `Values.cPhi` likewise
-found no theorem. These are bounded repository-history results, not a claim
-that no mathematical proof exists outside the searched corpus.
+found no theorem, and neither did the search for a source-semantics definition
+of corrected analytic `T0` connected to `sturmianDirichletValue`. These are
+bounded repository-history results, not a claim that no mathematical proof
+exists outside the searched corpus.
 
 ## Library-before-proof trace
 
@@ -283,9 +306,9 @@ an additional reason no formalization success is claimed.
 
 - Binding the atom to the union of `sturmian_dirichlet_value_eq` and
   `c_one_exact_value` was rejected because clauses 3 and 6 remain unnamed and
-  clause 1 lacks its series bridge.
-- Defining `W`, `S`, or `C_phi` directly as the desired closed form and then
-  proving the value was rejected as a definitional tautology.
+  clauses 1 and 2 lack their respective analytic/source-semantics bridges.
+- Defining `W`, `S`, `T0`, or `C_phi` directly as the desired closed form and
+  then proving the value was rejected as a definitional tautology.
 - Reusing `cot_series_rep` was rejected because it expands one cotangent at a
   fixed argument; it does not sum cotangents over golden multiples.
 - Reusing the finite reduction or double-angle identities was rejected because
@@ -295,7 +318,8 @@ an additional reason no formalization success is claimed.
 - Treating `Evidence/D5/values.json` as a proof was rejected. Its attestation
   explicitly classifies the noncomputable real binding as not kernel-evaluated.
 - Adding nicer wrappers around the two frozen algebraic theorems was rejected
-  as duplicate formalization and would still leave the analytic clauses open.
+  as duplicate formalization and would still leave the analytic clauses and
+  both source-semantics bridges open.
 - Depositing any subset was rejected because the atom is multi-clause and no
   authorized atom split exists. Partial coverage would falsely close the
   missing convergence, domain, regularization, and evaluation obligations.
@@ -333,17 +357,20 @@ prints for `sturmian_dirichlet_value_eq` and `c_one_exact_value` contained only
   not spell out the `k` domain, primed `m` domain, exclusion, order, or
   regularization; inventing witnesses would invent semantics.
 - **Proof substance:** the two existing frozen proofs are substantive algebra,
-  but they do not prove the two series evaluations or the series bridge.
+  but they do not prove the two series evaluations or either source-semantics
+  bridge.
 - **Deposit substance:** no definition or theorem was added. Definitions that
   install the desired values would not earn a freeze.
 - **Duplicate search:** the two exact algebraic carriers and their separate
-  receipts were found and were not duplicated.
+  formalization receipts were found and were not duplicated; ledger inspection
+  separately established that only the `c1` atom has executed coverage.
 - **Clause fidelity:** all six requested principal clauses, all four decimal
   readouts, and the separate loss-bound qualifier are listed one-to-one. The
-  missing set contains clauses 3 and 6, the analytic bridge needed for clause
-  1, three full decimal certificates plus the extra two `c1` digits, and the
-  ambiguous loss-bound referent; the dropped-or-weakened set for any proposed
-  theorem therefore cannot be empty.
+  missing set contains clauses 3 and 6, the analytic/source-semantics bridges
+  needed for clauses 1 and 2 (and therefore for the source-level readings of
+  clauses 4 and 5), three full decimal certificates plus the extra two `c1`
+  digits, and the ambiguous loss-bound referent; the dropped-or-weakened set
+  for any proposed theorem therefore cannot be empty.
 - **Rendered-statement fidelity:** not run because no Lean/Scribe artifact was
   created and no rendered statement exists to compare.
 
@@ -361,9 +388,11 @@ Grader-trap accounting:
   mathlib cotangent expansion are pointwise, while clauses 3 and 6 are series
   evaluations.
 - **Proof-internal vs addressable statement:** no proof-internal calculation
-  names the required `W`, `S`, convergence, or `cPhi` bridge as a theorem.
-- **Multi-clause residue names:** decisive; neither partial GID names all six
-  clauses, and a list of GIDs cannot fill missing clauses.
+  names the required `W`, `S`, convergence, `cPhi` bridge, or analytic `T0`
+  bridge as a theorem.
+- **Multi-clause residue names:** decisive; neither formalization-receipt GID
+  names all six clauses, the `228a...` row still has no executed coverage, and
+  a list of GIDs cannot fill missing clauses.
 - **Mechanism vs outcome:** reduction kernels and classical partial fractions
   are useful mechanisms, not the asserted golden special-value outcomes.
 
@@ -380,9 +409,11 @@ Grader-trap accounting:
 
 The atom remains `open`. A faithful future closure requires addressable
 definitions with explicit domains/summation semantics, convergence proofs,
-the `W(phi)` and `S(phi)` evaluations, and a theorem connecting the existing
-series-defined `Values.cPhi` to the exact algebraic constant. Until all six
-clauses can be carried together, no cover is valid.
+the `W(phi)` and `S(phi)` evaluations, a theorem connecting the source's
+analytic Sturmian-Dirichlet `T0` semantics to the algebraic
+`sturmianDirichletValue`, and a theorem connecting the existing series-defined
+`Values.cPhi` to the exact algebraic constant. Until all six clauses can be
+carried together, no cover is valid.
 
 Ledger balanced: yes. Intended changed path:
 `docs/devloop/reports/diag-month-r2/diag-month-r4-c-gict-5-3-open.md`.
