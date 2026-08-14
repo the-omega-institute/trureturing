@@ -81,6 +81,7 @@ theorem renyi_power_sum_power {ι : Type*} [Fintype ι]
   classical
   induction n with
   | zero =>
+    simp only [IidSpace]
     calc
       _ = (iidPower p 0 PUnit.unit) ^ alpha *
           (iidPower q 0 PUnit.unit) ^ (1 - alpha) :=
