@@ -109,6 +109,7 @@ internal static partial class DigestionStatusEvaluator
         IReadOnlyDictionary<string, DigestionLedgerEntry> baselineEntries,
         ImmutableArray<string>.Builder findings)
     {
+        var byId = work.ToDictionary(static item => item.Entry.AtomId, StringComparer.Ordinal);
         foreach (var item in work.Where(static item => item.Atom is not null))
         {
             var baselineMigration = baselineEntries.TryGetValue(item.Entry.AtomId, out var baseline)
@@ -118,6 +119,15 @@ internal static partial class DigestionStatusEvaluator
                     item.Atom!,
                     item.Migration,
                     item.Entry.Receipts.UnresolvedSubitems.Length,
+                    item.Entry.Receipts.ChainAtoms.Length > 0
+                        && item.Entry.Receipts.ChainAtoms.All(atomId =>
+                            byId.TryGetValue(atomId, out var child)
+                            && child.Entry.SourceId == item.Entry.SourceId
+                            && child.Entry.AstPath.StartsWith(
+                                item.Entry.AstPath + "/clause/",
+                                StringComparison.Ordinal)
+                            && child.Alignment == DigestionReceiptAlignment.Seen
+                            && child.Atom is not null),
                     baselineMigration))
             {
                 continue;

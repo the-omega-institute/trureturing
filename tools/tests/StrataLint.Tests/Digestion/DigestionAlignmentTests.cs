@@ -671,6 +671,81 @@ public sealed partial class DigestionAlignmentTests
         Assert.Equal(firstBytes.ToArray(), secondBytes.ToArray());
     }
 
+    [Fact]
+    public void PzgIngestDecomposesAParentAndWritesChildrenAndChainInOnePlan()
+    {
+        const string claim = """
+            **定理 18.7(时间之矢)**〔closed〕。u_t ≠ 0 ⇒ **L(a_{t+1}) > L(a_t)**:长度沿正生成严格单调。
+
+            *证明*。L(a_{t+1}) − L(a_t) = L(u_t) = Σ u_{t,p} log p > 0。∎
+
+            **推论:时间方向来自素数账本增长**;只要未引入逆账本,素数生成动力学单向。逆向运动(负指数)属群化扩张,须显式逆账本并入账(账 O-8)。
+
+            """;
+        var sourceBytes = Encoding.UTF8.GetBytes("# PZG\n\n" + claim);
+        var parent = Assert.Single(PzgAtomizer.Atomize(
+            sourceBytes,
+            DigestionTestSupport.Rules).Claims);
+        var parentCapture = DigestionCasStore.Capture(parent.RawBytes.AsSpan());
+        var loaded = BackfillInventoryLoader.Load(
+            Ledger([], CasEntry("parent", parent, parentCapture.Reference))
+                .Replace(AtomizerRegistry.GictId, AtomizerRegistry.PzgId, StringComparison.Ordinal));
+        var source = Assert.Single(loaded.RequireDigestionSources());
+        var parentEntry = Assert.Single(source.Entries);
+        var ledger = loaded.WithDigestionSources(
+        [
+            source with
+            {
+                Entries =
+                [
+                    parentEntry with
+                    {
+                        Receipts = parentEntry.Receipts with
+                        {
+                            UnresolvedSubitems = ["secondary-verdict"],
+                        },
+                        ReceiptSyntax = null,
+                    },
+                ],
+            },
+        ]);
+
+        var first = DigestionIngestor.Plan(
+            ledger,
+            Snapshot(sourceBytes, [parentCapture]),
+            ledger);
+        var entries = Assert.Single(first.Document.RequireDigestionSources()).Entries;
+        var plannedParent = Assert.Single(entries, static entry => entry.AtomId == "parent");
+        var children = entries.Where(static entry => entry.AtomId != "parent").ToArray();
+
+        Assert.Equal(2, first.ResidualOpenAdded);
+        Assert.Equal(2, children.Length);
+        Assert.Equal(parentCapture.Reference, plannedParent.CasRef);
+        Assert.Empty(plannedParent.Receipts.UnresolvedSubitems);
+        Assert.Equal(children.Select(static child => child.AtomId), plannedParent.Receipts.ChainAtoms);
+        Assert.All(children, child =>
+        {
+            Assert.StartsWith("theorem/18.7/clause/", child.AstPath, StringComparison.Ordinal);
+            Assert.Equal(
+                "pzg-residual-" + child.Fingerprints.RawSha256["sha256:".Length..],
+                child.AtomId);
+            Assert.Equal(DigestionMigrationState.Residual, child.ProjectedStatus.Migration);
+            Assert.Equal(DigestionTruthState.Open, child.ProjectedStatus.Truth);
+        });
+
+        var firstBytes = BackfillInventoryWriter.WriteForIngest(first.Document);
+        var migrated = BackfillInventoryLoader.Load(Encoding.UTF8.GetString(firstBytes.AsSpan()));
+        var second = DigestionIngestor.Plan(
+            migrated,
+            Snapshot(sourceBytes, first.CasObjects.Prepend(parentCapture)),
+            ledger);
+        var secondBytes = BackfillInventoryWriter.WriteForIngest(second.Document);
+
+        Assert.Equal(0, second.ResidualOpenAdded);
+        Assert.Empty(second.CasObjects);
+        Assert.Equal(firstBytes.ToArray(), secondBytes.ToArray());
+    }
+
     private static (BackfillInventoryDocument Ledger, DigestionCasObject Capture) ExistingCasBackedLedger()
     {
         var oldBytes = Encoding.UTF8.GetBytes("# GICT\n\n**定理 1.1(A)**。old。\n");

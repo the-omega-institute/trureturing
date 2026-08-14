@@ -162,6 +162,51 @@ public sealed partial class DigestionLedgerTests
     }
 
     [Fact]
+    public void UnchangedSingleClauseLedgerReplayRemainsByteIdentical()
+    {
+        var sourceBytes = Encoding.UTF8.GetBytes(
+            "# GICT\n\n**定理 1.1(Test)**。single clause。\n");
+        var atom = Assert.Single(GictAtomizer.Atomize(
+            sourceBytes,
+            DigestionTestSupport.Rules).Claims);
+        var document = BackfillInventoryLoader.Load(StructuralLedgerYaml(atom));
+        var expected = BackfillInventoryWriter.WriteForIngest(document);
+
+        var replay = DigestionIngestor.Plan(
+            document,
+            Snapshot(("docs/source.md", sourceBytes), CasFile(atom)),
+            document);
+
+        Assert.Equal(0, replay.ResidualOpenAdded);
+        Assert.Empty(replay.CasObjects);
+        Assert.Equal(expected.ToArray(), BackfillInventoryWriter.WriteForIngest(replay.Document).ToArray());
+    }
+
+    [Fact]
+    public void DanglingChainIdRetainsChainMigrationIncompleteGap()
+    {
+        var sourceBytes = Encoding.UTF8.GetBytes(
+            "# GICT\n\n**定理 1.1(Test)**。single clause。\n");
+        var atom = Assert.Single(GictAtomizer.Atomize(
+            sourceBytes,
+            DigestionTestSupport.Rules).Claims);
+        var document = BackfillInventoryLoader.Load(StructuralLedgerYaml(atom).Replace(
+            "          chain_atoms: []",
+            "          chain_atoms:\n            - missing-child",
+            StringComparison.Ordinal));
+
+        var status = Assert.Single(DigestionStatusEvaluator.Evaluate(
+            document,
+            Snapshot(("docs/source.md", sourceBytes), CasFile(atom)),
+            AcceptedLean(Array.Empty<string>()),
+            baselineDocument: document).Entries);
+
+        Assert.Contains(status.Gaps, gap =>
+            gap.Code == "chain-migration-incomplete" && gap.Detail == "missing-child");
+        Assert.False(status.Deletable);
+    }
+
+    [Fact]
     public void IngestOnboardsRegisteredEmptySourceWithCoarseFallback()
     {
         var atomizerId = SyntheticNumberedAtomizer.Id;

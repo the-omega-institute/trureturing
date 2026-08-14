@@ -39,12 +39,18 @@ internal sealed record StructuredResidualAdmission(
     string SuggestedAtomId,
     DigestionStatus ProjectedStatus);
 
+internal sealed record DigestionSourceClausePlan(
+    string SourceId,
+    DigestionAtom Parent,
+    DigestionClausePlan Plan);
+
 internal sealed record DigestionIngestFallback(string SourceId, string Reason);
 
 internal sealed record DigestionLedgerAlignment(
     ImmutableDictionary<string, DigestionReceiptAlignment> EntryAlignments,
     ImmutableDictionary<string, DigestionAtom> MatchedAtoms,
     ImmutableArray<StructuredResidualAdmission> Residual,
+    ImmutableArray<DigestionSourceClausePlan> ClausePlans,
     ImmutableArray<DigestionIngestFallback> Fallbacks,
     ImmutableArray<string> ActualStale,
     ImmutableArray<string> Findings)
@@ -94,6 +100,7 @@ internal static class DigestionLedgerAligner
             StringComparer.Ordinal);
         var matchedAtoms = ImmutableDictionary.CreateBuilder<string, DigestionAtom>(StringComparer.Ordinal);
         var residual = ImmutableArray.CreateBuilder<StructuredResidualAdmission>();
+        var clausePlans = ImmutableArray.CreateBuilder<DigestionSourceClausePlan>();
         var fallbacks = ImmutableArray.CreateBuilder<DigestionIngestFallback>();
         var actualStale = ImmutableArray.CreateBuilder<string>();
         var findings = ImmutableArray.CreateBuilder<string>();
@@ -102,7 +109,8 @@ internal static class DigestionLedgerAligner
         findings.AddRange(cas.Findings);
         var inheritedEntries = InheritedEntries(baselineDocument);
         foreach (var entry in document.RequireDigestionEntries()
-                     .Where(entry => cas.ValidAtomIds.Contains(entry.AtomId)
+                     .Where(entry => !IsNestedClauseEntry(entry)
+                         && cas.ValidAtomIds.Contains(entry.AtomId)
                          && inheritedEntries.Contains(CanonicalEntry(entry))))
         {
             var path = DigestionCasStore.RootPath + entry.CasRef["sha256:".Length..];
@@ -172,19 +180,23 @@ internal static class DigestionLedgerAligner
                         : source.Atomizer == AtomizerRegistry.NoAtomizerId
                             && entry.Boundary is not null
                                 ? DigestionReceiptAlignment.LegacyBoundary
-                                : cas.ValidAtomIds.Contains(entry.AtomId)
+                                : !IsNestedClauseEntry(entry)
+                                    && cas.ValidAtomIds.Contains(entry.AtomId)
                                     && inheritedEntries.Contains(CanonicalEntry(entry))
                                     ? DigestionReceiptAlignment.Seen
                                     : DigestionReceiptAlignment.Rejected;
                 }
 
                 var registeredAtomizer = AtomizerRegistry.IsRegistered(source.Atomizer);
+                var hasNestedClauseEntries = source.Entries.Any(IsNestedClauseEntry);
                 var coarseReplacementObligations =
                     coarseReplacementObligationsBySource.GetValueOrDefault(source.SourceId, []);
                 var unprovenCasEntries = source.Entries.Where(entry =>
                     cas.ValidAtomIds.Contains(entry.AtomId)
                     && !inheritedEntries.Contains(CanonicalEntry(entry))).ToArray();
-                if (((mode == DigestionAlignmentMode.Admission && unprovenCasEntries.Length == 0)
+                if (((mode == DigestionAlignmentMode.Admission
+                        && unprovenCasEntries.Length == 0
+                        && !hasNestedClauseEntries)
                         || !registeredAtomizer)
                     && coarseReplacementObligations.Length == 0)
                 {
@@ -236,7 +248,8 @@ internal static class DigestionLedgerAligner
 
                 if (mode == DigestionAlignmentMode.Admission
                     && coarseReplacementObligations.Length == 0
-                    && unprovenCasEntries.All(entry => matchedAtoms.ContainsKey(entry.AtomId)))
+                    && unprovenCasEntries.All(entry => matchedAtoms.ContainsKey(entry.AtomId))
+                    && !hasNestedClauseEntries)
                 {
                     return;
                 }
@@ -303,6 +316,12 @@ internal static class DigestionLedgerAligner
                     return;
                 }
 
+                clausePlans.AddRange(atomized.ClausePlans.Select(plan =>
+                    new DigestionSourceClausePlan(
+                        source.SourceId,
+                        atomized.ResolveClaim(plan.ParentAstPath),
+                        plan)));
+
                 var claims = new Dictionary<string, DigestionAtom>(StringComparer.Ordinal);
                 var duplicateAstPath = false;
                 foreach (var atom in atomized.Claims)
@@ -362,7 +381,9 @@ internal static class DigestionLedgerAligner
                     }
                 }
 
-                foreach (var entry in source.Entries.Where(entry => cas.ValidAtomIds.Contains(entry.AtomId)))
+                foreach (var entry in source.Entries.Where(entry =>
+                             !IsNestedClauseEntry(entry)
+                             && cas.ValidAtomIds.Contains(entry.AtomId)))
                 {
                     if (claims.TryGetValue(entry.AstPath, out var atom)
                         && (atom.Fingerprints.RawSha256 == entry.Fingerprints.RawSha256
@@ -373,6 +394,14 @@ internal static class DigestionLedgerAligner
                         alignments[entry.AtomId] = DigestionReceiptAlignment.Seen;
                     }
                 }
+
+
+                AlignNestedChildren(
+                    source,
+                    cas.ValidAtomIds,
+                    snapshot,
+                    alignments,
+                    matchedAtoms);
 
                 var registration = AtomizerRegistry.Require(source.Atomizer);
                 foreach (var atom in atomized.Claims.Where(atom => !matchedAstPaths.Contains(atom.AstPath)))
@@ -427,6 +456,7 @@ internal static class DigestionLedgerAligner
             alignments.ToImmutable(),
             matchedAtoms.ToImmutable(),
             residual.ToImmutable(),
+            clausePlans.ToImmutable(),
             fallbacks.ToImmutable(),
             actualStale.Order(StringComparer.Ordinal).ToImmutableArray(),
             findings.Order(StringComparer.Ordinal).ToImmutableArray());
@@ -579,7 +609,181 @@ internal static class DigestionLedgerAligner
             }
         }
 
+
+        var clausePlanFailure = ClausePlanIntegrityFailure(document);
+        if (clausePlanFailure is not null)
+        {
+            return clausePlanFailure;
+        }
+
         return null;
+    }
+
+    private static string? ClausePlanIntegrityFailure(AtomizedTheoryDocument document)
+    {
+        var parentPaths = new HashSet<string>(StringComparer.Ordinal);
+        foreach (var plan in document.ClausePlans)
+        {
+            if (!parentPaths.Add(plan.ParentAstPath))
+            {
+                return $"duplicate clause plan parent {plan.ParentAstPath}";
+            }
+
+            var parents = document.Claims
+                .Where(atom => atom.AstPath == plan.ParentAstPath)
+                .ToArray();
+            if (parents.Length != 1)
+            {
+                return $"clause plan parent {plan.ParentAstPath} resolves to {parents.Length} claims";
+            }
+
+            if (plan.Children.Length < 2)
+            {
+                return $"clause plan parent {plan.ParentAstPath} has fewer than two children";
+            }
+
+            var parent = parents[0];
+            var childPaths = new HashSet<string>(StringComparer.Ordinal);
+            var previousEnd = parent.StartByte;
+            foreach (var child in plan.Children)
+            {
+                if (!childPaths.Add(child.AstPath)
+                    || !child.AstPath.StartsWith(parent.AstPath + "/clause/", StringComparison.Ordinal))
+                {
+                    return $"clause plan parent {plan.ParentAstPath} has an invalid child ast_path";
+                }
+
+                if (child.StartByte < parent.StartByte
+                    || child.EndByte > parent.EndByte
+                    || child.EndByte <= child.StartByte
+                    || child.RawBytes.Length >= parent.RawBytes.Length
+                    || child.EndByte - child.StartByte != child.RawBytes.Length)
+                {
+                    return $"clause plan child {child.AstPath} is outside its parent";
+                }
+
+                if (child.StartByte < previousEnd)
+                {
+                    return $"clause plan children overlap at {child.AstPath}";
+                }
+
+                var relativeStart = child.StartByte - parent.StartByte;
+                if (!parent.RawBytes.AsSpan()[relativeStart..(relativeStart + child.RawBytes.Length)]
+                        .SequenceEqual(child.RawBytes.AsSpan()))
+                {
+                    return $"clause plan child {child.AstPath} differs from its parent span";
+                }
+
+                if (UniqueSubspanStart(parent.RawBytes.AsSpan(), child.RawBytes.AsSpan()) != relativeStart)
+                {
+                    return $"clause plan child {child.AstPath} is not a unique parent sub-span";
+                }
+
+                if (child.Fingerprints != DigestionFingerprint.Compute(child.RawBytes.AsSpan()))
+                {
+                    return $"clause plan child {child.AstPath} fingerprint does not match its raw bytes";
+                }
+
+                previousEnd = child.EndByte;
+            }
+        }
+
+        return null;
+    }
+
+    private static void AlignNestedChildren(
+        DigestionLedgerSource source,
+        IReadOnlySet<string> validAtomIds,
+        RepositorySnapshot snapshot,
+        IDictionary<string, DigestionReceiptAlignment> alignments,
+        IDictionary<string, DigestionAtom> matchedAtoms)
+    {
+        var byId = source.Entries.ToDictionary(static entry => entry.AtomId, StringComparer.Ordinal);
+        var accepted = new HashSet<string>(StringComparer.Ordinal);
+        foreach (var parent in source.Entries.Where(entry =>
+                     entry.Receipts.ChainAtoms.Length > 0
+                     && validAtomIds.Contains(entry.AtomId)
+                     && alignments.TryGetValue(entry.AtomId, out var alignment)
+                     && alignment == DigestionReceiptAlignment.Seen))
+        {
+            var parentPath = DigestionCasStore.RootPath + parent.CasRef["sha256:".Length..];
+            if (!snapshot.TryGetFile(parentPath, out var parentBlob))
+            {
+                continue;
+            }
+
+            var spans = new List<(string AtomId, int Start, int End, DigestionLedgerEntry Entry, RepositoryFile Blob)>();
+            foreach (var childId in parent.Receipts.ChainAtoms)
+            {
+                if (!byId.TryGetValue(childId, out var child)
+                    || !validAtomIds.Contains(childId)
+                    || !child.AstPath.StartsWith(parent.AstPath + "/clause/", StringComparison.Ordinal))
+                {
+                    continue;
+                }
+
+                var childPath = DigestionCasStore.RootPath + child.CasRef["sha256:".Length..];
+                if (!snapshot.TryGetFile(childPath, out var childBlob))
+                {
+                    continue;
+                }
+
+                if (child.Fingerprints != DigestionFingerprint.Compute(childBlob.RawBytes.AsSpan()))
+                {
+                    continue;
+                }
+
+                var start = UniqueSubspanStart(parentBlob.RawBytes.AsSpan(), childBlob.RawBytes.AsSpan());
+                if (start < 0 || childBlob.RawBytes.Length >= parentBlob.RawBytes.Length)
+                {
+                    continue;
+                }
+
+                spans.Add((childId, start, start + childBlob.RawBytes.Length, child, childBlob!));
+            }
+
+            var overlapping = spans
+                .Where(span => spans.Any(other =>
+                    other.AtomId != span.AtomId
+                    && span.Start < other.End
+                    && other.Start < span.End))
+                .Select(static span => span.AtomId)
+                .ToHashSet(StringComparer.Ordinal);
+            foreach (var span in spans.Where(span => !overlapping.Contains(span.AtomId)))
+            {
+                accepted.Add(span.AtomId);
+                matchedAtoms[span.AtomId] = DigestionAtom.FromFrozenCas(
+                    span.Entry.AstPath,
+                    span.Blob.RawBytes);
+            }
+        }
+
+        foreach (var childId in source.Entries.SelectMany(static entry => entry.Receipts.ChainAtoms))
+        {
+            if (accepted.Contains(childId))
+            {
+                alignments[childId] = DigestionReceiptAlignment.Seen;
+            }
+        }
+    }
+
+    private static bool IsNestedClauseEntry(DigestionLedgerEntry entry) =>
+        entry.AstPath.Contains("/clause/", StringComparison.Ordinal);
+
+    private static int UniqueSubspanStart(ReadOnlySpan<byte> parent, ReadOnlySpan<byte> child)
+    {
+        if (child.IsEmpty)
+        {
+            return -1;
+        }
+
+        var start = parent.IndexOf(child);
+        if (start < 0 || parent[(start + 1)..].IndexOf(child) >= 0)
+        {
+            return -1;
+        }
+
+        return start;
     }
 
     private static bool EntryIdentityEqual(

@@ -36,6 +36,9 @@ internal static class DigestionIngestor
         var residualBySource = alignment.Residual
             .GroupBy(static item => item.SourceId, StringComparer.Ordinal)
             .ToDictionary(static group => group.Key, static group => group.ToArray(), StringComparer.Ordinal);
+        var clausePlansBySource = alignment.ClausePlans
+            .GroupBy(static item => item.SourceId, StringComparer.Ordinal)
+            .ToDictionary(static group => group.Key, static group => group.ToArray(), StringComparer.Ordinal);
         var atomIds = migrationDocument.RequireDigestionEntries()
             .Select(static entry => entry.AtomId)
             .ToHashSet(StringComparer.Ordinal);
@@ -108,6 +111,73 @@ internal static class DigestionIngestor
                         ReceiptSyntax: null,
                         CasRef: captured.Reference));
                     residualOpenAdded++;
+                }
+            }
+
+
+            if (clausePlansBySource.TryGetValue(source.SourceId, out var clausePlans))
+            {
+                foreach (var clausePlan in clausePlans)
+                {
+                    var parentIndexes = entries
+                        .Select((entry, index) => (Entry: entry, Index: index))
+                        .Where(item => item.Entry.AstPath == clausePlan.Plan.ParentAstPath
+                            && item.Entry.Fingerprints == clausePlan.Parent.Fingerprints)
+                        .ToArray();
+                    if (parentIndexes.Length != 1)
+                    {
+                        throw new FormatException(
+                            $"ingest clause plan parent {clausePlan.Plan.ParentAstPath} resolves to "
+                            + $"{parentIndexes.Length} ledger entries");
+                    }
+
+                    var (parent, parentIndex) = parentIndexes[0];
+                    if (parent.Receipts.ChainAtoms.Length > 0)
+                    {
+                        continue;
+                    }
+
+                    var childIds = ImmutableArray.CreateBuilder<string>(clausePlan.Plan.Children.Length);
+                    foreach (var child in clausePlan.Plan.Children)
+                    {
+                        var childId = AtomizerRegistry.Require(source.Atomizer).ResidualPrefix
+                            + "-residual-"
+                            + child.Fingerprints.RawSha256["sha256:".Length..];
+                        if (!atomIds.Add(childId))
+                        {
+                            throw new FormatException(
+                                $"ingest clause atom_id collides with the ledger: {childId}");
+                        }
+
+                        var captured = AddCasObject(child.RawBytes.AsSpan(), casObjects);
+                        entries.Add(new DigestionLedgerEntry(
+                            source.SourceId,
+                            source.SourcePath,
+                            source.Atomizer,
+                            childId,
+                            child.AstPath,
+                            Boundary: null,
+                            child.Fingerprints,
+                            CoverageGids: [],
+                            new DigestionReceipts([], [], [], [], null),
+                            new DigestionStatus(
+                                DigestionMigrationState.Residual,
+                                DigestionTruthState.Open),
+                            ReceiptSyntax: null,
+                            CasRef: captured.Reference));
+                        childIds.Add(childId);
+                        residualOpenAdded++;
+                    }
+
+                    entries[parentIndex] = parent with
+                    {
+                        Receipts = parent.Receipts with
+                        {
+                            UnresolvedSubitems = [],
+                            ChainAtoms = childIds.MoveToImmutable(),
+                        },
+                        ReceiptSyntax = null,
+                    };
                 }
             }
 

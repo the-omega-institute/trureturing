@@ -184,6 +184,176 @@ public sealed partial class DigestionAlignmentTests
             StringComparer.Ordinal));
     }
 
+    [Fact]
+    public void AdmissionAcceptsNestedChildOnlyWhenVerifiedParentListsIt()
+    {
+        var parentBytes = Encoding.UTF8.GetBytes("prefix unique-child suffix");
+        var childBytes = Encoding.UTF8.GetBytes("unique-child");
+        var parent = Atom("theorem/1.1", parentBytes);
+        var child = Atom("theorem/1.1/clause/1", childBytes);
+        var parentCapture = DigestionCasStore.Capture(parentBytes);
+        var childCapture = DigestionCasStore.Capture(childBytes);
+        var baseline = BackfillInventoryLoader.Load(Ledger(
+            [],
+            CasEntry("parent", parent, parentCapture.Reference)));
+        var source = Assert.Single(baseline.RequireDigestionSources());
+        var parentEntry = Assert.Single(source.Entries);
+        var childId = "gict-residual-" + childCapture.Reference["sha256:".Length..];
+        var childEntry = ChildEntry(parentEntry, childId, child, childCapture.Reference);
+        var unchained = baseline.WithDigestionSources(
+            [source with { Entries = [parentEntry, childEntry] }]);
+        var chained = baseline.WithDigestionSources(
+        [
+            source with
+            {
+                Entries =
+                [
+                    parentEntry with
+                    {
+                        Receipts = parentEntry.Receipts with { ChainAtoms = [childId] },
+                        ReceiptSyntax = null,
+                    },
+                    childEntry,
+                ],
+            },
+        ]);
+        var snapshot = Snapshot(parentBytes, [parentCapture, childCapture]);
+
+        var rejected = DigestionLedgerAligner.Evaluate(
+            unchained,
+            snapshot,
+            baseline,
+            DigestionAlignmentMode.Admission,
+            _ => (_, _) => Atomized(parent));
+        var admitted = DigestionLedgerAligner.Evaluate(
+            chained,
+            snapshot,
+            baseline,
+            DigestionAlignmentMode.Admission,
+            _ => (_, _) => Atomized(parent));
+        var inheritedButUnchained = DigestionLedgerAligner.Evaluate(
+            unchained,
+            snapshot,
+            chained,
+            DigestionAlignmentMode.Admission,
+            _ => (_, _) => Atomized(parent));
+
+        Assert.Equal(DigestionReceiptAlignment.Rejected, rejected.AlignmentFor(childId));
+        Assert.Equal(DigestionReceiptAlignment.Seen, admitted.AlignmentFor(childId));
+        Assert.Equal(child.Fingerprints, admitted.AtomFor(childId)?.Fingerprints);
+        Assert.Equal(
+            DigestionReceiptAlignment.Rejected,
+            inheritedButUnchained.AlignmentFor(childId));
+    }
+
+    [Theory]
+    [InlineData("outside")]
+    [InlineData("non-unique")]
+    [InlineData("overlap")]
+    public void AdmissionRejectsUnverifiedNestedChildSpans(string defect)
+    {
+        var parentBytes = Encoding.UTF8.GetBytes(defect == "non-unique" ? "abcabc" : "abcdef");
+        var childByteSets = defect switch
+        {
+            "outside" => new[] { Encoding.UTF8.GetBytes("xyz") },
+            "non-unique" => new[] { Encoding.UTF8.GetBytes("abc") },
+            "overlap" => new[] { Encoding.UTF8.GetBytes("abcd"), Encoding.UTF8.GetBytes("cdef") },
+            _ => throw new ArgumentOutOfRangeException(nameof(defect)),
+        };
+        var parent = Atom("theorem/1.1", parentBytes);
+        var parentCapture = DigestionCasStore.Capture(parentBytes);
+        var baseline = BackfillInventoryLoader.Load(Ledger(
+            [],
+            CasEntry("parent", parent, parentCapture.Reference)));
+        var source = Assert.Single(baseline.RequireDigestionSources());
+        var parentEntry = Assert.Single(source.Entries);
+        var childCaptures = childByteSets
+            .Select(static bytes => DigestionCasStore.Capture(bytes))
+            .ToArray();
+        var children = childByteSets.Select((bytes, index) =>
+            Atom($"theorem/1.1/clause/{index + 1}", bytes)).ToArray();
+        var childIds = childCaptures.Select(static capture =>
+            "gict-residual-" + capture.Reference["sha256:".Length..]).ToImmutableArray();
+        var candidate = baseline.WithDigestionSources(
+        [
+            source with
+            {
+                Entries =
+                [
+                    parentEntry with
+                    {
+                        Receipts = parentEntry.Receipts with { ChainAtoms = childIds },
+                        ReceiptSyntax = null,
+                    },
+                    .. children.Select((child, index) => ChildEntry(
+                        parentEntry,
+                        childIds[index],
+                        child,
+                        childCaptures[index].Reference)),
+                ],
+            },
+        ]);
+
+        var result = DigestionLedgerAligner.Evaluate(
+            candidate,
+            Snapshot(parentBytes, childCaptures.Prepend(parentCapture)),
+            baseline,
+            DigestionAlignmentMode.Admission,
+            _ => (_, _) => Atomized(parent));
+
+        Assert.All(childIds, childId => Assert.Equal(
+            DigestionReceiptAlignment.Rejected,
+            result.AlignmentFor(childId)));
+    }
+
+    [Fact]
+    public void IngestRejectsOverlappingClausePlanBoundaries()
+    {
+        var parentBytes = ImmutableArray.CreateRange(Encoding.UTF8.GetBytes("abcdef"));
+        var parent = new DigestionAtom(
+            "theorem/1.1",
+            0,
+            parentBytes.Length,
+            parentBytes,
+            DigestionFingerprint.Compute(parentBytes.AsSpan()),
+            []);
+        var firstBytes = ImmutableArray.CreateRange(Encoding.UTF8.GetBytes("abcd"));
+        var secondBytes = ImmutableArray.CreateRange(Encoding.UTF8.GetBytes("cdef"));
+        var first = new DigestionAtom(
+            "theorem/1.1/clause/1",
+            0,
+            4,
+            firstBytes,
+            DigestionFingerprint.Compute(firstBytes.AsSpan()),
+            []);
+        var second = new DigestionAtom(
+            "theorem/1.1/clause/2",
+            2,
+            6,
+            secondBytes,
+            DigestionFingerprint.Compute(secondBytes.AsSpan()),
+            []);
+        var invalid = new AtomizedTheoryDocument(
+            [parent],
+            [new DigestionSlice(true, parentBytes)],
+            [new DigestionClausePlan(parent.AstPath, [first, second])]);
+        var captured = DigestionCasStore.Capture(parentBytes.AsSpan());
+        var ledger = BackfillInventoryLoader.Load(Ledger(
+            [],
+            CasEntry("parent", parent, captured.Reference)));
+
+        var result = DigestionLedgerAligner.Evaluate(
+            ledger,
+            Snapshot(parentBytes.ToArray(), [captured]),
+            ledger,
+            DigestionAlignmentMode.Ingest,
+            _ => (_, _) => invalid);
+
+        Assert.Contains(result.Findings, finding => finding.Contains(
+            "clause plan",
+            StringComparison.Ordinal));
+    }
+
     private static DigestionAtom Atom(string astPath, byte[] bytes) => new(
         astPath,
         0,
@@ -195,6 +365,25 @@ public sealed partial class DigestionAlignmentTests
     private static AtomizedTheoryDocument Atomized(DigestionAtom atom) => new(
         [atom],
         [new DigestionSlice(true, atom.RawBytes)]);
+
+    private static DigestionLedgerEntry ChildEntry(
+        DigestionLedgerEntry parent,
+        string atomId,
+        DigestionAtom child,
+        string casRef) => parent with
+        {
+            AtomId = atomId,
+            AstPath = child.AstPath,
+            Boundary = null,
+            Fingerprints = child.Fingerprints,
+            CoverageGids = [],
+            Receipts = new DigestionReceipts([], [], [], [], null),
+            ProjectedStatus = new DigestionStatus(
+                DigestionMigrationState.Residual,
+                DigestionTruthState.Open),
+            ReceiptSyntax = null,
+            CasRef = casRef,
+        };
 
     [Fact]
     public void IngestRejectsAtomizerHashFailureInsteadOfFallingBack()
