@@ -10,7 +10,7 @@ made.
 
 - Lane: `harness/diag-month-r4-b` at
   `/Users/mstudio3/trureturing-diag-month-r4-b`.
-- Current base: `470491ca088663eeebf36415db7f65af3dc415ec`;
+- Initial synchronized base: `470491ca088663eeebf36415db7f65af3dc415ec`;
   `HEAD` and `origin/dev` were equal before this report, and
   `git merge-base --is-ancestor origin/dev HEAD` exited `0`.
 - Atom ID:
@@ -166,10 +166,27 @@ measure anonymous. The selected `theorem/3.3` additionally contains the
 single-system clause and the countable-image proof. The atom is distinct, but
 the shared GID is not mechanically reusable by the current cover command.
 
-The current target ledger entry has `coverage_gids: []` and
+Static inspection of the live cover implementation exposes two independent
+mechanical blockers. The primary gate is in `CoverAtomCommand.cs`: it computes
+all baseline-bound GIDs before considering the legacy shared-residual path and
+rejects an added GID already present there:
+
+```csharp
+var baselineGids = BaselineCoverageGids(baselineDocument);
+if (addedGids.FirstOrDefault(baselineGids.Contains) is { } baselineConflict)
+{
+    throw new InvalidOperationException(
+        $"cover GID {baselineConflict} is already bound in the baseline ledger");
+}
+```
+
+The proposed GID is already baseline-bound by the `corollary/3.3.1` receipt, so
+this gate would reject it before the cross-atom host checks run.
+
+Independently, the current target ledger entry has `coverage_gids: []` and
 `ast_path: theorem/3.3`; the existing host has
-`ast_path: corollary/3.3.1`. The live guard in
-`CoverAtomCommand.HostedExtension.cs` is:
+`ast_path: corollary/3.3.1`. Even absent the earlier baseline-GID rejection, the
+hosted-extension guard in `CoverAtomCommand.HostedExtension.cs` is:
 
 ```csharp
 if (target.CoverageGids.Length == 0
@@ -179,9 +196,11 @@ if (target.CoverageGids.Length == 0
 }
 ```
 
-Both rejection conditions hold here. Canonical cover therefore reports that
-the GID is already bound to atom `pzg-residual-51fc...`; the narrow legacy
-shared-residual exception cannot apply across these two AST paths.
+Both conditions in this independent guard reject the proposed relationship, so
+the narrow legacy shared-residual exception cannot apply across these two AST
+paths. `make cover` was not run; these conclusions come from the current ledger
+values and the inspected ordering and predicates of the live implementation,
+not from an invented command diagnostic.
 
 ## Search trace and decision
 
@@ -208,14 +227,70 @@ different cross-atom relationship is separately governed harness capability;
 this report neither proposes nor implements such a change. This lane must not
 create a second Lean source of truth or hand-edit receipt/frozen ledgers.
 
+## Fidelity and non-hollowness checklist
+
+- **Conclusion substance:** the frozen countable-family theorem is substantive:
+  it proves countability, nullity, and complement measure equal to total measure.
+  It is not `True`, definitionally `True`, or a restated hypothesis. It is only a
+  partial carrier for the authoritative atom.
+- **Hypothesis satisfiability:** no source-faithful candidate declaration or
+  signature was produced. Consequently no candidate hypothesis witness was
+  formed or checked; the probability and compatible-limit carrier needed for
+  such a signature remain missing.
+- **Domain inhabitance:** no source-faithful combined candidate domain was
+  defined. `J = Unit` and `J = Nat` inhabit the frozen theorem's index domain,
+  but they do not inhabit or construct the source's compatible expansion tower
+  and its limit `NamingSystem`.
+- **Proof substance:** the reusable theorem rests on the addressable countability
+  and atomless-measure lemmas traced above. Reapplying it cannot manufacture the
+  two missing bridges: `volume univ = 1` under an explicit probability instance,
+  and `named(limit systems) = iUnion fun k => (systems k).named`.
+- **Duplicate search:** the exact current-tree and all-reference atom-ID searches
+  found no prior formalization of this atom. The one same-GID receipt is explicitly
+  accounted for as distinct `corollary/3.3.1` coverage, not hidden as a duplicate.
+- **Clause fidelity:** the dropped-or-weakened set for the frozen partial carrier
+  is nonempty. The numeric probability specialization and tower-to-limit-system
+  identification are absent, so deposit and cover are blocked.
+- **Rendered-statement fidelity:** not run. No Lean/Scribe candidate or emitted
+  statement was created, so there is no candidate rendering to compare.
+
+No unavailable item is passed as verified or replaced by
+`ASSUMED-UNVERIFIED`; the unavailable candidate checks force the `open` outcome.
+
+## Grader-trap checklist
+
+- **Generic vs specialized measure:** equality to `volume univ` is not the
+  source's numeric equality to `1` without a checked probability specialization.
+- **Family union vs limit object:** the complement of the union of named sets is
+  not definitionally the anonymous set of a limit `NamingSystem`; a limit
+  construction and named-set identity are required.
+- **Easy instance vs addressable discharge:** choosing `J = Unit` or `J = Nat`
+  is mathematical guidance, not a checked theorem carrying the omitted bridges.
+- **Stronger theorem vs missing carrier:** dropping compatibility hypotheses can
+  be a strengthening only after a checked map identifies the source limit
+  carrier with the theorem's family union.
+- **Cross-atom reuse vs canonical closure:** theorem relevance does not authorize
+  ledger reuse. The baseline-GID gate rejects first, and the empty-target/AST
+  hosted-extension predicates independently reject the proposed relationship.
+- **Static analysis vs executed result:** no exact `make cover` error is claimed;
+  the mechanical blocker is established from the live guard order and ledger
+  values while the command remains unrun.
+
 Verification reached in this lane:
 
 - `make dotnet`: exit `0`, zero warnings and errors.
-- `make lean-report`: exit `0`; report SHA-256
+- Historical pre-merge `make lean-report`: exit `0`; report SHA-256
   `bd7a5210d459c3a5fd8af2e051888c3695ffa1c72f6e456e6b6b8822ffa63be2`.
 - Current-base `digest-status --formalize-candidates`: exit `0`; 137 candidates;
   snapshot SHA-256
   `b5e23ac94a0aed91fb5fdc655f651eccd8731186c3a51c5077dc9683b9717316`.
 - Selected `make show-atom`: exit `0`, all hashes matched.
 - No deposit, cover, preflight, push, or PR was run. The two fidelity gaps and
-  the live cross-atom guard block executable closure.
+  the live cover gates block executable closure.
+- Post-merge base: `origin/dev` at
+  `7535775879d67b7f2f46ea890942c2abf845d8da`; normal merge head before this
+  follow-up report commit was
+  `e18bf01cfae582ad089eb8b64a421be59f60effd`.
+- Post-merge `git merge-base --is-ancestor origin/dev HEAD`: exit `0`.
+- Post-merge `git diff --check`: exit `0`; the lane-specific diff against
+  `origin/dev` contained only this report path.
