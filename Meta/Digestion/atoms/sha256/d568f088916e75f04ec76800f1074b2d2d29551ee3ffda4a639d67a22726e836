@@ -1,0 +1,20 @@
+### 定理 16.6（瞬态可观测过滤）
+
+对全部 \(k\ge0\)：
+
+1. \(\mathcal A_k\) 是含常数的交换子代数；
+2. \(\mathcal A_{k+1}\subseteq\mathcal A_k\)；
+3. \(h\in\mathcal A_k\) 当且仅当
+   \[
+   \tau^k(y)=\tau^k(y')
+   \Longrightarrow
+   h(y)=h(y');
+   \]
+4. 有维数恒等式
+   \[
+   \boxed{
+   \dim\mathcal A_k
+   =|\tau^k(Y)|
+   =\operatorname{rank}(L_\tau^k).}
+   \]
+

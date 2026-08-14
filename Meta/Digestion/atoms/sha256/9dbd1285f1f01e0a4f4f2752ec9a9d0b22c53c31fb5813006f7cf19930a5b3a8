@@ -1,0 +1,11 @@
+### 定理 23.5（局部递推唯一确定最短分辨证书）
+
+设
+\[
+\delta:Y\times Y\to\mathbb N\cup\{\infty\}
+\]
+满足上述三分递推，则
+\[
+\boxed{\delta=d_q.}
+\]
+

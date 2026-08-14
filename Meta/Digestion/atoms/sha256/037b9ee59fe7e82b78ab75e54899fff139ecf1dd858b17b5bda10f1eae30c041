@@ -1,0 +1,38 @@
+### 定理 22.2（预测关系随观察精化单调）
+
+若
+\[
+r=h\circ q,
+\]
+则
+\[
+\boxed{R_q\subseteq R_r.}
+\]
+因此存在唯一满射
+\[
+\boxed{
+\kappa_{q,r}:Z_q\twoheadrightarrow Z_r
+}
+\]
+满足
+\[
+\boxed{
+\pi_r=\kappa_{q,r}\pi_q.
+}
+\]
+并且该映射同时保持动力学与读出：
+\[
+\boxed{
+\kappa_{q,r}\overline\tau_q
+=
+\overline\tau_r\kappa_{q,r},
+}
+\]
+\[
+\boxed{
+\overline r\,\kappa_{q,r}
+=
+h\,\overline q.
+}
+\]
+

@@ -1,0 +1,36 @@
+## 命题 8.5（双谱仍不恢复完整函数图）
+
+取
+\[
+Y=\{0,a,b,c,d,e,f,g\}.
+\]
+定义
+\[
+\tau_A:\quad
+0\mapsto0,\ a,b,c\mapsto0,\ d,e,f\mapsto a,\ g\mapsto b,
+\]
+以及
+\[
+\tau_B:\quad
+0\mapsto0,\ a,b,c\mapsto0,\ d,e\mapsto a,\ f,g\mapsto b.
+\]
+二者都只有固定点 \(0\)，且
+\[
+|Y|=8,\qquad|\tau_A(Y)|=|\tau_B(Y)|=3,\qquad
+|\tau_A^k(Y)|=|\tau_B^k(Y)|=1\ (k\ge2).
+\]
+故迹谱与秩谱全部相同。但根的三个深度一子节点所带叶子数多重集分别为
+\[
+\{3,1,0\}
+\quad\text{与}\quad
+\{2,2,0\},
+\]
+故函数图非同构。
+
+所以
+\[
+\boxed{
+\text{迹谱 + 秩谱恢复线性相似类，
+但不恢复带基函数图。}}
+\]
+

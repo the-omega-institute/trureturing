@@ -1,0 +1,37 @@
+### 定理 19.4（最小确定性完成的泛性质）
+
+设另一个有限确定性实现由满射
+\[
+r:Y\twoheadrightarrow W
+\]
+给出，并存在
+\[
+\sigma:W\to W,
+\qquad
+o:W\to O
+\]
+使
+\[
+r\tau=\sigma r,
+\qquad
+q=or.
+\]
+则存在唯一满射
+\[
+h:W\twoheadrightarrow Z_q
+\]
+满足
+\[
+\boxed{
+\pi_q=hr,
+\qquad
+h\sigma=\overline\tau h,
+\qquad
+\overline qh=o.}
+\]
+
+因此 \(Z_q\) 在所有精确、确定且保留原读出的完成中状态数最小：
+\[
+\boxed{|Z_q|\le|W|.}
+\]
+

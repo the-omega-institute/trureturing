@@ -1,0 +1,10 @@
+### 定理 19.6（完成商上的对角自然性）
+
+对所有评价表 \(E:A\times A\to Y\)，
+\[
+\boxed{
+Q_q\Delta_\tau(E)
+=
+\Delta_{\overline\tau}P_q(E).}
+\]
+

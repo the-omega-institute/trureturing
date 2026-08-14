@@ -1,0 +1,13 @@
+### 推论 24.11（输出轨迹误差）
+
+对全部 \(k\ge0\)，
+\[
+\boxed{
+d_O\bigl(q(\tau^k y),o(\sigma^k\pi y)\bigr)
+\le
+\eta
++
+M\delta\sum_{j=0}^{k-1}L^j.
+}
+\]
+

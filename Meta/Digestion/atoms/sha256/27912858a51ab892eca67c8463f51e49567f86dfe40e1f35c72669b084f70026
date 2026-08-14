@@ -1,0 +1,32 @@
+### 定理 22.8（有限下降与一般稳定界）
+
+令
+\[
+R_0=R,
+\qquad
+R_{m+1}
+=
+R\cap(\tau\times\tau)^{-1}(R_m).
+\]
+则
+\[
+R_m
+=
+\bigcap_{k=0}^{m}
+(\tau^k\times\tau^k)^{-1}(R),
+\]
+且最终稳定到
+\[
+\mathsf C_\tau(R).
+\]
+若 \(R\) 有 \(c_0\) 个等价类，则最小稳定指标 \(m_R\) 满足
+\[
+\boxed{
+m_R
+\le
+|Y/\mathsf C_\tau(R)|-c_0
+\le
+|Y|-c_0.
+}
+\]
+
