@@ -58,6 +58,29 @@ public sealed class RuleEngineTests
     }
 
     [Fact]
+    public void MetaSplitScriptIsAnUnknownArtifactRatherThanAnInstantiationTicket()
+    {
+        Assert.True(RuleId.TryCreate("SL-000", out var sl000));
+        const string path = "Meta/split.py";
+        var fixture = new RuleFixture();
+        fixture.Files[path] = "print('split')\n";
+
+        var completed = Assert.IsType<RuleExecutionOutcome.Completed>(
+            RuleCatalog.Default.Execute(fixture.BuildForRuleCompatibility()));
+
+        Assert.DoesNotContain(
+            completed.Capability.Diagnostics,
+            diagnostic => diagnostic.Path == path
+                && diagnostic.RuleId == RuleId.CreateKnown(21)
+                && diagnostic.Message == "Meta/split.py 未实例化(案号 D5-T0004)");
+        var diagnostic = Assert.Single(
+            completed.Capability.Diagnostics,
+            diagnostic => diagnostic.Path == path && diagnostic.RuleId == sl000);
+        Assert.Equal("unknown Meta artifact", diagnostic.Message);
+        Assert.Equal(AdmissionEffect.Block, diagnostic.AdmissionEffect);
+    }
+
+    [Fact]
     public void DirectoryBackfillRejectsDanglingTicketGid()
     {
         var fixture = new RuleFixture();
