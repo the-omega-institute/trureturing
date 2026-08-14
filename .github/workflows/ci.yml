@@ -211,16 +211,29 @@ jobs:
 
       - name: Build candidate with warnings as errors
         if: steps.scope.outputs.run == 'true'
-        run: make -C candidate dotnet
+        run: |
+          hdir=candidate
+          [ -f candidate/tools/Makefile ] && hdir=candidate/tools
+          make -C "$hdir" dotnet
 
       - name: Run candidate golden and integration tests
         if: steps.scope.outputs.run == 'true'
-        run: make -C candidate tools-test
+        run: |
+          hdir=candidate
+          target=tools-test
+          if [ -f candidate/tools/Makefile ]; then
+            hdir=candidate/tools
+            target=test
+          fi
+          make -C "$hdir" "$target"
 
       - name: Run candidate selftest twice and compare bytes
         if: steps.scope.outputs.run == 'true'
         shell: bash
-        run: make -C candidate selftest
+        run: |
+          hdir=candidate
+          [ -f candidate/tools/Makefile ] && hdir=candidate/tools
+          make -C "$hdir" selftest
 
       - name: Prove missing capability does not compile
         if: steps.scope.outputs.run == 'true'
