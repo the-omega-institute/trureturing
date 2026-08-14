@@ -120,7 +120,7 @@ After the history-audit correction was committed, `origin/dev` advanced through
 PR #1713. A final non-destructive
 `git merge --no-edit 88fb4a9cc3d56cf08747a948ffc014af57a0e4cd`
 completed without conflict as `cf3f73d6651d70184c572993d6ea6db5f656ed9c`.
-Its second parent and the final synchronized content base are:
+Its second parent and the synchronized content base at that point were:
 
 ```text
 origin/dev = 88fb4a9cc3d56cf08747a948ffc014af57a0e4cd
@@ -135,12 +135,30 @@ exited `1` with no `UniversalSolenoid`, `PontryaginDual`, `HiddenAddress`,
 `hiddenKernelAddEquiv`, solenoid, profinite, p-adic, selected-atom, or exact-
 sequence occurrence. This deposit changes no clause disposition below.
 
+After the report-base refresh was committed, `origin/dev` advanced through PR
+#1714. A final non-destructive
+`git merge --no-edit 4551a412d3dfbf5bcaa25755e34bbf8481c1a3e8`
+completed without conflict as `2fa9ec70503067aa7995a93afd9d1edad827fc4d`.
+Its second parent and the final synchronized content base are:
+
+```text
+origin/dev = 4551a412d3dfbf5bcaa25755e34bbf8481c1a3e8
+merge-base(origin/dev, HEAD) = 4551a412d3dfbf5bcaa25755e34bbf8481c1a3e8
+```
+
+PR #1714 adds only `GoldenDesubstitutionClosedForms.lean` and its Scribe and
+Blueprint mirrors. Its two public theorems give expansion- and contraction-face
+logarithmic closed forms for golden desubstitution. A focused search across all
+three incoming paths exited `1` with no selected-atom, solenoid,
+Pontryagin-dual, profinite, p-adic, kernel-equivalence, or exact-sequence
+occurrence. It changes no clause disposition below.
+
 On this final base, `make lean-report` exited `0` from the content-addressed
 cache, producing:
 
 ```text
-input_address = sha256:0809776a5451e2aee72c2d615493b63c9e98e3248189c42de2ff8b312f2eeceb
-report_sha256 = 8a14bbe84a26f00ee026c7f7d1acfec6d18d2cf01910ff01d256a1f712115c29
+input_address = sha256:7c06971ecfda1ceb649b61deda7af1a48eaeb0f42542ec8887d09e95c0c977bf
+report_sha256 = d1fc400f4d539060fdf1af46aaba31228b1ef2d382588eaa7e38c4fdb32054d5
 ```
 
 ## Atom and authoritative statement
@@ -365,7 +383,7 @@ rg -n 'PontryaginDual' \
 found the generic definition, functorial map, topology/group instances, and
 finite-abelian double-dual results only. It found no rational specialization.
 
-There were 1,551 refs. This bounded all-ref query used the complete ref list
+There were 1,553 refs. This bounded all-ref query used the complete ref list
 and only Lean paths:
 
 ```sh
@@ -528,7 +546,7 @@ lake build \
 
 Exit `0`; Lean reported `Build completed successfully (8563 jobs)`.
 
-After the final merge to content base `88fb4a9c`, the refreshed scoped build
+After the final merge to content base `4551a412`, the refreshed scoped build
 included the modules defining and constructing the additive kernel equivalence:
 
 ```sh
