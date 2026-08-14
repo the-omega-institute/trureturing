@@ -206,11 +206,13 @@ git log --all --follow --oneline -- \
 gict-residual-5db40deeb77603206799812f973d4eee90041979570108b72914623feb17810a.yaml
 ```
 
-The first reports `393c30be`, the commit that added this report; it is report
-ingestion, not a formalization or coverage event. The path history reports
-`0f0edb92` as the introduction of the per-atom residual record, followed by
-the later schema/path migrations `201ecb7e`, `4eaedb39`, and `6178b8fa`.
-No retained-history hit deposits or covers the selected atom.
+The broad history may show report-only correction commits first because each
+correction repeats the atom ID; `393c30be` is the original report addition.
+Those report-history hits are not formalization or coverage events. The
+exact-path history independently records canonical backfill ingestion and
+migrations: `0f0edb92` introduced the per-atom residual record, with later
+schema/path migrations at `201ecb7e`, `4eaedb39`, and `6178b8fa`. No
+retained-history hit deposits or covers the selected atom.
 
 ## Clause-level statement echo
 
