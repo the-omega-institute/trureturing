@@ -1,0 +1,20 @@
+### 定理 17.4（装饰 necklace 完全分类有限自映射）
+
+对有限自映射
+\[
+\tau:Y\to Y,
+\qquad
+\sigma:Z\to Z,
+\]
+下列条件等价：
+
+1. 存在双射 \(\phi:Y\to Z\)，满足
+   \[
+   \phi\tau=\sigma\phi;
+   \]
+2. 装饰循环多重集相等：
+   \[
+   \boxed{
+   \mathfrak N(\tau)=\mathfrak N(\sigma).}
+   \]
+

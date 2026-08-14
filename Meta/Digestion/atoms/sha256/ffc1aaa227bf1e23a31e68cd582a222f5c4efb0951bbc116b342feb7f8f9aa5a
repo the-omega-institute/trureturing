@@ -1,0 +1,11 @@
+### 定理 25.7（全部干预同时自然下降）
+
+对联合完成投影 \(\pi=\pi_{q,U}\)，逐点定义 \(P_\pi,Q_\pi\)。则对全部 \(u\in U\)，
+\[
+\boxed{
+Q_\pi\Delta_{F_u}
+=
+\Delta_{\overline F_u}P_\pi.
+}
+\]
+

@@ -1,0 +1,11 @@
+## 定义 17.1（递归分支码）
+
+令分支码取值于遗传有限多重集。沿良基关系递归定义
+\[
+\boxed{
+\mathcal C_\tau(y)
+=
+\multiset{\mathcal C_\tau(x):x\in\operatorname{Ch}_\tau(y)}.}
+\]
+叶节点的码为空多重集；父节点的码是全部子树码的无序多重集。
+

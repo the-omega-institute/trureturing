@@ -1,0 +1,41 @@
+### 定理 21.8（无外部熵注入与零输出熵率）
+
+对任意 \(T\ge0\)，输出块
+
+\[
+\mathbf O_T=(O_0,\ldots,O_T)
+\]
+
+是 \(X_0\) 的确定函数，因此
+
+\[
+\boxed{
+H(\mathbf O_T\mid X_0)=0,}
+\]
+
+\[
+\boxed{
+H(\mathbf O_T)\le H(X_0)\le\log|Y|.}
+\]
+
+所以
+
+\[
+\boxed{
+\lim_{T\to\infty}
+\frac{H(O_0,\ldots,O_T)}{T+1}
+=0.}
+\]
+
+若把模型参数视为随机选择的配置 \(\Theta\)，则相应的条件形式是
+
+\[
+H(\mathbf O_T\mid \Theta,X_0)=0,
+\]
+
+\[
+H(\mathbf O_T)
+\le
+H(\Theta,X_0).
+\]
+
