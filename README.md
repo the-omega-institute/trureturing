@@ -18,7 +18,6 @@ StrataLint commands:
 tools/lean-inspector/inspect.sh --repository ROOT --output REPORT
 dotnet run --project tools/StrataLint.Cli/StrataLint.Cli.csproj --configuration Release -- check [--protected-base REV] --candidate-lean-report FILE
 dotnet run --project tools/StrataLint.Cli/StrataLint.Cli.csproj --configuration Release -- coverage [--json]
-dotnet run --project tools/StrataLint.Cli/StrataLint.Cli.csproj --configuration Release -- ledger-genesis --revision EXACT_COMMIT_OID
 dotnet run --project tools/StrataLint.Cli/StrataLint.Cli.csproj --configuration Release -- route MANIFEST|-
 dotnet run --project tools/StrataLint.Cli/StrataLint.Cli.csproj --configuration Release -- selftest
 dotnet run --project tools/StrataLint.Cli/StrataLint.Cli.csproj --configuration Release -- topology

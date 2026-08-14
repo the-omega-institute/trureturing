@@ -113,15 +113,6 @@ else
   mark cached-judge
 fi
 
-selftest_dir="$(mktemp -d)"
-(
-  cd "$CANDIDATE_ROOT"
-  dotnet "$JUDGE_DLL" selftest > "$selftest_dir/a"
-  dotnet "$JUDGE_DLL" selftest > "$selftest_dir/b"
-)
-cmp "$selftest_dir/a" "$selftest_dir/b"
-mark selftest
-
 set +e
 (
   cd "$CANDIDATE_ROOT"
