@@ -7,6 +7,8 @@ REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../../.." && pwd -P)"
 cd "$REPO_ROOT"
 
 REPORT="$REPO_ROOT/.lake/build/stratalint/raw-lean-report.json"
+CONTENT_CHECKS="$REPO_ROOT/tools/scripts/workflow/scribe-content-checks.sh"
+REPORT_CONSUMER="$REPO_ROOT/tools/scripts/report/report-consumer.sh"
 
 lake build
 make lean-report
@@ -26,9 +28,6 @@ set -e
 if [ "$check_rc" -ne 0 ] && [ "$check_rc" -ne 3 ]; then
   exit "$check_rc"
 fi
-dotnet run --project tools/StrataLint.Scribe/StrataLint.Scribe.csproj --configuration Release -- \
-  projections --check --report "$REPORT"
-/bin/bash tools/scripts/report/report-consumer.sh --role scribe-consumer --report "$REPORT" -- \
-  dotnet run --project tools/StrataLint.Scribe/StrataLint.Scribe.csproj --configuration Release -- emit --check
-dotnet run --project tools/StrataLint.Scribe/StrataLint.Scribe.csproj --configuration Release -- emit-values --check
-dotnet run --project tools/StrataLint.Scribe/StrataLint.Scribe.csproj --configuration Release -- describe-report --check
+/bin/bash "$REPORT_CONSUMER" --role scribe-consumer --report "$REPORT" -- \
+  /bin/bash -c 'exec /bin/bash "$1" "${STRATALINT_LEAN_REPORT:?}"' \
+  math-gate-scribe-content-checks "$CONTENT_CHECKS"

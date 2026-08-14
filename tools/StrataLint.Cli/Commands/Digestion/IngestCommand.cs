@@ -261,15 +261,22 @@ internal static class IngestCommand
         var replacementSources = replacement.RequireDigestionSources().ToDictionary(
             static source => source.SourceId,
             StringComparer.Ordinal);
-        if (!currentSources.Keys.ToHashSet(StringComparer.Ordinal).SetEquals(replacementSources.Keys))
+        // Adding is how a theory document nobody declared enters the ledger, so it is
+        // allowed and writes the source metadata below. Removing is not: a source that
+        // disappears would take its receipts with it, which is the one direction the
+        // append-only ledger does not have.
+        var removed = currentSources.Keys.Except(replacementSources.Keys, StringComparer.Ordinal).ToArray();
+        if (removed.Length > 0)
         {
-            throw new InvalidOperationException("ingest cannot add or remove directory ledger sources");
+            throw new InvalidOperationException(
+                "ingest cannot remove directory ledger sources: "
+                + string.Join(", ", removed.Order(StringComparer.Ordinal)));
         }
 
         foreach (var (sourceId, replacementSource) in replacementSources)
         {
-            var currentSource = currentSources[sourceId];
-            if (SourceMetadataEquals(currentSource, replacementSource))
+            if (currentSources.TryGetValue(sourceId, out var currentSource)
+                && SourceMetadataEquals(currentSource, replacementSource))
             {
                 continue;
             }

@@ -24,7 +24,75 @@ public sealed partial class MakeWorkflowTests
     {
         if (OperatingSystem.IsWindows()) return;
 
+        var result = RunPreflightScenario(scenario);
+
+        Assert.Equal(expectedExitCode, result.ExitCode);
+        Assert.EndsWith(
+            $"FKST_LOCAL_ITERATION_RESULT:v2:{expectedDeclaration}\n",
+            System.Text.Encoding.UTF8.GetString(result.StandardOutput),
+            StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void PreflightRejectsStaleValuesBeforeDeclaringPass()
+    {
+        if (OperatingSystem.IsWindows()) return;
+
+        var result = RunPreflightScenario("stale-values");
+        var output = System.Text.Encoding.UTF8.GetString(result.StandardOutput);
+
+        Assert.NotEqual(0, result.ExitCode);
+        Assert.DoesNotContain(
+            "FKST_LOCAL_ITERATION_RESULT:v2:PASS:NONE",
+            output,
+            StringComparison.Ordinal);
+        Assert.EndsWith(
+            "FKST_LOCAL_ITERATION_RESULT:v2:FAIL:SEMANTIC\n",
+            output,
+            StringComparison.Ordinal);
+    }
+
+    /// <summary>
+    /// Stands in for the artifact a real <c>make lean-report</c> leaves behind, and removes it
+    /// again only when this fixture is the one that put it there.
+    /// </summary>
+    private sealed class ScenarioLeanReport : IDisposable
+    {
+        private readonly string path;
+        private readonly bool created;
+
+        internal ScenarioLeanReport(string repositoryRoot)
+        {
+            path = Path.Combine(repositoryRoot, ".lake", "build", "stratalint", "raw-lean-report.json");
+            if (File.Exists(path))
+            {
+                return;
+            }
+
+            Directory.CreateDirectory(Path.GetDirectoryName(path)!);
+            File.WriteAllText(path, "{}\n");
+            created = true;
+        }
+
+        public void Dispose()
+        {
+            if (created && File.Exists(path))
+            {
+                File.Delete(path);
+            }
+        }
+    }
+
+    [System.Runtime.Versioning.UnsupportedOSPlatform("windows")]
+    private static ProcessOutput RunPreflightScenario(string scenario)
+    {
         var root = TestRepositoryLayout.FindRoot();
+        // The stub `make lean-report` claims success without writing anything, so on a clean
+        // checkout the report it is supposed to have produced does not exist and the content
+        // checks fail closed on a missing report rather than on the scenario under test. A
+        // successful lean-report produces a report; the stub has to be honest about that.
+        // Only a report this fixture created is removed, so a real one is never clobbered.
+        using var report = new ScenarioLeanReport(root);
         using var fixture = new TemporaryDirectory();
         var binDirectory = Path.Combine(fixture.Path, "bin");
         Directory.CreateDirectory(binDirectory);
@@ -44,6 +112,10 @@ public sealed partial class MakeWorkflowTests
             if [[ "${1:-}" == --version ]]; then
               [[ "${PREFLIGHT_SCENARIO:-}" != toolchain-missing ]] || exit 127
               exit 0
+            fi
+            if [[ "${PREFLIGHT_SCENARIO:-}" == stale-values && "$*" == *"emit-values --check"* ]]; then
+              printf '%s\n' 'out of date: Evidence/D5/values.json' >&2
+              exit 44
             fi
             if [[ "${1:-}" == build ]]; then exit 1; fi
             if [[ "${1:-}" == msbuild ]]; then exit 1; fi
@@ -103,11 +175,7 @@ public sealed partial class MakeWorkflowTests
             TimeSpan.FromSeconds(30),
             64 * 1024);
 
-        Assert.Equal(expectedExitCode, result.ExitCode);
-        Assert.EndsWith(
-            $"FKST_LOCAL_ITERATION_RESULT:v2:{expectedDeclaration}\n",
-            System.Text.Encoding.UTF8.GetString(result.StandardOutput),
-            StringComparison.Ordinal);
+        return result;
     }
 
     [System.Runtime.Versioning.UnsupportedOSPlatform("windows")]

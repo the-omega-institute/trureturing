@@ -273,23 +273,20 @@ internal static class DagLedgerCommandPreparation
             _ => throw new InvalidOperationException("unknown ledger load outcome"),
         };
 
-    internal static FrozenLedgerSyntax LoadLedgerDirectory(
-        string directory,
-        string label,
-        ImmutableArray<string> preferredIdentityPrefix = default) =>
-        LoadLedgerFiles(
-            Directory.EnumerateFiles(directory, "*.json").Select(path =>
-            {
-                var bytes = File.ReadAllBytes(path);
-                var repositoryPath = RepoPath.CreateKnown(
-                    $"{FrozenLedgerChangeClassifier.AcceptedRoot}/{Path.GetFileName(path)}");
-                return new RepositoryFile(
-                    repositoryPath,
-                    ImmutableArray.CreateRange(bytes),
-                    Encoding.UTF8.GetString(bytes));
-            }),
-            label,
-            preferredIdentityPrefix);
+    internal static FrozenLedgerSyntax LoadLedgerDirectory(string directory, string label) =>
+        LoadLedgerFiles(ReadLedgerDirectoryFiles(directory), label);
+
+    internal static ImmutableArray<RepositoryFile> ReadLedgerDirectoryFiles(string directory) =>
+        Directory.EnumerateFiles(directory, "*.json").Select(path =>
+        {
+            var bytes = File.ReadAllBytes(path);
+            var repositoryPath = RepoPath.CreateKnown(
+                $"{FrozenLedgerChangeClassifier.AcceptedRoot}/{Path.GetFileName(path)}");
+            return new RepositoryFile(
+                repositoryPath,
+                ImmutableArray.CreateRange(bytes),
+                Encoding.UTF8.GetString(bytes));
+        }).ToImmutableArray();
 
     internal static FrozenLedgerSyntax LoadLedgerFiles(
         IEnumerable<RepositoryFile> files,

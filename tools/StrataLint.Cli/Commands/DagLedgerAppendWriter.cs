@@ -1,5 +1,5 @@
 using System.Collections.Immutable;
-using System.Runtime.ExceptionServices;
+using System.Text;
 using System.Text.Json;
 using System.Text.Json.Nodes;
 using StrataLint.Engine;
@@ -8,18 +8,6 @@ namespace StrataLint.Cli;
 
 internal static class DagLedgerAppendWriter
 {
-    internal sealed record PublishedRollback(
-        ImmutableArray<string> RolledBackPaths,
-        string? StoppedPath,
-        Exception? Failure);
-
-    private sealed record PendingEvent(
-        string EventType,
-        string ModulePath,
-        string Identity,
-        string FinalPath,
-        ImmutableArray<byte> Bytes);
-
     internal static CommandResult Append(
         string repositoryRoot,
         IRepositoryGateway repository,
@@ -73,12 +61,11 @@ internal static class DagLedgerAppendWriter
                 throw new InvalidOperationException("accepted event files changed while ledger-append was validating them");
             }
 
-            var scratchWarning = WriteNewEvents(
+            WriteNewEvents(
                 context.LedgerPath,
                 candidateSyntax.Lines,
                 context.Baseline.Events.Length,
-                expectedBaselineBytes: context.BaselineBytes,
-                expectedWrittenBytes: candidateBytes);
+                context.BaselineBytes);
             var appended = candidate.Events.Skip(context.Baseline.Events.Length).ToImmutableArray();
             var reattests = appended
                 .OfType<FrozenLedgerEvent.Reattest>()
@@ -91,7 +78,7 @@ internal static class DagLedgerAppendWriter
                 + string.Concat(reattests.Select(item =>
                     $"REATTESTED {context.Baseline.ActiveEntries[item.Payload.CaseId].Material.RepoPath.Value}\n"))
                 + string.Concat(freezes.Select(static item => $"FROZEN {item.Payload.NodePath.Value}\n"));
-            return new CommandResult(true, output, scratchWarning);
+            return new CommandResult(true, output, string.Empty);
         }
         // Preparation marks report and repository faults now. Without these two the wrapped
         // forms escape this catch and the command loses its own diagnostic.
@@ -113,30 +100,22 @@ internal static class DagLedgerAppendWriter
         }
     }
 
-    internal static string WriteNewEvents(
+    internal static void WriteNewEvents(
         string directory,
         IEnumerable<FrozenLedgerLineSyntax> lines,
         int skip = 0,
-        byte[]? expectedBaselineBytes = null,
-        ImmutableArray<byte>? expectedWrittenBytes = null)
+        byte[]? expectedBaselineBytes = null) =>
+        WriteEventFiles(
+            directory,
+            BuildNewEventFiles(lines, skip),
+            expectedBaselineBytes);
+
+    internal static ImmutableArray<RepositoryFile> BuildNewEventFiles(
+        IEnumerable<FrozenLedgerLineSyntax> lines,
+        int skip = 0)
     {
-        Directory.CreateDirectory(directory);
-        var lockPath = Path.Combine(directory, ".ledger-write.lock");
-        using var publicationLock = AcquirePublicationLock(lockPath);
-        if (expectedBaselineBytes is not null
-            && !DagLedgerCommandPreparation.LoadLedgerDirectory(
-                    directory,
-                    "existing frozen ledger").RawBytes.AsSpan().SequenceEqual(expectedBaselineBytes))
-        {
-            throw new InvalidOperationException(
-                "accepted event files changed while the ledger command was validating them");
-        }
-
-        ReapStaleStagingDirectories(directory);
-
+        var files = ImmutableArray.CreateBuilder<RepositoryFile>();
         var linearToDagHash = new Dictionary<string, string>(StringComparer.Ordinal);
-        var expectedIdentityOrder = ImmutableArray.CreateBuilder<string>();
-        var pending = ImmutableArray.CreateBuilder<PendingEvent>();
         var sequence = 0;
         foreach (var line in lines)
         {
@@ -153,142 +132,99 @@ internal static class DagLedgerAppendWriter
                 eventType,
                 payload);
             linearToDagHash.Add(line.Value.GetProperty("event_hash").GetString()!, encoded.Hash);
-            var identity = FrozenLedgerCanonicalWriter.EventIdentity(
-                eventType,
-                payload,
-                encoded.Hash);
-            expectedIdentityOrder.Add(identity);
             if (sequence++ < skip)
             {
                 continue;
             }
 
-            pending.Add(new PendingEvent(
+            var identity = FrozenLedgerCanonicalWriter.EventIdentity(
                 eventType,
-                EventModulePath(eventType, payload),
-                identity,
-                Path.Combine(directory, identity[7..] + ".json"),
-                encoded.Bytes));
+                payload,
+                encoded.Hash);
+            var path = RepoPath.CreateKnown(
+                $"{FrozenLedgerChangeClassifier.AcceptedRoot}/{identity[7..]}.json");
+            files.Add(new RepositoryFile(
+                path,
+                encoded.Bytes,
+                Encoding.UTF8.GetString(encoded.Bytes.AsSpan())));
         }
 
-        var planned = pending.ToImmutable();
-        foreach (var duplicate in planned.GroupBy(static item => item.FinalPath, StringComparer.Ordinal)
-            .Where(static group => group.Count() > 1))
+        return files.ToImmutable();
+    }
+
+    internal static void WriteEventFiles(
+        string directory,
+        IEnumerable<RepositoryFile> files,
+        byte[]? expectedBaselineBytes = null)
+    {
+        var lockPath = Path.Combine(directory, ".ledger-write.lock");
+        using var publicationLock = AcquirePublicationLock(lockPath);
+        if (expectedBaselineBytes is not null
+            && !DagLedgerCommandPreparation.LoadLedgerDirectory(
+                    directory,
+                    "existing frozen ledger").RawBytes.AsSpan().SequenceEqual(expectedBaselineBytes))
         {
-            var modules = string.Join(", ", duplicate.Select(static item => item.ModulePath));
-            throw new IOException(
-                $"Cannot publish frozen-ledger batch because identity {duplicate.First().Identity} "
-                + $"is planned more than once for modules {modules}.");
+            throw new InvalidOperationException(
+                "accepted event files changed while the ledger command was validating them");
         }
 
-        foreach (var item in planned)
-        {
-            if (File.Exists(item.FinalPath))
-            {
-                throw ShardCollision(item);
-            }
-        }
-
+        ReapStaleStagingDirectories(directory);
+        var planned = files.ToImmutableArray();
         if (planned.IsEmpty)
         {
-            return string.Empty;
+            return;
         }
 
-        // A filesystem has no atomic commit spanning these shard renames. The lock serializes the
-        // publication phase; read/validate remains optimistic, with the in-lock baseline comparison
-        // above closing that window. Suffix-only compensation makes each publication a restartable
-        // prefix transaction: at every externally recoverable failure the directory is a valid prefix.
         var stagingDirectory = Path.Combine(directory, $".ledger-stage-{Guid.NewGuid():N}");
-        var published = new List<string>(planned.Length);
+        var createdPaths = new Stack<string>();
         try
         {
             Directory.CreateDirectory(stagingDirectory);
-            foreach (var item in planned)
+            foreach (var file in planned)
             {
-                var stagedPath = Path.Combine(stagingDirectory, Path.GetFileName(item.FinalPath));
+                var stagedPath = Path.Combine(stagingDirectory, Path.GetFileName(file.Path.Value));
                 using var stream = new FileStream(
                     stagedPath,
                     FileMode.CreateNew,
                     FileAccess.Write,
                     FileShare.None);
-                stream.Write(item.Bytes.AsSpan());
+                stream.Write(file.RawBytes.AsSpan());
                 stream.Flush(flushToDisk: true);
             }
 
-            foreach (var item in planned)
+            foreach (var file in planned)
             {
-                var stagedPath = Path.Combine(stagingDirectory, Path.GetFileName(item.FinalPath));
-                try
-                {
-                    File.Move(stagedPath, item.FinalPath);
-                    published.Add(item.FinalPath);
-                }
-                catch (IOException) when (File.Exists(item.FinalPath))
-                {
-                    throw ShardCollision(item);
-                }
+                var fileName = Path.GetFileName(file.Path.Value);
+                var stagedPath = Path.Combine(stagingDirectory, fileName);
+                var finalPath = Path.Combine(directory, fileName);
+                File.Move(stagedPath, finalPath);
+                createdPaths.Push(finalPath);
             }
 
-            if (expectedWrittenBytes is { } expected
-                && !DagLedgerCommandPreparation.LoadLedgerDirectory(
-                        directory,
-                        "written frozen ledger",
-                        expectedIdentityOrder.ToImmutable()).RawBytes.AsSpan()
-                    .SequenceEqual(expected.AsSpan()))
-            {
-                throw new InvalidOperationException(
-                    "written frozen-ledger events do not replay to the validated candidate bytes");
-            }
+            Directory.Delete(stagingDirectory);
         }
-        catch (Exception failure)
+        catch
         {
-            var rollback = RollbackPublishedPrefix(published);
-            var scratchFailure = CleanupAfterFailedPublication(stagingDirectory);
-            if (rollback.Failure is not null || scratchFailure is not null)
-            {
-                throw PublicationFailure(failure, published, rollback, scratchFailure);
-            }
-
-            ExceptionDispatchInfo.Capture(failure).Throw();
+            RollbackCreatedFiles(createdPaths);
+            CleanupStagingDirectory(stagingDirectory);
             throw;
         }
-
-        // All shard moves have completed at this point. Scratch cleanup is operational hygiene,
-        // not part of the ledger commit point, and must never roll a successful publication back.
-        return CleanupAfterSuccessfulPublication(stagingDirectory);
     }
 
-    internal static PublishedRollback RollbackPublishedPrefix(IReadOnlyList<string> published)
+    internal static void RollbackCreatedFiles(IEnumerable<string> createdPaths)
     {
-        var rolledBack = ImmutableArray.CreateBuilder<string>();
-        for (var index = published.Count - 1; index >= 0; index--)
+        foreach (var path in createdPaths)
         {
-            var path = published[index];
             try
             {
                 File.Delete(path);
-                rolledBack.Add(path);
             }
-            catch (Exception failure) when (failure is IOException or UnauthorizedAccessException)
+            catch (IOException)
             {
-                return new PublishedRollback(rolledBack.ToImmutable(), path, failure);
             }
-        }
-
-        return new PublishedRollback(rolledBack.ToImmutable(), null, null);
-    }
-
-    internal static string CleanupAfterSuccessfulPublication(string stagingDirectory)
-    {
-        try
-        {
-            Directory.Delete(stagingDirectory);
-            return string.Empty;
-        }
-        catch (Exception failure) when (failure is IOException or UnauthorizedAccessException)
-        {
-            return "LEDGER_SCRATCH_CLEANUP_FAILED publication_succeeded=true scratch="
-                + $"{stagingDirectory}: {failure.Message}\n";
+            catch (UnauthorizedAccessException)
+            {
+            }
         }
     }
 
@@ -325,21 +261,11 @@ internal static class DagLedgerAppendWriter
             ".ledger-stage-*",
             SearchOption.TopDirectoryOnly))
         {
-            try
-            {
-                Directory.Delete(stagingDirectory, recursive: true);
-            }
-            catch (Exception failure) when (failure is IOException or UnauthorizedAccessException)
-            {
-                throw new IOException(
-                    "LEDGER_SCRATCH_CLEANUP_FAILED publication_succeeded=false stale_scratch="
-                    + $"{stagingDirectory}: {failure.Message}",
-                    failure);
-            }
+            Directory.Delete(stagingDirectory, recursive: true);
         }
     }
 
-    private static Exception? CleanupAfterFailedPublication(string stagingDirectory)
+    private static void CleanupStagingDirectory(string stagingDirectory)
     {
         try
         {
@@ -347,90 +273,12 @@ internal static class DagLedgerAppendWriter
             {
                 Directory.Delete(stagingDirectory, recursive: true);
             }
-
-            return null;
         }
-        catch (Exception failure) when (failure is IOException or UnauthorizedAccessException)
+        catch (IOException)
         {
-            return failure;
+        }
+        catch (UnauthorizedAccessException)
+        {
         }
     }
-
-    internal static IOException PublicationFailure(
-        Exception publicationFailure,
-        IReadOnlyList<string> published,
-        PublishedRollback rollback,
-        Exception? scratchFailure)
-    {
-        var messages = new List<string>();
-        if (rollback.Failure is not null)
-        {
-            var retainedCount = published.Count - rollback.RolledBackPaths.Length;
-            messages.Add(
-                "LEDGER_ROLLBACK_INCOMPLETE frozen-ledger batch publication failed and rollback "
-                + "was incomplete; deletion stopped before any earlier shard was touched. "
-                + $"published={RenderPaths(published)} "
-                + $"rolled_back={RenderPaths(rollback.RolledBackPaths)} "
-                + $"rollback_stopped_at={Path.GetFileName(rollback.StoppedPath!)} "
-                + $"retained_prefix={RenderPaths(published.Take(retainedCount))}");
-        }
-
-        if (scratchFailure is not null)
-        {
-            messages.Add(
-                "LEDGER_SCRATCH_CLEANUP_FAILED publication_succeeded=false scratch directory "
-                + $"could not be removed: {scratchFailure.Message}");
-        }
-
-        var causes = new List<Exception> { publicationFailure };
-        if (rollback.Failure is not null)
-        {
-            causes.Add(rollback.Failure);
-        }
-
-        if (scratchFailure is not null)
-        {
-            causes.Add(scratchFailure);
-        }
-
-        return new IOException(
-            string.Join(' ', messages),
-            new AggregateException(causes));
-    }
-
-    private static string RenderPaths(IEnumerable<string> paths) =>
-        "[" + string.Join(',', paths.Select(Path.GetFileName)) + "]";
-
-    // OPEN(#1770 A3): frozen-node identity is not injective over ledger events, so returning to
-    // prior frozen bytes can collide. Recovery guidance needs a separate design; do not treat
-    // byte churn in Lean source as the resolved naming protocol.
-    private static IOException ShardCollision(PendingEvent item) => new(
-        $"Cannot publish {item.EventType} for module {item.ModulePath}: frozen-ledger shard "
-        + $"{Path.GetFileName(item.FinalPath)} already exists, so frozen-node identity "
-        + $"{item.Identity} was previously recorded (for example, the module returned to an "
-        + "earlier frozen byte state). Use a byte-distinct Closed representation and rerun the "
-        + "ledger command; do not delete or rewrite the accepted shard.");
-
-    private static string EventModulePath(string eventType, JsonElement payload)
-    {
-        if (eventType == "Freeze"
-            && payload.TryGetProperty("node_path", out var nodePath))
-        {
-            return nodePath.GetString()!;
-        }
-
-        var inputName = eventType == FrozenLedger.EnvironmentRecoordinateEventType
-            ? "new_input"
-            : "input";
-        if (payload.TryGetProperty(inputName, out var input)
-            && input.TryGetProperty("descriptor_selector", out var selector))
-        {
-            return selector.GetString()!;
-        }
-
-        return payload.TryGetProperty("case_id", out var caseId)
-            ? $"case {caseId.GetString()}"
-            : eventType;
-    }
-
 }

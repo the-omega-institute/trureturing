@@ -60,12 +60,11 @@ internal static class DagLedgerSyncWriter
                     "accepted event files changed while ledger-sync was validating them");
             }
 
-            var scratchWarning = DagLedgerAppendWriter.WriteNewEvents(
+            DagLedgerAppendWriter.WriteNewEvents(
                 context.LedgerPath,
                 candidateSyntax.Lines,
                 context.Baseline.Events.Length,
-                expectedBaselineBytes: context.BaselineBytes,
-                expectedWrittenBytes: candidateBytes);
+                context.BaselineBytes);
 
             var suffix = candidate.Events.Skip(context.Baseline.Events.Length).ToImmutableArray();
             var reattests = suffix.OfType<FrozenLedgerEvent.Reattest>().ToImmutableArray();
@@ -76,7 +75,7 @@ internal static class DagLedgerSyncWriter
                 + string.Concat(reattests.Select(item =>
                     $"REATTESTED {context.Baseline.ActiveEntries[item.Payload.CaseId].Material.RepoPath.Value}\n"))
                 + string.Concat(freezes.Select(static item => $"FROZEN {item.Payload.NodePath.Value}\n"));
-            return new CommandResult(true, output, scratchWarning);
+            return new CommandResult(true, output, string.Empty);
         }
         catch (Exception exception) when (
             exception is ArgumentException

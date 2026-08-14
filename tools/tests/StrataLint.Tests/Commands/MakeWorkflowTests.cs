@@ -12,6 +12,8 @@ public sealed partial class MakeWorkflowTests
     private const string LocalHarnessGateScriptPath =
         "tools/scripts/local-harness-gate.sh";
     private const string PreflightScriptPath = "tools/scripts/preflight.sh";
+    private const string ScribeContentChecksScriptPath =
+        "tools/scripts/workflow/scribe-content-checks.sh";
     private const string CleanLanesScriptPath = "tools/scripts/clean-lanes.sh";
     private const string WorktreeInitScriptPath = "tools/scripts/worktree-init.sh";
     private const string LeanReportScriptPath =

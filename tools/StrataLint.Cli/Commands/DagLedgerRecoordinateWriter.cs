@@ -84,12 +84,11 @@ internal static class DagLedgerRecoordinateWriter
                     "accepted event files changed while ledger-recoordinate was validating them");
             }
 
-            var scratchWarning = DagLedgerAppendWriter.WriteNewEvents(
+            DagLedgerAppendWriter.WriteNewEvents(
                 context.LedgerPath,
                 candidateSyntax.Lines,
                 context.Baseline.Events.Length,
-                expectedBaselineBytes: context.BaselineBytes,
-                expectedWrittenBytes: generation.Bytes);
+                context.BaselineBytes);
             var appended = candidate.Events
                 .Skip(context.Baseline.Events.Length)
                 .OfType<FrozenLedgerEvent.EnvironmentRecoordinate>()
@@ -100,7 +99,7 @@ internal static class DagLedgerRecoordinateWriter
                 + $"events={candidate.Events.Length} head={candidate.HeadHash}\n"
                 + string.Concat(generation.RecoordinatedPaths.Select(static path =>
                     $"RECOORDINATED {path.Value}\n"));
-            return new CommandResult(true, output, scratchWarning);
+            return new CommandResult(true, output, string.Empty);
         }
         catch (Exception exception) when (
             exception is ArgumentException
