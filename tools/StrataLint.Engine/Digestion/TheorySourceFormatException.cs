@@ -175,7 +175,7 @@ internal static class MarkdownBlockAst
         return new(line.Start, line.End, line.Text, FirstCellPlainText(firstCellSourceText), firstCellSourceText);
     }
 
-    private static string FirstCellSourceText(string row)
+    internal static string FirstCellSourceText(string row)
     {
         var value = row.Trim();
         if (value.StartsWith('|')) value = value[1..];
@@ -184,7 +184,7 @@ internal static class MarkdownBlockAst
         return value.Trim();
     }
 
-    private static string FirstCellPlainText(string value)
+    internal static string FirstCellPlainText(string value)
     {
         while (value.Length >= 4
             && (value.StartsWith("**", StringComparison.Ordinal)

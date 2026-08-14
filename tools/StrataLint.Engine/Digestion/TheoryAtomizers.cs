@@ -385,16 +385,23 @@ internal static class MarkdownAstAtomizer
 {
     private static readonly UTF8Encoding StrictUtf8 = new(false, true);
 
+    /// <summary>
+    /// <paramref name="parse"/> selects the block AST. It defaults to the line scanner
+    /// because the registered dialects' receipts are content-addressed over the boundaries
+    /// that scanner produces; only the default atomizer, which has no receipts to preserve,
+    /// passes a different one.
+    /// </summary>
     internal static AtomizedTheoryDocument Atomize(
         ReadOnlySpan<byte> bytes,
         Func<string, string?> identify,
         Func<string, string?>? identifyFirstTableCell = null,
         Func<string, string?>? identifyHeading = null,
-        Func<string, string?>? identifyFirstTableCellSource = null)
+        Func<string, string?>? identifyFirstTableCellSource = null,
+        Func<string, ImmutableArray<MarkdownBlock>>? parse = null)
     {
         var raw = bytes.ToArray();
         var text = StrictUtf8.GetString(raw);
-        var blocks = MarkdownBlockAst.Parse(text);
+        var blocks = (parse ?? MarkdownBlockAst.Parse)(text);
         var headings = new List<DigestionContext>();
         var candidates = new List<Candidate>();
         var headingStarts = new List<int>();

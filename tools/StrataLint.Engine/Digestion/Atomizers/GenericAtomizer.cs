@@ -53,7 +53,8 @@ internal static class GenericAtomizer
         MarkdownAstAtomizer.Atomize(
             bytes,
             IdentifyParagraph,
-            identifyHeading: IdentifyHeading);
+            identifyHeading: IdentifyHeading,
+            parse: MarkdigBlockAst.Parse);
 
     private static string? IdentifyHeading(string heading)
     {
