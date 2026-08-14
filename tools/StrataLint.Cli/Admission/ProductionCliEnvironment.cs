@@ -517,13 +517,6 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
     public CommandResult RenderDag(IReadOnlyList<string> arguments) =>
         DagRenderCommand.Run(repositoryRoot, repository, leanReportSource, arguments);
 
-    public CommandResult GenerateLedger(IReadOnlyList<string> arguments) =>
-        DagLedgerGenesisWriter.Generate(
-            repositoryRoot,
-            repository,
-            leanReportSource,
-            arguments);
-
     public CommandResult AppendLedger(IReadOnlyList<string> arguments) =>
         DagLedgerAppendWriter.Append(repositoryRoot, repository, arguments);
 

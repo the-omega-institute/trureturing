@@ -8,7 +8,6 @@ namespace StrataLint.Tests;
 public sealed class LeanReportInputScriptTests
 {
     private const string InputHelperPath = "tools/scripts/report/lean-report-input.sh";
-    private const string MergeCommandPath = "tools/StrataLint.Cli/Commands/LeanReport/LeanReportMergeCommand.cs";
     private const string RawReportPath = "tools/StrataLint.Engine/Snapshot/RawLeanReportArtifact.cs";
     private const string CanonicalWriterPath = "tools/StrataLint.Engine/Snapshot/StructuredCanonicalWriter.cs";
     private const string LeanModelsPath = "tools/StrataLint.Engine/Snapshot/LeanModels.cs";
@@ -154,7 +153,6 @@ public sealed class LeanReportInputScriptTests
     [InlineData("inspector")]
     [InlineData("inspector-script")]
     [InlineData("input-helper")]
-    [InlineData("merge-cli")]
     [InlineData("raw-report")]
     [InlineData("canonical-writer")]
     public void RepositoryInputDriftMakesAnExistingReportStale(string mutation)
@@ -202,7 +200,9 @@ public sealed class LeanReportInputScriptTests
             Write(inspectorScriptPath, "#!/usr/bin/env bash\n");
             Write(inspectorSourcePath, "def fixture : True := by trivial\n");
             Write(InputHelperPath, "#!/usr/bin/env bash\n");
-            Write(MergeCommandPath, "// fixture\n");
+            // Cli 工程必须至少有一个编译项:零编译项会让 helper 的 msbuild 求值退化,
+            // producer 分量对 Engine 源失敏(阶段 7 删 MergeCommand 桩后实测)。
+            Write("tools/StrataLint.Cli/Commands/FixtureProbe.cs", "// fixture\n");
             Write(RawReportPath, "// fixture\n");
             Write(CanonicalWriterPath, "// fixture\n");
             Write(LeanModelsPath, "// fixture\n");
@@ -287,7 +287,6 @@ public sealed class LeanReportInputScriptTests
                 "inspector" => inspectorSourcePath,
                 "inspector-script" => inspectorScriptPath,
                 "input-helper" => InputHelperPath,
-                "merge-cli" => MergeCommandPath,
                 "raw-report" => RawReportPath,
                 "canonical-writer" => CanonicalWriterPath,
                 _ => throw new InvalidOperationException($"unknown mutation {mutation}"),

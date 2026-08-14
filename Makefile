@@ -2,11 +2,11 @@ SHELL := /bin/bash
 .DEFAULT_GOAL := help
 
 BASE ?= origin/dev
-WORKTREE_PATH = $(if $(filter command line,$(origin PATH)),$(PATH),$(abspath ../trureturing-$(NAME)))
+WORKTREE_DEST = $(if $(DEST),$(abspath $(DEST)),$(abspath ../trureturing-$(NAME)))
 .PHONY: help test lean-cache-ensure lean lean-report build emit ingest echo-residual-summary show-atom deliver-check receipts-stage derived-refresh deposit cover worktree pr-open preflight gate
 
 help:
-	@printf '%s\n' 'make help                         Show this target list' 'make test                         Run the mathematical gate (Lean, admission, Scribe, values)' 'make lean-cache-ensure            Ensure a private Lean build cache is available' 'make lean                         Build the pinned Lean project' 'make lean-report                  Produce the canonical raw Lean report' 'make build                        Build the pinned Lean content' 'make emit                         Emit canonical Scribe documents, catalog, and values' 'make ingest [BASE=origin/dev]     Consume the raw Lean report and align theory receipts' 'make echo-residual-summary [BASE=origin/dev]  Emit the content-addressed residual projection bytes' 'make show-atom ATOM_ID=x          Print and verify one digestion atom without writing' 'make deliver-check [BASE=origin/dev]  Run theorem delivery in canonical freeze-last order' 'make receipts-stage [BASE=origin/dev]  Re-derive staged receipts and reject unsafe absorption' 'make derived-refresh [BASE=origin/dev]  Merge base and refresh all derived artifacts' 'make deposit ATOM_ID=x GID=g [BASE=origin/dev]  Deposit theorem, freeze, and receipt in two commits' 'make cover ATOM_ID=x GID=g [BASE=origin/dev]  Cover an atom and align its post-cover receipt' 'make worktree NAME=x [BASE=origin/dev] [PATH=DIR]  Initialize an isolated worktree; .lake is copied, never symlinked' 'make pr-open HEAD=branch TITLE=t [BODY=file]  Open a PR to dev and arm auto-merge' 'make preflight [BASE=origin/dev]  Pre-verify BOTH required CI checks locally before pushing' 'make gate [BASE=origin/dev]       Run the local CI-equivalent admission flow'
+	@printf '%s\n' 'make help                         Show this target list' 'make test                         Run the mathematical gate (Lean, admission, Scribe, values)' 'make lean-cache-ensure            Ensure a private Lean build cache is available' 'make lean                         Build the pinned Lean project' 'make lean-report                  Produce the canonical raw Lean report' 'make build                        Build the pinned Lean content' 'make emit                         Emit canonical Scribe documents, catalog, and values' 'make ingest [BASE=origin/dev]     Consume the raw Lean report and align theory receipts' 'make echo-residual-summary [BASE=origin/dev]  Emit the content-addressed residual projection bytes' 'make show-atom ATOM_ID=x          Print and verify one digestion atom without writing' 'make deliver-check [BASE=origin/dev]  Run theorem delivery in canonical freeze-last order' 'make receipts-stage [BASE=origin/dev]  Re-derive staged receipts and reject unsafe absorption' 'make derived-refresh [BASE=origin/dev]  Merge base and refresh all derived artifacts' 'make deposit ATOM_ID=x GID=g [BASE=origin/dev]  Deposit theorem, freeze, and receipt in two commits' 'make cover ATOM_ID=x GID=g [BASE=origin/dev]  Cover an atom and align its post-cover receipt' 'make worktree NAME=x [BASE=origin/dev] [DEST=DIR]  Initialize an isolated worktree; .lake is copied, never symlinked' 'make pr-open HEAD=branch TITLE=t [BODY=file]  Open a PR to dev and arm auto-merge' 'make preflight [BASE=origin/dev]  Pre-verify BOTH required CI checks locally before pushing' 'make gate [BASE=origin/dev]       Run the local CI-equivalent admission flow'
 
 test: lean-cache-ensure
 	@/bin/bash tools/scripts/workflow/math-gate.sh
@@ -50,13 +50,13 @@ cover:
 	@/bin/bash tools/scripts/workflow/playbook-workflows.sh cover "$(BASE)" "$(ATOM_ID)" "$(GID)"
 
 worktree:
-	@/bin/bash tools/scripts/worktree-init.sh "$(NAME)" "$(WORKTREE_PATH)" "$(BASE)"
+	@/bin/bash tools/scripts/worktree-init.sh "$(NAME)" "$(WORKTREE_DEST)" "$(BASE)"
 
 pr-open:
 	@/bin/bash tools/scripts/pr.sh open --head "$(HEAD)" --title "$(TITLE)" $(if $(BODY),--body-file "$(BODY)",)
 
 preflight:
-	@/bin/bash tools/scripts/preflight.sh
+	@BASE="$(BASE)" /bin/bash tools/scripts/preflight.sh
 
 gate:
 	@/bin/bash tools/scripts/local-harness-gate.sh --base "$(BASE)" $(GATE_ARGS)
