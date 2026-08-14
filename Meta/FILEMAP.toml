@@ -312,6 +312,15 @@ artifact_id = "none"
 runtime_disposition = "committed-source"
 
 [[files]]
+pattern = "Meta/Digestion/fidelity-attestations/**/*.v1.json"
+kind = "ledger"
+produced_by = "none"
+consumed_by = ["DigestionFidelityAttestationChecker"]
+verified_by = ["DigestionFidelityAttestationChecker"]
+artifact_id = "none"
+runtime_disposition = "committed-ledger"
+
+[[files]]
 pattern = "Meta/Digestion/formalizations/*.v1.json"
 kind = "ledger"
 produced_by = "EmitFormalizationReceiptCommand"

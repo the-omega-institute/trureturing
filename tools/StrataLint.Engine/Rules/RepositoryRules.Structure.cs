@@ -94,6 +94,7 @@ internal static partial class RepositoryRules
         || DigestionCasStore.IsCanonicalPath(path)
         || FrozenLedgerChangeClassifier.IsAcceptedEventPath(path)
         || path.StartsWith(DigestionFormalizationReceipt.RootPath, StringComparison.Ordinal)
+        || path.StartsWith(DigestionFidelityAttestation.RootPath, StringComparison.Ordinal)
         || (path.StartsWith("Blueprint/", StringComparison.Ordinal)
             && path.EndsWith(".md", StringComparison.Ordinal));
 
