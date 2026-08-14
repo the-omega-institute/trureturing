@@ -257,11 +257,16 @@ internal static partial class RepositoryRules
             .Where(static path => path is not null)
             .Select(static path => path!)
             .ToImmutableHashSet(StringComparer.Ordinal);
+        var addedEventPaths = context.Changes.Entries
+            .Where(static change => change.Kind == RawChangeKind.Added
+                && FrozenLedgerChangeClassifier.IsAcceptedEventPath(change.Path.Value))
+            .Select(static change => change.Path)
+            .ToImmutableHashSet();
         if (context.Changes.Paths.Any(static path => IsFrozenEnvironmentPin(path.Value)))
         {
             try
             {
-                findings.AddRange(FrozenStatementIdentityDrift(context, events));
+                findings.AddRange(FrozenStatementIdentityDrift(context, events, addedEventPaths));
             }
             catch (FormatException exception)
             {
@@ -271,11 +276,6 @@ internal static partial class RepositoryRules
             }
         }
 
-        var addedEventPaths = context.Changes.Entries
-            .Where(static change => change.Kind == RawChangeKind.Added
-                && FrozenLedgerChangeClassifier.IsAcceptedEventPath(change.Path.Value))
-            .Select(static change => change.Path)
-            .ToImmutableHashSet();
         var reattestedPaths = events
             .Where(item => item.EventType == "Reattest"
                 && addedEventPaths.Contains(item.SourcePath))
@@ -316,33 +316,49 @@ internal static partial class RepositoryRules
 
     private static ImmutableArray<RuleFinding> FrozenStatementIdentityDrift(
         RuleEvaluationContext context,
-        ImmutableArray<DagLedgerFileEvent> events)
+        ImmutableArray<DagLedgerFileEvent> events,
+        ImmutableHashSet<RepoPath> addedEventPaths)
     {
+        var addedRecoordinates = events
+            .Where(item => item.EventType == "EnvironmentRecoordinate"
+                && addedEventPaths.Contains(item.SourcePath))
+            .Select(static item => FrozenLedger.ParseEnvironmentRecoordinate(item.Payload))
+            .ToImmutableArray();
         var supersededAttestations = events
-            .Where(static item => item.EventType == "Reattest")
+            .Where(item => item.EventType == "Reattest"
+                || item.EventType == "EnvironmentRecoordinate"
+                    && !addedEventPaths.Contains(item.SourcePath))
             .Select(static item => RequiredLedgerString(item.Payload, "previous_attestation_event_hash"))
             .ToImmutableHashSet(StringComparer.Ordinal);
         var revokedNodeIds = events
             .Where(static item => item.EventType == "Revoke")
             .SelectMany(static item => RequiredLedgerStringArray(item.Payload, "affected_frozen_node_ids"))
             .ToImmutableHashSet(StringComparer.Ordinal);
-        var activeByPath = new Dictionary<string, ImmutableArray<FrozenDeclarationStatement>>(
+        var activeByPath = new Dictionary<string, ActiveFrozenStatementIdentity>(
             StringComparer.Ordinal);
         foreach (var attestation in events
-            .Where(static item => item.EventType is "Freeze" or "Reattest")
+            .Where(item => item.EventType is "Freeze" or "Reattest"
+                || item.EventType == "EnvironmentRecoordinate"
+                    && !addedEventPaths.Contains(item.SourcePath))
             .Where(item => !supersededAttestations.Contains(item.EventHash)
                 && !revokedNodeIds.Contains(item.Identity)))
         {
             var path = attestation.Input?.DescriptorSelector
                 ?? throw new FormatException("active frozen attestation is missing descriptor_selector.");
-            if (!activeByPath.TryAdd(path, FrozenLedger.ParseDeclarationStatementIds(attestation.Payload)))
+            var declarations = attestation.EventType == "EnvironmentRecoordinate"
+                ? FrozenLedger.ParseEnvironmentRecoordinate(attestation.Payload).NewDeclarationStatementIds
+                : FrozenLedger.ParseDeclarationStatementIds(attestation.Payload);
+            if (!activeByPath.TryAdd(path, new ActiveFrozenStatementIdentity(
+                declarations,
+                attestation.EventHash,
+                attestation.Identity)))
             {
                 throw new FormatException($"multiple active frozen attestations target {path}.");
             }
         }
 
         var findings = ImmutableArray.CreateBuilder<RuleFinding>();
-        foreach (var (pathText, expected) in activeByPath.OrderBy(
+        foreach (var (pathText, active) in activeByPath.OrderBy(
             static item => item.Key,
             StringComparer.Ordinal))
         {
@@ -354,8 +370,9 @@ internal static partial class RepositoryRules
             var actual = context.Lean.Report.Files.TryGetValue(path, out var report)
                 ? CanonicalStatementWriter.DeclarationStatementIds(path, report)
                 : ImmutableArray<FrozenDeclarationStatement>.Empty;
-            var driftCount = DeclarationStatementDriftCount(expected, actual);
-            if (driftCount > 0)
+            var driftCount = DeclarationStatementDriftCount(active.Declarations, actual);
+            if (driftCount > 0 && !addedRecoordinates.Any(payload =>
+                RecoordinatesActiveIdentity(payload, active, path, actual)))
             {
                 findings.Add(new RuleFinding(
                     pathText,
@@ -365,6 +382,27 @@ internal static partial class RepositoryRules
         }
 
         return findings.ToImmutable();
+    }
+
+    private static bool RecoordinatesActiveIdentity(
+        FrozenEnvironmentRecoordinatePayload payload,
+        ActiveFrozenStatementIdentity active,
+        RepoPath path,
+        ImmutableArray<FrozenDeclarationStatement> actual)
+    {
+        if (payload.NewInput.DescriptorSelector != path.Value
+            || payload.PreviousAttestationEventHash != active.EventHash
+            || payload.OldFrozenNodeId.Value != active.FrozenNodeIdentity
+            || !payload.OldDeclarationStatementIds.SequenceEqual(active.Declarations)
+            || !payload.NewDeclarationStatementIds.SequenceEqual(actual))
+        {
+            return false;
+        }
+
+        var actualStatementId = StatementId.Create(FrozenContentHash.Compute(
+            FrozenHashDomains.Statement,
+            CanonicalStatementWriter.WriteModule(path, actual).AsSpan()));
+        return payload.NewStatementId == actualStatementId;
     }
 
     private static int DeclarationStatementDriftCount(
@@ -383,6 +421,11 @@ internal static partial class RepositoryRules
                 || !actualByName.TryGetValue(name, out var actualDeclaration)
                 || expectedDeclaration != actualDeclaration);
     }
+
+    private sealed record ActiveFrozenStatementIdentity(
+        ImmutableArray<FrozenDeclarationStatement> Declarations,
+        string EventHash,
+        string FrozenNodeIdentity);
 
     private static string RequiredLedgerString(JsonElement value, string property)
     {
