@@ -118,9 +118,11 @@ internal static class DagLedgerAppendWriter
                 continue;
             }
 
-            var identity = payload.TryGetProperty("frozen_node_id", out var nodeId)
-                ? nodeId.GetString()!
-                : encoded.Hash;
+            var eventType = line.Value.GetProperty("event_type").GetString()!;
+            var identity = FrozenLedgerCanonicalWriter.EventIdentity(
+                eventType,
+                payload,
+                encoded.Hash);
             var path = Path.Combine(directory, identity[7..] + ".json");
             using var stream = new FileStream(path, FileMode.CreateNew, FileAccess.Write, FileShare.None);
             stream.Write(encoded.Bytes.AsSpan());

@@ -223,6 +223,13 @@ internal static class DagLedgerCommandPreparation
                 "Freeze" => DependenciesPresent(item.Payload, "prerequisite_frozen_node_ids", identities),
                 "Reattest" => item.Payload.TryGetProperty("previous_attestation_event_hash", out var previous)
                     && hashes.Contains(previous.GetString()!),
+                FrozenLedger.EnvironmentRecoordinateEventType =>
+                    item.Payload.TryGetProperty("previous_attestation_event_hash", out var previous)
+                    && hashes.Contains(previous.GetString()!)
+                    && DependenciesPresent(
+                        item.Payload,
+                        "new_prerequisite_frozen_node_ids",
+                        identities),
                 "Revoke" => DependenciesPresent(item.Payload, "root_frozen_node_ids", identities),
                 _ => true,
             });
@@ -320,11 +327,23 @@ internal static class DagLedgerCommandPreparation
         var algorithm = originCommit.StartsWith("git-sha256:", StringComparison.Ordinal)
             ? HashAlgorithmName.SHA256
             : HashAlgorithmName.SHA1;
-        return new FrozenEnvironmentAttestation(
+        var lakefiles = new[] { "lakefile.toml", "lakefile.lean" }
+            .Where(path => snapshot.TryGetFile(path, out _))
+            .ToArray();
+        var result = new FrozenEnvironmentAttestation(
             originCommit,
             originTree,
             FrozenContentAddress.ComputeGitBlobOid(toolchain.RawBytes.AsSpan(), algorithm),
             FrozenContentAddress.ComputeGitBlobOid(manifest.RawBytes.AsSpan(), algorithm));
+        return lakefiles.Length == 1
+            ? result with
+        {
+            LakefilePath = lakefiles[0],
+            LakefileBlobOid = FrozenContentAddress.ComputeGitBlobOid(
+                snapshot.Files[RepoPath.CreateKnown(lakefiles[0])].RawBytes.AsSpan(),
+                algorithm),
+        }
+            : result;
     }
 
     /// Bytes that will not decode are a fault in the repository we were handed, not a verdict about

@@ -252,7 +252,7 @@ internal static partial class RepositoryRules
 
         var events = ((DagLedgerFilesLoadOutcome.Loaded)loadOutcome).Events;
         var frozenPaths = events
-            .Where(static item => item.EventType is "Freeze" or "Reattest")
+            .Where(static item => item.EventType is "Freeze" or "Reattest" or "EnvironmentRecoordinate")
             .Select(static item => item.Input?.DescriptorSelector)
             .Where(static path => path is not null)
             .Select(static path => path!)

@@ -155,9 +155,12 @@ public static partial class FrozenLedger
     }
 
     internal static ImmutableArray<FrozenDeclarationStatement> ParseDeclarationStatementIds(
-        JsonElement payload)
+        JsonElement payload) =>
+        ParseDeclarationStatementArray(payload.GetProperty("declaration_statement_ids"));
+
+    private static ImmutableArray<FrozenDeclarationStatement> ParseDeclarationStatementArray(
+        JsonElement value)
     {
-        var value = payload.GetProperty("declaration_statement_ids");
         if (value.ValueKind != JsonValueKind.Array)
         {
             throw new FormatException("declaration_statement_ids must be an array.");

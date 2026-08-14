@@ -44,11 +44,23 @@ internal static class DagLedgerGenesisWriter
             var algorithm = identity.CommitOid.StartsWith("git-sha256:", StringComparison.Ordinal)
                 ? HashAlgorithmName.SHA256
                 : HashAlgorithmName.SHA1;
-            var environment = new FrozenEnvironmentAttestation(
+            var lakefiles = new[] { "lakefile.toml", "lakefile.lean" }
+                .Where(path => snapshot.TryGetFile(path, out _))
+                .ToArray();
+            var baseEnvironment = new FrozenEnvironmentAttestation(
                 identity.CommitOid,
                 identity.TreeOid,
                 GitBlobOid(toolchain.RawBytes.AsSpan(), algorithm),
                 GitBlobOid(manifest.RawBytes.AsSpan(), algorithm));
+            var environment = lakefiles.Length == 1
+                ? baseEnvironment with
+            {
+                LakefilePath = lakefiles[0],
+                LakefileBlobOid = GitBlobOid(
+                    snapshot.Files[RepoPath.CreateKnown(lakefiles[0])].RawBytes.AsSpan(),
+                    algorithm),
+            }
+                : baseEnvironment;
             var attestations = dag.Nodes
                 .Where(static node => node.State is TruthState.Closed && node.ModuleName is not null)
                 .Select(node => new FrozenModuleAttestation(

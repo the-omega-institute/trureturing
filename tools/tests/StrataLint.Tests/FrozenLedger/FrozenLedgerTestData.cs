@@ -10,12 +10,28 @@ namespace StrataLint.Tests;
 
 internal static class FrozenLedgerTestData
 {
-    internal static FrozenMaterialCatalog BuildCatalog(params ModuleSpec[] modules)
+    internal static FrozenMaterialCatalog BuildCatalog(params ModuleSpec[] modules) =>
+        BuildCatalogWithEnvironment(
+            "leanprover/lean4:v4.24.0\n",
+            "[package]\nname = \"fixture\"\n",
+            "{}\n",
+            GitOid('a'),
+            GitOid('b'),
+            modules);
+
+    internal static FrozenMaterialCatalog BuildCatalogWithEnvironment(
+        string toolchain,
+        string lakefile,
+        string manifest,
+        string originCommitOid,
+        string originTreeOid,
+        params ModuleSpec[] modules)
     {
         var files = new Dictionary<string, string>(StringComparer.Ordinal)
         {
-            ["lean-toolchain"] = "leanprover/lean4:v4.24.0\n",
-            ["lake-manifest.json"] = "{}\n",
+            ["lean-toolchain"] = toolchain,
+            ["lakefile.toml"] = lakefile,
+            ["lake-manifest.json"] = manifest,
         };
         var reports = new Dictionary<string, LeanFileReport>(StringComparer.Ordinal);
         foreach (var module in modules)
@@ -28,7 +44,11 @@ internal static class FrozenLedgerTestData
                 module.Imports.Select(ModuleNameFor).ToImmutableArray(),
                 declarationNames
                     .Order(StringComparer.Ordinal)
-                    .Select(name => new LeanDeclaration(name, "theorem", "True", module.Axioms)
+                    .Select(name => new LeanDeclaration(
+                        name,
+                        module.Kind,
+                        module.StatementMaterial,
+                        module.Axioms)
                     {
                         NameKey = module.OpaqueNameKeys ? NameKeyFor(name) : $"ns(n0,{name.Length}:{name})",
                         IncludeInStatement = module.Excluded.IsDefaultOrEmpty
@@ -44,10 +64,14 @@ internal static class FrozenLedgerTestData
             LeanClosureValidator.Validate(snapshot, LeanAxiomReport.Create(reports))).Capability;
         var dag = Assert.IsType<DagBuildOutcome.Accepted>(AcyclicTruthDag.Build(snapshot, closure)).Capability;
         var environment = new FrozenEnvironmentAttestation(
-            GitOid('a'),
-            GitOid('b'),
+            originCommitOid,
+            originTreeOid,
             GitBlobOid(files["lean-toolchain"]),
-            GitBlobOid(files["lake-manifest.json"]));
+            GitBlobOid(files["lake-manifest.json"]))
+        {
+            LakefilePath = "lakefile.toml",
+            LakefileBlobOid = GitBlobOid(files["lakefile.toml"]),
+        };
         var attestations = modules.Select(module => new FrozenModuleAttestation(
             RepoPathFor(module.Name),
             GitBlobOid(module.Source))
@@ -118,7 +142,22 @@ internal static class FrozenLedgerTestData
             excluded is null
                 ? ImmutableArray<string>.Empty
                 : excluded.Order(StringComparer.Ordinal).ToImmutableArray(),
-            opaqueNameKeys);
+            opaqueNameKeys,
+            "theorem",
+            "True");
+
+    internal static ModuleSpec ModuleWithReport(
+        string name,
+        string source,
+        string statementMaterial,
+        IEnumerable<string>? axioms = null,
+        IEnumerable<string>? declarations = null,
+        string kind = "theorem") =>
+        Module(name, source, axioms: axioms, declarations: declarations) with
+        {
+            Kind = kind,
+            StatementMaterial = statementMaterial,
+        };
 
     /// Deliberately not derivable from the declaration name. A key an implementation could
     /// assemble from the selector would let it skip the report resolver entirely and still match.
@@ -200,7 +239,10 @@ internal static class FrozenLedgerTestData
         TrustedFrozenGitReferences.CreateForTrustedAdapter(
             FrozenLedger.ScanReferences(syntax) is FrozenLedgerReferenceScanOutcome.Accepted accepted
                 ? accepted.References.Inputs
-                : ImmutableArray<FrozenLedgerInput>.Empty);
+                : ImmutableArray<FrozenLedgerInput>.Empty,
+            FrozenLedger.ScanReferences(syntax) is FrozenLedgerReferenceScanOutcome.Accepted environmentAccepted
+                ? environmentAccepted.References.EnvironmentReferences
+                : ImmutableArray<FrozenEnvironmentReference>.Empty);
 
     internal static void AddLedgerFiles(
         IDictionary<string, string> files,
@@ -222,9 +264,10 @@ internal static class FrozenLedgerTestData
                 line.Value.GetProperty("event_type").GetString()!,
                 payload);
             linearToDagHash.Add(line.Value.GetProperty("event_hash").GetString()!, encoded.Hash);
-            var identity = payload.TryGetProperty("frozen_node_id", out var nodeId)
-                ? nodeId.GetString()!
-                : encoded.Hash;
+            var identity = FrozenLedgerCanonicalWriter.EventIdentity(
+                line.Value.GetProperty("event_type").GetString()!,
+                payload,
+                encoded.Hash);
             files[$"{FrozenLedgerChangeClassifier.AcceptedRoot}/{identity[7..]}.json"] =
                 Encoding.UTF8.GetString(encoded.Bytes.AsSpan());
         }
@@ -251,5 +294,7 @@ internal static class FrozenLedgerTestData
         string? BaseTreeOid,
         ImmutableArray<string> Declarations = default,
         ImmutableArray<string> Excluded = default,
-        bool OpaqueNameKeys = false);
+        bool OpaqueNameKeys = false,
+        string Kind = "theorem",
+        string StatementMaterial = "True");
 }
