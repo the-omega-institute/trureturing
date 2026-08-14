@@ -13,7 +13,7 @@ namespace StrataLint.Tests;
 // 验的是语法不是指向;而它自己又带 [Trait("Category","Script")],不在默认测试集内。
 //
 // 本测试刻意是纯 in-process 断言(不 spawn 进程),因此不带 Script 分类,
-// 落在 `make tools-test` 真正执行的那一批里。
+// 落在 `make -C tools test` 真正执行的那一批里。
 public sealed class CliVerbLinkageTests
 {
     // 提取器至少应认出这么多次调用。低于此,说明提取器自己坏了(路径变了、调用形态变了),
@@ -118,6 +118,12 @@ public sealed class CliVerbLinkageTests
         if (File.Exists(makefile))
         {
             yield return makefile;
+        }
+
+        var toolsMakefile = Path.Combine(root, "tools", "Makefile");
+        if (File.Exists(toolsMakefile))
+        {
+            yield return toolsMakefile;
         }
 
         foreach (var directory in new[]

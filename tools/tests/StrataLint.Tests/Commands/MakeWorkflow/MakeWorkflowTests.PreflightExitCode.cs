@@ -60,17 +60,31 @@ public sealed partial class MakeWorkflowTests
             Path.Combine(binDirectory, "make"),
             """
             #!/usr/bin/env bash
-            target="${1:-}"
-            case "${PREFLIGHT_SCENARIO:-}:$target" in
-              semantic-test:tools-test) exit 41 ;;
-              semantic-gate:gate) exit 42 ;;
-              timeout:lean-report) exit 124 ;;
-              signal-term:lean-report) kill -TERM "$PPID"; exit 0 ;;
-              exit-126:lean-report) exit 126 ;;
-              exit-127:lean-report) exit 127 ;;
-              unknown-dotnet:dotnet) exit 73 ;;
-              unknown:lean-report) exit 73 ;;
-              starved-lean-slot:lean-report) exit 2 ;;
+            directory="."
+            target=""
+            while [[ $# -gt 0 ]]; do
+              case "$1" in
+                -C)
+                  [[ $# -ge 2 ]] || exit 64
+                  directory="$2"
+                  shift 2
+                  ;;
+                *)
+                  target="$1"
+                  break
+                  ;;
+              esac
+            done
+            case "${PREFLIGHT_SCENARIO:-}:$directory:$target" in
+              semantic-test:tools:test) exit 41 ;;
+              semantic-gate:.:gate) exit 42 ;;
+              timeout:.:lean-report) exit 124 ;;
+              signal-term:.:lean-report) kill -TERM "$PPID"; exit 0 ;;
+              exit-126:.:lean-report) exit 126 ;;
+              exit-127:.:lean-report) exit 127 ;;
+              unknown-dotnet:tools:dotnet) exit 73 ;;
+              unknown:.:lean-report) exit 73 ;;
+              starved-lean-slot:.:lean-report) exit 2 ;;
             esac
             exit 0
             """);

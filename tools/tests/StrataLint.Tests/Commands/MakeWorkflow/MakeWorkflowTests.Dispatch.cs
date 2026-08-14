@@ -10,26 +10,31 @@ public sealed partial class MakeWorkflowTests
     public void EngineeringCheckRunsTheCanonicalToolsTestTargetWithoutAFilter()
     {
         var root = TestRepositoryLayout.FindRoot();
-        var makefile = File.ReadAllText(Path.Combine(root, "Makefile"));
+        var makefile = File.ReadAllText(Path.Combine(root, ToolsMakefilePath));
         var workflow = File.ReadAllText(Path.Combine(root, AdmissionWorkflowPath));
         var engineeringStep = EngineeringTestStep(workflow);
-        // expand 窗口(阶段 5 前置):两个分支目标(根 tools-test / tools 门 test)
-        // 都被字面钉死,CI 仍不能静默切换到别的 test lane。
-        Assert.Contains("target=tools-test", engineeringStep, StringComparison.Ordinal);
-        Assert.Contains("if [ -f candidate/tools/Makefile ]; then", engineeringStep, StringComparison.Ordinal);
-        Assert.Contains("target=test", engineeringStep, StringComparison.Ordinal);
-        Assert.Contains("make -C \"$hdir\" \"$target\"", engineeringStep, StringComparison.Ordinal);
+        var targetMatches = Regex.Matches(
+            engineeringStep,
+            @"(?m)^[ \t]*make[ \t]+-C[ \t]+candidate/tools[ \t]+(?<target>[A-Za-z][A-Za-z0-9_-]*)[ \t]*$",
+            RegexOptions.CultureInvariant | RegexOptions.NonBacktracking);
+
+        Assert.True(
+            targetMatches.Count == 1,
+            "The candidate-engineering test step must invoke exactly one concrete make target so CI cannot silently switch to a different test lane.");
+        var targetMatch = targetMatches[0];
         Assert.True(
             !engineeringStep.Contains("--filter", StringComparison.Ordinal),
             "The candidate-engineering check must call the canonical unfiltered test target; commit 5743d114 filtered Script tests and left those tests unexecuted in CI.");
 
-        var recipe = Recipe(makefile, "tools-test");
+        var target = targetMatch.Groups["target"].Value;
+        Assert.Equal("test", target);
+        var recipe = Recipe(makefile, target);
         Assert.True(
             recipe.Contains("dotnet test", StringComparison.Ordinal),
-            "The make target 'tools-test' called by candidate-engineering on the legacy layout must be the .NET test target guarded by this invariant.");
+            $"The make target '{target}' called by candidate-engineering must be the .NET test target guarded by this invariant.");
         Assert.True(
             !recipe.Contains("--filter", StringComparison.Ordinal),
-            "The canonical make target 'tools-test' must keep its dotnet test command unfiltered; commit 5743d114 filtered Script tests and CI then had no replacement lane.");
+            $"The canonical make target '{target}' must keep its dotnet test command unfiltered; commit 5743d114 filtered Script tests and CI then had no replacement lane.");
     }
 
     [Fact]
@@ -42,17 +47,15 @@ public sealed partial class MakeWorkflowTests
         var phony = Assert.Single(
             makefile.Split('\n'),
             static line => line.StartsWith(".PHONY:", StringComparison.Ordinal));
-        Assert.Equal(Targets, phony[".PHONY:".Length..].Split(' ', StringSplitOptions.RemoveEmptyEntries));
-        foreach (var target in Targets)
+        Assert.Equal(RootTargets, phony[".PHONY:".Length..].Split(' ', StringSplitOptions.RemoveEmptyEntries));
+        foreach (var target in RootTargets)
         {
             Assert.Matches(new Regex($"(?m)^{Regex.Escape(target)}:", RegexOptions.CultureInvariant), makefile);
             Assert.InRange(RecipeCount(makefile, target), 0, 1);
         }
 
-        Assert.Contains("build: lean-cache-ensure dotnet lean", makefile, StringComparison.Ordinal);
+        Assert.Contains("build: lean-cache-ensure lean", makefile, StringComparison.Ordinal);
         Assert.Equal(0, RecipeCount(makefile, "build"));
-        Assert.Contains(CleanLanesScriptPath, Recipe(makefile, "clean-lanes"), StringComparison.Ordinal);
-        Assert.Contains(DotnetBuildScriptPath, Recipe(makefile, "dotnet"), StringComparison.Ordinal);
         // make test 是薄委托;数学门链条的唯一真源在 math-gate.sh 里,断言脚本本体。
         var mathematicalTestRecipe = Recipe(makefile, "test");
         Assert.DoesNotContain("dotnet test", mathematicalTestRecipe, StringComparison.Ordinal);
@@ -65,7 +68,6 @@ public sealed partial class MakeWorkflowTests
         Assert.Contains(" emit --check", mathGate, StringComparison.Ordinal);
         Assert.Contains(" emit-values --check", mathGate, StringComparison.Ordinal);
         Assert.Contains(" describe-report --check", mathGate, StringComparison.Ordinal);
-        Assert.Contains("dotnet test tools/StrataLint.sln", Recipe(makefile, "tools-test"), StringComparison.Ordinal);
         Assert.Equal(
             $"\t@/bin/bash {LeanCacheEnsureScriptPath}",
             Recipe(makefile, "lean-cache-ensure"));
@@ -82,14 +84,44 @@ public sealed partial class MakeWorkflowTests
             EchoResidualSummaryScriptPath,
             Recipe(makefile, "echo-residual-summary"),
             StringComparison.Ordinal);
-        Assert.Contains(SelftestScriptPath, Recipe(makefile, "selftest"), StringComparison.Ordinal);
         Assert.Contains(LocalHarnessGateScriptPath, Recipe(makefile, "gate"), StringComparison.Ordinal);
-        Assert.Contains(PerfReportScriptPath, Recipe(makefile, "perf-report"), StringComparison.Ordinal);
-        Assert.Contains("Golden/perf-budgets.toml", Recipe(makefile, "perf-report"), StringComparison.Ordinal);
+        Assert.Contains(PreflightScriptPath, Recipe(makefile, "preflight"), StringComparison.Ordinal);
         Assert.Contains(WorktreeInitScriptPath, Recipe(makefile, "worktree"), StringComparison.Ordinal);
         Assert.Contains(PrOpenScriptPath, Recipe(makefile, "pr-open"), StringComparison.Ordinal);
         Assert.Contains("--head \"$(HEAD)\"", Recipe(makefile, "pr-open"), StringComparison.Ordinal);
         Assert.DoesNotContain("pr-update", makefile, StringComparison.Ordinal);
+        foreach (var removed in ToolsTargets.Except(["help", "test"], StringComparer.Ordinal))
+        {
+            Assert.DoesNotContain($"\n{removed}:", "\n" + makefile, StringComparison.Ordinal);
+        }
+        Assert.DoesNotContain("\ntools-test:", "\n" + makefile, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void ToolsMakefileIsAThinCompleteDispatchTable()
+    {
+        var root = TestRepositoryLayout.FindRoot();
+        var makefile = File.ReadAllText(Path.Combine(root, ToolsMakefilePath));
+
+        Assert.Contains(".DEFAULT_GOAL := help", makefile, StringComparison.Ordinal);
+        var phony = Assert.Single(
+            makefile.Split('\n'),
+            static line => line.StartsWith(".PHONY:", StringComparison.Ordinal));
+        Assert.Equal(ToolsTargets, phony[".PHONY:".Length..].Split(' ', StringSplitOptions.RemoveEmptyEntries));
+        foreach (var target in ToolsTargets)
+        {
+            Assert.Matches(new Regex($"(?m)^{Regex.Escape(target)}:", RegexOptions.CultureInvariant), makefile);
+            Assert.InRange(RecipeCount(makefile, target), 0, 1);
+        }
+
+        Assert.Contains("scripts/dotnet-build.sh", Recipe(makefile, "dotnet"), StringComparison.Ordinal);
+        var testRecipe = Recipe(makefile, "test");
+        Assert.Contains("dotnet test StrataLint.sln", testRecipe, StringComparison.Ordinal);
+        Assert.DoesNotContain("--filter", testRecipe, StringComparison.Ordinal);
+        Assert.Contains("scripts/stratalint-selftest.sh", Recipe(makefile, "selftest"), StringComparison.Ordinal);
+        Assert.Contains("scripts/perf-report.sh", Recipe(makefile, "perf-report"), StringComparison.Ordinal);
+        Assert.Contains("../Golden/perf-budgets.toml", Recipe(makefile, "perf-report"), StringComparison.Ordinal);
+        Assert.Contains("scripts/clean-lanes.sh", Recipe(makefile, "clean-lanes"), StringComparison.Ordinal);
         Assert.Contains(
             " gate-authority --old-build \"$(OLD_BUILD)\" --out \"$(OUT)\"",
             Recipe(makefile, "refactor-p0-0-gate-authority"),
@@ -116,19 +148,35 @@ public sealed partial class MakeWorkflowTests
     public void HelpRunsAndNamesEveryTarget()
     {
         var root = TestRepositoryLayout.FindRoot();
-        var result = BoundedProcessRunner.Run(
+        var rootResult = BoundedProcessRunner.Run(
             "make",
             ["help"],
             root,
             TimeSpan.FromSeconds(30),
             64 * 1024);
 
-        Assert.Equal(0, result.ExitCode);
-        var output = System.Text.Encoding.UTF8.GetString(result.StandardOutput);
-        Assert.All(Targets, target => Assert.Contains($"make {target}", output, StringComparison.Ordinal));
-        Assert.Contains("dry-run", output, StringComparison.Ordinal);
-        Assert.Contains("FORCE=1", output, StringComparison.Ordinal);
-        Assert.Contains("values", output, StringComparison.OrdinalIgnoreCase);
-        Assert.DoesNotContain("pr-update", output, StringComparison.Ordinal);
+        var toolsResult = BoundedProcessRunner.Run(
+            "make",
+            ["-C", "tools", "help"],
+            root,
+            TimeSpan.FromSeconds(30),
+            64 * 1024);
+
+        Assert.Equal(0, rootResult.ExitCode);
+        var rootOutput = System.Text.Encoding.UTF8.GetString(rootResult.StandardOutput);
+        Assert.All(RootTargets, target => Assert.Contains($"make {target}", rootOutput, StringComparison.Ordinal));
+        Assert.Contains("values", rootOutput, StringComparison.OrdinalIgnoreCase);
+        Assert.DoesNotContain("make dotnet", rootOutput, StringComparison.Ordinal);
+        Assert.DoesNotContain("make tools-test", rootOutput, StringComparison.Ordinal);
+        Assert.DoesNotContain("pr-update", rootOutput, StringComparison.Ordinal);
+
+        Assert.Equal(0, toolsResult.ExitCode);
+        var toolsOutput = System.Text.Encoding.UTF8.GetString(toolsResult.StandardOutput);
+        Assert.All(
+            ToolsTargets,
+            target => Assert.Contains($"make -C tools {target}", toolsOutput, StringComparison.Ordinal));
+        Assert.Contains("dry-run", toolsOutput, StringComparison.Ordinal);
+        Assert.Contains("FORCE=1", toolsOutput, StringComparison.Ordinal);
+        Assert.DoesNotContain("make -C tools lean", toolsOutput, StringComparison.Ordinal);
     }
 }
