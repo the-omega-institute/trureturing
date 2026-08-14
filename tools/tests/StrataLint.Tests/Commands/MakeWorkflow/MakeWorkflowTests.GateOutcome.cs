@@ -6,6 +6,91 @@ namespace StrataLint.Tests;
 public sealed partial class MakeWorkflowTests
 {
     [Fact]
+    public void ScribeContentChecksUseTheExplicitNonEmptyReport()
+    {
+        if (OperatingSystem.IsWindows()) return;
+
+        var root = TestRepositoryLayout.FindRoot();
+        using var fixture = new TemporaryDirectory();
+        var binDirectory = Path.Combine(fixture.Path, "bin");
+        var explicitReport = Path.Combine(fixture.Path, "explicit-report.json");
+        var ambientReport = Path.Combine(fixture.Path, "ambient-report.json");
+        var scribe = Path.Combine(fixture.Path, "StrataLint.Scribe.dll");
+        var log = Path.Combine(fixture.Path, "scribe.log");
+        Directory.CreateDirectory(binDirectory);
+        File.WriteAllText(explicitReport, "explicit\n");
+        File.WriteAllText(ambientReport, "ambient\n");
+        File.WriteAllText(scribe, "fixture\n");
+        WriteExecutable(
+            Path.Combine(binDirectory, "dotnet"),
+            "#!/usr/bin/env bash\nprintf '%s|%s\\n' \"$STRATALINT_LEAN_REPORT\" \"$*\" >> \"$SCRIBE_LOG\"");
+
+        var result = BoundedProcessRunner.Run(
+            "/bin/bash",
+            [
+                "-c",
+                "PATH=\"$1:/usr/bin:/bin\" STRATALINT_LEAN_REPORT=\"$2\" SCRIBE_LOG=\"$3\" "
+                    + "exec /bin/bash \"$4\" \"$5\" \"$6\"",
+                "scribe-content-checks",
+                binDirectory,
+                ambientReport,
+                log,
+                Path.Combine(root, ScribeContentChecksScriptPath),
+                explicitReport,
+                scribe,
+            ],
+            root,
+            TimeSpan.FromSeconds(30),
+            64 * 1024);
+
+        Assert.Equal(0, result.ExitCode);
+        var invocations = File.ReadAllLines(log);
+        Assert.Equal(4, invocations.Length);
+        Assert.All(invocations, line => Assert.StartsWith(explicitReport + "|", line, StringComparison.Ordinal));
+        Assert.DoesNotContain(invocations, line => line.Contains(ambientReport, StringComparison.Ordinal));
+        Assert.Contains(
+            invocations,
+            line => line.EndsWith($" projections --check --report {explicitReport}", StringComparison.Ordinal));
+    }
+
+    [Fact]
+    public void ScribeContentChecksRejectMissingAndEmptyReportsBeforeRunningScribe()
+    {
+        if (OperatingSystem.IsWindows()) return;
+
+        var root = TestRepositoryLayout.FindRoot();
+        using var fixture = new TemporaryDirectory();
+        var binDirectory = Path.Combine(fixture.Path, "bin");
+        var emptyReport = Path.Combine(fixture.Path, "empty-report.json");
+        var missingReport = Path.Combine(fixture.Path, "missing-report.json");
+        var scribe = Path.Combine(fixture.Path, "StrataLint.Scribe.dll");
+        Directory.CreateDirectory(binDirectory);
+        File.WriteAllText(emptyReport, string.Empty);
+        File.WriteAllText(scribe, "fixture\n");
+        WriteExecutable(Path.Combine(binDirectory, "dotnet"), "#!/usr/bin/env bash\nexit 0");
+
+        foreach (var report in new[] { emptyReport, missingReport })
+        {
+            var result = BoundedProcessRunner.Run(
+                "/bin/bash",
+                [
+                    "-c",
+                    "PATH=\"$1:/usr/bin:/bin\" exec /bin/bash \"$2\" \"$3\" \"$4\"",
+                    "scribe-content-checks-invalid-report",
+                    binDirectory,
+                    Path.Combine(root, ScribeContentChecksScriptPath),
+                    report,
+                    scribe,
+                ],
+                root,
+                TimeSpan.FromSeconds(30),
+                64 * 1024);
+
+            Assert.NotEqual(0, result.ExitCode);
+        }
+    }
+
+    [Fact]
     public void HarnessGateUsesExternalJudgeWithoutRestoreOrBuild()
     {
         if (OperatingSystem.IsWindows()) return;
@@ -167,6 +252,7 @@ public sealed partial class MakeWorkflowTests
             if [[ "${2:-}" == selftest ]]; then printf 'selftest\n'; exit 0; fi
             if [[ "${2:-}" == check ]]; then exit "$PREFLIGHT_ADMISSION_RC"; fi
             if [[ "${2:-}" == filemap-conform ]]; then exit 0; fi
+            if [[ "$*" == *StrataLint.Scribe.csproj* && "$*" == *" --check"* ]]; then exit 0; fi
             echo "unexpected dotnet invocation: $*" >&2
             exit 91
             """);
@@ -185,6 +271,12 @@ public sealed partial class MakeWorkflowTests
                 GATE_ARGS=*) gate_args="${arg#GATE_ARGS=}" ;;
               esac
             done
+            if [[ "$target" == lean-report ]]; then
+              report="$PREFLIGHT_CANDIDATE_ROOT/.lake/build/stratalint/raw-lean-report.json"
+              mkdir -p "$(dirname "$report")"
+              printf '{}\n' > "$report"
+              exit 0
+            fi
             [[ "$target" == gate ]] || exit 0
             [[ "$gate_args" == --skip-engineering ]] || exit 92
             "$PREFLIGHT_LOCAL_GATE" \
@@ -210,6 +302,11 @@ public sealed partial class MakeWorkflowTests
             Path.Combine(producerDirectory, "inspect.sh"),
             "#!/usr/bin/env bash\nexit 0");
         File.WriteAllText(Path.Combine(producerDirectory, "Inspector.lean"), "fixture\n");
+        var workflowDirectory = Path.Combine(candidateRoot, "tools", "scripts", "workflow");
+        Directory.CreateDirectory(workflowDirectory);
+        File.Copy(
+            Path.Combine(TestRepositoryLayout.FindRoot(), ScribeContentChecksScriptPath),
+            Path.Combine(workflowDirectory, "scribe-content-checks.sh"));
         var script = Path.Combine(candidateRoot, "tools", "scripts", "lean-report-pair.sh");
         WriteExecutable(
             script,
@@ -218,7 +315,6 @@ public sealed partial class MakeWorkflowTests
             while [[ $# -gt 0 ]]; do
               case "$1" in
                 --candidate-output) candidate_output="$2"; shift 2 ;;
-                --single) shift ;;
                 *) shift 2 ;;
               esac
             done
