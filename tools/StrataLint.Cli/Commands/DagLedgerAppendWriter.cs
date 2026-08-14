@@ -7,6 +7,8 @@ namespace StrataLint.Cli;
 
 internal static class DagLedgerAppendWriter
 {
+    internal sealed record PendingEventFile(string Path, ImmutableArray<byte> Bytes);
+
     internal static CommandResult Append(
         string repositoryRoot,
         IRepositoryGateway repository,
@@ -97,6 +99,22 @@ internal static class DagLedgerAppendWriter
         IEnumerable<FrozenLedgerLineSyntax> lines,
         int skip = 0)
     {
+        foreach (var pending in PrepareNewEvents(directory, lines, skip))
+        {
+            using var stream = new FileStream(
+                pending.Path,
+                FileMode.CreateNew,
+                FileAccess.Write,
+                FileShare.None);
+            stream.Write(pending.Bytes.AsSpan());
+        }
+    }
+
+    internal static IEnumerable<PendingEventFile> PrepareNewEvents(
+        string directory,
+        IEnumerable<FrozenLedgerLineSyntax> lines,
+        int skip = 0)
+    {
         var linearToDagHash = new Dictionary<string, string>(StringComparer.Ordinal);
         var sequence = 0;
         foreach (var line in lines)
@@ -124,8 +142,7 @@ internal static class DagLedgerAppendWriter
                 payload,
                 encoded.Hash);
             var path = Path.Combine(directory, identity[7..] + ".json");
-            using var stream = new FileStream(path, FileMode.CreateNew, FileAccess.Write, FileShare.None);
-            stream.Write(encoded.Bytes.AsSpan());
+            yield return new PendingEventFile(path, encoded.Bytes);
         }
     }
 
