@@ -52,10 +52,47 @@ public sealed partial class MakeWorkflowTests
             StringComparison.Ordinal);
     }
 
+    /// <summary>
+    /// Stands in for the artifact a real <c>make lean-report</c> leaves behind, and removes it
+    /// again only when this fixture is the one that put it there.
+    /// </summary>
+    private sealed class ScenarioLeanReport : IDisposable
+    {
+        private readonly string path;
+        private readonly bool created;
+
+        internal ScenarioLeanReport(string repositoryRoot)
+        {
+            path = Path.Combine(repositoryRoot, ".lake", "build", "stratalint", "raw-lean-report.json");
+            if (File.Exists(path))
+            {
+                return;
+            }
+
+            Directory.CreateDirectory(Path.GetDirectoryName(path)!);
+            File.WriteAllText(path, "{}\n");
+            created = true;
+        }
+
+        public void Dispose()
+        {
+            if (created && File.Exists(path))
+            {
+                File.Delete(path);
+            }
+        }
+    }
+
     [System.Runtime.Versioning.UnsupportedOSPlatform("windows")]
     private static ProcessOutput RunPreflightScenario(string scenario)
     {
         var root = TestRepositoryLayout.FindRoot();
+        // The stub `make lean-report` claims success without writing anything, so on a clean
+        // checkout the report it is supposed to have produced does not exist and the content
+        // checks fail closed on a missing report rather than on the scenario under test. A
+        // successful lean-report produces a report; the stub has to be honest about that.
+        // Only a report this fixture created is removed, so a real one is never clobbered.
+        using var report = new ScenarioLeanReport(root);
         using var fixture = new TemporaryDirectory();
         var binDirectory = Path.Combine(fixture.Path, "bin");
         Directory.CreateDirectory(binDirectory);
