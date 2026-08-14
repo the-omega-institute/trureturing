@@ -31,16 +31,13 @@ public sealed partial class ProductionEnvironmentTests
         var oldAtom = Assert.Single(AtomizerRegistry.Atomize(atomizerId, oldBytes, rules).Claims);
         Assert.Equal("proposition/1.1", oldAtom.AstPath);
 
-        var ledger = IngestLedger(atomizerId, oldAtom);
         fixture.Files[RuleFixture.FixtureDigestionSourcePath] = Encoding.UTF8.GetString(currentBytes);
         fixture.Baseline[RuleFixture.FixtureDigestionSourcePath] = Encoding.UTF8.GetString(oldBytes);
         fixture.Baseline[TheoryAtomizerDataLoader.DataPath] =
             fixture.Files[TheoryAtomizerDataLoader.DataPath];
-        InstallLedger(fixture, ledger, oldAtom);
+        InstallDirectoryLedger(fixture, atomizerId, oldAtom);
         using var temporary = new TemporaryDirectory();
-        var outputPath = Path.Combine(temporary.Path, BackfillInventoryLoader.RelativePath);
-        Directory.CreateDirectory(Path.GetDirectoryName(outputPath)!);
-        File.WriteAllText(outputPath, ledger, new UTF8Encoding(false));
+        WriteDirectoryLedger(temporary.Path, fixture.Files);
         var environment = new ProductionCliEnvironment(
             temporary.Path,
             new FakeRepositoryGateway(
@@ -56,7 +53,7 @@ public sealed partial class ProductionEnvironmentTests
         // Atomised, not degraded: a fallback here would mean the dialect never resolved.
         Assert.Contains("coarse_fallbacks=0", result.Output, StringComparison.Ordinal);
         Assert.DoesNotContain("INGEST_INCOMPLETE", result.Output, StringComparison.Ordinal);
-        var written = BackfillInventoryLoader.Load(File.ReadAllText(outputPath));
+        var written = BackfillInventoryLoader.LoadRoot(temporary.Path);
         var source = Assert.Single(written.RequireDigestionSources());
         Assert.Equal(atomizerId, source.Atomizer);
         Assert.Contains(
