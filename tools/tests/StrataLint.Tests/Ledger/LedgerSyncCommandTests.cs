@@ -276,10 +276,13 @@ public sealed class LedgerSyncCommandTests
                         Source = $"-- historical header changed\ntheorem {module.Name.ToLowerInvariant()} : True := by trivial\n",
                     }
                     : module).ToArray();
+            var candidateHeader = historicalReattestCount == 0 && changedModuleCount is null
+                ? "canonical"
+                : "candidate";
             var candidates = historical.Select((module, index) => index < candidateChangeCount
                 ? module with
                 {
-                    Source = $"-- candidate header changed\ntheorem {module.Name.ToLowerInvariant()} : {candidateStatement} := by trivial\n",
+                    Source = $"-- {candidateHeader} header changed\ntheorem {module.Name.ToLowerInvariant()} : {candidateStatement} := by trivial\n",
                     StatementMaterial = candidateStatement,
                 }
                 : module).ToArray();
