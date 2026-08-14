@@ -28,6 +28,28 @@ public sealed class RuleEngineTests
         { 21, "future" },
     };
 
+    [Fact]
+    public void DefaultFixtureUsesTheCanonicalDirectoryDigestionLedger()
+    {
+        var fixture = new RuleFixture();
+
+        Assert.DoesNotContain(BackfillInventoryLoader.RelativePath, fixture.Files.Keys);
+        Assert.Contains(BackfillInventoryLoader.TicketIndexPath, fixture.Files.Keys);
+        var document = BackfillInventoryLoader.Load(fixture.Build().Current);
+        var source = Assert.Single(document.RequireDigestionSources());
+        var entry = Assert.Single(source.Entries);
+
+        Assert.Equal("fixture-source", source.SourceId);
+        Assert.Equal(RuleFixture.FixtureDigestionSourcePath, source.SourcePath);
+        Assert.Equal(AtomizerRegistry.NoAtomizerId, source.Atomizer);
+        Assert.Equal(RuleFixture.FixtureAtomId, entry.AtomId);
+        Assert.Equal("manual/fixture", entry.AstPath);
+        Assert.Equal(RuleFixture.FixtureCasReference, entry.CasRef);
+        Assert.Equal(DigestionMigrationState.Partial, entry.ProjectedStatus.Migration);
+        Assert.Equal(DigestionTruthState.Closed, entry.ProjectedStatus.Truth);
+        Assert.Equal(18, document.RequireTickets().Length);
+    }
+
     [Theory]
     [MemberData(nameof(BlockingCases))]
     public void ActiveRuleHasGreenAndRedExecutableFixtures(int number, string mutation)
@@ -154,11 +176,11 @@ public sealed class RuleEngineTests
         var fixture = new RuleFixture();
         fixture.AddBackfillTargets();
         fixture.Files.Remove(RuleFixture.FixtureCasPath);
-        fixture.Files[BackfillInventoryLoader.RelativePath] = fixture.Files[
-                BackfillInventoryLoader.RelativePath]
+        fixture.Files[RuleFixture.FixtureBackfillAtomPath] = fixture.Files[
+                RuleFixture.FixtureBackfillAtomPath]
             .Replace(
-                "                coverage_gids:\n                  - D5/S0/Carrier/BackfillTarget",
-                "                coverage_gids:\n                  - D5/S0/Carrier/BackfillTarget\n                  - D5/S0/Carrier/BackfillTarget",
+                "coverage_gids:\n  - D5/S0/Carrier/BackfillTarget",
+                "coverage_gids:\n  - D5/S0/Carrier/BackfillTarget\n  - D5/S0/Carrier/BackfillTarget",
                 StringComparison.Ordinal);
 
         var diagnostics = RuleCatalog.Default.EvaluateSingle(
@@ -175,11 +197,11 @@ public sealed class RuleEngineTests
         var fixture = new RuleFixture();
         fixture.AddBackfillTargets();
         fixture.Files[RuleFixture.FixtureCasPath] = "corrupt";
-        fixture.Files[BackfillInventoryLoader.RelativePath] = fixture.Files[
-                BackfillInventoryLoader.RelativePath]
+        fixture.Files[RuleFixture.FixtureBackfillAtomPath] = fixture.Files[
+                RuleFixture.FixtureBackfillAtomPath]
             .Replace(
-                "                coverage_gids:\n                  - D5/S0/Carrier/BackfillTarget",
-                "                coverage_gids:\n                  - D5/S0/Carrier/BackfillTarget\n                  - D5/S0/Carrier/BackfillTarget",
+                "coverage_gids:\n  - D5/S0/Carrier/BackfillTarget",
+                "coverage_gids:\n  - D5/S0/Carrier/BackfillTarget\n  - D5/S0/Carrier/BackfillTarget",
                 StringComparison.Ordinal);
 
         var diagnostics = RuleCatalog.Default.EvaluateSingle(
@@ -234,7 +256,7 @@ public sealed class RuleEngineTests
     }
 
     [Fact]
-    public void Sl003DoesNotTreatTheSingleSourceDigestionLedgerAsASplittableModule()
+    public void Sl003DoesNotTreatDirectoryDigestionLedgerFilesAsSplittableModules()
     {
         var fixture = new RuleFixture();
 
@@ -242,7 +264,8 @@ public sealed class RuleEngineTests
             RuleId.CreateKnown(3),
             fixture.Build()).Diagnostics;
 
-        Assert.DoesNotContain(diagnostics, diagnostic => diagnostic.Path == "Meta/BACKFILL.yaml");
+        Assert.DoesNotContain(diagnostics, diagnostic =>
+            BackfillInventoryLoader.IsCanonicalPath(diagnostic.Path));
     }
 
     [Fact]
