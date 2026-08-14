@@ -55,12 +55,16 @@
 - 2026-08-14 (SL-003): `Estimation/` was at its 12-file limit. The branch-new
   `FixedSuiteBayesRiskFloor` module opened the split-only
   `Estimation/DecisionRisk/` bucket; all 12 existing `Estimation/` paths remain unmoved.
+- 2026-08-14 (SL-003): `Midline/` was at its 12-file limit. The branch-new
+  `GoldenHeatLayers` module opened the `Midline/HeatLayers/` bucket; all 12
+  existing `Midline/` paths remain in place.
 
 ## Buckets
 
 - `Constants/`: canonical real constants and registered reference centers.
 - `Analytic/Dilation/`: Mellin and Fourier analysis along the multiplicative
   dilation flow in logarithmic time.
+- `Midline/HeatLayers/`: prime-indexed layers of a heat spectrum, their convergence abscissae, and the limit of those abscissae.
 - `Fourier/`: entire extensions of the Weil Fourier-Laplace transform.
 - `Quantum/`: finite-dimensional operator-algebra and probability structures.
 - `PrimeForms/`: representations of prime numbers by integral quadratic forms.
