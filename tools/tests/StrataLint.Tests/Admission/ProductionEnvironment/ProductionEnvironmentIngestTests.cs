@@ -539,6 +539,45 @@ public sealed partial class ProductionEnvironmentTests
     }
 
     [Fact]
+    public void DirectoryLedgerDeletionPrunesDirectoriesAfterAllRankedFilesAreGone()
+    {
+        using var temporary = new TemporaryDirectory();
+        var sourcePath = $"{BackfillInventoryLoader.RootPath}fixture-source/source.toml";
+        var parentPath = $"{BackfillInventoryLoader.RootPath}fixture-source/residual-open/parent.yaml";
+        var childPath = $"{BackfillInventoryLoader.RootPath}fixture-source/residual-open/child.yaml";
+        var current = RawRepositorySnapshot.Create(
+        [
+            RawRepositoryEntry.FromText(sourcePath, "source metadata\n"),
+            RawRepositoryEntry.FromText(parentPath, "parent\n"),
+            RawRepositoryEntry.FromText(childPath, "child\n"),
+        ]);
+        foreach (var entry in current.Entries)
+        {
+            var outputPath = Path.Combine(
+                temporary.Path,
+                entry.Path.Replace('/', Path.DirectorySeparatorChar));
+            Directory.CreateDirectory(Path.GetDirectoryName(outputPath)!);
+            File.WriteAllBytes(outputPath, entry.Bytes.AsSpan());
+        }
+
+        IngestCommand.ApplyLedgerUpdatesAtomically(
+            temporary.Path,
+            current,
+            [
+                new IngestCommand.LedgerUpdate(parentPath, null, int.MaxValue - 1),
+                new IngestCommand.LedgerUpdate(childPath, null, int.MaxValue),
+                new IngestCommand.LedgerUpdate(sourcePath, null, int.MaxValue),
+            ]);
+
+        var ledgerRoot = Path.Combine(
+            temporary.Path,
+            BackfillInventoryLoader.RootPath.Replace('/', Path.DirectorySeparatorChar));
+        Assert.True(Directory.Exists(ledgerRoot));
+        Assert.False(Directory.Exists(Path.Combine(ledgerRoot, "fixture-source", "residual-open")));
+        Assert.False(Directory.Exists(Path.Combine(ledgerRoot, "fixture-source")));
+    }
+
+    [Fact]
     public void DirectoryLedgerWritePlanNeverPublishesParentBeforeItsChildren()
     {
         var sourceBytes = Encoding.UTF8.GetBytes(

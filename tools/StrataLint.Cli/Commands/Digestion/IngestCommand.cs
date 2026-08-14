@@ -497,6 +497,8 @@ internal static class IngestCommand
                 Directory.CreateDirectory(Path.GetDirectoryName(outputPath)!);
                 ReplaceLedgerAtomically(outputPath, update.Bytes.Value.AsSpan(), commit);
             }
+
+            PruneEmptyLedgerDirectories(root, updates);
         }
         catch (Exception exception) when (exception is not OutOfMemoryException)
         {
@@ -540,6 +542,46 @@ internal static class IngestCommand
 
         void Add(string relativePath, string fullPath) =>
             result.Add(relativePath, ImmutableArray.CreateRange(File.ReadAllBytes(fullPath)));
+    }
+
+    private static void PruneEmptyLedgerDirectories(
+        string root,
+        IEnumerable<LedgerUpdate> updates)
+    {
+        var ledgerRoot = Path.GetFullPath(Path.Combine(
+            root,
+            BackfillInventoryLoader.RootPath.Replace('/', Path.DirectorySeparatorChar)));
+        var ledgerRootPrefix = ledgerRoot.EndsWith(Path.DirectorySeparatorChar)
+            ? ledgerRoot
+            : ledgerRoot + Path.DirectorySeparatorChar;
+        var directories = new HashSet<string>(StringComparer.Ordinal);
+        foreach (var update in updates.Where(static update =>
+                     update.Bytes is null
+                     && update.Path.StartsWith(BackfillInventoryLoader.RootPath, StringComparison.Ordinal)
+                     && BackfillInventoryLoader.IsCanonicalPath(update.Path)))
+        {
+            var outputPath = Path.GetFullPath(Path.Combine(
+                root,
+                update.Path.Replace('/', Path.DirectorySeparatorChar)));
+            for (var directory = Path.GetDirectoryName(outputPath);
+                 directory is not null
+                 && directory.StartsWith(ledgerRootPrefix, StringComparison.Ordinal);
+                 directory = Path.GetDirectoryName(directory))
+            {
+                directories.Add(directory);
+            }
+        }
+
+        foreach (var directory in directories
+                     .OrderByDescending(static path => path.Length)
+                     .ThenBy(static path => path, StringComparer.Ordinal))
+        {
+            if (Directory.Exists(directory)
+                && !Directory.EnumerateFileSystemEntries(directory).Any())
+            {
+                Directory.Delete(directory);
+            }
+        }
     }
 
     private static void RollbackLedgerUpdates(
