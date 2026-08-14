@@ -803,7 +803,7 @@ public sealed partial class DigestionAlignmentTests
     }
 
     [Fact]
-    public void PzgIngestResolvesClausePlanParentThroughNormalizedCrlfView()
+    public void PzgIngestRejectsClausePlanWhenOnlyNormalizedParentMatchesFrozenCas()
     {
         const string claim = """
             **定理 18.7(换行视图)**。first clause。
@@ -827,15 +827,12 @@ public sealed partial class DigestionAlignmentTests
             Ledger([], CasEntry("parent", lfParent, parentCapture.Reference))
                 .Replace(AtomizerRegistry.GictId, AtomizerRegistry.PzgId, StringComparison.Ordinal));
 
-        var plan = DigestionIngestor.Plan(
+        var exception = Assert.Throws<FormatException>(() => DigestionIngestor.Plan(
             ledger,
             Snapshot(crlfBytes, [parentCapture]),
-            ledger);
+            ledger));
 
-        var entries = Assert.Single(plan.Document.RequireDigestionSources()).Entries;
-        var parent = Assert.Single(entries, static entry => entry.AtomId == "parent");
-        Assert.Equal(2, parent.Receipts.ChainAtoms.Length);
-        Assert.Equal(2, plan.ResidualOpenAdded);
+        Assert.Contains("parent CAS bytes", exception.Message, StringComparison.Ordinal);
     }
 
     private static (BackfillInventoryDocument Ledger, DigestionCasObject Capture) ExistingCasBackedLedger()

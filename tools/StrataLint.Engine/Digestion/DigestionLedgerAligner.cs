@@ -51,6 +51,7 @@ internal sealed record DigestionLedgerAlignment(
     ImmutableDictionary<string, DigestionAtom> MatchedAtoms,
     ImmutableArray<StructuredResidualAdmission> Residual,
     ImmutableArray<DigestionSourceClausePlan> ClausePlans,
+    ImmutableHashSet<string> ClausePlanChainParents,
     ImmutableHashSet<string> VerifiedClausePlanParents,
     ImmutableArray<DigestionIngestFallback> Fallbacks,
     ImmutableArray<string> ActualStale,
@@ -102,6 +103,7 @@ internal static class DigestionLedgerAligner
         var matchedAtoms = ImmutableDictionary.CreateBuilder<string, DigestionAtom>(StringComparer.Ordinal);
         var residual = ImmutableArray.CreateBuilder<StructuredResidualAdmission>();
         var clausePlans = ImmutableArray.CreateBuilder<DigestionSourceClausePlan>();
+        var clausePlanChainParents = ImmutableHashSet.CreateBuilder<string>(StringComparer.Ordinal);
         var verifiedClausePlanParents = ImmutableHashSet.CreateBuilder<string>(StringComparer.Ordinal);
         var fallbacks = ImmutableArray.CreateBuilder<DigestionIngestFallback>();
         var actualStale = ImmutableArray.CreateBuilder<string>();
@@ -188,8 +190,9 @@ internal static class DigestionLedgerAligner
                 }
 
                 var registeredAtomizer = AtomizerRegistry.IsRegistered(source.Atomizer);
-                var hasAuthoredClauseChains = source.Entries.Any(static entry =>
-                    entry.Receipts.ChainAtoms.Length > 0);
+                var hasClausePlanChains = registeredAtomizer
+                    && AtomizerRegistry.EmitsClausePlans(source.Atomizer)
+                    && source.Entries.Any(static entry => entry.Receipts.ChainAtoms.Length > 0);
                 var coarseReplacementObligations =
                     coarseReplacementObligationsBySource.GetValueOrDefault(source.SourceId, []);
                 var unprovenCasEntries = source.Entries.Where(entry =>
@@ -197,7 +200,7 @@ internal static class DigestionLedgerAligner
                     && !inheritedEntries.Contains(CanonicalEntry(entry))).ToArray();
                 if (((mode == DigestionAlignmentMode.Admission
                         && unprovenCasEntries.Length == 0
-                        && !hasAuthoredClauseChains)
+                        && !hasClausePlanChains)
                         || !registeredAtomizer)
                     && coarseReplacementObligations.Length == 0)
                 {
@@ -250,7 +253,7 @@ internal static class DigestionLedgerAligner
                 if (mode == DigestionAlignmentMode.Admission
                     && coarseReplacementObligations.Length == 0
                     && unprovenCasEntries.All(entry => matchedAtoms.ContainsKey(entry.AtomId))
-                    && !hasAuthoredClauseChains)
+                    && !hasClausePlanChains)
                 {
                     return;
                 }
@@ -317,12 +320,6 @@ internal static class DigestionLedgerAligner
                     return;
                 }
 
-                clausePlans.AddRange(atomized.ClausePlans.Select(plan =>
-                    new DigestionSourceClausePlan(
-                        source.SourceId,
-                        atomized.ResolveClaim(plan.ParentAstPath),
-                        plan)));
-
                 var claims = new Dictionary<string, DigestionAtom>(StringComparer.Ordinal);
                 var duplicateAstPath = false;
                 foreach (var atom in atomized.Claims)
@@ -339,6 +336,23 @@ internal static class DigestionLedgerAligner
                 if (duplicateAstPath)
                 {
                     return;
+                }
+
+                foreach (var plan in atomized.ClausePlans)
+                {
+                    var parent = claims[plan.ParentAstPath];
+                    var authorityFailure = ClausePlanCasAuthorityFailure(
+                        source,
+                        parent,
+                        cas.ValidAtomIds,
+                        snapshot);
+                    if (authorityFailure is not null)
+                    {
+                        findings.Add(authorityFailure);
+                        continue;
+                    }
+
+                    clausePlans.Add(new DigestionSourceClausePlan(source.SourceId, parent, plan));
                 }
 
                 var matchedAstPaths = new HashSet<string>(StringComparer.Ordinal);
@@ -396,10 +410,12 @@ internal static class DigestionLedgerAligner
                 AlignNestedChildren(
                     source,
                     atomized.ClausePlans,
+                    claims,
                     cas.ValidAtomIds,
                     snapshot,
                     alignments,
                     matchedAtoms,
+                    clausePlanChainParents,
                     verifiedClausePlanParents,
                     findings);
 
@@ -457,6 +473,7 @@ internal static class DigestionLedgerAligner
             matchedAtoms.ToImmutable(),
             residual.ToImmutable(),
             clausePlans.ToImmutable(),
+            clausePlanChainParents.ToImmutable(),
             verifiedClausePlanParents.ToImmutable(),
             fallbacks.ToImmutable(),
             actualStale.Order(StringComparer.Ordinal).ToImmutableArray(),
@@ -697,13 +714,48 @@ internal static class DigestionLedgerAligner
         return null;
     }
 
+    private static string? ClausePlanCasAuthorityFailure(
+        DigestionLedgerSource source,
+        DigestionAtom plannedParent,
+        IReadOnlySet<string> validAtomIds,
+        RepositorySnapshot snapshot)
+    {
+        var ledgerParents = source.Entries.Where(entry =>
+                entry.AstPath == plannedParent.AstPath
+                && FingerprintsMatch(entry.Fingerprints, plannedParent.Fingerprints))
+            .ToArray();
+        if (ledgerParents.Length != 1)
+        {
+            return null;
+        }
+
+        var ledgerParent = ledgerParents[0];
+        if (!validAtomIds.Contains(ledgerParent.AtomId))
+        {
+            return $"entry {ledgerParent.AtomId} clause plan parent CAS proof is invalid";
+        }
+
+        var parentPath = DigestionCasStore.RootPath + ledgerParent.CasRef["sha256:".Length..];
+        if (!snapshot.TryGetFile(parentPath, out var parentBlob))
+        {
+            return $"entry {ledgerParent.AtomId} clause plan parent CAS blob is missing: {parentPath}";
+        }
+
+        return parentBlob.RawBytes.AsSpan().SequenceEqual(plannedParent.RawBytes.AsSpan())
+            ? null
+            : $"entry {ledgerParent.AtomId} clause plan parent CAS bytes differ from "
+                + $"recomputed source span {plannedParent.AstPath}";
+    }
+
     private static void AlignNestedChildren(
         DigestionLedgerSource source,
         ImmutableArray<DigestionClausePlan> clausePlans,
+        IReadOnlyDictionary<string, DigestionAtom> claims,
         IReadOnlySet<string> validAtomIds,
         RepositorySnapshot snapshot,
         IDictionary<string, DigestionReceiptAlignment> alignments,
         IDictionary<string, DigestionAtom> matchedAtoms,
+        ISet<string> clausePlanChainParents,
         ISet<string> verifiedClausePlanParents,
         ICollection<string> findings)
     {
@@ -721,6 +773,16 @@ internal static class DigestionLedgerAligner
 
         foreach (var parent in source.Entries.Where(static entry => entry.Receipts.ChainAtoms.Length > 0))
         {
+            var claimedByPlan = plansByParent.ContainsKey(parent.AstPath)
+                || parent.Receipts.ChainAtoms.Any(childId =>
+                    byId.TryGetValue(childId, out var child)
+                    && plannedChildPaths.Contains(child.AstPath));
+            if (!claimedByPlan)
+            {
+                continue;
+            }
+
+            clausePlanChainParents.Add(parent.AtomId);
             foreach (var childId in parent.Receipts.ChainAtoms)
             {
                 if (byId.ContainsKey(childId))
@@ -746,6 +808,15 @@ internal static class DigestionLedgerAligner
             if (!plansByParent.TryGetValue(parent.AstPath, out var plan))
             {
                 RejectClauseChain(parent, $"no recomputed plan exists for {parent.AstPath}", findings);
+                continue;
+            }
+
+            var parentPath = DigestionCasStore.RootPath + parent.CasRef["sha256:".Length..];
+            if (!snapshot.TryGetFile(parentPath, out var parentBlob)
+                || !parentBlob.RawBytes.AsSpan().SequenceEqual(
+                    claims[plan.ParentAstPath].RawBytes.AsSpan()))
+            {
+                RejectClauseChain(parent, "parent CAS bytes differ from recomputed plan source span", findings);
                 continue;
             }
 

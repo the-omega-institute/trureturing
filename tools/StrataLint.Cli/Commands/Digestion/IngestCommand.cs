@@ -6,7 +6,10 @@ namespace StrataLint.Cli;
 
 internal static class IngestCommand
 {
-    internal sealed record LedgerUpdate(string Path, ImmutableArray<byte>? Bytes);
+    internal sealed record LedgerUpdate(
+        string Path,
+        ImmutableArray<byte>? Bytes,
+        int DurabilityOrder = 0);
 
     internal static CommandResult Run(
         string repositoryRoot,
@@ -365,21 +368,77 @@ internal static class IngestCommand
     {
         var currentEntries = current.Entries.ToDictionary(static entry => entry.Path, StringComparer.Ordinal);
         var finalEntries = final.Entries.ToDictionary(static entry => entry.Path, StringComparer.Ordinal);
+        var currentRanks = LedgerDurabilityRanks(current);
+        var finalRanks = LedgerDurabilityRanks(final);
         var updates = final.Entries
             .Where(static entry => entry.Path == BackfillInventoryLoader.RelativePath
                 || BackfillInventoryLoader.IsCanonicalPath(entry.Path))
             .Where(entry => !currentEntries.TryGetValue(entry.Path, out var existing)
                 || !existing.Bytes.AsSpan().SequenceEqual(entry.Bytes.AsSpan()))
-            .Select(static entry => new LedgerUpdate(entry.Path, entry.Bytes))
+            .Select(entry => new LedgerUpdate(
+                entry.Path,
+                entry.Bytes,
+                finalRanks.GetValueOrDefault(entry.Path)))
             .Concat(current.Entries
                 .Where(static entry => entry.Path == BackfillInventoryLoader.RelativePath
                     || BackfillInventoryLoader.IsCanonicalPath(entry.Path))
                 .Where(entry => !finalEntries.ContainsKey(entry.Path))
-                .Select(static entry => new LedgerUpdate(entry.Path, null)))
-            .OrderBy(static update => update.Bytes is null ? 1 : 0)
+                .Select(entry => new LedgerUpdate(
+                    entry.Path,
+                    null,
+                    int.MaxValue - currentRanks.GetValueOrDefault(entry.Path))))
+            .OrderBy(static update => update.DurabilityOrder)
             .ThenBy(static update => update.Path, StringComparer.Ordinal)
             .ToImmutableArray();
         return updates;
+    }
+
+    private static IReadOnlyDictionary<string, int> LedgerDurabilityRanks(
+        RawRepositorySnapshot snapshot)
+    {
+        var document = LoadDocument(Decode(snapshot));
+        var entries = document.RequireDigestionEntries().ToDictionary(
+            static entry => entry.AtomId,
+            StringComparer.Ordinal);
+        var ranks = new Dictionary<string, int>(StringComparer.Ordinal);
+        var visiting = new HashSet<string>(StringComparer.Ordinal);
+
+        int Rank(string atomId)
+        {
+            if (ranks.TryGetValue(atomId, out var rank))
+            {
+                return rank;
+            }
+
+            if (!entries.TryGetValue(atomId, out var entry))
+            {
+                throw new InvalidOperationException(
+                    $"ledger chain references absent child {atomId}; durable ordering is impossible");
+            }
+
+            if (!visiting.Add(atomId))
+            {
+                throw new InvalidOperationException(
+                    $"ledger chain is cyclic at {atomId}; durable ordering is impossible");
+            }
+
+            rank = entry.Receipts.ChainAtoms.Length == 0
+                ? 0
+                : entry.Receipts.ChainAtoms.Max(Rank) + 1;
+            visiting.Remove(atomId);
+            ranks.Add(atomId, rank);
+            return rank;
+        }
+
+        foreach (var atomId in entries.Keys)
+        {
+            Rank(atomId);
+        }
+
+        return entries.Values.ToDictionary(
+            NewAtomPath,
+            entry => ranks[entry.AtomId],
+            StringComparer.Ordinal);
     }
 
     internal static void ApplyLedgerUpdatesAtomically(
@@ -423,7 +482,9 @@ internal static class IngestCommand
         var touched = new List<string>(updates.Length);
         try
         {
-            foreach (var update in updates)
+            foreach (var update in updates
+                         .OrderBy(static update => update.DurabilityOrder)
+                         .ThenBy(static update => update.Path, StringComparer.Ordinal))
             {
                 touched.Add(update.Path);
                 var outputPath = Path.Combine(

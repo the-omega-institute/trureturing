@@ -30,6 +30,7 @@ internal static class DigestionIngestor
             DigestionAlignmentMode.Ingest);
         var unverifiedChainParent = migrationDocument.RequireDigestionEntries().FirstOrDefault(entry =>
             entry.Receipts.ChainAtoms.Length > 0
+            && alignment.ClausePlanChainParents.Contains(entry.AtomId)
             && !alignment.VerifiedClausePlanParents.Contains(entry.AtomId));
         if (unverifiedChainParent is not null)
         {

@@ -527,6 +527,86 @@ public sealed partial class ProductionEnvironmentTests
     }
 
     [Fact]
+    public void DirectoryLedgerWritePlanNeverPublishesParentBeforeItsChildren()
+    {
+        var sourceBytes = Encoding.UTF8.GetBytes(
+            "# PZG\n\n**定理 18.7(写序)**。first clause。\n\n"
+            + "**推论:第二子句**;the full plan has two clauses。\n");
+        var atomized = PzgAtomizer.Atomize(sourceBytes, DigestionTestSupport.Rules);
+        var parentAtom = Assert.Single(atomized.Claims);
+        var children = Assert.Single(atomized.ClausePlans).Children;
+        var ledgerText = IngestLedger(AtomizerRegistry.PzgId, parentAtom)
+            .Replace("atom_id: old-receipt", "atom_id: parent", StringComparison.Ordinal);
+        var currentDocument = BackfillInventoryLoader.Load(ledgerText);
+        var source = Assert.Single(currentDocument.RequireDigestionSources());
+        var parent = Assert.Single(source.Entries);
+        var childIds = new[] { "pzg-child-1", "pzg-child-2" };
+        DigestionLedgerEntry ChildEntry(int index) => parent with
+        {
+            AtomId = childIds[index],
+            AstPath = children[index].AstPath,
+            Fingerprints = children[index].Fingerprints,
+            CasRef = children[index].Fingerprints.RawSha256,
+            Receipts = new DigestionReceipts([], [], [], [], null),
+            ReceiptSyntax = null,
+        };
+        var finalDocument = currentDocument.WithDigestionSources(
+        [
+            source with
+            {
+                Entries =
+                [
+                    parent with
+                    {
+                        Receipts = parent.Receipts with { ChainAtoms = [.. childIds] },
+                        ReceiptSyntax = null,
+                    },
+                    ChildEntry(0),
+                    ChildEntry(1),
+                ],
+            },
+        ]);
+        var currentFiles = DirectoryLedgerTestSupport.Project(
+            new Dictionary<string, string>(StringComparer.Ordinal)
+            {
+                [BackfillInventoryLoader.RelativePath] = ledgerText,
+            });
+        var currentRaw = RawRepositorySnapshot.Create(currentFiles.Select(static pair =>
+            RawRepositoryEntry.FromText(pair.Key, pair.Value)));
+        var finalRaw = IngestCommand.ReplaceLedger(
+            currentRaw,
+            currentDocument,
+            finalDocument,
+            BackfillInventoryWriter.WriteForIngest(finalDocument));
+        var updates = IngestCommand.LedgerUpdates(currentRaw, finalRaw);
+        var prefix = currentRaw.Entries.ToDictionary(static entry => entry.Path, StringComparer.Ordinal);
+
+        Assert.Equal(3, updates.Length);
+        foreach (var update in updates)
+        {
+            if (update.Bytes is { } bytes)
+            {
+                prefix[update.Path] = new RawRepositoryEntry(update.Path, bytes);
+            }
+            else
+            {
+                prefix.Remove(update.Path);
+            }
+
+            var rawPrefix = RawRepositorySnapshot.Create(prefix.Values);
+            var decoded = Assert.IsType<SnapshotDecodeOutcome.Decoded>(
+                SnapshotDecoder.Decode(rawPrefix)).Snapshot;
+            var prefixDocument = BackfillInventoryLoader.Load(decoded);
+            var present = prefixDocument.RequireDigestionEntries()
+                .Select(static entry => entry.AtomId)
+                .ToHashSet(StringComparer.Ordinal);
+            Assert.All(prefixDocument.RequireDigestionEntries(), entry => Assert.All(
+                entry.Receipts.ChainAtoms,
+                childId => Assert.Contains(childId, present)));
+        }
+    }
+
+    [Fact]
     public void IngestPreservesExactNoncanonicalStaleReceiptRepresentation()
     {
         var fixture = new RuleFixture();
