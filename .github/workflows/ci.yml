@@ -535,7 +535,7 @@ jobs:
           mkdir -p "$reports"
           # 只产候选侧。base 只作为 merge-base SHA 传给 admission gate 的 diff 语义,
           # 不再为它编译或上传第二份 Lean 报告。
-          "$pair_producer" --single \
+          "$pair_producer" \
             --producer "$producer" \
             --lake-bin "$HOME/.elan/bin/lake" \
             --candidate-root "$GITHUB_WORKSPACE/candidate" \

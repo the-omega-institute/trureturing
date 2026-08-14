@@ -240,15 +240,6 @@ artifact_id = "none"
 runtime_disposition = "committed-source"
 
 [[files]]
-pattern = "Meta/BACKFILL.yaml"
-kind = "data"
-produced_by = "none"
-consumed_by = ["BackfillInventoryLoader"]
-verified_by = ["BackfillInventoryLoader"]
-artifact_id = "none"
-runtime_disposition = "committed-source"
-
-[[files]]
 pattern = "Meta/Digestion/atomizers.toml"
 kind = "data"
 produced_by = "none"
