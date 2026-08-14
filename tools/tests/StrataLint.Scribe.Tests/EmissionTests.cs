@@ -175,6 +175,19 @@ public sealed class EmissionTests
                 driftedPath,
                 firstEmission[DocumentDefinitions.All[0].RelativePath.Value]);
             var attestationPath = Path.Combine(root, ScribeEmitter.AttestationRelativePath);
+            TemporaryFileSystem.File.Delete(attestationPath);
+            error.GetStringBuilder().Clear();
+
+            var cleanCheckoutExit = ScribeEmitter.Emit(
+                root,
+                check: true,
+                TextWriter.Null,
+                error,
+                report);
+
+            Assert.Equal(0, cleanCheckoutExit);
+            Assert.Empty(error.ToString());
+
             TemporaryFileSystem.File.WriteAllText(attestationPath, "drift\n", new UTF8Encoding(false, true));
             error.GetStringBuilder().Clear();
 

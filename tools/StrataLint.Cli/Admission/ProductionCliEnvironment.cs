@@ -142,7 +142,7 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
     /// verifies them only on the producing machine, where a commit that never reached the remote
     /// still resolves; the admission clone holds only pushed objects, so validating the added
     /// events here rejects an unpublishable anchor at the gate instead of letting it freeze and
-    /// strand every other driver's ledger-append (issue #1712). Scoped to added events only: the
+    /// strand every other driver's ledger-append (issue #1719). Scoped to added events only: the
     /// existing ledger's anchors are attested history, not part of this changeset.
     private AdmissionOutcome? ValidateAddedFrozenLedgerAnchors(
         RawChangeSet changes,
@@ -186,8 +186,8 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
                     DisplaySeverity.Error,
                     AdmissionEffect.Block,
                     change.Path.Value,
-                    "added frozen-ledger event references a Git object this repository cannot "
-                    + "resolve; freeze from a pushed base or publish the anchor commit first: "
+                    "added frozen-ledger event recorded snapshot base was not pushed or is "
+                    + "inconsistent; re-freeze from a pushed base on the producing side: "
                     + exception.Message));
             }
         }
@@ -273,6 +273,9 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
                 leanReportSource,
                 scribeEmissionVerifier,
                 arguments);
+
+    public CommandResult CheckFidelityAttestation(IReadOnlyList<string> arguments) =>
+        CheckFidelityAttestationCommand.Run(repository, leanReportSource, arguments);
 
     public CommandResult AlignScribeReceipt(IReadOnlyList<string> arguments)
     {

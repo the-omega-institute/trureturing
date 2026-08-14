@@ -35,13 +35,14 @@ public sealed partial class DepositCoverWorkflowScriptTests
               ledger-append)
                 target_module=${PLAYBOOK_TARGET_MODULE:-D5/S0/Carrier/Probe.lean}
                 descriptor_blob_oid="git-sha1:$(git hash-object -- "$target_module")"
+                base_commit_oid="git-sha1:$(git rev-parse HEAD)"
                 if [[ $target_module == D5/S0/Carrier/Probe.lean ]]; then
                   event_id=2222222222222222222222222222222222222222222222222222222222222222
                 else
                   event_id=3333333333333333333333333333333333333333333333333333333333333333
                 fi
-                printf '{"event_type": "Freeze", "payload": {"case_id": "active-frozen/%s", "frozen_node_id": "sha256:%s", "input": {"descriptor_blob_oid": "%s"}, "node_path": "%s"}}\n' \
-                  "$event_id" "$event_id" "$descriptor_blob_oid" "$target_module" \
+                printf '{"event_type": "Freeze", "payload": {"case_id": "active-frozen/%s", "frozen_node_id": "sha256:%s", "input": {"base_commit_oid": "%s", "descriptor_blob_oid": "%s"}, "node_path": "%s"}}\n' \
+                  "$event_id" "$event_id" "$base_commit_oid" "$descriptor_blob_oid" "$target_module" \
                   > "Golden/Frozen/accepted/${event_id}.json"
                 if [[ -n ${PLAYBOOK_MUTATE_RECEIPT_AFTER_PREPARE:-} ]]; then
                   printf '%s' "$PLAYBOOK_MUTATE_RECEIPT_AFTER_PREPARE" \
