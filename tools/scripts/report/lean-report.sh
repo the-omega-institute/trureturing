@@ -20,7 +20,7 @@ if [[ "${CI:-}" != "true" && "${CI:-}" != "1" ]]; then
   export STRATALINT_REPORT_CACHE_ROOT="${STRATALINT_REPORT_CACHE_ROOT:-${XDG_CACHE_HOME:-$HOME/.cache}/stratalint-lean-report-cache}"
 fi
 
-exec "$PAIR" --single \
+exec "$PAIR" \
   --producer "$INSPECTOR" \
   --lake-bin "$LAKE_BIN" \
   --candidate-root "$ROOT" \

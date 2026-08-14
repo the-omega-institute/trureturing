@@ -182,8 +182,7 @@ run_stage lean-reports \
   --producer "$PRODUCER" \
   --lake-bin "$LAKE_BIN" \
   --candidate-root "$CANDIDATE_ROOT" \
-  --candidate-output "$CANDIDATE_REPORT" \
-  --single
+  --candidate-output "$CANDIDATE_REPORT"
 GATE="$CANDIDATE_ROOT/.github/scripts/harness-gate.sh"
 [[ -x "$GATE" ]] || { echo "local-harness-gate: dev gate is absent" >&2; exit 2; }
 admission_started="$(date +%s)"
