@@ -90,8 +90,17 @@ public sealed partial class MakeWorkflowTests
             Recipe(makefile, "echo-residual-summary"),
             StringComparison.Ordinal);
         Assert.Contains(LocalHarnessGateScriptPath, Recipe(makefile, "gate"), StringComparison.Ordinal);
-        Assert.Contains(PreflightScriptPath, Recipe(makefile, "preflight"), StringComparison.Ordinal);
-        Assert.Contains(WorktreeInitScriptPath, Recipe(makefile, "worktree"), StringComparison.Ordinal);
+        Assert.Equal(
+            $"\t@BASE=\"$(BASE)\" /bin/bash {PreflightScriptPath}",
+            Recipe(makefile, "preflight"));
+        var worktreeRecipe = Recipe(makefile, "worktree");
+        Assert.Contains(WorktreeInitScriptPath, worktreeRecipe, StringComparison.Ordinal);
+        Assert.Contains("\"$(WORKTREE_DEST)\"", worktreeRecipe, StringComparison.Ordinal);
+        Assert.Contains("WORKTREE_DEST = $(if $(DEST)", makefile, StringComparison.Ordinal);
+        Assert.DoesNotContain("$(origin PATH)", makefile, StringComparison.Ordinal);
+        Assert.DoesNotContain("$(PATH)", makefile, StringComparison.Ordinal);
+        Assert.Contains("[DEST=DIR]", makefile, StringComparison.Ordinal);
+        Assert.DoesNotContain("[PATH=DIR]", makefile, StringComparison.Ordinal);
         Assert.Contains(PrOpenScriptPath, Recipe(makefile, "pr-open"), StringComparison.Ordinal);
         Assert.Contains("--head \"$(HEAD)\"", Recipe(makefile, "pr-open"), StringComparison.Ordinal);
         Assert.DoesNotContain("pr-update", makefile, StringComparison.Ordinal);
@@ -109,6 +118,10 @@ public sealed partial class MakeWorkflowTests
         var makefile = File.ReadAllText(Path.Combine(root, ToolsMakefilePath));
 
         Assert.Contains(".DEFAULT_GOAL := help", makefile, StringComparison.Ordinal);
+        Assert.Contains(
+            "HERE := $(patsubst %/,%,$(dir $(abspath $(lastword $(MAKEFILE_LIST)))))",
+            makefile,
+            StringComparison.Ordinal);
         var phony = Assert.Single(
             makefile.Split('\n'),
             static line => line.StartsWith(".PHONY:", StringComparison.Ordinal));
@@ -119,18 +132,17 @@ public sealed partial class MakeWorkflowTests
             Assert.InRange(RecipeCount(makefile, target), 0, 1);
         }
 
-        Assert.Contains("scripts/dotnet-build.sh", Recipe(makefile, "dotnet"), StringComparison.Ordinal);
+        Assert.Contains("$(HERE)/scripts/dotnet-build.sh", Recipe(makefile, "dotnet"), StringComparison.Ordinal);
         var testRecipe = Recipe(makefile, "test");
-        Assert.Contains("dotnet test StrataLint.sln", testRecipe, StringComparison.Ordinal);
+        Assert.Contains("dotnet test $(HERE)/StrataLint.sln", testRecipe, StringComparison.Ordinal);
         Assert.DoesNotContain("--filter", testRecipe, StringComparison.Ordinal);
-        Assert.Contains("scripts/stratalint-selftest.sh", Recipe(makefile, "selftest"), StringComparison.Ordinal);
-        Assert.Contains("scripts/perf-report.sh", Recipe(makefile, "perf-report"), StringComparison.Ordinal);
-        Assert.Contains("../Golden/perf-budgets.toml", Recipe(makefile, "perf-report"), StringComparison.Ordinal);
-        Assert.Contains("scripts/clean-lanes.sh", Recipe(makefile, "clean-lanes"), StringComparison.Ordinal);
-        Assert.Contains(
-            " gate-authority --old-build \"$(OLD_BUILD)\" --out \"$(OUT)\"",
-            Recipe(makefile, "refactor-p0-0-gate-authority"),
-            StringComparison.Ordinal);
+        Assert.Contains("$(HERE)/scripts/stratalint-selftest.sh", Recipe(makefile, "selftest"), StringComparison.Ordinal);
+        Assert.Contains("$(HERE)/scripts/perf-report.sh", Recipe(makefile, "perf-report"), StringComparison.Ordinal);
+        Assert.Contains("$(HERE)/../Golden/perf-budgets.toml", Recipe(makefile, "perf-report"), StringComparison.Ordinal);
+        Assert.Contains("$(HERE)/scripts/clean-lanes.sh", Recipe(makefile, "clean-lanes"), StringComparison.Ordinal);
+        Assert.DoesNotContain("refactor-p0-0-gate-authority", makefile, StringComparison.Ordinal);
+        Assert.DoesNotContain("--old-build", makefile, StringComparison.Ordinal);
+        Assert.DoesNotContain("OUT ?=", makefile, StringComparison.Ordinal);
     }
 
     private static string EngineeringTestStep(string workflow)
@@ -166,6 +178,12 @@ public sealed partial class MakeWorkflowTests
             root,
             TimeSpan.FromSeconds(30),
             64 * 1024);
+        var directToolsResult = BoundedProcessRunner.Run(
+            "make",
+            ["-f", "tools/Makefile", "help"],
+            root,
+            TimeSpan.FromSeconds(30),
+            64 * 1024);
 
         Assert.Equal(0, rootResult.ExitCode);
         var rootOutput = System.Text.Encoding.UTF8.GetString(rootResult.StandardOutput);
@@ -183,5 +201,10 @@ public sealed partial class MakeWorkflowTests
         Assert.Contains("dry-run", toolsOutput, StringComparison.Ordinal);
         Assert.Contains("FORCE=1", toolsOutput, StringComparison.Ordinal);
         Assert.DoesNotContain("make -C tools lean", toolsOutput, StringComparison.Ordinal);
+        Assert.Equal(0, directToolsResult.ExitCode);
+        var directToolsOutput = System.Text.Encoding.UTF8.GetString(directToolsResult.StandardOutput);
+        Assert.All(
+            ToolsTargets,
+            target => Assert.Contains($"make -C tools {target}", directToolsOutput, StringComparison.Ordinal));
     }
 }

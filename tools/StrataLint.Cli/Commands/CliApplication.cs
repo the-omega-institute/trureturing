@@ -43,8 +43,6 @@ internal interface ICliEnvironment
 
     CommandResult RenderDag(IReadOnlyList<string> arguments);
 
-    CommandResult GenerateLedger(IReadOnlyList<string> arguments);
-
     CommandResult AppendLedger(IReadOnlyList<string> arguments);
 
     CommandResult ReattestLedger(IReadOnlyList<string> arguments);
@@ -111,12 +109,8 @@ internal static class CliApplication
                 RenderCommand(environment.Ingest(tail), console),
             ["ledger-append"] = static (environment, tail, console) =>
                 RenderCommand(environment.AppendLedger(tail), console),
-            ["ledger-genesis"] = static (environment, tail, console) =>
-                RenderCommand(environment.GenerateLedger(tail), console),
             ["ledger-reattest"] = static (environment, tail, console) =>
                 RenderCommand(environment.ReattestLedger(tail), console),
-            ["lean-report-merge"] = static (_, tail, console) =>
-                RenderCommand(LeanReportMergeCommand.Run(tail), console),
             ["perf-append"] = static (environment, tail, console) =>
                 RenderCommand(environment.AppendPerf(tail), console),
             ["perf-report"] = static (environment, tail, console) =>

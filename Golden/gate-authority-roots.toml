@@ -29,10 +29,6 @@ root_id = "harness-gate.sh/build-judge"
 entrypoint = ".github/scripts/harness-gate.sh"
 
 [[roots]]
-root_id = "harness-gate.sh/selftest"
-entrypoint = ".github/scripts/harness-gate.sh"
-
-[[roots]]
 root_id = "local-harness-gate.sh/admission"
 entrypoint = "tools/scripts/local-harness-gate.sh"
 

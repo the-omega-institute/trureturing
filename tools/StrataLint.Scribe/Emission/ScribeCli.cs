@@ -1,9 +1,16 @@
+using System.Collections.Immutable;
 using StrataLint.Engine;
 
 namespace StrataLint.Scribe;
 
 public static class ScribeCli
 {
+    private static readonly ImmutableHashSet<string> EmissionCommands =
+        ImmutableHashSet.Create(StringComparer.Ordinal, "emit", "emit-values", "filemap");
+
+    public static ImmutableArray<string> ImplementedCommands { get; } =
+        ["describe-report", .. EmissionCommands.Order(StringComparer.Ordinal), "projections"];
+
     public static int Run(
         IReadOnlyList<string> arguments,
         string workingDirectory,
@@ -105,7 +112,7 @@ public static class ScribeCli
         var check = arguments.Count == 2
             && string.Equals(arguments[1], "--check", StringComparison.Ordinal);
         if (arguments.Count is < 1 or > 2
-            || command is not ("emit" or "emit-values" or "filemap")
+            || !EmissionCommands.Contains(command)
             || (arguments.Count == 2 && !check))
         {
             error.WriteLine(Usage);

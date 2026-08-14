@@ -558,6 +558,9 @@ public sealed partial class ReviewRegressionTests
         var pairProducer = File.ReadAllText(
             Path.Combine(root, "tools", "scripts", "lean-report-pair.sh"),
             Encoding.UTF8);
+        var selftest = File.ReadAllText(
+            Path.Combine(root, "tools", "scripts", "stratalint-selftest.sh"),
+            Encoding.UTF8);
         var inspectJob = workflow[
             workflow.IndexOf("  lean-inspect:", StringComparison.Ordinal)..workflow.IndexOf("  baseline-admission:", StringComparison.Ordinal)];
         var baselineJob = workflow[workflow.IndexOf("  baseline-admission:", StringComparison.Ordinal)..];
@@ -617,8 +620,11 @@ public sealed partial class ReviewRegressionTests
             "protected-surface change (SL-022); content checks passed",
             gate,
             StringComparison.Ordinal);
-        Assert.True(Count(gate, " selftest") >= 2, "selftest must run twice in the shared gate");
-        Assert.Contains("cmp", gate, StringComparison.Ordinal);
+        Assert.DoesNotContain(" selftest", gate, StringComparison.Ordinal);
+        Assert.DoesNotContain("mark selftest", gate, StringComparison.Ordinal);
+        Assert.Contains("selftest > \"$RUNS/first.txt\"", selftest, StringComparison.Ordinal);
+        Assert.Contains("selftest > \"$RUNS/second.txt\"", selftest, StringComparison.Ordinal);
+        Assert.Contains("cmp \"$RUNS/first.txt\" \"$RUNS/second.txt\"", selftest, StringComparison.Ordinal);
         Assert.DoesNotContain("LAKE", gate, StringComparison.Ordinal);
         Assert.DoesNotContain("elan", gate, StringComparison.OrdinalIgnoreCase);
         Assert.DoesNotContain("tail -", workflow, StringComparison.OrdinalIgnoreCase);
