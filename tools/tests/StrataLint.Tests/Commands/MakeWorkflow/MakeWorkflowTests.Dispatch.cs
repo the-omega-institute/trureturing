@@ -13,28 +13,23 @@ public sealed partial class MakeWorkflowTests
         var makefile = File.ReadAllText(Path.Combine(root, "Makefile"));
         var workflow = File.ReadAllText(Path.Combine(root, AdmissionWorkflowPath));
         var engineeringStep = EngineeringTestStep(workflow);
-        var targetMatches = Regex.Matches(
-            engineeringStep,
-            @"(?m)^[ \t]*make[ \t]+-C[ \t]+candidate[ \t]+(?<target>[A-Za-z][A-Za-z0-9_-]*)[ \t]*$",
-            RegexOptions.CultureInvariant | RegexOptions.NonBacktracking);
-
-        Assert.True(
-            targetMatches.Count == 1,
-            "The candidate-engineering test step must invoke exactly one concrete make target so CI cannot silently switch to a different test lane.");
-        var targetMatch = targetMatches[0];
+        // expand 窗口(阶段 5 前置):两个分支目标(根 tools-test / tools 门 test)
+        // 都被字面钉死,CI 仍不能静默切换到别的 test lane。
+        Assert.Contains("target=tools-test", engineeringStep, StringComparison.Ordinal);
+        Assert.Contains("if [ -f candidate/tools/Makefile ]; then", engineeringStep, StringComparison.Ordinal);
+        Assert.Contains("target=test", engineeringStep, StringComparison.Ordinal);
+        Assert.Contains("make -C \"$hdir\" \"$target\"", engineeringStep, StringComparison.Ordinal);
         Assert.True(
             !engineeringStep.Contains("--filter", StringComparison.Ordinal),
             "The candidate-engineering check must call the canonical unfiltered test target; commit 5743d114 filtered Script tests and left those tests unexecuted in CI.");
 
-        var target = targetMatch.Groups["target"].Value;
-        Assert.Equal("tools-test", target);
-        var recipe = Recipe(makefile, target);
+        var recipe = Recipe(makefile, "tools-test");
         Assert.True(
             recipe.Contains("dotnet test", StringComparison.Ordinal),
-            $"The make target '{target}' called by candidate-engineering must be the .NET test target guarded by this invariant.");
+            "The make target 'tools-test' called by candidate-engineering on the legacy layout must be the .NET test target guarded by this invariant.");
         Assert.True(
             !recipe.Contains("--filter", StringComparison.Ordinal),
-            $"The canonical make target '{target}' must keep its dotnet test command unfiltered; commit 5743d114 filtered Script tests and CI then had no replacement lane.");
+            "The canonical make target 'tools-test' must keep its dotnet test command unfiltered; commit 5743d114 filtered Script tests and CI then had no replacement lane.");
     }
 
     [Fact]
