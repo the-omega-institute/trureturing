@@ -16,6 +16,5 @@ receipts:
   unresolved_subitems:
     - gleason-representation-and-uniqueness-dimension-at-least-three
     - complete-solution-space-characterization
-    - harmonic-spectral-pruning-certificate
   chain_atoms: []
   tail_authorization: null
