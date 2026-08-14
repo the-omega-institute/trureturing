@@ -246,6 +246,21 @@ public sealed class WorktreeCacheStrategyTests
         Assert.False(File.GetAttributes(Path.Combine(target, ".lake")).HasFlag(FileAttributes.ReparsePoint));
     }
 
+    [Fact]
+    public void MakeWorktreeUsesDestWithoutRewritingTheToolPath()
+    {
+        var root = TestRepositoryLayout.FindRoot();
+        var makefile = File.ReadAllText(Path.Combine(root, "Makefile"));
+        var init = File.ReadAllText(Path.Combine(root, "tools", "scripts", "worktree-init.sh"));
+        var clean = File.ReadAllText(Path.Combine(root, "tools", "scripts", "clean-lanes.sh"));
+
+        Assert.Contains("WORKTREE_DEST = $(if $(DEST)", makefile, StringComparison.Ordinal);
+        Assert.Contains("[DEST=DIR]", makefile, StringComparison.Ordinal);
+        Assert.DoesNotContain("$(origin PATH)", makefile, StringComparison.Ordinal);
+        Assert.DoesNotContain("export PATH=", init, StringComparison.Ordinal);
+        Assert.DoesNotContain("export PATH=", clean, StringComparison.Ordinal);
+    }
+
     private static void InitializeRepository(string root)
     {
         Git(root, "init", "--initial-branch=dev");

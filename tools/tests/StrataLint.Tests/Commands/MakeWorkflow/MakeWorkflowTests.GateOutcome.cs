@@ -28,7 +28,6 @@ public sealed partial class MakeWorkflowTests
             #!/usr/bin/env bash
             printf '%s\n' "$*" >> "$DOTNET_LOG"
             case "${2:-}" in
-              selftest) printf 'selftest\n'; exit 0 ;;
               check|filemap-conform) exit 0 ;;
             esac
             exit 91
@@ -54,8 +53,8 @@ public sealed partial class MakeWorkflowTests
 
         Assert.Equal(0, result.ExitCode);
         var invocations = File.ReadAllLines(log);
-        Assert.Equal(4, invocations.Length);
-        Assert.Equal(2, invocations.Count(line => line.Contains(" selftest", StringComparison.Ordinal)));
+        Assert.Equal(2, invocations.Length);
+        Assert.DoesNotContain(invocations, line => line.Contains(" selftest", StringComparison.Ordinal));
         Assert.Single(invocations, line => line.Contains(" check --protected-base base", StringComparison.Ordinal));
         Assert.Single(invocations, line => line.EndsWith(" filemap-conform", StringComparison.Ordinal));
         Assert.DoesNotContain(invocations, line =>
