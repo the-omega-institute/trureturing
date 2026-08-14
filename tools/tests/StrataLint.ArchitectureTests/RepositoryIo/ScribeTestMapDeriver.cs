@@ -23,18 +23,7 @@ internal sealed record ScribeTestMethod(
     internal bool IsUnknown => UnknownReasons.Count != 0;
 }
 
-internal sealed record ScribeTestMap(IReadOnlyList<ScribeTestMethod> Methods)
-{
-    internal IReadOnlyList<ScribeTestMethod> Select(IEnumerable<string> changedPaths)
-    {
-        var changed = changedPaths.Select(Normalize).ToHashSet(StringComparer.Ordinal);
-        return Methods.Where(method => method.IsUnknown || method.Paths.Any(declared =>
-            changed.Any(path => path == declared
-                || path.StartsWith(declared + "/", StringComparison.Ordinal)))).ToArray();
-    }
-
-    private static string Normalize(string path) => path.Replace('\\', '/').TrimStart('.', '/');
-}
+internal sealed record ScribeTestMap(IReadOnlyList<ScribeTestMethod> Methods);
 
 internal static class ScribeTestMapDeriver
 {
