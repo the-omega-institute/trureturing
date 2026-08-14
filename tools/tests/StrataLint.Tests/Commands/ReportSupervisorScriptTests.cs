@@ -572,7 +572,8 @@ public sealed class ReportSupervisorScriptTests
         using var fixture = new ReportSupervisorFixture();
         using var process = fixture.StartLongRunningProducer();
         fixture.WaitUntil(
-            () => File.Exists(fixture.GrandchildPid),
+            () => File.Exists(fixture.GrandchildPid)
+                && new FileInfo(fixture.GrandchildPid).Length > 0,
             "worker did not publish its child pid");
         var grandchild = int.Parse(
             File.ReadAllText(fixture.GrandchildPid).Trim(),
