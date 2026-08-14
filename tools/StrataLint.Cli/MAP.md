@@ -12,16 +12,12 @@
 
 - `Admission/`: repository preparation, topology checks, production admission, and the
   single-tree protected-surface content check used by the baseline gate.
-- `Commands/`: command dispatch, coverage, registry loading, golden snapshot recording,
-  ledger commands, and worktree provisioning.
-- `Conservative/`: compatibility implementation for base-owned replay, TOML golden fixture
-  execution/materialization, conservative-extension verification, and contract-epoch
-  policy/plan/ledger/evidence obligation accounting from exact commit snapshots. It remains
-  callable for predecessor baselines, but the current shared baseline gate does not invoke it.
-- `Golden/`: shared compatibility schema plus fail-closed canonical TOML and
-  synthetic-registry loaders/writer for the retained conservative commands; data lives
-  outside the assembly under top-level `Golden/` after closure of `RESIDENCE-EPOCH`.
-- `Runtime/`: CLI adapters for precomputed Lean reports and pin-aware Lean cache provisioning.
+- `Commands/`: command dispatch, coverage, registry and manifest loading, DAG ledger,
+  digestion, file-map, blueprint-pin, and worktree commands.
+- `GateAuthority/`: authority-root catalog loading and gate-authority verification.
+- `Performance/`: performance event codecs, ledgers, reports, and budget comparison.
+- `Runtime/`: CLI adapters for precomputed Lean reports, pin-aware Lean cache provisioning,
+  Scribe emission verification, and worktree process execution.
 
 The root contains the executable entry point, assembly metadata, SDK project metadata,
 and this map.
