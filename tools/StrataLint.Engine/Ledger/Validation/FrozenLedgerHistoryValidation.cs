@@ -98,7 +98,11 @@ public static partial class FrozenLedger
 
                     active.Add(
                         freeze.CaseId,
-                        new FrozenActiveEntry(HistoricalMaterial(freeze), freeze, eventHash));
+                        new FrozenActiveEntry(
+                            HistoricalMaterial(freeze),
+                            freeze,
+                            eventHash,
+                            AxiomClosureKnown: false));
                     events.Add(new FrozenLedgerEvent.Freeze(sequence, eventHash, previousHash, freeze));
                 }
                 else if (eventType == "Reattest")
@@ -164,6 +168,23 @@ public static partial class FrozenLedger
                         previousHash,
                         reattest));
                 }
+                else if (eventType == EnvironmentRecoordinateEventType)
+                {
+                    var recoordinate = ValidateEnvironmentRecoordinate(
+                        payload,
+                        active,
+                        trustedReferences,
+                        candidateCatalog: null);
+                    active[recoordinate.CaseId] = ApplyEnvironmentRecoordinate(
+                        active[recoordinate.CaseId],
+                        recoordinate,
+                        eventHash);
+                    events.Add(new FrozenLedgerEvent.EnvironmentRecoordinate(
+                        sequence,
+                        eventHash,
+                        previousHash,
+                        recoordinate));
+                }
                 else if (eventType == "Revoke")
                 {
                     var revoke = ParseHistoricalRevoke(payload, events, active, previous);
@@ -214,7 +235,9 @@ public static partial class FrozenLedger
             foreach (var (caseId, entry) in active.ToArray())
             {
                 var material = expectedByPath[entry.Material.RepoPath];
-                if (HistoricalActiveFreezeMatches(entry.Payload, material))
+                if (HistoricalActiveFreezeMatches(entry.Payload, material)
+                    && (entry.Environment is null
+                        || EnvironmentMatches(entry.Environment, catalog.Environment)))
                 {
                     active[caseId] = entry with { Material = material };
                     continue;
@@ -331,6 +354,14 @@ public static partial class FrozenLedger
         && payload.PrerequisiteFrozenNodeIds.SequenceEqual(material.PrerequisiteFrozenNodeIds)
         && payload.Input.DescriptorBlobOid == material.Attestation.SourceBlobOid
         && payload.Input.DescriptorSelector == material.RepoPath.Value;
+
+    private static bool EnvironmentMatches(
+        FrozenEnvironmentPins actual,
+        FrozenEnvironmentAttestation expected) =>
+        actual.LeanToolchainBlobOid == expected.LeanToolchainBlobOid
+        && actual.LakeManifestBlobOid == expected.LakeManifestBlobOid
+        && actual.LakefilePath.Value == expected.LakefilePath
+        && actual.LakefileBlobOid == expected.LakefileBlobOid;
 
     private static StatementId ParseStatementId(string value, string label) =>
         FrozenHashSyntax.IsSha256(value)

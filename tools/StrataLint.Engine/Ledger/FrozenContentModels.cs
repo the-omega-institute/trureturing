@@ -90,7 +90,12 @@ public sealed record FrozenEnvironmentAttestation(
     string OriginCommitOid,
     string OriginTreeOid,
     string LeanToolchainBlobOid,
-    string LakeManifestBlobOid);
+    string LakeManifestBlobOid)
+{
+    public string? LakefilePath { get; init; }
+
+    public string? LakefileBlobOid { get; init; }
+}
 
 public sealed record FrozenModuleAttestation(RepoPath RepoPath, string SourceBlobOid)
 {

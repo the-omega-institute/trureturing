@@ -1,4 +1,5 @@
 using System.Collections.Immutable;
+using System.Security.Cryptography;
 using StrataLint.Engine;
 
 namespace StrataLint.Cli;
@@ -165,7 +166,58 @@ internal sealed partial class GitRepositoryGateway
             }
         }
 
-        return TrustedFrozenGitReferences.CreateForTrustedAdapter(references.Inputs);
+        foreach (var reference in references.EnvironmentReferences)
+        {
+            var tree = Untag(reference.Input.BaseTreeOid);
+            if (!trees.TryGetValue(tree, out var entries))
+            {
+                entries = ParseTree(GitBytes("ls-tree", "-r", "-z", tree)).ToImmutableArray();
+                trees.Add(tree, entries);
+            }
+
+            RequireTreeBlob(
+                entries,
+                "lean-toolchain",
+                reference.Environment.LeanToolchainBlobOid,
+                "EnvironmentRecoordinate lean-toolchain pin");
+            RequireTreeBlob(
+                entries,
+                reference.Environment.LakefilePath.Value,
+                reference.Environment.LakefileBlobOid,
+                "EnvironmentRecoordinate lakefile pin");
+            RequireTreeBlob(
+                entries,
+                "lake-manifest.json",
+                reference.Environment.LakeManifestBlobOid,
+                "EnvironmentRecoordinate lake-manifest pin");
+            var sourceBytes = GitBytes("cat-file", "blob", Untag(reference.Input.DescriptorBlobOid));
+            var sourceSha256 = "sha256:" + Convert.ToHexStringLower(SHA256.HashData(sourceBytes));
+            if (!string.Equals(sourceSha256, reference.SourceSha256, StringComparison.Ordinal))
+            {
+                throw SemanticRejection(
+                    "EnvironmentRecoordinate source_sha256 does not match descriptor blob bytes");
+            }
+        }
+
+        return TrustedFrozenGitReferences.CreateForTrustedAdapter(
+            references.Inputs,
+            references.EnvironmentReferences);
+    }
+
+    private static void RequireTreeBlob(
+        ImmutableArray<TreeEntry> entries,
+        string path,
+        string taggedOid,
+        string label)
+    {
+        var entry = entries.SingleOrDefault(item => item.Path == path);
+        if (entry is null
+            || entry.ObjectType != "blob"
+            || entry.Mode is not ("100644" or "100755")
+            || entry.ObjectId != Untag(taggedOid))
+        {
+            throw SemanticRejection($"{label} does not resolve to its named path");
+        }
     }
 
     private void RequireTaggedObjectType(string oid, string repositoryPrefix, string expected)

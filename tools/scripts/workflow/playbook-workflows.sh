@@ -150,13 +150,14 @@ freeze_exists() {
           if . == "Genesis" then 0
           elif . == "Freeze" then 1
           elif . == "Reattest" then 2
+          elif . == "EnvironmentRecoordinate" then 2
           elif . == "Revoke" then 3
           else 4
           end;
       def attestation_depth($event; $visited):
           if $event.event_type == "Freeze" then
             0
-          elif $event.event_type == "Reattest" then
+          elif ($event.event_type == "Reattest" or $event.event_type == "EnvironmentRecoordinate") then
             ($event.event_hash // null) as $event_hash
             | if (($event_hash | type) != "string") then
                 error("Reattest is missing its event hash")
@@ -181,7 +182,8 @@ freeze_exists() {
       to_entries
       | sort_by([
           (.value.event_type | replay_rank),
-          (if .value.event_type == "Reattest" then attestation_depth(.value; {}) else 0 end),
+          (if (.value.event_type == "Reattest" or .value.event_type == "EnvironmentRecoordinate")
+            then attestation_depth(.value; {}) else 0 end),
           .key
         ])
       | map(.value)
@@ -217,6 +219,19 @@ freeze_exists() {
               | if (($event.payload.frozen_node_id? // null) | type) == "string" then
                   .[$case].frozen_node_id = $event.payload.frozen_node_id
                 else . end
+            end
+        elif $event.event_type == "EnvironmentRecoordinate" then
+          ($event.payload.case_id // null) as $case
+          | ($event.payload.new_input.descriptor_blob_oid // null) as $blob
+          | ($event.payload.new_frozen_node_id // null) as $frozen_id
+          | if (($case | type) != "string"
+              or ($blob | type) != "string"
+              or ($frozen_id | type) != "string"
+              or (has($case) | not)) then
+              error("EnvironmentRecoordinate targets no active case or lacks module identity")
+            else
+              .[$case].descriptor_blob_oid = $blob
+              | .[$case].frozen_node_id = $frozen_id
             end
         elif $event.event_type == "Revoke" then
           ($event.payload.affected_case_ids // null) as $cases

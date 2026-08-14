@@ -35,11 +35,23 @@ public static class FrozenLedgerMaterializer
             var algorithm = originCommit.StartsWith("git-sha256:", StringComparison.Ordinal)
                 ? HashAlgorithmName.SHA256
                 : HashAlgorithmName.SHA1;
-            var environment = new FrozenEnvironmentAttestation(
+            var lakefiles = new[] { "lakefile.toml", "lakefile.lean" }
+                .Where(path => snapshot.TryGetFile(path, out _))
+                .ToArray();
+            var baseEnvironment = new FrozenEnvironmentAttestation(
                 originCommit,
                 originTree,
                 FrozenContentAddress.ComputeGitBlobOid(toolchain.RawBytes.AsSpan(), algorithm),
                 FrozenContentAddress.ComputeGitBlobOid(manifest.RawBytes.AsSpan(), algorithm));
+            var environment = lakefiles.Length == 1
+                ? baseEnvironment with
+            {
+                LakefilePath = lakefiles[0],
+                LakefileBlobOid = FrozenContentAddress.ComputeGitBlobOid(
+                    snapshot.Files[RepoPath.CreateKnown(lakefiles[0])].RawBytes.AsSpan(),
+                    algorithm),
+            }
+                : baseEnvironment;
             var inputs = new Dictionary<RepoPath, FrozenLedgerInput>();
             var pathsByCase = new Dictionary<string, RepoPath>(StringComparer.Ordinal);
             foreach (var line in syntax.Lines)
@@ -76,6 +88,17 @@ public static class FrozenLedgerMaterializer
 
                     inputs[path] = ParseMaterialInput(payload.GetProperty("input"));
                 }
+                else if (eventType.GetString() == FrozenLedger.EnvironmentRecoordinateEventType)
+                {
+                    var caseId = RequiredString(payload, "case_id");
+                    if (!pathsByCase.TryGetValue(caseId, out var path))
+                    {
+                        throw new FormatException(
+                            "EnvironmentRecoordinate refers to a case not introduced by a prior Freeze.");
+                    }
+
+                    inputs[path] = ParseMaterialInput(payload.GetProperty("new_input"));
+                }
             }
 
             var attestations = dag.Nodes
@@ -107,7 +130,7 @@ public static class FrozenLedgerMaterializer
     {
         if (value.ValueKind != JsonValueKind.Object)
         {
-            throw new FormatException("Freeze/Reattest input must be an object.");
+            throw new FormatException("Frozen ledger input must be an object.");
         }
 
         var supporting = value.GetProperty("supporting_blob_oids");

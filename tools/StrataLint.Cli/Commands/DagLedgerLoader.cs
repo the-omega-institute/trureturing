@@ -188,6 +188,18 @@ public static class DagLedgerLoader
                 && placedHashes.Contains(previous.GetString()!);
         }
 
+        if (item.EventType == FrozenLedger.EnvironmentRecoordinateEventType)
+        {
+            return item.Payload.TryGetProperty("previous_attestation_event_hash", out var previous)
+                && previous.ValueKind == JsonValueKind.String
+                && placedHashes.Contains(previous.GetString()!)
+                && item.Payload.TryGetProperty("new_prerequisite_frozen_node_ids", out var prerequisites)
+                && prerequisites.ValueKind == JsonValueKind.Array
+                && prerequisites.EnumerateArray().All(prerequisite =>
+                    prerequisite.ValueKind == JsonValueKind.String
+                    && placedIdentities.Contains(prerequisite.GetString()!));
+        }
+
         return true;
     }
 
