@@ -139,7 +139,7 @@ After the report-base refresh was committed, `origin/dev` advanced through PR
 #1714. A final non-destructive
 `git merge --no-edit 4551a412d3dfbf5bcaa25755e34bbf8481c1a3e8`
 completed without conflict as `2fa9ec70503067aa7995a93afd9d1edad827fc4d`.
-Its second parent and the final synchronized content base are:
+Its second parent and the synchronized content base at that point were:
 
 ```text
 origin/dev = 4551a412d3dfbf5bcaa25755e34bbf8481c1a3e8
@@ -153,12 +153,101 @@ three incoming paths exited `1` with no selected-atom, solenoid,
 Pontryagin-dual, profinite, p-adic, kernel-equivalence, or exact-sequence
 occurrence. It changes no clause disposition below.
 
-On this final base, `make lean-report` exited `0` from the content-addressed
-cache, producing:
+The R5 replay began after `origin/dev` had been fetched at
+`f94e87a89fd0a681936647038edf285f21eee916`. The exact non-destructive merge
+
+```sh
+git merge --no-edit f94e87a89fd0a681936647038edf285f21eee916
+```
+
+completed without conflict as `a3c33f20b5604eb6b46f87c812ec111f765669b2`.
+Its second parent and pinned replay content base are:
 
 ```text
-input_address = sha256:7c06971ecfda1ceb649b61deda7af1a48eaeb0f42542ec8887d09e95c0c977bf
-report_sha256 = d1fc400f4d539060fdf1af46aaba31228b1ef2d382588eaa7e38c4fdb32054d5
+pinned replay base = f94e87a89fd0a681936647038edf285f21eee916
+merge-base(f94e87a, HEAD) = f94e87a89fd0a681936647038edf285f21eee916
+```
+
+PR #1715 adds `PrimeLogIndependence.lean` and its Scribe and Blueprint mirrors,
+and updates only PZG remark 27.119's backfill record. The new theorem rules out
+nontrivial finite rational relations among prime logarithms; the PZG update adds
+that theorem's GID and removes its matching unresolved subitem. PR #1716 adds
+`GoldenContractionRadicalBound.lean` and its two mirrors; its public theorems
+bound a golden-desubstitution contraction error using `primeRadical`.
+
+An initial broad `prime.adic` text pattern matched only the unrelated
+`primeRadical` identifier. The refined focused search across all seven incoming
+paths exited `1` with no selected-atom, solenoid, Pontryagin-dual, profinite,
+p-adic, kernel-equivalence, or exact-sequence occurrence. Neither PR changes a
+clause disposition below, and the selected GICT backfill remains untouched.
+
+During that preliminary report refresh, the shared `origin/dev` ref advanced
+to `e18dd230ad6bcb900ee96f3a48c3d32d0bffaafd`. At that historical point this
+lane performed no fetch and did not merge the later base, which was not then an
+ancestor of the lane. That movement invalidated the f94 quiet-window gate
+claim, but it did not change the pinned `f94e87a8` content audit.
+
+On the pinned `f94e87a8` tree, `make lean-report` exited `0`, producing:
+
+```text
+input_address = sha256:a869ce251abcc700b0770c03c20bd8c6a3c240a1a42c87165495b5a5f1f92e55
+report_sha256 = e71f3c30b659d7e260d814de12caeac6e5a0e28f16cb034ab55bbaabf4940d29
+```
+
+The final R5 synchronization began with the shared ref already at the exact
+target, without another fetch. The preserved report edit was carried through
+this exact non-destructive merge:
+
+```sh
+git merge --no-edit 9014d6103a180f6347cb6d092b078ca1560958cf
+```
+
+Exit `0`; it completed without conflict as
+`4e6722d9c48fc0838bab0b0e072e8f7cd159a5f2`. Its parents and final content
+base are:
+
+```text
+parents = a3c33f20b5604eb6b46f87c812ec111f765669b2 9014d6103a180f6347cb6d092b078ca1560958cf
+origin/dev = 9014d6103a180f6347cb6d092b078ca1560958cf
+merge-base(origin/dev, HEAD) = 9014d6103a180f6347cb6d092b078ca1560958cf
+```
+
+The `f94e87a8..9014d610` delta contains 270 changed paths, 9,884 insertions,
+and 55 deletions. Its large ingestion component registers the independent
+`qdo-v1` source and atomizer dialect, adds the quantitative-diagonalization
+reference volume, 114 CAS atoms, and 115 source/backfill paths. The source and
+all of those residual records are QDO-addressed, not GICT theorem 6.1
+coverage.
+
+The tooling component batches revision blob reads through `git cat-file
+--batch` and rejects newly added frozen-ledger events whose Git anchors cannot
+be resolved. The content component adds six independent Lean modules:
+`GoldenMidlineFactorization`, `AffordableRegionAgreement`,
+`SearchableWindowDecision`, `GoldenSubstitutionOrbit`,
+`BackwardShiftOperator`, and `FourPointPowerDefect`, with their mirrors and
+seven freeze events. Four new formalization receipts bind three PZG atoms and
+one different GICT atom. In particular:
+
+```text
+incoming GICT receipt atom = gict-residual-d04f41c3612d0baaf0b2430e263e09a99103c4bb8eacd28a6dbe85baa4d77cdd
+incoming GICT primary GID = D5/S3/Zeros/ToySpectrum/FourPointPowerDefect.four_point_power_defect_eq
+selected atom = gict-residual-5db40deeb77603206799812f973d4eee90041979570108b72914623feb17810a
+```
+
+The `d04f...` receipt is therefore not a receipt for the selected `5db40...`
+atom. A full-content search over all 270 incoming paths for the exact selected
+ID exited `1`. The carrier search across the same path set found only the prose
+phrase `solenoid path orbit classification` in the new QDO reference volume;
+it found no `UniversalSolenoid`, `PontryaginDual`, `HiddenAddress`,
+`hiddenKernelAddEquiv`, profinite, p-adic, or exact-sequence carrier. These
+changes do not alter any selected-atom clause disposition below.
+
+On the final merged tree, a fresh bare `make lean-report` exited `0` and
+produced:
+
+```text
+input_address = sha256:bdb5001081468f123f50a4dd126daa1fa36e05a16a101106c6d883a60cd033eb
+report_sha256 = 6f04896a66cee2f912b6feaf1f52f662badbd4dbf20b444a8b07843344ec73d8
 ```
 
 ## Atom and authoritative statement
@@ -383,8 +472,9 @@ rg -n 'PontryaginDual' \
 found the generic definition, functorial map, topology/group instances, and
 finite-abelian double-dual results only. It found no rational specialization.
 
-There were 1,553 refs. This bounded all-ref query used the complete ref list
-and only Lean paths:
+The historical f94 replay had 1,560 refs. The final merged-tree census had
+1,572, so this bounded all-ref query was repeated with the complete final ref
+list and only Lean paths:
 
 ```sh
 set -o pipefail
@@ -546,7 +636,7 @@ lake build \
 
 Exit `0`; Lean reported `Build completed successfully (8563 jobs)`.
 
-After the final merge to content base `4551a412`, the refreshed scoped build
+After the final merge to content base `9014d610`, the refreshed scoped build
 included the modules defining and constructing the additive kernel equivalence:
 
 ```sh
@@ -572,11 +662,12 @@ The latest actual deposit template on this final base was inspected with:
 
 ```sh
 git log --no-merges -20 --format='%H %s' --grep='^formalize: deposit'
-git show 6664bf790742f22a3ef7d7b7e622dd8b4c895113
+git show 4813e833027e17f30e7b1c4c5144d87514114086
 ```
 
-It is the incoming `WideVacuumBand` deposit and adds one new Lean module, one
-Scribe source, and one emitted Blueprint Markdown file; its separate receipt
-and freeze commit is `4ec81b032f70523fcbaa12ae03c8156a8ad167fb`.
+It is the incoming `SearchableWindowDecision` deposit and adds one new Lean
+module, one Scribe source, and one emitted Blueprint Markdown file; its
+separate receipt/freeze commit is
+`0f9cfb7351a0a961340722926b2bfbdcf2707f2d`.
 No candidate artifacts were created because the task stopped at the
 fidelity/search gate.
