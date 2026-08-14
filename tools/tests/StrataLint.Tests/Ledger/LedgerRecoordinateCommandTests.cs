@@ -53,8 +53,32 @@ public sealed class LedgerRecoordinateCommandTests
                 fixture.CandidateCatalog)).Capability;
         var migration = Assert.IsType<FrozenLedgerEvent.EnvironmentRecoordinate>(
             accepted.Events[^1]);
-        Assert.Equal(["propext"], migration.Payload.OldAxiomClosure);
+        Assert.Equal("propext", Assert.Single(migration.Payload.OldAxiomClosure));
         Assert.Empty(migration.Payload.NewAxiomClosure);
+        Assert.Equal("D5.S0.Carrier.OldDependency", Assert.Single(migration.Payload.OldImports));
+        Assert.Equal("D5.S0.Carrier.NewDependency", Assert.Single(migration.Payload.NewImports));
+    }
+
+    [Fact]
+    public void ProductionCommandWritesRecoordinateWithoutStatementDrift()
+    {
+        using var fixture = new RecoordinateFixture(
+            candidateStatementMaterial: "old-elaborated-expression");
+        var console = new BufferedConsole();
+
+        var exitCode = CliApplication.Run(fixture.Arguments, fixture.Environment, console);
+
+        Assert.Equal(0, exitCode);
+        Assert.Contains("appended_recoordinates=1", console.Output, StringComparison.Ordinal);
+        var syntax = Assert.IsType<DagLedgerLoadOutcome.Loaded>(DagLedgerLoader.Load(
+            FrozenLedgerTestData.ReadLedgerDirectory(fixture.LedgerPath))).Syntax;
+        var migration = Assert.IsType<FrozenLedgerEvent.EnvironmentRecoordinate>(
+            Assert.IsType<FrozenLedgerValidationOutcome.Accepted>(
+                FrozenLedgerTestData.ValidateCandidate(
+                    syntax,
+                    fixture.Baseline,
+                    fixture.CandidateCatalog)).Capability.Events[^1]);
+        Assert.Equal(migration.Payload.OldStatementId, migration.Payload.NewStatementId);
     }
 
     private sealed class RecoordinateFixture : IDisposable
@@ -71,13 +95,16 @@ public sealed class LedgerRecoordinateCommandTests
 
         private readonly TemporaryDirectory temporary = new();
 
-        internal RecoordinateFixture()
+        internal RecoordinateFixture(string candidateStatementMaterial = "new-elaborated-expression")
         {
             var oldModule = FrozenLedgerTestData.ModuleWithReport(
                 "A",
                 Source,
                 "old-elaborated-expression",
-                ["propext"]);
+                ["propext"]) with
+            {
+                Imports = ["OldDependency"],
+            };
             var oldCatalog = FrozenLedgerTestData.BuildCatalogWithEnvironment(
                 OldToolchain,
                 OldLakefile,
@@ -98,10 +125,11 @@ public sealed class LedgerRecoordinateCommandTests
             var candidateModule = FrozenLedgerTestData.ModuleWithReport(
                 "A",
                 Source,
-                "new-elaborated-expression") with
+                candidateStatementMaterial) with
             {
                 BaseCommitOid = FrozenLedgerTestData.GitOid('a'),
                 BaseTreeOid = FrozenLedgerTestData.GitOid('b'),
+                Imports = ["NewDependency"],
             };
             CandidateCatalog = FrozenLedgerTestData.BuildCatalogWithEnvironment(
                 NewToolchain,
@@ -119,13 +147,19 @@ public sealed class LedgerRecoordinateCommandTests
             var candidateRaw = RawRepositorySnapshot.Create(
                 candidateFiles.Select(static item => RawRepositoryEntry.FromText(item.Key, item.Value)));
             var candidateSnapshot = Decode(candidateRaw);
-            var candidateReport = Report("new-elaborated-expression", []);
+            var candidateReport = Report(
+                candidateStatementMaterial,
+                [],
+                "D5.S0.Carrier.NewDependency");
 
             var oldFiles = EnvironmentFiles(OldToolchain, OldLakefile, OldManifest);
             var oldRaw = RawRepositorySnapshot.Create(
                 oldFiles.Select(static item => RawRepositoryEntry.FromText(item.Key, item.Value)));
             var oldSnapshot = Decode(oldRaw);
-            var oldReport = Report("old-elaborated-expression", ["propext"]);
+            var oldReport = Report(
+                "old-elaborated-expression",
+                ["propext"],
+                "D5.S0.Carrier.OldDependency");
 
             LedgerPath = Path.Combine(
                 temporary.Path,
@@ -195,11 +229,12 @@ public sealed class LedgerRecoordinateCommandTests
 
         private static LeanAxiomReport Report(
             string statementMaterial,
-            ImmutableArray<string> axioms) =>
+            ImmutableArray<string> axioms,
+            string import) =>
             LeanAxiomReport.Create(new Dictionary<string, LeanFileReport>(StringComparer.Ordinal)
             {
                 [FrozenLedgerTestData.PathFor("A")] = new(
-                    ImmutableArray<string>.Empty,
+                    ImmutableArray.Create(import),
                     ImmutableArray.Create(new LeanDeclaration(
                         "a",
                         "theorem",
