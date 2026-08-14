@@ -29,7 +29,6 @@ receipts:
   unresolved_subitems:
     - kochen-specker-projection-valuation-obstruction
     - hidden-address-local-variable-interpretation
-    - classical-address-realism-exclusion
     - probability-not-ignorance-conclusion
   chain_atoms: []
   tail_authorization: null
