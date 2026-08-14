@@ -68,6 +68,19 @@ public sealed class ScribeTestMapDeriverTests
     }
 
     [Fact]
+    public void DiscoveryDirectoryContributesBothMarkersToPaths()
+    {
+        const string source = """
+            class DirectoryTests {
+              [Fact] public void Discovers() => RepositoryAccessor.Discover(RepositoryRootCriterion.GlobalJsonAndBlueprintDirectoryNotFound);
+            }
+            """;
+        var map = DeriveSources([new("DirectoryTests.cs", source)]);
+
+        Assert.Equal(["Blueprint", "global.json"], Assert.Single(map.Methods).Paths);
+    }
+
+    [Fact]
     public void ReachableHelpersContributePathsAndUnknownReasons()
     {
         const string source = """

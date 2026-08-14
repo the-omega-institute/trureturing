@@ -34,7 +34,7 @@ internal static class ScribeTestMapDeriver
         "tools/tests/StrataLint.Tests/",
     ];
 
-    // This is the read surface used by the test-map path filter. Entries are either
+    // This is the read surface used by the engineering path-filter guard. Entries are either
     // exact files or directory roots; adding a new repository read requires updating
     // this declaration and its review-visible guard.
     internal static readonly IReadOnlyList<string> DeclaredPathWhitelist =
