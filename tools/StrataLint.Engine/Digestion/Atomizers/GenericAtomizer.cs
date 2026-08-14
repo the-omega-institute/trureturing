@@ -41,6 +41,9 @@ internal static class GenericAtomizer
         "^\\*\\*[\\s]*(?<number>[0-9]+(?:\\.[0-9A-Za-z]+)+)(?![0-9A-Za-z.])",
         RegexOptions.CultureInvariant);
 
+    /// <summary>Where a slugged heading stops being a readable address and starts being a copy of the prose.</summary>
+    private const int SlugRuneLimit = 48;
+
     /// <summary>Runs of anything that is neither a letter nor a digit collapse to one dash.</summary>
     private static readonly Regex SlugSeparators = new(
         "[^\\p{L}\\p{N}]+",
@@ -75,12 +78,26 @@ internal static class GenericAtomizer
     /// <summary>
     /// A locator has to survive being written to YAML and read back, so the slug keeps only
     /// letters and digits — of any script, since these volumes are written in Chinese — and
-    /// joins them with dashes. An empty result would make a locator that addresses nothing,
-    /// so a heading with no letters or digits at all falls back to its content hash.
+    /// joins them with dashes. Two degenerate headings are handled rather than assumed away,
+    /// because the input is arbitrary prose and both shapes exist in this repository's
+    /// volumes: a heading with no letters or digits at all would slug to the empty string,
+    /// which addresses nothing, and a heading that runs to a paragraph would put an
+    /// unbounded field in the ledger. Both fall back to the heading's own content hash —
+    /// still a function of the bytes, so the locator keeps that property either way.
     /// </summary>
     private static string Slug(string heading)
     {
         var slug = SlugSeparators.Replace(heading.Normalize(NormalizationForm.FormC), "-").Trim('-');
-        return slug.Length > 0 ? slug : DigestionFingerprint.ShortHash(heading);
+        if (slug.Length == 0)
+        {
+            return DigestionFingerprint.ShortHash(heading);
+        }
+
+        var runes = slug.EnumerateRunes().Take(SlugRuneLimit + 1).ToArray();
+        return runes.Length <= SlugRuneLimit
+            ? slug
+            : string.Concat(runes.Take(SlugRuneLimit).Select(static rune => rune.ToString()))
+                .TrimEnd('-')
+                + "-" + DigestionFingerprint.ShortHash(heading);
     }
 }

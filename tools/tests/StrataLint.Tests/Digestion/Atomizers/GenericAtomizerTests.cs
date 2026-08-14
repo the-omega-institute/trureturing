@@ -111,6 +111,35 @@ public sealed class GenericAtomizerTests
             Paths(document));
     }
 
+    /// <summary>
+    /// Both shapes occur in real volumes: a heading that is a whole sentence, and a heading
+    /// made only of punctuation. Neither may put an unbounded or empty field in the ledger.
+    /// </summary>
+    [Fact]
+    public void ALongHeadingIsBoundedAndAPunctuationOnlyHeadingStillAddressesSomething()
+    {
+        var longHeading = new string('章', 200);
+        var document = Atomize($"# {longHeading}\n\n一。\n\n## 《·》\n\n二。\n");
+
+        var paths = Paths(document);
+        Assert.Equal(2, paths.Length);
+        Assert.True(paths[0].Length < 80, $"locator is unbounded: {paths[0].Length} characters");
+        Assert.StartsWith("section/", paths[0], StringComparison.Ordinal);
+        Assert.Matches("^section/[0-9a-f]{8}$", paths[1]);
+    }
+
+    /// <summary>Two long headings that share a prefix must not collapse to one locator.</summary>
+    [Fact]
+    public void TwoLongHeadingsSharingAPrefixKeepDistinctLocators()
+    {
+        var prefix = new string('章', 200);
+        var document = Atomize($"## {prefix}甲\n\n一。\n\n## {prefix}乙\n\n二。\n");
+
+        var paths = Paths(document);
+        Assert.Equal(2, paths.Length);
+        Assert.NotEqual(paths[0], paths[1]);
+    }
+
     [Fact]
     public void TheDefaultAtomizerIsRegisteredAndCarriesItsOwnResidualStem()
     {
