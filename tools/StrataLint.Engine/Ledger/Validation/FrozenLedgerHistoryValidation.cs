@@ -243,7 +243,7 @@ public static partial class FrozenLedger
                     missing,
                     "Closed modules are missing Freeze events: "
                     + string.Join(", ", missing.Select(static path => path.Value))
-                    + "; run ledger-append to append the missing Freeze events.");
+                    + "; run ledger-sync to append the missing Freeze events.");
             }
 
             var outside = actualByPath.Keys.Except(expectedByPath.Keys)
@@ -283,7 +283,7 @@ public static partial class FrozenLedger
                 {
                     throw new HistoryFinalStateException(
                         ImmutableArray.Create(material.RepoPath),
-                        $"Active module {material.RepoPath.Value} statement identity changed; append Revoke before the replacement Freeze.");
+                        $"Active module {material.RepoPath.Value} statement identity changed; append Revoke before rerunning ledger-sync.");
                 }
 
                 if (allowPendingReattestation)
@@ -295,12 +295,12 @@ public static partial class FrozenLedger
                 {
                     throw new HistoryFinalStateException(
                         ImmutableArray.Create(material.RepoPath),
-                        $"Active module {material.RepoPath.Value} environment pins changed; run ledger-recoordinate before ledger-append.");
+                        $"Active module {material.RepoPath.Value} environment pins changed; run ledger-recoordinate before ledger-sync.");
                 }
 
                 throw new HistoryFinalStateException(
                     ImmutableArray.Create(material.RepoPath),
-                    $"Active module {material.RepoPath.Value} has material/blob drift and lacks a matching Reattest event; run ledger-append to close it with Reattest in the same transaction.");
+                    $"Active module {material.RepoPath.Value} has material/blob drift and lacks a matching Reattest event; run ledger-sync to close it with Reattest in the same transaction.");
             }
 
             var activeEntries = active.ToImmutableDictionary(StringComparer.Ordinal);

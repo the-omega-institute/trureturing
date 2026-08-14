@@ -43,7 +43,7 @@ public sealed partial class FrozenLedgerTests
     }
 
     [Fact]
-    public void ReconcileToCatalogAtomicallyReattestsRepresentationDriftAndFreezesNewModules()
+    public void AppendSynchronizationAtomicallyReattestsRepresentationDriftAndFreezesNewModules()
     {
         var baselineCatalog = BuildCatalog(
             Module("A", source: OriginalReattestSource),
@@ -60,7 +60,7 @@ public sealed partial class FrozenLedgerTests
         var baseline = Assert.IsType<FrozenLedgerValidationOutcome.Accepted>(
             ValidateGenesis(baselineSyntax, baselineCatalog)).Capability;
 
-        var candidateBytes = FrozenLedgerGenerator.ReconcileToCatalog(baseline, candidateCatalog);
+        var candidateBytes = FrozenLedgerGenerator.AppendSynchronization(baseline, candidateCatalog);
         var candidateSyntax = Assert.IsType<DagLedgerLoadOutcome.Loaded>(
             DagLedgerLoader.Load(candidateBytes.AsSpan())).Syntax;
         var candidate = Assert.IsType<FrozenLedgerValidationOutcome.Accepted>(
@@ -80,7 +80,7 @@ public sealed partial class FrozenLedgerTests
     }
 
     [Fact]
-    public void ReconcileToCatalogDirectsStatementIdentityChangesToRevoke()
+    public void AppendSynchronizationDirectsStatementIdentityChangesToRevoke()
     {
         var baselineCatalog = BuildCatalog(ModuleWithReport(
             "A",
@@ -102,7 +102,7 @@ public sealed partial class FrozenLedgerTests
                 baselineCatalog)).Capability;
 
         var exception = Assert.Throws<InvalidOperationException>(
-            () => FrozenLedgerGenerator.ReconcileToCatalog(baseline, candidateCatalog));
+            () => FrozenLedgerGenerator.AppendSynchronization(baseline, candidateCatalog));
 
         Assert.Contains(PathFor("A"), exception.Message, StringComparison.Ordinal);
         Assert.Contains("statement identity", exception.Message, StringComparison.OrdinalIgnoreCase);
@@ -110,7 +110,7 @@ public sealed partial class FrozenLedgerTests
     }
 
     [Fact]
-    public void ReconcileToCatalogDirectsEnvironmentPinChangesToRecoordinate()
+    public void AppendSynchronizationDirectsEnvironmentPinChangesToRecoordinate()
     {
         var fixture = EnvironmentFixture();
         var recoordinated = Assert.IsType<FrozenLedgerValidationOutcome.Accepted>(
@@ -131,7 +131,7 @@ public sealed partial class FrozenLedgerTests
                 declarations: new[] { "a" }));
 
         var exception = Assert.Throws<InvalidOperationException>(
-            () => FrozenLedgerGenerator.ReconcileToCatalog(recoordinated, nextCatalog));
+            () => FrozenLedgerGenerator.AppendSynchronization(recoordinated, nextCatalog));
 
         Assert.Contains(PathFor("A"), exception.Message, StringComparison.Ordinal);
         Assert.Contains("environment", exception.Message, StringComparison.OrdinalIgnoreCase);
@@ -139,7 +139,7 @@ public sealed partial class FrozenLedgerTests
     }
 
     [Fact]
-    public void ReconcileToCatalogDirectsAnActiveModuleThatIsNoLongerClosedToRevoke()
+    public void AppendSynchronizationDirectsAnActiveModuleThatIsNoLongerClosedToRevoke()
     {
         var baselineCatalog = BuildCatalog(Module("A"));
         var candidateCatalog = BuildCatalog(Module("B"));
@@ -153,16 +153,16 @@ public sealed partial class FrozenLedgerTests
                 baselineCatalog)).Capability;
 
         var exception = Assert.Throws<InvalidOperationException>(
-            () => FrozenLedgerGenerator.ReconcileToCatalog(baseline, candidateCatalog));
+            () => FrozenLedgerGenerator.AppendSynchronization(baseline, candidateCatalog));
 
         Assert.Contains(PathFor("A"), exception.Message, StringComparison.Ordinal);
         Assert.Contains("no longer Closed", exception.Message, StringComparison.Ordinal);
         Assert.Contains("Revoke", exception.Message, StringComparison.Ordinal);
-        Assert.Contains("ledger-append", exception.Message, StringComparison.Ordinal);
+        Assert.Contains("ledger-sync", exception.Message, StringComparison.Ordinal);
     }
 
     [Fact]
-    public void ReconcileToCatalogReattestsDriftWhenNoFreezeIsMissing()
+    public void AppendSynchronizationReattestsDriftWhenNoFreezeIsMissing()
     {
         var baselineCatalog = BuildCatalog(Module("A", source: OriginalReattestSource));
         var candidateCatalog = BuildCatalog(Module("A", source: ChangedHeaderReattestSource));
@@ -175,7 +175,7 @@ public sealed partial class FrozenLedgerTests
                     DagLedgerLoader.Load(baselineBytes.AsSpan())).Syntax,
                 baselineCatalog)).Capability;
 
-        var candidateBytes = FrozenLedgerGenerator.ReconcileToCatalog(baseline, candidateCatalog);
+        var candidateBytes = FrozenLedgerGenerator.AppendSynchronization(baseline, candidateCatalog);
         var candidateSyntax = Assert.IsType<DagLedgerLoadOutcome.Loaded>(
             DagLedgerLoader.Load(candidateBytes.AsSpan())).Syntax;
         var candidate = Assert.IsType<FrozenLedgerValidationOutcome.Accepted>(
@@ -187,7 +187,7 @@ public sealed partial class FrozenLedgerTests
     }
 
     [Fact]
-    public void ReconcileToCatalogIsByteIdempotentWhenNothingChanged()
+    public void AppendSynchronizationIsByteIdempotentWhenNothingChanged()
     {
         var catalog = BuildCatalog(Module("A"));
         var baselineBytes = FrozenLedgerGenerator.GenerateGenesis(
@@ -199,7 +199,7 @@ public sealed partial class FrozenLedgerTests
                     DagLedgerLoader.Load(baselineBytes.AsSpan())).Syntax,
                 catalog)).Capability;
 
-        var candidateBytes = FrozenLedgerGenerator.ReconcileToCatalog(baseline, catalog);
+        var candidateBytes = FrozenLedgerGenerator.AppendSynchronization(baseline, catalog);
 
         Assert.True(candidateBytes.AsSpan().SequenceEqual(baselineBytes.AsSpan()));
     }

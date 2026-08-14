@@ -48,7 +48,7 @@ public static partial class FrozenLedgerGenerator
         return result.ToImmutable();
     }
 
-    public static ImmutableArray<byte> ReconcileToCatalog(
+    public static ImmutableArray<byte> AppendMissingFreezes(
         FrozenLedgerConsistent baseline,
         FrozenMaterialCatalog candidateCatalog)
     {
@@ -57,15 +57,31 @@ public static partial class FrozenLedgerGenerator
         var activeByPath = baseline.ActiveEntries.Values.ToDictionary(
             static entry => entry.Material.RepoPath,
             static entry => entry.Material);
-        var reattestations = PlanReattestations(baseline, candidateCatalog);
-        var freezes = candidateCatalog.ClosedNodes
+        return Append(baseline, MissingFreezeEvents(activeByPath, candidateCatalog));
+    }
+
+    private static ImmutableArray<(string Type, JsonElement Payload)> MissingFreezeEvents(
+        IReadOnlyDictionary<RepoPath, FrozenNodeMaterial> activeByPath,
+        FrozenMaterialCatalog candidateCatalog)
+    {
+        foreach (var (path, active) in activeByPath)
+        {
+            if (candidateCatalog.ByPath.TryGetValue(path, out var candidate)
+                && active.FrozenNodeId != candidate.FrozenNodeId)
+            {
+                throw new InvalidOperationException(
+                    $"Active module {path.Value} changed identity; run ledger-sync to reconcile it.");
+            }
+        }
+
+        var payloads = candidateCatalog.ClosedNodes
             .Where(node => !activeByPath.ContainsKey(node.RepoPath))
             .Select(node => FrozenLedgerCanonicalWriter.FreezePayload(candidateCatalog.Environment, node))
             .OrderBy(static payload => payload.CaseClass, StringComparer.Ordinal)
             .ThenBy(static payload => payload.CaseId, StringComparer.Ordinal)
             .Select(static payload => (Type: "Freeze", Payload: FrozenLedgerCanonicalWriter.FreezeElement(payload)))
             .ToImmutableArray();
-        return Append(baseline, reattestations.AddRange(freezes));
+        return payloads;
     }
 
     public static ImmutableArray<byte> AppendReattestation(
@@ -98,10 +114,24 @@ public static partial class FrozenLedgerGenerator
     {
         ArgumentNullException.ThrowIfNull(baseline);
         ArgumentNullException.ThrowIfNull(candidateCatalog);
-        return Append(baseline, PlanReattestations(baseline, candidateCatalog));
+        return Append(baseline, ReattestationEvents(baseline, candidateCatalog));
     }
 
-    private static ImmutableArray<(string Type, JsonElement Payload)> PlanReattestations(
+    public static ImmutableArray<byte> AppendSynchronization(
+        FrozenLedgerConsistent baseline,
+        FrozenMaterialCatalog candidateCatalog)
+    {
+        ArgumentNullException.ThrowIfNull(baseline);
+        ArgumentNullException.ThrowIfNull(candidateCatalog);
+        var reattestations = ReattestationEvents(baseline, candidateCatalog);
+        var activeAfterReattestation = baseline.ActiveEntries.Values.ToDictionary(
+            static entry => entry.Material.RepoPath,
+            entry => candidateCatalog.ByPath[entry.Material.RepoPath]);
+        var freezes = MissingFreezeEvents(activeAfterReattestation, candidateCatalog);
+        return Append(baseline, reattestations.AddRange(freezes));
+    }
+
+    private static ImmutableArray<(string Type, JsonElement Payload)> ReattestationEvents(
         FrozenLedgerConsistent baseline,
         FrozenMaterialCatalog candidateCatalog)
     {
@@ -115,14 +145,14 @@ public static partial class FrozenLedgerGenerator
             if (!candidateCatalog.ByPath.TryGetValue(path, out var candidate))
             {
                 throw new InvalidOperationException(
-                    $"Active module {path.Value} is no longer Closed; append Revoke before running ledger-append because Reattest cannot change truth state.");
+                    $"Active module {path.Value} is no longer Closed; append Revoke before rerunning ledger-sync.");
             }
 
             if (entry.Payload.StatementId != candidate.StatementId
                 || !entry.Payload.DeclarationStatementIds.SequenceEqual(candidate.DeclarationStatementIds))
             {
                 throw new InvalidOperationException(
-                    $"Active module {path.Value} statement identity changed; append Revoke before running ledger-append because Reattest is forbidden.");
+                    $"Active module {path.Value} statement identity changed; append Revoke before rerunning ledger-sync.");
             }
 
             if (entry.Material.FrozenNodeId == candidate.FrozenNodeId
@@ -146,7 +176,7 @@ public static partial class FrozenLedgerGenerator
                         != candidateCatalog.Environment.LakefileBlobOid)
                 {
                     throw new InvalidOperationException(
-                        $"Active module {path.Value} environment changed; run ledger-recoordinate before ledger-append because Reattest is forbidden.");
+                        $"Active module {path.Value} environment changed; run ledger-recoordinate before ledger-sync.");
                 }
 
                 input = input with

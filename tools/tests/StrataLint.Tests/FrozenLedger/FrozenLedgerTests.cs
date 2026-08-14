@@ -257,7 +257,7 @@ public sealed partial class FrozenLedgerTests
             ValidateCandidate(baselineSyntax, baseline, candidateCatalog));
         Assert.Contains("missing Freeze", missing.Message, StringComparison.Ordinal);
 
-        var candidateBytes = FrozenLedgerGenerator.ReconcileToCatalog(baseline, candidateCatalog);
+        var candidateBytes = FrozenLedgerGenerator.AppendMissingFreezes(baseline, candidateCatalog);
         var candidateSyntax = Assert.IsType<DagLedgerLoadOutcome.Loaded>(
             DagLedgerLoader.Load(candidateBytes.AsSpan())).Syntax;
         var accepted = Assert.IsType<FrozenLedgerValidationOutcome.Accepted>(
@@ -287,7 +287,7 @@ public sealed partial class FrozenLedgerTests
                     DagLedgerLoader.Load(baselineBytes.AsSpan())).Syntax,
                 baselineCatalog)).Capability;
 
-        var candidateBytes = FrozenLedgerGenerator.ReconcileToCatalog(baseline, candidateCatalog);
+        var candidateBytes = FrozenLedgerGenerator.AppendMissingFreezes(baseline, candidateCatalog);
         var accepted = Assert.IsType<FrozenLedgerValidationOutcome.Accepted>(
             ValidateCandidate(
                 Assert.IsType<DagLedgerLoadOutcome.Loaded>(

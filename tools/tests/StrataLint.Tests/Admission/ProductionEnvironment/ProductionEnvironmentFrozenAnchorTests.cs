@@ -267,7 +267,7 @@ public sealed partial class ProductionEnvironmentTests
             rejected.Diagnostics.Where(static item => item.RuleId == RuleId.CreateKnown(8)));
         Assert.Equal(RuleFixture.RingPath, diagnostic.Path);
         Assert.Contains("missing Freeze", diagnostic.Message, StringComparison.Ordinal);
-        Assert.Contains("ledger-append", diagnostic.Message, StringComparison.Ordinal);
+        Assert.Contains("ledger-sync", diagnostic.Message, StringComparison.Ordinal);
     }
 
     [Fact]

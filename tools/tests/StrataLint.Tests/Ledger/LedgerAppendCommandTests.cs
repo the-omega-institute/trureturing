@@ -77,34 +77,19 @@ public sealed class LedgerAppendCommandTests
     }
 
     [Fact]
-    public void ProductionCommandReportsAndWritesReattestsAndFreezesInOneTransaction()
+    public void ProductionCommandDirectsExistingIdentityDriftToLedgerSyncWithoutWriting()
     {
         using var fixture = new LedgerAppendFixture(driftARepresentation: true);
-        var baselineLines = FrozenLedgerTestData.Lines(fixture.BaselineBytes);
-
         var result = fixture.Environment.AppendLedger(
             new[] { "--candidate-lean-report", fixture.ReportPath });
 
-        Assert.True(result.Success, result.Error);
-        Assert.Contains("appended_reattests=1", result.Output, StringComparison.Ordinal);
-        Assert.Contains("appended_freezes=2", result.Output, StringComparison.Ordinal);
-        Assert.Contains($"REATTESTED {FrozenLedgerTestData.PathFor("A")}", result.Output, StringComparison.Ordinal);
-        Assert.Contains($"FROZEN {FrozenLedgerTestData.PathFor("B")}", result.Output, StringComparison.Ordinal);
-        Assert.Contains($"FROZEN {FrozenLedgerTestData.PathFor("C")}", result.Output, StringComparison.Ordinal);
-        var appendedBytes = ImmutableArray.CreateRange(
+        Assert.False(result.Success, result.Output);
+        Assert.Contains(FrozenLedgerTestData.PathFor("A"), result.Error, StringComparison.Ordinal);
+        Assert.Contains("changed identity", result.Error, StringComparison.OrdinalIgnoreCase);
+        Assert.Contains("ledger-sync", result.Error, StringComparison.Ordinal);
+        Assert.Equal(
+            fixture.BaselineBytes.AsSpan().ToArray(),
             FrozenLedgerTestData.ReadLedgerDirectory(fixture.LedgerPath));
-        var appendedLines = FrozenLedgerTestData.Lines(appendedBytes);
-        Assert.Equal(baselineLines.Length + 3, appendedLines.Length);
-        for (var index = 0; index < baselineLines.Length; index++)
-        {
-            Assert.Equal(baselineLines[index], appendedLines[index]);
-        }
-
-        Assert.IsType<FrozenLedgerValidationOutcome.Accepted>(
-            FrozenLedgerTestData.ValidateHistory(
-                Assert.IsType<DagLedgerLoadOutcome.Loaded>(
-                    DagLedgerLoader.Load(appendedBytes.AsSpan())).Syntax,
-                fixture.CandidateCatalog));
     }
 
     [Fact]
@@ -199,7 +184,7 @@ public sealed class LedgerAppendCommandTests
     {
         using var temporary = new TemporaryDirectory();
         var (baselineBytes, baseline, candidateCatalog) = ReconciliationFixture(includeNewModule: true);
-        var candidateBytes = FrozenLedgerGenerator.ReconcileToCatalog(baseline, candidateCatalog);
+        var candidateBytes = FrozenLedgerGenerator.AppendSynchronization(baseline, candidateCatalog);
         var candidateSyntax = Assert.IsType<DagLedgerLoadOutcome.Loaded>(
             DagLedgerLoader.Load(candidateBytes.AsSpan())).Syntax;
         FrozenLedgerTestData.WriteLedgerDirectory(temporary.Path, baselineBytes);
@@ -211,7 +196,7 @@ public sealed class LedgerAppendCommandTests
         var competingCatalog = FrozenLedgerTestData.BuildCatalog(
             FrozenLedgerTestData.Module("A", source: competing),
             FrozenLedgerTestData.Module("C", imports: new[] { "A" }));
-        var competingBytes = FrozenLedgerGenerator.ReconcileToCatalog(baseline, competingCatalog);
+        var competingBytes = FrozenLedgerGenerator.AppendSynchronization(baseline, competingCatalog);
         var competingSyntax = Assert.IsType<DagLedgerLoadOutcome.Loaded>(
             DagLedgerLoader.Load(competingBytes.AsSpan())).Syntax;
         DagLedgerAppendWriter.WriteNewEvents(
@@ -265,7 +250,7 @@ public sealed class LedgerAppendCommandTests
     {
         using var temporary = new TemporaryDirectory();
         var (baselineBytes, baseline, candidateCatalog) = ReconciliationFixture(includeNewModule: true);
-        var candidateBytes = FrozenLedgerGenerator.ReconcileToCatalog(baseline, candidateCatalog);
+        var candidateBytes = FrozenLedgerGenerator.AppendSynchronization(baseline, candidateCatalog);
         var candidateSyntax = Assert.IsType<DagLedgerLoadOutcome.Loaded>(
             DagLedgerLoader.Load(candidateBytes.AsSpan())).Syntax;
         FrozenLedgerTestData.WriteLedgerDirectory(temporary.Path, baselineBytes);
@@ -289,7 +274,7 @@ public sealed class LedgerAppendCommandTests
     {
         using var temporary = new TemporaryDirectory();
         var (baselineBytes, baseline, candidateCatalog) = ReconciliationFixture(includeNewModule: true);
-        var candidateBytes = FrozenLedgerGenerator.ReconcileToCatalog(baseline, candidateCatalog);
+        var candidateBytes = FrozenLedgerGenerator.AppendSynchronization(baseline, candidateCatalog);
         var candidateSyntax = Assert.IsType<DagLedgerLoadOutcome.Loaded>(
             DagLedgerLoader.Load(candidateBytes.AsSpan())).Syntax;
         FrozenLedgerTestData.WriteLedgerDirectory(temporary.Path, baselineBytes);
@@ -320,7 +305,7 @@ public sealed class LedgerAppendCommandTests
     {
         using var temporary = new TemporaryDirectory();
         var (baselineBytes, baseline, candidateCatalog) = ReconciliationFixture(includeNewModule: true);
-        var candidateBytes = FrozenLedgerGenerator.ReconcileToCatalog(baseline, candidateCatalog);
+        var candidateBytes = FrozenLedgerGenerator.AppendSynchronization(baseline, candidateCatalog);
         var candidateSyntax = Assert.IsType<DagLedgerLoadOutcome.Loaded>(
             DagLedgerLoader.Load(candidateBytes.AsSpan())).Syntax;
         FrozenLedgerTestData.WriteLedgerDirectory(temporary.Path, baselineBytes);
@@ -390,6 +375,7 @@ public sealed class LedgerAppendCommandTests
     [InlineData("LEDGER_APPEND_FAILED")]
     [InlineData("LEDGER_REATTEST_FAILED")]
     [InlineData("LEDGER_RECOORDINATE_FAILED")]
+    [InlineData("LEDGER_SYNC_FAILED")]
     public void LedgerCommandFailureRenderingKeepsIncompleteRollbackVisible(string marker)
     {
         var exception = new IOException(
@@ -448,7 +434,7 @@ public sealed class LedgerAppendCommandTests
     {
         using var temporary = new TemporaryDirectory();
         var (baselineBytes, baseline, candidateCatalog) = ReconciliationFixture(includeNewModule: false);
-        var candidateBytes = FrozenLedgerGenerator.ReconcileToCatalog(baseline, candidateCatalog);
+        var candidateBytes = FrozenLedgerGenerator.AppendSynchronization(baseline, candidateCatalog);
         var candidateSyntax = Assert.IsType<DagLedgerLoadOutcome.Loaded>(
             DagLedgerLoader.Load(candidateBytes.AsSpan())).Syntax;
         FrozenLedgerTestData.WriteLedgerDirectory(temporary.Path, baselineBytes);

@@ -37,7 +37,7 @@ internal static class DagLedgerAppendWriter
                 repositoryRoot,
                 repository,
                 arguments[1]);
-            var candidateBytes = FrozenLedgerGenerator.ReconcileToCatalog(
+            var candidateBytes = FrozenLedgerGenerator.AppendMissingFreezes(
                 context.Baseline,
                 context.Catalog);
             if (candidateBytes.AsSpan().SequenceEqual(context.BaselineBytes))
