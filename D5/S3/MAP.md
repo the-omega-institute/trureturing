@@ -44,10 +44,15 @@
   Zeta23 explicit-formula port opened cohesive `Weil/Zeta*` subdomain buckets;
   all existing `Weil/` paths remain unmoved. The port retains its upstream
   import order, and over-800-line sources are split only at declaration bounds.
+- 2026-08-14 (SL-003): `Analytic/` was at its 12-Lean-file limit. The
+  branch-new `MellinDilationFlow` module opened the split-only
+  `Analytic/Dilation/` bucket; all existing `Analytic/` paths remain unmoved.
 
 ## Buckets
 
 - `Constants/`: canonical real constants and registered reference centers.
+- `Analytic/Dilation/`: Mellin and Fourier analysis along the multiplicative
+  dilation flow in logarithmic time.
 - `Fourier/`: entire extensions of the Weil Fourier-Laplace transform.
 - `Quantum/`: finite-dimensional operator-algebra and probability structures.
 - `PrimeForms/`: representations of prime numbers by integral quadratic forms.
