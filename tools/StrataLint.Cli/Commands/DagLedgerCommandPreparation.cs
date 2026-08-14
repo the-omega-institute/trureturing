@@ -12,7 +12,27 @@ internal sealed record DagLedgerCommandContext(
     byte[] BaselineBytes,
     FrozenLedgerConsistent Baseline,
     FrozenMaterialCatalog Catalog,
-    LeanAxiomReport Report);
+    LeanAxiomReport Report,
+    RepositorySnapshot Snapshot);
+
+internal sealed record DagLedgerRecoordinateContext(
+    string LedgerPath,
+    byte[] BaselineBytes,
+    FrozenLedgerConsistent Baseline,
+    FrozenMaterialCatalog Catalog,
+    LeanAxiomReport CandidateReport,
+    RepositorySnapshot CandidateSnapshot,
+    LeanAxiomReport OldReport,
+    RepositorySnapshot OldSnapshot,
+    FrozenEnvironmentPins OldEnvironment);
+
+internal sealed record DagLedgerCandidateMaterial(
+    string LedgerPath,
+    byte[] BaselineBytes,
+    FrozenLedgerSyntax BaselineSyntax,
+    FrozenMaterialCatalog Catalog,
+    LeanAxiomReport Report,
+    RepositorySnapshot Snapshot);
 
 internal sealed record TruthContext(
     RepositorySnapshot Snapshot,
@@ -32,6 +52,76 @@ internal static class DagLedgerCommandPreparation
     /// Callers that already hold an ILeanReportSource (the CLI environment does) get the
     /// authoritative FrozenLedgerConsistent without a second copy of this assembly line.
     internal static DagLedgerCommandContext Prepare(
+        string repositoryRoot,
+        IRepositoryGateway repository,
+        ILeanReportSource leanReportSource)
+    {
+        var candidate = PrepareCandidate(repositoryRoot, repository, leanReportSource);
+        var baselineReferences = ScanReferences(candidate.BaselineSyntax, "existing frozen ledger");
+        var trustedBaselineReferences = repository.ValidateFrozenReferences(baselineReferences);
+        var baseline = FrozenLedger.ValidateHistoryPrefix(
+            candidate.BaselineSyntax,
+            candidate.Catalog,
+            trustedBaselineReferences) switch
+        {
+            FrozenLedgerValidationOutcome.Accepted accepted => accepted.Capability,
+            FrozenLedgerValidationOutcome.Rejected rejected => throw new InvalidOperationException(
+                "existing frozen ledger is invalid: " + rejected.Message),
+            _ => throw new InvalidOperationException("unknown ledger validation outcome"),
+        };
+        return new DagLedgerCommandContext(
+            candidate.LedgerPath,
+            candidate.BaselineBytes,
+            baseline,
+            candidate.Catalog,
+            candidate.Report,
+            candidate.Snapshot);
+    }
+
+    internal static DagLedgerRecoordinateContext PrepareRecoordinate(
+        string repositoryRoot,
+        IRepositoryGateway repository,
+        string oldEnvironmentRevision,
+        string oldLeanReport,
+        string candidateLeanReport)
+    {
+        var candidate = PrepareCandidate(
+            repositoryRoot,
+            repository,
+            new FileLeanReportSource(candidateLeanReport));
+        var baselineReferences = ScanReferences(candidate.BaselineSyntax, "existing frozen ledger");
+        var trustedBaselineReferences = repository.ValidateFrozenReferences(baselineReferences);
+        var baseline = FrozenLedger.ValidateHistoryForEnvironmentRecoordinate(
+            candidate.BaselineSyntax,
+            candidate.Catalog,
+            trustedBaselineReferences) switch
+        {
+            FrozenLedgerValidationOutcome.Accepted accepted => accepted.Capability,
+            FrozenLedgerValidationOutcome.Rejected rejected => throw new InvalidOperationException(
+                "existing frozen ledger is invalid: " + rejected.Message),
+            _ => throw new InvalidOperationException("unknown ledger validation outcome"),
+        };
+
+        var oldIdentity = Ask(() => repository.ResolveFrozenRevision(oldEnvironmentRevision));
+        var oldSnapshot = Decode(Ask(() => repository.ReadFrozenRevision(oldIdentity.Revision)));
+        var (oldReport, _) = LoadLean(oldSnapshot, new FileLeanReportSource(oldLeanReport));
+        var oldEnvironment = EnvironmentPins(BuildEnvironment(
+            oldSnapshot,
+            oldIdentity.CommitOid,
+            oldIdentity.TreeOid));
+        return new DagLedgerRecoordinateContext(
+            candidate.LedgerPath,
+            candidate.BaselineBytes,
+            baseline,
+            candidate.Catalog,
+            candidate.Report,
+            candidate.Snapshot,
+            oldReport,
+            oldSnapshot,
+            oldEnvironment);
+    }
+
+    private static DagLedgerCandidateMaterial PrepareCandidate(
         string repositoryRoot,
         IRepositoryGateway repository,
         ILeanReportSource leanReportSource)
@@ -77,21 +167,13 @@ internal static class DagLedgerCommandPreparation
             _ => throw new InvalidOperationException("unknown frozen material outcome"),
         };
 
-        var baselineReferences = ScanReferences(baselineSyntax, "existing frozen ledger");
-        // Deliberately not wrapped: a refusal here says the ledger records objects this
-        // repository does not have -- a verdict about the ledger, not about the environment.
-        var trustedBaselineReferences = repository.ValidateFrozenReferences(baselineReferences);
-        var baseline = FrozenLedger.ValidateHistoryPrefix(
+        return new DagLedgerCandidateMaterial(
+            ledgerPath,
+            baselineBytes,
             baselineSyntax,
             catalog,
-            trustedBaselineReferences) switch
-        {
-            FrozenLedgerValidationOutcome.Accepted accepted => accepted.Capability,
-            FrozenLedgerValidationOutcome.Rejected rejected => throw new InvalidOperationException(
-                "existing frozen ledger is invalid: " + rejected.Message),
-            _ => throw new InvalidOperationException("unknown ledger validation outcome"),
-        };
-        return new DagLedgerCommandContext(ledgerPath, baselineBytes, baseline, catalog, report);
+            report,
+            snapshot);
     }
 
     /// Reads the repository, validates the Lean closure and builds the truth DAG -- the part of
@@ -103,6 +185,22 @@ internal static class DagLedgerCommandPreparation
         ILeanReportSource leanReportSource)
     {
         var snapshot = Decode(Ask(repository.ReadCurrent));
+        var (report, lean) = LoadLean(snapshot, leanReportSource);
+        var dag = AcyclicTruthDag.Build(snapshot, lean) switch
+        {
+            DagBuildOutcome.Accepted accepted => accepted.Capability,
+            DagBuildOutcome.Rejected rejected => throw new InvalidOperationException(
+                "candidate truth DAG is cyclic: "
+                + string.Join(" -> ", rejected.Witness.Select(static path => path.Value))),
+            _ => throw new InvalidOperationException("unknown truth DAG outcome"),
+        };
+        return new TruthContext(snapshot, lean, report, dag);
+    }
+
+    private static (LeanAxiomReport Report, AcceptedLeanClosure Lean) LoadLean(
+        RepositorySnapshot snapshot,
+        ILeanReportSource leanReportSource)
+    {
         // Loading and validating the report are one step from a caller's point of view: both
         // failures say the build artefact is unusable, not that this repository is wrong. Keeping
         // them together lets a caller classify them as one thing.
@@ -117,15 +215,8 @@ internal static class DagLedgerCommandPreparation
         {
             throw new LeanReportUnusableException(exception);
         }
-        var dag = AcyclicTruthDag.Build(snapshot, lean) switch
-        {
-            DagBuildOutcome.Accepted accepted => accepted.Capability,
-            DagBuildOutcome.Rejected rejected => throw new InvalidOperationException(
-                "candidate truth DAG is cyclic: "
-                + string.Join(" -> ", rejected.Witness.Select(static path => path.Value))),
-            _ => throw new InvalidOperationException("unknown truth DAG outcome"),
-        };
-        return new TruthContext(snapshot, lean, report, dag);
+
+        return (report, lean);
     }
 
     /// Runs a gateway call that reads repository state, marking anything it throws. A repository
@@ -304,12 +395,9 @@ internal static class DagLedgerCommandPreparation
         RepositorySnapshot snapshot,
         FrozenLedgerSyntax syntax)
     {
-        if (syntax.Lines.Length == 0
-            || !snapshot.TryGetFile("lean-toolchain", out var toolchain)
-            || !snapshot.TryGetFile("lake-manifest.json", out var manifest))
+        if (syntax.Lines.Length == 0)
         {
-            throw new InvalidOperationException(
-                "frozen ledger or pinned Lean environment files are missing");
+            throw new InvalidOperationException("frozen ledger is missing");
         }
 
         // The first line is only known to be a JSON object at this point -- DagLedgerLoader
@@ -322,8 +410,23 @@ internal static class DagLedgerCommandPreparation
                 "frozen ledger does not open with a Genesis event: first entry carries no payload");
         }
 
-        var originCommit = RequiredString(payload, "origin_commit_oid");
-        var originTree = RequiredString(payload, "origin_tree_oid");
+        return BuildEnvironment(
+            snapshot,
+            RequiredString(payload, "origin_commit_oid"),
+            RequiredString(payload, "origin_tree_oid"));
+    }
+
+    private static FrozenEnvironmentAttestation BuildEnvironment(
+        RepositorySnapshot snapshot,
+        string originCommit,
+        string originTree)
+    {
+        if (!snapshot.TryGetFile("lean-toolchain", out var toolchain)
+            || !snapshot.TryGetFile("lake-manifest.json", out var manifest))
+        {
+            throw new InvalidOperationException("pinned Lean environment files are missing");
+        }
+
         var algorithm = originCommit.StartsWith("git-sha256:", StringComparison.Ordinal)
             ? HashAlgorithmName.SHA256
             : HashAlgorithmName.SHA1;
@@ -344,6 +447,21 @@ internal static class DagLedgerCommandPreparation
                 algorithm),
         }
             : result;
+    }
+
+    private static FrozenEnvironmentPins EnvironmentPins(FrozenEnvironmentAttestation environment)
+    {
+        if (environment.LakefilePath is null || environment.LakefileBlobOid is null)
+        {
+            throw new InvalidOperationException(
+                "EnvironmentRecoordinate requires exactly one pinned lakefile.toml or lakefile.lean");
+        }
+
+        return new FrozenEnvironmentPins(
+            environment.LakeManifestBlobOid,
+            environment.LakefileBlobOid,
+            RepoPath.CreateKnown(environment.LakefilePath),
+            environment.LeanToolchainBlobOid);
     }
 
     /// Bytes that will not decode are a fault in the repository we were handed, not a verdict about
