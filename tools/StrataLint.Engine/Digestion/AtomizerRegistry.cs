@@ -10,6 +10,11 @@ internal sealed record AtomizerRegistration(
 
 internal static class AtomizerRegistry
 {
+    /// <summary>
+    /// The atomizer a source gets when no dialect has been written for it. It is a rule
+    /// rather than a lexicon, so it needs no registration data and never rejects a shape.
+    /// </summary>
+    internal const string GenericId = "generic-v1";
     internal const string ConeId = "cone-v1";
     internal const string GictId = "gict-v1";
     internal const string ObserverId = "observer-v1";
@@ -21,6 +26,9 @@ internal static class AtomizerRegistry
     private static readonly ImmutableDictionary<string, AtomizerRegistration> Atomizers =
         ImmutableDictionary<string, AtomizerRegistration>.Empty
             .WithComparers(StringComparer.Ordinal)
+            .Add(
+                GenericId,
+                new AtomizerRegistration(GenericAtomizer.Atomize, GenericAtomizer.ResidualPrefix))
             .Add(ConeId, new AtomizerRegistration(ConeAtomizer.Atomize, "cone"))
             .Add(GictId, new AtomizerRegistration(GictAtomizer.Atomize, "gict"))
             .Add(ObserverId, new AtomizerRegistration(ObserverAtomizer.Atomize, "observer"))

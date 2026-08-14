@@ -264,18 +264,19 @@ internal static class DagLedgerCommandPreparation
         };
 
     internal static FrozenLedgerSyntax LoadLedgerDirectory(string directory, string label) =>
-        LoadLedgerFiles(
-            Directory.EnumerateFiles(directory, "*.json").Select(path =>
-            {
-                var bytes = File.ReadAllBytes(path);
-                var repositoryPath = RepoPath.CreateKnown(
-                    $"{FrozenLedgerChangeClassifier.AcceptedRoot}/{Path.GetFileName(path)}");
-                return new RepositoryFile(
-                    repositoryPath,
-                    ImmutableArray.CreateRange(bytes),
-                    Encoding.UTF8.GetString(bytes));
-            }),
-            label);
+        LoadLedgerFiles(ReadLedgerDirectoryFiles(directory), label);
+
+    internal static ImmutableArray<RepositoryFile> ReadLedgerDirectoryFiles(string directory) =>
+        Directory.EnumerateFiles(directory, "*.json").Select(path =>
+        {
+            var bytes = File.ReadAllBytes(path);
+            var repositoryPath = RepoPath.CreateKnown(
+                $"{FrozenLedgerChangeClassifier.AcceptedRoot}/{Path.GetFileName(path)}");
+            return new RepositoryFile(
+                repositoryPath,
+                ImmutableArray.CreateRange(bytes),
+                Encoding.UTF8.GetString(bytes));
+        }).ToImmutableArray();
 
     internal static FrozenLedgerSyntax LoadLedgerFiles(
         IEnumerable<RepositoryFile> files,

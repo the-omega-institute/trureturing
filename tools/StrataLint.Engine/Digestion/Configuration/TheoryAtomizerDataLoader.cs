@@ -51,6 +51,18 @@ internal sealed class TheoryAtomizerRules
         Dialects = dialects;
     }
 
+    /// <summary>
+    /// No declared vocabulary at all. The default atomizer reads its locators out of the
+    /// source bytes, so it is the one atomizer that can be handed this and still work; any
+    /// other atomizer handed this fails closed on its own missing table, which is correct.
+    /// </summary>
+    internal static TheoryAtomizerRules None { get; } = new(
+        [], [], [], [], [], [],
+        ImmutableDictionary<string, string>.Empty,
+        [],
+        ImmutableDictionary<string, string>.Empty,
+        ImmutableDictionary<string, DeclaredDialect>.Empty);
+
     internal ImmutableDictionary<string, DeclaredDialect> Dialects { get; }
     internal ImmutableArray<AtomizerMapping> ObserverClaimPrefixes { get; }
     internal ImmutableArray<AtomizerMapping> ConeClaimPrefixes { get; }

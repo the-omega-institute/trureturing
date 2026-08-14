@@ -101,7 +101,8 @@ public sealed partial class TheoryAtomizerTests
     public void WmV1RegistryUsesOrdinalIdsAndTheWmResidualPrefix()
     {
         Assert.Equal(
-            [AtomizerRegistry.ConeId, AtomizerRegistry.GictId,
+            [AtomizerRegistry.ConeId, AtomizerRegistry.GenericId,
+                AtomizerRegistry.GictId,
                 AtomizerRegistry.ObserverId,
                 AtomizerRegistry.PeriodicTreeId,
                 AtomizerRegistry.PzgId,
