@@ -63,8 +63,13 @@
   split-only, no-move change opened `Zeros/Window/`; all existing `Zeros/`
   paths remain unmoved.
 
+- 2026-08-15 (SL-003): `Analytic/` was at its 12-Lean-file limit. The
+  split-only, no-move change opened `Analytic/EulerGerm/`; all existing
+  `Analytic/` paths remain unmoved.
+
 ## Buckets
 
+- `Analytic/EulerGerm/`: the golden Euler local factor and the convergence of its prime product.
 - `Zeros/Window/`: divisor-based zero counts on an arbitrary window, and Jensen's disk bound transported to any enclosed rectangle.
 - `Constants/`: canonical real constants and registered reference centers.
 - `Analytic/Dilation/`: Mellin and Fourier analysis along the multiplicative
