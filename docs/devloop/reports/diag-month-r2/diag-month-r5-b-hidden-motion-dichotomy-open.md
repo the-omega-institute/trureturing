@@ -32,56 +32,65 @@ worktree = /Users/mstudio3/trureturing-diag-month-r4-b
 branch = harness/diag-month-r5-b
 ```
 
-The report commit before this correction was:
+The reviewed report commit before this final synchronization was:
 
 ```text
-8bfd91eeb17467219ca28c807745834c4016ff59
+1203782fb338f1e1f88bdd30db57b4172c5c6274
 ```
 
 The current integration base and the branch merge point are distinct:
 
 ```text
-origin/dev                         = 5b69e67602e7cc960dc63a110ab1766fb64b19ec
-pre-correction branch merge HEAD  = b27bc38ffb3978585d4db38b07559e8c04b4a09c
+origin/dev                       = 88fb4a9cc3d56cf08747a948ffc014af57a0e4cd
+final synchronization merge HEAD = 78b639974edf4a3ebab57c4026bf9b6745452a6a
 ```
 
-`origin/dev` was merged non-destructively into the existing report commit with:
+`origin/dev` was merged non-destructively into the reviewed report commit with:
 
 ```sh
 git merge --no-edit origin/dev
 ```
 
-Exit `0`; there were no conflicts. The merge commit has parents `8bfd91ee` and
-`5b69e676`. Its first-parent diff contains only the incoming theorem/Scribe
-artifacts and domain registration:
+Exit `0`; there were no conflicts. The merge commit has parents `1203782f` and
+`88fb4a9c`. The incoming range from the preceding base
+`5b69e67602e7cc960dc63a110ab1766fb64b19ec` contains only the WideVacuumBand
+deposit and receipt paths:
 
 ```text
-A Blueprint/D5/S3/Factorization/Embeddings/SignedPrimeLogDensity.md
-A Blueprint/D5/S3/Factorization/Embeddings/SignedPrimeLogDensity.scribe.cs
-A Blueprint/D5/S3/ResourceOrder/PriceFaceOrder.md
-A Blueprint/D5/S3/ResourceOrder/PriceFaceOrder.scribe.cs
-A D5/S3/Factorization/Embeddings/SignedPrimeLogDensity.lean
-A D5/S3/ResourceOrder/PriceFaceOrder.lean
-M Meta/domains.yaml
+A Blueprint/D5/S0/Computability/DescriptionComplexity/WideVacuumBand.md
+A Blueprint/D5/S0/Computability/DescriptionComplexity/WideVacuumBand.scribe.cs
+A D5/S0/Computability/DescriptionComplexity/WideVacuumBand.lean
+A Golden/Frozen/accepted/5cc5b6cd52df67f29dc10a1009b0f1bc3aeff3a4619ae9e81ab616970fbdf32c.json
+A Golden/Frozen/accepted/60a82adfa44834c9da53f3220d89e2ca20468672459280b25fe6c5c177329147.json
+A Golden/Frozen/accepted/8f914136fbbe8abda0af595aa3880a1b4286122e65143e25beb23101fc0f66e0.json
+A Golden/Frozen/accepted/a1980b66e3b6eb4a72a6a84fc5795c1b65501d80dcfe0e939e430652338e106e.json
+A Golden/Frozen/accepted/a350017403f11cd675bba32e612e6d3c1613a44ac48df5f15ae15d6d3b288762.json
+A Golden/Frozen/accepted/b093bc06814c925720ed3eea2752843e1aab42ad5d3a85b21b374809a9193f7b.json
+A Golden/Frozen/accepted/e5b36541e912faf764f2bcb34adad003d4b19d037992d0adfdae1c5b3255803e.json
+A Meta/Digestion/formalizations/pzg-residual-aa45f85fd757607d0c3dcf3a6ad4f5461eb00b30e7471420c7ae108102630ee8.v1.json
 ```
 
-No rejected candidate artifact was restored by the merge.
+The receipt belongs to atom `pzg-residual-aa45f85f...`, not the selected
+hidden-motion atom `pzg-residual-85ace51c...`. No selected backfill, coverage,
+report, or rejected candidate path was touched or restored by the merge.
 
 `git merge-base origin/dev HEAD` returned the exact `origin/dev` SHA above, and
 `git merge-base --is-ancestor origin/dev HEAD` exited `0`. Thus `origin/dev` is
-the candidate-status base, while `b27bc38f` is the branch merge commit on which
-this correction was prepared; the correction commit is its descendant.
+the candidate-status base, while `78b63997` is the branch merge commit on which
+this final evidence refresh was prepared; the refresh commit is its descendant.
 
 The live PATH declaration was read from
 `tools/scripts/local-harness-gate.sh` and applied. `make help` exited `0` and was
-read as the canonical command catalogue. On the merged tree, `make dotnet`
-exited `0`, building all Release projects with zero warnings and zero errors.
+read as the canonical command catalogue. The earlier correction's `make dotnet`
+run exited `0`, building all Release projects with zero warnings and zero
+errors. The final incoming range changed no C# or tool path; this synchronization
+was assigned to refresh the Lean report and status evidence, not rerun .NET.
 
 `make lean-report` was rerun on the merged tree and exited `0` with:
 
 ```text
-input_address = sha256:2256ae9089f4582f3400a060768cabbebf0ad000ac16a3c86081fe8269d2578b
-report_sha256 = beaac53b34d66b39ba97b43dfa0030a0ab9002c3e7f036d31eaf55703cc0ec70
+input_address = sha256:0809776a5451e2aee72c2d615493b63c9e98e3248189c42de2ff8b312f2eeceb
+report_sha256 = 8a14bbe84a26f00ee026c7f7d1acfec6d18d2cf01910ff01d256a1f712115c29
 mode = cached
 source_side = candidate
 ```
@@ -200,19 +209,22 @@ atom record. The parsed result was:
 ```text
 schema = stratalint-formalize-candidates-v3
 ledger_sha256 = sha256:92c7b162f1956e991864a0aef8e84a34cd5983a9ef7b8f0107570bdd6e5745dc
-candidate_count = 129
+candidate_count = 128
 match_count = 1
 source_id = pzg-v170
 ast_path = corollary/20.4
 kind = corollary
 cas_ref = sha256:85ace51c6a4dd01566ad4ee14028fc48bba25db190a01a8d09917eb4d6262f52
 selected_withheld_matches = []
+selected_recorded_formalizations = []
 ```
 
 The exact canonical backfill record has empty coverage and receipts, and the
 selected atom remains exactly one current formalization candidate. The only
 exact-ID report hit is this diagnostic report; no formalization receipt or
-deposited coverage artifact was found.
+deposited coverage artifact was found. The total candidate count decreased by
+one because the incoming WideVacuumBand receipt records its different
+`pzg-residual-aa45f85f...` atom; it did not change the selected atom's status.
 
 ## Clause-level statement echo
 
