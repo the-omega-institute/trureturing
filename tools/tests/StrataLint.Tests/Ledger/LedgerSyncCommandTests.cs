@@ -1,4 +1,5 @@
 using System.Collections.Immutable;
+using System.Text;
 using StrataLint.Cli;
 using StrataLint.Engine;
 
@@ -102,6 +103,126 @@ public sealed class LedgerSyncCommandTests
             FrozenLedgerTestData.ReadLedgerDirectory(syncFixture.LedgerPath));
     }
 
+    [Fact]
+    public void ProductionCommandUsesDirectoryReplayOrderForManyExistingEvents()
+    {
+        using var fixture = new LedgerSyncFixture(
+            blobChanged: true,
+            addClosedModule: false,
+            existingModuleCount: 16);
+        var generatedBytes = FrozenLedgerGenerator.AppendSynchronization(
+            fixture.Baseline,
+            fixture.CandidateCatalog);
+        var generatedSyntax = Assert.IsType<DagLedgerLoadOutcome.Loaded>(
+            DagLedgerLoader.Load(generatedBytes.AsSpan())).Syntax;
+        var pending = DagLedgerAppendWriter.PrepareNewEvents(
+            fixture.LedgerPath,
+            generatedSyntax.Lines,
+            fixture.Baseline.Events.Length).ToImmutableArray();
+        var prospectiveFiles = Directory.EnumerateFiles(fixture.LedgerPath, "*.json")
+            .Select(ReadEventFile)
+            .Concat(pending.Select(static item => EventFile(item.Path, item.Bytes)))
+            .ToImmutableArray();
+        var replayed = DagLedgerCommandPreparation.LoadLedgerFiles(
+            prospectiveFiles,
+            "prospective frozen ledger");
+        var firstDifference = FirstDifference(generatedBytes, replayed.RawBytes);
+
+        Assert.Equal(2329, firstDifference);
+        Assert.Equal(
+            "Freeze",
+            generatedSyntax.Lines[2].Value.GetProperty("event_type").GetString());
+        Assert.Equal(
+            "Reattest",
+            replayed.Lines[2].Value.GetProperty("event_type").GetString());
+
+        var (exitCode, console) = Run(fixture, "ledger-sync");
+
+        Assert.Equal(0, exitCode);
+        Assert.Equal(string.Empty, console.Error);
+        Assert.Equal(
+            replayed.RawBytes.AsSpan().ToArray(),
+            FrozenLedgerTestData.ReadLedgerDirectory(fixture.LedgerPath));
+    }
+
+    [Fact]
+    public void ProductionCommandReplaysRealLedgerScaleTopology()
+    {
+        using var fixture = new LedgerSyncFixture(
+            blobChanged: true,
+            addClosedModule: false,
+            existingModuleCount: 688,
+            historicalReattestCount: 83,
+            changedModuleCount: 63);
+        Assert.Equal(772, fixture.Baseline.Events.Length);
+        Assert.Single(fixture.Baseline.Events.OfType<FrozenLedgerEvent.Genesis>());
+        Assert.Equal(688, fixture.Baseline.Events.OfType<FrozenLedgerEvent.Freeze>().Count());
+        Assert.Equal(83, fixture.Baseline.Events.OfType<FrozenLedgerEvent.Reattest>().Count());
+
+        var generatedBytes = FrozenLedgerGenerator.AppendSynchronization(
+            fixture.Baseline,
+            fixture.CandidateCatalog);
+        var generatedSyntax = Assert.IsType<DagLedgerLoadOutcome.Loaded>(
+            DagLedgerLoader.Load(generatedBytes.AsSpan())).Syntax;
+        var pending = DagLedgerAppendWriter.PrepareNewEvents(
+            fixture.LedgerPath,
+            generatedSyntax.Lines,
+            fixture.Baseline.Events.Length).ToImmutableArray();
+        var prospectiveFiles = Directory.EnumerateFiles(fixture.LedgerPath, "*.json")
+            .Select(ReadEventFile)
+            .Concat(pending.Select(static item => EventFile(item.Path, item.Bytes)))
+            .ToImmutableArray();
+        var replayed = DagLedgerCommandPreparation.LoadLedgerFiles(
+            prospectiveFiles,
+            "prospective frozen ledger");
+        var firstDifference = FirstDifference(generatedBytes, replayed.RawBytes);
+
+        Assert.NotEqual(-1, firstDifference);
+        Assert.Equal(63, pending.Length);
+        Assert.Equal(835, replayed.Lines.Length);
+
+        var (exitCode, console) = Run(fixture, "ledger-sync");
+
+        Assert.Equal(0, exitCode);
+        Assert.Equal(string.Empty, console.Error);
+        Assert.Contains("appended_reattests=63", console.Output, StringComparison.Ordinal);
+        Assert.Contains("appended_freezes=0", console.Output, StringComparison.Ordinal);
+        Assert.Equal(
+            replayed.RawBytes.AsSpan().ToArray(),
+            FrozenLedgerTestData.ReadLedgerDirectory(fixture.LedgerPath));
+    }
+
+    private static RepositoryFile ReadEventFile(string path)
+    {
+        var bytes = File.ReadAllBytes(path);
+        return EventFile(path, ImmutableArray.CreateRange(bytes));
+    }
+
+    private static RepositoryFile EventFile(string path, ImmutableArray<byte> bytes)
+    {
+        return new RepositoryFile(
+            RepoPath.CreateKnown(
+                $"{FrozenLedgerChangeClassifier.AcceptedRoot}/{Path.GetFileName(path)}"),
+            bytes,
+            Encoding.UTF8.GetString(bytes.AsSpan()));
+    }
+
+    private static int FirstDifference(
+        ImmutableArray<byte> left,
+        ImmutableArray<byte> right)
+    {
+        var length = Math.Min(left.Length, right.Length);
+        for (var index = 0; index < length; index++)
+        {
+            if (left[index] != right[index])
+            {
+                return index;
+            }
+        }
+
+        return left.Length == right.Length ? -1 : length;
+    }
+
     private static (int ExitCode, BufferedConsole Console) Run(
         LedgerSyncFixture fixture,
         string command)
@@ -121,44 +242,108 @@ public sealed class LedgerSyncCommandTests
         internal LedgerSyncFixture(
             bool blobChanged,
             bool addClosedModule,
-            string candidateStatement = "True")
+            string candidateStatement = "True",
+            int existingModuleCount = 1,
+            int historicalReattestCount = 0,
+            int? changedModuleCount = null)
         {
-            const string originalSource = "theorem a : True := by trivial\n";
-            var candidateSource = blobChanged
-                ? $"-- canonical header changed\ntheorem a : {candidateStatement} := by trivial\n"
-                : originalSource;
-            var original = FrozenLedgerTestData.ModuleWithReport(
-                "A",
-                originalSource,
-                "True");
-            var added = FrozenLedgerTestData.Module("B", imports: new[] { "A" });
-            var baselineCatalog = FrozenLedgerTestData.BuildCatalog(original);
+            if (historicalReattestCount < 0 || historicalReattestCount > existingModuleCount)
+            {
+                throw new ArgumentOutOfRangeException(nameof(historicalReattestCount));
+            }
+
+            var candidateChangeCount = blobChanged
+                ? changedModuleCount ?? existingModuleCount
+                : 0;
+            if (candidateChangeCount < 0 || candidateChangeCount > existingModuleCount)
+            {
+                throw new ArgumentOutOfRangeException(nameof(changedModuleCount));
+            }
+
+            var moduleNames = existingModuleCount == 1
+                ? new[] { "A" }
+                : Enumerable.Range(0, existingModuleCount)
+                    .Select(index => existingModuleCount < 100
+                        ? $"M{index:D2}"
+                        : $"M{index:D3}")
+                    .ToArray();
+            var originals = moduleNames.Select(static name =>
+                FrozenLedgerTestData.Module(name)).ToArray();
+            var historical = originals.Select((module, index) =>
+                index < historicalReattestCount
+                    ? module with
+                    {
+                        Source = $"-- historical header changed\ntheorem {module.Name.ToLowerInvariant()} : True := by trivial\n",
+                    }
+                    : module).ToArray();
+            var candidateHeader = historicalReattestCount == 0 && changedModuleCount is null
+                ? "canonical"
+                : "candidate";
+            var candidates = historical.Select((module, index) => index < candidateChangeCount
+                ? module with
+                {
+                    Source = $"-- {candidateHeader} header changed\ntheorem {module.Name.ToLowerInvariant()} : {candidateStatement} := by trivial\n",
+                    StatementMaterial = candidateStatement,
+                }
+                : module).ToArray();
+            var added = FrozenLedgerTestData.Module(
+                existingModuleCount == 1 ? "B" : "Added",
+                imports: new[] { moduleNames[^1] });
+            var originalCatalog = FrozenLedgerTestData.BuildCatalog(originals);
+            var historicalCatalog = historicalReattestCount == 0
+                ? originalCatalog
+                : FrozenLedgerTestData.BuildCatalog(historical);
             CandidateCatalog = addClosedModule
-                ? FrozenLedgerTestData.BuildCatalog(
-                    original with { Source = candidateSource, StatementMaterial = candidateStatement },
-                    added)
-                : FrozenLedgerTestData.BuildCatalog(
-                    original with { Source = candidateSource, StatementMaterial = candidateStatement });
-            BaselineBytes = FrozenLedgerGenerator.GenerateGenesis(
-                baselineCatalog,
+                ? FrozenLedgerTestData.BuildCatalog(candidates.Append(added).ToArray())
+                : FrozenLedgerTestData.BuildCatalog(candidates);
+            var genesisBytes = FrozenLedgerGenerator.GenerateGenesis(
+                originalCatalog,
                 new FrozenGenesisDescriptor(
                     FrozenLedgerTestData.GitOid('e'),
                     FrozenLedgerTestData.Sha256("historical-rule-catalog")));
+            var genesisSyntax = Assert.IsType<DagLedgerLoadOutcome.Loaded>(
+                DagLedgerLoader.Load(genesisBytes.AsSpan())).Syntax;
+            var genesis = FrozenLedgerTestData.ValidateHistory(genesisSyntax, originalCatalog) switch
+            {
+                FrozenLedgerValidationOutcome.Accepted accepted => accepted.Capability,
+                FrozenLedgerValidationOutcome.Rejected rejected => throw new InvalidOperationException(
+                    "fixture genesis was rejected: " + rejected.Message),
+                _ => throw new InvalidOperationException("unknown fixture genesis outcome"),
+            };
+            BaselineBytes = historicalReattestCount == 0
+                ? genesisBytes
+                : FrozenLedgerGenerator.AppendReattestation(genesis, historicalCatalog);
+
+            var baselineSyntax = Assert.IsType<DagLedgerLoadOutcome.Loaded>(
+                DagLedgerLoader.Load(BaselineBytes.AsSpan())).Syntax;
+            Baseline = FrozenLedgerTestData.ValidateHistory(baselineSyntax, historicalCatalog) switch
+            {
+                FrozenLedgerValidationOutcome.Accepted accepted => accepted.Capability,
+                FrozenLedgerValidationOutcome.Rejected rejected => throw new InvalidOperationException(
+                    "fixture history was rejected: " + rejected.Message),
+                _ => throw new InvalidOperationException("unknown fixture history outcome"),
+            };
 
             var files = new Dictionary<string, string>(StringComparer.Ordinal)
             {
                 ["lean-toolchain"] = "leanprover/lean4:v4.24.0\n",
                 ["lake-manifest.json"] = "{}\n",
-                [FrozenLedgerTestData.PathFor("A")] = candidateSource,
             };
-            var reports = new Dictionary<string, LeanFileReport>(StringComparer.Ordinal)
+            var reports = new Dictionary<string, LeanFileReport>(StringComparer.Ordinal);
+            foreach (var module in candidates)
             {
-                [FrozenLedgerTestData.PathFor("A")] = Report("A", candidateStatement),
-            };
+                files.Add(FrozenLedgerTestData.PathFor(module.Name), module.Source);
+                reports.Add(
+                    FrozenLedgerTestData.PathFor(module.Name),
+                    Report(module.Name, candidateStatement, module.Imports.ToArray()));
+            }
+
             if (addClosedModule)
             {
-                files.Add(FrozenLedgerTestData.PathFor("B"), added.Source);
-                reports.Add(FrozenLedgerTestData.PathFor("B"), Report("B", "True", "A"));
+                files.Add(FrozenLedgerTestData.PathFor(added.Name), added.Source);
+                reports.Add(
+                    FrozenLedgerTestData.PathFor(added.Name),
+                    Report(added.Name, "True", added.Imports.ToArray()));
             }
 
             FrozenLedgerTestData.AddLedgerFiles(files, BaselineBytes);
@@ -181,6 +366,8 @@ public sealed class LedgerSyncCommandTests
         }
 
         internal ImmutableArray<byte> BaselineBytes { get; }
+
+        internal FrozenLedgerConsistent Baseline { get; }
 
         internal FrozenMaterialCatalog CandidateCatalog { get; }
 

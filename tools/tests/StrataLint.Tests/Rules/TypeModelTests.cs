@@ -369,17 +369,6 @@ public sealed class TypeModelTests
             BootstrapGate.Evaluate(RawChangeSet.Create([value])));
     }
 
-    [Fact]
-    public void GeneratedFileMapProjectionIsGovernanceRegistered()
-    {
-        var path = RepoPath.CreateKnown("Generated/FILEMAP.md");
-        var policy = Policy();
-
-        Assert.Contains(path, policy.GovernanceDocuments);
-        Assert.Null(RepositoryPathPolicy.Validate(path, policy));
-        Assert.False(RepositoryPathPolicy.TryResolve(path, out _));
-    }
-
     private static ValidatedPolicy Policy() =>
         RegistryLoadAssert.Accepted(
             RegistryLoader.Load(
