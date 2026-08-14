@@ -10,6 +10,8 @@
     <PackageReference Include="Microsoft.CodeAnalysis.BannedApiAnalyzers" PrivateAssets="all" />
     <PackageReference Include="Tomlyn" />
     <PackageReference Include="YamlDotNet" />
+    <!-- BannedSymbols.Guid.txt is intentionally excluded because the CLI creates
+         ephemeral workspace names. -->
     <AdditionalFiles Include="../Architecture/BannedSymbols.txt" />
     <AdditionalFiles Include="../Architecture/BannedSymbols.Determinism.txt" />
   </ItemGroup>
