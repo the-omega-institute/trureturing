@@ -19,8 +19,9 @@ public sealed class EngineeringPathFilterTests
     ];
 
     // Blueprint documents are copied or scanned as corpus for emitter/document behavior. They are
-    // also compiled into StrataLint.Scribe, but the always-on lean-inspect reconciliation compiles
-    // that project and runs the stronger projection/document checks, so engineering adds no verdict.
+    // also compiled into StrataLint.Scribe, but the always-on lean-inspect content lane restores the
+    // exact Blueprint-addressed binary (or builds Scribe alone on a miss) and runs all four content
+    // checks, so the engineering test suite adds no content verdict.
     // CLAUDE.md is an existing marker/read sample for typed repository-accessor tests.
     // D5 sources are copied into temporary emission trees as real-world Lean corpus.
     // Library notes are copied into temporary emission trees as citation corpus.
@@ -28,7 +29,7 @@ public sealed class EngineeringPathFilterTests
     private static readonly IReadOnlyDictionary<string, string> IncidentalInputExclusions =
         new Dictionary<string, string>(StringComparer.Ordinal)
         {
-            ["Blueprint"] = "emitter/document corpus; always-on reconciliation compiles Scribe and checks projections",
+            ["Blueprint"] = "emitter/document corpus; the content lane runs the complete Scribe checks",
             ["CLAUDE.md"] = "repository-root marker and typed accessor sample, not asserted policy text",
             ["D5"] = "real-tree Lean corpus copied into temporary emission fixtures",
             ["Library"] = "real-tree citation corpus copied into temporary emission fixtures",

@@ -285,21 +285,23 @@ public static class ScribeEmitter
         // binary cannot render (their .scribe.cs is absent from DocumentDefinitions.All). A candidate that
         // adds such a document produces an attestation this base binary cannot reproduce byte-for-byte, yet
         // that is a protected-surface signal (SL-022 routes the new .scribe.cs to Component C), not base-owned
-        // corruption. So the attestation diff still fails the emit --check exit code (kept strict below) but
-        // must not, on its own, void the per-document capability for the base-owned documents that verified.
+        // corruption. So an existing attestation diff still fails the emit --check exit code, but must not,
+        // on its own, void the per-document capability for the base-owned documents that verified. The
+        // attestation is FILEMAP run-local and gitignored, so its absence in a clean checkout is not drift.
         var attestationOutOfDate = false;
         var attestationPath = Path.Combine(repositoryRoot, ScribeEmissionAttestation.RelativePath);
-        var currentAttestation = File.Exists(attestationPath)
+        var attestationExists = File.Exists(attestationPath);
+        var currentAttestation = attestationExists
             ? File.ReadAllBytes(attestationPath)
             : [];
         if (!currentAttestation.AsSpan().SequenceEqual(attestationBytes))
         {
-            if (check)
+            if (check && attestationExists)
             {
                 attestationOutOfDate = true;
                 error.WriteLine($"out of date: {ScribeEmissionAttestation.RelativePath}");
             }
-            else
+            else if (!check)
             {
                 var parent = Path.GetDirectoryName(attestationPath)
                     ?? throw new InvalidOperationException("Scribe attestation path has no parent directory.");
@@ -313,7 +315,10 @@ public static class ScribeEmitter
         if (check && differences == 0)
         {
             output.WriteLine($"checked: {definitions.Count} blueprint(s)");
-            output.WriteLine($"checked: {ScribeEmissionAttestation.RelativePath}");
+            if (attestationExists)
+            {
+                output.WriteLine($"checked: {ScribeEmissionAttestation.RelativePath}");
+            }
         }
         else if (!check)
         {

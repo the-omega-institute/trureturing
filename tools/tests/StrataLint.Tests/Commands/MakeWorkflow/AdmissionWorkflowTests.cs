@@ -1,16 +1,10 @@
 using YamlDotNet.RepresentationModel;
-using System.Diagnostics;
 using System.Text.RegularExpressions;
 
 namespace StrataLint.Tests;
 
 public sealed class AdmissionWorkflowTests
 {
-    private const string ProjectionTest =
-        "StrataLint.Scribe.Tests.StatementProjectionPilotTests.LiveReportMatchesPinnedFixtureWhenAvailable";
-    private const string DocumentTest =
-        "StrataLint.Scribe.Tests.DocumentDiscoveryTests.GeneratedMarkdownIsDeterministicAndMatchesTheCommittedTree";
-
     [Fact]
     public void BaselineAdmissionNeedsExactlyLeanInspect()
     {
@@ -171,7 +165,7 @@ public sealed class AdmissionWorkflowTests
     }
 
     [Fact]
-    public void ReconcilesStatementProjectionAfterProducingLiveReport()
+    public void RunsCompleteMathematicalChecksAfterProducingLiveReport()
     {
         var root = TestRepositoryLayout.FindRoot();
         var workflow = File.ReadAllText(Path.Combine(root, ".github", "workflows", "ci.yml"));
@@ -191,118 +185,74 @@ public sealed class AdmissionWorkflowTests
         var reportIndex = Array.FindIndex(namedSteps, static step =>
             step.Name == "Produce source-bound canonical Lean reports");
         var reconciliationIndex = Array.FindIndex(namedSteps, static step =>
-            step.Name == "Reconcile pinned statement projections with live Lean report");
+            step.Name == "Run complete mathematical content checks");
         Assert.True(reportIndex >= 0, "admission must produce the canonical live Lean report");
-        Assert.True(reconciliationIndex > reportIndex, "reconciliation must run after report production");
+        Assert.True(reconciliationIndex > reportIndex, "mathematical checks must run after report production");
 
         var reconciliation = namedSteps[reconciliationIndex].Node;
-        var environment = Assert.IsType<YamlMappingNode>(reconciliation.Children[new YamlScalarNode("env")]);
-        Assert.Equal("1", Assert.IsType<YamlScalarNode>(
-            environment.Children[new YamlScalarNode("STRATALINT_REQUIRE_LIVE_REPORT")]).Value);
         var run = Assert.IsType<YamlScalarNode>(reconciliation.Children[new YamlScalarNode("run")]).Value!;
-        var expectedTests = new HashSet<string>(StringComparer.Ordinal)
+        var commands = new[]
         {
-            ProjectionTest,
-            DocumentTest,
+            "projections --check --report \"$report\"",
+            "emit --check",
+            "emit-values --check",
+            "describe-report --check",
         };
-        var filterTests = Regex.Matches(run, @"FullyQualifiedName=([^|'\s]+)")
-            .Select(static match => match.Groups[1].Value)
-            .ToHashSet(StringComparer.Ordinal);
-        var pythonExpectedBlock = Regex.Match(
-            run,
-            @"(?s)expected\s*=\s*\{(?<body>.*?)\}",
-            RegexOptions.CultureInvariant);
-        Assert.True(pythonExpectedBlock.Success, "the TRX validator must declare its expected test-name set");
-        var validatorTests = Regex.Matches(pythonExpectedBlock.Groups["body"].Value, "[\"'](?<name>[^\"']+)[\"']")
-            .Select(static match => match.Groups["name"].Value)
-            .ToHashSet(StringComparer.Ordinal);
-
-        Assert.Equal(expectedTests.Order(), filterTests.Order());
-        Assert.Equal(expectedTests.Order(), validatorTests.Order());
-        Assert.Equal(filterTests.Order(), validatorTests.Order());
-        Assert.Contains("--logger \"trx;LogFileName=$results\"", run, StringComparison.Ordinal);
-        Assert.Contains("len(results) != 2", run, StringComparison.Ordinal);
-        Assert.Contains("set(names) != expected", run, StringComparison.Ordinal);
-    }
-
-    public static TheoryData<string, string?> RejectedTrxReports => new()
-    {
-        { "missing file", null },
-        { "empty file", "" },
-        { "invalid XML", "not xml" },
-        { "non-Passed outcome", Trx((ProjectionTest, "Passed"), (DocumentTest, "NotExecuted")) },
-        { "one result", Trx((ProjectionTest, "Passed")) },
-        { "three results", Trx((ProjectionTest, "Passed"), (DocumentTest, "Passed"), ("Extra.Test", "Passed")) },
-        { "duplicate name", Trx((ProjectionTest, "Passed"), (ProjectionTest, "Passed")) },
-        { "different name set", Trx((ProjectionTest, "Passed"), ("Wrong.Test", "Passed")) },
-    };
-
-    [Theory]
-    [MemberData(nameof(RejectedTrxReports))]
-    public void TrxValidatorRejectsInvalidReports(string _, string? trx)
-    {
-        Assert.NotEqual(0, RunTrxValidator(trx));
+        var previous = -1;
+        foreach (var command in commands)
+        {
+            var index = run.IndexOf(command, StringComparison.Ordinal);
+            Assert.True(index > previous, $"mathematical command is absent or out of order: {command}");
+            previous = index;
+        }
+        Assert.Contains("STRATALINT_LEAN_REPORT=\"$report\"", run, StringComparison.Ordinal);
+        Assert.Contains(".judge-binaries/scribe/StrataLint.Scribe.dll", run, StringComparison.Ordinal);
+        Assert.DoesNotContain("dotnet test", run, StringComparison.Ordinal);
+        Assert.DoesNotContain("tools/tests", run, StringComparison.Ordinal);
     }
 
     [Fact]
-    public void TrxValidatorAcceptsExactlyTheExpectedPassingReports()
+    public void JudgeBinaryCacheIsSharedByEngineeringAndBothContentJobs()
     {
-        Assert.Equal(0, RunTrxValidator(Trx((ProjectionTest, "Passed"), (DocumentTest, "Passed"))));
+        var workflow = AdmissionWorkflow();
+        var cacheKeyLines = workflow.Split('\n')
+            .Where(static line => line.TrimStart().StartsWith(
+                "key: stratalint-judge-binaries-v1-",
+                StringComparison.Ordinal))
+            .Select(static line => line.Trim())
+            .Distinct(StringComparer.Ordinal)
+            .ToArray();
+
+        Assert.Single(cacheKeyLines);
+        Assert.Equal(2, Regex.Matches(workflow, "- name: Restore judge binaries").Count);
+        Assert.Equal(3, Regex.Matches(
+            workflow,
+            "- name: Resolve judge binary content address before build outputs exist").Count);
+        Assert.Equal(3, Regex.Matches(workflow, "hashFiles\\('candidate/tools/\\*\\*'").Count);
+        Assert.Equal(3, Regex.Matches(workflow, "'candidate/Blueprint/\\*\\*/\\*.scribe.cs'").Count);
+        Assert.Equal(3, Regex.Matches(workflow, "'candidate/Directory.\\*'").Count);
+        Assert.Equal(3, Regex.Matches(workflow, "'candidate/global.json'").Count);
+
+        var engineering = JobText(workflow, "candidate-engineering", "lean-inspect");
+        var leanInspect = JobText(workflow, "lean-inspect", "baseline-admission");
+        var admission = workflow[workflow.IndexOf("  baseline-admission:", StringComparison.Ordinal)..];
+        Assert.Contains("dotnet publish", engineering, StringComparison.Ordinal);
+        Assert.Contains("github.event_name == 'push'", engineering, StringComparison.Ordinal);
+        Assert.Contains("github.ref == 'refs/heads/dev'", engineering, StringComparison.Ordinal);
+        Assert.Contains("actions/cache/save@v4", engineering, StringComparison.Ordinal);
+        Assert.Contains("actions/cache/restore@v4", leanInspect, StringComparison.Ordinal);
+        Assert.Contains("dotnet build candidate/tools/StrataLint.Scribe/StrataLint.Scribe.csproj", leanInspect, StringComparison.Ordinal);
+        Assert.DoesNotContain("dotnet test", leanInspect, StringComparison.Ordinal);
+        Assert.Contains("actions/cache/restore@v4", admission, StringComparison.Ordinal);
+        Assert.Contains("--judge-dll", admission, StringComparison.Ordinal);
     }
 
-    private static int RunTrxValidator(string? trx)
+    private static string JobText(string workflow, string job, string nextJob)
     {
-        var run = ReconciliationRun();
-        var scriptMatch = Regex.Match(
-            run,
-            "(?s)python3 -c '(?<script>.*?)' \\\"\\$results\\\"",
-            RegexOptions.CultureInvariant);
-        Assert.True(scriptMatch.Success, "the reconciliation step must invoke its embedded TRX validator");
-
-        var temporaryDirectory = Path.Combine(Path.GetTempPath(), $"stratalint-trx-validator-{Guid.NewGuid():N}");
-        Directory.CreateDirectory(temporaryDirectory);
-        try
-        {
-            var trxPath = Path.Combine(temporaryDirectory, "results.trx");
-            if (trx is not null)
-                File.WriteAllText(trxPath, trx);
-            var startInfo = new ProcessStartInfo
-            {
-                FileName = "python3",
-                RedirectStandardError = true,
-                RedirectStandardOutput = true,
-                UseShellExecute = false,
-            };
-            startInfo.ArgumentList.Add("-c");
-            startInfo.ArgumentList.Add(scriptMatch.Groups["script"].Value);
-            startInfo.ArgumentList.Add(trxPath);
-            using var process = Process.Start(startInfo)!;
-            process.WaitForExit();
-            return process.ExitCode;
-        }
-        finally
-        {
-            Directory.Delete(temporaryDirectory, recursive: true);
-        }
-    }
-
-    private static string Trx(params (string Name, string Outcome)[] results) =>
-        "<TestRun><Results>" + string.Concat(results.Select(static result =>
-            $"<UnitTestResult testName=\"{result.Name}\" outcome=\"{result.Outcome}\" />")) + "</Results></TestRun>";
-
-    private static string ReconciliationRun()
-    {
-        var workflow = File.ReadAllText(Path.Combine(TestRepositoryLayout.FindRoot(), ".github", "workflows", "ci.yml"));
-        var stream = new YamlStream();
-        stream.Load(new StringReader(workflow));
-        var document = Assert.IsType<YamlMappingNode>(stream.Documents[0].RootNode);
-        var jobs = Assert.IsType<YamlMappingNode>(document.Children[new YamlScalarNode("jobs")]);
-        var leanInspect = Assert.IsType<YamlMappingNode>(jobs.Children[new YamlScalarNode("lean-inspect")]);
-        var steps = Assert.IsType<YamlSequenceNode>(leanInspect.Children[new YamlScalarNode("steps")]);
-        var reconciliation = steps.Children.OfType<YamlMappingNode>().Single(step =>
-            Assert.IsType<YamlScalarNode>(step.Children[new YamlScalarNode("name")]).Value ==
-            "Reconcile pinned statement projections with live Lean report");
-        return Assert.IsType<YamlScalarNode>(reconciliation.Children[new YamlScalarNode("run")]).Value!;
+        var start = workflow.IndexOf($"  {job}:\n", StringComparison.Ordinal);
+        var end = workflow.IndexOf($"  {nextJob}:\n", start, StringComparison.Ordinal);
+        Assert.True(start >= 0 && end > start);
+        return workflow[start..end];
     }
 
     private static string AdmissionWorkflow() =>

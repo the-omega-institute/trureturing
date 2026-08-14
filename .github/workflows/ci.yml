@@ -132,6 +132,16 @@ jobs:
           echo "reason=$reason" >> "$GITHUB_OUTPUT"
           echo "matches=$matched_detail" >> "$GITHUB_OUTPUT"
 
+      - name: Resolve judge binary content address before build outputs exist
+        id: judge-address
+        if: steps.scope.outputs.run == 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+          address="${{ hashFiles('candidate/tools/**', 'candidate/Blueprint/**/*.scribe.cs', 'candidate/Directory.*', 'candidate/global.json') }}"
+          [[ "$address" =~ ^[0-9a-f]{64}$ ]]
+          echo "address=$address" >> "$GITHUB_OUTPUT"
+
       - name: Resolve pinned Lean toolchain
         id: lean
         if: steps.scope.outputs.run == 'true'
@@ -259,6 +269,27 @@ jobs:
             ((index += 1))
           done
 
+      - name: Stage judge binaries for the shared cache (dev push only)
+        id: stage-judge
+        if: steps.scope.outputs.run == 'true' && github.event_name == 'push' && github.ref == 'refs/heads/dev'
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p .judge-binaries/cli .judge-binaries/scribe
+          dotnet publish candidate/tools/StrataLint.Cli/StrataLint.Cli.csproj \
+            --configuration Release --no-build --output .judge-binaries/cli
+          dotnet publish candidate/tools/StrataLint.Scribe/StrataLint.Scribe.csproj \
+            --configuration Release --no-build --output .judge-binaries/scribe
+          test -s .judge-binaries/cli/StrataLint.dll
+          test -s .judge-binaries/scribe/StrataLint.Scribe.dll
+
+      - name: Save judge binaries by content address (dev push only)
+        if: steps.scope.outputs.run == 'true' && steps.stage-judge.outcome == 'success' && github.event_name == 'push' && github.ref == 'refs/heads/dev'
+        uses: actions/cache/save@v4
+        with:
+          path: .judge-binaries
+          key: stratalint-judge-binaries-v1-${{ runner.os }}-${{ steps.judge-address.outputs.address }}
+
       - name: Save elan toolchain for engineering checks (dev push only)
         if: steps.scope.outputs.run == 'true' && always() && steps.install-elan.outcome == 'success' && github.event_name == 'push' && github.ref == 'refs/heads/dev'
         uses: actions/cache/save@v4
@@ -309,6 +340,22 @@ jobs:
           fetch-depth: 0
           persist-credentials: false
           path: candidate
+
+      - name: Resolve judge binary content address before build outputs exist
+        id: judge-address
+        shell: bash
+        run: |
+          set -euo pipefail
+          address="${{ hashFiles('candidate/tools/**', 'candidate/Blueprint/**/*.scribe.cs', 'candidate/Directory.*', 'candidate/global.json') }}"
+          [[ "$address" =~ ^[0-9a-f]{64}$ ]]
+          echo "address=$address" >> "$GITHUB_OUTPUT"
+
+      - name: Restore judge binaries
+        id: judge-cache
+        uses: actions/cache/restore@v4
+        with:
+          path: .judge-binaries
+          key: stratalint-judge-binaries-v1-${{ runner.os }}-${{ steps.judge-address.outputs.address }}
 
       - name: Resolve dev merge-base content address
         id: base
@@ -452,6 +499,16 @@ jobs:
         with:
           global-json-file: candidate/global.json
 
+      - name: Build Scribe binary on judge cache miss
+        if: steps.judge-cache.outputs.cache-hit != 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p .judge-binaries/scribe
+          dotnet build candidate/tools/StrataLint.Scribe/StrataLint.Scribe.csproj \
+            --configuration Release \
+            --output .judge-binaries/scribe
+
       - name: Restore candidate Lean build artifacts
         if: steps.report-reuse.outcome != 'success'
 
@@ -484,36 +541,19 @@ jobs:
             --candidate-root "$GITHUB_WORKSPACE/candidate" \
             --candidate-output "$reports/candidate-lean-report.json"
 
-      - name: Reconcile pinned statement projections with live Lean report
+      - name: Run complete mathematical content checks
         shell: bash
-        env:
-          STRATALINT_REQUIRE_LIVE_REPORT: "1"
         run: |
           set -euo pipefail
           report="$RUNNER_TEMP/raw-lean-reports/candidate-lean-report.json"
-          target="$GITHUB_WORKSPACE/candidate/.lake/build/stratalint/raw-lean-report.json"
-          results="$RUNNER_TEMP/scribe-live-report-reconciliation.trx"
-          mkdir -p "$(dirname "$target")"
-          cp "$report" "$target"
-          dotnet test candidate/tools/tests/StrataLint.Scribe.Tests/StrataLint.Scribe.Tests.csproj \
-            --configuration Release \
-            --filter 'FullyQualifiedName=StrataLint.Scribe.Tests.StatementProjectionPilotTests.LiveReportMatchesPinnedFixtureWhenAvailable|FullyQualifiedName=StrataLint.Scribe.Tests.DocumentDiscoveryTests.GeneratedMarkdownIsDeterministicAndMatchesTheCommittedTree' \
-            --logger "trx;LogFileName=$results" \
-            --verbosity normal
-          python3 -c '
-          import sys
-          import xml.etree.ElementTree as ET
-
-          expected = {
-              "StrataLint.Scribe.Tests.StatementProjectionPilotTests.LiveReportMatchesPinnedFixtureWhenAvailable",
-              "StrataLint.Scribe.Tests.DocumentDiscoveryTests.GeneratedMarkdownIsDeterministicAndMatchesTheCommittedTree",
-          }
-          results = ET.parse(sys.argv[1]).getroot().findall(".//{*}UnitTestResult")
-          names = [result.attrib.get("testName") for result in results]
-          outcomes = [result.attrib.get("outcome") for result in results]
-          if len(results) != 2 or set(names) != expected or outcomes != ["Passed", "Passed"]:
-              raise SystemExit(f"expected exactly two passing reconciliation tests {sorted(expected)}; got {list(zip(names, outcomes))}")
-          ' "$results"
+          scribe="$GITHUB_WORKSPACE/.judge-binaries/scribe/StrataLint.Scribe.dll"
+          test -s "$report"
+          test -s "$scribe"
+          cd "$GITHUB_WORKSPACE/candidate"
+          STRATALINT_LEAN_REPORT="$report" dotnet "$scribe" projections --check --report "$report"
+          STRATALINT_LEAN_REPORT="$report" dotnet "$scribe" emit --check
+          STRATALINT_LEAN_REPORT="$report" dotnet "$scribe" emit-values --check
+          STRATALINT_LEAN_REPORT="$report" dotnet "$scribe" describe-report --check
 
       - name: Stage candidate canonical Lean report cache
         shell: bash
@@ -598,6 +638,22 @@ jobs:
           persist-credentials: false
           path: candidate
 
+      - name: Resolve judge binary content address before build outputs exist
+        id: judge-address
+        shell: bash
+        run: |
+          set -euo pipefail
+          address="${{ hashFiles('candidate/tools/**', 'candidate/Blueprint/**/*.scribe.cs', 'candidate/Directory.*', 'candidate/global.json') }}"
+          [[ "$address" =~ ^[0-9a-f]{64}$ ]]
+          echo "address=$address" >> "$GITHUB_OUTPUT"
+
+      - name: Restore judge binaries
+        id: judge-cache
+        uses: actions/cache/restore@v4
+        with:
+          path: .judge-binaries
+          key: stratalint-judge-binaries-v1-${{ runner.os }}-${{ steps.judge-address.outputs.address }}
+
       - name: Install pinned SDK
         uses: actions/setup-dotnet@v4
         with:
@@ -635,11 +691,18 @@ jobs:
             printf '%s\n' "candidate gate cannot consume canonical Lean reports" >&2
             exit 1
           fi
+          judge_args=()
+          if [[ "${{ steps.judge-cache.outputs.cache-hit }}" == "true" ]]; then
+            judge="$GITHUB_WORKSPACE/.judge-binaries/cli/StrataLint.dll"
+            test -s "$judge"
+            judge_args=(--judge-dll "$judge")
+          fi
           set +e
           "$gate" \
             --candidate "$GITHUB_WORKSPACE/candidate" \
             --base "$DEV_BASELINE_SHA" \
             --candidate-lean-report "$RUNNER_TEMP/raw-lean-reports/candidate-lean-report.json" \
+            "${judge_args[@]}" \
             2>&1 | tee "$RUNNER_TEMP/gate.log"
           rc="${PIPESTATUS[0]}"
           set -e
