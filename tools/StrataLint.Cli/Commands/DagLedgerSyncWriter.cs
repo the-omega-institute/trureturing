@@ -23,18 +23,18 @@ internal static class DagLedgerSyncWriter
                 repositoryRoot,
                 repository,
                 arguments[1]);
-            var candidateBytes = FrozenLedgerGenerator.AppendSynchronization(
+            var generatedBytes = FrozenLedgerGenerator.AppendSynchronization(
                 context.Baseline,
                 context.Catalog);
-            var candidateSyntax = DagLedgerCommandPreparation.LoadLedger(
-                candidateBytes.AsSpan(),
+            var generatedSyntax = DagLedgerCommandPreparation.LoadLedger(
+                generatedBytes.AsSpan(),
                 "generated frozen ledger");
             var candidateReferences = DagLedgerCommandPreparation.ScanReferences(
-                candidateSyntax,
+                generatedSyntax,
                 "generated frozen ledger");
             var trustedCandidateReferences = repository.ValidateFrozenReferences(candidateReferences);
-            var candidate = FrozenLedger.ValidateCandidate(
-                candidateSyntax,
+            var generated = FrozenLedger.ValidateCandidate(
+                generatedSyntax,
                 context.Baseline,
                 context.Catalog,
                 trustedCandidateReferences) switch
@@ -45,16 +45,20 @@ internal static class DagLedgerSyncWriter
                 _ => throw new InvalidOperationException("unknown ledger validation outcome"),
             };
 
-            if (candidateBytes.AsSpan().SequenceEqual(context.BaselineBytes))
+            if (generatedBytes.AsSpan().SequenceEqual(context.BaselineBytes))
             {
                 return new CommandResult(
                     true,
-                    $"LEDGER_SYNC no ledger changes events={candidate.Events.Length} head={candidate.HeadHash}\n",
+                    $"LEDGER_SYNC no ledger changes events={generated.Events.Length} head={generated.HeadHash}\n",
                     string.Empty);
             }
 
-            if (!DagLedgerCommandPreparation.LoadLedgerDirectory(context.LedgerPath, "existing frozen ledger")
-                    .RawBytes.AsSpan().SequenceEqual(context.BaselineBytes))
+            var baselineFiles = DagLedgerCommandPreparation.ReadLedgerDirectoryFiles(
+                context.LedgerPath);
+            var currentBaseline = DagLedgerCommandPreparation.LoadLedgerFiles(
+                baselineFiles,
+                "existing frozen ledger");
+            if (!currentBaseline.RawBytes.AsSpan().SequenceEqual(context.BaselineBytes))
             {
                 throw new InvalidOperationException(
                     "accepted event files changed while ledger-sync was validating them");
@@ -62,11 +66,31 @@ internal static class DagLedgerSyncWriter
 
             var pending = DagLedgerAppendWriter.PrepareNewEvents(
                 context.LedgerPath,
-                candidateSyntax.Lines,
+                generatedSyntax.Lines,
                 context.Baseline.Events.Length).ToImmutableArray();
+            var prospectiveFiles = baselineFiles.AddRange(pending.Select(item =>
+                DagLedgerCommandPreparation.CreateLedgerRepositoryFile(item.Path, item.Bytes)));
+            var candidateSyntax = DagLedgerCommandPreparation.LoadLedgerFiles(
+                prospectiveFiles,
+                "prospective frozen ledger");
+            var replayedReferences = DagLedgerCommandPreparation.ScanReferences(
+                candidateSyntax,
+                "prospective frozen ledger");
+            var trustedReplayedReferences = repository.ValidateFrozenReferences(replayedReferences);
+            var candidate = FrozenLedger.ValidateHistory(
+                candidateSyntax,
+                context.Catalog,
+                trustedReplayedReferences) switch
+            {
+                FrozenLedgerValidationOutcome.Accepted accepted => accepted.Capability,
+                FrozenLedgerValidationOutcome.Rejected rejected => throw new InvalidOperationException(
+                    "prospective frozen ledger history is invalid: " + rejected.Message),
+                _ => throw new InvalidOperationException("unknown ledger validation outcome"),
+            };
+            var candidateBytes = candidateSyntax.RawBytes;
             PublishAtomically(context.LedgerPath, pending, candidateBytes);
 
-            var suffix = candidate.Events.Skip(context.Baseline.Events.Length).ToImmutableArray();
+            var suffix = generated.Events.Skip(context.Baseline.Events.Length).ToImmutableArray();
             var reattests = suffix.OfType<FrozenLedgerEvent.Reattest>().ToImmutableArray();
             var freezes = suffix.OfType<FrozenLedgerEvent.Freeze>().ToImmutableArray();
             var output = $"LEDGER_SYNC appended_reattests={reattests.Length} "
