@@ -1,0 +1,17 @@
+ast_path: lemma/3.1
+fingerprints:
+  raw_sha256: sha256:47149cfc3c2543c7733665caa94334f69dbaf73aeb75ab6dd856834cd6b562e2
+  normalized_sha256: sha256:47149cfc3c2543c7733665caa94334f69dbaf73aeb75ab6dd856834cd6b562e2
+cas_ref: sha256:47149cfc3c2543c7733665caa94334f69dbaf73aeb75ab6dd856834cd6b562e2
+coverage_gids:
+  - D5/S3/Divergence/LogDerivTrace.trace_mul_logDeriv
+receipts:
+  coverage:
+    - gid: D5/S3/Divergence/LogDerivTrace.trace_mul_logDeriv
+      source_sha256: sha256:47149cfc3c2543c7733665caa94334f69dbaf73aeb75ab6dd856834cd6b562e2
+      target_sha256: sha256:746c7b5cb09872d72c261cd8d3455dd7257cd3c910287d7595ba654e81ac5f4e
+  scribe:
+    - gid: D5/S3/Divergence/LogDerivTrace.trace_mul_logDeriv
+      definition_sha256: sha256:146004421936cb2a3f36e68c995f893fbc16e64fb0fb8783f515cc3de9d6babb
+      emission_sha256: sha256:d744da09e720847731c646817862a4aa8b477ff0c560307b671e89d94180a754
+  unresolved_subitems: []
