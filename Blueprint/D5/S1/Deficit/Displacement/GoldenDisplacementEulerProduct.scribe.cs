@@ -115,7 +115,7 @@ internal sealed class GoldenDisplacementEulerProductDocument : IScribeDocumentDe
                     D(0), Sp, Leq, Sp, F.Id("s"), Sp, Land, Sp,
                     D(1), Sp, Lt, Sp, F.Id("s"), Plus, F.Id("w"), Sp, Implies, Sp,
                     Sum, Underscore, Grp(F.Id("n"), InMacro, Mathbb, Grp(F.Id("N"))),
-                    Lvert, F.Id("D"), Underscore, Grp(F.Id("s"), Comma, F.Id("w")),
+                    Lvert, Sp, F.Id("D"), Underscore, Grp(F.Id("s"), Comma, F.Id("w")),
                     Open, F.Id("n"), Close, Rvert, Sp, Lt, Sp, Infty))),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
