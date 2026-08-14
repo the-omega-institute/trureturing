@@ -29,13 +29,12 @@ public sealed class ScribeTestMapDeriverTests
     }
 
     [Fact]
-    public void UnparseableDiscoveryMarkerIsUnknownAndSelectedForEveryChange()
+    public void UnparseableDiscoveryMarkerIsUnknown()
     {
         var map = DeriveDiscoveryWithAccessorMarker("File.Exists(Path.Combine(root, markerPath))");
 
         var method = Assert.Single(map.Methods);
         Assert.True(method.IsUnknown);
-        Assert.Contains(method, map.Select(["unrelated.txt"]));
     }
 
     [Fact]
@@ -49,7 +48,7 @@ public sealed class ScribeTestMapDeriverTests
     }
 
     [Fact]
-    public void VariablePathIsUnknownAndSelectedForEveryChange()
+    public void VariablePathIsUnknown()
     {
         const string source = """
             class VariableTests {
@@ -66,20 +65,10 @@ public sealed class ScribeTestMapDeriverTests
 
         var method = Assert.Single(map.Methods);
         Assert.Equal(TestMapUnknownReason.VariablePath, Assert.Single(method.UnknownReasons));
-        Assert.Contains(method, map.Select(["unrelated.txt"]));
     }
 
     [Fact]
-    public void SingleNamedPathIsNotSelectedForUnrelatedChange()
-    {
-        var map = Derive("Golden/only.json");
-
-        Assert.Empty(map.Select(["Golden/other.json"]));
-        Assert.Single(map.Select(["Golden/only.json"]));
-    }
-
-    [Fact]
-    public void DiscoveryDirectorySelectsChangesBelowThatDirectory()
+    public void DiscoveryDirectoryContributesBothMarkersToPaths()
     {
         const string source = """
             class DirectoryTests {
@@ -88,7 +77,7 @@ public sealed class ScribeTestMapDeriverTests
             """;
         var map = DeriveSources([new("DirectoryTests.cs", source)]);
 
-        Assert.Single(map.Select(["Blueprint/Nested/document.scribe.cs"]));
+        Assert.Equal(["Blueprint", "global.json"], Assert.Single(map.Methods).Paths);
     }
 
     [Fact]

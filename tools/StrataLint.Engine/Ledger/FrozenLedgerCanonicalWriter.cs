@@ -6,7 +6,7 @@ namespace StrataLint.Engine;
 
 public sealed record FrozenGenesisDescriptor(string GeneratorBlobOid, string RuleCatalogRoot);
 
-public static class FrozenLedgerGenerator
+public static partial class FrozenLedgerGenerator
 {
     public static ImmutableArray<byte> GenerateGenesis(
         FrozenMaterialCatalog catalog,

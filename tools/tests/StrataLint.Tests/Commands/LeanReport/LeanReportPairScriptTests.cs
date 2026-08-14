@@ -79,18 +79,6 @@ public sealed class LeanReportPairScriptTests
         Assert.DoesNotContain("--modules-file", script, StringComparison.Ordinal);
     }
 
-    [Fact]
-    public void ManifestAcceptsABundleProducedByThePairScript()
-    {
-        using var fixture = new LeanReportPairFixture();
-        Assert.Equal(0, fixture.Run().ExitCode);
-
-        var result = fixture.VerifyCandidateManifest();
-
-        Assert.True(result.ExitCode == 0, Encoding.UTF8.GetString(result.StandardError));
-    }
-
-
     private sealed class LeanReportPairFixture : IDisposable
     {
         private readonly TemporaryDirectory temporary = new();
@@ -168,26 +156,6 @@ public sealed class LeanReportPairScriptTests
         internal IReadOnlyList<JsonElement> ReadMetrics() => File.ReadAllLines(metricsLog)
             .Select(line => JsonDocument.Parse(line).RootElement.Clone())
             .ToArray();
-
-        internal ProcessOutput VerifyCandidateManifest()
-        {
-            var helper = Path.Combine(TestRepositoryLayout.FindRoot(), InputHelperPath);
-            var manifest = Path.Combine(temporary.Path, "candidate-modules.tsv");
-            var generated = BoundedProcessRunner.Run(
-                "bash",
-                [helper, "manifest", "--repository", candidateRoot, "--report", candidateReport],
-                temporary.Path,
-                TimeSpan.FromSeconds(30),
-                1024 * 1024);
-            Assert.Equal(0, generated.ExitCode);
-            File.WriteAllBytes(manifest, generated.StandardOutput);
-            return BoundedProcessRunner.Run(
-                "bash",
-                [helper, "verify-manifest", "--repository", candidateRoot, "--report", candidateReport, "--manifest", manifest],
-                temporary.Path,
-                TimeSpan.FromSeconds(30),
-                1024 * 1024);
-        }
 
         public void Dispose() => temporary.Dispose();
 

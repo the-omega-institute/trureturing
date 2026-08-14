@@ -1,3 +1,5 @@
+-- Statement IDs remain owned by the .NET canonical statement writer.
+
 import Lean.Environment
 import Lean.CoreM
 import Lean.PrivateName

@@ -7907,3 +7907,11142 @@ R_{m+1}
 6. 本追加不声称普通逆极限能够恢复瞬态分支；定理 26.1 恰好证明相反结论。
 7. 本追加不冒领自动机最小化、同余格、Koopman 闭包或行为度量的一般思想为本项目独有发明；本文的贡献定位是把它们在本稿既有“对角—观察—完成”主线中给出单一、自洽、可形式化拆分的接口。
 8. 任何新增纸面定理若在 Lean 形式化中需要加强前提、削弱结论或拆分命题，应以 kernel-verified 声明为唯一真值，并在文档中 append-only 记录勘误。
+
+---
+
+# 28. 追加：Hilbert 正交商余塔、有限切片完成与持续逃逸
+
+本节把“在一个已知有限维 Hilbert 空间之外取反，再对余部作商余分类，并持续递归”收紧为类型正确的 Hilbert 空间结构。首先必须修正记号：若 \(H_0\) 只是一个抽象有限维 Hilbert 空间，则表达式
+\[
+\mathscr H_\infty-H_0
+\]
+没有定义。必须先给出一个等距线性嵌入
+\[
+\iota:H_0\hookrightarrow\mathscr H,
+\]
+并令
+\[
+M=\iota(H_0)
+\subseteq\mathscr H.
+\]
+真正的“取反”不是集合差，而是闭子空间格中的正交补
+\[
+M^\perp
+=
+\{x\in\mathscr H:\langle x,m\rangle=0\ \forall m\in M\},
+\]
+或者等价地，是正交投影的补
+\[
+P_M\longmapsto I-P_M.
+\]
+
+本节证明五组互相衔接的结论。
+
+1. 对闭子空间，商空间 \(\mathscr H/M\) 与正交余空间 \(M^\perp\) 规范等距同构；
+2. 直接重复取正交补只形成二周期，不能产生真正的递归深度；
+3. 非平凡递归必须在当前余空间中继续选择有限维切片，形成正交分裂的商余塔；
+4. 在无限维空间中，每个有限阶段的余空间仍与原空间同型，但全部有限切片的完成可以重构整个空间；
+5. 点态强收敛可以与最坏情形误差恒等于一同时成立，因此任何有限观察层都存在一个完全不可见的正交逃逸方向。
+
+这一结构同时澄清“连续如何产生离散”。Hilbert 向量空间本身仍是连续的；离散性来自所选择的投影族、壳层编号与测量结果，而每个离散壳层内部仍携带实或复的连续振幅。
+
+## 28.1 类型正确的取反：投影补、正交补与商余代表
+
+以下标量域固定为
+\[
+\mathbb K\in\{\mathbb R,\mathbb C\},
+\]
+\(\mathscr H\) 为 \(\mathbb K\)-Hilbert 空间。
+
+有限维线性子空间自动闭合，所以有限维 \(M\subseteq\mathscr H\) 存在唯一正交投影
+\[
+P_M:\mathscr H\to M.
+\]
+每个 \(x\in\mathscr H\) 唯一分解为
+\[
+\boxed{
+x=P_Mx+(I-P_M)x,
+}
+\]
+其中
+\[
+P_Mx\in M,
+\qquad
+(I-P_M)x\in M^\perp.
+\]
+并且
+\[
+\boxed{
+\|x\|^2
+=
+\|P_Mx\|^2
++
+\|(I-P_M)x\|^2.
+}
+\]
+
+### 定理 28.1（投影补是子空间取反）
+
+对任意闭子空间 \(M\subseteq\mathscr H\)：
+\[
+\boxed{
+P_{M^\perp}=I-P_M,
+}
+\]
+并有
+\[
+\boxed{
+P_M^2=P_M,
+\qquad
+P_{M^\perp}^2=P_{M^\perp},
+}
+\[
+\boxed{
+P_MP_{M^\perp}=P_{M^\perp}P_M=0,
+}
+\[
+\boxed{
+P_M+P_{M^\perp}=I.
+}
+
+### 证明
+
+对任意 \(x\)，正交分解
+\[
+x=P_Mx+(x-P_Mx)
+\]
+的第二项属于 \(M^\perp\)。因此投影到 \(M^\perp\) 的分量恰为
+\[
+x-P_Mx=(I-P_M)x.
+\]
+其余恒等式由互补正交投影直接计算。\(\square\)
+
+### 定理 28.2（商—正交余规范等距同构）
+
+令
+\[
+q_M:\mathscr H\to\mathscr H/M
+\]
+为 Banach 商映射。定义
+\[
+U_M:\mathscr H/M\to M^\perp,
+\qquad
+U_M(q_M(x))=(I-P_M)x.
+\]
+则 \(U_M\) 是规范线性等距同构：
+\[
+\boxed{
+\mathscr H/M
+\cong_{\mathrm{iso}}
+M^\perp.
+}
+\]
+
+### 证明
+
+若
+\[
+q_M(x)=q_M(x'),
+\]
+则 \(x-x'\in M\)，故
+\[
+(I-P_M)(x-x')=0.
+\]
+所以 \(U_M\) 良定义。
+
+任意 \(r\in M^\perp\) 满足
+\[
+U_M(q_M(r))=r,
+\]
+故满射。若 \(U_M(q_M(x))=0\)，则 \(x=P_Mx\in M\)，所以 \(q_M(x)=0\)，故单射。
+
+最后，商范数满足
+\[
+\|q_M(x)\|
+=
+\inf_{m\in M}\|x-m\|.
+\]
+由正交分解，对任意 \(m\in M\)：
+\[
+\|x-m\|^2
+=
+\|P_Mx-m\|^2
++
+\|(I-P_M)x\|^2
+\ge
+\|(I-P_M)x\|^2.
+\]
+取 \(m=P_Mx\) 达到等号，故
+\[
+\|q_M(x)\|
+=
+\|(I-P_M)x\|.
+\]
+所以 \(U_M\) 等距。\(\square\)
+
+因此“商”和“余”在 Hilbert 空间中不是两个互不相干的操作：
+\[
+\boxed{
+\text{按 }M\text{ 取商}
+=
+\text{为每个商类选取唯一的正交余代表}.
+}
+\]
+
+## 28.2 相对正交余、orthomodular 分解与非 Boolean 性
+
+如果
+\[
+M\subseteq N\subseteq\mathscr H
+\]
+均为闭子空间，定义 \(M\) 在 \(N\) 中的相对正交余：
+\[
+\boxed{
+N\ominus M
+:=
+N\cap M^\perp.
+}
+\]
+这才是“从 \(N\) 中扣除已知部分 \(M\)”的类型正确版本。
+
+### 定理 28.3（相对商余分解）
+
+若 \(M\subseteq N\) 为闭子空间，则
+\[
+\boxed{
+N=M\oplus(N\ominus M).
+}
+并且存在规范等距同构
+\[
+\boxed{
+N/M
+\cong_{\mathrm{iso}}
+N\ominus M.
+}
+
+### 证明
+
+把 \(x\in N\) 按 \(M\) 分解：
+\[
+x=P_Mx+(I-P_M)x.
+\]
+由于 \(M\subseteq N\)，第一项属于 \(N\)，所以第二项也属于 \(N\)；同时第二项属于 \(M^\perp\)。故
+\[
+(I-P_M)x\in N\cap M^\perp=N\ominus M.
+\]
+唯一性来自正交和。商同构是定理 28.2 限制到 \(N\) 的版本。\(\square\)
+
+该式正是闭子空间格的 orthomodular law：
+\[
+\boxed{
+M\subseteq N
+\Longrightarrow
+N=M\vee(N\wedge M^\perp).
+}
+\]
+其中
+\[
+M\wedge N=M\cap N,
+\qquad
+M\vee N=\overline{M+N}.
+\]
+
+### 定理 28.4（正交 De Morgan 公式）
+
+对闭子空间 \(M,N\subseteq\mathscr H\)：
+\[
+\boxed{
+(M\vee N)^\perp
+=M^\perp\cap N^\perp,
+}
+\]
+\[
+\boxed{
+(M\cap N)^\perp
+=
+\overline{M^\perp+N^\perp}.
+}
+
+### 证明
+
+一个向量与 \(M+N\) 中全部向量正交，当且仅当它同时与 \(M\) 和 \(N\) 正交；闭包不改变正交补，得到第一式。对第一式应用双重正交补并交换 \(M,N\) 与其正交补，即得第二式。\(\square\)
+
+正交补虽然具有 involution 与 De Morgan 结构，但闭子空间格一般不是 Boolean 代数，因为分配律失败。
+
+### 例 28.5（二维 Hilbert 格的非分配性）
+
+在
+\[
+\mathscr H=\mathbb C^2
+\]
+中取
+\[
+A=\operatorname{span}(e_1),
+\]
+\[
+B=\operatorname{span}(e_1+e_2),
+\qquad
+C=\operatorname{span}(e_1-e_2).
+\]
+因为 \(B\vee C=\mathscr H\)，有
+\[
+A\wedge(B\vee C)=A.
+\]
+但三条直线互不相同，所以
+\[
+A\wedge B=A\wedge C=\{0\},
+\]
+从而
+\[
+(A\wedge B)\vee(A\wedge C)=\{0\}.
+\]
+因此
+\[
+\boxed{
+A\wedge(B\vee C)
+\ne
+(A\wedge B)\vee(A\wedge C).
+}
+
+所以 Hilbert 子空间中的“取反—交—并”不能被无条件当作经典集合的 Boolean 运算。它是 orthomodular，而不是分配的。
+
+## 28.3 直接重复取反只产生二周期
+
+定义闭子空间取反算子
+\[
+\mathcal C(M)=M^\perp.
+\]
+
+### 定理 28.6（双重正交补）
+
+对任意线性子空间 \(M\subseteq\mathscr H\)：
+\[
+\boxed{
+M^{\perp\perp}=\overline M.
+}
+因此若 \(M\) 闭合，特别是若 \(M\) 有限维，则
+\[
+\boxed{
+\mathcal C^2(M)=M.
+}
+
+### 证明
+
+显然 \(M\subseteq M^{\perp\perp}\)，而 \(M^{\perp\perp}\) 闭合，所以
+\[
+\overline M\subseteq M^{\perp\perp}.
+\]
+若 \(x\notin\overline M\)，按闭子空间 \(\overline M\) 作正交分解：
+\[
+x=P_{\overline M}x+r,
+\qquad
+r\in M^\perp,
+\qquad
+r\ne0.
+\]
+则
+\[
+\langle x,r\rangle
+=
+\|r\|^2\ne0,
+\]
+故 \(x\notin M^{\perp\perp}\)。所以反向包含成立。\(\square\)
+
+于是直接迭代为
+\[
+M,
+\quad
+M^\perp,
+\quad
+M,
+\quad
+M^\perp,
+\quad\ldots
+\]
+只是二周期：
+\[
+\boxed{
+\mathcal C^{2k}(M)=M,
+\qquad
+\mathcal C^{2k+1}(M)=M^\perp.
+}
+
+因此真正有内容的递归不能是“对同一个整体不断再取正交补”。必须在当前余空间内部继续选择一个新切片，并把它加入累计已知空间。
+
+## 28.4 无限吸收：有限切片不改变余空间的 Hilbert 同构类型
+
+Hilbert 维数定义为任一正交规范基的基数。设
+\[
+\dim_{\mathrm H}\mathscr H=\kappa
+\]
+为无限基数，而
+\[
+\dim M=n<\infty.
+\]
+
+### 定理 28.7（有限抽取后的余空间维数不变）
+
+有
+\[
+\boxed{
+\dim_{\mathrm H}M^\perp=\kappa.
+}
+因此
+\[
+\boxed{
+M^\perp\cong_{\mathrm{unitary}}\mathscr H,
+}
+以及
+\[
+\boxed{
+\mathscr H/M
+\cong_{\mathrm{unitary}}\mathscr H.
+}
+
+### 证明
+
+由
+\[
+\mathscr H=M\oplus M^\perp
+\]
+得到 Hilbert 维数的基数和：
+\[
+\kappa=n+\dim_{\mathrm H}M^\perp.
+\]
+若右侧余维有限，则右侧总和有限，与 \(\kappa\) 无限矛盾；若余维无限，则有限基数加无限基数等于该无限基数，所以余维必须为 \(\kappa\)。Hilbert 空间由正交规范基基数分类，故得到酉同构。商同构再由定理 28.2。\(\square\)
+
+在可分无限维情形：
+\[
+\mathscr H\cong\ell^2(\mathbb N),
+\]
+对任意有限维 \(M\)：
+\[
+\boxed{
+M^\perp\cong\ell^2(\mathbb N).
+}
+
+这给出“无限减去有限仍是无限”的严格含义：它是**抽象 Hilbert 同构类型不变**，而不是集合论差、不是规范恒等，也不表示被抽出的有限部分没有留下结构记录。
+
+若递归只保存
+\[
+[R_n]_{\cong}
+\]
+这样的抽象同构类，那么所有有限阶段都会坍缩为同一个值
+\[
+[\mathscr H].
+\]
+真正的信息存在于嵌入、投影、商映射及每轮抽出的切片中，而不只存在于余空间对象的同构类型中。
+
+## 28.5 无规范逃逸向量：递归必须携带选择结构
+
+裸 Hilbert 空间在酉群下高度齐性。任意两个同维有限子空间都可由某个酉算子互相送达。因此仅凭 \(\mathscr H\) 本身，没有一个被全体酉对称性保留的首选非零有限切片。
+
+### 定理 28.8（不存在酉自然的正交逃逸选择器）
+
+设 \(\mathscr H\) 无限维。不存在映射
+\[
+\eta:
+\{M\subseteq\mathscr H:M\text{ 为有限维闭子空间}\}
+\to
+\{x\in\mathscr H:\|x\|=1\}
+\]
+同时满足：
+
+1. 对每个 \(M\)，
+   \[
+   \eta(M)\in M^\perp;
+   \]
+2. 对每个酉算子 \(U\)，
+   \[
+   \boxed{
+   \eta(UM)=U\eta(M).
+   }
+   \]
+
+### 证明
+
+固定有限维 \(M\)，令
+\[
+e=\eta(M)\in M^\perp.
+\]
+取一个酉算子 \(V\)，使它在 \(M\) 上恒等，在 \(e\) 张成的一维空间上取负号，并在其余正交补上恒等。则
+\[
+VM=M,
+\qquad
+Ve=-e.
+\]
+酉自然性要求
+\[
+e=\eta(M)=\eta(VM)=V\eta(M)=-e,
+\]
+矛盾。\(\square\)
+
+所以从余空间中“抠出下一个对象”需要额外数据，例如：
+
+- 一组已命名正交规范基；
+- 自伴算子的谱投影；
+- 一个观察者给出的有限秩投影；
+- 一组生成向量及正交化规则；
+- 局域性、能量、尺度或复杂度排序；
+- 任何明确打破全酉对称性的选择接口。
+
+正交补只给出一个逃逸**空间**，一般不给出一个规范逃逸**向量**。
+
+## 28.6 非平凡递归：有限切片—商—余空间塔
+
+设初始已知空间
+\[
+S_0=M
+\]
+为有限维闭子空间，并令
+\[
+R_0=S_0^\perp.
+\]
+递归地，已知
+\[
+\mathscr H=S_n\oplus R_n
+\]
+后，从当前余空间中选择一个有限维闭子空间
+\[
+E_{n+1}\subseteq R_n.
+\]
+定义
+\[
+\boxed{
+S_{n+1}=S_n\oplus E_{n+1},
+}
+\[
+\boxed{
+R_{n+1}=R_n\cap E_{n+1}^\perp.
+}
+
+### 定理 28.9（单步正交商余递推）
+
+对全部 \(n\ge0\)：
+\[
+\boxed{
+R_{n+1}=S_{n+1}^\perp,
+}
+\[
+\boxed{
+R_n=E_{n+1}\oplus R_{n+1},
+}
+\[
+\boxed{
+\mathscr H=S_{n+1}\oplus R_{n+1}.
+}
+
+### 证明
+
+由
+\[
+S_{n+1}=S_n\oplus E_{n+1}
+\]
+及正交 De Morgan：
+\[
+S_{n+1}^\perp
+=S_n^\perp\cap E_{n+1}^\perp
+=R_n\cap E_{n+1}^\perp
+=R_{n+1}.
+\]
+又因为 \(E_{n+1}\subseteq R_n\)，在 Hilbert 空间 \(R_n\) 中对闭子空间 \(E_{n+1}\) 作正交分解，得到
+\[
+R_n=E_{n+1}\oplus(R_n\cap E_{n+1}^\perp).
+\]
+其余结论代入即得。\(\square\)
+
+### 推论 28.10（有限阶段展开）
+
+对每个 \(n\)：
+\[
+\boxed{
+S_n
+=
+S_0
+\oplus
+E_1
+\oplus\cdots\oplus
+E_n,
+}
+\[
+\boxed{
+\mathscr H
+=
+S_0
+\oplus
+E_1
+\oplus\cdots\oplus
+E_n
+\oplus
+R_n.
+}
+
+因此递归的正确形态不是
+\[
+M\mapsto M^\perp\mapsto M\mapsto M^\perp,
+\]
+而是
+\[
+\boxed{
+R_n
+=
+E_{n+1}
+\oplus
+R_{n+1}.
+}
+每一步从当前余空间抽取一个有限正交壳层，并把未抽取部分传给下一步。
+
+## 28.7 商余短正合列与 associated graded 重构
+
+定义第 \(n\) 层剩余商：
+\[
+Q_n=\mathscr H/S_n.
+\]
+由定理 28.2：
+\[
+Q_n\cong R_n.
+\]
+因为 \(S_n\subseteq S_{n+1}\)，存在规范商映射
+\[
+\rho_n:Q_n\twoheadrightarrow Q_{n+1},
+\qquad
+\rho_n(x+S_n)=x+S_{n+1}.
+\]
+
+### 定理 28.11（一步商余短正合列）
+
+存在正交分裂短正合列
+\[
+\boxed{
+0
+\longrightarrow
+E_{n+1}
+\overset{\jmath_n}{\longrightarrow}
+Q_n
+\overset{\rho_n}{\longrightarrow}
+Q_{n+1}
+\longrightarrow
+0,
+}
+其中
+\[
+\jmath_n(e)=e+S_n.
+\]
+并且
+\[
+\boxed{
+\ker\rho_n
+\cong
+S_{n+1}/S_n
+\cong
+E_{n+1}.
+}
+在 Hilbert 同构下：
+\[
+\boxed{
+Q_n
+\cong
+E_{n+1}\oplus Q_{n+1}.
+}
+
+### 证明
+
+\(\rho_n\) 显然满射。其核由满足
+\[
+x\in S_{n+1}
+\]
+的 \(S_n\)-商类构成，所以
+\[
+\ker\rho_n=S_{n+1}/S_n.
+\]
+由
+\[
+S_{n+1}=S_n\oplus E_{n+1}
+\]
+得到
+\[
+S_{n+1}/S_n\cong E_{n+1}.
+\]
+再用
+\[
+Q_n\cong R_n=E_{n+1}\oplus R_{n+1}\cong E_{n+1}\oplus Q_{n+1}.
+\]
+\(\square\)
+
+定义过滤的 associated graded Hilbert 空间：
+\[
+\operatorname{gr}(S_\bullet)
+=
+S_0
+\oplus_2
+\bigoplus_{n\ge0}
+(S_{n+1}/S_n),
+\]
+其中 \(\oplus_2\) 表示平方可和 Hilbert 直和。
+
+由于
+\[
+S_{n+1}/S_n\cong E_{n+1},
+\]
+它等距同构于
+\[
+S_0\oplus_2\bigoplus_{n\ge1}E_n.
+\]
+这说明递归真正累积的是商层
+\[
+S_{n+1}/S_n,
+\]
+而不是每次都与 \(\mathscr H\) 同型的抽象余空间。
+
+## 28.8 无限极限：累计已知空间与最终余空间
+
+定义
+\[
+\boxed{
+S_\infty
+=
+\overline{\bigcup_{n\ge0}S_n}
+=
+\overline{
+S_0\oplus\bigoplus_{n\ge1}E_n
+},
+}
+\[
+\boxed{
+R_\infty
+=
+\bigcap_{n\ge0}R_n.
+}
+
+### 定理 28.12（极限商余分解）
+
+有
+\[
+\boxed{
+R_\infty=S_\infty^\perp,
+}
+并且
+\[
+\boxed{
+\mathscr H=S_\infty\oplus R_\infty.
+}
+
+### 证明
+
+若 \(x\in\bigcap_nR_n\)，则它与每个 \(S_n\) 正交，故与
+\[
+\bigcup_nS_n
+\]
+及其闭包 \(S_\infty\) 正交。因此
+\[
+R_\infty\subseteq S_\infty^\perp.
+\]
+反之，若 \(x\perp S_\infty\)，则 \(x\perp S_n\) 对全部 \(n\) 成立，所以
+\[
+x\in\bigcap_nS_n^\perp=\bigcap_nR_n.
+\]
+得到等号。最后对闭子空间 \(S_\infty\) 作正交分解。\(\square\)
+
+### 推论 28.13（递归完备性判据）
+
+下列条件等价：
+\[
+\boxed{
+R_\infty=\{0\},
+}
+\[
+\boxed{
+S_\infty=\mathscr H,
+}
+\[
+\boxed{
+\overline{
+S_0\oplus\bigoplus_{n\ge1}E_n
+}
+=
+\mathscr H.
+}
+
+若这些条件成立，则
+\[
+\boxed{
+\mathscr H
+\cong
+S_0
+\oplus_2
+\bigoplus_{n\ge1}E_n.
+}
+若不成立，则完整分解为
+\[
+\boxed{
+\mathscr H
+\cong
+S_0
+\oplus_2
+\bigoplus_{n\ge1}E_n
+\oplus
+R_\infty.
+}
+
+所以 \(R_\infty\) 是相对于当前选择规则永远没有被命名的终极余扇区。
+
+## 28.9 一维切片与正交规范基
+
+最小递归每次只选择一个单位向量：
+\[
+e_{n+1}\in R_n,
+\qquad
+\|e_{n+1}\|=1,
+\]
+并令
+\[
+E_{n+1}=\mathbb K e_{n+1}.
+\]
+由于
+\[
+e_{n+1}\perp S_n,
+\]
+序列 \((e_n)\) 两两正交。
+
+若 \(S_0=\{0\}\) 且 \(R_\infty=0\)，则 \((e_n)\) 是 \(\mathscr H\) 的正交规范基；反过来，任意有序正交规范基都给出这样的完备商余塔。
+
+对每个 \(x\in\mathscr H\)：
+\[
+\boxed{
+x
+=
+P_{S_0}x
++
+\sum_{n\ge1}
+\langle x,e_n\rangle e_n
++
+P_{R_\infty}x,
+}
+并有
+\[
+\boxed{
+\|x\|^2
+=
+\|P_{S_0}x\|^2
++
+\sum_{n\ge1}
+|\langle x,e_n\rangle|^2
++
+\|P_{R_\infty}x\|^2.
+}
+
+这里的“离散”是坐标标签
+\[
+n=1,2,3,\ldots,
+\]
+而系数
+\[
+\langle x,e_n\rangle\in\mathbb K
+\]
+仍是连续振幅。因此：
+\[
+\boxed{
+\text{正交递归产生离散坐标骨架，
+不是把 Hilbert 向量变成有限离散集合}.
+}
+
+## 28.10 可分与不可分：何时可数递归足够
+
+### 定理 28.14（可数有限切片只产生可分部分）
+
+若每个 \(E_n\) 有限维，则
+\[
+S_\infty
+=
+\overline{S_0\oplus\bigoplus_{n\ge1}E_n}
+\]
+是可分 Hilbert 空间。
+
+因此若 \(\mathscr H\) 不可分，则
+\[
+\boxed{
+R_\infty\ne0
+}
+对任意可数有限切片递归都成立。
+
+### 证明
+
+每个有限维空间有有限正交规范基；全部切片基的可数并是可数集合，其线性包在 \(S_\infty\) 中稠密。故 \(S_\infty\) 可分。若 \(S_\infty=\mathscr H\)，则 \(\mathscr H\) 可分，矛盾。\(\square\)
+
+对不可分 Hilbert 空间，需要超限递归。
+
+### 定理 28.15（正交基诱导的超限商余塔）
+
+设
+\[
+\dim_{\mathrm H}\mathscr H=\kappa
+\]
+为无限基数，并选择以初始序数 \(\kappa\) 编号的正交规范基
+\[
+(e_\alpha)_{\alpha<\kappa}.
+\]
+对 \(\alpha\le\kappa\) 定义
+\[
+S_\alpha
+=
+\overline{\operatorname{span}}
+\{e_\beta:\beta<\alpha\},
+\]
+\[
+R_\alpha=S_\alpha^\perp.
+\]
+则：
+
+1. 后继阶段
+   \[
+   \boxed{
+   R_\alpha
+   =
+   \mathbb K e_\alpha
+   \oplus
+   R_{\alpha+1};
+   }
+   \]
+2. 极限序数 \(\lambda\le\kappa\) 满足
+   \[
+   \boxed{
+   S_\lambda
+   =
+   \overline{\bigcup_{\alpha<\lambda}S_\alpha},
+   \qquad
+   R_\lambda
+   =
+   \bigcap_{\alpha<\lambda}R_\alpha;
+   }
+   \]
+3. 对每个 \(\alpha<\kappa\)：
+   \[
+   \boxed{
+   \dim_{\mathrm H}R_\alpha=\kappa,
+   }
+   \]
+   因而
+   \[
+   R_\alpha\cong\mathscr H;
+   \]
+4. 最终
+   \[
+   \boxed{
+   R_\kappa=0.
+   }
+   \]
+
+### 证明
+
+前两项由基向量集合的分割与正交补定义直接得到。对 \(\alpha<\kappa\)，已抽出的基向量数 \(|\alpha|<\kappa\)；剩余指标集合仍有基数 \(\kappa\)，故余空间 Hilbert 维数为 \(\kappa\)。在阶段 \(\kappa\)，全部基向量已被抽取，其闭线性包为 \(\mathscr H\)，故余空间为零。\(\square\)
+
+这给出一个精确的“无限吸收直到完成”现象：
+\[
+\boxed{
+\text{每个真前阶段的余空间仍与整体同型，
+只有完成全部基数长度的递归后余空间才归零}.
+}
+
+## 28.11 投影强收敛与持续的最坏情形盲区
+
+令
+\[
+P_n=P_{S_n},
+\qquad
+P_\infty=P_{S_\infty}.
+\]
+因为 \(S_n\) 递增，\((P_n)\) 是递增投影族。
+
+### 定理 28.16（递增投影的强极限）
+
+对每个 \(x\in\mathscr H\)：
+\[
+\boxed{
+P_nx\longrightarrow P_\infty x.
+}
+特别地，若递归完备，即 \(R_\infty=0\)，则
+\[
+\boxed{
+P_n\xrightarrow{\mathrm{SOT}}I.
+}
+
+### 证明
+
+若 \(m>n\)，由于
+\[
+S_n\subseteq S_m,
+\]
+向量
+\[
+P_mx-P_nx
+\]
+属于 \(S_m\cap S_n^\perp\)，并与 \(P_nx\) 正交。因此
+\[
+\|P_mx-P_nx\|^2
+=
+\|P_mx\|^2-
+\|P_nx\|^2.
+\]
+序列 \(\|P_nx\|\) 单调有界，故 \((P_nx)\) Cauchy，收敛到某个 \(y\in S_\infty\)。对任意 \(s\in\bigcup_nS_n\)，充分大 \(n\) 时
+\[
+\langle x-P_nx,s\rangle=0.
+\]
+取极限得到 \(x-y\perp S_\infty\)，故 \(y=P_\infty x\)。\(\square\)
+
+### 定理 28.17（有限层的范数一逃逸）
+
+若 \(R_n\ne0\)，则
+\[
+\boxed{
+\|I-P_n\|_{\mathrm{op}}=1.
+}
+更精确地，存在单位向量
+\[
+e_n^{\mathrm{esc}}\in R_n
+\]
+满足
+\[
+\boxed{
+P_ne_n^{\mathrm{esc}}=0,
+\qquad
+\operatorname{dist}(e_n^{\mathrm{esc}},S_n)=1.
+}
+
+### 证明
+
+正交投影补 \(I-P_n\) 的算子范数至多为一。取任意单位向量
+\[
+e_n^{\mathrm{esc}}\in R_n,
+\]
+则
+\[
+(I-P_n)e_n^{\mathrm{esc}}=e_n^{\mathrm{esc}},
+\]
+故算子范数至少为一。距离公式由正交性得到。\(\square\)
+
+如果递归完备且每个 \(S_n\) 都仍是真子空间，则同时成立：
+\[
+\forall x\in\mathscr H,
+\qquad
+\|(I-P_n)x\|\to0,
+\]
+但
+\[
+\forall n,
+\qquad
+\sup_{\|x\|=1}
+\|(I-P_n)x\|=1.
+\]
+所以
+\[
+\boxed{
+\sup_{\|x\|=1}
+\lim_{n\to\infty}
+\|(I-P_n)x\|
+=0,
+}
+而
+\[
+\boxed{
+\lim_{n\to\infty}
+\sup_{\|x\|=1}
+\|(I-P_n)x\|
+=1.
+}
+
+这是一条严格的有限—无限交换失败：
+
+> 对每个预先固定的对象，观察可以越来越完整；但在任意有限阶段，总能在当前余空间中选择一个新的单位对象，使该观察完全失明。
+
+因此强收敛不蕴含算子范数收敛。有限观察的逐对象完备性与全单位球上的统一完备性是两个不同命题。
+
+## 28.12 正交逃逸与 Cantor/Lawvere 对角化的区别
+
+给定有限层 \(S_n\)，正交补提供逃逸集合
+\[
+\boxed{
+\mathfrak E(S_n)
+=
+\{e\in S_n^\perp:\|e\|=1\}.
+}
+每个 \(e\in\mathfrak E(S_n)\) 都满足
+\[
+P_ne=0
+\]
+及单位距离逃逸。
+
+这与经典对角化具有共同的“逃出当前表示”形态，但不是同一定理：
+
+1. Cantor/Lawvere 对角化从一个评价表的自坐标机械地产生一个指定新对象；
+2. 正交逃逸只证明余空间中存在大量候选，通常没有规范唯一选择；
+3. Cantor 逃逸依赖无不动点扭曲；正交逃逸依赖内积与闭子空间；
+4. Cantor 新对象逐行不同；正交逃逸向量与整个已知线性包同时正交；
+5. 正交逃逸边际在单位球上恰为一，是一个几何而非 Hamming 差异。
+
+若加入选择规则
+\[
+\eta_n(S_n)\in\mathfrak E(S_n),
+\]
+则可递归定义
+\[
+S_{n+1}
+=S_n\oplus\mathbb K\eta_n(S_n).
+\]
+但定理 28.8 说明该规则不能同时保持全部酉对称性；它必然编码一个观察者、基、算子或命名偏置。
+
+所以更准确的术语是：
+\[
+\boxed{
+\text{正交逃逸递归},
+}
+而不是把它直接等同于布尔对角化。
+
+## 28.13 有界能量的 projective completion
+
+有限切片还给出一个自然的有限坐标逆系。对 \(m\ge n\)，定义
+\[
+p_{m,n}:S_m\to S_n,
+\qquad
+p_{m,n}=P_{S_n}|_{S_m}.
+\]
+则
+\[
+p_{n,n}=\mathrm{id},
+\qquad
+p_{\ell,n}=p_{m,n}p_{\ell,m}.
+\]
+定义集合逆极限
+\[
+\varprojlim S_n
+=
+\left\{
+(x_n)_n:
+ x_n\in S_n,
+\ p_{m,n}(x_m)=x_n
+\ (m\ge n)
+\right\}.
+\]
+
+普通集合逆极限允许坐标能量无限增长，因此一般比 Hilbert 完成更大。定义有界部分
+\[
+\boxed{
+\varprojlim_{\!b}S_n
+=
+\left\{
+(x_n)\in\varprojlim S_n:
+\sup_n\|x_n\|<\infty
+\right\}.
+}
+以范数
+\[
+\|(x_n)\|_b=\sup_n\|x_n\|.
+\]
+
+### 定理 28.18（有界逆极限重构累计完成）
+
+映射
+\[
+J:S_\infty\to\varprojlim_{\!b}S_n,
+\qquad
+J(x)=(P_nx)_n
+\]
+是规范线性等距同构：
+\[
+\boxed{
+S_\infty
+\cong_{\mathrm{iso}}
+\varprojlim_{\!b}S_n.
+}
+因此
+\[
+\boxed{
+\mathscr H/R_\infty
+\cong_{\mathrm{iso}}
+\varprojlim_{\!b}S_n.
+}
+
+### 证明
+
+相容性来自
+\[
+P_nP_m=P_n
+\quad(m\ge n).
+\]
+由定理 28.16，若 \(x\in S_\infty\)，则
+\[
+P_nx\to x,
+\]
+所以
+\[
+\sup_n\|P_nx\|=\|x\|.
+\]
+故 \(J\) 等距，特别地单射。
+
+现在取有界相容族 \((x_n)\)。定义正交增量
+\[
+d_0=x_0,
+\qquad
+d_{n+1}=x_{n+1}-x_n.
+\]
+由相容性
+\[
+P_nx_{n+1}=x_n,
+\]
+所以
+\[
+d_{n+1}\in S_{n+1}\cap S_n^\perp.
+\]
+不同增量两两正交，并且
+\[
+x_n=\sum_{j=0}^{n}d_j,
+\]
+\[
+\|x_n\|^2
+=
+\sum_{j=0}^{n}\|d_j\|^2.
+\]
+有界性给出
+\[
+\sum_{j\ge0}\|d_j\|^2<\infty.
+\]
+故正交级数
+\[
+x=\sum_{j\ge0}d_j
+\]
+在 \(\mathscr H\) 中收敛；其部分和属于 \(S_n\)，所以 \(x\in S_\infty\)。并且
+\[
+P_nx=x_n.
+\]
+因此 \(J\) 满射。最后由
+\[
+\mathscr H/R_\infty\cong S_\infty
+\]
+得到第二式。\(\square\)
+
+### 例 28.19（相容但无限能量的形式坐标）
+
+取
+\[
+\mathscr H=\ell^2(\mathbb N),
+\qquad
+S_n=\operatorname{span}(e_1,\ldots,e_n),
+\]
+并定义
+\[
+x_n=e_1+\cdots+e_n.
+\]
+则
+\[
+P_nx_{n+1}=x_n,
+\]
+所以 \((x_n)\) 是普通逆极限中的相容族。但
+\[
+\|x_n\|=\sqrt n\to\infty,
+\]
+不存在 \(x\in\ell^2\) 满足
+\[
+P_nx=x_n
+\]
+对全部 \(n\) 成立。
+
+因此：
+\[
+\boxed{
+\text{有限坐标相容}
+\not\Longrightarrow
+\text{存在 Hilbert 向量};
+}
+还必须加入
+\[
+\boxed{
+\text{统一有界能量／平方可和条件}.
+}
+
+这与第 26 节“普通状态逆极限只保留周期核”的结论处理不同对象，但共享一个方法论边界：仅写下形式相容条件，不能自动冒充目标范畴中的完备对象；必须检查该范畴额外要求的有界性、正则性或可实现性。
+
+## 28.14 壳层投影、Born 权重与连续—离散接口
+
+定义壳层投影
+\[
+P_0=P_{S_0},
+\qquad
+Q_n=P_{E_n}\quad(n\ge1),
+\qquad
+Q_\infty=P_{R_\infty}.
+\]
+这些投影两两正交。定理 28.12 与 28.16 给出强算子意义的分解
+\[
+\boxed{
+P_0+
+\sum_{n\ge1}Q_n
++Q_\infty
+=I.
+}
+
+### 定理 28.20（向量壳层能量分解）
+
+对任意 \(\psi\in\mathscr H\)：
+\[
+\boxed{
+\|\psi\|^2
+=
+\|P_0\psi\|^2
++
+\sum_{n\ge1}\|Q_n\psi\|^2
++
+\|Q_\infty\psi\|^2.
+}
+若 \(\|\psi\|=1\)，则
+\[
+p_0=\|P_0\psi\|^2,
+\qquad
+p_n=\|Q_n\psi\|^2,
+\qquad
+p_\infty=\|Q_\infty\psi\|^2
+\]
+构成离散概率分布：
+\[
+\boxed{
+p_0+
+\sum_{n\ge1}p_n+p_\infty=1.
+}
+
+### 证明
+
+有限阶段由 Pythagoras 定理：
+\[
+\|\psi\|^2
+=
+\|P_{S_n}\psi\|^2
++
+\|P_{R_n}\psi\|^2,
+\]
+并且
+\[
+\|P_{S_n}\psi\|^2
+=
+\|P_0\psi\|^2
++
+\sum_{j=1}^{n}\|Q_j\psi\|^2.
+\]
+令 \(n\to\infty\)，使用
+\[
+P_{S_n}\psi\to P_{S_\infty}\psi,
+\qquad
+P_{R_n}\psi\to P_{R_\infty}\psi.
+\]
+\(\square\)
+
+若 \(\rho\) 为密度算子，定义
+\[
+p_0=\operatorname{Tr}(\rho P_0),
+\qquad
+p_n=\operatorname{Tr}(\rho Q_n),
+\qquad
+p_\infty=\operatorname{Tr}(\rho Q_\infty).
+\]
+由正性与迹的单调收敛：
+\[
+\boxed{
+p_0+
+\sum_{n\ge1}p_n+p_\infty=1.
+}
+
+因此商余塔诱导一个投影值离散读出：
+\[
+\text{“初始已知层”},
+\quad
+1,2,3,\ldots,
+\quad
+\text{“最终余层”}.
+\]
+但离散标签来自投影分解；状态向量、每个壳层与壳层内振幅仍是连续的。不能从壳层概率公式推出 Hilbert 空间本体是有限离散集合。
+
+对于单个有限维 \(M\)，二元投影族
+\[
+(P_M,I-P_M)
+\]
+给出最小“已知／余部”测量。对单位向量 \(\psi\)：
+\[
+\boxed{
+\Pr(M)=\|P_M\psi\|^2,
+\qquad
+\Pr(M^\perp)=\|(I-P_M)\psi\|^2.
+}
+这正是“取反”在投影测量中的精确概率含义，而不是向量本身被布尔取反。
+
+## 28.15 裸商余塔的酉分类
+
+考虑两套有序正交塔：
+\[
+\mathscr H
+=
+S_0
+\oplus_2
+\bigoplus_{n\ge1}E_n
+\oplus R_\infty,
+\]
+\[
+\mathscr H'
+=
+S_0'
+\oplus_2
+\bigoplus_{n\ge1}E_n'
+\oplus R_\infty'.
+\]
+称它们塔等价，如果存在酉算子
+\[
+U:\mathscr H\to\mathscr H'
+\]
+满足
+\[
+U(S_0)=S_0',
+\qquad
+U(E_n)=E_n'\ \forall n,
+\qquad
+U(R_\infty)=R_\infty'.
+\]
+
+### 定理 28.21（裸塔的维数分类）
+
+两套塔等价，当且仅当
+\[
+\boxed{
+\dim S_0=\dim S_0',
+}
+\[
+\boxed{
+\dim E_n=\dim E_n'
+\quad\forall n,
+}
+\[
+\boxed{
+\dim R_\infty=\dim R_\infty'.
+}
+
+### 证明
+
+酉算子保持各块 Hilbert 维数，故必要性显然。
+
+反之，按维数相等分别选择酉同构
+\[
+U_0:S_0\to S_0',
+\]
+\[
+U_n:E_n\to E_n',
+\]
+\[
+U_\infty:R_\infty\to R_\infty'.
+\]
+其 Hilbert 正交直和
+\[
+U=U_0\oplus\bigoplus_{n\ge1}U_n\oplus U_\infty
+\]
+是所需酉同构。\(\square\)
+
+所以在没有任何额外算子、局域结构或语义标签时，商余塔只记录：
+\[
+\boxed{
+\text{每一层抽出了多少 Hilbert 维度}.
+}
+它不自动记录这些维度“代表什么”。
+
+## 28.16 加入动力学后必须保存块耦合
+
+令
+\[
+T:\mathscr H\to\mathscr H
+\]
+为有界线性算子。记正交块为
+\[
+B_0=S_0,
+\qquad
+B_n=E_n\ (n\ge1),
+\qquad
+B_\infty=R_\infty,
+\]
+投影为 \(P_i\)。完整算子由块矩阵
+\[
+\boxed{
+T_{ij}=P_iTP_j
+}
+决定。
+
+### 定理 28.22（过滤不变性与三角块结构）
+
+下列条件等价：
+
+1. 对全部有限 \(n\)，
+   \[
+   T(S_n)\subseteq S_n;
+   \]
+2. 对全部有限块指标 \(j\) 与所有严格更晚的指标 \(i>j\)，
+   \[
+   \boxed{
+   P_iTP_j=0,
+   }
+   \]
+   并且
+   \[
+   P_{R_\infty}TP_j=0.
+   \]
+
+若每个 \(S_n\) 还是 \(T\) 的 reducing subspace，即同时对 \(T\) 与 \(T^*\) 不变，则每个壳层 \(E_n\) 与 \(R_\infty\) 都 reducing，并且
+\[
+\boxed{
+P_iTP_j=0
+\quad(i\ne j).
+}
+即 \(T\) 对商余塔块对角化。
+
+### 证明
+
+若 \(T(S_j)\subseteq S_j\)，则源于 \(B_j\subseteq S_j\) 的向量不能产生任何位于更晚壳层或最终余空间的分量，得到块消失。
+
+反之，若所有晚向块消失，则每个
+\[
+S_n=B_0\oplus\cdots\oplus B_n
+\]
+在 \(T\) 下保持。
+
+若 \(S_n\) 同时对 \(T,T^*\) 不变，则 \(S_n^\perp\) 对 \(T\) 不变。壳层
+\[
+E_n=S_n\cap S_{n-1}^\perp
+\]
+是两个 reducing subspace 的交，故 reducing。不同 reducing 正交块之间的块矩阵为零。\(\square\)
+
+因此一旦研究量子动力学、谱算子或观察更新，维数序列不再足够。必须保留
+\[
+\boxed{
+P_iTP_j
+}
+这些跨层耦合。它们描述：
+
+- 已知层是否向余空间泄漏；
+- 余空间是否反向影响已知层；
+- 壳层之间是否发生跃迁；
+- 过滤是否真正形成闭合有效动力学。
+
+这与本文前面对角自然性审计一致：只保存商空间的对象类型，而不保存算子如何穿过投影，无法判断局部—整体动力学是否交换。
+
+## 28.17 Hilbert 商余塔与观察者完成的接口
+
+把有限观察定义为
+\[
+q_n:\mathscr H\to S_n,
+\qquad
+q_n=P_n.
+\]
+其不可见纤维为
+\[
+q_n^{-1}(s)=s+R_n.
+\]
+所以
+\[
+\ker q_n=R_n.
+\]
+观察者只能区分商
+\[
+\mathscr H/R_n
+\cong S_n.
+\]
+随着 \(n\) 增加，核递减：
+\[
+R_0\supseteq R_1\supseteq\cdots,
+\]
+可见空间递增：
+\[
+S_0\subseteq S_1\subseteq\cdots.
+\]
+
+这与有限集合上的 Nerode 细化具有共同图式：观察核逐步缩小，可区分类逐步增加。但两者仍有重要区别：
+
+1. 有限集合关系格在有限步后必稳定；无限维 Hilbert 投影塔一般只在极限中强收敛；
+2. 有限预测完成的商类数是整数并有 \(|Y|-|O|\) 界；Hilbert 维数可以保持无限不变；
+3. Hilbert 有限切片的最坏情形盲区恒为一，尽管逐向量误差趋零；
+4. Hilbert 完成需要平方可和／有界能量条件；集合关系完成不携带范数；
+5. 若有动力学 \(T\)，必须另外检查过滤不变性或近似半共轭。
+
+因此不能把第 19 节的有限稳定定理原样套到无限维 Hilbert 空间。正确替代是：
+\[
+\boxed{
+\text{关系有限步稳定}
+\quad\rightsquigarrow\quad
+\text{投影强极限与有界能量完成}.
+}
+
+## 28.18 最终统一式
+
+本节得到三种“余”的严格统一。
+
+### 代数商余
+
+\[
+\boxed{
+\mathscr H/S_n
+\cong R_n.
+}
+
+### 递归商余
+
+\[
+\boxed{
+R_n
+=E_{n+1}\oplus R_{n+1}.
+}
+
+### 完成商余
+
+\[
+\boxed{
+\mathscr H
+=
+S_0
+\oplus_2
+\bigoplus_{n\ge1}E_n
+\oplus R_\infty.
+}
+
+并且有限坐标完成满足
+\[
+\boxed{
+\mathscr H/R_\infty
+\cong
+\varprojlim_{\!b}S_n.
+}
+
+所以“从无限空间中不断扣除有限对象”的准确结构不是把无限数值逐次做减法，而是：
+\[
+\boxed{
+\text{选择有限闭子空间}
+\longrightarrow
+\text{正交分裂}
+\longrightarrow
+\text{记录商层}
+\longrightarrow
+\text{更新余空间}
+\longrightarrow
+\text{以平方可和条件完成全部有限坐标}.
+}
+
+无限维余空间在每个有限阶段可以与整体同型；递归的历史却保存在 associated graded、投影过滤与跨层算子块中。若把这些结构全部忘掉，只保留“余空间仍是无限维”这一同构类，整个递归便会坍缩成一个无信息固定点。
+
+## 28.19 严格边界
+
+1. \(\mathscr H-H_0\) 不是合法的 Hilbert 空间运算；必须先指定嵌入并使用正交补或商。
+2. 直接重复正交补只产生闭包后二周期，不会自动生成无限层级。
+3. 每一轮新切片都需要额外选择结构；裸 Hilbert 空间没有酉自然的首选逃逸向量。
+4. 有限维切片仍是连续向量空间；离散性来自壳层标签或投影测量结果，而不是有限维本身。
+5. \(M^\perp\cong\mathscr H\) 是非规范酉同构，不是子空间相等，也不允许删除嵌入账本。
+6. 强算子收敛不等于算子范数收敛；有限层对每个固定向量可渐近完备，同时仍有单位范数的最坏盲区。
+7. 普通有限坐标逆极限包含无限能量形式点；Hilbert 重构需要有界范数或平方可和条件。
+8. 裸塔的维数分类在加入动力学、局域性或可观测代数后不再完整；必须保存块耦合。
+9. 二元投影概率是标准 Hilbert 测量结构，不证明所有物理离散性都来自同一个商余塔。
+10. 本节不把正交逃逸等同于 Cantor/Lawvere 对角化，也不从 Hilbert 维数吸收推出 Riemann 假设、光速信息率或意识模型。
+
+## 28.20 形式化状态
+
+定理 28.1—28.22 及例 28.5、28.19 均给出纸面定义与证明，尚未成为 Lean 真源。适合拆分的数学内核包括：
+
+- 闭子空间商与正交补的等距同构；
+- 相对正交余与 orthomodular 分解；
+- 有限维抽取后的 Hilbert 维数吸收；
+- 无酉自然逃逸选择器；
+- 正交商余塔的有限阶段与极限分解；
+- 递增投影的强收敛及范数一逃逸；
+- 有界 inverse limit 与平方可和增量重构；
+- 壳层投影的向量／密度算子概率分解；
+- 裸塔的块维数分类；
+- 过滤不变性与算子块三角／块对角判据。
+
+在获得 kernel proof term、依赖闭包与冻结收据以前，本节不得标记为 `Closed`。
+
+---
+
+# 29. 追加：以 Hilbert 正交商余塔分析 Riemann 假设
+
+## 29.0 文档地位与结论边界
+
+本节把第 28 节的 Hilbert 正交商余塔用于 Riemann 假设（RH），目标不是把抽象的“无限维余空间”直接宣称为 RH 的证明，而是回答四个严格问题：
+
+1. RH 能否被写成某个完成商中的**目标余类消失**；
+2. 有限高度零点核验为什么不能推出全局 RH；
+3. Li–Cayley 指标为何能够放大高处零点极小的离线偏移；
+4. Weil 正性若要通过有限压缩传递到无限维极限，究竟还缺少什么算子论条件。
+
+本节得到两个层次不同的接口。
+
+第一种是**零点侧的诊断塔**：它把 RH 精确改写为一个 Cayley 对角算子的酉性，但该算子直接由零点定义，因此本身是结构诊断，不是非循环证明。
+
+第二种是**Nyman–Beurling–Báez-Duarte 逼近塔**：它完全由显式分数部分函数生成，并把 RH 精确改写为一个指定目标向量在最终正交余空间中的质量为零。这是本节最直接、非循环且可计算的 Hilbert 商余接口。
+
+本节没有证明最终余质量为零，没有证明 Weil 二次型全局非负，也没有构造 Hilbert–Pólya 自伴算子。所有新增结论均为纸面推导；在获得 Lean proof term、依赖闭包与冻结收据以前，不得标记为 `Closed`。
+
+---
+
+## 29.1 零点 Cayley 算子：RH 是酉性缺陷消失
+
+设 \(\mathcal Z\) 为 Riemann \(\xi\) 函数的非平凡零点多重集。对每个
+
+\[
+\rho=\sigma+i\gamma\in\mathcal Z
+\]
+
+定义 Cayley–Li 坐标
+
+\[
+\boxed{
+c_\rho
+=
+1-\frac1\rho
+=
+\frac{\rho-1}{\rho}.
+}
+\]
+
+取零点 Hilbert 空间
+
+\[
+\mathscr H_{\mathcal Z}
+=
+\ell^2(\mathcal Z),
+\]
+
+其规范正交基记为 \((e_\rho)_{\rho\in\mathcal Z}\)。在有限支撑向量上定义对角算子
+
+\[
+\boxed{
+Ce_\rho=c_\rho e_\rho.
+}
+\]
+
+由于非平凡零点位于临界带 \(0<\sigma<1\)，并且 \(|\gamma|\to\infty\) 时 \(c_\rho\to1\)，该对角算子可按标准方式闭包为有界算子。
+
+### 定理 29.1（Cayley 酉性缺陷公式）
+
+对每个非平凡零点 \(\rho=\sigma+i\gamma\)，
+
+\[
+\boxed{
+(C^*C-I)e_\rho
+=
+\delta_\rho e_\rho,
+}
+\]
+
+其中
+
+\[
+\boxed{
+\delta_\rho
+=
+|c_\rho|^2-1
+=
+\frac{1-2\sigma}{|\rho|^2}.
+}
+\]
+
+因此下列命题等价：
+
+\[
+\boxed{
+\mathrm{RH};
+}
+\]
+
+\[
+\boxed{
+|c_\rho|=1
+\quad
+\text{对全部 }\rho\in\mathcal Z;
+}
+\]
+
+\[
+\boxed{
+C^*C=I;
+}
+\]
+
+\[
+\boxed{
+C\text{ 为酉算子}.
+}
+\]
+
+#### 证明
+
+直接计算：
+
+\[
+|c_\rho|^2
+=
+\frac{|\rho-1|^2}{|\rho|^2}.
+\]
+
+而
+
+\[
+|\rho-1|^2
+=
+(\sigma-1)^2+\gamma^2,
+\qquad
+|\rho|^2
+=
+\sigma^2+\gamma^2.
+\]
+
+故
+
+\[
+|c_\rho|^2-1
+=
+\frac{(\sigma-1)^2-\sigma^2}{|\rho|^2}
+=
+\frac{1-2\sigma}{|\rho|^2}.
+\]
+
+于是
+
+\[
+|c_\rho|=1
+\iff
+1-2\sigma=0
+\iff
+\sigma=\frac12.
+\]
+
+对全部零点同时成立，恰为 RH。对角算子在每个基向量上的模均为一，当且仅当其为酉算子。 \(\square\)
+
+这一公式把临界线从“零点位置”转换成了“Cayley 演化是否保持 Hilbert 范数”：
+
+\[
+\boxed{
+\Re\rho=\frac12
+\iff
+\|Ce_\rho\|=\|e_\rho\|.
+}
+\]
+
+这与仓库 `SpectralDynamics` 中“临界线—镜像固定—半密度酉性—共振”的形式化接口一致，但这里的 \(C\) 是直接按零点对角化的诊断算子，并未构造独立于零点的 Hilbert–Pólya 动力学。
+
+### 推论 29.2（对数径向缺陷与镜像反号）
+
+定义
+
+\[
+\boxed{
+\beta_\rho
+=
+\log|c_\rho|
+=
+\frac12
+\log
+\frac{|\rho-1|^2}{|\rho|^2}.
+}
+\]
+
+则
+
+\[
+\boxed{
+\mathrm{RH}
+\iff
+\beta_\rho=0
+\quad
+\text{对全部 }\rho.
+}
+\]
+
+对函数方程镜像
+
+\[
+\rho^\sharp=1-\overline\rho
+\]
+
+有
+
+\[
+\boxed{
+|c_{\rho^\sharp}|=|c_\rho|^{-1},
+\qquad
+\beta_{\rho^\sharp}=-\beta_\rho.
+}
+\]
+
+#### 证明
+
+由
+
+\[
+c_{\rho^\sharp}
+=
+\frac{-\overline\rho}{1-\overline\rho}
+\]
+
+立即得到模长互为倒数。 \(\square\)
+
+所以一个离线四元轨道不是产生两个独立的“径向偏差”，而是产生一对相反的对数深度
+
+\[
++\beta,
+\qquad
+-\beta.
+\]
+
+这正是本文前述 Li–Cayley 四元贡献中 \(\cosh(n\beta)\) 出现的结构根源。
+
+---
+
+## 29.2 零点高度商余塔与有限核验的严格极限
+
+按非降高度枚举零点多重集：
+
+\[
+|\Im\rho_1|
+\le
+|\Im\rho_2|
+\le\cdots.
+\]
+
+定义
+
+\[
+S_N^{\mathcal Z}
+=
+\operatorname{span}
+(e_{\rho_1},\ldots,e_{\rho_N}),
+\]
+
+\[
+R_N^{\mathcal Z}
+=
+(S_N^{\mathcal Z})^\perp,
+\]
+
+并令 \(P_N^{\mathcal Z}\) 为 \(S_N^{\mathcal Z}\) 上的正交投影。由于 \(C\) 与缺陷算子
+
+\[
+D=C^*C-I
+\]
+
+均在零点基下对角化，每个 \(S_N^{\mathcal Z}\) 都是 reducing subspace，因而没有跨壳层块：
+
+\[
+P_iDP_j=0
+\qquad(i\ne j).
+\]
+
+有限高度核验“前 \(N\) 个零点在临界线”恰等价于
+
+\[
+\boxed{
+P_N^{\mathcal Z}DP_N^{\mathcal Z}=0.
+}
+\]
+
+### 命题 29.3（有限核验不能消除最终余块）
+
+对任意有限 \(N\)，
+
+\[
+P_N^{\mathcal Z}DP_N^{\mathcal Z}=0
+\]
+
+只说明已枚举壳层上的缺陷为零；它不给出
+
+\[
+P_{R_N^{\mathcal Z}}D
+P_{R_N^{\mathcal Z}}=0.
+\]
+
+因此任何有限数量的临界线零点核验都不能单独推出 RH。
+
+#### 证明
+
+取任意 \(M>N\)，在 \(R_N^{\mathcal Z}\) 内把某个基向量 \(e_{\rho_M}\) 的对角值改为非零，不影响 \(S_N^{\mathcal Z}\) 上的压缩。抽象地说，有限压缩完全遗忘余空间中的对角数据。 \(\square\)
+
+这里第 28 节的“最坏盲区恒为一”得到一个精确实例：
+
+\[
+\|I-P_N^{\mathcal Z}\|_{\mathrm{op}}=1
+\]
+
+对每个有限 \(N\) 成立。即使
+
+\[
+P_N^{\mathcal Z}x\to x
+\]
+
+对每个固定 \(x\) 强收敛，也不存在任何有限阶段在整个单位球上消除余空间。
+
+但零点缺陷还有一个更微妙的性质。由
+
+\[
+|\delta_\rho|
+=
+\frac{|1-2\sigma|}{|\rho|^2}
+\le
+\frac1{|\rho|^2}
+\]
+
+可见，高处离线零点在原始 Cayley 酉性中只产生很小的缺陷。若按高度枚举，则 \(D\) 的对角值趋于零，故 \(D\) 是紧对角算子。
+
+因此：
+
+\[
+\boxed{
+\text{高处离线零点可以具有任意小的单步酉性缺陷，}
+}
+\]
+
+而
+
+\[
+\boxed{
+\text{“缺陷很小”与“缺陷严格为零”不是同一命题。}
+}
+\]
+
+这解释了为什么提高零点核验高度虽然强烈增加证据，却不能通过连续极限自动把 RH 的等式条件证明出来。
+
+---
+
+## 29.3 Li–Cayley 放大：为什么需要 \((n,T)\) 联合控制
+
+写
+
+\[
+c_\rho=e^{\beta_\rho+i\theta_\rho}.
+\]
+
+对函数方程与共轭生成的完整四元轨道，本文既有约定下的第 \(n\) 个 Li–Cayley 轨道贡献为
+
+\[
+\boxed{
+L_n(\rho)
+=
+4-4\cosh(n\beta_\rho)\cos(n\theta_\rho).
+}
+\]
+
+在临界线上，
+
+\[
+\beta_\rho=0,
+\]
+
+故单轨道贡献化为
+
+\[
+\boxed{
+L_n(\rho)
+=
+4-4\cos(n\theta_\rho)
+=
+8\sin^2\frac{n\theta_\rho}{2}
+\ge0.
+}
+\]
+
+离线时 \(\beta_\rho\ne0\)，径向因子变为
+
+\[
+\cosh(n\beta_\rho),
+\]
+
+其大小随 \(n|\beta_\rho|\) 增长。
+
+当 \(|\gamma|\) 很大时，
+
+\[
+\beta_\rho
+=
+\frac12
+\log
+\left(
+1+\frac{1-2\sigma}{\sigma^2+\gamma^2}
+\right),
+\]
+
+所以在小偏移区间有尺度关系
+
+\[
+\boxed{
+|\beta_\rho|
+\asymp
+\frac{|1-2\sigma|}{2\gamma^2}.
+}
+\]
+
+因此让 \(n|\beta_\rho|\) 达到常数量级所需的 Li 指标大致为
+
+\[
+\boxed{
+n
+\asymp
+\frac{2\gamma^2}{|1-2\sigma|}.
+}
+\]
+
+这不是“第 \(n\) 个 Li 系数必在该位置变负”的断言，因为相位 \(\theta_\rho\)、其他零点轨道与正则化尾项仍会共同作用；它给出的是一个严格的**径向放大尺度**：
+
+\[
+\boxed{
+\text{零点越高、离线越浅，所需的 Li 频率通常越大。}
+}
+\]
+
+所以完整证明不能只做以下任一种单参数极限：
+
+\[
+T\to\infty
+\quad
+\text{而固定 }n,
+\]
+
+或
+
+\[
+n\to\infty
+\quad
+\text{而固定零点截断 }T.
+\]
+
+真正需要控制的是对称正则化后的联合余项
+
+\[
+\mathcal R_{n,T}
+=
+\sum_{|\Im\rho|>T}^{\mathrm{sym}}
+\left[
+1-
+\left(1-\frac1\rho\right)^n
+\right],
+\]
+
+并在 \(n\) 可随 \(T\) 增长的区域内给出统一估计。至少需要覆盖能够分辨
+
+\[
+|\beta_\rho|
+\sim T^{-2}
+\]
+
+的尺度，因此不能把 \(n\) 与 \(T\) 完全解耦。
+
+这精确说明了本文摘要中“从局部离线轨道暴露到全局 Li 系数负性仍缺 \((n,T)\) 联合截断估计”的含义。仓库 `LiCausalTrichotomy` 已形式化 Li 测试核的整数指标、因果实现与 Cayley monodromy 三分，但它没有证明全部 Li 系数非负；`WeilIdentity` 已形式化显式公式，但没有附加 Weil 正性或 RH 结论。
+
+---
+
+## 29.4 非循环主接口：Nyman–Beurling 目标余质量
+
+定义分数部分函数
+
+\[
+\varrho(t)=t-\lfloor t\rfloor.
+\]
+
+取
+
+\[
+\mathscr H_{\mathrm{NB}}
+=
+L^2(0,\infty),
+\]
+
+目标向量
+
+\[
+\boxed{
+\chi=\mathbf1_{(0,1)},
+\qquad
+\|\chi\|_2^2=1,
+}
+\]
+
+以及显式算术生成元
+
+\[
+\boxed{
+f_a(x)
+=
+\varrho\left(\frac1{ax}\right),
+\qquad
+a\in\mathbb N_{\ge1}.
+}
+\]
+
+定义嵌套有限维子空间
+
+\[
+S_N
+=
+\operatorname{span}(f_1,\ldots,f_N),
+\]
+
+\[
+R_N=S_N^\perp,
+\]
+
+\[
+S_\infty
+=
+\overline{\bigcup_{N\ge1}S_N},
+\]
+
+\[
+R_\infty
+=
+S_\infty^\perp
+=
+\bigcap_{N\ge1}R_N.
+\]
+
+Báez-Duarte 的强 Nyman–Beurling 判据给出
+
+\[
+\boxed{
+\mathrm{RH}
+\iff
+\chi\in S_\infty.
+}
+\]
+
+第 28 节的商—正交余同构立即把它变成一个精确的商余命题。
+
+### 定理 29.4（Nyman–Beurling 目标余类判据）
+
+下列命题等价：
+
+\[
+\boxed{
+\mathrm{RH};
+}
+\]
+
+\[
+\boxed{
+\chi\in S_\infty;
+}
+\]
+
+\[
+\boxed{
+[\chi]=0
+\quad
+\text{于 }
+\mathscr H_{\mathrm{NB}}/S_\infty;
+}
+\]
+
+\[
+\boxed{
+P_{R_\infty}\chi=0;
+}
+\]
+
+\[
+\boxed{
+\operatorname{dist}(\chi,S_N)\longrightarrow0.
+}
+\]
+
+#### 证明
+
+第一与第二项是强 Nyman–Beurling–Báez-Duarte 判据。第二与第三项由商空间零类定义等价。由第 28 节的规范等距同构
+
+\[
+\mathscr H_{\mathrm{NB}}/S_\infty
+\cong
+R_\infty,
+\]
+
+商类 \([\chi]\) 对应唯一正交余代表
+
+\[
+P_{R_\infty}\chi.
+\]
+
+故第三与第四项等价。最后，对递增闭子空间 \(S_N\)，投影 \(P_{S_N}\) 强收敛到 \(P_{S_\infty}\)，所以
+
+\[
+\operatorname{dist}(\chi,S_N)
+=
+\|(I-P_{S_N})\chi\|
+\longrightarrow
+\|(I-P_{S_\infty})\chi\|
+=
+\|P_{R_\infty}\chi\|.
+\]
+
+故第四与第五项等价。 \(\square\)
+
+这里必须强调：
+
+\[
+\boxed{
+\mathrm{RH}
+\text{ 不要求 }
+R_\infty=\{0\}.
+}
+\]
+
+它只要求指定目标 \(\chi\) 没有最终余分量：
+
+\[
+\boxed{
+P_{R_\infty}\chi=0.
+}
+\]
+
+因此不能把 RH 错写成“全部 Nyman–Beurling 生成元在整个 \(L^2\) 中稠密”。正确命题是目标特定的：
+
+\[
+\boxed{
+\chi
+\text{ 属于生成闭包}.
+}
+\]
+
+这一区分是商余塔用于 RH 时最重要的类型边界。
+
+---
+
+## 29.5 正交壳层能量：RH 是目标质量被有限算术层完全吸收
+
+令
+
+\[
+E_1=S_1,
+\]
+
+\[
+E_{N+1}
+=
+S_{N+1}\cap S_N^\perp
+\qquad(N\ge1),
+\]
+
+并令
+
+\[
+Q_N=P_{E_N},
+\qquad
+Q_\infty=P_{R_\infty}.
+\]
+
+则
+
+\[
+S_\infty
+=
+\bigoplus_{N\ge1}^{\ell^2}E_N,
+\]
+
+以及
+
+\[
+\mathscr H_{\mathrm{NB}}
+=
+\left(
+\bigoplus_{N\ge1}^{\ell^2}E_N
+\right)
+\oplus
+R_\infty.
+\]
+
+定义有限阶段剩余误差
+
+\[
+\boxed{
+d_N
+=
+\operatorname{dist}(\chi,S_N)
+=
+\|P_{R_N}\chi\|.
+}
+\]
+
+### 定理 29.5（壳层递推与最终余质量）
+
+对全部 \(N\ge1\)，
+
+\[
+\boxed{
+d_N^2
+=
+d_{N+1}^2
++
+\|Q_{N+1}\chi\|^2.
+}
+\]
+
+并且
+
+\[
+\boxed{
+d_N^2
+=
+\sum_{k>N}\|Q_k\chi\|^2
++
+\|Q_\infty\chi\|^2.
+}
+\]
+
+特别地，
+
+\[
+\boxed{
+1
+=
+\sum_{k\ge1}\|Q_k\chi\|^2
++
+\|Q_\infty\chi\|^2.
+}
+\]
+
+因此
+
+\[
+\boxed{
+\mathrm{RH}
+\iff
+\|Q_\infty\chi\|^2=0
+\iff
+\sum_{k\ge1}\|Q_k\chi\|^2=1.
+}
+\]
+
+#### 证明
+
+由相对正交余分解，
+
+\[
+R_N
+=
+E_{N+1}\oplus R_{N+1}.
+\]
+
+故
+
+\[
+P_{R_N}\chi
+=
+Q_{N+1}\chi
++
+P_{R_{N+1}}\chi
+\]
+
+是正交和。Pythagoras 给出第一式。迭代至 \(M>N\)：
+
+\[
+d_N^2
+=
+\sum_{k=N+1}^{M}\|Q_k\chi\|^2
++
+d_M^2.
+\]
+
+令 \(M\to\infty\)。递减闭子空间投影满足
+
+\[
+P_{R_M}\chi\to P_{R_\infty}\chi,
+\]
+
+故得到第二式。取初始零空间 \(S_0=\{0\}\)，有 \(d_0^2=\|\chi\|^2=1\)，得到总能量式。最后应用定理 29.4。 \(\square\)
+
+这给出 RH 的概率式读法。对单位目标态 \(\chi\)，壳层权重
+
+\[
+p_k=\|Q_k\chi\|^2,
+\qquad
+p_\infty=\|Q_\infty\chi\|^2
+\]
+
+组成概率分布，而
+
+\[
+\boxed{
+\mathrm{RH}
+\iff
+p_\infty=0.
+}
+\]
+
+它不是“所有未知方向消失”，而是：
+
+\[
+\boxed{
+\text{目标 }\chi\text{ 的全部 Hilbert 质量最终进入有限算术壳层。}
+}
+\]
+
+---
+
+## 29.6 Gram–Schur 证书：每一轮到底吸收了多少目标质量
+
+令
+
+\[
+V_N:\mathbb C^N\to\mathscr H_{\mathrm{NB}},
+\qquad
+V_Nc=\sum_{a=1}^{N}c_af_a.
+\]
+
+定义 Gram 矩阵与目标相关向量
+
+\[
+\boxed{
+G_N
+=
+V_N^*V_N
+=
+\bigl(\langle f_a,f_b\rangle\bigr)_{a,b\le N},
+}
+\]
+
+\[
+\boxed{
+b_N
+=
+V_N^*\chi
+=
+\bigl(\langle f_a,\chi\rangle\bigr)_{a\le N}.
+}
+\]
+
+记 \(G_N^\dagger\) 为 Moore–Penrose 逆。
+
+### 定理 29.6（有限阶段最优距离公式）
+
+有
+
+\[
+\boxed{
+P_{S_N}
+=
+V_NG_N^\dagger V_N^*,
+}
+\]
+
+以及
+
+\[
+\boxed{
+d_N^2
+=
+1-b_N^*G_N^\dagger b_N.
+}
+\]
+
+若 \(G_N\) 可逆，则
+
+\[
+\boxed{
+d_N^2
+=
+1-b_N^*G_N^{-1}b_N.
+}
+\]
+
+#### 证明
+
+有限维闭像 \(\operatorname{range}(V_N)=S_N\) 上的正交投影为
+
+\[
+V_N(V_N^*V_N)^\dagger V_N^*.
+\]
+
+因此
+
+\[
+\|P_{S_N}\chi\|^2
+=
+\langle
+V_NG_N^\dagger V_N^*\chi,
+\chi
+\rangle
+=
+b_N^*G_N^\dagger b_N.
+\]
+
+再由
+
+\[
+d_N^2
+=
+\|\chi\|^2-\|P_{S_N}\chi\|^2
+\]
+
+及 \(\|\chi\|^2=1\) 得证。 \(\square\)
+
+目标向量相关项还有显式公式。
+
+### 命题 29.7（目标相关向量的闭式）
+
+对每个整数 \(a\ge1\)，
+
+\[
+\boxed{
+\langle\chi,f_a\rangle
+=
+\frac{\log a+1-\gamma_{\mathrm E}}{a},
+}
+\]
+
+其中 \(\gamma_{\mathrm E}\) 为 Euler 常数。
+
+#### 证明
+
+有
+
+\[
+\langle\chi,f_a\rangle
+=
+\int_0^1
+\varrho\left(\frac1{ax}\right)\,dx.
+\]
+
+令 \(t=1/(ax)\)，得
+
+\[
+\langle\chi,f_a\rangle
+=
+\frac1a
+\int_{1/a}^{\infty}
+\frac{\varrho(t)}{t^2}\,dt.
+\]
+
+在区间 \([1/a,1]\) 上 \(\varrho(t)=t\)，故该部分为 \(\log a\)。另一方面，
+
+\[
+\int_1^\infty\frac{\varrho(t)}{t^2}\,dt
+=
+\sum_{n\ge1}
+\int_n^{n+1}
+\frac{t-n}{t^2}\,dt
+=
+1-\gamma_{\mathrm E}.
+\]
+
+合并即得。 \(\square\)
+
+现在定义新生成元相对于既有空间的创新分量：
+
+\[
+r_{N+1}
+=
+(I-P_{S_N})f_{N+1}.
+\]
+
+若 \(r_{N+1}\ne0\)，则
+
+\[
+E_{N+1}
+=
+\operatorname{span}(r_{N+1}).
+\]
+
+### 定理 29.8（单步 Schur 增益）
+
+若 \(r_{N+1}\ne0\)，则
+
+\[
+\boxed{
+d_N^2-d_{N+1}^2
+=
+\frac{
+|\langle\chi,r_{N+1}\rangle|^2
+}{
+\|r_{N+1}\|^2
+}.
+}
+\]
+
+若 \(r_{N+1}=0\)，则 \(d_{N+1}=d_N\)。
+
+#### 证明
+
+当 \(r_{N+1}\ne0\) 时，
+
+\[
+e_{N+1}
+=
+\frac{r_{N+1}}{\|r_{N+1}\|}
+\]
+
+是 \(E_{N+1}\) 的单位基，所以
+
+\[
+\|Q_{N+1}\chi\|^2
+=
+|\langle\chi,e_{N+1}\rangle|^2
+=
+\frac{
+|\langle\chi,r_{N+1}\rangle|^2
+}{
+\|r_{N+1}\|^2
+}.
+\]
+
+应用定理 29.5。 \(\square\)
+
+因此每个整数 \(N+1\) 对 RH 逼近所提供的真实新信息，不由原函数 \(f_{N+1}\) 的范数决定，而由它在此前全部生成元之外的正交创新
+
+\[
+r_{N+1}
+\]
+
+以及该创新与目标 \(\chi\) 的耦合决定。
+
+若 \(G_N\) 可逆，还可写成 Gram 行列式证书：
+
+\[
+\boxed{
+d_N^2
+=
+\frac{
+\det
+\begin{pmatrix}
+G_N & b_N\\
+b_N^* & 1
+\end{pmatrix}
+}{
+\det G_N
+}.
+}
+\]
+
+这把 RH 转化为一列有限维 Gram–Schur 余量的极限消失，但极限消失本身仍需要独立的全局估计。
+
+---
+
+## 29.7 Mellin–Plancherel 图像：余质量就是 \(1-\zeta A_N\) 的加权误差
+
+对适当的 \(f\in L^2(0,\infty)\)，取 Mellin 变换
+
+\[
+\mathcal Mf(s)
+=
+\int_0^\infty f(x)x^{s-1}\,dx.
+\]
+
+在临界线
+
+\[
+s=\frac12+it
+\]
+
+上，Mellin–Plancherel 把 \(L^2(0,\infty)\) 等距映到 \(L^2(\mathbb R,dt/2\pi)\)。
+
+目标向量满足
+
+\[
+\boxed{
+\mathcal M\chi(s)=\frac1s.
+}
+\]
+
+而对 \(0<\Re s<1\)，
+
+\[
+\int_0^\infty
+\varrho(t)t^{-s-1}\,dt
+=
+-\frac{\zeta(s)}s.
+\]
+
+由缩放得到
+
+\[
+\boxed{
+\mathcal Mf_a(s)
+=
+-\frac{\zeta(s)}{s\,a^s}.
+}
+\]
+
+令
+
+\[
+A_N(s)
+=
+\sum_{a=1}^{N}c_aa^{-s}.
+\]
+
+则某个有限线性组合的 Mellin 像为
+
+\[
+-\frac{\zeta(s)}sA_N(s).
+\]
+
+改变系数整体符号后，最优距离可写成
+
+\[
+\boxed{
+d_N^2
+=
+\inf_{A_N}
+\frac1{2\pi}
+\int_{-\infty}^{\infty}
+\left|
+1-\zeta\left(\frac12+it\right)
+A_N\left(\frac12+it\right)
+\right|^2
+\frac{dt}{\frac14+t^2},
+}
+\]
+
+其中下确界遍历长度不超过 \(N\) 的 Dirichlet 多项式
+
+\[
+A_N(s)=\sum_{a\le N}c_aa^{-s}.
+\]
+
+因此 Nyman–Beurling 最终余质量可以写成
+
+\[
+\boxed{
+\|Q_\infty\chi\|^2
+=
+\lim_{N\to\infty}
+\inf_{A_N}
+\frac1{2\pi}
+\int_{-\infty}^{\infty}
+|1-\zeta(s)A_N(s)|^2
+\frac{dt}{|s|^2},
+\quad
+s=\frac12+it.
+}
+\]
+
+于是
+
+\[
+\boxed{
+\mathrm{RH}
+\iff
+\zeta(s)
+\text{ 在该加权临界线空间中拥有 Dirichlet 多项式近逆}.
+}
+\]
+
+这不是逐点逼近 \(1/\zeta(s)\)。临界线零点处逐点逆不存在，而 \(L^2\) 判据只要求加权均方误差趋零。真正困难的是证明存在一列显式 Dirichlet 多项式，使这一全局均方误差具有趋零上界。
+
+该公式还把 Gram 矩阵写成零点与素数共同作用的相关矩阵：
+
+\[
+\boxed{
+(G_N)_{ab}
+=
+\frac1{2\pi}
+\int_{-\infty}^{\infty}
+\frac{
+\left|
+\zeta\left(\frac12+it\right)
+\right|^2
+}{
+\frac14+t^2
+}
+a^{-\frac12-it}
+b^{-\frac12+it}
+\,dt.
+}
+\]
+
+所以第 29.6 节的正交创新并非纯粹数值线性代数对象；它编码了临界线上的 \(|\zeta|^2\) 加权频率相关。
+
+---
+
+## 29.8 为什么有限数值逼近仍然不是证明
+
+若某个有限 \(N\) 给出
+
+\[
+d_N\ll1,
+\]
+
+它只提供上界
+
+\[
+\|Q_\infty\chi\|
+\le d_N,
+\]
+
+不能给出严格等式
+
+\[
+\|Q_\infty\chi\|=0.
+\]
+
+即使计算得到一条长序列
+
+\[
+d_{N_1}>d_{N_2}>\cdots
+\]
+
+并呈现明显趋零趋势，仍可能存在一个不可见的正极限
+
+\[
+d_\infty
+=
+\|Q_\infty\chi\|
+>0.
+\]
+
+另一方面，第 28 节的算子范数障碍
+
+\[
+\|I-P_{S_N}\|_{\mathrm{op}}=1
+\]
+
+并不直接否定 Nyman–Beurling 路线，因为 RH 只要求逼近一个固定目标 \(\chi\)，不要求 \(P_{S_N}\) 在整个单位球上一致逼近恒等算子。
+
+正确边界是：
+
+\[
+\boxed{
+\text{全空间一致逼近不可能，}
+}
+\]
+
+但
+
+\[
+\boxed{
+\text{单一目标的强逼近仍可能成立。}
+}
+\]
+
+要把数值证据升级为证明，必须构造一列可验证系数 \(c_{a,N}\)，并给出完全无条件的显式误差界
+
+\[
+\boxed{
+\left\|
+\chi-\sum_{a\le N}c_{a,N}f_a
+\right\|_2^2
+\le
+\varepsilon_N,
+\qquad
+\varepsilon_N\longrightarrow0.
+}
+\]
+
+或者在 Mellin 图像中证明
+
+\[
+\boxed{
+\frac1{2\pi}
+\int_{\mathbb R}
+|1-\zeta(\tfrac12+it)A_N(\tfrac12+it)|^2
+\frac{dt}{\frac14+t^2}
+\le
+\varepsilon_N
+\longrightarrow0.
+}
+\]
+
+任何真正建立该估计的无条件论证都会通过强 Nyman–Beurling 判据证明 RH；因此不能把目标误差趋零作为未经证明的“正则性假设”重新命名。
+
+---
+
+## 29.9 Weil 正性：有限压缩向无限极限传递所需的 form-core 条件
+
+设 \(\mathcal D\) 为 Weil 测试函数的稠密定义域，\(q_W\) 为对应 Hermitian 二次型。经典 Weil 判据把 RH 与适当测试类上的全局正性联系：
+
+\[
+\boxed{
+\mathrm{RH}
+\iff
+q_W(f)\ge0
+\quad
+\text{对全部允许测试 }f.
+}
+\]
+
+仓库 `WeilIdentity` 已形式化零点和、素数项、极点项与 Archimedean 项之间的显式公式，但明确没有附加正性或 RH 断言。
+
+若要把第 28 节的正交塔用于 Weil 正性，必须先在**不假设 RH** 的情况下给出一个 Hilbert 空间 \(\mathscr H_W\) 与可闭二次型 \(q_W\)，再选择递增有限维子空间
+
+\[
+S_1^W\subseteq S_2^W\subseteq\cdots\subseteq\mathcal D.
+\]
+
+只证明每个有限压缩非负：
+
+\[
+q_W(f)\ge0
+\qquad
+(f\in S_N^W)
+\]
+
+还不够。需要证明
+
+\[
+\bigcup_NS_N^W
+\]
+
+在二次型范数中是 form core。
+
+### 定理 29.9（form-core 正性传递）
+
+设 \(q\) 是稠密定义、闭合且下半有界的 Hermitian 二次型。若
+
+\[
+\mathcal C=\bigcup_NS_N
+\]
+
+是 \(q\) 的 form core，并且
+
+\[
+q(f)\ge0
+\qquad
+(f\in\mathcal C),
+\]
+
+则
+
+\[
+\boxed{
+q(f)\ge0
+\qquad
+(f\in\operatorname{Dom}q).
+}
+\]
+
+#### 证明
+
+对任意 \(f\in\operatorname{Dom}q\)，由 form-core 性存在 \(f_n\in\mathcal C\)，使 \(f_n\to f\) 于二次型范数。闭合二次型在该拓扑下连续，故
+
+\[
+q(f_n)\to q(f).
+\]
+
+每个 \(q(f_n)\ge0\)，于是 \(q(f)\ge0\)。 \(\square\)
+
+这揭示了有限 Weil 矩阵路线的准确缺口：
+
+\[
+\boxed{
+\text{有限压缩正性}
++
+\text{Hilbert 范数稠密}
+\quad
+\text{仍不足};
+}
+\]
+
+必须有
+
+\[
+\boxed{
+\text{二次型范数稠密／form-core 完备性}.
+}
+\]
+
+此外，若把相关算子按壳层写成
+
+\[
+A_{N+1}
+=
+\begin{pmatrix}
+A_N&C_N\\
+C_N^*&D_N
+\end{pmatrix},
+\]
+
+仅有
+
+\[
+A_N\ge0,
+\qquad
+D_N\ge0
+\]
+
+不能推出整个块矩阵非负。最简单的反例是
+
+\[
+\begin{pmatrix}
+1&2\\
+2&1
+\end{pmatrix},
+\]
+
+其两个对角块均正，但存在特征值 \(-1\)。
+
+在 \(A_N\) 可逆的理想情形，正确的新增壳层条件是 Schur 余量
+
+\[
+\boxed{
+D_N-C_N^*A_N^{-1}C_N\ge0.
+}
+\]
+
+半正定情形需把逆替换为 Moore–Penrose 逆，并加入相应的像空间兼容条件。
+
+这正是第 28 节“加入动力学后必须保留全部 \(P_iTP_j\) 块”的 RH 版本：只检查每个壳层自身的正性，会遗漏跨壳层耦合制造的负方向。
+
+---
+
+## 29.10 三条路线的逻辑地位
+
+### 零点 Cayley 塔
+
+它给出最直接的等价：
+
+\[
+\mathrm{RH}
+\iff
+C^*C-I=0.
+\]
+
+优点是零点离线深度、镜像反号、Li 放大与有限高度盲区全部透明。缺点是 \(C\) 直接由零点构造，因此只是诊断坐标，不是独立证明机制。
+
+### Nyman–Beurling 目标余塔
+
+它给出：
+
+\[
+\mathrm{RH}
+\iff
+P_{R_\infty}\chi=0.
+\]
+
+生成元 \(f_a\) 完全显式，有限阶段可由 Gram–Schur 算法计算，逻辑上非循环。真正缺口是无条件证明目标余质量趋零。
+
+### Weil 压缩塔
+
+它试图把 RH 变成一个全局正算子或正二次型命题。该路线最接近谱解释，但必须解决：
+
+\[
+\text{无条件 Hilbert 实现},
+\]
+
+\[
+\text{二次型可闭性},
+\]
+
+\[
+\text{form-core 完备性},
+\]
+
+\[
+\text{跨壳层耦合},
+\]
+
+\[
+\text{最终余块正性}.
+\]
+
+不能先用 Weil 正性定义内积，再以所得 Hilbert 范数证明 Weil 正性；那会把 RH 作为正定性的前提隐藏进空间构造中。
+
+---
+
+## 29.11 本框架识别出的真正“证明心脏”
+
+第 28 节本身提供的是完备的记账语言：
+
+\[
+S_N,
+\qquad
+E_{N+1},
+\qquad
+R_N,
+\qquad
+R_\infty,
+\qquad
+P_iTP_j.
+\]
+
+它不会凭空生成 RH 所需的解析估计。用于 RH 后，缺失心脏可以被压缩成以下三种等价风格之一。
+
+### 目标余质量消失
+
+证明
+
+\[
+\boxed{
+\|P_{R_\infty}\chi\|=0
+}
+\]
+
+于 Nyman–Beurling 塔。
+
+### 显式 Dirichlet 近逆
+
+构造 \(A_N\) 并证明
+
+\[
+\boxed{
+\int_{\mathbb R}
+|1-\zeta(\tfrac12+it)A_N(\tfrac12+it)|^2
+\frac{dt}{\frac14+t^2}
+\longrightarrow0.
+}
+\]
+
+### Weil form-core 正性
+
+构造无条件闭合 Weil 型二次型 \(q_W\)，证明一列有限压缩形成 form core，并控制每个 Schur 余量及最终余块，从而得到
+
+\[
+\boxed{
+q_W\ge0.
+}
+\]
+
+三者都不是由“无限维余空间与原空间同型”推出。相反，第 28 节告诉我们为什么这种同型没有证明力：若忘记嵌入、壳层、目标向量与算子块，只剩
+
+\[
+R_N\cong\mathscr H,
+\]
+
+整个递归会坍缩成无信息固定点。
+
+真正可能产生证明进展的对象是：
+
+\[
+\boxed{
+\text{目标在每个正交创新层上的精确耦合}
+}
+\]
+
+以及
+
+\[
+\boxed{
+\text{这些耦合的可求和全局尾界}.
+}
+\]
+
+---
+
+## 29.12 可形式化拆分
+
+建议把本节拆成以下 Lean 模块，按依赖顺序推进。
+
+1. `CayleyZeroDefect`
+   \[
+   |(\rho-1)/\rho|^2-1
+   =
+   (1-2\Re\rho)/|\rho|^2.
+   \]
+
+2. `DiagonalUnitaryCriticalLine`
+   \[
+   C^*C=I
+   \iff
+   \forall\rho,\ \Re\rho=\frac12.
+   \]
+
+3. `NestedProjectionResidual`
+   \[
+   R_N=E_{N+1}\oplus R_{N+1},
+   \qquad
+   d_N^2=d_{N+1}^2+\|Q_{N+1}\chi\|^2.
+   \]
+
+4. `TargetQuotientVanishing`
+   \[
+   [\chi]=0\text{ in }\mathscr H/S_\infty
+   \iff
+   P_{S_\infty^\perp}\chi=0.
+   \]
+
+5. `FiniteGramProjection`
+   \[
+   d_N^2
+   =
+   \|\chi\|^2-b_N^*G_N^\dagger b_N.
+   \]
+
+6. `OneStepGramSchurGain`
+   \[
+   d_N^2-d_{N+1}^2
+   =
+   |\langle\chi,r_{N+1}\rangle|^2/\|r_{N+1}\|^2.
+   \]
+
+7. `ClosedFormCorePositivity`
+   有限 core 上的非负性向闭合二次型定义域传递。
+
+8. `PositiveDiagonalBlocksInsufficient`
+   形式化二维块矩阵反例。
+
+Nyman–Beurling–Báez-Duarte 等价本身依赖经典解析数论结果；在仓库完成该桥以前，应作为明确命名、来源可审计的外部定理接口，而不是把它悄然作为无名公理嵌入。
+
+---
+
+## 29.13 最终结论
+
+Hilbert 正交商余塔对 RH 的最强严格结论不是“无限递归迫使零点上临界线”，而是以下目标化等价：
+
+\[
+\boxed{
+\mathrm{RH}
+\iff
+[\chi]=0
+\text{ 于 }
+L^2(0,\infty)/
+\overline{\operatorname{span}}
+\left\{
+\varrho\left(\frac1{ax}\right):a\in\mathbb N
+\right\}.
+}
+\]
+
+通过商—正交余同构，它等价于
+
+\[
+\boxed{
+\mathrm{RH}
+\iff
+P_{R_\infty}\chi=0.
+}
+\]
+
+通过壳层能量分解，它又等价于
+
+\[
+\boxed{
+\mathrm{RH}
+\iff
+\sum_{k\ge1}\|Q_k\chi\|^2=1.
+}
+\]
+
+通过 Mellin–Plancherel，它等价于
+
+\[
+\boxed{
+\inf_{A_N}
+\int_{\mathbb R}
+|1-\zeta(\tfrac12+it)A_N(\tfrac12+it)|^2
+\frac{dt}{\frac14+t^2}
+\longrightarrow0.
+}
+\]
+
+零点侧则有诊断等价
+
+\[
+\boxed{
+\mathrm{RH}
+\iff
+C^*C=I,
+\qquad
+Ce_\rho=\left(1-\frac1\rho\right)e_\rho.
+}
+\]
+
+这四个公式共同揭示同一结构：
+
+\[
+\boxed{
+\text{RH 不是“余空间不存在”，而是“指定的离线／逼近缺陷在完成后没有剩余质量”。}
+}
+\]
+
+第 28 节已经提供了精确的商余账本；剩余的数学核心是建立一个无条件、可求和、能穿过无限完成的全局尾估计。缺少该估计时，有限零点核验、有限 Gram 矩阵正性、局部 Li 轨道暴露与有限 Weil 压缩都只能构成证据或等价重述，不能单独完成 RH 的证明。
+
+## 29.14 参考接口
+
+- L. Báez-Duarte, *A strengthening of the Nyman–Beurling criterion for the Riemann Hypothesis*, 2002.
+- X.-J. Li, *The positivity of a sequence of numbers and the Riemann hypothesis*, 1997.
+- A. Connes and C. Consani, *Weil positivity and Trace formula, the archimedean place*, 2020.
+- M. Suzuki, *Li coefficients as norms of functions in a model space*, 2023.
+- M. Suzuki, *Weil's quadratic form via the screw function*, 2026.
+- 仓库接口：`D5/S3/Weil/WeilIdentity.lean`、`D5/S3/Weil/SpectralDynamics.lean`、`D5/S3/Analytic/LiCausalTrichotomy.lean`。
+
+## 29.15 严格非主张与形式化状态
+
+1. 本节没有证明 \(P_{R_\infty}\chi=0\)。
+2. 本节没有从有限 \(d_N\) 数值趋降推出其极限为零。
+3. 本节没有从有限高度零点全部位于临界线推出不存在更高离线零点。
+4. 本节没有把由零点定义的 Cayley 对角算子冒充为独立构造的 Hilbert–Pólya 算子。
+5. 本节没有证明局部离线四元贡献必在某个预先给定的 \(n\) 上使全局 Li 系数为负。
+6. 本节没有证明有限 Weil 压缩自动形成 form core。
+7. 本节没有以 Weil 正性先定义 Hilbert 内积再循环证明 Weil 正性。
+8. 本节全部新增定理均为纸面结论；未经 kernel verification 不得标记为 `Closed`。
+---
+
+# 30. 追加：界面相对性、对角闭合与量子上下文完成
+
+## 30.0 核心命题与严格边界
+
+本节把此前关于
+
+\[
+\infty,\qquad
+\text{对角化},\qquad
+\text{商余},\qquad
+\text{Hilbert 投影},\qquad
+\text{量子概率}
+\]
+
+的讨论收紧为一个共同数学问题：
+
+\[
+\boxed{
+\text{整体结构如何相对于一个有限界面被识别、遗忘、演化、逃逸与完成？}
+}
+\]
+
+这里的“相对性”不是主观任意性，而是以下数据的依赖性：
+
+1. 哪个映射被选作观察界面；
+2. 哪些对象被该界面识别为同一对象；
+3. 哪些差异进入核、纤维或正交余空间；
+4. 整体操作能否下降为界面上的有效操作；
+5. 不同界面之间能否自然转换；
+6. 所有有限界面的相容数据是否来自一个可实现的整体对象；
+7. 一个状态在不可见余空间中是否仍保留非零质量。
+
+本节得到的统一解释是：
+
+\[
+\boxed{
+\begin{aligned}
+\text{商}
+&=\text{相对于界面保留的同一性},\\
+\text{余}
+&=\text{相对于界面被删除的差异},\\
+\text{对角化}
+&=\text{相对描述无法封闭自身的证书},\\
+\infty
+&=\text{不存在有限终止界面，但相容界面族可以完成},\\
+\text{概率}
+&=\text{状态对界面事件的标量评价},\\
+\text{量子性}
+&=\text{局部经典界面不能统一拼成单一全局 Boolean 界面}.
+\end{aligned}
+}
+\]
+
+本节不主张一切物理相对性均等同于商空间，不把量子理论还原为一个裸无限维 Hilbert 空间，也不把上下文性、Bell 非局域性、退相干和测量问题混成同一个定理。新增结果均为纸面推导；未经 Lean proof term、依赖闭包与冻结收据不得标记为 `Closed`。
+
+---
+
+## 30.1 界面系统、相对同一性与观察偏序
+
+### 定义 30.1（观察界面）
+
+设 \(X\) 为整体对象空间。一个观察界面是映射
+
+\[
+q_i:X\to X_i.
+\]
+
+它在 \(X\) 上诱导等价关系
+
+\[
+\boxed{
+x\sim_i y
+\iff
+q_i(x)=q_i(y).
+}
+\]
+
+若把 \(X_i\) 替换为实际像 \(q_i(X)\)，则有规范双射
+
+\[
+\boxed{
+X/{\sim_i}\cong X_i.
+}
+\]
+
+因此 \(X_i\) 不是一个绝对缩小版的 \(X\)，而是由 \(q_i\) 决定的相对身份空间。
+
+### 定义 30.2（观察精化）
+
+若存在映射
+
+\[
+p_{j,i}:X_j\to X_i
+\]
+
+满足
+
+\[
+\boxed{
+q_i=p_{j,i}\circ q_j,
+}
+\]
+
+则称 \(j\) 比 \(i\) 更精细，记为
+
+\[
+j\succeq i.
+\]
+
+这表示细界面的读出足以确定粗界面的读出。
+
+### 定理 30.3（相对同一性的反变单调性）
+
+若 \(j\succeq i\)，则
+
+\[
+\boxed{
+{\sim_j}\subseteq{\sim_i}.
+}
+\]
+
+并存在唯一满射
+
+\[
+\boxed{
+\bar p_{j,i}:X/{\sim_j}\twoheadrightarrow X/{\sim_i}
+}
+\]
+
+使自然商图交换。
+
+#### 证明
+
+若 \(x\sim_jy\)，则 \(q_j(x)=q_j(y)\)。施加 \(p_{j,i}\) 得
+
+\[
+q_i(x)=p_{j,i}(q_j(x))
+      =p_{j,i}(q_j(y))
+      =q_i(y),
+\]
+
+故 \(x\sim_i y\)。商映射的存在唯一性由商的泛性质得到。 \(\square\)
+
+所以：
+
+\[
+\boxed{
+\text{观察越细，被称为“同一”的对象越少；}
+}
+\]
+
+而：
+
+\[
+\boxed{
+\text{观察越粗，被遗忘到同一纤维中的差异越多。}
+}
+\]
+
+### 定义 30.4（相对余量）
+
+一般集合界面 \(q_i\) 的余量不是一个规范对象，而是纤维族
+
+\[
+\boxed{
+\mathcal R_i(x)=q_i^{-1}(q_i(x)).
+}
+\]
+
+若 \(X\) 为线性空间且 \(q_i\) 线性，则不可见方向由
+
+\[
+\boxed{
+\ker q_i
+}
+\]
+
+统一描述。若 \(X=\mathscr H\) 为 Hilbert 空间且 \(q_i=P_i\) 是正交投影到闭子空间 \(S_i\)，则
+
+\[
+\boxed{
+\ker P_i=S_i^\perp.
+}
+\]
+
+此时商与余具有规范等距关系：
+
+\[
+\boxed{
+\mathscr H/S_i^\perp\cong S_i,
+\qquad
+\mathscr H/S_i\cong S_i^\perp.
+}
+\]
+
+因此“隐藏”不是向量的绝对属性，而是向量与所选投影之间的关系。
+
+---
+
+## 30.2 绝对整体是相容关系的闭合，而不是超级界面
+
+设观察指标构成有向偏序 \(I\)，并有逆系
+
+\[
+(X_i,p_{j,i})_{j\succeq i}.
+\]
+
+定义规范观察映射
+
+\[
+\boxed{
+\Phi:X\to\varprojlim_iX_i,
+\qquad
+\Phi(x)=(q_i(x))_i.
+}
+\]
+
+### 定义 30.5（最终不可分关系）
+
+定义
+
+\[
+\boxed{
+x\sim_\infty y
+\iff
+q_i(x)=q_i(y)
+\quad
+\text{对全部 }i.
+}
+\]
+
+于是
+
+\[
+{\sim_\infty}
+=
+\bigcap_i{\sim_i}.
+\]
+
+### 定理 30.6（分离判据）
+
+规范映射 \(\Phi\) 单射，当且仅当
+
+\[
+\boxed{
+{\sim_\infty}=\Delta_X,
+}
+\]
+
+其中 \(\Delta_X\) 为对角相等关系。
+
+在线性情形，这等价于
+
+\[
+\boxed{
+\bigcap_i\ker q_i=\{0\}.
+}
+\]
+
+#### 证明
+
+\[
+\Phi(x)=\Phi(y)
+\iff
+q_i(x)=q_i(y)\ \forall i
+\iff
+x\sim_\infty y.
+\]
+
+故 \(\Phi\) 单射恰当且仅当最终不可分关系就是相等。线性情形令 \(y=0\) 即得核交判据。 \(\square\)
+
+### 定义 30.7（形式相容与可实现性）
+
+逆极限中的元素是一族形式相容读出
+
+\[
+(x_i)_i,
+\qquad
+p_{j,i}(x_j)=x_i.
+\]
+
+若存在 \(x\in X\) 满足
+
+\[
+q_i(x)=x_i
+\quad
+\forall i,
+\]
+
+则称该族可实现。
+
+### 定理 30.8（完成判据）
+
+有规范同构
+
+\[
+\boxed{
+X/{\sim_\infty}
+\cong
+\operatorname{im}\Phi
+\subseteq
+\varprojlim_iX_i.
+}
+\]
+
+并且
+
+\[
+\boxed{
+X/{\sim_\infty}
+\cong
+\varprojlim_iX_i
+}
+\]
+
+当且仅当每个形式相容族均可实现。
+
+#### 证明
+
+\(\ker\Phi={\sim_\infty}\)，故第一同构定理给出第一式。满射性恰等价于所有逆极限点都来自某个整体对象。 \(\square\)
+
+这表明：
+
+\[
+\boxed{
+\text{绝对整体不是另一个“最大屏幕”，而是全部相对读出之间的可实现相容闭合。}
+}
+\]
+
+仅有相容性仍可能不够。第 28 节 Hilbert 塔已经给出反例：普通集合逆极限允许能量无界的形式坐标族；真正的 Hilbert 完成还需
+
+\[
+\sup_n\|x_n\|<\infty
+\]
+
+或等价的平方可和增量条件。因此在不同范畴中，“可实现”分别携带连续性、有界性、可测性、正性或局域性等附加要求。
+
+---
+
+## 30.3 \(\infty\) 的界面定义：无有限终止与可完成性必须分开
+
+设
+
+\[
+S_1\subseteq S_2\subseteq\cdots\subseteq\mathscr H
+\]
+
+为有限维闭子空间，投影为 \(P_n\)，余空间为
+
+\[
+R_n=S_n^\perp.
+\]
+
+### 定义 30.9（有限终止）
+
+若存在有限 \(N\) 使
+
+\[
+S_N=\mathscr H,
+\]
+
+则观察塔有限终止。
+
+### 定义 30.10（逐态完成）
+
+若对每个固定 \(x\in\mathscr H\)，
+
+\[
+P_nx\to x,
+\]
+
+则称观察塔逐态完成。
+
+### 定义 30.11（一致完成）
+
+若
+
+\[
+\|I-P_n\|_{\mathrm{op}}\to0,
+\]
+
+则称观察塔一致完成。
+
+### 定理 30.12（无限维中的三者分离）
+
+若 \(\mathscr H\) 无限维，每个 \(S_n\) 有限维，且
+
+\[
+\overline{\bigcup_nS_n}=\mathscr H,
+\]
+
+则：
+
+1. 观察塔不在任何有限层终止；
+2. 观察塔逐态完成；
+3. 观察塔不一致完成，且
+   \[
+   \boxed{
+   \|I-P_n\|_{\mathrm{op}}=1
+   \quad
+   \forall n.
+   }
+   \]
+
+#### 证明
+
+有限维真子空间不可能等于无限维空间，故第一项成立。递增闭子空间投影强收敛到闭并投影，闭并为全空间，故 \(P_nx\to x\)。对每个 \(n\)，取单位向量 \(r_n\in R_n\)，则
+
+\[
+(I-P_n)r_n=r_n,
+\]
+
+所以算子范数至少为一；投影补的范数至多为一，故等号成立。 \(\square\)
+
+因此：
+
+\[
+\boxed{
+\infty
+\text{ 可以被刻画为“任何有限界面都留下余量”，}
+}
+\]
+
+但这不妨碍
+
+\[
+\boxed{
+\text{所有相容有限界面在逐态意义下完成整体。}
+}
+\]
+
+“没有有限终止”与“没有完成”是两个不同命题。
+
+---
+
+## 30.4 对角化是相对自描述的闭合缺陷
+
+设 \(A\) 为地址集合，\(Y\) 为值集合，评价器为
+
+\[
+e:A\to Y^A.
+\]
+
+第 \(a\) 行 \(e(a)\) 是一个 \(A\)-索引对象。设
+
+\[
+\tau:Y\to Y
+\]
+
+无不动点：
+
+\[
+\tau(y)\ne y
+\quad
+\forall y.
+\]
+
+定义对角逃逸对象
+
+\[
+\boxed{
+d_e(a)=\tau(e(a)(a)).
+}
+\]
+
+### 定理 30.13（相对对角逃逸）
+
+有
+
+\[
+\boxed{
+d_e\notin\operatorname{range}(e).
+}
+\]
+
+#### 证明
+
+若 \(d_e=e(b)\)，则在 \(b\) 坐标
+
+\[
+d_e(b)
+=
+\tau(e(b)(b))
+=
+\tau(d_e(b)),
+\]
+
+与 \(\tau\) 无不动点矛盾。 \(\square\)
+
+这里有一个重要的相对—绝对分层：
+
+\[
+\boxed{
+d_e\text{ 的具体内容依赖于名单 }e;
+}
+\]
+
+但
+
+\[
+\boxed{
+\text{每个同类型名单都存在逃逸对象}
+}
+\]
+
+是不依赖特定名单的结构定理。
+
+所以对角化不是在一个绝对空间中寻找固定的“外部对象”，而是：
+
+\[
+\boxed{
+\text{给定一个自描述界面，由该界面自身构造其相对外部。}
+}
+\]
+
+### 定义 30.14（界面上的对角自然性）
+
+设值界面
+
+\[
+q:Y\to Z
+\]
+
+及粗层扭曲
+
+\[
+\bar\tau:Z\to Z.
+\]
+
+若
+
+\[
+q\tau=\bar\tau q,
+\]
+
+并逐坐标压缩评价表，则对角操作满足
+
+\[
+\boxed{
+Q\Delta_\tau
+=
+\Delta_{\bar\tau}P.
+}
+\]
+
+若不交换，定义缺陷
+
+\[
+\boxed{
+\varepsilon^\Delta(E)
+=
+d\bigl(
+Q\Delta_\tau E,
+\Delta_{\bar\tau}PE
+\bigr).
+}
+\]
+
+这不是“观察改变一切”的模糊命题，而是一个可测的自然性失败。
+
+### 定理 30.15（商可以完全隐藏对角扭曲）
+
+若
+
+\[
+q\tau=q,
+\]
+
+则
+
+\[
+\boxed{
+Q\Delta_\tau(E)
+=
+QD(E)
+}
+\]
+
+对所有评价表成立。
+
+#### 证明
+
+逐坐标：
+
+\[
+q(\tau(E(a,a)))
+=
+q(E(a,a)).
+\]
+
+\(\square\)
+
+所以一个界面可以得到零自然性缺陷，却完全失去扭曲可见性。这再次证明：
+
+\[
+\boxed{
+\text{操作交换}
+\ne
+\text{操作被忠实观察}.
+}
+\]
+
+需要同时审计分离量
+
+\[
+\operatorname{sep}_\tau(q)
+=
+\inf_{y\notin\operatorname{Fix}\tau}
+d(qy,q\tau y).
+\]
+
+---
+
+## 30.5 相对性不是任意性：自然变换与不变量
+
+考虑两个界面
+
+\[
+q_i:X\to X_i,
+\qquad
+q_j:X\to X_j
+\]
+
+以及转换
+
+\[
+p_{j,i}:X_j\to X_i.
+\]
+
+若整体动力学为
+
+\[
+T:X\to X,
+\]
+
+有效动力学为
+
+\[
+T_i:X_i\to X_i,
+\]
+
+则严格协变条件是
+
+\[
+\boxed{
+q_iT=T_iq_i.
+}
+\]
+
+若 \(j\succeq i\)，还要求
+
+\[
+\boxed{
+p_{j,i}T_j=T_ip_{j,i}.
+}
+\]
+
+这些交换图保证不同观察者不是各自任意发明规律，而是在重叠可见部分上给出一致描述。
+
+若只近似交换，可定义
+
+\[
+\boxed{
+\delta_i(T)
+=
+\sup_{x\in K}
+d_i(q_iTx,T_iq_ix)
+}
+\]
+
+于指定有界状态集 \(K\)。对连续的多尺度链，缺陷按 Lipschitz 常数满足 telescoping bound，这正是本文第 2 节一般缺陷复合定理的观察者版本。
+
+因此一个严格相对理论至少必须同时给出：
+
+\[
+\boxed{
+\text{界面}
++
+\text{界面转换}
++
+\text{协变规律}
++
+\text{转换不变量}
++
+\text{非协变缺陷}.
+}
+\]
+
+缺少界面转换的“每人有自己的真理”不是数学相对性，而只是不可比较的多重命名。
+
+---
+
+## 30.6 概率是状态—effect 配对，不是投影对象本身
+
+令 \(\mathcal A\) 为含幺 \(C^*\)-代数。一个状态是正的归一化线性泛函
+
+\[
+\omega:\mathcal A\to\mathbb C,
+\qquad
+\omega(I)=1.
+\]
+
+一个 effect 是满足
+
+\[
+0\le E\le I
+\]
+
+的元素。定义事件概率
+
+\[
+\boxed{
+p_\omega(E)=\omega(E).
+}
+\]
+
+若 \(E=P=P^*=P^2\)，则 \(P\) 是锐利事件。Hilbert 表示中若
+
+\[
+\omega(A)=\operatorname{Tr}(\rho A),
+\]
+
+则
+
+\[
+\boxed{
+p_\rho(P)
+=
+\operatorname{Tr}(\rho P).
+}
+\]
+
+纯态 \(\rho=|\psi\rangle\langle\psi|\) 时：
+
+\[
+\boxed{
+p_\psi(P)
+=
+\|P\psi\|^2.
+}
+\]
+
+因此：
+
+\[
+\boxed{
+\text{投影定义问题，状态定义权重，配对产生概率。}
+}
+\]
+
+### 定理 30.16（正交可加性）
+
+若 \((P_i)\) 为有限或可数正交投影族，且
+
+\[
+\sum_iP_i=I
+\]
+
+于强算子拓扑，则
+
+\[
+\boxed{
+\sum_i\omega(P_i)=1.
+}
+\]
+
+纯态情形为 Parseval 分解：
+
+\[
+\boxed{
+\sum_i\|P_i\psi\|^2=\|\psi\|^2.
+}
+\]
+
+#### 证明
+
+有限情形由线性性。可数情形由正态状态对递增投影和的单调连续性；纯态情形等价于正交分量的 Pythagoras/Parseval。 \(\square\)
+
+概率因此是完整状态经离散投影族后留下的标量质量，但不能把
+
+\[
+P_i
+\]
+
+与
+
+\[
+\omega(P_i)
+\]
+
+识别为同一个对象。
+
+---
+
+## 30.7 经典概率也是 Hilbert 投影；量子性来自非交换
+
+设经典概率空间
+
+\[
+(\Omega,\Sigma,\mu)
+\]
+
+并取
+
+\[
+\mathscr H=L^2(\Omega,\mu).
+\]
+
+对事件 \(A\in\Sigma\)，定义乘法投影
+
+\[
+(P_Af)(\omega)=\mathbf1_A(\omega)f(\omega).
+\]
+
+则
+
+\[
+P_A^2=P_A=P_A^*,
+\]
+
+并且
+
+\[
+\boxed{
+\mu(A)
+=
+\langle\mathbf1,P_A\mathbf1\rangle.
+}
+\]
+
+若 \(\mathcal G\subseteq\Sigma\) 为子 \(\sigma\)-代数，则条件期望
+
+\[
+\boxed{
+\mathbb E[X\mid\mathcal G]
+}
+\]
+
+是 \(L^2(\mathcal G)\) 上的正交投影。
+
+所以“概率来自 Hilbert 投影”并不区分经典与量子。真正的差异是：
+
+\[
+\boxed{
+\text{经典事件投影形成交换 Boolean 代数；}
+}
+\]
+
+而
+
+\[
+\boxed{
+\text{量子投影总体形成非分配的 orthomodular 格，且一般不交换。}
+}
+\]
+
+---
+
+## 30.8 两个投影何时属于同一个经典界面
+
+设 \(P,Q\) 为 Hilbert 空间上的正交投影。
+
+### 定理 30.17（共同四扇区分解判据）
+
+下列条件等价：
+
+1. \(PQ=QP\)；
+2. 四个算子
+   \[
+   PQ,\quad
+   P(I-Q),\quad
+   (I-P)Q,\quad
+   (I-P)(I-Q)
+   \]
+   都是正交投影；
+3. \(\mathscr H\) 有正交分解
+   \[
+   \boxed{
+   \mathscr H
+   =
+   \operatorname{ran}(PQ)
+   \oplus
+   \operatorname{ran}(P(I-Q))
+   \oplus
+   \operatorname{ran}((I-P)Q)
+   \oplus
+   \operatorname{ran}((I-P)(I-Q)).
+   }
+   \]
+4. 存在一个四结果 PVM \((R_{ab})_{a,b\in\{0,1\}}\)，使
+   \[
+   P=R_{10}+R_{11},
+   \qquad
+   Q=R_{01}+R_{11}.
+   \]
+
+#### 证明
+
+若 \(P,Q\) 交换，则所有多项式组合仍为自伴幂等元，四项两两正交且和为 \(I\)，得到 2、3、4。
+
+若存在第 4 项，则
+
+\[
+PQ
+=
+(R_{10}+R_{11})(R_{01}+R_{11})
+=
+R_{11}
+=
+QP.
+\]
+
+故 4 推出 1。其余蕴含由对应投影构造直接得到。 \(\square\)
+
+因此：
+
+\[
+\boxed{
+PQ=QP
+}
+\]
+
+恰好意味着两个是／否问题可以被嵌入同一个经典四格界面。
+
+若
+
+\[
+PQ\ne QP,
+\]
+
+则不存在同时保留二者锐利性的共同 Boolean 精化。量子相对性不是普通坐标变换，因为坐标变换不能把非交换关系消除为交换关系。
+
+---
+
+## 30.9 量子上下文是一张局部经典图
+
+### 定义 30.18（测量上下文）
+
+一个量子上下文是 \(\mathcal A\) 中的最大交换含幺 \(C^*\)-子代数
+
+\[
+\mathcal C\subseteq\mathcal A.
+\]
+
+有限维时，\(\mathcal C\) 由一族最小正交投影
+
+\[
+P_1,\ldots,P_m,
+\qquad
+\sum_iP_i=I
+\]
+
+生成。
+
+状态限制
+
+\[
+\omega|_{\mathcal C}
+\]
+
+对应经典概率分布
+
+\[
+\boxed{
+p_i=\omega(P_i).
+}
+\]
+
+所以：
+
+\[
+\boxed{
+\text{每一个量子上下文本身都是一个经典概率界面。}
+}
+\]
+
+不同上下文 \(\mathcal C,\mathcal D\) 在交集
+
+\[
+\mathcal C\cap\mathcal D
+\]
+
+上必须给出相同限制，因为它们来自同一个全局状态 \(\omega\)。
+
+### 定义 30.19（上下文预层）
+
+对每个上下文 \(\mathcal C\)，令
+
+\[
+\mathsf{Val}(\mathcal C)
+\]
+
+表示其锐利 \(0/1\) 赋值或更一般的概率赋值集合。若
+
+\[
+\mathcal D\subseteq\mathcal C,
+\]
+
+则有自然限制映射
+
+\[
+\operatorname{res}_{\mathcal C,\mathcal D}:
+\mathsf{Val}(\mathcal C)\to\mathsf{Val}(\mathcal D).
+\]
+
+局部赋值族 \((v_{\mathcal C})\) 若在所有交集上兼容，就形成一个相容局部截面族。
+
+### 定义 30.20（全局经典化）
+
+若存在一个上下文无关赋值 \(v\)，其对每个 \(\mathcal C\) 的限制均等于 \(v_{\mathcal C}\)，则称该局部族可全局经典化。
+
+Kochen–Specker 型障碍说明，在维数至少三的量子投影结构中，满足函数关系的锐利局部赋值一般不存在全局截面。这里的严格结构是：
+
+\[
+\boxed{
+\text{每张局部图可以经典化，但全部图不能同时拼平。}
+}
+\]
+
+因此量子性可以表述为一种相对完成失败：
+
+\[
+\boxed{
+\text{局部 Boolean 商均存在，全球 Boolean 逆极限点不存在。}
+}
+\]
+
+该陈述引用经典 Kochen–Specker 结果作为外部数学事实；本节没有重新证明其有限构型。
+
+---
+
+## 30.10 “绝对量子态”不是一个隐藏的全局经典答案表
+
+密度算子 \(\rho\) 确实对每个 effect 给出统一数值
+
+\[
+E\mapsto\operatorname{Tr}(\rho E).
+\]
+
+但这不是给所有投影预先指定 \(0/1\) 结果。它是一个非交换事件代数上的概率状态。
+
+因此必须区分：
+
+\[
+\boxed{
+\text{全局量子状态}
+}
+\]
+
+与
+
+\[
+\boxed{
+\text{全局经典确定赋值}.
+}
+\]
+
+前者存在；后者一般不存在。
+
+量子态统一的是所有上下文的**概率兼容性**：
+
+\[
+\omega|_{\mathcal C\cap\mathcal D}
+\]
+
+从两侧一致。
+
+它不统一为所有上下文中的确定结果同时存在。
+
+所以“绝对是全部相对关系的闭合”在量子理论中的正确版本是：
+
+\[
+\boxed{
+\text{全局量子状态是所有局部经典概率图在重叠处的一致状态，}
+}
+\]
+
+而不是：
+
+\[
+\boxed{
+\text{存在一张隐藏的全局经典样本表。}
+}
+\]
+
+---
+
+## 30.11 纠缠是局部商无法分配的关联余量
+
+设复合系统
+
+\[
+\mathscr H_{AB}
+=
+\mathscr H_A\otimes\mathscr H_B.
+\]
+
+全局状态为 \(\rho_{AB}\)。局部观察界面是限制到子代数
+
+\[
+\mathcal A_A\otimes I_B.
+\]
+
+其代表密度算子为偏迹
+
+\[
+\boxed{
+\rho_A=\operatorname{Tr}_B\rho_{AB}.
+}
+\]
+
+两个全局状态若具有相同 \(\rho_A\)，则相对于所有 \(A\)-局部测量不可区分，即落入同一个局部观察纤维。
+
+### 定理 30.21（纯全局态可投影成混合局部态）
+
+取 Bell 态
+
+\[
+|\Phi^+\rangle
+=
+\frac{|00\rangle+|11\rangle}{\sqrt2}.
+\]
+
+则
+
+\[
+\rho_{AB}
+=
+|\Phi^+\rangle\langle\Phi^+|
+\]
+
+为秩一纯态，但
+
+\[
+\boxed{
+\rho_A
+=
+\operatorname{Tr}_B\rho_{AB}
+=
+\frac12I_A.
+}
+\]
+
+#### 证明
+
+展开
+
+\[
+\rho_{AB}
+=
+\frac12(
+|00\rangle\langle00|
++
+|00\rangle\langle11|
++
+|11\rangle\langle00|
++
+|11\rangle\langle11|
+).
+\]
+
+对 \(B\) 偏迹时，交叉项含
+
+\[
+\langle1|0\rangle
+\quad\text{或}\quad
+\langle0|1\rangle
+\]
+
+而消失，对角项分别留下 \(|0\rangle\langle0|\) 与 \(|1\rangle\langle1|\)。 \(\square\)
+
+所以局部混合不是必然源于一个预先存在的经典混合，而可以来自：
+
+\[
+\boxed{
+\text{全局纯关联被局部界面遗忘。}
+}
+\]
+
+纠缠余量并不属于某个单独局部余空间；它存在于张量因子之间的关联结构中。
+
+---
+
+## 30.12 测量必须拆成概率、记录与条件更新
+
+一个量子仪器由完全正映射族
+
+\[
+(\mathcal I_i)_i
+\]
+
+组成，且总映射保持迹。定义 effect
+
+\[
+E_i=\mathcal I_i^*(I).
+\]
+
+对状态 \(\rho\)：
+
+\[
+\boxed{
+p_i
+=
+\operatorname{Tr}(\mathcal I_i(\rho))
+=
+\operatorname{Tr}(\rho E_i).
+}
+\]
+
+若 \(p_i>0\)，结果 \(i\) 后的条件状态为
+
+\[
+\boxed{
+\rho_i
+=
+\frac{\mathcal I_i(\rho)}{p_i}.
+}
+\]
+
+因此一次测量至少包含三个不同对象：
+
+\[
+\boxed{
+\begin{aligned}
+E_i
+&=\text{概率事件},\\
+i
+&=\text{经典记录标签},\\
+\mathcal I_i
+&=\text{状态更新规则}.
+\end{aligned}
+}
+\]
+
+仅知道 POVM \((E_i)\) 一般不能唯一决定条件状态更新。
+
+理想 Lüders 投影测量是特殊情形：
+
+\[
+\mathcal I_i(\rho)=P_i\rho P_i,
+\]
+
+于是
+
+\[
+p_i=\operatorname{Tr}(\rho P_i),
+\qquad
+\rho_i=\frac{P_i\rho P_i}{p_i}.
+\]
+
+所以“坍缩”不是概率本身，而是给定记录后的条件状态更新。
+
+---
+
+## 30.13 Naimark 与 Stinespring：相对随机性可由更大空间中的锐利结构实现
+
+### Naimark 扩张
+
+对 POVM
+
+\[
+E_i\ge0,
+\qquad
+\sum_iE_i=I_{\mathscr H},
+\]
+
+存在更大 Hilbert 空间 \(\mathscr K\)、等距嵌入
+
+\[
+V:\mathscr H\to\mathscr K
+\]
+
+及正交投影族 \((\Pi_i)\)，使
+
+\[
+\boxed{
+E_i=V^*\Pi_iV.
+}
+\]
+
+因此
+
+\[
+\boxed{
+\operatorname{Tr}(\rho E_i)
+=
+\operatorname{Tr}(V\rho V^*\Pi_i).
+}
+\]
+
+### Stinespring 扩张
+
+对完全正映射
+
+\[
+\Phi:\mathcal A\to\mathcal B(\mathscr H),
+\]
+
+存在表示 \(\pi\) 与算子 \(V\)，使
+
+\[
+\boxed{
+\Phi(a)=V^*\pi(a)V.
+}
+\]
+
+量子通道在 Schrödinger 图像中可写成：
+
+\[
+\boxed{
+\Phi_*(\rho)
+=
+\operatorname{Tr}_E
+\bigl[
+U(\rho\otimes\sigma_E)U^*
+\bigr].
+}
+\]
+
+这说明：
+
+\[
+\boxed{
+\text{局部的广义测量、噪声与非酉性，可以是更大系统的投影、酉演化与遗忘。}
+}
+\]
+
+但不能由此推出某个唯一隐藏整体。扩张只在适当最小性意义下唯一到酉等价；系统—环境分解、环境初态与具体实现仍是额外结构。
+
+因此：
+
+\[
+\boxed{
+\text{“可扩张为确定线性结构”}
+\ne
+\text{“物理世界已被证明具有唯一经典确定本体”.}
+}
+\]
+
+---
+
+## 30.14 退相干是相对于上下文的正交投影
+
+设 \((P_i)\) 为完整正交投影族。定义 pinching/dephasing 映射
+
+\[
+\boxed{
+\mathcal D_P(X)
+=
+\sum_iP_iXP_i.
+}
+\]
+
+在有限维 Hilbert–Schmidt 空间
+
+\[
+\mathsf{HS}(\mathscr H)
+\]
+
+上取内积
+
+\[
+\langle X,Y\rangle_{\mathrm{HS}}
+=
+\operatorname{Tr}(X^*Y).
+\]
+
+令
+
+\[
+\mathcal B_P
+=
+\{X:P_iXP_j=0\text{ 当 }i\ne j\}
+\]
+
+为相对于该上下文的块对角子空间。
+
+### 定理 30.22（去相干映射是 Hilbert–Schmidt 正交投影）
+
+有
+
+\[
+\boxed{
+\mathcal D_P^2=\mathcal D_P,
+}
+\]
+
+\[
+\boxed{
+\mathcal D_P^*=\mathcal D_P
+}
+\]
+
+于 Hilbert–Schmidt 内积，并且
+
+\[
+\boxed{
+\operatorname{range}\mathcal D_P=\mathcal B_P.
+}
+\]
+
+因此
+
+\[
+\boxed{
+X
+=
+\mathcal D_PX
++
+(I-\mathcal D_P)X
+}
+\]
+
+是 Hilbert–Schmidt 正交分解，且
+
+\[
+\boxed{
+\|X\|_{\mathrm{HS}}^2
+=
+\|\mathcal D_PX\|_{\mathrm{HS}}^2
++
+\|X-\mathcal D_PX\|_{\mathrm{HS}}^2.
+}
+\]
+
+#### 证明
+
+利用 \(P_iP_j=\delta_{ij}P_i\)：
+
+\[
+\mathcal D_P^2(X)
+=
+\sum_{i,j}P_iP_jXP_jP_i
+=
+\sum_iP_iXP_i.
+\]
+
+又
+
+\[
+\langle\mathcal D_PX,Y\rangle
+=
+\sum_i\operatorname{Tr}(X^*P_iYP_i)
+=
+\langle X,\mathcal D_PY\rangle.
+\]
+
+像空间恰是所有交叉块消失的算子。自伴幂等算子即为正交投影，Pythagoras 随之成立。 \(\square\)
+
+所以一个状态可分解为：
+
+\[
+\boxed{
+\rho
+=
+\underbrace{\mathcal D_P(\rho)}_{\text{相对于上下文可见的经典块}}
++
+\underbrace{\bigl(\rho-\mathcal D_P(\rho)\bigr)}_{\text{跨扇区相干余量}}.
+}
+\]
+
+“经典性”因此不是状态的绝对属性，而是相对于投影上下文的块对角性：
+
+\[
+\boxed{
+\rho=\mathcal D_P(\rho).
+}
+\]
+
+同一个 \(\rho\) 可以对一个上下文完全经典，对另一个上下文保持相干。
+
+---
+
+## 30.15 动力学相对性：概率流由跨界面耦合控制
+
+设封闭系统由自伴 Hamiltonian \(H\) 生成：
+
+\[
+U_t=e^{-itH},
+\qquad
+\rho_t=U_t\rho U_t^*.
+\]
+
+对投影 \(P\)，定义事件概率
+
+\[
+p_P(t)=\operatorname{Tr}(\rho_tP).
+\]
+
+### 定理 30.23（投影概率流公式）
+
+在有限维或满足相应定义域条件时，
+
+\[
+\boxed{
+\frac{d}{dt}p_P(t)
+=
+i\operatorname{Tr}(\rho_t[H,P]).
+}
+\]
+
+因此若
+
+\[
+[H,P]=0,
+\]
+
+则
+
+\[
+\boxed{
+p_P(t)=p_P(0)
+}
+\]
+
+对全部 \(t\) 成立。
+
+#### 证明
+
+\[
+\dot\rho_t=-i[H,\rho_t].
+\]
+
+故
+
+\[
+\begin{aligned}
+\dot p_P(t)
+&=
+-i\operatorname{Tr}([H,\rho_t]P)\\
+&=
+-i\operatorname{Tr}(H\rho_tP-\rho_tHP)\\
+&=
+i\operatorname{Tr}(\rho_t(HP-PH))\\
+&=
+i\operatorname{Tr}(\rho_t[H,P]).
+\end{aligned}
+\]
+
+\(\square\)
+
+相对于分解
+
+\[
+\mathscr H=P\mathscr H\oplus(I-P)\mathscr H,
+\]
+
+Hamiltonian 的跨界面耦合是
+
+\[
+PH(I-P),
+\qquad
+(I-P)HP.
+\]
+
+若二者为零，则 \(P\) reducing，事件扇区在动力学下闭合；若非零，则概率可以在已知／余空间之间流动。
+
+这与第 28 节块矩阵判据完全一致：
+
+\[
+\boxed{
+\text{观察界面的时间稳定性由跨块耦合决定，而不是只由各块内部维数决定。}
+}
+\]
+
+---
+
+## 30.16 状态完成严格弱于空间完成
+
+设投影塔
+
+\[
+P_n\uparrow P_\infty
+\]
+
+于强算子拓扑，最终余投影为
+
+\[
+Q_\infty=I-P_\infty.
+\]
+
+### 定义 30.24（空间完成）
+
+\[
+\boxed{
+Q_\infty=0.
+}
+\]
+
+### 定义 30.25（状态完成）
+
+对状态 \(\rho\)：
+
+\[
+\boxed{
+\operatorname{Tr}(\rho Q_\infty)=0.
+}
+\]
+
+### 定理 30.26（状态完成判据）
+
+对正迹类 \(\rho\)，下列条件等价：
+
+1. \(\operatorname{Tr}(\rho Q_\infty)=0\)；
+2. \(Q_\infty\rho^{1/2}=0\)；
+3. \(\operatorname{supp}\rho\le P_\infty\)；
+4. \(\operatorname{Tr}(\rho P_n)\to1\)。
+
+#### 证明
+
+\[
+\operatorname{Tr}(\rho Q_\infty)
+=
+\operatorname{Tr}(\rho^{1/2}Q_\infty\rho^{1/2})
+=
+\|Q_\infty\rho^{1/2}\|_{\mathrm{HS}}^2.
+\]
+
+故 1 与 2 等价；2 等价于状态支撑位于 \(P_\infty\) 中。又由 \(P_n\uparrow P_\infty\) 及正态迹的单调连续性：
+
+\[
+\operatorname{Tr}(\rho P_n)
+\to
+\operatorname{Tr}(\rho P_\infty)
+=
+1-\operatorname{Tr}(\rho Q_\infty).
+\]
+
+\(\square\)
+
+所以：
+
+\[
+\boxed{
+Q_\infty=0
+\Longrightarrow
+\operatorname{Tr}(\rho Q_\infty)=0,
+}
+\]
+
+但反向一般不成立。
+
+这给出一条统一解释：
+
+- 在 RH 的 Nyman–Beurling 表述中，不要求整个最终余空间消失，只要求目标态 \(\chi\) 的余质量为零；
+- 在量子观察中，不要求观察者覆盖全部可能态，只要求当前状态的支撑落在完成可见空间；
+- 在有限模型中，不要求全状态空间统一逼近，只要求任务相关状态族的余概率可控。
+
+---
+
+## 30.17 对角化、量子上下文与完成失败不是同一个障碍
+
+三种结构容易被语言混合，但其类型不同。
+
+### Cantor–Lawvere 对角障碍
+
+给定评价映射
+
+\[
+e:A\to Y^A,
+\]
+
+无不动点扭曲产生
+
+\[
+d_e\notin\operatorname{range}e.
+\]
+
+它是**自应用表示的满射失败**。
+
+### Hilbert 正交余障碍
+
+给定闭子空间 \(S\subsetneq\mathscr H\)，存在
+
+\[
+e\in S^\perp,
+\qquad
+\|e\|=1.
+\]
+
+它是**线性张成的完备失败**，但没有规范唯一逃逸对象。
+
+### 量子上下文障碍
+
+局部交换上下文各自允许经典赋值，但这些赋值不能拼成保持全部函数关系的全局 \(0/1\) 截面。
+
+它是**局部 Boolean 图册的全局拼接失败**。
+
+三者共同具有：
+
+\[
+\boxed{
+\text{相对于当前描述存在未闭合余量。}
+}
+\]
+
+但不能相互替代：
+
+\[
+\boxed{
+\text{自描述满射失败}
+\ne
+\text{正交张成失败}
+\ne
+\text{上下文全局截面失败}.
+}
+\]
+
+只有在给出明确函子、自然变换及双向定理后，才能把一个障碍传递到另一个领域。
+
+---
+
+## 30.18 “绝对是全部相对关系的闭合”的形式版本
+
+设 \(\mathsf I\) 为界面范畴，给出逆系统
+
+\[
+F:\mathsf I^{op}\to\mathsf C,
+\]
+
+其中 \(F(i)=X_i\) 是第 \(i\) 个相对读出对象。整体候选是锥
+
+\[
+(q_i:X\to X_i)_i.
+\]
+
+若该锥满足极限泛性质，则
+
+\[
+\boxed{
+X\cong\varprojlim_{i\in\mathsf I}X_i.
+}
+\]
+
+这意味着：对任何另一个对象 \(Y\)，只要有一族相容读出
+
+\[
+f_i:Y\to X_i,
+\qquad
+p_{j,i}f_j=f_i,
+\]
+
+就存在唯一
+
+\[
+f:Y\to X
+\]
+
+使
+
+\[
+q_if=f_i.
+\]
+
+所以“绝对”不是一个内容最多的单一视角，而是：
+
+\[
+\boxed{
+\text{使全部相对视角相容因子化的普适对象。}
+}
+\]
+
+但在 Hilbert、拓扑、概率或算子代数范畴中，必须使用相应范畴的极限与可实现性条件；集合极限可能过大或忘记范数、正性和连续性。
+
+量子理论进一步提示，全部交换上下文的简单集合极限未必给出一个全局经典样本空间。正确全局对象是非交换代数 \(\mathcal A\) 及其状态，而不是所有局部 Gelfand 谱的普通拼接。
+
+因此：
+
+\[
+\boxed{
+\text{绝对不是相对性的反面；绝对是相对转换规律及其闭合对象。}
+}
+\]
+
+---
+
+## 30.19 相对性六层审计
+
+一个声称“从有限观察重构整体”的理论至少应通过以下六层审计。
+
+### 第一层：身份审计
+
+明确：
+
+\[
+x\sim_qy
+\iff
+q(x)=q(y).
+\]
+
+回答哪些差异被界面商掉。
+
+### 第二层：余量审计
+
+明确纤维、核、正交补或条件分布，回答被删除的信息在哪里。
+
+### 第三层：自然性审计
+
+检查
+
+\[
+qT=T_q q
+\]
+
+或对角版本
+
+\[
+Q\Delta=\Delta P.
+\]
+
+回答有效规律是否严格下降。
+
+### 第四层：忠实性审计
+
+检查界面是否仍能区分
+
+\[
+y
+\quad\text{与}\quad
+\tau y,
+\]
+
+避免“盲自然性”。
+
+### 第五层：完成审计
+
+区分：
+
+\[
+\text{分离性},
+\quad
+\text{形式相容性},
+\quad
+\text{可实现性},
+\quad
+\text{有界能量/正则性}.
+\]
+
+### 第六层：上下文审计
+
+当存在多个不兼容界面时，检查：
+
+\[
+\text{重叠一致性},
+\quad
+\text{共同精化},
+\quad
+\text{全局截面},
+\quad
+\text{非交换障碍}.
+\]
+
+只有全部六层同时说明，才可以把“相对观察”提升为严谨的局部—整体理论。
+
+---
+
+## 30.20 与 Riemann 假设接口的再解释
+
+第 29 节得到：
+
+\[
+\mathrm{RH}
+\iff
+P_{R_\infty}\chi=0
+\]
+
+于 Nyman–Beurling 商余塔。
+
+本节说明其相对性含义：
+
+- \(S_N\) 是由前 \(N\) 个显式算术生成元形成的有限观察界面；
+- \(R_N\) 是相对于该算术界面仍未解释的方向；
+- \(d_N=\|P_{R_N}\chi\|\) 是指定目标的相对余量；
+- RH 不要求所有可能向量都被该界面塔统一解释；
+- RH 只要求 \(\chi\) 相对于完整算术界面族最终可实现，即
+  \[
+  [\chi]=0
+  \quad
+  \text{于 }
+  \mathscr H/S_\infty.
+  \]
+
+因此 RH 的 Hilbert 表述不是“绝对余空间不存在”，而是：
+
+\[
+\boxed{
+\text{相对于指定算术生成规则，目标向量没有最终不可解释分量。}
+}
+\]
+
+这与量子状态完成的形式完全平行：
+
+\[
+\operatorname{Tr}(\rho Q_\infty)=0.
+\]
+
+两者共享“状态/目标相对完成”结构，但一个是解析数论逼近判据，一个是量子状态支撑判据；二者不能仅凭形式相同而互相证明。
+
+---
+
+## 30.21 可形式化拆分
+
+建议新增以下 Lean 纸面目标，按依赖顺序推进。
+
+1. `ObserverInterfaceKernel`
+   \[
+   q_i=p_{j,i}q_j
+   \Rightarrow
+   \ker q_j\subseteq\ker q_i.
+   \]
+
+2. `ObserverLimitSeparation`
+   \[
+   \Phi\text{ injective}
+   \iff
+   \bigcap_i\ker q_i=\{0\}.
+   \]
+
+3. `ObserverLimitRealizability`
+   \[
+   X/{\sim_\infty}\cong\operatorname{im}\Phi.
+   \]
+
+4. `DiagonalInterfaceNaturality`
+   \[
+   q\tau=\bar\tau q
+   \Rightarrow
+   Q\Delta_\tau=\Delta_{\bar\tau}P.
+   \]
+
+5. `DiagonalBlindQuotient`
+   \[
+   q\tau=q
+   \Rightarrow
+   Q\Delta_\tau=QD.
+   \]
+
+6. `CommutingProjectionJointPVM`
+   两投影交换当且仅当存在共同四结果 PVM。
+
+7. `HilbertSchmidtDephasingProjection`
+   \[
+   \mathcal D_P^2=\mathcal D_P=\mathcal D_P^*.
+   \]
+
+8. `ProjectionProbabilityFlow`
+   \[
+   \frac d{dt}\operatorname{Tr}(\rho_tP)
+   =
+   i\operatorname{Tr}(\rho_t[H,P]).
+   \]
+
+9. `StateRelativeCompletion`
+   \[
+   \operatorname{Tr}(\rho Q_\infty)=0
+   \iff
+   \operatorname{supp}\rho\le P_\infty.
+   \]
+
+10. `ContextRestrictionCompatibility`
+    状态在交换子代数交集上的限制一致。
+
+Kochen–Specker、Gleason、Naimark、Stinespring 与 GNS 等一般结果应作为具名、来源可审计的经典接口接入，不能以无名公理隐藏。
+
+---
+
+## 30.22 最终统一式
+
+本节得到：
+
+\[
+\boxed{
+\text{相对性}
+=
+\text{选择界面并声明界面转换}.
+}
+\]
+
+\[
+\boxed{
+\text{商}
+=
+\text{该界面保留的身份空间}.
+}
+\]
+
+\[
+\boxed{
+\text{余}
+=
+\text{该界面删除的纤维、核或正交分量}.
+}
+\]
+
+\[
+\boxed{
+\text{对角化}
+=
+\text{描述界面不能以同类型封闭自身的证书}.
+}
+\]
+
+\[
+\boxed{
+\infty
+=
+\text{任何有限界面都不终止，但全部相容界面可以完成}.
+}
+\]
+
+\[
+\boxed{
+\text{概率}
+=
+\text{状态对 effect 的评价，而非 effect 本身}.
+}
+\]
+
+\[
+\boxed{
+\text{量子性}
+=
+\text{一族局部经典上下文不能被压平为单一全局 Boolean 上下文}.
+}
+\]
+
+最凝练的结论是：
+
+\[
+\boxed{
+\text{整体不是某个观察者看到的最大画面；整体是全部相对观察、转换、余量与一致性条件的闭合。}
+}
+\]
+
+而量子力学在这个框架中的位置是：
+
+\[
+\boxed{
+\text{每个测量上下文投影出一个经典概率世界；
+完整量子世界则保存这些局部经典世界之间不可交换、不可共同锐化的关系。}
+}
+\]
+
+## 30.23 严格非主张与形式化状态
+
+1. 本节不把哲学上的全部相对性约化为数学商映射。
+2. 本节不声称集合逆极限总能恢复拓扑、Hilbert 或算子代数整体。
+3. 本节不把概率等同于投影；概率始终依赖状态—effect 配对。
+4. 本节不把 Naimark/Stinespring 扩张解释为唯一隐藏经典本体。
+5. 本节不把退相干等同于单一结果选择。
+6. 本节不把量子上下文性、Bell 非局域性与 Cantor 对角化视为同一定理。
+7. 本节不从界面相对性推出 Riemann 假设、光速信息率或意识模型。
+8. 本节新增定理均为纸面结论；在获得 kernel verification 以前不得标记为 `Closed`。
+
+---
+
+# 31. 追加：算子 Hilbert 坐标塔、互补对角与三类量子闭合缺陷
+
+## 31.0 研究定位
+
+第 30 节把相对性、商余、概率与量子上下文统一到“观察界面及其完成”之下，但仍留下一个关键歧义：若两个上下文的去相干通道交换，是否说明它们在物理上兼容？答案是否定的。事实上，两组互相无偏基（mutually unbiased bases, MUB）的锐利投影是最大互补的，但对应去相干通道的复合都等于完全退极化通道，因此两种顺序完全相同。
+
+这迫使本文把“上下文差异”拆成三种彼此独立的结构：
+
+1. **锐利不兼容度**：组成上下文的投影是否能够共同对角化；
+2. **粗粒化顺序缺陷**：先按哪个上下文丢弃相干是否影响结果；
+3. **全局拼接障碍**：全部局部统计是否存在一个统一的非上下文全局模型。
+
+本节首先把有限维量子状态空间嵌入算子 Hilbert 空间，证明一次基测量恰好是到一个 \((d-1)\)-维“经典对角坐标平面”的正交投影；其余 \(d^2-d\) 个实方向是该上下文看不见的相干余量。随后证明，成套 MUB 上下文在算子 Hilbert 空间中形成正交商余塔：每增加一个最大互补坐标系，恰好抽取一个新的 \((d-1)\)-维正交切片；若存在完整的 \(d+1\) 组 MUB，则这些局部经典对角平面正交直和成全部无迹 Hermitian 算子空间，从而完成量子态层析。
+
+在此基础上，本节给出五组新推导：
+
+- 单一锐利上下文的状态自由度可见率为 \(1/(d+1)\)，线性余量率为 \(d/(d+1)\)；
+- \(m\) 组 MUB 的状态无关余维率为 \(1-m/(d+1)\)；
+- 状态的 Hilbert–Schmidt 余质量按每个新增概率坐标的二次偏差精确递减；
+- 对任意 Lipschitz 自指算子或动力学，观察自然性缺陷由尚未捕获的余质量控制；
+- 重复“酉演化—投影界面”产生的熵增，逐步恰等于每轮被删除的相对熵相干。
+
+本节不声称这些组成部分各自都是新发现。MUB 层析、算子 Hilbert 几何、条件期望、量子相干和上下文性均有成熟文献。本文的候选贡献是把它们接入同一个“对角—商余—观察完成”演算，并识别出一个此前框架中的错误替代：**去相干通道交换子不能作为锐利上下文不兼容性的统一度量。**
+
+以下固定
+
+\[
+\mathscr H=\mathbb C^d,
+\qquad
+d\ge2.
+\]
+
+所有新增结论均为纸面证明，未经 Lean kernel 验证不得标记为 `Closed`。
+
+---
+
+## 31.1 状态不是一个概率向量，而是算子 Hilbert 空间中的点
+
+令
+
+\[
+\operatorname{Herm}_d
+=
+\{X\in M_d(\mathbb C):X=X^*\}
+\]
+
+视为实 Hilbert 空间，内积为
+
+\[
+\langle X,Y\rangle_{\mathrm{HS}}
+=
+\operatorname{Tr}(XY).
+\]
+
+其无迹子空间为
+
+\[
+\operatorname{Herm}_d^0
+=
+\{X\in\operatorname{Herm}_d:\operatorname{Tr}X=0\}.
+\]
+
+维数为
+
+\[
+\boxed{
+\dim_{\mathbb R}\operatorname{Herm}_d=d^2,
+\qquad
+\dim_{\mathbb R}\operatorname{Herm}_d^0=d^2-1.
+}
+\]
+
+任意密度矩阵唯一写成
+
+\[
+\boxed{
+\rho=\frac{I}{d}+X_\rho,
+\qquad
+X_\rho\in\operatorname{Herm}_d^0.
+}
+\]
+
+这里 \(I/d\) 是共同的仿射原点，而 \(X_\rho\) 携带全部可变状态信息。其 Hilbert–Schmidt 长度满足
+
+\[
+\boxed{
+\|X_\rho\|_2^2
+=
+\operatorname{Tr}(\rho^2)-\frac1d.
+}
+\]
+
+所以偏离最大混合态的总二次信息量就是 purity excess。
+
+### 定义 31.1（基上下文的对角平面）
+
+取一组正交规范基
+
+\[
+\mathcal B=(|b_1\rangle,\ldots,|b_d\rangle),
+\]
+
+并令
+
+\[
+P_j^{\mathcal B}=|b_j\rangle\langle b_j|.
+\]
+
+定义该上下文的无迹对角平面
+
+\[
+\boxed{
+\mathcal D_{\mathcal B}^0
+=
+\left\{
+\sum_{j=1}^d x_jP_j^{\mathcal B}:
+x_j\in\mathbb R,\ 
+\sum_jx_j=0
+\right\}.
+}
+\]
+
+显然
+
+\[
+\boxed{
+\dim_{\mathbb R}\mathcal D_{\mathcal B}^0=d-1.
+}
+\]
+
+定义去相干／pinching 映射
+
+\[
+\boxed{
+\mathbb E_{\mathcal B}(X)
+=
+\sum_{j=1}^d
+P_j^{\mathcal B}XP_j^{\mathcal B}.
+}
+\]
+
+### 定理 31.2（一次基测量是算子 Hilbert 正交投影）
+
+\(\mathbb E_{\mathcal B}\) 是 \(\operatorname{Herm}_d\) 上到
+
+\[
+\mathcal D_{\mathcal B}
+=
+\mathbb RI\oplus\mathcal D_{\mathcal B}^0
+\]
+
+的 Hilbert–Schmidt 正交投影。限制到 \(\operatorname{Herm}_d^0\) 时，它是到 \(\mathcal D_{\mathcal B}^0\) 的正交投影。
+
+#### 证明
+
+由投影正交性，
+
+\[
+\mathbb E_{\mathcal B}^2(X)
+=
+\sum_{j,k}P_jP_kXP_kP_j
+=
+\sum_jP_jXP_j
+=
+\mathbb E_{\mathcal B}(X).
+\]
+
+又因为
+
+\[
+\operatorname{Tr}\!\left(
+Y\mathbb E_{\mathcal B}(X)
+\right)
+=
+\sum_j\operatorname{Tr}(YP_jXP_j)
+=
+\sum_j\operatorname{Tr}(P_jYP_jX)
+=
+\operatorname{Tr}\!\left(
+\mathbb E_{\mathcal B}(Y)X
+\right),
+\]
+
+故 \(\mathbb E_{\mathcal B}\) 对 Hilbert–Schmidt 内积自伴。幂等且自伴即为正交投影。其像恰为在 \(\mathcal B\) 中对角的 Hermitian 算子。由于保持迹，限制到无迹空间后的像为 \(\mathcal D_{\mathcal B}^0\)。 \(\square\)
+
+设
+
+\[
+p_j^{\mathcal B}(\rho)
+=
+\operatorname{Tr}(\rho P_j^{\mathcal B}).
+\]
+
+则
+
+\[
+\boxed{
+\mathbb E_{\mathcal B}(\rho)
+=
+\sum_jp_j^{\mathcal B}(\rho)P_j^{\mathcal B}.
+}
+\]
+
+所以一组测量概率并不是整个状态，而只确定状态在一个 \((d-1)\)-维经典对角平面上的投影。
+
+### 推论 31.3（单上下文的线性可见率与余量率）
+
+在无迹状态方向空间 \(\operatorname{Herm}_d^0\) 中，一组秩一 PVM 最多可见
+
+\[
+d-1
+\]
+
+个独立实方向，留下
+
+\[
+d^2-d
+\]
+
+个正交余方向。因此
+
+\[
+\boxed{
+\text{visible ratio}
+=
+\frac{d-1}{d^2-1}
+=
+\frac1{d+1},
+}
+\]
+
+\[
+\boxed{
+\text{remainder ratio}
+=
+\frac{d^2-d}{d^2-1}
+=
+\frac d{d+1}.
+}
+\]
+
+这里的比例是线性维数比例，不是任意具体状态的概率质量比例。
+
+这给出一个精确修正：
+
+\[
+\boxed{
+\text{一个量子概率向量通常只暴露状态线性自由度的 }1/(d+1).
+}
+\]
+
+其余部分不是“没有定义”，而是相对于该坐标系仍处于非对角余空间。
+
+---
+
+## 31.2 纯态概率映射的纤维就是相对相位余坐标
+
+在纯态层，取射影空间
+
+\[
+\mathbb{CP}^{d-1}
+\]
+
+并定义基概率映射
+
+\[
+q_{\mathcal B}:
+\mathbb{CP}^{d-1}
+\longrightarrow
+\Delta_{d-1},
+\]
+
+\[
+q_{\mathcal B}([\psi])
+=
+\left(
+|\langle b_1,\psi\rangle|^2,
+\ldots,
+|\langle b_d,\psi\rangle|^2
+\right).
+\]
+
+### 定理 31.4（内点概率纤维为 \((d-1)\)-环面）
+
+若
+
+\[
+p=(p_1,\ldots,p_d)
+\in\operatorname{int}\Delta_{d-1},
+\qquad
+p_j>0,
+\]
+
+则
+
+\[
+\boxed{
+q_{\mathcal B}^{-1}(p)
+\cong
+\mathbb T^{d-1}.
+}
+\]
+
+#### 证明
+
+任意位于该纤维的单位向量可写成
+
+\[
+\psi
+=
+\sum_{j=1}^d
+\sqrt{p_j}e^{i\theta_j}|b_j\rangle.
+\]
+
+全部 \(\theta_j\in\mathbb R/2\pi\mathbb Z\) 可自由选择，但共同平移
+
+\[
+(\theta_1,\ldots,\theta_d)
+\mapsto
+(\theta_1+\alpha,\ldots,\theta_d+\alpha)
+\]
+
+只改变全局相位，在 \(\mathbb{CP}^{d-1}\) 中代表同一点。因此纤维为
+
+\[
+\mathbb T^d/\mathbb T
+\cong
+\mathbb T^{d-1}.
+\]
+
+\(\square\)
+
+所以对于纯态：
+
+\[
+\boxed{
+\text{概率坐标}
+=
+\text{模长平方},
+}
+\]
+
+\[
+\boxed{
+\text{余坐标}
+=
+\text{相对相位}.
+}
+\]
+
+维数核对为
+
+\[
+2d-2
+=
+(d-1)+(d-1).
+\]
+
+在概率单纯形边界上，零振幅坐标不再携带相位，纤维退化为更低维环面。
+
+这使“概率是投影”获得一个非常具体的商余形式：
+
+\[
+\boxed{
+\mathbb{CP}^{d-1}
+\longrightarrow
+\Delta_{d-1}
+}
+\]
+
+忘掉的不是一个抽象神秘变量，而是相对于该基的相对相位纤维。
+
+---
+## 31.3 互相无偏基在算子 Hilbert 空间中给出正交对角平面
+
+取两组正交基
+
+\[
+\mathcal B=(|b_j\rangle)_j,
+\qquad
+\mathcal C=(|c_k\rangle)_k.
+\]
+
+定义重叠矩阵
+
+\[
+M_{jk}
+=
+|\langle b_j,c_k\rangle|^2
+=
+\operatorname{Tr}(P_j^{\mathcal B}P_k^{\mathcal C}).
+\]
+
+\(M\) 是双随机矩阵。
+
+两基互相无偏，是指
+
+\[
+\boxed{
+M_{jk}=\frac1d
+\qquad
+\forall j,k.
+}
+\]
+
+### 定理 31.5（MUB 等价于无迹对角平面正交）
+
+下列命题等价：
+
+1. \(\mathcal B,\mathcal C\) 互相无偏；
+2. \(\mathcal D_{\mathcal B}^0\perp\mathcal D_{\mathcal C}^0\) 于 Hilbert–Schmidt 内积；
+3. 对任意 \(X\in\operatorname{Herm}_d^0\)，
+
+   \[
+   \mathbb E_{\mathcal B}\mathbb E_{\mathcal C}(X)=0
+   =
+   \mathbb E_{\mathcal C}\mathbb E_{\mathcal B}(X);
+   \]
+
+4. 对任意 \(X\in\operatorname{Herm}_d\)，
+
+   \[
+   \boxed{
+   \mathbb E_{\mathcal B}\mathbb E_{\mathcal C}(X)
+   =
+   \mathbb E_{\mathcal C}\mathbb E_{\mathcal B}(X)
+   =
+   \frac{\operatorname{Tr}X}{d}I.
+   }
+   \]
+
+#### 证明
+
+若两基互相无偏，取
+
+\[
+A=\sum_ja_jP_j^{\mathcal B},
+\qquad
+B=\sum_kb_kP_k^{\mathcal C},
+\]
+
+且
+
+\[
+\sum_ja_j=\sum_kb_k=0.
+\]
+
+则
+
+\[
+\langle A,B\rangle_{\mathrm{HS}}
+=
+\sum_{j,k}a_jb_kM_{jk}
+=
+\frac1d
+\left(\sum_ja_j\right)
+\left(\sum_kb_k\right)
+=
+0.
+\]
+
+故 1 推出 2。正交投影到两个正交子空间的复合为零，故 2 推出 3。
+
+对任意 \(X\)，写
+
+\[
+X=\frac{\operatorname{Tr}X}{d}I+X_0,
+\qquad
+\operatorname{Tr}X_0=0.
+\]
+
+两映射均固定 \(I\)，而在 \(X_0\) 上复合为零，故得到 4。
+
+最后，令 \(X=P_k^{\mathcal C}\)。由 4，
+
+\[
+\mathbb E_{\mathcal B}(P_k^{\mathcal C})
+=
+\sum_jM_{jk}P_j^{\mathcal B}
+=
+\frac Id,
+\]
+
+比较各 \(P_j^{\mathcal B}\) 系数得到 \(M_{jk}=1/d\)，故 4 推出 1。 \(\square\)
+
+### 关键反例 31.6（去相干通道交换不等于锐利兼容）
+
+当 \(\mathcal B,\mathcal C\) 为 MUB 时，
+
+\[
+\boxed{
+[\mathbb E_{\mathcal B},\mathbb E_{\mathcal C}]=0,
+}
+\]
+
+因为两种复合都等于完全退极化投影
+
+\[
+X\mapsto\frac{\operatorname{Tr}X}{d}I.
+\]
+
+然而任意非平凡 \(P_j^{\mathcal B},P_k^{\mathcal C}\) 一般满足
+
+\[
+[P_j^{\mathcal B},P_k^{\mathcal C}]\ne0.
+\]
+
+所以
+
+\[
+\boxed{
+\text{粗粒化顺序无差异}
+\not\Rightarrow
+\text{锐利测量兼容}.
+}
+\]
+
+事实上，MUB 是最大互补的锐利坐标系，却给出零去相干顺序缺陷。由此，第 30 节所定义的
+
+\[
+\mathbb E_i\mathbb E_j-\mathbb E_j\mathbb E_i
+\]
+
+只能测量“丢弃信息的顺序是否重要”，不能单独充当上下文不兼容度。
+
+---
+
+## 31.4 锐利不兼容度、坐标冗余与投影交换子的精确公式
+
+定义中心化投影
+
+\[
+\widetilde P_j^{\mathcal B}
+=
+P_j^{\mathcal B}-\frac Id,
+\qquad
+\widetilde P_k^{\mathcal C}
+=
+P_k^{\mathcal C}-\frac Id.
+\]
+
+则
+
+\[
+\left\langle
+\widetilde P_j^{\mathcal B},
+\widetilde P_k^{\mathcal C}
+\right\rangle_{\mathrm{HS}}
+=
+M_{jk}-\frac1d.
+\]
+
+定义对角平面冗余能量
+
+\[
+\boxed{
+\mathcal R(\mathcal B,\mathcal C)
+=
+\sum_{j,k}
+\left(M_{jk}-\frac1d\right)^2.
+}
+\]
+
+利用双随机性，
+
+\[
+\boxed{
+\mathcal R(\mathcal B,\mathcal C)
+=
+\sum_{j,k}M_{jk}^2-1.
+}
+\]
+
+由于任意双随机矩阵满足
+
+\[
+1\le\sum_{j,k}M_{jk}^2\le d,
+\]
+
+故
+
+\[
+0\le\mathcal R\le d-1.
+\]
+
+- \(\mathcal R=0\) 当且仅当两基互相无偏；
+- \(\mathcal R=d-1\) 当且仅当 \(M\) 为置换矩阵，即两基相同到相位与重标记。
+
+定义归一化锐利不兼容度
+
+\[
+\boxed{
+\mathcal I(\mathcal B,\mathcal C)
+=
+1-\frac{\mathcal R(\mathcal B,\mathcal C)}{d-1}
+=
+\frac{
+d-\sum_{j,k}M_{jk}^2
+}{
+d-1
+}.
+}
+\]
+
+于是
+
+\[
+\boxed{
+0\le\mathcal I\le1,
+}
+\]
+
+\[
+\boxed{
+\mathcal I=0
+\iff
+\text{同一锐利上下文},
+}
+\]
+
+\[
+\boxed{
+\mathcal I=1
+\iff
+\text{MUB 最大互补上下文}.
+}
+\]
+
+### 定理 31.7（聚合投影交换子公式）
+
+对秩一上下文，
+
+\[
+\boxed{
+\sum_{j,k}
+\left\|
+[P_j^{\mathcal B},P_k^{\mathcal C}]
+\right\|_2^2
+=
+2(d-1)\mathcal I(\mathcal B,\mathcal C).
+}
+\]
+
+#### 证明
+
+对两个秩一投影 \(P,Q\)，若
+
+\[
+m=\operatorname{Tr}(PQ),
+\]
+
+直接计算得
+
+\[
+\|[P,Q]\|_2^2
+=
+2m(1-m).
+\]
+
+因此
+
+\[
+\sum_{j,k}\|[P_j,Q_k]\|_2^2
+=
+2\sum_{j,k}M_{jk}(1-M_{jk}).
+\]
+
+又因
+
+\[
+\sum_{j,k}M_{jk}=d,
+\]
+
+故
+
+\[
+2\sum_{j,k}M_{jk}(1-M_{jk})
+=
+2\left(
+d-\sum_{j,k}M_{jk}^2
+\right)
+=
+2(d-1)\mathcal I.
+\]
+
+\(\square\)
+
+因此本节得到三种必须分开的量：
+
+\[
+\boxed{
+\begin{aligned}
+\mathcal I(\mathcal B,\mathcal C)
+&=\text{锐利投影不兼容度},\\
+\mathcal O_{\mathcal B,\mathcal C}(\rho)
+&=
+\|
+\mathbb E_{\mathcal B}\mathbb E_{\mathcal C}(\rho)
+-
+\mathbb E_{\mathcal C}\mathbb E_{\mathcal B}(\rho)
+\|
+=\text{粗粒化顺序缺陷},\\
+\mathcal G
+&=\text{多上下文全局拼接／非上下文模型缺陷}.
+\end{aligned}
+}
+\]
+
+MUB 给出
+
+\[
+\mathcal I=1,
+\qquad
+\mathcal O=0.
+\]
+
+相同基给出
+
+\[
+\mathcal I=0,
+\qquad
+\mathcal O=0.
+\]
+
+因此 \(\mathcal O\) 甚至不能按 \(\mathcal I\) 单调排序。全局 contextuality 又不能由任意单个成对量完全决定；一般化非上下文性中，测量不兼容既非必要也非充分条件。故“量子上下文缺陷”必须是多分量审计，而不是一个被过度命名的交换子。
+
+---
+## 31.5 MUB 对角塔：每个新坐标系抽出一个正交经典切片
+
+设
+
+\[
+\mathcal B_1,\ldots,\mathcal B_m
+\]
+
+两两互相无偏。定义
+
+\[
+\boxed{
+S_m
+=
+\bigoplus_{\ell=1}^{m}
+\mathcal D_{\mathcal B_\ell}^0
+\subseteq
+\operatorname{Herm}_d^0,
+}
+\]
+
+以及余空间
+
+\[
+\boxed{
+R_m=S_m^\perp.
+}
+\]
+
+由定理 31.5，直和为正交直和。因此
+
+\[
+\boxed{
+\dim S_m=m(d-1),
+}
+\]
+
+\[
+\boxed{
+\dim R_m
+=
+d^2-1-m(d-1)
+=
+(d-1)(d+1-m).
+}
+\]
+
+由此定义状态无关的维数逃逸率
+
+\[
+\boxed{
+r_m^{\mathrm{dim}}
+=
+\frac{\dim R_m}{d^2-1}
+=
+1-\frac{m}{d+1}.
+}
+\]
+
+以及已完成比例
+
+\[
+\boxed{
+v_m^{\mathrm{dim}}
+=
+\frac{\dim S_m}{d^2-1}
+=
+\frac{m}{d+1}.
+}
+\]
+
+这给出一个有限量子系统中的精确“观察完成速度”：
+
+> 每增加一个最大互补锐利坐标系，恰好增加 \(1/(d+1)\) 的线性状态自由度覆盖。
+
+注意这不是物理时间速度，而是上下文精化深度。
+
+对状态
+
+\[
+X_\rho=\rho-\frac Id
+\]
+
+定义状态相关余质量
+
+\[
+\boxed{
+r_m^{(2)}(\rho)
+=
+\|P_{R_m}X_\rho\|_2^2.
+}
+\]
+
+### 定理 31.8（概率偏差—余质量 Pythagoras 恒等式）
+
+令
+
+\[
+p_{\ell j}
+=
+\operatorname{Tr}
+\left(
+\rho P_j^{\mathcal B_\ell}
+\right).
+\]
+
+则
+
+\[
+\boxed{
+\operatorname{Tr}(\rho^2)-\frac1d
+=
+\sum_{\ell=1}^{m}
+\sum_{j=1}^{d}
+\left(
+p_{\ell j}-\frac1d
+\right)^2
++
+r_m^{(2)}(\rho).
+}
+\]
+
+#### 证明
+
+\(\mathbb E_{\mathcal B_\ell}X_\rho\) 是 \(X_\rho\) 在第 \(\ell\) 个无迹对角平面上的正交投影，并且
+
+\[
+\mathbb E_{\mathcal B_\ell}X_\rho
+=
+\sum_j
+\left(
+p_{\ell j}-\frac1d
+\right)
+P_j^{\mathcal B_\ell}.
+\]
+
+因为各对角平面彼此正交，
+
+\[
+P_{S_m}X_\rho
+=
+\sum_{\ell=1}^m
+\mathbb E_{\mathcal B_\ell}X_\rho.
+\]
+
+又
+
+\[
+\left\|
+\mathbb E_{\mathcal B_\ell}X_\rho
+\right\|_2^2
+=
+\sum_j
+\left(
+p_{\ell j}-\frac1d
+\right)^2.
+\]
+
+最后应用
+
+\[
+\|X_\rho\|_2^2
+=
+\|P_{S_m}X_\rho\|_2^2
++
+\|P_{R_m}X_\rho\|_2^2.
+\]
+
+\(\square\)
+
+所以每个新坐标系所捕获的并不是“又一份重复概率”，而是一个与此前全部 MUB 对角平面正交的二次状态分量。
+
+### 推论 31.9（单步概率创新）
+
+增加第 \(m+1\) 个 MUB 上下文时，
+
+\[
+\boxed{
+r_m^{(2)}(\rho)
+-
+r_{m+1}^{(2)}(\rho)
+=
+\sum_j
+\left(
+p_{m+1,j}-\frac1d
+\right)^2.
+}
+\]
+
+这正是第 28 节商余塔递推
+
+\[
+R_m
+=
+\mathcal D_{\mathcal B_{m+1}}^0
+\oplus
+R_{m+1}
+\]
+
+在量子状态层析中的具体实现。
+
+---
+
+## 31.6 完整 MUB 集、最小层析深度与显式状态重构
+
+任意秩一正交基测量只产生 \(d-1\) 个独立概率参数，而一般密度矩阵具有 \(d^2-1\) 个实参数。因此，仅使用非退化正交基测量时，信息完备至少需要
+
+\[
+\boxed{
+\frac{d^2-1}{d-1}
+=
+d+1
+}
+\]
+
+组测量上下文。
+
+### 定理 31.10（完整 MUB 集达到最小基层析深度）
+
+若存在
+
+\[
+d+1
+\]
+
+组两两 MUB
+
+\[
+\mathcal B_1,\ldots,\mathcal B_{d+1},
+\]
+
+则
+
+\[
+\boxed{
+\operatorname{Herm}_d^0
+=
+\bigoplus_{\ell=1}^{d+1}
+\mathcal D_{\mathcal B_\ell}^0.
+}
+\]
+
+因此
+
+\[
+R_{d+1}=\{0\},
+\]
+
+而全部基概率唯一确定 \(\rho\)。
+
+#### 证明
+
+各子空间两两正交，每个维数为 \(d-1\)，总维数为
+
+\[
+(d+1)(d-1)=d^2-1,
+\]
+
+恰等于 \(\operatorname{Herm}_d^0\) 的维数。 \(\square\)
+
+### 推论 31.11（显式 MUB 重构公式）
+
+在完整 MUB 集下，
+
+\[
+\boxed{
+\rho
+=
+\frac Id
++
+\sum_{\ell=1}^{d+1}
+\sum_{j=1}^{d}
+\left(
+p_{\ell j}-\frac1d
+\right)
+P_j^{\mathcal B_\ell}.
+}
+\]
+
+#### 证明
+
+右侧第二项正是 \(X_\rho\) 在所有正交对角平面上的分量之和。 \(\square\)
+
+### 推论 31.12（完整 MUB 的 purity 概率恒等式）
+
+\[
+\boxed{
+\sum_{\ell=1}^{d+1}
+\sum_{j=1}^{d}
+\left(
+p_{\ell j}-\frac1d
+\right)^2
+=
+\operatorname{Tr}(\rho^2)-\frac1d.
+}
+\]
+
+等价地，
+
+\[
+\boxed{
+\sum_{\ell=1}^{d+1}
+\sum_{j=1}^{d}
+p_{\ell j}^2
+=
+1+\operatorname{Tr}(\rho^2).
+}
+\]
+
+所以完整 MUB 概率族不仅重构状态，还把整体 purity 精确分解为各局部经典坐标图的二次偏差总和。
+
+当 \(d\) 为素数幂时已知存在完整 \(d+1\) 组 MUB。对于一般非素数幂维数，特别是 \(d=6\)，完整集存在性截至本文版本仍是开放问题。因此本节不能把 \(d+1\) MUB 塔假定为所有维数中的普适物理结构。在缺乏完整 MUB 时，可以使用一般信息完备 POVM、互补 frame 或非正交上下文，并以 Gram–Schur 创新代替严格正交增量。
+
+---
+## 31.7 对角自指与动力学的自然性缺陷由层析余质量控制
+
+MUB 对角塔不仅重构状态，还可以控制任意状态操作在有限观察坐标中的降阶误差。
+
+令
+
+\[
+P_m:
+\operatorname{Herm}_d^0
+\to S_m
+\]
+
+为正交投影。
+
+设
+
+\[
+F:
+\operatorname{Herm}_d^0
+\to
+\operatorname{Herm}_d^0
+\]
+
+为 \(L_F\)-Lipschitz 映射：
+
+\[
+\|F(X)-F(Y)\|_2
+\le
+L_F\|X-Y\|_2.
+\]
+
+定义其第 \(m\) 层压缩模型
+
+\[
+\boxed{
+F_m
+=
+P_mF|_{S_m}.
+}
+\]
+
+定义自然性缺陷
+
+\[
+\boxed{
+\partial_mF(X)
+=
+\|
+P_mF(X)
+-
+F_m(P_mX)
+\|_2.
+}
+\]
+
+### 定理 31.13（余质量控制自然性缺陷）
+
+\[
+\boxed{
+\partial_mF(X)
+\le
+L_F
+\|(I-P_m)X\|_2.
+}
+\]
+
+对密度矩阵 \(X=X_\rho\)，
+
+\[
+\boxed{
+\partial_mF(X_\rho)
+\le
+L_F
+\sqrt{
+r_m^{(2)}(\rho)
+}.
+}
+\]
+
+#### 证明
+
+由 \(F_m(P_mX)=P_mF(P_mX)\)，
+
+\[
+\partial_mF(X)
+=
+\|
+P_m(F(X)-F(P_mX))
+\|_2.
+\]
+
+正交投影为收缩，故
+
+\[
+\partial_mF(X)
+\le
+\|F(X)-F(P_mX)\|_2
+\le
+L_F\|X-P_mX\|_2.
+\]
+
+\(\square\)
+
+这条定理把第 30 节的抽象界
+
+\[
+\text{自然性缺陷}
+\le
+\text{观察余量}
+\]
+
+在量子层析塔中完全具体化。若 \(F\) 是自指／对角操作，则它控制“先在完整状态空间自指再观察”与“先投影到有限概率坐标再自指”的误差；若 \(F\) 是动力学，则它控制有限观察层的有效演化误差。
+
+在完整 MUB 集存在时，
+
+\[
+P_{d+1}=I,
+\]
+
+因此
+
+\[
+\boxed{
+\partial_{d+1}F=0
+}
+\]
+
+对任意 \(F\) 成立。这里的零缺陷不是因为操作本身简单，而是因为观察坐标已经信息完备，不再有状态余量。
+
+### 定理 31.14（自然性缺陷的复合 Leibniz 界）
+
+设 \(F,G\) 分别具有局部压缩 \(F_m,G_m\)，并且 \(F_m\) 为 \(L_m(F)\)-Lipschitz。则
+
+\[
+\boxed{
+\partial_m(F\circ G)(X)
+\le
+\partial_mF(GX)
++
+L_m(F)\partial_mG(X),
+}
+\]
+
+其中局部复合取 \(F_m\circ G_m\)。
+
+#### 证明
+
+插入中间项 \(F_m(P_mGX)\)：
+
+\[
+\begin{aligned}
+&
+\|P_mFGX-F_mG_mP_mX\|_2
+\\
+&\le
+\|P_mFGX-F_mP_mGX\|_2
++
+\|F_mP_mGX-F_mG_mP_mX\|_2
+\\
+&\le
+\partial_mF(GX)
++
+L_m(F)\partial_mG(X).
+\end{aligned}
+\]
+
+\(\square\)
+
+### 推论 31.15（时间迭代误差）
+
+若 \(F_m\) 的 Lipschitz 常数不超过 \(L\)，则
+
+\[
+\boxed{
+\partial_m(F^n)(X)
+\le
+\sum_{k=0}^{n-1}
+L^{n-1-k}
+\partial_mF(F^kX).
+}
+\]
+
+若沿轨道单步缺陷均不超过 \(\varepsilon_m\)，则
+
+\[
+\boxed{
+\partial_m(F^n)(X)
+\le
+\begin{cases}
+n\varepsilon_m,&L=1,\\[1mm]
+\dfrac{1-L^n}{1-L}\varepsilon_m,&0\le L<1,\\[3mm]
+\dfrac{L^n-1}{L-1}\varepsilon_m,&L>1.
+\end{cases}
+}
+\]
+
+这把“时间”与“有限坐标自然性”连接起来：
+
+- 收缩动力学会使有限观察误差饱和；
+- 等距动力学最多线性累计局部缺陷；
+- 扩张动力学可能指数放大未观察余量。
+
+该结论仍是模型误差传播，不等同于物理光速或普适时间箭头。
+
+---
+
+## 31.8 重复投影界面产生的熵箭头：每一步熵增恰等于被删除相干
+
+令
+
+\[
+U:\mathscr H\to\mathscr H
+\]
+
+为酉算子，固定上下文 \(\mathcal B\)，并定义离散时间演化
+
+\[
+\boxed{
+\rho_{n+1}
+=
+\mathbb E_{\mathcal B}
+\left(
+U\rho_nU^*
+\right).
+}
+\]
+
+整体酉演化本身保持 von Neumann 熵：
+
+\[
+S(U\rho U^*)=S(\rho).
+\]
+
+对去相干映射有标准恒等式
+
+\[
+\boxed{
+D(\sigma\|
+\mathbb E_{\mathcal B}\sigma)
+=
+S(\mathbb E_{\mathcal B}\sigma)-S(\sigma).
+}
+\]
+
+### 定理 31.16（熵生产—相干删除恒等式）
+
+对每个 \(n\)，
+
+\[
+\boxed{
+S(\rho_{n+1})-S(\rho_n)
+=
+D\!\left(
+U\rho_nU^*
+\big\|
+\mathbb E_{\mathcal B}(U\rho_nU^*)
+\right)
+\ge0.
+}
+\]
+
+因此
+
+\[
+\boxed{
+S(\rho_N)-S(\rho_0)
+=
+\sum_{n=0}^{N-1}
+D\!\left(
+U\rho_nU^*
+\big\|
+\mathbb E_{\mathcal B}(U\rho_nU^*)
+\right).
+}
+\]
+
+#### 证明
+
+令
+
+\[
+\sigma_n=U\rho_nU^*.
+\]
+
+则
+
+\[
+\rho_{n+1}
+=
+\mathbb E_{\mathcal B}\sigma_n.
+\]
+
+利用去相干相对熵恒等式和酉熵不变性：
+
+\[
+\begin{aligned}
+S(\rho_{n+1})-S(\rho_n)
+&=
+S(\mathbb E_{\mathcal B}\sigma_n)-S(\sigma_n)
+\\
+&=
+D(\sigma_n\|
+\mathbb E_{\mathcal B}\sigma_n).
+\end{aligned}
+\]
+
+求和即得。 \(\square\)
+
+这给出一个严格的时间箭头分解：
+
+\[
+\boxed{
+\text{熵增}
+=
+\text{每一步由观察界面删除的相干总量}.
+}
+\]
+
+若没有 \(\mathbb E_{\mathcal B}\)，则酉动力学熵不变。若 \(U\) 保持对角代数，并且 \(\rho_0\) 已在该代数中，则所有相对熵项均为零，熵不增加。
+
+所以本模型中的不可逆性不来自 Hilbert 空间本身，而来自
+
+\[
+\boxed{
+\text{可逆整体动力学}
++
+\text{重复非单射界面投影}.
+}
+\]
+
+### 定理 31.17（投影后动力学退化为 unistochastic Markov 链）
+
+从第一步以后，
+
+\[
+\rho_n
+=
+\sum_jp_{n,j}P_j^{\mathcal B}.
+\]
+
+定义
+
+\[
+\boxed{
+T_{kj}
+=
+|\langle b_k,Ub_j\rangle|^2.
+}
+\]
+
+则 \(T\) 为双随机矩阵，并且
+
+\[
+\boxed{
+p_{n+1}=Tp_n.
+}
+\]
+
+#### 证明
+
+若
+
+\[
+\rho_n=\sum_jp_{n,j}P_j,
+\]
+
+则
+
+\[
+p_{n+1,k}
+=
+\operatorname{Tr}
+\left(
+P_kU\rho_nU^*
+\right)
+=
+\sum_j
+|\langle b_k,Ub_j\rangle|^2p_{n,j}.
+\]
+
+酉矩阵各行各列模平方和为一，故 \(T\) 双随机。 \(\square\)
+
+因此，一旦每一步都将状态投影回同一个经典对角上下文，量子过程在可见层变成一个经典 Markov 链。双随机性给出
+
+\[
+p_{n+1}\prec p_n,
+\]
+
+故 Shannon 熵满足
+
+\[
+\boxed{
+H(p_{n+1})\ge H(p_n).
+}
+\]
+
+若 \(T\) primitive，则
+
+\[
+p_n\to
+\left(
+\frac1d,\ldots,\frac1d
+\right)
+\]
+
+并且
+
+\[
+H(p_n)\to\log d.
+\]
+
+这不是量子力学所有时间箭头的唯一解释，而是一个精确模型，展示了概率、熵、投影与时间如何从同一界面递推中出现。
+
+---
+
+## 31.9 不能再使用一个“上下文缺陷”概括所有量子非经典性
+
+本节的 MUB 反例要求对第 30 节作 append-only 收紧。至少存在以下四个不同问题：
+
+### 1. 锐利兼容性
+
+问投影是否共同可测／共同对角化：
+
+\[
+[P_j^{\mathcal B},P_k^{\mathcal C}]=0.
+\]
+
+对应量：
+
+\[
+\mathcal I(\mathcal B,\mathcal C).
+\]
+
+### 2. 粗粒化顺序性
+
+问两次信息删除的顺序是否重要：
+
+\[
+\mathbb E_{\mathcal B}
+\mathbb E_{\mathcal C}
+\stackrel{?}{=}
+\mathbb E_{\mathcal C}
+\mathbb E_{\mathcal B}.
+\]
+
+对应状态依赖量：
+
+\[
+\mathcal O_{\mathcal B,\mathcal C}(\rho).
+\]
+
+### 3. 层析冗余
+
+问两个坐标系抽取的线性状态方向有多少重合：
+
+\[
+\mathcal R(\mathcal B,\mathcal C)
+=
+\sum_{jk}(M_{jk}-1/d)^2.
+\]
+
+MUB 使其为零，因此每个上下文带来最大正交创新。
+
+### 4. 全局 contextuality
+
+问一个测量情景的全部局部统计是否存在统一的非上下文全局实现。这是多上下文、多操作等价关系与概率约束的全局问题，不能由任意一对基的交换子或 dephasing 顺序完全决定。
+
+因此建议将量子上下文审计记录为向量
+
+\[
+\boxed{
+\mathfrak C
+=
+\left(
+\mathcal I,\mathcal O,\mathcal R,\mathcal G
+\right),
+}
+\]
+
+而不是单一标量。
+
+特别地，
+
+\[
+\boxed{
+\mathcal I=1,\quad
+\mathcal O=0,\quad
+\mathcal R=0
+}
+\]
+
+是 MUB 对的规范签名：
+
+- 锐利投影最大不兼容；
+- 两次完全去相干顺序却无差别；
+- 两个概率坐标平面在线性层析意义下完全无冗余。
+
+这一签名揭示“互补”不是单纯的不交换，而是：
+
+\[
+\boxed{
+\text{局部经典坐标最大不同，同时携带最大独立信息}.
+}
+\]
+
+---
+## 31.10 熵的三重分家：状态混合、测量不确定性与相干余量
+
+为避免把“熵”当成唯一无序标量，本节区分：
+
+### 状态熵
+
+\[
+\boxed{
+S(\rho)=-\operatorname{Tr}(\rho\log\rho).
+}
+\]
+
+它测量状态本身的混合度，基无关。
+
+### 上下文结果熵
+
+\[
+\boxed{
+H_{\mathcal B}(\rho)
+=
+-\sum_jp_j^{\mathcal B}\log p_j^{\mathcal B}.
+}
+\]
+
+它依赖观察坐标系。纯态可以有
+
+\[
+S(\rho)=0
+\]
+
+但在某个 MUB 上有
+
+\[
+H_{\mathcal B}(\rho)=\log d.
+\]
+
+### 相对熵相干
+
+\[
+\boxed{
+C_{\mathcal B}(\rho)
+=
+D(\rho\|
+\mathbb E_{\mathcal B}\rho)
+=
+S(\mathbb E_{\mathcal B}\rho)-S(\rho).
+}
+\]
+
+它测量相对于指定对角代数被删除的跨扇区关系。
+
+最大混合态满足
+
+\[
+S(I/d)=\log d
+\]
+
+但对所有基都有
+
+\[
+C_{\mathcal B}(I/d)=0.
+\]
+
+所以：
+
+\[
+\boxed{
+\text{高状态熵不等于高量子相干，}
+}
+\]
+
+\[
+\boxed{
+\text{高测量熵也不等于状态本身高度混合.}
+}
+\]
+
+MUB 塔的二次恒等式使用的是 purity／Hilbert–Schmidt 质量，而不是 Shannon 或 von Neumann 熵。不同熵可以通过不等式关联，但不得直接互换定义。
+
+---
+
+## 31.11 无限维推广的正确边界
+
+有限维完整 MUB 塔提供了一个清洁模型，但不能未经证明直接推广到任意无限维 Hilbert 空间。
+
+无限维中需要分别处理：
+
+1. 是否存在合适的互补基、frame 或 POVM；
+2. 对角子空间的闭合性；
+3. 测量映射是否有 frame 上下界；
+4. 状态是否为迹类，二次量是否有限；
+5. 无限概率坐标族是否满足统一能量界；
+6. 形式相容坐标是否确实来自一个正常状态；
+7. 动力学与各条件期望的定义域是否稳定。
+
+合理推广是：在一个 von Neumann 代数 \(\mathcal A\) 中取一族正常条件期望
+
+\[
+\mathbb E_i:\mathcal A\to\mathcal C_i,
+\]
+
+令可见算子子空间逐层增长，并在 \(L^2(\mathcal A,\omega)\) 或标准形式 Hilbert 空间中研究其正交余量。完成不能只取普通集合逆极限，还必须加入正常性、能量或平方可和条件。这与第 28 节的 bounded-energy inverse limit 完全一致。
+
+---
+
+## 31.12 与既有文献的边界及候选新贡献
+
+以下事实属于成熟理论，不应重新命名为本项目独有发现：
+
+- 一组基测量只给出状态在该基上的概率；
+- \(d+1\) 组完整 MUB 可用于最优量子态层析；
+- 素数幂维数存在完整 MUB 集；
+- 去相干是到交换子代数的条件期望／投影；
+- relative entropy of coherence 等于去相干熵增；
+- 重复测量可诱导经典 Markov 动力学；
+- contextuality 与 measurement incompatibility 不是同一概念。
+
+本稿的候选新贡献位于它们的组合方式：
+
+1. 把 MUB 对角代数组织成第 28 节意义下的严格正交商余塔；
+2. 同时定义状态无关的余维率和状态相关的 Hilbert–Schmidt 余质量；
+3. 由余质量给出自指对角操作与动力学降阶误差的统一 Lipschitz 界；
+4. 识别并证明“MUB 最大不兼容但去相干交换子为零”的框架反例；
+5. 将锐利不兼容、粗粒化顺序、层析冗余与全局 contextuality 拆成四维审计；
+6. 把重复投影的熵箭头写成逐步删除相干的精确 telescoping identity；
+7. 将坐标精化时间与物理动力时间明确分离，再通过自然性缺陷研究二者耦合。
+
+是否具有发表意义仍取决于进一步文献审计、非平凡推广以及至少一个不能由现有 MUB／资源理论定理直接重写得到的新结果。
+
+---
+## 31.13 建议形式化模块
+
+建议按以下顺序进入 Lean：
+
+1. `HermitianTracelessDimension`
+   \[
+   \dim_{\mathbb R}\operatorname{Herm}_d^0=d^2-1.
+   \]
+
+2. `BasisDephasingOrthogonalProjection`
+   \[
+   \mathbb E_{\mathcal B}^2=\mathbb E_{\mathcal B}
+   =
+   \mathbb E_{\mathcal B}^*.
+   \]
+
+3. `SingleContextVisibleRemainderDimension`
+   \[
+   \dim\mathcal D_{\mathcal B}^0=d-1,
+   \quad
+   \dim R_{\mathcal B}=d^2-d.
+   \]
+
+4. `PureStateProbabilityFiber`
+   内点纤维
+   \[
+   q_{\mathcal B}^{-1}(p)\cong\mathbb T^{d-1}.
+   \]
+
+5. `MUBDiagonalSubspaceOrthogonal`
+   \[
+   \mathcal B\perp_{\mathrm{MUB}}\mathcal C
+   \iff
+   \mathcal D_{\mathcal B}^0
+   \perp
+   \mathcal D_{\mathcal C}^0.
+   \]
+
+6. `MUBDephasingComposition`
+   \[
+   \mathbb E_{\mathcal B}\mathbb E_{\mathcal C}(X)
+   =
+   \operatorname{Tr}(X)I/d.
+   \]
+
+7. `SharpIncompatibilityCommutatorSum`
+   \[
+   \sum_{jk}\|[P_j,Q_k]\|_2^2
+   =
+   2(d-1)\mathcal I.
+   \]
+
+8. `MUBTowerDimension`
+   \[
+   \dim R_m=(d-1)(d+1-m).
+   \]
+
+9. `MUBProbabilityPythagoras`
+   \[
+   \operatorname{Tr}\rho^2-\frac1d
+   =
+   \sum_{\ell,j}(p_{\ell j}-1/d)^2+r_m^{(2)}(\rho).
+   \]
+
+10. `CompleteMUBTomography`
+    \[
+    \rho
+    =
+    I/d+\sum_{\ell,j}(p_{\ell j}-1/d)P_{\ell j}.
+    \]
+
+11. `ResidualControlsNaturality`
+    \[
+    \partial_mF(X)
+    \le
+    L_F\|(I-P_m)X\|_2.
+    \]
+
+12. `NaturalityDefectComposition`
+    \[
+    \partial_m(FG)
+    \le
+    \partial_mF\circ G
+    +
+    L_m(F)\partial_mG.
+    \]
+
+13. `RepeatedDephasingEntropyProduction`
+    \[
+    S(\rho_{n+1})-S(\rho_n)
+    =
+    D(U\rho_nU^*\|
+    \mathbb E_{\mathcal B}(U\rho_nU^*)).
+    \]
+
+14. `RepeatedDephasingUnistochastic`
+    \[
+    p_{n+1}=Tp_n,
+    \qquad
+    T_{kj}=|\langle b_k,Ub_j\rangle|^2.
+    \]
+
+MUB 完整集的存在应在素数幂维数中通过具名经典接口接入；一般维数中不得无条件实例化。
+
+---
+
+## 31.14 最终统一式
+
+本节得到一个比“概率是投影”更精确的层次：
+
+\[
+\boxed{
+\text{量子态}
+=
+\text{最大混合原点}
++
+\text{全部算子 Hilbert 方向}.
+}
+\]
+
+\[
+\boxed{
+\text{一个测量坐标系}
+=
+\text{到一个 }(d-1)\text{-维经典对角平面的正交投影}.
+}
+\]
+
+\[
+\boxed{
+\text{概率}
+=
+\text{该对角投影的坐标}.
+}
+\]
+
+\[
+\boxed{
+\text{相干}
+=
+\text{仍留在其正交余空间中的状态分量}.
+}
+\]
+
+\[
+\boxed{
+\text{MUB}
+=
+\text{彼此正交、冗余为零的局部经典坐标平面}.
+}
+\]
+
+\[
+\boxed{
+\text{完整 MUB 层析}
+=
+\text{用 }d+1\text{ 个局部经典对角完成全部量子状态方向}.
+}
+\]
+
+\[
+\boxed{
+\text{自然性缺陷}
+\le
+\text{尚未被坐标塔捕获的余质量}.
+}
+\]
+
+\[
+\boxed{
+\text{重复测量熵增}
+=
+\text{每轮投影删除的相干相对熵之和}.
+}
+\]
+
+而最重要的修正是：
+
+\[
+\boxed{
+\text{锐利不兼容}
+\neq
+\text{去相干顺序缺陷}
+\neq
+\text{层析冗余}
+\neq
+\text{全局 contextuality}.
+}
+\]
+
+因此，量子力学不能只解释为“多个投影不交换”，也不能只解释为“概率来自投影”。更完整的结构是：
+
+\[
+\boxed{
+\text{量子力学}
+=
+\text{一族局部经典对角坐标}
++
+\text{这些坐标的余相干}
++
+\text{它们之间的互补几何}
++
+\text{无法由单一全局经典坐标同时实现的拼接结构}.
+}
+\]
+
+在这个意义上，坐标系、概率、熵、时间、逃逸率、Hilbert 空间与对角化确实属于同一个研究对象的不同投影；但它们只有在各自的类型、缺陷量与完成条件被严格区分以后，才构成可检验的新数学，而不是词语上的统一。
+
+## 31.15 参考接口与严格非主张
+
+参考接口：
+
+- I. D. Ivanović, *Geometrical description of quantal state determination*, 1981.
+- W. K. Wootters and B. D. Fields, *Optimal state-determination by mutually unbiased measurements*, 1989.
+- R. B. A. Adamson and A. M. Steinberg, *Improving Quantum State Estimation with Mutually Unbiased Bases*, 2010.
+- D. McNulty and S. Weigert, *Mutually Unbiased Bases in Composite Dimensions — A Review*, 2026.
+- J. H. Selby et al., *Contextuality without Incompatibility*, 2023.
+
+严格非主张：
+
+1. 本节不声称一般维数都存在完整 \(d+1\) 组 MUB。
+2. 本节不把层析精化指标 \(m\) 等同于物理时间。
+3. 本节不把 Hilbert–Schmidt 余质量等同于 Shannon 熵、von Neumann 熵或任意操作性资源单调量。
+4. 本节不把 dephasing 通道交换当作锐利测量兼容性。
+5. 本节不把 pairwise measurement incompatibility 等同于 generalized contextuality。
+6. 本节不把重复投影模型中的熵增解释为所有封闭量子宇宙的基本时间箭头。
+7. 本节不从有限维层析完成推出无限维正常状态空间的自动完成。
+8. 本节新增结论均为纸面定理；在 Lean proof term、依赖闭包、admission 与冻结收据齐备前不得标记为 `Closed`。
+
+---
+
+# 32. 追加：观察者闭包、Heisenberg 预测塔与多轴完备性
+## Observer Closure, Heisenberg Predictive Towers, and Multi-Axis Completeness
+
+### 32.0 文档地位与承重边界
+
+本节把项目中已经反复出现的观察者视角收束为同一个类型正确的结构：
+
+- `OBSERVER-QUANTUM` 中的有限读出、读出纤维、整体自逼近、可见层与隐藏层；
+- `WindowObserverDistance` 中由可访问变化量的单位球恢复观察者几何；
+- universal solenoid 中可见圆、隐藏核与路径分支；
+- `D5/S0/Diagonal` 中自坐标读取、逃逸数量、距离剖面与浓缩；
+- 本文前述有限预测完成、Koopman 闭包、Hilbert 商余塔、量子上下文、MUB 坐标塔与 RH 目标余量；
+- 项目接口理论中“可访问性、代价、命名、正锥与外部真源必须分层”的原则。
+
+核心结论是：
+
+\[
+\boxed{
+\text{观察者不是一个点，也不仅是一个投影；观察者是“商 + 闭包规则”。}
+}
+\]
+
+商决定当前哪些对象不可区分；闭包规则决定这种不可区分性在时间、记忆、上下文、完成与自指操作下是否保持。
+
+本节主要在有限维量子状态空间和一般有限/线性观察系统中给出纸面定理。它不把所有观察者结构宣称为同一个既有 Lean 定义，也不把经验完备、层析完备、上下文完备与自描述完备混为一谈。新增定理在 Lean proof term、依赖闭包和冻结收据齐备以前不得标记为 `Closed`。
+
+---
+
+## 32.1 项目观察者的统一类型
+
+设整体状态对象为 \(X\)，动力学为
+
+\[
+T:X\to X.
+\]
+
+一个最小观察界面由读出映射
+
+\[
+q_O:X\to Y_O
+\]
+
+给出。它诱导当前不可区分关系
+
+\[
+x\sim_Oy
+\iff
+q_O(x)=q_O(y),
+\]
+
+以及读出纤维
+
+\[
+\mathcal F_O(y)
+=
+q_O^{-1}(y).
+\]
+
+但仅有 \(q_O\) 还不能说明观察者如何处理未来、记忆、自指和 refinement。为此定义如下数据。
+
+### 定义 32.1（结构化观察者）
+
+一个结构化观察者记为
+
+\[
+\boxed{
+\mathfrak O
+=
+(X,T,q_O,\mathcal M_O,\mathcal A_O,\Delta_O,\mathcal R_O),
+}
+\]
+
+其中：
+
+\[
+\begin{aligned}
+X
+&=\text{整体状态或对象空间},\\
+T
+&=\text{整体动力学},\\
+q_O
+&=\text{当前有限读出},\\
+\mathcal M_O
+&=\text{观察者可保存和再次读取的账本／记忆},\\
+\mathcal A_O
+&=\text{观察者可提出的问题或可访问可观测量},\\
+\Delta_O
+&=\text{观察者允许的自应用／对角操作},\\
+\mathcal R_O
+&=\text{观察分辨率、资源或接口 refinement 规则}.
+\end{aligned}
+\]
+
+该定义不是要把不同领域强制编码成同一数据类型，而是给出必须分别类型化的七个位置。具体实例可以省略不适用的数据，但不得把省略的位置默认为“自动存在”。
+
+### 原理 32.2（商与闭包）
+
+观察者的当前商为
+
+\[
+X_O=X/{\sim_O}.
+\]
+
+若要让 \(X_O\) 成为一个封闭有效世界，还必须证明至少一个闭包条件，例如：
+
+\[
+q_OT=T_Oq_O
+\]
+
+的动力学下降，
+
+\[
+Q_O\Delta=\Delta_OP_O
+\]
+
+的对角自然性，
+
+或局部上下文在交叠处的拼接一致性。
+
+所以：
+
+\[
+\boxed{
+\text{商只回答“现在看起来是否相同”；闭包回答“这种相同能否持续成立”。}
+}
+\]
+
+---
+
+## 32.2 从有限读出纤维到算子 Hilbert 余空间
+
+现在取有限维 Hilbert 空间
+
+\[
+\mathscr H=\mathbb C^d,
+\]
+
+实 Hilbert 空间
+
+\[
+V=\operatorname{Herm}_d^0
+=
+\{X=X^*,\ \operatorname{Tr}X=0\},
+\]
+
+以及量子态的中心化坐标
+
+\[
+X_\rho=\rho-\frac Id.
+\]
+
+设观察者拥有有限 effect 族
+
+\[
+E_1,\ldots,E_r,
+\qquad
+0\le E_a\le I.
+\]
+
+当前读出为
+
+\[
+q_O(\rho)
+=
+\bigl(
+\operatorname{Tr}(\rho E_a)
+\bigr)_{a=1}^r.
+\]
+
+定义中心化 effect
+
+\[
+\widetilde E_a
+=
+E_a-\frac{\operatorname{Tr}E_a}{d}I
+\in V,
+\]
+
+可见子空间
+
+\[
+\boxed{
+V_0
+=
+\operatorname{span}_{\mathbb R}
+\{\widetilde E_1,\ldots,\widetilde E_r\},
+}
+\]
+
+以及当前余空间
+
+\[
+\boxed{
+R_0=V_0^\perp.
+}
+\]
+
+### 定理 32.3（读出纤维—Hilbert 余空间等价）
+
+对任意两个密度矩阵 \(\rho,\sigma\)，下列命题等价：
+
+\[
+q_O(\rho)=q_O(\sigma);
+\]
+
+\[
+\operatorname{Tr}
+\bigl(
+(\rho-\sigma)E_a
+\bigr)=0
+\quad
+\forall a;
+\]
+
+\[
+X_\rho-X_\sigma\in R_0;
+\]
+
+\[
+P_{V_0}X_\rho=P_{V_0}X_\sigma.
+\]
+
+#### 证明
+
+因为 \(\operatorname{Tr}(\rho-\sigma)=0\)，
+
+\[
+\operatorname{Tr}
+\bigl(
+(\rho-\sigma)E_a
+\bigr)
+=
+\operatorname{Tr}
+\bigl(
+(X_\rho-X_\sigma)\widetilde E_a
+\bigr).
+\]
+
+所以全部读出相同，当且仅当差向量与 \(V_0\) 的生成元全部正交，即属于 \(V_0^\perp\)。最后一项是正交投影核的标准刻画。 \(\square\)
+
+因此 `OBSERVER-QUANTUM` 中的读出纤维，在有限维量子模型中具有一个规范线性骨架：
+
+\[
+\boxed{
+\text{读出纤维的切向不可见方向}
+=
+\text{可访问 effect 张成空间的正交余}.
+}
+\]
+
+但物理纤维并不是整个仿射余空间，而是它与密度算子正锥的交：
+
+\[
+\boxed{
+\mathcal F_O(y)
+=
+\left(
+\frac Id+x_y+R_0
+\right)
+\cap
+\{\rho\ge0,\ \operatorname{Tr}\rho=1\}.
+}
+\]
+
+### 推论 32.4（正锥纤维的凸性）
+
+每个非空读出纤维 \(\mathcal F_O(y)\) 是紧凸集。
+
+#### 证明
+
+密度矩阵集合是有限维紧凸集，读出映射是连续仿射映射；单点原像与其交仍为闭凸集。 \(\square\)
+
+这说明项目“正锥—界面”视角是必要的：线性商给出不可见方向，正锥决定其中哪些点仍是物理状态。
+
+---
+
+## 32.3 Heisenberg 预测塔：时间如何生成缺失坐标
+
+设
+
+\[
+\Phi:
+\operatorname{Herm}_d
+\to
+\operatorname{Herm}_d
+\]
+
+为保持迹的量子通道，\(\Phi^*\) 为其 Heisenberg 对偶：
+
+\[
+\operatorname{Tr}(\Phi(\rho)A)
+=
+\operatorname{Tr}(\rho\Phi^*(A)).
+\]
+
+观察者在时刻 \(k\) 对 effect \(E_a\) 的预测概率为
+
+\[
+p_{a,k}(\rho)
+=
+\operatorname{Tr}
+\bigl(
+\Phi^k(\rho)E_a
+\bigr)
+=
+\operatorname{Tr}
+\bigl(
+\rho(\Phi^*)^k(E_a)
+\bigr).
+\]
+
+定义第 \(m\) 阶 Heisenberg 可见空间
+
+\[
+\boxed{
+V_m
+=
+\operatorname{span}_{\mathbb R}
+\left\{
+\widetilde{(\Phi^*)^k(E_a)}
+:
+1\le a\le r,\ 0\le k\le m
+\right\}
+\subseteq V,
+}
+\]
+
+其中波浪号表示去除标量迹部分。定义预测余空间
+
+\[
+\boxed{
+R_m=V_m^\perp.
+}
+\]
+
+显然：
+
+\[
+V_0\subseteq V_1\subseteq\cdots,
+\qquad
+R_0\supseteq R_1\supseteq\cdots.
+\]
+
+### 定义 32.5（有限未来不可区分）
+
+写
+
+\[
+\rho\equiv_m^O\sigma
+\]
+
+若
+
+\[
+p_{a,k}(\rho)=p_{a,k}(\sigma)
+\]
+
+对全部 \(a\) 和 \(0\le k\le m\) 成立。
+
+### 定理 32.6（量子未来词—正交余等价）
+
+对任意 \(\rho,\sigma\)，
+
+\[
+\boxed{
+\rho\equiv_m^O\sigma
+\iff
+X_\rho-X_\sigma\in R_m
+\iff
+P_{V_m}X_\rho=P_{V_m}X_\sigma.
+}
+\]
+
+#### 证明
+
+对每个 \(a,k\)，
+
+\[
+p_{a,k}(\rho)-p_{a,k}(\sigma)
+=
+\left\langle
+X_\rho-X_\sigma,
+\widetilde{(\Phi^*)^k(E_a)}
+\right\rangle_{\mathrm{HS}}.
+\]
+
+全部有限未来概率相等，当且仅当差向量与 \(V_m\) 的全部生成元正交。 \(\square\)
+
+这就是本文有限确定系统中 Nerode/未来读出完成在量子算子 Hilbert 空间中的精确对应：
+
+\[
+\boxed{
+\text{经典未来输出词}
+\longleftrightarrow
+\text{Heisenberg 轨道上的 effect 期望值}.
+}
+\]
+
+---
+
+## 32.4 “一次稳定即永久稳定”的量子观察者版本
+
+### 定理 32.7（Heisenberg 塔一次稳定即永久稳定）
+
+若某个 \(m\) 满足
+
+\[
+V_m=V_{m+1},
+\]
+
+则
+
+\[
+\boxed{
+V_{m+s}=V_m
+\quad
+\forall s\ge0.
+}
+\]
+
+等价地，
+
+\[
+R_{m+s}=R_m
+\quad
+\forall s\ge0.
+\]
+
+#### 证明
+
+\(V_{m+1}=V_m\) 意味着对每个生成元及其前 \(m\) 次 Heisenberg 像，再施加一次 \(\Phi^*\) 后仍落在 \(V_m\)。因此
+
+\[
+\Phi^*(V_m)\subseteq V_m
+\]
+
+（标量方向单独保持，不影响无迹部分）。归纳得到全部更高次像仍在 \(V_m\)，所以不再出现新方向。 \(\square\)
+
+### 推论 32.8（有限稳定深度界）
+
+令
+
+\[
+m_*
+=
+\min\{m:V_m=V_{m+1}\}.
+\]
+
+则
+
+\[
+\boxed{
+m_*
+\le
+\dim V_\infty-\dim V_0
+\le
+d^2-1-\dim V_0,
+}
+\]
+
+其中
+
+\[
+V_\infty=\bigcup_mV_m=V_{m_*}.
+\]
+
+#### 证明
+
+每次未稳定时，有限维子空间维数至少增加一；总维数不超过 \(d^2-1\)。 \(\square\)
+
+这里的“一次稳定”并不表示：
+
+- 量子态停止演化；
+- 输出概率成为常数；
+- 通道达到固定点；
+- 熵不再变化。
+
+它只表示：
+
+\[
+\boxed{
+\text{更远的时间不再产生新的线性预测坐标。}
+}
+\]
+
+因此，时间可以持续发生，而观察者的预测坐标系统已经闭合。
+
+---
+
+## 32.5 最小线性预测观察者
+
+定义最终预测不可见空间
+
+\[
+R_\infty
+=
+\bigcap_{m\ge0}R_m
+=
+V_\infty^\perp.
+\]
+
+定义预测商
+
+\[
+\boxed{
+Z_O^{\mathrm{lin}}
+=
+V/R_\infty.
+}
+\]
+
+通过 Hilbert 正交代表，它规范同构于 \(V_\infty\)。于是可取最小预测状态为
+
+\[
+\boxed{
+z_O(\rho)
+=
+P_{V_\infty}X_\rho.
+}
+\]
+
+### 定理 32.9（全部未来统计的充分性）
+
+全部未来概率
+
+\[
+\bigl(
+p_{a,k}(\rho)
+\bigr)_{a,k}
+\]
+
+只依赖于 \(z_O(\rho)\)。更具体地，
+
+\[
+z_O(\rho)=z_O(\sigma)
+\iff
+p_{a,k}(\rho)=p_{a,k}(\sigma)
+\quad
+\forall a,k\ge0.
+\]
+
+#### 证明
+
+应用定理 32.6，并令 \(m\ge m_*\)。 \(\square\)
+
+### 定理 32.10（最小性泛性质）
+
+设
+
+\[
+L:V\to W
+\]
+
+为线性摘要，并假设所有未来概率都能由 \(L(X_\rho)\) 唯一确定。则存在唯一线性映射
+
+\[
+h:\operatorname{range}L\to V_\infty
+\]
+
+使
+
+\[
+\boxed{
+P_{V_\infty}=h\circ L.
+}
+\]
+
+特别地，
+
+\[
+\boxed{
+\dim\operatorname{range}L
+\ge
+\dim V_\infty.
+}
+\]
+
+#### 证明
+
+若 \(Lx=0\)，则 \(x\) 与零向量具有相同摘要，因此全部未来读出线性泛函在 \(x\) 上为零，即 \(x\in R_\infty\)。所以
+
+\[
+\ker L\subseteq R_\infty=\ker P_{V_\infty}.
+\]
+
+由线性映射的商泛性质，\(P_{V_\infty}\) 唯一地通过 \(L\) 因子化。维数不等式随即成立。 \(\square\)
+
+所以项目中的“最小预测观察者完成”在量子有限维情形不是一条比喻，而是：
+
+\[
+\boxed{
+\text{初始 effect 空间的最小 Heisenberg 不变线性闭包}.
+}
+\]
+
+这与经典有限系统中“当前读出代数的最小 Koopman 不变闭包”完全对偶。
+
+---
+
+## 32.6 时间作为坐标生成器
+
+### 定义 32.11（时间层析完备）
+
+若
+
+\[
+V_\infty=V=\operatorname{Herm}_d^0,
+\]
+
+则称固定观察界面 \((E_a)\) 在动力学 \(\Phi\) 下时间层析完备。
+
+此时：
+
+\[
+\boxed{
+\text{一个当下不完备的测量，通过其 Heisenberg 时间轨道可以变成完备坐标系。}
+}
+\]
+
+### 定理 32.12（有限时间层析）
+
+若时间层析完备，则存在
+
+\[
+m\le d^2-1-\dim V_0
+\]
+
+使前 \(m+1\) 个时间层的概率已经唯一确定任意量子态。
+
+#### 证明
+
+由推论 32.8，\(V_m\) 在有限步达到 \(V\)。定理 32.6 此时给出状态分离。 \(\square\)
+
+### 例 32.13（一个 qubit 的固定二元测量由时间生成完整坐标）
+
+取 qubit Pauli 算子 \(X,Y,Z\)。选择酉算子 \(U\)，使共轭作用循环三个轴：
+
+\[
+U^*ZU=X,
+\qquad
+U^*XU=Y,
+\qquad
+U^*YU=Z.
+\]
+
+例如可取 Bloch 球上绕轴 \((1,1,1)/\sqrt3\) 旋转 \(2\pi/3\) 的酉提升。
+
+当前只测量
+
+\[
+E_\pm=\frac{I\pm Z}{2}.
+\]
+
+则其中心化 Heisenberg 轨道依次张成
+
+\[
+Z,\quad X,\quad Y.
+\]
+
+因此
+
+\[
+V_0=\operatorname{span}\{Z\},
+\]
+
+\[
+V_1=\operatorname{span}\{Z,X\},
+\]
+
+\[
+V_2=\operatorname{span}\{Z,X,Y\}
+=
+\operatorname{Herm}_2^0.
+\]
+
+所以：
+
+\[
+\boxed{
+\text{同一个二元测量在三个时间切片上的集合统计足以完成 qubit 层析。}
+}
+\]
+
+这里必须使用独立制备的同一初态或其他不会把测量反作用混入动力学的实验协议。它不是说在一条经历投影坍缩的单样本轨迹上，可以无扰动地同时读出 \(X,Y,Z\)。
+
+这一例子给“时间是观察者对整体的展开”一个严格而有限的版本：
+
+\[
+\boxed{
+\text{物理动力学在 Heisenberg 图像中旋转问题；观察者沿时间收集这些问题的坐标。}
+}
+\]
+
+---
+
+## 32.7 预测余质量与未来误差
+
+对状态差
+
+\[
+X=X_\rho-X_\sigma
+\]
+
+定义第 \(m\) 层预测余质量
+
+\[
+\boxed{
+r_m^O(X)
+=
+\|P_{R_m}X\|_2^2.
+}
+\]
+
+定义创新壳层
+
+\[
+\boxed{
+E_{m+1}^O
+=
+V_{m+1}\cap V_m^\perp.
+}
+\]
+
+则
+
+\[
+R_m
+=
+E_{m+1}^O\oplus R_{m+1}.
+\]
+
+### 定理 32.14（时间坐标创新递推）
+
+\[
+\boxed{
+r_m^O(X)
+=
+r_{m+1}^O(X)
++
+\|P_{E_{m+1}^O}X\|_2^2.
+}
+\]
+
+#### 证明
+
+由上述正交直和和 Pythagoras。 \(\square\)
+
+所以每多观察一个时间层，真正增加的不是“又一次重复测量”，而是：
+
+\[
+\boxed{
+(\Phi^*)^{m+1}\mathcal A_O
+\text{ 中相对于全部较早时间无法线性解释的创新方向}.
+}
+\]
+
+### 定理 32.15（未来概率误差的精确余相关）
+
+令
+
+\[
+A_{a,k}
+=
+\widetilde{(\Phi^*)^k(E_a)}.
+\]
+
+若观察者用 \(P_{V_m}X_\rho\) 代替完整状态，则对任意未来 \(a,k\)，
+
+\[
+\boxed{
+\operatorname{Tr}
+\bigl(
+(\rho-\rho_m)E_{a,k}
+\bigr)
+=
+\left\langle
+P_{R_m}X_\rho,
+P_{R_m}A_{a,k}
+\right\rangle_{\mathrm{HS}},
+}
+\]
+
+其中 \(\rho_m\) 仅表示具有中心化坐标 \(P_{V_m}X_\rho\) 的线性预测代表；它未必自身是正密度矩阵。
+
+因此：
+
+\[
+\boxed{
+|\Delta p_{a,k}^{(m)}|
+\le
+\sqrt{r_m^O(X_\rho)}
+\,
+\|P_{R_m}A_{a,k}\|_2.
+}
+\]
+
+#### 证明
+
+\(X_\rho-P_{V_m}X_\rho=P_{R_m}X_\rho\)。再将 \(A_{a,k}\) 分解为 \(V_m\) 与 \(R_m\) 两部分；前者与状态余向量正交。最后应用 Cauchy–Schwarz。 \(\square\)
+
+当 \(k\le m\) 时，
+
+\[
+A_{a,k}\in V_m,
+\]
+
+故误差严格为零。对于更远未来，误差由“状态余量”和“未来问题尚未进入当前坐标塔的余量”共同决定。
+
+这给出一个双余量原则：
+
+\[
+\boxed{
+\text{预测失败}
+=
+\text{隐藏状态方向}
+\times
+\text{隐藏未来问题方向}.
+}
+\]
+
+---
+
+## 32.8 观察者几何：可访问变化量决定距离
+
+项目 `WindowObserverDistance` 的核心结构可以抽象如下。设观察者可访问一族实可观测量 \(\mathcal A_O^{\mathrm{sa}}\)，并给定变化半范数
+
+\[
+L_O(A)\in[0,\infty].
+\]
+
+定义观察者对偶距离
+
+\[
+\boxed{
+d_O(\rho,\sigma)
+=
+\sup
+\left\{
+|\operatorname{Tr}((\rho-\sigma)A)|:
+A\in\mathcal A_O^{\mathrm{sa}},
+\ L_O(A)\le1
+\right\}.
+}
+\]
+
+有限循环窗口中的仓库定理说明，在其特定一步更新缺陷半范数下，该对偶距离精确恢复循环图距离。该结果提示：
+
+\[
+\boxed{
+\text{几何不是只由载体集合给定，而由观察者允许哪些函数以及怎样计价其变化共同给定。}
+}
+\]
+
+### 定理 32.16（观察 refinement 的距离单调性）
+
+若
+
+\[
+\mathcal A_m\subseteq\mathcal A_{m+1}
+\]
+
+且 \(L_{m+1}\) 在 \(\mathcal A_m\) 上限制为 \(L_m\)，则
+
+\[
+\boxed{
+d_m(\rho,\sigma)
+\le
+d_{m+1}(\rho,\sigma).
+}
+\]
+
+#### 证明
+
+第 \(m\) 层 supremum 的可行集合包含于第 \(m+1\) 层。 \(\square\)
+
+### 推论 32.17（零距离纤维）
+
+若 \(L_m\) 的单位球线性张成 \(\mathcal A_m^{\mathrm{sa}}\)，则
+
+\[
+d_m(\rho,\sigma)=0
+\]
+
+当且仅当 \(\rho,\sigma\) 在 \(\mathcal A_m\) 上给出相同状态限制。
+
+因此读出纤维也可以被写成观察者伪度量的零距离类：
+
+\[
+\boxed{
+\mathcal F_O(\rho)
+=
+\{\sigma:d_O(\rho,\sigma)=0\}.
+}
+\]
+
+若完成代数能够分离全部状态，则极限伪度量成为真正度量。若仍有隐藏核，则不同整体状态可在观察者几何中距离为零。
+
+---
+
+## 32.9 可见圆、隐藏核与扇区完备性
+
+universal solenoid 的项目结构提供了一个重要反例：观察者即使对某个可见相位坐标完全精确，也可能仍然无法分辨全局路径扇区。
+
+设
+
+\[
+\pi:\Sigma_\infty\to\mathbb T
+\]
+
+为可见圆投影，隐藏核为
+
+\[
+K_\infty=\ker\pi.
+\]
+
+一个只通过 \(\pi\) 读取的观察者满足：
+
+\[
+q_O(x)=q_O(x+k)
+\qquad
+(k\in K_\infty).
+\]
+
+所以其当前不可见核至少包含整个隐藏纤维。仓库已有路径轨道分类说明，solenoid 中的路径连通关系由实流轨道刻画，隐藏核偏移参与路径分支标签。
+
+由此必须区分：
+
+\[
+\boxed{
+\begin{aligned}
+\text{点分离完备}
+&=\text{能否区分不同整体点},\\
+\text{动力预测完备}
+&=\text{能否区分未来读出不同的状态},\\
+\text{扇区完备}
+&=\text{能否分辨路径分支／隐藏核标签}.
+\end{aligned}
+}
+\]
+
+它们互不自动推出。
+
+一个观察者可以对可见圆上的位置拥有精确几何，却对隐藏核上的两个点给出零距离；也可以通过逐 prime-adic refinement 最终分离点，但仍需另行证明这些坐标如何恢复路径、流轨道或物理扇区结构。
+
+因此：
+
+\[
+\boxed{
+\text{逆极限点完成}
+\neq
+\text{拓扑路径完成}
+\neq
+\text{动力扇区完成}.
+}
+\]
+
+---
+
+## 32.10 经验完备不推出自描述完备
+
+假设一个量子观察者满足
+
+\[
+V_\infty=V.
+\]
+
+它可以从全部未来统计唯一重构当前密度矩阵。这叫经验／层析完备。
+
+现在另给一个同层自模型评价表
+
+\[
+E:A\times A\to Y
+\]
+
+与无不动点扭曲
+
+\[
+\tau:Y\to Y.
+\]
+
+对角对象为
+
+\[
+\Delta_\tau(E)(a)
+=
+\tau(E(a,a)).
+\]
+
+Cantor–Lawvere 型论证仍可使该对角对象逃出当前行像。层析完备只说明观察者能识别系统状态，不说明它能够在同一类型中列尽所有关于自身的评价函数。
+
+### 命题 32.18（经验完备与反身完备分离）
+
+存在观察者满足：
+
+\[
+\boxed{
+\text{当前状态完全可重构}
+}
+\]
+
+但不满足：
+
+\[
+\boxed{
+\text{所有同类型自评价均可由其内部名单捕获}.
+}
+\]
+
+#### 证明
+
+取任意有限维且信息完备的量子层析界面，故状态可重构。独立地，若存在一个声称枚举 \(Y^A\) 全部函数的同层评价名单，则对角扭曲构造逃逸函数。两种完备性涉及不同类型，前者不能消除后者的对角障碍。 \(\square\)
+
+所以：
+
+\[
+\boxed{
+\text{知道自己的完整状态}
+\neq
+\text{拥有关于自己的一切可能真命题或模型}.
+}
+\]
+
+这是项目观察者理论与普通量子层析之间最独特的接缝之一。
+
+---
+
+## 32.11 六个既有反例迫使观察者完备性成为向量
+
+以下结构已在本文不同章节出现。
+
+### 反例 A：预测闭合但不忠实
+
+常值读出对未来已经完全闭合，其最小预测状态只有一个点；但它不能区分任何微观状态。
+
+### 反例 B：层析完备但自描述不完备
+
+定理 32.18。
+
+### 反例 C：最大锐利不兼容但粗粒化顺序缺陷为零
+
+MUB 投影最大不兼容，而对应 dephasing 通道满足
+
+\[
+\mathbb E_{\mathcal B}\mathbb E_{\mathcal C}
+=
+\mathbb E_{\mathcal C}\mathbb E_{\mathcal B}.
+\]
+
+### 反例 D：目标完成但空间未完成
+
+Nyman–Beurling 塔中 RH 只要求
+
+\[
+P_{R_\infty}\chi=0,
+\]
+
+不要求
+
+\[
+R_\infty=0.
+\]
+
+### 反例 E：有限层逐点逼近但非统一完备
+
+递增有限维投影可满足
+
+\[
+P_nx\to x
+\quad
+\forall x,
+\]
+
+但每个真有限阶段仍有
+
+\[
+\|I-P_n\|=1.
+\]
+
+### 反例 F：可见坐标精确但隐藏扇区未分辨
+
+solenoid 可见圆读出不能自动恢复隐藏核分支。
+
+因此不存在一个不加类型说明的标量“观察者完整度”。
+
+### 定义 32.19（观察者多轴审计）
+
+定义观察者闭合向量
+
+\[
+\boxed{
+\mathbf C(\mathfrak O)
+=
+(
+C_{\mathrm{sep}},
+C_{\mathrm{pred}},
+C_{\mathrm{dyn}},
+C_{\mathrm{tom}},
+C_{\mathrm{ctx}},
+C_{\mathrm{sec}},
+C_{\mathrm{ref}},
+C_{\mathrm{lim}}
+).
+}
+\]
+
+各分量分别测量：
+
+\[
+\begin{aligned}
+C_{\mathrm{sep}}
+&=\text{当前状态分离能力},\\
+C_{\mathrm{pred}}
+&=\text{未来读出的预测闭合},\\
+C_{\mathrm{dyn}}
+&=\text{整体动力学能否下降到观察商},\\
+C_{\mathrm{tom}}
+&=\text{指定状态族的层析完备},\\
+C_{\mathrm{ctx}}
+&=\text{局部经典图能否全局拼接},\\
+C_{\mathrm{sec}}
+&=\text{路径／隐藏核／超选择扇区分辨},\\
+C_{\mathrm{ref}}
+&=\text{自应用评价的反身闭合},\\
+C_{\mathrm{lim}}
+&=\text{全部兼容有限视图是否由整体实现}.
+\end{aligned}
+\]
+
+接口价格、计算资源和记忆容量另作为代价向量
+
+\[
+\mathbf P(\mathfrak O)
+\]
+
+记录，不应伪装成数学完备性的一个分量。
+
+---
+
+## 32.12 观察 refinement 的双层自然性缺陷分解
+
+设
+
+\[
+V_m\subseteq V_n\subseteq V,
+\qquad
+m\le n,
+\]
+
+正交投影分别为 \(P_m,P_n\)。设
+
+\[
+F:V\to V
+\]
+
+为 \(L\)-Lipschitz 操作，粗层模型为
+
+\[
+F_m=P_mF|_{V_m}.
+\]
+
+定义第 \(m\) 层自然性缺陷
+
+\[
+\partial_mF(X)
+=
+\|P_mF(X)-F_m(P_mX)\|.
+\]
+
+再定义从细层 \(n\) 向粗层 \(m\) 的内层模型缺陷
+
+\[
+\boxed{
+\partial_{m\leftarrow n}F(Y)
+=
+\|P_mF(Y)-F_m(P_mY)\|,
+\qquad
+Y\in V_n.
+}
+\]
+
+### 定理 32.20（尾余量—跨层缺陷分解）
+
+\[
+\boxed{
+\partial_mF(X)
+\le
+L\|(I-P_n)X\|
++
+\partial_{m\leftarrow n}F(P_nX).
+}
+\]
+
+#### 证明
+
+插入中间项 \(P_mF(P_nX)\)：
+
+\[
+\begin{aligned}
+\partial_mF(X)
+&\le
+\|P_m(F(X)-F(P_nX))\|\\
+&\quad+
+\|P_mF(P_nX)-F_m(P_mX)\|.
+\end{aligned}
+\]
+
+第一项不超过 \(L\|(I-P_n)X\|\)。又因 \(P_mP_n=P_m\)，第二项正是定义中的跨层缺陷。 \(\square\)
+
+这条式子把观察误差分成两种不同来源：
+
+\[
+\boxed{
+\text{完整世界到细观察仍未捕获的尾余量}
+}
+\]
+
+与
+
+\[
+\boxed{
+\text{细观察已经捕获的信息在粗层有效模型中仍不能自然下降的失配}.
+}
+\]
+
+仅仅扩大窗口只能自动减小第一项；第二项必须通过模型自然性另行控制。
+
+---
+
+## 32.13 时间、记忆与熵的严格分工
+
+Heisenberg 塔的 refinement 指标 \(m\) 表示未来坐标深度。它与物理时间步 \(k\) 有联系，因为生成元来自 \((\Phi^*)^kE_a\)，但二者仍扮演不同角色：
+
+\[
+k=\text{被预测系统的动力时间},
+\]
+
+\[
+m=\text{观察者已经纳入模型的最大时间深度}.
+\]
+
+稳定深度 \(m_*\) 衡量的是最小线性预测记忆，而不是熵增速度。
+
+定义线性预测复杂度
+
+\[
+\boxed{
+C_{\mathrm{lin}}(\mathfrak O)
+=
+\dim V_\infty.
+}
+\]
+
+定义额外闭合成本
+
+\[
+\boxed{
+C_{\mathrm{add}}(\mathfrak O)
+=
+\dim V_\infty-\dim V_0.
+}
+\]
+
+它们是维数资源，而不是 Shannon 或 von Neumann 熵。
+
+只有在给定状态先验、测量记录过程或重复粗粒化动力学以后，才产生概率熵。特别地，对过程
+
+\[
+\rho_{n+1}
+=
+\mathbb E_{\mathcal B}
+(U\rho_nU^*)
+\]
+
+本文已经证明每轮熵增等于该轮被删除的相对熵相干。该结论来自不可逆 dephasing，而不是来自 Heisenberg 坐标塔本身。
+
+因此：
+
+\[
+\boxed{
+\text{时间生成新坐标}
+\not\Rightarrow
+\text{时间必然产生熵}.
+}
+\]
+
+以及：
+
+\[
+\boxed{
+\text{预测闭合深度}
+\not\Rightarrow
+\text{物理退化时间}.
+}
+\]
+
+---
+
+## 32.14 算术观察者与目标相对完备
+
+有限 prime ledger、有限零点窗口、Li 测试阶数和 Nyman–Beurling 生成空间都可被视为不同的算术观察界面，但它们的“完备”目标不同。
+
+例如 Nyman–Beurling 观察塔只需对目标
+
+\[
+\chi=\mathbf1_{(0,1)}
+\]
+
+满足
+
+\[
+P_{R_\infty}\chi=0
+\]
+
+即可等价于 RH；整个 \(L^2\) 余空间可以非零。
+
+这给出：
+
+\[
+\boxed{
+\text{目标相对完备}
+\neq
+\text{全空间层析完备}.
+}
+\]
+
+类似地，有限零点窗口可以对窗口内零点位置完全准确，却对窗口外是否存在离线零点没有统一控制；Li 高阶测试可以放大某一离线轨道，却仍需控制其余全部轨道的全局余项。
+
+所以项目的算术视角再次确认：
+
+\[
+\boxed{
+\text{观察者必须声明“对什么命题、什么目标、什么范数完备”。}
+}
+\]
+
+未注明目标的“观察者已经看见整体”不是数学命题。
+
+---
+
+## 32.15 项目独特视角的统一闭合图
+
+本节可以把项目各分支重新排列为同一个闭合图：
+
+\[
+\boxed{
+\begin{array}{c}
+\text{整体状态／对象 }X\\
+\downarrow\ q_O\\
+\text{有限读出与纤维}\\
+\downarrow\ \text{Hilbert／代数表示}\\
+\text{可见子空间 }V_0
+\oplus
+\text{余空间 }R_0\\
+\downarrow\ \Phi^*\text{ 或 refinement}\\
+\text{预测／坐标闭包 }V_\infty\\
+\downarrow\\
+\text{最小有效观察状态 }X/R_\infty\\
+\downarrow\ \Delta\\
+\text{自描述闭合测试与对角逃逸}\\
+\downarrow\ \varprojlim\\
+\text{全部相对视图的可实现完成}
+\end{array}
+}
+\]
+
+每一条箭头都可能失败，并对应不同缺陷：
+
+\[
+\boxed{
+\begin{aligned}
+\ker q_O
+&=\text{当前不可见差异},\\
+R_\infty
+&=\text{全部未来仍不可见差异},\\
+\partial_O T
+&=\text{动力学下降缺陷},\\
+\partial_O\Delta
+&=\text{自指自然性缺陷},\\
+\mathcal G_{\mathrm{ctx}}
+&=\text{上下文拼接缺陷},\\
+K_{\mathrm{sec}}
+&=\text{隐藏扇区核},\\
+\mathcal C_{\mathrm{real}}
+&=\text{兼容但不可实现的极限族}.
+\end{aligned}
+}
+\]
+
+这使“观察者”不再是额外放入系统中的神秘主体，而成为一组可审计的数学接口。
+
+---
+
+## 32.16 最强的新解释：观察者是相对同一性的稳定器
+
+单一读出 \(q_O\) 只定义瞬时同一性：
+
+\[
+x\sim_Oy.
+\]
+
+预测闭包把它稳定到全部未来：
+
+\[
+x\sim_O^\infty y
+\iff
+q_OT^k(x)=q_OT^k(y)
+\quad
+\forall k.
+\]
+
+上下文闭包要求不同局部读出在交叠处兼容。
+
+极限闭包要求每个相容局部族可由整体实现。
+
+反身闭包则要求观察者关于自身的描述操作也能下降到该商；对角化说明这一步可能必然失败。
+
+因此最凝练的项目式定义是：
+
+\[
+\boxed{
+\text{观察者}
+=
+\text{选择相对同一性，并尝试让这种同一性在时间、上下文、完成和自指下稳定。}
+}
+\]
+
+由此：
+
+\[
+\boxed{
+\text{相对性}
+=
+\text{不同观察者选择不同同一性关系};
+}
+\]
+
+\[
+\boxed{
+\text{时间}
+=
+\text{同一性关系在动力学下接受稳定性检验};
+}
+\]
+
+\[
+\boxed{
+\text{概率}
+=
+\text{状态对观察者可访问事件的权重};
+}
+\]
+
+\[
+\boxed{
+\text{熵}
+=
+\text{观察商删除差异后的统计代价};
+}
+\]
+
+\[
+\boxed{
+\text{对角化}
+=
+\text{同一层自描述不能完全稳定的证书};
+}
+\]
+
+\[
+\boxed{
+\infty
+=
+\text{任何有限稳定器都可能留有余核，但相容 refinement 可形成完成}.
+}
+\]
+
+这比“观察者看到世界的一部分”更强：观察者不是被动截取一幅画面，而是在定义什么可以被当作同一个对象，并承担该定义在未来是否自洽的全部代价。
+
+---
+
+## 32.17 建议形式化模块
+
+建议按以下顺序进入 Lean。
+
+1. `EffectReadoutFiberOrthogonal`
+   \[
+   q(\rho)=q(\sigma)
+   \iff
+   X_\rho-X_\sigma\in V_0^\perp.
+   \]
+
+2. `HeisenbergObservableTower`
+   定义 \(V_m\)、\(R_m\) 及其单调性。
+
+3. `QuantumFutureEquivalence`
+   \[
+   \rho\equiv_m\sigma
+   \iff
+   X_\rho-X_\sigma\in R_m.
+   \]
+
+4. `HeisenbergTowerStableForever`
+   \[
+   V_m=V_{m+1}
+   \Rightarrow
+   \forall s,\ V_{m+s}=V_m.
+   \]
+
+5. `FiniteQuantumObserverDepth`
+   \[
+   m_*\le d^2-1-\dim V_0.
+   \]
+
+6. `MinimalLinearPredictiveObserver`
+   证明 \(P_{V_\infty}\) 的因子化泛性质。
+
+7. `QubitTemporalTomographyCycle`
+   形式化 Pauli 三轴循环例。
+
+8. `PredictiveResidualPythagoras`
+   \[
+   r_m=r_{m+1}+\|P_{E_{m+1}}X\|^2.
+   \]
+
+9. `FutureProbabilityResidualBound`
+   \[
+   |\Delta p|
+   \le
+   \|P_{R_m}X\|_2
+   \|P_{R_m}A\|_2.
+   \]
+
+10. `ObserverDualMetricRefinement`
+    证明可观测代数扩张下距离单调。
+
+11. `TailTransferDefect`
+    \[
+    \partial_mF(X)
+    \le
+    L\|(I-P_n)X\|
+    +
+    \partial_{m\leftarrow n}F(P_nX).
+    \]
+
+12. `TomographicNotReflexive`
+    将信息完备读出与 Lawvere 型对角逃逸作为不同类型的非蕴含命题陈述。
+
+现有 `WindowObserverDistance`、finite predictive completion、MUB tower、solenoid path-orbit classification 与 diagonal escape-count 模块应作为实例或依赖锚点，而不是在新模块中复制证明。
+
+---
+
+## 32.18 严格非主张
+
+1. 本节不声称仓库中所有名为 observer 的结构已经共享同一个 Lean 类型。
+2. 本节不把读出纤维的线性余空间与完整物理纤维等同；后者还受正锥约束。
+3. 本节不把时间层析中的 refinement 深度等同于物理时间或热力学时间。
+4. 本节不声称单次侵入式测量轨迹可以无扰动完成 Heisenberg 层析。
+5. 本节不把预测闭合等同于微观状态忠实性。
+6. 本节不把层析完备等同于自描述完备。
+7. 本节不把点分离、路径分支分离和超选择扇区分离视为同一个条件。
+8. 本节不把可见坐标的 Hilbert–Schmidt 余质量直接等同于 Shannon 熵、von Neumann 熵或操作性资源单调量。
+9. 本节不把有限观察深度界推广为无限维系统中的统一有限界。
+10. 本节新增结论均为纸面定理；在 Lean 内核验证以前不得标记为 `Closed`。
+
+## 32.19 最终结论
+
+项目中“观察者”的全部独特视角可以压缩成三个连续升级的对象：
+
+\[
+\boxed{
+\text{读出观察者}
+=
+\text{当前商 }X/\ker q;
+}
+\]
+
+\[
+\boxed{
+\text{预测观察者}
+=
+\text{该商在动力学下的最小不变闭包};
+}
+\]
+
+\[
+\boxed{
+\text{反身观察者}
+=
+\text{预测闭包再接受自指、上下文和极限实现检验}.
+}
+\]
+
+在有限维量子系统中，预测观察者由 Heisenberg effect 轨道精确给出：
+
+\[
+\boxed{
+V_\infty
+=
+\operatorname{span}
+\{(\Phi^*)^k\widetilde E_a:a,k\}.
+}
+\]
+
+它的正交余：
+
+\[
+\boxed{
+R_\infty=V_\infty^\perp
+}
+\]
+
+是所有未来测量仍无法看见的差异。
+
+时间可以通过 \(\Phi^*\) 生成新坐标；概率是状态在这些坐标上的评价；预测误差由状态余量与未来问题余量的内积控制；观察者几何由允许的可观测变化量决定；solenoid 隐藏核提醒我们点、路径和扇区完成不同；对角化则说明，即使经验状态已经完全可见，同层自描述仍可能逃逸。
+
+因此本节的中心公式不是一个新的宇宙口号，而是一组可检验对象：
+
+\[
+\boxed{
+\begin{aligned}
+V_m
+&=
+\operatorname{span}\{(\Phi^*)^k\widetilde E_a:k\le m\},\\
+R_m
+&=
+V_m^\perp,\\
+\rho\equiv_m^O\sigma
+&\iff
+X_\rho-X_\sigma\in R_m,\\
+V_m=V_{m+1}
+&\Rightarrow
+V_{m+s}=V_m,\\
+|\Delta p_{a,k}^{(m)}|
+&\le
+\|P_{R_m}X_\rho\|_2
+\|P_{R_m}A_{a,k}\|_2.
+\end{aligned}
+}
+\]
+
+它们给出一个新的统一解释：
+
+\[
+\boxed{
+\text{观察不是从整体中静态切下一块；观察是沿时间生成坐标、收缩余核，并检验所得相对同一性能否闭合。}
+}
+\]
+
+---
+
+## 32.20 观察者闭包算子与动力学下降的最小修复
+
+令 \(V\) 为有限维实 Hilbert 空间，\(K:V\to V\) 为 Heisenberg/Koopman 线性算子，\(W\subseteq V\) 为当前可见可观测子空间。定义
+
+\[
+\boxed{
+\operatorname{Cl}_K(W)
+=
+\operatorname{span}
+\{K^n w:n\ge0,\ w\in W\}.
+}
+\]
+
+有限维时无需另取闭包；无限维时使用 Hilbert 闭包。
+
+### 定理 32.21（观察者闭包是最小不变闭包）
+
+\(\operatorname{Cl}_K\) 满足：
+
+\[
+\boxed{
+W\subseteq\operatorname{Cl}_K(W)
+}
+\]
+
+（扩张性），
+
+\[
+\boxed{
+W_1\subseteq W_2
+\Longrightarrow
+\operatorname{Cl}_K(W_1)
+\subseteq
+\operatorname{Cl}_K(W_2)
+}
+\]
+
+（单调性），
+
+\[
+\boxed{
+\operatorname{Cl}_K(
+\operatorname{Cl}_K(W)
+)
+=
+\operatorname{Cl}_K(W)
+}
+\]
+
+（幂等性），并且它是包含 \(W\) 的最小 \(K\)-不变子空间。
+
+#### 证明
+
+前三项由幂次轨道张成定义直接得到。若 \(U\supseteq W\) 且 \(K(U)\subseteq U\)，则归纳有 \(K^nW\subseteq U\)，故 \(\operatorname{Cl}_K(W)\subseteq U\)。 \(\square\)
+
+因此，预测观察者并不是任意增加记忆，而是对当前问题空间施加一个规范闭包算子。
+
+在量子情形取
+
+\[
+K(A)=
+\widetilde{\Phi^*(A)}.
+\]
+
+则
+
+\[
+V_\infty=\operatorname{Cl}_K(V_0).
+\]
+
+### 定理 32.22（最终余核是动力学同余）
+
+令 Schrödinger 侧线性演化为 \(\Phi\)，并令
+
+\[
+R_\infty=V_\infty^\perp.
+\]
+
+则
+
+\[
+\boxed{
+\Phi(R_\infty)\subseteq R_\infty.
+}
+\]
+
+因此动力学唯一下降到商
+
+\[
+V/R_\infty.
+\]
+
+#### 证明
+
+若 \(x\in R_\infty\)，对任意 \(A\in V_\infty\)，
+
+\[
+\langle\Phi x,A\rangle
+=
+\langle x,\Phi^*A\rangle.
+\]
+
+由于 \(V_\infty\) 对中心化 Heisenberg 演化不变，\(\Phi^*A\) 的无迹部分仍属于 \(V_\infty\)；而 \(x\) 无迹，标量部分不贡献配对。所以右侧为零，故 \(\Phi x\in V_\infty^\perp\)。商映射的良定义性随即成立。 \(\square\)
+
+### 推论 32.23（预测闭包是动力学自然性的最小修复）
+
+当前读出空间 \(V_0\) 未必允许封闭有效动力学；但其观察闭包
+
+\[
+V_\infty=\operatorname{Cl}_{\Phi^*}(V_0)
+\]
+
+使最终不可见关系成为动力学同余。任何包含 \(V_0\) 且允许全部未来读出封闭演化的可观测子空间，都必须包含 \(V_\infty\)。
+
+所以：
+
+\[
+\boxed{
+\text{观察者闭包}
+=
+\text{把瞬时商修复成动力学商所需的最小坐标扩张}.
+}
+\]
+
+这给项目所有观察者视角一个更统一的内核：
+
+\[
+\boxed{
+\text{观察者}
+=
+\text{初始问题空间}
++
+\text{使其在目标操作下稳定的最小闭包}.
+}
+\]
+
+对于时间，目标操作是 \(\Phi^*\)；对于自指，目标操作是 \(\Delta\)；对于上下文，目标操作是限制与拼接；对于完成，目标操作是全部 bonding maps；对于算术账本，目标操作是 prime/zero/test refinement。不同领域共享的是“闭包问题”的形状，而不是同一个未经证明的对象同一性。
+
+---
+
+# 33. 追加：观察者叶层几何、记录作用、混合时间与三重闭包
+## Observer Leaf Geometry, Record Action, Hybrid Time, and the Three Closures
+
+### 33.0 研究位置、仓库锚点与严格边界
+
+第 32 节把观察者收紧为“当前商 + 使该商在目标操作下稳定的最小闭包”。本节继续结合项目已经形式化的独特结构：
+
+- `D5/S3/Quantum/ObserverAlgebra.lean` 与 `ObserverCommutator.lean` 中的读出—更新协变和精确交换子公式；
+- `D5/S3/Observer/ObserverMetric.lean`、`MetricGeometry/OrbitConnesDistance.lean`、`WindowObserverDistance.lean` 与 `VisiblePhaseInfinity.lean` 中的更新缺陷半范数、有限叶内距离和跨可见相位无穷距离；
+- `HiddenFlow/ContinuousRigidity.lean`、`DiscreteRigidity.lean`、`StreamlineExistence.lean` 中的可见连续流、隐藏素数地址与离散跳变阻碍；
+- `Conditioning.lean`、`BornReduction.lean`、`MeasurementMarginal.lean` 中的 Born 权重、条件分支、未读测量和环境边缘；
+- `ObserverMemory/MultiCopyErasure.lean`、`LedgerEnvironmentBridge.lean`、`JointCoherentReversal.lean` 中的多记录乘法、退相干与联合反演；
+- `FiniteReadoutKernel.lean`、`TwoTimeKnowledge.lean`、`FiniteForgettingCertificate.lean` 中的读出商、知识因子化、遗忘和追加式审计；
+- `WindowRegister.lean`、`MatrixUnitCertificate.lean`、`WindowAlgebra/WindowGeneration.lean`、`WindowCharacter.lean` 中的 Weyl 对、全矩阵代数生成、标量交换子和无角色定理；
+- `WindowRegisterCRT.lean` 与 `PrimePowerTensorTower.lean` 中的 CRT 地址分解和素数幂张量塔；
+- `RecordCorrelationMonogamy.lean` 与 `ClassicalAnswerTableExclusion.lean` 中的同一记录指针互补约束及经典答案表双重排除。
+
+这些结果共同指向一个比“观察者是投影”更强的结构：
+
+\[
+\boxed{
+\text{观察者是一个带有读出、更新、记忆、代价和闭包规则的相对状态机。}
+}
+\]
+
+本节的候选新贡献不是重新陈述交叉积、Connes 距离、量子测量或 CRT，而是把下列此前分居不同模块的对象放入同一组定理：
+
+\[
+\boxed{
+\text{读出交换子}
+\longleftrightarrow
+\text{观察者 Lipschitz 半范数}
+\longleftrightarrow
+\text{叶层扩展距离};
+}
+\]
+
+\[
+\boxed{
+\text{环境记录重叠乘积}
+\longleftrightarrow
+\text{可加记录作用}
+\longleftrightarrow
+\text{相干生存率与可逆性门槛};
+}
+\]
+
+\[
+\boxed{
+\text{有限读出核}
+\longleftrightarrow
+\text{知识代数}
+\longleftrightarrow
+\text{遗忘余量};
+}
+\]
+
+\[
+\boxed{
+\text{CRT 素数幂分解}
+\longleftrightarrow
+\text{局部观察扇区}
+\longleftrightarrow
+\text{高阶关联余空间}.
+}
+\]
+
+本节不主张：所有物理时间都是隐藏地址跳数；记录作用就是 von Neumann 熵；无穷观察距离就是物理空间距离；全矩阵代数生成无条件推出自然界量子力学；素数幂张量分解自动解决一般维数 MUB；相干恢复可以在丢弃环境以后无条件完成。新增定理仍为纸面推导，未经 Lean proof term、依赖闭包、admission 和冻结收据不得标记为 `Closed`。
+
+---
+
+## 33.1 读出—更新交换子就是观察者的一阶导数
+
+设地址集合为 \(I\)，寄存器 Hilbert 空间为
+
+\[
+\mathscr H_I=\ell^2(I),
+\]
+
+可逆更新为置换
+
+\[
+\tau:I\to I.
+\]
+
+定义更新酉算子和读出乘法算子：
+
+\[
+(U_\tau\psi)(i)=\psi(\tau^{-1}i),
+\]
+
+\[
+(M_f\psi)(i)=f(i)\psi(i).
+\]
+
+定义更新差分：
+
+\[
+\boxed{
+\delta_\tau f
+=f\circ\tau^{-1}-f.
+}
+\]
+
+仓库已经逐坐标证明：
+
+\[
+(U_\tau M_f-M_fU_\tau)\psi(i)
+=
+\delta_\tau f(i)\psi(\tau^{-1}i).
+\]
+
+### 定理 33.1（交换子因子化）
+
+有精确算子恒等式：
+
+\[
+\boxed{
+[U_\tau,M_f]
+=M_{\delta_\tau f}U_\tau.
+}
+\]
+
+若 \(I\) 有限，或 \(f\) 有界，则：
+
+\[
+\boxed{
+\|[U_\tau,M_f]\|_{\mathrm{op}}
+=
+\|\delta_\tau f\|_\infty.
+}
+\]
+
+#### 证明
+
+第一式是仓库交换子公式的算子写法。第二式利用 \(U_\tau\) 酉以及乘法算子范数公式：
+
+\[
+\|M_gU_\tau\|
+=
+\|M_g\|
+=
+\|g\|_\infty.
+\]
+
+\(\square\)
+
+因此项目中的
+
+\[
+\operatorname{perturbationSeminorm}(\tau,f)
+=
+\sup_i|f(\tau^{-1}i)-f(i)|
+\]
+
+不是任意选取的扰动量，而是读出与更新交换子的算子范数：
+
+\[
+\boxed{
+L_\tau(f)
+:=
+\|[U_\tau,M_f]\|
+=
+\|\delta_\tau f\|_\infty.
+}
+\]
+
+它是观察者相对于一步更新的“一阶导数”。
+
+### 推论 33.2（零导数、更新不变量与操作中心）
+
+\[
+\boxed{
+L_\tau(f)=0
+\iff
+f\circ\tau=f.
+}
+\]
+
+所以 \(L_\tau\) 的核不是“无意义函数”，而是更新无法改变的观测量代数：
+
+\[
+\boxed{
+\ker L_\tau
+=
+\operatorname{Fix}(\tau^*).
+}
+\]
+
+在单个非空循环窗口上，仓库已经证明该核只有常数；因此该窗口没有非平凡的零代价横向观测量。
+
+---
+
+## 33.2 一般置换的观察者距离是叶内图距离、叶间无穷距离
+
+定义扩展观察者距离：
+
+\[
+\boxed{
+ d_\tau(x,y)
+=
+\sup\left\{
+|f(x)-f(y)|:
+L_\tau(f)\le1
+\right\}.
+}
+\]
+
+在无限集合上，为避免无关的增长病态，可以把候选限制为有界函数；以下叶间结论仍然成立，因为轨道指示函数有界。
+
+### 定理 33.3（不变量分离导致无穷距离）
+
+若存在
+
+\[
+f\in\ker L_\tau
+\]
+
+满足
+
+\[
+f(x)\ne f(y),
+\]
+
+则
+
+\[
+\boxed{
+ d_\tau(x,y)=+\infty.
+}
+\]
+
+#### 证明
+
+对任意 \(c>0\)，有
+
+\[
+L_\tau(cf)=cL_\tau(f)=0\le1,
+\]
+
+而
+
+\[
+|cf(x)-cf(y)|
+=c|f(x)-f(y)|.
+\]
+
+令 \(c\to\infty\)。\(\square\)
+
+因此有限距离至少要求两个状态在全部零缺陷观测量上给出相同值。
+
+### 定义 33.4（更新叶）
+
+置换 \(\tau\) 将 \(I\) 分解为轨道：
+
+\[
+I=\bigsqcup_{\lambda\in\Lambda}\mathcal O_\lambda.
+\]
+
+称每个 \(\mathcal O_\lambda\) 为一个更新叶。
+
+### 定理 33.5（置换观察者距离完全分类）
+
+设 \(I\) 为离散集合，\(\tau\) 为置换。
+
+1. 若 \(x,y\) 位于不同更新叶，则
+   \[
+   \boxed{
+   d_\tau(x,y)=+\infty.
+   }
+   \]
+2. 若 \(x,y\) 位于同一有限循环叶 \(C_m\)，则
+   \[
+   \boxed{
+   d_\tau(x,y)
+   =
+   d_{C_m}(x,y),
+   }
+   \]
+   右侧是循环图上的最短路距离。
+3. 若 \(x,y\) 位于同一自由整数叶，并对候选观测量要求有界，则
+   \[
+   \boxed{
+   d_\tau(x,y)=|n_x-n_y|,
+   }
+   \]
+   其中 \(n_x,n_y\in\mathbb Z\) 是相对于任一叶原点的整数坐标。
+
+#### 证明
+
+不同叶时，取某一叶的指示函数。它沿 \(\tau\) 不变，且分离 \(x,y\)，应用定理 33.3。
+
+同一有限循环中，\(L_\tau(f)\le1\) 表示每条相邻边上的函数差至多一。沿最短路求和给出
+
+\[
+|f(x)-f(y)|
+\le d_{C_m}(x,y).
+\]
+
+取截断距离函数
+
+\[
+f_z=d_{C_m}(x,z)
+\]
+
+即可达到上界。自由整数叶使用仓库已经形式化的 clipped distance observable；上界由逐步三角不等式，下界由截断距离函数达到。\(\square\)
+
+因此观察者空间不是普通连通度量空间，而是扩展度量叶层：
+
+\[
+\boxed{
+\text{叶内距离有限并由更新步数决定；叶间距离由不变量放大为无穷。}
+}
+\]
+
+这把仓库中两个看似相反的结果统一起来：
+
+- `WindowObserverDistance` 与 `OrbitConnesDistance` 在一个更新叶内恢复有限路径距离；
+- `VisiblePhaseInfinity` 在不同可见相位上得到 \(\top\)，因为隐藏平移保持可见相位，故可见相位函数属于 \(\ker L_\tau\)，并能分离两点。
+
+### 推论 33.6（有限距离分量由不变量代数标记）
+
+令状态限制映射为
+
+\[
+\operatorname{res}_{\ker L_\tau}:
+I\to
+\operatorname{Spec}(\ker L_\tau),
+\qquad
+x\mapsto(f\mapsto f(x)).
+\]
+
+则每个有限距离分量都包含在该限制映射的一个纤维中。
+
+所以：
+
+\[
+\boxed{
+\text{零缺陷观测量不是距离中的“零方向”；它们是扩展几何的扇区标签。}
+}
+\]
+
+若不先固定这些标签或商掉不变量代数，Connes 型距离可能自然取无穷值。
+
+---
+
+## 33.3 可见圆与隐藏素数地址给出混合时间，而不是单一连续时间
+
+项目中的 universal solenoid 带有投影：
+
+\[
+\pi:\Sigma_\infty\to\mathbb T,
+\]
+
+隐藏核为：
+
+\[
+K_\infty=\ker\pi
+\cong
+\prod_p\mathbb Z_p.
+\]
+
+对一条连续路径 \(x:\mathbb R\to\Sigma_\infty\)，仓库构造规范化数据：
+
+\[
+ x(t)=\operatorname{realFlow}(a(t))+k,
+\]
+
+其中 \(a:\mathbb R\to\mathbb R\) 连续，而
+
+\[
+k\in K_\infty
+\]
+
+在整条连续路径上保持常数。
+
+同时，仓库证明任意连续加法实流
+
+\[
+\mathbb R\to K_\infty
+\]
+
+都是零流；但存在显式非零整数参数跳变
+
+\[
+\mathbb Z\to K_\infty,
+\]
+
+且该跳变没有连续实参数扩张。
+
+### 定理 33.7（连续段的隐藏地址守恒）
+
+在规范化 streamline 分解中，若 \(x(t)\) 连续，则其隐藏地址
+
+\[
+k(x)
+\]
+
+在每个连通时间段上恒定。
+
+因此若两个时刻具有不同隐藏地址：
+
+\[
+k(t_0)\ne k(t_1),
+\]
+
+则不存在一条在同一规范化可见提升下连接二者的连续隐藏流。
+
+### 定义 33.8（混合观察时间）
+
+一个允许隐藏事件的观察历史可写为分段数据：
+
+\[
+ x(t)
+=
+\operatorname{realFlow}(a_j(t))+k_j,
+\qquad
+ t\in[t_j,t_{j+1}),
+\]
+
+以及跳变收据：
+
+\[
+\delta_j=k_{j+1}-k_j.
+\]
+
+定义累计隐藏账：
+
+\[
+\Lambda(t)
+=
+\sum_{t_j\le t}\delta_j.
+\]
+
+于是完整历史参数不是单个实数，而是：
+
+\[
+\boxed{
+\Theta(t)
+=(t,\Lambda(t)).
+}
+\]
+
+其中：
+
+- \(t\) 排序可见连续演化；
+- \(\Lambda(t)\) 记录不能由连续隐藏流吸收的离散地址变化。
+
+这是一种数学上的 hybrid time／event time 模型，不是关于物理时间本体的无条件断言。
+
+### 推论 33.9（隐藏变化必须留下接缝）
+
+若隐藏地址发生非零变化，而整体路径仍被宣称为连续，则至少一项必须改变：
+
+1. 可见提升的规范；
+2. 路径所属的 streamline 扇区；
+3. 观察接口；
+4. 连续性声明；
+5. 记录中所采用的隐藏坐标等价。
+
+所以隐藏事件不能在固定全部接口的同时被“平滑掉”。这给追加式账本一个几何理由：
+
+\[
+\boxed{
+\text{离散事件收据记录的是连续图册之间无法无痕拼接的接缝。}
+}
+\]
+
+---
+
+## 33.4 概率是记录分支权重；未读测量是条件分支的重组
+
+设 \((P_k)_{k\in K}\) 是有限完备正交投影族：
+
+\[
+P_k=P_k^*=P_k^2,
+\qquad
+P_kP_l=0\ (k\ne l),
+\qquad
+\sum_kP_k=I.
+\]
+
+对状态 \(\rho\)，定义记录权重：
+
+\[
+\boxed{
+p_k=\operatorname{Tr}(\rho P_k).
+}
+\]
+
+当 \(p_k>0\) 时，条件状态为：
+
+\[
+\boxed{
+\rho_k
+=
+\frac{P_k\rho P_k}{p_k}.
+}
+\]
+
+未读测量状态为：
+
+\[
+\boxed{
+\mathcal P(\rho)
+=
+\sum_kP_k\rho P_k.
+}
+\]
+
+仓库已经形式化：
+
+\[
+\boxed{
+\mathcal P(\rho)
+=
+\sum_kp_k\rho_k,
+}
+\]
+
+包括零权重分支的严格处理。
+
+### 定理 33.10（记录经典性固定点）
+
+\[
+\boxed{
+\mathcal P(\rho)=\rho
+\iff
+P_k\rho P_l=0
+\quad(k\ne l).
+}
+\]
+
+所以相对于该记录接口，“经典态”恰是未读记录投影的固定点。
+
+### 推论 33.11（Born 权重的秩一约化）
+
+若
+
+\[
+P_k=|\phi_k\rangle\langle\phi_k|,
+\qquad
+\rho=|\psi\rangle\langle\psi|,
+\]
+
+则：
+
+\[
+\boxed{
+p_k
+=|\langle\phi_k,\psi\rangle|^2.
+}
+\]
+
+因此 Born 概率在本框架中的类型是：
+
+\[
+\boxed{
+\text{整体态与记录分支投影的配对权重，而不是投影或商本身。}
+}
+\]
+
+未读状态则是丢弃分支标签以后保留的条件状态混合。
+
+---
+
+## 33.5 多记录重叠产生一个可加“记录作用”
+
+考虑同一系统地址 \(i,j\) 被有限多个环境记录复制。第 \(r\) 个记录的 Gram 重叠记为：
+
+\[
+g_r(i,j)
+=
+\langle E_j^{(r)},E_i^{(r)}\rangle.
+\]
+
+项目已经形式化，多记录通道逐元满足：
+
+\[
+\boxed{
+\rho_{ij}^{(N)}
+=
+\Gamma_N(i,j)\rho_{ij}^{(0)},
+\qquad
+\Gamma_N(i,j)
+=
+\prod_{r=1}^{N}g_r(i,j).
+}
+\]
+
+若所有环境记录向量归一化，则 Cauchy–Schwarz 给出：
+
+\[
+|g_r(i,j)|\le1.
+\]
+
+### 定义 33.12（记录作用／相干债务）
+
+定义扩展非负量：
+
+\[
+\boxed{
+\mathfrak A_N(i,j)
+=
+-\log|\Gamma_N(i,j)|
+\in[0,+\infty],
+}
+\]
+
+并约定 \(\Gamma_N=0\) 时：
+
+\[
+\mathfrak A_N=+\infty.
+\]
+
+若每个重叠非零，则：
+
+\[
+\boxed{
+\mathfrak A_N(i,j)
+=
+\sum_{r=1}^{N}
+\bigl(-\log|g_r(i,j)|\bigr).
+}
+\]
+
+### 定理 33.13（记录作用控制相干生存）
+
+\[
+\boxed{
+|\rho_{ij}^{(N)}|
+=
+e^{-\mathfrak A_N(i,j)}
+|\rho_{ij}^{(0)}|.
+}
+\]
+
+若记录向量归一化，则 \(\mathfrak A_N\) 随 \(N\) 单调不减。
+
+若存在极限：
+
+\[
+\lambda_{ij}
+=
+\lim_{N\to\infty}
+\frac{\mathfrak A_N(i,j)}{N},
+\]
+
+则：
+
+\[
+\boxed{
+\lim_{N\to\infty}
+-\frac1N
+\log
+\frac{|\rho_{ij}^{(N)}|}{|\rho_{ij}^{(0)}|}
+=
+\lambda_{ij}.
+}
+\]
+
+因此 \(\lambda_{ij}\) 是该相干坐标的记录擦除率。
+
+### 特例 33.14（同质记录）
+
+若
+
+\[
+|g_r(i,j)|=c
+\quad(0<c<1)
+\]
+
+对全部 \(r\) 成立，则：
+
+\[
+\boxed{
+|\rho_{ij}^{(N)}|
+=c^N|\rho_{ij}^{(0)}|,
+\qquad
+\mathfrak A_N=N(-\log c).
+}
+\]
+
+如果某一份记录满足
+
+\[
+g_r(i,j)=0,
+\]
+
+则：
+
+\[
+\boxed{
+\rho_{ij}^{(N)}=0
+\quad
+\text{对所有后续只由同类 reduced record channel 组成的演化成立}.
+}
+\]
+
+这与仓库 `multi_copy_erasure_quantifier` 完全一致：一个零重叠记录足以在约化系统中擦除该非零输入项。
+
+### 严格解释
+
+\(\mathfrak A_N\) 是记录 Gram 因子的可加对数，不自动等同于 Shannon 熵、von Neumann 熵或热力学作用量。它的价值在于把：
+
+\[
+\text{乘法相干衰减}
+\]
+
+改写成：
+
+\[
+\boxed{
+\text{追加式记录债务的加法累计}.
+}
+\]
+
+这为“账本长度可能成为内部时间”提供一个精确候选，但不把它冒充为唯一物理时间。
+
+---
+
+## 33.6 可逆性门槛：恢复需要全部相关记录，而不只是系统本身
+
+仓库定义对记录振幅取共轭的反向记录。其重叠满足：
+
+\[
+g_r^{\mathrm{rev}}(i,j)
+=
+\overline{g_r(i,j)}.
+\]
+
+对原记录通道后再施加所有反向记录，指定矩阵元获得因子：
+
+\[
+\prod_r
+\overline{g_r(i,j)}g_r(i,j)
+=
+\prod_r|g_r(i,j)|^2.
+\]
+
+### 定理 33.15（相位记录的联合恢复）
+
+若对全部记录：
+
+\[
+|g_r(i,j)|=1,
+\]
+
+则施加全部反向记录后：
+
+\[
+\boxed{
+\rho_{ij}^{\mathrm{restored}}
+=
+\rho_{ij}^{(0)}.
+}
+\]
+
+若存在某个记录满足：
+
+\[
+|g_r(i,j)|<1,
+\]
+
+则仅通过该共轭记录通道不能精确恢复，因为残余因子为：
+
+\[
+|g_r(i,j)|^2<1.
+\]
+
+若有一个非平凡记录副本未被反转，并且其重叠不等于一，则仓库已经形式化该副本阻止精确恢复。
+
+### 推论 33.16（约化不可逆性是访问缺陷）
+
+在整体系统—环境层面，记录相互作用可以来自可逆酉耦合；系统层面的退相干来自：
+
+\[
+\boxed{
+\text{整体可逆相关生成}
++
+\text{环境记录不可访问／被偏迹}.
+}
+\]
+
+精确恢复要求控制所有携带相关相位的记录自由度。只对系统约化态作用，一般无法反推出已经被环境关联编码的相位。
+
+因此：
+
+\[
+\boxed{
+\text{“信息消失”应先审计为“信息是否转移到观察者余空间或记录账本”。}
+}
+\]
+
+但若环境记录已经被真正丢弃，或被新的不可控自由度继续放大，操作性恢复仍可能不可行；全局可逆表示不等于局部工程可逆。
+
+---
+
+## 33.7 记录作用给出一条与熵相容、但不等同的事件时间
+
+在归一化记录假设下：
+
+\[
+\mathfrak A_{N+1}(i,j)
+\ge
+\mathfrak A_N(i,j).
+\]
+
+所以对每个相干坐标都可定义单调事件时钟：
+
+\[
+\boxed{
+\tau_{ij}^{\mathrm{rec}}(N)
+=
+\mathfrak A_N(i,j).
+}
+\]
+
+它满足：
+
+1. 没有区分记录时 \(|g_r|=1\)，时钟不走；
+2. 部分区分记录时 \(0<|g_r|<1\)，时钟增加有限量；
+3. 正交记录时 \(g_r=0\)，时钟跳到 \(+\infty\)，该约化相干被完全擦除。
+
+对于同一投影上下文的 pinching：
+
+\[
+S(\mathcal P\rho)-S(\rho)
+=
+D(\rho\|\mathcal P\rho)
+\ge0.
+\]
+
+因此每次生成并丢弃可区分记录时，状态熵增可由相对熵相干测量；与此同时，\(\mathfrak A_N\) 测量指定矩阵元的对数生存债务。
+
+二者关系是：
+
+\[
+\boxed{
+\begin{aligned}
+\mathfrak A_N(i,j)
+&=\text{坐标级、乘法级记录债务},\\
+S(\mathcal P\rho)-S(\rho)
+&=\text{全状态、谱级信息删除量}.
+\end{aligned}
+}
+\]
+
+它们可以在具体通道中互相界定，但不能直接互换定义。
+
+### 定义 33.17（双时间观察历史）
+
+结合第 33.3 节，可把观察历史赋予两个独立的时间坐标：
+
+\[
+\boxed{
+\mathsf T_O
+=
+\left(
+ t_{\mathrm{vis}},
+ \mathfrak A_{\mathrm{rec}}
+\right).
+}
+\]
+
+其中：
+
+- \(t_{\mathrm{vis}}\) 是连续可见动力学参数；
+- \(\mathfrak A_{\mathrm{rec}}\) 是记录生成造成的不可逆可访问性债务。
+
+一个系统可以在 \(t_{\mathrm{vis}}\) 上持续酉演化而 \(\mathfrak A_{\mathrm{rec}}=0\)；也可以在极短可见时间内通过一次正交记录使某个 \(\mathfrak A_{ij}\) 跳到无穷。因此两种时间不能预先等同。
+
+---
+
+## 33.8 知识是读出因子化；遗忘是知识代数的严格缩小
+
+设世界集合为 \(X\)，读出为：
+
+\[
+q:X\to Y.
+\]
+
+定义标量知识代数：
+
+\[
+\boxed{
+\mathcal K(q)
+=
+\{f:X\to\mathbb C:
+\exists g:Y\to\mathbb C,
+ f=g\circ q\n\}.
+}
+\]
+
+这正是所有在读出纤维上常值的事件值函数。
+
+项目 `TwoTimeKnowledge` 中：
+
+\[
+\operatorname{Knows}(q,v_e)
+\iff
+v_e\in\mathcal K(q).
+\]
+
+### 定理 33.18（读出粗化导致知识代数反向缩小）
+
+若后期读出 \(q_1\) 比早期读出 \(q_0\) 更粗，即存在：
+
+\[
+r:Y_0\to Y_1
+\]
+
+满足：
+
+\[
+q_1=r\circ q_0,
+\]
+
+则：
+
+\[
+\boxed{
+\mathcal K(q_1)
+\subseteq
+\mathcal K(q_0).
+}
+\]
+
+#### 证明
+
+若 \(f=g\circ q_1\)，则：
+
+\[
+f=(g\circ r)\circ q_0.
+\]
+
+\(\square\)
+
+因此语义遗忘可以写成：
+
+\[
+\boxed{
+v_e\in
+\mathcal K(q_0)
+\setminus
+\mathcal K(q_1),
+}
+\]
+
+同时事件 \(e\) 在完整账本中仍然持续存在。
+
+### 推论 33.19（有限知识容量）
+
+若 \(X,Y\) 有限，并把所有复函数作为可观测量，则：
+
+\[
+\boxed{
+\dim_{\mathbb C}\mathcal K(q)
+=|q(X)|.
+}
+\]
+
+所以粗化 \(q_1=rq_0\) 的线性知识容量损失为：
+
+\[
+\boxed{
+\Delta\dim\mathcal K
+=
+|q_0(X)|-|q_1(X)|.
+}
+\]
+
+该数量计算的是可独立区分的读出类减少量，不等于自然语言中“忘了多少件事”。
+
+### 定义 33.20（定量遗忘余量）
+
+给定世界分布 \(\mu\)，在 \(L^2(X,\mu)\) 中令
+
+\[
+\mathbb E_q
+\]
+
+为到 \(\mathcal K(q)\) 的条件期望／正交投影。定义：
+
+\[
+\boxed{
+\varepsilon_q(f)
+=
+\|f-\mathbb E_qf\|_{L^2(\mu)}.
+}
+\]
+
+则：
+
+\[
+\boxed{
+\varepsilon_q(f)=0
+\iff
+f\in\mathcal K(q).
+}
+\]
+
+所以事件从“已知”到“未知”可以从布尔命题推广为连续余量增长。
+
+### 账本与认知必须分离
+
+项目的有限遗忘证书明确保留：
+
+\[
+\texttt{forgottenLogged}=\texttt{true}
+\]
+
+即使当前认知已经从 `remember` 进入 `forgotten`，甚至后来进入 `recall`。
+
+因此：
+
+\[
+\boxed{
+\text{当前可访问知识}
+\neq
+\text{历史记录是否存在}.
+}
+\]
+
+遗忘是当前读出不能再因子化事件值；追加式账本则保存“该因子化曾经成立或曾经失败”的历史收据。召回需要读出重新精化、重新连接账本，或引入外部记录；它不是粗商内部自动产生的信息。
+
+---
+
+## 33.9 坐标变化不是时间路径：`StateNotPath` 的结构解释
+
+设 \(\mathcal D_Z\) 为计算基中的对角状态集合。纯粹的相位阻尼／经典对角通道满足：
+
+\[
+\rho\in\mathcal D_Z
+\Longrightarrow
+\Phi^n(\rho)\in\mathcal D_Z
+\quad
+\forall n.
+\]
+
+仓库已经形式化：对角输入经任意有限次经典对角通道迭代，非对角元始终为零。
+
+但同一密度矩阵在 Hadamard 坐标中可以出现非零非对角元：
+
+\[
+H|0\rangle\langle0|H^*
+=
+\frac12
+\begin{pmatrix}
+1&1\\
+1&1
+\end{pmatrix}.
+\]
+
+所以：
+
+\[
+\boxed{
+\text{一个坐标系中的相干出现}
+\not\Rightarrow
+\text{存在一条同一经典通道中的时间路径生成该相干}.
+}
+\]
+
+必须区分：
+
+\[
+\boxed{
+\begin{aligned}
+\text{坐标变换}
+&:\rho\mapsto U\rho U^*,\\
+\text{物理通道迭代}
+&:\rho\mapsto\Phi^n(\rho),\\
+\text{观察界面变换}
+&:\rho\mapsto\mathbb E_{\mathcal C}(\rho).
+\end{aligned}
+}
+\]
+
+这对“经典世界与量子世界只是坐标系不同”的直觉给出严格修正：
+
+- 相干确实依赖所选对角；
+- 但非交换操作结构、可实现通道和时间路径不能由普通坐标重命名消除；
+- 改变坐标可以改变哪些元被称为“非对角”，却不把一个受限通道的可达集合自动扩大。
+
+---
+
+## 33.10 三重闭包：预测闭包、操作代数闭包与自描述闭包
+
+项目中至少存在三种不能混用的“完整”。
+
+### 第一种：预测闭包
+
+第 32 节定义：
+
+\[
+V_{\mathrm{pred}}
+=
+\overline{\operatorname{span}}
+\{(\Phi^*)^nA:
+A\in V_0,
+ n\ge0\}.
+\]
+
+它回答：
+
+> 为预测全部未来读出，当前观察者还需补充哪些线性坐标？
+
+### 第二种：操作代数闭包
+
+给定可读取观测量和可执行更新，定义最小含幺 \(*\)-代数：
+
+\[
+\boxed{
+\mathcal A_{\mathrm{op}}
+=C^*(M_f,U_\tau:
+ f\in\mathcal F_O).
+}
+\]
+
+在非平凡有限循环窗口中，仓库构造 clock、shift 和全部矩阵单位，并证明：
+
+\[
+\boxed{
+\mathcal A_{\mathrm{op}}
+=M_M(\mathbb C).
+}
+\]
+
+同时：
+
+\[
+\boxed{
+\mathcal A_{\mathrm{op}}'
+=
+\mathbb CI.
+}
+\]
+
+也就是操作表示不可约。
+
+### 第三种：自描述／经典答案闭包
+
+经典全局答案表要求一个保持代数运算的角色：
+
+\[
+\chi:
+M_M(\mathbb C)	o\mathbb C.
+\]
+
+对于 \(M>1\)，仓库证明：
+
+\[
+\boxed{
+\operatorname{Hom}_{\mathrm{Alg}}
+(M_M(\mathbb C),\mathbb C)
+=
+\varnothing.
+}
+\]
+
+并进一步以 CHSH 见证排除同一 preparation-independent 局域确定表。
+
+### 定理 33.21（操作完备不推出经典答案完备）
+
+在任意非平凡有限循环窗口：
+
+\[
+\boxed{
+\mathcal A_{\mathrm{op}}
+=M_M(\mathbb C),
+\qquad
+\mathcal A_{\mathrm{op}}'
+=
+\mathbb CI,
+\qquad
+\operatorname{Char}(\mathcal A_{\mathrm{op}})
+=
+\varnothing.
+}
+\]
+
+所以观察者可以生成、组合并层析全部矩阵观测量，却仍不能把它们压成一个保持乘法的全局经典数值表。
+
+这不是矛盾：
+
+\[
+\boxed{
+\text{知道完整量子态}
+\neq
+\text{为全部不相容问题预存同时确定的答案}.
+}
+\]
+
+密度矩阵给出正线性状态：
+
+\[
+\omega_\rho(A)=\operatorname{Tr}(\rho A),
+\]
+
+但一般不满足：
+
+\[
+\omega_\rho(AB)
+=
+\omega_\rho(A)\omega_\rho(B).
+\]
+
+因此状态层析完成、操作代数生成完成与经典角色完成是三种不同层级。
+
+### 推论 33.22（三重闭包非蕴含）
+
+\[
+\boxed{
+\text{预测完备}
+\not\Rightarrow
+\text{操作代数完备};
+}
+\]
+
+常值读出可以预测闭合却操作贫乏。
+
+\[
+\boxed{
+\text{操作代数完备}
+\not\Rightarrow
+\text{经典答案完备};
+}
+\]
+
+非平凡窗口全矩阵代数即为反例。
+
+\[
+\boxed{
+\text{层析完备}
+\not\Rightarrow
+\text{同层自描述完备};
+}
+\]
+
+即使状态由全部概率唯一确定，Cantor–Lawvere 型评价空间仍可能被自己的对角对象逃出。
+
+---
+
+## 33.11 CRT 张量分解揭示局部读出的高阶关联余空间
+
+设有限窗口大小分解为互素因子：
+
+\[
+M=mn,
+\qquad
+\gcd(m,n)=1.
+\]
+
+仓库已经形式化地址 CRT 和窗口 clock/shift 的 Kronecker 分解，并进一步对全部素数幂因子给出全矩阵代数等价：
+
+\[
+\boxed{
+M_M(\mathbb C)
+\cong
+\bigotimes_{p^r\parallel M}
+M_{p^r}(\mathbb C).
+}
+\]
+
+这给出一个规范的观察者地址张量分解。但张量分解不意味着全局状态由各因子的边缘态唯一确定。
+
+### 定理 33.23（二因子算子 Hilbert 扇区分解）
+
+设：
+
+\[
+\mathscr H
+=
+\mathscr H_A\otimes\mathscr H_B,
+\qquad
+\dim\mathscr H_A=m,
+\quad
+\dim\mathscr H_B=n.
+\]
+
+在 Hilbert–Schmidt 实内积下：
+
+\[
+\boxed{
+\operatorname{Herm}_0(\mathscr H)
+=
+\bigl(
+\operatorname{Herm}_0(\mathscr H_A)
+\otimes \mathbb RI_B
+\bigr)
+\oplus
+\bigl(
+\mathbb RI_A
+\otimes\operatorname{Herm}_0(\mathscr H_B)
+\bigr)
+\oplus
+\bigl(
+\operatorname{Herm}_0(\mathscr H_A)
+\otimes
+\operatorname{Herm}_0(\mathscr H_B)
+\bigr).
+}
+\]
+
+三项两两正交，维数分别为：
+
+\[
+m^2-1,
+\qquad
+n^2-1,
+\qquad
+(m^2-1)(n^2-1).
+\]
+
+#### 证明
+
+使用：
+
+\[
+\operatorname{Herm}(\mathscr H_A)
+=
+\mathbb RI_A
+\oplus
+\operatorname{Herm}_0(\mathscr H_A),
+\]
+
+\[
+\operatorname{Herm}(\mathscr H_B)
+=
+\mathbb RI_B
+\oplus
+\operatorname{Herm}_0(\mathscr H_B),
+\]
+
+展开实张量积。全标量项 \(\mathbb R(I_A\otimes I_B)\) 是唯一非无迹项；删除它即得。不同扇区至少在一个因子上由标量与无迹正交，故两两正交。维数乘法给出公式。\(\square\)
+
+### 推论 33.24（局部边缘的关联盲区）
+
+只读取两个局部边缘态，最多读取：
+
+\[
+(m^2-1)+(n^2-1)
+\]
+
+个无迹方向。未读关联余空间维数为：
+
+\[
+\boxed{
+D_{\mathrm{corr}}
+=(m^2-1)(n^2-1).
+}
+\]
+
+其在全部无迹方向中的比例为：
+
+\[
+\boxed{
+ r_{\mathrm{corr}}
+=
+\frac{(m^2-1)(n^2-1)}{m^2n^2-1}.
+}
+\]
+
+因此即使每个因子局部层析完备，仍可能遗漏全部跨因子关联。
+
+Bell 纯态与相应经典相关混合具有相同局部边缘而不同全局态，正是该关联余空间的显式见证。
+
+### 定理 33.25（多素数因子的关联深度分解）
+
+设：
+
+\[
+\mathscr H
+=
+\bigotimes_{r=1}^{s}\mathscr H_r,
+\qquad
+\dim\mathscr H_r=d_r.
+\]
+
+对每个非空子集 \(S\subseteq\{1,\ldots,s\}\)，定义关联扇区：
+
+\[
+\mathcal C_S
+=
+\left(
+\bigotimes_{r\in S}
+\operatorname{Herm}_0(\mathscr H_r)
+\right)
+\otimes
+\left(
+\bigotimes_{r\notin S}
+\mathbb RI_r
+\right).
+\]
+
+则：
+
+\[
+\boxed{
+\operatorname{Herm}_0(\mathscr H)
+=
+\bigoplus_{\varnothing\ne S\subseteq[s]}
+\mathcal C_S,
+}
+\]
+
+且：
+
+\[
+\boxed{
+\dim\mathcal C_S
+=
+\prod_{r\in S}(d_r^2-1).
+}
+\]
+
+定义 \(|S|\) 为关联阶数。只保留至多 \(k\) 体读出的观察者，其未观察余维数为：
+
+\[
+\boxed{
+D_{>k}
+=
+\sum_{|S|>k}
+\prod_{r\in S}(d_r^2-1).
+}
+\]
+
+这给 CRT 素数幂地址塔一个新的量子解释：
+
+\[
+\boxed{
+\text{素数幂因子给出局部地址；子集 }S\text{ 给出跨地址关联深度。}
+}
+\]
+
+但这些关联扇区既可以承载经典相关，也可以承载量子纠缠；非零高阶扇区本身不是纠缠充分条件。
+
+---
+
+## 33.12 同一记录指针的互补相关约束
+
+项目 `RecordCorrelationMonogamy` 固定同一个记录指针 \(Z_R\)，定义：
+
+\[
+C_Z(\rho)
+=
+\operatorname{Tr}
+\bigl(
+\rho(Z_S\otimes Z_R)
+\bigr),
+\]
+
+\[
+C_X(\rho)
+=
+\operatorname{Tr}
+\bigl(
+\rho(X_S\otimes Z_R)
+\bigr).
+\]
+
+仓库证明：
+
+\[
+\boxed{
+C_Z(\rho)=1
+\Longrightarrow
+C_X(\rho)=0.
+}
+\]
+
+其含义不是“所有互补相关不能共存”。Bell 态可以同时具有：
+
+\[
+\langle Z\otimes Z\rangle=1,
+\qquad
+\langle X\otimes X\rangle=1.
+\]
+
+真正结论是：
+
+\[
+\boxed{
+\text{同一个固定 }Z\text{ 记录指针若完美复制系统 }Z\text{ 地址，
+则该指针不能同时记录系统 }X\text{ 值。}
+}
+\]
+
+这与第 31 节的 MUB 坐标塔一致：一个经典记录界面选择了某个对角方向；对该记录本身而言，共轭方向进入余空间。
+
+因此“客观记录形成”可以写成：
+
+\[
+\boxed{
+\text{某一上下文的相关被冗余增强，
+同一指针相对于互补上下文的可读相关被压低。}
+}
+\]
+
+这仍不是完整的量子 Darwinism 定理，因为项目当前没有无条件证明任意多环境碎片上的冗余互信息平台或客观性阈值。
+
+---
+
+## 33.13 观察者完成必须区分目标完成、状态完成、代数完成与统一完成
+
+设递增可见空间：
+
+\[
+V_0\subseteq V_1\subseteq\cdots,
+\qquad
+R_n=V_n^\perp.
+\]
+
+### 目标完成
+
+对固定目标 \(x\)：
+
+\[
+\boxed{
+\|P_{R_n}x\|\to0.
+}
+\]
+
+RH 的 Nyman–Beurling 形式属于此类，目标为 \(\chi\)。
+
+### 状态族完成
+
+对某个任务相关集合 \(\mathcal S\)：
+
+\[
+\boxed{
+\sup_{x\in\mathcal S}
+\|P_{R_n}x\|	o0.
+}
+\]
+
+这比单目标强，但仍可弱于全单位球完成。
+
+### 代数完成
+
+可访问操作闭包等于目标算子代数：
+
+\[
+\boxed{
+\mathcal A_{\mathrm{op}}
+=\mathcal A_{\mathrm{target}}.
+}
+\]
+
+有限窗口 clock/shift 生成全矩阵代数属于此类。
+
+### 统一完成
+
+要求：
+
+\[
+\boxed{
+\|I-P_{V_n}\|_{\mathrm{op}}	o0.
+}
+\]
+
+若所有 \(V_n\) 都是真闭子空间，则：
+
+\[
+\|I-P_{V_n}\|_{\mathrm{op}}=1,
+\]
+
+统一完成失败。
+
+### 定理 33.26（四种完成的严格层级）
+
+一般只有：
+
+\[
+\boxed{
+\text{统一完成}
+\Longrightarrow
+\text{状态族完成}
+\Longrightarrow
+\text{目标完成}.
+}
+\]
+
+逆向均不成立。
+
+代数完成与前三者没有无条件蕴含关系：一个代数可以由少量生成元生成，但指定状态的有限截断误差仍需独立控制；反之，单个目标可以被很好逼近，而操作代数仍非常小。
+
+因此项目中的所有“完成”必须携带对象类型：
+
+\[
+\boxed{
+\operatorname{Complete}
+(
+\text{target/state family/algebra/uniform ball}
+).
+}
+\]
+
+不能只写一个无参数的“观察者已完成”。
+
+---
+
+## 33.14 观察者逃逸率必须是向量而不是单一数字
+
+结合前述各节，至少存在六种不同逃逸量。
+
+### 1. 读出余质量
+
+\[
+r_m^{\mathrm{state}}(\rho)
+=
+\|P_{R_m}X_\rho\|_2^2.
+\]
+
+### 2. 未来问题余质量
+
+\[
+r_{m,k}^{\mathrm{effect}}(A)
+=
+\|P_{R_m}(\Phi^*)^kA\|_2^2.
+\]
+
+### 3. 记录相干生存率
+
+\[
+s_N^{\mathrm{rec}}(i,j)
+=
+|\Gamma_N(i,j)|
+=
+e^{-\mathfrak A_N(i,j)}.
+\]
+
+### 4. 对角逃逸率
+
+由有限评价表的 escaped listing 数量、概率或距离剖面给出。
+
+### 5. 知识损失率
+
+\[
+\Delta\dim\mathcal K
+
+equals
+\dim\mathcal K(q_0)-
+\dim\mathcal K(q_1),
+\]
+
+或事件余量 \(\varepsilon_q(f)\)。
+
+### 6. 关联阶余量
+
+\[
+D_{>k}
+=
+\sum_{|S|>k}
+\prod_{r\in S}(d_r^2-1).
+\]
+
+因此定义观察者逃逸剖面：
+
+\[
+\boxed{
+\mathbf R_O
+=
+\left(
+ r^{\mathrm{state}},
+ r^{\mathrm{effect}},
+ s^{\mathrm{rec}},
+ r^{\mathrm{diag}},
+ r^{\mathrm{know}},
+ r^{\mathrm{corr}}
+\right).
+}
+\]
+
+这些量可以通过特定不等式耦合，但不应在定义层被压成一个“总熵”。
+
+例如第 32 节已经证明未来概率误差由双余量乘积控制：
+
+\[
+|\Delta p|
+\le
+\sqrt{r^{\mathrm{state}}}
+\sqrt{r^{\mathrm{effect}}}.
+\]
+
+第 33.5 节又给出：
+
+\[
+s_N^{\mathrm{rec}}
+=e^{-\mathfrak A_N}.
+\]
+
+而第 31 节在重复去相干中给出：
+
+\[
+\Delta S
+=D(\rho\|\mathbb E\rho).
+\]
+
+正确研究方向是寻找这些不同分量间的 sharp inequalities，而不是预先宣称它们同一。
+
+---
+
+## 33.15 从项目全部独特视角得到的观察者闭合图
+
+现在可以把项目中观察者的全部主要结构排列成一个闭合图：
+
+\[
+\boxed{
+\begin{array}{c}
+\text{整体状态／路径／账本}\[1mm]
+\downarrow\ q_O\\
+\text{当前读出商与读出纤维}\[1mm]
+\downarrow\ \Phi^*\\
+\text{未来问题的 Heisenberg 预测闭包}\[1mm]
+\downarrow\ C^*\text{-closure}\\
+\text{读出—更新操作代数}\[1mm]
+\downarrow\ \text{record dilation}\\
+\text{条件分支、环境相关与记录作用}\[1mm]
+\downarrow\ \text{discard record}\\
+\text{概率、退相干、熵与知识粗化}\[1mm]
+\downarrow\ \Delta\\
+\text{自描述闭合测试与对角逃逸}\[1mm]
+\downarrow\ \varprojlim\\
+\text{相对界面族的可实现完成}
+\end{array}
+}
+\]
+
+该图中每一条箭头都需要独立审计：
+
+1. **读出是否忠实：** \(\ker q_O\) 多大；
+2. **动力学是否下降：** 当前商是否为同余；
+3. **预测是否闭合：** \(V_m\) 是否稳定；
+4. **操作是否完备：** 生成代数是否达到目标；
+5. **记录是否可访问：** 环境相关是否保留；
+6. **概率是否规范：** 状态、effect 与条件分支是否正且归一；
+7. **知识是否保持：** 事件值是否继续因子化读出；
+8. **自描述是否封闭：** 是否存在对角逃逸；
+9. **有限层是否可完成：** 相容族是否满足正性、能量和可实现性；
+10. **跨上下文是否可拼接：** 是否存在全局经典答案表。
+
+因此项目中“观察者”的最强定义可以写成：
+
+\[
+\boxed{
+\text{观察者}
+=
+\text{一个定义相对同一性的读出商，
+以及使这种同一性在时间、操作、记录和自指下尽可能闭合的最小机制。}
+}
+\]
+
+---
+
+## 33.16 五个候选新定理族
+
+下面五个定理族最能承载本节相对于成熟理论的新增组合，而不是只做解释性重命名。
+
+### A. 观察者扩展距离叶层分类
+
+形式化一般置换的结论：
+
+\[
+\boxed{
+ d_\tau(x,y)
+=
+\begin{cases}
+\text{轨道图距离},&x,y\text{ 同叶},\\
++\infty,&x,y\text{ 异叶}.
+\end{cases}
+}
+\]
+
+这将当前分散的 finite cycle、integer orbit 与 visible-phase infinity 合并为一个定理。
+
+### B. 记录作用与擦除率
+
+形式化：
+
+\[
+\boxed{
+\mathfrak A_N
+=-\log\left|\prod_{r\le N}g_r\right|
+=
+\sum_{r\le N}-\log|g_r|,
+}
+\]
+
+以及相干指数率、零重叠吸收和全记录反演门槛。
+
+### C. 知识代数—遗忘余量
+
+形式化：
+
+\[
+\boxed{
+q_1=rq_0
+\Longrightarrow
+\mathcal K(q_1)
+\subseteq
+\mathcal K(q_0),
+}
+\]
+
+并把 `Forgot` 识别为一个持久事件值从早期知识代数退出晚期知识代数。
+
+### D. CRT 关联深度塔
+
+在 prime-power tensor factorization 上形式化：
+
+\[
+\boxed{
+\operatorname{Herm}_0
+=
+\bigoplus_{\varnothing\ne S}
+\mathcal C_S,
+}
+\]
+
+及：
+
+\[
+\boxed{
+D_{>k}
+=
+\sum_{|S|>k}
+\prod_{r\in S}(d_r^2-1).
+}
+\]
+
+这会把“素数地址因子”与“观察者遗漏的关联阶数”连接起来。
+
+### E. 三重闭包分离证书
+
+以有限窗口为单一模型证明：
+
+\[
+\boxed{
+\text{操作代数完成}
++
+\text{标量交换子}
++
+\text{无经典角色}.
+}
+\]
+
+并与第 32 节预测闭包和本文对角逃逸明确分型。
+
+这些定理即使单项有成熟邻近结果，其在项目统一观察者类型中的组合与互相非蕴含，仍可能形成可发表的结构性贡献。
+
+---
+
+## 33.17 建议 Lean 形式化顺序
+
+1. `ObserverCommutatorNorm`
+   \[
+   \|[U_\tau,M_f]\|
+   =
+   \|f\circ\tau^{-1}-f\|_\infty.
+   \]
+
+2. `ObserverDistanceInfiniteOfInvariantSeparation`
+   \[
+   f\in\ker L_\tau,
+   \ f(x)\ne f(y)
+   \Rightarrow
+   d_\tau(x,y)=\top.
+   \]
+
+3. `PermutationObserverDistanceClassification`
+   同轨道为图距离、异轨道为 \(\top\)。
+
+4. `RecordActionAdditive`
+   \[
+   -\log|\prod g_r|
+   =
+   \sum -\log|g_r|.
+   \]
+
+5. `RecordActionCoherenceSurvival`
+   \[
+   |\rho_{ij}^{(N)}|
+   =
+e^{-\mathfrak A_N}|\rho_{ij}^{(0)}|.
+   \]
+
+6. `UnimodularRecordReversalIff`
+   对共轭反向记录，精确恢复的模长门槛。
+
+7. `KnowledgeAlgebraAntitone`
+   \[
+   q_1=rq_0
+   \Rightarrow
+   \mathcal K(q_1)\subseteq\mathcal K(q_0).
+   \]
+
+8. `ForgotAsKnowledgeAlgebraExit`
+   把 `TwoTimeKnowledge.Forgot` 与事件值的代数成员变化连接。
+
+9. `TensorHermitianCorrelationDecomposition`
+   二因子及有限多因子的正交扇区分解。
+
+10. `PrimePowerCorrelationDepth`
+    将 `PrimePowerTensorTower` 的因子索引用于关联阶余维数。
+
+11. `OperationalCompleteNoCharacter`
+    汇总 `WindowGeneration`、`window_commutant_eq_scalars` 与 `window_algebra_has_no_character`。
+
+12. `CompletionKindNonImplications`
+    为目标、状态族、代数和统一完成给出有限显式反例。
+
+所有新声明应引用现有 Lean GID，而不是从理论卷自然语言复制为第二真源。
+
+---
+
+## 33.18 最终结论
+
+项目中的独特观察者视角可以压缩为以下十二句：
+
+\[
+\boxed{
+\text{读出定义商，核与余空间定义当前不可见差异。}
+}
+\]
+
+\[
+\boxed{
+\text{更新交换子是观察者的一阶导数。}
+}
+\]
+
+\[
+\boxed{
+\text{交换子半范数生成叶内有限、叶间无穷的扩展几何。}
+}
+\]
+
+\[
+\boxed{
+\text{连续可见流保持隐藏素数地址；隐藏变化需要离散接缝。}
+}
+\]
+
+\[
+\boxed{
+\text{概率是状态对记录分支的权重。}
+}
+\]
+
+\[
+\boxed{
+\text{未读测量是条件分支在忘记标签后的重组。}
+}
+\]
+
+\[
+\boxed{
+\text{多记录将相干乘法衰减转化为可加记录作用。}
+}
+\]
+
+\[
+\boxed{
+\text{局部不可逆性来自记录不可访问；恢复要求控制全部相关记录。}
+}
+\]
+
+\[
+\boxed{
+\text{知识是事件值对当前读出的因子化；遗忘是该因子化失效。}
+}
+\]
+
+\[
+\boxed{
+\text{CRT 给出素数幂局部地址，但高阶关联仍居张量余空间。}
+}
+\]
+
+\[
+\boxed{
+\text{操作代数可以完整，而全局经典答案表仍不存在。}
+}
+\]
+
+\[
+\boxed{
+\text{预测、操作、记录、自描述与无限完成是不同闭包，不能由一个“完整度”代替。}
+}
+\]
+
+最凝练的统一式是：
+
+\[
+\boxed{
+\text{观察者不是世界之外的观看点；
+它是世界内部形成的读出商、更新代数、记录账本与闭包规则。}
+}
+\]
+
+时间描述该结构如何更新；概率描述状态在记录分支上的权重；熵描述某类非单射记录接口删除的可区分性；对角化检验观察者能否以同一类型完整描述自身；无穷则标记任何有限闭包仍可能留下的余核。
+
+因此，这一研究方向真正可能给数学与物理带来的新解释，不是宣称所有概念本来相同，而是：
+
+\[
+\boxed{
+\text{把它们分别识别为同一个观察者闭合问题中的不同对象、不同缺陷和不同极限。}
+}
+\]
+
+### 33.19 严格非主张
+
+1. 本节没有从 hidden-flow rigidity 推出自然界时间必为离散—连续二元本体。
+2. 本节没有把记录作用 \(\mathfrak A_N\) 等同于 thermodynamic action 或任意标准熵。
+3. 本节没有证明所有环境记录都归一化；涉及 \(|g_r|\le1\) 的结论明确以归一化为前提。
+4. 本节没有声称全局酉可逆性保证局部实验可逆性。
+5. 本节没有把高阶关联扇区非零等同于纠缠。
+6. 本节没有把相同局部边缘解释为 Bell 非局域性的充分条件。
+7. 本节没有把窗口全矩阵代数生成冒充为量子力学无前件的出身证明。
+8. 本节没有把无代数角色直接等同于所有版本的 Kochen–Specker 或 Bell 定理。
+9. 本节没有把 observer distance 的 \(+\infty\) 解释为物理空间距离无穷大。
+10. 本节没有把知识代数的维数等同于语义知识总量。
+11. 本节没有把理论卷纸面推导注册为 Lean 已闭合事实。
+12. 本节不修改第 28–32 节任何旧文字；所有收紧均以追加形式记账。
