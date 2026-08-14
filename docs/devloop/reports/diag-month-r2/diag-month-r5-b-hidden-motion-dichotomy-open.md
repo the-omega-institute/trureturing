@@ -35,14 +35,14 @@ branch = harness/diag-month-r5-b
 The reviewed report commit before this final synchronization was:
 
 ```text
-1203782fb338f1e1f88bdd30db57b4172c5c6274
+cb08d5a2707e068e2f47b21bbdb3f8d5a98695ee
 ```
 
 The current integration base and the branch merge point are distinct:
 
 ```text
-origin/dev                       = 88fb4a9cc3d56cf08747a948ffc014af57a0e4cd
-final synchronization merge HEAD = 78b639974edf4a3ebab57c4026bf9b6745452a6a
+origin/dev                       = 4551a412d3dfbf5bcaa25755e34bbf8481c1a3e8
+final synchronization merge HEAD = 074102830aae8814b38271f130a0e6c9a8ffec70
 ```
 
 `origin/dev` was merged non-destructively into the reviewed report commit with:
@@ -51,32 +51,25 @@ final synchronization merge HEAD = 78b639974edf4a3ebab57c4026bf9b6745452a6a
 git merge --no-edit origin/dev
 ```
 
-Exit `0`; there were no conflicts. The merge commit has parents `1203782f` and
-`88fb4a9c`. The incoming range from the preceding base
-`5b69e67602e7cc960dc63a110ab1766fb64b19ec` contains only the WideVacuumBand
-deposit and receipt paths:
+Exit `0`; there were no conflicts. The merge commit has parents `cb08d5a2` and
+`4551a412`. The incoming range from the preceding base
+`88fb4a9cc3d56cf08747a948ffc014af57a0e4cd` contains only the
+GoldenDesubstitutionClosedForms theorem and its Blueprint/Scribe projections:
 
 ```text
-A Blueprint/D5/S0/Computability/DescriptionComplexity/WideVacuumBand.md
-A Blueprint/D5/S0/Computability/DescriptionComplexity/WideVacuumBand.scribe.cs
-A D5/S0/Computability/DescriptionComplexity/WideVacuumBand.lean
-A Golden/Frozen/accepted/5cc5b6cd52df67f29dc10a1009b0f1bc3aeff3a4619ae9e81ab616970fbdf32c.json
-A Golden/Frozen/accepted/60a82adfa44834c9da53f3220d89e2ca20468672459280b25fe6c5c177329147.json
-A Golden/Frozen/accepted/8f914136fbbe8abda0af595aa3880a1b4286122e65143e25beb23101fc0f66e0.json
-A Golden/Frozen/accepted/a1980b66e3b6eb4a72a6a84fc5795c1b65501d80dcfe0e939e430652338e106e.json
-A Golden/Frozen/accepted/a350017403f11cd675bba32e612e6d3c1613a44ac48df5f15ae15d6d3b288762.json
-A Golden/Frozen/accepted/b093bc06814c925720ed3eea2752843e1aab42ad5d3a85b21b374809a9193f7b.json
-A Golden/Frozen/accepted/e5b36541e912faf764f2bcb34adad003d4b19d037992d0adfdae1c5b3255803e.json
-A Meta/Digestion/formalizations/pzg-residual-aa45f85fd757607d0c3dcf3a6ad4f5461eb00b30e7471420c7ae108102630ee8.v1.json
+A Blueprint/D5/S1/Deficit/Displacement/GoldenDesubstitutionClosedForms.md
+A Blueprint/D5/S1/Deficit/Displacement/GoldenDesubstitutionClosedForms.scribe.cs
+A D5/S1/Deficit/Displacement/GoldenDesubstitutionClosedForms.lean
 ```
 
-The receipt belongs to atom `pzg-residual-aa45f85f...`, not the selected
-hidden-motion atom `pzg-residual-85ace51c...`. No selected backfill, coverage,
-report, or rejected candidate path was touched or restored by the merge.
+The incoming range contains no digestion, formalization receipt, frozen-record,
+hidden-motion, solenoid, backfill, coverage, report, or rejected-candidate path.
+It is unrelated to the selected hidden-motion atom, and no candidate artifact
+was touched or restored by the merge.
 
 `git merge-base origin/dev HEAD` returned the exact `origin/dev` SHA above, and
 `git merge-base --is-ancestor origin/dev HEAD` exited `0`. Thus `origin/dev` is
-the candidate-status base, while `78b63997` is the branch merge commit on which
+the candidate-status base, while `07410283` is the branch merge commit on which
 this final evidence refresh was prepared; the refresh commit is its descendant.
 
 The live PATH declaration was read from
@@ -89,8 +82,8 @@ was assigned to refresh the Lean report and status evidence, not rerun .NET.
 `make lean-report` was rerun on the merged tree and exited `0` with:
 
 ```text
-input_address = sha256:0809776a5451e2aee72c2d615493b63c9e98e3248189c42de2ff8b312f2eeceb
-report_sha256 = 8a14bbe84a26f00ee026c7f7d1acfec6d18d2cf01910ff01d256a1f712115c29
+input_address = sha256:7c06971ecfda1ceb649b61deda7af1a48eaeb0f42542ec8887d09e95c0c977bf
+report_sha256 = d1fc400f4d539060fdf1af46aaba31228b1ef2d382588eaa7e38c4fdb32054d5
 mode = cached
 source_side = candidate
 ```
@@ -222,9 +215,9 @@ selected_recorded_formalizations = []
 The exact canonical backfill record has empty coverage and receipts, and the
 selected atom remains exactly one current formalization candidate. The only
 exact-ID report hit is this diagnostic report; no formalization receipt or
-deposited coverage artifact was found. The total candidate count decreased by
-one because the incoming WideVacuumBand receipt records its different
-`pzg-residual-aa45f85f...` atom; it did not change the selected atom's status.
+deposited coverage artifact was found. The incoming desubstitution range adds no
+receipt or digestion path: the total candidate count remains `128`, and it does
+not change the selected atom's status.
 
 ## Clause-level statement echo
 
