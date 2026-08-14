@@ -557,15 +557,6 @@ artifact_id = "none"
 runtime_disposition = "committed-source"
 
 [[files]]
-pattern = "tools/tests/StrataLint.*/**/*.md"
-kind = "program"
-produced_by = "none"
-consumed_by = ["dotnet"]
-verified_by = ["dotnet-test"]
-artifact_id = "none"
-runtime_disposition = "committed-source"
-
-[[files]]
 pattern = "tools/tests/StrataLint.Tests/Fixtures/fixture-registry.yaml"
 kind = "data"
 produced_by = "none"
