@@ -258,15 +258,6 @@ artifact_id = "none"
 runtime_disposition = "committed-source"
 
 [[files]]
-pattern = "Library/MAP.md"
-kind = "ledger"
-produced_by = "none"
-consumed_by = ["developer"]
-verified_by = ["SL-003"]
-artifact_id = "none"
-runtime_disposition = "committed-ledger"
-
-[[files]]
 pattern = "Makefile"
 kind = "program"
 produced_by = "none"
@@ -454,15 +445,6 @@ consumed_by = ["ArchitectureTests"]
 verified_by = ["ArchitectureTests"]
 artifact_id = "none"
 runtime_disposition = "committed-ledger"
-
-[[files]]
-pattern = "tools/Architecture/MAP.md"
-kind = "program"
-produced_by = "none"
-consumed_by = ["developer"]
-verified_by = ["architecture-tests"]
-artifact_id = "none"
-runtime_disposition = "committed-source"
 
 [[files]]
 pattern = "tools/Generated/scribe-emissions.v1.json"

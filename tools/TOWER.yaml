@@ -118,7 +118,6 @@ components:
   - id: csharp-architecture
     kind: repository-files
     members:
-      - tools/Architecture/MAP.md
       - tools/tests/StrataLint.ArchitectureTests/MAP.md
       - tools/tests/StrataLint.ArchitectureTests/StrataLint.ArchitectureTests.csproj
     judged_by:
