@@ -1,3 +1,4 @@
+using System.Collections.Immutable;
 using System.Text.Json;
 using StrataLint.Engine;
 
@@ -8,10 +9,25 @@ public static class StatementProjectionReconciliation
     public static void Verify(string repositoryRoot, DeclarationCatalog catalog)
     {
         ArgumentNullException.ThrowIfNull(catalog);
-        Verify(repositoryRoot, catalog.Declarations);
+        var findings = Check(repositoryRoot, catalog.Declarations);
+        if (!findings.IsEmpty)
+        {
+            throw new InvalidDataException(
+                "Pinned statement-v1 projection fixtures do not match the live canonical raw Lean report."
+                + Environment.NewLine
+                + string.Join(Environment.NewLine, findings));
+        }
     }
 
-    private static void Verify(string repositoryRoot, IEnumerable<LeanDeclaration> declarations)
+    public static ImmutableArray<string> Check(string repositoryRoot, DeclarationCatalog catalog)
+    {
+        ArgumentNullException.ThrowIfNull(catalog);
+        return Check(repositoryRoot, catalog.Declarations);
+    }
+
+    private static ImmutableArray<string> Check(
+        string repositoryRoot,
+        IEnumerable<LeanDeclaration> declarations)
     {
         using var pilot = LoadFixture(repositoryRoot, "statement-projection-pilot-v1.json");
         using var expansion = LoadFixture(repositoryRoot, "statement-projection-expansion-v1.json");
@@ -26,16 +42,28 @@ public static class StatementProjectionReconciliation
             .GroupBy(item => item.Name, StringComparer.Ordinal)
             .ToDictionary(
                 group => group.Key,
-                group => group.Single().TypeRepresentation,
+                group => group.ToArray(),
                 StringComparer.Ordinal);
+        var findings = ImmutableArray.CreateBuilder<string>();
 
-        if (expected.Count != actual.Count
-            || expected.Any(item => !actual.TryGetValue(item.Key, out var type)
-                || !StringComparer.Ordinal.Equals(item.Value, type)))
+        foreach (var item in expected.OrderBy(static item => item.Key, StringComparer.Ordinal))
         {
-            throw new InvalidDataException(
-                "Pinned statement-v1 projection fixtures do not match the live canonical raw Lean report.");
+            if (!actual.TryGetValue(item.Key, out var live))
+            {
+                findings.Add($"pinned statement projection is missing from live report: {item.Key}");
+            }
+            else if (live.Length != 1)
+            {
+                findings.Add(
+                    $"pinned statement projection is ambiguous in live report: {item.Key} ({live.Length} declarations)");
+            }
+            else if (!StringComparer.Ordinal.Equals(item.Value, live[0].TypeRepresentation))
+            {
+                findings.Add($"pinned statement projection differs from live report: {item.Key}");
+            }
         }
+
+        return findings.ToImmutable();
     }
 
     private static JsonDocument LoadFixture(string repositoryRoot, string name) =>

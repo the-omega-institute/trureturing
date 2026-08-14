@@ -62,9 +62,14 @@ public sealed partial class MakeWorkflowTests
         Assert.Contains("tools/scripts/workflow/math-gate.sh", mathematicalTestRecipe, StringComparison.Ordinal);
         var mathGate = File.ReadAllText(Path.Combine(TestRepositoryLayout.FindRoot(), "tools", "scripts", "workflow", "math-gate.sh"));
         Assert.DoesNotContain("dotnet test", mathGate, StringComparison.Ordinal);
+        Assert.Contains("/../../..\" && pwd -P)", mathGate, StringComparison.Ordinal);
         Assert.Contains("lake build", mathGate, StringComparison.Ordinal);
         Assert.Contains("make lean-report", mathGate, StringComparison.Ordinal);
-        Assert.Contains(" check --candidate-lean-report ", mathGate, StringComparison.Ordinal);
+        // check 在干净树须锚定 merge-base(候选不能自我保护)且容忍 rc=3 预期路径。
+        Assert.Contains(" check \"${CHECK_BASE_ARGS[@]}\" --candidate-lean-report ", mathGate, StringComparison.Ordinal);
+        Assert.Contains("--protected-base \"$base_sha\"", mathGate, StringComparison.Ordinal);
+        Assert.Contains("[ \"$check_rc\" -ne 0 ] && [ \"$check_rc\" -ne 3 ]", mathGate, StringComparison.Ordinal);
+        Assert.Contains(" projections --check --report ", mathGate, StringComparison.Ordinal);
         Assert.Contains(" emit --check", mathGate, StringComparison.Ordinal);
         Assert.Contains(" emit-values --check", mathGate, StringComparison.Ordinal);
         Assert.Contains(" describe-report --check", mathGate, StringComparison.Ordinal);
