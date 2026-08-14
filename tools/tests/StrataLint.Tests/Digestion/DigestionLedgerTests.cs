@@ -207,6 +207,101 @@ public sealed partial class DigestionLedgerTests
     }
 
     [Fact]
+    public void DerivedChainAbsorptionReachesFixedPointAcrossThreeLevels()
+    {
+        var sourceBytes = Encoding.UTF8.GetBytes("manual fixed-point receipt\n");
+        var atom = new DigestionAtom(
+            "manual/fixed-point",
+            0,
+            sourceBytes.Length,
+            ImmutableArray.CreateRange(sourceBytes),
+            DigestionFingerprint.Compute(sourceBytes),
+            ImmutableArray<DigestionContext>.Empty);
+        const string gid = "D5/S0/Carrier/Probe";
+        const string targetPath = "D5/S0/Carrier/Probe.lean";
+        var target = Encoding.UTF8.GetBytes(Lean(gid));
+        var definition = Encoding.UTF8.GetBytes("scribe definition\n");
+        var emission = Encoding.UTF8.GetBytes("# emitted narrative\n");
+        var definitionHash = DigestionFingerprint.Compute(definition).RawSha256;
+        var emissionHash = DigestionFingerprint.Compute(emission).RawSha256;
+        var coverage = $$"""
+            - gid: {{gid}}
+              source_sha256: {{atom.Fingerprints.RawSha256}}
+              target_sha256: {{DigestionFingerprint.Compute(target).RawSha256}}
+            """;
+        var scribe = $$"""
+            - gid: {{gid}}
+              definition_sha256: {{definitionHash}}
+              emission_sha256: {{emissionHash}}
+            """;
+        var template = BackfillInventoryLoader.Load(LedgerYaml(
+                atom,
+                migration: "absorbed",
+                truth: "closed",
+                coverageReceipts: coverage,
+                scribeReceipts: scribe,
+                coverageGid: gid)
+            .Replace(
+                $"atomizer: {AtomizerRegistry.GictId}",
+                $"atomizer: {AtomizerRegistry.NoAtomizerId}",
+                StringComparison.Ordinal));
+        var source = Assert.Single(template.RequireDigestionSources());
+        var entry = Assert.Single(source.Entries);
+        var chained = template.WithDigestionSources(
+        [
+            source with
+            {
+                Entries =
+                [
+                    entry with
+                    {
+                        AtomId = "chain-parent",
+                        Receipts = entry.Receipts with { ChainAtoms = ["chain-middle"] },
+                        ReceiptSyntax = null,
+                    },
+                    entry with
+                    {
+                        AtomId = "chain-middle",
+                        Receipts = entry.Receipts with { ChainAtoms = ["chain-leaf"] },
+                        ReceiptSyntax = null,
+                    },
+                    entry with { AtomId = "chain-leaf", ReceiptSyntax = null },
+                ],
+            },
+        ]);
+        var record = new ScribeEmissionRecord(
+            gid,
+            ScribeEmissionAttestation.DefinitionPath(gid),
+            definitionHash,
+            ScribeEmissionAttestation.EmissionPath(gid),
+            emissionHash);
+        var rawSnapshot = RawRepositorySnapshot.Create(
+        [
+            new RawRepositoryEntry("docs/source.md", ImmutableArray.CreateRange(sourceBytes)),
+            new RawRepositoryEntry(CasFile(atom).Path, ImmutableArray.CreateRange(CasFile(atom).Bytes)),
+            new RawRepositoryEntry(targetPath, ImmutableArray.CreateRange(target)),
+            new RawRepositoryEntry(record.DefinitionPath, ImmutableArray.CreateRange(definition)),
+            new RawRepositoryEntry(record.EmissionPath, ImmutableArray.CreateRange(emission)),
+        ]);
+        var snapshot = Assert.IsType<SnapshotDecodeOutcome.Decoded>(
+            SnapshotDecoder.Decode(rawSnapshot)).Snapshot;
+
+        var evaluation = DigestionStatusEvaluator.Evaluate(
+            chained,
+            snapshot,
+            AcceptedLean(targetPath),
+            VerifiedScribeEmissions.Create([record]),
+            baselineDocument: chained);
+
+        Assert.Equal(3, evaluation.Entries.Length);
+        Assert.All(evaluation.Entries, static item => Assert.Equal(
+            DigestionMigrationState.Absorbed,
+            item.DerivedStatus.Migration));
+        Assert.DoesNotContain(evaluation.Entries.SelectMany(static item => item.Gaps), static gap =>
+            gap.Code == "chain-migration-incomplete");
+    }
+
+    [Fact]
     public void IngestOnboardsRegisteredEmptySourceWithCoarseFallback()
     {
         var atomizerId = SyntheticNumberedAtomizer.Id;

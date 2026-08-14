@@ -1,4 +1,6 @@
 using System.Collections.Immutable;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace StrataLint.Engine;
 
@@ -122,7 +124,9 @@ internal static class DigestionIngestor
                     var parentIndexes = entries
                         .Select((entry, index) => (Entry: entry, Index: index))
                         .Where(item => item.Entry.AstPath == clausePlan.Plan.ParentAstPath
-                            && item.Entry.Fingerprints == clausePlan.Parent.Fingerprints)
+                            && DigestionLedgerAligner.FingerprintsMatch(
+                                item.Entry.Fingerprints,
+                                clausePlan.Parent.Fingerprints))
                         .ToArray();
                     if (parentIndexes.Length != 1)
                     {
@@ -138,11 +142,10 @@ internal static class DigestionIngestor
                     }
 
                     var childIds = ImmutableArray.CreateBuilder<string>(clausePlan.Plan.Children.Length);
-                    foreach (var child in clausePlan.Plan.Children)
+                    foreach (var (child, childIndex) in clausePlan.Plan.Children.Select(
+                                 (child, index) => (Child: child, Index: index)))
                     {
-                        var childId = AtomizerRegistry.Require(source.Atomizer).ResidualPrefix
-                            + "-residual-"
-                            + child.Fingerprints.RawSha256["sha256:".Length..];
+                        var childId = ClauseAtomId(source, parent, child, childIndex);
                         if (!atomIds.Add(childId))
                         {
                             throw new FormatException(
@@ -196,6 +199,20 @@ internal static class DigestionIngestor
                 .OrderBy(static item => item.RelativePath, StringComparer.Ordinal)
                 .ToImmutableArray(),
             alignment.Fallbacks);
+    }
+
+    private static string ClauseAtomId(
+        DigestionLedgerSource source,
+        DigestionLedgerEntry parent,
+        DigestionAtom child,
+        int childIndex)
+    {
+        var stem = AtomizerRegistry.Require(source.Atomizer).ResidualPrefix
+            + "-residual-"
+            + child.Fingerprints.RawSha256["sha256:".Length..];
+        var occurrenceBytes = Encoding.UTF8.GetBytes(
+            parent.AtomId + "\0" + child.AstPath + "\0" + childIndex);
+        return stem + "-" + Convert.ToHexStringLower(SHA256.HashData(occurrenceBytes));
     }
 
     private static DigestionLedgerSource CaptureBoundarySource(

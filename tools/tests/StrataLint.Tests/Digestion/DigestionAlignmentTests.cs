@@ -726,9 +726,10 @@ public sealed partial class DigestionAlignmentTests
         Assert.All(children, child =>
         {
             Assert.StartsWith("theorem/18.7/clause/", child.AstPath, StringComparison.Ordinal);
-            Assert.Equal(
-                "pzg-residual-" + child.Fingerprints.RawSha256["sha256:".Length..],
-                child.AtomId);
+            Assert.StartsWith(
+                "pzg-residual-" + child.Fingerprints.RawSha256["sha256:".Length..] + "-",
+                child.AtomId,
+                StringComparison.Ordinal);
             Assert.Equal(DigestionMigrationState.Residual, child.ProjectedStatus.Migration);
             Assert.Equal(DigestionTruthState.Open, child.ProjectedStatus.Truth);
         });
@@ -744,6 +745,97 @@ public sealed partial class DigestionAlignmentTests
         Assert.Equal(0, second.ResidualOpenAdded);
         Assert.Empty(second.CasObjects);
         Assert.Equal(firstBytes.ToArray(), secondBytes.ToArray());
+    }
+
+    [Fact]
+    public void PzgIngestQualifiesIdenticalClauseBytesByParent()
+    {
+        const string sharedClause = "**推论:共享子句**;相同字节必须按父 atom 寻址。";
+        var sourceBytes = Encoding.UTF8.GetBytes($$"""
+            # PZG
+
+            **定理 18.7(甲)**。first parent。
+
+            {{sharedClause}}
+
+            **定理 18.8(乙)**。second parent。
+
+            {{sharedClause}}
+
+            # END
+
+            """);
+        var atomized = PzgAtomizer.Atomize(sourceBytes, DigestionTestSupport.Rules);
+        Assert.Equal(2, atomized.Claims.Length);
+        Assert.Equal(2, atomized.ClausePlans.Length);
+        var sharedChildren = atomized.ClausePlans
+            .Select(static plan => plan.Children[1])
+            .ToArray();
+        Assert.True(
+            sharedChildren[0].RawBytes.AsSpan().SequenceEqual(sharedChildren[1].RawBytes.AsSpan()),
+            $"first=[{Encoding.UTF8.GetString(sharedChildren[0].RawBytes.AsSpan())}] "
+            + $"second=[{Encoding.UTF8.GetString(sharedChildren[1].RawBytes.AsSpan())}]");
+        var parentCaptures = atomized.Claims
+            .Select(parent => DigestionCasStore.Capture(parent.RawBytes.AsSpan()))
+            .ToArray();
+        var ledger = BackfillInventoryLoader.Load(
+            Ledger(
+                [],
+                CasEntry("parent-18-7", atomized.Claims[0], parentCaptures[0].Reference),
+                CasEntry("parent-18-8", atomized.Claims[1], parentCaptures[1].Reference))
+                .Replace(AtomizerRegistry.GictId, AtomizerRegistry.PzgId, StringComparison.Ordinal));
+
+        var plan = DigestionIngestor.Plan(
+            ledger,
+            Snapshot(sourceBytes, parentCaptures),
+            ledger);
+
+        var entries = Assert.Single(plan.Document.RequireDigestionSources()).Entries;
+        var sharedFingerprint = Assert.Single(sharedChildren
+            .Select(static child => child.Fingerprints.RawSha256)
+            .Distinct(StringComparer.Ordinal));
+        var admittedSharedChildren = entries
+            .Where(entry => entry.Fingerprints.RawSha256 == sharedFingerprint)
+            .ToArray();
+        Assert.Equal(2, admittedSharedChildren.Length);
+        Assert.Equal(2, admittedSharedChildren.Select(static child => child.AtomId).Distinct().Count());
+        Assert.Equal(4, plan.ResidualOpenAdded);
+    }
+
+    [Fact]
+    public void PzgIngestResolvesClausePlanParentThroughNormalizedCrlfView()
+    {
+        const string claim = """
+            **定理 18.7(换行视图)**。first clause。
+
+            **推论:第二子句**;line ending normalization must preserve the parent identity。
+
+            """;
+        var lfBytes = Encoding.UTF8.GetBytes("# PZG\n\n" + claim);
+        var crlfBytes = Encoding.UTF8.GetBytes(
+            ("# PZG\n\n" + claim).Replace("\n", "\r\n", StringComparison.Ordinal));
+        var lfParent = Assert.Single(PzgAtomizer.Atomize(
+            lfBytes,
+            DigestionTestSupport.Rules).Claims);
+        var crlfParent = Assert.Single(PzgAtomizer.Atomize(
+            crlfBytes,
+            DigestionTestSupport.Rules).Claims);
+        Assert.NotEqual(lfParent.Fingerprints.RawSha256, crlfParent.Fingerprints.RawSha256);
+        Assert.Equal(lfParent.Fingerprints.NormalizedSha256, crlfParent.Fingerprints.NormalizedSha256);
+        var parentCapture = DigestionCasStore.Capture(lfParent.RawBytes.AsSpan());
+        var ledger = BackfillInventoryLoader.Load(
+            Ledger([], CasEntry("parent", lfParent, parentCapture.Reference))
+                .Replace(AtomizerRegistry.GictId, AtomizerRegistry.PzgId, StringComparison.Ordinal));
+
+        var plan = DigestionIngestor.Plan(
+            ledger,
+            Snapshot(crlfBytes, [parentCapture]),
+            ledger);
+
+        var entries = Assert.Single(plan.Document.RequireDigestionSources()).Entries;
+        var parent = Assert.Single(entries, static entry => entry.AtomId == "parent");
+        Assert.Equal(2, parent.Receipts.ChainAtoms.Length);
+        Assert.Equal(2, plan.ResidualOpenAdded);
     }
 
     private static (BackfillInventoryDocument Ledger, DigestionCasObject Capture) ExistingCasBackedLedger()
