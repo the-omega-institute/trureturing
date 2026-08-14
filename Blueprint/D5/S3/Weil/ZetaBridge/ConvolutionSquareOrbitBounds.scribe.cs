@@ -26,7 +26,7 @@ internal sealed class ConvolutionSquareOrbitBoundsDocument : IScribeDocumentDefi
                     Operatorname, Grp(F.Id("fourierLaplace")), Sp, F.Id("g"), Sp,
                     Open, F.Id("z"), Close, Cdot, Sp,
                     Overline, Grp(Operatorname, Grp(F.Id("fourierLaplace")), Sp, F.Id("g"), Sp,
-                        Open, Overline, F.Id("z"), Close)))),
+                        Open, Overline, Grp(F.Id("z")), Close)))),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "Twist g and its Weil involution by the complex exponential kernel. "
