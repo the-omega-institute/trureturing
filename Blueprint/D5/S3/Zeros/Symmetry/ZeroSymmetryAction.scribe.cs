@@ -80,6 +80,5 @@ internal sealed class ZeroSymmetryActionDocument : IScribeDocumentDefinition
                 DescribeRole.Theorem)),
         [
             DocumentEdge.Dependency.Create(GidRef.Create("D5/S3/Weil/ReflectionLedger")),
-            DocumentEdge.Dependency.Create(GidRef.Create("D5/S3/Weil/ZeroSum")),
         ]));
 }
