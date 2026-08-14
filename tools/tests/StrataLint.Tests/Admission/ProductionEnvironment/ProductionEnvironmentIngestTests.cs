@@ -45,6 +45,18 @@ public sealed partial class ProductionEnvironmentTests
     }
 
     [Fact]
+    public void ByteIdenticalIngestToleratesDanglingGenericChainMember()
+    {
+        AssertByteIdenticalGenericChainIngest("missing-child");
+    }
+
+    [Fact]
+    public void ByteIdenticalIngestToleratesCyclicGenericChain()
+    {
+        AssertByteIdenticalGenericChainIngest("old-receipt");
+    }
+
+    [Fact]
     public void IngestMovesDirectoryAtomWhenDerivedStatusChangesFromResidualToPartial()
     {
         const string coverageGid = "D5/S0/Carrier/Ring";
@@ -736,6 +748,50 @@ public sealed partial class ProductionEnvironmentTests
                   truth: open
         ticket_index: []
         """;
+
+    private static void AssertByteIdenticalGenericChainIngest(string chainAtomId)
+    {
+        var fixture = new RuleFixture();
+        var atomizerId = SyntheticNumberedAtomizer.Id;
+        var sourceBytes = Encoding.UTF8.GetBytes("# Synthetic\n\n**定理 1.1(A)**。claim。\n");
+        var atom = Assert.Single(AtomizerRegistry.Atomize(
+            atomizerId,
+            sourceBytes,
+            DigestionTestSupport.Rules).Claims);
+        fixture.Files[RuleFixture.FixtureDigestionSourcePath] = Encoding.UTF8.GetString(sourceBytes);
+        fixture.Baseline[RuleFixture.FixtureDigestionSourcePath] = Encoding.UTF8.GetString(sourceBytes);
+        InstallDirectoryLedger(fixture, atomizerId, atom);
+        var atomPath = DirectoryAtomPath("old-receipt", "residual-open");
+        var atomText = fixture.Files[atomPath].Replace(
+            "  unresolved_subitems: []",
+            $"  unresolved_subitems: []\n  chain_atoms:\n    - {chainAtomId}",
+            StringComparison.Ordinal);
+        fixture.Files[atomPath] = atomText;
+        fixture.Baseline[atomPath] = atomText;
+        using var temporary = new TemporaryDirectory();
+        WriteDirectoryLedger(temporary.Path, fixture.Files);
+        var outputPath = Path.Combine(
+            temporary.Path,
+            atomPath.Replace('/', Path.DirectorySeparatorChar));
+        var unchangedWriteTime = new DateTime(2000, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+        File.SetLastWriteTimeUtc(outputPath, unchangedWriteTime);
+        var environment = new ProductionCliEnvironment(
+            temporary.Path,
+            new FakeRepositoryGateway(
+                RawChangeSet.Create(Array.Empty<string>()),
+                Snapshot(fixture.Files),
+                Snapshot(fixture.Baseline)),
+            new FakeLeanReportSource(LeanAxiomReport.Create(fixture.Reports)),
+            new FakeScribeEmissionVerifier(VerifiedScribeEmissions.Empty));
+
+        var result = environment.Ingest(["--base", "baseline"]);
+
+        Assert.True(result.Success, result.Error);
+        Assert.Contains("residual_open_added=0", result.Output, StringComparison.Ordinal);
+        Assert.Contains("ledger_changed=false", result.Output, StringComparison.Ordinal);
+        Assert.Equal(atomText, File.ReadAllText(outputPath));
+        Assert.Equal(unchangedWriteTime, File.GetLastWriteTimeUtc(outputPath));
+    }
 
     private static void InstallLedger(
         RuleFixture fixture,

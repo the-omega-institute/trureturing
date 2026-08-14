@@ -412,14 +412,12 @@ internal static class IngestCommand
 
             if (!entries.TryGetValue(atomId, out var entry))
             {
-                throw new InvalidOperationException(
-                    $"ledger chain references absent child {atomId}; durable ordering is impossible");
+                return 0;
             }
 
             if (!visiting.Add(atomId))
             {
-                throw new InvalidOperationException(
-                    $"ledger chain is cyclic at {atomId}; durable ordering is impossible");
+                return 0;
             }
 
             rank = entry.Receipts.ChainAtoms.Length == 0
