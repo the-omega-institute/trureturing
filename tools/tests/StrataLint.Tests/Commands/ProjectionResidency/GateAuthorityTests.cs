@@ -17,11 +17,11 @@ public sealed class GateAuthorityTests
     // and would let a root be dropped silently. Retiring one is a deliberate act: change the
     // number here in the same commit.
     [Fact]
-    public void RepositoryCatalogHasFourteenUniqueUtf8SortedRoots()
+    public void RepositoryCatalogHasThirteenUniqueUtf8SortedRoots()
     {
         var roots = GateAuthorityRootCatalogLoader.LoadRepository(TestRepositoryLayout.FindRoot());
 
-        Assert.Equal(14, roots.Length);
+        Assert.Equal(13, roots.Length);
         Assert.Equal(
             roots.Length,
             roots.Select(root => root.RootId).Distinct().Count());
@@ -127,13 +127,21 @@ public sealed class GateAuthorityTests
     }
 
     [Fact]
-    public void CommandRejectsMissingArgumentsAndUnwritableOutputAsUsage()
+    public void CommandAcceptsOnlyTheCheckShape()
     {
         var root = TestRepositoryLayout.FindRoot();
         using var temporary = new TemporaryDirectory();
-        Assert.Equal(2, GateAuthorityCommand.Run(root, null, Path.Combine(temporary.Path, "a.json")).ExitCode);
-        Assert.Equal(2, GateAuthorityCommand.Run(root, OldBuild, null).ExitCode);
-        Assert.Equal(2, GateAuthorityCommand.Run(root, OldBuild, temporary.Path).ExitCode);
+        var output = Path.Combine(temporary.Path, "authority.json");
+
+        var missing = GateAuthorityCommand.Run(root, []);
+        var retiredProducer = GateAuthorityCommand.Run(
+            root,
+            ["--old-build", OldBuild, "--out", output]);
+
+        Assert.Equal(2, missing.ExitCode);
+        Assert.Equal(2, retiredProducer.ExitCode);
+        Assert.Equal("USAGE: StrataLint gate-authority --check\n", retiredProducer.Error);
+        Assert.False(File.Exists(output));
     }
 
     [Fact]
