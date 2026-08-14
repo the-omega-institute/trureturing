@@ -59,8 +59,13 @@
   `GoldenHeatLayers` module opened the `Midline/HeatLayers/` bucket; all 12
   existing `Midline/` paths remain in place.
 
+- 2026-08-14 (SL-003): `Zeros/` remained at its 12-Lean-file limit. The
+  split-only, no-move change opened `Zeros/Window/`; all existing `Zeros/`
+  paths remain unmoved.
+
 ## Buckets
 
+- `Zeros/Window/`: divisor-based zero counts on an arbitrary window, and Jensen's disk bound transported to any enclosed rectangle.
 - `Constants/`: canonical real constants and registered reference centers.
 - `Analytic/Dilation/`: Mellin and Fourier analysis along the multiplicative
   dilation flow in logarithmic time.
