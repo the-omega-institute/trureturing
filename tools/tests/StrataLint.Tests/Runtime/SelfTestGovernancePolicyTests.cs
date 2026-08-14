@@ -13,7 +13,7 @@ public sealed class SelfTestGovernancePolicyTests
               - id: csharp-architecture
                 kind: repository-files
                 members:
-                  - tools/Architecture/MAP.md
+                  - tools/tests/StrataLint.ArchitectureTests/MAP.md
                 judged_by:
                   - architecture-tests
                   - banned-api-analyzers
