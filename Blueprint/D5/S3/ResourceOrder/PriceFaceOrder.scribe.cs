@@ -1,11 +1,11 @@
 using static StrataLint.Scribe.DefinitionDsl;
 using F = StrataLint.Scribe.FormulaDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Resource;
+namespace StrataLint.Scribe.Blueprint.D5.S3.ResourceOrder;
 
 internal sealed class PriceFaceOrderDocument : IScribeDocumentDefinition
 {
-    private const string LeanPrefix = "D5/S3/Resource/PriceFaceOrder.";
+    private const string LeanPrefix = "D5/S3/ResourceOrder/PriceFaceOrder.";
 
     private static Formula CostProfileType() => F.Seq(
         F.Operatorname, F.Grp(F.Id("CostProfile")), F.Open, F.Id("Cost"), F.Close);

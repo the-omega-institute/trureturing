@@ -1,10 +1,9 @@
-/- GID: D5/S3/Resource/PriceFaceOrder
+/- GID: D5/S3/ResourceOrder/PriceFaceOrder
    generality: G
-   mirror-B: D5/B/S3/Resource/PriceFaceOrder
+   mirror-B: D5/B/S3/ResourceOrder/PriceFaceOrder
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: The price-face order is a preorder, is not antisymmetric, and admits
-   a concrete two-direction face. -/
+   digest: A preorder that is not antisymmetric, with a two-direction price face. -/
 
 import D5.S3.Resource.PriceFace
 import Mathlib.Order.Filter.AtTopBot.Basic
@@ -22,7 +21,7 @@ Library-search and proof boundary (2026-08-14):
   eventual preorder is a partial order.
 -/
 
-namespace D5.S3.Resource.PriceFaceOrder
+namespace D5.S3.ResourceOrder.PriceFaceOrder
 
 open D5.S3.Resource.PriceFace
 
@@ -230,4 +229,4 @@ theorem priceFace_eq_empty_of_no_valid
 #print axioms priceFace_mem_reachable
 #print axioms priceFace_eq_empty_of_no_valid
 
-end D5.S3.Resource.PriceFaceOrder
+end D5.S3.ResourceOrder.PriceFaceOrder
