@@ -35,93 +35,79 @@ branch = harness/diag-month-r5-b
 The reviewed report commit before this final-base replay was:
 
 ```text
-b7ee9b7e1319294ceb1ffe91f0bfbefd853fe6f5
+0feb74b9a5ac35b6dd83c9b881defea203343dd8
 ```
 
 The exact assigned integration base and the branch merge point are distinct:
 
 ```text
-origin/dev                   = f94e87a89fd0a681936647038edf285f21eee916
-final-base replay merge HEAD = 8bcaa70e6c64deb554a1bb4439d7ae4ebae0689e
+origin/dev                   = 9014d6103a180f6347cb6d092b078ca1560958cf
+final-base replay merge HEAD = e6ba3731b7e00326f275f3ac4b3ad3cda7ed06a2
 ```
 
 `origin/dev` resolved to the exact assigned SHA before the merge. That commit
 was merged non-destructively into the reviewed report commit with:
 
 ```sh
-git merge --no-edit f94e87a89fd0a681936647038edf285f21eee916
+git merge --no-edit 9014d6103a180f6347cb6d092b078ca1560958cf
 ```
 
-Exit `0`; there were no conflicts. The merge commit has parents `b7ee9b7e` and
-`f94e87a8`. The incoming range from the preceding base
-`4551a412d3dfbf5bcaa25755e34bbf8481c1a3e8` contains exactly:
+Exit `0`; there were no conflicts. The merge commit has parents `0feb74b9` and
+`9014d610`. The incoming range from the preceding base
+`f94e87a89fd0a681936647038edf285f21eee916` has 270 changed paths. Its large
+component is the QDO ingestion: 114 new content-addressed atom blobs and 115
+paths under `Meta/Digestion/backfill/qdo-v1/`, together with the QDO atomizer,
+source declaration, and reference volume. The range also contains unrelated
+Git-revision/frozen-anchor tooling changes and their tests.
+
+The incoming PZG receipt and partial-record changes named by this replay are
+keyed to other atoms:
 
 ```text
-A Blueprint/D5/S1/Deficit/Displacement/GoldenContractionRadicalBound.md
-A Blueprint/D5/S1/Deficit/Displacement/GoldenContractionRadicalBound.scribe.cs
-A Blueprint/D5/S3/Weil/PrimeAddress/PrimeLogIndependence.md
-A Blueprint/D5/S3/Weil/PrimeAddress/PrimeLogIndependence.scribe.cs
-A D5/S1/Deficit/Displacement/GoldenContractionRadicalBound.lean
-A D5/S3/Weil/PrimeAddress/PrimeLogIndependence.lean
-M Meta/Digestion/backfill/pzg-v170/partial-closed/pzg-residual-735b1de95a92d627f7b786f4057931534c910317ef85684289e944e322cb4659.yaml
+6e7e6e80...  AffordableRegionAgreement.affordable_region_agreement
+a6b11f64...  SearchableWindowDecision.searchable_window_forall_decidable
+d8fd2d6f...  GoldenMidlineFactorization.golden_midline_factorization
+42785d66...  BackwardShiftOperator coverage on the shift-operator carrier
 ```
 
-The `PrimeLogIndependence` theorem and the modified PZG backfill record belong
-to atom `735b1de95a92d627f7b786f4057931534c910317ef85684289e944e322cb4659`,
-not the selected hidden-motion atom
+The `42785d66...` backfill delta adds three backward-shift coverage GIDs and
+removes only its bounded-adjoint and basis-subtraction unresolved items. The
+range also adds GoldenSubstitutionOrbit and FourPointPowerDefect declarations,
+but none of these paths or atom IDs is the selected hidden-motion atom
 `85ace51c6a4dd01566ad4ee14028fc48bba25db190a01a8d09917eb4d6262f52`.
-The record delta adds
-`D5/S3/Weil/PrimeAddress/PrimeLogIndependence.prime_log_rational_independence`
-to `coverage_gids` and removes only
-`log-prime-rational-independence-from-unique-factorization` from that same
-atom's unresolved list. The golden-contraction files are also disjoint from
-hidden motion.
 
-A path-scoped `git diff --name-only 4551a412..f94e87a8` over this report, the
-selected atom's canonical backfill record, and all three rejected candidate
-paths exited `0` with no output. A direct `git diff --exit-code` over the
-selected canonical record also exited `0`; its tracked blob remains
-`9f66c6fb5e79b27689b9ec9b4c8b7c6f2aa5d352`. Thus the incoming range neither
-changes the selected atom's status data nor touches or restores a candidate
-artifact.
+A path-scoped `git diff --name-status f94e87a8..9014d610` over this report, the
+selected atom's canonical record, and all three rejected candidate paths exited
+`0` with no output. The selected record resolves to the same blob at both
+endpoints:
+
+```text
+f94e87a8: 9f66c6fb5e79b27689b9ec9b4c8b7c6f2aa5d352
+9014d610: 9f66c6fb5e79b27689b9ec9b4c8b7c6f2aa5d352
+```
+
+Thus the incoming range neither changes the selected atom's status data nor
+touches or restores a candidate artifact.
 
 `git merge-base origin/dev HEAD` returned the exact `origin/dev` SHA above, and
 `git merge-base --is-ancestor origin/dev HEAD` exited `0`. Thus `origin/dev` is
-the candidate-status base, while `8bcaa70e` is the branch merge commit on which
+the candidate-status base, while `e6ba3731` is the branch merge commit on which
 this final evidence refresh was prepared; the refresh commit is its descendant.
 Immediately after the merge, all three rejected-path absence tests exited `0`.
 
-The live PATH declaration had been read from
-`tools/scripts/local-harness-gate.sh` and applied. `make help` exited `0` and was
-read as the canonical command catalogue. The earlier correction's `make dotnet`
-run exited `0`, building all Release projects with zero warnings and zero
-errors. The final incoming range changes no C# or tool path.
-
-The preceding quiet-window attempt ran bare `make lean-report` on `b7ee9b7e`
-before this final-base merge and exited `0` with:
+Fresh bare `make lean-report` on the exact merged base exited `0` with:
 
 ```text
-input_address = sha256:7c06971ecfda1ceb649b61deda7af1a48eaeb0f42542ec8887d09e95c0c977bf
-report_sha256 = d1fc400f4d539060fdf1af46aaba31228b1ef2d382588eaa7e38c4fdb32054d5
+input_address = sha256:bdb5001081468f123f50a4dd126daa1fa36e05a16a101106c6d883a60cd033eb
+report_sha256 = 6f04896a66cee2f912b6feaf1f52f662badbd4dbf20b444a8b07843344ec73d8
 mode = cached
 source_side = candidate
 ```
 
-That report is not claimed as final-base evidence. Its following bare
-`make gate BASE=origin/dev` exited `0` and emitted an admission receipt, but it
-also emitted:
-
-```text
-BASE_ADVANCED pinned=4551a412d3dfbf5bcaa25755e34bbf8481c1a3e8 observed=f94e87a89fd0a681936647038edf285f21eee916
-```
-
-The attempt was therefore stale and invalid. After the exact merge, a
-pre-production `digest-status` probe failed closed with exit `2` because that
-old raw report did not contain the newly merged
-`GoldenContractionRadicalBound.lean` and `PrimeLogIndependence.lean` modules.
-No status conclusion is drawn from that stale projection. Fresh bare
-`make lean-report` and `make gate BASE=origin/dev` runs are reserved for after
-this report commit, so this report does not preclaim their terminal results.
+Because this base changes CLI admission sources, the Release CLI was rebuilt
+before the status checks; the build exited `0` with zero warnings and zero
+errors. The final bare `make gate BASE=origin/dev` run is reserved for after
+this report commit, so the report does not preclaim its terminal result.
 
 ## Atom and authoritative statement
 
@@ -221,20 +207,29 @@ the restored current placement.
 
 ## Current candidate and receipt status
 
-The exact canonical backfill record on final base `f94e87a8` still has empty
-coverage and receipts. `make show-atom` exited `0` after the merge and verified
-matching raw, normalized, and CAS hashes for the selected atom. The selected
-record's blob is unchanged across `4551a412..f94e87a8`, while the only incoming
-PZG status change is the separately keyed partial-closed atom `735b1de9...`
-described above. The selected atom therefore remains `residual-open`; no
-incoming formalization receipt, coverage GID, or deposited artifact closes it.
+The exact canonical backfill record on final base `9014d610` still has empty
+coverage and receipts. `make show-atom` exited `0` after the Release rebuild and
+verified matching raw, normalized, and CAS hashes for the selected atom.
 
-The old formalization-candidate projection had counted `128` candidates, but
-that count is not repeated as a final-base measurement here: the final-base
-projection correctly requires the fresh post-commit Lean report. The canonical
-per-atom record and exact non-overlap diff are the status evidence available
-before that production step, and neither is stale with respect to the merged
-base.
+The exact final-base candidate projection exited `0` and reported:
+
+```text
+schema = stratalint-formalize-candidates-v3
+ledger_sha256 = sha256:04195d8065a46fdd1c6118555d98bb00b8d24099d3319628744667640d59780b
+candidate_count = 230
+match_count = 1
+source_id = pzg-v170
+ast_path = corollary/20.4
+kind = corollary
+cas_ref = sha256:85ace51c6a4dd01566ad4ee14028fc48bba25db190a01a8d09917eb4d6262f52
+selected_withheld_matches = []
+selected_recorded_formalizations = []
+```
+
+The final projection includes the newly ingested QDO corpus and totals 230
+candidates; the incoming PZG receipts belong to the differently keyed atoms
+listed above. The selected atom therefore remains exactly one `residual-open`
+candidate; no incoming receipt, coverage GID, or deposited artifact closes it.
 
 ## Clause-level statement echo
 
