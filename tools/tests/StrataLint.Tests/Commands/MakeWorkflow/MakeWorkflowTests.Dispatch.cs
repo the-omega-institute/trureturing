@@ -69,10 +69,7 @@ public sealed partial class MakeWorkflowTests
         Assert.Contains(" check \"${CHECK_BASE_ARGS[@]}\" --candidate-lean-report ", mathGate, StringComparison.Ordinal);
         Assert.Contains("--protected-base \"$base_sha\"", mathGate, StringComparison.Ordinal);
         Assert.Contains("[ \"$check_rc\" -ne 0 ] && [ \"$check_rc\" -ne 3 ]", mathGate, StringComparison.Ordinal);
-        Assert.Contains(" projections --check --report ", mathGate, StringComparison.Ordinal);
-        Assert.Contains(" emit --check", mathGate, StringComparison.Ordinal);
-        Assert.Contains(" emit-values --check", mathGate, StringComparison.Ordinal);
-        Assert.Contains(" describe-report --check", mathGate, StringComparison.Ordinal);
+        Assert.Contains(ScribeContentChecksScriptPath, mathGate, StringComparison.Ordinal);
         Assert.Equal(
             $"\t@/bin/bash {LeanCacheEnsureScriptPath}",
             Recipe(makefile, "lean-cache-ensure"));
@@ -159,6 +156,181 @@ public sealed partial class MakeWorkflowTests
             && name is YamlScalarNode scalar
             && scalar.Value == "Run candidate golden and integration tests");
         return Assert.IsType<YamlScalarNode>(step.Children[new YamlScalarNode("run")]).Value!;
+    }
+
+    [Fact]
+    public void PreflightCoversRecognizedCiGateCommandsAndRejectsUnrecognizedOnes()
+    {
+        var root = TestRepositoryLayout.FindRoot();
+        var workflow = File.ReadAllText(Path.Combine(root, AdmissionWorkflowPath));
+        var preflight = File.ReadAllText(Path.Combine(root, PreflightScriptPath));
+        var stream = new YamlStream();
+        stream.Load(new StringReader(workflow));
+        var document = Assert.IsType<YamlMappingNode>(stream.Documents[0].RootNode);
+        var jobs = Assert.IsType<YamlMappingNode>(document.Children[new YamlScalarNode("jobs")]);
+        var localEvidence = GateCommandSignatures(preflight).ToHashSet(StringComparer.Ordinal);
+        if (InvokesScript(preflight, ScribeContentChecksScriptPath))
+        {
+            localEvidence.UnionWith(GateCommandSignatures(
+                File.ReadAllText(Path.Combine(root, ScribeContentChecksScriptPath))));
+        }
+        if (Regex.IsMatch(
+            preflight,
+            @"(?m)^[ \t]*make[ \t]+gate(?:[ \t]|$)",
+            RegexOptions.CultureInvariant | RegexOptions.NonBacktracking))
+        {
+            localEvidence.UnionWith(GateCommandSignatures(
+                File.ReadAllText(Path.Combine(root, LocalHarnessGateScriptPath))));
+        }
+
+        Assert.NotEmpty(jobs.Children);
+        foreach (var (jobNode, definitionNode) in jobs.Children)
+        {
+            var job = Assert.IsType<YamlScalarNode>(jobNode).Value ?? string.Empty;
+            var definition = Assert.IsType<YamlMappingNode>(definitionNode);
+            Assert.True(
+                definition.Children.TryGetValue(new YamlScalarNode("steps"), out var stepsNode)
+                    && stepsNode is YamlSequenceNode,
+                $"CI job '{job}' must define a 'steps' sequence so gate-command parity can inspect its run blocks; job-level 'uses' declarations are not inspectable here.");
+            var steps = (YamlSequenceNode)stepsNode!;
+            var ciCommands = new List<string>();
+            foreach (var step in steps.Children.OfType<YamlMappingNode>())
+            {
+                if (!step.Children.TryGetValue(new YamlScalarNode("run"), out var runNode)) continue;
+                var run = Assert.IsType<YamlScalarNode>(runNode).Value ?? string.Empty;
+                var stepName = step.Children.TryGetValue(new YamlScalarNode("name"), out var nameNode)
+                    && nameNode is YamlScalarNode name
+                    ? name.Value ?? "<unnamed>"
+                    : "<unnamed>";
+                AssertNoUnrecognizedGateCommands(run, $"CI job '{job}' step '{stepName}'");
+                ciCommands.AddRange(GateCommandSignatures(run));
+            }
+
+            var distinctCiCommands = ciCommands
+                .Distinct(StringComparer.Ordinal)
+                .ToArray();
+
+            Assert.All(
+                distinctCiCommands,
+                command => Assert.True(
+                    localEvidence.Contains(command),
+                    $"preflight does not execute CI job '{job}' command '{command}'."));
+        }
+    }
+
+    private static void AssertNoUnrecognizedGateCommands(string shell, string source)
+    {
+        foreach (var rawLine in shell.Split('\n'))
+        {
+            var line = rawLine.TrimEnd('\r');
+            if (!Regex.IsMatch(
+                    line,
+                    """(?:dotnet[ \t]+"\$scribe"|run_scribe)[ \t]+\S+|make[ \t]+-C[ \t]+\S*tools[ \t]+\S+""",
+                    RegexOptions.CultureInvariant | RegexOptions.NonBacktracking))
+            {
+                continue;
+            }
+
+            Assert.True(
+                GateCommandSignatures(line).Any(),
+                $"{source} contains an unrecognized gate command: '{line.Trim()}'.");
+        }
+    }
+
+    private static bool InvokesScript(string shell, string repositoryPath) => Regex.IsMatch(
+        shell,
+        "(?m)^[ \\t]*/bin/bash[ \\t]+(?:\"\\$ROOT/|\"?)"
+            + Regex.Escape(repositoryPath)
+            + "\"?(?:[ \\t]+\\\\)?[ \\t]*$",
+        RegexOptions.CultureInvariant | RegexOptions.NonBacktracking);
+
+    private static IEnumerable<string> GateCommandSignatures(string shell)
+    {
+        foreach (Match match in Regex.Matches(
+            shell,
+            @"(?m)^[ \t]*(?:CI=true[ \t]+)?(?:STRATALINT_REQUIRE_LIVE_REPORT=1[ \t]+)?make[ \t]+-C[ \t]+(?:candidate/)?tools[ \t]+(?<target>dotnet|test|selftest)[ \t]*$",
+            RegexOptions.CultureInvariant | RegexOptions.NonBacktracking))
+        {
+            yield return $"make -C tools {match.Groups["target"].Value}";
+        }
+
+        foreach (Match match in Regex.Matches(
+            shell,
+            """(?m)^[ \t]*(?:(?:STRATALINT_LEAN_REPORT="\$report"[ \t]+)?dotnet[ \t]+"\$scribe"|run_scribe)[ \t]+(?<arguments>(?:projections|emit|emit-values|describe-report)[^\r\n]*)$""",
+            RegexOptions.CultureInvariant | RegexOptions.NonBacktracking))
+        {
+            yield return Regex.Replace(
+                match.Groups["arguments"].Value.Trim(),
+                @"\$(?:report|REPORT|EFFECTIVE_REPORT)",
+                "$REPORT",
+                RegexOptions.CultureInvariant | RegexOptions.NonBacktracking);
+        }
+
+        var assignments = Regex.Matches(
+                shell,
+                """(?m)^[ \t]*(?<variable>[A-Za-z_][A-Za-z0-9_]*)="(?<path>[^"\r\n]*\.github/scripts/harness-gate\.sh)"[ \t]*$""",
+                RegexOptions.CultureInvariant | RegexOptions.NonBacktracking)
+            .ToDictionary(
+                static match => match.Groups["variable"].Value,
+                static match => match.Groups["path"].Value,
+                StringComparer.Ordinal);
+        foreach (var (variable, path) in assignments)
+        {
+            if (Regex.IsMatch(
+                shell,
+                "(?m)^[ \\t]*(?:[A-Za-z_][A-Za-z0-9_]*=\"[^\"\\r\\n]*\"[ \\t]+)*\"\\$"
+                    + Regex.Escape(variable)
+                    + "\"(?:[ \\t]+\\\\)?[ \\t]*$",
+                RegexOptions.CultureInvariant | RegexOptions.NonBacktracking))
+            {
+                yield return $"script:{path[(path.IndexOf(".github/", StringComparison.Ordinal))..]}";
+            }
+        }
+    }
+
+    [Fact]
+    public void ScribeContentChecksHaveOneCanonicalCommandList()
+    {
+        var root = TestRepositoryLayout.FindRoot();
+        var canonicalPath = Path.Combine(root, ScribeContentChecksScriptPath);
+        Assert.True(File.Exists(canonicalPath), $"canonical Scribe content check script is missing: {ScribeContentChecksScriptPath}");
+
+        var canonical = File.ReadAllText(canonicalPath);
+        var mathGate = File.ReadAllText(Path.Combine(root, "tools", "scripts", "workflow", "math-gate.sh"));
+        var preflight = File.ReadAllText(Path.Combine(root, PreflightScriptPath));
+        var workflow = File.ReadAllText(Path.Combine(root, AdmissionWorkflowPath));
+        var stream = new YamlStream();
+        stream.Load(new StringReader(workflow));
+        var document = Assert.IsType<YamlMappingNode>(stream.Documents[0].RootNode);
+        var jobs = Assert.IsType<YamlMappingNode>(document.Children[new YamlScalarNode("jobs")]);
+        var leanInspect = Assert.IsType<YamlMappingNode>(jobs.Children[new YamlScalarNode("lean-inspect")]);
+        var steps = Assert.IsType<YamlSequenceNode>(leanInspect.Children[new YamlScalarNode("steps")]);
+        var contentStep = Assert.Single(
+            steps.Children.OfType<YamlMappingNode>(),
+            step => step.Children.TryGetValue(new YamlScalarNode("name"), out var name)
+                && name is YamlScalarNode { Value: "Run complete mathematical content checks" });
+        var ciRun = Assert.IsType<YamlScalarNode>(contentStep.Children[new YamlScalarNode("run")]).Value!;
+
+        AssertNoUnrecognizedGateCommands(canonical, $"canonical script '{ScribeContentChecksScriptPath}'");
+        AssertNoUnrecognizedGateCommands(ciRun, "CI step 'Run complete mathematical content checks'");
+        var canonicalCommands = GateCommandSignatures(canonical).ToArray();
+        var ciCommands = GateCommandSignatures(ciRun).ToArray();
+        Assert.Equal(
+            [
+                "projections --check --report \"$REPORT\"",
+                "emit --check",
+                "emit-values --check",
+                "describe-report --check",
+            ],
+            canonicalCommands);
+        Assert.Equal(canonicalCommands, ciCommands);
+        Assert.Contains(ScribeContentChecksScriptPath, mathGate, StringComparison.Ordinal);
+        Assert.Contains(
+            "'exec /bin/bash \"$1\" \"${STRATALINT_LEAN_REPORT:?}\"'",
+            mathGate,
+            StringComparison.Ordinal);
+        Assert.Contains(ScribeContentChecksScriptPath, preflight, StringComparison.Ordinal);
+        Assert.DoesNotContain(ScribeContentChecksScriptPath, ciRun, StringComparison.Ordinal);
     }
 
     [Fact]

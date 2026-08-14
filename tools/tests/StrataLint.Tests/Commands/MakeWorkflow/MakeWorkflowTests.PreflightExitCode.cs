@@ -24,6 +24,37 @@ public sealed partial class MakeWorkflowTests
     {
         if (OperatingSystem.IsWindows()) return;
 
+        var result = RunPreflightScenario(scenario);
+
+        Assert.Equal(expectedExitCode, result.ExitCode);
+        Assert.EndsWith(
+            $"FKST_LOCAL_ITERATION_RESULT:v2:{expectedDeclaration}\n",
+            System.Text.Encoding.UTF8.GetString(result.StandardOutput),
+            StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void PreflightRejectsStaleValuesBeforeDeclaringPass()
+    {
+        if (OperatingSystem.IsWindows()) return;
+
+        var result = RunPreflightScenario("stale-values");
+        var output = System.Text.Encoding.UTF8.GetString(result.StandardOutput);
+
+        Assert.NotEqual(0, result.ExitCode);
+        Assert.DoesNotContain(
+            "FKST_LOCAL_ITERATION_RESULT:v2:PASS:NONE",
+            output,
+            StringComparison.Ordinal);
+        Assert.EndsWith(
+            "FKST_LOCAL_ITERATION_RESULT:v2:FAIL:SEMANTIC\n",
+            output,
+            StringComparison.Ordinal);
+    }
+
+    [System.Runtime.Versioning.UnsupportedOSPlatform("windows")]
+    private static ProcessOutput RunPreflightScenario(string scenario)
+    {
         var root = TestRepositoryLayout.FindRoot();
         using var fixture = new TemporaryDirectory();
         var binDirectory = Path.Combine(fixture.Path, "bin");
@@ -44,6 +75,10 @@ public sealed partial class MakeWorkflowTests
             if [[ "${1:-}" == --version ]]; then
               [[ "${PREFLIGHT_SCENARIO:-}" != toolchain-missing ]] || exit 127
               exit 0
+            fi
+            if [[ "${PREFLIGHT_SCENARIO:-}" == stale-values && "$*" == *"emit-values --check"* ]]; then
+              printf '%s\n' 'out of date: Evidence/D5/values.json' >&2
+              exit 44
             fi
             if [[ "${1:-}" == build ]]; then exit 1; fi
             if [[ "${1:-}" == msbuild ]]; then exit 1; fi
@@ -103,11 +138,7 @@ public sealed partial class MakeWorkflowTests
             TimeSpan.FromSeconds(30),
             64 * 1024);
 
-        Assert.Equal(expectedExitCode, result.ExitCode);
-        Assert.EndsWith(
-            $"FKST_LOCAL_ITERATION_RESULT:v2:{expectedDeclaration}\n",
-            System.Text.Encoding.UTF8.GetString(result.StandardOutput),
-            StringComparison.Ordinal);
+        return result;
     }
 
     [System.Runtime.Versioning.UnsupportedOSPlatform("windows")]
