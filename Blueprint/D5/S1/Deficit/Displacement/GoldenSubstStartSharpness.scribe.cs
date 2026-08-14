@@ -18,7 +18,7 @@ internal sealed class GoldenSubstStartSharpnessDocument : IScribeDocumentDefinit
                 StatementSource.FromAuthor(Disp(Seq(
                     Forall, Sp, F.Id("v"), InMacro, Mathbb, Grp(F.Id("N")), Comma, Esc,
                     Operatorname, Grp(F.Id("start")), Open, F.Id("v"), Close,
-                    Sp, Minus, Sp, Varphi, F.Id("v"), Sp, Eq, Sp,
+                    Sp, Minus, Sp, Varphi, Sp, F.Id("v"), Sp, Eq, Sp,
                     Varphi, Caret, Grp(Minus, D(1)), Sp, Minus, Sp,
                     OpenBrace, Open, F.Id("v"), Plus, D(1), Close,
                     Varphi, CloseBrace))),
@@ -37,7 +37,7 @@ internal sealed class GoldenSubstStartSharpnessDocument : IScribeDocumentDefinit
                     Forall, Sp, F.Id("v"), InMacro, Mathbb, Grp(F.Id("N")), Comma, Esc,
                     Minus, Varphi, Caret, Grp(Minus, D(2)), Sp, Leq, Sp,
                     Operatorname, Grp(F.Id("start")), Open, F.Id("v"), Close,
-                    Sp, Minus, Sp, Varphi, F.Id("v"), Sp, Leq, Sp,
+                    Sp, Minus, Sp, Varphi, Sp, F.Id("v"), Sp, Leq, Sp,
                     Varphi, Caret, Grp(Minus, D(1))))),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
@@ -94,7 +94,7 @@ internal sealed class GoldenSubstStartSharpnessDocument : IScribeDocumentDefinit
                     Varphi, Caret, Grp(Minus, D(1)), Sp, Minus, Sp, F.Id("epsilon"),
                     Sp, Lt, Sp,
                     Operatorname, Grp(F.Id("start")), Open, F.Id("v"), Close,
-                    Sp, Minus, Sp, Varphi, F.Id("v")))),
+                    Sp, Minus, Sp, Varphi, Sp, F.Id("v")))),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "Choose v plus one to be Fib(k) with k odd. The exact odd-index formula makes the "
@@ -111,7 +111,7 @@ internal sealed class GoldenSubstStartSharpnessDocument : IScribeDocumentDefinit
                     F.Id("epsilon"), Gt, D(0), Sp, Implies, Sp,
                     Exists, Sp, F.Id("v"), InMacro, Mathbb, Grp(F.Id("N")), Comma, Esc,
                     Operatorname, Grp(F.Id("start")), Open, F.Id("v"), Close,
-                    Sp, Minus, Sp, Varphi, F.Id("v"), Sp, Lt, Sp,
+                    Sp, Minus, Sp, Varphi, Sp, F.Id("v"), Sp, Lt, Sp,
                     Minus, Varphi, Caret, Grp(Minus, D(2)), Sp, Plus, Sp, F.Id("epsilon")))),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
