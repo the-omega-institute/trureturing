@@ -30,6 +30,7 @@ def fixedCoefficients (m : BinaryFractionalMap) : Int × Int × Int :=
 def discriminant (m : BinaryFractionalMap) : Int :=
   ((m.d : Int) - m.a) ^ 2 + 4 * (m.b : Int) * m.c
 
+set_option backward.isDefEq.respectTransparency false in
 inductive SelfApplicationFate
   | empty
   | dead

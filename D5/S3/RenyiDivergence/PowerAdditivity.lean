@@ -80,7 +80,13 @@ theorem renyi_power_sum_power {ι : Type*} [Fintype ι]
       (∑ i, (p i) ^ alpha * (q i) ^ (1 - alpha)) ^ n := by
   classical
   induction n with
-  | zero => simp [IidSpace, iidPower]
+  | zero =>
+    calc
+      _ = (iidPower p 0 PUnit.unit) ^ alpha *
+          (iidPower q 0 PUnit.unit) ^ (1 - alpha) :=
+        Fintype.sum_eq_single PUnit.unit fun z hz =>
+          (hz (Subsingleton.elim z PUnit.unit)).elim
+      _ = _ := by norm_num [iidPower]
   | succ n ih =>
     change (∑ z : ι × IidSpace ι n,
         (p z.1 * iidPower p n z.2) ^ alpha *
@@ -125,7 +131,19 @@ theorem renyi_divergence_power_additive {ι : Type*} [Fintype ι]
     | zero => norm_num
     | succ n => simp
   · induction n with
-    | zero => simp [IidSpace, iidPower, renyiDivergence]
+    | zero =>
+      have hsum_zero :
+          (∑ z : IidSpace ι 0,
+            (iidPower p 0 z) ^ alpha * (iidPower q 0 z) ^ (1 - alpha)) = 1 := by
+        calc
+          _ = (iidPower p 0 PUnit.unit) ^ alpha *
+              (iidPower q 0 PUnit.unit) ^ (1 - alpha) :=
+            Fintype.sum_eq_single PUnit.unit fun z hz =>
+              (hz (Subsingleton.elim z PUnit.unit)).elim
+          _ = 1 := by norm_num [iidPower]
+      rw [renyiDivergence]
+      rw [hsum_zero]
+      norm_num
     | succ n ih =>
       change renyiDivergence alpha
           (fun z : ι × IidSpace ι n => p z.1 * iidPower p n z.2)

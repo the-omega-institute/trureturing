@@ -25,7 +25,8 @@ instance : Zero UniversalSolenoid :=
 instance : Add UniversalSolenoid :=
   ⟨fun theta eta => ⟨theta.1 + eta.1, by
     intro m n
-    simp only [Pi.add_apply, nsmul_add, theta.2 m n, eta.2 m n]⟩⟩
+    change n.1 • (theta.1 _ + eta.1 _) = theta.1 m + eta.1 m
+    rw [nsmul_add, theta.2 m n, eta.2 m n]⟩⟩
 
 instance : Neg UniversalSolenoid :=
   ⟨fun theta => ⟨-theta.1, by

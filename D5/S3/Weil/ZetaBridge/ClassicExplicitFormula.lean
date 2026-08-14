@@ -144,8 +144,14 @@ theorem weil_explicit_formula
       (g.contDiff.of_le (show (2 : WithTop ℕ∞) ≤ ((⊤ : ℕ∞) : WithTop ℕ∞) by
         exact WithTop.coe_le_coe.mpr le_top))
       g.hasCompactSupport
-  let e := zeroEquiv Z
-  let f : {rho : ℂ // Zeta23.IsNontrivialZero rho} → ℂ := fun rho =>
+  let setSubtypeEquiv : {rho : ℂ // Zeta23.IsNontrivialZero rho} ≃
+      ↥{rho : ℂ | Zeta23.IsNontrivialZero rho} :=
+    { toFun := fun rho => ⟨rho, rho.property⟩
+      invFun := fun rho => ⟨rho, rho.property⟩
+      left_inv := fun _ => rfl
+      right_inv := fun _ => rfl }
+  let e := (zeroEquiv Z).trans setSubtypeEquiv
+  let f : ↥{rho : ℂ | Zeta23.IsNontrivialZero rho} → ℂ := fun rho =>
     (Zeta23.zeroMult rho : ℂ) * Zeta23.paperFT (g : ℝ → ℂ) (Zeta23.gammaOf rho)
   let a : ℕ → ℂ := fun n => zeroSummand Z g n
   have hterm : ∀ n, f (e n) = a n := by

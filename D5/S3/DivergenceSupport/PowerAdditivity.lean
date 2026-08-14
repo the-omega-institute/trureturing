@@ -44,7 +44,12 @@ theorem iid_power_sum_one {ι : Type*} [Fintype ι]
     forall n : Nat, ∑ z : IidSpace ι n, iidPower p n z = 1 := by
   intro n
   induction n with
-  | zero => simp [IidSpace, iidPower]
+  | zero =>
+    calc
+      _ = iidPower p 0 PUnit.unit :=
+        Fintype.sum_eq_single PUnit.unit fun z hz =>
+          (hz (Subsingleton.elim z PUnit.unit)).elim
+      _ = 1 := by norm_num [iidPower]
   | succ n ih =>
     change (∑ z : ι × IidSpace ι n, p z.1 * iidPower p n z.2) = 1
     rw [Fintype.sum_prod_type, ← Fintype.sum_mul_sum, hp_sum, ih, one_mul]

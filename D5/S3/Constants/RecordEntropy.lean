@@ -21,7 +21,11 @@ theorem neg_mul_log_integral :
       ((continuous_id.pow 2).div_const 4)).neg
   rw [intervalIntegral.integral_eq_sub_of_hasDerivAt_of_tendsto
     (f := F) (by norm_num) _
-    (by simpa only [neg_mul] using Real.continuous_mul_log.neg.intervalIntegrable 0 1)
+    (by
+      apply (Real.continuous_mul_log.neg.intervalIntegrable 0 1).congr
+      intro u hu
+      change -(u * Real.log u) = -u * Real.log u
+      ring)
     (tendsto_nhdsWithin_of_tendsto_nhds hF_continuous.continuousAt.tendsto)
     (tendsto_nhdsWithin_of_tendsto_nhds hF_continuous.continuousAt.tendsto)]
   · norm_num [F]
@@ -50,13 +54,16 @@ theorem haar_record_entropy_bits :
       1 / (2 * Real.log 2) := by
   let f : ℝ → ℝ := fun u => -u * Real.log u
   have hf : IntervalIntegrable f MeasureTheory.volume 0 1 := by
-    simpa [f, neg_mul] using Real.continuous_mul_log.neg.intervalIntegrable 0 1
+    apply (Real.continuous_mul_log.neg.intervalIntegrable 0 1).congr
+    intro u hu
+    change -(u * Real.log u) = -u * Real.log u
+    ring
   have hf_comp : IntervalIntegrable (fun u => f (1 - u)) MeasureTheory.volume 0 1 := by
     apply Continuous.intervalIntegrable
     convert Real.continuous_mul_log.neg.comp
       ((continuous_const : Continuous fun _ : ℝ => (1 : ℝ)).sub continuous_id) using 1
     funext u
-    simp only [Function.comp_apply, id_eq, f]
+    simp only [Function.comp_apply, Pi.neg_apply, Pi.sub_apply, f, id_eq]
     ring
   have hsymm : ∫ u in (0 : ℝ)..1, f (1 - u) = 1 / 4 := by
     calc

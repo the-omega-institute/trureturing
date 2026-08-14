@@ -64,7 +64,13 @@ theorem bhattacharyya_iidPower_multiplicative {ι : Type*} [Fintype ι]
   classical
   induction n with
   | zero =>
-      simp [IidSpace, iidPower, bhattacharyya]
+      rw [bhattacharyya]
+      calc
+        _ = Real.sqrt
+            (iidPower p 0 PUnit.unit * iidPower q 0 PUnit.unit) :=
+          Fintype.sum_eq_single PUnit.unit fun z hz =>
+            (hz (Subsingleton.elim z PUnit.unit)).elim
+        _ = _ := by norm_num [iidPower]
   | succ n ih =>
       change bhattacharyya
           (fun z : ι × IidSpace ι n => p z.1 * iidPower p n z.2)

@@ -31,12 +31,17 @@ instance : Zero CongruenceData :=
 instance : Add CongruenceData :=
   ⟨fun x y => ⟨x.1 + y.1, by
     intro m n
-    simp only [Pi.add_apply, map_add, x.2 m n, y.2 m n]⟩⟩
+    change (ZMod.castHom (show m.1 ∣ m.1 * n.1 from dvd_mul_right m.1 n.1)
+      (ZMod m.1) (x.1 ⟨m.1 * n.1, Nat.mul_pos m.2 n.2⟩ +
+        y.1 ⟨m.1 * n.1, Nat.mul_pos m.2 n.2⟩)) = x.1 m + y.1 m
+    rw [map_add, x.2 m n, y.2 m n]⟩⟩
 
 instance : Neg CongruenceData :=
   ⟨fun x => ⟨-x.1, by
     intro m n
-    simp only [Pi.neg_apply, map_neg, x.2 m n]⟩⟩
+    change (ZMod.castHom (show m.1 ∣ m.1 * n.1 from dvd_mul_right m.1 n.1)
+      (ZMod m.1) (-x.1 ⟨m.1 * n.1, Nat.mul_pos m.2 n.2⟩)) = -x.1 m
+    rw [map_neg, x.2 m n]⟩⟩
 
 instance : AddCommGroup CongruenceData where
   add := (· + ·)
@@ -82,12 +87,23 @@ private theorem residueCircle_cast_mul (m n : ℕ+) (z : ZMod (m.1 * n.1)) :
     ⟨mul_ne_zero (Nat.ne_of_gt m.2) (Nat.ne_of_gt n.2)⟩
   rcases ZMod.intCast_surjective z with ⟨a, rfl⟩
   rw [ZMod.castHom_apply,
-    ZMod.cast_intCast (R := ZMod m.1) (dvd_mul_right m.1 n.1) a,
-    residueCircle_intCast, residueCircle_intCast, ← AddCircle.coe_nsmul]
-  apply congrArg (fun t : ℝ => (t : UnitAddCircle))
-  rw [nsmul_eq_mul]
-  push_cast
-  field_simp [Nat.ne_of_gt m.2, Nat.ne_of_gt n.2]
+    ZMod.cast_intCast (R := ZMod m.1) (dvd_mul_right m.1 n.1) a]
+  calc
+    n.1 • residueCircle ⟨m.1 * n.1, Nat.mul_pos m.2 n.2⟩ (a : ZMod (m.1 * n.1)) =
+        n.1 • (((a : ℝ) / (m.1 * n.1) : ℝ) : UnitAddCircle) := by
+          simpa only [Nat.cast_mul] using
+            congrArg (fun u : UnitAddCircle => n.1 • u)
+              (residueCircle_intCast ⟨m.1 * n.1, Nat.mul_pos m.2 n.2⟩ a)
+    _ = (((a : ℝ) / m.1 : ℝ) : UnitAddCircle) := by
+          change n.1 • (((a : ℝ) / ((m.1 : ℝ) * n.1) : ℝ) : UnitAddCircle) = _
+          rw [← AddCircle.coe_nsmul]
+          apply congrArg (fun t : ℝ => (t : UnitAddCircle))
+          rw [nsmul_eq_mul]
+          push_cast
+          field_simp [Nat.ne_of_gt m.2, Nat.ne_of_gt n.2]
+    _ = residueCircle m (a : ZMod m.1) := by
+          symm
+          exact residueCircle_intCast m a
 
 /-- Compatible residue coordinates define a pure-congruence solenoid element. -/
 noncomputable def congruenceEmbedding : CongruenceData →+ UniversalSolenoid where
@@ -116,7 +132,12 @@ private theorem coordinate_torsion
     (m : ℕ+) : m.1 • theta.1 m = 0 := by
   calc
     m.1 • theta.1 m = theta.1 ⟨1, Nat.zero_lt_one⟩ := by
-      simpa using theta.2 ⟨1, Nat.zero_lt_one⟩ m
+      have h := theta.2 ⟨1, Nat.zero_lt_one⟩ m
+      have hm : (⟨1 * m.1, Nat.mul_pos Nat.zero_lt_one m.2⟩ : ℕ+) = m := by
+        apply Subtype.ext
+        simp
+      rw [hm] at h
+      exact h
     _ = UniversalSolenoid.projection theta := rfl
     _ = 0 := htheta
 
@@ -133,9 +154,12 @@ theorem congruence_embedding_exact_projection :
     let x : CongruenceData := ⟨fun m => (k m : ZMod m.1), by
       intro m n
       apply residueCircle_injective m
-      rw [← residueCircle_cast_mul, residueCircle_natCast, residueCircle_natCast]
-      rw [hcoordinate, hcoordinate]
-      exact theta.2 m n⟩
+      dsimp only
+      rw [← residueCircle_cast_mul,
+        residueCircle_natCast ⟨m.1 * n.1, Nat.mul_pos m.2 n.2⟩ (k ⟨m.1 * n.1, Nat.mul_pos m.2 n.2⟩),
+        residueCircle_natCast m (k m)]
+      rw [hcoordinate ⟨m.1 * n.1, Nat.mul_pos m.2 n.2⟩, theta.2 m n]
+      exact (hcoordinate m).symm⟩
     refine ⟨x, ?_⟩
     apply Subtype.ext
     funext m
