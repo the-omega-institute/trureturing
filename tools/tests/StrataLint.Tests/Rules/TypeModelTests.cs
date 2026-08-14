@@ -79,6 +79,8 @@ public sealed class TypeModelTests
         Assert.True(RepositoryPathPolicy.IsBlueprintContentCompositionBuildFile(
             "Blueprint/trureturing.content.csproj"));
         Assert.False(RepositoryPathPolicy.IsBlueprintContentCompositionBuildFile(
+            "Blueprint/D5/Future.Content.csproj"));
+        Assert.False(RepositoryPathPolicy.IsBlueprintContentCompositionBuildFile(
             "Blueprint/FOO.CSPROJ"));
         var exception = Assert.Throws<ArgumentException>(
             () => RepoPath.CreateKnown("Blueprint/Trureturing.Content.csproj/"));
