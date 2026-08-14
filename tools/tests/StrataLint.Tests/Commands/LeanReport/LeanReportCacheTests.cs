@@ -360,7 +360,6 @@ public sealed class LeanReportCacheTests
             arguments.AddRange(
             [
                 PairScript,
-                "--single",
                 "--producer", Producer,
                 "--lake-bin", "/bin/echo",
                 "--candidate-root", Repo,

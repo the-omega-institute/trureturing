@@ -20,7 +20,6 @@ while [[ $# -gt 0 ]]; do
     --lake-bin) LAKE_BIN="$2"; shift 2 ;;
     --candidate-root) CANDIDATE_ROOT="$2"; shift 2 ;;
     --candidate-output) CANDIDATE_OUTPUT="$2"; shift 2 ;;
-    --single) shift ;;
     *) echo "lean-report-pair: unknown argument '$1'" >&2; exit 2 ;;
   esac
 done
