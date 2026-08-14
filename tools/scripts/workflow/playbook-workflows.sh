@@ -280,6 +280,88 @@ freeze_module_if_needed() {
   fi
 }
 
+verify_added_frozen_event_ancestor() {
+  local path="$1" head="$2" event_type input_selector base_commit_oid commit_oid
+  if ! event_type="$(jq -er '.event_type | select(type == "string")' "$path")"; then
+    echo "PLAYBOOK_INVALID added frozen event has no valid event_type: $path; re-freeze before delivery" >&2
+    return 1
+  fi
+
+  case "$event_type" in
+    Freeze|Reattest) input_selector='.payload.input.base_commit_oid' ;;
+    EnvironmentRecoordinate) input_selector='.payload.new_input.base_commit_oid' ;;
+    Genesis|Revoke) return 0 ;;
+    *)
+      echo "PLAYBOOK_INVALID added frozen event has unsupported event_type $event_type: $path" >&2
+      return 1
+      ;;
+  esac
+
+  if ! base_commit_oid="$(jq -er "$input_selector | select(type == \"string\")" "$path")"; then
+    echo "PLAYBOOK_INVALID added frozen event has no snapshot base_commit_oid: $path; re-freeze before delivery" >&2
+    return 1
+  fi
+  case "$base_commit_oid" in
+    git-sha1:*) commit_oid="${base_commit_oid#git-sha1:}" ;;
+    git-sha256:*) commit_oid="${base_commit_oid#git-sha256:}" ;;
+    *)
+      echo "PLAYBOOK_INVALID added frozen event has malformed base_commit_oid $base_commit_oid: $path" >&2
+      return 1
+      ;;
+  esac
+
+  if ! git cat-file -e "${commit_oid}^{commit}" >/dev/null 2>&1; then
+    echo "PLAYBOOK_INVALID added frozen event $path recorded snapshot base $base_commit_oid was not pushed or is inconsistent: it does not resolve to a commit in this repository; re-freeze from a pushed base on the producing side before delivery" >&2
+    return 1
+  fi
+  if ! git merge-base --is-ancestor "$commit_oid" "$head"; then
+    echo "PLAYBOOK_INVALID added frozen event $path recorded snapshot base $base_commit_oid was not pushed or is inconsistent: it is not an ancestor of current HEAD $head; re-freeze from a pushed base on the producing side before delivery" >&2
+    return 1
+  fi
+}
+
+verify_added_frozen_event_ancestors() {
+  local added_paths head path
+  added_paths="$(mktemp)"
+  if ! git diff --diff-filter=A --name-only -z "$BASE"...HEAD -- "$FROZEN_LEDGER/*.json" \
+      > "$added_paths"; then
+    rm -f -- "$added_paths"
+    echo "PLAYBOOK_INVALID cannot determine added frozen events from base $BASE" >&2
+    return 1
+  fi
+  if ! git ls-files --others --exclude-standard -z -- "$FROZEN_LEDGER/*.json" \
+      >> "$added_paths"; then
+    rm -f -- "$added_paths"
+    echo "PLAYBOOK_INVALID cannot determine untracked frozen events" >&2
+    return 1
+  fi
+  if [[ ! -s "$added_paths" ]]; then
+    rm -f -- "$added_paths"
+    return 0
+  fi
+  if ! command -v jq >/dev/null 2>&1; then
+    rm -f -- "$added_paths"
+    echo "PLAYBOOK_INVALID jq is required to verify added frozen event ancestry" >&2
+    return 2
+  fi
+  if ! head="$(git rev-parse --verify HEAD^{commit})"; then
+    rm -f -- "$added_paths"
+    echo "PLAYBOOK_INVALID current HEAD does not resolve to a commit" >&2
+    return 2
+  fi
+
+  while IFS= read -r -d '' path; do
+    if verify_added_frozen_event_ancestor "$path" "$head"; then
+      :
+    else
+      local status=$?
+      rm -f -- "$added_paths"
+      return "$status"
+    fi
+  done < "$added_paths"
+  rm -f -- "$added_paths"
+}
+
 prepare_formalization_receipt() {
   local receipt_gid="$GID" temporary original="" receipt_existed=0
   if [[ -f "$RECEIPT_PATH" ]]; then
@@ -428,9 +510,11 @@ case "$COMMAND" in
     make emit
     receipts_stage
     # Freeze last among all mutating derivations so the receipt binds committed source bytes.
+    verify_added_frozen_event_ancestors
     run_cli ledger-append --candidate-lean-report "$REPORT"
     run_digest_status
     make preflight BASE="$BASE"
+    verify_added_frozen_event_ancestors
     ;;
   receipts-stage)
     receipts_stage

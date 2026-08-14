@@ -52,6 +52,9 @@
 - 2026-08-14 (SL-003): `Analytic/` was at its 12-Lean-file limit. The
   branch-new `MellinDilationFlow` module opened the split-only
   `Analytic/Dilation/` bucket; all existing `Analytic/` paths remain unmoved.
+- 2026-08-14 (SL-003): `Estimation/` was at its 12-file limit. The branch-new
+  `FixedSuiteBayesRiskFloor` module opened the split-only
+  `Estimation/DecisionRisk/` bucket; all 12 existing `Estimation/` paths remain unmoved.
 
 ## Buckets
 
@@ -87,5 +90,7 @@
 - `Observer/MetricGeometry/`: observable-supremum metrics on observer update orbits, including
   `VisiblePhaseInfinity.lean` for the ENNReal visible-phase infinity shadow.
 - `Entropy/Forgetting/`: finite entropy and uniform-capacity laws under forgetting channels.
+- `Estimation/DecisionRisk/`: Bayes-risk and average-risk laws for decision channels
+  based on fixed finite observation suites.
 - 2026-08-13 SL-003 分裂记录:D5/S3/Zeros 达 12 上限;按"只裂不迁"新增子疆域桶 `Zeros/ToySpectrum/`,存量 Zeros 模块地址全数保留;首件 `ToySpectrum/OffLineToySpectrum.lean`。
 - `Zeros/ToySpectrum/`: explicit finite toy zero-spectra separating set-level symmetry from critical-line containment.
