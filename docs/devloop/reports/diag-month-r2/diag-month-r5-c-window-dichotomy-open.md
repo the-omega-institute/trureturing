@@ -31,13 +31,13 @@ The lane began this audit clean at
 fast-forwarded after each advance. After this report became the lane's sole
 untracked change, `origin/dev` advanced again through PRs #1707, #1708, and
 #1709. Status checks before both later synchronizations showed only this report,
-and the incoming paths did not overlap it. Each synchronization used:
+and the incoming paths did not overlap it. Each historical synchronization used:
 
 ```sh
 git merge --ff-only origin/dev
 ```
 
-Exit `0`; the synchronized base is:
+Exit `0`; the initial report commit's synchronized base was:
 
 ```text
 HEAD = a6dcb9be36dc5b929e4b96fe5310df95d78f3c75
@@ -68,6 +68,35 @@ Gleason/Born result, unique trace, Lagrange-Markov spectrum, revival theorem, or
 selected-atom reference. Their analytic use of “window” and Fourier transforms
 is on unrelated carriers. None changes a clause disposition below.
 
+After the initial report commit, `origin/dev` advanced through PRs #1710 and
+#1711. The clean report branch synchronized non-destructively with:
+
+```sh
+git merge --no-edit origin/dev
+```
+
+Exit `0`; the merge completed without conflict as
+`35319d8e91761d771df459081c80164ebc29f57b`. Its second parent and the final
+synchronized content base are:
+
+```text
+origin/dev = 5b69e67602e7cc960dc63a110ab1766fb64b19ec
+merge-base(origin/dev, HEAD) = 5b69e67602e7cc960dc63a110ab1766fb64b19ec
+```
+
+PR #1710 added `PriceFaceOrder`, its Scribe source and projection, and the
+`ResourceOrder` domain registration. It proves preorders for resource-cost
+records, non-antisymmetry of eventual profile order, and concrete minimal
+price-face facts. Its `Minimal` predicate concerns reachable tax receipts, not
+a minimal adic observer update, and it contains no algebra trace. PR #1711
+added `SignedPrimeLogDensity`, its Scribe source, and its projection. It proves
+density in `Real` of the logarithmic lengths of signed prime ledgers; it does
+not concern prime-qudit tensor factorization or an observer carrier. Focused
+inspection of all seven incoming paths found no observer-window, continued-
+fraction, golden/adic, matrix-tower, anyon, Gleason, trace, revival,
+Lagrange-Markov, or selected-atom declaration. Neither PR changes a clause
+disposition below.
+
 The fresh authoritative partition command on this base was:
 
 ```sh
@@ -82,8 +111,8 @@ address was:
 sha256:92c7b162f1956e991864a0aef8e84a34cd5983a9ef7b8f0107570bdd6e5745dc
 ```
 
-For `observer-quantum-v1`, it reported exactly one candidate, the selected
-atom below, with no recorded formalization and no withheld atom.
+For `observer-quantum-v1`, the final-base rerun reported exactly one candidate,
+the selected atom below, with no recorded formalization and no withheld atom.
 
 The first partition attempt after PR #1705 failed closed with exit `2` and:
 
@@ -101,14 +130,22 @@ D5/S3/Weil/ZetaBridge/ConvolutionSquareOrbitBounds.lean
 ```
 
 No inference was drawn from either stale report. The canonical Lean-report door
-was rerun after each failure. The final refresh completed with:
+was rerun after each failure. The final-base refresh completed from the
+content-addressed cache with:
 
 ```text
 make lean-report
 exit = 0
-input_address = sha256:6474af698ff2fa87cb059baf4a2a35a929d556952ffbed0d6fb096416de98533
-report_sha256 = 27c2df1bdb3b1eb95f235f24200744221818f4a338bd1ebf648eb76d3f87ba34
+input_address = sha256:2256ae9089f4582f3400a060768cabbebf0ad000ac16a3c86081fe8269d2578b
+report_sha256 = beaac53b34d66b39ba97b43dfa0030a0ab9002c3e7f036d31eaf55703cc0ec70
 ```
+
+The exact selected-ID content search outside this report again exited `1`.
+The canonical residual-open record's raw, normalized, and CAS fingerprints
+still equal the selected hash, while `coverage_gids`, `receipts.coverage`, and
+`receipts.scribe` remain empty. The filtered candidate output contains the
+selected atom only as the single current candidate. Thus the synchronized
+base adds no deposit, bind, partial cover, or withheld status for this atom.
 
 ## Atom identity and authoritative statement
 
