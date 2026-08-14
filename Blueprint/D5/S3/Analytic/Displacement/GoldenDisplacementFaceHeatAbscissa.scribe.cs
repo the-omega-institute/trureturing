@@ -21,7 +21,7 @@ internal sealed class GoldenDisplacementFaceHeatAbscissaDocument : IScribeDocume
                     To, Sp, Mathbb, Grp(F.Id("R")), Comma, Sp,
                     F.Id("f"), Open, D(0), Close, Eq, D(0), Comma, Sp,
                     F.Id("f"), Open, D(1), Close, Eq, D(1), Comma, Sp,
-                    Forall, Sp, F.Id("n"), Comma, Sp, D(0), Leq, F.Id("f"), Open,
+                    Forall, Sp, F.Id("n"), Comma, Sp, D(0), Leq, Sp, F.Id("f"), Open,
                     F.Id("n"), Close, Comma, Sp,
                     Forall, Sp, F.Id("m"), Comma, Sp, F.Id("n"), Comma, Sp,
                     Operatorname, Grp(F.Id("Coprime")), Open, F.Id("m"), Comma, Sp,
