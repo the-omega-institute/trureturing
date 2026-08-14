@@ -332,6 +332,91 @@ public sealed class LedgerAppendCommandTests
     }
 
     [Fact]
+    public void WriteNewEventsRollsBackAllPublishedShardsWhenPostPublicationReplayDiffers()
+    {
+        using var temporary = new TemporaryDirectory();
+        var (baselineBytes, baseline, candidateCatalog) = ReconciliationFixture(includeNewModule: true);
+        var candidateBytes = FrozenLedgerGenerator.AppendSynchronization(baseline, candidateCatalog);
+        var candidateSyntax = Assert.IsType<DagLedgerLoadOutcome.Loaded>(
+            DagLedgerLoader.Load(candidateBytes.AsSpan())).Syntax;
+        FrozenLedgerTestData.WriteLedgerDirectory(temporary.Path, baselineBytes);
+        File.WriteAllBytes(Path.Combine(temporary.Path, ".ledger-write.lock"), []);
+        var before = DirectorySnapshot(temporary.Path);
+
+        var exception = Assert.Throws<InvalidOperationException>(() =>
+            DagLedgerAppendWriter.WriteNewEvents(
+                temporary.Path,
+                candidateSyntax.Lines,
+                baseline.Events.Length,
+                expectedBaselineBytes: baselineBytes.ToArray(),
+                expectedWrittenBytes: baselineBytes));
+
+        var rendered = DagLedgerAppendWriter.RenderFailure("LEDGER_SYNC_FAILED", exception);
+        Assert.Contains("LEDGER_SYNC_FAILED", rendered, StringComparison.Ordinal);
+        Assert.Contains(
+            "written frozen-ledger events do not replay to the validated candidate bytes",
+            rendered,
+            StringComparison.Ordinal);
+        var after = DirectorySnapshot(temporary.Path);
+        Assert.Equal(before.Keys, after.Keys);
+        Assert.All(before, item => Assert.Equal(item.Value, after[item.Key]));
+        Assert.Empty(Directory.EnumerateDirectories(temporary.Path, ".ledger-stage-*"));
+    }
+
+    [Fact]
+    public void WriteNewEventsValidatesTheCandidateOrderWhenAnotherDagOrderSortsNewWorkEarlier()
+    {
+        using var temporary = new TemporaryDirectory();
+        var existing = FrozenLedgerTestData.Module("Existing");
+        var baselineCatalog = FrozenLedgerTestData.BuildCatalog(existing);
+        var baselineBytes = FrozenLedgerGenerator.GenerateGenesis(
+            baselineCatalog,
+            new FrozenGenesisDescriptor(
+                FrozenLedgerTestData.GitOid('e'),
+                RuleCatalog.Default.RootSha256));
+        var baselineSyntax = Assert.IsType<DagLedgerLoadOutcome.Loaded>(
+            DagLedgerLoader.Load(baselineBytes.AsSpan())).Syntax;
+        var baseline = Assert.IsType<FrozenLedgerValidationOutcome.Accepted>(
+            FrozenLedgerTestData.ValidateGenesis(baselineSyntax, baselineCatalog)).Capability;
+        var existingIdentity = baselineCatalog.ByPath[
+                RepoPath.CreateKnown(FrozenLedgerTestData.PathFor("Existing"))]
+            .FrozenNodeId.Value;
+        FrozenMaterialCatalog? candidateCatalog = null;
+        for (var index = 0; index < 64; index++)
+        {
+            var proposed = FrozenLedgerTestData.BuildCatalog(
+                existing,
+                FrozenLedgerTestData.Module($"Added{index}"));
+            var addedIdentity = proposed.ByPath[
+                    RepoPath.CreateKnown(FrozenLedgerTestData.PathFor($"Added{index}"))]
+                .FrozenNodeId.Value;
+            if (string.CompareOrdinal(addedIdentity, existingIdentity) < 0)
+            {
+                candidateCatalog = proposed;
+                break;
+            }
+        }
+
+        Assert.NotNull(candidateCatalog);
+        var candidateBytes = FrozenLedgerGenerator.AppendMissingFreezes(baseline, candidateCatalog);
+        var candidateSyntax = Assert.IsType<DagLedgerLoadOutcome.Loaded>(
+            DagLedgerLoader.Load(candidateBytes.AsSpan())).Syntax;
+        FrozenLedgerTestData.WriteLedgerDirectory(temporary.Path, baselineBytes);
+
+        DagLedgerAppendWriter.WriteNewEvents(
+            temporary.Path,
+            candidateSyntax.Lines,
+            baseline.Events.Length,
+            expectedBaselineBytes: baselineBytes.ToArray(),
+            expectedWrittenBytes: candidateBytes);
+
+        Assert.Equal(
+            baseline.Events.Length + 1,
+            Directory.EnumerateFiles(temporary.Path, "*.json").Count());
+        Assert.Empty(Directory.EnumerateDirectories(temporary.Path, ".ledger-stage-*"));
+    }
+
+    [Fact]
     public void RollbackPublishedPrefixStopsAtFirstFailureAndPreservesTheLongestPrefix()
     {
         using var temporary = new TemporaryDirectory();

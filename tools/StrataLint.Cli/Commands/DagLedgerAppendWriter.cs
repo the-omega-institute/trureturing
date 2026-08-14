@@ -77,7 +77,8 @@ internal static class DagLedgerAppendWriter
                 context.LedgerPath,
                 candidateSyntax.Lines,
                 context.Baseline.Events.Length,
-                context.BaselineBytes);
+                expectedBaselineBytes: context.BaselineBytes,
+                expectedWrittenBytes: candidateBytes);
             var appended = candidate.Events.Skip(context.Baseline.Events.Length).ToImmutableArray();
             var reattests = appended
                 .OfType<FrozenLedgerEvent.Reattest>()
@@ -116,7 +117,8 @@ internal static class DagLedgerAppendWriter
         string directory,
         IEnumerable<FrozenLedgerLineSyntax> lines,
         int skip = 0,
-        byte[]? expectedBaselineBytes = null)
+        byte[]? expectedBaselineBytes = null,
+        ImmutableArray<byte>? expectedWrittenBytes = null)
     {
         Directory.CreateDirectory(directory);
         var lockPath = Path.Combine(directory, ".ledger-write.lock");
@@ -133,10 +135,12 @@ internal static class DagLedgerAppendWriter
         ReapStaleStagingDirectories(directory);
 
         var linearToDagHash = new Dictionary<string, string>(StringComparer.Ordinal);
+        var expectedIdentityOrder = ImmutableArray.CreateBuilder<string>();
         var pending = ImmutableArray.CreateBuilder<PendingEvent>();
         var sequence = 0;
         foreach (var line in lines)
         {
+            var eventType = line.Value.GetProperty("event_type").GetString()!;
             var payload = line.Value.GetProperty("payload");
             if (payload.TryGetProperty("previous_attestation_event_hash", out var previous))
             {
@@ -146,19 +150,19 @@ internal static class DagLedgerAppendWriter
             }
 
             var encoded = FrozenLedgerCanonicalWriter.WriteDagEvent(
-                line.Value.GetProperty("event_type").GetString()!,
+                eventType,
                 payload);
             linearToDagHash.Add(line.Value.GetProperty("event_hash").GetString()!, encoded.Hash);
+            var identity = FrozenLedgerCanonicalWriter.EventIdentity(
+                eventType,
+                payload,
+                encoded.Hash);
+            expectedIdentityOrder.Add(identity);
             if (sequence++ < skip)
             {
                 continue;
             }
 
-            var eventType = line.Value.GetProperty("event_type").GetString()!;
-            var identity = FrozenLedgerCanonicalWriter.EventIdentity(
-                eventType,
-                payload,
-                encoded.Hash);
             pending.Add(new PendingEvent(
                 eventType,
                 EventModulePath(eventType, payload),
@@ -223,6 +227,17 @@ internal static class DagLedgerAppendWriter
                 {
                     throw ShardCollision(item);
                 }
+            }
+
+            if (expectedWrittenBytes is { } expected
+                && !DagLedgerCommandPreparation.LoadLedgerDirectory(
+                        directory,
+                        "written frozen ledger",
+                        expectedIdentityOrder.ToImmutable()).RawBytes.AsSpan()
+                    .SequenceEqual(expected.AsSpan()))
+            {
+                throw new InvalidOperationException(
+                    "written frozen-ledger events do not replay to the validated candidate bytes");
             }
         }
         catch (Exception failure)

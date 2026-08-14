@@ -64,15 +64,8 @@ internal static class DagLedgerSyncWriter
                 context.LedgerPath,
                 candidateSyntax.Lines,
                 context.Baseline.Events.Length,
-                context.BaselineBytes);
-            var written = DagLedgerCommandPreparation.LoadLedgerDirectory(
-                context.LedgerPath,
-                "written frozen ledger");
-            if (!written.RawBytes.AsSpan().SequenceEqual(candidateBytes.AsSpan()))
-            {
-                throw new InvalidOperationException(
-                    "written ledger-sync events do not replay to the validated candidate bytes");
-            }
+                expectedBaselineBytes: context.BaselineBytes,
+                expectedWrittenBytes: candidateBytes);
 
             var suffix = candidate.Events.Skip(context.Baseline.Events.Length).ToImmutableArray();
             var reattests = suffix.OfType<FrozenLedgerEvent.Reattest>().ToImmutableArray();
