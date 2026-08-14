@@ -29,6 +29,8 @@ internal interface ICliEnvironment
 
     CommandResult CoverAtom(IReadOnlyList<string> arguments);
 
+    CommandResult CheckFidelityAttestation(IReadOnlyList<string> arguments);
+
     CommandResult AlignScribeReceipt(IReadOnlyList<string> arguments);
 
     CommandResult EmitFormalizationReceipt(IReadOnlyList<string> arguments);
@@ -83,6 +85,8 @@ internal static class CliApplication
                 RenderCommand(environment.AlignScribeReceipt(tail), console),
             ["check"] = static (environment, tail, console) =>
                 RenderAdmission(environment.Check(tail), console),
+            ["check-fidelity-attestation"] = static (environment, tail, console) =>
+                RenderCommand(environment.CheckFidelityAttestation(tail), console),
             ["clean-lanes"] = static (environment, tail, console) =>
                 RenderCommand(environment.CleanLanes(tail), console),
             ["coverage"] = static (environment, tail, console) =>
