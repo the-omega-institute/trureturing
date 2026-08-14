@@ -22,9 +22,13 @@ public sealed class PlaybookWorkflowScriptTests
                 "make:emit",
                 "make:ingest BASE=synthetic-base",
                 "dotnet:digest-status --base synthetic-base",
+                "git:diff --diff-filter=A --name-only -z synthetic-base...HEAD -- Golden/Frozen/accepted/*.json",
+                "git:ls-files --others --exclude-standard -z -- Golden/Frozen/accepted/*.json",
                 "dotnet:ledger-append --candidate-lean-report .lake/build/stratalint/raw-lean-report.json",
                 "dotnet:digest-status --base synthetic-base",
                 "make:preflight BASE=synthetic-base",
+                "git:diff --diff-filter=A --name-only -z synthetic-base...HEAD -- Golden/Frozen/accepted/*.json",
+                "git:ls-files --others --exclude-standard -z -- Golden/Frozen/accepted/*.json",
             ],
             fixture.Calls());
     }
