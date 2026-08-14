@@ -108,7 +108,8 @@ internal static class MarkdigBlockAst
             End(row),
             text,
             MarkdownBlockAst.FirstCellPlainText(firstCellSourceText),
-            firstCellSourceText);
+            firstCellSourceText,
+            row.IsHeader);
     }
 
     /// <summary>

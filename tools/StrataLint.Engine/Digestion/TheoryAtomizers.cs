@@ -397,7 +397,9 @@ internal static class MarkdownAstAtomizer
         Func<string, string?>? identifyFirstTableCell = null,
         Func<string, string?>? identifyHeading = null,
         Func<string, string?>? identifyFirstTableCellSource = null,
-        Func<string, ImmutableArray<MarkdownBlock>>? parse = null)
+        Func<string, ImmutableArray<MarkdownBlock>>? parse = null,
+        Func<MarkdownTableRow, string?>? identifyTableRow = null,
+        bool dropEmptyHeadingClaims = false)
     {
         var raw = bytes.ToArray();
         var text = StrictUtf8.GetString(raw);
@@ -423,7 +425,8 @@ internal static class MarkdownAstAtomizer
                         heading.Start,
                         text.Length,
                         headings.ToImmutableArray(),
-                        Extend: true));
+                        Extend: true,
+                        IsHeading: true));
                 }
 
                 headings.Add(new DigestionContext(heading.Level, heading.Text));
@@ -433,7 +436,9 @@ internal static class MarkdownAstAtomizer
 
             if (block is MarkdownTableRow row)
             {
-                var tableAstPath = identifyFirstTableCellSource is not null
+                var tableAstPath = identifyTableRow is not null
+                    ? identifyTableRow(row)
+                    : identifyFirstTableCellSource is not null
                     ? TheorySourceFormatException.IdentifyAt(
                         identifyFirstTableCellSource, row.FirstCellSourceText, row.Start, text, failures)
                     : identifyFirstTableCell is not null
@@ -524,6 +529,16 @@ internal static class MarkdownAstAtomizer
             }
         }
 
+        if (dropEmptyHeadingClaims)
+        {
+            // A heading whose whole body was claimed by finer atoms is left holding only its
+            // own line. That atom states nothing, so it could never be discharged and would
+            // sit open forever; the heading itself is not lost, because every atom beneath it
+            // carries it in its context.
+            candidates.RemoveAll(candidate =>
+                candidate.IsHeading && IsHeadingOnly(text, candidate));
+        }
+
         var claims = ImmutableArray.CreateBuilder<DigestionAtom>(candidates.Count);
         var slices = ImmutableArray.CreateBuilder<DigestionSlice>(candidates.Count * 2 + 1);
         var locatorCounts = candidates
@@ -572,6 +587,15 @@ internal static class MarkdownAstAtomizer
         return new AtomizedTheoryDocument(claims.MoveToImmutable(), slices.ToImmutable());
     }
 
+    private static bool IsHeadingOnly(string text, Candidate candidate)
+    {
+        var slice = text.AsSpan(
+            candidate.StartCharacter,
+            candidate.EndCharacter - candidate.StartCharacter);
+        var lineEnd = slice.IndexOfAny('\r', '\n');
+        return lineEnd >= 0 && slice[lineEnd..].IsWhiteSpace();
+    }
+
     private static int ByteOffset(string text, int characterOffset) =>
         characterOffset == text.Length
             ? StrictUtf8.GetByteCount(text)
@@ -599,7 +623,8 @@ internal static class MarkdownAstAtomizer
         int StartCharacter,
         int EndCharacter,
         ImmutableArray<DigestionContext> Context,
-        bool Extend);
+        bool Extend,
+        bool IsHeading = false);
 
     private sealed record SourceLine(string Text, int Start, int End);
 }

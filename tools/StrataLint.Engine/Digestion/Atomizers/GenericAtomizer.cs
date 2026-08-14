@@ -26,8 +26,14 @@ internal static class GenericAtomizer
 {
     internal const string ResidualPrefix = "generic";
 
-    /// <summary>〈word〉 then 〈number〉: the lead shape every numbered dialect already shares.</summary>
-    private const string GenreLead = "(?<kind>\\p{L}[\\p{L}\\p{N}_-]*)[\\s\\u00A0]*(?<number>[0-9]+(?:\\.[0-9A-Za-z]+)*)";
+    /// <summary>
+    /// 〈word〉 then 〈number〉: the lead shape every numbered dialect already shares. A genre
+    /// is a word, so the token holds letters and digits and nothing else — no dash, no
+    /// underscore. That is not cosmetic: with a dash admitted, this volume's own title,
+    /// <c>ENTROPY-INFO-PRIMES-O5:热层卷宗</c>, reads as genre ENTROPY-INFO-PRIMES-O numbered
+    /// 5, and its whole preamble is filed under an address that means nothing.
+    /// </summary>
+    private const string GenreLead = "(?<kind>\\p{L}[\\p{L}\\p{N}]*)[\\s\\u00A0]*(?<number>[0-9]+(?:\\.[0-9A-Za-z]+)*)";
 
     private static readonly Regex HeadingClaim = new(
         "^" + GenreLead + "(?![0-9A-Za-z.])",
@@ -54,7 +60,19 @@ internal static class GenericAtomizer
             bytes,
             IdentifyParagraph,
             identifyHeading: IdentifyHeading,
-            parse: MarkdigBlockAst.Parse);
+            parse: MarkdigBlockAst.Parse,
+            identifyTableRow: IdentifyTableRow,
+            dropEmptyHeadingClaims: true);
+
+    /// <summary>
+    /// A claim table states one proposition per row — each with its own attestation and its
+    /// own truth status, 定理级 beside open — so a row is a claim and the table is not. The
+    /// header row names the columns rather than stating anything, and is not a claim.
+    /// </summary>
+    private static string? IdentifyTableRow(MarkdownTableRow row) =>
+        row.IsHeader || row.FirstCellText.Length == 0
+            ? null
+            : "row/" + Slug(row.FirstCellText);
 
     private static string? IdentifyHeading(string heading)
     {

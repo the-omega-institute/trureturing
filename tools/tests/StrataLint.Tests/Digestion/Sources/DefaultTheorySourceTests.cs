@@ -82,7 +82,7 @@ public sealed class DefaultTheorySourceTests
         var registered = plan.Document.RequireDigestionSources()
             .Single(static source => source.SourceId == "undeclared-volume");
         Assert.Equal(
-            ["section/未声明卷", "定理/1.1"],
+            ["定理/1.1"],
             registered.Entries.Select(static entry => entry.AstPath).ToArray());
         Assert.All(registered.Entries, static entry =>
             Assert.StartsWith("generic-residual-", entry.AtomId, StringComparison.Ordinal));
