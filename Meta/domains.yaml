@@ -122,6 +122,9 @@ domains:
   Resource:
     stratum: S3
     definition: Resource-theoretic functionals defined as infima over tensor-closed strategy classes and their subadditivity.
+  ResourceOrder:
+    stratum: S3
+    definition: Order structure on resource cost profiles and tax receipts, covering the eventual-domination preorder at large scales, its non-antisymmetry, and the minimal price face.
   Rewriting:
     stratum: S0
     definition: Abstract terminating rewrite relations, confluence, and canonical normal forms.
