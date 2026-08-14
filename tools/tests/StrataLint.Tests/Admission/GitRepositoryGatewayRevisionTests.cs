@@ -84,6 +84,52 @@ public sealed class GitRepositoryGatewayRevisionTests
             entries["script.sh"].Bytes);
     }
 
+    [Fact]
+    public void PreparePrefersModifiedOverCopySourceForTheSamePath()
+    {
+        using var repository = new TemporaryDirectory();
+        var runner = new PrepareGitProcessRunner(
+            "M\0source.txt\0C069\0source.txt\0copy.txt\0");
+        var gateway = new GitRepositoryGateway(
+            repository.Path,
+            runner,
+            "git",
+            TimeSpan.FromSeconds(1));
+
+        var prepared = gateway.Prepare("synthetic-base");
+
+        Assert.Equal(2, prepared.Changes.Entries.Length);
+        var source = Assert.Single(
+            prepared.Changes.Entries,
+            change => change.Path.Value == "source.txt");
+        Assert.Equal(RawChangeKind.Modified, source.Kind);
+        Assert.Contains(prepared.Changes.Entries, change =>
+            change.Path.Value == "copy.txt" && change.Kind == RawChangeKind.Added);
+    }
+
+    [Fact]
+    public void PreparePrefersDeletedOverRenameSourceCollisionForTheSamePath()
+    {
+        using var repository = new TemporaryDirectory();
+        var runner = new PrepareGitProcessRunner(
+            "M\0source.txt\0R100\0source.txt\0renamed.txt\0");
+        var gateway = new GitRepositoryGateway(
+            repository.Path,
+            runner,
+            "git",
+            TimeSpan.FromSeconds(1));
+
+        var prepared = gateway.Prepare("synthetic-base");
+
+        Assert.Equal(2, prepared.Changes.Entries.Length);
+        var source = Assert.Single(
+            prepared.Changes.Entries,
+            change => change.Path.Value == "source.txt");
+        Assert.Equal(RawChangeKind.Deleted, source.Kind);
+        Assert.Contains(prepared.Changes.Entries, change =>
+            change.Path.Value == "renamed.txt" && change.Kind == RawChangeKind.Added);
+    }
+
     private static void AssertEntry(RawRepositoryEntry entry, string path, string expected)
     {
         Assert.Equal(path, entry.Path);
@@ -119,6 +165,30 @@ public sealed class GitRepositoryGatewayRevisionTests
                 _ => throw new InvalidOperationException("unexpected Git command"),
             };
         }
+
+        private static ProcessOutput Output(string output) =>
+            new(0, Encoding.UTF8.GetBytes(output), []);
+    }
+
+    private sealed class PrepareGitProcessRunner(string diffNameStatus) : IGitProcessRunner
+    {
+        public ProcessOutput Run(
+            string fileName,
+            IReadOnlyList<string> arguments,
+            string workingDirectory,
+            TimeSpan timeout,
+            int maximumOutputBytes = GitRepositoryGateway.DefaultGitOutputBytes,
+            ReadOnlyMemory<byte> standardInput = default) =>
+            arguments[0] switch
+            {
+                "rev-parse" when arguments[1] == "HEAD" => Output(SecondOid + "\n"),
+                "status" => Output(string.Empty),
+                "rev-parse" when arguments[1] == "--verify" => Output(FirstOid + "\n"),
+                "merge-base" when arguments[1] == "--is-ancestor" => Output(string.Empty),
+                "diff" => Output(diffNameStatus),
+                "ls-files" => Output(string.Empty),
+                _ => throw new InvalidOperationException("unexpected Git command"),
+            };
 
         private static ProcessOutput Output(string output) =>
             new(0, Encoding.UTF8.GetBytes(output), []);

@@ -252,5 +252,9 @@ public partial record FrozenLedgerValidationOutcome
         public FrozenLedgerConsistent Capability { get; }
     }
 
-    public partial record Rejected(string Message);
+    public partial record Rejected(string Message)
+    {
+        internal ImmutableArray<RepoPath> HistoryFailurePaths { get; init; } =
+            ImmutableArray<RepoPath>.Empty;
+    }
 }

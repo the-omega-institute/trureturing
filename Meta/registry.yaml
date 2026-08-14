@@ -14,9 +14,6 @@ root_files:
   - "lean-toolchain"
 governance_documents:
   - "D5/X_Frontier/HeartsAuthorizations.md"
-  - "Generated/DAG.md"
-  - "Generated/FILEMAP.md"
-  - "Generated/truth-graph.v1.json"
   - "Golden/gate-authority-roots.toml"
   - "Golden/perf-budgets.toml"
   - "Meta/Digestion/atomizers.toml"
@@ -36,7 +33,6 @@ governance_documents:
   - "docs/develop/theory/PRICED_INTERFACE_PAPER.md"
   - "docs/develop/theory/PZG_BEDC.md"
   - "docs/develop/theory/QUANTITATIVE_DIAGONALIZATION_OBSERVER_COMPLETION.md"
-  - "tools/Generated/scribe-emissions.v1.json"
 agent_files:
   - "CONTEXT.md"
   - "adversary.md"

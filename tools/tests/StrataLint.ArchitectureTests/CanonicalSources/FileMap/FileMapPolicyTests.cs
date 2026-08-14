@@ -9,7 +9,7 @@ namespace StrataLint.ArchitectureTests;
 public sealed partial class FileMapPolicyTests
 {
     [Fact]
-    public void ComputationalProjectionRegistrationsAcceptTheSyntheticRegistryFixture()
+    public void ComputationalProjectionsHaveCanonicalFileMapEntries()
     {
         var expectedPaths = new HashSet<string>(
             [
@@ -19,7 +19,6 @@ public sealed partial class FileMapPolicyTests
             StringComparer.Ordinal);
         var root = RepositoryLayout.FindRoot();
         var manifest = FileMapLoader.LoadRepository(root);
-        var registry = SyntheticRegistry();
         var artifacts = GeneratedArtifactInventory.All
             .Where(artifact => expectedPaths.Contains(artifact.Path))
             .ToArray();
@@ -32,14 +31,6 @@ public sealed partial class FileMapPolicyTests
             Assert.Equal(artifact.Producer, entry.ProducedBy);
             Assert.Contains(artifact.Producer, entry.VerifiedBy, StringComparer.Ordinal);
         });
-
-        var topLevelProjectionPaths = expectedPaths
-            .Where(static path => path.StartsWith("Generated/", StringComparison.Ordinal))
-            .Select(RepoPath.CreateKnown)
-            .ToArray();
-        Assert.All(topLevelProjectionPaths, path =>
-            Assert.Contains(path, registry.Policy.GovernanceDocuments));
-
     }
 
     [Fact]
