@@ -142,6 +142,40 @@
 
 **候查 B13(界面图册索引,v0.7)**。承弧二"界面登记定律取等处"之读法:变分原理把现实压至锥膜,故**等号面**(取等条件)是 WM 的登记位。本条为**索引件**:逐一登记本仓已有之等号面工件及其取等判据,使"界面图册"从叙事成为可查表;每条须注明该等号面是已冻结形式件、还是仅 digest 级证据待亲读。**判据**:①索引条目必须机械可判地指向存在之工件(悬空引用即红,循宪法 2026-08-12 引用条);②未亲读者一律标"digest 级待亲读",不得以文件名冒充已核内容;③本条为 data-only 文档件,不承载任何数学断言。〔候查;data-only,文档可关〕
 
+
+**B13 结账追记（界面图册索引，data-only）**。下表只转录 dev 树中实存 Lean 工件及所列声明的陈述面；“取等”栏不补证明、不合成 converse，原声明仅给恒等式、阈值 iff 或单向谱包含者，照原形登记并明记其边界。
+
+| 面 | 工件（dev 实址） | 承重声明（逐字标识符） | 取等 / 界面条件（按 Lean statement） | 状态 |
+|---|---|---|---|---|
+| Gibbs 零面 | `D5/S3/Divergence/GibbsEquality.lean` | `kl_divergence_eq_zero_iff` | 在非负归一化及离散绝对连续前件下，`klDivergence p q = 0 ↔ p = q`。 | 〔已冻形式件〕 |
+| DPI-Petz 零面 | `D5/S3/Divergence/PetzClassical.lean` | `dpi_defect_zero_iff_posteriors_eq` | 在严格正分布与严格正信道前件下，DPI defect 为零 ↔ `p` 所诱导输出支撑上的两后验逐点相等。 | 〔已冻形式件〕 |
+| CP 边界面 | `D5/S3/QuantumChannels/BoundarySaturation.lean` | `cp_boundary_eq_iff_det_zero` | `Complex.normSq z = p ↔ (cpMatrix z p).det = 0`。 | 〔已冻形式件〕 |
+| 冻结阈面 | `D5/S3/QuantumChannels/DecoherenceFreeze.lean` | `decoherence_freeze_iff_above_critical` | 在 `beta > 0`、`passiveEnergy > 0` 前件下，`0 < freezeDeposit … ↔ criticalInverseTemperature … < beta`；该声明是严格阈值 iff，不另陈 deposit 为零之 iff。 | 〔已冻形式件〕 |
+| 相位阻尼固定面 | `D5/S3/Quantum/Decoherence.lean` | `phase_damping_fixed_iff_diagonal` | 非平凡阻尼系数下，`phaseDamping c rho = rho` ↔ `rho` 的全部非对角元为零。 | 〔已冻形式件〕 |
+| 基底选择固定面 | `D5/S3/Quantum/PointerBasis.lean` | `phase_damping_in_basis_fixed_iff` | 非平凡阻尼系数下，输运后的阻尼固定 `rho` ↔ `coordinates rho` 的全部非对角元为零。 | 〔已冻形式件〕 |
+| 环境记录固定面 | `D5/S3/Quantum/EnvironmentRecords.lean` | `record_channel_fixed_iff_selected_blocks` | `recordChannel record rho = rho` ↔ 环境记录重叠不等于 `1` 的全部矩阵元为零。 | 〔已冻形式件〕 |
+| 可分锥对偶面 | `D5/S3/Resource/CompositeConeDuality.lean` | `blockPositive_iff_forall_separable_pairing_nonneg` | `blockPositive W` ↔ 对每个 `separableCone S`，`pairing S W` 非负。 | 〔已冻形式件〕 |
+| log-det 零面 | `D5/S3/Resource/LogDetDivergenceEquality.lean` | `logDetDivergence_eq_zero_iff` | 在两矩阵 PSD 且可逆的前件下，`logDetDivergence rho sigma = 0 ↔ rho = sigma`。 | 〔已冻形式件〕 |
+| 熵上端面 | `D5/S3/Entropy/EntropyEquality.lean` | `entropy_eq_log_card_iff_uniform` | 对非负归一化有限质量，`shannonEntropy p = log(card ι)` ↔ `p` 为均匀质量。 | 〔已冻形式件〕 |
+| 熵下端面 | `D5/S3/Entropy/EntropyEquality.lean` | `entropy_eq_zero_iff_point_mass` | 对非负归一化有限质量，`shannonEntropy p = 0` ↔ `p` 为某一点质量。 | 〔已冻形式件〕 |
+| 条件熵零面 | `D5/S3/Entropy/ConditionalEntropyEquality.lean` | `conditional_entropy_eq_zero_iff_point_mass_on_support` | 在联合质量逐点非负前件下，条件熵为零 ↔ 每个非零边缘质量切片上的条件质量为一点质量。 | 〔已冻形式件〕 |
+| 互信息零面 | `D5/S3/Entropy/MutualInformationIndependence.lean` | `mutual_information_eq_zero_iff_product` | 对非负归一化有限联合质量，互信息为零 ↔ 联合质量等于其两边缘质量之积。 | 〔已冻形式件〕 |
+| 总变差零面 | `D5/S3/TotalVariation/Metric.lean` | `total_variation_eq_zero_iff` | 对任意有限实函数，`totalVariation p q = 0 ↔ p = q`。 | 〔已冻形式件〕 |
+| Hellinger 零面 | `D5/S3/TotalVariation/HellingerDivergence.lean` | `hellinger_sq_eq_zero_iff` | 在 `p`、`q` 逐点非负前件下，`hellingerSq p q = 0 ↔ p = q`。 | 〔已冻形式件〕 |
+| Rényi 零面 | `D5/S3/RenyiDivergence/ZeroCharacterization.lean` | `renyi_divergence_eq_zero_iff` | 在 `alpha > 0`、`alpha ≠ 1`、两质量非负归一化及离散绝对连续前件下，Rényi divergence 为零 ↔ `p = q`。 | 〔已冻形式件〕 |
+| 谱锐度下端面 | `D5/S3/Quantum/Sharpness/SpectralSharpness.lean` | `spectral_sharpness_zero_iff_uniform` | 对反单调且总和为 `1` 的有限谱，`spectralSharpness r = 0` ↔ 每项等于 `1 / n`。 | 〔已冻形式件〕 |
+| 谱锐度饱和面 | `D5/S3/Quantum/Sharpness/SpectralSharpnessSaturation.lean` | `spectral_sharpness_one_iff_support_le_half` | 对非负、反单调且总和为 `1` 的有限谱，`spectralSharpness r = 1` ↔ 非零支撑基数不超过 `n / 2`。 | 〔已冻形式件〕 |
+| 观察者零扰动面 | `D5/S3/Observer/ObserverMetric.lean` | `perturbationSeminorm_eq_zero_iff` | 在有限非空指标型上，扰动半范数为零 ↔ `f (tau i) = f i` 对每个 `i` 成立。 | 〔已冻形式件〕 |
+| 轨道距离取值面 | `D5/S3/Observer/MetricGeometry/OrbitConnesDistance.lean` | `orbit_connes_distance_eq` | 对整数轨道任意 `m,n`，`orbitConnesDistance m n = dist m n`；该声明为直接恒等式，不另列饱和 iff。 | 〔已冻形式件〕 |
+| Le Cam 紧面 | `D5/S3/Estimation/LeCamTight.lean` | `le_cam_two_point_sum_tight` | 在共同质量且 `q` 总质量为 `1` 的前件下，事件 `{i | p i ≤ q i}` 的两类误差和等于 `1 - totalVariation p q`。 | 〔已冻形式件〕 |
+| Robertson–Schrödinger 恒等面 | `D5/S3/QuantumBounds/RobertsonSchrodinger.lean` | `robertson_schrodinger` | 对称算子与单位向量下，中心化范数平方积被声明为 covariance 平方、commutatorHalf 范数平方与 `G` 之和，并同时声明 `0 ≤ G`；本 theorem 未给“下界取等 ↔ `G = 0`”的独立 iff。 | 〔已冻形式件〕 |
+| CHSH 谱界面 | `D5/S3/QuantumBounds/CHSHSpectrum.lean` | `chsh_spectrum` | 在四个 Hermitian involution、`0 < N < 4` 及 commutator 谱二点包含前件下，CHSH 实谱被包含于所列四个平方根点；本 theorem 是谱包含，不宣称四点逐一取到。 | 〔已冻形式件〕 |
+| CHSH 取等见证 | `D5/S3/QuantumBounds/CHSHWitness.lean` | `bell_chsh_value` | 固定 Bell 密度矩阵与固定 CHSH 算子满足 `trace (bellDensity * chshOperator) = 2 * sqrt 2`；该声明给显式取等见证，不给全体取等态之 iff 分类。 | 〔已冻形式件〕 |
+
+**边界账**：表内无仅据 filename / Blueprint 登记之行；所有路径均在 dev 树实存，所有承重标识符均已亲读其 Lean statement。表中“未给 iff”只记录原声明边界，不由索引补造数学结论。〔data-only；所列全为已冻形式件，无 digest 级冒领〕
+
+**索引附注(2026-08-14)**:本表由逐个读取 dev 树上 Lean statement 建成,24 条之路径存在性与承重标识符真实性均经机器核验(逐条断言该文件内确有同名 `theorem`/`lemma`/`def`),失败 0、悬空 0。**已修正一处名实不符**:源卷宗所称 `CHSH` 若落实为 `D5/S3/Quantum/CHSH.lean` 则该路径不存在,实存者为 `QuantumBounds/CHSHSpectrum` 与 `QuantumBounds/CHSHWitness`,表中按实址登记。**有意排除并记明理由**:`StrictGibbs`/`DpiDefect`/`StrictDpi` 各自只给单向不等或严格正,不自陈取等 iff,其零面已由 `GibbsEquality`/`PetzClassical` 登记;`CompositeCones` 只给两项锥包含,具体对偶 iff 改登记实存的 `CompositeConeDuality`。
+
 ---
 
 ## 9. 判真机声明(本卷与数学卷之结构差)
