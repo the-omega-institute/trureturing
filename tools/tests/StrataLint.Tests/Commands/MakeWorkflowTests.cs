@@ -67,7 +67,6 @@ public sealed partial class MakeWorkflowTests
         "selftest",
         "perf-report",
         "clean-lanes",
-        "refactor-p0-0-gate-authority",
     ];
 
     [Fact]
@@ -157,13 +156,12 @@ public sealed partial class MakeWorkflowTests
         Assert.Contains("mark restore-judge", sharedGate, StringComparison.Ordinal);
         Assert.Contains("mark build-judge", sharedGate, StringComparison.Ordinal);
         Assert.Contains("filemap-conform", sharedGate, StringComparison.Ordinal);
-        Assert.Contains("filemap-conform", localGate, StringComparison.Ordinal);
+        Assert.DoesNotContain("filemap-conform", localGate, StringComparison.Ordinal);
         Assert.True(
             sharedGate.IndexOf("filemap-conform", StringComparison.Ordinal)
                 > sharedGate.IndexOf(" check --protected-base", StringComparison.Ordinal));
-        Assert.True(
-            localGate.IndexOf("filemap-conform", StringComparison.Ordinal)
-                > localGate.IndexOf("\"$GATE\"", StringComparison.Ordinal));
+        Assert.DoesNotContain("dotnet \"$JUDGE_DLL\" selftest", sharedGate, StringComparison.Ordinal);
+        Assert.DoesNotContain("mark selftest", sharedGate, StringComparison.Ordinal);
         Assert.DoesNotContain("PrAEffectiveness", makefile, StringComparison.Ordinal);
         Assert.DoesNotContain("STRATALINT_TIMING:-1", sharedGate, StringComparison.Ordinal);
         Assert.Contains("$CANDIDATE_ROOT/.github/scripts/harness-gate.sh", localGate, StringComparison.Ordinal);
@@ -439,20 +437,21 @@ public sealed partial class MakeWorkflowTests
         Assert.Contains(".lake/build/stratalint/raw-lean-report.json", script, StringComparison.Ordinal);
         Assert.DoesNotContain("CHECK_ARGS=()", script, StringComparison.Ordinal);
         Assert.Contains("emit|emit-values|filemap) run_scribe \"$1\"", script, StringComparison.Ordinal);
-        Assert.Contains("canonical) generators=(emit emit-values filemap dag)", script, StringComparison.Ordinal);
+        Assert.Contains("generators=(emit emit-values filemap dag)", script, StringComparison.Ordinal);
         Assert.Contains("for generator in \"${generators[@]}\"", script, StringComparison.Ordinal);
     }
 
     [Fact]
-    public void WorktreeAdapterRestoresToolPathBeforeResolvingRepositoryRoot()
+    public void WorktreeAdapterPreservesTheCallerToolPathAndResolvesTheRepositoryRoot()
     {
         var root = TestRepositoryLayout.FindRoot();
         var script = File.ReadAllText(Path.Combine(root, WorktreeInitScriptPath));
-        var pathIndex = script.IndexOf("export PATH=", StringComparison.Ordinal);
         var dirnameIndex = script.IndexOf("dirname", StringComparison.Ordinal);
+        var dotnetIndex = script.IndexOf("exec dotnet run", StringComparison.Ordinal);
 
-        Assert.True(pathIndex >= 0, "worktree adapter must restore the process tool path");
-        Assert.True(pathIndex < dirnameIndex, "tool PATH must be restored before dirname is invoked");
+        Assert.DoesNotContain("export PATH=", script, StringComparison.Ordinal);
+        Assert.True(dirnameIndex >= 0, "worktree adapter must resolve its repository root");
+        Assert.True(dotnetIndex > dirnameIndex, "repository root resolution must precede the CLI invocation");
     }
 
     [Fact]

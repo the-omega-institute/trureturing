@@ -270,10 +270,10 @@ public static partial class FrozenLedger
             throw new FormatException("EnvironmentRecoordinate kernel_verdict must be Closed.");
         }
 
-        if (payload.OldStatementId == payload.NewStatementId)
+        if (payload.OldEnvironment == payload.NewEnvironment)
         {
             throw new FormatException(
-                "EnvironmentRecoordinate requires statement identity drift; unchanged identity uses Reattest.");
+                "EnvironmentRecoordinate requires distinct old and new environments; unchanged environment uses Reattest.");
         }
 
         var path = RepoPath.CreateKnown(payload.OldInput.DescriptorSelector);

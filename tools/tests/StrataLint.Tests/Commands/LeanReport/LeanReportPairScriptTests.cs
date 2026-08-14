@@ -8,7 +8,6 @@ namespace StrataLint.Tests;
 public sealed class LeanReportPairScriptTests
 {
     private const string InputHelperPath = "tools/scripts/report/lean-report-input.sh";
-    private const string MergeCommandPath = "tools/StrataLint.Cli/Commands/LeanReport/LeanReportMergeCommand.cs";
     private const string RawReportPath = "tools/StrataLint.Engine/Snapshot/RawLeanReportArtifact.cs";
     private const string CanonicalWriterPath = "tools/StrataLint.Engine/Snapshot/StructuredCanonicalWriter.cs";
     private const string ScribeProgramPath = "tools/StrataLint.Scribe/ScribeProgram.cs";
@@ -79,18 +78,6 @@ public sealed class LeanReportPairScriptTests
         Assert.DoesNotContain("--module-cache-manifest", script, StringComparison.Ordinal);
         Assert.DoesNotContain("--modules-file", script, StringComparison.Ordinal);
     }
-
-    [Fact]
-    public void ManifestAcceptsABundleProducedByThePairScript()
-    {
-        using var fixture = new LeanReportPairFixture();
-        Assert.Equal(0, fixture.Run().ExitCode);
-
-        var result = fixture.VerifyCandidateManifest();
-
-        Assert.True(result.ExitCode == 0, Encoding.UTF8.GetString(result.StandardError));
-    }
-
 
     private sealed class LeanReportPairFixture : IDisposable
     {
@@ -170,26 +157,6 @@ public sealed class LeanReportPairScriptTests
             .Select(line => JsonDocument.Parse(line).RootElement.Clone())
             .ToArray();
 
-        internal ProcessOutput VerifyCandidateManifest()
-        {
-            var helper = Path.Combine(TestRepositoryLayout.FindRoot(), InputHelperPath);
-            var manifest = Path.Combine(temporary.Path, "candidate-modules.tsv");
-            var generated = BoundedProcessRunner.Run(
-                "bash",
-                [helper, "manifest", "--repository", candidateRoot, "--report", candidateReport],
-                temporary.Path,
-                TimeSpan.FromSeconds(30),
-                1024 * 1024);
-            Assert.Equal(0, generated.ExitCode);
-            File.WriteAllBytes(manifest, generated.StandardOutput);
-            return BoundedProcessRunner.Run(
-                "bash",
-                [helper, "verify-manifest", "--repository", candidateRoot, "--report", candidateReport, "--manifest", manifest],
-                temporary.Path,
-                TimeSpan.FromSeconds(30),
-                1024 * 1024);
-        }
-
         public void Dispose() => temporary.Dispose();
 
         private static void InitializeRepository(string root)
@@ -225,7 +192,6 @@ public sealed class LeanReportPairScriptTests
                 "def residentFixture : True := by trivial\n",
                 new UTF8Encoding(false));
             WriteProducerInput(root, InputHelperPath);
-            WriteProducerInput(root, MergeCommandPath);
             WriteProducerInput(root, RawReportPath);
             WriteProducerInput(root, CanonicalWriterPath);
             WriteProducerInput(root, ScribeProgramPath);

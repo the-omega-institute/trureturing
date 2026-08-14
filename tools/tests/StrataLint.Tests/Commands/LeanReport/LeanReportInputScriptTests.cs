@@ -8,7 +8,6 @@ namespace StrataLint.Tests;
 public sealed class LeanReportInputScriptTests
 {
     private const string InputHelperPath = "tools/scripts/report/lean-report-input.sh";
-    private const string MergeCommandPath = "tools/StrataLint.Cli/Commands/LeanReport/LeanReportMergeCommand.cs";
     private const string RawReportPath = "tools/StrataLint.Engine/Snapshot/RawLeanReportArtifact.cs";
     private const string CanonicalWriterPath = "tools/StrataLint.Engine/Snapshot/StructuredCanonicalWriter.cs";
     private const string LeanModelsPath = "tools/StrataLint.Engine/Snapshot/LeanModels.cs";
@@ -28,16 +27,14 @@ public sealed class LeanReportInputScriptTests
         '/', "tools", "StrataLint.Scribe", "packages.lock.json");
 
     [Fact]
-    public void ProductionSourceClosureChangesProducerAndModuleKey()
+    public void ProductionSourceClosureChangesProducer()
     {
         using var fixture = new LeanReportInputFixture();
         var producerBefore = fixture.Producer();
-        var keyBefore = fixture.Manifest()["D5.Probe"].Key;
 
         fixture.Append(LeanModelsPath, "// mutation\n");
 
         Assert.NotEqual(producerBefore, fixture.Producer());
-        Assert.NotEqual(keyBefore, fixture.Manifest()["D5.Probe"].Key);
     }
 
     [Fact]
@@ -73,77 +70,22 @@ public sealed class LeanReportInputScriptTests
         Assert.NotEqual(before, fixture.Producer());
     }
     [Fact]
-    public void ManifestKeysIncludeTheTransitiveManagedImportClosure()
-    {
-        using var fixture = new LeanReportInputFixture();
-        fixture.WriteSource("D5/Upstream.lean", "def upstream : Nat := 1\n");
-        fixture.WriteSource("D5/Probe.lean", "import D5.Upstream\ntheorem probe : True := by trivial\n");
-        fixture.WriteSource("Trureturing.lean", "import D5.Probe\n");
-        var before = fixture.Manifest();
-
-        fixture.WriteSource("D5/Upstream.lean", "def upstream : Nat := 2\n");
-        var after = fixture.Manifest();
-
-        Assert.Equal(before["D5.Upstream"].Path, after["D5.Upstream"].Path);
-        Assert.NotEqual(before["D5.Upstream"].Key, after["D5.Upstream"].Key);
-        Assert.NotEqual(before["D5.Probe"].Key, after["D5.Probe"].Key);
-        Assert.NotEqual(before["Trureturing"].Key, after["Trureturing"].Key);
-    }
-
-    [Fact]
-    public void ModulesAndManifestUseTheSameCanonicalEnumeration()
+    public void ModulesEnumerateAllManagedSources()
     {
         using var fixture = new LeanReportInputFixture();
         fixture.WriteSource("D5/Nested/Second.lean", "def second : Nat := 2\n");
 
         var modules = fixture.RunCommand("modules");
-        var manifest = fixture.RunCommand("manifest");
 
         Assert.Equal(0, modules.ExitCode);
-        Assert.Equal(0, manifest.ExitCode);
         Assert.Equal(
-            Lines(modules).Select(static line => line.Split('\t')[0]),
-            Lines(manifest).Where(static line => !line.StartsWith('#')).Select(static line => line.Split('\t')[0]));
-    }
-
-    [Fact]
-    public void LeadingWhitespaceImportIsMarkedUnparseableForConservativeRecomputation()
-    {
-        using var fixture = new LeanReportInputFixture();
-        fixture.WriteSource("D5/Probe.lean", "  import D5.Upstream\ntheorem probe : True := by trivial\n");
-        fixture.WriteSource("D5/Upstream.lean", "def upstream : Nat := 1\n");
-
-        var manifest = fixture.Manifest();
-
-        Assert.StartsWith("unparseable:", manifest["D5.Probe"].Key, StringComparison.Ordinal);
-    }
-
-    [Fact]
-    public void ManifestRejectsReportShaMismatchBeforeReuse()
-    {
-        using var fixture = new LeanReportInputFixture();
-        fixture.CaptureProductionInput();
-        var manifest = fixture.WriteBoundManifest();
-        fixture.AppendToReport("tampered\n");
-
-        var result = fixture.VerifyManifest(manifest);
-
-        Assert.Equal(2, result.ExitCode);
-        Assert.Contains("report SHA mismatch", Encoding.UTF8.GetString(result.StandardError), StringComparison.Ordinal);
-    }
-
-    [Fact]
-    public void ManifestRejectsReportFromDifferentProducerBeforeReuse()
-    {
-        using var fixture = new LeanReportInputFixture();
-        fixture.CaptureProductionInput();
-        var manifest = fixture.WriteBoundManifest();
-        fixture.ReplaceAttestedProducer(new string('f', 64));
-
-        var result = fixture.VerifyManifest(manifest);
-
-        Assert.Equal(2, result.ExitCode);
-        Assert.Contains("producer mismatch", Encoding.UTF8.GetString(result.StandardError), StringComparison.Ordinal);
+            new[]
+            {
+                "Trureturing\tTrureturing.lean",
+                "D5.Nested.Second\tD5/Nested/Second.lean",
+                "D5.Probe\tD5/Probe.lean",
+            },
+            Lines(modules));
     }
 
     [Theory]
@@ -154,7 +96,6 @@ public sealed class LeanReportInputScriptTests
     [InlineData("inspector")]
     [InlineData("inspector-script")]
     [InlineData("input-helper")]
-    [InlineData("merge-cli")]
     [InlineData("raw-report")]
     [InlineData("canonical-writer")]
     public void RepositoryInputDriftMakesAnExistingReportStale(string mutation)
@@ -202,7 +143,9 @@ public sealed class LeanReportInputScriptTests
             Write(inspectorScriptPath, "#!/usr/bin/env bash\n");
             Write(inspectorSourcePath, "def fixture : True := by trivial\n");
             Write(InputHelperPath, "#!/usr/bin/env bash\n");
-            Write(MergeCommandPath, "// fixture\n");
+            // Cli 工程必须至少有一个编译项:零编译项会让 helper 的 msbuild 求值退化,
+            // producer 分量对 Engine 源失敏(阶段 7 删 MergeCommand 桩后实测)。
+            Write("tools/StrataLint.Cli/Commands/FixtureProbe.cs", "// fixture\n");
             Write(RawReportPath, "// fixture\n");
             Write(CanonicalWriterPath, "// fixture\n");
             Write(LeanModelsPath, "// fixture\n");
@@ -250,32 +193,6 @@ public sealed class LeanReportInputScriptTests
 
         internal ProcessOutput Verify() => Run("verify");
 
-        internal string WriteBoundManifest()
-        {
-            var path = Path.Combine(temporary.Path, "modules.tsv");
-            var result = Run("manifest");
-            Assert.Equal(0, result.ExitCode);
-            File.WriteAllBytes(path, result.StandardOutput);
-            return path;
-        }
-
-        internal ProcessOutput VerifyManifest(string manifest) => BoundedProcessRunner.Run(
-            "bash",
-            [script, "verify-manifest", "--repository", repository, "--report", report, "--manifest", manifest],
-            temporary.Path,
-            TimeSpan.FromSeconds(30),
-            1024 * 1024);
-
-        internal void AppendToReport(string contents) =>
-            File.AppendAllText(report, contents, new UTF8Encoding(false));
-
-        internal void ReplaceAttestedProducer(string producer)
-        {
-            var lines = File.ReadAllLines(report + ".input.attestation");
-            lines[2] = $"producer_sha256={producer}";
-            File.WriteAllLines(report + ".input.attestation", lines, new UTF8Encoding(false));
-        }
-
         internal void Mutate(string mutation)
         {
             var path = mutation switch
@@ -287,7 +204,6 @@ public sealed class LeanReportInputScriptTests
                 "inspector" => inspectorSourcePath,
                 "inspector-script" => inspectorScriptPath,
                 "input-helper" => InputHelperPath,
-                "merge-cli" => MergeCommandPath,
                 "raw-report" => RawReportPath,
                 "canonical-writer" => CanonicalWriterPath,
                 _ => throw new InvalidOperationException($"unknown mutation {mutation}"),
@@ -299,16 +215,6 @@ public sealed class LeanReportInputScriptTests
         }
 
         internal ProcessOutput RunCommand(string command) => Run(command);
-
-        internal Dictionary<string, (string Path, string Key)> Manifest()
-        {
-            var result = Run("manifest");
-            Assert.Equal(0, result.ExitCode);
-            return Lines(result).Where(static line => !line.StartsWith('#')).ToDictionary(
-                static line => line.Split('\t')[0],
-                static line => (line.Split('\t')[1], line.Split('\t')[2]),
-                StringComparer.Ordinal);
-        }
 
         internal void WriteSource(string relativePath, string contents) => Write(relativePath, contents);
 

@@ -1,61 +1,61 @@
 schema = "stratalint-perf-budget-v1"
 
 [[budgets]]
-id = "local-m4-gate-total"
+id = "local-m5-gate-total"
 mode = "warn-only"
 venue = "local"
 os = "Darwin"
 arch = "arm64"
-cpu_class = "Apple M4 Pro"
+cpu_class = "Apple M5"
 workload_id = "local-harness-gate"
 kind = "timing"
 stage = "total"
 metric = "p95_seconds"
-limit_seconds = 1380
+limit_seconds = 3850
 owner = "harness/performance"
-review_due = "2026-08-20"
-remediation = "Profile the slowest gate stages and attach same-cohort event receipts before changing the budget."
+review_due = "2026-11-20"
+remediation = "Run make -C tools perf-report, inspect ~/.stratalint-perf/events.jsonl for same-cohort receipts, and profile the slowest gate stages."
 false_positive_window_days = 14
 false_positive_rate_percent = "unmeasured"
 rollback_criteria = "Keep or restore warn-only when the rolling false-positive rate is unmeasured or at least 5 percent."
-source = "2026-07-20 session: complete gate measured 1138s; rounded up by about 20 percent."
+source = "2026-08-15 recalibration: PerfReportBuilder passed-only, all-history, Apple M5 cohort - n=50, med=1363s, p95=3336s; limit = p95 +~15%. WARN at this limit means p95 grew beyond the 2026-08-15 snapshot. Note: comparator has no time window or load filter; earlier mixed-status receipts (2026-08-14 version) misdescribed the measured population."
 
 [[budgets]]
-id = "local-m4-admission"
+id = "local-m5-admission"
 mode = "warn-only"
 venue = "local"
 os = "Darwin"
 arch = "arm64"
-cpu_class = "Apple M4 Pro"
+cpu_class = "Apple M5"
 workload_id = "local-harness-gate"
 kind = "timing"
 stage = "admission"
 metric = "p95_seconds"
-limit_seconds = 120
+limit_seconds = 3800
 owner = "harness/performance"
-review_due = "2026-08-20"
-remediation = "Profile base-owned admission and attach same-cohort event receipts before changing the budget."
+review_due = "2026-11-20"
+remediation = "Run make -C tools perf-report, inspect ~/.stratalint-perf/events.jsonl for same-cohort receipts, and profile admission."
 false_positive_window_days = 14
 false_positive_rate_percent = "unmeasured"
 rollback_criteria = "Keep or restore warn-only when the rolling false-positive rate is unmeasured or at least 5 percent."
-source = "2026-07-20 session: admission measured about 90s; rounded up by one third. Conservative workers stayed within the 180s process ceiling, but P0 exposes no separate conservative ledger series."
+source = "2026-08-15 recalibration: PerfReportBuilder passed-only, all-history, Apple M5 cohort - n=49, med=1179s, p95=3304s; admission p95 remains near total p95 because the stage series have different sample composition; limit = p95 +~15%. WARN at this limit means p95 grew beyond the 2026-08-15 snapshot. Note: comparator has no time window or load filter; earlier mixed-status receipts (2026-08-14 version) misdescribed the measured population."
 
 [[budgets]]
-id = "local-m4-preflight-total"
+id = "local-m5-preflight-total"
 mode = "warn-only"
 venue = "local"
 os = "Darwin"
 arch = "arm64"
-cpu_class = "Apple M4 Pro"
+cpu_class = "Apple M5"
 workload_id = "preflight"
 kind = "timing"
 stage = "total"
 metric = "p95_seconds"
-limit_seconds = 1560
+limit_seconds = 4400
 owner = "harness/performance"
-review_due = "2026-08-20"
-remediation = "Separate engineering and gate contributions, then attach same-cohort preflight receipts before changing the budget."
+review_due = "2026-11-20"
+remediation = "Run make -C tools perf-report, inspect ~/.stratalint-perf/events.jsonl for same-cohort receipts, and separate engineering and gate contributions."
 false_positive_window_days = 14
 false_positive_rate_percent = "unmeasured"
 rollback_criteria = "Keep or restore warn-only when the rolling false-positive rate is unmeasured or at least 5 percent."
-source = "2026-07-20 session: gate measured 1138s and engineering about 70s; rounded the combined preflight up to 1560s."
+source = "2026-08-15 recalibration: PerfReportBuilder passed-only, all-history, Apple M5 cohort - n=41, med=1485s, p95=3832s; limit = p95 +~15%. WARN at this limit means p95 grew beyond the 2026-08-15 snapshot. Note: comparator has no time window or load filter; earlier mixed-status receipts (2026-08-14 version) misdescribed the measured population."

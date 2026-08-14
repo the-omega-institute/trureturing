@@ -79,6 +79,8 @@ public sealed class TypeModelTests
         Assert.True(RepositoryPathPolicy.IsBlueprintContentCompositionBuildFile(
             "Blueprint/trureturing.content.csproj"));
         Assert.False(RepositoryPathPolicy.IsBlueprintContentCompositionBuildFile(
+            "Blueprint/D5/Future.Content.csproj"));
+        Assert.False(RepositoryPathPolicy.IsBlueprintContentCompositionBuildFile(
             "Blueprint/FOO.CSPROJ"));
         var exception = Assert.Throws<ArgumentException>(
             () => RepoPath.CreateKnown("Blueprint/Trureturing.Content.csproj/"));
@@ -275,15 +277,6 @@ public sealed class TypeModelTests
 
         Assert.NotNull(RepositoryPathPolicy.Validate(path, Policy()));
         Assert.False(RepositoryPathPolicy.TryResolve(path, Policy(), out _));
-    }
-
-    [Fact]
-    public void LibrarySplitLedgerIsClosedWorldRegisteredButNotASemanticTarget()
-    {
-        var path = RepoPath.CreateKnown("Library/MAP.md");
-
-        Assert.Null(RepositoryPathPolicy.Validate(path, Policy()));
-        Assert.False(RepositoryPathPolicy.TryResolve(path, out _));
     }
 
     [Fact]

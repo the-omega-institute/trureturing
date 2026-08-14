@@ -175,44 +175,6 @@ internal static class GateAuthorityReader
 
 internal static class GateAuthorityCommand
 {
-    internal static ExplicitCommandResult Run(
-        string repositoryRoot,
-        string? oldBuildSha256,
-        string? outputPath)
-    {
-        if (!GateAuthorityReader.IsSha256(oldBuildSha256) || string.IsNullOrEmpty(outputPath))
-        {
-            return Usage();
-        }
-
-        try
-        {
-            var bytes = GateAuthorityProducer.Write(
-                GateAuthorityProducer.Create(repositoryRoot, oldBuildSha256!));
-            var definitions = GateAuthorityRootCatalogLoader.LoadRepository(repositoryRoot);
-            if (GateAuthorityReader.Validate(bytes, null, definitions) != 0)
-            {
-                return Usage();
-            }
-
-            using var stream = new FileStream(
-                outputPath,
-                FileMode.Create,
-                FileAccess.Write,
-                FileShare.None);
-            stream.Write(bytes);
-            return new ExplicitCommandResult(0, string.Empty, string.Empty);
-        }
-        catch (Exception exception) when (
-            exception is IOException
-                or UnauthorizedAccessException
-                or FormatException
-                or DecoderFallbackException)
-        {
-            return new ExplicitCommandResult(2, string.Empty, $"GATE_AUTHORITY_INVALID {exception.Message}\n");
-        }
-    }
-
     internal static ExplicitCommandResult Run(string repositoryRoot, IReadOnlyList<string> arguments)
     {
         if (arguments.Count == 1 && arguments[0] == "--check")
@@ -220,14 +182,7 @@ internal static class GateAuthorityCommand
             return Check(repositoryRoot);
         }
 
-        if (arguments.Count != 4
-            || arguments[0] != "--old-build"
-            || arguments[2] != "--out")
-        {
-            return Usage();
-        }
-
-        return Run(repositoryRoot, arguments[1], arguments[3]);
+        return Usage();
     }
 
     private static ExplicitCommandResult Check(string repositoryRoot)
@@ -322,5 +277,5 @@ internal static class GateAuthorityCommand
     private static ExplicitCommandResult Usage() => new(
         2,
         string.Empty,
-        "USAGE: StrataLint gate-authority --check | --old-build SHA256 --out FILE\n");
+        "USAGE: StrataLint gate-authority --check\n");
 }
