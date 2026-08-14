@@ -1,8 +1,10 @@
-# Diagnostic Month R4 Lane B: Interface Theorem 3.3 Bind Recommendation
+# Diagnostic Month R4 Lane B: Interface Theorem 3.3 Open Report
 
-Outcome: complete bind recommendation to an existing frozen theorem. No new
-Lean declaration, Scribe source, deposit, cover, receipt, or protected-ledger
-edit was made. The remaining action is dispatcher-owned ledger binding.
+Outcome: `open`, with no formalization deposit or cover. A frozen theorem proves
+the countable-family nullity mechanism, but it does not check two source-level
+bridges, and the canonical cover path also rejects reuse of its already-bound
+GID. No Lean declaration, Scribe source, receipt, or protected-ledger edit was
+made.
 
 ## Baseline and atom
 
@@ -39,9 +41,9 @@ END_RAW_TEXT
 The normalized text is byte-for-byte the same text. The raw, normalized, and
 CAS hashes are the exact machine output and all match.
 
-## Exact carrier
+## Partial frozen carrier
 
-Bind to the already frozen declaration
+The closest already frozen declaration is
 
 ```text
 D5/S0/Naming/Conservation/NamingTowerConservation.countable_tower_anonymous_full_measure
@@ -79,33 +81,30 @@ def NamingSystem.named (system : NamingSystem X) : Set X :=
   {x | exists n, system.assignment n = some x}
 ```
 
-The source's Polish probability carrier is stronger than the Lean theorem's
-measure assumptions: probability implies sigma-finiteness, its stated
-atomlessness supplies `NoAtoms`, and an atomless Borel probability space cannot
-have a countable carrier. The frozen theorem carries the resulting
-`Uncountable X` fact as an explicit (proof-redundant) instance. The source's
-countable names are represented by finite height sublevels;
-`name_layer_finite` derives `Countable system.Name`. The generic
-frozen conclusion deliberately says `volume complement = volume univ`; after
-specializing to the source's probability measure, `volume univ = 1` gives the
-source's numeric equality. The generic statement does not claim that arbitrary
-non-probability measures have total mass one.
+The source's countable names are represented by finite height sublevels;
+`name_layer_finite` derives `Countable system.Name`. Its atomlessness assumption
+matches the carrier's `NoAtoms` mechanism. However, the source fixes a Borel
+probability measure while this theorem has no `IsProbabilityMeasure` binder and
+does not expose a checked specialization proving `volume Set.univ = 1`.
+Therefore its generic conclusion `volume complement = volume univ` does not by
+itself discharge the source's numeric equality `mu(A) = 1`.
 
 ## Clause echo
 
 | Source obligation | Exact formal discharge |
 |---|---|
-| Arbitrary naming system | Instantiate the carrier theorem with `J = Unit` and the constant singleton family. `named` is exactly the image of the partial `Option` assignment. |
+| Arbitrary naming system | `J = Unit` is the easy mathematical instantiation, and `named` is exactly the image of the partial `Option` assignment. The checked conclusion is still equality to `volume univ`, not to `1`. |
 | Named image is countable | `D5.S0.Naming.named_countable (system : NamingSystem X) : system.named.Countable`. |
 | Atomlessness makes the named image null | `Set.Countable.measure_zero`; the carrier theorem exposes the resulting equality as its second conjunct. |
-| `mu(A(N)) = 1` | The third conjunct is `volume named_complement = volume univ`; under the source probability measure, `volume univ = 1`. |
-| Countable expansion tower | Instantiate `J = Nat` and `systems k = N_k`. The theorem proves the union of all named sets countable and null. |
-| Nestedness and compatible extension | These hypotheses are not needed: the frozen theorem proves the conclusion for every countable family, strictly strengthening the source. A nested compatible tower is a special case, so no clause is dropped. |
-| Limit anonymous set is full measure | The third conjunct applied to the `Nat` family is exactly the complement of the union of all tower-named points having the measure of the whole carrier. |
+| `mu(A(N)) = 1` | Missing checked bridge. The third conjunct is only `volume named_complement = volume univ`; no addressable probability specialization turns its right side into `1`. |
+| Countable expansion tower | `J = Nat` is the easy mathematical instantiation. It proves the union of the family of named sets countable and null. |
+| Nestedness and compatible extension | The union theorem does not need these hypotheses, but it also does not define an expansion relation, compatible assignments, or a limit `NamingSystem`. Their absence cannot be called strengthening until a checked limit construction connects the source carrier to the family union. |
+| Limit anonymous set is full measure | Missing checked bridge. No declaration defines the limit system or proves `named(limit systems) = Set.iUnion fun k => (systems k).named`; the family-union complement is therefore not formally identified with the source's limit anonymous set. |
 
-Thus the dropped-or-weakened set is empty. The lack of explicit nesting and
-compatibility binders is strengthening, not omission: the proof does not use
-them because countability alone suffices.
+The dropped-or-weakened set is nonempty: the numeric probability specialization
+and the tower-to-limit-system carrier identification are absent. `J = Unit` and
+`J = Nat` demonstrate that the remaining mathematics is elementary, but they
+are not checked, addressable discharges of those two clauses.
 
 ## Proof dependency trace
 
@@ -159,13 +158,30 @@ git log --all --format='%H %s' \
 returned no hit. The selected atom therefore has no prior report, receipt, or
 atom-specific formalization in current-tree or all-reference history.
 
-There is intentional cross-atom carrier reuse. Receipt
+There is relevant cross-atom carrier coverage. Receipt
 `Meta/Digestion/formalizations/pzg-residual-51fc797a08995981cd55c93a1b87c96aa5d79bc953ab471734c59a0ed6e8fa54.v1.json`
 already binds the same frozen GID to `corollary/3.3.1`. Its authoritative atom
 is only the narrative restatement that countable naming towers leave full
 measure anonymous. The selected `theorem/3.3` additionally contains the
-single-system clause and the countable-image proof. This is not an exact atom
-duplicate: it is a distinct atom reusing a theorem strong enough for both.
+single-system clause and the countable-image proof. The atom is distinct, but
+the shared GID is not mechanically reusable by the current cover command.
+
+The current target ledger entry has `coverage_gids: []` and
+`ast_path: theorem/3.3`; the existing host has
+`ast_path: corollary/3.3.1`. The live guard in
+`CoverAtomCommand.HostedExtension.cs` is:
+
+```csharp
+if (target.CoverageGids.Length == 0
+    || !string.Equals(target.AstPath, conflict.AstPath, StringComparison.Ordinal))
+{
+    throw CrossAtomBinding(gid, conflict.AtomId);
+}
+```
+
+Both rejection conditions hold here. Canonical cover therefore reports that
+the GID is already bound to atom `pzg-residual-51fc...`; the narrow legacy
+shared-residual exception cannot apply across these two AST paths.
 
 ## Search trace and decision
 
@@ -184,12 +200,13 @@ Relevant exact hits were `NamingSystem.lean`,
 `NullMeasurable.lean`. No third-party search was needed after the exact pinned
 carrier and its complete dependency path were established.
 
-Recommendation: the dispatcher should bind atom
-`pzg-residual-9ba51e073a6b7bfd395328fa2968c377a5539d3df64ffcd36797cf9a7faa3548`
-to GID
-`D5/S0/Naming/Conservation/NamingTowerConservation.countable_tower_anonymous_full_measure`
-through the canonical ledger door. This lane must not create a second Lean
-source of truth or hand-edit the receipt/frozen ledgers.
+Decision: the atom remains operationally `open`. The existing theorem is a
+substantive partial carrier, but no executable closure path currently exists:
+it lacks the probability and limit-system bridges, and canonical cover rejects
+cross-atom reuse of the already-bound GID. Any future mechanism permitting a
+different cross-atom relationship is separately governed harness capability;
+this report neither proposes nor implements such a change. This lane must not
+create a second Lean source of truth or hand-edit receipt/frozen ledgers.
 
 Verification reached in this lane:
 
@@ -200,5 +217,5 @@ Verification reached in this lane:
   snapshot SHA-256
   `b5e23ac94a0aed91fb5fdc655f651eccd8731186c3a51c5077dc9683b9717316`.
 - Selected `make show-atom`: exit `0`, all hashes matched.
-- No deposit, cover, preflight, push, or PR was run because no new theorem is
-  warranted and cross-review precedes dispatcher-owned binding.
+- No deposit, cover, preflight, push, or PR was run. The two fidelity gaps and
+  the live cross-atom guard block executable closure.
