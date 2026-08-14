@@ -1,7 +1,5 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <OutputType>Exe</OutputType>
-    <StartupObject>StrataLint.ArchitectureTests.TestMapProgram</StartupObject>
     <IsPackable>false</IsPackable>
     <IsTestProject>true</IsTestProject>
     <RootNamespace>StrataLint.ArchitectureTests</RootNamespace>

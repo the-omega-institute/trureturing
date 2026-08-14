@@ -201,6 +201,9 @@ internal sealed class StubCliEnvironment(
     public CommandResult ReattestLedger(IReadOnlyList<string> arguments) =>
         new(false, string.Empty, "ledger reattest is not configured in this fixture");
 
+    public CommandResult SyncLedger(IReadOnlyList<string> arguments) =>
+        new(false, string.Empty, "ledger sync is not configured in this fixture");
+
     public CommandResult RecoordinateLedger(IReadOnlyList<string> arguments) =>
         new(false, string.Empty, "ledger recoordinate is not configured in this fixture");
 

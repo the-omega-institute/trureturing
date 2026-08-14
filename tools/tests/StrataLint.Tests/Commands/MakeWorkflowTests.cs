@@ -145,7 +145,7 @@ public sealed partial class MakeWorkflowTests
             StringComparison.Ordinal);
         Assert.Contains("make -C tools selftest", preflight, StringComparison.Ordinal);
         Assert.Contains("lean-report-pair.sh", localGate, StringComparison.Ordinal);
-        Assert.Contains("--single", localGate, StringComparison.Ordinal);
+        Assert.DoesNotContain("--single", localGate, StringComparison.Ordinal);
         Assert.Contains("--skip-engineering", localGate, StringComparison.Ordinal);
         Assert.Contains("GATE_ARGS=\"--skip-engineering\"", preflight, StringComparison.Ordinal);
         Assert.DoesNotContain("refactor-pr-a-required", localGate, StringComparison.Ordinal);
@@ -437,7 +437,7 @@ public sealed partial class MakeWorkflowTests
         Assert.Contains(".lake/build/stratalint/raw-lean-report.json", script, StringComparison.Ordinal);
         Assert.DoesNotContain("CHECK_ARGS=()", script, StringComparison.Ordinal);
         Assert.Contains("emit|emit-values|filemap) run_scribe \"$1\"", script, StringComparison.Ordinal);
-        Assert.Contains("canonical) generators=(emit emit-values filemap dag)", script, StringComparison.Ordinal);
+        Assert.Contains("generators=(emit emit-values filemap dag)", script, StringComparison.Ordinal);
         Assert.Contains("for generator in \"${generators[@]}\"", script, StringComparison.Ordinal);
     }
 

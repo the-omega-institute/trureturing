@@ -23,18 +23,7 @@ internal sealed record ScribeTestMethod(
     internal bool IsUnknown => UnknownReasons.Count != 0;
 }
 
-internal sealed record ScribeTestMap(IReadOnlyList<ScribeTestMethod> Methods)
-{
-    internal IReadOnlyList<ScribeTestMethod> Select(IEnumerable<string> changedPaths)
-    {
-        var changed = changedPaths.Select(Normalize).ToHashSet(StringComparer.Ordinal);
-        return Methods.Where(method => method.IsUnknown || method.Paths.Any(declared =>
-            changed.Any(path => path == declared
-                || path.StartsWith(declared + "/", StringComparison.Ordinal)))).ToArray();
-    }
-
-    private static string Normalize(string path) => path.Replace('\\', '/').TrimStart('.', '/');
-}
+internal sealed record ScribeTestMap(IReadOnlyList<ScribeTestMethod> Methods);
 
 internal static class ScribeTestMapDeriver
 {
@@ -45,7 +34,7 @@ internal static class ScribeTestMapDeriver
         "tools/tests/StrataLint.Tests/",
     ];
 
-    // This is the read surface used by the test-map path filter. Entries are either
+    // This is the read surface used by the engineering path-filter guard. Entries are either
     // exact files or directory roots; adding a new repository read requires updating
     // this declaration and its review-visible guard.
     internal static readonly IReadOnlyList<string> DeclaredPathWhitelist =

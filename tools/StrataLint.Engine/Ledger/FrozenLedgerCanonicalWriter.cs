@@ -57,6 +57,13 @@ public static partial class FrozenLedgerGenerator
         var activeByPath = baseline.ActiveEntries.Values.ToDictionary(
             static entry => entry.Material.RepoPath,
             static entry => entry.Material);
+        return Append(baseline, MissingFreezeEvents(activeByPath, candidateCatalog));
+    }
+
+    private static ImmutableArray<(string Type, JsonElement Payload)> MissingFreezeEvents(
+        IReadOnlyDictionary<RepoPath, FrozenNodeMaterial> activeByPath,
+        FrozenMaterialCatalog candidateCatalog)
+    {
         foreach (var (path, active) in activeByPath)
         {
             if (candidateCatalog.ByPath.TryGetValue(path, out var candidate)
@@ -74,7 +81,7 @@ public static partial class FrozenLedgerGenerator
             .ThenBy(static payload => payload.CaseId, StringComparer.Ordinal)
             .Select(static payload => (Type: "Freeze", Payload: FrozenLedgerCanonicalWriter.FreezeElement(payload)))
             .ToImmutableArray();
-        return Append(baseline, payloads);
+        return payloads;
     }
 
     public static ImmutableArray<byte> AppendReattestation(
@@ -107,6 +114,27 @@ public static partial class FrozenLedgerGenerator
     {
         ArgumentNullException.ThrowIfNull(baseline);
         ArgumentNullException.ThrowIfNull(candidateCatalog);
+        return Append(baseline, ReattestationEvents(baseline, candidateCatalog));
+    }
+
+    public static ImmutableArray<byte> AppendSynchronization(
+        FrozenLedgerConsistent baseline,
+        FrozenMaterialCatalog candidateCatalog)
+    {
+        ArgumentNullException.ThrowIfNull(baseline);
+        ArgumentNullException.ThrowIfNull(candidateCatalog);
+        var reattestations = ReattestationEvents(baseline, candidateCatalog);
+        var activeAfterReattestation = baseline.ActiveEntries.Values.ToDictionary(
+            static entry => entry.Material.RepoPath,
+            entry => candidateCatalog.ByPath[entry.Material.RepoPath]);
+        var freezes = MissingFreezeEvents(activeAfterReattestation, candidateCatalog);
+        return Append(baseline, reattestations.AddRange(freezes));
+    }
+
+    private static ImmutableArray<(string Type, JsonElement Payload)> ReattestationEvents(
+        FrozenLedgerConsistent baseline,
+        FrozenMaterialCatalog candidateCatalog)
+    {
         var activeByPath = baseline.ActiveEntries.Values.ToDictionary(
             static entry => entry.Material.RepoPath);
         var payloads = ImmutableArray.CreateBuilder<(string Type, JsonElement Payload)>();
@@ -165,7 +193,7 @@ public static partial class FrozenLedgerGenerator
             payloads.Add(("Reattest", FrozenLedgerCanonicalWriter.ReattestElement(payload)));
         }
 
-        return Append(baseline, payloads.ToImmutable());
+        return payloads.ToImmutable();
     }
 
     private static FrozenReattestPayload ExtendedReattestPayload(

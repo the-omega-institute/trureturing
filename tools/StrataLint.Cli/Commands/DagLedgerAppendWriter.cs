@@ -8,6 +8,8 @@ namespace StrataLint.Cli;
 
 internal static class DagLedgerAppendWriter
 {
+    internal sealed record PendingEventFile(string Path, ImmutableArray<byte> Bytes);
+
     internal static CommandResult Append(
         string repositoryRoot,
         IRepositoryGateway repository,
@@ -99,6 +101,19 @@ internal static class DagLedgerAppendWriter
         int skip = 0) =>
         WriteEventFiles(directory, BuildNewEventFiles(lines, skip));
 
+    internal static IEnumerable<PendingEventFile> PrepareNewEvents(
+        string directory,
+        IEnumerable<FrozenLedgerLineSyntax> lines,
+        int skip = 0)
+    {
+        foreach (var file in BuildNewEventFiles(lines, skip))
+        {
+            yield return new PendingEventFile(
+                Path.Combine(directory, Path.GetFileName(file.Path.Value)),
+                file.RawBytes);
+        }
+    }
+
     internal static ImmutableArray<RepositoryFile> BuildNewEventFiles(
         IEnumerable<FrozenLedgerLineSyntax> lines,
         int skip = 0)
@@ -179,5 +194,4 @@ internal static class DagLedgerAppendWriter
             }
         }
     }
-
 }

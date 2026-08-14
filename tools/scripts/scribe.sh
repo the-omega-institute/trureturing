@@ -7,22 +7,14 @@ CLI_PROJECT="$ROOT/tools/StrataLint.Cli/StrataLint.Cli.csproj"
 LEAN_REPORT="$ROOT/.lake/build/stratalint/raw-lean-report.json"
 CONSUMER="$ROOT/tools/scripts/report/report-consumer.sh"
 MODE="${1:-}"
-ORDER="${STRATALINT_PR_A_ORDER:-canonical}"
-PARALLELISM="${STRATALINT_PR_A_PARALLELISM:-1}"
 
 case "$MODE" in
   emit) ;;
   *) echo "usage: scribe.sh emit" >&2; exit 2 ;;
 esac
 
-[[ "$PARALLELISM" =~ ^(1|4)$ ]] \
-  || { echo "scribe: STRATALINT_PR_A_PARALLELISM must be 1 or 4" >&2; exit 2; }
-
 run_scribe() {
   local command=(dotnet run --project "$PROJECT" --configuration Release -- "$1")
-  if [[ "${STRATALINT_PR_A_NO_BUILD:-0}" == "1" ]]; then
-    command=(dotnet run --no-build --project "$PROJECT" --configuration Release -- "$1")
-  fi
   if [[ "$1" == "emit" ]]; then
     "$CONSUMER" --role scribe-consumer --report "$LEAN_REPORT" -- "${command[@]}"
   else
@@ -34,9 +26,6 @@ run_scribe() {
 # RepositorySnapshot, which only the CLI's git gateway produces.
 run_dag() {
   local command=(dotnet run --project "$CLI_PROJECT" --configuration Release -- dag-render)
-  if [[ "${STRATALINT_PR_A_NO_BUILD:-0}" == "1" ]]; then
-    command=(dotnet run --no-build --project "$CLI_PROJECT" --configuration Release -- dag-render)
-  fi
   "${command[@]}"
 }
 
@@ -48,25 +37,7 @@ run_generator() {
   esac
 }
 
-case "$ORDER" in
-  canonical) generators=(emit emit-values filemap dag) ;;
-  reverse) generators=(dag filemap emit-values emit) ;;
-  seeded-shuffle) generators=(emit-values dag emit filemap) ;;
-  *) echo "scribe: STRATALINT_PR_A_ORDER must be canonical, reverse, or seeded-shuffle" >&2; exit 2 ;;
-esac
+generators=(emit emit-values filemap dag)
 
 cd "$ROOT"
-if [[ "$PARALLELISM" == "1" ]]; then
-  for generator in "${generators[@]}"; do run_generator "$generator"; done
-else
-  running=0
-  for generator in "${generators[@]}"; do
-    run_generator "$generator" &
-    ((running += 1))
-    if ((running == PARALLELISM)); then
-      wait
-      running=0
-    fi
-  done
-  wait
-fi
+for generator in "${generators[@]}"; do run_generator "$generator"; done
