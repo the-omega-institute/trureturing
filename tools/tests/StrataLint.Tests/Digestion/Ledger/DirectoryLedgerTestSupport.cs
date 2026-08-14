@@ -7,9 +7,13 @@ internal static class DirectoryLedgerTestSupport
 {
     internal static Dictionary<string, string> Project(IReadOnlyDictionary<string, string> files)
     {
-        var ledger = BackfillInventoryLoader.Load(files[BackfillInventoryLoader.RelativePath]);
+        var raw = RawRepositorySnapshot.Create(files.Select(static pair =>
+            RawRepositoryEntry.FromText(pair.Key, pair.Value)));
+        var snapshot = Assert.IsType<SnapshotDecodeOutcome.Decoded>(
+            SnapshotDecoder.Decode(raw)).Snapshot;
+        var ledger = BackfillInventoryLoader.Load(snapshot);
         var result = new Dictionary<string, string>(files, StringComparer.Ordinal);
-        result.Remove(BackfillInventoryLoader.RelativePath);
+        RemoveLedger(result);
         foreach (var source in ledger.RequireDigestionSources())
         {
             result[$"{BackfillInventoryLoader.RootPath}{source.SourceId}/source.toml"] =
@@ -30,6 +34,21 @@ internal static class DirectoryLedgerTestSupport
         return result;
     }
 
+    internal static void ReplaceWithProjection(
+        IDictionary<string, string> files,
+        string ledger)
+    {
+        var projected = Project(new Dictionary<string, string>(StringComparer.Ordinal)
+        {
+            [BackfillInventoryLoader.RelativePath] = ledger,
+        });
+        RemoveLedger(files);
+        foreach (var (path, text) in projected)
+        {
+            files[path] = text;
+        }
+    }
+
     internal static void Write(string repositoryRoot, IReadOnlyDictionary<string, string> files)
     {
         foreach (var (path, text) in files.Where(static pair =>
@@ -40,6 +59,17 @@ internal static class DirectoryLedgerTestSupport
                 path.Replace('/', Path.DirectorySeparatorChar));
             Directory.CreateDirectory(Path.GetDirectoryName(outputPath)!);
             File.WriteAllText(outputPath, text, new UTF8Encoding(false));
+        }
+    }
+
+    private static void RemoveLedger(IDictionary<string, string> files)
+    {
+        files.Remove(BackfillInventoryLoader.RelativePath);
+        foreach (var path in files.Keys
+                     .Where(BackfillInventoryLoader.IsCanonicalPath)
+                     .ToArray())
+        {
+            files.Remove(path);
         }
     }
 }

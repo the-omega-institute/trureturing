@@ -1,4 +1,6 @@
 using System.Collections.Immutable;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace StrataLint.Engine;
 
@@ -91,6 +93,20 @@ internal static class DigestionIngestor
             snapshot,
             baselineDocument,
             DigestionAlignmentMode.Ingest);
+        var unverifiedChainParent = migrationDocument.RequireDigestionEntries().FirstOrDefault(entry =>
+            entry.Receipts.ChainAtoms.Length > 0
+            && alignment.ClausePlanChainParents.Contains(entry.AtomId)
+            && !alignment.VerifiedClausePlanParents.Contains(entry.AtomId));
+        if (unverifiedChainParent is not null)
+        {
+            var findingPrefix = $"entry {unverifiedChainParent.AtomId} malformed clause chain:";
+            var reason = alignment.Findings.FirstOrDefault(finding =>
+                finding.StartsWith(findingPrefix, StringComparison.Ordinal));
+            throw new FormatException(
+                $"ingest clause chain parent {unverifiedChainParent.AtomId} lacks verified clause-plan proof"
+                + (reason is null ? string.Empty : $": {reason}"));
+        }
+
         if (alignment.Findings.Length > 0)
         {
             throw new FormatException(
@@ -99,6 +115,9 @@ internal static class DigestionIngestor
 
         var stale = alignment.ActualStale.ToHashSet(StringComparer.Ordinal);
         var residualBySource = alignment.Residual
+            .GroupBy(static item => item.SourceId, StringComparer.Ordinal)
+            .ToDictionary(static group => group.Key, static group => group.ToArray(), StringComparer.Ordinal);
+        var clausePlansBySource = alignment.ClausePlans
             .GroupBy(static item => item.SourceId, StringComparer.Ordinal)
             .ToDictionary(static group => group.Key, static group => group.ToArray(), StringComparer.Ordinal);
         var atomIds = migrationDocument.RequireDigestionEntries()
@@ -176,6 +195,81 @@ internal static class DigestionIngestor
                 }
             }
 
+
+            if (clausePlansBySource.TryGetValue(source.SourceId, out var clausePlans))
+            {
+                foreach (var clausePlan in clausePlans)
+                {
+                    var parentIndexes = entries
+                        .Select((entry, index) => (Entry: entry, Index: index))
+                        .Where(item => item.Entry.AstPath == clausePlan.Plan.ParentAstPath
+                            && DigestionLedgerAligner.FingerprintsMatch(
+                                item.Entry.Fingerprints,
+                                clausePlan.Parent.Fingerprints))
+                        .ToArray();
+                    if (parentIndexes.Length != 1)
+                    {
+                        throw new FormatException(
+                            $"ingest clause plan parent {clausePlan.Plan.ParentAstPath} resolves to "
+                            + $"{parentIndexes.Length} ledger entries");
+                    }
+
+                    var (parent, parentIndex) = parentIndexes[0];
+                    if (parent.Receipts.ChainAtoms.Length > 0)
+                    {
+                        continue;
+                    }
+
+                    if (parent.ProjectedStatus != new DigestionStatus(
+                            DigestionMigrationState.Residual,
+                            DigestionTruthState.Open))
+                    {
+                        continue;
+                    }
+
+                    var childIds = ImmutableArray.CreateBuilder<string>(clausePlan.Plan.Children.Length);
+                    foreach (var (child, childIndex) in clausePlan.Plan.Children.Select(
+                                 (child, index) => (Child: child, Index: index)))
+                    {
+                        var childId = ClauseAtomId(source, parent, child, childIndex);
+                        if (!atomIds.Add(childId))
+                        {
+                            throw new FormatException(
+                                $"ingest clause atom_id collides with the ledger: {childId}");
+                        }
+
+                        var captured = AddCasObject(child.RawBytes.AsSpan(), casObjects);
+                        entries.Add(new DigestionLedgerEntry(
+                            source.SourceId,
+                            source.SourcePath,
+                            source.Atomizer,
+                            childId,
+                            child.AstPath,
+                            Boundary: null,
+                            child.Fingerprints,
+                            CoverageGids: [],
+                            new DigestionReceipts([], [], [], [], null),
+                            new DigestionStatus(
+                                DigestionMigrationState.Residual,
+                                DigestionTruthState.Open),
+                            ReceiptSyntax: null,
+                            CasRef: captured.Reference));
+                        childIds.Add(childId);
+                        residualOpenAdded++;
+                    }
+
+                    entries[parentIndex] = parent with
+                    {
+                        Receipts = parent.Receipts with
+                        {
+                            UnresolvedSubitems = [],
+                            ChainAtoms = childIds.MoveToImmutable(),
+                        },
+                        ReceiptSyntax = null,
+                    };
+                }
+            }
+
             sources.Add(source with
             {
                 AcknowledgedStale = acknowledgments,
@@ -191,6 +285,20 @@ internal static class DigestionIngestor
                 .OrderBy(static item => item.RelativePath, StringComparer.Ordinal)
                 .ToImmutableArray(),
             alignment.Fallbacks);
+    }
+
+    private static string ClauseAtomId(
+        DigestionLedgerSource source,
+        DigestionLedgerEntry parent,
+        DigestionAtom child,
+        int childIndex)
+    {
+        var stem = AtomizerRegistry.Require(source.Atomizer).ResidualPrefix
+            + "-residual-"
+            + child.Fingerprints.RawSha256["sha256:".Length..];
+        var occurrenceBytes = Encoding.UTF8.GetBytes(
+            parent.AtomId + "\0" + child.AstPath + "\0" + childIndex);
+        return stem + "-" + Convert.ToHexStringLower(SHA256.HashData(occurrenceBytes));
     }
 
     private static DigestionLedgerSource CaptureBoundarySource(

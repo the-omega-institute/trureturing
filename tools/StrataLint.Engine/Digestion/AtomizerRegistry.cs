@@ -6,7 +6,8 @@ internal delegate AtomizedTheoryDocument TheoryAtomizer(ReadOnlySpan<byte> bytes
 
 internal sealed record AtomizerRegistration(
     TheoryAtomizer Atomize,
-    string ResidualPrefix);
+    string ResidualPrefix,
+    bool EmitsClausePlans = false);
 
 internal static class AtomizerRegistry
 {
@@ -35,7 +36,7 @@ internal static class AtomizerRegistry
             .Add(
                 PeriodicTreeId,
                 new AtomizerRegistration(PeriodicTreeAtomizer.Atomize, "periodic-tree"))
-            .Add(PzgId, new AtomizerRegistration(PzgAtomizer.Atomize, "pzg"))
+            .Add(PzgId, new AtomizerRegistration(PzgAtomizer.Atomize, "pzg", EmitsClausePlans: true))
             .Add(WmId, new AtomizerRegistration(WmAtomizer.Atomize, "wm"));
 
     internal static ImmutableArray<string> RegisteredIds { get; } =
@@ -66,6 +67,8 @@ internal static class AtomizerRegistry
 
     internal static bool IsRegistered(string id) =>
         Atomizers.ContainsKey(id) || IsDeclaredDialect(id);
+
+    internal static bool EmitsClausePlans(string id) => Require(id).EmitsClausePlans;
 
     internal static AtomizerRegistration Require(string id) =>
         Atomizers.TryGetValue(id, out var registration)

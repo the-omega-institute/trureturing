@@ -56,8 +56,10 @@ public sealed partial class ReviewRegressionTests
     {
         var fixture = new RuleFixture();
         fixture.AddBackfillTargets();
-        fixture.Files["Meta/BACKFILL.yaml"] = fixture.Files["Meta/BACKFILL.yaml"].Replace(
-            "  - case_id: D5-T0017\n    gid: D5/X_Frontier/RequiredChecks\n",
+        fixture.Files[BackfillInventoryLoader.TicketIndexPath] = fixture.Files[
+                BackfillInventoryLoader.TicketIndexPath]
+            .Replace(
+            "D5-T0017 = \"D5/X_Frontier/RequiredChecks\"\n",
             string.Empty,
             StringComparison.Ordinal);
 
@@ -123,18 +125,18 @@ public sealed partial class ReviewRegressionTests
         fixture.AddBackfillTargets();
         var captured = DigestionCasStore.Capture(Encoding.UTF8.GetBytes(
             RuleFixture.FixtureDigestionSource));
-        fixture.Files[BackfillInventoryLoader.RelativePath] = fixture.Files[
-                BackfillInventoryLoader.RelativePath]
+        fixture.Files[RuleFixture.FixtureBackfillSourcePath] = fixture.Files[
+                RuleFixture.FixtureBackfillSourcePath]
             .Replace(
-                $"atomizer: {AtomizerRegistry.NoAtomizerId}",
-                $"atomizer: {SyntheticNumberedAtomizer.Id}",
+                $"atomizer = \"{AtomizerRegistry.NoAtomizerId}\"",
+                $"atomizer = \"{SyntheticNumberedAtomizer.Id}\"",
                 StringComparison.Ordinal);
         fixture.Files[captured.RelativePath] = RuleFixture.FixtureDigestionSource;
         fixture.Files.Remove(RuleFixture.FixtureDigestionSourcePath);
         Assert.Equal(
             captured.Reference,
             Assert.Single(BackfillInventoryLoader.Load(
-                fixture.Files[BackfillInventoryLoader.RelativePath]).RequireDigestionEntries()).CasRef);
+                fixture.Build().Current).RequireDigestionEntries()).CasRef);
 
         var evaluation = RuleCatalog.Default.EvaluateSingle(
             RuleId.CreateKnown(16),
@@ -165,10 +167,10 @@ public sealed partial class ReviewRegressionTests
     {
         var fixture = new RuleFixture();
         fixture.AddBackfillTargets();
-        fixture.Files[BackfillInventoryLoader.RelativePath] = fixture.Files[
-                BackfillInventoryLoader.RelativePath]
+        fixture.Files[RuleFixture.FixtureBackfillAtomPath] = fixture.Files[
+                RuleFixture.FixtureBackfillAtomPath]
             .Replace(
-                $"        cas_ref: {RuleFixture.FixtureCasReference}\n",
+                $"cas_ref: {RuleFixture.FixtureCasReference}\n",
                 string.Empty,
                 StringComparison.Ordinal);
 
@@ -202,6 +204,7 @@ public sealed partial class ReviewRegressionTests
     {
         var fixture = new RuleFixture();
         fixture.AddBackfillTargets();
+        fixture.UseLegacyBackfill();
         const string expected = "          migration: partial\n          truth: closed";
         const string falseProjection = "          migration: absorbed\n          truth: closed";
         fixture.Files["Meta/BACKFILL.yaml"] = fixture.Files["Meta/BACKFILL.yaml"].Replace(
@@ -220,10 +223,12 @@ public sealed partial class ReviewRegressionTests
     {
         var fixture = new RuleFixture();
         fixture.AddBackfillTargets();
-        var document = BackfillInventoryLoader.Load(fixture.Files["Meta/BACKFILL.yaml"]);
+        var document = BackfillInventoryLoader.Load(fixture.Build().Current);
         var fingerprint = document.RequireDigestionEntries()[0].Fingerprints.RawSha256;
         var replacement = fingerprint[..^1] + (fingerprint[^1] == '0' ? '1' : '0');
-        fixture.Files["Meta/BACKFILL.yaml"] = fixture.Files["Meta/BACKFILL.yaml"].Replace(
+        fixture.Files[RuleFixture.FixtureBackfillAtomPath] = fixture.Files[
+                RuleFixture.FixtureBackfillAtomPath]
+            .Replace(
             fingerprint,
             replacement,
             StringComparison.Ordinal);
@@ -239,6 +244,7 @@ public sealed partial class ReviewRegressionTests
     {
         var fixture = new RuleFixture();
         fixture.AddBackfillTargets();
+        fixture.UseLegacyBackfill();
         const string duplicate =
             "  - source_id: fixture-source\n"
             + "    path: docs/CONTRIBUTING.md\n"
@@ -514,7 +520,7 @@ public sealed partial class ReviewRegressionTests
         var fixture = new RuleFixture();
         fixture.AddBackfillTargets();
         var source = Assert.Single(BackfillInventoryLoader
-            .Load(fixture.Files["Meta/BACKFILL.yaml"])
+            .Load(fixture.Build().Current)
             .RequireDigestionSources());
         var registryWithoutSource = TestRegistry.Canonical.Replace(
             $"  - \"{source.SourcePath}\"\n",
