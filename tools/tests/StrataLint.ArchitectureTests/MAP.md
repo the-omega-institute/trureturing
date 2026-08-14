@@ -4,14 +4,18 @@
 
 - `Capabilities/`: unforgeable capability construction and its executable red fixture.
 - `CanonicalSources/`: source-level checks that C# consumes canonical repository data instead of copying it.
-- `CanonicalSources/Golden/`: golden TOML storage and closed-stratum consistency
-  policies, split locally when the parent bucket reached its file limit.
+- `CanonicalSources/Golden/`: closed-stratum consistency policy, split locally when
+  the parent bucket reached its file limit.
 - `CanonicalSources/FileMap/`: FILEMAP closed-world coverage, producer/loader identity,
   data residence, class-directory purity, and dependency-direction fixtures.
+- `CanonicalSources/RepositoryEnumeration/`: Git-index-backed tracked-file enumeration
+  shared by canonical-source policies.
+- `Capacity/`: repository capacity policy and its explicit exclusions.
 - `Dependencies/`: compiled assembly dependency direction, retired-assembly absence,
   final source ownership, and whitelist fixtures.
-- `Namespaces/`: source path to namespace policy, including Blueprint linked-source conventions.
+- `Determinism/`: banned-API analyzer configuration and coverage.
 - `PublicSurface/`: the exact exported Engine type allowlist.
+- `RepositoryIo/`: production repository access and derived test-map policies.
 
 The root contains only shared repository discovery, test metadata, and this map.
 
@@ -19,9 +23,6 @@ The root contains only shared repository discovery, test metadata, and this map.
 
 ### Covered
 
-- `Meta/BACKFILL.yaml`: rejects an exact canonical `case_id <-> gid` pair in a C#
-  dictionary indexer (scalar, collection-expression, or array RHS) or two-element
-  tuple literal.
 - Existing repository file paths: scans every `.cs` outside `.git`, `.lake`, `bin`,
   and `obj`; rejects a string literal containing at least two `/` characters when its
   value exactly equals an existing repository-relative file. A literal that directly
@@ -29,11 +30,9 @@ The root contains only shared repository discovery, test metadata, and this map.
   consumers must reference the constant.
 - `Meta/domains.yaml`: rejects a C# dictionary indexer whose literal key is a
   registered domain and whose literal value is any `S0` through `S4` stratum code.
-- Golden corpus storage: rejects literal-name golden case construction in tracked C#;
-  the only case authority is strict canonical TOML under
-  `Golden/cases`. A separate consistency anchor keeps
-  `GoldenStratum`, Engine `Stratum`, and both closed `IsStratum` predicates equal to
-  the explicit `S0` through `S4` five-member alphabet.
+- Closed-stratum alphabet: a consistency anchor keeps `GoldenStratum`, Engine
+  `Stratum`, and both closed `IsStratum` predicates equal to the explicit `S0`
+  through `S4` five-member alphabet.
 - FILEMAP: production `StrataLint filemap-conform` checks every tracked file against
   exactly one `Meta/FILEMAP.toml` pattern, aligns registry roots, joins generated
   inventory, resolves actors and data verifiers, enforces declared modes and directory
@@ -72,6 +71,10 @@ isolated byte-mismatch fixture.
 
 ### Open (not covered)
 
+- Backfill case/GID pair duplication: `BackfillInventoryLoader.RelativePath` still
+  names the absent legacy `Meta/BACKFILL.yaml`; the current ledger is sharded under
+  `Meta/Digestion/backfill/`, so the legacy exact-pair policy has no canonical object
+  to compare against.
 - Arbitrary semantic duplication, including split, encoded, concatenated,
   interpolated, or computed values.
 - Split/interpolated/computed copies of central package or SDK versions.
