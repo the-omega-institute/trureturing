@@ -11,14 +11,14 @@ workload_id = "local-harness-gate"
 kind = "timing"
 stage = "total"
 metric = "p95_seconds"
-limit_seconds = 1950
+limit_seconds = 3850
 owner = "harness/performance"
 review_due = "2026-11-20"
 remediation = "Run make -C tools perf-report, inspect ~/.stratalint-perf/events.jsonl for same-cohort receipts, and profile the slowest gate stages."
 false_positive_window_days = 14
 false_positive_rate_percent = "unmeasured"
 rollback_criteria = "Keep or restore warn-only when the rolling false-positive rate is unmeasured or at least 5 percent."
-source = "2026-08-14 recalibration: events.jsonl same-cohort receipts, n=185, med=324s, p95=1614s, load<=1.0 filter; old 2026-07-20 baseline architecture retired."
+source = "2026-08-15 recalibration: PerfReportBuilder passed-only, all-history, Apple M5 cohort - n=50, med=1363s, p95=3336s; limit = p95 +~15%. WARN at this limit means p95 grew beyond the 2026-08-15 snapshot. Note: comparator has no time window or load filter; earlier mixed-status receipts (2026-08-14 version) misdescribed the measured population."
 
 [[budgets]]
 id = "local-m5-admission"
@@ -31,14 +31,14 @@ workload_id = "local-harness-gate"
 kind = "timing"
 stage = "admission"
 metric = "p95_seconds"
-limit_seconds = 2050
+limit_seconds = 3800
 owner = "harness/performance"
 review_due = "2026-11-20"
 remediation = "Run make -C tools perf-report, inspect ~/.stratalint-perf/events.jsonl for same-cohort receipts, and profile admission."
 false_positive_window_days = 14
 false_positive_rate_percent = "unmeasured"
 rollback_criteria = "Keep or restore warn-only when the rolling false-positive rate is unmeasured or at least 5 percent."
-source = "2026-08-14 recalibration: events.jsonl same-cohort receipts, n=123, med=565s, p95=1697s, load<=1.0 filter; admission p95 is near total p95 because the stage series have different sample composition; old 2026-07-20 baseline architecture retired."
+source = "2026-08-15 recalibration: PerfReportBuilder passed-only, all-history, Apple M5 cohort - n=49, med=1179s, p95=3304s; admission p95 remains near total p95 because the stage series have different sample composition; limit = p95 +~15%. WARN at this limit means p95 grew beyond the 2026-08-15 snapshot. Note: comparator has no time window or load filter; earlier mixed-status receipts (2026-08-14 version) misdescribed the measured population."
 
 [[budgets]]
 id = "local-m5-preflight-total"
@@ -51,11 +51,11 @@ workload_id = "preflight"
 kind = "timing"
 stage = "total"
 metric = "p95_seconds"
-limit_seconds = 2450
+limit_seconds = 4400
 owner = "harness/performance"
 review_due = "2026-11-20"
 remediation = "Run make -C tools perf-report, inspect ~/.stratalint-perf/events.jsonl for same-cohort receipts, and separate engineering and gate contributions."
 false_positive_window_days = 14
 false_positive_rate_percent = "unmeasured"
 rollback_criteria = "Keep or restore warn-only when the rolling false-positive rate is unmeasured or at least 5 percent."
-source = "2026-08-14 recalibration: events.jsonl same-cohort receipts, n=191, med=510s, p95=2056s, load<=1.0 filter; old 2026-07-20 baseline architecture retired."
+source = "2026-08-15 recalibration: PerfReportBuilder passed-only, all-history, Apple M5 cohort - n=41, med=1485s, p95=3832s; limit = p95 +~15%. WARN at this limit means p95 grew beyond the 2026-08-15 snapshot. Note: comparator has no time window or load filter; earlier mixed-status receipts (2026-08-14 version) misdescribed the measured population."
