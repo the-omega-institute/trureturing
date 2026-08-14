@@ -59,15 +59,9 @@ The root contains only shared repository discovery, test metadata, and this map.
 - Anchor definition names: every public typed anchor property is checked by reflection
   against a fixed scheme-specific transform. Literature uses a Pascal-cased bibkey;
   mathlib uses the Pascal-cased terminal qualified name followed by target kind.
-- ComponentC C0 ceremony: TOWER controller/corpus/gate Git blob OIDs and the inaugural
-  certificate SHA-256 must match the canonical worktree bytes and the certificate's
-  Git preimage; loader/schema C# and TOML corpus sets are recursively discovered from
-  their owning directories so additions cannot escape the root.
 
 Each syntax policy has a rejecting fixture, a non-matching green fixture, and a
-repository-wide zero-finding test. C0 ceremony uses live repository-bound address
-tripwires plus synthetic source-discovery fixtures; it does not currently have an
-isolated byte-mismatch fixture.
+repository-wide zero-finding test.
 
 ### Open (not covered)
 
