@@ -258,15 +258,6 @@ artifact_id = "none"
 runtime_disposition = "committed-source"
 
 [[files]]
-pattern = "Library/MAP.md"
-kind = "ledger"
-produced_by = "none"
-consumed_by = ["developer"]
-verified_by = ["SL-003"]
-artifact_id = "none"
-runtime_disposition = "committed-ledger"
-
-[[files]]
 pattern = "Makefile"
 kind = "program"
 produced_by = "none"
@@ -310,15 +301,6 @@ consumed_by = ["BackfillInventoryLoader"]
 verified_by = ["BackfillInventoryLoader"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
-
-[[files]]
-pattern = "Meta/Digestion/fidelity-attestations/**/*.v1.json"
-kind = "ledger"
-produced_by = "none"
-consumed_by = ["DigestionFidelityAttestationChecker"]
-verified_by = ["DigestionFidelityAttestationChecker"]
-artifact_id = "none"
-runtime_disposition = "committed-ledger"
 
 [[files]]
 pattern = "Meta/Digestion/formalizations/*.v1.json"
@@ -465,15 +447,6 @@ artifact_id = "none"
 runtime_disposition = "committed-ledger"
 
 [[files]]
-pattern = "tools/Architecture/MAP.md"
-kind = "program"
-produced_by = "none"
-consumed_by = ["developer"]
-verified_by = ["architecture-tests"]
-artifact_id = "none"
-runtime_disposition = "committed-source"
-
-[[files]]
 pattern = "tools/Generated/scribe-emissions.v1.json"
 kind = "generated"
 produced_by = "ScribeEmitter"
@@ -576,15 +549,6 @@ runtime_disposition = "committed-source"
 
 [[files]]
 pattern = "tools/tests/StrataLint.*/**/*.json"
-kind = "program"
-produced_by = "none"
-consumed_by = ["dotnet"]
-verified_by = ["dotnet-test"]
-artifact_id = "none"
-runtime_disposition = "committed-source"
-
-[[files]]
-pattern = "tools/tests/StrataLint.*/**/*.md"
 kind = "program"
 produced_by = "none"
 consumed_by = ["dotnet"]

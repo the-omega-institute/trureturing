@@ -6,6 +6,39 @@ using Xunit.Sdk;
 
 namespace StrataLint.Tests;
 
+internal static class TestDirectoryCleanup
+{
+    internal const int MaximumAttempts = 40;
+    private static readonly TimeSpan RetryDelay = TimeSpan.FromMilliseconds(25);
+
+    internal static void DeleteRecursively(string path) =>
+        DeleteRecursively(path, Directory.Delete, Thread.Sleep);
+
+    internal static void DeleteRecursively(
+        string path,
+        Action<string, bool> deleteDirectory,
+        Action<TimeSpan> delay)
+    {
+        for (var attempt = 1; ; attempt++)
+        {
+            try
+            {
+                deleteDirectory(path, true);
+                return;
+            }
+            catch (DirectoryNotFoundException)
+            {
+                return;
+            }
+            catch (IOException) when (attempt < MaximumAttempts)
+            {
+                // Git maintenance may detach after commit and briefly repopulate .git/objects.
+                delay(RetryDelay);
+            }
+        }
+    }
+}
+
 public sealed class TestScratchFramework : XunitTestFramework
 {
     public TestScratchFramework(IMessageSink messageSink)
@@ -100,7 +133,7 @@ internal sealed class TestScratchRoot : IDisposable
             }
 
             disposed = true;
-            Directory.Delete(Path, recursive: true);
+            TestDirectoryCleanup.DeleteRecursively(Path);
         }
     }
 
@@ -141,12 +174,6 @@ internal sealed class TemporaryDirectory : IDisposable
             return;
         }
 
-        try
-        {
-            Directory.Delete(Path, recursive: true);
-        }
-        catch (DirectoryNotFoundException)
-        {
-        }
+        TestDirectoryCleanup.DeleteRecursively(Path);
     }
 }

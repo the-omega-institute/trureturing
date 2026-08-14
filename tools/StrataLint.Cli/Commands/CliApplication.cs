@@ -29,8 +29,6 @@ internal interface ICliEnvironment
 
     CommandResult CoverAtom(IReadOnlyList<string> arguments);
 
-    CommandResult CheckFidelityAttestation(IReadOnlyList<string> arguments);
-
     CommandResult AlignScribeReceipt(IReadOnlyList<string> arguments);
 
     CommandResult EmitFormalizationReceipt(IReadOnlyList<string> arguments);
@@ -46,6 +44,8 @@ internal interface ICliEnvironment
     CommandResult AppendLedger(IReadOnlyList<string> arguments);
 
     CommandResult ReattestLedger(IReadOnlyList<string> arguments);
+
+    CommandResult RecoordinateLedger(IReadOnlyList<string> arguments);
 
     CommandResult CleanLanes(IReadOnlyList<string> arguments);
 
@@ -85,8 +85,6 @@ internal static class CliApplication
                 RenderCommand(environment.AlignScribeReceipt(tail), console),
             ["check"] = static (environment, tail, console) =>
                 RenderAdmission(environment.Check(tail), console),
-            ["check-fidelity-attestation"] = static (environment, tail, console) =>
-                RenderCommand(environment.CheckFidelityAttestation(tail), console),
             ["clean-lanes"] = static (environment, tail, console) =>
                 RenderCommand(environment.CleanLanes(tail), console),
             ["coverage"] = static (environment, tail, console) =>
@@ -111,6 +109,8 @@ internal static class CliApplication
                 RenderCommand(environment.AppendLedger(tail), console),
             ["ledger-reattest"] = static (environment, tail, console) =>
                 RenderCommand(environment.ReattestLedger(tail), console),
+            ["ledger-recoordinate"] = static (environment, tail, console) =>
+                RenderCommand(environment.RecoordinateLedger(tail), console),
             ["perf-append"] = static (environment, tail, console) =>
                 RenderCommand(environment.AppendPerf(tail), console),
             ["perf-report"] = static (environment, tail, console) =>

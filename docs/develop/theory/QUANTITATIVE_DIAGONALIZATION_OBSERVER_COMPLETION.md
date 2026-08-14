@@ -15227,3 +15227,3822 @@ MUB 完整集的存在应在素数幂维数中通过具名经典接口接入；�
 6. 本节不把重复投影模型中的熵增解释为所有封闭量子宇宙的基本时间箭头。
 7. 本节不从有限维层析完成推出无限维正常状态空间的自动完成。
 8. 本节新增结论均为纸面定理；在 Lean proof term、依赖闭包、admission 与冻结收据齐备前不得标记为 `Closed`。
+
+---
+
+# 32. 追加：观察者闭包、Heisenberg 预测塔与多轴完备性
+## Observer Closure, Heisenberg Predictive Towers, and Multi-Axis Completeness
+
+### 32.0 文档地位与承重边界
+
+本节把项目中已经反复出现的观察者视角收束为同一个类型正确的结构：
+
+- `OBSERVER-QUANTUM` 中的有限读出、读出纤维、整体自逼近、可见层与隐藏层；
+- `WindowObserverDistance` 中由可访问变化量的单位球恢复观察者几何；
+- universal solenoid 中可见圆、隐藏核与路径分支；
+- `D5/S0/Diagonal` 中自坐标读取、逃逸数量、距离剖面与浓缩；
+- 本文前述有限预测完成、Koopman 闭包、Hilbert 商余塔、量子上下文、MUB 坐标塔与 RH 目标余量；
+- 项目接口理论中“可访问性、代价、命名、正锥与外部真源必须分层”的原则。
+
+核心结论是：
+
+\[
+\boxed{
+\text{观察者不是一个点，也不仅是一个投影；观察者是“商 + 闭包规则”。}
+}
+\]
+
+商决定当前哪些对象不可区分；闭包规则决定这种不可区分性在时间、记忆、上下文、完成与自指操作下是否保持。
+
+本节主要在有限维量子状态空间和一般有限/线性观察系统中给出纸面定理。它不把所有观察者结构宣称为同一个既有 Lean 定义，也不把经验完备、层析完备、上下文完备与自描述完备混为一谈。新增定理在 Lean proof term、依赖闭包和冻结收据齐备以前不得标记为 `Closed`。
+
+---
+
+## 32.1 项目观察者的统一类型
+
+设整体状态对象为 \(X\)，动力学为
+
+\[
+T:X\to X.
+\]
+
+一个最小观察界面由读出映射
+
+\[
+q_O:X\to Y_O
+\]
+
+给出。它诱导当前不可区分关系
+
+\[
+x\sim_Oy
+\iff
+q_O(x)=q_O(y),
+\]
+
+以及读出纤维
+
+\[
+\mathcal F_O(y)
+=
+q_O^{-1}(y).
+\]
+
+但仅有 \(q_O\) 还不能说明观察者如何处理未来、记忆、自指和 refinement。为此定义如下数据。
+
+### 定义 32.1（结构化观察者）
+
+一个结构化观察者记为
+
+\[
+\boxed{
+\mathfrak O
+=
+(X,T,q_O,\mathcal M_O,\mathcal A_O,\Delta_O,\mathcal R_O),
+}
+\]
+
+其中：
+
+\[
+\begin{aligned}
+X
+&=\text{整体状态或对象空间},\\
+T
+&=\text{整体动力学},\\
+q_O
+&=\text{当前有限读出},\\
+\mathcal M_O
+&=\text{观察者可保存和再次读取的账本／记忆},\\
+\mathcal A_O
+&=\text{观察者可提出的问题或可访问可观测量},\\
+\Delta_O
+&=\text{观察者允许的自应用／对角操作},\\
+\mathcal R_O
+&=\text{观察分辨率、资源或接口 refinement 规则}.
+\end{aligned}
+\]
+
+该定义不是要把不同领域强制编码成同一数据类型，而是给出必须分别类型化的七个位置。具体实例可以省略不适用的数据，但不得把省略的位置默认为“自动存在”。
+
+### 原理 32.2（商与闭包）
+
+观察者的当前商为
+
+\[
+X_O=X/{\sim_O}.
+\]
+
+若要让 \(X_O\) 成为一个封闭有效世界，还必须证明至少一个闭包条件，例如：
+
+\[
+q_OT=T_Oq_O
+\]
+
+的动力学下降，
+
+\[
+Q_O\Delta=\Delta_OP_O
+\]
+
+的对角自然性，
+
+或局部上下文在交叠处的拼接一致性。
+
+所以：
+
+\[
+\boxed{
+\text{商只回答“现在看起来是否相同”；闭包回答“这种相同能否持续成立”。}
+}
+\]
+
+---
+
+## 32.2 从有限读出纤维到算子 Hilbert 余空间
+
+现在取有限维 Hilbert 空间
+
+\[
+\mathscr H=\mathbb C^d,
+\]
+
+实 Hilbert 空间
+
+\[
+V=\operatorname{Herm}_d^0
+=
+\{X=X^*,\ \operatorname{Tr}X=0\},
+\]
+
+以及量子态的中心化坐标
+
+\[
+X_\rho=\rho-\frac Id.
+\]
+
+设观察者拥有有限 effect 族
+
+\[
+E_1,\ldots,E_r,
+\qquad
+0\le E_a\le I.
+\]
+
+当前读出为
+
+\[
+q_O(\rho)
+=
+\bigl(
+\operatorname{Tr}(\rho E_a)
+\bigr)_{a=1}^r.
+\]
+
+定义中心化 effect
+
+\[
+\widetilde E_a
+=
+E_a-\frac{\operatorname{Tr}E_a}{d}I
+\in V,
+\]
+
+可见子空间
+
+\[
+\boxed{
+V_0
+=
+\operatorname{span}_{\mathbb R}
+\{\widetilde E_1,\ldots,\widetilde E_r\},
+}
+\]
+
+以及当前余空间
+
+\[
+\boxed{
+R_0=V_0^\perp.
+}
+\]
+
+### 定理 32.3（读出纤维—Hilbert 余空间等价）
+
+对任意两个密度矩阵 \(\rho,\sigma\)，下列命题等价：
+
+\[
+q_O(\rho)=q_O(\sigma);
+\]
+
+\[
+\operatorname{Tr}
+\bigl(
+(\rho-\sigma)E_a
+\bigr)=0
+\quad
+\forall a;
+\]
+
+\[
+X_\rho-X_\sigma\in R_0;
+\]
+
+\[
+P_{V_0}X_\rho=P_{V_0}X_\sigma.
+\]
+
+#### 证明
+
+因为 \(\operatorname{Tr}(\rho-\sigma)=0\)，
+
+\[
+\operatorname{Tr}
+\bigl(
+(\rho-\sigma)E_a
+\bigr)
+=
+\operatorname{Tr}
+\bigl(
+(X_\rho-X_\sigma)\widetilde E_a
+\bigr).
+\]
+
+所以全部读出相同，当且仅当差向量与 \(V_0\) 的生成元全部正交，即属于 \(V_0^\perp\)。最后一项是正交投影核的标准刻画。 \(\square\)
+
+因此 `OBSERVER-QUANTUM` 中的读出纤维，在有限维量子模型中具有一个规范线性骨架：
+
+\[
+\boxed{
+\text{读出纤维的切向不可见方向}
+=
+\text{可访问 effect 张成空间的正交余}.
+}
+\]
+
+但物理纤维并不是整个仿射余空间，而是它与密度算子正锥的交：
+
+\[
+\boxed{
+\mathcal F_O(y)
+=
+\left(
+\frac Id+x_y+R_0
+\right)
+\cap
+\{\rho\ge0,\ \operatorname{Tr}\rho=1\}.
+}
+\]
+
+### 推论 32.4（正锥纤维的凸性）
+
+每个非空读出纤维 \(\mathcal F_O(y)\) 是紧凸集。
+
+#### 证明
+
+密度矩阵集合是有限维紧凸集，读出映射是连续仿射映射；单点原像与其交仍为闭凸集。 \(\square\)
+
+这说明项目“正锥—界面”视角是必要的：线性商给出不可见方向，正锥决定其中哪些点仍是物理状态。
+
+---
+
+## 32.3 Heisenberg 预测塔：时间如何生成缺失坐标
+
+设
+
+\[
+\Phi:
+\operatorname{Herm}_d
+\to
+\operatorname{Herm}_d
+\]
+
+为保持迹的量子通道，\(\Phi^*\) 为其 Heisenberg 对偶：
+
+\[
+\operatorname{Tr}(\Phi(\rho)A)
+=
+\operatorname{Tr}(\rho\Phi^*(A)).
+\]
+
+观察者在时刻 \(k\) 对 effect \(E_a\) 的预测概率为
+
+\[
+p_{a,k}(\rho)
+=
+\operatorname{Tr}
+\bigl(
+\Phi^k(\rho)E_a
+\bigr)
+=
+\operatorname{Tr}
+\bigl(
+\rho(\Phi^*)^k(E_a)
+\bigr).
+\]
+
+定义第 \(m\) 阶 Heisenberg 可见空间
+
+\[
+\boxed{
+V_m
+=
+\operatorname{span}_{\mathbb R}
+\left\{
+\widetilde{(\Phi^*)^k(E_a)}
+:
+1\le a\le r,\ 0\le k\le m
+\right\}
+\subseteq V,
+}
+\]
+
+其中波浪号表示去除标量迹部分。定义预测余空间
+
+\[
+\boxed{
+R_m=V_m^\perp.
+}
+\]
+
+显然：
+
+\[
+V_0\subseteq V_1\subseteq\cdots,
+\qquad
+R_0\supseteq R_1\supseteq\cdots.
+\]
+
+### 定义 32.5（有限未来不可区分）
+
+写
+
+\[
+\rho\equiv_m^O\sigma
+\]
+
+若
+
+\[
+p_{a,k}(\rho)=p_{a,k}(\sigma)
+\]
+
+对全部 \(a\) 和 \(0\le k\le m\) 成立。
+
+### 定理 32.6（量子未来词—正交余等价）
+
+对任意 \(\rho,\sigma\)，
+
+\[
+\boxed{
+\rho\equiv_m^O\sigma
+\iff
+X_\rho-X_\sigma\in R_m
+\iff
+P_{V_m}X_\rho=P_{V_m}X_\sigma.
+}
+\]
+
+#### 证明
+
+对每个 \(a,k\)，
+
+\[
+p_{a,k}(\rho)-p_{a,k}(\sigma)
+=
+\left\langle
+X_\rho-X_\sigma,
+\widetilde{(\Phi^*)^k(E_a)}
+\right\rangle_{\mathrm{HS}}.
+\]
+
+全部有限未来概率相等，当且仅当差向量与 \(V_m\) 的全部生成元正交。 \(\square\)
+
+这就是本文有限确定系统中 Nerode/未来读出完成在量子算子 Hilbert 空间中的精确对应：
+
+\[
+\boxed{
+\text{经典未来输出词}
+\longleftrightarrow
+\text{Heisenberg 轨道上的 effect 期望值}.
+}
+\]
+
+---
+
+## 32.4 “一次稳定即永久稳定”的量子观察者版本
+
+### 定理 32.7（Heisenberg 塔一次稳定即永久稳定）
+
+若某个 \(m\) 满足
+
+\[
+V_m=V_{m+1},
+\]
+
+则
+
+\[
+\boxed{
+V_{m+s}=V_m
+\quad
+\forall s\ge0.
+}
+\]
+
+等价地，
+
+\[
+R_{m+s}=R_m
+\quad
+\forall s\ge0.
+\]
+
+#### 证明
+
+\(V_{m+1}=V_m\) 意味着对每个生成元及其前 \(m\) 次 Heisenberg 像，再施加一次 \(\Phi^*\) 后仍落在 \(V_m\)。因此
+
+\[
+\Phi^*(V_m)\subseteq V_m
+\]
+
+（标量方向单独保持，不影响无迹部分）。归纳得到全部更高次像仍在 \(V_m\)，所以不再出现新方向。 \(\square\)
+
+### 推论 32.8（有限稳定深度界）
+
+令
+
+\[
+m_*
+=
+\min\{m:V_m=V_{m+1}\}.
+\]
+
+则
+
+\[
+\boxed{
+m_*
+\le
+\dim V_\infty-\dim V_0
+\le
+d^2-1-\dim V_0,
+}
+\]
+
+其中
+
+\[
+V_\infty=\bigcup_mV_m=V_{m_*}.
+\]
+
+#### 证明
+
+每次未稳定时，有限维子空间维数至少增加一；总维数不超过 \(d^2-1\)。 \(\square\)
+
+这里的“一次稳定”并不表示：
+
+- 量子态停止演化；
+- 输出概率成为常数；
+- 通道达到固定点；
+- 熵不再变化。
+
+它只表示：
+
+\[
+\boxed{
+\text{更远的时间不再产生新的线性预测坐标。}
+}
+\]
+
+因此，时间可以持续发生，而观察者的预测坐标系统已经闭合。
+
+---
+
+## 32.5 最小线性预测观察者
+
+定义最终预测不可见空间
+
+\[
+R_\infty
+=
+\bigcap_{m\ge0}R_m
+=
+V_\infty^\perp.
+\]
+
+定义预测商
+
+\[
+\boxed{
+Z_O^{\mathrm{lin}}
+=
+V/R_\infty.
+}
+\]
+
+通过 Hilbert 正交代表，它规范同构于 \(V_\infty\)。于是可取最小预测状态为
+
+\[
+\boxed{
+z_O(\rho)
+=
+P_{V_\infty}X_\rho.
+}
+\]
+
+### 定理 32.9（全部未来统计的充分性）
+
+全部未来概率
+
+\[
+\bigl(
+p_{a,k}(\rho)
+\bigr)_{a,k}
+\]
+
+只依赖于 \(z_O(\rho)\)。更具体地，
+
+\[
+z_O(\rho)=z_O(\sigma)
+\iff
+p_{a,k}(\rho)=p_{a,k}(\sigma)
+\quad
+\forall a,k\ge0.
+\]
+
+#### 证明
+
+应用定理 32.6，并令 \(m\ge m_*\)。 \(\square\)
+
+### 定理 32.10（最小性泛性质）
+
+设
+
+\[
+L:V\to W
+\]
+
+为线性摘要，并假设所有未来概率都能由 \(L(X_\rho)\) 唯一确定。则存在唯一线性映射
+
+\[
+h:\operatorname{range}L\to V_\infty
+\]
+
+使
+
+\[
+\boxed{
+P_{V_\infty}=h\circ L.
+}
+\]
+
+特别地，
+
+\[
+\boxed{
+\dim\operatorname{range}L
+\ge
+\dim V_\infty.
+}
+\]
+
+#### 证明
+
+若 \(Lx=0\)，则 \(x\) 与零向量具有相同摘要，因此全部未来读出线性泛函在 \(x\) 上为零，即 \(x\in R_\infty\)。所以
+
+\[
+\ker L\subseteq R_\infty=\ker P_{V_\infty}.
+\]
+
+由线性映射的商泛性质，\(P_{V_\infty}\) 唯一地通过 \(L\) 因子化。维数不等式随即成立。 \(\square\)
+
+所以项目中的“最小预测观察者完成”在量子有限维情形不是一条比喻，而是：
+
+\[
+\boxed{
+\text{初始 effect 空间的最小 Heisenberg 不变线性闭包}.
+}
+\]
+
+这与经典有限系统中“当前读出代数的最小 Koopman 不变闭包”完全对偶。
+
+---
+
+## 32.6 时间作为坐标生成器
+
+### 定义 32.11（时间层析完备）
+
+若
+
+\[
+V_\infty=V=\operatorname{Herm}_d^0,
+\]
+
+则称固定观察界面 \((E_a)\) 在动力学 \(\Phi\) 下时间层析完备。
+
+此时：
+
+\[
+\boxed{
+\text{一个当下不完备的测量，通过其 Heisenberg 时间轨道可以变成完备坐标系。}
+}
+\]
+
+### 定理 32.12（有限时间层析）
+
+若时间层析完备，则存在
+
+\[
+m\le d^2-1-\dim V_0
+\]
+
+使前 \(m+1\) 个时间层的概率已经唯一确定任意量子态。
+
+#### 证明
+
+由推论 32.8，\(V_m\) 在有限步达到 \(V\)。定理 32.6 此时给出状态分离。 \(\square\)
+
+### 例 32.13（一个 qubit 的固定二元测量由时间生成完整坐标）
+
+取 qubit Pauli 算子 \(X,Y,Z\)。选择酉算子 \(U\)，使共轭作用循环三个轴：
+
+\[
+U^*ZU=X,
+\qquad
+U^*XU=Y,
+\qquad
+U^*YU=Z.
+\]
+
+例如可取 Bloch 球上绕轴 \((1,1,1)/\sqrt3\) 旋转 \(2\pi/3\) 的酉提升。
+
+当前只测量
+
+\[
+E_\pm=\frac{I\pm Z}{2}.
+\]
+
+则其中心化 Heisenberg 轨道依次张成
+
+\[
+Z,\quad X,\quad Y.
+\]
+
+因此
+
+\[
+V_0=\operatorname{span}\{Z\},
+\]
+
+\[
+V_1=\operatorname{span}\{Z,X\},
+\]
+
+\[
+V_2=\operatorname{span}\{Z,X,Y\}
+=
+\operatorname{Herm}_2^0.
+\]
+
+所以：
+
+\[
+\boxed{
+\text{同一个二元测量在三个时间切片上的集合统计足以完成 qubit 层析。}
+}
+\]
+
+这里必须使用独立制备的同一初态或其他不会把测量反作用混入动力学的实验协议。它不是说在一条经历投影坍缩的单样本轨迹上，可以无扰动地同时读出 \(X,Y,Z\)。
+
+这一例子给“时间是观察者对整体的展开”一个严格而有限的版本：
+
+\[
+\boxed{
+\text{物理动力学在 Heisenberg 图像中旋转问题；观察者沿时间收集这些问题的坐标。}
+}
+\]
+
+---
+
+## 32.7 预测余质量与未来误差
+
+对状态差
+
+\[
+X=X_\rho-X_\sigma
+\]
+
+定义第 \(m\) 层预测余质量
+
+\[
+\boxed{
+r_m^O(X)
+=
+\|P_{R_m}X\|_2^2.
+}
+\]
+
+定义创新壳层
+
+\[
+\boxed{
+E_{m+1}^O
+=
+V_{m+1}\cap V_m^\perp.
+}
+\]
+
+则
+
+\[
+R_m
+=
+E_{m+1}^O\oplus R_{m+1}.
+\]
+
+### 定理 32.14（时间坐标创新递推）
+
+\[
+\boxed{
+r_m^O(X)
+=
+r_{m+1}^O(X)
++
+\|P_{E_{m+1}^O}X\|_2^2.
+}
+\]
+
+#### 证明
+
+由上述正交直和和 Pythagoras。 \(\square\)
+
+所以每多观察一个时间层，真正增加的不是“又一次重复测量”，而是：
+
+\[
+\boxed{
+(\Phi^*)^{m+1}\mathcal A_O
+\text{ 中相对于全部较早时间无法线性解释的创新方向}.
+}
+\]
+
+### 定理 32.15（未来概率误差的精确余相关）
+
+令
+
+\[
+A_{a,k}
+=
+\widetilde{(\Phi^*)^k(E_a)}.
+\]
+
+若观察者用 \(P_{V_m}X_\rho\) 代替完整状态，则对任意未来 \(a,k\)，
+
+\[
+\boxed{
+\operatorname{Tr}
+\bigl(
+(\rho-\rho_m)E_{a,k}
+\bigr)
+=
+\left\langle
+P_{R_m}X_\rho,
+P_{R_m}A_{a,k}
+\right\rangle_{\mathrm{HS}},
+}
+\]
+
+其中 \(\rho_m\) 仅表示具有中心化坐标 \(P_{V_m}X_\rho\) 的线性预测代表；它未必自身是正密度矩阵。
+
+因此：
+
+\[
+\boxed{
+|\Delta p_{a,k}^{(m)}|
+\le
+\sqrt{r_m^O(X_\rho)}
+\,
+\|P_{R_m}A_{a,k}\|_2.
+}
+\]
+
+#### 证明
+
+\(X_\rho-P_{V_m}X_\rho=P_{R_m}X_\rho\)。再将 \(A_{a,k}\) 分解为 \(V_m\) 与 \(R_m\) 两部分；前者与状态余向量正交。最后应用 Cauchy–Schwarz。 \(\square\)
+
+当 \(k\le m\) 时，
+
+\[
+A_{a,k}\in V_m,
+\]
+
+故误差严格为零。对于更远未来，误差由“状态余量”和“未来问题尚未进入当前坐标塔的余量”共同决定。
+
+这给出一个双余量原则：
+
+\[
+\boxed{
+\text{预测失败}
+=
+\text{隐藏状态方向}
+\times
+\text{隐藏未来问题方向}.
+}
+\]
+
+---
+
+## 32.8 观察者几何：可访问变化量决定距离
+
+项目 `WindowObserverDistance` 的核心结构可以抽象如下。设观察者可访问一族实可观测量 \(\mathcal A_O^{\mathrm{sa}}\)，并给定变化半范数
+
+\[
+L_O(A)\in[0,\infty].
+\]
+
+定义观察者对偶距离
+
+\[
+\boxed{
+d_O(\rho,\sigma)
+=
+\sup
+\left\{
+|\operatorname{Tr}((\rho-\sigma)A)|:
+A\in\mathcal A_O^{\mathrm{sa}},
+\ L_O(A)\le1
+\right\}.
+}
+\]
+
+有限循环窗口中的仓库定理说明，在其特定一步更新缺陷半范数下，该对偶距离精确恢复循环图距离。该结果提示：
+
+\[
+\boxed{
+\text{几何不是只由载体集合给定，而由观察者允许哪些函数以及怎样计价其变化共同给定。}
+}
+\]
+
+### 定理 32.16（观察 refinement 的距离单调性）
+
+若
+
+\[
+\mathcal A_m\subseteq\mathcal A_{m+1}
+\]
+
+且 \(L_{m+1}\) 在 \(\mathcal A_m\) 上限制为 \(L_m\)，则
+
+\[
+\boxed{
+d_m(\rho,\sigma)
+\le
+d_{m+1}(\rho,\sigma).
+}
+\]
+
+#### 证明
+
+第 \(m\) 层 supremum 的可行集合包含于第 \(m+1\) 层。 \(\square\)
+
+### 推论 32.17（零距离纤维）
+
+若 \(L_m\) 的单位球线性张成 \(\mathcal A_m^{\mathrm{sa}}\)，则
+
+\[
+d_m(\rho,\sigma)=0
+\]
+
+当且仅当 \(\rho,\sigma\) 在 \(\mathcal A_m\) 上给出相同状态限制。
+
+因此读出纤维也可以被写成观察者伪度量的零距离类：
+
+\[
+\boxed{
+\mathcal F_O(\rho)
+=
+\{\sigma:d_O(\rho,\sigma)=0\}.
+}
+\]
+
+若完成代数能够分离全部状态，则极限伪度量成为真正度量。若仍有隐藏核，则不同整体状态可在观察者几何中距离为零。
+
+---
+
+## 32.9 可见圆、隐藏核与扇区完备性
+
+universal solenoid 的项目结构提供了一个重要反例：观察者即使对某个可见相位坐标完全精确，也可能仍然无法分辨全局路径扇区。
+
+设
+
+\[
+\pi:\Sigma_\infty\to\mathbb T
+\]
+
+为可见圆投影，隐藏核为
+
+\[
+K_\infty=\ker\pi.
+\]
+
+一个只通过 \(\pi\) 读取的观察者满足：
+
+\[
+q_O(x)=q_O(x+k)
+\qquad
+(k\in K_\infty).
+\]
+
+所以其当前不可见核至少包含整个隐藏纤维。仓库已有路径轨道分类说明，solenoid 中的路径连通关系由实流轨道刻画，隐藏核偏移参与路径分支标签。
+
+由此必须区分：
+
+\[
+\boxed{
+\begin{aligned}
+\text{点分离完备}
+&=\text{能否区分不同整体点},\\
+\text{动力预测完备}
+&=\text{能否区分未来读出不同的状态},\\
+\text{扇区完备}
+&=\text{能否分辨路径分支／隐藏核标签}.
+\end{aligned}
+}
+\]
+
+它们互不自动推出。
+
+一个观察者可以对可见圆上的位置拥有精确几何，却对隐藏核上的两个点给出零距离；也可以通过逐 prime-adic refinement 最终分离点，但仍需另行证明这些坐标如何恢复路径、流轨道或物理扇区结构。
+
+因此：
+
+\[
+\boxed{
+\text{逆极限点完成}
+\neq
+\text{拓扑路径完成}
+\neq
+\text{动力扇区完成}.
+}
+\]
+
+---
+
+## 32.10 经验完备不推出自描述完备
+
+假设一个量子观察者满足
+
+\[
+V_\infty=V.
+\]
+
+它可以从全部未来统计唯一重构当前密度矩阵。这叫经验／层析完备。
+
+现在另给一个同层自模型评价表
+
+\[
+E:A\times A\to Y
+\]
+
+与无不动点扭曲
+
+\[
+\tau:Y\to Y.
+\]
+
+对角对象为
+
+\[
+\Delta_\tau(E)(a)
+=
+\tau(E(a,a)).
+\]
+
+Cantor–Lawvere 型论证仍可使该对角对象逃出当前行像。层析完备只说明观察者能识别系统状态，不说明它能够在同一类型中列尽所有关于自身的评价函数。
+
+### 命题 32.18（经验完备与反身完备分离）
+
+存在观察者满足：
+
+\[
+\boxed{
+\text{当前状态完全可重构}
+}
+\]
+
+但不满足：
+
+\[
+\boxed{
+\text{所有同类型自评价均可由其内部名单捕获}.
+}
+\]
+
+#### 证明
+
+取任意有限维且信息完备的量子层析界面，故状态可重构。独立地，若存在一个声称枚举 \(Y^A\) 全部函数的同层评价名单，则对角扭曲构造逃逸函数。两种完备性涉及不同类型，前者不能消除后者的对角障碍。 \(\square\)
+
+所以：
+
+\[
+\boxed{
+\text{知道自己的完整状态}
+\neq
+\text{拥有关于自己的一切可能真命题或模型}.
+}
+\]
+
+这是项目观察者理论与普通量子层析之间最独特的接缝之一。
+
+---
+
+## 32.11 六个既有反例迫使观察者完备性成为向量
+
+以下结构已在本文不同章节出现。
+
+### 反例 A：预测闭合但不忠实
+
+常值读出对未来已经完全闭合，其最小预测状态只有一个点；但它不能区分任何微观状态。
+
+### 反例 B：层析完备但自描述不完备
+
+定理 32.18。
+
+### 反例 C：最大锐利不兼容但粗粒化顺序缺陷为零
+
+MUB 投影最大不兼容，而对应 dephasing 通道满足
+
+\[
+\mathbb E_{\mathcal B}\mathbb E_{\mathcal C}
+=
+\mathbb E_{\mathcal C}\mathbb E_{\mathcal B}.
+\]
+
+### 反例 D：目标完成但空间未完成
+
+Nyman–Beurling 塔中 RH 只要求
+
+\[
+P_{R_\infty}\chi=0,
+\]
+
+不要求
+
+\[
+R_\infty=0.
+\]
+
+### 反例 E：有限层逐点逼近但非统一完备
+
+递增有限维投影可满足
+
+\[
+P_nx\to x
+\quad
+\forall x,
+\]
+
+但每个真有限阶段仍有
+
+\[
+\|I-P_n\|=1.
+\]
+
+### 反例 F：可见坐标精确但隐藏扇区未分辨
+
+solenoid 可见圆读出不能自动恢复隐藏核分支。
+
+因此不存在一个不加类型说明的标量“观察者完整度”。
+
+### 定义 32.19（观察者多轴审计）
+
+定义观察者闭合向量
+
+\[
+\boxed{
+\mathbf C(\mathfrak O)
+=
+(
+C_{\mathrm{sep}},
+C_{\mathrm{pred}},
+C_{\mathrm{dyn}},
+C_{\mathrm{tom}},
+C_{\mathrm{ctx}},
+C_{\mathrm{sec}},
+C_{\mathrm{ref}},
+C_{\mathrm{lim}}
+).
+}
+\]
+
+各分量分别测量：
+
+\[
+\begin{aligned}
+C_{\mathrm{sep}}
+&=\text{当前状态分离能力},\\
+C_{\mathrm{pred}}
+&=\text{未来读出的预测闭合},\\
+C_{\mathrm{dyn}}
+&=\text{整体动力学能否下降到观察商},\\
+C_{\mathrm{tom}}
+&=\text{指定状态族的层析完备},\\
+C_{\mathrm{ctx}}
+&=\text{局部经典图能否全局拼接},\\
+C_{\mathrm{sec}}
+&=\text{路径／隐藏核／超选择扇区分辨},\\
+C_{\mathrm{ref}}
+&=\text{自应用评价的反身闭合},\\
+C_{\mathrm{lim}}
+&=\text{全部兼容有限视图是否由整体实现}.
+\end{aligned}
+\]
+
+接口价格、计算资源和记忆容量另作为代价向量
+
+\[
+\mathbf P(\mathfrak O)
+\]
+
+记录，不应伪装成数学完备性的一个分量。
+
+---
+
+## 32.12 观察 refinement 的双层自然性缺陷分解
+
+设
+
+\[
+V_m\subseteq V_n\subseteq V,
+\qquad
+m\le n,
+\]
+
+正交投影分别为 \(P_m,P_n\)。设
+
+\[
+F:V\to V
+\]
+
+为 \(L\)-Lipschitz 操作，粗层模型为
+
+\[
+F_m=P_mF|_{V_m}.
+\]
+
+定义第 \(m\) 层自然性缺陷
+
+\[
+\partial_mF(X)
+=
+\|P_mF(X)-F_m(P_mX)\|.
+\]
+
+再定义从细层 \(n\) 向粗层 \(m\) 的内层模型缺陷
+
+\[
+\boxed{
+\partial_{m\leftarrow n}F(Y)
+=
+\|P_mF(Y)-F_m(P_mY)\|,
+\qquad
+Y\in V_n.
+}
+\]
+
+### 定理 32.20（尾余量—跨层缺陷分解）
+
+\[
+\boxed{
+\partial_mF(X)
+\le
+L\|(I-P_n)X\|
++
+\partial_{m\leftarrow n}F(P_nX).
+}
+\]
+
+#### 证明
+
+插入中间项 \(P_mF(P_nX)\)：
+
+\[
+\begin{aligned}
+\partial_mF(X)
+&\le
+\|P_m(F(X)-F(P_nX))\|\\
+&\quad+
+\|P_mF(P_nX)-F_m(P_mX)\|.
+\end{aligned}
+\]
+
+第一项不超过 \(L\|(I-P_n)X\|\)。又因 \(P_mP_n=P_m\)，第二项正是定义中的跨层缺陷。 \(\square\)
+
+这条式子把观察误差分成两种不同来源：
+
+\[
+\boxed{
+\text{完整世界到细观察仍未捕获的尾余量}
+}
+\]
+
+与
+
+\[
+\boxed{
+\text{细观察已经捕获的信息在粗层有效模型中仍不能自然下降的失配}.
+}
+\]
+
+仅仅扩大窗口只能自动减小第一项；第二项必须通过模型自然性另行控制。
+
+---
+
+## 32.13 时间、记忆与熵的严格分工
+
+Heisenberg 塔的 refinement 指标 \(m\) 表示未来坐标深度。它与物理时间步 \(k\) 有联系，因为生成元来自 \((\Phi^*)^kE_a\)，但二者仍扮演不同角色：
+
+\[
+k=\text{被预测系统的动力时间},
+\]
+
+\[
+m=\text{观察者已经纳入模型的最大时间深度}.
+\]
+
+稳定深度 \(m_*\) 衡量的是最小线性预测记忆，而不是熵增速度。
+
+定义线性预测复杂度
+
+\[
+\boxed{
+C_{\mathrm{lin}}(\mathfrak O)
+=
+\dim V_\infty.
+}
+\]
+
+定义额外闭合成本
+
+\[
+\boxed{
+C_{\mathrm{add}}(\mathfrak O)
+=
+\dim V_\infty-\dim V_0.
+}
+\]
+
+它们是维数资源，而不是 Shannon 或 von Neumann 熵。
+
+只有在给定状态先验、测量记录过程或重复粗粒化动力学以后，才产生概率熵。特别地，对过程
+
+\[
+\rho_{n+1}
+=
+\mathbb E_{\mathcal B}
+(U\rho_nU^*)
+\]
+
+本文已经证明每轮熵增等于该轮被删除的相对熵相干。该结论来自不可逆 dephasing，而不是来自 Heisenberg 坐标塔本身。
+
+因此：
+
+\[
+\boxed{
+\text{时间生成新坐标}
+\not\Rightarrow
+\text{时间必然产生熵}.
+}
+\]
+
+以及：
+
+\[
+\boxed{
+\text{预测闭合深度}
+\not\Rightarrow
+\text{物理退化时间}.
+}
+\]
+
+---
+
+## 32.14 算术观察者与目标相对完备
+
+有限 prime ledger、有限零点窗口、Li 测试阶数和 Nyman–Beurling 生成空间都可被视为不同的算术观察界面，但它们的“完备”目标不同。
+
+例如 Nyman–Beurling 观察塔只需对目标
+
+\[
+\chi=\mathbf1_{(0,1)}
+\]
+
+满足
+
+\[
+P_{R_\infty}\chi=0
+\]
+
+即可等价于 RH；整个 \(L^2\) 余空间可以非零。
+
+这给出：
+
+\[
+\boxed{
+\text{目标相对完备}
+\neq
+\text{全空间层析完备}.
+}
+\]
+
+类似地，有限零点窗口可以对窗口内零点位置完全准确，却对窗口外是否存在离线零点没有统一控制；Li 高阶测试可以放大某一离线轨道，却仍需控制其余全部轨道的全局余项。
+
+所以项目的算术视角再次确认：
+
+\[
+\boxed{
+\text{观察者必须声明“对什么命题、什么目标、什么范数完备”。}
+}
+\]
+
+未注明目标的“观察者已经看见整体”不是数学命题。
+
+---
+
+## 32.15 项目独特视角的统一闭合图
+
+本节可以把项目各分支重新排列为同一个闭合图：
+
+\[
+\boxed{
+\begin{array}{c}
+\text{整体状态／对象 }X\\
+\downarrow\ q_O\\
+\text{有限读出与纤维}\\
+\downarrow\ \text{Hilbert／代数表示}\\
+\text{可见子空间 }V_0
+\oplus
+\text{余空间 }R_0\\
+\downarrow\ \Phi^*\text{ 或 refinement}\\
+\text{预测／坐标闭包 }V_\infty\\
+\downarrow\\
+\text{最小有效观察状态 }X/R_\infty\\
+\downarrow\ \Delta\\
+\text{自描述闭合测试与对角逃逸}\\
+\downarrow\ \varprojlim\\
+\text{全部相对视图的可实现完成}
+\end{array}
+}
+\]
+
+每一条箭头都可能失败，并对应不同缺陷：
+
+\[
+\boxed{
+\begin{aligned}
+\ker q_O
+&=\text{当前不可见差异},\\
+R_\infty
+&=\text{全部未来仍不可见差异},\\
+\partial_O T
+&=\text{动力学下降缺陷},\\
+\partial_O\Delta
+&=\text{自指自然性缺陷},\\
+\mathcal G_{\mathrm{ctx}}
+&=\text{上下文拼接缺陷},\\
+K_{\mathrm{sec}}
+&=\text{隐藏扇区核},\\
+\mathcal C_{\mathrm{real}}
+&=\text{兼容但不可实现的极限族}.
+\end{aligned}
+}
+\]
+
+这使“观察者”不再是额外放入系统中的神秘主体，而成为一组可审计的数学接口。
+
+---
+
+## 32.16 最强的新解释：观察者是相对同一性的稳定器
+
+单一读出 \(q_O\) 只定义瞬时同一性：
+
+\[
+x\sim_Oy.
+\]
+
+预测闭包把它稳定到全部未来：
+
+\[
+x\sim_O^\infty y
+\iff
+q_OT^k(x)=q_OT^k(y)
+\quad
+\forall k.
+\]
+
+上下文闭包要求不同局部读出在交叠处兼容。
+
+极限闭包要求每个相容局部族可由整体实现。
+
+反身闭包则要求观察者关于自身的描述操作也能下降到该商；对角化说明这一步可能必然失败。
+
+因此最凝练的项目式定义是：
+
+\[
+\boxed{
+\text{观察者}
+=
+\text{选择相对同一性，并尝试让这种同一性在时间、上下文、完成和自指下稳定。}
+}
+\]
+
+由此：
+
+\[
+\boxed{
+\text{相对性}
+=
+\text{不同观察者选择不同同一性关系};
+}
+\]
+
+\[
+\boxed{
+\text{时间}
+=
+\text{同一性关系在动力学下接受稳定性检验};
+}
+\]
+
+\[
+\boxed{
+\text{概率}
+=
+\text{状态对观察者可访问事件的权重};
+}
+\]
+
+\[
+\boxed{
+\text{熵}
+=
+\text{观察商删除差异后的统计代价};
+}
+\]
+
+\[
+\boxed{
+\text{对角化}
+=
+\text{同一层自描述不能完全稳定的证书};
+}
+\]
+
+\[
+\boxed{
+\infty
+=
+\text{任何有限稳定器都可能留有余核，但相容 refinement 可形成完成}.
+}
+\]
+
+这比“观察者看到世界的一部分”更强：观察者不是被动截取一幅画面，而是在定义什么可以被当作同一个对象，并承担该定义在未来是否自洽的全部代价。
+
+---
+
+## 32.17 建议形式化模块
+
+建议按以下顺序进入 Lean。
+
+1. `EffectReadoutFiberOrthogonal`
+   \[
+   q(\rho)=q(\sigma)
+   \iff
+   X_\rho-X_\sigma\in V_0^\perp.
+   \]
+
+2. `HeisenbergObservableTower`
+   定义 \(V_m\)、\(R_m\) 及其单调性。
+
+3. `QuantumFutureEquivalence`
+   \[
+   \rho\equiv_m\sigma
+   \iff
+   X_\rho-X_\sigma\in R_m.
+   \]
+
+4. `HeisenbergTowerStableForever`
+   \[
+   V_m=V_{m+1}
+   \Rightarrow
+   \forall s,\ V_{m+s}=V_m.
+   \]
+
+5. `FiniteQuantumObserverDepth`
+   \[
+   m_*\le d^2-1-\dim V_0.
+   \]
+
+6. `MinimalLinearPredictiveObserver`
+   证明 \(P_{V_\infty}\) 的因子化泛性质。
+
+7. `QubitTemporalTomographyCycle`
+   形式化 Pauli 三轴循环例。
+
+8. `PredictiveResidualPythagoras`
+   \[
+   r_m=r_{m+1}+\|P_{E_{m+1}}X\|^2.
+   \]
+
+9. `FutureProbabilityResidualBound`
+   \[
+   |\Delta p|
+   \le
+   \|P_{R_m}X\|_2
+   \|P_{R_m}A\|_2.
+   \]
+
+10. `ObserverDualMetricRefinement`
+    证明可观测代数扩张下距离单调。
+
+11. `TailTransferDefect`
+    \[
+    \partial_mF(X)
+    \le
+    L\|(I-P_n)X\|
+    +
+    \partial_{m\leftarrow n}F(P_nX).
+    \]
+
+12. `TomographicNotReflexive`
+    将信息完备读出与 Lawvere 型对角逃逸作为不同类型的非蕴含命题陈述。
+
+现有 `WindowObserverDistance`、finite predictive completion、MUB tower、solenoid path-orbit classification 与 diagonal escape-count 模块应作为实例或依赖锚点，而不是在新模块中复制证明。
+
+---
+
+## 32.18 严格非主张
+
+1. 本节不声称仓库中所有名为 observer 的结构已经共享同一个 Lean 类型。
+2. 本节不把读出纤维的线性余空间与完整物理纤维等同；后者还受正锥约束。
+3. 本节不把时间层析中的 refinement 深度等同于物理时间或热力学时间。
+4. 本节不声称单次侵入式测量轨迹可以无扰动完成 Heisenberg 层析。
+5. 本节不把预测闭合等同于微观状态忠实性。
+6. 本节不把层析完备等同于自描述完备。
+7. 本节不把点分离、路径分支分离和超选择扇区分离视为同一个条件。
+8. 本节不把可见坐标的 Hilbert–Schmidt 余质量直接等同于 Shannon 熵、von Neumann 熵或操作性资源单调量。
+9. 本节不把有限观察深度界推广为无限维系统中的统一有限界。
+10. 本节新增结论均为纸面定理；在 Lean 内核验证以前不得标记为 `Closed`。
+
+## 32.19 最终结论
+
+项目中“观察者”的全部独特视角可以压缩成三个连续升级的对象：
+
+\[
+\boxed{
+\text{读出观察者}
+=
+\text{当前商 }X/\ker q;
+}
+\]
+
+\[
+\boxed{
+\text{预测观察者}
+=
+\text{该商在动力学下的最小不变闭包};
+}
+\]
+
+\[
+\boxed{
+\text{反身观察者}
+=
+\text{预测闭包再接受自指、上下文和极限实现检验}.
+}
+\]
+
+在有限维量子系统中，预测观察者由 Heisenberg effect 轨道精确给出：
+
+\[
+\boxed{
+V_\infty
+=
+\operatorname{span}
+\{(\Phi^*)^k\widetilde E_a:a,k\}.
+}
+\]
+
+它的正交余：
+
+\[
+\boxed{
+R_\infty=V_\infty^\perp
+}
+\]
+
+是所有未来测量仍无法看见的差异。
+
+时间可以通过 \(\Phi^*\) 生成新坐标；概率是状态在这些坐标上的评价；预测误差由状态余量与未来问题余量的内积控制；观察者几何由允许的可观测变化量决定；solenoid 隐藏核提醒我们点、路径和扇区完成不同；对角化则说明，即使经验状态已经完全可见，同层自描述仍可能逃逸。
+
+因此本节的中心公式不是一个新的宇宙口号，而是一组可检验对象：
+
+\[
+\boxed{
+\begin{aligned}
+V_m
+&=
+\operatorname{span}\{(\Phi^*)^k\widetilde E_a:k\le m\},\\
+R_m
+&=
+V_m^\perp,\\
+\rho\equiv_m^O\sigma
+&\iff
+X_\rho-X_\sigma\in R_m,\\
+V_m=V_{m+1}
+&\Rightarrow
+V_{m+s}=V_m,\\
+|\Delta p_{a,k}^{(m)}|
+&\le
+\|P_{R_m}X_\rho\|_2
+\|P_{R_m}A_{a,k}\|_2.
+\end{aligned}
+}
+\]
+
+它们给出一个新的统一解释：
+
+\[
+\boxed{
+\text{观察不是从整体中静态切下一块；观察是沿时间生成坐标、收缩余核，并检验所得相对同一性能否闭合。}
+}
+\]
+
+---
+
+## 32.20 观察者闭包算子与动力学下降的最小修复
+
+令 \(V\) 为有限维实 Hilbert 空间，\(K:V\to V\) 为 Heisenberg/Koopman 线性算子，\(W\subseteq V\) 为当前可见可观测子空间。定义
+
+\[
+\boxed{
+\operatorname{Cl}_K(W)
+=
+\operatorname{span}
+\{K^n w:n\ge0,\ w\in W\}.
+}
+\]
+
+有限维时无需另取闭包；无限维时使用 Hilbert 闭包。
+
+### 定理 32.21（观察者闭包是最小不变闭包）
+
+\(\operatorname{Cl}_K\) 满足：
+
+\[
+\boxed{
+W\subseteq\operatorname{Cl}_K(W)
+}
+\]
+
+（扩张性），
+
+\[
+\boxed{
+W_1\subseteq W_2
+\Longrightarrow
+\operatorname{Cl}_K(W_1)
+\subseteq
+\operatorname{Cl}_K(W_2)
+}
+\]
+
+（单调性），
+
+\[
+\boxed{
+\operatorname{Cl}_K(
+\operatorname{Cl}_K(W)
+)
+=
+\operatorname{Cl}_K(W)
+}
+\]
+
+（幂等性），并且它是包含 \(W\) 的最小 \(K\)-不变子空间。
+
+#### 证明
+
+前三项由幂次轨道张成定义直接得到。若 \(U\supseteq W\) 且 \(K(U)\subseteq U\)，则归纳有 \(K^nW\subseteq U\)，故 \(\operatorname{Cl}_K(W)\subseteq U\)。 \(\square\)
+
+因此，预测观察者并不是任意增加记忆，而是对当前问题空间施加一个规范闭包算子。
+
+在量子情形取
+
+\[
+K(A)=
+\widetilde{\Phi^*(A)}.
+\]
+
+则
+
+\[
+V_\infty=\operatorname{Cl}_K(V_0).
+\]
+
+### 定理 32.22（最终余核是动力学同余）
+
+令 Schrödinger 侧线性演化为 \(\Phi\)，并令
+
+\[
+R_\infty=V_\infty^\perp.
+\]
+
+则
+
+\[
+\boxed{
+\Phi(R_\infty)\subseteq R_\infty.
+}
+\]
+
+因此动力学唯一下降到商
+
+\[
+V/R_\infty.
+\]
+
+#### 证明
+
+若 \(x\in R_\infty\)，对任意 \(A\in V_\infty\)，
+
+\[
+\langle\Phi x,A\rangle
+=
+\langle x,\Phi^*A\rangle.
+\]
+
+由于 \(V_\infty\) 对中心化 Heisenberg 演化不变，\(\Phi^*A\) 的无迹部分仍属于 \(V_\infty\)；而 \(x\) 无迹，标量部分不贡献配对。所以右侧为零，故 \(\Phi x\in V_\infty^\perp\)。商映射的良定义性随即成立。 \(\square\)
+
+### 推论 32.23（预测闭包是动力学自然性的最小修复）
+
+当前读出空间 \(V_0\) 未必允许封闭有效动力学；但其观察闭包
+
+\[
+V_\infty=\operatorname{Cl}_{\Phi^*}(V_0)
+\]
+
+使最终不可见关系成为动力学同余。任何包含 \(V_0\) 且允许全部未来读出封闭演化的可观测子空间，都必须包含 \(V_\infty\)。
+
+所以：
+
+\[
+\boxed{
+\text{观察者闭包}
+=
+\text{把瞬时商修复成动力学商所需的最小坐标扩张}.
+}
+\]
+
+这给项目所有观察者视角一个更统一的内核：
+
+\[
+\boxed{
+\text{观察者}
+=
+\text{初始问题空间}
++
+\text{使其在目标操作下稳定的最小闭包}.
+}
+\]
+
+对于时间，目标操作是 \(\Phi^*\)；对于自指，目标操作是 \(\Delta\)；对于上下文，目标操作是限制与拼接；对于完成，目标操作是全部 bonding maps；对于算术账本，目标操作是 prime/zero/test refinement。不同领域共享的是“闭包问题”的形状，而不是同一个未经证明的对象同一性。
+
+---
+
+# 33. 追加：观察者叶层几何、记录作用、混合时间与三重闭包
+## Observer Leaf Geometry, Record Action, Hybrid Time, and the Three Closures
+
+### 33.0 研究位置、仓库锚点与严格边界
+
+第 32 节把观察者收紧为“当前商 + 使该商在目标操作下稳定的最小闭包”。本节继续结合项目已经形式化的独特结构：
+
+- `D5/S3/Quantum/ObserverAlgebra.lean` 与 `ObserverCommutator.lean` 中的读出—更新协变和精确交换子公式；
+- `D5/S3/Observer/ObserverMetric.lean`、`MetricGeometry/OrbitConnesDistance.lean`、`WindowObserverDistance.lean` 与 `VisiblePhaseInfinity.lean` 中的更新缺陷半范数、有限叶内距离和跨可见相位无穷距离；
+- `HiddenFlow/ContinuousRigidity.lean`、`DiscreteRigidity.lean`、`StreamlineExistence.lean` 中的可见连续流、隐藏素数地址与离散跳变阻碍；
+- `Conditioning.lean`、`BornReduction.lean`、`MeasurementMarginal.lean` 中的 Born 权重、条件分支、未读测量和环境边缘；
+- `ObserverMemory/MultiCopyErasure.lean`、`LedgerEnvironmentBridge.lean`、`JointCoherentReversal.lean` 中的多记录乘法、退相干与联合反演；
+- `FiniteReadoutKernel.lean`、`TwoTimeKnowledge.lean`、`FiniteForgettingCertificate.lean` 中的读出商、知识因子化、遗忘和追加式审计；
+- `WindowRegister.lean`、`MatrixUnitCertificate.lean`、`WindowAlgebra/WindowGeneration.lean`、`WindowCharacter.lean` 中的 Weyl 对、全矩阵代数生成、标量交换子和无角色定理；
+- `WindowRegisterCRT.lean` 与 `PrimePowerTensorTower.lean` 中的 CRT 地址分解和素数幂张量塔；
+- `RecordCorrelationMonogamy.lean` 与 `ClassicalAnswerTableExclusion.lean` 中的同一记录指针互补约束及经典答案表双重排除。
+
+这些结果共同指向一个比“观察者是投影”更强的结构：
+
+\[
+\boxed{
+\text{观察者是一个带有读出、更新、记忆、代价和闭包规则的相对状态机。}
+}
+\]
+
+本节的候选新贡献不是重新陈述交叉积、Connes 距离、量子测量或 CRT，而是把下列此前分居不同模块的对象放入同一组定理：
+
+\[
+\boxed{
+\text{读出交换子}
+\longleftrightarrow
+\text{观察者 Lipschitz 半范数}
+\longleftrightarrow
+\text{叶层扩展距离};
+}
+\]
+
+\[
+\boxed{
+\text{环境记录重叠乘积}
+\longleftrightarrow
+\text{可加记录作用}
+\longleftrightarrow
+\text{相干生存率与可逆性门槛};
+}
+\]
+
+\[
+\boxed{
+\text{有限读出核}
+\longleftrightarrow
+\text{知识代数}
+\longleftrightarrow
+\text{遗忘余量};
+}
+\]
+
+\[
+\boxed{
+\text{CRT 素数幂分解}
+\longleftrightarrow
+\text{局部观察扇区}
+\longleftrightarrow
+\text{高阶关联余空间}.
+}
+\]
+
+本节不主张：所有物理时间都是隐藏地址跳数；记录作用就是 von Neumann 熵；无穷观察距离就是物理空间距离；全矩阵代数生成无条件推出自然界量子力学；素数幂张量分解自动解决一般维数 MUB；相干恢复可以在丢弃环境以后无条件完成。新增定理仍为纸面推导，未经 Lean proof term、依赖闭包、admission 和冻结收据不得标记为 `Closed`。
+
+---
+
+## 33.1 读出—更新交换子就是观察者的一阶导数
+
+设地址集合为 \(I\)，寄存器 Hilbert 空间为
+
+\[
+\mathscr H_I=\ell^2(I),
+\]
+
+可逆更新为置换
+
+\[
+\tau:I\to I.
+\]
+
+定义更新酉算子和读出乘法算子：
+
+\[
+(U_\tau\psi)(i)=\psi(\tau^{-1}i),
+\]
+
+\[
+(M_f\psi)(i)=f(i)\psi(i).
+\]
+
+定义更新差分：
+
+\[
+\boxed{
+\delta_\tau f
+=f\circ\tau^{-1}-f.
+}
+\]
+
+仓库已经逐坐标证明：
+
+\[
+(U_\tau M_f-M_fU_\tau)\psi(i)
+=
+\delta_\tau f(i)\psi(\tau^{-1}i).
+\]
+
+### 定理 33.1（交换子因子化）
+
+有精确算子恒等式：
+
+\[
+\boxed{
+[U_\tau,M_f]
+=M_{\delta_\tau f}U_\tau.
+}
+\]
+
+若 \(I\) 有限，或 \(f\) 有界，则：
+
+\[
+\boxed{
+\|[U_\tau,M_f]\|_{\mathrm{op}}
+=
+\|\delta_\tau f\|_\infty.
+}
+\]
+
+#### 证明
+
+第一式是仓库交换子公式的算子写法。第二式利用 \(U_\tau\) 酉以及乘法算子范数公式：
+
+\[
+\|M_gU_\tau\|
+=
+\|M_g\|
+=
+\|g\|_\infty.
+\]
+
+\(\square\)
+
+因此项目中的
+
+\[
+\operatorname{perturbationSeminorm}(\tau,f)
+=
+\sup_i|f(\tau^{-1}i)-f(i)|
+\]
+
+不是任意选取的扰动量，而是读出与更新交换子的算子范数：
+
+\[
+\boxed{
+L_\tau(f)
+:=
+\|[U_\tau,M_f]\|
+=
+\|\delta_\tau f\|_\infty.
+}
+\]
+
+它是观察者相对于一步更新的“一阶导数”。
+
+### 推论 33.2（零导数、更新不变量与操作中心）
+
+\[
+\boxed{
+L_\tau(f)=0
+\iff
+f\circ\tau=f.
+}
+\]
+
+所以 \(L_\tau\) 的核不是“无意义函数”，而是更新无法改变的观测量代数：
+
+\[
+\boxed{
+\ker L_\tau
+=
+\operatorname{Fix}(\tau^*).
+}
+\]
+
+在单个非空循环窗口上，仓库已经证明该核只有常数；因此该窗口没有非平凡的零代价横向观测量。
+
+---
+
+## 33.2 一般置换的观察者距离是叶内图距离、叶间无穷距离
+
+定义扩展观察者距离：
+
+\[
+\boxed{
+ d_\tau(x,y)
+=
+\sup\left\{
+|f(x)-f(y)|:
+L_\tau(f)\le1
+\right\}.
+}
+\]
+
+在无限集合上，为避免无关的增长病态，可以把候选限制为有界函数；以下叶间结论仍然成立，因为轨道指示函数有界。
+
+### 定理 33.3（不变量分离导致无穷距离）
+
+若存在
+
+\[
+f\in\ker L_\tau
+\]
+
+满足
+
+\[
+f(x)\ne f(y),
+\]
+
+则
+
+\[
+\boxed{
+ d_\tau(x,y)=+\infty.
+}
+\]
+
+#### 证明
+
+对任意 \(c>0\)，有
+
+\[
+L_\tau(cf)=cL_\tau(f)=0\le1,
+\]
+
+而
+
+\[
+|cf(x)-cf(y)|
+=c|f(x)-f(y)|.
+\]
+
+令 \(c\to\infty\)。\(\square\)
+
+因此有限距离至少要求两个状态在全部零缺陷观测量上给出相同值。
+
+### 定义 33.4（更新叶）
+
+置换 \(\tau\) 将 \(I\) 分解为轨道：
+
+\[
+I=\bigsqcup_{\lambda\in\Lambda}\mathcal O_\lambda.
+\]
+
+称每个 \(\mathcal O_\lambda\) 为一个更新叶。
+
+### 定理 33.5（置换观察者距离完全分类）
+
+设 \(I\) 为离散集合，\(\tau\) 为置换。
+
+1. 若 \(x,y\) 位于不同更新叶，则
+   \[
+   \boxed{
+   d_\tau(x,y)=+\infty.
+   }
+   \]
+2. 若 \(x,y\) 位于同一有限循环叶 \(C_m\)，则
+   \[
+   \boxed{
+   d_\tau(x,y)
+   =
+   d_{C_m}(x,y),
+   }
+   \]
+   右侧是循环图上的最短路距离。
+3. 若 \(x,y\) 位于同一自由整数叶，并对候选观测量要求有界，则
+   \[
+   \boxed{
+   d_\tau(x,y)=|n_x-n_y|,
+   }
+   \]
+   其中 \(n_x,n_y\in\mathbb Z\) 是相对于任一叶原点的整数坐标。
+
+#### 证明
+
+不同叶时，取某一叶的指示函数。它沿 \(\tau\) 不变，且分离 \(x,y\)，应用定理 33.3。
+
+同一有限循环中，\(L_\tau(f)\le1\) 表示每条相邻边上的函数差至多一。沿最短路求和给出
+
+\[
+|f(x)-f(y)|
+\le d_{C_m}(x,y).
+\]
+
+取截断距离函数
+
+\[
+f_z=d_{C_m}(x,z)
+\]
+
+即可达到上界。自由整数叶使用仓库已经形式化的 clipped distance observable；上界由逐步三角不等式，下界由截断距离函数达到。\(\square\)
+
+因此观察者空间不是普通连通度量空间，而是扩展度量叶层：
+
+\[
+\boxed{
+\text{叶内距离有限并由更新步数决定；叶间距离由不变量放大为无穷。}
+}
+\]
+
+这把仓库中两个看似相反的结果统一起来：
+
+- `WindowObserverDistance` 与 `OrbitConnesDistance` 在一个更新叶内恢复有限路径距离；
+- `VisiblePhaseInfinity` 在不同可见相位上得到 \(\top\)，因为隐藏平移保持可见相位，故可见相位函数属于 \(\ker L_\tau\)，并能分离两点。
+
+### 推论 33.6（有限距离分量由不变量代数标记）
+
+令状态限制映射为
+
+\[
+\operatorname{res}_{\ker L_\tau}:
+I\to
+\operatorname{Spec}(\ker L_\tau),
+\qquad
+x\mapsto(f\mapsto f(x)).
+\]
+
+则每个有限距离分量都包含在该限制映射的一个纤维中。
+
+所以：
+
+\[
+\boxed{
+\text{零缺陷观测量不是距离中的“零方向”；它们是扩展几何的扇区标签。}
+}
+\]
+
+若不先固定这些标签或商掉不变量代数，Connes 型距离可能自然取无穷值。
+
+---
+
+## 33.3 可见圆与隐藏素数地址给出混合时间，而不是单一连续时间
+
+项目中的 universal solenoid 带有投影：
+
+\[
+\pi:\Sigma_\infty\to\mathbb T,
+\]
+
+隐藏核为：
+
+\[
+K_\infty=\ker\pi
+\cong
+\prod_p\mathbb Z_p.
+\]
+
+对一条连续路径 \(x:\mathbb R\to\Sigma_\infty\)，仓库构造规范化数据：
+
+\[
+ x(t)=\operatorname{realFlow}(a(t))+k,
+\]
+
+其中 \(a:\mathbb R\to\mathbb R\) 连续，而
+
+\[
+k\in K_\infty
+\]
+
+在整条连续路径上保持常数。
+
+同时，仓库证明任意连续加法实流
+
+\[
+\mathbb R\to K_\infty
+\]
+
+都是零流；但存在显式非零整数参数跳变
+
+\[
+\mathbb Z\to K_\infty,
+\]
+
+且该跳变没有连续实参数扩张。
+
+### 定理 33.7（连续段的隐藏地址守恒）
+
+在规范化 streamline 分解中，若 \(x(t)\) 连续，则其隐藏地址
+
+\[
+k(x)
+\]
+
+在每个连通时间段上恒定。
+
+因此若两个时刻具有不同隐藏地址：
+
+\[
+k(t_0)\ne k(t_1),
+\]
+
+则不存在一条在同一规范化可见提升下连接二者的连续隐藏流。
+
+### 定义 33.8（混合观察时间）
+
+一个允许隐藏事件的观察历史可写为分段数据：
+
+\[
+ x(t)
+=
+\operatorname{realFlow}(a_j(t))+k_j,
+\qquad
+ t\in[t_j,t_{j+1}),
+\]
+
+以及跳变收据：
+
+\[
+\delta_j=k_{j+1}-k_j.
+\]
+
+定义累计隐藏账：
+
+\[
+\Lambda(t)
+=
+\sum_{t_j\le t}\delta_j.
+\]
+
+于是完整历史参数不是单个实数，而是：
+
+\[
+\boxed{
+\Theta(t)
+=(t,\Lambda(t)).
+}
+\]
+
+其中：
+
+- \(t\) 排序可见连续演化；
+- \(\Lambda(t)\) 记录不能由连续隐藏流吸收的离散地址变化。
+
+这是一种数学上的 hybrid time／event time 模型，不是关于物理时间本体的无条件断言。
+
+### 推论 33.9（隐藏变化必须留下接缝）
+
+若隐藏地址发生非零变化，而整体路径仍被宣称为连续，则至少一项必须改变：
+
+1. 可见提升的规范；
+2. 路径所属的 streamline 扇区；
+3. 观察接口；
+4. 连续性声明；
+5. 记录中所采用的隐藏坐标等价。
+
+所以隐藏事件不能在固定全部接口的同时被“平滑掉”。这给追加式账本一个几何理由：
+
+\[
+\boxed{
+\text{离散事件收据记录的是连续图册之间无法无痕拼接的接缝。}
+}
+\]
+
+---
+
+## 33.4 概率是记录分支权重；未读测量是条件分支的重组
+
+设 \((P_k)_{k\in K}\) 是有限完备正交投影族：
+
+\[
+P_k=P_k^*=P_k^2,
+\qquad
+P_kP_l=0\ (k\ne l),
+\qquad
+\sum_kP_k=I.
+\]
+
+对状态 \(\rho\)，定义记录权重：
+
+\[
+\boxed{
+p_k=\operatorname{Tr}(\rho P_k).
+}
+\]
+
+当 \(p_k>0\) 时，条件状态为：
+
+\[
+\boxed{
+\rho_k
+=
+\frac{P_k\rho P_k}{p_k}.
+}
+\]
+
+未读测量状态为：
+
+\[
+\boxed{
+\mathcal P(\rho)
+=
+\sum_kP_k\rho P_k.
+}
+\]
+
+仓库已经形式化：
+
+\[
+\boxed{
+\mathcal P(\rho)
+=
+\sum_kp_k\rho_k,
+}
+\]
+
+包括零权重分支的严格处理。
+
+### 定理 33.10（记录经典性固定点）
+
+\[
+\boxed{
+\mathcal P(\rho)=\rho
+\iff
+P_k\rho P_l=0
+\quad(k\ne l).
+}
+\]
+
+所以相对于该记录接口，“经典态”恰是未读记录投影的固定点。
+
+### 推论 33.11（Born 权重的秩一约化）
+
+若
+
+\[
+P_k=|\phi_k\rangle\langle\phi_k|,
+\qquad
+\rho=|\psi\rangle\langle\psi|,
+\]
+
+则：
+
+\[
+\boxed{
+p_k
+=|\langle\phi_k,\psi\rangle|^2.
+}
+\]
+
+因此 Born 概率在本框架中的类型是：
+
+\[
+\boxed{
+\text{整体态与记录分支投影的配对权重，而不是投影或商本身。}
+}
+\]
+
+未读状态则是丢弃分支标签以后保留的条件状态混合。
+
+---
+
+## 33.5 多记录重叠产生一个可加“记录作用”
+
+考虑同一系统地址 \(i,j\) 被有限多个环境记录复制。第 \(r\) 个记录的 Gram 重叠记为：
+
+\[
+g_r(i,j)
+=
+\langle E_j^{(r)},E_i^{(r)}\rangle.
+\]
+
+项目已经形式化，多记录通道逐元满足：
+
+\[
+\boxed{
+\rho_{ij}^{(N)}
+=
+\Gamma_N(i,j)\rho_{ij}^{(0)},
+\qquad
+\Gamma_N(i,j)
+=
+\prod_{r=1}^{N}g_r(i,j).
+}
+\]
+
+若所有环境记录向量归一化，则 Cauchy–Schwarz 给出：
+
+\[
+|g_r(i,j)|\le1.
+\]
+
+### 定义 33.12（记录作用／相干债务）
+
+定义扩展非负量：
+
+\[
+\boxed{
+\mathfrak A_N(i,j)
+=
+-\log|\Gamma_N(i,j)|
+\in[0,+\infty],
+}
+\]
+
+并约定 \(\Gamma_N=0\) 时：
+
+\[
+\mathfrak A_N=+\infty.
+\]
+
+若每个重叠非零，则：
+
+\[
+\boxed{
+\mathfrak A_N(i,j)
+=
+\sum_{r=1}^{N}
+\bigl(-\log|g_r(i,j)|\bigr).
+}
+\]
+
+### 定理 33.13（记录作用控制相干生存）
+
+\[
+\boxed{
+|\rho_{ij}^{(N)}|
+=
+e^{-\mathfrak A_N(i,j)}
+|\rho_{ij}^{(0)}|.
+}
+\]
+
+若记录向量归一化，则 \(\mathfrak A_N\) 随 \(N\) 单调不减。
+
+若存在极限：
+
+\[
+\lambda_{ij}
+=
+\lim_{N\to\infty}
+\frac{\mathfrak A_N(i,j)}{N},
+\]
+
+则：
+
+\[
+\boxed{
+\lim_{N\to\infty}
+-\frac1N
+\log
+\frac{|\rho_{ij}^{(N)}|}{|\rho_{ij}^{(0)}|}
+=
+\lambda_{ij}.
+}
+\]
+
+因此 \(\lambda_{ij}\) 是该相干坐标的记录擦除率。
+
+### 特例 33.14（同质记录）
+
+若
+
+\[
+|g_r(i,j)|=c
+\quad(0<c<1)
+\]
+
+对全部 \(r\) 成立，则：
+
+\[
+\boxed{
+|\rho_{ij}^{(N)}|
+=c^N|\rho_{ij}^{(0)}|,
+\qquad
+\mathfrak A_N=N(-\log c).
+}
+\]
+
+如果某一份记录满足
+
+\[
+g_r(i,j)=0,
+\]
+
+则：
+
+\[
+\boxed{
+\rho_{ij}^{(N)}=0
+\quad
+\text{对所有后续只由同类 reduced record channel 组成的演化成立}.
+}
+\]
+
+这与仓库 `multi_copy_erasure_quantifier` 完全一致：一个零重叠记录足以在约化系统中擦除该非零输入项。
+
+### 严格解释
+
+\(\mathfrak A_N\) 是记录 Gram 因子的可加对数，不自动等同于 Shannon 熵、von Neumann 熵或热力学作用量。它的价值在于把：
+
+\[
+\text{乘法相干衰减}
+\]
+
+改写成：
+
+\[
+\boxed{
+\text{追加式记录债务的加法累计}.
+}
+\]
+
+这为“账本长度可能成为内部时间”提供一个精确候选，但不把它冒充为唯一物理时间。
+
+---
+
+## 33.6 可逆性门槛：恢复需要全部相关记录，而不只是系统本身
+
+仓库定义对记录振幅取共轭的反向记录。其重叠满足：
+
+\[
+g_r^{\mathrm{rev}}(i,j)
+=
+\overline{g_r(i,j)}.
+\]
+
+对原记录通道后再施加所有反向记录，指定矩阵元获得因子：
+
+\[
+\prod_r
+\overline{g_r(i,j)}g_r(i,j)
+=
+\prod_r|g_r(i,j)|^2.
+\]
+
+### 定理 33.15（相位记录的联合恢复）
+
+若对全部记录：
+
+\[
+|g_r(i,j)|=1,
+\]
+
+则施加全部反向记录后：
+
+\[
+\boxed{
+\rho_{ij}^{\mathrm{restored}}
+=
+\rho_{ij}^{(0)}.
+}
+\]
+
+若存在某个记录满足：
+
+\[
+|g_r(i,j)|<1,
+\]
+
+则仅通过该共轭记录通道不能精确恢复，因为残余因子为：
+
+\[
+|g_r(i,j)|^2<1.
+\]
+
+若有一个非平凡记录副本未被反转，并且其重叠不等于一，则仓库已经形式化该副本阻止精确恢复。
+
+### 推论 33.16（约化不可逆性是访问缺陷）
+
+在整体系统—环境层面，记录相互作用可以来自可逆酉耦合；系统层面的退相干来自：
+
+\[
+\boxed{
+\text{整体可逆相关生成}
++
+\text{环境记录不可访问／被偏迹}.
+}
+\]
+
+精确恢复要求控制所有携带相关相位的记录自由度。只对系统约化态作用，一般无法反推出已经被环境关联编码的相位。
+
+因此：
+
+\[
+\boxed{
+\text{“信息消失”应先审计为“信息是否转移到观察者余空间或记录账本”。}
+}
+\]
+
+但若环境记录已经被真正丢弃，或被新的不可控自由度继续放大，操作性恢复仍可能不可行；全局可逆表示不等于局部工程可逆。
+
+---
+
+## 33.7 记录作用给出一条与熵相容、但不等同的事件时间
+
+在归一化记录假设下：
+
+\[
+\mathfrak A_{N+1}(i,j)
+\ge
+\mathfrak A_N(i,j).
+\]
+
+所以对每个相干坐标都可定义单调事件时钟：
+
+\[
+\boxed{
+\tau_{ij}^{\mathrm{rec}}(N)
+=
+\mathfrak A_N(i,j).
+}
+\]
+
+它满足：
+
+1. 没有区分记录时 \(|g_r|=1\)，时钟不走；
+2. 部分区分记录时 \(0<|g_r|<1\)，时钟增加有限量；
+3. 正交记录时 \(g_r=0\)，时钟跳到 \(+\infty\)，该约化相干被完全擦除。
+
+对于同一投影上下文的 pinching：
+
+\[
+S(\mathcal P\rho)-S(\rho)
+=
+D(\rho\|\mathcal P\rho)
+\ge0.
+\]
+
+因此每次生成并丢弃可区分记录时，状态熵增可由相对熵相干测量；与此同时，\(\mathfrak A_N\) 测量指定矩阵元的对数生存债务。
+
+二者关系是：
+
+\[
+\boxed{
+\begin{aligned}
+\mathfrak A_N(i,j)
+&=\text{坐标级、乘法级记录债务},\\
+S(\mathcal P\rho)-S(\rho)
+&=\text{全状态、谱级信息删除量}.
+\end{aligned}
+}
+\]
+
+它们可以在具体通道中互相界定，但不能直接互换定义。
+
+### 定义 33.17（双时间观察历史）
+
+结合第 33.3 节，可把观察历史赋予两个独立的时间坐标：
+
+\[
+\boxed{
+\mathsf T_O
+=
+\left(
+ t_{\mathrm{vis}},
+ \mathfrak A_{\mathrm{rec}}
+\right).
+}
+\]
+
+其中：
+
+- \(t_{\mathrm{vis}}\) 是连续可见动力学参数；
+- \(\mathfrak A_{\mathrm{rec}}\) 是记录生成造成的不可逆可访问性债务。
+
+一个系统可以在 \(t_{\mathrm{vis}}\) 上持续酉演化而 \(\mathfrak A_{\mathrm{rec}}=0\)；也可以在极短可见时间内通过一次正交记录使某个 \(\mathfrak A_{ij}\) 跳到无穷。因此两种时间不能预先等同。
+
+---
+
+## 33.8 知识是读出因子化；遗忘是知识代数的严格缩小
+
+设世界集合为 \(X\)，读出为：
+
+\[
+q:X\to Y.
+\]
+
+定义标量知识代数：
+
+\[
+\boxed{
+\mathcal K(q)
+=
+\{f:X\to\mathbb C:
+\exists g:Y\to\mathbb C,
+ f=g\circ q\n\}.
+}
+\]
+
+这正是所有在读出纤维上常值的事件值函数。
+
+项目 `TwoTimeKnowledge` 中：
+
+\[
+\operatorname{Knows}(q,v_e)
+\iff
+v_e\in\mathcal K(q).
+\]
+
+### 定理 33.18（读出粗化导致知识代数反向缩小）
+
+若后期读出 \(q_1\) 比早期读出 \(q_0\) 更粗，即存在：
+
+\[
+r:Y_0\to Y_1
+\]
+
+满足：
+
+\[
+q_1=r\circ q_0,
+\]
+
+则：
+
+\[
+\boxed{
+\mathcal K(q_1)
+\subseteq
+\mathcal K(q_0).
+}
+\]
+
+#### 证明
+
+若 \(f=g\circ q_1\)，则：
+
+\[
+f=(g\circ r)\circ q_0.
+\]
+
+\(\square\)
+
+因此语义遗忘可以写成：
+
+\[
+\boxed{
+v_e\in
+\mathcal K(q_0)
+\setminus
+\mathcal K(q_1),
+}
+\]
+
+同时事件 \(e\) 在完整账本中仍然持续存在。
+
+### 推论 33.19（有限知识容量）
+
+若 \(X,Y\) 有限，并把所有复函数作为可观测量，则：
+
+\[
+\boxed{
+\dim_{\mathbb C}\mathcal K(q)
+=|q(X)|.
+}
+\]
+
+所以粗化 \(q_1=rq_0\) 的线性知识容量损失为：
+
+\[
+\boxed{
+\Delta\dim\mathcal K
+=
+|q_0(X)|-|q_1(X)|.
+}
+\]
+
+该数量计算的是可独立区分的读出类减少量，不等于自然语言中“忘了多少件事”。
+
+### 定义 33.20（定量遗忘余量）
+
+给定世界分布 \(\mu\)，在 \(L^2(X,\mu)\) 中令
+
+\[
+\mathbb E_q
+\]
+
+为到 \(\mathcal K(q)\) 的条件期望／正交投影。定义：
+
+\[
+\boxed{
+\varepsilon_q(f)
+=
+\|f-\mathbb E_qf\|_{L^2(\mu)}.
+}
+\]
+
+则：
+
+\[
+\boxed{
+\varepsilon_q(f)=0
+\iff
+f\in\mathcal K(q).
+}
+\]
+
+所以事件从“已知”到“未知”可以从布尔命题推广为连续余量增长。
+
+### 账本与认知必须分离
+
+项目的有限遗忘证书明确保留：
+
+\[
+\texttt{forgottenLogged}=\texttt{true}
+\]
+
+即使当前认知已经从 `remember` 进入 `forgotten`，甚至后来进入 `recall`。
+
+因此：
+
+\[
+\boxed{
+\text{当前可访问知识}
+\neq
+\text{历史记录是否存在}.
+}
+\]
+
+遗忘是当前读出不能再因子化事件值；追加式账本则保存“该因子化曾经成立或曾经失败”的历史收据。召回需要读出重新精化、重新连接账本，或引入外部记录；它不是粗商内部自动产生的信息。
+
+---
+
+## 33.9 坐标变化不是时间路径：`StateNotPath` 的结构解释
+
+设 \(\mathcal D_Z\) 为计算基中的对角状态集合。纯粹的相位阻尼／经典对角通道满足：
+
+\[
+\rho\in\mathcal D_Z
+\Longrightarrow
+\Phi^n(\rho)\in\mathcal D_Z
+\quad
+\forall n.
+\]
+
+仓库已经形式化：对角输入经任意有限次经典对角通道迭代，非对角元始终为零。
+
+但同一密度矩阵在 Hadamard 坐标中可以出现非零非对角元：
+
+\[
+H|0\rangle\langle0|H^*
+=
+\frac12
+\begin{pmatrix}
+1&1\\
+1&1
+\end{pmatrix}.
+\]
+
+所以：
+
+\[
+\boxed{
+\text{一个坐标系中的相干出现}
+\not\Rightarrow
+\text{存在一条同一经典通道中的时间路径生成该相干}.
+}
+\]
+
+必须区分：
+
+\[
+\boxed{
+\begin{aligned}
+\text{坐标变换}
+&:\rho\mapsto U\rho U^*,\\
+\text{物理通道迭代}
+&:\rho\mapsto\Phi^n(\rho),\\
+\text{观察界面变换}
+&:\rho\mapsto\mathbb E_{\mathcal C}(\rho).
+\end{aligned}
+}
+\]
+
+这对“经典世界与量子世界只是坐标系不同”的直觉给出严格修正：
+
+- 相干确实依赖所选对角；
+- 但非交换操作结构、可实现通道和时间路径不能由普通坐标重命名消除；
+- 改变坐标可以改变哪些元被称为“非对角”，却不把一个受限通道的可达集合自动扩大。
+
+---
+
+## 33.10 三重闭包：预测闭包、操作代数闭包与自描述闭包
+
+项目中至少存在三种不能混用的“完整”。
+
+### 第一种：预测闭包
+
+第 32 节定义：
+
+\[
+V_{\mathrm{pred}}
+=
+\overline{\operatorname{span}}
+\{(\Phi^*)^nA:
+A\in V_0,
+ n\ge0\}.
+\]
+
+它回答：
+
+> 为预测全部未来读出，当前观察者还需补充哪些线性坐标？
+
+### 第二种：操作代数闭包
+
+给定可读取观测量和可执行更新，定义最小含幺 \(*\)-代数：
+
+\[
+\boxed{
+\mathcal A_{\mathrm{op}}
+=C^*(M_f,U_\tau:
+ f\in\mathcal F_O).
+}
+\]
+
+在非平凡有限循环窗口中，仓库构造 clock、shift 和全部矩阵单位，并证明：
+
+\[
+\boxed{
+\mathcal A_{\mathrm{op}}
+=M_M(\mathbb C).
+}
+\]
+
+同时：
+
+\[
+\boxed{
+\mathcal A_{\mathrm{op}}'
+=
+\mathbb CI.
+}
+\]
+
+也就是操作表示不可约。
+
+### 第三种：自描述／经典答案闭包
+
+经典全局答案表要求一个保持代数运算的角色：
+
+\[
+\chi:
+M_M(\mathbb C)	o\mathbb C.
+\]
+
+对于 \(M>1\)，仓库证明：
+
+\[
+\boxed{
+\operatorname{Hom}_{\mathrm{Alg}}
+(M_M(\mathbb C),\mathbb C)
+=
+\varnothing.
+}
+\]
+
+并进一步以 CHSH 见证排除同一 preparation-independent 局域确定表。
+
+### 定理 33.21（操作完备不推出经典答案完备）
+
+在任意非平凡有限循环窗口：
+
+\[
+\boxed{
+\mathcal A_{\mathrm{op}}
+=M_M(\mathbb C),
+\qquad
+\mathcal A_{\mathrm{op}}'
+=
+\mathbb CI,
+\qquad
+\operatorname{Char}(\mathcal A_{\mathrm{op}})
+=
+\varnothing.
+}
+\]
+
+所以观察者可以生成、组合并层析全部矩阵观测量，却仍不能把它们压成一个保持乘法的全局经典数值表。
+
+这不是矛盾：
+
+\[
+\boxed{
+\text{知道完整量子态}
+\neq
+\text{为全部不相容问题预存同时确定的答案}.
+}
+\]
+
+密度矩阵给出正线性状态：
+
+\[
+\omega_\rho(A)=\operatorname{Tr}(\rho A),
+\]
+
+但一般不满足：
+
+\[
+\omega_\rho(AB)
+=
+\omega_\rho(A)\omega_\rho(B).
+\]
+
+因此状态层析完成、操作代数生成完成与经典角色完成是三种不同层级。
+
+### 推论 33.22（三重闭包非蕴含）
+
+\[
+\boxed{
+\text{预测完备}
+\not\Rightarrow
+\text{操作代数完备};
+}
+\]
+
+常值读出可以预测闭合却操作贫乏。
+
+\[
+\boxed{
+\text{操作代数完备}
+\not\Rightarrow
+\text{经典答案完备};
+}
+\]
+
+非平凡窗口全矩阵代数即为反例。
+
+\[
+\boxed{
+\text{层析完备}
+\not\Rightarrow
+\text{同层自描述完备};
+}
+\]
+
+即使状态由全部概率唯一确定，Cantor–Lawvere 型评价空间仍可能被自己的对角对象逃出。
+
+---
+
+## 33.11 CRT 张量分解揭示局部读出的高阶关联余空间
+
+设有限窗口大小分解为互素因子：
+
+\[
+M=mn,
+\qquad
+\gcd(m,n)=1.
+\]
+
+仓库已经形式化地址 CRT 和窗口 clock/shift 的 Kronecker 分解，并进一步对全部素数幂因子给出全矩阵代数等价：
+
+\[
+\boxed{
+M_M(\mathbb C)
+\cong
+\bigotimes_{p^r\parallel M}
+M_{p^r}(\mathbb C).
+}
+\]
+
+这给出一个规范的观察者地址张量分解。但张量分解不意味着全局状态由各因子的边缘态唯一确定。
+
+### 定理 33.23（二因子算子 Hilbert 扇区分解）
+
+设：
+
+\[
+\mathscr H
+=
+\mathscr H_A\otimes\mathscr H_B,
+\qquad
+\dim\mathscr H_A=m,
+\quad
+\dim\mathscr H_B=n.
+\]
+
+在 Hilbert–Schmidt 实内积下：
+
+\[
+\boxed{
+\operatorname{Herm}_0(\mathscr H)
+=
+\bigl(
+\operatorname{Herm}_0(\mathscr H_A)
+\otimes \mathbb RI_B
+\bigr)
+\oplus
+\bigl(
+\mathbb RI_A
+\otimes\operatorname{Herm}_0(\mathscr H_B)
+\bigr)
+\oplus
+\bigl(
+\operatorname{Herm}_0(\mathscr H_A)
+\otimes
+\operatorname{Herm}_0(\mathscr H_B)
+\bigr).
+}
+\]
+
+三项两两正交，维数分别为：
+
+\[
+m^2-1,
+\qquad
+n^2-1,
+\qquad
+(m^2-1)(n^2-1).
+\]
+
+#### 证明
+
+使用：
+
+\[
+\operatorname{Herm}(\mathscr H_A)
+=
+\mathbb RI_A
+\oplus
+\operatorname{Herm}_0(\mathscr H_A),
+\]
+
+\[
+\operatorname{Herm}(\mathscr H_B)
+=
+\mathbb RI_B
+\oplus
+\operatorname{Herm}_0(\mathscr H_B),
+\]
+
+展开实张量积。全标量项 \(\mathbb R(I_A\otimes I_B)\) 是唯一非无迹项；删除它即得。不同扇区至少在一个因子上由标量与无迹正交，故两两正交。维数乘法给出公式。\(\square\)
+
+### 推论 33.24（局部边缘的关联盲区）
+
+只读取两个局部边缘态，最多读取：
+
+\[
+(m^2-1)+(n^2-1)
+\]
+
+个无迹方向。未读关联余空间维数为：
+
+\[
+\boxed{
+D_{\mathrm{corr}}
+=(m^2-1)(n^2-1).
+}
+\]
+
+其在全部无迹方向中的比例为：
+
+\[
+\boxed{
+ r_{\mathrm{corr}}
+=
+\frac{(m^2-1)(n^2-1)}{m^2n^2-1}.
+}
+\]
+
+因此即使每个因子局部层析完备，仍可能遗漏全部跨因子关联。
+
+Bell 纯态与相应经典相关混合具有相同局部边缘而不同全局态，正是该关联余空间的显式见证。
+
+### 定理 33.25（多素数因子的关联深度分解）
+
+设：
+
+\[
+\mathscr H
+=
+\bigotimes_{r=1}^{s}\mathscr H_r,
+\qquad
+\dim\mathscr H_r=d_r.
+\]
+
+对每个非空子集 \(S\subseteq\{1,\ldots,s\}\)，定义关联扇区：
+
+\[
+\mathcal C_S
+=
+\left(
+\bigotimes_{r\in S}
+\operatorname{Herm}_0(\mathscr H_r)
+\right)
+\otimes
+\left(
+\bigotimes_{r\notin S}
+\mathbb RI_r
+\right).
+\]
+
+则：
+
+\[
+\boxed{
+\operatorname{Herm}_0(\mathscr H)
+=
+\bigoplus_{\varnothing\ne S\subseteq[s]}
+\mathcal C_S,
+}
+\]
+
+且：
+
+\[
+\boxed{
+\dim\mathcal C_S
+=
+\prod_{r\in S}(d_r^2-1).
+}
+\]
+
+定义 \(|S|\) 为关联阶数。只保留至多 \(k\) 体读出的观察者，其未观察余维数为：
+
+\[
+\boxed{
+D_{>k}
+=
+\sum_{|S|>k}
+\prod_{r\in S}(d_r^2-1).
+}
+\]
+
+这给 CRT 素数幂地址塔一个新的量子解释：
+
+\[
+\boxed{
+\text{素数幂因子给出局部地址；子集 }S\text{ 给出跨地址关联深度。}
+}
+\]
+
+但这些关联扇区既可以承载经典相关，也可以承载量子纠缠；非零高阶扇区本身不是纠缠充分条件。
+
+---
+
+## 33.12 同一记录指针的互补相关约束
+
+项目 `RecordCorrelationMonogamy` 固定同一个记录指针 \(Z_R\)，定义：
+
+\[
+C_Z(\rho)
+=
+\operatorname{Tr}
+\bigl(
+\rho(Z_S\otimes Z_R)
+\bigr),
+\]
+
+\[
+C_X(\rho)
+=
+\operatorname{Tr}
+\bigl(
+\rho(X_S\otimes Z_R)
+\bigr).
+\]
+
+仓库证明：
+
+\[
+\boxed{
+C_Z(\rho)=1
+\Longrightarrow
+C_X(\rho)=0.
+}
+\]
+
+其含义不是“所有互补相关不能共存”。Bell 态可以同时具有：
+
+\[
+\langle Z\otimes Z\rangle=1,
+\qquad
+\langle X\otimes X\rangle=1.
+\]
+
+真正结论是：
+
+\[
+\boxed{
+\text{同一个固定 }Z\text{ 记录指针若完美复制系统 }Z\text{ 地址，
+则该指针不能同时记录系统 }X\text{ 值。}
+}
+\]
+
+这与第 31 节的 MUB 坐标塔一致：一个经典记录界面选择了某个对角方向；对该记录本身而言，共轭方向进入余空间。
+
+因此“客观记录形成”可以写成：
+
+\[
+\boxed{
+\text{某一上下文的相关被冗余增强，
+同一指针相对于互补上下文的可读相关被压低。}
+}
+\]
+
+这仍不是完整的量子 Darwinism 定理，因为项目当前没有无条件证明任意多环境碎片上的冗余互信息平台或客观性阈值。
+
+---
+
+## 33.13 观察者完成必须区分目标完成、状态完成、代数完成与统一完成
+
+设递增可见空间：
+
+\[
+V_0\subseteq V_1\subseteq\cdots,
+\qquad
+R_n=V_n^\perp.
+\]
+
+### 目标完成
+
+对固定目标 \(x\)：
+
+\[
+\boxed{
+\|P_{R_n}x\|\to0.
+}
+\]
+
+RH 的 Nyman–Beurling 形式属于此类，目标为 \(\chi\)。
+
+### 状态族完成
+
+对某个任务相关集合 \(\mathcal S\)：
+
+\[
+\boxed{
+\sup_{x\in\mathcal S}
+\|P_{R_n}x\|	o0.
+}
+\]
+
+这比单目标强，但仍可弱于全单位球完成。
+
+### 代数完成
+
+可访问操作闭包等于目标算子代数：
+
+\[
+\boxed{
+\mathcal A_{\mathrm{op}}
+=\mathcal A_{\mathrm{target}}.
+}
+\]
+
+有限窗口 clock/shift 生成全矩阵代数属于此类。
+
+### 统一完成
+
+要求：
+
+\[
+\boxed{
+\|I-P_{V_n}\|_{\mathrm{op}}	o0.
+}
+\]
+
+若所有 \(V_n\) 都是真闭子空间，则：
+
+\[
+\|I-P_{V_n}\|_{\mathrm{op}}=1,
+\]
+
+统一完成失败。
+
+### 定理 33.26（四种完成的严格层级）
+
+一般只有：
+
+\[
+\boxed{
+\text{统一完成}
+\Longrightarrow
+\text{状态族完成}
+\Longrightarrow
+\text{目标完成}.
+}
+\]
+
+逆向均不成立。
+
+代数完成与前三者没有无条件蕴含关系：一个代数可以由少量生成元生成，但指定状态的有限截断误差仍需独立控制；反之，单个目标可以被很好逼近，而操作代数仍非常小。
+
+因此项目中的所有“完成”必须携带对象类型：
+
+\[
+\boxed{
+\operatorname{Complete}
+(
+\text{target/state family/algebra/uniform ball}
+).
+}
+\]
+
+不能只写一个无参数的“观察者已完成”。
+
+---
+
+## 33.14 观察者逃逸率必须是向量而不是单一数字
+
+结合前述各节，至少存在六种不同逃逸量。
+
+### 1. 读出余质量
+
+\[
+r_m^{\mathrm{state}}(\rho)
+=
+\|P_{R_m}X_\rho\|_2^2.
+\]
+
+### 2. 未来问题余质量
+
+\[
+r_{m,k}^{\mathrm{effect}}(A)
+=
+\|P_{R_m}(\Phi^*)^kA\|_2^2.
+\]
+
+### 3. 记录相干生存率
+
+\[
+s_N^{\mathrm{rec}}(i,j)
+=
+|\Gamma_N(i,j)|
+=
+e^{-\mathfrak A_N(i,j)}.
+\]
+
+### 4. 对角逃逸率
+
+由有限评价表的 escaped listing 数量、概率或距离剖面给出。
+
+### 5. 知识损失率
+
+\[
+\Delta\dim\mathcal K
+
+equals
+\dim\mathcal K(q_0)-
+\dim\mathcal K(q_1),
+\]
+
+或事件余量 \(\varepsilon_q(f)\)。
+
+### 6. 关联阶余量
+
+\[
+D_{>k}
+=
+\sum_{|S|>k}
+\prod_{r\in S}(d_r^2-1).
+\]
+
+因此定义观察者逃逸剖面：
+
+\[
+\boxed{
+\mathbf R_O
+=
+\left(
+ r^{\mathrm{state}},
+ r^{\mathrm{effect}},
+ s^{\mathrm{rec}},
+ r^{\mathrm{diag}},
+ r^{\mathrm{know}},
+ r^{\mathrm{corr}}
+\right).
+}
+\]
+
+这些量可以通过特定不等式耦合，但不应在定义层被压成一个“总熵”。
+
+例如第 32 节已经证明未来概率误差由双余量乘积控制：
+
+\[
+|\Delta p|
+\le
+\sqrt{r^{\mathrm{state}}}
+\sqrt{r^{\mathrm{effect}}}.
+\]
+
+第 33.5 节又给出：
+
+\[
+s_N^{\mathrm{rec}}
+=e^{-\mathfrak A_N}.
+\]
+
+而第 31 节在重复去相干中给出：
+
+\[
+\Delta S
+=D(\rho\|\mathbb E\rho).
+\]
+
+正确研究方向是寻找这些不同分量间的 sharp inequalities，而不是预先宣称它们同一。
+
+---
+
+## 33.15 从项目全部独特视角得到的观察者闭合图
+
+现在可以把项目中观察者的全部主要结构排列成一个闭合图：
+
+\[
+\boxed{
+\begin{array}{c}
+\text{整体状态／路径／账本}\[1mm]
+\downarrow\ q_O\\
+\text{当前读出商与读出纤维}\[1mm]
+\downarrow\ \Phi^*\\
+\text{未来问题的 Heisenberg 预测闭包}\[1mm]
+\downarrow\ C^*\text{-closure}\\
+\text{读出—更新操作代数}\[1mm]
+\downarrow\ \text{record dilation}\\
+\text{条件分支、环境相关与记录作用}\[1mm]
+\downarrow\ \text{discard record}\\
+\text{概率、退相干、熵与知识粗化}\[1mm]
+\downarrow\ \Delta\\
+\text{自描述闭合测试与对角逃逸}\[1mm]
+\downarrow\ \varprojlim\\
+\text{相对界面族的可实现完成}
+\end{array}
+}
+\]
+
+该图中每一条箭头都需要独立审计：
+
+1. **读出是否忠实：** \(\ker q_O\) 多大；
+2. **动力学是否下降：** 当前商是否为同余；
+3. **预测是否闭合：** \(V_m\) 是否稳定；
+4. **操作是否完备：** 生成代数是否达到目标；
+5. **记录是否可访问：** 环境相关是否保留；
+6. **概率是否规范：** 状态、effect 与条件分支是否正且归一；
+7. **知识是否保持：** 事件值是否继续因子化读出；
+8. **自描述是否封闭：** 是否存在对角逃逸；
+9. **有限层是否可完成：** 相容族是否满足正性、能量和可实现性；
+10. **跨上下文是否可拼接：** 是否存在全局经典答案表。
+
+因此项目中“观察者”的最强定义可以写成：
+
+\[
+\boxed{
+\text{观察者}
+=
+\text{一个定义相对同一性的读出商，
+以及使这种同一性在时间、操作、记录和自指下尽可能闭合的最小机制。}
+}
+\]
+
+---
+
+## 33.16 五个候选新定理族
+
+下面五个定理族最能承载本节相对于成熟理论的新增组合，而不是只做解释性重命名。
+
+### A. 观察者扩展距离叶层分类
+
+形式化一般置换的结论：
+
+\[
+\boxed{
+ d_\tau(x,y)
+=
+\begin{cases}
+\text{轨道图距离},&x,y\text{ 同叶},\\
++\infty,&x,y\text{ 异叶}.
+\end{cases}
+}
+\]
+
+这将当前分散的 finite cycle、integer orbit 与 visible-phase infinity 合并为一个定理。
+
+### B. 记录作用与擦除率
+
+形式化：
+
+\[
+\boxed{
+\mathfrak A_N
+=-\log\left|\prod_{r\le N}g_r\right|
+=
+\sum_{r\le N}-\log|g_r|,
+}
+\]
+
+以及相干指数率、零重叠吸收和全记录反演门槛。
+
+### C. 知识代数—遗忘余量
+
+形式化：
+
+\[
+\boxed{
+q_1=rq_0
+\Longrightarrow
+\mathcal K(q_1)
+\subseteq
+\mathcal K(q_0),
+}
+\]
+
+并把 `Forgot` 识别为一个持久事件值从早期知识代数退出晚期知识代数。
+
+### D. CRT 关联深度塔
+
+在 prime-power tensor factorization 上形式化：
+
+\[
+\boxed{
+\operatorname{Herm}_0
+=
+\bigoplus_{\varnothing\ne S}
+\mathcal C_S,
+}
+\]
+
+及：
+
+\[
+\boxed{
+D_{>k}
+=
+\sum_{|S|>k}
+\prod_{r\in S}(d_r^2-1).
+}
+\]
+
+这会把“素数地址因子”与“观察者遗漏的关联阶数”连接起来。
+
+### E. 三重闭包分离证书
+
+以有限窗口为单一模型证明：
+
+\[
+\boxed{
+\text{操作代数完成}
++
+\text{标量交换子}
++
+\text{无经典角色}.
+}
+\]
+
+并与第 32 节预测闭包和本文对角逃逸明确分型。
+
+这些定理即使单项有成熟邻近结果，其在项目统一观察者类型中的组合与互相非蕴含，仍可能形成可发表的结构性贡献。
+
+---
+
+## 33.17 建议 Lean 形式化顺序
+
+1. `ObserverCommutatorNorm`
+   \[
+   \|[U_\tau,M_f]\|
+   =
+   \|f\circ\tau^{-1}-f\|_\infty.
+   \]
+
+2. `ObserverDistanceInfiniteOfInvariantSeparation`
+   \[
+   f\in\ker L_\tau,
+   \ f(x)\ne f(y)
+   \Rightarrow
+   d_\tau(x,y)=\top.
+   \]
+
+3. `PermutationObserverDistanceClassification`
+   同轨道为图距离、异轨道为 \(\top\)。
+
+4. `RecordActionAdditive`
+   \[
+   -\log|\prod g_r|
+   =
+   \sum -\log|g_r|.
+   \]
+
+5. `RecordActionCoherenceSurvival`
+   \[
+   |\rho_{ij}^{(N)}|
+   =
+e^{-\mathfrak A_N}|\rho_{ij}^{(0)}|.
+   \]
+
+6. `UnimodularRecordReversalIff`
+   对共轭反向记录，精确恢复的模长门槛。
+
+7. `KnowledgeAlgebraAntitone`
+   \[
+   q_1=rq_0
+   \Rightarrow
+   \mathcal K(q_1)\subseteq\mathcal K(q_0).
+   \]
+
+8. `ForgotAsKnowledgeAlgebraExit`
+   把 `TwoTimeKnowledge.Forgot` 与事件值的代数成员变化连接。
+
+9. `TensorHermitianCorrelationDecomposition`
+   二因子及有限多因子的正交扇区分解。
+
+10. `PrimePowerCorrelationDepth`
+    将 `PrimePowerTensorTower` 的因子索引用于关联阶余维数。
+
+11. `OperationalCompleteNoCharacter`
+    汇总 `WindowGeneration`、`window_commutant_eq_scalars` 与 `window_algebra_has_no_character`。
+
+12. `CompletionKindNonImplications`
+    为目标、状态族、代数和统一完成给出有限显式反例。
+
+所有新声明应引用现有 Lean GID，而不是从理论卷自然语言复制为第二真源。
+
+---
+
+## 33.18 最终结论
+
+项目中的独特观察者视角可以压缩为以下十二句：
+
+\[
+\boxed{
+\text{读出定义商，核与余空间定义当前不可见差异。}
+}
+\]
+
+\[
+\boxed{
+\text{更新交换子是观察者的一阶导数。}
+}
+\]
+
+\[
+\boxed{
+\text{交换子半范数生成叶内有限、叶间无穷的扩展几何。}
+}
+\]
+
+\[
+\boxed{
+\text{连续可见流保持隐藏素数地址；隐藏变化需要离散接缝。}
+}
+\]
+
+\[
+\boxed{
+\text{概率是状态对记录分支的权重。}
+}
+\]
+
+\[
+\boxed{
+\text{未读测量是条件分支在忘记标签后的重组。}
+}
+\]
+
+\[
+\boxed{
+\text{多记录将相干乘法衰减转化为可加记录作用。}
+}
+\]
+
+\[
+\boxed{
+\text{局部不可逆性来自记录不可访问；恢复要求控制全部相关记录。}
+}
+\]
+
+\[
+\boxed{
+\text{知识是事件值对当前读出的因子化；遗忘是该因子化失效。}
+}
+\]
+
+\[
+\boxed{
+\text{CRT 给出素数幂局部地址，但高阶关联仍居张量余空间。}
+}
+\]
+
+\[
+\boxed{
+\text{操作代数可以完整，而全局经典答案表仍不存在。}
+}
+\]
+
+\[
+\boxed{
+\text{预测、操作、记录、自描述与无限完成是不同闭包，不能由一个“完整度”代替。}
+}
+\]
+
+最凝练的统一式是：
+
+\[
+\boxed{
+\text{观察者不是世界之外的观看点；
+它是世界内部形成的读出商、更新代数、记录账本与闭包规则。}
+}
+\]
+
+时间描述该结构如何更新；概率描述状态在记录分支上的权重；熵描述某类非单射记录接口删除的可区分性；对角化检验观察者能否以同一类型完整描述自身；无穷则标记任何有限闭包仍可能留下的余核。
+
+因此，这一研究方向真正可能给数学与物理带来的新解释，不是宣称所有概念本来相同，而是：
+
+\[
+\boxed{
+\text{把它们分别识别为同一个观察者闭合问题中的不同对象、不同缺陷和不同极限。}
+}
+\]
+
+### 33.19 严格非主张
+
+1. 本节没有从 hidden-flow rigidity 推出自然界时间必为离散—连续二元本体。
+2. 本节没有把记录作用 \(\mathfrak A_N\) 等同于 thermodynamic action 或任意标准熵。
+3. 本节没有证明所有环境记录都归一化；涉及 \(|g_r|\le1\) 的结论明确以归一化为前提。
+4. 本节没有声称全局酉可逆性保证局部实验可逆性。
+5. 本节没有把高阶关联扇区非零等同于纠缠。
+6. 本节没有把相同局部边缘解释为 Bell 非局域性的充分条件。
+7. 本节没有把窗口全矩阵代数生成冒充为量子力学无前件的出身证明。
+8. 本节没有把无代数角色直接等同于所有版本的 Kochen–Specker 或 Bell 定理。
+9. 本节没有把 observer distance 的 \(+\infty\) 解释为物理空间距离无穷大。
+10. 本节没有把知识代数的维数等同于语义知识总量。
+11. 本节没有把理论卷纸面推导注册为 Lean 已闭合事实。
+12. 本节不修改第 28–32 节任何旧文字；所有收紧均以追加形式记账。
