@@ -36,6 +36,10 @@
   no-move change opened `Weil/PrimeAddress/`; all existing `Weil/` paths remain
   unmoved. First module: `PrimeAddress/PrimeAddress.lean`, connecting finite
   Euler modifications, zero amplitudes, ramified silence, and prime readings.
+- 2026-08-14 (SL-003): `Zeros/` remained at its 12-Lean-file limit. The
+  split-only, no-move change opened `Zeros/Detection/`; all existing `Zeros/`
+  paths remain unmoved. First module: `Detection/DetectionRadiusCertificate.lean`,
+  certifying the exact visibility scale and radius at beta = 0.51 and gamma = 10^12.
 
 ## Buckets
 
@@ -48,6 +52,7 @@
 - `Zeros/`: zeta-zero geometry, symmetry, and local critical-line balance.
 - `Zeros/Endpoints/`: endpoint-value certificates for completed-zeta readings.
 - `Zeros/Symmetry/`: conjugation and reflection covariance of zeta readings.
+- `Zeros/Detection/`: exact arithmetic certificates for zero-detection scales.
 - 2026-08-04 SL-003 分裂记录:Blueprint/D5/S3/Arith 达 12 上限;按"只裂不迁"新增子疆域桶 `Axis/`(组名已入词表),存量 Arith 模块地址全数保留;首件 `Axis/PrimeAxisEscape.lean`。
 - 2026-08-10 SL-003 分裂记录:D5/S3/Arith 达 12 上限;按"只裂不迁"新增子疆域桶 `Factorization/`(组名已入词表),存量 Arith 模块地址全数保留;首件 `Factorization/FreeCommMonoid.lean`。
 - `Quantum/Algebra/`: representation-independent covariance and commutator algebra.
