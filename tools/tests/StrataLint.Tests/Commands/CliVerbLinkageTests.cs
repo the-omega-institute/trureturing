@@ -1,7 +1,6 @@
 using System.Collections.Immutable;
 using System.Text.RegularExpressions;
 using StrataLint.Cli;
-using StrataLint.Scribe;
 
 namespace StrataLint.Tests;
 
@@ -48,8 +47,13 @@ public sealed class CliVerbLinkageTests
         {
             [CommandProgram.StrataLint] =
                 CliApplication.ImplementedCommands.ToHashSet(StringComparer.Ordinal),
-            [CommandProgram.Scribe] =
-                ScribeCli.ImplementedCommands.ToHashSet(StringComparer.Ordinal),
+            // 不得引用 Scribe 程序集(依赖方向:Tests→Cli+Engine)。此表为 Scribe 动词
+            // 的本侧钉定;Scribe.Tests 有孪生断言钉 ScribeCli.ImplementedCommands 与此表
+            // 一致,漂移时两侧必有一红。
+            [CommandProgram.Scribe] = new HashSet<string>(StringComparer.Ordinal)
+            {
+                "emit", "emit-values", "filemap", "describe-report", "projections",
+            },
         };
         var dangling = invocations
             .Where(invocation => !implemented[invocation.Program].Contains(invocation.Verb))

@@ -200,6 +200,9 @@ public sealed class LeanReportInputScriptTests
             Write(inspectorScriptPath, "#!/usr/bin/env bash\n");
             Write(inspectorSourcePath, "def fixture : True := by trivial\n");
             Write(InputHelperPath, "#!/usr/bin/env bash\n");
+            // Cli 工程必须至少有一个编译项:零编译项会让 helper 的 msbuild 求值退化,
+            // producer 分量对 Engine 源失敏(阶段 7 删 MergeCommand 桩后实测)。
+            Write("tools/StrataLint.Cli/Commands/FixtureProbe.cs", "// fixture\n");
             Write(RawReportPath, "// fixture\n");
             Write(CanonicalWriterPath, "// fixture\n");
             Write(LeanModelsPath, "// fixture\n");
