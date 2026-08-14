@@ -195,9 +195,6 @@ internal sealed class StubCliEnvironment(
     public CommandResult RenderDag(IReadOnlyList<string> arguments) =>
         new(false, string.Empty, "dag rendering is not configured in this fixture");
 
-    public CommandResult GenerateLedger(IReadOnlyList<string> arguments) =>
-        new(false, string.Empty, "ledger generation is not configured in this fixture");
-
     public CommandResult AppendLedger(IReadOnlyList<string> arguments) =>
         new(false, string.Empty, "ledger append is not configured in this fixture");
 

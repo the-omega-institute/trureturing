@@ -8,7 +8,6 @@ namespace StrataLint.Tests;
 public sealed class LeanReportPairScriptTests
 {
     private const string InputHelperPath = "tools/scripts/report/lean-report-input.sh";
-    private const string MergeCommandPath = "tools/StrataLint.Cli/Commands/LeanReport/LeanReportMergeCommand.cs";
     private const string RawReportPath = "tools/StrataLint.Engine/Snapshot/RawLeanReportArtifact.cs";
     private const string CanonicalWriterPath = "tools/StrataLint.Engine/Snapshot/StructuredCanonicalWriter.cs";
     private const string ScribeProgramPath = "tools/StrataLint.Scribe/ScribeProgram.cs";
@@ -225,7 +224,6 @@ public sealed class LeanReportPairScriptTests
                 "def residentFixture : True := by trivial\n",
                 new UTF8Encoding(false));
             WriteProducerInput(root, InputHelperPath);
-            WriteProducerInput(root, MergeCommandPath);
             WriteProducerInput(root, RawReportPath);
             WriteProducerInput(root, CanonicalWriterPath);
             WriteProducerInput(root, ScribeProgramPath);

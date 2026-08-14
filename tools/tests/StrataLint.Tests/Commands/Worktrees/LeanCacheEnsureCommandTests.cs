@@ -198,15 +198,16 @@ public sealed class LeanCacheEnsureScriptTests
     {
         if (OperatingSystem.IsWindows()) return;
 
-        var script = Path.Combine(TestRepositoryLayout.FindRoot(), LeanCacheEnsureScriptPath);
         using var fixture = new TemporaryDirectory();
+        var installed = InstallScript(fixture.Path);
         var bin = Path.Combine(fixture.Path, "bin");
         var arguments = Path.Combine(fixture.Path, "dotnet-arguments");
+        var dotnetCwd = Path.Combine(fixture.Path, "dotnet-cwd");
         Directory.CreateDirectory(bin);
         var dotnet = Path.Combine(bin, "dotnet");
         File.WriteAllText(
             dotnet,
-            "#!/usr/bin/env bash\nprintf '%s\\n' \"$@\" > \"$DOTNET_ARGUMENTS\"\nprintf 'delegated\\n'\n");
+            "#!/usr/bin/env bash\nprintf '%s\\n' \"$@\" > \"$DOTNET_ARGUMENTS\"\nprintf '%s\\n' \"$PWD\" > \"$DOTNET_CWD\"\nprintf 'delegated\\n'\n");
         File.SetUnixFileMode(
             dotnet,
             UnixFileMode.UserRead | UnixFileMode.UserWrite | UnixFileMode.UserExecute);
@@ -215,31 +216,45 @@ public sealed class LeanCacheEnsureScriptTests
             "/bin/bash",
             [
                 "-c",
-                "PATH=\"$1:$PATH\" DOTNET_ARGUMENTS=\"$2\" exec /bin/bash \"$3\"",
+                "PATH=\"$1:$PATH\" DOTNET_ARGUMENTS=\"$2\" DOTNET_CWD=\"$3\" exec /bin/bash \"$4\"",
                 "lean-cache-test",
                 bin,
                 arguments,
-                script,
+                dotnetCwd,
+                installed.Script,
             ],
-            fixture.Path,
+            installed.Caller,
             TimeSpan.FromSeconds(10),
             64 * 1024);
 
         Assert.Equal(0, result.ExitCode);
         Assert.Equal("delegated\n", Encoding.UTF8.GetString(result.StandardOutput));
         Assert.Empty(result.StandardError);
+        var canonicalRoot = BoundedProcessRunner.Run(
+            "/bin/pwd",
+            ["-P"],
+            installed.Repository,
+            TimeSpan.FromSeconds(10),
+            4096);
+        Assert.Equal(0, canonicalRoot.ExitCode);
+        var canonicalRepository = Encoding.UTF8.GetString(canonicalRoot.StandardOutput).TrimEnd('\n');
+        var project = Path.Combine(
+            canonicalRepository,
+            "tools",
+            "StrataLint.Cli",
+            "StrataLint.Cli.csproj");
         Assert.Equal(
-            """
-            run
-            --project
-            tools/StrataLint.Cli/StrataLint.Cli.csproj
-            --configuration
-            Release
-            --
-            worktree
-            ensure-cache
-            """ + "\n",
+            string.Join('\n',
+                "run",
+                "--project",
+                project,
+                "--configuration",
+                "Release",
+                "--",
+                "worktree",
+                "ensure-cache") + "\n",
             File.ReadAllText(arguments));
+        Assert.Equal(canonicalRepository + "\n", File.ReadAllText(dotnetCwd));
     }
 
     [Fact]
@@ -247,12 +262,12 @@ public sealed class LeanCacheEnsureScriptTests
     {
         if (OperatingSystem.IsWindows()) return;
 
-        var script = Path.Combine(TestRepositoryLayout.FindRoot(), LeanCacheEnsureScriptPath);
         using var fixture = new TemporaryDirectory();
-        Directory.CreateDirectory(Path.Combine(fixture.Path, ".lake"));
+        var installed = InstallScript(fixture.Path);
+        Directory.CreateDirectory(Path.Combine(installed.Repository, ".lake"));
         var marker = Path.Combine(fixture.Path, "dotnet-started");
 
-        var result = RunWithFailingDotnet(script, fixture.Path, marker);
+        var result = RunWithFailingDotnet(installed.Script, installed.Caller, marker);
 
         Assert.Equal(0, result.ExitCode);
         Assert.Contains(
@@ -268,14 +283,14 @@ public sealed class LeanCacheEnsureScriptTests
     {
         if (OperatingSystem.IsWindows()) return;
 
-        var script = Path.Combine(TestRepositoryLayout.FindRoot(), LeanCacheEnsureScriptPath);
         using var fixture = new TemporaryDirectory();
-        var shared = Path.Combine(fixture.Path, "shared");
+        var installed = InstallScript(fixture.Path);
+        var shared = Path.Combine(installed.Repository, "shared");
         Directory.CreateDirectory(shared);
-        Directory.CreateSymbolicLink(Path.Combine(fixture.Path, ".lake"), shared);
+        Directory.CreateSymbolicLink(Path.Combine(installed.Repository, ".lake"), shared);
         var marker = Path.Combine(fixture.Path, "dotnet-started");
 
-        var result = RunWithFailingDotnet(script, fixture.Path, marker);
+        var result = RunWithFailingDotnet(installed.Script, installed.Caller, marker);
 
         Assert.Equal(1, result.ExitCode);
         Assert.Empty(result.StandardOutput);
@@ -288,6 +303,21 @@ public sealed class LeanCacheEnsureScriptTests
 
     private const string LeanCacheEnsureScriptPath =
         "tools/scripts/worktree/lean-cache-ensure.sh";
+
+    private static InstalledScript InstallScript(string fixtureRoot)
+    {
+        var repository = Path.Combine(fixtureRoot, "repository");
+        var caller = Path.Combine(fixtureRoot, "caller");
+        var script = Path.Combine(
+            repository,
+            LeanCacheEnsureScriptPath.Replace('/', Path.DirectorySeparatorChar));
+        Directory.CreateDirectory(Path.GetDirectoryName(script)!);
+        Directory.CreateDirectory(caller);
+        File.Copy(
+            Path.Combine(TestRepositoryLayout.FindRoot(), LeanCacheEnsureScriptPath),
+            script);
+        return new InstalledScript(repository, caller, script);
+    }
 
     private static ProcessOutput RunWithFailingDotnet(
         string script,
@@ -313,5 +343,7 @@ public sealed class LeanCacheEnsureScriptTests
             TimeSpan.FromSeconds(10),
             64 * 1024);
     }
+
+    private sealed record InstalledScript(string Repository, string Caller, string Script);
 
 }
