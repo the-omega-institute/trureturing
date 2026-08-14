@@ -16,7 +16,7 @@ The reachability lemmas make the set-theoretic boundary explicit: membership in 
 
 $$\forall Cost \in \operatorname{Type}, \forall left, middle, right \in \operatorname{CostProfile}(Cost), left\leq middle \Rightarrow middle\leq right \Rightarrow left\leq right$$
 
-*Proof.* Machine-checked in Lean as `D5/S3/Resource/PriceFaceOrder.costProfile_preorder_trans` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/ResourceOrder/PriceFaceOrder.costProfile_preorder_trans` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -28,7 +28,7 @@ For every preordered cost type, eventual domination composes: a profile no great
 
 $$\forall Cost \in \operatorname{Type}, \forall left, middle, right \in \operatorname{PhysicalCosts}(Cost), left\leq middle \Rightarrow middle\leq right \Rightarrow left\leq right$$
 
-*Proof.* Machine-checked in Lean as `D5/S3/Resource/PriceFaceOrder.physicalCosts_preorder_trans` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/ResourceOrder/PriceFaceOrder.physicalCosts_preorder_trans` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -40,7 +40,7 @@ The four componentwise comparisons of forward time, forward space, reverse time,
 
 $$\forall AlgorithmCost, RateCost, PhysicalCost, HeatCost \in \operatorname{Type}, \forall left, middle, right \in \operatorname{TaxReceipt}(AlgorithmCost, RateCost, PhysicalCost, HeatCost) \Rightarrow left \leq middle \Rightarrow middle \leq right \Rightarrow left \leq right$$
 
-*Proof.* Machine-checked in Lean as `D5/S3/Resource/PriceFaceOrder.taxReceipt_preorder_trans` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/ResourceOrder/PriceFaceOrder.taxReceipt_preorder_trans` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -52,7 +52,7 @@ At the receipt layer, the algorithm costs, rate, four physical profiles, and hea
 
 $$\neg(\operatorname{tradeReceipt}(true) \leq \operatorname{tradeReceipt}(false))$$
 
-*Proof.* Machine-checked in Lean as `D5/S3/Resource/PriceFaceOrder.trade_true_not_le_false` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/ResourceOrder/PriceFaceOrder.trade_true_not_le_false` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -64,7 +64,7 @@ The receipt with the forward-time and forward-space assignment exchanged in the 
 
 $$\neg(\operatorname{tradeReceipt}(false) \leq \operatorname{tradeReceipt}(true))$$
 
-*Proof.* Machine-checked in Lean as `D5/S3/Resource/PriceFaceOrder.trade_false_not_le_true` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/ResourceOrder/PriceFaceOrder.trade_false_not_le_true` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -76,7 +76,7 @@ The converse comparison fails for the dual reason: the reverse branch would forc
 
 $$zeroProfile \leq spikeProfile \land spikeProfile \leq zeroProfile \land zeroProfile \neq spikeProfile$$
 
-*Proof.* Machine-checked in Lean as `D5/S3/Resource/PriceFaceOrder.costProfile_eventual_order_not_antisymmetric` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/ResourceOrder/PriceFaceOrder.costProfile_eventual_order_not_antisymmetric` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -88,7 +88,7 @@ The constantly-zero profile and the profile that equals one only at scale zero d
 
 $$\operatorname{tradeReceipt}(true) \in tradeFace \land \operatorname{tradeReceipt}(false) \in tradeFace \land \operatorname{tradeReceipt}(true) \neq \operatorname{tradeReceipt}(false) \land \neg(\operatorname{tradeReceipt}(true) \leq \operatorname{tradeReceipt}(false)) \land \neg(\operatorname{tradeReceipt}(false) \leq \operatorname{tradeReceipt}(true))$$
 
-*Proof.* Machine-checked in Lean as `D5/S3/Resource/PriceFaceOrder.trade_face_two_incomparable_minima` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/ResourceOrder/PriceFaceOrder.trade_face_two_incomparable_minima` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -100,7 +100,7 @@ Both concrete receipts are reachable from valid Boolean witnesses and are minima
 
 $$\forall Object, Witness, AlgorithmCost, RateCost, PhysicalCost, HeatCost \in \operatorname{Type}, \forall candidate \in \operatorname{TaxReceipt}(AlgorithmCost, RateCost, PhysicalCost, HeatCost), candidate \in \operatorname{priceFace}(validWitness, receipt, left, right) \Rightarrow \exists witness, validWitness(witness, left, right) \land receipt(witness)= candidate$$
 
-*Proof.* Machine-checked in Lean as `D5/S3/Resource/PriceFaceOrder.priceFace_mem_reachable` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/ResourceOrder/PriceFaceOrder.priceFace_mem_reachable` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -112,7 +112,7 @@ The first coordinate of the Minimal predicate is exactly the reachability condit
 
 $$\neg\exists witness, validWitness(witness, left, right) \Rightarrow \operatorname{priceFace}(validWitness, receipt, left, right) = \emptyset$$
 
-*Proof.* Machine-checked in Lean as `D5/S3/Resource/PriceFaceOrder.priceFace_eq_empty_of_no_valid` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/ResourceOrder/PriceFaceOrder.priceFace_eq_empty_of_no_valid` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -122,13 +122,13 @@ If the validity predicate has no witness for the two objects, the preceding reac
 
 ## References
 
-- Truth anchor: `D5/S3/Resource/PriceFaceOrder.costProfile_eventual_order_not_antisymmetric`
-- Truth anchor: `D5/S3/Resource/PriceFaceOrder.costProfile_preorder_trans`
-- Truth anchor: `D5/S3/Resource/PriceFaceOrder.physicalCosts_preorder_trans`
-- Truth anchor: `D5/S3/Resource/PriceFaceOrder.priceFace_eq_empty_of_no_valid`
-- Truth anchor: `D5/S3/Resource/PriceFaceOrder.priceFace_mem_reachable`
-- Truth anchor: `D5/S3/Resource/PriceFaceOrder.taxReceipt_preorder_trans`
-- Truth anchor: `D5/S3/Resource/PriceFaceOrder.trade_face_two_incomparable_minima`
-- Truth anchor: `D5/S3/Resource/PriceFaceOrder.trade_false_not_le_true`
-- Truth anchor: `D5/S3/Resource/PriceFaceOrder.trade_true_not_le_false`
-- Dependency: [D5/S3/Resource/PriceFace](PriceFace.md)
+- Truth anchor: `D5/S3/ResourceOrder/PriceFaceOrder.costProfile_eventual_order_not_antisymmetric`
+- Truth anchor: `D5/S3/ResourceOrder/PriceFaceOrder.costProfile_preorder_trans`
+- Truth anchor: `D5/S3/ResourceOrder/PriceFaceOrder.physicalCosts_preorder_trans`
+- Truth anchor: `D5/S3/ResourceOrder/PriceFaceOrder.priceFace_eq_empty_of_no_valid`
+- Truth anchor: `D5/S3/ResourceOrder/PriceFaceOrder.priceFace_mem_reachable`
+- Truth anchor: `D5/S3/ResourceOrder/PriceFaceOrder.taxReceipt_preorder_trans`
+- Truth anchor: `D5/S3/ResourceOrder/PriceFaceOrder.trade_face_two_incomparable_minima`
+- Truth anchor: `D5/S3/ResourceOrder/PriceFaceOrder.trade_false_not_le_true`
+- Truth anchor: `D5/S3/ResourceOrder/PriceFaceOrder.trade_true_not_le_false`
+- Dependency: [D5/S3/Resource/PriceFace](../Resource/PriceFace.md)
