@@ -851,3 +851,38 @@ text = "§7-附 尸检账(只增不删)"
 [[wm.headings]]
 role = "audit"
 text = "校核记录(append-only,按版分块)"
+
+[[dialect]]
+id = "qdo"
+claim = "^(?<kind>\\p{L}+)\\s+(?<number>[0-9]+(?:\\.[0-9A-Za-z]+)+)"
+target = "heading"
+
+[[dialect.genre]]
+dialect = "qdo"
+token = "定理"
+kind = "theorem"
+
+[[dialect.genre]]
+dialect = "qdo"
+token = "定义"
+kind = "definition"
+
+[[dialect.genre]]
+dialect = "qdo"
+token = "命题"
+kind = "proposition"
+
+[[dialect.genre]]
+dialect = "qdo"
+token = "推论"
+kind = "corollary"
+
+[[dialect.genre]]
+dialect = "qdo"
+token = "例"
+kind = "example"
+
+[[dialect.genre]]
+dialect = "qdo"
+token = "算法"
+kind = "algorithm"

@@ -26,7 +26,7 @@ public sealed partial class ProductionEnvironmentTests
         var currentBytes = Encoding.UTF8.GetBytes(
             "# 探针\n\n**命题 1.1(甲)**。old。\n\n**观察 2.3.4(乙)**。new。\n");
         fixture.Files[TheoryAtomizerDataLoader.DataPath] =
-            fixture.Files[TheoryAtomizerDataLoader.DataPath].TrimEnd('\n') + "\n\n" + DeclaredDialect;
+            WithProbeDialect(fixture.Files[TheoryAtomizerDataLoader.DataPath]);
         var rules = TheoryAtomizerDataLoader.Load(fixture.Build().Current);
         var oldAtom = Assert.Single(AtomizerRegistry.Atomize(atomizerId, oldBytes, rules).Claims);
         Assert.Equal("proposition/1.1", oldAtom.AstPath);
@@ -70,7 +70,7 @@ public sealed partial class ProductionEnvironmentTests
     {
         var fixture = new RuleFixture();
         fixture.Files[TheoryAtomizerDataLoader.DataPath] =
-            fixture.Files[TheoryAtomizerDataLoader.DataPath].TrimEnd('\n') + "\n\n" + DeclaredDialect;
+            WithProbeDialect(fixture.Files[TheoryAtomizerDataLoader.DataPath]);
         var rules = TheoryAtomizerDataLoader.Load(fixture.Build().Current);
 
         var error = Assert.Throws<FormatException>(() => AtomizerRegistry.Atomize(
@@ -82,11 +82,13 @@ public sealed partial class ProductionEnvironmentTests
         Assert.Contains(ProbeDialectId, error.Message, StringComparison.Ordinal);
     }
 
-    private const string DeclaredDialect = """
+    private const string DialectDeclaration = """
         [[dialect]]
         id = "probe-dialect"
         claim = "^\\*\\*(?<kind>\\p{L}+)\\s*(?<number>[0-9]+(?:\\.[0-9]+)+)"
+        """;
 
+    private const string DialectGenres = """
         [[dialect.genre]]
         dialect = "probe-dialect"
         token = "命题"
@@ -97,4 +99,18 @@ public sealed partial class ProductionEnvironmentTests
         token = "观察"
         kind = "observation"
         """;
+
+    /// <summary>
+    /// Splices the probe dialect into atomizer data that may already declare dialects of
+    /// its own: sections are ordered, so the declaration must join the [[dialect]] block
+    /// rather than trail the genres.
+    /// </summary>
+    private static string WithProbeDialect(string data)
+    {
+        var genres = data.IndexOf("[[dialect.genre]]", StringComparison.Ordinal);
+        return genres < 0
+            ? data.TrimEnd('\n') + "\n\n" + DialectDeclaration + "\n\n" + DialectGenres + "\n"
+            : data[..genres] + DialectDeclaration + "\n\n"
+                + data[genres..].TrimEnd('\n') + "\n\n" + DialectGenres + "\n";
+    }
 }
