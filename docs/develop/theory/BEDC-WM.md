@@ -134,6 +134,12 @@
 
 **候查 B12(锥对偶:可分锥之对偶面,v0.7)**。承 ENTROPY-INFO-PRIMES-O5 §10 弧二之收束图式「WM = (正锥, 界面图册, 对偶投影)」。复合系统之三锥链 可分锥 ⊆ PSD ⊆ 块正锥,两包含已冻(`D5/S3/Resource/CompositeCones`)。**形式面**:在迹双线性配对下,块正性 ⟺ 与一切可分元配对非负——即块正锥为可分锥之对偶锥;有限维两向皆初等,**不经分离超平面**:正向(块正 ⟹ 配对非负)以 PSD 之秩一分解将可分元化为积向量秩一之和,逐项即块正性之定义式;逆向(配对非负 ⟹ 块正)取单个积向量秩一元作见证,配对值即定义式本身〔Lean可关〕。**判据**:①配对约定须显式写出并与既有 `separableCone`/`blockPositive` 定义对榫,不得含糊;②若仅一方向可证,如实只交该方向并显式登记另一方向为 open,**禁静默弱化或交空洞双条件**;③见证存在性(纠缠见证)属对偶之推论,不得先于对偶宣称。**述而不作**:锥对偶机器(`ProperCone.dual`、`innerDual` 及其对合)属上游已证,按先库后证直接引用,重证即冒领;本条候选新颖处仅在可分/块正这一对具体锥之对偶实例。〔候查;Lean可关〕
 
+**B12 结账追记(v0.8,2026-08-14)**。B12 之形式面已 **Lean-closed**,四件依次落值(旧行不改,此处只记结果):①`D5/S3/Resource/CompositeConeDuality.blockPositive_iff_forall_separable_pairing_nonneg` —— 迹配对下块正 ⟺ 与一切可分元配对非负,两向皆初等、不经分离超平面,与 B12 原文所述路线一致;②`D5/S3/Resource/EntanglementWitness` —— 可分锥之凸锥四条(含零、加法、非负数乘、凸性);③`D5/S3/Resource/SeparableConeClosed.isClosed_separableCone` —— 可分锥在有限维下闭,无附加前件,经归一化积生成元之锥表示与 Caratheodory 维数界;④`D5/S3/Resource/EntanglementWitnessExists.exists_entanglementWitness` —— **见证存在性**:`R.PosSemidef → ¬separableCone R → ∃ W, blockPositive W ∧ pairing R W < 0`。四者公理闭包皆 ⊆ {propext, Classical.choice, Quot.sound},零 sorry。
+
+**过程如实记(判例价值高于结果)**:③④之间隔着一道**非数学的坎**——`ProperCone.hyperplane_separation'` 要求 `[NormedAddCommGroup E] [InnerProductSpace ℝ E] [CompleteSpace E]`,而裸 `Matrix` 不带这些实例;pinned mathlib 亦无 `Matrix` 的实内积实例(Frobenius 族皆 scoped 且止于 `NormedSpace`)。更关键:`InnerProductSpace.ofCore` **会诱导自身的范数与拓扑**,而 ③ 的闭性是在 `Matrix` 原生拓扑下证的——两者不打通,"闭"便非同一个闭,分离所得结论将因错配而不可靠。④ 的承重步正是此拓扑搬运:按 mathlib 规定路线(第二范数置于类型副本、证双向恒等映射连续)得同胚,再以 `isClosed_separableCone.preimage` 将闭性搬入 ofCore 拓扑。**故 B12 判据③"见证存在性属对偶之推论"须细化**:它不只是对偶的推论,还须闭性与拓扑一致两项前置;三者齐备方可宣称。
+
+**另记**:④ 之 `R.PosSemidef` 前件在证明中实际未用(分离仅需 `R` 不属该锥),定理去之亦成立;保留是为恰好闭合 `EntanglementWitness` 所登记之 open 陈述。〔Lean-closed(形式面四件);读法级各条仍循 §9 边界〕
+
 **候查 B13(界面图册索引,v0.7)**。承弧二"界面登记定律取等处"之读法:变分原理把现实压至锥膜,故**等号面**(取等条件)是 WM 的登记位。本条为**索引件**:逐一登记本仓已有之等号面工件及其取等判据,使"界面图册"从叙事成为可查表;每条须注明该等号面是已冻结形式件、还是仅 digest 级证据待亲读。**判据**:①索引条目必须机械可判地指向存在之工件(悬空引用即红,循宪法 2026-08-12 引用条);②未亲读者一律标"digest 级待亲读",不得以文件名冒充已核内容;③本条为 data-only 文档件,不承载任何数学断言。〔候查;data-only,文档可关〕
 
 ---
