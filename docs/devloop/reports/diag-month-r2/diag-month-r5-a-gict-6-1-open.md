@@ -194,7 +194,7 @@ input_address = sha256:a869ce251abcc700b0770c03c20bd8c6a3c240a1a42c87165495b5a5f
 report_sha256 = e71f3c30b659d7e260d814de12caeac6e5a0e28f16cb034ab55bbaabf4940d29
 ```
 
-The final R5 synchronization began with the shared ref already at the exact
+The 9014 R5 synchronization began with the shared ref already at the exact
 target, without another fetch. The preserved report edit was carried through
 this exact non-destructive merge:
 
@@ -203,8 +203,8 @@ git merge --no-edit 9014d6103a180f6347cb6d092b078ca1560958cf
 ```
 
 Exit `0`; it completed without conflict as
-`4e6722d9c48fc0838bab0b0e072e8f7cd159a5f2`. Its parents and final content
-base are:
+`4e6722d9c48fc0838bab0b0e072e8f7cd159a5f2`. Its parents and content base at
+that point were:
 
 ```text
 parents = a3c33f20b5604eb6b46f87c812ec111f765669b2 9014d6103a180f6347cb6d092b078ca1560958cf
@@ -242,12 +242,53 @@ it found no `UniversalSolenoid`, `PontryaginDual`, `HiddenAddress`,
 `hiddenKernelAddEquiv`, profinite, p-adic, or exact-sequence carrier. These
 changes do not alter any selected-atom clause disposition below.
 
-On the final merged tree, a fresh bare `make lean-report` exited `0` and
+On the 9014 merged tree, a fresh bare `make lean-report` exited `0` and
 produced:
 
 ```text
 input_address = sha256:bdb5001081468f123f50a4dd126daa1fa36e05a16a101106c6d883a60cd033eb
 report_sha256 = 6f04896a66cee2f912b6feaf1f52f662badbd4dbf20b444a8b07843344ec73d8
+```
+
+The final quiet-base replay began with the local shared ref already at the
+exact target, without a fetch. The clean A branch used the exact
+non-destructive merge:
+
+```sh
+git merge --no-edit 82a22f50e60bbbda2312b6dc8365679ee1a3ec6e
+```
+
+Exit `0`; it completed without conflict as
+`ddd7f3bbb2a5556fe8613fe8f91d7bb95e6c6ba9`. Its parents and final content
+base are:
+
+```text
+parents = ecb3cb2dbfa74dd83c2dc3d4b5be73d975935d66 82a22f50e60bbbda2312b6dc8365679ee1a3ec6e
+origin/dev = 82a22f50e60bbbda2312b6dc8365679ee1a3ec6e
+merge-base(origin/dev, HEAD) = 82a22f50e60bbbda2312b6dc8365679ee1a3ec6e
+```
+
+The complete `9014d610..82a22f50` delta is 361 inserted lines in exactly
+three new paths: the Lean, Scribe, and emitted Blueprint files for
+`GoldenSubstStartSharpness`. Its six public theorems give an exact
+fractional-part formula for the golden substitution-start error, its closed
+golden window, Fibonacci-index fractional-part identities, and sharpness of
+the two window endpoints.
+
+A search across all three incoming paths for the exact selected atom ID exited
+`1`. A second focused search exited `1` with no `UniversalSolenoid`,
+`PontryaginDual`, `HiddenAddress`, `hiddenKernelAddEquiv`, solenoid, profinite,
+p-adic, exact-sequence, prime-register, coverage, receipt, or GICT-residual
+occurrence. No `Meta/Digestion` path changed, so the incoming delta contains no
+formalization or coverage record for any atom. It does not alter a selected
+GICT theorem 6.1 clause disposition.
+
+On the final merged tree, a fresh bare `make lean-report` exited `0` and
+produced:
+
+```text
+input_address = sha256:0a9de7f48c13d3da15657f9615e7faba79b183712e22f9eebc7ce4a769cb81d3
+report_sha256 = 7ad53ea4e0bf474f49b4312cf27453d6b9885920a9c263991d157c65ee79323f
 ```
 
 ## Atom and authoritative statement
@@ -472,9 +513,9 @@ rg -n 'PontryaginDual' \
 found the generic definition, functorial map, topology/group instances, and
 finite-abelian double-dual results only. It found no rational specialization.
 
-The historical f94 replay had 1,560 refs. The final merged-tree census had
-1,572, so this bounded all-ref query was repeated with the complete final ref
-list and only Lean paths:
+The historical f94 replay had 1,560 refs. The 9014 merged-tree census had
+1,572, so this bounded all-ref query was repeated with that complete ref list
+and only Lean paths:
 
 ```sh
 set -o pipefail
@@ -636,7 +677,7 @@ lake build \
 
 Exit `0`; Lean reported `Build completed successfully (8563 jobs)`.
 
-After the final merge to content base `9014d610`, the refreshed scoped build
+After the merge to content base `9014d610`, the refreshed scoped build
 included the modules defining and constructing the additive kernel equivalence:
 
 ```sh
