@@ -579,8 +579,8 @@ public sealed partial class ReviewRegressionTests
         Assert.Contains("--producer", inspectJob, StringComparison.Ordinal);
         Assert.Contains("--candidate-root", inspectJob, StringComparison.Ordinal);
         Assert.Contains("candidate-lean-report.json", inspectJob, StringComparison.Ordinal);
-        // Lean inspection produces the candidate report only.
-        Assert.Contains("--single", inspectJob, StringComparison.Ordinal);
+        // Lean inspection produces the candidate report without the retired no-op flag.
+        Assert.DoesNotContain("--single", inspectJob, StringComparison.Ordinal);
         Assert.DoesNotContain("--baseline-root", inspectJob, StringComparison.Ordinal);
         Assert.Contains("stratalint-lean-report-input-v1", pairProducer, StringComparison.Ordinal);
         Assert.Contains("stratalint-lean-report-provenance-v1", pairProducer, StringComparison.Ordinal);
