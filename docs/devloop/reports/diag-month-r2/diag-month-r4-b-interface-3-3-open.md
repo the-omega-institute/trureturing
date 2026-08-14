@@ -62,8 +62,8 @@ theorem countable_tower_anonymous_full_measure
         volume (Set.univ : Set X)
 ```
 
-The current raw Lean report records `kind=theorem` and exactly the standard
-axiom closure `{Classical.choice, Quot.sound, propext}`. Freeze event
+The historical pre-merge raw Lean report records `kind=theorem` and exactly the
+standard axiom closure `{Classical.choice, Quot.sound, propext}`. Freeze event
 `Golden/Frozen/accepted/ede6971b3c411fdc6e6112621f6515f2636dba8a4441eba63dccadb69241e638.json`
 pins the declaration at deposit commit
 `166af8c9b899a01292d7eb51591f38ab36c25354`.
@@ -216,8 +216,10 @@ rg -n -C 15 '定理 3\.3|常道守恒|命名系统|匿名集|扩张塔' \
 
 Relevant exact hits were `NamingSystem.lean`,
 `NamingTowerConservation.lean`, mathlib `NoAtoms.lean`, and mathlib
-`NullMeasurable.lean`. No third-party search was needed after the exact pinned
-carrier and its complete dependency path were established.
+`NullMeasurable.lean`. A third-party Lean ecosystem search was not run. Search
+for an external declaration supplying either the probability specialization or
+the compatible-tower limit-system bridge is therefore incomplete; this is
+additional `open` evidence, not a nonexistence claim.
 
 Decision: the atom remains operationally `open`. The existing theorem is a
 substantive partial carrier, but no executable closure path currently exists:
@@ -279,10 +281,14 @@ No unavailable item is passed as verified or replaced by
 Verification reached in this lane:
 
 - `make dotnet`: exit `0`, zero warnings and errors.
+- Post-merge scoped
+  `lake build D5.S0.Naming.Conservation.NamingTowerConservation`: exit `0`;
+  Lean reported `Build completed successfully (2441 jobs)`. This command printed
+  no axiom diagnostics.
 - Historical pre-merge `make lean-report`: exit `0`; report SHA-256
   `bd7a5210d459c3a5fd8af2e051888c3695ffa1c72f6e456e6b6b8822ffa63be2`.
-- Current-base `digest-status --formalize-candidates`: exit `0`; 137 candidates;
-  snapshot SHA-256
+- Historical pre-merge `digest-status --formalize-candidates`: exit `0`; 137
+  candidates; snapshot SHA-256
   `b5e23ac94a0aed91fb5fdc655f651eccd8731186c3a51c5077dc9683b9717316`.
 - Selected `make show-atom`: exit `0`, all hashes matched.
 - No deposit, cover, preflight, push, or PR was run. The two fidelity gaps and
