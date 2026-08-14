@@ -147,11 +147,23 @@ internal sealed partial class GitRepositoryGateway : IRepositoryGateway
                 "--"))
             .Concat(ParseNulStrings(GitBytes("ls-files", "--others", "--exclude-standard", "-z"))
                 .Select(static path => (Path: path, Kind: RawChangeKind.Added)))
-            .Distinct()
+            .GroupBy(static change => change.Path, StringComparer.Ordinal)
+            .Select(static group => group
+                .OrderBy(static change => ChangeKindPriority(change.Kind))
+                .First())
             .OrderBy(static change => change.Path, StringComparer.Ordinal)
             .ToArray();
         return new PreparedRepository(revision, changeBase, RawChangeSet.CreateWithKinds(changes));
     }
+
+    private static int ChangeKindPriority(RawChangeKind kind) => kind switch
+    {
+        RawChangeKind.Deleted => 0,
+        RawChangeKind.Added => 1,
+        RawChangeKind.Modified => 2,
+        RawChangeKind.Copied => 3,
+        _ => throw new InvalidOperationException($"unsupported raw change kind: {kind}"),
+    };
 
     public RawRepositorySnapshot ReadCurrent() => GitRepositorySnapshotReader.ReadCurrent(root);
 

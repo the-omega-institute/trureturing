@@ -136,7 +136,6 @@ public sealed class LeanReportPairScriptTests
                     $"STRATALINT_SUPERVISOR_ROOT={Path.Combine(temporary.Path, "supervisor")}",
                     "bash",
                     script,
-                    "--single",
                     "--producer", producer,
                     "--lake-bin", "/usr/bin/true",
                     "--candidate-root", candidateRoot,
