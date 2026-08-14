@@ -10,6 +10,21 @@ namespace StrataLint.Tests;
 public sealed partial class FrozenLedgerTests
 {
     private const string RecoordinateSource = "theorem a : True := by trivial\n";
+
+    internal static (string Path, string Contents) EnvironmentRecoordinateDagEvent()
+    {
+        var payload = JsonSerializer.SerializeToElement(EnvironmentPayload(EnvironmentFixture()));
+        var encoded = FrozenLedgerCanonicalWriter.WriteDagEvent(
+            FrozenLedger.EnvironmentRecoordinateEventType,
+            payload);
+        var identity = FrozenLedgerCanonicalWriter.EventIdentity(
+            FrozenLedger.EnvironmentRecoordinateEventType,
+            payload,
+            encoded.Hash);
+        return (
+            $"{FrozenLedgerChangeClassifier.AcceptedRoot}/{identity[7..]}.json",
+            System.Text.Encoding.UTF8.GetString(encoded.Bytes.AsSpan()));
+    }
     private const string UnprovedEquivalence = "representation-migration; equivalence-unproved";
 
     [Fact]

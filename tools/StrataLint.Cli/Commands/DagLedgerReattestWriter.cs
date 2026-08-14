@@ -124,7 +124,10 @@ internal static class DagLedgerReattestWriter
                     "accepted event files changed while ledger-reattest was validating them");
             }
 
-            DagLedgerAppendWriter.WriteEventFiles(context.LedgerPath, newFiles);
+            DagLedgerAppendWriter.WriteEventFiles(
+                context.LedgerPath,
+                newFiles,
+                context.BaselineBytes);
             var appended = candidate.Events
                 .Skip(context.Baseline.Events.Length)
                 .OfType<FrozenLedgerEvent.Reattest>()
@@ -158,7 +161,7 @@ internal static class DagLedgerReattestWriter
             return new CommandResult(
                 false,
                 string.Empty,
-                "LEDGER_REATTEST_FAILED " + (exception.InnerException ?? exception).Message + "\n");
+                DagLedgerAppendWriter.RenderFailure("LEDGER_REATTEST_FAILED", exception));
         }
     }
 

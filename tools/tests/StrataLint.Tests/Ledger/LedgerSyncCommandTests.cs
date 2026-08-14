@@ -115,13 +115,12 @@ public sealed class LedgerSyncCommandTests
             fixture.CandidateCatalog);
         var generatedSyntax = Assert.IsType<DagLedgerLoadOutcome.Loaded>(
             DagLedgerLoader.Load(generatedBytes.AsSpan())).Syntax;
-        var pending = DagLedgerAppendWriter.PrepareNewEvents(
-            fixture.LedgerPath,
+        var pending = DagLedgerAppendWriter.BuildNewEventFiles(
             generatedSyntax.Lines,
-            fixture.Baseline.Events.Length).ToImmutableArray();
+            fixture.Baseline.Events.Length);
         var prospectiveFiles = Directory.EnumerateFiles(fixture.LedgerPath, "*.json")
             .Select(ReadEventFile)
-            .Concat(pending.Select(static item => EventFile(item.Path, item.Bytes)))
+            .Concat(pending)
             .ToImmutableArray();
         var replayed = DagLedgerCommandPreparation.LoadLedgerFiles(
             prospectiveFiles,
@@ -164,13 +163,12 @@ public sealed class LedgerSyncCommandTests
             fixture.CandidateCatalog);
         var generatedSyntax = Assert.IsType<DagLedgerLoadOutcome.Loaded>(
             DagLedgerLoader.Load(generatedBytes.AsSpan())).Syntax;
-        var pending = DagLedgerAppendWriter.PrepareNewEvents(
-            fixture.LedgerPath,
+        var pending = DagLedgerAppendWriter.BuildNewEventFiles(
             generatedSyntax.Lines,
-            fixture.Baseline.Events.Length).ToImmutableArray();
+            fixture.Baseline.Events.Length);
         var prospectiveFiles = Directory.EnumerateFiles(fixture.LedgerPath, "*.json")
             .Select(ReadEventFile)
-            .Concat(pending.Select(static item => EventFile(item.Path, item.Bytes)))
+            .Concat(pending)
             .ToImmutableArray();
         var replayed = DagLedgerCommandPreparation.LoadLedgerFiles(
             prospectiveFiles,

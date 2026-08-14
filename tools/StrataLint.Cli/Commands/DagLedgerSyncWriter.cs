@@ -64,12 +64,10 @@ internal static class DagLedgerSyncWriter
                     "accepted event files changed while ledger-sync was validating them");
             }
 
-            var pending = DagLedgerAppendWriter.PrepareNewEvents(
-                context.LedgerPath,
+            var pending = DagLedgerAppendWriter.BuildNewEventFiles(
                 generatedSyntax.Lines,
-                context.Baseline.Events.Length).ToImmutableArray();
-            var prospectiveFiles = baselineFiles.AddRange(pending.Select(item =>
-                DagLedgerCommandPreparation.CreateLedgerRepositoryFile(item.Path, item.Bytes)));
+                context.Baseline.Events.Length);
+            var prospectiveFiles = baselineFiles.AddRange(pending);
             var candidateSyntax = DagLedgerCommandPreparation.LoadLedgerFiles(
                 prospectiveFiles,
                 "prospective frozen ledger");
@@ -87,8 +85,13 @@ internal static class DagLedgerSyncWriter
                     "prospective frozen ledger history is invalid: " + rejected.Message),
                 _ => throw new InvalidOperationException("unknown ledger validation outcome"),
             };
-            var candidateBytes = candidateSyntax.RawBytes;
-            PublishAtomically(context.LedgerPath, pending, candidateBytes);
+            // Publication goes through the one shared publisher so ledger-sync inherits the
+            // exclusive writer lock, the in-lock baseline compare-and-swap and stale-stage
+            // reaping instead of carrying a second write path.
+            DagLedgerAppendWriter.WriteEventFiles(
+                context.LedgerPath,
+                pending,
+                context.BaselineBytes);
 
             var suffix = generated.Events.Skip(context.Baseline.Events.Length).ToImmutableArray();
             var reattests = suffix.OfType<FrozenLedgerEvent.Reattest>().ToImmutableArray();
@@ -119,69 +122,4 @@ internal static class DagLedgerSyncWriter
         }
     }
 
-    private static void PublishAtomically(
-        string ledgerPath,
-        ImmutableArray<DagLedgerAppendWriter.PendingEventFile> pending,
-        ImmutableArray<byte> candidateBytes)
-    {
-        var transactionPath = Path.Combine(ledgerPath, $".ledger-sync-{Guid.NewGuid():N}");
-        var staged = new List<(string StagedPath, string TargetPath)>();
-        var published = new List<string>();
-        try
-        {
-            foreach (var item in pending)
-            {
-                if (File.Exists(item.Path))
-                {
-                    throw new IOException($"ledger-sync target already exists: {Path.GetFileName(item.Path)}");
-                }
-            }
-
-            Directory.CreateDirectory(transactionPath);
-            foreach (var item in pending)
-            {
-                var stagedPath = Path.Combine(
-                    transactionPath,
-                    Path.GetFileName(item.Path) + ".pending");
-                using var stream = new FileStream(
-                    stagedPath,
-                    FileMode.CreateNew,
-                    FileAccess.Write,
-                    FileShare.None);
-                stream.Write(item.Bytes.AsSpan());
-                stream.Flush(flushToDisk: true);
-                staged.Add((stagedPath, item.Path));
-            }
-
-            foreach (var item in staged)
-            {
-                File.Move(item.StagedPath, item.TargetPath);
-                published.Add(item.TargetPath);
-            }
-
-            Directory.Delete(transactionPath);
-            var written = DagLedgerCommandPreparation.LoadLedgerDirectory(
-                ledgerPath,
-                "written frozen ledger");
-            if (!written.RawBytes.AsSpan().SequenceEqual(candidateBytes.AsSpan()))
-            {
-                throw new InvalidOperationException(
-                    "written ledger-sync events do not replay to the validated candidate bytes");
-            }
-        }
-        catch
-        {
-            foreach (var path in published.AsEnumerable().Reverse())
-            {
-                File.Delete(path);
-            }
-
-            if (Directory.Exists(transactionPath))
-            {
-                Directory.Delete(transactionPath, recursive: true);
-            }
-
-            throw;
-        }
-    }
 }

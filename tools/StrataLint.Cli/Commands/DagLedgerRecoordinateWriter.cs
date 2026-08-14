@@ -87,19 +87,12 @@ internal static class DagLedgerRecoordinateWriter
             DagLedgerAppendWriter.WriteNewEvents(
                 context.LedgerPath,
                 candidateSyntax.Lines,
-                context.Baseline.Events.Length);
+                context.Baseline.Events.Length,
+                context.BaselineBytes);
             var appended = candidate.Events
                 .Skip(context.Baseline.Events.Length)
                 .OfType<FrozenLedgerEvent.EnvironmentRecoordinate>()
                 .ToImmutableArray();
-            var written = DagLedgerCommandPreparation.LoadLedgerDirectory(
-                context.LedgerPath,
-                "written frozen ledger");
-            if (!written.RawBytes.AsSpan().SequenceEqual(generation.Bytes.AsSpan()))
-            {
-                throw new InvalidOperationException(
-                    "written EnvironmentRecoordinate events do not replay to the validated candidate bytes");
-            }
 
             var output = $"LEDGER_RECOORDINATE appended_recoordinates={appended.Length} "
                 + $"requires_reattest={generation.ReattestPaths.Length} "
@@ -122,7 +115,7 @@ internal static class DagLedgerRecoordinateWriter
             return new CommandResult(
                 false,
                 string.Empty,
-                "LEDGER_RECOORDINATE_FAILED " + (exception.InnerException ?? exception).Message + "\n");
+                DagLedgerAppendWriter.RenderFailure("LEDGER_RECOORDINATE_FAILED", exception));
         }
     }
 
