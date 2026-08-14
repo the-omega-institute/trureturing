@@ -54,9 +54,9 @@ rather than taken as a Lake dependency because the upstream pins
 `51e6992efd06126df61a496bebf8f49482a4e129`, while this repository pins
 `v4.31.0` and mathlib `fabf563a7c95a166b8d7b6efca11c8b4dc9d911f`; the
 machine comparison therefore rejects the dependency form. The port is
-Apache-2.0, Copyright 2026 Anthropic, PBC; the retained license and NOTICE are
-`D5/S3/Weil/ZetaCore/LICENSE` and `D5/S3/Weil/ZetaCore/NOTICE`. The NOTICE keeps
-the complete derivation chain Zeta23 <- PrimeNumberTheoremAnd <- mathlib, and
+Apache-2.0, Copyright 2026 Anthropic, PBC; the complete license and verbatim
+NOTICE are retained with the code in `D5/S3/Weil/ZetaCore/Defs`. The NOTICE
+keeps the complete derivation chain Zeta23 <- PrimeNumberTheoremAnd <- mathlib, and
 ported files retain their source and modification notices. The port obeys the
 ordinary GID routing, six-line header, import-order, and capacity rules, and
 the bridge theorem's axiom closure contains only `propext`, `Classical.choice`,

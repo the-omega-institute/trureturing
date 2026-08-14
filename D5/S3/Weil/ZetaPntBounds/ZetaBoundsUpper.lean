@@ -1,6 +1,6 @@
 /- GID: D5/S3/Weil/ZetaPntBounds/ZetaBoundsUpper
    generality: G
-   mirror-B: D5/B/S3/Weil/ZetaPntBounds/ZetaBoundsUpper
+   mirror-B: none(waiver:formal-unit-only)
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    digest: Port the upper-bound foundation of the Zeta23 zeta estimates. -/
@@ -608,4 +608,3 @@ lemma mul_le_mul₃ {α : Type*} {a b c d e f : α} [MulZeroClass α] [Preorder 
     [MulPosMono α] (h₁ : a ≤ b) (h₂ : c ≤ d) (h₃ : e ≤ f) (c0 : 0 ≤ c) (b0 : 0 ≤ b)
     (e0 : 0 ≤ e) : a * c * e ≤ b * d * f := by
   apply mul_le_mul (mul_le_mul h₁ h₂ c0 b0) h₃ e0 <| mul_nonneg b0 <| le_trans c0 h₂
-

@@ -1,6 +1,6 @@
 /- GID: D5/S3/Weil/ZetaPntBounds/ZetaBoundsDerivative
    generality: G
-   mirror-B: D5/B/S3/Weil/ZetaPntBounds/ZetaBoundsDerivative
+   mirror-B: none(waiver:formal-unit-only)
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    digest: Port the zeta and derivative upper bounds. -/
@@ -639,4 +639,3 @@ lemma ZetaDerivUpperBnd :
   rw [(by ring : aa + (bb + cc) + dd + ee + ff = aa + bb + cc + dd + ee + ff)]
   apply le_trans (by apply norm_add₆_le) ?_
   convert ZetaDerivUpperBnd' hA t_gt ⟨σ_ge, σ_le⟩
-

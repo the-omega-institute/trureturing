@@ -1,6 +1,6 @@
 /- GID: D5/S3/Weil/ZetaBridge/ClassicExplicitFormula
    generality: I
-   mirror-B: D5/B/S3/Weil/ZetaBridge/ClassicExplicitFormula
+   mirror-B: none(waiver:formal-unit-only)
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    digest: Transport the hypothesis-free zeta formula into the frozen Weil vocabulary. -/

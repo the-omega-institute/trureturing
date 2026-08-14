@@ -1,6 +1,6 @@
 /- GID: D5/S3/Weil/ZetaExplicit/FullLineAssembly
    generality: G
-   mirror-B: D5/B/S3/Weil/ZetaExplicit/FullLineAssembly
+   mirror-B: none(waiver:formal-unit-only)
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    digest: Port the Zeta23 full-line explicit-formula assembly. -/

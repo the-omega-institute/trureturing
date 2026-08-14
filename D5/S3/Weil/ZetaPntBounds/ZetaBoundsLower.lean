@@ -1,6 +1,6 @@
 /- GID: D5/S3/Weil/ZetaPntBounds/ZetaBoundsLower
    generality: G
-   mirror-B: D5/B/S3/Weil/ZetaPntBounds/ZetaBoundsLower
+   mirror-B: none(waiver:formal-unit-only)
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    digest: Port the lower and inverse zeta bounds. -/
@@ -664,4 +664,3 @@ lemma ZetaLowerBnd :
   exact_mod_cast ineq
 
 -- **End collaboration 6/20/25**
-

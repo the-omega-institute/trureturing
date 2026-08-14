@@ -1,6 +1,6 @@
 /- GID: D5/S3/Weil/ZetaLinear/Sylvester
    generality: G
-   mirror-B: D5/B/S3/Weil/ZetaLinear/Sylvester
+   mirror-B: none(waiver:formal-unit-only)
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    digest: Port the Zeta23 Sylvester inertia inequality. -/

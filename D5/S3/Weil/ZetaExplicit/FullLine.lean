@@ -1,6 +1,6 @@
 /- GID: D5/S3/Weil/ZetaExplicit/FullLine
    generality: G
-   mirror-B: D5/B/S3/Weil/ZetaExplicit/FullLine
+   mirror-B: none(waiver:formal-unit-only)
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    digest: Port the Zeta23 full-line archimedean integral. -/
@@ -380,7 +380,7 @@ theorem verticals_eq (hk : ContDiff ℝ 2 k) (hkc : HasCompactSupport k) {c : �
     VIntegral (fun s => Hfn k s * logDeriv completedRiemannZeta s) c (-R) R
       - VIntegral (fun s => Hfn k s * logDeriv completedRiemannZeta s) (1 - c) (-R) R
       = I • ∫ t in (-R)..R, Fline k c t := by
-  
+
   set L := logDeriv completedRiemannZeta with hL
   have hLc : Continuous (fun t : ℝ => L ((c : ℂ) + t * I)) := by
     have : (fun t : ℝ => L ((c:ℂ) + t * I)) = fun t : ℝ => logDeriv Complex.Gammaℝ ((c : ℂ) + t * I)
