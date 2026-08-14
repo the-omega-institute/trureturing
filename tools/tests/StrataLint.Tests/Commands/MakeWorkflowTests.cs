@@ -127,9 +127,13 @@ public sealed partial class MakeWorkflowTests
         var perfEvents = File.ReadAllText(Path.Combine(root, PerfEventScriptPath));
         var makefile = File.ReadAllText(Path.Combine(root, "Makefile"));
 
-        Assert.Contains("make -C candidate dotnet", workflow, StringComparison.Ordinal);
-        Assert.Contains("make -C candidate tools-test", workflow, StringComparison.Ordinal);
-        Assert.Contains("make -C candidate selftest", workflow, StringComparison.Ordinal);
+        // expand 窗口(阶段 5 前置):engineering 三连按候选布局探测 make 门
+        // (tools/Makefile 存在 → tools 门,否则根门)。contract 由阶段 5 的
+        // tools-only ci.yml 收尾。
+        Assert.Contains("[ -f candidate/tools/Makefile ] && hdir=candidate/tools", workflow, StringComparison.Ordinal);
+        Assert.Contains("make -C \"$hdir\" dotnet", workflow, StringComparison.Ordinal);
+        Assert.Contains("make -C \"$hdir\" \"$target\"", workflow, StringComparison.Ordinal);
+        Assert.Contains("make -C \"$hdir\" selftest", workflow, StringComparison.Ordinal);
         Assert.Contains("lean-report-pair.sh", localGate, StringComparison.Ordinal);
         Assert.Contains("--single", localGate, StringComparison.Ordinal);
         Assert.Contains("--skip-engineering", localGate, StringComparison.Ordinal);
