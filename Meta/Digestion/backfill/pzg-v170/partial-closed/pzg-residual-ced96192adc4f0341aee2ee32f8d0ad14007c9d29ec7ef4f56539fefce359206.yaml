@@ -4,6 +4,7 @@ fingerprints:
   normalized_sha256: sha256:ced96192adc4f0341aee2ee32f8d0ad14007c9d29ec7ef4f56539fefce359206
 cas_ref: sha256:ced96192adc4f0341aee2ee32f8d0ad14007c9d29ec7ef4f56539fefce359206
 coverage_gids:
+  - D5/S3/Analytic/Dilation/MellinDilationFlow.mellin_eq_fourier_on_dilation_flow
   - D5/S3/Weil/CriticalLine.unitarity_line_iff
 receipts:
   coverage:
@@ -15,7 +16,6 @@ receipts:
       definition_sha256: sha256:fe2a3a38af39fb6e6498a29f28d4602422aa2c8ae0b332747d831fc4398de0e4
       emission_sha256: sha256:ebc04544e4e36b1093d9c151fcb9b778350cd9ce5842b81b0946ab91347d4bbd
   unresolved_subitems:
-    - mellin-transform-as-fourier-on-dilation-flow
     - every-zeta-value-as-compressed-history
     - zeros-as-global-cancellation-at-frequency-and-weight
     - eta-cesaro-cancellation-and-nearby-endpoint-certificates
