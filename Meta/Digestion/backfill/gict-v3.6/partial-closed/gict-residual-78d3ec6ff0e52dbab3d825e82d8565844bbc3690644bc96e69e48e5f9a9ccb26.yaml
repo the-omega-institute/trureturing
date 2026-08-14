@@ -4,6 +4,7 @@ fingerprints:
   normalized_sha256: sha256:78d3ec6ff0e52dbab3d825e82d8565844bbc3690644bc96e69e48e5f9a9ccb26
 cas_ref: sha256:78d3ec6ff0e52dbab3d825e82d8565844bbc3690644bc96e69e48e5f9a9ccb26
 coverage_gids:
+  - D5/S1/Phase/Interference/DedekindBhkCertificates.bhk_four_nine_certificate
   - D5/S1/Phase/Interference/DedekindBhkCertificates.bhk_three_four_certificate
   - D5/S1/Phase/SeatTowerArithmetic.bhk_implies_w3_walk
   - D5/S1/Phase/WalkFormula.alternating_walk_append
