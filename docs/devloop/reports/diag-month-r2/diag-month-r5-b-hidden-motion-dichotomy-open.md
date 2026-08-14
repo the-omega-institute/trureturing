@@ -32,54 +32,73 @@ worktree = /Users/mstudio3/trureturing-diag-month-r4-b
 branch = harness/diag-month-r5-b
 ```
 
-The reviewed report commit before this final synchronization was:
+The reviewed report commit before this final-base replay was:
 
 ```text
-cb08d5a2707e068e2f47b21bbdb3f8d5a98695ee
+b7ee9b7e1319294ceb1ffe91f0bfbefd853fe6f5
 ```
 
-The current integration base and the branch merge point are distinct:
+The exact assigned integration base and the branch merge point are distinct:
 
 ```text
-origin/dev                       = 4551a412d3dfbf5bcaa25755e34bbf8481c1a3e8
-final synchronization merge HEAD = 074102830aae8814b38271f130a0e6c9a8ffec70
+origin/dev                   = f94e87a89fd0a681936647038edf285f21eee916
+final-base replay merge HEAD = 8bcaa70e6c64deb554a1bb4439d7ae4ebae0689e
 ```
 
-`origin/dev` was merged non-destructively into the reviewed report commit with:
+`origin/dev` resolved to the exact assigned SHA before the merge. That commit
+was merged non-destructively into the reviewed report commit with:
 
 ```sh
-git merge --no-edit origin/dev
+git merge --no-edit f94e87a89fd0a681936647038edf285f21eee916
 ```
 
-Exit `0`; there were no conflicts. The merge commit has parents `cb08d5a2` and
-`4551a412`. The incoming range from the preceding base
-`88fb4a9cc3d56cf08747a948ffc014af57a0e4cd` contains only the
-GoldenDesubstitutionClosedForms theorem and its Blueprint/Scribe projections:
+Exit `0`; there were no conflicts. The merge commit has parents `b7ee9b7e` and
+`f94e87a8`. The incoming range from the preceding base
+`4551a412d3dfbf5bcaa25755e34bbf8481c1a3e8` contains exactly:
 
 ```text
-A Blueprint/D5/S1/Deficit/Displacement/GoldenDesubstitutionClosedForms.md
-A Blueprint/D5/S1/Deficit/Displacement/GoldenDesubstitutionClosedForms.scribe.cs
-A D5/S1/Deficit/Displacement/GoldenDesubstitutionClosedForms.lean
+A Blueprint/D5/S1/Deficit/Displacement/GoldenContractionRadicalBound.md
+A Blueprint/D5/S1/Deficit/Displacement/GoldenContractionRadicalBound.scribe.cs
+A Blueprint/D5/S3/Weil/PrimeAddress/PrimeLogIndependence.md
+A Blueprint/D5/S3/Weil/PrimeAddress/PrimeLogIndependence.scribe.cs
+A D5/S1/Deficit/Displacement/GoldenContractionRadicalBound.lean
+A D5/S3/Weil/PrimeAddress/PrimeLogIndependence.lean
+M Meta/Digestion/backfill/pzg-v170/partial-closed/pzg-residual-735b1de95a92d627f7b786f4057931534c910317ef85684289e944e322cb4659.yaml
 ```
 
-The incoming range contains no digestion, formalization receipt, frozen-record,
-hidden-motion, solenoid, backfill, coverage, report, or rejected-candidate path.
-It is unrelated to the selected hidden-motion atom, and no candidate artifact
-was touched or restored by the merge.
+The `PrimeLogIndependence` theorem and the modified PZG backfill record belong
+to atom `735b1de95a92d627f7b786f4057931534c910317ef85684289e944e322cb4659`,
+not the selected hidden-motion atom
+`85ace51c6a4dd01566ad4ee14028fc48bba25db190a01a8d09917eb4d6262f52`.
+The record delta adds
+`D5/S3/Weil/PrimeAddress/PrimeLogIndependence.prime_log_rational_independence`
+to `coverage_gids` and removes only
+`log-prime-rational-independence-from-unique-factorization` from that same
+atom's unresolved list. The golden-contraction files are also disjoint from
+hidden motion.
+
+A path-scoped `git diff --name-only 4551a412..f94e87a8` over this report, the
+selected atom's canonical backfill record, and all three rejected candidate
+paths exited `0` with no output. A direct `git diff --exit-code` over the
+selected canonical record also exited `0`; its tracked blob remains
+`9f66c6fb5e79b27689b9ec9b4c8b7c6f2aa5d352`. Thus the incoming range neither
+changes the selected atom's status data nor touches or restores a candidate
+artifact.
 
 `git merge-base origin/dev HEAD` returned the exact `origin/dev` SHA above, and
 `git merge-base --is-ancestor origin/dev HEAD` exited `0`. Thus `origin/dev` is
-the candidate-status base, while `07410283` is the branch merge commit on which
+the candidate-status base, while `8bcaa70e` is the branch merge commit on which
 this final evidence refresh was prepared; the refresh commit is its descendant.
+Immediately after the merge, all three rejected-path absence tests exited `0`.
 
-The live PATH declaration was read from
+The live PATH declaration had been read from
 `tools/scripts/local-harness-gate.sh` and applied. `make help` exited `0` and was
 read as the canonical command catalogue. The earlier correction's `make dotnet`
 run exited `0`, building all Release projects with zero warnings and zero
-errors. The final incoming range changed no C# or tool path; this synchronization
-was assigned to refresh the Lean report and status evidence, not rerun .NET.
+errors. The final incoming range changes no C# or tool path.
 
-`make lean-report` was rerun on the merged tree and exited `0` with:
+The preceding quiet-window attempt ran bare `make lean-report` on `b7ee9b7e`
+before this final-base merge and exited `0` with:
 
 ```text
 input_address = sha256:7c06971ecfda1ceb649b61deda7af1a48eaeb0f42542ec8887d09e95c0c977bf
@@ -87,6 +106,22 @@ report_sha256 = d1fc400f4d539060fdf1af46aaba31228b1ef2d382588eaa7e38c4fdb32054d5
 mode = cached
 source_side = candidate
 ```
+
+That report is not claimed as final-base evidence. Its following bare
+`make gate BASE=origin/dev` exited `0` and emitted an admission receipt, but it
+also emitted:
+
+```text
+BASE_ADVANCED pinned=4551a412d3dfbf5bcaa25755e34bbf8481c1a3e8 observed=f94e87a89fd0a681936647038edf285f21eee916
+```
+
+The attempt was therefore stale and invalid. After the exact merge, a
+pre-production `digest-status` probe failed closed with exit `2` because that
+old raw report did not contain the newly merged
+`GoldenContractionRadicalBound.lean` and `PrimeLogIndependence.lean` modules.
+No status conclusion is drawn from that stale projection. Fresh bare
+`make lean-report` and `make gate BASE=origin/dev` runs are reserved for after
+this report commit, so this report does not preclaim their terminal results.
 
 ## Atom and authoritative statement
 
@@ -186,38 +221,20 @@ the restored current placement.
 
 ## Current candidate and receipt status
 
-The canonical status command was rerun on the merged tree with its complete
-JSON redirected to an isolated temporary file for exact machine parsing:
+The exact canonical backfill record on final base `f94e87a8` still has empty
+coverage and receipts. `make show-atom` exited `0` after the merge and verified
+matching raw, normalized, and CAS hashes for the selected atom. The selected
+record's blob is unchanged across `4551a412..f94e87a8`, while the only incoming
+PZG status change is the separately keyed partial-closed atom `735b1de9...`
+described above. The selected atom therefore remains `residual-open`; no
+incoming formalization receipt, coverage GID, or deposited artifact closes it.
 
-```sh
-dotnet run --no-build \
-  --project tools/StrataLint.Cli/StrataLint.Cli.csproj \
-  --configuration Release -- \
-  digest-status --formalize-candidates --base origin/dev
-```
-
-The invocation exited `0`. `jq -e` also exited `0` while selecting the exact
-atom record. The parsed result was:
-
-```text
-schema = stratalint-formalize-candidates-v3
-ledger_sha256 = sha256:92c7b162f1956e991864a0aef8e84a34cd5983a9ef7b8f0107570bdd6e5745dc
-candidate_count = 128
-match_count = 1
-source_id = pzg-v170
-ast_path = corollary/20.4
-kind = corollary
-cas_ref = sha256:85ace51c6a4dd01566ad4ee14028fc48bba25db190a01a8d09917eb4d6262f52
-selected_withheld_matches = []
-selected_recorded_formalizations = []
-```
-
-The exact canonical backfill record has empty coverage and receipts, and the
-selected atom remains exactly one current formalization candidate. The only
-exact-ID report hit is this diagnostic report; no formalization receipt or
-deposited coverage artifact was found. The incoming desubstitution range adds no
-receipt or digestion path: the total candidate count remains `128`, and it does
-not change the selected atom's status.
+The old formalization-candidate projection had counted `128` candidates, but
+that count is not repeated as a final-base measurement here: the final-base
+projection correctly requires the fresh post-commit Lean report. The canonical
+per-atom record and exact non-overlap diff are the status evidence available
+before that production step, and neither is stale with respect to the merged
+base.
 
 ## Clause-level statement echo
 
