@@ -20,8 +20,8 @@ internal sealed class PriceFaceOrderDocument : IScribeDocumentDefinition
 
     private static Formula Display(Formula formula) => F.Disp(formula);
 
-    private static Formula TradeReceipt(string witness) => F.Seq(
-        F.Operatorname, F.Grp(F.Id("tradeReceipt")), F.Open, F.Id(witness), F.Close);
+    private static Formula TradeReceipt(bool witness) => F.Seq(
+        F.Operatorname, F.Grp(F.Id("tradeReceipt")), F.Open, F.Id(witness ? "true" : "false"), F.Close);
 
     private static Formula PriceFace() => F.Seq(
         F.Operatorname, F.Grp(F.Id("priceFace")), F.Open,
@@ -118,8 +118,8 @@ internal sealed class PriceFaceOrderDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create(LeanPrefix + "trade_true_not_le_false"),
                 H("The forward trade receipt is not below the reverse trade receipt"),
                 StatementSource.FromAuthor(Display(F.Seq(
-                    F.Neg, F.Open, TradeReceipt("true"), F.Sp, F.Leq, F.Sp,
-                    TradeReceipt("false"), F.Close))),
+                    F.Neg, F.Open, TradeReceipt(true), F.Sp, F.Leq, F.Sp,
+                    TradeReceipt(false), F.Close))),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "The receipt with the forward-time and forward-space assignment exchanged in "
@@ -132,8 +132,8 @@ internal sealed class PriceFaceOrderDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create(LeanPrefix + "trade_false_not_le_true"),
                 H("The reverse trade receipt is not below the forward trade receipt"),
                 StatementSource.FromAuthor(Display(F.Seq(
-                    F.Neg, F.Open, TradeReceipt("false"), F.Sp, F.Leq, F.Sp,
-                    TradeReceipt("true"), F.Close))),
+                    F.Neg, F.Open, TradeReceipt(false), F.Sp, F.Leq, F.Sp,
+                    TradeReceipt(true), F.Close))),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "The converse comparison fails for the dual reason: the reverse branch would "
@@ -161,15 +161,15 @@ internal sealed class PriceFaceOrderDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create(LeanPrefix + "trade_face_two_incomparable_minima"),
                 H("The concrete trade face has two distinct incomparable minima"),
                 StatementSource.FromAuthor(Display(F.Seq(
-                    TradeReceipt("true"), F.Sp, F.InMacro, F.Sp,
+                    TradeReceipt(true), F.Sp, F.InMacro, F.Sp,
                     F.Id("tradeFace"), F.Sp, F.Land, F.Sp,
-                    TradeReceipt("false"), F.Sp, F.InMacro, F.Sp,
+                    TradeReceipt(false), F.Sp, F.InMacro, F.Sp,
                     F.Id("tradeFace"), F.Sp, F.Land, F.Sp,
-                    TradeReceipt("true"), F.Sp, F.Neq, F.Sp, TradeReceipt("false"),
-                    F.Sp, F.Land, F.Sp, F.Neg, F.Open, TradeReceipt("true"), F.Sp,
-                    F.Leq, F.Sp, TradeReceipt("false"), F.Close, F.Sp, F.Land, F.Sp,
-                    F.Neg, F.Open, TradeReceipt("false"), F.Sp, F.Leq, F.Sp,
-                    TradeReceipt("true"), F.Close))),
+                    TradeReceipt(true), F.Sp, F.Neq, F.Sp, TradeReceipt(false),
+                    F.Sp, F.Land, F.Sp, F.Neg, F.Open, TradeReceipt(true), F.Sp,
+                    F.Leq, F.Sp, TradeReceipt(false), F.Close, F.Sp, F.Land, F.Sp,
+                    F.Neg, F.Open, TradeReceipt(false), F.Sp, F.Leq, F.Sp,
+                    TradeReceipt(true), F.Close))),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "Both concrete receipts are reachable from valid Boolean witnesses and are "
