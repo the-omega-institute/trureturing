@@ -31,36 +31,42 @@ public sealed partial class MakeWorkflowTests
     private const string LeanReportPairScriptPath = "tools/scripts/lean-report-pair.sh";
     private const string PerfReportScriptPath = "tools/scripts/perf-report.sh";
     private const string PerfEventScriptPath = "tools/scripts/perf-event-lib.sh";
+    private const string ToolsMakefilePath = "tools/Makefile";
     private const string AdmissionWorkflowPath = ".github/workflows/ci.yml";
     private const string TheoryIngestWorkflowPath = ".github/workflows/theory-ingest.yml";
     private const string PrOpenScriptPath = "tools/scripts/pr.sh open";
 
-    private static readonly string[] Targets =
+    private static readonly string[] RootTargets =
     [
         "help",
-        "dotnet",
         "test",
-        "tools-test",
         "lean-cache-ensure",
         "lean",
         "lean-report",
         "build",
-        "clean-lanes",
         "emit",
         "ingest",
         "echo-residual-summary",
-        "selftest",
-        "gate",
-        "preflight",
-        "perf-report",
+        "show-atom",
         "deliver-check",
         "receipts-stage",
         "derived-refresh",
         "deposit",
         "cover",
-        "show-atom",
         "worktree",
         "pr-open",
+        "preflight",
+        "gate",
+    ];
+
+    private static readonly string[] ToolsTargets =
+    [
+        "help",
+        "dotnet",
+        "test",
+        "selftest",
+        "perf-report",
+        "clean-lanes",
         "refactor-p0-0-gate-authority",
     ];
 
@@ -127,9 +133,18 @@ public sealed partial class MakeWorkflowTests
         var perfEvents = File.ReadAllText(Path.Combine(root, PerfEventScriptPath));
         var makefile = File.ReadAllText(Path.Combine(root, "Makefile"));
 
-        Assert.Contains("make -C candidate dotnet", workflow, StringComparison.Ordinal);
-        Assert.Contains("make -C candidate tools-test", workflow, StringComparison.Ordinal);
-        Assert.Contains("make -C candidate selftest", workflow, StringComparison.Ordinal);
+        Assert.Contains("make -C candidate/tools dotnet", workflow, StringComparison.Ordinal);
+        Assert.Contains("make -C candidate/tools test", workflow, StringComparison.Ordinal);
+        Assert.Contains("make -C candidate/tools selftest", workflow, StringComparison.Ordinal);
+        Assert.Contains("make -C \"$CANDIDATE_ROOT/tools\" dotnet", localGate, StringComparison.Ordinal);
+        Assert.Contains("make -C \"$CANDIDATE_ROOT/tools\" test", localGate, StringComparison.Ordinal);
+        Assert.Contains("make -C \"$CANDIDATE_ROOT/tools\" selftest", localGate, StringComparison.Ordinal);
+        Assert.Contains("CI=true make -C tools dotnet", preflight, StringComparison.Ordinal);
+        Assert.Contains(
+            "CI=true STRATALINT_REQUIRE_LIVE_REPORT=1 make -C tools test",
+            preflight,
+            StringComparison.Ordinal);
+        Assert.Contains("make -C tools selftest", preflight, StringComparison.Ordinal);
         Assert.Contains("lean-report-pair.sh", localGate, StringComparison.Ordinal);
         Assert.Contains("--single", localGate, StringComparison.Ordinal);
         Assert.Contains("--skip-engineering", localGate, StringComparison.Ordinal);
@@ -205,10 +220,10 @@ public sealed partial class MakeWorkflowTests
         var root = TestRepositoryLayout.FindRoot();
         var preflight = File.ReadAllText(Path.Combine(root, PreflightScriptPath));
 
-        var dotnetIndex = preflight.IndexOf("CI=true make dotnet", StringComparison.Ordinal);
+        var dotnetIndex = preflight.IndexOf("CI=true make -C tools dotnet", StringComparison.Ordinal);
         var leanReportIndex = preflight.IndexOf("make lean-report", StringComparison.Ordinal);
         var testIndex = preflight.IndexOf(
-            "CI=true STRATALINT_REQUIRE_LIVE_REPORT=1 make tools-test",
+            "CI=true STRATALINT_REQUIRE_LIVE_REPORT=1 make -C tools test",
             StringComparison.Ordinal);
 
         Assert.True(dotnetIndex >= 0, "preflight must build the .NET report consumer");
@@ -229,7 +244,7 @@ public sealed partial class MakeWorkflowTests
             "BASE_SHA=\"$(git rev-parse --verify \"${BASE_REF}^{commit}\")\"",
             StringComparison.Ordinal);
         var ancestorIndex = preflight.IndexOf("merge-base --is-ancestor", StringComparison.Ordinal);
-        var buildIndex = preflight.IndexOf("CI=true make dotnet", StringComparison.Ordinal);
+        var buildIndex = preflight.IndexOf("CI=true make -C tools dotnet", StringComparison.Ordinal);
 
         Assert.True(fetchIndex >= 0, "preflight must perform the run's single base fetch");
         Assert.True(pinIndex > fetchIndex, "the exact base OID must be resolved after the fetch");

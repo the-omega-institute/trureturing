@@ -35,16 +35,16 @@ Run:
 eval "$(sed -n '/^export PATH=/p' tools/scripts/local-harness-gate.sh)"
 # If not already in a dispatcher-assigned isolated lane:
 make worktree NAME=<lane> && cd <created-path-from-output>
-pwd -P && git rev-parse --show-toplevel && make dotnet
+pwd -P && git rev-parse --show-toplevel && make -C tools dotnet
 ```
 
 Re-read the current `export PATH` from `tools/scripts/local-harness-gate.sh` for every task rather than trusting a list quoted elsewhere; its `/usr/sbin` entry must survive because the report supervisor requires `lsof`, which lives there. If a dispatcher already assigned an isolated lane, do not create a second one: confirm the existing lane with the same `pwd -P` / `git rev-parse --show-toplevel` check. Otherwise, the `make worktree` output is JSON whose `path` field names the created path; substitute that value for `<created-path-from-output>` and work only there.
 
-Build through the canonical `make dotnet` door because `make show-atom` runs the Release CLI with `--no-build`.
+Build through the canonical `make -C tools dotnet` door because `make show-atom` runs the Release CLI with `--no-build`.
 
 Before any deposit, require `git status --short` to print nothing except the intended formalization changes. Prefer a fully clean tree before beginning the task. The deposit workflow in `tools/scripts/workflow/playbook-workflows.sh` stages with `git add -A` in both `commit_phase_a_if_needed` and `commit_all_if_needed`; therefore every change in the tree can enter a deposit commit.
 
-Postcondition: the pinned toolchain is on PATH; `pwd -P` and `git rev-parse --show-toplevel` agree with the assigned or created isolated lane; `make dotnet` has built the CLI so `make show-atom` succeeds; and no unrelated or unexplained change is present.
+Postcondition: the pinned toolchain is on PATH; `pwd -P` and `git rev-parse --show-toplevel` agree with the assigned or created isolated lane; `make -C tools dotnet` has built the CLI so `make show-atom` succeeds; and no unrelated or unexplained change is present.
 
 ### 1. Choose exactly one open atom
 
