@@ -177,9 +177,6 @@ internal sealed class StubCliEnvironment(
     public CommandResult CoverAtom(IReadOnlyList<string> arguments) =>
         new(false, string.Empty, "cover-atom is not configured in this fixture");
 
-    public CommandResult CheckFidelityAttestation(IReadOnlyList<string> arguments) =>
-        new(false, string.Empty, "fidelity attestation is not configured in this fixture");
-
     public CommandResult AlignScribeReceipt(IReadOnlyList<string> arguments) =>
         new(false, string.Empty, "align-scribe-receipt is not configured in this fixture");
 
