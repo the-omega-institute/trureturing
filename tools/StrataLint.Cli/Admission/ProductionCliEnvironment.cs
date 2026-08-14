@@ -274,9 +274,6 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
                 scribeEmissionVerifier,
                 arguments);
 
-    public CommandResult CheckFidelityAttestation(IReadOnlyList<string> arguments) =>
-        CheckFidelityAttestationCommand.Run(repository, leanReportSource, arguments);
-
     public CommandResult AlignScribeReceipt(IReadOnlyList<string> arguments)
     {
         if (scribeEmissionVerifier is null)
