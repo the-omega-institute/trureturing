@@ -1,0 +1,70 @@
+name: One-shot append unified relativity sections
+
+on:
+  push:
+    branches:
+      - agent/hilbert-orthogonal-quotient-remainder-tower
+
+permissions:
+  contents: write
+
+jobs:
+  append-and-self-delete:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: agent/hilbert-orthogonal-quotient-remainder-tower
+          fetch-depth: 0
+
+      - name: Append sections 29 and 30 without rewriting prior bytes
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+
+          target = Path("docs/develop/theory/QUANTITATIVE_DIAGONALIZATION_OBSERVER_COMPLETION.md")
+          chunk_dir = Path(".github/qdo-append")
+          chunks = sorted(chunk_dir.glob("chunk-*.md"))
+          if not chunks:
+              raise SystemExit("append chunks are missing")
+
+          payload = b"".join(p.read_bytes() for p in chunks)
+          data = target.read_bytes()
+          marker29 = "# 29. 追加：以 Hilbert 正交商余塔分析 Riemann 假设".encode("utf-8")
+          marker30 = "# 30. 追加：界面相对性、对角闭合与量子上下文完成".encode("utf-8")
+          has29 = marker29 in data
+          has30 = marker30 in data
+
+          if has29 != has30:
+              raise SystemExit("partial prior append detected; refusing to duplicate or rewrite")
+
+          if not has29:
+              if data and not data.endswith(b"\n"):
+                  data += b"\n"
+              if data and not data.endswith(b"\n\n"):
+                  data += b"\n"
+              data += payload.lstrip(b"\n")
+              if not data.endswith(b"\n"):
+                  data += b"\n"
+              target.write_bytes(data)
+          PY
+
+          rm -rf .github/qdo-append
+          rm -f .github/workflows/one-shot-append-relative-completion.yml
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A -- \
+            docs/develop/theory/QUANTITATIVE_DIAGONALIZATION_OBSERVER_COMPLETION.md \
+            .github/qdo-append \
+            .github/workflows/one-shot-append-relative-completion.yml
+
+          if git diff --cached --quiet; then
+            echo "No append or self-deletion change required."
+            exit 0
+          fi
+
+          git commit -m "docs(theory): append interface relativity and quantum context completion"
+          git push origin HEAD:agent/hilbert-orthogonal-quotient-remainder-tower
