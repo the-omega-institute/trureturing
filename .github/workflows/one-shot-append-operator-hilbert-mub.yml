@@ -1,0 +1,64 @@
+name: One-shot append operator Hilbert MUB completion
+
+on:
+  push:
+    branches:
+      - agent/hilbert-orthogonal-quotient-remainder-tower
+
+permissions:
+  contents: write
+
+jobs:
+  append-and-self-delete:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: agent/hilbert-orthogonal-quotient-remainder-tower
+          fetch-depth: 0
+
+      - name: Append section 31 without rewriting prior bytes
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+
+          target = Path("docs/develop/theory/QUANTITATIVE_DIAGONALIZATION_OBSERVER_COMPLETION.md")
+          chunk_dir = Path(".github/qdo-append31")
+          chunks = sorted(chunk_dir.glob("chunk-*.md"))
+          if not chunks:
+              raise SystemExit("section 31 append chunks are missing")
+
+          payload = b"".join(p.read_bytes() for p in chunks)
+          data = target.read_bytes()
+          marker = "# 31. 追加：算子 Hilbert 坐标塔、互补对角与三类量子闭合缺陷".encode("utf-8")
+
+          if marker not in data:
+              if data and not data.endswith(b"\n"):
+                  data += b"\n"
+              if data and not data.endswith(b"\n\n"):
+                  data += b"\n"
+              data += payload.lstrip(b"\n")
+              if not data.endswith(b"\n"):
+                  data += b"\n"
+              target.write_bytes(data)
+          PY
+
+          rm -rf .github/qdo-append31
+          rm -f .github/workflows/one-shot-append-operator-hilbert-mub.yml
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A -- \
+            docs/develop/theory/QUANTITATIVE_DIAGONALIZATION_OBSERVER_COMPLETION.md \
+            .github/qdo-append31 \
+            .github/workflows/one-shot-append-operator-hilbert-mub.yml
+
+          if git diff --cached --quiet; then
+            echo "No append or self-deletion change required."
+            exit 0
+          fi
+
+          git commit -m "docs(theory): append operator Hilbert MUB defect calculus"
+          git push origin HEAD:agent/hilbert-orthogonal-quotient-remainder-tower
