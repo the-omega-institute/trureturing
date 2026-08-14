@@ -1,0 +1,23 @@
+### 定理 24.1（\(d_\gamma\) 是有界伪度量）
+
+\(d_\gamma\) 满足：
+
+\[
+\boxed{
+0\le d_\gamma(y,y')\le D,
+}
+\]
+\[
+d_\gamma(y,y)=0,
+\]
+\[
+d_\gamma(y,y')=d_\gamma(y',y),
+\]
+\[
+\boxed{
+d_\gamma(y,z)
+\le
+d_\gamma(y,y')+d_\gamma(y',z).
+}
+\]
+

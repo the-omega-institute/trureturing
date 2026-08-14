@@ -1,0 +1,13 @@
+## 定理 8.3（秩差恢复零 Jordan 块）
+
+定义
+\[
+a_k=\operatorname{rank}(L_\tau^k)-|P_\tau|,
+\qquad
+b_k=a_{k-1}-a_k.
+\]
+则 \(b_k\) 等于大小至少为 \(k\) 的零 Jordan 块数；大小恰为 \(k\) 的块数为
+\[
+\boxed{b_k-b_{k+1}.}
+\]
+

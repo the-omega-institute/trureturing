@@ -1,0 +1,38 @@
+### 定理 19.3（有限 Kleene 下降与最大同余）
+
+有递推式
+\[
+\boxed{
+\equiv_{m+1}=\Phi(\equiv_m),
+\qquad
+\equiv_0=\ker q.}
+\]
+并且
+\[
+\boxed{
+\equiv_\infty
+=
+\bigcap_{m\ge0}\equiv_m
+=
+\equiv_{m_*}.}
+\]
+关系 \(\equiv_\infty\) 是包含于 \(\ker q\) 的最大 \(\tau\)-同余，即：
+
+1. \(\equiv_\infty\subseteq\ker q\)；
+2. \(y\equiv_\infty y'\Rightarrow\tau y\equiv_\infty\tau y'\)；
+3. 若等价关系 \(R\subseteq\ker q\) 且
+   \[
+   yRy'\Longrightarrow\tau y\,R\,\tau y',
+   \]
+   则
+   \[
+   R\subseteq\equiv_\infty.
+   \]
+
+等价地，
+\[
+\boxed{
+\equiv_\infty=\nu R.\,\Phi(R),}
+\]
+即它是 \(\Phi\) 的最大不动点。
+

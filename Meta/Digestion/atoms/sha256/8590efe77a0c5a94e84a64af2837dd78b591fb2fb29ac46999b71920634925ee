@@ -1,0 +1,36 @@
+### 定理 27.3（最大共同因子的泛性质）
+
+设
+\[
+r:Y\twoheadrightarrow W
+\]
+是一个动力学因子：存在
+\[
+\theta:W\to W
+\]
+满足
+\[
+r\tau=\theta r.
+\]
+再假设该因子可以分别从两个完成确定地计算，即存在
+\[
+a_i:Z_{q_i}\to W
+\]
+满足
+\[
+r=a_i\pi_{q_i}
+\quad(i=1,2).
+\]
+则存在唯一满射
+\[
+\boxed{
+h:Z_{\mathrm{common}}\twoheadrightarrow W
+}
+\]
+使
+\[
+r=h\pi_{\mathrm{common}}.
+\]
+
+因此 \(Z_{\mathrm{common}}\) 是两个预测完成的**最细共同确定因子**。
+

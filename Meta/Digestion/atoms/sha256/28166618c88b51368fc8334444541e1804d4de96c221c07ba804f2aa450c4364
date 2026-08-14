@@ -1,0 +1,10 @@
+### 定理 19.7（最小自然化）
+
+设满射 \(r:Y\twoheadrightarrow W\) 保留原读出，即 \(q=or\)。若存在 \(\sigma:W\to W\)，使对任意非空地址集和任意评价表都有
+\[
+Q_r\Delta_\tau
+=
+\Delta_\sigma P_r,
+\]
+则 \(r\tau=\sigma r\)，并存在唯一满射 \(h:W\twoheadrightarrow Z_q\) 使 \(\pi_q=hr\)。
+

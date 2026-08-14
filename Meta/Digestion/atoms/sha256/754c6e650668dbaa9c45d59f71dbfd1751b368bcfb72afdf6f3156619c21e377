@@ -1,0 +1,18 @@
+### 定理 24.3（Bellman 算子的压缩性与唯一不动点）
+
+在一致范数
+\[
+\|p\|_\infty
+=
+\max_{y,y'}|p(y,y')|
+\]
+下，
+\[
+\boxed{
+\|\mathcal Tp-\mathcal Tp'\|_\infty
+\le
+\gamma\|p-p'\|_\infty.
+}
+\]
+因此 \(\mathcal T\) 有唯一有界不动点，且该不动点正是 \(d_\gamma\)。
+

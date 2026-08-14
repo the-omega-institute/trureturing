@@ -1,0 +1,35 @@
+### 定理 22.6（先细完成再粗完成的级联定理）
+
+设
+\[
+r=hq.
+\]
+在 \(Z_q\) 上定义粗读出
+\[
+r_q=h\overline q:Z_q\to P.
+\]
+令 \(\widehat R_{r|q}\) 是系统
+\[
+(Z_q,\overline\tau_q,r_q)
+\]
+的无限未来等价关系。则
+\[
+\boxed{
+\pi_q(y)\,\widehat R_{r|q}\,\pi_q(y')
+\iff
+yR_ry'.
+}
+\]
+因此
+\[
+\boxed{
+Z_q/\widehat R_{r|q}
+\cong
+Z_r,
+}
+\]
+并且该同构把二次完成投影识别为
+\[
+\kappa_{q,r}:Z_q\twoheadrightarrow Z_r.
+\]
+

@@ -3620,3 +3620,4290 @@ m_*
 12. 两个二元窗口反例的有限枚举验证。
 
 在获得 proof term、依赖闭包与冻结收据以前，本节不得标记为 `Closed`。
+
+---
+
+# 22. 追加：观察精化的函子性、同余内核与多观察者融合
+
+第 19 节已经对单一读出
+\[
+q:Y\to O
+\]
+构造了最小预测完成
+\[
+Z_q=Y/{\equiv_\infty^q}.
+\]
+本节研究不同观察界面之间的关系。核心问题不再是“一个观察是否闭合”，而是：
+
+1. 当一个读出比另一个更细时，它们的完成是否存在规范映射；
+2. 先完成再粗化，是否等价于直接完成粗读出；
+3. 多个观察者联合时，完成状态是简单直积，还是只占据直积中的兼容子集；
+4. 状态数、完成深度与信息成本在观察精化下分别怎样变化。
+
+这些问题给出一个比单点最小化更稳定的结构：预测完成不是孤立商，而组成一个由观察精化驱动的规范商塔。
+
+固定非空有限集合 \(Y\) 与自映射
+\[
+\tau:Y\to Y.
+\]
+对任意读出 \(q:Y\to O\)，把 \(O\) 替换为实际像 \(q(Y)\)，并定义
+\[
+y\,R_q\,y'
+\iff
+q(\tau^k y)=q(\tau^k y')
+\quad\text{对全部 }k\ge0.
+\]
+于是
+\[
+R_q=\equiv_\infty^q,
+\qquad
+Z_q=Y/R_q,
+\qquad
+\pi_q:Y\twoheadrightarrow Z_q.
+\]
+商动力学与商读出记为
+\[
+\overline\tau_q([y]_q)=[\tau y]_q,
+\qquad
+\overline q([y]_q)=q(y).
+\]
+
+## 22.1 观察精化与规范商映射
+
+### 定义 22.1（观察精化）
+
+设
+\[
+q:Y\to O,
+\qquad
+r:Y\to P.
+\]
+称 \(q\) **精化** \(r\)，记为
+\[
+q\succeq_{\mathrm{obs}} r,
+\]
+若存在映射
+\[
+h:O\to P
+\]
+使
+\[
+\boxed{r=h\circ q.}
+\]
+这表示 \(r\) 可以从 \(q\) 的当前读数确定地计算出来；\(q\) 至少保留 \(r\) 的全部当前信息。
+
+### 定理 22.2（预测关系随观察精化单调）
+
+若
+\[
+r=h\circ q,
+\]
+则
+\[
+\boxed{R_q\subseteq R_r.}
+\]
+因此存在唯一满射
+\[
+\boxed{
+\kappa_{q,r}:Z_q\twoheadrightarrow Z_r
+}
+\]
+满足
+\[
+\boxed{
+\pi_r=\kappa_{q,r}\pi_q.
+}
+\]
+并且该映射同时保持动力学与读出：
+\[
+\boxed{
+\kappa_{q,r}\overline\tau_q
+=
+\overline\tau_r\kappa_{q,r},
+}
+\]
+\[
+\boxed{
+\overline r\,\kappa_{q,r}
+=
+h\,\overline q.
+}
+\]
+
+### 证明
+
+若 \(yR_qy'\)，则对每个 \(k\ge0\)，
+\[
+q(\tau^k y)=q(\tau^k y').
+\]
+施加 \(h\) 得
+\[
+r(\tau^k y)
+=
+h(q(\tau^k y))
+=
+h(q(\tau^k y'))
+=
+r(\tau^k y'),
+\]
+故 \(yR_ry'\)。于是 \(\pi_r\) 在每个 \(\pi_q\)-纤维上常值，唯一因子化为
+\[
+\pi_r=\kappa_{q,r}\pi_q.
+\]
+由于 \(\pi_r\) 满射，\(\kappa_{q,r}\) 亦满射。
+
+对任意 \(y\in Y\)，
+\[
+\begin{aligned}
+\kappa_{q,r}\overline\tau_q(\pi_q y)
+&=
+\kappa_{q,r}(\pi_q(\tau y))\\
+&=
+\pi_r(\tau y)\\
+&=
+\overline\tau_r(\pi_r y)\\
+&=
+\overline\tau_r\kappa_{q,r}(\pi_q y).
+\end{aligned}
+\]
+\(\pi_q\) 满射，所以动力学交换式成立。读出交换式同理：
+\[
+\overline r\kappa_{q,r}\pi_q
+=
+\overline r\pi_r
+=
+r
+=
+hq
+=
+h\overline q\pi_q.
+\]
+\(\square\)
+
+### 推论 22.3（规范映射的恒等与复合）
+
+有
+\[
+\boxed{\kappa_{q,q}=\mathrm{id}_{Z_q}.}
+\]
+若
+\[
+q\succeq_{\mathrm{obs}}r
+\succeq_{\mathrm{obs}}s,
+\]
+则
+\[
+\boxed{
+\kappa_{q,s}
+=
+\kappa_{r,s}\circ\kappa_{q,r}.
+}
+\]
+
+### 证明
+
+两式都由
+\[
+\pi_r=\kappa_{q,r}\pi_q
+\]
+的唯一因子化直接得到。对于复合，
+\[
+(\kappa_{r,s}\kappa_{q,r})\pi_q
+=
+\kappa_{r,s}\pi_r
+=
+\pi_s,
+\]
+故唯一性迫使它等于 \(\kappa_{q,s}\)。\(\square\)
+
+所以预测完成不是任意选择的最小模型。观察精化一旦给定，完成之间的映射便由原始状态投影唯一决定：
+\[
+\boxed{
+q\longmapsto Z_q,
+\qquad
+(q\succeq_{\mathrm{obs}}r)
+\longmapsto
+(Z_q\twoheadrightarrow Z_r).
+}
+\]
+更细观察产生更细预测状态；从细状态到粗状态的方向是规范满射，而不是非规范嵌入。
+
+### 推论 22.4（完成状态数的单调性）
+
+若
+\[
+q\succeq_{\mathrm{obs}}r,
+\]
+则
+\[
+\boxed{|Z_q|\ge |Z_r|.}
+\]
+
+这是一条状态数单调律，但它不蕴含完成深度 \(m_*\) 的单调性；第 22.8 节将给出严格反例。
+
+## 22.2 完成的幂等性与级联定理
+
+完成状态 \(Z_q\) 已经把所有无限未来可区分状态分开。该陈述需要与“当前读出已经构成一步封闭状态”严格区分。
+
+### 定理 22.5（预测完成的幂等性）
+
+在系统
+\[
+(Z_q,\overline\tau_q,\overline q)
+\]
+上重新定义无限未来等价：
+\[
+z\widehat R_q z'
+\iff
+\overline q(\overline\tau_q^k z)
+=
+\overline q(\overline\tau_q^k z')
+\quad\text{对全部 }k\ge0.
+\]
+则
+\[
+\boxed{
+\widehat R_q=\Delta_{Z_q},
+}
+\]
+其中 \(\Delta_{Z_q}\) 是相等关系。因此再次取预测完成不会产生新的状态识别：
+\[
+\boxed{
+Z_{\overline q}\cong Z_q.
+}
+\]
+
+### 证明
+
+取
+\[
+z=\pi_q(y),
+\qquad
+z'=\pi_q(y').
+\]
+若 \(z\widehat R_qz'\)，则对全部 \(k\ge0\)，
+\[
+q(\tau^k y)
+=
+\overline q(\overline\tau_q^k z)
+=
+\overline q(\overline\tau_q^k z')
+=
+q(\tau^k y').
+\]
+故 \(yR_qy'\)，于是
+\[
+z=\pi_q(y)=\pi_q(y')=z'.
+\]
+反向显然。\(\square\)
+
+这里不能推出
+\[
+m_*(\overline q,\overline\tau_q)=0.
+\]
+幂等性只说**无限未来等价已等于状态相等**；若 \(\overline q\) 当前仍把多个预测状态映到同一输出，观察者仍可能需要若干未来坐标才能从读出词识别具体的 \(z\in Z_q\)。
+
+### 定理 22.6（先细完成再粗完成的级联定理）
+
+设
+\[
+r=hq.
+\]
+在 \(Z_q\) 上定义粗读出
+\[
+r_q=h\overline q:Z_q\to P.
+\]
+令 \(\widehat R_{r|q}\) 是系统
+\[
+(Z_q,\overline\tau_q,r_q)
+\]
+的无限未来等价关系。则
+\[
+\boxed{
+\pi_q(y)\,\widehat R_{r|q}\,\pi_q(y')
+\iff
+yR_ry'.
+}
+\]
+因此
+\[
+\boxed{
+Z_q/\widehat R_{r|q}
+\cong
+Z_r,
+}
+\]
+并且该同构把二次完成投影识别为
+\[
+\kappa_{q,r}:Z_q\twoheadrightarrow Z_r.
+\]
+
+### 证明
+
+逐定义计算：
+\[
+\begin{aligned}
+\pi_q(y)\,\widehat R_{r|q}\,\pi_q(y')
+&\iff
+r_q(\overline\tau_q^k\pi_q y)
+=
+r_q(\overline\tau_q^k\pi_q y')
+\quad(\forall k)\\
+&\iff
+h\overline q(\pi_q\tau^k y)
+=
+h\overline q(\pi_q\tau^k y')
+\quad(\forall k)\\
+&\iff
+r(\tau^k y)=r(\tau^k y')
+\quad(\forall k)\\
+&\iff
+yR_ry'.
+\end{aligned}
+\]
+于是二次商的纤维恰是 \(R_r\)-类，故与 \(Y/R_r\) 规范同构。\(\square\)
+
+因此
+\[
+\boxed{
+\operatorname{Comp}(r)
+\cong
+\operatorname{Comp}
+\bigl(
+h\overline q:
+\operatorname{Comp}(q)\to P
+\bigr).
+}
+\]
+这给出完成与观察级联之间的精确相容性：先保留细观察的全部预测信息，再按 \(h\) 粗化并重新最小化，不会比从原系统直接构造粗完成多出或少掉状态。
+
+## 22.3 最大同余内核是关系格上的内算子
+
+第 19 节只对
+\[
+R=\ker q
+\]
+定义了 greatest-fixed-point。现在把它提升到任意等价关系。
+
+对 \(Y\) 上等价关系 \(R\)，定义
+\[
+\boxed{
+\mathsf C_\tau(R)
+=
+\bigcap_{k\ge0}
+(\tau^k\times\tau^k)^{-1}(R).
+}
+\]
+即
+\[
+y\,\mathsf C_\tau(R)\,y'
+\iff
+\tau^k y\,R\,\tau^k y'
+\quad\text{对全部 }k\ge0.
+\]
+
+### 定理 22.7（同余内核定理）
+
+\(\mathsf C_\tau\) 满足：
+
+1. \(\mathsf C_\tau(R)\) 是等价关系；
+2. 它是 \(\tau\)-同余：
+   \[
+   y\,\mathsf C_\tau(R)\,y'
+   \Longrightarrow
+   \tau y\,\mathsf C_\tau(R)\,\tau y';
+   \]
+3. 它收缩原关系：
+   \[
+   \boxed{\mathsf C_\tau(R)\subseteq R;}
+   \]
+4. 它对包含关系单调：
+   \[
+   R\subseteq S
+   \Longrightarrow
+   \mathsf C_\tau(R)\subseteq\mathsf C_\tau(S);
+   \]
+5. 它幂等：
+   \[
+   \boxed{
+   \mathsf C_\tau(\mathsf C_\tau(R))
+   =
+   \mathsf C_\tau(R);
+   }
+   \]
+6. 它是包含于 \(R\) 的最大 \(\tau\)-同余。
+
+等价地，若 \(\operatorname{Cong}_\tau(Y)\) 表示全部 \(\tau\)-同余，则对每个
+\[
+S\in\operatorname{Cong}_\tau(Y)
+\]
+有
+\[
+\boxed{
+S\subseteq R
+\iff
+S\subseteq\mathsf C_\tau(R).
+}
+\]
+
+### 证明
+
+每个
+\[
+(\tau^k\times\tau^k)^{-1}(R)
+\]
+都是等价关系，任意交仍是等价关系，得到第一项。
+
+若 \(y\mathsf C_\tau(R)y'\)，则对全部 \(k\ge0\)，
+\[
+\tau^{k+1}y\,R\,\tau^{k+1}y',
+\]
+故
+\[
+\tau y\,\mathsf C_\tau(R)\,\tau y'.
+\]
+第三项取 \(k=0\) 即得。第四项由逆像与交对包含关系的单调性得到。
+
+由于 \(\mathsf C_\tau(R)\) 本身已经是 \(\tau\)-同余，对任意 \(k\)，
+\[
+y\,\mathsf C_\tau(R)\,y'
+\Longrightarrow
+\tau^k y\,\mathsf C_\tau(R)\,\tau^k y',
+\]
+故
+\[
+\mathsf C_\tau(R)
+\subseteq
+\mathsf C_\tau(\mathsf C_\tau(R)).
+\]
+反向包含由第三项应用于关系 \(\mathsf C_\tau(R)\) 得到，故幂等。
+
+若 \(S\subseteq R\) 且 \(S\) 是 \(\tau\)-同余，则
+\[
+ySy'
+\Longrightarrow
+\tau^k y\,S\,\tau^k y'
+\Longrightarrow
+\tau^k y\,R\,\tau^k y'
+\]
+对全部 \(k\) 成立，所以
+\[
+S\subseteq\mathsf C_\tau(R).
+\]
+结合 \(\mathsf C_\tau(R)\subseteq R\)，得到最大性与最后的等价式。\(\square\)
+
+因此 \(\mathsf C_\tau\) 是等价关系格上的一个**内算子**：
+
+\[
+\boxed{
+\text{单调}
++
+\text{收缩}
++
+\text{幂等}.
+}
+\]
+
+它的固定点恰为 \(\tau\)-同余。第 19 节的预测关系只是特殊情形
+\[
+\boxed{
+R_q=\mathsf C_\tau(\ker q).
+}
+\]
+
+### 定理 22.8（有限下降与一般稳定界）
+
+令
+\[
+R_0=R,
+\qquad
+R_{m+1}
+=
+R\cap(\tau\times\tau)^{-1}(R_m).
+\]
+则
+\[
+R_m
+=
+\bigcap_{k=0}^{m}
+(\tau^k\times\tau^k)^{-1}(R),
+\]
+且最终稳定到
+\[
+\mathsf C_\tau(R).
+\]
+若 \(R\) 有 \(c_0\) 个等价类，则最小稳定指标 \(m_R\) 满足
+\[
+\boxed{
+m_R
+\le
+|Y/\mathsf C_\tau(R)|-c_0
+\le
+|Y|-c_0.
+}
+\]
+
+### 证明
+
+递推展开给出有限交公式。关系链逐步细化，商类数是从 \(c_0\) 开始、至多为 \(|Y|\) 的非降整数列。每次严格变化至少增加一个类，所以在至多
+\[
+|Y/\mathsf C_\tau(R)|-c_0
+\]
+次严格变化后稳定。一次稳定后，递推算子已到不动点，故永久稳定；极限由定理 22.7 的最大性等于 \(\mathsf C_\tau(R)\)。\(\square\)
+
+## 22.4 与 Koopman 不变闭包的有限对偶
+
+对等价关系 \(R\)，定义纤维常值代数
+\[
+\mathcal A_R
+=
+\{f:Y\to\mathbb C:
+yRy'\Longrightarrow f(y)=f(y')\}.
+\]
+令 Koopman 拉回为
+\[
+K_\tau f=f\circ\tau.
+\]
+定义包含 \(\mathcal A_R\) 的最小 \(K_\tau\)-不变含幺交换
+\(*\)-代数：
+\[
+\boxed{
+\mathsf K_\tau(\mathcal A_R)
+=
+\operatorname{alg}^*
+\left(
+\bigcup_{k\ge0}K_\tau^k\mathcal A_R
+\right).
+}
+\]
+
+### 定理 22.9（同余内核—Koopman 闭包对偶）
+
+有
+\[
+\boxed{
+\mathsf K_\tau(\mathcal A_R)
+=
+\mathcal A_{\mathsf C_\tau(R)}.
+}
+\]
+
+### 证明
+
+若
+\[
+y\,\mathsf C_\tau(R)\,y',
+\]
+则对全部 \(k\ge0\)，
+\[
+\tau^k y\,R\,\tau^k y'.
+\]
+所以对任意 \(f\in\mathcal A_R\)，
+\[
+K_\tau^k f(y)
+=
+f(\tau^k y)
+=
+f(\tau^k y')
+=
+K_\tau^k f(y').
+\]
+因此全部生成元以及由它们生成的代数都在
+\(\mathsf C_\tau(R)\)-类上常值：
+\[
+\mathsf K_\tau(\mathcal A_R)
+\subseteq
+\mathcal A_{\mathsf C_\tau(R)}.
+\]
+
+反之，令 \(C\) 遍历 \(R\)-等价类。其指示函数
+\[
+\mathbf 1_C
+\]
+属于 \(\mathcal A_R\)，而
+\[
+K_\tau^k\mathbf 1_C
+=
+\mathbf 1_{(\tau^k)^{-1}(C)}.
+\]
+有限多个这类指示函数的乘积给出所有有限联合分区原子的指示函数。稳定以后，这些原子正是
+\[
+\bigcap_{k\ge0}(\tau^k)^{-1}(C_k)
+\]
+的非空集合，也就是 \(\mathsf C_\tau(R)\)-类。故每个
+\(\mathsf C_\tau(R)\)-类的指示函数都属于生成代数，它们张成
+\(\mathcal A_{\mathsf C_\tau(R)}\)。得到反向包含。\(\square\)
+
+关系侧与代数侧的方向相反：
+
+\[
+\boxed{
+\mathsf C_\tau(R)\subseteq R
+\quad\Longleftrightarrow\quad
+\mathcal A_R
+\subseteq
+\mathcal A_{\mathsf C_\tau(R)}.
+}
+\]
+
+关系被细化，是为了恢复未来可区分性；可观测代数被扩张，是为了加入全部未来拉回坐标。二者不是两套完成，而是同一有限分区对偶的两种表示。
+
+取
+\[
+R=\ker q
+\]
+便恢复第 19 节：
+\[
+\boxed{
+\mathbb C^{Z_q}
+\cong
+\mathsf K_\tau(q^*\mathbb C^O).
+}
+\]
+
+## 22.5 有限词商塔中的分级动力学
+
+令
+\[
+R_m=\equiv_m^q,
+\qquad
+Z_m=Y/R_m.
+\]
+因为
+\[
+R_{m+1}\subseteq R_m,
+\]
+存在规范满射
+\[
+p_{m+1,m}:Z_{m+1}\twoheadrightarrow Z_m.
+\]
+
+在未稳定以前，\(\tau\) 一般不能定义为 \(Z_m\) 上的自映射；但它始终定义一个跨层映射。
+
+### 定理 22.10（分级移位）
+
+映射
+\[
+\boxed{
+s_m:Z_{m+1}\to Z_m,
+\qquad
+s_m([y]_{m+1})=[\tau y]_m
+}
+\]
+良定义。并且
+\[
+p_{m+1,m}([y]_{m+1})=[y]_m
+\]
+与 \(s_m\) 共同编码“删除当前读出坐标”的有限词移位。
+
+当
+\[
+R_{m_*}=R_{m_*+1}
+\]
+时，\(p_{m_*+1,m_*}\) 是双射，因而 \(s_{m_*}\) 经该双射识别为
+\[
+Z_{m_*}=Z_q
+\]
+上的闭合动力学 \(\overline\tau_q\)。
+
+### 证明
+
+若
+\[
+yR_{m+1}y',
+\]
+则
+\[
+q(\tau^{k+1}y)=q(\tau^{k+1}y')
+\quad(0\le k\le m),
+\]
+故
+\[
+\tau y\,R_m\,\tau y'.
+\]
+所以 \(s_m\) 良定义。稳定时两个关系相等，规范满射成为双射；此时同一公式正是商动力学。\(\square\)
+
+因此有限深度观察不是“近似的闭合状态”那么简单。更精确的结构是：
+
+\[
+\boxed{
+Z_{m+1}
+\overset{s_m}{\longrightarrow}
+Z_m.
+}
+\]
+
+只有在稳定层，跨层移位才闭合为同层自映射。这个分级接口将在第 24 节给出定量误差解释。
+
+## 22.6 多观察者融合与兼容子积
+
+设 \(I\) 为非空有限指标集，对每个 \(i\in I\) 有读出
+\[
+q_i:Y\to O_i.
+\]
+定义联合读出
+\[
+q_I:Y\to\prod_{i\in I}O_i,
+\qquad
+q_I(y)=(q_i(y))_{i\in I}.
+\]
+
+### 定理 22.11（联合预测关系是交）
+
+有
+\[
+\boxed{
+R_{q_I}
+=
+\bigcap_{i\in I}R_{q_i}.
+}
+\]
+
+### 证明
+
+\[
+\begin{aligned}
+yR_{q_I}y'
+&\iff
+q_I(\tau^k y)=q_I(\tau^k y')
+\quad(\forall k)\\
+&\iff
+q_i(\tau^k y)=q_i(\tau^k y')
+\quad(\forall i,\forall k)\\
+&\iff
+yR_{q_i}y'
+\quad(\forall i).
+\end{aligned}
+\]
+\(\square\)
+
+于是存在规范映射
+\[
+\boxed{
+J_I:Z_{q_I}\longrightarrow\prod_{i\in I}Z_{q_i},
+\qquad
+J_I([y]_{q_I})=([y]_{q_i})_{i\in I}.
+}
+\]
+
+### 定理 22.12（融合完成嵌入与兼容像）
+
+\(J_I\) 是单射，并与各分量动力学交换。其像恰为兼容子集
+\[
+\boxed{
+\operatorname{Comp}_I
+=
+\left\{
+(z_i)_{i\in I}:
+\exists y\in Y,\quad
+\pi_{q_i}(y)=z_i\ \forall i
+\right\}.
+}
+\]
+因此
+\[
+\boxed{
+Z_{q_I}
+\cong
+\operatorname{Comp}_I
+\subseteq
+\prod_{i\in I}Z_{q_i}.
+}
+\]
+
+### 证明
+
+若
+\[
+J_I([y])=J_I([y']),
+\]
+则
+\[
+yR_{q_i}y'
+\quad\text{对全部 }i.
+\]
+由定理 22.11，
+\[
+yR_{q_I}y',
+\]
+故 \([y]=[y']\)，所以 \(J_I\) 单射。像的描述由定义直接得到。动力学交换式逐分量使用
+\[
+\pi_{q_i}\tau
+=
+\overline\tau_{q_i}\pi_{q_i}.
+\]
+\(\square\)
+
+对于两个观察者，记
+\[
+c_1=|Z_{q_1}|,
+\qquad
+c_2=|Z_{q_2}|,
+\qquad
+c_{12}=|Z_{(q_1,q_2)}|.
+\]
+
+### 推论 22.13（融合状态数界）
+
+有
+\[
+\boxed{
+\max(c_1,c_2)
+\le
+c_{12}
+\le
+\min(|Y|,c_1c_2).
+}
+\]
+
+### 证明
+
+联合读出精化每个分量读出，所以由定理 22.2 存在
+\[
+Z_{12}\twoheadrightarrow Z_i,
+\]
+得到下界。上界分别来自
+\[
+Z_{12}=Y/R_{12}
+\]
+是 \(Y\) 的商，以及定理 22.12 的直积嵌入。\(\square\)
+
+### 定理 22.14（直积充满判据）
+
+对两个观察者，下列条件等价：
+
+1. \(J_{\{1,2\}}\) 满射；
+2. 每对预测类
+   \[
+   C_1\in Z_{q_1},
+   \qquad
+   C_2\in Z_{q_2}
+   \]
+   都有非空交：
+   \[
+   C_1\cap C_2\ne\varnothing;
+   \]
+3. 有
+   \[
+   \boxed{c_{12}=c_1c_2.}
+   \]
+
+### 证明
+
+\(J\) 的像由定理 22.12 恰是存在共同实现状态的类对，所以 1 与 2 等价。\(J\) 已知单射，因此其像等于有限直积当且仅当两者基数相等，得到 1 与 3 等价。\(\square\)
+
+一般而言，
+\[
+Z_{12}
+\ne
+Z_1\times Z_2.
+\]
+两个观察者各自合法的预测状态组合，未必都能由同一个微观状态同时实现。直积中的缺失点不是信息损坏，而是**兼容性约束**。
+
+定义组合兼容亏损
+\[
+\boxed{
+\chi_{\mathrm{comp}}(q_1,q_2)
+=
+\log
+\frac{c_1c_2}{c_{12}}
+\ge0.
+}
+\]
+则
+\[
+\chi_{\mathrm{comp}}=0
+\]
+当且仅当全部预测状态对均可共同实现。
+
+这个量只测量支持集未充满直积的组合亏损。它不是给定概率分布下的互信息，也不是 partial information decomposition 意义下的“冗余”或“协同”。
+
+### 定理 22.15（独立直积系统的完全分解）
+
+设
+\[
+Y=Y_1\times Y_2,
+\qquad
+\tau(y_1,y_2)=(\tau_1y_1,\tau_2y_2),
+\]
+并令
+\[
+q_1'(y_1,y_2)=q_1(y_1),
+\qquad
+q_2'(y_1,y_2)=q_2(y_2).
+\]
+则
+\[
+\boxed{
+Z_{(q_1',q_2')}
+\cong
+Z_{q_1}\times Z_{q_2}
+}
+\]
+且动力学为分量商动力学的直积。
+
+### 证明
+
+联合未来读出相同，当且仅当第一分量的全部未来 \(q_1\)-读出相同且第二分量的全部未来 \(q_2\)-读出相同。因此联合等价类恰为
+\[
+[y_1]_{q_1}\times[y_2]_{q_2}.
+\]
+每个类对都由任意代表元对实现，所以定理 22.14 的充满条件成立。\(\square\)
+
+## 22.7 融合的 Shannon 恒等式
+
+令随机初态 \(Y_0\) 取值于 \(Y\)，定义
+\[
+Z_i=\pi_{q_i}(Y_0),
+\qquad
+Z_{12}=\pi_{(q_1,q_2)}(Y_0).
+\]
+定理 22.12 给出
+\[
+J(Z_{12})=(Z_1,Z_2),
+\]
+且 \(J\) 在 \(Z_{12}\) 上单射。
+
+### 定理 22.16（融合状态熵等于联合预测熵）
+
+有
+\[
+\boxed{
+H(Z_{12})
+=
+H(Z_1,Z_2).
+}
+\]
+因此
+\[
+\boxed{
+H(Z_{12})
+=
+H(Z_1)+H(Z_2\mid Z_1)
+}
+\]
+以及
+\[
+\boxed{
+H(Z_{12})
+=
+H(Z_2)+H(Z_1\mid Z_2).
+}
+\]
+
+### 证明
+
+有限随机变量在双射重命名下熵不变。\(J\) 把 \(Z_{12}\) 双射到随机向量 \((Z_1,Z_2)\) 的实际支持，故第一式成立；其余为 Shannon 链式法则。\(\square\)
+
+这给出两种不同的融合增益：
+
+\[
+\boxed{
+G^{\mathrm{card}}_{2\mid1}
+=
+\log\frac{c_{12}}{c_1}
+}
+\]
+是最坏情形的状态数增益，而
+\[
+\boxed{
+G^{\mathrm{Sh}}_{2\mid1}
+=
+H(Z_2\mid Z_1)
+}
+\]
+是给定初始分布下的平均增益。二者不能互换；前者只依赖支持与动力学，后者还依赖概率质量。
+
+## 22.8 完成深度在观察精化下不单调
+
+完成状态数随观察精化单调增加，但达到完成所需的未来词深度不满足同样的单调律。
+
+令
+\[
+Y_n=\{0,1,\ldots,n-1\},
+\qquad
+n\ge3,
+\]
+并定义向根收缩的链动力学
+\[
+\tau(0)=0,
+\qquad
+\tau(i)=i-1
+\quad(i\ge1).
+\]
+考虑三个读出：
+
+\[
+r(i)=0
+\quad\text{（常值读出）},
+\]
+\[
+q(i)=
+\begin{cases}
+1,&i=0,\\
+0,&i>0,
+\end{cases}
+\quad\text{（根脉冲读出）},
+\]
+\[
+e(i)=i
+\quad\text{（恒等读出）}.
+\]
+显然
+\[
+e\succeq_{\mathrm{obs}}q
+\succeq_{\mathrm{obs}}r.
+\]
+
+### 定理 22.17（精化深度的双向反例与稳定界锐性）
+
+上述系统满足
+\[
+\boxed{
+m_*(r)=0,
+\qquad
+m_*(q)=n-2,
+\qquad
+m_*(e)=0.
+}
+\]
+并且
+\[
+\boxed{
+|Z_r|=1,
+\qquad
+|Z_q|=|Z_e|=n.
+}
+\]
+
+因此：
+
+1. 从 \(r\) 精化到 \(q\) 时，完成深度从 \(0\) 增加到 \(n-2\)；
+2. 从 \(q\) 再精化到 \(e\) 时，完成深度从 \(n-2\) 降回 \(0\)；
+3. 第 19 节的界
+   \[
+   m_*\le|Y|-|O|
+   \]
+   对 \(q\) 取等号：
+   \[
+   \boxed{
+   m_*(q)=n-2=|Y_n|-|q(Y_n)|.
+   }
+   \]
+
+### 证明
+
+常值读出的所有有限词都相同，故 \(m_*(r)=0\)。
+
+恒等读出在当前时刻已经分离全部状态，所以 \(m_*(e)=0\)。
+
+对根脉冲读出，从状态 \(i\) 出发的无限输出为
+\[
+\underbrace{0,\ldots,0}_{i\text{ 项}},
+1,1,1,\ldots.
+\]
+故不同 \(i\) 给出不同无限轨迹，\(Z_q\) 有 \(n\) 个状态。状态 \(n-2\) 与 \(n-1\) 在时刻
+\[
+0,\ldots,n-3
+\]
+输出相同，并在时刻 \(n-2\) 首次不同，所以
+\[
+m_*(q)\ge n-2.
+\]
+任意两个状态 \(i<j\) 至迟在时刻 \(i\le n-2\) 首次不同，故
+\[
+m_*(q)\le n-2.
+\]
+于是等号成立。\(\square\)
+
+所以必须严格区分：
+
+\[
+\boxed{
+\text{完成状态数随观察精化单调，}
+}
+\]
+但
+\[
+\boxed{
+\text{完成深度不随观察精化单调。}
+}
+\]
+
+更细的当前读出可能立刻分离状态，从而缩短所需未来；也可能只暴露一条需要很久才显现的延迟差异，从而增加完成深度。
+
+
+---
+
+# 23. 追加：预测最小化算法、最短分辨证书与锐性样例
+
+第 19 节给出 \(Z_q\) 的存在性与泛性质，第 22 节给出它在观察精化下的规范结构。本节把这些对象改写成两个有限算法，并给出可由独立检查器验证的局部证书。
+
+固定
+\[
+|Y|=n,
+\qquad
+\tau:Y\to Y,
+\qquad
+q:Y\to O,
+\]
+并假设 \(O=q(Y)\)。
+
+两个算法回答不同问题：
+
+1. **分区细化算法**直接计算最小完成商 \(Z_q\)；
+2. **状态对反向算法**同时计算每一对状态的最早分辨时间。
+
+前者空间线性、适合构造商；后者空间二次、但提供逐对见证与精确 \(m_*\)。
+
+## 23.1 规范分区细化
+
+令
+\[
+c_0:Y\to C_0
+\]
+是 \(q\) 的规范类标签，即
+\[
+c_0(y)=c_0(y')
+\iff
+q(y)=q(y').
+\]
+递归定义签名
+\[
+\boxed{
+\operatorname{sig}_{m+1}(y)
+=
+\bigl(q(y),c_m(\tau y)\bigr),
+}
+\]
+再把相同签名规范重标为
+\[
+c_{m+1}:Y\to C_{m+1}.
+\]
+
+这里“规范重标”只要求
+\[
+c_{m+1}(y)=c_{m+1}(y')
+\iff
+\operatorname{sig}_{m+1}(y)
+=
+\operatorname{sig}_{m+1}(y').
+\]
+具体整数编号不承载数学意义。
+
+### 定理 23.1（签名标签等于有限未来词分区）
+
+对全部 \(m\ge0\)，
+\[
+\boxed{
+c_m(y)=c_m(y')
+\iff
+y\equiv_m^q y'.
+}
+\]
+因此算法第一次出现
+\[
+c_{m+1}\sim c_m
+\]
+的同一分区时，该 \(m\) 正是稳定深度 \(m_*\)，最终标签集合自然同构于 \(Z_q\)。
+
+### 证明
+
+对 \(m\) 归纳。
+
+当 \(m=0\) 时，
+\[
+c_0(y)=c_0(y')
+\iff
+q(y)=q(y'),
+\]
+正是 \(y\equiv_0^q y'\)。
+
+假设结论对 \(m\) 成立。则
+\[
+\begin{aligned}
+c_{m+1}(y)=c_{m+1}(y')
+&\iff
+q(y)=q(y')
+\ \text{且}\
+c_m(\tau y)=c_m(\tau y')\\
+&\iff
+q(y)=q(y')
+\ \text{且}\
+q(\tau^{k+1}y)=q(\tau^{k+1}y')
+\quad(0\le k\le m)\\
+&\iff
+q(\tau^k y)=q(\tau^k y')
+\quad(0\le k\le m+1)\\
+&\iff
+y\equiv_{m+1}^q y'.
+\end{aligned}
+\]
+归纳完成。\(\square\)
+
+### 算法 23.A（未来词分区细化）
+
+输入：
+
+- 状态列表 \(Y\)；
+- 后继表 \(\tau(y)\)；
+- 当前读出 \(q(y)\)。
+
+过程：
+
+1. 按 \(q(y)\) 对状态分组，得到 \(c_0\)；
+2. 在第 \(m\) 轮为每个状态计算
+   \[
+   (q(y),c_m(\tau y));
+   \]
+3. 对签名排序或哈希，生成 \(c_{m+1}\)；
+4. 若新旧分区相同则停止，否则继续。
+
+输出：
+
+- 完成类映射
+  \[
+  c_*:Y\twoheadrightarrow Z_q;
+  \]
+- 商转移
+  \[
+  \overline\tau(c_*(y))=c_*(\tau y);
+  \]
+- 稳定深度 \(m_*\)。
+
+### 定理 23.2（朴素算法复杂度）
+
+若每轮通过排序 \(n\) 个常数长度签名完成规范重标，则：
+
+\[
+\boxed{
+\text{轮数}
+\le
+n-|O|,
+}
+\]
+\[
+\boxed{
+\text{时间}
+=
+O\bigl(n(n-|O|+1)\log n\bigr),
+}
+\]
+\[
+\boxed{
+\text{额外空间}
+=
+O(n).
+}
+\]
+
+使用期望常数时间哈希时，期望时间可写为
+\[
+O\bigl(n(n-|O|+1)\bigr).
+\]
+
+### 证明
+
+初始分区有 \(|O|\) 类。每一轮若未停止，分区严格细化，所以类数至少增加一。类数至多为 \(n\)，故严格轮数至多
+\[
+n-|O|.
+\]
+每轮计算 \(n\) 个签名并排序，成本 \(O(n\log n)\)；只需保存当前、下一轮标签与签名数组，空间 \(O(n)\)。\(\square\)
+
+该界的轮数部分是锐的：第 22.8 节的根脉冲链恰需要
+\[
+n-2=n-|O|
+\]
+轮严格细化。
+
+## 23.2 状态对图与最早分辨时间
+
+定义状态对空间
+\[
+\mathcal P=Y\times Y
+\]
+以及确定后继
+\[
+\boxed{
+T(y,y')=(\tau y,\tau y').
+}
+\]
+定义当前失配集合
+\[
+\boxed{
+D_0
+=
+\{(y,y'):q(y)\ne q(y')\}.
+}
+\]
+
+对状态对定义扩展自然数值
+\[
+d_q(y,y')
+\in
+\mathbb N\cup\{\infty\}
+\]
+如下：
+\[
+d_q(y,y')
+=
+\min\{k\ge0:T^k(y,y')\in D_0\},
+\]
+若该集合为空则令
+\[
+d_q(y,y')=\infty.
+\]
+
+### 定理 23.3（状态对距离的精确语义）
+
+对任意 \(y,y'\in Y\)：
+
+1. 有
+   \[
+   \boxed{
+   d_q(y,y')<\infty
+   }
+   \]
+   当且仅当两个状态在某个未来时刻可由 \(q\) 分辨；
+2. 若有限，则
+   \[
+   \boxed{
+   d_q(y,y')
+   =
+   \min\{k:q(\tau^k y)\ne q(\tau^k y')\};
+   }
+   \]
+3. 有
+   \[
+   \boxed{
+   d_q(y,y')=\infty
+   \iff
+   yR_qy';
+   }
+   \]
+4. 若存在至少一对可分辨状态，则
+   \[
+   \boxed{
+   m_*
+   =
+   \max\{d_q(y,y'):d_q(y,y')<\infty\}.
+   }
+   \]
+   若没有可分辨状态，约定 \(m_*=0\)。
+
+### 证明
+
+由
+\[
+T^k(y,y')=(\tau^k y,\tau^k y')
+\]
+直接得到前两项。第三项是
+\[
+q(\tau^k y)=q(\tau^k y')
+\quad(\forall k)
+\]
+的改写。第四项沿用第 19.5 节的“最晚首次分离时刻”刻画。\(\square\)
+
+## 23.3 反向广度优先搜索
+
+图 \(\mathcal P\) 中每个顶点有唯一正向后继 \(T\)，但可以有多个反向前驱。把全部边反向，从 \(D_0\) 同时开始广度优先搜索。
+
+### 算法 23.B（状态对反向分辨）
+
+1. 建立每个状态的前像表
+   \[
+   \operatorname{Pred}(z)=\{y:\tau y=z\};
+   \]
+2. 对每个对 \((z,z')\)，其反向前驱为
+   \[
+   \operatorname{Pred}(z)\times\operatorname{Pred}(z');
+   \]
+3. 把 \(D_0\) 中全部状态对以距离 \(0\) 入队；
+4. 每当首次访问一个反向前驱，赋距离为当前距离加一；
+5. 搜索结束后未访问的状态对标记为 \(\infty\)。
+
+### 定理 23.4（反向 BFS 的正确性与复杂度）
+
+算法 23.B 输出精确的 \(d_q\)。使用显式状态对边表时：
+
+\[
+\boxed{
+\text{时间}=O(n^2),
+\qquad
+\text{空间}=O(n^2).
+}
+\]
+
+### 证明
+
+一个状态对到 \(D_0\) 的长度 \(k\) 正向路径，等价于从 \(D_0\) 到该状态对的长度 \(k\) 反向路径。多源 BFS 对无权图计算最短路径，所以得到最小分辨时刻。
+
+状态对顶点数为 \(n^2\)。每个有序状态对在正向图中只有一条边，故总边数为 \(n^2\)；反向存储不改变总边数。BFS 对每个顶点和边处理常数次。\(\square\)
+
+两个算法的成本结构不同：
+
+- 分区细化只需 \(O(n)\) 空间，并直接产生最小商；
+- 状态对算法需 \(O(n^2)\) 空间，但给出每一对状态的最短见证深度。
+
+## 23.4 局部 Bellman 递推证书
+
+扩展自然数上的 \(d_q\) 满足完全局部的递推：
+
+\[
+\boxed{
+d_q(y,y')
+=
+\begin{cases}
+0,
+&
+q(y)\ne q(y'),
+\\[4pt]
+1+d_q(\tau y,\tau y'),
+&
+q(y)=q(y'),
+\ d_q(\tau y,\tau y')<\infty,
+\\[4pt]
+\infty,
+&
+q(y)=q(y'),
+\ d_q(\tau y,\tau y')=\infty.
+\end{cases}
+}
+\]
+
+### 定理 23.5（局部递推唯一确定最短分辨证书）
+
+设
+\[
+\delta:Y\times Y\to\mathbb N\cup\{\infty\}
+\]
+满足上述三分递推，则
+\[
+\boxed{\delta=d_q.}
+\]
+
+### 证明
+
+若从 \((y,y')\) 的正向轨道在第 \(k\) 步首次进入 \(D_0\)，沿递推反向展开恰得到
+\[
+\delta(y,y')=k.
+\]
+
+若正向轨道从不进入 \(D_0\)，由于 \(Y\times Y\) 有限，该轨道最终进入一个全部当前读出相同的循环。若循环上某点被赋有限自然数，沿循环递推一周会得到
+\[
+a=a+\ell
+\]
+其中 \(\ell\ge1\)，矛盾。因此循环及其全部前驱只能取 \(\infty\)。这正是 \(d_q\) 的定义。\(\square\)
+
+所以一个独立验证器不必重新运行整个最小化过程。候选证书可以包含：
+
+1. 类标签
+   \[
+   c:Y\to C;
+   \]
+2. 状态对距离表
+   \[
+   \delta:Y\times Y\to\mathbb N\cup\{\infty\}.
+   \]
+
+验证器检查：
+
+\[
+\boxed{
+c(y)=c(y')
+\iff
+\delta(y,y')=\infty,
+}
+\]
+以及定理 23.5 的局部递推。
+
+### 推论 23.6（线性局部条件给出全局最小性）
+
+若上述检查全部通过，则：
+
+1. \(c\) 的纤维恰为 \(R_q\)-类；
+2. 商转移
+   \[
+   \overline\tau(c(y))=c(\tau y)
+   \]
+   良定义；
+3. \(C\cong Z_q\)；
+4. 且
+   \[
+   \max\{\delta(y,y')<\infty\}=m_*;
+   \]
+5. 由第 19.4 节的泛性质，该商在全部精确确定性读出保持实现中状态数最小。
+
+验证工作量为
+\[
+\boxed{O(n^2).}
+\]
+
+该证书把“最小”从一个需要信任构造程序的全局结论，转化为可由另一实现逐格核验的局部不动点条件。
+
+## 23.5 最短分辨词的显式见证
+
+对每个有限距离状态对，还可保存见证时刻
+\[
+k=d_q(y,y')
+\]
+以及输出失配：
+\[
+q(\tau^k y)\ne q(\tau^k y').
+\]
+若希望避免重新计算 \(\tau^k\)，可为每个有限非零距离对保存下一对指针
+\[
+(y,y')
+\mapsto
+(\tau y,\tau y')
+\]
+并检查距离严格减一。沿指针至多 \(k\) 步便到达 \(D_0\)。
+
+于是证书同时提供：
+
+- **不可分证书**：\(\infty\)-状态对集合对 \(T\) 闭合且当前输出一致；
+- **可分证书**：有限距离沿 \(T\) 每步减一，最终到达当前失配。
+
+这正对应 greatest-fixed-point 与 least-reachability 两个互补视图：
+
+\[
+\boxed{
+R_q
+=
+\nu R.\,
+\bigl(\ker q\cap T^{-1}R\bigr),
+}
+\]
+\[
+\boxed{
+(Y\times Y)\setminus R_q
+=
+\mu D.\,
+\bigl(D_0\cup T^{-1}D\bigr).
+}
+\]
+
+前者从“永不被分辨”向下闭合，后者从“最终会失配”向上可达；在有限状态对图中二者互为补集。
+
+## 23.6 根脉冲链给出轮数与见证深度的同时锐性
+
+沿用第 22.8 节：
+\[
+Y_n=\{0,\ldots,n-1\},
+\qquad
+\tau(i)=\max(i-1,0),
+\]
+\[
+q(0)=1,
+\qquad
+q(i)=0\ (i>0).
+\]
+
+### 定理 23.7（锐性证书）
+
+对 \(0\le i<j\le n-1\)，
+\[
+\boxed{
+d_q(i,j)=i.
+}
+\]
+特别地，
+\[
+\boxed{
+d_q(n-2,n-1)=n-2,
+}
+\]
+故：
+
+1. 分区细化需要恰好 \(n-2\) 轮严格增加；
+2. 状态对 BFS 的最大有限距离恰为 \(n-2\)；
+3. 一般界
+   \[
+   m_*\le n-|O|
+   \]
+   不能统一改进。
+
+### 证明
+
+状态 \(i\) 在时刻 \(0,\ldots,i-1\) 输出 \(0\)，在时刻 \(i\) 首次输出 \(1\)。若 \(i<j\)，状态 \(j\) 在时刻 \(i\) 仍输出 \(0\)，故首次失配时刻恰为 \(i\)。取 \(i=n-2\)、\(j=n-1\) 即得最大值。\(\square\)
+
+## 23.7 算法边界
+
+1. 上述算法针对有限确定性单后继系统；随机核需要概率等价或统计距离，不能把状态对后继写成单值 \(T\)。
+2. \(O(n^2)\) 状态对证书适合审计，不表示它总是构造商的最佳算法。
+3. 标签整数本身不是规范数学对象；规范对象是标签诱导的分区。
+4. 哈希复杂度是期望界；需要完全确定的最坏界时应使用排序或经证明的字典结构。
+5. 验证最小商不等于验证论文全部解释性结论；检查器只裁决有限转移、读出、等价类与见证距离。
+6. 在 Lean 中应优先形式化数学正确性，再把具体数组实现的复杂度证明作为独立层。
+
+
+---
+
+# 24. 追加：折扣预测伪度量、有限深度误差与近似对角自然性
+
+精确关系 \(R_q\) 只回答“是否永远不可分”。为了量化两个状态要经过多久才显出差异，并把未稳定的有限词商解释为有误差的预测接口，本节引入折扣未来伪度量。
+
+设输出空间 \(O\) 带有有界伪度量
+\[
+d_O:O\times O\to\mathbb R_{\ge0},
+\]
+且
+\[
+d_O(o,o')\le D
+\]
+对全部 \(o,o'\) 成立。固定折扣
+\[
+0<\gamma<1.
+\]
+
+定义
+\[
+\boxed{
+d_\gamma(y,y')
+=
+\sup_{k\ge0}
+\gamma^k
+d_O\bigl(q(\tau^k y),q(\tau^k y')\bigr).
+}
+\]
+
+较早出现的差异权重更大；很晚才显现的差异按 \(\gamma^k\) 衰减。
+
+## 24.1 折扣预测伪度量与 Bellman 方程
+
+### 定理 24.1（\(d_\gamma\) 是有界伪度量）
+
+\(d_\gamma\) 满足：
+
+\[
+\boxed{
+0\le d_\gamma(y,y')\le D,
+}
+\]
+\[
+d_\gamma(y,y)=0,
+\]
+\[
+d_\gamma(y,y')=d_\gamma(y',y),
+\]
+\[
+\boxed{
+d_\gamma(y,z)
+\le
+d_\gamma(y,y')+d_\gamma(y',z).
+}
+\]
+
+### 证明
+
+非负、有界、对称与对角为零逐项继承自 \(d_O\)。
+
+对任意 \(k\)，三角不等式给出
+\[
+\gamma^k d_O(q\tau^k y,q\tau^k z)
+\le
+\gamma^k d_O(q\tau^k y,q\tau^k y')
++
+\gamma^k d_O(q\tau^k y',q\tau^k z).
+\]
+对 \(k\) 取上确界，并使用
+\[
+\sup_k(a_k+b_k)
+\le
+\sup_k a_k+\sup_k b_k
+\]
+即得。\(\square\)
+
+### 定理 24.2（Bellman 最大方程）
+
+有
+\[
+\boxed{
+d_\gamma(y,y')
+=
+\max\left\{
+d_O(qy,qy'),
+\gamma d_\gamma(\tau y,\tau y')
+\right\}.
+}
+\]
+
+### 证明
+
+定义中的 \(k=0\) 项为
+\[
+d_O(qy,qy').
+\]
+其余 \(k\ge1\) 项令 \(j=k-1\)，得到
+\[
+\sup_{k\ge1}
+\gamma^k d_O(q\tau^k y,q\tau^k y')
+=
+\gamma
+\sup_{j\ge0}
+\gamma^j
+d_O(q\tau^j(\tau y),q\tau^j(\tau y'))
+=
+\gamma d_\gamma(\tau y,\tau y').
+\]
+全部项的上确界是两部分的最大值。\(\square\)
+
+这是一条定量化的一步稳定方程。精确同余只记录零集；Bellman 方程同时记录首次差异的尺度。
+
+在全部有界函数
+\[
+p:Y\times Y\to\mathbb R
+\]
+上定义算子
+\[
+\boxed{
+(\mathcal Tp)(y,y')
+=
+\max\left\{
+d_O(qy,qy'),
+\gamma p(\tau y,\tau y')
+\right\}.
+}
+\]
+
+### 定理 24.3（Bellman 算子的压缩性与唯一不动点）
+
+在一致范数
+\[
+\|p\|_\infty
+=
+\max_{y,y'}|p(y,y')|
+\]
+下，
+\[
+\boxed{
+\|\mathcal Tp-\mathcal Tp'\|_\infty
+\le
+\gamma\|p-p'\|_\infty.
+}
+\]
+因此 \(\mathcal T\) 有唯一有界不动点，且该不动点正是 \(d_\gamma\)。
+
+### 证明
+
+对固定 \(a\)，实函数
+\[
+x\mapsto\max\{a,x\}
+\]
+是 \(1\)-Lipschitz。因此
+\[
+\begin{aligned}
+|(\mathcal Tp)(y,y')-(\mathcal Tp')(y,y')|
+&\le
+\gamma
+|p(\tau y,\tau y')-p'(\tau y,\tau y')|\\
+&\le
+\gamma\|p-p'\|_\infty.
+\end{aligned}
+\]
+取最大值得压缩界。有限维一致范数空间完备，Banach 不动点定理给出唯一不动点；定理 24.2 已证明 \(d_\gamma\) 是不动点。\(\square\)
+
+## 24.2 有限值迭代与统一误差界
+
+令
+\[
+p_0=0,
+\qquad
+p_{m+1}=\mathcal Tp_m.
+\]
+
+### 定理 24.4（有限未来截断公式）
+
+对全部 \(m\ge0\)，
+\[
+\boxed{
+p_{m+1}(y,y')
+=
+\max_{0\le k\le m}
+\gamma^k
+d_O(q\tau^k y,q\tau^k y').
+}
+\]
+并且
+\[
+\boxed{
+0
+\le
+d_\gamma(y,y')-p_{m+1}(y,y')
+\le
+\gamma^{m+1}D.
+}
+\]
+
+### 证明
+
+第一式对 \(m\) 归纳，使用 Bellman 递推。截断遗漏的全部项满足
+\[
+\gamma^k d_O(\cdots)
+\le
+\gamma^kD
+\le
+\gamma^{m+1}D
+\quad(k\ge m+1),
+\]
+所以完整上确界至多比截断最大值多
+\(\gamma^{m+1}D\)。\(\square\)
+
+因此无需等到精确稳定，长度 \(m+1\) 的有限未来已经以统一误差
+\[
+\boxed{\gamma^{m+1}D}
+\]
+逼近全部折扣未来几何。
+
+### 推论 24.5（有限词纤维的预测直径）
+
+若
+\[
+y\equiv_m^q y',
+\]
+即前 \(m+1\) 个读出完全相同，则
+\[
+\boxed{
+d_\gamma(y,y')
+\le
+\gamma^{m+1}D.
+}
+\]
+
+### 证明
+
+前 \(m+1\) 项全部为零，所以定理 24.4 的截断值为零。\(\square\)
+
+这给出第 22.5 节分级商
+\[
+Z_m=Y/{\equiv_m}
+\]
+的严格近似含义：每个 \(Z_m\)-纤维的折扣未来直径至多为
+\[
+\gamma^{m+1}D.
+\]
+但在 \(m<m_*\) 时，\(Z_m\) 一般仍没有同层闭合转移；小预测直径不自动产生精确同余。
+
+## 24.3 离散输出时的首差异超度量
+
+现在令 \(d_O\) 为离散度量：
+\[
+d_O(o,o')
+=
+\begin{cases}
+0,&o=o',\\
+1,&o\ne o'.
+\end{cases}
+\]
+
+### 定理 24.6（首差异公式）
+
+若 \(yR_qy'\)，则
+\[
+d_\gamma(y,y')=0.
+\]
+若二者可分辨，且
+\[
+d_q(y,y')
+=
+\min\{k:q\tau^k y\ne q\tau^k y'\},
+\]
+则
+\[
+\boxed{
+d_\gamma(y,y')
+=
+\gamma^{d_q(y,y')}.
+}
+\]
+
+### 证明
+
+若永不失配，定义中的每项均为零。
+
+若首次失配时刻为 \(d\)，则时刻 \(d\) 的项等于
+\[
+\gamma^d.
+\]
+更早项为零，更晚非零项至多为
+\[
+\gamma^k\le\gamma^{d+1}<\gamma^d.
+\]
+所以上确界恰为 \(\gamma^d\)。\(\square\)
+
+### 定理 24.7（预测伪超度量）
+
+离散输出下，
+\[
+\boxed{
+d_\gamma(y,z)
+\le
+\max\{d_\gamma(y,y'),d_\gamma(y',z)\}.
+}
+\]
+所以 \(d_\gamma\) 是伪超度量。
+
+### 证明
+
+对每个 \(k\)，离散度量满足超三角不等式：
+\[
+d_O(q\tau^k y,q\tau^k z)
+\le
+\max\{
+d_O(q\tau^k y,q\tau^k y'),
+d_O(q\tau^k y',q\tau^k z)
+\}.
+\]
+乘以 \(\gamma^k\)、取上确界，并使用有限最大与上确界交换，得到结论。\(\square\)
+
+### 定理 24.8（有限词关系是超度量阈值）
+
+对全部 \(m\ge0\)，
+\[
+\boxed{
+y\equiv_m^q y'
+\iff
+d_\gamma(y,y')
+\le
+\gamma^{m+1}.
+}
+\]
+
+### 证明
+
+若前 \(m+1\) 个读出相同，则首次差异时刻若存在，必满足
+\[
+d_q(y,y')\ge m+1.
+\]
+由定理 24.6，
+\[
+d_\gamma=\gamma^{d_q}\le\gamma^{m+1}.
+\]
+
+反之，若在某个 \(k\le m\) 已经失配，则
+\[
+d_\gamma
+\ge
+\gamma^k
+\ge
+\gamma^m
+>
+\gamma^{m+1},
+\]
+矛盾。\(\square\)
+
+因此未来词分区恰是超度量球分区，而不是任意聚类：
+
+\[
+\boxed{
+\equiv_m^q
+=
+\{d_\gamma\le\gamma^{m+1}\}.
+}
+\]
+
+若存在可分辨状态对，则
+\[
+\boxed{
+\min\{d_\gamma(y,y')>0\}
+=
+\gamma^{m_*}.
+}
+\]
+因为最小正距离对应最晚首次分离时刻。
+
+稳定时
+\[
+\equiv_{m_*}=R_q,
+\]
+故
+\[
+\boxed{
+R_q
+=
+\{d_\gamma\le\gamma^{m_*+1}\}.
+}
+\]
+有限系统在稳定层以下形成一个正的谱隙：
+\[
+0
+<
+\gamma^{m_*}
+\]
+把真正不同的预测状态与零距离类分开。
+
+## 24.4 阈值等价不等于同层动力学闭合
+
+伪超度量球关系具有传递性，但它一般不是 \(\tau\)-同余。
+
+由 Bellman 方程，
+\[
+\gamma d_\gamma(\tau y,\tau y')
+\le
+d_\gamma(y,y'),
+\]
+所以
+\[
+\boxed{
+d_\gamma(\tau y,\tau y')
+\le
+\gamma^{-1}d_\gamma(y,y').
+}
+\]
+距离在前进一步后最多放大 \(\gamma^{-1}\)。
+
+对应到有限词关系：
+\[
+\boxed{
+y\equiv_{m+1}y'
+\Longrightarrow
+\tau y\equiv_m\tau y'.
+}
+\]
+但一般不能把右侧提升为
+\[
+\tau y\equiv_{m+1}\tau y'.
+\]
+
+所以必须区分：
+
+\[
+\boxed{
+\text{阈值类是等价类}
+}
+\]
+与
+\[
+\boxed{
+\text{阈值类对动力学前向闭合}.
+}
+\]
+
+只有当
+\[
+\equiv_m=\equiv_{m+1}
+\]
+时，同一阈值层才成为真正的动力学同余。第 22.5 节的跨层映射
+\[
+Z_{m+1}\to Z_m
+\]
+正是该尺度放大律的离散形式。
+
+## 24.5 多观察者折扣距离按最大值融合
+
+对两个读出
+\[
+q_i:Y\to O_i
+\]
+分别取有界伪度量 \(d_i\)，并在直积输出上取最大伪度量
+\[
+d_{12}\bigl((o_1,o_2),(o_1',o_2')\bigr)
+=
+\max\{d_1(o_1,o_1'),d_2(o_2,o_2')\}.
+\]
+相应折扣距离记为
+\[
+d_\gamma^{(1)},
+\quad
+d_\gamma^{(2)},
+\quad
+d_\gamma^{(12)}.
+\]
+
+### 定理 24.9（传感器融合的最大距离公式）
+
+有
+\[
+\boxed{
+d_\gamma^{(12)}(y,y')
+=
+\max\{
+d_\gamma^{(1)}(y,y'),
+d_\gamma^{(2)}(y,y')
+\}.
+}
+\]
+
+### 证明
+
+逐定义：
+\[
+\begin{aligned}
+d_\gamma^{(12)}(y,y')
+&=
+\sup_k
+\gamma^k
+\max\{
+d_1(q_1\tau^k y,q_1\tau^k y'),
+d_2(q_2\tau^k y,q_2\tau^k y')
+\}\\
+&=
+\max\left\{
+\sup_k\gamma^k d_1(q_1\tau^k y,q_1\tau^k y'),
+\sup_k\gamma^k d_2(q_2\tau^k y,q_2\tau^k y')
+\right\}.
+\end{aligned}
+\]
+\(\square\)
+
+零核随之满足
+\[
+\ker d_\gamma^{(12)}
+=
+\ker d_\gamma^{(1)}
+\cap
+\ker d_\gamma^{(2)},
+\]
+这正是定理 22.11 的定量提升。
+
+## 24.6 近似半共轭与轨道误差传播
+
+精确完成要求
+\[
+\pi\tau=\sigma\pi.
+\]
+现在允许该方程具有统一误差。
+
+设 \((Z,d_Z)\) 为度量空间，
+\[
+\pi:Y\to Z,
+\qquad
+\sigma:Z\to Z.
+\]
+定义转移缺陷
+\[
+\boxed{
+\delta(\pi;\tau,\sigma)
+=
+\max_{y\in Y}
+d_Z\bigl(\pi(\tau y),\sigma(\pi y)\bigr).
+}
+\]
+假设 \(\sigma\) 是 \(L\)-Lipschitz：
+\[
+d_Z(\sigma z,\sigma z')
+\le
+L\,d_Z(z,z').
+\]
+
+### 定理 24.10（近似半共轭的有限时域误差）
+
+对全部 \(k\ge0\) 与 \(y\in Y\)，
+\[
+\boxed{
+d_Z\bigl(\pi(\tau^k y),\sigma^k(\pi y)\bigr)
+\le
+\delta
+\sum_{j=0}^{k-1}L^j.
+}
+\]
+其中 \(k=0\) 时空和为 \(0\)。
+
+特别地：
+
+- 若 \(0\le L<1\)，则
+  \[
+  \boxed{
+  d_Z(\pi\tau^k y,\sigma^k\pi y)
+  \le
+  \frac{\delta}{1-L};
+  }
+  \]
+- 若 \(L=1\)，则
+  \[
+  \boxed{
+  d_Z(\pi\tau^k y,\sigma^k\pi y)
+  \le
+  k\delta.
+  }
+  \]
+
+### 证明
+
+令
+\[
+e_k(y)
+=
+d_Z(\pi\tau^k y,\sigma^k\pi y).
+\]
+有 \(e_0=0\)，且
+\[
+\begin{aligned}
+e_{k+1}(y)
+&=
+d_Z(\pi\tau(\tau^k y),\sigma(\sigma^k\pi y))\\
+&\le
+d_Z(\pi\tau(\tau^k y),\sigma\pi(\tau^k y))
++
+d_Z(\sigma\pi(\tau^k y),\sigma(\sigma^k\pi y))\\
+&\le
+\delta+Le_k(y).
+\end{aligned}
+\]
+递归展开即得几何和。\(\square\)
+
+再设输出空间 \((O,d_O)\)，原读出
+\[
+q:Y\to O,
+\]
+抽象读出
+\[
+o:Z\to O.
+\]
+定义当前读出误差
+\[
+\boxed{
+\eta
+=
+\max_{y\in Y}
+d_O(q(y),o(\pi y)).
+}
+\]
+假设 \(o\) 是 \(M\)-Lipschitz。
+
+### 推论 24.11（输出轨迹误差）
+
+对全部 \(k\ge0\)，
+\[
+\boxed{
+d_O\bigl(q(\tau^k y),o(\sigma^k\pi y)\bigr)
+\le
+\eta
++
+M\delta\sum_{j=0}^{k-1}L^j.
+}
+\]
+
+### 证明
+
+在两端之间插入
+\[
+o(\pi\tau^k y)
+\]
+并使用当前读出误差与 \(o\) 的 Lipschitz 界。\(\square\)
+
+这条公式严格区分两个误差源：
+
+\[
+\boxed{
+\text{当前读出逼近误差 }\eta
+}
+\]
+与
+\[
+\boxed{
+\text{动力学交换缺陷 }\delta.
+}
+\]
+
+即使 \(\eta=0\)，非零 \(\delta\) 仍可随时间积累；即使 \(\delta=0\)，抽象读出也可能有固定偏差 \(\eta\)。
+
+## 24.7 近似对角自然性的精确缺陷
+
+取任意非空地址集 \(A\)。对评价表
+\[
+E:A\times A\to Y
+\]
+定义逐点投影
+\[
+P_\pi(E)(a,b)=\pi(E(a,b)),
+\]
+对输出
+\[
+u:A\to Y
+\]
+定义
+\[
+Q_\pi(u)(a)=\pi(u(a)).
+\]
+
+令
+\[
+\Delta_\tau(E)(a)=\tau(E(a,a)),
+\]
+\[
+\Delta_\sigma(F)(a)=\sigma(F(a,a)).
+\]
+
+### 定理 24.12（对角自然性缺陷等于半共轭缺陷）
+
+对每个 \(E\) 与 \(a\in A\)，
+\[
+\boxed{
+d_Z\left(
+Q_\pi\Delta_\tau(E)(a),
+\Delta_\sigma P_\pi(E)(a)
+\right)
+\le
+\delta.
+}
+\]
+并且
+\[
+\boxed{
+\sup_E\sup_{a\in A}
+d_Z\left(
+Q_\pi\Delta_\tau(E)(a),
+\Delta_\sigma P_\pi(E)(a)
+\right)
+=
+\delta.
+}
+\]
+
+### 证明
+
+逐坐标有
+\[
+\begin{aligned}
+d_Z(
+Q_\pi\Delta_\tau(E)(a),
+\Delta_\sigma P_\pi(E)(a))
+&=
+d_Z(
+\pi\tau(E(a,a)),
+\sigma\pi(E(a,a)))\\
+&\le\delta.
+\end{aligned}
+\]
+由于 \(Y\) 有限，存在 \(y_*\) 取得最大缺陷。取一个评价表使某个对角元等于 \(y_*\)，即可达到 \(\delta\)。\(\square\)
+
+所以精确自然性不是独立于半共轭的额外条件：
+
+\[
+\boxed{
+\delta=0
+\iff
+Q_\pi\Delta_\tau
+=
+\Delta_\sigma P_\pi.
+}
+\]
+
+而在近似层，
+\[
+\delta
+\]
+正是全部地址表上的最坏对角自然性误差。
+
+## 24.8 近似翻译的复合误差
+
+设
+\[
+(Y,\tau)
+\overset{\pi}{\longrightarrow}
+(Z,\sigma)
+\overset{\rho}{\longrightarrow}
+(W,\omega).
+\]
+记两步缺陷为
+\[
+\delta_1
+=
+\max_y d_Z(\pi\tau y,\sigma\pi y),
+\]
+\[
+\delta_2
+=
+\max_z d_W(\rho\sigma z,\omega\rho z).
+\]
+假设
+\[
+\rho:(Z,d_Z)\to(W,d_W)
+\]
+是 \(K\)-Lipschitz。
+
+### 定理 24.13（近似半共轭复合）
+
+复合映射
+\[
+\rho\pi:Y\to W
+\]
+满足
+\[
+\boxed{
+\delta(\rho\pi;\tau,\omega)
+\le
+K\delta_1+\delta_2.
+}
+\]
+
+### 证明
+
+对任意 \(y\)，
+\[
+\begin{aligned}
+d_W(\rho\pi\tau y,\omega\rho\pi y)
+&\le
+d_W(\rho\pi\tau y,\rho\sigma\pi y)
++
+d_W(\rho\sigma\pi y,\omega\rho\pi y)\\
+&\le
+K\,d_Z(\pi\tau y,\sigma\pi y)+\delta_2\\
+&\le
+K\delta_1+\delta_2.
+\end{aligned}
+\]
+取最大值。\(\square\)
+
+若 \(\rho\) 是等距嵌入，则 \(K=1\)，误差按
+\[
+\boxed{\delta_1+\delta_2}
+\]
+相加。这与仓库既有近似命名翻译“语义误差相加、资源模数复合”的结构一致，但这里的对象是动力学半共轭与对角自然性，不应把两个定理视为同一个已形式化声明。
+
+## 24.9 定量近似的严格边界
+
+1. 小的 \(\delta\) 只给出有限时域或在 \(L<1\) 时的统一轨道控制；若 \(L\ge1\)，误差可以线性或指数增长。
+2. 小的纤维直径不保证商转移良定义。精确同余要求零缺陷，而不是“足够小”这一非结构条件。
+3. 对一般伪度量输出，\(d_\gamma=0\) 只表示全部未来输出落在 \(d_O\) 的零距离类中；只有当 \(d_O\) 分离点时才等价于 \(R_q\)。
+4. 离散输出时阈值关系是超度量等价；一般度量下，任意阈值关系
+   \[
+   d_\gamma\le\varepsilon
+   \]
+   未必传递。
+5. 覆盖数、聚类数或低维嵌入本身不证明近似动力学自然；必须直接审计 \(\delta\)。
+6. 本节没有把行为伪度量等同于量子态距离，也没有从折扣参数 \(\gamma\) 推出物理时间常数。
+
+
+---
+
+# 25. 追加：带输入系统的行为完成、干预自然性与反馈闭包
+
+第 21 节指出：持续外界输入会破坏有限自治系统的最终周期结论。但“轨迹不再自治”不等于“最小预测状态无法定义”。本节把第 19 节从单一自映射推广到有限输入族，得到一个对全部干预词统一有效的最小行为完成。
+
+固定非空有限集合：
+
+\[
+Y=\text{状态空间},
+\qquad
+U=\text{输入字母表},
+\qquad
+O=\text{读出集合}.
+\]
+
+对每个输入 \(u\in U\)，给定转移
+\[
+F_u:Y\to Y,
+\]
+并给定 Moore 型当前读出
+\[
+q:Y\to O.
+\]
+以下把 \(O\) 替换为实际像 \(q(Y)\)，所以
+\[
+|O|=|q(Y)|.
+\]
+
+对有限输入词
+\[
+w=u_1u_2\cdots u_k\in U^*
+\]
+定义
+\[
+F_\varepsilon=\mathrm{id}_Y,
+\]
+\[
+F_w
+=
+F_{u_k}\circ\cdots\circ F_{u_1}.
+\]
+即输入按从左到右的时间顺序施加。
+
+## 25.1 有限输入词等价
+
+对 \(m\ge0\)，定义
+\[
+y\equiv_m^U y'
+\]
+当且仅当对全部长度至多为 \(m\) 的输入词，
+\[
+\boxed{
+q(F_wy)=q(F_wy')
+\quad
+(|w|\le m).
+}
+\]
+定义完全行为等价
+\[
+\boxed{
+y\equiv_\infty^U y'
+\iff
+q(F_wy)=q(F_wy')
+\quad
+\text{对全部 }w\in U^*.
+}
+\]
+
+令
+\[
+R_m^U=\equiv_m^U,
+\qquad
+R_\infty^U=\equiv_\infty^U.
+\]
+
+### 定理 25.1（受控行为关系递推）
+
+有
+\[
+\boxed{
+R_0^U=\ker q,
+}
+\]
+\[
+\boxed{
+R_{m+1}^U
+=
+\ker q
+\cap
+\bigcap_{u\in U}
+(F_u\times F_u)^{-1}(R_m^U).
+}
+\]
+
+### 证明
+
+长度至多 \(m+1\) 的词分为：
+
+- 空词 \(\varepsilon\)，要求当前读出相同；
+- 以某个 \(u\in U\) 开头的非空词 \(uw\)，其中 \(|w|\le m\)。
+
+对第二类，
+\[
+q(F_{uw}y)=q(F_w(F_uy)).
+\]
+所以全部此类词读出相同，当且仅当
+\[
+F_uy\,R_m^U\,F_uy'
+\quad
+\text{对全部 }u\in U.
+\]
+与当前读出条件合并即得。\(\square\)
+
+在关系格上定义
+\[
+\boxed{
+\Phi_U(R)
+=
+\ker q
+\cap
+\bigcap_{u\in U}
+(F_u\times F_u)^{-1}(R).
+}
+\]
+则
+\[
+R_{m+1}^U=\Phi_U(R_m^U).
+\]
+
+### 定理 25.2（一次稳定、最大共同同余与有限界）
+
+若
+\[
+R_m^U=R_{m+1}^U,
+\]
+则
+\[
+\boxed{
+R_{m+r}^U=R_m^U
+\quad
+(r\ge0).
+}
+\]
+并且
+\[
+\boxed{
+R_\infty^U
+=
+\nu R.\,\Phi_U(R),
+}
+\]
+即 \(R_\infty^U\) 是包含于 \(\ker q\)、并对每个 \(F_u\) 前向稳定的最大等价关系。
+
+若
+\[
+c_m=|Y/R_m^U|,
+\]
+则最小稳定深度 \(m_*^U\) 满足
+\[
+\boxed{
+m_*^U
+\le
+|Y/R_\infty^U|-|O|
+\le
+|Y|-|O|.
+}
+\]
+
+### 证明
+
+若 \(R_m^U\) 是 \(\Phi_U\) 的不动点，则对每个 \(u\)，
+\[
+yR_m^Uy'
+\Longrightarrow
+F_uyR_m^UF_uy'.
+\]
+对任意输入词反复应用，得到全部更长词也不能细化该关系，所以永久稳定。
+
+若 \(S\subseteq\ker q\) 且对全部 \(F_u\) 稳定，则
+\[
+ySy'
+\Longrightarrow
+F_wy\,S\,F_wy'
+\]
+对全部词 \(w\) 成立，继而全部读出相同，所以
+\[
+S\subseteq R_\infty^U.
+\]
+最大性得证。
+
+商类数从 \(|O|\) 开始非降，每次严格细化至少增加一类，且最终类数为
+\[
+|Y/R_\infty^U|,
+\]
+故得到稳定界。\(\square\)
+
+自治系统是
+\[
+|U|=1
+\]
+的特殊情形。输入族并没有改变有限下降的逻辑，只把一个同余条件替换为“对全部干预共同稳定”。
+
+## 25.2 最小受控行为完成
+
+定义
+\[
+\boxed{
+Z_{q,U}=Y/R_\infty^U,
+\qquad
+\pi_{q,U}:Y\twoheadrightarrow Z_{q,U}.
+}
+\]
+对每个 \(u\in U\)，定义商转移
+\[
+\boxed{
+\overline F_u([y])=[F_uy].
+}
+\]
+定义商读出
+\[
+\overline q([y])=q(y).
+\]
+由共同同余性，这些映射良定义，并满足
+\[
+\boxed{
+\pi_{q,U}F_u
+=
+\overline F_u\pi_{q,U}
+\quad(\forall u\in U),
+}
+\]
+\[
+\boxed{
+q=\overline q\,\pi_{q,U}.
+}
+\]
+
+### 定理 25.3（最小 Moore 行为实现的泛性质）
+
+设另一个受控实现由满射
+\[
+r:Y\twoheadrightarrow W
+\]
+以及转移
+\[
+G_u:W\to W
+\quad(u\in U)
+\]
+和读出
+\[
+o:W\to O
+\]
+给出，满足
+\[
+\boxed{
+rF_u=G_ur
+\quad(\forall u\in U),
+}
+\]
+\[
+\boxed{
+q=or.
+}
+\]
+则存在唯一满射
+\[
+\boxed{
+h:W\twoheadrightarrow Z_{q,U}
+}
+\]
+使
+\[
+\boxed{
+\pi_{q,U}=hr,
+}
+\]
+\[
+\boxed{
+hG_u=\overline F_uh
+\quad(\forall u\in U),
+}
+\]
+\[
+\boxed{
+\overline qh=o.
+}
+\]
+特别地，
+\[
+\boxed{
+|Z_{q,U}|\le|W|.
+}
+\]
+
+### 证明
+
+若 \(r(y)=r(y')\)，则对任意词 \(w\)，由转移交换性反复得到
+\[
+r(F_wy)=r(F_wy').
+\]
+再由 \(q=or\)，
+\[
+q(F_wy)=q(F_wy').
+\]
+所以
+\[
+\ker r\subseteq R_\infty^U.
+\]
+于是 \(\pi_{q,U}\) 在 \(r\)-纤维上常值，唯一因子化为
+\[
+\pi_{q,U}=hr.
+\]
+两者满射推出 \(h\) 满射。其余交换式在 \(r(Y)=W\) 上逐点验证。\(\square\)
+
+所以 \(Z_{q,U}\) 是保留**全部可能输入干预下的全部未来读出**所需的最小状态，而不是只对某一条固定输入轨迹最小。
+
+## 25.3 受控分区细化算法
+
+取当前类标签
+\[
+c_0(y)=q(y)
+\]
+的规范重标。递归定义
+\[
+\boxed{
+\operatorname{sig}_{m+1}(y)
+=
+\left(
+q(y),
+\bigl(c_m(F_uy)\bigr)_{u\in U}
+\right).
+}
+\]
+对相同签名重新编号得到 \(c_{m+1}\)。
+
+### 定理 25.4（受控签名算法正确性）
+
+对全部 \(m\ge0\)，
+\[
+\boxed{
+c_m(y)=c_m(y')
+\iff
+yR_m^Uy'.
+}
+\]
+因此算法在 \(m_*^U\) 轮稳定，并输出 \(Z_{q,U}\)。
+
+### 证明
+
+对 \(m\) 归纳。归纳步中，签名相同当且仅当当前读出相同，并且对每个 \(u\)，后继状态在 \(R_m^U\) 下等价；由定理 25.1 正是 \(R_{m+1}^U\)。\(\square\)
+
+若 \(|U|=a\)，每轮对每个状态读取 \(a\) 个后继类。通过排序规范化，朴素复杂度为
+\[
+\boxed{
+O\bigl(
+a\,n(n-|O|+1)\log n
+\bigr)
+}
+\]
+时间与
+\[
+\boxed{O(an)}
+\]
+签名空间；若输入枚举固定，可把额外工作空间实现为 \(O(n)\) 加流式签名比较。
+
+## 25.4 状态对干预图与最短分辨词
+
+在状态对空间 \(Y\times Y\) 上，对每个输入 \(u\) 建立边
+\[
+\boxed{
+(y,y')
+\overset{u}{\longrightarrow}
+(F_uy,F_uy').
+}
+\]
+当前失配集仍为
+\[
+D_0=\{(y,y'):q(y)\ne q(y')\}.
+\]
+
+定义
+\[
+d_U(y,y')
+=
+\min\{
+|w|:
+q(F_wy)\ne q(F_wy')
+\},
+\]
+若不存在分辨词则记为 \(\infty\)。
+
+### 定理 25.5（最短干预见证）
+
+有
+\[
+\boxed{
+d_U(y,y')=\infty
+\iff
+yR_\infty^Uy'.
+}
+\]
+若存在可分辨状态对，则
+\[
+\boxed{
+m_*^U
+=
+\max\{d_U(y,y')<\infty\}.
+}
+\]
+
+### 证明
+
+定义直接说明 \(\infty\) 等价于全部输入词读出相同。深度 \(m\) 关系正是“没有长度至多 \(m\) 的分辨词”，所以最晚的最短分辨词长度等于稳定深度。\(\square\)
+
+从 \(D_0\) 在全部带标签边上做反向 BFS，可计算每个状态对到失配集的最短路径，并保存产生该前驱的输入标签。于是每个有限距离对都得到一个显式最短输入词见证。
+
+### 定理 25.6（受控状态对算法复杂度）
+
+显式构造全部状态对—输入边时：
+
+\[
+\boxed{
+\text{时间}
+=
+O(|U|\,n^2),
+}
+\]
+\[
+\boxed{
+\text{空间}
+=
+O(|U|\,n^2)
+}
+\]
+用于完整反向边表；若按输入与前像表即时枚举，可在具体结构允许时降低常数或存储，但不改变最坏状态对规模。
+
+## 25.5 干预族上的对角自然性
+
+对每个 \(u\in U\)，把 \(F_u\) 看作一个扭曲。对任意地址集 \(A\)，定义
+\[
+\Delta_{F_u}(E)(a)=F_u(E(a,a)).
+\]
+
+### 定理 25.7（全部干预同时自然下降）
+
+对联合完成投影 \(\pi=\pi_{q,U}\)，逐点定义 \(P_\pi,Q_\pi\)。则对全部 \(u\in U\)，
+\[
+\boxed{
+Q_\pi\Delta_{F_u}
+=
+\Delta_{\overline F_u}P_\pi.
+}
+\]
+
+### 证明
+
+逐坐标：
+\[
+\begin{aligned}
+Q_\pi\Delta_{F_u}(E)(a)
+&=
+\pi(F_u(E(a,a)))\\
+&=
+\overline F_u(\pi(E(a,a)))\\
+&=
+\Delta_{\overline F_u}P_\pi(E)(a).
+\end{aligned}
+\]
+\(\square\)
+
+### 定理 25.8（干预自然性的最小性反向判据）
+
+设满射
+\[
+r:Y\twoheadrightarrow W
+\]
+保留原读出：
+\[
+q=or.
+\]
+若对每个 \(u\in U\) 存在
+\[
+G_u:W\to W
+\]
+使对任意非空地址集与任意评价表都有
+\[
+\boxed{
+Q_r\Delta_{F_u}
+=
+\Delta_{G_u}P_r,
+}
+\]
+则
+\[
+rF_u=G_ur
+\quad(\forall u),
+\]
+并存在唯一满射
+\[
+W\twoheadrightarrow Z_{q,U}.
+\]
+
+### 证明
+
+取单点地址集 \(A=\{*\}\)，令
+\[
+E(*,*)=y.
+\]
+对角自然性给出
+\[
+r(F_uy)=G_u(r(y))
+\]
+对全部 \(y,u\) 成立。随后应用定理 25.3。\(\square\)
+
+所以受控预测完成同时具有三种等价角色：
+
+\[
+\boxed{
+\text{全部输入词的最小行为状态},
+}
+\]
+\[
+\boxed{
+\text{包含于 }\ker q\text{ 的最大共同同余},
+}
+\]
+\[
+\boxed{
+\text{使全部干预对角同时自然下降的最小商}.
+}
+\]
+
+## 25.6 反馈策略在完成上的闭合
+
+设策略只依赖完成状态：
+\[
+\kappa:Z_{q,U}\to U.
+\]
+定义原系统上的闭环转移
+\[
+\boxed{
+\tau_\kappa(y)
+=
+F_{\kappa(\pi y)}(y),
+}
+\]
+以及完成上的闭环转移
+\[
+\boxed{
+\overline\tau_\kappa(z)
+=
+\overline F_{\kappa(z)}(z).
+}
+\]
+
+### 定理 25.9（预测完成对状态反馈充分）
+
+有
+\[
+\boxed{
+\pi\tau_\kappa
+=
+\overline\tau_\kappa\pi.
+}
+\]
+
+### 证明
+
+对任意 \(y\)，
+\[
+\begin{aligned}
+\pi\tau_\kappa(y)
+&=
+\pi F_{\kappa(\pi y)}(y)\\
+&=
+\overline F_{\kappa(\pi y)}(\pi y)\\
+&=
+\overline\tau_\kappa(\pi y).
+\end{aligned}
+\]
+\(\square\)
+
+因此任意只读取最小行为状态的确定反馈策略，都能在完成上无损执行。特别地，任何只依赖当前原读出 \(q(y)\) 的策略也包含在内，因为
+\[
+q=\overline q\,\pi.
+\]
+
+严格边界是：若控制器使用被 \(\pi\) 删除的微观信息，即策略
+\[
+\kappa_{\mathrm{micro}}:Y\to U
+\]
+不在 \(\pi\)-纤维上常值，则一般不存在 \(Z_{q,U}\) 上的对应策略。最小行为状态对“所有可观察反馈”充分，不对“使用隐藏状态的特权控制器”充分。
+
+## 25.7 有限状态加外部输入不保证最终周期
+
+有限自治映射最终周期；有限受控系统在任意外部输入流下不必最终周期。
+
+### 例 25.10（输入复制系统）
+
+令
+\[
+Y=U=O=\{0,1\},
+\]
+\[
+F_u(y)=u,
+\qquad
+q(y)=y.
+\]
+对输入流
+\[
+u_0,u_1,u_2,\ldots
+\]
+有
+\[
+y_{t+1}=u_t,
+\]
+所以
+\[
+q(y_{t+1})=u_t.
+\]
+
+若输入流不是最终周期，例如取
+\[
+u_t=
+\begin{cases}
+1,&t\text{ 是 }2\text{ 的幂},\\
+0,&\text{否则},
+\end{cases}
+\]
+则输出也不是最终周期，尽管状态空间只有两个元素。
+
+这不与第 21.2 节矛盾，因为这里不存在单一闭合自映射
+\[
+Y\to Y;
+\]
+每一步使用的转移由新的外部输入选择。
+
+### 定理 25.11（有限输入生成器恢复自治周期性）
+
+若输入由有限确定性生成器
+\[
+C\to C,
+\qquad
+g:C\to U
+\]
+产生，则扩展状态
+\[
+\widetilde Y=Y\times C
+\]
+上的更新
+\[
+\widetilde\tau(y,c)
+=
+(F_{g(c)}y,Jc)
+\]
+是有限自治映射。因此每条扩展轨迹最终周期。
+
+### 证明
+
+\(\widetilde Y\) 有限，\(\widetilde\tau\) 单值。应用定理 21.2。\(\square\)
+
+所以“输入打破周期”必须继续区分：
+
+\[
+\boxed{
+\text{新外部输入流}
+}
+\]
+与
+\[
+\boxed{
+\text{有限内部控制器状态的展开}.
+}
+\]
+
+## 25.8 受控完成的严格边界
+
+1. 本节假设 \(U\) 有限，因而签名可有限枚举；无限输入族仍可定义共同同余，但算法需要额外有效性条件。
+2. 本节是 Moore 型读出。若输出依赖状态—输入对，应改用 Mealy 型行为等价，不能直接复用当前递推。
+3. 随机转移核需要概率双模拟、分布距离或统计实验等价；确定关系交不足以表达概率差异。
+4. \(Z_{q,U}\) 对全部输入词最小，不表示它对某个固定策略已经最小；策略固定后还可再次对闭环系统做更粗最小化。
+5. 对所有干预自然下降不等于干预在物理上可实施；数学输入字母只编码已声明的转移族。
+6. 本节没有把外界输入等同于 Gödel 意义的“系统外真理”，也没有从非周期输入推出无限状态本体。
+
+
+---
+
+# 26. 追加：普通逆极限只保留周期核——过去完成与分支完成的严格分家
+
+第 3 节把严格自然族下降到逆极限；第 17 节又用有限深度前像树的 projective completion 恢复完整函数图。二者容易被误读为“对同一个动力学不断向过去取逆极限，就能恢复全部瞬态分支”。
+
+本节证明该推断为假。
+
+对有限自映射
+\[
+\tau:Y\to Y,
+\]
+普通状态逆极限
+\[
+\varprojlim(Y,\tau)
+\]
+只保留周期核；所有有限瞬态入树都被删除。第 17 节之所以能恢复分支，是因为它取极限的对象不是单个前驱状态，而是“全部前驱子树的有限深度编码”。
+
+## 26.1 普通状态逆极限
+
+定义
+\[
+\boxed{
+X_\tau^-
+=
+\left\{
+(x_0,x_1,x_2,\ldots)\in Y^{\mathbb N}:
+\tau(x_{k+1})=x_k
+\ \forall k\ge0
+\right\}.
+}
+\]
+这是常逆系
+\[
+\cdots
+\overset{\tau}{\longrightarrow}
+Y
+\overset{\tau}{\longrightarrow}
+Y
+\overset{\tau}{\longrightarrow}
+Y
+\]
+的逆极限。
+
+令周期核为
+\[
+P_\tau
+=
+\{y\in Y:\exists n\ge1,\ \tau^ny=y\}.
+\]
+
+### 定理 26.1（有限自映射的逆极限—周期核定理）
+
+坐标投影
+\[
+p_0:X_\tau^-\to Y,
+\qquad
+p_0((x_k)_k)=x_0
+\]
+的像恰为 \(P_\tau\)，并且
+\[
+\boxed{
+p_0:X_\tau^-\xrightarrow{\ \cong\ }P_\tau
+}
+\]
+是双射。
+
+因此
+\[
+\boxed{
+|X_\tau^-|=|P_\tau|.
+}
+\]
+
+### 证明
+
+先取
+\[
+x=(x_0,x_1,\ldots)\in X_\tau^-.
+\]
+由于 \(Y\) 有限，序列中存在
+\[
+0\le i<j
+\]
+使
+\[
+x_i=x_j.
+\]
+兼容性给出
+\[
+\tau^{j-i}(x_j)=x_i.
+\]
+结合 \(x_i=x_j\)，得到
+\[
+\tau^{j-i}(x_i)=x_i,
+\]
+所以 \(x_i\) 是周期点。又
+\[
+x_0=\tau^i(x_i),
+\]
+周期轨道的正向像仍在同一周期上，故 \(x_0\in P_\tau\)。因此
+\[
+p_0(X_\tau^-)\subseteq P_\tau.
+\]
+
+反之，\(\tau\) 在 \(P_\tau\) 上是置换。对任意 \(p\in P_\tau\)，定义
+\[
+x_k=(\tau|_{P_\tau})^{-k}(p).
+\]
+则
+\[
+\tau(x_{k+1})=x_k,
+\]
+所以 \((x_k)_k\in X_\tau^-\) 且 \(p_0(x)=p\)。得到满射到 \(P_\tau\)。
+
+最后证明唯一性。任意兼容序列的尾部
+\[
+(x_k,x_{k+1},\ldots)
+\]
+仍是无限兼容序列；重复上面的有限性论证，得到每个 \(x_k\in P_\tau\)。而 \(\tau|_{P_\tau}\) 是双射，所以
+\[
+x_{k+1}
+=
+(\tau|_{P_\tau})^{-1}(x_k)
+\]
+被 \(x_k\) 唯一决定。于是整个序列由 \(x_0\) 唯一确定。\(\square\)
+
+普通逆极限没有保存“周期点有哪些瞬态前像”。它只沿周期上的唯一可无限延伸前驱继续。
+
+## 26.2 自然扩张仍只是周期置换
+
+在 \(X_\tau^-\) 上定义右移
+\[
+S^-(x_0,x_1,x_2,\ldots)
+=
+(x_1,x_2,x_3,\ldots).
+\]
+在定理 26.1 的同构下，
+\[
+\boxed{
+S^-
+\cong
+(\tau|_{P_\tau})^{-1}.
+}
+\]
+
+也可定义自然扩张
+\[
+\widehat\tau(x_0,x_1,x_2,\ldots)
+=
+(\tau x_0,x_0,x_1,\ldots),
+\]
+则
+\[
+\boxed{
+\widehat\tau
+\cong
+\tau|_{P_\tau}.
+}
+\]
+
+所以有限系统的普通自然扩张没有把非可逆瞬态动力学变成一个包含全部历史的可逆系统；它先删除全部不能无限向后延伸的瞬态点，再把剩余周期置换可逆化。
+
+## 26.3 瞬态点为何不能拥有无限过去
+
+对任意 \(y\in Y\)，定义前像树层
+\[
+\operatorname{Pred}_k(y)
+=
+\{x\in Y:\tau^kx=y\}.
+\]
+瞬态点可以有许多有限深度前像，但不能位于一条无限相容前驱链上。
+
+### 推论 26.2（无限过去存在当且仅当当前点周期）
+
+下列条件等价：
+
+1. 存在
+   \[
+   x_1,x_2,\ldots
+   \]
+   使
+   \[
+   \tau x_1=y,
+   \qquad
+   \tau x_{k+1}=x_k;
+   \]
+2. \(y\in P_\tau\)。
+
+所以
+\[
+\boxed{
+\text{任意长的非空前像层}
+}
+\]
+与
+\[
+\boxed{
+\text{存在一条无限相容前像链}
+}
+\]
+在有限系统中最终等价于周期性，而不等价于“前像分支丰富”。
+
+## 26.4 与第 17 节分支完成的非交换性
+
+第 17 节定义的递归分支码
+\[
+\mathcal C_\tau^{(h)}(y)
+\]
+在深度 \(h\) 记录的是**所有非周期前像子节点及其子树多重集**。其 projective limit 恢复完整装饰 necklace：
+\[
+\varprojlim_h\mathfrak N_h(\tau)
+\cong
+\mathfrak N(\tau).
+\]
+
+普通状态逆极限却只选择一个状态序列：
+\[
+x_0\leftarrow x_1\leftarrow x_2\leftarrow\cdots.
+\]
+它没有在每层保留全部前驱集合，更没有保留各分支之间的多重集关联。
+
+因此存在两个不同的“向过去完成”：
+
+### 路径型过去完成
+
+\[
+\boxed{
+X_\tau^-
+=
+\varprojlim(Y,\tau)
+\cong
+P_\tau.
+}
+\]
+
+它询问：哪些当前点具有一条无限相容过去？
+
+### 分支型过去完成
+
+\[
+\boxed{
+\varprojlim_h
+\{\text{深度 }h\text{ 的完整前像树码}\}
+\cong
+\mathfrak N(\tau).
+}
+\]
+
+它询问：所有有限深度过去分支如何兼容组成完整函数图？
+
+### 定理 26.3（取路径极限与保存分支不交换）
+
+若 \(\tau\) 有非空瞬态部分，则普通状态逆极限不能恢复完整函数图。更精确地：
+
+\[
+\boxed{
+X_\tau^-
+\text{ 只由 }
+\tau|_{P_\tau}
+\text{ 决定};
+}
+\]
+而
+\[
+\boxed{
+\mathfrak N(\tau)
+\text{ 还依赖附着于周期核的全部瞬态入树}.
+}
+\]
+
+所以可以存在两个非共轭有限自映射 \(\tau,\sigma\)，满足
+
+\[
+P_\tau\cong P_\sigma
+\]
+且周期置换相同，从而
+\[
+X_\tau^-\cong X_\sigma^-,
+\]
+但
+\[
+\mathfrak N(\tau)\ne\mathfrak N(\sigma).
+\]
+
+### 证明
+
+第一项由定理 26.1。第二项由定理 17.4 的装饰 necklace 完全分类。取任意相同周期而附着不同非同构入树的两个函数图，即得反例。\(\square\)
+
+这给出严格分家：
+
+\[
+\boxed{
+\text{先把过去压成一条兼容路径再取极限}
+\ne
+\text{先保存每层全部分支再取极限}.
+}
+\]
+
+## 26.5 未来预测完成保留瞬态可分辨性
+
+未来完成
+\[
+Z_q=Y/R_q
+\]
+与普通过去逆极限有相反的瞬态行为。
+
+未来读出词
+\[
+q(y),q(\tau y),q(\tau^2y),\ldots
+\]
+可以在状态进入周期核以前读取其瞬态位置。因此只要 \(q\) 足够细，\(Z_q\) 可以保留全部瞬态状态。
+
+### 定理 26.4（恒等读出的最大未来完成）
+
+取
+\[
+q=\mathrm{id}_Y.
+\]
+则
+\[
+\boxed{
+R_q=\Delta_Y,
+\qquad
+Z_q\cong Y.
+}
+\]
+而普通过去逆极限仍满足
+\[
+\boxed{
+X_\tau^-\cong P_\tau.
+}
+\]
+
+若 \(\tau\) 非置换，则
+\[
+|P_\tau|<|Y|,
+\]
+所以
+\[
+\boxed{
+|X_\tau^-|
+<
+|Z_{\mathrm{id}}|.
+}
+\]
+
+### 证明
+
+恒等读出在时刻 \(0\) 已经分离不同状态，所以预测等价就是相等。其余由定理 26.1。\(\square\)
+
+### 例 26.5（根链的最大分离）
+
+令
+\[
+Y_n=\{0,\ldots,n-1\},
+\qquad
+\tau(i)=\max(i-1,0).
+\]
+周期核只有
+\[
+P_\tau=\{0\},
+\]
+所以
+\[
+\boxed{
+|X_\tau^-|=1.
+}
+\]
+对恒等读出，
+\[
+\boxed{
+|Z_{\mathrm{id}}|=n.
+}
+\]
+对第 22.8 节的根脉冲读出，同样有
+\[
+\boxed{
+|Z_q|=n.
+}
+\]
+
+因此一个系统可以在过去路径逆极限中完全塌成单点，却在未来观察完成中保留全部 \(n\) 个状态。
+
+## 26.6 双向轨迹只存在于周期核
+
+定义双向轨迹
+\[
+(x_t)_{t\in\mathbb Z}
+\]
+满足
+\[
+\tau(x_t)=x_{t+1}
+\quad
+\text{对全部 }t\in\mathbb Z.
+\]
+
+### 定理 26.6（有限系统的双向轨迹定理）
+
+任意双向轨迹的全部状态都属于 \(P_\tau\)。反之，每个周期点都位于唯一的双向周期轨迹中。
+
+### 证明
+
+负时间部分给出每个 \(x_t\) 的无限相容过去。由推论 26.2，\(x_t\in P_\tau\)。在周期核上 \(\tau\) 是置换，故正反两个时间方向都唯一。\(\square\)
+
+因此若要为瞬态点赋予“双向历史”，必须添加原系统之外的数据，例如：
+
+- 一个有限起始边界；
+- 外部生成的过去输入；
+- 分支树而非单路径；
+- 或扩展状态，使原瞬态成为更大系统中的周期/可逆部分。
+
+不能仅凭普通逆极限声称有限不可逆系统的全部状态已经获得时间对称历史。
+
+## 26.7 与观察者完成的方向性审计
+
+一个完整观察者理论必须单独记录以下三个对象：
+
+\[
+\boxed{
+\text{未来 itinerary 完成 }Z_q,
+}
+\]
+\[
+\boxed{
+\text{单路径过去逆极限 }X_\tau^-,
+}
+\]
+\[
+\boxed{
+\text{全分支过去完成 }\mathfrak N(\tau).
+}
+\]
+
+它们分别保存：
+
+- \(Z_q\)：相对于 \(q\) 的全部未来可预测差异；
+- \(X_\tau^-\)：可以无限向后延伸的周期轨迹；
+- \(\mathfrak N(\tau)\)：周期与全部瞬态入树的完整关联。
+
+三者一般互不等价。特别地：
+
+\[
+\boxed{
+Z_q
+\text{ 相对读出，}
+}
+\]
+\[
+\boxed{
+X_\tau^-
+\text{ 忘掉全部有限瞬态，}
+}
+\]
+\[
+\boxed{
+\mathfrak N(\tau)
+\text{ 是观察者无关的完整有限函数图不变量。}
+}
+\]
+
+## 26.8 严格边界
+
+1. 定理 26.1 依赖 \(Y\) 有限。无限状态系统可以有非周期点却拥有无限前史。
+2. 普通逆极限只保留一条相容路径；它不应被口语化为“全部可能过去的集合”而忽略分支关联。
+3. 分支码完成恢复的是有限函数图组合类型，不自动赋予每条分支概率、物理实在性或量子振幅。
+4. 未来完成 \(Z_q\) 依赖读出 \(q\)；恒等读出恢复 \(Y\) 不表示任意现实观察者都能读取微观状态。
+5. 双向轨迹定理不证明基本物理时间不可逆；它只描述有限确定性自映射的组合结构。
+6. 本节没有把 projective limit、自然扩张与量子多世界解释等同。
+
+
+---
+
+# 27. 追加：预测同余格、十一项观察审计与形式化落点
+
+前述章节已经得到四类完成：
+
+1. 单读出的最小预测完成 \(Z_q\)；
+2. 多读出的联合完成 \(Z_{q_I}\)；
+3. 带输入系统的最小行为完成 \(Z_{q,U}\)；
+4. 保存全部前像分支的组合完成 \(\mathfrak N(\tau)\)。
+
+本节把这些结果收束成一个有限格结构，并明确它们与仓库已有 Lean 声明之间的可复用接口与不可混同边界。
+
+## 27.1 全部预测完成恰由 \(\tau\)-同余分类
+
+令
+\[
+\operatorname{Cong}_\tau(Y)
+\]
+为 \(Y\) 上全部 \(\tau\)-同余，按关系包含排序。
+
+任意族 \((R_i)_{i\in I}\) 的交仍是 \(\tau\)-同余，因此给出格的交：
+\[
+\boxed{
+\bigwedge_iR_i
+=
+\bigcap_iR_i.
+}
+\]
+
+对两个同余 \(R,S\)，定义它们的并同余
+\[
+\boxed{
+R\vee_\tau S
+=
+\bigcap\{
+T\in\operatorname{Cong}_\tau(Y):
+R\cup S\subseteq T
+\}.
+}
+\]
+它是同时包含 \(R,S\) 的最小 \(\tau\)-同余。
+
+由于 \(Y\) 有限，
+\[
+\operatorname{Cong}_\tau(Y)
+\]
+是有限完备格。
+
+### 定理 27.1（每个同余都是某个已完成读出的预测关系）
+
+对任意
+\[
+R\in\operatorname{Cong}_\tau(Y),
+\]
+取商读出
+\[
+q_R=\pi_R:Y\to Y/R.
+\]
+则
+\[
+\boxed{
+R_{q_R}=R.
+}
+\]
+
+### 证明
+
+当前读出相同恰等价于
+\[
+yRy'.
+\]
+所以
+\[
+R_{q_R}\subseteq R.
+\]
+反之，若 \(yRy'\)，同余性给出
+\[
+\tau^k y\,R\,\tau^k y'
+\]
+对全部 \(k\) 成立，故全部未来商读出相同：
+\[
+yR_{q_R}y'.
+\]
+得到反向包含。\(\square\)
+
+因此
+\[
+\boxed{
+\text{有限预测完成的等价关系}
+=
+\operatorname{Cong}_\tau(Y).
+}
+\]
+读出 \(q\) 只是从当前分区
+\[
+\ker q
+\]
+出发，通过内算子
+\[
+\mathsf C_\tau
+\]
+选出其中最大的同余。
+
+## 27.2 联合观察与共同信息形成商菱形
+
+令
+\[
+R_1=R_{q_1},
+\qquad
+R_2=R_{q_2}.
+\]
+
+联合观察对应同余交：
+\[
+\boxed{
+R_{\mathrm{fuse}}
+=
+R_1\cap R_2.
+}
+\]
+它产生最小共同精化，即在所有同时精化二者的完成中保留最少但仍充分的信息：
+\[
+\boxed{
+Z_{\mathrm{fuse}}
+=
+Y/(R_1\cap R_2).
+}
+\]
+
+另一方面，定义共同因子同余
+\[
+\boxed{
+R_{\mathrm{common}}
+=
+R_1\vee_\tau R_2.
+}
+\]
+并令
+\[
+\boxed{
+Z_{\mathrm{common}}
+=
+Y/(R_1\vee_\tau R_2).
+}
+\]
+
+于是存在规范满射菱形：
+\[
+\boxed{
+Z_{\mathrm{fuse}}
+\twoheadrightarrow
+Z_{q_1}
+\twoheadrightarrow
+Z_{\mathrm{common}},
+}
+\]
+\[
+\boxed{
+Z_{\mathrm{fuse}}
+\twoheadrightarrow
+Z_{q_2}
+\twoheadrightarrow
+Z_{\mathrm{common}}.
+}
+\]
+
+### 定理 27.2（最小共同精化的泛性质）
+
+若某完成 \(W\) 同时精化 \(Z_{q_1}\) 与 \(Z_{q_2}\)，即存在满射
+\[
+W\twoheadrightarrow Z_{q_i}
+\]
+且这些映射与同一个原始投影 \(Y\to W\) 相容，则存在唯一满射
+\[
+\boxed{
+W\twoheadrightarrow Z_{\mathrm{fuse}}.
+}
+\]
+
+### 证明
+
+设 \(r:Y\twoheadrightarrow W\)。能从 \(W\) 计算两个完成意味着
+\[
+\ker r\subseteq R_1
+\quad\text{且}\quad
+\ker r\subseteq R_2.
+\]
+故
+\[
+\ker r\subseteq R_1\cap R_2.
+\]
+于是联合投影
+\[
+Y\to Y/(R_1\cap R_2)
+\]
+在 \(r\)-纤维上常值，唯一因子化为 \(W\to Z_{\mathrm{fuse}}\)。\(\square\)
+
+### 定理 27.3（最大共同因子的泛性质）
+
+设
+\[
+r:Y\twoheadrightarrow W
+\]
+是一个动力学因子：存在
+\[
+\theta:W\to W
+\]
+满足
+\[
+r\tau=\theta r.
+\]
+再假设该因子可以分别从两个完成确定地计算，即存在
+\[
+a_i:Z_{q_i}\to W
+\]
+满足
+\[
+r=a_i\pi_{q_i}
+\quad(i=1,2).
+\]
+则存在唯一满射
+\[
+\boxed{
+h:Z_{\mathrm{common}}\twoheadrightarrow W
+}
+\]
+使
+\[
+r=h\pi_{\mathrm{common}}.
+\]
+
+因此 \(Z_{\mathrm{common}}\) 是两个预测完成的**最细共同确定因子**。
+
+### 证明
+
+由
+\[
+r=a_i\pi_{q_i}
+\]
+得到
+\[
+R_i=\ker\pi_{q_i}\subseteq\ker r.
+\]
+\(\ker r\) 是 \(\tau\)-同余，因为 \(r\) 作为完成因子与动力学交换。因此
+\[
+R_1\vee_\tau R_2
+\subseteq
+\ker r.
+\]
+所以 \(r\) 在 \(\pi_{\mathrm{common}}\)-纤维上常值，唯一因子化。\(\square\)
+
+在基数上有
+\[
+\boxed{
+|Z_{\mathrm{common}}|
+\le
+\min(|Z_{q_1}|,|Z_{q_2}|)
+}
+\]
+与
+\[
+\boxed{
+|Z_{\mathrm{fuse}}|
+\ge
+\max(|Z_{q_1}|,|Z_{q_2}|).
+}
+\]
+
+所以多观察者结构同时含有两个方向：
+
+\[
+\boxed{
+\text{融合：保留任一观察者能分辨的差异};
+}
+\]
+\[
+\boxed{
+\text{共同因子：只保留两个观察者都能独立确定的状态}.
+}
+\]
+
+不能只构造直积联合读出，而忽略共同因子；两者分别是同余格的交与并。
+
+## 27.3 给定分布下的共同状态熵界
+
+令随机初态为 \(Y_0\)，定义
+\[
+Z_i=\pi_{q_i}(Y_0),
+\qquad
+C=\pi_{\mathrm{common}}(Y_0).
+\]
+由于 \(C\) 同时是 \(Z_1\) 与 \(Z_2\) 的确定函数，
+\[
+H(C\mid Z_1)=H(C\mid Z_2)=0.
+\]
+
+### 定理 27.4（共同确定状态受互信息控制）
+
+有
+\[
+\boxed{
+H(C)
+\le
+I(Z_1;Z_2).
+}
+\]
+
+### 证明
+
+因为 \(C\) 是 \(Z_1\) 的函数，数据处理给出
+\[
+I(Z_1;Z_2)
+\ge
+I(C;Z_2).
+\]
+又因为 \(C\) 也是 \(Z_2\) 的函数，
+\[
+H(C\mid Z_2)=0,
+\]
+所以
+\[
+I(C;Z_2)
+=
+H(C)-H(C\mid Z_2)
+=
+H(C).
+\]
+合并即得。\(\square\)
+
+该不等式只针对由两个完成共同确定的商变量 \(C\)。它没有声称全部互信息都能由一个确定共同状态提取，也没有把
+\[
+Z_{\mathrm{common}}
+\]
+等同于任何特定文献中的概率共同信息定义。
+
+## 27.4 十一项观察者审计
+
+结合第 18、20、21、22、24、25、26 节，一个有限观察接口至少应分别记录以下十一项。
+
+### 1. 对角自然性
+
+是否有
+\[
+Q\Delta_\tau=\Delta_\sigma P,
+\]
+或其误差
+\[
+\delta_\Delta.
+\]
+
+### 2. 扭曲忠实性
+
+观察是否仍能分离
+\[
+y
+\quad\text{与}\quad
+\tau y,
+\]
+而不是自然交换但把扭曲商掉。
+
+### 3. 全局单值命名
+
+商纤维的余坐标是否存在全局截面；若只有局部截面，必须记录 cocycle 与 monodromy。
+
+### 4. 瞬态容量可见性
+
+迹、秩、像链与零 Jordan 块保存了多少瞬态容量。
+
+### 5. 分支关联可见性
+
+是否保留
+\[
+\mathfrak N_h(\tau)
+\]
+直至足够深度，从而区分相同谱而不同入树附着的函数图。
+
+### 6. 预测闭合性
+
+当前读出是否已经形成确定状态；若否，记录
+\[
+m_*,
+\qquad
+Z_q,
+\qquad
+C_{\mathrm{det}}.
+\]
+
+### 7. 观察精化一致性
+
+对
+\[
+q\succeq_{\mathrm{obs}}r,
+\]
+是否保存规范满射
+\[
+Z_q\twoheadrightarrow Z_r
+\]
+及其复合律，而不是为每个尺度独立选择不可比较的模型。
+
+### 8. 多观察者兼容性
+
+联合完成是否只占据
+\[
+Z_1\times Z_2
+\]
+的兼容子集；共同因子
+\[
+Z_{\mathrm{common}}
+\]
+是什么；支持亏损与分布互信息必须分栏。
+
+### 9. 定量鲁棒性
+
+记录
+\[
+d_\gamma,
+\qquad
+\delta,
+\qquad
+\eta,
+\qquad
+L,
+\]
+并给出有限时域误差，而不是把近似交换口语化为“基本相同”。
+
+### 10. 干预闭合性
+
+状态商是否对全部
+\[
+F_u
+\]
+同时为同余；只对无输入轨迹闭合，不等于对所有外部干预闭合。
+
+### 11. 时间方向完整性
+
+必须区分
+\[
+Z_q,
+\qquad
+X_\tau^-,
+\qquad
+\mathfrak N(\tau).
+\]
+未来预测完成、单路径过去逆极限与全分支过去完成保存不同信息。
+
+这十一项不应自动互推。已有反例至少表明：
+
+- 自然性不推出忠实性；
+- 迹—秩容量不推出分支完整性；
+- 当前合法读出不推出无记忆闭合；
+- 完成状态数的单调性不推出完成深度单调性；
+- 联合完成不必充满直积；
+- 小有限词直径不推出同层转移良定义；
+- 有限状态在外部输入下不推出轨迹最终周期；
+- 普通过去逆极限不推出瞬态分支被恢复。
+
+## 27.5 与仓库已有 Lean 锚点的精确接口
+
+本追加部分不是孤立另起一套观察者术语。它与当前仓库至少有以下可复用接口，但每一项都必须避免过度同一化。
+
+### `D5/S3/ObserverMemory/FiniteReadoutKernel.lean`
+
+该模块形式化线性读出
+\[
+M\to N
+\]
+按线性核取商后与可达像线性等价：
+\[
+M/\ker f
+\cong
+\operatorname{range}(f).
+\]
+
+本节的
+\[
+Y/R_q
+\]
+复用“按不可见差异取商”的结构模式，但 \(R_q\) 是由全部未来读出生成的集合论同余，不是线性映射的代数核。除非另行给出线性动力学与线性读出，不能把二者直接识别。
+
+### `D5/S3/ObserverMemory/TwoTimeKnowledge.lean`
+
+该模块用
+\[
+\texttt{Function.FactorsThrough}
+\]
+表达事件值在观察纤维上常值，并证明观察粗化方向上的知识传递。
+
+定理 22.2、27.3 与该纤维因子化语言直接相容：观察精化对应更小的纤维关系，公共因子对应同时在两个完成纤维上常值的读出。但本追加处理全部未来与动力学同余，超出两时刻定义本身。
+
+### `D5/S0/Naming/TranslationComposition.lean`
+
+该模块证明近似命名翻译复合时：
+
+- 语义误差相加；
+- 资源模数复合；
+- 等距嵌入复合。
+
+定理 24.13 给出动力学半共轭缺陷
+\[
+K\delta_1+\delta_2
+\]
+的对应复合律。两者共享三角不等式与 Lipschitz 传播模式，但对象与结论不同；现有 Lean 定理不能被引用为本节的 proof term。
+
+### `D5/S3/ObserverMemory/FiniteForgettingCertificate.lean`
+
+该模块保存“遗忘已发生”“访问已撤销”等 append-only 审计标记，并证明有限历史不擦除这些账本事实。
+
+预测完成可能把两个未来读出相同的状态合并，而审计账本仍可要求历史标记不被删除。因此：
+
+\[
+\boxed{
+\text{预测等价}
+\ne
+\text{审计历史等价}.
+}
+\]
+
+若账本会被未来转移读取，它必须并入 \(Y\)；若它只供外部审计且不影响动力学，则可作为与预测状态并列的不可擦除证书。
+
+### `D5/S3/ObserverMemory/MultiCopyErasure.lean`
+
+该模块证明有限个独立环境记录通道的重叠因子相乘，并刻画“至少一个零重叠副本导致对应矩阵元擦除”。
+
+第 22.6 节的多观察者融合是经典确定性读出关系的交：
+\[
+R_{12}=R_1\cap R_2.
+\]
+它不能替代量子通道乘积、退相干或多副本擦除定理。二者只共享“多个记录共同约束可见性”的高层模式。
+
+### `D5/S3/ObserverMemory/RecordCorrelationMonogamy.lean`
+
+该模块对同一个固定记录指针证明互补系统相关的约束，并明确排除了把不同记录可观测量混为同一命题的错误替换。
+
+本追加的经典联合读出可以无损拼接多个坐标；这不推出量子互补可观测量也能同时形成经典直积完成。任何量子推广都必须重新指定态空间、通道、可观测代数与距离。
+
+## 27.6 推荐形式化分解
+
+本追加部分适合拆成以下互相依赖但可独立冻结的 Lean 模块。路径仅为候选语义地址，实际创建必须先经过仓库 routing/harness，不应手写绕过。
+
+### 第一簇：预测同余内核
+
+候选模块：
+
+- `PredictiveCongruenceCore`
+- `FiniteCongruenceStabilization`
+- `PredictiveCompletionIdempotent`
+
+核心声明：
+
+\[
+\mathsf C_\tau(R)
+=
+\bigcap_k(\tau^k\times\tau^k)^{-1}(R),
+\]
+最大同余、单调、收缩、幂等与稳定界。
+
+### 第二簇：观察精化与同余格
+
+候选模块：
+
+- `PredictiveRefinementFactor`
+- `JointReadoutCompletion`
+- `PredictiveCongruenceLattice`
+
+核心声明：
+
+\[
+R_q\subseteq R_r
+\Longrightarrow
+Z_q\twoheadrightarrow Z_r,
+\]
+\[
+R_{(q_1,q_2)}=R_{q_1}\cap R_{q_2},
+\]
+以及共同因子
+\[
+Y/(R_1\vee_\tau R_2).
+\]
+
+### 第三簇：可核验最小化
+
+候选模块：
+
+- `FuturePartitionRefinement`
+- `PairDistinguishingCertificate`
+- `PredictiveDepthSharpness`
+
+先形式化数学递推与证书正确性，再决定是否对数组实现、排序与复杂度作单独程序验证。
+
+### 第四簇：定量预测距离
+
+候选模块：
+
+- `DiscountedPredictivePseudoMetric`
+- `DiscretePredictiveUltraMetric`
+- `ApproximateObserverSemiconjugacy`
+
+核心声明：
+
+\[
+d_\gamma
+=
+\max\{d_0,\gamma d_\gamma\circ(\tau\times\tau)\},
+\]
+有限截断误差、离散首差异公式、轨道误差与缺陷复合。
+
+### 第五簇：受控观察完成
+
+候选模块：
+
+- `ControlledPredictiveCongruence`
+- `ControlledObserverCompletion`
+- `ControlledDistinguishingWord`
+
+核心声明：
+
+\[
+R_{m+1}
+=
+\ker q\cap
+\bigcap_u(F_u\times F_u)^{-1}(R_m),
+\]
+最小 Moore 行为商、干预对角自然性与反馈策略闭合。
+
+### 第六簇：过去极限分家
+
+候选模块：
+
+- `FiniteInverseLimitPeriodicCore`
+- `BidirectionalTrajectoryPeriodic`
+- `PastBranchCompletionSeparation`
+
+核心声明：
+
+\[
+\varprojlim(Y,\tau)\cong P_\tau
+\]
+以及与装饰 necklace 完成的显式非等价反例。
+
+推荐依赖顺序为：
+
+\[
+\boxed{
+\text{有限关系与商}
+\to
+\text{同余内核}
+\to
+\text{精化/融合}
+\to
+\text{算法证书}
+\to
+\text{度量近似}
+\to
+\text{受控输入}
+\to
+\text{逆极限分家}.
+}
+\]
+
+## 27.7 追加部分的形式化状态
+
+定理 22.2—22.17、23.1—23.7、24.1—24.13、25.1—25.9、例 25.10、定理 25.11、定理 26.1—26.4、例 26.5、定理 26.6 及定理 27.1—27.4 均给出纸面定义与证明，但尚未成为 Lean 数学真源。
+
+在获得以下全部工件以前，不得把任何新增结论标记为 `Closed`：
+
+1. Lean 声明与 proof term；
+2. 完整 axiom 闭包；
+3. 依赖地址与 Blueprint 镜像；
+4. harness admission；
+5. 冻结收据。
+
+本文对仓库已有 Lean 模块的引用只说明可复用接口或严格边界，不声称这些模块已经证明本追加定理。
+
+## 27.8 最终非主张
+
+1. 本追加不证明 Riemann 假设，不提供 Weil 正性的缺失全局余项估计。
+2. 本追加不把有限预测完成等同于意识、自我或物理观察者的唯一模型。
+3. 本追加不声称折扣参数 \(\gamma\)、完成深度 \(m_*\) 或状态数对应任何普适物理常数。
+4. 本追加不把经典多传感器融合推广为量子可观测量的任意联合可读性。
+5. 本追加不证明现实大语言模型在工程时间尺度上必然进入短循环；第 21 节的有限自治结论仍受完整运行时状态与外部输入假设约束。
+6. 本追加不声称普通逆极限能够恢复瞬态分支；定理 26.1 恰好证明相反结论。
+7. 本追加不冒领自动机最小化、同余格、Koopman 闭包或行为度量的一般思想为本项目独有发明；本文的贡献定位是把它们在本稿既有“对角—观察—完成”主线中给出单一、自洽、可形式化拆分的接口。
+8. 任何新增纸面定理若在 Lean 形式化中需要加强前提、削弱结论或拆分命题，应以 kernel-verified 声明为唯一真值，并在文档中 append-only 记录勘误。

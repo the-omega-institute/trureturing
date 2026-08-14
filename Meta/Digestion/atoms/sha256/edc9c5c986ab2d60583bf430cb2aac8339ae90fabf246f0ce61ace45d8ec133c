@@ -1,0 +1,28 @@
+## 定理 3.2（逆极限下降与反向判据）
+
+设 \((\mathcal T_i,P_{j,i})\)、\((\mathcal U_i,Q_{j,i})\) 为逆系。若
+\[
+Q_{j,i}\Delta_j=\Delta_iP_{j,i}
+\]
+对全部 \(j\succeq i\) 成立，则存在唯一
+\[
+\boxed{
+\Delta_\infty:
+\varprojlim_i\mathcal T_i
+\to
+\varprojlim_i\mathcal U_i}
+\]
+满足
+\[
+\pi_i^\mathcal U\Delta_\infty
+=\Delta_i\pi_i^\mathcal T.
+\]
+定义即为
+\[
+\Delta_\infty((E_i)_i)=(\Delta_i(E_i))_i.
+\]
+
+反之，若每个有限表坐标都可从极限满射提升，且存在上述坐标兼容的 \(\Delta_\infty\)，则有限层严格自然。故在可提升系统中，对角缺陷正是有限算子不能下降到完成对象的障碍。
+
+---
+
