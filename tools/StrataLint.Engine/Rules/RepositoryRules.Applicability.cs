@@ -50,7 +50,7 @@ internal static partial class RepositoryRules
     private static bool AllArtifacts(RepositoryFile artifact, RuleApplicabilityContext context) => true;
 
     private static bool BackfillScoped(RepositoryFile artifact, RuleApplicabilityContext context) =>
-        artifact.Path.Value == "Meta/BACKFILL.yaml";
+        BackfillInventoryLoader.IsCanonicalPath(artifact.Path.Value);
 
     private static bool LiteratureScoped(RepositoryFile artifact, RuleApplicabilityContext context) =>
         artifact.Path.Value == "Library/queries.yaml";
@@ -82,8 +82,7 @@ internal static partial class RepositoryRules
             ? parts[1]
             : parts[0];
         return theory is "Metallic" or "Moduli"
-            || theory.Length > 1 && theory[0] == 'D' && theory != "D5" && theory[1..].All(char.IsDigit)
-            || artifact.Path.Value == "Meta/split.py";
+            || theory.Length > 1 && theory[0] == 'D' && theory != "D5" && theory[1..].All(char.IsDigit);
     }
 
     private static bool BootstrapScoped(RepositoryFile artifact, RuleApplicabilityContext context) =>
