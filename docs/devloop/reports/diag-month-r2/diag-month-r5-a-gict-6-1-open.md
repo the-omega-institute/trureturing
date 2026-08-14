@@ -101,7 +101,7 @@ Before committing this correction, `origin/dev` advanced through PRs #1710 and
 #1711. A final non-destructive
 `git merge --no-edit 5b69e67602e7cc960dc63a110ab1766fb64b19ec`
 completed without conflict as `8225ad19073854a9f16b3098066f844a9470fdac`.
-Its second parent and the final synchronized content base are:
+Its second parent and the synchronized content base at that point were:
 
 ```text
 origin/dev = 5b69e67602e7cc960dc63a110ab1766fb64b19ec
@@ -116,11 +116,31 @@ topological upgrade. The only broad search hit was the unchanged, pre-existing
 `ResourceOrder`. None of these seven later PRs changes a clause disposition
 below.
 
-On this final base, `make lean-report` exited `0`, producing:
+After the history-audit correction was committed, `origin/dev` advanced through
+PR #1713. A final non-destructive
+`git merge --no-edit 88fb4a9cc3d56cf08747a948ffc014af57a0e4cd`
+completed without conflict as `cf3f73d6651d70184c572993d6ea6db5f656ed9c`.
+Its second parent and the final synchronized content base are:
 
 ```text
-input_address = sha256:2256ae9089f4582f3400a060768cabbebf0ad000ac16a3c86081fe8269d2578b
-report_sha256 = beaac53b34d66b39ba97b43dfa0030a0ab9002c3e7f036d31eaf55703cc0ec70
+origin/dev = 88fb4a9cc3d56cf08747a948ffc014af57a0e4cd
+merge-base(origin/dev, HEAD) = 88fb4a9cc3d56cf08747a948ffc014af57a0e4cd
+```
+
+PR #1713 adds `WideVacuumBand`, its Scribe source and Blueprint projection,
+seven freeze records, and one formalization receipt for the different atom
+`pzg-residual-aa45f85f...`. The theorem constructs arbitrarily wide bands in a
+lookup-program spectrum. A focused search across all eleven incoming paths
+exited `1` with no `UniversalSolenoid`, `PontryaginDual`, `HiddenAddress`,
+`hiddenKernelAddEquiv`, solenoid, profinite, p-adic, selected-atom, or exact-
+sequence occurrence. This deposit changes no clause disposition below.
+
+On this final base, `make lean-report` exited `0` from the content-addressed
+cache, producing:
+
+```text
+input_address = sha256:0809776a5451e2aee72c2d615493b63c9e98e3248189c42de2ff8b312f2eeceb
+report_sha256 = 8a14bbe84a26f00ee026c7f7d1acfec6d18d2cf01910ff01d256a1f712115c29
 ```
 
 ## Atom and authoritative statement
@@ -345,7 +365,7 @@ rg -n 'PontryaginDual' \
 found the generic definition, functorial map, topology/group instances, and
 finite-abelian double-dual results only. It found no rational specialization.
 
-There were 1,547 refs. This bounded all-ref query used the complete ref list
+There were 1,551 refs. This bounded all-ref query used the complete ref list
 and only Lean paths:
 
 ```sh
@@ -508,7 +528,7 @@ lake build \
 
 Exit `0`; Lean reported `Build completed successfully (8563 jobs)`.
 
-After the final merge to content base `5b69e676`, the refreshed scoped build
+After the final merge to content base `88fb4a9c`, the refreshed scoped build
 included the modules defining and constructing the additive kernel equivalence:
 
 ```sh
@@ -534,9 +554,11 @@ The latest actual deposit template on this final base was inspected with:
 
 ```sh
 git log --no-merges -20 --format='%H %s' --grep='^formalize: deposit'
-git show bdd8130402c4c91fa8effd2696bb09d8c93b657d
+git show 6664bf790742f22a3ef7d7b7e622dd8b4c895113
 ```
 
-It adds one new Lean module, one Scribe source, and one emitted Blueprint
-Markdown file. No candidate artifacts were created because the task stopped at
-the fidelity/search gate.
+It is the incoming `WideVacuumBand` deposit and adds one new Lean module, one
+Scribe source, and one emitted Blueprint Markdown file; its separate receipt
+and freeze commit is `4ec81b032f70523fcbaa12ae03c8156a8ad167fb`.
+No candidate artifacts were created because the task stopped at the
+fidelity/search gate.
