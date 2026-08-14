@@ -1,5 +1,5 @@
 /- GID: D5/S1/Words/Complexity/SubshiftHausdorffDimension
-   generality: G
+   generality: I
    mirror-B: D5/B/S1/Words/Complexity/SubshiftHausdorffDimension
    mirror-E: none(waiver:pure-word-combinatorics)
    anchors: []
