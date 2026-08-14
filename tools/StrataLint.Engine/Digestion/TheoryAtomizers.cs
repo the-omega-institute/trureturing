@@ -193,6 +193,10 @@ internal static class DigestionFingerprint
         return new DigestionFingerprints(raw, raw);
     }
 
+    /// <summary>A short content address, for locators that have no readable text to slug.</summary>
+    internal static string ShortHash(string value) =>
+        Convert.ToHexStringLower(SHA256.HashData(StrictUtf8.GetBytes(value)))[..8];
+
     private static string Sha256(ReadOnlySpan<byte> bytes) =>
         "sha256:" + Convert.ToHexStringLower(SHA256.HashData(bytes));
 }
