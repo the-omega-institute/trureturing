@@ -11,7 +11,9 @@ internal interface IGitProcessRunner
         string fileName,
         IReadOnlyList<string> arguments,
         string workingDirectory,
-        TimeSpan timeout);
+        TimeSpan timeout,
+        int maximumOutputBytes = GitRepositoryGateway.DefaultGitOutputBytes,
+        ReadOnlyMemory<byte> standardInput = default);
 }
 
 internal sealed class ProductionGitProcessRunner : IGitProcessRunner
@@ -20,17 +22,21 @@ internal sealed class ProductionGitProcessRunner : IGitProcessRunner
         string fileName,
         IReadOnlyList<string> arguments,
         string workingDirectory,
-        TimeSpan timeout) =>
+        TimeSpan timeout,
+        int maximumOutputBytes = GitRepositoryGateway.DefaultGitOutputBytes,
+        ReadOnlyMemory<byte> standardInput = default) =>
         BoundedProcessRunner.Run(
             fileName,
             arguments,
             workingDirectory,
             timeout,
-            64 * 1024 * 1024);
+            maximumOutputBytes,
+            standardInput);
 }
 
 internal sealed partial class GitRepositoryGateway : IRepositoryGateway
 {
+    internal const int DefaultGitOutputBytes = 64 * 1024 * 1024;
     private static readonly UTF8Encoding StrictUtf8 = new(false, true);
     private readonly string root;
     private readonly IGitProcessRunner processRunner;
@@ -151,20 +157,10 @@ internal sealed partial class GitRepositoryGateway : IRepositoryGateway
 
     public RawRepositorySnapshot ReadRevision(string revision)
     {
-        var entries = ImmutableArray.CreateBuilder<RawRepositoryEntry>();
-        foreach (var entry in ParseTree(GitBytes("ls-tree", "-r", "-z", revision)))
-        {
-            if (entry.Mode is not ("100644" or "100755") || entry.ObjectType != "blob")
-            {
-                throw new InvalidOperationException(
-                    $"protected base has non-regular entry {entry.Path} ({entry.Mode} {entry.ObjectType})");
-            }
-
-            var bytes = GitBytes("show", $"{revision}:{entry.Path}");
-            entries.Add(new RawRepositoryEntry(entry.Path, ImmutableArray.CreateRange(bytes)));
-        }
-
-        return RawRepositorySnapshot.Create(entries);
+        var tree = ParseTree(GitBytes("ls-tree", "-r", "-l", "-z", revision)).ToArray();
+        return RawRepositorySnapshot.Create(ReadTreeBlobs(
+            tree,
+            entry => $"protected base has non-regular entry {entry.Path} ({entry.Mode} {entry.ObjectType})"));
     }
 
     // 冻结账本切换成一节点一文件后,它不再是单个 blob 而是一个目录。
@@ -177,21 +173,13 @@ internal sealed partial class GitRepositoryGateway : IRepositoryGateway
         }
 
         RequireObjectType(revision, "commit");
-        var entries = ImmutableArray.CreateBuilder<RawRepositoryEntry>();
-        foreach (var entry in ParseTree(GitBytes("ls-tree", "-r", "-z", revision, "--", prefix)))
-        {
-            if (entry.Mode is not ("100644" or "100755") || entry.ObjectType != "blob")
-            {
-                throw new InvalidOperationException(
-                    $"revision file is not regular: {entry.Path} ({entry.Mode} {entry.ObjectType})");
-            }
-
-            entries.Add(new RawRepositoryEntry(
-                entry.Path,
-                ImmutableArray.CreateRange(GitBytes("show", $"{revision}:{entry.Path}"))));
-        }
-
-        return entries.ToImmutable();
+        var tree = ParseTree(
+                GitBytes("ls-tree", "-r", "-l", "-z", revision, "--", prefix))
+            .ToArray();
+        return ReadTreeBlobs(
+                tree,
+                entry => $"revision file is not regular: {entry.Path} ({entry.Mode} {entry.ObjectType})")
+            .ToImmutableArray();
     }
 
     internal RawRepositoryEntry ReadRevisionFile(string revision, string path)
@@ -230,20 +218,148 @@ internal sealed partial class GitRepositoryGateway : IRepositoryGateway
             ImmutableArray.CreateRange(GitBytes("show", $"{revision}:{path}")));
     }
 
+    private IEnumerable<RawRepositoryEntry> ReadTreeBlobs(
+        IReadOnlyList<TreeEntry> tree,
+        Func<TreeEntry, string> invalidEntryMessage)
+    {
+        foreach (var entry in tree)
+        {
+            if (entry.Mode is not ("100644" or "100755")
+                || entry.ObjectType != "blob"
+                || entry.Size is null)
+            {
+                throw new InvalidOperationException(invalidEntryMessage(entry));
+            }
+        }
+
+        var objects = tree
+            .DistinctBy(static entry => entry.ObjectId, StringComparer.Ordinal)
+            .ToArray();
+        if (objects.Length == 0)
+        {
+            return [];
+        }
+
+        var input = StrictUtf8.GetBytes(
+            string.Concat(objects.Select(static entry => entry.ObjectId + "\n")));
+        var maximumOutputBytes = BatchOutputLimit(objects);
+        var output = GitRaw(
+                ["cat-file", "--batch"],
+                allowNonzero: false,
+                maximumOutputBytes: maximumOutputBytes,
+                standardInput: input)
+            .StandardOutput;
+        var blobs = ParseBatchObjects(objects, output);
+        return tree.Select(entry => new RawRepositoryEntry(entry.Path, blobs[entry.ObjectId]));
+    }
+
+    private static int BatchOutputLimit(IEnumerable<TreeEntry> entries)
+    {
+        long maximum = 0;
+        foreach (var entry in entries)
+        {
+            var size = entry.Size!.Value;
+            var overhead = entry.ObjectId.Length + 64;
+            if (size > int.MaxValue || maximum > int.MaxValue - size - overhead)
+            {
+                throw new InvalidOperationException("revision snapshot exceeds the supported batch size");
+            }
+
+            maximum += size + overhead;
+        }
+
+        return (int)maximum;
+    }
+
+    private static IReadOnlyDictionary<string, ImmutableArray<byte>> ParseBatchObjects(
+        IReadOnlyList<TreeEntry> expected,
+        byte[] output)
+    {
+        var blobs = new Dictionary<string, ImmutableArray<byte>>(StringComparer.Ordinal);
+        var offset = 0;
+        foreach (var entry in expected)
+        {
+            var headerEnd = Array.IndexOf(output, (byte)'\n', offset);
+            if (headerEnd < offset)
+            {
+                throw InvalidBatchOutput(entry.ObjectId);
+            }
+
+            var header = StrictUtf8.GetString(output.AsSpan(offset, headerEnd - offset));
+            var fields = header.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+            if (fields.Length != 3
+                || !string.Equals(fields[0], entry.ObjectId, StringComparison.Ordinal)
+                || !string.Equals(fields[1], "blob", StringComparison.Ordinal)
+                || !long.TryParse(
+                    fields[2],
+                    System.Globalization.NumberStyles.None,
+                    System.Globalization.CultureInfo.InvariantCulture,
+                    out var size)
+                || size != entry.Size
+                || size > int.MaxValue)
+            {
+                throw InvalidBatchOutput(entry.ObjectId);
+            }
+
+            var contentStart = headerEnd + 1;
+            if (size > output.Length - contentStart - 1)
+            {
+                throw InvalidBatchOutput(entry.ObjectId);
+            }
+
+            var contentEnd = contentStart + (int)size;
+            if (output[contentEnd] != (byte)'\n')
+            {
+                throw InvalidBatchOutput(entry.ObjectId);
+            }
+
+            blobs.Add(
+                entry.ObjectId,
+                ImmutableArray.CreateRange(output.AsSpan(contentStart, (int)size).ToArray()));
+            offset = contentEnd + 1;
+        }
+
+        if (offset != output.Length)
+        {
+            throw new InvalidOperationException("git cat-file --batch emitted trailing data");
+        }
+
+        return blobs;
+    }
+
+    private static InvalidOperationException InvalidBatchOutput(string objectId) =>
+        new($"git cat-file --batch emitted invalid data for object {objectId}");
+
     private IEnumerable<TreeEntry> ParseTree(byte[] bytes)
     {
         foreach (var entry in SplitNul(bytes))
         {
             var tab = Array.IndexOf(entry, (byte)'\t');
             if (tab <= 0) throw new InvalidOperationException("git tree emitted invalid metadata");
-            var metadata = StrictUtf8.GetString(entry.AsSpan(0, tab)).Split(' ');
+            var metadata = StrictUtf8.GetString(entry.AsSpan(0, tab))
+                .Split(' ', StringSplitOptions.RemoveEmptyEntries);
             var path = StrictUtf8.GetString(entry.AsSpan(tab + 1));
-            if (metadata.Length != 3 || !RepoPath.TryCreate(path, out _))
+            if (metadata.Length is not (3 or 4) || !RepoPath.TryCreate(path, out _))
             {
                 throw new InvalidOperationException($"git tree emitted invalid entry: {path}");
             }
 
-            yield return new TreeEntry(metadata[0], metadata[1], metadata[2], path);
+            long? size = null;
+            if (metadata.Length == 4 && metadata[3] != "-")
+            {
+                if (!long.TryParse(
+                        metadata[3],
+                        System.Globalization.NumberStyles.None,
+                        System.Globalization.CultureInfo.InvariantCulture,
+                        out var parsedSize))
+                {
+                    throw new InvalidOperationException($"git tree emitted invalid entry: {path}");
+                }
+
+                size = parsedSize;
+            }
+
+            yield return new TreeEntry(metadata[0], metadata[1], metadata[2], path, size);
         }
     }
 
@@ -255,13 +371,23 @@ internal sealed partial class GitRepositoryGateway : IRepositoryGateway
         return result.StandardOutput;
     }
 
-    private ProcessOutput GitRaw(IEnumerable<string> arguments, bool allowNonzero)
+    private ProcessOutput GitRaw(
+        IEnumerable<string> arguments,
+        bool allowNonzero,
+        int maximumOutputBytes = DefaultGitOutputBytes,
+        ReadOnlyMemory<byte> standardInput = default)
     {
         var commandArguments = arguments.ToArray();
         ProcessOutput result;
         try
         {
-            result = processRunner.Run(gitExecutable, commandArguments, root, gitTimeout);
+            result = processRunner.Run(
+                gitExecutable,
+                commandArguments,
+                root,
+                gitTimeout,
+                maximumOutputBytes,
+                standardInput);
         }
         catch (TimeoutException exception)
         {
@@ -434,5 +560,10 @@ internal sealed partial class GitRepositoryGateway : IRepositoryGateway
         }
     }
 
-    private sealed record TreeEntry(string Mode, string ObjectType, string ObjectId, string Path);
+    private sealed record TreeEntry(
+        string Mode,
+        string ObjectType,
+        string ObjectId,
+        string Path,
+        long? Size);
 }
