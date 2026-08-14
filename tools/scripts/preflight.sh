@@ -143,7 +143,7 @@ record_timing restore-proofs
 
 PREFLIGHT_FAULT_CLASS="SEMANTIC"
 PREFLIGHT_FAULT_CLASS="UNKNOWN"
-CI=true make dotnet
+CI=true make -C tools dotnet
 record_timing dotnet
 
 PREFLIGHT_FAULT_CLASS="UNKNOWN"
@@ -151,12 +151,12 @@ make lean-report
 record_timing lean-report
 
 PREFLIGHT_FAULT_CLASS="SEMANTIC"
-CI=true STRATALINT_REQUIRE_LIVE_REPORT=1 make tools-test
+CI=true STRATALINT_REQUIRE_LIVE_REPORT=1 make -C tools test
 record_timing test
 
 PREFLIGHT_FAULT_CLASS="SEMANTIC"
 PREFLIGHT_FAULT_CLASS="SEMANTIC"
-make selftest
+make -C tools selftest
 record_timing selftest
 
 expect_compile_failure() {

@@ -476,6 +476,15 @@ mode = "100644"
 history_requirement = "not-required"
 
 [[files]]
+pattern = "tools/Makefile"
+kind = "program"
+produced_by = "none"
+consumed_by = ["developer"]
+verified_by = ["make-gate"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+
+[[files]]
 pattern = "tools/StrataLint.*/**"
 kind = "program"
 produced_by = "none"
