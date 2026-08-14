@@ -40,6 +40,10 @@
   split-only, no-move change opened `Zeros/Detection/`; all existing `Zeros/`
   paths remain unmoved. First module: `Detection/DetectionRadiusCertificate.lean`,
   certifying the exact visibility scale and radius at beta = 0.51 and gamma = 10^12.
+- 2026-08-14 (SL-003): `Weil/` remained at its 12-Lean-file limit. The A17.2
+  Zeta23 explicit-formula port opened cohesive `Weil/Zeta*` subdomain buckets;
+  all existing `Weil/` paths remain unmoved. The port retains its upstream
+  import order, and over-800-line sources are split only at declaration bounds.
 
 ## Buckets
 
@@ -49,6 +53,16 @@
 - `PrimeForms/`: representations of prime numbers by integral quadratic forms.
 - `Weil/`: classical zeta conventions, test functions, and explicit-formula machinery.
 - `Weil/PrimeAddress/`: finite prime modifications, ramified-character silence, and prime-address amplitudes.
+- `Weil/ZetaCore/`: Zeta23 definitions and explicit-formula convention dictionaries.
+- `Weil/ZetaSeam/`: the hypothesis-free nontrivial-zeta-zero configuration.
+- `Weil/ZetaLinear/`: finite-dimensional positive-index linear algebra used by the tail bounds.
+- `Weil/ZetaGamma/`: gamma-factor series, Stirling estimates, and vertical bounds.
+- `Weil/ZetaAnalytic/`: rectangle logarithmic-derivative integration.
+- `Weil/ZetaPntBase/`: Apache-2.0 PrimeNumberTheoremAnd-derived analytic foundations.
+- `Weil/ZetaPntBounds/`: the split zeta and logarithmic-derivative bound chain.
+- `Weil/ZetaRvm/`: Riemann-von Mangoldt and local zero-count bounds.
+- `Weil/ZetaTail/`: zero-sum tail and rank-one bounds.
+- `Weil/ZetaExplicit/`: contour assembly of the hypothesis-free Weil explicit formula.
 - `Zeros/`: zeta-zero geometry, symmetry, and local critical-line balance.
 - `Zeros/Endpoints/`: endpoint-value certificates for completed-zeta readings.
 - `Zeros/Symmetry/`: conjugation and reflection covariance of zeta readings.
