@@ -85,8 +85,14 @@ internal sealed record MarkdownHeading(int Start, int End, int Level, string Tex
 internal sealed record MarkdownParagraph(int Start, int End, string Text)
     : MarkdownBlock(Start, End);
 
+/// <summary>
+/// <paramref name="IsHeader"/> separates the row that names the columns from the rows that
+/// state something. Only a parser knows which is which, so it is recorded here rather than
+/// guessed from the text downstream.
+/// </summary>
 internal sealed record MarkdownTableRow(
-    int Start, int End, string Text, string FirstCellText, string FirstCellSourceText)
+    int Start, int End, string Text, string FirstCellText, string FirstCellSourceText,
+    bool IsHeader = false)
     : MarkdownBlock(Start, End);
 
 internal static class MarkdownBlockAst
@@ -133,7 +139,7 @@ internal static class MarkdownBlockAst
                 && line.Text.Contains('|')
                 && TableDelimiterPattern.IsMatch(lines[index + 1].Text))
             {
-                blocks.Add(TableRow(line));
+                blocks.Add(TableRow(line, isHeader: true));
                 index += 2;
                 while (index < lines.Length
                     && !string.IsNullOrWhiteSpace(lines[index].Text)
@@ -169,13 +175,19 @@ internal static class MarkdownBlockAst
         return blocks.ToImmutable();
     }
 
-    private static MarkdownTableRow TableRow(MarkdownSourceLine line)
+    private static MarkdownTableRow TableRow(MarkdownSourceLine line, bool isHeader = false)
     {
         var firstCellSourceText = FirstCellSourceText(line.Text);
-        return new(line.Start, line.End, line.Text, FirstCellPlainText(firstCellSourceText), firstCellSourceText);
+        return new(
+            line.Start,
+            line.End,
+            line.Text,
+            FirstCellPlainText(firstCellSourceText),
+            firstCellSourceText,
+            isHeader);
     }
 
-    private static string FirstCellSourceText(string row)
+    internal static string FirstCellSourceText(string row)
     {
         var value = row.Trim();
         if (value.StartsWith('|')) value = value[1..];
@@ -184,7 +196,7 @@ internal static class MarkdownBlockAst
         return value.Trim();
     }
 
-    private static string FirstCellPlainText(string value)
+    internal static string FirstCellPlainText(string value)
     {
         while (value.Length >= 4
             && (value.StartsWith("**", StringComparison.Ordinal)

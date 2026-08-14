@@ -274,9 +274,6 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
                 scribeEmissionVerifier,
                 arguments);
 
-    public CommandResult CheckFidelityAttestation(IReadOnlyList<string> arguments) =>
-        CheckFidelityAttestationCommand.Run(repository, leanReportSource, arguments);
-
     public CommandResult AlignScribeReceipt(IReadOnlyList<string> arguments)
     {
         if (scribeEmissionVerifier is null)
@@ -522,6 +519,12 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
 
     public CommandResult ReattestLedger(IReadOnlyList<string> arguments) =>
         DagLedgerReattestWriter.Reattest(repositoryRoot, repository, arguments);
+
+    public CommandResult SyncLedger(IReadOnlyList<string> arguments) =>
+        DagLedgerSyncWriter.Sync(repositoryRoot, repository, arguments);
+
+    public CommandResult RecoordinateLedger(IReadOnlyList<string> arguments) =>
+        DagLedgerRecoordinateWriter.Recoordinate(repositoryRoot, repository, arguments);
 
     public CommandResult CleanLanes(IReadOnlyList<string> arguments) =>
         CleanLanesCommand.Run(repositoryRoot, arguments);

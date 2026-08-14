@@ -7,7 +7,6 @@ internal sealed record RepositoryPathIssue(RuleId RuleId, string Path, string Me
 internal static partial class RepositoryPathPolicy
 {
     internal const string AssumptionRegistryPath = "D5/X_Assumptions/REGISTRY.md";
-    internal const string LibraryMapPath = "Library/MAP.md";
     internal const string WorkflowPath = ".github/workflows/ci.yml";
     internal const string TheoryIngestWorkflowPath = ".github/workflows/theory-ingest.yml";
     internal const string HarnessGatePath = ".github/scripts/harness-gate.sh";
@@ -74,8 +73,7 @@ internal static partial class RepositoryPathPolicy
         }
 
         if (value is "Meta/domains.yaml" or "Meta/BACKFILL.yaml" or "Meta/registry.yaml"
-            or LibraryMapPath or "Library/queries.yaml" or AssumptionRegistryPath
-            or "Meta/split.py"
+            or "Library/queries.yaml" or AssumptionRegistryPath
             or "tools/tests/StrataLint.Tests/Fixtures/fixture-registry.yaml"
             or "Golden/values-kernels.toml"
             or WorkflowPath or TheoryIngestWorkflowPath
@@ -85,7 +83,6 @@ internal static partial class RepositoryPathPolicy
             || DigestionCasStore.IsCanonicalPath(value)
             || BackfillInventoryLoader.IsCanonicalPath(value)
             || DigestionFormalizationReceipt.IsCanonicalPath(value)
-            || DigestionFidelityAttestation.IsCanonicalPath(value)
             || IsEchoResidualShardPath(value)
             || FrozenLedgerChangeClassifier.IsAcceptedEventPath(value)
             || value.StartsWith(".fkst/", StringComparison.Ordinal)

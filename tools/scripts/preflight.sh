@@ -1,6 +1,7 @@
 #!/bin/bash
-# preflight: 提交前一键预证 CI 双 required check 会绿(本地=CI 同一器,器之四律②)
-# 覆盖 engineering check 全步骤 + baseline admission(gate);CI=true 复现 CI 独有构建属性。
+# preflight: 提交前一键预证 CI 三 required check 会绿(本地=CI 同一器,器之四律②)
+# 覆盖 engineering 全步骤、lean-inspect 的数学内容检查与 baseline admission(gate);
+# CI=true 复现 CI 独有构建属性。
 set -euo pipefail
 
 ROOT=""
@@ -151,6 +152,10 @@ make lean-report
 record_timing lean-report
 
 PREFLIGHT_FAULT_CLASS="SEMANTIC"
+/bin/bash "$ROOT/tools/scripts/workflow/scribe-content-checks.sh" \
+  "$ROOT/.lake/build/stratalint/raw-lean-report.json"
+record_timing scribe-content-checks
+
 CI=true STRATALINT_REQUIRE_LIVE_REPORT=1 make -C tools test
 record_timing test
 
@@ -221,4 +226,4 @@ if [[ -n "$observed_base" && "$observed_base" != "$BASE_SHA" ]]; then
 fi
 if [[ "$gate_rc" -ne 0 ]]; then exit "$gate_rc"; fi
 
-echo "[preflight] PASS — CI 双 required check 预证绿"
+echo "[preflight] PASS — CI 三 required check 预证绿"

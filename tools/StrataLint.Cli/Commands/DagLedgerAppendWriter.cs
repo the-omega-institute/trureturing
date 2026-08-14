@@ -1,4 +1,5 @@
 using System.Collections.Immutable;
+using System.Text;
 using System.Text.Json;
 using System.Text.Json.Nodes;
 using StrataLint.Engine;
@@ -7,6 +8,8 @@ namespace StrataLint.Cli;
 
 internal static class DagLedgerAppendWriter
 {
+    internal sealed record PendingEventFile(string Path, ImmutableArray<byte> Bytes);
+
     internal static CommandResult Append(
         string repositoryRoot,
         IRepositoryGateway repository,
@@ -95,8 +98,27 @@ internal static class DagLedgerAppendWriter
     internal static void WriteNewEvents(
         string directory,
         IEnumerable<FrozenLedgerLineSyntax> lines,
+        int skip = 0) =>
+        WriteEventFiles(directory, BuildNewEventFiles(lines, skip));
+
+    internal static IEnumerable<PendingEventFile> PrepareNewEvents(
+        string directory,
+        IEnumerable<FrozenLedgerLineSyntax> lines,
         int skip = 0)
     {
+        foreach (var file in BuildNewEventFiles(lines, skip))
+        {
+            yield return new PendingEventFile(
+                Path.Combine(directory, Path.GetFileName(file.Path.Value)),
+                file.RawBytes);
+        }
+    }
+
+    internal static ImmutableArray<RepositoryFile> BuildNewEventFiles(
+        IEnumerable<FrozenLedgerLineSyntax> lines,
+        int skip = 0)
+    {
+        var files = ImmutableArray.CreateBuilder<RepositoryFile>();
         var linearToDagHash = new Dictionary<string, string>(StringComparer.Ordinal);
         var sequence = 0;
         foreach (var line in lines)
@@ -123,10 +145,53 @@ internal static class DagLedgerAppendWriter
                 eventType,
                 payload,
                 encoded.Hash);
-            var path = Path.Combine(directory, identity[7..] + ".json");
-            using var stream = new FileStream(path, FileMode.CreateNew, FileAccess.Write, FileShare.None);
-            stream.Write(encoded.Bytes.AsSpan());
+            var path = RepoPath.CreateKnown(
+                $"{FrozenLedgerChangeClassifier.AcceptedRoot}/{identity[7..]}.json");
+            files.Add(new RepositoryFile(
+                path,
+                encoded.Bytes,
+                Encoding.UTF8.GetString(encoded.Bytes.AsSpan())));
+        }
+
+        return files.ToImmutable();
+    }
+
+    internal static void WriteEventFiles(
+        string directory,
+        IEnumerable<RepositoryFile> files)
+    {
+        var createdPaths = new Stack<string>();
+        try
+        {
+            foreach (var file in files)
+            {
+                var path = Path.Combine(directory, Path.GetFileName(file.Path.Value));
+                using var stream = new FileStream(path, FileMode.CreateNew, FileAccess.Write, FileShare.None);
+                createdPaths.Push(path);
+                stream.Write(file.RawBytes.AsSpan());
+            }
+        }
+        catch
+        {
+            RollbackCreatedFiles(createdPaths);
+            throw;
         }
     }
 
+    internal static void RollbackCreatedFiles(IEnumerable<string> createdPaths)
+    {
+        foreach (var path in createdPaths)
+        {
+            try
+            {
+                File.Delete(path);
+            }
+            catch (IOException)
+            {
+            }
+            catch (UnauthorizedAccessException)
+            {
+            }
+        }
+    }
 }

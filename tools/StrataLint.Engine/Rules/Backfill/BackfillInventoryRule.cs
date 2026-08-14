@@ -97,6 +97,34 @@ internal static class BackfillInventoryRule
         return findings.ToImmutable();
     }
 
+    /// <summary>
+    /// The inverse of the source-path check above, and the reason it exists: that one asks
+    /// whether a declared source names a governed document, this one asks whether a
+    /// governed theory document has a source. Without it a volume can sit in the tree
+    /// undigested with nothing red — a dangling reference in the direction nobody checks,
+    /// which produces no symptom because the thing that is missing is the reader.
+    /// </summary>
+    private static void ValidateTheoryCoverage(
+        BackfillInventoryValidationContext context,
+        IEnumerable<string> declaredPaths,
+        ImmutableArray<RuleFinding>.Builder findings)
+    {
+        var declared = declaredPaths.ToHashSet(StringComparer.Ordinal);
+        foreach (var path in context.Policy.GovernanceDocuments
+                     .Select(static path => path.Value)
+                     .Where(static path => path.StartsWith(
+                         DigestionOpaquePathPolicy.TheoryRootPath,
+                         StringComparison.Ordinal))
+                     .Where(path => !declared.Contains(path))
+                     .Order(StringComparer.Ordinal))
+        {
+            findings.Add(new RuleFinding(
+                BackfillPath,
+                $"theory document '{path}' has no digestion source: run make ingest, "
+                + "which registers it with the default atomizer"));
+        }
+    }
+
     private static void ValidateDigestionEntries(
         BackfillInventoryValidationContext context,
         BackfillInventoryDocument document,
@@ -180,6 +208,8 @@ internal static class BackfillInventoryRule
                 seenPaths.Add(source.SourcePath, source.SourceId);
             }
         }
+
+        ValidateTheoryCoverage(context, seenPaths.Keys, findings);
 
         if (entries.Length == 0)
         {

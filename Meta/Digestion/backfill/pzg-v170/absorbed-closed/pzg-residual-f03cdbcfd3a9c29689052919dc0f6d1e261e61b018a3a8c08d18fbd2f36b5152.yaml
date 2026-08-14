@@ -1,0 +1,17 @@
+ast_path: lemma/5.2
+fingerprints:
+  raw_sha256: sha256:f03cdbcfd3a9c29689052919dc0f6d1e261e61b018a3a8c08d18fbd2f36b5152
+  normalized_sha256: sha256:f03cdbcfd3a9c29689052919dc0f6d1e261e61b018a3a8c08d18fbd2f36b5152
+cas_ref: sha256:f03cdbcfd3a9c29689052919dc0f6d1e261e61b018a3a8c08d18fbd2f36b5152
+coverage_gids:
+  - D5/S1/Recurrence/FibAlternatingSum.alternating_fibonacci_sum
+receipts:
+  coverage:
+    - gid: D5/S1/Recurrence/FibAlternatingSum.alternating_fibonacci_sum
+      source_sha256: sha256:f03cdbcfd3a9c29689052919dc0f6d1e261e61b018a3a8c08d18fbd2f36b5152
+      target_sha256: sha256:b639a2b94ee140e8cbd39ca9278f3ce507813e5dfa9d9bd4e1037a2f686353e4
+  scribe:
+    - gid: D5/S1/Recurrence/FibAlternatingSum.alternating_fibonacci_sum
+      definition_sha256: sha256:2947231bc5616664c90adc6e20846d2d55a51c9d114bb94ca696aaecb5cad43f
+      emission_sha256: sha256:a93334ded6dabde2d1d18efde756c716f2be00dd6cb38e65e4a68c4da44e3400
+  unresolved_subitems: []

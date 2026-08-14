@@ -208,6 +208,10 @@ internal static class DigestionFingerprint
         return new DigestionFingerprints(raw, raw);
     }
 
+    /// <summary>A short content address, for locators that have no readable text to slug.</summary>
+    internal static string ShortHash(string value) =>
+        Convert.ToHexStringLower(SHA256.HashData(StrictUtf8.GetBytes(value)))[..8];
+
     private static string Sha256(ReadOnlySpan<byte> bytes) =>
         "sha256:" + Convert.ToHexStringLower(SHA256.HashData(bytes));
 }
@@ -488,16 +492,25 @@ internal static class MarkdownAstAtomizer
 {
     private static readonly UTF8Encoding StrictUtf8 = new(false, true);
 
+    /// <summary>
+    /// <paramref name="parse"/> selects the block AST. It defaults to the line scanner
+    /// because the registered dialects' receipts are content-addressed over the boundaries
+    /// that scanner produces; only the default atomizer, which has no receipts to preserve,
+    /// passes a different one.
+    /// </summary>
     internal static AtomizedTheoryDocument Atomize(
         ReadOnlySpan<byte> bytes,
         Func<string, string?> identify,
         Func<string, string?>? identifyFirstTableCell = null,
         Func<string, string?>? identifyHeading = null,
-        Func<string, string?>? identifyFirstTableCellSource = null)
+        Func<string, string?>? identifyFirstTableCellSource = null,
+        Func<string, ImmutableArray<MarkdownBlock>>? parse = null,
+        Func<MarkdownTableRow, string?>? identifyTableRow = null,
+        bool dropEmptyHeadingClaims = false)
     {
         var raw = bytes.ToArray();
         var text = StrictUtf8.GetString(raw);
-        var blocks = MarkdownBlockAst.Parse(text);
+        var blocks = (parse ?? MarkdownBlockAst.Parse)(text);
         var headings = new List<DigestionContext>();
         var candidates = new List<Candidate>();
         var headingStarts = new List<int>();
@@ -519,7 +532,8 @@ internal static class MarkdownAstAtomizer
                         heading.Start,
                         text.Length,
                         headings.ToImmutableArray(),
-                        Extend: true));
+                        Extend: true,
+                        IsHeading: true));
                 }
 
                 headings.Add(new DigestionContext(heading.Level, heading.Text));
@@ -529,7 +543,9 @@ internal static class MarkdownAstAtomizer
 
             if (block is MarkdownTableRow row)
             {
-                var tableAstPath = identifyFirstTableCellSource is not null
+                var tableAstPath = identifyTableRow is not null
+                    ? identifyTableRow(row)
+                    : identifyFirstTableCellSource is not null
                     ? TheorySourceFormatException.IdentifyAt(
                         identifyFirstTableCellSource, row.FirstCellSourceText, row.Start, text, failures)
                     : identifyFirstTableCell is not null
@@ -620,6 +636,16 @@ internal static class MarkdownAstAtomizer
             }
         }
 
+        if (dropEmptyHeadingClaims)
+        {
+            // A heading whose whole body was claimed by finer atoms is left holding only its
+            // own line. That atom states nothing, so it could never be discharged and would
+            // sit open forever; the heading itself is not lost, because every atom beneath it
+            // carries it in its context.
+            candidates.RemoveAll(candidate =>
+                candidate.IsHeading && IsHeadingOnly(text, candidate));
+        }
+
         var claims = ImmutableArray.CreateBuilder<DigestionAtom>(candidates.Count);
         var slices = ImmutableArray.CreateBuilder<DigestionSlice>(candidates.Count * 2 + 1);
         var locatorCounts = candidates
@@ -668,6 +694,15 @@ internal static class MarkdownAstAtomizer
         return new AtomizedTheoryDocument(claims.MoveToImmutable(), slices.ToImmutable());
     }
 
+    private static bool IsHeadingOnly(string text, Candidate candidate)
+    {
+        var slice = text.AsSpan(
+            candidate.StartCharacter,
+            candidate.EndCharacter - candidate.StartCharacter);
+        var lineEnd = slice.IndexOfAny('\r', '\n');
+        return lineEnd >= 0 && slice[lineEnd..].IsWhiteSpace();
+    }
+
     internal static int ByteOffset(string text, int characterOffset) =>
         characterOffset == text.Length
             ? StrictUtf8.GetByteCount(text)
@@ -695,7 +730,8 @@ internal static class MarkdownAstAtomizer
         int StartCharacter,
         int EndCharacter,
         ImmutableArray<DigestionContext> Context,
-        bool Extend);
+        bool Extend,
+        bool IsHeading = false);
 
     private sealed record SourceLine(string Text, int Start, int End);
 }

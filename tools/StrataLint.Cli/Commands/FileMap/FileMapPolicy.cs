@@ -196,6 +196,7 @@ internal static class FileMapPolicy
             : [];
 
         return InspectCoverage(manifest, paths)
+            .Concat(InspectPatternPopulation(manifest, paths))
             .Concat(registryFindings)
             .Concat(projectionRegistrationFindings)
             .Concat(InspectDeclaredActors(manifest, DeclaredTypeNames(repositoryRoot, paths), repositoryRoot))
@@ -461,6 +462,23 @@ internal static class FileMapPolicy
         }
 
         return findings;
+    }
+
+    internal static IReadOnlyList<FileMapFinding> InspectPatternPopulation(
+        FileMapManifest manifest,
+        IEnumerable<string> paths)
+    {
+        ArgumentNullException.ThrowIfNull(manifest);
+        ArgumentNullException.ThrowIfNull(paths);
+        var trackedPaths = paths.ToArray();
+        return manifest.Entries
+            .Where(static entry => entry.RuntimeDisposition != "run-local")
+            .Where(entry => !trackedPaths.Any(entry.Matches))
+            .Select(static entry => new FileMapFinding(
+                "FILEMAP-PATTERN-EMPTY",
+                entry.Pattern,
+                "non-run-local FILEMAP pattern matches no tracked repository path"))
+            .ToArray();
     }
 
     internal static IReadOnlyList<FileMapFinding> InspectDataVerifiers(

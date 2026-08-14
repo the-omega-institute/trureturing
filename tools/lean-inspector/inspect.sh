@@ -6,7 +6,6 @@ export LC_ALL=C
 REPOSITORY=""
 OUTPUT=""
 LOG_DIR=""
-MODULES_FILE=""
 
 while [[ $# -gt 0 ]]; do
   case "$1" in
@@ -25,11 +24,6 @@ while [[ $# -gt 0 ]]; do
       LOG_DIR="$2"
       shift 2
       ;;
-    --modules-file)
-      [[ $# -ge 2 ]] || { echo "inspect.sh: --modules-file requires a value" >&2; exit 2; }
-      MODULES_FILE="$2"
-      shift 2
-      ;;
     *)
       echo "inspect.sh: unknown argument '$1'" >&2
       exit 2
@@ -42,10 +36,6 @@ done
 [[ -d "$REPOSITORY" ]] || { echo "inspect.sh: repository '$REPOSITORY' is absent" >&2; exit 2; }
 
 REPOSITORY="$(cd "$REPOSITORY" && pwd -P)"
-if [[ -n "$MODULES_FILE" ]]; then
-  [[ "$MODULES_FILE" == /* && -f "$MODULES_FILE" ]] \
-    || { echo "inspect.sh: --modules-file must name an absolute file" >&2; exit 2; }
-fi
 if [[ "$OUTPUT" != /* ]]; then OUTPUT="$REPOSITORY/$OUTPUT"; fi
 if [[ -z "$LOG_DIR" ]]; then LOG_DIR="${OUTPUT}.logs"; fi
 if [[ "$LOG_DIR" != /* ]]; then LOG_DIR="$REPOSITORY/$LOG_DIR"; fi
@@ -133,18 +123,7 @@ append_module() {
     "sha256:$(hash_file "$REPOSITORY/$path")"
   )
 }
-if [[ -z "$MODULES_FILE" ]]; then
-  while IFS=$'\t' read -r module path; do append_module "$module" "$path"; done < "$MODULE_TABLE"
-else
-  while IFS= read -r requested || [[ -n "$requested" ]]; do
-    [[ "$requested" =~ ^(Trureturing|D5\.[A-Za-z0-9_.]+)$ ]] \
-      || { echo "inspect.sh: invalid managed module request: $requested" >&2; exit 2; }
-    match="$(awk -F '\t' -v module="$requested" '$1 == module { print; count++ } END { if (count != 1) exit 1 }' "$MODULE_TABLE")" \
-      || { echo "inspect.sh: requested managed module is absent: $requested" >&2; exit 2; }
-    IFS=$'\t' read -r module path <<< "$match"
-    append_module "$module" "$path"
-  done < "$MODULES_FILE"
-fi
+while IFS=$'\t' read -r module path; do append_module "$module" "$path"; done < "$MODULE_TABLE"
 [[ "${#inspector_arguments[@]}" -gt 0 ]] || { echo "inspect.sh: module selection is empty" >&2; exit 2; }
 
 run_phase inspect \
