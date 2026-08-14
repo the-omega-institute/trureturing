@@ -2,7 +2,6 @@ using System.Collections.Immutable;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
-using System.Text.Json.Nodes;
 using StrataLint.Engine;
 
 namespace StrataLint.Cli;
@@ -301,7 +300,7 @@ internal static class DagLedgerCommandPreparation
             throw new InvalidOperationException(label + " does not form a closed dependency DAG");
         }
 
-        return ToLinearSyntax(OrderForReplay(ordered));
+        return DagLedgerLoader.ToLinearSyntax(OrderForReplay(ordered));
     }
 
     private static ImmutableArray<DagLedgerFileEvent> OrderForReplay(
@@ -352,38 +351,6 @@ internal static class DagLedgerCommandPreparation
         && dependencies.ValueKind == JsonValueKind.Array
         && dependencies.EnumerateArray().All(item =>
             item.ValueKind == JsonValueKind.String && identities.Contains(item.GetString()!));
-
-    private static FrozenLedgerSyntax ToLinearSyntax(ImmutableArray<DagLedgerFileEvent> events)
-    {
-        var raw = ImmutableArray.CreateBuilder<byte>();
-        var lines = ImmutableArray.CreateBuilder<FrozenLedgerLineSyntax>();
-        var previous = FrozenLedgerCanonicalWriter.ZeroHash;
-        var dagToLinearHash = new Dictionary<string, string>(StringComparer.Ordinal);
-        for (var sequence = 0; sequence < events.Length; sequence++)
-        {
-            var item = events[sequence];
-            var payload = item.Payload;
-            if (payload.TryGetProperty("previous_attestation_event_hash", out var dagPrevious))
-            {
-                var rewritten = JsonNode.Parse(payload.GetRawText())!.AsObject();
-                rewritten["previous_attestation_event_hash"] = dagToLinearHash[dagPrevious.GetString()!];
-                payload = JsonSerializer.SerializeToElement(rewritten);
-            }
-
-            var encoded = FrozenLedgerCanonicalWriter.WriteEvent(
-                item.EventType,
-                payload,
-                previous,
-                sequence);
-            using var document = JsonDocument.Parse(encoded.Bytes.AsSpan()[..^1].ToArray());
-            raw.AddRange(encoded.Bytes);
-            lines.Add(new FrozenLedgerLineSyntax(encoded.Bytes, document.RootElement.Clone()));
-            dagToLinearHash.Add(item.EventHash, encoded.Hash);
-            previous = encoded.Hash;
-        }
-
-        return new FrozenLedgerSyntax(raw.ToImmutable(), lines.ToImmutable());
-    }
 
     internal static FrozenLedgerReferenceSet ScanReferences(
         FrozenLedgerSyntax syntax,
