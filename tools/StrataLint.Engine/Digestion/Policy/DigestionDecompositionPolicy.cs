@@ -6,10 +6,12 @@ internal static class DigestionDecompositionPolicy
         DigestionAtom atom,
         DigestionMigrationState candidate,
         int unresolvedSubitemCount,
+        bool hasVerifiedChainAtoms,
         DigestionMigrationState? baseline) =>
         candidate == DigestionMigrationState.Absorbed
         && baseline != DigestionMigrationState.Absorbed
         && unresolvedSubitemCount == 0
+        && !hasVerifiedChainAtoms
         && IsMultiClause(atom);
 
     internal static bool IsMultiClause(DigestionAtom atom)

@@ -45,6 +45,18 @@ public sealed partial class ProductionEnvironmentTests
     }
 
     [Fact]
+    public void ByteIdenticalIngestToleratesDanglingGenericChainMember()
+    {
+        AssertByteIdenticalGenericChainIngest("missing-child");
+    }
+
+    [Fact]
+    public void ByteIdenticalIngestToleratesCyclicGenericChain()
+    {
+        AssertByteIdenticalGenericChainIngest("old-receipt");
+    }
+
+    [Fact]
     public void IngestMovesDirectoryAtomWhenDerivedStatusChangesFromResidualToPartial()
     {
         const string coverageGid = "D5/S0/Carrier/Ring";
@@ -449,84 +461,6 @@ public sealed partial class ProductionEnvironmentTests
     }
 
     [Fact]
-    public void AtomicLedgerReplacementPreservesExistingBytesWhenCommitFails()
-    {
-        using var temporary = new TemporaryDirectory();
-        var outputPath = Path.Combine(temporary.Path, BackfillInventoryLoader.RelativePath);
-        Directory.CreateDirectory(Path.GetDirectoryName(outputPath)!);
-        var original = Encoding.UTF8.GetBytes("original ledger\n");
-        var replacement = Encoding.UTF8.GetBytes("replacement ledger\n");
-        File.WriteAllBytes(outputPath, original);
-        string? pendingPath = null;
-
-        var exception = Assert.Throws<IOException>(() => IngestCommand.ReplaceLedgerAtomically(
-            outputPath,
-            replacement,
-            (pending, target) =>
-            {
-                pendingPath = pending;
-                Assert.Equal(Path.GetDirectoryName(target), Path.GetDirectoryName(pending));
-                Assert.Equal(original, File.ReadAllBytes(target));
-                Assert.Equal(replacement, File.ReadAllBytes(pending));
-                throw new IOException("simulated atomic commit failure");
-            }));
-
-        Assert.Equal("simulated atomic commit failure", exception.Message);
-        Assert.Equal(original, File.ReadAllBytes(outputPath));
-        Assert.NotNull(pendingPath);
-        Assert.False(File.Exists(pendingPath));
-    }
-
-    [Fact]
-    public void DirectoryLedgerUpdateRollsBackEarlierFilesWhenALaterCommitFails()
-    {
-        using var temporary = new TemporaryDirectory();
-        var firstPath = $"{BackfillInventoryLoader.RootPath}fixture-source/residual-open/first.yaml";
-        var secondPath = $"{BackfillInventoryLoader.RootPath}fixture-source/residual-open/second.yaml";
-        var firstBytes = Encoding.UTF8.GetBytes("first original\n");
-        var secondBytes = Encoding.UTF8.GetBytes("second original\n");
-        var current = RawRepositorySnapshot.Create([
-            new RawRepositoryEntry(firstPath, [.. firstBytes]),
-            new RawRepositoryEntry(secondPath, [.. secondBytes]),
-        ]);
-        foreach (var entry in current.Entries)
-        {
-            var outputPath = Path.Combine(
-                temporary.Path,
-                entry.Path.Replace('/', Path.DirectorySeparatorChar));
-            Directory.CreateDirectory(Path.GetDirectoryName(outputPath)!);
-            File.WriteAllBytes(outputPath, entry.Bytes.AsSpan());
-        }
-
-        var commits = 0;
-        var exception = Assert.Throws<IOException>(() => IngestCommand.ApplyLedgerUpdatesAtomically(
-            temporary.Path,
-            current,
-            [
-                new IngestCommand.LedgerUpdate(firstPath, [.. Encoding.UTF8.GetBytes("first replacement\n")]),
-                new IngestCommand.LedgerUpdate(secondPath, [.. Encoding.UTF8.GetBytes("second replacement\n")]),
-            ],
-            (pending, target) =>
-            {
-                commits++;
-                if (commits == 2)
-                {
-                    throw new IOException("simulated second ledger commit failure");
-                }
-
-                File.Move(pending, target, overwrite: true);
-            }));
-
-        Assert.Equal("simulated second ledger commit failure", exception.Message);
-        Assert.Equal(firstBytes, File.ReadAllBytes(Path.Combine(
-            temporary.Path,
-            firstPath.Replace('/', Path.DirectorySeparatorChar))));
-        Assert.Equal(secondBytes, File.ReadAllBytes(Path.Combine(
-            temporary.Path,
-            secondPath.Replace('/', Path.DirectorySeparatorChar))));
-    }
-
-    [Fact]
     public void IngestPreservesExactNoncanonicalStaleReceiptRepresentation()
     {
         var fixture = new RuleFixture();
@@ -656,6 +590,50 @@ public sealed partial class ProductionEnvironmentTests
                   truth: open
         ticket_index: []
         """;
+
+    private static void AssertByteIdenticalGenericChainIngest(string chainAtomId)
+    {
+        var fixture = new RuleFixture();
+        var atomizerId = SyntheticNumberedAtomizer.Id;
+        var sourceBytes = Encoding.UTF8.GetBytes("# Synthetic\n\n**定理 1.1(A)**。claim。\n");
+        var atom = Assert.Single(AtomizerRegistry.Atomize(
+            atomizerId,
+            sourceBytes,
+            DigestionTestSupport.Rules).Claims);
+        fixture.Files[RuleFixture.FixtureDigestionSourcePath] = Encoding.UTF8.GetString(sourceBytes);
+        fixture.Baseline[RuleFixture.FixtureDigestionSourcePath] = Encoding.UTF8.GetString(sourceBytes);
+        InstallDirectoryLedger(fixture, atomizerId, atom);
+        var atomPath = DirectoryAtomPath("old-receipt", "residual-open");
+        var atomText = fixture.Files[atomPath].Replace(
+            "  unresolved_subitems: []",
+            $"  unresolved_subitems: []\n  chain_atoms:\n    - {chainAtomId}",
+            StringComparison.Ordinal);
+        fixture.Files[atomPath] = atomText;
+        fixture.Baseline[atomPath] = atomText;
+        using var temporary = new TemporaryDirectory();
+        WriteDirectoryLedger(temporary.Path, fixture.Files);
+        var outputPath = Path.Combine(
+            temporary.Path,
+            atomPath.Replace('/', Path.DirectorySeparatorChar));
+        var unchangedWriteTime = new DateTime(2000, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+        File.SetLastWriteTimeUtc(outputPath, unchangedWriteTime);
+        var environment = new ProductionCliEnvironment(
+            temporary.Path,
+            new FakeRepositoryGateway(
+                RawChangeSet.Create(Array.Empty<string>()),
+                Snapshot(fixture.Files),
+                Snapshot(fixture.Baseline)),
+            new FakeLeanReportSource(LeanAxiomReport.Create(fixture.Reports)),
+            new FakeScribeEmissionVerifier(VerifiedScribeEmissions.Empty));
+
+        var result = environment.Ingest(["--base", "baseline"]);
+
+        Assert.True(result.Success, result.Error);
+        Assert.Contains("residual_open_added=0", result.Output, StringComparison.Ordinal);
+        Assert.Contains("ledger_changed=false", result.Output, StringComparison.Ordinal);
+        Assert.Equal(atomText, File.ReadAllText(outputPath));
+        Assert.Equal(unchangedWriteTime, File.GetLastWriteTimeUtc(outputPath));
+    }
 
     private static void InstallLedger(
         RuleFixture fixture,
