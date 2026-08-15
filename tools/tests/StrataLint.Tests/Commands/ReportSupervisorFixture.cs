@@ -42,12 +42,15 @@ internal sealed class ReportSupervisorFixture : IDisposable
             state="$4"
             active="$5"
             overlap="$6"
+            slots="${8:-}"
             env STRATALINT_REPORT_METRICS_LOG="$metrics" STRATALINT_SUPERVISOR_ROOT="$state" \
               STRATALINT_PERF_CONFIGURATION="$7" \
+              ${slots:+STRATALINT_LEAN_MAX_CONCURRENCY="$slots"} \
               "$supervisor" --role lean-producer --lean-slot -- "$worker" "$active" "$overlap" &
             first=$!
             env STRATALINT_REPORT_METRICS_LOG="$metrics" STRATALINT_SUPERVISOR_ROOT="$state" \
               STRATALINT_PERF_CONFIGURATION="$7" \
+              ${slots:+STRATALINT_LEAN_MAX_CONCURRENCY="$slots"} \
               "$supervisor" --role lean-producer --lean-slot -- "$worker" "$active" "$overlap" &
             second=$!
             wait "$first"
