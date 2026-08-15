@@ -1,0 +1,28 @@
+### 定理 34.10（流动性余量非负）
+
+若 \(P\) 非增，则
+
+\[
+\boxed{
+\mathcal L(Q)
+\le
+p_0Q.
+}
+\]
+
+定义流动性余量：
+
+\[
+\boxed{
+R_{\mathrm{liq}}(Q)
+=
+p_0Q-\mathcal L(Q)
+=
+\int_0^Q
+\bigl(
+p_0-P(x)
+\bigr)\,dx
+\ge0.
+}
+\]
+
