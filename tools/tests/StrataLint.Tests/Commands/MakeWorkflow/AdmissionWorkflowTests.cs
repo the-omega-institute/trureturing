@@ -60,7 +60,10 @@ public sealed class AdmissionWorkflowTests
             summary.Children[new YamlScalarNode("if")]).Value);
         var summaryScript = Assert.IsType<YamlScalarNode>(
             summary.Children[new YamlScalarNode("run")]).Value ?? string.Empty;
-        Assert.Contains("$SCOPE_PATHS", summaryScript, StringComparison.Ordinal);
+        // 明细走日志、摘要只走计数:逐条路径不进 step output,因而不经 env 传给这一步。
+        // 有界性本身由 WorkflowOutputBoundTests 判,这里只钉"摘要读的是计数"。
+        Assert.Contains("$SCOPE_CHANGED_COUNT", summaryScript, StringComparison.Ordinal);
+        Assert.Contains("$SCOPE_MATCHED_COUNT", summaryScript, StringComparison.Ordinal);
         Assert.Contains("$GITHUB_STEP_SUMMARY", summaryScript, StringComparison.Ordinal);
 
         Assert.Equal(
