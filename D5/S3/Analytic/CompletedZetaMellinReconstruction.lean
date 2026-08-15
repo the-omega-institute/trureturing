@@ -130,12 +130,24 @@ tail Mellin values, reflected across `w ↦ 1/2 - w`. -/
 private theorem fmodif_mellin_split (w : ℂ) :
     mellin ((hurwitzEvenFEPair 0).f_modif) w = mellin tail w + mellin tail (1 / 2 - w) := by
   have hconvT : MellinConvergent tail w := tail_mellinConvergent w
-  have hconvF : MellinConvergent ((hurwitzEvenFEPair 0).f_modif) w :=
-    ((hurwitzEvenFEPair 0).toStrongFEPair.hasMellin w).1
   have hconvS : MellinConvergent shifted w := by
-    refine (hconvF.sub hconvT).congr ?_
-    filter_upwards with t
-    simp only [Pi.sub_apply, hfmodif_eq, smul_add, add_sub_cancel_left]
+    have hinv : MellinConvergent (fun t => tail (t ^ (-1 : ℝ))) (w + -(1 / 2)) :=
+      (MellinConvergent.comp_rpow (f := tail) (s := w + -(1 / 2)) (a := -1)
+        (by norm_num)).2 (by
+          convert tail_mellinConvergent (1 / 2 - w) using 1 <;> norm_num <;> ring)
+    have hscaled : MellinConvergent
+        (fun t => (t : ℂ) ^ (-(1 / 2) : ℂ) • tail (t ^ (-1 : ℝ))) w :=
+      MellinConvergent.cpow_smul.mpr hinv
+    have hscaledInv : MellinConvergent
+        (fun t => (t : ℂ) ^ (-(1 / 2) : ℂ) • tail t⁻¹) w := by
+      simpa only [Real.rpow_neg_one] using hscaled
+    rw [MellinConvergent] at hscaledInv ⊢
+    rw [integrableOn_congr_fun (fun t ht => by
+      rw [shifted_pointwise t ht]) measurableSet_Ioi]
+    exact hscaledInv
+  have hconvF : MellinConvergent ((hurwitzEvenFEPair 0).f_modif) w := by
+    rw [hfmodif_eq]
+    exact (hasMellin_add hconvT hconvS).1
   rw [hfmodif_eq, (hasMellin_add hconvT hconvS).2, shifted_mellin_eq]
 
 /-- Master identity: the symmetric theta-tail Mellin integral equals the entire completed zeta. -/

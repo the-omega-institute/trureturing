@@ -171,10 +171,22 @@ public sealed class TheoryAtomizerDataTests
     [Fact]
     public void UnknownNumberedGenreStillFailsClosed()
     {
-        Assert.Throws<TheorySourceFormatException>(() => AtomizerRegistry.Atomize(
-            FirstScheme + "-v1",
-            Encoding.UTF8.GetBytes("**未知体裁 1.1** body"),
-            Load(Minimal)));
+        var bytes = Encoding.UTF8.GetBytes("**未知体裁 1.1** body");
+        var ledger = BackfillInventoryLoader.Load(
+            DigestionTestSupport.EmptyLedger(FirstScheme + "-v1"));
+        var alignment = DigestionLedgerAligner.Evaluate(
+            ledger,
+            DigestionTestSupport.Snapshot(
+                ("docs/source.md", bytes),
+                (TheoryAtomizerDataLoader.DataPath, Encoding.UTF8.GetBytes(Minimal))),
+            ledger,
+            DigestionAlignmentMode.Ingest);
+
+        var finding = Assert.Single(alignment.Findings);
+        Assert.Contains("source source", finding, StringComparison.Ordinal);
+        Assert.Contains("未知体裁", finding, StringComparison.Ordinal);
+        Assert.Empty(alignment.Residual);
+        Assert.Empty(alignment.Fallbacks);
     }
 
     [Fact]

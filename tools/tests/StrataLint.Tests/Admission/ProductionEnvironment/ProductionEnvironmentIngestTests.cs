@@ -367,27 +367,28 @@ public sealed partial class ProductionEnvironmentTests
     {
         var fixture = new RuleFixture();
         var atomizerId = SyntheticNumberedAtomizer.Id;
-        var oldBytes = Encoding.UTF8.GetBytes("# Synthetic\n\n**定理 1.1(A)**。old。\n");
-        var oldAtom = Assert.Single(AtomizerRegistry.Atomize(atomizerId, oldBytes, DigestionTestSupport.Rules).Claims);
-        var oldCapture = DigestionCasStore.Capture(oldAtom.RawBytes.AsSpan());
+        // Prose the atomizer recognizes nothing in is still a live coarse trigger. An unregistered
+        // genre token is not: the aligner can name and refuse that specific unsupported input.
         var malformedBytes = Encoding.UTF8.GetBytes(
-            "# Synthetic\n\n**未知 1.2(B)**。free-form source。\n");
+            "# Synthetic\n\n没有任何编号抬头的自由散文。\n");
         var malformedText = Encoding.UTF8.GetString(malformedBytes);
-        var ledger = IngestLedger(atomizerId, oldAtom);
+        var ledger = $$"""
+            schema_version: 3
+            ledger: theory-digestion-v1
+            sources:
+              - source_id: fixture-source
+                path: {{RuleFixture.FixtureDigestionSourcePath}}
+                atomizer: {{atomizerId}}
+                entries: []
+            ticket_index: []
+            """;
         fixture.Files[RuleFixture.FixtureDigestionSourcePath] = malformedText;
-        fixture.Baseline[RuleFixture.FixtureDigestionSourcePath] = Encoding.UTF8.GetString(oldBytes);
-        fixture.Files[oldCapture.RelativePath] = Encoding.UTF8.GetString(oldCapture.Bytes.AsSpan());
-        fixture.Baseline[oldCapture.RelativePath] = Encoding.UTF8.GetString(oldCapture.Bytes.AsSpan());
-        InstallLedger(fixture, ledger, oldAtom);
+        fixture.Baseline[RuleFixture.FixtureDigestionSourcePath] = malformedText;
+        InstallLedger(fixture, ledger, existingAtom: null);
         using var temporary = new TemporaryDirectory();
         var outputPath = Path.Combine(temporary.Path, BackfillInventoryLoader.RelativePath);
         Directory.CreateDirectory(Path.GetDirectoryName(outputPath)!);
         File.WriteAllText(outputPath, ledger, new UTF8Encoding(false));
-        var oldCasPath = Path.Combine(
-            temporary.Path,
-            oldCapture.RelativePath.Replace('/', Path.DirectorySeparatorChar));
-        Directory.CreateDirectory(Path.GetDirectoryName(oldCasPath)!);
-        File.WriteAllBytes(oldCasPath, oldCapture.Bytes.AsSpan());
         var environment = new ProductionCliEnvironment(
             temporary.Path,
             new FakeRepositoryGateway(

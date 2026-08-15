@@ -53,14 +53,12 @@ public sealed partial class FileMapPolicyTests
     }
 
     [Fact]
-    public void DevloopPlanDocumentsAreAdmittedByRepositoryPathPolicy()
+    public void AgentReportsAreAdmittedByRepositoryPathPolicy()
     {
-        // Self-driving devloop plan documents are emitted under docs/devloop/plans/
-        // with dynamically generated names (one per prove-task), so they cannot be
-        // enumerated individually in registry.yaml governance_documents. The
-        // RepositoryPathPolicy admits the whole docs/devloop/ prefix; SL-000 must
-        // not reject dynamically generated plans as unknown top-level artifacts.
-        const string value = "docs/devloop/plans/synthetic-prove-task-plan.md";
+        // Agent-written reports have generated names, cannot be enumerated in
+        // registry.yaml governance_documents, so RepositoryPathPolicy admits the
+        // docs/reports/ prefix and SL-000 must not reject them.
+        const string value = "docs/reports/diag-lane-a/synthetic-open-report.md";
         var registry = SyntheticRegistry();
         var path = RepoPath.CreateKnown(value);
 
@@ -255,6 +253,53 @@ public sealed partial class FileMapPolicyTests
         Assert.Empty(FileMapPolicy.InspectDeclaredActors(
             manifest,
             new HashSet<string>(StringComparer.Ordinal) { "FixtureEmitter" },
+            "fixture-root"));
+    }
+
+    [Theory]
+    [InlineData("ledger")]
+    [InlineData("truth")]
+    public void DanglingLedgerAndTruthActorsAreRejectedByTheRedFixture(string kind)
+    {
+        var manifest = Parse(Entry(
+            $"Synthetic/{kind}.txt",
+            kind,
+            "none",
+            "MissingConsumer",
+            "MissingVerifier"));
+
+        var findings = FileMapPolicy.InspectDeclaredActors(
+            manifest,
+            new HashSet<string>(StringComparer.Ordinal),
+            "fixture-root");
+
+        Assert.Collection(
+            findings,
+            finding =>
+            {
+                Assert.Equal("FILEMAP-ACTOR-DANGLING", finding.Code);
+                Assert.Contains("consumed_by names MissingConsumer", finding.Message, StringComparison.Ordinal);
+            },
+            finding =>
+            {
+                Assert.Equal("FILEMAP-ACTOR-DANGLING", finding.Code);
+                Assert.Contains("verified_by names MissingVerifier", finding.Message, StringComparison.Ordinal);
+            });
+    }
+
+    [Fact]
+    public void LedgerVerifierNamedByARuleIdIsAcceptedByTheGreenFixture()
+    {
+        var manifest = Parse(Entry(
+            "Synthetic/ledger.md",
+            "ledger",
+            "none",
+            "reader",
+            "SL-008"));
+
+        Assert.Empty(FileMapPolicy.InspectDeclaredActors(
+            manifest,
+            new HashSet<string>(StringComparer.Ordinal),
             "fixture-root"));
     }
 

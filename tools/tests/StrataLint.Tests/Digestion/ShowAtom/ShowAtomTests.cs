@@ -197,6 +197,32 @@ public sealed class ShowAtomTests
     }
 
     [Fact]
+    public void ConflictMarkedSourceFailsClosedBeforeShowAtomPrintsIt()
+    {
+        const string sourcePath = "fixtures/show-atom/conflicted.md";
+        var sourceBytes = Encoding.UTF8.GetBytes("<<<<<<< HEAD\nreceipt\n=======\n");
+        var fingerprints = DigestionFingerprint.Compute(sourceBytes);
+        var files = FixtureFiles(
+            BoundaryLedger(
+                sourcePath,
+                0,
+                sourceBytes.Length,
+                fingerprints.RawSha256,
+                fingerprints.NormalizedSha256),
+            sourcePath,
+            sourceBytes,
+            fingerprints.RawSha256,
+            sourceBytes);
+
+        var result = Environment("/repo", files).ShowAtom(["--atom-id", BoundaryAtomId]);
+
+        Assert.False(result.Success);
+        Assert.Equal(string.Empty, result.Output);
+        Assert.Contains("INGEST-CONFLICT-MARKER-001", result.Error, StringComparison.Ordinal);
+        Assert.Contains($"{sourcePath}:1", result.Error, StringComparison.Ordinal);
+    }
+
+    [Fact]
     public void SupersededGenerationReadsStrictlyVerifiedHistoricalCasAndMarksItStale()
     {
         const string sourcePath = "fixtures/show-atom/adapter.md";

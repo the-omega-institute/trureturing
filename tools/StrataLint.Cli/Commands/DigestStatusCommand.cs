@@ -71,10 +71,11 @@ internal static class DigestStatusCommand
             var verifiedScribeEmissions = scribeEmissionVerifier.Verify(leanReport);
             var document = BackfillInventoryLoader.Load(snapshot);
             BackfillInventoryDocument? baselineDocument = null;
+            RepositorySnapshot? baselineSnapshot = null;
             if (options.BaselineRevision is not null)
             {
-                baselineDocument = BackfillInventoryLoader.Load(
-                    Decode(repository.ReadRevision(options.BaselineRevision)));
+                baselineSnapshot = Decode(repository.ReadRevision(options.BaselineRevision));
+                baselineDocument = BackfillInventoryLoader.Load(baselineSnapshot);
             }
 
             var evaluation = DigestionStatusEvaluator.Evaluate(
@@ -82,7 +83,8 @@ internal static class DigestStatusCommand
                 snapshot,
                 lean,
                 verifiedScribeEmissions,
-                baselineDocument);
+                baselineDocument,
+                baselineSnapshot: baselineSnapshot);
             if (evaluation.Findings.Length > 0)
             {
                 return InvalidEvaluation(evaluation);
@@ -114,13 +116,15 @@ internal static class DigestStatusCommand
         string baselineRevision)
     {
         var snapshot = Decode(repository.ReadCurrent());
+        var baseline = Decode(repository.ReadRevision(baselineRevision));
         var leanReport = leanReportSource.Load(snapshot);
         var evaluation = DigestionStatusEvaluator.Evaluate(
             BackfillInventoryLoader.Load(snapshot),
             snapshot,
             ValidateLean(snapshot, leanReport),
             scribeEmissionVerifier.Verify(leanReport),
-            BackfillInventoryLoader.Load(Decode(repository.ReadRevision(baselineRevision))));
+            BackfillInventoryLoader.Load(baseline),
+            baselineSnapshot: baseline);
         if (evaluation.Findings.Length > 0)
         {
             throw new InvalidOperationException(InvalidEvaluation(evaluation).Error.TrimEnd());

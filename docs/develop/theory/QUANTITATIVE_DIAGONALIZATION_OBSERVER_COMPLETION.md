@@ -19046,3 +19046,4112 @@ e^{-\mathfrak A_N}|\rho_{ij}^{(0)}|.
 10. 本节没有把知识代数的维数等同于语义知识总量。
 11. 本节没有把理论卷纸面推导注册为 Lean 已闭合事实。
 12. 本节不修改第 28–32 节任何旧文字；所有收紧均以追加形式记账。
+
+---
+
+# 34. 追加：经济观察者、价格商余、无套利闭包与流动性逃逸
+## Economic Observers, Price Quotients, Arbitrage-Free Closure, and Liquidity Escape
+
+### 34.0 研究位置、经济学边界与核心命题
+
+第 28–33 节已经把观察者写成：
+
+\[
+\boxed{
+\text{当前读出商}
++
+\text{使该商在动力学、记录、自指与完成下稳定的最小闭包}.
+}
+\]
+
+经济系统提供一个尤其重要的检验场，因为经济观察界面不是外生、被动且固定的。价格、评级、抵押率、会计值、风险模型和政策指标一旦被公开，参与者会依据这些读出重新行动；行动又改变价格、资产负债表与未来读出。因此经济观察者一般具有双重角色：
+
+\[
+\boxed{
+\text{价格是世界状态的读出}
+}
+\]
+
+同时也是
+
+\[
+\boxed{
+\text{改变交易、融资和生产决策的控制信号}.
+}
+\]
+
+本节把项目已有的商余、Hilbert 投影、预测闭包、对角逃逸、记录账本、熵和混合时间结构接入经济学，重点研究：
+
+1. 价格为何是相对于计价单位、交易集合和市场深度的坐标，而不是总价值本体；
+2. 无套利为何等价于价格对“相同终端收益”这一商关系的良定义下降；
+3. 不完备市场为何可写成 marketed payoff 子空间的正交余风险；
+4. 市值为何可以在现金总量几乎不变时大幅上升；
+5. 固定名义债务为何把连续资产价格变成离散违约界面；
+6. 市场流动性、融资流动性和支付网络为何形成反馈闭包；
+7. 信息有效市场、政策评价和公开预测为何具有内生观察与自指缺陷；
+8. 为什么“市场效率”“市场完整”“流动性充足”“信息充分”不能压成同一个标量。
+
+本节不主张经济系统是量子系统，不把价格等同于概率，不把市场市值等同于可兑现现金，不把熵指标自动解释为福利，不把无套利等同于均衡存在，也不把下述简化流动性反馈模型冒充为现实金融系统的完整结构模型。所有新增结论均为纸面推导；未经 Lean proof term、依赖闭包、admission 与冻结收据不得标记为 `Closed`。
+
+---
+
+## 34.1 价格坐标的射影性：计价单位是截面，不是绝对原点
+
+设有 \(L\) 种商品，价格向量为
+
+\[
+p=(p_1,\ldots,p_L)\in\mathbb R_{++}^{L},
+\]
+
+主体的名义财富为 \(w>0\)。预算集为
+
+\[
+B(p,w)
+=
+\{x\in\mathbb R_+^L:p\cdot x\le w\}.
+\]
+
+### 定理 34.1（计价尺度规范不变性）
+
+对任意 \(\lambda>0\)：
+
+\[
+\boxed{
+B(\lambda p,\lambda w)=B(p,w).
+}
+\]
+
+#### 证明
+
+\[
+(\lambda p)\cdot x\le\lambda w
+\iff
+p\cdot x\le w.
+\]
+
+\(\square\)
+
+因此，在没有固定名义合同介入时，经济选择首先依赖的不是绝对价格向量 \(p\)，而是正射影类：
+
+\[
+\boxed{
+[p]
+=
+\{\lambda p:\lambda>0\}.
+}
+\]
+
+选择某种商品、货币或价格指数作为 numeraire，相当于在每条射影轨道上选择一个代表元。例如固定
+
+\[
+p_1=1
+\]
+
+或
+
+\[
+p\cdot n=1
+\]
+
+都是选择截面，而不是发现一个绝对价格原点。
+
+这与本文有限群余坐标和局部截面的结构相同：
+
+\[
+\boxed{
+\text{相对价格}
+=
+\text{射影商坐标};
+\qquad
+\text{计价单位}
+=
+\text{该商上的命名截面}.
+}
+\]
+
+不同货币图表之间的汇率，是不同截面之间的转换函数。若转换函数满足循环一致性，便不存在纯粹由计价循环产生的套利；若转换积偏离一，则出现三角套利。
+
+### 推论 34.2（固定名义债务破坏价格尺度规范）
+
+设固定名义债务为 \(D>0\)，并以第 \(j\) 种商品衡量其实物负担：
+
+\[
+d_j(p)=\frac{D}{p_j}.
+\]
+
+若只缩放价格而不同比例缩放合同债务：
+
+\[
+p\mapsto\lambda p,
+\qquad
+D\mapsto D,
+\]
+
+则
+
+\[
+\boxed{
+d_j(\lambda p)=\frac1\lambda d_j(p).
+}
+\]
+
+所以固定名义债务不是射影不变量；它选择并固定了一个结算尺度。
+
+这给出一个重要经济解释：
+
+\[
+\boxed{
+\text{真实配置可以对统一名义缩放不敏感，
+固定名义合同却把该规范自由变成实际资产负债表效应}.
+}
+\]
+
+通货紧缩使固定债务的实物负担上升，通货膨胀使其下降；这不是因为 Hilbert 空间或市场“创造了价值”，而是名义合同成为一个破坏计价规范的边界条件。
+
+---
+
+## 34.2 收益商与无套利：价格必须下降到终端收益空间
+
+考虑有限状态的一期市场。终端状态集合为
+
+\[
+\Omega=\{1,\ldots,n\}.
+\]
+
+有 \(m\) 个可交易资产。组合向量为
+
+\[
+z\in\mathbb R^m,
+\]
+
+终端收益映射为
+
+\[
+A:\mathbb R^m\to\mathbb R^n,
+\]
+
+其中 \(Az\) 是组合 \(z\) 在各终端状态中的支付。当前资产价格向量为
+
+\[
+c\in\mathbb R^m,
+\]
+
+组合成本为
+
+\[
+c\cdot z.
+\]
+
+定义组合等价关系：
+
+\[
+z\sim_A z'
+\iff
+Az=Az'.
+\]
+
+即两个组合若在每个终端状态支付完全相同，则属于同一收益商类。
+
+### 定理 34.3（价格下降—同一收益同一价格等价）
+
+下列命题等价：
+
+1. 对所有 \(z,z'\)：
+   \[
+   Az=Az'
+   \Longrightarrow
+   c\cdot z=c\cdot z';
+   \]
+2. 
+   \[
+   \ker A\subseteq\ker c^\top;
+   \]
+3. 存在唯一线性泛函
+   \[
+   \ell:\operatorname{im}A\to\mathbb R
+   \]
+   满足
+   \[
+   \boxed{
+   c\cdot z=\ell(Az)
+   \qquad
+   \forall z\in\mathbb R^m.
+   }
+   \]
+
+#### 证明
+
+\(1\Rightarrow2\)：若 \(Az=0=A0\)，由 1 得 \(c\cdot z=0\)。
+
+\(2\Rightarrow3\)：定义
+
+\[
+\ell(Az)=c\cdot z.
+\]
+
+若 \(Az=Az'\)，则 \(z-z'\in\ker A\subseteq\ker c^\top\)，故定义与代表元无关。线性显然。唯一性来自 \(\operatorname{im}A\) 中每个元素都有形如 \(Az\) 的表示。
+
+\(3\Rightarrow1\)：若 \(Az=Az'\)，则
+
+\[
+c\cdot z=\ell(Az)=\ell(Az')=c\cdot z'.
+\]
+
+\(\square\)
+
+所以无摩擦市场中的 law of one price 可以写成：
+
+\[
+\boxed{
+\text{价格不是定义在组合名字上，
+而必须良定义地因子化到终端收益商}.
+}
+\]
+
+若该条件失败，则存在
+
+\[
+h\in\ker A
+\]
+
+满足
+
+\[
+c\cdot h\ne0.
+\]
+
+改变符号后可令
+
+\[
+c\cdot h<0,
+\qquad
+Ah=0.
+\]
+
+主体当前收到正现金，未来没有任何净支付义务，构成零收益套利。因此：
+
+\[
+\boxed{
+\text{价格不能下降到收益商}
+\Longrightarrow
+\text{存在纯命名差异套利}.
+}
+\]
+
+这正是本文自然性语言在金融中的精确实例：
+
+\[
+\boxed{
+q_{\mathrm{payoff}}(z)=Az,
+\qquad
+\text{价格必须在 }q_{\mathrm{payoff}}\text{ 的纤维上常值}.
+}
+\]
+
+---
+
+## 34.3 正状态价格与定价余纤维
+
+在标准有限一期无套利假设下，分离定理给出严格正状态价格向量
+
+\[
+\pi\in\mathbb R_{++}^{n}
+\]
+
+满足
+
+\[
+\boxed{
+A^\top\pi=c.
+}
+\]
+
+于是 marketed payoff \(X=Az\) 的价格为
+
+\[
+\ell(X)=\pi\cdot X.
+\]
+
+若市场不完备，状态价格一般不唯一。任取一个解 \(\pi_0\)，全部线性解构成仿射空间：
+
+\[
+\boxed{
+\{\pi:A^\top\pi=c\}
+=
+\pi_0+\ker A^\top.
+}
+\]
+
+真正允许的无套利状态价格集合是其与正锥的交：
+
+\[
+\boxed{
+\mathcal P_c
+=
+(\pi_0+\ker A^\top)
+\cap
+\mathbb R_{++}^{n}.
+}
+\]
+
+因此市场价格观察者只读取状态价格向量在
+
+\[
+(\ker A^\top)^\perp
+=
+\operatorname{im}A
+\]
+
+上的作用，而把
+
+\[
+\ker A^\top
+\]
+
+方向商掉。
+
+这产生一个经济商余结构：
+
+\[
+\boxed{
+\text{已交易资产价格}
+=
+\text{状态价格泛函在 marketed payoff 子空间上的限制};
+}
+\]
+
+\[
+\boxed{
+\text{定价余量}
+=
+\text{所有不改变已交易资产价格的状态价格方向}.
+}
+\]
+
+若存在无风险 numeraire，价格为 \(B_0>0\)，终端支付恒为一，则
+
+\[
+\sum_i\pi_i=B_0.
+\]
+
+归一化得到风险中性概率：
+
+\[
+\boxed{
+\mathbb Q_i=\frac{\pi_i}{B_0}.
+}
+\]
+
+但 \(\mathbb Q\) 不是物理频率分布的同义词。它是把正定价泛函相对于 numeraire 归一化后的坐标，编码价格、稀缺性、风险承受与约束。若市场不完备，则风险中性概率本身也形成一个余纤维；选择最小熵测度或其他准则，是在该纤维中再选择一个截面，而不是从价格中发现唯一客观概率。
+
+---
+
+## 34.4 不完备市场是 Hilbert 余风险
+
+在终端状态上固定一个满支撑物理概率 \(\mu\)，取 Hilbert 空间
+
+\[
+\mathscr H_\mu=L^2(\Omega,\mu).
+\]
+
+令 marketed payoff 子空间为
+
+\[
+\mathcal M=\operatorname{im}A\subseteq\mathscr H_\mu.
+\]
+
+对任意目标索赔或负债
+
+\[
+X\in\mathscr H_\mu,
+\]
+
+有唯一正交分解：
+
+\[
+\boxed{
+X=P_{\mathcal M}X+R_{\mathcal M}X,
+\qquad
+R_{\mathcal M}X\in\mathcal M^\perp.
+}
+\]
+
+### 定理 34.4（最小均方套期保值）
+
+对全部 marketed payoff \(Y\in\mathcal M\)：
+
+\[
+\boxed{
+\|X-Y\|_2^2
+=
+\|R_{\mathcal M}X\|_2^2
++
+\|P_{\mathcal M}X-Y\|_2^2.
+}
+\]
+
+因此唯一最优均方套期保值收益为
+
+\[
+\boxed{
+Y^*=P_{\mathcal M}X,
+}
+\]
+
+最小不可对冲风险为
+
+\[
+\boxed{
+\inf_{Y\in\mathcal M}\|X-Y\|_2^2
+=
+\|R_{\mathcal M}X\|_2^2.
+}
+\]
+
+#### 证明
+
+\[
+X-Y
+=
+R_{\mathcal M}X+
+(P_{\mathcal M}X-Y),
+\]
+
+两项正交，应用 Pythagoras。 \(\square\)
+
+所以市场不完备不是一句抽象的“资产不够多”，而是：
+
+\[
+\boxed{
+\text{目标支付中存在 marketed payoff 子空间无法承载的正交余分量}.
+}
+\]
+
+### 目标完成与全市场完成
+
+全市场完成要求：
+
+\[
+\boxed{
+\mathcal M=\mathscr H_\mu.
+}
+\]
+
+但某个机构只需其特定负债 \(X\) 可复制：
+
+\[
+\boxed{
+R_{\mathcal M}X=0.
+}
+\]
+
+因此：
+
+\[
+\boxed{
+\text{目标负债完成}
+\not\Rightarrow
+\text{全市场完成}.
+}
+\]
+
+这与第 29 节 RH 的 Nyman–Beurling 目标完成完全同型：最终余空间可以存在，只要指定目标在余空间中的投影为零。
+
+---
+
+## 34.5 金融创新的正交增益与 Gram–Schur 公式
+
+设现有 marketed payoff 空间为 \(\mathcal M_N\)，加入新资产支付 \(Y_{N+1}\)。定义其相对于旧市场的创新：
+
+\[
+r_{N+1}
+=
+(I-P_{\mathcal M_N})Y_{N+1}.
+\]
+
+若 \(r_{N+1}=0\)，新资产在收益层完全冗余，不改变可对冲空间。
+
+若 \(r_{N+1}\ne0\)，则
+
+\[
+\mathcal M_{N+1}
+=
+\mathcal M_N
+\oplus
+\operatorname{span}(r_{N+1}).
+\]
+
+### 定理 34.5（新证券对目标负债的单步套保增益）
+
+令
+
+\[
+d_N(X)
+=
+\operatorname{dist}(X,\mathcal M_N).
+\]
+
+若 \(r_{N+1}\ne0\)，则
+
+\[
+\boxed{
+d_N(X)^2-d_{N+1}(X)^2
+=
+\frac{
+|\langle X,r_{N+1}\rangle|^2
+}{
+\|r_{N+1}\|^2
+}.
+}
+\]
+
+#### 证明
+
+新增正交壳层的单位向量为
+
+\[
+e_{N+1}
+=
+\frac{r_{N+1}}{\|r_{N+1}\|}.
+\]
+
+套保误差下降量恰为目标在新壳层上的平方投影：
+
+\[
+|\langle X,e_{N+1}\rangle|^2.
+\]
+
+\(\square\)
+
+所以金融创新的真实增量不由“新发行一个证券”这一名字决定，而由两个量决定：
+
+\[
+\boxed{
+\text{它相对于旧市场是否有正交创新};
+}
+\]
+
+\[
+\boxed{
+\text{该创新是否与待管理目标风险耦合}.
+}
+\]
+
+一个支付结构极其新颖的资产，如果与某个机构的负债余量正交，对该机构的目标完成没有直接帮助。反之，一个维数很小的新壳层，只要与目标高度对齐，也可以显著降低套保余量。
+---
+
+## 34.6 信息商、Blackwell 精化与理性疏忽
+
+设真实经济状态为有限随机变量
+
+\[
+\Theta\in\mathcal X.
+\]
+
+观察者获得信号
+
+\[
+Y=q(\Theta).
+\]
+
+若另一个信号 \(Y_1\) 可由更细信号 \(Y_0\) 经过再映射获得：
+
+\[
+Y_1=r(Y_0),
+\]
+
+则 \(Y_0\) Blackwell 不弱于 \(Y_1\)。在确定性读出情形：
+
+\[
+\mathcal K(Y_1)
+\subseteq
+\mathcal K(Y_0),
+\]
+
+与第 33 节知识代数的反变单调性一致。
+
+### 定理 34.6（有限确定读出的熵商余分解）
+
+\[
+\boxed{
+H(\Theta)
+=
+H(Y)
++
+H(\Theta\mid Y).
+}
+\]
+
+其中：
+
+\[
+H(Y)
+=
+\text{观察界面保留的分类不确定性},
+\]
+
+\[
+H(\Theta\mid Y)
+=
+\text{读出纤维内部仍未分辨的状态不确定性}.
+\]
+
+若 \(Y_1=r(Y_0)\)，则
+
+\[
+\boxed{
+H(\Theta\mid Y_0)
+\le
+H(\Theta\mid Y_1).
+}
+\]
+
+因此观察 refinement 缩小信息余量。
+
+Blackwell 理论进一步说明：对任意给定的决策问题，更细实验的最优期望收益不低于其 garbling。这里的“更有信息”不是信号维数更大，而是所有决策问题上的可用性偏序。
+
+但经济主体通常不能免费选择无限精细观察。理性疏忽模型把观察界面本身写成优化变量：
+
+\[
+\boxed{
+\max_{K(a\mid\theta)}
+\mathbb E[u(a,\Theta)]
+-
+\lambda I(\Theta;A).
+}
+\]
+
+所以经济观察者不是被动给定的商，而是：
+
+\[
+\boxed{
+\text{在决策收益与信息处理成本之间选择的内生商}.
+}
+\]
+
+高条件熵不必表示主体非理性；它可能是支付信息成本以后仍然最优保留的余量。
+
+---
+
+## 34.7 价格是内生观察者：信息效率的反身闭包
+
+市场价格既聚合信息，又影响信息生产激励。设基本状态为 \(\theta\)，主体可支付成本 \(\kappa>0\) 获得私人信息并交易，价格 \(P\) 由订单流与市场清算产生。
+
+### 命题 34.7（完全揭示与付费信息激励的条件冲突）
+
+假设：
+
+1. 价格中的状态信息只能来自付费信息主体的交易；
+2. 完全揭示价格一旦形成，任何主体额外获得该私人信息的边际交易毛收益为零；
+3. 信息成本严格为正：
+   \[
+   \kappa>0.
+   \]
+
+则不存在同时满足以下两项的均衡：
+
+\[
+\boxed{
+\text{存在正的私人信息生产};
+}
+\]
+
+\[
+\boxed{
+\text{价格完全揭示该信息}.
+}
+\]
+
+#### 证明
+
+若价格完全揭示状态，假设 2 给出付费信息的边际毛收益为零；扣除严格正成本后，购买信息严格劣于不购买，故均衡信息生产为零。由假设 1，没有付费信息交易便没有该信息进入价格的来源，与完全揭示矛盾。 \(\square\)
+
+这是 Grossman–Stiglitz 信息效率悖论的最小闭包形式：
+
+\[
+\boxed{
+\text{价格观察界面的精度}
+\longrightarrow
+\text{改变信息生产激励}
+\longrightarrow
+\text{反过来改变价格观察界面的精度}.
+}
+\]
+
+因此价格映射不是外生的
+
+\[
+q:X\to Y,
+\]
+
+而是策略固定点的一部分：
+
+\[
+\boxed{
+q
+=
+\operatorname{Clearing}
+\bigl(
+\operatorname{Strategies}(q)
+\bigr).
+}
+\]
+
+市场观察者必须同时闭合状态、策略、信息成本和清算规则。
+
+---
+
+## 34.8 对角化的经济版本：公开预测可能改变其预测对象
+
+设状态空间为 \(X\)，公开预测取值空间为 \(Y\)，并存在无不动点变换
+
+\[
+\tau:Y\to Y,
+\qquad
+\tau(y)\ne y.
+\]
+
+一个预测器是
+
+\[
+f:X\to Y.
+\]
+
+公开预测后，主体依据 \(f\) 行动，真实结果记为
+
+\[
+R(f,x)\in Y.
+\]
+
+### 定理 34.8（战略响应下的对角预测障碍）
+
+若对每个预测器 \(f\)，都存在某个状态 \(x_f\) 使市场或政策响应能够实现
+
+\[
+\boxed{
+R(f,x_f)=\tau(f(x_f)),
+}
+\]
+
+则不存在对所有状态普遍正确的预测器：
+
+\[
+\boxed{
+\nexists f\;
+\forall x,\quad
+R(f,x)=f(x).
+}
+\]
+
+#### 证明
+
+若存在普遍正确的 \(f\)，在 \(x_f\) 上同时有
+
+\[
+R(f,x_f)=f(x_f)
+\]
+
+和
+
+\[
+R(f,x_f)=\tau(f(x_f)),
+\]
+
+从而
+
+\[
+f(x_f)=\tau(f(x_f)),
+\]
+
+与 \(\tau\) 无不动点矛盾。 \(\square\)
+
+该定理不是说所有经济预测都会失败。它说明：
+
+\[
+\boxed{
+\text{当被预测主体拥有足够的战略响应能力时，
+“公开预测”与“被预测过程”不能再按外生数据生成过程处理}.
+}
+\]
+
+市场可以出现自我实现预测，也可以出现自我否定预测；是否存在稳定固定点取决于响应映射，而不是由对角化自动决定。
+
+### Lucas 型自然性缺陷
+
+设历史读出为
+
+\[
+q:X\to Z,
+\]
+
+历史上拟合的约化动力学为
+
+\[
+\widehat T_\pi:Z\to Z,
+\]
+
+政策 \(\pi\) 在完整状态上的真实作用为
+
+\[
+T_\pi:X\to X.
+\]
+
+定义政策自然性缺陷：
+
+\[
+\boxed{
+\varepsilon_\pi(x)
+=
+d_Z
+\left(
+q(T_\pi x),
+\widehat T_\pi(qx)
+\right).
+}
+\]
+
+若政策改变了主体规则、预期或约束，历史上的商关系可能不再是 \(T_\pi\)-同余，因此
+
+\[
+\varepsilon_\pi(x)\ne0.
+\]
+
+这把 Lucas critique 写成项目语言：
+
+\[
+\boxed{
+\text{历史约化模型没有自然地下降到新政策下的观察商}.
+}
+\]
+
+同样，当绩效指标 \(q\) 被直接设为目标后，主体操作会改变 \(q\) 与真实目标之间的关系；这是一类 Goodhart 型界面漂移，而不是单纯测量噪声。
+
+---
+
+## 34.9 市值不是现金：边际价格坐标与总体可兑现值分离
+
+设某公司有 \(N\) 股流通股，当前显示价格为 \(p\)。账面市值为
+
+\[
+\boxed{
+V_{\mathrm{mark}}=Np.
+}
+\]
+
+假设一笔规模为 \(\delta\) 的交易使显示价格从 \(p_0\) 变为 \(p_1\)，成交平均价为 \(\bar p\)。该笔交易实际转移现金约为
+
+\[
+C_{\mathrm{trade}}=\delta\bar p,
+\]
+
+而显示市值变化为
+
+\[
+\Delta V_{\mathrm{mark}}
+=
+N(p_1-p_0).
+\]
+
+### 定理 34.9（边际成交的账面放大）
+
+在上述条件下：
+
+\[
+\boxed{
+\frac{
+|\Delta V_{\mathrm{mark}}|
+}{
+C_{\mathrm{trade}}
+}
+=
+\frac{
+N|p_1-p_0|
+}{
+\delta\bar p
+}.
+}
+\]
+
+只要 \(\delta\ll N\)，市值变化就可以远大于该笔成交现金。
+
+这只是一个会计—坐标恒等式：显示价格用边际成交为全部存量股份重新标价。它不声称任意小交易必然能造成任意价格跳变；价格跳变大小由订单簿、信息和做市深度决定。
+
+因此：
+
+\[
+\boxed{
+\text{市值变化没有与净现金流入一一对应的守恒律}.
+}
+\]
+
+全球现金总量近似不变时，股票市值仍可大幅上升，因为发生的是现金相对于股票索取权的交换比率变化，而不是每一美元市值增量都由一美元现金永久“注入”。
+
+---
+
+## 34.10 标记价值与清算现金之间的流动性余量
+
+设持有 \(Q\) 单位资产，当前边际价格为
+
+\[
+P(0)=p_0.
+\]
+
+若累计卖出 \(x\) 单位后的边际成交价格为非增函数
+
+\[
+P(x),
+\qquad
+0\le x\le Q,
+\]
+
+则全部清算可获得现金为
+
+\[
+\boxed{
+\mathcal L(Q)
+=
+\int_0^Q P(x)\,dx.
+}
+\]
+
+当前 mark-to-market 价值为
+
+\[
+V_{\mathrm{mark}}(Q)=p_0Q.
+\]
+
+### 定理 34.10（流动性余量非负）
+
+若 \(P\) 非增，则
+
+\[
+\boxed{
+\mathcal L(Q)
+\le
+p_0Q.
+}
+\]
+
+定义流动性余量：
+
+\[
+\boxed{
+R_{\mathrm{liq}}(Q)
+=
+p_0Q-\mathcal L(Q)
+=
+\int_0^Q
+\bigl(
+p_0-P(x)
+\bigr)\,dx
+\ge0.
+}
+\]
+
+#### 证明
+
+对所有 \(x\ge0\)：
+
+\[
+P(x)\le P(0)=p_0.
+\]
+
+积分即得。 \(\square\)
+
+若采用线性价格冲击：
+
+\[
+P(x)=p_0-\lambda x,
+\]
+
+并假设区间内价格非负，则
+
+\[
+\boxed{
+\mathcal L(Q)
+=
+p_0Q-\frac{\lambda Q^2}{2},
+}
+\]
+
+\[
+\boxed{
+R_{\mathrm{liq}}(Q)
+=
+\frac{\lambda Q^2}{2}.
+}
+\]
+
+所以：
+
+\[
+\boxed{
+\text{市值是边际价格坐标};
+\qquad
+\text{清算现金是沿订单簿路径积分};
+\qquad
+\text{二者之差是市场深度余量}.
+}
+\]
+
+这解释了为什么压力状态下“账面资产大于债务”与“能够按时获得足够结算现金”是两个不同命题。
+---
+
+## 34.11 固定名义债务把连续资产负债表变成离散违约界面
+
+设压力状态下可用结算资源为
+
+\[
+L
+=
+C
++
+\sum_j\mathcal L_j(Q_j)
++
+F_{\mathrm{committed}}
++
+P_{\mathrm{in}},
+\]
+
+其中：
+
+- \(C\) 是现有现金；
+- \(\mathcal L_j(Q_j)\) 是资产 \(j\) 的压力清算现金；
+- \(F_{\mathrm{committed}}\) 是可靠已承诺融资；
+- \(P_{\mathrm{in}}\) 是在结算窗口内实际可收到的付款。
+
+短期固定名义义务为
+
+\[
+D_{\mathrm{due}}.
+\]
+
+定义结算边际：
+
+\[
+\boxed{
+g_{\mathrm{settle}}
+=
+L-D_{\mathrm{due}}.
+}
+\]
+
+违约／支付失败指示为：
+
+\[
+\boxed{
+\mathbf 1_{\mathrm{fail}}
+=
+\mathbf 1_{\{g_{\mathrm{settle}}<0\}}.
+}
+\]
+
+这正是本文“连续—离散界面”的经济实例：
+
+\[
+\boxed{
+\text{连续资产价格与流动性路径}
+\longrightarrow
+\text{零结算界面}
+\longrightarrow
+\text{支付成功／失败的离散分类}.
+}
+\]
+
+定义压力现金覆盖率：
+
+\[
+\boxed{
+\operatorname{CCR}
+=
+\frac{L}{D_{\mathrm{due}}}.
+}
+\]
+
+则
+
+\[
+\operatorname{CCR}<1
+\]
+
+是单体支付缺口的直接判据。
+
+但必须区分：
+
+\[
+\boxed{
+\text{流动性失败}
+\ne
+\text{经济价值上的资不抵债}.
+}
+\]
+
+长期资产现值可以高于总负债，但若资产不能在结算时点转换为现金，主体仍可发生支付失败。反之，短期获得外部流动性可以避免支付失败，却不保证长期净值为正。
+
+---
+
+## 34.12 杠杆是价格余量到权益损失的微分放大器
+
+设资产价值为 \(A\)，固定债务为 \(D\)，权益为
+
+\[
+E=A-D>0.
+\]
+
+定义资产杠杆：
+
+\[
+\ell=\frac AE.
+\]
+
+在债务短期固定时：
+
+\[
+dE=dA.
+\]
+
+因此：
+
+\[
+\boxed{
+\frac{dE}{E}
+=
+\ell
+\frac{dA}{A}.
+}
+\]
+
+所以杠杆 \(\ell\) 是资产价值相对变化到权益相对变化的局部放大倍数。
+
+若资产价值中还包含流动性余量误差：
+
+\[
+A_{\mathrm{exec}}
+=
+A_{\mathrm{mark}}-R_{\mathrm{liq}},
+\]
+
+则执行价值权益为
+
+\[
+E_{\mathrm{exec}}
+=
+E_{\mathrm{mark}}-R_{\mathrm{liq}}.
+\]
+
+当
+
+\[
+R_{\mathrm{liq}}\ge E_{\mathrm{mark}},
+\]
+
+主体即使账面权益非负，也可能在可执行价值下进入零或负权益区间。
+
+因此：
+
+\[
+\boxed{
+\text{杠杆不会创造原始价格误差，
+但会把价格、折价和流动性余量集中放大到剩余权益层}.
+}
+\]
+
+---
+
+## 34.13 融资流动性—市场流动性反馈的最小稳定性模型
+
+考虑持有 \(Q\) 单位抵押资产的主体。累计强制出售量为 \(x_t\)，价格冲击为：
+
+\[
+p_t=p_0-\lambda x_t,
+\qquad
+\lambda>0.
+\]
+
+抵押折算率为
+
+\[
+\alpha\in(0,1],
+\]
+
+所以可支持债务为
+
+\[
+B_t=\alpha Qp_t.
+\]
+
+固定债务为 \(D\)。若债务超过抵押能力，下一轮需按基准价格 \(p_0\) 折算出强制出售量：
+
+\[
+\boxed{
+x_{t+1}
+=
+\frac{
+[D-\alpha Q(p_0-\lambda x_t)]_+
+}{p_0}.
+}
+\]
+
+在短缺严格为正的活动区间，映射为：
+
+\[
+x_{t+1}=a+bx_t,
+\]
+
+其中
+
+\[
+a=\frac{D-\alpha Qp_0}{p_0},
+\]
+
+\[
+\boxed{
+b=\frac{\alpha Q\lambda}{p_0}.
+}
+\]
+
+### 定理 34.11（流动性反馈的局部收缩门槛）
+
+在保持活动区间且价格非负的局部模型中：
+
+1. 若
+   \[
+   0\le b<1,
+   \]
+   则反馈映射是收缩，唯一固定点为
+   \[
+   \boxed{
+   x^*=\frac{a}{1-b},
+   }
+   \]
+   并且迭代局部收敛；
+2. 若
+   \[
+   b>1,
+   \]
+   则该固定点局部不稳定，小的出售偏差会被反馈放大；
+3. \(b=1\) 是线性化的临界门槛。
+
+#### 证明
+
+活动区间内：
+
+\[
+x_{t+1}-x^*
+=
+b(x_t-x^*).
+\]
+
+故误差按 \(b^t\) 缩放。 \(\square\)
+
+这里：
+
+\[
+\boxed{
+b
+=
+\text{价格冲击}
+\times
+\text{抵押敏感度}
+\times
+\text{持仓规模}
+\div
+\text{结算价格尺度}.
+}
+\]
+
+它是融资流动性与市场流动性相互强化的环路增益。该模型只是局部门槛演示；现实中还需加入非线性订单簿、内生 haircut、多个资产、战略交易、跳跃违约和网络支付。成熟金融文献已经研究 margin spiral 与 market/funding liquidity 的互相强化；本节新增的是把它接入本文自然性缺陷和迭代放大演算。
+
+---
+
+## 34.14 支付网络：aggregate 商可以隐藏违约拓扑余量
+
+设机构 \(i\) 的总名义义务为
+
+\[
+\bar p_i,
+\]
+
+相对负债矩阵为
+
+\[
+\Pi,
+\]
+
+外部压力现金为
+
+\[
+e_i\ge0.
+\]
+
+标准比例清算映射为：
+
+\[
+\boxed{
+\Phi(p)
+=
+\bar p
+\wedge
+(e+\Pi^\top p),
+}
+\]
+
+其中 \(\wedge\) 表示逐坐标最小值。
+
+该映射在区间
+
+\[
+[0,\bar p]
+\]
+
+上单调。有限维完全格上的单调性给出最小和最大清算固定点；在标准正则条件下二者一致，得到唯一清算向量。
+
+定义支付短缺：
+
+\[
+\boxed{
+S(p)
+=
+\sum_i(\bar p_i-p_i).
+}
+\]
+
+### 例 34.12（相同 aggregate 账本，不同网络清算结果）
+
+考虑两家银行与一个社会节点，所有金额均为 \(100\)。
+
+两套系统均具有：
+
+\[
+\text{总外部现金}=100,
+\]
+
+\[
+\text{总银行间名义负债}=100,
+\]
+
+\[
+\text{总对外名义负债}=100.
+\]
+
+#### 系统 A
+
+- 银行 1 外部现金为 \(0\)，欠银行 2：\(100\)；
+- 银行 2 外部现金为 \(100\)，欠社会节点：\(100\)。
+
+银行 1 无资源，不能支付内部债务；银行 2 依靠自身外部现金仍可向社会支付 \(100\)。银行间义务短缺为 \(100\)。
+
+#### 系统 B
+
+- 银行 2 外部现金为 \(100\)，欠银行 1：\(100\)；
+- 银行 1 外部现金为 \(0\)，欠社会节点：\(100\)。
+
+银行 2 向银行 1 支付 \(100\)，银行 1 再向社会支付 \(100\)，全部义务结清。
+
+所以：
+
+\[
+\boxed{
+\text{相同的 aggregate 现金、内部债务和外部债务}
+\not\Rightarrow
+\text{相同的清算结果}.
+}
+\]
+
+差异位于有向负债网络的关联余量中。
+
+因此只读取总资产、总债务或系统净额的观察者，可能把两个系统放入同一 aggregate 商类；但清算动力学并不能下降到该商，因为网络拓扑没有被保留。
+
+这与第 33 节 CRT 局部边缘不能恢复高阶关联完全同型：
+
+\[
+\boxed{
+\text{局部或 aggregate 完成}
+\not\Rightarrow
+\text{关联结构完成}.
+}
+\]
+
+---
+
+## 34.15 现金总量不涨而股市市值上涨：严格结算
+
+现在可以回答本文经济应用中的核心问题。
+
+设经济中的结算现金存量近似固定，但股票价格普遍上升。并不需要存在与市值增量等额的现金流入，原因有三层。
+
+### 第一层：价格是交换比率，不是库存守恒量
+
+股票价格表示边际单位股票相对于现金的交换率。若主体更愿意持有股票、贴现率下降、风险溢价下降、预期现金流上升或可供出售深度下降，边际交换率可以变化。
+
+### 第二层：市值按边际价格重估全部存量
+
+\[
+V_{\mathrm{market}}=Np
+\]
+
+使用边际价格为 \(N\) 股重新计价。实际成交只涉及其中很小部分，故
+
+\[
+\Delta V_{\mathrm{market}}
+\]
+
+可以远大于同期净现金转移。
+
+### 第三层：压力兑现受清算路径约束
+
+若大量持有人同时要求转回结算现金，可获得的不是
+
+\[
+Np,
+\]
+
+而是：
+
+\[
+\mathcal L(N)
+=
+\int_0^N P(x)\,dx.
+\]
+
+所以危机不由“市值超过现金总量”本身触发，而由以下不等式触发：
+
+\[
+\boxed{
+\text{固定时间窗口内必须支付的现金义务}
+>
+\text{该窗口内可获得的压力结算现金}.
+}
+\]
+
+更完整地：
+
+\[
+\boxed{
+D_{\mathrm{due}}
+>
+C
++
+\sum_j\mathcal L_j(Q_j)
++
+F_{\mathrm{reliable}}
++
+P_{\mathrm{in}}.
+}
+\]
+
+若债务和保证金需求也随上涨阶段扩张，则上涨可以同时增加账面财富与结算脆弱性：
+
+\[
+\boxed{
+\text{mark-to-market 资本扩张}
++
+\text{固定名义杠杆扩张}
++
+\text{低估流动性余量}
+}
+\]
+
+在压力状态下可能坍缩为：
+
+\[
+\boxed{
+\text{强制出售}
+\to
+\text{价格冲击}
+\to
+\text{抵押能力下降}
+\to
+\text{更多强制出售}.
+}
+\]
+
+因此应监测的不是“全球现金／全球市值”单一比值，而是一个多轴压力账本：
+
+\[
+\boxed{
+\begin{aligned}
+&\text{短期固定现金义务},\\
+&\text{压力清算曲线},\\
+&\text{haircut 与追加保证金规则},\\
+&\text{融资承诺可靠性},\\
+&\text{支付网络拓扑},\\
+&\text{持仓集中度与共同出售相关性}.
+\end{aligned}
+}
+\]
+
+---
+
+## 34.16 经济时间的分裂：日历、结算、交易、信息与资产负债表时间
+
+经济系统至少包含五种不能预先等同的时间。
+
+### 日历时间
+
+\[
+t_{\mathrm{cal}}
+\]
+
+记录合同和宏观过程的外部顺序。
+
+### 结算时间
+
+\[
+t_{\mathrm{settle}}
+\]
+
+由债务到期、保证金调用和支付窗口决定。即使长期价值不变，结算时点错配也可触发失败。
+
+### 交易事件时间
+
+\[
+n_{\mathrm{trade}}
+\]
+
+按成交或订单簿更新计数。高频市场中，同一日历时间可以包含极不均匀的事件密度。
+
+### 信息时间
+
+可用公共信念更新的累计信息距离表示，例如：
+
+\[
+\boxed{
+\tau_{\mathrm{info}}(N)
+=
+\sum_{k=0}^{N-1}
+D_{\mathrm{KL}}
+(\mu_{k+1}\Vert\mu_k),
+}
+\]
+
+在每项有限时非负且可加。它测量信念更新路径，不等同于福利或物理作用量。
+
+### 资产负债表时间
+
+反复 haircut 或流动性乘数
+
+\[
+g_k\in(0,1]
+\]
+
+使可执行价值满足
+
+\[
+V_N=V_0\prod_{k=1}^Ng_k.
+\]
+
+定义流动性记录作用：
+
+\[
+\boxed{
+\mathfrak A_N^{\mathrm{liq}}
+=
+-\log\frac{V_N}{V_0}
+=
+\sum_{k=1}^N-\log g_k.
+}
+\]
+
+它与第 33 节环境记录作用具有同一乘法—加法结构，但经济含义不同：这里记录的是连续压力步骤对可兑现价值的累计折损，不是量子相干。
+
+所以：
+
+\[
+\boxed{
+\text{经济时间不是一个单轴参数，
+而是状态变化、结算门槛、交易密度、信息更新和流动性折损的耦合序}.
+}
+\]
+
+---
+
+## 34.17 经济逃逸率不能压成一个指标
+
+本框架中至少存在以下经济余量。
+
+### 套保余量
+
+\[
+\boxed{
+r_N^{\mathrm{hedge}}(X)
+=
+\|P_{\mathcal M_N^\perp}X\|_2^2.
+}
+\]
+
+### 流动性余量率
+
+\[
+\boxed{
+r^{\mathrm{liq}}(Q)
+=
+1-
+\frac{\mathcal L(Q)}{p_0Q}.
+}
+\]
+
+### 信息余量率
+
+在有限离散状态且 \(H(\Theta)>0\) 时：
+
+\[
+\boxed{
+r^{\mathrm{info}}(Y)
+=
+\frac{H(\Theta\mid Y)}{H(\Theta)}.
+}
+\]
+
+### 网络支付余量率
+
+\[
+\boxed{
+r^{\mathrm{net}}
+=
+\frac{
+\sum_i(\bar p_i-p_i)
+}{
+\sum_i\bar p_i
+}.
+}
+\]
+
+### 政策自然性缺陷
+
+\[
+\boxed{
+r^{\mathrm{policy}}_\pi(x)
+=
+d
+\left(
+q(T_\pi x),
+\widehat T_\pi(qx)
+\right).
+}
+\]
+
+### 战略对角缺陷
+
+\[
+\boxed{
+r^{\mathrm{diag}}_f(x)
+=
+d_Y
+\left(
+R(f,x),f(x)
+\right).
+}
+\]
+
+这些量分别测量：
+
+- 未被交易资产张成的支付风险；
+- 不能按边际价格兑现的资产价值；
+- 信号纤维中残留的状态不确定性；
+- 支付网络未结清的义务；
+- 政策变化下约化模型的不自然性；
+- 公开预测被战略响应改变的程度。
+
+它们可以相互反馈，但不是同一“经济熵”或“市场逃逸率”。
+---
+
+## 34.18 市场完整度必须是向量
+
+定义经济观察者的多轴闭合向量：
+
+\[
+\boxed{
+\mathbf C_{\mathrm{econ}}
+=
+(
+C_{\mathrm{price}},
+C_{\mathrm{hedge}},
+C_{\mathrm{info}},
+C_{\mathrm{liq}},
+C_{\mathrm{settle}},
+C_{\mathrm{network}},
+C_{\mathrm{policy}},
+C_{\mathrm{reflex}}
+).
+}
+\]
+
+其中：
+
+\[
+\begin{aligned}
+C_{\mathrm{price}}
+&=\text{价格是否良定义地下降到收益商},\\
+C_{\mathrm{hedge}}
+&=\text{目标支付是否进入 marketed payoff 闭包},\\
+C_{\mathrm{info}}
+&=\text{价格／信号对目标状态的分离能力},\\
+C_{\mathrm{liq}}
+&=\text{mark value 到 executable cash 的转换能力},\\
+C_{\mathrm{settle}}
+&=\text{到期窗口内固定现金义务覆盖},\\
+C_{\mathrm{network}}
+&=\text{aggregate 读出是否保留清算拓扑},\\
+C_{\mathrm{policy}}
+&=\text{约化关系在政策改变下是否自然},\\
+C_{\mathrm{reflex}}
+&=\text{读出公开后是否因主体响应而改变自身生成机制}.
+\end{aligned}
+\]
+
+几个关键非蕴含是：
+
+\[
+\boxed{
+\text{无套利}
+\not\Rightarrow
+\text{市场完备};
+}
+\]
+
+\[
+\boxed{
+\text{市场完备}
+\not\Rightarrow
+\text{压力流动性充足};
+}
+\]
+
+\[
+\boxed{
+\text{账面偿付能力}
+\not\Rightarrow
+\text{结算时点流动性};
+}
+\]
+
+\[
+\boxed{
+\text{价格高度信息化}
+\not\Rightarrow
+\text{信息生产激励稳定};
+}
+\]
+
+\[
+\boxed{
+\text{aggregate 资产负债表相同}
+\not\Rightarrow
+\text{支付网络风险相同};
+}
+\]
+
+\[
+\boxed{
+\text{历史预测准确}
+\not\Rightarrow
+\text{政策干预后仍准确}.
+}
+\]
+
+因此“市场效率”若不声明轴和观察界面，就不是一个类型充分的数学性质。
+
+---
+
+## 34.19 与现有经济学的边界及候选项目贡献
+
+以下结构具有成熟前驱，不能重新命名为项目独有发现：
+
+- Arrow–Debreu 竞争均衡与完全市场；
+- Blackwell 实验比较；
+- Harrison–Kreps 型无套利与状态价格；
+- Grossman–Stiglitz 信息效率悖论；
+- Lucas policy critique；
+- Sims rational inattention；
+- Eisenberg–Noe 支付清算固定点；
+- Brunnermeier–Pedersen 市场／融资流动性反馈；
+- 最小方差套期保值、Gram 投影和风险中性定价；
+- 价格冲击、订单簿深度与 fire-sale 模型。
+
+本节的候选贡献位于这些结果与项目统一观察者语言的组合：
+
+1. 把 law of one price 识别为价格对收益商的严格因子化；
+2. 把不完备市场写成目标支付的 Hilbert 余风险，并用正交壳层量化每个新证券的目标增益；
+3. 把状态价格非唯一性写成正锥内的定价余纤维，把风险中性概率解释为 numeraire 截面；
+4. 把名义债务识别为破坏价格射影规范的结算边界条件；
+5. 把市值—现金差异写成边际重估与清算路径积分之间的流动性余量；
+6. 把支付网络 topology 识别为 aggregate 商丢失的关联余量；
+7. 把 Grossman–Stiglitz、Lucas 和公开预测反馈统一为内生观察界面的闭包／自然性问题；
+8. 把金融稳定拆成定价、套保、信息、流动性、结算、网络、政策和反身八轴，而不是单一效率分数。
+
+是否具有发表价值仍取决于进一步文献审计，以及能否在该统一语言中证明超出现有结果简单重述的新界、稳定性定理或可计算证书。
+
+### 参考接口
+
+- K. J. Arrow and G. Debreu, *Existence of an Equilibrium for a Competitive Economy*, 1954.
+- D. Blackwell, *Equivalent Comparisons of Experiments*, 1953.
+- R. E. Lucas Jr., *Econometric Policy Evaluation: A Critique*, 1976.
+- J. M. Harrison and D. M. Kreps, *Martingales and Arbitrage in Multiperiod Securities Markets*, 1979.
+- S. J. Grossman and J. E. Stiglitz, *On the Impossibility of Informationally Efficient Markets*, 1980.
+- L. Eisenberg and T. H. Noe, *Systemic Risk in Financial Systems*, 2001.
+- C. A. Sims, *Implications of Rational Inattention*, 2003.
+- M. K. Brunnermeier and L. H. Pedersen, *Market Liquidity and Funding Liquidity*, 2009.
+
+---
+
+## 34.20 建议 Lean 形式化顺序
+
+1. `PriceFactorsThroughPayoffQuotient`
+   \[
+   \ker A\subseteq\ker c^\top
+   \iff
+   \exists!\ell,\ c^\top=\ell\circ A.
+   \]
+
+2. `ZeroPayoffPriceDifferenceArbitrage`
+   收益相同而价格不同给出零终端支付套利。
+
+3. `NumeraireGaugeInvariantBudget`
+   \[
+   B(\lambda p,\lambda w)=B(p,w).
+   \]
+
+4. `NominalDebtBreaksPriceGauge`
+   \[
+   D/(\lambda p_j)=\lambda^{-1}D/p_j.
+   \]
+
+5. `StatePriceAffineFiber`
+   \[
+   \{\pi:A^\top\pi=c\}
+   =
+   \pi_0+\ker A^\top.
+   \]
+
+6. `TargetHedgeOrthogonalProjection`
+   \[
+   \inf_{Y\in\mathcal M}\|X-Y\|^2
+   =
+   \|P_{\mathcal M^\perp}X\|^2.
+   \]
+
+7. `SecurityInnovationHedgeGain`
+   \[
+   d_N^2-d_{N+1}^2
+   =
+   |\langle X,r_{N+1}\rangle|^2/\|r_{N+1}\|^2.
+   \]
+
+8. `DeterministicSignalEntropyRemainder`
+   \[
+   H(\Theta)=H(q\Theta)+H(\Theta\mid q\Theta).
+   \]
+
+9. `SignalGarblingKnowledgeAntitone`
+   \[
+   q_1=rq_0
+   \Rightarrow
+   \mathcal K(q_1)\subseteq\mathcal K(q_0).
+   \]
+
+10. `StrategicPredictionDiagonalObstruction`
+    形式化定理 34.8。
+
+11. `MarginalRepricingAmplification`
+    \[
+    \Delta V=N\Delta p.
+    \]
+
+12. `LiquidationValueBelowMark`
+    \[
+    \int_0^QP(x)\,dx\le P(0)Q.
+    \]
+
+13. `LinearImpactLiquidityRemainder`
+    \[
+    R_{\mathrm{liq}}(Q)=\lambda Q^2/2.
+    \]
+
+14. `LeverageDifferentialAmplification`
+    \[
+    dE/E=(A/E)\,dA/A.
+    \]
+
+15. `LiquidityFeedbackContraction`
+    活动区间内 \(b<1\) 的固定点唯一性和收敛。
+
+16. `ClearingMapMonotone`
+    \[
+    \Phi(p)=\bar p\wedge(e+\Pi^\top p)
+    \]
+    的单调性。
+
+17. `AggregateBalanceSheetNetworkCounterexample`
+    形式化例 34.12。
+
+18. `EconomicCompletenessNonImplications`
+    为无套利、完备、流动性、结算和信息效率之间的非蕴含构造有限反例。
+
+这些声明应以标准线性代数、有限概率和序理论对象实现。Harrison–Kreps、Blackwell、Grossman–Stiglitz、Eisenberg–Noe 等外部经典结果若被用作完整桥，应以具名、可审计接口接入，不得隐藏为无名公理。
+
+---
+
+## 34.21 最终统一式
+
+经济学接入本文以后，得到：
+
+\[
+\boxed{
+\text{价格}
+=
+\text{经济状态相对于 traded payoff、numeraire 与边际市场深度的读出坐标}.
+}
+\]
+
+\[
+\boxed{
+\text{无套利}
+=
+\text{价格在相同终端收益的商上良定义}.
+}
+\]
+
+\[
+\boxed{
+\text{不完备市场}
+=
+\text{目标支付仍有 marketed payoff 子空间之外的 Hilbert 余量}.
+}
+\]
+
+\[
+\boxed{
+\text{风险中性概率}
+=
+\text{正状态价格泛函在 numeraire 下的归一化坐标}.
+}
+\]
+
+\[
+\boxed{
+\text{市值}
+=
+\text{边际成交价格对全部存量索取权的重估}.
+}
+\]
+
+\[
+\boxed{
+\text{可兑现现金}
+=
+\text{沿流动性曲线执行得到的路径积分}.
+}
+\]
+
+\[
+\boxed{
+\text{固定债务}
+=
+\text{破坏名义尺度规范并产生零结算界面的合同条件}.
+}
+\]
+
+\[
+\boxed{
+\text{金融危机}
+=
+\text{固定结算义务超过压力可兑现现金，
+并经杠杆、抵押和支付网络反馈放大}.
+}
+\]
+
+\[
+\boxed{
+\text{信息价格}
+=
+\text{主体选择和市场清算共同生成的内生观察界面}.
+}
+\]
+
+\[
+\boxed{
+\text{经济对角化}
+=
+\text{公开模型、指标或预测进入主体策略以后，
+原被预测关系无法保持外生闭合的证书}.
+}
+\]
+
+最凝练的结论是：
+
+\[
+\boxed{
+\text{财富、价格、现金、概率与风险不是同一个守恒量；
+它们是经济整体经过不同观察界面、结算规则和时间窗口后得到的不同坐标与余量}.
+}
+\]
+
+因此，现金总量几乎不变而股市市值持续上升本身并不构成矛盾。真正需要审计的是：
+
+\[
+\boxed{
+\text{边际价格创造了多少账面重估，
+其中多少能在压力路径中转换为结算现金，
+以及哪些固定债务会在转换完成以前到期}.
+}
+\]
+
+### 34.22 严格非主张
+
+1. 本节不把竞争均衡存在性约化为无套利。
+2. 本节不把风险中性概率解释为真实事件频率。
+3. 本节不把最小均方套保等同于所有偏好下的最优风险管理。
+4. 本节不声称任何小额成交都能造成任意市值跳变。
+5. 本节不把 market capitalization 当作全体持有人可同时兑现的现金。
+6. 本节不把单体 \(\operatorname{CCR}<1\) 当作完整系统性危机的充分必要条件。
+7. 本节不把线性流动性反馈模型当作现实市场的完整校准模型。
+8. 本节不把 aggregate 统计无效解释为 aggregate 数据没有价值。
+9. 本节不把信息熵直接等同于福利、价格效率或热力学熵。
+10. 本节不声称所有公开预测都会被主体对角反转；定理 34.8 明确依赖战略响应可实现性。
+11. 本节不把名义价格尺度规范与一般物理 gauge theory 视为同一定理。
+12. 本节不把 Sections 28–33 的量子、数论或 solenoid 对象与经济变量作本体同一。
+13. 本节不提供投资、杠杆或交易建议。
+14. 本节新增结论均为纸面推导；未经 Lean kernel 验证不得标记为 `Closed`。
+
+---
+
+# 35. 追加：带初始坐标的连续统观察者、叶—横截双结构与黄金悬挂
+## Anchored-Continuum Observers, Leaf–Transversal Duality, and Golden Suspensions
+
+### 35.0 文档地位、问题修正与承重边界
+
+前文主要把观察者写成连续统内部的有限读出、商、可观测代数、预测闭包、路径账本与对角审计。本节研究一个更强的可能性：
+
+\[
+\boxed{
+\text{观察者本身是否可以是一种带初始坐标的连续统？}
+}
+\]
+
+答案是肯定的，但“既连续又离散”必须严格分型。一个非空空间不可能在同一个拓扑下同时既连通又离散，除非它只有一个点。因此，正确结构不是把两个互斥性质塞进同一个方向，而是把观察者组织成：
+
+\[
+\boxed{
+\text{叶方向连续}
++
+\text{横截方向全不连通}
++
+\text{有限读出离散}
++
+\text{路径提升与记忆保存初始坐标}.
+}
+\]
+
+本节把这一结构与仓库已经闭合或部分闭合的以下接口连接：
+
+- universal solenoid 的连通整体、稠密实流、可见圆投影与 profinite 隐藏核；
+- streamline decomposition 中“连续实提升 + 常值隐藏偏移”的唯一分解；
+- path-orbit classification 中路径分量与实流轨道的一致性；
+- throat transition cocycle 中不同局部提升之间的隐藏纤维差满足加法 cocycle；
+- Minkowski golden embedding 中物理坐标与共轭内部坐标；
+- Fibonacci–golden partition 中整数权重与逆黄金尺度的精确单位分割；
+- 前文的有限读出、预测观察者、记忆账本、上下文商余与对角逃逸。
+
+本节不会把观察者连续统等同于意识本体，不会把 Cantor 横截直接等同于量子离散结果，也不会把黄金比例宣称为一切连续—离散系统的唯一来源。新增结果均为纸面定理；在 Lean proof term、依赖闭包、admission 与冻结收据齐备以前不得标记为 `Closed`。
+
+---
+
+## 35.1 同一拓扑下“连通且离散”的不可能性
+
+### 定理 35.1（连通离散空间退化）
+
+设 \(X\) 是非空拓扑空间。若 \(X\) 连通且离散，则 \(X\) 只有一个点。
+
+#### 证明
+
+若 \(x\in X\)，离散性说明 \(\{x\}\) 为开集，其补集 \(X\setminus\{x\}\) 也为开集。若存在 \(y\neq x\)，则
+
+\[
+X=\{x\}\sqcup(X\setminus\{x\})
+\]
+
+是两个非空开集的分离，与连通性矛盾。故 \(X=\{x\}\)。 \(\square\)
+
+所以“观察者既连续又离散”不能被解释成：
+
+\[
+\text{同一个状态空间在同一个拓扑中既非平凡连通又离散}.
+\]
+
+必须至少采用以下一种分层机制：
+
+\[
+\boxed{
+\begin{aligned}
+&\text{不同坐标方向：叶连续、横截全不连通};\\
+&\text{不同层级：整体连续、有限商离散};\\
+&\text{不同对象：状态连续、事件标签离散};\\
+&\text{不同时间：流参数连续、返回次数离散};\\
+&\text{不同拓扑：同一集合携带不同可访问结构}.
+\end{aligned}
+}
+\]
+
+其中最适合项目现有 solenoid、观察者与黄金模型集工作的，是“叶—横截”与“逆极限—有限商”两种结构。
+
+---
+
+## 35.2 带初始坐标的连续统观察者
+
+### 定义 35.2（点化连续统）
+
+点化连续统是二元组
+
+\[
+(X,\xi_0),
+\]
+
+其中 \(X\) 是非空紧致连通度量空间，\(\xi_0\in X\) 是指定原点。
+
+若还指定一个局部坐标架、方向架或尺度架 \(\mathfrak f_0\)，则称
+
+\[
+(X,\xi_0,\mathfrak f_0)
+\]
+
+为带架连续统。
+
+仅有 \(X\) 时，所有点仍可能被自同构群交换；指定 \(\xi_0\) 后，允许的对称群从
+
+\[
+\operatorname{Aut}(X)
+\]
+
+缩小到稳定子
+
+\[
+\operatorname{Aut}(X,\xi_0)
+=
+\{g\in\operatorname{Aut}(X):g(\xi_0)=\xi_0\}.
+\]
+
+再指定 \(\mathfrak f_0\) 后，对称性进一步缩小。
+
+### 定义 35.3（锚定连续统观察者）
+
+一个锚定连续统观察者记为
+
+\[
+\boxed{
+\mathfrak O
+=
+(
+\mathcal X_O,
+\xi_0,
+\mathfrak f_0,
+\Phi,
+\mathcal K_O,
+q_O,
+\widetilde{\mathcal X}_O,
+\mathcal M_O,
+\Delta_O
+).
+}
+\]
+
+其中：
+
+\[
+\begin{aligned}
+\mathcal X_O
+&=\text{观察者的连续统载体},\\
+\xi_0
+&=\text{初始锚点},\\
+\mathfrak f_0
+&=\text{初始坐标、方向与尺度架},\\
+\Phi
+&=\text{连续流、半流或动力作用},\\
+\mathcal K_O
+&=\text{全不连通／profinite 横截地址},\\
+q_O
+&=\text{有限读出、事件分割或可观测接口},\\
+\widetilde{\mathcal X}_O
+&=\text{保存路径提升或历史坐标的扩展状态空间},\\
+\mathcal M_O
+&=\text{事件数、cocycle、holonomy 与追加式记忆},\\
+\Delta_O
+&=\text{自评价、同址读取与对角操作}.
+\end{aligned}
+\]
+
+这一定义的核心不是“观察者占据一个连续统大小的物体”，而是：
+
+\[
+\boxed{
+\text{观察者是连续统被点化、带架、可读出并保存路径以后形成的结构。}
+}
+\]
+
+初始坐标不是额外写在状态旁边的一串标签。它决定：
+
+- 哪一点被叫作“这里”；
+- 哪一方向被叫作“正方向”；
+- 哪一尺度被叫作“单位”；
+- 哪一提升被叫作“从零开始”；
+- 哪些回归状态属于同一当前点但不同历史。
+
+---
+
+## 35.3 初始点的轨道闭包本身就是连续统
+
+设 \(W\) 是紧致度量空间，且
+
+\[
+\Phi:\mathbb R\times W\to W
+\]
+
+为连续流。固定 \(\xi_0\in W\)，定义轨道
+
+\[
+\mathcal O(\xi_0)
+=
+\{\Phi_t(\xi_0):t\in\mathbb R\}
+\]
+
+和轨道闭包
+
+\[
+\boxed{
+\mathcal X_{\xi_0}
+=
+\overline{\mathcal O(\xi_0)}.
+}
+\]
+
+### 定理 35.4（轨道闭包连续统）
+
+\(\mathcal X_{\xi_0}\) 是紧致连通子空间。
+
+#### 证明
+
+映射
+
+\[
+\gamma_{\xi_0}:\mathbb R\to W,
+\qquad
+t\mapsto\Phi_t(\xi_0)
+\]
+
+连续。由于 \(\mathbb R\) 连通，其像 \(\mathcal O(\xi_0)\) 连通；连通集的闭包仍连通。又因为 \(W\) 紧致，闭子集 \(\mathcal X_{\xi_0}\) 紧致。 \(\square\)
+
+所以一种最小的观察者连续统可以直接定义为：
+
+\[
+\boxed{
+\mathfrak O_{\xi_0}
+=
+\left(
+\overline{\Phi_{\mathbb R}(\xi_0)},
+\xi_0
+\right).
+}
+\]
+
+若流是最小的，即每条轨道都稠密，则：
+
+\[
+\boxed{
+\mathcal X_{\xi_0}=W
+\qquad
+\forall\xi_0\in W.
+}
+\]
+
+这时观察者与世界可以拥有相同的未点化载体，但二者仍不等同。观察者还包含：
+
+\[
+\xi_0,\quad
+\mathfrak f_0,\quad
+q_O,\quad
+\mathcal M_O,\quad
+\Delta_O.
+\]
+
+因此：
+
+\[
+\boxed{
+\text{载体相同}
+\not\Rightarrow
+\text{观察者结构相同}.
+}
+\]
+
+世界可以是未点化的动力连续统；观察者则是该连续统相对于一个初始点和一套运输规则所形成的相对结构。
+
+---
+
+## 35.4 锚点是对称性约化，不是绝对外部输入
+
+设群 \(G\) 连续作用于 \(X\)。未点化系统只保留轨道结构。指定 \(\xi_0\) 后，变换 \(g\in G\) 若要保持观察者身份，必须满足：
+
+\[
+g\xi_0=\xi_0.
+\]
+
+所以锚点把允许对称性从 \(G\) 约化为稳定子：
+
+\[
+G_{\xi_0}
+=
+\{g\in G:g\xi_0=\xi_0\}.
+\]
+
+### 命题 35.5（锚定等价）
+
+两个锚定动力连续统
+
+\[
+(X,\xi_0,\Phi),
+\qquad
+(Y,\eta_0,\Psi)
+\]
+
+等价，当且仅当存在同胚 \(h:X\to Y\)，使：
+
+\[
+h(\xi_0)=\eta_0
+\]
+
+且：
+
+\[
+h(\Phi_t x)=\Psi_t(hx)
+\qquad
+\forall t,x.
+\]
+
+若再有读出和记忆，则还要求：
+
+\[
+q_Y\circ h=q_X
+\]
+
+以及 cocycle／账本结构在 \(h\) 下对应。
+
+因此观察者身份不是裸点，也不是裸流，而是：
+
+\[
+\boxed{
+\text{点化动力系统的共轭类}.
+}
+\]
+
+锚点不必来自连续统之外；它可以是连续统内部一次自定位所选择的基准。但一旦选择，它便产生结构性不对称：
+
+\[
+\boxed{
+\text{这里}
+\neq
+\text{任意其他同构位置}.
+}
+\]
+
+---
+
+## 35.5 叶连续、横截全不连通
+
+观察者连续统的局部模型可以写为：
+
+\[
+\boxed{
+U\cong B^d\times K,
+}
+\]
+
+其中 \(B^d\subseteq\mathbb R^d\) 是连续叶坐标，而 \(K\) 是 Cantor 空间、profinite 群或其他全不连通紧空间。
+
+必须区分：
+
+\[
+\boxed{
+\text{全不连通}
+\neq
+\text{离散}.
+}
+\]
+
+Cantor 空间没有孤立点，因此并非离散空间。但它拥有大量 clopen 集，可以通过有限 clopen 分割产生真正离散的有限读出。
+
+若
+
+\[
+K\cong\varprojlim_m K_m
+\]
+
+是有限离散空间 \(K_m\) 的逆极限，则：
+
+\[
+\boxed{
+\begin{aligned}
+K
+&=\text{完整无限地址},\\
+K_m
+&=\text{第 }m\text{ 层有限离散读出},\\
+\ker(K\to K_m)
+&=\text{当前分辨率仍未看见的横截余量}.
+\end{aligned}
+}
+\]
+
+于是同一个观察者可以同时具有：
+
+\[
+\boxed{
+\begin{aligned}
+u\in B^d
+&:\text{连续位置／相位／尺度},\\
+\kappa\in K
+&:\text{全不连通路径地址},\\
+q_m(\kappa)\in K_m
+&:\text{有限离散事件标签}.
+\end{aligned}
+}
+\]
+
+“连续且离散”真正指的是这种不同层级、不同坐标方向和不同分辨率的共存。
+
+---
+
+## 35.6 悬挂观察者：连续时间中的离散返回
+
+令 \(K\) 为紧致空间，\(T:K\to K\) 为同胚，roof 函数
+
+\[
+r:K\to\mathbb R_{>0}
+\]
+
+连续。定义悬挂空间：
+
+\[
+\boxed{
+\Sigma_{T,r}
+=
+(K\times\mathbb R)/{\sim},
+}
+\]
+
+其中：
+
+\[
+(\kappa,s+r(\kappa))
+\sim
+(T\kappa,s).
+\]
+
+连续流定义为：
+
+\[
+\Phi_t[\kappa,s]
+=
+[\kappa,s+t].
+\]
+
+从商空间整体看，\(\Phi_t\) 连续；但当 \(s+t\) 穿过 roof 边界时，横截地址发生离散更新：
+
+\[
+\kappa\mapsto T\kappa.
+\]
+
+定义 Birkhoff roof 和：
+
+\[
+S_nr(\kappa)
+=
+\sum_{j=0}^{n-1}r(T^j\kappa),
+\qquad
+n\ge1,
+\]
+
+并令 \(S_0r=0\)。
+
+### 命题 35.6（连续时间—离散事件分解）
+
+对每个 \([\kappa,s]\) 和足够一般的 \(t\ge0\)，唯一存在整数 \(n\ge0\) 与残余相位 \(s'\) 使：
+
+\[
+S_nr(\kappa)
+\le
+s+t
+<
+S_{n+1}r(\kappa),
+\]
+
+\[
+s'
+=
+s+t-S_nr(\kappa),
+\]
+
+以及：
+
+\[
+\boxed{
+\Phi_t[\kappa,s]
+=
+[T^n\kappa,s'].
+}
+\]
+
+所以：
+
+\[
+\boxed{
+\text{连续时间}
+=
+\text{累计离散返回时间}
++
+\text{当前叶内残余相位}.
+}
+\]
+
+事件计数 \(n\) 是离散的，残余相位 \(s'\) 是连续的。二者共同构成观察者的时间坐标。
+
+### 定理 35.7（最小 Cantor 悬挂是连通连续统）
+
+若 \(K\) 是紧致度量空间，\(T\) 最小，且 \(r\) 连续严格为正，则 \(\Sigma_{T,r}\) 紧致连通。
+
+#### 证明概要
+
+紧致性来自 \(K\times[0,\max r]\) 的商。选取任意 \(\kappa_0\)，悬挂流轨道在每次返回时经过 \(T^n\kappa_0\)。由于 \(T\) 最小，\(\{T^n\kappa_0\}\) 在 \(K\) 中稠密，故该连续实流轨道在整个悬挂中稠密。轨道是 \(\mathbb R\) 的连续像，因此连通；其闭包即整个悬挂，故悬挂连通。 \(\square\)
+
+这给出一个标准模型：
+
+\[
+\boxed{
+\text{整体是连通连续统，横截动力却由离散迭代生成。}
+}
+\]
+
+---
+
+## 35.7 universal solenoid 是项目内已经存在的原型
+
+仓库中的 universal solenoid 可写为兼容圆坐标族：
+
+\[
+\Sigma_\infty
+=
+\left\{
+(\theta_m)_{m\in\mathbb N_{>0}}:
+n\theta_{mn}=\theta_m
+\right\}.
+\]
+
+其可见投影为：
+
+\[
+\pi:\Sigma_\infty\to\mathbb T,
+\qquad
+\pi(\theta)=\theta_1.
+\]
+
+连续实流为：
+
+\[
+\iota:\mathbb R\to\Sigma_\infty,
+\qquad
+\iota(t)_m=\frac{t}{m}\pmod1.
+\]
+
+仓库已经证明：
+
+\[
+\boxed{
+\pi(\iota(t))=t\pmod1,
+}
+\]
+
+\[
+\boxed{
+\overline{\iota(\mathbb R)}=\Sigma_\infty,
+}
+\]
+
+以及 \(\Sigma_\infty\) 连通。
+
+`ExactSequence` 又证明了相容同余数据嵌入恰好给出隐藏核，并形成：
+
+\[
+\boxed{
+0
+\longrightarrow
+K_\infty
+\longrightarrow
+\Sigma_\infty
+\overset{\pi}{\longrightarrow}
+\mathbb T
+\longrightarrow
+0.
+}
+\]
+
+因此 solenoid 同时具有：
+
+\[
+\boxed{
+\begin{aligned}
+\mathbb T
+&=\text{可见连续相位},\\
+\iota(\mathbb R)
+&=\text{连续叶流},\\
+K_\infty
+&=\text{profinite 隐藏横截},\\
+K_\infty/K^{(m)}
+&=\text{有限同余读出}.
+\end{aligned}
+}
+\]
+
+这不是把观察者放进连续统以后再额外附加离散信息，而是：
+
+\[
+\boxed{
+\text{连续相位与 profinite 地址本来就是同一连通整体的两个结构方向。}
+}
+\]
+
+---
+
+## 35.8 初始坐标的 solenoid 正规形
+
+仓库 `StreamlineDecomposition` 已证明：固定基准时刻 \(t_0\) 和可见相位的一个实代表 \(r_0\) 后，每条连续路径
+
+\[
+\gamma:\mathbb R\to\Sigma_\infty
+\]
+
+唯一分解为：
+
+\[
+\boxed{
+\gamma(t)
+=
+\iota(\widetilde r(t))+k_0,
+}
+\]
+
+其中：
+
+\[
+\widetilde r(t_0)=r_0,
+\]
+
+而：
+
+\[
+k_0\in K_\infty
+\]
+
+在整条路径上保持常值。
+
+所以 solenoid 观察者的初始坐标不是一个标量，而是：
+
+\[
+\boxed{
+(r_0,k_0).
+}
+\]
+
+其中：
+
+\[
+r_0
+=
+\text{连续叶上的归一化提升原点},
+\]
+
+\[
+k_0
+=
+\text{隐藏路径扇区／同余地址}.
+\]
+
+同一可见相位可以拥有不同 \(k_0\)，同一当前 solenoid 点也可能由不同未归一化实提升表达。初始代表 \(r_0\) 消除整数平移规范，隐藏偏移 \(k_0\) 保存路径扇区。
+
+仓库 `ThroatTransitionCocycle` 还证明：若三个局部提升具有相同可见投影，则它们之间的隐藏差
+
+\[
+k_{\alpha\beta},
+\quad
+k_{\beta\gamma},
+\quad
+k_{\alpha\gamma}
+\]
+
+唯一存在，并满足：
+
+\[
+\boxed{
+k_{\alpha\gamma}
+=
+k_{\alpha\beta}
++
+k_{\beta\gamma}.
+}
+\]
+
+所以不同观察坐标图之间的隐藏转换不是任意误差，而是一个严格的加法 cocycle。
+
+---
+
+## 35.9 路径身份不能由当前状态自动恢复
+
+仓库 `RealFlowRecurrence` 已证明：
+
+\[
+\boxed{
+\iota(n!)\longrightarrow0
+\quad
+\text{于 }\Sigma_\infty,
+}
+\]
+
+但：
+
+\[
+n!\longrightarrow+\infty
+\quad
+\text{于 }\mathbb R.
+\]
+
+同时 \(\iota\) 为单射但不是拓扑嵌入。
+
+这意味着内部时间可以无限增长，而当前整体状态重新任意接近初始状态。
+
+### 定理 35.8（回归轨道无连续年龄函数）
+
+设 \(X\) 为拓扑空间，\(\Phi_t\) 为连续流，且存在：
+
+\[
+t_n\to+\infty,
+\qquad
+\Phi_{t_n}(x_0)\to x_0.
+\]
+
+则不存在连续函数：
+
+\[
+a:X\to\mathbb R
+\]
+
+满足：
+
+\[
+a(\Phi_t(x_0))=t
+\qquad
+\forall t\ge0.
+\]
+
+#### 证明
+
+若存在，则连续性给出：
+
+\[
+a(\Phi_{t_n}(x_0))
+\to
+a(x_0).
+\]
+
+但左侧等于 \(t_n\to+\infty\)，矛盾。 \(\square\)
+
+因此：
+
+\[
+\boxed{
+\text{当前 ambient state}
+\not\Rightarrow
+\text{连续可恢复的绝对年龄}.
+}
+\]
+
+若观察者必须区分：
+
+\[
+\iota(0)
+\]
+
+与某个极晚但已经回到其邻域的：
+
+\[
+\iota(n!),
+\]
+
+则必须扩展状态：
+
+\[
+\boxed{
+\widetilde X
+=
+X\times\mathcal M
+}
+\]
+
+或使用覆盖、路径群胚、cocycle／账本来保存提升坐标。
+
+---
+
+## 35.10 记忆是 cocycle，不只是存储数组
+
+设流 \(\Phi_t\) 上有加法 cocycle：
+
+\[
+c:\mathbb R\times X\to G
+\]
+
+满足：
+
+\[
+\boxed{
+c_{s+t}(x)
+=
+c_s(\Phi_t x)+c_t(x).
+}
+\]
+
+观察者的扩展动力学可以写成 skew product：
+
+\[
+\boxed{
+\widetilde\Phi_t(x,m)
+=
+(\Phi_t x,m+c_t(x)).
+}
+\]
+
+若存在连续函数 \(h:X\to G\)，使：
+
+\[
+c_t(x)
+=
+h(\Phi_t x)-h(x),
+\]
+
+则 \(c\) 是 coboundary，记忆可以由当前状态势函数 \(h\) 重构。
+
+### 命题 35.9（回归阻碍 coboundary 化）
+
+若存在：
+
+\[
+t_n\to\infty,
+\qquad
+\Phi_{t_n}(x)\to x,
+\]
+
+但：
+
+\[
+c_{t_n}(x)\not\to0,
+\]
+
+则不存在连续 \(h\) 使 \(c_t(x)=h(\Phi_t x)-h(x)\)。
+
+#### 证明
+
+若存在连续 \(h\)，则：
+
+\[
+c_{t_n}(x)
+=
+h(\Phi_{t_n}x)-h(x)
+\to0,
+\]
+
+矛盾。 \(\square\)
+
+所以：
+
+\[
+\boxed{
+\text{不可 coboundary 化的 cocycle}
+=
+\text{不能由当前状态压缩掉的历史余量}.
+}
+\]
+
+这给“记忆”的一个结构定义：
+
+\[
+\boxed{
+\text{记忆是初始坐标沿路径运输所累积、且不能降为当前状态函数的 cocycle 类。}
+}
+\]
+
+---
+
+## 35.11 同一点附近可以有完全不同的历史
+
+设：
+
+\[
+\pi:\widetilde X\to X
+\]
+
+为路径提升或记忆扩展。两个扩展状态：
+
+\[
+\widetilde x,
+\widetilde y\in\widetilde X
+\]
+
+可能满足：
+
+\[
+\pi(\widetilde x)=\pi(\widetilde y),
+\]
+
+但：
+
+\[
+\widetilde x\neq\widetilde y.
+\]
+
+因此：
+
+\[
+\boxed{
+\text{当前可见状态相同}
+\not\Rightarrow
+\text{观察者历史状态相同}.
+}
+\]
+
+更强地，即使：
+
+\[
+d_X(\pi\widetilde x,\pi\widetilde y)\ll1,
+\]
+
+提升距离、事件计数或账本差仍可以很大。
+
+所以观察者本身若只取为 \(X\)，可能不足以保存其身份；真正的观察者状态应取为某个最小扩展：
+
+\[
+\boxed{
+\widetilde X_{\mathrm{obs}}
+}
+\]
+
+使目标历史量、事件量与路径扇区在该扩展上成为良定义坐标。
+
+这与前文“预测闭包是把瞬时商修复成动力学商的最小扩张”完全平行：
+
+\[
+\boxed{
+\begin{aligned}
+\text{预测闭包}
+&=\text{补足未来读出所需坐标},\\
+\text{提升闭包}
+&=\text{补足路径身份所需坐标},\\
+\text{记忆闭包}
+&=\text{补足不可 coboundary 化历史所需坐标}.
+\end{aligned}
+}
+\]
+
+---
+
+## 35.12 概率不是连续—离散双性的定义
+
+给定观察者连续统 \(X\)、状态测度 \(\mu\) 和有限读出：
+
+\[
+q:X\to A,
+\]
+
+其中 \(A\) 有限，离散结果概率为：
+
+\[
+\boxed{
+p(a)=\mu(q^{-1}(a)).
+}
+\]
+
+所以概率来自三者配对：
+
+\[
+\boxed{
+\text{连续／拓扑状态空间}
++
+\text{状态测度}
++
+\text{有限分割}.
+}
+\]
+
+离散横截或有限事件标签本身并不自动给出概率；还需要状态或不变测度。
+
+同样，离散输出不自动产生正熵。一个离散序列可以：
+
+- 周期且零熵；
+- 非周期但零熵；
+- 正熵；
+- 甚至没有指定概率测度时根本没有 Shannon 熵。
+
+因此：
+
+\[
+\boxed{
+\text{离散}
+\neq
+\text{随机}
+\neq
+\text{正熵}.
+}
+\]
+
+黄金／Sturmian 系统恰好提供“非周期离散但零熵”的反例。
+
+---
+
+## 35.13 黄金整数：一个代数操作同时扩张与收缩
+
+令：
+
+\[
+\varphi=\frac{1+\sqrt5}{2},
+\qquad
+\varphi'=1-\varphi=-\varphi^{-1}.
+\]
+
+黄金整数环：
+
+\[
+\mathbb Z[\varphi]
+=
+\{a+b\varphi:a,b\in\mathbb Z\}
+\]
+
+拥有两个实嵌入。Minkowski 嵌入为：
+
+\[
+\boxed{
+\iota_M(x)
+=
+(x,x'),
+}
+\]
+
+其中 \(x'\) 由 \(\varphi\mapsto\varphi'\) 得到。
+
+乘以 \(\varphi\) 在两个坐标中作用为：
+
+\[
+\boxed{
+(x,x')
+\longmapsto
+(\varphi x,-\varphi^{-1}x').
+}
+\]
+
+所以同一个代数单位同时产生：
+
+\[
+\boxed{
+\text{物理方向的连续扩张}
+}
+\]
+
+与：
+
+\[
+\boxed{
+\text{内部方向的翻转收缩}.
+}
+\]
+
+这不是把一个连续操作与另一个离散操作人为并置，而是一个整数代数自同构在两个实嵌入中的不同几何表现。
+
+仓库 `MinkowskiModelSet` 已把这一结构实现为：
+
+\[
+x
+\longmapsto
+(\operatorname{embedding}(x),
+\operatorname{embedding}(\operatorname{conj}x)),
+\]
+
+并通过内部窗口选择物理投影上的离散模型集。
+
+---
+
+## 35.14 Fibonacci 替换的连续—离散谱分解
+
+定义 Fibonacci 替换：
+
+\[
+\sigma(L)=LS,
+\qquad
+\sigma(S)=L.
+\]
+
+其计数矩阵为：
+
+\[
+\boxed{
+M_\varphi
+=
+\begin{pmatrix}
+1&1\\
+1&0
+\end{pmatrix}.
+}
+\]
+
+特征值为：
+
+\[
+\boxed{
+\lambda_+=\varphi,
+\qquad
+\lambda_-=-\varphi^{-1}.
+}
+\]
+
+若初始计数向量为 \(v_0\)，则：
+
+\[
+v_n=M_\varphi^nv_0.
+\]
+
+将 \(v_0\) 分解到两个特征方向：
+
+\[
+v_0=au_++bu_-,
+\]
+
+得到：
+
+\[
+\boxed{
+v_n
+=
+a\varphi^nu_+
++
+b(-\varphi^{-1})^nu_-.
+}
+\]
+
+按主尺度归一化：
+
+\[
+\boxed{
+\varphi^{-n}v_n
+=
+au_+
++
+b(-1)^n\varphi^{-2n}u_-.
+}
+\]
+
+所以离散整数替换的归一化余量按：
+
+\[
+\boxed{
+\varphi^{-2n}
+}
+\]
+
+指数收缩并交替翻转。
+
+这给“黄金比例同时连续又离散”的严格解释：
+
+\[
+\boxed{
+\text{离散替换矩阵}
+\quad\text{拥有}\quad
+\text{连续扩张特征方向与共轭收缩特征方向}.
+}
+\]
+
+黄金比例不是唯一具有这种现象的代数单位，但它是最简单的二次 Pisot 单位模型之一。
+
+---
+
+## 35.15 黄金单位分割是跨尺度的精确守恒式
+
+仓库 `GoldenPartition` 已证明，对每个 \(n\)：
+
+\[
+\boxed{
+F_{n+1}\varphi^{-n}
++
+F_n\varphi^{-(n+1)}
+=
+1.
+}
+\]
+
+这可以读成两个相邻离散计数与两个相邻连续尺度的精确配对：
+
+\[
+\boxed{
+\text{整数权重}
+\times
+\text{连续逆尺度}
+=
+\text{单位总量}.
+}
+\]
+
+它不是渐近式，而是每层严格成立。
+
+因此可以定义两项权重：
+
+\[
+p_n^{(L)}
+=
+F_{n+1}\varphi^{-n},
+\]
+
+\[
+p_n^{(S)}
+=
+F_n\varphi^{-(n+1)},
+\]
+
+满足：
+
+\[
+p_n^{(L)}+p_n^{(S)}=1.
+\]
+
+这并不自动把它们解释成物理 Born 概率；它们首先是一个精确正分割。只有在额外给出状态、事件和操作解释后，才可以把该分割当作概率坐标。
+
+---
+
+## 35.16 Fibonacci 悬挂观察者
+
+令 \(K_F\) 为 Fibonacci 双边子移位闭包，\(T\) 为左移。取 roof：
+
+\[
+r(\kappa)
+=
+\begin{cases}
+\varphi,&\kappa_0=L,\\
+1,&\kappa_0=S.
+\end{cases}
+\]
+
+对应悬挂：
+
+\[
+\Sigma_F
+=
+(K_F\times\mathbb R)/{\sim}
+\]
+
+可以解释为带标记原点的一维 Fibonacci tiling hull。
+
+此时：
+
+\[
+\boxed{
+\begin{aligned}
+\kappa
+&=\text{离散双向 tile 地址},\\
+s
+&=\text{原点在当前 tile 内的连续位置},\\
+\xi_0=[\kappa_0,s_0]
+&=\text{带初始 tile 与叶内相位的观察者原点}.
+\end{aligned}
+}
+\]
+
+平移流连续移动原点；穿过 tile 边界时，符号地址离散移位。
+
+所以：
+
+\[
+\boxed{
+\text{观察者当前坐标}
+=
+\text{连续 tile 内相位}
++
+\text{离散／Cantor tile 历史}.
+}
+\]
+
+Fibonacci inflation 进一步把 tile 长度乘以 \(\varphi\)，同时按 \(\sigma\) 替换 tile 类型，从而把：
+
+\[
+\boxed{
+\text{连续空间缩放}
+}
+\]
+
+与：
+
+\[
+\boxed{
+\text{离散符号替换}
+}
+\]
+
+锁定在同一个重整化操作中。
+
+---
+
+## 35.17 黄金机械词：连续相位产生非周期离散事件
+
+取无理斜率：
+
+\[
+\alpha=\varphi^{-2}.
+\]
+
+对初始相位 \(\theta\in\mathbb R\)，定义：
+
+\[
+\boxed{
+w_n(\theta)
+=
+\lfloor\theta+(n+1)\alpha\rfloor
+-
+\lfloor\theta+n\alpha\rfloor.
+}
+\]
+
+由于 \(0<\alpha<1\)，有：
+
+\[
+w_n(\theta)\in\{0,1\}.
+\]
+
+### 定理 35.10（有界余量事件计数）
+
+对每个 \(N\ge1\)：
+
+\[
+\boxed{
+\sum_{n=0}^{N-1}w_n(\theta)
+=
+\lfloor\theta+N\alpha\rfloor
+-
+\lfloor\theta\rfloor.
+}
+\]
+
+从而：
+
+\[
+\boxed{
+\left|
+\sum_{n=0}^{N-1}w_n(\theta)
+-
+N\alpha
+\right|
+<1.
+}
+\]
+
+#### 证明
+
+求和望远镜：
+
+\[
+\sum_{n=0}^{N-1}
+\left(
+\lfloor\theta+(n+1)\alpha\rfloor
+-
+\lfloor\theta+n\alpha\rfloor
+\right)
+=
+\lfloor\theta+N\alpha\rfloor-\lfloor\theta\rfloor.
+\]
+
+再利用任意实数 \(x\) 满足 \(x-1<\lfloor x\rfloor\le x\)。 \(\square\)
+
+因此：
+
+\[
+\boxed{
+\text{离散事件数}
+=
+\text{连续黄金斜率}\times N
++
+\text{绝对值小于一个事件的余量}.
+}
+\]
+
+这比“离散频率趋近连续比例”更强：误差不随 \(N\) 增长。
+
+---
+
+## 35.18 有限未来局部稳定，无限未来持续要求坐标 refinement
+
+定义前 \(N\) 个符号所涉及的边界集合：
+
+\[
+B_N
+=
+\{-n\alpha\bmod1:0\le n\le N\}.
+\]
+
+### 命题 35.11（有限前缀局部常值）
+
+若：
+
+\[
+\theta\notin B_N,
+\]
+
+则存在 \(\varepsilon_N(\theta)>0\)，使：
+
+\[
+|\theta'-\theta|_{\mathbb T}<\varepsilon_N(\theta)
+\]
+
+推出：
+
+\[
+\boxed{
+w_n(\theta')=w_n(\theta)
+\qquad
+0\le n<N.
+}
+\]
+
+#### 证明
+
+每个 \(w_n\) 只在：
+
+\[
+\theta=-n\alpha
+\quad\text{或}\quad
+\theta=-(n+1)\alpha
+\pmod1
+\]
+
+处改变。有限多个边界之外，到边界集合的距离为正；在该半径内所有相关 floor 分支保持不变。 \(\square\)
+
+但因为 \(\alpha\) 无理，边界轨道：
+
+\[
+\{-n\alpha\bmod1:n\ge0\}
+\]
+
+在圆上稠密。
+
+### 推论 35.12（无统一无限未来稳定半径）
+
+对任意 \(\theta\) 和任意邻域 \(U\ni\theta\)，存在 \(\theta'\in U\) 与某个 \(n\) 使：
+
+\[
+w_n(\theta')\neq w_n(\theta).
+\]
+
+所以：
+
+\[
+\boxed{
+\forall N<\infty,
+\text{有限未来拥有局部稳定坐标精度};
+}
+\]
+
+但：
+
+\[
+\boxed{
+\text{整个无限未来一般没有正的统一稳定半径}.
+}
+\]
+
+这不是指数混沌。底层圆旋转满足：
+
+\[
+d(R_\alpha^n\theta,R_\alpha^n\theta')
+=
+d(\theta,\theta')
+\]
+
+而不产生指数分离。未来符号分叉来自读出边界的稠密前像。
+
+因此：
+
+\[
+\boxed{
+\text{预测逃逸可以来自界面边界，而不来自底层动力学的不稳定。}
+}
+\]
+
+---
+
+## 35.19 黄金系统说明“离散非周期”不等于熵增
+
+Sturmian／Fibonacci 符号系统的长度 \(N\) 因子复杂度为：
+
+\[
+\boxed{
+p(N)=N+1.
+}
+\]
+
+因此其拓扑熵为：
+
+\[
+h_{\mathrm{top}}
+=
+\lim_{N\to\infty}\frac1N\log p(N)
+=
+0.
+\]
+
+所以它同时具备：
+
+\[
+\boxed{
+\text{离散}
++
+\text{非周期}
++
+\text{无限新前缀}
++
+\text{零熵}.
+}
+\]
+
+这对前文的熵解释是一个重要边界：
+
+\[
+\boxed{
+\text{离散事件持续出现}
+\not\Rightarrow
+\text{每单位时间持续产生正熵}.
+}
+\]
+
+观察者的离散记录可以是高度有序的几何编码，而不是随机噪声。
+
+---
+
+## 35.20 初始坐标是对角化得以类型化的条件之一
+
+一般对角化需要一个评价表：
+
+\[
+E:A\times A\to Y.
+\]
+
+第一坐标表示描述者地址，第二坐标表示对象地址。对角映射：
+
+\[
+\delta_A(a)=(a,a)
+\]
+
+要求能够识别“描述者地址”和“被描述对象地址”中的同一个 \(a\)。
+
+在未点化、完全对称的连续统中，没有规范理由选择某一点或某一地址作为“我”。锚点和坐标架提供了这种识别：
+
+\[
+\boxed{
+\text{初始坐标使自坐标读取成为良定义操作。}
+}
+\]
+
+但这并不消除对角逃逸。若 \(\tau:Y\to Y\) 无不动点，则：
+
+\[
+\Delta_\tau(E)(a)
+=
+\tau(E(a,a))
+\]
+
+仍不能出现在 \(E\) 的任一行中。
+
+所以：
+
+\[
+\boxed{
+\text{锚点使“自我指涉”可定义；
+对角化证明同层自我描述仍不能穷尽。}
+}
+\]
+
+观察者成为连续统，并不会让 Cantor–Lawvere 型不完备性消失。
+
+---
+
+## 35.21 连续叶上的离散对角读出需要界面
+
+若 \(A\) 连通，\(Y\) 离散，并且：
+
+\[
+E:A\times A\to Y
+\]
+
+连续，则 \(A\times A\) 连通，故 \(E\) 必为常值。
+
+因此非平凡离散自指表不可能同时是：
+
+\[
+\boxed{
+\text{连通叶上的全局连续离散值函数}.
+}
+\]
+
+它必须来自：
+
+- 横截 Cantor 地址；
+- clopen 有限分割；
+- 阈值／界面；
+- 非连续符号编码；
+- 概率 effect 后的抽样；
+- 或更高层的记录账本。
+
+这与前文“连续空间不能通过非平凡连续确定映射直接产生离散标签”一致。
+
+所以锚定连续统观察者的对角层应写成：
+
+\[
+\boxed{
+\text{连续载体}
+\longrightarrow
+\text{横截／界面／记录地址}
+\longrightarrow
+\text{离散自评价}.
+}
+\]
+
+---
+
+## 35.22 观察者的五重闭包升级
+
+本节定义：
+
+\[
+\boxed{
+\mathbf{Cl}(\mathfrak O)
+=
+(
+\mathrm{Cl}_{\mathrm{anchor}},
+\mathrm{Cl}_{\mathrm{orbit}},
+\mathrm{Cl}_{\mathrm{pred}},
+\mathrm{Cl}_{\mathrm{lift}},
+\mathrm{Cl}_{\mathrm{record}},
+\mathrm{Cl}_{\mathrm{self}}
+).
+}
+\]
+
+其中：
+
+\[
+\mathrm{Cl}_{\mathrm{anchor}}
+=
+\text{初始原点与坐标架是否在转换中保持};
+\]
+
+\[
+\mathrm{Cl}_{\mathrm{orbit}}
+=
+\text{初始点的轨道闭包生成多大的连续统};
+\]
+
+\[
+\mathrm{Cl}_{\mathrm{pred}}
+=
+\text{为预测全部未来读出需补足哪些坐标};
+\]
+
+\[
+\mathrm{Cl}_{\mathrm{lift}}
+=
+\text{为区分回归路径需补足哪些提升变量};
+\]
+
+\[
+\mathrm{Cl}_{\mathrm{record}}
+=
+\text{哪些 cocycle／事件历史不能压成当前状态函数};
+\]
+
+\[
+\mathrm{Cl}_{\mathrm{self}}
+=
+\text{同层自评价是否存在对角逃逸}.
+\]
+
+它们互不自动推出：
+
+\[
+\boxed{
+\text{轨道稠密}
+\not\Rightarrow
+\text{读出层析完备};
+}
+\]
+
+\[
+\boxed{
+\text{未来读出完备}
+\not\Rightarrow
+\text{路径提升完备};
+}
+\]
+
+\[
+\boxed{
+\text{路径提升完备}
+\not\Rightarrow
+\text{记录可以删除};
+}
+\]
+
+\[
+\boxed{
+\text{完整记录历史}
+\not\Rightarrow
+\text{同层自描述完备}.
+}
+\]
+
+因此观察者没有一个单标量的“完整度”。
+
+---
+
+## 35.23 与量子观察者的关系
+
+量子状态空间本身可以是连续凸集，测量结果却是有限离散标签。两者之间由 effect／投影与状态评价连接：
+
+\[
+p_i=\operatorname{Tr}(\rho E_i).
+\]
+
+这与本节的叶—横截结构有形式相似性：
+
+\[
+\text{连续状态}
+\to
+\text{有限读出}.
+\]
+
+但不能直接把量子测量结果识别为某个 Cantor 横截坐标。量子 contextuality、非交换可观测代数和复振幅相干具有额外结构。
+
+本节提供的真正桥是：
+
+\[
+\boxed{
+\text{观察者可以拥有连续状态载体，
+同时通过有限上下文产生离散记录；
+离散记录不要求观察者本体是离散对象。}
+}
+\]
+
+而路径记忆扩展与量子记录账本都可使用 cocycle／skew-product 语言，但二者的物理解释不能混同。
+
+---
+
+## 35.24 与经济观察者的关系
+
+经济状态、价格、库存和资产负债表可以连续变化；成交、结算、违约、margin call 和政策事件则具有离散边界。
+
+numeraire 与初始财富给出经济坐标架，交易历史与合同账本保存路径依赖。两个具有相同当前价格和总量的系统，可能因债务网络或历史合同不同而具有不同未来。
+
+所以经济观察者也可以写成：
+
+\[
+\boxed{
+\text{连续价格／状态叶}
++
+\text{离散合同／结算横截}
++
+\text{初始 numeraire 与账本锚点}.
+}
+\]
+
+但这不是说经济系统就是 solenoid 或 Fibonacci 悬挂。这里的共同点仅是“连续状态 + 离散事件 + 路径账本”的类型结构。
+
+---
+
+## 35.25 可能的新研究中心：锚定完成而非裸观察
+
+成熟理论已经分别研究：
+
+- 点化拓扑空间和点化动力系统；
+- Cantor 最小系统及其悬挂；
+- weak solenoid 与 matchbox manifold；
+- substitution tiling hull；
+- Sturmian／Fibonacci 编码；
+- cocycle 与 cohomology；
+- 覆盖空间、holonomy 和路径群胚；
+- 对角化与固定点障碍。
+
+候选的新贡献不应宣称这些单项首次出现，而应集中在以下统一对象：
+
+\[
+\boxed{
+\text{锚定连续统}
++
+\text{有限读出商}
++
+\text{预测闭包}
++
+\text{路径提升闭包}
++
+\text{记录 cocycle}
++
+\text{对角自描述审计}.
+}
+\]
+
+特别值得形式化的定量问题是：
+
+1. **坐标稳定半径**
+   \[
+   \varepsilon_N(\xi)
+   =
+   \text{保持前 }N\text{ 个事件不变的最大初始坐标半径};
+   \]
+
+2. **首次逃逸深度**
+   \[
+   \tau(\xi,\xi')
+   =
+   \min\{n:q(\Phi_n\xi)\neq q(\Phi_n\xi')\};
+   \]
+
+3. **提升余量**
+   \[
+   r_{\mathrm{lift}}
+   =
+   \text{当前状态无法恢复的 cocycle 类};
+   \]
+
+4. **锚定自然性缺陷**
+   \[
+   \partial_{\xi_0}(F)
+   =
+   d\bigl(
+   F(\xi_0),
+   \xi_0'
+   \bigr);
+   \]
+
+5. **自描述缺陷**
+   \[
+   \partial^\Delta_O
+   =
+   Q_O\Delta-\Delta_O P_O.
+   \]
+
+这五个量分别测量有限预测、路径记忆、坐标运输与自指闭合，不能被单一熵或单一距离替代。
+
+---
+
+## 35.26 建议 Lean 形式化模块
+
+建议按下列顺序推进。
+
+1. `ConnectedDiscreteSubsingleton`
+   \[
+   \text{Connected }X\land\text{Discrete }X
+   \Rightarrow
+   \operatorname{Subsingleton}X.
+   \]
+
+2. `OrbitClosureIsContinuum`
+   连续实流单轨道闭包的紧致连通性。
+
+3. `MinimalFlowOrbitClosure`
+   最小流中任意轨道闭包等于全空间。
+
+4. `PointedConjugacy`
+   点化动力系统共轭及其等价关系。
+
+5. `SuspensionReturnDecomposition`
+   \[
+   \Phi_t[\kappa,s]=[T^n\kappa,s'].
+   \]
+
+6. `MinimalCantorSuspensionConnected`
+   最小 Cantor 系统悬挂的连通性。
+
+7. `ProfiniteReadoutInverseLimit`
+   完整横截与有限离散商的逆极限关系。
+
+8. `RecurrenceNoContinuousAge`
+   无界回归排除连续绝对年龄函数。
+
+9. `CocycleRecurrenceNotCoboundary`
+   非消失回归 cocycle 排除连续势函数。
+
+10. `GoldenMinkowskiScaling`
+    \[
+    (x,x')\mapsto(\varphi x,-\varphi^{-1}x').
+    \]
+
+11. `FibonacciSubstitutionSpectrum`
+    \[
+    \operatorname{spec}M_\varphi
+    =
+    \{\varphi,-\varphi^{-1}\}.
+    \]
+
+12. `NormalizedFibonacciResidual`
+    \[
+    \varphi^{-n}M_\varphi^nv
+    =
+    au_++b(-1)^n\varphi^{-2n}u_-.
+    \]
+
+13. `MechanicalWordTelescoping`
+    \[
+    \sum_{n<N}w_n
+    =
+    \lfloor\theta+N\alpha\rfloor-\lfloor\theta\rfloor.
+    \]
+
+14. `MechanicalWordDiscrepancy`
+    \[
+    \left|\sum_{n<N}w_n-N\alpha\right|<1.
+    \]
+
+15. `FinitePrefixLocallyConstant`
+    远离有限边界集合时，长度 \(N\) 编码局部常值。
+
+16. `AnchoredDiagonalTyping`
+    锚点／地址识别如何诱导自坐标评价。
+
+17. `ContinuousDiscreteDiagonalNoGo`
+    连通定义域到离散值域的连续评价表只能常值。
+
+其中 Sturmian 因子复杂度、完整 Fibonacci tiling hull 识别与一般 matchbox manifold 理论，应通过具名经典来源或后续独立形式化接入，不得作为无名公理使用。
+
+---
+
+## 35.27 最终统一式
+
+本节把观察者从“连续统内部的一个对象”升级为：
+
+\[
+\boxed{
+\text{观察者}
+=
+\text{连续统对自身选择初始原点以后，
+沿动力学运输该原点关系并保存不可压缩历史的结构}.
+}
+\]
+
+其连续性来自：
+
+\[
+\boxed{
+\text{叶流、相位、尺度与状态的连续运输}.
+}
+\]
+
+其离散性来自：
+
+\[
+\boxed{
+\text{横截地址、有限同余、边界穿越、事件编号与账本记录}.
+}
+\]
+
+其初始坐标来自：
+
+\[
+\boxed{
+\text{点化}
++
+\text{局部坐标架}
++
+\text{路径提升归一化}.
+}
+\]
+
+其记忆来自：
+
+\[
+\boxed{
+\text{不能被当前状态函数吸收的 cocycle 类}.
+}
+\]
+
+其黄金性质来自：
+
+\[
+\boxed{
+\text{同一个整数代数操作在物理嵌入中扩张，
+在共轭嵌入中翻转收缩，
+并以 Fibonacci 离散替换实现连续尺度自相似}.
+}
+\]
+
+其自我限制来自：
+
+\[
+\boxed{
+\text{锚点使自坐标读取可定义，
+但对角化仍证明同层自描述不能穷尽}.
+}
+\]
+
+所以最凝练的结论是：
+
+\[
+\boxed{
+\text{观察者不是连续统之外观看连续统的点；
+观察者可以是连续统被点化、带架、提升并记忆以后形成的自相对结构}.
+}
+\]
+
+以及：
+
+\[
+\boxed{
+\text{“连续且离散”不是逻辑矛盾，
+而是叶方向、横截方向、有限商和事件账本属于不同类型的陈述}.
+}
+\]
+
+---
+
+## 35.28 参考接口与严格非主张
+
+参考接口：
+
+- W. H. Gottschalk and G. A. Hedlund, *Topological Dynamics*, 1955.
+- M. Barge and B. Diamond, substitution tiling spaces and inverse-limit models.
+- L. Sadun, *Topology of Tiling Spaces*, 2008.
+- M. Queffélec, *Substitution Dynamical Systems—Spectral Analysis*.
+- J. Bellissard, D. Herrmann and M. Zarrouati, hulls of aperiodic solids and transversal structures.
+- S. Hurder and collaborators, matchbox manifolds and weak solenoids.
+- M. Lothaire, *Algebraic Combinatorics on Words*, Sturmian and mechanical words.
+- 仓库接口：
+  `D5/S1/Dynamics/UniversalSolenoid.lean`,
+  `D5/S1/Solenoid/ExactSequence.lean`,
+  `D5/S1/Solenoid/StreamlineDecomposition.lean`,
+  `D5/S1/Solenoid/PathOrbitClassification.lean`,
+  `D5/S1/Solenoid/RealFlowRecurrence.lean`,
+  `D5/S1/Solenoid/ThroatTransitionCocycle.lean`,
+  `D5/S1/Scale/MinkowskiModelSet.lean`,
+  `D5/S1/Recurrence/GoldenPartition.lean`.
+
+严格非主张：
+
+1. 本节不声称一个非平凡空间可在同一拓扑下同时连通且离散。
+2. 本节不把全不连通 Cantor 横截称为离散拓扑空间。
+3. 本节不声称所有观察者都必须是 solenoid、悬挂流或 tiling hull。
+4. 本节不把路径记忆等同于人类意识或心理记忆的完整理论。
+5. 本节不从轨道稠密推出任何单个有限读出已经完备。
+6. 本节不把当前状态回归解释成物理时间倒流。
+7. 本节不把不可 coboundary 化的 cocycle 自动解释成主观自我。
+8. 本节不把黄金比例视为连续—离散双结构的唯一代数来源。
+9. 本节不把 Fibonacci 正分割自动解释成 Born 概率。
+10. 本节不把 Sturmian 零熵解释成没有信息内容或没有无限新结构。
+11. 本节不把有限前缀稳定解释成无限未来存在统一稳定半径。
+12. 本节不把符号分叉解释成底层流的指数混沌。
+13. 本节不把量子测量结果直接识别为 solenoid 的 profinite 横截。
+14. 本节不把经济交易事件直接识别为 Fibonacci substitution。
+15. 本节不声称锚点消除了 Cantor–Lawvere 型对角逃逸。
+16. 本节新增定理均为纸面推导；未经 Lean kernel 验证不得标记为 `Closed`。

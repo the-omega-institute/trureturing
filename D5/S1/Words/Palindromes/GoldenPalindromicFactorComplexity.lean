@@ -388,13 +388,16 @@ private theorem palindromic_factor_card_mod_two (n : Nat) :
     simpa using goldenFactorReverse_sq n
   have hmod := Equiv.Perm.card_fixedPoints_modEq
     (p := 2) (n := 1) (f := goldenFactorReverse n) hpow
+  simp only [Fintype.card_eq_nat_card] at hmod
   have hfixed :
-      Fintype.card (Function.fixedPoints (goldenFactorReverse n)) =
+      Nat.card (Function.fixedPoints (goldenFactorReverse n)) =
         (goldenPalindromicFactorSet n).card := by
     calc
-      Fintype.card (Function.fixedPoints (goldenFactorReverse n)) =
-          Fintype.card ↥(goldenPalindromicFactorSet n) :=
-        Fintype.card_congr (reverseFixedPointsEquiv n)
+      Nat.card (Function.fixedPoints (goldenFactorReverse n)) =
+          Nat.card ↥(goldenPalindromicFactorSet n) :=
+        Nat.card_congr (reverseFixedPointsEquiv n)
+      _ = Fintype.card ↥(goldenPalindromicFactorSet n) :=
+        Nat.card_eq_fintype_card
       _ = (goldenPalindromicFactorSet n).card := Fintype.card_coe _
   rw [hfixed] at hmod
   simpa using hmod.symm

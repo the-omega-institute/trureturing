@@ -1,0 +1,61 @@
+### 定理 28.15（正交基诱导的超限商余塔）
+
+设
+\[
+\dim_{\mathrm H}\mathscr H=\kappa
+\]
+为无限基数，并选择以初始序数 \(\kappa\) 编号的正交规范基
+\[
+(e_\alpha)_{\alpha<\kappa}.
+\]
+对 \(\alpha\le\kappa\) 定义
+\[
+S_\alpha
+=
+\overline{\operatorname{span}}
+\{e_\beta:\beta<\alpha\},
+\]
+\[
+R_\alpha=S_\alpha^\perp.
+\]
+则：
+
+1. 后继阶段
+   \[
+   \boxed{
+   R_\alpha
+   =
+   \mathbb K e_\alpha
+   \oplus
+   R_{\alpha+1};
+   }
+   \]
+2. 极限序数 \(\lambda\le\kappa\) 满足
+   \[
+   \boxed{
+   S_\lambda
+   =
+   \overline{\bigcup_{\alpha<\lambda}S_\alpha},
+   \qquad
+   R_\lambda
+   =
+   \bigcap_{\alpha<\lambda}R_\alpha;
+   }
+   \]
+3. 对每个 \(\alpha<\kappa\)：
+   \[
+   \boxed{
+   \dim_{\mathrm H}R_\alpha=\kappa,
+   }
+   \]
+   因而
+   \[
+   R_\alpha\cong\mathscr H;
+   \]
+4. 最终
+   \[
+   \boxed{
+   R_\kappa=0.
+   }
+   \]
+

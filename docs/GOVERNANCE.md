@@ -23,8 +23,8 @@ P1 数据成熟阈统一为:目标 cohort × workload × kind × stage 至少有
 
 | 候选 | 启动条件(P1 数据成熟后另须满足) | 待验证预测 | 收据边界 |
 |---|---|---|---|
-| 判官树缓存 | `setup`/`build-judge` 同栏 p95 合计至少占 gate p95 的 10%,且绝对值 ≥60s;能以精确 base commit、toolchain 与 judge tree 内容地址证明失效边界 | 缓存命中降低判官准备 p95 ≥20%,不改变 base-owned judge 身份 | before/after 同 cohort 与 cache_state 分栏;附缓存地址、命中判据、失效攻击案及完整 gate rc |
-| lake cache 持久化 | `lean-reports` 同栏 p95 ≥120s,且 warm/cold 分栏显示持久化可解释的 ≥20% 差值;磁盘保留预算和淘汰策略已登记 | 跨 run 持久化降低 `lean-reports` p95 ≥20%,不复用输入地址不等的产物 | before/after 同 cohort、同 report input address;附磁盘峰值/余量、淘汰收据与错误命中反例 |
-| corpus 并行评估 | `conservative` 同栏 p95 ≥120s 且占 gate p95 ≥20%;host_concurrency/loadavg_per_cpu 表明至少两个稳定执行槽;每案独立性与输出排序已由确定性测试证明 | 有界并行降低 conservative p95 ≥20%,逐案结果与 canonical certificate bytes 不变 | before/after 同 cohort、同 corpus 地址与并发档;附串并行 byte-equality、峰值 RSS/fd 与失败取消语义 |
+| 判官树缓存 | 〔勘注 2026-08-15:已落地——CI 判官/Scribe 发布目录按内容地址缓存(`.github/workflows/ci.yml` judge-cache,key 为 base 侧表达式对候选 tools 闭包的 hashFiles;admission 与 lean-inspect restore);原「不改变 base-owned judge 身份」前提随候选自判(2026-08-13)失效。before/after 收据未按 A21 P2 形式结案,状态记「实验」(实现已存在、收益未结案),由待启动候选转为未结案实验;落地路径为 CI 关键路径 PR,非经本表 P1 启动。〕 | — | — |
+| lake cache 持久化 | 〔勘注 2026-08-15:已落地——`.lake` 经 actions/cache restore-keys 前缀回退跨 SHA 复用(`ci.yml` 中 path 含 `candidate/.lake` 的 restore 步及其 dev push save 步);同上,状态记「实验」(收益未按 P2 结案)。〕 | — | — |
+| corpus 并行评估 | 〔勘注 2026-08-15:启动条件不可满足——`conservative` 阶段随保守扩展重放机器于 2026-08-12 整体退役,gate 已无该栏;候选关闭(不进入实验)。〕 | — | — |
 
 候选一次只允许启动一个。结案必须引用 A21 的 P2 内容寻址 before/after 收据;无收据时状态只能是“候选”或“实验”,不得改写为“已优化”。

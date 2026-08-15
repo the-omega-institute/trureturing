@@ -9,6 +9,9 @@ public sealed partial class DigestionAlignmentTests
         var acknowledgments = acknowledgedStale.Count == 0
             ? "[]"
             : "\n" + string.Join("\n", acknowledgedStale.Select(static value => "      - " + value));
+        var renderedEntries = entries.Length == 0
+            ? "    entries: []"
+            : "    entries:\n" + string.Join("\n", entries);
         return $$"""
             schema_version: 3
             ledger: theory-digestion-v1
@@ -17,8 +20,7 @@ public sealed partial class DigestionAlignmentTests
                 path: docs/source.md
                 atomizer: {{string.Concat("gi", "ct", "-v1")}}
                 acknowledged_stale: {{acknowledgments}}
-                entries:
-            {{string.Join("\n", entries)}}
+            {{renderedEntries}}
             ticket_index: []
             """;
     }

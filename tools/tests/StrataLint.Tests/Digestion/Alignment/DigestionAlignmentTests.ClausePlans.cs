@@ -238,7 +238,8 @@ public sealed partial class DigestionAlignmentTests
             _ => (_, _) => new AtomizedTheoryDocument(
                 [parent],
                 [new DigestionSlice(true, parent.RawBytes)],
-                [new DigestionClausePlan(parent.AstPath, children.ToImmutableArray())]));
+                [new DigestionClausePlan(parent.AstPath, children.ToImmutableArray())],
+                GenreRegistryCheck.NoGenreRegistry));
 
         Assert.All(childIds, childId => Assert.Equal(
             DigestionReceiptAlignment.Rejected,
@@ -297,7 +298,8 @@ public sealed partial class DigestionAlignmentTests
             _ => (_, _) => new AtomizedTheoryDocument(
                 [parent],
                 [new DigestionSlice(true, parent.RawBytes)],
-                [new DigestionClausePlan(parent.AstPath, children.ToImmutableArray())]));
+                [new DigestionClausePlan(parent.AstPath, children.ToImmutableArray())],
+                GenreRegistryCheck.NoGenreRegistry));
 
         Assert.All(childIds, childId => Assert.Equal(
             DigestionReceiptAlignment.Rejected,
@@ -337,7 +339,8 @@ public sealed partial class DigestionAlignmentTests
         var invalid = new AtomizedTheoryDocument(
             [parent],
             [new DigestionSlice(true, parentBytes)],
-            [new DigestionClausePlan(parent.AstPath, [first, second])]);
+            [new DigestionClausePlan(parent.AstPath, [first, second])],
+            GenreRegistryCheck.NoGenreRegistry);
         var captured = DigestionCasStore.Capture(parentBytes.AsSpan());
         var ledger = BackfillInventoryLoader.Load(Ledger(
             [],
@@ -378,7 +381,8 @@ public sealed partial class DigestionAlignmentTests
         var invalid = new AtomizedTheoryDocument(
             [parent],
             [new DigestionSlice(true, parentBytes)],
-            [new DigestionClausePlan(parent.AstPath, [first, second])]);
+            [new DigestionClausePlan(parent.AstPath, [first, second])],
+            GenreRegistryCheck.NoGenreRegistry);
         var captured = DigestionCasStore.Capture(parentBytes.AsSpan());
         var ledger = BackfillInventoryLoader.Load(Ledger(
             [],

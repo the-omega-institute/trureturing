@@ -75,7 +75,7 @@ private def boolAddEquivZModTwo : Bool ≃+ ZMod 2 where
   toFun b := b.toNat
   invFun z := decide (z.val = 1)
   left_inv b := by cases b <;> decide
-  right_inv z := by fin_cases z <;> decide
+  right_inv z := by fin_cases z <;> rfl
   map_add' a b := by cases a <;> cases b <;> decide
 
 private noncomputable def signedPhiPowerUnit (s : Bool) (n : ℤ) : GoldenIntˣ :=

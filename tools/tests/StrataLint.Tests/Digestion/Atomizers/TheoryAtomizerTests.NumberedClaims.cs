@@ -47,29 +47,30 @@ public sealed partial class TheoryAtomizerTests
         var bytes = Encoding.UTF8.GetBytes(
             "# PZG\n\n**甲体 1.1(A)**。一。\n\n**乙体 2.2(B)**。二。\n\n**丙体 3.3(C)**。三。\n");
 
-        var error = Assert.Throws<TheorySourceFormatException>(() =>
-            PzgAtomizer.Atomize(bytes, DigestionTestSupport.Rules));
+        var alignment = AlignUnregisteredGenres(bytes);
 
         Assert.Equal(
-            "unknown PZG numbered claim kind 甲体 at line 3; "
-            + "unknown PZG numbered claim kind 乙体 at line 5; "
-            + "unknown PZG numbered claim kind 丙体 at line 7",
-            error.Message);
+            "source source uses claim genres its dialect does not register: 丙体, 乙体, 甲体. "
+            + $"Register them in {TheoryAtomizerDataLoader.DataPath} or correct the volume.",
+            Assert.Single(alignment.Findings));
+        Assert.Empty(alignment.Residual);
+        Assert.Empty(alignment.Fallbacks);
     }
 
     [Fact]
-    public void ARepeatedUnknownLeadIsNamedOnceWithItsFirstLineAndCount()
+    public void ARepeatedUnknownLeadIsNamedOnceInTheSingleFinding()
     {
         var bytes = Encoding.UTF8.GetBytes(
             "# PZG\n\n**甲体 1.1(A)**。一。\n\n**甲体 2.2(B)**。二。\n\n**乙体 3.3(C)**。三。\n");
 
-        var error = Assert.Throws<TheorySourceFormatException>(() =>
-            PzgAtomizer.Atomize(bytes, DigestionTestSupport.Rules));
+        var alignment = AlignUnregisteredGenres(bytes);
 
         Assert.Equal(
-            "unknown PZG numbered claim kind 甲体 at line 3 (2 occurrences); "
-            + "unknown PZG numbered claim kind 乙体 at line 7",
-            error.Message);
+            "source source uses claim genres its dialect does not register: 乙体, 甲体. "
+            + $"Register them in {TheoryAtomizerDataLoader.DataPath} or correct the volume.",
+            Assert.Single(alignment.Findings));
+        Assert.Empty(alignment.Residual);
+        Assert.Empty(alignment.Fallbacks);
     }
 
     [Theory]

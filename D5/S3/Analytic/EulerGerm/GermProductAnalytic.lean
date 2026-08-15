@@ -123,7 +123,7 @@ private theorem germProduct_differentiableOn (σ : ℝ)
     exact hsNorm.tsum_le_tsum (fun v => germ_mode_norm_le p hsσ (v + 1)) hσNorm
   have hcts : ∀ p : Nat.Primes, ContinuousOn (f p) U := by
     intro p
-    simpa [f] using (germLocalFactor_differentiableOn p σ hσ).continuousOn.sub
+    simpa [Pi.sub_def, f, U] using (germLocalFactor_differentiableOn p σ hσ).continuousOn.sub
       (continuousOn_const : ContinuousOn (fun _ : ℂ => (1 : ℂ)) U)
   have hprod := hu.hasProdLocallyUniformlyOn_one_add hU
     (Filter.Eventually.of_forall hbound) hcts

@@ -7,37 +7,43 @@ namespace StrataLint.Tests;
 public sealed partial class DigestionAlignmentTests
 {
     [Fact]
-    public void IngestFallsBackToOneWholeSourceAtomWhenTheSourceFormatCannotBeAtomized()
+    public void IngestFallsBackToOneWholeSourceAtomWhenBaselineHasNoEntries()
     {
-        var oldBytes = Encoding.UTF8.GetBytes("# GICT\n\n**定理 1.1(A)**。old。\n");
-        var oldAtom = Assert.Single(GictAtomizer.Atomize(oldBytes, DigestionTestSupport.Rules).Claims);
-        var oldCapture = DigestionCasStore.Capture(oldAtom.RawBytes.AsSpan());
-        var ledger = BackfillInventoryLoader.Load(Ledger(
-            [],
-            CasEntry("old-receipt", oldAtom, oldCapture.Reference)));
-        var malformedBytes = Encoding.UTF8.GetBytes(
-            "# GICT\n\n**未知 1.2(B)**。free-form source。\n");
+        const string theoryPath = "docs/develop/theory/non-utf8.bin";
+        var ledger = BackfillInventoryLoader.Load(Ledger([])
+            .Replace("path: docs/source.md", $"path: {theoryPath}", StringComparison.Ordinal));
+        var opaqueBytes = new byte[] { 0xff, 0x00, 0xfe };
+        var snapshot = Snapshot(opaqueBytes, sourcePath: theoryPath);
+
+        var alignment = DigestionLedgerAligner.Evaluate(
+            ledger,
+            snapshot,
+            ledger,
+            DigestionAlignmentMode.Ingest);
 
         var plan = DigestionIngestor.Plan(
             ledger,
-            Snapshot(malformedBytes, [oldCapture]),
+            snapshot,
             ledger);
 
+        Assert.Empty(alignment.Findings);
         var fallback = Assert.Single(plan.Fallbacks);
         Assert.Equal("source", fallback.SourceId);
-        Assert.Contains("unknown GICT numbered claim kind", fallback.Reason, StringComparison.Ordinal);
-        var coarse = Assert.Single(plan.Document.RequireDigestionEntries().Where(static entry =>
-            entry.AtomId != "old-receipt"));
+        Assert.Contains("Unicode", fallback.Reason, StringComparison.OrdinalIgnoreCase);
+        var coarse = Assert.Single(plan.Document.RequireDigestionEntries());
         var captured = Assert.Single(plan.CasObjects);
         Assert.Equal(captured.Reference, coarse.CasRef);
         Assert.Equal(captured.Reference, coarse.Fingerprints.RawSha256);
-        Assert.Equal(malformedBytes, captured.Bytes.ToArray());
+        Assert.Equal(opaqueBytes, captured.Bytes.ToArray());
 
         var firstBytes = BackfillInventoryWriter.WriteForIngest(plan.Document);
         var migrated = BackfillInventoryLoader.Load(Encoding.UTF8.GetString(firstBytes.AsSpan()));
         var second = DigestionIngestor.Plan(
             migrated,
-            Snapshot(malformedBytes, new[] { oldCapture }.Concat(plan.CasObjects)),
+            Snapshot(
+                opaqueBytes,
+                plan.CasObjects,
+                theoryPath),
             ledger);
         var secondBytes = BackfillInventoryWriter.WriteForIngest(second.Document);
 
@@ -68,7 +74,7 @@ public sealed partial class DigestionAlignmentTests
     }
 
     [Fact]
-    public void IngestFallsBackToExactCoarseAtomForNonUtf8TheoryBytes()
+    public void IngestRefusesStructuralCoarseFallbackWhenBaselineHasFineReceipt()
     {
         const string theoryPath = "docs/develop/theory/non-utf8.bin";
         var oldBytes = Encoding.UTF8.GetBytes("# GICT\n\n**定理 1.1(A)**。old。\n");
@@ -79,20 +85,58 @@ public sealed partial class DigestionAlignmentTests
                 CasEntry("old-receipt", oldAtom, oldCapture.Reference))
             .Replace("path: docs/source.md", $"path: {theoryPath}", StringComparison.Ordinal));
         var opaqueBytes = new byte[] { 0xff, 0x00, 0xfe };
+        var snapshot = Snapshot(opaqueBytes, [oldCapture], theoryPath);
 
-        var plan = DigestionIngestor.Plan(
+        var alignment = DigestionLedgerAligner.Evaluate(
             ledger,
-            Snapshot(opaqueBytes, [oldCapture], theoryPath),
-            ledger);
+            snapshot,
+            ledger,
+            DigestionAlignmentMode.Ingest);
 
-        var fallback = Assert.Single(plan.Fallbacks);
-        Assert.Contains("Unicode", fallback.Reason, StringComparison.OrdinalIgnoreCase);
-        var captured = Assert.Single(plan.CasObjects);
-        Assert.Equal(opaqueBytes, captured.Bytes.ToArray());
-        Assert.Equal(
-            captured.Reference,
-            plan.Document.RequireDigestionEntries().Single(static entry =>
-                entry.AtomId != "old-receipt").CasRef);
+        var finding = Assert.Single(alignment.Findings);
+        Assert.Contains("source source", finding, StringComparison.Ordinal);
+        Assert.Contains("Unicode", finding, StringComparison.OrdinalIgnoreCase);
+        Assert.Empty(alignment.Fallbacks);
+        Assert.Empty(alignment.Residual);
+
+        var exception = Assert.Throws<FormatException>(() => DigestionIngestor.Plan(
+            ledger,
+            snapshot,
+            ledger));
+        Assert.Contains(finding, exception.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void IngestAllowsFallbackWhenBaselineContainsOnlyCoarseEntries()
+    {
+        var opaqueBytes = Encoding.UTF8.GetBytes("not a recognised claim\n");
+        var coarseBytes = ImmutableArray.CreateRange(opaqueBytes);
+        var coarse = new DigestionAtom(
+            "coarse/source",
+            0,
+            opaqueBytes.Length,
+            coarseBytes,
+            DigestionFingerprint.ComputeOpaque(coarseBytes.AsSpan()),
+            []);
+        var captured = DigestionCasStore.Capture(coarseBytes.AsSpan());
+        var ledger = BackfillInventoryLoader.Load(Ledger(
+            [],
+            CasEntry("coarse-receipt", coarse, captured.Reference)));
+        var snapshot = Snapshot(opaqueBytes, [captured]);
+
+        var alignment = DigestionLedgerAligner.Evaluate(
+            ledger,
+            snapshot,
+            ledger,
+            DigestionAlignmentMode.Ingest);
+        var first = DigestionIngestor.Plan(ledger, snapshot, ledger);
+
+        Assert.Empty(alignment.Findings);
+        Assert.Single(alignment.Fallbacks);
+        Assert.Empty(alignment.Residual);
+        Assert.Single(first.Fallbacks);
+        Assert.Equal(0, first.ResidualOpenAdded);
+        Assert.Empty(first.CasObjects);
     }
 
     [Fact]
@@ -208,7 +252,7 @@ public sealed partial class DigestionAlignmentTests
     }
 
     [Fact]
-    public void CasBackedAdmissionDoesNotReatomizeReceipts()
+    public void CasBackedAdmissionDoesNotReatomizeReceiptsWhenInputsMatchBaseline()
     {
         var currentBytes = Encoding.UTF8.GetBytes(
             "# GICT\n\n**定理 1.1(A)**。raw。\n\n**定理 1.2(B)**。normalized。\n");
@@ -234,7 +278,8 @@ public sealed partial class DigestionAlignmentTests
             snapshot,
             ledger,
             DigestionAlignmentMode.Admission,
-            _ => atomizer);
+            _ => atomizer,
+            baselineSnapshot: snapshot);
 
         Assert.Empty(first.Findings);
         Assert.Empty(first.Residual);
@@ -247,7 +292,8 @@ public sealed partial class DigestionAlignmentTests
             snapshot,
             ledger,
             DigestionAlignmentMode.Admission,
-            _ => atomizer);
+            _ => atomizer,
+            baselineSnapshot: snapshot);
 
         Assert.Empty(second.Findings);
         Assert.Equal(0, calls);
@@ -553,7 +599,8 @@ public sealed partial class DigestionAlignmentTests
             []);
         var duplicateDocument = new AtomizedTheoryDocument(
             [first, second],
-            [new DigestionSlice(true, firstBytes), new DigestionSlice(true, secondBytes)]);
+            [new DigestionSlice(true, firstBytes), new DigestionSlice(true, secondBytes)],
+            GenreRegistryCheck.NoGenreRegistry);
         var ledger = BackfillInventoryLoader.Load(Ledger([], Entry("receipt", first)));
         var calls = 0;
 

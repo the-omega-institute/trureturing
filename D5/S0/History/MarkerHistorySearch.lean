@@ -24,13 +24,11 @@ def historiesOfLength : ℕ → List MarkerHistory
 /-- Every marker history occurs in its exact length layer. -/
 theorem mem_historiesOfLength_length (h : MarkerHistory) :
     h ∈ historiesOfLength h.length := by
-  induction h using FreeMonoid.inductionOn' with
-  | one => simp [historiesOfLength]
-  | mul_of marker h ih =>
-      rw [FreeMonoid.length_mul, FreeMonoid.length_of, Nat.one_add]
-      cases marker <;>
-        simp only [historiesOfLength, List.mem_flatMap] <;>
-        exact ⟨h, ih, by simp⟩
+  exact FreeMonoid.inductionOn' h (by simp [historiesOfLength]) (fun marker history ih => by
+    rw [FreeMonoid.length_mul, FreeMonoid.length_of, Nat.one_add]
+    cases marker <;>
+      simp only [historiesOfLength, List.mem_flatMap] <;>
+      exact ⟨history, ih, by simp⟩)
 
 /-- All marker histories whose length is at most the given bound. -/
 def historiesUpTo (n : ℕ) : List MarkerHistory :=
@@ -114,7 +112,8 @@ def startsWithE₀ : MarkerHistory → Bool
   | .E₁ :: _ => false
 
 -- Non-vacuity witness: the bounded search finds the one-marker history `[E₁]`.
-example : findCounterexample startsWithE₀ 1 = some [.E₁] := by decide
+example : findCounterexample startsWithE₀ 1 = some [.E₁] := by
+  rfl
 
 #eval findCounterexample startsWithE₀ 1
 

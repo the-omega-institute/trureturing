@@ -1,3 +1,4 @@
+using System.Collections.Immutable;
 using System.Text.RegularExpressions;
 
 namespace StrataLint.Engine;
@@ -21,14 +22,18 @@ internal static class DeclaredDialectAtomizer
         ArgumentNullException.ThrowIfNull(rules);
         var dialect = Require(atomizerId, rules);
         var pattern = new Regex(dialect.ClaimPattern, RegexOptions.CultureInvariant);
+        var unregistered = new SortedSet<string>(StringComparer.Ordinal);
+        ImmutableArray<string> Seen() => [.. unregistered];
         return dialect.HeadingClaims
             ? MarkdownAstAtomizer.Atomize(
                 bytes,
                 static _ => null,
-                identifyHeading: heading => Identify(heading, dialect, pattern))
+                () => GenreRegistryCheck.Collected(Seen()),
+                identifyHeading: heading => Identify(heading, dialect, pattern, unregistered))
             : MarkdownAstAtomizer.Atomize(
                 bytes,
-                paragraph => Identify(paragraph, dialect, pattern));
+                paragraph => Identify(paragraph, dialect, pattern, unregistered),
+                () => GenreRegistryCheck.Collected(Seen()));
     }
 
     internal static DeclaredDialect Require(string atomizerId, TheoryAtomizerRules rules)
@@ -47,7 +52,11 @@ internal static class DeclaredDialectAtomizer
             + ".");
     }
 
-    private static string? Identify(string paragraph, DeclaredDialect dialect, Regex pattern)
+    private static string? Identify(
+        string paragraph,
+        DeclaredDialect dialect,
+        Regex pattern,
+        SortedSet<string> unregistered)
     {
         var match = pattern.Match(paragraph);
         if (!match.Success)
@@ -55,16 +64,16 @@ internal static class DeclaredDialectAtomizer
             return null;
         }
 
+        // Same contract as the built-in dialects: a lead that fits the shape but names no
+        // registered genre is addressed by its own token and recorded, never silently skipped
+        // and never allowed to cost the volume its other claims. The ledger refuses it.
         var token = match.Groups["kind"].Value;
         var genre = dialect.Genres.FirstOrDefault(item => item.Token == token);
         if (genre is null)
         {
-            // Same contract as the built-in dialects: a lead that fits the shape but names
-            // no registered genre is a source-format failure, never a silent skip.
-            throw new TheorySourceFormatException(
-                $"dialect {dialect.Id} does not register claim kind {token}");
+            unregistered.Add(token);
         }
 
-        return genre.Value + "/" + match.Groups["number"].Value;
+        return (genre?.Value ?? token) + "/" + match.Groups["number"].Value;
     }
 }

@@ -72,11 +72,33 @@ internal static partial class DigestionLedgerAligner
         RepositorySnapshot snapshot,
         BackfillInventoryDocument? baselineDocument,
         DigestionAlignmentMode mode,
-        Func<string, TheoryAtomizer>? atomizerResolver = null)
+        Func<string, TheoryAtomizer>? atomizerResolver = null,
+        RepositorySnapshot? baselineSnapshot = null)
     {
         ArgumentNullException.ThrowIfNull(document);
         ArgumentNullException.ThrowIfNull(snapshot);
         atomizerResolver ??= static id => AtomizerRegistry.Require(id).Atomize;
+        var findings = ImmutableArray.CreateBuilder<string>();
+        var sources = document.RequireDigestionSources();
+        var conflictedSources = new HashSet<string>(StringComparer.Ordinal);
+        foreach (var source in sources)
+        {
+            if (!snapshot.TryGetFile(source.SourcePath, out var sourceFile)
+                || DigestionSourceConflictMarkers.FindFirstLine(sourceFile.RawBytes.AsSpan()) is not { } line)
+            {
+                continue;
+            }
+
+            var finding = DigestionSourceConflictMarkers.FormatFinding(source.SourcePath, line);
+            if (mode == DigestionAlignmentMode.Ingest)
+            {
+                throw new FormatException(finding);
+            }
+
+            findings.Add(finding);
+            conflictedSources.Add(source.SourceId);
+        }
+
         // Ingest is an explicit operation on the current tree, so a missing data file there is a
         // real fault. Admission judges arbitrary trees, including the baseline tree that predates
         // this data surface entirely; rejecting that tree would break conservative extension, so
@@ -107,7 +129,6 @@ internal static partial class DigestionLedgerAligner
         var verifiedClausePlanParents = ImmutableHashSet.CreateBuilder<string>(StringComparer.Ordinal);
         var fallbacks = ImmutableArray.CreateBuilder<DigestionIngestFallback>();
         var actualStale = ImmutableArray.CreateBuilder<string>();
-        var findings = ImmutableArray.CreateBuilder<string>();
         var suggestedAtomIds = new HashSet<string>(StringComparer.Ordinal);
         var cas = DigestionCasStore.Evaluate(document, snapshot);
         findings.AddRange(cas.Findings);
@@ -124,7 +145,6 @@ internal static partial class DigestionLedgerAligner
         }
 
         var baselineSources = BaselineSources(baselineDocument, findings);
-        var sources = document.RequireDigestionSources();
         var candidateSources = sources.ToDictionary(
             static source => source.SourceId,
             StringComparer.Ordinal);
@@ -176,6 +196,8 @@ internal static partial class DigestionLedgerAligner
         void AlignSource(DigestionLedgerSource source)
         {
                 baselineSources.TryGetValue(source.SourceId, out var baselineSource);
+                var baselineHasFineEntries = baselineSource?.Entries.Any(static entry =>
+                    entry.AstPath != "coarse/source") == true;
                 foreach (var entry in source.Entries)
                 {
                     alignments[entry.AtomId] = rejectedCoarseClones.Contains(entry.AtomId)
@@ -189,6 +211,11 @@ internal static partial class DigestionLedgerAligner
                                     : DigestionReceiptAlignment.Rejected;
                 }
 
+                if (conflictedSources.Contains(source.SourceId))
+                {
+                    return;
+                }
+
                 var registeredAtomizer = AtomizerRegistry.IsRegistered(source.Atomizer);
                 var hasClausePlanChains = registeredAtomizer
                     && AtomizerRegistry.EmitsClausePlans(source.Atomizer)
@@ -198,6 +225,20 @@ internal static partial class DigestionLedgerAligner
                 var unprovenCasEntries = source.Entries.Where(entry =>
                     cas.ValidAtomIds.Contains(entry.AtomId)
                     && !inheritedEntries.Contains(CanonicalEntry(entry))).ToArray();
+                var admissionGenreFinding = AdmissionGenreFinding(
+                    mode,
+                    snapshot,
+                    baselineSnapshot,
+                    source,
+                    baselineSource,
+                    registeredAtomizer,
+                    atomizerRules,
+                    atomizerResolver);
+                if (admissionGenreFinding is not null)
+                {
+                    findings.Add(admissionGenreFinding);
+                }
+
                 if (((mode == DigestionAlignmentMode.Admission
                         && unprovenCasEntries.Length == 0
                         && !hasClausePlanChains)
@@ -276,14 +317,27 @@ internal static partial class DigestionLedgerAligner
                 {
                     if (mode == DigestionAlignmentMode.Ingest)
                     {
-                        AddCoarseFallback(
-                            source,
-                            sourceFile.RawBytes,
-                            exception.Message,
-                            cas.ValidAtomIds,
-                            suggestedAtomIds,
-                            residual,
-                            fallbacks);
+                        if (baselineHasFineEntries)
+                        {
+                            // Plan throws on any finding, so one refusal fails repository-wide ingest.
+                            // No verb covers total format retirement: acknowledged_stale is coarse-to-fine,
+                            // while ActualStale covers partial fine regression. This is deliberately fail-closed.
+                            findings.Add(
+                                $"source {source.SourceId} cannot add coarse fallback after baseline "
+                                + $"fine atomization: {exception.Message}");
+                        }
+                        else
+                        {
+                            AddCoarseFallback(
+                                source,
+                                sourceFile.RawBytes,
+                                exception.Message,
+                                cas.ValidAtomIds,
+                                suggestedAtomIds,
+                                residual,
+                                fallbacks);
+                        }
+
                         return;
                     }
 
@@ -301,18 +355,42 @@ internal static partial class DigestionLedgerAligner
                     return;
                 }
 
+                // Ingest must refuse the addressed token instead of degrading the whole volume
+                // to a coarse atom. Admission has a separate probe so reconciliation outcomes
+                // remain unchanged.
+                if (mode != DigestionAlignmentMode.Admission
+                    && !atomized.UnregisteredGenres.IsEmpty)
+                {
+                    findings.Add(UnregisteredGenreFinding(source, atomized.UnregisteredGenres));
+                    return;
+                }
+
                 if (atomized.Claims.Length == 0)
                 {
                     if (mode == DigestionAlignmentMode.Ingest)
                     {
-                        AddCoarseFallback(
-                            source,
-                            sourceFile.RawBytes,
-                            "atomizer recognition is incomplete or empty",
-                            cas.ValidAtomIds,
-                            suggestedAtomIds,
-                            residual,
-                            fallbacks);
+                        const string reason = "atomizer recognition is incomplete or empty";
+                        if (baselineHasFineEntries)
+                        {
+                            // Plan throws on any finding, so one refusal fails repository-wide ingest.
+                            // No verb covers total format retirement: acknowledged_stale is coarse-to-fine,
+                            // while ActualStale covers partial fine regression. This is deliberately fail-closed.
+                            findings.Add(
+                                $"source {source.SourceId} cannot add coarse fallback after baseline "
+                                + $"fine atomization: {reason}");
+                        }
+                        else
+                        {
+                            AddCoarseFallback(
+                                source,
+                                sourceFile.RawBytes,
+                                reason,
+                                cas.ValidAtomIds,
+                                suggestedAtomIds,
+                                residual,
+                                fallbacks);
+                        }
+
                         return;
                     }
 
@@ -565,81 +643,13 @@ internal static partial class DigestionLedgerAligner
             .Select(CanonicalEntry)
             .ToHashSet(StringComparer.Ordinal);
 
-    private static string CanonicalEntry(DigestionLedgerEntry entry) =>
-        Convert.ToBase64String(BackfillInventoryWriter.WriteEntry(entry).AsSpan());
-
-    private static string? AtomizerIntegrityFailure(
-        AtomizedTheoryDocument document,
-        ReadOnlySpan<byte> sourceBytes)
-    {
-        var sourceLength = sourceBytes.Length;
-        if (document.Slices.Count(static slice => slice.IsClaim) != document.Claims.Length)
-        {
-            return "claim slice count does not match claim count";
-        }
-
-        if (!document.Reassemble().AsSpan().SequenceEqual(sourceBytes))
-        {
-            return "slices do not reassemble the source bytes";
-        }
-
-        var claimIndex = 0;
-        var cursor = 0;
-        foreach (var slice in document.Slices)
-        {
-            var end = cursor + slice.RawBytes.Length;
-            if (slice.IsClaim)
-            {
-                var atom = document.Claims[claimIndex++];
-                if (atom.StartByte != cursor || atom.EndByte != end)
-                {
-                    return $"claim {atom.AstPath} boundaries do not match its source slice";
-                }
-
-                if (!atom.RawBytes.AsSpan().SequenceEqual(slice.RawBytes.AsSpan()))
-                {
-                    return $"claim {atom.AstPath} raw bytes do not match its source span";
-                }
-            }
-
-            cursor = end;
-        }
-
-        foreach (var atom in document.Claims)
-        {
-            if (string.IsNullOrWhiteSpace(atom.AstPath))
-            {
-                return "claim ast_path is empty";
-            }
-
-            if (atom.RawBytes.Length == 0
-                || atom.StartByte < 0
-                || atom.EndByte <= atom.StartByte
-                || atom.EndByte > sourceLength
-                || atom.EndByte - atom.StartByte != atom.RawBytes.Length)
-            {
-                return $"claim {atom.AstPath} has invalid byte boundaries";
-            }
-
-            if (atom.Fingerprints != DigestionFingerprint.Compute(atom.RawBytes.AsSpan()))
-            {
-                return $"claim {atom.AstPath} fingerprint does not match its raw bytes";
-            }
-        }
-
-
-        var clausePlanFailure = ClausePlanIntegrityFailure(document);
-        if (clausePlanFailure is not null)
-        {
-            return clausePlanFailure;
-        }
-
-        return null;
-    }
-
     internal static bool FingerprintsMatch(DigestionFingerprints left, DigestionFingerprints right) =>
         left.RawSha256 == right.RawSha256
         || left.NormalizedSha256 == right.NormalizedSha256;
+
+    private static bool HasUniqueAstPaths(ImmutableArray<DigestionAtom> claims) =>
+        claims.Select(static claim => claim.AstPath).Distinct(StringComparer.Ordinal).Count()
+        == claims.Length;
 
     private static bool EntryIdentityEqual(
         DigestionLedgerEntry candidate,

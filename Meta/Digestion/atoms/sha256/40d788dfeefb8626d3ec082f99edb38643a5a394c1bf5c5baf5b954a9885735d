@@ -1,0 +1,42 @@
+### 关键反例 31.6（去相干通道交换不等于锐利兼容）
+
+当 \(\mathcal B,\mathcal C\) 为 MUB 时，
+
+\[
+\boxed{
+[\mathbb E_{\mathcal B},\mathbb E_{\mathcal C}]=0,
+}
+\]
+
+因为两种复合都等于完全退极化投影
+
+\[
+X\mapsto\frac{\operatorname{Tr}X}{d}I.
+\]
+
+然而任意非平凡 \(P_j^{\mathcal B},P_k^{\mathcal C}\) 一般满足
+
+\[
+[P_j^{\mathcal B},P_k^{\mathcal C}]\ne0.
+\]
+
+所以
+
+\[
+\boxed{
+\text{粗粒化顺序无差异}
+\not\Rightarrow
+\text{锐利测量兼容}.
+}
+\]
+
+事实上，MUB 是最大互补的锐利坐标系，却给出零去相干顺序缺陷。由此，第 30 节所定义的
+
+\[
+\mathbb E_i\mathbb E_j-\mathbb E_j\mathbb E_i
+\]
+
+只能测量“丢弃信息的顺序是否重要”，不能单独充当上下文不兼容度。
+
+---
+

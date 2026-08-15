@@ -88,8 +88,10 @@ theorem aligned_projection_from_ray (k : Fin 3) :
       (alignedRayScale k) • Matrix.vecMulVec (alignedRays k) (star (alignedRays k)) := by
   fin_cases k <;>
     ext i j <;> fin_cases i <;> fin_cases j <;>
-      norm_num [alignedProjection, alignedRayScale, alignedRays, uniformRay,
-        Matrix.vecMulVec_apply]
+      simp only [alignedProjection, alignedRayScale, alignedRays, uniformRay,
+        Matrix.smul_apply, Matrix.vecMulVec_apply, Pi.star_apply,
+        Matrix.cons_val, Matrix.cons_val_zero, Matrix.cons_val_one,
+        Matrix.cons_val_fin_one] <;> norm_num
 
 /-- The displayed equal-amplitude density matrix is positive semidefinite with trace one. -/
 theorem uniform_density_is_state :

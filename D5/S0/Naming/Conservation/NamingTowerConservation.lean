@@ -16,6 +16,7 @@ open MeasureTheory
 
 universe u v
 
+set_option checkBinderAnnotations false in
 /-- Even a countably infinite tower of naming systems has only countably many named points;
 under an atomless sigma-finite measure its named union is null and its anonymous complement has
 the measure of the whole carrier. -/
@@ -30,7 +31,7 @@ theorem countable_tower_anonymous_full_measure
     Set.countable_iUnion fun j =>
       D5.S0.Naming.named_countable (X := X) (systems j)
   have named_null : volume (Set.iUnion fun j => (systems j).named) = 0 :=
-    D5.S0.Naming.dark_side_conservation systems
+    @D5.S0.Naming.dark_side_conservation X _ _ ‹NoAtoms volume› _ J _ systems
   refine ⟨named_countable, named_null, ?_⟩
   have named_double_compl_null :
       volume (Set.iUnion fun j => (systems j).named)ᶜᶜ = 0 := by
@@ -55,6 +56,8 @@ example :
       volume (Set.iUnion fun j => (systems j).named) = 0 /\
       volume (Set.iUnion fun j => (systems j).named)ᶜ = volume (Set.univ : Set Real) := by
   dsimp only
-  exact countable_tower_anonymous_full_measure (X := Real) _
+  exact @countable_tower_anonymous_full_measure Real _ _
+    (show NoAtoms (volume : Measure Real) from
+      { measure_singleton := fun x => measure_singleton x }) _ Nat _ _
 
 end D5.S0.Naming.Conservation.NamingTowerConservation

@@ -22,9 +22,11 @@ internal static class ConeAtomizer
         TheoryAtomizerRules rules)
     {
         ArgumentNullException.ThrowIfNull(rules);
+        var unregistered = new SortedSet<string>(StringComparer.Ordinal);
         var document = MarkdownAstAtomizer.Atomize(
             bytes,
-            paragraph => Identify(paragraph, rules));
+            paragraph => Identify(paragraph, rules, unregistered),
+            () => GenreRegistryCheck.Collected([.. unregistered]));
         if (document.Claims.Any(static atom =>
                 atom.AstPath.Contains("/occurrence/", StringComparison.Ordinal)))
         {
@@ -39,23 +41,30 @@ internal static class ConeAtomizer
         return document;
     }
 
-    private static string? Identify(string paragraph, TheoryAtomizerRules rules)
+    private static string? Identify(
+        string paragraph,
+        TheoryAtomizerRules rules,
+        SortedSet<string> unregistered)
     {
         var match = NumberedClaimPattern.Match(paragraph);
         if (match.Success)
         {
             var genre = match.Groups["genre"].Value;
-            var mapping = rules.ConeClaimPrefixes.FirstOrDefault(item =>
-                item.Token.Split('|').Contains(genre, StringComparer.Ordinal));
-            if (mapping is null)
-            {
-                throw Unknown(paragraph);
-            }
-
             var titleEnd = paragraph.IndexOf("**", 2, StringComparison.Ordinal);
             if (titleEnd < 0 || paragraph[titleEnd - 1] != '。')
             {
                 throw Unknown(paragraph);
+            }
+
+            var semanticNumber = match.Groups["number"].Value
+                .Replace("′", "-prime", StringComparison.Ordinal)
+                .Replace("″", "-double-prime", StringComparison.Ordinal);
+            var mapping = rules.ConeClaimPrefixes.FirstOrDefault(item =>
+                item.Token.Split('|').Contains(genre, StringComparer.Ordinal));
+            if (mapping is null)
+            {
+                unregistered.Add(genre);
+                return genre + "/" + semanticNumber;
             }
 
             var templates = mapping.Value.Split('|');
@@ -67,9 +76,6 @@ internal static class ConeAtomizer
             var template = exactProofGrade && templates.Length == 2
                 ? templates[0]
                 : templates[^1];
-            var semanticNumber = match.Groups["number"].Value
-                .Replace("′", "-prime", StringComparison.Ordinal)
-                .Replace("″", "-double-prime", StringComparison.Ordinal);
             return template.Replace("{number}", semanticNumber, StringComparison.Ordinal);
         }
 

@@ -62,9 +62,24 @@ theorem hindley_rosen_confluent {α : Type*} {r s : α → α → Prop}
   have unionToT : ∀ {a b}, Relation.ReflTransGen (fun a b => r a b ∨ s a b) a b →
       Relation.ReflTransGen t a b := by
     intro a b hab
-    exact hab.mono fun _ _ h => h.elim
-      (fun hr => Or.inl (.single hr))
-      (fun hs => Or.inr (.single hs))
+    induction hab with
+    | refl => exact .refl
+    | tail hab hbc ih =>
+        exact ih.tail (hbc.elim
+          (fun hr => Or.inl (.single hr))
+          (fun hs => Or.inr (.single hs)))
+  have rToUnion : ∀ {a b}, Relation.ReflTransGen r a b →
+      Relation.ReflTransGen (fun a b => r a b ∨ s a b) a b := by
+    intro a b hab
+    induction hab with
+    | refl => exact .refl
+    | tail hab hbc ih => exact ih.tail (Or.inl hbc)
+  have sToUnion : ∀ {a b}, Relation.ReflTransGen s a b →
+      Relation.ReflTransGen (fun a b => r a b ∨ s a b) a b := by
+    intro a b hab
+    induction hab with
+    | refl => exact .refl
+    | tail hab hbc ih => exact ih.tail (Or.inr hbc)
   have tToUnion : ∀ {a b}, Relation.ReflTransGen t a b →
       Relation.ReflTransGen (fun a b => r a b ∨ s a b) a b := by
     intro a b hab
@@ -73,8 +88,8 @@ theorem hindley_rosen_confluent {α : Type*} {r s : α → α → Prop}
     | tail hab hbc ih =>
         apply ih.trans
         rcases hbc with hbc | hbc
-        · exact hbc.mono fun _ _ hr => Or.inl hr
-        · exact hbc.mono fun _ _ hs => Or.inr hs
+        · exact rToUnion hbc
+        · exact sToUnion hbc
   intro h a b ha hb
   obtain ⟨c, hac, hbc⟩ := Relation.church_rosser tLocal (unionToT ha) (unionToT hb)
   exact ⟨c, tToUnion hac, tToUnion hbc⟩
