@@ -252,6 +252,17 @@ public sealed partial class TheoryAtomizerTests
         var snapshot = Assert.IsType<SnapshotDecodeOutcome.Decoded>(
             SnapshotDecoder.Decode(raw)).Snapshot;
         var source = Assert.Single(BackfillInventoryLoader.Load(snapshot).RequireDigestionSources());
+        Assert.Equal(AtomizerRegistry.PeriodicTreeId, source.Atomizer);
+        Assert.True(AtomizerRegistry.IsRegistered(source.Atomizer));
+        var registryDocument = AtomizerRegistry.Atomize(
+            source.Atomizer,
+            sourceBytes,
+            DigestionTestSupport.Rules);
+        var registryAtom = Assert.Single(registryDocument.Claims);
+        Assert.Equal("coarse/source", registryAtom.AstPath);
+        Assert.Equal(DigestionFingerprint.ComputeOpaque(sourceBytes), registryAtom.Fingerprints);
+        Assert.Equal(sourceBytes, registryAtom.RawBytes.ToArray());
+        Assert.Equal(sourceBytes, registryDocument.Reassemble().ToArray());
         var environment = new ProductionCliEnvironment(
             root,
             new FakeRepositoryGateway(RawChangeSet.Create([]), raw, null),
@@ -266,7 +277,6 @@ public sealed partial class TheoryAtomizerTests
             console);
 
         Assert.Equal(0, exitCode);
-        Assert.Equal(AtomizerRegistry.NoAtomizerId, source.Atomizer);
         Assert.DoesNotContain(
             "atomizer recognition is incomplete or empty",
             console.Output,
