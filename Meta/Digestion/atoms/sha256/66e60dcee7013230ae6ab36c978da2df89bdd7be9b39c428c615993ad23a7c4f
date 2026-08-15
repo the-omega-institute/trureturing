@@ -1,0 +1,16 @@
+### 定理 28.9（单步正交商余递推）
+
+对全部 \(n\ge0\)：
+\[
+\boxed{
+R_{n+1}=S_{n+1}^\perp,
+}
+\[
+\boxed{
+R_n=E_{n+1}\oplus R_{n+1},
+}
+\[
+\boxed{
+\mathscr H=S_{n+1}\oplus R_{n+1}.
+}
+

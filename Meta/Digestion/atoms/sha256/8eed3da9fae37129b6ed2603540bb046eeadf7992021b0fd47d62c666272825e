@@ -1,0 +1,15 @@
+### 定理 31.7（聚合投影交换子公式）
+
+对秩一上下文，
+
+\[
+\boxed{
+\sum_{j,k}
+\left\|
+[P_j^{\mathcal B},P_k^{\mathcal C}]
+\right\|_2^2
+=
+2(d-1)\mathcal I(\mathcal B,\mathcal C).
+}
+\]
+

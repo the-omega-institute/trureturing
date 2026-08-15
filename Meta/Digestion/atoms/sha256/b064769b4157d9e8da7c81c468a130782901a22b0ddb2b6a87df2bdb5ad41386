@@ -1,0 +1,13 @@
+### 定理 28.6（双重正交补）
+
+对任意线性子空间 \(M\subseteq\mathscr H\)：
+\[
+\boxed{
+M^{\perp\perp}=\overline M.
+}
+因此若 \(M\) 闭合，特别是若 \(M\) 有限维，则
+\[
+\boxed{
+\mathcal C^2(M)=M.
+}
+

@@ -1,0 +1,37 @@
+### 定理 33.13（记录作用控制相干生存）
+
+\[
+\boxed{
+|\rho_{ij}^{(N)}|
+=
+e^{-\mathfrak A_N(i,j)}
+|\rho_{ij}^{(0)}|.
+}
+\]
+
+若记录向量归一化，则 \(\mathfrak A_N\) 随 \(N\) 单调不减。
+
+若存在极限：
+
+\[
+\lambda_{ij}
+=
+\lim_{N\to\infty}
+\frac{\mathfrak A_N(i,j)}{N},
+\]
+
+则：
+
+\[
+\boxed{
+\lim_{N\to\infty}
+-\frac1N
+\log
+\frac{|\rho_{ij}^{(N)}|}{|\rho_{ij}^{(0)}|}
+=
+\lambda_{ij}.
+}
+\]
+
+因此 \(\lambda_{ij}\) 是该相干坐标的记录擦除率。
+
