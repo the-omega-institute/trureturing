@@ -1,0 +1,71 @@
+### 定义 37.1（矩阵序观察者）
+
+有限维矩阵序观察者是数据：
+
+\[
+\boxed{
+\mathfrak O
+=
+(
+\mathcal A,
+\{M_n(\mathcal A)_+\}_{n\ge1},
+u,
+\omega,
+\mathcal S_O,
+\mathbb E_O,
+\{\mathcal I_r\}_{r\in R},
+\alpha,
+\mathcal M_O,
+\Delta_O
+).
+}
+\]
+
+其中：
+
+\[
+\begin{aligned}
+\mathcal A
+&=\text{整体有限维 }C^\ast\text{-代数};\\
+M_n(\mathcal A)_+
+&=\text{加入 }n\text{ 维辅助系统后的正锥};\\
+u
+&=I\text{，即 order unit};\\
+\omega
+&=\text{正、归一化状态};\\
+\mathcal S_O
+&\subseteq\mathcal A\text{ 为观察者可访问的 operator system};\\
+\mathbb E_O
+&:\mathcal A\to\mathcal S_O\text{ 为粗粒化、pinching 或条件期望};\\
+\mathcal I_r
+&=\text{结果 }r\text{ 的完全正、迹不增 instrument 分支};\\
+\alpha
+&=\text{整体动力学};\\
+\mathcal M_O
+&=\text{结果、路径和环境副本的记录账本};\\
+\Delta_O
+&=\text{观察者对自身观察规则的同址评价}.
+\end{aligned}
+\]
+
+这里 operator system 要求：
+
+\[
+I\in\mathcal S_O,
+\qquad
+A\in\mathcal S_O
+\Longrightarrow
+A^\ast\in\mathcal S_O,
+\]
+
+并对复线性组合封闭，但不必对乘法封闭。
+
+因此：
+
+\[
+\boxed{
+\text{观察者首先决定哪些问题能够被提出，
+而不必已经拥有这些问题生成的全部操作代数。}
+}
+\]
+

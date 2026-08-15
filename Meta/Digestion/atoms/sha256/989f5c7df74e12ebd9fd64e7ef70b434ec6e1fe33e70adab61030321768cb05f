@@ -1,0 +1,33 @@
+### 原理 37.7（扩展稳定性）
+
+\[
+\boxed{
+\text{完全正性}
+=
+\text{观察规则在加入任意未读辅助系统后仍保持合法。}
+}
+\]
+
+标量正性只审计当前观察层；完全正性同时审计所有有限矩阵放大：
+
+\[
+\boxed{
+\mathcal A_+,
+\quad
+M_2(\mathcal A)_+,
+\quad
+M_3(\mathcal A)_+,
+\quad\ldots
+}
+\]
+
+因此项目的 inverse-completion 语言在量子层面的正确正性对象不是一只锥，而是矩阵锥塔：
+
+\[
+\boxed{
+\mathbf C_{\mathcal A}
+=
+\{M_n(\mathcal A)_+\}_{n\ge1}.
+}
+\]
+

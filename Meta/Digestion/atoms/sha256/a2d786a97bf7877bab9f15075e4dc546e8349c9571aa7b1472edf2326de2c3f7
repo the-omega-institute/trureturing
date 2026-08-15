@@ -1,0 +1,40 @@
+### 定义 36.10（逆完成观察者）
+
+一个逆完成观察者记为：
+
+\[
+\boxed{
+\mathfrak O
+=
+(\mathbf X,\mathbf o,\mathcal P,\mathcal M,\Delta),
+}
+\]
+
+其中：
+
+\[
+\begin{aligned}
+\mathbf X
+&=(X_i,p_{ji})
+&&\text{为逆完成载体};\\
+\mathbf o
+&=(o_i)
+&&\text{为相容锚点};\\
+\mathcal P
+&\subseteq\operatorname{Pro}(\mathcal C)/\mathbf X
+&&\text{为允许的概念／探针族};\\
+\mathcal M
+&&&\text{为不能由当前阶段恢复的路径与转换账本};\\
+\Delta
+&&&\text{为对探针系统自身进行评价的对角操作}.
+\end{aligned}
+\]
+
+这里 \(\mathbf o\) 满足：
+
+\[
+p_{ji}(o_j)=o_i.
+\]
+
+它把每一层中的“这里”绑定为同一个跨尺度观察者。
+

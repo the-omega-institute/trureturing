@@ -1,0 +1,4 @@
+### 定义 36.12（最终阶段）
+
+若存在 \(i_\ast\in I\)，使 \(\mathbf X\) 在 pro-category 中等价于常值对象 \(cX_{i_\ast}\)，则称 \(\mathbf X\) 最终稳定或本质常值。
+

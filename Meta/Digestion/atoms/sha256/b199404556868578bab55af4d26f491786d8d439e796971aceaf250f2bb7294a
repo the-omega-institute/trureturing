@@ -1,0 +1,25 @@
+### 定义 36.5（pro-category 态射）
+
+若：
+
+\[
+\mathbf X=(X_i)_{i\in I},
+\qquad
+\mathbf Y=(Y_j)_{j\in J},
+\]
+
+则：
+
+\[
+\boxed{
+\operatorname{Hom}_{\operatorname{Pro}(\mathcal C)}
+(\mathbf X,\mathbf Y)
+=
+\varprojlim_{j\in J}
+\varinjlim_{i\in I}
+\operatorname{Hom}_{\mathcal C}(X_i,Y_j).
+}
+\]
+
+这个公式表明，pro-object 之间的映射并不是简单的逐层映射族；它允许先把源精化到足够细的阶段，再与目标的每个阶段兼容。
+
