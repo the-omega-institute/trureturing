@@ -363,7 +363,7 @@ internal static partial class CoverAtomCommand
             verified,
             baselineDocument: null,
             validateProjectedStatus: false);
-        RequireNoFindings(derived);
+        RequireNoConflictMarkedSources(derived);
         RequireAlignedScribeReceipt(EvaluationFor(derived, options.AtomId), options.Gid);
         var finalBytes = BackfillInventoryWriter.WriteForIngest(planned);
         var finalRaw = IngestCommand.ReplaceLedger(
@@ -379,7 +379,7 @@ internal static partial class CoverAtomCommand
             lean,
             verified,
             baselineDocument: null);
-        RequireNoFindings(finalEvaluation);
+        RequireNoConflictMarkedSources(finalEvaluation);
         RequireAlignedScribeReceipt(EvaluationFor(finalEvaluation, options.AtomId), options.Gid);
 
         var ledgerUpdates = IngestCommand.LedgerUpdates(currentRaw, finalRaw);
@@ -717,6 +717,22 @@ internal static partial class CoverAtomCommand
 
     private static BackfillInventoryDocument LoadDocument(RepositorySnapshot snapshot) =>
         BackfillInventoryLoader.Load(snapshot);
+
+    // align-scribe 刻意容忍同胞条目的状态漂移与 coverage 诊断(既有契约,见 CoverAtomTests
+    // AlignScribeReceiptIgnoresSiblingDrift…);唯独源文本含冲突标记时不得写账本。
+    private static void RequireNoConflictMarkedSources(DigestionLedgerEvaluation evaluation)
+    {
+        var conflicts = evaluation.Findings
+            .Where(static finding => finding.Contains(
+                DigestionSourceConflictMarkers.DiagnosticCode,
+                StringComparison.Ordinal))
+            .ToArray();
+        if (conflicts.Length > 0)
+        {
+            throw new InvalidOperationException(
+                "digest status is invalid: " + string.Join("; ", conflicts));
+        }
+    }
 
     private static void RequireNoFindings(DigestionLedgerEvaluation evaluation)
     {
