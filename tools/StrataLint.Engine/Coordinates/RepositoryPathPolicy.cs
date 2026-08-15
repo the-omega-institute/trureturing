@@ -85,8 +85,6 @@ internal static partial class RepositoryPathPolicy
             || DigestionFormalizationReceipt.IsCanonicalPath(value)
             || IsEchoResidualShardPath(value)
             || FrozenLedgerChangeClassifier.IsAcceptedEventPath(value)
-            || value.StartsWith(".fkst/", StringComparison.Ordinal)
-            || value.StartsWith("packages/", StringComparison.Ordinal)
             || value.StartsWith("skills/", StringComparison.Ordinal)
             || value.StartsWith(".claude/skills/", StringComparison.Ordinal)
             || value.StartsWith(".codex/skills/", StringComparison.Ordinal)
