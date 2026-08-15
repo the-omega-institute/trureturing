@@ -11,6 +11,59 @@ internal sealed record DigestionIngestPlan(
     ImmutableArray<DigestionCasObject> CasObjects,
     ImmutableArray<DigestionIngestFallback> Fallbacks);
 
+internal static class DigestionSourceConflictMarkers
+{
+    internal const string DiagnosticCode = "INGEST-CONFLICT-MARKER-001";
+
+    internal static int? FindFirstLine(ReadOnlySpan<byte> bytes)
+    {
+        var start = bytes.Length >= 3
+            && bytes[0] == 0xef
+            && bytes[1] == 0xbb
+            && bytes[2] == 0xbf
+                ? 3
+                : 0;
+        var lineNumber = 1;
+        while (true)
+        {
+            var end = start;
+            while (end < bytes.Length
+                && bytes[end] != (byte)'\r'
+                && bytes[end] != (byte)'\n')
+            {
+                end++;
+            }
+
+            var line = bytes[start..end];
+            if (line.StartsWith("<<<<<<< "u8)
+                || line.StartsWith("||||||| "u8)
+                || line.SequenceEqual("======="u8)
+                || line.StartsWith(">>>>>>> "u8))
+            {
+                return lineNumber;
+            }
+
+            if (end == bytes.Length)
+            {
+                return null;
+            }
+
+            if (bytes[end] == (byte)'\r'
+                && end + 1 < bytes.Length
+                && bytes[end + 1] == (byte)'\n')
+            {
+                end++;
+            }
+
+            start = end + 1;
+            lineNumber++;
+        }
+    }
+
+    internal static string FormatFinding(string sourcePath, int line) =>
+        $"{DiagnosticCode} {sourcePath}:{line}: unresolved merge conflict marker in digestion source";
+}
+
 internal static class DigestionIngestor
 {
     /// <summary>
