@@ -69,8 +69,9 @@ internal static partial class RepositoryRules
     // add one file to a bucket holding eleven, each see twelve and admit, and their union
     // of thirteen turns the repository-wide scan red - blocking every unrelated PR until
     // someone splits. That is what made strict (now forbidden, 19) load-bearing. The
-    // admission rule keeps the unbanded limit, so the next change touching that bucket is
-    // still refused and the split pressure lands exactly where it belongs.
+    // admission rule keeps the unbanded limit, so the next change that introduces a
+    // capacity-counted path absent from its ForkPoint is still refused and the split
+    // pressure lands exactly where it belongs.
     internal const int DirectoryToleranceLimit = 24;
 
     // SL-003 capacity exclusions: theory inputs, the Lake manifest, the backfill
@@ -102,10 +103,33 @@ internal static partial class RepositoryRules
     internal static int CountArtifactLines(string text) =>
         text.Split('\n').Length - (text.EndsWith('\n') ? 1 : 0);
 
+    internal static Dictionary<string, HashSet<string>> CapacityPathsByDirectory(
+        IEnumerable<RepoPath> paths)
+    {
+        var directories = new Dictionary<string, HashSet<string>>(StringComparer.Ordinal);
+        foreach (var path in paths)
+        {
+            if (IsCapacityExcluded(path.Value))
+            {
+                continue;
+            }
+
+            var directory = DirectoryOf(path.Value);
+            if (!directories.TryGetValue(directory, out var directoryPaths))
+            {
+                directoryPaths = new HashSet<string>(StringComparer.Ordinal);
+                directories.Add(directory, directoryPaths);
+            }
+
+            directoryPaths.Add(path.Value);
+        }
+
+        return directories;
+    }
+
     private static ImmutableArray<RuleFinding> Capacity(RuleEvaluationContext context)
     {
         var findings = ImmutableArray.CreateBuilder<RuleFinding>();
-        var directories = new Dictionary<string, int>(StringComparer.Ordinal);
         foreach (var (path, file) in context.Current.Files)
         {
             if (IsCapacityExcluded(path.Value))
@@ -127,39 +151,74 @@ internal static partial class RepositoryRules
                     AdmissionEffect.Observe));
             }
 
-            var directory = DirectoryOf(path.Value);
-            directories[directory] = directories.GetValueOrDefault(directory) + 1;
         }
+
+        var directories = CapacityPathsByDirectory(context.Current.Files.Keys);
+        var forkPointDirectories = CapacityPathsByDirectory(context.ForkPoint.Files.Keys);
 
         // Occupancy is counted over the whole tree so the number reported is the real one, but
         // only buckets this change touches are reported. DirectoryToleranceLimit above was added
         // so that a union of two independently-admitted PRs would not end up "blocking every
         // unrelated PR until someone splits" - and it was wired into the repository-wide net
         // alone, leaving this rule scanning every directory and blocking them anyway. On
-        // 2026-08-13 that is exactly what happened: two deposits branched from an eleven-file
-        // D5/S3/Constants each saw twelve and admitted, and the union of thirteen stopped dev
-        // and every unrelated branch. Every member of that bucket is frozen, so it cannot be
-        // split by moving anything; the block had no exit. Scoping is what the comment above
-        // already claims this rule does - the next change *touching that bucket* is still
-        // refused, and the split pressure lands exactly where it belongs.
+        // 2026-08-13 that is exactly what happened: merge-base aa2deeb held eleven members in
+        // D5/S3/Constants, deposits f2296a0 and eb759dc each saw twelve and admitted, and union
+        // 0ba924d held thirteen and stopped dev and every unrelated branch. Every member of that
+        // bucket is frozen, so moving one out is not an available split. Admission therefore
+        // compares capacity-counted path membership with the ForkPoint: a band candidate blocks
+        // if any current path is absent there, and otherwise emits a non-blocking Observe.
+        //
+        // Band closure: for each admitted band candidate C, relative to its own merge base F,
+        // Added_C(d) = C(d) \ F(d) is empty because CurrentPaths_C(d) is a subset of
+        // MergeBasePaths_C(d). A git three-way merge can introduce only paths in Added_C(d), so
+        // every such merge is non-growing in d; the candidates need not share a fork point.
+        //
+        // Residual: candidates at or below DirectoryFileLimit are not constrained by this
+        // predicate. The 2026-08-13 union mechanism in that regime is unchanged by this change;
+        // the repository-wide DirectoryToleranceLimit net is its detection layer.
+        //
+        // Known cost: a same-directory rename arrives as Deleted(old)+Added(new). Honoring that
+        // pair as non-growing would break band closure: branch A can rename x to a while branch B
+        // renames x to b, making their union contain 25 paths. The gateway asks git to detect
+        // renames and copies, but ParseChanges intentionally discards the old/new pairing when it
+        // builds RawChangeSet. Retaining that choice is deliberate, so the new path still blocks.
+        // Observe remains a structured, non-blocking finding; the current CLI does not render
+        // Observe findings on the admit path. That is an existing property of the Observe channel,
+        // not a visibility regression introduced here.
         var touched = context.Changes.Paths
             .Select(static path => DirectoryOf(path.Value))
             .ToHashSet(StringComparer.Ordinal);
         findings.AddRange(directories
-            .Where(static item => item.Value > DirectoryToleranceLimit)
+            .Where(static item => item.Value.Count > DirectoryToleranceLimit)
             .Select(static item => new RuleFinding(
                 item.Key,
-                $"directory contains {item.Value} files (repository tolerance "
+                $"directory contains {item.Value.Count} files (repository tolerance "
                 + $"{DirectoryToleranceLimit}; split per CLAUDE.md 8)")));
-        findings.AddRange(directories
-            .Where(item => item.Value > DirectoryFileLimit
-                && item.Value <= DirectoryToleranceLimit
-                && touched.Contains(item.Key))
-            .Select(static item => new RuleFinding(
-                item.Key,
-                $"directory contains {item.Value} files (admission limit "
-                + $"{DirectoryFileLimit}, repository tolerance "
-                + $"{DirectoryToleranceLimit}; split per CLAUDE.md 8)")));
+        foreach (var item in directories.Where(item => item.Value.Count > DirectoryFileLimit
+            && item.Value.Count <= DirectoryToleranceLimit
+            && touched.Contains(item.Key)))
+        {
+            var forkPointPaths = forkPointDirectories.GetValueOrDefault(item.Key);
+            if (forkPointPaths is null || !item.Value.IsSubsetOf(forkPointPaths))
+            {
+                findings.Add(new RuleFinding(
+                    item.Key,
+                    $"directory contains {item.Value.Count} files (admission limit "
+                    + $"{DirectoryFileLimit}, repository tolerance "
+                    + $"{DirectoryToleranceLimit}; split per CLAUDE.md 8)"));
+            }
+            else
+            {
+                findings.Add(new RuleFinding(
+                    item.Key,
+                    $"directory is overfull at {item.Value.Count} files (admission limit "
+                    + $"{DirectoryFileLimit}, repository tolerance "
+                    + $"{DirectoryToleranceLimit}), but this change introduced no capacity-counted "
+                    + "path absent from its fork point; split per CLAUDE.md 8",
+                    AdmissionEffect.Observe));
+            }
+        }
+
         return findings.ToImmutable();
     }
 

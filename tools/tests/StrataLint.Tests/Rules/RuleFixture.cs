@@ -154,12 +154,15 @@ internal sealed partial class RuleFixture
             """ + "\n";
         BaselineReports = new Dictionary<string, LeanFileReport>(Reports, StringComparer.Ordinal);
         Baseline[ValuesKernelBindingValidator.RelativePath] = Files[ValuesKernelBindingValidator.RelativePath];
+        ForkPoint = new Dictionary<string, string>(Baseline, StringComparer.Ordinal);
         Changes = new List<string> { BlueprintPath };
     }
 
     internal Dictionary<string, string> Files { get; }
 
     internal Dictionary<string, string> Baseline { get; }
+
+    internal Dictionary<string, string> ForkPoint { get; }
 
     internal Dictionary<string, LeanFileReport> Reports { get; }
 
@@ -219,7 +222,7 @@ internal sealed partial class RuleFixture
               tail_authorization: null
             """ + "\n";
 
-        foreach (var files in new[] { Files, Baseline })
+        foreach (var files in new[] { Files, Baseline, ForkPoint })
         {
             files.Remove(BackfillInventoryLoader.RelativePath);
             files[BackfillInventoryLoader.RootPath + sourcePath] = source;
@@ -273,6 +276,7 @@ internal sealed partial class RuleFixture
     {
         var current = Decode(Files);
         var baseline = Decode(Baseline);
+        var forkPoint = Decode(ForkPoint);
         var policy = suppliedPolicy;
         if (policy is null)
         {
@@ -299,13 +303,15 @@ internal sealed partial class RuleFixture
             lean,
             changes,
             meta,
-            verifiedScribeEmissions);
+            verifiedScribeEmissions,
+            forkPoint);
     }
 
     internal RuleEvaluationContext BuildForRuleCompatibility()
     {
         var current = Decode(Files);
         var baseline = Decode(Baseline);
+        var forkPoint = Decode(ForkPoint);
         var policyOutcome = RegistryLoader.Load(
             Encoding.UTF8.GetBytes(TestRegistry.Canonical),
             Encoding.UTF8.GetBytes(TestRegistry.Domains));
@@ -318,13 +324,15 @@ internal sealed partial class RuleFixture
             policy,
             AcceptedLeanClosure.Create(LeanAxiomReport.Create(Reports)),
             RawChangeSet.Create(Changes),
-            meta);
+            meta,
+            forkPoint: forkPoint);
     }
 
     internal RuleEvaluationContext BuildForProtectedRuleCompatibility()
     {
         var current = Decode(Files);
         var baseline = Decode(Baseline);
+        var forkPoint = Decode(ForkPoint);
         var policyOutcome = RegistryLoader.Load(
             Encoding.UTF8.GetBytes(TestRegistry.Canonical),
             Encoding.UTF8.GetBytes(TestRegistry.Domains));
@@ -337,7 +345,8 @@ internal sealed partial class RuleFixture
             policy,
             AcceptedLeanClosure.Create(LeanAxiomReport.Create(Reports)),
             RawChangeSet.Create(Changes),
-            MetaEvaluationProfile.ForProtectedSurface(meta));
+            MetaEvaluationProfile.ForProtectedSurface(meta),
+            forkPoint: forkPoint);
     }
 
     internal void AddUpwardImport()
@@ -383,6 +392,7 @@ internal sealed partial class RuleFixture
     {
         const string path = "Chronicle/2026/07/10-old.md";
         Baseline[path] = "old\n";
+        ForkPoint[path] = "old\n";
         Files[path] = "changed\n";
     }
 
@@ -391,7 +401,9 @@ internal sealed partial class RuleFixture
         const string path = HeartsPath;
         // 新 SL-008 只看 changeset 状态:红 fixture 必须把 Hearts 标记为 Modified。
         Changes.Add(path);
-        Baseline[path] = HeaderFor("D5/X_Frontier/Hearts", "E") + "theorem heart : True := by sorry\n";
+        var baselineText = HeaderFor("D5/X_Frontier/Hearts", "E") + "theorem heart : True := by sorry\n";
+        Baseline[path] = baselineText;
+        ForkPoint[path] = baselineText;
         Files[path] = HeaderFor("D5/X_Frontier/Hearts", "E") + "theorem heart : False := by sorry\n";
         BaselineReports[path] = Report(declarations: new[]
         {
@@ -517,6 +529,7 @@ internal sealed partial class RuleFixture
             if (path == HeartsPath)
             {
                 Baseline[path] = text;
+                ForkPoint[path] = text;
                 BaselineReports[path] = Reports[path];
             }
         }
