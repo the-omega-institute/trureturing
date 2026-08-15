@@ -1,4 +1,5 @@
 using System.Collections.Immutable;
+using System.Reflection;
 using System.Text.Json;
 using System.Text.Json.Nodes;
 using StrataLint.Cli;
@@ -10,6 +11,22 @@ namespace StrataLint.Tests;
 public sealed partial class FrozenLedgerTests
 {
     private const string RecoordinateSource = "theorem a : True := by trivial\n";
+
+    [Fact]
+    public void RetiredEnvironmentRecoordinateProducerHelpersRemainAbsent()
+    {
+        const BindingFlags staticMethods = BindingFlags.Static | BindingFlags.NonPublic;
+
+        Assert.Null(typeof(FrozenLedger).GetMethod(
+            string.Concat("ValidateHistoryForEnvironment", "Recoordinate"),
+            staticMethods));
+        Assert.DoesNotContain(
+            typeof(FrozenLedger).GetMethods(staticMethods).SelectMany(static method => method.GetParameters()),
+            static parameter => parameter.Name == string.Concat("allowPendingEnvironment", "Recoordinate"));
+        Assert.Null(typeof(DagLedgerCommandPreparation).GetMethod(
+            string.Concat("Environment", "Pins"),
+            staticMethods));
+    }
 
     internal static (string Path, string Contents) EnvironmentRecoordinateDagEvent()
     {

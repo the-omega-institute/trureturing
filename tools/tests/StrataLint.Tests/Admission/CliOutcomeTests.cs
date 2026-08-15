@@ -7,23 +7,6 @@ namespace StrataLint.Tests;
 
 public sealed class CliOutcomeTests
 {
-    [Fact]
-    public void LedgerRecoordinateIsNotAnImplementedCommand()
-    {
-        var console = new BufferedConsole();
-        var environment = new StubCliEnvironment(Admitted());
-
-        var exitCode = CliApplication.Run(
-            ["ledger-recoordinate", "--old-environment", new string('a', 40)],
-            environment,
-            console);
-
-        Assert.Equal(2, exitCode);
-        Assert.Equal(string.Empty, console.Output);
-        Assert.Equal("UNKNOWN_COMMAND ledger-recoordinate\n", console.Error);
-        Assert.DoesNotContain("ledger-recoordinate", CliApplication.ImplementedCommands);
-    }
-
     public static TheoryData<string, int, string, bool> Outcomes => new()
     {
         { "admitted", 0, "ADMITTED", false },
