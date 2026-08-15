@@ -1,0 +1,41 @@
+### 推论 28.10（有限阶段展开）
+
+对每个 \(n\)：
+\[
+\boxed{
+S_n
+=
+S_0
+\oplus
+E_1
+\oplus\cdots\oplus
+E_n,
+}
+\[
+\boxed{
+\mathscr H
+=
+S_0
+\oplus
+E_1
+\oplus\cdots\oplus
+E_n
+\oplus
+R_n.
+}
+
+因此递归的正确形态不是
+\[
+M\mapsto M^\perp\mapsto M\mapsto M^\perp,
+\]
+而是
+\[
+\boxed{
+R_n
+=
+E_{n+1}
+\oplus
+R_{n+1}.
+}
+每一步从当前余空间抽取一个有限正交壳层，并把未抽取部分传给下一步。
+
