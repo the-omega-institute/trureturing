@@ -3,8 +3,7 @@
    mirror-B: D5/B/S0/Asymptotics/EscapeProbability/FixedOutputLimit
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: Fixed finite output alphabets of size at least two have escape
-     probability tending to one as the address count grows. -/
+   digest: Escape probability tends to one as addresses grow for a fixed output alphabet. -/
 
 import D5.S0.Asymptotics.FixedPointFreeEscapeProbability
 import D5.S0.Diagonal.EscapeAsymptotics
