@@ -169,6 +169,7 @@ public sealed partial class MakeWorkflowTests
         var document = Assert.IsType<YamlMappingNode>(stream.Documents[0].RootNode);
         var jobs = Assert.IsType<YamlMappingNode>(document.Children[new YamlScalarNode("jobs")]);
         var localEvidence = GateCommandSignatures(preflight).ToHashSet(StringComparer.Ordinal);
+        var recognizedCiScripts = new List<string>();
         if (InvokesScript(preflight, ScribeContentChecksScriptPath))
         {
             localEvidence.UnionWith(GateCommandSignatures(
@@ -204,6 +205,13 @@ public sealed partial class MakeWorkflowTests
                     : "<unnamed>";
                 AssertNoUnrecognizedGateCommands(run, $"CI job '{job}' step '{stepName}'");
                 ciCommands.AddRange(GateCommandSignatures(run));
+                foreach (var scriptPath in CandidateWorkflowScriptPaths(run))
+                {
+                    recognizedCiScripts.Add(scriptPath);
+                    var script = File.ReadAllText(Path.Combine(root, scriptPath));
+                    AssertNoUnrecognizedGateCommands(script, $"CI script '{scriptPath}'");
+                    ciCommands.AddRange(GateCommandSignatures(script));
+                }
             }
 
             var distinctCiCommands = ciCommands
@@ -216,6 +224,8 @@ public sealed partial class MakeWorkflowTests
                     localEvidence.Contains(command),
                     $"preflight does not execute CI job '{job}' command '{command}'."));
         }
+
+        Assert.Equal(2, recognizedCiScripts.Count(path => path == InstallLeanToolchainScriptPath));
     }
 
     private static void AssertNoUnrecognizedGateCommands(string shell, string source)
@@ -243,6 +253,17 @@ public sealed partial class MakeWorkflowTests
             + Regex.Escape(repositoryPath)
             + "\"?(?:[ \\t]+\\\\)?[ \\t]*$",
         RegexOptions.CultureInvariant | RegexOptions.NonBacktracking);
+
+    private static IEnumerable<string> CandidateWorkflowScriptPaths(string shell)
+    {
+        foreach (Match match in Regex.Matches(
+            shell,
+            """(?m)^[ \t]*"\$GITHUB_WORKSPACE/candidate/(?<path>tools/scripts/workflow/[A-Za-z0-9_.-]+\.sh)"[^\\\r\n]*$""",
+            RegexOptions.CultureInvariant | RegexOptions.NonBacktracking))
+        {
+            yield return match.Groups["path"].Value;
+        }
+    }
 
     private static IEnumerable<string> GateCommandSignatures(string shell)
     {
