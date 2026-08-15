@@ -55,7 +55,7 @@ internal sealed class EquivariantListingOrbitCountingDocument : IScribeDocumentD
                             + "Burnside theorem proves the divisibility and the average identity; "
                             + "the repository orbit equivalence turns that orbit count into the "
                             + "exponent of card(Y)."))),
-                    DescribeRole.Theorem),
+                    DescribeRole.Theorem)),
             [
                 DocumentEdge.Dependency.Create(
                     GidRef.Create("D5/S0/Diagonal/EquivariantEscape")),
