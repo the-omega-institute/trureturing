@@ -26,7 +26,7 @@ set_option checkBinderAnnotations false in
 /-- A jurisdiction is the source fiber assigned to one name by an encoder. Under an atomless
 measure, positive measure forces that fiber to contain more than countably many source points. -/
 theorem positive_measure_jurisdiction_uncountable
-    {X : Type u} [MeasureSpace X] [NullSingletonClass (volume : Measure X)]
+    {X : Type u} [MeasureSpace X] [NoAtoms (volume : Measure X)]
     (system : NamingSystem X) (encode : X -> system.Name) (name : system.Name)
     (positive : 0 < volume (encode ⁻¹' {name})) :
     ¬ (encode ⁻¹' {name}).Countable := by
