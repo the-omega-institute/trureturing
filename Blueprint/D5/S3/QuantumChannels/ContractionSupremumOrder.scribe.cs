@@ -6,10 +6,10 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.QuantumChannels;
 
 internal sealed class ContractionSupremumOrderDocument : IScribeDocumentDefinition
 {
-    private static Formula Ratio(string metric) => Seq(
-        F.Id("eta"), Underscore, Grp(F.Id(metric)), Open, Gamma, Comma, F.Id("u"), Close);
+    private static Formula Ratio(Formula metric) => Seq(
+        F.Id("eta"), Underscore, Grp(metric), Open, Gamma, Comma, F.Id("u"), Close);
 
-    private static Formula AxisSup(string metric) => Seq(
+    private static Formula AxisSup(Formula metric) => Seq(
         Operatorname, Grp(F.Id("sup")), Underscore,
         Grp(D(0), Sp, Lt, Sp, F.Id("u"), Sp, Lt, Sp, D(1)), Sp, Ratio(metric));
 
@@ -25,7 +25,8 @@ internal sealed class ContractionSupremumOrderDocument : IScribeDocumentDefiniti
                 H("The positive-axis contraction-ratio suprema are ordered"),
                 StatementSource.FromAuthor(Disp(Seq(
                     D(0), Le, Gamma, Sp, Lt, Sp, D(1), Sp, Rightarrow, Sp,
-                    AxisSup("SLD"), Sp, Le, Sp, AxisSup("KM"), Sp, Le, Sp, AxisSup("RLD")))),
+                    AxisSup(F.Id("SLD")), Sp, Le, Sp, AxisSup(F.Id("KM")), Sp, Le, Sp,
+                    AxisSup(F.Id("RLD"))))),
                 AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
