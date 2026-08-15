@@ -46,7 +46,7 @@ public sealed partial class DepositCoverWorkflowScriptTests
         Assert.Contains("make:preflight BASE=" + deliveryBase, fixture.Calls());
     }
 
-    private sealed partial class TransactionFixture
+    internal sealed partial class TransactionFixture
     {
         internal string HeadRevision() => Git("rev-parse", "HEAD").Trim();
 
