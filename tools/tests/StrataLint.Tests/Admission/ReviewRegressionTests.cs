@@ -546,24 +546,26 @@ public sealed partial class ReviewRegressionTests
             SearchOption.AllDirectories).Single();
         var engineSource = File.ReadAllText(enginePath, Encoding.UTF8);
         Assert.DoesNotContain(source.SourcePath, engineSource, StringComparison.Ordinal);
-    }
 
-    [Fact]
-    public void Sl016EvaluatesCasStoreOncePerAdmission()
-    {
-        // The CAS pass rehashes every tracked blob. SL-016 admission used to run it twice on
-        // the same tree: once here and once inside the alignment pass. The second run could
-        // only reproduce the first one's verdict, so the first result is threaded down the
-        // chain instead. This pins the shape of that chain; DigestionCasStoreTests keeps
-        // pinning what the pass itself rejects.
-        var engineRoot = Path.Combine(TestRepositoryLayout.FindRoot(), "tools", "StrataLint.Engine");
-        var casChainSource =
-            File.ReadAllText(Path.Combine(engineRoot, "Rules", "Backfill", "BackfillInventoryRule.cs"), Encoding.UTF8)
-            + File.ReadAllText(Path.Combine(engineRoot, "Digestion", "DigestionLedgerAligner.cs"), Encoding.UTF8)
+        // The CAS pass rehashes every tracked blob. SL-016 admission used to run it twice on the
+        // same tree: once in this rule and once inside the alignment pass it calls. The second run
+        // could only reproduce the first one's verdict, so the first result is threaded down the
+        // chain instead. DigestionCasStoreTests keeps pinning what the pass itself rejects; this
+        // pins the shape of the chain that carries its result.
+        //
+        // These assertions live inside this test rather than a separately named one because
+        // ScribeTestMapDeriver cannot resolve a literal read path in StrataLint.Tests — the project
+        // has no RepositoryAccessor — so every repository-reading [Fact] here counts as a
+        // conservative unknown, and RepositoryMapHasNoUnknownGrowthAndEveryPathIsDeclared caps
+        // those at 280. Cf9 already reads BackfillInventoryRule.cs, so the assertions extend a read
+        // that is already paid for.
+        var casChainSource = engineSource
             + File.ReadAllText(
-                Path.Combine(engineRoot, "Digestion", "Evaluation", "DigestionStatusEvaluator.cs"),
+                Path.Combine(TestRepositoryLayout.FindRoot(), "tools", "StrataLint.Engine", "Digestion", "DigestionLedgerAligner.cs"),
+                Encoding.UTF8)
+            + File.ReadAllText(
+                Path.Combine(TestRepositoryLayout.FindRoot(), "tools", "StrataLint.Engine", "Digestion", "Evaluation", "DigestionStatusEvaluator.cs"),
                 Encoding.UTF8);
-
         Assert.Equal(1, Count(casChainSource, "var casEvaluation = DigestionCasStore.Evaluate("));
         Assert.DoesNotContain("var cas = DigestionCasStore.Evaluate(", casChainSource, StringComparison.Ordinal);
         Assert.Equal(2, Count(casChainSource, "casEvaluation: casEvaluation"));
