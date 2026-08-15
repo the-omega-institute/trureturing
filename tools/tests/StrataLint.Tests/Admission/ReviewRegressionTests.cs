@@ -549,6 +549,27 @@ public sealed partial class ReviewRegressionTests
     }
 
     [Fact]
+    public void Sl016EvaluatesCasStoreOncePerAdmission()
+    {
+        // The CAS pass rehashes every tracked blob. SL-016 admission used to run it twice on
+        // the same tree: once here and once inside the alignment pass. The second run could
+        // only reproduce the first one's verdict, so the first result is threaded down the
+        // chain instead. This pins the shape of that chain; DigestionCasStoreTests keeps
+        // pinning what the pass itself rejects.
+        var engineRoot = Path.Combine(TestRepositoryLayout.FindRoot(), "tools", "StrataLint.Engine");
+        var casChainSource =
+            File.ReadAllText(Path.Combine(engineRoot, "Rules", "Backfill", "BackfillInventoryRule.cs"), Encoding.UTF8)
+            + File.ReadAllText(Path.Combine(engineRoot, "Digestion", "DigestionLedgerAligner.cs"), Encoding.UTF8)
+            + File.ReadAllText(
+                Path.Combine(engineRoot, "Digestion", "Evaluation", "DigestionStatusEvaluator.cs"),
+                Encoding.UTF8);
+
+        Assert.Equal(1, Count(casChainSource, "var casEvaluation = DigestionCasStore.Evaluate("));
+        Assert.DoesNotContain("var cas = DigestionCasStore.Evaluate(", casChainSource, StringComparison.Ordinal);
+        Assert.Equal(2, Count(casChainSource, "casEvaluation: casEvaluation"));
+    }
+
+    [Fact]
     public void Cf10WorkflowSeparatesLeanInspectionFromDotnetAdmission()
     {
         var root = TestRepositoryLayout.FindRoot();
