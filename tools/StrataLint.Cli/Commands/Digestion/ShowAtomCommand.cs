@@ -84,6 +84,12 @@ internal static class ShowAtomCommand
                 $"atom {entry.AtomId} source is missing: {source.SourcePath}");
         }
 
+        if (DigestionSourceConflictMarkers.FindFirstLine(sourceFile.RawBytes.AsSpan()) is { } line)
+        {
+            throw new FormatException(
+                DigestionSourceConflictMarkers.FormatFinding(source.SourcePath, line));
+        }
+
         if (source.Atomizer == AtomizerRegistry.NoAtomizerId)
         {
             var boundary = entry.Boundary
