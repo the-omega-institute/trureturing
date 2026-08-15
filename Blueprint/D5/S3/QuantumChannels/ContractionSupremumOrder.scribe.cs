@@ -1,0 +1,42 @@
+using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
+
+namespace StrataLint.Scribe.Blueprint.D5.S3.QuantumChannels;
+
+internal sealed class ContractionSupremumOrderDocument : IScribeDocumentDefinition
+{
+    private static Formula Ratio(string metric) => Seq(
+        F.Id("eta"), Underscore, Grp(F.Id(metric)), Open, Gamma, Comma, F.Id("u"), Close);
+
+    private static Formula AxisSup(string metric) => Seq(
+        Operatorname, Grp(F.Id("sup")), Underscore,
+        Grp(D(0), Sp, Lt, Sp, F.Id("u"), Sp, Lt, Sp, D(1)), Sp, Ratio(metric));
+
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "The pointwise SLD-KM-RLD amplitude-damping order lifts to the corresponding "
+        + "positive open-axis suprema of the scalar contraction-ratio model.",
+        H("Amplitude-Damping Contraction Suprema Are Ordered"),
+        Blocks(
+            Describe.Lean(
+                DescribeId.Create("the-positive-axis-contraction-ratio-suprema-are-ordered"),
+                DeclarationHandle.Create(
+                    "D5/S3/QuantumChannels/ContractionSupremumOrder.contraction_supremum_order"),
+                H("The positive-axis contraction-ratio suprema are ordered"),
+                StatementSource.FromAuthor(Disp(Seq(
+                    D(0), Le, Gamma, Sp, Lt, Sp, D(1), Sp, Rightarrow, Sp,
+                    AxisSup("SLD"), Sp, Le, Sp, AxisSup("KM"), Sp, Le, Sp, AxisSup("RLD")))),
+                AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text(
+                        "Fix a damping parameter gamma in the interval from zero inclusive to one "
+                        + "exclusive. Taking the supremum over the positive open Bloch axis preserves "
+                        + "the imported pointwise ordering of the SLD, KM, and RLD coherence ratios. "
+                        + "Boundedness follows from the imported RLD endpoint bound, while the two "
+                        + "supremum comparisons use monotonicity of the indexed supremum.")),
+                    Paragraph(Text(
+                        "This theorem orders suprema of the repository's scalar coherenceRatio model "
+                        + "only for u in the open interval from zero to one. It does not establish an "
+                        + "all-state reduction and makes no claim about the negative axis."))),
+                DescribeRole.Theorem))));
+}
