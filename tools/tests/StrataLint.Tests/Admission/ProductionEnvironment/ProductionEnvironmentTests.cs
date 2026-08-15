@@ -115,6 +115,7 @@ public sealed partial class ProductionEnvironmentTests
     {
         using var temporary = new TemporaryDirectory();
         var fixture = new RuleFixture();
+        fixture.UseLegacyBackfill();
         var atomizerId = SyntheticNumberedAtomizer.Id;
         var baselineBytes = Encoding.UTF8.GetBytes("# Synthetic\n\n**定理 1.1(A)**。old。\n");
         var atom = Assert.Single(AtomizerRegistry.Atomize(atomizerId, baselineBytes, DigestionTestSupport.Rules).Claims);

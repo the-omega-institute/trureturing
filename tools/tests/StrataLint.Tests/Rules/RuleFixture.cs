@@ -14,6 +14,10 @@ internal sealed partial class RuleFixture
         "sha256:2d711642b726b04401627ca9fbac32f5c8530fb1903cc4db02258717921a4881";
     internal const string FixtureCasPath =
         "Meta/Digestion/atoms/sha256/2d711642b726b04401627ca9fbac32f5c8530fb1903cc4db02258717921a4881";
+    internal const string FixtureBackfillSourcePath =
+        "Meta/Digestion/backfill/fixture-source/source.toml";
+    internal const string FixtureBackfillAtomPath =
+        "Meta/Digestion/backfill/fixture-source/partial-closed/fixture-atom.yaml";
     internal const string FixtureBackfill = """
         schema_version: 3
         ledger: theory-digestion-v1
@@ -80,6 +84,49 @@ internal sealed partial class RuleFixture
           - case_id: D5-T0018
             gid: D5/X_Frontier/HeartsDraft
         """ + "\n";
+    internal const string FixtureBackfillSource = """
+        source_id = "fixture-source"
+        path = "docs/GOVERNANCE.md"
+        atomizer = "none"
+        """ + "\n";
+    internal const string FixtureBackfillAtom = """
+        boundary:
+          ast_path: manual/fixture
+          start_byte: 0
+          end_byte: 1
+        fingerprints:
+          raw_sha256: sha256:2d711642b726b04401627ca9fbac32f5c8530fb1903cc4db02258717921a4881
+          normalized_sha256: sha256:2d711642b726b04401627ca9fbac32f5c8530fb1903cc4db02258717921a4881
+        cas_ref: sha256:2d711642b726b04401627ca9fbac32f5c8530fb1903cc4db02258717921a4881
+        coverage_gids:
+          - D5/S0/Carrier/BackfillTarget
+        receipts:
+          coverage: []
+          scribe: []
+          unresolved_subitems: []
+          chain_atoms: []
+          tail_authorization: null
+        """ + "\n";
+    internal const string FixtureTicketIndex = """
+        D5-T0001 = "D5/X_Frontier/HeartsDraft"
+        D5-T0002 = "D5/X_Frontier/StrataLintLeanEnvironment"
+        D5-T0003 = "D5/X_Frontier/ValuesProducer"
+        D5-T0004 = "D5/X_Frontier/SplitTool"
+        D5-T0005 = "D5/X_Frontier/PaperGenerator"
+        D5-T0006 = "D5/X_Frontier/D5P001"
+        D5-T0007 = "D5/X_Frontier/RequiredChecks"
+        D5-T0008 = "D5/X_Frontier/GoldenUnitsUFD"
+        D5-T0009 = "D5/X_Frontier/FutureInstances"
+        D5-T0010 = "D5/X_Frontier/ToolchainUpgrade"
+        D5-T0011 = "D5/X_Frontier/GovernanceDeferrals"
+        D5-T0012 = "D5/X_Frontier/GovernanceDeferrals"
+        D5-T0013 = "D5/X_Frontier/GovernanceDeferrals"
+        D5-T0014 = "D5/X_Frontier/GovernanceDeferrals"
+        D5-T0015 = "D5/X_Frontier/GovernanceDeferrals"
+        D5-T0016 = "D5/X_Frontier/GovernanceDeferrals"
+        D5-T0017 = "D5/X_Frontier/RequiredChecks"
+        D5-T0018 = "D5/X_Frontier/HeartsDraft"
+        """ + "\n";
 
     internal const string RingPath = "D5/S0/Carrier/Ring.lean";
     internal const string ValuesBindingPath = "D5/S0/Carrier/ValuesBinding.lean";
@@ -112,7 +159,9 @@ internal sealed partial class RuleFixture
         Files = new Dictionary<string, string>(StringComparer.Ordinal)
         {
             ["Meta/domains.yaml"] = TestRegistry.Domains,
-            ["Meta/BACKFILL.yaml"] = FixtureBackfill,
+            [FixtureBackfillSourcePath] = FixtureBackfillSource,
+            [FixtureBackfillAtomPath] = FixtureBackfillAtom,
+            [BackfillInventoryLoader.TicketIndexPath] = FixtureTicketIndex,
             [TheoryAtomizerDataLoader.DataPath] = File.ReadAllText(
                 Path.Combine(repositoryRoot, TheoryAtomizerDataLoader.DataPath), Encoding.UTF8),
             ["Meta/registry.yaml"] = TestRegistry.Canonical,
@@ -167,9 +216,18 @@ internal sealed partial class RuleFixture
 
     internal List<string> Changes { get; }
 
+    internal void UseLegacyBackfill()
+    {
+        foreach (var files in new[] { Files, Baseline })
+        {
+            RemoveDigestionLedger(files);
+            files[BackfillInventoryLoader.RelativePath] = FixtureBackfill;
+        }
+    }
+
     internal void UseSyntheticDirectoryBackfill(string ticketIndex)
     {
-        Files.Remove(BackfillInventoryLoader.RelativePath);
+        RemoveDigestionLedger(Files);
         Files[$"{BackfillInventoryLoader.RootPath}delta-v0.1/source.toml"] =
             $"source_id = \"delta-v0.1\"\npath = \"{FixtureDigestionSourcePath}\"\natomizer = \"none\"\n";
         Files[$"{BackfillInventoryLoader.RootPath}delta-v0.1/residual-open/delta-atom.yaml"] = """
@@ -194,7 +252,7 @@ internal sealed partial class RuleFixture
 
     internal void UseValidDirectoryBackfill()
     {
-        var document = BackfillInventoryLoader.Load(Files[BackfillInventoryLoader.RelativePath]);
+        var document = BackfillInventoryLoader.Load(Decode(Files));
         var ticketIndex = string.Concat(document.RequireTickets().Select(static ticket =>
             $"{ticket.CaseId} = \"{ticket.Gid}\"\n"));
         const string sourcePath = "delta-v0.1/source.toml";
@@ -221,7 +279,7 @@ internal sealed partial class RuleFixture
 
         foreach (var files in new[] { Files, Baseline })
         {
-            files.Remove(BackfillInventoryLoader.RelativePath);
+            RemoveDigestionLedger(files);
             files[BackfillInventoryLoader.RootPath + sourcePath] = source;
             files[BackfillInventoryLoader.RootPath + atomPath] = atom;
             files[BackfillInventoryLoader.TicketIndexPath] = ticketIndex;
@@ -251,7 +309,7 @@ internal sealed partial class RuleFixture
             case "domain": AddUnknownDomain(); break;
             case "header": Files[RingPath] = "def noHeader : Nat := 0\n"; break;
             case "formula": AddIllegalFormula(); break;
-            case "backfill": Files["Meta/BACKFILL.yaml"] = Files["Meta/BACKFILL.yaml"].Replace("schema_version: 3", "schema_version: 2", StringComparison.Ordinal); break;
+            case "backfill": Files[FixtureBackfillSourcePath] = Files[FixtureBackfillSourcePath].Replace("source_id = \"fixture-source\"", "source_id = [\"fixture-source\"]", StringComparison.Ordinal); break;
             case "query": Files["Library/queries.yaml"] = "schema_version: 1\nqueries:\n  - id: D5-Q0099\n    target_gid: D5/S0/Carrier/Ring\n"; break;
             case "values": Files["Evidence/D5/values.result.json"] = "{\"D5/sample\": {\"status\": \"verified\"}}\n"; break;
             case "anomaly": Files["Evidence/D5/S0/Carrier/Result.run.json"] = "{\"anomaly\": \"fixture drift\"}\n"; break;
@@ -439,7 +497,7 @@ internal sealed partial class RuleFixture
 
     internal void AddBackfillTargets()
     {
-        var inventory = BackfillInventoryLoader.Load(Files["Meta/BACKFILL.yaml"]);
+        var inventory = BackfillInventoryLoader.Load(Decode(Files));
         var ticketsByGid = inventory.RequireTickets()
             .GroupBy(static ticket => ticket.Gid, StringComparer.Ordinal)
             .ToDictionary(
@@ -547,6 +605,17 @@ internal sealed partial class RuleFixture
     {
         var raw = RawRepositorySnapshot.Create(files.Select(pair => RawRepositoryEntry.FromText(pair.Key, pair.Value)));
         return Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(raw)).Snapshot;
+    }
+
+    private static void RemoveDigestionLedger(IDictionary<string, string> files)
+    {
+        files.Remove(BackfillInventoryLoader.RelativePath);
+        foreach (var path in files.Keys
+                     .Where(BackfillInventoryLoader.IsCanonicalPath)
+                     .ToArray())
+        {
+            files.Remove(path);
+        }
     }
 
     private static AcceptedLeanClosure AcceptLean(

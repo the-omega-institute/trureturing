@@ -640,8 +640,18 @@ public sealed partial class ProductionEnvironmentTests
         string ledger,
         DigestionAtom? existingAtom)
     {
-        fixture.Files[BackfillInventoryLoader.RelativePath] = ledger;
-        fixture.Baseline[BackfillInventoryLoader.RelativePath] = ledger;
+        foreach (var files in new[] { fixture.Files, fixture.Baseline })
+        {
+            foreach (var path in files.Keys
+                         .Where(BackfillInventoryLoader.IsCanonicalPath)
+                         .ToArray())
+            {
+                files.Remove(path);
+            }
+
+            files[BackfillInventoryLoader.RelativePath] = ledger;
+        }
+
         fixture.Files.Remove(RuleFixture.FixtureCasPath);
         fixture.Baseline.Remove(RuleFixture.FixtureCasPath);
         if (existingAtom is null)

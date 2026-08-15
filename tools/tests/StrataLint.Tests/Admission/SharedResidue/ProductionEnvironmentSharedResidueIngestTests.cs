@@ -171,16 +171,14 @@ public sealed partial class ProductionEnvironmentTests
         fixture.Files["docs/CONTRIBUTING.md"] = sourceText;
         fixture.Baseline[RuleFixture.FixtureDigestionSourcePath] = sourceText;
         fixture.Baseline["docs/CONTRIBUTING.md"] = sourceText;
-        fixture.Files[BackfillInventoryLoader.RelativePath] = currentLedger;
-        fixture.Baseline[BackfillInventoryLoader.RelativePath] = baselineLedger;
+        DirectoryLedgerTestSupport.ReplaceWithProjection(fixture.Files, currentLedger);
+        DirectoryLedgerTestSupport.ReplaceWithProjection(fixture.Baseline, baselineLedger);
         fixture.Files.Remove(RuleFixture.FixtureCasPath);
         fixture.Baseline.Remove(RuleFixture.FixtureCasPath);
         fixture.Files[captured.RelativePath] = Encoding.UTF8.GetString(captured.Bytes.AsSpan());
         fixture.Baseline[captured.RelativePath] = Encoding.UTF8.GetString(captured.Bytes.AsSpan());
         using var temporary = new TemporaryDirectory();
-        var outputPath = Path.Combine(temporary.Path, BackfillInventoryLoader.RelativePath);
-        Directory.CreateDirectory(Path.GetDirectoryName(outputPath)!);
-        File.WriteAllText(outputPath, currentLedger, new UTF8Encoding(false));
+        DirectoryLedgerTestSupport.Write(temporary.Path, fixture.Files);
         var environment = new ProductionCliEnvironment(
             temporary.Path,
             new FakeRepositoryGateway(
