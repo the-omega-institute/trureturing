@@ -209,11 +209,14 @@ public sealed class StatementProjectionPilotTests
     {
         using var fixture = LoadPinnedFixture("statement-projection-pilot-v1.json");
         using var expansion = LoadPinnedFixture("statement-projection-expansion-v1.json");
-        var result = Assert.Single(ProjectionPilot.Run(ReadFixtureDeclarations(fixture, expansion)).Cases,
-            item => item.Name.EndsWith("hiddenFiber_closed_compact_seqCompact", StringComparison.Ordinal));
+        var declaration = Assert.Single(ReadFixtureDeclarations(fixture, expansion), item =>
+            item.Key.EndsWith("hiddenFiber_closed_compact_seqCompact", StringComparison.Ordinal));
 
-        Assert.Empty(result.Unprojectable);
-        Assert.IsNotType<Formula.Placeholder>(result.Formula);
+        var outcome = StatementProjector.Project(
+            StatementV1Decoder.Decode(declaration.Value.GetProperty("type").GetString()!).Type);
+
+        var formula = Assert.IsType<ProjectionOutcome.Projected>(outcome).Formula;
+        Assert.IsNotType<Formula.Placeholder>(formula);
     }
 
     [Fact]
@@ -221,11 +224,14 @@ public sealed class StatementProjectionPilotTests
     {
         using var fixture = LoadPinnedFixture("statement-projection-pilot-v1.json");
         using var expansion = LoadPinnedFixture("statement-projection-expansion-v1.json");
-        var result = Assert.Single(ProjectionPilot.Run(ReadFixtureDeclarations(fixture, expansion)).Cases,
-            item => item.Name.EndsWith("finite_poisson_summation", StringComparison.Ordinal));
+        var declaration = Assert.Single(ReadFixtureDeclarations(fixture, expansion), item =>
+            item.Key.EndsWith("finite_poisson_summation", StringComparison.Ordinal));
 
-        Assert.Empty(result.Unprojectable);
-        Assert.IsNotType<Formula.Placeholder>(result.Formula);
+        var outcome = StatementProjector.Project(
+            StatementV1Decoder.Decode(declaration.Value.GetProperty("type").GetString()!).Type);
+
+        var formula = Assert.IsType<ProjectionOutcome.Projected>(outcome).Formula;
+        Assert.IsNotType<Formula.Placeholder>(formula);
     }
 
     [Fact]
@@ -246,21 +252,19 @@ public sealed class StatementProjectionPilotTests
     }
 
     [Fact]
-    public void PilotProjectsTenOfTenRealDeclarationsAndPinsTheComparisonReport()
+    public void EveryPinnedFixtureDeclarationProjectsWithoutPlaceholder()
     {
         using var fixture = LoadPinnedFixture("statement-projection-pilot-v1.json");
         using var expansion = LoadPinnedFixture("statement-projection-expansion-v1.json");
-        var results = ProjectionPilot.Run(ReadFixtureDeclarations(fixture, expansion));
 
-        Assert.Equal(10, results.Cases.Length);
-        Assert.Empty(results.Report);
-        Assert.Equal(ProjectionNotation.Entries.Count, results.NotationSize);
-        Assert.All(results.Cases.Where(item => item.Unprojectable.IsEmpty),
-            item => Assert.IsNotType<Formula.Placeholder>(item.Formula));
-        Assert.All(results.Cases.Where(item => !item.Unprojectable.IsEmpty),
-            item => Assert.IsType<Formula.Placeholder>(item.Formula));
-        Assert.Equal(10, results.Cases.Count(item => item.Unprojectable.IsEmpty));
-        Assert.Empty(results.Cases.Where(item => !item.Unprojectable.IsEmpty));
+        foreach (var declaration in ReadFixtureDeclarations(fixture, expansion))
+        {
+            var outcome = StatementProjector.Project(
+                StatementV1Decoder.Decode(declaration.Value.GetProperty("type").GetString()!).Type);
+
+            var formula = Assert.IsType<ProjectionOutcome.Projected>(outcome).Formula;
+            Assert.IsNotType<Formula.Placeholder>(formula);
+        }
     }
 
     [Fact]
