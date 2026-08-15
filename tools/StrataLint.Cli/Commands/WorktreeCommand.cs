@@ -16,6 +16,7 @@ internal static class WorktreeCommand
     internal const string SolutionPath = "tools/StrataLint.sln";
     internal const string Usage =
         "USAGE: StrataLint worktree ensure-cache [--path DIR] | "
+        + "StrataLint worktree with-cache-writer [--path DIR] -- COMMAND [ARG ...] | "
         + "StrataLint worktree --branch NAME --path DIR "
         + "[--base REV] [--source REPO_ROOT] [--skip-restore]. "
         + ".lake caches are copied for isolation; symlink sharing is forbidden.";
@@ -57,6 +58,14 @@ internal static class WorktreeCommand
                 arguments.Skip(1).ToArray(),
                 runner);
         }
+        if (arguments.Count > 0
+            && string.Equals(arguments[0], "with-cache-writer", StringComparison.Ordinal))
+        {
+            return LeanCacheEnsureCommand.RunWithWriter(
+                repositoryRoot,
+                arguments.Skip(1).ToArray(),
+                runner);
+        }
 
         WorktreeOptions? options = null;
         var worktreeCreated = false;
@@ -68,7 +77,7 @@ internal static class WorktreeCommand
             GitWorktreeInventory.FetchRemoteBase(options.Source, options.Base, runner);
             VerifyBase(options, runner);
             var pins = LeanPinSet.ReadBase(options.Source, options.Base, runner);
-            var donor = GitWorktreeInventory.SelectDonor(options.Source, pins, runner);
+            using var donor = GitWorktreeInventory.SelectDonor(options.Source, pins, runner);
 
             RunRequired(
                 runner,
@@ -79,7 +88,7 @@ internal static class WorktreeCommand
                 "git worktree add failed");
             worktreeCreated = true;
             EnsureReviewScaffoldIgnores(options.Path);
-            var cache = LeanCacheProvisioner.Provision(donor, options.Path, runner);
+            var cache = LeanCacheProvisioner.Provision(donor, options.Path, pins, runner);
             if (!options.SkipRestore)
             {
                 RunRequired(
@@ -102,6 +111,7 @@ internal static class WorktreeCommand
                 pin_sha256 = pins.Sha256,
                 cache_strategy = cache.Strategy,
                 cache_method = cache.Method,
+                mathlib_cache_pruned_files = cache.MathlibCachePrunedFiles,
                 dotnet_restore = options.SkipRestore ? "skipped" : "restored",
                 elapsed_ms = stopwatch.ElapsedMilliseconds,
             }) + "\n";

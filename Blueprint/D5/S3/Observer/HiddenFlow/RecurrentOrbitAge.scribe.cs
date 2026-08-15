@@ -64,21 +64,21 @@ internal sealed class RecurrentOrbitAgeDocument : IScribeDocumentDefinition
         Formula age = F.Id("age");
         Formula real = Seq(Mathbb, Grp(F.Id("R")));
         Formula naturals = Seq(Mathbb, Grp(F.Id("N")));
-        Formula atTop = OperatornameThen("atTop");
+        Formula atTop = OperatornameThen(F.Id("atTop"));
         Formula indexedTime = Seq(times, Underscore, Grp(index));
         Formula orbitPoint = Apply(Seq(Phi, Underscore, Grp(indexedTime)), x0);
         Formula flowPoint = Apply(Seq(Phi, Underscore, Grp(time)), x0);
 
         Formula Tendsto(Formula function, Formula source, Formula target) =>
-            Apply(OperatornameThen("Tendsto"), function, source, target);
+            Apply(OperatornameThen(F.Id("Tendsto")), function, source, target);
 
-        Formula nhds(Formula point) => Apply(OperatornameThen("nhds"), point);
+        Formula nhds(Formula point) => Apply(OperatornameThen(F.Id("nhds")), point);
 
         return Disp(Seq(
             Forall, Sp, x, Comma, Sp,
-            OpenBracket, OperatornameThen("TopologicalSpace"), Open, x, Close,
+            OpenBracket, OperatornameThen(F.Id("TopologicalSpace")), Open, x, Close,
             CloseBracket, Comma, Esc,
-            Phi, Colon, Sp, Apply(OperatornameThen("Flow"), real, x), Comma, Sp,
+            Phi, Colon, Sp, Apply(OperatornameThen(F.Id("Flow")), real, x), Comma, Sp,
             x0, Colon, Sp, x, Comma, Sp,
             times, Colon, Sp, naturals, Sp, To, Sp, real, Comma, Esc,
             Open,
@@ -87,12 +87,12 @@ internal sealed class RecurrentOrbitAgeDocument : IScribeDocumentDefinition
                 atTop, nhds(x0)),
             Close, Sp, Rightarrow, Esc,
             Neg, Exists, Sp, age, Colon, Sp, x, Sp, To, Sp, real, Comma, Esc,
-            Apply(OperatornameThen("Continuous"), age), Sp, Land, Sp,
+            Apply(OperatornameThen(F.Id("Continuous")), age), Sp, Land, Sp,
             Forall, Sp, time, InMacro, Sp, real, Comma, Sp,
             D(0), Sp, Leq, Sp, time, Sp, Rightarrow, Sp,
             Apply(age, flowPoint), Sp, Eq, Sp, time, Dot));
     }
 
-    private static Formula OperatornameThen(string name) =>
-        Seq(Operatorname, Grp(F.Id(name)));
+    private static Formula OperatornameThen(Formula name) =>
+        Seq(Operatorname, Grp(name));
 }

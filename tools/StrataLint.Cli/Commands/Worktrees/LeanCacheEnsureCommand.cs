@@ -1,3 +1,4 @@
+using System.Text;
 using System.Text.Json;
 
 namespace StrataLint.Cli;
@@ -5,6 +6,8 @@ namespace StrataLint.Cli;
 internal static class LeanCacheEnsureCommand
 {
     internal const string Usage = "USAGE: StrataLint worktree ensure-cache [--path DIR]";
+    internal const string WriterUsage =
+        "USAGE: StrataLint worktree with-cache-writer [--path DIR] -- COMMAND [ARG ...]";
 
     internal static CommandResult Run(
         string repositoryRoot,
@@ -18,47 +21,156 @@ internal static class LeanCacheEnsureCommand
             return new CommandResult(false, string.Empty, Usage + "\n");
         }
 
+        var pins = LeanPinSet.TryReadWorktree(root, out var pinReason);
+        if (pins is null)
+        {
+            return FailureReceipt(
+                "failed",
+                root,
+                donor: null,
+                method: "none",
+                pinSha256: null,
+                reason: pinReason ?? "Lean pin files are unavailable");
+        }
+
+        var lake = Path.Combine(root, ".lake");
+        using var guard = LeanCacheGuard.TryAcquireExclusive(lake);
+        if (guard is null)
+        {
+            return FailureReceipt(
+                "busy",
+                root,
+                donor: null,
+                method: "none",
+                pins.Sha256,
+                "canonical cache writer guard is busy");
+        }
+
+        return EnsureLocked(root, pins, runner);
+    }
+
+    internal static CommandResult RunWithWriter(
+        string repositoryRoot,
+        IReadOnlyList<string> arguments,
+        IWorktreeProcessRunner runner)
+    {
+        if (!TryParseWriter(repositoryRoot, arguments, out var root, out var command))
+        {
+            return new CommandResult(false, string.Empty, WriterUsage + "\n");
+        }
+
+        var pins = LeanPinSet.TryReadWorktree(root, out var pinReason);
+        if (pins is null)
+        {
+            return FailureReceipt(
+                "failed",
+                root,
+                donor: null,
+                method: "none",
+                pinSha256: null,
+                reason: pinReason ?? "Lean pin files are unavailable");
+        }
+
+        using var guard = LeanCacheGuard.TryAcquireExclusive(Path.Combine(root, ".lake"));
+        if (guard is null)
+        {
+            return FailureReceipt(
+                "busy",
+                root,
+                donor: null,
+                method: "none",
+                pins.Sha256,
+                "canonical cache writer guard is busy");
+        }
+
+        var ensured = EnsureLocked(root, pins, runner);
+        if (!ensured.Success) return ensured;
+
+        try
+        {
+            var invoked = runner.Run(
+                command[0],
+                command.Skip(1).ToArray(),
+                root,
+                LeanCacheProvisioner.CommandBudget);
+            return new CommandResult(
+                invoked.ExitCode == 0,
+                ensured.Output + Encoding.UTF8.GetString(invoked.StandardOutput),
+                Encoding.UTF8.GetString(invoked.StandardError));
+        }
+        catch (Exception exception)
+        {
+            return new CommandResult(false, ensured.Output, exception.Message + "\n");
+        }
+    }
+
+    private static CommandResult EnsureLocked(
+        string root,
+        LeanPinSet pins,
+        IWorktreeProcessRunner runner)
+    {
         var lake = Path.Combine(root, ".lake");
         try
         {
-            if (IsSymlink(lake)) return RefusedSymlink(lake);
+            if (IsSymlink(lake)) return RefusedSymlink(root, pins.Sha256);
+
+            string? missReason = null;
             if (Directory.Exists(lake))
             {
-                return SuccessReceipt("present", root, donor: null, method: "none", reason: null);
+                if (LeanCacheStamp.Matches(lake, pins, out missReason))
+                {
+                    return SuccessReceipt(
+                        "present",
+                        root,
+                        donor: null,
+                        method: "none",
+                        pins.Sha256,
+                        reason: null,
+                        mathlibCachePrunedFiles: null);
+                }
+                RemoveProjection(lake);
             }
-
-            if (File.Exists(lake))
+            else if (File.Exists(lake))
             {
-                return ColdReceipt(root, donor: null, ".lake exists but is not a directory");
+                missReason = ".lake exists but is not a directory";
+                File.Delete(lake);
             }
 
-            var pins = LeanPinSet.TryReadWorktree(root, out var pinReason);
-            if (pins is null)
-            {
-                return ColdReceipt(root, donor: null, pinReason ?? "Lean pin files are unavailable");
-            }
-
-            var selection = GitWorktreeInventory.SelectDonor(root, pins, runner);
+            using var selection = GitWorktreeInventory.SelectDonor(root, pins, runner);
             try
             {
-                var provisioned = LeanCacheProvisioner.Provision(selection, root, runner);
-                var reason = JoinReasons(selection.Notice, provisioned.Warning);
+                var provisioned = LeanCacheProvisioner.Provision(selection, root, pins, runner);
                 return SuccessReceipt(
                     provisioned.Strategy == "cloned" ? "seeded" : "fetched",
                     root,
                     selection.Donor,
                     provisioned.Method,
-                    reason);
+                    pins.Sha256,
+                    JoinReasons(missReason, JoinReasons(selection.Notice, provisioned.Warning)),
+                    provisioned.MathlibCachePrunedFiles);
             }
             catch (Exception exception)
             {
-                if (IsSymlink(lake)) return RefusedSymlink(lake);
-                return ColdReceipt(root, selection.Donor, JoinReasons(selection.Notice, exception.Message));
+                if (IsSymlink(lake)) return RefusedSymlink(root, pins.Sha256);
+                return FailureReceipt(
+                    "failed",
+                    root,
+                    selection.Donor,
+                    "none",
+                    pins.Sha256,
+                    JoinReasons(missReason, JoinReasons(selection.Notice, exception.Message))
+                        ?? "unknown provisioning failure");
             }
         }
         catch (Exception exception)
         {
-            return ColdReceipt(root, donor: null, exception.Message);
+            return FailureReceipt(
+                "failed",
+                root,
+                donor: null,
+                method: "none",
+                pins.Sha256,
+                exception.Message);
         }
     }
 
@@ -67,28 +179,41 @@ internal static class LeanCacheEnsureCommand
         string worktree,
         string? donor,
         string method,
-        string? reason) =>
+        string? pinSha256,
+        string? reason,
+        int? mathlibCachePrunedFiles) =>
         new(
             true,
-            RenderReceipt(status, worktree, donor, method, reason),
+            RenderReceipt(
+                status,
+                worktree,
+                donor,
+                method,
+                pinSha256,
+                reason,
+                mathlibCachePrunedFiles),
             string.Empty);
 
-    private static CommandResult ColdReceipt(
+    private static CommandResult FailureReceipt(
+        string status,
         string worktree,
         string? donor,
+        string method,
+        string? pinSha256,
         string reason) =>
-        SuccessReceipt("cold", worktree, donor, "none", reason);
-
-    private static CommandResult RefusedSymlink(string lake) =>
         new(
             false,
             string.Empty,
-            RenderReceipt(
-                "refused",
-                Path.GetDirectoryName(lake) ?? lake,
-                donor: null,
-                method: "none",
-                reason: ".lake is a symlink; shared Lean caches are forbidden"));
+            RenderReceipt(status, worktree, donor, method, pinSha256, reason, null));
+
+    private static CommandResult RefusedSymlink(string root, string pinSha256) =>
+        FailureReceipt(
+            "refused",
+            root,
+            donor: null,
+            method: "none",
+            pinSha256,
+            reason: ".lake is a symlink; shared Lean caches are forbidden");
 
     private static bool TryParseWorktreeRoot(
         string repositoryRoot,
@@ -118,7 +243,9 @@ internal static class LeanCacheEnsureCommand
         string worktree,
         string? donor,
         string method,
-        string? reason) =>
+        string? pinSha256,
+        string? reason,
+        int? mathlibCachePrunedFiles) =>
         "LEAN_CACHE " + JsonSerializer.Serialize(new
         {
             status,
@@ -126,11 +253,36 @@ internal static class LeanCacheEnsureCommand
             donor,
             method,
             reason,
+            pin_sha256 = pinSha256,
+            shared_cache_scope = "machine",
+            mathlib_cache_pruned_files = mathlibCachePrunedFiles,
         }) + "\n";
 
-    private static string JoinReasons(string? first, string? second)
+    private static bool TryParseWriter(
+        string repositoryRoot,
+        IReadOnlyList<string> arguments,
+        out string root,
+        out string[] command)
     {
-        if (string.IsNullOrWhiteSpace(first)) return second ?? "unknown provisioning failure";
+        var index = 0;
+        root = Path.GetFullPath(repositoryRoot);
+        if (arguments.Count >= 2 && arguments[0] == "--path")
+        {
+            root = Path.GetFullPath(arguments[1]);
+            index = 2;
+        }
+        if (index >= arguments.Count || arguments[index] != "--" || index + 1 >= arguments.Count)
+        {
+            command = [];
+            return false;
+        }
+        command = arguments.Skip(index + 1).ToArray();
+        return true;
+    }
+
+    private static string? JoinReasons(string? first, string? second)
+    {
+        if (string.IsNullOrWhiteSpace(first)) return second;
         if (string.IsNullOrWhiteSpace(second)) return first;
         return first + "; " + second;
     }
@@ -138,4 +290,6 @@ internal static class LeanCacheEnsureCommand
     private static bool IsSymlink(string path) =>
         (Directory.Exists(path) || File.Exists(path))
         && File.GetAttributes(path).HasFlag(FileAttributes.ReparsePoint);
+
+    private static void RemoveProjection(string lake) => Directory.Delete(lake, recursive: true);
 }

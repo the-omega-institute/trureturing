@@ -1,6 +1,9 @@
 using System.Buffers.Binary;
 using System.Security.Cryptography;
 using System.Text;
+using System.Text.Json;
+using System.Runtime.InteropServices;
+using Microsoft.Win32.SafeHandles;
 using StrataLint.Engine;
 
 namespace StrataLint.Cli;
@@ -89,7 +92,301 @@ internal sealed record LeanPinSet(byte[] LeanToolchain, byte[] LakeManifest, str
     }
 }
 
-internal sealed record LeanCacheDonorSelection(string? Donor, string? Notice);
+internal static class LeanCacheStamp
+{
+    private const string Schema = "stratalint-lean-cache-v1";
+    private const string FileName = ".stratalint-lean-cache-stamp.json";
+
+    internal static string PathFor(string lake) => Path.Combine(lake, FileName);
+
+    internal static void Write(string lake, LeanPinSet pins)
+    {
+        Directory.CreateDirectory(lake);
+        var path = PathFor(lake);
+        var temporary = Path.Combine(lake, $".stratalint-lean-cache-stamp.{Path.GetRandomFileName()}.tmp");
+        try
+        {
+            File.WriteAllText(
+                temporary,
+                JsonSerializer.Serialize(new
+                {
+                    schema = Schema,
+                    pin_sha256 = pins.Sha256,
+                    lean_toolchain_base64 = Convert.ToBase64String(pins.LeanToolchain),
+                    lake_manifest_base64 = Convert.ToBase64String(pins.LakeManifest),
+                }) + "\n",
+                new UTF8Encoding(false));
+            File.Move(temporary, path, overwrite: true);
+        }
+        finally
+        {
+            if (File.Exists(temporary)) File.Delete(temporary);
+        }
+    }
+
+    internal static bool Matches(string lake, LeanPinSet pins, out string? reason)
+    {
+        var path = PathFor(lake);
+        if (!File.Exists(path))
+        {
+            reason = "cache producer stamp is absent";
+            return false;
+        }
+
+        try
+        {
+            using var document = JsonDocument.Parse(File.ReadAllBytes(path));
+            var root = document.RootElement;
+            if (root.ValueKind != JsonValueKind.Object
+                || !root.TryGetProperty("schema", out var schema)
+                || schema.ValueKind != JsonValueKind.String
+                || schema.GetString() != Schema
+                || !root.TryGetProperty("pin_sha256", out var sha256)
+                || sha256.ValueKind != JsonValueKind.String
+                || !root.TryGetProperty("lean_toolchain_base64", out var toolchain)
+                || toolchain.ValueKind != JsonValueKind.String
+                || !root.TryGetProperty("lake_manifest_base64", out var manifest)
+                || manifest.ValueKind != JsonValueKind.String)
+            {
+                reason = "cache producer stamp has an unknown or invalid schema";
+                return false;
+            }
+
+            var toolchainBytes = Convert.FromBase64String(toolchain.GetString()!);
+            var manifestBytes = Convert.FromBase64String(manifest.GetString()!);
+            if (sha256.GetString() != pins.Sha256
+                || !toolchainBytes.AsSpan().SequenceEqual(pins.LeanToolchain)
+                || !manifestBytes.AsSpan().SequenceEqual(pins.LakeManifest))
+            {
+                reason = "cache producer stamp pin bytes do not match the requested pins";
+                return false;
+            }
+
+            reason = null;
+            return true;
+        }
+        catch (Exception exception) when (exception is IOException
+            or UnauthorizedAccessException
+            or JsonException
+            or FormatException)
+        {
+            reason = $"cache producer stamp is unreadable: {exception.Message}";
+            return false;
+        }
+    }
+}
+
+internal sealed class LeanCacheGuard : IDisposable
+{
+    private const int LockShared = 1;
+    private const int LockExclusive = 2;
+    private const int LockNonBlocking = 4;
+    private const int LockUnlock = 8;
+    private const uint LockFileFailImmediately = 1;
+    private const uint LockFileExclusiveLock = 2;
+    private readonly FileStream stream;
+    private bool locked = true;
+
+    private LeanCacheGuard(FileStream stream) => this.stream = stream;
+
+    internal static LeanCacheGuard? TryAcquireShared(string lake) => TryAcquire(lake, shared: true);
+
+    internal static LeanCacheGuard? TryAcquireExclusive(string lake) => TryAcquire(lake, shared: false);
+
+    internal static string PhysicalPath(string path)
+    {
+        var full = Path.GetFullPath(path);
+        if (OperatingSystem.IsWindows()) return full;
+        var resolved = ResolveExisting(full);
+        if (resolved is not null) return resolved;
+        var parent = Path.GetDirectoryName(full);
+        var resolvedParent = parent is null ? null : ResolveExisting(parent);
+        return resolvedParent is null ? full : Path.Combine(resolvedParent, Path.GetFileName(full));
+    }
+
+    public void Dispose()
+    {
+        if (locked)
+        {
+            if (OperatingSystem.IsWindows())
+            {
+                _ = UnlockFile(stream.SafeFileHandle, 0, 0, 1, 0);
+            }
+            else
+            {
+                _ = Flock(stream.SafeFileHandle, LockUnlock);
+            }
+            locked = false;
+        }
+        stream.Dispose();
+    }
+
+    private static LeanCacheGuard? TryAcquire(string lake, bool shared)
+    {
+        var directory = Path.Combine(Path.GetTempPath(), "stratalint-lean-cache-guards");
+        Directory.CreateDirectory(directory);
+        var address = Convert.ToHexStringLower(SHA256.HashData(
+            Encoding.UTF8.GetBytes(PhysicalPath(lake))));
+        FileStream stream;
+        try
+        {
+            stream = new FileStream(
+                Path.Combine(directory, address + ".lock"),
+                FileMode.OpenOrCreate,
+                FileAccess.ReadWrite,
+                FileShare.ReadWrite | FileShare.Delete);
+        }
+        catch (IOException)
+        {
+            return null;
+        }
+        var acquired = OperatingSystem.IsWindows()
+            ? TryLockWindows(stream.SafeFileHandle, shared)
+            : Flock(
+                stream.SafeFileHandle,
+                (shared ? LockShared : LockExclusive) | LockNonBlocking) == 0;
+        if (acquired) return new LeanCacheGuard(stream);
+        stream.Dispose();
+        return null;
+    }
+
+    private static bool TryLockWindows(SafeFileHandle handle, bool shared)
+    {
+        var overlapped = Marshal.AllocHGlobal(Marshal.SizeOf<NativeOverlapped>());
+        try
+        {
+            Marshal.StructureToPtr(default(NativeOverlapped), overlapped, false);
+            var flags = LockFileFailImmediately | (shared ? 0u : LockFileExclusiveLock);
+            return LockFileEx(handle, flags, 0, 1, 0, overlapped);
+        }
+        finally
+        {
+            Marshal.FreeHGlobal(overlapped);
+        }
+    }
+
+    private static string? ResolveExisting(string path)
+    {
+        var pointer = RealPath(path, IntPtr.Zero);
+        if (pointer == IntPtr.Zero) return null;
+        try
+        {
+            return Marshal.PtrToStringUTF8(pointer);
+        }
+        finally
+        {
+            Free(pointer);
+        }
+    }
+
+    [DllImport("libc", EntryPoint = "flock", SetLastError = true)]
+    private static extern int Flock(SafeFileHandle handle, int operation);
+
+    [DllImport("libc", EntryPoint = "realpath", SetLastError = true)]
+    private static extern IntPtr RealPath([MarshalAs(UnmanagedType.LPUTF8Str)] string path, IntPtr buffer);
+
+    [DllImport("libc", EntryPoint = "free")]
+    private static extern void Free(IntPtr pointer);
+
+    [DllImport("kernel32.dll", SetLastError = true)]
+    [return: MarshalAs(UnmanagedType.Bool)]
+    private static extern bool LockFileEx(
+        SafeFileHandle file,
+        uint flags,
+        uint reserved,
+        uint bytesLow,
+        uint bytesHigh,
+        IntPtr overlapped);
+
+    [DllImport("kernel32.dll", SetLastError = true)]
+    [return: MarshalAs(UnmanagedType.Bool)]
+    private static extern bool UnlockFile(
+        SafeFileHandle file,
+        uint offsetLow,
+        uint offsetHigh,
+        uint bytesLow,
+        uint bytesHigh);
+
+    [StructLayout(LayoutKind.Sequential)]
+    private struct NativeOverlapped
+    {
+        internal IntPtr Internal;
+        internal IntPtr InternalHigh;
+        internal uint Offset;
+        internal uint OffsetHigh;
+        internal IntPtr EventHandle;
+    }
+}
+
+internal static class LeanCacheBusyProbe
+{
+    internal static bool IsBusy(string root, IWorktreeProcessRunner runner)
+    {
+        ProcessOutput output;
+        try
+        {
+            output = runner.Run(
+                "lsof",
+                ["-Fpcn", "-a", "-d", "cwd"],
+                Path.GetTempPath(),
+                TimeSpan.FromSeconds(30));
+        }
+        catch (Exception exception) when (exception is IOException
+            or UnauthorizedAccessException
+            or InvalidOperationException
+            or TimeoutException)
+        {
+            return false;
+        }
+        if (output.ExitCode != 0) return false;
+
+        var target = LeanCacheGuard.PhysicalPath(root).TrimEnd(Path.DirectorySeparatorChar)
+            + Path.DirectorySeparatorChar;
+        string? command = null;
+        foreach (var line in Encoding.UTF8.GetString(output.StandardOutput).Split('\n'))
+        {
+            if (line.StartsWith('c'))
+            {
+                command = line[1..];
+                continue;
+            }
+            if (!line.StartsWith('n') || !IsLeanWriter(command)) continue;
+            var cwd = LeanCacheGuard.PhysicalPath(line[1..]).TrimEnd(Path.DirectorySeparatorChar)
+                + Path.DirectorySeparatorChar;
+            if (cwd.StartsWith(target, StringComparison.Ordinal)) return true;
+        }
+        return false;
+    }
+
+    private static bool IsLeanWriter(string? command) => command is not null
+        && (command.Contains("lake", StringComparison.OrdinalIgnoreCase)
+            || command.Contains("lean", StringComparison.OrdinalIgnoreCase));
+}
+
+internal sealed class LeanCacheDonorSelection : IDisposable
+{
+    private LeanCacheGuard? guard;
+
+    internal LeanCacheDonorSelection(string? donor, string? notice, LeanCacheGuard? guard = null)
+    {
+        Donor = donor;
+        Notice = notice;
+        this.guard = guard;
+    }
+
+    internal string? Donor { get; }
+
+    internal string? Notice { get; }
+
+    internal LeanCacheGuard? TakeGuard()
+    {
+        var owned = guard;
+        guard = null;
+        return owned;
+    }
+
+    public void Dispose() => guard?.Dispose();
+}
 
 internal static class GitWorktreeInventory
 {
@@ -103,10 +400,13 @@ internal static class GitWorktreeInventory
         var roots = ReadRoots(repositoryRoot, runner);
         var ordered = new[] { Path.GetFullPath(repositoryRoot) }
             .Concat(roots)
+            .Select(LeanCacheGuard.PhysicalPath)
             .Distinct(StringComparer.Ordinal);
         var sawCache = false;
         var sawMismatch = false;
         var sawSymlink = false;
+        var sawInvalidStamp = false;
+        var sawBusy = false;
         var unreadable = new List<string>();
 
         foreach (var root in ordered)
@@ -135,16 +435,46 @@ internal static class GitWorktreeInventory
                 continue;
             }
 
-            if (basePins.HasSameBytes(pins))
+            if (!basePins.HasSameBytes(pins))
             {
-                return new LeanCacheDonorSelection(Path.GetFullPath(root), null);
+                sawMismatch = true;
+                continue;
             }
 
-            sawMismatch = true;
+            if (!LeanCacheStamp.Matches(cache, basePins, out var stampReason))
+            {
+                sawInvalidStamp = true;
+                unreadable.Add($"{root}: {stampReason}");
+                continue;
+            }
+
+            var guard = LeanCacheGuard.TryAcquireShared(cache);
+            if (guard is null)
+            {
+                sawBusy = true;
+                continue;
+            }
+
+            var verifiedPins = LeanPinSet.TryReadWorktree(root, out _);
+            if (verifiedPins is null
+                || !basePins.HasSameBytes(verifiedPins)
+                || !LeanCacheStamp.Matches(cache, basePins, out _)
+                || LeanCacheBusyProbe.IsBusy(root, runner))
+            {
+                guard.Dispose();
+                sawBusy = true;
+                continue;
+            }
+
+            return new LeanCacheDonorSelection(Path.GetFullPath(root), null, guard);
         }
 
         var notice = sawMismatch
             ? "existing .lake donor pin bytes do not match the requested base"
+            : sawInvalidStamp
+                ? $"existing .lake donor producer stamp is unusable ({string.Join("; ", unreadable)})"
+                : sawBusy
+                    ? "existing .lake donor is busy; refusing a non-quiescent copy"
             : sawSymlink
                 ? "existing .lake donor is a symlink; shared Lean caches are forbidden"
                 : unreadable.Count > 0

@@ -6,7 +6,8 @@ namespace StrataLint.Cli;
 internal sealed record LeanCacheProvisionResult(
     string Strategy,
     string Method,
-    string? Warning);
+    string? Warning,
+    int? MathlibCachePrunedFiles);
 
 internal static class LeanCacheProvisioner
 {
@@ -29,82 +30,233 @@ internal static class LeanCacheProvisioner
         }
     }
 
+    internal static TimeSpan CommandBudget => ProvisionBudget;
+
     internal static LeanCacheProvisionResult Provision(
         LeanCacheDonorSelection selection,
         string worktreeRoot,
+        LeanPinSet pins,
         IWorktreeProcessRunner runner)
     {
         if (selection.Donor is null)
         {
-            var notice = $"{selection.Notice}; refusing to clone .lake and running lake exe cache get";
-            RunCacheGet(worktreeRoot, runner);
-            return new LeanCacheProvisionResult("cache-get", "cache-get", notice);
+            var notice = Join(
+                selection.Notice,
+                "refusing to clone .lake and running lake exe cache get");
+            return Fetch(worktreeRoot, pins, runner, notice);
         }
 
         var source = Path.Combine(selection.Donor, ".lake");
         var target = Path.Combine(worktreeRoot, ".lake");
         EnsureAbsent(target);
-        var clonefile = runner.Run(
-            "cp",
-            ["-c", "-R", source, target],
+        var staged = target + ".stage-" + Path.GetRandomFileName();
+        string? cloneWarning;
+        var cloned = TryClone(
+            selection,
+            source,
+            staged,
+            target,
             worktreeRoot,
-            ProvisionBudget);
-        if (clonefile.ExitCode == 0)
+            pins,
+            runner,
+            out cloneWarning);
+        if (cloned is not null) return cloned;
+
+        return Fetch(
+            worktreeRoot,
+            pins,
+            runner,
+            Join(selection.Notice, cloneWarning));
+    }
+
+    private static LeanCacheProvisionResult? TryClone(
+        LeanCacheDonorSelection selection,
+        string source,
+        string staged,
+        string target,
+        string worktreeRoot,
+        LeanPinSet pins,
+        IWorktreeProcessRunner runner,
+        out string? warning)
+    {
+        using var guard = selection.TakeGuard() ?? LeanCacheGuard.TryAcquireShared(source);
+        if (guard is null)
         {
-            VerifyPrivateDirectory(target);
-            return new LeanCacheProvisionResult("cloned", "clonefile", null);
+            warning = "donor cache guard is busy";
+            return null;
         }
 
-        var clonefileError = Error(clonefile, "cp -c -R failed");
-        RemovePartial(target);
-        var copy = runner.Run(
-            "cp",
-            ["-R", source, target],
-            worktreeRoot,
-            ProvisionBudget);
-        if (copy.ExitCode == 0)
+        if (!LeanCacheStamp.Matches(source, pins, out var stampReason)
+            || LeanCacheBusyProbe.IsBusy(selection.Donor!, runner))
         {
-            VerifyPrivateDirectory(target);
-            return new LeanCacheProvisionResult(
-                "cloned",
-                "copy",
-                $"clonefile failed ({clonefileError}); used slow ordinary copy");
+            warning = stampReason ?? "donor worktree is busy";
+            return null;
         }
 
-        var copyError = Error(copy, "cp -R failed");
-        RemovePartial(target);
         try
         {
-            RunCacheGet(worktreeRoot, runner);
+            EnsureAbsent(staged);
+            var clonefile = runner.Run(
+                "cp",
+                ["-c", "-R", source, staged],
+                worktreeRoot,
+                ProvisionBudget);
+            if (clonefile.ExitCode == 0)
+            {
+                return PublishStaged(
+                    source,
+                    staged,
+                    target,
+                    selection.Donor!,
+                    pins,
+                    runner,
+                    "clonefile",
+                    null,
+                    out warning);
+            }
+
+            var clonefileError = Error(clonefile, "cp -c -R failed");
+            RemovePartial(staged);
+            var copy = runner.Run(
+                "cp",
+                ["-R", source, staged],
+                worktreeRoot,
+                ProvisionBudget);
+            if (copy.ExitCode == 0)
+            {
+                return PublishStaged(
+                    source,
+                    staged,
+                    target,
+                    selection.Donor!,
+                    pins,
+                    runner,
+                    "copy",
+                    $"clonefile failed ({clonefileError}); used slow ordinary copy",
+                    out warning);
+            }
+
+            var copyError = Error(copy, "cp -R failed");
+            warning = $"clonefile failed ({clonefileError}); ordinary copy failed ({copyError})";
+            RemovePartial(staged);
+            return null;
+        }
+        catch (Exception exception)
+        {
+            RemovePartial(staged);
+            warning = $"donor staging failed ({exception.Message})";
+            return null;
+        }
+    }
+
+    private static LeanCacheProvisionResult? PublishStaged(
+        string source,
+        string staged,
+        string target,
+        string donorRoot,
+        LeanPinSet pins,
+        IWorktreeProcessRunner runner,
+        string method,
+        string? warning,
+        out string? finalWarning)
+    {
+        VerifyPrivateDirectory(staged);
+        if (!LeanCacheStamp.Matches(source, pins, out var stampReason)
+            || LeanCacheBusyProbe.IsBusy(donorRoot, runner))
+        {
+            RemovePartial(staged);
+            finalWarning = stampReason ?? "donor became busy after staging; discarded staging copy";
+            return null;
+        }
+
+        LeanCacheStamp.Write(staged, pins);
+        Directory.Move(staged, target);
+        finalWarning = warning;
+        return new LeanCacheProvisionResult("cloned", method, warning, null);
+    }
+
+    private static LeanCacheProvisionResult Fetch(
+        string worktreeRoot,
+        LeanPinSet pins,
+        IWorktreeProcessRunner runner,
+        string? warning)
+    {
+        try
+        {
+            var pruned = RunCacheGet(worktreeRoot, pins, runner);
+            return new LeanCacheProvisionResult(
+                "cache-get",
+                "cache-get",
+                Join(warning, "used lake exe cache get then lake exe cache clean"),
+                pruned);
         }
         catch (Exception exception)
         {
             throw new InvalidOperationException(
-                $"clonefile failed ({clonefileError}); ordinary copy failed ({copyError}); "
-                + $"cache fallback failed ({exception.Message})",
+                Join(warning, $"cache fallback failed ({exception.Message})"),
                 exception);
         }
-        return new LeanCacheProvisionResult(
-            "cache-get",
-            "cache-get",
-            $"clonefile failed ({clonefileError}); ordinary copy failed ({copyError}); used lake exe cache get");
     }
 
-    private static void RunCacheGet(string worktreeRoot, IWorktreeProcessRunner runner)
+    private static int RunCacheGet(
+        string worktreeRoot,
+        LeanPinSet pins,
+        IWorktreeProcessRunner runner)
     {
-        var result = runner.Run(
-            "lake",
-            ["exe", "cache", "get"],
-            worktreeRoot,
-            ProvisionBudget);
-        if (result.ExitCode != 0)
+        var lake = Path.Combine(worktreeRoot, ".lake");
+        try
         {
-            throw new InvalidOperationException(
-                $"lake exe cache get failed: {Error(result, "unknown error")}");
-        }
+            var result = runner.Run(
+                "lake",
+                ["exe", "cache", "get"],
+                worktreeRoot,
+                ProvisionBudget);
+            if (result.ExitCode != 0)
+            {
+                throw new InvalidOperationException(
+                    $"lake exe cache get failed: {Error(result, "unknown error")}");
+            }
 
-        VerifyPrivateDirectory(Path.Combine(worktreeRoot, ".lake"));
+            VerifyPrivateDirectory(lake);
+            var sharedCache = MathlibCacheDirectory(worktreeRoot);
+            var beforeClean = CountLtarFiles(sharedCache);
+            var clean = runner.Run(
+                "lake",
+                ["exe", "cache", "clean"],
+                worktreeRoot,
+                ProvisionBudget);
+            if (clean.ExitCode != 0)
+            {
+                throw new InvalidOperationException(
+                    $"lake exe cache clean failed: {Error(clean, "unknown error")}");
+            }
+
+            var afterClean = CountLtarFiles(sharedCache);
+            LeanCacheStamp.Write(lake, pins);
+            return Math.Max(0, beforeClean - afterClean);
+        }
+        catch
+        {
+            RemovePartial(lake);
+            throw;
+        }
     }
+
+    private static string MathlibCacheDirectory(string worktreeRoot)
+    {
+        var explicitPath = Environment.GetEnvironmentVariable("MATHLIB_CACHE_DIR");
+        if (!string.IsNullOrEmpty(explicitPath)) return Path.GetFullPath(explicitPath);
+        var xdg = Environment.GetEnvironmentVariable("XDG_CACHE_HOME");
+        if (!string.IsNullOrEmpty(xdg)) return Path.GetFullPath(Path.Combine(xdg, "mathlib"));
+        var home = Environment.GetEnvironmentVariable("HOME");
+        return string.IsNullOrEmpty(home)
+            ? Path.Combine(worktreeRoot, ".cache")
+            : Path.Combine(home, ".cache", "mathlib");
+    }
+
+    private static int CountLtarFiles(string directory) => Directory.Exists(directory)
+        ? Directory.EnumerateFiles(directory, "*.ltar", SearchOption.AllDirectories).Count()
+        : 0;
 
     private static void EnsureAbsent(string target)
     {
@@ -137,5 +289,12 @@ internal static class LeanCacheProvisioner
     {
         var error = StrictUtf8.GetString(output.StandardError).Trim();
         return error.Length == 0 ? fallback : error;
+    }
+
+    private static string Join(string? first, string? second)
+    {
+        if (string.IsNullOrWhiteSpace(first)) return second ?? string.Empty;
+        if (string.IsNullOrWhiteSpace(second)) return first;
+        return first + "; " + second;
     }
 }

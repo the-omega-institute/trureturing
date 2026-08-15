@@ -22,6 +22,8 @@ public sealed partial class MakeWorkflowTests
         "tools/scripts/report/lean-report.sh";
     private const string LeanCacheEnsureScriptPath =
         "tools/scripts/worktree/lean-cache-ensure.sh";
+    private const string LeanCacheRunScriptPath =
+        "tools/scripts/worktree/lean-cache-run.sh";
     private const string IngestScriptPath = "tools/scripts/ingest.sh";
     private const string TheoryIngestClosureScriptPath = "tools/scripts/workflow/theory-ingest-closure.sh";
     private const string EchoResidualSummaryScriptPath =

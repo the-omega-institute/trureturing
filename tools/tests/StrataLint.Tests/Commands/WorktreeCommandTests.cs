@@ -3,6 +3,7 @@ using StrataLint.Engine;
 
 namespace StrataLint.Tests;
 
+[Collection("Lean cache environment")]
 public sealed class WorktreeCommandTests
 {
     [Fact]
@@ -29,7 +30,8 @@ public sealed class WorktreeCommandTests
     public void CliDispatchesLeanCacheEnsureThroughWorktree()
     {
         using var repository = new TemporaryDirectory();
-        Directory.CreateDirectory(Path.Combine(repository.Path, ".lake"));
+        InitializeRepository(repository.Path);
+        StampCache(repository.Path);
         var console = new BufferedConsole();
 
         var exitCode = CliApplication.Run(
@@ -40,6 +42,51 @@ public sealed class WorktreeCommandTests
         Assert.Equal(0, exitCode);
         Assert.Contains("present", console.Output, StringComparison.Ordinal);
         Assert.Empty(console.Error);
+    }
+
+    [Fact]
+    public void WriterEntryConvergesBeforeStartingLakeBuild()
+    {
+        using var repository = new TemporaryDirectory();
+        using var sharedCache = new MathlibCacheFixture();
+        InitializeRepository(repository.Path);
+        var runner = new RecordingWorktreeProcessRunner();
+
+        var result = WorktreeCommand.Run(
+            repository.Path,
+            ["with-cache-writer", "--", "lake", "build"],
+            runner);
+
+        Assert.True(result.Success, result.Error);
+        Assert.Equal(
+            ["get", "clean", "build"],
+            runner.Invocations
+                .Where(static call => call.FileName == "lake")
+                .Select(static call => call.Arguments.Last())
+                .ToArray());
+        Assert.True(LeanCacheStamp.Matches(
+            Path.Combine(repository.Path, ".lake"),
+            ReadPins(repository.Path),
+            out _));
+    }
+
+    [Fact]
+    public void WriterEntryNeverStartsBuildWhenProvisioningFails()
+    {
+        using var repository = new TemporaryDirectory();
+        using var sharedCache = new MathlibCacheFixture();
+        InitializeRepository(repository.Path);
+        var runner = new RecordingWorktreeProcessRunner { FailLake = true };
+
+        var result = WorktreeCommand.Run(
+            repository.Path,
+            ["with-cache-writer", "--", "lake", "build"],
+            runner);
+
+        Assert.False(result.Success);
+        Assert.DoesNotContain(
+            runner.Invocations,
+            static call => call.FileName == "lake" && call.Arguments.SequenceEqual(["build"]));
     }
 
     [Fact]
@@ -120,6 +167,7 @@ public sealed class WorktreeCommandTests
         var cacheFile = Path.Combine(repository.Path, ".lake", "build", "cache.bin");
         Directory.CreateDirectory(Path.GetDirectoryName(cacheFile)!);
         File.WriteAllText(cacheFile, "warm cache\n");
+        StampCache(repository.Path);
         var target = Path.Combine(repository.Path, "provisioned");
         var console = new BufferedConsole();
 
@@ -144,7 +192,10 @@ public sealed class WorktreeCommandTests
         AssertReviewScaffoldsAreIgnored(target);
         Assert.Contains("\"event\":\"worktree_init\"", console.Output, StringComparison.Ordinal);
         Assert.Contains("\"branch\":\"harness/integration-probe\"", console.Output, StringComparison.Ordinal);
-        Assert.Contains($"\"donor\":\"{repository.Path}\"", console.Output, StringComparison.Ordinal);
+        Assert.Contains(
+            $"\"donor\":\"{LeanCacheGuard.PhysicalPath(repository.Path)}\"",
+            console.Output,
+            StringComparison.Ordinal);
         Assert.Contains("\"pin_sha256\":\"", console.Output, StringComparison.Ordinal);
         Assert.Contains("\"cache_strategy\":\"cloned\"", console.Output, StringComparison.Ordinal);
         Assert.Contains("\"elapsed_ms\":", console.Output, StringComparison.Ordinal);
@@ -173,6 +224,7 @@ public sealed class WorktreeCommandTests
         var cacheFile = Path.Combine(repository.Path, ".lake", "build", "cache.bin");
         Directory.CreateDirectory(Path.GetDirectoryName(cacheFile)!);
         File.WriteAllText(cacheFile, "warm cache\n");
+        StampCache(repository.Path);
         var target = Path.Combine(repository.Path, "provisioned-with-ignore");
         var console = new BufferedConsole();
 
@@ -208,6 +260,7 @@ public sealed class WorktreeCommandTests
         var cacheFile = Path.Combine(repository.Path, ".lake", "build", "cache.bin");
         Directory.CreateDirectory(Path.GetDirectoryName(cacheFile)!);
         File.WriteAllText(cacheFile, "warm cache\n");
+        StampCache(repository.Path);
         var target = Path.Combine(repository.Path, "provisioned-clean");
         var console = new BufferedConsole();
 
@@ -362,6 +415,17 @@ public sealed class WorktreeCommandTests
         ReviewRegressionTests.RunGit(root, "add", "README.md", "lean-toolchain", "lake-manifest.json");
         ReviewRegressionTests.RunGit(root, "commit", "-m", "fixture baseline");
     }
+
+    private static void StampCache(string root)
+    {
+        var lake = Path.Combine(root, ".lake");
+        Directory.CreateDirectory(lake);
+        LeanCacheStamp.Write(lake, ReadPins(root));
+    }
+
+    private static LeanPinSet ReadPins(string root) =>
+        LeanPinSet.TryReadWorktree(root, out var reason)
+        ?? throw new InvalidOperationException(reason);
 
     private static void AssertReviewScaffoldsAreIgnored(string root)
     {

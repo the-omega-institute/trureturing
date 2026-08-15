@@ -58,7 +58,9 @@ public sealed partial class MakeWorkflowTests
             }
 
             Directory.CreateDirectory(Path.GetDirectoryName(path)!);
-            File.WriteAllText(path, "{}\n");
+            File.WriteAllText(
+                path,
+                "{\"modules\":[],\"schema\":\"stratalint-raw-lean-report-v1\"}\n");
             created = true;
         }
 

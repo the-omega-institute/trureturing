@@ -2,7 +2,7 @@ using StrataLint.Cli;
 
 namespace StrataLint.Tests;
 
-[Collection("Lean cache budget environment")]
+[Collection("Lean cache environment")]
 public sealed class LeanCacheProvisionerTests
 {
     private const string BudgetVariable = "STRATALINT_LEAN_CACHE_TIMEOUT_SECONDS";
@@ -20,9 +20,15 @@ public sealed class LeanCacheProvisionerTests
         {
             using var donor = new TemporaryDirectory();
             using var target = new TemporaryDirectory();
+            using var sharedCache = new MathlibCacheFixture();
             var root = Path.Combine(target.Path, "worktree");
-            Directory.CreateDirectory(Path.Combine(donor.Path, ".lake"));
             Directory.CreateDirectory(root);
+            WritePins(donor.Path);
+            WritePins(root);
+            var donorLake = Path.Combine(donor.Path, ".lake");
+            Directory.CreateDirectory(donorLake);
+            var pins = ReadPins(root);
+            LeanCacheStamp.Write(donorLake, pins);
             var runner = new RecordingWorktreeProcessRunner
             {
                 FailClonefile = true,
@@ -32,12 +38,13 @@ public sealed class LeanCacheProvisionerTests
             LeanCacheProvisioner.Provision(
                 new LeanCacheDonorSelection(donor.Path, null),
                 root,
+                pins,
                 runner);
 
             var provisioning = runner.Invocations
                 .Where(static call => call.FileName is "cp" or "lake")
                 .ToArray();
-            Assert.Equal(3, provisioning.Length);
+            Assert.Equal(4, provisioning.Length);
             Assert.All(provisioning, static call => Assert.Equal(5400, call.Timeout.TotalSeconds));
         });
     }
@@ -56,21 +63,35 @@ public sealed class LeanCacheProvisionerTests
         WithBudget(raw, () =>
         {
             using var target = new TemporaryDirectory();
+            using var sharedCache = new MathlibCacheFixture();
             var root = Path.Combine(target.Path, "worktree");
             Directory.CreateDirectory(root);
+            WritePins(root);
             var runner = new RecordingWorktreeProcessRunner();
 
             LeanCacheProvisioner.Provision(
                 new LeanCacheDonorSelection(null, "fixture has no donor"),
                 root,
+                ReadPins(root),
                 runner);
 
             var cacheGet = Assert.Single(
                 runner.Invocations,
-                static call => call.FileName == "lake");
+                static call => call.FileName == "lake"
+                    && call.Arguments.SequenceEqual(["exe", "cache", "get"]));
             Assert.Equal(expectedSeconds, cacheGet.Timeout.TotalSeconds);
         });
     }
+
+    private static void WritePins(string root)
+    {
+        File.WriteAllText(Path.Combine(root, "lean-toolchain"), "leanprover/lean4:v4.33.0\n");
+        File.WriteAllText(Path.Combine(root, "lake-manifest.json"), "{\"version\":\"1.1.0\"}\n");
+    }
+
+    private static LeanPinSet ReadPins(string root) =>
+        LeanPinSet.TryReadWorktree(root, out var reason)
+        ?? throw new InvalidOperationException(reason);
 
     private static void WithBudget(string? value, Action action)
     {
@@ -87,5 +108,5 @@ public sealed class LeanCacheProvisionerTests
     }
 }
 
-[CollectionDefinition("Lean cache budget environment", DisableParallelization = true)]
-public sealed class LeanCacheBudgetEnvironmentCollection;
+[CollectionDefinition("Lean cache environment", DisableParallelization = true)]
+public sealed class LeanCacheEnvironmentCollection;

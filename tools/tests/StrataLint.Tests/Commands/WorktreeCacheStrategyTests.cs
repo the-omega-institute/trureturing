@@ -5,8 +5,23 @@ using StrataLint.Engine;
 
 namespace StrataLint.Tests;
 
+[Collection("Lean cache environment")]
 public sealed class WorktreeCacheStrategyTests
 {
+    [Fact]
+    public void DonorGuardsAreSharedWhileCanonicalWriterGuardIsExclusive()
+    {
+        using var root = new TemporaryDirectory();
+        var lake = Path.Combine(root.Path, ".lake");
+        using var first = LeanCacheGuard.TryAcquireShared(lake);
+        using var second = LeanCacheGuard.TryAcquireShared(lake);
+
+        Assert.NotNull(first);
+        Assert.NotNull(second);
+        using var writer = LeanCacheGuard.TryAcquireExclusive(lake);
+        Assert.Null(writer);
+    }
+
     [Fact]
     public void MatchingDonorCanComeFromAnotherRegisteredWorktree()
     {
@@ -35,12 +50,112 @@ public sealed class WorktreeCacheStrategyTests
         Assert.Equal(
             "registered donor cache\n",
             File.ReadAllText(Path.Combine(target, ".lake", "build", "cache.bin")));
+        Assert.True(LeanCacheStamp.Matches(Path.Combine(target, ".lake"), ReadPins(target), out _));
+    }
+
+    [Fact]
+    public void BusyDonorIsSkippedAndCacheGetProducesTheOnlyQualifiedCache()
+    {
+        using var repository = new TemporaryDirectory();
+        using var sharedCache = new MathlibCacheFixture();
+        InitializeRepository(repository.Path);
+        var donor = Path.Combine(repository.Path, "busy-donor");
+        Git(repository.Path, "worktree", "add", "-b", "harness/busy-donor", donor, "HEAD");
+        WriteCache(donor, "busy cache\n");
+        var target = Path.Combine(repository.Path, "busy-target");
+        using var busy = LeanCacheGuard.TryAcquireExclusive(Path.Combine(donor, ".lake"));
+        Assert.NotNull(busy);
+        using (var blocked = LeanCacheGuard.TryAcquireShared(Path.Combine(donor, ".lake")))
+        {
+            Assert.Null(blocked);
+        }
+
+        var result = WorktreeCommand.Run(
+            repository.Path,
+            [
+                "--branch", "harness/busy-target",
+                "--path", target,
+                "--base", "HEAD",
+                "--skip-restore",
+            ],
+            new RecordingWorktreeProcessRunner());
+
+        Assert.True(result.Success, result.Error);
+        Assert.Contains("busy", result.Error, StringComparison.OrdinalIgnoreCase);
+        Assert.True(File.Exists(Path.Combine(target, ".lake", "cache-get.marker")));
+        Assert.False(File.Exists(Path.Combine(target, ".lake", "build", "cache.bin")));
+    }
+
+    [Fact]
+    public void CwdBusyProbeSkipsDonorWithoutTreatingTheProbeAsProof()
+    {
+        using var repository = new TemporaryDirectory();
+        using var sharedCache = new MathlibCacheFixture();
+        InitializeRepository(repository.Path);
+        WriteCache(repository.Path, "busy cache\n");
+        var target = Path.Combine(repository.Path, "cwd-busy-target");
+        var runner = new RecordingWorktreeProcessRunner { BusyRoot = repository.Path };
+        Assert.True(LeanCacheBusyProbe.IsBusy(repository.Path, runner));
+        using (var selection = GitWorktreeInventory.SelectDonor(repository.Path, ReadPins(repository.Path), runner))
+        {
+            Assert.Null(selection.Donor);
+            Assert.Contains("busy", selection.Notice, StringComparison.OrdinalIgnoreCase);
+        }
+
+        var result = WorktreeCommand.Run(
+            repository.Path,
+            [
+                "--branch", "harness/cwd-busy-target",
+                "--path", target,
+                "--base", "HEAD",
+                "--skip-restore",
+            ],
+            runner);
+
+        Assert.True(result.Success, result.Error);
+        Assert.True(
+            result.Error.Contains("busy", StringComparison.OrdinalIgnoreCase),
+            $"output={result.Output}; error={result.Error}");
+        Assert.True(File.Exists(Path.Combine(target, ".lake", "cache-get.marker")));
+        Assert.DoesNotContain(runner.Invocations, static call => call.FileName == "cp");
+    }
+
+    [Fact]
+    public void DonorBecomingBusyAfterStagingFallsBackWithoutPublishingTheCopy()
+    {
+        using var repository = new TemporaryDirectory();
+        using var sharedCache = new MathlibCacheFixture();
+        InitializeRepository(repository.Path);
+        WriteCache(repository.Path, "copy raced cache\n");
+        var target = Path.Combine(repository.Path, "post-copy-busy");
+        var runner = new RecordingWorktreeProcessRunner
+        {
+            BusyRoot = repository.Path,
+            BusyOnlyAfterCopy = true,
+        };
+
+        var result = WorktreeCommand.Run(
+            repository.Path,
+            [
+                "--branch", "harness/post-copy-busy",
+                "--path", target,
+                "--base", "HEAD",
+                "--skip-restore",
+            ],
+            runner);
+
+        Assert.True(result.Success, result.Error);
+        Assert.True(File.Exists(Path.Combine(target, ".lake", "cache-get.marker")));
+        Assert.False(File.Exists(Path.Combine(target, ".lake", "build", "cache.bin")));
+        Assert.Empty(Directory.EnumerateDirectories(target, ".lake.stage-*"));
+        Assert.True(LeanCacheStamp.Matches(Path.Combine(target, ".lake"), ReadPins(target), out _));
     }
 
     [Fact]
     public void MismatchedPinsRefuseDonorAndRunCacheGet()
     {
         using var repository = new TemporaryDirectory();
+        using var sharedCache = new MathlibCacheFixture();
         InitializeRepository(repository.Path);
         var baseRevision = Git(repository.Path, "rev-parse", "HEAD").Trim();
         File.WriteAllText(Path.Combine(repository.Path, "lean-toolchain"), "leanprover/lean4:v4.32.0\n");
@@ -222,6 +337,7 @@ public sealed class WorktreeCacheStrategyTests
     public void LakeSymlinkIsRejectedAsDonor()
     {
         using var repository = new TemporaryDirectory();
+        using var sharedCache = new MathlibCacheFixture();
         InitializeRepository(repository.Path);
         var realCache = Path.Combine(repository.Path, "real-cache");
         Directory.CreateDirectory(realCache);
@@ -275,11 +391,17 @@ public sealed class WorktreeCacheStrategyTests
 
     private static string WriteCache(string root, string contents)
     {
-        var path = Path.Combine(root, ".lake", "build", "cache.bin");
+        var lake = Path.Combine(root, ".lake");
+        var path = Path.Combine(lake, "build", "cache.bin");
         Directory.CreateDirectory(Path.GetDirectoryName(path)!);
         File.WriteAllText(path, contents);
+        LeanCacheStamp.Write(lake, ReadPins(root));
         return path;
     }
+
+    private static LeanPinSet ReadPins(string root) =>
+        LeanPinSet.TryReadWorktree(root, out var reason)
+        ?? throw new InvalidOperationException(reason);
 
     private static string Git(string root, params string[] arguments) =>
         ReviewRegressionTests.RunGit(root, arguments);
@@ -304,6 +426,8 @@ internal sealed record WorktreeProcessInvocation(
 
 internal sealed class RecordingWorktreeProcessRunner : IWorktreeProcessRunner
 {
+    private bool copyCompleted;
+
     internal List<WorktreeProcessInvocation> Invocations { get; } = [];
 
     internal bool FailClonefile { get; init; }
@@ -312,9 +436,17 @@ internal sealed class RecordingWorktreeProcessRunner : IWorktreeProcessRunner
 
     internal bool FailLake { get; init; }
 
+    internal bool FailClean { get; init; }
+
     internal bool FailDotnet { get; init; }
 
     internal bool FailWorktreeAdd { get; init; }
+
+    internal string? BusyRoot { get; init; }
+
+    internal bool BusyOnlyAfterCopy { get; init; }
+
+    internal bool CacheGetSawExistingProjection { get; private set; }
 
     public ProcessOutput Run(
         string fileName,
@@ -344,12 +476,39 @@ internal sealed class RecordingWorktreeProcessRunner : IWorktreeProcessRunner
             return Failure("ordinary copy unavailable");
         }
 
+        if (fileName == "lsof")
+        {
+            var busy = BusyRoot is not null && (!BusyOnlyAfterCopy || copyCompleted);
+            return busy
+                ? new ProcessOutput(0, Encoding.UTF8.GetBytes($"p123\nclean\nfcwd\nn{BusyRoot}\n"), [])
+                : Success();
+        }
+
         if (fileName == "lake")
         {
-            if (FailLake) return Failure("cache get failed");
-            var lake = Path.Combine(workingDirectory, ".lake");
-            Directory.CreateDirectory(lake);
-            File.WriteAllText(Path.Combine(lake, "cache-get.marker"), "cache get\n");
+            if (arguments.SequenceEqual(["exe", "cache", "get"]))
+            {
+                if (FailLake) return Failure("cache get failed");
+                CacheGetSawExistingProjection = File.Exists(
+                    Path.Combine(workingDirectory, ".lake", "build", "cache.bin"));
+                var lake = Path.Combine(workingDirectory, ".lake");
+                Directory.CreateDirectory(lake);
+                File.WriteAllText(Path.Combine(lake, "cache-get.marker"), "cache get\n");
+                Directory.CreateDirectory(MathlibCacheFixture.CurrentPath);
+                File.WriteAllText(Path.Combine(MathlibCacheFixture.CurrentPath, "current.ltar"), "current\n");
+                return Success();
+            }
+
+            if (arguments.SequenceEqual(["exe", "cache", "clean"]))
+            {
+                if (FailClean) return Failure("cache clean failed");
+                foreach (var path in Directory.EnumerateFiles(MathlibCacheFixture.CurrentPath, "*.ltar"))
+                {
+                    if (Path.GetFileName(path) != "current.ltar") File.Delete(path);
+                }
+                return Success();
+            }
+
             return Success();
         }
 
@@ -358,16 +517,40 @@ internal sealed class RecordingWorktreeProcessRunner : IWorktreeProcessRunner
             return FailDotnet ? Failure("dotnet restore failed") : Success();
         }
 
-        return BoundedProcessRunner.Run(
+        var result = BoundedProcessRunner.Run(
             fileName,
             arguments,
             workingDirectory,
             timeout,
             64 * 1024 * 1024);
+        if (fileName == "cp" && result.ExitCode == 0) copyCompleted = true;
+        return result;
     }
 
     private static ProcessOutput Success() => new(0, [], []);
 
     private static ProcessOutput Failure(string message) =>
         new(1, [], Encoding.UTF8.GetBytes(message));
+}
+
+internal sealed class MathlibCacheFixture : IDisposable
+{
+    private readonly TemporaryDirectory temporary = new();
+    private readonly string? previous = Environment.GetEnvironmentVariable("MATHLIB_CACHE_DIR");
+
+    internal MathlibCacheFixture()
+    {
+        Environment.SetEnvironmentVariable("MATHLIB_CACHE_DIR", temporary.Path);
+        File.WriteAllText(Path.Combine(temporary.Path, "old.ltar"), "old\n");
+    }
+
+    internal static string CurrentPath =>
+        Environment.GetEnvironmentVariable("MATHLIB_CACHE_DIR")
+        ?? throw new InvalidOperationException("MATHLIB_CACHE_DIR is not set for the cache test");
+
+    public void Dispose()
+    {
+        Environment.SetEnvironmentVariable("MATHLIB_CACHE_DIR", previous);
+        temporary.Dispose();
+    }
 }

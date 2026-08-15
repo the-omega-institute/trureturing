@@ -55,6 +55,8 @@ if [[ -z "$LAKE" ]]; then
 fi
 [[ -n "$LAKE" && "$LAKE" == /* && -x "$LAKE" ]] \
   || { echo "inspect.sh: an absolute executable lake path is required (set LAKE_BIN)" >&2; exit 2; }
+CACHE_RUN="$REPOSITORY/tools/scripts/worktree/lean-cache-run.sh"
+[[ -x "$CACHE_RUN" ]] || { echo "inspect.sh: cache writer is absent: $CACHE_RUN" >&2; exit 2; }
 
 hash_file() {
   local file="$1"
@@ -101,10 +103,8 @@ run_phase() {
   fi
 }
 
-# mathlib artifacts come from its binary cache; lake build then compiles only
-# repository modules whose oleans are not already cached.
-run_phase cache-get "$LAKE" exe cache get
-run_phase build "$LAKE" build
+# The cache writer converges the pinned mathlib cache before starting either Lake phase.
+run_phase build "$CACHE_RUN" "$LAKE" build
 
 INSPECTOR_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)"
 INPUT_HELPER="$INSPECTOR_DIR/../scripts/report/lean-report-input.sh"
@@ -127,7 +127,7 @@ while IFS=$'\t' read -r module path; do append_module "$module" "$path"; done < 
 [[ "${#inspector_arguments[@]}" -gt 0 ]] || { echo "inspect.sh: module selection is empty" >&2; exit 2; }
 
 run_phase inspect \
-  "$LAKE" env lean --run "$INSPECTOR" --output "$OUTPUT" \
+  "$CACHE_RUN" "$LAKE" env lean --run "$INSPECTOR" --output "$OUTPUT" \
   "${inspector_arguments[@]}"
 
 [[ -s "$OUTPUT" ]] || { echo "inspect.sh: producer left no report at $OUTPUT" >&2; exit 2; }
