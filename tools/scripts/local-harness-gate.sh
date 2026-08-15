@@ -2,7 +2,8 @@
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd -P)"
-source "$ROOT/tools/scripts/perf-event-lib.sh"
+source "$ROOT/tools/scripts/lib/admission-base-lib.sh"
+source "$ROOT/tools/scripts/lib/perf-event-lib.sh"
 CANDIDATE_ROOT="$ROOT"
 BASE_REF="origin/dev"
 OBSERVED_BASE_REF=""
@@ -32,6 +33,7 @@ while [[ $# -gt 0 ]]; do
       ;;
   esac
 done
+OBSERVED_BASE_REF="$BASE_REF"
 
 [[ -d "$CANDIDATE_ROOT" ]] \
   || { echo "local-harness-gate: candidate '$CANDIDATE_ROOT' is absent" >&2; exit 2; }
@@ -44,7 +46,9 @@ LOCAL_TIMING_FILE="$TMP_ROOT/local-gate-timing.jsonl"
 SHARED_TIMING_FILE="$TMP_ROOT/shared-gate-timing.jsonl"
 PERF_TMP="$(perf_make_spool_dir "$CANDIDATE_ROOT" stratalint-local-gate-perf 2>/dev/null || true)"
 PERF_EVENT_SPOOL=""
+BASE_TIP_SHA=""
 BASE_SHA=""
+CANDIDATE_SHA=""
 : > "$LOCAL_TIMING_FILE"
 if [[ -n "$PERF_TMP" ]]; then
   PERF_EVENT_SPOOL="$PERF_TMP/events.jsonl"
@@ -115,8 +119,8 @@ finish() {
   if [[ -n "$OBSERVED_BASE_REF" ]]; then
     local observed_base=""
     observed_base="$(git -C "$CANDIDATE_ROOT" rev-parse --verify "${OBSERVED_BASE_REF}^{commit}" 2>/dev/null || true)"
-    if [[ -n "$observed_base" && "$observed_base" != "$BASE_SHA" ]]; then
-      printf 'BASE_ADVANCED pinned=%s observed=%s\n' "$BASE_SHA" "$observed_base" >&2 || true
+    if [[ -n "$BASE_TIP_SHA" && -n "$observed_base" && "$observed_base" != "$BASE_TIP_SHA" ]]; then
+      printf 'BASE_ADVANCED pinned=%s observed=%s\n' "$BASE_TIP_SHA" "$observed_base" >&2 || true
     fi
   fi
   perf_flush_events "$CANDIDATE_ROOT" "$PERF_EVENT_SPOOL" >/dev/null 2>&1 || true
@@ -134,17 +138,7 @@ trap 'exit 130' INT
 trap 'exit 143' TERM
 
 prepare_base() {
-  if [[ ! "$BASE_REF" =~ ^[0-9a-fA-F]{40}$ ]]; then
-    OBSERVED_BASE_REF="$BASE_REF"
-  fi
-  BASE_SHA="$(git -C "$CANDIDATE_ROOT" rev-parse --verify "${BASE_REF}^{commit}")"
-  local candidate_sha
-  candidate_sha="$(git -C "$CANDIDATE_ROOT" rev-parse --verify HEAD^{commit})"
-  if [[ "$BASE_SHA" == "$candidate_sha" ]] \
-    || ! git -C "$CANDIDATE_ROOT" merge-base --is-ancestor "$BASE_SHA" "$candidate_sha"; then
-    echo "local-harness-gate: pinned base is not a strict ancestor of candidate HEAD" >&2
-    return 1
-  fi
+  admission_resolve_base "$CANDIDATE_ROOT" "$BASE_REF" || return 1
 
   printf '[local-gate] candidate=%s base=%s\n' "$CANDIDATE_ROOT" "$BASE_SHA" >&2
 }

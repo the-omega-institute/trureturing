@@ -2,8 +2,39 @@ namespace StrataLint.Tests;
 
 public sealed partial class DepositCoverWorkflowScriptTests
 {
-    private sealed partial class TransactionFixture
+    internal sealed partial class TransactionFixture
     {
+        private void WriteGitGuardStub() => WriteExecutable("git", """
+            arguments=("$@")
+            index=0
+            while [[ $index -lt ${#arguments[@]} ]]; do
+              token=${arguments[index]}
+              case "$token" in
+                -C|-c|--git-dir|--work-tree|--namespace|--super-prefix|--config-env)
+                  index=$((index + 2))
+                  ;;
+                --git-dir=*|--work-tree=*|--namespace=*|--super-prefix=*|--config-env=*)
+                  index=$((index + 1))
+                  ;;
+                --no-pager|--paginate|--bare|--literal-pathspecs|--no-literal-pathspecs|--glob-pathspecs|--noglob-pathspecs|--icase-pathspecs)
+                  index=$((index + 1))
+                  ;;
+                --)
+                  index=$((index + 1))
+                  break
+                  ;;
+                -*) index=$((index + 1)) ;;
+                *) break ;;
+              esac
+            done
+            subcommand=${arguments[index]:-}
+            if [[ $subcommand == merge ]]; then
+              printf 'git-branch-merge:%s\n' "${arguments[*]}" >> "$PLAYBOOK_TEST_CALLS"
+              exit 97
+            fi
+            exec /usr/bin/git "${arguments[@]}"
+            """);
+
         private void WriteMakeStub() => WriteExecutable("make", """
             printf 'make:%s\n' "$*" >> "$PLAYBOOK_TEST_CALLS"
             case "${1:-}" in

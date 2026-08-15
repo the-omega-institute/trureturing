@@ -6,36 +6,6 @@ namespace StrataLint.Cli;
 
 internal sealed partial class GitRepositoryGateway
 {
-    internal FrozenRevisionIdentity ResolveReference(string revision)
-    {
-        ArgumentException.ThrowIfNullOrWhiteSpace(revision);
-        var resolved = GitText("rev-parse", "--verify", $"{revision}^{{commit}}").Trim();
-        return ResolveFrozenRevision(resolved);
-    }
-
-    internal void RequireStrictAncestor(string ancestor, string descendant)
-    {
-        if (string.Equals(ancestor, descendant, StringComparison.Ordinal))
-        {
-            throw new InvalidOperationException("C0 base must be a strict ancestor of the preimage");
-        }
-
-        var result = GitRaw(
-            new[] { "merge-base", "--is-ancestor", ancestor, descendant },
-            allowNonzero: true);
-        if (result.ExitCode != 0)
-        {
-            throw new InvalidOperationException("C0 base is not an ancestor of the preimage");
-        }
-    }
-
-    internal ImmutableArray<string> WorkingTreeChanges() =>
-        ParseNulStrings(GitBytes("diff", "--name-only", "-z", "HEAD", "--"))
-            .Concat(ParseNulStrings(GitBytes("ls-files", "--others", "--exclude-standard", "-z")))
-            .Distinct(StringComparer.Ordinal)
-            .Order(StringComparer.Ordinal)
-            .ToImmutableArray();
-
     public FrozenRevisionIdentity ResolveCurrentRevision()
     {
         var revision = GitText("rev-parse", "--verify", "HEAD^{commit}").Trim();

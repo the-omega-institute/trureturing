@@ -127,7 +127,7 @@ public sealed class ReportSupervisorScriptTests
         using var fixture = new ReportSupervisorFixture();
         var library = Path.Combine(
             fixture.RepositoryRoot,
-            "tools", "scripts", "perf-event-lib.sh");
+            "tools", "scripts", "lib", "perf-event-lib.sh");
 
         var result = fixture.RunExternalProcess(
             "bash",
@@ -150,7 +150,7 @@ public sealed class ReportSupervisorScriptTests
         using var fixture = new ReportSupervisorFixture();
         using var temporary = new TemporaryDirectory();
         var root = TestRepositoryLayout.FindRoot();
-        var library = Path.Combine(root, "tools", "scripts", "perf-event-lib.sh");
+        var library = Path.Combine(root, "tools", "scripts", "lib", "perf-event-lib.sh");
         var spool = Path.Combine(temporary.Path, "events.jsonl");
         var target = Path.Combine(temporary.Path, "StrataLint.dll");
         var invocations = Path.Combine(temporary.Path, "dotnet-invocations.txt");
