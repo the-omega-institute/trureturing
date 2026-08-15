@@ -23,13 +23,6 @@ public enum Stratum
     S4,
 }
 
-public enum SpecialZone
-{
-    Assumptions,
-    Certificates,
-    Frontier,
-}
-
 public enum Generality
 {
     General,
