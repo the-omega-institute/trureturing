@@ -1,0 +1,38 @@
+### 定义 37.25（character section）
+
+若还满足：
+
+\[
+\chi_C(ab)=\chi_C(a)\chi_C(b),
+\]
+
+并在投影上取：
+
+\[
+\chi_C(P)\in\{0,1\},
+\]
+
+则称为 classical character section。
+
+量子状态可以给出所有上下文上的相容正线性 section，但有限 Kochen–Specker 构型仍排除全局 character section。
+
+所以：
+
+\[
+\boxed{
+\text{量子整体可以是全局正状态，
+却不是一个全局经典地址点。}
+}
+\]
+
+这对逆完成观察者本体有直接影响：
+
+\[
+\boxed{
+\text{跨全部投影层存在 global section，
+不表示该 section 必须是点状、确定性或乘法 character。}
+}
+\]
+
+---
+

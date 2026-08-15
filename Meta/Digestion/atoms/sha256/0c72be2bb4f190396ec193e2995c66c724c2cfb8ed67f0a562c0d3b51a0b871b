@@ -1,0 +1,44 @@
+### 定理 36.27（规范最强分离观察者）
+
+若 \(r\neq0\)，则：
+
+\[
+\widehat r=\frac r{\|r\|}
+\]
+
+唯一达到：
+
+\[
+\boxed{
+\sup_{
+g\in M^\perp,\ \|g\|\le1
+}
+|\langle g,x\rangle|
+=
+\|r\|.
+}
+\]
+
+因此同一个 \(r\) 同时是：
+
+\[
+\boxed{
+\begin{aligned}
+r
+&=\text{目标的闭合缺陷};\\
+r
+&=\text{唯一最小新坐标};\\
+r
+&=\text{最小作用方向};\\
+\ell_r
+&=\text{对原空间失明、对目标最敏感的观察者}.
+\end{aligned}
+}
+\]
+
+这解释了前文“闭合缺陷本身成为观察者”的精确 Hilbert 含义。
+
+在一般 Banach 空间中，Hahn–Banach 可以给出分离泛函，但通常没有 Hilbert 正交代表的规范唯一性。
+
+---
+

@@ -1,0 +1,20 @@
+### 定理 37.21（Moreau 分解）
+
+对任意 \(x\in V\)，存在唯一分解：
+
+\[
+\boxed{
+x=P_Cx+r,
+}
+\]
+
+满足：
+
+\[
+P_Cx\in C,
+\qquad
+r\in C^\circ,
+\qquad
+\langle P_Cx,r\rangle=0.
+\]
+

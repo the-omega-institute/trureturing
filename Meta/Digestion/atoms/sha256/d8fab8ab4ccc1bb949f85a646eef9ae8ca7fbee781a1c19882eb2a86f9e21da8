@@ -1,0 +1,20 @@
+### 原理 36.24（RH 图册不能被预先假定成普通逆系统）
+
+若 Li、Nyman、Weil、复平面和素数图之间没有已经构造的函数型 bonding maps，则不能直接使用：
+
+\[
+\varprojlim_jD_j.
+\]
+
+更准确的对象可能是：
+
+- presheaf；
+- stack；
+- fibered category；
+- correspondence diagram；
+- derived diagram。
+
+只有在明确类型以后，“不存在全局离线 section”才成为可证明命题。
+
+---
+

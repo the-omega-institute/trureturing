@@ -1,0 +1,18 @@
+### 定义 37.5（标量正性）
+
+线性映射：
+
+\[
+\Phi:\mathcal A\to\mathcal B
+\]
+
+若满足：
+
+\[
+A\ge0
+\Longrightarrow
+\Phi(A)\ge0,
+\]
+
+称为正映射。
+
