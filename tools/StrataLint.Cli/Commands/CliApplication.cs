@@ -47,8 +47,6 @@ internal interface ICliEnvironment
 
     CommandResult SyncLedger(IReadOnlyList<string> arguments);
 
-    CommandResult RecoordinateLedger(IReadOnlyList<string> arguments);
-
     CommandResult CleanLanes(IReadOnlyList<string> arguments);
 
     CommandResult AppendPerf(IReadOnlyList<string> arguments);
@@ -113,8 +111,6 @@ internal static class CliApplication
                 RenderCommand(environment.ReattestLedger(tail), console),
             ["ledger-sync"] = static (environment, tail, console) =>
                 RenderCommand(environment.SyncLedger(tail), console),
-            ["ledger-recoordinate"] = static (environment, tail, console) =>
-                RenderCommand(environment.RecoordinateLedger(tail), console),
             ["perf-append"] = static (environment, tail, console) =>
                 RenderCommand(environment.AppendPerf(tail), console),
             ["perf-report"] = static (environment, tail, console) =>

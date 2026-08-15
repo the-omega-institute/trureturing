@@ -529,13 +529,6 @@ internal sealed class FakeRepositoryGateway(
             baseline ?? throw new InvalidOperationException("baseline snapshot should not be read"));
     }
 
-    public RawRepositorySnapshot ReadFrozenRevision(string revision)
-    {
-        ReadCount++;
-        return WithAtomizerData(
-            baseline ?? throw new InvalidOperationException("frozen revision snapshot should not be read"));
-    }
-
     public TrustedFrozenGitReferences ValidateFrozenReferences(FrozenLedgerReferenceSet references)
     {
         FrozenReferenceValidations.Add(references);

@@ -30,24 +30,6 @@ internal sealed partial class GitRepositoryGateway
         return new FrozenRevisionIdentity(resolved, algorithm + resolved, algorithm + tree);
     }
 
-    public RawRepositorySnapshot ReadFrozenRevision(string revision)
-    {
-        var entries = ImmutableArray.CreateBuilder<RawRepositoryEntry>();
-        foreach (var entry in ParseTree(GitBytes("ls-tree", "-r", "-z", revision)))
-        {
-            if (entry.Mode is not ("100644" or "100755" or "120000") || entry.ObjectType != "blob")
-            {
-                throw new InvalidOperationException(
-                    $"frozen revision has unsupported entry {entry.Path} ({entry.Mode} {entry.ObjectType})");
-            }
-
-            var bytes = GitBytes("show", $"{revision}:{entry.Path}");
-            entries.Add(new RawRepositoryEntry(entry.Path, ImmutableArray.CreateRange(bytes)));
-        }
-
-        return RawRepositorySnapshot.Create(entries);
-    }
-
     public TrustedFrozenGitReferences ValidateFrozenReferences(FrozenLedgerReferenceSet references)
     {
         ArgumentNullException.ThrowIfNull(references);

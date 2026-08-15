@@ -7,6 +7,23 @@ namespace StrataLint.Tests;
 
 public sealed class CliOutcomeTests
 {
+    [Fact]
+    public void LedgerRecoordinateIsNotAnImplementedCommand()
+    {
+        var console = new BufferedConsole();
+        var environment = new StubCliEnvironment(Admitted());
+
+        var exitCode = CliApplication.Run(
+            ["ledger-recoordinate", "--old-environment", new string('a', 40)],
+            environment,
+            console);
+
+        Assert.Equal(2, exitCode);
+        Assert.Equal(string.Empty, console.Output);
+        Assert.Equal("UNKNOWN_COMMAND ledger-recoordinate\n", console.Error);
+        Assert.DoesNotContain("ledger-recoordinate", CliApplication.ImplementedCommands);
+    }
+
     public static TheoryData<string, int, string, bool> Outcomes => new()
     {
         { "admitted", 0, "ADMITTED", false },
@@ -203,9 +220,6 @@ internal sealed class StubCliEnvironment(
 
     public CommandResult SyncLedger(IReadOnlyList<string> arguments) =>
         new(false, string.Empty, "ledger sync is not configured in this fixture");
-
-    public CommandResult RecoordinateLedger(IReadOnlyList<string> arguments) =>
-        new(false, string.Empty, "ledger recoordinate is not configured in this fixture");
 
     public CommandResult CleanLanes(IReadOnlyList<string> arguments) =>
         new(false, string.Empty, "clean lanes is not configured in this fixture");
