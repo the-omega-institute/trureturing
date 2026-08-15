@@ -52,7 +52,6 @@ public sealed partial class MakeWorkflowTests
         "show-atom",
         "deliver-check",
         "receipts-stage",
-        "derived-refresh",
         "deposit",
         "cover",
         "worktree",
@@ -234,25 +233,26 @@ public sealed partial class MakeWorkflowTests
     }
 
     [Fact]
-    public void PreflightPinsOneStrictAncestorBeforeExpensiveStagesAndReportsBaseAdvanceAdvisory()
+    public void PreflightPinsForkPointBeforeExpensiveStagesAndKeepsTipAdvanceAdvisory()
     {
         var root = TestRepositoryLayout.FindRoot();
         var preflight = File.ReadAllText(Path.Combine(root, PreflightScriptPath));
+        var localGate = File.ReadAllText(Path.Combine(root, LocalHarnessGateScriptPath));
 
-        var fetchIndex = preflight.IndexOf("fetch --prune", StringComparison.Ordinal);
-        var pinIndex = preflight.IndexOf(
-            "BASE_SHA=\"$(git rev-parse --verify \"${BASE_REF}^{commit}\")\"",
-            StringComparison.Ordinal);
-        var ancestorIndex = preflight.IndexOf("merge-base --is-ancestor", StringComparison.Ordinal);
-        var buildIndex = preflight.IndexOf("CI=true make -C tools dotnet", StringComparison.Ordinal);
-
-        Assert.True(fetchIndex >= 0, "preflight must perform the run's single base fetch");
-        Assert.True(pinIndex > fetchIndex, "the exact base OID must be resolved after the fetch");
-        Assert.True(ancestorIndex > pinIndex, "the pinned OID must retain strict ancestor validation");
-        Assert.True(buildIndex > ancestorIndex, "base validation must precede every expensive stage");
+        string[] ordered = ["fetch --prune", "BASE_TIP_SHA=\"$(git rev-parse", "CANDIDATE_SHA=\"$(git rev-parse", "BASE_SHA=\"$(git merge-base", "CI=true make -C tools dotnet"];
+        var cursor = -1;
+        foreach (var fragment in ordered)
+        {
+            cursor = preflight.IndexOf(fragment, cursor + 1, StringComparison.Ordinal);
+            Assert.True(cursor >= 0, $"preflight contract is absent or out of order: {fragment}");
+        }
+        Assert.DoesNotContain("merge-base --is-ancestor", preflight, StringComparison.Ordinal);
         Assert.Contains("make gate BASE=\"$BASE_SHA\"", preflight, StringComparison.Ordinal);
-        Assert.Contains("BASE_ADVANCED pinned=%s observed=%s", preflight, StringComparison.Ordinal);
+        Assert.Contains("\"$observed_base\" != \"$BASE_TIP_SHA\"", preflight, StringComparison.Ordinal);
         Assert.Contains("|| true", preflight[preflight.IndexOf("BASE_ADVANCED", StringComparison.Ordinal)..], StringComparison.Ordinal);
+        Assert.Contains("merge-base \"$BASE_TIP_SHA\" \"$candidate_sha\"", localGate, StringComparison.Ordinal);
+        Assert.DoesNotContain("merge-base --is-ancestor", localGate, StringComparison.Ordinal);
+        Assert.DoesNotContain("pinned base is not a strict ancestor", localGate, StringComparison.Ordinal);
     }
 
     [Fact]

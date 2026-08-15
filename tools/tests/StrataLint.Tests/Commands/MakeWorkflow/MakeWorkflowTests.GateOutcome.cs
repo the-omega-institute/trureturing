@@ -5,6 +5,11 @@ namespace StrataLint.Tests;
 
 public sealed partial class MakeWorkflowTests
 {
+    private const string GateForkSha = "0000000000000000000000000000000000000001";
+    private const string GateCandidateSha = "0000000000000000000000000000000000000002";
+    private const string GateBaseTipSha = "0000000000000000000000000000000000000004";
+    private const string GateAdvancedBaseTipSha = "0000000000000000000000000000000000000005";
+
     [Fact]
     public void ScribeContentChecksUseTheExplicitNonEmptyReport()
     {
@@ -149,13 +154,14 @@ public sealed partial class MakeWorkflowTests
     }
 
     [Theory]
-    [InlineData(1, 1, "FAIL:SEMANTIC")]
-    [InlineData(2, 2, "FAIL:INFRASTRUCTURE")]
-    [InlineData(3, 0, "PASS:NONE")]
-    public void PreflightConsumesHarnessGateOutcomeAcrossTheFullChain(
+    [InlineData(1, 1, "FAIL:SEMANTIC", true)]
+    [InlineData(2, 2, "FAIL:INFRASTRUCTURE", true)]
+    [InlineData(3, 0, "PASS:NONE", false)]
+    public void PreflightUsesForkPointWhenBaseTipHasAdvancedWithoutMutatingGit(
         int admissionExitCode,
         int expectedExitCode,
-        string expectedDeclaration)
+        string expectedDeclaration,
+        bool diverged)
     {
         if (OperatingSystem.IsWindows()) return;
 
@@ -165,6 +171,8 @@ public sealed partial class MakeWorkflowTests
         var homeDirectory = Path.Combine(fixture.Path, "home");
         var binDirectory = Path.Combine(homeDirectory, ".dotnet");
         var candidateDll = Path.Combine(candidateRoot, "bin", "candidate.dll");
+        var gitState = Path.Combine(fixture.Path, "git-state");
+        var baseTipSha = diverged ? GateBaseTipSha : GateForkSha;
         Directory.CreateDirectory(Path.GetDirectoryName(candidateDll)!);
         Directory.CreateDirectory(binDirectory);
         Directory.CreateDirectory(Path.Combine(candidateRoot, "tools", "scripts"));
@@ -174,9 +182,11 @@ public sealed partial class MakeWorkflowTests
             "perf_make_spool_dir() { mktemp -d; }\n"
             + "perf_capture_event() { :; }\n"
             + "perf_flush_events() { :; }\n");
+        var gitStateBefore = Encoding.UTF8.GetBytes(diverged ? $"HEAD {GateCandidateSha} {GateForkSha}\nBASE {baseTipSha} 0000000000000000000000000000000000000003 {GateForkSha}\nrefs {GateCandidateSha} {baseTipSha}\n" : $"HEAD {GateCandidateSha} {baseTipSha}\nrefs {GateCandidateSha} {baseTipSha}\n");
+        File.WriteAllBytes(gitState, gitStateBefore);
         WriteGateOutcomeReportPair(candidateRoot);
 
-        WriteGateOutcomeGitShim(binDirectory, candidateRoot);
+        WriteGateOutcomeGitShim(binDirectory, candidateRoot, baseTipSha, GateCandidateSha, GateForkSha, diverged);
         WriteGateOutcomeDotnetShim(binDirectory);
         WriteExecutable(
             Path.Combine(binDirectory, "lake"),
@@ -190,7 +200,7 @@ public sealed partial class MakeWorkflowTests
                 "PREFLIGHT_ADMISSION_RC=\"$1\" PREFLIGHT_CANDIDATE_ROOT=\"$2\" "
                 + "PREFLIGHT_GATE=\"$3\" PREFLIGHT_LOCAL_GATE=\"$4\" "
                 + "HOME=\"$5\" BASE=base PATH=\"$6:/usr/bin:/bin\" "
-                + "exec /bin/bash \"$7\"",
+                + "PREFLIGHT_GIT_STATE=\"$7\" PREFLIGHT_EXPECTED_GATE_BASE=\"$8\" exec /bin/bash \"$9\"",
                 "preflight-gate-outcome",
                 admissionExitCode.ToString(System.Globalization.CultureInfo.InvariantCulture),
                 candidateRoot,
@@ -198,6 +208,8 @@ public sealed partial class MakeWorkflowTests
                 Path.Combine(root, LocalHarnessGateScriptPath),
                 homeDirectory,
                 binDirectory,
+                gitState,
+                GateForkSha,
                 Path.Combine(root, PreflightScriptPath),
             ],
             candidateRoot,
@@ -205,18 +217,173 @@ public sealed partial class MakeWorkflowTests
             64 * 1024);
 
         var output = Encoding.UTF8.GetString(result.StandardOutput);
+        Assert.True(expectedExitCode == result.ExitCode, $"expected exit {expectedExitCode}, actual {result.ExitCode}\nstdout:\n{output}\nstderr:\n{Encoding.UTF8.GetString(result.StandardError)}");
+        Assert.EndsWith($"FKST_LOCAL_ITERATION_RESULT:v2:{expectedDeclaration}\n", output, StringComparison.Ordinal);
+        Assert.Contains("[preflight] dotnet", output, StringComparison.Ordinal);
+        Assert.Equal(gitStateBefore, File.ReadAllBytes(gitState));
+    }
+
+    [Theory]
+    [InlineData("command-failed")]
+    [InlineData("empty")]
+    [InlineData("vacuous")]
+    public void PreflightRejectsInvalidMergeBaseBeforeExpensiveStages(string mergeBaseMode)
+    {
+        if (OperatingSystem.IsWindows()) return;
+
+        var result = RunInvalidMergeBase(PreflightScriptPath, mergeBaseMode);
+        var output = Encoding.UTF8.GetString(result.StandardOutput);
         var error = Encoding.UTF8.GetString(result.StandardError);
-        Assert.True(
-            expectedExitCode == result.ExitCode,
-            $"expected exit {expectedExitCode}, actual {result.ExitCode}\nstdout:\n{output}\nstderr:\n{error}");
+
+        Assert.Equal(1, result.ExitCode);
         Assert.EndsWith(
-            $"FKST_LOCAL_ITERATION_RESULT:v2:{expectedDeclaration}\n",
+            "FKST_LOCAL_ITERATION_RESULT:v2:FAIL:CONFIGURATION\n",
             output,
             StringComparison.Ordinal);
+        Assert.DoesNotContain("[preflight] dotnet", output, StringComparison.Ordinal);
+        Assert.Contains(ExpectedMergeBaseDiagnostic(mergeBaseMode), error, StringComparison.Ordinal);
+    }
+
+    [Theory]
+    [InlineData("command-failed")]
+    [InlineData("empty")]
+    [InlineData("vacuous")]
+    public void LocalHarnessGateRejectsInvalidMergeBase(string mergeBaseMode)
+    {
+        if (OperatingSystem.IsWindows()) return;
+
+        var result = RunInvalidMergeBase(LocalHarnessGateScriptPath, mergeBaseMode);
+        var error = Encoding.UTF8.GetString(result.StandardError);
+
+        Assert.True(
+            result.ExitCode == 1,
+            $"expected exit 1, actual {result.ExitCode}\nstdout:\n{Encoding.UTF8.GetString(result.StandardOutput)}\nstderr:\n{error}");
+        Assert.Contains(ExpectedMergeBaseDiagnostic(mergeBaseMode), error, StringComparison.Ordinal);
+    }
+
+    [Theory]
+    [InlineData(GateForkSha, false)]
+    [InlineData("base", true)]
+    public void LocalHarnessGateResolvesBaseToForkAndOnlyObservesSymbolicRefs(
+        string baseArgument,
+        bool expectAdvanceAdvisory)
+    {
+        if (OperatingSystem.IsWindows()) return;
+
+        var root = TestRepositoryLayout.FindRoot();
+        using var fixture = new TemporaryDirectory();
+        var candidateRoot = Path.Combine(fixture.Path, "candidate");
+        var homeDirectory = Path.Combine(fixture.Path, "home");
+        var binDirectory = Path.Combine(homeDirectory, ".dotnet");
+        var candidateDll = Path.Combine(candidateRoot, "bin", "candidate.dll");
+        var baseRefCount = Path.Combine(fixture.Path, "base-ref-count");
+        Directory.CreateDirectory(Path.GetDirectoryName(candidateDll)!);
+        Directory.CreateDirectory(binDirectory);
+        File.WriteAllText(candidateDll, string.Empty);
+        WriteGateOutcomeReportPair(candidateRoot);
+        WriteGateOutcomeDotnetShim(binDirectory);
+        WriteExecutable(Path.Combine(binDirectory, "lake"), "#!/usr/bin/env bash\nexit 0");
+        WriteObservedBaseGitShim(binDirectory, candidateRoot, baseArgument);
+
+        var result = BoundedProcessRunner.Run(
+            "/bin/bash",
+            [
+                "-c",
+                "HOME=\"$1\" PATH=\"$2:/usr/bin:/bin\" PREFLIGHT_ADMISSION_RC=0 "
+                    + "PREFLIGHT_EXPECTED_GATE_BASE=\"$3\" GATE_BASE_REF_COUNT=\"$4\" "
+                    + "exec /bin/bash \"$5\" --candidate \"$6\" --base \"$7\" --skip-engineering",
+                "local-gate-base-resolution",
+                homeDirectory,
+                binDirectory,
+                GateForkSha,
+                baseRefCount,
+                Path.Combine(root, LocalHarnessGateScriptPath),
+                candidateRoot,
+                baseArgument,
+            ],
+            candidateRoot,
+            TimeSpan.FromSeconds(30),
+            64 * 1024);
+
+        var error = Encoding.UTF8.GetString(result.StandardError);
+        Assert.True(
+            result.ExitCode == 0,
+            $"expected exit 0, actual {result.ExitCode}\nstdout:\n{Encoding.UTF8.GetString(result.StandardOutput)}\nstderr:\n{error}");
+        Assert.Contains($"base={GateForkSha}", error, StringComparison.Ordinal);
+        if (expectAdvanceAdvisory)
+        {
+            Assert.Contains(
+                $"BASE_ADVANCED pinned={GateBaseTipSha} observed={GateAdvancedBaseTipSha}",
+                error,
+                StringComparison.Ordinal);
+        }
+        else
+        {
+            Assert.DoesNotContain("BASE_ADVANCED", error, StringComparison.Ordinal);
+        }
     }
 
     [System.Runtime.Versioning.UnsupportedOSPlatform("windows")]
-    private static void WriteGateOutcomeGitShim(string binDirectory, string candidateRoot) =>
+    private static ProcessOutput RunInvalidMergeBase(string scriptPath, string mergeBaseMode)
+    {
+        var root = TestRepositoryLayout.FindRoot();
+        using var fixture = new TemporaryDirectory();
+        var candidateRoot = Path.Combine(fixture.Path, "candidate");
+        var homeDirectory = Path.Combine(fixture.Path, "home");
+        var binDirectory = Path.Combine(homeDirectory, ".dotnet");
+        Directory.CreateDirectory(Path.Combine(candidateRoot, "tools", "scripts"));
+        Directory.CreateDirectory(binDirectory);
+        File.WriteAllText(
+            Path.Combine(candidateRoot, "tools", "scripts", "perf-event-lib.sh"),
+            "perf_make_spool_dir() { mktemp -d; }\n"
+                + "perf_capture_event() { :; }\n"
+                + "perf_flush_events() { :; }\n");
+        WriteInvalidMergeBaseGitShim(binDirectory, candidateRoot);
+        WriteExecutable(
+            Path.Combine(binDirectory, "dotnet"),
+            "#!/usr/bin/env bash\n[[ \"${1:-}\" == --version ]] && exit 0\n[[ \"${1:-}\" == restore ]] && exit 0\nexit 0");
+        WriteExecutable(
+            Path.Combine(binDirectory, "lake"),
+            "#!/usr/bin/env bash\n[[ \"${1:-}\" == --version ]] && exit 0\nexit 0");
+        WriteExecutable(Path.Combine(binDirectory, "make"), "#!/usr/bin/env bash\nexit 0");
+
+        var command = scriptPath == PreflightScriptPath
+            ? "HOME=\"$1\" BASE=\"$2\" PATH=\"$3:/usr/bin:/bin\" MERGE_BASE_MODE=\"$4\" exec /bin/bash \"$5\""
+            : "HOME=\"$1\" PATH=\"$3:/usr/bin:/bin\" MERGE_BASE_MODE=\"$4\" exec /bin/bash \"$5\" --candidate \"$6\" --base \"$2\" --skip-engineering";
+        return BoundedProcessRunner.Run(
+            "/bin/bash",
+            [
+                "-c",
+                command,
+                "invalid-merge-base",
+                homeDirectory,
+                GateBaseTipSha,
+                binDirectory,
+                mergeBaseMode,
+                Path.Combine(root, scriptPath),
+                candidateRoot,
+            ],
+            candidateRoot,
+            TimeSpan.FromSeconds(30),
+            64 * 1024);
+    }
+
+    private static string ExpectedMergeBaseDiagnostic(string mergeBaseMode)
+    {
+        var reason = mergeBaseMode switch
+        {
+            "command-failed" => "merge-base-command-failed",
+            "empty" => "merge-base-empty",
+            "vacuous" => "vacuous",
+            _ => throw new ArgumentOutOfRangeException(nameof(mergeBaseMode)),
+        };
+        var resolvedBase = mergeBaseMode == "vacuous" ? GateCandidateSha : "empty";
+        return $"BASE_RESOLUTION_FAILED reason={reason} BASE_REF={GateBaseTipSha} "
+            + $"BASE_TIP_SHA={GateBaseTipSha} CANDIDATE_SHA={GateCandidateSha} BASE_SHA={resolvedBase}";
+    }
+
+    [System.Runtime.Versioning.UnsupportedOSPlatform("windows")]
+    private static void WriteInvalidMergeBaseGitShim(string binDirectory, string candidateRoot) =>
         WriteExecutable(
             Path.Combine(binDirectory, "git"),
             $$"""
@@ -224,9 +391,68 @@ public sealed partial class MakeWorkflowTests
             if [[ "${1:-}" == -C ]]; then shift 2; fi
             case "$*" in
               "rev-parse --show-toplevel") printf '%s\n' '{{candidateRoot}}' ;;
-              "rev-parse --verify base^{commit}"|"rev-parse --verify 0000000000000000000000000000000000000001^{commit}") printf '%040d\n' 1 ;;
-              "rev-parse --verify HEAD^{commit}"|"rev-parse --verify HEAD") printf '%040d\n' 2 ;;
-              "merge-base --is-ancestor "*) exit 0 ;;
+              "rev-parse --verify HEAD"|"rev-parse --verify HEAD^{commit}") printf '%s\n' '{{GateCandidateSha}}' ;;
+              "rev-parse --verify {{GateBaseTipSha}}^{commit}") printf '%s\n' '{{GateBaseTipSha}}' ;;
+              "merge-base {{GateBaseTipSha}} {{GateCandidateSha}}")
+                case "$MERGE_BASE_MODE" in
+                  command-failed) exit 1 ;;
+                  empty) exit 0 ;;
+                  vacuous) printf '%s\n' '{{GateCandidateSha}}' ;;
+                  *) exit 89 ;;
+                esac
+                ;;
+              "merge-base --is-ancestor {{GateBaseTipSha}} {{GateCandidateSha}}") exit 0 ;;
+              *) echo "unexpected git invocation: $*" >&2; exit 90 ;;
+            esac
+            """);
+
+    [System.Runtime.Versioning.UnsupportedOSPlatform("windows")]
+    private static void WriteObservedBaseGitShim(
+        string binDirectory,
+        string candidateRoot,
+        string baseArgument) =>
+        WriteExecutable(
+            Path.Combine(binDirectory, "git"),
+            $$"""
+            #!/usr/bin/env bash
+            if [[ "${1:-}" == -C ]]; then shift 2; fi
+            case "$*" in
+              "rev-parse --verify HEAD"|"rev-parse --verify HEAD^{commit}") printf '%s\n' '{{GateCandidateSha}}' ;;
+              "rev-parse --verify {{baseArgument}}^{commit}")
+                if [[ '{{baseArgument}}' == base ]]; then
+                  count="$(cat "$GATE_BASE_REF_COUNT" 2>/dev/null || printf 0)"
+                  count="$((count + 1))"
+                  printf '%s\n' "$count" > "$GATE_BASE_REF_COUNT"
+                  if [[ "$count" -ge 3 ]]; then
+                    printf '%s\n' '{{GateAdvancedBaseTipSha}}'
+                  else
+                    printf '%s\n' '{{GateBaseTipSha}}'
+                  fi
+                else
+                  printf '%s\n' '{{GateForkSha}}'
+                fi
+                ;;
+              "merge-base {{GateBaseTipSha}} {{GateCandidateSha}}"|"merge-base {{GateForkSha}} {{GateCandidateSha}}") printf '%s\n' '{{GateForkSha}}' ;;
+              *) echo "unexpected git invocation: $*" >&2; exit 90 ;;
+            esac
+            """);
+
+    [System.Runtime.Versioning.UnsupportedOSPlatform("windows")]
+    private static void WriteGateOutcomeGitShim(string binDirectory, string candidateRoot, string baseTipSha, string candidateSha, string forkSha, bool diverged) =>
+        WriteExecutable(
+            Path.Combine(binDirectory, "git"),
+            $$"""
+            #!/usr/bin/env bash
+            if [[ "${1:-}" == -C ]]; then shift 2; fi
+            case "$*" in
+              "rev-parse --show-toplevel") printf '%s\n' '{{candidateRoot}}' ;;
+              "rev-parse --verify base^{commit}") printf '%s\n' '{{baseTipSha}}' ;;
+              "rev-parse --verify {{forkSha}}^{commit}") printf '%s\n' '{{forkSha}}' ;;
+              "rev-parse --verify HEAD^{commit}"|"rev-parse --verify HEAD") printf '%s\n' '{{candidateSha}}' ;;
+              "merge-base {{baseTipSha}} {{candidateSha}}") printf '%s\n' '{{forkSha}}' ;;
+              "merge-base --is-ancestor {{baseTipSha}} {{candidateSha}}") exit {{(diverged ? 1 : 0)}} ;;
+              "merge-base --is-ancestor {{forkSha}} {{candidateSha}}") exit 0 ;;
+              merge\ *) printf 'mutated\n' > "$PREFLIGHT_GIT_STATE" ;;
               *) echo "unexpected git invocation: $*" >&2; exit 90 ;;
             esac
             """);
@@ -250,7 +476,10 @@ public sealed partial class MakeWorkflowTests
                 ;;
             esac
             if [[ "${2:-}" == selftest ]]; then printf 'selftest\n'; exit 0; fi
-            if [[ "${2:-}" == check ]]; then exit "$PREFLIGHT_ADMISSION_RC"; fi
+            if [[ "${2:-}" == check ]]; then
+              if [[ -n "${PREFLIGHT_EXPECTED_GATE_BASE:-}" && "$*" != *" --protected-base $PREFLIGHT_EXPECTED_GATE_BASE "* ]]; then exit 94; fi
+              exit "$PREFLIGHT_ADMISSION_RC"
+            fi
             if [[ "${2:-}" == filemap-conform ]]; then exit 0; fi
             if [[ "$*" == *StrataLint.Scribe.csproj* && "$*" == *" --check"* ]]; then exit 0; fi
             echo "unexpected dotnet invocation: $*" >&2
@@ -265,10 +494,12 @@ public sealed partial class MakeWorkflowTests
             #!/usr/bin/env bash
             target=""
             gate_args=""
+            gate_base=""
             for arg in "$@"; do
               case "$arg" in
                 gate|dotnet|lean-report|test|selftest) target="$arg" ;;
                 GATE_ARGS=*) gate_args="${arg#GATE_ARGS=}" ;;
+                BASE=*) gate_base="${arg#BASE=}" ;;
               esac
             done
             if [[ "$target" == lean-report ]]; then
@@ -279,6 +510,7 @@ public sealed partial class MakeWorkflowTests
             fi
             [[ "$target" == gate ]] || exit 0
             [[ "$gate_args" == --skip-engineering ]] || exit 92
+            [[ "$gate_base" == "$PREFLIGHT_EXPECTED_GATE_BASE" ]] || exit 93
             "$PREFLIGHT_LOCAL_GATE" \
               --candidate "$PREFLIGHT_CANDIDATE_ROOT" \
               --base 0000000000000000000000000000000000000001 \

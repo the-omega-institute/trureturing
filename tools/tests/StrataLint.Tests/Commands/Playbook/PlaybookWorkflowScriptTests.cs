@@ -75,23 +75,16 @@ public sealed class PlaybookWorkflowScriptTests
     }
 
     [Fact]
-    public void DerivedRefreshMergesBeforeRecomputingDerivedArtifacts()
+    public void CanonicalPlaybookNeverMergesBranches()
     {
-        if (OperatingSystem.IsWindows()) return;
-        using var fixture = new PlaybookFixture();
+        var script = File.ReadAllText(
+            Path.Combine(TestRepositoryLayout.FindRoot(), ScriptPath));
+        const string mergeCommandPattern = @"(?m)^\s*git\b[^\r\n]*?(?<!\S)merge(?:\s|$)";
 
-        var result = fixture.Run("derived-refresh", "synthetic-base");
-
-        Assert.Equal(0, result.ExitCode);
-        Assert.Equal(
-            [
-                "git:merge --no-edit synthetic-base",
-                "make:lean-report",
-                "make:emit",
-                "make:ingest BASE=synthetic-base",
-                "dotnet:digest-status --base synthetic-base",
-            ],
-            fixture.Calls());
+        Assert.DoesNotMatch(mergeCommandPattern, script);
+        Assert.Matches(mergeCommandPattern, "git -C \"$dir\" --no-pager merge --no-edit base\n");
+        Assert.DoesNotMatch(mergeCommandPattern, "git merge-base --is-ancestor base HEAD\n");
+        Assert.DoesNotContain("derived-refresh", script, StringComparison.Ordinal);
     }
 
     private sealed class PlaybookFixture : IDisposable
