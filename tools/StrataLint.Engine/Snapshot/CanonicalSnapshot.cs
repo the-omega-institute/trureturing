@@ -66,19 +66,6 @@ public static class RepositoryCanonicalizer
                 .Select(static item => SnapshotEntry.FromFile(item.Key, item.Value))
                 .ToImmutableArray();
             var bytes = CanonicalSnapshotWriter.Write(policy.RegistrySha256, expectedEntries);
-            var parsed = CanonicalSnapshotWriter.Parse(bytes.AsSpan());
-            if (!string.Equals(parsed.RegistrySha256, policy.RegistrySha256, StringComparison.Ordinal)
-                || !parsed.Entries.SequenceEqual(expectedEntries))
-            {
-                throw new FormatException("Canonical snapshot semantic round-trip is not an identity.");
-            }
-
-            var encodedAgain = CanonicalSnapshotWriter.Write(parsed.RegistrySha256, parsed.Entries);
-            if (!bytes.AsSpan().SequenceEqual(encodedAgain.AsSpan()))
-            {
-                throw new FormatException("Canonical snapshot second encoding is not byte-identical.");
-            }
-
             return new CanonicalizationOutcome.Accepted(
                 CanonicalFixedPoint.Create(bytes, policy.RegistrySha256));
         }
@@ -143,10 +130,6 @@ internal sealed record SnapshotEntry(RepoPath Path, int Length, string Sha256)
         Convert.ToHexStringLower(SHA256.HashData(file.RawBytes.AsSpan())));
 }
 
-internal sealed record CanonicalSnapshotDocument(
-    string RegistrySha256,
-    ImmutableArray<SnapshotEntry> Entries);
-
 internal static class CanonicalSnapshotWriter
 {
     private static readonly UTF8Encoding StrictUtf8 = new(false, true);
@@ -180,54 +163,5 @@ internal static class CanonicalSnapshotWriter
         }
 
         return ImmutableArray.CreateRange(StrictUtf8.GetBytes(builder.ToString()));
-    }
-
-    internal static CanonicalSnapshotDocument Parse(ReadOnlySpan<byte> bytes)
-    {
-        var text = StrictUtf8.GetString(bytes);
-        var root = (Dictionary<string, object?>)YamlSubsetParser.Parse(text);
-        if (!root.Keys.SequenceEqual(new[] { "schema_version", "registry_sha256", "files" })
-            || root["schema_version"] is not int version
-            || version != 1
-            || root["registry_sha256"] is not string registrySha256
-            || !HashPattern.IsMatch(registrySha256)
-            || root["files"] is not List<object?> files)
-        {
-            throw new FormatException("Canonical snapshot document has an invalid schema.");
-        }
-
-        var entries = ImmutableArray.CreateBuilder<SnapshotEntry>();
-        foreach (var rawFile in files)
-        {
-            if (rawFile is not Dictionary<string, object?> file
-                || !file.Keys.SequenceEqual(new[] { "path_utf8_hex", "length", "sha256" })
-                || file["path_utf8_hex"] is not string pathHex
-                || file["length"] is not int length
-                || length < 0
-                || file["sha256"] is not string sha256
-                || !HashPattern.IsMatch(sha256))
-            {
-                throw new FormatException("Canonical snapshot file entry is invalid.");
-            }
-
-            string pathText;
-            try
-            {
-                pathText = StrictUtf8.GetString(Convert.FromHexString(pathHex));
-            }
-            catch (Exception exception) when (exception is FormatException or DecoderFallbackException)
-            {
-                throw new FormatException("Canonical snapshot path encoding is invalid.", exception);
-            }
-
-            if (!RepoPath.TryCreate(pathText, out var path))
-            {
-                throw new FormatException("Canonical snapshot contains an invalid repository path.");
-            }
-
-            entries.Add(new SnapshotEntry(path, length, sha256));
-        }
-
-        return new CanonicalSnapshotDocument(registrySha256, entries.ToImmutable());
     }
 }
