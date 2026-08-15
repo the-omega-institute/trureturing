@@ -519,12 +519,6 @@ case "$COMMAND" in
   receipts-stage)
     receipts_stage
     ;;
-  derived-refresh)
-    git merge --no-edit "$BASE"
-    make lean-report
-    make emit
-    receipts_stage
-    ;;
   deposit)
     require_transaction_arguments
     require_new_module_blueprint_mirror
@@ -558,7 +552,7 @@ case "$COMMAND" in
     commit_all_if_needed "formalize: cover $ATOM_ID with $GID"
     ;;
   *)
-    echo "usage: playbook-workflows.sh deliver-check|receipts-stage|derived-refresh|deposit|cover [BASE] [ATOM_ID GID]" >&2
+    echo "usage: playbook-workflows.sh deliver-check|receipts-stage|deposit|cover [BASE] [ATOM_ID GID]" >&2
     exit 2
     ;;
 esac
