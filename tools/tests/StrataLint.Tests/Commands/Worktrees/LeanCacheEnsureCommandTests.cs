@@ -142,7 +142,6 @@ public sealed class LeanCacheEnsureCommandTests
         var target = AddWorktree(repository.Path, "copy-failure-target");
         var runner = new RecordingWorktreeProcessRunner
         {
-            FailClonefile = true,
             FailCopy = true,
             FailLake = true,
         };
@@ -150,7 +149,8 @@ public sealed class LeanCacheEnsureCommandTests
         var result = WorktreeCommand.Run(
             repository.Path,
             ["ensure-cache", "--path", target],
-            runner);
+            runner,
+            new RecordingDirectoryCloner { FailureReason = "clonefile unavailable" });
 
         Assert.True(result.Success);
         Assert.Empty(result.Error);

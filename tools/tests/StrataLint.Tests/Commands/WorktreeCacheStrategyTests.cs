@@ -78,7 +78,7 @@ public sealed class WorktreeCacheStrategyTests
         InitializeRepository(repository.Path);
         var donorFile = WriteCache(repository.Path, "warm cache\n");
         var target = Path.Combine(repository.Path, "copy-fallback");
-        var runner = new RecordingWorktreeProcessRunner { FailClonefile = true };
+        var runner = new RecordingWorktreeProcessRunner();
 
         var result = WorktreeCommand.Run(
             repository.Path,
@@ -88,7 +88,8 @@ public sealed class WorktreeCacheStrategyTests
                 "--base", "HEAD",
                 "--skip-restore",
             ],
-            runner);
+            runner,
+            new RecordingDirectoryCloner { FailureReason = "clonefile unavailable" });
 
         Assert.True(result.Success, result.Error);
         Assert.Contains("\"cache_strategy\":\"cloned\"", result.Output, StringComparison.Ordinal);
@@ -261,6 +262,35 @@ public sealed class WorktreeCacheStrategyTests
         Assert.DoesNotContain("export PATH=", clean, StringComparison.Ordinal);
     }
 
+    [Fact]
+    public void NoProgramWalksTheCacheTreeWithPerFileClonefile()
+    {
+        var root = TestRepositoryLayout.FindRoot();
+        var scanned = new[] { "tools", ".github" }
+            .Select(directory => Path.Combine(root, directory))
+            .Where(Directory.Exists)
+            .SelectMany(directory => Directory.EnumerateFiles(directory, "*", SearchOption.AllDirectories))
+            .Where(static path => !path.Contains($"{Path.DirectorySeparatorChar}bin{Path.DirectorySeparatorChar}", StringComparison.Ordinal))
+            .Where(static path => !path.Contains($"{Path.DirectorySeparatorChar}obj{Path.DirectorySeparatorChar}", StringComparison.Ordinal))
+            .Where(static path => Path.GetExtension(path) is ".cs" or ".sh" or ".yml" or ".yaml" or ".md")
+            .Append(Path.Combine(root, "Makefile"))
+            .Append(Path.Combine(root, "README.md"))
+            .ToArray();
+        Assert.NotEmpty(scanned);
+
+        // Assembled rather than written out so this guard is not its own counterexample.
+        var shellForm = "cp" + " -c";
+        var argumentForm = "\"-c\"" + ", " + "\"-R\"";
+        var offenders = scanned
+            .Where(path => File.ReadAllText(path) is var text
+                && (text.Contains(shellForm, StringComparison.Ordinal)
+                    || text.Contains(argumentForm, StringComparison.Ordinal)))
+            .Select(path => Path.GetRelativePath(root, path))
+            .ToArray();
+
+        Assert.Empty(offenders);
+    }
+
     private static void InitializeRepository(string root)
     {
         Git(root, "init", "--initial-branch=dev");
@@ -296,6 +326,35 @@ public sealed class WorktreeCacheStrategyTests
     }
 }
 
+internal sealed class RecordingDirectoryCloner : IDirectoryCloner
+{
+    internal List<(string Source, string Target)> Invocations { get; } = [];
+
+    internal string? FailureReason { get; init; }
+
+    public string? Clone(string source, string target)
+    {
+        Invocations.Add((source, target));
+        if (FailureReason is not null) return FailureReason;
+        CopyTree(new DirectoryInfo(source), new DirectoryInfo(target));
+        return null;
+    }
+
+    private static void CopyTree(DirectoryInfo source, DirectoryInfo target)
+    {
+        target.Create();
+        foreach (var file in source.GetFiles())
+        {
+            file.CopyTo(Path.Combine(target.FullName, file.Name));
+        }
+
+        foreach (var directory in source.GetDirectories())
+        {
+            CopyTree(directory, new DirectoryInfo(Path.Combine(target.FullName, directory.Name)));
+        }
+    }
+}
+
 internal sealed record WorktreeProcessInvocation(
     string FileName,
     IReadOnlyList<string> Arguments,
@@ -305,8 +364,6 @@ internal sealed record WorktreeProcessInvocation(
 internal sealed class RecordingWorktreeProcessRunner : IWorktreeProcessRunner
 {
     internal List<WorktreeProcessInvocation> Invocations { get; } = [];
-
-    internal bool FailClonefile { get; init; }
 
     internal bool FailCopy { get; init; }
 
@@ -332,11 +389,6 @@ internal sealed class RecordingWorktreeProcessRunner : IWorktreeProcessRunner
             && FailWorktreeAdd)
         {
             return Failure("simulated concurrent worktree");
-        }
-
-        if (fileName == "cp" && arguments.FirstOrDefault() == "-c" && FailClonefile)
-        {
-            return Failure("clonefile unavailable");
         }
 
         if (fileName == "cp" && arguments.FirstOrDefault() == "-R" && FailCopy)
