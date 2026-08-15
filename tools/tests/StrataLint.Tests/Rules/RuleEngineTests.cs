@@ -28,6 +28,28 @@ public sealed class RuleEngineTests
         { 21, "future" },
     };
 
+    [Fact]
+    public void DefaultFixtureUsesTheCanonicalDirectoryDigestionLedger()
+    {
+        var fixture = new RuleFixture();
+
+        Assert.DoesNotContain(BackfillInventoryLoader.RelativePath, fixture.Files.Keys);
+        Assert.Contains(BackfillInventoryLoader.TicketIndexPath, fixture.Files.Keys);
+        var document = BackfillInventoryLoader.Load(fixture.Build().Current);
+        var source = Assert.Single(document.RequireDigestionSources());
+        var entry = Assert.Single(source.Entries);
+
+        Assert.Equal("fixture-source", source.SourceId);
+        Assert.Equal(RuleFixture.FixtureDigestionSourcePath, source.SourcePath);
+        Assert.Equal(AtomizerRegistry.NoAtomizerId, source.Atomizer);
+        Assert.Equal(RuleFixture.FixtureAtomId, entry.AtomId);
+        Assert.Equal("manual/fixture", entry.AstPath);
+        Assert.Equal(RuleFixture.FixtureCasReference, entry.CasRef);
+        Assert.Equal(DigestionMigrationState.Partial, entry.ProjectedStatus.Migration);
+        Assert.Equal(DigestionTruthState.Closed, entry.ProjectedStatus.Truth);
+        Assert.Equal(18, document.RequireTickets().Length);
+    }
+
     [Theory]
     [MemberData(nameof(BlockingCases))]
     public void ActiveRuleHasGreenAndRedExecutableFixtures(int number, string mutation)
