@@ -33,12 +33,15 @@ public sealed class LeanCacheProvisionerTests
             {
                 FailCopy = true,
             };
+            using var writerGuard = LeanCacheWriterGuard.TryAcquire(Path.Combine(root, ".lake"));
+            Assert.NotNull(writerGuard);
 
             LeanCacheProvisioner.Provision(
                 new LeanCacheDonorSelection(donor.Path, null),
                 root,
                 pins,
                 runner,
+                writerGuard,
                 new RecordingDirectoryCloner { FailureReason = "clonefile unavailable" });
 
             var provisioning = runner.Invocations
@@ -69,12 +72,15 @@ public sealed class LeanCacheProvisionerTests
             Directory.CreateDirectory(root);
             WritePins(root);
             var runner = new RecordingWorktreeProcessRunner();
+            using var writerGuard = LeanCacheWriterGuard.TryAcquire(Path.Combine(root, ".lake"));
+            Assert.NotNull(writerGuard);
 
             LeanCacheProvisioner.Provision(
                 new LeanCacheDonorSelection(null, "fixture has no donor"),
                 root,
                 ReadPins(root),
-                runner);
+                runner,
+                writerGuard);
 
             var cacheGet = Assert.Single(
                 runner.Invocations,

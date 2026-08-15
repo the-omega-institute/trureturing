@@ -4,6 +4,15 @@ namespace StrataLint.Tests;
 
 public sealed partial class MakeWorkflowTests
 {
+    [Fact]
+    public void PreflightScenarioFixtureDoesNotOwnTheCanonicalLeanReport()
+    {
+        Assert.DoesNotContain(
+            typeof(MakeWorkflowTests).GetNestedTypes(
+                System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Public),
+            static type => type.Name == "ScenarioLeanReport");
+    }
+
     [Theory]
     [InlineData("pass", 0)]
     [InlineData("semantic-test", 41)]
@@ -40,52 +49,36 @@ public sealed partial class MakeWorkflowTests
         Assert.Equal(44, result.ExitCode);
     }
 
-    /// <summary>
-    /// Stands in for the artifact a real <c>make lean-report</c> leaves behind, and removes it
-    /// again only when this fixture is the one that put it there.
-    /// </summary>
-    private sealed class ScenarioLeanReport : IDisposable
-    {
-        private readonly string path;
-        private readonly bool created;
-
-        internal ScenarioLeanReport(string repositoryRoot)
-        {
-            path = Path.Combine(repositoryRoot, ".lake", "build", "stratalint", "raw-lean-report.json");
-            if (File.Exists(path))
-            {
-                return;
-            }
-
-            Directory.CreateDirectory(Path.GetDirectoryName(path)!);
-            File.WriteAllText(
-                path,
-                "{\"modules\":[],\"schema\":\"stratalint-raw-lean-report-v1\"}\n");
-            created = true;
-        }
-
-        public void Dispose()
-        {
-            if (created && File.Exists(path))
-            {
-                File.Delete(path);
-            }
-        }
-    }
-
     [System.Runtime.Versioning.UnsupportedOSPlatform("windows")]
     private static ProcessOutput RunPreflightScenario(string scenario)
     {
-        var root = TestRepositoryLayout.FindRoot();
-        // The stub `make lean-report` claims success without writing anything, so on a clean
-        // checkout the report it is supposed to have produced does not exist and the content
-        // checks fail closed on a missing report rather than on the scenario under test. A
-        // successful lean-report produces a report; the stub has to be honest about that.
-        // Only a report this fixture created is removed, so a real one is never clobbered.
-        using var report = new ScenarioLeanReport(root);
+        var workTarget = TestRepositoryLayout.FindRoot();
         using var fixture = new TemporaryDirectory();
+        var root = Path.Combine(fixture.Path, "candidate");
         var binDirectory = Path.Combine(fixture.Path, "bin");
+        var preflight = Path.Combine(root, PreflightScriptPath);
+        var perfEvents = Path.Combine(root, "tools", "scripts", "perf-event-lib.sh");
+        var scribeChecks = Path.Combine(root, ScribeContentChecksScriptPath);
+        var report = Path.Combine(root, ".lake", "build", "stratalint", "raw-lean-report.json");
+        Directory.CreateDirectory(Path.GetDirectoryName(preflight)!);
+        Directory.CreateDirectory(Path.GetDirectoryName(scribeChecks)!);
+        Directory.CreateDirectory(Path.GetDirectoryName(report)!);
         Directory.CreateDirectory(binDirectory);
+        File.Copy(Path.Combine(workTarget, PreflightScriptPath), preflight);
+        File.Copy(Path.Combine(workTarget, "tools/scripts/perf-event-lib.sh"), perfEvents);
+        File.Copy(Path.Combine(workTarget, ScribeContentChecksScriptPath), scribeChecks);
+        File.WriteAllText(
+            report,
+            "{\"modules\":[],\"schema\":\"stratalint-raw-lean-report-v1\"}\n");
+        File.WriteAllText(Path.Combine(root, "README.md"), "base\n");
+        RunScenarioGit(root, "init", "--initial-branch=dev");
+        RunScenarioGit(root, "config", "user.email", "preflight@example.invalid");
+        RunScenarioGit(root, "config", "user.name", "Preflight Fixture");
+        RunScenarioGit(root, "add", "README.md", "tools");
+        RunScenarioGit(root, "commit", "-m", "fixture base");
+        File.AppendAllText(Path.Combine(root, "README.md"), "candidate\n");
+        RunScenarioGit(root, "add", "README.md");
+        RunScenarioGit(root, "commit", "-m", "fixture candidate");
         WriteExecutable(
             Path.Combine(binDirectory, "git"),
             """
@@ -159,13 +152,28 @@ public sealed partial class MakeWorkflowTests
                 "preflight-contract",
                 scenario,
                 binDirectory,
-                Path.Combine(root, PreflightScriptPath),
+                preflight,
             ],
             root,
             TimeSpan.FromSeconds(30),
             64 * 1024);
 
         return result;
+    }
+
+    private static void RunScenarioGit(string root, params string[] arguments)
+    {
+        var result = BoundedProcessRunner.Run(
+            "/usr/bin/git",
+            arguments,
+            root,
+            TimeSpan.FromSeconds(10),
+            64 * 1024);
+        if (result.ExitCode != 0)
+        {
+            throw new InvalidOperationException(
+                System.Text.Encoding.UTF8.GetString(result.StandardError));
+        }
     }
 
     [System.Runtime.Versioning.UnsupportedOSPlatform("windows")]

@@ -7,16 +7,36 @@ internal sealed record LeanCacheProvisionResult(
     string Strategy,
     string Method,
     string? Warning,
-    int? MathlibCachePrunedFiles);
+    MathlibCachePruneOutcome PruneOutcome);
 
-internal sealed class MathlibOleanCompletenessException : InvalidOperationException
+internal sealed record MathlibCachePruneOutcome(
+    string Scope,
+    int DeletedFiles,
+    string CleanStatus)
+{
+    internal static MathlibCachePruneOutcome NotRun { get; } = new("machine", 0, "not-run");
+}
+
+internal class LeanCacheProvisionException : InvalidOperationException
+{
+    internal LeanCacheProvisionException(
+        string message,
+        MathlibCachePruneOutcome pruneOutcome,
+        Exception? innerException = null)
+        : base(message, innerException) => PruneOutcome = pruneOutcome;
+
+    internal MathlibCachePruneOutcome PruneOutcome { get; }
+}
+
+internal sealed class MathlibOleanCompletenessException : LeanCacheProvisionException
 {
     internal MathlibOleanCompletenessException(
         int? missingOleanFiles,
         IReadOnlyList<string> missingOleanSamples,
         string message,
+        MathlibCachePruneOutcome? pruneOutcome = null,
         Exception? innerException = null)
-        : base(message, innerException)
+        : base(message, pruneOutcome ?? MathlibCachePruneOutcome.NotRun, innerException)
     {
         MissingOleanFiles = missingOleanFiles;
         MissingOleanSamples = missingOleanSamples;
@@ -29,6 +49,12 @@ internal sealed class MathlibOleanCompletenessException : InvalidOperationExcept
 
 internal static class LeanCacheProvisioner
 {
+    private enum CacheTreeOwnership
+    {
+        CreatedByThisCall,
+        PreExisting,
+    }
+
     internal const int DefaultProvisionBudgetSeconds = 1800;
     private const int MissingOleanSampleLimit = 5;
     private static readonly UTF8Encoding StrictUtf8 = new(false, true);
@@ -55,17 +81,21 @@ internal static class LeanCacheProvisioner
         LeanCacheDonorSelection selection,
         string worktreeRoot,
         LeanPinSet pins,
-        IWorktreeProcessRunner runner) =>
-        Provision(selection, worktreeRoot, pins, runner, new ApfsDirectoryCloner());
+        IWorktreeProcessRunner runner,
+        LeanCacheWriterGuard writerGuard) =>
+        Provision(selection, worktreeRoot, pins, runner, writerGuard, new ApfsDirectoryCloner());
 
     internal static LeanCacheProvisionResult Provision(
         LeanCacheDonorSelection selection,
         string worktreeRoot,
         LeanPinSet pins,
         IWorktreeProcessRunner runner,
+        LeanCacheWriterGuard writerGuard,
         IDirectoryCloner cloner)
     {
         ArgumentNullException.ThrowIfNull(cloner);
+        ArgumentNullException.ThrowIfNull(writerGuard);
+        writerGuard.RequireOwnershipOf(Path.Combine(worktreeRoot, ".lake"));
         if (selection.Donor is null)
         {
             var notice = Join(
@@ -101,14 +131,20 @@ internal static class LeanCacheProvisioner
     internal static LeanCacheProvisionResult ReproduceExisting(
         string worktreeRoot,
         LeanPinSet pins,
-        IWorktreeProcessRunner runner)
+        IWorktreeProcessRunner runner,
+        LeanCacheWriterGuard writerGuard)
     {
-        var pruned = RunCacheGet(worktreeRoot, pins, runner);
+        writerGuard.RequireOwnershipOf(Path.Combine(worktreeRoot, ".lake"));
+        var pruneOutcome = RunCacheGet(
+            worktreeRoot,
+            pins,
+            runner,
+            CacheTreeOwnership.PreExisting);
         return new LeanCacheProvisionResult(
             "cache-get",
             "cache-get",
-            "ran the current-pin producer in place; published the stamp only after producer and completeness verification succeeded",
-            pruned);
+            "ran the current-pin producer in place; the pin-identity stamp was published only after producer and live completeness verification succeeded",
+            pruneOutcome);
     }
 
     private static LeanCacheProvisionResult? TryClone(
@@ -216,6 +252,8 @@ internal static class LeanCacheProvisioner
         try
         {
             VerifyPrivateDirectory(staged);
+            RemoveCopiedStamp(staged);
+            VerifyMathlibOleans(staged);
             if (!LeanCacheStamp.Matches(source, pins, out var stampReason)
                 || LeanCacheBusyProbe.IsBusy(donorRoot, runner))
             {
@@ -225,8 +263,6 @@ internal static class LeanCacheProvisioner
             }
 
             Directory.Move(staged, target);
-            VerifyPrivateDirectory(target);
-            VerifyMathlibOleans(target);
             LeanCacheStamp.Write(target, pins);
         }
         catch
@@ -237,7 +273,11 @@ internal static class LeanCacheProvisioner
         }
 
         finalWarning = warning;
-        return new LeanCacheProvisionResult("cloned", method, warning, null);
+        return new LeanCacheProvisionResult(
+            "cloned",
+            method,
+            warning,
+            MathlibCachePruneOutcome.NotRun);
     }
 
     private static LeanCacheProvisionResult Fetch(
@@ -248,12 +288,16 @@ internal static class LeanCacheProvisioner
     {
         try
         {
-            var pruned = RunCacheGet(worktreeRoot, pins, runner);
+            var pruneOutcome = RunCacheGet(
+                worktreeRoot,
+                pins,
+                runner,
+                CacheTreeOwnership.CreatedByThisCall);
             return new LeanCacheProvisionResult(
                 "cache-get",
                 "cache-get",
                 Join(warning, "used lake exe cache get then lake exe cache clean"),
-                pruned);
+                pruneOutcome);
         }
         catch (MathlibOleanCompletenessException exception)
         {
@@ -261,22 +305,33 @@ internal static class LeanCacheProvisioner
                 exception.MissingOleanFiles,
                 exception.MissingOleanSamples,
                 Join(warning, $"cache fallback failed ({exception.Message})"),
+                exception.PruneOutcome,
+                exception);
+        }
+        catch (LeanCacheProvisionException exception)
+        {
+            throw new LeanCacheProvisionException(
+                Join(warning, $"cache fallback failed ({exception.Message})"),
+                exception.PruneOutcome,
                 exception);
         }
         catch (Exception exception)
         {
-            throw new InvalidOperationException(
+            throw new LeanCacheProvisionException(
                 Join(warning, $"cache fallback failed ({exception.Message})"),
+                MathlibCachePruneOutcome.NotRun,
                 exception);
         }
     }
 
-    private static int RunCacheGet(
+    private static MathlibCachePruneOutcome RunCacheGet(
         string worktreeRoot,
         LeanPinSet pins,
-        IWorktreeProcessRunner runner)
+        IWorktreeProcessRunner runner,
+        CacheTreeOwnership ownership)
     {
         var lake = Path.Combine(worktreeRoot, ".lake");
+        var pruneOutcome = MathlibCachePruneOutcome.NotRun;
         try
         {
             var result = runner.Run(
@@ -286,35 +341,69 @@ internal static class LeanCacheProvisioner
                 ProvisionBudget);
             if (result.ExitCode != 0)
             {
-                throw new InvalidOperationException(
-                    $"lake exe cache get failed: {Error(result, "unknown error")}");
+                throw new LeanCacheProvisionException(
+                    $"lake exe cache get failed: {Error(result, "unknown error")}",
+                    pruneOutcome);
             }
 
             VerifyPrivateDirectory(lake);
             VerifyMathlibOleans(lake);
             var sharedCache = MathlibCacheDirectory(worktreeRoot);
             var beforeClean = CountLtarFiles(sharedCache);
-            var clean = runner.Run(
-                "lake",
-                ["exe", "cache", "clean"],
-                worktreeRoot,
-                ProvisionBudget);
+            ProcessOutput clean;
+            try
+            {
+                clean = runner.Run(
+                    "lake",
+                    ["exe", "cache", "clean"],
+                    worktreeRoot,
+                    ProvisionBudget);
+            }
+            catch (Exception exception)
+            {
+                var afterFailedClean = CountLtarFiles(sharedCache);
+                pruneOutcome = new MathlibCachePruneOutcome(
+                    "machine",
+                    Math.Max(0, beforeClean - afterFailedClean),
+                    "failed");
+                throw new LeanCacheProvisionException(
+                    $"lake exe cache clean failed: {exception.Message}",
+                    pruneOutcome,
+                    exception);
+            }
+            var afterClean = CountLtarFiles(sharedCache);
+            pruneOutcome = new MathlibCachePruneOutcome(
+                "machine",
+                Math.Max(0, beforeClean - afterClean),
+                clean.ExitCode == 0 ? "succeeded" : "failed");
             if (clean.ExitCode != 0)
             {
-                throw new InvalidOperationException(
-                    $"lake exe cache clean failed: {Error(clean, "unknown error")}");
+                throw new LeanCacheProvisionException(
+                    $"lake exe cache clean failed: {Error(clean, "unknown error")}",
+                    pruneOutcome);
             }
 
-            var afterClean = CountLtarFiles(sharedCache);
-            LeanCacheStamp.Write(lake, pins);
-            return Math.Max(0, beforeClean - afterClean);
+            try
+            {
+                LeanCacheStamp.Write(lake, pins);
+            }
+            catch (Exception exception)
+            {
+                throw new LeanCacheProvisionException(
+                    $"cache producer stamp publication failed: {exception.Message}",
+                    pruneOutcome,
+                    exception);
+            }
+            return pruneOutcome;
         }
-        catch
+        catch (Exception exception)
         {
-            // Producer or completeness failure is the first evidence that an unstamped tree is
-            // unusable. Remove it only after that attempt, so fresh provisioning starts cleanly.
-            RemovePartial(lake);
-            throw;
+            if (ownership == CacheTreeOwnership.CreatedByThisCall) RemovePartial(lake);
+            if (exception is LeanCacheProvisionException) throw;
+            throw new LeanCacheProvisionException(
+                exception.Message,
+                pruneOutcome,
+                exception);
         }
     }
 
@@ -355,7 +444,7 @@ internal static class LeanCacheProvisioner
         }
     }
 
-    private static void VerifyMathlibOleans(string lake)
+    internal static void VerifyMathlibOleans(string lake)
     {
         var mathlib = Path.Combine(lake, "packages", "mathlib");
         var sourceRoot = Path.Combine(mathlib, "Mathlib");
@@ -405,6 +494,21 @@ internal static class LeanCacheProvisioner
                 samples,
                 $"mathlib olean cache is incomplete: missing {missingCount} of {sourceCount}; "
                 + $"samples: {string.Join(", ", samples)}");
+        }
+    }
+
+    private static void RemoveCopiedStamp(string staged)
+    {
+        var stamp = LeanCacheStamp.PathFor(staged);
+        if (File.Exists(stamp))
+        {
+            File.Delete(stamp);
+            return;
+        }
+        if (Directory.Exists(stamp))
+        {
+            throw new InvalidOperationException(
+                "staging cache contains a producer stamp that is not a regular file");
         }
     }
 

@@ -104,6 +104,30 @@ public sealed class WorktreeCommandTests
     }
 
     [Fact]
+    public void WriterEntryRejectsStampedCacheThatLostAnOleanBeforeStartingCommand()
+    {
+        using var repository = new TemporaryDirectory();
+        InitializeRepository(repository.Path);
+        StampCache(repository.Path);
+        MathlibProjectionFixture.RemoveAllOleans(Path.Combine(repository.Path, ".lake"));
+        var runner = new RecordingWorktreeProcessRunner();
+
+        var result = WorktreeCommand.Run(
+            repository.Path,
+            ["with-cache-writer", "--", "lake", "build"],
+            runner);
+
+        Assert.False(result.Success);
+        Assert.DoesNotContain(
+            runner.Invocations,
+            static call => call.FileName == "lake" && call.Arguments.SequenceEqual(["build"]));
+        using var receipt = ParseReceipt(result.Error);
+        Assert.Equal(
+            MathlibProjectionFixture.ModuleCount,
+            receipt.RootElement.GetProperty("mathlib_missing_olean_files").GetInt32());
+    }
+
+    [Fact]
     public void WriterEntryNeverStartsBuildWhenProvisioningFails()
     {
         using var repository = new TemporaryDirectory();
@@ -231,6 +255,9 @@ public sealed class WorktreeCommandTests
             StringComparison.Ordinal);
         Assert.Contains("\"pin_sha256\":\"", console.Output, StringComparison.Ordinal);
         Assert.Contains("\"cache_strategy\":\"cloned\"", console.Output, StringComparison.Ordinal);
+        Assert.Contains("\"shared_cache_scope\":\"machine\"", console.Output, StringComparison.Ordinal);
+        Assert.Contains("\"mathlib_cache_pruned_files\":0", console.Output, StringComparison.Ordinal);
+        Assert.Contains("\"mathlib_cache_clean_status\":\"not-run\"", console.Output, StringComparison.Ordinal);
         Assert.Contains("\"elapsed_ms\":", console.Output, StringComparison.Ordinal);
         if (OperatingSystem.IsMacOS())
         {
@@ -242,6 +269,111 @@ public sealed class WorktreeCommandTests
             Assert.Contains("\"cache_method\":\"copy\"", console.Output, StringComparison.Ordinal);
             Assert.Contains("clonefile failed", console.Error, StringComparison.Ordinal);
         }
+    }
+
+    [Fact]
+    public void CommandHoldsTargetWriterGuardThroughoutProvisioning()
+    {
+        using var repository = new TemporaryDirectory();
+        InitializeRepository(repository.Path);
+        StampCache(repository.Path);
+        var target = Path.Combine(repository.Path, "guarded-provision");
+        bool? concurrentWriterAcquired = null;
+        var cloner = new RecordingDirectoryCloner
+        {
+            AfterClone = (_, _) =>
+            {
+                using var concurrent = LeanCacheGuard.TryAcquireExclusive(Path.Combine(target, ".lake"));
+                concurrentWriterAcquired = concurrent is not null;
+            },
+        };
+
+        var result = WorktreeCommand.Run(
+            repository.Path,
+            [
+                "--branch", "harness/guarded-provision",
+                "--path", target,
+                "--base", "HEAD",
+                "--source", repository.Path,
+                "--skip-restore",
+            ],
+            new RecordingWorktreeProcessRunner(),
+            cloner);
+
+        Assert.True(result.Success, result.Error);
+        Assert.False(concurrentWriterAcquired);
+    }
+
+    [Fact]
+    public void BusyTargetWriterFailsClosedWithoutDeletingTheActiveWritersWorktree()
+    {
+        using var repository = new TemporaryDirectory();
+        InitializeRepository(repository.Path);
+        StampCache(repository.Path);
+        var target = Path.Combine(repository.Path, "busy-target-writer");
+        LeanCacheGuard? activeWriter = null;
+        var runner = new RecordingWorktreeProcessRunner
+        {
+            AfterWorktreeAdd = addedTarget =>
+            {
+                var lake = Path.Combine(addedTarget, ".lake");
+                activeWriter = LeanCacheGuard.TryAcquireExclusive(lake);
+                Assert.NotNull(activeWriter);
+                Directory.CreateDirectory(lake);
+                File.WriteAllText(Path.Combine(lake, "active-writer.marker"), "owned\n");
+            },
+        };
+        try
+        {
+            var result = WorktreeCommand.Run(
+                repository.Path,
+                [
+                    "--branch", "harness/busy-target-writer",
+                    "--path", target,
+                    "--base", "HEAD",
+                    "--source", repository.Path,
+                    "--skip-restore",
+                ],
+                runner,
+                new RecordingDirectoryCloner());
+
+            Assert.False(result.Success);
+            Assert.Contains("writer guard is busy", result.Error, StringComparison.OrdinalIgnoreCase);
+            Assert.True(File.Exists(Path.Combine(target, ".lake", "active-writer.marker")));
+        }
+        finally
+        {
+            activeWriter?.Dispose();
+        }
+    }
+
+    [Fact]
+    public void WorktreeFailureReceiptRetainsMachinePruneOutcomeAfterStampFailure()
+    {
+        using var repository = new TemporaryDirectory();
+        using var sharedCache = new MathlibCacheFixture();
+        InitializeRepository(repository.Path);
+        var target = Path.Combine(repository.Path, "stamp-failure");
+        var result = WorktreeCommand.Run(
+            repository.Path,
+            [
+                "--branch", "harness/stamp-failure",
+                "--path", target,
+                "--base", "HEAD",
+                "--source", repository.Path,
+                "--skip-restore",
+            ],
+            new RecordingWorktreeProcessRunner { BlockStampAfterClean = true },
+            new RecordingDirectoryCloner());
+
+        Assert.False(result.Success);
+        Assert.StartsWith("WORKTREE_FAILED ", result.Error, StringComparison.Ordinal);
+        using var receipt = System.Text.Json.JsonDocument.Parse(
+            result.Error["WORKTREE_FAILED ".Length..]);
+        Assert.Equal("failed", receipt.RootElement.GetProperty("status").GetString());
+        Assert.Equal("machine", receipt.RootElement.GetProperty("shared_cache_scope").GetString());
+        Assert.Equal(1, receipt.RootElement.GetProperty("mathlib_cache_pruned_files").GetInt32());
+        Assert.Equal("succeeded", receipt.RootElement.GetProperty("mathlib_cache_clean_status").GetString());
     }
 
     [Fact]

@@ -42,7 +42,7 @@ internal static class LeanCacheEnsureCommand
         }
 
         var lake = Path.Combine(root, ".lake");
-        using var guard = LeanCacheGuard.TryAcquireExclusive(lake);
+        using var guard = LeanCacheWriterGuard.TryAcquire(lake);
         if (guard is null)
         {
             return FailureReceipt(
@@ -54,7 +54,7 @@ internal static class LeanCacheEnsureCommand
                 "canonical cache writer guard is busy");
         }
 
-        return EnsureLocked(root, pins, runner, cloner);
+        return EnsureLocked(root, pins, runner, cloner, guard);
     }
 
     internal static CommandResult RunWithWriter(
@@ -87,7 +87,7 @@ internal static class LeanCacheEnsureCommand
                 reason: pinReason ?? "Lean pin files are unavailable");
         }
 
-        using var guard = LeanCacheGuard.TryAcquireExclusive(Path.Combine(root, ".lake"));
+        using var guard = LeanCacheWriterGuard.TryAcquire(Path.Combine(root, ".lake"));
         if (guard is null)
         {
             return FailureReceipt(
@@ -99,7 +99,7 @@ internal static class LeanCacheEnsureCommand
                 "canonical cache writer guard is busy");
         }
 
-        var ensured = EnsureLocked(root, pins, runner, cloner);
+        var ensured = EnsureLocked(root, pins, runner, cloner, guard);
         if (!ensured.Success) return ensured;
 
         try
@@ -124,9 +124,11 @@ internal static class LeanCacheEnsureCommand
         string root,
         LeanPinSet pins,
         IWorktreeProcessRunner runner,
-        IDirectoryCloner cloner)
+        IDirectoryCloner cloner,
+        LeanCacheWriterGuard writerGuard)
     {
         var lake = Path.Combine(root, ".lake");
+        writerGuard.RequireOwnershipOf(lake);
         string? stampMiss = null;
         try
         {
@@ -140,6 +142,23 @@ internal static class LeanCacheEnsureCommand
                 stampMiss = ReceiptStampMiss(stamp.State);
                 if (stamp.State == LeanCacheStampState.Match)
                 {
+                    try
+                    {
+                        LeanCacheProvisioner.VerifyMathlibOleans(lake);
+                    }
+                    catch (MathlibOleanCompletenessException exception)
+                    {
+                        return FailureReceipt(
+                            "failed",
+                            root,
+                            donor: null,
+                            method: "none",
+                            pins.Sha256,
+                            exception.Message,
+                            exception.MissingOleanFiles,
+                            exception.MissingOleanSamples,
+                            pruneOutcome: exception.PruneOutcome);
+                    }
                     return SuccessReceipt(
                         "present",
                         root,
@@ -147,7 +166,7 @@ internal static class LeanCacheEnsureCommand
                         method: "none",
                         pins.Sha256,
                         reason: null,
-                        mathlibCachePrunedFiles: null);
+                        MathlibCachePruneOutcome.NotRun);
                 }
 
                 if (stamp.State == LeanCacheStampState.Mismatch)
@@ -156,12 +175,16 @@ internal static class LeanCacheEnsureCommand
                 }
                 else
                 {
-                    // Missing or corrupt provenance does not prove staleness. Re-run the current-pin
-                    // producer and verify completeness in place; the new stamp attests this run, so
-                    // no existing byte is accepted without a successful producer invocation.
+                    // Missing or corrupt pin identity does not prove staleness. Re-run the current-pin
+                    // producer and verify completeness in place. The new stamp records only pin
+                    // identity; live completeness remains mandatory on every later admission.
                     try
                     {
-                        var reproduced = LeanCacheProvisioner.ReproduceExisting(root, pins, runner);
+                        var reproduced = LeanCacheProvisioner.ReproduceExisting(
+                            root,
+                            pins,
+                            runner,
+                            writerGuard);
                         return SuccessReceipt(
                             "fetched",
                             root,
@@ -169,24 +192,65 @@ internal static class LeanCacheEnsureCommand
                             reproduced.Method,
                             pins.Sha256,
                             JoinReasons(missReason, reproduced.Warning),
-                            reproduced.MathlibCachePrunedFiles,
+                            reproduced.PruneOutcome,
                             stampMiss);
+                    }
+                    catch (MathlibOleanCompletenessException exception)
+                    {
+                        if (IsSymlink(lake)) return RefusedSymlink(root, pins.Sha256);
+                        return FailureReceipt(
+                            "failed",
+                            root,
+                            donor: null,
+                            method: "cache-get",
+                            pins.Sha256,
+                            JoinReasons(missReason, exception.Message)
+                                ?? "unknown in-place producer failure",
+                            exception.MissingOleanFiles,
+                            exception.MissingOleanSamples,
+                            stampMiss,
+                            exception.PruneOutcome);
+                    }
+                    catch (LeanCacheProvisionException exception)
+                    {
+                        if (IsSymlink(lake)) return RefusedSymlink(root, pins.Sha256);
+                        return FailureReceipt(
+                            "failed",
+                            root,
+                            donor: null,
+                            method: "cache-get",
+                            pins.Sha256,
+                            JoinReasons(missReason, exception.Message)
+                                ?? "unknown in-place producer failure",
+                            stampMiss: stampMiss,
+                            pruneOutcome: exception.PruneOutcome);
                     }
                     catch (Exception exception)
                     {
                         if (IsSymlink(lake)) return RefusedSymlink(root, pins.Sha256);
-                        missReason = JoinReasons(
-                            missReason,
-                            $"in-place current-pin producer failed ({exception.Message}); "
-                            + "discarded the existing .lake before fresh provisioning");
-                        RemoveProjectionIfPresent(lake);
+                        return FailureReceipt(
+                            "failed",
+                            root,
+                            donor: null,
+                            method: "cache-get",
+                            pins.Sha256,
+                            JoinReasons(missReason, exception.Message)
+                                ?? "unknown in-place producer failure",
+                            stampMiss: stampMiss);
                     }
                 }
             }
             else if (File.Exists(lake))
             {
-                missReason = ".lake exists but is not a directory";
-                File.Delete(lake);
+                stampMiss = "corrupt";
+                return FailureReceipt(
+                    "failed",
+                    root,
+                    donor: null,
+                    method: "none",
+                    pins.Sha256,
+                    ".lake exists but is not a directory",
+                    stampMiss: stampMiss);
             }
 
             using var selection = GitWorktreeInventory.SelectDonor(root, pins, runner);
@@ -197,6 +261,7 @@ internal static class LeanCacheEnsureCommand
                     root,
                     pins,
                     runner,
+                    writerGuard,
                     cloner);
                 return SuccessReceipt(
                     provisioned.Strategy == "cloned" ? "seeded" : "fetched",
@@ -205,7 +270,7 @@ internal static class LeanCacheEnsureCommand
                     provisioned.Method,
                     pins.Sha256,
                     JoinReasons(missReason, JoinReasons(selection.Notice, provisioned.Warning)),
-                    provisioned.MathlibCachePrunedFiles,
+                    provisioned.PruneOutcome,
                     stampMiss);
             }
             catch (MathlibOleanCompletenessException exception)
@@ -221,7 +286,22 @@ internal static class LeanCacheEnsureCommand
                         ?? "unknown provisioning failure",
                     exception.MissingOleanFiles,
                     exception.MissingOleanSamples,
-                    stampMiss);
+                    stampMiss,
+                    exception.PruneOutcome);
+            }
+            catch (LeanCacheProvisionException exception)
+            {
+                if (IsSymlink(lake)) return RefusedSymlink(root, pins.Sha256);
+                return FailureReceipt(
+                    "failed",
+                    root,
+                    selection.Donor,
+                    "none",
+                    pins.Sha256,
+                    JoinReasons(missReason, JoinReasons(selection.Notice, exception.Message))
+                        ?? "unknown provisioning failure",
+                    stampMiss: stampMiss,
+                    pruneOutcome: exception.PruneOutcome);
             }
             catch (Exception exception)
             {
@@ -257,7 +337,7 @@ internal static class LeanCacheEnsureCommand
         string method,
         string? pinSha256,
         string? reason,
-        int? mathlibCachePrunedFiles,
+        MathlibCachePruneOutcome pruneOutcome,
         string? stampMiss = null) =>
         new(
             true,
@@ -268,7 +348,7 @@ internal static class LeanCacheEnsureCommand
                 method,
                 pinSha256,
                 reason,
-                mathlibCachePrunedFiles,
+                pruneOutcome,
                 mathlibMissingOleanFiles: null,
                 mathlibMissingOleanSamples: null,
                 stampMiss),
@@ -283,7 +363,8 @@ internal static class LeanCacheEnsureCommand
         string reason,
         int? mathlibMissingOleanFiles = null,
         IReadOnlyList<string>? mathlibMissingOleanSamples = null,
-        string? stampMiss = null) =>
+        string? stampMiss = null,
+        MathlibCachePruneOutcome? pruneOutcome = null) =>
         new(
             false,
             string.Empty,
@@ -294,7 +375,7 @@ internal static class LeanCacheEnsureCommand
                 method,
                 pinSha256,
                 reason,
-                mathlibCachePrunedFiles: null,
+                pruneOutcome ?? MathlibCachePruneOutcome.NotRun,
                 mathlibMissingOleanFiles,
                 mathlibMissingOleanSamples,
                 stampMiss));
@@ -338,7 +419,7 @@ internal static class LeanCacheEnsureCommand
         string method,
         string? pinSha256,
         string? reason,
-        int? mathlibCachePrunedFiles,
+        MathlibCachePruneOutcome pruneOutcome,
         int? mathlibMissingOleanFiles,
         IReadOnlyList<string>? mathlibMissingOleanSamples,
         string? stampMiss) =>
@@ -351,8 +432,9 @@ internal static class LeanCacheEnsureCommand
             reason,
             stamp_miss = stampMiss,
             pin_sha256 = pinSha256,
-            shared_cache_scope = "machine",
-            mathlib_cache_pruned_files = mathlibCachePrunedFiles,
+            shared_cache_scope = pruneOutcome.Scope,
+            mathlib_cache_pruned_files = pruneOutcome.DeletedFiles,
+            mathlib_cache_clean_status = pruneOutcome.CleanStatus,
             mathlib_missing_olean_files = mathlibMissingOleanFiles,
             mathlib_missing_olean_samples = mathlibMissingOleanSamples,
         }) + "\n";
@@ -400,9 +482,4 @@ internal static class LeanCacheEnsureCommand
 
     private static void RemoveProjection(string lake) => Directory.Delete(lake, recursive: true);
 
-    private static void RemoveProjectionIfPresent(string lake)
-    {
-        if (Directory.Exists(lake)) RemoveProjection(lake);
-        else if (File.Exists(lake)) File.Delete(lake);
-    }
 }

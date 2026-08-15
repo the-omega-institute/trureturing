@@ -104,6 +104,8 @@ internal sealed record LeanCacheStampInspection(LeanCacheStampState State, strin
 
 internal static class LeanCacheStamp
 {
+    // The stamp records pin identity only. Cache completeness is live state and is checked on
+    // every ensure/writer admission instead of being inferred from this durable identity record.
     private const string Schema = "stratalint-lean-cache-v1";
     private const string FileName = ".stratalint-lean-cache-stamp.json";
 
@@ -339,6 +341,41 @@ internal sealed class LeanCacheGuard : IDisposable
         internal uint Offset;
         internal uint OffsetHigh;
         internal IntPtr EventHandle;
+    }
+}
+
+internal sealed class LeanCacheWriterGuard : IDisposable
+{
+    private readonly string lake;
+    private LeanCacheGuard? guard;
+
+    private LeanCacheWriterGuard(string lake, LeanCacheGuard guard)
+    {
+        this.lake = LeanCacheGuard.PhysicalPath(lake);
+        this.guard = guard;
+    }
+
+    internal static LeanCacheWriterGuard? TryAcquire(string lake)
+    {
+        var guard = LeanCacheGuard.TryAcquireExclusive(lake);
+        return guard is null ? null : new LeanCacheWriterGuard(lake, guard);
+    }
+
+    internal void RequireOwnershipOf(string expectedLake)
+    {
+        ObjectDisposedException.ThrowIf(guard is null, this);
+        var expected = LeanCacheGuard.PhysicalPath(expectedLake);
+        if (!string.Equals(lake, expected, StringComparison.Ordinal))
+        {
+            throw new InvalidOperationException(
+                $"cache writer guard owns {lake}, not the requested target {expected}");
+        }
+    }
+
+    public void Dispose()
+    {
+        guard?.Dispose();
+        guard = null;
     }
 }
 

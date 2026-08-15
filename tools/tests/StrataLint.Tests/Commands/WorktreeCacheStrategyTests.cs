@@ -535,6 +535,10 @@ internal sealed class RecordingWorktreeProcessRunner : IWorktreeProcessRunner
 
     internal bool FailWorktreeAdd { get; init; }
 
+    internal bool BlockStampAfterClean { get; init; }
+
+    internal Action<string>? AfterWorktreeAdd { get; init; }
+
     internal string? BusyRoot { get; init; }
 
     internal bool BusyOnlyAfterCopy { get; init; }
@@ -599,6 +603,10 @@ internal sealed class RecordingWorktreeProcessRunner : IWorktreeProcessRunner
                 {
                     if (Path.GetFileName(path) != "current.ltar") File.Delete(path);
                 }
+                if (BlockStampAfterClean)
+                {
+                    Directory.CreateDirectory(LeanCacheStamp.PathFor(Path.Combine(workingDirectory, ".lake")));
+                }
                 return Success();
             }
 
@@ -616,6 +624,12 @@ internal sealed class RecordingWorktreeProcessRunner : IWorktreeProcessRunner
             workingDirectory,
             timeout,
             64 * 1024 * 1024);
+        if (fileName == "git"
+            && arguments.Take(2).SequenceEqual(["worktree", "add"])
+            && result.ExitCode == 0)
+        {
+            AfterWorktreeAdd?.Invoke(arguments[4]);
+        }
         if (fileName == "cp" && result.ExitCode == 0) copyCompleted = true;
         return result;
     }
