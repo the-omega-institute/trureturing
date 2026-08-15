@@ -239,7 +239,7 @@ public sealed partial class MakeWorkflowTests
         var preflight = File.ReadAllText(Path.Combine(root, PreflightScriptPath));
         var localGate = File.ReadAllText(Path.Combine(root, LocalHarnessGateScriptPath));
 
-        string[] ordered = ["fetch --prune", "BASE_TIP_SHA=\"$(git rev-parse", "CANDIDATE_SHA=\"$(git rev-parse", "BASE_SHA=\"$(git merge-base", "CI=true make -C tools dotnet"];
+        string[] ordered = ["fetch --prune", "CANDIDATE_SHA=\"$(git rev-parse", "BASE_TIP_SHA=\"$(git rev-parse", "BASE_SHA=\"$(git merge-base", "CI=true make -C tools dotnet"];
         var cursor = -1;
         foreach (var fragment in ordered)
         {
@@ -252,6 +252,10 @@ public sealed partial class MakeWorkflowTests
         Assert.Contains("|| true", preflight[preflight.IndexOf("BASE_ADVANCED", StringComparison.Ordinal)..], StringComparison.Ordinal);
         Assert.Contains("merge-base \"$BASE_TIP_SHA\" \"$candidate_sha\"", localGate, StringComparison.Ordinal);
         Assert.DoesNotContain("merge-base --is-ancestor", localGate, StringComparison.Ordinal);
+        Assert.True(
+            localGate.IndexOf("candidate_sha=\"$(git", StringComparison.Ordinal)
+                < localGate.IndexOf("BASE_TIP_SHA=\"$(git", StringComparison.Ordinal),
+            "local gate must pin candidate before resolving any base spelling");
         Assert.DoesNotContain("pinned base is not a strict ancestor", localGate, StringComparison.Ordinal);
     }
 

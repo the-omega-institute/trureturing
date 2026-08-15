@@ -262,6 +262,20 @@ public sealed partial class MakeWorkflowTests
     }
 
     [Theory]
+    [InlineData(PreflightScriptPath)]
+    [InlineData(LocalHarnessGateScriptPath)]
+    public void BaseResolutionFailureDiagnosticsCarryResolvedAndEmptyValues(string scriptPath)
+    {
+        if (OperatingSystem.IsWindows()) return;
+
+        var result = RunInvalidMergeBase(scriptPath, "base-ref-failed");
+        var error = Encoding.UTF8.GetString(result.StandardError);
+
+        Assert.Equal(1, result.ExitCode);
+        Assert.Contains(ExpectedMergeBaseDiagnostic("base-ref-failed"), error, StringComparison.Ordinal);
+    }
+
+    [Theory]
     [InlineData(GateForkSha, false)]
     [InlineData("base", true)]
     public void LocalHarnessGateResolvesBaseToForkAndOnlyObservesSymbolicRefs(
@@ -375,11 +389,13 @@ public sealed partial class MakeWorkflowTests
             "command-failed" => "merge-base-command-failed",
             "empty" => "merge-base-empty",
             "vacuous" => "vacuous",
+            "base-ref-failed" => "base-tip-resolution-failed",
             _ => throw new ArgumentOutOfRangeException(nameof(mergeBaseMode)),
         };
         var resolvedBase = mergeBaseMode == "vacuous" ? GateCandidateSha : "empty";
+        var baseTip = mergeBaseMode == "base-ref-failed" ? "empty" : GateBaseTipSha;
         return $"BASE_RESOLUTION_FAILED reason={reason} BASE_REF={GateBaseTipSha} "
-            + $"BASE_TIP_SHA={GateBaseTipSha} CANDIDATE_SHA={GateCandidateSha} BASE_SHA={resolvedBase}";
+            + $"BASE_TIP_SHA={baseTip} CANDIDATE_SHA={GateCandidateSha} BASE_SHA={resolvedBase}";
     }
 
     [System.Runtime.Versioning.UnsupportedOSPlatform("windows")]
@@ -392,7 +408,10 @@ public sealed partial class MakeWorkflowTests
             case "$*" in
               "rev-parse --show-toplevel") printf '%s\n' '{{candidateRoot}}' ;;
               "rev-parse --verify HEAD"|"rev-parse --verify HEAD^{commit}") printf '%s\n' '{{GateCandidateSha}}' ;;
-              "rev-parse --verify {{GateBaseTipSha}}^{commit}") printf '%s\n' '{{GateBaseTipSha}}' ;;
+              "rev-parse --verify {{GateBaseTipSha}}^{commit}")
+                [[ "$MERGE_BASE_MODE" != base-ref-failed ]] || exit 1
+                printf '%s\n' '{{GateBaseTipSha}}'
+                ;;
               "merge-base {{GateBaseTipSha}} {{GateCandidateSha}}")
                 case "$MERGE_BASE_MODE" in
                   command-failed) exit 1 ;;
