@@ -5,7 +5,7 @@
    anchors: []
    digest: Countable naming systems over uncountable carriers have null named image. -/
 
-import Mathlib.MeasureTheory.Measure.Typeclasses.NoAtoms
+import Mathlib.MeasureTheory.Measure.Dirac
 import Mathlib.MeasureTheory.Measure.Typeclasses.SFinite
 
 namespace D5.S0.Naming
@@ -55,6 +55,7 @@ theorem named_countable {X : Type u} [MeasureSpace X] (system : NamingSystem X) 
   rintro x ⟨n, hn⟩
   exact ⟨n, hn⟩
 
+set_option checkBinderAnnotations false in
 /-- A countable family of naming systems has null named image under an atomless,
 sigma-finite measure on an uncountable carrier. -/
 theorem dark_side_conservation
@@ -62,6 +63,8 @@ theorem dark_side_conservation
     [NoAtoms (volume : Measure X)] [SigmaFinite (volume : Measure X)]
     {J : Type w} [Countable J] (systems : J → NamingSystem X) :
     volume (⋃ j, (systems j).named) = 0 := by
-  exact (Set.countable_iUnion fun j => named_countable (systems j)).measure_zero volume
+  exact @Set.Countable.measure_zero X _ _
+    (Set.countable_iUnion fun j => named_countable (systems j)) volume
+    ‹NoAtoms volume›
 
 end D5.S0.Naming

@@ -130,8 +130,10 @@ private theorem forwardTranslationFamily_add (u : PrimeAxisTable)
   funext b
   by_cases hb : ∃ a, normalizedTableAdd a u = b
   · obtain ⟨a, rfl⟩ := hb
-    simp [forwardTranslationFamily, normalizedTableAdd_right_injective]
-  · simp [forwardTranslationFamily, Function.extend_apply', hb]
+    simp only [forwardTranslationFamily, (normalizedTableAdd_right_injective u).extend_apply,
+      lp.coeFn_add, Pi.add_apply]
+  · simp only [forwardTranslationFamily, Function.extend_apply' _ _ _ hb,
+      Pi.add_apply, Pi.zero_apply, add_zero]
 
 private theorem forwardTranslationFamily_smul (u : PrimeAxisTable) (c : ℂ)
     (x : ZetaHilbertSpace) :

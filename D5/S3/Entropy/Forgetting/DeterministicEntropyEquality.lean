@@ -68,7 +68,7 @@ private theorem pushforward_entropy_le {X Y : Type*} [Fintype X] [Fintype Y]
       simp only [q, pushforward]
       apply Finset.sum_congr rfl
       intro x _
-      simp [fRange, yr]
+      simp [fRange, yr, Subtype.ext_iff]
     · have hnot_range : ¬ ∃ yr, inclusion yr = y := by
         rintro ⟨yr, hyr⟩
         rcases yr.property with ⟨x, hx⟩

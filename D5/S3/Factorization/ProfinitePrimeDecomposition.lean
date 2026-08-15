@@ -158,7 +158,7 @@ private theorem assemble_primeProjectionFamily (x : ProfiniteIntegers) :
     (hp.pow_dvd_iff_le_factorization n.2.ne').2 le_rfl
   change PadicInt.toZModPow (n.1.factorization q.1)
       (primeProjection x ⟨q.1, hp⟩) = ZMod.cast (x.1 n)
-  rw [primeProjection_mod]
+  rw [primeProjection_mod x ⟨q.1, hp⟩ ((n.1).factorization q.1)]
   exact (x.2 factor n hfactor).symm
 
 private theorem primeProjectionFamily_assemble
