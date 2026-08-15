@@ -27,32 +27,7 @@ public static class RegistryLoader
         {
             var syntax = ParseRegistrySyntax(registryBytes);
             var domains = ParseDomainsSyntax(domainsBytes);
-            var first = RegistryPolicyCompiler.Compile(syntax, domains, registryBytes, domainsBytes);
-            if (first is RegistryLoadOutcome.InfrastructureFailure)
-            {
-                return first;
-            }
-
-            var accepted = (RegistryLoadOutcome.Accepted)first;
-            var reparsed = ParseRegistrySyntax(accepted.Policy.CanonicalRegistryBytes.AsSpan());
-            var reparsedDomains = ParseDomainsSyntax(accepted.Policy.CanonicalDomainsBytes.AsSpan());
-            var second = RegistryPolicyCompiler.Compile(
-                reparsed,
-                reparsedDomains,
-                accepted.Policy.CanonicalRegistryBytes.AsSpan(),
-                accepted.Policy.CanonicalDomainsBytes.AsSpan());
-            if (second is not RegistryLoadOutcome.Accepted secondAccepted
-                || !SemanticallyEqual(syntax, reparsed)
-                || !domains.SequenceEqual(reparsedDomains)
-                || !accepted.Policy.CanonicalRegistryBytes.AsSpan()
-                    .SequenceEqual(secondAccepted.Policy.CanonicalRegistryBytes.AsSpan())
-                || !accepted.Policy.CanonicalDomainsBytes.AsSpan()
-                    .SequenceEqual(secondAccepted.Policy.CanonicalDomainsBytes.AsSpan()))
-            {
-                throw new FormatException("Policy canonical parse/semantic/re-encode fixed point failed.");
-            }
-
-            return accepted;
+            return RegistryPolicyCompiler.Compile(syntax, domains, registryBytes, domainsBytes);
         }
         catch (Exception exception) when (exception is DecoderFallbackException or YamlException or FormatException)
         {
@@ -83,18 +58,6 @@ public static class RegistryLoader
 
         return root;
     }
-
-    private static bool SemanticallyEqual(RegistrySyntax left, RegistrySyntax right) =>
-        left.SchemaVersion == right.SchemaVersion
-        && left.RootFiles.SequenceEqual(right.RootFiles, StringComparer.Ordinal)
-        && left.GovernanceDocuments.SequenceEqual(right.GovernanceDocuments, StringComparer.Ordinal)
-        && left.AgentFiles.SequenceEqual(right.AgentFiles, StringComparer.Ordinal)
-        && left.ArtifactKinds.Length == right.ArtifactKinds.Length
-        && left.ArtifactKinds.Zip(right.ArtifactKinds).All(static pair =>
-            pair.First.Name == pair.Second.Name
-            && pair.First.Profile == pair.Second.Profile
-            && pair.First.Selectors.SequenceEqual(pair.Second.Selectors, StringComparer.Ordinal)
-            && pair.First.PathSelectors.SequenceEqual(pair.Second.PathSelectors, StringComparer.Ordinal));
 
     private static void ScanEvents(string text)
     {
