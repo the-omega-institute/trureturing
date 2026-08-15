@@ -149,6 +149,20 @@ internal static class LeanCacheEnsureCommand
                     JoinReasons(missReason, JoinReasons(selection.Notice, provisioned.Warning)),
                     provisioned.MathlibCachePrunedFiles);
             }
+            catch (MathlibOleanCompletenessException exception)
+            {
+                if (IsSymlink(lake)) return RefusedSymlink(root, pins.Sha256);
+                return FailureReceipt(
+                    "failed",
+                    root,
+                    selection.Donor,
+                    "none",
+                    pins.Sha256,
+                    JoinReasons(missReason, JoinReasons(selection.Notice, exception.Message))
+                        ?? "unknown provisioning failure",
+                    exception.MissingOleanFiles,
+                    exception.MissingOleanSamples);
+            }
             catch (Exception exception)
             {
                 if (IsSymlink(lake)) return RefusedSymlink(root, pins.Sha256);
@@ -191,7 +205,9 @@ internal static class LeanCacheEnsureCommand
                 method,
                 pinSha256,
                 reason,
-                mathlibCachePrunedFiles),
+                mathlibCachePrunedFiles,
+                mathlibMissingOleanFiles: null,
+                mathlibMissingOleanSamples: null),
             string.Empty);
 
     private static CommandResult FailureReceipt(
@@ -200,11 +216,22 @@ internal static class LeanCacheEnsureCommand
         string? donor,
         string method,
         string? pinSha256,
-        string reason) =>
+        string reason,
+        int? mathlibMissingOleanFiles = null,
+        IReadOnlyList<string>? mathlibMissingOleanSamples = null) =>
         new(
             false,
             string.Empty,
-            RenderReceipt(status, worktree, donor, method, pinSha256, reason, null));
+            RenderReceipt(
+                status,
+                worktree,
+                donor,
+                method,
+                pinSha256,
+                reason,
+                mathlibCachePrunedFiles: null,
+                mathlibMissingOleanFiles,
+                mathlibMissingOleanSamples));
 
     private static CommandResult RefusedSymlink(string root, string pinSha256) =>
         FailureReceipt(
@@ -245,7 +272,9 @@ internal static class LeanCacheEnsureCommand
         string method,
         string? pinSha256,
         string? reason,
-        int? mathlibCachePrunedFiles) =>
+        int? mathlibCachePrunedFiles,
+        int? mathlibMissingOleanFiles,
+        IReadOnlyList<string>? mathlibMissingOleanSamples) =>
         "LEAN_CACHE " + JsonSerializer.Serialize(new
         {
             status,
@@ -256,6 +285,8 @@ internal static class LeanCacheEnsureCommand
             pin_sha256 = pinSha256,
             shared_cache_scope = "machine",
             mathlib_cache_pruned_files = mathlibCachePrunedFiles,
+            mathlib_missing_olean_files = mathlibMissingOleanFiles,
+            mathlib_missing_olean_samples = mathlibMissingOleanSamples,
         }) + "\n";
 
     private static bool TryParseWriter(

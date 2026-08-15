@@ -395,6 +395,7 @@ public sealed class WorktreeCacheStrategyTests
         var path = Path.Combine(lake, "build", "cache.bin");
         Directory.CreateDirectory(Path.GetDirectoryName(path)!);
         File.WriteAllText(path, contents);
+        MathlibProjectionFixture.Write(lake);
         LeanCacheStamp.Write(lake, ReadPins(root));
         return path;
     }
@@ -437,6 +438,8 @@ internal sealed class RecordingWorktreeProcessRunner : IWorktreeProcessRunner
     internal bool FailLake { get; init; }
 
     internal bool FailClean { get; init; }
+
+    internal bool OmitMathlibOleans { get; init; }
 
     internal bool FailDotnet { get; init; }
 
@@ -494,6 +497,7 @@ internal sealed class RecordingWorktreeProcessRunner : IWorktreeProcessRunner
                 var lake = Path.Combine(workingDirectory, ".lake");
                 Directory.CreateDirectory(lake);
                 File.WriteAllText(Path.Combine(lake, "cache-get.marker"), "cache get\n");
+                MathlibProjectionFixture.Write(lake, includeOleans: !OmitMathlibOleans);
                 Directory.CreateDirectory(MathlibCacheFixture.CurrentPath);
                 File.WriteAllText(Path.Combine(MathlibCacheFixture.CurrentPath, "current.ltar"), "current\n");
                 return Success();
@@ -531,6 +535,50 @@ internal sealed class RecordingWorktreeProcessRunner : IWorktreeProcessRunner
 
     private static ProcessOutput Failure(string message) =>
         new(1, [], Encoding.UTF8.GetBytes(message));
+}
+
+internal static class MathlibProjectionFixture
+{
+    private static readonly string[] Modules =
+    [
+        "Mathlib/Algebra/Basic",
+        "Mathlib/Topology/Basic",
+    ];
+
+    internal static int ModuleCount => Modules.Length;
+
+    internal static string FirstModule => Modules[0];
+
+    internal static void Write(string lake, bool includeOleans = true)
+    {
+        var mathlib = Path.Combine(lake, "packages", "mathlib");
+        foreach (var module in Modules)
+        {
+            var relative = module.Replace('/', Path.DirectorySeparatorChar);
+            var source = Path.Combine(mathlib, relative + ".lean");
+            Directory.CreateDirectory(Path.GetDirectoryName(source)!);
+            File.WriteAllText(source, "-- fixture\n");
+            if (!includeOleans) continue;
+
+            var olean = Path.Combine(mathlib, ".lake", "build", "lib", "lean", relative + ".olean");
+            Directory.CreateDirectory(Path.GetDirectoryName(olean)!);
+            File.WriteAllText(olean, "fixture\n");
+        }
+    }
+
+    internal static void RemoveFirstOlean(string lake)
+    {
+        var relative = FirstModule.Replace('/', Path.DirectorySeparatorChar);
+        File.Delete(Path.Combine(
+            lake,
+            "packages",
+            "mathlib",
+            ".lake",
+            "build",
+            "lib",
+            "lean",
+            relative + ".olean"));
+    }
 }
 
 internal sealed class MathlibCacheFixture : IDisposable

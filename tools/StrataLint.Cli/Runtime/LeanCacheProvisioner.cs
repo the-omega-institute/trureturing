@@ -9,9 +9,28 @@ internal sealed record LeanCacheProvisionResult(
     string? Warning,
     int? MathlibCachePrunedFiles);
 
+internal sealed class MathlibOleanCompletenessException : InvalidOperationException
+{
+    internal MathlibOleanCompletenessException(
+        int? missingOleanFiles,
+        IReadOnlyList<string> missingOleanSamples,
+        string message,
+        Exception? innerException = null)
+        : base(message, innerException)
+    {
+        MissingOleanFiles = missingOleanFiles;
+        MissingOleanSamples = missingOleanSamples;
+    }
+
+    internal int? MissingOleanFiles { get; }
+
+    internal IReadOnlyList<string> MissingOleanSamples { get; }
+}
+
 internal static class LeanCacheProvisioner
 {
     internal const int DefaultProvisionBudgetSeconds = 1800;
+    private const int MissingOleanSampleLimit = 5;
     private static readonly UTF8Encoding StrictUtf8 = new(false, true);
 
     // Cold provisioning spans package clones plus olean download and extraction. Five minutes
@@ -169,6 +188,7 @@ internal static class LeanCacheProvisioner
             return null;
         }
 
+        VerifyMathlibOleans(staged);
         LeanCacheStamp.Write(staged, pins);
         Directory.Move(staged, target);
         finalWarning = warning;
@@ -189,6 +209,14 @@ internal static class LeanCacheProvisioner
                 "cache-get",
                 Join(warning, "used lake exe cache get then lake exe cache clean"),
                 pruned);
+        }
+        catch (MathlibOleanCompletenessException exception)
+        {
+            throw new MathlibOleanCompletenessException(
+                exception.MissingOleanFiles,
+                exception.MissingOleanSamples,
+                Join(warning, $"cache fallback failed ({exception.Message})"),
+                exception);
         }
         catch (Exception exception)
         {
@@ -218,6 +246,7 @@ internal static class LeanCacheProvisioner
             }
 
             VerifyPrivateDirectory(lake);
+            VerifyMathlibOleans(lake);
             var sharedCache = MathlibCacheDirectory(worktreeRoot);
             var beforeClean = CountLtarFiles(sharedCache);
             var clean = runner.Run(
@@ -276,6 +305,59 @@ internal static class LeanCacheProvisioner
         if (File.GetAttributes(target).HasFlag(FileAttributes.ReparsePoint))
         {
             throw new InvalidOperationException("cache provisioning produced a forbidden .lake symlink");
+        }
+    }
+
+    private static void VerifyMathlibOleans(string lake)
+    {
+        var mathlib = Path.Combine(lake, "packages", "mathlib");
+        var sourceRoot = Path.Combine(mathlib, "Mathlib");
+        if (!Directory.Exists(sourceRoot))
+        {
+            throw new MathlibOleanCompletenessException(
+                null,
+                [],
+                "mathlib olean completeness could not be determined: Mathlib source directory is missing");
+        }
+
+        var buildRoot = Path.Combine(mathlib, ".lake", "build", "lib", "lean");
+        var sourceCount = 0;
+        var missingCount = 0;
+        var samples = new List<string>();
+        foreach (var source in Directory.EnumerateFiles(
+            sourceRoot,
+            "*.lean",
+            SearchOption.AllDirectories))
+        {
+            sourceCount++;
+            var relative = Path.GetRelativePath(mathlib, source);
+            var expected = Path.Combine(buildRoot, Path.ChangeExtension(relative, ".olean"));
+            if (File.Exists(expected)) continue;
+
+            missingCount++;
+            if (samples.Count < MissingOleanSampleLimit)
+            {
+                samples.Add(
+                    Path.ChangeExtension(relative, null)!
+                        .Replace(Path.DirectorySeparatorChar, '/'));
+            }
+        }
+
+        if (sourceCount == 0)
+        {
+            throw new MathlibOleanCompletenessException(
+                null,
+                [],
+                "mathlib olean completeness could not be determined: Mathlib source directory contains no Lean files");
+        }
+
+        if (missingCount != 0)
+        {
+            throw new MathlibOleanCompletenessException(
+                missingCount,
+                samples,
+                $"mathlib olean cache is incomplete: missing {missingCount} of {sourceCount}; "
+                + $"samples: {string.Join(", ", samples)}");
         }
     }
 

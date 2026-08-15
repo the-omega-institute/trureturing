@@ -13,8 +13,15 @@ public sealed class LeanCacheEnsureCommandTests
     {
         using var repository = new TemporaryDirectory();
         InitializeRepository(repository.Path);
-        WriteCache(repository.Path, "already warm\n");
+        WriteCache(repository.Path, "already warm\n", mathlibComplete: false);
         var runner = new RecordingWorktreeProcessRunner();
+
+        Assert.False(Directory.Exists(Path.Combine(
+            repository.Path,
+            ".lake",
+            "packages",
+            "mathlib",
+            "Mathlib")));
 
         var result = WorktreeCommand.Run(repository.Path, ["ensure-cache"], runner);
 
@@ -28,6 +35,8 @@ public sealed class LeanCacheEnsureCommandTests
         Assert.Equal(ReadPins(repository.Path).Sha256, receipt.RootElement.GetProperty("pin_sha256").GetString());
         Assert.Equal("machine", receipt.RootElement.GetProperty("shared_cache_scope").GetString());
         Assert.Equal(JsonValueKind.Null, receipt.RootElement.GetProperty("mathlib_cache_pruned_files").ValueKind);
+        Assert.Equal(JsonValueKind.Null, receipt.RootElement.GetProperty("mathlib_missing_olean_files").ValueKind);
+        Assert.Equal(JsonValueKind.Null, receipt.RootElement.GetProperty("mathlib_missing_olean_samples").ValueKind);
         Assert.Empty(result.Error);
         Assert.Empty(runner.Invocations);
         Assert.Equal(
@@ -167,6 +176,37 @@ public sealed class LeanCacheEnsureCommandTests
         Assert.DoesNotContain(
             runner.Invocations,
             static call => call.FileName == "lake");
+    }
+
+    [Fact]
+    public void IncompleteDonorStagingIsDiscardedWithoutPublishingAStamp()
+    {
+        using var repository = new TemporaryDirectory();
+        using var sharedCache = new MathlibCacheFixture();
+        InitializeRepository(repository.Path);
+        WriteCache(repository.Path, "incomplete donor\n");
+        MathlibProjectionFixture.RemoveFirstOlean(Path.Combine(repository.Path, ".lake"));
+        var target = AddWorktree(repository.Path, "incomplete-donor-target");
+        var runner = new RecordingWorktreeProcessRunner { OmitMathlibOleans = true };
+
+        var result = WorktreeCommand.Run(
+            repository.Path,
+            ["ensure-cache", "--path", target],
+            runner);
+
+        Assert.False(result.Success);
+        Assert.Empty(result.Output);
+        Assert.False(Directory.Exists(Path.Combine(target, ".lake")));
+        Assert.False(File.Exists(LeanCacheStamp.PathFor(Path.Combine(target, ".lake"))));
+        Assert.Empty(Directory.EnumerateFileSystemEntries(target, ".lake.stage-*"));
+        Assert.Contains(runner.Invocations, static call => call.FileName == "cp");
+        using var receipt = ParseReceipt(result.Error);
+        Assert.Equal(
+            MathlibProjectionFixture.ModuleCount,
+            receipt.RootElement.GetProperty("mathlib_missing_olean_files").GetInt32());
+        Assert.Contains(
+            receipt.RootElement.GetProperty("mathlib_missing_olean_samples").EnumerateArray(),
+            sample => sample.GetString() == MathlibProjectionFixture.FirstModule);
     }
 
     [Fact]
@@ -341,12 +381,17 @@ public sealed class LeanCacheEnsureCommandTests
         Git(root, "commit", "-m", "fixture baseline");
     }
 
-    private static void WriteCache(string root, string contents, bool stamp = true)
+    private static void WriteCache(
+        string root,
+        string contents,
+        bool stamp = true,
+        bool mathlibComplete = true)
     {
         var lake = Path.Combine(root, ".lake");
         var cache = Path.Combine(lake, "build", "cache.bin");
         Directory.CreateDirectory(Path.GetDirectoryName(cache)!);
         File.WriteAllText(cache, contents);
+        if (mathlibComplete) MathlibProjectionFixture.Write(lake);
         if (stamp) LeanCacheStamp.Write(lake, ReadPins(root));
     }
 

@@ -68,6 +68,39 @@ public sealed class WorktreeCommandTests
             Path.Combine(repository.Path, ".lake"),
             ReadPins(repository.Path),
             out _));
+        using var receipt = ParseReceipt(result.Output);
+        Assert.Equal(
+            System.Text.Json.JsonValueKind.Null,
+            receipt.RootElement.GetProperty("mathlib_missing_olean_files").ValueKind);
+    }
+
+    [Fact]
+    public void WriterEntryRejectsExitZeroCacheGetWhenMathlibOleansAreMissing()
+    {
+        using var repository = new TemporaryDirectory();
+        using var sharedCache = new MathlibCacheFixture();
+        InitializeRepository(repository.Path);
+        var runner = new RecordingWorktreeProcessRunner { OmitMathlibOleans = true };
+
+        var result = WorktreeCommand.Run(
+            repository.Path,
+            ["with-cache-writer", "--", "lake", "build"],
+            runner);
+
+        Assert.False(result.Success);
+        Assert.Empty(result.Output);
+        Assert.DoesNotContain(
+            runner.Invocations,
+            static call => call.FileName == "lake" && call.Arguments.SequenceEqual(["build"]));
+        Assert.False(Directory.Exists(Path.Combine(repository.Path, ".lake")));
+        Assert.False(File.Exists(LeanCacheStamp.PathFor(Path.Combine(repository.Path, ".lake"))));
+        using var receipt = ParseReceipt(result.Error);
+        Assert.Equal(
+            MathlibProjectionFixture.ModuleCount,
+            receipt.RootElement.GetProperty("mathlib_missing_olean_files").GetInt32());
+        Assert.Contains(
+            receipt.RootElement.GetProperty("mathlib_missing_olean_samples").EnumerateArray(),
+            sample => sample.GetString() == MathlibProjectionFixture.FirstModule);
     }
 
     [Fact]
@@ -420,12 +453,16 @@ public sealed class WorktreeCommandTests
     {
         var lake = Path.Combine(root, ".lake");
         Directory.CreateDirectory(lake);
+        MathlibProjectionFixture.Write(lake);
         LeanCacheStamp.Write(lake, ReadPins(root));
     }
 
     private static LeanPinSet ReadPins(string root) =>
         LeanPinSet.TryReadWorktree(root, out var reason)
         ?? throw new InvalidOperationException(reason);
+
+    private static System.Text.Json.JsonDocument ParseReceipt(string output) =>
+        System.Text.Json.JsonDocument.Parse(output["LEAN_CACHE ".Length..]);
 
     private static void AssertReviewScaffoldsAreIgnored(string root)
     {
