@@ -1,0 +1,31 @@
+### 定理 37.9（矩阵 GNS 自配对）
+
+设：
+
+\[
+\rho\ge0,
+\qquad
+\operatorname{Tr}\rho=1.
+\]
+
+则对任意矩阵 \(X\)：
+
+\[
+\boxed{
+\operatorname{Tr}(\rho X^\ast X)
+=
+\|X\sqrt\rho\|_{\mathrm{HS}}^2
+\ge0.
+}
+\]
+
+仓库已经给出该恒等式的 Lean 证明。
+
+这说明正状态的根本性质不是“所有坐标为正”，而是：
+
+\[
+\boxed{
+\text{任何操作与自身的 }X^\ast X\text{ 配对都成为范数平方。}
+}
+\]
+

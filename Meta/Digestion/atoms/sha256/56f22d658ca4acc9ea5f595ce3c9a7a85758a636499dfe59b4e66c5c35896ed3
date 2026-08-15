@@ -1,0 +1,26 @@
+### 定理 36.7（概念—锚点非对称性）
+
+对任意 pro-object \(\mathbf X=(X_i)\) 与普通对象 \(D,A\in\mathcal C\)，有：
+
+\[
+\boxed{
+\operatorname{Hom}_{\operatorname{Pro}(\mathcal C)}
+(\mathbf X,cD)
+\cong
+\varinjlim_i
+\operatorname{Hom}_{\mathcal C}(X_i,D).
+}
+\]
+
+以及：
+
+\[
+\boxed{
+\operatorname{Hom}_{\operatorname{Pro}(\mathcal C)}
+(cA,\mathbf X)
+\cong
+\varprojlim_i
+\operatorname{Hom}_{\mathcal C}(A,X_i).
+}
+\]
+

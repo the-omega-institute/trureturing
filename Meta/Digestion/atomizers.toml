@@ -901,3 +901,13 @@ kind = "principle"
 dialect = "qdo"
 token = "特例"
 kind = "example"
+
+[[dialect.genre]]
+dialect = "qdo"
+token = "条件定理"
+kind = "theorem-form"
+
+[[dialect.genre]]
+dialect = "qdo"
+token = "猜想"
+kind = "observation"

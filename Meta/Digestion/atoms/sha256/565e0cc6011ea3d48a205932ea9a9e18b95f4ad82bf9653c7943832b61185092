@@ -1,0 +1,26 @@
+### 定义 36.11（局部观察者）
+
+若不存在全局相容点 \(\mathbf o\)，但在覆盖或子图上存在局部相容锚点，则称其为局部观察者。
+
+局部锚点之间可能由：
+
+- group-valued cocycle；
+- hidden-fiber transition；
+- holonomy；
+- gauge transformation；
+- sheaf restriction；
+
+连接。
+
+所以：
+
+\[
+\boxed{
+\text{观察者可以是全局 section，也可以只有局部 section 和转移 cocycle。}
+}
+\]
+
+这与第 35 节的 solenoid 提升、隐藏核和 throat transition cocycle 一致，但本节不把所有逆完成观察者都等同于 solenoid。
+
+---
+

@@ -1,0 +1,49 @@
+### 定理 37.18（记录—相干互补）
+
+在上述二地址纯记录模型中：
+
+\[
+\boxed{
+\text{记录越能区分左右地址，
+系统左右相干保留越少。}
+}
+\]
+
+极端情况为：
+
+\[
+c=0
+\Longrightarrow
+\mathcal D=1,\ \mathcal V=0,
+\]
+
+以及：
+
+\[
+|c|=1
+\Longrightarrow
+\mathcal D=0,\ \mathcal V=1.
+\]
+
+因此：
+
+\[
+\boxed{
+\text{完美记录侧别}
+\Longrightarrow
+\text{unread 系统中的镜像相干严格消失};
+}
+\]
+
+\[
+\boxed{
+\text{完整保留镜像相干}
+\Longrightarrow
+\text{环境没有获得可区分侧别记录}.
+}
+\]
+
+这不是哲学互补，而是 Gram overlap 的精确恒等式。
+
+---
+

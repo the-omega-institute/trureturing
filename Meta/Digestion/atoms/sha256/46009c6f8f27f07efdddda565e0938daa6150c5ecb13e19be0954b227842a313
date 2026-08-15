@@ -1,0 +1,57 @@
+### 定义 37.36（有限层最小正性常数）
+
+在有限维测试层 \(\mathcal T_m\) 中定义：
+
+\[
+\boxed{
+\lambda_m
+=
+\inf_{\substack{g\in\mathcal T_m\\ \|g\|_{\mathrm{ref}}=1}}
+\Omega(g^\ast g).
+}
+\]
+
+即使：
+
+\[
+\lambda_m\ge0
+\qquad
+\forall m,
+\]
+
+仍可能有：
+
+\[
+\lambda_m\downarrow0.
+\]
+
+此时有限阶段均无负方向，但正完成在无限极限中退化到锥边界。
+
+所以需要区分：
+
+\[
+\boxed{
+\text{逐层正性}
+}
+\]
+
+与：
+
+\[
+\boxed{
+\text{统一非退化正性}.
+}
+\]
+
+若存在 \(c>0\) 使：
+
+\[
+\lambda_m\ge c
+\qquad
+\forall m,
+\]
+
+则二次型对参考范数具有统一下界，更有希望完成为稳定 Hilbert 几何。
+
+---
+

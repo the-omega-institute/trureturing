@@ -1,0 +1,18 @@
+### 推论 37.13（单位权重支撑面）
+
+若：
+
+\[
+\operatorname{Tr}(\rho P)=1,
+\qquad
+\operatorname{Tr}\rho=1,
+\]
+
+则：
+
+\[
+\boxed{
+\rho=P\rho P.
+}
+\]
+

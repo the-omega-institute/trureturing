@@ -1,0 +1,36 @@
+### 推论 36.9（观察者锚点是相容锥）
+
+若 \(\mathcal C\) 有终对象 \(1\)，则 \(\mathbf X\) 的广义点为：
+
+\[
+\operatorname{Hom}_{\operatorname{Pro}(\mathcal C)}(c1,\mathbf X)
+\cong
+\varprojlim_i
+\operatorname{Hom}_{\mathcal C}(1,X_i).
+\]
+
+所以一个观察者锚点不是某个单一 \(X_i\) 中的点，而是相容族：
+
+\[
+\boxed{
+\mathbf o=(o_i)_{i\in I},
+\qquad
+p_{ji}(o_j)=o_i.
+}
+\]
+
+这给出本节最核心的不对称：
+
+\[
+\boxed{
+\begin{aligned}
+\text{概念}
+&=\text{从某个阶段出发的单一读出};\\
+\text{观察者}
+&=\text{贯穿全部阶段的相容广义点}.
+\end{aligned}
+}
+\]
+
+---
+

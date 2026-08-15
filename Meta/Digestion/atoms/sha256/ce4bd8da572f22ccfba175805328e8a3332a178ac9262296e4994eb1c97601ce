@@ -1,0 +1,35 @@
+### 推论 37.17（记录中心）
+
+其中心为：
+
+\[
+\boxed{
+Z(\operatorname{Fix}(\Phi_G))
+\cong
+\bigoplus_{\alpha\in\Lambda}
+\mathbb C\,I_{I_\alpha}.
+}
+\]
+
+因此：
+
+\[
+\boxed{
+\alpha
+=
+\text{环境能够稳定复制的经典记录标签},
+}
+\]
+
+而：
+
+\[
+\boxed{
+M_{|I_\alpha|}(\mathbb C)
+=
+\text{该标签内部仍未被环境分辨的量子自由度}.
+}
+\]
+
+这给出三个极端。
+

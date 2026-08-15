@@ -1,0 +1,18 @@
+### 定义 36.15（实现缺陷）
+
+定义：
+
+\[
+\boxed{
+D_{\mathrm{real}}
+=
+\left(
+\varprojlim_iX_i
+\right)
+\setminus
+\eta_X(X).
+}
+\]
+
+其中的元素是形式上在每个阶段都相容、但不来自任何实际整体对象的坐标族。
+
