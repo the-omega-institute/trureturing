@@ -6,6 +6,9 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.QuantumBounds;
 
 internal sealed class LandauCommutingCollapseDocument : IScribeDocumentDefinition
 {
+    private static readonly LibraryNoteRef Landau =
+        LibraryNoteRef.Create("D5/L/Quantum/landau1987violation");
+
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Local commutativity collapses the algebraic CHSH square to four times the identity.",
         H("CHSH Square under Local Commutativity"),
@@ -26,13 +29,16 @@ internal sealed class LandauCommutingCollapseDocument : IScribeDocumentDefinitio
                         "The proof specializes LandauIdentity.landau_identity: the local " +
                         "commutation equality makes one commutator, and hence their " +
                         "Kronecker product, zero.")),
-                    Paragraph(Text(
-                        "Lawrence J. Landau's 1987 work on the violation of Bell's " +
-                        "inequality in quantum theory is contextual historical credit. " +
-                        "The primary-source metadata was verified, but the article text " +
-                        "was not available for inspection, so this repository-derived " +
-                        "provenance does not claim that the paper states this exact " +
-                        "commuting-pair corollary.")),
+                    Paragraph(
+                        Text(
+                            "Lawrence J. Landau's 1987 work on the violation of Bell's " +
+                            "inequality in quantum theory is contextual historical credit; "),
+                        Ref(Landau.Value),
+                        Text(
+                            " records its verified bibliographic metadata and access limit. " +
+                            "The article text was not readable, so this repository-derived " +
+                            "provenance does not claim that the paper states this exact " +
+                            "commuting-pair corollary.")),
                     Paragraph(Text(
                         "This is only the algebraic square equality under a commuting local " +
                         "pair. It does not assert an expectation bound of two, an " +
