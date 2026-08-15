@@ -304,20 +304,25 @@ public sealed partial class DigestionLedgerTests
     [Fact]
     public void IngestOnboardsRegisteredEmptySourceWithCoarseFallback()
     {
+        const string sourcePath = "docs/develop/theory/non-utf8.bin";
         var atomizerId = SyntheticNumberedAtomizer.Id;
-        var sourceBytes = Encoding.UTF8.GetBytes(
-            "# Synthetic\n\n**未知 1.1(A)**。free-form source。\n");
-        var ledger = BackfillInventoryLoader.Load(EmptyLedger(atomizerId));
+        var sourceBytes = new byte[] { 0xff, 0x00, 0xfe };
+        var ledger = BackfillInventoryLoader.Load(
+            EmptyLedger(atomizerId).Replace(
+                "path: docs/source.md",
+                $"path: {sourcePath}",
+                StringComparison.Ordinal));
 
         var first = DigestionIngestor.Plan(
             ledger,
-            Snapshot(("docs/source.md", sourceBytes)),
+            Snapshot((sourcePath, sourceBytes)),
             ledger);
         var firstBytes = BackfillInventoryWriter.WriteForIngest(first.Document);
         var migrated = BackfillInventoryLoader.Load(Encoding.UTF8.GetString(firstBytes.AsSpan()));
 
         var fallback = Assert.Single(first.Fallbacks);
         Assert.Equal("source", fallback.SourceId);
+        Assert.Contains("Unicode", fallback.Reason, StringComparison.OrdinalIgnoreCase);
         Assert.Equal(1, first.ResidualOpenAdded);
         var coarse = Assert.Single(first.Document.RequireDigestionEntries());
         Assert.Equal("coarse/source", coarse.AstPath);
@@ -329,7 +334,10 @@ public sealed partial class DigestionLedgerTests
 
         var second = DigestionIngestor.Plan(
             migrated,
-            Snapshot(sourceBytes, first.CasObjects),
+            Snapshot(first.CasObjects
+                .Select(static item => (item.RelativePath, item.Bytes.ToArray()))
+                .Prepend((sourcePath, sourceBytes))
+                .ToArray()),
             ledger);
         var secondBytes = BackfillInventoryWriter.WriteForIngest(second.Document);
 

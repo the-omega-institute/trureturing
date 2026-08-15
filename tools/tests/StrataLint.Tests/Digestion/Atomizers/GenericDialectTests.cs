@@ -87,6 +87,18 @@ public sealed class GenericDialectTests
             DigestionTestSupport.Snapshot(
                 (TheoryAtomizerDataLoader.DataPath, Encoding.UTF8.GetBytes(data))));
 
+    private static DigestionLedgerAlignment Align(string atomizerId, byte[] bytes, string data)
+    {
+        var ledger = BackfillInventoryLoader.Load(DigestionTestSupport.EmptyLedger(atomizerId));
+        return DigestionLedgerAligner.Evaluate(
+            ledger,
+            DigestionTestSupport.Snapshot(
+                ("docs/source.md", bytes),
+                (TheoryAtomizerDataLoader.DataPath, Encoding.UTF8.GetBytes(data))),
+            ledger,
+            DigestionAlignmentMode.Ingest);
+    }
+
     [Fact]
     public void ADialectDeclaredInDataDigestsAVolumeWithoutAnyCode()
     {
@@ -105,14 +117,15 @@ public sealed class GenericDialectTests
     [Fact]
     public void AnUnregisteredGenreInADeclaredDialectStillFailsClosed()
     {
-        var rules = Load(RulesWith(ProbeDialect));
         var bytes = Encoding.UTF8.GetBytes("# 探针卷\n\n**未登记体 1.1(甲)**。一。\n");
 
-        var error = Assert.Throws<TheorySourceFormatException>(() =>
-            AtomizerRegistry.Atomize($"dialect:{DialectId}", bytes, rules));
+        var alignment = Align($"dialect:{DialectId}", bytes, RulesWith(ProbeDialect));
 
-        Assert.Contains(DialectId, error.Message, StringComparison.Ordinal);
-        Assert.Contains("未登记体", error.Message, StringComparison.Ordinal);
+        var finding = Assert.Single(alignment.Findings);
+        Assert.Contains("source source", finding, StringComparison.Ordinal);
+        Assert.Contains("未登记体", finding, StringComparison.Ordinal);
+        Assert.Empty(alignment.Residual);
+        Assert.Empty(alignment.Fallbacks);
     }
 
     [Fact]
@@ -175,14 +188,18 @@ public sealed class GenericDialectTests
     [Fact]
     public void AnUnregisteredGenreOnAHeadingStillFailsClosed()
     {
-        var rules = Load(RulesWith(HeadingProbeDialect));
         var bytes = Encoding.UTF8.GetBytes("# 探针卷\n\n## 未登记体 1.1(甲)\n");
 
-        var error = Assert.Throws<TheorySourceFormatException>(() =>
-            AtomizerRegistry.Atomize($"dialect:{HeadingDialectId}", bytes, rules));
+        var alignment = Align(
+            $"dialect:{HeadingDialectId}",
+            bytes,
+            RulesWith(HeadingProbeDialect));
 
-        Assert.Contains(HeadingDialectId, error.Message, StringComparison.Ordinal);
-        Assert.Contains("未登记体", error.Message, StringComparison.Ordinal);
+        var finding = Assert.Single(alignment.Findings);
+        Assert.Contains("source source", finding, StringComparison.Ordinal);
+        Assert.Contains("未登记体", finding, StringComparison.Ordinal);
+        Assert.Empty(alignment.Residual);
+        Assert.Empty(alignment.Fallbacks);
     }
 
     [Fact]

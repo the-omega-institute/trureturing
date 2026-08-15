@@ -72,7 +72,8 @@ internal static partial class DigestionLedgerAligner
         RepositorySnapshot snapshot,
         BackfillInventoryDocument? baselineDocument,
         DigestionAlignmentMode mode,
-        Func<string, TheoryAtomizer>? atomizerResolver = null)
+        Func<string, TheoryAtomizer>? atomizerResolver = null,
+        RepositorySnapshot? baselineSnapshot = null)
     {
         ArgumentNullException.ThrowIfNull(document);
         ArgumentNullException.ThrowIfNull(snapshot);
@@ -198,6 +199,20 @@ internal static partial class DigestionLedgerAligner
                 var unprovenCasEntries = source.Entries.Where(entry =>
                     cas.ValidAtomIds.Contains(entry.AtomId)
                     && !inheritedEntries.Contains(CanonicalEntry(entry))).ToArray();
+                var admissionGenreFinding = AdmissionGenreFinding(
+                    mode,
+                    snapshot,
+                    baselineSnapshot,
+                    source,
+                    baselineSource,
+                    registeredAtomizer,
+                    atomizerRules,
+                    atomizerResolver);
+                if (admissionGenreFinding is not null)
+                {
+                    findings.Add(admissionGenreFinding);
+                }
+
                 if (((mode == DigestionAlignmentMode.Admission
                         && unprovenCasEntries.Length == 0
                         && !hasClausePlanChains)
@@ -298,6 +313,16 @@ internal static partial class DigestionLedgerAligner
                 {
                     findings.Add(
                         $"source {source.SourceId} atomizer integrity failed: {integrityFailure}");
+                    return;
+                }
+
+                // Ingest must refuse the addressed token instead of degrading the whole volume
+                // to a coarse atom. Admission has a separate probe so reconciliation outcomes
+                // remain unchanged.
+                if (mode != DigestionAlignmentMode.Admission
+                    && !atomized.UnregisteredGenres.IsEmpty)
+                {
+                    findings.Add(UnregisteredGenreFinding(source, atomized.UnregisteredGenres));
                     return;
                 }
 
@@ -565,6 +590,102 @@ internal static partial class DigestionLedgerAligner
             .Select(CanonicalEntry)
             .ToHashSet(StringComparer.Ordinal);
 
+    private static string? AdmissionGenreFinding(
+        DigestionAlignmentMode mode,
+        RepositorySnapshot candidateSnapshot,
+        RepositorySnapshot? baselineSnapshot,
+        DigestionLedgerSource candidateSource,
+        DigestionLedgerSource? baselineSource,
+        bool registeredAtomizer,
+        TheoryAtomizerRules? atomizerRules,
+        Func<string, TheoryAtomizer> atomizerResolver)
+    {
+        if (mode != DigestionAlignmentMode.Admission
+            || candidateSource.Atomizer == AtomizerRegistry.NoAtomizerId
+            || !registeredAtomizer
+            || atomizerRules is null
+            || AtomizerDecisionClosureEqualBaseline(
+                candidateSnapshot,
+                baselineSnapshot,
+                candidateSource,
+                baselineSource)
+            || !candidateSnapshot.TryGetFile(candidateSource.SourcePath, out var sourceFile))
+        {
+            return null;
+        }
+
+        AtomizedTheoryDocument atomized;
+        try
+        {
+            var atomize = atomizerResolver(candidateSource.Atomizer);
+            atomized = atomize(sourceFile.RawBytes.AsSpan(), atomizerRules);
+        }
+        catch (Exception exception) when (
+            exception is TheorySourceFormatException or DecoderFallbackException)
+        {
+            // The ordinary pass owns theory-source and UTF-8 decoding failures, so the probe
+            // must not replace those outcomes with a genre finding.
+            return null;
+        }
+
+        if (AtomizerIntegrityFailure(atomized, sourceFile.RawBytes.AsSpan()) is not null
+            || !HasUniqueAstPaths(atomized.Claims)
+            || atomized.Claims.Length == 0
+            || atomized.GenreRegistryCheck.Kind != GenreRegistryCheckKind.Collected
+            || atomized.UnregisteredGenres.IsEmpty)
+        {
+            return null;
+        }
+
+        return UnregisteredGenreFinding(candidateSource, atomized.UnregisteredGenres);
+    }
+
+    private static string UnregisteredGenreFinding(
+        DigestionLedgerSource source,
+        ImmutableArray<string> unregisteredGenres) =>
+        $"source {source.SourceId} uses claim genres its dialect does not register: "
+        + string.Join(", ", unregisteredGenres)
+        + $". Register them in {TheoryAtomizerDataLoader.DataPath} or correct the volume.";
+
+    private static bool AtomizerDecisionClosureEqualBaseline(
+        RepositorySnapshot candidateSnapshot,
+        RepositorySnapshot? baselineSnapshot,
+        DigestionLedgerSource candidateSource,
+        DigestionLedgerSource? baselineSource) =>
+        baselineSnapshot is not null
+        && baselineSource is not null
+        && candidateSource.Atomizer == baselineSource.Atomizer
+        && FileBytesEqual(
+            candidateSnapshot,
+            candidateSource.SourcePath,
+            baselineSnapshot,
+            baselineSource.SourcePath)
+        && FileBytesEqual(
+            candidateSnapshot,
+            TheoryAtomizerDataLoader.DataPath,
+            baselineSnapshot,
+            TheoryAtomizerDataLoader.DataPath)
+        // Atomizer implementations have no narrower stable content address. Whole-tree equality
+        // proves their code closure is unchanged; any candidate change pays the cheap recheck.
+        && RepositoryBytesEqual(candidateSnapshot, baselineSnapshot);
+
+    private static bool RepositoryBytesEqual(
+        RepositorySnapshot candidateSnapshot,
+        RepositorySnapshot baselineSnapshot) =>
+        candidateSnapshot.Files.Count == baselineSnapshot.Files.Count
+        && candidateSnapshot.Files.All(candidate =>
+            baselineSnapshot.Files.TryGetValue(candidate.Key, out var baseline)
+            && candidate.Value.RawBytes.AsSpan().SequenceEqual(baseline.RawBytes.AsSpan()));
+
+    private static bool FileBytesEqual(
+        RepositorySnapshot candidateSnapshot,
+        string candidatePath,
+        RepositorySnapshot baselineSnapshot,
+        string baselinePath) =>
+        candidateSnapshot.TryGetFile(candidatePath, out var candidate)
+        && baselineSnapshot.TryGetFile(baselinePath, out var baseline)
+        && candidate.RawBytes.AsSpan().SequenceEqual(baseline.RawBytes.AsSpan());
+
     private static string CanonicalEntry(DigestionLedgerEntry entry) =>
         Convert.ToBase64String(BackfillInventoryWriter.WriteEntry(entry).AsSpan());
 
@@ -640,6 +761,10 @@ internal static partial class DigestionLedgerAligner
     internal static bool FingerprintsMatch(DigestionFingerprints left, DigestionFingerprints right) =>
         left.RawSha256 == right.RawSha256
         || left.NormalizedSha256 == right.NormalizedSha256;
+
+    private static bool HasUniqueAstPaths(ImmutableArray<DigestionAtom> claims) =>
+        claims.Select(static claim => claim.AstPath).Distinct(StringComparer.Ordinal).Count()
+        == claims.Length;
 
     private static bool EntryIdentityEqual(
         DigestionLedgerEntry candidate,

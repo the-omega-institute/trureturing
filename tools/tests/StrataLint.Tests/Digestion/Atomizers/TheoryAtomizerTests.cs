@@ -295,18 +295,19 @@ public sealed partial class TheoryAtomizerTests
     [InlineData("\n")]
     [InlineData("\r\n")]
     [InlineData("\r")]
-    public void ObserverAdapterRejectsAnUnknownBoldClaimLead(string newLine)
+    public void ObserverAdapterRecordsAnUnknownBoldClaimLead(string newLine)
     {
         var bytes = Encoding.UTF8.GetBytes(
             $"# Observer{newLine}{newLine}## 11. New section{newLine}{newLine}"
             + $"**新判词。** claim。{newLine}");
 
-        var error = Assert.Throws<TheorySourceFormatException>(() =>
-            AtomizerRegistry.Atomize(AtomizerRegistry.ObserverId, bytes, DigestionTestSupport.Rules));
+        var document = AtomizerRegistry.Atomize(
+            AtomizerRegistry.ObserverId,
+            bytes,
+            DigestionTestSupport.Rules);
 
-        Assert.Contains("unknown observer claim lead", error.Message, StringComparison.Ordinal);
-        Assert.Contains("**新判词。**", error.Message, StringComparison.Ordinal);
-        Assert.Contains("line 5", error.Message, StringComparison.Ordinal);
+        Assert.Single(document.Claims);
+        Assert.Equal(["**新判词。**"], document.UnregisteredGenres.ToArray());
     }
 
     [Theory]
@@ -314,7 +315,7 @@ public sealed partial class TheoryAtomizerTests
     [InlineData(false, "\n")]
     [InlineData(true, "\r\n")]
     [InlineData(false, "\r\n")]
-    public void ObserverAdapterRejectsAnUnknownBoldTableClaimLead(
+    public void ObserverAdapterRecordsAnUnknownBoldTableClaimLead(
         bool leadingPipe,
         string newLine)
     {
@@ -324,25 +325,29 @@ public sealed partial class TheoryAtomizerTests
         var bytes = Encoding.UTF8.GetBytes(
             $"# Observer{newLine}{newLine}{header}{newLine}{delimiter}{newLine}{claim}{newLine}");
 
-        var error = Assert.Throws<TheorySourceFormatException>(() =>
-            AtomizerRegistry.Atomize(AtomizerRegistry.ObserverId, bytes, DigestionTestSupport.Rules));
+        var document = AtomizerRegistry.Atomize(
+            AtomizerRegistry.ObserverId,
+            bytes,
+            DigestionTestSupport.Rules);
 
-        Assert.Contains("unknown observer claim lead", error.Message, StringComparison.Ordinal);
-        Assert.Contains("**新判词。**", error.Message, StringComparison.Ordinal);
-        Assert.Contains("line 5", error.Message, StringComparison.Ordinal);
+        Assert.Single(document.Claims);
+        Assert.Equal(["**新判词。**"], document.UnregisteredGenres.ToArray());
     }
 
     [Fact]
-    public void ObserverAdapterRejectsAnIndentedUnknownBoldClaimLead()
+    public void ObserverAdapterRecordsAnIndentedUnknownBoldClaimLead()
     {
         var bytes = Encoding.UTF8.GetBytes(
             "# Observer\n\n   **新判词。** claim。\n\n"
             + "**定理(观察者代数的唯一形态)。** known。\n");
 
-        var error = Assert.Throws<TheorySourceFormatException>(() =>
-            AtomizerRegistry.Atomize(AtomizerRegistry.ObserverId, bytes, DigestionTestSupport.Rules));
+        var document = AtomizerRegistry.Atomize(
+            AtomizerRegistry.ObserverId,
+            bytes,
+            DigestionTestSupport.Rules);
 
-        Assert.Contains("unknown observer claim lead", error.Message, StringComparison.Ordinal);
+        Assert.Equal(2, document.Claims.Length);
+        Assert.Equal(["**新判词。**"], document.UnregisteredGenres.ToArray());
     }
 
     [Theory]
@@ -352,16 +357,21 @@ public sealed partial class TheoryAtomizerTests
     [InlineData("**Q4(伪造标签)。** claim。")]
     [InlineData("**已结案(伪造标签):** claim。")]
     [InlineData("**遗留(伪造标签):** claim。")]
-    public void ObserverAdapterRejectsMalformedKnownPrefixBoldLead(string malformedLead)
+    public void ObserverAdapterRecordsMalformedKnownPrefixAsAnUnregisteredLead(string malformedLead)
     {
         var bytes = Encoding.UTF8.GetBytes(
             $"# Observer\n\n{malformedLead}\n\n"
             + "**定理(观察者代数的唯一形态)。** known。\n");
 
-        var error = Assert.Throws<TheorySourceFormatException>(() =>
-            AtomizerRegistry.Atomize(AtomizerRegistry.ObserverId, bytes, DigestionTestSupport.Rules));
+        var document = AtomizerRegistry.Atomize(
+            AtomizerRegistry.ObserverId,
+            bytes,
+            DigestionTestSupport.Rules);
 
-        Assert.Contains("unknown observer claim lead", error.Message, StringComparison.Ordinal);
+        Assert.Equal(2, document.Claims.Length);
+        Assert.Equal(
+            [TheorySourceFormatException.ClaimLead(malformedLead)],
+            document.UnregisteredGenres.ToArray());
     }
 
     [Fact]
@@ -404,14 +414,18 @@ public sealed partial class TheoryAtomizerTests
     }
 
     [Fact]
-    public void UnknownNumberedClaimKindIsClassifiedAsASourceFormatFailure()
+    public void UnknownNumberedClaimKindIsClassifiedAsALedgerFinding()
     {
         var bytes = Encoding.UTF8.GetBytes(
             "# PZG\n\n**未知体 1.1(Unknown kind)**。claim。\n");
 
-        var error = Assert.Throws<TheorySourceFormatException>(() => PzgAtomizer.Atomize(bytes, DigestionTestSupport.Rules));
+        var alignment = AlignUnregisteredGenres(bytes);
 
-        Assert.Contains("unknown PZG numbered claim kind", error.Message, StringComparison.Ordinal);
+        var finding = Assert.Single(alignment.Findings);
+        Assert.Contains("source source", finding, StringComparison.Ordinal);
+        Assert.Contains("未知体", finding, StringComparison.Ordinal);
+        Assert.Empty(alignment.Residual);
+        Assert.Empty(alignment.Fallbacks);
     }
 
     [Fact]
@@ -739,6 +753,17 @@ public sealed partial class TheoryAtomizerTests
         Assert.Equal(repeatedRemarks[0].Fingerprints, repeatedRemarks[1].Fingerprints);
         Assert.Equal(repeatedCorollaries[0].Fingerprints, repeatedCorollaries[1].Fingerprints);
         Assert.NotEqual(incompatibleTheorems[0].Fingerprints, incompatibleTheorems[1].Fingerprints);
+    }
+
+    private static DigestionLedgerAlignment AlignUnregisteredGenres(byte[] bytes)
+    {
+        var ledger = BackfillInventoryLoader.Load(
+            DigestionTestSupport.EmptyLedger(AtomizerRegistry.PzgId));
+        return DigestionLedgerAligner.Evaluate(
+            ledger,
+            DigestionTestSupport.Snapshot(("docs/source.md", bytes)),
+            ledger,
+            DigestionAlignmentMode.Ingest);
     }
 }
 internal static class SyntheticNumberedAtomizer { internal static string Id => AtomizerRegistry.GictId; }

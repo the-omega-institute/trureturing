@@ -1,0 +1,259 @@
+using System.Collections.Immutable;
+using System.Security.Cryptography;
+using System.Text;
+using System.Text.RegularExpressions;
+
+namespace StrataLint.Engine;
+
+internal static class MarkdownAstAtomizer
+{
+    private static readonly UTF8Encoding StrictUtf8 = new(false, true);
+
+    /// <summary>
+    /// <paramref name="parse"/> selects the block AST. It defaults to the line scanner
+    /// because the registered dialects' receipts are content-addressed over the boundaries
+    /// that scanner produces; only the default atomizer, which has no receipts to preserve,
+    /// passes a different one.
+    /// </summary>
+    internal static AtomizedTheoryDocument Atomize(
+        ReadOnlySpan<byte> bytes,
+        Func<string, string?> identify,
+        Func<GenreRegistryCheck> genreRegistryCheck,
+        Func<string, string?>? identifyFirstTableCell = null,
+        Func<string, string?>? identifyHeading = null,
+        Func<string, string?>? identifyFirstTableCellSource = null,
+        Func<string, ImmutableArray<MarkdownBlock>>? parse = null,
+        Func<MarkdownTableRow, string?>? identifyTableRow = null,
+        bool dropEmptyHeadingClaims = false)
+    {
+        ArgumentNullException.ThrowIfNull(genreRegistryCheck);
+        var raw = bytes.ToArray();
+        var text = StrictUtf8.GetString(raw);
+        var blocks = (parse ?? MarkdownBlockAst.Parse)(text);
+        var headings = new List<DigestionContext>();
+        var candidates = new List<Candidate>();
+        var headingStarts = new List<int>();
+        var failures = new List<UnrecognisedLead>();
+        foreach (var block in blocks)
+        {
+            if (block is MarkdownHeading heading)
+            {
+                while (headings.Count > 0 && headings[^1].Level >= heading.Level)
+                {
+                    headings.RemoveAt(headings.Count - 1);
+                }
+
+                var headingAstPath = identifyHeading?.Invoke(heading.Text);
+                if (headingAstPath is not null)
+                {
+                    candidates.Add(new Candidate(
+                        headingAstPath,
+                        heading.Start,
+                        text.Length,
+                        headings.ToImmutableArray(),
+                        Extend: true,
+                        IsHeading: true));
+                }
+
+                headings.Add(new DigestionContext(heading.Level, heading.Text));
+                headingStarts.Add(heading.Start);
+                continue;
+            }
+
+            if (block is MarkdownTableRow row)
+            {
+                var tableAstPath = identifyTableRow is not null
+                    ? identifyTableRow(row)
+                    : identifyFirstTableCellSource is not null
+                    ? TheorySourceFormatException.IdentifyAt(
+                        identifyFirstTableCellSource, row.FirstCellSourceText, row.Start, text, failures)
+                    : identifyFirstTableCell is not null
+                    ? TheorySourceFormatException.IdentifyAt(
+                        identifyFirstTableCell, row.FirstCellText, row.Start, text, failures)
+                    : TheorySourceFormatException.IdentifyAt(identify, row.Text, row.Start, text, failures);
+                if (tableAstPath is not null)
+                {
+                    candidates.Add(new Candidate(
+                        tableAstPath,
+                        row.Start,
+                        row.End,
+                        headings.ToImmutableArray(),
+                        Extend: false));
+                }
+
+                continue;
+            }
+
+            if (block is not MarkdownParagraph paragraph)
+            {
+                continue;
+            }
+
+            var lineClaims = SourceLines(paragraph.Text, paragraph.Start)
+                .Select(line => (Line: line, AstPath: TheorySourceFormatException.IdentifyAt(
+                    identify, line.Text, line.Start, text, failures)))
+                .Where(static item => item.AstPath is not null)
+                .ToArray();
+            if (lineClaims.Length > 1)
+            {
+                foreach (var lineClaim in lineClaims)
+                {
+                    candidates.Add(new Candidate(
+                        lineClaim.AstPath!,
+                        lineClaim.Line.Start,
+                        lineClaim.Line.End,
+                        headings.ToImmutableArray(),
+                        Extend: false));
+                }
+
+                continue;
+            }
+
+            var astPath = TheorySourceFormatException.IdentifyAt(
+                identify, paragraph.Text, paragraph.Start, text, failures);
+            if (astPath is null)
+            {
+                continue;
+            }
+
+            candidates.Add(new Candidate(
+                astPath,
+                paragraph.Start,
+                text.Length,
+                headings.ToImmutableArray(),
+                Extend: true));
+        }
+
+        if (failures.Count > 0)
+        {
+            // Grouped by cause because one unknown lead is reported many times: once per
+            // source line, once again as the whole paragraph, and once per repetition in
+            // the volume. Naming each cause once, with its first line and how often it
+            // occurs, is what a reader needs to register the dialect in a single pass.
+            throw new TheorySourceFormatException(
+                TheorySourceFormatException.Summarise(failures));
+        }
+
+        var boundaries = candidates.Select(static candidate => candidate.StartCharacter)
+            .Concat(headingStarts)
+            .Distinct()
+            .Order()
+            .ToArray();
+        for (var index = 0; index < candidates.Count; index++)
+        {
+            var candidate = candidates[index];
+            if (!candidate.Extend)
+            {
+                continue;
+            }
+
+            var nestedBoundary = boundaries.FirstOrDefault(start =>
+                start > candidate.StartCharacter && start < candidate.EndCharacter);
+            if (nestedBoundary > 0)
+            {
+                candidates[index] = candidate with { EndCharacter = nestedBoundary };
+            }
+        }
+
+        if (dropEmptyHeadingClaims)
+        {
+            // A heading whose whole body was claimed by finer atoms is left holding only its
+            // own line. That atom states nothing, so it could never be discharged and would
+            // sit open forever; the heading itself is not lost, because every atom beneath it
+            // carries it in its context.
+            candidates.RemoveAll(candidate =>
+                candidate.IsHeading && IsHeadingOnly(text, candidate));
+        }
+
+        var claims = ImmutableArray.CreateBuilder<DigestionAtom>(candidates.Count);
+        var slices = ImmutableArray.CreateBuilder<DigestionSlice>(candidates.Count * 2 + 1);
+        var locatorCounts = candidates
+            .GroupBy(static candidate => candidate.AstPath, StringComparer.Ordinal)
+            .ToDictionary(static group => group.Key, static group => group.Count(), StringComparer.Ordinal);
+        var locatorOccurrences = new Dictionary<string, int>(StringComparer.Ordinal);
+        var cursor = 0;
+        foreach (var candidate in candidates.OrderBy(static item => item.StartCharacter))
+        {
+            locatorOccurrences.TryGetValue(candidate.AstPath, out var occurrence);
+            occurrence++;
+            locatorOccurrences[candidate.AstPath] = occurrence;
+            var astPath = locatorCounts[candidate.AstPath] == 1
+                ? candidate.AstPath
+                : $"{candidate.AstPath}/occurrence/{occurrence}";
+            var start = ByteOffset(text, candidate.StartCharacter);
+            var end = ByteOffset(text, candidate.EndCharacter);
+            if (start < cursor || end <= start || end > raw.Length)
+            {
+                throw new FormatException($"invalid Markdown AST span for {astPath}");
+            }
+
+            if (start > cursor)
+            {
+                slices.Add(new DigestionSlice(false, ImmutableArray.CreateRange(raw[cursor..start])));
+            }
+
+            var atomBytes = ImmutableArray.CreateRange(raw[start..end]);
+            slices.Add(new DigestionSlice(true, atomBytes));
+            claims.Add(new DigestionAtom(
+                astPath,
+                start,
+                end,
+                atomBytes,
+                DigestionFingerprint.Compute(atomBytes.AsSpan()),
+                candidate.Context,
+                DigestionAtomStatusMarker.Parse(atomBytes.AsSpan())));
+            cursor = end;
+        }
+
+        if (cursor < raw.Length)
+        {
+            slices.Add(new DigestionSlice(false, ImmutableArray.CreateRange(raw[cursor..])));
+        }
+
+        return new AtomizedTheoryDocument(
+            claims.MoveToImmutable(),
+            slices.ToImmutable(),
+            genreRegistryCheck());
+    }
+
+    private static bool IsHeadingOnly(string text, Candidate candidate)
+    {
+        var slice = text.AsSpan(
+            candidate.StartCharacter,
+            candidate.EndCharacter - candidate.StartCharacter);
+        var lineEnd = slice.IndexOfAny('\r', '\n');
+        return lineEnd >= 0 && slice[lineEnd..].IsWhiteSpace();
+    }
+
+    internal static int ByteOffset(string text, int characterOffset) =>
+        characterOffset == text.Length
+            ? StrictUtf8.GetByteCount(text)
+            : StrictUtf8.GetByteCount(text.AsSpan(0, characterOffset));
+
+    private static IEnumerable<SourceLine> SourceLines(string paragraph, int sourceStart)
+    {
+        var offset = 0;
+        while (offset < paragraph.Length)
+        {
+            var lineEnd = paragraph.IndexOfAny(['\r', '\n'], offset);
+            if (lineEnd < 0) lineEnd = paragraph.Length;
+            var next = lineEnd;
+            while (next < paragraph.Length && paragraph[next] is '\r' or '\n') next++;
+            yield return new SourceLine(
+                paragraph[offset..lineEnd],
+                sourceStart + offset,
+                sourceStart + next);
+            offset = next;
+        }
+    }
+
+    private sealed record Candidate(
+        string AstPath,
+        int StartCharacter,
+        int EndCharacter,
+        ImmutableArray<DigestionContext> Context,
+        bool Extend,
+        bool IsHeading = false);
+
+    private sealed record SourceLine(string Text, int Start, int End);
+}

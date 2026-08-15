@@ -370,8 +370,11 @@ public sealed partial class ProductionEnvironmentTests
         var oldBytes = Encoding.UTF8.GetBytes("# Synthetic\n\n**定理 1.1(A)**。old。\n");
         var oldAtom = Assert.Single(AtomizerRegistry.Atomize(atomizerId, oldBytes, DigestionTestSupport.Rules).Claims);
         var oldCapture = DigestionCasStore.Capture(oldAtom.RawBytes.AsSpan());
+        // Prose the atomizer recognizes nothing in, which is still a live coarse trigger. An
+        // unregistered genre token no longer is one: it is addressed by its own words and
+        // refused by the ledger instead of costing the volume every other claim it has.
         var malformedBytes = Encoding.UTF8.GetBytes(
-            "# Synthetic\n\n**未知 1.2(B)**。free-form source。\n");
+            "# Synthetic\n\n没有任何编号抬头的自由散文。\n");
         var malformedText = Encoding.UTF8.GetString(malformedBytes);
         var ledger = IngestLedger(atomizerId, oldAtom);
         fixture.Files[RuleFixture.FixtureDigestionSourcePath] = malformedText;

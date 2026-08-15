@@ -36,6 +36,7 @@ internal static partial class WmAtomizer
         var scaffold = MarkdownAstAtomizer.Atomize(
             bytes,
             Identify,
+            static () => GenreRegistryCheck.NoGenreRegistry,
             identifyHeading: heading => IdentifyHeading(heading, rules));
         var raw = bytes.ToArray();
         var text = StrictUtf8.GetString(raw);
@@ -74,7 +75,10 @@ internal static partial class WmAtomizer
                 $"WM atom spans stop at byte {cursor} before source byte {raw.Length}");
         }
 
-        return new AtomizedTheoryDocument(claims.ToImmutableArray(), slices.MoveToImmutable());
+        return new AtomizedTheoryDocument(
+            claims.ToImmutableArray(),
+            slices.MoveToImmutable(),
+            GenreRegistryCheck.NoGenreRegistry);
     }
 
     private static string? Identify(string paragraph)
