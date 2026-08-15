@@ -1,0 +1,40 @@
+### 定理 36.29（商空间收缩刚性）
+
+设 \(M\subseteq\mathscr H\) 闭，\(x\in\mathscr H\)，且有界线性算子：
+
+\[
+R:\mathscr H\to\mathscr H
+\]
+
+满足：
+
+\[
+R(M)\subseteq M,
+\]
+
+\[
+Rx-x\in M.
+\]
+
+令：
+
+\[
+\overline R:\mathscr H/M\to\mathscr H/M
+\]
+
+为诱导算子。若：
+
+\[
+\boxed{
+\|\overline R\|<1,
+}
+\]
+
+则：
+
+\[
+\boxed{
+x\in M.
+}
+\]
+

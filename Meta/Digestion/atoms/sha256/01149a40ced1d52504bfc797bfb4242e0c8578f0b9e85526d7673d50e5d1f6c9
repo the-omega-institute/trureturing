@@ -1,0 +1,16 @@
+### 定义 37.20（极锥）
+
+设 \(C\) 为实 Hilbert 空间 \(V\) 中的闭凸锥。定义极锥：
+
+\[
+C^\circ
+=
+\{y\in V:\langle y,c\rangle\le0\ \forall c\in C\}.
+\]
+
+对偶锥为：
+
+\[
+C^\vee=-C^\circ.
+\]
+

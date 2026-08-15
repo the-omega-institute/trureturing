@@ -204,9 +204,6 @@ internal sealed class StubCliEnvironment(
     public CommandResult SyncLedger(IReadOnlyList<string> arguments) =>
         new(false, string.Empty, "ledger sync is not configured in this fixture");
 
-    public CommandResult RecoordinateLedger(IReadOnlyList<string> arguments) =>
-        new(false, string.Empty, "ledger recoordinate is not configured in this fixture");
-
     public CommandResult CleanLanes(IReadOnlyList<string> arguments) =>
         new(false, string.Empty, "clean lanes is not configured in this fixture");
 

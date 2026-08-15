@@ -1,0 +1,24 @@
+### 原理 36.6（逆完成本体）
+
+本节把一个候选“本体”建模为 pro-object：
+
+\[
+\boxed{
+\mathbf X=(X_i,p_{ji}),
+}
+\]
+
+其中每个 \(X_i\) 是某个可表达、可计算或可观测层，而 bonding maps 记录：
+
+\[
+\text{更精细呈现}
+\longrightarrow
+\text{更粗呈现}
+\]
+
+所遗忘的信息。
+
+这里“本体”不是额外躲在 \(\mathbf X\) 背后的神秘点；它就是全部阶段及其相容关系的 pro-isomorphism 类。
+
+---
+

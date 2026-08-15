@@ -1,0 +1,16 @@
+### 定理 36.22（有限非空 cofiltered 逆极限非空）
+
+设：
+
+\[
+\mathbf S:I\to\mathbf{Set}
+\]
+
+为 cofiltered 图，并且每个 \(S_i\) 都是非空有限集合。则：
+
+\[
+\boxed{
+\varprojlim_iS_i\neq\varnothing.
+}
+\]
+

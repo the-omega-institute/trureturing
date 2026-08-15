@@ -1,0 +1,32 @@
+### 定义 37.2（观察等价）
+
+对两个状态 \(\rho,\sigma\)，定义：
+
+\[
+\boxed{
+\rho\sim_O\sigma
+\iff
+\operatorname{Tr}((\rho-\sigma)E)=0
+\quad
+\forall E\in\mathcal S_O.
+}
+\]
+
+令：
+
+\[
+N_O
+=
+\mathcal S_O^\perp
+\]
+
+为 Hilbert–Schmidt 正交余空间，则：
+
+\[
+\rho\sim_O\sigma
+\iff
+\rho-\sigma\in N_O.
+\]
+
+这只是线性不可区分关系。
+

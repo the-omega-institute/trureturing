@@ -21,8 +21,7 @@ public static partial class FrozenLedger
             catalog,
             trustedReferences,
             requireCompleteCatalog: true,
-            allowPendingReattestation: false,
-            allowPendingEnvironmentRecoordinate: false);
+            allowPendingReattestation: false);
 
     internal static FrozenLedgerValidationOutcome ValidateHistoryPrefix(
         FrozenLedgerSyntax syntax,
@@ -33,28 +32,14 @@ public static partial class FrozenLedger
             catalog,
             trustedReferences,
             requireCompleteCatalog: false,
-            allowPendingReattestation: true,
-            allowPendingEnvironmentRecoordinate: false);
-
-    internal static FrozenLedgerValidationOutcome ValidateHistoryForEnvironmentRecoordinate(
-        FrozenLedgerSyntax syntax,
-        FrozenMaterialCatalog catalog,
-        TrustedFrozenGitReferences trustedReferences) =>
-        ValidateHistory(
-            syntax,
-            catalog,
-            trustedReferences,
-            requireCompleteCatalog: false,
-            allowPendingReattestation: true,
-            allowPendingEnvironmentRecoordinate: true);
+            allowPendingReattestation: true);
 
     private static FrozenLedgerValidationOutcome ValidateHistory(
         FrozenLedgerSyntax syntax,
         FrozenMaterialCatalog catalog,
         TrustedFrozenGitReferences trustedReferences,
         bool requireCompleteCatalog,
-        bool allowPendingReattestation,
-        bool allowPendingEnvironmentRecoordinate)
+        bool allowPendingReattestation)
     {
         ArgumentNullException.ThrowIfNull(syntax);
         ArgumentNullException.ThrowIfNull(catalog);
@@ -272,11 +257,6 @@ public static partial class FrozenLedger
                     continue;
                 }
 
-                if (allowPendingEnvironmentRecoordinate)
-                {
-                    continue;
-                }
-
                 if (entry.Payload.StatementId != material.StatementId
                     || !entry.Payload.DeclarationStatementIds.SequenceEqual(
                         material.DeclarationStatementIds))
@@ -295,7 +275,7 @@ public static partial class FrozenLedger
                 {
                     throw new HistoryFinalStateException(
                         ImmutableArray.Create(material.RepoPath),
-                        $"Active module {material.RepoPath.Value} environment pins changed; run ledger-recoordinate before ledger-sync.");
+                        $"Active module {material.RepoPath.Value} environment pins changed; an accepted EnvironmentRecoordinate event is required before ledger-sync.");
                 }
 
                 throw new HistoryFinalStateException(

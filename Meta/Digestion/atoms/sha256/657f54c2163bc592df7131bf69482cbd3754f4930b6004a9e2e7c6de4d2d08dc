@@ -1,0 +1,41 @@
+### 定义 37.8（矩阵级闭合缺陷）
+
+对候选观察操作 \(\Delta\)，定义第 \(n\) 级正性缺陷：
+
+\[
+\boxed{
+\partial^{\mathrm{cp}}_{O,n}(\Delta)
+=
+\sup_{\substack{X\in M_n(\mathcal S_O)_+\\ \|X\|\le1}}
+\operatorname{dist}
+\left(
+(\operatorname{id}_n\otimes\Delta)(X),
+M_n(\mathcal S_O)_+
+\right).
+}
+\]
+
+完全正闭合要求：
+
+\[
+\partial^{\mathrm{cp}}_{O,n}(\Delta)=0
+\qquad
+\forall n.
+\]
+
+因此：
+
+\[
+\boxed{
+\partial^{\mathrm{cp}}_{O,1}=0
+\not\Rightarrow
+\partial^{\mathrm{cp}}_{O,n}=0
+\quad
+(n>1).
+}
+\]
+
+这正是“当前投影层看起来可实现”与“所有扩展层都可实现”的差别。
+
+---
+
