@@ -18,6 +18,7 @@
 -/
 
 import D5.S0.Asymptotics.EscapeProbability.PoissonDomainLimit
+import Mathlib.Data.Fintype.Card
 import Mathlib.Tactic
 
 namespace D5.S0.Asymptotics.EscapeProbability.ZeroCharacterization
