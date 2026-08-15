@@ -61,7 +61,7 @@ internal sealed class GeneralEquivariantEscapeDocument : IScribeDocumentDefiniti
                     DescribeId.Create("transitive-probability-is-a-general-corollary"),
                     DeclarationHandle.Create(
                         "D5/S0/Diagonal/Probability/GeneralEquivariantEscape."
-                        + "transitive_equivariant_escape_probability_from_general"),
+                        + "general_orbit_product_eq_frozen_transitive"),
                     H("The transitive formula is a corollary"),
                     StatementSource.FromAuthor(Disp(Seq(
                         Call("PescEq", f), Sp, Eq, Sp, D(1), Sp, Minus, Sp,
