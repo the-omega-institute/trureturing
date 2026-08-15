@@ -148,10 +148,6 @@ internal sealed class BackfillInventoryDocument
         ImmutableArray<DigestionLedgerSource> sources) =>
         new(root, RequireTickets(), sources, receiptSyntaxes);
 
-    internal BackfillInventoryDocument WithTickets(
-        ImmutableArray<BackfillTicketReference> tickets) =>
-        new(root, tickets, RequireDigestionSources(), receiptSyntaxes);
-
     internal ImmutableArray<string> RequireReferencedGids()
     {
         var gids = ImmutableArray.CreateBuilder<string>();

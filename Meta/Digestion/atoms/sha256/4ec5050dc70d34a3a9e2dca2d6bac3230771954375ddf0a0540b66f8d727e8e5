@@ -1,0 +1,26 @@
+### 定义 36.21（本体版 RH）
+
+定义：
+
+\[
+\boxed{
+\mathrm{RH}_{\mathrm{ont}}
+\iff
+\operatorname{Sect}_{\mathrm{off}}
+(\mathfrak D_{\mathrm{RH}})
+=
+\varnothing.
+}
+\]
+
+即不存在全局相容的非零离线缺陷 section。
+
+标准 RH 只直接断言复平面图中不存在离线非平凡零点。本体版 RH 若要与标准 RH 等价，必须证明：
+
+1. 任意标准离线零点可唯一提升为全局缺陷 section；
+2. 任意全局缺陷 section 在复平面图中产生标准离线零点。
+
+这两个提升／下降定理目前不是既有结果，必须作为研究目标，而不能直接假设。
+
+---
+

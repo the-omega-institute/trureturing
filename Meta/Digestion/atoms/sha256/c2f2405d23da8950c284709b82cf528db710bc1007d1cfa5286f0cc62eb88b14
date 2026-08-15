@@ -1,0 +1,40 @@
+### 定理 36.26（最小作用路径）
+
+在所有绝对连续路径：
+
+\[
+\gamma:[0,1]\to\mathscr H,
+\qquad
+\gamma(0)\in M,
+\quad
+\gamma(1)=x
+\]
+
+中，作用量：
+
+\[
+\mathcal S[\gamma]
+=
+\frac12\int_0^1\|\dot\gamma(t)\|^2dt
+\]
+
+的唯一最小值为：
+
+\[
+\boxed{
+\mathcal S_{\min}
+=
+\frac12\|r\|^2.
+}
+\]
+
+唯一极小路径为：
+
+\[
+\boxed{
+\gamma_\ast(t)
+=
+P_Mx+tr.
+}
+\]
+

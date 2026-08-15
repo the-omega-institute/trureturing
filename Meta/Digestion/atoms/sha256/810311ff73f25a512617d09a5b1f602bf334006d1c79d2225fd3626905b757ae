@@ -1,0 +1,32 @@
+### 定理 37.31（side-flip 正性刚性）
+
+设线性子空间：
+
+\[
+W\subseteq\mathbb C^2
+\]
+
+满足：
+
+\[
+Z_\rho W\subseteq W,
+\]
+
+并且：
+
+\[
+q_J(v)\ge0
+\qquad
+\forall v\in W.
+\]
+
+则：
+
+\[
+\boxed{
+q_J(v)=0
+\qquad
+\forall v\in W.
+}
+\]
+

@@ -1,0 +1,38 @@
+### 推论 36.23（纯有限离散 refinement 不会自动消灭反例）
+
+设每个阶段都有稳定的离线候选集合：
+
+\[
+O_i\subseteq D_i,
+\]
+
+满足：
+
+\[
+O_i\neq\varnothing,
+\]
+
+且 transition 将 \(O_j\) 映入 \(O_i\)。若所有 \(O_i\) 有限且索引图 cofiltered，则：
+
+\[
+\boxed{
+\varprojlim_iO_i\neq\varnothing.
+}
+\]
+
+因此：
+
+\[
+\boxed{
+\text{如果每个有限离散概念层都允许某个离线候选，
+且这些候选形成真正的有限 cofiltered 逆系统，
+那么逆完成反而保证存在全局离线 section。}
+}
+\]
+
+这是本节最重要的反直觉结论之一。
+
+仅仅把所有概念视为有限离散投影，不能自动证明 RH；在上述条件下，它甚至支持全局 section 的存在。
+
+---
+

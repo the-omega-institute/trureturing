@@ -77,19 +77,6 @@ public static class DagLedgerLoader
     public static DagLedgerFilesLoadOutcome LoadFiles(IEnumerable<RepositoryFile> files) =>
         FrozenAcceptedEventLoader.LoadFiles(files);
 
-    public static string? ValidateClosedDag(ImmutableArray<DagLedgerFileEvent> events)
-    {
-        var genesis = events.Where(static item => item.EventType == "Genesis").ToArray();
-        if (genesis.Length != 1)
-        {
-            return "Content-addressed frozen ledger must contain exactly one Genesis.";
-        }
-
-        return TryOrderClosedDag(events, ImmutableArray<string>.Empty, out _)
-            ? null
-            : "Frozen event files do not form a closed dependency DAG.";
-    }
-
     public static bool TryOrderClosedDag(
         ImmutableArray<DagLedgerFileEvent> events,
         ImmutableArray<string> preferredIdentityPrefix,
