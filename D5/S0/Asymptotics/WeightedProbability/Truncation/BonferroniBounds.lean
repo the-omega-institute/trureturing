@@ -1,6 +1,6 @@
-/- GID: D5/S0/Asymptotics/WeightedProbability/BonferroniTruncation
+/- GID: D5/S0/Asymptotics/WeightedProbability/Truncation/BonferroniBounds
    generality: G
-   mirror-B: D5/B/S0/Asymptotics/WeightedProbability/BonferroniTruncation
+   mirror-B: D5/B/S0/Asymptotics/WeightedProbability/Truncation/BonferroniBounds
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    digest: Every alternating capture truncation bounds escape according to its parity. -/
@@ -21,7 +21,7 @@ import Mathlib.Tactic
 
 open scoped BigOperators
 
-namespace D5.S0.Asymptotics.WeightedProbability.BonferroniTruncation
+namespace D5.S0.Asymptotics.WeightedProbability.Truncation.BonferroniBounds
 
 open FiniteProductCapture
 open FiniteProductSetCapture
@@ -178,4 +178,4 @@ theorem escape_bonferroni_truncation
 
 end
 
-end D5.S0.Asymptotics.WeightedProbability.BonferroniTruncation
+end D5.S0.Asymptotics.WeightedProbability.Truncation.BonferroniBounds

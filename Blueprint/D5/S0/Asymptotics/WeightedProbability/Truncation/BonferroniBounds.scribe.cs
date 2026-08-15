@@ -2,9 +2,9 @@ using static StrataLint.Scribe.DefinitionDsl;
 using static StrataLint.Scribe.FormulaDsl;
 using F = StrataLint.Scribe.FormulaDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S0.Asymptotics.WeightedProbability;
+namespace StrataLint.Scribe.Blueprint.D5.S0.Asymptotics.WeightedProbability.Truncation;
 
-internal sealed class BonferroniTruncationDocument : IScribeDocumentDefinition
+internal sealed class BonferroniBoundsDocument : IScribeDocumentDefinition
 {
     private static readonly LibraryNoteRef Galambos1977 =
         LibraryNoteRef.Create("D5/L/Diagonal/galambos1977bonferroni");
@@ -37,7 +37,7 @@ internal sealed class BonferroniTruncationDocument : IScribeDocumentDefinition
                 Describe.Lean(
                     DescribeId.Create("arbitrary-order-escape-bonferroni-truncation"),
                     DeclarationHandle.Create(
-                        "D5/S0/Asymptotics/WeightedProbability/BonferroniTruncation."
+                        "D5/S0/Asymptotics/WeightedProbability/Truncation/BonferroniBounds."
                         + "escape_bonferroni_truncation"),
                     H("Alternating truncations bracket escape"),
                     StatementSource.FromAuthor(Disp(Seq(
