@@ -39,11 +39,11 @@ internal sealed class ReachabilityInvariantDocument : IScribeDocumentDefinition
                 DescribeRole.Theorem))));
 
     private static Formula Derivable(Formula word) =>
-        Seq(Operatorname, Grp(F.Id("Miu.Derivable")), Open, word, Close);
+        Seq(Operatorname, Grp(F.Id("Derivable")), Open, word, Close);
 
     private static Formula ICountModThree(Formula word) =>
         new Formula.Modulo(
-            Seq(F.Id("count_I"), Open, word, Close),
+            Seq(F.Id("countI"), Open, word, Close),
             D(3));
 
     private static Formula InvariantClausesFormula()
