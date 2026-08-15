@@ -1,5 +1,5 @@
 /- GID: D5/S1/Digit/PrimeAxis/FiniteDescriptionPZGCode
-   generality: G
+   generality: I
    mirror-B: D5/B/S1/Digit/PrimeAxis/FiniteDescriptionPZGCode
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
