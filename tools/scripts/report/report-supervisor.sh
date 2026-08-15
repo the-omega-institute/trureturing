@@ -58,7 +58,17 @@ fi
 MAX_CONCURRENCY="${STRATALINT_LEAN_MAX_CONCURRENCY:-5}"
 [[ "$MAX_CONCURRENCY" =~ ^[1-9][0-9]*$ && "$MAX_CONCURRENCY" -le 64 ]] \
   || { echo "report-supervisor: STRATALINT_LEAN_MAX_CONCURRENCY must be 1..64" >&2; exit 2; }
-LOCK_TIMEOUT_SECONDS="${STRATALINT_LOCK_TIMEOUT_SECONDS:-900}"
+# 等槽者必须熬得过一个**合法**的持槽者,故此默认值不得小于 BUILD_TIMEOUT_SECONDS。
+# 此前是 900s(15 分钟),而持槽者合法可持有 7200s(2 小时),差 8 倍——于是一次正常的长构建
+# 就让所有并发等待者判红。2026-08-15 实测:持槽 24m24s,等待中的 `make preflight` 在 15 分钟
+# 处以 `timed out waiting for a Lean slot` 判红,判词读上去像等待者自己的问题。
+# 多 worktree 并行是本仓常态(第16条),这不是罕见路径。不变量由
+# WaiterBudgetOutlastsALegitimateHolder 机器守卫。
+#
+# 代价(如实记):真死锁的暴露时间因此由 15 分钟变为 2 小时。缓解是 reclaim_stale_lock
+# 对死掉的持槽者立即回收,而活着的持槽者本就是合法的。剩下的饥饿(mkdir 抢占自旋而非
+# FIFO,先到者可被后到者反复抢先)是 #1910 的另一半,本改动不假装修了它。
+LOCK_TIMEOUT_SECONDS="${STRATALINT_LOCK_TIMEOUT_SECONDS:-7200}"
 [[ "$LOCK_TIMEOUT_SECONDS" =~ ^[1-9][0-9]*$ && "$LOCK_TIMEOUT_SECONDS" -le 86400 ]] \
   || { echo "report-supervisor: STRATALINT_LOCK_TIMEOUT_SECONDS must be 1..86400" >&2; exit 2; }
 # Wall-clock budget for the worker build itself (#403): a build that hangs while

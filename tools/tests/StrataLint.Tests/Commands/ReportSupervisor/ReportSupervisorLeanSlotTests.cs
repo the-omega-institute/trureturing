@@ -70,4 +70,45 @@ public sealed class ReportSupervisorLeanSlotTests
             metrics,
             metric => metric.GetProperty("concurrency_count").GetInt32() > 1);
     }
+    // 等槽者必须熬得过一个**合法**的持槽者,否则「合法持有」就等于「让别人红」。
+    //
+    // 2026-08-15 实测该不自洽的代价:LOCK_TIMEOUT_SECONDS 默认 900s(15 分钟)而
+    // BUILD_TIMEOUT_SECONDS 默认 7200s(2 小时),差 8 倍。一次持槽 24m24s 的正常构建
+    // 直接把等待中的 `make preflight` 判红:
+    //     report-supervisor: timed out waiting for a Lean slot
+    //     report-supervisor: slot-1.lock holder pid=94189 ... held_for=24m24s
+    //     FKST_LOCAL_ITERATION_RESULT:v2:UNKNOWN:UNKNOWN
+    // 判词说「timed out」,读上去像等待者自己的问题,实则是两个预算的差额造成的。
+    // 多 worktree 并行是本仓常态(第16条),所以这不是罕见路径。
+    //
+    // 钉的是**不变量**而不是某个数:谁改了任一默认值,只要把等待预算压到持有预算之下,
+    // 这条就红。剩余的饥饿问题(mkdir 抢占自旋而非 FIFO)是 #1910 的另一半,本条不假装修了它。
+    [Fact]
+    public void WaiterBudgetOutlastsALegitimateHolder()
+    {
+        var source = File.ReadAllText(SupervisorScriptPath());
+        var wait = DefaultOf(source, "STRATALINT_LOCK_TIMEOUT_SECONDS");
+        var hold = DefaultOf(source, "STRATALINT_BUILD_TIMEOUT_SECONDS");
+
+        Assert.True(
+            wait >= hold,
+            $"a waiter gives up after {wait}s while a holder may legitimately hold {hold}s; "
+            + "one legitimate long build would then red every concurrent waiter");
+    }
+
+    private static int DefaultOf(string source, string name)
+    {
+        var match = System.Text.RegularExpressions.Regex.Match(
+            source,
+            @"\$\{" + System.Text.RegularExpressions.Regex.Escape(name) + @":-(?<value>[0-9]+)\}");
+        Assert.True(match.Success, $"{name} has no literal default in the supervisor script");
+        return int.Parse(
+            match.Groups["value"].Value,
+            System.Globalization.CultureInfo.InvariantCulture);
+    }
+
+    private static string SupervisorScriptPath() =>
+        Path.Combine(
+            TestRepositoryLayout.FindRoot(), "tools", "scripts", "report", "report-supervisor.sh");
+
 }
