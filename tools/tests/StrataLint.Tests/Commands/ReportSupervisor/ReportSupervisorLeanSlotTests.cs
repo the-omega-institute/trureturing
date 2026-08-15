@@ -77,7 +77,6 @@ public sealed class ReportSupervisorLeanSlotTests
     // 直接把等待中的 `make preflight` 判红:
     //     report-supervisor: timed out waiting for a Lean slot
     //     report-supervisor: slot-1.lock holder pid=94189 ... held_for=24m24s
-    //     FKST_LOCAL_ITERATION_RESULT:v2:UNKNOWN:UNKNOWN
     // 判词说「timed out」,读上去像等待者自己的问题,实则是两个预算的差额造成的。
     // 多 worktree 并行是本仓常态(第16条),所以这不是罕见路径。
     //
