@@ -74,18 +74,49 @@ public sealed class PlaybookWorkflowScriptTests
         Assert.Contains("unresolved_subitems=[]", error, StringComparison.Ordinal);
     }
 
-    [Fact]
-    public void CanonicalPlaybookNeverMergesBranches()
+    [Theory]
+    [InlineData("deliver-check")]
+    [InlineData("receipts-stage")]
+    [InlineData("deposit")]
+    [InlineData("cover")]
+    public void CanonicalPlaybookVerbNeverExecutesBranchMerge(string command)
     {
-        var script = File.ReadAllText(
-            Path.Combine(TestRepositoryLayout.FindRoot(), ScriptPath));
-        const string mergeCommandPattern = @"(?m)^\s*git\b[^\r\n]*?(?<!\S)merge(?:\s|$)";
+        if (OperatingSystem.IsWindows()) return;
 
-        Assert.DoesNotMatch(mergeCommandPattern, script);
-        Assert.Matches(mergeCommandPattern, "git -C \"$dir\" --no-pager merge --no-edit base\n");
-        Assert.DoesNotMatch(mergeCommandPattern, "git merge-base --is-ancestor base HEAD\n");
-        Assert.DoesNotContain("derived-refresh", script, StringComparison.Ordinal);
+        if (command is "deposit" or "cover")
+        {
+            using var fixture = new DepositCoverWorkflowScriptTests.TransactionFixture();
+            fixture.ChangeFormalization();
+            if (command == "cover")
+            {
+                var deposit = fixture.Run("deposit");
+                Assert.True(deposit.ExitCode == 0, Diagnostics(deposit));
+                fixture.ClearCalls();
+            }
+
+            var result = fixture.Run(command);
+
+            Assert.True(result.ExitCode == 0, Diagnostics(result));
+            Assert.DoesNotContain(
+                fixture.Calls(),
+                call => call.StartsWith("git-branch-merge:", StringComparison.Ordinal));
+            return;
+        }
+
+        using (var fixture = new PlaybookFixture())
+        {
+            var result = fixture.Run(command, "synthetic-base");
+
+            Assert.True(result.ExitCode == 0, Diagnostics(result));
+            Assert.DoesNotContain(
+                fixture.Calls(),
+                call => call.StartsWith("git-branch-merge:", StringComparison.Ordinal));
+        }
     }
+
+    private static string Diagnostics(ProcessOutput result) =>
+        "stdout:\n" + Encoding.UTF8.GetString(result.StandardOutput)
+        + "\nstderr:\n" + Encoding.UTF8.GetString(result.StandardError);
 
     private sealed class PlaybookFixture : IDisposable
     {
@@ -103,7 +134,38 @@ public sealed class PlaybookWorkflowScriptTests
             Directory.CreateDirectory(Path.GetDirectoryName(scriptTarget)!);
             File.Copy(Path.Combine(root, ScriptPath), scriptTarget);
             WriteExecutable("make", "printf 'make:%s\\n' \"$*\" >> \"$PLAYBOOK_TEST_CALLS\"");
-            WriteExecutable("git", "printf 'git:%s\\n' \"$*\" >> \"$PLAYBOOK_TEST_CALLS\"");
+            WriteExecutable(
+                "git",
+                """
+                arguments=("$@")
+                index=0
+                while [[ $index -lt ${#arguments[@]} ]]; do
+                  token=${arguments[index]}
+                  case "$token" in
+                    -C|-c|--git-dir|--work-tree|--namespace|--super-prefix|--config-env)
+                      index=$((index + 2))
+                      ;;
+                    --git-dir=*|--work-tree=*|--namespace=*|--super-prefix=*|--config-env=*)
+                      index=$((index + 1))
+                      ;;
+                    --no-pager|--paginate|--bare|--literal-pathspecs|--no-literal-pathspecs|--glob-pathspecs|--noglob-pathspecs|--icase-pathspecs)
+                      index=$((index + 1))
+                      ;;
+                    --)
+                      index=$((index + 1))
+                      break
+                      ;;
+                    -*) index=$((index + 1)) ;;
+                    *) break ;;
+                  esac
+                done
+                subcommand=${arguments[index]:-}
+                if [[ $subcommand == merge ]]; then
+                  printf 'git-branch-merge:%s\n' "${arguments[*]}" >> "$PLAYBOOK_TEST_CALLS"
+                  exit 97
+                fi
+                printf 'git:%s\n' "${arguments[*]}" >> "$PLAYBOOK_TEST_CALLS"
+                """);
             WriteExecutable(
                 "dotnet",
                 "args=\"$*\"; command=${args##* -- }; printf 'dotnet:%s\\n' \"$command\" >> \"$PLAYBOOK_TEST_CALLS\"; "

@@ -224,8 +224,10 @@ public sealed partial class MakeWorkflowTests
     }
 
     [Theory]
+    [InlineData("candidate-failed")]
     [InlineData("command-failed")]
     [InlineData("empty")]
+    [InlineData("zero")]
     [InlineData("vacuous")]
     public void PreflightRejectsInvalidMergeBaseBeforeExpensiveStages(string mergeBaseMode)
     {
@@ -245,8 +247,10 @@ public sealed partial class MakeWorkflowTests
     }
 
     [Theory]
+    [InlineData("candidate-failed")]
     [InlineData("command-failed")]
     [InlineData("empty")]
+    [InlineData("zero")]
     [InlineData("vacuous")]
     public void LocalHarnessGateRejectsInvalidMergeBase(string mergeBaseMode)
     {
@@ -276,9 +280,9 @@ public sealed partial class MakeWorkflowTests
     }
 
     [Theory]
-    [InlineData(GateForkSha, false)]
+    [InlineData(GateBaseTipSha, false)]
     [InlineData("base", true)]
-    public void LocalHarnessGateResolvesBaseToForkAndOnlyObservesSymbolicRefs(
+    public void LocalHarnessGateResolvesSymbolicAndFullOidBaseTipsToFork(
         string baseArgument,
         bool expectAdvanceAdvisory)
     {
@@ -352,6 +356,7 @@ public sealed partial class MakeWorkflowTests
             "perf_make_spool_dir() { mktemp -d; }\n"
                 + "perf_capture_event() { :; }\n"
                 + "perf_flush_events() { :; }\n");
+        CopyAdmissionBaseLibraryIfPresent(candidateRoot);
         WriteInvalidMergeBaseGitShim(binDirectory, candidateRoot);
         WriteExecutable(
             Path.Combine(binDirectory, "dotnet"),
@@ -386,16 +391,26 @@ public sealed partial class MakeWorkflowTests
     {
         var reason = mergeBaseMode switch
         {
+            "candidate-failed" => "candidate-resolution-failed",
             "command-failed" => "merge-base-command-failed",
             "empty" => "merge-base-empty",
+            "zero" => "merge-base-empty",
             "vacuous" => "vacuous",
             "base-ref-failed" => "base-tip-resolution-failed",
             _ => throw new ArgumentOutOfRangeException(nameof(mergeBaseMode)),
         };
-        var resolvedBase = mergeBaseMode == "vacuous" ? GateCandidateSha : "empty";
-        var baseTip = mergeBaseMode == "base-ref-failed" ? "empty" : GateBaseTipSha;
+        var candidate = mergeBaseMode == "candidate-failed" ? "empty" : GateCandidateSha;
+        var resolvedBase = mergeBaseMode switch
+        {
+            "vacuous" => GateCandidateSha,
+            "zero" => "0000000000000000000000000000000000000000",
+            _ => "empty",
+        };
+        var baseTip = mergeBaseMode is "base-ref-failed" or "candidate-failed"
+            ? "empty"
+            : GateBaseTipSha;
         return $"BASE_RESOLUTION_FAILED reason={reason} BASE_REF={GateBaseTipSha} "
-            + $"BASE_TIP_SHA={baseTip} CANDIDATE_SHA={GateCandidateSha} BASE_SHA={resolvedBase}";
+            + $"BASE_TIP_SHA={baseTip} CANDIDATE_SHA={candidate} BASE_SHA={resolvedBase}";
     }
 
     [System.Runtime.Versioning.UnsupportedOSPlatform("windows")]
@@ -407,7 +422,10 @@ public sealed partial class MakeWorkflowTests
             if [[ "${1:-}" == -C ]]; then shift 2; fi
             case "$*" in
               "rev-parse --show-toplevel") printf '%s\n' '{{candidateRoot}}' ;;
-              "rev-parse --verify HEAD"|"rev-parse --verify HEAD^{commit}") printf '%s\n' '{{GateCandidateSha}}' ;;
+              "rev-parse --verify HEAD"|"rev-parse --verify HEAD^{commit}")
+                [[ "$MERGE_BASE_MODE" != candidate-failed ]] || exit 1
+                printf '%s\n' '{{GateCandidateSha}}'
+                ;;
               "rev-parse --verify {{GateBaseTipSha}}^{commit}")
                 [[ "$MERGE_BASE_MODE" != base-ref-failed ]] || exit 1
                 printf '%s\n' '{{GateBaseTipSha}}'
@@ -416,6 +434,7 @@ public sealed partial class MakeWorkflowTests
                 case "$MERGE_BASE_MODE" in
                   command-failed) exit 1 ;;
                   empty) exit 0 ;;
+                  zero) printf '%040d\n' 0 ;;
                   vacuous) printf '%s\n' '{{GateCandidateSha}}' ;;
                   *) exit 89 ;;
                 esac
@@ -448,10 +467,10 @@ public sealed partial class MakeWorkflowTests
                     printf '%s\n' '{{GateBaseTipSha}}'
                   fi
                 else
-                  printf '%s\n' '{{GateForkSha}}'
+                  printf '%s\n' '{{GateBaseTipSha}}'
                 fi
                 ;;
-              "merge-base {{GateBaseTipSha}} {{GateCandidateSha}}"|"merge-base {{GateForkSha}} {{GateCandidateSha}}") printf '%s\n' '{{GateForkSha}}' ;;
+              "merge-base {{GateBaseTipSha}} {{GateCandidateSha}}") printf '%s\n' '{{GateForkSha}}' ;;
               *) echo "unexpected git invocation: $*" >&2; exit 90 ;;
             esac
             """);
@@ -540,6 +559,7 @@ public sealed partial class MakeWorkflowTests
     [System.Runtime.Versioning.UnsupportedOSPlatform("windows")]
     private static void WriteGateOutcomeReportPair(string candidateRoot)
     {
+        CopyAdmissionBaseLibraryIfPresent(candidateRoot);
         var gateDirectory = Path.Combine(candidateRoot, ".github", "scripts");
         Directory.CreateDirectory(gateDirectory);
         File.Copy(
@@ -573,5 +593,15 @@ public sealed partial class MakeWorkflowTests
             mkdir -p "$(dirname "$candidate_output")"
             printf '{}\n' > "$candidate_output"
             """);
+    }
+
+    private static void CopyAdmissionBaseLibraryIfPresent(string candidateRoot)
+    {
+        var source = Path.Combine(TestRepositoryLayout.FindRoot(), AdmissionBaseScriptPath);
+        if (!File.Exists(source)) return;
+
+        var target = Path.Combine(candidateRoot, AdmissionBaseScriptPath);
+        Directory.CreateDirectory(Path.GetDirectoryName(target)!);
+        File.Copy(source, target, overwrite: true);
     }
 }
