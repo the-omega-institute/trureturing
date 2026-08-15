@@ -248,7 +248,7 @@ public sealed class WorktreeCacheStrategyTests
     }
 
     [Fact]
-    public void MakeWorktreeUsesDestWithoutRewritingTheToolPath()
+    public void WorktreeToolingKeepsItsPathContractAndNeverWalksTheCacheTreePerFile()
     {
         var root = TestRepositoryLayout.FindRoot();
         var makefile = File.ReadAllText(Path.Combine(root, "Makefile"));
@@ -260,16 +260,14 @@ public sealed class WorktreeCacheStrategyTests
         Assert.DoesNotContain("$(origin PATH)", makefile, StringComparison.Ordinal);
         Assert.DoesNotContain("export PATH=", init, StringComparison.Ordinal);
         Assert.DoesNotContain("export PATH=", clean, StringComparison.Ordinal);
-    }
 
-    [Fact]
-    public void NoProgramWalksTheCacheTreeWithPerFileClonefile()
-    {
-        var root = TestRepositoryLayout.FindRoot();
-        var scanned = new[] { "tools", ".github" }
-            .Select(directory => Path.Combine(root, directory))
-            .Where(Directory.Exists)
-            .SelectMany(directory => Directory.EnumerateFiles(directory, "*", SearchOption.AllDirectories))
+        // A per-file clonefile walk over .lake costs one system call per entry: 197.5s
+        // against 3.6s for the single directory-level clonefile(2). Assembled rather than
+        // written out so this guard is not its own counterexample.
+        var shellForm = "cp" + " -c";
+        var argumentForm = "\"-c\"" + ", " + "\"-R\"";
+        var scanned = Directory
+            .EnumerateFiles(Path.Combine(root, "tools"), "*", SearchOption.AllDirectories)
             .Where(static path => !path.Contains($"{Path.DirectorySeparatorChar}bin{Path.DirectorySeparatorChar}", StringComparison.Ordinal))
             .Where(static path => !path.Contains($"{Path.DirectorySeparatorChar}obj{Path.DirectorySeparatorChar}", StringComparison.Ordinal))
             .Where(static path => Path.GetExtension(path) is ".cs" or ".sh" or ".yml" or ".yaml" or ".md")
@@ -277,18 +275,12 @@ public sealed class WorktreeCacheStrategyTests
             .Append(Path.Combine(root, "README.md"))
             .ToArray();
         Assert.NotEmpty(scanned);
-
-        // Assembled rather than written out so this guard is not its own counterexample.
-        var shellForm = "cp" + " -c";
-        var argumentForm = "\"-c\"" + ", " + "\"-R\"";
-        var offenders = scanned
+        Assert.Empty(scanned
             .Where(path => File.ReadAllText(path) is var text
                 && (text.Contains(shellForm, StringComparison.Ordinal)
                     || text.Contains(argumentForm, StringComparison.Ordinal)))
             .Select(path => Path.GetRelativePath(root, path))
-            .ToArray();
-
-        Assert.Empty(offenders);
+            .ToArray());
     }
 
     private static void InitializeRepository(string root)
