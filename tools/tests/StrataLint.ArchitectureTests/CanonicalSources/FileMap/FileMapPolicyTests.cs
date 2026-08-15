@@ -258,6 +258,53 @@ public sealed partial class FileMapPolicyTests
             "fixture-root"));
     }
 
+    [Theory]
+    [InlineData("ledger")]
+    [InlineData("truth")]
+    public void DanglingLedgerAndTruthActorsAreRejectedByTheRedFixture(string kind)
+    {
+        var manifest = Parse(Entry(
+            $"Synthetic/{kind}.txt",
+            kind,
+            "none",
+            "MissingConsumer",
+            "MissingVerifier"));
+
+        var findings = FileMapPolicy.InspectDeclaredActors(
+            manifest,
+            new HashSet<string>(StringComparer.Ordinal),
+            "fixture-root");
+
+        Assert.Collection(
+            findings,
+            finding =>
+            {
+                Assert.Equal("FILEMAP-ACTOR-DANGLING", finding.Code);
+                Assert.Contains("consumed_by names MissingConsumer", finding.Message, StringComparison.Ordinal);
+            },
+            finding =>
+            {
+                Assert.Equal("FILEMAP-ACTOR-DANGLING", finding.Code);
+                Assert.Contains("verified_by names MissingVerifier", finding.Message, StringComparison.Ordinal);
+            });
+    }
+
+    [Fact]
+    public void LedgerVerifierNamedByARuleIdIsAcceptedByTheGreenFixture()
+    {
+        var manifest = Parse(Entry(
+            "Synthetic/ledger.md",
+            "ledger",
+            "none",
+            "reader",
+            "SL-008"));
+
+        Assert.Empty(FileMapPolicy.InspectDeclaredActors(
+            manifest,
+            new HashSet<string>(StringComparer.Ordinal),
+            "fixture-root"));
+    }
+
     [Fact]
     public void RegistryAndTrackedRootDriftIsRejectedByTheRedFixture()
     {
