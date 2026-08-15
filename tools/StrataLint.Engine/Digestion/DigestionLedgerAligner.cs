@@ -39,12 +39,20 @@ internal sealed record StructuredResidualAdmission(
     string SuggestedAtomId,
     DigestionStatus ProjectedStatus);
 
+internal sealed record DigestionSourceClausePlan(
+    string SourceId,
+    DigestionAtom Parent,
+    DigestionClausePlan Plan);
+
 internal sealed record DigestionIngestFallback(string SourceId, string Reason);
 
 internal sealed record DigestionLedgerAlignment(
     ImmutableDictionary<string, DigestionReceiptAlignment> EntryAlignments,
     ImmutableDictionary<string, DigestionAtom> MatchedAtoms,
     ImmutableArray<StructuredResidualAdmission> Residual,
+    ImmutableArray<DigestionSourceClausePlan> ClausePlans,
+    ImmutableHashSet<string> ClausePlanChainParents,
+    ImmutableHashSet<string> VerifiedClausePlanParents,
     ImmutableArray<DigestionIngestFallback> Fallbacks,
     ImmutableArray<string> ActualStale,
     ImmutableArray<string> Findings)
@@ -57,7 +65,7 @@ internal sealed record DigestionLedgerAlignment(
     internal DigestionAtom? AtomFor(string atomId) => MatchedAtoms.GetValueOrDefault(atomId);
 }
 
-internal static class DigestionLedgerAligner
+internal static partial class DigestionLedgerAligner
 {
     internal static DigestionLedgerAlignment Evaluate(
         BackfillInventoryDocument document,
@@ -94,6 +102,9 @@ internal static class DigestionLedgerAligner
             StringComparer.Ordinal);
         var matchedAtoms = ImmutableDictionary.CreateBuilder<string, DigestionAtom>(StringComparer.Ordinal);
         var residual = ImmutableArray.CreateBuilder<StructuredResidualAdmission>();
+        var clausePlans = ImmutableArray.CreateBuilder<DigestionSourceClausePlan>();
+        var clausePlanChainParents = ImmutableHashSet.CreateBuilder<string>(StringComparer.Ordinal);
+        var verifiedClausePlanParents = ImmutableHashSet.CreateBuilder<string>(StringComparer.Ordinal);
         var fallbacks = ImmutableArray.CreateBuilder<DigestionIngestFallback>();
         var actualStale = ImmutableArray.CreateBuilder<string>();
         var findings = ImmutableArray.CreateBuilder<string>();
@@ -179,12 +190,17 @@ internal static class DigestionLedgerAligner
                 }
 
                 var registeredAtomizer = AtomizerRegistry.IsRegistered(source.Atomizer);
+                var hasClausePlanChains = registeredAtomizer
+                    && AtomizerRegistry.EmitsClausePlans(source.Atomizer)
+                    && source.Entries.Any(static entry => entry.Receipts.ChainAtoms.Length > 0);
                 var coarseReplacementObligations =
                     coarseReplacementObligationsBySource.GetValueOrDefault(source.SourceId, []);
                 var unprovenCasEntries = source.Entries.Where(entry =>
                     cas.ValidAtomIds.Contains(entry.AtomId)
                     && !inheritedEntries.Contains(CanonicalEntry(entry))).ToArray();
-                if (((mode == DigestionAlignmentMode.Admission && unprovenCasEntries.Length == 0)
+                if (((mode == DigestionAlignmentMode.Admission
+                        && unprovenCasEntries.Length == 0
+                        && !hasClausePlanChains)
                         || !registeredAtomizer)
                     && coarseReplacementObligations.Length == 0)
                 {
@@ -236,7 +252,8 @@ internal static class DigestionLedgerAligner
 
                 if (mode == DigestionAlignmentMode.Admission
                     && coarseReplacementObligations.Length == 0
-                    && unprovenCasEntries.All(entry => matchedAtoms.ContainsKey(entry.AtomId)))
+                    && unprovenCasEntries.All(entry => matchedAtoms.ContainsKey(entry.AtomId))
+                    && !hasClausePlanChains)
                 {
                     return;
                 }
@@ -321,6 +338,23 @@ internal static class DigestionLedgerAligner
                     return;
                 }
 
+                foreach (var plan in atomized.ClausePlans)
+                {
+                    var parent = claims[plan.ParentAstPath];
+                    var authorityFailure = ClausePlanCasAuthorityFailure(
+                        source,
+                        parent,
+                        cas.ValidAtomIds,
+                        snapshot);
+                    if (authorityFailure is not null)
+                    {
+                        findings.Add(authorityFailure);
+                        continue;
+                    }
+
+                    clausePlans.Add(new DigestionSourceClausePlan(source.SourceId, parent, plan));
+                }
+
                 var matchedAstPaths = new HashSet<string>(StringComparer.Ordinal);
                 var sourceStale = new List<string>();
                 if (coarseReplacementObligations.Length > 0 && !claims.ContainsKey("coarse/source"))
@@ -353,26 +387,37 @@ internal static class DigestionLedgerAligner
                 foreach (var legacy in source.Entries.Where(static entry => entry.Boundary is not null))
                 {
                     if (claims.TryGetValue(legacy.AstPath, out var atom)
-                        && (atom.Fingerprints.RawSha256 == legacy.Fingerprints.RawSha256
-                            || atom.Fingerprints.NormalizedSha256
-                            == legacy.Fingerprints.NormalizedSha256))
+                        && FingerprintsMatch(atom.Fingerprints, legacy.Fingerprints))
                     {
                         matchedAstPaths.Add(atom.AstPath);
                         matchedAtoms[legacy.AtomId] = atom;
                     }
                 }
 
-                foreach (var entry in source.Entries.Where(entry => cas.ValidAtomIds.Contains(entry.AtomId)))
+                foreach (var entry in source.Entries.Where(entry =>
+                             cas.ValidAtomIds.Contains(entry.AtomId)))
                 {
                     if (claims.TryGetValue(entry.AstPath, out var atom)
-                        && (atom.Fingerprints.RawSha256 == entry.Fingerprints.RawSha256
-                            || atom.Fingerprints.NormalizedSha256 == entry.Fingerprints.NormalizedSha256))
+                        && FingerprintsMatch(atom.Fingerprints, entry.Fingerprints))
                     {
                         matchedAstPaths.Add(atom.AstPath);
                         matchedAtoms[entry.AtomId] = atom;
                         alignments[entry.AtomId] = DigestionReceiptAlignment.Seen;
                     }
                 }
+
+
+                AlignNestedChildren(
+                    source,
+                    atomized.ClausePlans,
+                    claims,
+                    cas.ValidAtomIds,
+                    snapshot,
+                    alignments,
+                    matchedAtoms,
+                    clausePlanChainParents,
+                    verifiedClausePlanParents,
+                    findings);
 
                 var registration = AtomizerRegistry.Require(source.Atomizer);
                 foreach (var atom in atomized.Claims.Where(atom => !matchedAstPaths.Contains(atom.AstPath)))
@@ -427,6 +472,9 @@ internal static class DigestionLedgerAligner
             alignments.ToImmutable(),
             matchedAtoms.ToImmutable(),
             residual.ToImmutable(),
+            clausePlans.ToImmutable(),
+            clausePlanChainParents.ToImmutable(),
+            verifiedClausePlanParents.ToImmutable(),
             fallbacks.ToImmutable(),
             actualStale.Order(StringComparer.Ordinal).ToImmutableArray(),
             findings.Order(StringComparer.Ordinal).ToImmutableArray());
@@ -579,8 +627,19 @@ internal static class DigestionLedgerAligner
             }
         }
 
+
+        var clausePlanFailure = ClausePlanIntegrityFailure(document);
+        if (clausePlanFailure is not null)
+        {
+            return clausePlanFailure;
+        }
+
         return null;
     }
+
+    internal static bool FingerprintsMatch(DigestionFingerprints left, DigestionFingerprints right) =>
+        left.RawSha256 == right.RawSha256
+        || left.NormalizedSha256 == right.NormalizedSha256;
 
     private static bool EntryIdentityEqual(
         DigestionLedgerEntry candidate,

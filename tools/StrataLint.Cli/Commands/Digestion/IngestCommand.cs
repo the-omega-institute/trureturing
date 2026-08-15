@@ -4,10 +4,8 @@ using StrataLint.Engine;
 
 namespace StrataLint.Cli;
 
-internal static class IngestCommand
+internal static partial class IngestCommand
 {
-    internal sealed record LedgerUpdate(string Path, ImmutableArray<byte>? Bytes);
-
     internal static CommandResult Run(
         string repositoryRoot,
         IRepositoryGateway repository,
@@ -361,34 +359,6 @@ internal static class IngestCommand
                 $"directory ledger atom {sourceId}/{atomId} does not have exactly one canonical path");
     }
 
-    private static string NewAtomPath(DigestionLedgerEntry entry) =>
-        $"{BackfillInventoryLoader.RootPath}{entry.SourceId}/"
-        + $"{DigestionStatusNames.Migration(entry.ProjectedStatus.Migration)}-"
-        + $"{DigestionStatusNames.Truth(entry.ProjectedStatus.Truth)}/{entry.AtomId}.yaml";
-
-    internal static ImmutableArray<LedgerUpdate> LedgerUpdates(
-        RawRepositorySnapshot current,
-        RawRepositorySnapshot final)
-    {
-        var currentEntries = current.Entries.ToDictionary(static entry => entry.Path, StringComparer.Ordinal);
-        var finalEntries = final.Entries.ToDictionary(static entry => entry.Path, StringComparer.Ordinal);
-        var updates = final.Entries
-            .Where(static entry => entry.Path == BackfillInventoryLoader.RelativePath
-                || BackfillInventoryLoader.IsCanonicalPath(entry.Path))
-            .Where(entry => !currentEntries.TryGetValue(entry.Path, out var existing)
-                || !existing.Bytes.AsSpan().SequenceEqual(entry.Bytes.AsSpan()))
-            .Select(static entry => new LedgerUpdate(entry.Path, entry.Bytes))
-            .Concat(current.Entries
-                .Where(static entry => entry.Path == BackfillInventoryLoader.RelativePath
-                    || BackfillInventoryLoader.IsCanonicalPath(entry.Path))
-                .Where(entry => !finalEntries.ContainsKey(entry.Path))
-                .Select(static entry => new LedgerUpdate(entry.Path, null)))
-            .OrderBy(static update => update.Bytes is null ? 1 : 0)
-            .ThenBy(static update => update.Path, StringComparer.Ordinal)
-            .ToImmutableArray();
-        return updates;
-    }
-
     internal static void ApplyLedgerUpdatesAtomically(
         string repositoryRoot,
         RawRepositorySnapshot current,
@@ -430,7 +400,9 @@ internal static class IngestCommand
         var touched = new List<string>(updates.Length);
         try
         {
-            foreach (var update in updates)
+            foreach (var update in updates
+                         .OrderBy(static update => update.DurabilityOrder)
+                         .ThenBy(static update => update.Path, StringComparer.Ordinal))
             {
                 touched.Add(update.Path);
                 var outputPath = Path.Combine(
@@ -445,6 +417,8 @@ internal static class IngestCommand
                 Directory.CreateDirectory(Path.GetDirectoryName(outputPath)!);
                 ReplaceLedgerAtomically(outputPath, update.Bytes.Value.AsSpan(), commit);
             }
+
+            PruneEmptyLedgerDirectories(root, updates);
         }
         catch (Exception exception) when (exception is not OutOfMemoryException)
         {
@@ -488,6 +462,46 @@ internal static class IngestCommand
 
         void Add(string relativePath, string fullPath) =>
             result.Add(relativePath, ImmutableArray.CreateRange(File.ReadAllBytes(fullPath)));
+    }
+
+    private static void PruneEmptyLedgerDirectories(
+        string root,
+        IEnumerable<LedgerUpdate> updates)
+    {
+        var ledgerRoot = Path.GetFullPath(Path.Combine(
+            root,
+            BackfillInventoryLoader.RootPath.Replace('/', Path.DirectorySeparatorChar)));
+        var ledgerRootPrefix = ledgerRoot.EndsWith(Path.DirectorySeparatorChar)
+            ? ledgerRoot
+            : ledgerRoot + Path.DirectorySeparatorChar;
+        var directories = new HashSet<string>(StringComparer.Ordinal);
+        foreach (var update in updates.Where(static update =>
+                     update.Bytes is null
+                     && update.Path.StartsWith(BackfillInventoryLoader.RootPath, StringComparison.Ordinal)
+                     && BackfillInventoryLoader.IsCanonicalPath(update.Path)))
+        {
+            var outputPath = Path.GetFullPath(Path.Combine(
+                root,
+                update.Path.Replace('/', Path.DirectorySeparatorChar)));
+            for (var directory = Path.GetDirectoryName(outputPath);
+                 directory is not null
+                 && directory.StartsWith(ledgerRootPrefix, StringComparison.Ordinal);
+                 directory = Path.GetDirectoryName(directory))
+            {
+                directories.Add(directory);
+            }
+        }
+
+        foreach (var directory in directories
+                     .OrderByDescending(static path => path.Length)
+                     .ThenBy(static path => path, StringComparer.Ordinal))
+        {
+            if (Directory.Exists(directory)
+                && !Directory.EnumerateFileSystemEntries(directory).Any())
+            {
+                Directory.Delete(directory);
+            }
+        }
     }
 
     private static void RollbackLedgerUpdates(

@@ -19,11 +19,19 @@ public sealed class DigestionDecompositionPolicyTests
             atom,
             DigestionMigrationState.Absorbed,
             unresolvedSubitemCount: 0,
+            hasVerifiedChainAtoms: false,
             baseline: DigestionMigrationState.Partial));
         Assert.False(DigestionDecompositionPolicy.RejectsNewAbsorption(
             atom,
             DigestionMigrationState.Absorbed,
             unresolvedSubitemCount: 1,
+            hasVerifiedChainAtoms: false,
+            baseline: DigestionMigrationState.Partial));
+        Assert.False(DigestionDecompositionPolicy.RejectsNewAbsorption(
+            atom,
+            DigestionMigrationState.Absorbed,
+            unresolvedSubitemCount: 0,
+            hasVerifiedChainAtoms: true,
             baseline: DigestionMigrationState.Partial));
     }
 

@@ -41,7 +41,7 @@ public sealed partial class ProductionEnvironmentTests
         Assert.True(File.Exists(outside));
         Assert.True(File.Exists(Path.Combine(output, "keep.txt")));
         Assert.False(File.Exists(Path.Combine(output, "stale.md")));
-        var expectedFileNames = BackfillInventoryLoader.Load(fixture.Files["Meta/BACKFILL.yaml"])
+        var expectedFileNames = BackfillInventoryLoader.Load(fixture.Build().Current)
             .RequireDigestionSources()
             .Select(static source => source.SourceId + ".md")
             .Order(StringComparer.Ordinal)

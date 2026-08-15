@@ -29,8 +29,11 @@ public sealed partial class ProductionEnvironmentTests
     {
         var fixture = new RuleFixture();
         fixture.AddBackfillTargets();
-        var canonicalLedger = fixture.Files[BackfillInventoryLoader.RelativePath];
-        var ticketIndex = canonicalLedger[canonicalLedger.IndexOf("ticket_index:", StringComparison.Ordinal)..];
+        var ticketIndex = "ticket_index:\n" + string.Concat(
+            BackfillInventoryLoader.Load(fixture.Build().Current)
+                .RequireTickets()
+                .Select(static ticket =>
+                    $"  - case_id: {ticket.CaseId}\n    gid: {ticket.Gid}\n"));
         var atomizerId = SyntheticNumberedAtomizer.Id;
         var sourceBytes = Encoding.UTF8.GetBytes("# Synthetic\n\n**定理 1.1(A)**。covered。\n");
         var atom = Assert.Single(AtomizerRegistry.Atomize(atomizerId, sourceBytes, DigestionTestSupport.Rules).Claims);
@@ -87,8 +90,8 @@ public sealed partial class ProductionEnvironmentTests
         fixture.Baseline.Remove(RuleFixture.FixtureCasPath);
         fixture.Files[captured.RelativePath] = cas;
         fixture.Baseline[captured.RelativePath] = cas;
-        fixture.Files[BackfillInventoryLoader.RelativePath] = ledger;
-        fixture.Baseline[BackfillInventoryLoader.RelativePath] = ledger;
+        DirectoryLedgerTestSupport.ReplaceWithProjection(fixture.Files, ledger);
+        DirectoryLedgerTestSupport.ReplaceWithProjection(fixture.Baseline, ledger);
         fixture.Files[definitionPath] = definition;
         fixture.Baseline[definitionPath] = definition;
         fixture.Files[emissionPath] = emission;
@@ -152,12 +155,12 @@ public sealed partial class ProductionEnvironmentTests
         const string changedEmission = "# Candidate changed a previously verified emission\n";
         var changedEmissionHash = DigestionFingerprint.Compute(
             Encoding.UTF8.GetBytes(changedEmission)).RawSha256;
+        var changedLedger = ledger.Replace(
+            emissionHash,
+            changedEmissionHash,
+            StringComparison.Ordinal);
         var changedFiles = new Dictionary<string, string>(fixture.Files, StringComparer.Ordinal)
         {
-            [BackfillInventoryLoader.RelativePath] = ledger.Replace(
-                emissionHash,
-                changedEmissionHash,
-                StringComparison.Ordinal),
             [emissionPath] = changedEmission,
             [ScribeEmissionAttestation.RelativePath] = Encoding.UTF8.GetString(
                 ScribeEmissionAttestation.Write(
@@ -165,11 +168,12 @@ public sealed partial class ProductionEnvironmentTests
                     record with { EmissionSha256 = changedEmissionHash },
                 ]).AsSpan()),
         };
+        DirectoryLedgerTestSupport.ReplaceWithProjection(changedFiles, changedLedger);
         var changedSnapshot = Decode(Snapshot(changedFiles));
         var changedLean = Assert.IsType<LeanValidationOutcome.Accepted>(
             LeanClosureValidator.Validate(changedSnapshot, currentReport)).Capability;
         var changedStatus = Assert.Single(DigestionStatusEvaluator.Evaluate(
-            BackfillInventoryLoader.Load(changedFiles[BackfillInventoryLoader.RelativePath]),
+            BackfillInventoryLoader.Load(changedSnapshot),
             changedSnapshot,
             changedLean,
             verifiedScribeEmissions,
