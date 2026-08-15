@@ -46,6 +46,46 @@ internal sealed record DigestionClausePlan(
     string ParentAstPath,
     ImmutableArray<DigestionAtom> Children);
 
+internal enum GenreRegistryCheckKind
+{
+    Collected,
+    NoRegistry,
+}
+
+/// <summary>
+/// An empty collected set and an absent registry both contain no tokens, but only the former
+/// proves the dialect was checked. Keeping the states distinct prevents omission from becoming
+/// a false clean report.
+/// </summary>
+internal sealed record GenreRegistryCheck
+{
+    private GenreRegistryCheck(
+        GenreRegistryCheckKind kind,
+        ImmutableArray<string> unregisteredGenres)
+    {
+        Kind = kind;
+        UnregisteredGenres = unregisteredGenres;
+    }
+
+    internal static GenreRegistryCheck NoGenreRegistry { get; } =
+        new(GenreRegistryCheckKind.NoRegistry, []);
+
+    internal static GenreRegistryCheck Collected(ImmutableArray<string> unregisteredGenres)
+    {
+        if (unregisteredGenres.IsDefault)
+        {
+            throw new InvalidOperationException(
+                "collected unregistered genres must be initialized");
+        }
+
+        return new GenreRegistryCheck(GenreRegistryCheckKind.Collected, unregisteredGenres);
+    }
+
+    internal GenreRegistryCheckKind Kind { get; }
+
+    internal ImmutableArray<string> UnregisteredGenres { get; }
+}
+
 internal enum DigestionAtomStatusMarkerKind
 {
     Absent,
@@ -120,19 +160,23 @@ internal sealed class AtomizedTheoryDocument
 {
     internal AtomizedTheoryDocument(
         ImmutableArray<DigestionAtom> claims,
-        ImmutableArray<DigestionSlice> slices)
-        : this(claims, slices, [])
+        ImmutableArray<DigestionSlice> slices,
+        GenreRegistryCheck genreRegistryCheck)
+        : this(claims, slices, [], genreRegistryCheck)
     {
     }
 
     internal AtomizedTheoryDocument(
         ImmutableArray<DigestionAtom> claims,
         ImmutableArray<DigestionSlice> slices,
-        ImmutableArray<DigestionClausePlan> clausePlans)
+        ImmutableArray<DigestionClausePlan> clausePlans,
+        GenreRegistryCheck genreRegistryCheck)
     {
+        ArgumentNullException.ThrowIfNull(genreRegistryCheck);
         Claims = claims;
         Slices = slices;
         ClausePlans = clausePlans;
+        GenreRegistryCheck = genreRegistryCheck;
     }
 
     internal ImmutableArray<DigestionAtom> Claims { get; }
@@ -140,6 +184,16 @@ internal sealed class AtomizedTheoryDocument
     internal ImmutableArray<DigestionSlice> Slices { get; }
 
     internal ImmutableArray<DigestionClausePlan> ClausePlans { get; }
+
+    internal GenreRegistryCheck GenreRegistryCheck { get; }
+
+    /// <summary>
+    /// Genre tokens the volume used that its dialect does not register. The parser addresses
+    /// such a claim by its own token rather than refusing it, so this is what carries the
+    /// refusal to the layer that owns it: the ledger, which admits atoms, not the parser,
+    /// which only reads them.
+    /// </summary>
+    internal ImmutableArray<string> UnregisteredGenres => GenreRegistryCheck.UnregisteredGenres;
 
     internal DigestionAtom ResolveClaim(string astPath)
     {
@@ -220,19 +274,17 @@ internal static class DigestionFingerprint
 internal sealed class NumberedClaims
 {
     private static readonly Regex AnyNumberedLead = new(
-        "^\\*\\*(?<kind>\\p{L}+)\\s*[0-9]+\\.[0-9]+",
+        "^\\*\\*(?<kind>\\p{L}+)\\s*(?<number>[0-9]+\\.[0-9]+)",
         RegexOptions.CultureInvariant);
 
-    private readonly string dialect;
     private readonly ImmutableArray<AtomizerMapping> genres;
     private readonly Regex registered;
+    private readonly SortedSet<string> unregistered = new(StringComparer.Ordinal);
 
     internal NumberedClaims(
-        string dialect,
         ImmutableArray<AtomizerMapping> genres,
         string numberPattern)
     {
-        this.dialect = dialect;
         this.genres = genres;
         registered = new Regex(
             "^\\*\\*(?<kind>"
@@ -241,28 +293,37 @@ internal sealed class NumberedClaims
             RegexOptions.CultureInvariant);
     }
 
+    /// <summary>Genre tokens seen on a claim lead that this dialect does not register.</summary>
+    internal ImmutableArray<string> Unregistered => [.. unregistered];
+
+    /// <summary>
+    /// A registered token normalizes to its canonical kind; an unregistered one addresses the
+    /// claim by its own words and is recorded. Refusing here would be the table acting as a
+    /// gate on a document it does not own, and the cost is not small: one unwritten word
+    /// replaces a whole volume with a single coarse atom.
+    /// </summary>
     internal string? Identify(string paragraph)
     {
         var match = registered.Match(paragraph);
-        return match.Success
-            ? Kind(match.Groups["kind"].Value) + "/" + match.Groups["number"].Value
-            : null;
-    }
-
-    /// <summary>Fails closed on a lead that is numbered but names no registered genre.</summary>
-    internal void RejectUnregistered(string paragraph)
-    {
-        var unknown = AnyNumberedLead.Match(paragraph);
-        if (unknown.Success)
+        if (match.Success)
         {
-            throw new TheorySourceFormatException(
-                $"unknown {dialect} numbered claim kind {unknown.Groups["kind"].Value}");
+            return Kind(match.Groups["kind"].Value) + "/" + match.Groups["number"].Value;
         }
+
+        var unknown = AnyNumberedLead.Match(paragraph);
+        if (!unknown.Success)
+        {
+            return null;
+        }
+
+        var token = unknown.Groups["kind"].Value;
+        unregistered.Add(token);
+        return token + "/" + unknown.Groups["number"].Value;
     }
 
     private string Kind(string value) =>
         genres.FirstOrDefault(item => item.Token == value)?.Value
-        ?? throw new InvalidOperationException($"unknown {dialect} claim kind {value}");
+        ?? throw new InvalidOperationException($"unregistered kind reached Kind: {value}");
 }
 
 internal static class GictAtomizer
@@ -272,31 +333,30 @@ internal static class GictAtomizer
         "^\\*\\*(?<number>E\\.[0-9]+)\\s+[^\\r\\n*]+\\*\\*",
         RegexOptions.CultureInvariant);
 
-    internal static AtomizedTheoryDocument Atomize(ReadOnlySpan<byte> bytes, TheoryAtomizerRules rules) =>
-        MarkdownAstAtomizer.Atomize(
-            bytes,
-            paragraph => Identify(paragraph, rules),
-            value => IdentifyConstant(value, rules));
-
-    private static string? Identify(string paragraph, TheoryAtomizerRules rules)
+    internal static AtomizedTheoryDocument Atomize(ReadOnlySpan<byte> bytes, TheoryAtomizerRules rules)
     {
-        var claims = new NumberedClaims("GICT", rules.GictGenres, NumberPattern);
-        if (claims.Identify(paragraph) is { } locator)
-        {
-            return locator;
-        }
+        // One instance per document rather than per paragraph: it accumulates the unregistered
+        // tokens the volume used, and it owns a compiled regex worth building once.
+        var claims = new NumberedClaims(rules.GictGenres, NumberPattern);
+        return MarkdownAstAtomizer.Atomize(
+            bytes,
+            paragraph => Identify(paragraph, rules, claims),
+            () => GenreRegistryCheck.Collected(claims.Unregistered),
+            value => IdentifyConstant(value, rules));
+    }
 
+    private static string? Identify(string paragraph, TheoryAtomizerRules rules, NumberedClaims claims)
+    {
         var appendix = AppendixClaimPattern.Match(paragraph);
         if (appendix.Success)
         {
             return "appendix/" + appendix.Groups["number"].Value;
         }
 
-        claims.RejectUnregistered(paragraph);
-
-        return rules.GictClaimPrefixes
-            .FirstOrDefault(item => paragraph.StartsWith(item.Token, StringComparison.Ordinal))
-            ?.Value;
+        return claims.Identify(paragraph)
+            ?? rules.GictClaimPrefixes
+                .FirstOrDefault(item => paragraph.StartsWith(item.Token, StringComparison.Ordinal))
+                ?.Value;
     }
 
     private static string? IdentifyConstant(string value, TheoryAtomizerRules rules) =>
@@ -311,7 +371,11 @@ internal static class PeriodicTreeAtomizer
         RegexOptions.CultureInvariant);
 
     internal static AtomizedTheoryDocument Atomize(ReadOnlySpan<byte> bytes, TheoryAtomizerRules _) =>
-        MarkdownAstAtomizer.Atomize(bytes, static _ => null, identifyHeading: IdentifyHeading);
+        MarkdownAstAtomizer.Atomize(
+            bytes,
+            static _ => null,
+            static () => GenreRegistryCheck.NoGenreRegistry,
+            identifyHeading: IdentifyHeading);
 
     private static string? IdentifyHeading(string heading)
     {
@@ -329,9 +393,12 @@ internal static class PzgAtomizer
 
     internal static AtomizedTheoryDocument Atomize(ReadOnlySpan<byte> bytes, TheoryAtomizerRules rules)
     {
+        // See GictAtomizer: one instance per document so unregistered tokens accumulate.
+        var claims = new NumberedClaims(rules.PzgGenres, NumberPattern);
         var document = MarkdownAstAtomizer.Atomize(
             bytes,
-            paragraph => Identify(paragraph, rules),
+            paragraph => Identify(paragraph, rules, claims),
+            () => GenreRegistryCheck.Collected(claims.Unregistered),
             identifyHeading: heading => IdentifyHeading(heading, rules));
         return new AtomizedTheoryDocument(
             document.Claims,
@@ -340,7 +407,8 @@ internal static class PzgAtomizer
                 .Select(PlanClauses)
                 .Where(static plan => plan is not null)
                 .Select(static plan => plan!)
-                .ToImmutableArray());
+                .ToImmutableArray(),
+            document.GenreRegistryCheck);
     }
 
     private static DigestionClausePlan? PlanClauses(DigestionAtom parent)
@@ -425,14 +493,8 @@ internal static class PzgAtomizer
 
     private sealed record PzgSourceLine(int Start, string Text);
 
-    private static string? Identify(string paragraph, TheoryAtomizerRules rules)
+    private static string? Identify(string paragraph, TheoryAtomizerRules rules, NumberedClaims claims)
     {
-        var claims = new NumberedClaims("PZG", rules.PzgGenres, NumberPattern);
-        if (claims.Identify(paragraph) is { } locator)
-        {
-            return locator;
-        }
-
         var trace = Regex.Match(
             paragraph,
             "^\\*\\*〔(?<number>[0-9]+\\.[0-9]+)\\s+"
@@ -449,9 +511,7 @@ internal static class PzgAtomizer
             return "open/" + open.Groups["id"].Value;
         }
 
-        claims.RejectUnregistered(paragraph);
-
-        return null;
+        return claims.Identify(paragraph);
     }
 
     private static string? IdentifyHeading(string heading, TheoryAtomizerRules rules)
@@ -486,252 +546,4 @@ internal static class PzgAtomizer
             .Where(static item => item.Value != "metadata/supplement")
             .FirstOrDefault(item => heading.StartsWith(item.Token, StringComparison.Ordinal))?.Value;
     }
-}
-
-internal static class MarkdownAstAtomizer
-{
-    private static readonly UTF8Encoding StrictUtf8 = new(false, true);
-
-    /// <summary>
-    /// <paramref name="parse"/> selects the block AST. It defaults to the line scanner
-    /// because the registered dialects' receipts are content-addressed over the boundaries
-    /// that scanner produces; only the default atomizer, which has no receipts to preserve,
-    /// passes a different one.
-    /// </summary>
-    internal static AtomizedTheoryDocument Atomize(
-        ReadOnlySpan<byte> bytes,
-        Func<string, string?> identify,
-        Func<string, string?>? identifyFirstTableCell = null,
-        Func<string, string?>? identifyHeading = null,
-        Func<string, string?>? identifyFirstTableCellSource = null,
-        Func<string, ImmutableArray<MarkdownBlock>>? parse = null,
-        Func<MarkdownTableRow, string?>? identifyTableRow = null,
-        bool dropEmptyHeadingClaims = false)
-    {
-        var raw = bytes.ToArray();
-        var text = StrictUtf8.GetString(raw);
-        var blocks = (parse ?? MarkdownBlockAst.Parse)(text);
-        var headings = new List<DigestionContext>();
-        var candidates = new List<Candidate>();
-        var headingStarts = new List<int>();
-        var failures = new List<UnrecognisedLead>();
-        foreach (var block in blocks)
-        {
-            if (block is MarkdownHeading heading)
-            {
-                while (headings.Count > 0 && headings[^1].Level >= heading.Level)
-                {
-                    headings.RemoveAt(headings.Count - 1);
-                }
-
-                var headingAstPath = identifyHeading?.Invoke(heading.Text);
-                if (headingAstPath is not null)
-                {
-                    candidates.Add(new Candidate(
-                        headingAstPath,
-                        heading.Start,
-                        text.Length,
-                        headings.ToImmutableArray(),
-                        Extend: true,
-                        IsHeading: true));
-                }
-
-                headings.Add(new DigestionContext(heading.Level, heading.Text));
-                headingStarts.Add(heading.Start);
-                continue;
-            }
-
-            if (block is MarkdownTableRow row)
-            {
-                var tableAstPath = identifyTableRow is not null
-                    ? identifyTableRow(row)
-                    : identifyFirstTableCellSource is not null
-                    ? TheorySourceFormatException.IdentifyAt(
-                        identifyFirstTableCellSource, row.FirstCellSourceText, row.Start, text, failures)
-                    : identifyFirstTableCell is not null
-                    ? TheorySourceFormatException.IdentifyAt(
-                        identifyFirstTableCell, row.FirstCellText, row.Start, text, failures)
-                    : TheorySourceFormatException.IdentifyAt(identify, row.Text, row.Start, text, failures);
-                if (tableAstPath is not null)
-                {
-                    candidates.Add(new Candidate(
-                        tableAstPath,
-                        row.Start,
-                        row.End,
-                        headings.ToImmutableArray(),
-                        Extend: false));
-                }
-
-                continue;
-            }
-
-            if (block is not MarkdownParagraph paragraph)
-            {
-                continue;
-            }
-
-            var lineClaims = SourceLines(paragraph.Text, paragraph.Start)
-                .Select(line => (Line: line, AstPath: TheorySourceFormatException.IdentifyAt(
-                    identify, line.Text, line.Start, text, failures)))
-                .Where(static item => item.AstPath is not null)
-                .ToArray();
-            if (lineClaims.Length > 1)
-            {
-                foreach (var lineClaim in lineClaims)
-                {
-                    candidates.Add(new Candidate(
-                        lineClaim.AstPath!,
-                        lineClaim.Line.Start,
-                        lineClaim.Line.End,
-                        headings.ToImmutableArray(),
-                        Extend: false));
-                }
-
-                continue;
-            }
-
-            var astPath = TheorySourceFormatException.IdentifyAt(
-                identify, paragraph.Text, paragraph.Start, text, failures);
-            if (astPath is null)
-            {
-                continue;
-            }
-
-            candidates.Add(new Candidate(
-                astPath,
-                paragraph.Start,
-                text.Length,
-                headings.ToImmutableArray(),
-                Extend: true));
-        }
-
-        if (failures.Count > 0)
-        {
-            // Grouped by cause because one unknown lead is reported many times: once per
-            // source line, once again as the whole paragraph, and once per repetition in
-            // the volume. Naming each cause once, with its first line and how often it
-            // occurs, is what a reader needs to register the dialect in a single pass.
-            throw new TheorySourceFormatException(
-                TheorySourceFormatException.Summarise(failures));
-        }
-
-        var boundaries = candidates.Select(static candidate => candidate.StartCharacter)
-            .Concat(headingStarts)
-            .Distinct()
-            .Order()
-            .ToArray();
-        for (var index = 0; index < candidates.Count; index++)
-        {
-            var candidate = candidates[index];
-            if (!candidate.Extend)
-            {
-                continue;
-            }
-
-            var nestedBoundary = boundaries.FirstOrDefault(start =>
-                start > candidate.StartCharacter && start < candidate.EndCharacter);
-            if (nestedBoundary > 0)
-            {
-                candidates[index] = candidate with { EndCharacter = nestedBoundary };
-            }
-        }
-
-        if (dropEmptyHeadingClaims)
-        {
-            // A heading whose whole body was claimed by finer atoms is left holding only its
-            // own line. That atom states nothing, so it could never be discharged and would
-            // sit open forever; the heading itself is not lost, because every atom beneath it
-            // carries it in its context.
-            candidates.RemoveAll(candidate =>
-                candidate.IsHeading && IsHeadingOnly(text, candidate));
-        }
-
-        var claims = ImmutableArray.CreateBuilder<DigestionAtom>(candidates.Count);
-        var slices = ImmutableArray.CreateBuilder<DigestionSlice>(candidates.Count * 2 + 1);
-        var locatorCounts = candidates
-            .GroupBy(static candidate => candidate.AstPath, StringComparer.Ordinal)
-            .ToDictionary(static group => group.Key, static group => group.Count(), StringComparer.Ordinal);
-        var locatorOccurrences = new Dictionary<string, int>(StringComparer.Ordinal);
-        var cursor = 0;
-        foreach (var candidate in candidates.OrderBy(static item => item.StartCharacter))
-        {
-            locatorOccurrences.TryGetValue(candidate.AstPath, out var occurrence);
-            occurrence++;
-            locatorOccurrences[candidate.AstPath] = occurrence;
-            var astPath = locatorCounts[candidate.AstPath] == 1
-                ? candidate.AstPath
-                : $"{candidate.AstPath}/occurrence/{occurrence}";
-            var start = ByteOffset(text, candidate.StartCharacter);
-            var end = ByteOffset(text, candidate.EndCharacter);
-            if (start < cursor || end <= start || end > raw.Length)
-            {
-                throw new FormatException($"invalid Markdown AST span for {astPath}");
-            }
-
-            if (start > cursor)
-            {
-                slices.Add(new DigestionSlice(false, ImmutableArray.CreateRange(raw[cursor..start])));
-            }
-
-            var atomBytes = ImmutableArray.CreateRange(raw[start..end]);
-            slices.Add(new DigestionSlice(true, atomBytes));
-            claims.Add(new DigestionAtom(
-                astPath,
-                start,
-                end,
-                atomBytes,
-                DigestionFingerprint.Compute(atomBytes.AsSpan()),
-                candidate.Context,
-                DigestionAtomStatusMarker.Parse(atomBytes.AsSpan())));
-            cursor = end;
-        }
-
-        if (cursor < raw.Length)
-        {
-            slices.Add(new DigestionSlice(false, ImmutableArray.CreateRange(raw[cursor..])));
-        }
-
-        return new AtomizedTheoryDocument(claims.MoveToImmutable(), slices.ToImmutable());
-    }
-
-    private static bool IsHeadingOnly(string text, Candidate candidate)
-    {
-        var slice = text.AsSpan(
-            candidate.StartCharacter,
-            candidate.EndCharacter - candidate.StartCharacter);
-        var lineEnd = slice.IndexOfAny('\r', '\n');
-        return lineEnd >= 0 && slice[lineEnd..].IsWhiteSpace();
-    }
-
-    internal static int ByteOffset(string text, int characterOffset) =>
-        characterOffset == text.Length
-            ? StrictUtf8.GetByteCount(text)
-            : StrictUtf8.GetByteCount(text.AsSpan(0, characterOffset));
-
-    private static IEnumerable<SourceLine> SourceLines(string paragraph, int sourceStart)
-    {
-        var offset = 0;
-        while (offset < paragraph.Length)
-        {
-            var lineEnd = paragraph.IndexOfAny(['\r', '\n'], offset);
-            if (lineEnd < 0) lineEnd = paragraph.Length;
-            var next = lineEnd;
-            while (next < paragraph.Length && paragraph[next] is '\r' or '\n') next++;
-            yield return new SourceLine(
-                paragraph[offset..lineEnd],
-                sourceStart + offset,
-                sourceStart + next);
-            offset = next;
-        }
-    }
-
-    private sealed record Candidate(
-        string AstPath,
-        int StartCharacter,
-        int EndCharacter,
-        ImmutableArray<DigestionContext> Context,
-        bool Extend,
-        bool IsHeading = false);
-
-    private sealed record SourceLine(string Text, int Start, int End);
 }

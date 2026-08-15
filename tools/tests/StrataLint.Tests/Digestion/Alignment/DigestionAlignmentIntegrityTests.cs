@@ -225,7 +225,8 @@ public sealed partial class DigestionAlignmentTests
         var atomized = new AtomizedTheoryDocument(
             [parent],
             [new DigestionSlice(true, parent.RawBytes)],
-            [new DigestionClausePlan(parent.AstPath, [first, second])]);
+            [new DigestionClausePlan(parent.AstPath, [first, second])],
+            GenreRegistryCheck.NoGenreRegistry);
 
         var rejected = DigestionLedgerAligner.Evaluate(
             unchained,
@@ -292,7 +293,8 @@ public sealed partial class DigestionAlignmentTests
         var atomized = new AtomizedTheoryDocument(
             [parent],
             [new DigestionSlice(true, parent.RawBytes)],
-            [new DigestionClausePlan(parent.AstPath, [first, second])]);
+            [new DigestionClausePlan(parent.AstPath, [first, second])],
+            GenreRegistryCheck.NoGenreRegistry);
 
         var result = DigestionLedgerAligner.Evaluate(
             candidate,
@@ -592,7 +594,8 @@ public sealed partial class DigestionAlignmentTests
         var atomized = new AtomizedTheoryDocument(
             [parent],
             [new DigestionSlice(true, parent.RawBytes)],
-            [new DigestionClausePlan(parent.AstPath, [first, plannedSecond])]);
+            [new DigestionClausePlan(parent.AstPath, [first, plannedSecond])],
+            GenreRegistryCheck.NoGenreRegistry);
 
         var result = DigestionLedgerAligner.Evaluate(
             candidate,
@@ -630,7 +633,8 @@ public sealed partial class DigestionAlignmentTests
 
     private static AtomizedTheoryDocument Atomized(DigestionAtom atom) => new(
         [atom],
-        [new DigestionSlice(true, atom.RawBytes)]);
+        [new DigestionSlice(true, atom.RawBytes)],
+        GenreRegistryCheck.NoGenreRegistry);
 
     private static (
         byte[] SourceBytes,

@@ -5,10 +5,12 @@ internal static class ObserverAtomizer
     internal static AtomizedTheoryDocument Atomize(ReadOnlySpan<byte> bytes, TheoryAtomizerRules rules)
     {
         ArgumentNullException.ThrowIfNull(rules);
+        var unregistered = new SortedSet<string>(StringComparer.Ordinal);
         var document = MarkdownAstAtomizer.Atomize(
             bytes,
-            paragraph => Identify(paragraph, rules),
-            identifyFirstTableCellSource: paragraph => Identify(paragraph, rules));
+            paragraph => Identify(paragraph, rules, unregistered),
+            () => GenreRegistryCheck.Collected([.. unregistered]),
+            identifyFirstTableCellSource: paragraph => Identify(paragraph, rules, unregistered));
         if (document.Claims.Any(atom =>
                 atom.AstPath.Contains("/occurrence/", StringComparison.Ordinal)))
         {
@@ -18,7 +20,10 @@ internal static class ObserverAtomizer
         return document;
     }
 
-    private static string? Identify(string paragraph, TheoryAtomizerRules rules)
+    private static string? Identify(
+        string paragraph,
+        TheoryAtomizerRules rules,
+        SortedSet<string> unregistered)
     {
         foreach (var mapping in rules.ObserverClaimPrefixes)
         {
@@ -30,8 +35,9 @@ internal static class ObserverAtomizer
 
         if (HasBoldClaimLead(paragraph))
         {
-            throw new TheorySourceFormatException(
-                $"unknown observer claim lead '{TheorySourceFormatException.ClaimLead(paragraph)}'");
+            var token = TheorySourceFormatException.ClaimLead(paragraph);
+            unregistered.Add(token);
+            return "unregistered/" + Uri.EscapeDataString(token);
         }
         return null;
     }

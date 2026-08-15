@@ -9,35 +9,39 @@ public sealed partial class DigestionAlignmentTests
     [Fact]
     public void IngestFallsBackToOneWholeSourceAtomWhenTheSourceFormatCannotBeAtomized()
     {
+        const string theoryPath = "docs/develop/theory/non-utf8.bin";
         var oldBytes = Encoding.UTF8.GetBytes("# GICT\n\n**定理 1.1(A)**。old。\n");
         var oldAtom = Assert.Single(GictAtomizer.Atomize(oldBytes, DigestionTestSupport.Rules).Claims);
         var oldCapture = DigestionCasStore.Capture(oldAtom.RawBytes.AsSpan());
         var ledger = BackfillInventoryLoader.Load(Ledger(
-            [],
-            CasEntry("old-receipt", oldAtom, oldCapture.Reference)));
-        var malformedBytes = Encoding.UTF8.GetBytes(
-            "# GICT\n\n**未知 1.2(B)**。free-form source。\n");
+                [],
+                CasEntry("old-receipt", oldAtom, oldCapture.Reference))
+            .Replace("path: docs/source.md", $"path: {theoryPath}", StringComparison.Ordinal));
+        var opaqueBytes = new byte[] { 0xff, 0x00, 0xfe };
 
         var plan = DigestionIngestor.Plan(
             ledger,
-            Snapshot(malformedBytes, [oldCapture]),
+            Snapshot(opaqueBytes, [oldCapture], theoryPath),
             ledger);
 
         var fallback = Assert.Single(plan.Fallbacks);
         Assert.Equal("source", fallback.SourceId);
-        Assert.Contains("unknown GICT numbered claim kind", fallback.Reason, StringComparison.Ordinal);
+        Assert.Contains("Unicode", fallback.Reason, StringComparison.OrdinalIgnoreCase);
         var coarse = Assert.Single(plan.Document.RequireDigestionEntries().Where(static entry =>
             entry.AtomId != "old-receipt"));
         var captured = Assert.Single(plan.CasObjects);
         Assert.Equal(captured.Reference, coarse.CasRef);
         Assert.Equal(captured.Reference, coarse.Fingerprints.RawSha256);
-        Assert.Equal(malformedBytes, captured.Bytes.ToArray());
+        Assert.Equal(opaqueBytes, captured.Bytes.ToArray());
 
         var firstBytes = BackfillInventoryWriter.WriteForIngest(plan.Document);
         var migrated = BackfillInventoryLoader.Load(Encoding.UTF8.GetString(firstBytes.AsSpan()));
         var second = DigestionIngestor.Plan(
             migrated,
-            Snapshot(malformedBytes, new[] { oldCapture }.Concat(plan.CasObjects)),
+            Snapshot(
+                opaqueBytes,
+                new[] { oldCapture }.Concat(plan.CasObjects),
+                theoryPath),
             ledger);
         var secondBytes = BackfillInventoryWriter.WriteForIngest(second.Document);
 
@@ -208,7 +212,7 @@ public sealed partial class DigestionAlignmentTests
     }
 
     [Fact]
-    public void CasBackedAdmissionDoesNotReatomizeReceipts()
+    public void CasBackedAdmissionDoesNotReatomizeReceiptsWhenInputsMatchBaseline()
     {
         var currentBytes = Encoding.UTF8.GetBytes(
             "# GICT\n\n**定理 1.1(A)**。raw。\n\n**定理 1.2(B)**。normalized。\n");
@@ -234,7 +238,8 @@ public sealed partial class DigestionAlignmentTests
             snapshot,
             ledger,
             DigestionAlignmentMode.Admission,
-            _ => atomizer);
+            _ => atomizer,
+            baselineSnapshot: snapshot);
 
         Assert.Empty(first.Findings);
         Assert.Empty(first.Residual);
@@ -247,7 +252,8 @@ public sealed partial class DigestionAlignmentTests
             snapshot,
             ledger,
             DigestionAlignmentMode.Admission,
-            _ => atomizer);
+            _ => atomizer,
+            baselineSnapshot: snapshot);
 
         Assert.Empty(second.Findings);
         Assert.Equal(0, calls);
@@ -553,7 +559,8 @@ public sealed partial class DigestionAlignmentTests
             []);
         var duplicateDocument = new AtomizedTheoryDocument(
             [first, second],
-            [new DigestionSlice(true, firstBytes), new DigestionSlice(true, secondBytes)]);
+            [new DigestionSlice(true, firstBytes), new DigestionSlice(true, secondBytes)],
+            GenreRegistryCheck.NoGenreRegistry);
         var ledger = BackfillInventoryLoader.Load(Ledger([], Entry("receipt", first)));
         var calls = 0;
 
