@@ -1,0 +1,26 @@
+### 定义 37.15（记录不可区分类）
+
+定义：
+
+\[
+i\sim_Gj
+\iff
+G_{ij}=1.
+\]
+
+由于记录向量归一化，Cauchy–Schwarz 取等条件给出：
+
+\[
+G_{ij}=1
+\iff
+e_i=e_j.
+\]
+
+所以 \(\sim_G\) 是等价关系。
+
+记其等价类分解为：
+
+\[
+I=\coprod_{\alpha\in\Lambda}I_\alpha.
+\]
+

@@ -1,0 +1,13 @@
+### 定理 37.16（记录 fixed algebra 分解）
+
+record channel 的固定代数为：
+
+\[
+\boxed{
+\operatorname{Fix}(\Phi_G)
+\cong
+\bigoplus_{\alpha\in\Lambda}
+M_{|I_\alpha|}(\mathbb C).
+}
+\]
+
