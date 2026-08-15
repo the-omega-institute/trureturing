@@ -395,4 +395,61 @@ public sealed class RuleEngineCapacityTests
             + $"{RepositoryRules.DirectoryToleranceLimit}; split per CLAUDE.md 8)",
             diagnostic.Message);
     }
+    // 2026-08-15 实测的连坐:dev 上 DigestionLedgerAligner.cs 因两个 PR 的**并集**达到 823 行
+    // (各自树内是 799 与 639,都没越线,各自 admit 都是对的)。此后每一个 PR 的准入都判红,
+    // 包括 #1890/#1891/#1896/#1897 这些从未碰过该文件的——全仓锁死约一小时。
+    //
+    // 阻断该落在把它推过线的那个候选身上,不该落在无辜候选身上。判据取自分叉点:本次改动
+    // 有没有让它变长。这与目录轴既有的做法同构(带内候选只有引入了分叉点上不存在的路径才阻断,
+    // 见 RepositoryRules.Structure.cs 的 DirectoryToleranceLimit 注释与 2026-08-13 判例)。
+    //
+    // 检测不降级:超线仍然出 finding,只是无辜者那条是 Observe;而全仓检测由
+    // CapacityPolicy.InspectRepository 在 dotnet test 里承担(本轮一并接上)。
+    [Fact]
+    public void Sl003DoesNotBlockACandidateThatDidNotGrowAnAlreadyOversizeArtifact()
+    {
+        var fixture = new RuleFixture();
+        var oversize = fixture.Files[RuleFixture.RingPath]
+            + string.Concat(Enumerable.Repeat("-- pad\n", 801));
+        fixture.Files[RuleFixture.RingPath] = oversize;
+        fixture.Baseline[RuleFixture.RingPath] = oversize;
+        fixture.ForkPoint[RuleFixture.RingPath] = oversize;
+
+        var diagnostic = Assert.Single(
+            RuleCatalog.Default.EvaluateSingle(RuleId.CreateKnown(3), fixture.Build()).Diagnostics);
+        Assert.Equal(AdmissionEffect.Observe, diagnostic.AdmissionEffect);
+        Assert.Contains("did not grow it", diagnostic.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void Sl003BlocksTheCandidateThatGrewAnAlreadyOversizeArtifact()
+    {
+        var fixture = new RuleFixture();
+        var forkOversize = fixture.Files[RuleFixture.RingPath]
+            + string.Concat(Enumerable.Repeat("-- pad\n", 801));
+        fixture.Files[RuleFixture.RingPath] = forkOversize + "-- one more line\n";
+        fixture.Baseline[RuleFixture.RingPath] = forkOversize;
+        fixture.ForkPoint[RuleFixture.RingPath] = forkOversize;
+
+        var diagnostic = Assert.Single(
+            RuleCatalog.Default.EvaluateSingle(RuleId.CreateKnown(3), fixture.Build()).Diagnostics);
+        Assert.Equal(AdmissionEffect.Block, diagnostic.AdmissionEffect);
+        Assert.Equal("artifact exceeds 800 lines", diagnostic.Message);
+    }
+
+    // 分叉点上没有这个文件 = 本次改动新建了它,那它当然是"长出来的",阻断。
+    [Fact]
+    public void Sl003BlocksAnOversizeArtifactThisChangeCreated()
+    {
+        var fixture = new RuleFixture();
+        fixture.Files["Meta/NewOversize.txt"] =
+            string.Concat(Enumerable.Repeat("pad\n", 801));
+        fixture.Changes.Add("Meta/NewOversize.txt");
+
+        var diagnostic = Assert.Single(
+            RuleCatalog.Default.EvaluateSingle(RuleId.CreateKnown(3), fixture.Build()).Diagnostics,
+            item => item.Path == "Meta/NewOversize.txt");
+        Assert.Equal(AdmissionEffect.Block, diagnostic.AdmissionEffect);
+    }
+
 }
