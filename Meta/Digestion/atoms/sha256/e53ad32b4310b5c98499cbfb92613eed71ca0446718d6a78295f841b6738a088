@@ -1,0 +1,23 @@
+### 定义 37.3（物理观察纤维）
+
+对状态 \(\rho\)，定义：
+
+\[
+\boxed{
+\operatorname{PhysFiber}_O(\rho)
+=
+(\rho+N_O)
+\cap
+\{\sigma\ge0,\ \operatorname{Tr}\sigma=1\}.
+}
+\]
+
+所以：
+
+\[
+\boxed{
+\text{线性余空间给出不可见方向；
+正锥和归一化截面决定这些方向中哪些仍是可实现状态。}
+}
+\]
+

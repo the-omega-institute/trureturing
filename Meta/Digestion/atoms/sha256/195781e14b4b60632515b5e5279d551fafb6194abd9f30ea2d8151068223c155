@@ -1,0 +1,32 @@
+### 定理 37.12（零权重支撑面定理）
+
+设：
+
+\[
+\rho\ge0,
+\qquad
+P=P^\ast=P^2.
+\]
+
+若：
+
+\[
+\operatorname{Tr}(\rho P)=0,
+\]
+
+则：
+
+\[
+\boxed{
+P\rho=\rho P=0
+}
+\]
+
+并且：
+
+\[
+\boxed{
+\rho=(I-P)\rho(I-P).
+}
+\]
+

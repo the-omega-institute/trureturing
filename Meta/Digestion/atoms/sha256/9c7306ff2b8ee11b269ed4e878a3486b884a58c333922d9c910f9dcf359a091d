@@ -1,0 +1,35 @@
+### 定理 37.22（锥残差—观察见证对偶）
+
+令：
+
+\[
+w=-r.
+\]
+
+则：
+
+\[
+w\in C^\vee,
+\]
+
+且若 \(x\notin C\)，则：
+
+\[
+\boxed{
+\langle w,c\rangle\ge0
+\quad
+\forall c\in C,
+}
+\]
+
+但：
+
+\[
+\boxed{
+\langle w,x\rangle
+=
+-\|r\|^2
+<0.
+}
+\]
+
