@@ -423,7 +423,7 @@ Exit `0`; all five exact declarations were found at the paths listed above.
 ```sh
 rg -n -F \
   'pzg-residual-85ace51c6a4dd01566ad4ee14028fc48bba25db190a01a8d09917eb4d6262f52' \
-  Meta/Digestion/formalizations docs/devloop/reports
+  Meta/Digestion/formalizations docs/reports
 ```
 
 Exit `1`; no prior receipt or report was found. The corresponding whole-tree

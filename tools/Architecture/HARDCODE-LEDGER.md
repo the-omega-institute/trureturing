@@ -611,8 +611,8 @@ The first full preflight after that renewal passed all three .NET test assemblie
 Lean reports, emission checks, base admission, and candidate build. It then failed only at
 `verify-conservative`: one corpus worker exceeded the unchanged 180-second process budget;
 the conservative stage took 263s and the full preflight 548s. Contemporaneous process
-evidence showed macOS `mds_stores` using about 97-147% CPU and an unrelated github-devloop
-fkst testhost using about 92-94% CPU, with no second conservative worker. No rule or timeout
+evidence showed macOS `mds_stores` using about 97-147% CPU and an unrelated competing `dotnet`
+testhost using about 92-94% CPU, with no second conservative worker. No rule or timeout
 changed; the identical canonical preflight must be retried after the competing testhost exits.
 
 A later no-contention replay reproduced the same 180-second worker failure and falsified

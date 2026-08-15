@@ -117,7 +117,7 @@ The exact current receipt and prior-report exclusion searches were:
 
 ```sh
 rg -n -F 'gict-residual-35ed7e23907f0bd89bcc7f0232c45d84e98c55cc8aea15669c163424a58fecc3' Meta/Digestion/formalizations
-rg -n -F 'gict-residual-35ed7e23907f0bd89bcc7f0232c45d84e98c55cc8aea15669c163424a58fecc3' docs/devloop/reports --glob '!diag-month-r4-a-gict-6-42-open.md'
+rg -n -F 'gict-residual-35ed7e23907f0bd89bcc7f0232c45d84e98c55cc8aea15669c163424a58fecc3' docs/reports --glob '!diag-month-r4-a-gict-6-42-open.md'
 ```
 
 Both exited `1`, with no receipt or prior report hit. The report itself was
@@ -262,7 +262,7 @@ The exact history search was:
 ```sh
 git log --all --oneline \
   -S'gict-residual-35ed7e23907f0bd89bcc7f0232c45d84e98c55cc8aea15669c163424a58fecc3' \
-  -- D5 Blueprint Meta/Digestion/formalizations docs/devloop/reports
+  -- D5 Blueprint Meta/Digestion/formalizations docs/reports
 ```
 
 Exit `0` with no output. As usual, `git log` uses exit `0` for an empty match

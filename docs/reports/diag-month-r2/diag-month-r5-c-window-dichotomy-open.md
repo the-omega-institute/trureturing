@@ -471,7 +471,7 @@ The selected-atom formalization-receipt and prior-report content search was:
 ```sh
 rg -n -F \
   'observer-residual-36a5eee4b1574c9abf9adf009d72fc27d059e918b32d281dfe0aaf07028189cf' \
-  Meta/Digestion/formalizations docs/devloop/reports \
+  Meta/Digestion/formalizations docs/reports \
   --glob '!diag-month-r5-c-window-dichotomy-open.md'
 ```
 
@@ -497,7 +497,7 @@ The exact selected-atom history searches were:
 git log --all --oneline \
   -S'observer-residual-36a5eee4b1574c9abf9adf009d72fc27d059e918b32d281dfe0aaf07028189cf' \
   -- D5 Blueprint Meta/Digestion/formalizations Meta/Digestion/backfill \
-     docs/devloop/reports
+     docs/reports
 
 git log --all --follow --oneline -- \
   Meta/Digestion/backfill/observer-quantum-v1/residual-open/\

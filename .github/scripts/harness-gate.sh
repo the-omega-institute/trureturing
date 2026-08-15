@@ -7,23 +7,6 @@ CANDIDATE_ROOT="."
 BASE_REF=""
 CANDIDATE_LEAN_REPORT=""
 JUDGE_DLL=""
-GATE_OUTCOME_DIR="${STRATALINT_GATE_OUTCOME_DIR:-}"
-
-exit_with_gate_outcome() {
-  local kind="$1"
-  local rc="$2"
-  local marker=""
-  case "$kind" in
-    admitted|semantic-violation|infrastructure-failure|protected-surface-change) ;;
-    *) echo "harness-gate: invalid structured outcome '$kind'" >&2; exit 2 ;;
-  esac
-  if [[ -n "$GATE_OUTCOME_DIR" ]]; then
-    marker="$GATE_OUTCOME_DIR/gate-outcome-v1.$kind"
-    (umask 077; : > "$marker") \
-      || { echo "harness-gate: could not publish structured outcome '$marker'" >&2; exit 2; }
-  fi
-  exit "$rc"
-}
 
 while [[ $# -gt 0 ]]; do
   case "$1" in
@@ -42,10 +25,6 @@ done
   || { echo "harness-gate: candidate root '$CANDIDATE_ROOT' is absent" >&2; exit 2; }
 [[ -f "$CANDIDATE_LEAN_REPORT" ]] \
   || { echo "harness-gate: candidate Lean report '$CANDIDATE_LEAN_REPORT' is absent" >&2; exit 2; }
-if [[ -n "$GATE_OUTCOME_DIR" ]]; then
-  [[ "$GATE_OUTCOME_DIR" == /* && -d "$GATE_OUTCOME_DIR" ]] \
-    || { echo "harness-gate: STRATALINT_GATE_OUTCOME_DIR must name an existing absolute directory" >&2; exit 2; }
-fi
 
 CANDIDATE_ROOT="$(cd "$CANDIDATE_ROOT" && pwd -P)"
 CANDIDATE_LEAN_REPORT="$(cd "$(dirname "$CANDIDATE_LEAN_REPORT")" && pwd -P)/$(basename "$CANDIDATE_LEAN_REPORT")"
@@ -137,25 +116,25 @@ if [[ "$conform_rc" -ne 0 ]]; then conform_status="failed"; fi
 mark filemap-conform "$conform_status"
 
 case "$rc" in
-  1) exit_with_gate_outcome semantic-violation 1 ;;
-  2) exit_with_gate_outcome infrastructure-failure 2 ;;
+  1) exit 1 ;;
+  2) exit 2 ;;
 esac
 
 case "$conform_rc" in
   0) ;;
-  1) exit_with_gate_outcome semantic-violation 1 ;;
-  2) exit_with_gate_outcome infrastructure-failure 2 ;;
+  1) exit 1 ;;
+  2) exit 2 ;;
   *) exit "$conform_rc" ;;
 esac
 
 if [[ $rc -eq 0 ]]; then
   summary "### Admission: content fully validated, no protected-surface change"
-  exit_with_gate_outcome admitted 0
+  exit 0
 fi
 
 if [[ $rc -eq 3 ]]; then
   summary "protected-surface change (SL-022); content checks passed"
-  exit_with_gate_outcome protected-surface-change 3
+  exit 3
 fi
 
 exit "$rc"

@@ -136,7 +136,7 @@ The exact current report/receipt search was:
 ```sh
 rg -n -F \
   'pzg-residual-3033ac6f443ddb6b04e0192ca76446823358795aa0f6394b34065c5271e5d570' \
-  docs/devloop/reports Meta/Digestion/formalizations
+  docs/reports Meta/Digestion/formalizations
 ```
 
 It produced no output and exited `1`.
@@ -146,7 +146,7 @@ The exact scoped all-ref atom search was:
 ```sh
 git log --all --oneline \
   -S'pzg-residual-3033ac6f443ddb6b04e0192ca76446823358795aa0f6394b34065c5271e5d570' \
-  -- D5 Meta/Digestion/formalizations docs/devloop/reports
+  -- D5 Meta/Digestion/formalizations docs/reports
 ```
 
 It produced no output and exited `0`; `git log` uses exit `0` for an empty
@@ -166,7 +166,7 @@ The exact current certificate-artifact search was:
 
 ```sh
 rg -n '2107/19683|全部 17 组|17 组.*全表|脚本与种子|恰式穷举' \
-  D5 Evidence Meta/Digestion/formalizations docs/devloop/reports
+  D5 Evidence Meta/Digestion/formalizations docs/reports
 ```
 
 It produced no output and exited `1`.
@@ -175,10 +175,10 @@ The exact scoped all-ref searches were:
 
 ```sh
 git log --all --oneline -S'2107/19683' \
-  -- D5 Evidence Meta/Digestion/formalizations docs/devloop/reports
+  -- D5 Evidence Meta/Digestion/formalizations docs/reports
 
 git log --all --oneline -S'全部 17 组' \
-  -- D5 Evidence Meta/Digestion/formalizations docs/devloop/reports
+  -- D5 Evidence Meta/Digestion/formalizations docs/reports
 ```
 
 Both produced no output and exited `0`.
@@ -361,7 +361,7 @@ scope checks recorded at collection.
 ## Ledger balance
 
 The only intended tracked change is this report under
-`docs/devloop/reports/`. There are no changes to `Meta/Digestion/**`,
+`docs/reports/`. There are no changes to `Meta/Digestion/**`,
 `Golden/Frozen/**`, formalization receipts, `Generated/**`, `D5/**`,
 `Blueprint/**`, or Scribe sources. The selected digestion atom remains
 untouched for dispatcher-owned disposition.

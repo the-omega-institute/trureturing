@@ -73,7 +73,7 @@ The exact all-reference search was run verbatim:
 
 ```sh
 rg -n -F 'cone-residual-11b1a5fd861ba4cdfeb6d0b960c829985e5e82c2cfffa878ed9f945fb22bc574' \
-  Meta/Digestion/formalizations docs/devloop/reports Golden/Frozen
+  Meta/Digestion/formalizations docs/reports Golden/Frozen
 ```
 
 It exited `1` with no output. The all-history search was:

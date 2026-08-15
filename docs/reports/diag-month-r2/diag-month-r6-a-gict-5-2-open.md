@@ -425,4 +425,4 @@ unresolved subitems can be named by addressable statements, no additional
 bind or cover is valid.
 
 Ledger balanced: yes. Intended changed path:
-`docs/devloop/reports/diag-month-r2/diag-month-r6-a-gict-5-2-open.md`.
+`docs/reports/diag-month-r2/diag-month-r6-a-gict-5-2-open.md`.

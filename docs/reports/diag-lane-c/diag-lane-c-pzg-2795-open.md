@@ -70,7 +70,7 @@ rg -n -i "6765|golden rotation|rotation.*return|first return|irrational.*golden|
 rg -n -i "goldenRatio.*irrational|irrational.*goldenRatio|6765|first return" \
   .lake/packages/mathlib/Mathlib --glob '*.lean'
 rg -n -F "pzg-residual-dc71224083fd410013c0148478a38aede8e0bd4e62827aa1e5a4fcd7eec37333" \
-  Meta/Digestion/formalizations docs/devloop/reports
+  Meta/Digestion/formalizations docs/reports
 ```
 
 Relevant hits were:

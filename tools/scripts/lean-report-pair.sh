@@ -10,7 +10,7 @@ CANDIDATE_OUTPUT=""
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)"
 SUPERVISOR="$SCRIPT_DIR/report/report-supervisor.sh"
 INPUT_HELPER="$SCRIPT_DIR/report/lean-report-input.sh"
-# Local devloop opt-in only: a host/UID-scoped content-addressed report cache.
+# Local opt-in only: a host/UID-scoped content-addressed report cache.
 # Never set in CI, so CI behaviour is byte-for-byte unchanged.
 CACHE_ROOT="${STRATALINT_REPORT_CACHE_ROOT:-}"
 
@@ -110,7 +110,7 @@ verify_report() {
   LAST_REPORT_SHA256="$actual"
 }
 
-# --- Content-addressed canonical-report cache (local devloop opt-in) -----------
+# --- Content-addressed canonical-report cache (local opt-in) -----------
 # Ported from CI (.github/workflows/ci.yml, key
 # stratalint-canonical-lean-report-v1-<address>). Enabled only when
 # STRATALINT_REPORT_CACHE_ROOT is set; CI never sets it. A cache entry is a

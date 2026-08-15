@@ -74,7 +74,7 @@ report, branch commit, or formalization entry was found for the selected atom:
 
 ```text
 rg -n -F "d7985fe8359a834d53c3fe034ce1f396b945c7ef664389ee5aeead00d25c7620" \
-  Meta/Digestion/formalizations docs/devloop/reports
+  Meta/Digestion/formalizations docs/reports
 ```
 
 The only hit is the authoritative residual shard at

@@ -144,14 +144,14 @@ These are exact applications, not declaration-name similarity.
 
 ## Distinctness and prior coverage
 
-Current-tree exact-ID searches over `docs/devloop/reports`,
+Current-tree exact-ID searches over `docs/reports`,
 `Meta/Digestion/formalizations`, `Golden/Frozen`, `D5`, `Blueprint`, and
 `Evidence` returned no hit for the selected `9ba51e...` atom. Likewise:
 
 ```sh
 git log --all --format='%H %s' \
   -S'pzg-residual-9ba51e073a6b7bfd395328fa2968c377a5539d3df64ffcd36797cf9a7faa3548' \
-  -- docs/devloop/reports Meta/Digestion/formalizations \
+  -- docs/reports Meta/Digestion/formalizations \
      Golden/Frozen/accepted D5 Blueprint Evidence
 ```
 

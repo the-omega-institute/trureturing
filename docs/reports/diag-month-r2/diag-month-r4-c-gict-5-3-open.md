@@ -260,7 +260,7 @@ git grep -n -h -E \
   'Real\.cot.*goldenRatio|goldenRatio.*Real\.cot|Real\.cot.*sqrt 5|cot\(πkφ\)/k|cotangent.*series|series.*cotangent' \
   $(git for-each-ref --format='%(refname)') -- \
   'D5/**/*.lean' 'Blueprint/**/*.scribe.cs' 'Blueprint/**/*.md' \
-  'docs/devloop/reports/**/*.md' | sort -u
+  'docs/reports/**/*.md' | sort -u
 ```
 
 It exited `0` with only three unique lines: the `Values.cPhi` comment and the
@@ -416,4 +416,4 @@ analytic Sturmian-Dirichlet `T0` semantics to the algebraic
 carried together, no cover is valid.
 
 Ledger balanced: yes. Intended changed path:
-`docs/devloop/reports/diag-month-r2/diag-month-r4-c-gict-5-3-open.md`.
+`docs/reports/diag-month-r2/diag-month-r4-c-gict-5-3-open.md`.
