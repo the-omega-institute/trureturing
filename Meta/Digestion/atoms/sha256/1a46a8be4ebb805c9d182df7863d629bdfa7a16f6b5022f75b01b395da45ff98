@@ -1,6 +1,0 @@
-**Λ_qc(T) = (T/2)·log(1/x₀) + o(T)——最深的结构性零点,决定到临界的距离。**
-
-机制(定理形待严格化):流权须以边缘增益 e^{t} 压倒该零点之径向劣势 x₀^{−T},二次剖面出因子 ½。
-
-(四)**临界性对照(词典新条)与再就业**。ζ 之体系:Λ = 0(Rodgers–Tao 封顶,恰坐相变点——「若真,勉强为真」);内核截断系:Λ_qc ≈ 0.262·T → ∞(**线性非临界**)——**同一张热流卡,两种命运:RH 之难,在此语言里是「恰好坐在相变点」之难;而内核对象自带结构性内零点,天生离相变线性远。**旧常数 x₀(第一批对角轴测量)再就业为热流临界斜率——坐标系之空间轴又添一钉。〔前沿引注:Hall–Ho, "The heat flow conjecture for polynomials and random matrices", Lett. Math. Phys.(2025;arXiv:2202.09660,含乘法版流);Hall–Ho–Jalowy–Kabluchko 线(随机多项式之热流零点,Electron. J. Probab. 30 (2025));Kabluchko, "Lee–Yang zeroes of the Curie–Weiss ferromagnet, unitary Hermite polynomials, and the backward heat flow"(2024)——圆上反向热流与 Lee–Yang 零点,恰接 26.12 之 FQ–Lee–Yang 分类。〕
-

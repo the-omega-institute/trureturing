@@ -1,4 +1,0 @@
-**𝖫(Δ) = (source, detector, status, next)**
-
-source = residual 来源;detector = 检出(或未检出)它的读数器;**status ∈ {open, closed, tail, semantic}**;future = 未来预算如何处理。账目是工作流对象:来处、见者、状态、去向与预算。
-
