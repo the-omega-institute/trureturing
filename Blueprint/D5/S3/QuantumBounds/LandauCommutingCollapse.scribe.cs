@@ -31,12 +31,11 @@ internal sealed class LandauCommutingCollapseDocument : IScribeDocumentDefinitio
                         "Kronecker product, zero.")),
                     Paragraph(
                         Text(
-                            "Lawrence J. Landau's 1987 work on the violation of Bell's " +
-                            "inequality in quantum theory is contextual historical credit; "),
+                            "Contextual historical credit and the verified bibliographic " +
+                            "metadata and access limit are recorded in "),
                         Ref(Landau.Value),
                         Text(
-                            " records its verified bibliographic metadata and access limit. " +
-                            "The article text was not readable, so this repository-derived " +
+                            ". The article text was not readable, so this repository-derived " +
                             "provenance does not claim that the paper states this exact " +
                             "commuting-pair corollary.")),
                     Paragraph(Text(

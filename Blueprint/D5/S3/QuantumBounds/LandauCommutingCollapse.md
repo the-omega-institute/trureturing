@@ -16,7 +16,7 @@ $$\forall m, n,\ [\operatorname{Fintype}(m)] [\operatorname{DecidableEq}(m)] [\o
 
 Let A0 and A1 and B0 and B1 be finite complex Hermitian involutions. If either the Alice pair or the Bob pair commutes, then the square of their CHSH matrix is four times the identity. The proof specializes LandauIdentity.landau_identity: the local commutation equality makes one commutator, and hence their Kronecker product, zero.
 
-Lawrence J. Landau's 1987 work on the violation of Bell's inequality in quantum theory is contextual historical credit; `D5/L/Quantum/landau1987violation` records its verified bibliographic metadata and access limit. The article text was not readable, so this repository-derived provenance does not claim that the paper states this exact commuting-pair corollary.
+Contextual historical credit and the verified bibliographic metadata and access limit are recorded in `D5/L/Quantum/landau1987violation`. The article text was not readable, so this repository-derived provenance does not claim that the paper states this exact commuting-pair corollary.
 
 This is only the algebraic square equality under a commuting local pair. It does not assert an expectation bound of two, an operator-norm CHSH bound of two, or any optimization over states.
 
