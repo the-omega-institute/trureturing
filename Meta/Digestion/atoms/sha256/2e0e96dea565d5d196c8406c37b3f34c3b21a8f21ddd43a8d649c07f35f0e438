@@ -1,0 +1,25 @@
+### 定理 32.3（读出纤维—Hilbert 余空间等价）
+
+对任意两个密度矩阵 \(\rho,\sigma\)，下列命题等价：
+
+\[
+q_O(\rho)=q_O(\sigma);
+\]
+
+\[
+\operatorname{Tr}
+\bigl(
+(\rho-\sigma)E_a
+\bigr)=0
+\quad
+\forall a;
+\]
+
+\[
+X_\rho-X_\sigma\in R_0;
+\]
+
+\[
+P_{V_0}X_\rho=P_{V_0}X_\sigma.
+\]
+

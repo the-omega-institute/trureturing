@@ -1,0 +1,29 @@
+### 定理 31.8（概率偏差—余质量 Pythagoras 恒等式）
+
+令
+
+\[
+p_{\ell j}
+=
+\operatorname{Tr}
+\left(
+\rho P_j^{\mathcal B_\ell}
+\right).
+\]
+
+则
+
+\[
+\boxed{
+\operatorname{Tr}(\rho^2)-\frac1d
+=
+\sum_{\ell=1}^{m}
+\sum_{j=1}^{d}
+\left(
+p_{\ell j}-\frac1d
+\right)^2
++
+r_m^{(2)}(\rho).
+}
+\]
+
