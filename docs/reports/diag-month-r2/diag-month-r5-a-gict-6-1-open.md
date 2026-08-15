@@ -345,7 +345,7 @@ report itself, exited `1` with no hit:
 ```sh
 rg -n -F \
   'gict-residual-5db40deeb77603206799812f973d4eee90041979570108b72914623feb17810a' \
-  Meta/Digestion/formalizations docs/devloop/reports/diag-month-r2 \
+  Meta/Digestion/formalizations docs/reports/diag-month-r2 \
   --glob '!diag-month-r5-a-gict-6-1-open.md'
 ```
 
@@ -367,7 +367,7 @@ The retained-history searches included the backfill tree and its exact path:
 git log --all --oneline \
   -S'gict-residual-5db40deeb77603206799812f973d4eee90041979570108b72914623feb17810a' \
   -- D5 Blueprint Meta/Digestion/formalizations Meta/Digestion/backfill \
-     docs/devloop/reports/diag-month-r2
+     docs/reports/diag-month-r2
 
 git log --all --follow --oneline -- \
   Meta/Digestion/backfill/gict-v3.6/residual-open/\

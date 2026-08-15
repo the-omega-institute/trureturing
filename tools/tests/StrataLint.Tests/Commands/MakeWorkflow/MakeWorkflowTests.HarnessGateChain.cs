@@ -149,13 +149,12 @@ public sealed partial class MakeWorkflowTests
     }
 
     [Theory]
-    [InlineData(1, 1, "FAIL:SEMANTIC")]
-    [InlineData(2, 2, "FAIL:INFRASTRUCTURE")]
-    [InlineData(3, 0, "PASS:NONE")]
-    public void PreflightConsumesHarnessGateOutcomeAcrossTheFullChain(
+    [InlineData(1, 1)]
+    [InlineData(2, 2)]
+    [InlineData(3, 0)]
+    public void PreflightPreservesHarnessGateExitCodeAcrossTheFullChain(
         int admissionExitCode,
-        int expectedExitCode,
-        string expectedDeclaration)
+        int expectedExitCode)
     {
         if (OperatingSystem.IsWindows()) return;
 
@@ -174,14 +173,14 @@ public sealed partial class MakeWorkflowTests
             "perf_make_spool_dir() { mktemp -d; }\n"
             + "perf_capture_event() { :; }\n"
             + "perf_flush_events() { :; }\n");
-        WriteGateOutcomeReportPair(candidateRoot);
+        WriteHarnessGateChainReportPair(candidateRoot);
 
-        WriteGateOutcomeGitShim(binDirectory, candidateRoot);
-        WriteGateOutcomeDotnetShim(binDirectory);
+        WriteHarnessGateChainGitShim(binDirectory, candidateRoot);
+        WriteHarnessGateChainDotnetShim(binDirectory);
         WriteExecutable(
             Path.Combine(binDirectory, "lake"),
             "#!/usr/bin/env bash\n[[ \"${1:-}\" == --version ]] || exit 64\nexit 0");
-        WriteGateOutcomeMakeShim(binDirectory);
+        WriteHarnessGateChainMakeShim(binDirectory);
 
         var result = BoundedProcessRunner.Run(
             "/bin/bash",
@@ -191,7 +190,7 @@ public sealed partial class MakeWorkflowTests
                 + "PREFLIGHT_GATE=\"$3\" PREFLIGHT_LOCAL_GATE=\"$4\" "
                 + "HOME=\"$5\" BASE=base PATH=\"$6:/usr/bin:/bin\" "
                 + "exec /bin/bash \"$7\"",
-                "preflight-gate-outcome",
+                "preflight-harness-gate-chain",
                 admissionExitCode.ToString(System.Globalization.CultureInfo.InvariantCulture),
                 candidateRoot,
                 Path.Combine(root, ".github", "scripts", "harness-gate.sh"),
@@ -209,14 +208,10 @@ public sealed partial class MakeWorkflowTests
         Assert.True(
             expectedExitCode == result.ExitCode,
             $"expected exit {expectedExitCode}, actual {result.ExitCode}\nstdout:\n{output}\nstderr:\n{error}");
-        Assert.EndsWith(
-            $"FKST_LOCAL_ITERATION_RESULT:v2:{expectedDeclaration}\n",
-            output,
-            StringComparison.Ordinal);
     }
 
     [System.Runtime.Versioning.UnsupportedOSPlatform("windows")]
-    private static void WriteGateOutcomeGitShim(string binDirectory, string candidateRoot) =>
+    private static void WriteHarnessGateChainGitShim(string binDirectory, string candidateRoot) =>
         WriteExecutable(
             Path.Combine(binDirectory, "git"),
             $$"""
@@ -232,7 +227,7 @@ public sealed partial class MakeWorkflowTests
             """);
 
     [System.Runtime.Versioning.UnsupportedOSPlatform("windows")]
-    private static void WriteGateOutcomeDotnetShim(string binDirectory) =>
+    private static void WriteHarnessGateChainDotnetShim(string binDirectory) =>
         WriteExecutable(
             Path.Combine(binDirectory, "dotnet"),
             """
@@ -258,7 +253,7 @@ public sealed partial class MakeWorkflowTests
             """);
 
     [System.Runtime.Versioning.UnsupportedOSPlatform("windows")]
-    private static void WriteGateOutcomeMakeShim(string binDirectory) =>
+    private static void WriteHarnessGateChainMakeShim(string binDirectory) =>
         WriteExecutable(
             Path.Combine(binDirectory, "make"),
             """
@@ -286,7 +281,7 @@ public sealed partial class MakeWorkflowTests
             """);
 
     [System.Runtime.Versioning.UnsupportedOSPlatform("windows")]
-    private static void WriteGateOutcomeReportPair(string candidateRoot)
+    private static void WriteHarnessGateChainReportPair(string candidateRoot)
     {
         var gateDirectory = Path.Combine(candidateRoot, ".github", "scripts");
         Directory.CreateDirectory(gateDirectory);

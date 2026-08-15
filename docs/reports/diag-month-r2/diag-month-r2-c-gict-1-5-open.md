@@ -175,7 +175,7 @@ Exit `1`, no current-tree hit.
 ```sh
 rg -n -F \
   'gict-residual-6706f5aca56b416822592bfdf174870340ad95de2896373968b828ba4a49f0c4' \
-  Meta/Digestion/formalizations docs/devloop/reports
+  Meta/Digestion/formalizations docs/reports
 ```
 
 Exit `1`, no formalization receipt or prior tracked report.

@@ -77,7 +77,7 @@ The selected atom ID has no formalization receipt, report, or branch commit:
 
 ```text
 rg -n -F "pzg-residual-67d2f5a4be3abe0dddd74c2e02356baf51c69540622741abdba5bdc933190b92" \
-  Meta/Digestion/formalizations docs/devloop/reports
+  Meta/Digestion/formalizations docs/reports
 ```
 
 No exact theorem for the two-variable product or either specialization was

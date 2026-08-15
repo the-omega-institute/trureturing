@@ -78,7 +78,7 @@ rg -n -i "Tribonacci|tribonacci|c_T|44\\.4|0\\.955|cubic.*conjug|one real.*two c
 rg -n -i "Tribonacci|tribonacci" \
   .lake/packages/mathlib/Mathlib --glob '*.lean'
 rg -n -F "pzg-residual-b9b6b0a69c0a65c6d437b2c9f3983495cd0d52ffbef6fe6a2c4a7f06e1865ba0" \
-  Meta/Digestion/formalizations docs/devloop/reports
+  Meta/Digestion/formalizations docs/reports
 ```
 
 The results were:
