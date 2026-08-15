@@ -19,8 +19,12 @@ namespace D5.S3.QuantumChannels.ContractionSupremumOrder
 For fixed `gamma` in `[0,1)`, the pointwise SLD-KM-RLD ordering lifts to the indexed
 suprema of the repository's scalar `coherenceRatio` model over `u ∈ (0,1)`.
 
-This is only an ordering of those positive open-axis suprema. It does not establish an
-all-state reduction and makes no claim about the negative axis.
+This theorem closes the sup-level omission recorded by the producer at
+`ContractionSpectrumOrder.lean:139-142`: it lifts the scalar positive-axis pointwise order
+to the corresponding `iSup` order. It does NOT close the producer's recorded
+contraction-coefficient gap. The all-state reduction remains open and is NOT discharged by
+this wave: there is no all-state coefficient definition or reduction from all input states
+to the positive scalar axis. No claim is made about the negative axis.
 -/
 
 /-- The scalar amplitude-damping contraction-ratio suprema on `u ∈ (0,1)` satisfy
