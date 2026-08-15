@@ -337,7 +337,7 @@ jobs:
             # those rules stand on. A branch that departed before the base moved a pin builds
             # against a toolchain that will not exist after the merge, and reports the mismatch
             # as broken mathematics in modules it never touched.
-            bash tools/scripts/check-environment-pin-staleness.sh \
+            bash tools/scripts/checks/check-environment-pin-staleness.sh \
               "$base" "$sha" "$head" candidate
           else
             sha="${{ github.event.before }}"
