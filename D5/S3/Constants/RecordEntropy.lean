@@ -84,5 +84,3 @@ theorem haar_record_entropy_bits :
       ring
 
 end D5.S3.Constants.RecordEntropy
-
--- capacity probe
