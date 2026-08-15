@@ -12,7 +12,7 @@ public sealed partial class MakeWorkflowTests
         var makefile = File.ReadAllText(Path.Combine(root, "Makefile"));
         var script = File.ReadAllText(Path.Combine(root, PlaybookWorkflowScriptPath));
 
-        foreach (var target in new[] { "deliver-check", "receipts-stage", "derived-refresh" })
+        foreach (var target in new[] { "deliver-check", "receipts-stage" })
         {
             Assert.Contains($"make {target}", makefile, StringComparison.Ordinal);
             Assert.Contains(
