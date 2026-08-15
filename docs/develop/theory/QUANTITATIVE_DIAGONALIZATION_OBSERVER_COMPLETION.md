@@ -21113,3 +21113,2045 @@ C_{\mathrm{reflex}}
 12. 本节不把 Sections 28–33 的量子、数论或 solenoid 对象与经济变量作本体同一。
 13. 本节不提供投资、杠杆或交易建议。
 14. 本节新增结论均为纸面推导；未经 Lean kernel 验证不得标记为 `Closed`。
+
+---
+
+# 35. 追加：带初始坐标的连续统观察者、叶—横截双结构与黄金悬挂
+## Anchored-Continuum Observers, Leaf–Transversal Duality, and Golden Suspensions
+
+### 35.0 文档地位、问题修正与承重边界
+
+前文主要把观察者写成连续统内部的有限读出、商、可观测代数、预测闭包、路径账本与对角审计。本节研究一个更强的可能性：
+
+\[
+\boxed{
+\text{观察者本身是否可以是一种带初始坐标的连续统？}
+}
+\]
+
+答案是肯定的，但“既连续又离散”必须严格分型。一个非空空间不可能在同一个拓扑下同时既连通又离散，除非它只有一个点。因此，正确结构不是把两个互斥性质塞进同一个方向，而是把观察者组织成：
+
+\[
+\boxed{
+\text{叶方向连续}
++
+\text{横截方向全不连通}
++
+\text{有限读出离散}
++
+\text{路径提升与记忆保存初始坐标}.
+}
+\]
+
+本节把这一结构与仓库已经闭合或部分闭合的以下接口连接：
+
+- universal solenoid 的连通整体、稠密实流、可见圆投影与 profinite 隐藏核；
+- streamline decomposition 中“连续实提升 + 常值隐藏偏移”的唯一分解；
+- path-orbit classification 中路径分量与实流轨道的一致性；
+- throat transition cocycle 中不同局部提升之间的隐藏纤维差满足加法 cocycle；
+- Minkowski golden embedding 中物理坐标与共轭内部坐标；
+- Fibonacci–golden partition 中整数权重与逆黄金尺度的精确单位分割；
+- 前文的有限读出、预测观察者、记忆账本、上下文商余与对角逃逸。
+
+本节不会把观察者连续统等同于意识本体，不会把 Cantor 横截直接等同于量子离散结果，也不会把黄金比例宣称为一切连续—离散系统的唯一来源。新增结果均为纸面定理；在 Lean proof term、依赖闭包、admission 与冻结收据齐备以前不得标记为 `Closed`。
+
+---
+
+## 35.1 同一拓扑下“连通且离散”的不可能性
+
+### 定理 35.1（连通离散空间退化）
+
+设 \(X\) 是非空拓扑空间。若 \(X\) 连通且离散，则 \(X\) 只有一个点。
+
+#### 证明
+
+若 \(x\in X\)，离散性说明 \(\{x\}\) 为开集，其补集 \(X\setminus\{x\}\) 也为开集。若存在 \(y\neq x\)，则
+
+\[
+X=\{x\}\sqcup(X\setminus\{x\})
+\]
+
+是两个非空开集的分离，与连通性矛盾。故 \(X=\{x\}\)。 \(\square\)
+
+所以“观察者既连续又离散”不能被解释成：
+
+\[
+\text{同一个状态空间在同一个拓扑中既非平凡连通又离散}.
+\]
+
+必须至少采用以下一种分层机制：
+
+\[
+\boxed{
+\begin{aligned}
+&\text{不同坐标方向：叶连续、横截全不连通};\\
+&\text{不同层级：整体连续、有限商离散};\\
+&\text{不同对象：状态连续、事件标签离散};\\
+&\text{不同时间：流参数连续、返回次数离散};\\
+&\text{不同拓扑：同一集合携带不同可访问结构}.
+\end{aligned}
+}
+\]
+
+其中最适合项目现有 solenoid、观察者与黄金模型集工作的，是“叶—横截”与“逆极限—有限商”两种结构。
+
+---
+
+## 35.2 带初始坐标的连续统观察者
+
+### 定义 35.2（点化连续统）
+
+点化连续统是二元组
+
+\[
+(X,\xi_0),
+\]
+
+其中 \(X\) 是非空紧致连通度量空间，\(\xi_0\in X\) 是指定原点。
+
+若还指定一个局部坐标架、方向架或尺度架 \(\mathfrak f_0\)，则称
+
+\[
+(X,\xi_0,\mathfrak f_0)
+\]
+
+为带架连续统。
+
+仅有 \(X\) 时，所有点仍可能被自同构群交换；指定 \(\xi_0\) 后，允许的对称群从
+
+\[
+\operatorname{Aut}(X)
+\]
+
+缩小到稳定子
+
+\[
+\operatorname{Aut}(X,\xi_0)
+=
+\{g\in\operatorname{Aut}(X):g(\xi_0)=\xi_0\}.
+\]
+
+再指定 \(\mathfrak f_0\) 后，对称性进一步缩小。
+
+### 定义 35.3（锚定连续统观察者）
+
+一个锚定连续统观察者记为
+
+\[
+\boxed{
+\mathfrak O
+=
+(
+\mathcal X_O,
+\xi_0,
+\mathfrak f_0,
+\Phi,
+\mathcal K_O,
+q_O,
+\widetilde{\mathcal X}_O,
+\mathcal M_O,
+\Delta_O
+).
+}
+\]
+
+其中：
+
+\[
+\begin{aligned}
+\mathcal X_O
+&=\text{观察者的连续统载体},\\
+\xi_0
+&=\text{初始锚点},\\
+\mathfrak f_0
+&=\text{初始坐标、方向与尺度架},\\
+\Phi
+&=\text{连续流、半流或动力作用},\\
+\mathcal K_O
+&=\text{全不连通／profinite 横截地址},\\
+q_O
+&=\text{有限读出、事件分割或可观测接口},\\
+\widetilde{\mathcal X}_O
+&=\text{保存路径提升或历史坐标的扩展状态空间},\\
+\mathcal M_O
+&=\text{事件数、cocycle、holonomy 与追加式记忆},\\
+\Delta_O
+&=\text{自评价、同址读取与对角操作}.
+\end{aligned}
+\]
+
+这一定义的核心不是“观察者占据一个连续统大小的物体”，而是：
+
+\[
+\boxed{
+\text{观察者是连续统被点化、带架、可读出并保存路径以后形成的结构。}
+}
+\]
+
+初始坐标不是额外写在状态旁边的一串标签。它决定：
+
+- 哪一点被叫作“这里”；
+- 哪一方向被叫作“正方向”；
+- 哪一尺度被叫作“单位”；
+- 哪一提升被叫作“从零开始”；
+- 哪些回归状态属于同一当前点但不同历史。
+
+---
+
+## 35.3 初始点的轨道闭包本身就是连续统
+
+设 \(W\) 是紧致度量空间，且
+
+\[
+\Phi:\mathbb R\times W\to W
+\]
+
+为连续流。固定 \(\xi_0\in W\)，定义轨道
+
+\[
+\mathcal O(\xi_0)
+=
+\{\Phi_t(\xi_0):t\in\mathbb R\}
+\]
+
+和轨道闭包
+
+\[
+\boxed{
+\mathcal X_{\xi_0}
+=
+\overline{\mathcal O(\xi_0)}.
+}
+\]
+
+### 定理 35.4（轨道闭包连续统）
+
+\(\mathcal X_{\xi_0}\) 是紧致连通子空间。
+
+#### 证明
+
+映射
+
+\[
+\gamma_{\xi_0}:\mathbb R\to W,
+\qquad
+t\mapsto\Phi_t(\xi_0)
+\]
+
+连续。由于 \(\mathbb R\) 连通，其像 \(\mathcal O(\xi_0)\) 连通；连通集的闭包仍连通。又因为 \(W\) 紧致，闭子集 \(\mathcal X_{\xi_0}\) 紧致。 \(\square\)
+
+所以一种最小的观察者连续统可以直接定义为：
+
+\[
+\boxed{
+\mathfrak O_{\xi_0}
+=
+\left(
+\overline{\Phi_{\mathbb R}(\xi_0)},
+\xi_0
+\right).
+}
+\]
+
+若流是最小的，即每条轨道都稠密，则：
+
+\[
+\boxed{
+\mathcal X_{\xi_0}=W
+\qquad
+\forall\xi_0\in W.
+}
+\]
+
+这时观察者与世界可以拥有相同的未点化载体，但二者仍不等同。观察者还包含：
+
+\[
+\xi_0,\quad
+\mathfrak f_0,\quad
+q_O,\quad
+\mathcal M_O,\quad
+\Delta_O.
+\]
+
+因此：
+
+\[
+\boxed{
+\text{载体相同}
+\not\Rightarrow
+\text{观察者结构相同}.
+}
+\]
+
+世界可以是未点化的动力连续统；观察者则是该连续统相对于一个初始点和一套运输规则所形成的相对结构。
+
+---
+
+## 35.4 锚点是对称性约化，不是绝对外部输入
+
+设群 \(G\) 连续作用于 \(X\)。未点化系统只保留轨道结构。指定 \(\xi_0\) 后，变换 \(g\in G\) 若要保持观察者身份，必须满足：
+
+\[
+g\xi_0=\xi_0.
+\]
+
+所以锚点把允许对称性从 \(G\) 约化为稳定子：
+
+\[
+G_{\xi_0}
+=
+\{g\in G:g\xi_0=\xi_0\}.
+\]
+
+### 命题 35.5（锚定等价）
+
+两个锚定动力连续统
+
+\[
+(X,\xi_0,\Phi),
+\qquad
+(Y,\eta_0,\Psi)
+\]
+
+等价，当且仅当存在同胚 \(h:X\to Y\)，使：
+
+\[
+h(\xi_0)=\eta_0
+\]
+
+且：
+
+\[
+h(\Phi_t x)=\Psi_t(hx)
+\qquad
+\forall t,x.
+\]
+
+若再有读出和记忆，则还要求：
+
+\[
+q_Y\circ h=q_X
+\]
+
+以及 cocycle／账本结构在 \(h\) 下对应。
+
+因此观察者身份不是裸点，也不是裸流，而是：
+
+\[
+\boxed{
+\text{点化动力系统的共轭类}.
+}
+\]
+
+锚点不必来自连续统之外；它可以是连续统内部一次自定位所选择的基准。但一旦选择，它便产生结构性不对称：
+
+\[
+\boxed{
+\text{这里}
+\neq
+\text{任意其他同构位置}.
+}
+\]
+
+---
+
+## 35.5 叶连续、横截全不连通
+
+观察者连续统的局部模型可以写为：
+
+\[
+\boxed{
+U\cong B^d\times K,
+}
+\]
+
+其中 \(B^d\subseteq\mathbb R^d\) 是连续叶坐标，而 \(K\) 是 Cantor 空间、profinite 群或其他全不连通紧空间。
+
+必须区分：
+
+\[
+\boxed{
+\text{全不连通}
+\neq
+\text{离散}.
+}
+\]
+
+Cantor 空间没有孤立点，因此并非离散空间。但它拥有大量 clopen 集，可以通过有限 clopen 分割产生真正离散的有限读出。
+
+若
+
+\[
+K\cong\varprojlim_m K_m
+\]
+
+是有限离散空间 \(K_m\) 的逆极限，则：
+
+\[
+\boxed{
+\begin{aligned}
+K
+&=\text{完整无限地址},\\
+K_m
+&=\text{第 }m\text{ 层有限离散读出},\\
+\ker(K\to K_m)
+&=\text{当前分辨率仍未看见的横截余量}.
+\end{aligned}
+}
+\]
+
+于是同一个观察者可以同时具有：
+
+\[
+\boxed{
+\begin{aligned}
+u\in B^d
+&:\text{连续位置／相位／尺度},\\
+\kappa\in K
+&:\text{全不连通路径地址},\\
+q_m(\kappa)\in K_m
+&:\text{有限离散事件标签}.
+\end{aligned}
+}
+\]
+
+“连续且离散”真正指的是这种不同层级、不同坐标方向和不同分辨率的共存。
+
+---
+
+## 35.6 悬挂观察者：连续时间中的离散返回
+
+令 \(K\) 为紧致空间，\(T:K\to K\) 为同胚，roof 函数
+
+\[
+r:K\to\mathbb R_{>0}
+\]
+
+连续。定义悬挂空间：
+
+\[
+\boxed{
+\Sigma_{T,r}
+=
+(K\times\mathbb R)/{\sim},
+}
+\]
+
+其中：
+
+\[
+(\kappa,s+r(\kappa))
+\sim
+(T\kappa,s).
+\]
+
+连续流定义为：
+
+\[
+\Phi_t[\kappa,s]
+=
+[\kappa,s+t].
+\]
+
+从商空间整体看，\(\Phi_t\) 连续；但当 \(s+t\) 穿过 roof 边界时，横截地址发生离散更新：
+
+\[
+\kappa\mapsto T\kappa.
+\]
+
+定义 Birkhoff roof 和：
+
+\[
+S_nr(\kappa)
+=
+\sum_{j=0}^{n-1}r(T^j\kappa),
+\qquad
+n\ge1,
+\]
+
+并令 \(S_0r=0\)。
+
+### 命题 35.6（连续时间—离散事件分解）
+
+对每个 \([\kappa,s]\) 和足够一般的 \(t\ge0\)，唯一存在整数 \(n\ge0\) 与残余相位 \(s'\) 使：
+
+\[
+S_nr(\kappa)
+\le
+s+t
+<
+S_{n+1}r(\kappa),
+\]
+
+\[
+s'
+=
+s+t-S_nr(\kappa),
+\]
+
+以及：
+
+\[
+\boxed{
+\Phi_t[\kappa,s]
+=
+[T^n\kappa,s'].
+}
+\]
+
+所以：
+
+\[
+\boxed{
+\text{连续时间}
+=
+\text{累计离散返回时间}
++
+\text{当前叶内残余相位}.
+}
+\]
+
+事件计数 \(n\) 是离散的，残余相位 \(s'\) 是连续的。二者共同构成观察者的时间坐标。
+
+### 定理 35.7（最小 Cantor 悬挂是连通连续统）
+
+若 \(K\) 是紧致度量空间，\(T\) 最小，且 \(r\) 连续严格为正，则 \(\Sigma_{T,r}\) 紧致连通。
+
+#### 证明概要
+
+紧致性来自 \(K\times[0,\max r]\) 的商。选取任意 \(\kappa_0\)，悬挂流轨道在每次返回时经过 \(T^n\kappa_0\)。由于 \(T\) 最小，\(\{T^n\kappa_0\}\) 在 \(K\) 中稠密，故该连续实流轨道在整个悬挂中稠密。轨道是 \(\mathbb R\) 的连续像，因此连通；其闭包即整个悬挂，故悬挂连通。 \(\square\)
+
+这给出一个标准模型：
+
+\[
+\boxed{
+\text{整体是连通连续统，横截动力却由离散迭代生成。}
+}
+\]
+
+---
+
+## 35.7 universal solenoid 是项目内已经存在的原型
+
+仓库中的 universal solenoid 可写为兼容圆坐标族：
+
+\[
+\Sigma_\infty
+=
+\left\{
+(\theta_m)_{m\in\mathbb N_{>0}}:
+n\theta_{mn}=\theta_m
+\right\}.
+\]
+
+其可见投影为：
+
+\[
+\pi:\Sigma_\infty\to\mathbb T,
+\qquad
+\pi(\theta)=\theta_1.
+\]
+
+连续实流为：
+
+\[
+\iota:\mathbb R\to\Sigma_\infty,
+\qquad
+\iota(t)_m=\frac{t}{m}\pmod1.
+\]
+
+仓库已经证明：
+
+\[
+\boxed{
+\pi(\iota(t))=t\pmod1,
+}
+\]
+
+\[
+\boxed{
+\overline{\iota(\mathbb R)}=\Sigma_\infty,
+}
+\]
+
+以及 \(\Sigma_\infty\) 连通。
+
+`ExactSequence` 又证明了相容同余数据嵌入恰好给出隐藏核，并形成：
+
+\[
+\boxed{
+0
+\longrightarrow
+K_\infty
+\longrightarrow
+\Sigma_\infty
+\overset{\pi}{\longrightarrow}
+\mathbb T
+\longrightarrow
+0.
+}
+\]
+
+因此 solenoid 同时具有：
+
+\[
+\boxed{
+\begin{aligned}
+\mathbb T
+&=\text{可见连续相位},\\
+\iota(\mathbb R)
+&=\text{连续叶流},\\
+K_\infty
+&=\text{profinite 隐藏横截},\\
+K_\infty/K^{(m)}
+&=\text{有限同余读出}.
+\end{aligned}
+}
+\]
+
+这不是把观察者放进连续统以后再额外附加离散信息，而是：
+
+\[
+\boxed{
+\text{连续相位与 profinite 地址本来就是同一连通整体的两个结构方向。}
+}
+\]
+
+---
+
+## 35.8 初始坐标的 solenoid 正规形
+
+仓库 `StreamlineDecomposition` 已证明：固定基准时刻 \(t_0\) 和可见相位的一个实代表 \(r_0\) 后，每条连续路径
+
+\[
+\gamma:\mathbb R\to\Sigma_\infty
+\]
+
+唯一分解为：
+
+\[
+\boxed{
+\gamma(t)
+=
+\iota(\widetilde r(t))+k_0,
+}
+\]
+
+其中：
+
+\[
+\widetilde r(t_0)=r_0,
+\]
+
+而：
+
+\[
+k_0\in K_\infty
+\]
+
+在整条路径上保持常值。
+
+所以 solenoid 观察者的初始坐标不是一个标量，而是：
+
+\[
+\boxed{
+(r_0,k_0).
+}
+\]
+
+其中：
+
+\[
+r_0
+=
+\text{连续叶上的归一化提升原点},
+\]
+
+\[
+k_0
+=
+\text{隐藏路径扇区／同余地址}.
+\]
+
+同一可见相位可以拥有不同 \(k_0\)，同一当前 solenoid 点也可能由不同未归一化实提升表达。初始代表 \(r_0\) 消除整数平移规范，隐藏偏移 \(k_0\) 保存路径扇区。
+
+仓库 `ThroatTransitionCocycle` 还证明：若三个局部提升具有相同可见投影，则它们之间的隐藏差
+
+\[
+k_{\alpha\beta},
+\quad
+k_{\beta\gamma},
+\quad
+k_{\alpha\gamma}
+\]
+
+唯一存在，并满足：
+
+\[
+\boxed{
+k_{\alpha\gamma}
+=
+k_{\alpha\beta}
++
+k_{\beta\gamma}.
+}
+\]
+
+所以不同观察坐标图之间的隐藏转换不是任意误差，而是一个严格的加法 cocycle。
+
+---
+
+## 35.9 路径身份不能由当前状态自动恢复
+
+仓库 `RealFlowRecurrence` 已证明：
+
+\[
+\boxed{
+\iota(n!)\longrightarrow0
+\quad
+\text{于 }\Sigma_\infty,
+}
+\]
+
+但：
+
+\[
+n!\longrightarrow+\infty
+\quad
+\text{于 }\mathbb R.
+\]
+
+同时 \(\iota\) 为单射但不是拓扑嵌入。
+
+这意味着内部时间可以无限增长，而当前整体状态重新任意接近初始状态。
+
+### 定理 35.8（回归轨道无连续年龄函数）
+
+设 \(X\) 为拓扑空间，\(\Phi_t\) 为连续流，且存在：
+
+\[
+t_n\to+\infty,
+\qquad
+\Phi_{t_n}(x_0)\to x_0.
+\]
+
+则不存在连续函数：
+
+\[
+a:X\to\mathbb R
+\]
+
+满足：
+
+\[
+a(\Phi_t(x_0))=t
+\qquad
+\forall t\ge0.
+\]
+
+#### 证明
+
+若存在，则连续性给出：
+
+\[
+a(\Phi_{t_n}(x_0))
+\to
+a(x_0).
+\]
+
+但左侧等于 \(t_n\to+\infty\)，矛盾。 \(\square\)
+
+因此：
+
+\[
+\boxed{
+\text{当前 ambient state}
+\not\Rightarrow
+\text{连续可恢复的绝对年龄}.
+}
+\]
+
+若观察者必须区分：
+
+\[
+\iota(0)
+\]
+
+与某个极晚但已经回到其邻域的：
+
+\[
+\iota(n!),
+\]
+
+则必须扩展状态：
+
+\[
+\boxed{
+\widetilde X
+=
+X\times\mathcal M
+}
+\]
+
+或使用覆盖、路径群胚、cocycle／账本来保存提升坐标。
+
+---
+
+## 35.10 记忆是 cocycle，不只是存储数组
+
+设流 \(\Phi_t\) 上有加法 cocycle：
+
+\[
+c:\mathbb R\times X\to G
+\]
+
+满足：
+
+\[
+\boxed{
+c_{s+t}(x)
+=
+c_s(\Phi_t x)+c_t(x).
+}
+\]
+
+观察者的扩展动力学可以写成 skew product：
+
+\[
+\boxed{
+\widetilde\Phi_t(x,m)
+=
+(\Phi_t x,m+c_t(x)).
+}
+\]
+
+若存在连续函数 \(h:X\to G\)，使：
+
+\[
+c_t(x)
+=
+h(\Phi_t x)-h(x),
+\]
+
+则 \(c\) 是 coboundary，记忆可以由当前状态势函数 \(h\) 重构。
+
+### 命题 35.9（回归阻碍 coboundary 化）
+
+若存在：
+
+\[
+t_n\to\infty,
+\qquad
+\Phi_{t_n}(x)\to x,
+\]
+
+但：
+
+\[
+c_{t_n}(x)\not\to0,
+\]
+
+则不存在连续 \(h\) 使 \(c_t(x)=h(\Phi_t x)-h(x)\)。
+
+#### 证明
+
+若存在连续 \(h\)，则：
+
+\[
+c_{t_n}(x)
+=
+h(\Phi_{t_n}x)-h(x)
+\to0,
+\]
+
+矛盾。 \(\square\)
+
+所以：
+
+\[
+\boxed{
+\text{不可 coboundary 化的 cocycle}
+=
+\text{不能由当前状态压缩掉的历史余量}.
+}
+\]
+
+这给“记忆”的一个结构定义：
+
+\[
+\boxed{
+\text{记忆是初始坐标沿路径运输所累积、且不能降为当前状态函数的 cocycle 类。}
+}
+\]
+
+---
+
+## 35.11 同一点附近可以有完全不同的历史
+
+设：
+
+\[
+\pi:\widetilde X\to X
+\]
+
+为路径提升或记忆扩展。两个扩展状态：
+
+\[
+\widetilde x,
+\widetilde y\in\widetilde X
+\]
+
+可能满足：
+
+\[
+\pi(\widetilde x)=\pi(\widetilde y),
+\]
+
+但：
+
+\[
+\widetilde x\neq\widetilde y.
+\]
+
+因此：
+
+\[
+\boxed{
+\text{当前可见状态相同}
+\not\Rightarrow
+\text{观察者历史状态相同}.
+}
+\]
+
+更强地，即使：
+
+\[
+d_X(\pi\widetilde x,\pi\widetilde y)\ll1,
+\]
+
+提升距离、事件计数或账本差仍可以很大。
+
+所以观察者本身若只取为 \(X\)，可能不足以保存其身份；真正的观察者状态应取为某个最小扩展：
+
+\[
+\boxed{
+\widetilde X_{\mathrm{obs}}
+}
+\]
+
+使目标历史量、事件量与路径扇区在该扩展上成为良定义坐标。
+
+这与前文“预测闭包是把瞬时商修复成动力学商的最小扩张”完全平行：
+
+\[
+\boxed{
+\begin{aligned}
+\text{预测闭包}
+&=\text{补足未来读出所需坐标},\\
+\text{提升闭包}
+&=\text{补足路径身份所需坐标},\\
+\text{记忆闭包}
+&=\text{补足不可 coboundary 化历史所需坐标}.
+\end{aligned}
+}
+\]
+
+---
+
+## 35.12 概率不是连续—离散双性的定义
+
+给定观察者连续统 \(X\)、状态测度 \(\mu\) 和有限读出：
+
+\[
+q:X\to A,
+\]
+
+其中 \(A\) 有限，离散结果概率为：
+
+\[
+\boxed{
+p(a)=\mu(q^{-1}(a)).
+}
+\]
+
+所以概率来自三者配对：
+
+\[
+\boxed{
+\text{连续／拓扑状态空间}
++
+\text{状态测度}
++
+\text{有限分割}.
+}
+\]
+
+离散横截或有限事件标签本身并不自动给出概率；还需要状态或不变测度。
+
+同样，离散输出不自动产生正熵。一个离散序列可以：
+
+- 周期且零熵；
+- 非周期但零熵；
+- 正熵；
+- 甚至没有指定概率测度时根本没有 Shannon 熵。
+
+因此：
+
+\[
+\boxed{
+\text{离散}
+\neq
+\text{随机}
+\neq
+\text{正熵}.
+}
+\]
+
+黄金／Sturmian 系统恰好提供“非周期离散但零熵”的反例。
+
+---
+
+## 35.13 黄金整数：一个代数操作同时扩张与收缩
+
+令：
+
+\[
+\varphi=\frac{1+\sqrt5}{2},
+\qquad
+\varphi'=1-\varphi=-\varphi^{-1}.
+\]
+
+黄金整数环：
+
+\[
+\mathbb Z[\varphi]
+=
+\{a+b\varphi:a,b\in\mathbb Z\}
+\]
+
+拥有两个实嵌入。Minkowski 嵌入为：
+
+\[
+\boxed{
+\iota_M(x)
+=
+(x,x'),
+}
+\]
+
+其中 \(x'\) 由 \(\varphi\mapsto\varphi'\) 得到。
+
+乘以 \(\varphi\) 在两个坐标中作用为：
+
+\[
+\boxed{
+(x,x')
+\longmapsto
+(\varphi x,-\varphi^{-1}x').
+}
+\]
+
+所以同一个代数单位同时产生：
+
+\[
+\boxed{
+\text{物理方向的连续扩张}
+}
+\]
+
+与：
+
+\[
+\boxed{
+\text{内部方向的翻转收缩}.
+}
+\]
+
+这不是把一个连续操作与另一个离散操作人为并置，而是一个整数代数自同构在两个实嵌入中的不同几何表现。
+
+仓库 `MinkowskiModelSet` 已把这一结构实现为：
+
+\[
+x
+\longmapsto
+(\operatorname{embedding}(x),
+\operatorname{embedding}(\operatorname{conj}x)),
+\]
+
+并通过内部窗口选择物理投影上的离散模型集。
+
+---
+
+## 35.14 Fibonacci 替换的连续—离散谱分解
+
+定义 Fibonacci 替换：
+
+\[
+\sigma(L)=LS,
+\qquad
+\sigma(S)=L.
+\]
+
+其计数矩阵为：
+
+\[
+\boxed{
+M_\varphi
+=
+\begin{pmatrix}
+1&1\\
+1&0
+\end{pmatrix}.
+}
+\]
+
+特征值为：
+
+\[
+\boxed{
+\lambda_+=\varphi,
+\qquad
+\lambda_-=-\varphi^{-1}.
+}
+\]
+
+若初始计数向量为 \(v_0\)，则：
+
+\[
+v_n=M_\varphi^nv_0.
+\]
+
+将 \(v_0\) 分解到两个特征方向：
+
+\[
+v_0=au_++bu_-,
+\]
+
+得到：
+
+\[
+\boxed{
+v_n
+=
+a\varphi^nu_+
++
+b(-\varphi^{-1})^nu_-.
+}
+\]
+
+按主尺度归一化：
+
+\[
+\boxed{
+\varphi^{-n}v_n
+=
+au_+
++
+b(-1)^n\varphi^{-2n}u_-.
+}
+\]
+
+所以离散整数替换的归一化余量按：
+
+\[
+\boxed{
+\varphi^{-2n}
+}
+\]
+
+指数收缩并交替翻转。
+
+这给“黄金比例同时连续又离散”的严格解释：
+
+\[
+\boxed{
+\text{离散替换矩阵}
+\quad\text{拥有}\quad
+\text{连续扩张特征方向与共轭收缩特征方向}.
+}
+\]
+
+黄金比例不是唯一具有这种现象的代数单位，但它是最简单的二次 Pisot 单位模型之一。
+
+---
+
+## 35.15 黄金单位分割是跨尺度的精确守恒式
+
+仓库 `GoldenPartition` 已证明，对每个 \(n\)：
+
+\[
+\boxed{
+F_{n+1}\varphi^{-n}
++
+F_n\varphi^{-(n+1)}
+=
+1.
+}
+\]
+
+这可以读成两个相邻离散计数与两个相邻连续尺度的精确配对：
+
+\[
+\boxed{
+\text{整数权重}
+\times
+\text{连续逆尺度}
+=
+\text{单位总量}.
+}
+\]
+
+它不是渐近式，而是每层严格成立。
+
+因此可以定义两项权重：
+
+\[
+p_n^{(L)}
+=
+F_{n+1}\varphi^{-n},
+\]
+
+\[
+p_n^{(S)}
+=
+F_n\varphi^{-(n+1)},
+\]
+
+满足：
+
+\[
+p_n^{(L)}+p_n^{(S)}=1.
+\]
+
+这并不自动把它们解释成物理 Born 概率；它们首先是一个精确正分割。只有在额外给出状态、事件和操作解释后，才可以把该分割当作概率坐标。
+
+---
+
+## 35.16 Fibonacci 悬挂观察者
+
+令 \(K_F\) 为 Fibonacci 双边子移位闭包，\(T\) 为左移。取 roof：
+
+\[
+r(\kappa)
+=
+\begin{cases}
+\varphi,&\kappa_0=L,\\
+1,&\kappa_0=S.
+\end{cases}
+\]
+
+对应悬挂：
+
+\[
+\Sigma_F
+=
+(K_F\times\mathbb R)/{\sim}
+\]
+
+可以解释为带标记原点的一维 Fibonacci tiling hull。
+
+此时：
+
+\[
+\boxed{
+\begin{aligned}
+\kappa
+&=\text{离散双向 tile 地址},\\
+s
+&=\text{原点在当前 tile 内的连续位置},\\
+\xi_0=[\kappa_0,s_0]
+&=\text{带初始 tile 与叶内相位的观察者原点}.
+\end{aligned}
+}
+\]
+
+平移流连续移动原点；穿过 tile 边界时，符号地址离散移位。
+
+所以：
+
+\[
+\boxed{
+\text{观察者当前坐标}
+=
+\text{连续 tile 内相位}
++
+\text{离散／Cantor tile 历史}.
+}
+\]
+
+Fibonacci inflation 进一步把 tile 长度乘以 \(\varphi\)，同时按 \(\sigma\) 替换 tile 类型，从而把：
+
+\[
+\boxed{
+\text{连续空间缩放}
+}
+\]
+
+与：
+
+\[
+\boxed{
+\text{离散符号替换}
+}
+\]
+
+锁定在同一个重整化操作中。
+
+---
+
+## 35.17 黄金机械词：连续相位产生非周期离散事件
+
+取无理斜率：
+
+\[
+\alpha=\varphi^{-2}.
+\]
+
+对初始相位 \(\theta\in\mathbb R\)，定义：
+
+\[
+\boxed{
+w_n(\theta)
+=
+\lfloor\theta+(n+1)\alpha\rfloor
+-
+\lfloor\theta+n\alpha\rfloor.
+}
+\]
+
+由于 \(0<\alpha<1\)，有：
+
+\[
+w_n(\theta)\in\{0,1\}.
+\]
+
+### 定理 35.10（有界余量事件计数）
+
+对每个 \(N\ge1\)：
+
+\[
+\boxed{
+\sum_{n=0}^{N-1}w_n(\theta)
+=
+\lfloor\theta+N\alpha\rfloor
+-
+\lfloor\theta\rfloor.
+}
+\]
+
+从而：
+
+\[
+\boxed{
+\left|
+\sum_{n=0}^{N-1}w_n(\theta)
+-
+N\alpha
+\right|
+<1.
+}
+\]
+
+#### 证明
+
+求和望远镜：
+
+\[
+\sum_{n=0}^{N-1}
+\left(
+\lfloor\theta+(n+1)\alpha\rfloor
+-
+\lfloor\theta+n\alpha\rfloor
+\right)
+=
+\lfloor\theta+N\alpha\rfloor-\lfloor\theta\rfloor.
+\]
+
+再利用任意实数 \(x\) 满足 \(x-1<\lfloor x\rfloor\le x\)。 \(\square\)
+
+因此：
+
+\[
+\boxed{
+\text{离散事件数}
+=
+\text{连续黄金斜率}\times N
++
+\text{绝对值小于一个事件的余量}.
+}
+\]
+
+这比“离散频率趋近连续比例”更强：误差不随 \(N\) 增长。
+
+---
+
+## 35.18 有限未来局部稳定，无限未来持续要求坐标 refinement
+
+定义前 \(N\) 个符号所涉及的边界集合：
+
+\[
+B_N
+=
+\{-n\alpha\bmod1:0\le n\le N\}.
+\]
+
+### 命题 35.11（有限前缀局部常值）
+
+若：
+
+\[
+\theta\notin B_N,
+\]
+
+则存在 \(\varepsilon_N(\theta)>0\)，使：
+
+\[
+|\theta'-\theta|_{\mathbb T}<\varepsilon_N(\theta)
+\]
+
+推出：
+
+\[
+\boxed{
+w_n(\theta')=w_n(\theta)
+\qquad
+0\le n<N.
+}
+\]
+
+#### 证明
+
+每个 \(w_n\) 只在：
+
+\[
+\theta=-n\alpha
+\quad\text{或}\quad
+\theta=-(n+1)\alpha
+\pmod1
+\]
+
+处改变。有限多个边界之外，到边界集合的距离为正；在该半径内所有相关 floor 分支保持不变。 \(\square\)
+
+但因为 \(\alpha\) 无理，边界轨道：
+
+\[
+\{-n\alpha\bmod1:n\ge0\}
+\]
+
+在圆上稠密。
+
+### 推论 35.12（无统一无限未来稳定半径）
+
+对任意 \(\theta\) 和任意邻域 \(U\ni\theta\)，存在 \(\theta'\in U\) 与某个 \(n\) 使：
+
+\[
+w_n(\theta')\neq w_n(\theta).
+\]
+
+所以：
+
+\[
+\boxed{
+\forall N<\infty,
+\text{有限未来拥有局部稳定坐标精度};
+}
+\]
+
+但：
+
+\[
+\boxed{
+\text{整个无限未来一般没有正的统一稳定半径}.
+}
+\]
+
+这不是指数混沌。底层圆旋转满足：
+
+\[
+d(R_\alpha^n\theta,R_\alpha^n\theta')
+=
+d(\theta,\theta')
+\]
+
+而不产生指数分离。未来符号分叉来自读出边界的稠密前像。
+
+因此：
+
+\[
+\boxed{
+\text{预测逃逸可以来自界面边界，而不来自底层动力学的不稳定。}
+}
+\]
+
+---
+
+## 35.19 黄金系统说明“离散非周期”不等于熵增
+
+Sturmian／Fibonacci 符号系统的长度 \(N\) 因子复杂度为：
+
+\[
+\boxed{
+p(N)=N+1.
+}
+\]
+
+因此其拓扑熵为：
+
+\[
+h_{\mathrm{top}}
+=
+\lim_{N\to\infty}\frac1N\log p(N)
+=
+0.
+\]
+
+所以它同时具备：
+
+\[
+\boxed{
+\text{离散}
++
+\text{非周期}
++
+\text{无限新前缀}
++
+\text{零熵}.
+}
+\]
+
+这对前文的熵解释是一个重要边界：
+
+\[
+\boxed{
+\text{离散事件持续出现}
+\not\Rightarrow
+\text{每单位时间持续产生正熵}.
+}
+\]
+
+观察者的离散记录可以是高度有序的几何编码，而不是随机噪声。
+
+---
+
+## 35.20 初始坐标是对角化得以类型化的条件之一
+
+一般对角化需要一个评价表：
+
+\[
+E:A\times A\to Y.
+\]
+
+第一坐标表示描述者地址，第二坐标表示对象地址。对角映射：
+
+\[
+\delta_A(a)=(a,a)
+\]
+
+要求能够识别“描述者地址”和“被描述对象地址”中的同一个 \(a\)。
+
+在未点化、完全对称的连续统中，没有规范理由选择某一点或某一地址作为“我”。锚点和坐标架提供了这种识别：
+
+\[
+\boxed{
+\text{初始坐标使自坐标读取成为良定义操作。}
+}
+\]
+
+但这并不消除对角逃逸。若 \(\tau:Y\to Y\) 无不动点，则：
+
+\[
+\Delta_\tau(E)(a)
+=
+\tau(E(a,a))
+\]
+
+仍不能出现在 \(E\) 的任一行中。
+
+所以：
+
+\[
+\boxed{
+\text{锚点使“自我指涉”可定义；
+对角化证明同层自我描述仍不能穷尽。}
+}
+\]
+
+观察者成为连续统，并不会让 Cantor–Lawvere 型不完备性消失。
+
+---
+
+## 35.21 连续叶上的离散对角读出需要界面
+
+若 \(A\) 连通，\(Y\) 离散，并且：
+
+\[
+E:A\times A\to Y
+\]
+
+连续，则 \(A\times A\) 连通，故 \(E\) 必为常值。
+
+因此非平凡离散自指表不可能同时是：
+
+\[
+\boxed{
+\text{连通叶上的全局连续离散值函数}.
+}
+\]
+
+它必须来自：
+
+- 横截 Cantor 地址；
+- clopen 有限分割；
+- 阈值／界面；
+- 非连续符号编码；
+- 概率 effect 后的抽样；
+- 或更高层的记录账本。
+
+这与前文“连续空间不能通过非平凡连续确定映射直接产生离散标签”一致。
+
+所以锚定连续统观察者的对角层应写成：
+
+\[
+\boxed{
+\text{连续载体}
+\longrightarrow
+\text{横截／界面／记录地址}
+\longrightarrow
+\text{离散自评价}.
+}
+\]
+
+---
+
+## 35.22 观察者的五重闭包升级
+
+本节定义：
+
+\[
+\boxed{
+\mathbf{Cl}(\mathfrak O)
+=
+(
+\mathrm{Cl}_{\mathrm{anchor}},
+\mathrm{Cl}_{\mathrm{orbit}},
+\mathrm{Cl}_{\mathrm{pred}},
+\mathrm{Cl}_{\mathrm{lift}},
+\mathrm{Cl}_{\mathrm{record}},
+\mathrm{Cl}_{\mathrm{self}}
+).
+}
+\]
+
+其中：
+
+\[
+\mathrm{Cl}_{\mathrm{anchor}}
+=
+\text{初始原点与坐标架是否在转换中保持};
+\]
+
+\[
+\mathrm{Cl}_{\mathrm{orbit}}
+=
+\text{初始点的轨道闭包生成多大的连续统};
+\]
+
+\[
+\mathrm{Cl}_{\mathrm{pred}}
+=
+\text{为预测全部未来读出需补足哪些坐标};
+\]
+
+\[
+\mathrm{Cl}_{\mathrm{lift}}
+=
+\text{为区分回归路径需补足哪些提升变量};
+\]
+
+\[
+\mathrm{Cl}_{\mathrm{record}}
+=
+\text{哪些 cocycle／事件历史不能压成当前状态函数};
+\]
+
+\[
+\mathrm{Cl}_{\mathrm{self}}
+=
+\text{同层自评价是否存在对角逃逸}.
+\]
+
+它们互不自动推出：
+
+\[
+\boxed{
+\text{轨道稠密}
+\not\Rightarrow
+\text{读出层析完备};
+}
+\]
+
+\[
+\boxed{
+\text{未来读出完备}
+\not\Rightarrow
+\text{路径提升完备};
+}
+\]
+
+\[
+\boxed{
+\text{路径提升完备}
+\not\Rightarrow
+\text{记录可以删除};
+}
+\]
+
+\[
+\boxed{
+\text{完整记录历史}
+\not\Rightarrow
+\text{同层自描述完备}.
+}
+\]
+
+因此观察者没有一个单标量的“完整度”。
+
+---
+
+## 35.23 与量子观察者的关系
+
+量子状态空间本身可以是连续凸集，测量结果却是有限离散标签。两者之间由 effect／投影与状态评价连接：
+
+\[
+p_i=\operatorname{Tr}(\rho E_i).
+\]
+
+这与本节的叶—横截结构有形式相似性：
+
+\[
+\text{连续状态}
+\to
+\text{有限读出}.
+\]
+
+但不能直接把量子测量结果识别为某个 Cantor 横截坐标。量子 contextuality、非交换可观测代数和复振幅相干具有额外结构。
+
+本节提供的真正桥是：
+
+\[
+\boxed{
+\text{观察者可以拥有连续状态载体，
+同时通过有限上下文产生离散记录；
+离散记录不要求观察者本体是离散对象。}
+}
+\]
+
+而路径记忆扩展与量子记录账本都可使用 cocycle／skew-product 语言，但二者的物理解释不能混同。
+
+---
+
+## 35.24 与经济观察者的关系
+
+经济状态、价格、库存和资产负债表可以连续变化；成交、结算、违约、margin call 和政策事件则具有离散边界。
+
+numeraire 与初始财富给出经济坐标架，交易历史与合同账本保存路径依赖。两个具有相同当前价格和总量的系统，可能因债务网络或历史合同不同而具有不同未来。
+
+所以经济观察者也可以写成：
+
+\[
+\boxed{
+\text{连续价格／状态叶}
++
+\text{离散合同／结算横截}
++
+\text{初始 numeraire 与账本锚点}.
+}
+\]
+
+但这不是说经济系统就是 solenoid 或 Fibonacci 悬挂。这里的共同点仅是“连续状态 + 离散事件 + 路径账本”的类型结构。
+
+---
+
+## 35.25 可能的新研究中心：锚定完成而非裸观察
+
+成熟理论已经分别研究：
+
+- 点化拓扑空间和点化动力系统；
+- Cantor 最小系统及其悬挂；
+- weak solenoid 与 matchbox manifold；
+- substitution tiling hull；
+- Sturmian／Fibonacci 编码；
+- cocycle 与 cohomology；
+- 覆盖空间、holonomy 和路径群胚；
+- 对角化与固定点障碍。
+
+候选的新贡献不应宣称这些单项首次出现，而应集中在以下统一对象：
+
+\[
+\boxed{
+\text{锚定连续统}
++
+\text{有限读出商}
++
+\text{预测闭包}
++
+\text{路径提升闭包}
++
+\text{记录 cocycle}
++
+\text{对角自描述审计}.
+}
+\]
+
+特别值得形式化的定量问题是：
+
+1. **坐标稳定半径**
+   \[
+   \varepsilon_N(\xi)
+   =
+   \text{保持前 }N\text{ 个事件不变的最大初始坐标半径};
+   \]
+
+2. **首次逃逸深度**
+   \[
+   \tau(\xi,\xi')
+   =
+   \min\{n:q(\Phi_n\xi)\neq q(\Phi_n\xi')\};
+   \]
+
+3. **提升余量**
+   \[
+   r_{\mathrm{lift}}
+   =
+   \text{当前状态无法恢复的 cocycle 类};
+   \]
+
+4. **锚定自然性缺陷**
+   \[
+   \partial_{\xi_0}(F)
+   =
+   d\bigl(
+   F(\xi_0),
+   \xi_0'
+   \bigr);
+   \]
+
+5. **自描述缺陷**
+   \[
+   \partial^\Delta_O
+   =
+   Q_O\Delta-\Delta_O P_O.
+   \]
+
+这五个量分别测量有限预测、路径记忆、坐标运输与自指闭合，不能被单一熵或单一距离替代。
+
+---
+
+## 35.26 建议 Lean 形式化模块
+
+建议按下列顺序推进。
+
+1. `ConnectedDiscreteSubsingleton`
+   \[
+   \text{Connected }X\land\text{Discrete }X
+   \Rightarrow
+   \operatorname{Subsingleton}X.
+   \]
+
+2. `OrbitClosureIsContinuum`
+   连续实流单轨道闭包的紧致连通性。
+
+3. `MinimalFlowOrbitClosure`
+   最小流中任意轨道闭包等于全空间。
+
+4. `PointedConjugacy`
+   点化动力系统共轭及其等价关系。
+
+5. `SuspensionReturnDecomposition`
+   \[
+   \Phi_t[\kappa,s]=[T^n\kappa,s'].
+   \]
+
+6. `MinimalCantorSuspensionConnected`
+   最小 Cantor 系统悬挂的连通性。
+
+7. `ProfiniteReadoutInverseLimit`
+   完整横截与有限离散商的逆极限关系。
+
+8. `RecurrenceNoContinuousAge`
+   无界回归排除连续绝对年龄函数。
+
+9. `CocycleRecurrenceNotCoboundary`
+   非消失回归 cocycle 排除连续势函数。
+
+10. `GoldenMinkowskiScaling`
+    \[
+    (x,x')\mapsto(\varphi x,-\varphi^{-1}x').
+    \]
+
+11. `FibonacciSubstitutionSpectrum`
+    \[
+    \operatorname{spec}M_\varphi
+    =
+    \{\varphi,-\varphi^{-1}\}.
+    \]
+
+12. `NormalizedFibonacciResidual`
+    \[
+    \varphi^{-n}M_\varphi^nv
+    =
+    au_++b(-1)^n\varphi^{-2n}u_-.
+    \]
+
+13. `MechanicalWordTelescoping`
+    \[
+    \sum_{n<N}w_n
+    =
+    \lfloor\theta+N\alpha\rfloor-\lfloor\theta\rfloor.
+    \]
+
+14. `MechanicalWordDiscrepancy`
+    \[
+    \left|\sum_{n<N}w_n-N\alpha\right|<1.
+    \]
+
+15. `FinitePrefixLocallyConstant`
+    远离有限边界集合时，长度 \(N\) 编码局部常值。
+
+16. `AnchoredDiagonalTyping`
+    锚点／地址识别如何诱导自坐标评价。
+
+17. `ContinuousDiscreteDiagonalNoGo`
+    连通定义域到离散值域的连续评价表只能常值。
+
+其中 Sturmian 因子复杂度、完整 Fibonacci tiling hull 识别与一般 matchbox manifold 理论，应通过具名经典来源或后续独立形式化接入，不得作为无名公理使用。
+
+---
+
+## 35.27 最终统一式
+
+本节把观察者从“连续统内部的一个对象”升级为：
+
+\[
+\boxed{
+\text{观察者}
+=
+\text{连续统对自身选择初始原点以后，
+沿动力学运输该原点关系并保存不可压缩历史的结构}.
+}
+\]
+
+其连续性来自：
+
+\[
+\boxed{
+\text{叶流、相位、尺度与状态的连续运输}.
+}
+\]
+
+其离散性来自：
+
+\[
+\boxed{
+\text{横截地址、有限同余、边界穿越、事件编号与账本记录}.
+}
+\]
+
+其初始坐标来自：
+
+\[
+\boxed{
+\text{点化}
++
+\text{局部坐标架}
++
+\text{路径提升归一化}.
+}
+\]
+
+其记忆来自：
+
+\[
+\boxed{
+\text{不能被当前状态函数吸收的 cocycle 类}.
+}
+\]
+
+其黄金性质来自：
+
+\[
+\boxed{
+\text{同一个整数代数操作在物理嵌入中扩张，
+在共轭嵌入中翻转收缩，
+并以 Fibonacci 离散替换实现连续尺度自相似}.
+}
+\]
+
+其自我限制来自：
+
+\[
+\boxed{
+\text{锚点使自坐标读取可定义，
+但对角化仍证明同层自描述不能穷尽}.
+}
+\]
+
+所以最凝练的结论是：
+
+\[
+\boxed{
+\text{观察者不是连续统之外观看连续统的点；
+观察者可以是连续统被点化、带架、提升并记忆以后形成的自相对结构}.
+}
+\]
+
+以及：
+
+\[
+\boxed{
+\text{“连续且离散”不是逻辑矛盾，
+而是叶方向、横截方向、有限商和事件账本属于不同类型的陈述}.
+}
+\]
+
+---
+
+## 35.28 参考接口与严格非主张
+
+参考接口：
+
+- W. H. Gottschalk and G. A. Hedlund, *Topological Dynamics*, 1955.
+- M. Barge and B. Diamond, substitution tiling spaces and inverse-limit models.
+- L. Sadun, *Topology of Tiling Spaces*, 2008.
+- M. Queffélec, *Substitution Dynamical Systems—Spectral Analysis*.
+- J. Bellissard, D. Herrmann and M. Zarrouati, hulls of aperiodic solids and transversal structures.
+- S. Hurder and collaborators, matchbox manifolds and weak solenoids.
+- M. Lothaire, *Algebraic Combinatorics on Words*, Sturmian and mechanical words.
+- 仓库接口：
+  `D5/S1/Dynamics/UniversalSolenoid.lean`,
+  `D5/S1/Solenoid/ExactSequence.lean`,
+  `D5/S1/Solenoid/StreamlineDecomposition.lean`,
+  `D5/S1/Solenoid/PathOrbitClassification.lean`,
+  `D5/S1/Solenoid/RealFlowRecurrence.lean`,
+  `D5/S1/Solenoid/ThroatTransitionCocycle.lean`,
+  `D5/S1/Scale/MinkowskiModelSet.lean`,
+  `D5/S1/Recurrence/GoldenPartition.lean`.
+
+严格非主张：
+
+1. 本节不声称一个非平凡空间可在同一拓扑下同时连通且离散。
+2. 本节不把全不连通 Cantor 横截称为离散拓扑空间。
+3. 本节不声称所有观察者都必须是 solenoid、悬挂流或 tiling hull。
+4. 本节不把路径记忆等同于人类意识或心理记忆的完整理论。
+5. 本节不从轨道稠密推出任何单个有限读出已经完备。
+6. 本节不把当前状态回归解释成物理时间倒流。
+7. 本节不把不可 coboundary 化的 cocycle 自动解释成主观自我。
+8. 本节不把黄金比例视为连续—离散双结构的唯一代数来源。
+9. 本节不把 Fibonacci 正分割自动解释成 Born 概率。
+10. 本节不把 Sturmian 零熵解释成没有信息内容或没有无限新结构。
+11. 本节不把有限前缀稳定解释成无限未来存在统一稳定半径。
+12. 本节不把符号分叉解释成底层流的指数混沌。
+13. 本节不把量子测量结果直接识别为 solenoid 的 profinite 横截。
+14. 本节不把经济交易事件直接识别为 Fibonacci substitution。
+15. 本节不声称锚点消除了 Cantor–Lawvere 型对角逃逸。
+16. 本节新增定理均为纸面推导；未经 Lean kernel 验证不得标记为 `Closed`。
