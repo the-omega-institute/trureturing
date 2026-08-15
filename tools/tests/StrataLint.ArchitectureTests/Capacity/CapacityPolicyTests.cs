@@ -135,4 +135,19 @@ public sealed class CapacityPolicyTests
     // The backfill inventory path, restated here only to exercise the exclusion;
     // the enforcement source is RepositoryRules.IsCapacityExcluded.
     private const string BackfillInventoryRelativePath = "Meta/BACKFILL.yaml";
+    // 这张网的存在理由写在 CapacityPolicy 的注释里:「SL-003 has repeatedly slipped past
+    // `dotnet test`」。但 InspectRepository 此前**没有任何调用者**——全部用例走 InspectFiles
+    // 加合成 fixture,于是它从未对真仓库跑过。2026-08-15 实测该缺口的代价:dev 上
+    // DigestionLedgerAligner.cs 达 823 行(硬线 800),而 `make -C tools test` 的
+    // ArchitectureTests 仍 90/90 全绿;越线只在准入侧被发现,而准入是全仓阻断,于是
+    // 每一个 PR(包括从未碰过该文件的 #1890/#1891/#1896/#1897)一起被判红,全仓锁死约一小时。
+    //
+    // 检测放在 dotnet test 里,阻断留给准入——这是第20条执法分级的形状:检测要早要廉,
+    // 阻断要窄要准。缺了这一半,唯一的执法手段就只剩最贵的那个。
+    [Fact]
+    public void RepositoryHasNoOversizeArtifactOrOverfullDirectory()
+    {
+        Assert.Empty(CapacityPolicy.InspectRepository(RepositoryLayout.FindRoot()));
+    }
+
 }
