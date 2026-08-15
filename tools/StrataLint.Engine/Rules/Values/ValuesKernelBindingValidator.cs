@@ -36,8 +36,6 @@ internal static partial class ValuesKernelBindingValidator
         return findings.ToImmutable();
     }
 
-    internal static int CountBindings(string text) => Parse(text).Length;
-
     private static void Validate(
         ValueBinding binding,
         LeanAxiomReport report,

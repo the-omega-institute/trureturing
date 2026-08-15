@@ -133,16 +133,6 @@ internal static class DigestStatusCommand
         return DigestResidualSummary.RenderShards(evaluation);
     }
 
-    internal static IReadOnlyList<string> CurrentSourceIds(IRepositoryGateway repository)
-    {
-        ArgumentNullException.ThrowIfNull(repository);
-        return BackfillInventoryLoader.Load(Decode(repository.ReadCurrent()))
-            .RequireDigestionSources()
-            .Select(static source => source.SourceId)
-            .Order(StringComparer.Ordinal)
-            .ToArray();
-    }
-
     private static DigestStatusOptions ParseArguments(IReadOnlyList<string> arguments)
     {
         var json = false;
