@@ -37,18 +37,25 @@ else
     || { echo "report-supervisor: HOME must be absolute for the performance ledger" >&2; exit 2; }
   METRICS_LOG="$HOME/.stratalint-perf/events.jsonl"
 fi
-# 默认槽数 3(2026-08-15 用户裁决)。此前是 1,且全仓没有任何注释/文档/测试记载其案由。
+# 默认槽数 5(2026-08-15 用户裁决;同日先定 3,再定 5)。此前是 1,且全仓没有任何
+# 注释/文档/测试记载 1 的案由。
 #
 # 留档的反对读数,以免下一个人以为这是吞吐优化:实测一次 Lean 构建自身即跑 10+ 个 lean
 # 进程、每个约 85% CPU,全机 `top -l 2` 两次采样 idle 均为 0.12%(28 核 / 96 GB)。所以
 # 一次构建已把核吃满,加槽不增总吞吐,只把同样的核分成 N 份、每份慢 N 倍。内存不是约束
-# (44 GB 空闲,单次构建总 RSS 11.5 GB)。用户在看过这组读数后确认要 3,故照办。
+# (测时 44 GB 空闲,而当时已有一次构建在跑、其总 RSS 11.5 GB)。用户在看过这组读数后
+# 先定 3、再定 5,故照办。
+#
+# 但内存在 5 槽处**可能**变成约束,把算术留在这里:测时 96 GB 中 51 GB 已用、44 GB 空闲,
+# 其中含一次构建的 11.5 GB,故无构建时的空闲约 55 GB;5 个并发满构建约 5×11.5 = 57.5 GB,
+# 已越过它。**这是外推不是实测**——11.5 GB 是某一时刻的总 RSS 而非峰值,且实际很少五槽同时
+# 满载。若出现换页/卡顿,先量 memory_pressure 再谈调整,不要凭感觉回退默认值。
 #
 # 它确实能改善的是**延迟与失败率**:等槽者的耐心 LOCK_TIMEOUT_SECONDS 默认 900s,而持槽者
 # 合法可持有 BUILD_TIMEOUT_SECONDS=7200s,两者差 8 倍,且 acquire_lean_slot 是 mkdir 抢占
 # 自旋而非 FIFO——并行 worktree 下先到者会被后到者反复抢先直到超时判红(实测:持槽 24m24s,
 # 等槽者 15 分钟阵亡)。槽多了撞上这条的概率随之下降。根因另见 #1910,本改动不假装修了它。
-MAX_CONCURRENCY="${STRATALINT_LEAN_MAX_CONCURRENCY:-3}"
+MAX_CONCURRENCY="${STRATALINT_LEAN_MAX_CONCURRENCY:-5}"
 [[ "$MAX_CONCURRENCY" =~ ^[1-9][0-9]*$ && "$MAX_CONCURRENCY" -le 64 ]] \
   || { echo "report-supervisor: STRATALINT_LEAN_MAX_CONCURRENCY must be 1..64" >&2; exit 2; }
 LOCK_TIMEOUT_SECONDS="${STRATALINT_LOCK_TIMEOUT_SECONDS:-900}"
