@@ -88,6 +88,28 @@ public sealed class DigestionSourceConflictMarkerTests
         Assert.Contains($"{TheoryPath}:2", error.Message, StringComparison.Ordinal);
     }
 
+    [Fact]
+    public void AlignScribeReceiptRejectsConflictMarkedSourceWithoutChangingLedger()
+    {
+        var inputs = CoverWorld.Materialize(CoverWorld.StaleReceiptSpec());
+        var files = new Dictionary<string, string>(inputs.Files, StringComparer.Ordinal)
+        {
+            [RuleFixture.FixtureDigestionSourcePath] = "<<<<<<< HEAD\nconflicted source\n",
+        };
+        using var temporary = new TemporaryDirectory();
+        var ledgerPath = Path.Combine(temporary.Path, BackfillInventoryLoader.RelativePath);
+        Directory.CreateDirectory(Path.GetDirectoryName(ledgerPath)!);
+        var before = Encoding.UTF8.GetBytes(inputs.Ledger);
+        File.WriteAllBytes(ledgerPath, before);
+
+        var result = CoverWorld.Environment(temporary.Path, inputs, files)
+            .AlignScribeReceipt(CoverWorld.AlignArgs(inputs));
+
+        Assert.False(result.Success);
+        Assert.Contains("INGEST-CONFLICT-MARKER-001", result.Error, StringComparison.Ordinal);
+        Assert.Equal(before, File.ReadAllBytes(ledgerPath));
+    }
+
     private static DigestionIngestPlan Plan(string sourcePath, string source)
         => Plan(sourcePath, Encoding.UTF8.GetBytes(source));
 

@@ -363,6 +363,7 @@ internal static partial class CoverAtomCommand
             verified,
             baselineDocument: null,
             validateProjectedStatus: false);
+        RequireNoFindings(derived);
         RequireAlignedScribeReceipt(EvaluationFor(derived, options.AtomId), options.Gid);
         var finalBytes = BackfillInventoryWriter.WriteForIngest(planned);
         var finalRaw = IngestCommand.ReplaceLedger(
@@ -378,6 +379,7 @@ internal static partial class CoverAtomCommand
             lean,
             verified,
             baselineDocument: null);
+        RequireNoFindings(finalEvaluation);
         RequireAlignedScribeReceipt(EvaluationFor(finalEvaluation, options.AtomId), options.Gid);
 
         var ledgerUpdates = IngestCommand.LedgerUpdates(currentRaw, finalRaw);
