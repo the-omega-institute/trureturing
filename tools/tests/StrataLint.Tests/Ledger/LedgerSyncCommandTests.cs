@@ -51,6 +51,7 @@ public sealed class LedgerSyncCommandTests
         Assert.Equal(
             fixture.BaselineBytes.AsSpan().ToArray(),
             FrozenLedgerTestData.ReadLedgerDirectory(fixture.LedgerPath));
+        Assert.Equal(0, fixture.Gateway.FrozenReferenceValidationCount);
     }
 
     [Fact]
@@ -65,6 +66,7 @@ public sealed class LedgerSyncCommandTests
         Assert.Equal(
             fixture.BaselineBytes.AsSpan().ToArray(),
             FrozenLedgerTestData.ReadLedgerDirectory(fixture.LedgerPath));
+        Assert.Equal(1, fixture.Gateway.FrozenReferenceValidationCount);
     }
 
     [Fact]
@@ -142,6 +144,7 @@ public sealed class LedgerSyncCommandTests
         Assert.Equal(
             replayed.RawBytes.AsSpan().ToArray(),
             FrozenLedgerTestData.ReadLedgerDirectory(fixture.LedgerPath));
+        Assert.Equal(2, fixture.Gateway.FrozenReferenceValidationCount);
     }
 
     [Fact]
@@ -357,9 +360,10 @@ public sealed class LedgerSyncCommandTests
             FrozenLedgerTestData.WriteLedgerDirectory(LedgerPath, BaselineBytes);
             ReportPath = Path.Combine(temporary.Path, "candidate-lean-report.json");
             File.WriteAllBytes(ReportPath, RawLeanReportArtifact.Write(snapshot, report).AsSpan());
+            Gateway = new FakeRepositoryGateway(RawChangeSet.Create([]), raw, null);
             Environment = new ProductionCliEnvironment(
                 temporary.Path,
-                new FakeRepositoryGateway(RawChangeSet.Create([]), raw, null),
+                Gateway,
                 new FakeLeanReportSource(null));
         }
 
@@ -368,6 +372,8 @@ public sealed class LedgerSyncCommandTests
         internal FrozenLedgerConsistent Baseline { get; }
 
         internal FrozenMaterialCatalog CandidateCatalog { get; }
+
+        internal FakeRepositoryGateway Gateway { get; }
 
         internal ProductionCliEnvironment Environment { get; }
 
