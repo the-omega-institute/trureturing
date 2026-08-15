@@ -135,7 +135,11 @@ public sealed partial class FrozenLedgerTests
 
         Assert.Contains(PathFor("A"), exception.Message, StringComparison.Ordinal);
         Assert.Contains("environment", exception.Message, StringComparison.OrdinalIgnoreCase);
-        Assert.Contains("ledger-recoordinate", exception.Message, StringComparison.Ordinal);
+        Assert.Contains(
+            "accepted EnvironmentRecoordinate event is required",
+            exception.Message,
+            StringComparison.Ordinal);
+        Assert.DoesNotContain("ledger-recoordinate", exception.Message, StringComparison.Ordinal);
     }
 
     [Fact]

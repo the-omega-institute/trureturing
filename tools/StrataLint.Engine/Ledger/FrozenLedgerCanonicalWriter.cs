@@ -176,7 +176,7 @@ public static partial class FrozenLedgerGenerator
                         != candidateCatalog.Environment.LakefileBlobOid)
                 {
                     throw new InvalidOperationException(
-                        $"Active module {path.Value} environment changed; run ledger-recoordinate before ledger-sync.");
+                        $"Active module {path.Value} environment changed; an accepted EnvironmentRecoordinate event is required before ledger-sync.");
                 }
 
                 input = input with
