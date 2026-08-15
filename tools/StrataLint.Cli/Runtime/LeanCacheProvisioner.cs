@@ -88,6 +88,19 @@ internal static class LeanCacheProvisioner
             Join(selection.Notice, cloneWarning));
     }
 
+    internal static LeanCacheProvisionResult ReproduceExisting(
+        string worktreeRoot,
+        LeanPinSet pins,
+        IWorktreeProcessRunner runner)
+    {
+        var pruned = RunCacheGet(worktreeRoot, pins, runner);
+        return new LeanCacheProvisionResult(
+            "cache-get",
+            "cache-get",
+            "ran the current-pin producer in place; published the stamp only after producer and completeness verification succeeded",
+            pruned);
+    }
+
     private static LeanCacheProvisionResult? TryClone(
         LeanCacheDonorSelection selection,
         string source,
@@ -266,6 +279,8 @@ internal static class LeanCacheProvisioner
         }
         catch
         {
+            // Producer or completeness failure is the first evidence that an unstamped tree is
+            // unusable. Remove it only after that attempt, so fresh provisioning starts cleanly.
             RemovePartial(lake);
             throw;
         }

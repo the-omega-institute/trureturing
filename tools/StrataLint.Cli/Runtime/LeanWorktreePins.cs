@@ -92,6 +92,16 @@ internal sealed record LeanPinSet(byte[] LeanToolchain, byte[] LakeManifest, str
     }
 }
 
+internal enum LeanCacheStampState
+{
+    Match,
+    Missing,
+    Corrupt,
+    Mismatch,
+}
+
+internal sealed record LeanCacheStampInspection(LeanCacheStampState State, string? Reason);
+
 internal static class LeanCacheStamp
 {
     private const string Schema = "stratalint-lean-cache-v1";
@@ -124,13 +134,18 @@ internal static class LeanCacheStamp
         }
     }
 
-    internal static bool Matches(string lake, LeanPinSet pins, out string? reason)
+    internal static LeanCacheStampInspection Inspect(string lake, LeanPinSet pins)
     {
         var path = PathFor(lake);
         if (!File.Exists(path))
         {
-            reason = "cache producer stamp is absent";
-            return false;
+            return Directory.Exists(path)
+                ? new LeanCacheStampInspection(
+                    LeanCacheStampState.Corrupt,
+                    "cache producer stamp is not a regular file")
+                : new LeanCacheStampInspection(
+                    LeanCacheStampState.Missing,
+                    "cache producer stamp is absent");
         }
 
         try
@@ -148,8 +163,9 @@ internal static class LeanCacheStamp
                 || !root.TryGetProperty("lake_manifest_base64", out var manifest)
                 || manifest.ValueKind != JsonValueKind.String)
             {
-                reason = "cache producer stamp has an unknown or invalid schema";
-                return false;
+                return new LeanCacheStampInspection(
+                    LeanCacheStampState.Corrupt,
+                    "cache producer stamp has an unknown or invalid schema");
             }
 
             var toolchainBytes = Convert.FromBase64String(toolchain.GetString()!);
@@ -158,21 +174,29 @@ internal static class LeanCacheStamp
                 || !toolchainBytes.AsSpan().SequenceEqual(pins.LeanToolchain)
                 || !manifestBytes.AsSpan().SequenceEqual(pins.LakeManifest))
             {
-                reason = "cache producer stamp pin bytes do not match the requested pins";
-                return false;
+                return new LeanCacheStampInspection(
+                    LeanCacheStampState.Mismatch,
+                    "cache producer stamp pin bytes do not match the requested pins");
             }
 
-            reason = null;
-            return true;
+            return new LeanCacheStampInspection(LeanCacheStampState.Match, null);
         }
         catch (Exception exception) when (exception is IOException
             or UnauthorizedAccessException
             or JsonException
             or FormatException)
         {
-            reason = $"cache producer stamp is unreadable: {exception.Message}";
-            return false;
+            return new LeanCacheStampInspection(
+                LeanCacheStampState.Corrupt,
+                $"cache producer stamp is unreadable: {exception.Message}");
         }
+    }
+
+    internal static bool Matches(string lake, LeanPinSet pins, out string? reason)
+    {
+        var inspection = Inspect(lake, pins);
+        reason = inspection.Reason;
+        return inspection.State == LeanCacheStampState.Match;
     }
 }
 

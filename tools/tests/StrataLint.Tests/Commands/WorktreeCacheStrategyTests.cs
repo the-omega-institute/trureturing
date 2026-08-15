@@ -451,6 +451,8 @@ internal sealed class RecordingWorktreeProcessRunner : IWorktreeProcessRunner
 
     internal bool CacheGetSawExistingProjection { get; private set; }
 
+    internal List<bool> CacheGetExistingProjectionObservations { get; } = [];
+
     public ProcessOutput Run(
         string fileName,
         IReadOnlyList<string> arguments,
@@ -491,9 +493,11 @@ internal sealed class RecordingWorktreeProcessRunner : IWorktreeProcessRunner
         {
             if (arguments.SequenceEqual(["exe", "cache", "get"]))
             {
-                if (FailLake) return Failure("cache get failed");
-                CacheGetSawExistingProjection = File.Exists(
+                var sawExistingProjection = File.Exists(
                     Path.Combine(workingDirectory, ".lake", "build", "cache.bin"));
+                CacheGetSawExistingProjection |= sawExistingProjection;
+                CacheGetExistingProjectionObservations.Add(sawExistingProjection);
+                if (FailLake) return Failure("cache get failed");
                 var lake = Path.Combine(workingDirectory, ".lake");
                 Directory.CreateDirectory(lake);
                 File.WriteAllText(Path.Combine(lake, "cache-get.marker"), "cache get\n");
