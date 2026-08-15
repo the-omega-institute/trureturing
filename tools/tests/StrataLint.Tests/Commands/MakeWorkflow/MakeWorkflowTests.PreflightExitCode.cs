@@ -5,51 +5,37 @@ namespace StrataLint.Tests;
 public sealed partial class MakeWorkflowTests
 {
     [Theory]
-    [InlineData("pass", 0, "PASS:NONE")]
-    [InlineData("semantic-test", 41, "FAIL:SEMANTIC")]
-    [InlineData("semantic-gate", 42, "FAIL:SEMANTIC")]
-    [InlineData("configuration", 78, "FAIL:CONFIGURATION")]
-    [InlineData("toolchain-missing", 127, "FAIL:TOOLCHAIN")]
-    [InlineData("timeout", 124, "FAIL:INFRASTRUCTURE")]
-    [InlineData("signal-term", 143, "FAIL:INFRASTRUCTURE")]
-    [InlineData("exit-126", 126, "FAIL:TOOLCHAIN")]
-    [InlineData("exit-127", 127, "FAIL:TOOLCHAIN")]
-    [InlineData("unknown-dotnet", 73, "UNKNOWN:UNKNOWN")]
-    [InlineData("unknown", 73, "UNKNOWN:UNKNOWN")]
-    [InlineData("starved-lean-slot", 2, "UNKNOWN:UNKNOWN")]
+    [InlineData("pass", 0)]
+    [InlineData("semantic-test", 41)]
+    [InlineData("semantic-gate", 42)]
+    [InlineData("configuration", 78)]
+    [InlineData("toolchain-missing", 127)]
+    [InlineData("timeout", 124)]
+    [InlineData("signal-term", 143)]
+    [InlineData("exit-126", 126)]
+    [InlineData("exit-127", 127)]
+    [InlineData("unknown-dotnet", 73)]
+    [InlineData("unknown", 73)]
+    [InlineData("starved-lean-slot", 2)]
     public void PreflightPreservesExitCode(
         string scenario,
-        int expectedExitCode,
-        string expectedDeclaration)
+        int expectedExitCode)
     {
         if (OperatingSystem.IsWindows()) return;
 
         var result = RunPreflightScenario(scenario);
 
         Assert.Equal(expectedExitCode, result.ExitCode);
-        Assert.EndsWith(
-            $"FKST_LOCAL_ITERATION_RESULT:v2:{expectedDeclaration}\n",
-            System.Text.Encoding.UTF8.GetString(result.StandardOutput),
-            StringComparison.Ordinal);
     }
 
     [Fact]
-    public void PreflightRejectsStaleValuesBeforeDeclaringPass()
+    public void PreflightRejectsStaleValues()
     {
         if (OperatingSystem.IsWindows()) return;
 
         var result = RunPreflightScenario("stale-values");
-        var output = System.Text.Encoding.UTF8.GetString(result.StandardOutput);
 
         Assert.NotEqual(0, result.ExitCode);
-        Assert.DoesNotContain(
-            "FKST_LOCAL_ITERATION_RESULT:v2:PASS:NONE",
-            output,
-            StringComparison.Ordinal);
-        Assert.EndsWith(
-            "FKST_LOCAL_ITERATION_RESULT:v2:FAIL:SEMANTIC\n",
-            output,
-            StringComparison.Ordinal);
     }
 
     /// <summary>

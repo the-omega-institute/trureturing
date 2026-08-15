@@ -1,0 +1,27 @@
+### 定理 35.10（有界余量事件计数）
+
+对每个 \(N\ge1\)：
+
+\[
+\boxed{
+\sum_{n=0}^{N-1}w_n(\theta)
+=
+\lfloor\theta+N\alpha\rfloor
+-
+\lfloor\theta\rfloor.
+}
+\]
+
+从而：
+
+\[
+\boxed{
+\left|
+\sum_{n=0}^{N-1}w_n(\theta)
+-
+N\alpha
+\right|
+<1.
+}
+\]
+

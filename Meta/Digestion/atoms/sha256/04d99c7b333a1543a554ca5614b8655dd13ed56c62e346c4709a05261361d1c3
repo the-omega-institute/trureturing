@@ -1,0 +1,32 @@
+### 定理 34.4（最小均方套期保值）
+
+对全部 marketed payoff \(Y\in\mathcal M\)：
+
+\[
+\boxed{
+\|X-Y\|_2^2
+=
+\|R_{\mathcal M}X\|_2^2
++
+\|P_{\mathcal M}X-Y\|_2^2.
+}
+\]
+
+因此唯一最优均方套期保值收益为
+
+\[
+\boxed{
+Y^*=P_{\mathcal M}X,
+}
+\]
+
+最小不可对冲风险为
+
+\[
+\boxed{
+\inf_{Y\in\mathcal M}\|X-Y\|_2^2
+=
+\|R_{\mathcal M}X\|_2^2.
+}
+\]
+
