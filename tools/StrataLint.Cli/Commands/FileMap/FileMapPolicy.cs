@@ -111,6 +111,10 @@ internal static class FileMapPolicy
                 .Select(static match => match.Groups[1].Value))
             .ToImmutableHashSet(StringComparer.Ordinal);
 
+    // open FILEMAP-ACTOR-PATTERN-SEMANTICS: FILEMAP-ACTOR-DANGLING proves only that each
+    // actor name resolves. It does not prove that the actor reads or verifies this pattern;
+    // DataVerifierRuleName likewise accepts any syntactically valid SL-nnn without binding
+    // that rule to the pattern.
     internal static IReadOnlyList<FileMapFinding> InspectDeclaredActors(
         FileMapManifest manifest,
         IReadOnlySet<string> declaredTypes,
@@ -121,7 +125,10 @@ internal static class FileMapPolicy
         ArgumentException.ThrowIfNullOrWhiteSpace(repositoryRoot);
         var findings = new List<FileMapFinding>();
         foreach (var entry in manifest.Entries.Where(
-            static item => item.Kind is FileMapKind.Generated or FileMapKind.Program))
+            static item => item.Kind is FileMapKind.Generated
+                or FileMapKind.Program
+                or FileMapKind.Ledger
+                or FileMapKind.Truth))
         {
             var declared = new List<(string Field, string Name)> { ("produced_by", entry.ProducedBy) };
             declared.AddRange(entry.ConsumedBy.Select(static name => ("consumed_by", name)));
@@ -129,7 +136,10 @@ internal static class FileMapPolicy
             foreach (var (field, name) in declared.Where(item =>
                 !GeneratedActorWords.Contains(item.Name)
                 && !ProgramActorWords.Contains(item.Name)
-                && !declaredTypes.Contains(item.Name)))
+                && !declaredTypes.Contains(item.Name)
+                && !(entry.Kind is FileMapKind.Ledger
+                    && item.Field == "verified_by"
+                    && DataVerifierRuleName.IsMatch(item.Name))))
             {
                 findings.Add(new FileMapFinding(
                     "FILEMAP-ACTOR-DANGLING",
