@@ -202,7 +202,6 @@ public sealed class EnginePublicSurfaceTests
         "StrataLint.Engine.SnapshotDecodeOutcome+InfrastructureFailure",
         "StrataLint.Engine.SnapshotDecodeOutcome0MatchExtensions",
         "StrataLint.Engine.SnapshotDecoder",
-        "StrataLint.Engine.SpecialZone",
         "StrataLint.Engine.StatementId",
         "StrataLint.Engine.Stratum",
         "StrataLint.Engine.TowerBootstrapSyntax",
