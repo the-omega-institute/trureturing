@@ -1,0 +1,24 @@
+### 定理 34.5（新证券对目标负债的单步套保增益）
+
+令
+
+\[
+d_N(X)
+=
+\operatorname{dist}(X,\mathcal M_N).
+\]
+
+若 \(r_{N+1}\ne0\)，则
+
+\[
+\boxed{
+d_N(X)^2-d_{N+1}(X)^2
+=
+\frac{
+|\langle X,r_{N+1}\rangle|^2
+}{
+\|r_{N+1}\|^2
+}.
+}
+\]
+

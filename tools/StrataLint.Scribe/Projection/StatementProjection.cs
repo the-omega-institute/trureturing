@@ -475,6 +475,29 @@ internal static class StatementProjector
 
 internal static class StatementProjectionFixtureLoader
 {
+    private static bool TryReadModules(string reportPath, out JsonDocument document)
+    {
+        document = null!;
+        try
+        {
+            var candidate = JsonDocument.Parse(File.ReadAllBytes(reportPath));
+            if (candidate.RootElement.ValueKind != JsonValueKind.Object
+                || !candidate.RootElement.TryGetProperty("modules", out var modules)
+                || modules.ValueKind != JsonValueKind.Array)
+            {
+                candidate.Dispose();
+                return false;
+            }
+
+            document = candidate;
+            return true;
+        }
+        catch (JsonException)
+        {
+            return false;
+        }
+    }
+
     internal const string ProjectorEpoch = "statement-projector-v1";
     internal sealed record Assessment(ProjectionOutcome Outcome, string DeclarationContentDigest);
     private static readonly AsyncLocal<string?> RepositoryRoot = new();
@@ -640,9 +663,14 @@ internal static class StatementProjectionFixtureLoader
             }
         }
         var reportPath = Path.Combine(repositoryRoot, ".lake", "build", "stratalint", "raw-lean-report.json");
-        if (File.Exists(reportPath))
+        // File.Exists is not the same question as "is this a usable report". The engineering CI job
+        // never produces one (that is lean-inspect's job), and tests running in parallel write their
+        // own fixtures under the repository root, so this path can hold a partial or differently
+        // shaped document. Reading it with GetProperty then threw KeyNotFoundException out of a
+        // loader whose whole contract is "use the live report when there is one".
+        if (File.Exists(reportPath) && TryReadModules(reportPath, out var reportDocument))
         {
-            using var report = JsonDocument.Parse(File.ReadAllBytes(reportPath));
+            using var report = reportDocument;
             foreach (var declaration in report.RootElement.GetProperty("modules").EnumerateArray()
                          .SelectMany(static module => module.GetProperty("declarations").EnumerateArray()))
             {

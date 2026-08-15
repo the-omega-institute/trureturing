@@ -6,11 +6,9 @@ set -euo pipefail
 
 ROOT=""
 PREFLIGHT_STARTED=0
-PREFLIGHT_FAULT_CLASS="CONFIGURATION"
 PERF_TMP=""
 PERF_EVENT_SPOOL=""
 PERF_BASE="unknown"
-PREFLIGHT_GATE_OUTCOME_DIR=""
 BASE_REF="${BASE:-origin/dev}"
 BASE_TIP_SHA=""
 BASE_SHA=""
@@ -28,51 +26,17 @@ remaining_deadline_seconds() {
   printf '%s\n' "$(( deadline - now ))"
 }
 
-structured_gate_failure() {
-  local semantic="$PREFLIGHT_GATE_OUTCOME_DIR/gate-outcome-v1.semantic-violation"
-  local infrastructure="$PREFLIGHT_GATE_OUTCOME_DIR/gate-outcome-v1.infrastructure-failure"
-  if [[ -f "$semantic" && ! -e "$infrastructure" ]]; then
-    printf 'FAIL:SEMANTIC\n'
-    return 0
-  fi
-  if [[ -f "$infrastructure" && ! -e "$semantic" ]]; then
-    printf 'FAIL:INFRASTRUCTURE\n'
-    return 0
-  fi
-  return 1
-}
-
 finish_preflight() {
   local rc="$1"
-  local declaration="UNKNOWN:UNKNOWN"
   local status="failed"
   local finished_at="$PREFLIGHT_STARTED"
-  local gate_declaration=""
   trap - EXIT
   trap '' INT TERM
   set +e
   set +u
 
   if [[ "$rc" -eq 0 ]]; then
-    declaration="PASS:NONE"
     status="passed"
-  else
-    case "$rc" in
-      124|130|143) declaration="FAIL:INFRASTRUCTURE" ;;
-      126|127) declaration="FAIL:TOOLCHAIN" ;;
-      *)
-        if [[ -n "$PREFLIGHT_GATE_OUTCOME_DIR" ]] \
-          && gate_declaration="$(structured_gate_failure)"; then
-          declaration="$gate_declaration"
-        else
-          case "$PREFLIGHT_FAULT_CLASS" in
-            SEMANTIC|CONFIGURATION|TOOLCHAIN|INFRASTRUCTURE)
-              declaration="FAIL:$PREFLIGHT_FAULT_CLASS"
-              ;;
-          esac
-        fi
-        ;;
-    esac
   fi
 
   finished_at="$(date +%s 2>/dev/null || printf '%s' "$PREFLIGHT_STARTED")"
@@ -83,24 +47,18 @@ finish_preflight() {
     perf_flush_events "$ROOT" "$PERF_EVENT_SPOOL" >/dev/null 2>&1 || true
   fi
   if [[ -n "$PERF_TMP" ]]; then rm -rf -- "$PERF_TMP"; fi
-  if [[ -n "$PREFLIGHT_GATE_OUTCOME_DIR" ]]; then
-    rm -rf -- "$PREFLIGHT_GATE_OUTCOME_DIR"
-  fi
-  printf 'FKST_LOCAL_ITERATION_RESULT:v2:%s\n' "$declaration"
   exit "$rc"
 }
 trap 'finish_preflight "$?"' EXIT
 trap 'exit 130' INT
 trap 'exit 143' TERM
 
-PREFLIGHT_FAULT_CLASS="TOOLCHAIN"
 for tool in git make dotnet lake; do
   command -v "$tool" >/dev/null 2>&1 || exit 127
 done
 dotnet --version >/dev/null
 lake --version >/dev/null
 
-PREFLIGHT_FAULT_CLASS="CONFIGURATION"
 ROOT="$(git rev-parse --show-toplevel)"
 cd "$ROOT"
 source "$ROOT/tools/scripts/lib/admission-base-lib.sh"
@@ -136,21 +94,16 @@ record_timing() {
 }
 T=$(date +%s)
 
-PREFLIGHT_FAULT_CLASS="UNKNOWN"
 dotnet restore tools/tests/CompileFailProof/CompileFailProof.csproj --locked-mode >/dev/null
 dotnet restore tools/tests/BannedApiCompileFailProof/BannedApiCompileFailProof.csproj --locked-mode >/dev/null
 record_timing restore-proofs
 
-PREFLIGHT_FAULT_CLASS="SEMANTIC"
-PREFLIGHT_FAULT_CLASS="UNKNOWN"
 CI=true make -C tools dotnet
 record_timing dotnet
 
-PREFLIGHT_FAULT_CLASS="UNKNOWN"
 make lean-report
 record_timing lean-report
 
-PREFLIGHT_FAULT_CLASS="SEMANTIC"
 /bin/bash "$ROOT/tools/scripts/workflow/scribe-content-checks.sh" \
   "$ROOT/.lake/build/stratalint/raw-lean-report.json"
 record_timing scribe-content-checks
@@ -158,8 +111,6 @@ record_timing scribe-content-checks
 CI=true STRATALINT_REQUIRE_LIVE_REPORT=1 make -C tools test
 record_timing test
 
-PREFLIGHT_FAULT_CLASS="SEMANTIC"
-PREFLIGHT_FAULT_CLASS="SEMANTIC"
 make -C tools selftest
 record_timing selftest
 
@@ -182,7 +133,6 @@ expect_compile_failure() {
   return 0
 }
 
-PREFLIGHT_FAULT_CLASS="SEMANTIC"
 expect_compile_failure \
   tools/tests/CompileFailProof/CompileFailProof.csproj \
   CompileFailProof \
@@ -193,9 +143,6 @@ expect_compile_failure \
   "禁 API 证明失效"
 record_timing compile-fail-proofs
 
-PREFLIGHT_FAULT_CLASS="INFRASTRUCTURE"
-PREFLIGHT_GATE_OUTCOME_DIR="$(mktemp -d "${TMPDIR:-/tmp}/stratalint-gate-outcome.XXXXXXXX")"
-
 # Measure what is left of the outer deadline before entering the most expensive stage,
 # and name the owner when it is already spent. Without this the gate starts, runs its
 # own report production against an inner budget, and the eventual timeout is reported as
@@ -205,16 +152,13 @@ if gate_remaining="$(remaining_deadline_seconds)"; then
   if [[ "$gate_remaining" -le 0 ]]; then
     printf 'PREFLIGHT_BUDGET_EXHAUSTED owner=outer-deadline stage=gate remaining_seconds=%s deadline_at=%s\n' \
       "$gate_remaining" "$PREFLIGHT_DEADLINE_AT" >&2
-    PREFLIGHT_FAULT_CLASS="INFRASTRUCTURE"
     exit 124
   fi
   printf 'PREFLIGHT_BUDGET owner=outer-deadline stage=gate remaining_seconds=%s\n' "$gate_remaining"
 fi
 
-PREFLIGHT_FAULT_CLASS="SEMANTIC"
 set +e
-STRATALINT_GATE_OUTCOME_DIR="$PREFLIGHT_GATE_OUTCOME_DIR" \
-  make gate BASE="$BASE_SHA" GATE_ARGS="--skip-engineering"
+make gate BASE="$BASE_SHA" GATE_ARGS="--skip-engineering"
 gate_rc=$?
 set -e
 record_timing gate

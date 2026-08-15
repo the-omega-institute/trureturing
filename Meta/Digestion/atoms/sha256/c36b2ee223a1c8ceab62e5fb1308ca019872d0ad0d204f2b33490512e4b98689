@@ -1,0 +1,18 @@
+### 命题 35.9（回归阻碍 coboundary 化）
+
+若存在：
+
+\[
+t_n\to\infty,
+\qquad
+\Phi_{t_n}(x)\to x,
+\]
+
+但：
+
+\[
+c_{t_n}(x)\not\to0,
+\]
+
+则不存在连续 \(h\) 使 \(c_t(x)=h(\Phi_t x)-h(x)\)。
+
