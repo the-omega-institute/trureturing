@@ -10,7 +10,9 @@ PERF_TMP=""
 PERF_EVENT_SPOOL=""
 PERF_BASE="unknown"
 BASE_REF="${BASE:-origin/dev}"
+BASE_TIP_SHA=""
 BASE_SHA=""
+CANDIDATE_SHA=""
 STRATALINT_PERF_RUN_ID=""
 PREFLIGHT_DEADLINE_AT="${PREFLIGHT_DEADLINE_AT:-}"
 
@@ -59,20 +61,17 @@ lake --version >/dev/null
 
 ROOT="$(git rev-parse --show-toplevel)"
 cd "$ROOT"
+source "$ROOT/tools/scripts/lib/admission-base-lib.sh"
+source "$ROOT/tools/scripts/lib/perf-event-lib.sh"
 
 remote="${BASE_REF%%/*}"
 if [[ "$remote" != "$BASE_REF" ]] && git remote | grep -Fxq "$remote"; then
   git fetch --prune "$remote"
 fi
-BASE_SHA="$(git rev-parse --verify "${BASE_REF}^{commit}")"
-CANDIDATE_SHA="$(git rev-parse --verify HEAD^{commit})"
-if [[ "$BASE_SHA" == "$CANDIDATE_SHA" ]] \
-  || ! git merge-base --is-ancestor "$BASE_SHA" "$CANDIDATE_SHA"; then
-  echo "preflight: pinned base is not a strict ancestor of candidate HEAD" >&2
+if ! admission_resolve_base "$ROOT" "$BASE_REF"; then
   exit 1
 fi
 
-source "$ROOT/tools/scripts/perf-event-lib.sh"
 PREFLIGHT_STARTED="$(date +%s)"
 PERF_TMP="$(perf_make_spool_dir "$ROOT" stratalint-preflight-perf 2>/dev/null || true)"
 if [[ -n "$PERF_TMP" ]]; then
@@ -165,8 +164,8 @@ set -e
 record_timing gate
 
 observed_base="$(git rev-parse --verify "${BASE_REF}^{commit}" 2>/dev/null || true)"
-if [[ -n "$observed_base" && "$observed_base" != "$BASE_SHA" ]]; then
-  printf 'BASE_ADVANCED pinned=%s observed=%s\n' "$BASE_SHA" "$observed_base" || true
+if [[ -n "$observed_base" && "$observed_base" != "$BASE_TIP_SHA" ]]; then
+  printf 'BASE_ADVANCED pinned=%s observed=%s\n' "$BASE_TIP_SHA" "$observed_base" || true
 fi
 if [[ "$gate_rc" -ne 0 ]]; then exit "$gate_rc"; fi
 
