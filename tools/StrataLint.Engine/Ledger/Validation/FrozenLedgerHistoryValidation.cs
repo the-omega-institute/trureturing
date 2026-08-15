@@ -21,8 +21,7 @@ public static partial class FrozenLedger
             catalog,
             trustedReferences,
             requireCompleteCatalog: true,
-            allowPendingReattestation: false,
-            allowPendingEnvironmentRecoordinate: false);
+            allowPendingReattestation: false);
 
     internal static FrozenLedgerValidationOutcome ValidateHistoryPrefix(
         FrozenLedgerSyntax syntax,
@@ -33,28 +32,14 @@ public static partial class FrozenLedger
             catalog,
             trustedReferences,
             requireCompleteCatalog: false,
-            allowPendingReattestation: true,
-            allowPendingEnvironmentRecoordinate: false);
-
-    internal static FrozenLedgerValidationOutcome ValidateHistoryForEnvironmentRecoordinate(
-        FrozenLedgerSyntax syntax,
-        FrozenMaterialCatalog catalog,
-        TrustedFrozenGitReferences trustedReferences) =>
-        ValidateHistory(
-            syntax,
-            catalog,
-            trustedReferences,
-            requireCompleteCatalog: false,
-            allowPendingReattestation: true,
-            allowPendingEnvironmentRecoordinate: true);
+            allowPendingReattestation: true);
 
     private static FrozenLedgerValidationOutcome ValidateHistory(
         FrozenLedgerSyntax syntax,
         FrozenMaterialCatalog catalog,
         TrustedFrozenGitReferences trustedReferences,
         bool requireCompleteCatalog,
-        bool allowPendingReattestation,
-        bool allowPendingEnvironmentRecoordinate)
+        bool allowPendingReattestation)
     {
         ArgumentNullException.ThrowIfNull(syntax);
         ArgumentNullException.ThrowIfNull(catalog);
@@ -269,11 +254,6 @@ public static partial class FrozenLedger
                 if (materialMatches && environmentMatches)
                 {
                     active[caseId] = entry with { Material = material };
-                    continue;
-                }
-
-                if (allowPendingEnvironmentRecoordinate)
-                {
                     continue;
                 }
 

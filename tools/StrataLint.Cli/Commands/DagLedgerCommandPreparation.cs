@@ -46,7 +46,9 @@ internal static class DagLedgerCommandPreparation
     {
         var candidate = PrepareCandidate(repositoryRoot, repository, leanReportSource);
         var baselineReferences = ScanReferences(candidate.BaselineSyntax, "existing frozen ledger");
-        var trustedBaselineReferences = repository.ValidateFrozenReferences(baselineReferences);
+        var trustedBaselineReferences = TrustedFrozenGitReferences.CreateForTrustedAdapter(
+            baselineReferences.Inputs,
+            baselineReferences.EnvironmentReferences);
         var baseline = FrozenLedger.ValidateHistoryPrefix(
             candidate.BaselineSyntax,
             candidate.Catalog,
@@ -382,21 +384,6 @@ internal static class DagLedgerCommandPreparation
                 algorithm),
         }
             : result;
-    }
-
-    private static FrozenEnvironmentPins EnvironmentPins(FrozenEnvironmentAttestation environment)
-    {
-        if (environment.LakefilePath is null || environment.LakefileBlobOid is null)
-        {
-            throw new InvalidOperationException(
-                "EnvironmentRecoordinate requires exactly one pinned lakefile.toml or lakefile.lean");
-        }
-
-        return new FrozenEnvironmentPins(
-            environment.LakeManifestBlobOid,
-            environment.LakefileBlobOid,
-            RepoPath.CreateKnown(environment.LakefilePath),
-            environment.LeanToolchainBlobOid);
     }
 
     /// Bytes that will not decode are a fault in the repository we were handed, not a verdict about
