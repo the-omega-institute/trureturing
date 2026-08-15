@@ -31,7 +31,7 @@ state remain Git object snapshots used by repository rules.
 
 `worktree` fetches a remote base, compares the exact `lean-toolchain` and
 `lake-manifest.json` bytes, and only then copies `.lake` from a matching worktree.
-On macOS it first uses APFS clonefile (`cp -c -R`), reports and falls back when
-clonefile is unavailable, and uses `lake exe cache get` when no pinned donor
-matches. It never shares `.lake` through a symlink and restores locked .NET
+On macOS it clones the whole tree with one APFS `clonefile(2)` call, reports and
+falls back to an ordinary copy when clonefile is unavailable, and uses
+`lake exe cache get` when no pinned donor matches. It never shares `.lake` through a symlink and restores locked .NET
 dependencies unless `--skip-restore` is explicit.
