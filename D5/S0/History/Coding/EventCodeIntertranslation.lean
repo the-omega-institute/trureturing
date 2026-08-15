@@ -37,23 +37,26 @@ def decodeFieldPrefix : MarkerHistory -> Option (MarkerHistory × MarkerHistory)
 theorem decode_field_prefix_encode (field suffix : MarkerHistory) :
     decodeFieldPrefix (encodeField field * fieldSeparator * suffix) =
       some (field, suffix) := by
-  induction field with
-  | nil =>
-      change decodeFieldPrefix (Marker.E₁ :: Marker.E₁ :: suffix) = some ([], suffix)
+  refine FreeMonoid.inductionOn' field ?_ ?_
+  · change decodeFieldPrefix (Marker.E₁ :: Marker.E₁ :: suffix) = some ([], suffix)
+    rfl
+  · intro marker field ih
+    have encode_of_mul :
+        encodeField (FreeMonoid.of marker * field) =
+          pairMarker marker * encodeField field :=
+      encode_field_cons marker field
+    rw [encode_of_mul]
+    cases marker
+    · change (decodeFieldPrefix (encodeField field * fieldSeparator * suffix)).map
+        (fun decoded => (FreeMonoid.of Marker.E₀ * decoded.1, decoded.2)) =
+          some (FreeMonoid.of Marker.E₀ * field, suffix)
+      rw [ih]
       rfl
-  | cons marker field ih =>
-      rw [encode_field_cons]
-      cases marker
-      · change decodeFieldPrefix
-          (Marker.E₀ :: Marker.E₀ :: (encodeField field * fieldSeparator * suffix)) =
-            some (Marker.E₀ :: field, suffix)
-        rw [decodeFieldPrefix, ih]
-        rfl
-      · change decodeFieldPrefix
-          (Marker.E₀ :: Marker.E₁ :: (encodeField field * fieldSeparator * suffix)) =
-            some (Marker.E₁ :: field, suffix)
-        rw [decodeFieldPrefix, ih]
-        rfl
+    · change (decodeFieldPrefix (encodeField field * fieldSeparator * suffix)).map
+        (fun decoded => (FreeMonoid.of Marker.E₁ * decoded.1, decoded.2)) =
+          some (FreeMonoid.of Marker.E₁ * field, suffix)
+      rw [ih]
+      rfl
 
 /-- Decode the fixed-width opcode component used by `encodeEvent`. -/
 def decodeOpcode : MarkerHistory -> Option Opcode
