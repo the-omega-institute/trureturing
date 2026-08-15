@@ -222,7 +222,7 @@ internal static class ProjectionNotation
         ["DFunLike.coe"] = "coe", ["HMul.hMul"] = "multiply", ["HDiv.hDiv"] = "divide",
         ["Complex.re"] = "re",
         ["IsClosed"] = "IsClosed", ["IsCompact"] = "IsCompact", ["IsSeqCompact"] = "IsSeqCompact",
-        ["setOf"] = "setOf", ["Set.ofPred"] = "setOf", ["AddSubgroup"] = "AddSubgroup",
+        ["setOf"] = "setOf", ["AddSubgroup"] = "AddSubgroup",
         ["ZMod"] = "ZMod",
         ["D5.S1.Dynamics.UniversalSolenoid.projection"] = "projection",
         ["Finset.sum"] = "sum", ["Finset.univ"] = "univ", ["Set.univ"] = "univ",
@@ -244,7 +244,7 @@ internal static class ProjectionDenoiser
         ["DFunLike.coe"] = new(0, 2), ["HMul.hMul"] = new(0, 2), ["HDiv.hDiv"] = new(0, 2),
         ["Complex.re"] = new(0, 1),
         ["IsClosed"] = new(0, 1), ["IsCompact"] = new(0, 1), ["IsSeqCompact"] = new(0, 1),
-        ["setOf"] = new(0, 1), ["Set.ofPred"] = new(0, 1),
+        ["setOf"] = new(0, 1),
         ["AddSubgroup"] = new(0, null, [0]),
         ["ZMod"] = new(0),
         ["Finset.sum"] = new(0, 2),
@@ -475,6 +475,29 @@ internal static class StatementProjector
 
 internal static class StatementProjectionFixtureLoader
 {
+    private static bool TryReadModules(string reportPath, out JsonDocument document)
+    {
+        document = null!;
+        try
+        {
+            var candidate = JsonDocument.Parse(File.ReadAllBytes(reportPath));
+            if (candidate.RootElement.ValueKind != JsonValueKind.Object
+                || !candidate.RootElement.TryGetProperty("modules", out var modules)
+                || modules.ValueKind != JsonValueKind.Array)
+            {
+                candidate.Dispose();
+                return false;
+            }
+
+            document = candidate;
+            return true;
+        }
+        catch (JsonException)
+        {
+            return false;
+        }
+    }
+
     internal const string ProjectorEpoch = "statement-projector-v1";
     internal sealed record Assessment(ProjectionOutcome Outcome, string DeclarationContentDigest);
     private static readonly AsyncLocal<string?> RepositoryRoot = new();
@@ -640,9 +663,14 @@ internal static class StatementProjectionFixtureLoader
             }
         }
         var reportPath = Path.Combine(repositoryRoot, ".lake", "build", "stratalint", "raw-lean-report.json");
-        if (File.Exists(reportPath))
+        // File.Exists is not the same question as "is this a usable report". The engineering CI job
+        // never produces one (that is lean-inspect's job), and tests running in parallel write their
+        // own fixtures under the repository root, so this path can hold a partial or differently
+        // shaped document. Reading it with GetProperty then threw KeyNotFoundException out of a
+        // loader whose whole contract is "use the live report when there is one".
+        if (File.Exists(reportPath) && TryReadModules(reportPath, out var reportDocument))
         {
-            using var report = JsonDocument.Parse(File.ReadAllBytes(reportPath));
+            using var report = reportDocument;
             foreach (var declaration in report.RootElement.GetProperty("modules").EnumerateArray()
                          .SelectMany(static module => module.GetProperty("declarations").EnumerateArray()))
             {
