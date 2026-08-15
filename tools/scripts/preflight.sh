@@ -103,8 +103,8 @@ lake --version >/dev/null
 PREFLIGHT_FAULT_CLASS="CONFIGURATION"
 ROOT="$(git rev-parse --show-toplevel)"
 cd "$ROOT"
-source "$ROOT/tools/scripts/admission-base-lib.sh"
-source "$ROOT/tools/scripts/perf-event-lib.sh"
+source "$ROOT/tools/scripts/lib/admission-base-lib.sh"
+source "$ROOT/tools/scripts/lib/perf-event-lib.sh"
 
 remote="${BASE_REF%%/*}"
 if [[ "$remote" != "$BASE_REF" ]] && git remote | grep -Fxq "$remote"; then

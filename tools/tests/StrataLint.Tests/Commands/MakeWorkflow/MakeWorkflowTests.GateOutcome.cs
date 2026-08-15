@@ -175,10 +175,10 @@ public sealed partial class MakeWorkflowTests
         var baseTipSha = diverged ? GateBaseTipSha : GateForkSha;
         Directory.CreateDirectory(Path.GetDirectoryName(candidateDll)!);
         Directory.CreateDirectory(binDirectory);
-        Directory.CreateDirectory(Path.Combine(candidateRoot, "tools", "scripts"));
+        Directory.CreateDirectory(Path.Combine(candidateRoot, "tools", "scripts", "lib"));
         File.WriteAllText(candidateDll, string.Empty);
         File.WriteAllText(
-            Path.Combine(candidateRoot, "tools", "scripts", "perf-event-lib.sh"),
+            Path.Combine(candidateRoot, "tools", "scripts", "lib", "perf-event-lib.sh"),
             "perf_make_spool_dir() { mktemp -d; }\n"
             + "perf_capture_event() { :; }\n"
             + "perf_flush_events() { :; }\n");
@@ -263,6 +263,10 @@ public sealed partial class MakeWorkflowTests
             result.ExitCode == 1,
             $"expected exit 1, actual {result.ExitCode}\nstdout:\n{Encoding.UTF8.GetString(result.StandardOutput)}\nstderr:\n{error}");
         Assert.Contains(ExpectedMergeBaseDiagnostic(mergeBaseMode), error, StringComparison.Ordinal);
+        if (mergeBaseMode == "candidate-failed")
+        {
+            Assert.DoesNotContain("BASE_ADVANCED", error, StringComparison.Ordinal);
+        }
     }
 
     [Theory]
@@ -349,10 +353,10 @@ public sealed partial class MakeWorkflowTests
         var candidateRoot = Path.Combine(fixture.Path, "candidate");
         var homeDirectory = Path.Combine(fixture.Path, "home");
         var binDirectory = Path.Combine(homeDirectory, ".dotnet");
-        Directory.CreateDirectory(Path.Combine(candidateRoot, "tools", "scripts"));
+        Directory.CreateDirectory(Path.Combine(candidateRoot, "tools", "scripts", "lib"));
         Directory.CreateDirectory(binDirectory);
         File.WriteAllText(
-            Path.Combine(candidateRoot, "tools", "scripts", "perf-event-lib.sh"),
+            Path.Combine(candidateRoot, "tools", "scripts", "lib", "perf-event-lib.sh"),
             "perf_make_spool_dir() { mktemp -d; }\n"
                 + "perf_capture_event() { :; }\n"
                 + "perf_flush_events() { :; }\n");

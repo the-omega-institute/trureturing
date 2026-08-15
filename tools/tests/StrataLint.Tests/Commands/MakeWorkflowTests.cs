@@ -13,7 +13,7 @@ public sealed partial class MakeWorkflowTests
         "tools/scripts/local-harness-gate.sh";
     private const string PreflightScriptPath = "tools/scripts/preflight.sh";
     private const string AdmissionBaseScriptPath =
-        "tools/scripts/admission-base-lib.sh";
+        "tools/scripts/lib/admission-base-lib.sh";
     private const string ScribeContentChecksScriptPath =
         "tools/scripts/workflow/scribe-content-checks.sh";
     private const string CleanLanesScriptPath = "tools/scripts/clean-lanes.sh";
@@ -34,7 +34,7 @@ public sealed partial class MakeWorkflowTests
         "tools/scripts/report/lean-report-input.sh";
     private const string LeanReportPairScriptPath = "tools/scripts/lean-report-pair.sh";
     private const string PerfReportScriptPath = "tools/scripts/perf-report.sh";
-    private const string PerfEventScriptPath = "tools/scripts/perf-event-lib.sh";
+    private const string PerfEventScriptPath = "tools/scripts/lib/perf-event-lib.sh";
     private const string ToolsMakefilePath = "tools/Makefile";
     private const string AdmissionWorkflowPath = ".github/workflows/ci.yml";
     private const string TheoryIngestWorkflowPath = ".github/workflows/theory-ingest.yml";
@@ -242,7 +242,7 @@ public sealed partial class MakeWorkflowTests
         var localGate = File.ReadAllText(Path.Combine(root, LocalHarnessGateScriptPath));
         var admissionBase = File.ReadAllText(Path.Combine(root, AdmissionBaseScriptPath));
 
-        const string source = "source \"$ROOT/tools/scripts/admission-base-lib.sh\"";
+        const string source = "source \"$ROOT/tools/scripts/lib/admission-base-lib.sh\"";
         const string preflightResolve = "admission_resolve_base \"$ROOT\" \"$BASE_REF\"";
         const string localResolve =
             "admission_resolve_base \"$CANDIDATE_ROOT\" \"$BASE_REF\"";

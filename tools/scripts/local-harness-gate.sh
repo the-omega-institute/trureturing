@@ -2,8 +2,8 @@
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd -P)"
-source "$ROOT/tools/scripts/admission-base-lib.sh"
-source "$ROOT/tools/scripts/perf-event-lib.sh"
+source "$ROOT/tools/scripts/lib/admission-base-lib.sh"
+source "$ROOT/tools/scripts/lib/perf-event-lib.sh"
 CANDIDATE_ROOT="$ROOT"
 BASE_REF="origin/dev"
 OBSERVED_BASE_REF=""
@@ -119,7 +119,7 @@ finish() {
   if [[ -n "$OBSERVED_BASE_REF" ]]; then
     local observed_base=""
     observed_base="$(git -C "$CANDIDATE_ROOT" rev-parse --verify "${OBSERVED_BASE_REF}^{commit}" 2>/dev/null || true)"
-    if [[ -n "$observed_base" && "$observed_base" != "$BASE_TIP_SHA" ]]; then
+    if [[ -n "$BASE_TIP_SHA" && -n "$observed_base" && "$observed_base" != "$BASE_TIP_SHA" ]]; then
       printf 'BASE_ADVANCED pinned=%s observed=%s\n' "$BASE_TIP_SHA" "$observed_base" >&2 || true
     fi
   fi
