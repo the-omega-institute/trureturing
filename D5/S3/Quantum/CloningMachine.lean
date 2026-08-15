@@ -74,15 +74,24 @@ theorem machine_reduced_is_density
 theorem machine_reduced_det
     (psi : QubitState) (hUnit : star psi ⬝ᵥ psi = 1) :
     Matrix.det (machineReducedState psi) = (2 / 9 : Complex) := by
+  have hOrthogonalOuter :
+      Matrix.vecMulVec (orthogonalQubit psi) (star (orthogonalQubit psi)) =
+        !![star (psi 1) * psi 1, -star (psi 1) * psi 0;
+          -star (psi 0) * psi 1, star (psi 0) * psi 0] := by
+    ext i j <;> fin_cases i <;> fin_cases j <;>
+      simp [orthogonalQubit, Pi.star_apply, Matrix.vecMulVec_apply] <;> ring
   have hUnit' : star (psi 0) * psi 0 + star (psi 1) * psi 1 = 1 := by
     simpa [dotProduct, Fin.sum_univ_two] using hUnit
   calc
     Matrix.det (machineReducedState psi) =
         (2 / 9 : Complex) *
           (star (psi 0) * psi 0 + star (psi 1) * psi 1) ^ 2 := by
+      rw [machineReducedState, hOrthogonalOuter]
       simp [machineReducedState, orthogonalQubit, Matrix.det_fin_two,
-        Matrix.vecMulVec_apply]
-      ring
+        Matrix.vecMulVec_apply, Pi.star_apply, Matrix.smul_apply,
+        Matrix.cons_val, Matrix.cons_val_zero, Matrix.cons_val_one,
+        Matrix.cons_val_fin_one]
+      ring_nf
     _ = 2 / 9 := by rw [hUnit']; norm_num
 
 /-- The normalized machine reduced state's characteristic polynomial is input-independent. -/

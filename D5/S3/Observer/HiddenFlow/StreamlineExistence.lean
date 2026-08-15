@@ -67,11 +67,16 @@ private theorem assemble_add (x y : HiddenAddress) :
   funext m
   apply (ZMod.equivPi m.1 m.2.ne').injective
   calc
-    (ZMod.equivPi m.1 m.2.ne') ((assemble (x + y)).1 m) =
+      (ZMod.equivPi m.1 m.2.ne') ((assemble (x + y)).1 m) =
         components (x + y) m := equivPi_assemble (x + y) m
     _ = components x m + components y m := by
       funext q
-      simp [components]
+      let hp := Nat.prime_of_mem_primeFactors q.2
+      change (@PadicInt.toZModPow q.1 ⟨hp⟩ (m.1.factorization q.1))
+          (x ⟨q.1, hp⟩ + y ⟨q.1, hp⟩) =
+        (@PadicInt.toZModPow q.1 ⟨hp⟩ (m.1.factorization q.1)) (x ⟨q.1, hp⟩) +
+          (@PadicInt.toZModPow q.1 ⟨hp⟩ (m.1.factorization q.1)) (y ⟨q.1, hp⟩)
+      exact map_add (@PadicInt.toZModPow q.1 ⟨hp⟩ (m.1.factorization q.1)) _ _
     _ = (ZMod.equivPi m.1 m.2.ne') ((assemble x).1 m) +
           (ZMod.equivPi m.1 m.2.ne') ((assemble y).1 m) :=
       congrArg₂ (fun a b => a + b)

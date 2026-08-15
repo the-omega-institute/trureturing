@@ -54,7 +54,8 @@ private theorem coordinate_torsion
     m.1 • theta.1 m = 0 := by
   calc
     m.1 • theta.1 m = theta.1 ⟨1, Nat.zero_lt_one⟩ := by
-      simpa using theta.2 ⟨1, Nat.zero_lt_one⟩ m
+      convert theta.2 ⟨1, Nat.zero_lt_one⟩ m using 1 <;>
+        try { congr 1; apply congrArg theta.1; apply Subtype.ext; simp }
     _ = UniversalSolenoid.projection theta := rfl
     _ = 0 := htheta
 

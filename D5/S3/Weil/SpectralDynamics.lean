@@ -68,7 +68,9 @@ noncomputable def verticalEvolution (t : ℝ) :
   map_add' x y := by
     apply lp.ext
     funext a
-    simp [mul_add]
+    change verticalPhase t a * (x a + y a) =
+      verticalPhase t a * x a + verticalPhase t a * y a
+    ring
   map_smul' c x := by
     apply lp.ext
     funext a
@@ -150,7 +152,9 @@ noncomputable def horizontalEvolution (δ : ℝ) (hδ : 0 ≤ δ) :
   map_add' x y := by
     apply lp.ext
     funext a
-    simp [mul_add]
+    change horizontalWeight δ a * (x a + y a) =
+      horizontalWeight δ a * x a + horizontalWeight δ a * y a
+    ring
   map_smul' c x := by
     apply lp.ext
     funext a
