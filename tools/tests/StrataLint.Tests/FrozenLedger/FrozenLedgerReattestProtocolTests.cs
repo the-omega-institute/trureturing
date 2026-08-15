@@ -43,6 +43,168 @@ public sealed partial class FrozenLedgerTests
     }
 
     [Fact]
+    public void AppendSynchronizationAtomicallyReattestsRepresentationDriftAndFreezesNewModules()
+    {
+        var baselineCatalog = BuildCatalog(
+            Module("A", source: OriginalReattestSource),
+            Module("C", imports: new[] { "A" }));
+        var candidateCatalog = BuildCatalog(
+            Module("A", source: ChangedHeaderReattestSource),
+            Module("B", imports: new[] { "A" }),
+            Module("C", imports: new[] { "A" }));
+        var baselineBytes = FrozenLedgerGenerator.GenerateGenesis(
+            baselineCatalog,
+            new FrozenGenesisDescriptor(GitOid('e'), RuleCatalog.Default.RootSha256));
+        var baselineSyntax = Assert.IsType<DagLedgerLoadOutcome.Loaded>(
+            DagLedgerLoader.Load(baselineBytes.AsSpan())).Syntax;
+        var baseline = Assert.IsType<FrozenLedgerValidationOutcome.Accepted>(
+            ValidateGenesis(baselineSyntax, baselineCatalog)).Capability;
+
+        var candidateBytes = FrozenLedgerGenerator.AppendSynchronization(baseline, candidateCatalog);
+        var candidateSyntax = Assert.IsType<DagLedgerLoadOutcome.Loaded>(
+            DagLedgerLoader.Load(candidateBytes.AsSpan())).Syntax;
+        var candidate = Assert.IsType<FrozenLedgerValidationOutcome.Accepted>(
+            ValidateCandidate(candidateSyntax, baseline, candidateCatalog)).Capability;
+        var history = Assert.IsType<FrozenLedgerValidationOutcome.Accepted>(
+            ValidateHistory(candidateSyntax, candidateCatalog)).Capability;
+
+        Assert.True(candidateBytes.AsSpan().StartsWith(baselineBytes.AsSpan()));
+        Assert.Equal(
+            new[] { "Reattest", "Reattest", "Freeze" },
+            candidateSyntax.Lines
+                .Skip(baseline.Events.Length)
+                .Select(static line => line.Value.GetProperty("event_type").GetString()));
+        Assert.Equal(2, candidate.Events.OfType<FrozenLedgerEvent.Reattest>().Count());
+        Assert.Equal(3, candidate.ActiveFrozenNodes.Length);
+        Assert.Equal(3, history.ActiveFrozenNodes.Length);
+    }
+
+    [Fact]
+    public void AppendSynchronizationDirectsStatementIdentityChangesToRevoke()
+    {
+        var baselineCatalog = BuildCatalog(ModuleWithReport(
+            "A",
+            OriginalReattestSource,
+            "True",
+            declarations: new[] { "a" }));
+        var candidateCatalog = BuildCatalog(ModuleWithReport(
+            "A",
+            OriginalReattestSource,
+            "False",
+            declarations: new[] { "a" }));
+        var baselineBytes = FrozenLedgerGenerator.GenerateGenesis(
+            baselineCatalog,
+            new FrozenGenesisDescriptor(GitOid('e'), RuleCatalog.Default.RootSha256));
+        var baseline = Assert.IsType<FrozenLedgerValidationOutcome.Accepted>(
+            ValidateGenesis(
+                Assert.IsType<DagLedgerLoadOutcome.Loaded>(
+                    DagLedgerLoader.Load(baselineBytes.AsSpan())).Syntax,
+                baselineCatalog)).Capability;
+
+        var exception = Assert.Throws<InvalidOperationException>(
+            () => FrozenLedgerGenerator.AppendSynchronization(baseline, candidateCatalog));
+
+        Assert.Contains(PathFor("A"), exception.Message, StringComparison.Ordinal);
+        Assert.Contains("statement identity", exception.Message, StringComparison.OrdinalIgnoreCase);
+        Assert.Contains("Revoke", exception.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void AppendSynchronizationDirectsEnvironmentPinChangesToRecoordinate()
+    {
+        var fixture = EnvironmentFixture();
+        var recoordinated = Assert.IsType<FrozenLedgerValidationOutcome.Accepted>(
+            ValidateCandidate(
+                LoadedEnvironmentLedger(AppendEnvironmentEvent(fixture).AsSpan()),
+                fixture.Baseline,
+                fixture.CandidateCatalog)).Capability;
+        var nextCatalog = BuildCatalogWithEnvironment(
+            "leanprover/lean4:v4.34.0\n",
+            "[package]\nname = \"next\"\n",
+            "{\"version\":\"next\"}\n",
+            GitOid('a'),
+            GitOid('b'),
+            ModuleWithReport(
+                "A",
+                RecoordinateSource,
+                "new-elaborated-expression",
+                declarations: new[] { "a" }));
+
+        var exception = Assert.Throws<InvalidOperationException>(
+            () => FrozenLedgerGenerator.AppendSynchronization(recoordinated, nextCatalog));
+
+        Assert.Contains(PathFor("A"), exception.Message, StringComparison.Ordinal);
+        Assert.Contains("environment", exception.Message, StringComparison.OrdinalIgnoreCase);
+        Assert.Contains("ledger-recoordinate", exception.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void AppendSynchronizationDirectsAnActiveModuleThatIsNoLongerClosedToRevoke()
+    {
+        var baselineCatalog = BuildCatalog(Module("A"));
+        var candidateCatalog = BuildCatalog(Module("B"));
+        var baselineBytes = FrozenLedgerGenerator.GenerateGenesis(
+            baselineCatalog,
+            new FrozenGenesisDescriptor(GitOid('e'), RuleCatalog.Default.RootSha256));
+        var baseline = Assert.IsType<FrozenLedgerValidationOutcome.Accepted>(
+            ValidateGenesis(
+                Assert.IsType<DagLedgerLoadOutcome.Loaded>(
+                    DagLedgerLoader.Load(baselineBytes.AsSpan())).Syntax,
+                baselineCatalog)).Capability;
+
+        var exception = Assert.Throws<InvalidOperationException>(
+            () => FrozenLedgerGenerator.AppendSynchronization(baseline, candidateCatalog));
+
+        Assert.Contains(PathFor("A"), exception.Message, StringComparison.Ordinal);
+        Assert.Contains("no longer Closed", exception.Message, StringComparison.Ordinal);
+        Assert.Contains("Revoke", exception.Message, StringComparison.Ordinal);
+        Assert.Contains("ledger-sync", exception.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void AppendSynchronizationReattestsDriftWhenNoFreezeIsMissing()
+    {
+        var baselineCatalog = BuildCatalog(Module("A", source: OriginalReattestSource));
+        var candidateCatalog = BuildCatalog(Module("A", source: ChangedHeaderReattestSource));
+        var baselineBytes = FrozenLedgerGenerator.GenerateGenesis(
+            baselineCatalog,
+            new FrozenGenesisDescriptor(GitOid('e'), RuleCatalog.Default.RootSha256));
+        var baseline = Assert.IsType<FrozenLedgerValidationOutcome.Accepted>(
+            ValidateGenesis(
+                Assert.IsType<DagLedgerLoadOutcome.Loaded>(
+                    DagLedgerLoader.Load(baselineBytes.AsSpan())).Syntax,
+                baselineCatalog)).Capability;
+
+        var candidateBytes = FrozenLedgerGenerator.AppendSynchronization(baseline, candidateCatalog);
+        var candidateSyntax = Assert.IsType<DagLedgerLoadOutcome.Loaded>(
+            DagLedgerLoader.Load(candidateBytes.AsSpan())).Syntax;
+        var candidate = Assert.IsType<FrozenLedgerValidationOutcome.Accepted>(
+            ValidateCandidate(candidateSyntax, baseline, candidateCatalog)).Capability;
+
+        var appended = Assert.IsType<FrozenLedgerEvent.Reattest>(candidate.Events[^1]);
+        Assert.Equal(PathFor("A"), appended.Payload.Input.DescriptorSelector);
+        Assert.Equal(baseline.Events.Length + 1, candidate.Events.Length);
+    }
+
+    [Fact]
+    public void AppendSynchronizationIsByteIdempotentWhenNothingChanged()
+    {
+        var catalog = BuildCatalog(Module("A"));
+        var baselineBytes = FrozenLedgerGenerator.GenerateGenesis(
+            catalog,
+            new FrozenGenesisDescriptor(GitOid('e'), RuleCatalog.Default.RootSha256));
+        var baseline = Assert.IsType<FrozenLedgerValidationOutcome.Accepted>(
+            ValidateGenesis(
+                Assert.IsType<DagLedgerLoadOutcome.Loaded>(
+                    DagLedgerLoader.Load(baselineBytes.AsSpan())).Syntax,
+                catalog)).Capability;
+
+        var candidateBytes = FrozenLedgerGenerator.AppendSynchronization(baseline, catalog);
+
+        Assert.True(candidateBytes.AsSpan().SequenceEqual(baselineBytes.AsSpan()));
+    }
+
+    [Fact]
     public void ExtendedReattestIsIdempotentOnceCandidateMaterialIsActive()
     {
         var baselineCatalog = BuildCatalog(Module("A", source: OriginalReattestSource));

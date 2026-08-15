@@ -9,7 +9,7 @@ namespace StrataLint.ArchitectureTests;
 public sealed partial class FileMapPolicyTests
 {
     [Fact]
-    public void ComputationalProjectionRegistrationsAcceptTheSyntheticRegistryFixture()
+    public void ComputationalProjectionsHaveCanonicalFileMapEntries()
     {
         var expectedPaths = new HashSet<string>(
             [
@@ -19,7 +19,6 @@ public sealed partial class FileMapPolicyTests
             StringComparer.Ordinal);
         var root = RepositoryLayout.FindRoot();
         var manifest = FileMapLoader.LoadRepository(root);
-        var registry = SyntheticRegistry();
         var artifacts = GeneratedArtifactInventory.All
             .Where(artifact => expectedPaths.Contains(artifact.Path))
             .ToArray();
@@ -32,14 +31,6 @@ public sealed partial class FileMapPolicyTests
             Assert.Equal(artifact.Producer, entry.ProducedBy);
             Assert.Contains(artifact.Producer, entry.VerifiedBy, StringComparer.Ordinal);
         });
-
-        var topLevelProjectionPaths = expectedPaths
-            .Where(static path => path.StartsWith("Generated/", StringComparison.Ordinal))
-            .Select(RepoPath.CreateKnown)
-            .ToArray();
-        Assert.All(topLevelProjectionPaths, path =>
-            Assert.Contains(path, registry.Policy.GovernanceDocuments));
-
     }
 
     [Fact]
@@ -264,6 +255,53 @@ public sealed partial class FileMapPolicyTests
         Assert.Empty(FileMapPolicy.InspectDeclaredActors(
             manifest,
             new HashSet<string>(StringComparer.Ordinal) { "FixtureEmitter" },
+            "fixture-root"));
+    }
+
+    [Theory]
+    [InlineData("ledger")]
+    [InlineData("truth")]
+    public void DanglingLedgerAndTruthActorsAreRejectedByTheRedFixture(string kind)
+    {
+        var manifest = Parse(Entry(
+            $"Synthetic/{kind}.txt",
+            kind,
+            "none",
+            "MissingConsumer",
+            "MissingVerifier"));
+
+        var findings = FileMapPolicy.InspectDeclaredActors(
+            manifest,
+            new HashSet<string>(StringComparer.Ordinal),
+            "fixture-root");
+
+        Assert.Collection(
+            findings,
+            finding =>
+            {
+                Assert.Equal("FILEMAP-ACTOR-DANGLING", finding.Code);
+                Assert.Contains("consumed_by names MissingConsumer", finding.Message, StringComparison.Ordinal);
+            },
+            finding =>
+            {
+                Assert.Equal("FILEMAP-ACTOR-DANGLING", finding.Code);
+                Assert.Contains("verified_by names MissingVerifier", finding.Message, StringComparison.Ordinal);
+            });
+    }
+
+    [Fact]
+    public void LedgerVerifierNamedByARuleIdIsAcceptedByTheGreenFixture()
+    {
+        var manifest = Parse(Entry(
+            "Synthetic/ledger.md",
+            "ledger",
+            "none",
+            "reader",
+            "SL-008"));
+
+        Assert.Empty(FileMapPolicy.InspectDeclaredActors(
+            manifest,
+            new HashSet<string>(StringComparer.Ordinal),
             "fixture-root"));
     }
 

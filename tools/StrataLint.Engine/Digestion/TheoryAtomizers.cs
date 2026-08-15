@@ -42,6 +42,10 @@ internal sealed record DigestionAtom(
 
 internal sealed record DigestionSlice(bool IsClaim, ImmutableArray<byte> RawBytes);
 
+internal sealed record DigestionClausePlan(
+    string ParentAstPath,
+    ImmutableArray<DigestionAtom> Children);
+
 internal enum DigestionAtomStatusMarkerKind
 {
     Absent,
@@ -117,14 +121,25 @@ internal sealed class AtomizedTheoryDocument
     internal AtomizedTheoryDocument(
         ImmutableArray<DigestionAtom> claims,
         ImmutableArray<DigestionSlice> slices)
+        : this(claims, slices, [])
+    {
+    }
+
+    internal AtomizedTheoryDocument(
+        ImmutableArray<DigestionAtom> claims,
+        ImmutableArray<DigestionSlice> slices,
+        ImmutableArray<DigestionClausePlan> clausePlans)
     {
         Claims = claims;
         Slices = slices;
+        ClausePlans = clausePlans;
     }
 
     internal ImmutableArray<DigestionAtom> Claims { get; }
 
     internal ImmutableArray<DigestionSlice> Slices { get; }
+
+    internal ImmutableArray<DigestionClausePlan> ClausePlans { get; }
 
     internal DigestionAtom ResolveClaim(string astPath)
     {
@@ -312,11 +327,103 @@ internal static class PzgAtomizer
         "^\\*\\*(?<id>O-[0-9]+)\\*\\*",
         RegexOptions.CultureInvariant);
 
-    internal static AtomizedTheoryDocument Atomize(ReadOnlySpan<byte> bytes, TheoryAtomizerRules rules) =>
-        MarkdownAstAtomizer.Atomize(
+    internal static AtomizedTheoryDocument Atomize(ReadOnlySpan<byte> bytes, TheoryAtomizerRules rules)
+    {
+        var document = MarkdownAstAtomizer.Atomize(
             bytes,
             paragraph => Identify(paragraph, rules),
             identifyHeading: heading => IdentifyHeading(heading, rules));
+        return new AtomizedTheoryDocument(
+            document.Claims,
+            document.Slices,
+            document.Claims
+                .Select(PlanClauses)
+                .Where(static plan => plan is not null)
+                .Select(static plan => plan!)
+                .ToImmutableArray());
+    }
+
+    private static DigestionClausePlan? PlanClauses(DigestionAtom parent)
+    {
+        var text = Encoding.UTF8.GetString(parent.RawBytes.AsSpan());
+        var lines = SourceLines(text);
+        var explicitStarts = lines
+            .Skip(1)
+            .Where(static line => line.Text.StartsWith("**", StringComparison.Ordinal))
+            .Select(static line => line.Start)
+            .ToArray();
+        int[] clauseStarts;
+        if (explicitStarts.Length > 0)
+        {
+            clauseStarts = [0, .. explicitStarts];
+        }
+        else
+        {
+            var listStarts = lines
+                .Where(static line => line.Text.StartsWith("- ", StringComparison.Ordinal)
+                    || line.Text.StartsWith("* ", StringComparison.Ordinal))
+                .Select(static line => line.Start)
+                .ToArray();
+            if (listStarts.Length < 2)
+            {
+                return null;
+            }
+
+            clauseStarts = [0, .. listStarts.Skip(1)];
+        }
+
+        var children = ImmutableArray.CreateBuilder<DigestionAtom>(clauseStarts.Length);
+        for (var index = 0; index < clauseStarts.Length; index++)
+        {
+            var relativeStart = MarkdownAstAtomizer.ByteOffset(text, clauseStarts[index]);
+            var relativeEnd = index + 1 == clauseStarts.Length
+                ? parent.RawBytes.Length
+                : MarkdownAstAtomizer.ByteOffset(text, clauseStarts[index + 1]);
+            var childBytes = parent.RawBytes[relativeStart..relativeEnd];
+            children.Add(new DigestionAtom(
+                $"{parent.AstPath}/clause/{index + 1}",
+                parent.StartByte + relativeStart,
+                parent.StartByte + relativeEnd,
+                childBytes,
+                DigestionFingerprint.Compute(childBytes.AsSpan()),
+                parent.Context,
+                DigestionAtomStatusMarker.Parse(childBytes.AsSpan())));
+        }
+
+        return new DigestionClausePlan(parent.AstPath, children.MoveToImmutable());
+    }
+
+    private static ImmutableArray<PzgSourceLine> SourceLines(string text)
+    {
+        var lines = ImmutableArray.CreateBuilder<PzgSourceLine>();
+        var offset = 0;
+        while (offset < text.Length)
+        {
+            var lineEnd = text.IndexOfAny(['\r', '\n'], offset);
+            if (lineEnd < 0)
+            {
+                lineEnd = text.Length;
+            }
+
+            var line = text[offset..lineEnd];
+            var leadingWhitespace = line.Length - line.TrimStart().Length;
+            if (!string.IsNullOrWhiteSpace(line))
+            {
+                lines.Add(new PzgSourceLine(offset + leadingWhitespace, line.TrimStart()));
+            }
+
+            while (lineEnd < text.Length && text[lineEnd] is '\r' or '\n')
+            {
+                lineEnd++;
+            }
+
+            offset = lineEnd;
+        }
+
+        return lines.ToImmutable();
+    }
+
+    private sealed record PzgSourceLine(int Start, string Text);
 
     private static string? Identify(string paragraph, TheoryAtomizerRules rules)
     {
@@ -596,7 +703,7 @@ internal static class MarkdownAstAtomizer
         return lineEnd >= 0 && slice[lineEnd..].IsWhiteSpace();
     }
 
-    private static int ByteOffset(string text, int characterOffset) =>
+    internal static int ByteOffset(string text, int characterOffset) =>
         characterOffset == text.Length
             ? StrictUtf8.GetByteCount(text)
             : StrictUtf8.GetByteCount(text.AsSpan(0, characterOffset));

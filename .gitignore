@@ -17,3 +17,5 @@ __pycache__/
 /Generated/FILEMAP.md
 /Generated/echo-residuals/
 /tools/Generated/scribe-emissions.v1.json
+/Golden/Frozen/accepted/.ledger-stage-*/
+/Golden/Frozen/accepted/.ledger-write.lock

@@ -142,4 +142,50 @@ public sealed partial class TheoryAtomizerTests
             document.Claims.Select(static claim => claim.AstPath).ToArray());
         Assert.Equal(bytes, document.Reassemble().ToArray());
     }
+
+    [Fact]
+    public void PzgClausePlanIsDeterministicForRealResidualTheorem18_7()
+    {
+        const string claim =
+            "**定理 18.7(时间之矢)**〔closed〕。u_t ≠ 0 ⇒ **L(a_{t+1}) > L(a_t)**:长度沿正生成严格单调。\n"
+            + "\n"
+            + "*证明*。L(a_{t+1}) − L(a_t) = L(u_t) = Σ u_{t,p} log p > 0。∎\n"
+            + "\n"
+            + "**推论:时间方向来自素数账本增长**;只要未引入逆账本,素数生成动力学单向。"
+            + "逆向运动(负指数)属群化扩张,须显式逆账本并入账(账 O-8)。\n"
+            + "\n";
+        var bytes = Encoding.UTF8.GetBytes("# PZG\n\n" + claim);
+
+        var first = PzgAtomizer.Atomize(bytes, DigestionTestSupport.Rules);
+        var second = PzgAtomizer.Atomize(bytes, DigestionTestSupport.Rules);
+
+        var plan = Assert.Single(first.ClausePlans);
+        Assert.Equal("theorem/18.7", plan.ParentAstPath);
+        Assert.Equal(
+            ["theorem/18.7/clause/1", "theorem/18.7/clause/2"],
+            plan.Children.Select(static child => child.AstPath).ToArray());
+        Assert.Equal([7, 196], plan.Children.Select(static child => child.StartByte).ToArray());
+        Assert.Equal([196, 379], plan.Children.Select(static child => child.EndByte).ToArray());
+        Assert.Equal(
+            [
+                "sha256:2b465d7578add091f8bf5c03ccc921d04a2cb5a552e67f3a7e3b400e9b7adc65",
+                "sha256:cb882fe434d77c8e0215d129decf54142d9bfea0f02d196007b18068aa90194b",
+            ],
+            plan.Children.Select(static child => child.Fingerprints.RawSha256).ToArray());
+        var repeated = Assert.Single(second.ClausePlans);
+        Assert.Equal(plan.ParentAstPath, repeated.ParentAstPath);
+        Assert.Equal(
+            plan.Children.Select(static child => (
+                child.AstPath,
+                child.StartByte,
+                child.EndByte,
+                child.Fingerprints.RawSha256)),
+            repeated.Children.Select(static child => (
+                child.AstPath,
+                child.StartByte,
+                child.EndByte,
+                child.Fingerprints.RawSha256)));
+        Assert.All(plan.Children.Zip(repeated.Children), pair =>
+            Assert.Equal(pair.First.RawBytes.ToArray(), pair.Second.RawBytes.ToArray()));
+    }
 }

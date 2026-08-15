@@ -99,7 +99,11 @@ internal static partial class DigestionStatusEvaluator
                 verifiedScribeEmissions,
                 findings)).ToArray();
         DeriveMigration(work);
-        RequireDecompositionBeforeNewAbsorption(work, baselineEntries, findings);
+        RequireDecompositionBeforeNewAbsorption(
+            work,
+            baselineEntries,
+            alignment.VerifiedClausePlanParents,
+            findings);
 
         return CompleteEvaluation(work, snapshot, findings, validateProjectedStatus);
     }
@@ -107,6 +111,7 @@ internal static partial class DigestionStatusEvaluator
     private static void RequireDecompositionBeforeNewAbsorption(
         IEnumerable<EntryWork> work,
         IReadOnlyDictionary<string, DigestionLedgerEntry> baselineEntries,
+        IReadOnlySet<string> verifiedClausePlanParents,
         ImmutableArray<string>.Builder findings)
     {
         foreach (var item in work.Where(static item => item.Atom is not null))
@@ -118,6 +123,7 @@ internal static partial class DigestionStatusEvaluator
                     item.Atom!,
                     item.Migration,
                     item.Entry.Receipts.UnresolvedSubitems.Length,
+                    verifiedClausePlanParents.Contains(item.Entry.AtomId),
                     baselineMigration))
             {
                 continue;

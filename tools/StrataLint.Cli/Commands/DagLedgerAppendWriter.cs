@@ -8,8 +8,6 @@ namespace StrataLint.Cli;
 
 internal static class DagLedgerAppendWriter
 {
-    internal sealed record PendingEventFile(string Path, ImmutableArray<byte> Bytes);
-
     internal static CommandResult Append(
         string repositoryRoot,
         IRepositoryGateway repository,
@@ -34,7 +32,8 @@ internal static class DagLedgerAppendWriter
             {
                 return new CommandResult(
                     true,
-                    $"LEDGER_APPEND no missing freezes events={context.Baseline.Events.Length} head={context.Baseline.HeadHash}\n",
+                    $"LEDGER_APPEND appended_reattests=0 appended_freezes=0 no catalog reconciliation required "
+                    + $"events={context.Baseline.Events.Length} head={context.Baseline.HeadHash}\n",
                     string.Empty);
             }
 
@@ -65,14 +64,20 @@ internal static class DagLedgerAppendWriter
             WriteNewEvents(
                 context.LedgerPath,
                 candidateSyntax.Lines,
-                context.Baseline.Events.Length);
-            var appended = candidate.Events
-                .Skip(context.Baseline.Events.Length)
+                context.Baseline.Events.Length,
+                context.BaselineBytes);
+            var appended = candidate.Events.Skip(context.Baseline.Events.Length).ToImmutableArray();
+            var reattests = appended
+                .OfType<FrozenLedgerEvent.Reattest>()
+                .ToImmutableArray();
+            var freezes = appended
                 .OfType<FrozenLedgerEvent.Freeze>()
                 .ToImmutableArray();
-            var output = $"LEDGER_APPEND appended_freezes={appended.Length} "
+            var output = $"LEDGER_APPEND appended_reattests={reattests.Length} appended_freezes={freezes.Length} "
                 + $"events={candidate.Events.Length} head={candidate.HeadHash}\n"
-                + string.Concat(appended.Select(static item => $"FROZEN {item.Payload.NodePath.Value}\n"));
+                + string.Concat(reattests.Select(item =>
+                    $"REATTESTED {context.Baseline.ActiveEntries[item.Payload.CaseId].Material.RepoPath.Value}\n"))
+                + string.Concat(freezes.Select(static item => $"FROZEN {item.Payload.NodePath.Value}\n"));
             return new CommandResult(true, output, string.Empty);
         }
         // Preparation marks report and repository faults now. Without these two the wrapped
@@ -91,28 +96,19 @@ internal static class DagLedgerAppendWriter
             return new CommandResult(
                 false,
                 string.Empty,
-                "LEDGER_APPEND_FAILED " + (exception.InnerException ?? exception).Message + "\n");
+                RenderFailure("LEDGER_APPEND_FAILED", exception));
         }
     }
 
     internal static void WriteNewEvents(
         string directory,
         IEnumerable<FrozenLedgerLineSyntax> lines,
-        int skip = 0) =>
-        WriteEventFiles(directory, BuildNewEventFiles(lines, skip));
-
-    internal static IEnumerable<PendingEventFile> PrepareNewEvents(
-        string directory,
-        IEnumerable<FrozenLedgerLineSyntax> lines,
-        int skip = 0)
-    {
-        foreach (var file in BuildNewEventFiles(lines, skip))
-        {
-            yield return new PendingEventFile(
-                Path.Combine(directory, Path.GetFileName(file.Path.Value)),
-                file.RawBytes);
-        }
-    }
+        int skip = 0,
+        byte[]? expectedBaselineBytes = null) =>
+        WriteEventFiles(
+            directory,
+            BuildNewEventFiles(lines, skip),
+            expectedBaselineBytes);
 
     internal static ImmutableArray<RepositoryFile> BuildNewEventFiles(
         IEnumerable<FrozenLedgerLineSyntax> lines,
@@ -123,6 +119,7 @@ internal static class DagLedgerAppendWriter
         var sequence = 0;
         foreach (var line in lines)
         {
+            var eventType = line.Value.GetProperty("event_type").GetString()!;
             var payload = line.Value.GetProperty("payload");
             if (payload.TryGetProperty("previous_attestation_event_hash", out var previous))
             {
@@ -132,7 +129,7 @@ internal static class DagLedgerAppendWriter
             }
 
             var encoded = FrozenLedgerCanonicalWriter.WriteDagEvent(
-                line.Value.GetProperty("event_type").GetString()!,
+                eventType,
                 payload);
             linearToDagHash.Add(line.Value.GetProperty("event_hash").GetString()!, encoded.Hash);
             if (sequence++ < skip)
@@ -140,7 +137,6 @@ internal static class DagLedgerAppendWriter
                 continue;
             }
 
-            var eventType = line.Value.GetProperty("event_type").GetString()!;
             var identity = FrozenLedgerCanonicalWriter.EventIdentity(
                 eventType,
                 payload,
@@ -158,22 +154,59 @@ internal static class DagLedgerAppendWriter
 
     internal static void WriteEventFiles(
         string directory,
-        IEnumerable<RepositoryFile> files)
+        IEnumerable<RepositoryFile> files,
+        byte[]? expectedBaselineBytes = null)
     {
+        var lockPath = Path.Combine(directory, ".ledger-write.lock");
+        using var publicationLock = AcquirePublicationLock(lockPath);
+        if (expectedBaselineBytes is not null
+            && !DagLedgerCommandPreparation.LoadLedgerDirectory(
+                    directory,
+                    "existing frozen ledger").RawBytes.AsSpan().SequenceEqual(expectedBaselineBytes))
+        {
+            throw new InvalidOperationException(
+                "accepted event files changed while the ledger command was validating them");
+        }
+
+        ReapStaleStagingDirectories(directory);
+        var planned = files.ToImmutableArray();
+        if (planned.IsEmpty)
+        {
+            return;
+        }
+
+        var stagingDirectory = Path.Combine(directory, $".ledger-stage-{Guid.NewGuid():N}");
         var createdPaths = new Stack<string>();
         try
         {
-            foreach (var file in files)
+            Directory.CreateDirectory(stagingDirectory);
+            foreach (var file in planned)
             {
-                var path = Path.Combine(directory, Path.GetFileName(file.Path.Value));
-                using var stream = new FileStream(path, FileMode.CreateNew, FileAccess.Write, FileShare.None);
-                createdPaths.Push(path);
+                var stagedPath = Path.Combine(stagingDirectory, Path.GetFileName(file.Path.Value));
+                using var stream = new FileStream(
+                    stagedPath,
+                    FileMode.CreateNew,
+                    FileAccess.Write,
+                    FileShare.None);
                 stream.Write(file.RawBytes.AsSpan());
+                stream.Flush(flushToDisk: true);
             }
+
+            foreach (var file in planned)
+            {
+                var fileName = Path.GetFileName(file.Path.Value);
+                var stagedPath = Path.Combine(stagingDirectory, fileName);
+                var finalPath = Path.Combine(directory, fileName);
+                File.Move(stagedPath, finalPath);
+                createdPaths.Push(finalPath);
+            }
+
+            Directory.Delete(stagingDirectory);
         }
         catch
         {
             RollbackCreatedFiles(createdPaths);
+            CleanupStagingDirectory(stagingDirectory);
             throw;
         }
     }
@@ -192,6 +225,60 @@ internal static class DagLedgerAppendWriter
             catch (UnauthorizedAccessException)
             {
             }
+        }
+    }
+
+    internal static string RenderFailure(string marker, Exception exception)
+    {
+        var detail = exception.InnerException is null
+            ? exception.Message
+            : exception.Message + " Cause: " + exception.InnerException.Message;
+        return marker + " " + detail + "\n";
+    }
+
+    internal static FileStream AcquirePublicationLock(string lockPath)
+    {
+        try
+        {
+            return new FileStream(
+                lockPath,
+                FileMode.OpenOrCreate,
+                FileAccess.ReadWrite,
+                FileShare.None);
+        }
+        catch (Exception failure) when (failure is IOException or UnauthorizedAccessException)
+        {
+            throw new IOException(
+                $"Another frozen-ledger publication owns the writer lock {lockPath}.",
+                failure);
+        }
+    }
+
+    private static void ReapStaleStagingDirectories(string directory)
+    {
+        foreach (var stagingDirectory in Directory.EnumerateDirectories(
+            directory,
+            ".ledger-stage-*",
+            SearchOption.TopDirectoryOnly))
+        {
+            Directory.Delete(stagingDirectory, recursive: true);
+        }
+    }
+
+    private static void CleanupStagingDirectory(string stagingDirectory)
+    {
+        try
+        {
+            if (Directory.Exists(stagingDirectory))
+            {
+                Directory.Delete(stagingDirectory, recursive: true);
+            }
+        }
+        catch (IOException)
+        {
+        }
+        catch (UnauthorizedAccessException)
+        {
         }
     }
 }

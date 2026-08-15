@@ -20,32 +20,24 @@ public sealed partial class ProductionEnvironmentTests
         fixture.Files[RuleFixture.FixtureDigestionSourcePath] = Encoding.UTF8.GetString(currentBytes);
         fixture.Files.Remove(RuleFixture.FixtureCasPath);
         fixture.Files[captured.RelativePath] = Encoding.UTF8.GetString(captured.Bytes.AsSpan());
-        fixture.Files["Meta/BACKFILL.yaml"] = $$"""
-            schema_version: 3
-            ledger: theory-digestion-v1
-            sources:
-              - source_id: fixture-source
-                path: {{RuleFixture.FixtureDigestionSourcePath}}
-                atomizer: {{atomizerId}}
-                acknowledged_stale: []
-                entries:
-                  - atom_id: normalized-receipt
-                    ast_path: {{atom.AstPath}}
-                    fingerprints:
-                      raw_sha256: {{atom.Fingerprints.RawSha256}}
-                      normalized_sha256: {{atom.Fingerprints.NormalizedSha256}}
-                    cas_ref: {{captured.Reference}}
-                    coverage_gids: []
-                    receipts:
-                      coverage: []
-                      scribe: []
-                      unresolved_subitems: []
-                      chain_atoms: []
-                      tail_authorization: null
-                    status:
-                      migration: residual
-                      truth: open
-            ticket_index: []
+        fixture.Files[RuleFixture.FixtureBackfillSourcePath] =
+            $"source_id = \"fixture-source\"\n"
+            + $"path = \"{RuleFixture.FixtureDigestionSourcePath}\"\n"
+            + $"atomizer = \"{atomizerId}\"\n";
+        fixture.Files.Remove(RuleFixture.FixtureBackfillAtomPath);
+        fixture.Files[$"{BackfillInventoryLoader.RootPath}fixture-source/residual-open/normalized-receipt.yaml"] = $$"""
+            ast_path: {{atom.AstPath}}
+            fingerprints:
+              raw_sha256: {{atom.Fingerprints.RawSha256}}
+              normalized_sha256: {{atom.Fingerprints.NormalizedSha256}}
+            cas_ref: {{captured.Reference}}
+            coverage_gids: []
+            receipts:
+              coverage: []
+              scribe: []
+              unresolved_subitems: []
+              chain_atoms: []
+              tail_authorization: null
             """;
         var environment = new ProductionCliEnvironment(
             "/repo",
@@ -69,31 +61,6 @@ public sealed partial class ProductionEnvironmentTests
     {
         var fixture = new RuleFixture();
         fixture.AddBackfillTargets();
-        var legacy = BackfillInventoryLoader.Load(fixture.Files["Meta/BACKFILL.yaml"]);
-        fixture.Files.Remove("Meta/BACKFILL.yaml");
-        fixture.Files["Meta/Digestion/backfill/fixture-source/source.toml"] =
-            "source_id = \"fixture-source\"\npath = \"docs/GOVERNANCE.md\"\natomizer = \"none\"\n";
-        fixture.Files["Meta/Digestion/backfill/fixture-source/partial-closed/fixture-atom.yaml"] =
-            """
-            boundary:
-              ast_path: manual/fixture
-              start_byte: 0
-              end_byte: 1
-            fingerprints:
-              raw_sha256: sha256:2d711642b726b04401627ca9fbac32f5c8530fb1903cc4db02258717921a4881
-              normalized_sha256: sha256:2d711642b726b04401627ca9fbac32f5c8530fb1903cc4db02258717921a4881
-            cas_ref: sha256:2d711642b726b04401627ca9fbac32f5c8530fb1903cc4db02258717921a4881
-            coverage_gids:
-              - D5/S0/Carrier/BackfillTarget
-            receipts:
-              coverage: []
-              scribe: []
-              unresolved_subitems: []
-              chain_atoms: []
-              tail_authorization: null
-            """;
-        fixture.Files[BackfillInventoryLoader.TicketIndexPath] = string.Concat(
-            legacy.RequireTickets().Select(static ticket => $"{ticket.CaseId} = \"{ticket.Gid}\"\n"));
         var environment = new ProductionCliEnvironment(
             "/repo",
             new FakeRepositoryGateway(
@@ -138,10 +105,11 @@ public sealed partial class ProductionEnvironmentTests
     {
         var fixture = new RuleFixture();
         fixture.AddBackfillTargets();
-        fixture.Files[BackfillInventoryLoader.RelativePath] = fixture.Files[BackfillInventoryLoader.RelativePath]
+        fixture.Files[RuleFixture.FixtureBackfillAtomPath] = fixture.Files[
+                RuleFixture.FixtureBackfillAtomPath]
             .Replace(
-                "          unresolved_subitems: []",
-                "          unresolved_subitems:\n            - zeta-residual\n            - alpha-residual",
+                "  unresolved_subitems: []",
+                "  unresolved_subitems:\n    - zeta-residual\n    - alpha-residual",
                 StringComparison.Ordinal);
         var environment = new ProductionCliEnvironment(
             "/repo",
@@ -186,8 +154,8 @@ public sealed partial class ProductionEnvironmentTests
             BackfillInventoryWriter.Write(plan.Document).AsSpan());
         fixture.Files[RuleFixture.FixtureDigestionSourcePath] = Encoding.UTF8.GetString(currentBytes);
         fixture.Baseline[RuleFixture.FixtureDigestionSourcePath] = Encoding.UTF8.GetString(oldBytes);
-        fixture.Files[BackfillInventoryLoader.RelativePath] = candidateLedger;
-        fixture.Baseline[BackfillInventoryLoader.RelativePath] = baselineLedger;
+        DirectoryLedgerTestSupport.ReplaceWithProjection(fixture.Files, candidateLedger);
+        DirectoryLedgerTestSupport.ReplaceWithProjection(fixture.Baseline, baselineLedger);
         fixture.Files.Remove(RuleFixture.FixtureCasPath);
         fixture.Baseline.Remove(RuleFixture.FixtureCasPath);
         fixture.Files[oldCapture.RelativePath] = Encoding.UTF8.GetString(oldCapture.Bytes.AsSpan());
@@ -218,6 +186,7 @@ public sealed partial class ProductionEnvironmentTests
     {
         var fixture = new RuleFixture();
         fixture.AddBackfillTargets();
+        fixture.UseLegacyBackfill();
         const string expected = "          migration: partial\n          truth: closed";
         const string falseProjection = "          migration: absorbed\n          truth: closed";
         fixture.Files["Meta/BACKFILL.yaml"] = fixture.Files["Meta/BACKFILL.yaml"].Replace(
