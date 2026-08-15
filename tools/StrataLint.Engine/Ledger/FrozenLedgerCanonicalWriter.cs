@@ -70,7 +70,7 @@ public static partial class FrozenLedgerGenerator
                 && active.FrozenNodeId != candidate.FrozenNodeId)
             {
                 throw new InvalidOperationException(
-                    $"Active module {path.Value} changed identity; append Revoke before the replacement Freeze.");
+                    $"Active module {path.Value} changed identity; run ledger-sync to reconcile it.");
             }
         }
 
@@ -145,14 +145,14 @@ public static partial class FrozenLedgerGenerator
             if (!candidateCatalog.ByPath.TryGetValue(path, out var candidate))
             {
                 throw new InvalidOperationException(
-                    $"Active module {path.Value} is no longer Closed; Reattest cannot change truth state.");
+                    $"Active module {path.Value} is no longer Closed; append Revoke before rerunning ledger-sync.");
             }
 
             if (entry.Payload.StatementId != candidate.StatementId
                 || !entry.Payload.DeclarationStatementIds.SequenceEqual(candidate.DeclarationStatementIds))
             {
                 throw new InvalidOperationException(
-                    $"Active module {path.Value} statement identity changed; Reattest is forbidden.");
+                    $"Active module {path.Value} statement identity changed; append Revoke before rerunning ledger-sync.");
             }
 
             if (entry.Material.FrozenNodeId == candidate.FrozenNodeId
@@ -176,7 +176,7 @@ public static partial class FrozenLedgerGenerator
                         != candidateCatalog.Environment.LakefileBlobOid)
                 {
                     throw new InvalidOperationException(
-                        $"Active module {path.Value} environment changed; Reattest is forbidden.");
+                        $"Active module {path.Value} environment changed; run ledger-recoordinate before ledger-sync.");
                 }
 
                 input = input with

@@ -115,6 +115,7 @@ public sealed partial class ProductionEnvironmentTests
     {
         using var temporary = new TemporaryDirectory();
         var fixture = new RuleFixture();
+        fixture.UseLegacyBackfill();
         var atomizerId = SyntheticNumberedAtomizer.Id;
         var baselineBytes = Encoding.UTF8.GetBytes("# Synthetic\n\n**定理 1.1(A)**。old。\n");
         var atom = Assert.Single(AtomizerRegistry.Atomize(atomizerId, baselineBytes, DigestionTestSupport.Rules).Claims);
@@ -450,7 +451,7 @@ public sealed partial class ProductionEnvironmentTests
             DagLedgerLoader.Load(baselineLedger.AsSpan())).Syntax;
         var baselineCapability = Assert.IsType<FrozenLedgerValidationOutcome.Accepted>(
             FrozenLedgerTestData.ValidateGenesis(baselineSyntax, baselineCatalog)).Capability;
-        var currentLedger = FrozenLedgerGenerator.AppendMissingFreezes(
+        var currentLedger = FrozenLedgerGenerator.AppendSynchronization(
             baselineCapability,
             currentCatalog);
         SetLedger(fixture.Files, Encoding.UTF8.GetString(currentLedger.AsSpan()));
@@ -481,7 +482,8 @@ internal sealed class FakeRepositoryGateway(
     RawChangeSet changes,
     RawRepositorySnapshot? current,
     RawRepositorySnapshot? baseline,
-    Func<FrozenLedgerReferenceSet, TrustedFrozenGitReferences>? frozenReferenceValidator = null)
+    Func<FrozenLedgerReferenceSet, TrustedFrozenGitReferences>? frozenReferenceValidator = null,
+    Func<FrozenRevisionIdentity>? currentRevisionResolver = null)
     : IRepositoryGateway
 {
     internal int ReadCount { get; private set; }
@@ -489,6 +491,8 @@ internal sealed class FakeRepositoryGateway(
     internal List<FrozenLedgerReferenceSet> FrozenReferenceValidations { get; } = [];
 
     internal int FrozenReferenceValidationCount => FrozenReferenceValidations.Count;
+
+    internal int CurrentRevisionResolutionCount { get; private set; }
 
     public AdmissionTopologyOutcome InspectAdmissionTopology() =>
         throw new InvalidOperationException("topology should not be inspected");
@@ -504,8 +508,12 @@ internal sealed class FakeRepositoryGateway(
             algorithm + new string('b', revision.Length));
     }
 
-    public FrozenRevisionIdentity ResolveCurrentRevision() =>
-        ResolveFrozenRevision(new string('a', 40));
+    public FrozenRevisionIdentity ResolveCurrentRevision()
+    {
+        CurrentRevisionResolutionCount++;
+        return currentRevisionResolver?.Invoke()
+            ?? ResolveFrozenRevision(new string('a', 40));
+    }
 
     public RawRepositorySnapshot ReadCurrent()
     {
@@ -532,7 +540,9 @@ internal sealed class FakeRepositoryGateway(
     {
         FrozenReferenceValidations.Add(references);
         return frozenReferenceValidator?.Invoke(references)
-            ?? TrustedFrozenGitReferences.CreateForTrustedAdapter(references.Inputs);
+            ?? TrustedFrozenGitReferences.CreateForTrustedAdapter(
+                references.Inputs,
+                references.EnvironmentReferences);
     }
 
     private static RawRepositorySnapshot WithAtomizerData(RawRepositorySnapshot snapshot) =>

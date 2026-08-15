@@ -1,0 +1,37 @@
+### 例 28.5（二维 Hilbert 格的非分配性）
+
+在
+\[
+\mathscr H=\mathbb C^2
+\]
+中取
+\[
+A=\operatorname{span}(e_1),
+\]
+\[
+B=\operatorname{span}(e_1+e_2),
+\qquad
+C=\operatorname{span}(e_1-e_2).
+\]
+因为 \(B\vee C=\mathscr H\)，有
+\[
+A\wedge(B\vee C)=A.
+\]
+但三条直线互不相同，所以
+\[
+A\wedge B=A\wedge C=\{0\},
+\]
+从而
+\[
+(A\wedge B)\vee(A\wedge C)=\{0\}.
+\]
+因此
+\[
+\boxed{
+A\wedge(B\vee C)
+\ne
+(A\wedge B)\vee(A\wedge C).
+}
+
+所以 Hilbert 子空间中的“取反—交—并”不能被无条件当作经典集合的 Boolean 运算。它是 orthomodular，而不是分配的。
+

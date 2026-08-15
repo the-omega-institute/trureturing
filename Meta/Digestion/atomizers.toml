@@ -886,3 +886,18 @@ kind = "example"
 dialect = "qdo"
 token = "算法"
 kind = "algorithm"
+
+[[dialect.genre]]
+dialect = "qdo"
+token = "关键反例"
+kind = "example"
+
+[[dialect.genre]]
+dialect = "qdo"
+token = "原理"
+kind = "principle"
+
+[[dialect.genre]]
+dialect = "qdo"
+token = "特例"
+kind = "example"

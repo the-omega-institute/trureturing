@@ -1,0 +1,13 @@
+### 定理 28.16（递增投影的强极限）
+
+对每个 \(x\in\mathscr H\)：
+\[
+\boxed{
+P_nx\longrightarrow P_\infty x.
+}
+特别地，若递归完备，即 \(R_\infty=0\)，则
+\[
+\boxed{
+P_n\xrightarrow{\mathrm{SOT}}I.
+}
+

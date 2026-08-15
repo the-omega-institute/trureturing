@@ -109,8 +109,8 @@ runtime_disposition = "committed-source"
 pattern = "D5/**/*.md"
 kind = "ledger"
 produced_by = "none"
-consumed_by = ["Admission"]
-verified_by = ["SL-002"]
+consumed_by = ["FrozenContentAddress", "HeartsAuthorizationLedger"]
+verified_by = ["FrozenContentAddress", "SL-008"]
 artifact_id = "none"
 runtime_disposition = "committed-ledger"
 
@@ -405,8 +405,8 @@ runtime_disposition = "committed-source"
 pattern = "tools/Architecture/HARDCODE-LEDGER.md"
 kind = "ledger"
 produced_by = "none"
-consumed_by = ["ArchitectureTests"]
-verified_by = ["ArchitectureTests"]
+consumed_by = ["developer"]
+verified_by = ["developer"]
 artifact_id = "none"
 runtime_disposition = "committed-ledger"
 

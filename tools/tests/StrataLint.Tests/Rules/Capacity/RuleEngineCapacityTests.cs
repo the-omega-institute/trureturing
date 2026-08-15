@@ -10,6 +10,7 @@ public sealed class RuleEngineCapacityTests
     [Fact]
     public void Sl003CapacityHardBlocksAtEightHundredAndSoftWarnsAtSixHundred()
     {
+        // 600 < n <= 800: a non-blocking soft warning, not a rejection.
         var soft = new RuleFixture();
         soft.Files[RuleFixture.RingPath] += string.Concat(Enumerable.Repeat("-- pad\n", 700));
         var softDiag = Assert.Single(
@@ -21,6 +22,7 @@ public sealed class RuleEngineCapacityTests
             softDiag.Message,
             StringComparison.Ordinal);
 
+        // > 800: a hard block.
         var hard = new RuleFixture();
         hard.Files[RuleFixture.RingPath] += string.Concat(Enumerable.Repeat("-- pad\n", 801));
         var hardDiag = Assert.Single(
@@ -49,6 +51,19 @@ public sealed class RuleEngineCapacityTests
     }
 
     [Fact]
+    public void Sl003DoesNotTreatDirectoryDigestionLedgerFilesAsSplittableModules()
+    {
+        var fixture = new RuleFixture();
+
+        var diagnostics = RuleCatalog.Default.EvaluateSingle(
+            RuleId.CreateKnown(3),
+            fixture.Build()).Diagnostics;
+
+        Assert.DoesNotContain(diagnostics, diagnostic =>
+            BackfillInventoryLoader.IsCanonicalPath(diagnostic.Path));
+    }
+
+    [Fact]
     public void Sl003DoesNotTreatTheCasObjectStoreAsASplittableModule()
     {
         var fixture = new RuleFixture();
@@ -57,6 +72,8 @@ public sealed class RuleEngineCapacityTests
             var text = $"CAS object {index}\n";
             var captured = DigestionCasStore.Capture(Encoding.UTF8.GetBytes(text));
             fixture.Files[captured.RelativePath] = text;
+            // The change has to touch the store, or the capacity rule skips it for being
+            // untouched and this stops testing the exclusion it is named for.
             fixture.Changes.Add(captured.RelativePath);
         }
         var diagnostics = RuleCatalog.Default.EvaluateSingle(

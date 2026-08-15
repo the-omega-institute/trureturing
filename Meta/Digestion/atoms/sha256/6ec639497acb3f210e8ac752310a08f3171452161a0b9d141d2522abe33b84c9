@@ -1,0 +1,52 @@
+### 定理 29.1（Cayley 酉性缺陷公式）
+
+对每个非平凡零点 \(\rho=\sigma+i\gamma\)，
+
+\[
+\boxed{
+(C^*C-I)e_\rho
+=
+\delta_\rho e_\rho,
+}
+\]
+
+其中
+
+\[
+\boxed{
+\delta_\rho
+=
+|c_\rho|^2-1
+=
+\frac{1-2\sigma}{|\rho|^2}.
+}
+\]
+
+因此下列命题等价：
+
+\[
+\boxed{
+\mathrm{RH};
+}
+\]
+
+\[
+\boxed{
+|c_\rho|=1
+\quad
+\text{对全部 }\rho\in\mathcal Z;
+}
+\]
+
+\[
+\boxed{
+C^*C=I;
+}
+\]
+
+\[
+\boxed{
+C\text{ 为酉算子}.
+}
+\]
+

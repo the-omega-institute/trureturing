@@ -1,0 +1,9 @@
+### 定理 30.26（状态完成判据）
+
+对正迹类 \(\rho\)，下列条件等价：
+
+1. \(\operatorname{Tr}(\rho Q_\infty)=0\)；
+2. \(Q_\infty\rho^{1/2}=0\)；
+3. \(\operatorname{supp}\rho\le P_\infty\)；
+4. \(\operatorname{Tr}(\rho P_n)\to1\)。
+

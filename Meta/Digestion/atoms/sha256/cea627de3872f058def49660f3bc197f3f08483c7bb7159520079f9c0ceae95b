@@ -1,0 +1,26 @@
+### 定理 30.8（完成判据）
+
+有规范同构
+
+\[
+\boxed{
+X/{\sim_\infty}
+\cong
+\operatorname{im}\Phi
+\subseteq
+\varprojlim_iX_i.
+}
+\]
+
+并且
+
+\[
+\boxed{
+X/{\sim_\infty}
+\cong
+\varprojlim_iX_i
+}
+\]
+
+当且仅当每个形式相容族均可实现。
+

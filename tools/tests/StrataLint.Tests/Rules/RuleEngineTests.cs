@@ -154,11 +154,11 @@ public sealed class RuleEngineTests
         var fixture = new RuleFixture();
         fixture.AddBackfillTargets();
         fixture.Files.Remove(RuleFixture.FixtureCasPath);
-        fixture.Files[BackfillInventoryLoader.RelativePath] = fixture.Files[
-                BackfillInventoryLoader.RelativePath]
+        fixture.Files[RuleFixture.FixtureBackfillAtomPath] = fixture.Files[
+                RuleFixture.FixtureBackfillAtomPath]
             .Replace(
-                "                coverage_gids:\n                  - D5/S0/Carrier/BackfillTarget",
-                "                coverage_gids:\n                  - D5/S0/Carrier/BackfillTarget\n                  - D5/S0/Carrier/BackfillTarget",
+                "coverage_gids:\n  - D5/S0/Carrier/BackfillTarget",
+                "coverage_gids:\n  - D5/S0/Carrier/BackfillTarget\n  - D5/S0/Carrier/BackfillTarget",
                 StringComparison.Ordinal);
 
         var diagnostics = RuleCatalog.Default.EvaluateSingle(
@@ -175,11 +175,11 @@ public sealed class RuleEngineTests
         var fixture = new RuleFixture();
         fixture.AddBackfillTargets();
         fixture.Files[RuleFixture.FixtureCasPath] = "corrupt";
-        fixture.Files[BackfillInventoryLoader.RelativePath] = fixture.Files[
-                BackfillInventoryLoader.RelativePath]
+        fixture.Files[RuleFixture.FixtureBackfillAtomPath] = fixture.Files[
+                RuleFixture.FixtureBackfillAtomPath]
             .Replace(
-                "                coverage_gids:\n                  - D5/S0/Carrier/BackfillTarget",
-                "                coverage_gids:\n                  - D5/S0/Carrier/BackfillTarget\n                  - D5/S0/Carrier/BackfillTarget",
+                "coverage_gids:\n  - D5/S0/Carrier/BackfillTarget",
+                "coverage_gids:\n  - D5/S0/Carrier/BackfillTarget\n  - D5/S0/Carrier/BackfillTarget",
                 StringComparison.Ordinal);
 
         var diagnostics = RuleCatalog.Default.EvaluateSingle(
