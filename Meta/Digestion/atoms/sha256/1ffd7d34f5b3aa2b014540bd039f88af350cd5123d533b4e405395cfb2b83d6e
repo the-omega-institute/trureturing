@@ -1,0 +1,20 @@
+### 定义 36.19（RH 缺陷图册）
+
+RH 缺陷图册是：
+
+\[
+\boxed{
+\mathfrak D_{\mathrm{RH}}
+=
+\left(
+\mathcal J_{\mathrm{RH}},
+\{\overline D_j\},
+\{\text{transition/correspondence data}\}
+\right).
+}
+\]
+
+若各图之间存在真正的函数型转换，则可形成逆系统。若只有局部对应、关系或多值变换，则应使用 fibered category、stack 或 correspondence category，而不是强行写成普通集合逆极限。
+
+---
+

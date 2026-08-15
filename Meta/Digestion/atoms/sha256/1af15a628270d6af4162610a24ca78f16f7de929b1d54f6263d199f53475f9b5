@@ -1,0 +1,53 @@
+### 定理 37.32（完美侧别记录消除镜像交换读出）
+
+对任意二地址状态 \(\rho\)：
+
+\[
+\boxed{
+\text{若左右侧别被完美记录并丢弃记录值，
+则 }J_\rho\text{ 的期望严格为零。}
+}
+\]
+
+这与项目的 record-correlation monogamy 同型：
+
+\[
+\text{perfect }Z\text{-record}
+\Longrightarrow
+X\text{-correlation}=0.
+\]
+
+因此一个离线结构若同时要求：
+
+1. 左右侧别成为公开、完美、可复制的经典标签；
+2. Weil 四元 orbit 保留非零 \(J_\rho\)-型交叉读出；
+
+则二者不能由同一个 unread 观察接口同时实现。
+
+必须至少发生以下之一：
+
+\[
+\boxed{
+\begin{aligned}
+&\text{侧别没有被完美记录};\\
+&\text{镜像相干只存在于含环境的 joint state};\\
+&\text{Weil 读出属于另一个不兼容上下文};\\
+&\text{记录值没有被丢弃};\\
+&\text{所谓侧别不是一个可公开复制的经典变量}.
+\end{aligned}
+}
+\]
+
+这并不排除离线零点，但它说明：
+
+\[
+\boxed{
+\text{离线零点的完整观察者本体不能是一个同时携带
+经典侧别和未衰减镜像相干的单一经典对象。}
+}
+\]
+
+它若存在，必须具有量子上下文或 joint-record 结构。
+
+---
+
