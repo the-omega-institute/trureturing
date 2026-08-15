@@ -1,0 +1,14 @@
+### 命题 29.7（目标相关向量的闭式）
+
+对每个整数 \(a\ge1\)，
+
+\[
+\boxed{
+\langle\chi,f_a\rangle
+=
+\frac{\log a+1-\gamma_{\mathrm E}}{a},
+}
+\]
+
+其中 \(\gamma_{\mathrm E}\) 为 Euler 常数。
+

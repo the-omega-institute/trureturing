@@ -1,0 +1,10 @@
+### 定义 33.4（更新叶）
+
+置换 \(\tau\) 将 \(I\) 分解为轨道：
+
+\[
+I=\bigsqcup_{\lambda\in\Lambda}\mathcal O_\lambda.
+\]
+
+称每个 \(\mathcal O_\lambda\) 为一个更新叶。
+

@@ -1,0 +1,47 @@
+### 定义 31.1（基上下文的对角平面）
+
+取一组正交规范基
+
+\[
+\mathcal B=(|b_1\rangle,\ldots,|b_d\rangle),
+\]
+
+并令
+
+\[
+P_j^{\mathcal B}=|b_j\rangle\langle b_j|.
+\]
+
+定义该上下文的无迹对角平面
+
+\[
+\boxed{
+\mathcal D_{\mathcal B}^0
+=
+\left\{
+\sum_{j=1}^d x_jP_j^{\mathcal B}:
+x_j\in\mathbb R,\ 
+\sum_jx_j=0
+\right\}.
+}
+\]
+
+显然
+
+\[
+\boxed{
+\dim_{\mathbb R}\mathcal D_{\mathcal B}^0=d-1.
+}
+\]
+
+定义去相干／pinching 映射
+
+\[
+\boxed{
+\mathbb E_{\mathcal B}(X)
+=
+\sum_{j=1}^d
+P_j^{\mathcal B}XP_j^{\mathcal B}.
+}
+\]
+

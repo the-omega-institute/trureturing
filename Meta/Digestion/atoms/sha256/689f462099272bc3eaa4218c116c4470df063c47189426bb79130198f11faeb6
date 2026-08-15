@@ -1,0 +1,23 @@
+### 定理 28.18（有界逆极限重构累计完成）
+
+映射
+\[
+J:S_\infty\to\varprojlim_{\!b}S_n,
+\qquad
+J(x)=(P_nx)_n
+\]
+是规范线性等距同构：
+\[
+\boxed{
+S_\infty
+\cong_{\mathrm{iso}}
+\varprojlim_{\!b}S_n.
+}
+因此
+\[
+\boxed{
+\mathscr H/R_\infty
+\cong_{\mathrm{iso}}
+\varprojlim_{\!b}S_n.
+}
+
