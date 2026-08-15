@@ -313,6 +313,7 @@ public sealed partial class DigestionAlignmentTests
     {
         var (sourceBytes, _, candidate, parentCapture, childCapture) = MalformedPzgClauseSubset();
         var fixture = new RuleFixture();
+        fixture.UseLegacyBackfill();
         fixture.AddBackfillTargets();
         fixture.Files[RuleFixture.FixtureDigestionSourcePath] = Encoding.UTF8.GetString(sourceBytes);
         fixture.Files[parentCapture.RelativePath] = Encoding.UTF8.GetString(parentCapture.Bytes.AsSpan());
