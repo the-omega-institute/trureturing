@@ -25,20 +25,21 @@ public sealed class LeanCacheProvisionerTests
             Directory.CreateDirectory(root);
             var runner = new RecordingWorktreeProcessRunner
             {
-                FailClonefile = true,
                 FailCopy = true,
             };
 
             LeanCacheProvisioner.Provision(
                 new LeanCacheDonorSelection(donor.Path, null),
                 root,
-                runner);
+                runner,
+                new RecordingDirectoryCloner { FailureReason = "clonefile unavailable" });
 
             var provisioning = runner.Invocations
                 .Where(static call => call.FileName is "cp" or "lake")
                 .ToArray();
-            Assert.Equal(3, provisioning.Length);
+            Assert.Equal(2, provisioning.Length);
             Assert.All(provisioning, static call => Assert.Equal(5400, call.Timeout.TotalSeconds));
+            Assert.DoesNotContain(provisioning, static call => call.Arguments.Contains("-c"));
         });
     }
 
