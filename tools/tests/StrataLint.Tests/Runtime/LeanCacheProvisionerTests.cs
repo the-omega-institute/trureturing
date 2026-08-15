@@ -31,7 +31,6 @@ public sealed class LeanCacheProvisionerTests
             LeanCacheStamp.Write(donorLake, pins);
             var runner = new RecordingWorktreeProcessRunner
             {
-                FailClonefile = true,
                 FailCopy = true,
             };
 
@@ -39,13 +38,15 @@ public sealed class LeanCacheProvisionerTests
                 new LeanCacheDonorSelection(donor.Path, null),
                 root,
                 pins,
-                runner);
+                runner,
+                new RecordingDirectoryCloner { FailureReason = "clonefile unavailable" });
 
             var provisioning = runner.Invocations
                 .Where(static call => call.FileName is "cp" or "lake")
                 .ToArray();
-            Assert.Equal(4, provisioning.Length);
+            Assert.Equal(3, provisioning.Length);
             Assert.All(provisioning, static call => Assert.Equal(5400, call.Timeout.TotalSeconds));
+            Assert.DoesNotContain(provisioning, static call => call.Arguments.Contains("-c"));
         });
     }
 

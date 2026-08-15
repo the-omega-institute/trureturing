@@ -46,17 +46,26 @@ internal static class WorktreeCommand
     internal static CommandResult Run(
         string repositoryRoot,
         IReadOnlyList<string> arguments,
-        IWorktreeProcessRunner runner)
+        IWorktreeProcessRunner runner) =>
+        Run(repositoryRoot, arguments, runner, new ApfsDirectoryCloner());
+
+    internal static CommandResult Run(
+        string repositoryRoot,
+        IReadOnlyList<string> arguments,
+        IWorktreeProcessRunner runner,
+        IDirectoryCloner cloner)
     {
         ArgumentNullException.ThrowIfNull(arguments);
         ArgumentNullException.ThrowIfNull(runner);
+        ArgumentNullException.ThrowIfNull(cloner);
         if (arguments.Count > 0
             && string.Equals(arguments[0], "ensure-cache", StringComparison.Ordinal))
         {
             return LeanCacheEnsureCommand.Run(
                 repositoryRoot,
                 arguments.Skip(1).ToArray(),
-                runner);
+                runner,
+                cloner);
         }
         if (arguments.Count > 0
             && string.Equals(arguments[0], "with-cache-writer", StringComparison.Ordinal))
@@ -64,7 +73,8 @@ internal static class WorktreeCommand
             return LeanCacheEnsureCommand.RunWithWriter(
                 repositoryRoot,
                 arguments.Skip(1).ToArray(),
-                runner);
+                runner,
+                cloner);
         }
 
         WorktreeOptions? options = null;
@@ -88,7 +98,7 @@ internal static class WorktreeCommand
                 "git worktree add failed");
             worktreeCreated = true;
             EnsureReviewScaffoldIgnores(options.Path);
-            var cache = LeanCacheProvisioner.Provision(donor, options.Path, pins, runner);
+            var cache = LeanCacheProvisioner.Provision(donor, options.Path, pins, runner, cloner);
             if (!options.SkipRestore)
             {
                 RunRequired(

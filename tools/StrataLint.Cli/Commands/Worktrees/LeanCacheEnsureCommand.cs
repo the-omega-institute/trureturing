@@ -12,10 +12,18 @@ internal static class LeanCacheEnsureCommand
     internal static CommandResult Run(
         string repositoryRoot,
         IReadOnlyList<string> arguments,
-        IWorktreeProcessRunner runner)
+        IWorktreeProcessRunner runner) =>
+        Run(repositoryRoot, arguments, runner, new ApfsDirectoryCloner());
+
+    internal static CommandResult Run(
+        string repositoryRoot,
+        IReadOnlyList<string> arguments,
+        IWorktreeProcessRunner runner,
+        IDirectoryCloner cloner)
     {
         ArgumentNullException.ThrowIfNull(arguments);
         ArgumentNullException.ThrowIfNull(runner);
+        ArgumentNullException.ThrowIfNull(cloner);
         if (!TryParseWorktreeRoot(repositoryRoot, arguments, out var root))
         {
             return new CommandResult(false, string.Empty, Usage + "\n");
@@ -46,14 +54,22 @@ internal static class LeanCacheEnsureCommand
                 "canonical cache writer guard is busy");
         }
 
-        return EnsureLocked(root, pins, runner);
+        return EnsureLocked(root, pins, runner, cloner);
     }
 
     internal static CommandResult RunWithWriter(
         string repositoryRoot,
         IReadOnlyList<string> arguments,
-        IWorktreeProcessRunner runner)
+        IWorktreeProcessRunner runner) =>
+        RunWithWriter(repositoryRoot, arguments, runner, new ApfsDirectoryCloner());
+
+    internal static CommandResult RunWithWriter(
+        string repositoryRoot,
+        IReadOnlyList<string> arguments,
+        IWorktreeProcessRunner runner,
+        IDirectoryCloner cloner)
     {
+        ArgumentNullException.ThrowIfNull(cloner);
         if (!TryParseWriter(repositoryRoot, arguments, out var root, out var command))
         {
             return new CommandResult(false, string.Empty, WriterUsage + "\n");
@@ -83,7 +99,7 @@ internal static class LeanCacheEnsureCommand
                 "canonical cache writer guard is busy");
         }
 
-        var ensured = EnsureLocked(root, pins, runner);
+        var ensured = EnsureLocked(root, pins, runner, cloner);
         if (!ensured.Success) return ensured;
 
         try
@@ -107,7 +123,8 @@ internal static class LeanCacheEnsureCommand
     private static CommandResult EnsureLocked(
         string root,
         LeanPinSet pins,
-        IWorktreeProcessRunner runner)
+        IWorktreeProcessRunner runner,
+        IDirectoryCloner cloner)
     {
         var lake = Path.Combine(root, ".lake");
         string? stampMiss = null;
@@ -175,7 +192,12 @@ internal static class LeanCacheEnsureCommand
             using var selection = GitWorktreeInventory.SelectDonor(root, pins, runner);
             try
             {
-                var provisioned = LeanCacheProvisioner.Provision(selection, root, pins, runner);
+                var provisioned = LeanCacheProvisioner.Provision(
+                    selection,
+                    root,
+                    pins,
+                    runner,
+                    cloner);
                 return SuccessReceipt(
                     provisioned.Strategy == "cloned" ? "seeded" : "fetched",
                     root,

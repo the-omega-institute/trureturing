@@ -55,8 +55,17 @@ internal static class LeanCacheProvisioner
         LeanCacheDonorSelection selection,
         string worktreeRoot,
         LeanPinSet pins,
-        IWorktreeProcessRunner runner)
+        IWorktreeProcessRunner runner) =>
+        Provision(selection, worktreeRoot, pins, runner, new ApfsDirectoryCloner());
+
+    internal static LeanCacheProvisionResult Provision(
+        LeanCacheDonorSelection selection,
+        string worktreeRoot,
+        LeanPinSet pins,
+        IWorktreeProcessRunner runner,
+        IDirectoryCloner cloner)
     {
+        ArgumentNullException.ThrowIfNull(cloner);
         if (selection.Donor is null)
         {
             var notice = Join(
@@ -78,6 +87,7 @@ internal static class LeanCacheProvisioner
             worktreeRoot,
             pins,
             runner,
+            cloner,
             out cloneWarning);
         if (cloned is not null) return cloned;
 
@@ -109,6 +119,7 @@ internal static class LeanCacheProvisioner
         string worktreeRoot,
         LeanPinSet pins,
         IWorktreeProcessRunner runner,
+        IDirectoryCloner cloner,
         out string? warning)
     {
         using var guard = selection.TakeGuard() ?? LeanCacheGuard.TryAcquireShared(source);
@@ -125,60 +136,70 @@ internal static class LeanCacheProvisioner
             return null;
         }
 
+        EnsureAbsent(staged);
+
+        // One clonefile(2) call clones the entire hierarchy inside the kernel. A per-file walk
+        // over the same tree pays a system call per entry and is roughly 60x slower on a warm .lake.
+        string? clonefileError;
         try
         {
-            EnsureAbsent(staged);
-            var clonefile = runner.Run(
-                "cp",
-                ["-c", "-R", source, staged],
-                worktreeRoot,
-                ProvisionBudget);
-            if (clonefile.ExitCode == 0)
-            {
-                return PublishStaged(
-                    source,
-                    staged,
-                    target,
-                    selection.Donor!,
-                    pins,
-                    runner,
-                    "clonefile",
-                    null,
-                    out warning);
-            }
-
-            var clonefileError = Error(clonefile, "cp -c -R failed");
-            RemovePartial(staged);
-            var copy = runner.Run(
-                "cp",
-                ["-R", source, staged],
-                worktreeRoot,
-                ProvisionBudget);
-            if (copy.ExitCode == 0)
-            {
-                return PublishStaged(
-                    source,
-                    staged,
-                    target,
-                    selection.Donor!,
-                    pins,
-                    runner,
-                    "copy",
-                    $"clonefile failed ({clonefileError}); used slow ordinary copy",
-                    out warning);
-            }
-
-            var copyError = Error(copy, "cp -R failed");
-            warning = $"clonefile failed ({clonefileError}); ordinary copy failed ({copyError})";
-            RemovePartial(staged);
-            return null;
+            clonefileError = cloner.Clone(source, staged);
         }
         catch (Exception exception)
         {
             RemovePartial(staged);
-            warning = $"donor staging failed ({exception.Message})";
+            clonefileError = exception.Message;
+        }
+
+        if (clonefileError is null)
+        {
+            return PublishStaged(
+                source,
+                staged,
+                target,
+                selection.Donor!,
+                pins,
+                runner,
+                "clonefile",
+                null,
+                out warning);
+        }
+
+        RemovePartial(staged);
+        ProcessOutput copy;
+        try
+        {
+            copy = runner.Run(
+                "cp",
+                ["-R", source, staged],
+                worktreeRoot,
+                ProvisionBudget);
+        }
+        catch (Exception exception)
+        {
+            RemovePartial(staged);
+            warning = $"clonefile failed ({clonefileError}); ordinary copy failed ({exception.Message})";
             return null;
         }
+
+        if (copy.ExitCode == 0)
+        {
+            return PublishStaged(
+                source,
+                staged,
+                target,
+                selection.Donor!,
+                pins,
+                runner,
+                "copy",
+                $"clonefile failed ({clonefileError}); used slow ordinary copy",
+                out warning);
+        }
+
+        var copyError = Error(copy, "cp -R failed");
+        warning = $"clonefile failed ({clonefileError}); ordinary copy failed ({copyError})";
+        RemovePartial(staged);
+        return null;
     }
 
     private static LeanCacheProvisionResult? PublishStaged(
@@ -192,18 +213,29 @@ internal static class LeanCacheProvisioner
         string? warning,
         out string? finalWarning)
     {
-        VerifyPrivateDirectory(staged);
-        if (!LeanCacheStamp.Matches(source, pins, out var stampReason)
-            || LeanCacheBusyProbe.IsBusy(donorRoot, runner))
+        try
+        {
+            VerifyPrivateDirectory(staged);
+            if (!LeanCacheStamp.Matches(source, pins, out var stampReason)
+                || LeanCacheBusyProbe.IsBusy(donorRoot, runner))
+            {
+                RemovePartial(staged);
+                finalWarning = stampReason ?? "donor became busy after staging; discarded staging copy";
+                return null;
+            }
+
+            Directory.Move(staged, target);
+            VerifyPrivateDirectory(target);
+            VerifyMathlibOleans(target);
+            LeanCacheStamp.Write(target, pins);
+        }
+        catch
         {
             RemovePartial(staged);
-            finalWarning = stampReason ?? "donor became busy after staging; discarded staging copy";
-            return null;
+            RemovePartial(target);
+            throw;
         }
 
-        VerifyMathlibOleans(staged);
-        LeanCacheStamp.Write(staged, pins);
-        Directory.Move(staged, target);
         finalWarning = warning;
         return new LeanCacheProvisionResult("cloned", method, warning, null);
     }

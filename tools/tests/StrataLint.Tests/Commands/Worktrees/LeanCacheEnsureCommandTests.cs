@@ -206,21 +206,29 @@ public sealed class LeanCacheEnsureCommandTests
         using var sharedCache = new MathlibCacheFixture();
         InitializeRepository(repository.Path);
         WriteCache(repository.Path, "incomplete donor\n");
-        MathlibProjectionFixture.RemoveFirstOlean(Path.Combine(repository.Path, ".lake"));
+        MathlibProjectionFixture.RemoveAllOleans(Path.Combine(repository.Path, ".lake"));
         var target = AddWorktree(repository.Path, "incomplete-donor-target");
-        var runner = new RecordingWorktreeProcessRunner { OmitMathlibOleans = true };
+        var runner = new RecordingWorktreeProcessRunner();
+        var cloner = new RecordingDirectoryCloner();
 
         var result = WorktreeCommand.Run(
             repository.Path,
             ["ensure-cache", "--path", target],
-            runner);
+            runner,
+            cloner);
 
         Assert.False(result.Success);
         Assert.Empty(result.Output);
         Assert.False(Directory.Exists(Path.Combine(target, ".lake")));
         Assert.False(File.Exists(LeanCacheStamp.PathFor(Path.Combine(target, ".lake"))));
         Assert.Empty(Directory.EnumerateFileSystemEntries(target, ".lake.stage-*"));
-        Assert.Contains(runner.Invocations, static call => call.FileName == "cp");
+        var clone = Assert.Single(cloner.Invocations);
+        Assert.StartsWith(
+            Path.Combine(target, ".lake.stage-"),
+            clone.Target,
+            StringComparison.Ordinal);
+        Assert.DoesNotContain(runner.Invocations, static call => call.FileName == "cp");
+        Assert.DoesNotContain(runner.Invocations, static call => call.FileName == "lake");
         using var receipt = ParseReceipt(result.Error);
         Assert.Equal(
             MathlibProjectionFixture.ModuleCount,
@@ -373,7 +381,6 @@ public sealed class LeanCacheEnsureCommandTests
         var target = AddWorktree(repository.Path, "copy-failure-target");
         var runner = new RecordingWorktreeProcessRunner
         {
-            FailClonefile = true,
             FailCopy = true,
             FailLake = true,
         };
@@ -381,7 +388,8 @@ public sealed class LeanCacheEnsureCommandTests
         var result = WorktreeCommand.Run(
             repository.Path,
             ["ensure-cache", "--path", target],
-            runner);
+            runner,
+            new RecordingDirectoryCloner { FailureReason = "clonefile unavailable" });
 
         Assert.False(result.Success);
         Assert.Empty(result.Output);
