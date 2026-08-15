@@ -1,0 +1,19 @@
+### 推论 31.11（显式 MUB 重构公式）
+
+在完整 MUB 集下，
+
+\[
+\boxed{
+\rho
+=
+\frac Id
++
+\sum_{\ell=1}^{d+1}
+\sum_{j=1}^{d}
+\left(
+p_{\ell j}-\frac1d
+\right)
+P_j^{\mathcal B_\ell}.
+}
+\]
+

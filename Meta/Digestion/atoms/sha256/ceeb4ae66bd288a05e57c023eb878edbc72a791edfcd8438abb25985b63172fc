@@ -1,0 +1,38 @@
+### 特例 33.14（同质记录）
+
+若
+
+\[
+|g_r(i,j)|=c
+\quad(0<c<1)
+\]
+
+对全部 \(r\) 成立，则：
+
+\[
+\boxed{
+|\rho_{ij}^{(N)}|
+=c^N|\rho_{ij}^{(0)}|,
+\qquad
+\mathfrak A_N=N(-\log c).
+}
+\]
+
+如果某一份记录满足
+
+\[
+g_r(i,j)=0,
+\]
+
+则：
+
+\[
+\boxed{
+\rho_{ij}^{(N)}=0
+\quad
+\text{对所有后续只由同类 reduced record channel 组成的演化成立}.
+}
+\]
+
+这与仓库 `multi_copy_erasure_quantifier` 完全一致：一个零重叠记录足以在约化系统中擦除该非零输入项。
+

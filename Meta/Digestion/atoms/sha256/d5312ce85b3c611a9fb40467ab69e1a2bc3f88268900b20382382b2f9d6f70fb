@@ -1,0 +1,35 @@
+### 定义 32.1（结构化观察者）
+
+一个结构化观察者记为
+
+\[
+\boxed{
+\mathfrak O
+=
+(X,T,q_O,\mathcal M_O,\mathcal A_O,\Delta_O,\mathcal R_O),
+}
+\]
+
+其中：
+
+\[
+\begin{aligned}
+X
+&=\text{整体状态或对象空间},\\
+T
+&=\text{整体动力学},\\
+q_O
+&=\text{当前有限读出},\\
+\mathcal M_O
+&=\text{观察者可保存和再次读取的账本／记忆},\\
+\mathcal A_O
+&=\text{观察者可提出的问题或可访问可观测量},\\
+\Delta_O
+&=\text{观察者允许的自应用／对角操作},\\
+\mathcal R_O
+&=\text{观察分辨率、资源或接口 refinement 规则}.
+\end{aligned}
+\]
+
+该定义不是要把不同领域强制编码成同一数据类型，而是给出必须分别类型化的七个位置。具体实例可以省略不适用的数据，但不得把省略的位置默认为“自动存在”。
+
