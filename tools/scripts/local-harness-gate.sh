@@ -44,6 +44,7 @@ LOCAL_TIMING_FILE="$TMP_ROOT/local-gate-timing.jsonl"
 SHARED_TIMING_FILE="$TMP_ROOT/shared-gate-timing.jsonl"
 PERF_TMP="$(perf_make_spool_dir "$CANDIDATE_ROOT" stratalint-local-gate-perf 2>/dev/null || true)"
 PERF_EVENT_SPOOL=""
+BASE_TIP_SHA=""
 BASE_SHA=""
 : > "$LOCAL_TIMING_FILE"
 if [[ -n "$PERF_TMP" ]]; then
@@ -115,8 +116,8 @@ finish() {
   if [[ -n "$OBSERVED_BASE_REF" ]]; then
     local observed_base=""
     observed_base="$(git -C "$CANDIDATE_ROOT" rev-parse --verify "${OBSERVED_BASE_REF}^{commit}" 2>/dev/null || true)"
-    if [[ -n "$observed_base" && "$observed_base" != "$BASE_SHA" ]]; then
-      printf 'BASE_ADVANCED pinned=%s observed=%s\n' "$BASE_SHA" "$observed_base" >&2 || true
+    if [[ -n "$observed_base" && "$observed_base" != "$BASE_TIP_SHA" ]]; then
+      printf 'BASE_ADVANCED pinned=%s observed=%s\n' "$BASE_TIP_SHA" "$observed_base" >&2 || true
     fi
   fi
   perf_flush_events "$CANDIDATE_ROOT" "$PERF_EVENT_SPOOL" >/dev/null 2>&1 || true
@@ -134,15 +135,38 @@ trap 'exit 130' INT
 trap 'exit 143' TERM
 
 prepare_base() {
+  local candidate_sha=""
+  local resolution_rc=0
+  local resolution_reason=""
+  candidate_sha="$(git -C "$CANDIDATE_ROOT" rev-parse --verify HEAD^{commit})" || resolution_rc=$?
+  if [[ "$resolution_rc" -ne 0 || -z "$candidate_sha" ]]; then
+    printf 'BASE_RESOLUTION_FAILED reason=candidate-resolution-failed BASE_REF=%s BASE_TIP_SHA=%s CANDIDATE_SHA=%s BASE_SHA=%s\n' \
+      "$BASE_REF" "${BASE_TIP_SHA:-empty}" "${candidate_sha:-empty}" "${BASE_SHA:-empty}" >&2
+    return 1
+  fi
   if [[ ! "$BASE_REF" =~ ^[0-9a-fA-F]{40}$ ]]; then
     OBSERVED_BASE_REF="$BASE_REF"
   fi
-  BASE_SHA="$(git -C "$CANDIDATE_ROOT" rev-parse --verify "${BASE_REF}^{commit}")"
-  local candidate_sha
-  candidate_sha="$(git -C "$CANDIDATE_ROOT" rev-parse --verify HEAD^{commit})"
-  if [[ "$BASE_SHA" == "$candidate_sha" ]] \
-    || ! git -C "$CANDIDATE_ROOT" merge-base --is-ancestor "$BASE_SHA" "$candidate_sha"; then
-    echo "local-harness-gate: pinned base is not a strict ancestor of candidate HEAD" >&2
+  resolution_rc=0
+  BASE_TIP_SHA="$(git -C "$CANDIDATE_ROOT" rev-parse --verify "${BASE_REF}^{commit}")" || resolution_rc=$?
+  if [[ "$resolution_rc" -ne 0 || -z "$BASE_TIP_SHA" ]]; then
+    printf 'BASE_RESOLUTION_FAILED reason=base-tip-resolution-failed BASE_REF=%s BASE_TIP_SHA=%s CANDIDATE_SHA=%s BASE_SHA=%s\n' \
+      "$BASE_REF" "${BASE_TIP_SHA:-empty}" "$candidate_sha" "${BASE_SHA:-empty}" >&2
+    return 1
+  fi
+
+  resolution_rc=0
+  BASE_SHA="$(git -C "$CANDIDATE_ROOT" merge-base "$BASE_TIP_SHA" "$candidate_sha")" || resolution_rc=$?
+  if [[ "$resolution_rc" -ne 0 ]]; then
+    resolution_reason="merge-base-command-failed"
+  elif [[ -z "$BASE_SHA" ]]; then
+    resolution_reason="merge-base-empty"
+  elif [[ "$BASE_SHA" == "$candidate_sha" ]]; then
+    resolution_reason="vacuous"
+  fi
+  if [[ -n "$resolution_reason" ]]; then
+    printf 'BASE_RESOLUTION_FAILED reason=%s BASE_REF=%s BASE_TIP_SHA=%s CANDIDATE_SHA=%s BASE_SHA=%s\n' \
+      "$resolution_reason" "$BASE_REF" "$BASE_TIP_SHA" "$candidate_sha" "${BASE_SHA:-empty}" >&2
     return 1
   fi
 

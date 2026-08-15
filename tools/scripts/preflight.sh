@@ -12,7 +12,9 @@ PERF_EVENT_SPOOL=""
 PERF_BASE="unknown"
 PREFLIGHT_GATE_OUTCOME_DIR=""
 BASE_REF="${BASE:-origin/dev}"
+BASE_TIP_SHA=""
 BASE_SHA=""
+CANDIDATE_SHA=""
 STRATALINT_PERF_RUN_ID=""
 PREFLIGHT_DEADLINE_AT="${PREFLIGHT_DEADLINE_AT:-}"
 
@@ -106,11 +108,34 @@ remote="${BASE_REF%%/*}"
 if [[ "$remote" != "$BASE_REF" ]] && git remote | grep -Fxq "$remote"; then
   git fetch --prune "$remote"
 fi
-BASE_SHA="$(git rev-parse --verify "${BASE_REF}^{commit}")"
-CANDIDATE_SHA="$(git rev-parse --verify HEAD^{commit})"
-if [[ "$BASE_SHA" == "$CANDIDATE_SHA" ]] \
-  || ! git merge-base --is-ancestor "$BASE_SHA" "$CANDIDATE_SHA"; then
-  echo "preflight: pinned base is not a strict ancestor of candidate HEAD" >&2
+resolution_rc=0
+CANDIDATE_SHA="$(git rev-parse --verify HEAD^{commit})" || resolution_rc=$?
+if [[ "$resolution_rc" -ne 0 || -z "$CANDIDATE_SHA" ]]; then
+  printf 'BASE_RESOLUTION_FAILED reason=candidate-resolution-failed BASE_REF=%s BASE_TIP_SHA=%s CANDIDATE_SHA=%s BASE_SHA=%s\n' \
+    "$BASE_REF" "${BASE_TIP_SHA:-empty}" "${CANDIDATE_SHA:-empty}" "${BASE_SHA:-empty}" >&2
+  exit 1
+fi
+resolution_rc=0
+BASE_TIP_SHA="$(git rev-parse --verify "${BASE_REF}^{commit}")" || resolution_rc=$?
+if [[ "$resolution_rc" -ne 0 || -z "$BASE_TIP_SHA" ]]; then
+  printf 'BASE_RESOLUTION_FAILED reason=base-tip-resolution-failed BASE_REF=%s BASE_TIP_SHA=%s CANDIDATE_SHA=%s BASE_SHA=%s\n' \
+    "$BASE_REF" "${BASE_TIP_SHA:-empty}" "$CANDIDATE_SHA" "${BASE_SHA:-empty}" >&2
+  exit 1
+fi
+resolution_rc=0
+BASE_SHA="$(git merge-base "$BASE_TIP_SHA" "$CANDIDATE_SHA")" || resolution_rc=$?
+if [[ "$resolution_rc" -ne 0 ]]; then
+  resolution_reason="merge-base-command-failed"
+elif [[ -z "$BASE_SHA" ]]; then
+  resolution_reason="merge-base-empty"
+elif [[ "$BASE_SHA" == "$CANDIDATE_SHA" ]]; then
+  resolution_reason="vacuous"
+else
+  resolution_reason=""
+fi
+if [[ -n "$resolution_reason" ]]; then
+  printf 'BASE_RESOLUTION_FAILED reason=%s BASE_REF=%s BASE_TIP_SHA=%s CANDIDATE_SHA=%s BASE_SHA=%s\n' \
+    "$resolution_reason" "$BASE_REF" "$BASE_TIP_SHA" "$CANDIDATE_SHA" "${BASE_SHA:-empty}" >&2
   exit 1
 fi
 
@@ -221,8 +246,8 @@ set -e
 record_timing gate
 
 observed_base="$(git rev-parse --verify "${BASE_REF}^{commit}" 2>/dev/null || true)"
-if [[ -n "$observed_base" && "$observed_base" != "$BASE_SHA" ]]; then
-  printf 'BASE_ADVANCED pinned=%s observed=%s\n' "$BASE_SHA" "$observed_base" || true
+if [[ -n "$observed_base" && "$observed_base" != "$BASE_TIP_SHA" ]]; then
+  printf 'BASE_ADVANCED pinned=%s observed=%s\n' "$BASE_TIP_SHA" "$observed_base" || true
 fi
 if [[ "$gate_rc" -ne 0 ]]; then exit "$gate_rc"; fi
 
