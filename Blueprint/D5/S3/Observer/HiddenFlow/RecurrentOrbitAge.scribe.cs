@@ -64,21 +64,23 @@ internal sealed class RecurrentOrbitAgeDocument : IScribeDocumentDefinition
         Formula age = F.Id("age");
         Formula real = Seq(Mathbb, Grp(F.Id("R")));
         Formula naturals = Seq(Mathbb, Grp(F.Id("N")));
-        Formula atTop = OperatornameThen(F.Id("atTop"));
+        Formula atTop = Seq(Operatorname, Grp(F.Id("atTop")));
         Formula indexedTime = Seq(times, Underscore, Grp(index));
         Formula orbitPoint = Apply(Seq(Phi, Underscore, Grp(indexedTime)), x0);
         Formula flowPoint = Apply(Seq(Phi, Underscore, Grp(time)), x0);
 
         Formula Tendsto(Formula function, Formula source, Formula target) =>
-            Apply(OperatornameThen(F.Id("Tendsto")), function, source, target);
+            Apply(Seq(Operatorname, Grp(F.Id("Tendsto"))), function, source, target);
 
-        Formula nhds(Formula point) => Apply(OperatornameThen(F.Id("nhds")), point);
+        Formula nhds(Formula point) =>
+            Apply(Seq(Operatorname, Grp(F.Id("nhds"))), point);
 
         return Disp(Seq(
             Forall, Sp, x, Comma, Sp,
-            OpenBracket, OperatornameThen(F.Id("TopologicalSpace")), Open, x, Close,
+            OpenBracket, Seq(Operatorname, Grp(F.Id("TopologicalSpace"))), Open, x, Close,
             CloseBracket, Comma, Esc,
-            Phi, Colon, Sp, Apply(OperatornameThen(F.Id("Flow")), real, x), Comma, Sp,
+            Phi, Colon, Sp,
+            Apply(Seq(Operatorname, Grp(F.Id("Flow"))), real, x), Comma, Sp,
             x0, Colon, Sp, x, Comma, Sp,
             times, Colon, Sp, naturals, Sp, To, Sp, real, Comma, Esc,
             Open,
@@ -87,14 +89,9 @@ internal sealed class RecurrentOrbitAgeDocument : IScribeDocumentDefinition
                 atTop, nhds(x0)),
             Close, Sp, Rightarrow, Esc,
             Neg, Exists, Sp, age, Colon, Sp, x, Sp, To, Sp, real, Comma, Esc,
-            Apply(OperatornameThen(F.Id("Continuous")), age), Sp, Land, Sp,
+            Apply(Seq(Operatorname, Grp(F.Id("Continuous"))), age), Sp, Land, Sp,
             Forall, Sp, time, InMacro, Sp, real, Comma, Sp,
             D(0), Sp, Leq, Sp, time, Sp, Rightarrow, Sp,
             Apply(age, flowPoint), Sp, Eq, Sp, time, Dot));
     }
-
-    // Takes a Formula, not a string: a single-string factory returning Formula is exactly the raw
-    // construction entry point FormulaTests.FormulaHasNoRawStringConstructionEntryPoint forbids.
-    private static Formula OperatornameThen(Formula name) =>
-        Seq(Operatorname, Grp(name));
 }
