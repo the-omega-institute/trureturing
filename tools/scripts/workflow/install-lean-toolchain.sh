@@ -14,6 +14,10 @@ toolchain_file="$1"
 attempt_count=3
 github_path=""
 shift
+if [[ -z "$toolchain_file" ]]; then
+  usage
+  exit 64
+fi
 
 while (($# > 0)); do
   case "$1" in

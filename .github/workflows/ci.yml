@@ -161,6 +161,10 @@ jobs:
         env:
           LEAN_TOOLCHAIN_FILE: ${{ steps.lean.outputs.file }}
         run: |
+          if [[ ! -x "$GITHUB_WORKSPACE/candidate/tools/scripts/workflow/install-lean-toolchain.sh" ]]; then
+            printf '%s\n' "candidate Lean toolchain installer is absent (merge dev to pick it up)" >&2
+            exit 1
+          fi
           "$GITHUB_WORKSPACE/candidate/tools/scripts/workflow/install-lean-toolchain.sh" "$LEAN_TOOLCHAIN_FILE" --github-path "$GITHUB_PATH"
 
       - name: Install pinned SDK
@@ -412,6 +416,10 @@ jobs:
         if: steps.report-reuse.outcome != 'success'
         shell: bash
         run: |
+          if [[ ! -x "$GITHUB_WORKSPACE/candidate/tools/scripts/workflow/install-lean-toolchain.sh" ]]; then
+            printf '%s\n' "candidate Lean toolchain installer is absent (merge dev to pick it up)" >&2
+            exit 1
+          fi
           "$GITHUB_WORKSPACE/candidate/tools/scripts/workflow/install-lean-toolchain.sh" candidate/lean-toolchain
 
       - name: Install pinned SDK for statement projection reconciliation

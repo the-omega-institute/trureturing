@@ -106,13 +106,26 @@ public sealed class AdmissionWorkflowTests
         // 安装算法只在脚本实现一次,两个 CI 步骤都从候选树调用它。
         Assert.Single(Regex.Matches(installer, @"elan-init\.sh"));
         Assert.Single(Regex.Matches(installer, @"elan_install_with_retry\(\) \{"));
+        // 数的是行首直接调用(与 Dispatch parity 扫描器同口径),不数路径字面量——
+        // 调用前的具名缺席检查也引用同一路径,那不是第三次调用。
         Assert.Equal(
             2,
             Regex.Matches(
                 workflow,
-                Regex.Escape($"$GITHUB_WORKSPACE/candidate/{installerPath}"),
+                "(?m)^[ \\t]*\"" + Regex.Escape($"$GITHUB_WORKSPACE/candidate/{installerPath}") + "\"",
                 RegexOptions.CultureInvariant | RegexOptions.NonBacktracking).Count);
         Assert.DoesNotContain("elan-init.sh", workflow, StringComparison.Ordinal);
+
+        // 调用形是行为投影的一部分:engineering 必须把 elan 写进 GITHUB_PATH 供后续 step 用,
+        // lean-inspect 不写(它在同一 step 内自己拼 PATH)。只数调用次数抓不住这两条。
+        Assert.Contains(
+            $"\"$GITHUB_WORKSPACE/candidate/{installerPath}\" \"$LEAN_TOOLCHAIN_FILE\" --github-path \"$GITHUB_PATH\"",
+            workflow,
+            StringComparison.Ordinal);
+        Assert.Contains(
+            $"\"$GITHUB_WORKSPACE/candidate/{installerPath}\" candidate/lean-toolchain\n",
+            workflow,
+            StringComparison.Ordinal);
 
         // 工具链下载是第二个网络跳,单独失败过(releases.lean-lang.org 返回空响应),
         // 所以它也必须走重试,而不是裸 `elan toolchain install`。
