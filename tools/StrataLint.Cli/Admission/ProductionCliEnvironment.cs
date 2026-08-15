@@ -27,8 +27,6 @@ internal interface IRepositoryGateway
 
     RawRepositorySnapshot ReadRevision(string revision);
 
-    RawRepositorySnapshot ReadFrozenRevision(string revision);
-
     TrustedFrozenGitReferences ValidateFrozenReferences(FrozenLedgerReferenceSet references);
 }
 
@@ -655,9 +653,6 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
 
     public CommandResult SyncLedger(IReadOnlyList<string> arguments) =>
         DagLedgerSyncWriter.Sync(repositoryRoot, repository, arguments);
-
-    public CommandResult RecoordinateLedger(IReadOnlyList<string> arguments) =>
-        DagLedgerRecoordinateWriter.Recoordinate(repositoryRoot, repository, arguments);
 
     public CommandResult CleanLanes(IReadOnlyList<string> arguments) =>
         CleanLanesCommand.Run(repositoryRoot, arguments);

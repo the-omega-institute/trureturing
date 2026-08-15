@@ -295,7 +295,7 @@ public static partial class FrozenLedger
                 {
                     throw new HistoryFinalStateException(
                         ImmutableArray.Create(material.RepoPath),
-                        $"Active module {material.RepoPath.Value} environment pins changed; run ledger-recoordinate before ledger-sync.");
+                        $"Active module {material.RepoPath.Value} environment pins changed; an accepted EnvironmentRecoordinate event is required before ledger-sync.");
                 }
 
                 throw new HistoryFinalStateException(
