@@ -23155,3 +23155,7260 @@ numeraire 与初始财富给出经济坐标架，交易历史与合同账本保�
 14. 本节不把经济交易事件直接识别为 Fibonacci substitution。
 15. 本节不声称锚点消除了 Cantor–Lawvere 型对角逃逸。
 16. 本节新增定理均为纸面推导；未经 Lean kernel 验证不得标记为 `Closed`。
+
+
+---
+
+# 36. 追加：逆完成观察者本体、概念离散化与 RH 全局 section 障碍
+## Inverse-Completion Observer Ontology, Conceptual Discretization, and the RH Global-Section Obstruction
+
+### 36.0 文档地位、问题提升与承重边界
+
+前文已经分别建立：
+
+- 对角读取、扭曲逃逸、投影自然性与完成障碍；
+- Hilbert 正交商余塔、目标余量、最小预测闭包与多轴观察者完备性；
+- 量子上下文中的局部经典对角、余相干、互补坐标与全局拼接障碍；
+- universal solenoid 中的有限圆坐标、隐藏 profinite 核、实流提升与路径账本；
+- 经济学中的收益商、定价纤维、流动性余量与内生观察界面；
+- 锚定连续统观察者的叶—横截结构、初始坐标、cocycle 记忆与黄金悬挂；
+- Riemann 假设的 Cayley 径向缺陷、Li 正性、Nyman–Beurling 目标余量与 Weil 负方向接口。
+
+本节把问题再提升一个层级。这里的“离散”不再只指离散拓扑、整数标签或有限结果，而指任何一次可命名、可区分、可类型化的概念选择：
+
+\[
+\boxed{
+\text{凡是被选作一个坐标、对象、性质、定理、模型或观察接口的东西，
+都已经对更深关系系统实施了一次区分。}
+}
+\]
+
+因此，“连续统”这个概念本身也不是最终本体；它是某种关系系统在拓扑语言中的一个呈现。数学、量子力学、复平面、零点、概率、熵和观察者，同样可以被视为不同探针范畴中的呈现对象。
+
+本节提出的数学模型是：
+
+\[
+\boxed{
+\text{本体不是某个最后的巨大对象，
+而是全部有限／局部呈现及其转换关系形成的逆完成对象。}
+}
+\]
+
+更准确地说，本节采用 pro-object、逆系统、广义点、sheaf section、Hilbert 余量和对角自然性作为严格语言。它不声称标准数学已经证明存在一个超越所有表示的唯一“zeta 本体”，也不把哲学本体论冒充为既有定理。新增结果分成三类：
+
+1. pro-category、逆极限、Hilbert 投影和 sheaf section 中的标准结构推论；
+2. 将前文章节统一后的新定义与条件定理；
+3. 关于 RH 缺陷全局 section 的研究纲领和明确未闭合接口。
+
+本节全部新增内容仍为纸面数学；在 Lean proof term、依赖闭包、admission 与冻结收据齐备以前不得标记为 `Closed`。
+
+---
+
+## 36.1 “概念离散”不是“值域具有离散拓扑”
+
+### 定义 36.1（拓扑离散）
+
+拓扑空间 \(D\) 称为离散的，当且仅当每个单点集合 \(\{d\}\) 都是开集。
+
+### 定义 36.2（呈现离散／概念切割）
+
+设 \(X\) 为某个对象，\(D\) 为一个呈现对象。一个概念、坐标或观察探针是一个态射
+
+\[
+q:X\longrightarrow D.
+\]
+
+它诱导不可区分关系
+
+\[
+x\sim_q y
+\iff
+q(x)=q(y).
+\]
+
+称选择 \(q\) 的行为为一次呈现离散，因为它把所有可能关系中的一类关系单独命名，并把 \(X\) 按 \(q\) 的纤维切分。
+
+这里 \(D\) 可以是：
+
+\[
+\{0,1\},
+\quad
+\mathbb Z,
+\quad
+\mathbb R,
+\quad
+\mathbb C,
+\quad
+\mathscr H,
+\quad
+\text{某个函数空间},
+\]
+
+所以呈现离散并不要求 \(D\) 具有离散拓扑。
+
+### 原理 36.3（类型选择本身是一种离散）
+
+一旦规定：
+
+\[
+q:X\to D,
+\]
+
+便同时规定了：
+
+- 哪些差异被 \(q\) 保留；
+- 哪些差异被 \(q\) 商掉；
+- 哪种相等关系被允许；
+- 哪些操作可以在 \(D\) 中表达；
+- 哪些问题因类型不匹配而不可表达。
+
+因此：
+
+\[
+\boxed{
+\text{连续性是某个呈现内部的性质；
+选择“这一呈现而非其他呈现”则是元层的离散。}
+}
+\]
+
+本节以后使用“概念是离散的”时，默认指呈现离散，而不是拓扑离散。
+
+---
+
+## 36.2 pro-object：逆完成先于实际极限对象
+
+设 \(\mathcal C\) 为一个范畴，\(I\) 为小的 cofiltered 范畴。
+
+### 定义 36.4（pro-object）
+
+一个 pro-object 是一个函子
+
+\[
+\mathbf X:I\longrightarrow\mathcal C.
+\]
+
+记其阶段对象为：
+
+\[
+X_i=\mathbf X(i).
+\]
+
+对箭头 \(j\to i\)，记遗忘或粗化映射为：
+
+\[
+p_{ji}:X_j\to X_i.
+\]
+
+pro-object 的本质不是预先存在的集合
+
+\[
+\varprojlim_iX_i,
+\]
+
+而是整个 cofiltered 图：
+
+\[
+\boxed{
+\mathbf X=(X_i,p_{ji})_{i\in I}.
+}
+\]
+
+即使 \(\mathcal C\) 中不存在相应极限，\(\mathbf X\) 仍然是良定义的 pro-object。
+
+### 定义 36.5（pro-category 态射）
+
+若：
+
+\[
+\mathbf X=(X_i)_{i\in I},
+\qquad
+\mathbf Y=(Y_j)_{j\in J},
+\]
+
+则：
+
+\[
+\boxed{
+\operatorname{Hom}_{\operatorname{Pro}(\mathcal C)}
+(\mathbf X,\mathbf Y)
+=
+\varprojlim_{j\in J}
+\varinjlim_{i\in I}
+\operatorname{Hom}_{\mathcal C}(X_i,Y_j).
+}
+\]
+
+这个公式表明，pro-object 之间的映射并不是简单的逐层映射族；它允许先把源精化到足够细的阶段，再与目标的每个阶段兼容。
+
+### 原理 36.6（逆完成本体）
+
+本节把一个候选“本体”建模为 pro-object：
+
+\[
+\boxed{
+\mathbf X=(X_i,p_{ji}),
+}
+\]
+
+其中每个 \(X_i\) 是某个可表达、可计算或可观测层，而 bonding maps 记录：
+
+\[
+\text{更精细呈现}
+\longrightarrow
+\text{更粗呈现}
+\]
+
+所遗忘的信息。
+
+这里“本体”不是额外躲在 \(\mathbf X\) 背后的神秘点；它就是全部阶段及其相容关系的 pro-isomorphism 类。
+
+---
+
+## 36.3 普通概念只需一个阶段，观察者锚点却必须贯穿全部阶段
+
+令：
+
+\[
+c:\mathcal C\to\operatorname{Pro}(\mathcal C)
+\]
+
+为常值嵌入。
+
+### 定理 36.7（概念—锚点非对称性）
+
+对任意 pro-object \(\mathbf X=(X_i)\) 与普通对象 \(D,A\in\mathcal C\)，有：
+
+\[
+\boxed{
+\operatorname{Hom}_{\operatorname{Pro}(\mathcal C)}
+(\mathbf X,cD)
+\cong
+\varinjlim_i
+\operatorname{Hom}_{\mathcal C}(X_i,D).
+}
+\]
+
+以及：
+
+\[
+\boxed{
+\operatorname{Hom}_{\operatorname{Pro}(\mathcal C)}
+(cA,\mathbf X)
+\cong
+\varprojlim_i
+\operatorname{Hom}_{\mathcal C}(A,X_i).
+}
+\]
+
+#### 证明
+
+第一式把目标 pro-object 取为只有一个阶段的常值对象 \(cD\)，代入定义 36.5，外层逆极限退化，得到：
+
+\[
+\varinjlim_i\operatorname{Hom}(X_i,D).
+\]
+
+第二式把源取为常值对象 \(cA\)，内层正向极限退化，得到：
+
+\[
+\varprojlim_i\operatorname{Hom}(A,X_i).
+\]
+
+\(\square\)
+
+### 推论 36.8（每个普通概念在有限阶段出现）
+
+任意普通读出：
+
+\[
+q:\mathbf X\to cD
+\]
+
+都由某个阶段的映射代表：
+
+\[
+q_i:X_i\to D.
+\]
+
+因此：
+
+\[
+\boxed{
+\text{任何单一普通概念都只需要本体的某个阶段；
+它不必、也通常不能同时读取全部阶段。}
+}
+\]
+
+即使 \(D=\mathbb R\) 或 \(D=\mathbb C\) 是连续空间，作为对 \(\mathbf X\) 的普通概念，\(q\) 仍在某个有限呈现阶段被定义。
+
+### 推论 36.9（观察者锚点是相容锥）
+
+若 \(\mathcal C\) 有终对象 \(1\)，则 \(\mathbf X\) 的广义点为：
+
+\[
+\operatorname{Hom}_{\operatorname{Pro}(\mathcal C)}(c1,\mathbf X)
+\cong
+\varprojlim_i
+\operatorname{Hom}_{\mathcal C}(1,X_i).
+\]
+
+所以一个观察者锚点不是某个单一 \(X_i\) 中的点，而是相容族：
+
+\[
+\boxed{
+\mathbf o=(o_i)_{i\in I},
+\qquad
+p_{ji}(o_j)=o_i.
+}
+\]
+
+这给出本节最核心的不对称：
+
+\[
+\boxed{
+\begin{aligned}
+\text{概念}
+&=\text{从某个阶段出发的单一读出};\\
+\text{观察者}
+&=\text{贯穿全部阶段的相容广义点}.
+\end{aligned}
+}
+\]
+
+---
+
+## 36.4 观察者是带锚 compatible cone，而不是底层集合中的一个点
+
+### 定义 36.10（逆完成观察者）
+
+一个逆完成观察者记为：
+
+\[
+\boxed{
+\mathfrak O
+=
+(\mathbf X,\mathbf o,\mathcal P,\mathcal M,\Delta),
+}
+\]
+
+其中：
+
+\[
+\begin{aligned}
+\mathbf X
+&=(X_i,p_{ji})
+&&\text{为逆完成载体};\\
+\mathbf o
+&=(o_i)
+&&\text{为相容锚点};\\
+\mathcal P
+&\subseteq\operatorname{Pro}(\mathcal C)/\mathbf X
+&&\text{为允许的概念／探针族};\\
+\mathcal M
+&&&\text{为不能由当前阶段恢复的路径与转换账本};\\
+\Delta
+&&&\text{为对探针系统自身进行评价的对角操作}.
+\end{aligned}
+\]
+
+这里 \(\mathbf o\) 满足：
+
+\[
+p_{ji}(o_j)=o_i.
+\]
+
+它把每一层中的“这里”绑定为同一个跨尺度观察者。
+
+### 定义 36.11（局部观察者）
+
+若不存在全局相容点 \(\mathbf o\)，但在覆盖或子图上存在局部相容锚点，则称其为局部观察者。
+
+局部锚点之间可能由：
+
+- group-valued cocycle；
+- hidden-fiber transition；
+- holonomy；
+- gauge transformation；
+- sheaf restriction；
+
+连接。
+
+所以：
+
+\[
+\boxed{
+\text{观察者可以是全局 section，也可以只有局部 section 和转移 cocycle。}
+}
+\]
+
+这与第 35 节的 solenoid 提升、隐藏核和 throat transition cocycle 一致，但本节不把所有逆完成观察者都等同于 solenoid。
+
+---
+
+## 36.5 “结构性无穷”是没有终端忠实阶段
+
+### 定义 36.12（最终阶段）
+
+若存在 \(i_\ast\in I\)，使 \(\mathbf X\) 在 pro-category 中等价于常值对象 \(cX_{i_\ast}\)，则称 \(\mathbf X\) 最终稳定或本质常值。
+
+### 定义 36.13（结构性无穷）
+
+若 \(\mathbf X\) 不本质常值，称其具有结构性无穷。
+
+在集合型逆系统中，一个充分的非终止条件是：
+
+\[
+\boxed{
+\forall i,\quad
+\exists(j\to i)
+\text{ 使 }p_{ji}\text{ 仍合并至少两个 }X_j\text{ 中的对象}.
+}
+\]
+
+也就是说，没有任何阶段能够忠实替代以后全部 refinement。
+
+因此：
+
+\[
+\boxed{
+\infty
+\neq
+\text{一个无限大的坐标值};
+}
+\]
+
+更适合本节的定义是：
+
+\[
+\boxed{
+\infty
+=
+\text{不存在终端忠实概念层}.
+}
+\]
+
+这与前文 Hilbert 投影塔中：
+
+\[
+\|I-P_n\|_{\mathrm{op}}=1
+\]
+
+对每个有限阶段成立、但 \(P_nx\to x\) 对每个固定 \(x\) 成立的现象同型。
+
+---
+## 36.6 候选整体到逆极限的实现映射
+
+设 \(\mathcal C\) 中相应极限存在，并设另有一个候选整体对象 \(X\)，带相容投影：
+
+\[
+q_i:X\to X_i,
+\qquad
+p_{ji}q_j=q_i.
+\]
+
+这些投影诱导规范映射：
+
+\[
+\boxed{
+\eta_X:
+X\longrightarrow
+\varprojlim_iX_i,
+\qquad
+x\longmapsto(q_i(x))_i.
+}
+\]
+
+### 定义 36.14（分离缺陷）
+
+集合情形中定义：
+
+\[
+K_{\mathrm{sep}}
+=
+\{(x,y)\in X^2:
+q_i(x)=q_i(y)\ \forall i\}.
+\]
+
+若 \(X\) 为线性空间且 \(q_i\) 线性，则：
+
+\[
+\boxed{
+K_{\mathrm{sep}}
+=
+\bigcap_i\ker q_i.
+}
+\]
+
+若 \(K_{\mathrm{sep}}\neq0\)，全部已选概念联合起来仍无法区分某些整体差异。
+
+### 定义 36.15（实现缺陷）
+
+定义：
+
+\[
+\boxed{
+D_{\mathrm{real}}
+=
+\left(
+\varprojlim_iX_i
+\right)
+\setminus
+\eta_X(X).
+}
+\]
+
+其中的元素是形式上在每个阶段都相容、但不来自任何实际整体对象的坐标族。
+
+### 定理 36.16（逆完成同构判据）
+
+\(\eta_X\) 为同构，当且仅当：
+
+1. 探针族联合分离 \(X\)；
+2. 每个相容阶段族都由唯一的 \(x\in X\) 实现。
+
+#### 证明
+
+第一条件等价于 \(\eta_X\) 单射；第二条件等价于 \(\eta_X\) 满射。二者同时成立即为双射；在相应结构范畴中再验证结构保持，即得同构。 \(\square\)
+
+因此最高层的闭合缺陷不是一个单一数值，而是：
+
+\[
+\boxed{
+\text{候选整体与其全部概念坐标的逆完成不能建立同构}.
+}
+\]
+
+---
+
+## 36.7 Hilbert 完成说明“形式相容”仍可能缺少能量条件
+
+设：
+
+\[
+S_1\subseteq S_2\subseteq\cdots
+\]
+
+为递增有限维 Hilbert 子空间，正交投影为：
+
+\[
+p_{n+1,n}:S_{n+1}\to S_n.
+\]
+
+一个形式相容族满足：
+
+\[
+p_{n+1,n}(x_{n+1})=x_n.
+\]
+
+普通集合逆极限允许所有这种族，但 Hilbert 向量只对应满足：
+
+\[
+\boxed{
+\sup_n\|x_n\|<\infty
+}
+\]
+
+的相容族。
+
+等价地，正交增量：
+
+\[
+d_{n+1}=x_{n+1}-x_n
+\]
+
+必须满足：
+
+\[
+\boxed{
+\sum_n\|d_n\|^2<\infty.
+}
+\]
+
+所以：
+
+\[
+\boxed{
+\text{坐标相容}
+\not\Rightarrow
+\text{对象可实现};
+}
+\]
+
+还需要：
+
+\[
+\boxed{
+\text{能量、范数、正性、可积性或其他 admissibility 条件}.
+}
+\]
+
+这为 RH 的逆完成模型提供重要边界：所有有限层零点／Li／Weil 数据形式相容，仍不保证它们来自一个允许的全局算术对象。
+
+---
+
+## 36.8 Yoneda 探针观点：对象由其对全部探针的响应给出
+
+对范畴 \(\mathcal C\)，Yoneda 嵌入把对象 \(X\) 送到：
+
+\[
+\boxed{
+h_X:
+\mathcal C^{\mathrm{op}}\to\mathbf{Set},
+\qquad
+P\longmapsto\operatorname{Hom}_{\mathcal C}(P,X).
+}
+\]
+
+如果探针子范畴 \(\mathcal G\subseteq\mathcal C\) 足够稠密／生成，则 \(X\) 可以由限制 nerve：
+
+\[
+N_{\mathcal G}(X)
+=
+\left(
+\operatorname{Hom}(G,X)
+\right)_{G\in\mathcal G}
+\]
+
+重构。
+
+### 原理 36.17（反应本体）
+
+对象不必被理解为“所有坐标背后的一个裸点集”，而可以被理解为：
+
+\[
+\boxed{
+\text{它对全部允许探针的响应，以及这些响应对探针态射的自然性}.
+}
+\]
+
+但这需要证明 \(\mathcal G\) 是联合忠实、稠密或保守的；任意选择的一小组探针并不自动恢复对象。
+
+因此“数学概念是本体的投影”要成为定理，必须给出：
+
+\[
+\boxed{
+\text{探针范畴}
++
+\text{转换律}
++
+\text{联合忠实性}
++
+\text{可实现性}.
+}
+\]
+
+---
+
+## 36.9 元对角：任何声称枚举全部概念的单一阶段都会逃逸
+
+设某一阶段 \(X_i\) 声称编码全部同类型读出：
+
+\[
+e:X_i\to Y^{X_i}.
+\]
+
+设：
+
+\[
+\tau:Y\to Y
+\]
+
+无不动点。定义：
+
+\[
+d(x)=\tau(e(x)(x)).
+\]
+
+则：
+
+\[
+d\notin\operatorname{im}e.
+\]
+
+这仍是普通 Cantor–Lawvere 对角化。
+
+### 定理 36.18（无终端自描述坐标）
+
+若某一普通阶段同时声称：
+
+1. 它忠实表示整个 pro-object；
+2. 它枚举全部从该阶段到 \(Y\) 的同类型概念；
+3. 这些概念包括对该枚举本身的评价；
+4. \(Y\) 上存在无不动点扭曲；
+
+则该阶段不可能闭合。
+
+#### 证明
+
+由条件 2–4 构造上述对角函数 \(d\)，它逃出枚举；与条件 1–2 的完备声称矛盾。 \(\square\)
+
+因此：
+
+\[
+\boxed{
+\text{对角化不是“连续统存在”本身的后果，
+而是某一离散呈现声称包含自身全部同类型呈现时的逃逸。}
+}
+\]
+
+在最高抽象层面，普通闭合障碍与对角障碍都属于“单一呈现不能替代逆完成本体”；但在具体数学层，它们仍由不同定理实现。
+
+---
+
+## 36.10 解析延拓同时具有 Ind 与 Pro 两个方向
+
+设 \(\mathcal U\) 为定义域按包含关系形成的 filtered 系统。对每个定义域 \(U\)，再设 \(R_U\) 为局部精度、jet 阶数、测试函数、谱截断或计算分辨率形成的 cofiltered 系统。
+
+于是一个“持续解析延拓并持续精化”的对象更接近：
+
+\[
+\boxed{
+\mathfrak F
+=
+\underset{U\in\mathcal U}{\operatorname{``colim"}}
+\;
+\underset{r\in R_U}{\operatorname{``lim"}}
+F_{U,r}.
+}
+\]
+
+即：
+
+\[
+\mathfrak F
+\in
+\operatorname{Ind}
+\left(
+\operatorname{Pro}(\mathcal C)
+\right).
+\]
+
+其中：
+
+\[
+\begin{aligned}
+\operatorname{Ind}\text{ 方向}
+&=\text{扩张定义域、加入更多局部图};\\
+\operatorname{Pro}\text{ 方向}
+&=\text{提高每个局部图中的分辨率与相容约束}.
+\end{aligned}
+\]
+
+标准复分析已经把 \(\zeta\) 从 \(\Re s>1\) 的 Dirichlet 级数延拓为复平面上的亚纯函数。该亚纯函数是一个完整、合法的标准数学对象。
+
+本节额外提出的“zeta 本体”假设是：
+
+\[
+\boxed{
+\text{复平面亚纯函数仍可能只是一个更大的 Ind–Pro 观察对象的一个表示函子值}.
+}
+\]
+
+这不是标准 RH 的前提，也不是已证明事实；它是用于组织不同等价判据与观察接口的候选研究结构。
+
+---
+
+## 36.11 zeta 缺陷观察图册
+
+记一个候选 zeta 逆完成对象为：
+
+\[
+\mathfrak Z.
+\]
+
+定义观察图册索引范畴：
+
+\[
+\mathcal J_{\mathrm{RH}}.
+\]
+
+其对象可包括：
+
+\[
+\boxed{
+\begin{aligned}
+\mathsf C
+&=\text{复平面／亚纯函数图};\\
+\mathsf{Div}
+&=\text{零点—极点 divisor 图};\\
+\mathsf{Cay}
+&=\text{Cayley 相位—径向图};\\
+\mathsf{Li}
+&=\text{Li 系数图};\\
+\mathsf{NB}
+&=\text{Nyman--Beurling Hilbert 余量图};\\
+\mathsf{W}
+&=\text{Weil 二次型图};\\
+\mathsf P
+&=\text{素数显式公式误差图};\\
+\mathsf S
+&=\text{谱／共振图}.
+\end{aligned}
+}
+\]
+
+对每个图 \(j\)，设观察对象为：
+
+\[
+D_j,
+\]
+
+临界／闭合子对象为：
+
+\[
+C_j\subseteq D_j.
+\]
+
+定义点化缺陷对象：
+
+\[
+\boxed{
+\overline D_j
+=
+D_j/C_j.
+}
+\]
+
+这里 \(D_j/C_j\) 可以是：
+
+- 线性商；
+- pointed topological quotient；
+- 正锥商；
+- 二次型负部；
+- 条件定义的状态空间；
+
+不能假定所有图都属于同一个简单范畴。
+
+### 定义 36.19（RH 缺陷图册）
+
+RH 缺陷图册是：
+
+\[
+\boxed{
+\mathfrak D_{\mathrm{RH}}
+=
+\left(
+\mathcal J_{\mathrm{RH}},
+\{\overline D_j\},
+\{\text{transition/correspondence data}\}
+\right).
+}
+\]
+
+若各图之间存在真正的函数型转换，则可形成逆系统。若只有局部对应、关系或多值变换，则应使用 fibered category、stack 或 correspondence category，而不是强行写成普通集合逆极限。
+
+---
+
+## 36.12 离线零点不是图册中的一个点，而是一个相容 section
+
+### 定义 36.20（离线缺陷 section）
+
+一个离线缺陷 section 是一族：
+
+\[
+\boxed{
+\delta
+=
+(\delta_j)_{j\in\mathcal J_{\mathrm{RH}}},
+}
+\]
+
+其中：
+
+\[
+\delta_j\in\overline D_j,
+\]
+
+并且在所有已定义的 transition、restriction 或 correspondence 下相容。
+
+复平面图中的坐标满足：
+
+\[
+\delta_{\mathsf C}
+=
+[\rho],
+\qquad
+\Re\rho\neq\frac12.
+\]
+
+Cayley 图中的坐标为：
+
+\[
+\delta_{\mathsf{Cay}}
+=
+(\theta_\rho,\beta_\rho),
+\qquad
+\beta_\rho\neq0.
+\]
+
+但完整离线对象不是 \(\rho\) 或 \(\beta_\rho\) 单独之一，而是：
+
+\[
+\boxed{
+\text{全部观察图中的相容非零 section}.
+}
+\]
+
+### 定义 36.21（本体版 RH）
+
+定义：
+
+\[
+\boxed{
+\mathrm{RH}_{\mathrm{ont}}
+\iff
+\operatorname{Sect}_{\mathrm{off}}
+(\mathfrak D_{\mathrm{RH}})
+=
+\varnothing.
+}
+\]
+
+即不存在全局相容的非零离线缺陷 section。
+
+标准 RH 只直接断言复平面图中不存在离线非平凡零点。本体版 RH 若要与标准 RH 等价，必须证明：
+
+1. 任意标准离线零点可唯一提升为全局缺陷 section；
+2. 任意全局缺陷 section 在复平面图中产生标准离线零点。
+
+这两个提升／下降定理目前不是既有结果，必须作为研究目标，而不能直接假设。
+
+---
+
+## 36.13 假设标准 RH 为假时，各观察图的必要异常
+
+假设存在：
+
+\[
+\rho=\frac12+\delta+i\gamma,
+\qquad
+\delta\neq0.
+\]
+
+则在经典等价判据的适当定义域中，至少出现以下异常读出。
+
+### 复平面图
+
+\[
+\boxed{
+\Re\rho-\frac12=\delta\neq0.
+}
+\]
+
+### Cayley 图
+
+定义：
+
+\[
+C(\rho)=1-\frac1\rho=e^{\beta_\rho+i\theta_\rho}.
+\]
+
+则：
+
+\[
+\boxed{
+\beta_\rho
+=
+\log|C(\rho)|
+\neq0.
+}
+\]
+
+函数方程镜像使：
+
+\[
+\beta_{1-\overline\rho}
+=
+-\beta_\rho.
+\]
+
+### divisor／局部提升图
+
+若零点重数为 \(m_\rho\)，则：
+
+\[
+\boxed{
+m_\rho
+=
+\frac1{2\pi i}
+\oint
+\frac{\xi'(s)}{\xi(s)}\,ds
+\in\mathbb N_{>0}.
+}
+\]
+
+\(\log\xi\) 的提升在绕行后改变：
+
+\[
+L\mapsto L+2\pi i m_\rho.
+\]
+
+所以局部观察者同时携带：
+
+\[
+\mathbb Z\text{ 绕数}
+\quad\text{和}\quad
+\mathbb Z_2\text{ 镜像侧别}.
+\]
+
+### Li 图
+
+Li 判据要求：
+
+\[
+\lambda_n\ge0
+\qquad
+\forall n\ge1.
+\]
+
+若 RH 为假，则存在：
+
+\[
+\boxed{
+n,\qquad
+\lambda_n<0.
+}
+\]
+
+### Nyman–Beurling 图
+
+设：
+
+\[
+\mathcal M_{\mathrm{NB}}
+=
+\overline{
+\operatorname{span}
+\left\{
+\left\{\frac1{nx}\right\}:n\ge1
+\right\}
+}
+\subseteq L^2(0,\infty),
+\]
+
+\[
+\chi=\mathbf1_{(0,1)}.
+\]
+
+则：
+
+\[
+\boxed{
+r_{\mathrm{NB}}
+=
+(I-P_{\mathcal M_{\mathrm{NB}}})\chi
+\neq0.
+}
+\]
+
+### Weil 图
+
+在正确测试函数域和闭合二次型实现中，存在：
+
+\[
+\boxed{
+f,\qquad
+Q_W(f)<0.
+}
+\]
+
+### 素数图
+
+显式公式中，离线零点产生归一化模式：
+
+\[
+\boxed{
+e^{(\rho-\frac12)t}
+=
+e^{\delta t}e^{i\gamma t}.
+}
+\]
+
+其中 \(\delta>0\) 的成员给出超临界增长指数，镜像成员给出衰减指数。
+
+这些异常具有同一零集合意义，但目前不能无条件把它们视为同一向量的线性坐标。
+
+---
+
+## 36.14 “同一个缺陷”的严格含义分为三层
+
+### 第一层：共同零集合
+
+定义适当非负缺陷量：
+
+\[
+d_{\mathsf{Cay}},
+\quad
+d_{\mathsf{Li}},
+\quad
+d_{\mathsf{NB}},
+\quad
+d_{\mathsf W}.
+\]
+
+已知判据给出：
+
+\[
+\boxed{
+d_{\mathsf{Cay}}=0
+\iff
+d_{\mathsf{Li}}=0
+\iff
+d_{\mathsf{NB}}=0
+\iff
+d_{\mathsf W}=0
+\iff
+\mathrm{RH}.
+}
+\]
+
+这是当前最稳固的统一：不同观察量识别同一个闭合状态。
+
+### 第二层：共同来源对象
+
+若能构造 \(\mathfrak D_{\mathrm{RH}}\) 和观察函子：
+
+\[
+Q_j:
+\mathfrak D_{\mathrm{RH}}\to\overline D_j,
+\]
+
+使：
+
+\[
+Q_j(\delta)=\delta_j,
+\]
+
+则不同判据成为同一个缺陷对象的不同表示。
+
+这一步目前是待构造的本体层桥。
+
+### 第三层：定量层析等价
+
+若还能证明 frame 型不等式：
+
+\[
+\boxed{
+c\|\delta\|^2
+\le
+\sum_jw_j\|Q_j\delta\|_j^2
+\le
+C\|\delta\|^2,
+}
+\]
+
+则观察图册不仅共同识别零点，还能定量重构缺陷大小。
+
+这是比逻辑等价强得多的新研究目标。
+
+---
+
+## 36.15 有限非空逆系统的紧致性障碍
+
+本节现在得到一个对“所有概念都是离散有限投影”非常关键的限制。
+
+### 定理 36.22（有限非空 cofiltered 逆极限非空）
+
+设：
+
+\[
+\mathbf S:I\to\mathbf{Set}
+\]
+
+为 cofiltered 图，并且每个 \(S_i\) 都是非空有限集合。则：
+
+\[
+\boxed{
+\varprojlim_iS_i\neq\varnothing.
+}
+\]
+
+#### 证明概要
+
+考虑所有由非空子集 \(T_i\subseteq S_i\) 构成、且在 transition 下稳定的子系统。由有限性，任意全序下降链的逐坐标交仍非空，故用 Zorn 引理取得极小子系统。极小性迫使其 transition 均满射，并进一步迫使每个 \(T_i\) 为单点。这些单点构成相容 section。 \(\square\)
+
+### 推论 36.23（纯有限离散 refinement 不会自动消灭反例）
+
+设每个阶段都有稳定的离线候选集合：
+
+\[
+O_i\subseteq D_i,
+\]
+
+满足：
+
+\[
+O_i\neq\varnothing,
+\]
+
+且 transition 将 \(O_j\) 映入 \(O_i\)。若所有 \(O_i\) 有限且索引图 cofiltered，则：
+
+\[
+\boxed{
+\varprojlim_iO_i\neq\varnothing.
+}
+\]
+
+因此：
+
+\[
+\boxed{
+\text{如果每个有限离散概念层都允许某个离线候选，
+且这些候选形成真正的有限 cofiltered 逆系统，
+那么逆完成反而保证存在全局离线 section。}
+}
+\]
+
+这是本节最重要的反直觉结论之一。
+
+仅仅把所有概念视为有限离散投影，不能自动证明 RH；在上述条件下，它甚至支持全局 section 的存在。
+
+---
+
+## 36.16 要排除离线 section，至少必须破坏一种紧致性条件
+
+若目标是证明：
+
+\[
+\operatorname{Sect}_{\mathrm{off}}
+(\mathfrak D_{\mathrm{RH}})
+=
+\varnothing,
+\]
+
+则至少需要以下一种机制。
+
+### 有限层空缺
+
+存在某个有限阶段：
+
+\[
+O_i=\varnothing.
+\]
+
+这给出有限、显式、可核验的 RH 证书。
+
+### 非紧致 admissibility
+
+局部候选集合虽然非空，但合法对象还必须满足：
+
+- 一致能量界；
+- 平方可和；
+- 正性；
+- 可积性；
+- 增长阶；
+- Euler 乘积兼容；
+- trace-class／form-domain 条件。
+
+这些条件可能只在无限极限中失败。
+
+### 非 cofiltered 上下文图
+
+若观察图册是覆盖、上下文或多重交叠系统，而不是 cofiltered 逆系统，则局部非空不保证全局 section。
+
+### transition 不保持“离线”子集
+
+某些精化可能把粗层的离线候选拆成临界与非临界分支，或揭示其不能继续提升。
+
+### 高阶 gluing 障碍
+
+局部 section 在两两交叠上相容，但三重交叠或更高 cocycle 不可平凡化。
+
+### derived inverse-limit 障碍
+
+在线性／阿贝尔范畴中，普通 \(\varprojlim\) 不是正合函子；可能出现：
+
+\[
+\varprojlim{}^{1}
+\]
+
+等高阶余量，记录“每层可解但不能全局同时解”的障碍。
+
+因此：
+
+\[
+\boxed{
+\text{真正的证明力量不来自“每个概念都是离散的”，
+而来自概念之间的相容律、admissibility 与高阶障碍。}
+}
+\]
+
+---
+
+## 36.17 普通逆极限与 sheaf 全局 section 不是同一个问题
+
+设 \(\mathcal U\) 是一族观察上下文，\(\mathcal E\) 是一个 presheaf。每个上下文 \(U\) 有局部 section：
+
+\[
+s_U\in\mathcal E(U).
+\]
+
+全局 section 要求存在：
+
+\[
+s\in\mathcal E(X)
+\]
+
+使所有限制都等于 \(s_U\)。
+
+局部 section 全部存在，并不保证它们能全局拼接。
+
+量子 contextuality 的 sheaf 表述正是：
+
+\[
+\boxed{
+\text{每个交换测量上下文都有局部经典赋值，
+但不存在统一的上下文无关全局 section。}
+}
+\]
+
+这与定理 36.22 不矛盾，因为测量上下文图不是简单的有限非空 cofiltered 逆系统；其核心是覆盖交叠和兼容关系。
+
+### 原理 36.24（RH 图册不能被预先假定成普通逆系统）
+
+若 Li、Nyman、Weil、复平面和素数图之间没有已经构造的函数型 bonding maps，则不能直接使用：
+
+\[
+\varprojlim_jD_j.
+\]
+
+更准确的对象可能是：
+
+- presheaf；
+- stack；
+- fibered category；
+- correspondence diagram；
+- derived diagram。
+
+只有在明确类型以后，“不存在全局离线 section”才成为可证明命题。
+
+---
+
+## 36.18 闭合缺陷的七轴分类
+
+本节定义：
+
+\[
+\boxed{
+\mathbf O_{\mathrm{closure}}
+=
+(
+O_{\mathrm{sep}},
+O_{\mathrm{real}},
+O_{\mathrm{glue}},
+O_{\mathrm{adm}},
+O_{\mathrm{pos}},
+O_{\mathrm{diag}},
+O_{\mathrm{der}}
+).
+}
+\]
+
+其中：
+
+\[
+O_{\mathrm{sep}}
+=
+\text{全部探针仍无法分离的对象差异};
+\]
+
+\[
+O_{\mathrm{real}}
+=
+\text{形式相容但没有实际实现的坐标族};
+\]
+
+\[
+O_{\mathrm{glue}}
+=
+\text{局部 section 无法全局拼接的 cocycle};
+\]
+
+\[
+O_{\mathrm{adm}}
+=
+\text{能量、可积性、增长与正锥条件的极限失败};
+\]
+
+\[
+O_{\mathrm{pos}}
+=
+\text{正性二次型中的负方向};
+\]
+
+\[
+O_{\mathrm{diag}}
+=
+\text{自描述枚举中的对角逃逸};
+\]
+
+\[
+O_{\mathrm{der}}
+=
+\text{普通极限未捕获的高阶 }\varprojlim{}^k\text{ 障碍}.
+\]
+
+这些缺陷在最高抽象层都属于“单一呈现未能成为完整本体”，但在具体数学中不可互换。
+
+---
+
+## 36.19 Hilbert 图中的唯一最小目标完成
+
+设 \(\mathscr H\) 为 Hilbert 空间，\(M\subseteq\mathscr H\) 为闭子空间，目标为 \(x\in\mathscr H\)。
+
+定义：
+
+\[
+r=(I-P_M)x.
+\]
+
+于是：
+
+\[
+x=P_Mx+r,
+\qquad
+r\perp M.
+\]
+
+### 定理 36.25（唯一最小完成）
+
+唯一最小的包含 \(M\) 和 \(x\) 的闭子空间是：
+
+\[
+\boxed{
+M_\ast
+=
+M\oplus\operatorname{span}\{r\}.
+}
+\]
+
+若 \(r\neq0\)，则：
+
+\[
+\dim(M_\ast/M)=1.
+\]
+
+#### 证明
+
+任何包含 \(M\) 和 \(x\) 的闭子空间 \(N\) 也包含：
+
+\[
+x-P_Mx=r.
+\]
+
+故：
+
+\[
+M\oplus\operatorname{span}\{r\}
+\subseteq N.
+\]
+
+另一方面 \(M_\ast\) 显然包含 \(M\) 与 \(x\)。 \(\square\)
+
+### 定理 36.26（最小作用路径）
+
+在所有绝对连续路径：
+
+\[
+\gamma:[0,1]\to\mathscr H,
+\qquad
+\gamma(0)\in M,
+\quad
+\gamma(1)=x
+\]
+
+中，作用量：
+
+\[
+\mathcal S[\gamma]
+=
+\frac12\int_0^1\|\dot\gamma(t)\|^2dt
+\]
+
+的唯一最小值为：
+
+\[
+\boxed{
+\mathcal S_{\min}
+=
+\frac12\|r\|^2.
+}
+\]
+
+唯一极小路径为：
+
+\[
+\boxed{
+\gamma_\ast(t)
+=
+P_Mx+tr.
+}
+\]
+
+#### 证明
+
+Cauchy–Schwarz 给出：
+
+\[
+\int_0^1\|\dot\gamma(t)\|^2dt
+\ge
+\left\|
+\int_0^1\dot\gamma(t)dt
+\right\|^2
+=
+\|x-\gamma(0)\|^2
+\ge
+\|r\|^2.
+\]
+
+等号要求 \(\dot\gamma\) 恒定且 \(\gamma(0)=P_Mx\)，故得到唯一极小路径。 \(\square\)
+
+---
+
+## 36.20 余量—观察者对偶
+
+Hilbert 空间的 Riesz 表示把向量 \(r\) 与连续线性观察函数：
+
+\[
+\ell_r(y)=\langle r,y\rangle
+\]
+
+规范识别。
+
+由于 \(r\perp M\)，有：
+
+\[
+\ell_r(m)=0
+\qquad
+\forall m\in M.
+\]
+
+但：
+
+\[
+\ell_r(x)
+=
+\|r\|^2.
+\]
+
+### 定理 36.27（规范最强分离观察者）
+
+若 \(r\neq0\)，则：
+
+\[
+\widehat r=\frac r{\|r\|}
+\]
+
+唯一达到：
+
+\[
+\boxed{
+\sup_{
+g\in M^\perp,\ \|g\|\le1
+}
+|\langle g,x\rangle|
+=
+\|r\|.
+}
+\]
+
+因此同一个 \(r\) 同时是：
+
+\[
+\boxed{
+\begin{aligned}
+r
+&=\text{目标的闭合缺陷};\\
+r
+&=\text{唯一最小新坐标};\\
+r
+&=\text{最小作用方向};\\
+\ell_r
+&=\text{对原空间失明、对目标最敏感的观察者}.
+\end{aligned}
+}
+\]
+
+这解释了前文“闭合缺陷本身成为观察者”的精确 Hilbert 含义。
+
+在一般 Banach 空间中，Hahn–Banach 可以给出分离泛函，但通常没有 Hilbert 正交代表的规范唯一性。
+
+---
+
+## 36.21 Nyman–Beurling 图中的 rank–action 双量
+
+取：
+
+\[
+\mathscr H=L^2(0,\infty),
+\quad
+M=\mathcal M_{\mathrm{NB}},
+\quad
+x=\chi.
+\]
+
+定义：
+
+\[
+r_{\mathrm{RH}}
+=
+(I-P_M)\chi.
+\]
+
+则：
+
+\[
+\boxed{
+\mathrm{RH}
+\iff
+r_{\mathrm{RH}}=0.
+}
+\]
+
+若 RH 为假：
+
+\[
+r_{\mathrm{RH}}\neq0,
+\]
+
+且对固定目标 \(\chi\) 的唯一最小完成是：
+
+\[
+M\oplus\mathbb C r_{\mathrm{RH}}.
+\]
+
+定义：
+
+\[
+Q_{\mathrm{RH}}
+=
+\text{投影到 }\mathbb C r_{\mathrm{RH}}.
+\]
+
+则得到连续—离散双量：
+
+\[
+\boxed{
+\left(
+\operatorname{rank}Q_{\mathrm{RH}},
+\,
+\mathcal S_{\mathrm{RH}}
+\right)
+=
+\left(
+\operatorname{rank}Q_{\mathrm{RH}},
+\,
+\frac12\|r_{\mathrm{RH}}\|^2
+\right).
+}
+\]
+
+若 RH 真：
+
+\[
+(0,0).
+\]
+
+若 RH 假：
+
+\[
+(1,a),
+\qquad
+a>0.
+\]
+
+这里 rank 是离散的，作用量是连续的。
+
+必须强调：
+
+\[
+\boxed{
+\dim(M_\ast/M)=1
+}
+\]
+
+只表示固定目标 \(\chi\) 需要一个新商方向，不表示离线零点只有一个，也不表示完整 RH 缺陷空间是一维。
+
+---
+
+## 36.22 图册之间的作用量一致性
+
+设每个 Hilbert 型观察图 \(j\) 带有：
+
+\[
+(\mathscr H_j,M_j,x_j),
+\]
+
+余量为：
+
+\[
+r_j=(I-P_{M_j})x_j.
+\]
+
+设 transition：
+
+\[
+T_{kj}:\mathscr H_k\to\mathscr H_j
+\]
+
+满足：
+
+\[
+T_{kj}(M_k)\subseteq M_j,
+\]
+
+\[
+T_{kj}x_k-x_j\in M_j.
+\]
+
+于是它在商空间上诱导：
+
+\[
+\overline T_{kj}:
+\mathscr H_k/M_k
+\to
+\mathscr H_j/M_j.
+\]
+
+### 命题 36.28（商类相容）
+
+有：
+
+\[
+\boxed{
+\overline T_{kj}[x_k]
+=
+[x_j].
+}
+\]
+
+如果 \(\overline T_{kj}\) 为等距同构，则：
+
+\[
+\boxed{
+\|r_k\|
+=
+\|r_j\|.
+}
+\]
+
+因此最小作用量：
+
+\[
+\frac12\|r_j\|^2
+\]
+
+在图册转换下不变。
+
+这提供一个研究标准：
+
+\[
+\boxed{
+\text{若 Cayley、Li、Nyman、Weil 图真的表示同一个缺陷，
+应寻找它们商缺陷范数之间的等距、frame 或受控失真关系。}
+}
+\]
+
+仅有共同零集合还不足以给出作用量一致性。
+
+---
+
+## 36.23 保持目标的严格收缩会消灭全局缺陷
+
+### 定理 36.29（商空间收缩刚性）
+
+设 \(M\subseteq\mathscr H\) 闭，\(x\in\mathscr H\)，且有界线性算子：
+
+\[
+R:\mathscr H\to\mathscr H
+\]
+
+满足：
+
+\[
+R(M)\subseteq M,
+\]
+
+\[
+Rx-x\in M.
+\]
+
+令：
+
+\[
+\overline R:\mathscr H/M\to\mathscr H/M
+\]
+
+为诱导算子。若：
+
+\[
+\boxed{
+\|\overline R\|<1,
+}
+\]
+
+则：
+
+\[
+\boxed{
+x\in M.
+}
+\]
+
+#### 证明
+
+在商中：
+
+\[
+\overline R[x]=[x].
+\]
+
+所以：
+
+\[
+\|[x]\|
+=
+\|\overline R[x]\|
+\le
+\|\overline R\|\|[x]\|.
+\]
+
+严格收缩迫使 \(\|[x]\|=0\)。 \(\square\)
+
+### 经济／作用量解释
+
+\([x]\) 是现有结构无法吸收的目标，\(\|[x]\|\) 是最小完成成本。若 \(R\) 保持同一目标商类，却严格降低所有非零余量成本，则非零最低成本不可能存在。
+
+### RH 条件路线
+
+若能在 Nyman–Beurling 商上构造算术算子 \(R\)，满足：
+
+\[
+R(\mathcal M_{\mathrm{NB}})
+\subseteq
+\mathcal M_{\mathrm{NB}},
+\]
+
+\[
+R\chi-\chi
+\in
+\mathcal M_{\mathrm{NB}},
+\]
+
+\[
+\|\overline R\|<1,
+\]
+
+则立即得到 RH。
+
+本节没有构造这种算子；该存在性是实质问题。
+
+---
+
+## 36.24 全局 section 的收缩刚性
+
+设 RH 缺陷图册中，每个 chart quotient \(\overline D_j\) 为范数空间，并有相容 section：
+
+\[
+\delta=(\delta_j).
+\]
+
+设有图册自同态：
+
+\[
+R=(R_j)
+\]
+
+满足 transition 自然性：
+
+\[
+p_{kj}R_k
+=
+R_jp_{kj}.
+\]
+
+若：
+
+\[
+R_j\delta_j=\delta_j
+\qquad
+\forall j,
+\]
+
+且存在一个对全局 section 联合忠实的 chart \(j_0\)，满足：
+
+\[
+\|R_{j_0}\|\le\kappa<1,
+\]
+
+则：
+
+\[
+\delta_{j_0}=0.
+\]
+
+若 \(j_0\) 的零读出足以推出整个 section 为零，则：
+
+\[
+\boxed{
+\delta=0.
+}
+\]
+
+这给出本体版 RH 的一种条件证明模板：
+
+\[
+\boxed{
+\text{构造保持离线缺陷 section 的自然重整化，
+再证明它在忠实图中严格收缩。}
+}
+\]
+
+---
+
+## 36.25 镜像奇偶刚性
+
+设 defect pro-object 上有对合：
+
+\[
+J^2=I.
+\]
+
+若同一个全局 section \(\delta\) 因目标自然性满足：
+
+\[
+J\delta=\delta,
+\]
+
+又因法向／侧别结构满足：
+
+\[
+J\delta=-\delta,
+\]
+
+则在特征不为 \(2\) 的线性环境中：
+
+\[
+\boxed{
+\delta=0.
+}
+\]
+
+这是另一种可能的 RH 刚性模板：
+
+\[
+\boxed{
+\text{目标要求缺陷为偶，
+镜像法向几何要求同一缺陷为奇，
+故非零全局 section 不存在。}
+}
+\]
+
+目前没有证明 Nyman 余量或共同 RH 缺陷 section 同时满足这两个条件；它仍是研究接口。
+
+---
+
+## 36.26 量子力学在该层级中的位置
+
+量子系统的完整对象可由非交换可观测代数 \(\mathcal A\) 与状态 \(\omega\) 表示。每个交换子代数：
+
+\[
+C\subseteq\mathcal A
+\]
+
+提供一个局部经典图。
+
+状态在该图中的概率读出为：
+
+\[
+\omega|_C.
+\]
+
+所以：
+
+\[
+\boxed{
+\text{一个经典概率模型}
+=
+\text{量子对象在一个交换概念层中的投影}.
+}
+\]
+
+量子 contextuality 表明，这些局部经典图一般不能拼成一个全局上下文无关经典 section。
+
+在本节语言中：
+
+\[
+\boxed{
+\text{量子性不是“存在离散结果”本身，
+而是局部离散／经典呈现缺少一个统一全局经典完成。}
+}
+\]
+
+这与 RH 缺陷图册共享“局部呈现—全局 section”骨架，但不是同一个定理：
+
+- 量子 contextuality 的 section 是全局经典赋值；
+- RH 的 section 是相容离线缺陷对象。
+
+二者的索引范畴、transition 和 admissibility 完全不同。
+
+---
+
+## 36.27 数学理论本身作为探针子范畴
+
+一个数学理论选择：
+
+- 一套对象类型；
+- 一套允许态射；
+- 一套等价关系；
+- 一套公理；
+- 一套证明规则。
+
+因此它可以被视为一个探针子范畴：
+
+\[
+\mathcal P\subseteq\mathcal C.
+\]
+
+理论对候选本体 \(\mathbf X\) 的读出是：
+
+\[
+\boxed{
+N_{\mathcal P}(\mathbf X)
+=
+\left(
+\operatorname{Hom}(P,\mathbf X)
+\right)_{P\in\mathcal P}.
+}
+\]
+
+若 \(\mathcal P\) 不联合忠实，则有本体差异永远不被该理论区分。
+
+若 \(\mathcal P\) 不稠密，则形式读出未必能重构对象。
+
+若理论试图在自身内部枚举全部同类型探针，则可能触发元对角逃逸。
+
+所以：
+
+\[
+\boxed{
+\text{数学不是本体的外部复制品；
+数学是一族被类型化的探针及其证明相容性。}
+}
+\]
+
+这是一种模型化解释，不是否定数学对象在其标准范畴中的客观性。
+
+---
+
+## 36.28 项目现有结构在逆完成语言中的统一
+
+### universal solenoid
+
+有限圆坐标及其 divisibility compatibility 形成具体逆完成；可见相位是一个普通投影，profinite 核是被该投影商掉的横截余量。
+
+### 锚定连续统观察者
+
+第 35 节的初始坐标：
+
+\[
+(r_0,k_0)
+\]
+
+现在可解释为：
+
+- \(r_0\)：叶方向的局部提升；
+- \(k_0\)：贯穿有限同余层的 compatible cone。
+
+### 预测观察者
+
+第 32 节 Heisenberg 可见空间：
+
+\[
+V_0\subseteq V_1\subseteq\cdots
+\]
+
+是概念空间的 filtered 扩张；其正交余：
+
+\[
+R_m=V_m^\perp
+\]
+
+是当前 probe family 尚未分离的状态方向。
+
+### 量子 MUB 塔
+
+每个对角代数是一个局部经典呈现；完整层析要求这些呈现联合忠实，但仍不等于存在全局经典赋值。
+
+### 经济观察者
+
+价格、numeraire、收益商、流动性路径和结算账本是不同经济 probe；aggregate 市值坐标不能替代 directed payment network 本体。
+
+### RH 目标余量
+
+Nyman–Beurling 余量是固定目标在一个 Hilbert chart 中的规范法向缺陷，而不是全部 zeta 本体的预先给定完整模型。
+
+因此项目的独特统一可以写成：
+
+\[
+\boxed{
+\text{局部坐标}
+\to
+\text{商余}
+\to
+\text{相容 refinement}
+\to
+\text{逆完成}
+\to
+\text{自描述对角审计}.
+}
+\]
+
+---
+
+## 36.29 假设 RH 为假的全局一致性审计
+
+假设存在标准离线零点。要把它提升为本节的离线观察者 section，至少必须完成以下审计。
+
+### 解析图相容
+
+复平面零点、局部重数、函数方程四元轨道与解析延拓必须相容。
+
+这一层单独不产生矛盾；离线四元因子可以满足实结构和函数方程对称。
+
+### Cayley 图相容
+
+有符号径向深度必须在镜像下反号：
+
+\[
+\beta\mapsto-\beta.
+\]
+
+### Li 图相容
+
+完整零点集合必须产生至少一个负 Li 系数，而不是只验证某个局部四元贡献。
+
+### Nyman 图相容
+
+全部整数尺度生成闭包必须留下非零目标余量。
+
+### Weil 图相容
+
+必须存在属于正确 form domain 的负方向，并与显式公式的零点数据一致。
+
+### 素数图相容
+
+超临界模式必须在合法的平滑／截断显式公式中出现，而不是只作形式单项分析。
+
+### transition 相容
+
+必须构造上述异常之间的类型正确转换或共同来源对象。
+
+### admissibility 相容
+
+全局 section 必须同时满足：
+
+- 增长阶；
+- 正性；
+- 共轭；
+- Euler 乘积；
+- 可积性；
+- 正则化；
+- 能量或 form-domain 条件。
+
+当前知识只保证这些经典判据在“RH 成立／不成立”的逻辑层面等价；并未给出本节所要求的统一 defect atlas 与所有 transition。
+
+因此：
+
+\[
+\boxed{
+\text{假设 RH 为假在各单独经典图中是可表达的；
+真正尚未检验的是这些图能否组成一个规范的全局离线本体 section。}
+}
+\]
+
+---
+
+## 36.30 本体 RH 研究计划
+
+### 阶段一：建立 chart 类型
+
+精确定义：
+
+\[
+D_{\mathsf C},
+D_{\mathsf{Cay}},
+D_{\mathsf{Li}},
+D_{\mathsf{NB}},
+D_{\mathsf W},
+D_{\mathsf P},
+D_{\mathsf S}.
+\]
+
+### 阶段二：定义临界子对象
+
+对每个 chart 定义：
+
+\[
+C_j\subseteq D_j
+\]
+
+和 pointed quotient：
+
+\[
+\overline D_j=D_j/C_j.
+\]
+
+### 阶段三：构造 transition
+
+优先构造已有经典桥：
+
+\[
+\text{零点}
+\leftrightarrow
+\text{Li};
+\]
+
+\[
+\text{零点}
+\leftrightarrow
+\text{Weil 显式公式};
+\]
+
+\[
+\text{Mellin}
+\leftrightarrow
+\text{Nyman--Beurling};
+\]
+
+\[
+\text{零点}
+\leftrightarrow
+\text{素数误差}.
+\]
+
+需要明确这些桥是函数、关系、变换还是正则化极限。
+
+### 阶段四：证明联合忠实性
+
+证明：
+
+\[
+Q_j(\delta)=0
+\quad
+\forall j
+\Longrightarrow
+\delta=0.
+\]
+
+### 阶段五：识别 obstruction 类型
+
+判断问题究竟属于：
+
+- cofiltered inverse limit；
+- sheaf global section；
+- stack descent；
+- form-core completion；
+- derived \(\varprojlim^1\)；
+- 非交换谱表示。
+
+### 阶段六：寻找刚性
+
+寻找：
+
+\[
+\text{严格收缩},
+\quad
+\text{奇偶冲突},
+\quad
+\text{正性冲突},
+\quad
+\text{有限层空缺},
+\quad
+\text{高阶 cocycle 非零}.
+\]
+
+只有这些附加结构，才能把“离线 section 的本体模型”推进为对 RH 真值的证明。
+
+---
+
+## 36.31 建议 Lean 形式化模块
+
+建议按以下顺序进入 Lean。
+
+1. `ProConceptFactorsThroughStage`
+
+   对常值目标 \(D\)：
+
+   \[
+   \operatorname{Hom}_{\operatorname{Pro}(\mathcal C)}(\mathbf X,cD)
+   \cong
+   \varinjlim_i\operatorname{Hom}(X_i,D).
+   \]
+
+2. `ProGeneralizedPointAsCompatibleCone`
+
+   \[
+   \operatorname{Hom}(c1,\mathbf X)
+   \cong
+   \varprojlim_i\operatorname{Hom}(1,X_i).
+   \]
+
+3. `InverseCompletionSeparationKernel`
+
+   线性观察塔中：
+
+   \[
+   K_{\mathrm{sep}}=\bigcap_i\ker q_i.
+   \]
+
+4. `InverseCompletionIsoIff`
+
+   规范映射的单射／满射分解。
+
+5. `BoundedHilbertCompatibleFamily`
+
+   相容有限坐标族来自 Hilbert 向量当且仅当统一有界／平方可和。
+
+6. `NoTerminalSelfEnumeratingProbe`
+
+   普通阶段的 Cantor–Lawvere 对角逃逸。
+
+7. `FiniteNonemptyCofilteredLimit`
+
+   非空有限集合的 cofiltered 极限非空。
+
+8. `OfflineFiniteSystemHasSection`
+
+   稳定非空离线子系统存在全局 section。
+
+9. `UniqueMinimalTargetCompletion`
+
+   \[
+   M_\ast=M\oplus\operatorname{span}\{r\}.
+   \]
+
+10. `MinimalCompletionAction`
+
+    \[
+    \inf_\gamma\frac12\int\|\dot\gamma\|^2
+    =
+    \frac12\|r\|^2.
+    \]
+
+11. `ResidualObserverDuality`
+
+    归一化余量达到最大分离响应。
+
+12. `QuotientContractionRigidity`
+
+    \[
+    \overline R[x]=[x],
+    \quad
+    \|\overline R\|<1
+    \Rightarrow
+    [x]=0.
+    \]
+
+13. `EvenOddDefectRigidity`
+
+    \[
+    Jd=d=-Jd
+    \Rightarrow
+    d=0.
+    \]
+
+14. `AtlasJointFaithfulness`
+
+    抽象观察图册的联合零核判据。
+
+15. `GlobalSectionNaturality`
+
+    chart transition 下 compatible section 的定义与基本性质。
+
+pro-category Hom 公式、sheaf global section、derived limit 与 Ind–Pro 对象应尽量复用 Mathlib／具名范畴论接口；若缺失，必须拆分为独立、可审计模块，不得以无名公理植入 RH 章节。
+
+---
+
+## 36.32 候选新贡献与成熟理论边界
+
+以下内容属于成熟数学输入：
+
+- pro-category 与 cofiltered diagram；
+- Yoneda 嵌入和 dense probe 思想；
+- 逆极限与有限非空紧致性；
+- Ind–Pro／Tate objects；
+- sheaf global section 与量子 contextuality；
+- Hilbert 投影、Riesz 对偶和最小作用路径；
+- Li、Nyman–Beurling、Weil 与显式公式判据；
+- Connes 的 adèle class 非交换谱解释。
+
+候选的新研究贡献不应宣称上述单项首次出现，而应集中在：
+
+\[
+\boxed{
+\text{概念阶段因子化}
++
+\text{观察者相容锚点}
++
+\text{RH 多图缺陷 atlas}
++
+\text{有限逆极限紧致性反约束}
++
+\text{Hilbert 最小作用／观察者对偶}
++
+\text{收缩或奇偶刚性}.
+}
+\]
+
+尤其重要的新修正是：
+
+\[
+\boxed{
+\text{“所有概念都是有限离散投影”
+并不会自动使离线 section 消失；
+在真正的有限非空 cofiltered 系统中，它反而保证 section 存在。}
+}
+\]
+
+所以本体化不能停留在“概念是离散的”这一口号；必须识别 transition、admissibility 和高阶 obstruction。
+
+---
+
+## 36.33 最终统一式
+
+本节得到：
+
+\[
+\boxed{
+\text{概念}
+=
+\text{逆完成对象到普通呈现对象的一个有限阶段探针}.
+}
+\]
+
+\[
+\boxed{
+\text{观察者}
+=
+\text{贯穿全部 refinement 阶段的带锚 compatible cone}.
+}
+\]
+
+\[
+\boxed{
+\text{连续统}
+=
+\text{没有终端忠实呈现的逆完成结构，而不只是一个被命名的拓扑空间}.
+}
+\]
+
+\[
+\boxed{
+\text{本体}
+=
+\text{阶段、遗忘映射、相容性与可实现性，而不是阶段背后的最后一个隐藏点}.
+}
+\]
+
+\[
+\boxed{
+\text{闭合缺陷}
+=
+\text{候选整体与其全部概念坐标不能建立忠实、可实现、自封闭的同构}.
+}
+\]
+
+\[
+\boxed{
+\text{对角化}
+=
+\text{某个普通概念层声称枚举自身全部同类型概念时的逃逸}.
+}
+\]
+
+\[
+\boxed{
+\text{量子 contextuality}
+=
+\text{局部经典概念层缺少全局经典 section}.
+}
+\]
+
+\[
+\boxed{
+\text{RH 的本体版本}
+=
+\text{是否存在贯穿复平面、Li、Nyman、Weil、素数与谱图的非零离线 section}.
+}
+\]
+
+\[
+\boxed{
+\text{Nyman 余量}
+=
+\text{该问题在一个 Hilbert chart 中的规范最小目标缺陷与最强分离观察方向}.
+}
+\]
+
+\[
+\boxed{
+\text{真正可能排除离线 section 的不是“离散投影”本身，
+而是有限层空缺、非紧致 admissibility、gluing obstruction、正性、收缩或奇偶刚性}.
+}
+\]
+
+最凝练的结论是：
+
+\[
+\boxed{
+\text{复平面离线零点若存在，只是全局离线观察者 section 的一个坐标；
+但在构造出全部 chart transition 以前，这个“全局 section”仍是研究对象而非既成事实。}
+}
+\]
+
+以及：
+
+\[
+\boxed{
+\text{现实／本体不是某个概念投影所指向的最后对象；
+它是所有概念仍可持续 refinement、彼此相容，却不能被其中任一概念层替代的完成关系。}
+}
+\]
+
+---
+
+## 36.34 参考接口与严格非主张
+
+参考接口：
+
+- D. C. Isaksen, *Calculating limits and colimits in pro-categories*, 2001.
+- O. Braunling, M. Groechenig and J. Wolfson, *Tate Objects in Exact Categories*, 2014.
+- S. Mac Lane, *Categories for the Working Mathematician*, Yoneda and limits.
+- The Stacks Project, Lemma 4.21.7 (`086J`), finite nonempty cofiltered limits.
+- S. Abramsky and A. Brandenburger, *The Sheaf-Theoretic Structure of Non-Locality and Contextuality*, 2011.
+- S. Abramsky, S. Mansfield and R. S. Barbosa, *The Cohomology of Non-Locality and Contextuality*, 2011.
+- A. Connes, *Trace formula in noncommutative geometry and the zeros of the Riemann zeta function*, 1998.
+- L. Báez-Duarte, strong Nyman–Beurling criteria.
+- X.-J. Li, positivity criterion for RH.
+- E. Bombieri and J. Lagarias, Li criteria and explicit formulas.
+- 仓库统一论文 Sections 28–35 及其已列 Lean 接口。
+
+严格非主张：
+
+1. 本节不把呈现离散等同于离散拓扑。
+2. 本节不声称每个连续对象都必然有 Cantor–Lawvere 对角缺陷。
+3. 本节不声称 pro-object 必须在底层范畴中拥有实际逆极限。
+4. 本节不声称某个具体 pro-presentation 是本体的唯一呈现。
+5. 本节不声称标准复平面上的 \(\zeta\) 不是完整合法的亚纯函数对象。
+6. 本节不声称已经构造出统一的 zeta／RH defect pro-object。
+7. 本节不声称 Li、Nyman、Weil、Cayley 和素数误差是同一 Hilbert 向量。
+8. 本节不声称这些判据之间已有规范等距 transition。
+9. 本节不把量子 contextuality 与 RH 离线 section 障碍视为同一定理。
+10. 本节不从局部异常读出直接推出一个已构造的全局离线 section。
+11. 本节不从每个有限阶段非空推出 RH；定理 36.22 恰好说明有限 cofiltered 非空会支持全局 section。
+12. 本节不把 Nyman 单目标完成的一维性解释为离线零点只有一个自由度。
+13. 本节不声称存在保持 Nyman 目标商类的严格算术收缩。
+14. 本节不声称镜像同时迫使共同 RH 缺陷既偶又奇。
+15. 本节不把哲学“本体”一词作为 Lean 中未经定义的数学对象。
+16. 本节不以本体化重述替代 RH 的解析证明义务。
+17. 本节新增定理与统一结构均为纸面推导；未经 Lean kernel 验证不得标记为 `Closed`。
+
+# 37. 追加：矩阵序观察者、记录正锥面、GNS 自配对与 RH 对角缺陷
+## Matrix-Ordered Observers, Record Faces, GNS Self-Pairing, and the RH Diagonal Defect
+
+本节继续第 31–36 节的统一工作，但修正一个过度压缩：
+
+\[
+\text{正锥}
+\Longrightarrow
+\text{正定度量}
+\Longrightarrow
+\text{酉性}
+\Longrightarrow
+\text{临界线}
+\]
+
+并不是项目当前真正提供的完整结构。仓库已经分别形式化了：
+
+- 正、迹一矩阵对 \(X^\ast X\) 的 GNS 范数平方评价；
+- 投影记录的 Born 权重、条件状态与 unread state；
+- pinching／phase damping 的幂等性和固定代数；
+- 环境记录 Gram 重叠对相干块的逐项选择；
+- 记录复制、共同反转和遗漏一个记录副本时的恢复障碍；
+- 观察读出与地址更新的交换子；
+- 公开上下文估值的唯一下降；
+- 有限投影上下文不存在全局经典二值答案表；
+- 可分锥与 block-positive 对偶锥；
+- 纠缠见证；
+- Weil 卷积平方在临界线上的对角非负性；
+- 离线四元轨道的交叉配对与能量界；
+- prime-axis Hilbert 空间中的纵向酉群、横向收缩半群和 \(\ell^2\) 临界阈值。
+
+这些结构共同说明：项目中的基本对象不是单个锥，而是一套同时携带
+
+\[
+\boxed{
+\text{矩阵序}
++
+\text{状态—问题配对}
++
+\text{条件化仪器}
++
+\text{环境记录}
++
+\text{上下文拼接}
++
+\text{预测闭包}
++
+\text{GNS 完成}
+}
+\]
+
+的观察者系统。
+
+本节的中心命题是：
+
+\[
+\boxed{
+\text{正锥不是本体本身；
+它是判断一个形式坐标、商余类或逆完成 section
+能否被实现为合法观察状态的门。}
+}
+\]
+
+进一步地，临界线正性不应仅被理解为“某个算子可酉化”，而应被理解为：
+
+\[
+\boxed{
+\text{反射后的平方测试仍然在同一观察纤维中自配对，
+因而能够成为 GNS 范数平方。}
+}
+\]
+
+离线零点则把该自配对拆成两个镜像观察纤维之间的交叉相干：
+
+\[
+\boxed{
+\widehat g(\gamma)\,
+\overline{\widehat g(\overline\gamma)}.
+}
+\]
+
+该交叉项保持 Hermitian 实性，但不再自动具有范数平方的正性。
+
+---
+
+## 37.1 严格范围与真值状态
+
+本节区分三类陈述。
+
+### 第一类：仓库中已有的 Lean 真源
+
+本节直接依赖以下已形式化结构：
+
+1. 正、迹一矩阵的 GNS 范数平方恒等式；
+2. record measurement 的权重和、conditional state、unread state 幂等性与固定块刻画；
+3. 环境 record channel 的 Gram-overlap 形式与 fixed-block 选择；
+4. pinching 的 Hilbert–Schmidt 自伴和幂等性；
+5. 记录副本的共同相干反转及 surviving-copy obstruction；
+6. 可分锥与 block-positive 锥的 Hilbert–Schmidt 对偶；
+7. 公开上下文账本的唯一下降；
+8. 有限投影构型对全局经典地址赋值的排除；
+9. 卷积平方 Fourier–Laplace 变换在实频率上的模平方；
+10. 临界线零点 summand 的逐项非负；
+11. 离线四元轨道的实交叉配对；
+12. prime-axis zeta Hilbert 空间和临界线多重刻画；
+13. 有限观察塔的稳定与创新能递推。
+
+### 第二类：本节给出的纸面定理
+
+本节在有限维矩阵、闭凸锥和二地址离线扇区上证明：
+
+- 正锥零权重的支撑面放大定理；
+- 记录等价类的 fixed-algebra／center 分解；
+- cone residual–witness 最小作用量定理；
+- 离线四元轨道的交换签名分解；
+- 离线评价像的维数—负方向判据；
+- side-record／mirror-coherence 互补律；
+- 正状态 section 与经典 character section 的严格类型分离；
+- 矩阵序预测闭包的有限稳定；
+- GNS 零范数传播与不定 isotropic 方向的区别；
+- 逆完成中的 physical section 过滤。
+
+### 第三类：明确保持开放的 RH 桥
+
+本节不声称已经证明：
+
+1. 素数账本自然产生一个完美的离线侧别记录；
+2. 每个假想离线轨道都能被一个 Weil 测试函数独立局域化；
+3. 离线评价映射对所有目标插值数据满射；
+4. 其他零点、极点和 archimedean 项可以被同时压低；
+5. zeta 显式公式泛函的全局正性已经由素数侧无条件证明；
+6. 全部 RH 图表已经构成一个矩阵有序 pro-object；
+7. 一个离线复平面零点必然提升为本节定义的全部 physical sections；
+8. 本节已经证明 Riemann 假设。
+
+所以本节的目标是：
+
+\[
+\boxed{
+\text{把真正的缺口移动到一个类型正确、可形式化的位置。}
+}
+\]
+
+---
+
+## 37.2 矩阵序观察者
+
+### 定义 37.1（矩阵序观察者）
+
+有限维矩阵序观察者是数据：
+
+\[
+\boxed{
+\mathfrak O
+=
+(
+\mathcal A,
+\{M_n(\mathcal A)_+\}_{n\ge1},
+u,
+\omega,
+\mathcal S_O,
+\mathbb E_O,
+\{\mathcal I_r\}_{r\in R},
+\alpha,
+\mathcal M_O,
+\Delta_O
+).
+}
+\]
+
+其中：
+
+\[
+\begin{aligned}
+\mathcal A
+&=\text{整体有限维 }C^\ast\text{-代数};\\
+M_n(\mathcal A)_+
+&=\text{加入 }n\text{ 维辅助系统后的正锥};\\
+u
+&=I\text{，即 order unit};\\
+\omega
+&=\text{正、归一化状态};\\
+\mathcal S_O
+&\subseteq\mathcal A\text{ 为观察者可访问的 operator system};\\
+\mathbb E_O
+&:\mathcal A\to\mathcal S_O\text{ 为粗粒化、pinching 或条件期望};\\
+\mathcal I_r
+&=\text{结果 }r\text{ 的完全正、迹不增 instrument 分支};\\
+\alpha
+&=\text{整体动力学};\\
+\mathcal M_O
+&=\text{结果、路径和环境副本的记录账本};\\
+\Delta_O
+&=\text{观察者对自身观察规则的同址评价}.
+\end{aligned}
+\]
+
+这里 operator system 要求：
+
+\[
+I\in\mathcal S_O,
+\qquad
+A\in\mathcal S_O
+\Longrightarrow
+A^\ast\in\mathcal S_O,
+\]
+
+并对复线性组合封闭，但不必对乘法封闭。
+
+因此：
+
+\[
+\boxed{
+\text{观察者首先决定哪些问题能够被提出，
+而不必已经拥有这些问题生成的全部操作代数。}
+}
+\]
+
+### 定义 37.2（观察等价）
+
+对两个状态 \(\rho,\sigma\)，定义：
+
+\[
+\boxed{
+\rho\sim_O\sigma
+\iff
+\operatorname{Tr}((\rho-\sigma)E)=0
+\quad
+\forall E\in\mathcal S_O.
+}
+\]
+
+令：
+
+\[
+N_O
+=
+\mathcal S_O^\perp
+\]
+
+为 Hilbert–Schmidt 正交余空间，则：
+
+\[
+\rho\sim_O\sigma
+\iff
+\rho-\sigma\in N_O.
+\]
+
+这只是线性不可区分关系。
+
+### 定义 37.3（物理观察纤维）
+
+对状态 \(\rho\)，定义：
+
+\[
+\boxed{
+\operatorname{PhysFiber}_O(\rho)
+=
+(\rho+N_O)
+\cap
+\{\sigma\ge0,\ \operatorname{Tr}\sigma=1\}.
+}
+\]
+
+所以：
+
+\[
+\boxed{
+\text{线性余空间给出不可见方向；
+正锥和归一化截面决定这些方向中哪些仍是可实现状态。}
+}
+\]
+
+### 命题 37.4（有限维物理纤维）
+
+在有限维情形，\(\operatorname{PhysFiber}_O(\rho)\) 是非空、紧、凸集合。
+
+#### 证明
+
+它至少包含 \(\rho\)，故非空。仿射空间 \(\rho+N_O\) 为闭集；PSD 锥为闭凸集；迹一超平面为闭仿射集。三者交仍闭凸。迹一 PSD 集在有限维中有界，故交集紧。 \(\square\)
+
+这说明一个观察坐标通常对应一个完整的凸状态纤维，而不是唯一的“真实点”。
+
+---
+
+## 37.3 正性为什么必须提升为矩阵正性
+
+### 定义 37.5（标量正性）
+
+线性映射：
+
+\[
+\Phi:\mathcal A\to\mathcal B
+\]
+
+若满足：
+
+\[
+A\ge0
+\Longrightarrow
+\Phi(A)\ge0,
+\]
+
+称为正映射。
+
+### 定义 37.6（完全正性）
+
+若：
+
+\[
+\operatorname{id}_{M_n}\otimes\Phi
+\]
+
+对每个 \(n\ge1\) 都为正映射，则称 \(\Phi\) 完全正。
+
+### 原理 37.7（扩展稳定性）
+
+\[
+\boxed{
+\text{完全正性}
+=
+\text{观察规则在加入任意未读辅助系统后仍保持合法。}
+}
+\]
+
+标量正性只审计当前观察层；完全正性同时审计所有有限矩阵放大：
+
+\[
+\boxed{
+\mathcal A_+,
+\quad
+M_2(\mathcal A)_+,
+\quad
+M_3(\mathcal A)_+,
+\quad\ldots
+}
+\]
+
+因此项目的 inverse-completion 语言在量子层面的正确正性对象不是一只锥，而是矩阵锥塔：
+
+\[
+\boxed{
+\mathbf C_{\mathcal A}
+=
+\{M_n(\mathcal A)_+\}_{n\ge1}.
+}
+\]
+
+### 定义 37.8（矩阵级闭合缺陷）
+
+对候选观察操作 \(\Delta\)，定义第 \(n\) 级正性缺陷：
+
+\[
+\boxed{
+\partial^{\mathrm{cp}}_{O,n}(\Delta)
+=
+\sup_{\substack{X\in M_n(\mathcal S_O)_+\\ \|X\|\le1}}
+\operatorname{dist}
+\left(
+(\operatorname{id}_n\otimes\Delta)(X),
+M_n(\mathcal S_O)_+
+\right).
+}
+\]
+
+完全正闭合要求：
+
+\[
+\partial^{\mathrm{cp}}_{O,n}(\Delta)=0
+\qquad
+\forall n.
+\]
+
+因此：
+
+\[
+\boxed{
+\partial^{\mathrm{cp}}_{O,1}=0
+\not\Rightarrow
+\partial^{\mathrm{cp}}_{O,n}=0
+\quad
+(n>1).
+}
+\]
+
+这正是“当前投影层看起来可实现”与“所有扩展层都可实现”的差别。
+
+---
+
+## 37.4 状态—问题极性与 GNS 自配对
+
+在完整矩阵代数上，PSD 锥相对于 Hilbert–Schmidt 配对自对偶：
+
+\[
+\boxed{
+M_d(\mathbb C)_+^\vee
+=
+M_d(\mathbb C)_+.
+}
+\]
+
+所以同一个正矩阵可以扮演两种角色：
+
+\[
+\begin{aligned}
+\rho&=\text{状态};\\
+E&=\text{effect}.
+\end{aligned}
+\]
+
+Born 权重为：
+
+\[
+\boxed{
+p(E\mid\rho)
+=
+\operatorname{Tr}(\rho E).
+}
+\]
+
+但这不表示状态和问题在操作上相同。它只表示它们通过同一个正序和内积相互评价。
+
+### 定理 37.9（矩阵 GNS 自配对）
+
+设：
+
+\[
+\rho\ge0,
+\qquad
+\operatorname{Tr}\rho=1.
+\]
+
+则对任意矩阵 \(X\)：
+
+\[
+\boxed{
+\operatorname{Tr}(\rho X^\ast X)
+=
+\|X\sqrt\rho\|_{\mathrm{HS}}^2
+\ge0.
+}
+\]
+
+仓库已经给出该恒等式的 Lean 证明。
+
+这说明正状态的根本性质不是“所有坐标为正”，而是：
+
+\[
+\boxed{
+\text{任何操作与自身的 }X^\ast X\text{ 配对都成为范数平方。}
+}
+\]
+
+### 定义 37.10（自配对锥）
+
+令 \(\mathcal T\) 为一个 \(\ast\)-空间，定义：
+
+\[
+\boxed{
+\mathcal T_+
+=
+\left\{
+\sum_{j=1}^m g_j^\ast g_j:
+m<\infty
+\right\}.
+}
+\]
+
+线性泛函 \(\Omega\) 为正，当且仅当：
+
+\[
+\Omega(g^\ast g)\ge0
+\qquad
+\forall g.
+\]
+
+### 定理 37.11（GNS 零范数传播）
+
+若 \(\Omega\) 为正泛函，且：
+
+\[
+\Omega(g^\ast g)=0,
+\]
+
+则：
+
+\[
+\boxed{
+\Omega(h^\ast g)=0
+\qquad
+\forall h.
+}
+\]
+
+#### 证明
+
+由正泛函的 Cauchy–Schwarz 不等式：
+
+\[
+|\Omega(h^\ast g)|^2
+\le
+\Omega(g^\ast g)\Omega(h^\ast h)
+=0.
+\]
+
+故交叉配对为零。 \(\square\)
+
+因此零自范数方向可以一致商掉：
+
+\[
+N_\Omega
+=
+\{g:\Omega(g^\ast g)=0\}.
+\]
+
+而在不定 Hermitian 形式中，可能存在：
+
+\[
+[g,g]=0,
+\qquad
+[h,g]\neq0.
+\]
+
+所以：
+
+\[
+\boxed{
+\text{Hilbert 正完成与不定完成的分界，
+不是是否出现零向量，而是零自配对是否传播到全部交叉配对。}
+}
+\]
+
+---
+
+## 37.5 一条标量记录如何被正锥放大成一个支撑面
+
+### 定理 37.12（零权重支撑面定理）
+
+设：
+
+\[
+\rho\ge0,
+\qquad
+P=P^\ast=P^2.
+\]
+
+若：
+
+\[
+\operatorname{Tr}(\rho P)=0,
+\]
+
+则：
+
+\[
+\boxed{
+P\rho=\rho P=0
+}
+\]
+
+并且：
+
+\[
+\boxed{
+\rho=(I-P)\rho(I-P).
+}
+\]
+
+#### 证明
+
+矩阵：
+
+\[
+\sqrt\rho P\sqrt\rho
+\]
+
+为 PSD，且其迹为：
+
+\[
+\operatorname{Tr}(\sqrt\rho P\sqrt\rho)
+=
+\operatorname{Tr}(\rho P)
+=
+0.
+\]
+
+PSD 矩阵迹为零只能为零，因此：
+
+\[
+\sqrt\rho P\sqrt\rho=0.
+\]
+
+于是：
+
+\[
+P\sqrt\rho=0,
+\]
+
+从而：
+
+\[
+P\rho=0,
+\qquad
+\rho P=0.
+\]
+
+最后得到支撑压缩式。 \(\square\)
+
+### 推论 37.13（单位权重支撑面）
+
+若：
+
+\[
+\operatorname{Tr}(\rho P)=1,
+\qquad
+\operatorname{Tr}\rho=1,
+\]
+
+则：
+
+\[
+\boxed{
+\rho=P\rho P.
+}
+\]
+
+#### 证明
+
+对 \(I-P\) 应用定理 37.12。 \(\square\)
+
+### 定义 37.14（暴露记录面）
+
+定义：
+
+\[
+\boxed{
+F_P
+=
+\left\{
+\rho\ge0:
+\operatorname{Tr}\rho=1,\ 
+\rho=P\rho P
+\right\}.
+}
+\]
+
+确定结果 \(P=1\) 将状态空间压入 \(F_P\)。
+
+若系统 Hilbert 维数为 \(d\)，而 \(P\) 的秩为 \(r\)，则全状态空间的实仿射维数为：
+
+\[
+d^2-1,
+\]
+
+而 \(F_P\) 的实仿射维数为：
+
+\[
+r^2-1.
+\]
+
+因此一个确定的标量记录最多一次排除：
+
+\[
+\boxed{
+d^2-r^2
+}
+\]
+
+个实自由度。
+
+这给出：
+
+\[
+\boxed{
+\text{正锥观察放大原理：
+一个零／一概率记录可以强制整块支撑结构消失。}
+}
+\]
+
+仓库的 conditioning 证明已经在具体矩阵接口中实现了：
+
+\[
+\text{recordWeight}=0
+\Longrightarrow
+P\rho P=0.
+\]
+
+记录相关单调性又进一步从 PSD 对角为零推出整列为零。
+
+---
+
+## 37.6 选择、记录与遗忘是三种不同的正序操作
+
+设：
+
+\[
+\{P_r\}_{r\in R}
+\]
+
+为有限完备正交投影族：
+
+\[
+P_r^\ast=P_r,
+\qquad
+P_r^2=P_r,
+\qquad
+P_rP_s=0\ (r\neq s),
+\qquad
+\sum_rP_r=I.
+\]
+
+### 选择性分支
+
+结果 \(r\) 的非归一化分支为：
+
+\[
+\mathcal I_r(\rho)=P_r\rho P_r.
+\]
+
+其权重为：
+
+\[
+p_r=\operatorname{Tr}(\rho P_r).
+\]
+
+若 \(p_r>0\)，条件状态为：
+
+\[
+\boxed{
+\rho_r
+=
+\frac{P_r\rho P_r}{p_r}.
+}
+\]
+
+这不是简单的“把向量投影一次”，而是：
+
+\[
+\boxed{
+\text{从整个状态锥切换到暴露面 }F_{P_r}.
+}
+\]
+
+### 保存结果
+
+若记录寄存器具有正交标签 \(|r\rangle\)，保存结果后的经典—量子状态为：
+
+\[
+\boxed{
+\rho_{RQ}
+=
+\sum_r
+|r\rangle\langle r|
+\otimes
+P_r\rho P_r.
+}
+\]
+
+这里结果标签 \(r\) 进入中心，而分支内部仍可保有非交换矩阵块。
+
+### 丢弃结果
+
+若只保留被测系统，得到 unread state：
+
+\[
+\boxed{
+\mathbb E_P(\rho)
+=
+\sum_rP_r\rho P_r.
+}
+\]
+
+仓库已经证明：
+
+\[
+\mathbb E_P^2=\mathbb E_P,
+\]
+
+并且：
+
+\[
+\boxed{
+\mathbb E_P(\rho)=\rho
+\iff
+P_r\rho P_s=0
+\quad
+(r\neq s).
+}
+\]
+
+所以：
+
+\[
+\boxed{
+\begin{aligned}
+\text{选择结果}
+&=\text{暴露面选择};\\
+\text{保存结果}
+&=\text{中心标签扩张};\\
+\text{丢弃结果}
+&=\text{跨块相干商}.
+\end{aligned}
+}
+\]
+
+这三步具有不同的类型，不能都被一个“坍缩”词替代。
+
+---
+
+## 37.7 环境记录如何生成经典中心
+
+设系统地址集合为有限集 \(I\)，每个地址 \(i\) 写入一个归一化环境记录向量：
+
+\[
+e_i\in\mathscr H_E,
+\qquad
+\|e_i\|=1.
+\]
+
+定义 Gram 重叠：
+
+\[
+G_{ij}
+=
+\langle e_j,e_i\rangle.
+\]
+
+约化 record channel 为：
+
+\[
+\boxed{
+\Phi_G(\rho)_{ij}
+=
+G_{ij}\rho_{ij}.
+}
+\]
+
+仓库已经证明其固定点满足：
+
+\[
+\Phi_G(\rho)=\rho
+\iff
+G_{ij}\neq1
+\Longrightarrow
+\rho_{ij}=0.
+\]
+
+### 定义 37.15（记录不可区分类）
+
+定义：
+
+\[
+i\sim_Gj
+\iff
+G_{ij}=1.
+\]
+
+由于记录向量归一化，Cauchy–Schwarz 取等条件给出：
+
+\[
+G_{ij}=1
+\iff
+e_i=e_j.
+\]
+
+所以 \(\sim_G\) 是等价关系。
+
+记其等价类分解为：
+
+\[
+I=\coprod_{\alpha\in\Lambda}I_\alpha.
+\]
+
+### 定理 37.16（记录 fixed algebra 分解）
+
+record channel 的固定代数为：
+
+\[
+\boxed{
+\operatorname{Fix}(\Phi_G)
+\cong
+\bigoplus_{\alpha\in\Lambda}
+M_{|I_\alpha|}(\mathbb C).
+}
+\]
+
+#### 证明
+
+固定点条件要求：
+
+\[
+\rho_{ij}=0
+\]
+
+除非 \(G_{ij}=1\)，即 \(i,j\) 属于同一记录等价类。因此固定矩阵恰为按 \(I_\alpha\) 分块的块对角矩阵，每个块内不受限制。 \(\square\)
+
+### 推论 37.17（记录中心）
+
+其中心为：
+
+\[
+\boxed{
+Z(\operatorname{Fix}(\Phi_G))
+\cong
+\bigoplus_{\alpha\in\Lambda}
+\mathbb C\,I_{I_\alpha}.
+}
+\]
+
+因此：
+
+\[
+\boxed{
+\alpha
+=
+\text{环境能够稳定复制的经典记录标签},
+}
+\]
+
+而：
+
+\[
+\boxed{
+M_{|I_\alpha|}(\mathbb C)
+=
+\text{该标签内部仍未被环境分辨的量子自由度}.
+}
+\]
+
+这给出三个极端。
+
+### 无记录
+
+若所有 \(e_i\) 相同，则只有一个等价类：
+
+\[
+\operatorname{Fix}(\Phi_G)
+=
+M_{|I|}(\mathbb C).
+\]
+
+没有产生新的经典中心。
+
+### 完美地址记录
+
+若所有 \(e_i\) 两两正交，则：
+
+\[
+G_{ij}=\delta_{ij},
+\]
+
+每个等价类为单点，因此：
+
+\[
+\operatorname{Fix}(\Phi_G)
+\cong
+\mathbb C^{|I|}.
+\]
+
+固定代数完全交换。
+
+### 部分记录
+
+若存在非平凡等价类，则：
+
+\[
+\operatorname{Fix}(\Phi_G)
+=
+\text{经典直和标签}
++
+\text{标签内部量子矩阵块}.
+\]
+
+所以：
+
+\[
+\boxed{
+\text{经典现实不是完整量子代数；
+它是记录选择的不动代数的中心。}
+}
+\]
+
+仓库在未记录的有限循环窗口中证明，零扰动 operational center 仅由常数函数组成。环境记录产生非平凡分区后，新的中心投影才成为可公开复制的事实。
+
+---
+
+## 37.8 side record 与 mirror coherence 的精确互补
+
+考虑两个地址：
+
+\[
+|\mathrm R\rangle,
+\qquad
+|\mathrm L\rangle.
+\]
+
+环境分别写入归一化纯记录：
+
+\[
+|e_{\mathrm R}\rangle,
+\qquad
+|e_{\mathrm L}\rangle.
+\]
+
+定义记录重叠：
+
+\[
+c
+=
+\langle e_{\mathrm L},e_{\mathrm R}\rangle.
+\]
+
+系统的 off-diagonal 元素变为：
+
+\[
+\boxed{
+\rho_{\mathrm{RL}}
+\longmapsto
+c\,\rho_{\mathrm{RL}}.
+}
+\]
+
+所以相干保留率为：
+
+\[
+\boxed{
+\mathcal V=|c|.
+}
+\]
+
+对两个等先验纯记录，定义最优区分度：
+
+\[
+\boxed{
+\mathcal D
+=
+\sqrt{1-|c|^2}.
+}
+\]
+
+于是：
+
+\[
+\boxed{
+\mathcal D^2+\mathcal V^2=1.
+}
+\]
+
+### 定理 37.18（记录—相干互补）
+
+在上述二地址纯记录模型中：
+
+\[
+\boxed{
+\text{记录越能区分左右地址，
+系统左右相干保留越少。}
+}
+\]
+
+极端情况为：
+
+\[
+c=0
+\Longrightarrow
+\mathcal D=1,\ \mathcal V=0,
+\]
+
+以及：
+
+\[
+|c|=1
+\Longrightarrow
+\mathcal D=0,\ \mathcal V=1.
+\]
+
+因此：
+
+\[
+\boxed{
+\text{完美记录侧别}
+\Longrightarrow
+\text{unread 系统中的镜像相干严格消失};
+}
+\]
+
+\[
+\boxed{
+\text{完整保留镜像相干}
+\Longrightarrow
+\text{环境没有获得可区分侧别记录}.
+}
+\]
+
+这不是哲学互补，而是 Gram overlap 的精确恒等式。
+
+---
+
+## 37.9 记录相关单调性：同一指针不能同时完美记录共轭方向
+
+仓库已经在一个 system–record qubit 模型中证明：
+
+\[
+\boxed{
+\text{同一记录指针对系统 }Z\text{ 地址具有完美相关}
+\Longrightarrow
+\text{它与系统 }X\text{ 共轭变量的相关为零}.
+}
+\]
+
+其证明并不只是使用不确定性口号，而是使用 PSD 刚性：
+
+1. 完美 \(Z\)-相关与总迹一迫使 disagreement 对角权重为零；
+2. PSD 对角元为零迫使相应整列和整行消失；
+3. \(X\)-型交叉项因此全部为零。
+
+这可以抽象成：
+
+### 原理 37.19（正记录单调性）
+
+设一个记录指针把某个 sharp decomposition：
+
+\[
+P_+\oplus P_-
+\]
+
+变为确定经典标签。则同一指针无法同时保留跨 \(P_+\) 与 \(P_-\) 扇区的完整相干读出。
+
+所以：
+
+\[
+\boxed{
+\text{记录生成中心的同时，也删除中心块之间的相干。}
+}
+\]
+
+---
+
+## 37.10 约化不可逆性是控制域不足，而非整体动力学必然不可逆
+
+设有 \(N\) 个环境记录副本，第 \(r\) 个副本给地址 \(i,j\) 的重叠为：
+
+\[
+G^{(r)}_{ij}.
+\]
+
+多记录通道的总重叠为：
+
+\[
+\Gamma_N(i,j)
+=
+\prod_{r=1}^N
+G^{(r)}_{ij}.
+\]
+
+因此：
+
+\[
+\boxed{
+\rho_{ij}^{(N)}
+=
+\Gamma_N(i,j)\rho_{ij}^{(0)}.
+}
+\]
+
+定义记录作用：
+
+\[
+\boxed{
+\mathfrak A_N(i,j)
+=
+-\log|\Gamma_N(i,j)|.
+}
+\]
+
+在所有因子非零时：
+
+\[
+\mathfrak A_N(i,j)
+=
+\sum_{r=1}^N
+-\log|G^{(r)}_{ij}|.
+\]
+
+于是：
+
+\[
+|\rho_{ij}^{(N)}|
+=
+e^{-\mathfrak A_N(i,j)}
+|\rho_{ij}^{(0)}|.
+\]
+
+仓库进一步证明：
+
+- 若全部相关副本重叠均为单位模；
+- 并且每个副本都被相干反转；
+
+则指定矩阵项可被恢复。
+
+但只要保留一个未反转副本 \(k\)，且：
+
+\[
+G^{(k)}_{ij}\neq1,
+\]
+
+则对非零输入项：
+
+\[
+\rho_{ij}\neq0,
+\]
+
+完整恢复被阻断。
+
+因此：
+
+\[
+\boxed{
+\text{约化不可逆性}
+=
+\text{恢复信息分布在观察者当前控制域之外的记录副本中。}
+}
+\]
+
+这给出一个记录型时间箭头：
+
+\[
+\boxed{
+\text{时间箭头}
+=
+\text{记录账本扩张速度}
+-
+\text{观察者可逆控制域扩张速度}.
+}
+\]
+
+若账本复制快于控制域扩张，则观察者看到单向相干损失，即使整体 joint evolution 仍可逆。
+
+---
+
+## 37.11 状态不是路径：当前密度矩阵不能替代记录历史
+
+仓库已经给出两个相互补充的事实：
+
+1. 经典对角 phase-damping channel 从对角输入出发，任意有限迭代都不能生成 off-diagonal coherence；
+2. 一次 Hadamard 坐标变换却能从基态生成精确非零相干。
+
+所以：
+
+\[
+\boxed{
+\text{相同的当前对角状态描述，
+不能告诉我们它来自纯经典迭代还是来自量子路径后再粗粒化。}
+}
+\]
+
+再结合多记录账本：
+
+\[
+\boxed{
+\text{当前状态}
+\neq
+\text{路径提升}
+\neq
+\text{环境记录副本族}.
+}
+\]
+
+因此完整观察者状态至少需要：
+
+\[
+\boxed{
+(\rho_t,\ \widetilde\gamma_t,\ \mathcal M_t),
+}
+\]
+
+其中：
+
+\[
+\begin{aligned}
+\rho_t&=\text{当前约化状态};\\
+\widetilde\gamma_t&=\text{无法由当前状态恢复的路径提升};\\
+\mathcal M_t&=\text{已经写入环境或公共账本的记录}.
+\end{aligned}
+\]
+
+---
+
+## 37.12 锥残差自动产生最优观察见证
+
+此前 Hilbert 子空间情形中：
+
+\[
+r=(I-P_M)x
+\]
+
+既是闭合余量，又通过 Riesz 对偶成为分离观察者。
+
+该结构可以推广到闭凸锥。
+
+### 定义 37.20（极锥）
+
+设 \(C\) 为实 Hilbert 空间 \(V\) 中的闭凸锥。定义极锥：
+
+\[
+C^\circ
+=
+\{y\in V:\langle y,c\rangle\le0\ \forall c\in C\}.
+\]
+
+对偶锥为：
+
+\[
+C^\vee=-C^\circ.
+\]
+
+### 定理 37.21（Moreau 分解）
+
+对任意 \(x\in V\)，存在唯一分解：
+
+\[
+\boxed{
+x=P_Cx+r,
+}
+\]
+
+满足：
+
+\[
+P_Cx\in C,
+\qquad
+r\in C^\circ,
+\qquad
+\langle P_Cx,r\rangle=0.
+\]
+
+### 定理 37.22（锥残差—观察见证对偶）
+
+令：
+
+\[
+w=-r.
+\]
+
+则：
+
+\[
+w\in C^\vee,
+\]
+
+且若 \(x\notin C\)，则：
+
+\[
+\boxed{
+\langle w,c\rangle\ge0
+\quad
+\forall c\in C,
+}
+\]
+
+但：
+
+\[
+\boxed{
+\langle w,x\rangle
+=
+-\|r\|^2
+<0.
+}
+\]
+
+#### 证明
+
+由 \(r\in C^\circ\)，有 \(-r\in C^\vee\)。又：
+
+\[
+\langle w,x\rangle
+=
+-\langle r,P_Cx+r\rangle
+=
+-\|r\|^2.
+\]
+
+若 \(x\notin C\)，则 \(r\neq0\)，故严格为负。 \(\square\)
+
+因此同一个对象同时是：
+
+\[
+\boxed{
+\begin{aligned}
+r
+&=\text{离可实现锥最近的闭合缺陷};\\
+\frac12\|r\|^2
+&=\text{最小完成作用量};\\
+w=-r
+&=\text{规范对偶观察见证}.
+\end{aligned}
+}
+\]
+
+### 推论 37.23（四类既有结构的统一）
+
+该定理统一：
+
+\[
+\boxed{
+\begin{aligned}
+\text{Nyman 余量}
+&=\text{闭子空间版本};\\
+\text{纠缠见证}
+&=\text{可分锥版本};\\
+\text{经济影子价格}
+&=\text{可复制收益锥版本};\\
+\text{Weil 负方向}
+&=\text{临界正性锥版本}.
+\end{aligned}
+}
+\]
+
+---
+
+## 37.13 可分锥、PSD 锥与观察者对偶锥
+
+对复合系统 \(A\otimes B\)，项目定义并研究：
+
+\[
+C_{\mathrm{sep}}
+=
+\overline{
+\operatorname{cone}
+\{
+\rho_A\otimes\rho_B:
+\rho_A,\rho_B\ge0
+\}
+},
+\]
+
+完整 PSD 锥：
+
+\[
+C_{\mathrm{PSD}}
+=
+M_{d_Ad_B}(\mathbb C)_+,
+\]
+
+以及 block-positive 锥：
+
+\[
+C_{\mathrm{block+}}
+=
+\left\{
+W:
+\langle a\otimes b,W(a\otimes b)\rangle\ge0
+\quad
+\forall a,b
+\right\}.
+\]
+
+仓库已经形式化：
+
+\[
+\boxed{
+C_{\mathrm{sep}}
+\subseteq
+C_{\mathrm{PSD}}
+\subseteq
+C_{\mathrm{block+}},
+}
+\]
+
+并证明：
+
+\[
+\boxed{
+C_{\mathrm{block+}}
+=
+C_{\mathrm{sep}}^\vee
+}
+\]
+
+相对于实 Hilbert–Schmidt 配对。
+
+因此：
+
+\[
+\boxed{
+\text{“合法状态”与“合法观察见证”的锥，
+取决于当前要检验的可实现性类别。}
+}
+\]
+
+相对于完整量子物理：
+
+\[
+C_{\mathrm{state}}=C_{\mathrm{PSD}}
+\]
+
+近似自对偶。
+
+相对于局部可分实现：
+
+\[
+C_{\mathrm{state}}=C_{\mathrm{sep}},
+\qquad
+C_{\mathrm{test}}=C_{\mathrm{block+}},
+\]
+
+二者并不相同。
+
+所以观察者的类型不是由单一 PSD 锥永久决定，而是由问题：
+
+\[
+\boxed{
+\text{它试图区分哪一种“可实现世界”？}
+}
+\]
+
+决定。
+
+---
+
+## 37.14 正概率账本与经典答案表不是同一对象
+
+项目中的公开账本下降定理证明：
+
+若一族局部上下文估值满足：
+
+1. 重叠事件上的 publicness；
+2. 每个上下文内部的有限加法律；
+
+则它们唯一下降为 covered events 上的一个全局估值。
+
+形式上，若：
+
+\[
+v_C:E_C\to\mathbb R
+\]
+
+满足：
+
+\[
+v_C(e)=v_D(e)
+\qquad
+(e\in E_C\cap E_D),
+\]
+
+并且对上下文内不交分解：
+
+\[
+e=e_1\sqcup e_2
+\]
+
+有：
+
+\[
+v_C(e)=v_C(e_1)+v_C(e_2),
+\]
+
+则存在唯一：
+
+\[
+v_{\mathrm{pub}}
+\]
+
+使每个 \(v_C\) 都是其限制。
+
+但该定理明确不主张：
+
+- 正性；
+- Born 表示；
+- 乘法性；
+- 二值性；
+- 全局 character。
+
+因此：
+
+\[
+\boxed{
+\text{公共正概率账本}
+\neq
+\text{全局确定性答案表}.
+}
+\]
+
+### 定义 37.24（状态 section）
+
+局部上下文状态 section 是一族：
+
+\[
+\omega_C:\mathcal C\to\mathbb C
+\]
+
+满足：
+
+- 正性；
+- 归一化；
+- 重叠兼容。
+
+### 定义 37.25（character section）
+
+若还满足：
+
+\[
+\chi_C(ab)=\chi_C(a)\chi_C(b),
+\]
+
+并在投影上取：
+
+\[
+\chi_C(P)\in\{0,1\},
+\]
+
+则称为 classical character section。
+
+量子状态可以给出所有上下文上的相容正线性 section，但有限 Kochen–Specker 构型仍排除全局 character section。
+
+所以：
+
+\[
+\boxed{
+\text{量子整体可以是全局正状态，
+却不是一个全局经典地址点。}
+}
+\]
+
+这对逆完成观察者本体有直接影响：
+
+\[
+\boxed{
+\text{跨全部投影层存在 global section，
+不表示该 section 必须是点状、确定性或乘法 character。}
+}
+\]
+
+---
+
+## 37.15 Born 规则的结构优势是加法下降，而不是任意非线性评分
+
+对完整有限上下文：
+
+\[
+\sum_iE_i=I,
+\]
+
+Born 总量为：
+
+\[
+\sum_i\operatorname{Tr}(\rho E_i)
+=
+\operatorname{Tr}\rho.
+\]
+
+若：
+
+\[
+\operatorname{Tr}\rho=1,
+\]
+
+则：
+
+\[
+\boxed{
+\sum_ip_i=1
+}
+\]
+
+在每个完整上下文中不变。
+
+项目进一步给出精确有限反例：对同一个正、迹一 qutrit 状态和两个完整上下文，二次振幅／Born 加法总量均为一，但四次和六次非线性“价格”出现严格上下文差异。
+
+所以：
+
+\[
+\boxed{
+\text{Born 规则的关键不是任意“平方”；
+而是它来自状态锥与 effect 锥之间的正线性配对。}
+}
+\]
+
+线性保证：
+
+- 上下文内可加；
+- 粗粒化一致；
+- 公共账本可下降；
+- 归一化不依赖完整上下文的选择。
+
+而：
+
+\[
+p\mapsto p^2,
+\qquad
+p\mapsto p^3
+\]
+
+破坏这种事件加法。
+
+因此：
+
+\[
+\boxed{
+\text{概率是能够跨上下文下降的正线性价格。}
+}
+\]
+
+---
+
+## 37.16 观察者的经典世界是中心，不是所有投影值的隐藏列表
+
+记录 fixed algebra：
+
+\[
+\operatorname{Fix}(\Phi_G)
+\cong
+\bigoplus_\alpha M_{d_\alpha}(\mathbb C)
+\]
+
+的中心为：
+
+\[
+Z_G
+\cong
+\mathbb C^{|\Lambda|}.
+\]
+
+局部经典概率分布生活在 \(Z_G\) 上。
+
+但每个块内部仍有：
+
+\[
+M_{d_\alpha}(\mathbb C)
+\]
+
+的非交换自由度。
+
+所以：
+
+\[
+\boxed{
+\text{经典结果}
+=
+\text{中心标签 }\alpha;
+}
+\]
+
+\[
+\boxed{
+\text{量子条件状态}
+=
+\text{中心标签内部的矩阵块}.
+}
+\]
+
+这使“现实分支”得到一个不依赖诠释的最小代数定义：
+
+\[
+\boxed{
+\text{分支}
+=
+\text{记录 fixed algebra 的极小中心投影}.
+}
+\]
+
+若中心投影为 \(Z_\alpha\)，则条件块为：
+
+\[
+Z_\alpha\rho Z_\alpha.
+\]
+
+但这不自动解决“为何主观经验只出现一个结果”；它只定义了记录结构中可公开区分的 classical sectors。
+
+---
+
+## 37.17 预测闭包应从线性子空间升级为最小 operator system
+
+设整体 Schrödinger 通道为：
+
+\[
+\Phi,
+\]
+
+其 Heisenberg 对偶为：
+
+\[
+\Phi^\ast.
+\]
+
+观察者初始可访问 operator system 为：
+
+\[
+\mathcal S_{O,0}.
+\]
+
+定义：
+
+\[
+\boxed{
+\mathcal S_{O,m}
+=
+\operatorname{OSys}
+\left(
+I,\,
+(\Phi^\ast)^k(E):
+E\in\mathcal S_{O,0},
+\ 0\le k\le m
+\right).
+}
+\]
+
+其中 \(\operatorname{OSys}\) 表示包含所列元素的最小 operator system。
+
+极限预测闭包为：
+
+\[
+\boxed{
+\mathcal S_{O,\infty}
+=
+\operatorname{OSys}
+\left(
+(\Phi^\ast)^k\mathcal S_{O,0}:
+k\ge0
+\right).
+}
+\]
+
+### 定理 37.26（operator-system 一次稳定即永久稳定）
+
+若有限维中：
+
+\[
+\mathcal S_{O,m}
+=
+\mathcal S_{O,m+1},
+\]
+
+则：
+
+\[
+\boxed{
+\mathcal S_{O,m+r}
+=
+\mathcal S_{O,m}
+\qquad
+\forall r\ge0.
+}
+\]
+
+#### 证明
+
+等式说明：
+
+\[
+\Phi^\ast(\mathcal S_{O,m})
+\subseteq
+\mathcal S_{O,m}.
+\]
+
+所以继续应用 \(\Phi^\ast\) 不会产生新方向。取 operator-system 闭包后仍不增加元素。归纳即得。 \(\square\)
+
+有限维性保证该递增塔最终稳定。
+
+### 定义 37.27（完全未来等价）
+
+定义：
+
+\[
+\boxed{
+\rho\equiv_O^\infty\sigma
+}
+\]
+
+当且仅当：
+
+\[
+\operatorname{Tr}((\rho-\sigma)A)=0
+\qquad
+\forall A\in\mathcal S_{O,\infty}.
+\]
+
+等价地：
+
+\[
+\rho-\sigma
+\in
+\mathcal S_{O,\infty}^\perp.
+\]
+
+物理未来纤维为：
+
+\[
+\boxed{
+\operatorname{PhysFiber}_{O,\infty}(\rho)
+=
+\left(
+\rho+\mathcal S_{O,\infty}^\perp
+\right)
+\cap
+\{\sigma\ge0,\operatorname{Tr}\sigma=1\}.
+}
+\]
+
+因此：
+
+\[
+\boxed{
+\text{预测闭包}
+=
+\text{把瞬时观察商修复为动力学稳定的矩阵有序商。}
+}
+\]
+
+---
+
+## 37.18 预测余量、锥距离与创新能必须同时存在
+
+设线性可见子空间为：
+
+\[
+V_m
+=
+\operatorname{span}_{\mathbb R}
+\left(
+\mathcal S_{O,m}^{\mathrm{sa}}\cap\{I\}^\perp
+\right).
+\]
+
+对无迹状态坐标：
+
+\[
+X_\rho=\rho-\frac Id,
+\]
+
+定义线性余能：
+
+\[
+\boxed{
+r_m^{(2)}(\rho)
+=
+\|P_{V_m^\perp}X_\rho\|_2^2.
+}
+\]
+
+仓库的创新能递推给出：若：
+
+\[
+V_m\subseteq V_{m+1},
+\]
+
+则：
+
+\[
+\boxed{
+r_m^{(2)}(\rho)
+=
+r_{m+1}^{(2)}(\rho)
++
+\|P_{V_{m+1}\cap V_m^\perp}X_\rho\|_2^2.
+}
+\]
+
+但这只是线性坐标完成。
+
+还应定义正锥可实现距离：
+
+\[
+\boxed{
+r_m^{(+)}(y)
+=
+\operatorname{dist}
+\left(
+y,\,
+q_m(\operatorname{StateCone})
+\right)^2.
+}
+\]
+
+两者区别为：
+
+\[
+\boxed{
+\begin{aligned}
+r_m^{(2)}
+&=\text{尚未被线性坐标捕获的状态质量};\\
+r_m^{(+)}
+&=\text{形式坐标距离可实现状态像有多远}.
+\end{aligned}
+}
+\]
+
+因此观察塔可能出现：
+
+1. 线性信息不完备，但所有当前读出可实现；
+2. 线性信息完备，但某个形式拼接坐标不满足正性；
+3. 两者都完备；
+4. 两者都失败。
+
+---
+
+## 37.19 动力学、对角与正序闭合是三种不同缺陷
+
+设：
+
+\[
+\mathbb E_O:\mathcal A\to\mathcal S_O
+\]
+
+为观察粗粒化。
+
+### 动力学自然性缺陷
+
+\[
+\boxed{
+\partial_O^{\mathrm{dyn}}
+=
+\mathbb E_O\Phi
+-
+\Phi_O\mathbb E_O.
+}
+\]
+
+它回答：
+
+> 先整体演化再观察，是否等于先观察再按有效动力学演化？
+
+### 对角自然性缺陷
+
+\[
+\boxed{
+\partial_O^{\mathrm{diag}}
+=
+\mathbb E_O\Delta
+-
+\Delta_O\mathbb E_O.
+}
+\]
+
+它回答：
+
+> 完整系统中的自评价，能否下降到观察商中的自评价？
+
+### 正序缺陷
+
+设 effect interval 为：
+
+\[
+[0,I]_{\mathcal S_O}
+=
+\{E\in\mathcal S_O:0\le E\le I\}.
+\]
+
+定义：
+
+\[
+\boxed{
+\partial_O^{\mathrm{ord}}(\Delta)
+=
+\sup_{E\in[0,I]_{\mathcal S_O}}
+\operatorname{dist}
+\left(
+\Delta(E),
+[0,I]_{\mathcal S_O}
+\right).
+}
+\]
+
+它回答：
+
+> 对角操作是否仍把合法问题送到合法问题？
+
+三者互不等价。
+
+项目已有缺陷分解定理说明，一个 projected update 的总误差可以分为：
+
+\[
+\boxed{
+\text{更新自然性缺陷}
++
+\text{Lipschitz 放大的对角投影缺陷}.
+}
+\]
+
+结合正序以后，应升级为：
+
+\[
+\boxed{
+\text{总物理缺陷}
+\le
+\text{动力自然性}
++
+\text{表示对角缺陷}
++
+\text{正序可实现缺陷}
++
+\text{矩阵级 CP 缺陷}.
+}
+\]
+
+---
+
+## 37.20 量子逻辑中的取反是 \(I-E\)，不是 \(-E\)
+
+对合法 effect：
+
+\[
+0\le E\le I,
+\]
+
+其补事件为：
+
+\[
+\boxed{
+E^\perp=I-E.
+}
+\]
+
+仍满足：
+
+\[
+0\le I-E\le I.
+\]
+
+所以量子观察者的“取反”必须保留 order interval。
+
+在单个交换上下文中，\(E\mapsto I-E\) 是 Boolean 补。
+
+但跨多个非交换上下文，通常不存在一个共同 Boolean 代数同时容纳全部 sharp effects。
+
+因此：
+
+\[
+\boxed{
+\text{正序对角化}
+=
+\text{沿自评价对角读取 effect，
+再在当前 order interval 中取补}.
+}
+\]
+
+这与底层向量空间的：
+
+\[
+x\mapsto-x
+\]
+
+不是同一种操作。
+
+### 原理 37.28（类型化对角逃逸）
+
+若一个观察层声称：
+
+1. 枚举自己的全部合法 effects；
+2. 允许在同一地址读取该枚举；
+3. 对读取值施加 \(E\mapsto I-E\)；
+4. 新 effect 仍属于同一枚举；
+
+则会出现 Lawvere 型逃逸。
+
+但逃逸对象必须首先通过：
+
+\[
+0\le E\le I
+\]
+
+以及全部矩阵级正性审计。
+
+所以：
+
+\[
+\boxed{
+\text{抽象对角逃逸}
+\not\Rightarrow
+\text{物理量子 effect 逃逸};
+}
+\]
+
+还需要证明新对象处于合法 order interval。
+
+---
+
+## 37.21 观察者完整度必须加入正序和矩阵稳定轴
+
+定义：
+
+\[
+\boxed{
+\mathbf C(\mathfrak O)
+=
+(
+C_{\mathrm{sep}},
+C_{\mathrm{pred}},
+C_{\mathrm{dyn}},
+C_{\mathrm{tom}},
+C_{\mathrm{ord}},
+C_{\mathrm{cp}},
+C_{\mathrm{ctx}},
+C_{\mathrm{record}},
+C_{\mathrm{lift}},
+C_{\mathrm{self}},
+C_{\mathrm{lim}}
+).
+}
+\]
+
+各轴含义：
+
+\[
+\begin{aligned}
+C_{\mathrm{sep}}
+&=\text{当前问题能否分离目标状态};\\
+C_{\mathrm{pred}}
+&=\text{未来问题闭包是否稳定};\\
+C_{\mathrm{dyn}}
+&=\text{动力学能否下降到观察商};\\
+C_{\mathrm{tom}}
+&=\text{指定状态族是否可层析};\\
+C_{\mathrm{ord}}
+&=\text{观察商是否保留正序和归一化};\\
+C_{\mathrm{cp}}
+&=\text{加入任意辅助系统后是否仍合法};\\
+C_{\mathrm{ctx}}
+&=\text{局部上下文能否拼成所需类型的全局 section};\\
+C_{\mathrm{record}}
+&=\text{结果账本是否保存所需经典中心};\\
+C_{\mathrm{lift}}
+&=\text{路径与环境副本是否可恢复};\\
+C_{\mathrm{self}}
+&=\text{同层自描述是否闭合};\\
+C_{\mathrm{lim}}
+&=\text{相容有限视图是否由全局物理对象实现}.
+\end{aligned}
+\]
+
+重要非蕴含包括：
+
+\[
+\boxed{
+C_{\mathrm{sep}}=1
+\not\Rightarrow
+C_{\mathrm{cp}}=1;
+}
+\]
+
+\[
+\boxed{
+C_{\mathrm{pred}}=1
+\not\Rightarrow
+C_{\mathrm{tom}}=1;
+}
+\]
+
+\[
+\boxed{
+C_{\mathrm{ord}}=1
+\not\Rightarrow
+C_{\mathrm{ctx}}=1;
+}
+\]
+
+\[
+\boxed{
+C_{\mathrm{tom}}=1
+\not\Rightarrow
+C_{\mathrm{self}}=1;
+}
+\]
+
+\[
+\boxed{
+C_{\mathrm{record}}=1
+\not\Rightarrow
+C_{\mathrm{lift}}=1.
+}
+\]
+
+所以“观察者完备”不能由一个布尔量表达。
+
+---
+
+## 37.22 Weil 卷积平方：临界线上的自配对正性
+
+设 Weil 测试函数空间为 \(\mathcal T\)，定义 involution：
+
+\[
+g^\ast(x)
+=
+\overline{g(-x)}.
+\]
+
+卷积平方为：
+
+\[
+\boxed{
+f_g
+=
+g*g^\ast.
+}
+\]
+
+项目已经形式化，在实频率 \(\xi\in\mathbb R\) 上：
+
+\[
+\boxed{
+\widehat{f_g}(\xi)
+=
+|\widehat g(\xi)|^2
+\ge0.
+}
+\]
+
+设零点参数写成：
+
+\[
+\rho
+=
+\frac12+i\gamma.
+\]
+
+若：
+
+\[
+\Re\rho=\frac12,
+\]
+
+则：
+
+\[
+\gamma\in\mathbb R.
+\]
+
+该零点对 \(f_g\) 的 summand 为：
+
+\[
+m_\rho\widehat{f_g}(\gamma)
+=
+m_\rho|\widehat g(\gamma)|^2
+\ge0.
+\]
+
+所以每个临界线零点都逐项提供：
+
+\[
+\boxed{
+\text{同一频率地址上的 GNS 自配对}.
+}
+\]
+
+这不是只在总和以后出现的正性，而是每个临界零点 summand 自身就是模平方。
+
+---
+
+## 37.23 离线零点把自配对拆成镜像纤维间的交叉相干
+
+若：
+
+\[
+\rho
+=
+\frac12+\delta+i t,
+\qquad
+\delta\neq0,
+\]
+
+则：
+
+\[
+\gamma
+=
+t-i\delta
+\notin\mathbb R.
+\]
+
+其复共轭为：
+
+\[
+\overline\gamma=t+i\delta.
+\]
+
+项目已经形式化复频率因子分解：
+
+\[
+\boxed{
+\widehat{g*g^\ast}(\gamma)
+=
+\widehat g(\gamma)\,
+\overline{\widehat g(\overline\gamma)}.
+}
+\]
+
+记：
+
+\[
+A_g
+=
+\widehat g(\gamma),
+\qquad
+B_g
+=
+\widehat g(\overline\gamma).
+\]
+
+则单个镜像—共轭四元轨道的总贡献为：
+
+\[
+\boxed{
+Q_\rho(g)
+=
+4m_\rho
+\operatorname{Re}
+\left(
+A_g\overline{B_g}
+\right).
+}
+\]
+
+函数方程和共轭保证 \(Q_\rho(g)\) 为实数，但不保证其非负。
+
+所以：
+
+\[
+\boxed{
+\text{函数方程}
+=
+\text{交叉配对的 Hermitian 实性};
+}
+\]
+
+而：
+
+\[
+\boxed{
+\text{临界线}
+=
+\text{两个镜像评价地址相合，交叉配对退化为自配对}.
+}
+\]
+
+---
+
+## 37.24 离线轨道的二地址观察者空间
+
+对一个假想离线轨道定义：
+
+\[
+\boxed{
+\mathscr H_\rho
+=
+\operatorname{span}
+\{
+|\mathrm R\rangle,
+|\mathrm L\rangle
+\}
+\cong
+\mathbb C^2.
+}
+\]
+
+其中：
+
+\[
+|\mathrm R\rangle
+=
+\text{右侧评价地址 }\gamma,
+\]
+
+\[
+|\mathrm L\rangle
+=
+\text{左侧镜像评价地址 }\overline\gamma.
+\]
+
+定义测试函数产生的评价向量：
+
+\[
+\boxed{
+|v_g\rangle
+=
+A_g|\mathrm R\rangle
++
+B_g|\mathrm L\rangle.
+}
+\]
+
+定义侧别算子：
+
+\[
+Z_\rho
+=
+\begin{pmatrix}
+1&0\\
+0&-1
+\end{pmatrix},
+\]
+
+以及反射交换算子：
+
+\[
+J_\rho
+=
+\begin{pmatrix}
+0&1\\
+1&0
+\end{pmatrix}.
+\]
+
+若 Cayley 径向深度为 \(\beta_\rho\)，定义法向算子：
+
+\[
+\boxed{
+B_\rho
+=
+\beta_\rho Z_\rho.
+}
+\]
+
+则：
+
+\[
+\boxed{
+J_\rho B_\rho J_\rho
+=
+-B_\rho.
+}
+\]
+
+四元轨道读出为：
+
+\[
+\boxed{
+Q_\rho(g)
+=
+2m_\rho
+\langle v_g,J_\rho v_g\rangle.
+}
+\]
+
+因为：
+
+\[
+\langle v_g,J_\rho v_g\rangle
+=
+2\operatorname{Re}(A_g\overline{B_g}).
+\]
+
+所以离线零点对应的最小观察者结构不是一个裸复数，而包含：
+
+\[
+\boxed{
+(
+\beta_\rho,\,
+Z_\rho,\,
+J_\rho,\,
+E_\rho,\,
+Q_\rho
+),
+}
+\]
+
+其中：
+
+\[
+E_\rho(g)
+=
+(A_g,B_g).
+\]
+
+这里的二地址模型是局部代数结构，不声称真实 zeta 零点是物理 qubit。
+
+---
+
+## 37.25 交换签名分解
+
+定义对称和反对称基：
+
+\[
+|+\rangle
+=
+\frac{
+|\mathrm R\rangle+|\mathrm L\rangle
+}{\sqrt2},
+\]
+
+\[
+|-\rangle
+=
+\frac{
+|\mathrm R\rangle-|\mathrm L\rangle
+}{\sqrt2}.
+\]
+
+则：
+
+\[
+J_\rho|+\rangle=|+\rangle,
+\qquad
+J_\rho|-\rangle=-|-\rangle.
+\]
+
+写：
+
+\[
+c_+(g)
+=
+\frac{A_g+B_g}{\sqrt2},
+\]
+
+\[
+c_-(g)
+=
+\frac{A_g-B_g}{\sqrt2}.
+\]
+
+则：
+
+\[
+\boxed{
+\langle v_g,J_\rho v_g\rangle
+=
+|c_+(g)|^2-|c_-(g)|^2.
+}
+\]
+
+因此：
+
+\[
+\boxed{
+Q_\rho(g)
+=
+2m_\rho
+\left(
+|c_+(g)|^2-|c_-(g)|^2
+\right).
+}
+\]
+
+这表明离线轨道的局部 Hermitian 形式具有签名：
+
+\[
+\boxed{
+(1,1).
+}
+\]
+
+### 临界线退化
+
+若 \(\gamma=\overline\gamma\)，则：
+
+\[
+A_g=B_g.
+\]
+
+所以：
+
+\[
+c_-(g)=0.
+\]
+
+于是：
+
+\[
+Q_\rho(g)
+=
+4m_\rho|A_g|^2
+\ge0.
+\]
+
+因此：
+
+\[
+\boxed{
+\text{临界线并不是把一个负方向“估计掉”；
+而是反对称观察方向根本没有被生成。}
+}
+\]
+
+---
+
+## 37.26 评价像维数—负方向判据
+
+定义离线评价映射：
+
+\[
+\boxed{
+E_\rho:
+\mathcal T\to\mathbb C^2,
+\qquad
+E_\rho(g)
+=
+(A_g,B_g).
+}
+\]
+
+在 \(\mathbb C^2\) 上定义 Hermitian 形式：
+
+\[
+q_J(v)
+=
+v^\ast J_\rho v.
+\]
+
+### 定理 37.29（二维像必有负方向）
+
+若：
+
+\[
+\dim_{\mathbb C}
+\operatorname{im}E_\rho
+=
+2,
+\]
+
+则存在 \(g\in\mathcal T\) 使：
+
+\[
+\boxed{
+Q_\rho(g)<0.
+}
+\]
+
+#### 证明
+
+二维像等于整个 \(\mathbb C^2\)。取：
+
+\[
+v=|-\rangle.
+\]
+
+则：
+
+\[
+q_J(v)=-1.
+\]
+
+由满射性存在 \(g\) 使 \(E_\rho(g)=v\)，故：
+
+\[
+Q_\rho(g)
+=
+2m_\rho q_J(v)
+=
+-2m_\rho<0.
+\]
+
+\(\square\)
+
+### 推论 37.30（局部非负像的维数限制）
+
+若：
+
+\[
+Q_\rho(g)\ge0
+\qquad
+\forall g\in\mathcal T,
+\]
+
+则：
+
+\[
+\boxed{
+\dim_{\mathbb C}
+\operatorname{im}E_\rho
+\le1.
+}
+\]
+
+因为签名 \((1,1)\) 的 Hermitian 空间中，不存在二维非负线性子空间。
+
+这给出一个非常具体的局部刚性：
+
+\[
+\boxed{
+\text{离线轨道若对全部平方测试保持非负，
+则两个镜像评价不能是独立坐标。}
+}
+\]
+
+---
+
+## 37.27 一维非负关系仍不自动等于临界对角
+
+若：
+
+\[
+\operatorname{im}E_\rho
+=
+\operatorname{span}\{(1,\lambda)\},
+\]
+
+则：
+
+\[
+Q_\rho(g)
+\propto
+2\operatorname{Re}\lambda.
+\]
+
+所以局部非负只要求：
+
+\[
+\operatorname{Re}\lambda\ge0.
+\]
+
+它并不自动要求：
+
+\[
+\lambda=1.
+\]
+
+而临界线真正给出：
+
+\[
+A_g=B_g
+\qquad
+\forall g,
+\]
+
+即：
+
+\[
+\lambda=1.
+\]
+
+因此：
+
+\[
+\boxed{
+\text{局部正性}
+\not\Rightarrow
+\text{镜像地址完全合一}.
+}
+\]
+
+要从一维非负关系推进到真正临界对角，还需要额外结构，例如：
+
+- reflection naturality；
+- conjugation covariance；
+- normalization；
+- 足够丰富的测试函数；
+- prime-side transition law；
+- 唯一性或极值性。
+
+---
+
+## 37.28 side-flip 不变性与正性的冲突
+
+侧别算子满足：
+
+\[
+\boxed{
+Z_\rho J_\rho Z_\rho
+=
+-J_\rho.
+}
+\]
+
+所以：
+
+\[
+q_J(Z_\rho v)
+=
+-q_J(v).
+\]
+
+### 定理 37.31（side-flip 正性刚性）
+
+设线性子空间：
+
+\[
+W\subseteq\mathbb C^2
+\]
+
+满足：
+
+\[
+Z_\rho W\subseteq W,
+\]
+
+并且：
+
+\[
+q_J(v)\ge0
+\qquad
+\forall v\in W.
+\]
+
+则：
+
+\[
+\boxed{
+q_J(v)=0
+\qquad
+\forall v\in W.
+}
+\]
+
+#### 证明
+
+对任意 \(v\in W\)，有 \(Z_\rho v\in W\)。所以：
+
+\[
+q_J(v)\ge0,
+\]
+
+且：
+
+\[
+-q_J(v)
+=
+q_J(Z_\rho v)
+\ge0.
+\]
+
+故 \(q_J(v)=0\)。 \(\square\)
+
+由于签名 \((1,1)\) 的最大 totally isotropic 子空间维数为一，进一步得到：
+
+\[
+\boxed{
+\dim_{\mathbb C}W\le1.
+}
+\]
+
+所以若离线评价像同时：
+
+1. 对 side flip 闭合；
+2. 对全部测试保持非负；
+3. 具有两个独立评价自由度；
+
+则矛盾。
+
+这提供一个条件 RH 路线：
+
+\[
+\boxed{
+\text{证明 prime-side 测试闭包使离线评价像既 }Z\text{-不变又二维}.
+}
+\]
+
+当前项目尚未证明这一算术闭包条件。
+
+---
+
+## 37.29 侧别记录与交换读出的观察者互补
+
+在二地址离线模型中：
+
+\[
+Z_\rho
+=
+\text{左右侧别},
+\]
+
+而：
+
+\[
+J_\rho
+=
+\text{左右镜像相干交换}.
+\]
+
+若环境完美记录 \(Z_\rho\)，则 unread channel 为 \(Z\)-basis pinching：
+
+\[
+\mathbb E_Z(\rho)
+=
+P_{\mathrm R}\rho P_{\mathrm R}
++
+P_{\mathrm L}\rho P_{\mathrm L}.
+\]
+
+于是：
+
+\[
+\boxed{
+\operatorname{Tr}
+\left(
+\mathbb E_Z(\rho)J_\rho
+\right)
+=
+0.
+}
+\]
+
+因为 \(J_\rho\) 只有 off-diagonal 元素。
+
+### 定理 37.32（完美侧别记录消除镜像交换读出）
+
+对任意二地址状态 \(\rho\)：
+
+\[
+\boxed{
+\text{若左右侧别被完美记录并丢弃记录值，
+则 }J_\rho\text{ 的期望严格为零。}
+}
+\]
+
+这与项目的 record-correlation monogamy 同型：
+
+\[
+\text{perfect }Z\text{-record}
+\Longrightarrow
+X\text{-correlation}=0.
+\]
+
+因此一个离线结构若同时要求：
+
+1. 左右侧别成为公开、完美、可复制的经典标签；
+2. Weil 四元 orbit 保留非零 \(J_\rho\)-型交叉读出；
+
+则二者不能由同一个 unread 观察接口同时实现。
+
+必须至少发生以下之一：
+
+\[
+\boxed{
+\begin{aligned}
+&\text{侧别没有被完美记录};\\
+&\text{镜像相干只存在于含环境的 joint state};\\
+&\text{Weil 读出属于另一个不兼容上下文};\\
+&\text{记录值没有被丢弃};\\
+&\text{所谓侧别不是一个可公开复制的经典变量}.
+\end{aligned}
+}
+\]
+
+这并不排除离线零点，但它说明：
+
+\[
+\boxed{
+\text{离线零点的完整观察者本体不能是一个同时携带
+经典侧别和未衰减镜像相干的单一经典对象。}
+}
+\]
+
+它若存在，必须具有量子上下文或 joint-record 结构。
+
+---
+
+## 37.30 离线轨道的 Gram 状态与不定 observable
+
+定义 rank-one Gram 矩阵：
+
+\[
+\boxed{
+G_g
+=
+|v_g\rangle\langle v_g|
+=
+\begin{pmatrix}
+|A_g|^2&A_g\overline{B_g}\\
+B_g\overline{A_g}&|B_g|^2
+\end{pmatrix}.
+}
+\]
+
+显然：
+
+\[
+G_g\ge0.
+\]
+
+离线轨道贡献为：
+
+\[
+\boxed{
+Q_\rho(g)
+=
+2m_\rho
+\operatorname{Tr}(G_gJ_\rho).
+}
+\]
+
+所以离线问题不是“Gram 状态失去正性”。
+
+真正发生的是：
+
+\[
+\boxed{
+\text{一个合法 PSD Gram 状态，
+被一个具有正负谱的交换 observable 评价。}
+}
+\]
+
+\(J_\rho\) 的谱为：
+
+\[
+\{+1,-1\}.
+\]
+
+因此：
+
+\[
+\operatorname{Tr}(G_gJ_\rho)
+\]
+
+可以为正、零或负。
+
+这与项目中的 block-positive／entanglement-witness 结构有相似之处：
+
+- 状态本身仍可 PSD；
+- 检测问题由更大的对偶锥或不定 observable 给出；
+- 负值见证目标不属于某个更窄的可实现锥。
+
+但二者不是同一具体锥，不能直接把离线零点称为纠缠态。
+
+---
+
+## 37.31 临界线是评价地址的对角，不只是复平面的竖线
+
+定义双评价映射：
+
+\[
+E(s)
+=
+\left(
+\widehat g(\gamma(s)),
+\widehat g(\overline{\gamma(s)})
+\right).
+\]
+
+临界线条件：
+
+\[
+\Re s=\frac12
+\]
+
+等价于：
+
+\[
+\gamma(s)=\overline{\gamma(s)}.
+\]
+
+所以：
+
+\[
+E(s)
+\in
+\Delta_{\mathbb C}
+=
+\{(A,A):A\in\mathbb C\}.
+\]
+
+该对角子空间正是 \(J_\rho\) 的正本征空间：
+
+\[
+\Delta_{\mathbb C}
+=
+\operatorname{span}\{|+\rangle\}.
+\]
+
+因此：
+
+\[
+\boxed{
+\text{Riemann 临界线}
+=
+\text{镜像评价纤维的对角嵌入像}.
+}
+\]
+
+离线时：
+
+\[
+E(s)\notin\Delta_{\mathbb C}
+\]
+
+一般成立，并产生反对称分量：
+
+\[
+c_-(g)
+=
+\frac{A_g-B_g}{\sqrt2}.
+\]
+
+所以：
+
+\[
+\boxed{
+\text{离线深度并不只是横坐标偏移；
+它使一个自配对评价分裂为两个可独立变化的地址。}
+}
+\]
+
+这正是本节所说的“对角缺陷”。
+
+---
+
+## 37.32 函数方程给出 Hermitian 配对，RH 要求正 GNS 完成
+
+设显式公式定义 Hermitian 线性泛函：
+
+\[
+\Omega_\zeta:\mathcal T\to\mathbb C.
+\]
+
+若：
+
+\[
+\Omega_\zeta(g^\ast g)\ge0
+\qquad
+\forall g,
+\]
+
+则可以构造 GNS 空间：
+
+\[
+\mathscr H_\zeta
+=
+\overline{
+\mathcal T/N_\zeta
+},
+\]
+
+其中：
+
+\[
+N_\zeta
+=
+\{g:\Omega_\zeta(g^\ast g)=0\}.
+\]
+
+内积为：
+
+\[
+\boxed{
+\langle[g],[h]\rangle_\zeta
+=
+\Omega_\zeta(h^\ast g).
+}
+\]
+
+范数平方为：
+
+\[
+\boxed{
+\|[g]\|_\zeta^2
+=
+\Omega_\zeta(g^\ast g).
+}
+\]
+
+函数方程和共轭对称足以保证相关零点总和为 Hermitian／实，但不自动保证：
+
+\[
+\Omega_\zeta(g^\ast g)\ge0.
+\]
+
+因此：
+
+\[
+\boxed{
+\text{函数方程}
+=
+\text{GNS 候选形式的 Hermitian 性};
+}
+\]
+
+\[
+\boxed{
+\text{RH-like 正性}
+=
+\text{该 Hermitian 形式能够完成为真正 Hilbert 内积}.
+}
+\]
+
+若 RH 为假，Weil 判据意味着存在 \(g\) 使：
+
+\[
+\Omega_\zeta(g^\ast g)<0.
+\]
+
+此时不能得到正 GNS Hilbert 空间，只能得到不定型或必须改变测试锥。
+
+---
+
+## 37.33 RH 不是“一个正锥存在”，而是平方锥上的全局正状态存在
+
+定义 Weil 平方锥：
+
+\[
+\boxed{
+C_{\mathrm{Weil}}
+=
+\left\{
+\sum_{j=1}^m
+g_j*g_j^\ast:
+m<\infty
+\right\}.
+}
+\]
+
+则 RH 的正性型版本应表述为：
+
+\[
+\boxed{
+\Omega_\zeta(f)\ge0
+\qquad
+\forall f\in C_{\mathrm{Weil}}.
+}
+\]
+
+这里：
+
+- \(C_{\mathrm{Weil}}\) 由测试函数卷积和 involution 无条件定义；
+- \(\Omega_\zeta\) 由显式公式的 prime、pole、archimedean 与 zero terms 定义；
+- 正性不是另行指定，而是要证明的全局性质。
+
+所以：
+
+\[
+\boxed{
+\mathrm{RH}
+=
+\text{zeta 显式公式泛函在 Weil 平方锥上是正状态}.
+}
+\]
+
+这比：
+
+\[
+\text{存在某个抽象正锥使某个算子可酉化}
+\]
+
+更贴合项目已经形式化的接口。
+
+---
+
+## 37.34 但离线单轨道负性不自动等于全局 Weil 负性
+
+即使定理 37.29 给出某个 \(g\) 使单个离线轨道：
+
+\[
+Q_\rho(g)<0,
+\]
+
+完整显式公式仍包含：
+
+\[
+\Omega_\zeta(g^\ast g)
+=
+Q_\rho(g)
++
+\sum_{\rho'\neq\rho}
+Q_{\rho'}(g)
++
+P(g)
++
+A(g),
+\]
+
+其中：
+
+\[
+P(g)
+=
+\text{prime/pole contributions},
+\]
+
+\[
+A(g)
+=
+\text{archimedean contribution}.
+\]
+
+其他项可能为正并抵消该负方向。
+
+因此，从局部轨道负性到全局 RH 反例需要一个 localization theorem。
+
+### 条件定理 37.35（离线局域化蕴含全局负性）
+
+若对某个离线轨道 \(\rho\)，存在测试函数列 \(g_n\) 满足：
+
+\[
+Q_\rho(g_n)\to -c
+\qquad
+(c>0),
+\]
+
+且：
+
+\[
+\sum_{\rho'\neq\rho}
+Q_{\rho'}(g_n)
++
+P(g_n)
++
+A(g_n)
+\to0,
+\]
+
+则：
+
+\[
+\Omega_\zeta(g_n^\ast g_n)<0
+\]
+
+对充分大 \(n\) 成立。
+
+#### 证明
+
+由总和分解和极限直接得到。 \(\square\)
+
+真正困难的部分是同时完成：
+
+\[
+\boxed{
+\text{目标离线评价插值}
++
+\text{其余无限谱压制}
++
+\text{prime/archimedean 控制}.
+}
+\]
+
+---
+
+## 37.35 离线 observer 的 classicality–coherence 二分
+
+假设一个离线镜像对被表示为两个地址：
+
+\[
+\mathrm R,\mathrm L.
+\]
+
+则完整观察者有两种极端。
+
+### 经典侧别观察者
+
+它能够完美、公开、可复制地记录：
+
+\[
+\varepsilon\in\{\mathrm R,\mathrm L\}.
+\]
+
+此时 fixed algebra 在该二地址上为对角代数：
+
+\[
+\mathbb C\oplus\mathbb C.
+\]
+
+镜像相干 \(J_\rho\) 被 unread channel 删除。
+
+### 相干镜像观察者
+
+它完整保留：
+
+\[
+\langle J_\rho\rangle.
+\]
+
+此时环境记录必须满足：
+
+\[
+|c|=1,
+\]
+
+所以不能区分 \(\mathrm R\) 与 \(\mathrm L\)。
+
+因此：
+
+\[
+\boxed{
+\text{离线侧别作为经典公开事实}
+\quad\text{与}\quad
+\text{离线镜像相干作为未衰减读出}
+}
+\]
+
+不能由同一个纯记录接口同时实现。
+
+这提示一种本体修正：
+
+\[
+\boxed{
+\text{复平面中“左点”和“右点”的离散标签，
+可能只是一个上下文中的记录；
+四元显式公式中的交叉相干属于另一个上下文。}
+}
+\]
+
+所以一个假想离线零点的完整本体必须至少是：
+
+\[
+\boxed{
+\text{非交换上下文 atlas},
+}
+\]
+
+而不是一个携带全部性质的单一经典点。
+
+---
+
+## 37.36 从“离线点”升级为矩阵序 observer section
+
+第 36 节把离线对象定义为 RH defect atlas 上的相容非零 section。
+
+本节进一步要求每个图表不是普通集合，而是 operator-system／矩阵序图表：
+
+\[
+\boxed{
+\mathbf D_{\mathrm{RH}}^{\mathrm{ord}}
+=
+\left(
+\mathcal D_i,
+\{M_n(\mathcal D_i)_+\}_{n\ge1},
+p_{ji}
+\right).
+}
+\]
+
+一个候选离线 observer section 包括：
+
+\[
+\boxed{
+d=(d_i)_i
+}
+\]
+
+以及：
+
+\[
+\boxed{
+\omega_i:
+\mathcal D_i\to\mathbb C
+}
+\]
+
+满足：
+
+1. 坐标相容：
+
+   \[
+   p_{ji}(d_j)=d_i;
+   \]
+
+2. 状态相容：
+
+   \[
+   \omega_i=\omega_j\circ p_{ji};
+   \]
+
+3. 每级正性；
+
+4. 全部矩阵级正性；
+
+5. 归一化；
+
+6. instrument 条件化相容；
+
+7. 环境记录 cocycle 相容；
+
+8. 必要的能量、normality 和 form-domain 条件。
+
+因此集合逆极限：
+
+\[
+\varprojlim_iD_i
+\]
+
+只给出形式 section。
+
+真正物理／算术允许的 section 应写成：
+
+\[
+\boxed{
+\operatorname{PhysSect}
+\left(
+\mathbf D_{\mathrm{RH}}^{\mathrm{ord}}
+\right).
+}
+\]
+
+于是 RH 的本体型问题进一步收紧为：
+
+\[
+\boxed{
+\text{是否存在一个非零、矩阵正、条件化相容、
+记录一致且全局可实现的离线 observer section？}
+}
+\]
+
+---
+
+## 37.37 正锥不会自动消灭离线 section
+
+第 36 节已经证明：非空有限集合的 cofiltered 逆系统通常具有非空逆极限。
+
+同样地，若每个阶段的状态空间：
+
+\[
+K_i
+\]
+
+是非空紧凸集，且 bonding maps：
+
+\[
+p_{ji}:K_j\to K_i
+\]
+
+连续满射，则：
+
+\[
+\varprojlim_iK_i\neq\varnothing.
+\]
+
+因此：
+
+\[
+\boxed{
+\text{逐层存在正状态}
++
+\text{满射相容}
+}
+\]
+
+通常支持而不是排除全局正 section。
+
+要排除离线 observer，必须在更强位置出现障碍：
+
+\[
+\boxed{
+\begin{aligned}
+&\text{某个矩阵级正锥为空};\\
+&\text{transition 不是完全正};\\
+&\text{局部状态不满足重叠 publicness};\\
+&\text{instrument 条件化不相容};\\
+&\text{form-domain 或能量条件不闭合};\\
+&\text{正性常数在极限中退化};\\
+&\text{出现 contextual gluing obstruction};\\
+&\text{出现严格收缩或奇偶刚性}.
+\end{aligned}
+}
+\]
+
+所以本节再次确认：
+
+\[
+\boxed{
+\text{“正锥存在”本身不具有 RH 证明力。}
+}
+\]
+
+证明力必须来自正锥、转换、记录、上下文和极限的联合结构。
+
+---
+
+## 37.38 prime-axis Hilbert 空间中的状态—effect 接缝
+
+项目构造 prime-axis 系数：
+
+\[
+k_s(a)
+=
+n(a)^{-s}
+\]
+
+并证明：
+
+\[
+\boxed{
+k_s\in\ell^2
+\iff
+\Re s>\frac12.
+}
+\]
+
+同时：
+
+- 虚部方向：
+
+  \[
+  s\mapsto s+it
+  \]
+
+  产生范数保持酉群；
+
+- 向右的实部方向：
+
+  \[
+  s\mapsto s+\delta,
+  \qquad
+  \delta\ge0
+  \]
+
+  产生收缩半群；
+
+- 镜像伙伴为：
+
+  \[
+  1-\overline s;
+  \]
+
+- 临界线同时满足：
+
+  \[
+  s=1-\overline s,
+  \]
+
+  half-density unit modulus，
+
+  self-resonance，
+
+  以及 \(\ell^2\) 阈值。
+
+这提示 rigged Hilbert 解释：
+
+\[
+\boxed{
+\Phi
+\subset
+\mathscr H
+\subset
+\Phi^\prime.
+}
+\]
+
+其中可能有：
+
+\[
+\boxed{
+\Re s>\frac12
+=
+\text{normalizable state side},
+}
+\]
+
+\[
+\boxed{
+\Re s<\frac12
+=
+\text{dual/distribution effect side},
+}
+\]
+
+\[
+\boxed{
+\Re s=\frac12
+=
+\text{state 与 effect 的自对偶接缝}.
+}
+\]
+
+若存在离线对：
+
+\[
+\rho=\frac12+\delta+i\gamma,
+\qquad
+1-\overline\rho
+=
+\frac12-\delta+i\gamma,
+\]
+
+则其中一侧属于 \(\ell^2\) normalizable 域，另一侧不属于同一个 \(\ell^2\) 状态空间。
+
+因此：
+
+\[
+\boxed{
+\text{离线镜像对把一个自对偶广义模式拆成
+normal state side 与 dual effect side。}
+}
+\]
+
+当前项目尚未完成对应的 nuclear rigging 和 generalized eigenvector 理论，因此该解释保持为研究方向。
+
+---
+
+## 37.39 有限 Gram 塔与全局 GNS 完成
+
+设测试空间递增：
+
+\[
+\mathcal T_0
+\subseteq
+\mathcal T_1
+\subseteq
+\cdots.
+\]
+
+对有限测试族：
+
+\[
+g_1,\ldots,g_N\in\mathcal T_m,
+\]
+
+定义 Gram 矩阵：
+
+\[
+\boxed{
+\Gamma_{\Omega,m}
+=
+\left[
+\Omega(g_j^\ast g_i)
+\right]_{i,j=1}^N.
+}
+\]
+
+\(\Omega\) 正当且仅当所有有限 Gram 矩阵均 PSD。
+
+但“每个有限阶段 PSD”要推出全局 GNS 完成，还必须控制：
+
+1. 测试塔是否为 form core；
+2. 二次型是否可闭；
+3. 极限是否连续；
+4. 统一 coercivity 是否存在；
+5. null spaces 是否相容；
+6. completion 是否保留作用表示。
+
+### 定义 37.36（有限层最小正性常数）
+
+在有限维测试层 \(\mathcal T_m\) 中定义：
+
+\[
+\boxed{
+\lambda_m
+=
+\inf_{\substack{g\in\mathcal T_m\\ \|g\|_{\mathrm{ref}}=1}}
+\Omega(g^\ast g).
+}
+\]
+
+即使：
+
+\[
+\lambda_m\ge0
+\qquad
+\forall m,
+\]
+
+仍可能有：
+
+\[
+\lambda_m\downarrow0.
+\]
+
+此时有限阶段均无负方向，但正完成在无限极限中退化到锥边界。
+
+所以需要区分：
+
+\[
+\boxed{
+\text{逐层正性}
+}
+\]
+
+与：
+
+\[
+\boxed{
+\text{统一非退化正性}.
+}
+\]
+
+若存在 \(c>0\) 使：
+
+\[
+\lambda_m\ge c
+\qquad
+\forall m,
+\]
+
+则二次型对参考范数具有统一下界，更有希望完成为稳定 Hilbert 几何。
+
+---
+
+## 37.40 三种可能的 RH 失败机制
+
+在本节框架中，假设 RH 为假，不必简单说“正锥不存在”。
+
+至少有三种不同可能。
+
+### 类型 A：显式负平方
+
+存在 \(g\)：
+
+\[
+\Omega_\zeta(g^\ast g)<0.
+\]
+
+这是 Weil 正性直接失败。
+
+### 类型 B：非负但退化的极限
+
+所有有限测试层均 PSD，但：
+
+\[
+\lambda_m\to0,
+\]
+
+并出现不能一致商掉的极限 null direction。
+
+### 类型 C：形式局部正，但 transitions 不物理
+
+每个图表内部存在正状态，但 chart transition：
+
+\[
+p_{ji}
+\]
+
+不保持矩阵正序、条件化或 form domain，所以没有 global physical section。
+
+因此：
+
+\[
+\boxed{
+\neg\mathrm{RH}
+}
+\]
+
+在观察者本体中可能表现为：
+
+\[
+\boxed{
+\text{负性}
+\quad\text{或}\quad
+\text{退化}
+\quad\text{或}\quad
+\text{拼接失败}.
+}
+\]
+
+标准 Weil 判据若完整适用，最终必须给出类型 A 的测试见证；但在构造候选有限模型时，B 和 C 是最常见的伪闭合来源。
+
+---
+
+## 37.41 一条新的条件证明路线：prime record–coherence rigidity
+
+本节的记录互补和离线二地址模型组合出一个条件路线。
+
+### 假设 1：算术侧别 record
+
+从 prime ledger 无条件构造一个 CP instrument：
+
+\[
+\mathcal R_\pm
+\]
+
+其经典结果记录离线扇区：
+
+\[
+\varepsilon\in\{\mathrm R,\mathrm L\}.
+\]
+
+### 假设 2：记录忠实
+
+对任何非零离线深度：
+
+\[
+\beta_\rho\neq0,
+\]
+
+该 instrument 完美区分左右侧别。
+
+### 假设 3：显式公式自然性
+
+Weil 轨道读出：
+
+\[
+Q_\rho(g)
+\]
+
+在 record dilation 和 partial trace 下保持自然。
+
+### 假设 4：非零交叉需求
+
+离线轨道存在要求某个允许测试 \(g\) 满足：
+
+\[
+\langle v_g,J_\rho v_g\rangle\neq0.
+\]
+
+那么：
+
+\[
+\boxed{
+\text{完美侧别 record}
+\Longrightarrow
+\text{unread }J_\rho\text{-读出为零},
+}
+\]
+
+与假设 4 冲突。
+
+故：
+
+\[
+\beta_\rho=0.
+\]
+
+### 条件定理 37.37（prime record–coherence rigidity）
+
+若上述四个假设可从 zeta 的无条件算术结构建立，则所有非平凡零点位于临界线。
+
+该路线的真正缺口是：
+
+\[
+\boxed{
+\text{构造一个不以零点位置为输入的 prime-side CP 记录仪器。}
+}
+\]
+
+---
+
+## 37.42 第二条条件路线：离线评价满秩与全局局域化
+
+### 假设 1：双点评价满秩
+
+对每个离线 \(\gamma\neq\overline\gamma\)，评价映射：
+
+\[
+E_\rho(g)
+=
+\left(
+\widehat g(\gamma),
+\widehat g(\overline\gamma)
+\right)
+\]
+
+的像为 \(\mathbb C^2\)。
+
+### 假设 2：谱局域化
+
+存在测试函数序列 \(g_n\)：
+
+- 在目标离线 orbit 上趋于反对称方向；
+- 在其余零点 orbit 上评价趋零；
+- prime/pole/archimedean 总余量趋零。
+
+则目标 orbit 贡献趋于严格负值，完整 Weil 泛函最终为负。
+
+### 条件定理 37.38（评价—局域化排除）
+
+若双点评价满秩与全局谱局域化对每个离线 orbit 成立，则 Weil 正性排除全部离线零点。
+
+这一路线的关键不是正锥抽象，而是：
+
+\[
+\boxed{
+\text{Paley–Wiener 型插值}
++
+\text{无限零点谱压制}
++
+\text{显式公式尾控制}.
+}
+\]
+
+---
+
+## 37.43 第三条条件路线：矩阵序 defect atlas 的无 character 定理
+
+第 36 节的 RH defect atlas 目前只要求坐标 section 相容。
+
+本节建议区分两种 global section。
+
+### 正状态 section
+
+\[
+\omega_i
+\]
+
+在每个图表上为正、归一化、完全正相容。
+
+### 纯 character section
+
+\[
+\chi_i
+\]
+
+还应在对应交换或乘法结构上为极端／乘法评价。
+
+复平面离线零点作为一个离散 point-like object，更接近一个 generalized character，而不是任意混合正状态。
+
+因此可提出：
+
+### 猜想 37.39（off-critical character exclusion）
+
+RH defect atlas 可能允许一个全局正状态 section，但不允许任何满足：
+
+- 非零离线复平面坐标；
+- 镜像 transition；
+- prime factorization；
+- Weil square positivity；
+- matrix-order compatibility；
+
+的 pure character section。
+
+若证明该猜想，则离线零点无法作为一个全局点状观察者存在，即使更一般的非经典正 section 仍可存在。
+
+这与量子 contextuality 的经验相似：
+
+\[
+\boxed{
+\text{全局概率状态可以存在，
+而全局确定性 character 不存在。}
+}
+\]
+
+但本节不声称 RH atlas 已经构造，也不声称该猜想等同于 Kochen–Specker。
+
+---
+
+## 37.44 第四条条件路线：自对偶接缝唯一性
+
+设存在 rigged Hilbert triple：
+
+\[
+\Phi
+\subset
+\mathscr H
+\subset
+\Phi^\prime,
+\]
+
+以及 reflection：
+
+\[
+J:s\mapsto1-\overline s.
+\]
+
+假设：
+
+1. \(\Re s>1/2\) 的 mode 产生 normalizable state；
+2. \(\Re s<1/2\) 的 mirror mode 产生 continuous effect；
+3. 零点 mode 必须同时是 state 和 effect 的同一 generalized eigenobject；
+4. state–effect handshake 的固定对象仅位于：
+
+   \[
+   \Re s=\frac12.
+   \]
+
+则所有零点必须在临界线。
+
+该路线将 RH 改写为：
+
+\[
+\boxed{
+\text{零点 generalized mode 必须位于状态锥与 effect 锥的自对偶接缝。}
+}
+\]
+
+真正缺口是构造该 rigging，并证明零点的谱身份，而不是仅观察 \(\ell^2\) 阈值。
+
+---
+
+## 37.45 与对角化理论的最终连接
+
+本节出现了三种对角。
+
+### 地址对角
+
+\[
+\gamma=\overline\gamma.
+\]
+
+它把两个镜像评价地址合一。
+
+### GNS 对角
+
+\[
+g^\ast g.
+\]
+
+它把一个操作与自身配对，产生范数平方。
+
+### 自描述对角
+
+\[
+E(a,a).
+\]
+
+它把描述者地址和被描述对象地址设为同一项。
+
+三者不是同一个定理，但在逆完成元层共享结构：
+
+\[
+\boxed{
+\text{同址配对}
+\Longrightarrow
+\text{正性、固定点或闭合};
+}
+\]
+
+\[
+\boxed{
+\text{地址分裂}
+\Longrightarrow
+\text{交叉项、余量或逃逸}.
+}
+\]
+
+在 RH 卷积平方中：
+
+\[
+\boxed{
+\text{临界线}
+=
+\text{地址对角}
++
+\text{GNS 对角};
+}
+\]
+
+离线时：
+
+\[
+\boxed{
+\text{地址分裂}
+\Longrightarrow
+\text{GNS 自配对被读取为交叉相干}.
+}
+\]
+
+所以本节给出“闭合缺陷本质上是对角问题”的一个类型正确版本：
+
+\[
+\boxed{
+\text{闭合失败不是抽象地“离开一条线”，
+而是原本应在同一观察地址完成的自配对，
+被迫经过两个不同纤维的 transition 才能返回。}
+}
+\]
+
+---
+
+## 37.46 新的统一作用量
+
+定义四类缺陷作用量。
+
+### 线性余量
+
+\[
+\mathcal A_{\mathrm{lin}}
+=
+\frac12
+\|P_{\mathcal S^\perp}X_\rho\|_2^2.
+\]
+
+### 锥可实现余量
+
+\[
+\mathcal A_{\mathrm{cone}}
+=
+\frac12
+\operatorname{dist}(x,C)^2.
+\]
+
+### 记录作用
+
+\[
+\mathcal A_{\mathrm{rec}}
+=
+-\sum_r\log|G^{(r)}_{ij}|.
+\]
+
+### GNS 负性作用
+
+\[
+\mathcal A_{\mathrm{GNS}}(g)
+=
+\left(
+-\Omega_\zeta(g^\ast g)
+\right)_+.
+\]
+
+可以组成观察者总缺陷：
+
+\[
+\boxed{
+\mathcal A_O
+=
+w_1\mathcal A_{\mathrm{lin}}
++
+w_2\mathcal A_{\mathrm{cone}}
++
+w_3\mathcal A_{\mathrm{rec}}
++
+w_4\mathcal A_{\mathrm{GNS}}
++
+w_5\|\partial_O^{\mathrm{dyn}}\|^2
++
+w_6\|\partial_O^{\mathrm{diag}}\|^2.
+}
+\]
+
+这里权重必须由具体问题定义，不能任意宣称自然唯一。
+
+该式的意义是：
+
+\[
+\boxed{
+\text{观察者闭合不是单一距离，
+而是线性捕获、物理可实现、记录可逆、
+GNS 正性和自然性缺陷的多目标最小作用问题。}
+}
+\]
+
+---
+
+## 37.47 与经济观察者的结构同构
+
+第 34 节中：
+
+\[
+\text{marketed payoff subspace}
+\]
+
+决定可复制收益，
+
+正价格泛函决定无套利，
+
+流动性路径决定账面价值能否兑现，
+
+支付网络决定 aggregate 数据能否实现结算。
+
+本节中：
+
+\[
+\text{operator system}
+\]
+
+决定可提问题，
+
+正状态决定 Born 价格，
+
+instrument 和 record 决定概率能否成为分支，
+
+矩阵正性决定局部坐标能否由全局状态实现。
+
+对应表为：
+
+\[
+\boxed{
+\begin{array}{c|c}
+\text{经济观察者} & \text{量子矩阵序观察者}\\
+\hline
+\text{可复制收益空间} & \text{可访问 operator system}\\
+\text{状态价格泛函} & \text{正状态}\\
+\text{不可套保余量} & \text{观察余空间／相干余量}\\
+\text{影子价格} & \text{对偶见证}\\
+\text{流动性路径} & \text{instrument／record dilation}\\
+\text{支付网络} & \text{环境关联与上下文 atlas}\\
+\text{最小市场完成} & \text{最小预测／GNS 完成}
+\end{array}
+}
+\]
+
+所以：
+
+\[
+\boxed{
+\text{正性在两个领域中都不是“数值非负”而已；
+它决定一个局部报价或局部概率是否能下降为全局可实现结构。}
+}
+\]
+
+---
+
+## 37.48 Lean 形式化建议顺序
+
+本节新增纸面定理可以按以下顺序形式化。
+
+### 第一阶段：有限矩阵正锥面
+
+建议文件：
+
+```text
+D5/S3/Observer/PositiveFaces/ZeroWeightSupport.lean
+```
+
+形式化：
+
+\[
+\operatorname{Tr}(\rho P)=0
+\Longrightarrow
+P\rho=\rho P=0.
+\]
+
+以及：
+
+\[
+\operatorname{Tr}(\rho P)=1
+\Longrightarrow
+\rho=P\rho P.
+\]
+
+### 第二阶段：记录 fixed algebra
+
+建议文件：
+
+```text
+D5/S3/Observer/EnvironmentRecords/FixedAlgebraCenter.lean
+```
+
+形式化 normalized record vectors 的等价类和：
+
+\[
+\operatorname{Fix}(\Phi_G)
+\cong
+\bigoplus_\alpha M_{d_\alpha}(\mathbb C).
+\]
+
+### 第三阶段：二地址 record–coherence complementarity
+
+建议文件：
+
+```text
+D5/S3/ObserverMemory/RecordCoherenceComplementarity.lean
+```
+
+形式化：
+
+\[
+\mathcal D^2+|c|^2=1
+\]
+
+以及 perfect record 消除交换 observable 期望。
+
+### 第四阶段：锥残差见证
+
+建议文件：
+
+```text
+D5/S3/Resource/ConeResidualWitness.lean
+```
+
+形式化 Moreau 分解和：
+
+\[
+\langle-r,x\rangle=-\|r\|^2.
+\]
+
+### 第五阶段：operator-system 预测闭包
+
+建议文件：
+
+```text
+D5/S3/Observer/Tomography/OperatorSystemClosure.lean
+```
+
+先在有限维矩阵空间用自伴、单位和线性闭包的显式载体实现，不必立即引入完整抽象 operator-system 库。
+
+### 第六阶段：离线交换签名
+
+建议文件：
+
+```text
+D5/S3/Weil/ZetaBridge/OffLineSwapSignature.lean
+```
+
+形式化：
+
+\[
+4m\operatorname{Re}(A\overline B)
+=
+2m
+\left(
+\left|\frac{A+B}{\sqrt2}\right|^2
+-
+\left|\frac{A-B}{\sqrt2}\right|^2
+\right).
+\]
+
+### 第七阶段：评价像维数判据
+
+建议文件：
+
+```text
+D5/S3/Weil/ZetaBridge/OffLineEvaluationRank.lean
+```
+
+形式化二维像包含负交换方向。
+
+### 第八阶段：有限 Gram 正性塔
+
+建议文件：
+
+```text
+D5/S3/Weil/GNS/FiniteGramPositivity.lean
+```
+
+形式化正泛函的 Gram PSD 与零范数传播。
+
+### 第九阶段：全局 localization seam
+
+该阶段需要新的解析输入，不能仅靠有限线性代数完成。应明确记录：
+
+- complex interpolation；
+- compact support；
+- exponential type；
+- infinite zero control；
+- prime/archimedean tails；
+- form-core closure。
+
+---
+
+## 37.49 可证伪的实验与计算任务
+
+尽管最终目标是解析定理，本节产生若干可计算问题。
+
+### 任务 A：离线双点评价条件数
+
+给定假想：
+
+\[
+\gamma=t-i\delta,
+\]
+
+对有限测试基 \(g_1,\ldots,g_N\)，计算矩阵：
+
+\[
+M_\gamma
+=
+\begin{pmatrix}
+\widehat g_1(\gamma)&\cdots&\widehat g_N(\gamma)\\
+\widehat g_1(\overline\gamma)&\cdots&\widehat g_N(\overline\gamma)
+\end{pmatrix}.
+\]
+
+研究：
+
+\[
+\sigma_{\min}(M_\gamma).
+\]
+
+若：
+
+\[
+\sigma_{\min}>0,
+\]
+
+有限测试族已经能生成两个独立评价方向。
+
+### 任务 B：目标负方向与其他 orbit 泄漏
+
+解约束优化：
+
+\[
+\min_c
+\quad
+Q_\rho\left(\sum_jc_jg_j\right)
++
+\lambda
+\sum_{\rho'\neq\rho}
+\left|
+E_{\rho'}
+\left(\sum_jc_jg_j\right)
+\right|^2.
+\]
+
+它测量局部负方向能否在有限测试空间中与全局泄漏分离。
+
+### 任务 C：记录互补模拟
+
+构造二地址 record overlap \(c\)，绘制：
+
+\[
+\mathcal D=\sqrt{1-|c|^2},
+\qquad
+\mathcal V=|c|.
+\]
+
+并验证 unread \(J\)-期望按 \(c\) 衰减。
+
+### 任务 D：有限 Gram 最小特征值
+
+对递增测试空间计算：
+
+\[
+\lambda_{\min}(\Gamma_{\Omega,m}).
+\]
+
+区分：
+
+- 稳定正下界；
+- 逼近零的退化；
+- 出现负特征值。
+
+这些数值任务不能证明 RH，但可以检验本节提出的闭合机制是否具有合理尺度。
+
+---
+
+## 37.50 本节的最终统一
+
+项目中的正锥、量子力学与观察者不应再分别理解为：
+
+\[
+\text{正性条件},
+\qquad
+\text{概率理论},
+\qquad
+\text{观看主体}.
+\]
+
+更准确的统一是：
+
+\[
+\boxed{
+\text{正锥}
+=
+\text{形式坐标成为可实现状态／问题的门};
+}
+\]
+
+\[
+\boxed{
+\text{量子力学}
+=
+\text{矩阵正锥塔、非交换上下文、
+条件化 instrument 与全局关联余量的网络};
+}
+\]
+
+\[
+\boxed{
+\text{观察者}
+=
+\text{选择 operator system，
+通过 instrument 写入记录中心，
+沿动力学生成预测闭包，
+并用 GNS 自配对审计自身可实现性的结构}.
+}
+\]
+
+RH 在该框架中的最强表述不是：
+
+\[
+\text{所有零点碰巧位于 }\Re s=\frac12.
+\]
+
+而是：
+
+\[
+\boxed{
+\text{zeta 观察者的每个平方测试，
+在反射以后仍然保持为同一评价纤维中的对角自配对，
+从而允许全局正 GNS 完成。}
+}
+\]
+
+离线零点则表示：
+
+\[
+\boxed{
+\text{一个本应产生范数平方的自观察，
+被拆成两个镜像纤维之间的符号不定相干。}
+}
+\]
+
+因此：
+
+\[
+\boxed{
+\text{临界线}
+=
+\text{评价地址对角}
++
+\text{状态—effect 自对偶接缝}
++
+\text{GNS 正完成}.
+}
+\]
+
+而：
+
+\[
+\boxed{
+\text{RH 证明的可能核心}
+=
+\text{证明 prime-side 记录、矩阵序转换和 Weil 平方测试
+不允许一个非零的离线交叉相干 observer section}.
+}
+\]
+
+---
+
+## 37.51 严格非主张
+
+1. 本节不声称任何物理意识实体参与 zeta 零点的形成。
+2. 本节不声称 zeta 零点是物理 qubit。
+3. 本节不声称任意正锥都能推出临界线。
+4. 本节不声称标量正性足以替代完全正性。
+5. 本节不声称 operator system 预测闭包已经在 Lean 中实现。
+6. 本节不声称环境记录 fixed algebra 的一般有限维直和分解已经形式化。
+7. 本节不声称 record–coherence 互补已经从 prime ledger 构造。
+8. 本节不声称复平面左右侧别是可公开复制的经典变量。
+9. 本节不把离线二地址模型解释为真实量子测量实验。
+10. 本节不把 block-positive 纠缠见证与 Weil 负方向视为同一个具体锥。
+11. 本节不声称单个离线轨道的局部负方向自动压过全部其他显式公式项。
+12. 本节不声称双点评价映射已经被证明满射。
+13. 本节不声称存在同时压制无限其他零点的测试函数列。
+14. 本节不声称 prime/pole/archimedean 余项已经在该局域化中受控。
+15. 本节不声称第 36 节 RH defect atlas 已经升级为实际矩阵有序 pro-object。
+16. 本节不声称任意 compatible positive section 都来自真实 zeta 本体。
+17. 本节不声称存在 off-critical character exclusion 定理。
+18. 本节不声称 prime-axis \(\ell^2\) 阈值已经给出完整 rigged Hilbert triple。
+19. 本节不声称逐层 Gram PSD 自动推出全局 GNS 正完成。
+20. 本节不声称有限测试层已经形成 Weil 二次型的 form core。
+21. 本节不从函数方程的 Hermitian 性直接推出 RH。
+22. 本节不以“对角缺陷”这一元解释替代具体解析估计。
+23. 本节新增定理均为纸面推导；未经 Lean kernel 验证不得标记为 `Closed`。
+24. 本节没有证明 Riemann 假设。

@@ -1,0 +1,22 @@
+### 定理 37.26（operator-system 一次稳定即永久稳定）
+
+若有限维中：
+
+\[
+\mathcal S_{O,m}
+=
+\mathcal S_{O,m+1},
+\]
+
+则：
+
+\[
+\boxed{
+\mathcal S_{O,m+r}
+=
+\mathcal S_{O,m}
+\qquad
+\forall r\ge0.
+}
+\]
+

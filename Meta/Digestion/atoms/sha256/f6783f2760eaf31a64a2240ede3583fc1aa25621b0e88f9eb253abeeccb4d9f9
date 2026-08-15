@@ -1,0 +1,19 @@
+### 定理 37.29（二维像必有负方向）
+
+若：
+
+\[
+\dim_{\mathbb C}
+\operatorname{im}E_\rho
+=
+2,
+\]
+
+则存在 \(g\in\mathcal T\) 使：
+
+\[
+\boxed{
+Q_\rho(g)<0.
+}
+\]
+
