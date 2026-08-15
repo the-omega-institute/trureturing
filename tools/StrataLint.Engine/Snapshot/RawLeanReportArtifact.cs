@@ -15,26 +15,10 @@ internal static class RawLeanReportArtifact
     internal static LeanAxiomReport ReadFile(string path, RepositorySnapshot snapshot)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(path);
-        return Read(File.ReadAllBytes(path), snapshot, requireComplete: true);
+        return Read(File.ReadAllBytes(path), snapshot);
     }
 
     internal static LeanAxiomReport Read(ReadOnlySpan<byte> bytes, RepositorySnapshot snapshot)
-        => Read(bytes, snapshot, requireComplete: true);
-
-    internal static LeanAxiomReport ReadPartialFile(
-        string path,
-        RepositorySnapshot snapshot,
-        IReadOnlySet<string>? selectedPaths = null)
-    {
-        ArgumentException.ThrowIfNullOrWhiteSpace(path);
-        return Read(File.ReadAllBytes(path), snapshot, requireComplete: false, selectedPaths);
-    }
-
-    private static LeanAxiomReport Read(
-        ReadOnlySpan<byte> bytes,
-        RepositorySnapshot snapshot,
-        bool requireComplete,
-        IReadOnlySet<string>? selectedPaths = null)
     {
         ArgumentNullException.ThrowIfNull(snapshot);
         var text = StrictUtf8.GetString(bytes);
@@ -78,7 +62,6 @@ internal static class RawLeanReportArtifact
             RequireStrictOrder(previousModule, module, "modules");
             previousModule = module;
             var sourcePath = RequiredString(moduleElement, "source_path");
-            if (selectedPaths is not null && !selectedPaths.Contains(sourcePath)) continue;
             if (!expected.TryGetValue(module, out var source))
             {
                 throw new FormatException($"Raw Lean report contains unknown module {module}.");
@@ -109,7 +92,7 @@ internal static class RawLeanReportArtifact
             .Where(path => !reports.ContainsKey(path))
             .Order(StringComparer.Ordinal)
             .ToArray();
-        if (requireComplete && missing.Length > 0)
+        if (missing.Length > 0)
         {
             throw new FormatException(
                 "Raw Lean report is missing modules: " + string.Join(", ", missing));
