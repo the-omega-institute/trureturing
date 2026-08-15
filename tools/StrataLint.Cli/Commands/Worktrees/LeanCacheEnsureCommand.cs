@@ -9,10 +9,18 @@ internal static class LeanCacheEnsureCommand
     internal static CommandResult Run(
         string repositoryRoot,
         IReadOnlyList<string> arguments,
-        IWorktreeProcessRunner runner)
+        IWorktreeProcessRunner runner) =>
+        Run(repositoryRoot, arguments, runner, new ApfsDirectoryCloner());
+
+    internal static CommandResult Run(
+        string repositoryRoot,
+        IReadOnlyList<string> arguments,
+        IWorktreeProcessRunner runner,
+        IDirectoryCloner cloner)
     {
         ArgumentNullException.ThrowIfNull(arguments);
         ArgumentNullException.ThrowIfNull(runner);
+        ArgumentNullException.ThrowIfNull(cloner);
         if (!TryParseWorktreeRoot(repositoryRoot, arguments, out var root))
         {
             return new CommandResult(false, string.Empty, Usage + "\n");
@@ -41,7 +49,7 @@ internal static class LeanCacheEnsureCommand
             var selection = GitWorktreeInventory.SelectDonor(root, pins, runner);
             try
             {
-                var provisioned = LeanCacheProvisioner.Provision(selection, root, runner);
+                var provisioned = LeanCacheProvisioner.Provision(selection, root, runner, cloner);
                 var reason = JoinReasons(selection.Notice, provisioned.Warning);
                 return SuccessReceipt(
                     provisioned.Strategy == "cloned" ? "seeded" : "fetched",

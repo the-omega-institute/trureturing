@@ -35,7 +35,9 @@ public sealed partial class MakeWorkflowTests
 
         var result = RunPreflightScenario("stale-values");
 
-        Assert.NotEqual(0, result.ExitCode);
+        // The stale-values shim exits 44 from `emit-values --check`; scribe-content-checks.sh
+        // runs under `set -e`, so preflight must surface exactly that code.
+        Assert.Equal(44, result.ExitCode);
     }
 
     /// <summary>
