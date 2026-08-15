@@ -92,25 +92,29 @@ public sealed partial class DigestionAlignmentTests
     }
 
     [Fact]
-    public void IngestFallsBackWhenZeroClaimAtomizerOutputExactlyReassemblesTheSource()
+    public void IngestRefusesZeroClaimCoarseFallbackWhenBaselineHasFineReceipt()
     {
         var (ledger, oldCapture) = ExistingCasBackedLedger();
         var sourceBytes = ImmutableArray.Create((byte)'a');
-        var unrecognized = new AtomizedTheoryDocument(
-            [],
-            [new DigestionSlice(false, sourceBytes)],
-            GenreRegistryCheck.NoGenreRegistry);
+        var snapshot = Snapshot(sourceBytes.ToArray(), [oldCapture]);
 
         var result = DigestionLedgerAligner.Evaluate(
             ledger,
-            Snapshot(sourceBytes.ToArray(), [oldCapture]),
+            snapshot,
             ledger,
-            DigestionAlignmentMode.Ingest,
-            _ => (_, _) => unrecognized);
+            DigestionAlignmentMode.Ingest);
 
-        Assert.Empty(result.Findings);
-        Assert.Single(result.Fallbacks);
-        Assert.Equal(sourceBytes.ToArray(), Assert.Single(result.Residual).Atom.RawBytes.ToArray());
+        var finding = Assert.Single(result.Findings);
+        Assert.Contains("source source", finding, StringComparison.Ordinal);
+        Assert.Contains("atomizer recognition is incomplete or empty", finding, StringComparison.Ordinal);
+        Assert.Empty(result.Fallbacks);
+        Assert.Empty(result.Residual);
+
+        var exception = Assert.Throws<FormatException>(() => DigestionIngestor.Plan(
+            ledger,
+            snapshot,
+            ledger));
+        Assert.Contains(finding, exception.Message, StringComparison.Ordinal);
     }
 
     [Fact]
@@ -129,6 +133,7 @@ public sealed partial class DigestionAlignmentTests
         var ledger = BackfillInventoryLoader.Load(Ledger(
             [],
             CasEntry("existing-receipt", existing, captured.Reference)));
+        var baseline = BackfillInventoryLoader.Load(Ledger([]));
         var unrecognized = new AtomizedTheoryDocument(
             [],
             [new DigestionSlice(false, sourceBytes)],
@@ -137,7 +142,7 @@ public sealed partial class DigestionAlignmentTests
         var result = DigestionLedgerAligner.Evaluate(
             ledger,
             Snapshot(sourceBytes.ToArray(), [captured]),
-            ledger,
+            baseline,
             DigestionAlignmentMode.Ingest,
             _ => (_, _) => unrecognized);
 
