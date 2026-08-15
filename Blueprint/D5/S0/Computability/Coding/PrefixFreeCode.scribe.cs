@@ -17,7 +17,7 @@ internal sealed class PrefixFreeCodeDocument : IScribeDocumentDefinition
             Describe.Lean(
                 DescribeId.Create("prefix-free-nil-degeneracy"),
                 DeclarationHandle.Create(
-                    "D5/S0/Computability/Coding/PrefixFreeCode.IsPrefixFree.eq_singleton_nil"),
+                    "D5/S0/Computability/Coding/PrefixFreeCode.isPrefixFree_eq_singleton_nil"),
                 H("The empty word makes a prefix-free code degenerate"),
                 StatementSource.FromAuthor(Disp(Seq(
                     Operatorname, Grp(F.Id("IsPrefixFree")), Open, F.Id("S"), Close,
@@ -33,7 +33,7 @@ internal sealed class PrefixFreeCodeDocument : IScribeDocumentDefinition
             Describe.Lean(
                 DescribeId.Create("prefix-free-first-codeword"),
                 DeclarationHandle.Create(
-                    "D5/S0/Computability/Coding/PrefixFreeCode.IsPrefixFree.first_codeword"),
+                    "D5/S0/Computability/Coding/PrefixFreeCode.isPrefixFree_first_codeword"),
                 H("A prefix-free concatenation determines its first codeword"),
                 StatementSource.FromAuthor(Disp(Seq(
                     F.Id("u"), Sp, InMacro, Sp, F.Id("S"), Comma, Sp,
@@ -69,7 +69,7 @@ internal sealed class PrefixFreeCodeDocument : IScribeDocumentDefinition
             Describe.Lean(
                 DescribeId.Create("reverse-image-prefix-free"),
                 DeclarationHandle.Create(
-                    "D5/S0/Computability/Coding/PrefixFreeCode.IsSuffixFree.isPrefixFree_reverse_image"),
+                    "D5/S0/Computability/Coding/PrefixFreeCode.isSuffixFree_isPrefixFree_reverse_image"),
                 H("Reversal sends suffix-free codes to prefix-free codes"),
                 StatementSource.FromAuthor(Disp(Seq(
                     Operatorname, Grp(F.Id("IsSuffixFree")), Open, F.Id("S"), Close,

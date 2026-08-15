@@ -53,14 +53,14 @@ def IsSuffixFree (S : Set (List α)) : Prop :=
 
 /-- A prefix-free code containing the empty word is the singleton `{[]}`; this is why
 excluding the empty word is the right side condition rather than an extra restriction. -/
-theorem IsPrefixFree.eq_singleton_nil {S : Set (List α)} (hpf : IsPrefixFree S)
+theorem isPrefixFree_eq_singleton_nil {S : Set (List α)} (hpf : IsPrefixFree S)
     (hnil : [] ∈ S) : S = {[]} := by
   ext v
   exact ⟨fun hv => (hpf hnil hv List.nil_prefix).symm, fun hv => hv ▸ hnil⟩
 
 /-- The greedy decoding step: in a prefix-free code the first codeword of a concatenation is
 determined, together with the remaining tail. -/
-theorem IsPrefixFree.first_codeword {S : Set (List α)} (hpf : IsPrefixFree S)
+theorem isPrefixFree_first_codeword {S : Set (List α)} (hpf : IsPrefixFree S)
     {u v x y : List α} (hu : u ∈ S) (hv : v ∈ S) (h : u ++ x = v ++ y) :
     u = v ∧ x = y := by
   have hup : u <+: v ++ y := h ▸ List.prefix_append u x
@@ -95,12 +95,12 @@ theorem uniquelyDecodable_of_isPrefixFree {S : Set (List α)}
     | cons v s =>
       simp only [List.flatten_cons] at hflat
       obtain ⟨hwv, hrest⟩ :=
-        hpf.first_codeword (h₁ w (by simp)) (h₂ v (by simp)) hflat
+        isPrefixFree_first_codeword hpf (h₁ w (by simp)) (h₂ v (by simp)) hflat
       subst hwv
       rw [ih s (fun x hx => h₁ x (by simp [hx])) (fun x hx => h₂ x (by simp [hx])) hrest]
 
 /-- Reversal turns a suffix-free code into a prefix-free one. -/
-theorem IsSuffixFree.isPrefixFree_reverse_image {S : Set (List α)}
+theorem isSuffixFree_isPrefixFree_reverse_image {S : Set (List α)}
     (hsf : IsSuffixFree S) : IsPrefixFree (List.reverse '' S) := by
   rintro _ ⟨u, hu, rfl⟩ _ ⟨v, hv, rfl⟩ h
   exact congrArg List.reverse (hsf hu hv (List.reverse_prefix.mp h))
@@ -111,7 +111,7 @@ theorem uniquelyDecodable_of_isSuffixFree {S : Set (List α)}
   have hnil' : [] ∉ List.reverse '' S := by
     rintro ⟨u, hu, h⟩
     exact hnil (List.reverse_eq_nil_iff.mp h ▸ hu)
-  have hUD := uniquelyDecodable_of_isPrefixFree hsf.isPrefixFree_reverse_image hnil'
+  have hUD := uniquelyDecodable_of_isPrefixFree (isSuffixFree_isPrefixFree_reverse_image hsf) hnil'
   have hmem : ∀ L : List (List α), (∀ w ∈ L, w ∈ S) →
       ∀ w ∈ (L.map List.reverse).reverse, w ∈ List.reverse '' S := by
     intro L hL w hw
@@ -150,10 +150,10 @@ theorem exists_uniquelyDecodable_not_isPrefixFree :
     have hsub : ([0] : List (Fin 2)) <+: ([0, 1] : List (Fin 2)) := by decide
     exact absurd (hpf h0 h1 hsub) (by decide)
 
-#print axioms IsPrefixFree.eq_singleton_nil
-#print axioms IsPrefixFree.first_codeword
+#print axioms isPrefixFree_eq_singleton_nil
+#print axioms isPrefixFree_first_codeword
 #print axioms uniquelyDecodable_of_isPrefixFree
-#print axioms IsSuffixFree.isPrefixFree_reverse_image
+#print axioms isSuffixFree_isPrefixFree_reverse_image
 #print axioms uniquelyDecodable_of_isSuffixFree
 #print axioms kraft_inequality_of_isPrefixFree
 #print axioms exists_uniquelyDecodable_not_isPrefixFree
