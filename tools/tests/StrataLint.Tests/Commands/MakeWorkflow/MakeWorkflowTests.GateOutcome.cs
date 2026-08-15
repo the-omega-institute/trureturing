@@ -469,6 +469,7 @@ public sealed partial class MakeWorkflowTests
               "rev-parse --verify {{forkSha}}^{commit}") printf '%s\n' '{{forkSha}}' ;;
               "rev-parse --verify HEAD^{commit}"|"rev-parse --verify HEAD") printf '%s\n' '{{candidateSha}}' ;;
               "merge-base {{baseTipSha}} {{candidateSha}}") printf '%s\n' '{{forkSha}}' ;;
+              "merge-base {{forkSha}} {{candidateSha}}") printf '%s\n' '{{forkSha}}' ;;
               "merge-base --is-ancestor {{baseTipSha}} {{candidateSha}}") exit {{(diverged ? 1 : 0)}} ;;
               "merge-base --is-ancestor {{forkSha}} {{candidateSha}}") exit 0 ;;
               merge\ *) printf 'mutated\n' > "$PREFLIGHT_GIT_STATE" ;;
