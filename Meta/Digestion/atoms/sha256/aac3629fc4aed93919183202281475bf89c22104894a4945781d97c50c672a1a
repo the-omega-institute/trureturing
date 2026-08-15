@@ -1,0 +1,36 @@
+### 定理 32.21（观察者闭包是最小不变闭包）
+
+\(\operatorname{Cl}_K\) 满足：
+
+\[
+\boxed{
+W\subseteq\operatorname{Cl}_K(W)
+}
+\]
+
+（扩张性），
+
+\[
+\boxed{
+W_1\subseteq W_2
+\Longrightarrow
+\operatorname{Cl}_K(W_1)
+\subseteq
+\operatorname{Cl}_K(W_2)
+}
+\]
+
+（单调性），
+
+\[
+\boxed{
+\operatorname{Cl}_K(
+\operatorname{Cl}_K(W)
+)
+=
+\operatorname{Cl}_K(W)
+}
+\]
+
+（幂等性），并且它是包含 \(W\) 的最小 \(K\)-不变子空间。
+
