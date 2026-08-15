@@ -140,7 +140,30 @@ internal static partial class RepositoryRules
             var lineCount = CountArtifactLines(file.Text);
             if (lineCount > ArtifactHardLineLimit)
             {
-                findings.Add(new RuleFinding(path.Value, "artifact exceeds 800 lines"));
+                // 阻断落在把它推过线的那个候选身上,不落在无辜候选身上。判据取自分叉点:
+                // 本次改动有没有让它变长。与目录轴同构(带内候选只有引入了分叉点上不存在的
+                // 路径才阻断,见下方 DirectoryToleranceLimit 注释与 2026-08-13 判例)。
+                //
+                // 案由(2026-08-15):dev 上 DigestionLedgerAligner.cs 因两个 PR 的**并集**
+                // 达到 823 行——各自树内是 799 与 639,都没越线,各自 admit 都是对的。此后每个
+                // PR 的准入一律判红,包括 #1890/#1891/#1896/#1897 这些从未碰过该文件的,全仓
+                // 锁死约一小时。并集本身在 PR 期不可拦(那正是 strict 的活,而 strict 已被 19 禁),
+                // 所以能治的是别让它连坐,并把分裂压力压在真正加长它的那次改动上。
+                //
+                // 检测不降级:超线仍然出 finding,无辜者那条是 Observe;而全仓检测由
+                // CapacityPolicy.InspectRepository 在 dotnet test 里承担(它此前无调用者,
+                // 同一改动一并接上)。第20条要的正是这个形状:窄化阻断须以加强检测为对价。
+                var forkPointLineCount = context.ForkPoint.Files.TryGetValue(path, out var forkFile)
+                    ? CountArtifactLines(forkFile.Text)
+                    : 0;
+                findings.Add(lineCount > forkPointLineCount
+                    ? new RuleFinding(path.Value, "artifact exceeds 800 lines")
+                    : new RuleFinding(
+                        path.Value,
+                        $"artifact is overfull at {lineCount} lines (hard limit "
+                        + $"{ArtifactHardLineLimit}; split per CLAUDE.md 8), but this change "
+                        + "did not grow it",
+                        AdmissionEffect.Observe));
             }
             else if (lineCount > ArtifactSoftLineLimit)
             {

@@ -1,0 +1,27 @@
+### 定理 34.3（价格下降—同一收益同一价格等价）
+
+下列命题等价：
+
+1. 对所有 \(z,z'\)：
+   \[
+   Az=Az'
+   \Longrightarrow
+   c\cdot z=c\cdot z';
+   \]
+2. 
+   \[
+   \ker A\subseteq\ker c^\top;
+   \]
+3. 存在唯一线性泛函
+   \[
+   \ell:\operatorname{im}A\to\mathbb R
+   \]
+   满足
+   \[
+   \boxed{
+   c\cdot z=\ell(Az)
+   \qquad
+   \forall z\in\mathbb R^m.
+   }
+   \]
+

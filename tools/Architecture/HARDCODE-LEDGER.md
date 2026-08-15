@@ -426,7 +426,7 @@ Each row is a future migration obligation, not authorization to prebuild the mec
 | `StrataLint.Engine/Rules/RepositoryRules.Applicability.cs:14,36-40`, `Rules/RepositoryRules.Helpers.cs:15,50-57`, and `Admission/LeanModels.cs:113-115` | Managed formal files and domain-scoped artifacts are recognized only under the D5 root. |
 | `StrataLint.Engine/Rules/RepositoryRules.Structure.cs:11,18,108-109,181,216-223` | Hearts, managed imports, mirror prefixes, and domain validation are fixed to D5 rather than the artifact's theory. |
 | `StrataLint.Engine/Rules/RepositoryRules.Content.cs:154` | Generic evidence-GID diagnostics identify the E plane with a `D5/E/` prefix. The D5 values checks at lines 230-238 remain category 2. |
-| `StrataLint.Engine/Rules/RepositoryRules.cs:30,39,43`, `Coordinates/DomainTypes.cs:135`, and `Rules/Backfill/BackfillInventoryRule.cs:11,15,283` | Task, query, case, and frontier discovery implement D5-shaped identifiers instead of the `THEORY-T/Q` grammar. |
+| `StrataLint.Engine/Rules/RepositoryRules.cs:30,39,43`, `Coordinates/DomainTypes.cs:128`, and `Rules/Backfill/BackfillInventoryRule.cs:11,15,283` | Task, query, case, and frontier discovery implement D5-shaped identifiers instead of the `THEORY-T/Q` grammar. |
 | `StrataLint.Engine/Coverage/CoverageAnalyzer.cs:83`, `Dag/TruthDagConstruction.cs:177-178`, and `Snapshot/CanonicalSnapshot.cs:96` | Artifact classification, managed-module recognition, and structured evidence canonicalization enumerate D5 as the only admitted theory. |
 | `StrataLint.Engine/Ledger/FrozenContentAddress.cs:12,16,175,182` | Frozen task/assumption references and Lean import discovery recognize only D5 case and assumption namespaces. |
 | `StrataLint.Cli/Admission/ProductionCliEnvironment.cs:247-251` | The production self-test proves only a D5 route. It must probe the admitted theory set once that set has more than one member. |
@@ -611,8 +611,8 @@ The first full preflight after that renewal passed all three .NET test assemblie
 Lean reports, emission checks, base admission, and candidate build. It then failed only at
 `verify-conservative`: one corpus worker exceeded the unchanged 180-second process budget;
 the conservative stage took 263s and the full preflight 548s. Contemporaneous process
-evidence showed macOS `mds_stores` using about 97-147% CPU and an unrelated github-devloop
-fkst testhost using about 92-94% CPU, with no second conservative worker. No rule or timeout
+evidence showed macOS `mds_stores` using about 97-147% CPU and an unrelated competing `dotnet`
+testhost using about 92-94% CPU, with no second conservative worker. No rule or timeout
 changed; the identical canonical preflight must be retried after the competing testhost exits.
 
 A later no-contention replay reproduced the same 180-second worker failure and falsified

@@ -1,0 +1,65 @@
+### 定义 35.3（锚定连续统观察者）
+
+一个锚定连续统观察者记为
+
+\[
+\boxed{
+\mathfrak O
+=
+(
+\mathcal X_O,
+\xi_0,
+\mathfrak f_0,
+\Phi,
+\mathcal K_O,
+q_O,
+\widetilde{\mathcal X}_O,
+\mathcal M_O,
+\Delta_O
+).
+}
+\]
+
+其中：
+
+\[
+\begin{aligned}
+\mathcal X_O
+&=\text{观察者的连续统载体},\\
+\xi_0
+&=\text{初始锚点},\\
+\mathfrak f_0
+&=\text{初始坐标、方向与尺度架},\\
+\Phi
+&=\text{连续流、半流或动力作用},\\
+\mathcal K_O
+&=\text{全不连通／profinite 横截地址},\\
+q_O
+&=\text{有限读出、事件分割或可观测接口},\\
+\widetilde{\mathcal X}_O
+&=\text{保存路径提升或历史坐标的扩展状态空间},\\
+\mathcal M_O
+&=\text{事件数、cocycle、holonomy 与追加式记忆},\\
+\Delta_O
+&=\text{自评价、同址读取与对角操作}.
+\end{aligned}
+\]
+
+这一定义的核心不是“观察者占据一个连续统大小的物体”，而是：
+
+\[
+\boxed{
+\text{观察者是连续统被点化、带架、可读出并保存路径以后形成的结构。}
+}
+\]
+
+初始坐标不是额外写在状态旁边的一串标签。它决定：
+
+- 哪一点被叫作“这里”；
+- 哪一方向被叫作“正方向”；
+- 哪一尺度被叫作“单位”；
+- 哪一提升被叫作“从零开始”；
+- 哪些回归状态属于同一当前点但不同历史。
+
+---
+

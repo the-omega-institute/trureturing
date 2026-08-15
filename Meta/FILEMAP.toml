@@ -357,11 +357,11 @@ artifact_id = "none"
 runtime_disposition = "committed-source"
 
 [[files]]
-pattern = "docs/devloop/**"
-kind = "program"
+pattern = "docs/reports/**"
+kind = "data"
 produced_by = "none"
 consumed_by = ["agent"]
-verified_by = ["repository-policy"]
+verified_by = ["SnapshotDecoder"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
 
