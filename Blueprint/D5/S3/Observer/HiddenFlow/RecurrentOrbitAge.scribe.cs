@@ -93,6 +93,8 @@ internal sealed class RecurrentOrbitAgeDocument : IScribeDocumentDefinition
             Apply(age, flowPoint), Sp, Eq, Sp, time, Dot));
     }
 
+    // Takes a Formula, not a string: a single-string factory returning Formula is exactly the raw
+    // construction entry point FormulaTests.FormulaHasNoRawStringConstructionEntryPoint forbids.
     private static Formula OperatornameThen(Formula name) =>
         Seq(Operatorname, Grp(name));
 }
