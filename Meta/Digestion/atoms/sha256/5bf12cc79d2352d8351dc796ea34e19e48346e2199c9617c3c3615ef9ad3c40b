@@ -1,0 +1,30 @@
+### 定义 33.20（定量遗忘余量）
+
+给定世界分布 \(\mu\)，在 \(L^2(X,\mu)\) 中令
+
+\[
+\mathbb E_q
+\]
+
+为到 \(\mathcal K(q)\) 的条件期望／正交投影。定义：
+
+\[
+\boxed{
+\varepsilon_q(f)
+=
+\|f-\mathbb E_qf\|_{L^2(\mu)}.
+}
+\]
+
+则：
+
+\[
+\boxed{
+\varepsilon_q(f)=0
+\iff
+f\in\mathcal K(q).
+}
+\]
+
+所以事件从“已知”到“未知”可以从布尔命题推广为连续余量增长。
+

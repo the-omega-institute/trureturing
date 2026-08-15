@@ -1,0 +1,30 @@
+### 定义 33.12（记录作用／相干债务）
+
+定义扩展非负量：
+
+\[
+\boxed{
+\mathfrak A_N(i,j)
+=
+-\log|\Gamma_N(i,j)|
+\in[0,+\infty],
+}
+\]
+
+并约定 \(\Gamma_N=0\) 时：
+
+\[
+\mathfrak A_N=+\infty.
+\]
+
+若每个重叠非零，则：
+
+\[
+\boxed{
+\mathfrak A_N(i,j)
+=
+\sum_{r=1}^{N}
+\bigl(-\log|g_r(i,j)|\bigr).
+}
+\]
+
