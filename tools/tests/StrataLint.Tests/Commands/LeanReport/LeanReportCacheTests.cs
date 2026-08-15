@@ -7,7 +7,7 @@ namespace StrataLint.Tests;
 
 // Contract for the content-addressed canonical-Lean-report cache ported from CI
 // (.github/workflows/ci.yml, key stratalint-canonical-lean-report-v1-<address>)
-// into the local devloop path. The cache is opt-in via STRATALINT_REPORT_CACHE_ROOT
+// into the local run path. The cache is opt-in via STRATALINT_REPORT_CACHE_ROOT
 // (never set in CI) and MUST be fail-closed: a hit is only served after the stored
 // bundle re-verifies against the current tree; any anomaly evicts and reproduces.
 //

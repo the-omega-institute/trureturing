@@ -1,0 +1,24 @@
+### 命题 35.11（有限前缀局部常值）
+
+若：
+
+\[
+\theta\notin B_N,
+\]
+
+则存在 \(\varepsilon_N(\theta)>0\)，使：
+
+\[
+|\theta'-\theta|_{\mathbb T}<\varepsilon_N(\theta)
+\]
+
+推出：
+
+\[
+\boxed{
+w_n(\theta')=w_n(\theta)
+\qquad
+0\le n<N.
+}
+\]
+
