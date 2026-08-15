@@ -196,6 +196,8 @@ internal static partial class DigestionLedgerAligner
         void AlignSource(DigestionLedgerSource source)
         {
                 baselineSources.TryGetValue(source.SourceId, out var baselineSource);
+                var baselineHasFineEntries = baselineSource?.Entries.Any(static entry =>
+                    entry.AstPath != "coarse/source") == true;
                 foreach (var entry in source.Entries)
                 {
                     alignments[entry.AtomId] = rejectedCoarseClones.Contains(entry.AtomId)
@@ -315,14 +317,27 @@ internal static partial class DigestionLedgerAligner
                 {
                     if (mode == DigestionAlignmentMode.Ingest)
                     {
-                        AddCoarseFallback(
-                            source,
-                            sourceFile.RawBytes,
-                            exception.Message,
-                            cas.ValidAtomIds,
-                            suggestedAtomIds,
-                            residual,
-                            fallbacks);
+                        if (baselineHasFineEntries)
+                        {
+                            // Plan throws on any finding, so one refusal fails repository-wide ingest.
+                            // No verb covers total format retirement: acknowledged_stale is coarse-to-fine,
+                            // while ActualStale covers partial fine regression. This is deliberately fail-closed.
+                            findings.Add(
+                                $"source {source.SourceId} cannot add coarse fallback after baseline "
+                                + $"fine atomization: {exception.Message}");
+                        }
+                        else
+                        {
+                            AddCoarseFallback(
+                                source,
+                                sourceFile.RawBytes,
+                                exception.Message,
+                                cas.ValidAtomIds,
+                                suggestedAtomIds,
+                                residual,
+                                fallbacks);
+                        }
+
                         return;
                     }
 
@@ -354,14 +369,28 @@ internal static partial class DigestionLedgerAligner
                 {
                     if (mode == DigestionAlignmentMode.Ingest)
                     {
-                        AddCoarseFallback(
-                            source,
-                            sourceFile.RawBytes,
-                            "atomizer recognition is incomplete or empty",
-                            cas.ValidAtomIds,
-                            suggestedAtomIds,
-                            residual,
-                            fallbacks);
+                        const string reason = "atomizer recognition is incomplete or empty";
+                        if (baselineHasFineEntries)
+                        {
+                            // Plan throws on any finding, so one refusal fails repository-wide ingest.
+                            // No verb covers total format retirement: acknowledged_stale is coarse-to-fine,
+                            // while ActualStale covers partial fine regression. This is deliberately fail-closed.
+                            findings.Add(
+                                $"source {source.SourceId} cannot add coarse fallback after baseline "
+                                + $"fine atomization: {reason}");
+                        }
+                        else
+                        {
+                            AddCoarseFallback(
+                                source,
+                                sourceFile.RawBytes,
+                                reason,
+                                cas.ValidAtomIds,
+                                suggestedAtomIds,
+                                residual,
+                                fallbacks);
+                        }
+
                         return;
                     }
 
