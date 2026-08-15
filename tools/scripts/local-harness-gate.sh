@@ -2,6 +2,7 @@
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd -P)"
+source "$ROOT/tools/scripts/admission-base-lib.sh"
 source "$ROOT/tools/scripts/perf-event-lib.sh"
 CANDIDATE_ROOT="$ROOT"
 BASE_REF="origin/dev"
@@ -32,6 +33,7 @@ while [[ $# -gt 0 ]]; do
       ;;
   esac
 done
+OBSERVED_BASE_REF="$BASE_REF"
 
 [[ -d "$CANDIDATE_ROOT" ]] \
   || { echo "local-harness-gate: candidate '$CANDIDATE_ROOT' is absent" >&2; exit 2; }
@@ -46,6 +48,7 @@ PERF_TMP="$(perf_make_spool_dir "$CANDIDATE_ROOT" stratalint-local-gate-perf 2>/
 PERF_EVENT_SPOOL=""
 BASE_TIP_SHA=""
 BASE_SHA=""
+CANDIDATE_SHA=""
 : > "$LOCAL_TIMING_FILE"
 if [[ -n "$PERF_TMP" ]]; then
   PERF_EVENT_SPOOL="$PERF_TMP/events.jsonl"
@@ -135,40 +138,7 @@ trap 'exit 130' INT
 trap 'exit 143' TERM
 
 prepare_base() {
-  local candidate_sha=""
-  local resolution_rc=0
-  local resolution_reason=""
-  candidate_sha="$(git -C "$CANDIDATE_ROOT" rev-parse --verify HEAD^{commit})" || resolution_rc=$?
-  if [[ "$resolution_rc" -ne 0 || -z "$candidate_sha" ]]; then
-    printf 'BASE_RESOLUTION_FAILED reason=candidate-resolution-failed BASE_REF=%s BASE_TIP_SHA=%s CANDIDATE_SHA=%s BASE_SHA=%s\n' \
-      "$BASE_REF" "${BASE_TIP_SHA:-empty}" "${candidate_sha:-empty}" "${BASE_SHA:-empty}" >&2
-    return 1
-  fi
-  if [[ ! "$BASE_REF" =~ ^[0-9a-fA-F]{40}$ ]]; then
-    OBSERVED_BASE_REF="$BASE_REF"
-  fi
-  resolution_rc=0
-  BASE_TIP_SHA="$(git -C "$CANDIDATE_ROOT" rev-parse --verify "${BASE_REF}^{commit}")" || resolution_rc=$?
-  if [[ "$resolution_rc" -ne 0 || -z "$BASE_TIP_SHA" ]]; then
-    printf 'BASE_RESOLUTION_FAILED reason=base-tip-resolution-failed BASE_REF=%s BASE_TIP_SHA=%s CANDIDATE_SHA=%s BASE_SHA=%s\n' \
-      "$BASE_REF" "${BASE_TIP_SHA:-empty}" "$candidate_sha" "${BASE_SHA:-empty}" >&2
-    return 1
-  fi
-
-  resolution_rc=0
-  BASE_SHA="$(git -C "$CANDIDATE_ROOT" merge-base "$BASE_TIP_SHA" "$candidate_sha")" || resolution_rc=$?
-  if [[ "$resolution_rc" -ne 0 ]]; then
-    resolution_reason="merge-base-command-failed"
-  elif [[ -z "$BASE_SHA" ]]; then
-    resolution_reason="merge-base-empty"
-  elif [[ "$BASE_SHA" == "$candidate_sha" ]]; then
-    resolution_reason="vacuous"
-  fi
-  if [[ -n "$resolution_reason" ]]; then
-    printf 'BASE_RESOLUTION_FAILED reason=%s BASE_REF=%s BASE_TIP_SHA=%s CANDIDATE_SHA=%s BASE_SHA=%s\n' \
-      "$resolution_reason" "$BASE_REF" "$BASE_TIP_SHA" "$candidate_sha" "${BASE_SHA:-empty}" >&2
-    return 1
-  fi
+  admission_resolve_base "$CANDIDATE_ROOT" "$BASE_REF" || return 1
 
   printf '[local-gate] candidate=%s base=%s\n' "$CANDIDATE_ROOT" "$BASE_SHA" >&2
 }

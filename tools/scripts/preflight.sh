@@ -103,43 +103,17 @@ lake --version >/dev/null
 PREFLIGHT_FAULT_CLASS="CONFIGURATION"
 ROOT="$(git rev-parse --show-toplevel)"
 cd "$ROOT"
+source "$ROOT/tools/scripts/admission-base-lib.sh"
+source "$ROOT/tools/scripts/perf-event-lib.sh"
 
 remote="${BASE_REF%%/*}"
 if [[ "$remote" != "$BASE_REF" ]] && git remote | grep -Fxq "$remote"; then
   git fetch --prune "$remote"
 fi
-resolution_rc=0
-CANDIDATE_SHA="$(git rev-parse --verify HEAD^{commit})" || resolution_rc=$?
-if [[ "$resolution_rc" -ne 0 || -z "$CANDIDATE_SHA" ]]; then
-  printf 'BASE_RESOLUTION_FAILED reason=candidate-resolution-failed BASE_REF=%s BASE_TIP_SHA=%s CANDIDATE_SHA=%s BASE_SHA=%s\n' \
-    "$BASE_REF" "${BASE_TIP_SHA:-empty}" "${CANDIDATE_SHA:-empty}" "${BASE_SHA:-empty}" >&2
-  exit 1
-fi
-resolution_rc=0
-BASE_TIP_SHA="$(git rev-parse --verify "${BASE_REF}^{commit}")" || resolution_rc=$?
-if [[ "$resolution_rc" -ne 0 || -z "$BASE_TIP_SHA" ]]; then
-  printf 'BASE_RESOLUTION_FAILED reason=base-tip-resolution-failed BASE_REF=%s BASE_TIP_SHA=%s CANDIDATE_SHA=%s BASE_SHA=%s\n' \
-    "$BASE_REF" "${BASE_TIP_SHA:-empty}" "$CANDIDATE_SHA" "${BASE_SHA:-empty}" >&2
-  exit 1
-fi
-resolution_rc=0
-BASE_SHA="$(git merge-base "$BASE_TIP_SHA" "$CANDIDATE_SHA")" || resolution_rc=$?
-if [[ "$resolution_rc" -ne 0 ]]; then
-  resolution_reason="merge-base-command-failed"
-elif [[ -z "$BASE_SHA" ]]; then
-  resolution_reason="merge-base-empty"
-elif [[ "$BASE_SHA" == "$CANDIDATE_SHA" ]]; then
-  resolution_reason="vacuous"
-else
-  resolution_reason=""
-fi
-if [[ -n "$resolution_reason" ]]; then
-  printf 'BASE_RESOLUTION_FAILED reason=%s BASE_REF=%s BASE_TIP_SHA=%s CANDIDATE_SHA=%s BASE_SHA=%s\n' \
-    "$resolution_reason" "$BASE_REF" "$BASE_TIP_SHA" "$CANDIDATE_SHA" "${BASE_SHA:-empty}" >&2
+if ! admission_resolve_base "$ROOT" "$BASE_REF"; then
   exit 1
 fi
 
-source "$ROOT/tools/scripts/perf-event-lib.sh"
 PREFLIGHT_STARTED="$(date +%s)"
 PERF_TMP="$(perf_make_spool_dir "$ROOT" stratalint-preflight-perf 2>/dev/null || true)"
 if [[ -n "$PERF_TMP" ]]; then
