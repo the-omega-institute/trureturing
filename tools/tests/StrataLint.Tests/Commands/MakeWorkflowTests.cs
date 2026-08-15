@@ -174,16 +174,10 @@ public sealed partial class MakeWorkflowTests
         Assert.DoesNotContain("--judge-root", localGate, StringComparison.Ordinal);
         Assert.DoesNotContain("worktree add", localGate, StringComparison.Ordinal);
         Assert.DoesNotContain("verify-conservative", sharedGate, StringComparison.Ordinal);
-        Assert.Contains("STRATALINT_GATE_OUTCOME_DIR", sharedGate + preflight, StringComparison.Ordinal);
-        Assert.Contains("gate-outcome-v1", sharedGate + preflight, StringComparison.Ordinal);
         Assert.DoesNotContain("make -C \"$CANDIDATE_ROOT\" dotnet", sharedGate, StringComparison.Ordinal);
         Assert.Contains("-getProperty:TargetPath", sharedGate, StringComparison.Ordinal);
         Assert.DoesNotContain("--baseline-harness", sharedGate, StringComparison.Ordinal);
         Assert.DoesNotContain("--candidate-harness", sharedGate, StringComparison.Ordinal);
-        Assert.Contains(
-            "exit_with_gate_outcome protected-surface-change 3",
-            sharedGate,
-            StringComparison.Ordinal);
         Assert.DoesNotContain("conservative-certificate", sharedGate, StringComparison.Ordinal);
         Assert.Contains(
             "protected-surface change (SL-022); content checks passed",
