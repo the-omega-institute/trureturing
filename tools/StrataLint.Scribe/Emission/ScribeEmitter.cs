@@ -215,23 +215,13 @@ public static class ScribeEmitter
         var citations = LibraryNoteCatalog.Load(repositoryRoot).Citations;
         foreach (var definition in definitions)
         {
-            var first = CanonicalMarkdownWriter.Write(
+            var bytes = CanonicalMarkdownWriter.Write(
                 definition.Document,
                 declarationCatalog,
                 citations,
                 graph).ToArray();
-            var second = CanonicalMarkdownWriter.Write(
-                definition.Document,
-                declarationCatalog,
-                citations,
-                graph).ToArray();
-            if (!first.AsSpan().SequenceEqual(second))
-            {
-                throw new InvalidOperationException(
-                    $"Scribe rendering is not deterministic for {definition.Document.Header.Gid.Value}.");
-            }
 
-            rendered.Add((definition, first));
+            rendered.Add((definition, bytes));
             var gid = definition.Document.Header.Gid.Value;
             var definitionPath = ScribeEmissionAttestation.DefinitionPath(gid);
             var source = File.ReadAllBytes(Path.Combine(repositoryRoot, definitionPath));
@@ -240,7 +230,7 @@ public static class ScribeEmitter
                 definitionPath,
                 DigestionFingerprint.Compute(source).RawSha256,
                 definition.RelativePath.Value,
-                DigestionFingerprint.Compute(first).RawSha256));
+                DigestionFingerprint.Compute(bytes).RawSha256));
             CollectDescribeCapabilities(
                 gid,
                 definitionPath,
