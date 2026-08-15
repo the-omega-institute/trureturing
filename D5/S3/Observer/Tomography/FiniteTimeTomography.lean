@@ -70,17 +70,18 @@ theorem finite_time_tomography
 /-- The hypotheses are jointly satisfiable for the constant complete tower. -/
 example :
     let layers : Nat →o Submodule Rat Rat :=
-      ⟨fun _ => ⊤, fun _ _ _ => le_refl ⊤⟩
+      ⟨fun _ => ⊤, monotone_const⟩
     ∃ m ≤ Module.finrank Rat Rat - Module.finrank Rat (layers 0),
       Function.Injective ((fun _ : Nat => (id : Rat → Rat)) m) := by
   dsimp
   apply finite_time_tomography (State := Rat) (Observation := Rat)
-      (⟨fun _ => ⊤, fun _ _ _ => le_refl ⊤⟩ : Nat →o Submodule Rat Rat)
+      (⟨fun _ => ⊤, monotone_const⟩ : Nat →o Submodule Rat Rat)
       (fun _ => (id : Rat → Rat))
   · simp
-  · intro k hk
-    simp at hk
-  · intro k hk
+  · intro m hm
+    exact absurd rfl hm
+  · intro m _
     exact Function.injective_id
+
 
 end D5.S3.Observer.Tomography.FiniteTimeTomography
