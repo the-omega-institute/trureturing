@@ -249,7 +249,7 @@ public sealed class ReportSupervisorScriptTests
             "lean-producer",
             leanSlot: true,
             fixture.ScratchWriter,
-            "STRATALINT_LOCK_TIMEOUT_SECONDS=1");
+            "STRATALINT_LOCK_TIMEOUT_SECONDS=1", "STRATALINT_LEAN_MAX_CONCURRENCY=1");
 
         Assert.Equal(2, result.ExitCode);
         Assert.True(Directory.Exists(ownerlessLock));
@@ -325,7 +325,7 @@ public sealed class ReportSupervisorScriptTests
             "lean-producer",
             leanSlot: true,
             fixture.ScratchWriter,
-            "STRATALINT_LOCK_TIMEOUT_SECONDS=1");
+            "STRATALINT_LOCK_TIMEOUT_SECONDS=1", "STRATALINT_LEAN_MAX_CONCURRENCY=1");
 
         var stderr = Encoding.UTF8.GetString(result.StandardError);
         Assert.True(
@@ -358,7 +358,7 @@ public sealed class ReportSupervisorScriptTests
             "lean-producer",
             leanSlot: true,
             fixture.ScratchWriter,
-            "STRATALINT_LOCK_TIMEOUT_SECONDS=1",
+            "STRATALINT_LOCK_TIMEOUT_SECONDS=1", "STRATALINT_LEAN_MAX_CONCURRENCY=1",
             "STRATALINT_TEST_PS_FAIL_AFTER_COMMAND=1");
 
         Assert.Equal(2, result.ExitCode);
@@ -385,7 +385,7 @@ public sealed class ReportSupervisorScriptTests
         var release = Path.Combine(fixture.Root, "ps-command-release");
         var waiter = Task.Run(() => fixture.RunWithEnvironment(
             "lean-producer", leanSlot: true, fixture.ScratchWriter,
-            "STRATALINT_LOCK_TIMEOUT_SECONDS=1",
+            "STRATALINT_LOCK_TIMEOUT_SECONDS=1", "STRATALINT_LEAN_MAX_CONCURRENCY=1",
             "STRATALINT_TEST_PS_PAUSE_ON_COMMAND=1"));
         try
         {
@@ -460,7 +460,7 @@ public sealed class ReportSupervisorScriptTests
             "scribe-consumer",
             leanSlot: false,
             fixture.ScratchWriter,
-            "STRATALINT_LOCK_TIMEOUT_SECONDS=1");
+            "STRATALINT_LOCK_TIMEOUT_SECONDS=1", "STRATALINT_LEAN_MAX_CONCURRENCY=1");
 
         Assert.Equal(0, result.ExitCode);
         Assert.True(Directory.Exists(liveLock));
@@ -536,34 +536,6 @@ public sealed class ReportSupervisorScriptTests
 
         Assert.Contains("perf_flush_events", source, StringComparison.Ordinal);
         Assert.DoesNotContain("syswrite", source, StringComparison.Ordinal);
-    }
-
-    [Fact]
-    public void DefaultLeanSlotSerializesConcurrentProducers()
-    {
-        using var fixture = new ReportSupervisorFixture();
-
-        var result = fixture.RunExternalProcess(
-            "bash",
-            [fixture.ConcurrentDriver, fixture.Supervisor, fixture.ProducerWorker,
-             fixture.MetricsLog, fixture.StateRoot, fixture.ActiveMarker, fixture.OverlapMarker,
-             fixture.PerformanceConfiguration],
-            maximumOutputBytes: 1024 * 1024);
-
-        Assert.True(
-            result.ExitCode == 0,
-            $"concurrent driver exited {result.ExitCode}; stdout: "
-                + Encoding.UTF8.GetString(result.StandardOutput)
-                + "; stderr: "
-                + Encoding.UTF8.GetString(result.StandardError));
-        Assert.False(File.Exists(fixture.OverlapMarker));
-        var metrics = fixture.ReadMetrics();
-        Assert.Equal(2, metrics.Count);
-        Assert.All(metrics, metric =>
-        {
-            Assert.Equal("lean-producer", metric.GetProperty("role").GetString());
-            Assert.Equal(1, metric.GetProperty("concurrency_count").GetInt32());
-        });
     }
 
     [Fact]

@@ -70,8 +70,7 @@ jobs:
           reason="dev push always runs the union engineering check"
           base_sha="not-applicable"
           changed_count="0"
-          changed_detail="all paths (dev push union check)"
-          matched_detail="all paths (dev push union check)"
+          matched_count="0"
           if [[ "$GITHUB_EVENT_NAME" == "push" ]]; then
             run="true"
           elif [[ "$GITHUB_EVENT_NAME" == "pull_request_target" ]]; then
@@ -90,47 +89,38 @@ jobs:
               git -C candidate diff --name-only -z --no-renames --diff-filter=ACDMRTUXB "$base_sha" "$head"
             )
             changed_count="${#changed_paths[@]}"
-            changed_detail=""
-            matched_detail=""
+            matched_paths=()
             quoted_path=""
             for path in "${changed_paths[@]}"; do
               printf -v quoted_path '%q' "$path"
               printf 'ENGINEERING_SCOPE_CHANGED %s\n' "$quoted_path"
-              changed_detail="$changed_detail$quoted_path; "
               for trigger in "${engineering_triggers[@]}"; do
                 if [[ "$path" == "$trigger" || "$path" == "$trigger/"* ]]; then
-                  matched_detail="$matched_detail$quoted_path -> $trigger; "
+                  printf 'ENGINEERING_SCOPE_MATCHED %s -> %s\n' "$quoted_path" "$trigger"
+                  matched_paths+=("$path")
                 fi
               done
             done
-            if [[ -z "$changed_detail" ]]; then
-              changed_detail="none"
-            fi
-            if [[ -n "$matched_detail" ]]; then
+            matched_count="${#matched_paths[@]}"
+            if [[ "$matched_count" -gt 0 ]]; then
               run="true"
               reason="merge-base diff intersects the harness trigger set"
             else
               run="false"
               reason="merge-base diff does not intersect the harness trigger set"
-              matched_detail="none"
             fi
           else
             run="true"
             reason="unrecognized event fails closed to the full engineering check"
-            changed_detail="all paths (fail-closed event handling)"
-            matched_detail="all paths (fail-closed event handling)"
           fi
-          printf 'ENGINEERING_SCOPE event=%s run=%s base=%s changed=%s reason=%s\n' \
-            "$GITHUB_EVENT_NAME" "$run" "$base_sha" "$changed_count" "$reason"
-          printf 'ENGINEERING_SCOPE_PATHS %s\n' "$changed_detail"
-          printf 'ENGINEERING_SCOPE_MATCHES %s\n' "$matched_detail"
+          printf 'ENGINEERING_SCOPE event=%s run=%s base=%s changed=%s matched=%s reason=%s\n' \
+            "$GITHUB_EVENT_NAME" "$run" "$base_sha" "$changed_count" "$matched_count" "$reason"
           echo "run=$run" >> "$GITHUB_OUTPUT"
           echo "event=$GITHUB_EVENT_NAME" >> "$GITHUB_OUTPUT"
           echo "base_sha=$base_sha" >> "$GITHUB_OUTPUT"
           echo "changed_count=$changed_count" >> "$GITHUB_OUTPUT"
-          echo "paths=$changed_detail" >> "$GITHUB_OUTPUT"
+          echo "matched_count=$matched_count" >> "$GITHUB_OUTPUT"
           echo "reason=$reason" >> "$GITHUB_OUTPUT"
-          echo "matches=$matched_detail" >> "$GITHUB_OUTPUT"
 
       - name: Resolve judge binary content address before build outputs exist
         id: judge-address
@@ -305,9 +295,8 @@ jobs:
           SCOPE_RUN: ${{ steps.scope.outputs.run }}
           SCOPE_BASE: ${{ steps.scope.outputs.base_sha }}
           SCOPE_CHANGED_COUNT: ${{ steps.scope.outputs.changed_count }}
-          SCOPE_PATHS: ${{ steps.scope.outputs.paths }}
+          SCOPE_MATCHED_COUNT: ${{ steps.scope.outputs.matched_count }}
           SCOPE_REASON: ${{ steps.scope.outputs.reason }}
-          SCOPE_MATCHES: ${{ steps.scope.outputs.matches }}
         run: |
           set -euo pipefail
           result="$SCOPE_RUN"
@@ -321,9 +310,9 @@ jobs:
             printf -- '- Run engineering: %s\n' "$result"
             printf -- '- Merge-base: %s\n' "$SCOPE_BASE"
             printf -- '- Changed paths: %s\n' "$SCOPE_CHANGED_COUNT"
-            printf -- '- Path detail: %s\n' "$SCOPE_PATHS"
-            printf -- '- Trigger matches: %s\n' "$SCOPE_MATCHES"
+            printf -- '- Trigger matches: %s\n' "$SCOPE_MATCHED_COUNT"
             printf -- '- Decision: %s\n' "$SCOPE_REASON"
+            printf -- '%s\n' '- Detail: see the ENGINEERING_SCOPE_CHANGED and ENGINEERING_SCOPE_MATCHED log lines of the scope step.'
           } >> "$GITHUB_STEP_SUMMARY"
 
   lean-inspect:

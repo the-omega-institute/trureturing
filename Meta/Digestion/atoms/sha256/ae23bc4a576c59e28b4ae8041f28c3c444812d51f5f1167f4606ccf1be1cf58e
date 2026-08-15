@@ -1,0 +1,24 @@
+### 定义 33.17（双时间观察历史）
+
+结合第 33.3 节，可把观察历史赋予两个独立的时间坐标：
+
+\[
+\boxed{
+\mathsf T_O
+=
+\left(
+ t_{\mathrm{vis}},
+ \mathfrak A_{\mathrm{rec}}
+\right).
+}
+\]
+
+其中：
+
+- \(t_{\mathrm{vis}}\) 是连续可见动力学参数；
+- \(\mathfrak A_{\mathrm{rec}}\) 是记录生成造成的不可逆可访问性债务。
+
+一个系统可以在 \(t_{\mathrm{vis}}\) 上持续酉演化而 \(\mathfrak A_{\mathrm{rec}}=0\)；也可以在极短可见时间内通过一次正交记录使某个 \(\mathfrak A_{ij}\) 跳到无穷。因此两种时间不能预先等同。
+
+---
+

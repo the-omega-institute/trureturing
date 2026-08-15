@@ -37,22 +37,35 @@ def decodeFieldPrefix : MarkerHistory -> Option (MarkerHistory × MarkerHistory)
 theorem decode_field_prefix_encode (field suffix : MarkerHistory) :
     decodeFieldPrefix (encodeField field * fieldSeparator * suffix) =
       some (field, suffix) := by
+  have _decode_field_prefix_default :
+      decodeFieldPrefix (FreeMonoid.ofList []) = none := by
+    rw [decodeFieldPrefix]
+    all_goals
+      intro rest h
+      cases h
   induction field with
   | nil =>
       change decodeFieldPrefix (Marker.E₁ :: Marker.E₁ :: suffix) = some ([], suffix)
       rfl
   | cons marker field ih =>
-      rw [encode_field_cons]
+      rw [show encodeField (marker :: field) = pairMarker marker * encodeField field from
+        encode_field_cons marker field]
       cases marker
-      · change decodeFieldPrefix
-          (Marker.E₀ :: Marker.E₀ :: (encodeField field * fieldSeparator * suffix)) =
-            some (Marker.E₀ :: field, suffix)
-        rw [decodeFieldPrefix, ih]
+      · change (decodeFieldPrefix
+          (encodeField (FreeMonoid.ofList field) * fieldSeparator * suffix)).map
+          (fun decoded => (FreeMonoid.of Marker.E₀ * decoded.1, decoded.2)) =
+            some (FreeMonoid.of Marker.E₀ * FreeMonoid.ofList field, suffix)
+        rw [show decodeFieldPrefix
+          (encodeField (FreeMonoid.ofList field) * fieldSeparator * suffix) =
+            some (FreeMonoid.ofList field, suffix) from ih]
         rfl
-      · change decodeFieldPrefix
-          (Marker.E₀ :: Marker.E₁ :: (encodeField field * fieldSeparator * suffix)) =
-            some (Marker.E₁ :: field, suffix)
-        rw [decodeFieldPrefix, ih]
+      · change (decodeFieldPrefix
+          (encodeField (FreeMonoid.ofList field) * fieldSeparator * suffix)).map
+          (fun decoded => (FreeMonoid.of Marker.E₁ * decoded.1, decoded.2)) =
+            some (FreeMonoid.of Marker.E₁ * FreeMonoid.ofList field, suffix)
+        rw [show decodeFieldPrefix
+          (encodeField (FreeMonoid.ofList field) * fieldSeparator * suffix) =
+            some (FreeMonoid.ofList field, suffix) from ih]
         rfl
 
 /-- Decode the fixed-width opcode component used by `encodeEvent`. -/

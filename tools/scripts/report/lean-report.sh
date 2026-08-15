@@ -10,8 +10,8 @@ LAKE_BIN="${LAKE_BIN:-$(command -v lake || true)}"
 [[ -n "$LAKE_BIN" && "$LAKE_BIN" == /* && -x "$LAKE_BIN" ]] \
   || { echo "lean-report.sh: an absolute lake executable is required" >&2; exit 2; }
 
-# Local devloop opt-in: warm the same host/UID-scoped, content-addressed report
-# cache that local-harness-gate exports (identical default path), so a redrive of
+# Local opt-in: warm the same host/UID-scoped, content-addressed report
+# cache that local-harness-gate exports (identical default path), so a repeat run of
 # an unchanged tree restores the canonical report instead of re-running the Lean
 # producer under the serialized global slot. Never enabled in CI (which leaves the
 # env unset), so CI report production stays byte-for-byte unchanged; the pair helper

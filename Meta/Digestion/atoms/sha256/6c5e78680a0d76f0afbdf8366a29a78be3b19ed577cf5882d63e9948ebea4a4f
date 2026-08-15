@@ -1,0 +1,15 @@
+### 定理 28.3（相对商余分解）
+
+若 \(M\subseteq N\) 为闭子空间，则
+\[
+\boxed{
+N=M\oplus(N\ominus M).
+}
+并且存在规范等距同构
+\[
+\boxed{
+N/M
+\cong_{\mathrm{iso}}
+N\ominus M.
+}
+
