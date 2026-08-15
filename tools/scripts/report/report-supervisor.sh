@@ -37,7 +37,18 @@ else
     || { echo "report-supervisor: HOME must be absolute for the performance ledger" >&2; exit 2; }
   METRICS_LOG="$HOME/.stratalint-perf/events.jsonl"
 fi
-MAX_CONCURRENCY="${STRATALINT_LEAN_MAX_CONCURRENCY:-1}"
+# 默认槽数 3(2026-08-15 用户裁决)。此前是 1,且全仓没有任何注释/文档/测试记载其案由。
+#
+# 留档的反对读数,以免下一个人以为这是吞吐优化:实测一次 Lean 构建自身即跑 10+ 个 lean
+# 进程、每个约 85% CPU,全机 `top -l 2` 两次采样 idle 均为 0.12%(28 核 / 96 GB)。所以
+# 一次构建已把核吃满,加槽不增总吞吐,只把同样的核分成 N 份、每份慢 N 倍。内存不是约束
+# (44 GB 空闲,单次构建总 RSS 11.5 GB)。用户在看过这组读数后确认要 3,故照办。
+#
+# 它确实能改善的是**延迟与失败率**:等槽者的耐心 LOCK_TIMEOUT_SECONDS 默认 900s,而持槽者
+# 合法可持有 BUILD_TIMEOUT_SECONDS=7200s,两者差 8 倍,且 acquire_lean_slot 是 mkdir 抢占
+# 自旋而非 FIFO——并行 worktree 下先到者会被后到者反复抢先直到超时判红(实测:持槽 24m24s,
+# 等槽者 15 分钟阵亡)。槽多了撞上这条的概率随之下降。根因另见 #1910,本改动不假装修了它。
+MAX_CONCURRENCY="${STRATALINT_LEAN_MAX_CONCURRENCY:-3}"
 [[ "$MAX_CONCURRENCY" =~ ^[1-9][0-9]*$ && "$MAX_CONCURRENCY" -le 64 ]] \
   || { echo "report-supervisor: STRATALINT_LEAN_MAX_CONCURRENCY must be 1..64" >&2; exit 2; }
 LOCK_TIMEOUT_SECONDS="${STRATALINT_LOCK_TIMEOUT_SECONDS:-900}"
