@@ -86,9 +86,8 @@ internal static partial class RepositoryPathPolicy
             || IsEchoResidualShardPath(value)
             || FrozenLedgerChangeClassifier.IsAcceptedEventPath(value)
             || value.StartsWith("skills/", StringComparison.Ordinal)
-            || value.StartsWith(".claude/skills/", StringComparison.Ordinal)
             || value.StartsWith(".codex/skills/", StringComparison.Ordinal)
-            || value.StartsWith("docs/devloop/", StringComparison.Ordinal)
+            || value.StartsWith("docs/reports/", StringComparison.Ordinal)
             || IsGoldenProjectionData(value)
             || IsCanonicalFutureCoordinate(value))
         {

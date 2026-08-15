@@ -1,0 +1,2 @@
+**27.307(容量定理 v2 = E12 替换条文,轮 376)**。范围定理 [Σrᵢa_{n+1−i}, Σrᵢaᵢ](von Neumann + U(n) 连通);C_ρ(A)=½Σrᵢ(aᵢ−a_{n+1−i});纯态 = dist;qubit = Bloch·dist(解耦仅居 qubit);优超单调(递减权 Abel 引理,Schur 凸)。证书:端点可达 5.6e-16;单调 2000/2000;qubit 十二位。
+

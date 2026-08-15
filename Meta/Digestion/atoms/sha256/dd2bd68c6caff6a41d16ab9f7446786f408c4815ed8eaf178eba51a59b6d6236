@@ -1,0 +1,22 @@
+### 定理 32.22（最终余核是动力学同余）
+
+令 Schrödinger 侧线性演化为 \(\Phi\)，并令
+
+\[
+R_\infty=V_\infty^\perp.
+\]
+
+则
+
+\[
+\boxed{
+\Phi(R_\infty)\subseteq R_\infty.
+}
+\]
+
+因此动力学唯一下降到商
+
+\[
+V/R_\infty.
+\]
+

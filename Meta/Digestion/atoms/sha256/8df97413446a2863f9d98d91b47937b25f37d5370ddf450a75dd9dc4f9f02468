@@ -1,0 +1,16 @@
+### 定理 28.4（正交 De Morgan 公式）
+
+对闭子空间 \(M,N\subseteq\mathscr H\)：
+\[
+\boxed{
+(M\vee N)^\perp
+=M^\perp\cap N^\perp,
+}
+\]
+\[
+\boxed{
+(M\cap N)^\perp
+=
+\overline{M^\perp+N^\perp}.
+}
+

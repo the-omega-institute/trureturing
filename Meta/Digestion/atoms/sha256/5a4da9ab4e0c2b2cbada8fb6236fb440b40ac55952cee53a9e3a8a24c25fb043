@@ -1,0 +1,22 @@
+### 定理 28.8（不存在酉自然的正交逃逸选择器）
+
+设 \(\mathscr H\) 无限维。不存在映射
+\[
+\eta:
+\{M\subseteq\mathscr H:M\text{ 为有限维闭子空间}\}
+\to
+\{x\in\mathscr H:\|x\|=1\}
+\]
+同时满足：
+
+1. 对每个 \(M\)，
+   \[
+   \eta(M)\in M^\perp;
+   \]
+2. 对每个酉算子 \(U\)，
+   \[
+   \boxed{
+   \eta(UM)=U\eta(M).
+   }
+   \]
+
