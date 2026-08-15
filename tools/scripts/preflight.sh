@@ -72,6 +72,13 @@ if [[ "$BASE_SHA" == "$CANDIDATE_SHA" ]] \
   exit 1
 fi
 
+# Catch a stale global environment pin before the expensive stages: building against a
+# toolchain the base has already moved off of makes every later green meaningless, and the
+# failure it eventually produces names broken mathematics rather than the pin.
+FORK_SHA="$(git merge-base "$BASE_SHA" "$CANDIDATE_SHA")"
+bash "$ROOT/tools/scripts/check-environment-pin-staleness.sh" \
+  "$BASE_SHA" "$FORK_SHA" "$CANDIDATE_SHA" "$ROOT"
+
 source "$ROOT/tools/scripts/perf-event-lib.sh"
 PREFLIGHT_STARTED="$(date +%s)"
 PERF_TMP="$(perf_make_spool_dir "$ROOT" stratalint-preflight-perf 2>/dev/null || true)"

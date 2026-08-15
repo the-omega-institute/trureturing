@@ -333,6 +333,12 @@ jobs:
               printf '%s\n' "cannot resolve fork point between $base and $head" >&2
               exit 1
             fi
+            # The fork point is the right base for rules; it is the wrong base for the ground
+            # those rules stand on. A branch that departed before the base moved a pin builds
+            # against a toolchain that will not exist after the merge, and reports the mismatch
+            # as broken mathematics in modules it never touched.
+            bash tools/scripts/check-environment-pin-staleness.sh \
+              "$base" "$sha" "$head" candidate
           else
             sha="${{ github.event.before }}"
             if [[ -z "$sha" || "$sha" =~ ^0+$ ]]; then
