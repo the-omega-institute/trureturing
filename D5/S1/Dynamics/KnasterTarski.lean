@@ -46,8 +46,12 @@ theorem three_cycle_extremal_fixed_points :
     threeCycleOperator.lfp = ∅ ∧ threeCycleOperator.gfp = Set.univ := by
   constructor
   · exact le_antisymm
-      (threeCycleOperator.lfp_le (by simp [threeCycleOperator])) bot_le
+      (threeCycleOperator.lfp_le (by
+        intro state h
+        exact h)) bot_le
   · exact le_antisymm le_top
-      (threeCycleOperator.le_gfp (by simp [threeCycleOperator]))
+      (threeCycleOperator.le_gfp (by
+        intro state h
+        trivial))
 
 end D5.S1.Dynamics.KnasterTarski

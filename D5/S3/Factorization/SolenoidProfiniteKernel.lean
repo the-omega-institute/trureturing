@@ -57,7 +57,8 @@ private theorem kernel_coordinate_torsion
     m.1 • theta.1.1 m = 0 := by
   calc
     m.1 • theta.1.1 m = theta.1.1 ⟨1, Nat.zero_lt_one⟩ := by
-      simpa using theta.1.2 ⟨1, Nat.zero_lt_one⟩ m
+      convert theta.1.2 ⟨1, Nat.zero_lt_one⟩ m using 1 <;>
+        try { congr 1; apply congrArg theta.1.1; apply Subtype.ext; simp }
     _ = 0 := theta.2
 
 private theorem exists_kernel_residue

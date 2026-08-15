@@ -284,7 +284,7 @@ theorem fibonacci_apparition_entry_point {p : ℕ} (hp : p.Prime) (hpNotDvdFive 
       simpa only [Nat.cast_ofNat] using heps
     rw [heps']
     constructor
-    · norm_num [Int.fib]
+    · norm_num [Int.fib] <;> decide
     · have htwoInt : ((2 : ℕ) : ℤ) = 2 := Nat.cast_ofNat
       rw [htwoInt, Int.fib_two]
       decide

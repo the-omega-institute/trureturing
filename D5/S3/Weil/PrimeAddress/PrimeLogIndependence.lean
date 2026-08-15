@@ -19,6 +19,10 @@ theorem prime_log_integer_independence :
     ⟨fun q => q, fun _ _ h => Subtype.ext h⟩
   let S : Finset ℕ := s.map embedding
   let k : ℕ → ℤ := fun n => if hn : n.Prime then g ⟨n, hn⟩ else 0
+  have hk (q : Nat.Primes) : k (embedding q) = g q := by
+    change (if hn : (q : ℕ).Prime then g ⟨(q : ℕ), hn⟩ else 0) = g q
+    rw [dif_pos q.prop]
+    congr 1
   have hS : ∀ n ∈ S, n.Prime := by
     intro n hn
     change n ∈ s.map embedding at hn
@@ -32,12 +36,16 @@ theorem prime_log_integer_independence :
           ∑ q ∈ s, (g q : ℝ) * Real.log q := by
             apply Finset.sum_congr rfl
             intro q hq
-            simp [embedding, k, q.prop]
+            rw [hk]
+            rfl
       _ = 0 := by simpa only [zsmul_eq_mul] using hsum
   have hzero :=
     D5.S3.Factorization.PrimeLogIndependence.prime_log_indep S k hS hsum'
       (p : ℕ) (by exact Finset.mem_map.mpr ⟨p, hp, rfl⟩)
-  simpa [k, p.prop] using hzero
+  have hkp := hk p
+  change k (p : ℕ) = g p at hkp
+  rw [hkp] at hzero
+  exact hzero
 
 theorem prime_log_rational_independence :
     LinearIndependent ℚ (fun p : Nat.Primes => Real.log p) := by
@@ -55,7 +63,10 @@ theorem log_two_log_three_relation_eq_zero (a b : ℚ)
   have hp_ne' : p3 ≠ p2 := Ne.symm hp_ne
   let c : Nat.Primes → ℚ := fun p => if p = p2 then a else if p = p3 then b else 0
   have hc : ∑ p ∈ ({p2, p3} : Finset Nat.Primes), c p • Real.log p = 0 := by
-    simpa [c, p2, p3, hp_ne, hp_ne'] using h
+    rw [Finset.sum_insert (by simpa using hp_ne), Finset.sum_singleton]
+    simp only [c, if_pos, hp_ne', if_false]
+    change a • Real.log 2 + b • Real.log 3 = 0
+    exact h
   have hcoeff :=
     linearIndependent_iff'.mp prime_log_rational_independence
       ({p2, p3} : Finset Nat.Primes) c hc

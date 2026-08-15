@@ -87,8 +87,8 @@ private theorem naturalLedgerToPositiveRational_surj_fraction
     pnatNaturalLedgerEquiv (Additive.ofMul den), by simp, ?_⟩
   apply Additive.toMul.injective
   apply Units.ext
-  simp [naturalLedgerToPositiveRational, pnatToPositiveRational, num, den,
-    (q.toMul : NNRat).num_div_den]
+  simp [naturalLedgerToPositiveRational, pnatToPositiveRational, num, den] <;>
+    exact (NNRat.num_div_den (q.toMul : NNRat)).symm
 
 noncomputable def signedLedgerLocalization :
     (⊤ : AddSubmonoid NaturalPrimeLedger).LocalizationMap SignedPrimeLedger where

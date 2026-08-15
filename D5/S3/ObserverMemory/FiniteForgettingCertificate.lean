@@ -16,6 +16,7 @@ import Mathlib.Tactic
 
 namespace D5.S3.ObserverMemory.FiniteForgettingCertificate
 
+set_option backward.isDefEq.respectTransparency false in
 /-- The six cognitive states, named by their epistemic meanings rather than coordinates. -/
 inductive CognitiveState where
   | remember

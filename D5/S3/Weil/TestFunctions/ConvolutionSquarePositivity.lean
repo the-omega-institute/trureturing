@@ -35,9 +35,14 @@ theorem fourierLaplace_convolutionSquare_real (g : WeilTestFunction) (xi : ℝ) 
         (g : ℝ → ℂ) ⋆[ContinuousLinearMap.mul ℂ ℂ] (involution g : ℝ → ℂ) := by
     funext x
     rfl
+  have hg_integrable : Integrable (g : ℝ → ℂ) := g.integrable
+  have hinvolution_integrable : Integrable (involution g : ℝ → ℂ) :=
+    (involution g).integrable
+  have hg_continuous : Continuous (g : ℝ → ℂ) := g.continuous
+  have hinvolution_continuous : Continuous (involution g : ℝ → ℂ) :=
+    (involution g).continuous
   rw [hconvolution]
-  rw [Real.fourier_mul_convolution_eq g.integrable (involution g).integrable
-    g.continuous (involution g).continuous]
+  rw [Real.fourier_mul_convolution_eq] <;> try assumption
   rw [← fourierLaplace_real_eq_fourier g xi]
   rw [← fourierLaplace_real_eq_fourier (involution g) xi]
   rw [fourierLaplace_involution_real, Complex.mul_conj]
