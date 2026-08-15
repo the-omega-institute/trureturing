@@ -69,6 +69,27 @@ internal static class DigestionLedgerAligner
         ArgumentNullException.ThrowIfNull(document);
         ArgumentNullException.ThrowIfNull(snapshot);
         atomizerResolver ??= static id => AtomizerRegistry.Require(id).Atomize;
+        var findings = ImmutableArray.CreateBuilder<string>();
+        var sources = document.RequireDigestionSources();
+        var conflictedSources = new HashSet<string>(StringComparer.Ordinal);
+        foreach (var source in sources)
+        {
+            if (!snapshot.TryGetFile(source.SourcePath, out var sourceFile)
+                || DigestionSourceConflictMarkers.FindFirstLine(sourceFile.RawBytes.AsSpan()) is not { } line)
+            {
+                continue;
+            }
+
+            var finding = DigestionSourceConflictMarkers.FormatFinding(source.SourcePath, line);
+            if (mode == DigestionAlignmentMode.Ingest)
+            {
+                throw new FormatException(finding);
+            }
+
+            findings.Add(finding);
+            conflictedSources.Add(source.SourceId);
+        }
+
         // Ingest is an explicit operation on the current tree, so a missing data file there is a
         // real fault. Admission judges arbitrary trees, including the baseline tree that predates
         // this data surface entirely; rejecting that tree would break conservative extension, so
@@ -96,7 +117,6 @@ internal static class DigestionLedgerAligner
         var residual = ImmutableArray.CreateBuilder<StructuredResidualAdmission>();
         var fallbacks = ImmutableArray.CreateBuilder<DigestionIngestFallback>();
         var actualStale = ImmutableArray.CreateBuilder<string>();
-        var findings = ImmutableArray.CreateBuilder<string>();
         var suggestedAtomIds = new HashSet<string>(StringComparer.Ordinal);
         var cas = DigestionCasStore.Evaluate(document, snapshot);
         findings.AddRange(cas.Findings);
@@ -113,7 +133,6 @@ internal static class DigestionLedgerAligner
         }
 
         var baselineSources = BaselineSources(baselineDocument, findings);
-        var sources = document.RequireDigestionSources();
         var candidateSources = sources.ToDictionary(
             static source => source.SourceId,
             StringComparer.Ordinal);
@@ -176,6 +195,11 @@ internal static class DigestionLedgerAligner
                                     && inheritedEntries.Contains(CanonicalEntry(entry))
                                     ? DigestionReceiptAlignment.Seen
                                     : DigestionReceiptAlignment.Rejected;
+                }
+
+                if (conflictedSources.Contains(source.SourceId))
+                {
+                    return;
                 }
 
                 var registeredAtomizer = AtomizerRegistry.IsRegistered(source.Atomizer);

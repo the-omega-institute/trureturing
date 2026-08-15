@@ -9,10 +9,61 @@ internal sealed record DigestionIngestPlan(
     ImmutableArray<DigestionCasObject> CasObjects,
     ImmutableArray<DigestionIngestFallback> Fallbacks);
 
+internal static class DigestionSourceConflictMarkers
+{
+    internal const string DiagnosticCode = "INGEST-CONFLICT-MARKER-001";
+
+    internal static int? FindFirstLine(ReadOnlySpan<byte> bytes)
+    {
+        var start = bytes.Length >= 3
+            && bytes[0] == 0xef
+            && bytes[1] == 0xbb
+            && bytes[2] == 0xbf
+                ? 3
+                : 0;
+        var lineNumber = 1;
+        while (true)
+        {
+            var end = start;
+            while (end < bytes.Length
+                && bytes[end] != (byte)'\r'
+                && bytes[end] != (byte)'\n')
+            {
+                end++;
+            }
+
+            var line = bytes[start..end];
+            if (line.StartsWith("<<<<<<< "u8)
+                || line.StartsWith("||||||| "u8)
+                || line.SequenceEqual("======="u8)
+                || line.StartsWith(">>>>>>> "u8))
+            {
+                return lineNumber;
+            }
+
+            if (end == bytes.Length)
+            {
+                return null;
+            }
+
+            if (bytes[end] == (byte)'\r'
+                && end + 1 < bytes.Length
+                && bytes[end + 1] == (byte)'\n')
+            {
+                end++;
+            }
+
+            start = end + 1;
+            lineNumber++;
+        }
+    }
+
+    internal static string FormatFinding(string sourcePath, int line) =>
+        $"{DiagnosticCode} {sourcePath}:{line}: unresolved merge conflict marker in digestion source";
+}
+
 internal static class DigestionIngestor
 {
-    internal const string ConflictMarkerDiagnosticCode = "INGEST-CONFLICT-MARKER-001";
-
     /// <summary>
     /// Every theory document is digested by something. A volume nobody has written a
     /// dialect for used to sit in the tree with no source declaration at all — not refused,
@@ -88,7 +139,6 @@ internal static class DigestionIngestor
         var migrationDocument = RegisterDefaultTheorySources(
             PrepareLegacyMigrations(document),
             snapshot);
-        RejectConflictMarkedSources(migrationDocument, snapshot);
         var alignment = DigestionLedgerAligner.Evaluate(
             migrationDocument,
             snapshot,
@@ -194,66 +244,6 @@ internal static class DigestionIngestor
                 .OrderBy(static item => item.RelativePath, StringComparer.Ordinal)
                 .ToImmutableArray(),
             alignment.Fallbacks);
-    }
-
-    private static void RejectConflictMarkedSources(
-        BackfillInventoryDocument document,
-        RepositorySnapshot snapshot)
-    {
-        foreach (var source in document.RequireDigestionSources())
-        {
-            if (!snapshot.TryGetFile(source.SourcePath, out var sourceFile))
-            {
-                continue;
-            }
-
-            var line = ConflictMarkerLine(sourceFile.RawBytes.AsSpan());
-            if (line is not null)
-            {
-                throw new FormatException(
-                    $"{ConflictMarkerDiagnosticCode} {source.SourcePath}:{line}: "
-                    + "unresolved merge conflict marker in digestion source");
-            }
-        }
-    }
-
-    private static int? ConflictMarkerLine(ReadOnlySpan<byte> bytes)
-    {
-        var start = 0;
-        var lineNumber = 1;
-        while (true)
-        {
-            var end = start;
-            while (end < bytes.Length
-                && bytes[end] != (byte)'\r'
-                && bytes[end] != (byte)'\n')
-            {
-                end++;
-            }
-
-            var line = bytes[start..end];
-            if (line.StartsWith("<<<<<<< "u8)
-                || line.SequenceEqual("======="u8)
-                || line.StartsWith(">>>>>>> "u8))
-            {
-                return lineNumber;
-            }
-
-            if (end == bytes.Length)
-            {
-                return null;
-            }
-
-            if (bytes[end] == (byte)'\r'
-                && end + 1 < bytes.Length
-                && bytes[end + 1] == (byte)'\n')
-            {
-                end++;
-            }
-
-            start = end + 1;
-            lineNumber++;
-        }
     }
 
     private static DigestionLedgerSource CaptureBoundarySource(
