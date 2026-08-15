@@ -53,7 +53,8 @@ internal static partial class DigestionStatusEvaluator
         AcceptedLeanClosure lean,
         VerifiedScribeEmissions? verifiedScribeEmissions = null,
         BackfillInventoryDocument? baselineDocument = null,
-        bool validateProjectedStatus = true)
+        bool validateProjectedStatus = true,
+        RepositorySnapshot? baselineSnapshot = null)
     {
         ArgumentNullException.ThrowIfNull(document);
         ArgumentNullException.ThrowIfNull(snapshot);
@@ -70,7 +71,8 @@ internal static partial class DigestionStatusEvaluator
             document,
             snapshot,
             baselineDocument,
-            DigestionAlignmentMode.Admission);
+            DigestionAlignmentMode.Admission,
+            baselineSnapshot: baselineSnapshot);
         findings.AddRange(alignment.Findings);
         var baselineEntries = (baselineDocument?.RequireDigestionEntries()
                 ?? ImmutableArray<DigestionLedgerEntry>.Empty)

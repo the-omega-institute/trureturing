@@ -51,7 +51,8 @@ internal static partial class IngestCommand
                 lean,
                 verifiedScribeEmissions,
                 baselineDocument,
-                validateProjectedStatus: false);
+                validateProjectedStatus: false,
+                baselineSnapshot: baseline);
             RequireNoFindings(derived);
 
             var statusByAtomId = derived.Entries.ToDictionary(
@@ -81,7 +82,8 @@ internal static partial class IngestCommand
                 finalSnapshot,
                 lean,
                 verifiedScribeEmissions,
-                baselineDocument);
+                baselineDocument,
+                baselineSnapshot: baseline);
             RequireNoFindings(evaluation);
             RequireValidBackfill(
                 finalDocument,

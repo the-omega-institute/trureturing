@@ -85,18 +85,20 @@ public sealed partial class TheoryAtomizerTests
                 """))));
 
     [Fact]
-    public void ConeV1RejectsAnUnknownNumberedClaimTitle()
+    public void ConeV1RecordsAnUnregisteredNumberedClaimGenre()
     {
         var bytes = Encoding.UTF8.GetBytes(
             "# 正锥纲领:形式化定理与证明\n\n"
             + "## 第三章 路径散度理论\n\n"
             + "**猜想 3.6(未登记标题)[证]。**claim。\n");
 
-        var error = Assert.Throws<TheorySourceFormatException>(() =>
-            AtomizerRegistry.Atomize(AtomizerRegistry.ConeId, bytes, ConeRules));
+        var document = AtomizerRegistry.Atomize(
+            AtomizerRegistry.ConeId,
+            bytes,
+            ConeRules);
 
-        Assert.Contains("unknown cone numbered claim title", error.Message, StringComparison.Ordinal);
-        Assert.Contains("line 5", error.Message, StringComparison.Ordinal);
+        Assert.Equal("猜想/3.6", Assert.Single(document.Claims).AstPath);
+        Assert.Equal(["猜想"], document.UnregisteredGenres.ToArray());
     }
 
     [Fact]

@@ -59,6 +59,7 @@ internal static class GenericAtomizer
         MarkdownAstAtomizer.Atomize(
             bytes,
             IdentifyParagraph,
+            static () => GenreRegistryCheck.NoGenreRegistry,
             identifyHeading: IdentifyHeading,
             parse: MarkdigBlockAst.Parse,
             identifyTableRow: IdentifyTableRow,

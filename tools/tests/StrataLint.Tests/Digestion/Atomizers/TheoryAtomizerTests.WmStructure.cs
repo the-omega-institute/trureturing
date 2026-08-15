@@ -153,6 +153,7 @@ public sealed partial class TheoryAtomizerTests
         var document = AtomizerRegistry.Atomize(AtomizerRegistry.WmId, bytes, DigestionTestSupport.Rules);
 
         Assert.Equal(fixture.Select(static item => item.AstPath), document.Claims.Select(static item => item.AstPath));
+        Assert.Equal(GenreRegistryCheckKind.NoRegistry, document.GenreRegistryCheck.Kind);
         Assert.Equal(document.Claims.Length, document.Claims.Select(static item => item.AstPath).Distinct(StringComparer.Ordinal).Count());
         Assert.Equal(fixture.Count, document.Claims.Length);
         for (var index = 0; index < fixture.Count; index++)
@@ -200,6 +201,28 @@ public sealed partial class TheoryAtomizerTests
         var error = Record.Exception(() => AtomizerRegistry.Atomize(AtomizerRegistry.WmId, bytes, DigestionTestSupport.Rules));
 
         Assert.True(error is FormatException or DecoderFallbackException, error?.ToString());
+    }
+
+    [Fact]
+    public void WmV1StructuralDriftStillTakesTheCoarsePath()
+    {
+        var bytes = Encoding.UTF8.GetBytes(
+            CanonicalWmFixture().Replace(WmTitle, "# Unknown WM", StringComparison.Ordinal));
+        var ledger = BackfillInventoryLoader.Load(
+            DigestionTestSupport.EmptyLedger(AtomizerRegistry.WmId));
+
+        var alignment = DigestionLedgerAligner.Evaluate(
+            ledger,
+            DigestionTestSupport.Snapshot(("docs/source.md", bytes)),
+            ledger,
+            DigestionAlignmentMode.Ingest);
+
+        Assert.Empty(alignment.Findings);
+        Assert.Contains(
+            "WM source must begin with its exact H1 title",
+            Assert.Single(alignment.Fallbacks).Reason,
+            StringComparison.Ordinal);
+        Assert.Equal("coarse/source", Assert.Single(alignment.Residual).Atom.AstPath);
     }
 
     [Fact]

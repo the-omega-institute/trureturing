@@ -101,7 +101,8 @@ internal static partial class CoverAtomCommand
                 current,
                 lean,
                 verifiedScribeEmissions,
-                baselineDocument);
+                baselineDocument,
+                baselineSnapshot: baseline);
             RequireNoFindings(beforeEvaluation);
 
             // Gate ②(b): anti-Goodhart — cover may only deposit a declaration that
@@ -155,7 +156,8 @@ internal static partial class CoverAtomCommand
                 lean,
                 verifiedScribeEmissions,
                 baselineDocument,
-                validateProjectedStatus: false);
+                validateProjectedStatus: false,
+                baselineSnapshot: baseline);
             RequireNoFindings(derived);
 
             var statusByAtomId = derived.Entries.ToDictionary(
@@ -188,7 +190,8 @@ internal static partial class CoverAtomCommand
                 finalSnapshot,
                 lean,
                 verifiedScribeEmissions,
-                baselineDocument);
+                baselineDocument,
+                baselineSnapshot: baseline);
             RequireNoFindings(evaluation);
             RequireValidBackfill(
                 finalDocument,

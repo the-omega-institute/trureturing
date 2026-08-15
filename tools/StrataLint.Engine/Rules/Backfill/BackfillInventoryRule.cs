@@ -273,7 +273,8 @@ internal static class BackfillInventoryRule
                 context.Current,
                 context.Lean,
                 context.VerifiedScribeEmissions,
-                LoadBaselineDocument(context.Baseline));
+                LoadBaselineDocument(context.Baseline),
+                baselineSnapshot: context.Baseline);
             foreach (var finding in evaluation.Findings)
             {
                 findings.Add(new RuleFinding(BackfillPath, finding));
