@@ -35,6 +35,25 @@ internal interface ILeanReportSource
     LeanAxiomReport Load(RepositorySnapshot snapshot);
 }
 
+internal interface IFrozenLedgerAdmissionServices
+{
+    IReadOnlySet<string> LeanReportProducerPaths { get; }
+
+    FrozenLedgerAdmissionPreparation Prepare(
+        RepositorySnapshot current,
+        RepositorySnapshot protectedBase,
+        RawChangeSet changes,
+        Func<FrozenLedgerReferenceSet, TrustedFrozenGitReferences> validateReferences);
+
+    AdmissionOutcome? Validate(
+        FrozenLedgerAdmissionPreparation preparation,
+        RepositorySnapshot current,
+        AcceptedLeanClosure lean,
+        AcyclicTruthDag dag,
+        RawChangeSet changes,
+        FrozenRevisionIdentity currentIdentity);
+}
+
 internal sealed class ProductionCliEnvironment : ICliEnvironment
 {
     private static readonly JsonSerializerOptions RouteJsonOptions = new()
@@ -47,13 +66,15 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
     private readonly IRepositoryGateway repository;
     private readonly ILeanReportSource leanReportSource;
     private readonly IScribeEmissionVerifier? scribeEmissionVerifier;
+    private readonly IFrozenLedgerAdmissionServices frozenLedgerAdmission;
 
     internal ProductionCliEnvironment(string repositoryRoot)
         : this(
             repositoryRoot,
             new GitRepositoryGateway(repositoryRoot),
             new PrecomputedLeanReportSource(repositoryRoot),
-            new ProductionScribeEmissionVerifier(repositoryRoot))
+            new ProductionScribeEmissionVerifier(repositoryRoot),
+            new ProductionFrozenLedgerAdmissionServices(repositoryRoot))
     {
     }
 
@@ -61,7 +82,14 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
         string repositoryRoot,
         IRepositoryGateway repository,
         ILeanReportSource leanReportSource)
-        : this(repositoryRoot, repository, leanReportSource, scribeEmissionVerifier: null)
+        : this(
+            repositoryRoot,
+            repository,
+            leanReportSource,
+            scribeEmissionVerifier: null,
+            new ProductionFrozenLedgerAdmissionServices(
+                repositoryRoot,
+                ImmutableHashSet<string>.Empty))
     {
     }
 
@@ -70,11 +98,29 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
         IRepositoryGateway repository,
         ILeanReportSource leanReportSource,
         IScribeEmissionVerifier? scribeEmissionVerifier)
+        : this(
+            repositoryRoot,
+            repository,
+            leanReportSource,
+            scribeEmissionVerifier,
+            new ProductionFrozenLedgerAdmissionServices(
+                repositoryRoot,
+                ImmutableHashSet<string>.Empty))
+    {
+    }
+
+    internal ProductionCliEnvironment(
+        string repositoryRoot,
+        IRepositoryGateway repository,
+        ILeanReportSource leanReportSource,
+        IScribeEmissionVerifier? scribeEmissionVerifier,
+        IFrozenLedgerAdmissionServices frozenLedgerAdmission)
     {
         this.repositoryRoot = Path.GetFullPath(repositoryRoot);
         this.repository = repository;
         this.leanReportSource = leanReportSource;
         this.scribeEmissionVerifier = scribeEmissionVerifier;
+        this.frozenLedgerAdmission = frozenLedgerAdmission;
     }
 
     public AdmissionOutcome Check(IReadOnlyList<string> arguments)
@@ -83,6 +129,9 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
         {
             var options = ParseCheckArguments(arguments);
             var prepared = repository.Prepare(options.ProtectedBase);
+            var hasFrozenLedgerDelta = FrozenLedgerDeltaPredicate.HasLedgerDelta(
+                prepared.Changes,
+                frozenLedgerAdmission.LeanReportProducerPaths);
             var bootstrap = BootstrapGate.Evaluate(prepared.Changes);
             if (bootstrap is BootstrapOutcome.InfrastructureFailure bootstrapFailure)
             {
@@ -96,11 +145,6 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
             }
 
             var current = Decode(repository.ReadCurrent());
-            if (ValidateAddedFrozenLedgerAnchors(prepared.Changes, current) is { } anchorRejection)
-            {
-                return anchorRejection;
-            }
-
             var baseline = Decode(repository.ReadRevision(prepared.Revision));
             // fork point 只需树,不需要 Lean report:append-only 保留性检查比的是文件字节。
             var forkPoint = string.Equals(prepared.ChangeBase, prepared.Revision, StringComparison.Ordinal)
@@ -121,153 +165,71 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
                 bootstrap,
                 verifiedScribeEmissions,
                 forkPoint);
-            return ApplyFrozenLedgerFinalStateGate(
-                evaluation,
-                (lean, dag) => ValidateFrozenLedgerFinalState(current, lean, dag));
+            if (!hasFrozenLedgerDelta)
+            {
+                return evaluation.Outcome;
+            }
+
+            if (evaluation.Outcome is not AdmissionOutcome.Admitted
+                && evaluation.Outcome is not AdmissionOutcome.ProtectedSurfaceChange)
+            {
+                return evaluation.Outcome;
+            }
+
+            if (evaluation.CurrentLean is null || evaluation.CurrentDag is null)
+            {
+                return new AdmissionOutcome.InfrastructureFailure(
+                    "frozen-ledger delta evaluation lacks its Lean closure or truth DAG");
+            }
+
+            FrozenLedgerAdmissionPreparation frozenLedgerPreparation;
+            try
+            {
+                frozenLedgerPreparation = frozenLedgerAdmission.Prepare(
+                    current,
+                    baseline,
+                    prepared.Changes,
+                    repository.ValidateFrozenReferences);
+            }
+            catch (FrozenLedgerAdmissionPreparationException exception)
+            {
+                return MergeFrozenLedgerRejection(
+                    evaluation.Outcome,
+                    FrozenLedgerRuleRejection(exception.Paths, exception.Message));
+            }
+
+            FrozenRevisionIdentity currentIdentity;
+            try
+            {
+                currentIdentity = DagLedgerCommandPreparation.Ask(repository.ResolveCurrentRevision);
+            }
+            catch (DagLedgerCommandPreparation.RepositoryUnavailableException exception)
+            {
+                return new AdmissionOutcome.InfrastructureFailure(
+                    (exception.InnerException ?? exception).Message);
+            }
+
+            var serviceRejection = frozenLedgerAdmission.Validate(
+                frozenLedgerPreparation,
+                current,
+                evaluation.CurrentLean,
+                evaluation.CurrentDag,
+                prepared.Changes,
+                currentIdentity);
+            if (serviceRejection is AdmissionOutcome.RuleRejected serviceRuleRejection)
+            {
+                return MergeFrozenLedgerRejection(evaluation.Outcome, serviceRuleRejection);
+            }
+            if (serviceRejection is AdmissionOutcome.InfrastructureFailure serviceInfrastructureFailure)
+            {
+                return serviceInfrastructureFailure;
+            }
+
+            return evaluation.Outcome;
         }
         catch (Exception exception)
         {
             return new AdmissionOutcome.InfrastructureFailure(exception.Message);
-        }
-    }
-
-    /// Added accepted-ledger events name Git objects as their provenance anchors. ledger-append
-    /// verifies them only on the producing machine, where a commit that never reached the remote
-    /// still resolves; the admission clone holds only pushed objects, so validating the added
-    /// events here rejects an unpublishable anchor at the gate instead of letting it freeze and
-    /// strand every other driver's ledger-append (issue #1719). Scoped to added events only: the
-    /// existing ledger's anchors are attested history, not part of this changeset.
-    private AdmissionOutcome? ValidateAddedFrozenLedgerAnchors(
-        RawChangeSet changes,
-        RepositorySnapshot current)
-    {
-        var diagnostics = ImmutableArray.CreateBuilder<Diagnostic>();
-        foreach (var change in changes.Entries)
-        {
-            if (change.Kind != RawChangeKind.Added
-                || !FrozenLedgerChangeClassifier.IsAcceptedEventPath(change.Path.Value)
-                || !current.TryGetFile(change.Path.Value, out var file))
-            {
-                continue;
-            }
-
-            // A file that does not even load is the frozen-surface rule's verdict, not this
-            // guard's; letting the snapshot core report it keeps one violation one voice.
-            if (FrozenAcceptedEventLoader.LoadFiles([file]) is not DagLedgerFilesLoadOutcome.Loaded loaded)
-            {
-                continue;
-            }
-
-            var inputs = ImmutableArray.CreateBuilder<FrozenLedgerInput>();
-            var environmentReferences = ImmutableArray.CreateBuilder<FrozenEnvironmentReference>();
-            foreach (var item in loaded.Events)
-            {
-                if (item.EventType == FrozenLedger.EnvironmentRecoordinateEventType)
-                {
-                    var recoordinate = FrozenLedger.ParseEnvironmentRecoordinate(item.Payload);
-                    inputs.Add(recoordinate.OldInput);
-                    inputs.Add(recoordinate.NewInput);
-                    environmentReferences.Add(new FrozenEnvironmentReference(
-                        recoordinate.OldInput,
-                        recoordinate.OldEnvironment,
-                        recoordinate.SourceSha256));
-                    environmentReferences.Add(new FrozenEnvironmentReference(
-                        recoordinate.NewInput,
-                        recoordinate.NewEnvironment,
-                        recoordinate.SourceSha256));
-                }
-                else if (item.Input is { } input)
-                {
-                    inputs.Add(input);
-                }
-            }
-
-            if (inputs.Count == 0)
-            {
-                continue;
-            }
-
-            try
-            {
-                repository.ValidateFrozenReferences(FrozenLedgerReferenceSet.Create(
-                    inputs.ToImmutable(),
-                    environmentReferences.ToImmutable(),
-                    []));
-            }
-            catch (FrozenReferenceRejectionException exception)
-            {
-                diagnostics.Add(new Diagnostic(
-                    RuleId.CreateKnown(8),
-                    "Frozen Hearts semantics",
-                    DisplaySeverity.Error,
-                    AdmissionEffect.Block,
-                    change.Path.Value,
-                    "added frozen-ledger event recorded snapshot base was not pushed or is "
-                    + "inconsistent; re-freeze from a pushed base on the producing side: "
-                    + exception.Message));
-            }
-        }
-
-        return diagnostics.Count == 0
-            ? null
-            : new AdmissionOutcome.RuleRejected(diagnostics.ToImmutable());
-    }
-
-    private AdmissionOutcome? ValidateFrozenLedgerFinalState(
-        RepositorySnapshot current,
-        AcceptedLeanClosure lean,
-        AcyclicTruthDag dag)
-    {
-        try
-        {
-            var syntax = DagLedgerCommandPreparation.LoadLedgerFiles(
-                current.Files.Values.Where(static file =>
-                    FrozenLedgerChangeClassifier.IsAcceptedEventPath(file.Path.Value)),
-                "current frozen ledger");
-            var catalog = DagLedgerCommandPreparation.BuildCatalog(
-                current,
-                lean,
-                dag,
-                syntax,
-                DagLedgerCommandPreparation.Ask(repository.ResolveCurrentRevision));
-            var references = DagLedgerCommandPreparation.ScanReferences(
-                syntax,
-                "current frozen ledger");
-
-            // Added-event anchors were validated above. Existing accepted files are an admitted,
-            // byte-preserved prefix, so the full replay capability is assembled locally and never
-            // asks the repository gateway to resolve old remote anchors again (#1712).
-            var trustedReplayReferences = TrustedFrozenGitReferences.CreateForTrustedAdapter(
-                references.Inputs,
-                references.EnvironmentReferences);
-            return FrozenLedger.ValidateHistory(syntax, catalog, trustedReplayReferences) switch
-            {
-                FrozenLedgerValidationOutcome.Accepted => null,
-                FrozenLedgerValidationOutcome.Rejected rejected => FrozenLedgerRuleRejection(
-                    rejected.HistoryFailurePaths.IsEmpty
-                        ? ImmutableArray.Create(
-                            RepoPath.CreateKnown(FrozenLedgerChangeClassifier.AcceptedRoot))
-                        : rejected.HistoryFailurePaths,
-                    rejected.Message),
-                _ => throw new InvalidOperationException("unknown frozen history validation outcome"),
-            };
-        }
-        catch (DagLedgerCommandPreparation.RepositoryUnavailableException exception)
-        {
-            return new AdmissionOutcome.InfrastructureFailure(
-                (exception.InnerException ?? exception).Message);
-        }
-        catch (Exception exception) when (
-            exception is ArgumentException
-                or FormatException
-                or InvalidOperationException
-                or JsonException
-                or KeyNotFoundException)
-        {
-            return FrozenLedgerRuleRejection(
-                ImmutableArray.Create(
-                    RepoPath.CreateKnown(FrozenLedgerChangeClassifier.AcceptedRoot)),
-                exception.Message);
         }
     }
 
@@ -299,34 +261,6 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
             _ => throw new InvalidOperationException(
                 "unknown admission outcome while merging frozen-ledger rejection"),
         };
-
-    internal static AdmissionOutcome ApplyFrozenLedgerFinalStateGate(
-        SnapshotAdmissionEvaluation evaluation,
-        Func<AcceptedLeanClosure, AcyclicTruthDag, AdmissionOutcome?> validateFinalState)
-    {
-        var admission = evaluation.Outcome;
-        if (admission is not AdmissionOutcome.Admitted
-            && admission is not AdmissionOutcome.ProtectedSurfaceChange)
-        {
-            return admission;
-        }
-
-        if (evaluation.CurrentLean is null || evaluation.CurrentDag is null)
-        {
-            return new AdmissionOutcome.InfrastructureFailure(
-                "frozen-ledger final-state invariant failed: admitted evaluation lacks the "
-                + "current Lean closure or truth DAG");
-        }
-
-        return validateFinalState(evaluation.CurrentLean, evaluation.CurrentDag) switch
-        {
-            null => admission,
-            AdmissionOutcome.RuleRejected frozenRejection =>
-                MergeFrozenLedgerRejection(admission, frozenRejection),
-            AdmissionOutcome.InfrastructureFailure infrastructureFailure => infrastructureFailure,
-            _ => throw new InvalidOperationException("unknown frozen-ledger final-state outcome"),
-        };
-    }
 
     public AdmissionTopologyOutcome Topology(IReadOnlyList<string> arguments)
     {

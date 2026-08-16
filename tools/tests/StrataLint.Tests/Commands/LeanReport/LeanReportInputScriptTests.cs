@@ -69,6 +69,24 @@ public sealed class LeanReportInputScriptTests
 
         Assert.NotEqual(before, fixture.Producer());
     }
+
+    [Fact]
+    public void ProducerPathsCommandExposesTheCanonicalDeclaredAndCompileClosure()
+    {
+        using var fixture = new LeanReportInputFixture();
+
+        var result = fixture.RunCommand("producer-paths");
+
+        Assert.Equal(0, result.ExitCode);
+        var paths = Lines(result);
+        Assert.Contains(InputHelperPath, paths);
+        Assert.Contains("Directory.Build.props", paths);
+        Assert.Contains(RawReportPath, paths);
+        Assert.Contains(LeanModelsPath, paths);
+        Assert.DoesNotContain(TestSourcePath, paths);
+        Assert.DoesNotContain(BlueprintSourcePath, paths);
+    }
+
     [Fact]
     public void ModulesEnumerateAllManagedSources()
     {

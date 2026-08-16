@@ -95,51 +95,26 @@ public static partial class FrozenLedger
                 {
                     var reattest = ParseReattest(payload, active, trustedReferences);
                     var entry = active[reattest.CaseId];
-                    if (reattest.IsLegacyFormat)
+                    FrozenNodeMaterial? material = null;
+                    if (!reattest.IsLegacyFormat)
                     {
-                        active[reattest.CaseId] = entry with
-                        {
-                            Payload = entry.Payload with
-                            {
-                                Input = reattest.Input,
-                                InputFingerprint = reattest.InputFingerprint,
-                                SemanticReceipt = reattest.SemanticReceipt,
-                            },
-                            LastAttestationEventHash = eventHash,
-                        };
-                    }
-                    else
-                    {
-                        if (!catalog.ByPath.TryGetValue(entry.Material.RepoPath, out var material))
+                        if (!catalog.ByPath.TryGetValue(
+                            entry.Material.RepoPath,
+                            out var candidateMaterial))
                         {
                             throw new FormatException(
                                 $"Reattest target {entry.Material.RepoPath.Value} is no longer Closed.");
                         }
 
-                        ValidateReattestMaterial(reattest, material);
-                        var frozenNodeId = reattest.FrozenNodeId
-                            ?? throw new FormatException("Extended Reattest is missing frozen_node_id.");
-                        var statementId = reattest.StatementId
-                            ?? throw new FormatException("Extended Reattest is missing statement_id.");
-                        var witnessId = reattest.WitnessId
-                            ?? throw new FormatException("Extended Reattest is missing witness_id.");
-                        active[reattest.CaseId] = entry with
-                        {
-                            Material = material,
-                            Payload = entry.Payload with
-                            {
-                                DeclarationStatementIds = reattest.DeclarationStatementIds,
-                                FrozenNodeId = frozenNodeId,
-                                Input = reattest.Input,
-                                InputFingerprint = reattest.InputFingerprint,
-                                PrerequisiteFrozenNodeIds = reattest.PrerequisiteFrozenNodeIds,
-                                SemanticReceipt = reattest.SemanticReceipt,
-                                StatementId = statementId,
-                                WitnessId = witnessId,
-                            },
-                            LastAttestationEventHash = eventHash,
-                        };
+                        ValidateReattestMaterial(reattest, candidateMaterial);
+                        material = candidateMaterial;
                     }
+
+                    active[reattest.CaseId] = ApplyReattest(
+                        entry,
+                        reattest,
+                        eventHash,
+                        material);
 
                     events.Add(new FrozenLedgerEvent.Reattest(
                         sequence,

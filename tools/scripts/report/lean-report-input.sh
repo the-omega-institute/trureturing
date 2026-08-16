@@ -19,8 +19,9 @@ while [[ $# -gt 0 ]]; do
   esac
 done
 
-[[ "$COMMAND" == "address" || "$COMMAND" == "verify" || "$COMMAND" == "modules" ]] \
-  || { echo "usage: lean-report-input.sh address|verify|modules --repository DIR [--report FILE] [--producer FILE] [--inspector FILE]" >&2; exit 2; }
+[[ "$COMMAND" == "address" || "$COMMAND" == "verify" || "$COMMAND" == "modules" \
+  || "$COMMAND" == "producer-paths" ]] \
+  || { echo "usage: lean-report-input.sh address|verify|modules|producer-paths --repository DIR [--report FILE] [--producer FILE] [--inspector FILE]" >&2; exit 2; }
 [[ -n "$REPOSITORY" && "$REPOSITORY" == /* && -d "$REPOSITORY" ]] \
   || { echo "lean-report-input: --repository requires an absolute directory" >&2; exit 2; }
 [[ -z "$PRODUCER_OVERRIDE" || ( "$PRODUCER_OVERRIDE" == /* && -f "$PRODUCER_OVERRIDE" ) ]] \
@@ -124,20 +125,26 @@ PY
   done
 }
 
+complete_producer_paths() {
+  local compile_paths="$TMP_ROOT/producer-compile-paths"
+  producer_compile_paths > "$compile_paths" || return 1
+  { cat "$compile_paths"; producer_declared_paths; } | sort -u
+}
+
 producer_sha256() {
   local manifest="$1"
   local relative
   : > "$manifest"
   : > "${manifest}.unsorted"
-  local compile_paths="$TMP_ROOT/producer-compile-paths"
+  local producer_paths="$TMP_ROOT/producer-paths"
   local closure_complete=1
-  if ! producer_compile_paths > "$compile_paths"; then
+  if ! complete_producer_paths > "$producer_paths"; then
     closure_complete=0
-    : > "$compile_paths"
+    producer_declared_paths | sort -u > "$producer_paths"
   fi
   while IFS= read -r relative; do
     append_producer_manifest_entry "${manifest}.unsorted" "$relative" || return 2
-  done < <({ cat "$compile_paths"; producer_declared_paths; } | sort -u)
+  done < "$producer_paths"
   if [[ "$closure_complete" == "0" ]]; then
     printf '%s\n' "unavailable:candidate" >> "${manifest}.unsorted"
   fi
@@ -222,6 +229,10 @@ case "$COMMAND" in
     ;;
   modules)
     managed_modules
+    ;;
+  producer-paths)
+    complete_producer_paths \
+      || { echo "lean-report-input: producer compile closure is unavailable" >&2; exit 2; }
     ;;
   verify)
     verify_report_sha

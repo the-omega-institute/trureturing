@@ -162,7 +162,7 @@ public static partial class FrozenLedger
         }
     }
 
-    private static FrozenActiveEntry ApplyEnvironmentRecoordinate(
+    internal static FrozenActiveEntry ApplyEnvironmentRecoordinate(
         FrozenActiveEntry entry,
         FrozenEnvironmentRecoordinatePayload payload,
         string eventHash)

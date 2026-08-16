@@ -111,6 +111,92 @@ public sealed partial class ProductionEnvironmentTests
     }
 
     [Fact]
+    public void CheckPerformsZeroLedgerSemanticCallsForAnUnrelatedChange()
+    {
+        using var temporary = new TemporaryDirectory();
+        var fixture = new RuleFixture();
+        fixture.AddBackfillTargets();
+        fixture.Files["Meta/registry.yaml"] = TestRegistry.Canonical;
+        fixture.Baseline["Meta/registry.yaml"] = TestRegistry.Canonical;
+        fixture.Files["Meta/domains.yaml"] = TestRegistry.Domains;
+        fixture.Baseline["Meta/domains.yaml"] = TestRegistry.Domains;
+        AddFrozenLedger(fixture);
+        var currentRaw = Snapshot(fixture.Files);
+        var baselineRaw = Snapshot(fixture.Baseline);
+        var gateway = new FakeRepositoryGateway(
+            RawChangeSet.Create([RuleFixture.BlueprintPath]),
+            currentRaw,
+            baselineRaw);
+        var ledger = new ProductionFrozenLedgerAdmissionServices(
+            "/repo",
+            ImmutableHashSet<string>.Empty);
+        var candidateReport = Path.Combine(temporary.Path, "candidate.json");
+        File.WriteAllBytes(
+            candidateReport,
+            RawLeanReportArtifact.Write(
+                Decode(currentRaw),
+                LeanAxiomReport.Create(fixture.Reports)).AsSpan());
+        var environment = new ProductionCliEnvironment(
+            "/repo",
+            gateway,
+            new FakeLeanReportSource(null),
+            scribeEmissionVerifier: null,
+            ledger);
+
+        var outcome = environment.Check([
+            "--candidate-lean-report", candidateReport,
+        ]);
+
+        Assert.IsType<AdmissionOutcome.Admitted>(outcome);
+        Assert.Equal(0, ledger.BaseViewReadCount);
+        Assert.Equal(0, ledger.DeltaEventLoadCount);
+        Assert.Equal(0, ledger.AdmissionCatalogBuildCount);
+        Assert.Equal(0, ledger.IncrementalValidationCount);
+        Assert.Equal(0, gateway.CurrentRevisionResolutionCount);
+        Assert.Equal(0, gateway.FrozenReferenceValidationCount);
+    }
+
+    [Fact]
+    public void CheckPerformsScopedLedgerCallsForAManagedLeanDelta()
+    {
+        using var temporary = new TemporaryDirectory();
+        var fixture = TrustedFrozenFixture();
+        var currentRaw = Snapshot(fixture.Files);
+        var baselineRaw = Snapshot(fixture.Baseline);
+        var gateway = new FakeRepositoryGateway(
+            RawChangeSet.CreateWithKinds([(RuleFixture.RingPath, RawChangeKind.Modified)]),
+            currentRaw,
+            baselineRaw);
+        var ledger = new ProductionFrozenLedgerAdmissionServices(
+            "/repo",
+            ImmutableHashSet<string>.Empty);
+        var candidateReport = Path.Combine(temporary.Path, "candidate.json");
+        File.WriteAllBytes(
+            candidateReport,
+            RawLeanReportArtifact.Write(
+                Decode(currentRaw),
+                LeanAxiomReport.Create(fixture.Reports)).AsSpan());
+        var environment = new ProductionCliEnvironment(
+            "/repo",
+            gateway,
+            new FakeLeanReportSource(null),
+            scribeEmissionVerifier: null,
+            ledger);
+
+        var outcome = environment.Check([
+            "--candidate-lean-report", candidateReport,
+        ]);
+
+        Assert.IsType<AdmissionOutcome.Admitted>(outcome);
+        Assert.Equal(1, ledger.BaseViewReadCount);
+        Assert.Equal(0, ledger.DeltaEventLoadCount);
+        Assert.Equal(1, ledger.AdmissionCatalogBuildCount);
+        Assert.Equal(1, ledger.IncrementalValidationCount);
+        Assert.Equal(1, gateway.CurrentRevisionResolutionCount);
+        Assert.Equal(0, gateway.FrozenReferenceValidationCount);
+    }
+
+    [Fact]
     public void CheckMapsUndecodableLegacyBoundaryToSl016RuleRejection()
     {
         using var temporary = new TemporaryDirectory();
