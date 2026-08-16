@@ -19,8 +19,6 @@ internal interface IRepositoryGateway
 
     PreparedRepository Prepare(string? protectedBase);
 
-    FrozenRevisionIdentity ResolveFrozenRevision(string revision);
-
     FrozenRevisionIdentity ResolveCurrentRevision();
 
     RawRepositorySnapshot ReadCurrent();

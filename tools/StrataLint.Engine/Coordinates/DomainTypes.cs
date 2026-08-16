@@ -186,9 +186,4 @@ public sealed record ArtifactKindId
     }
 
     public override string ToString() => Value;
-
-    internal static ArtifactKindId CreateKnown(string value) =>
-        TryCreate(value, out var artifactKindId)
-            ? artifactKindId
-            : throw new ArgumentException("Invalid artifact kind id.", nameof(value));
 }

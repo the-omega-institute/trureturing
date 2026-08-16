@@ -5,8 +5,6 @@ namespace StrataLint.Engine;
 
 internal static class CanonicalStatementWriter
 {
-    internal const string StatementIdEncodingVersion = "canonical-statement-v1";
-
     internal static ImmutableArray<FrozenDeclarationStatement> DeclarationStatementIds(
         RepoPath path,
         LeanFileReport report) =>
