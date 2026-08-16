@@ -90,9 +90,73 @@ public sealed class QdoGenreSuffixTests
             Assert.Equal(bytes, after.Reassemble().ToArray());
         }
 
-        AssertGenreTable(LegacyGictGenres, migrated.GictGenres);
-        AssertGenreTable(LegacyPzgGenres, migrated.PzgGenres);
-        Assert.Equal(["qdo"], migrated.Dialects.Keys.Order(StringComparer.Ordinal));
+        AssertLegacyTables(migrated);
+    }
+
+    [Fact]
+    public void ConservativityOracleAdmitsAMonotoneGenreAddition()
+    {
+        // The oracle freezes legacy behaviour, not the future catalogue: adding a genre that
+        // conflicts with no legacy mapping is a conservative extension and must stay green,
+        // otherwise every new token would have to edit this test.
+        var extended = InsertBefore(
+            CanonicalData,
+            "[[pzg.markers]]",
+            """
+            [[pzg.genres]]
+            token = "增补观察"
+            kind = "observation"
+
+
+            """);
+        var migrated = LoadRules(extended);
+
+        AssertLegacyTables(migrated);
+        Assert.Contains(
+            migrated.PzgGenres,
+            item => item.Token == "增补观察" && item.Value == "observation");
+    }
+
+    [Fact]
+    public void ConservativityOracleAdmitsASecondDeclaredDialect()
+    {
+        // Declaring another dialect leaves every legacy mapping intact, so the oracle must
+        // admit it; pinning the key set to exactly qdo would freeze the future catalogue.
+        var extended = InsertBefore(CanonicalData, "[[dialect.genre]]", LongestDialect + "\n\n");
+        var migrated = LoadRules(extended);
+
+        AssertLegacyTables(migrated);
+        Assert.Contains(LongestDialectId, migrated.Dialects.Keys);
+    }
+
+    [Fact]
+    public void ConservativityOracleRejectsARewrittenLegacyMapping()
+    {
+        // Rewrite one legacy mapping in memory: the oracle's discriminating power is a property
+        // of the predicate, not of the canonical file's byte layout, so this must not depend on
+        // matching TOML text.
+        var (token, kind) = LegacyPzgGenres[0];
+        var rewritten = LoadRules(CanonicalData).PzgGenres
+            .Select(item => item.Token == token
+                ? new AtomizerMapping(item.Token, kind == "observation" ? "note" : "observation")
+                : item)
+            .ToArray();
+
+        Assert.Single(rewritten, item => item.Token == token && item.Value != kind);
+        Assert.Throws<Xunit.Sdk.ContainsException>(
+            () => AssertGenreTable(LegacyPzgGenres, rewritten));
+    }
+
+    [Fact]
+    public void ConservativityOracleRejectsADroppedLegacyMapping()
+    {
+        var (token, _) = LegacyPzgGenres[0];
+        var dropped = LoadRules(CanonicalData).PzgGenres
+            .Where(item => item.Token != token)
+            .ToArray();
+
+        Assert.Throws<Xunit.Sdk.ContainsException>(
+            () => AssertGenreTable(LegacyPzgGenres, dropped));
     }
 
     [Fact]
@@ -157,14 +221,32 @@ public sealed class QdoGenreSuffixTests
         DigestionTestSupport.Snapshot(
             (TheoryAtomizerDataLoader.DataPath, Encoding.UTF8.GetBytes(data))));
 
+    /// <summary>
+    /// The whole legacy surface this branch must preserve. Every conservativity fixture calls
+    /// it, so a reverted inclusion assertion is pinned by the monotone-extension cases.
+    /// </summary>
+    private static void AssertLegacyTables(TheoryAtomizerRules migrated)
+    {
+        AssertGenreTable(LegacyGictGenres, migrated.GictGenres);
+        AssertGenreTable(LegacyPzgGenres, migrated.PzgGenres);
+        Assert.Contains("qdo", migrated.Dialects.Keys);
+    }
+
+    /// <summary>
+    /// Conservative extension is inclusion, not equality: every legacy mapping must still be
+    /// present with its old kind. Asserting set equality would freeze the future catalogue and
+    /// turn this oracle into a second copy of the canonical data, so registering any new genre
+    /// would have to edit this test.
+    /// </summary>
     private static void AssertGenreTable(
         IEnumerable<(string Token, string Kind)> expected,
         IEnumerable<AtomizerMapping> actual)
     {
-        Assert.Equal(
-            expected.OrderBy(static item => item.Token, StringComparer.Ordinal),
-            actual.Select(static item => (item.Token, Kind: item.Value))
-                .OrderBy(static item => item.Token, StringComparer.Ordinal));
+        var current = actual.ToArray();
+        foreach (var (token, kind) in expected)
+        {
+            Assert.Contains(current, item => item.Token == token && item.Value == kind);
+        }
     }
 
     private static (byte[] Bytes, string[] ExpectedPaths) Pr2096Fixture()
@@ -265,6 +347,8 @@ public sealed class QdoGenreSuffixTests
         ("窗", "observation"),
         ("系", "corollary"),
     ];
+
+    private const string LongestDialectId = "longest-probe";
 
     private const string LongestDialect = """
         [[dialect]]

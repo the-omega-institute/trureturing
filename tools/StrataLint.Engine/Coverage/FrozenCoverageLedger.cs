@@ -27,7 +27,7 @@ public static class FrozenCoverageLedger
                 var root = line.Value;
                 var eventType = RequiredString(root, "event_type");
                 var payload = RequiredObject(root, "payload");
-                if (!sawGenesis && eventType is "Freeze" or "Reattest" or "EnvironmentRecoordinate" or "Revoke")
+                if (!sawGenesis && eventType is "Freeze" or "Reattest" or "Supersede" or "Revoke")
                 {
                     throw new FormatException($"{eventType} event occurs before Genesis");
                 }
@@ -56,16 +56,19 @@ public static class FrozenCoverageLedger
                         break;
                     case "Reattest":
                         break;
-                    case "EnvironmentRecoordinate":
-                        var oldNodeId = RequiredString(payload, "old_frozen_node_id");
-                        var newNodeId = RequiredString(payload, "new_frozen_node_id");
-                        if (!FrozenHashSyntax.IsSha256(oldNodeId)
-                            || !FrozenHashSyntax.IsSha256(newNodeId)
-                            || !active.Remove(oldNodeId, out var recoordinatedPath)
-                            || !active.TryAdd(newNodeId, recoordinatedPath))
+                    case "Supersede":
+                        var caseId = RequiredString(payload, "case_id");
+                        var newNodeId = RequiredString(payload, "frozen_node_id");
+                        var oldNode = active.SingleOrDefault(item =>
+                            item.Value.Value == RequiredString(payload.GetProperty("input"), "descriptor_selector"));
+                        if (!FrozenHashSyntax.IsSha256(newNodeId)
+                            || string.IsNullOrEmpty(caseId)
+                            || oldNode.Equals(default(KeyValuePair<string, RepoPath>))
+                            || !active.Remove(oldNode.Key, out var supersededPath)
+                            || !active.TryAdd(newNodeId, supersededPath))
                         {
                             throw new FormatException(
-                                "EnvironmentRecoordinate has invalid or inactive node identities");
+                                "Supersede has an invalid or inactive node identity");
                         }
                         break;
                     case "Revoke":

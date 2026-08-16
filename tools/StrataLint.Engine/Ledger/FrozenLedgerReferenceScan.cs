@@ -177,6 +177,13 @@ internal static class FrozenLedgerReferenceProjection
         "graph_root", "root_case_ids", "root_frozen_node_ids",
     ];
 
+    internal static string[] SupersedePayloadFields { get; } =
+    [
+        "axiom_closure", "case_id", "declaration_statement_ids", "environment",
+        "frozen_node_id", "input", "prerequisite_frozen_node_ids",
+        "previous_attestation_event_hash", "statement_id", "witness_id",
+    ];
+
     internal static ImmutableDictionary<string, string[]> OidFields { get; } =
         new Dictionary<string, string[]>(StringComparer.Ordinal)
         {
@@ -204,30 +211,22 @@ internal static class FrozenLedgerReferenceProjection
             [
                 "evidence[].receipt_blob_oid",
             ],
-            [FrozenLedger.EnvironmentRecoordinateEventType] =
+            [FrozenLedger.SupersedeEventType] =
             [
-                "environment.new.lake_manifest_blob_oid",
-                "environment.new.lakefile_blob_oid",
-                "environment.new.lean_toolchain_blob_oid",
-                "environment.old.lake_manifest_blob_oid",
-                "environment.old.lakefile_blob_oid",
-                "environment.old.lean_toolchain_blob_oid",
-                "new_input.base_commit_oid",
-                "new_input.base_tree_oid",
-                "new_input.descriptor_blob_oid",
-                "new_input.supporting_blob_oids",
-                "old_input.base_commit_oid",
-                "old_input.base_tree_oid",
-                "old_input.descriptor_blob_oid",
-                "old_input.supporting_blob_oids",
+                "environment.lake_manifest_blob_oid",
+                "environment.lakefile_blob_oid",
+                "environment.lean_toolchain_blob_oid",
+                "input.base_commit_oid",
+                "input.base_tree_oid",
+                "input.descriptor_blob_oid",
+                "input.supporting_blob_oids",
             ],
         }.ToImmutableDictionary(StringComparer.Ordinal);
 }
 
 public sealed record FrozenEnvironmentReference(
     FrozenLedgerInput Input,
-    FrozenEnvironmentPins Environment,
-    string SourceSha256);
+    FrozenEnvironmentPins Environment);
 
 [Union(EnableImplicitConversions = false)]
 public partial record FrozenLedgerReferenceScanOutcome
@@ -270,9 +269,9 @@ public static partial class FrozenLedger
             return ParseInput(input);
         }
 
-        if (eventType == EnvironmentRecoordinateEventType)
+        if (eventType == SupersedeEventType)
         {
-            return ParseEnvironmentRecoordinate(payload).NewInput;
+            return ParseSupersede(payload).Input;
         }
 
         if (eventType == "Revoke")
@@ -398,21 +397,14 @@ public static partial class FrozenLedger
                         blobs.Add(oid);
                     }
                 }
-                else if (eventType == EnvironmentRecoordinateEventType)
+                else if (eventType == SupersedeEventType)
                 {
-                    var recoordinate = ParseEnvironmentRecoordinate(payload);
-                    inputs.Add(recoordinate.OldInput);
-                    inputs.Add(recoordinate.NewInput);
+                    var supersede = ParseSupersede(payload);
+                    inputs.Add(supersede.Input);
                     environmentReferences.Add(new FrozenEnvironmentReference(
-                        recoordinate.OldInput,
-                        recoordinate.OldEnvironment,
-                        recoordinate.SourceSha256));
-                    environmentReferences.Add(new FrozenEnvironmentReference(
-                        recoordinate.NewInput,
-                        recoordinate.NewEnvironment,
-                        recoordinate.SourceSha256));
-                    AddInputReferences(recoordinate.OldInput, commits, trees, blobs);
-                    AddInputReferences(recoordinate.NewInput, commits, trees, blobs);
+                        supersede.Input,
+                        supersede.Environment));
+                    AddInputReferences(supersede.Input, commits, trees, blobs);
                 }
                 else
                 {
