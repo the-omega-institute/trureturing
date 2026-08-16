@@ -1,8 +1,8 @@
 namespace StrataLint.Engine;
 
-public static class FrozenLedgerDeltaPredicate
+internal static class FrozenLedgerDeltaPredicate
 {
-    public static bool HasLedgerDelta(
+    internal static bool HasLedgerDelta(
         RawChangeSet changes,
         IReadOnlySet<string> leanReportProducerPaths)
     {
