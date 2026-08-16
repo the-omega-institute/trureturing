@@ -34,6 +34,11 @@ internal sealed class FunctionGraphSpectrumCollisionDocument : IScribeDocumentDe
                             + "preserve every fiber cardinality, but tauA has a fiber of size "
                             + "three and tauB has none, so no conjugacy exists.")),
                     Paragraph(Text(
+                        "This theorem certifies only the collision (negative) half of proposition "
+                            + "8.5. The positive half, linear similarity of the two transition "
+                            + "matrices, is certified by D5/S3/ObserverMemory/InverseLimits/"
+                            + "FunctionGraphLinearSimilarity.transition_matrices_linearly_similar.")),
+                    Paragraph(Text(
                         "Repository and pinned-Mathlib searches found no equal or stronger "
                             + "statement. Mathlib supplies Semiconj, iterate_add_apply, "
                             + "image_const, and card_congr; GitHub Lean-code search found only "
