@@ -10,6 +10,7 @@ public sealed class FrozenLedgerReferenceSet
         ImmutableArray<FrozenLedgerInput> inputs,
         ImmutableArray<FrozenEnvironmentReference> environmentReferences,
         ImmutableArray<string> revocationReceiptBlobOids,
+        ImmutableArray<string> requiredAncestorCommitOids,
         ImmutableArray<string> commitOids,
         ImmutableArray<string> treeOids,
         ImmutableArray<string> blobOids)
@@ -17,6 +18,7 @@ public sealed class FrozenLedgerReferenceSet
         Inputs = inputs;
         EnvironmentReferences = environmentReferences;
         RevocationReceiptBlobOids = revocationReceiptBlobOids;
+        RequiredAncestorCommitOids = requiredAncestorCommitOids;
         CommitOids = commitOids;
         TreeOids = treeOids;
         BlobOids = blobOids;
@@ -27,6 +29,8 @@ public sealed class FrozenLedgerReferenceSet
     public ImmutableArray<FrozenEnvironmentReference> EnvironmentReferences { get; }
 
     public ImmutableArray<string> RevocationReceiptBlobOids { get; }
+
+    internal ImmutableArray<string> RequiredAncestorCommitOids { get; }
 
     public ImmutableArray<string> CommitOids { get; }
 
@@ -57,13 +61,27 @@ public sealed class FrozenLedgerReferenceSet
         ImmutableArray<FrozenLedgerInput> inputs,
         ImmutableArray<FrozenEnvironmentReference> environmentReferences,
         ImmutableArray<string> receiptOids)
+        => Create(inputs, environmentReferences, receiptOids, []);
+
+    internal static FrozenLedgerReferenceSet Create(
+        ImmutableArray<FrozenLedgerInput> inputs,
+        ImmutableArray<FrozenEnvironmentReference> environmentReferences,
+        ImmutableArray<string> receiptOids,
+        IEnumerable<string> requiredAncestorCommitOids)
     {
         var commits = inputs.Select(static input => input.BaseCommitOid);
         var trees = inputs.Select(static input => input.BaseTreeOid);
         var blobs = inputs.Select(static input => input.DescriptorBlobOid)
             .Concat(inputs.SelectMany(static input => input.SupportingBlobOids))
             .Concat(receiptOids);
-        return Create(inputs, environmentReferences, receiptOids, commits, trees, blobs);
+        return Create(
+            inputs,
+            environmentReferences,
+            receiptOids,
+            requiredAncestorCommitOids,
+            commits,
+            trees,
+            blobs);
     }
 
     internal static FrozenLedgerReferenceSet Create(
@@ -73,10 +91,28 @@ public sealed class FrozenLedgerReferenceSet
         IEnumerable<string> commitOids,
         IEnumerable<string> treeOids,
         IEnumerable<string> blobOids) =>
+        Create(
+            inputs,
+            environmentReferences,
+            receiptOids,
+            [],
+            commitOids,
+            treeOids,
+            blobOids);
+
+    private static FrozenLedgerReferenceSet Create(
+        ImmutableArray<FrozenLedgerInput> inputs,
+        ImmutableArray<FrozenEnvironmentReference> environmentReferences,
+        ImmutableArray<string> receiptOids,
+        IEnumerable<string> requiredAncestorCommitOids,
+        IEnumerable<string> commitOids,
+        IEnumerable<string> treeOids,
+        IEnumerable<string> blobOids) =>
         new(
             inputs,
             environmentReferences,
             receiptOids,
+            Sorted(requiredAncestorCommitOids),
             Sorted(commitOids),
             Sorted(treeOids),
             Sorted(blobOids));

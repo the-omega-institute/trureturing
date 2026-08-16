@@ -69,7 +69,8 @@ public static partial class FrozenLedger
     private static FrozenFreezePayload ParseFreeze(
         JsonElement payload,
         FrozenMaterialCatalog catalog,
-        TrustedFrozenGitReferences trustedReferences)
+        TrustedFrozenGitReferences trustedReferences,
+        bool requireCatalogRevisionIdentity = true)
     {
         RequireObjectFields(
             payload,
@@ -133,10 +134,11 @@ public static partial class FrozenLedger
             || result.InputFingerprint != expectedMaterial.WitnessId.Value
             || result.SemanticReceipt != expectedMaterial.FrozenNodeId.Value
             || !result.PrerequisiteFrozenNodeIds.SequenceEqual(expectedMaterial.PrerequisiteFrozenNodeIds)
-            || result.Input.BaseCommitOid
-                != (expectedMaterial.Attestation.BaseCommitOid ?? catalog.Environment.OriginCommitOid)
-            || result.Input.BaseTreeOid
-                != (expectedMaterial.Attestation.BaseTreeOid ?? catalog.Environment.OriginTreeOid)
+            || requireCatalogRevisionIdentity
+                && (result.Input.BaseCommitOid
+                        != (expectedMaterial.Attestation.BaseCommitOid ?? catalog.Environment.OriginCommitOid)
+                    || result.Input.BaseTreeOid
+                        != (expectedMaterial.Attestation.BaseTreeOid ?? catalog.Environment.OriginTreeOid))
             || result.Input.DescriptorBlobOid != expectedMaterial.Attestation.SourceBlobOid
             || result.Input.DescriptorSelector != expectedMaterial.RepoPath.Value
             || result.Input.Materializer != "repository-snapshot-v1"
