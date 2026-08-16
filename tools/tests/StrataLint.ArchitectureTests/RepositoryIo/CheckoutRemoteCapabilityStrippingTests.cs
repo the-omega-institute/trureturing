@@ -25,10 +25,7 @@ public sealed class CheckoutRemoteCapabilityStrippingTests
         Assert.Empty(findings);
     }
 
-    [Fact]
-    public void CheckoutWithCompleteRemoteCapabilityStrippingIsAccepted()
-    {
-        const string workflow = """
+    private const string CompleteStripWorkflow = """
             jobs:
               test:
                 steps:
@@ -55,7 +52,71 @@ public sealed class CheckoutRemoteCapabilityStrippingTests
                       test -n "$base_sha"
             """;
 
-        Assert.Empty(InspectWorkflow(".github/workflows/complete.yml", workflow));
+    [Fact]
+    public void CheckoutWithCompleteRemoteCapabilityStrippingIsAccepted() =>
+        Assert.Empty(InspectWorkflow(".github/workflows/complete.yml", CompleteStripWorkflow));
+
+    // The strip step is the machine guarantee that CI cannot reach a remote. Its
+    // individual contracts were unpinned: deleting the remote-removal contract left every
+    // test green, so a workflow edit that hollowed the step out would have landed silently.
+    // These two pin the contract set itself and each contract's rejection.
+    private const string StripContractProbe = """
+        jobs:
+          test:
+            steps:
+              - uses: actions/checkout@v4
+                with:
+                  path: source
+              - name: Unrelated step
+        """;
+
+    [Fact]
+    public void StripContractSetIsExactlyPinned()
+    {
+        var finding = Assert.Single(InspectWorkflow(".github/workflows/probe.yml", StripContractProbe));
+        var missing = finding.Message
+            .Split("missing: ", StringSplitOptions.None)[1]
+            .Split(", ", StringSplitOptions.None);
+
+        Assert.Equal(
+            new[]
+            {
+                "canonical step name",
+                "bash shell",
+                "checkout-derived path",
+                "fail-closed shell mode",
+                "remote removal",
+                "remote-ref deletion",
+                "empty remote assertion",
+                "empty remote-ref assertion",
+                "explicit failure exit",
+                "HEAD smoke test",
+                "HEAD^1 smoke test",
+            },
+            missing);
+    }
+
+    [Theory]
+    [InlineData("name: Strip checkout remote state", "name: Something else", "canonical step name")]
+    [InlineData("shell: bash", "shell: sh", "bash shell")]
+    [InlineData("CHECKOUT_PATH: source", "CHECKOUT_PATH: elsewhere", "checkout-derived path")]
+    [InlineData("set -euo pipefail", "true", "fail-closed shell mode")]
+    [InlineData("git -C \"$CHECKOUT_PATH\" remote remove origin", "true", "remote removal")]
+    [InlineData("--format='delete %(refname)' refs/remotes/", "--format='%(refname)' refs/heads/", "remote-ref deletion")]
+    [InlineData("remote_count=", "unused_count=", "empty remote assertion")]
+    [InlineData("remote_ref_count=", "unused_ref_count=", "empty remote-ref assertion")]
+    [InlineData("exit 1", "true", "explicit failure exit")]
+    [InlineData("head_sha=\"$(git -C \"$CHECKOUT_PATH\" rev-parse HEAD)\"", "true", "HEAD smoke test")]
+    [InlineData("base_sha=\"$(git -C \"$CHECKOUT_PATH\" rev-parse HEAD^1)\"", "true", "HEAD^1 smoke test")]
+    public void BreakingAnyStripContractIsRejected(string original, string replacement, string contract)
+    {
+        var broken = CompleteStripWorkflow.Replace(original, replacement, StringComparison.Ordinal);
+
+        Assert.NotEqual(CompleteStripWorkflow, broken);
+
+        var finding = Assert.Single(InspectWorkflow(".github/workflows/broken.yml", broken));
+
+        Assert.Contains(contract, finding.Message, StringComparison.Ordinal);
     }
 
     [Fact]
