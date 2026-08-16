@@ -142,7 +142,7 @@ public sealed class FileMapManifestTests
         Assert.False(entry.ResidenceViolation);
     }
 
-    private const string BlueprintPath = "Blueprint/D5/S0/Carrier/Ring.md";
+    private const string GeneratedPath = "Artifacts/Ring.md";
     private const string FormalPath = "D5/S0/Carrier/Ring.lean";
     private const string FrozenLedgerPath =
         "Golden/Frozen/accepted/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.json";
@@ -162,7 +162,7 @@ public sealed class FileMapManifestTests
             status = "known-violations-frozen-under-monitoring"
 
             [[files]]
-            pattern = "Blueprint/**/*.md"
+            pattern = "Artifacts/**/*.md"
             kind = "generated"
             produced_by = "ScribeEmitter"
             consumed_by = ["reader"]
@@ -216,7 +216,7 @@ public sealed class FileMapManifestTests
             "known-violations-frozen-under-monitoring",
             manifest.ResidencePolicy.Status);
         Assert.Equal(FileMapKind.Generated, Assert.Single(
-            manifest.Match(BlueprintPath)).Kind);
+            manifest.Match(GeneratedPath)).Kind);
         Assert.Equal(FileMapKind.Truth, Assert.Single(
             manifest.Match(FormalPath)).Kind);
         Assert.Equal(FileMapKind.Ledger, Assert.Single(
