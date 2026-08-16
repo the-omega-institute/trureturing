@@ -34,7 +34,6 @@ public sealed class RuleEngineTests
         var fixture = new RuleFixture();
 
         Assert.DoesNotContain(BackfillInventoryLoader.RelativePath, fixture.Files.Keys);
-        Assert.Contains(BackfillInventoryLoader.TicketIndexPath, fixture.Files.Keys);
         var document = BackfillInventoryLoader.Load(fixture.Build().Current);
         var source = Assert.Single(document.RequireDigestionSources());
         var entry = Assert.Single(source.Entries);
@@ -47,7 +46,6 @@ public sealed class RuleEngineTests
         Assert.Equal(RuleFixture.FixtureCasReference, entry.CasRef);
         Assert.Equal(DigestionMigrationState.Partial, entry.ProjectedStatus.Migration);
         Assert.Equal(DigestionTruthState.Closed, entry.ProjectedStatus.Truth);
-        Assert.Equal(18, document.RequireTickets().Length);
     }
 
     [Theory]
@@ -103,44 +101,6 @@ public sealed class RuleEngineTests
     }
 
     [Fact]
-    public void DirectoryBackfillRejectsDanglingTicketGid()
-    {
-        var fixture = new RuleFixture();
-        fixture.UseSyntheticDirectoryBackfill("D5-T0098 = \"D5/X_Frontier/SyntheticDelta\"\n");
-
-        var diagnostics = RuleCatalog.Default.EvaluateSingle(RuleId.CreateKnown(16), fixture.Build()).Diagnostics;
-
-        Assert.Contains(diagnostics, diagnostic =>
-            diagnostic.Message == "dangling ticket D5-T0098: ticket target Lean file is absent");
-    }
-
-    [Fact]
-    public void DirectoryBackfillRejectsDuplicateTicketCaseId()
-    {
-        var fixture = new RuleFixture();
-        fixture.UseSyntheticDirectoryBackfill(
-            $"D5-T0098 = \"{RuleFixture.RingPath[..^".lean".Length]}\"\n"
-            + $"D5-T0098 = \"{RuleFixture.RingPath[..^".lean".Length]}\"\n");
-
-        var diagnostics = RuleCatalog.Default.EvaluateSingle(RuleId.CreateKnown(16), fixture.Build()).Diagnostics;
-
-        Assert.Contains(diagnostics, diagnostic => diagnostic.Message == "duplicate ticket case: D5-T0098");
-    }
-
-    [Fact]
-    public void DirectoryBackfillRejectsUnregisteredFrontierTask()
-    {
-        var fixture = new RuleFixture();
-        fixture.UseSyntheticDirectoryBackfill("");
-        fixture.AddSyntheticUnregisteredFrontierTask("D5-T0097");
-
-        var diagnostics = RuleCatalog.Default.EvaluateSingle(RuleId.CreateKnown(16), fixture.Build()).Diagnostics;
-
-        Assert.Contains(diagnostics, diagnostic =>
-            diagnostic.Message == "frontier TASK cases are missing from ticket_index: D5-T0097");
-    }
-
-    [Fact]
     public void Sl019AcceptsAFreeProseTaskAsAnAnomalyCaseAddress()
     {
         const string path = "D5/X_Frontier/FreeProseTask.lean";
@@ -158,7 +118,7 @@ public sealed class RuleEngineTests
     public void DirectoryBackfillReachesSharedDownstreamValidationWithoutFormatDiagnostics()
     {
         var fixture = new RuleFixture();
-        fixture.UseSyntheticDirectoryBackfill("");
+        fixture.UseSyntheticDirectoryBackfill();
 
         var diagnostics = RuleCatalog.Default.EvaluateSingle(RuleId.CreateKnown(16), fixture.Build()).Diagnostics;
 

@@ -380,7 +380,6 @@ public sealed partial class DigestionLedgerTests
                 entries:
                   - anchor: old
                     disposition: D5/X_Frontier/Probe
-            ticket_index: []
             """;
 
         var error = Assert.Throws<FormatException>(() => BackfillInventoryLoader.Load(legacy));
@@ -640,7 +639,6 @@ public sealed partial class DigestionLedgerTests
                 status:
                   migration: {{migration}}
                   truth: {{truth}}
-        ticket_index: []
         """;
 
     private static string StructuralLedgerYaml(DigestionAtom atom) =>

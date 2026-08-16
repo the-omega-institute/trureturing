@@ -123,7 +123,6 @@ public sealed class DigestionSourceConflictMarkerTests
                 path: {{sourcePath}}
                 atomizer: {{AtomizerRegistry.GenericId}}
                 entries: []
-            ticket_index: []
             """);
         var snapshot = DigestionTestSupport.Snapshot((sourcePath, sourceBytes));
         return DigestionIngestor.Plan(ledger, snapshot, ledger);
@@ -162,7 +161,6 @@ public sealed class DigestionSourceConflictMarkerTests
                     status:
                       migration: residual
                       truth: open
-            ticket_index: []
             """;
         var ledger = BackfillInventoryLoader.Load(ledgerText);
         var policy = RegistryLoadAssert.Accepted(RegistryLoader.Load(

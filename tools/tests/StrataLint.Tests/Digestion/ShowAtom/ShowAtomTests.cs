@@ -382,7 +382,6 @@ public sealed class ShowAtomTests
                 status:
                   migration: partial
                   truth: open
-        ticket_index: []
         """;
 
     private static string AdapterLedger(
@@ -410,7 +409,6 @@ public sealed class ShowAtomTests
                 status:
                   migration: partial
                   truth: open
-        ticket_index: []
         """;
 
     private static string AdapterGenerationLedger(
@@ -452,7 +450,6 @@ public sealed class ShowAtomTests
                 status:
                   migration: partial
                   truth: open
-        ticket_index: []
         """;
 
     private static string SyntheticAtomizerData => """

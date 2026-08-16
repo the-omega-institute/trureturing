@@ -21,7 +21,6 @@ public sealed partial class DigestionAlignmentTests
                 atomizer: {{string.Concat("gi", "ct", "-v1")}}
                 acknowledged_stale: {{acknowledgments}}
             {{renderedEntries}}
-            ticket_index: []
             """;
     }
 

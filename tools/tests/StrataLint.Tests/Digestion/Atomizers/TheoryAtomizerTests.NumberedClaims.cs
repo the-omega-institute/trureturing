@@ -255,7 +255,6 @@ public sealed partial class TheoryAtomizerTests
             .Select(path => Path.GetRelativePath(root, path).Replace(Path.DirectorySeparatorChar, '/'))
             .Append(sourcePath)
             .Append(TheoryAtomizerDataLoader.DataPath)
-            .Append(BackfillInventoryLoader.TicketIndexPath)
             .Append(casPath)
             .Distinct(StringComparer.Ordinal)
             .ToArray();

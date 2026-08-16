@@ -96,6 +96,7 @@ internal static class BackfillInventoryWriter
         Line(builder, "sources:");
         foreach (var source in document.RequireDigestionSources())
         {
+            EnsureLineBreak(builder);
             Line(builder, $"  - source_id: {Scalar(source.SourceId)}");
             Line(builder, $"    path: {Scalar(source.SourcePath)}");
             Line(builder, $"    atomizer: {Scalar(source.Atomizer)}");
@@ -108,6 +109,7 @@ internal static class BackfillInventoryWriter
             Line(builder, source.Entries.Length == 0 ? "    entries: []" : "    entries:");
             foreach (var entry in source.Entries)
             {
+                EnsureLineBreak(builder);
                 if (preserveReceiptSyntax && entry.ReceiptSyntax is { } syntax)
                 {
                     var receipt = BackfillReceiptPreimage.RewriteStatus(
@@ -122,15 +124,15 @@ internal static class BackfillInventoryWriter
             }
         }
 
-        var tickets = document.RequireTickets();
-        Line(builder, tickets.Length == 0 ? "ticket_index: []" : "ticket_index:");
-        foreach (var ticket in tickets)
-        {
-            Line(builder, $"  - case_id: {Scalar(ticket.CaseId)}");
-            Line(builder, $"    gid: {Scalar(ticket.Gid)}");
-        }
-
         return ImmutableArray.CreateRange(StrictUtf8.GetBytes(builder.ToString()));
+    }
+
+    private static void EnsureLineBreak(StringBuilder builder)
+    {
+        if (builder.Length > 0 && builder[^1] != '\n')
+        {
+            builder.Append('\n');
+        }
     }
 
     private static void Entry(StringBuilder builder, DigestionLedgerEntry entry)
