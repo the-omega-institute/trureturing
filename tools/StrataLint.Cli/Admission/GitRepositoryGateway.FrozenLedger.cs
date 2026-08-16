@@ -158,24 +158,17 @@ internal sealed partial class GitRepositoryGateway
                 entries,
                 "lean-toolchain",
                 reference.Environment.LeanToolchainBlobOid,
-                "EnvironmentRecoordinate lean-toolchain pin");
+                "Supersede lean-toolchain pin");
             RequireTreeBlob(
                 entries,
                 reference.Environment.LakefilePath.Value,
                 reference.Environment.LakefileBlobOid,
-                "EnvironmentRecoordinate lakefile pin");
+                "Supersede lakefile pin");
             RequireTreeBlob(
                 entries,
                 "lake-manifest.json",
                 reference.Environment.LakeManifestBlobOid,
-                "EnvironmentRecoordinate lake-manifest pin");
-            var sourceBytes = GitBytes("cat-file", "blob", Untag(reference.Input.DescriptorBlobOid));
-            var sourceSha256 = "sha256:" + Convert.ToHexStringLower(SHA256.HashData(sourceBytes));
-            if (!string.Equals(sourceSha256, reference.SourceSha256, StringComparison.Ordinal))
-            {
-                throw SemanticRejection(
-                    "EnvironmentRecoordinate source_sha256 does not match descriptor blob bytes");
-            }
+                "Supersede lake-manifest pin");
         }
 
         return TrustedFrozenGitReferences.CreateForTrustedAdapter(

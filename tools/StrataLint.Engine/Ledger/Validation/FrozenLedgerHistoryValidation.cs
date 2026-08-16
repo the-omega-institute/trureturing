@@ -56,6 +56,7 @@ public static partial class FrozenLedger
             var active = new Dictionary<string, FrozenActiveEntry>(StringComparer.Ordinal);
             var activePaths = new HashSet<RepoPath>();
             var allCaseIds = new HashSet<string>(StringComparer.Ordinal);
+            var superseded = new HashSet<FrozenNodeId>();
             var revoked = new HashSet<FrozenNodeId>();
             var previous = ZeroHash;
             for (var index = 0; index < syntax.Lines.Length; index++)
@@ -126,22 +127,24 @@ public static partial class FrozenLedger
                         previousHash,
                         reattest));
                 }
-                else if (eventType == EnvironmentRecoordinateEventType)
+                else if (eventType == SupersedeEventType)
                 {
-                    var recoordinate = ValidateEnvironmentRecoordinate(
+                    var supersede = ValidateSupersede(
                         payload,
                         active,
                         trustedReferences,
                         candidateCatalog: null);
-                    active[recoordinate.CaseId] = ApplyEnvironmentRecoordinate(
-                        active[recoordinate.CaseId],
-                        recoordinate,
+                    var oldEntry = active[supersede.CaseId];
+                    superseded.Add(oldEntry.Material.FrozenNodeId);
+                    active[supersede.CaseId] = ApplySupersede(
+                        oldEntry,
+                        supersede,
                         eventHash);
-                    events.Add(new FrozenLedgerEvent.EnvironmentRecoordinate(
+                    events.Add(new FrozenLedgerEvent.Supersede(
                         sequence,
                         eventHash,
                         previousHash,
-                        recoordinate));
+                        supersede));
                 }
                 else if (eventType == "Revoke")
                 {
@@ -200,9 +203,7 @@ public static partial class FrozenLedger
             {
                 var material = expectedByPath[entry.Material.RepoPath];
                 var materialMatches = HistoricalActiveFreezeMatches(entry.Payload, material);
-                var environmentMatches = entry.Environment is null
-                    || EnvironmentMatches(entry.Environment, catalog.Environment);
-                if (materialMatches && environmentMatches)
+                if (materialMatches)
                 {
                     active[caseId] = entry with { Material = material };
                     continue;
@@ -220,13 +221,6 @@ public static partial class FrozenLedger
                 if (allowPendingReattestation)
                 {
                     continue;
-                }
-
-                if (!environmentMatches)
-                {
-                    throw new HistoryFinalStateException(
-                        ImmutableArray.Create(material.RepoPath),
-                        $"Active module {material.RepoPath.Value} environment pins changed; an accepted EnvironmentRecoordinate event is required before ledger-sync.");
                 }
 
                 throw new HistoryFinalStateException(
@@ -250,6 +244,7 @@ public static partial class FrozenLedger
                 ComputeFrozenGraphRoot(activeNodes),
                 activeEntries,
                 allCaseIds.ToImmutableHashSet(StringComparer.Ordinal),
+                superseded.ToImmutableHashSet(),
                 revoked.ToImmutableHashSet()));
         }
         catch (Exception exception) when (
@@ -339,14 +334,6 @@ public static partial class FrozenLedger
         && payload.PrerequisiteFrozenNodeIds.SequenceEqual(material.PrerequisiteFrozenNodeIds)
         && payload.Input.DescriptorBlobOid == material.Attestation.SourceBlobOid
         && payload.Input.DescriptorSelector == material.RepoPath.Value;
-
-    private static bool EnvironmentMatches(
-        FrozenEnvironmentPins actual,
-        FrozenEnvironmentAttestation expected) =>
-        actual.LeanToolchainBlobOid == expected.LeanToolchainBlobOid
-        && actual.LakeManifestBlobOid == expected.LakeManifestBlobOid
-        && actual.LakefilePath.Value == expected.LakefilePath
-        && actual.LakefileBlobOid == expected.LakefileBlobOid;
 
     private static StatementId ParseStatementId(string value, string label) =>
         FrozenHashSyntax.IsSha256(value)

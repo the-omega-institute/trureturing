@@ -73,7 +73,7 @@ public sealed class FrozenGitReferenceAdapterTests
     }
 
     [Fact]
-    public void EnvironmentRecoordinateReferencesBindAllThreePinsToNamedPaths()
+    public void SupersedeReferencesBindAllThreePinsToNamedPaths()
     {
         using var repository = new TemporaryDirectory();
         ReviewRegressionTests.RunGit(repository.Path, "init");
@@ -153,11 +153,7 @@ public sealed class FrozenGitReferenceAdapterTests
             prefix + lakefile,
             RepoPath.CreateKnown("lakefile.toml"),
             prefix + toolchain);
-        var sourceBytes = File.ReadAllBytes(Path.Combine(root, "D5", "S0", "Carrier", "A.lean"));
-        return new FrozenEnvironmentReference(
-            input,
-            environment,
-            "sha256:" + Convert.ToHexStringLower(System.Security.Cryptography.SHA256.HashData(sourceBytes)));
+        return new FrozenEnvironmentReference(input, environment);
     }
 
     private static FrozenLedgerInput CreateFrozenInput(
