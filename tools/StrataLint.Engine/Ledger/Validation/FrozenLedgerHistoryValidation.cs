@@ -283,7 +283,13 @@ public static partial class FrozenLedger
         TrustedFrozenGitReferences trustedReferences)
     {
         RequireEventPayloadFields(payload, "Freeze");
-        var pathText = RequiredString(payload, "node_path");
+        var currentShape = HasExactObjectFields(
+            payload,
+            FrozenLedgerReferenceProjection.FreezePayloadFieldsV4);
+        var input = ParseInput(payload.GetProperty("input"));
+        var pathText = currentShape
+            ? input.DescriptorSelector
+            : RequiredString(payload, "node_path");
         if (!RepoPath.TryCreate(pathText, out var path))
         {
             throw new FormatException($"Freeze has invalid node_path {pathText}.");
@@ -293,19 +299,24 @@ public static partial class FrozenLedger
         var witness = ParseWitnessId(RequiredString(payload, "witness_id"), "Freeze witness");
         var frozen = ParseFrozenNodeId(RequiredString(payload, "frozen_node_id"), "Freeze node");
         var result = new FrozenFreezePayload(
-            RequiredString(payload, "case_class"),
+            currentShape ? "active-frozen" : RequiredString(payload, "case_class"),
             RequiredString(payload, "case_id"),
             ParseDeclarationStatementIds(payload),
-            RequiredString(payload, "evaluation"),
-            ParseExpected(payload.GetProperty("expected")),
+            currentShape ? "admission" : RequiredString(payload, "evaluation"),
+            currentShape
+                ? new FrozenExpectedVerdict(
+                    ImmutableArray.Create("admit"),
+                    "none",
+                    ImmutableArray<FrozenExpectedDiagnostic>.Empty)
+                : ParseExpected(payload.GetProperty("expected")),
             frozen,
-            ParseInput(payload.GetProperty("input")),
-            RequiredString(payload, "input_fingerprint"),
+            input,
+            currentShape ? witness.Value : RequiredString(payload, "input_fingerprint"),
             path,
             ParseFrozenNodeIds(payload, "prerequisite_frozen_node_ids"),
-            RequiredString(payload, "semantic_receipt"),
+            currentShape ? frozen.Value : RequiredString(payload, "semantic_receipt"),
             statement,
-            RequiredString(payload, "truth_state"),
+            currentShape ? nameof(TruthState.Closed) : RequiredString(payload, "truth_state"),
             witness)
         {
             AxiomClosure = ParseOptionalAxiomClosure(payload),
