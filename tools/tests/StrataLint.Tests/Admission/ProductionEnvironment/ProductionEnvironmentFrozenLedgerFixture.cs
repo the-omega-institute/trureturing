@@ -157,6 +157,9 @@ public sealed partial class ProductionEnvironmentTests
         Assert.Equal(1, gateway.CurrentRevisionResolutionCount);
         var deltaReferences = Assert.Single(gateway.FrozenReferenceValidations);
         Assert.Contains(FrozenLedgerTestData.GitOid('a'), deltaReferences.CommitOids);
+        Assert.Equal(
+            FrozenLedgerTestData.GitOid('a'),
+            Assert.Single(deltaReferences.RequiredAncestorCommitOids));
     }
 
     [Fact]
@@ -193,6 +196,7 @@ public sealed partial class ProductionEnvironmentTests
         Assert.NotNull(captured);
         Assert.Equal(2, captured.Inputs.Length);
         Assert.Equal(2, captured.EnvironmentReferences.Length);
+        Assert.Empty(captured.RequiredAncestorCommitOids);
         var oldReference = Assert.Single(
             captured.EnvironmentReferences,
             reference => reference.Input.BaseCommitOid == FrozenLedgerTestData.GitOid('a'));
