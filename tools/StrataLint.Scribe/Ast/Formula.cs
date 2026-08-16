@@ -89,27 +89,6 @@ public abstract record Formula
 {
     private Formula() { }
 
-    public sealed record TextRun : Formula
-    {
-        internal TextRun(string value)
-        {
-            ArgumentNullException.ThrowIfNull(value);
-            if (value.Length == 0 || value.Any(static character =>
-                    !char.IsLetterOrDigit(character)
-                    && character is not (' ' or '.' or ',' or ';' or ':' or '!' or '?'
-                        or '\'' or '"' or '(' or ')' or '-')))
-            {
-                throw new ArgumentException(
-                    "Formula text accepts prose letters, digits, spaces, and basic punctuation only.",
-                    nameof(value));
-            }
-
-            Value = value;
-        }
-
-        public string Value { get; }
-    }
-
     public sealed record Aligned : Formula
     {
         public Aligned(ImmutableArray<Formula> rows) =>

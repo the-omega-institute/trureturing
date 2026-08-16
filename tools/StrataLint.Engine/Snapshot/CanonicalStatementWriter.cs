@@ -21,11 +21,6 @@ internal static class CanonicalStatementWriter
             .ThenBy(static declaration => declaration.StatementId.Value, StringComparer.Ordinal)
             .ToImmutableArray();
 
-    internal static ImmutableArray<byte> WriteModule(RepoPath path, LeanFileReport report)
-    {
-        return WriteModule(path, DeclarationStatementIds(path, report));
-    }
-
     internal static ImmutableArray<byte> WriteModule(
         RepoPath path,
         ImmutableArray<FrozenDeclarationStatement> declarations)
