@@ -1,0 +1,17 @@
+ast_path: theorem/30.3
+fingerprints:
+  raw_sha256: sha256:9cbd5454e4464eb527f9e996993dc72fdc5305d0ce8a4ad1fadeaaa429cec9be
+  normalized_sha256: sha256:9cbd5454e4464eb527f9e996993dc72fdc5305d0ce8a4ad1fadeaaa429cec9be
+cas_ref: sha256:9cbd5454e4464eb527f9e996993dc72fdc5305d0ce8a4ad1fadeaaa429cec9be
+coverage_gids:
+  - D5/S0/Rewriting/Quotients/RelativeIdentityRefinement.relative_identity_refinement
+receipts:
+  coverage:
+    - gid: D5/S0/Rewriting/Quotients/RelativeIdentityRefinement.relative_identity_refinement
+      source_sha256: sha256:9cbd5454e4464eb527f9e996993dc72fdc5305d0ce8a4ad1fadeaaa429cec9be
+      target_sha256: sha256:ddb96a0cc077f03931312eccc884bd3a8cfb01156663b0e9a42dd368a403d402
+  scribe:
+    - gid: D5/S0/Rewriting/Quotients/RelativeIdentityRefinement.relative_identity_refinement
+      definition_sha256: sha256:9eb8fd2751de1d2a5e9b0caa346510b3a6151c642a841938139c497850cd22d0
+      emission_sha256: sha256:11197d685890193701b9acdb4b1f1fcb6745079e15a8ed20b99db5685e437b1c
+  unresolved_subitems: []
