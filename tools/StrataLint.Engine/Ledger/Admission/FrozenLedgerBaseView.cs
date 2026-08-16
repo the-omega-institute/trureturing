@@ -213,6 +213,7 @@ internal static class FrozenLedgerBaseViewReader
         var frozen = FrozenNodeId.Create(
             FrozenLedgerAttestationChain.RequiredString(payload, "frozen_node_id"));
         var prerequisites = ReadFrozenNodeIds(payload, "prerequisite_frozen_node_ids");
+        var axiomClosure = ReadOptionalAxiomClosure(payload);
         var freeze = new FrozenFreezePayload(
             FrozenLedgerAttestationChain.RequiredString(payload, "case_class"),
             FrozenLedgerAttestationChain.RequiredString(payload, "case_id"),
@@ -227,12 +228,23 @@ internal static class FrozenLedgerBaseViewReader
             FrozenLedgerAttestationChain.RequiredString(payload, "semantic_receipt"),
             statement,
             FrozenLedgerAttestationChain.RequiredString(payload, "truth_state"),
-            witness);
+            witness)
+        {
+            AxiomClosure = axiomClosure,
+        };
         return new FrozenActiveEntry(
-            ReadMaterial(path, declarations, statement, witness, frozen, prerequisites, input),
+            ReadMaterial(
+                path,
+                declarations,
+                statement,
+                witness,
+                frozen,
+                prerequisites,
+                axiomClosure.IsDefault ? ImmutableArray<string>.Empty : axiomClosure,
+                input),
             freeze,
             eventHash,
-            AxiomClosureKnown: false);
+            AxiomClosureKnown: !axiomClosure.IsDefault);
     }
 
     private static FrozenReattestPayload ReadReattest(JsonElement payload)
@@ -246,7 +258,10 @@ internal static class FrozenLedgerBaseViewReader
         var receipt = FrozenLedgerAttestationChain.RequiredString(payload, "semantic_receipt");
         if (!payload.TryGetProperty("declaration_statement_ids", out var declarations))
         {
-            return new FrozenReattestPayload(caseId, input, fingerprint, previous, receipt);
+            return new FrozenReattestPayload(caseId, input, fingerprint, previous, receipt)
+            {
+                AxiomClosure = ReadOptionalAxiomClosure(payload),
+            };
         }
 
         return new FrozenReattestPayload(
@@ -259,7 +274,10 @@ internal static class FrozenLedgerBaseViewReader
             previous,
             receipt,
             StatementId.Create(FrozenLedgerAttestationChain.RequiredString(payload, "statement_id")),
-            WitnessId.Create(FrozenLedgerAttestationChain.RequiredString(payload, "witness_id")));
+            WitnessId.Create(FrozenLedgerAttestationChain.RequiredString(payload, "witness_id")))
+        {
+            AxiomClosure = ReadOptionalAxiomClosure(payload),
+        };
     }
 
     private static FrozenEnvironmentRecoordinatePayload ReadEnvironmentRecoordinate(JsonElement payload)
@@ -352,6 +370,7 @@ internal static class FrozenLedgerBaseViewReader
         WitnessId witness,
         FrozenNodeId frozen,
         ImmutableArray<FrozenNodeId> prerequisites,
+        ImmutableArray<string> axiomClosure,
         FrozenLedgerInput input) => new(
             path,
             declarations,
@@ -359,12 +378,17 @@ internal static class FrozenLedgerBaseViewReader
             witness,
             frozen,
             prerequisites,
-            ImmutableArray<string>.Empty,
+            axiomClosure,
             new FrozenModuleAttestation(path, input.DescriptorBlobOid)
             {
                 BaseCommitOid = input.BaseCommitOid,
                 BaseTreeOid = input.BaseTreeOid,
             });
+
+    private static ImmutableArray<string> ReadOptionalAxiomClosure(JsonElement payload) =>
+        payload.TryGetProperty("axiom_closure", out _)
+            ? FrozenLedgerAttestationChain.RequiredStringArray(payload, "axiom_closure")
+            : default;
 
     private static RepoPath ReadPath(string value) =>
         RepoPath.TryCreate(value, out var path)

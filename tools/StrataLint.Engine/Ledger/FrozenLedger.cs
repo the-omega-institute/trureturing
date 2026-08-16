@@ -5,7 +5,10 @@ using Dunet;
 
 namespace StrataLint.Engine;
 
-public sealed record FrozenLedgerLineSyntax(ImmutableArray<byte> RawBytes, JsonElement Value);
+public sealed record FrozenLedgerLineSyntax(
+    ImmutableArray<byte> RawBytes,
+    JsonElement Value,
+    string? SourceDagEventHash = null);
 
 public sealed record FrozenLedgerSyntax(
     ImmutableArray<byte> RawBytes,
@@ -47,7 +50,12 @@ public sealed record FrozenFreezePayload(
     string SemanticReceipt,
     StatementId StatementId,
     string TruthState,
-    WitnessId WitnessId);
+    WitnessId WitnessId)
+{
+    public ImmutableArray<string> AxiomClosure { get; init; }
+
+    internal bool HasAxiomClosure => !AxiomClosure.IsDefault;
+}
 
 public sealed record FrozenReattestPayload(
     string CaseId,
@@ -61,6 +69,10 @@ public sealed record FrozenReattestPayload(
     StatementId? StatementId,
     WitnessId? WitnessId)
 {
+    public ImmutableArray<string> AxiomClosure { get; init; }
+
+    internal bool HasAxiomClosure => !AxiomClosure.IsDefault;
+
     public FrozenReattestPayload(
         string caseId,
         FrozenLedgerInput input,

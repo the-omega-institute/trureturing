@@ -72,12 +72,7 @@ public static partial class FrozenLedger
         TrustedFrozenGitReferences trustedReferences,
         bool requireCatalogRevisionIdentity = true)
     {
-        RequireObjectFields(
-            payload,
-            "Freeze payload",
-            "case_class", "case_id", "declaration_statement_ids", "evaluation", "expected",
-            "frozen_node_id", "input", "input_fingerprint", "node_path", "prerequisite_frozen_node_ids",
-            "semantic_receipt", "statement_id", "truth_state", "witness_id");
+        RequireEventPayloadFields(payload, "Freeze");
         var pathText = RequiredString(payload, "node_path");
         if (!RepoPath.TryCreate(pathText, out var path) || !catalog.ByPath.TryGetValue(path, out var expectedMaterial))
         {
@@ -114,7 +109,10 @@ public static partial class FrozenLedger
             RequiredString(payload, "semantic_receipt"),
             StatementId.Create(statementText),
             RequiredString(payload, "truth_state"),
-            WitnessId.Create(witnessText));
+            WitnessId.Create(witnessText))
+        {
+            AxiomClosure = ParseOptionalAxiomClosure(payload),
+        };
         if (!trustedReferences.Covers(result.Input))
         {
             throw new FormatException("Freeze input has no validated Git commit/tree/blob capability.");
@@ -131,6 +129,8 @@ public static partial class FrozenLedger
             || result.StatementId != expectedMaterial.StatementId
             || result.WitnessId != expectedMaterial.WitnessId
             || result.FrozenNodeId != expectedMaterial.FrozenNodeId
+            || result.HasAxiomClosure
+                && !result.AxiomClosure.SequenceEqual(expectedMaterial.AxiomClosure)
             || result.InputFingerprint != expectedMaterial.WitnessId.Value
             || result.SemanticReceipt != expectedMaterial.FrozenNodeId.Value
             || !result.PrerequisiteFrozenNodeIds.SequenceEqual(expectedMaterial.PrerequisiteFrozenNodeIds)
@@ -155,6 +155,11 @@ public static partial class FrozenLedger
 
         return result;
     }
+
+    private static ImmutableArray<string> ParseOptionalAxiomClosure(JsonElement payload) =>
+        payload.TryGetProperty("axiom_closure", out _)
+            ? ParseAxiomClosure(payload, "axiom_closure")
+            : default;
 
     internal static ImmutableArray<FrozenDeclarationStatement> ParseDeclarationStatementIds(
         JsonElement payload) =>

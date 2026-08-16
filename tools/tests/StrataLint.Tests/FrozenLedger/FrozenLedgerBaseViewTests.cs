@@ -29,6 +29,51 @@ public sealed class FrozenLedgerBaseViewTests
     }
 
     [Fact]
+    public void ProtectedBaseProjectionRestoresRecordedAxiomClosure()
+    {
+        var view = FrozenLedgerBaseViewReader.Read(Snapshot(TrustedButNoncanonicalBaseFiles()));
+
+        var active = Assert.Single(view.ActiveByPath).Value;
+        Assert.True(active.AxiomClosureKnown);
+        Assert.Equal(new[] { "Classical.choice" }, active.Material.AxiomClosure);
+    }
+
+    [Fact]
+    public void AcceptedLoaderDecodesExistingV2Corpus()
+    {
+        var root = TestRepositoryLayout.FindRoot();
+        var raw = new GitRepositoryGateway(root).ReadRevision("origin/dev");
+        var snapshot = Assert.IsType<SnapshotDecodeOutcome.Decoded>(
+            SnapshotDecoder.Decode(raw)).Snapshot;
+        var acceptedFiles = snapshot.Files.Values.Where(file =>
+            FrozenLedgerChangeClassifier.IsAcceptedEventPath(file.Path.Value));
+
+        var loaded = Assert.IsType<DagLedgerFilesLoadOutcome.Loaded>(
+            FrozenAcceptedEventLoader.LoadFiles(acceptedFiles));
+
+        Assert.NotEmpty(loaded.Events);
+        Assert.All(loaded.Events, static item => Assert.Equal(2, item.SchemaVersion));
+    }
+
+    [Fact]
+    public void NewContentAddressedEventsUseSchemaV3()
+    {
+        var encoded = FrozenLedgerCanonicalWriter.WriteDagEvent(
+            "Genesis",
+            JsonSerializer.SerializeToElement(new
+            {
+                generator_blob_oid = FrozenLedgerTestData.GitOid('1'),
+                origin_commit_oid = FrozenLedgerTestData.GitOid('2'),
+                origin_tree_oid = FrozenLedgerTestData.GitOid('3'),
+                protocol_version = 1,
+                rule_catalog_root = RuleCatalog.Default.RootSha256,
+            }));
+        using var document = JsonDocument.Parse(encoded.Bytes.AsSpan()[..^1].ToArray());
+
+        Assert.Equal(3, document.RootElement.GetProperty("schema_version").GetInt32());
+    }
+
+    [Fact]
     public void CurrentDevAcceptedSetProjectsWithoutAFindingOrVerdictObject()
     {
         var root = TestRepositoryLayout.FindRoot();
@@ -66,6 +111,7 @@ public sealed class FrozenLedgerBaseViewTests
             "Freeze",
             JsonSerializer.SerializeToElement(new
             {
+                axiom_closure = new[] { "Classical.choice" },
                 case_class = "active-frozen",
                 case_id = "persisted-case-id",
                 declaration_statement_ids = Array.Empty<object>(),

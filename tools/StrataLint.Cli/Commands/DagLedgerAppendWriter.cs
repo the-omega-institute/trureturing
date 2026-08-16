@@ -55,8 +55,10 @@ internal static class DagLedgerAppendWriter
                     "generated frozen ledger is invalid: " + rejected.Message),
                 _ => throw new InvalidOperationException("unknown ledger validation outcome"),
             };
-            if (!DagLedgerCommandPreparation.LoadLedgerDirectory(context.LedgerPath, "existing frozen ledger")
-                    .RawBytes.AsSpan().SequenceEqual(context.BaselineBytes))
+            var currentBaseline = DagLedgerCommandPreparation.LoadLedgerDirectory(
+                context.LedgerPath,
+                "existing frozen ledger");
+            if (!currentBaseline.RawBytes.AsSpan().SequenceEqual(context.BaselineBytes))
             {
                 throw new InvalidOperationException("accepted event files changed while ledger-append was validating them");
             }
@@ -65,7 +67,8 @@ internal static class DagLedgerAppendWriter
                 context.LedgerPath,
                 candidateSyntax.Lines,
                 context.Baseline.Events.Length,
-                context.BaselineBytes);
+                context.BaselineBytes,
+                currentBaseline);
             var appended = candidate.Events.Skip(context.Baseline.Events.Length).ToImmutableArray();
             var reattests = appended
                 .OfType<FrozenLedgerEvent.Reattest>()
@@ -104,23 +107,41 @@ internal static class DagLedgerAppendWriter
         string directory,
         IEnumerable<FrozenLedgerLineSyntax> lines,
         int skip = 0,
-        byte[]? expectedBaselineBytes = null) =>
+        byte[]? expectedBaselineBytes = null,
+        FrozenLedgerSyntax? existingSyntax = null) =>
         WriteEventFiles(
             directory,
-            BuildNewEventFiles(lines, skip),
+            BuildNewEventFiles(lines, skip, existingSyntax),
             expectedBaselineBytes);
 
     internal static ImmutableArray<RepositoryFile> BuildNewEventFiles(
         IEnumerable<FrozenLedgerLineSyntax> lines,
-        int skip = 0)
+        int skip = 0,
+        FrozenLedgerSyntax? existingSyntax = null)
     {
         var files = ImmutableArray.CreateBuilder<RepositoryFile>();
         var linearToDagHash = new Dictionary<string, string>(StringComparer.Ordinal);
+        var existingDagHashByLinearHash = existingSyntax?.Lines
+            .Where(static line => line.SourceDagEventHash is not null)
+            .ToDictionary(
+                static line => line.Value.GetProperty("event_hash").GetString()!,
+                static line => line.SourceDagEventHash!,
+                StringComparer.Ordinal)
+            ?? new Dictionary<string, string>(StringComparer.Ordinal);
         var sequence = 0;
         foreach (var line in lines)
         {
             var eventType = line.Value.GetProperty("event_type").GetString()!;
             var payload = line.Value.GetProperty("payload");
+            var linearEventHash = line.Value.GetProperty("event_hash").GetString()!;
+            if (sequence < skip
+                && existingDagHashByLinearHash.TryGetValue(linearEventHash, out var existingDagHash))
+            {
+                linearToDagHash.Add(linearEventHash, existingDagHash);
+                sequence++;
+                continue;
+            }
+
             if (payload.TryGetProperty("previous_attestation_event_hash", out var previous))
             {
                 var rewritten = JsonNode.Parse(payload.GetRawText())!.AsObject();
@@ -128,10 +149,11 @@ internal static class DagLedgerAppendWriter
                 payload = JsonSerializer.SerializeToElement(rewritten);
             }
 
-            var encoded = FrozenLedgerCanonicalWriter.WriteDagEvent(
-                eventType,
-                payload);
-            linearToDagHash.Add(line.Value.GetProperty("event_hash").GetString()!, encoded.Hash);
+            var schemaVersion = sequence < skip && !payload.TryGetProperty("axiom_closure", out _)
+                ? 2
+                : FrozenLedgerCanonicalWriter.CurrentDagSchemaVersion;
+            var encoded = FrozenLedgerCanonicalWriter.WriteDagEvent(eventType, payload, schemaVersion);
+            linearToDagHash.Add(linearEventHash, encoded.Hash);
             if (sequence++ < skip)
             {
                 continue;
