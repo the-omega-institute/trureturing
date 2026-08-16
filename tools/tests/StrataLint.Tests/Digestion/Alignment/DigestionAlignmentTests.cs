@@ -729,7 +729,7 @@ public sealed partial class DigestionAlignmentTests
         return (ledger, oldCapture);
     }
 
-    private static RepositorySnapshot Snapshot(
+    internal static RepositorySnapshot Snapshot(
         byte[] sourceBytes,
         IEnumerable<DigestionCasObject>? casObjects = null,
         string sourcePath = "docs/source.md")

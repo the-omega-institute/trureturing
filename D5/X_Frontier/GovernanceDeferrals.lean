@@ -138,3 +138,8 @@ def darkSideFormalizationReceiptMisbindingTicket : Unit := ()
     提示:Spec:97 (A3) declares the special-zone alphabet `X_Assumptions/X_Certificates/X_Frontier` as a closed, never-extended set, but unlike the S0-S4 alphabet, which `tools/tests/StrataLint.ArchitectureTests/CanonicalSources/Golden/StratumAlphabetTests.cs` anchors across `Enum.GetNames<Stratum>()`, `RepositoryRules.IsStratum`, and `Gid.IsStratum`, the special-zone alphabet has no anchoring test; it is carried as scattered string literals in `Gid.cs`, `RepositoryPathPolicy.cs`, `Routing.cs`, and `RepositoryRules.Helpers.cs`, with nothing comparing them to spec:97 or to one another. This gap is strictly pre-existing and independent of the `SpecialZone` enum removal in this change: the enum had zero consumers and zero anchoring test, so it detected nothing before or after. Close only by an anchoring test with a red fixture that binds all carriers to one source of truth; do not close by re-introducing an unconsumed type.
     尸检:none -/
 def specialZoneAlphabetAnchoringTicket : Unit := ()
+
+/-- TASK D5-T0034 | 难度:3 | 依赖:就绪✓ | 尝试:0
+    提示:Enforce ast_path uniqueness within each ledger source: the live path checks only atom_id uniqueness, so duplicate ast_path values currently have no machine finding. This gap predates and is independent of removing production-unreachable TheoryIngestion; that dead code never ran and therefore never enforced the invariant. Close only by adding a finding in BackfillInventoryRule or DigestionStatusEvaluator plus a red fixture for duplicate same-source ast_path values.
+    尸检:none -/
+def ledgerSourceAstPathUniquenessTicket : Unit := ()

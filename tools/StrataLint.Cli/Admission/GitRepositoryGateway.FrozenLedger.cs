@@ -58,6 +58,33 @@ internal sealed partial class GitRepositoryGateway
             RequireTaggedObjectType(oid, prefix, "blob");
         }
 
+        if (!references.RequiredAncestorCommitOids.IsEmpty)
+        {
+            var candidateHead = GitText("rev-parse", "--verify", "HEAD^{commit}").Trim();
+            foreach (var oid in references.RequiredAncestorCommitOids)
+            {
+                var arguments = new[]
+                {
+                    "merge-base", "--is-ancestor", Untag(oid), candidateHead,
+                };
+                var result = GitRaw(arguments, allowNonzero: true);
+                if (result.ExitCode == 1)
+                {
+                    throw SemanticRejection(
+                        $"frozen base_commit_oid {oid} is not an ancestor of candidate HEAD");
+                }
+
+                if (result.ExitCode != 0)
+                {
+                    throw InfrastructureFailure(
+                        GitCommandFailureKind.NonzeroExit,
+                        arguments,
+                        exitCode: result.ExitCode,
+                        standardError: DecodeFailureText(result.StandardError));
+                }
+            }
+        }
+
         var trees = new Dictionary<string, ImmutableArray<TreeEntry>>(StringComparer.Ordinal);
         foreach (var input in references.Inputs)
         {

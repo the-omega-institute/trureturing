@@ -104,7 +104,8 @@ record_timing dotnet
 make lean-report
 record_timing lean-report
 
-/bin/bash "$ROOT/tools/scripts/workflow/scribe-content-checks.sh" \
+STRATALINT_SCRIBE_BASE="$BASE_SHA" \
+  /bin/bash "$ROOT/tools/scripts/workflow/scribe-content-checks.sh" \
   "$ROOT/.lake/build/stratalint/raw-lean-report.json"
 record_timing scribe-content-checks
 
