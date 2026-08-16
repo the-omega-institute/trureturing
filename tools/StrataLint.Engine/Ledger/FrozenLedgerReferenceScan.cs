@@ -391,6 +391,120 @@ public static partial class FrozenLedger
         }
     }
 
+    internal static FrozenLedgerReferenceScanOutcome ScanSuffixReferences(
+        FrozenLedgerSyntax syntax,
+        int startIndex,
+        string previousHash)
+    {
+        ArgumentNullException.ThrowIfNull(syntax);
+        try
+        {
+            if (startIndex < 0 || startIndex > syntax.Lines.Length)
+            {
+                throw new ArgumentOutOfRangeException(nameof(startIndex));
+            }
+
+            ValidateSuffixSyntaxEnvelope(syntax, startIndex);
+
+            var inputs = ImmutableArray.CreateBuilder<FrozenLedgerInput>();
+            var environmentReferences = ImmutableArray.CreateBuilder<FrozenEnvironmentReference>();
+            var receipts = ImmutableHashSet.CreateBuilder<string>(StringComparer.Ordinal);
+            var commits = ImmutableHashSet.CreateBuilder<string>(StringComparer.Ordinal);
+            var trees = ImmutableHashSet.CreateBuilder<string>(StringComparer.Ordinal);
+            var blobs = ImmutableHashSet.CreateBuilder<string>(StringComparer.Ordinal);
+            var previous = previousHash;
+            for (var index = startIndex; index < syntax.Lines.Length; index++)
+            {
+                var line = syntax.Lines[index];
+                var root = line.Value;
+                RequireObjectFields(
+                    root,
+                    "event envelope",
+                    "event_hash", "event_type", "payload", "previous_hash", "schema_version", "sequence");
+                RequireCanonicalLine(line);
+                var sequence = RequiredNonnegativeInteger(root, "sequence");
+                var recordedPrevious = RequiredString(root, "previous_hash");
+                var eventHash = RequiredString(root, "event_hash");
+                if (sequence != index
+                    || RequiredNonnegativeInteger(root, "schema_version") != 1
+                    || !string.Equals(recordedPrevious, previous, StringComparison.Ordinal)
+                    || !FrozenHashSyntax.IsSha256(eventHash)
+                    || !string.Equals(eventHash, ComputeEventHash(root), StringComparison.Ordinal))
+                {
+                    throw new FormatException("Frozen suffix sequence/hash chain is invalid.");
+                }
+
+                var eventType = RequiredString(root, "event_type");
+                var payload = root.GetProperty("payload");
+                if (eventType is "Freeze" or "Reattest")
+                {
+                    RequireEventPayloadFields(payload, eventType);
+                    var parsed = ParseInput(payload.GetProperty("input"));
+                    inputs.Add(parsed);
+                    AddInputReferences(parsed, commits, trees, blobs);
+                }
+                else if (eventType == "Revoke")
+                {
+                    RequireObjectFields(
+                        payload,
+                        "Revoke payload",
+                        FrozenLedgerReferenceProjection.RevokePayloadFields);
+                    var evidence = payload.GetProperty("evidence");
+                    if (evidence.ValueKind != JsonValueKind.Array)
+                    {
+                        throw new FormatException("Revoke payload is missing evidence fields.");
+                    }
+
+                    foreach (var item in evidence.EnumerateArray().Select(ParseEvidence))
+                    {
+                        var (oid, _) = EvidenceReceipt(item);
+                        if (!FrozenHashSyntax.IsGitOid(oid))
+                        {
+                            throw new FormatException(
+                                "Revoke evidence receipt has a malformed Git blob OID.");
+                        }
+
+                        receipts.Add(oid);
+                        blobs.Add(oid);
+                    }
+                }
+                else if (eventType == SupersedeEventType)
+                {
+                    var supersede = ParseSupersede(payload);
+                    inputs.Add(supersede.Input);
+                    environmentReferences.Add(new FrozenEnvironmentReference(
+                        supersede.Input,
+                        supersede.Environment));
+                    AddInputReferences(supersede.Input, commits, trees, blobs);
+                }
+                else
+                {
+                    throw new FormatException(
+                        $"Event type {eventType} is not legal in a candidate suffix.");
+                }
+
+                previous = eventHash;
+            }
+
+            return new FrozenLedgerReferenceScanOutcome.Accepted(FrozenLedgerReferenceSet.Create(
+                inputs.ToImmutable(),
+                environmentReferences.ToImmutable(),
+                receipts.Order(StringComparer.Ordinal).ToImmutableArray(),
+                commits,
+                trees,
+                blobs));
+        }
+        catch (Exception exception) when (
+            exception is ArgumentOutOfRangeException
+                or FormatException
+                or JsonException
+                or InvalidOperationException
+                or KeyNotFoundException)
+        {
+            return new FrozenLedgerReferenceScanOutcome.Rejected(exception.Message);
+        }
+    }
+
     private static void RequireEventPayloadFields(
         JsonElement payload,
         string eventType,

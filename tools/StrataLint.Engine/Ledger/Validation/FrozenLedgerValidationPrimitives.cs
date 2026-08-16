@@ -15,6 +15,17 @@ public static partial class FrozenLedger
         }
     }
 
+    private static void ValidateSuffixSyntaxEnvelope(FrozenLedgerSyntax syntax, int startIndex)
+    {
+        var prefixLength = syntax.Lines.Take(startIndex).Sum(static line => line.RawBytes.Length);
+        var suffix = syntax.Lines.Skip(startIndex).SelectMany(static line => line.RawBytes).ToArray();
+        if (prefixLength > syntax.RawBytes.Length
+            || !syntax.RawBytes.AsSpan()[prefixLength..].SequenceEqual(suffix))
+        {
+            throw new FormatException("Frozen ledger suffix lines do not reproduce the suffix bytes.");
+        }
+    }
+
     private static void RequireCanonicalLine(FrozenLedgerLineSyntax line)
     {
         var canonical = StructuredCanonicalWriter.WriteJson(line.Value);

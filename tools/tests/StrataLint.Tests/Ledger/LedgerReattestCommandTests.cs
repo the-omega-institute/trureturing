@@ -181,9 +181,9 @@ public sealed class LedgerReattestCommandTests
     public void ProspectiveReplayRejectsAnEventSetMissingABaselineEvent()
     {
         using var fixture = new LedgerReattestFixture("True");
+        var baselineFiles = DagLedgerCommandPreparation.ReadLedgerDirectoryFiles(fixture.LedgerPath);
         var baselineEvents = Assert.IsType<DagLedgerFilesLoadOutcome.Loaded>(
-            DagLedgerLoader.LoadFiles(
-                DagLedgerCommandPreparation.ReadLedgerDirectoryFiles(fixture.LedgerPath))).Events;
+            DagLedgerLoader.LoadFiles(baselineFiles)).Events;
 
         var exception = Assert.Throws<InvalidOperationException>(() =>
             DagLedgerReattestWriter.RequireExpectedEventSet(
@@ -192,6 +192,16 @@ public sealed class LedgerReattestCommandTests
                 baselineEvents.Skip(1).ToImmutableArray()));
 
         Assert.Contains("event set", exception.Message, StringComparison.OrdinalIgnoreCase);
+
+        var baseView = FrozenLedgerBaseViewReader.Read(RepositorySnapshot.Create(
+            baselineFiles.ToImmutableDictionary(static file => file.Path)));
+        var nonIncremental = Assert.Throws<InvalidOperationException>(() =>
+            DagLedgerCommandPreparation.ValidateGeneratedEventFiles(
+                baseView,
+                ImmutableArray.Create(baselineFiles.Single(file =>
+                    file.Path == baselineEvents.Single(static item => item.EventType == "Genesis").SourcePath)),
+                "test suffix"));
+        Assert.Contains("does not extend", nonIncremental.Message, StringComparison.Ordinal);
     }
 
     [Fact]
