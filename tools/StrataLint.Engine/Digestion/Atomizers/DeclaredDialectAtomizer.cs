@@ -69,6 +69,7 @@ internal static class DeclaredDialectAtomizer
         // and never allowed to cost the volume its other claims. The ledger refuses it.
         var token = match.Groups["kind"].Value;
         var genre = dialect.Genres.FirstOrDefault(item => item.Token == token);
+        genre ??= GenreSuffixResolver.Resolve(token, dialect.GenreSuffixes);
         if (genre is null)
         {
             unregistered.Add(token);
