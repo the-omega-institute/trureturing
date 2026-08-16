@@ -21,14 +21,27 @@ public sealed partial class FileMapPolicyTests
                 "--no-hardlinks",
                 RepositoryLayout.FindRoot(),
                 repository);
+            foreach (var relativePath in new[]
+                     {
+                         MissionFileLoader.RelativePath,
+                         "Meta/Digestion/ticket-index.toml",
+                         "D5/X_Frontier/GovernanceDeferrals.lean",
+                     })
+            {
+                File.Copy(
+                    Path.Combine(RepositoryLayout.FindRoot(), relativePath),
+                    Path.Combine(repository, relativePath),
+                    overwrite: true);
+                RunMissionGit(repository, "add", "--", relativePath);
+            }
             const string targetRelativePath = "D5/X_Frontier/GovernanceDeferrals.lean";
             var targetPath = Path.Combine(repository, targetRelativePath);
-            var target = RunMissionGit(repository, "show", $"HEAD:{targetRelativePath}");
-            var taskStart = target.IndexOf("/-- TASK D5-T0039 |", StringComparison.Ordinal);
-            var nextTaskStart = target.IndexOf("/-- TASK D5-T0040 |", StringComparison.Ordinal);
+            var target = RunMissionGit(repository, "show", $":{targetRelativePath}");
+            var taskStart = target.IndexOf("/-- TASK D5-T0040\n", StringComparison.Ordinal);
+            var nextTaskStart = target.IndexOf("/-- TASK D5-T0041\n", StringComparison.Ordinal);
             Assert.True(taskStart >= 0 && nextTaskStart > taskStart);
             target = target[..taskStart]
-                + "def staleMissionMarker : String := \"TASK D5-T0039 |\"\n\n"
+                + "def staleMissionMarker : String := \"TASK D5-T0040\"\n\n"
                 + target[nextTaskStart..];
             File.WriteAllText(targetPath, target, new UTF8Encoding(false));
 
@@ -41,7 +54,7 @@ public sealed partial class FileMapPolicyTests
                 nameof(MissionLoadErrorCode.DanglingCaseReference),
                 finding.Message,
                 StringComparison.Ordinal);
-            Assert.Contains("D5-T0039", finding.Message, StringComparison.Ordinal);
+            Assert.Contains("D5-T0040", finding.Message, StringComparison.Ordinal);
         }
         finally
         {
@@ -62,17 +75,30 @@ public sealed partial class FileMapPolicyTests
                 "--no-hardlinks",
                 RepositoryLayout.FindRoot(),
                 repository);
+            foreach (var relativePath in new[]
+                     {
+                         MissionFileLoader.RelativePath,
+                         "Meta/Digestion/ticket-index.toml",
+                         "D5/X_Frontier/GovernanceDeferrals.lean",
+                     })
+            {
+                File.Copy(
+                    Path.Combine(RepositoryLayout.FindRoot(), relativePath),
+                    Path.Combine(repository, relativePath),
+                    overwrite: true);
+                RunMissionGit(repository, "add", "--", relativePath);
+            }
             var missionPath = Path.Combine(repository, MissionFileLoader.RelativePath);
             var mission = RunMissionGit(
                 repository,
                 "show",
-                $"HEAD:{MissionFileLoader.RelativePath}");
+                $":{MissionFileLoader.RelativePath}");
             foreach (var (factor, caseId) in new[]
                      {
-                         ("novelty", "D5-T0039"),
-                         ("dependency_readiness", "D5-T0040"),
-                         ("structural_realization", "D5-T0041"),
-                         ("receipt_potential", "D5-T0042"),
+                         ("novelty", "D5-T0040"),
+                         ("dependency_readiness", "D5-T0041"),
+                         ("structural_realization", "D5-T0042"),
+                         ("receipt_potential", "D5-T0043"),
                      })
             {
                 mission = mission.Replace(
@@ -96,7 +122,7 @@ public sealed partial class FileMapPolicyTests
                 nameof(MissionLoadErrorCode.InvalidWorthState),
                 finding.Message,
                 StringComparison.Ordinal);
-            Assert.Contains("D5-T0039", finding.Message, StringComparison.Ordinal);
+            Assert.Contains("D5-T0040", finding.Message, StringComparison.Ordinal);
         }
         finally
         {

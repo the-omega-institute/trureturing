@@ -110,13 +110,11 @@ golden-ledger/
 
 **A6 Lean 声明命名**(承 mathlib)定理 `snake_case`(主语_性质);类型 `CamelCase`;命名空间=路径;上游通用层居 `Metallic.*` 且以参数 D 陈述(H10)。
 
-**A7 任务码** `THEORY"-T"<四位>`(D5-T0042,永久不复用);工单块(SL-013):
+**A7 任务码** `THEORY"-T"<四位>`(D5-T0042,永久不复用);工单块只要求包含 `TASK D5-T0042`,块内为自由散文:
 ```lean
-/-- TASK D5-T0042 | 难度:1–5 | 依赖:就绪✓/欠(GID) | 尝试:n
-    提示:…
-    尸检:PR#118 归纳死于进位交错;PR#123 Zsqrtd 路死于符号 -/
+/-- TASK D5-T0042
+    可自由记录目标、线索、失败战史与后续条件。 -/
 ```
-尸检只增不删;**领单前置 = 读毕全部尸检。**
 
 **A8 常数码** `D5/E/values--json` 是 Scribe 对 Lean 常数定义与外置计算实例的 canonical 投影;十四个正式定义唯一住在 `D5/S3/Constants/Values.lean`,计算参数作为数据住在 `Golden/values-kernels.toml`,程序集只保留 schema、fail-closed loader、计算核与 writer。根 schema 为 `{attestation,constants,schema_version}`,其中 `constants` 按 `id` 严格排序且恰含十四项。每项含 `{id,lean_gid,lean_statement_sha256,status,definition,formula,refs,value,decimal,error,exact_value,method,provenance,reference_value,reference_error,comparison,open_reason,kernel_receipts}`;`provenance` 必须等于该项具体 `lean_gid`,共享 attestation 的 `provenance` 必须列全十四个 GID,不得再写裸 `Lean`。`status∈{emitted,registered-open}`,未足以转译者须 value/error 为 null、收据为空并给 open_reason,不得以 appendix 观测值补洞;误差条为最坏项负责。含 libm 的浮点投影固定发射十四位小数(value/window result 按最近值,error 按该十进制网格向上取整),量化位数与策略须入 kernel receipt,raw kernel 参数不因旧观测值调谐。SL-018 机器绑定 GID 唯一存在、声明 `kind=def`、标准三公理闭包及 inspector statement SHA-256;因这些定义是 `noncomputable ℝ`,十进制结果不冒充 Lean kernel 求值,attestation 必须以 `numeric_binding=not-kernel-evaluated:noncomputable-real` 明示该边界。修订史只归 git,工作树不保留历史兼容层。
 **A8.1 复合常数**(验收补丁):非标量常数用点分子键——`D5/delta.mean`、`D5/delta.amp`、`D5/delta.period`(δ-亏项之形态学三元);家族共享 `D5/delta._meta` 记法。
@@ -132,7 +130,7 @@ golden-ledger/
 
 **A13 编年码** `D5/C/<YYYY-MM-DD>/<slug>`;物理路径由 A2 双射至 `Chronicle/<YYYY>/<MM>/<DD>-<slug>.md`;LEGACY.md 存旧评注号(27.x)映射;过去条目不可改(H5),勘误以新条目引旧。
 
-**A14 版本码** 版辑 tag `E<n>`+Zenodo DOI;工具链钉版。环境升级的政策要求是同一 PR 原子更新 `lean-toolchain`/`lakefile.{toml,lean}`/`lake-manifest.json`,并执行全量 clean `lake build`;强制无缓存 clean build 仍不是现役机器谓词。冻结账本现役第五事件 `EnvironmentRecoordinate` 专门承载「同一 `.lean` source blob 在不同 pinned 环境中产生不同 elaborated statement identity」;它只追加新事件,不得改写/删除旧 `Freeze`/`Reattest`,不得解冻或冒充 `Revoke`,也不授权修改 source。v1 payload 顶层闭集为 `{case_id,declaration_statement_ids:{new,old},environment:{new,old},equivalence_status,kernel_verdict,new_axiom_closure,new_frozen_node_id,new_imports,new_input,new_prerequisite_frozen_node_ids,new_statement_id,new_witness_id,old_axiom_closure,old_frozen_node_id,old_imports,old_input,old_prerequisite_frozen_node_ids,old_statement_id,old_witness_id,previous_attestation_event_hash,source_sha256}`;每侧 environment 闭集为 `{lake_manifest_blob_oid,lakefile_blob_oid,lakefile_path,lean_toolchain_blob_oid}`,每侧 input 仍用现役 `FrozenLedgerInput` 六字段。机器必须验证两侧 Git commit/tree/blob capability、三个 pin 各自解析到具名路径、两侧 descriptor blob OID 与 source SHA-256 相等、逐声明 name-key/kind 集合不变、module statement ID 由逐声明 ID 重算一致、old/new witness-v1 与 frozen-node 地址由 imports/axiom/source/environment/prerequisite 重算一致、old 坐标匹配 active case、new 坐标匹配 candidate Lean report 的 `Closed` material、new axiom closure 是 old closure 子集、attestation parent 连续。任一未知/缺失/类型错误或证据不一致 fail-closed。fidelity 边界固定为:v1 `equivalence_status` 只接受 `representation-migration; equivalence-unproved`;未携机器可判的 definitional equality 或显式命题等价证书前,绝不允许已证等价值。当前只定义并验证事件类,未提供迁移 producer,也未授权写入任何具体 `EnvironmentRecoordinate` accepted event;实际迁移另 PR付成本。
+**A14 版本码** 版辑 tag `E<n>`+Zenodo DOI;工具链钉版。环境升级的政策要求是同一 PR 原子更新 `lean-toolchain`/`lakefile.{toml,lean}`/`lake-manifest.json`,并执行全量 clean `lake build`;强制无缓存 clean build 仍不是现役机器谓词。冻结账本现役第五事件 `Supersede` 是升级门:pin 文件变化时,受影响的每个 protected-base active case 必须恰有一条事件。payload 顶层闭集为 `{axiom_closure,case_id,declaration_statement_ids,environment,frozen_node_id,input,prerequisite_frozen_node_ids,previous_attestation_event_hash,statement_id,witness_id}`;`environment` 闭集为 `{lake_manifest_blob_oid,lakefile_blob_oid,lakefile_path,lean_toolchain_blob_oid}`,`input` 使用现役 `FrozenLedgerInput` 六字段。payload 禁止携带任何 old-side 派生值。机器直接读取 protected-base case 的已记录真值并要求:新 `statement_id` 与 base 相等;新 `axiom_closure` 是 base 已记录闭包的子集(可严格缩小,扩大或不可比较均拒绝);base 闭包未知时 fail-closed;全部新坐标与 candidate Lean report 的 `Closed` material 一致;candidate input 与三个具名 pin 通过 Git capability 验证;attestation parent 连续。成功后旧节点进入独立终态 `superseded`,不进入 `revoked`;旧节点仍真,只是不再是当前坐标。支持命令为 `ledger-supersede --candidate-lean-report FILE`,且升级路径不得读取、重建或重验旧环境。
 
 **A14.1 环境升级的首次实测(v7.16 R4)** A14 曾记「环境 migration 当前 `open`」,并写明解锁设计须具备「三 pin 原子 generation、**statement identity 不变**及 full-catalog red/green tests」。2026-08-14 首次实际执行该升级并取得读数,其中一项前提被**经验证伪**,故在此原位记账。实测对象为 `leanprover/lean4:v4.31.0`+mathlib `v4.31.0` → `v4.33.0`+mathlib `v4.33.0`(v4.33.0 于 2026-08-10 转正式版),探针分支 `harness/mathlib-v433-probe`。**编译层可达**:源码版本改动仅 `lean-toolchain` 与 `lakefile.toml` 两行,`lake update mathlib` rc=0(8690 个预编译文件);首次 `lake build` rc=1,536 个 D5 文件中 **18 个失败(3.4%)**、30 个 error 块,分类为 12 目标未闭合、6 实例合成失败、3 类型不匹配、3 rewrite 失配、3 字段记法失效、2 归纳别名改名、1 未知标识符,**无一为数学问题**;逐个适配证明脚本后 `lake build` **rc=0**,共改 25 个 `.lean`(+157/−61 行),**定理陈述被改 0 条**,新增 sorry/axiom **0**,唯二签名层变动为两处 `deriving Fintype` 失效后改手写 `Fintype.ofList`。**statement identity 不变这一前提为假**:以两侧源文件逐字节相同的 498 个模块为样本(任何差异必由升级导致),其 4,262 条 `include_in_statement` 声明中 **672 条(15.77%)的 `statement_material` 发生变化,涉及 211 个模块(占样本 42.4%)**,这些模块本仓一个字节未改。原因全部是 mathlib 重构类型类层级导致 elaborated term 中的实例解析路径变化,实测样本:`Monoid.toPow`→`NPow.toPow`、`DivInvMonoid.toZPow`→`ZPow.toPow`、`NormedDivisionRing.toDivisionRing`→`Field.toDivisionRing`、`NormedRing.toRing`→`DivisionRing.toRing`、`setOf`→`Set.ofPred`。**因 `statement_id` 按定义哈希 elaborated kernel `Expr`(`.const name levels` 逐字写入常量名,实例参数亦在其中),该量是否保持不变取决于上游是否重构了本仓陈述所引用的常量与实例路径——那是本仓无从控制、亦无从预测的外部事实,本次实测为假。故旧 A14 以其为解锁前提,等于把解锁挂在一个本仓不控制的量上;本条不主张它在所有升级中皆假,只记本次为假且该判定权不在本仓。** 机器判词双侧对照:同一 `ledger-reattest` 命令、同一账本,`v4.31.0` 得 rc=0 `no changed frozen modules events=591`,`v4.33.0` 得 rc=2 `Active module D5/S0/Computability/ClosureUndecidable.lean statement identity changed or lacks a matching Reattest event` ⇒ 漂移确由升级导致,非既有缺陷。**并发现准入门的检测盲区**:`StrataLint check` 的 SL-008 只对**候选 changeset 中被改动**的模块报警,实测点名 25 个模块并与本仓改动的 25 个文件精确重合(差集两侧皆空);上述 211 个未改动模块的 672 条漂移**门零发现**,仅账本写入器 `ledger-reattest` 于全账校验时撞上。该盲区按 CLAUDE.md 第 20 条红线归类记 `open(FROZEN-IDENTITY-AMBIENT-DRIFT)`:被守性质是「冻结的陈述仍是那个陈述」,而它可在本仓零文件变动的前提下被环境破坏,故触发条件设在「候选文件被改动」这一关节上并不覆盖该性质(第Ⅵ节「因其固然」)。`Reattest` 的现役语义(同一陈述、新 blob)按 `FrozenLedgerCanonicalWriter` 对身份漂移硬抛而明确不适用,`Revoke` 的封闭四型证据(`KernelWitnessFailure`/`FormalContradictionCertificate`/`ContentAddressMismatch`/`AllowedAxiomRetired`)全部指向「其实没被正确证明」而语义不符。A14 已以 `EnvironmentRecoordinate` 收口事件类型/parser/validator;本次 672 条具体迁移仍未授权、未写入 accepted ledger,须由后续独立 PR消费该机制。
 
@@ -218,7 +216,7 @@ warn→required 的升红义务逐预算结算,只许另开独立 PR/check,不�
 | H9 | 溯源(LLM PR 必携转录+模型版本) | 门官 |
 | H10 | 通用性头必填;标 G 者禁 import 实例事实 | SL-010 |
 | H11 | 词表律(目录名∈domains.yaml) | SL-011 |
-| H12 | 任务码永久、尸检只增 | SL-013 |
+| H12 | 任务码永久 | SL-013 |
 
 注:SL-007/009 保留空号(H7/H9 为门官策略非 lint);现役至 SL-023:SL-020 为 Lean 环境公理/状态律,SL-021 为未实例化坐标律,SL-022 为元层门,SL-023 为 Describe LaTeX epoch 规则。
 
@@ -248,7 +246,7 @@ warn→required 的升红义务逐预算结算,只许另开独立 PR/check,不�
 | 门官 Gate(决定论) | CI+合并策略:全部 SL、H7/H9、预算闸、门控执行 | 合并权 | 升格级 PR 无机器绿判词不并 | 一切 PR |
 
 ## 5.2 五铁律
-陈述回声先行(先审题后判卷——防"证对了错题");失败即尸检入工单块(不许重走死路);利益回避(旗判分离之智能体形态);无转录不收 LLM PR。**通信即工件**(v7.7 成文):智能体间一切协调经由库内工件——PR/issue/工单块/卷宗;禁库外旁路信道,**未见于工件之协调视同未发生**——溯源链无旁门。
+陈述回声先行(先审题后判卷——防"证对了错题");失败战史入工单自由散文(不许重走死路);利益回避(旗判分离之智能体形态);无转录不收 LLM PR。**通信即工件**(v7.7 成文):智能体间一切协调经由库内工件——PR/issue/工单块/卷宗;禁库外旁路信道,**未见于工件之协调视同未发生**——溯源链无旁门。
 
 ## 5.3 上下文结构(A2 有限视野之兑现)
 `agents/CONTEXT.md`(≤2K token,CI 校长):理论一句话、W1–W3 约定、目录地图、GID 文法、风格规约——有限上下文智能体之唯一必读;回声模板、判词模板随附。
@@ -374,7 +372,7 @@ recipe(A11)→ `Meta/papergen`(决定论):拉 Blueprint 散文 + **语法生成�
 残差当信号(拟合残差之系统结构 = 未知谱线,非噪声——立异常单);二阶地层法(减去已知各层,研究余项);双法对质(关键量必两条独立路);恒等式誊写链(闭式 = 逐步代换之链,每步单独可验);不动点解法(自洽方程于 1/φ=φ−1 处显式解);Fibonacci/对数周期窗(振荡量取全周期窗均,禁半窗);收据分拣(新现象按 φ/(−1/φ) 本征轴归位);结构变现(每个抽象同一——K-理论、拓扑等价——须开一张可算支票,如隙标定九中九);认亲优先(先查典再宣新;重新发现不冒充发现)。
 
 ## 11.4 旗-判协议与常数悬赏生命周期
-**旗**:候选闭式/候选关系,登记于所涉 Frontier 工单(候选值、来源、预测差);**判**:σ-处决制——实测与候选差 >3σ 即毙(毙刑记录入尸检:本账战史 46σ、5.6σ 等),<1σ 且过独立复算方可升格猜想;**零误升为荣誉指标**(升格后被毙 = 事故复盘)。**悬赏生命周期**:算到 n 位(误差条最坏项)→ 候选词典扫(**整数关系探测 PSLQ/LLL 入 Evidence/kernels 标配**+领域词汇表:本库为 ℚ(√5)-Hecke L′、Stark 对数、ζ-值组合)→ 旗 → σ-判 → 升格或归档;八位为悬赏起步线(防伪匹配)。
+**旗**:候选闭式/候选关系,登记于所涉 Frontier 工单(候选值、来源、预测差);**判**:σ-处决制——实测与候选差 >3σ 即毙(败选记录留档:本账战史 46σ、5.6σ 等),<1σ 且过独立复算方可升格猜想;**零误升为荣誉指标**(升格后被毙 = 事故复盘)。**悬赏生命周期**:算到 n 位(误差条最坏项)→ 候选词典扫(**整数关系探测 PSLQ/LLL 入 Evidence/kernels 标配**+领域词汇表:本库为 ℚ(√5)-Hecke L′、Stark 对数、ζ-值组合)→ 旗 → σ-判 → 升格或归档;八位为悬赏起步线(防伪匹配)。
 
 ## 11.5 数值方法论细则(Evidence/POLICY.md 全文义务)
 误差条为最坏项负责;插值可用于尾、不可用于结论;条件收敛恒等式过双极限须显式核亏项(δ-教训);振荡感知拟合(疑对数周期者,先周期扫描后定均值);整数精确优先(如 {kφ} 之 isqrt-迭代,禁浮点累积);共线性检查(拟合基含近共线项——如 ε² 与 ε²log——须报条件数并做交替剔除审);滑窗一致性(结论须对窗口位置稳定)。**显式种子律**(一切随机性显式播种并记录,复跑同值为验收条件);**环境钉版**(通用 Evidence 依赖锁文件 + 容器指纹入库;Scribe values 投影不用 host fingerprint 污染 canonical bytes,改由共享 attestation 的组合 input SHA-256 绑定 `global.json`、`Directory.Build.props`、`Directory.Packages.props`、Scribe `packages.lock.json` 与 Lean ticket,并以 A8 固定量化跨平台收敛——五年后同输入与 emitter version 必须同值)。
@@ -424,7 +422,7 @@ CONTEXT.md(1 页)→ 各地层 `INDEX.md`(CI 从文件头 digest 行聚合)→ �
 ## 11.20 纲领文件(目标函数:什么算进展)
 `docs/MISSION.md`:北极星 = 两颗心脏(可仰望不可硬攻);价值序 = **理解 > 数量,诚实 > 速度,负知识与正结果等价记账**;WorthVector 恰含四因子:新颖性、依赖就绪度、结构变现潜力(可开支票否)、收据潜力。每因子的状态恰为 `measured(value, receipt_ref)` 或 `open(case_id)` 二选一;`case_id` 必须经现役 ticket index 解析到含同号 TASK 块的永久案,悬空引用 fail-closed。
 
-`docs/MISSION.md` 的唯一机读面是恰一个 `mission-v1` fenced block,由 `MissionFileLoader` 以 strict UTF-8、无 BOM、LF 与封闭 JSON schema 解析为 typed WorthVector;文件缺失、不可解析、未知/缺失因子、状态字段混用或悬空案号均返回 typed error,禁止默认填 `0`、`1` 或任何常数。任一因子为 `open` 时,禁止乘法合成标量,禁止输出或自称完整 worth score/argmax;此时唯一合法的选择标签是 `bootstrap eligibility order`,且 tie-break 恰按 `canonical candidate id` 稳定破。同一输入的 typed 结果及该退化序必须逐字节可重放。仅当四因子全部携真实 `measured(value, receipt_ref)` 时,完整 worth argmax 才进入合法域;P0 不测量、不产生标量、不枚举或排序候选。**现役 P0 边界:**`measured` 分支保留为 typed schema 的可表示状态,但 D5-T0039..D5-T0042 的 measurement receipt 契约与 resolver 落地前,任一 `measured` 实例均由 `MissionFileLoader` typed fail-closed;故 `CompleteWorthArgmax` 在 P0 结构上不可达,不得以非空 `receipt_ref` 字符串冒充收据权威。
+`docs/MISSION.md` 的唯一机读面是恰一个 `mission-v1` fenced block,由 `MissionFileLoader` 以 strict UTF-8、无 BOM、LF 与封闭 JSON schema 解析为 typed WorthVector;文件缺失、不可解析、未知/缺失因子、状态字段混用或悬空案号均返回 typed error,禁止默认填 `0`、`1` 或任何常数。任一因子为 `open` 时,禁止乘法合成标量,禁止输出或自称完整 worth score/argmax;此时唯一合法的选择标签是 `bootstrap eligibility order`,且 tie-break 恰按 `canonical candidate id` 稳定破。同一输入的 typed 结果及该退化序必须逐字节可重放。仅当四因子全部携真实 `measured(value, receipt_ref)` 时,完整 worth argmax 才进入合法域;P0 不测量、不产生标量、不枚举或排序候选。**现役 P0 边界:**`measured` 分支保留为 typed schema 的可表示状态,但 D5-T0040..D5-T0043 的 measurement receipt 契约与 resolver 落地前,任一 `measured` 实例均由 `MissionFileLoader` typed fail-closed;故 `CompleteWorthArgmax` 在 P0 结构上不可达,不得以非空 `receipt_ref` 字符串冒充收据权威。
 
 禁令 = 刷 sorry 数、堆平凡引理、追引用。**PLAYBOOK 答"怎么找",MISSION 答"什么值得找"——无此文件,飞轮高速空转。**
 
@@ -611,9 +609,9 @@ P0-2 必须对每个 run-local artifact 给出 `history_requirement:not-required
 
 ### PR-C：command/accepted-state 单一边界
 
-只读核实：现行 union 定义是 `Genesis/Freeze/Reattest/EnvironmentRecoordinate/Revoke` 五类；验证器要求线性 `previous_hash`。PR-C 不得把第五型丢失；迁移 reducer 必须证明同一可观察状态。
+只读核实：现行 union 定义是 `Genesis/Freeze/Reattest/Supersede/Revoke` 五类；验证器要求线性 `previous_hash`。PR-C 不得把第五型丢失；迁移 reducer 必须证明同一可观察状态。
 
-候选 lane 只可提交 `Golden/Frozen/intents/<case_sha256>/<intent_sha256>.json`，绝不可修改 accepted ledger 或提交 `events.jsonl`。封闭 schema 为 `{schema:"frozen-intent-v2",base_snapshot_sha256,case_sha256,operation,payload_sha256,lean_report_sha256,evidence_sha256,reason_sha256,producer_build_sha256,previous_case_event_sha256,intent_sha256}`；operation 枚举仅 `Genesis|Freeze|Reattest|EnvironmentRecoordinate|Revoke`；`intent_sha256=sha256(UTF8("frozen-intent-v2") || 0x00 || JCS(除自身外全部字段))`。sha256 均为 64 lowercase hex，Genesis 的 case 固定为 64 个 `0`、previous 固定为 64 个 `0`；其它 operation 禁零 case。仅完整 intent SHA 相同才可能幂等。
+候选 lane 只可提交 `Golden/Frozen/intents/<case_sha256>/<intent_sha256>.json`，绝不可修改 accepted ledger 或提交 `events.jsonl`。封闭 schema 为 `{schema:"frozen-intent-v2",base_snapshot_sha256,case_sha256,operation,payload_sha256,lean_report_sha256,evidence_sha256,reason_sha256,producer_build_sha256,previous_case_event_sha256,intent_sha256}`；operation 枚举仅 `Genesis|Freeze|Reattest|Supersede|Revoke`；`intent_sha256=sha256(UTF8("frozen-intent-v2") || 0x00 || JCS(除自身外全部字段))`。sha256 均为 64 lowercase hex，Genesis 的 case 固定为 64 个 `0`、previous 固定为 64 个 `0`；其它 operation 禁零 case。仅完整 intent SHA 相同才可能幂等。
 
 `base_snapshot_sha256` 定位 content-addressed subset proof 文件 `Golden/Frozen/intents/proofs/<base_snapshot_sha256>.json`；其封闭 schema 是 `{schema:"accepted-subset-proof-v1",event_paths:[string],event_sha256s:[sha256]}`，两数组等长，按 path UTF-8 升序且非空；snapshot digest 为 `sha256(UTF8("accepted-subset-proof-v1") || 0x00 || JCS(object))`。proof 不是随 accepted set 变化的全局 head，只是该 intent 的内容寻址输入。writer 从当前 accepted paths 逐项读取，要求 path 规范、event SHA 与 bytes 重算一致且 byte-identical；缺项、额外字段、重复、替换均 reject。随后 writer 在最新 accepted set 上重跑 evidence、Lean report、operation precondition、`previous_case_event_sha256` continuity 与冲突表。
 
@@ -627,16 +625,16 @@ accepted-set validator 必须先按 `previous_case_event_sha256` 重建历史，
 
 同一 case 的 reference reducer 再按以下表处理；格内 `I`=仅 incoming 与现存 event 全字段相同才 idempotent，否则 reject，`A`=满足 payload/evidence/Lean 及 previous 指向该 case 唯一 childless head 才 admit，`R`=reject。`empty` 是尚无该 nonzero case 的状态，仅 `empty→Freeze` 可建立首事件且 previous 必须为零；Genesis 是全局 singleton，不是新 nonzero case 的 current，除唯一相同 Genesis 的 I 外不能与任何操作配对。
 
-| current \\ incoming | Genesis | Freeze | Reattest | EnvironmentRecoordinate | Revoke |
+| current \\ incoming | Genesis | Freeze | Reattest | Supersede | Revoke |
 |---|---:|---:|---:|---:|---:|
 | empty | R | A | R | R | R |
 | Genesis | I | R | R | R | R |
 | Freeze | R | I | A | A | A |
 | Reattest | R | R | I/A | A | A |
-| EnvironmentRecoordinate | R | R | A | I/A | A |
+| Supersede | R | R | A | I/A | A |
 | Revoke | R | R | R | R | I |
 
-`Reattest→Reattest` 与 `EnvironmentRecoordinate→EnvironmentRecoordinate`：全字段相同为 I；否则仅新 evidence/Lean 有效且 previous 连续时 A。两种 attestation event 共用同一 `previous_attestation_event_hash` 因果链；`EnvironmentRecoordinate` 只在 statement identity 漂移且 A14 全部证据成立时 A，`Reattest` 仍只在 statement identity 不变时 A。`Revoke→Freeze` 对同一 case 永久为 R；后续 Freeze 必须使用从其 typed input 重新导出的新 `case_sha256`。这是现有 `allCaseIds` 永久集合的保守保持：candidate validator 对 `allCaseIds.Add` 失败即拒绝，history validator同样拒绝；Revoke 仅从 active 集移除，不从 `allCaseIds` 移除。
+`Reattest→Reattest` 与 `Supersede→Supersede`：全字段相同为 I；否则仅新 evidence/Lean 有效且 previous 连续时 A。两种 attestation event 共用同一 `previous_attestation_event_hash` 因果链；`Supersede` 只在 A14 的 same-theorem、闭包子集及 candidate 写入门全部成立时 A，`Reattest` 仍只在 statement identity 不变时 A。`Revoke→Freeze` 对同一 case 永久为 R；后续 Freeze 必须使用从其 typed input 重新导出的新 `case_sha256`。这是现有 `allCaseIds` 永久集合的保守保持：candidate validator 对 `allCaseIds.Add` 失败即拒绝，history validator同样拒绝；Revoke 仅从 active 集移除，不从 `allCaseIds` 移除。
 
 优先级固定：schema/path/hash/tamper failure > accepted-set chain invariant > Genesis singleton > exact duplicate > previous continuity > 表中 transition > semantic evidence；高优先级失败不得被低优先级 idempotence 覆盖。选择方案 1：`FrozenLedgerBaseWriter` 是唯一机器线性化点，按其收到并完成验证的顺序串行处理；同 case 竞争中先通过并原子落盘者接纳，后续仍指旧 head 的 stale intent 因 previous continuity 失败而拒绝。该语义不要求人判断；同 case 竞争本就是互斥状态转移，赢家由 base-owned writer 的机器提交序确定。REMOVED：跨 cutover 聚合 same-snapshot 竞争并“全部拒绝”的要求，以及 same-case A/B 反序得到同 root 的虚假要求。只有异 case 必须交换；同 case 明确允许 A→B 得 `S∪{A}`、B→A 得 `S∪{B}`。
 
@@ -768,7 +766,7 @@ Blueprint markdown 已证有仓内语义 consumer，移出 PR-A；只有独立 P
 
 # CHANGELOG(原位演进史;只追加)
 
-- **v7.16 R5**(2026-08-16):`THEORY-GENERATION-P0` 将 11.20 的 MISSION 目标函数从缺失散文补成可执行契约:`mission-v1` strict loader、WorthVector 四因子封闭和、`measured(value, receipt_ref)|open(case_id)` 二选一、open 案号永久 TASK 双向解析,以及任一 open 时禁止完整 worth 标量/argmax、只许 `bootstrap eligibility order` 并按 canonical candidate id 稳定破。同 PR 首次落 `docs/MISSION.md`;四因子均诚实登记为 `open(D5-T0039..D5-T0042)`,零伪造测量。`measured` 类型保留可表示,但对应 D5-T0039..D5-T0042 的 receipt 契约与 resolver 未落地前,现役 P0 loader 对任何 measured 实例 typed fail-closed,故 complete worth argmax 结构上不可达。本轮只激活目标实例与 loader,不枚举候选、不排序、不重建 formalize,禁令仍为刷 sorry 数、堆平凡引理、追引用。
+- **v7.16 R5**(2026-08-16):`THEORY-GENERATION-P0` 将 11.20 的 MISSION 目标函数从缺失散文补成可执行契约:`mission-v1` strict loader、WorthVector 四因子封闭和、`measured(value, receipt_ref)|open(case_id)` 二选一、open 案号永久 TASK 双向解析,以及任一 open 时禁止完整 worth 标量/argmax、只许 `bootstrap eligibility order` 并按 canonical candidate id 稳定破。同 PR 首次落 `docs/MISSION.md`;四因子均诚实登记为 `open(D5-T0040..D5-T0043)`,零伪造测量。`measured` 类型保留可表示,但对应 D5-T0040..D5-T0043 的 receipt 契约与 resolver 未落地前,现役 P0 loader 对任何 measured 实例 typed fail-closed,故 complete worth argmax 结构上不可达。本轮只激活目标实例与 loader,不枚举候选、不排序、不重建 formalize,禁令仍为刷 sorry 数、堆平凡引理、追引用。
 - **v7.16 R4**(2026-08-14):补 A14.1,记环境升级的首次实测读数并勘正 A14 的一项前提。本仓自建库以来从未升级过 toolchain(`git log --follow -- lean-toolchain` 仅一条,2026-07-11 建库提交),故 A14 的解锁条件此前从无数据支撑。2026-08-14 首次实际执行 v4.31.0→v4.33.0 并取得读数:编译层可达(18/536 文件失败 3.4%,修复后 `lake build` rc=0,定理陈述被改 0 条);但 A14 所列解锁前提之一「statement identity 不变」**经验证伪**——在源文件逐字节相同的 498 个模块中,4,262 条声明有 **672 条(15.77%)** 的 `statement_material` 因 mathlib 重构类型类层级而变化,涉及 211 个本仓未改动的模块。该量是上游演化的函数,非本仓尽责可达成,故 A14 不得继续以其为解锁前提。同时记 `open(FROZEN-IDENTITY-AMBIENT-DRIFT)`:准入门 SL-008 只在候选 changeset 改动某模块时校验其冻结身份,实测点名集合与本仓改动集合精确重合,对 211 个未改动模块的漂移零发现,而该性质可在本仓零文件变动下被环境破坏。本条只记读数与前提证伪,不设计解锁机制;环境升级闭包仍不得主张。
 - **v7.16 R3**(2026-08-13):补 A17.2,立第三方 Lean 成果的两种准入形(依赖/移植)与其机器判据。立条之由为 CLAUDE.md 第 11 条有序路径的实测洞:③「按 spec A17 可准入的第三方」因 A17 三谓词现役全 `open` 而事实关闭,路径遂塌缩为 ②→④本地证明,即同条所禁之重证;本条补出移植形,并把形式选择降为 toolchain 与 mathlib `rev` 的机器比较,不由偏好判。同时钉死移植形四项义务(许可证与 NOTICE 链、入仓后照常执法、axiom 闭包不扩张、退役条件必须对本仓自己的钉版可判);禁以「上游被 mathlib 接受」为到期条件,反例为 mathlib PR #40037 于 2026-06-09 以 AI 投稿规范关闭未合并。判例读数见 A17.2。
 - **v7.16 R2**(2026-08-12):勘正 A17 与 11.23 的 Anchor 分类及双轨权威。现役 sealed `Anchor` 仅为 `lit/<bibkey>` 与 `mathlib/{module,decl}/<Lean.Name>`;`gict`/`pzg` 降回 provenance 注记,`spec/<payload>` 经全仓实现、D5 头与 Scribe 实例检索无定义而记 `open(SPEC-ANCHOR-CLASSIFICATION)`。SL-017 现役 Lean 头准入面如实收窄为 import 闭包可达的 `mathlib/module`;文献 Anchor 的现役成员资格由 L-plane note + Scribe validator 承担。11.23 删除不存在的 typed catalog、`Unregistered` 字节登记与 Engine 消费投影路线,只保留 Library query 的 source/target/identifier 防幻引链和理论 provenance 非承重边界;A5 同步撤下机器会拒绝的 `gict` 头部样例。
@@ -827,7 +825,7 @@ Blueprint markdown 已证有仓内语义 consumer，移出 PR-A；只有独立 P
 
 `joins.truth_anchors` 每项固定为 `{document_repo_path,document_gid,describe_id,lean_declaration_gid,formal_truth_repo_path}`;Describe 来源的锚必须携 `describe_id`,显式文档锚可为 null。每个锚必须经 compiled-artifact report 恰解析一个 Lean declaration,且该 declaration 的模块路径必须恰命中一个 `truth.nodes.repo_path`;零解析、多解析或缺 formal 节点均 fail-closed。Describe truth_anchor **只断言锚定关系**,绝不得解读为“该叙事陈述已获证明”。锚点总数从 assembler 图动态派生,不得硬编码历史读数。根 `deferred_layers` 当前必须逐字等于 `["digestion"]`,显式声明 digestion/1879 原子层未进入 v1;该层归后续版本,不得以字段缺席静默冒充已覆盖。writer 以 DTO 纯投影并发射确定性 UTF-8 canonical bytes;strict reader 拒未知/缺失字段、乱序、重复、跨节悬空及非 canonical bytes。`Generated/DAG.md` 仍只读 formal DAG,与 documents/joins 双投影互不读取。
 
-**冻结面条款:**SL-008 只读候选树与 changeset 状态:`D5/X_Frontier/Hearts.lean` 的 Modified/Deleted 一律拒绝;`Golden/Frozen/accepted/*.json` 只许 Added;候选 accepted Freeze/Reattest/EnvironmentRecoordinate 事件所指的 `.lean` 模块一旦冻结,Deleted 一律拒绝,Modified 仅在同一 changeset Added 了指向同一路径的 canonical Reattest 事件时放行。`EnvironmentRecoordinate` 要求 old/new source blob相等,绝不构成 source修改授权。Hearts 的规则变更须与规则实现同改并经过 SL-022 保护面;`HeartsAuthorizations.md` 保留 canonical 格式校验,不构成 Hearts 改动豁免。
+**冻结面条款:**SL-008 只读候选树与 changeset 状态:`D5/X_Frontier/Hearts.lean` 的 Modified/Deleted 一律拒绝;`Golden/Frozen/accepted/*.json` 只许 Added;候选 accepted Freeze/Reattest/Supersede 事件所指的 `.lean` 模块一旦冻结,Deleted 一律拒绝,Modified 仅在同一 changeset Added 了指向同一路径的 canonical Reattest 事件时放行。`Supersede` 是 pin-bump 升级门,绝不构成 source 修改授权。Hearts 的规则变更须与规则实现同改并经过 SL-022 保护面;`HeartsAuthorizations.md` 保留 canonical 格式校验,不构成 Hearts 改动豁免。
 
 - **v7.13 R2**(2026-07-17):`HEARTS-AUTH-P0` 将 SL-008 最小松动为 append-only git 授权账上的声明全名+canonical statement SHA-256 精确单增,保留既有声明冻结与防夹带;密码学身份、签名及 nonce 消费机依用户裁决不进入系统,伪造风险归公开史检测、判词可诉勘正与追责。
 - **v7.13 R3**(2026-07-17):`OBSERVER-ATOMIZER-P0` 以零 OBSERVER 账本消费注册窄域 `observer-v1`,并安装 whole-source coarse 退役的身份保全规则;本 epoch 只定义类与红绿 fixture,`gict-v1`/`pzg-v1` 语义与 OBSERVER 账本实例均不变。

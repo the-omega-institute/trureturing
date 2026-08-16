@@ -7,31 +7,27 @@ namespace StrataLint.Tests;
 public sealed class MissionFileLoaderTests
 {
     private const string TicketIndex = """
-        D5-T0039 = "D5/X_Frontier/GovernanceDeferrals"
         D5-T0040 = "D5/X_Frontier/GovernanceDeferrals"
         D5-T0041 = "D5/X_Frontier/GovernanceDeferrals"
         D5-T0042 = "D5/X_Frontier/GovernanceDeferrals"
+        D5-T0043 = "D5/X_Frontier/GovernanceDeferrals"
         """;
 
     private const string NoveltyTaskBlock = """
-        /-- TASK D5-T0039 | 难度:3 | 依赖:欠(novelty-measurement-receipt) | 尝试:0
-            提示:Define the novelty measurement receipt contract.
-            尸检:none -/
+        /-- TASK D5-T0040
+            The novelty factor's machine-replayable measurement receipt contract is not installed. Until it lands, docs/MISSION.md must remain open(D5-T0040) and must not claim a complete worth score. -/
         def missionNoveltyMeasurementTicket : Unit := ()
         """;
 
     private static readonly string GovernanceDeferrals = NoveltyTaskBlock + "\n" + """
-        /-- TASK D5-T0040 | 难度:3 | 依赖:欠(dependency-readiness-measurement-receipt) | 尝试:0
-            提示:Define the dependency-readiness measurement receipt contract.
-            尸检:none -/
+        /-- TASK D5-T0041
+            The dependency-readiness factor's machine-replayable measurement receipt contract is not installed. Until it lands, docs/MISSION.md must remain open(D5-T0041) and must not claim a complete worth score. -/
         def missionDependencyReadinessMeasurementTicket : Unit := ()
-        /-- TASK D5-T0041 | 难度:3 | 依赖:欠(structural-realization-measurement-receipt) | 尝试:0
-            提示:Define the structural-realization measurement receipt contract.
-            尸检:none -/
+        /-- TASK D5-T0042
+            The structural-realization factor's machine-replayable measurement receipt contract is not installed. Until it lands, docs/MISSION.md must remain open(D5-T0042) and must not claim a complete worth score. -/
         def missionStructuralRealizationMeasurementTicket : Unit := ()
-        /-- TASK D5-T0042 | 难度:3 | 依赖:欠(receipt-potential-measurement-receipt) | 尝试:0
-            提示:Define the receipt-potential measurement receipt contract.
-            尸检:none -/
+        /-- TASK D5-T0043
+            The receipt-potential factor's machine-replayable measurement receipt contract is not installed. Until it lands, docs/MISSION.md must remain open(D5-T0043) and must not claim a complete worth score. -/
         def missionReceiptPotentialMeasurementTicket : Unit := ()
         """ + "\n";
 
@@ -51,10 +47,10 @@ public sealed class MissionFileLoaderTests
             "negative-knowledge-equals-positive-results"
           ],
           "worth_vector": {
-            "novelty": { "state": "open", "case_id": "D5-T0039" },
-            "dependency_readiness": { "state": "open", "case_id": "D5-T0040" },
-            "structural_realization": { "state": "open", "case_id": "D5-T0041" },
-            "receipt_potential": { "state": "open", "case_id": "D5-T0042" }
+            "novelty": { "state": "open", "case_id": "D5-T0040" },
+            "dependency_readiness": { "state": "open", "case_id": "D5-T0041" },
+            "structural_realization": { "state": "open", "case_id": "D5-T0042" },
+            "receipt_potential": { "state": "open", "case_id": "D5-T0043" }
           },
           "selection": {
             "order_kind": "bootstrap eligibility order",
@@ -96,7 +92,7 @@ public sealed class MissionFileLoaderTests
     public void UnknownFactorCannotBeSilentlyFilledWithANumericDefault()
     {
         var unknownFactor = ValidMission.Replace(
-            "\"novelty\": { \"state\": \"open\", \"case_id\": \"D5-T0039\" }",
+            "\"novelty\": { \"state\": \"open\", \"case_id\": \"D5-T0040\" }",
             "\"unknown\": { \"state\": \"measured\", \"value\": 1, \"receipt_ref\": \"receipt:invented\" }",
             StringComparison.Ordinal);
 
@@ -110,8 +106,8 @@ public sealed class MissionFileLoaderTests
     public void OpenFactorCannotCarryASilentNumericDefault()
     {
         var defaulted = ValidMission.Replace(
-            "{ \"state\": \"open\", \"case_id\": \"D5-T0039\" }",
-            "{ \"state\": \"open\", \"case_id\": \"D5-T0039\", \"value\": 1 }",
+            "{ \"state\": \"open\", \"case_id\": \"D5-T0040\" }",
+            "{ \"state\": \"open\", \"case_id\": \"D5-T0040\", \"value\": 1 }",
             StringComparison.Ordinal);
 
         var invalid = Assert.IsType<MissionLoadOutcome.Invalid>(
@@ -123,7 +119,7 @@ public sealed class MissionFileLoaderTests
     [Fact]
     public void DanglingOpenCaseIdIsRejected()
     {
-        var dangling = ValidMission.Replace("D5-T0039", "D5-T9999", StringComparison.Ordinal);
+        var dangling = ValidMission.Replace("D5-T0040", "D5-T9999", StringComparison.Ordinal);
 
         var invalid = Assert.IsType<MissionLoadOutcome.Invalid>(
             MissionFileLoader.Load(Snapshot(dangling)));
@@ -135,22 +131,20 @@ public sealed class MissionFileLoaderTests
     public void NonBlockTaskMarkerCannotSatisfyAnOpenCaseReference()
     {
         var target = ReplaceNoveltyTaskBlock(
-            "def staleMissionMarker : String := \"TASK D5-T0039 |\"");
+            "def staleMissionMarker : String := \"TASK D5-T0040\"");
 
         var invalid = Assert.IsType<MissionLoadOutcome.Invalid>(
             LoadRepository(Encoding.UTF8.GetBytes(ValidMission), target));
 
         Assert.Equal(MissionLoadErrorCode.DanglingCaseReference, invalid.Error.Code);
-        Assert.Contains("D5-T0039", invalid.Error.Message, StringComparison.Ordinal);
+        Assert.Contains("D5-T0040", invalid.Error.Message, StringComparison.Ordinal);
     }
 
     [Fact]
-    public void MalformedTaskBlockCannotSatisfyAnOpenCaseReference()
+    public void ProseTaskMarkerCannotSatisfyAnOpenCaseReference()
     {
         var target = ReplaceNoveltyTaskBlock("""
-            /-- TASK D5-T0039 | 难度:3 | 依赖:欠(novelty-measurement-receipt) | 尝试:0
-                提示:Define the novelty measurement receipt contract.
-                尸检 none -/
+            /-- This prose mentions TASK D5-T0040 but does not begin with it. -/
             def missionNoveltyMeasurementTicket : Unit := ()
             """);
 
@@ -158,7 +152,23 @@ public sealed class MissionFileLoaderTests
             LoadRepository(Encoding.UTF8.GetBytes(ValidMission), target));
 
         Assert.Equal(MissionLoadErrorCode.DanglingCaseReference, invalid.Error.Code);
-        Assert.Contains("D5-T0039", invalid.Error.Message, StringComparison.Ordinal);
+        Assert.Contains("D5-T0040", invalid.Error.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void NonDocumentationCommentTaskMarkerCannotSatisfyAnOpenCaseReference()
+    {
+        var target = ReplaceNoveltyTaskBlock("""
+            /- TASK D5-T0040
+               This is a regular block comment, not a documentation-comment TASK block. -/
+            def missionNoveltyMeasurementTicket : Unit := ()
+            """);
+
+        var invalid = Assert.IsType<MissionLoadOutcome.Invalid>(
+            LoadRepository(Encoding.UTF8.GetBytes(ValidMission), target));
+
+        Assert.Equal(MissionLoadErrorCode.DanglingCaseReference, invalid.Error.Code);
+        Assert.Contains("D5-T0040", invalid.Error.Message, StringComparison.Ordinal);
     }
 
     [Fact]
@@ -170,7 +180,7 @@ public sealed class MissionFileLoaderTests
             LoadRepository(Encoding.UTF8.GetBytes(ValidMission), target));
 
         Assert.Equal(MissionLoadErrorCode.DanglingCaseReference, invalid.Error.Code);
-        Assert.Contains("D5-T0039", invalid.Error.Message, StringComparison.Ordinal);
+        Assert.Contains("D5-T0040", invalid.Error.Message, StringComparison.Ordinal);
     }
 
     [Fact]
@@ -218,10 +228,10 @@ public sealed class MissionFileLoaderTests
     public static TheoryData<string> RepositoryMissionCases => new()
     {
         "canonical",
-        "measured:novelty:D5-T0039",
-        "measured:dependency_readiness:D5-T0040",
-        "measured:structural_realization:D5-T0041",
-        "measured:receipt_potential:D5-T0042",
+        "measured:novelty:D5-T0040",
+        "measured:dependency_readiness:D5-T0041",
+        "measured:structural_realization:D5-T0042",
+        "measured:receipt_potential:D5-T0043",
         "measured:all",
         "north_star:target",
         "north_star:policy",
@@ -332,7 +342,7 @@ public sealed class MissionFileLoaderTests
             "measured:all" => Case(
                 AllMeasuredMission(),
                 MissionLoadErrorCode.InvalidWorthState,
-                "D5-T0039"),
+                "D5-T0040"),
             "north_star:target" => ChangedCase(
                 ValidMission.Replace("\"two hearts\"", "\"three hearts\"", StringComparison.Ordinal),
                 MissionLoadErrorCode.InvalidSchema),
@@ -363,7 +373,7 @@ public sealed class MissionFileLoaderTests
             "ticket:missing-task-block" => Case(
                 ValidMission,
                 MissionLoadErrorCode.DanglingCaseReference,
-                "D5-T0039",
+                "D5-T0040",
                 ReplaceNoveltyTaskBlock(
                     "/-- receipt contract is not a TASK block -/\n"
                     + "def missionNoveltyMeasurementTicket : Unit := ()")),
@@ -408,10 +418,10 @@ public sealed class MissionFileLoaderTests
         var mission = ValidMission;
         foreach (var (factor, caseId) in new[]
                  {
-                     ("novelty", "D5-T0039"),
-                     ("dependency_readiness", "D5-T0040"),
-                     ("structural_realization", "D5-T0041"),
-                     ("receipt_potential", "D5-T0042"),
+                     ("novelty", "D5-T0040"),
+                     ("dependency_readiness", "D5-T0041"),
+                     ("structural_realization", "D5-T0042"),
+                     ("receipt_potential", "D5-T0043"),
                  })
         {
             mission = WithMeasuredFactor(mission, factor, caseId);

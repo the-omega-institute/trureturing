@@ -470,10 +470,9 @@ internal static class MissionFileLoader
                 ? ticket.Gid
                 : ticket.Gid + ".lean";
             if (!snapshot.TryGetFile(targetPath, out var target)
-                || TaskBlockParser.Parse(target.Text).Blocks.Count(block => string.Equals(
-                    block.CaseId,
-                    open.CaseId,
-                    StringComparison.Ordinal)) != 1)
+                || TaskBlockReferenceSyntax.CountDocumentationCommentTaskStarts(
+                    target.Text,
+                    open.CaseId) != 1)
             {
                 throw Error(
                     MissionLoadErrorCode.DanglingCaseReference,
@@ -600,10 +599,10 @@ internal static class MissionFileLoader
 
     private static string MeasurementCaseId(WorthFactorId factor) => factor switch
     {
-        WorthFactorId.Novelty => "D5-T0039",
-        WorthFactorId.DependencyReadiness => "D5-T0040",
-        WorthFactorId.StructuralRealization => "D5-T0041",
-        WorthFactorId.ReceiptPotential => "D5-T0042",
+        WorthFactorId.Novelty => "D5-T0040",
+        WorthFactorId.DependencyReadiness => "D5-T0041",
+        WorthFactorId.StructuralRealization => "D5-T0042",
+        WorthFactorId.ReceiptPotential => "D5-T0043",
         _ => throw new InvalidOperationException("Unknown worth factor."),
     };
 

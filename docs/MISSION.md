@@ -19,10 +19,10 @@
     "negative-knowledge-equals-positive-results"
   ],
   "worth_vector": {
-    "novelty": { "state": "open", "case_id": "D5-T0039" },
-    "dependency_readiness": { "state": "open", "case_id": "D5-T0040" },
-    "structural_realization": { "state": "open", "case_id": "D5-T0041" },
-    "receipt_potential": { "state": "open", "case_id": "D5-T0042" }
+    "novelty": { "state": "open", "case_id": "D5-T0040" },
+    "dependency_readiness": { "state": "open", "case_id": "D5-T0041" },
+    "structural_realization": { "state": "open", "case_id": "D5-T0042" },
+    "receipt_potential": { "state": "open", "case_id": "D5-T0043" }
   },
   "selection": {
     "order_kind": "bootstrap eligibility order",

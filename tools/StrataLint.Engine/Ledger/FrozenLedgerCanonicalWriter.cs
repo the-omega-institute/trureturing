@@ -165,31 +165,6 @@ public static partial class FrozenLedgerGenerator
             var input = FrozenLedgerCanonicalWriter.FreezePayload(
                 candidateCatalog.Environment,
                 candidate).Input;
-            if (entry.Environment is { } activeEnvironment)
-            {
-                if (activeEnvironment.LeanToolchainBlobOid
-                        != candidateCatalog.Environment.LeanToolchainBlobOid
-                    || activeEnvironment.LakeManifestBlobOid
-                        != candidateCatalog.Environment.LakeManifestBlobOid
-                    || activeEnvironment.LakefilePath.Value
-                        != candidateCatalog.Environment.LakefilePath
-                    || activeEnvironment.LakefileBlobOid
-                        != candidateCatalog.Environment.LakefileBlobOid)
-                {
-                    throw new InvalidOperationException(
-                        $"Active module {path.Value} environment changed; an accepted EnvironmentRecoordinate event is required before ledger-sync.");
-                }
-
-                input = input with
-                {
-                    SupportingBlobOids = new[]
-                    {
-                        activeEnvironment.LakeManifestBlobOid,
-                        activeEnvironment.LakefileBlobOid,
-                        activeEnvironment.LeanToolchainBlobOid,
-                    }.Order(StringComparer.Ordinal).ToImmutableArray(),
-                };
-            }
             var payload = materialUnchanged
                 ? new FrozenReattestPayload(
                     entry.Payload.CaseId,
@@ -488,41 +463,20 @@ internal static class FrozenLedgerCanonicalWriter
             root_frozen_node_ids = payload.RootFrozenNodeIds.Select(static id => id.Value),
         });
 
-    internal static JsonElement EnvironmentRecoordinateElement(
-        FrozenEnvironmentRecoordinatePayload payload) =>
+    internal static JsonElement SupersedeElement(FrozenSupersedePayload payload) =>
         JsonSerializer.SerializeToElement(new
         {
+            axiom_closure = payload.AxiomClosure,
             case_id = payload.CaseId,
-            declaration_statement_ids = new
-            {
-                @new = DeclarationStatementIdsElement(payload.NewDeclarationStatementIds),
-                old = DeclarationStatementIdsElement(payload.OldDeclarationStatementIds),
-            },
-            environment = new
-            {
-                @new = EnvironmentPinsElement(payload.NewEnvironment),
-                old = EnvironmentPinsElement(payload.OldEnvironment),
-            },
-            equivalence_status = payload.EquivalenceStatus,
-            kernel_verdict = payload.KernelVerdict,
-            new_axiom_closure = payload.NewAxiomClosure,
-            new_frozen_node_id = payload.NewFrozenNodeId.Value,
-            new_imports = payload.NewImports,
-            new_input = InputElement(payload.NewInput),
-            new_prerequisite_frozen_node_ids = payload.NewPrerequisiteFrozenNodeIds
+            declaration_statement_ids = DeclarationStatementIdsElement(payload.DeclarationStatementIds),
+            environment = EnvironmentPinsElement(payload.Environment),
+            frozen_node_id = payload.FrozenNodeId.Value,
+            input = InputElement(payload.Input),
+            prerequisite_frozen_node_ids = payload.PrerequisiteFrozenNodeIds
                 .Select(static id => id.Value),
-            new_statement_id = payload.NewStatementId.Value,
-            new_witness_id = payload.NewWitnessId.Value,
-            old_axiom_closure = payload.OldAxiomClosure,
-            old_frozen_node_id = payload.OldFrozenNodeId.Value,
-            old_imports = payload.OldImports,
-            old_input = InputElement(payload.OldInput),
-            old_prerequisite_frozen_node_ids = payload.OldPrerequisiteFrozenNodeIds
-                .Select(static id => id.Value),
-            old_statement_id = payload.OldStatementId.Value,
-            old_witness_id = payload.OldWitnessId.Value,
             previous_attestation_event_hash = payload.PreviousAttestationEventHash,
-            source_sha256 = payload.SourceSha256,
+            statement_id = payload.StatementId.Value,
+            witness_id = payload.WitnessId.Value,
         });
 
     private static object DeclarationStatementIdsElement(
@@ -547,7 +501,6 @@ internal static class FrozenLedgerCanonicalWriter
         {
             environment = EnvironmentPinsElement(reference.Environment),
             input = InputElement(reference.Input),
-            source_sha256 = reference.SourceSha256,
         });
 
     internal static JsonElement EvidenceElement(RevocationEvidence evidence) => evidence switch
@@ -659,10 +612,12 @@ internal static class FrozenLedgerCanonicalWriter
 
     internal static string EventIdentity(string eventType, JsonElement payload, string eventHash)
     {
-        var propertyName = eventType == FrozenLedger.EnvironmentRecoordinateEventType
-            ? "new_frozen_node_id"
-            : "frozen_node_id";
-        return payload.TryGetProperty(propertyName, out var frozenNodeId)
+        if (eventType == FrozenLedger.SupersedeEventType)
+        {
+            return eventHash;
+        }
+
+        return payload.TryGetProperty("frozen_node_id", out var frozenNodeId)
             && frozenNodeId.ValueKind == JsonValueKind.String
             ? frozenNodeId.GetString()!
             : eventHash;

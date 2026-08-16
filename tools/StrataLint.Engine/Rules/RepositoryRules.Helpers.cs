@@ -124,29 +124,15 @@ internal static partial class RepositoryRules
         return seen;
     }
 
-    private static Dictionary<string, List<TaskEntry>> CollectTasks(
-        RepositorySnapshot snapshot,
-        ImmutableArray<RuleFinding>.Builder? findings)
+    private static HashSet<string> CollectTaskCodes(RepositorySnapshot snapshot)
     {
-        var result = new Dictionary<string, List<TaskEntry>>(StringComparer.Ordinal);
+        var result = new HashSet<string>(StringComparer.Ordinal);
         foreach (var (path, file) in FormalFiles(snapshot)
             .OrderBy(static item => item.Path.Value, StringComparer.Ordinal))
         {
-            var parsed = TaskBlockParser.Parse(file.Text);
-            if (findings is not null && parsed.TokenCount != parsed.Blocks.Length)
+            foreach (Match match in TaskBlockReferenceSyntax.TaskTokenPattern.Matches(file.Text))
             {
-                findings.Add(new RuleFinding(path.Value, "task block does not match the A7 grammar"));
-            }
-
-            foreach (var block in parsed.Blocks)
-            {
-                if (!result.TryGetValue(block.CaseId, out var entries))
-                {
-                    entries = new List<TaskEntry>();
-                    result.Add(block.CaseId, entries);
-                }
-
-                entries.Add(new TaskEntry(path.Value, block.Autopsy));
+                result.Add(match.Groups["code"].Value);
             }
         }
 
@@ -163,36 +149,6 @@ internal static partial class RepositoryRules
         internal static HeaderData Empty { get; } = new(string.Empty, string.Empty, string.Empty, string.Empty, Array.Empty<string>());
     }
 
-    private sealed record TaskEntry(string Path, string Autopsy);
-}
-
-internal sealed record TaskBlock(string CaseId, string Autopsy);
-
-internal sealed record TaskBlockParseResult(
-    int TokenCount,
-    ImmutableArray<TaskBlock> Blocks);
-
-internal static class TaskBlockParser
-{
-    private static readonly Regex TokenPattern = new(
-        "TASK\\s+(D[0-9]+-T[0-9]{4})",
-        RegexOptions.CultureInvariant);
-
-    private static readonly Regex BlockPattern = new(
-        "/-- TASK (?<code>D5-T[0-9]{4}) \\| 难度:[1-5] \\| 依赖:[^\\n|]+ \\| 尝试:[0-9]+\\n"
-        + "\\s+提示:[^\\n]+\\n\\s+尸检:(?<autopsy>[^\\n]+) -/",
-        RegexOptions.CultureInvariant);
-
-    internal static TaskBlockParseResult Parse(string text)
-    {
-        ArgumentNullException.ThrowIfNull(text);
-        var blocks = BlockPattern.Matches(text)
-            .Select(static match => new TaskBlock(
-                match.Groups["code"].Value,
-                match.Groups["autopsy"].Value.Trim()))
-            .ToImmutableArray();
-        return new TaskBlockParseResult(TokenPattern.Matches(text).Count, blocks);
-    }
 }
 
 internal static class StringExtensions
