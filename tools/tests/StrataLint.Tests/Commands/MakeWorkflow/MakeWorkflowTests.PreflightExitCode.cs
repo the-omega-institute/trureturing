@@ -91,6 +91,16 @@ public sealed partial class MakeWorkflowTests
             if [[ "${PREFLIGHT_SCENARIO:-}" == configuration && "$*" == "rev-parse --show-toplevel" ]]; then
               exit 78
             fi
+            if [[ -n "${PREFLIGHT_SCENARIO:-}" && "$#" -eq 6 \
+              && "${1:-}" == diff && "${2:-}" == --name-only \
+              && "${3:-}" == --no-renames && "${4:-}" == -z && "${6:-}" == -- ]]; then
+              if [[ "$PREFLIGHT_SCENARIO" == stale-values ]]; then
+                printf '%s\0' 'Golden/values-kernels.toml'
+              else
+                printf '%s\0' 'CLAUDE.md'
+              fi
+              exit 0
+            fi
             exec /usr/bin/git "$@"
             """);
         WriteExecutable(
