@@ -80,17 +80,4 @@ public static class LeanReferenceResolver
             : "⚠ " + string.Join(", ", nonstandard);
         return new VerifiedLeanDeclaration(reference, declaration, badge);
     }
-
-    private static string ReportKind(LeanDeclarationKind kind) => kind switch
-    {
-        LeanDeclarationKind.Axiom => "axiom",
-        LeanDeclarationKind.Definition => "def",
-        LeanDeclarationKind.Theorem => "theorem",
-        LeanDeclarationKind.Opaque => "opaque",
-        LeanDeclarationKind.Quotient => "quotient",
-        LeanDeclarationKind.Constructor => "constructor",
-        LeanDeclarationKind.Recursor => "recursor",
-        LeanDeclarationKind.Inductive => "inductive",
-        _ => throw new ArgumentOutOfRangeException(nameof(kind)),
-    };
 }

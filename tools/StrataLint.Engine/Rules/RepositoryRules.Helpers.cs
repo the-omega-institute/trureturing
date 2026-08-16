@@ -154,26 +154,7 @@ internal static partial class RepositoryRules
 
         return result;
     }
-    private static IEnumerable<string> SplitYamlListBlocks(string text)
-    {
-        var matches = Regex.Matches(text, "(?ms)^  - (?<body>.*?)(?=^  - |\\z)");
-        return matches.Select(static match => match.Groups["body"].Value);
-    }
 
-    private static Dictionary<string, string> SimpleYamlFields(string block)
-    {
-        var result = new Dictionary<string, string>(StringComparer.Ordinal);
-        foreach (var line in block.Split('\n'))
-        {
-            var match = Regex.Match(line.Trim(), "^(?:- )?(?<key>[A-Za-z_][A-Za-z0-9_.-]*):\\s*(?<value>.*)$");
-            if (match.Success)
-            {
-                result[match.Groups["key"].Value] = match.Groups["value"].Value.Trim().Trim('"', '\'');
-            }
-        }
-
-        return result;
-    }
     internal sealed record HeaderData(
         string Gid,
         string Generality,

@@ -295,14 +295,6 @@ public abstract record DocumentBlock
             _ => block,
         }));
 
-    internal static bool HasReportDerived(BlockSequence content) => content.Items.Any(block => block switch
-    {
-        Section section => HasReportDerived(section.Content),
-        Describe describe => describe.KindSource is DescribeKindSource.ReportDerived
-            || HasReportDerived(describe.Content),
-        _ => false,
-    });
-
 }
 
 public sealed class ScribeDocument
@@ -347,8 +339,6 @@ public sealed class ScribeDocument
 
     internal ScribeDocument ResolveDeclarations(DeclarationCatalog catalog) =>
         new(Header, Title, DocumentBlock.ResolveBlocks(Content, catalog), Edges);
-
-    internal bool HasReportDerivedDeclarations => DocumentBlock.HasReportDerived(Content);
 
     private static void RequireUniqueDescribeIds(BlockSequence content)
     {

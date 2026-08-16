@@ -78,7 +78,6 @@ internal sealed class TheoryAtomizerRules
 internal static class TheoryAtomizerDataLoader
 {
     internal const string DataPath = "Meta/Digestion/atomizers.toml";
-    internal static ImmutableArray<string> InputPaths { get; } = [DataPath];
     private static readonly UTF8Encoding StrictUtf8 = new(false, true);
     private static readonly Regex LocatorPattern = new(
         "^[A-Za-z0-9][A-Za-z0-9.-]*(?:/[A-Za-z0-9][A-Za-z0-9.-]*)+$",

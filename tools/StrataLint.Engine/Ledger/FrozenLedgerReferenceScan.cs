@@ -177,16 +177,6 @@ internal static class FrozenLedgerReferenceProjection
         "graph_root", "root_case_ids", "root_frozen_node_ids",
     ];
 
-    internal static string[] EnvironmentRecoordinatePayloadFields { get; } =
-    [
-        "case_id", "declaration_statement_ids", "environment", "equivalence_status",
-        "kernel_verdict", "new_axiom_closure", "new_frozen_node_id", "new_imports", "new_input",
-        "new_prerequisite_frozen_node_ids", "new_statement_id", "new_witness_id",
-        "old_axiom_closure", "old_frozen_node_id", "old_imports", "old_input",
-        "old_prerequisite_frozen_node_ids", "old_statement_id", "old_witness_id",
-        "previous_attestation_event_hash", "source_sha256",
-    ];
-
     internal static ImmutableDictionary<string, string[]> OidFields { get; } =
         new Dictionary<string, string[]>(StringComparer.Ordinal)
         {
