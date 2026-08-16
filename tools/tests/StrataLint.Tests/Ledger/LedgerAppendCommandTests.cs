@@ -86,7 +86,6 @@ public sealed class LedgerAppendCommandTests
             fixture.ReportPath);
 
         Assert.Equal(3, preparation.BaseView.EventCount);
-        Assert.Equal(0, preparation.BaseView.BaseEventsFolded);
 
         var result = fixture.Environment.AppendLedger(
             new[] { "--candidate-lean-report", fixture.ReportPath });

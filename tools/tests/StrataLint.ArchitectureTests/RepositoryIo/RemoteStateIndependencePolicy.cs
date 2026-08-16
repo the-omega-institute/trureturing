@@ -30,8 +30,11 @@ internal sealed record RemoteStateFinding(string Path, int Line, string Operatio
 /// <c>github.event.before</c> (only its direct audited shape has a regression match). Unexecuted
 /// hypotheses intentionally not modeled here include composite and JavaScript actions, source
 /// generators, P/Invoke, PowerShell, Python, Make, <c>eval</c>/<c>bash -c</c>, and revisions read
-/// from files or environment variables. CI's stronger guarantee comes from removing every checkout
-/// remote and every <c>refs/remotes/*</c> ref before verdict code runs.
+/// from files or environment variables. The post-checkout strip step removes every checkout remote
+/// and every <c>refs/remotes/*</c> ref before verdict code runs, which eliminates name-based
+/// resolution but not remote reachability: <c>fetch-depth: 0</c> leaves every branch's objects in
+/// the local object database, so a raw OID recorded before the strip still resolves. See CLAUDE.md
+/// for the measured boundary; do not restate either layer as a completeness guarantee.
 /// </remarks>
 internal static partial class RemoteStateIndependencePolicy
 {
