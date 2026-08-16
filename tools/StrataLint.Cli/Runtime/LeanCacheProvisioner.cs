@@ -41,44 +41,6 @@ internal sealed class LeanCachePublisher : ILeanCachePublisher
     }
 }
 
-internal class LeanCacheProvisionException : InvalidOperationException
-{
-    internal LeanCacheProvisionException(
-        string message,
-        MathlibCachePruneOutcome pruneOutcome,
-        Exception? innerException = null,
-        ClonefileReceipt? clonefile = null)
-        : base(message, innerException)
-    {
-        PruneOutcome = pruneOutcome;
-        Clonefile = clonefile ?? ClonefileReceipt.NotRun;
-    }
-
-    internal MathlibCachePruneOutcome PruneOutcome { get; }
-
-    internal ClonefileReceipt Clonefile { get; }
-}
-
-internal sealed class MathlibOleanCompletenessException : LeanCacheProvisionException
-{
-    internal MathlibOleanCompletenessException(
-        int? missingOleanFiles,
-        IReadOnlyList<string> missingOleanSamples,
-        string message,
-        MathlibCachePruneOutcome? pruneOutcome = null,
-        Exception? innerException = null,
-        ClonefileReceipt? clonefile = null)
-        : base(message, pruneOutcome ?? MathlibCachePruneOutcome.NotRun, innerException, clonefile)
-    {
-        MissingOleanFiles = missingOleanFiles;
-        MissingOleanSamples = missingOleanSamples;
-    }
-
-    internal int? MissingOleanFiles { get; }
-
-    internal IReadOnlyList<string> MissingOleanSamples { get; }
-}
-
 internal static class LeanCacheProvisioner
 {
     private enum CacheTreeOwnership
@@ -330,20 +292,18 @@ internal static class LeanCacheProvisioner
                 "clonefile",
                 null,
                 cloneReceipt,
+                removePartial,
                 out warning);
         }
 
-        try
+        var exit = new CloneReceiptExit(
+            cloneReceipt,
+            $"clonefile failed ({clone.Message})");
+        if (!exit.TryCleanup(staged, removePartial, "staging cleanup"))
         {
-            removePartial(staged);
-        }
-        catch (Exception exception)
-        {
-            cloneReceipt = cloneReceipt with
-            {
-                CleanupError = Join(cloneReceipt.CleanupError, exception.Message),
-            };
-            warning = $"clonefile failed ({clone.Message}); staging cleanup failed ({exception.Message}); ordinary copy skipped";
+            exit.AppendWarning("ordinary copy skipped");
+            cloneReceipt = exit.Receipt;
+            warning = exit.Warning;
             return null;
         }
         ProcessOutput copy;
@@ -357,8 +317,10 @@ internal static class LeanCacheProvisioner
         }
         catch (Exception exception)
         {
-            removePartial(staged);
-            warning = $"clonefile failed ({clone.Message}); ordinary copy failed ({exception.Message})";
+            exit.AppendWarning($"ordinary copy failed ({exception.Message})");
+            exit.TryCleanup(staged, removePartial, "staging cleanup");
+            cloneReceipt = exit.Receipt;
+            warning = exit.Warning;
             return null;
         }
 
@@ -373,14 +335,17 @@ internal static class LeanCacheProvisioner
                 runner,
                 publisher,
                 "copy",
-                $"clonefile failed ({clone.Message}); used slow ordinary copy",
-                cloneReceipt,
+                Join(exit.Warning, "used slow ordinary copy"),
+                exit.Receipt,
+                removePartial,
                 out warning);
         }
 
         var copyError = Error(copy, "cp -R failed");
-        warning = $"clonefile failed ({clone.Message}); ordinary copy failed ({copyError})";
-        removePartial(staged);
+        exit.AppendWarning($"ordinary copy failed ({copyError})");
+        exit.TryCleanup(staged, removePartial, "staging cleanup");
+        cloneReceipt = exit.Receipt;
+        warning = exit.Warning;
         return null;
     }
 
@@ -443,6 +408,7 @@ internal static class LeanCacheProvisioner
         string method,
         string? warning,
         ClonefileReceipt cloneReceipt,
+        Action<string> removePartial,
         out string? finalWarning)
     {
         try
@@ -453,18 +419,19 @@ internal static class LeanCacheProvisioner
             if (!LeanCacheStamp.Matches(source, pins, out var stampReason)
                 || LeanCacheBusyProbe.IsBusy(donorRoot, runner))
             {
-                RemovePartial(staged);
+                removePartial(staged);
                 finalWarning = stampReason ?? "donor became busy after staging; discarded staging copy";
                 return null;
             }
 
             publisher.Publish(staged, target, pins);
         }
-        catch
+        catch (Exception exception)
         {
-            RemovePartial(staged);
-            RemovePartial(target);
-            throw;
+            var exit = new CloneReceiptExit(cloneReceipt, warning);
+            exit.TryCleanup(staged, removePartial, "staging cleanup");
+            exit.TryCleanup(target, removePartial, "published cache cleanup");
+            throw exit.Wrap(exception);
         }
 
         finalWarning = warning;

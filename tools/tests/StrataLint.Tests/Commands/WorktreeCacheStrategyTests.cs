@@ -587,6 +587,8 @@ internal sealed class RecordingWorktreeProcessRunner : IWorktreeProcessRunner
 
     internal bool FailCopy { get; init; }
 
+    internal bool ThrowCopy { get; init; }
+
     internal string? LakeFileName { get; init; }
 
     internal bool FailLake { get; init; }
@@ -634,6 +636,11 @@ internal sealed class RecordingWorktreeProcessRunner : IWorktreeProcessRunner
         if (fileName == "cp" && arguments.FirstOrDefault() == "-R" && FailCopy)
         {
             return Failure("ordinary copy unavailable");
+        }
+
+        if (fileName == "cp" && arguments.FirstOrDefault() == "-R" && ThrowCopy)
+        {
+            throw new IOException("ordinary copy threw");
         }
 
         if (fileName == "lsof")

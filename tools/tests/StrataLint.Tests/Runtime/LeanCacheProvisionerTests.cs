@@ -256,23 +256,84 @@ public sealed class LeanCacheProvisionerTests
             stampExistedAfterRename = File.Exists(LeanCacheStamp.PathFor(canonical));
             throw new IOException("failure injected after rename and before stamp publication");
         });
+        var cloner = new RecordingDirectoryCloner
+        {
+            Results = new Queue<DirectoryCloneResult>(
+            [
+                new(false, true, 5, 1, "clonefile(2) failed: EIO"),
+                new(true, false, null, 1, null),
+            ]),
+        };
         using var selection = new LeanCacheDonorSelection(donor.Path, null);
         using var writerGuard = LeanCacheWriterGuard.TryAcquire(Path.Combine(target.Path, ".lake"));
         Assert.NotNull(writerGuard);
+        var cleanupCalls = 0;
+        void Remove(string path)
+        {
+            cleanupCalls++;
+            if (cleanupCalls == 2) throw new IOException("publication staging cleanup failed");
+            if (Directory.Exists(path)) Directory.Delete(path, recursive: true);
+        }
 
-        Assert.Throws<IOException>(() => LeanCacheProvisioner.Provision(
+        var exception = Assert.Throws<LeanCacheProvisionException>(() => LeanCacheProvisioner.Provision(
             selection,
             target.Path,
             ReadPins(target.Path),
             "lake",
             runner,
             writerGuard,
-            new RecordingDirectoryCloner(),
-            publisher));
+            cloner,
+            publisher,
+            Remove,
+            static _ => { }));
 
         Assert.True(observerInvoked);
         Assert.False(stampExistedAfterRename);
         Assert.False(Directory.Exists(Path.Combine(target.Path, ".lake")));
+        Assert.Equal(2, exception.Clonefile.Attempts);
+        Assert.Equal([5], exception.Clonefile.Errnos);
+        Assert.Contains("publication staging cleanup failed", exception.Clonefile.CleanupError, StringComparison.Ordinal);
+        Assert.IsType<IOException>(exception.InnerException);
+    }
+
+    [Fact]
+    public void CompletenessFailureAfterSuccessfulRetryPreservesReceiptAndMissingDetails()
+    {
+        string? removedModule = null;
+        var cloner = new RecordingDirectoryCloner
+        {
+            Results = new Queue<DirectoryCloneResult>(
+            [
+                new(false, true, 5, 1, "clonefile(2) failed: EIO"),
+                new(true, false, null, 1, null),
+            ]),
+            AfterClone = (_, staged) =>
+            {
+                if (!Directory.Exists(staged)) return;
+                removedModule = MathlibProjectionFixture.FirstModule;
+                var relative = removedModule.Replace('/', Path.DirectorySeparatorChar);
+                var firstOlean = Path.Combine(
+                    staged,
+                    "packages",
+                    "mathlib",
+                    ".lake",
+                    "build",
+                    "lib",
+                    "lean",
+                    relative + ".olean");
+                File.Delete(firstOlean);
+            },
+        };
+
+        var exception = Assert.Throws<MathlibOleanCompletenessException>(() =>
+            ProvisionFromDonor(cloner));
+
+        Assert.NotNull(removedModule);
+        Assert.Equal(1, exception.MissingOleanFiles);
+        Assert.Equal([removedModule!], exception.MissingOleanSamples);
+        Assert.Equal(MathlibCachePruneOutcome.NotRun, exception.PruneOutcome);
+        Assert.Equal(2, exception.Clonefile.Attempts);
+        Assert.Equal([5], exception.Clonefile.Errnos);
     }
 
     [Fact]
@@ -372,6 +433,76 @@ public sealed class LeanCacheProvisionerTests
     }
 
     [Theory]
+    [InlineData(false, "ordinary copy unavailable")]
+    [InlineData(true, "ordinary copy threw")]
+    public void RecursiveCopyFailureCleanupCannotStopFetchOrReplaceKnownCauses(
+        bool copyThrows,
+        string copyReason)
+    {
+        using var sharedCache = new MathlibCacheFixture();
+        var cloner = new RecordingDirectoryCloner
+        {
+            Results = new Queue<DirectoryCloneResult>(
+                [new(false, true, 5, 1, "clonefile(2) failed: EIO")]),
+            AfterClone = (_, staged) => Directory.CreateDirectory(staged),
+        };
+        var runner = new RecordingWorktreeProcessRunner
+        {
+            FailCopy = !copyThrows,
+            ThrowCopy = copyThrows,
+        };
+        var cleanupCalls = 0;
+        void Remove(string path)
+        {
+            cleanupCalls++;
+            if (cleanupCalls == 1) throw new IOException("retry staging cleanup failed");
+            if (cleanupCalls == 3) throw new IOException("copy staging cleanup failed");
+            if (Directory.Exists(path)) Directory.Delete(path, recursive: true);
+        }
+
+        var result = ProvisionFromDonor(cloner, runner, removePartial: Remove);
+
+        Assert.Equal("cache-get", result.Method);
+        Assert.Contains(
+            runner.Invocations,
+            static call => Path.GetFileName(call.FileName) == "lake"
+                && call.Arguments.SequenceEqual(["exe", "cache", "get"]));
+        Assert.Equal(1, result.Clonefile.Attempts);
+        Assert.Equal([5], result.Clonefile.Errnos);
+        Assert.Contains("retry staging cleanup failed", result.Clonefile.CleanupError, StringComparison.Ordinal);
+        Assert.Contains("copy staging cleanup failed", result.Clonefile.CleanupError, StringComparison.Ordinal);
+        Assert.Contains("EIO", result.Warning, StringComparison.Ordinal);
+        Assert.Contains("retry staging cleanup failed", result.Warning, StringComparison.Ordinal);
+        Assert.Contains(copyReason, result.Warning, StringComparison.Ordinal);
+        Assert.Contains("copy staging cleanup failed", result.Warning, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void NonMacOsCopyAndCleanupFailuresStillReachFetchWithNotRunReceipt()
+    {
+        using var sharedCache = new MathlibCacheFixture();
+        var cloner = new ApfsDirectoryCloner(
+            isMacOS: static () => false,
+            cloneFile: static (_, _, _) => throw new InvalidOperationException("must not call clonefile"));
+        var runner = new RecordingWorktreeProcessRunner { FailCopy = true };
+        var cleanupCalls = 0;
+        void Remove(string path)
+        {
+            cleanupCalls++;
+            if (cleanupCalls == 2) throw new IOException("copy staging cleanup failed");
+            if (Directory.Exists(path)) Directory.Delete(path, recursive: true);
+        }
+
+        var result = ProvisionFromDonor(cloner, runner, removePartial: Remove);
+
+        Assert.Equal("cache-get", result.Method);
+        Assert.Equal(0, result.Clonefile.Attempts);
+        Assert.Empty(result.Clonefile.Errnos);
+        Assert.Contains("copy staging cleanup failed", result.Clonefile.CleanupError, StringComparison.Ordinal);
+        Assert.Contains("ordinary copy unavailable", result.Warning, StringComparison.Ordinal);
+    }
+
+    [Theory]
     [InlineData(13)]  // EACCES
     [InlineData(45)]  // ENOTSUP
     [InlineData(17)]  // EEXIST
@@ -460,7 +591,8 @@ public sealed class LeanCacheProvisionerTests
         IDirectoryCloner cloner,
         IWorktreeProcessRunner? runner = null,
         Action<string>? removePartial = null,
-        Action<TimeSpan>? wait = null)
+        Action<TimeSpan>? wait = null,
+        ILeanCachePublisher? publisher = null)
     {
         using var donor = new TemporaryDirectory();
         using var target = new TemporaryDirectory();
@@ -485,7 +617,7 @@ public sealed class LeanCacheProvisionerTests
             runner ?? new RecordingWorktreeProcessRunner(),
             writerGuard,
             cloner,
-            LeanCachePublisher.Instance,
+            publisher ?? LeanCachePublisher.Instance,
             removePartial,
             wait);
     }
