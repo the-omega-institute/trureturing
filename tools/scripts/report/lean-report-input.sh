@@ -20,8 +20,8 @@ while [[ $# -gt 0 ]]; do
 done
 
 [[ "$COMMAND" == "address" || "$COMMAND" == "verify" || "$COMMAND" == "modules" \
-  || "$COMMAND" == "producer-paths" ]] \
-  || { echo "usage: lean-report-input.sh address|verify|modules|producer-paths --repository DIR [--report FILE] [--producer FILE] [--inspector FILE]" >&2; exit 2; }
+  || "$COMMAND" == "producer-paths" || "$COMMAND" == "scribe-producer-paths" ]] \
+  || { echo "usage: lean-report-input.sh address|verify|modules|producer-paths|scribe-producer-paths --repository DIR [--report FILE] [--producer FILE] [--inspector FILE]" >&2; exit 2; }
 [[ -n "$REPOSITORY" && "$REPOSITORY" == /* && -d "$REPOSITORY" ]] \
   || { echo "lean-report-input: --repository requires an absolute directory" >&2; exit 2; }
 [[ -z "$PRODUCER_OVERRIDE" || ( "$PRODUCER_OVERRIDE" == /* && -f "$PRODUCER_OVERRIDE" ) ]] \
@@ -95,18 +95,28 @@ producer_declared_paths() {
 }
 
 producer_reachable_script_paths() {
-  python3 - "$REPOSITORY" <<'PY'
+  local scope="${1:-lean-report}"
+  python3 - "$REPOSITORY" "$scope" <<'PY'
 import pathlib
 import re
 import sys
 
 root = pathlib.Path(sys.argv[1]).resolve()
-entrypoints = (
-    pathlib.PurePosixPath(".github/workflows/ci.yml"),
-    pathlib.PurePosixPath("tools/lean-inspector/inspect.sh"),
-    pathlib.PurePosixPath("tools/scripts/lean-report-pair.sh"),
-    pathlib.PurePosixPath("tools/scripts/report/lean-report-input.sh"),
-)
+scope = sys.argv[2]
+if scope == "lean-report":
+    entrypoints = (
+        pathlib.PurePosixPath(".github/workflows/ci.yml"),
+        pathlib.PurePosixPath("tools/lean-inspector/inspect.sh"),
+        pathlib.PurePosixPath("tools/scripts/lean-report-pair.sh"),
+        pathlib.PurePosixPath("tools/scripts/report/lean-report-input.sh"),
+    )
+elif scope == "scribe-content":
+    entrypoints = (
+        pathlib.PurePosixPath(".github/workflows/ci.yml"),
+        pathlib.PurePosixPath("tools/scripts/workflow/scribe-content-checks.sh"),
+    )
+else:
+    raise SystemExit(f"lean-report-input: unknown producer scope: {scope}")
 reference_pattern = re.compile(
     r"(?P<path>(?:\$[A-Z_][A-Z0-9_]*|\$\{[A-Z_][A-Z0-9_]*\}|[A-Za-z0-9_.-]+)"
     r"(?:/[A-Za-z0-9_.$@{}+-]+)+\.sh)(?![A-Za-z0-9_.])"
@@ -179,10 +189,21 @@ PY
 }
 
 producer_compile_paths() {
+  local scope="${1:-lean-report}"
   local project json
-  for project in \
-    tools/StrataLint.Cli/StrataLint.Cli.csproj \
-    tools/StrataLint.Engine/StrataLint.Engine.csproj; do
+  local projects=()
+  if [[ "$scope" == "lean-report" ]]; then
+    projects=(
+      tools/StrataLint.Cli/StrataLint.Cli.csproj
+      tools/StrataLint.Engine/StrataLint.Engine.csproj)
+  elif [[ "$scope" == "scribe-content" ]]; then
+    projects=(
+      tools/StrataLint.Scribe/StrataLint.Scribe.csproj
+      tools/StrataLint.Engine/StrataLint.Engine.csproj)
+  else
+    return 1
+  fi
+  for project in "${projects[@]}"; do
     [[ -f "$REPOSITORY/$project" ]] || return 1
     json="$TMP_ROOT/$(basename "$project").compile.json"
     dotnet msbuild "$REPOSITORY/$project" -getItem:Compile \
@@ -212,9 +233,33 @@ PY
 complete_producer_paths() {
   local compile_paths="$TMP_ROOT/producer-compile-paths"
   local script_paths="$TMP_ROOT/producer-script-paths"
-  producer_compile_paths > "$compile_paths" || return 1
-  producer_reachable_script_paths > "$script_paths" || return 1
+  producer_compile_paths lean-report > "$compile_paths" || return 1
+  producer_reachable_script_paths lean-report > "$script_paths" || return 1
   { cat "$compile_paths"; cat "$script_paths"; producer_declared_paths; } | sort -u
+}
+
+scribe_declared_paths() {
+  local relative
+  for relative in \
+    tools/StrataLint.Scribe/StrataLint.Scribe.csproj \
+    tools/StrataLint.Scribe/packages.lock.json; do
+    [[ -f "$REPOSITORY/$relative" ]] && printf '%s\n' "$relative"
+  done
+}
+
+complete_scribe_producer_paths() {
+  local compile_paths="$TMP_ROOT/scribe-compile-paths"
+  local script_paths="$TMP_ROOT/scribe-script-paths"
+  local lean_paths="$TMP_ROOT/lean-producer-paths"
+  producer_compile_paths scribe-content > "$compile_paths" || return 1
+  producer_reachable_script_paths scribe-content > "$script_paths" || return 1
+  complete_producer_paths > "$lean_paths" || return 1
+  {
+    cat "$compile_paths"
+    cat "$script_paths"
+    cat "$lean_paths"
+    scribe_declared_paths
+  } | sort -u
 }
 
 producer_sha256() {
@@ -319,6 +364,10 @@ case "$COMMAND" in
   producer-paths)
     complete_producer_paths \
       || { echo "lean-report-input: producer compile closure is unavailable" >&2; exit 2; }
+    ;;
+  scribe-producer-paths)
+    complete_scribe_producer_paths \
+      || { echo "lean-report-input: Scribe producer closure is unavailable" >&2; exit 2; }
     ;;
   verify)
     verify_report_sha

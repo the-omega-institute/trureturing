@@ -29,13 +29,31 @@ public sealed partial class MakeWorkflowTests
         WriteExecutable(
             Path.Combine(binDirectory, "dotnet"),
             "#!/usr/bin/env bash\nprintf '%s|%s\\n' \"$STRATALINT_LEAN_REPORT\" \"$*\" >> \"$SCRIBE_LOG\"");
+        var headResult = BoundedProcessRunner.Run(
+            "git",
+            ["rev-parse", "HEAD"],
+            root,
+            TimeSpan.FromSeconds(30),
+            64 * 1024);
+        Assert.Equal(0, headResult.ExitCode);
+        var baseRevision = Encoding.UTF8.GetString(headResult.StandardOutput).Trim();
+        WriteExecutable(
+            Path.Combine(binDirectory, "git"),
+            $$"""
+            #!/usr/bin/env bash
+            if [[ "${1:-}" == -C ]]; then shift 2; fi
+            case "$*" in
+              "cat-file -e {{baseRevision}}^{commit}"|"diff --name-only --no-renames -z {{baseRevision}} --"|"ls-files --others --exclude-standard -z") exit 0 ;;
+              *) echo "unexpected git invocation: $*" >&2; exit 90 ;;
+            esac
+            """);
 
         var result = BoundedProcessRunner.Run(
             "/bin/bash",
             [
                 "-c",
                 "PATH=\"$1:/usr/bin:/bin\" STRATALINT_LEAN_REPORT=\"$2\" SCRIBE_LOG=\"$3\" "
-                    + "exec /bin/bash \"$4\" \"$5\" \"$6\"",
+                    + "exec /bin/bash \"$4\" \"$5\" \"$6\" \"$7\"",
                 "scribe-content-checks",
                 binDirectory,
                 ambientReport,
@@ -43,14 +61,17 @@ public sealed partial class MakeWorkflowTests
                 Path.Combine(root, ScribeContentChecksScriptPath),
                 explicitReport,
                 scribe,
+                baseRevision,
             ],
             root,
             TimeSpan.FromSeconds(30),
             64 * 1024);
 
-        Assert.Equal(0, result.ExitCode);
+        Assert.True(
+            result.ExitCode == 0,
+            $"expected exit 0, actual {result.ExitCode}\nstdout:\n{Encoding.UTF8.GetString(result.StandardOutput)}\nstderr:\n{Encoding.UTF8.GetString(result.StandardError)}");
         var invocations = File.ReadAllLines(log);
-        Assert.Equal(4, invocations.Length);
+        Assert.True(invocations.Length is 2 or 4);
         Assert.All(invocations, line => Assert.StartsWith(explicitReport + "|", line, StringComparison.Ordinal));
         Assert.DoesNotContain(invocations, line => line.Contains(ambientReport, StringComparison.Ordinal));
         Assert.Contains(
@@ -527,6 +548,7 @@ public sealed partial class MakeWorkflowTests
               "rev-parse --verify HEAD^{commit}"|"rev-parse --verify HEAD") printf '%040d\n' 2 ;;
               "merge-base 0000000000000000000000000000000000000001 0000000000000000000000000000000000000002") printf '%040d\n' 1 ;;
               "merge-base --is-ancestor "*) exit 0 ;;
+              "cat-file -e {{GateForkSha}}^{commit}"|"diff --name-only --no-renames -z {{GateForkSha}} --"|"ls-files --others --exclude-standard -z") exit 0 ;;
               *) echo "unexpected git invocation: $*" >&2; exit 90 ;;
             esac
             """);
@@ -584,6 +606,7 @@ public sealed partial class MakeWorkflowTests
               "merge-base {{forkSha}} {{candidateSha}}") printf '%s\n' '{{forkSha}}' ;;
               "merge-base --is-ancestor {{baseTipSha}} {{candidateSha}}") exit {{(diverged ? 1 : 0)}} ;;
               "merge-base --is-ancestor {{forkSha}} {{candidateSha}}") exit 0 ;;
+              "cat-file -e {{forkSha}}^{commit}"|"diff --name-only --no-renames -z {{forkSha}} --"|"ls-files --others --exclude-standard -z") exit 0 ;;
               merge\ *) printf 'mutated\n' > "$PREFLIGHT_GIT_STATE" ;;
               *) echo "unexpected git invocation: $*" >&2; exit 90 ;;
             esac
