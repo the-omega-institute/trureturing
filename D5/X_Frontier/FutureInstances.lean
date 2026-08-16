@@ -5,6 +5,5 @@
    anchors: []
    digest: Keep Metallic, Moduli, and non-D5 theory codes uninstantiated until pressure is recorded. -/
 
-/-- TASK D5-T0009
+/- TASK D5-T0009
     Instantiate a future theory root only after governance, license, or scale pressure is evidenced. -/
-def futureInstancesTicket : Unit := ()
