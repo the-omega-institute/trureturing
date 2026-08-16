@@ -7,6 +7,48 @@ namespace StrataLint.ArchitectureTests;
 
 public sealed partial class FileMapPolicyTests
 {
+    [Fact]
+    public void NonBlockTaskMarkerSurfacesAsMissionContractFinding()
+    {
+        var fixture = Directory.CreateTempSubdirectory("stratalint-mission-task-");
+        try
+        {
+            var repository = Path.Combine(fixture.FullName, "repository");
+            RunMissionGit(
+                fixture.FullName,
+                "clone",
+                "--quiet",
+                "--no-hardlinks",
+                RepositoryLayout.FindRoot(),
+                repository);
+            const string targetRelativePath = "D5/X_Frontier/GovernanceDeferrals.lean";
+            var targetPath = Path.Combine(repository, targetRelativePath);
+            var target = RunMissionGit(repository, "show", $"HEAD:{targetRelativePath}");
+            var taskStart = target.IndexOf("/-- TASK D5-T0039 |", StringComparison.Ordinal);
+            var nextTaskStart = target.IndexOf("/-- TASK D5-T0040 |", StringComparison.Ordinal);
+            Assert.True(taskStart >= 0 && nextTaskStart > taskStart);
+            target = target[..taskStart]
+                + "def staleMissionMarker : String := \"TASK D5-T0039 |\"\n\n"
+                + target[nextTaskStart..];
+            File.WriteAllText(targetPath, target, new UTF8Encoding(false));
+
+            var finding = Assert.Single(
+                FileMapPolicy.InspectRepository(repository),
+                static finding => finding.Code == "MISSION-CONTRACT");
+
+            Assert.Equal(MissionFileLoader.RelativePath, finding.Path);
+            Assert.Contains(
+                nameof(MissionLoadErrorCode.DanglingCaseReference),
+                finding.Message,
+                StringComparison.Ordinal);
+            Assert.Contains("D5-T0039", finding.Message, StringComparison.Ordinal);
+        }
+        finally
+        {
+            fixture.Delete(recursive: true);
+        }
+    }
+
     private static void AssertInventedMeasuredReceiptsSurfaceAsMissionContractFinding()
     {
         var fixture = Directory.CreateTempSubdirectory("stratalint-mission-");

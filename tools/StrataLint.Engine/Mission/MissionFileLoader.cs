@@ -470,7 +470,10 @@ internal static class MissionFileLoader
                 ? ticket.Gid
                 : ticket.Gid + ".lean";
             if (!snapshot.TryGetFile(targetPath, out var target)
-                || !target.Text.Contains($"TASK {open.CaseId} |", StringComparison.Ordinal))
+                || TaskBlockParser.Parse(target.Text).Blocks.Count(block => string.Equals(
+                    block.CaseId,
+                    open.CaseId,
+                    StringComparison.Ordinal)) != 1)
             {
                 throw Error(
                     MissionLoadErrorCode.DanglingCaseReference,

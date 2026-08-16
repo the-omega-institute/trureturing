@@ -13,16 +13,27 @@ public sealed class MissionFileLoaderTests
         D5-T0042 = "D5/X_Frontier/GovernanceDeferrals"
         """;
 
-    private const string GovernanceDeferrals = """
-        /-- TASK D5-T0039 | difficulty:3 -/
+    private const string NoveltyTaskBlock = """
+        /-- TASK D5-T0039 | 难度:3 | 依赖:欠(novelty-measurement-receipt) | 尝试:0
+            提示:Define the novelty measurement receipt contract.
+            尸检:none -/
         def missionNoveltyMeasurementTicket : Unit := ()
-        /-- TASK D5-T0040 | difficulty:3 -/
-        def missionDependencyReadinessMeasurementTicket : Unit := ()
-        /-- TASK D5-T0041 | difficulty:3 -/
-        def missionStructuralRealizationMeasurementTicket : Unit := ()
-        /-- TASK D5-T0042 | difficulty:3 -/
-        def missionReceiptPotentialMeasurementTicket : Unit := ()
         """;
+
+    private static readonly string GovernanceDeferrals = NoveltyTaskBlock + "\n" + """
+        /-- TASK D5-T0040 | 难度:3 | 依赖:欠(dependency-readiness-measurement-receipt) | 尝试:0
+            提示:Define the dependency-readiness measurement receipt contract.
+            尸检:none -/
+        def missionDependencyReadinessMeasurementTicket : Unit := ()
+        /-- TASK D5-T0041 | 难度:3 | 依赖:欠(structural-realization-measurement-receipt) | 尝试:0
+            提示:Define the structural-realization measurement receipt contract.
+            尸检:none -/
+        def missionStructuralRealizationMeasurementTicket : Unit := ()
+        /-- TASK D5-T0042 | 难度:3 | 依赖:欠(receipt-potential-measurement-receipt) | 尝试:0
+            提示:Define the receipt-potential measurement receipt contract.
+            尸检:none -/
+        def missionReceiptPotentialMeasurementTicket : Unit := ()
+        """ + "\n";
 
     private static readonly string ValidMission = """
         # Mission
@@ -118,6 +129,48 @@ public sealed class MissionFileLoaderTests
             MissionFileLoader.Load(Snapshot(dangling)));
 
         Assert.Equal(MissionLoadErrorCode.DanglingCaseReference, invalid.Error.Code);
+    }
+
+    [Fact]
+    public void NonBlockTaskMarkerCannotSatisfyAnOpenCaseReference()
+    {
+        var target = ReplaceNoveltyTaskBlock(
+            "def staleMissionMarker : String := \"TASK D5-T0039 |\"");
+
+        var invalid = Assert.IsType<MissionLoadOutcome.Invalid>(
+            LoadRepository(Encoding.UTF8.GetBytes(ValidMission), target));
+
+        Assert.Equal(MissionLoadErrorCode.DanglingCaseReference, invalid.Error.Code);
+        Assert.Contains("D5-T0039", invalid.Error.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void MalformedTaskBlockCannotSatisfyAnOpenCaseReference()
+    {
+        var target = ReplaceNoveltyTaskBlock("""
+            /-- TASK D5-T0039 | 难度:3 | 依赖:欠(novelty-measurement-receipt) | 尝试:0
+                提示:Define the novelty measurement receipt contract.
+                尸检 none -/
+            def missionNoveltyMeasurementTicket : Unit := ()
+            """);
+
+        var invalid = Assert.IsType<MissionLoadOutcome.Invalid>(
+            LoadRepository(Encoding.UTF8.GetBytes(ValidMission), target));
+
+        Assert.Equal(MissionLoadErrorCode.DanglingCaseReference, invalid.Error.Code);
+        Assert.Contains("D5-T0039", invalid.Error.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void DuplicateCanonicalTaskBlocksCannotSatisfyAnOpenCaseReference()
+    {
+        var target = ReplaceNoveltyTaskBlock(NoveltyTaskBlock + "\n" + NoveltyTaskBlock);
+
+        var invalid = Assert.IsType<MissionLoadOutcome.Invalid>(
+            LoadRepository(Encoding.UTF8.GetBytes(ValidMission), target));
+
+        Assert.Equal(MissionLoadErrorCode.DanglingCaseReference, invalid.Error.Code);
+        Assert.Contains("D5-T0039", invalid.Error.Message, StringComparison.Ordinal);
     }
 
     [Fact]
@@ -311,10 +364,9 @@ public sealed class MissionFileLoaderTests
                 ValidMission,
                 MissionLoadErrorCode.DanglingCaseReference,
                 "D5-T0039",
-                GovernanceDeferrals.Replace(
-                    "/-- TASK D5-T0039 | difficulty:3 -/",
-                    "/-- receipt contract is not a TASK block -/",
-                    StringComparison.Ordinal)),
+                ReplaceNoveltyTaskBlock(
+                    "/-- receipt contract is not a TASK block -/\n"
+                    + "def missionNoveltyMeasurementTicket : Unit := ()")),
             _ => throw new ArgumentOutOfRangeException(nameof(scenario), scenario, null),
         };
     }
@@ -466,6 +518,16 @@ public sealed class MissionFileLoaderTests
         WriteFile(repository.Path, MissionFileLoader.RelativePath, mission);
         ReviewRegressionTests.RunGit(repository.Path, "add", ".");
         return MissionFileLoader.LoadRepository(repository.Path);
+    }
+
+    private static string ReplaceNoveltyTaskBlock(string replacement)
+    {
+        var result = GovernanceDeferrals.Replace(
+            NoveltyTaskBlock,
+            replacement,
+            StringComparison.Ordinal);
+        Assert.NotEqual(GovernanceDeferrals, result);
+        return result;
     }
 
     private static void WriteFile(string root, string relativePath, byte[] contents)

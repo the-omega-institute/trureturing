@@ -132,23 +132,21 @@ internal static partial class RepositoryRules
         foreach (var (path, file) in FormalFiles(snapshot)
             .OrderBy(static item => item.Path.Value, StringComparer.Ordinal))
         {
-            var tokens = TaskTokenPattern.Matches(file.Text);
-            var matches = TaskPattern.Matches(file.Text);
-            if (findings is not null && tokens.Count != matches.Count)
+            var parsed = TaskBlockParser.Parse(file.Text);
+            if (findings is not null && parsed.TokenCount != parsed.Blocks.Length)
             {
                 findings.Add(new RuleFinding(path.Value, "task block does not match the A7 grammar"));
             }
 
-            foreach (Match match in matches)
+            foreach (var block in parsed.Blocks)
             {
-                var code = match.Groups["code"].Value;
-                if (!result.TryGetValue(code, out var entries))
+                if (!result.TryGetValue(block.CaseId, out var entries))
                 {
                     entries = new List<TaskEntry>();
-                    result.Add(code, entries);
+                    result.Add(block.CaseId, entries);
                 }
 
-                entries.Add(new TaskEntry(path.Value, match.Groups["autopsy"].Value.Trim()));
+                entries.Add(new TaskEntry(path.Value, block.Autopsy));
             }
         }
 
@@ -166,6 +164,35 @@ internal static partial class RepositoryRules
     }
 
     private sealed record TaskEntry(string Path, string Autopsy);
+}
+
+internal sealed record TaskBlock(string CaseId, string Autopsy);
+
+internal sealed record TaskBlockParseResult(
+    int TokenCount,
+    ImmutableArray<TaskBlock> Blocks);
+
+internal static class TaskBlockParser
+{
+    private static readonly Regex TokenPattern = new(
+        "TASK\\s+(D[0-9]+-T[0-9]{4})",
+        RegexOptions.CultureInvariant);
+
+    private static readonly Regex BlockPattern = new(
+        "/-- TASK (?<code>D5-T[0-9]{4}) \\| 难度:[1-5] \\| 依赖:[^\\n|]+ \\| 尝试:[0-9]+\\n"
+        + "\\s+提示:[^\\n]+\\n\\s+尸检:(?<autopsy>[^\\n]+) -/",
+        RegexOptions.CultureInvariant);
+
+    internal static TaskBlockParseResult Parse(string text)
+    {
+        ArgumentNullException.ThrowIfNull(text);
+        var blocks = BlockPattern.Matches(text)
+            .Select(static match => new TaskBlock(
+                match.Groups["code"].Value,
+                match.Groups["autopsy"].Value.Trim()))
+            .ToImmutableArray();
+        return new TaskBlockParseResult(TokenPattern.Matches(text).Count, blocks);
+    }
 }
 
 internal static class StringExtensions
