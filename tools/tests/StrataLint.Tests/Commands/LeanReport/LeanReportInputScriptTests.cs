@@ -16,8 +16,6 @@ public sealed class LeanReportInputScriptTests
     private const string ScribeSourcePath = "tools/StrataLint.Scribe/Emission/FixtureEmitter.cs";
     private const string ScribeContentChecksPath =
         "tools/scripts/workflow/scribe-content-checks.sh";
-    private const string ScribeDeltaInputPath =
-        "tools/scripts/workflow/scribe-delta-input.sh";
     private static readonly string PairScriptPath = string.Join(
         '/', "tools", "scripts", "lean-report-pair.sh");
     private const string SupervisorScriptPath = "tools/scripts/report/report-supervisor.sh";
@@ -142,7 +140,6 @@ public sealed class LeanReportInputScriptTests
         Assert.Contains(LeanModelsPath, paths);
         Assert.Contains(ScribeProjectPath, paths);
         Assert.Contains(ScribeContentChecksPath, paths);
-        Assert.Contains(ScribeDeltaInputPath, paths);
         Assert.Contains(derivedProbe, paths);
         Assert.DoesNotContain(TestSourcePath, paths);
     }
@@ -238,9 +235,6 @@ public sealed class LeanReportInputScriptTests
             Write(PerformanceLibraryPath, "#!/usr/bin/env bash\n");
             Write(ToolchainInstallerPath, "#!/usr/bin/env bash\n");
             Write(ScribeContentChecksPath, "#!/usr/bin/env bash\n");
-            Write(
-                ScribeDeltaInputPath,
-                File.ReadAllText(Path.Combine(root, ScribeDeltaInputPath), Encoding.UTF8));
             Write(
                 WorkflowPath,
                 File.ReadAllText(Path.Combine(root, WorkflowPath), Encoding.UTF8));

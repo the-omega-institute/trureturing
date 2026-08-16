@@ -1,4 +1,3 @@
-using System.Collections.Immutable;
 using System.Text;
 using System.Security.Cryptography;
 using StrataLint.Engine;
@@ -91,8 +90,6 @@ public sealed class EmissionTests
 
         try
         {
-            var repository = RepositoryAccessor.Discover(
-                RepositoryRootCriterion.GlobalJsonAndBlueprintInvalidOperation);
             var output = new StringWriter();
             var error = new StringWriter();
             var report = LeanReportFixture.ForDocuments(
@@ -104,7 +101,8 @@ public sealed class EmissionTests
                 TemporaryFileSystem.Directory.CreateDirectory(Path.GetDirectoryName(destination)!);
                 // Deterministic CI builds map [CallerFilePath] to the /_/ source root,
                 // so fixture copies must resolve through the runtime repository root.
-                repository.CopyTo(RepositoryRelativePath.Create(relativeSource), destination);
+                RepositoryAccessor.Discover(RepositoryRootCriterion.GlobalJsonAndBlueprintInvalidOperation).CopyTo(
+                    RepositoryRelativePath.Create(relativeSource), destination);
             }
             CopyRepositoryLibrary(root);
 
@@ -172,47 +170,6 @@ public sealed class EmissionTests
             Assert.Equal(1, checkExit);
             Assert.Equal("drift\n", TemporaryFileSystem.File.ReadAllText(driftedPath));
             Assert.Contains("out of date", error.ToString(), StringComparison.Ordinal);
-
-            error.GetStringBuilder().Clear();
-            var changedDocument = DocumentDefinitions.All[0];
-            var delta = ScribeDeltaInputs.CreateForTests(
-                RawChangeSet.Create([changedDocument.RelativePath.Value]),
-                ImmutableHashSet<string>.Empty);
-            var deltaCheckExit = ScribeEmitter.Emit(
-                root,
-                check: true,
-                output,
-                error,
-                report,
-                delta);
-
-            Assert.Equal(1, deltaCheckExit);
-            Assert.Contains(
-                $"out of date: {changedDocument.RelativePath.Value}",
-                error.ToString(),
-                StringComparison.Ordinal);
-
-            output.GetStringBuilder().Clear();
-            error.GetStringBuilder().Clear();
-            var unrelatedDelta = ScribeDeltaInputs.CreateForTests(
-                RawChangeSet.Create(["docs/develop/notes.md"]),
-                ImmutableHashSet<string>.Empty);
-            var unrelatedRoot = Path.Combine(root, "unrelated");
-            TemporaryFileSystem.Directory.CreateDirectory(unrelatedRoot);
-            var unrelatedExit = ScribeEmitter.Emit(
-                unrelatedRoot,
-                check: true,
-                output,
-                error,
-                unrelatedDelta);
-
-            Assert.Equal(0, unrelatedExit);
-            Assert.Equal($"checked: 0 blueprint(s){Environment.NewLine}", output.ToString());
-            Assert.Empty(error.ToString());
-
-            Assert.Throws<FormatException>(() => ScribeDeltaInputLoader.ValidateProducerManifest(
-                repository.Root.FullPath,
-                ImmutableHashSet<string>.Empty));
 
             TemporaryFileSystem.File.WriteAllBytes(
                 driftedPath,
@@ -591,26 +548,6 @@ public sealed class EmissionTests
 
         Assert.Equal(2, exit);
         Assert.Contains("emit|emit-values|filemap [--check]", error.ToString(), StringComparison.Ordinal);
-    }
-
-    [Fact]
-    public void CliAcceptsOnlyACompleteDeltaCheckOptionSet()
-    {
-        Assert.True(ScribeCli.TryParseEmissionOptions(
-            [
-                "--check",
-                "--base", new string('a', 40),
-                "--changes-file", "/tmp/changes",
-                "--producer-paths-file", "/tmp/producers",
-            ],
-            out var options));
-        Assert.True(options.Check);
-        Assert.Equal(new string('a', 40), options.BaseRevision);
-        Assert.Equal("/tmp/changes", options.ChangesFile);
-        Assert.Equal("/tmp/producers", options.ProducerPathsFile);
-        Assert.False(ScribeCli.TryParseEmissionOptions(
-            ["--check", "--base", new string('a', 40), "--changes-file", "/tmp/changes"],
-            out _));
     }
 
     private const string CandidateOnlyGid = "D5/S9/Candidate/PrimeFactorization";

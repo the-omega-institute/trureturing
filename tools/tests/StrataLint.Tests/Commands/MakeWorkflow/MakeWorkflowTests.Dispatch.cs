@@ -333,18 +333,15 @@ public sealed partial class MakeWorkflowTests
         var ciRun = Assert.IsType<YamlScalarNode>(contentStep.Children[new YamlScalarNode("run")]).Value!;
 
         AssertNoUnrecognizedGateCommands(canonical, $"canonical script '{ScribeContentChecksScriptPath}'");
-        AssertNoUnrecognizedGateCommands(ciRun, "CI step 'Run complete mathematical content checks'");
         var canonicalCommands = GateCommandSignatures(canonical).ToArray();
-        var ciCommands = GateCommandSignatures(ciRun).ToArray();
         Assert.Equal(
             [
                 "projections --check --report \"$REPORT\"",
-                "emit --check \"${DELTA_ARGS[@]}\"",
-                "emit-values --check \"${DELTA_ARGS[@]}\"",
+                "emit --check",
+                "emit-values --check",
                 "describe-report --check",
             ],
             canonicalCommands);
-        Assert.Equal(canonicalCommands, ciCommands);
         Assert.Contains(ScribeContentChecksScriptPath, mathGate, StringComparison.Ordinal);
         Assert.Contains(
             "'exec /bin/bash \"$1\" \"${STRATALINT_LEAN_REPORT:?}\"'",
@@ -359,7 +356,9 @@ public sealed partial class MakeWorkflowTests
             "STRATALINT_SCRIBE_BASE=\"$BASE_SHA\"",
             preflight,
             StringComparison.Ordinal);
-        Assert.DoesNotContain(ScribeContentChecksScriptPath, ciRun, StringComparison.Ordinal);
+        Assert.Contains(ScribeContentChecksScriptPath, ciRun, StringComparison.Ordinal);
+        Assert.Contains("steps.base.outputs.sha", ciRun, StringComparison.Ordinal);
+        Assert.Empty(GateCommandSignatures(ciRun));
     }
 
     [Fact]

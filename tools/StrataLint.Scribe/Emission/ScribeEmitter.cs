@@ -1,4 +1,3 @@
-using System.Collections.Immutable;
 using StrataLint.Engine;
 
 namespace StrataLint.Scribe;
@@ -18,7 +17,7 @@ public static class ScribeEmitter
         TextWriter error)
     {
         return Run(repositoryRoot, check, output, error, LeanCompiledArtifactReports.InspectRepository,
-            validateRepository: true, tolerateAbsentDocuments: false, delta: null).ExitCode;
+            validateRepository: true, tolerateAbsentDocuments: false).ExitCode;
     }
 
     internal static int Emit(
@@ -36,40 +35,7 @@ public static class ScribeEmitter
             error,
             _ => leanReport,
             validateRepository: false,
-            tolerateAbsentDocuments: false,
-            delta: null).ExitCode;
-    }
-
-    internal static int Emit(
-        string repositoryRoot,
-        bool check,
-        TextWriter output,
-        TextWriter error,
-        ScribeDeltaInputs delta)
-    {
-        ArgumentException.ThrowIfNullOrWhiteSpace(repositoryRoot);
-        ArgumentNullException.ThrowIfNull(output);
-        ArgumentNullException.ThrowIfNull(error);
-        ArgumentNullException.ThrowIfNull(delta);
-        if (!check)
-        {
-            throw new ArgumentException("Scribe delta scope is only valid for checks.", nameof(check));
-        }
-        if (!ScribeDeltaScope.RequiresBlueprintEmission(delta.Changes, delta.ProducerPaths))
-        {
-            output.WriteLine("checked: 0 blueprint(s)");
-            return 0;
-        }
-
-        return Run(
-            repositoryRoot,
-            check,
-            output,
-            error,
-            LeanCompiledArtifactReports.InspectRepository,
-            validateRepository: true,
-            tolerateAbsentDocuments: false,
-            delta).ExitCode;
+            tolerateAbsentDocuments: false).ExitCode;
     }
 
     internal static int Emit(
@@ -88,42 +54,7 @@ public static class ScribeEmitter
             error,
             _ => leanReport,
             validateRepository,
-            tolerateAbsentDocuments: false,
-            delta: null).ExitCode;
-    }
-
-    internal static int Emit(
-        string repositoryRoot,
-        bool check,
-        TextWriter output,
-        TextWriter error,
-        LeanAxiomReport leanReport,
-        ScribeDeltaInputs delta)
-    {
-        ArgumentException.ThrowIfNullOrWhiteSpace(repositoryRoot);
-        ArgumentNullException.ThrowIfNull(output);
-        ArgumentNullException.ThrowIfNull(error);
-        ArgumentNullException.ThrowIfNull(leanReport);
-        ArgumentNullException.ThrowIfNull(delta);
-        if (!check)
-        {
-            throw new ArgumentException("Scribe delta scope is only valid for checks.", nameof(check));
-        }
-        if (!ScribeDeltaScope.RequiresBlueprintEmission(delta.Changes, delta.ProducerPaths))
-        {
-            output.WriteLine("checked: 0 blueprint(s)");
-            return 0;
-        }
-
-        return Run(
-            repositoryRoot,
-            check,
-            output,
-            error,
-            _ => leanReport,
-            validateRepository: false,
-            tolerateAbsentDocuments: false,
-            delta).ExitCode;
+            tolerateAbsentDocuments: false).ExitCode;
     }
 
     internal static VerifiedScribeEmissions? Verify(
@@ -139,8 +70,7 @@ public static class ScribeEmitter
             error,
             _ => leanReport,
             validateRepository: true,
-            tolerateAbsentDocuments: true,
-            delta: null).Verification;
+            tolerateAbsentDocuments: true).Verification;
     }
 
     private static ScribeEmissionRun Run(
@@ -150,8 +80,7 @@ public static class ScribeEmitter
         TextWriter error,
         Func<string, LeanAxiomReport> loadLeanReport,
         bool validateRepository,
-        bool tolerateAbsentDocuments,
-        ScribeDeltaInputs? delta)
+        bool tolerateAbsentDocuments)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(repositoryRoot);
         ArgumentNullException.ThrowIfNull(output);
@@ -246,18 +175,6 @@ public static class ScribeEmitter
                 documents,
                 declarationCatalog,
                 census.ReceiptFreeDocumentGids);
-            var deltaDocuments = definitions.Select(static definition => new ScribeDeltaDocument(
-                definition.Document.Header.Gid.Value,
-                ScribeEmissionAttestation.DefinitionPath(definition.Document.Header.Gid.Value),
-                definition.RelativePath.Value)).ToImmutableArray();
-            var scope = delta is null
-                ? ScribeDeltaScope.Full(deltaDocuments)
-                : ScribeDeltaScope.Create(
-                    delta.Changes,
-                    delta.ProducerPaths,
-                    deltaDocuments,
-                    DescribeTargetsByDefinition(definitions, graph),
-                    BaseDescribeTargets(definitions, delta));
             var wired = documents.Count(document => graph.For(document).Length > 0);
             var graphEdges = documents.SelectMany(document => graph.For(document)).ToArray();
             output.WriteLine(
@@ -268,7 +185,7 @@ public static class ScribeEmitter
                 + $"narrative={graphEdges.OfType<DocumentEdge.NarrativeReference>().Count()}");
             return EmitVerified(
                 repositoryRoot, check, output, error,
-                declarationCatalog, definitions, graph, scope);
+                declarationCatalog, definitions, graph);
         }
         catch (Exception exception) when (
             exception is InvalidOperationException
@@ -289,8 +206,7 @@ public static class ScribeEmitter
         TextWriter error,
         DeclarationCatalog declarationCatalog,
         IReadOnlyList<DocumentDefinition> definitions,
-        DocumentGraph graph,
-        ScribeDeltaScope scope)
+        DocumentGraph graph)
     {
         var rendered = new List<(DocumentDefinition Definition, byte[] Bytes)>();
         var attestations = new List<ScribeEmissionRecord>();
@@ -299,20 +215,15 @@ public static class ScribeEmitter
         var citations = LibraryNoteCatalog.Load(repositoryRoot).Citations;
         foreach (var definition in definitions)
         {
+            var bytes = CanonicalMarkdownWriter.Write(
+                definition.Document,
+                declarationCatalog,
+                citations,
+                graph).ToArray();
+
+            rendered.Add((definition, bytes));
             var gid = definition.Document.Header.Gid.Value;
             var definitionPath = ScribeEmissionAttestation.DefinitionPath(gid);
-            var emissionPath = definition.RelativePath.Value;
-            var bytes = scope.Contains(emissionPath)
-                ? CanonicalMarkdownWriter.Write(
-                    definition.Document,
-                    declarationCatalog,
-                    citations,
-                    graph).ToArray()
-                : ReadTrustedEmission(repositoryRoot, emissionPath);
-            if (scope.Contains(emissionPath))
-            {
-                rendered.Add((definition, bytes));
-            }
             var source = File.ReadAllBytes(Path.Combine(repositoryRoot, definitionPath));
             attestations.Add(new ScribeEmissionRecord(
                 gid,
@@ -393,7 +304,7 @@ public static class ScribeEmitter
         var differences = documentDifferences + (attestationOutOfDate ? 1 : 0);
         if (check && differences == 0)
         {
-            output.WriteLine($"checked: {scope.EmissionPaths.Count} blueprint(s)");
+            output.WriteLine($"checked: {definitions.Count} blueprint(s)");
             if (attestationExists)
             {
                 output.WriteLine($"checked: {ScribeEmissionAttestation.RelativePath}");
@@ -412,66 +323,6 @@ public static class ScribeEmitter
                     declarationReferences,
                     describeLatexRecords)
                 : null);
-    }
-
-    private static byte[] ReadTrustedEmission(string repositoryRoot, string emissionPath)
-    {
-        var path = Path.Combine(repositoryRoot, emissionPath);
-        if (!File.Exists(path))
-        {
-            throw new InvalidOperationException(
-                $"trusted unscoped Scribe emission is absent: {emissionPath}");
-        }
-
-        return File.ReadAllBytes(path);
-    }
-
-    private static ImmutableDictionary<string, ImmutableHashSet<string>> DescribeTargetsByDefinition(
-        IEnumerable<DocumentDefinition> definitions,
-        DocumentGraph graph)
-    {
-        var result = ImmutableDictionary.CreateBuilder<string, ImmutableHashSet<string>>(
-            StringComparer.Ordinal);
-        foreach (var definition in definitions)
-        {
-            var targets = graph.ExplicitEdges[definition.Document.Header.Gid.Value]
-                .OfType<DocumentEdge.NarrativeReference>()
-                .Select(static edge => edge.Target)
-                .OfType<NarrativeTarget.Describe>()
-                .Select(static target => target.DocumentGid.Value)
-                .ToImmutableHashSet(StringComparer.Ordinal);
-            result.Add(
-                ScribeEmissionAttestation.DefinitionPath(definition.Document.Header.Gid.Value),
-                targets);
-        }
-
-        return result.ToImmutable();
-    }
-
-    private static ImmutableDictionary<string, ImmutableHashSet<string>> BaseDescribeTargets(
-        IEnumerable<DocumentDefinition> definitions,
-        ScribeDeltaInputs delta)
-    {
-        var changedDefinitions = delta.Changes.Entries
-            .Select(static change => change.Path.Value)
-            .ToImmutableHashSet(StringComparer.Ordinal);
-        var result = ImmutableDictionary.CreateBuilder<string, ImmutableHashSet<string>>(
-            StringComparer.Ordinal);
-        foreach (var definition in definitions)
-        {
-            var definitionPath = ScribeEmissionAttestation.DefinitionPath(
-                definition.Document.Header.Gid.Value);
-            if (!changedDefinitions.Contains(definitionPath)) continue;
-            var markdown = delta.ReadBaseDocument(definition.RelativePath.Value);
-            if (markdown is not null)
-            {
-                result.Add(
-                    definitionPath,
-                    ScribeBaseDocumentReferences.ParseDescribeTargetGids(markdown));
-            }
-        }
-
-        return result.ToImmutable();
     }
 
     private static void CollectDescribeCapabilities(
