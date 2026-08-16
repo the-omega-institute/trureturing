@@ -6,18 +6,20 @@ public sealed class CheckoutRemoteCapabilityStrippingTests
 {
     private const string StripStepName = "Strip checkout remote state";
     private static readonly string RepositoryRoot = RepositoryLayout.FindRoot();
+    private static readonly IReadOnlyList<RemoteStateSource> WorkflowSources =
+        GitIndexRepositoryFiles.Enumerate(RepositoryRoot)
+            .Where(static file => file.RelativePath.StartsWith(".github/workflows/", StringComparison.Ordinal)
+                && (file.RelativePath.EndsWith(".yml", StringComparison.Ordinal)
+                    || file.RelativePath.EndsWith(".yaml", StringComparison.Ordinal)))
+            .OrderBy(static file => file.RelativePath, StringComparer.Ordinal)
+            .Select(static file => new RemoteStateSource(file.RelativePath, File.ReadAllText(file.FullPath)))
+            .ToArray();
 
     [Fact]
     public void EveryActionsCheckoutIsImmediatelyFollowedByFailClosedRemoteCapabilityStripping()
     {
-        var workflowDirectory = Path.Combine(RepositoryRoot, ".github", "workflows");
-        var findings = Directory.EnumerateFiles(workflowDirectory)
-            .Where(static path => path.EndsWith(".yml", StringComparison.Ordinal)
-                || path.EndsWith(".yaml", StringComparison.Ordinal))
-            .Order(StringComparer.Ordinal)
-            .SelectMany(path => InspectWorkflow(
-                Path.GetRelativePath(RepositoryRoot, path),
-                File.ReadAllText(path)))
+        var findings = WorkflowSources
+            .SelectMany(static source => InspectWorkflow(source.Path, source.Content))
             .ToArray();
 
         Assert.Empty(findings);
