@@ -158,3 +158,8 @@ def theoryIsolationSemanticsRulingTicket : Unit := ()
     提示:This is not a decision this lane can make; hand it to the admission-gate owner. Admission is offline and fail-closed under spec A12/A17 and `CLAUDE.md` rule 11, so GitHub issue numbers cannot be a resolvable case vocabulary, while the A7/SL-013 TASK system's machine role is the case-address space: `FrozenContentAddress` rejects every Open module without a `D5-Tnnnn` reference, `RepositoryRules.StructuredScan` uses the same vocabulary for SL-019 anomaly accounting, and deferred rule case ids enter `RuleCatalog.RootSha256`. Close only when the owner rules whether the gate may query GitHub; if yes, full retirement becomes cheaper, and if no, only the ticket skin (`难度`, `尝试`, `提示`, and `尸检`) can retire while the case-id skeleton remains.
     尸检:none -/
 def githubAdmissionLookupRulingTicket : Unit := ()
+
+/-- TASK D5-T0038 | 难度:3 | 依赖:欠(owner-ruling) | 尝试:0
+    提示:This is not a decision this lane can make; hand it to the projection contract owner. Spec A17.1 names `StatementProjectionFixtureLoader.FromLean` as the unique construction entry for `lean-derived` formula provenance, but production never calls it: `Describe.cs` materializes through `StatementProjectionFixtureLoader.Assess`, and a symbol-level reachability measurement over Cli/Engine/Scribe found the method has zero references. Deleting it would silently adjudicate the mismatch in favour of the implementation; leaving it unrecorded leaves a spec claim with no enforcing consumer. Close only when the owner either rewrites A17.1 to name the live route or restores the method as that route.
+    尸检:none -/
+def statementProjectionFromLeanRulingTicket : Unit := ()
