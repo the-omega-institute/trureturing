@@ -144,6 +144,54 @@ internal static class DagLedgerCommandPreparation
         };
     }
 
+    internal static FrozenMaterialCatalog BuildAdmissionCatalog(
+        RepositorySnapshot snapshot,
+        AcceptedLeanClosure lean,
+        AcyclicTruthDag dag,
+        FrozenLedgerBaseView baseView,
+        FrozenLedgerAdmissionScope scope,
+        FrozenRevisionIdentity currentIdentity)
+    {
+        var environment = BuildEnvironment(
+            snapshot,
+            baseView.Origin.CommitOid,
+            baseView.Origin.TreeOid);
+        if (currentIdentity.CommitOid.StartsWith("git-sha256:", StringComparison.Ordinal)
+            != environment.OriginCommitOid.StartsWith("git-sha256:", StringComparison.Ordinal))
+        {
+            throw new InvalidOperationException(
+                "current revision and frozen Genesis use different Git hash algorithms");
+        }
+
+        var algorithm = environment.OriginCommitOid.StartsWith("git-sha256:", StringComparison.Ordinal)
+            ? HashAlgorithmName.SHA256
+            : HashAlgorithmName.SHA1;
+        var attestations = dag.Nodes
+            .Where(node => node.State is TruthState.Closed
+                && node.ModuleName is not null
+                && scope.Paths.Contains(node.RepoPath))
+            .Select(node => new FrozenModuleAttestation(
+                node.RepoPath,
+                FrozenContentAddress.ComputeGitBlobOid(
+                    snapshot.Files[node.RepoPath].RawBytes.AsSpan(),
+                    algorithm))
+            {
+                BaseCommitOid = currentIdentity.CommitOid,
+                BaseTreeOid = currentIdentity.TreeOid,
+            })
+            .ToImmutableArray();
+        return FrozenContentAddress.BuildAdmissionCatalog(
+            snapshot,
+            lean,
+            dag,
+            environment,
+            attestations,
+            scope.Paths,
+            baseView.ActiveByPath.ToDictionary(
+                static item => item.Key,
+                static item => item.Value.Material));
+    }
+
     internal static TruthContext BuildTruth(
         IRepositoryGateway repository,
         ILeanReportSource leanReportSource)

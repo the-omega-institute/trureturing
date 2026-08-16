@@ -43,58 +43,24 @@ public static class FrozenContentAddress
             var materialByPath = new Dictionary<RepoPath, FrozenNodeMaterial>();
             foreach (var node in dag.TopologicalOrder.Where(static node => node.State is TruthState.Closed))
             {
-                if (!byPath.TryGetValue(node.RepoPath, out var attestation)
-                    || !snapshot.Files.TryGetValue(node.RepoPath, out var source)
-                    || !lean.Report.Files.TryGetValue(node.RepoPath, out var report))
+                if (!byPath.TryGetValue(node.RepoPath, out var attestation))
                 {
                     throw new FormatException($"Closed module {node.RepoPath.Value} has no complete attestation material.");
                 }
 
-                ValidateGitBlobOid(attestation.SourceBlobOid, source.RawBytes.AsSpan(), node.RepoPath.Value);
-                if (attestation.BaseCommitOid is not null && !FrozenHashSyntax.IsGitOid(attestation.BaseCommitOid)
-                    || attestation.BaseTreeOid is not null && !FrozenHashSyntax.IsGitOid(attestation.BaseTreeOid)
-                    || (attestation.BaseCommitOid is null) != (attestation.BaseTreeOid is null))
-                {
-                    throw new FormatException(
-                        $"Closed module {node.RepoPath.Value} has a malformed event-specific Git attestation.");
-                }
-                var declarationStatementIds = CanonicalStatementWriter.DeclarationStatementIds(
+                materialByPath.Add(
                     node.RepoPath,
-                    report);
-                var statement = StatementId.Create(FrozenContentHash.Compute(
-                    FrozenHashDomains.Statement,
-                    CanonicalStatementWriter.WriteModule(node.RepoPath, declarationStatementIds).AsSpan()));
-                var witness = ComputeWitnessId(
-                    node.RepoPath,
-                    statement,
-                    report.Imports,
-                    report.Declarations.SelectMany(static declaration => declaration.Axioms),
-                    attestation.SourceBlobOid,
-                    "sha256:" + Convert.ToHexStringLower(SHA256.HashData(source.RawBytes.AsSpan())),
-                    environment.LeanToolchainBlobOid,
-                    environment.LakeManifestBlobOid);
-                var axiomClosure = report.Declarations
-                    .SelectMany(static declaration => declaration.Axioms)
-                    .Distinct(StringComparer.Ordinal)
-                    .Order(StringComparer.Ordinal)
-                    .ToImmutableArray();
-                var prerequisites = dag.DependenciesOf(node.RepoPath)
-                    .Select(path => materialByPath.TryGetValue(path, out var dependency)
-                        ? dependency.FrozenNodeId
-                        : throw new FormatException(
-                            $"Closed module {node.RepoPath.Value} depends on non-frozen {path.Value}."))
-                    .OrderBy(static id => id.Value, StringComparer.Ordinal)
-                    .ToImmutableArray();
-                var frozen = ComputeFrozenNodeId(node.RepoPath, statement, witness, prerequisites);
-                materialByPath.Add(node.RepoPath, new FrozenNodeMaterial(
-                    node.RepoPath,
-                    declarationStatementIds,
-                    statement,
-                    witness,
-                    frozen,
-                    prerequisites,
-                    axiomClosure,
-                    attestation));
+                    BuildNodeMaterial(
+                        snapshot,
+                        lean,
+                        dag,
+                        environment,
+                        node,
+                        attestation,
+                        path => materialByPath.TryGetValue(path, out var dependency)
+                            ? dependency.FrozenNodeId
+                            : throw new FormatException(
+                                $"Closed module {node.RepoPath.Value} depends on non-frozen {path.Value}.")));
             }
 
             var unused = byPath.Keys
@@ -121,6 +87,124 @@ public static class FrozenContentAddress
         {
             return new FrozenMaterialOutcome.Rejected(exception.Message);
         }
+    }
+
+    internal static FrozenMaterialCatalog BuildAdmissionCatalog(
+        RepositorySnapshot snapshot,
+        AcceptedLeanClosure lean,
+        AcyclicTruthDag dag,
+        FrozenEnvironmentAttestation environment,
+        IEnumerable<FrozenModuleAttestation> moduleAttestations,
+        IReadOnlySet<RepoPath> selectedPaths,
+        IReadOnlyDictionary<RepoPath, FrozenNodeMaterial> trustedBaseMaterials)
+    {
+        ArgumentNullException.ThrowIfNull(snapshot);
+        ArgumentNullException.ThrowIfNull(lean);
+        ArgumentNullException.ThrowIfNull(dag);
+        ArgumentNullException.ThrowIfNull(environment);
+        ArgumentNullException.ThrowIfNull(moduleAttestations);
+        ArgumentNullException.ThrowIfNull(selectedPaths);
+        ArgumentNullException.ThrowIfNull(trustedBaseMaterials);
+        ValidateEnvironment(snapshot, environment);
+        var attestations = moduleAttestations.ToDictionary(static item => item.RepoPath);
+        var materialByPath = new Dictionary<RepoPath, FrozenNodeMaterial>();
+        foreach (var node in dag.TopologicalOrder.Where(node =>
+            node.State is TruthState.Closed
+            && node.ModuleName is not null
+            && selectedPaths.Contains(node.RepoPath)))
+        {
+            if (!attestations.TryGetValue(node.RepoPath, out var attestation))
+            {
+                throw new FormatException(
+                    $"Selected Closed module {node.RepoPath.Value} has no attestation material.");
+            }
+
+            materialByPath.Add(
+                node.RepoPath,
+                BuildNodeMaterial(
+                    snapshot,
+                    lean,
+                    dag,
+                    environment,
+                    node,
+                    attestation,
+                    path => materialByPath.TryGetValue(path, out var selectedDependency)
+                        ? selectedDependency.FrozenNodeId
+                        : trustedBaseMaterials.TryGetValue(path, out var trustedDependency)
+                            ? trustedDependency.FrozenNodeId
+                            : throw new FormatException(
+                                $"Selected Closed module {node.RepoPath.Value} depends on unrecorded {path.Value}.")));
+        }
+
+        return FrozenMaterialCatalog.Create(
+            dag,
+            environment,
+            materialByPath.Values
+                .OrderBy(static node => node.RepoPath.Value, StringComparer.Ordinal)
+                .ToImmutableArray(),
+            ImmutableDictionary<RepoPath, ImmutableArray<CaseId>>.Empty,
+            ImmutableDictionary<RepoPath, ImmutableArray<string>>.Empty);
+    }
+
+    private static FrozenNodeMaterial BuildNodeMaterial(
+        RepositorySnapshot snapshot,
+        AcceptedLeanClosure lean,
+        AcyclicTruthDag dag,
+        FrozenEnvironmentAttestation environment,
+        TruthNode node,
+        FrozenModuleAttestation attestation,
+        Func<RepoPath, FrozenNodeId> resolveDependency)
+    {
+        if (!snapshot.Files.TryGetValue(node.RepoPath, out var source)
+            || !lean.Report.Files.TryGetValue(node.RepoPath, out var report))
+        {
+            throw new FormatException(
+                $"Closed module {node.RepoPath.Value} has no complete attestation material.");
+        }
+
+        ValidateGitBlobOid(attestation.SourceBlobOid, source.RawBytes.AsSpan(), node.RepoPath.Value);
+        if (attestation.BaseCommitOid is not null && !FrozenHashSyntax.IsGitOid(attestation.BaseCommitOid)
+            || attestation.BaseTreeOid is not null && !FrozenHashSyntax.IsGitOid(attestation.BaseTreeOid)
+            || (attestation.BaseCommitOid is null) != (attestation.BaseTreeOid is null))
+        {
+            throw new FormatException(
+                $"Closed module {node.RepoPath.Value} has a malformed event-specific Git attestation.");
+        }
+
+        var declarationStatementIds = CanonicalStatementWriter.DeclarationStatementIds(
+            node.RepoPath,
+            report);
+        var statement = StatementId.Create(FrozenContentHash.Compute(
+            FrozenHashDomains.Statement,
+            CanonicalStatementWriter.WriteModule(node.RepoPath, declarationStatementIds).AsSpan()));
+        var witness = ComputeWitnessId(
+            node.RepoPath,
+            statement,
+            report.Imports,
+            report.Declarations.SelectMany(static declaration => declaration.Axioms),
+            attestation.SourceBlobOid,
+            "sha256:" + Convert.ToHexStringLower(SHA256.HashData(source.RawBytes.AsSpan())),
+            environment.LeanToolchainBlobOid,
+            environment.LakeManifestBlobOid);
+        var axiomClosure = report.Declarations
+            .SelectMany(static declaration => declaration.Axioms)
+            .Distinct(StringComparer.Ordinal)
+            .Order(StringComparer.Ordinal)
+            .ToImmutableArray();
+        var prerequisites = dag.DependenciesOf(node.RepoPath)
+            .Select(resolveDependency)
+            .OrderBy(static id => id.Value, StringComparer.Ordinal)
+            .ToImmutableArray();
+        var frozen = ComputeFrozenNodeId(node.RepoPath, statement, witness, prerequisites);
+        return new FrozenNodeMaterial(
+            node.RepoPath,
+            declarationStatementIds,
+            statement,
+            witness,
+            frozen,
+            prerequisites,
+            axiomClosure,
+            attestation);
     }
 
     private static void ValidateEnvironment(

@@ -115,59 +115,10 @@ public static partial class FrozenLedger
                 else if (eventType == "Reattest")
                 {
                     var reattest = ParseReattest(payload, active, trustedReferences);
-                    var entry = active[reattest.CaseId];
-                    if (reattest.IsLegacyFormat)
-                    {
-                        active[reattest.CaseId] = entry with
-                        {
-                            Payload = entry.Payload with
-                            {
-                                Input = reattest.Input,
-                                InputFingerprint = reattest.InputFingerprint,
-                                SemanticReceipt = reattest.SemanticReceipt,
-                            },
-                            LastAttestationEventHash = eventHash,
-                        };
-                    }
-                    else
-                    {
-                        var frozenNodeId = reattest.FrozenNodeId
-                            ?? throw new FormatException("Extended Reattest is missing frozen_node_id.");
-                        var statementId = reattest.StatementId
-                            ?? throw new FormatException("Extended Reattest is missing statement_id.");
-                        var witnessId = reattest.WitnessId
-                            ?? throw new FormatException("Extended Reattest is missing witness_id.");
-                        active[reattest.CaseId] = entry with
-                        {
-                            Material = new FrozenNodeMaterial(
-                                entry.Material.RepoPath,
-                                reattest.DeclarationStatementIds,
-                                statementId,
-                                witnessId,
-                                frozenNodeId,
-                                reattest.PrerequisiteFrozenNodeIds,
-                                entry.Material.AxiomClosure,
-                                new FrozenModuleAttestation(
-                                    entry.Material.RepoPath,
-                                    reattest.Input.DescriptorBlobOid)
-                                {
-                                    BaseCommitOid = reattest.Input.BaseCommitOid,
-                                    BaseTreeOid = reattest.Input.BaseTreeOid,
-                                }),
-                            Payload = entry.Payload with
-                            {
-                                DeclarationStatementIds = reattest.DeclarationStatementIds,
-                                FrozenNodeId = frozenNodeId,
-                                Input = reattest.Input,
-                                InputFingerprint = reattest.InputFingerprint,
-                                PrerequisiteFrozenNodeIds = reattest.PrerequisiteFrozenNodeIds,
-                                SemanticReceipt = reattest.SemanticReceipt,
-                                StatementId = statementId,
-                                WitnessId = witnessId,
-                            },
-                            LastAttestationEventHash = eventHash,
-                        };
-                    }
+                    active[reattest.CaseId] = ApplyReattest(
+                        active[reattest.CaseId],
+                        reattest,
+                        eventHash);
 
                     events.Add(new FrozenLedgerEvent.Reattest(
                         sequence,

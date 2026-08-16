@@ -10,9 +10,7 @@ public sealed partial class ProductionEnvironmentTests
     [Fact]
     public void CheckEvaluatesProtectedChangeContentAndReturnsStructuredMetaSignal()
     {
-        var fixture = new RuleFixture();
-        fixture.AddBackfillTargets();
-        AddFrozenLedger(fixture);
+        var fixture = TrustedFrozenFixture();
         const string protectedPath = RuleFixture.SyntheticProtectedPath;
         var gateway = new FakeRepositoryGateway(
             RawChangeSet.Create(new[] { protectedPath }),
@@ -108,6 +106,92 @@ public sealed partial class ProductionEnvironmentTests
             admitted.Certificate.ExecutedRules);
         Assert.Equal(2, gateway.ReadCount);
         Assert.Equal(0, source.CallCount);
+    }
+
+    [Fact]
+    public void CheckPerformsZeroLedgerSemanticCallsForAnUnrelatedChange()
+    {
+        using var temporary = new TemporaryDirectory();
+        var fixture = new RuleFixture();
+        fixture.AddBackfillTargets();
+        fixture.Files["Meta/registry.yaml"] = TestRegistry.Canonical;
+        fixture.Baseline["Meta/registry.yaml"] = TestRegistry.Canonical;
+        fixture.Files["Meta/domains.yaml"] = TestRegistry.Domains;
+        fixture.Baseline["Meta/domains.yaml"] = TestRegistry.Domains;
+        AddFrozenLedger(fixture);
+        var currentRaw = Snapshot(fixture.Files);
+        var baselineRaw = Snapshot(fixture.Baseline);
+        var gateway = new FakeRepositoryGateway(
+            RawChangeSet.Create([RuleFixture.BlueprintPath]),
+            currentRaw,
+            baselineRaw);
+        var ledger = new ProductionFrozenLedgerAdmissionServices(
+            "/repo",
+            ImmutableHashSet<string>.Empty);
+        var candidateReport = Path.Combine(temporary.Path, "candidate.json");
+        File.WriteAllBytes(
+            candidateReport,
+            RawLeanReportArtifact.Write(
+                Decode(currentRaw),
+                LeanAxiomReport.Create(fixture.Reports)).AsSpan());
+        var environment = new ProductionCliEnvironment(
+            "/repo",
+            gateway,
+            new FakeLeanReportSource(null),
+            scribeEmissionVerifier: null,
+            ledger);
+
+        var outcome = environment.Check([
+            "--candidate-lean-report", candidateReport,
+        ]);
+
+        Assert.IsType<AdmissionOutcome.Admitted>(outcome);
+        Assert.Equal(0, ledger.BaseViewReadCount);
+        Assert.Equal(0, ledger.DeltaEventLoadCount);
+        Assert.Equal(0, ledger.AdmissionCatalogBuildCount);
+        Assert.Equal(0, ledger.IncrementalValidationCount);
+        Assert.Equal(0, gateway.CurrentRevisionResolutionCount);
+        Assert.Equal(0, gateway.FrozenReferenceValidationCount);
+    }
+
+    [Fact]
+    public void CheckPerformsScopedLedgerCallsForAManagedLeanDelta()
+    {
+        using var temporary = new TemporaryDirectory();
+        var fixture = TrustedFrozenFixture();
+        var currentRaw = Snapshot(fixture.Files);
+        var baselineRaw = Snapshot(fixture.Baseline);
+        var gateway = new FakeRepositoryGateway(
+            RawChangeSet.CreateWithKinds([(RuleFixture.RingPath, RawChangeKind.Modified)]),
+            currentRaw,
+            baselineRaw);
+        var ledger = new ProductionFrozenLedgerAdmissionServices(
+            "/repo",
+            ImmutableHashSet<string>.Empty);
+        var candidateReport = Path.Combine(temporary.Path, "candidate.json");
+        File.WriteAllBytes(
+            candidateReport,
+            RawLeanReportArtifact.Write(
+                Decode(currentRaw),
+                LeanAxiomReport.Create(fixture.Reports)).AsSpan());
+        var environment = new ProductionCliEnvironment(
+            "/repo",
+            gateway,
+            new FakeLeanReportSource(null),
+            scribeEmissionVerifier: null,
+            ledger);
+
+        var outcome = environment.Check([
+            "--candidate-lean-report", candidateReport,
+        ]);
+
+        Assert.IsType<AdmissionOutcome.Admitted>(outcome);
+        Assert.Equal(1, ledger.BaseViewReadCount);
+        Assert.Equal(0, ledger.DeltaEventLoadCount);
+        Assert.Equal(1, ledger.AdmissionCatalogBuildCount);
+        Assert.Equal(1, ledger.IncrementalValidationCount);
+        Assert.Equal(1, gateway.CurrentRevisionResolutionCount);
+        Assert.Equal(0, gateway.FrozenReferenceValidationCount);
     }
 
     [Fact]
@@ -261,9 +345,7 @@ public sealed partial class ProductionEnvironmentTests
     public void CheckRoutesAnyProtectedChangeBeforeBaseEmitterDependencyMismatch()
     {
         using var temporary = new TemporaryDirectory();
-        var fixture = new RuleFixture();
-        fixture.AddBackfillTargets();
-        AddFrozenLedger(fixture);
+        var fixture = TrustedFrozenFixture();
         var environment = new ProductionCliEnvironment(
             temporary.Path,
             new FakeRepositoryGateway(
@@ -427,19 +509,26 @@ public sealed partial class ProductionEnvironmentTests
         return (snapshot, lean, dag);
     }
 
-    private static void AddFrozenLedger(RuleFixture fixture)
+    private static FrozenLedgerConsistent AddFrozenLedger(RuleFixture fixture)
     {
         const string toolchain = "leanprover/lean4:v4.24.0\n";
+        const string lakefile = "name = \"Fixture\"\n";
         const string manifest = "{}\n";
         fixture.Files["lean-toolchain"] = toolchain;
         fixture.Baseline["lean-toolchain"] = toolchain;
+        fixture.Files["lakefile.toml"] = lakefile;
+        fixture.Baseline["lakefile.toml"] = lakefile;
         fixture.Files["lake-manifest.json"] = manifest;
         fixture.Baseline["lake-manifest.json"] = manifest;
         var environment = new FrozenEnvironmentAttestation(
             FrozenLedgerTestData.GitOid('a'),
             FrozenLedgerTestData.GitOid('b'),
             FrozenLedgerTestData.GitBlobOid(toolchain),
-            FrozenLedgerTestData.GitBlobOid(manifest));
+            FrozenLedgerTestData.GitBlobOid(manifest))
+        {
+            LakefilePath = "lakefile.toml",
+            LakefileBlobOid = FrozenLedgerTestData.GitBlobOid(lakefile),
+        };
         var baselineCatalog = Catalog(fixture.Baseline, fixture.BaselineReports, environment);
         var currentCatalog = Catalog(fixture.Files, fixture.Reports, environment);
         var baselineLedger = FrozenLedgerGenerator.GenerateGenesis(
@@ -456,6 +545,7 @@ public sealed partial class ProductionEnvironmentTests
             currentCatalog);
         SetLedger(fixture.Files, Encoding.UTF8.GetString(currentLedger.AsSpan()));
         SetLedger(fixture.Baseline, Encoding.UTF8.GetString(baselineLedger.AsSpan()));
+        return baselineCapability;
 
         static FrozenMaterialCatalog Catalog(
             IReadOnlyDictionary<string, string> files,
