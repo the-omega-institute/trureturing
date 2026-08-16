@@ -22,6 +22,8 @@ internal static class FileMapPolicy
         "tools/StrataLint.Scribe/Library/LibraryNoteCatalog.cs";
     private const string RegistryLoaderPath =
         "tools/StrataLint.Cli/Commands/RegistryLoader.cs";
+    private const string ScribeEmitterPath =
+        "tools/StrataLint.Scribe/Emission/ScribeEmitter.cs";
     private const string ScribeProjectPath =
         "tools/StrataLint.Scribe/StrataLint.Scribe.csproj";
     private const string SnapshotDecoderPath =
@@ -54,6 +56,7 @@ internal static class FileMapPolicy
             ["LibraryNoteCatalog"] = LibraryNoteCatalogPath,
             ["PerfBudgetLoader"] = PerfBudgetLoaderPath,
             ["RegistryLoader"] = RegistryLoaderPath,
+            ["ScribeEmitter"] = ScribeEmitterPath,
             ["ScribeCompiler"] = ScribeProjectPath,
             ["SnapshotDecoder"] = SnapshotDecoderPath,
             ["StatementProjectionFixtureLoader"] = StatementProjectionFixtureLoaderPath,
@@ -78,10 +81,10 @@ internal static class FileMapPolicy
         ];
 
     // FILEMAP names the producer, consumers and verifiers of every generated artifact
-    // and every protected program entry. A declaration nobody verifies is a claim about
-    // the system that can quietly stop being true. Resolve names against live declarations
-    // or the small closed vocabulary of external commands; RepositoryPathPolicy additionally
-    // binds the Blueprint build-root actor to its source file.
+    // and protected program entry, plus the producer and consumers of data. Data verifiers
+    // use the implementation registry below. Resolve actor names against live declarations,
+    // active rules, or the small closed vocabulary of external commands;
+    // RepositoryPathPolicy additionally binds the Blueprint build-root actor to its source file.
     private static readonly ImmutableHashSet<string> GeneratedActorWords =
         ["reader", "harness-gate", "none"];
 
@@ -125,18 +128,26 @@ internal static class FileMapPolicy
         ArgumentException.ThrowIfNullOrWhiteSpace(repositoryRoot);
         var findings = new List<FileMapFinding>();
         foreach (var entry in manifest.Entries.Where(
-            static item => item.Kind is FileMapKind.Generated
+            static item => item.Kind is FileMapKind.Data
+                or FileMapKind.Generated
                 or FileMapKind.Program
                 or FileMapKind.Ledger
                 or FileMapKind.Truth))
         {
             var declared = new List<(string Field, string Name)> { ("produced_by", entry.ProducedBy) };
             declared.AddRange(entry.ConsumedBy.Select(static name => ("consumed_by", name)));
-            declared.AddRange(entry.VerifiedBy.Select(static name => ("verified_by", name)));
+            if (entry.Kind is not FileMapKind.Data)
+            {
+                declared.AddRange(entry.VerifiedBy.Select(static name => ("verified_by", name)));
+            }
+
             foreach (var (field, name) in declared.Where(item =>
                 !GeneratedActorWords.Contains(item.Name)
                 && !ProgramActorWords.Contains(item.Name)
                 && !declaredTypes.Contains(item.Name)
+                && !(entry.Kind is FileMapKind.Data
+                    && RuleCatalog.Default.Descriptors.Any(
+                        descriptor => descriptor.Id.Value == item.Name))
                 && !(entry.Kind is FileMapKind.Ledger
                     && item.Field == "verified_by"
                     && DataVerifierRuleName.IsMatch(item.Name))))
@@ -590,14 +601,6 @@ internal static class FileMapPolicy
         }
 
         return findings;
-    }
-
-    internal static IReadOnlyList<string> ResidenceViolations(string repositoryRoot)
-    {
-        ArgumentException.ThrowIfNullOrWhiteSpace(repositoryRoot);
-        return ResidenceViolations(
-            FileMapLoader.LoadRepository(repositoryRoot),
-            TrackedPaths(repositoryRoot));
     }
 
     internal static IReadOnlyList<string> ResidenceViolations(

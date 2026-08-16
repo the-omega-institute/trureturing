@@ -110,13 +110,6 @@ public abstract record Formula
         public string Value { get; }
     }
 
-    internal sealed record AlignedRows : Formula
-    {
-        internal AlignedRows(ImmutableArray<TextRun> rows) => Rows = rows;
-
-        public ImmutableArray<TextRun> Rows { get; }
-    }
-
     public sealed record Aligned : Formula
     {
         public Aligned(ImmutableArray<Formula> rows) =>

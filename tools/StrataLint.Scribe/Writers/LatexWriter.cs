@@ -65,18 +65,6 @@ public static class LatexWriter
             case Formula.TextRun text:
                 builder.Append(text.Value);
                 break;
-            case Formula.AlignedRows aligned:
-                builder.Append("\\begin{aligned}");
-                for (var index = 0; index < aligned.Rows.Length; index++)
-                {
-                    if (index > 0)
-                    {
-                        builder.Append("\\\\");
-                    }
-                    builder.Append(aligned.Rows[index].Value);
-                }
-                builder.Append("\\end{aligned}");
-                break;
             case Formula.Aligned aligned:
                 builder.Append("\\begin{aligned}");
                 for (var index = 0; index < aligned.Rows.Length; index++)

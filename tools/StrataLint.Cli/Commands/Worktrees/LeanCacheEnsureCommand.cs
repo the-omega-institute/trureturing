@@ -12,12 +12,6 @@ internal static class LeanCacheEnsureCommand
     internal static CommandResult Run(
         string repositoryRoot,
         IReadOnlyList<string> arguments,
-        IWorktreeProcessRunner runner) =>
-        Run(repositoryRoot, arguments, runner, new ApfsDirectoryCloner());
-
-    internal static CommandResult Run(
-        string repositoryRoot,
-        IReadOnlyList<string> arguments,
         IWorktreeProcessRunner runner,
         IDirectoryCloner cloner) =>
         Run(
@@ -88,12 +82,6 @@ internal static class LeanCacheEnsureCommand
             guard,
             countLtarFiles);
     }
-
-    internal static CommandResult RunWithWriter(
-        string repositoryRoot,
-        IReadOnlyList<string> arguments,
-        IWorktreeProcessRunner runner) =>
-        RunWithWriter(repositoryRoot, arguments, runner, new ApfsDirectoryCloner());
 
     internal static CommandResult RunWithWriter(
         string repositoryRoot,

@@ -13,20 +13,30 @@ public sealed class TruthGraphJsonTests
         "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
 
     [Fact]
-    public void SnapshotIdentityIsContentAddressedWithoutEmitterProjectionBytes()
+    public void SnapshotIdentityIgnoresGeneratedProjectionBytesButIncludesCommittedOracleBytes()
     {
+        var oraclePath = DocumentDefinitions.All[0].RelativePath.Value;
         var first = Snapshot(
             ("Meta/source.txt", "alpha\n"),
+            (oraclePath, "old committed oracle\n"),
             (DagEmitter.RelativePath, "old dag projection\n"),
             (DagEmitter.TruthGraphRelativePath, "old truth projection\n"),
             (ScribeEmitter.AttestationRelativePath, "old attestation\n"));
         var projectionsChanged = Snapshot(
             ("Meta/source.txt", "alpha\n"),
+            (oraclePath, "old committed oracle\n"),
             (DagEmitter.RelativePath, "new dag projection\n"),
             (DagEmitter.TruthGraphRelativePath, "new truth projection\n"),
             (ScribeEmitter.AttestationRelativePath, "new attestation\n"));
+        var oracleChanged = Snapshot(
+            ("Meta/source.txt", "alpha\n"),
+            (oraclePath, "new committed oracle\n"),
+            (DagEmitter.RelativePath, "old dag projection\n"),
+            (DagEmitter.TruthGraphRelativePath, "old truth projection\n"),
+            (ScribeEmitter.AttestationRelativePath, "old attestation\n"));
         var sourceChanged = Snapshot(
             ("Meta/source.txt", "beta\n"),
+            (oraclePath, "old committed oracle\n"),
             (DagEmitter.RelativePath, "old dag projection\n"),
             (DagEmitter.TruthGraphRelativePath, "old truth projection\n"),
             (ScribeEmitter.AttestationRelativePath, "old attestation\n"));
@@ -34,6 +44,7 @@ public sealed class TruthGraphJsonTests
         Assert.Equal(
             TruthGraphSnapshotIdentity.Compute(first),
             TruthGraphSnapshotIdentity.Compute(projectionsChanged));
+        Assert.NotEqual(TruthGraphSnapshotIdentity.Compute(first), TruthGraphSnapshotIdentity.Compute(oracleChanged));
         Assert.NotEqual(TruthGraphSnapshotIdentity.Compute(first), TruthGraphSnapshotIdentity.Compute(sourceChanged));
     }
 

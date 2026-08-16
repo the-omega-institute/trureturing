@@ -84,15 +84,15 @@ public sealed class CapacityPolicyTests
         Assert.Empty(findings);
     }
 
-    // Emitted Blueprint projections (FILEMAP kind=generated, produced by
-    // ScribeEmitter) are photographs of the graph, not
-    // skeleton: each document already pays its structural slot through its
-    // .scribe.cs source. Bounding the projections halves the effective bucket:
+    // Committed Blueprint renderer oracles (FILEMAP kind=data, produced by
+    // ScribeEmitter) are not a second structural slot: each document already
+    // pays that slot through its .scribe.cs source. Bounding both files halves
+    // the effective bucket:
     // the document GID must name an existing Lean module and the definition
     // path is bijective with that GID, so a lawful twelve-module Lean bucket
     // overflows its Blueprint mirror at the seventh blueprinted module.
     [Fact]
-    public void EmittedBlueprintProjectionIsNotBounded()
+    public void CommittedBlueprintRendererOracleIsNotBounded()
     {
         var files = Enumerable.Range(0, RepositoryRules.DirectoryFileLimit + 1)
             .Select(static i => ($"Blueprint/D5/S1/Synthetic/File{i}.md", "x"))
@@ -101,7 +101,7 @@ public sealed class CapacityPolicyTests
         Assert.Empty(CapacityPolicy.InspectFiles(files));
     }
 
-    // The canonical definition sources beside those projections stay bounded.
+    // The canonical definition sources beside those renderer oracles stay bounded.
     [Fact]
     public void BlueprintDefinitionSourcesRemainBounded()
     {
