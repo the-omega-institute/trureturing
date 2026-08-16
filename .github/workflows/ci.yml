@@ -30,10 +30,11 @@ concurrency:
   group: ci-${{ github.event.pull_request.number || github.sha }}
   cancel-in-progress: true
 
-# Trust topology: pull_request_target supplies the event context; candidate-owned
-# Lean producer and .NET judge inspect candidate content. Candidate engineering is
-# only a signal. Admission consumes immutable raw reports from the predecessor job;
-# the protected base exists only as the merge-base SHA passed to the gate.
+# Trust topology: pull_request_target keeps workflow text on the base branch. The
+# candidate-owned Lean producer and .NET judge inspect GitHub's post-merge tree
+# (candidate plus the current dev parent). Candidate engineering is only a signal.
+# Admission consumes immutable raw reports from the predecessor job; the protected
+# base is the checked merge commit's first-parent SHA passed to the gate.
 jobs:
   candidate-engineering:
     name: Candidate harness engineering checks
@@ -41,12 +42,26 @@ jobs:
     timeout-minutes: 20
     steps:
       - name: Check out candidate
+        id: checkout-merge
+        continue-on-error: ${{ github.event_name == 'pull_request_target' }}
         uses: actions/checkout@v4
         with:
-          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          ref: ${{ github.event_name == 'pull_request_target' && format('refs/pull/{0}/merge', github.event.pull_request.number) || github.sha }}
           fetch-depth: 0
           persist-credentials: false
           path: candidate
+
+      - name: Fail closed when merge result is unavailable
+        if: always() && steps.checkout-merge.outcome != 'success'
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [[ "$GITHUB_EVENT_NAME" == "pull_request_target" ]]; then
+            printf '%s\n' "cannot check out GitHub merge ref refs/pull/${{ github.event.pull_request.number }}/merge; conflicted pull requests have no merge result, so admission fails closed" >&2
+          else
+            printf '%s\n' "cannot check out push commit $GITHUB_SHA; admission fails closed" >&2
+          fi
+          exit 1
 
       - name: Decide candidate engineering scope
         id: scope
@@ -74,19 +89,18 @@ jobs:
           if [[ "$GITHUB_EVENT_NAME" == "push" ]]; then
             run="true"
           elif [[ "$GITHUB_EVENT_NAME" == "pull_request_target" ]]; then
-            base="${{ github.event.pull_request.base.sha }}"
-            head="${{ github.event.pull_request.head.sha }}"
-            git -C candidate fetch --no-tags --quiet origin "$base" 2>/dev/null || true
-            if ! base_sha="$(git -C candidate merge-base "$base" "$head" 2>/dev/null)"; then
-              printf '%s\n' "cannot resolve fork point between $base and $head" >&2
+            base_sha="$(git -C candidate rev-parse HEAD^1)"
+            candidate_sha="$(git -C candidate rev-parse HEAD)"
+            if ! git -C candidate rev-parse --verify HEAD^2 >/dev/null 2>&1; then
+              printf '%s\n' "checked pull request ref is not a merge result" >&2
               exit 1
             fi
-            if [[ -z "$base_sha" || "$base_sha" =~ ^0+$ ]]; then
-              printf '%s\n' "pull request has no content-addressable merge-base" >&2
+            if [[ -z "$base_sha" || "$base_sha" =~ ^0+$ || -z "$candidate_sha" || "$candidate_sha" =~ ^0+$ ]]; then
+              printf '%s\n' "pull request merge result has no content-addressable dev parent or candidate SHA" >&2
               exit 1
             fi
             mapfile -d '' -t changed_paths < <(
-              git -C candidate diff --name-only -z --no-renames --diff-filter=ACDMRTUXB "$base_sha" "$head"
+              git -C candidate diff --name-only -z --no-renames --diff-filter=ACDMRTUXB "$base_sha" "$candidate_sha"
             )
             changed_count="${#changed_paths[@]}"
             matched_paths=()
@@ -104,10 +118,10 @@ jobs:
             matched_count="${#matched_paths[@]}"
             if [[ "$matched_count" -gt 0 ]]; then
               run="true"
-              reason="merge-base diff intersects the harness trigger set"
+              reason="post-merge delta intersects the harness trigger set"
             else
               run="false"
-              reason="merge-base diff does not intersect the harness trigger set"
+              reason="post-merge delta does not intersect the harness trigger set"
             fi
           else
             run="true"
@@ -278,7 +292,7 @@ jobs:
             printf '\n'
             printf -- '- Event: %s\n' "$SCOPE_EVENT"
             printf -- '- Run engineering: %s\n' "$result"
-            printf -- '- Merge-base: %s\n' "$SCOPE_BASE"
+            printf -- '- Dev parent: %s\n' "$SCOPE_BASE"
             printf -- '- Changed paths: %s\n' "$SCOPE_CHANGED_COUNT"
             printf -- '- Trigger matches: %s\n' "$SCOPE_MATCHED_COUNT"
             printf -- '- Decision: %s\n' "$SCOPE_REASON"
@@ -293,12 +307,26 @@ jobs:
       baseline_sha: ${{ steps.base.outputs.sha }}
     steps:
       - name: Check out candidate with history
+        id: checkout-merge
+        continue-on-error: ${{ github.event_name == 'pull_request_target' }}
         uses: actions/checkout@v4
         with:
-          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          ref: ${{ github.event_name == 'pull_request_target' && format('refs/pull/{0}/merge', github.event.pull_request.number) || github.sha }}
           fetch-depth: 0
           persist-credentials: false
           path: candidate
+
+      - name: Fail closed when merge result is unavailable
+        if: always() && steps.checkout-merge.outcome != 'success'
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [[ "$GITHUB_EVENT_NAME" == "pull_request_target" ]]; then
+            printf '%s\n' "cannot check out GitHub merge ref refs/pull/${{ github.event.pull_request.number }}/merge; conflicted pull requests have no merge result, so admission fails closed" >&2
+          else
+            printf '%s\n' "cannot check out push commit $GITHUB_SHA; admission fails closed" >&2
+          fi
+          exit 1
 
       - name: Resolve judge binary content address before build outputs exist
         id: judge-address
@@ -316,21 +344,18 @@ jobs:
           path: .judge-binaries
           key: stratalint-judge-binaries-v1-${{ runner.os }}-${{ steps.judge-address.outputs.address }}
 
-      - name: Resolve dev merge-base content address
+      - name: Resolve checked merge result's dev parent
         id: base
         shell: bash
         run: |
           set -euo pipefail
           if [[ "$GITHUB_EVENT_NAME" == "pull_request_target" ]]; then
-            # 法官取候选的**分叉点**,不是 dev 的当前 tip。dev 在候选在飞期间前进时,
-            # tip 上新落地的规则会追溯审判候选没碰过的东西;分叉点让候选只对它出发时
-            # 已存在的 harness 负责。这也让法官二进制、冻结账本与旧侧 Lean 报告
-            # 取自同一棵树,故不会重演 PR #1144 的两树一报。
-            base="${{ github.event.pull_request.base.sha }}"
-            head="${{ github.event.pull_request.head.sha }}"
-            git -C candidate fetch --no-tags --quiet origin "$base" 2>/dev/null || true
-            if ! sha="$(git -C candidate merge-base "$base" "$head" 2>/dev/null)"; then
-              printf '%s\n' "cannot resolve fork point between $base and $head" >&2
+            # GitHub 的 merge ref 是 merge(dev_tip, head):第一父提交是被扩展的 dev
+            # 状态,HEAD 是实际受审的并集树。两者来自同一个 merge 对象,故 baseline
+            # 与最后交给 gate 的 delta 不会跨树漂移。
+            sha="$(git -C candidate rev-parse HEAD^1)"
+            if ! git -C candidate rev-parse --verify HEAD^2 >/dev/null 2>&1; then
+              printf '%s\n' "checked pull request ref is not a merge result" >&2
               exit 1
             fi
           else
@@ -461,8 +486,8 @@ jobs:
           test -x "$pair_producer"
           reports="$RUNNER_TEMP/raw-lean-reports"
           mkdir -p "$reports"
-          # 只产候选侧。base 只作为 merge-base SHA 传给 admission gate 的 diff 语义,
-          # 不再为它编译或上传第二份 Lean 报告。
+          # 只产受审的 post-merge 侧。base 是同一 merge 对象的 dev 第一父提交,
+          # 只参与 admission gate 的 diff 语义,不再为它编译或上传第二份 Lean 报告。
           "$pair_producer" \
             --producer "$producer" \
             --lake-bin "$HOME/.elan/bin/lake" \
@@ -557,12 +582,26 @@ jobs:
       DEV_BASELINE_SHA: ${{ needs.lean-inspect.outputs.baseline_sha }}
     steps:
       - name: Check out candidate with history
+        id: checkout-merge
+        continue-on-error: ${{ github.event_name == 'pull_request_target' }}
         uses: actions/checkout@v4
         with:
-          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          ref: ${{ github.event_name == 'pull_request_target' && format('refs/pull/{0}/merge', github.event.pull_request.number) || github.sha }}
           fetch-depth: 0
           persist-credentials: false
           path: candidate
+
+      - name: Fail closed when merge result is unavailable
+        if: always() && steps.checkout-merge.outcome != 'success'
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [[ "$GITHUB_EVENT_NAME" == "pull_request_target" ]]; then
+            printf '%s\n' "cannot check out GitHub merge ref refs/pull/${{ github.event.pull_request.number }}/merge; conflicted pull requests have no merge result, so admission fails closed" >&2
+          else
+            printf '%s\n' "cannot check out push commit $GITHUB_SHA; admission fails closed" >&2
+          fi
+          exit 1
 
       - name: Resolve judge binary content address before build outputs exist
         id: judge-address
