@@ -141,6 +141,20 @@ public sealed class RuleEngineTests
     }
 
     [Fact]
+    public void Sl019AcceptsAFreeProseTaskAsAnAnomalyCaseAddress()
+    {
+        const string path = "D5/X_Frontier/FreeProseTask.lean";
+        var fixture = new RuleFixture();
+        fixture.AddTask(path, "D5/X_Frontier/FreeProseTask", "D5-T0097");
+        fixture.Files["Evidence/D5/S0/Carrier/Result.run.json"] =
+            "{\"anomaly\":\"fixture drift\",\"case_id\":\"D5-T0097\"}\n";
+
+        var diagnostics = RuleCatalog.Default.EvaluateSingle(RuleId.CreateKnown(19), fixture.Build()).Diagnostics;
+
+        Assert.Empty(diagnostics);
+    }
+
+    [Fact]
     public void DirectoryBackfillReachesSharedDownstreamValidationWithoutFormatDiagnostics()
     {
         var fixture = new RuleFixture();

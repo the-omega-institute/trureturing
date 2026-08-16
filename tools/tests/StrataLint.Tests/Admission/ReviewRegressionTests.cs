@@ -76,8 +76,8 @@ public sealed partial class ReviewRegressionTests
         var fixture = new RuleFixture();
         fixture.AddBackfillTargets();
         fixture.Files[RuleFixture.HeartsDraftPath] = fixture.Files[RuleFixture.HeartsDraftPath].Replace(
-            "TASK D5-T0018 ",
-            "TASK D5-T0099 ",
+            "TASK D5-T0018",
+            "TASK D5-T0099",
             StringComparison.Ordinal);
 
         var evaluation = RuleCatalog.Default.EvaluateSingle(RuleId.CreateKnown(16), fixture.Build());
