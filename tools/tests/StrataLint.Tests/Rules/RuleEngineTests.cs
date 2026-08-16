@@ -154,6 +154,34 @@ public sealed class RuleEngineTests
         Assert.Empty(diagnostics);
     }
 
+    [Theory]
+    [InlineData("outer-comment")]
+    [InlineData("five-digit")]
+    public void RepositoryRulesTaskTokenRecognitionRetainsDevSemantics(string scenario)
+    {
+        const string path = "D5/X_Frontier/DevTaskTokenSemantics.lean";
+        const string gid = "D5/X_Frontier/DevTaskTokenSemantics";
+        const string caseId = "D5-T0097";
+        var fixture = new RuleFixture();
+        fixture.AddTask(path, gid, scenario == "five-digit" ? caseId + "0" : caseId);
+        if (scenario == "outer-comment")
+        {
+            fixture.Files[path] = fixture.Files[path].Replace(
+                "/-- TASK D5-T0097",
+                "/-\n/-- TASK D5-T0097",
+                StringComparison.Ordinal) + "-/\n";
+        }
+
+        fixture.Files["Evidence/D5/S0/Carrier/Result.run.json"] =
+            $"{{\"anomaly\":\"fixture drift\",\"case_id\":\"{caseId}\"}}\n";
+
+        var diagnostics = RuleCatalog.Default.EvaluateSingle(
+            RuleId.CreateKnown(19),
+            fixture.Build()).Diagnostics;
+
+        Assert.Empty(diagnostics);
+    }
+
     [Fact]
     public void DirectoryBackfillReachesSharedDownstreamValidationWithoutFormatDiagnostics()
     {

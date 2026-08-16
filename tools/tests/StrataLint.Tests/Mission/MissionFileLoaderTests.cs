@@ -172,6 +172,74 @@ public sealed class MissionFileLoaderTests
     }
 
     [Fact]
+    public void TaskBlockDisabledByAnOuterBlockCommentCannotSatisfyAnOpenCaseReference()
+    {
+        var target = ReplaceNoveltyTaskBlock("/-\n" + NoveltyTaskBlock + "\n-/");
+
+        var invalid = Assert.IsType<MissionLoadOutcome.Invalid>(
+            LoadRepository(Encoding.UTF8.GetBytes(ValidMission), target));
+
+        Assert.Equal(MissionLoadErrorCode.DanglingCaseReference, invalid.Error.Code);
+        Assert.Contains("D5-T0040", invalid.Error.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void FiveDigitTaskCodeCannotSatisfyAFourDigitOpenCaseReference()
+    {
+        var target = ReplaceNoveltyTaskBlock(NoveltyTaskBlock.Replace(
+            "D5-T0040",
+            "D5-T00400",
+            StringComparison.Ordinal));
+
+        var invalid = Assert.IsType<MissionLoadOutcome.Invalid>(
+            LoadRepository(Encoding.UTF8.GetBytes(ValidMission), target));
+
+        Assert.Equal(MissionLoadErrorCode.DanglingCaseReference, invalid.Error.Code);
+        Assert.Contains("D5-T0040", invalid.Error.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void TaskBlockTextInsideAStringLiteralCannotSatisfyAnOpenCaseReference()
+    {
+        var target = ReplaceNoveltyTaskBlock("""
+            def staleMissionMarker : String := "
+            /-- TASK D5-T0040
+                This text is inside a string literal. -/"
+            """);
+
+        var invalid = Assert.IsType<MissionLoadOutcome.Invalid>(
+            LoadRepository(Encoding.UTF8.GetBytes(ValidMission), target));
+
+        Assert.Equal(MissionLoadErrorCode.DanglingCaseReference, invalid.Error.Code);
+        Assert.Contains("D5-T0040", invalid.Error.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void CommentDelimiterInsideALineCommentDoesNotHideTheFollowingTaskBlock()
+    {
+        var target = ReplaceNoveltyTaskBlock("-- /-\n" + NoveltyTaskBlock);
+
+        Assert.IsType<MissionLoadOutcome.Loaded>(
+            LoadRepository(Encoding.UTF8.GetBytes(ValidMission), target));
+    }
+
+    [Theory]
+    [InlineData("D5-T0040")]
+    [InlineData("D5-T0041")]
+    [InlineData("D5-T0042")]
+    [InlineData("D5-T0043")]
+    public void CanonicalGovernanceTaskBlocksAreEachCountedExactlyOnce(string caseId)
+    {
+        Assert.IsType<MissionLoadOutcome.Loaded>(
+            LoadRepository(Encoding.UTF8.GetBytes(ValidMission), GovernanceDeferrals));
+        Assert.Equal(
+            1,
+            TaskBlockReferenceSyntax.CountDocumentationCommentTaskStarts(
+                GovernanceDeferrals,
+                caseId));
+    }
+
+    [Fact]
     public void DuplicateCanonicalTaskBlocksCannotSatisfyAnOpenCaseReference()
     {
         var target = ReplaceNoveltyTaskBlock(NoveltyTaskBlock + "\n" + NoveltyTaskBlock);
