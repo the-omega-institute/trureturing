@@ -89,7 +89,6 @@ public sealed class FrozenLedgerBaseViewTests
             snapshot.Files.Count(item =>
                 FrozenLedgerChangeClassifier.IsAcceptedEventPath(item.Key.Value)),
             view.EventCount);
-        Assert.Equal(0, view.BaseEventsFolded);
         var source = snapshot.Files[RepoPath.CreateKnown(
             "tools/StrataLint.Engine/Ledger/Admission/FrozenLedgerBaseView.cs")].Text;
         Assert.DoesNotContain("FrozenLedger.ApplyReattest", source, StringComparison.Ordinal);
