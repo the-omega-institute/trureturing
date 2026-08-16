@@ -13,9 +13,26 @@ internal sealed record RemoteStateSource(string Path, string Content);
 internal sealed record RemoteStateFinding(string Path, int Line, string Operation, string Message)
 {
     internal string Location => $"{Path}:{Line}";
-    public override string ToString() => $"{Location}: {Operation}: {Message}";
+    public override string ToString() =>
+        $"{Location}: {Operation}: early-feedback shape match, not a remote-unreachability proof: {Message}";
 }
 
+/// <summary>
+/// Gives local and pull-request-time feedback for recognized remote-dependent shapes in C# tests
+/// and workflow shell steps. It can fail before a push reaches CI, but it is not a proof that no
+/// remote-reading execution path exists.
+/// </summary>
+/// <remarks>
+/// Carrier families outside a completeness claim include C# helper-argument indirection,
+/// reflection through <c>GetMethod("ReadRevision").Invoke</c>, property-assigned
+/// <c>ProcessStartInfo</c>, workflow executable/revision variables, workflow calls into repository
+/// shell scripts, MSBuild <c>Exec</c> in project files, and event-payload revisions such as
+/// <c>github.event.before</c> (only its direct audited shape has a regression match). Unexecuted
+/// hypotheses intentionally not modeled here include composite and JavaScript actions, source
+/// generators, P/Invoke, PowerShell, Python, Make, <c>eval</c>/<c>bash -c</c>, and revisions read
+/// from files or environment variables. CI's stronger guarantee comes from removing every checkout
+/// remote and every <c>refs/remotes/*</c> ref before verdict code runs.
+/// </remarks>
 internal static partial class RemoteStateIndependencePolicy
 {
     private static readonly IReadOnlySet<string> AllowedRevisions =
