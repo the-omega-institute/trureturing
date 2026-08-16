@@ -117,13 +117,13 @@ public sealed class StandaloneLeanInspectorTests
             "theorem same : forall renamed : Nat, renamed = renamed := fun _ => rfl\n");
         Assert.True(RepoPath.TryCreate("Trureturing.lean", out var path));
 
-        Assert.True(
-            CanonicalStatementWriter.DeclarationStatementIds(path, first)
-                .SequenceEqual(CanonicalStatementWriter.DeclarationStatementIds(path, second)));
+        var firstDeclarations = CanonicalStatementWriter.DeclarationStatementIds(path, first);
+        var secondDeclarations = CanonicalStatementWriter.DeclarationStatementIds(path, second);
+        Assert.True(firstDeclarations.SequenceEqual(secondDeclarations));
 
         Assert.True(
-            CanonicalStatementWriter.WriteModule(path, first).AsSpan()
-                .SequenceEqual(CanonicalStatementWriter.WriteModule(path, second).AsSpan()));
+            CanonicalStatementWriter.WriteModule(path, firstDeclarations).AsSpan()
+                .SequenceEqual(CanonicalStatementWriter.WriteModule(path, secondDeclarations).AsSpan()));
     }
 
     [Fact]

@@ -184,44 +184,6 @@ internal static class FrozenLedgerReferenceProjection
         "previous_attestation_event_hash", "statement_id", "witness_id",
     ];
 
-    internal static ImmutableDictionary<string, string[]> OidFields { get; } =
-        new Dictionary<string, string[]>(StringComparer.Ordinal)
-        {
-            ["Genesis"] =
-            [
-                GeneratorBlobOid,
-                OriginCommitOid,
-                OriginTreeOid,
-            ],
-            ["Freeze"] =
-            [
-                "input.base_commit_oid",
-                "input.base_tree_oid",
-                "input.descriptor_blob_oid",
-                "input.supporting_blob_oids",
-            ],
-            ["Reattest"] =
-            [
-                "input.base_commit_oid",
-                "input.base_tree_oid",
-                "input.descriptor_blob_oid",
-                "input.supporting_blob_oids",
-            ],
-            ["Revoke"] =
-            [
-                "evidence[].receipt_blob_oid",
-            ],
-            [FrozenLedger.SupersedeEventType] =
-            [
-                "environment.lake_manifest_blob_oid",
-                "environment.lakefile_blob_oid",
-                "environment.lean_toolchain_blob_oid",
-                "input.base_commit_oid",
-                "input.base_tree_oid",
-                "input.descriptor_blob_oid",
-                "input.supporting_blob_oids",
-            ],
-        }.ToImmutableDictionary(StringComparer.Ordinal);
 }
 
 public sealed record FrozenEnvironmentReference(

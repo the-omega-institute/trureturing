@@ -497,12 +497,13 @@ internal sealed partial class RuleFixture
     internal void AddFutureTheory() =>
         Files["D8/S0/Carrier/Ring.lean"] = "future\n";
 
-    internal void AddTask(string path, string gid, string code, string autopsy = "none")
+    internal void AddTask(string path, string gid, string code, string? history = null)
     {
         Files[path] = HeaderFor(gid, "E")
-            + $"/-- TASK {code} | 难度:3 | 依赖:就绪 | 尝试:0\n"
-            + "    提示:Fixture task.\n"
-            + $"    尸检:{autopsy} -/\n"
+            + $"/-- TASK {code}\n"
+            + "    Fixture task."
+            + (history is null ? "" : $"\n    {history}")
+            + " -/\n"
             + "def fixtureTask : Unit := ()\n";
         Reports[path] = Report();
     }
@@ -575,11 +576,10 @@ internal sealed partial class RuleFixture
             if (ticketsByGid.TryGetValue(gidText, out var cases))
             {
                 text += string.Concat(cases.Where(caseId =>
-                        !text.Contains($"TASK {caseId} ", StringComparison.Ordinal))
+                        !text.Contains($"TASK {caseId}", StringComparison.Ordinal))
                     .Select(static caseId =>
-                    $"/-- TASK {caseId} | 难度:3 | 依赖:就绪 | 尝试:0\n"
-                    + "    提示:Fixture task.\n"
-                    + "    尸检:none -/\n"
+                    $"/-- TASK {caseId}\n"
+                    + "    Fixture task. -/\n"
                     + $"def fixtureTask{caseId[4..]} : Unit := ()\n"));
             }
 
@@ -607,9 +607,8 @@ internal sealed partial class RuleFixture
         var path = gid + ".lean";
         Files[path] = HeaderFor(gid, "E")
             + string.Concat(Enumerable.Range(1, 18).Select(static number =>
-                $"/-- TASK D5-T{number:0000} | 难度:3 | 依赖:就绪 | 尝试:0\n"
-                + "    提示:Fixture task.\n"
-                + "    尸检:none -/\n"
+                $"/-- TASK D5-T{number:0000}\n"
+                + "    Fixture task. -/\n"
                 + $"def fixtureTask{number:0000} : Unit := ()\n"));
         Reports[path] = Report();
     }

@@ -111,18 +111,18 @@ internal sealed partial class GitRepositoryGateway : IRepositoryGateway
                 "clean checkout requires --protected-base; candidate HEAD cannot protect itself");
         }
 
-        // 「旧侧」有两个不同的问题,须用两个不同的提交回答,不可合并成一个:
+        // 「旧侧」有两个不同的问题,不可先验地合并成一个:
         //
         //   Revision —— 「候选在扩展哪个受保护状态?」答案只能是 protected base 本身。
         //       准入的旧侧快照由它解出;旧侧 Lean 已不参与 admission。
         //
-        //   changeBase —— 「候选自己改了什么?」答案是 merge-base。dev 在候选在飞
-        //       期间前进时,protected base 不再是候选祖先,拿它做 diff 会把 dev 的
-        //       改动反向记到候选头上(候选看起来在删除 dev 刚加的东西)。
+        //   changeBase —— 「受审树相对其 dev 状态净改了什么?」CI checkout
+        //       refs/pull/N/merge,并把该 merge commit 的第一父提交作为 protected base,
+        //       故 CI 中 changeBase == Revision,而 diff(HEAD^1, HEAD) 正是落地净增量。
         //
-        // 此前二者共用一个变量。strict 分支保护强制 merge-base == base.sha,使这个
-        // 混同不可观测;strict 已按 τ=0 裁决永久关闭(CLAUDE.md 第 19 条),混同随即
-        // 成为常态失败,故在此把两个角色拆开。
+        // 下方 merge-base fallback 只服务本地 dirty/preflight 调用者:若它显式传入的
+        // protected base 不是 HEAD 祖先,仍须隔离调用者自己的净改动。它不是 CI 的
+        // PR delta 定义;CI 的两个地址由同一个 GitHub merge 对象机械绑定。
         var changeBase = revision;
         var ancestor = GitRaw(new[] { "merge-base", "--is-ancestor", revision, head }, allowNonzero: true);
         if (ancestor.ExitCode != 0)

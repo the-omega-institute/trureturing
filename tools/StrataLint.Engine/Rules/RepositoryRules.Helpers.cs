@@ -124,31 +124,15 @@ internal static partial class RepositoryRules
         return seen;
     }
 
-    private static Dictionary<string, List<TaskEntry>> CollectTasks(
-        RepositorySnapshot snapshot,
-        ImmutableArray<RuleFinding>.Builder? findings)
+    private static HashSet<string> CollectTaskCodes(RepositorySnapshot snapshot)
     {
-        var result = new Dictionary<string, List<TaskEntry>>(StringComparer.Ordinal);
+        var result = new HashSet<string>(StringComparer.Ordinal);
         foreach (var (path, file) in FormalFiles(snapshot)
             .OrderBy(static item => item.Path.Value, StringComparer.Ordinal))
         {
-            var tokens = TaskTokenPattern.Matches(file.Text);
-            var matches = TaskPattern.Matches(file.Text);
-            if (findings is not null && tokens.Count != matches.Count)
+            foreach (Match match in TaskTokenPattern.Matches(file.Text))
             {
-                findings.Add(new RuleFinding(path.Value, "task block does not match the A7 grammar"));
-            }
-
-            foreach (Match match in matches)
-            {
-                var code = match.Groups["code"].Value;
-                if (!result.TryGetValue(code, out var entries))
-                {
-                    entries = new List<TaskEntry>();
-                    result.Add(code, entries);
-                }
-
-                entries.Add(new TaskEntry(path.Value, match.Groups["autopsy"].Value.Trim()));
+                result.Add(match.Groups["code"].Value);
             }
         }
 
@@ -165,7 +149,6 @@ internal static partial class RepositoryRules
         internal static HeaderData Empty { get; } = new(string.Empty, string.Empty, string.Empty, string.Empty, Array.Empty<string>());
     }
 
-    private sealed record TaskEntry(string Path, string Autopsy);
 }
 
 internal static class StringExtensions
