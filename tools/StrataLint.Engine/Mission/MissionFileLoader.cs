@@ -653,7 +653,7 @@ internal static class MissionFileLoader
         _ => throw new InvalidOperationException("Unknown mission prohibition."),
     };
 
-    private static string SelectionName(WorthSelectionOrder order) => order switch
+    internal static string SelectionName(WorthSelectionOrder order) => order switch
     {
         WorthSelectionOrder.BootstrapEligibilityOrder => BootstrapOrder,
         WorthSelectionOrder.CompleteWorthArgmax => CompleteArgmax,

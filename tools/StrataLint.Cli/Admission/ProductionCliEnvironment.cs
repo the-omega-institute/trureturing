@@ -289,6 +289,18 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
                 scribeEmissionVerifier,
                 arguments);
 
+    public CommandResult TheoryCandidates(IReadOnlyList<string> arguments) =>
+        scribeEmissionVerifier is null
+            ? new CommandResult(
+                false,
+                string.Empty,
+                "THEORY_CANDIDATES_INVALID Scribe emission verifier is unavailable\n")
+            : TheoryCandidatesCommand.Run(
+                repository,
+                leanReportSource,
+                scribeEmissionVerifier,
+                arguments);
+
     public CommandResult ShowAtom(IReadOnlyList<string> arguments) =>
         ShowAtomCommand.Run(repository, arguments);
 

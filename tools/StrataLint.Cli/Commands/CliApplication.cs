@@ -17,6 +17,8 @@ internal interface ICliEnvironment
 
     CommandResult DigestStatus(IReadOnlyList<string> arguments);
 
+    CommandResult TheoryCandidates(IReadOnlyList<string> arguments);
+
     CommandResult ShowAtom(IReadOnlyList<string> arguments);
 
     ExplicitCommandResult EchoVerify(IReadOnlyList<string> arguments);
@@ -127,6 +129,8 @@ internal static class CliApplication
                 RenderCommand(environment.ShowAtom(tail), console),
             ["topology"] = static (environment, tail, console) =>
                 RenderTopology(environment.Topology(tail), console),
+            ["theory-candidates"] = static (environment, tail, console) =>
+                RenderCommand(environment.TheoryCandidates(tail), console),
             ["validate-blueprint-pins"] = static (environment, tail, console) =>
                 RenderExplicit(environment.ValidateBlueprintPins(tail), console),
             ["worktree"] = static (environment, tail, console) =>

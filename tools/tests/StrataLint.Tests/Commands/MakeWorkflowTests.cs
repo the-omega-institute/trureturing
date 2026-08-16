@@ -52,6 +52,7 @@ public sealed partial class MakeWorkflowTests
         "ingest",
         "echo-residual-summary",
         "show-atom",
+        "theory-candidates",
         "deliver-check",
         "receipts-stage",
         "deposit",
