@@ -275,6 +275,164 @@ public sealed class LeanCacheProvisionerTests
         Assert.False(Directory.Exists(Path.Combine(target.Path, ".lake")));
     }
 
+    [Fact]
+    public void RetryableCloneFailuresCleanBeforeRetryAndUseBoundedBackoff()
+    {
+        var scripted = new Queue<DirectoryCloneResult>(
+        [
+            new(false, true, 5, 1, "clonefile(2) failed: EIO"),
+            new(false, true, 5, 1, "clonefile(2) failed: EIO"),
+            new(true, false, null, 1, null),
+        ]);
+        var targetWasAbsent = new List<bool>();
+        var cloner = new RecordingDirectoryCloner
+        {
+            Results = scripted,
+            BeforeClone = (_, path) => targetWasAbsent.Add(!Directory.Exists(path)),
+            AfterClone = (_, path) =>
+            {
+                if (scripted.Count > 0) Directory.CreateDirectory(path);
+            },
+        };
+        var waits = new List<TimeSpan>();
+        var cleanupCalls = 0;
+        void Remove(string path)
+        {
+            cleanupCalls++;
+            if (Directory.Exists(path)) Directory.Delete(path, recursive: true);
+        }
+        var result = ProvisionFromDonor(cloner, removePartial: Remove, wait: waits.Add);
+
+        Assert.Equal("clonefile", result.Method);
+        Assert.Equal(3, cloner.Invocations.Count);
+        Assert.Equal([true, true, true], targetWasAbsent);
+        Assert.Equal(2, cleanupCalls);
+        Assert.Equal([TimeSpan.FromMilliseconds(250), TimeSpan.FromMilliseconds(500)], waits);
+        Assert.Equal(3, result.Clonefile.Attempts);
+        Assert.Equal([5, 5], result.Clonefile.Errnos);
+        Assert.Equal(5, result.Clonefile.LastErrno);
+        Assert.Null(result.Clonefile.CleanupError);
+    }
+
+    [Theory]
+    [InlineData(13)]  // EACCES
+    [InlineData(45)]  // ENOTSUP
+    [InlineData(17)]  // EEXIST
+    [InlineData(18)]  // EXDEV
+    [InlineData(22)]  // EINVAL
+    [InlineData(28)]  // ENOSPC
+    [InlineData(1)]   // EPERM
+    [InlineData(62)]  // ELOOP
+    [InlineData(107)] // ENOTCAPABLE
+    [InlineData(30)]  // EROFS
+    [InlineData(63)]  // ENAMETOOLONG
+    [InlineData(2)]   // ENOENT
+    [InlineData(20)]  // ENOTDIR
+    [InlineData(11)]  // EDEADLK
+    public void ClonefileDocumentedDeterministicFailuresImmediatelyUseCopy(int errno)
+    {
+        var cloner = new RecordingDirectoryCloner
+        {
+            Results = new Queue<DirectoryCloneResult>(
+                [new(false, ApfsDirectoryCloner.IsRetryable(errno), errno, 1, $"clonefile(2) failed: errno {errno}")]),
+        };
+        var runner = new RecordingWorktreeProcessRunner();
+        var waits = new List<TimeSpan>();
+        var result = ProvisionFromDonor(cloner, runner, wait: waits.Add);
+
+        Assert.Equal("copy", result.Method);
+        Assert.Single(cloner.Invocations);
+        Assert.Empty(waits);
+        Assert.Contains(runner.Invocations, static call => call.FileName == "cp");
+        Assert.Equal(1, result.Clonefile.Attempts);
+        Assert.Equal([errno], result.Clonefile.Errnos);
+    }
+
+    [Fact]
+    public void ManagedCloneExceptionDoesNotRetryBeforeCopyFallback()
+    {
+        var cloner = new RecordingDirectoryCloner
+        {
+            ExceptionToThrow = new IOException("managed clone failure"),
+        };
+        var waits = new List<TimeSpan>();
+        var result = ProvisionFromDonor(cloner, wait: waits.Add);
+
+        Assert.Equal("copy", result.Method);
+        Assert.Single(cloner.Invocations);
+        Assert.Empty(waits);
+        Assert.Equal(0, result.Clonefile.Attempts);
+        Assert.Empty(result.Clonefile.Errnos);
+        Assert.Contains("managed clone failure", result.Warning, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void RetryCleanupFailureStopsRetriesAndPreservesBothCauses()
+    {
+        var scripted = new Queue<DirectoryCloneResult>(
+        [
+            new(false, true, 5, 1, "clonefile(2) failed: EIO"),
+            new(true, false, null, 1, null),
+        ]);
+        var cloner = new RecordingDirectoryCloner
+        {
+            Results = scripted,
+            AfterClone = (_, path) => Directory.CreateDirectory(path),
+        };
+        var cleanupCalls = 0;
+        void Remove(string path)
+        {
+            cleanupCalls++;
+            if (cleanupCalls == 1) throw new IOException("retry cleanup unavailable");
+            if (Directory.Exists(path)) Directory.Delete(path, recursive: true);
+        }
+        var waits = new List<TimeSpan>();
+        var result = ProvisionFromDonor(cloner, removePartial: Remove, wait: waits.Add);
+
+        Assert.Equal("copy", result.Method);
+        Assert.Single(cloner.Invocations);
+        Assert.Empty(waits);
+        Assert.Equal(5, result.Clonefile.LastErrno);
+        Assert.Equal(1, result.Clonefile.Attempts);
+        Assert.Contains("EIO", result.Warning, StringComparison.Ordinal);
+        Assert.Contains("retry cleanup unavailable", result.Clonefile.CleanupError, StringComparison.Ordinal);
+        Assert.Contains("retry cleanup unavailable", result.Warning, StringComparison.Ordinal);
+    }
+
+    private static LeanCacheProvisionResult ProvisionFromDonor(
+        IDirectoryCloner cloner,
+        IWorktreeProcessRunner? runner = null,
+        Action<string>? removePartial = null,
+        Action<TimeSpan>? wait = null)
+    {
+        using var donor = new TemporaryDirectory();
+        using var target = new TemporaryDirectory();
+        WritePins(donor.Path);
+        WritePins(target.Path);
+        var donorLake = Path.Combine(donor.Path, ".lake");
+        MathlibProjectionFixture.Write(donorLake);
+        LeanCacheStamp.Write(donorLake, ReadPins(donor.Path));
+        removePartial ??= static path =>
+        {
+            if (Directory.Exists(path)) Directory.Delete(path, recursive: true);
+        };
+        wait ??= static _ => { };
+        using var selection = new LeanCacheDonorSelection(donor.Path, null);
+        using var writerGuard = LeanCacheWriterGuard.TryAcquire(Path.Combine(target.Path, ".lake"));
+        Assert.NotNull(writerGuard);
+        return LeanCacheProvisioner.Provision(
+            selection,
+            target.Path,
+            ReadPins(target.Path),
+            "lake",
+            runner ?? new RecordingWorktreeProcessRunner(),
+            writerGuard,
+            cloner,
+            LeanCachePublisher.Instance,
+            removePartial,
+            wait);
+    }
+
     private static void AssertCacheGetBudget(string? raw, int expectedSeconds)
     {
         WithBudget(raw, () =>

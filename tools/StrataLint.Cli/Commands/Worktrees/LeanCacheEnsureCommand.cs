@@ -315,7 +315,8 @@ internal static class LeanCacheEnsureCommand
                     pins.Sha256,
                     JoinReasons(missReason, JoinReasons(selection.Notice, provisioned.Warning)),
                     provisioned.PruneOutcome,
-                    stampMiss);
+                    stampMiss,
+                    provisioned.Clonefile);
             }
             catch (MathlibOleanCompletenessException exception)
             {
@@ -331,7 +332,8 @@ internal static class LeanCacheEnsureCommand
                     exception.MissingOleanFiles,
                     exception.MissingOleanSamples,
                     stampMiss,
-                    exception.PruneOutcome);
+                    exception.PruneOutcome,
+                    exception.Clonefile);
             }
             catch (LeanCacheProvisionException exception)
             {
@@ -345,7 +347,8 @@ internal static class LeanCacheEnsureCommand
                     JoinReasons(missReason, JoinReasons(selection.Notice, exception.Message))
                         ?? "unknown provisioning failure",
                     stampMiss: stampMiss,
-                    pruneOutcome: exception.PruneOutcome);
+                    pruneOutcome: exception.PruneOutcome,
+                    clonefile: exception.Clonefile);
             }
             catch (Exception exception)
             {
@@ -382,7 +385,8 @@ internal static class LeanCacheEnsureCommand
         string? pinSha256,
         string? reason,
         MathlibCachePruneOutcome pruneOutcome,
-        string? stampMiss = null) =>
+        string? stampMiss = null,
+        ClonefileReceipt? clonefile = null) =>
         new(
             true,
             RenderReceipt(
@@ -395,7 +399,8 @@ internal static class LeanCacheEnsureCommand
                 pruneOutcome,
                 mathlibMissingOleanFiles: null,
                 mathlibMissingOleanSamples: null,
-                stampMiss),
+                stampMiss,
+                clonefile),
             string.Empty);
 
     private static CommandResult FailureReceipt(
@@ -408,7 +413,8 @@ internal static class LeanCacheEnsureCommand
         int? mathlibMissingOleanFiles = null,
         IReadOnlyList<string>? mathlibMissingOleanSamples = null,
         string? stampMiss = null,
-        MathlibCachePruneOutcome? pruneOutcome = null) =>
+        MathlibCachePruneOutcome? pruneOutcome = null,
+        ClonefileReceipt? clonefile = null) =>
         new(
             false,
             string.Empty,
@@ -422,7 +428,8 @@ internal static class LeanCacheEnsureCommand
                 pruneOutcome ?? MathlibCachePruneOutcome.NotRun,
                 mathlibMissingOleanFiles,
                 mathlibMissingOleanSamples,
-                stampMiss));
+                stampMiss,
+                clonefile));
 
     private static CommandResult RefusedSymlink(string root, string pinSha256) =>
         FailureReceipt(
@@ -466,7 +473,8 @@ internal static class LeanCacheEnsureCommand
         MathlibCachePruneOutcome pruneOutcome,
         int? mathlibMissingOleanFiles,
         IReadOnlyList<string>? mathlibMissingOleanSamples,
-        string? stampMiss) =>
+        string? stampMiss,
+        ClonefileReceipt? clonefile = null) =>
         "LEAN_CACHE " + JsonSerializer.Serialize(new
         {
             status,
@@ -476,6 +484,10 @@ internal static class LeanCacheEnsureCommand
             reason,
             stamp_miss = stampMiss,
             pin_sha256 = pinSha256,
+            clonefile_errno = (clonefile ?? ClonefileReceipt.NotRun).LastErrno,
+            clonefile_errnos = (clonefile ?? ClonefileReceipt.NotRun).Errnos,
+            clonefile_attempts = (clonefile ?? ClonefileReceipt.NotRun).Attempts,
+            clonefile_cleanup_error = (clonefile ?? ClonefileReceipt.NotRun).CleanupError,
             shared_cache_scope = pruneOutcome.Scope,
             mathlib_cache_pruned_files = pruneOutcome.DeletedFiles,
             mathlib_cache_clean_status = pruneOutcome.CleanStatus,
