@@ -94,7 +94,7 @@ public sealed partial class ProductionEnvironmentTests
     }
 
     [Fact]
-    public void CheckAdmitsAddedLedgerEventsWhoseAnchorsResolve()
+    public void CheckAdmitsAddedFreezeAnchoredToPhaseAWhenCurrentRevisionIsPhaseB()
     {
         using var temporary = new TemporaryDirectory();
         var fixture = new RuleFixture();
@@ -106,11 +106,27 @@ public sealed partial class ProductionEnvironmentTests
         AddFrozenLedger(fixture);
         var addedLedgerPaths = AddedLedgerPaths(fixture);
         Assert.NotEmpty(addedLedgerPaths);
+        Assert.All(addedLedgerPaths, path =>
+        {
+            using var document = JsonDocument.Parse(fixture.Files[path]);
+            Assert.Equal("Freeze", document.RootElement.GetProperty("event_type").GetString());
+            var input = document.RootElement.GetProperty("payload").GetProperty("input");
+            Assert.Equal(
+                FrozenLedgerTestData.GitOid('a'),
+                input.GetProperty("base_commit_oid").GetString());
+            Assert.Equal(
+                FrozenLedgerTestData.GitOid('b'),
+                input.GetProperty("base_tree_oid").GetString());
+        });
         var gateway = new FakeRepositoryGateway(
             RawChangeSet.CreateWithKinds(
                 addedLedgerPaths.Select(static path => (path, RawChangeKind.Added))),
             Snapshot(fixture.Files),
-            Snapshot(fixture.Baseline));
+            Snapshot(fixture.Baseline),
+            currentRevisionResolver: static () => new FrozenRevisionIdentity(
+                new string('c', 40),
+                FrozenLedgerTestData.GitOid('c'),
+                FrozenLedgerTestData.GitOid('d')));
         var ledger = new ProductionFrozenLedgerAdmissionServices(
             "/repo",
             ImmutableHashSet<string>.Empty);
@@ -124,11 +140,21 @@ public sealed partial class ProductionEnvironmentTests
         var outcome = environment.Check(
             ["--candidate-lean-report", WriteCandidateReport(temporary, fixture)]);
 
-        Assert.IsType<AdmissionOutcome.Admitted>(outcome);
+        Assert.True(
+            outcome is AdmissionOutcome.Admitted,
+            outcome switch
+            {
+                AdmissionOutcome.RuleRejected rejected => string.Join(
+                    '\n',
+                    rejected.Diagnostics.Select(static diagnostic => diagnostic.Render())),
+                AdmissionOutcome.InfrastructureFailure failure => failure.Message,
+                _ => outcome.ToString(),
+            });
         Assert.Equal(1, ledger.BaseViewReadCount);
         Assert.Equal(1, ledger.DeltaEventLoadCount);
         Assert.Equal(1, ledger.AdmissionCatalogBuildCount);
         Assert.Equal(1, ledger.IncrementalValidationCount);
+        Assert.Equal(1, gateway.CurrentRevisionResolutionCount);
         var deltaReferences = Assert.Single(gateway.FrozenReferenceValidations);
         Assert.Contains(FrozenLedgerTestData.GitOid('a'), deltaReferences.CommitOids);
     }
