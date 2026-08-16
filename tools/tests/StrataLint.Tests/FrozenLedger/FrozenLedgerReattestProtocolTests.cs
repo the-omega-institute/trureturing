@@ -226,39 +226,6 @@ public sealed partial class FrozenLedgerTests
     }
 
     [Fact]
-    public void AppendSynchronizationDirectsEnvironmentPinChangesToRecoordinate()
-    {
-        var fixture = EnvironmentFixture();
-        var recoordinated = Assert.IsType<FrozenLedgerValidationOutcome.Accepted>(
-            ValidateCandidate(
-                LoadedEnvironmentLedger(AppendEnvironmentEvent(fixture).AsSpan()),
-                fixture.Baseline,
-                fixture.CandidateCatalog)).Capability;
-        var nextCatalog = BuildCatalogWithEnvironment(
-            "leanprover/lean4:v4.34.0\n",
-            "[package]\nname = \"next\"\n",
-            "{\"version\":\"next\"}\n",
-            GitOid('a'),
-            GitOid('b'),
-            ModuleWithReport(
-                "A",
-                RecoordinateSource,
-                "new-elaborated-expression",
-                declarations: new[] { "a" }));
-
-        var exception = Assert.Throws<InvalidOperationException>(
-            () => FrozenLedgerGenerator.AppendSynchronization(recoordinated, nextCatalog));
-
-        Assert.Contains(PathFor("A"), exception.Message, StringComparison.Ordinal);
-        Assert.Contains("environment", exception.Message, StringComparison.OrdinalIgnoreCase);
-        Assert.Contains(
-            "accepted EnvironmentRecoordinate event is required",
-            exception.Message,
-            StringComparison.Ordinal);
-        Assert.DoesNotContain("ledger-recoordinate", exception.Message, StringComparison.Ordinal);
-    }
-
-    [Fact]
     public void AppendSynchronizationDirectsAnActiveModuleThatIsNoLongerClosedToRevoke()
     {
         var baselineCatalog = BuildCatalog(Module("A"));

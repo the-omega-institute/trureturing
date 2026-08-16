@@ -19,10 +19,8 @@ public sealed partial class FrozenLedgerTests
             ["Genesis"] = OidProperties(typeof(FrozenGenesisPayload)),
             ["Freeze"] = inputFields,
             ["Reattest"] = inputFields,
-            ["EnvironmentRecoordinate"] = OidProperties(typeof(FrozenLedgerInput), "new_input")
-                .Concat(OidProperties(typeof(FrozenLedgerInput), "old_input"))
-                .Concat(OidProperties(typeof(FrozenEnvironmentPins), "environment.new"))
-                .Concat(OidProperties(typeof(FrozenEnvironmentPins), "environment.old"))
+            [FrozenLedger.SupersedeEventType] = OidProperties(typeof(FrozenLedgerInput), "input")
+                .Concat(OidProperties(typeof(FrozenEnvironmentPins), "environment"))
                 .Order(StringComparer.Ordinal)
                 .ToArray(),
             ["Revoke"] = typeof(RevocationEvidence).GetNestedTypes()
@@ -75,10 +73,10 @@ public sealed partial class FrozenLedgerTests
         AssertUnknownPayloadFieldRejected(genesisSyntax.RawBytes, 0);
         AssertUnknownPayloadFieldRejected(genesisSyntax.RawBytes, 1);
         AssertUnknownPayloadFieldRejected(reattest, 2);
-        var recoordinateFixture = EnvironmentFixture();
+        var supersedeFixture = SupersedeFixture();
         AssertUnknownPayloadFieldRejected(
-            AppendEnvironmentEvent(recoordinateFixture),
-            recoordinateFixture.Baseline.Events.Length);
+            AppendSupersede(supersedeFixture),
+            supersedeFixture.Baseline.Events.Length);
         AssertUnknownPayloadFieldRejected(genesisSyntax.Lines[0].RawBytes.AddRange(revokeLine), 1);
     }
 

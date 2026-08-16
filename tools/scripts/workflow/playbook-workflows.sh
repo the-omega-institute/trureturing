@@ -150,14 +150,14 @@ freeze_exists() {
           if . == "Genesis" then 0
           elif . == "Freeze" then 1
           elif . == "Reattest" then 2
-          elif . == "EnvironmentRecoordinate" then 2
+          elif . == "Supersede" then 2
           elif . == "Revoke" then 3
           else 4
           end;
       def attestation_depth($event; $visited):
           if $event.event_type == "Freeze" then
             0
-          elif ($event.event_type == "Reattest" or $event.event_type == "EnvironmentRecoordinate") then
+          elif ($event.event_type == "Reattest" or $event.event_type == "Supersede") then
             ($event.event_hash // null) as $event_hash
             | if (($event_hash | type) != "string") then
                 error("Reattest is missing its event hash")
@@ -182,7 +182,7 @@ freeze_exists() {
       to_entries
       | sort_by([
           (.value.event_type | replay_rank),
-          (if (.value.event_type == "Reattest" or .value.event_type == "EnvironmentRecoordinate")
+          (if (.value.event_type == "Reattest" or .value.event_type == "Supersede")
             then attestation_depth(.value; {}) else 0 end),
           .key
         ])
@@ -220,15 +220,15 @@ freeze_exists() {
                   .[$case].frozen_node_id = $event.payload.frozen_node_id
                 else . end
             end
-        elif $event.event_type == "EnvironmentRecoordinate" then
+        elif $event.event_type == "Supersede" then
           ($event.payload.case_id // null) as $case
-          | ($event.payload.new_input.descriptor_blob_oid // null) as $blob
-          | ($event.payload.new_frozen_node_id // null) as $frozen_id
+          | ($event.payload.input.descriptor_blob_oid // null) as $blob
+          | ($event.payload.frozen_node_id // null) as $frozen_id
           | if (($case | type) != "string"
               or ($blob | type) != "string"
               or ($frozen_id | type) != "string"
               or (has($case) | not)) then
-              error("EnvironmentRecoordinate targets no active case or lacks module identity")
+              error("Supersede targets no active case or lacks module identity")
             else
               .[$case].descriptor_blob_oid = $blob
               | .[$case].frozen_node_id = $frozen_id
@@ -289,7 +289,7 @@ verify_added_frozen_event_ancestor() {
 
   case "$event_type" in
     Freeze|Reattest) input_selector='.payload.input.base_commit_oid' ;;
-    EnvironmentRecoordinate) input_selector='.payload.new_input.base_commit_oid' ;;
+    Supersede) input_selector='.payload.input.base_commit_oid' ;;
     Genesis|Revoke) return 0 ;;
     *)
       echo "PLAYBOOK_INVALID added frozen event has unsupported event_type $event_type: $path" >&2
