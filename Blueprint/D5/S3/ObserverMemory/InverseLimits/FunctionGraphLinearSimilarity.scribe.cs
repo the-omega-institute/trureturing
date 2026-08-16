@@ -33,8 +33,10 @@ internal sealed class FunctionGraphLinearSimilarityDocument : IScribeDocumentDef
                     Paragraph(Text(
                         "This theorem certifies the positive half of proposition 8.5 for the "
                             + "specific pair: the transition matrices lie in the same linear "
-                            + "similarity class. The frozen collision theorem separately certifies "
-                            + "that no permutation conjugates the underlying based function graphs.")),
+                            + "similarity class. The frozen collision theorem certifies the negative "
+                            + "half: their spectra collide, but no permutation conjugates the "
+                            + "underlying based function graphs. These separately certified "
+                            + "declarations are the atom's two formal halves.")),
                     Paragraph(Text(
                         "Repository, pinned-Mathlib, and GitHub Lean-code searches found no equal "
                             + "or stronger declaration. The proof therefore uses the explicit "
