@@ -22,10 +22,6 @@ internal static partial class RepositoryRules
         + "状态\\s*[:：]\\s*(?:已证|承典|条件|开放)|〔(?:已证|承典|条件|开放)〕)",
         RegexOptions.IgnoreCase | RegexOptions.CultureInvariant);
 
-    private static readonly Regex TaskTokenPattern = new(
-        "TASK\\s+(?<code>D5-T[0-9]{4})",
-        RegexOptions.CultureInvariant);
-
     private static readonly Regex SafeFieldPattern = new(
         "^[A-Za-z0-9_/.-]+$",
         RegexOptions.CultureInvariant);

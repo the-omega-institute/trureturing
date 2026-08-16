@@ -20,6 +20,8 @@ internal static class FileMapPolicy
         "tools/StrataLint.Scribe/FileMap/FileMapManifest.cs";
     private const string LibraryNoteCatalogPath =
         "tools/StrataLint.Scribe/Library/LibraryNoteCatalog.cs";
+    private const string MissionFileLoaderPath =
+        "tools/StrataLint.Engine/Mission/MissionFileLoader.cs";
     private const string RegistryLoaderPath =
         "tools/StrataLint.Cli/Commands/RegistryLoader.cs";
     private const string ScribeEmitterPath =
@@ -54,6 +56,7 @@ internal static class FileMapPolicy
             ["FileMapLoader"] = FileMapLoaderPath,
             ["GateAuthorityRootCatalogLoader"] = GateAuthorityRootCatalogLoaderPath,
             ["LibraryNoteCatalog"] = LibraryNoteCatalogPath,
+            [nameof(MissionFileLoader)] = MissionFileLoaderPath,
             ["PerfBudgetLoader"] = PerfBudgetLoaderPath,
             ["RegistryLoader"] = RegistryLoaderPath,
             ["ScribeEmitter"] = ScribeEmitterPath,
@@ -218,6 +221,7 @@ internal static class FileMapPolicy
 
         return InspectCoverage(manifest, paths)
             .Concat(InspectPatternPopulation(manifest, paths))
+            .Concat(InspectMission(repositoryRoot))
             .Concat(registryFindings)
             .Concat(projectionRegistrationFindings)
             .Concat(InspectDeclaredActors(manifest, DeclaredTypeNames(repositoryRoot, paths), repositoryRoot))
@@ -232,6 +236,19 @@ internal static class FileMapPolicy
             .ThenBy(static finding => finding.Code, StringComparer.Ordinal)
             .ToArray();
     }
+
+    private static IReadOnlyList<FileMapFinding> InspectMission(string repositoryRoot) =>
+        MissionFileLoader.LoadRepository(repositoryRoot) switch
+        {
+            MissionLoadOutcome.Loaded => [],
+            MissionLoadOutcome.Invalid invalid =>
+            [
+                new FileMapFinding(
+                    "MISSION-CONTRACT",
+                    MissionFileLoader.RelativePath,
+                    $"{invalid.Error.Code}: {invalid.Error.Message}"),
+            ],
+        };
 
     internal static IReadOnlyList<FileMapFinding> InspectDeclaredModes(
         FileMapManifest manifest,
