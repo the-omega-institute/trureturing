@@ -1,6 +1,11 @@
 namespace StrataLint.ArchitectureTests;
 
-public sealed class RemoteStateIndependencePolicyTests
+/// <summary>
+/// Pins the recognized-shape early-feedback boundary of <see cref="RemoteStateIndependencePolicy"/>.
+/// These tests do not claim execution-path completeness; CI remote capability stripping provides
+/// the remote-unreachability guarantee.
+/// </summary>
+public sealed class RemoteStateEarlyFeedbackPolicyTests
 {
     private static readonly string RepositoryRoot = RepositoryLayout.FindRoot();
     private static readonly IReadOnlyDictionary<string, string> InertLiteralSources =
@@ -15,7 +20,7 @@ public sealed class RemoteStateIndependencePolicyTests
         };
 
     [Fact]
-    public void RealRepositoryRemoteRevisionIsRejectedWithFileAndLineWitness()
+    public void RecognizedRealRepositoryRemoteRevisionProducesEarlyFeedbackWithFileAndLineWitness()
     {
         const string source = """
             class RemoteDependentTests
@@ -440,7 +445,7 @@ public sealed class RemoteStateIndependencePolicyTests
     }
 
     [Fact]
-    public void RepositoryTestsAndPostCheckoutWorkflowsAreRemoteStateIndependent()
+    public void RepositoryTestsAndPostCheckoutWorkflowsContainNoRecognizedRemoteDependencyShapes()
     {
         var findings = RemoteStateIndependencePolicy.InspectRepository(RepositoryRoot);
 
