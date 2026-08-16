@@ -2,6 +2,7 @@ using System.Collections.Immutable;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
+using System.Text.Json.Nodes;
 using StrataLint.Cli;
 using StrataLint.Engine;
 
@@ -91,6 +92,62 @@ public sealed partial class ProductionEnvironmentTests
         Assert.Equal(0, ledger.AdmissionCatalogBuildCount);
         Assert.Equal(0, ledger.IncrementalValidationCount);
         Assert.Equal(0, gateway.FrozenReferenceValidationCount);
+    }
+
+    [Fact]
+    public void CheckRejectsAddedFreezeWithoutAxiomClosureAndNamesNodePath()
+    {
+        using var temporary = new TemporaryDirectory();
+        var fixture = AddedFrozenRingFixture();
+        var freezePath = AddedFreezePathFor(fixture, RuleFixture.RingPath);
+        RewriteFreezeWithoutAxiomClosure(
+            fixture.Files,
+            freezePath,
+            FrozenLedgerCanonicalWriter.CurrentDagSchemaVersion);
+        var addedLedgerPaths = AddedLedgerPaths(fixture);
+        var environment = new ProductionCliEnvironment(
+            "/repo",
+            new FakeRepositoryGateway(
+                RawChangeSet.CreateWithKinds(
+                    addedLedgerPaths.Select(static path => (path, RawChangeKind.Added))),
+                Snapshot(fixture.Files),
+                Snapshot(fixture.Baseline)),
+            new FakeLeanReportSource(null));
+
+        var outcome = environment.Check(
+            ["--candidate-lean-report", WriteCandidateReport(temporary, fixture)]);
+
+        var rejected = Assert.IsType<AdmissionOutcome.RuleRejected>(outcome);
+        var diagnostic = Assert.Single(
+            rejected.Diagnostics.Where(static item => item.RuleId == RuleId.CreateKnown(8)));
+        Assert.Equal(RuleFixture.RingPath, diagnostic.Path);
+        Assert.Contains(
+            $"Added Freeze event for {RuleFixture.RingPath} must carry axiom_closure.",
+            diagnostic.Message,
+            StringComparison.Ordinal);
+        Assert.Contains("delta witness: " + freezePath, diagnostic.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void CheckAdmitsHistoricalClosurelessV2FreezeDuringIncrementalEvaluation()
+    {
+        using var temporary = new TemporaryDirectory();
+        var fixture = TrustedFrozenFixture();
+        var freezePath = FreezePathFor(fixture, RuleFixture.RingPath);
+        RewriteFreezeWithoutAxiomClosure(fixture.Files, freezePath, schemaVersion: 2);
+        RewriteFreezeWithoutAxiomClosure(fixture.Baseline, freezePath, schemaVersion: 2);
+        var environment = new ProductionCliEnvironment(
+            "/repo",
+            new FakeRepositoryGateway(
+                RawChangeSet.CreateWithKinds([(RuleFixture.RingPath, RawChangeKind.Modified)]),
+                Snapshot(fixture.Files),
+                Snapshot(fixture.Baseline)),
+            new FakeLeanReportSource(null));
+
+        var outcome = environment.Check(
+            ["--candidate-lean-report", WriteCandidateReport(temporary, fixture)]);
+
+        Assert.IsType<AdmissionOutcome.Admitted>(outcome);
     }
 
     [Fact]
@@ -438,5 +495,25 @@ public sealed partial class ProductionEnvironmentTests
     {
         using var document = JsonDocument.Parse(contents);
         return document.RootElement.GetProperty("event_type").GetString()!;
+    }
+
+    private static void RewriteFreezeWithoutAxiomClosure(
+        IDictionary<string, string> files,
+        string eventPath,
+        int schemaVersion)
+    {
+        using var document = JsonDocument.Parse(files[eventPath]);
+        var root = document.RootElement;
+        Assert.Equal("Freeze", root.GetProperty("event_type").GetString());
+        var payload = JsonNode.Parse(root.GetProperty("payload").GetRawText())!.AsObject();
+        Assert.True(payload.Remove("axiom_closure"));
+        var payloadElement = JsonSerializer.SerializeToElement(payload);
+        var encoded = FrozenLedgerCanonicalWriter.WriteDagEvent(
+            "Freeze",
+            payloadElement,
+            schemaVersion);
+        var identity = FrozenLedgerCanonicalWriter.EventIdentity("Freeze", payloadElement, encoded.Hash);
+        Assert.Equal(eventPath, FrozenLedgerChangeClassifier.AcceptedPath(identity));
+        files[eventPath] = Encoding.UTF8.GetString(encoded.Bytes.AsSpan());
     }
 }

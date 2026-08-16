@@ -1,5 +1,6 @@
 using System.Collections.Immutable;
 using System.Text;
+using System.Text.Json;
 using StrataLint.Engine;
 
 namespace StrataLint.Cli;
@@ -64,10 +65,12 @@ internal sealed class ProductionFrozenLedgerAdmissionServices : IFrozenLedgerAdm
         }
 
         var deltaFiles = deltaPaths.Select(path => current.TryGetFile(path.Value, out var file)
-            ? file
-            : throw new FrozenLedgerAdmissionPreparationException(
-                [path],
-                "added frozen-ledger delta path is absent from the candidate snapshot"));
+                ? file
+                : throw new FrozenLedgerAdmissionPreparationException(
+                    [path],
+                    "added frozen-ledger delta path is absent from the candidate snapshot"))
+            .ToImmutableArray();
+        RejectClosurelessAddedFreezes(deltaFiles);
         DeltaEventLoadCount++;
         var loaded = FrozenAcceptedEventLoader.LoadFiles(deltaFiles) switch
         {
@@ -164,6 +167,52 @@ internal sealed class ProductionFrozenLedgerAdmissionServices : IFrozenLedgerAdm
             ordered,
             producerPaths.Value,
             trusted);
+    }
+
+    private static void RejectClosurelessAddedFreezes(
+        ImmutableArray<RepositoryFile> deltaFiles)
+    {
+        foreach (var file in deltaFiles)
+        {
+            var nodePath = ClosurelessFreezeNodePath(file);
+            if (nodePath is null)
+            {
+                continue;
+            }
+
+            throw new FrozenLedgerAdmissionPreparationException(
+                [nodePath],
+                $"Added Freeze event for {nodePath.Value} must carry axiom_closure. "
+                    + $"delta witness: {file.Path.Value}");
+        }
+    }
+
+    private static RepoPath? ClosurelessFreezeNodePath(RepositoryFile file)
+    {
+        try
+        {
+            using var document = JsonDocument.Parse(file.RawBytes.AsSpan().ToArray());
+            var root = document.RootElement;
+            if (!root.TryGetProperty("event_type", out var eventType)
+                || eventType.ValueKind != JsonValueKind.String
+                || eventType.GetString() != "Freeze"
+                || !root.TryGetProperty("payload", out var payload)
+                || payload.ValueKind != JsonValueKind.Object
+                || payload.TryGetProperty("axiom_closure", out _)
+                || !payload.TryGetProperty("node_path", out var nodePath)
+                || nodePath.ValueKind != JsonValueKind.String)
+            {
+                return null;
+            }
+
+            return RepoPath.TryCreate(nodePath.GetString()!, out var parsedPath)
+                ? parsedPath
+                : null;
+        }
+        catch (JsonException)
+        {
+            return null;
+        }
     }
 
     public AdmissionOutcome? Validate(
