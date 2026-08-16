@@ -162,8 +162,14 @@ public static partial class FrozenLedgerGenerator
             if (entry.Payload.StatementId != candidate.StatementId
                 || !entry.Payload.DeclarationStatementIds.SequenceEqual(candidate.DeclarationStatementIds))
             {
+                if (entry.Payload.Input.DescriptorBlobOid == candidate.Attestation.SourceBlobOid)
+                {
+                    throw new InvalidOperationException(
+                        $"Active module {path.Value} statement identity changed while its source blob is unchanged; run ledger-supersede for the environment-pin drift.");
+                }
+
                 throw new InvalidOperationException(
-                    $"Active module {path.Value} statement identity changed; append Revoke before rerunning ledger-sync.");
+                    $"Active module {path.Value} source blob and statement identity changed; append Revoke, then add a new Freeze before rerunning ledger-sync.");
             }
 
             var materialUnchanged = entry.Material.FrozenNodeId == candidate.FrozenNodeId
