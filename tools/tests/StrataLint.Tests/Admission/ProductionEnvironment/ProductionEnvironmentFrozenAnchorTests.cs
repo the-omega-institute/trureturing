@@ -15,6 +15,123 @@ namespace StrataLint.Tests;
 public sealed partial class ProductionEnvironmentTests
 {
     [Fact]
+    public void CheckRetainsScopedStatementIdentityDetection()
+    {
+        using var temporary = new TemporaryDirectory();
+        var fixture = TrustedFrozenFixture();
+        fixture.Files[RuleFixture.RingPath] = fixture.Files[RuleFixture.RingPath]
+            .Replace("Nat := 0", "Int := 0", StringComparison.Ordinal);
+        fixture.Reports[RuleFixture.RingPath] = new LeanFileReport(
+            [],
+            [new LeanDeclaration("goldenRing", "def", "Int", [])]);
+        var environment = new ProductionCliEnvironment(
+            "/repo",
+            new FakeRepositoryGateway(
+                RawChangeSet.CreateWithKinds([(RuleFixture.RingPath, RawChangeKind.Modified)]),
+                Snapshot(fixture.Files),
+                Snapshot(fixture.Baseline)),
+            new FakeLeanReportSource(null));
+
+        var outcome = environment.Check(
+            ["--candidate-lean-report", WriteCandidateReport(temporary, fixture)]);
+
+        var rejected = Assert.IsType<AdmissionOutcome.RuleRejected>(outcome);
+        var diagnostic = Assert.Single(
+            rejected.Diagnostics.Where(static item => item.RuleId == RuleId.CreateKnown(8)));
+        Assert.Equal(RuleFixture.RingPath, diagnostic.Path);
+        Assert.Contains("statement identity changed", diagnostic.Message, StringComparison.Ordinal);
+        Assert.Contains(
+            "delta witness: " + RuleFixture.RingPath,
+            diagnostic.Message,
+            StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void CheckRetainsScopedOutsideClosedCatalogDetection()
+    {
+        using var temporary = new TemporaryDirectory();
+        var fixture = TrustedFrozenFixture();
+        fixture.Files.Remove(RuleFixture.RingPath);
+        fixture.Reports.Remove(RuleFixture.RingPath);
+        var environment = new ProductionCliEnvironment(
+            "/repo",
+            new FakeRepositoryGateway(
+                RawChangeSet.CreateWithKinds([(RuleFixture.RingPath, RawChangeKind.Deleted)]),
+                Snapshot(fixture.Files),
+                Snapshot(fixture.Baseline)),
+            new FakeLeanReportSource(null));
+
+        var outcome = environment.Check(
+            ["--candidate-lean-report", WriteCandidateReport(temporary, fixture)]);
+
+        var rejected = Assert.IsType<AdmissionOutcome.RuleRejected>(outcome);
+        var diagnostic = Assert.Single(
+            rejected.Diagnostics.Where(static item => item.RuleId == RuleId.CreateKnown(8)));
+        Assert.Equal(RuleFixture.RingPath, diagnostic.Path);
+        Assert.Contains("outside the current Closed catalog", diagnostic.Message, StringComparison.Ordinal);
+        Assert.Contains(
+            "delta witness: " + RuleFixture.RingPath,
+            diagnostic.Message,
+            StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void IncrementalValidationRetainsEnvironmentIdentityDetection()
+    {
+        var fixture = TrustedFrozenFixture();
+        var (snapshot, lean, dag) = BuildState(fixture.Files, fixture.Reports);
+        var baseView = FrozenLedgerBaseViewReader.Read(Decode(Snapshot(fixture.Baseline)));
+        var activeByCase = baseView.ActiveByCase.ToImmutableDictionary(
+            static item => item.Key,
+            item => item.Value.Material.RepoPath.Value == RuleFixture.RingPath
+                ? item.Value with
+                {
+                    Environment = new FrozenEnvironmentPins(
+                        FrozenLedgerTestData.GitOid('1'),
+                        FrozenLedgerTestData.GitOid('2'),
+                        RepoPath.CreateKnown("lakefile.toml"),
+                        FrozenLedgerTestData.GitOid('3')),
+                }
+                : item.Value,
+            StringComparer.Ordinal);
+        var persistedView = new FrozenLedgerBaseView(
+            baseView.Origin,
+            baseView.Events,
+            activeByCase,
+            baseView.AllCaseIds,
+            baseView.EventHashes,
+            baseView.EventIdentities);
+        var preparation = new FrozenLedgerAdmissionPreparation(
+            persistedView,
+            [],
+            ImmutableHashSet<string>.Empty,
+            TrustedFrozenGitReferences.CreateForTrustedAdapter([], []));
+        var changes = RawChangeSet.CreateWithKinds([("lean-toolchain", RawChangeKind.Modified)]);
+        var scope = FrozenLedgerAdmissionScope.Create(changes, preparation, dag);
+        var catalog = DagLedgerCommandPreparation.BuildAdmissionCatalog(
+            snapshot,
+            lean,
+            dag,
+            persistedView,
+            scope,
+            new FrozenRevisionIdentity(
+                "candidate",
+                FrozenLedgerTestData.GitOid('a'),
+                FrozenLedgerTestData.GitOid('b')));
+
+        var failure = Assert.IsType<FrozenLedgerAdmissionFailure>(
+            FrozenLedger.ValidateAdmissionDelta(
+                preparation,
+                scope,
+                catalog,
+                preparation.TrustedDeltaReferences));
+
+        Assert.Equal(RuleFixture.RingPath, Assert.Single(failure.AffectedPaths).Value);
+        Assert.Equal("lean-toolchain", Assert.Single(failure.DeltaWitnessPaths).Value);
+        Assert.Contains("environment pins changed", failure.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
     public void Sl008RejectsIncompleteAddedReattestPayload()
     {
         using var temporary = new TemporaryDirectory();
