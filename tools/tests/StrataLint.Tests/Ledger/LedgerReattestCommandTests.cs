@@ -315,6 +315,28 @@ public sealed class LedgerReattestCommandTests
 
         Assert.False(result.Success);
         Assert.Contains("statement identity changed", result.Error, StringComparison.OrdinalIgnoreCase);
+        Assert.Contains("Revoke", result.Error, StringComparison.Ordinal);
+        Assert.Equal(
+            fixture.BaselineBytes.AsSpan().ToArray(),
+            FrozenLedgerTestData.ReadLedgerDirectory(fixture.LedgerPath));
+    }
+
+    [Fact]
+    public void ProductionCommandDirectsAmbientStatementDriftToLedgerSupersedeWithoutWriting()
+    {
+        using var fixture = new LedgerReattestFixture(
+            "ambiently-different-elaborated-expression",
+            descriptorDrift: false,
+            pinBump: true);
+
+        var result = fixture.Environment.ReattestLedger(
+            new[] { "--candidate-lean-report", fixture.ReportPath });
+
+        Assert.False(result.Success);
+        Assert.Contains("statement identity changed", result.Error, StringComparison.OrdinalIgnoreCase);
+        Assert.Contains("source blob is unchanged", result.Error, StringComparison.OrdinalIgnoreCase);
+        Assert.Contains("ledger-supersede", result.Error, StringComparison.Ordinal);
+        Assert.DoesNotContain("append Revoke", result.Error, StringComparison.OrdinalIgnoreCase);
         Assert.Equal(
             fixture.BaselineBytes.AsSpan().ToArray(),
             FrozenLedgerTestData.ReadLedgerDirectory(fixture.LedgerPath));
@@ -386,13 +408,14 @@ public sealed class LedgerReattestCommandTests
             string candidateStatement,
             bool descriptorDrift = true,
             bool includeBacklog = false,
-            string backlogModule = "B")
+            string backlogModule = "B",
+            bool pinBump = false)
         {
             const string originalSource = "theorem a : True := by trivial\n";
             var candidateSource = descriptorDrift
                 ? "-- canonical header changed\n"
                     + $"theorem a : {candidateStatement} := by trivial\n"
-                : $"theorem a : {candidateStatement} := by trivial\n";
+                : originalSource;
             BacklogModule = backlogModule;
             var backlogDeclaration = BacklogModule.ToLowerInvariant();
             var backlogSource = $"theorem {backlogDeclaration} : True := by trivial\n";
@@ -406,7 +429,9 @@ public sealed class LedgerReattestCommandTests
 
             var files = new Dictionary<string, string>(StringComparer.Ordinal)
             {
-                ["lean-toolchain"] = "leanprover/lean4:v4.24.0\n",
+                ["lean-toolchain"] = pinBump
+                    ? "leanprover/lean4:v4.25.0\n"
+                    : "leanprover/lean4:v4.24.0\n",
                 ["lake-manifest.json"] = "{}\n",
                 [FrozenLedgerTestData.PathFor("A")] = candidateSource,
             };

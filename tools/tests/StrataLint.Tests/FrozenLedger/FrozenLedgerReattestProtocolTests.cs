@@ -223,6 +223,7 @@ public sealed partial class FrozenLedgerTests
         Assert.Contains(PathFor("A"), exception.Message, StringComparison.Ordinal);
         Assert.Contains("statement identity", exception.Message, StringComparison.OrdinalIgnoreCase);
         Assert.Contains("Revoke", exception.Message, StringComparison.Ordinal);
+        Assert.DoesNotContain("ledger-supersede", exception.Message, StringComparison.Ordinal);
     }
 
     [Fact]
