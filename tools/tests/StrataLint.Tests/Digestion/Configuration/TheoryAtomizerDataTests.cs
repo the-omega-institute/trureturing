@@ -237,12 +237,26 @@ public sealed class TheoryAtomizerDataTests
     [Fact]
     public void LoaderRejectsGenreSuffixWithoutSameDialectBareExactGenre()
     {
-        var data = SuffixData("""
+        var data = Minimal.TrimEnd('\n') + "\n\n" + """
+            [[dialect]]
+            id = "bare-head-owner"
+            claim = "^(?<kind>\\p{L}+)\\s+(?<number>[0-9]+(?:\\.[0-9]+)+)"
+            target = "heading"
+
+            [[dialect]]
+            id = "suffix-probe"
+            claim = "^(?<kind>\\p{L}+)\\s+(?<number>[0-9]+(?:\\.[0-9]+)+)"
+            target = "heading"
+
             [[dialect.genre]]
-            dialect = "suffix-probe"
-            token = "样本"
+            dialect = "bare-head-owner"
+            token = "例"
             kind = "example"
-            """, ExampleSuffix);
+
+            [[dialect.genre_suffix]]
+            dialect = "suffix-probe"
+            suffix = "例"
+            """ + "\n";
 
         var error = Assert.Throws<FormatException>(() => Load(data));
 

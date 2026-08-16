@@ -20,6 +20,21 @@ internal sealed record DeclaredDialect(
     ImmutableArray<AtomizerMapping> GenreSuffixes,
     bool HeadingClaims);
 
+internal static class GenreSuffixResolver
+{
+    internal static ImmutableArray<AtomizerMapping> Order(IEnumerable<AtomizerMapping> suffixes) =>
+        suffixes.OrderByDescending(static item => item.Token.Length)
+            .ThenBy(static item => item.Token, StringComparer.Ordinal)
+            .ToImmutableArray();
+
+    internal static AtomizerMapping? Resolve(
+        string token,
+        ImmutableArray<AtomizerMapping> orderedSuffixes) =>
+        orderedSuffixes.FirstOrDefault(suffix =>
+            token.Length > suffix.Token.Length
+            && token.EndsWith(suffix.Token, StringComparison.Ordinal));
+}
+
 internal sealed class TheoryAtomizerRules
 {
     internal static readonly ImmutableHashSet<string> AllowedKinds = ImmutableHashSet.Create(
@@ -370,19 +385,23 @@ internal static class TheoryAtomizerDataLoader
             suffixes.Add(new AtomizerMapping(suffix, head.Value));
         }
 
+        var orderedGenreSuffixesById = genreSuffixesById.ToDictionary(
+            static pair => pair.Key,
+            static pair => GenreSuffixResolver.Order(pair.Value),
+            StringComparer.Ordinal);
+
         foreach (var dialectId in ids)
         {
             foreach (var genre in genresById[dialectId])
             {
-                var redundantSuffix = genreSuffixesById[dialectId].FirstOrDefault(suffix =>
-                    genre.Token.Length > suffix.Token.Length
-                    && genre.Token.EndsWith(suffix.Token, StringComparison.Ordinal)
-                    && genre.Value == suffix.Value);
-                if (redundantSuffix is not null)
+                var winningSuffix = GenreSuffixResolver.Resolve(
+                    genre.Token,
+                    orderedGenreSuffixesById[dialectId]);
+                if (winningSuffix is not null && genre.Value == winningSuffix.Value)
                 {
                     throw new FormatException(
                         $"Dialect '{dialectId}' has redundant exact genre '{genre.Token}': suffix "
-                        + $"'{redundantSuffix.Token}' derives the same kind '{genre.Value}'.");
+                        + $"'{winningSuffix.Token}' derives the same kind '{genre.Value}'.");
                 }
             }
         }
@@ -395,10 +414,7 @@ internal static class TheoryAtomizerDataLoader
                 .OrderByDescending(static item => item.Token.Length)
                 .ThenBy(static item => item.Token, StringComparer.Ordinal)
                 .ToImmutableArray();
-            var genreSuffixes = genreSuffixesById[row["id"]].ToImmutable()
-                .OrderByDescending(static item => item.Token.Length)
-                .ThenBy(static item => item.Token, StringComparer.Ordinal)
-                .ToImmutableArray();
+            var genreSuffixes = orderedGenreSuffixesById[row["id"]];
             builder.Add(row["id"], new DeclaredDialect(
                 row["id"],
                 row["claim"],

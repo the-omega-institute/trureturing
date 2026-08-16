@@ -80,40 +80,19 @@ public sealed class QdoGenreSuffixTests
     public void MigrationPreservesEveryPreviouslyAcceptedLocatorAndUntouchedTable()
     {
         var migrated = LoadRules(CanonicalData);
-        var legacy = LoadRules(
-            RemoveQdoSuffixRule(CanonicalData).TrimEnd('\n') + "\n\n" + LegacyExactRepresentatives + "\n");
-        var legacyQdoTokens = new[]
-        {
-            "定理", "定义", "命题", "推论", "例", "算法", "关键反例", "原理", "特例", "条件定理", "猜想",
-        };
 
-        foreach (var token in legacyQdoTokens)
+        foreach (var (token, kind) in LegacyQdoGenres)
         {
             var bytes = Encoding.UTF8.GetBytes($"# QDO\n\n## {token} 41.1\n\n证。\n");
-            var before = AtomizerRegistry.Atomize("dialect:qdo", bytes, legacy);
             var after = AtomizerRegistry.Atomize("dialect:qdo", bytes, migrated);
-            Assert.Equal(Assert.Single(before.Claims).AstPath, Assert.Single(after.Claims).AstPath);
-            Assert.Empty(before.UnregisteredGenres);
+            Assert.Equal($"{kind}/41.1", Assert.Single(after.Claims).AstPath);
             Assert.Empty(after.UnregisteredGenres);
             Assert.Equal(bytes, after.Reassemble().ToArray());
         }
 
-        Assert.Equal(legacy.ObserverClaimPrefixes.ToArray(), migrated.ObserverClaimPrefixes.ToArray());
-        Assert.Equal(legacy.ConeClaimPrefixes.ToArray(), migrated.ConeClaimPrefixes.ToArray());
-        Assert.Equal(legacy.GictGenres.ToArray(), migrated.GictGenres.ToArray());
-        Assert.Equal(legacy.GictClaimPrefixes.ToArray(), migrated.GictClaimPrefixes.ToArray());
-        Assert.Equal(legacy.GictConstants.ToArray(), migrated.GictConstants.ToArray());
-        Assert.Equal(legacy.PzgGenres.ToArray(), migrated.PzgGenres.ToArray());
-        Assert.Equal(legacy.PzgHeadingPrefixes.ToArray(), migrated.PzgHeadingPrefixes.ToArray());
-        Assert.Equal(
-            legacy.PzgMarkers.OrderBy(static item => item.Key).ToArray(),
-            migrated.PzgMarkers.OrderBy(static item => item.Key).ToArray());
-        Assert.Equal(
-            legacy.WmHeadings.OrderBy(static item => item.Key).ToArray(),
-            migrated.WmHeadings.OrderBy(static item => item.Key).ToArray());
-        Assert.Equal(
-            legacy.Dialects.Keys.Where(static id => id != "qdo").Order(StringComparer.Ordinal),
-            migrated.Dialects.Keys.Where(static id => id != "qdo").Order(StringComparer.Ordinal));
+        AssertGenreTable(LegacyGictGenres, migrated.GictGenres);
+        AssertGenreTable(LegacyPzgGenres, migrated.PzgGenres);
+        Assert.Equal(["qdo"], migrated.Dialects.Keys.Order(StringComparer.Ordinal));
     }
 
     [Fact]
@@ -134,11 +113,59 @@ public sealed class QdoGenreSuffixTests
         Assert.Equal(bytes, document.Reassemble().ToArray());
     }
 
+    [Fact]
+    public void ExactOverrideOfLongestSuffixIsNotRejectedAsRedundant()
+    {
+        var exactGenres = LongestExactGenres + "\n\n" + """
+            [[dialect.genre]]
+            dialect = "longest-probe"
+            token = "极新体"
+            kind = "theorem"
+            """;
+        var data = InsertBefore(CanonicalData, "[[dialect.genre]]", LongestDialect + "\n\n");
+        data = InsertBefore(data, "[[dialect.genre_suffix]]", exactGenres + "\n\n");
+        data = data.TrimEnd('\n') + "\n\n" + LongestSuffixes + "\n";
+
+        var rules = LoadRules(data);
+        var bytes = Encoding.UTF8.GetBytes("# Probe\n\n## 极新体 1.1\n\n证。\n");
+        var document = AtomizerRegistry.Atomize("dialect:longest-probe", bytes, rules);
+
+        Assert.Equal("theorem/1.1", Assert.Single(document.Claims).AstPath);
+        Assert.Empty(document.UnregisteredGenres);
+        Assert.Equal(bytes, document.Reassemble().ToArray());
+    }
+
+    [Fact]
+    public void CompoundExactGenreWinsBeforeMatchingSuffix()
+    {
+        var data = InsertBefore(CanonicalData, "[[dialect.genre]]", ExactPriorityDialect + "\n\n");
+        data = InsertBefore(data, "[[dialect.genre_suffix]]", ExactPriorityGenres + "\n\n");
+        data = data.TrimEnd('\n') + "\n\n" + ExactPrioritySuffix + "\n";
+        var rules = LoadRules(data);
+        var bytes = Encoding.UTF8.GetBytes("# Probe\n\n## 特殊体 1.1\n\n证。\n");
+
+        var document = AtomizerRegistry.Atomize("dialect:exact-priority-probe", bytes, rules);
+
+        Assert.Equal("observation/1.1", Assert.Single(document.Claims).AstPath);
+        Assert.Empty(document.UnregisteredGenres);
+        Assert.Equal(bytes, document.Reassemble().ToArray());
+    }
+
     private static string CanonicalData => Encoding.UTF8.GetString(DigestionTestSupport.RulesBytes);
 
     private static TheoryAtomizerRules LoadRules(string data) => TheoryAtomizerDataLoader.Load(
         DigestionTestSupport.Snapshot(
             (TheoryAtomizerDataLoader.DataPath, Encoding.UTF8.GetBytes(data))));
+
+    private static void AssertGenreTable(
+        IEnumerable<(string Token, string Kind)> expected,
+        IEnumerable<AtomizerMapping> actual)
+    {
+        Assert.Equal(
+            expected.OrderBy(static item => item.Token, StringComparer.Ordinal),
+            actual.Select(static item => (item.Token, Kind: item.Value))
+                .OrderBy(static item => item.Token, StringComparer.Ordinal));
+    }
 
     private static (byte[] Bytes, string[] ExpectedPaths) Pr2096Fixture()
     {
@@ -172,17 +199,72 @@ public sealed class QdoGenreSuffixTests
         return data.Insert(index, insertion);
     }
 
-    private const string LegacyExactRepresentatives = """
-        [[dialect.genre]]
-        dialect = "qdo"
-        token = "关键反例"
-        kind = "example"
+    private static readonly (string Token, string Kind)[] LegacyQdoGenres =
+    [
+        ("定理", "theorem"),
+        ("定义", "definition"),
+        ("命题", "proposition"),
+        ("推论", "corollary"),
+        ("例", "example"),
+        ("算法", "algorithm"),
+        ("关键反例", "example"),
+        ("原理", "principle"),
+        ("特例", "example"),
+        ("条件定理", "theorem-form"),
+        ("猜想", "observation"),
+    ];
 
-        [[dialect.genre]]
-        dialect = "qdo"
-        token = "特例"
-        kind = "example"
-        """;
+    private static readonly (string Token, string Kind)[] LegacyGictGenres =
+    [
+        ("勘察", "survey"),
+        ("命题", "proposition"),
+        ("定义", "definition"),
+        ("定理", "theorem"),
+        ("引理", "lemma"),
+        ("推论", "corollary"),
+        ("注", "note"),
+        ("观察", "observation"),
+    ];
+
+    private static readonly (string Token, string Kind)[] LegacyPzgGenres =
+    [
+        ("复审降级注", "ledger"),
+        ("候签定理", "theorem"),
+        ("前沿引注", "frontier-note"),
+        ("勘误正案", "ledger"),
+        ("负向证据", "observation"),
+        ("勘正注", "ledger"),
+        ("勘误注", "ledger"),
+        ("定理形", "theorem-form"),
+        ("事实", "note"),
+        ("公理", "axiom"),
+        ("判据", "criterion"),
+        ("原则", "principle"),
+        ("后果", "consequence"),
+        ("命题", "proposition"),
+        ("契约", "contract"),
+        ("定义", "definition"),
+        ("定理", "theorem"),
+        ("延表", "extension-table"),
+        ("引理", "lemma"),
+        ("推论", "corollary"),
+        ("条目", "entry"),
+        ("案卷", "ledger"),
+        ("注记", "remark"),
+        ("猜想", "observation"),
+        ("约定", "specification"),
+        ("范例", "example"),
+        ("观察", "observation"),
+        ("规格", "specification"),
+        ("设置", "specification"),
+        ("评注", "remark"),
+        ("账目", "ledger"),
+        ("路线", "route"),
+        ("例", "example"),
+        ("注", "remark"),
+        ("窗", "observation"),
+        ("系", "corollary"),
+    ];
 
     private const string LongestDialect = """
         [[dialect]]
@@ -211,5 +293,30 @@ public sealed class QdoGenreSuffixTests
         [[dialect.genre_suffix]]
         dialect = "longest-probe"
         suffix = "新体"
+        """;
+
+    private const string ExactPriorityDialect = """
+        [[dialect]]
+        id = "exact-priority-probe"
+        claim = "^(?<kind>\\p{L}+)\\s+(?<number>[0-9]+(?:\\.[0-9]+)+)"
+        target = "heading"
+        """;
+
+    private const string ExactPriorityGenres = """
+        [[dialect.genre]]
+        dialect = "exact-priority-probe"
+        token = "体"
+        kind = "theorem"
+
+        [[dialect.genre]]
+        dialect = "exact-priority-probe"
+        token = "特殊体"
+        kind = "observation"
+        """;
+
+    private const string ExactPrioritySuffix = """
+        [[dialect.genre_suffix]]
+        dialect = "exact-priority-probe"
+        suffix = "体"
         """;
 }
