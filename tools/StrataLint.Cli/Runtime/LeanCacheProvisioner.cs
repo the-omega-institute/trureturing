@@ -25,14 +25,17 @@ internal interface ILeanCachePublisher
 internal sealed class LeanCachePublisher : ILeanCachePublisher
 {
     internal static LeanCachePublisher Instance { get; } = new();
+    private readonly Action<string>? postRenamePreStamp;
 
-    private LeanCachePublisher()
+    internal LeanCachePublisher(Action<string>? postRenamePreStamp = null)
     {
+        this.postRenamePreStamp = postRenamePreStamp;
     }
 
     public void Publish(string staged, string target, LeanPinSet pins)
     {
         Directory.Move(staged, target);
+        postRenamePreStamp?.Invoke(target);
         LeanCacheStamp.Write(target, pins);
     }
 }
@@ -128,10 +131,30 @@ internal static class LeanCacheProvisioner
         IWorktreeProcessRunner runner,
         LeanCacheWriterGuard writerGuard,
         IDirectoryCloner cloner,
-        ILeanCachePublisher publisher)
+        ILeanCachePublisher publisher) =>
+        Provision(
+            selection,
+            worktreeRoot,
+            pins,
+            runner,
+            writerGuard,
+            cloner,
+            publisher,
+            RemovePartial);
+
+    internal static LeanCacheProvisionResult Provision(
+        LeanCacheDonorSelection selection,
+        string worktreeRoot,
+        LeanPinSet pins,
+        IWorktreeProcessRunner runner,
+        LeanCacheWriterGuard writerGuard,
+        IDirectoryCloner cloner,
+        ILeanCachePublisher publisher,
+        Action<string> removePartial)
     {
         ArgumentNullException.ThrowIfNull(cloner);
         ArgumentNullException.ThrowIfNull(publisher);
+        ArgumentNullException.ThrowIfNull(removePartial);
         ArgumentNullException.ThrowIfNull(writerGuard);
         writerGuard.RequireOwnershipOf(Path.Combine(worktreeRoot, ".lake"));
         if (selection.Donor is null)
@@ -139,7 +162,7 @@ internal static class LeanCacheProvisioner
             var notice = Join(
                 selection.Notice,
                 "refusing to clone .lake and running lake exe cache get");
-            return Fetch(worktreeRoot, pins, runner, notice);
+            return Fetch(worktreeRoot, pins, runner, notice, removePartial);
         }
 
         var source = Path.Combine(selection.Donor, ".lake");
@@ -164,7 +187,8 @@ internal static class LeanCacheProvisioner
             worktreeRoot,
             pins,
             runner,
-            Join(selection.Notice, cloneWarning));
+            Join(selection.Notice, cloneWarning),
+            removePartial);
     }
 
     internal static LeanCacheProvisionResult ReproduceExisting(
@@ -188,7 +212,8 @@ internal static class LeanCacheProvisioner
             pins,
             runner,
             CacheTreeOwnership.PreExisting,
-            countLtarFiles);
+            countLtarFiles,
+            RemovePartial);
         return new LeanCacheProvisionResult(
             "cache-get",
             "cache-get",
@@ -336,7 +361,8 @@ internal static class LeanCacheProvisioner
         string worktreeRoot,
         LeanPinSet pins,
         IWorktreeProcessRunner runner,
-        string? warning)
+        string? warning,
+        Action<string> removePartial)
     {
         try
         {
@@ -345,7 +371,8 @@ internal static class LeanCacheProvisioner
                 pins,
                 runner,
                 CacheTreeOwnership.CreatedByThisCall,
-                CountLtarFiles);
+                CountLtarFiles,
+                removePartial);
             return new LeanCacheProvisionResult(
                 "cache-get",
                 "cache-get",
@@ -382,7 +409,8 @@ internal static class LeanCacheProvisioner
         LeanPinSet pins,
         IWorktreeProcessRunner runner,
         CacheTreeOwnership ownership,
-        Func<string, int> countLtarFiles)
+        Func<string, int> countLtarFiles,
+        Action<string> removePartial)
     {
         var lake = Path.Combine(worktreeRoot, ".lake");
         var pruneOutcome = MathlibCachePruneOutcome.NotRun;
@@ -480,7 +508,37 @@ internal static class LeanCacheProvisioner
         }
         catch (Exception exception)
         {
-            if (ownership == CacheTreeOwnership.CreatedByThisCall) RemovePartial(lake);
+            if (ownership == CacheTreeOwnership.CreatedByThisCall)
+            {
+                try
+                {
+                    removePartial(lake);
+                }
+                catch (Exception cleanupException)
+                {
+                    var aggregate = new AggregateException(exception, cleanupException);
+                    if (exception is MathlibOleanCompletenessException completenessException)
+                    {
+                        throw new MathlibOleanCompletenessException(
+                            completenessException.MissingOleanFiles,
+                            completenessException.MissingOleanSamples,
+                            completenessException.Message,
+                            completenessException.PruneOutcome,
+                            aggregate);
+                    }
+                    if (exception is LeanCacheProvisionException provisionException)
+                    {
+                        throw new LeanCacheProvisionException(
+                            provisionException.Message,
+                            provisionException.PruneOutcome,
+                            aggregate);
+                    }
+                    throw new LeanCacheProvisionException(
+                        exception.Message,
+                        pruneOutcome,
+                        aggregate);
+                }
+            }
             if (exception is LeanCacheProvisionException) throw;
             throw new LeanCacheProvisionException(
                 exception.Message,
@@ -501,7 +559,7 @@ internal static class LeanCacheProvisioner
             : Path.Combine(home, ".cache", "mathlib");
     }
 
-    private static int CountLtarFiles(string directory) => Directory.Exists(directory)
+    internal static int CountLtarFiles(string directory) => Directory.Exists(directory)
         ? Directory.EnumerateFiles(directory, "*.ltar", SearchOption.AllDirectories).Count()
         : 0;
 

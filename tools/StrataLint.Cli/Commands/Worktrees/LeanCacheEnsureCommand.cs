@@ -19,11 +19,25 @@ internal static class LeanCacheEnsureCommand
         string repositoryRoot,
         IReadOnlyList<string> arguments,
         IWorktreeProcessRunner runner,
-        IDirectoryCloner cloner)
+        IDirectoryCloner cloner) =>
+        Run(
+            repositoryRoot,
+            arguments,
+            runner,
+            cloner,
+            LeanCacheProvisioner.CountLtarFiles);
+
+    internal static CommandResult Run(
+        string repositoryRoot,
+        IReadOnlyList<string> arguments,
+        IWorktreeProcessRunner runner,
+        IDirectoryCloner cloner,
+        Func<string, int> countLtarFiles)
     {
         ArgumentNullException.ThrowIfNull(arguments);
         ArgumentNullException.ThrowIfNull(runner);
         ArgumentNullException.ThrowIfNull(cloner);
+        ArgumentNullException.ThrowIfNull(countLtarFiles);
         if (!TryParseWorktreeRoot(repositoryRoot, arguments, out var root))
         {
             return new CommandResult(false, string.Empty, Usage + "\n");
@@ -54,7 +68,7 @@ internal static class LeanCacheEnsureCommand
                 "canonical cache writer guard is busy");
         }
 
-        return EnsureLocked(root, pins, runner, cloner, guard);
+        return EnsureLocked(root, pins, runner, cloner, guard, countLtarFiles);
     }
 
     internal static CommandResult RunWithWriter(
@@ -99,7 +113,13 @@ internal static class LeanCacheEnsureCommand
                 "canonical cache writer guard is busy");
         }
 
-        var ensured = EnsureLocked(root, pins, runner, cloner, guard);
+        var ensured = EnsureLocked(
+            root,
+            pins,
+            runner,
+            cloner,
+            guard,
+            LeanCacheProvisioner.CountLtarFiles);
         if (!ensured.Success) return ensured;
 
         try
@@ -125,7 +145,8 @@ internal static class LeanCacheEnsureCommand
         LeanPinSet pins,
         IWorktreeProcessRunner runner,
         IDirectoryCloner cloner,
-        LeanCacheWriterGuard writerGuard)
+        LeanCacheWriterGuard writerGuard,
+        Func<string, int> countLtarFiles)
     {
         var lake = Path.Combine(root, ".lake");
         writerGuard.RequireOwnershipOf(lake);
@@ -184,7 +205,8 @@ internal static class LeanCacheEnsureCommand
                             root,
                             pins,
                             runner,
-                            writerGuard);
+                            writerGuard,
+                            countLtarFiles);
                         return SuccessReceipt(
                             "fetched",
                             root,
