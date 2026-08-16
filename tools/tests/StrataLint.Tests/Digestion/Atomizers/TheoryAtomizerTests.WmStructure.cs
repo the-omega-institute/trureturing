@@ -6,24 +6,6 @@ namespace StrataLint.Tests;
 
 public sealed partial class TheoryAtomizerTests
 {
-
-    private static DigestionLedgerEntry LedgerEntry(
-        string atomId,
-        string atomizer,
-        DigestionAtom atom) => new(
-        atomizer,
-        "docs/source.md",
-        atomizer,
-        atomId,
-        atom.AstPath,
-        new DigestionBoundary(atom.AstPath, atom.StartByte, atom.EndByte),
-        atom.Fingerprints,
-        [],
-        new DigestionReceipts([], [], [], [], null),
-        new DigestionStatus(DigestionMigrationState.Residual, DigestionTruthState.Open),
-        ReceiptSyntax: null,
-        CasRef: atom.Fingerprints.RawSha256);
-
     [Fact]
     public void WmCreateAtomAttachesCanonicalStatusMetadata()
     {

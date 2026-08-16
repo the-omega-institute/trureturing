@@ -4,7 +4,7 @@ namespace StrataLint.Tests;
 
 public sealed partial class DigestionAlignmentTests
 {
-    private static string Ledger(IReadOnlyList<string> acknowledgedStale, params string[] entries)
+    internal static string Ledger(IReadOnlyList<string> acknowledgedStale, params string[] entries)
     {
         var acknowledgments = acknowledgedStale.Count == 0
             ? "[]"
@@ -25,7 +25,7 @@ public sealed partial class DigestionAlignmentTests
             """;
     }
 
-    private static string Entry(string atomId, DigestionAtom atom) =>
+    internal static string Entry(string atomId, DigestionAtom atom) =>
         Entry(atomId, atom.AstPath, atom.Fingerprints);
 
     private static string CasEntry(string atomId, DigestionAtom atom, string casRef) => $$"""
