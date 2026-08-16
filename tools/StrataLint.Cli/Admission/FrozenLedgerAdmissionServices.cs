@@ -98,19 +98,13 @@ internal sealed class ProductionFrozenLedgerAdmissionServices : IFrozenLedgerAdm
         {
             try
             {
-                if (item.EventType == FrozenLedger.EnvironmentRecoordinateEventType)
+                if (item.EventType == FrozenLedger.SupersedeEventType)
                 {
-                    var payload = FrozenLedger.ParseEnvironmentRecoordinate(item.Payload);
-                    inputs.Add(payload.OldInput);
-                    inputs.Add(payload.NewInput);
+                    var payload = FrozenLedger.ParseSupersede(item.Payload);
+                    inputs.Add(payload.Input);
                     environmentReferences.Add(new FrozenEnvironmentReference(
-                        payload.OldInput,
-                        payload.OldEnvironment,
-                        payload.SourceSha256));
-                    environmentReferences.Add(new FrozenEnvironmentReference(
-                        payload.NewInput,
-                        payload.NewEnvironment,
-                        payload.SourceSha256));
+                        payload.Input,
+                        payload.Environment));
                 }
                 else if (item.Input is { } input)
                 {
