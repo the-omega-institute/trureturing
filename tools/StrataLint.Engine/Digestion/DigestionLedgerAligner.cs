@@ -678,8 +678,15 @@ internal static partial class DigestionLedgerAligner
                     CoarseReplacementIdentityEqual(candidateEntry, entry))
                 || baseline.AcknowledgedStale.Contains(entry.AtomId, StringComparer.Ordinal)
                 || baseline.Atomizer != candidate.Atomizer
+                || HasAdapterFineReceipt(candidate)
                 || candidate.AcknowledgedStale.Contains(
                     entry.AtomId,
                     StringComparer.Ordinal)))
             .ToArray();
+
+    private static bool HasAdapterFineReceipt(DigestionLedgerSource source) =>
+        AtomizerRegistry.IsRegistered(source.Atomizer)
+        && source.Entries.Any(static entry =>
+            entry.Boundary is null
+            && entry.AstPath != "coarse/source");
 }
