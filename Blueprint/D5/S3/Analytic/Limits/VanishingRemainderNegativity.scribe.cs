@@ -17,12 +17,14 @@ internal sealed class VanishingRemainderNegativityDocument : IScribeDocumentDefi
                     + "vanishing_remainder_eventually_negative"),
                 H("A vanishing remainder preserves eventual negativity"),
                 StatementSource.FromAuthor(Disp(Seq(
-                    F.Id("a_n"), Sp, To, Sp, Minus, F.Id("c"), Comma, Sp,
-                    F.Id("r_n"), Sp, To, Sp, D(0), Comma, Sp,
+                    F.Id("a"), Underscore, F.Id("n"), Sp, To, Sp, Minus,
+                    F.Id("c"), Comma, Sp,
+                    F.Id("r"), Underscore, F.Id("n"), Sp, To, Sp, D(0), Comma, Sp,
                     F.Id("c"), Sp, Gt, Sp, D(0), Sp, Rightarrow, Sp,
                     Exists, Sp, F.Id("N"), Comma, Sp, Forall, Sp,
                     F.Id("n"), Sp, Ge, Sp, F.Id("N"), Comma, Sp,
-                    F.Id("a_n"), Sp, Plus, Sp, F.Id("r_n"), Sp, Lt, Sp, D(0), Dot))),
+                    F.Id("a"), Underscore, F.Id("n"), Sp, Plus, Sp,
+                    F.Id("r"), Underscore, F.Id("n"), Sp, Lt, Sp, D(0), Dot))),
                 AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
@@ -31,7 +33,8 @@ internal sealed class VanishingRemainderNegativityDocument : IScribeDocumentDefi
                         + "to -c, and the strict inequality -c < 0 then holds eventually.")),
                     Paragraph(Text(
                         "This closes only the asymptotic dominance clause of the source atom. "
-                        + "It does not construct zeta test functions or formalize the decomposition "
-                        + "of the quadratic functional into orbit, prime, and archimedean terms."))),
+                        + "It does not construct zeta test functions or formalize the "
+                        + "decomposition of the quadratic functional into orbit, prime, and "
+                        + "archimedean terms."))),
                 DescribeRole.Theorem))));
 }
