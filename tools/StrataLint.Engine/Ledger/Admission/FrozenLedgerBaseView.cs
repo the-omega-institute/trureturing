@@ -23,8 +23,7 @@ internal sealed class FrozenLedgerBaseView
         ImmutableDictionary<string, FrozenActiveEntry> activeByCase,
         ImmutableHashSet<string> allCaseIds,
         ImmutableHashSet<string> eventHashes,
-        ImmutableHashSet<string> eventIdentities,
-        int baseEventsFolded = 0)
+        ImmutableHashSet<string> eventIdentities)
     {
         Origin = origin;
         Events = events;
@@ -34,7 +33,6 @@ internal sealed class FrozenLedgerBaseView
         AllCaseIds = allCaseIds;
         EventHashes = eventHashes;
         EventIdentities = eventIdentities;
-        BaseEventsFolded = baseEventsFolded;
     }
 
     internal FrozenLedgerOrigin Origin { get; }
@@ -52,8 +50,6 @@ internal sealed class FrozenLedgerBaseView
     internal ImmutableHashSet<string> EventIdentities { get; }
 
     internal int EventCount => Events.Length;
-
-    internal int BaseEventsFolded { get; }
 
     internal FrozenLedgerConsistent ToWriterBaseline(FrozenLedgerSyntax syntax)
     {

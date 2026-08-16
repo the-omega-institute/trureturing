@@ -89,7 +89,6 @@ public sealed class FrozenLedgerBaseViewTests
             snapshot.Files.Count(item =>
                 FrozenLedgerChangeClassifier.IsAcceptedEventPath(item.Key.Value)),
             view.EventCount);
-        Assert.Equal(0, view.BaseEventsFolded);
         var source = File.ReadAllText(Path.Combine(
             root,
             "tools",

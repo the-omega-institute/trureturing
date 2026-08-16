@@ -623,7 +623,7 @@ internal static partial class BackfillInventoryLoader
         return BackfillInventoryDocument.Create(sources.ToImmutable(), DeriveTickets(snapshot));
     }
 
-    private static ImmutableArray<BackfillTicketReference> DeriveTickets(
+    internal static ImmutableArray<BackfillTicketReference> DeriveTickets(
         RepositorySnapshot snapshot)
     {
         var modulesByCase = new SortedDictionary<string, string>(StringComparer.Ordinal);
