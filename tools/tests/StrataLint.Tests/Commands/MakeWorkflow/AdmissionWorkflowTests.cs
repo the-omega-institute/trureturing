@@ -284,6 +284,10 @@ public sealed class AdmissionWorkflowTests
             previous = index;
         }
         Assert.Contains("STRATALINT_LEAN_REPORT=\"$report\"", run, StringComparison.Ordinal);
+        Assert.Contains("steps.base.outputs.sha", run, StringComparison.Ordinal);
+        Assert.Contains("tools/scripts/workflow/scribe-delta-input.sh", run, StringComparison.Ordinal);
+        Assert.Contains("--changes-file \"$changes\"", run, StringComparison.Ordinal);
+        Assert.Contains("--producer-paths-file \"$producer_paths\"", run, StringComparison.Ordinal);
         Assert.Contains(".judge-binaries/scribe/StrataLint.Scribe.dll", run, StringComparison.Ordinal);
         Assert.DoesNotContain("dotnet test", run, StringComparison.Ordinal);
         Assert.DoesNotContain("tools/tests", run, StringComparison.Ordinal);

@@ -83,7 +83,11 @@ public sealed partial class MakeWorkflowTests
         using var report = new ScenarioLeanReport(root);
         using var fixture = new TemporaryDirectory();
         var binDirectory = Path.Combine(fixture.Path, "bin");
+        var changes = Path.Combine(fixture.Path, "scribe-changes");
+        var producers = Path.Combine(fixture.Path, "scribe-producers");
         Directory.CreateDirectory(binDirectory);
+        File.WriteAllText(changes, string.Empty);
+        File.WriteAllText(producers, string.Empty);
         WriteExecutable(
             Path.Combine(binDirectory, "git"),
             """
@@ -153,11 +157,15 @@ public sealed partial class MakeWorkflowTests
             "/bin/bash",
             [
                 "-c",
-                "PREFLIGHT_SCENARIO=\"$1\" BASE=HEAD^ PATH=\"$2:/usr/bin:/bin\" exec /bin/bash \"$3\"",
+                "PREFLIGHT_SCENARIO=\"$1\" BASE=HEAD^ PATH=\"$2:/usr/bin:/bin\" "
+                    + "STRATALINT_SCRIBE_CHANGES_FILE=\"$4\" "
+                    + "STRATALINT_SCRIBE_PRODUCER_PATHS_FILE=\"$5\" exec /bin/bash \"$3\"",
                 "preflight-contract",
                 scenario,
                 binDirectory,
                 Path.Combine(root, PreflightScriptPath),
+                changes,
+                producers,
             ],
             root,
             TimeSpan.FromSeconds(30),

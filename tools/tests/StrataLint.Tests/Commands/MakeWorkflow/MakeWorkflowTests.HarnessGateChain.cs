@@ -21,11 +21,15 @@ public sealed partial class MakeWorkflowTests
         var explicitReport = Path.Combine(fixture.Path, "explicit-report.json");
         var ambientReport = Path.Combine(fixture.Path, "ambient-report.json");
         var scribe = Path.Combine(fixture.Path, "StrataLint.Scribe.dll");
+        var changes = Path.Combine(fixture.Path, "changes");
+        var producers = Path.Combine(fixture.Path, "producers");
         var log = Path.Combine(fixture.Path, "scribe.log");
         Directory.CreateDirectory(binDirectory);
         File.WriteAllText(explicitReport, "explicit\n");
         File.WriteAllText(ambientReport, "ambient\n");
         File.WriteAllText(scribe, "fixture\n");
+        File.WriteAllText(changes, string.Empty);
+        File.WriteAllText(producers, string.Empty);
         WriteExecutable(
             Path.Combine(binDirectory, "dotnet"),
             "#!/usr/bin/env bash\nprintf '%s|%s\\n' \"$STRATALINT_LEAN_REPORT\" \"$*\" >> \"$SCRIBE_LOG\"");
@@ -35,7 +39,7 @@ public sealed partial class MakeWorkflowTests
             [
                 "-c",
                 "PATH=\"$1:/usr/bin:/bin\" STRATALINT_LEAN_REPORT=\"$2\" SCRIBE_LOG=\"$3\" "
-                    + "exec /bin/bash \"$4\" \"$5\" \"$6\"",
+                    + "exec /bin/bash \"$4\" \"$5\" \"$6\" \"$7\" \"$8\" \"$9\"",
                 "scribe-content-checks",
                 binDirectory,
                 ambientReport,
@@ -43,6 +47,9 @@ public sealed partial class MakeWorkflowTests
                 Path.Combine(root, ScribeContentChecksScriptPath),
                 explicitReport,
                 scribe,
+                new string('a', 40),
+                changes,
+                producers,
             ],
             root,
             TimeSpan.FromSeconds(30),
@@ -56,6 +63,61 @@ public sealed partial class MakeWorkflowTests
         Assert.Contains(
             invocations,
             line => line.EndsWith($" projections --check --report {explicitReport}", StringComparison.Ordinal));
+    }
+
+    [Fact]
+    public void ScribeContentChecksForwardTheExactDeltaManifestsToEmissionVerbsOnly()
+    {
+        if (OperatingSystem.IsWindows()) return;
+
+        var root = TestRepositoryLayout.FindRoot();
+        using var fixture = new TemporaryDirectory();
+        var binDirectory = Path.Combine(fixture.Path, "bin");
+        var report = Path.Combine(fixture.Path, "report.json");
+        var scribe = Path.Combine(fixture.Path, "StrataLint.Scribe.dll");
+        var changes = Path.Combine(fixture.Path, "changes");
+        var producers = Path.Combine(fixture.Path, "producers");
+        var log = Path.Combine(fixture.Path, "scribe.log");
+        Directory.CreateDirectory(binDirectory);
+        File.WriteAllText(report, "report\n");
+        File.WriteAllText(scribe, "fixture\n");
+        File.WriteAllText(changes, string.Empty);
+        File.WriteAllText(producers, string.Empty);
+        WriteExecutable(
+            Path.Combine(binDirectory, "dotnet"),
+            "#!/usr/bin/env bash\nprintf '%s\n' \"$*\" >> \"$SCRIBE_LOG\"");
+        var baseRevision = new string('a', 40);
+
+        var result = BoundedProcessRunner.Run(
+            "/bin/bash",
+            [
+                "-c",
+                "PATH=\"$1:/usr/bin:/bin\" SCRIBE_LOG=\"$2\" exec /bin/bash \"$3\" \"$4\" \"$5\" \"$6\" \"$7\" \"$8\"",
+                "scribe-content-checks-delta",
+                binDirectory,
+                log,
+                Path.Combine(root, ScribeContentChecksScriptPath),
+                report,
+                scribe,
+                baseRevision,
+                changes,
+                producers,
+            ],
+            root,
+            TimeSpan.FromSeconds(30),
+            64 * 1024);
+
+        Assert.Equal(0, result.ExitCode);
+        var invocations = File.ReadAllLines(log);
+        var deltaSuffix = $"--base {baseRevision} --changes-file {changes} --producer-paths-file {producers}";
+        Assert.Contains(invocations, line => line.Contains("emit --check", StringComparison.Ordinal)
+            && line.EndsWith(deltaSuffix, StringComparison.Ordinal));
+        Assert.Contains(invocations, line => line.Contains("emit-values --check", StringComparison.Ordinal)
+            && line.EndsWith(deltaSuffix, StringComparison.Ordinal));
+        Assert.DoesNotContain(invocations, line => line.Contains("projections --check", StringComparison.Ordinal)
+            && line.Contains("--changes-file", StringComparison.Ordinal));
+        Assert.DoesNotContain(invocations, line => line.Contains("describe-report --check", StringComparison.Ordinal)
+            && line.Contains("--changes-file", StringComparison.Ordinal));
     }
 
     [Fact]
@@ -194,6 +256,8 @@ public sealed partial class MakeWorkflowTests
                 "PREFLIGHT_ADMISSION_RC=\"$1\" PREFLIGHT_CANDIDATE_ROOT=\"$2\" "
                 + "PREFLIGHT_GATE=\"$3\" PREFLIGHT_LOCAL_GATE=\"$4\" "
                 + "HOME=\"$5\" BASE=base PATH=\"$6:/usr/bin:/bin\" "
+                + "STRATALINT_SCRIBE_CHANGES_FILE=\"$2/.scribe-changes\" "
+                + "STRATALINT_SCRIBE_PRODUCER_PATHS_FILE=\"$2/.scribe-producers\" "
                 + "exec /bin/bash \"$7\"",
                 "preflight-harness-gate-chain",
                 admissionExitCode.ToString(System.Globalization.CultureInfo.InvariantCulture),
@@ -269,6 +333,8 @@ public sealed partial class MakeWorkflowTests
                 "PREFLIGHT_ADMISSION_RC=\"$1\" PREFLIGHT_CANDIDATE_ROOT=\"$2\" "
                 + "PREFLIGHT_GATE=\"$3\" PREFLIGHT_LOCAL_GATE=\"$4\" "
                 + "HOME=\"$5\" BASE=base PATH=\"$6:/usr/bin:/bin\" "
+                + "STRATALINT_SCRIBE_CHANGES_FILE=\"$2/.scribe-changes\" "
+                + "STRATALINT_SCRIBE_PRODUCER_PATHS_FILE=\"$2/.scribe-producers\" "
                 + "PREFLIGHT_GIT_STATE=\"$7\" PREFLIGHT_EXPECTED_GATE_BASE=\"$8\" exec /bin/bash \"$9\"",
                 "preflight-fork-point",
                 admissionExitCode.ToString(System.Globalization.CultureInfo.InvariantCulture),
@@ -379,6 +445,8 @@ public sealed partial class MakeWorkflowTests
                 "-c",
                 "HOME=\"$1\" PATH=\"$2:/usr/bin:/bin\" PREFLIGHT_ADMISSION_RC=0 "
                     + "PREFLIGHT_EXPECTED_GATE_BASE=\"$3\" GATE_BASE_REF_COUNT=\"$4\" "
+                    + "STRATALINT_SCRIBE_CHANGES_FILE=\"$6/.scribe-changes\" "
+                    + "STRATALINT_SCRIBE_PRODUCER_PATHS_FILE=\"$6/.scribe-producers\" "
                     + "exec /bin/bash \"$5\" --candidate \"$6\" --base \"$7\" --skip-engineering",
                 "local-gate-base-resolution",
                 homeDirectory,
@@ -654,6 +722,8 @@ public sealed partial class MakeWorkflowTests
     [System.Runtime.Versioning.UnsupportedOSPlatform("windows")]
     private static void WriteHarnessGateChainReportPair(string candidateRoot)
     {
+        File.WriteAllText(Path.Combine(candidateRoot, ".scribe-changes"), string.Empty);
+        File.WriteAllText(Path.Combine(candidateRoot, ".scribe-producers"), string.Empty);
         CopyAdmissionBaseLibraryIfPresent(candidateRoot);
         var gateDirectory = Path.Combine(candidateRoot, ".github", "scripts");
         Directory.CreateDirectory(gateDirectory);

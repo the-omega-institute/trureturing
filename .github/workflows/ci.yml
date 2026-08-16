@@ -477,10 +477,19 @@ jobs:
           scribe="$GITHUB_WORKSPACE/.judge-binaries/scribe/StrataLint.Scribe.dll"
           test -s "$report"
           test -s "$scribe"
+          base="${{ steps.base.outputs.sha }}"
+          changes="$RUNNER_TEMP/scribe-changed-paths"
+          producer_paths="$RUNNER_TEMP/scribe-producer-paths"
+          "$GITHUB_WORKSPACE/candidate/tools/scripts/workflow/scribe-delta-input.sh" \
+            "$GITHUB_WORKSPACE/candidate" "$base" "$changes" "$producer_paths"
+          DELTA_ARGS=(
+            --base "$base"
+            --changes-file "$changes"
+            --producer-paths-file "$producer_paths")
           cd "$GITHUB_WORKSPACE/candidate"
           STRATALINT_LEAN_REPORT="$report" dotnet "$scribe" projections --check --report "$report"
-          STRATALINT_LEAN_REPORT="$report" dotnet "$scribe" emit --check
-          STRATALINT_LEAN_REPORT="$report" dotnet "$scribe" emit-values --check
+          STRATALINT_LEAN_REPORT="$report" dotnet "$scribe" emit --check "${DELTA_ARGS[@]}"
+          STRATALINT_LEAN_REPORT="$report" dotnet "$scribe" emit-values --check "${DELTA_ARGS[@]}"
           STRATALINT_LEAN_REPORT="$report" dotnet "$scribe" describe-report --check
 
       - name: Stage candidate canonical Lean report cache

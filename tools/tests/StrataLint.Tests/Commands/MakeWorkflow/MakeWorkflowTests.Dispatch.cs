@@ -339,8 +339,8 @@ public sealed partial class MakeWorkflowTests
         Assert.Equal(
             [
                 "projections --check --report \"$REPORT\"",
-                "emit --check",
-                "emit-values --check",
+                "emit --check \"${DELTA_ARGS[@]}\"",
+                "emit-values --check \"${DELTA_ARGS[@]}\"",
                 "describe-report --check",
             ],
             canonicalCommands);
@@ -350,7 +350,15 @@ public sealed partial class MakeWorkflowTests
             "'exec /bin/bash \"$1\" \"${STRATALINT_LEAN_REPORT:?}\"'",
             mathGate,
             StringComparison.Ordinal);
+        Assert.Contains(
+            "export STRATALINT_SCRIBE_BASE=\"$base_sha\"",
+            mathGate,
+            StringComparison.Ordinal);
         Assert.Contains(ScribeContentChecksScriptPath, preflight, StringComparison.Ordinal);
+        Assert.Contains(
+            "STRATALINT_SCRIBE_BASE=\"$BASE_SHA\"",
+            preflight,
+            StringComparison.Ordinal);
         Assert.DoesNotContain(ScribeContentChecksScriptPath, ciRun, StringComparison.Ordinal);
     }
 

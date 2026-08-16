@@ -8,12 +8,46 @@ public static class ValuesEmitter
         TextWriter output,
         TextWriter error)
     {
+        return EmitCore(repositoryRoot, check, output, error, delta: null);
+    }
+
+    internal static int Emit(
+        string repositoryRoot,
+        bool check,
+        TextWriter output,
+        TextWriter error,
+        ScribeDeltaInputs delta)
+    {
+        ArgumentNullException.ThrowIfNull(delta);
+        if (!check)
+        {
+            throw new ArgumentException("Scribe delta scope is only valid for checks.", nameof(check));
+        }
+        return EmitCore(repositoryRoot, check, output, error, delta);
+    }
+
+    private static int EmitCore(
+        string repositoryRoot,
+        bool check,
+        TextWriter output,
+        TextWriter error,
+        ScribeDeltaInputs? delta)
+    {
         ArgumentException.ThrowIfNullOrWhiteSpace(repositoryRoot);
         ArgumentNullException.ThrowIfNull(output);
         ArgumentNullException.ThrowIfNull(error);
 
         try
         {
+            if (delta is not null
+                && !ScribeDeltaScope.RequiresValuesProjection(
+                    delta.Changes,
+                    delta.ProducerPaths))
+            {
+                output.WriteLine("checked: 0 values projection(s)");
+                return 0;
+            }
+
             var first = CanonicalValuesWriter.Write(repositoryRoot).ToArray();
             var second = CanonicalValuesWriter.Write(repositoryRoot).ToArray();
             if (!first.AsSpan().SequenceEqual(second))
