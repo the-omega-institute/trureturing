@@ -43,6 +43,19 @@ and this file is the bug.
 
 Follow these steps in order. Do not pass a step until its postcondition holds.
 
+Unless a step names a bounded recovery, every command result has exactly one
+successor: exit 0 with the stated postcondition satisfied advances to the next
+step; any nonzero exit or unmet postcondition ends in evidence-complete `open`.
+Likewise, every pull request has exactly one terminal successor: `MERGED`
+advances or completes the workflow, while any terminal non-merged state ends in
+evidence-complete `open`. There are no implicit retries.
+
+Every such `open` report must identify the step, reproduce the exact command,
+record its exit code or external terminal state and machine diagnostic, name the
+branch, and include the complete `git status --short` tree state. Preserve every
+canonical-writer output and the resulting tree exactly as found: do not hand-fix,
+delete, reset, or clean generated artifacts to make the failure look tidy.
+
 ### 0. Establish isolation
 
 Run:
@@ -131,10 +144,15 @@ ordered pull requests even while its former machine enforcement is deferred.
 
 **Registration PR:** On a dedicated branch, add only the future volume path to
 `Meta/registry.yaml` under `governance_documents`, preserving canonical ordering.
-Do not add the volume or digestion data. Commit, run `make preflight`, push, run
-`make pr-open`, and wait until that PR is `MERGED`. A green or open PR is not the
-postcondition. If the exact path is already present in the protected base, prove
-that fact from `origin/dev` and do not create a duplicate registration PR.
+Do not add the volume or digestion data. Commit, run `make preflight`, push, and
+run `make pr-open`; every command must exit 0. After `make pr-open`, do not push
+further changes to that branch. Poll until the PR is `MERGED` or reaches a
+terminal non-merged state. Only `MERGED` advances to the theory PR; a command
+failure or terminal non-merged state takes the global `open` transition with the
+retained registration branch, exact command and exit code or PR state, machine
+diagnostic, and tree state. A green or merely open PR is not a postcondition. If
+the exact path is already present in the protected base, prove that fact from
+`origin/dev` and do not create a duplicate registration PR.
 
 **Theory PR:** After registration is merged, create a fresh worktree from the
 new `origin/dev`. Confirm that its registry already contains the path, then add
@@ -154,10 +172,20 @@ make ingest
 ```
 
 Require exit 0, `coarse_fallbacks=0`, `ledger_changed=true`, and
-`residual_open_added` greater than zero. If, and only if, the command exits 2
-with the exact diagnostic that the raw Lean report is stale, run
-`make lean-report`, require exit 0, and retry `make ingest`. Any other failure,
-or a second stale-report failure, ends as evidence-complete `open`.
+`residual_open_added` greater than zero. There is one named recovery. If, and
+only if, `make ingest` exits 2 and its output contains one of these canonical
+report-prerequisite diagnostics (where `<path>` is the path emitted by the
+machine):
+
+- `report-consumer: raw Lean report is missing at <path>; run make lean-report first`
+- `report-consumer: raw Lean report bundle is incomplete at <path>; run make lean-report first`
+- `report-consumer: consumption failed; the raw Lean report may be stale, run make lean-report first`
+
+run `make lean-report` exactly once, require exit 0, then retry `make ingest`
+exactly once. The retry must itself exit 0 and satisfy every ingest postcondition
+above. A nonzero `make lean-report`, any failed retry, or an exit 2 without one of
+the three diagnostics takes the global `open` transition. Never treat an
+arbitrary exit 2 as a report prerequisite and never attempt a second recovery.
 
 Do not create or edit any `Meta/Digestion/**` file yourself. Locate the one
 generated `Meta/Digestion/backfill/<source_id>/source.toml` whose `path` equals
@@ -205,7 +233,7 @@ the successful Step 4 writer. Prepare a pull-request body that records:
 
 - provenance and the new volume path;
 - source id, residual increment, and eligible atom ids;
-- every verification command and exit code, including any stale-report recovery;
+- every verification command and exit code, including any report-prerequisite recovery;
 - the exact `show-atom` hash-match evidence.
 
 Commit the theory volume and writer-produced digestion data, then run:
