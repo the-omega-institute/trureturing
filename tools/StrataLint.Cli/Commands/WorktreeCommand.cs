@@ -53,7 +53,8 @@ internal static class WorktreeCommand
         string repositoryRoot,
         IReadOnlyList<string> arguments,
         IWorktreeProcessRunner runner,
-        IDirectoryCloner cloner)
+        IDirectoryCloner cloner,
+        Action<TimeSpan>? wait = null)
     {
         ArgumentNullException.ThrowIfNull(arguments);
         ArgumentNullException.ThrowIfNull(runner);
@@ -81,6 +82,7 @@ internal static class WorktreeCommand
         var worktreeCreated = false;
         var cleanupWorktreeOnFailure = false;
         var pruneOutcome = MathlibCachePruneOutcome.NotRun;
+        var clonefile = ClonefileReceipt.NotRun;
         var stopwatch = System.Diagnostics.Stopwatch.StartNew();
         try
         {
@@ -121,8 +123,10 @@ internal static class WorktreeCommand
                 lakeExecutable,
                 runner,
                 targetWriter,
-                cloner);
+                cloner,
+                wait);
             pruneOutcome = cache.PruneOutcome;
+            clonefile = cache.Clonefile;
             if (!options.SkipRestore)
             {
                 RunRequired(
@@ -146,6 +150,10 @@ internal static class WorktreeCommand
                 pin_sha256 = pins.Sha256,
                 cache_strategy = cache.Strategy,
                 cache_method = cache.Method,
+                clonefile_errno = clonefile.LastErrno,
+                clonefile_errnos = clonefile.Errnos,
+                clonefile_attempts = clonefile.Attempts,
+                clonefile_cleanup_error = clonefile.CleanupError,
                 shared_cache_scope = pruneOutcome.Scope,
                 mathlib_cache_pruned_files = pruneOutcome.DeletedFiles,
                 mathlib_cache_clean_status = pruneOutcome.CleanStatus,
@@ -163,6 +171,7 @@ internal static class WorktreeCommand
             if (exception is LeanCacheProvisionException cacheException)
             {
                 pruneOutcome = cacheException.PruneOutcome;
+                clonefile = cacheException.Clonefile;
             }
             var cleanup = options is not null && worktreeCreated && cleanupWorktreeOnFailure
                 ? Cleanup(options, runner)
@@ -175,6 +184,10 @@ internal static class WorktreeCommand
                 path = options?.Path,
                 base_revision = options?.Base,
                 reason = exception.Message,
+                clonefile_errno = clonefile.LastErrno,
+                clonefile_errnos = clonefile.Errnos,
+                clonefile_attempts = clonefile.Attempts,
+                clonefile_cleanup_error = clonefile.CleanupError,
                 shared_cache_scope = pruneOutcome.Scope,
                 mathlib_cache_pruned_files = pruneOutcome.DeletedFiles,
                 mathlib_cache_clean_status = pruneOutcome.CleanStatus,
