@@ -90,7 +90,8 @@ internal static class LeanCacheProvisioner
     internal const int DefaultProvisionBudgetSeconds = 1800;
     private const int MissingOleanSampleLimit = 5;
     private static readonly TimeSpan[] CloneRetryBackoffs =
-        [TimeSpan.FromMilliseconds(250), TimeSpan.FromMilliseconds(500)];
+        [TimeSpan.FromMilliseconds(250), TimeSpan.FromMilliseconds(500),
+         TimeSpan.FromMilliseconds(1000), TimeSpan.FromMilliseconds(2000)];
     private static readonly UTF8Encoding StrictUtf8 = new(false, true);
 
     // Cold provisioning spans package clones plus olean download and extraction. Five minutes

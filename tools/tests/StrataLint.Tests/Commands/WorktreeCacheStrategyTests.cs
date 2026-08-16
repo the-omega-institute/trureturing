@@ -464,26 +464,22 @@ public sealed class WorktreeCacheStrategyTests
         Assert.DoesNotContain("export PATH=", init, StringComparison.Ordinal);
         Assert.DoesNotContain("export PATH=", clean, StringComparison.Ordinal);
 
-        // A per-file clonefile walk over .lake costs one system call per entry: 197.5s
-        // against 3.3s for the single directory-level clonefile(2). Assembled rather than
-        // written out so this guard is not its own counterexample.
-        var shellForm = "cp" + " -c";
-        var argumentForm = "\"-c\"" + ", " + "\"-R\"";
-        var scanned = Directory
-            .EnumerateFiles(Path.Combine(root, "tools"), "*", SearchOption.AllDirectories)
-            .Where(static path => !path.Contains($"{Path.DirectorySeparatorChar}bin{Path.DirectorySeparatorChar}", StringComparison.Ordinal))
-            .Where(static path => !path.Contains($"{Path.DirectorySeparatorChar}obj{Path.DirectorySeparatorChar}", StringComparison.Ordinal))
-            .Where(static path => Path.GetExtension(path) is ".cs" or ".sh" or ".yml" or ".yaml" or ".md")
-            .Append(Path.Combine(root, "Makefile"))
-            .Append(Path.Combine(root, "README.md"))
-            .ToArray();
-        Assert.NotEmpty(scanned);
-        Assert.Empty(scanned
-            .Where(path => File.ReadAllText(path) is var text
-                && (text.Contains(shellForm, StringComparison.Ordinal)
-                    || text.Contains(argumentForm, StringComparison.Ordinal)))
-            .Select(path => Path.GetRelativePath(root, path))
-            .ToArray());
+        // A per-file clone walk costs one system call per entry. Build the rejected forms
+        // dynamically so the repository-wide guard does not match its own source.
+        var cloneFlag = string.Concat('-', 'c');
+        var recursiveFlag = string.Concat('-', 'R');
+        var shellForm = $"cp {cloneFlag}";
+        var argumentForm = $"\"{cloneFlag}\", \"{recursiveFlag}\"";
+        var scan = BoundedProcessRunner.Run(
+            "git",
+            ["grep", "-n", "-I", "-e", shellForm, "-e", argumentForm, "--", "."],
+            root,
+            TimeSpan.FromSeconds(30),
+            1024 * 1024);
+
+        Assert.Equal(
+            1,
+            scan.ExitCode);
     }
 
     private static void InitializeRepository(string root)

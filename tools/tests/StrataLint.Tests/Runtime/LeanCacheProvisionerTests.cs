@@ -276,24 +276,24 @@ public sealed class LeanCacheProvisionerTests
     }
 
     [Fact]
-    public void RetryableCloneFailuresCleanBeforeRetryAndUseBoundedBackoff()
+    public void RetryableCloneFailuresUseFiveAttemptsAndCleanBeforeEveryBackoff()
     {
         var scripted = new Queue<DirectoryCloneResult>(
         [
             new(false, true, 5, 1, "clonefile(2) failed: EIO"),
             new(false, true, 5, 1, "clonefile(2) failed: EIO"),
-            new(true, false, null, 1, null),
+            new(false, true, 5, 1, "clonefile(2) failed: EIO"),
+            new(false, true, 5, 1, "clonefile(2) failed: EIO"),
+            new(false, true, 5, 1, "clonefile(2) failed: EIO"),
         ]);
         var targetWasAbsent = new List<bool>();
         var cloner = new RecordingDirectoryCloner
         {
             Results = scripted,
             BeforeClone = (_, path) => targetWasAbsent.Add(!Directory.Exists(path)),
-            AfterClone = (_, path) =>
-            {
-                if (scripted.Count > 0) Directory.CreateDirectory(path);
-            },
+            AfterClone = (_, path) => Directory.CreateDirectory(path),
         };
+        var runner = new RecordingWorktreeProcessRunner();
         var waits = new List<TimeSpan>();
         var cleanupCalls = 0;
         void Remove(string path)
@@ -301,17 +301,74 @@ public sealed class LeanCacheProvisionerTests
             cleanupCalls++;
             if (Directory.Exists(path)) Directory.Delete(path, recursive: true);
         }
-        var result = ProvisionFromDonor(cloner, removePartial: Remove, wait: waits.Add);
+        var result = ProvisionFromDonor(cloner, runner, removePartial: Remove, wait: waits.Add);
 
-        Assert.Equal("clonefile", result.Method);
-        Assert.Equal(3, cloner.Invocations.Count);
-        Assert.Equal([true, true, true], targetWasAbsent);
-        Assert.Equal(2, cleanupCalls);
-        Assert.Equal([TimeSpan.FromMilliseconds(250), TimeSpan.FromMilliseconds(500)], waits);
-        Assert.Equal(3, result.Clonefile.Attempts);
-        Assert.Equal([5, 5], result.Clonefile.Errnos);
+        Assert.Equal("copy", result.Method);
+        Assert.Equal(5, cloner.Invocations.Count);
+        Assert.Equal([true, true, true, true, true], targetWasAbsent);
+        Assert.Equal(5, cleanupCalls);
+        Assert.Equal(
+            [
+                TimeSpan.FromMilliseconds(250),
+                TimeSpan.FromMilliseconds(500),
+                TimeSpan.FromMilliseconds(1000),
+                TimeSpan.FromMilliseconds(2000),
+            ],
+            waits);
+        var copy = Assert.Single(runner.Invocations, static call => call.FileName == "cp");
+        Assert.Equal("-R", copy.Arguments[0]);
+        Assert.Equal(5, result.Clonefile.Attempts);
+        Assert.Equal([5, 5, 5, 5, 5], result.Clonefile.Errnos);
         Assert.Equal(5, result.Clonefile.LastErrno);
         Assert.Null(result.Clonefile.CleanupError);
+    }
+
+    [Fact]
+    public void NonMacOsSkipsNativeClonefileAndDirectlyUsesRecursiveCopy()
+    {
+        var nativeCalls = 0;
+        var cloner = new ApfsDirectoryCloner(
+            isMacOS: static () => false,
+            cloneFile: (_, _, _) =>
+            {
+                nativeCalls++;
+                return 0;
+            });
+        var runner = new RecordingWorktreeProcessRunner();
+
+        var result = ProvisionFromDonor(cloner, runner);
+
+        Assert.Equal("copy", result.Method);
+        Assert.Equal(0, nativeCalls);
+        Assert.Equal(0, result.Clonefile.Attempts);
+        Assert.Empty(result.Clonefile.Errnos);
+        var copy = Assert.Single(runner.Invocations, static call => call.FileName == "cp");
+        Assert.Equal("-R", copy.Arguments[0]);
+    }
+
+    [Fact]
+    public void RecursiveCopyFailureFallsBackToCacheGet()
+    {
+        using var sharedCache = new MathlibCacheFixture();
+        var cloner = new RecordingDirectoryCloner
+        {
+            Results = new Queue<DirectoryCloneResult>(
+                [new(false, false, 17, 1, "clonefile(2) failed: EEXIST")]),
+        };
+        var runner = new RecordingWorktreeProcessRunner { FailCopy = true };
+
+        var result = ProvisionFromDonor(cloner, runner);
+
+        Assert.Equal("cache-get", result.Method);
+        Assert.Contains(
+            runner.Invocations,
+            static call => call.FileName == "cp" && call.Arguments[0] == "-R");
+        Assert.Contains(
+            runner.Invocations,
+            static call => Path.GetFileName(call.FileName) == "lake"
+                && call.Arguments.SequenceEqual(["exe", "cache", "get"]));
+        Assert.Equal(1, result.Clonefile.Attempts);
+        Assert.Equal([17], result.Clonefile.Errnos);
     }
 
     [Theory]

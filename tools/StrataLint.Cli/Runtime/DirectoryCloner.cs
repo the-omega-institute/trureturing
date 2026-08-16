@@ -30,8 +30,8 @@ internal interface IDirectoryCloner
 
 /// <summary>
 /// Clones a directory tree with a single APFS clonefile(2) call. The kernel walks the
-/// hierarchy itself, so a 14 GiB .lake with 155k files costs one system call instead of
-/// one per entry: measured 3.3 s against 197.5 s for a per-file clonefile walk.
+/// hierarchy itself, so the measured 14 GiB/133,406-file cache takes about four seconds,
+/// shares physical blocks, and avoids a system call per entry.
 /// </summary>
 internal sealed class ApfsDirectoryCloner : IDirectoryCloner
 {
@@ -116,8 +116,8 @@ internal sealed class ApfsDirectoryCloner : IDirectoryCloner
             or DarwinErrno.FileNameTooLong
             or DarwinErrno.CapabilitiesInsufficient => false,
 
-        // The observed incident has no captured errno yet. Unknown values get only the
-        // same bounded 750 ms budget so a future receipt can support tighter classification.
+        // The observed incident has no captured errno yet. Unknown values get the same
+        // bounded 3.75 s budget so a future receipt can support tighter classification.
         _ => true,
     };
 
