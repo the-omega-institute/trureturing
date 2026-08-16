@@ -63,7 +63,8 @@ public sealed partial class MakeWorkflowTests
         var mathGate = File.ReadAllText(Path.Combine(TestRepositoryLayout.FindRoot(), "tools", "scripts", "workflow", "math-gate.sh"));
         Assert.DoesNotContain("dotnet test", mathGate, StringComparison.Ordinal);
         Assert.Contains("/../../..\" && pwd -P)", mathGate, StringComparison.Ordinal);
-        Assert.Contains("lake build", mathGate, StringComparison.Ordinal);
+        Assert.Contains("make lean", mathGate, StringComparison.Ordinal);
+        Assert.DoesNotContain("lake build", mathGate, StringComparison.Ordinal);
         Assert.Contains("make lean-report", mathGate, StringComparison.Ordinal);
         // check 在干净树须锚定 merge-base(候选不能自我保护)且容忍 rc=3 预期路径。
         Assert.Contains(" check \"${CHECK_BASE_ARGS[@]}\" --candidate-lean-report ", mathGate, StringComparison.Ordinal);
@@ -74,9 +75,23 @@ public sealed partial class MakeWorkflowTests
             $"\t@/bin/bash {LeanCacheEnsureScriptPath}",
             Recipe(makefile, "lean-cache-ensure"));
         Assert.Contains("lean: lean-cache-ensure", makefile, StringComparison.Ordinal);
-        Assert.Contains("lake build", Recipe(makefile, "lean"), StringComparison.Ordinal);
+        var leanRecipe = Recipe(makefile, "lean");
+        Assert.Contains(LeanCacheRunScriptPath, leanRecipe, StringComparison.Ordinal);
+        Assert.Contains("lake build", leanRecipe, StringComparison.Ordinal);
         Assert.Contains("lean-report: lean-cache-ensure", makefile, StringComparison.Ordinal);
         Assert.Contains(LeanReportScriptPath, Recipe(makefile, "lean-report"), StringComparison.Ordinal);
+        var inspector = File.ReadAllText(Path.Combine(root, "tools", "lean-inspector", "inspect.sh"));
+        Assert.DoesNotContain("run_phase cache-get", inspector, StringComparison.Ordinal);
+        Assert.DoesNotContain("run_phase build \"$LAKE\"", inspector, StringComparison.Ordinal);
+        Assert.Contains(LeanCacheRunScriptPath, inspector, StringComparison.Ordinal);
+        Assert.Contains("run_phase build \"$CACHE_RUN\" \"$LAKE\" build", inspector, StringComparison.Ordinal);
+        Assert.Contains("\"$CACHE_RUN\" \"$LAKE\" env lean", inspector, StringComparison.Ordinal);
+        var cacheEnsure = File.ReadAllText(Path.Combine(root, LeanCacheEnsureScriptPath));
+        Assert.DoesNotContain("[[ -L", cacheEnsure, StringComparison.Ordinal);
+        Assert.DoesNotContain("[[ -d", cacheEnsure, StringComparison.Ordinal);
+        var perfEvents = File.ReadAllText(Path.Combine(root, PerfEventScriptPath));
+        Assert.DoesNotContain(".lake/build", perfEvents, StringComparison.Ordinal);
+        Assert.Contains("cache_state\":null", perfEvents, StringComparison.Ordinal);
         Assert.Contains(ScribeScriptPath + " emit", Recipe(makefile, "emit"), StringComparison.Ordinal);
         Assert.Contains(IngestScriptPath, Recipe(makefile, "ingest"), StringComparison.Ordinal);
         var showAtomRecipe = Recipe(makefile, "show-atom");

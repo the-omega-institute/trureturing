@@ -4,6 +4,81 @@ namespace StrataLint.Tests;
 
 public sealed partial class MakeWorkflowTests
 {
+    [Fact]
+    public void PreflightScenarioScriptClosureFollowsTheSourceDirectory()
+    {
+        using var source = new TemporaryDirectory();
+        using var destination = new TemporaryDirectory();
+        var futureScript = Path.Combine(
+            source.Path,
+            "tools",
+            "scripts",
+            "future",
+            "arbitrary.sh");
+        Directory.CreateDirectory(Path.GetDirectoryName(futureScript)!);
+        File.WriteAllText(futureScript, "#!/usr/bin/env bash\n");
+
+        CopyPreflightScriptClosure(source.Path, destination.Path);
+
+        Assert.True(File.Exists(Path.Combine(
+            destination.Path,
+            "tools",
+            "scripts",
+            "future",
+            "arbitrary.sh")));
+    }
+
+    [Fact]
+    public void PreflightScenarioLeavesTheSourceTreeAndItsCanonicalReportUntouched()
+    {
+        if (OperatingSystem.IsWindows()) return;
+
+        var canonicalSource = TestRepositoryLayout.FindRoot();
+        using var source = new TemporaryDirectory();
+        CopyPreflightScriptClosure(canonicalSource, source.Path);
+        var sourceReport = Path.Combine(
+            source.Path,
+            ".lake",
+            "build",
+            "stratalint",
+            "raw-lean-report.json");
+        Directory.CreateDirectory(Path.GetDirectoryName(sourceReport)!);
+        var sentinel = System.Text.Encoding.UTF8.GetBytes(
+            "canonical-source-report-sentinel: byte-distinct and not a fixture report\n");
+        File.WriteAllBytes(sourceReport, sentinel);
+        File.WriteAllText(Path.Combine(source.Path, "README.md"), "synthetic source\n");
+        RunScenarioGit(source.Path, "init", "--initial-branch=dev");
+        RunScenarioGit(source.Path, "config", "user.email", "preflight@example.invalid");
+        RunScenarioGit(source.Path, "config", "user.name", "Preflight Fixture");
+        RunScenarioGit(source.Path, "add", ".");
+        RunScenarioGit(source.Path, "commit", "-m", "synthetic source baseline");
+        var headBefore = RunScenarioGitForOutput(source.Path, "rev-parse", "HEAD");
+        var statusBefore = RunScenarioGitForOutput(
+            source.Path,
+            "status",
+            "--porcelain=v1",
+            "--untracked-files=all");
+        var sourceReportBlobBefore = RunScenarioGitForOutput(
+            source.Path,
+            "hash-object",
+            sourceReport);
+
+        var result = RunPreflightScenario("pass", source.Path);
+
+        Assert.Equal(
+            sourceReportBlobBefore,
+            RunScenarioGitForOutput(source.Path, "hash-object", sourceReport));
+        Assert.Equal(headBefore, RunScenarioGitForOutput(source.Path, "rev-parse", "HEAD"));
+        Assert.Equal(
+            statusBefore,
+            RunScenarioGitForOutput(
+                source.Path,
+                "status",
+                "--porcelain=v1",
+                "--untracked-files=all"));
+        Assert.Equal(0, result.ExitCode);
+    }
+
     [Theory]
     [InlineData("pass", 0)]
     [InlineData("semantic-test", 41)]
@@ -23,7 +98,7 @@ public sealed partial class MakeWorkflowTests
     {
         if (OperatingSystem.IsWindows()) return;
 
-        var result = RunPreflightScenario(scenario);
+        var result = RunPreflightScenario(scenario, TestRepositoryLayout.FindRoot());
 
         Assert.Equal(expectedExitCode, result.ExitCode);
     }
@@ -33,57 +108,40 @@ public sealed partial class MakeWorkflowTests
     {
         if (OperatingSystem.IsWindows()) return;
 
-        var result = RunPreflightScenario("stale-values");
+        var result = RunPreflightScenario("stale-values", TestRepositoryLayout.FindRoot());
 
         // The stale-values shim exits 44 from `emit-values --check`; scribe-content-checks.sh
         // runs under `set -e`, so preflight must surface exactly that code.
         Assert.Equal(44, result.ExitCode);
     }
 
-    /// <summary>
-    /// Stands in for the artifact a real <c>make lean-report</c> leaves behind, and removes it
-    /// again only when this fixture is the one that put it there.
-    /// </summary>
-    private sealed class ScenarioLeanReport : IDisposable
-    {
-        private readonly string path;
-        private readonly bool created;
-
-        internal ScenarioLeanReport(string repositoryRoot)
-        {
-            path = Path.Combine(repositoryRoot, ".lake", "build", "stratalint", "raw-lean-report.json");
-            if (File.Exists(path))
-            {
-                return;
-            }
-
-            Directory.CreateDirectory(Path.GetDirectoryName(path)!);
-            File.WriteAllText(path, "{}\n");
-            created = true;
-        }
-
-        public void Dispose()
-        {
-            if (created && File.Exists(path))
-            {
-                File.Delete(path);
-            }
-        }
-    }
-
     [System.Runtime.Versioning.UnsupportedOSPlatform("windows")]
-    private static ProcessOutput RunPreflightScenario(string scenario)
+    private static ProcessOutput RunPreflightScenario(string scenario, string sourceRoot)
     {
-        var root = TestRepositoryLayout.FindRoot();
-        // The stub `make lean-report` claims success without writing anything, so on a clean
-        // checkout the report it is supposed to have produced does not exist and the content
-        // checks fail closed on a missing report rather than on the scenario under test. A
-        // successful lean-report produces a report; the stub has to be honest about that.
-        // Only a report this fixture created is removed, so a real one is never clobbered.
-        using var report = new ScenarioLeanReport(root);
         using var fixture = new TemporaryDirectory();
+        var root = Path.Combine(fixture.Path, "candidate");
         var binDirectory = Path.Combine(fixture.Path, "bin");
+        var preflight = Path.Combine(root, PreflightScriptPath);
+        var report = Path.Combine(root, ".lake", "build", "stratalint", "raw-lean-report.json");
+        CopyPreflightScriptClosure(sourceRoot, root);
+        Directory.CreateDirectory(Path.GetDirectoryName(report)!);
         Directory.CreateDirectory(binDirectory);
+        File.WriteAllText(
+            report,
+            "{\"modules\":[],\"schema\":\"stratalint-raw-lean-report-v1\"}\n");
+        File.WriteAllText(Path.Combine(root, "README.md"), "base\n");
+        RunScenarioGit(root, "init", "--initial-branch=dev");
+        RunScenarioGit(root, "config", "user.email", "preflight@example.invalid");
+        RunScenarioGit(root, "config", "user.name", "Preflight Fixture");
+        RunScenarioGit(root, "add", "README.md", "tools");
+        RunScenarioGit(root, "commit", "-m", "fixture base");
+        var candidatePath = scenario == "stale-values"
+            ? Path.Combine(root, "Golden", "values-kernels.toml")
+            : Path.Combine(root, "README.md");
+        Directory.CreateDirectory(Path.GetDirectoryName(candidatePath)!);
+        File.AppendAllText(candidatePath, "candidate\n");
+        RunScenarioGit(root, "add", Path.GetRelativePath(root, candidatePath));
+        RunScenarioGit(root, "commit", "-m", "fixture candidate");
         WriteExecutable(
             Path.Combine(binDirectory, "git"),
             """
@@ -167,13 +225,59 @@ public sealed partial class MakeWorkflowTests
                 "preflight-contract",
                 scenario,
                 binDirectory,
-                Path.Combine(root, PreflightScriptPath),
+                preflight,
             ],
             root,
             TimeSpan.FromSeconds(30),
             64 * 1024);
 
         return result;
+    }
+
+    private static void CopyPreflightScriptClosure(string sourceRoot, string destinationRoot)
+    {
+        var sourceScripts = Path.Combine(sourceRoot, "tools", "scripts");
+        foreach (var source in Directory.GetFiles(
+            sourceScripts,
+            "*",
+            SearchOption.AllDirectories))
+        {
+            var relativePath = Path.GetRelativePath(sourceRoot, source);
+            var destination = Path.Combine(destinationRoot, relativePath);
+            Directory.CreateDirectory(Path.GetDirectoryName(destination)!);
+            File.Copy(source, destination);
+        }
+    }
+
+    private static void RunScenarioGit(string root, params string[] arguments)
+    {
+        var result = BoundedProcessRunner.Run(
+            "/usr/bin/git",
+            arguments,
+            root,
+            TimeSpan.FromSeconds(10),
+            64 * 1024);
+        if (result.ExitCode != 0)
+        {
+            throw new InvalidOperationException(
+                System.Text.Encoding.UTF8.GetString(result.StandardError));
+        }
+    }
+
+    private static string RunScenarioGitForOutput(string root, params string[] arguments)
+    {
+        var result = BoundedProcessRunner.Run(
+            "/usr/bin/git",
+            arguments,
+            root,
+            TimeSpan.FromSeconds(10),
+            64 * 1024);
+        if (result.ExitCode != 0)
+        {
+            throw new InvalidOperationException(
+                System.Text.Encoding.UTF8.GetString(result.StandardError));
+        }
+        return System.Text.Encoding.UTF8.GetString(result.StandardOutput);
     }
 
     [System.Runtime.Versioning.UnsupportedOSPlatform("windows")]

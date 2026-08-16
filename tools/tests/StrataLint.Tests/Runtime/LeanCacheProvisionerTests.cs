@@ -1,8 +1,9 @@
+using System.Text.Json;
 using StrataLint.Cli;
 
 namespace StrataLint.Tests;
 
-[Collection("Lean cache budget environment")]
+[Collection("Lean cache environment")]
 public sealed class LeanCacheProvisionerTests
 {
     private const string BudgetVariable = "STRATALINT_LEAN_CACHE_TIMEOUT_SECONDS";
@@ -20,24 +21,35 @@ public sealed class LeanCacheProvisionerTests
         {
             using var donor = new TemporaryDirectory();
             using var target = new TemporaryDirectory();
+            using var sharedCache = new MathlibCacheFixture();
             var root = Path.Combine(target.Path, "worktree");
-            Directory.CreateDirectory(Path.Combine(donor.Path, ".lake"));
             Directory.CreateDirectory(root);
+            WritePins(donor.Path);
+            WritePins(root);
+            var donorLake = Path.Combine(donor.Path, ".lake");
+            Directory.CreateDirectory(donorLake);
+            var pins = ReadPins(root);
+            LeanCacheStamp.Write(donorLake, pins);
             var runner = new RecordingWorktreeProcessRunner
             {
                 FailCopy = true,
             };
+            using var writerGuard = LeanCacheWriterGuard.TryAcquire(Path.Combine(root, ".lake"));
+            Assert.NotNull(writerGuard);
 
             LeanCacheProvisioner.Provision(
                 new LeanCacheDonorSelection(donor.Path, null),
                 root,
+                pins,
+                "lake",
                 runner,
+                writerGuard,
                 new RecordingDirectoryCloner { FailureReason = "clonefile unavailable" });
 
             var provisioning = runner.Invocations
                 .Where(static call => call.FileName is "cp" or "lake")
                 .ToArray();
-            Assert.Equal(2, provisioning.Length);
+            Assert.Equal(3, provisioning.Length);
             Assert.All(provisioning, static call => Assert.Equal(5400, call.Timeout.TotalSeconds));
             Assert.DoesNotContain(provisioning, static call => call.Arguments.Contains("-c"));
         });
@@ -52,26 +64,255 @@ public sealed class LeanCacheProvisionerTests
         AssertCacheGetBudget(raw, expectedSeconds);
     }
 
+    [Theory]
+    [InlineData(false, false, "succeeded")]
+    [InlineData(true, false, "failed")]
+    [InlineData(false, true, "failed")]
+    public void PostCleanInventoryFailurePreservesTheAuthoritativeCleanState(
+        bool cleanReturnsFailure,
+        bool cleanThrows,
+        string expectedStatus)
+    {
+        using var target = new TemporaryDirectory();
+        using var sharedCache = new MathlibCacheFixture();
+        WritePins(target.Path);
+        var lake = Path.Combine(target.Path, ".lake");
+        MathlibProjectionFixture.Write(lake);
+        var runner = new RecordingWorktreeProcessRunner
+        {
+            FailClean = cleanReturnsFailure,
+            ThrowClean = cleanThrows,
+        };
+        var inventoryCalls = 0;
+        int CountFiles(string _)
+        {
+            inventoryCalls++;
+            if (inventoryCalls == 1) return 2;
+            throw new IOException("post-clean inventory unavailable");
+        }
+        using var writerGuard = LeanCacheWriterGuard.TryAcquire(lake);
+        Assert.NotNull(writerGuard);
+
+        var exception = Assert.Throws<LeanCacheProvisionException>(() =>
+            LeanCacheProvisioner.ReproduceExisting(
+                target.Path,
+                ReadPins(target.Path),
+                "lake",
+                runner,
+                writerGuard,
+                CountFiles));
+
+        Assert.Equal(2, inventoryCalls);
+        Assert.Equal("machine", exception.PruneOutcome.Scope);
+        Assert.Null(exception.PruneOutcome.DeletedFiles);
+        Assert.Equal(expectedStatus, exception.PruneOutcome.CleanStatus);
+    }
+
+    [Fact]
+    public void UnknownPostCleanInventoryIsNullInTheCommandReceipt()
+    {
+        using var target = new TemporaryDirectory();
+        using var sharedCache = new MathlibCacheFixture();
+        WritePins(target.Path);
+        MathlibProjectionFixture.Write(Path.Combine(target.Path, ".lake"));
+        var runner = new RecordingWorktreeProcessRunner();
+        var inventoryCalls = 0;
+        int CountFiles(string _)
+        {
+            inventoryCalls++;
+            if (inventoryCalls == 1) return 2;
+            throw new IOException("post-clean inventory unavailable");
+        }
+
+        var result = LeanCacheEnsureCommand.Run(
+            target.Path,
+            [],
+            runner,
+            new RecordingDirectoryCloner(),
+            CountFiles);
+
+        Assert.False(result.Success);
+        Assert.Empty(result.Output);
+        Assert.Equal(2, inventoryCalls);
+        using var receipt = JsonDocument.Parse(result.Error["LEAN_CACHE ".Length..]);
+        Assert.True(receipt.RootElement.TryGetProperty("mathlib_cache_pruned_files", out var prunedFiles));
+        Assert.Equal(JsonValueKind.Null, prunedFiles.ValueKind);
+        Assert.Equal("succeeded", receipt.RootElement.GetProperty("mathlib_cache_clean_status").GetString());
+    }
+
+    [Fact]
+    public void CleanupFailureCannotMaskTheAuthoritativePruneOutcome()
+    {
+        using var target = new TemporaryDirectory();
+        using var sharedCache = new MathlibCacheFixture();
+        WritePins(target.Path);
+        var lake = Path.Combine(target.Path, ".lake");
+        var runner = new RecordingWorktreeProcessRunner
+        {
+            BlockStampAfterClean = true,
+        };
+        using var writerGuard = LeanCacheWriterGuard.TryAcquire(lake);
+        Assert.NotNull(writerGuard);
+
+        var exception = Assert.Throws<LeanCacheProvisionException>(() =>
+            LeanCacheProvisioner.Provision(
+                new LeanCacheDonorSelection(null, "fixture has no donor"),
+                target.Path,
+                ReadPins(target.Path),
+                "lake",
+                runner,
+                writerGuard,
+                new RecordingDirectoryCloner(),
+                LeanCachePublisher.Instance,
+                _ => throw new IOException("partial cache cleanup failed")));
+
+        Assert.Equal("machine", exception.PruneOutcome.Scope);
+        Assert.Equal(1, exception.PruneOutcome.DeletedFiles);
+        Assert.Equal("succeeded", exception.PruneOutcome.CleanStatus);
+        var authoritative = Assert.IsType<LeanCacheProvisionException>(exception.InnerException);
+        Assert.Equal(exception.PruneOutcome, authoritative.PruneOutcome);
+        var aggregate = Assert.IsType<AggregateException>(authoritative.InnerException);
+        Assert.Contains(
+            aggregate.InnerExceptions,
+            static inner => inner is LeanCacheProvisionException
+                && inner.Message.Contains("stamp publication failed", StringComparison.Ordinal));
+        Assert.Contains(
+            aggregate.InnerExceptions,
+            static inner => inner is IOException
+                && inner.Message.Contains("partial cache cleanup failed", StringComparison.Ordinal));
+    }
+
+    [Fact]
+    public void ProvisionRejectsAWriterGuardForAnotherPhysicalTargetBeforeCallingDependencies()
+    {
+        using var owner = new TemporaryDirectory();
+        using var donor = new TemporaryDirectory();
+        using var target = new TemporaryDirectory();
+        WritePins(donor.Path);
+        WritePins(target.Path);
+        var donorLake = Path.Combine(donor.Path, ".lake");
+        MathlibProjectionFixture.Write(donorLake);
+        LeanCacheStamp.Write(donorLake, ReadPins(donor.Path));
+        var runner = new RecordingWorktreeProcessRunner();
+        var cloner = new RecordingDirectoryCloner();
+        using var selection = new LeanCacheDonorSelection(donor.Path, null);
+        using var writerGuard = LeanCacheWriterGuard.TryAcquire(Path.Combine(owner.Path, ".lake"));
+        Assert.NotNull(writerGuard);
+
+        var exception = Assert.Throws<InvalidOperationException>(() =>
+            LeanCacheProvisioner.Provision(
+                selection,
+                target.Path,
+                ReadPins(target.Path),
+                "lake",
+                runner,
+                writerGuard,
+                cloner));
+
+        Assert.Contains("not the requested target", exception.Message, StringComparison.Ordinal);
+        Assert.Empty(runner.Invocations);
+        Assert.Empty(cloner.Invocations);
+    }
+
+    [Fact]
+    public void ReproduceRejectsAWriterGuardForAnotherPhysicalTargetBeforeCallingRunner()
+    {
+        using var owner = new TemporaryDirectory();
+        using var target = new TemporaryDirectory();
+        using var sharedCache = new MathlibCacheFixture();
+        WritePins(target.Path);
+        var runner = new RecordingWorktreeProcessRunner();
+        using var writerGuard = LeanCacheWriterGuard.TryAcquire(Path.Combine(owner.Path, ".lake"));
+        Assert.NotNull(writerGuard);
+
+        var exception = Assert.Throws<InvalidOperationException>(() =>
+            LeanCacheProvisioner.ReproduceExisting(
+                target.Path,
+                ReadPins(target.Path),
+                "lake",
+                runner,
+                writerGuard));
+
+        Assert.Contains("not the requested target", exception.Message, StringComparison.Ordinal);
+        Assert.Empty(runner.Invocations);
+    }
+
+    [Fact]
+    public void CopiedStampIsAbsentAtThePostRenamePreStampFailurePoint()
+    {
+        using var donor = new TemporaryDirectory();
+        using var target = new TemporaryDirectory();
+        WritePins(donor.Path);
+        WritePins(target.Path);
+        var donorLake = Path.Combine(donor.Path, ".lake");
+        MathlibProjectionFixture.Write(donorLake);
+        LeanCacheStamp.Write(donorLake, ReadPins(donor.Path));
+        var runner = new RecordingWorktreeProcessRunner();
+        var observerInvoked = false;
+        var stampExistedAfterRename = true;
+        var publisher = new LeanCachePublisher(canonical =>
+        {
+            observerInvoked = true;
+            stampExistedAfterRename = File.Exists(LeanCacheStamp.PathFor(canonical));
+            throw new IOException("failure injected after rename and before stamp publication");
+        });
+        using var selection = new LeanCacheDonorSelection(donor.Path, null);
+        using var writerGuard = LeanCacheWriterGuard.TryAcquire(Path.Combine(target.Path, ".lake"));
+        Assert.NotNull(writerGuard);
+
+        Assert.Throws<IOException>(() => LeanCacheProvisioner.Provision(
+            selection,
+            target.Path,
+            ReadPins(target.Path),
+            "lake",
+            runner,
+            writerGuard,
+            new RecordingDirectoryCloner(),
+            publisher));
+
+        Assert.True(observerInvoked);
+        Assert.False(stampExistedAfterRename);
+        Assert.False(Directory.Exists(Path.Combine(target.Path, ".lake")));
+    }
+
     private static void AssertCacheGetBudget(string? raw, int expectedSeconds)
     {
         WithBudget(raw, () =>
         {
             using var target = new TemporaryDirectory();
+            using var sharedCache = new MathlibCacheFixture();
             var root = Path.Combine(target.Path, "worktree");
             Directory.CreateDirectory(root);
+            WritePins(root);
             var runner = new RecordingWorktreeProcessRunner();
+            using var writerGuard = LeanCacheWriterGuard.TryAcquire(Path.Combine(root, ".lake"));
+            Assert.NotNull(writerGuard);
 
             LeanCacheProvisioner.Provision(
                 new LeanCacheDonorSelection(null, "fixture has no donor"),
                 root,
-                runner);
+                ReadPins(root),
+                "lake",
+                runner,
+                writerGuard);
 
             var cacheGet = Assert.Single(
                 runner.Invocations,
-                static call => call.FileName == "lake");
+                static call => call.FileName == "lake"
+                    && call.Arguments.SequenceEqual(["exe", "cache", "get"]));
             Assert.Equal(expectedSeconds, cacheGet.Timeout.TotalSeconds);
         });
     }
+
+    private static void WritePins(string root)
+    {
+        File.WriteAllText(Path.Combine(root, "lean-toolchain"), "leanprover/lean4:v4.33.0\n");
+        File.WriteAllText(Path.Combine(root, "lake-manifest.json"), "{\"version\":\"1.1.0\"}\n");
+    }
+
+    private static LeanPinSet ReadPins(string root) =>
+        LeanPinSet.TryReadWorktree(root, out var reason)
+        ?? throw new InvalidOperationException(reason);
 
     private static void WithBudget(string? value, Action action)
     {
@@ -88,5 +329,5 @@ public sealed class LeanCacheProvisionerTests
     }
 }
 
-[CollectionDefinition("Lean cache budget environment", DisableParallelization = true)]
-public sealed class LeanCacheBudgetEnvironmentCollection;
+[CollectionDefinition("Lean cache environment", DisableParallelization = true)]
+public sealed class LeanCacheEnvironmentCollection;

@@ -8,6 +8,7 @@ public sealed class LeanInspectorScriptTests
     private const string InspectorScript = "tools/lean-inspector/inspect.sh";
     private const string InspectorSource = "tools/lean-inspector/Inspector.lean";
     private const string InputScript = "tools/scripts/report/lean-report-input.sh";
+    private const string CacheRunScript = "tools/scripts/worktree/lean-cache-run.sh";
 
     [Fact]
     public void InspectorDefaultsToCompleteModuleEnumeration()
@@ -25,6 +26,7 @@ public sealed class LeanInspectorScriptTests
         {
             File.Copy(Path.Combine(root, relative), Path.Combine(repository, relative));
         }
+        InstallCacheRun(repository);
         var lake = Path.Combine(temporary.Path, "lake");
         File.WriteAllText(lake, "#!/usr/bin/env bash\nprintf '%s\\n' \"$*\" >> \"$STUB_LOG\"\nif [[ \"$*\" == *' --output '* ]]; then while [[ $# -gt 0 ]]; do [[ $1 == --output ]] && { printf '{\"modules\": [], \"schema\": \"stratalint-raw-lean-report-v1\"}\\n' > \"$2\"; break; }; shift; done; fi\n", new UTF8Encoding(false));
         File.SetUnixFileMode(lake, UnixFileMode.UserRead | UnixFileMode.UserWrite | UnixFileMode.UserExecute);
@@ -56,6 +58,7 @@ public sealed class LeanInspectorScriptTests
             $"#!/usr/bin/env bash\ntouch '{marker}'\nprintf 'Trureturing\\tTrureturing.lean\\n'\n",
             new UTF8Encoding(false));
         File.SetUnixFileMode(poisoned, UnixFileMode.UserRead | UnixFileMode.UserWrite | UnixFileMode.UserExecute);
+        InstallCacheRun(repository);
         var lake = Path.Combine(temporary.Path, "lake");
         File.WriteAllText(lake, "#!/usr/bin/env bash\nif [[ \"$*\" == *' --output '* ]]; then while [[ $# -gt 0 ]]; do [[ $1 == --output ]] && { printf '{\"modules\": [], \"schema\": \"stratalint-raw-lean-report-v1\"}\\n' > \"$2\"; break; }; shift; done; fi\n", new UTF8Encoding(false));
         File.SetUnixFileMode(lake, UnixFileMode.UserRead | UnixFileMode.UserWrite | UnixFileMode.UserExecute);
@@ -74,6 +77,15 @@ public sealed class LeanInspectorScriptTests
         var path = Path.Combine(root, relative);
         Directory.CreateDirectory(Path.GetDirectoryName(path)!);
         File.WriteAllText(path, contents, new UTF8Encoding(false));
+    }
+
+    private static void InstallCacheRun(string repository)
+    {
+        if (OperatingSystem.IsWindows()) return;
+        Write(repository, CacheRunScript, "#!/usr/bin/env bash\nexec \"$@\"\n");
+        File.SetUnixFileMode(
+            Path.Combine(repository, CacheRunScript),
+            UnixFileMode.UserRead | UnixFileMode.UserWrite | UnixFileMode.UserExecute);
     }
 
 }

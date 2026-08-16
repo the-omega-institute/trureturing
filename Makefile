@@ -15,7 +15,7 @@ lean-cache-ensure:
 	@/bin/bash tools/scripts/worktree/lean-cache-ensure.sh
 
 lean: lean-cache-ensure
-	@lake build
+	@/bin/bash tools/scripts/worktree/lean-cache-run.sh lake build
 
 lean-report: lean-cache-ensure
 	@/bin/bash tools/scripts/report/lean-report.sh

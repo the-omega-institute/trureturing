@@ -10,7 +10,7 @@ REPORT="$REPO_ROOT/.lake/build/stratalint/raw-lean-report.json"
 CONTENT_CHECKS="$REPO_ROOT/tools/scripts/workflow/scribe-content-checks.sh"
 REPORT_CONSUMER="$REPO_ROOT/tools/scripts/report/report-consumer.sh"
 
-lake build
+make lean
 make lean-report
 # 干净树上 CLI 拒绝无 base 自判(候选不能自我保护);有 origin/dev 时自动锚定
 # merge-base,diff 类规则(SL-008/016/022/025)也随之有意义。解不出 base(如
