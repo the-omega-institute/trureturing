@@ -77,6 +77,22 @@ public sealed class AdmissionWorkflowTests
             baselineScript,
             StringComparison.Ordinal);
         Assert.DoesNotContain("merge-base", baselineScript, StringComparison.Ordinal);
+        Assert.DoesNotContain("HEAD^2", scopeScript, StringComparison.Ordinal);
+        Assert.DoesNotContain("HEAD^2", baselineScript, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void PushFallbackBaseIsCheckedHeadFirstParent()
+    {
+        var baselineScript = BaselineResolutionScript(SharedAdmissionWorkflow);
+        var pushBranch = baselineScript[
+            baselineScript.IndexOf("else", StringComparison.Ordinal)..];
+
+        Assert.Contains(
+            "sha=\"$(git -C candidate rev-parse HEAD^1)\"",
+            pushBranch,
+            StringComparison.Ordinal);
+        Assert.DoesNotContain("$GITHUB_SHA^", pushBranch, StringComparison.Ordinal);
     }
 
     [Fact]

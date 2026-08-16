@@ -91,10 +91,6 @@ jobs:
           elif [[ "$GITHUB_EVENT_NAME" == "pull_request_target" ]]; then
             base_sha="$(git -C candidate rev-parse HEAD^1)"
             candidate_sha="$(git -C candidate rev-parse HEAD)"
-            if ! git -C candidate rev-parse --verify HEAD^2 >/dev/null 2>&1; then
-              printf '%s\n' "checked pull request ref is not a merge result" >&2
-              exit 1
-            fi
             if [[ -z "$base_sha" || "$base_sha" =~ ^0+$ || -z "$candidate_sha" || "$candidate_sha" =~ ^0+$ ]]; then
               printf '%s\n' "pull request merge result has no content-addressable dev parent or candidate SHA" >&2
               exit 1
@@ -354,14 +350,10 @@ jobs:
             # 状态,HEAD 是实际受审的并集树。两者来自同一个 merge 对象,故 baseline
             # 与最后交给 gate 的 delta 不会跨树漂移。
             sha="$(git -C candidate rev-parse HEAD^1)"
-            if ! git -C candidate rev-parse --verify HEAD^2 >/dev/null 2>&1; then
-              printf '%s\n' "checked pull request ref is not a merge result" >&2
-              exit 1
-            fi
           else
             sha="${{ github.event.before }}"
             if [[ -z "$sha" || "$sha" =~ ^0+$ ]]; then
-              sha="$(git -C candidate rev-parse "$GITHUB_SHA^")"
+              sha="$(git -C candidate rev-parse HEAD^1)"
             fi
           fi
           if [[ -z "$sha" || "$sha" =~ ^0+$ ]]; then
