@@ -1,0 +1,6 @@
+root = true
+
+[*.cs]
+# Reflection-only private constructors can trigger IDE0051. Suppress each false positive in place with "#pragma warning disable IDE0051" and a one-line written reason; never disable the rule repository-wide.
+dotnet_diagnostic.IDE0051.severity = warning
+dotnet_diagnostic.CA1823.severity = warning
