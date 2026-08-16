@@ -209,7 +209,7 @@ public sealed class RuleCatalogAssociationTests
     public void DefaultCatalogRootMatchesCharacterizedRegressionValue()
     {
         Assert.Equal(
-            "sha256:ef3d3ddfb87c804df192115cbd9827a9c5e6de0b62ed423e299c0316e52f693d",
+            "sha256:5daf5cf6d1d4eba326f3b961b8442ba1711e7074cbc683522695c25562edc2ab",
             RuleCatalog.Default.RootSha256);
     }
 

@@ -136,17 +136,16 @@ public sealed class DocumentDiscoveryTests
         //
         // 【2026-08-11 勘误】本注释原写「提交的 md 是人读快照,陈旧无害于任何判决」——**那是假的**,
         // 由第十一轮面板证伪。committed `Blueprint/**/*.md` 的字节**仍在准入路径上承重**:
-        //   `Engine/Digestion/DigestionStatusEvaluator.cs:587` 从候选快照读该 md,
-        //   `:591-594` 断言 `receipt.EmissionSha256 == Compute(emission.RawBytes)`,不等即
+        //   `Engine/Digestion/Evaluation/DigestionStatusEvaluator.Verification.cs` 从候选快照读该 md,
+        //   并断言 `receipt.EmissionSha256 == Compute(emission.RawBytes)`,不等即
         //   `scribe-emission-mismatch`;调用链 `Rules/RepositoryRules.cs:112`
         //   → `Rules/Backfill/BackfillInventoryRule.cs:229` → 该 evaluator。
         //   生产测试 `StrataLint.Tests/Admission/ProductionEnvironmentCoverTests.cs:127-129`
-        //   钉死其为红。此外 `Scribe/Emission/ScribeEmitter.cs:244-272` 也仍对提交树逐字节比对。
-        // 亦即 FILEMAP 的 `consumed_by = ["reader"]` 并未反映实情:它有机器消费者。
+        //   钉死其为红。此外 `Scribe/Emission/ScribeEmitter.cs` 也仍对提交树逐字节比对。
+        // FILEMAP 现将这些 committed bytes 如实分类为 data,并声明上述机器消费者。
         //
-        // 本测试与 admission 侧 ScribeEmitter.Verify 仅在逐文档 committed-byte 比对上部分等价;
-        // 它不等价于 admission 的完整验证。准入侧两处保持不动,
-        // 是否该删须另行按四项合取裁决(裁决时不得再以 FILEMAP 自声明字段为据)。
+        // 本测试是全语料逐文档 committed-byte 历史锚;它与 admission 侧 ScribeEmitter.Verify
+        // 仅在逐文档比对上部分等价,不替代 admission 的完整验证。#1954 裁决保留两者。
         Assert.NotEmpty(DocumentDefinitions.All);
         foreach (var definition in DocumentDefinitions.All)
         {

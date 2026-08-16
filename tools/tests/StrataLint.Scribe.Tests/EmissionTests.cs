@@ -444,11 +444,34 @@ public sealed class EmissionTests
             attestation = InjectCandidateOnlyAttestationEntry(attestation);
             TemporaryFileSystem.File.WriteAllText(attestationPath, attestation, new UTF8Encoding(false));
 
-            var error = new StringWriter();
-            var verification = ScribeEmitter.Verify(root, error, report);
+            var targetPath = DocumentDefinitions.All[0].RelativePath.Value;
+            var emitError = new StringWriter();
+            var exit = ScribeEmitter.Emit(
+                root,
+                check: true,
+                TextWriter.Null,
+                emitError,
+                report);
+            var verifyError = new StringWriter();
+            var verification = ScribeEmitter.Verify(root, verifyError, report);
 
+            Assert.Equal(1, exit);
             Assert.Null(verification);
-            Assert.Contains("out of date", error.ToString(), StringComparison.Ordinal);
+            foreach (var diagnostic in new[] { emitError.ToString(), verifyError.ToString() })
+            {
+                Assert.Contains(
+                    $"out of date: {targetPath}: renderer output differs from committed oracle",
+                    diagnostic,
+                    StringComparison.Ordinal);
+                Assert.Contains("review the diff first", diagnostic, StringComparison.Ordinal);
+                Assert.Contains("only if this change is intentional", diagnostic, StringComparison.Ordinal);
+                Assert.Contains("run make emit", diagnostic, StringComparison.Ordinal);
+                Assert.Contains($"commit {targetPath}", diagnostic, StringComparison.Ordinal);
+                Assert.DoesNotContain(
+                    "committed renderer oracle missing",
+                    diagnostic,
+                    StringComparison.Ordinal);
+            }
         }
         finally
         {
@@ -521,13 +544,34 @@ public sealed class EmissionTests
             // then a deleted or out-of-date base-owned emission, not a candidate-only addition. It must
             // still void the capability locally, never be laundered through the not-materialized skip.
             var target = DocumentDefinitions.All[0];
-            TemporaryFileSystem.File.Delete(Path.Combine(root, target.RelativePath.Value));
+            var targetPath = target.RelativePath.Value;
+            TemporaryFileSystem.File.Delete(Path.Combine(root, targetPath));
 
-            var error = new StringWriter();
-            var verification = ScribeEmitter.Verify(root, error, report);
+            var emitError = new StringWriter();
+            var exit = ScribeEmitter.Emit(
+                root,
+                check: true,
+                TextWriter.Null,
+                emitError,
+                report);
+            var verifyError = new StringWriter();
+            var verification = ScribeEmitter.Verify(root, verifyError, report);
 
+            Assert.Equal(1, exit);
             Assert.Null(verification);
-            Assert.Contains("out of date", error.ToString(), StringComparison.Ordinal);
+            foreach (var diagnostic in new[] { emitError.ToString(), verifyError.ToString() })
+            {
+                Assert.Contains(
+                    $"out of date: {targetPath}: committed renderer oracle missing",
+                    diagnostic,
+                    StringComparison.Ordinal);
+                Assert.Contains("run make emit", diagnostic, StringComparison.Ordinal);
+                Assert.Contains($"commit {targetPath}", diagnostic, StringComparison.Ordinal);
+                Assert.DoesNotContain(
+                    "renderer output differs from committed oracle",
+                    diagnostic,
+                    StringComparison.Ordinal);
+            }
         }
         finally
         {

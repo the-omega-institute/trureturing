@@ -265,8 +265,12 @@ public sealed class RuleEngineTests
 
         Assert.Equal(RuleFixture.BlueprintPath, diagnostic.Path);
         Assert.Equal(
-            "Blueprint markdown is a projection: emit it from a Scribe or digestion source change",
+            "Blueprint markdown is a committed renderer oracle: update it from a Scribe or digestion source change",
             diagnostic.Message);
+        Assert.Equal(
+            "Blueprint committed renderer oracle",
+            RuleCatalog.Default.Descriptors.Single(
+                descriptor => descriptor.Id == RuleId.CreateKnown(25)).Title);
     }
 
     [Fact]
@@ -357,7 +361,7 @@ public sealed class RuleEngineTests
         var diagnostic = Assert.Single(EvaluateSl025(fixture), item =>
             item.Path == RuleFixture.BlueprintSourcePath);
 
-        Assert.Equal("Blueprint Scribe source has no matching .md projection", diagnostic.Message);
+        Assert.Equal("Blueprint Scribe source has no matching .md committed oracle", diagnostic.Message);
     }
 
     private static ImmutableArray<Diagnostic> EvaluateSl025(RuleFixture fixture)
