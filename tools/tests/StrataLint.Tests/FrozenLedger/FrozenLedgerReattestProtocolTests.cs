@@ -1,3 +1,6 @@
+using System.Collections.Immutable;
+using System.Text.Json;
+using System.Text.Json.Nodes;
 using StrataLint.Cli;
 using StrataLint.Engine;
 using static StrataLint.Tests.FrozenLedgerTestData;
@@ -40,6 +43,119 @@ public sealed partial class FrozenLedgerTests
         Assert.Equal(candidateNode.FrozenNodeId, reattest.Payload.FrozenNodeId);
         Assert.Equal(candidateNode.Attestation.SourceBlobOid, reattest.Payload.Input.DescriptorBlobOid);
         Assert.Equal(candidateNode.FrozenNodeId, history.ActiveFrozenNodes.Single().FrozenNodeId);
+    }
+
+    [Fact]
+    public void ExtendedReattestRejectsAxiomClosureThatDisagreesWithCandidateReport()
+    {
+        var baselineCatalog = BuildCatalog(Module(
+            "A",
+            source: OriginalReattestSource,
+            axioms: new[] { "Classical.choice" }));
+        var candidateCatalog = BuildCatalog(Module(
+            "A",
+            source: ChangedHeaderReattestSource,
+            axioms: new[] { "Classical.choice" }));
+        var baselineBytes = FrozenLedgerGenerator.GenerateGenesis(
+            baselineCatalog,
+            new FrozenGenesisDescriptor(GitOid('e'), RuleCatalog.Default.RootSha256));
+        var baseline = Assert.IsType<FrozenLedgerValidationOutcome.Accepted>(
+            ValidateGenesis(
+                Assert.IsType<DagLedgerLoadOutcome.Loaded>(
+                    DagLedgerLoader.Load(baselineBytes.AsSpan())).Syntax,
+                baselineCatalog)).Capability;
+        var generatedBytes = FrozenLedgerGenerator.AppendReattestation(baseline, candidateCatalog);
+        var generatedSyntax = Assert.IsType<DagLedgerLoadOutcome.Loaded>(
+            DagLedgerLoader.Load(generatedBytes.AsSpan())).Syntax;
+        var generatedPayload = generatedSyntax.Lines[^1].Value.GetProperty("payload");
+        Assert.Equal(
+            candidateCatalog.ClosedNodes.Single().AxiomClosure,
+            generatedPayload.GetProperty("axiom_closure")
+                .EnumerateArray()
+                .Select(static item => item.GetString()!));
+        var forgedPayload = JsonNode.Parse(generatedPayload.GetRawText())!.AsObject();
+        forgedPayload["axiom_closure"] = new JsonArray("propext");
+        var forgedLine = FrozenLedgerCanonicalWriter.WriteEvent(
+            "Reattest",
+            JsonSerializer.SerializeToElement(forgedPayload),
+            baseline.HeadHash,
+            baseline.Events.Length).Bytes;
+        var forgedSyntax = Assert.IsType<DagLedgerLoadOutcome.Loaded>(
+            DagLedgerLoader.Load(baselineBytes.Concat(forgedLine).ToArray())).Syntax;
+
+        var rejected = Assert.IsType<FrozenLedgerValidationOutcome.Rejected>(
+            ValidateCandidate(forgedSyntax, baseline, candidateCatalog));
+
+        Assert.Contains("recomputed material", rejected.Message, StringComparison.OrdinalIgnoreCase);
+    }
+
+    [Fact]
+    public void ClosureOnlyReattestRejectsAxiomClosureThatDisagreesWithCandidateReport()
+    {
+        var catalog = BuildCatalog(Module("A", axioms: new[] { "Classical.choice" }));
+        var generated = FrozenLedgerGenerator.GenerateGenesis(
+            catalog,
+            new FrozenGenesisDescriptor(GitOid('e'), RuleCatalog.Default.RootSha256));
+        var legacyBytes = WithoutRecordedAxiomClosures(generated);
+        var legacySyntax = Assert.IsType<DagLedgerLoadOutcome.Loaded>(
+            DagLedgerLoader.Load(legacyBytes.AsSpan())).Syntax;
+        var baseline = Assert.IsType<FrozenLedgerValidationOutcome.Accepted>(
+            FrozenLedger.ValidateHistoryPrefix(legacySyntax, catalog, Trust(legacySyntax))).Capability;
+        var candidateBytes = FrozenLedgerGenerator.AppendReattestation(baseline, catalog);
+        var candidateSyntax = Assert.IsType<DagLedgerLoadOutcome.Loaded>(
+            DagLedgerLoader.Load(candidateBytes.AsSpan())).Syntax;
+        var payload = JsonNode.Parse(
+            candidateSyntax.Lines[^1].Value.GetProperty("payload").GetRawText())!.AsObject();
+        Assert.False(payload.ContainsKey("declaration_statement_ids"));
+        payload["axiom_closure"] = new JsonArray("propext");
+        var forgedLine = FrozenLedgerCanonicalWriter.WriteEvent(
+            "Reattest",
+            JsonSerializer.SerializeToElement(payload),
+            baseline.HeadHash,
+            baseline.Events.Length).Bytes;
+        var forgedSyntax = Assert.IsType<DagLedgerLoadOutcome.Loaded>(
+            DagLedgerLoader.Load(legacyBytes.Concat(forgedLine).ToArray())).Syntax;
+
+        var rejected = Assert.IsType<FrozenLedgerValidationOutcome.Rejected>(
+            ValidateCandidate(forgedSyntax, baseline, catalog));
+
+        Assert.Contains("recomputed material", rejected.Message, StringComparison.OrdinalIgnoreCase);
+    }
+
+    [Fact]
+    public void AppendReattestationBackfillsUnknownClosureWithoutMaterialDrift()
+    {
+        var catalog = BuildCatalog(Module("A", axioms: new[] { "Classical.choice" }));
+        var generated = FrozenLedgerGenerator.GenerateGenesis(
+            catalog,
+            new FrozenGenesisDescriptor(GitOid('e'), RuleCatalog.Default.RootSha256));
+        var legacyBytes = WithoutRecordedAxiomClosures(generated);
+        var legacySyntax = Assert.IsType<DagLedgerLoadOutcome.Loaded>(
+            DagLedgerLoader.Load(legacyBytes.AsSpan())).Syntax;
+        var baseline = Assert.IsType<FrozenLedgerValidationOutcome.Accepted>(
+            FrozenLedger.ValidateHistoryPrefix(legacySyntax, catalog, Trust(legacySyntax))).Capability;
+        Assert.False(baseline.ActiveEntries.Values.Single().AxiomClosureKnown);
+
+        var candidateBytes = FrozenLedgerGenerator.AppendReattestation(baseline, catalog);
+        var candidate = Assert.IsType<FrozenLedgerValidationOutcome.Accepted>(
+            ValidateCandidate(
+                Assert.IsType<DagLedgerLoadOutcome.Loaded>(
+                    DagLedgerLoader.Load(candidateBytes.AsSpan())).Syntax,
+                baseline,
+                catalog)).Capability;
+
+        var reattest = Assert.IsType<FrozenLedgerEvent.Reattest>(candidate.Events[^1]);
+        Assert.Equal(baseline.Events.Length + 1, candidate.Events.Length);
+        Assert.Equal(baseline.ActiveEntries.Values.Single().Payload.CaseId, reattest.Payload.CaseId);
+        Assert.Equal(
+            catalog.ClosedNodes.Single().AxiomClosure,
+            Assert.IsType<DagLedgerLoadOutcome.Loaded>(
+                DagLedgerLoader.Load(candidateBytes.AsSpan())).Syntax.Lines[^1].Value
+                .GetProperty("payload")
+                .GetProperty("axiom_closure")
+                .EnumerateArray()
+                .Select(static item => item.GetString()!));
+        Assert.True(candidate.ActiveEntries.Values.Single().AxiomClosureKnown);
     }
 
     [Fact]
@@ -311,5 +427,28 @@ public sealed partial class FrozenLedgerTests
         Assert.Contains("catalog", newGenesis.Message, StringComparison.OrdinalIgnoreCase);
         var genesis = Assert.IsType<FrozenLedgerEvent.Genesis>(history.Events[0]);
         Assert.Equal(historicalRoot, genesis.Payload.RuleCatalogRoot);
+    }
+
+    private static byte[] WithoutRecordedAxiomClosures(ImmutableArray<byte> bytes)
+    {
+        var syntax = Assert.IsType<DagLedgerLoadOutcome.Loaded>(
+            DagLedgerLoader.Load(bytes.AsSpan())).Syntax;
+        var result = ImmutableArray.CreateBuilder<byte>();
+        var previous = FrozenLedgerCanonicalWriter.ZeroHash;
+        for (var sequence = 0; sequence < syntax.Lines.Length; sequence++)
+        {
+            var line = syntax.Lines[sequence].Value;
+            var payload = JsonNode.Parse(line.GetProperty("payload").GetRawText())!.AsObject();
+            payload.Remove("axiom_closure");
+            var encoded = FrozenLedgerCanonicalWriter.WriteEvent(
+                line.GetProperty("event_type").GetString()!,
+                JsonSerializer.SerializeToElement(payload),
+                previous,
+                sequence);
+            result.AddRange(encoded.Bytes);
+            previous = encoded.Hash;
+        }
+
+        return result.ToArray();
     }
 }

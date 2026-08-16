@@ -129,7 +129,7 @@ public sealed class LedgerSyncCommandTests
             "prospective frozen ledger");
         var firstDifference = FirstDifference(generatedBytes, replayed.RawBytes);
 
-        Assert.Equal(2329, firstDifference);
+        Assert.Equal(2350, firstDifference);
         Assert.Equal(
             "Freeze",
             generatedSyntax.Lines[2].Value.GetProperty("event_type").GetString());

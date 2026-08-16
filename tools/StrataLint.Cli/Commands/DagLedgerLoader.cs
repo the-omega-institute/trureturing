@@ -242,7 +242,10 @@ public static class DagLedgerLoader
                 previous,
                 sequence);
             using var document = JsonDocument.Parse(encoded.Bytes.AsSpan()[..^1].ToArray());
-            var line = new FrozenLedgerLineSyntax(encoded.Bytes, document.RootElement.Clone());
+            var line = new FrozenLedgerLineSyntax(
+                encoded.Bytes,
+                document.RootElement.Clone(),
+                item.EventHash);
             raw.AddRange(encoded.Bytes);
             lines.Add(line);
             dagToLinearHash.Add(item.EventHash, encoded.Hash);
