@@ -66,7 +66,7 @@ public sealed class LedgerSyncCommandTests
         Assert.Equal(
             fixture.BaselineBytes.AsSpan().ToArray(),
             FrozenLedgerTestData.ReadLedgerDirectory(fixture.LedgerPath));
-        Assert.Equal(1, fixture.Gateway.FrozenReferenceValidationCount);
+        Assert.Equal(0, fixture.Gateway.FrozenReferenceValidationCount);
     }
 
     [Fact]
@@ -144,7 +144,7 @@ public sealed class LedgerSyncCommandTests
         Assert.Equal(
             replayed.RawBytes.AsSpan().ToArray(),
             FrozenLedgerTestData.ReadLedgerDirectory(fixture.LedgerPath));
-        Assert.Equal(2, fixture.Gateway.FrozenReferenceValidationCount);
+        Assert.Equal(1, fixture.Gateway.FrozenReferenceValidationCount);
     }
 
     [Fact]

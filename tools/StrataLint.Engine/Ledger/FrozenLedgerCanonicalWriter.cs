@@ -66,8 +66,19 @@ public static partial class FrozenLedgerGenerator
     {
         foreach (var (path, active) in activeByPath)
         {
-            if (candidateCatalog.ByPath.TryGetValue(path, out var candidate)
-                && active.FrozenNodeId != candidate.FrozenNodeId)
+            if (!candidateCatalog.ByPath.TryGetValue(path, out var candidate))
+            {
+                continue;
+            }
+
+            if (active.StatementId != candidate.StatementId
+                || !active.DeclarationStatementIds.SequenceEqual(candidate.DeclarationStatementIds))
+            {
+                throw new InvalidOperationException(
+                    $"Active module {path.Value} statement identity changed; append Revoke before rerunning ledger-sync.");
+            }
+
+            if (active.FrozenNodeId != candidate.FrozenNodeId)
             {
                 throw new InvalidOperationException(
                     $"Active module {path.Value} changed identity; run ledger-sync to reconcile it.");
