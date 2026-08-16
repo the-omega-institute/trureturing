@@ -29,10 +29,11 @@ internal static class DagLedgerSyncWriter
             var generatedSyntax = DagLedgerCommandPreparation.LoadLedger(
                 generatedBytes.AsSpan(),
                 "generated frozen ledger");
-            var candidateReferences = DagLedgerCommandPreparation.ScanReferences(
+            var trustedCandidateReferences = DagLedgerCommandPreparation.ValidateSuffixReferences(
+                repository,
                 generatedSyntax,
+                context.Baseline,
                 "generated frozen ledger");
-            var trustedCandidateReferences = repository.ValidateFrozenReferences(candidateReferences);
             var generated = FrozenLedger.ValidateCandidate(
                 generatedSyntax,
                 context.Baseline,
@@ -53,53 +54,33 @@ internal static class DagLedgerSyncWriter
                     string.Empty);
             }
 
-            var baselineFiles = DagLedgerCommandPreparation.ReadLedgerDirectoryFiles(
-                context.LedgerPath);
-            var currentBaseline = DagLedgerCommandPreparation.LoadLedgerFiles(
-                baselineFiles,
-                "existing frozen ledger");
-            if (!currentBaseline.RawBytes.AsSpan().SequenceEqual(context.BaselineBytes))
-            {
-                throw new InvalidOperationException(
-                    "accepted event files changed while ledger-sync was validating them");
-            }
+            DagLedgerAppendWriter.RequireUnchangedBaseline(
+                context.LedgerPath,
+                context.BaselineFiles,
+                "ledger-sync");
 
             var pending = DagLedgerAppendWriter.BuildNewEventFiles(
                 generatedSyntax.Lines,
                 context.Baseline.Events.Length,
-                currentBaseline);
-            var prospectiveFiles = baselineFiles.AddRange(pending);
-            var candidateSyntax = DagLedgerCommandPreparation.LoadLedgerFiles(
-                prospectiveFiles,
-                "prospective frozen ledger");
-            var replayedReferences = DagLedgerCommandPreparation.ScanReferences(
-                candidateSyntax,
-                "prospective frozen ledger");
-            var trustedReplayedReferences = repository.ValidateFrozenReferences(replayedReferences);
-            var candidate = FrozenLedger.ValidateHistory(
-                candidateSyntax,
-                context.Catalog,
-                trustedReplayedReferences) switch
-            {
-                FrozenLedgerValidationOutcome.Accepted accepted => accepted.Capability,
-                FrozenLedgerValidationOutcome.Rejected rejected => throw new InvalidOperationException(
-                    "prospective frozen ledger history is invalid: " + rejected.Message),
-                _ => throw new InvalidOperationException("unknown ledger validation outcome"),
-            };
+                context.BaselineSyntax);
+            _ = DagLedgerCommandPreparation.ValidateGeneratedEventFiles(
+                context.BaseView,
+                pending,
+                "generated frozen ledger suffix");
             // Publication goes through the one shared publisher so ledger-sync inherits the
             // exclusive writer lock, the in-lock baseline compare-and-swap and stale-stage
             // reaping instead of carrying a second write path.
             DagLedgerAppendWriter.WriteEventFiles(
                 context.LedgerPath,
                 pending,
-                context.BaselineBytes);
+                context.BaselineFiles);
 
             var suffix = generated.Events.Skip(context.Baseline.Events.Length).ToImmutableArray();
             var reattests = suffix.OfType<FrozenLedgerEvent.Reattest>().ToImmutableArray();
             var freezes = suffix.OfType<FrozenLedgerEvent.Freeze>().ToImmutableArray();
             var output = $"LEDGER_SYNC appended_reattests={reattests.Length} "
-                + $"appended_freezes={freezes.Length} events={candidate.Events.Length} "
-                + $"head={candidate.HeadHash}\n"
+                + $"appended_freezes={freezes.Length} events={generated.Events.Length} "
+                + $"head={generated.HeadHash}\n"
                 + string.Concat(reattests.Select(item =>
                     $"REATTESTED {context.Baseline.ActiveEntries[item.Payload.CaseId].Material.RepoPath.Value}\n"))
                 + string.Concat(freezes.Select(static item => $"FROZEN {item.Payload.NodePath.Value}\n"));

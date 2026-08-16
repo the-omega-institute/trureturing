@@ -22,14 +22,13 @@ public sealed class BackfillInventoryLoaderTests
     }
 
     [Fact]
-    public void DirectoryShapeProjectsTwoSourcesAtomsAndTicketIndex()
+    public void DirectoryShapeProjectsTwoSourcesAndAtoms()
     {
         var snapshot = Snapshot(
             Source("delta-v0.1", "docs/delta.md", "none"),
             Source("epsilon-v0.1", "docs/epsilon.md", "none"),
             Atom("delta-v0.1", "residual-open", "delta-atom", "theorem/delta"),
-            Atom("epsilon-v0.1", "partial-closed", "epsilon-atom", "theorem/epsilon"),
-            (BackfillInventoryLoader.TicketIndexPath, "D5-T0098 = \"D5/X_Frontier/SyntheticDelta\"\n"));
+            Atom("epsilon-v0.1", "partial-closed", "epsilon-atom", "theorem/epsilon"));
 
         var document = BackfillInventoryLoader.Load(snapshot);
 
@@ -37,9 +36,6 @@ public sealed class BackfillInventoryLoaderTests
             document.RequireDigestionSources().Select(static source => source.SourceId).ToArray());
         Assert.Equal(["delta-atom", "epsilon-atom"],
             document.RequireDigestionEntries().Select(static entry => entry.AtomId).ToArray());
-        var ticket = Assert.Single(document.RequireTickets());
-        Assert.Equal("D5-T0098", ticket.CaseId);
-        Assert.Equal("D5/X_Frontier/SyntheticDelta", ticket.Gid);
         Assert.Collection(
             document.RequireDigestionEntries(),
             entry =>
@@ -67,15 +63,13 @@ public sealed class BackfillInventoryLoaderTests
             StringComparison.Ordinal);
         var document = BackfillInventoryLoader.Load(Snapshot(
             Source("delta-v0.1", "docs/delta.md", "none"),
-            (atom.Path, liveAtom),
-            (BackfillInventoryLoader.TicketIndexPath, "")));
+            (atom.Path, liveAtom)));
 
         var written = Encoding.UTF8.GetString(BackfillInventoryWriter.WriteAtom(
             Assert.Single(document.RequireDigestionEntries())).AsSpan());
         var roundTripped = BackfillInventoryLoader.Load(Snapshot(
             Source("delta-v0.1", "docs/delta.md", "none"),
-            (atom.Path, written),
-            (BackfillInventoryLoader.TicketIndexPath, "")));
+            (atom.Path, written)));
 
         var receipts = Assert.Single(roundTripped.RequireDigestionEntries()).Receipts;
         Assert.Equal(["predecessor-atom"], receipts.ChainAtoms.ToArray());
@@ -90,8 +84,7 @@ public sealed class BackfillInventoryLoaderTests
         var exception = Assert.Throws<FormatException>(() => BackfillInventoryLoader.Load(Snapshot(
             (BackfillInventoryLoader.RelativePath, text),
             Source("delta-v0.1", "docs/delta.md", "none"),
-            Atom("delta-v0.1", "residual-open", "delta-atom", "theorem/delta"),
-            (BackfillInventoryLoader.TicketIndexPath, ""))));
+            Atom("delta-v0.1", "residual-open", "delta-atom", "theorem/delta"))));
 
         Assert.Equal("legacy and directory digestion ledgers cannot coexist", exception.Message);
     }
@@ -114,7 +107,6 @@ public sealed class BackfillInventoryLoaderTests
         {
             [source.Path] = source.Text,
             [atom.Path] = atom.Text,
-            [BackfillInventoryLoader.TicketIndexPath] = string.Empty,
         });
 
         var exception = Assert.Throws<FormatException>(() =>
@@ -137,8 +129,7 @@ public sealed class BackfillInventoryLoaderTests
         var atom = Atom("delta-v0.1", "residual-open", "delta-atom", "theorem/delta");
         var exception = Assert.Throws<FormatException>(() => BackfillInventoryLoader.Load(Snapshot(
             Source("delta-v0.1", "docs/delta.md", "none"),
-            (atom.Path, atom.Text + "unexpected: value\n"),
-            (BackfillInventoryLoader.TicketIndexPath, ""))));
+            (atom.Path, atom.Text + "unexpected: value\n"))));
 
         Assert.Equal("source delta-v0.1 entry keys are not canonical", exception.Message);
     }
@@ -150,8 +141,7 @@ public sealed class BackfillInventoryLoaderTests
         var exception = Assert.Throws<FormatException>(() => BackfillInventoryLoader.Load(Snapshot(
             Source("delta-v0.1", "docs/delta.md", "none"),
             Atom("delta-v0.1", "residual-open", "delta-atom", "theorem/delta"),
-            (path, Atom("zeta-v0.1", "residual-open", "zeta-atom", "theorem/zeta").Text),
-            (BackfillInventoryLoader.TicketIndexPath, ""))));
+            (path, Atom("zeta-v0.1", "residual-open", "zeta-atom", "theorem/zeta").Text))));
 
         Assert.Equal($"backfill atom is not owned by exactly one source: {path}", exception.Message);
     }
@@ -166,8 +156,7 @@ public sealed class BackfillInventoryLoaderTests
         var path = $"{BackfillInventoryLoader.RootPath}delta-v0.1/source.toml";
         var exception = Assert.Throws<FormatException>(() => BackfillInventoryLoader.Load(Snapshot(
             (path, metadata),
-            Atom("delta-v0.1", "residual-open", "delta-atom", "theorem/delta"),
-            (BackfillInventoryLoader.TicketIndexPath, ""))));
+            Atom("delta-v0.1", "residual-open", "delta-atom", "theorem/delta"))));
 
         Assert.Equal($"source metadata identity fields must be single quoted strings: {path}", exception.Message);
     }
@@ -178,8 +167,7 @@ public sealed class BackfillInventoryLoaderTests
         var sourcePath = $"{BackfillInventoryLoader.RootPath}delta-v0.1/source.toml";
         var document = BackfillInventoryLoader.Load(Snapshot(
             (sourcePath, "source_id = \"delta-v0.1\"\npath = \"docs/delta.md\"\natomizer = \"none\"\nacknowledged_stale = [\"old-one\", \"old-two\"]\n"),
-            Atom("delta-v0.1", "residual-open", "delta-atom", "theorem/delta"),
-            (BackfillInventoryLoader.TicketIndexPath, "")));
+            Atom("delta-v0.1", "residual-open", "delta-atom", "theorem/delta")));
 
         Assert.Equal(
             ["old-one", "old-two"],
@@ -192,8 +180,7 @@ public sealed class BackfillInventoryLoaderTests
         var sourcePath = $"{BackfillInventoryLoader.RootPath}delta-v0.1/source.toml";
         var document = BackfillInventoryLoader.Load(Snapshot(
             (sourcePath, "source_id = \"delta-v0.1\"\npath = \"docs/delta.md\"\natomizer = \"none\"\nacknowledged_stale = []\n"),
-            Atom("delta-v0.1", "residual-open", "delta-atom", "theorem/delta"),
-            (BackfillInventoryLoader.TicketIndexPath, "")));
+            Atom("delta-v0.1", "residual-open", "delta-atom", "theorem/delta")));
 
         Assert.Empty(Assert.Single(document.RequireDigestionSources()).AcknowledgedStale);
     }
@@ -208,27 +195,9 @@ public sealed class BackfillInventoryLoaderTests
         var sourcePath = $"{BackfillInventoryLoader.RootPath}delta-v0.1/source.toml";
         var exception = Assert.Throws<FormatException>(() => BackfillInventoryLoader.Load(Snapshot(
             (sourcePath, $"source_id = \"delta-v0.1\"\npath = \"docs/delta.md\"\natomizer = \"none\"\nacknowledged_stale = {encoded}\n"),
-            Atom("delta-v0.1", "residual-open", "delta-atom", "theorem/delta"),
-            (BackfillInventoryLoader.TicketIndexPath, ""))));
+            Atom("delta-v0.1", "residual-open", "delta-atom", "theorem/delta"))));
 
         Assert.Equal($"acknowledged_stale must be a quoted string array without blank elements: {sourcePath}", exception.Message);
-    }
-
-    [Theory]
-    [InlineData("not-an-assignment")]
-    [InlineData("D5-T0098 = unquoted")]
-    [InlineData("D5-T0098 = \"D5/X_Frontier/SyntheticDelta\" = \"extra\"")]
-    [InlineData("D5-T0098 = \"D5/X_Frontier/SyntheticDelta\" trailing")]
-    [InlineData("D5-T0098 = \"D5/X_Frontier/SyntheticDelta\", \"D5/X_Frontier/Other\"")]
-    [InlineData("D5-T0098 = \"D5/X_Frontier/Synthetic\"Delta\"")]
-    public void IllegalTicketIndexIsRejected(string ticketIndex)
-    {
-        var exception = Assert.Throws<FormatException>(() => BackfillInventoryLoader.Load(Snapshot(
-            Source("delta-v0.1", "docs/delta.md", "none"),
-            Atom("delta-v0.1", "residual-open", "delta-atom", "theorem/delta"),
-            (BackfillInventoryLoader.TicketIndexPath, ticketIndex + "\n"))));
-
-        Assert.Contains("digestion ticket index", exception.Message, StringComparison.Ordinal);
     }
 
     [Theory]
@@ -241,14 +210,12 @@ public sealed class BackfillInventoryLoaderTests
         var path = $"{BackfillInventoryLoader.RootPath}delta-v0.1/{state}/{fileName}";
         var exception = Assert.Throws<FormatException>(() => BackfillInventoryLoader.Load(Snapshot(
             Source("delta-v0.1", "docs/delta.md", "none"),
-            (path, "value: invalid\n"),
-            (BackfillInventoryLoader.TicketIndexPath, ""))));
+            (path, "value: invalid\n"))));
 
         Assert.Equal($"noncanonical digestion ledger path: {path}", exception.Message);
     }
 
     [Theory]
-    [InlineData(BackfillInventoryLoader.TicketIndexPath)]
     [InlineData("Meta/Digestion/backfill/delta-v0.1/source.toml")]
     [InlineData("Meta/Digestion/backfill/delta-v0.1/residual-open/atom-0dca.yaml")]
     [InlineData("Meta/Digestion/backfill/delta-v0.1/partial-closed/atom-0f28.yaml")]
@@ -262,7 +229,6 @@ public sealed class BackfillInventoryLoaderTests
     [InlineData("Meta/Digestion/backfill/delta-v0.1/residual-frozen/atom.yaml")]
     [InlineData("Meta/Digestion/backfill/delta-v0.1/residual-open/nested/atom.yaml")]
     [InlineData("Meta/Digestion/backfill/delta-v0.1/notes.toml")]
-    [InlineData("Meta/Digestion/ticket-index.yaml")]
     [InlineData("Meta/BACKFILL.yaml")]
     public void NoncanonicalDigestionLedgerPathsAreRejected(string path)
         => Assert.False(BackfillInventoryLoader.IsCanonicalPath(path));
@@ -318,7 +284,6 @@ public sealed class BackfillInventoryLoaderTests
                     status:
                       migration: residual
                       truth: open
-            ticket_index: []
             """;
 
         var document = BackfillInventoryLoader.Load(text);
@@ -333,7 +298,7 @@ public sealed class BackfillInventoryLoaderTests
     }
 
     [Fact]
-    public void ProjectsReferencesFromSyntheticBackfill()
+    public void ProjectsCoverageReferencesFromSyntheticBackfill()
     {
         const string yaml = """
             schema_version: 3
@@ -363,20 +328,14 @@ public sealed class BackfillInventoryLoaderTests
                     status:
                       migration: partial
                       truth: open
-            ticket_index:
-              - case_id: D5-T0099
-                gid: D5/X_Frontier/SyntheticTicketTarget
             """;
 
         var inventory = BackfillInventoryLoader.Load(yaml);
-        var ticket = Assert.Single(inventory.RequireTickets());
 
         Assert.Equal(3, inventory.Root["schema_version"]);
         Assert.Equal("synthetic-atom", Assert.Single(inventory.RequireDigestionEntries()).AtomId);
-        Assert.Equal("D5-T0099", ticket.CaseId);
-        Assert.Equal("D5/X_Frontier/SyntheticTicketTarget", ticket.Gid);
         Assert.Equal(
-            ["D5/X_Frontier/SyntheticSourceTarget", "D5/X_Frontier/SyntheticTicketTarget"],
+            ["D5/X_Frontier/SyntheticSourceTarget"],
             inventory.RequireReferencedGids().ToArray());
     }
 
@@ -409,7 +368,6 @@ public sealed class BackfillInventoryLoaderTests
                     status:
                       migration: residual
                       truth: open
-            ticket_index: []
             """;
 
         var inventory = BackfillInventoryLoader.Load(yaml);
@@ -465,7 +423,6 @@ public sealed class BackfillInventoryLoaderTests
                     status:
                       migration: residual
                       truth: open
-            ticket_index: []
             """;
         var inventory = BackfillInventoryLoader.Load(yaml);
 
@@ -533,6 +490,46 @@ public sealed class BackfillInventoryLoaderTests
             Assert.Equal(DigestionMigrationState.Residual, entry.ProjectedStatus.Migration);
             Assert.Equal(DigestionTruthState.Open, entry.ProjectedStatus.Truth);
         }
+    }
+
+    [Fact]
+    public void DirectoryShapeDerivesTicketsFromAllD5LeanFiles()
+    {
+        var snapshot = Snapshot(
+            Source("delta-v0.1", "docs/delta.md", "none"),
+            Atom("delta-v0.1", "residual-open", "delta-atom", "theorem/delta"),
+            ("D5/X_Frontier/SyntheticDelta.lean", "/-- TASK D5-T0098 -/\ndef frontierTask : Unit := ()\n"),
+            ("D5/S1/Depth/Finite.lean", "/-- TASK D5-T0020 -/\ndef depthTask : Unit := ()\n"));
+
+        var tickets = BackfillInventoryLoader.Load(snapshot)
+            .RequireTickets()
+            .OrderBy(static ticket => ticket.CaseId, StringComparer.Ordinal)
+            .Select(static ticket => (ticket.CaseId, ticket.Gid))
+            .ToArray();
+
+        Assert.Equal(
+            [
+                ("D5-T0020", "D5/S1/Depth/Finite"),
+                ("D5-T0098", "D5/X_Frontier/SyntheticDelta"),
+            ],
+            tickets);
+    }
+
+    [Fact]
+    public void DirectoryShapeRejectsTaskCaseDeclaredByMultipleD5LeanFiles()
+    {
+        var snapshot = Snapshot(
+            Source("delta-v0.1", "docs/delta.md", "none"),
+            Atom("delta-v0.1", "residual-open", "delta-atom", "theorem/delta"),
+            ("D5/S0/Synthetic/First.lean", "/-- TASK D5-T0098 -/\ndef firstTask : Unit := ()\n"),
+            ("D5/S1/Synthetic/Second.lean", "/-- TASK D5-T0098 -/\ndef secondTask : Unit := ()\n"));
+
+        var exception = Assert.Throws<FormatException>(() => BackfillInventoryLoader.Load(snapshot));
+
+        Assert.Equal(
+            "TASK case D5-T0098 is declared by multiple D5 Lean modules: "
+            + "D5/S0/Synthetic/First, D5/S1/Synthetic/Second",
+            exception.Message);
     }
 
     private static bool TryLoadEntry(string yaml)
@@ -649,6 +646,6 @@ public sealed class BackfillInventoryLoaderTests
                 path: docs/source.md
                 atomizer: synthetic-v1
                 entries:
-            """ + "\n" + entry + "ticket_index: []\n";
+            """ + "\n" + entry;
     }
 }

@@ -1,5 +1,6 @@
 schema_version: 1
 root_files:
+  - ".editorconfig"
   - ".gitignore"
   - "AGENTS.md"
   - "CLAUDE.md"

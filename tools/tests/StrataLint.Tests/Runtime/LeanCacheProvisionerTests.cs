@@ -231,7 +231,8 @@ public sealed class LeanCacheProvisionerTests
                 ReadPins(target.Path),
                 "lake",
                 runner,
-                writerGuard));
+                writerGuard,
+                LeanCacheProvisioner.CountLtarFiles));
 
         Assert.Contains("not the requested target", exception.Message, StringComparison.Ordinal);
         Assert.Empty(runner.Invocations);
@@ -641,7 +642,8 @@ public sealed class LeanCacheProvisionerTests
                 ReadPins(root),
                 "lake",
                 runner,
-                writerGuard);
+                writerGuard,
+                new RecordingDirectoryCloner());
 
             var cacheGet = Assert.Single(
                 runner.Invocations,

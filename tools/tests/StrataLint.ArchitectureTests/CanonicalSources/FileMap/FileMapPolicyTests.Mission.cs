@@ -80,7 +80,6 @@ public sealed partial class FileMapPolicyTests
             foreach (var relativePath in new[]
                      {
                          MissionFileLoader.RelativePath,
-                         "Meta/Digestion/ticket-index.toml",
                          "D5/X_Frontier/GovernanceDeferrals.lean",
                      })
             {
@@ -133,7 +132,6 @@ public sealed partial class FileMapPolicyTests
             foreach (var relativePath in new[]
                      {
                          MissionFileLoader.RelativePath,
-                         "Meta/Digestion/ticket-index.toml",
                          "D5/X_Frontier/GovernanceDeferrals.lean",
                      })
             {

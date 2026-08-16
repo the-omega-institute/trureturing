@@ -6,13 +6,6 @@ namespace StrataLint.Tests;
 
 public sealed partial class MissionFileLoaderTests
 {
-    private const string TicketIndex = """
-        D5-T0040 = "D5/X_Frontier/GovernanceDeferrals"
-        D5-T0041 = "D5/X_Frontier/GovernanceDeferrals"
-        D5-T0042 = "D5/X_Frontier/GovernanceDeferrals"
-        D5-T0043 = "D5/X_Frontier/GovernanceDeferrals"
-        """;
-
     private const string NoveltyTaskBlock = """
         /-- TASK D5-T0040
             The novelty factor's machine-replayable measurement receipt contract is not installed. Until it lands, docs/MISSION.md must remain open(D5-T0040) and must not claim a complete worth score. -/
@@ -387,7 +380,7 @@ public sealed partial class MissionFileLoaderTests
     [InlineData("D5-T0041")]
     [InlineData("D5-T0042")]
     [InlineData("D5-T0043")]
-    public void CanonicalGovernanceTaskBlocksAreEachCountedExactlyOnce(string caseId)
+    public void LeanDerivedGovernanceTaskBlocksAreEachResolvedExactlyOnce(string caseId)
     {
         Assert.IsType<MissionLoadOutcome.Loaded>(
             LoadRepository(Encoding.UTF8.GetBytes(ValidMission), GovernanceDeferrals));
@@ -748,7 +741,6 @@ public sealed partial class MissionFileLoaderTests
     {
         using var repository = new TemporaryDirectory();
         ReviewRegressionTests.RunGit(repository.Path, "init", "--quiet");
-        WriteFile(repository.Path, BackfillInventoryLoader.TicketIndexPath, Encoding.UTF8.GetBytes(TicketIndex));
         WriteFile(
             repository.Path,
             "D5/X_Frontier/GovernanceDeferrals.lean",
@@ -779,7 +771,6 @@ public sealed partial class MissionFileLoaderTests
     {
         var entries = new List<RawRepositoryEntry>
         {
-            RawRepositoryEntry.FromText(BackfillInventoryLoader.TicketIndexPath, TicketIndex),
             RawRepositoryEntry.FromText(
                 "D5/X_Frontier/GovernanceDeferrals.lean",
                 GovernanceDeferrals),

@@ -434,17 +434,10 @@ internal static class MissionFileLoader
 
     private static void ValidateOpenCases(RepositorySnapshot snapshot, MissionPolicy policy)
     {
-        if (!snapshot.TryGetFile(BackfillInventoryLoader.TicketIndexPath, out var index))
-        {
-            throw Error(
-                MissionLoadErrorCode.DanglingCaseReference,
-                $"ticket index is missing: {BackfillInventoryLoader.TicketIndexPath}");
-        }
-
         ImmutableArray<BackfillTicketReference> tickets;
         try
         {
-            tickets = BackfillInventoryLoader.ParseTickets(index.Text);
+            tickets = BackfillInventoryLoader.DeriveTickets(snapshot);
         }
         catch (FormatException exception)
         {
@@ -463,7 +456,7 @@ internal static class MissionFileLoader
             {
                 throw Error(
                     MissionLoadErrorCode.DanglingCaseReference,
-                    $"case {open.CaseId} must have exactly one ticket-index entry");
+                    $"case {open.CaseId} must resolve to exactly one derived TASK module");
             }
 
             var targetPath = ticket.Gid.EndsWith(".lean", StringComparison.Ordinal)
@@ -496,7 +489,7 @@ internal static class MissionFileLoader
                     throw Error(
                         MissionLoadErrorCode.DanglingCaseReference,
                         $"case {open.CaseId} TASK scan in {targetPath} is ambiguous at character "
-                        + $"{ambiguous.CharacterIndex}: {ambiguous.Reason}; rewrite the ticket file "
+                        + $"{ambiguous.CharacterIndex}: {ambiguous.Reason}; rewrite the TASK file "
                         + "to remove primed identifiers or ambiguous literal introducers");
                 default:
                     throw Error(

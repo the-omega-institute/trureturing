@@ -5,34 +5,27 @@
    anchors: []
    digest: Keep governance and byte-canonicalization claims narrower than capabilities not present at M0. -/
 
-/-- TASK D5-T0011
+/- TASK D5-T0011
     Expand the protected M0 source list into a per-item inventory for every numbered entry in both theory volumes. -/
-def fullVolumeInventoryTicket : Unit := ()
 
-/-- TASK D5-T0012
+/- TASK D5-T0012
     Add deterministic DOI and arXiv existence plus metadata checks from a pinned, reviewable snapshot. -/
-def citationResolutionTicket : Unit := ()
 
-/-- TASK D5-T0013
+/- TASK D5-T0013
     Define a machine-owned ledger block for PR and round prose before enforcing natural-language anomaly coverage. -/
-def proseLedgerTicket : Unit := ()
 
-/-- TASK D5-T0014
+/- TASK D5-T0014
     Harden closed-world enumeration against symlink aliases, casefold collisions on case-insensitive filesystems, and lstat/read TOCTOU races; dot-segment traversal is already rejected. -/
-def worktreeAliasHardeningTicket : Unit := ()
 
-/-- TASK D5-T0015
+/- TASK D5-T0015
     Extend the active UTF-8, BOM, object-key-order, and trailing-whitespace checks to complete Unicode NFC, default-value, and tag-order canonicalization. -/
-def fullByteCanonicalizationTicket : Unit := ()
 
-/-- TASK D5-T0016
+/- TASK D5-T0016
     For SL-016 and SL-019 case references, verify open state, matching category, and not-closed status in addition to case existence. -/
-def ticketLifecycleValidationTicket : Unit := ()
 
-/-- TASK D5-T0021
+/- TASK D5-T0021
     For seven days after Phase-0 lands, count measurement-log-attributable report races, file-descriptor exhaustion, and replay timeouts; if the combined count is at least two, automatically start A-full with content-addressed ReportRef plus CAS, otherwise retain Phase-0 as sufficient.
     曾试过并失败:2026-07-19:Darwin hides inherited environment after some exec paths and rejects kqueue NOTE_TRACK with ENOTSUP; FIFO-holder identity works, but /var/folders must be canonicalized to /private/var/folders before lsof matching. 2026-07-19:c0-renew candidate inspection completed, then the baseline inspector exited 1 with empty stderr while an older lane ran a concurrent inspector; this pre-land failure is recorded but excluded from the seven-day post-land trigger window. 2026-07-19:Linux CI exposed perf_flush_events invoking the canonical writer from the caller fixture cwd, so its external ledger was rejected as residing inside that false repository root; Darwin's /var to /private/var alias masked the bug locally. The writer invocation now starts from the actual repository root. 2026-07-19:The Linux host returned an empty load-average sample, which produced an invalid bare JSON value; nonnumeric samples now become explicit null observations. Both pre-land failures are excluded from the seven-day post-land trigger window. -/
-def reportCasTriggerTicket : Unit := ()
 
 /- VI.4 moment-spectroscopy audit report.
     Source CAS: sha256:2c35b352f01e417c6428f8119ea9060126b717e632634f894e8582ed98c1b1.
@@ -113,46 +106,37 @@ def vi4MomentAuditReport : Unit := ()
    formal witness in the local sources. They remain unverified rather than clean. -/
 def vi5ObserverPtAuditReport : Unit := ()
 
-/-- TASK D5-T0002
+/- TASK D5-T0002
     Keep collectAxioms, sorryAx, protected-axiom, comment/string, and semantic Hearts-signature fixtures green.
     曾试过并失败:M0 bootstrap regex recognized only bare/private axiom and treated comment text as sorry; replaced by Lean ConstantInfo types and transitive collectAxioms reports. -/
-def strataLintLeanEnvironmentTicket : Unit := ()
 
-/-- TASK D5-T0031
+/- TASK D5-T0031
     Evidence/D5/values.json violates the projection-partition law as an open nonconformance, not an exemption: Golden/values-kernels.toml carries 14 constants with distinct id, lean_gid, statement hash and status, c1 and c2 add a local dependency closure, and CanonicalValuesWriter binds one attestation over the whole input closure, so any input byte rewrites the projection; deferred because 60-day churn is 10 commits all attributable to SDK pins, residence moves and producer migrations rather than parallel constant maintenance, and migration must also move SL-018's single-address verdict, ValuesProjectionPath, the Evidence GID mapping and the A-VALUES aggregate identity; re-open on the first source change touching a proper subset of constants, the first merge conflict attributable to this path, or SL-018 or A-VALUES being touched by another authorized migration; close only by sharding per mutation unit against a single-key change fixture, never by low churn.
     曾试过并失败:2026-08-11:the law's own clause first recorded this path as an exemption because its producer reads a single toml, conflating input file count with input partition count; the erratum is in CLAUDE.md section 0. -/
-def valuesProjectionPartitionDeferral : Unit := ()
 
-/-- TASK D5-T0032
+/- TASK D5-T0032
     Quarantine the fidelity-misbinding case `(cas_ref, atom_id) = (sha256:6e9240260a5357b3505166d2f932210e94222f6a29a3ebd6b2589435f82a4ee4, pzg-residual-6e9240260a5357b3505166d2f932210e94222f6a29a3ebd6b2589435f82a4ee4)`: formalization receipt sha256:9f2e9e17baddd794620d89773b65c7f43f7f9f521f4101305a8de0bd51b946aa binds the whole dark-side-receipt atom to CompletionEmbeddingDense, while its Scribe explicitly says it closes clause (i) only and leaves clauses (ii) and (iii) unresolved; coverage_gids and both coverage receipt lists remain empty, so do not run the existing cover door; no feedback issue was created because the repository exposes no canonical issue door; resolve only through an append-only receipt-correction door or an author-originated new-CAS atom.
     曾试过并失败:2026-08-13:receipt/freeze/Lean/Scribe sha256 values are 9f2e9e17baddd794620d89773b65c7f43f7f9f521f4101305a8de0bd51b946aa, 8773ef8f665665ffc2eb372621dbc972a252b0cf80f522c0ead99a040943ff16, 3d3e7714a1003f954e4749d848dcf211e4cf451fc8144123af1c97ad03b73c27, and b980074fed83d7bce49120168513a57defce55c3a089d893a951639cd22dd332; ledger-reattest forbids statement-identity changes, Revoke has no canonical producer and does not apply to a valid but incomplete Lean theorem, and hosted extension requires the incorrect primary GID to have existing coverage. -/
-def darkSideFormalizationReceiptMisbindingTicket : Unit := ()
 
-/-- TASK D5-T0033
+/- TASK D5-T0033
     Spec:97 (A3) declares the special-zone alphabet `X_Assumptions/X_Certificates/X_Frontier` as a closed, never-extended set, but unlike the S0-S4 alphabet, which `tools/tests/StrataLint.ArchitectureTests/CanonicalSources/Golden/StratumAlphabetTests.cs` anchors across `Enum.GetNames<Stratum>()`, `RepositoryRules.IsStratum`, and `Gid.IsStratum`, the special-zone alphabet has no anchoring test; it is carried as scattered string literals in `Gid.cs`, `RepositoryPathPolicy.cs`, `Routing.cs`, and `RepositoryRules.Helpers.cs`, with nothing comparing them to spec:97 or to one another. This gap is strictly pre-existing and independent of the `SpecialZone` enum removal in this change: the enum had zero consumers and zero anchoring test, so it detected nothing before or after. Close only by an anchoring test with a red fixture that binds all carriers to one source of truth; do not close by re-introducing an unconsumed type. -/
-def specialZoneAlphabetAnchoringTicket : Unit := ()
 
-/-- TASK D5-T0034
+/- TASK D5-T0034
     Enforce ast_path uniqueness within each ledger source: the live path checks only atom_id uniqueness, so duplicate ast_path values currently have no machine finding. This gap predates and is independent of removing production-unreachable TheoryIngestion; that dead code never ran and therefore never enforced the invariant. Close only by adding a finding in BackfillInventoryRule or DigestionStatusEvaluator plus a red fixture for duplicate same-source ast_path values. -/
-def ledgerSourceAstPathUniquenessTicket : Unit := ()
 
-/-- TASK D5-T0035
+/- TASK D5-T0035
     This is not a decision this lane can make; hand it to the A2b contract owner. `BackfillInventoryLoader.RelativePath` remains the live constant `Meta/BACKFILL.yaml` even though that path is no longer indexed, while `BackfillInventoryLoader.RootPath` names the active `Meta/Digestion/backfill/` shards; `DigestStatusCommand.hasLegacyLedger` still preserves the legacy single-file ledger's raw bytes. The ledger's SL-016 guard-matrix row no longer misstates the authoritative path: it names the live directory loader and records this ticket as the owner of the dual-read ruling, so no ledger correction remains outstanding. Close only when the owner rules whether the A2b dual-read layer stays. -/
-def a2bLegacyDualReadRulingTicket : Unit := ()
 
-/-- TASK D5-T0036
+/- TASK D5-T0036
     This is not a decision this lane can make; hand it to the repository policy owner. the CLAUDE.md line declaring that Lean and C# hold zero knowledge and zero location of `docs/theory` still names a TheoryIsolation guard deleted by `46220826c`, whose verdict says that `TheoryIsolationPolicy` hid from itself by concatenating its own tokens; the narrow reading that forbids theory-volume paths or names has zero D5/Blueprint matches, while the broad reading that forbids every `pzg` or `gict` token has three D5 files, including `D5/S1/Digit/PrimeAxis/FiniteDescriptionPZGCode.lean`. Until the owner defines what zero knowledge and zero location prohibit, even the open scope is inaccurate; close only when the owner chooses either a fail-closed consumer resistant to concatenation bypass or a rewrite of that guard-existence claim, both at tau=0. The ledger's false active guard-matrix row for this family has already been removed; the uncovered family is now recorded under `HC-OPEN-013` and `HC-OPEN-014` in the ledger's residual scan, so no ledger correction remains outstanding. -/
-def theoryIsolationSemanticsRulingTicket : Unit := ()
 
-/-- TASK D5-T0037
+/- TASK D5-T0037
     This is not a decision this lane can make; hand it to the admission-gate owner. Admission is offline and fail-closed under spec A12/A17 and `CLAUDE.md` rule 11, so GitHub issue numbers cannot be a resolvable case vocabulary, while the A7/SL-013 TASK system's machine role is the case-address space: `FrozenContentAddress` rejects every Open module without a `D5-Tnnnn` reference, `RepositoryRules.StructuredScan` uses the same vocabulary for SL-019 anomaly accounting, and deferred rule case ids enter `RuleCatalog.RootSha256`. Close only when the owner rules whether the gate may query GitHub; if yes, full retirement becomes cheaper, and if no, only the ticket skin (`难度`, `尝试`, `提示`, and `尸检`) can retire while the case-id skeleton remains. -/
-def githubAdmissionLookupRulingTicket : Unit := ()
 
-/-- TASK D5-T0038
+/- TASK D5-T0038
     This is not a decision this lane can make; hand it to the projection contract owner. Spec A17.1 names `StatementProjectionFixtureLoader.FromLean` as the unique construction entry for `lean-derived` formula provenance, but production never calls it: `Describe.cs` materializes through `StatementProjectionFixtureLoader.Assess`, and a symbol-level reachability measurement over Cli/Engine/Scribe found the method has zero references. Deleting it would silently adjudicate the mismatch in favour of the implementation; leaving it unrecorded leaves a spec claim with no enforcing consumer. Close only when the owner either rewrites A17.1 to name the live route or restores the method as that route. -/
-def statementProjectionFromLeanRulingTicket : Unit := ()
 
-/-- TASK D5-T0039
+/- TASK D5-T0039
     `docs/develop/spec/golden-ledger-repo-spec.md` 的样例 7 仍展示已退役的五字段 A7 语法。
     该样例是 `spec-acceptance-07` 这条未消化开放义务的内容；其 `receipts.coverage` 为空，
     并由 CAS 逐字节钉定。消除此处不一致须先消化该条目或执行收据级操作，本 lane 无权。 -/

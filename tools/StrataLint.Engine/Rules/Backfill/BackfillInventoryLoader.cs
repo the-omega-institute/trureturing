@@ -1,4 +1,5 @@
 using System.Collections.Immutable;
+using System.Text.RegularExpressions;
 
 namespace StrataLint.Engine;
 
@@ -17,25 +18,25 @@ internal sealed class BackfillInventoryDocument
     ];
 
     private readonly IReadOnlyDictionary<string, object?> root;
-    private readonly ImmutableArray<BackfillTicketReference> projectedTickets;
+    private readonly ImmutableArray<BackfillTicketReference> derivedTickets;
     private readonly ImmutableArray<DigestionLedgerSource> projectedSources;
     private readonly ImmutableArray<BackfillReceiptSyntax> receiptSyntaxes;
 
     internal BackfillInventoryDocument(
         IReadOnlyDictionary<string, object?> root,
         ImmutableArray<BackfillReceiptSyntax> receiptSyntaxes)
-        : this(root, default, default, receiptSyntaxes)
+        : this(root, [], default, receiptSyntaxes)
     {
     }
 
     private BackfillInventoryDocument(
         IReadOnlyDictionary<string, object?> root,
-        ImmutableArray<BackfillTicketReference> projectedTickets,
+        ImmutableArray<BackfillTicketReference> derivedTickets,
         ImmutableArray<DigestionLedgerSource> projectedSources,
         ImmutableArray<BackfillReceiptSyntax> receiptSyntaxes)
     {
         this.root = root;
-        this.projectedTickets = projectedTickets;
+        this.derivedTickets = derivedTickets;
         this.projectedSources = projectedSources;
         this.receiptSyntaxes = receiptSyntaxes;
     }
@@ -46,41 +47,16 @@ internal sealed class BackfillInventoryDocument
         ImmutableArray<DigestionLedgerSource> sources,
         ImmutableArray<BackfillTicketReference> tickets)
     {
-        var ticketIndex = tickets.Select(static ticket => (object?)new Dictionary<string, object?>(StringComparer.Ordinal)
-        {
-            ["case_id"] = ticket.CaseId,
-            ["gid"] = ticket.Gid,
-        }).ToList();
         var root = new Dictionary<string, object?>(StringComparer.Ordinal)
         {
             ["schema_version"] = BackfillInventoryLoader.SchemaVersion,
             ["ledger"] = BackfillInventoryLoader.LedgerName,
             ["sources"] = new List<object?>(),
-            ["ticket_index"] = ticketIndex,
         };
         return new BackfillInventoryDocument(root, tickets, sources, []);
     }
 
-    internal ImmutableArray<BackfillTicketReference> RequireTickets()
-    {
-        if (!projectedTickets.IsDefault)
-        {
-            return projectedTickets;
-        }
-
-        var ticketIndex = List(root, "ticket_index", "ticket_index must be a list");
-        var tickets = ImmutableArray.CreateBuilder<BackfillTicketReference>();
-        foreach (var rawTicket in ticketIndex)
-        {
-            var ticket = Mapping(rawTicket, "ticket_index entries must be mappings");
-            ExactKeys(ticket, ["case_id", "gid"], "ticket_index entry");
-            tickets.Add(new BackfillTicketReference(
-                Scalar(ticket, "case_id", "ticket_index case_id"),
-                Scalar(ticket, "gid", "ticket_index gid")));
-        }
-
-        return tickets.ToImmutable();
-    }
+    internal ImmutableArray<BackfillTicketReference> RequireTickets() => derivedTickets;
 
     internal ImmutableArray<DigestionLedgerSource> RequireDigestionSources()
     {
@@ -147,6 +123,10 @@ internal sealed class BackfillInventoryDocument
     internal BackfillInventoryDocument WithDigestionSources(
         ImmutableArray<DigestionLedgerSource> sources) =>
         new(root, RequireTickets(), sources, receiptSyntaxes);
+
+    internal BackfillInventoryDocument WithDerivedTickets(
+        ImmutableArray<BackfillTicketReference> tickets) =>
+        new(root, tickets, projectedSources, receiptSyntaxes);
 
     internal ImmutableArray<string> RequireReferencedGids()
     {
@@ -424,17 +404,15 @@ internal static partial class BackfillInventoryLoader
     internal const string RelativePath = "Meta/BACKFILL.yaml";
     internal const int SchemaVersion = 3;
     internal const string LedgerName = "theory-digestion-v1";
+    private static readonly Regex TaskDeclarationPattern = new(
+        "TASK (?<case>D5-T[0-9]{4})",
+        RegexOptions.CultureInvariant);
 
-    // 一原子一文件的消化台账落位。这三个成员先行加入 base 侧,使后续迁移 PR 的
-    // baseline admission 能识别 Meta/Digestion/backfill/** —— 否则「要认识这片路径
-    // 才能往里放文件,而放文件那次 PR 的法官还不认识它」形成引导死结。
-    // 今天树里还没有这些路径,故本谓词对当前 dev 恒为 false。
+    // 一原子一文件的消化台账落位;路径形状由 loader 闭世界识别。
     internal const string RootPath = "Meta/Digestion/backfill/";
-    internal const string TicketIndexPath = "Meta/Digestion/ticket-index.toml";
 
     internal static bool IsCanonicalPath(string path)
     {
-        if (string.Equals(path, TicketIndexPath, StringComparison.Ordinal)) return true;
         if (!path.StartsWith(RootPath, StringComparison.Ordinal)) return false;
         var parts = path[RootPath.Length..].Split('/');
         if (parts.Length == 2 && parts[1] == "source.toml") return true;
@@ -482,7 +460,7 @@ internal static partial class BackfillInventoryLoader
 
         if (hasLegacy)
         {
-            var document = Load(legacyFile!.Text);
+            var document = Load(legacyFile!.Text).WithDerivedTickets(DeriveTickets(snapshot));
             ValidateQuarantineMachineFormMarkers(snapshot, document);
             return document;
         }
@@ -518,12 +496,8 @@ internal static partial class BackfillInventoryLoader
         var directoryPath = Path.Combine(
             root,
             RootPath.Replace('/', Path.DirectorySeparatorChar));
-        var ticketIndexPath = Path.Combine(
-            root,
-            TicketIndexPath.Replace('/', Path.DirectorySeparatorChar));
         var hasLegacy = File.Exists(legacyPath);
-        var hasDirectory = File.Exists(ticketIndexPath)
-            || Directory.Exists(directoryPath)
+        var hasDirectory = Directory.Exists(directoryPath)
             && Directory.EnumerateFiles(directoryPath, "*", SearchOption.AllDirectories)
                 .Select(path => Path.GetRelativePath(root, path)
                     .Replace(Path.DirectorySeparatorChar, '/'))
@@ -536,7 +510,9 @@ internal static partial class BackfillInventoryLoader
         return hasLegacy
             ? LoadRootSnapshot(
                 root,
-                EnumerateFormalizationReceiptPaths(root).Prepend(legacyPath))
+                EnumerateFormalizationReceiptPaths(root)
+                    .Concat(EnumerateD5LeanPaths(root))
+                    .Prepend(legacyPath))
             : LoadDirectory(repositoryRoot);
     }
 
@@ -546,7 +522,7 @@ internal static partial class BackfillInventoryLoader
         var root = Path.GetFullPath(repositoryRoot);
         var directory = Path.Combine(root, RootPath.Replace('/', Path.DirectorySeparatorChar));
         var paths = Directory.EnumerateFiles(directory, "*", SearchOption.AllDirectories)
-            .Append(Path.Combine(root, TicketIndexPath.Replace('/', Path.DirectorySeparatorChar)))
+            .Concat(EnumerateD5LeanPaths(root))
             .Concat(EnumerateFormalizationReceiptPaths(root));
         return LoadRootSnapshot(root, paths);
     }
@@ -644,10 +620,45 @@ internal static partial class BackfillInventoryLoader
             }
         }
 
-        var tickets = snapshot.TryGetFile(TicketIndexPath, out var ticketFile)
-            ? ParseTickets(ticketFile.Text)
-            : throw new FormatException($"digestion ticket index is missing: {TicketIndexPath}");
-        return BackfillInventoryDocument.Create(sources.ToImmutable(), tickets);
+        return BackfillInventoryDocument.Create(sources.ToImmutable(), DeriveTickets(snapshot));
+    }
+
+    internal static ImmutableArray<BackfillTicketReference> DeriveTickets(
+        RepositorySnapshot snapshot)
+    {
+        var modulesByCase = new SortedDictionary<string, string>(StringComparer.Ordinal);
+        foreach (var (path, file) in snapshot.Files
+                     .Where(static pair => pair.Key.Value.StartsWith("D5/", StringComparison.Ordinal)
+                         && pair.Key.Value.EndsWith(".lean", StringComparison.Ordinal))
+                     .OrderBy(static pair => pair.Key.Value, StringComparer.Ordinal))
+        {
+            var module = path.Value[..^".lean".Length];
+            foreach (Match match in TaskDeclarationPattern.Matches(file.Text))
+            {
+                var caseId = match.Groups["case"].Value;
+                if (modulesByCase.TryGetValue(caseId, out var existingModule)
+                    && !string.Equals(existingModule, module, StringComparison.Ordinal))
+                {
+                    throw new FormatException(
+                        $"TASK case {caseId} is declared by multiple D5 Lean modules: "
+                        + $"{existingModule}, {module}");
+                }
+
+                modulesByCase.TryAdd(caseId, module);
+            }
+        }
+
+        return modulesByCase
+            .Select(static pair => new BackfillTicketReference(pair.Key, pair.Value))
+            .ToImmutableArray();
+    }
+
+    private static IEnumerable<string> EnumerateD5LeanPaths(string root)
+    {
+        var d5Root = Path.Combine(root, "D5");
+        return Directory.Exists(d5Root)
+            ? Directory.EnumerateFiles(d5Root, "*.lean", SearchOption.AllDirectories)
+            : [];
     }
 
     private static Dictionary<string, List<string>> ParseSourceMetadata(string text, string path)
@@ -749,35 +760,4 @@ internal static partial class BackfillInventoryLoader
         return encoded[1..^1];
     }
 
-    internal static ImmutableArray<BackfillTicketReference> ParseTickets(string text)
-    {
-        var tickets = ImmutableArray.CreateBuilder<BackfillTicketReference>();
-        foreach (var line in text.Split('\n', StringSplitOptions.RemoveEmptyEntries))
-        {
-            var parts = line.Split(" = ", 2, StringSplitOptions.None);
-            if (parts.Length != 2)
-            {
-                throw new FormatException("invalid digestion ticket index");
-            }
-
-            List<string> values;
-            try
-            {
-                values = ParseTomlValues(parts[1]);
-            }
-            catch (FormatException)
-            {
-                throw new FormatException("invalid digestion ticket index");
-            }
-
-            if (values.Count != 1)
-            {
-                throw new FormatException("invalid digestion ticket index");
-            }
-
-            tickets.Add(new BackfillTicketReference(parts[0], values[0]));
-        }
-
-        return tickets.ToImmutable();
-    }
 }
