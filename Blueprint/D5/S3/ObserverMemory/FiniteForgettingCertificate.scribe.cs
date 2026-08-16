@@ -6,8 +6,6 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.ObserverMemory;
 
 internal sealed class FiniteForgettingCertificateDocument : IScribeDocumentDefinition
 {
-    private const string LeanPrefix = "D5/S3/ObserverMemory/FiniteForgettingCertificate.";
-
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create("Finite forgetting and recall histories preserve irreversible ledger marks and incompatible-claim separation.",
         H("Named Cognitive-State Forgetting Certificate"),
         Blocks(

@@ -6,8 +6,6 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.ObserverMemory;
 
 internal sealed class MultiCopyErasureDocument : IScribeDocumentDefinition
 {
-    private const string LeanPrefix = "D5/S3/ObserverMemory/MultiCopyErasure.";
-
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create("A finite independent record family keeps a nonzero coherence entry nonzero exactly when every record overlap is nonzero.",
         H("Finite Multi-Copy Record Erasure"),
         Blocks(
