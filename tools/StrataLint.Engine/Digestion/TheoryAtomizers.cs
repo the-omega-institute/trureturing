@@ -197,7 +197,10 @@ internal sealed class AtomizedTheoryDocument
 
     internal DigestionAtom ResolveClaim(string astPath)
     {
-        var exact = Claims.Where(atom => atom.AstPath == astPath).ToArray();
+        var exact = Claims
+            .Concat(ClausePlans.SelectMany(static plan => plan.Children))
+            .Where(atom => atom.AstPath == astPath)
+            .ToArray();
         if (exact.Length == 1)
         {
             return exact[0];
