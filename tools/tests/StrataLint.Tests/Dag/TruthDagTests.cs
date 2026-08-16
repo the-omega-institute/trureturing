@@ -8,6 +8,14 @@ namespace StrataLint.Tests;
 public sealed class TruthDagTests
 {
     [Fact]
+    public void StandardAxiomAlphabetIsPinned()
+    {
+        Assert.Equal(
+            new[] { "Classical.choice", "Quot.sound", "propext" },
+            LeanAxiomFacts.StandardAxioms.Order(StringComparer.Ordinal));
+    }
+
+    [Fact]
     public void TruthNodeStateAndAcyclicDagCannotBeForgedThroughPublicConstructors()
     {
         Assert.Empty(typeof(TruthNode).GetConstructors(BindingFlags.Instance | BindingFlags.Public));
