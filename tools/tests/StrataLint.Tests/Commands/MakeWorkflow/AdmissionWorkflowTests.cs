@@ -85,14 +85,16 @@ public sealed class AdmissionWorkflowTests
     public void PushFallbackBaseIsCheckedHeadFirstParent()
     {
         var baselineScript = BaselineResolutionScript(SharedAdmissionWorkflow);
-        var pushBranch = baselineScript[
-            baselineScript.IndexOf("else", StringComparison.Ordinal)..];
 
         Assert.Contains(
             "sha=\"$(git -C candidate rev-parse HEAD^1)\"",
-            pushBranch,
+            baselineScript,
             StringComparison.Ordinal);
-        Assert.DoesNotContain("$GITHUB_SHA^", pushBranch, StringComparison.Ordinal);
+        Assert.Single(Regex.Matches(
+            baselineScript,
+            Regex.Escape("sha=\"$(git -C candidate rev-parse HEAD^1)\"")));
+        Assert.DoesNotContain("github.event.before", baselineScript, StringComparison.Ordinal);
+        Assert.DoesNotContain("$GITHUB_SHA^", baselineScript, StringComparison.Ordinal);
     }
 
     [Fact]
