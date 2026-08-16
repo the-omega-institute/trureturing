@@ -631,7 +631,6 @@ public sealed class FormalizeCandidatesTests
             }
         }
 
-        builder.AppendLine("ticket_index: []");
         return builder.ToString();
     }
 

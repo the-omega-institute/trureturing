@@ -54,7 +54,6 @@ public sealed class RuleApplicabilityTests
     [Theory]
     [InlineData("Meta/Digestion/backfill/fixture-v1/source.toml", true)]
     [InlineData("Meta/Digestion/backfill/fixture-v1/residual-open/fixture.yaml", true)]
-    [InlineData("Meta/Digestion/ticket-index.toml", true)]
     [InlineData("Meta/Digestion/backfill/fixture-v1/deferred-open/fixture.yaml", false)]
     [InlineData("Meta/Digestion/backfill/fixture-v1/residual-open/fixture.toml", false)]
     [InlineData("Meta/BACKFILL.yaml", false)]

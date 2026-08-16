@@ -33,8 +33,7 @@ public sealed class TheoryCoverageRuleTests
         "  - source_id: digested",
         "    path: " + DigestedPath,
         "    atomizer: " + AtomizerRegistry.GenericId,
-        "    entries: []",
-        "ticket_index: []");
+        "    entries: []");
 
     private static string[] Findings(string registry)
     {

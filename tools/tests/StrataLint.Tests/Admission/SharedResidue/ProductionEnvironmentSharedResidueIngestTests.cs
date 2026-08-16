@@ -135,7 +135,6 @@ public sealed partial class ProductionEnvironmentTests
                 status:
                   migration: residual
                   truth: open
-        ticket_index: []
         """;
 
     private static CommandResult RunSharedResidueIngest(

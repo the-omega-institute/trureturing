@@ -175,8 +175,7 @@ public sealed class DigestionQuarantineTests
         + "    path: docs/source.md\n"
         + "    atomizer: none\n"
         + "    entries:\n"
-        + string.Concat(atoms.Select(static atom => LedgerEntry(atom) + "\n"))
-        + "ticket_index: []\n";
+        + string.Concat(atoms.Select(static atom => LedgerEntry(atom) + "\n"));
 
     private static string Atom(
         string atomId,
@@ -220,7 +219,6 @@ public sealed class DigestionQuarantineTests
                 """)),
             ($"{BackfillInventoryLoader.RootPath}fixture-source/residual-open/{AtomId}.yaml",
                 Encoding.UTF8.GetBytes(ToDirectoryAtom(atom))),
-            (BackfillInventoryLoader.TicketIndexPath, []),
         };
         files.AddRange(additional);
         return DigestionTestSupport.Snapshot([.. files]);
