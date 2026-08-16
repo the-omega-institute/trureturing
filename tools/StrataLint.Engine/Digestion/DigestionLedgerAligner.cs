@@ -687,6 +687,5 @@ internal static partial class DigestionLedgerAligner
     private static bool HasAdapterFineReceipt(DigestionLedgerSource source) =>
         AtomizerRegistry.IsRegistered(source.Atomizer)
         && source.Entries.Any(static entry =>
-            entry.Boundary is null
-            && entry.AstPath != "coarse/source");
+            entry.AstPath != "coarse/source");
 }

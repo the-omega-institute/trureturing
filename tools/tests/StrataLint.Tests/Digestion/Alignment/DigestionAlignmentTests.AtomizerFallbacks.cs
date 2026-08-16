@@ -245,7 +245,7 @@ public sealed partial class DigestionAlignmentTests
     }
 
     [Fact]
-    public void IngestRepairsMissedCoarseRetirementAfterAdapterFineReceiptsExist()
+    public void IngestTreatsRegisteredLegacyFineReceiptAsAdapterReplacementIntent()
     {
         var (sourceBytes, coarseCapture, fineCapture, ledger) = MissedCoarseReplacement();
         var coarseBefore = Assert.Single(ledger.RequireDigestionEntries(), static entry =>
@@ -268,7 +268,50 @@ public sealed partial class DigestionAlignmentTests
     }
 
     [Fact]
-    public void IngestDoesNotRetireCoarseReceiptForFineLegacyBoundariesWithoutAdapter()
+    public void AlignmentTreatsRegisteredLegacyFineReceiptAsAdapterReplacementIntent()
+    {
+        var (sourceBytes, coarseCapture, fineCapture, ledger) =
+            MissedCoarseReplacement(legacySyntax: true);
+
+        var result = DigestionLedgerAligner.Evaluate(
+            ledger,
+            Snapshot(sourceBytes, [coarseCapture, fineCapture]),
+            ledger,
+            DigestionAlignmentMode.Ingest);
+
+        Assert.Equal(["coarse-receipt"], result.ActualStale.ToArray());
+        Assert.Equal(
+            DigestionReceiptAlignment.Stale,
+            result.AlignmentFor("coarse-receipt"));
+    }
+
+    [Fact]
+    public void AlignmentKeepsCoarseReceiptWhenRegisteredAdapterHasNoFineReceipt()
+    {
+        var (sourceBytes, coarseCapture, _, ledger) = MissedCoarseReplacement();
+        var source = Assert.Single(ledger.RequireDigestionSources());
+        var coarseOnly = ledger.WithDigestionSources(
+            [source with
+            {
+                Entries = source.Entries
+                    .Where(static entry => entry.AstPath == "coarse/source")
+                    .ToImmutableArray(),
+            }]);
+
+        var result = DigestionLedgerAligner.Evaluate(
+            coarseOnly,
+            Snapshot(sourceBytes, [coarseCapture]),
+            coarseOnly,
+            DigestionAlignmentMode.Ingest);
+
+        Assert.Empty(result.ActualStale);
+        Assert.Equal(
+            DigestionReceiptAlignment.Seen,
+            result.AlignmentFor("coarse-receipt"));
+    }
+
+    [Fact]
+    public void IngestDoesNotRetireCoarseReceiptForFineReceiptWithoutRegisteredAdapter()
     {
         var sourceBytes = Encoding.UTF8.GetBytes("# Legacy\n\nfine claim\n");
         var coarseBytes = ImmutableArray.CreateRange(sourceBytes);
@@ -592,7 +635,7 @@ public sealed partial class DigestionAlignmentTests
         byte[] SourceBytes,
         DigestionCasObject CoarseCapture,
         DigestionCasObject FineCapture,
-        BackfillInventoryDocument Ledger) MissedCoarseReplacement()
+        BackfillInventoryDocument Ledger) MissedCoarseReplacement(bool legacySyntax = false)
     {
         var sourceBytes = Encoding.UTF8.GetBytes(
             "# Observer\n\n**\u5b9a\u7406(\u89c2\u5bdf\u8005\u4ee3\u6570\u7684\u552f\u4e00\u5f62\u6001)\u3002** claim\u3002\n");
@@ -613,8 +656,12 @@ public sealed partial class DigestionAlignmentTests
         var ledger = BackfillInventoryLoader.Load(
             Ledger(
                     [],
-                    CasEntry("coarse-receipt", coarse, coarseCapture.Reference),
-                    CasEntry("fine-receipt", fine, fineCapture.Reference))
+                    legacySyntax
+                        ? LegacyEntry("coarse-receipt", coarse)
+                        : CasEntry("coarse-receipt", coarse, coarseCapture.Reference),
+                    legacySyntax
+                        ? LegacyEntry("fine-receipt", fine)
+                        : CasEntry("fine-receipt", fine, fineCapture.Reference))
                 .Replace(
                     $"atomizer: {AtomizerRegistry.GictId}",
                     $"atomizer: {AtomizerRegistry.ObserverId}",
