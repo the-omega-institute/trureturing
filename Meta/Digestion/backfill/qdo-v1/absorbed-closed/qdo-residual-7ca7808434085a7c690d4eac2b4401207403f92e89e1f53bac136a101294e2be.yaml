@@ -5,13 +5,20 @@ fingerprints:
 cas_ref: sha256:7ca7808434085a7c690d4eac2b4401207403f92e89e1f53bac136a101294e2be
 coverage_gids:
   - D5/S3/ObserverMemory/InverseLimits/FunctionGraphSpectrumCollision.same_trace_rank_spectra_not_function_graph_conjugate
+  - D5/S3/ObserverMemory/InverseLimits/FunctionGraphLinearSimilarity.transition_matrices_linearly_similar
 receipts:
   coverage:
     - gid: D5/S3/ObserverMemory/InverseLimits/FunctionGraphSpectrumCollision.same_trace_rank_spectra_not_function_graph_conjugate
       source_sha256: sha256:7ca7808434085a7c690d4eac2b4401207403f92e89e1f53bac136a101294e2be
       target_sha256: sha256:6e3b86f51b659e2a8cbe87a0af9ae84d3ae6ca20b41682e57bfb5a93e5c26441
+    - gid: D5/S3/ObserverMemory/InverseLimits/FunctionGraphLinearSimilarity.transition_matrices_linearly_similar
+      source_sha256: sha256:7ca7808434085a7c690d4eac2b4401207403f92e89e1f53bac136a101294e2be
+      target_sha256: sha256:5ec7b547e8c08f2e5c43e6333f6c53d832c1a8e19075e1ddc749af2522b2055a
   scribe:
     - gid: D5/S3/ObserverMemory/InverseLimits/FunctionGraphSpectrumCollision.same_trace_rank_spectra_not_function_graph_conjugate
       definition_sha256: sha256:ddd60b47159249a78aa9d70018a60341cfcb5f87bcaed3504a437796b95bf121
       emission_sha256: sha256:f7e832a4c6625d318780529cadda685c29572df7a35ec969a3c9cab3c0f4e414
+    - gid: D5/S3/ObserverMemory/InverseLimits/FunctionGraphLinearSimilarity.transition_matrices_linearly_similar
+      definition_sha256: sha256:9b80736881039d420feb40e0ada3dfbc53581fe6ffd9f7e597f8983f91bc6d8c
+      emission_sha256: sha256:79e30f89039d180d63f08f6cdd86a1f1aa57a57a2dac17493a1448ade613b6ce
   unresolved_subitems: []
