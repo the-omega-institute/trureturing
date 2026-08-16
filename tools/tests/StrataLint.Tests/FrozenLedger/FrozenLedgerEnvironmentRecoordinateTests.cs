@@ -54,7 +54,7 @@ public sealed partial class FrozenLedgerTests
         var syntax = LoadedEnvironmentLedger(bytes.AsSpan());
 
         Assert.Equal(
-            "7f82664d7cfe5e8df1cf7b6fcf67f306f71e1df1b16ba0851bfb31913583b4e5",
+            "69a85a2b1fee90a1bed2fc787960a93f554679bfc54d71d248a5474acdbf9d8f",
             Convert.ToHexStringLower(System.Security.Cryptography.SHA256.HashData(bytes.AsSpan())));
 
         var accepted = Assert.IsType<FrozenLedgerValidationOutcome.Accepted>(

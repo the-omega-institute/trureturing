@@ -250,7 +250,8 @@ public static class ScribeEmitter
         foreach (var (definition, expected) in rendered)
         {
             var path = Path.Combine(repositoryRoot, definition.RelativePath.Value);
-            var current = File.Exists(path) ? File.ReadAllBytes(path) : [];
+            var exists = File.Exists(path);
+            var current = exists ? File.ReadAllBytes(path) : [];
             if (current.AsSpan().SequenceEqual(expected))
             {
                 continue;
@@ -259,7 +260,12 @@ public static class ScribeEmitter
             if (check)
             {
                 documentDifferences++;
-                error.WriteLine($"out of date: {definition.RelativePath.Value}");
+                error.WriteLine(exists
+                    ? $"out of date: {definition.RelativePath.Value}: renderer output differs from committed oracle; "
+                        + "review the diff first; only if this change is intentional, run make emit and commit "
+                        + $"{definition.RelativePath.Value} to accept it"
+                    : $"out of date: {definition.RelativePath.Value}: committed renderer oracle missing; "
+                        + $"run make emit and commit {definition.RelativePath.Value}");
                 continue;
             }
 
