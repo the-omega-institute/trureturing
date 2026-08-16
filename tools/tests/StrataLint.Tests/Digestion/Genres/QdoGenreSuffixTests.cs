@@ -90,9 +90,7 @@ public sealed class QdoGenreSuffixTests
             Assert.Equal(bytes, after.Reassemble().ToArray());
         }
 
-        AssertGenreTable(LegacyGictGenres, migrated.GictGenres);
-        AssertGenreTable(LegacyPzgGenres, migrated.PzgGenres);
-        Assert.Contains("qdo", migrated.Dialects.Keys);
+        AssertLegacyTables(migrated);
     }
 
     [Fact]
@@ -113,31 +111,52 @@ public sealed class QdoGenreSuffixTests
             """);
         var migrated = LoadRules(extended);
 
-        AssertGenreTable(LegacyGictGenres, migrated.GictGenres);
-        AssertGenreTable(LegacyPzgGenres, migrated.PzgGenres);
+        AssertLegacyTables(migrated);
         Assert.Contains(
             migrated.PzgGenres,
             item => item.Token == "增补观察" && item.Value == "observation");
     }
 
     [Fact]
+    public void ConservativityOracleAdmitsASecondDeclaredDialect()
+    {
+        // Declaring another dialect leaves every legacy mapping intact, so the oracle must
+        // admit it; pinning the key set to exactly qdo would freeze the future catalogue.
+        var extended = InsertBefore(CanonicalData, "[[dialect.genre]]", LongestDialect + "\n\n");
+        var migrated = LoadRules(extended);
+
+        AssertLegacyTables(migrated);
+        Assert.Contains(LongestDialectId, migrated.Dialects.Keys);
+    }
+
+    [Fact]
     public void ConservativityOracleRejectsARewrittenLegacyMapping()
     {
-        var rewritten = LoadRules(CanonicalData.Replace(
-            """
-            [[pzg.genres]]
-            token = "约定"
-            kind = "specification"
-            """,
-            """
-            [[pzg.genres]]
-            token = "约定"
-            kind = "note"
-            """,
-            StringComparison.Ordinal));
+        // Rewrite one legacy mapping in memory: the oracle's discriminating power is a property
+        // of the predicate, not of the canonical file's byte layout, so this must not depend on
+        // matching TOML text.
+        var (token, kind) = LegacyPzgGenres[0];
+        var rewritten = LoadRules(CanonicalData).PzgGenres
+            .Select(item => item.Token == token
+                ? new AtomizerMapping(item.Token, kind == "observation" ? "note" : "observation")
+                : item)
+            .ToArray();
+
+        Assert.Single(rewritten, item => item.Token == token && item.Value != kind);
+        Assert.Throws<Xunit.Sdk.ContainsException>(
+            () => AssertGenreTable(LegacyPzgGenres, rewritten));
+    }
+
+    [Fact]
+    public void ConservativityOracleRejectsADroppedLegacyMapping()
+    {
+        var (token, _) = LegacyPzgGenres[0];
+        var dropped = LoadRules(CanonicalData).PzgGenres
+            .Where(item => item.Token != token)
+            .ToArray();
 
         Assert.Throws<Xunit.Sdk.ContainsException>(
-            () => AssertGenreTable(LegacyPzgGenres, rewritten.PzgGenres));
+            () => AssertGenreTable(LegacyPzgGenres, dropped));
     }
 
     [Fact]
@@ -201,6 +220,17 @@ public sealed class QdoGenreSuffixTests
     private static TheoryAtomizerRules LoadRules(string data) => TheoryAtomizerDataLoader.Load(
         DigestionTestSupport.Snapshot(
             (TheoryAtomizerDataLoader.DataPath, Encoding.UTF8.GetBytes(data))));
+
+    /// <summary>
+    /// The whole legacy surface this branch must preserve. Every conservativity fixture calls
+    /// it, so a reverted inclusion assertion is pinned by the monotone-extension cases.
+    /// </summary>
+    private static void AssertLegacyTables(TheoryAtomizerRules migrated)
+    {
+        AssertGenreTable(LegacyGictGenres, migrated.GictGenres);
+        AssertGenreTable(LegacyPzgGenres, migrated.PzgGenres);
+        Assert.Contains("qdo", migrated.Dialects.Keys);
+    }
 
     /// <summary>
     /// Conservative extension is inclusion, not equality: every legacy mapping must still be
@@ -317,6 +347,8 @@ public sealed class QdoGenreSuffixTests
         ("窗", "observation"),
         ("系", "corollary"),
     ];
+
+    private const string LongestDialectId = "longest-probe";
 
     private const string LongestDialect = """
         [[dialect]]
