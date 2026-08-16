@@ -199,12 +199,119 @@ public sealed class MissionFileLoaderTests
     }
 
     [Fact]
-    public void TaskBlockTextInsideAStringLiteralCannotSatisfyAnOpenCaseReference()
+    public void LetterSuffixedTaskCodeCannotSatisfyAFourDigitOpenCaseReference()
+    {
+        var target = ReplaceNoveltyTaskBlock(NoveltyTaskBlock.Replace(
+            "D5-T0040",
+            "D5-T0040foo",
+            StringComparison.Ordinal));
+
+        var invalid = Assert.IsType<MissionLoadOutcome.Invalid>(
+            LoadRepository(Encoding.UTF8.GetBytes(ValidMission), target));
+
+        Assert.Equal(MissionLoadErrorCode.DanglingCaseReference, invalid.Error.Code);
+        Assert.Contains("D5-T0040", invalid.Error.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void UnderscoreSuffixedTaskCodeCannotSatisfyAFourDigitOpenCaseReference()
+    {
+        var target = ReplaceNoveltyTaskBlock(NoveltyTaskBlock.Replace(
+            "D5-T0040",
+            "D5-T0040_x",
+            StringComparison.Ordinal));
+
+        var invalid = Assert.IsType<MissionLoadOutcome.Invalid>(
+            LoadRepository(Encoding.UTF8.GetBytes(ValidMission), target));
+
+        Assert.Equal(MissionLoadErrorCode.DanglingCaseReference, invalid.Error.Code);
+        Assert.Contains("D5-T0040", invalid.Error.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void TaskBlockTextInsideAnEscapedStringLiteralCannotSatisfyAnOpenCaseReference()
     {
         var target = ReplaceNoveltyTaskBlock("""
-            def staleMissionMarker : String := "
+            def staleMissionMarker : String := "escaped quote: \"
             /-- TASK D5-T0040
                 This text is inside a string literal. -/"
+            """);
+
+        var invalid = Assert.IsType<MissionLoadOutcome.Invalid>(
+            LoadRepository(Encoding.UTF8.GetBytes(ValidMission), target));
+
+        Assert.Equal(MissionLoadErrorCode.DanglingCaseReference, invalid.Error.Code);
+        Assert.Contains("D5-T0040", invalid.Error.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void DoubleQuoteCharacterLiteralDoesNotHideTheFollowingTaskBlock()
+    {
+        var target = ReplaceNoveltyTaskBlock(
+            "def quote : Char := '\"'\n" + NoveltyTaskBlock);
+
+        Assert.IsType<MissionLoadOutcome.Loaded>(
+            LoadRepository(Encoding.UTF8.GetBytes(ValidMission), target));
+    }
+
+    [Fact]
+    public void TaskBlockTextInsideAZeroHashRawStringCannotSatisfyAnOpenCaseReference()
+    {
+        var target = ReplaceNoveltyTaskBlock("""
+            def staleMissionMarker : String := r"
+            /-- TASK D5-T0040
+                This text is inside a zero-hash raw string. -/"
+            """);
+
+        var invalid = Assert.IsType<MissionLoadOutcome.Invalid>(
+            LoadRepository(Encoding.UTF8.GetBytes(ValidMission), target));
+
+        Assert.Equal(MissionLoadErrorCode.DanglingCaseReference, invalid.Error.Code);
+        Assert.Contains("D5-T0040", invalid.Error.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void TaskBlockTextInsideAMultiHashRawStringCannotSatisfyAnOpenCaseReference()
+    {
+        var target = ReplaceNoveltyTaskBlock("""
+            def staleMissionMarker : String := r##"
+            An unescaped " does not close this raw string.
+            /-- TASK D5-T0040
+                This text is inside a multi-hash raw string. -/
+            "##
+            """);
+
+        var invalid = Assert.IsType<MissionLoadOutcome.Invalid>(
+            LoadRepository(Encoding.UTF8.GetBytes(ValidMission), target));
+
+        Assert.Equal(MissionLoadErrorCode.DanglingCaseReference, invalid.Error.Code);
+        Assert.Contains("D5-T0040", invalid.Error.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void TaskBlockTextInsideAnInterpolatedStringCannotSatisfyAnOpenCaseReference()
+    {
+        var target = ReplaceNoveltyTaskBlock("""
+            def staleMissionMarker : String := s!"{show Char from '"'}
+            /-- TASK D5-T0040
+                This text is inside an interpolated string. -/"
+            """);
+
+        var invalid = Assert.IsType<MissionLoadOutcome.Invalid>(
+            LoadRepository(Encoding.UTF8.GetBytes(ValidMission), target));
+
+        Assert.Equal(MissionLoadErrorCode.DanglingCaseReference, invalid.Error.Code);
+        Assert.Contains("D5-T0040", invalid.Error.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void TaskBlockTextInsideAGuillemetIdentifierCannotSatisfyAnOpenCaseReference()
+    {
+        var target = ReplaceNoveltyTaskBlock("""
+            def «
+            /-- TASK D5-T0040
+                This text is inside a guillemet identifier. -/
+            » : Unit := ()
             """);
 
         var invalid = Assert.IsType<MissionLoadOutcome.Invalid>(
@@ -221,6 +328,23 @@ public sealed class MissionFileLoaderTests
 
         Assert.IsType<MissionLoadOutcome.Loaded>(
             LoadRepository(Encoding.UTF8.GetBytes(ValidMission), target));
+    }
+
+    [Fact]
+    public void TaskBlockNestedInsideAModuleDocumentationCommentCannotSatisfyAnOpenCaseReference()
+    {
+        var target = ReplaceNoveltyTaskBlock("""
+            /-!
+            /-- TASK D5-T0040
+                This documentation comment is nested inside a module documentation comment. -/
+            -/
+            """);
+
+        var invalid = Assert.IsType<MissionLoadOutcome.Invalid>(
+            LoadRepository(Encoding.UTF8.GetBytes(ValidMission), target));
+
+        Assert.Equal(MissionLoadErrorCode.DanglingCaseReference, invalid.Error.Code);
+        Assert.Contains("D5-T0040", invalid.Error.Message, StringComparison.Ordinal);
     }
 
     [Theory]
