@@ -52,7 +52,19 @@ public sealed class FrozenLedgerBaseViewTests
             FrozenAcceptedEventLoader.LoadFiles(acceptedFiles));
 
         Assert.NotEmpty(loaded.Events);
-        Assert.All(loaded.Events, static item => Assert.Equal(2, item.SchemaVersion));
+
+        // The corpus is mixed by design: 2 is the legacy encoding and
+        // CurrentDagSchemaVersion is what the writer emits now, so pinning the whole
+        // corpus to one version contradicts NewContentAddressedEventsUseSchemaV3 the
+        // moment a new event lands. Pin the supported set that
+        // FrozenLedgerCanonicalWriter already owns, and keep the legacy decode path
+        // covered by requiring the v2 subset to stay non-empty.
+        Assert.All(
+            loaded.Events,
+            static item => Assert.True(
+                item.SchemaVersion is 2 or FrozenLedgerCanonicalWriter.CurrentDagSchemaVersion,
+                $"unsupported schema_version {item.SchemaVersion}"));
+        Assert.Contains(loaded.Events, static item => item.SchemaVersion == 2);
     }
 
     [Fact]
