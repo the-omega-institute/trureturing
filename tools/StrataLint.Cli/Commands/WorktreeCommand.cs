@@ -16,6 +16,7 @@ internal static class WorktreeCommand
     internal const string SolutionPath = "tools/StrataLint.sln";
     internal const string Usage =
         "USAGE: StrataLint worktree ensure-cache [--path DIR] | "
+        + "StrataLint worktree with-cache-writer [--path DIR] -- COMMAND [ARG ...] | "
         + "StrataLint worktree --branch NAME --path DIR "
         + "[--base REV] [--source REPO_ROOT] [--skip-restore]. "
         + ".lake caches are copied for isolation; symlink sharing is forbidden.";
@@ -66,18 +67,33 @@ internal static class WorktreeCommand
                 runner,
                 cloner);
         }
+        if (arguments.Count > 0
+            && string.Equals(arguments[0], "with-cache-writer", StringComparison.Ordinal))
+        {
+            return LeanCacheEnsureCommand.RunWithWriter(
+                repositoryRoot,
+                arguments.Skip(1).ToArray(),
+                runner,
+                cloner);
+        }
 
         WorktreeOptions? options = null;
         var worktreeCreated = false;
+        var cleanupWorktreeOnFailure = false;
+        var pruneOutcome = MathlibCachePruneOutcome.NotRun;
         var stopwatch = System.Diagnostics.Stopwatch.StartNew();
         try
         {
             options = ParseArguments(repositoryRoot, arguments);
+            if (!LeanLakeExecutable.TryResolve(out var lakeExecutable, out var lakeReason))
+            {
+                throw new InvalidOperationException(lakeReason);
+            }
             ValidatePreflight(options, runner);
             GitWorktreeInventory.FetchRemoteBase(options.Source, options.Base, runner);
             VerifyBase(options, runner);
             var pins = LeanPinSet.ReadBase(options.Source, options.Base, runner);
-            var donor = GitWorktreeInventory.SelectDonor(options.Source, pins, runner);
+            using var donor = GitWorktreeInventory.SelectDonor(options.Source, pins, runner);
 
             RunRequired(
                 runner,
@@ -87,8 +103,26 @@ internal static class WorktreeCommand
                 TimeSpan.FromSeconds(120),
                 "git worktree add failed");
             worktreeCreated = true;
+            cleanupWorktreeOnFailure = true;
             EnsureReviewScaffoldIgnores(options.Path);
-            var cache = LeanCacheProvisioner.Provision(donor, options.Path, runner, cloner);
+            using var targetWriter = LeanCacheWriterGuard.TryAcquire(
+                Path.Combine(options.Path, ".lake"));
+            if (targetWriter is null)
+            {
+                // A writer that won the post-add race owns the target cache now. Preserve the
+                // worktree rather than deleting bytes underneath that live writer.
+                cleanupWorktreeOnFailure = false;
+                throw new InvalidOperationException("target cache writer guard is busy");
+            }
+            var cache = LeanCacheProvisioner.Provision(
+                donor,
+                options.Path,
+                pins,
+                lakeExecutable,
+                runner,
+                targetWriter,
+                cloner);
+            pruneOutcome = cache.PruneOutcome;
             if (!options.SkipRestore)
             {
                 RunRequired(
@@ -104,6 +138,7 @@ internal static class WorktreeCommand
             var summary = JsonSerializer.Serialize(new
             {
                 @event = "worktree_init",
+                status = "succeeded",
                 branch = options.Branch,
                 path = options.Path,
                 base_revision = options.Base,
@@ -111,6 +146,9 @@ internal static class WorktreeCommand
                 pin_sha256 = pins.Sha256,
                 cache_strategy = cache.Strategy,
                 cache_method = cache.Method,
+                shared_cache_scope = pruneOutcome.Scope,
+                mathlib_cache_pruned_files = pruneOutcome.DeletedFiles,
+                mathlib_cache_clean_status = pruneOutcome.CleanStatus,
                 dotnet_restore = options.SkipRestore ? "skipped" : "restored",
                 elapsed_ms = stopwatch.ElapsedMilliseconds,
             }) + "\n";
@@ -122,13 +160,31 @@ internal static class WorktreeCommand
         catch (Exception exception)
         {
             stopwatch.Stop();
-            var cleanup = options is not null && worktreeCreated
+            if (exception is LeanCacheProvisionException cacheException)
+            {
+                pruneOutcome = cacheException.PruneOutcome;
+            }
+            var cleanup = options is not null && worktreeCreated && cleanupWorktreeOnFailure
                 ? Cleanup(options, runner)
                 : string.Empty;
+            var receipt = JsonSerializer.Serialize(new
+            {
+                @event = "worktree_init",
+                status = "failed",
+                branch = options?.Branch,
+                path = options?.Path,
+                base_revision = options?.Base,
+                reason = exception.Message,
+                shared_cache_scope = pruneOutcome.Scope,
+                mathlib_cache_pruned_files = pruneOutcome.DeletedFiles,
+                mathlib_cache_clean_status = pruneOutcome.CleanStatus,
+                cleanup_error = cleanup.Length == 0 ? null : cleanup.TrimStart(';', ' '),
+                elapsed_ms = stopwatch.ElapsedMilliseconds,
+            });
             return new CommandResult(
                 false,
                 string.Empty,
-                $"WORKTREE_FAILED {exception.Message}{cleanup}\n");
+                $"WORKTREE_FAILED {receipt}\n");
         }
     }
 

@@ -66,7 +66,8 @@ internal static class DagLedgerSyncWriter
 
             var pending = DagLedgerAppendWriter.BuildNewEventFiles(
                 generatedSyntax.Lines,
-                context.Baseline.Events.Length);
+                context.Baseline.Events.Length,
+                currentBaseline);
             var prospectiveFiles = baselineFiles.AddRange(pending);
             var candidateSyntax = DagLedgerCommandPreparation.LoadLedgerFiles(
                 prospectiveFiles,

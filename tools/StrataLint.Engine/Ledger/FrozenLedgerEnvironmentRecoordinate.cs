@@ -186,6 +186,7 @@ public static partial class FrozenLedger
             Material = material,
             Payload = entry.Payload with
             {
+                AxiomClosure = payload.NewAxiomClosure,
                 DeclarationStatementIds = payload.NewDeclarationStatementIds,
                 FrozenNodeId = payload.NewFrozenNodeId,
                 Input = payload.NewInput,

@@ -110,8 +110,6 @@ perf_capture_event() {
   local loadavg="$(perf_loadavg_per_cpu)"
   local concurrency="$(perf_host_concurrency)"
   local disk_free="$(perf_disk_free_gb "$root")"
-  local cache_state="cold"
-  if [[ -d "$root/.lake/build" ]]; then cache_state="warm"; fi
   local timestamp="$(date -u '+%Y-%m-%dT%H:%M:%SZ' 2>/dev/null || printf '1970-01-01T00:00:00Z')"
   local runner_json="null"
   if [[ -n "$runner_class" ]]; then runner_json="$(perf_json_quote "$runner_class")"; fi
@@ -120,7 +118,7 @@ perf_capture_event() {
   local disk_json="${disk_free:-null}"
   if [[ -z "$base" ]]; then base="unknown"; fi
 
-  printf '{"schema":"stratalint-perf-event-v1","run_id":%s,"ts":%s,"cohort":{"venue":%s,"os":%s,"arch":%s,"cpu_class":%s,"runner_class":%s},"context":{"commit":%s,"base":%s,"workload_id":%s,"cache_state":%s,"loadavg_per_cpu":%s,"host_concurrency":%s},"kind":"timing","stage":%s,"status":%s,"elapsed_seconds":%s,"resources":{"disk_free_gb":%s,"fd_peak":null,"rss_peak_mb":null}}\n' \
+  printf '{"schema":"stratalint-perf-event-v1","run_id":%s,"ts":%s,"cohort":{"venue":%s,"os":%s,"arch":%s,"cpu_class":%s,"runner_class":%s},"context":{"commit":%s,"base":%s,"workload_id":%s,"cache_state":null,"loadavg_per_cpu":%s,"host_concurrency":%s},"kind":"timing","stage":%s,"status":%s,"elapsed_seconds":%s,"resources":{"disk_free_gb":%s,"fd_peak":null,"rss_peak_mb":null}}\n' \
     "$(perf_json_quote "$run_id")" \
     "$(perf_json_quote "$timestamp")" \
     "$(perf_json_quote "$venue")" \
@@ -131,7 +129,6 @@ perf_capture_event() {
     "$(perf_json_quote "$commit")" \
     "$(perf_json_quote "$base")" \
     "$(perf_json_quote "$workload_id")" \
-    "$(perf_json_quote "$cache_state")" \
     "$loadavg_json" \
     "$concurrency_json" \
     "$(perf_json_quote "$stage")" \

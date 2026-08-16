@@ -5,25 +5,187 @@ using StrataLint.Engine;
 
 namespace StrataLint.Tests;
 
+[Collection("Lean cache environment")]
 public sealed class LeanCacheEnsureCommandTests
 {
     [Fact]
-    public void PresentPrivateLakeIsANoOp()
+    public void MatchingPinStampStillRequiresLiveMathlibOleanCompleteness()
     {
         using var repository = new TemporaryDirectory();
         InitializeRepository(repository.Path);
-        WriteCache(repository.Path, "already warm\n");
+        WriteCache(repository.Path, "already warm\n", mathlibComplete: false);
         var runner = new RecordingWorktreeProcessRunner();
+
+        Assert.False(Directory.Exists(Path.Combine(
+            repository.Path,
+            ".lake",
+            "packages",
+            "mathlib",
+            "Mathlib")));
 
         var result = WorktreeCommand.Run(repository.Path, ["ensure-cache"], runner);
 
-        Assert.True(result.Success);
-        Assert.Contains("present", result.Output, StringComparison.Ordinal);
-        Assert.Empty(result.Error);
+        Assert.False(result.Success);
+        Assert.Empty(result.Output);
+        using var receipt = ParseReceipt(result.Error);
+        foreach (var field in new[] { "status", "worktree", "donor", "method", "reason", "pin_sha256" })
+        {
+            Assert.True(receipt.RootElement.TryGetProperty(field, out _), $"receipt is missing {field}");
+        }
+        Assert.Equal(ReadPins(repository.Path).Sha256, receipt.RootElement.GetProperty("pin_sha256").GetString());
+        Assert.Equal("machine", receipt.RootElement.GetProperty("shared_cache_scope").GetString());
+        Assert.Equal(0, receipt.RootElement.GetProperty("mathlib_cache_pruned_files").GetInt32());
+        Assert.Equal("not-run", receipt.RootElement.GetProperty("mathlib_cache_clean_status").GetString());
+        Assert.Equal(JsonValueKind.Null, receipt.RootElement.GetProperty("mathlib_missing_olean_files").ValueKind);
+        Assert.Contains(
+            "source directory is missing",
+            receipt.RootElement.GetProperty("reason").GetString()!,
+            StringComparison.OrdinalIgnoreCase);
         Assert.Empty(runner.Invocations);
         Assert.Equal(
             "already warm\n",
             File.ReadAllText(Path.Combine(repository.Path, ".lake", "build", "cache.bin")));
+    }
+
+    [Fact]
+    public void UnstampedMainCheckoutRunsCurrentProducerInPlaceAndPublishesMissingReceipt()
+    {
+        using var repository = new TemporaryDirectory();
+        using var sharedCache = new MathlibCacheFixture();
+        InitializeRepository(repository.Path);
+        WriteCache(repository.Path, "unstamped cache\n", stamp: false);
+        var repositoryOlean = Path.Combine(
+            repository.Path,
+            ".lake",
+            "build",
+            "lib",
+            "lean",
+            "Trureturing",
+            "Hot.olean");
+        Directory.CreateDirectory(Path.GetDirectoryName(repositoryOlean)!);
+        File.WriteAllText(repositoryOlean, "expensive repository build\n");
+        var runner = new RecordingWorktreeProcessRunner();
+
+        var result = WorktreeCommand.Run(repository.Path, ["ensure-cache"], runner);
+
+        Assert.True(result.Success, result.Error);
+        Assert.True(File.Exists(Path.Combine(repository.Path, ".lake", "build", "cache.bin")));
+        Assert.True(File.Exists(repositoryOlean));
+        Assert.True(File.Exists(Path.Combine(repository.Path, ".lake", "cache-get.marker")));
+        Assert.True(runner.CacheGetSawExistingProjection);
+        Assert.Equal([true], runner.CacheGetExistingProjectionObservations);
+        Assert.True(LeanCacheStamp.Matches(Path.Combine(repository.Path, ".lake"), ReadPins(repository.Path), out _));
+        Assert.Equal(
+            ["get", "clean"],
+            runner.Invocations
+                .Where(static call => Path.GetFileName(call.FileName) == "lake")
+                .Select(static call => call.Arguments[2])
+                .ToArray());
+        using var receipt = ParseReceipt(result.Output);
+        Assert.Equal("fetched", receipt.RootElement.GetProperty("status").GetString());
+        Assert.Equal("missing", receipt.RootElement.GetProperty("stamp_miss").GetString());
+        Assert.DoesNotContain(
+            "do not match",
+            receipt.RootElement.GetProperty("reason").GetString()!,
+            StringComparison.OrdinalIgnoreCase);
+        Assert.Equal(1, receipt.RootElement.GetProperty("mathlib_cache_pruned_files").GetInt32());
+        Assert.Equal("succeeded", receipt.RootElement.GetProperty("mathlib_cache_clean_status").GetString());
+    }
+
+    [Fact]
+    public void StampCarriesTheExactPinBytesAndLeavesNoPublicationTemporary()
+    {
+        using var repository = new TemporaryDirectory();
+        InitializeRepository(repository.Path);
+        WriteCache(repository.Path, "stamped\n");
+        var lake = Path.Combine(repository.Path, ".lake");
+        var pins = ReadPins(repository.Path);
+
+        using var stamp = LeanCacheFixtureFile.ParseJson(LeanCacheStamp.PathFor(lake));
+
+        Assert.Equal(pins.LeanToolchain, Convert.FromBase64String(
+            stamp.RootElement.GetProperty("lean_toolchain_base64").GetString()!));
+        Assert.Equal(pins.LakeManifest, Convert.FromBase64String(
+            stamp.RootElement.GetProperty("lake_manifest_base64").GetString()!));
+        Assert.Empty(Directory.GetFiles(lake, ".stratalint-lean-cache-stamp.*.tmp"));
+    }
+
+    [Theory]
+    [InlineData("not json\n")]
+    [InlineData("{\"schema\":\"unknown\"}\n")]
+    [InlineData("{\"schema\":\"stratalint-lean-cache-v1\",\"pin_sha256\":42}\n")]
+    public void CorruptStampRunsCurrentProducerInPlaceWithoutDeletingTheProjection(string stamp)
+    {
+        using var repository = new TemporaryDirectory();
+        using var sharedCache = new MathlibCacheFixture();
+        InitializeRepository(repository.Path);
+        WriteCache(repository.Path, "untrusted cache\n");
+        File.WriteAllText(LeanCacheStamp.PathFor(Path.Combine(repository.Path, ".lake")), stamp);
+        var runner = new RecordingWorktreeProcessRunner();
+
+        var result = WorktreeCommand.Run(repository.Path, ["ensure-cache"], runner);
+
+        Assert.True(result.Success, result.Error);
+        Assert.True(File.Exists(Path.Combine(repository.Path, ".lake", "build", "cache.bin")));
+        Assert.True(runner.CacheGetSawExistingProjection);
+        Assert.Equal([true], runner.CacheGetExistingProjectionObservations);
+        Assert.True(LeanCacheStamp.Matches(Path.Combine(repository.Path, ".lake"), ReadPins(repository.Path), out _));
+        using var receipt = ParseReceipt(result.Output);
+        Assert.Equal("corrupt", receipt.RootElement.GetProperty("stamp_miss").GetString());
+    }
+
+    [Fact]
+    public void InternallyInconsistentStampAndProducerFailurePreserveExistingProjection()
+    {
+        using var repository = new TemporaryDirectory();
+        using var sharedCache = new MathlibCacheFixture();
+        InitializeRepository(repository.Path);
+        WriteCache(repository.Path, "must survive inconsistent stamp\n");
+        var lake = Path.Combine(repository.Path, ".lake");
+        var ownedOlean = Path.Combine(lake, "build", "lib", "lean", "Trureturing", "Owned.olean");
+        Directory.CreateDirectory(Path.GetDirectoryName(ownedOlean)!);
+        File.WriteAllText(ownedOlean, "must survive\n");
+        var pins = ReadPins(repository.Path);
+        File.WriteAllText(
+            LeanCacheStamp.PathFor(lake),
+            JsonSerializer.Serialize(new
+            {
+                schema = "stratalint-lean-cache-v1",
+                pin_sha256 = "sha256:" + new string('0', 64),
+                lean_toolchain_base64 = Convert.ToBase64String(pins.LeanToolchain),
+                lake_manifest_base64 = Convert.ToBase64String(pins.LakeManifest),
+            }) + "\n");
+        var runner = new RecordingWorktreeProcessRunner { FailLake = true };
+
+        var result = WorktreeCommand.Run(repository.Path, ["ensure-cache"], runner);
+
+        Assert.False(result.Success);
+        Assert.True(File.Exists(Path.Combine(lake, "build", "cache.bin")));
+        Assert.True(File.Exists(ownedOlean));
+        Assert.Equal([true], runner.CacheGetExistingProjectionObservations);
+        using var receipt = ParseReceipt(result.Error);
+        Assert.Equal("corrupt", receipt.RootElement.GetProperty("stamp_miss").GetString());
+    }
+
+    [Fact]
+    public void StampForPreviousPinsDeletesOldLakeBeforeProvisioning()
+    {
+        using var repository = new TemporaryDirectory();
+        using var sharedCache = new MathlibCacheFixture();
+        InitializeRepository(repository.Path);
+        WriteCache(repository.Path, "old pin cache\n");
+        File.WriteAllText(Path.Combine(repository.Path, "lean-toolchain"), "leanprover/lean4:v4.33.0\n");
+        var runner = new RecordingWorktreeProcessRunner();
+
+        var result = WorktreeCommand.Run(repository.Path, ["ensure-cache"], runner);
+
+        Assert.True(result.Success, result.Error);
+        Assert.False(File.Exists(Path.Combine(repository.Path, ".lake", "build", "cache.bin")));
+        Assert.False(runner.CacheGetSawExistingProjection);
+        Assert.Equal([false], runner.CacheGetExistingProjectionObservations);
+        Assert.True(LeanCacheStamp.Matches(Path.Combine(repository.Path, ".lake"), ReadPins(repository.Path), out _));
+        using var receipt = ParseReceipt(result.Output);
+        Assert.Equal("mismatch", receipt.RootElement.GetProperty("stamp_miss").GetString());
     }
 
     [Fact]
@@ -45,6 +207,25 @@ public sealed class LeanCacheEnsureCommandTests
         Assert.Contains("refused", result.Error, StringComparison.OrdinalIgnoreCase);
         Assert.Contains("symlink", result.Error, StringComparison.OrdinalIgnoreCase);
         Assert.Empty(runner.Invocations);
+    }
+
+    [Fact]
+    public void ExistingLakeFileIsPreservedAndFailsClosedAsCorrupt()
+    {
+        using var repository = new TemporaryDirectory();
+        InitializeRepository(repository.Path);
+        var lake = Path.Combine(repository.Path, ".lake");
+        File.WriteAllText(lake, "repository-owned bytes\n");
+        var runner = new RecordingWorktreeProcessRunner();
+
+        var result = WorktreeCommand.Run(repository.Path, ["ensure-cache"], runner);
+
+        Assert.False(result.Success);
+        Assert.Equal("repository-owned bytes\n", LeanCacheFixtureFile.ReadText(lake));
+        Assert.Empty(runner.Invocations);
+        using var receipt = ParseReceipt(result.Error);
+        Assert.Equal("corrupt", receipt.RootElement.GetProperty("stamp_miss").GetString());
+        Assert.Contains("not a directory", result.Error, StringComparison.OrdinalIgnoreCase);
     }
 
     [Fact]
@@ -75,9 +256,114 @@ public sealed class LeanCacheEnsureCommandTests
     }
 
     [Fact]
+    public void IncompleteDonorStagingIsDiscardedWithoutPublishingAStamp()
+    {
+        using var repository = new TemporaryDirectory();
+        using var sharedCache = new MathlibCacheFixture();
+        InitializeRepository(repository.Path);
+        WriteCache(repository.Path, "incomplete donor\n");
+        MathlibProjectionFixture.RemoveAllOleans(Path.Combine(repository.Path, ".lake"));
+        var target = AddWorktree(repository.Path, "incomplete-donor-target");
+        var runner = new RecordingWorktreeProcessRunner();
+        var cloner = new RecordingDirectoryCloner();
+        using var publishedTarget = new ManualResetEventSlim();
+        using var watcher = new FileSystemWatcher(target)
+        {
+            NotifyFilter = NotifyFilters.DirectoryName,
+            EnableRaisingEvents = true,
+        };
+        watcher.Created += (_, eventArgs) =>
+        {
+            if (Path.GetFileName(eventArgs.FullPath) == ".lake") publishedTarget.Set();
+        };
+        watcher.Renamed += (_, eventArgs) =>
+        {
+            if (Path.GetFileName(eventArgs.FullPath) == ".lake") publishedTarget.Set();
+        };
+
+        var result = WorktreeCommand.Run(
+            repository.Path,
+            ["ensure-cache", "--path", target],
+            runner,
+            cloner);
+
+        Assert.False(result.Success);
+        Assert.False(
+            publishedTarget.Wait(TimeSpan.FromSeconds(1)),
+            "an incomplete staging tree was renamed to the canonical .lake path before verification");
+        Assert.Empty(result.Output);
+        Assert.False(Directory.Exists(Path.Combine(target, ".lake")));
+        Assert.False(File.Exists(LeanCacheStamp.PathFor(Path.Combine(target, ".lake"))));
+        Assert.Empty(Directory.EnumerateFileSystemEntries(target, ".lake.stage-*"));
+        var clone = Assert.Single(cloner.Invocations);
+        Assert.StartsWith(
+            Path.Combine(target, ".lake.stage-"),
+            clone.Target,
+            StringComparison.Ordinal);
+        Assert.DoesNotContain(runner.Invocations, static call => call.FileName == "cp");
+        Assert.DoesNotContain(runner.Invocations, static call => call.FileName == "lake");
+        using var receipt = ParseReceipt(result.Error);
+        Assert.Equal(
+            MathlibProjectionFixture.ModuleCount,
+            receipt.RootElement.GetProperty("mathlib_missing_olean_files").GetInt32());
+        Assert.Contains(
+            receipt.RootElement.GetProperty("mathlib_missing_olean_samples").EnumerateArray(),
+            sample => sample.GetString() == MathlibProjectionFixture.FirstModule);
+    }
+
+    [Fact]
+    public void DonorWithoutMatchingStampIsRejected()
+    {
+        using var repository = new TemporaryDirectory();
+        using var sharedCache = new MathlibCacheFixture();
+        InitializeRepository(repository.Path);
+        WriteCache(repository.Path, "unstamped donor\n", stamp: false);
+        var target = AddWorktree(repository.Path, "unstamped-donor-target");
+        var runner = new RecordingWorktreeProcessRunner();
+
+        var result = WorktreeCommand.Run(
+            repository.Path,
+            ["ensure-cache", "--path", target],
+            runner);
+
+        Assert.True(result.Success, result.Error);
+        Assert.False(File.Exists(Path.Combine(target, ".lake", "build", "cache.bin")));
+        Assert.True(File.Exists(Path.Combine(target, ".lake", "cache-get.marker")));
+        Assert.Contains("stamp", result.Output, StringComparison.OrdinalIgnoreCase);
+        Assert.DoesNotContain(runner.Invocations, static call => call.FileName == "cp");
+    }
+
+    [Fact]
+    public void DonorStampForDifferentPinBytesIsRejectedEvenWhenWorktreePinsMatch()
+    {
+        using var repository = new TemporaryDirectory();
+        using var otherPins = new TemporaryDirectory();
+        using var sharedCache = new MathlibCacheFixture();
+        InitializeRepository(repository.Path);
+        File.WriteAllText(Path.Combine(otherPins.Path, "lean-toolchain"), "leanprover/lean4:v4.30.0\n");
+        File.WriteAllText(Path.Combine(otherPins.Path, "lake-manifest.json"), "{\"version\":\"old\"}\n");
+        WriteCache(repository.Path, "wrongly stamped donor\n", stamp: false);
+        LeanCacheStamp.Write(Path.Combine(repository.Path, ".lake"), ReadPins(otherPins.Path));
+        var target = AddWorktree(repository.Path, "wrong-stamp-donor-target");
+        var runner = new RecordingWorktreeProcessRunner();
+
+        var result = WorktreeCommand.Run(
+            repository.Path,
+            ["ensure-cache", "--path", target],
+            runner);
+
+        Assert.True(result.Success, result.Error);
+        Assert.True(File.Exists(Path.Combine(target, ".lake", "cache-get.marker")));
+        Assert.False(File.Exists(Path.Combine(target, ".lake", "build", "cache.bin")));
+        Assert.Contains("stamp", result.Output, StringComparison.OrdinalIgnoreCase);
+        Assert.DoesNotContain(runner.Invocations, static call => call.FileName == "cp");
+    }
+
+    [Fact]
     public void ByteMismatchedPinsNeverCopyCandidateCache()
     {
         using var repository = new TemporaryDirectory();
+        using var sharedCache = new MathlibCacheFixture();
         InitializeRepository(repository.Path);
         var target = AddWorktree(repository.Path, "mismatched-target");
         var targetManifest = File.ReadAllBytes(Path.Combine(target, "lake-manifest.json"));
@@ -112,29 +398,76 @@ public sealed class LeanCacheEnsureCommandTests
             static call => call.FileName == "cp");
     }
 
-    [Fact]
-    public void NoDonorAndFailedCacheGetProceedColdWithAReceipt()
+    [Theory]
+    [InlineData("cache-get", "missing", "not-run", 0)]
+    [InlineData("completeness", "missing", "not-run", 0)]
+    [InlineData("clean", "missing", "failed", 0)]
+    [InlineData("stamp", "corrupt", "succeeded", 1)]
+    public void InPlaceProducerFailurePreservesExistingLakeAndNeverFallsThrough(
+        string failure,
+        string expectedStampMiss,
+        string expectedCleanStatus,
+        int expectedPrunedFiles)
     {
         using var repository = new TemporaryDirectory();
+        using var sharedCache = new MathlibCacheFixture();
         InitializeRepository(repository.Path);
-        var target = AddWorktree(repository.Path, "cold-target");
-        var runner = new RecordingWorktreeProcessRunner { FailLake = true };
-
-        var result = WorktreeCommand.Run(
+        WriteCache(repository.Path, "expensive unstamped cache\n", stamp: false);
+        var repositoryOlean = Path.Combine(
             repository.Path,
-            ["ensure-cache", "--path", target],
-            runner);
+            ".lake",
+            "build",
+            "lib",
+            "lean",
+            "Trureturing",
+            "Expensive.olean");
+        Directory.CreateDirectory(Path.GetDirectoryName(repositoryOlean)!);
+        File.WriteAllText(repositoryOlean, "must survive\n");
+        if (failure == "completeness")
+        {
+            MathlibProjectionFixture.RemoveAllOleans(Path.Combine(repository.Path, ".lake"));
+        }
+        if (failure == "stamp")
+        {
+            Directory.CreateDirectory(LeanCacheStamp.PathFor(Path.Combine(repository.Path, ".lake")));
+        }
+        var runner = new RecordingWorktreeProcessRunner
+        {
+            FailLake = failure == "cache-get",
+            OmitMathlibOleans = failure == "completeness",
+            FailClean = failure == "clean",
+        };
 
-        Assert.True(result.Success);
-        Assert.Empty(result.Error);
-        Assert.Contains("cold", result.Output, StringComparison.Ordinal);
-        Assert.Contains("no existing worktree contains .lake", result.Output, StringComparison.Ordinal);
-        Assert.Contains("cache get failed", result.Output, StringComparison.OrdinalIgnoreCase);
-        Assert.False(Directory.Exists(Path.Combine(target, ".lake")));
+        var result = WorktreeCommand.Run(repository.Path, ["ensure-cache"], runner);
+
+        Assert.False(result.Success);
+        Assert.Empty(result.Output);
+        Assert.True(Directory.Exists(Path.Combine(repository.Path, ".lake")));
+        Assert.True(File.Exists(Path.Combine(repository.Path, ".lake", "build", "cache.bin")));
+        Assert.True(File.Exists(repositoryOlean));
+        Assert.False(File.Exists(LeanCacheStamp.PathFor(Path.Combine(repository.Path, ".lake"))));
+        Assert.Equal([true], runner.CacheGetExistingProjectionObservations);
+        using var receipt = ParseReceipt(result.Error);
+        Assert.Equal(expectedStampMiss, receipt.RootElement.GetProperty("stamp_miss").GetString());
+        Assert.Equal(expectedPrunedFiles, receipt.RootElement.GetProperty("mathlib_cache_pruned_files").GetInt32());
+        Assert.Equal(expectedCleanStatus, receipt.RootElement.GetProperty("mathlib_cache_clean_status").GetString());
+        if (failure == "completeness")
+        {
+            Assert.Equal(
+                MathlibProjectionFixture.ModuleCount,
+                receipt.RootElement.GetProperty("mathlib_missing_olean_files").GetInt32());
+        }
+        else if (failure == "cache-get")
+        {
+            Assert.Contains(
+                "cache get failed",
+                receipt.RootElement.GetProperty("reason").GetString()!,
+                StringComparison.OrdinalIgnoreCase);
+        }
     }
 
     [Fact]
-    public void ExhaustedCopyFallbacksProceedColdAndNameEveryFailure()
+    public void ExhaustedCopyFallbacksFailClosedAndNameEveryFailure()
     {
         using var repository = new TemporaryDirectory();
         InitializeRepository(repository.Path);
@@ -152,13 +485,31 @@ public sealed class LeanCacheEnsureCommandTests
             runner,
             new RecordingDirectoryCloner { FailureReason = "clonefile unavailable" });
 
-        Assert.True(result.Success);
-        Assert.Empty(result.Error);
-        Assert.Contains("cold", result.Output, StringComparison.Ordinal);
-        Assert.Contains("clonefile failed", result.Output, StringComparison.OrdinalIgnoreCase);
-        Assert.Contains("ordinary copy failed", result.Output, StringComparison.OrdinalIgnoreCase);
-        Assert.Contains("cache get failed", result.Output, StringComparison.OrdinalIgnoreCase);
+        Assert.False(result.Success);
+        Assert.Empty(result.Output);
+        Assert.Contains("clonefile failed", result.Error, StringComparison.OrdinalIgnoreCase);
+        Assert.Contains("ordinary copy failed", result.Error, StringComparison.OrdinalIgnoreCase);
+        Assert.Contains("cache get failed", result.Error, StringComparison.OrdinalIgnoreCase);
         Assert.False(Directory.Exists(Path.Combine(target, ".lake")));
+    }
+
+    [Fact]
+    public void CacheCleanFailureLeavesTheProjectionUnstamped()
+    {
+        using var repository = new TemporaryDirectory();
+        using var sharedCache = new MathlibCacheFixture();
+        InitializeRepository(repository.Path);
+        var runner = new RecordingWorktreeProcessRunner { FailClean = true };
+
+        var result = WorktreeCommand.Run(repository.Path, ["ensure-cache"], runner);
+
+        Assert.False(result.Success);
+        Assert.Contains("cache clean failed", result.Error, StringComparison.OrdinalIgnoreCase);
+        Assert.False(File.Exists(LeanCacheStamp.PathFor(Path.Combine(repository.Path, ".lake"))));
+        using var receipt = ParseReceipt(result.Error);
+        Assert.Equal("machine", receipt.RootElement.GetProperty("shared_cache_scope").GetString());
+        Assert.Equal(0, receipt.RootElement.GetProperty("mathlib_cache_pruned_files").GetInt32());
+        Assert.Equal("failed", receipt.RootElement.GetProperty("mathlib_cache_clean_status").GetString());
     }
 
     private static string AddWorktree(string repositoryRoot, string name)
@@ -180,17 +531,32 @@ public sealed class LeanCacheEnsureCommandTests
         Git(root, "commit", "-m", "fixture baseline");
     }
 
-    private static void WriteCache(string root, string contents)
+    private static void WriteCache(
+        string root,
+        string contents,
+        bool stamp = true,
+        bool mathlibComplete = true)
     {
-        var cache = Path.Combine(root, ".lake", "build", "cache.bin");
+        var lake = Path.Combine(root, ".lake");
+        var cache = Path.Combine(lake, "build", "cache.bin");
         Directory.CreateDirectory(Path.GetDirectoryName(cache)!);
         File.WriteAllText(cache, contents);
+        if (mathlibComplete) MathlibProjectionFixture.Write(lake);
+        if (stamp) LeanCacheStamp.Write(lake, ReadPins(root));
     }
+
+    private static LeanPinSet ReadPins(string root) =>
+        LeanPinSet.TryReadWorktree(root, out var reason)
+        ?? throw new InvalidOperationException(reason);
+
+    private static JsonDocument ParseReceipt(string output) =>
+        JsonDocument.Parse(output["LEAN_CACHE ".Length..]);
 
     private static string Git(string root, params string[] arguments) =>
         ReviewRegressionTests.RunGit(root, arguments);
 }
 
+[Collection("Lean cache environment")]
 public sealed class LeanCacheEnsureScriptTests
 {
     [Fact]
@@ -258,7 +624,7 @@ public sealed class LeanCacheEnsureScriptTests
     }
 
     [Fact]
-    public void PrivateDirectoryFastPathDoesNotStartDotnet()
+    public void PrivateDirectoryDelegatesToTheCanonicalJudge()
     {
         if (OperatingSystem.IsWindows()) return;
 
@@ -269,17 +635,14 @@ public sealed class LeanCacheEnsureScriptTests
 
         var result = RunWithFailingDotnet(installed.Script, installed.Caller, marker);
 
-        Assert.Equal(0, result.ExitCode);
-        Assert.Contains(
-            "present",
-            Encoding.UTF8.GetString(result.StandardOutput),
-            StringComparison.Ordinal);
+        Assert.Equal(97, result.ExitCode);
+        Assert.Empty(result.StandardOutput);
         Assert.Empty(result.StandardError);
-        Assert.False(File.Exists(marker));
+        Assert.True(File.Exists(marker));
     }
 
     [Fact]
-    public void SymlinkFastPathRefusesWithoutStartingDotnet()
+    public void SymlinkDelegatesToTheCanonicalJudge()
     {
         if (OperatingSystem.IsWindows()) return;
 
@@ -292,13 +655,10 @@ public sealed class LeanCacheEnsureScriptTests
 
         var result = RunWithFailingDotnet(installed.Script, installed.Caller, marker);
 
-        Assert.Equal(1, result.ExitCode);
+        Assert.Equal(97, result.ExitCode);
         Assert.Empty(result.StandardOutput);
-        Assert.Contains(
-            "symlink",
-            Encoding.UTF8.GetString(result.StandardError),
-            StringComparison.OrdinalIgnoreCase);
-        Assert.False(File.Exists(marker));
+        Assert.Empty(result.StandardError);
+        Assert.True(File.Exists(marker));
     }
 
     private const string LeanCacheEnsureScriptPath =
@@ -346,4 +706,94 @@ public sealed class LeanCacheEnsureScriptTests
 
     private sealed record InstalledScript(string Repository, string Caller, string Script);
 
+}
+
+[Collection("Lean cache environment")]
+public sealed class LeanCacheRunScriptTests
+{
+    [Fact]
+    public void AdapterDelegatesWrappedCommandToCanonicalWriterJudgeWithoutExecutingItDirectly()
+    {
+        if (OperatingSystem.IsWindows()) return;
+
+        using var fixture = new TemporaryDirectory();
+        var repository = Path.Combine(fixture.Path, "repository");
+        var script = Path.Combine(
+            repository,
+            "tools",
+            "scripts",
+            "worktree",
+            "lean-cache-run.sh");
+        var bin = Path.Combine(fixture.Path, "bin");
+        var arguments = Path.Combine(fixture.Path, "dotnet-arguments");
+        var wrappedMarker = Path.Combine(fixture.Path, "wrapped-command-ran");
+        var wrapped = Path.Combine(fixture.Path, "wrapped-command");
+        Directory.CreateDirectory(Path.GetDirectoryName(script)!);
+        Directory.CreateDirectory(bin);
+        File.Copy(
+            Path.Combine(TestRepositoryLayout.FindRoot(), "tools/scripts/worktree/lean-cache-run.sh"),
+            script);
+        WriteExecutable(
+            Path.Combine(bin, "dotnet"),
+            "#!/usr/bin/env bash\nprintf '%s\\n' \"$@\" > \"$DOTNET_ARGUMENTS\"\nexit 97");
+        WriteExecutable(
+            wrapped,
+            "#!/usr/bin/env bash\ntouch \"$WRAPPED_MARKER\"\nexit 23");
+
+        var result = BoundedProcessRunner.Run(
+            "/bin/bash",
+            [
+                "-c",
+                "PATH=\"$1:$PATH\" DOTNET_ARGUMENTS=\"$2\" WRAPPED_MARKER=\"$3\" exec /bin/bash \"$4\" \"$5\" payload",
+                "lean-cache-run-test",
+                bin,
+                arguments,
+                wrappedMarker,
+                script,
+                wrapped,
+            ],
+            fixture.Path,
+            TimeSpan.FromSeconds(10),
+            64 * 1024);
+
+        Assert.Equal(97, result.ExitCode);
+        Assert.False(File.Exists(wrappedMarker));
+        Assert.Equal(
+            new[]
+            {
+                "run",
+                "--project",
+                Path.Combine(
+                    LeanCacheGuard.PhysicalPath(repository),
+                    "tools",
+                    "StrataLint.Cli",
+                    "StrataLint.Cli.csproj"),
+                "--configuration",
+                "Release",
+                "--",
+                "worktree",
+                "with-cache-writer",
+                "--",
+                wrapped,
+                "payload",
+            },
+            File.ReadAllLines(arguments));
+    }
+
+    [System.Runtime.Versioning.UnsupportedOSPlatform("windows")]
+    private static void WriteExecutable(string path, string content)
+    {
+        File.WriteAllText(path, content + "\n");
+        File.SetUnixFileMode(
+            path,
+            UnixFileMode.UserRead | UnixFileMode.UserWrite | UnixFileMode.UserExecute);
+    }
+}
+
+internal static class LeanCacheFixtureFile
+{
+    internal static JsonDocument ParseJson(string path) =>
+        JsonDocument.Parse(File.ReadAllText(path));
+
+    internal static string ReadText(string path) => File.ReadAllText(path);
 }

@@ -8,4 +8,4 @@ exec dotnet run \
   --project "$ROOT/tools/StrataLint.Cli/StrataLint.Cli.csproj" \
   --configuration Release \
   -- \
-  worktree ensure-cache
+  worktree with-cache-writer -- "$@"

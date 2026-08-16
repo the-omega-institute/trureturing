@@ -215,6 +215,12 @@ public static partial class FrozenLedger
             {
                 try
                 {
+                    if (item.SchemaVersion != FrozenLedgerCanonicalWriter.CurrentDagSchemaVersion)
+                    {
+                        throw new FormatException(
+                            $"New accepted event must use schema_version {FrozenLedgerCanonicalWriter.CurrentDagSchemaVersion}.");
+                    }
+
                     if (item.EventType == "Freeze")
                     {
                         var freeze = ParseFreeze(
@@ -237,22 +243,17 @@ public static partial class FrozenLedger
                     }
                     else if (item.EventType == "Reattest")
                     {
-                        var reattest = ParseReattest(item.Payload, active, trustedReferences);
+                        var reattest = ParseReattest(
+                            item.Payload,
+                            active,
+                            trustedReferences,
+                            requireAxiomClosure: true);
                         var entry = active[reattest.CaseId];
-                        FrozenNodeMaterial? material = null;
-                        if (!reattest.IsLegacyFormat)
-                        {
-                            if (!catalog.ByPath.TryGetValue(
-                                entry.Material.RepoPath,
-                                out var candidateMaterial))
-                            {
-                                throw new FormatException(
-                                    $"Reattest target {entry.Material.RepoPath.Value} is not Closed.");
-                            }
-
-                            ValidateReattestMaterial(reattest, candidateMaterial);
-                            material = candidateMaterial;
-                        }
+                        var material = ValidateReattestCandidateMaterial(
+                            reattest,
+                            entry,
+                            catalog,
+                            "is not Closed");
 
                         active[reattest.CaseId] = ApplyReattest(
                             entry,

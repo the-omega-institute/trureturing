@@ -594,7 +594,7 @@ public sealed partial class ReviewRegressionTests
             workflow.IndexOf("  lean-inspect:", StringComparison.Ordinal)..workflow.IndexOf("  baseline-admission:", StringComparison.Ordinal)];
         var baselineJob = workflow[workflow.IndexOf("  baseline-admission:", StringComparison.Ordinal)..];
 
-        Assert.Contains("exe cache get", producer, StringComparison.Ordinal);
+        Assert.Contains("lean-cache-run.sh", producer, StringComparison.Ordinal);
         Assert.Contains("build", producer, StringComparison.Ordinal);
         Assert.Contains("env", producer, StringComparison.Ordinal);
         Assert.Contains("lean", producer, StringComparison.Ordinal);

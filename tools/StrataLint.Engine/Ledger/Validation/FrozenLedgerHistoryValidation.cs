@@ -109,7 +109,7 @@ public static partial class FrozenLedger
                             HistoricalMaterial(freeze),
                             freeze,
                             eventHash,
-                            AxiomClosureKnown: false));
+                            AxiomClosureKnown: freeze.HasAxiomClosure));
                     events.Add(new FrozenLedgerEvent.Freeze(sequence, eventHash, previousHash, freeze));
                 }
                 else if (eventType == "Reattest")
@@ -269,12 +269,7 @@ public static partial class FrozenLedger
         JsonElement payload,
         TrustedFrozenGitReferences trustedReferences)
     {
-        RequireObjectFields(
-            payload,
-            "Freeze payload",
-            "case_class", "case_id", "declaration_statement_ids", "evaluation", "expected",
-            "frozen_node_id", "input", "input_fingerprint", "node_path", "prerequisite_frozen_node_ids",
-            "semantic_receipt", "statement_id", "truth_state", "witness_id");
+        RequireEventPayloadFields(payload, "Freeze");
         var pathText = RequiredString(payload, "node_path");
         if (!RepoPath.TryCreate(pathText, out var path))
         {
@@ -298,7 +293,10 @@ public static partial class FrozenLedger
             RequiredString(payload, "semantic_receipt"),
             statement,
             RequiredString(payload, "truth_state"),
-            witness);
+            witness)
+        {
+            AxiomClosure = ParseOptionalAxiomClosure(payload),
+        };
         if (!trustedReferences.Covers(result.Input))
         {
             throw new FormatException("Historical Freeze input has no validated Git commit/tree/blob capability.");
@@ -328,7 +326,7 @@ public static partial class FrozenLedger
         payload.WitnessId,
         payload.FrozenNodeId,
         payload.PrerequisiteFrozenNodeIds,
-        ImmutableArray<string>.Empty,
+        payload.HasAxiomClosure ? payload.AxiomClosure : ImmutableArray<string>.Empty,
         new FrozenModuleAttestation(payload.NodePath, payload.Input.DescriptorBlobOid));
 
     private static bool HistoricalActiveFreezeMatches(
