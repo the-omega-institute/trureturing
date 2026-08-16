@@ -4,7 +4,7 @@ using StrataLint.Engine;
 
 namespace StrataLint.Tests;
 
-public sealed class MissionFileLoaderTests
+public sealed partial class MissionFileLoaderTests
 {
     private const string TicketIndex = """
         D5-T0040 = "D5/X_Frontier/GovernanceDeferrals"
@@ -138,6 +138,7 @@ public sealed class MissionFileLoaderTests
 
         Assert.Equal(MissionLoadErrorCode.DanglingCaseReference, invalid.Error.Code);
         Assert.Contains("D5-T0040", invalid.Error.Message, StringComparison.Ordinal);
+        Assert.Contains("no active", invalid.Error.Message, StringComparison.Ordinal);
     }
 
     [Fact]
@@ -390,11 +391,11 @@ public sealed class MissionFileLoaderTests
     {
         Assert.IsType<MissionLoadOutcome.Loaded>(
             LoadRepository(Encoding.UTF8.GetBytes(ValidMission), GovernanceDeferrals));
-        Assert.Equal(
-            1,
-            TaskBlockReferenceSyntax.CountDocumentationCommentTaskStarts(
+        var exact = Assert.IsType<TaskBlockScanResult.Exact>(
+            TaskBlockReferenceSyntax.ScanDocumentationCommentTaskStarts(
                 GovernanceDeferrals,
                 caseId));
+        Assert.Equal(1, exact.Count);
     }
 
     [Fact]
@@ -407,6 +408,7 @@ public sealed class MissionFileLoaderTests
 
         Assert.Equal(MissionLoadErrorCode.DanglingCaseReference, invalid.Error.Code);
         Assert.Contains("D5-T0040", invalid.Error.Message, StringComparison.Ordinal);
+        Assert.Contains("2 active", invalid.Error.Message, StringComparison.Ordinal);
     }
 
     [Fact]

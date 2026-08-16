@@ -469,14 +469,39 @@ internal static class MissionFileLoader
             var targetPath = ticket.Gid.EndsWith(".lean", StringComparison.Ordinal)
                 ? ticket.Gid
                 : ticket.Gid + ".lean";
-            if (!snapshot.TryGetFile(targetPath, out var target)
-                || TaskBlockReferenceSyntax.CountDocumentationCommentTaskStarts(
-                    target.Text,
-                    open.CaseId) != 1)
+            if (!snapshot.TryGetFile(targetPath, out var target))
             {
                 throw Error(
                     MissionLoadErrorCode.DanglingCaseReference,
-                    $"case {open.CaseId} does not resolve to a matching TASK block in {targetPath}");
+                    $"case {open.CaseId} target is missing: {targetPath}");
+            }
+
+            var scan = TaskBlockReferenceSyntax.ScanDocumentationCommentTaskStarts(
+                target.Text,
+                open.CaseId);
+            switch (scan)
+            {
+                case TaskBlockScanResult.Exact { Count: 1 }:
+                    break;
+                case TaskBlockScanResult.Exact { Count: 0 }:
+                    throw Error(
+                        MissionLoadErrorCode.DanglingCaseReference,
+                        $"case {open.CaseId} resolves to no active matching TASK block in {targetPath}");
+                case TaskBlockScanResult.Exact exact:
+                    throw Error(
+                        MissionLoadErrorCode.DanglingCaseReference,
+                        $"case {open.CaseId} resolves to {exact.Count} active matching TASK blocks "
+                        + $"in {targetPath}; exactly one is required");
+                case TaskBlockScanResult.Ambiguous ambiguous:
+                    throw Error(
+                        MissionLoadErrorCode.DanglingCaseReference,
+                        $"case {open.CaseId} TASK scan in {targetPath} is ambiguous at character "
+                        + $"{ambiguous.CharacterIndex}: {ambiguous.Reason}; rewrite the ticket file "
+                        + "to remove primed identifiers or ambiguous literal introducers");
+                default:
+                    throw Error(
+                        MissionLoadErrorCode.DanglingCaseReference,
+                        $"case {open.CaseId} returned an unsupported TASK scan result in {targetPath}");
             }
         }
     }

@@ -424,6 +424,8 @@ CONTEXT.md(1 页)→ 各地层 `INDEX.md`(CI 从文件头 digest 行聚合)→ �
 
 `docs/MISSION.md` 的唯一机读面是恰一个 `mission-v1` fenced block,由 `MissionFileLoader` 以 strict UTF-8、无 BOM、LF 与封闭 JSON schema 解析为 typed WorthVector;文件缺失、不可解析、未知/缺失因子、状态字段混用或悬空案号均返回 typed error,禁止默认填 `0`、`1` 或任何常数。任一因子为 `open` 时,禁止乘法合成标量,禁止输出或自称完整 worth score/argmax;此时唯一合法的选择标签是 `bootstrap eligibility order`,且 tie-break 恰按 `canonical candidate id` 稳定破。同一输入的 typed 结果及该退化序必须逐字节可重放。仅当四因子全部携真实 `measured(value, receipt_ref)` 时,完整 worth argmax 才进入合法域;P0 不测量、不产生标量、不枚举或排序候选。**现役 P0 边界:**`measured` 分支保留为 typed schema 的可表示状态,但 D5-T0040..D5-T0043 的 measurement receipt 契约与 resolver 落地前,任一 `measured` 实例均由 `MissionFileLoader` typed fail-closed;故 `CompleteWorthArgmax` 在 P0 结构上不可达,不得以非空 `receipt_ref` 字符串冒充收据权威。
 
+案号目标文件的 TASK 词法扫描结果恰为 `Exact(count)` 或 `Ambiguous`;仅全文件零歧义才可产 `Exact`,任一非可证 token-start 的 raw 引导、可能属于 primed identifier 或 char literal 的撇号、猜测性插值/字面量入态均将全文件永久毒化为 `Ambiguous`,其后不得恢复分类,且 `ValidateOpenCases` 仅接受 `Exact(1)`。因此维护者在该类 ticket 文件顶层使用 primed identifier 会得到带改写提示的 fail-closed `DanglingCaseReference`;这是保守噪声,不得坍缩成较小整数计数。
+
 禁令 = 刷 sorry 数、堆平凡引理、追引用。**PLAYBOOK 答"怎么找",MISSION 答"什么值得找"——无此文件,飞轮高速空转。**
 
 ## 11.21 回填溯源清单(消化完整性)
@@ -766,6 +768,7 @@ Blueprint markdown 已证有仓内语义 consumer，移出 PR-A；只有独立 P
 
 # CHANGELOG(原位演进史;只追加)
 
+- **v7.16 R6**(2026-08-17):`THEORY-GENERATION-P0` 将 open-case TASK 扫描的不确定性从整数坍缩修为 `Exact(count)|Ambiguous`:歧义全文件毒化且不可在猜测终结符处恢复,`ValidateOpenCases` 仅放行 `Exact(1)`,并以不同诊断区分零块、重复块与词法歧义。primed identifier 顶层噪声如实 fail-closed,维护者须改写 ticket 文件而非让扫描器猜测。
 - **v7.16 R5**(2026-08-16):`THEORY-GENERATION-P0` 将 11.20 的 MISSION 目标函数从缺失散文补成可执行契约:`mission-v1` strict loader、WorthVector 四因子封闭和、`measured(value, receipt_ref)|open(case_id)` 二选一、open 案号永久 TASK 双向解析,以及任一 open 时禁止完整 worth 标量/argmax、只许 `bootstrap eligibility order` 并按 canonical candidate id 稳定破。同 PR 首次落 `docs/MISSION.md`;四因子均诚实登记为 `open(D5-T0040..D5-T0043)`,零伪造测量。`measured` 类型保留可表示,但对应 D5-T0040..D5-T0043 的 receipt 契约与 resolver 未落地前,现役 P0 loader 对任何 measured 实例 typed fail-closed,故 complete worth argmax 结构上不可达。本轮只激活目标实例与 loader,不枚举候选、不排序、不重建 formalize,禁令仍为刷 sorry 数、堆平凡引理、追引用。
 - **v7.16 R4**(2026-08-14):补 A14.1,记环境升级的首次实测读数并勘正 A14 的一项前提。本仓自建库以来从未升级过 toolchain(`git log --follow -- lean-toolchain` 仅一条,2026-07-11 建库提交),故 A14 的解锁条件此前从无数据支撑。2026-08-14 首次实际执行 v4.31.0→v4.33.0 并取得读数:编译层可达(18/536 文件失败 3.4%,修复后 `lake build` rc=0,定理陈述被改 0 条);但 A14 所列解锁前提之一「statement identity 不变」**经验证伪**——在源文件逐字节相同的 498 个模块中,4,262 条声明有 **672 条(15.77%)** 的 `statement_material` 因 mathlib 重构类型类层级而变化,涉及 211 个本仓未改动的模块。该量是上游演化的函数,非本仓尽责可达成,故 A14 不得继续以其为解锁前提。同时记 `open(FROZEN-IDENTITY-AMBIENT-DRIFT)`:准入门 SL-008 只在候选 changeset 改动某模块时校验其冻结身份,实测点名集合与本仓改动集合精确重合,对 211 个未改动模块的漂移零发现,而该性质可在本仓零文件变动下被环境破坏。本条只记读数与前提证伪,不设计解锁机制;环境升级闭包仍不得主张。
 - **v7.16 R3**(2026-08-13):补 A17.2,立第三方 Lean 成果的两种准入形(依赖/移植)与其机器判据。立条之由为 CLAUDE.md 第 11 条有序路径的实测洞:③「按 spec A17 可准入的第三方」因 A17 三谓词现役全 `open` 而事实关闭,路径遂塌缩为 ②→④本地证明,即同条所禁之重证;本条补出移植形,并把形式选择降为 toolchain 与 mathlib `rev` 的机器比较,不由偏好判。同时钉死移植形四项义务(许可证与 NOTICE 链、入仓后照常执法、axiom 闭包不扩张、退役条件必须对本仓自己的钉版可判);禁以「上游被 mathlib 接受」为到期条件,反例为 mathlib PR #40037 于 2026-06-09 以 AI 投稿规范关闭未合并。判例读数见 A17.2。
