@@ -67,7 +67,7 @@ public sealed partial class DigestionLedgerTests
     }
 
     [Fact]
-    public void MatchingScribeFileHashesWithoutEmitterAttestationFailClosed()
+    public void MatchingScribeFileHashesWithoutProducerCapabilityFailClosed()
     {
         var source = Encoding.UTF8.GetBytes("# GICT\n\n**定理 1.1(Test)**。claim。\n");
         var atom = Assert.Single(GictAtomizer.Atomize(source, DigestionTestSupport.Rules).Claims);
@@ -108,7 +108,7 @@ public sealed partial class DigestionLedgerTests
     }
 
     [Fact]
-    public void DeclarationCoverageUsesItsContainingModuleScribeAttestation()
+    public void DeclarationCoverageUsesItsProducerCurrentModuleRecord()
     {
         const string declarationGid = "D5/S0/Carrier/Probe.probe";
         var status = EvaluateDeclarationCoverage(declarationGid, [declarationGid]);
@@ -117,6 +117,22 @@ public sealed partial class DigestionLedgerTests
         Assert.Equal(DigestionTruthState.Closed, status.DerivedStatus.Truth);
         Assert.True(status.Deletable);
         Assert.Empty(status.Gaps);
+    }
+
+    [Fact]
+    public void ProducerCurrentEmissionMakesCommittedMarkdownOptional()
+    {
+        const string declarationGid = "D5/S0/Carrier/Probe.probe";
+        var status = EvaluateDeclarationCoverage(
+            declarationGid,
+            [declarationGid],
+            includeCommittedEmission: false);
+
+        Assert.Equal(DigestionMigrationState.Absorbed, status.DerivedStatus.Migration);
+        Assert.Equal(DigestionTruthState.Closed, status.DerivedStatus.Truth);
+        Assert.True(status.Deletable);
+        Assert.Empty(status.Gaps);
+        Assert.NotEmpty(status.Entry.Receipts.Scribe);
     }
 
     [Fact]

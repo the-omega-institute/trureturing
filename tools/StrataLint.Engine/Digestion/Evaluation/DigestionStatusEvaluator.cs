@@ -35,11 +35,9 @@ internal static partial class DigestionStatusEvaluator
                 entry,
                 alignment.AlignmentFor(entry.AtomId),
                 alignment.AtomFor(entry.AtomId),
-                null,
                 snapshot,
                 emptyLeanReport,
                 emptyTruthNodes,
-                ScribeEmissionAttestation.FromSnapshot(snapshot),
                 verifiedScribeEmissions: null,
                 findings))
             .ToArray();
@@ -89,17 +87,14 @@ internal static partial class DigestionStatusEvaluator
                 "truth DAG is cyclic: " + string.Join(" -> ", rejected.Witness.Select(static path => path.Value))),
         };
         var nodes = dag.Nodes.ToDictionary(static node => node.RepoPath);
-        var scribeAttestation = ScribeEmissionAttestation.FromSnapshot(snapshot);
         var work = entries.Select(entry =>
             Inspect(
                 entry,
                 alignment.AlignmentFor(entry.AtomId),
                 alignment.AtomFor(entry.AtomId),
-                baselineEntries.GetValueOrDefault(entry.AtomId),
                 snapshot,
                 lean.Report,
                 nodes,
-                scribeAttestation,
                 verifiedScribeEmissions,
                 findings)).ToArray();
         DeriveMigration(work);
@@ -191,11 +186,9 @@ internal static partial class DigestionStatusEvaluator
         DigestionLedgerEntry entry,
         DigestionReceiptAlignment alignment,
         DigestionAtom? atom,
-        DigestionLedgerEntry? baselineEntry,
         RepositorySnapshot snapshot,
         LeanAxiomReport leanReport,
         IReadOnlyDictionary<RepoPath, TruthNode> nodes,
-        ScribeEmissionAttestation scribeAttestation,
         VerifiedScribeEmissions? verifiedScribeEmissions,
         ImmutableArray<string>.Builder findings)
     {
@@ -234,9 +227,7 @@ internal static partial class DigestionStatusEvaluator
         var coverage = VerifyCoverageReceipts(entry, existingTargets, gaps, findings);
         var scribe = VerifyScribeReceipts(
             entry,
-            baselineEntry,
             snapshot,
-            scribeAttestation,
             verifiedScribeEmissions,
             gaps,
             findings);

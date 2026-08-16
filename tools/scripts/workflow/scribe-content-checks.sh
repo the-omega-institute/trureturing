@@ -78,9 +78,8 @@ fi
 
 run_scribe projections --check --report "$REPORT"
 if [[ "$requires_emission_checks" == "1" ]]; then
-  run_scribe emit --check
   run_scribe emit-values --check
 else
-  echo "skipped: emit --check and emit-values --check (delta misses coarse emission closure)"
+  echo "skipped: emit-values --check (delta misses coarse emission closure)"
 fi
 run_scribe describe-report --check

@@ -181,9 +181,7 @@ internal static partial class DigestionStatusEvaluator
 
     private static bool VerifyScribeReceipts(
         DigestionLedgerEntry entry,
-        DigestionLedgerEntry? baselineEntry,
         RepositorySnapshot snapshot,
-        ScribeEmissionAttestation attestation,
         VerifiedScribeEmissions? verifiedEmissions,
         ICollection<DigestionGap> gaps,
         ImmutableArray<string>.Builder findings)
@@ -204,25 +202,20 @@ internal static partial class DigestionStatusEvaluator
             var emissionPath = ScribeEmissionAttestation.EmissionPath(documentGid);
             var selectsDeclaration = Gid.TryParse(gid, out var parsedGid)
                 && parsedGid.ToTarget() is Target.Formal { Declaration: not null };
-            var hasAttestation = attestation.TryGet(documentGid, out var emitted);
-            if (!hasAttestation)
-            {
-                gaps.Add(new DigestionGap("scribe-attestation-missing", gid));
-                complete = false;
-            }
-
             ScribeEmissionRecord? verified = null;
-            if (verifiedEmissions is not null
-                && verifiedEmissions.TryGet(documentGid, out var verifiedRecord))
-            {
-                verified = verifiedRecord;
-            }
-            else if (verifiedEmissions is not null
-                || !hasReceipt
-                || !HasBaselineScribeCapability(entry, baselineEntry, gid, receipt!))
+            if (verifiedEmissions is null)
             {
                 gaps.Add(new DigestionGap("scribe-emission-unverified", gid));
                 complete = false;
+            }
+            else if (!verifiedEmissions.TryGet(documentGid, out var verifiedRecord))
+            {
+                gaps.Add(new DigestionGap("scribe-emission-missing", gid));
+                complete = false;
+            }
+            else
+            {
+                verified = verifiedRecord;
             }
 
             if (selectsDeclaration
@@ -241,9 +234,6 @@ internal static partial class DigestionStatusEvaluator
             else if (hasReceipt
                 && (receipt!.DefinitionSha256
                     != DigestionFingerprint.Compute(definition.RawBytes.AsSpan()).RawSha256
-                    || hasAttestation
-                    && (emitted!.DefinitionPath != definitionPath
-                        || emitted.DefinitionSha256 != receipt.DefinitionSha256)
                     || verified is not null
                     && (verified.DefinitionPath != definitionPath
                         || verified.DefinitionSha256 != receipt.DefinitionSha256)))
@@ -252,20 +242,10 @@ internal static partial class DigestionStatusEvaluator
                 complete = false;
             }
 
-            if (!snapshot.TryGetFile(emissionPath, out var emission))
-            {
-                gaps.Add(new DigestionGap("scribe-emission-missing", gid));
-                complete = false;
-            }
-            else if (hasReceipt
-                && (receipt!.EmissionSha256
-                    != DigestionFingerprint.Compute(emission.RawBytes.AsSpan()).RawSha256
-                    || hasAttestation
-                    && (emitted!.EmissionPath != emissionPath
-                        || emitted.EmissionSha256 != receipt.EmissionSha256)
-                    || verified is not null
-                    && (verified.EmissionPath != emissionPath
-                        || verified.EmissionSha256 != receipt.EmissionSha256)))
+            if (hasReceipt
+                && verified is not null
+                && (verified.EmissionPath != emissionPath
+                    || verified.EmissionSha256 != receipt!.EmissionSha256))
             {
                 gaps.Add(new DigestionGap("scribe-emission-mismatch", gid));
                 complete = false;
@@ -280,36 +260,4 @@ internal static partial class DigestionStatusEvaluator
 
         return complete;
     }
-
-    private static bool HasBaselineScribeCapability(
-        DigestionLedgerEntry entry,
-        DigestionLedgerEntry? baselineEntry,
-        string gid,
-        DigestionScribeReceipt receipt)
-    {
-        if (baselineEntry is null
-            || baselineEntry.ProjectedStatus.Migration != DigestionMigrationState.Absorbed
-            || baselineEntry.ProjectedStatus.Truth is not (
-                DigestionTruthState.Closed or DigestionTruthState.Tail)
-            || !baselineEntry.CoverageGids.Contains(gid, StringComparer.Ordinal))
-        {
-            return false;
-        }
-
-        var currentCoverage = entry.Receipts.Coverage
-            .Where(item => string.Equals(item.Gid, gid, StringComparison.Ordinal))
-            .ToArray();
-        var baselineCoverage = baselineEntry.Receipts.Coverage
-            .Where(item => string.Equals(item.Gid, gid, StringComparison.Ordinal))
-            .ToArray();
-        var baselineScribe = baselineEntry.Receipts.Scribe
-            .Where(item => string.Equals(item.Gid, gid, StringComparison.Ordinal))
-            .ToArray();
-        return currentCoverage.Length == 1
-            && baselineCoverage.Length == 1
-            && baselineCoverage[0] == currentCoverage[0]
-            && baselineScribe.Length == 1
-            && baselineScribe[0] == receipt;
-    }
-
 }

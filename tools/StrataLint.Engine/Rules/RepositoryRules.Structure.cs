@@ -76,16 +76,15 @@ internal static partial class RepositoryRules
 
     // SL-003 capacity exclusions: theory inputs, the Lake manifest, the backfill
     // inventory, atomizer dialect registry, canonical CAS blobs, per-atom
-    // formalization receipts, and committed Blueprint renderer oracles are not artifacts
+    // formalization receipts, and generated Blueprint Markdown projections are not artifacts
     // the capacity pressure rule bounds. Machine inventories grow one entry per
     // admitted unit and are never navigated as content buckets; the atomizer registry
     // is one canonical strict-loader input, not a content artifact to split. A
-    // Blueprint document's structural slot is its .scribe.cs source. The .md is FILEMAP
-    // data with committed renderer-oracle and history authority; ScribeEmitter and the
-    // digestion evaluator verify its bytes. Its GID must name an existing Lean module
-    // and the definition path is bijective with that GID, so counting both files would cap a lawful
-    // twelve-module Lean bucket at six blueprinted modules. Single source shared with
-    // the CapacityPolicy dotnet-test net.
+    // Blueprint document's structural slot is its .scribe.cs source. The .md is a FILEMAP
+    // generated projection at the same stem, so counting both paths would cap a lawful
+    // twelve-module Lean bucket at six blueprinted modules. This exclusion concerns only
+    // structural capacity; it gives the projection no content or history authority. Single
+    // source shared with the CapacityPolicy dotnet-test net.
     internal static bool IsCapacityExcluded(string path) =>
         path.StartsWith("docs/develop/", StringComparison.Ordinal)
         || string.Equals(path, "lake-manifest.json", StringComparison.Ordinal)
