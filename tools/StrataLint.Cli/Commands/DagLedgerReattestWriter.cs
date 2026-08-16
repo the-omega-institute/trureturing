@@ -37,13 +37,16 @@ internal static class DagLedgerReattestWriter
             var intermediateSyntax = DagLedgerCommandPreparation.LoadLedger(
                 candidateBytes.AsSpan(),
                 "generated frozen ledger");
-            var intermediateReferences = DagLedgerCommandPreparation.ScanReferences(
+            var intermediateReferences = DagLedgerCommandPreparation.ScanSuffixReferences(
                 intermediateSyntax,
+                context.Baseline,
                 "generated frozen ledger");
-            var trustedIntermediateReferences = repository.ValidateFrozenReferences(
-                intermediateReferences);
-            var intermediate = FrozenLedger.ValidateHistoryPrefix(
+            var trustedIntermediateReferences = TrustedFrozenGitReferences.CreateForTrustedAdapter(
+                intermediateReferences.Inputs,
+                intermediateReferences.EnvironmentReferences);
+            var intermediate = FrozenLedger.ValidateCandidatePrefix(
                 intermediateSyntax,
+                context.Baseline,
                 context.Catalog,
                 trustedIntermediateReferences) switch
             {
@@ -58,10 +61,11 @@ internal static class DagLedgerReattestWriter
             var generatedSyntax = DagLedgerCommandPreparation.LoadLedger(
                 candidateBytes.AsSpan(),
                 "generated frozen ledger");
-            var generatedReferences = DagLedgerCommandPreparation.ScanReferences(
+            var trustedGeneratedReferences = DagLedgerCommandPreparation.ValidateSuffixReferences(
+                repository,
                 generatedSyntax,
+                context.Baseline,
                 "generated frozen ledger");
-            var trustedGeneratedReferences = repository.ValidateFrozenReferences(generatedReferences);
             var candidate = FrozenLedger.ValidateCandidate(
                 generatedSyntax,
                 context.Baseline,
@@ -73,62 +77,29 @@ internal static class DagLedgerReattestWriter
                     "generated frozen ledger is invalid: " + rejected.Message),
                 _ => throw new InvalidOperationException("unknown ledger validation outcome"),
             };
-            var baselineFiles = DagLedgerCommandPreparation.ReadLedgerDirectoryFiles(
-                context.LedgerPath);
-            var currentBaselineSyntax = DagLedgerCommandPreparation.LoadLedgerFiles(
+            var baselineFiles = context.BaselineFiles;
+            DagLedgerAppendWriter.RequireUnchangedBaseline(
+                context.LedgerPath,
                 baselineFiles,
-                "existing frozen ledger");
-            if (!currentBaselineSyntax.RawBytes.AsSpan().SequenceEqual(context.BaselineBytes))
-            {
-                throw new InvalidOperationException(
-                    "accepted event files changed while ledger-reattest was validating them");
-            }
+                "ledger-reattest");
 
             var newFiles = DagLedgerAppendWriter.BuildNewEventFiles(
                 generatedSyntax.Lines,
                 context.Baseline.Events.Length,
-                currentBaselineSyntax);
-            var simulatedFiles = baselineFiles.AddRange(newFiles);
-            var simulatedEvents = LoadFileEvents(simulatedFiles, "prospective frozen ledger");
-            var simulatedSyntax = DagLedgerCommandPreparation.LoadLedgerFiles(
-                simulatedFiles,
-                "prospective frozen ledger");
-            var simulatedReferences = DagLedgerCommandPreparation.ScanReferences(
-                simulatedSyntax,
-                "prospective frozen ledger");
-            var trustedSimulatedReferences = repository.ValidateFrozenReferences(simulatedReferences);
-            var replayed = FrozenLedger.ValidateHistory(
-                simulatedSyntax,
-                context.Catalog,
-                trustedSimulatedReferences) switch
-            {
-                FrozenLedgerValidationOutcome.Accepted accepted => accepted.Capability,
-                FrozenLedgerValidationOutcome.Rejected rejected => throw new InvalidOperationException(
-                    "prospective frozen ledger history is invalid: " + rejected.Message),
-                _ => throw new InvalidOperationException("unknown ledger validation outcome"),
-            };
-            RequireExpectedEventSet(
-                LoadFileEvents(baselineFiles, "existing frozen ledger"),
-                LoadFileEvents(newFiles, "generated frozen ledger suffix"),
-                simulatedEvents);
-            if (!SameActiveSet(candidate, replayed)
-                || !candidate.RevokedFrozenNodeIds.SetEquals(replayed.RevokedFrozenNodeIds))
-            {
-                throw new InvalidOperationException(
-                    "prospective content-addressed ledger replay does not retain the validated candidate state");
-            }
-            if (!DagLedgerCommandPreparation.LoadLedgerDirectory(
-                    context.LedgerPath,
-                    "existing frozen ledger").RawBytes.AsSpan().SequenceEqual(context.BaselineBytes))
-            {
-                throw new InvalidOperationException(
-                    "accepted event files changed while ledger-reattest was validating them");
-            }
+                context.BaselineSyntax);
+            var prospectiveSyntax = DagLedgerCommandPreparation.LoadTrustedLedgerWithSuffix(
+                context.BaseView,
+                newFiles,
+                "generated frozen ledger suffix");
+            DagLedgerAppendWriter.RequireUnchangedBaseline(
+                context.LedgerPath,
+                baselineFiles,
+                "ledger-reattest");
 
             DagLedgerAppendWriter.WriteEventFiles(
                 context.LedgerPath,
                 newFiles,
-                context.BaselineBytes);
+                baselineFiles);
             var appended = candidate.Events
                 .Skip(context.Baseline.Events.Length)
                 .OfType<FrozenLedgerEvent.Reattest>()
@@ -139,7 +110,8 @@ internal static class DagLedgerReattestWriter
                 .ToImmutableArray();
             var output = $"LEDGER_REATTEST appended_reattests={appended.Length} "
                 + $"appended_freezes={appendedFreezes.Length} "
-                + $"events={replayed.Events.Length} head={replayed.HeadHash}\n"
+                + $"events={context.BaseView.EventCount + newFiles.Length} "
+                + $"head={prospectiveSyntax.Lines[^1].Value.GetProperty("event_hash").GetString()}\n"
                 + string.Concat(appended.Select(item =>
                     $"REATTESTED {context.Baseline.ActiveEntries[item.Payload.CaseId].Material.RepoPath.Value}\n"))
                 + string.Concat(appendedFreezes.Select(static item =>
@@ -187,32 +159,4 @@ internal static class DagLedgerReattestWriter
         }
     }
 
-    private static ImmutableArray<DagLedgerFileEvent> LoadFileEvents(
-        IEnumerable<RepositoryFile> files,
-        string label) =>
-        DagLedgerLoader.LoadFiles(files) switch
-        {
-            DagLedgerFilesLoadOutcome.Loaded loaded => loaded.Events,
-            DagLedgerFilesLoadOutcome.Invalid invalid => throw new InvalidOperationException(
-                label + " syntax is invalid: " + invalid.Message),
-            _ => throw new InvalidOperationException("unknown ledger files load outcome"),
-        };
-
-    private static bool SameActiveSet(
-        FrozenLedgerConsistent candidate,
-        FrozenLedgerConsistent replayed)
-    {
-        var expected = candidate.ActiveEntries.Values.ToDictionary(
-            static entry => entry.Material.RepoPath.Value,
-            static entry => entry.Material.FrozenNodeId.Value,
-            StringComparer.Ordinal);
-        var actual = replayed.ActiveEntries.Values.ToDictionary(
-            static entry => entry.Material.RepoPath.Value,
-            static entry => entry.Material.FrozenNodeId.Value,
-            StringComparer.Ordinal);
-        return expected.Count == actual.Count
-            && expected.All(item =>
-                actual.TryGetValue(item.Key, out var frozenNodeId)
-                && string.Equals(item.Value, frozenNodeId, StringComparison.Ordinal));
-    }
 }
