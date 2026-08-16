@@ -110,13 +110,11 @@ golden-ledger/
 
 **A6 Lean 声明命名**(承 mathlib)定理 `snake_case`(主语_性质);类型 `CamelCase`;命名空间=路径;上游通用层居 `Metallic.*` 且以参数 D 陈述(H10)。
 
-**A7 任务码** `THEORY"-T"<四位>`(D5-T0042,永久不复用);工单块(SL-013):
+**A7 任务码** `THEORY"-T"<四位>`(D5-T0042,永久不复用);工单块只要求包含 `TASK D5-T0042`,块内为自由散文:
 ```lean
-/-- TASK D5-T0042 | 难度:1–5 | 依赖:就绪✓/欠(GID) | 尝试:n
-    提示:…
-    尸检:PR#118 归纳死于进位交错;PR#123 Zsqrtd 路死于符号 -/
+/-- TASK D5-T0042
+    可自由记录目标、线索、失败战史与后续条件。 -/
 ```
-尸检只增不删;**领单前置 = 读毕全部尸检。**
 
 **A8 常数码** `D5/E/values--json` 是 Scribe 对 Lean 常数定义与外置计算实例的 canonical 投影;十四个正式定义唯一住在 `D5/S3/Constants/Values.lean`,计算参数作为数据住在 `Golden/values-kernels.toml`,程序集只保留 schema、fail-closed loader、计算核与 writer。根 schema 为 `{attestation,constants,schema_version}`,其中 `constants` 按 `id` 严格排序且恰含十四项。每项含 `{id,lean_gid,lean_statement_sha256,status,definition,formula,refs,value,decimal,error,exact_value,method,provenance,reference_value,reference_error,comparison,open_reason,kernel_receipts}`;`provenance` 必须等于该项具体 `lean_gid`,共享 attestation 的 `provenance` 必须列全十四个 GID,不得再写裸 `Lean`。`status∈{emitted,registered-open}`,未足以转译者须 value/error 为 null、收据为空并给 open_reason,不得以 appendix 观测值补洞;误差条为最坏项负责。含 libm 的浮点投影固定发射十四位小数(value/window result 按最近值,error 按该十进制网格向上取整),量化位数与策略须入 kernel receipt,raw kernel 参数不因旧观测值调谐。SL-018 机器绑定 GID 唯一存在、声明 `kind=def`、标准三公理闭包及 inspector statement SHA-256;因这些定义是 `noncomputable ℝ`,十进制结果不冒充 Lean kernel 求值,attestation 必须以 `numeric_binding=not-kernel-evaluated:noncomputable-real` 明示该边界。修订史只归 git,工作树不保留历史兼容层。
 **A8.1 复合常数**(验收补丁):非标量常数用点分子键——`D5/delta.mean`、`D5/delta.amp`、`D5/delta.period`(δ-亏项之形态学三元);家族共享 `D5/delta._meta` 记法。
@@ -132,9 +130,9 @@ golden-ledger/
 
 **A13 编年码** `D5/C/<YYYY-MM-DD>/<slug>`;物理路径由 A2 双射至 `Chronicle/<YYYY>/<MM>/<DD>-<slug>.md`;LEGACY.md 存旧评注号(27.x)映射;过去条目不可改(H5),勘误以新条目引旧。
 
-**A14 版本码** 版辑 tag `E<n>`+Zenodo DOI;工具链钉版。环境升级的政策要求是同一 PR 原子更新 `lean-toolchain`/`lakefile.{toml,lean}`/`lake-manifest.json`,并执行全量 clean `lake build`;强制无缓存 clean build 仍不是现役机器谓词。冻结账本现役第五事件 `Supersede` 是升级门:pin 文件变化时,受影响的每个 protected-base active case 必须恰有一条事件。payload 顶层闭集为 `{axiom_closure,case_id,declaration_statement_ids,environment,frozen_node_id,input,prerequisite_frozen_node_ids,previous_attestation_event_hash,statement_id,witness_id}`;`environment` 闭集为 `{lake_manifest_blob_oid,lakefile_blob_oid,lakefile_path,lean_toolchain_blob_oid}`,`input` 使用现役 `FrozenLedgerInput` 六字段。payload 禁止携带任何 old-side 派生值。机器直接读取 protected-base case 的已记录真值并要求:新 `statement_id` 与 base 相等;新 `axiom_closure` 是 base 已记录闭包的子集(可严格缩小,扩大或不可比较均拒绝);base 闭包未知时 fail-closed;全部新坐标与 candidate Lean report 的 `Closed` material 一致;candidate input 与三个具名 pin 通过 Git capability 验证;attestation parent 连续。成功后旧节点进入独立终态 `superseded`,不进入 `revoked`;旧节点仍真,只是不再是当前坐标。支持命令为 `ledger-supersede --candidate-lean-report FILE`,且升级路径不得读取、重建或重验旧环境。
+**A14 版本码** 版辑 tag `E<n>`+Zenodo DOI;工具链钉版。环境升级的政策要求是同一 PR 原子更新 `lean-toolchain`/`lakefile.{toml,lean}`/`lake-manifest.json`,并执行全量 clean `lake build`;强制无缓存 clean build 仍不是现役机器谓词。冻结账本现役第五事件 `Supersede` 是升级门:pin 文件变化时,受影响的每个 protected-base active case 必须恰有一条事件。payload 顶层闭集为 `{axiom_closure,case_id,declaration_statement_ids,environment,frozen_node_id,input,prerequisite_frozen_node_ids,previous_attestation_event_hash,statement_id,witness_id}`;`environment` 闭集为 `{lake_manifest_blob_oid,lakefile_blob_oid,lakefile_path,lean_toolchain_blob_oid}`,`input` 使用现役 `FrozenLedgerInput` 六字段。payload 禁止携带任何 old-side 派生值。机器直接读取 protected-base case 的受信 `Payload.Input` 与已记录真值,零重放地要求共同条件成立:base 闭包已知;新 `axiom_closure` 是 base 已记录闭包的子集(可严格缩小,扩大或不可比较均拒绝);双方按 Ordinal 排序的 `(Kind,DeclarationNameKey)` 集合相等;全部新坐标与 candidate Lean report 的 `Closed` material 一致;candidate input 与三个具名 pin 通过 Git capability 验证;attestation parent 连续。身份条件另须满足二支之一:**A** 新 `statement_id` 与 base 相等;或 **B** payload 与 base 的 `input.supporting_blob_oids` 各自按 Ordinal 排序后不相等,且 payload 的 `input.descriptor_blob_oid` 与 base 已记录值逐字节相等。源码 blob 与 `statement_id` 同时变化时两支皆不成立,fail-closed 拒绝,须走 Revoke + 新 Freeze。A∨B 依赖此前提:**elaboration 对 `(源码字节,环境)` 是确定性的**;故 B 过而 A 不过,即 elaborated `Expr` 变化而源码字节不变,蕴含环境变化。现役 Reattest 的「同一陈述、新 blob」语义已经依赖同一前提;若此前提为假,`statement_id` 会在输入不变时无故漂移,是比 Supersede 身份判据更根本的错误。成功后旧节点进入独立终态 `superseded`,不进入 `revoked`;旧节点仍真,只是不再是当前坐标。支持命令为 `ledger-supersede --candidate-lean-report FILE`,且升级路径不得读取、重建或重验旧环境。
 
-**A14.1 环境升级的首次实测(v7.16 R4)** A14 曾记「环境 migration 当前 `open`」,并写明解锁设计须具备「三 pin 原子 generation、**statement identity 不变**及 full-catalog red/green tests」。2026-08-14 首次实际执行该升级并取得读数,其中一项前提被**经验证伪**,故在此原位记账。实测对象为 `leanprover/lean4:v4.31.0`+mathlib `v4.31.0` → `v4.33.0`+mathlib `v4.33.0`(v4.33.0 于 2026-08-10 转正式版),探针分支 `harness/mathlib-v433-probe`。**编译层可达**:源码版本改动仅 `lean-toolchain` 与 `lakefile.toml` 两行,`lake update mathlib` rc=0(8690 个预编译文件);首次 `lake build` rc=1,536 个 D5 文件中 **18 个失败(3.4%)**、30 个 error 块,分类为 12 目标未闭合、6 实例合成失败、3 类型不匹配、3 rewrite 失配、3 字段记法失效、2 归纳别名改名、1 未知标识符,**无一为数学问题**;逐个适配证明脚本后 `lake build` **rc=0**,共改 25 个 `.lean`(+157/−61 行),**定理陈述被改 0 条**,新增 sorry/axiom **0**,唯二签名层变动为两处 `deriving Fintype` 失效后改手写 `Fintype.ofList`。**statement identity 不变这一前提为假**:以两侧源文件逐字节相同的 498 个模块为样本(任何差异必由升级导致),其 4,262 条 `include_in_statement` 声明中 **672 条(15.77%)的 `statement_material` 发生变化,涉及 211 个模块(占样本 42.4%)**,这些模块本仓一个字节未改。原因全部是 mathlib 重构类型类层级导致 elaborated term 中的实例解析路径变化,实测样本:`Monoid.toPow`→`NPow.toPow`、`DivInvMonoid.toZPow`→`ZPow.toPow`、`NormedDivisionRing.toDivisionRing`→`Field.toDivisionRing`、`NormedRing.toRing`→`DivisionRing.toRing`、`setOf`→`Set.ofPred`。**因 `statement_id` 按定义哈希 elaborated kernel `Expr`(`.const name levels` 逐字写入常量名,实例参数亦在其中),该量是否保持不变取决于上游是否重构了本仓陈述所引用的常量与实例路径——那是本仓无从控制、亦无从预测的外部事实,本次实测为假。故旧 A14 以其为解锁前提,等于把解锁挂在一个本仓不控制的量上;本条不主张它在所有升级中皆假,只记本次为假且该判定权不在本仓。** 机器判词双侧对照:同一 `ledger-reattest` 命令、同一账本,`v4.31.0` 得 rc=0 `no changed frozen modules events=591`,`v4.33.0` 得 rc=2 `Active module D5/S0/Computability/ClosureUndecidable.lean statement identity changed or lacks a matching Reattest event` ⇒ 漂移确由升级导致,非既有缺陷。**并发现准入门的检测盲区**:`StrataLint check` 的 SL-008 只对**候选 changeset 中被改动**的模块报警,实测点名 25 个模块并与本仓改动的 25 个文件精确重合(差集两侧皆空);上述 211 个未改动模块的 672 条漂移**门零发现**,仅账本写入器 `ledger-reattest` 于全账校验时撞上。该盲区按 CLAUDE.md 第 20 条红线归类记 `open(FROZEN-IDENTITY-AMBIENT-DRIFT)`:被守性质是「冻结的陈述仍是那个陈述」,而它可在本仓零文件变动的前提下被环境破坏,故触发条件设在「候选文件被改动」这一关节上并不覆盖该性质(第Ⅵ节「因其固然」)。`Reattest` 的现役语义(同一陈述、新 blob)按 `FrozenLedgerCanonicalWriter` 对身份漂移硬抛而明确不适用,`Revoke` 的封闭四型证据(`KernelWitnessFailure`/`FormalContradictionCertificate`/`ContentAddressMismatch`/`AllowedAxiomRetired`)全部指向「其实没被正确证明」而语义不符。A14 已以 `EnvironmentRecoordinate` 收口事件类型/parser/validator;本次 672 条具体迁移仍未授权、未写入 accepted ledger,须由后续独立 PR消费该机制。
+**A14.1 环境升级的首次实测(v7.16 R4)** A14 曾记「环境 migration 当前 `open`」,并写明解锁设计须具备「三 pin 原子 generation、**statement identity 不变**及 full-catalog red/green tests」。2026-08-14 首次实际执行该升级并取得读数,其中一项前提被**经验证伪**,故在此原位记账。实测对象为 `leanprover/lean4:v4.31.0`+mathlib `v4.31.0` → `v4.33.0`+mathlib `v4.33.0`(v4.33.0 于 2026-08-10 转正式版),探针分支 `harness/mathlib-v433-probe`。**编译层可达**:源码版本改动仅 `lean-toolchain` 与 `lakefile.toml` 两行,`lake update mathlib` rc=0(8690 个预编译文件);首次 `lake build` rc=1,536 个 D5 文件中 **18 个失败(3.4%)**、30 个 error 块,分类为 12 目标未闭合、6 实例合成失败、3 类型不匹配、3 rewrite 失配、3 字段记法失效、2 归纳别名改名、1 未知标识符,**无一为数学问题**;逐个适配证明脚本后 `lake build` **rc=0**,共改 25 个 `.lean`(+157/−61 行),**定理陈述被改 0 条**,新增 sorry/axiom **0**,唯二签名层变动为两处 `deriving Fintype` 失效后改手写 `Fintype.ofList`。**statement identity 不变这一前提为假**:以两侧源文件逐字节相同的 498 个模块为样本(任何差异必由升级导致),其 4,262 条 `include_in_statement` 声明中 **672 条(15.77%)的 `statement_material` 发生变化,涉及 211 个模块(占样本 42.4%)**,这些模块本仓一个字节未改。原因全部是 mathlib 重构类型类层级导致 elaborated term 中的实例解析路径变化,实测样本:`Monoid.toPow`→`NPow.toPow`、`DivInvMonoid.toZPow`→`ZPow.toPow`、`NormedDivisionRing.toDivisionRing`→`Field.toDivisionRing`、`NormedRing.toRing`→`DivisionRing.toRing`、`setOf`→`Set.ofPred`。**因 `statement_id` 按定义哈希 elaborated kernel `Expr`(`.const name levels` 逐字写入常量名,实例参数亦在其中),该量是否保持不变取决于上游是否重构了本仓陈述所引用的常量与实例路径——那是本仓无从控制、亦无从预测的外部事实,本次实测为假。故旧 A14 以其为解锁前提,等于把解锁挂在一个本仓不控制的量上;本条不主张它在所有升级中皆假,只记本次为假且该判定权不在本仓。** 机器判词双侧对照:同一 `ledger-reattest` 命令、同一账本,`v4.31.0` 得 rc=0 `no changed frozen modules events=591`,`v4.33.0` 得 rc=2 `Active module D5/S0/Computability/ClosureUndecidable.lean statement identity changed or lacks a matching Reattest event` ⇒ 漂移确由升级导致,非既有缺陷。**并发现准入门的检测盲区**:`StrataLint check` 的 SL-008 只对**候选 changeset 中被改动**的模块报警,实测点名 25 个模块并与本仓改动的 25 个文件精确重合(差集两侧皆空);上述 211 个未改动模块的 672 条漂移**门零发现**,仅账本写入器 `ledger-reattest` 于全账校验时撞上。该盲区按 CLAUDE.md 第 20 条红线归类记 `open(FROZEN-IDENTITY-AMBIENT-DRIFT)`:被守性质是「冻结的陈述仍是那个陈述」,而它可在本仓零文件变动的前提下被环境破坏,故触发条件设在「候选文件被改动」这一关节上并不覆盖该性质(第Ⅵ节「因其固然」)。`Reattest` 的现役语义(同一陈述、新 blob)按 `FrozenLedgerCanonicalWriter` 对身份漂移硬抛而明确不适用,`Revoke` 的封闭四型证据(`KernelWitnessFailure`/`FormalContradictionCertificate`/`ContentAddressMismatch`/`AllowedAxiomRetired`)全部指向「其实没被正确证明」而语义不符。现行事件联合为 `{Genesis,Freeze,Reattest,Supersede,Revoke}`;A14 的 `Supersede` parser/validator 及 A∨B 身份判据现已消化 `open(FROZEN-IDENTITY-AMBIENT-DRIFT)` 中「源码字节相同、supporting pin 集合变化、声明键不变、闭包不扩张而 elaborated Expr 漂移」这一部分。未消化边界仍保持 `open`:若源码与声明键不变,但上游同名被引用常量的定义体变化而 `statement_id` 仍不变,branch A 的既有身份强度不改善也不恶化;且本次 672 条具体迁移仍未授权、未写入 accepted ledger,须由后续独立 PR 消费现役 `Supersede` 机制。
 
 **A15 提交与 PR 文法** `COMMIT := <官>"("<GID>"): "<动词短语>`;PR 模板 = 四段判词(立了什么/依赖什么/试了什么死了什么/账平声明勾选:无既有 closed 被推翻)。
 
@@ -218,7 +216,7 @@ warn→required 的升红义务逐预算结算,只许另开独立 PR/check,不�
 | H9 | 溯源(LLM PR 必携转录+模型版本) | 门官 |
 | H10 | 通用性头必填;标 G 者禁 import 实例事实 | SL-010 |
 | H11 | 词表律(目录名∈domains.yaml) | SL-011 |
-| H12 | 任务码永久、尸检只增 | SL-013 |
+| H12 | 任务码永久 | SL-013 |
 
 注:SL-007/009 保留空号(H7/H9 为门官策略非 lint);现役至 SL-023:SL-020 为 Lean 环境公理/状态律,SL-021 为未实例化坐标律,SL-022 为元层门,SL-023 为 Describe LaTeX epoch 规则。
 
@@ -248,7 +246,7 @@ warn→required 的升红义务逐预算结算,只许另开独立 PR/check,不�
 | 门官 Gate(决定论) | CI+合并策略:全部 SL、H7/H9、预算闸、门控执行 | 合并权 | 升格级 PR 无机器绿判词不并 | 一切 PR |
 
 ## 5.2 五铁律
-陈述回声先行(先审题后判卷——防"证对了错题");失败即尸检入工单块(不许重走死路);利益回避(旗判分离之智能体形态);无转录不收 LLM PR。**通信即工件**(v7.7 成文):智能体间一切协调经由库内工件——PR/issue/工单块/卷宗;禁库外旁路信道,**未见于工件之协调视同未发生**——溯源链无旁门。
+陈述回声先行(先审题后判卷——防"证对了错题");失败战史入工单自由散文(不许重走死路);利益回避(旗判分离之智能体形态);无转录不收 LLM PR。**通信即工件**(v7.7 成文):智能体间一切协调经由库内工件——PR/issue/工单块/卷宗;禁库外旁路信道,**未见于工件之协调视同未发生**——溯源链无旁门。
 
 ## 5.3 上下文结构(A2 有限视野之兑现)
 `agents/CONTEXT.md`(≤2K token,CI 校长):理论一句话、W1–W3 约定、目录地图、GID 文法、风格规约——有限上下文智能体之唯一必读;回声模板、判词模板随附。
@@ -374,7 +372,7 @@ recipe(A11)→ `Meta/papergen`(决定论):拉 Blueprint 散文 + **语法生成�
 残差当信号(拟合残差之系统结构 = 未知谱线,非噪声——立异常单);二阶地层法(减去已知各层,研究余项);双法对质(关键量必两条独立路);恒等式誊写链(闭式 = 逐步代换之链,每步单独可验);不动点解法(自洽方程于 1/φ=φ−1 处显式解);Fibonacci/对数周期窗(振荡量取全周期窗均,禁半窗);收据分拣(新现象按 φ/(−1/φ) 本征轴归位);结构变现(每个抽象同一——K-理论、拓扑等价——须开一张可算支票,如隙标定九中九);认亲优先(先查典再宣新;重新发现不冒充发现)。
 
 ## 11.4 旗-判协议与常数悬赏生命周期
-**旗**:候选闭式/候选关系,登记于所涉 Frontier 工单(候选值、来源、预测差);**判**:σ-处决制——实测与候选差 >3σ 即毙(毙刑记录入尸检:本账战史 46σ、5.6σ 等),<1σ 且过独立复算方可升格猜想;**零误升为荣誉指标**(升格后被毙 = 事故复盘)。**悬赏生命周期**:算到 n 位(误差条最坏项)→ 候选词典扫(**整数关系探测 PSLQ/LLL 入 Evidence/kernels 标配**+领域词汇表:本库为 ℚ(√5)-Hecke L′、Stark 对数、ζ-值组合)→ 旗 → σ-判 → 升格或归档;八位为悬赏起步线(防伪匹配)。
+**旗**:候选闭式/候选关系,登记于所涉 Frontier 工单(候选值、来源、预测差);**判**:σ-处决制——实测与候选差 >3σ 即毙(败选记录留档:本账战史 46σ、5.6σ 等),<1σ 且过独立复算方可升格猜想;**零误升为荣誉指标**(升格后被毙 = 事故复盘)。**悬赏生命周期**:算到 n 位(误差条最坏项)→ 候选词典扫(**整数关系探测 PSLQ/LLL 入 Evidence/kernels 标配**+领域词汇表:本库为 ℚ(√5)-Hecke L′、Stark 对数、ζ-值组合)→ 旗 → σ-判 → 升格或归档;八位为悬赏起步线(防伪匹配)。
 
 ## 11.5 数值方法论细则(Evidence/POLICY.md 全文义务)
 误差条为最坏项负责;插值可用于尾、不可用于结论;条件收敛恒等式过双极限须显式核亏项(δ-教训);振荡感知拟合(疑对数周期者,先周期扫描后定均值);整数精确优先(如 {kφ} 之 isqrt-迭代,禁浮点累积);共线性检查(拟合基含近共线项——如 ε² 与 ε²log——须报条件数并做交替剔除审);滑窗一致性(结论须对窗口位置稳定)。**显式种子律**(一切随机性显式播种并记录,复跑同值为验收条件);**环境钉版**(通用 Evidence 依赖锁文件 + 容器指纹入库;Scribe values 投影不用 host fingerprint 污染 canonical bytes,改由共享 attestation 的组合 input SHA-256 绑定 `global.json`、`Directory.Build.props`、`Directory.Packages.props`、Scribe `packages.lock.json` 与 Lean ticket,并以 A8 固定量化跨平台收敛——五年后同输入与 emitter version 必须同值)。
@@ -401,7 +399,7 @@ recipe(A11)→ `Meta/papergen`(决定论):拉 Blueprint 散文 + **语法生成�
 升格链定为四级:**数值(E 脚本)→ 符号(CAS)→ 条件定理 → Lean**。`Evidence/symbolic/` 存 sympy/CAS 验证脚本(镜像律定址);CAS 过验之恒等式获状态"符号已验"(本账先例:A_F=κ、A_h、E 之外壳皆此路),其 Lean 化降为 `ring`/`norm_num` 级工单——**符号层是数值与形式化之间的正规台阶,不是可选项。**
 
 ## 11.13 卷宗制(记忆之机器化)
-每个 Frontier 靶获自动聚合卷宗 `Blueprint/X_Frontier/<靶>/DOSSIER.md`(CI 生成):全部 GID-关联之尝试、尸检、数值、收据、文献锚、相关 Chronicle 条目,按时间序;**审计协议增义务步:立新案前必先全文检索卷宗与编年**("先翻卷宗后立新案"——第 149 轮主犯居第 122 轮旧卷之教训法典化)。
+Frontier 靶的诊断卷宗现住 `docs/reports/**`(`Meta/FILEMAP.toml` 记 `kind=data`、`consumed_by=["agent"]`),逐份为一次具名诊断的完整记录,其结论不在别处留副本。〔勘注 2026-08-17·open〕原表述称每个 Frontier 靶获 `Blueprint/X_Frontier/<靶>/DOSSIER.md` 自动聚合卷宗(CI 生成),按 GID 汇总尝试、失败战史、数值、收据、文献锚与相关 Chronicle 条目。实测该聚合器不存在:`Blueprint/X_Frontier/` 零条目、全仓无任何 DOSSIER 生成器、`docs/reports/**` 亦无索引。聚合尚属 open;在它建成前,下条义务以 `docs/reports/**` 全文检索履行。**审计协议增义务步:立新案前必先全文检索卷宗与编年**("先翻卷宗后立新案"——第 149 轮主犯居第 122 轮旧卷之教训法典化)。
 
 ## 11.14 判词可诉制(当庭勘正为荣誉事件)
 任何在册评注/判词/裁决可经问答轮挑战;挑战成立 ⟹ 原判条目加删除线注 + 勘正条目(Chronicle 新条引旧条,H5 不破)——**勘正入荣誉榜非耻辱柱**(本账先例:27.79 第二层经对手反击当庭撤销,为全程最佳轮次之一);对手官宪章增:定期抽查在册判词之可攻性。
@@ -459,7 +457,7 @@ CONTEXT.md(1 页)→ 各地层 `INDEX.md`(CI 从文件头 digest 行聚合)→ �
 ## 11.27 理论勘误事件类(TheoryErratum)
 **触发与边界**:机器发现一条**已摄入**的 claim **涉嫌**数学错误、内部矛盾、空洞性问题或与已冻结 Lean 真值冲突之一,始得归本类;每条已摄入 claim 均由 11.21 的 loader 不变量携 `cas_ref`,不存在需另行排除的无 `cas_ref` 收据。证据门裁决前只称“涉嫌”,不得断言问题存在。四项排除各归既有路径:风格措辞不是理论错;普通未证猜想照常以 `open` 消化;外部文献勘误走 L 平面路径;harness/Lean 自身证明洞走既有后代撤销路径。须分清两层状态:全局 truth DAG 为 `closed/open/tail/semantic` 四态;`BACKFILL.status.truth` 仅为 `closed/tail/open` 三态投影,全局 `semantic` 在 BACKFILL 投影为 `open`,不得把 `semantic` 写成 BACKFILL 第四值。〔守护:**硬+评审**·机器保证 claim 已摄入及 `cas_ref`/`atom_id` 合规;四类涉嫌触发、排除项及忠实分类当前由评审守护〕
 
-**立案**:以 `(cas_ref, atom_id)` 二元组唯一定址 claim;重复发现必须先按该二元组检索并复用唯一案件,只追加证据、尸检或处置记录,不得另立平行案。`D5/X_Frontier/*` 中的永久 `TASK` 正文与反馈 issue 必须双向持久记录同一组 `case_id`、`cas_ref`、`atom_id`,issue 引用 TASK GID,TASK 引用 issue;`BACKFILL.ticket_index` 仅承担 `{case_id, gid}` 的 `case_id`→TASK GID 映射,不得冒充 claim 身份或案件双向绑定。本类只定义既有载体的处置规范:零新状态、零新 schema、零新 workflow、零新服务。〔守护:**硬+评审**·`atom_id` 唯一性、`ticket_index` 结构及其对 X_Frontier TASK 的覆盖由 SL-016 机器判;二元组检索复用及 TASK↔issue 三字段双向绑定当前由评审守护,机器化待升提〕
+**立案**:以 `(cas_ref, atom_id)` 二元组唯一定址 claim;重复发现必须先按该二元组检索并复用唯一案件,只追加证据、尸检或处置记录,不得另立平行案。`D5/X_Frontier/*` 中的永久 `TASK` 正文与反馈 issue 必须双向持久记录同一组 `case_id`、`cas_ref`、`atom_id`,issue 引用 TASK GID,TASK 引用 issue;`case_id`→TASK GID 映射由 SL-016 从全仓 `D5/**/*.lean` 的 TASK token 现算派生(不再有手工镜像文件),该映射不得冒充 claim 身份或案件双向绑定。本类只定义既有载体的处置规范:零新状态、零新 schema、零新 workflow、零新服务。〔守护:**硬+评审**·`atom_id` 唯一性、以及派生的 `case_id`→TASK GID 映射对**全仓** TASK(不限 X_Frontier)的覆盖由 SL-016 机器判;二元组检索复用及 TASK↔issue 三字段双向绑定当前由评审守护,机器化待升提〕
 
 **证据门**:宣称“原 claim 被反驳”或“其非平凡性主张被反驳”的必要条件是三环闭合:**CAS 原句 → 独立忠实 echo(复核席逐字对照原文)→ 可重放反证**。可重放证书仅限三类:(a) Lean 证明 `¬claim` 或证明其与冻结声明冲突,且 axiom 闭包必须满足仓库绝对白名单 `axiom closure ⊆ {propext, Classical.choice, Quot.sound}`;(b) 精确算术、区间或有限反例经独立 checker 复核;(c) 空洞性证明——claim 为真但由弱前提平凡成立,故证书反驳的是其**非平凡性主张**,绝不得冒充 `¬claim`。每个 Lean witness 的陈述必须自描述所反驳的对象:是原 claim、与冻结声明的相容性,还是指定的非平凡性主张。三环未闭合者不定错:证据不足则案件记录保持 `open`;语义不能消歧则全局节点归 `semantic`、BACKFILL 仍投影为 `status.truth: open`。叙事、多模型共识或浮点异常均不足以称理论错;O5 先例仅证重做者之错,不证理论之错。〔守护:**硬+评审**·Lean inspector/SL-020 校验 witness 公理已登记;truth DAG 将含非标准公理的节点判为 `tail`,SL-016 据此禁止 `closed` 投影。勘误 witness 的上述三公理**绝对白名单**判别当前属评审守护,升提专用 lint 后才成为硬门;触发分类、忠实 echo、三类证书判别及空洞性所反驳对象的忠实性亦由评审守护〕
 
@@ -545,6 +543,8 @@ R1：可再生全局 aggregate 入库，令独立 source change 争用相同路�
 R2：`ExpectedMacros` 把 corpus 派生集合写进程序。R3：并行 freeze intent 争用一条 canonical linear tail。R4：BACKFILL 是 source/消化账本热点，性质未测，移出本 SPEC；§4 因而保持 `Meta/BACKFILL.yaml` 为 `kind=data`、`runtime_disposition="committed-source"`、conflict policy 为“随 source 同 PR 运行 canonical ingest 重算，禁手改”，与当前 FILEMAP `Meta/FILEMAP.toml:184-189` 一致。
 
 〔勘注 2026-08-15〕PR #1810 已于 2026-08-15 从 `Meta/FILEMAP.toml` 删除 `pattern = "Meta/BACKFILL.yaml"` 条目，因该路径无 tracked 对象；同一 PR 立 `FILEMAP-PATTERN-EMPTY` 谓词，禁止非 `run-local` 的 pattern 无对象，故该条目不能以原形态恢复。现役消化账本为 `Meta/Digestion/backfill/` 目录形态，其 FILEMAP 覆盖由 `Meta/Digestion/backfill/**` 与 `Meta/Digestion/ticket-index.toml` 两条条目承担。R4 原判词中「与当前 FILEMAP 一致」的引用坐标 `Meta/FILEMAP.toml:184-189` 已失效。
+
+〔勘注 2026-08-17〕`Meta/Digestion/ticket-index.toml` 已删除:该文件是 `case_id`→TASK GID 映射的手工镜像,而该映射完全可由全仓 `D5/**/*.lean` 的 TASK token 派生;守它的三重校验(目标存在、目标确实声明该 TASK、X_Frontier TASK 须在索引中)在派生形态下各自恒真,故无独立检测消失。实测该镜像本身覆盖 28/29——`D5-T0020` 住 `D5/S1/Depth/Finite.lean`(不在 X_Frontier)故从未被要求登记;改为派生后覆盖全仓。现役消化账本的 FILEMAP 覆盖由 `Meta/Digestion/backfill/**` 一条条目承担。
 
 **范围边界：**F2/F3（多驱动者调度的收敛性与失败隔离）是独立因果支，不属第十二部，不把实现扩入本部。归宿为独立 issue **#922**；该 issue 必须覆盖多驱动者收敛性、单驱动者失败隔离、`#903` 卡 2h52m 与 `#904`/`#914` 排队证据、`is_derived_conflict` 白名单不覆盖 ceremony 产物，并以“并发驱动最终收敛到同一 accepted state；任一驱动失败不阻塞无依赖驱动；上述三个案件有可重放回归且全绿”为完成判据。另一同构实例是 CHANGELOG 的 `v7.14 R<n>` 共享单调递增计数器：dev 上 R1、R2、R4 各重复两次，多写者并发撞号与 `events.jsonl` 的 `sequence` 争用同属该独立因果支。以上问题不会因 PR-A 落地而自动消失，故不得把第十二部误作已覆盖。
 

@@ -51,6 +51,26 @@ jobs:
           persist-credentials: false
           path: candidate
 
+      - name: Strip checkout remote state
+        shell: bash
+        env:
+          CHECKOUT_PATH: candidate
+        run: |
+          set -euo pipefail
+          git -C "$CHECKOUT_PATH" remote remove origin
+          git -C "$CHECKOUT_PATH" for-each-ref --format='delete %(refname)' refs/remotes/ |
+            git -C "$CHECKOUT_PATH" update-ref --stdin
+          remote_count="$(git -C "$CHECKOUT_PATH" remote | wc -l)"
+          remote_ref_count="$(git -C "$CHECKOUT_PATH" for-each-ref --format='%(refname)' refs/remotes/ | wc -l)"
+          if [[ "$remote_count" -ne 0 || "$remote_ref_count" -ne 0 ]]; then
+            printf '%s\n' "checkout still exposes remotes or remote-tracking refs" >&2
+            exit 1
+          fi
+          head_sha="$(git -C "$CHECKOUT_PATH" rev-parse HEAD)"
+          base_sha="$(git -C "$CHECKOUT_PATH" rev-parse HEAD^1)"
+          test -n "$head_sha"
+          test -n "$base_sha"
+
       - name: Fail closed when merge result is unavailable
         if: always() && steps.checkout-merge.outcome != 'success'
         shell: bash
@@ -312,6 +332,26 @@ jobs:
           persist-credentials: false
           path: candidate
 
+      - name: Strip checkout remote state
+        shell: bash
+        env:
+          CHECKOUT_PATH: candidate
+        run: |
+          set -euo pipefail
+          git -C "$CHECKOUT_PATH" remote remove origin
+          git -C "$CHECKOUT_PATH" for-each-ref --format='delete %(refname)' refs/remotes/ |
+            git -C "$CHECKOUT_PATH" update-ref --stdin
+          remote_count="$(git -C "$CHECKOUT_PATH" remote | wc -l)"
+          remote_ref_count="$(git -C "$CHECKOUT_PATH" for-each-ref --format='%(refname)' refs/remotes/ | wc -l)"
+          if [[ "$remote_count" -ne 0 || "$remote_ref_count" -ne 0 ]]; then
+            printf '%s\n' "checkout still exposes remotes or remote-tracking refs" >&2
+            exit 1
+          fi
+          head_sha="$(git -C "$CHECKOUT_PATH" rev-parse HEAD)"
+          base_sha="$(git -C "$CHECKOUT_PATH" rev-parse HEAD^1)"
+          test -n "$head_sha"
+          test -n "$base_sha"
+
       - name: Fail closed when merge result is unavailable
         if: always() && steps.checkout-merge.outcome != 'success'
         shell: bash
@@ -345,19 +385,11 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          if [[ "$GITHUB_EVENT_NAME" == "pull_request_target" ]]; then
-            # GitHub 的 merge ref 是 merge(dev_tip, head):第一父提交是被扩展的 dev
-            # 状态,HEAD 是实际受审的并集树。两者来自同一个 merge 对象,故 baseline
-            # 与最后交给 gate 的 delta 不会跨树漂移。
-            sha="$(git -C candidate rev-parse HEAD^1)"
-          else
-            sha="${{ github.event.before }}"
-            if [[ -z "$sha" || "$sha" =~ ^0+$ ]]; then
-              sha="$(git -C candidate rev-parse HEAD^1)"
-            fi
-          fi
+          # PR merge refs and dev push commits both carry their protected base as
+          # the checked object's first parent, so the verdict has no event-payload input.
+          sha="$(git -C candidate rev-parse HEAD^1)"
           if [[ -z "$sha" || "$sha" =~ ^0+$ ]]; then
-            printf '%s\n' "event has no content-addressable base SHA" >&2
+            printf '%s\n' "checked object has no content-addressable base SHA" >&2
             exit 1
           fi
           echo "sha=$sha" >> "$GITHUB_OUTPUT"
@@ -610,6 +642,26 @@ jobs:
           fetch-depth: 0
           persist-credentials: false
           path: candidate
+
+      - name: Strip checkout remote state
+        shell: bash
+        env:
+          CHECKOUT_PATH: candidate
+        run: |
+          set -euo pipefail
+          git -C "$CHECKOUT_PATH" remote remove origin
+          git -C "$CHECKOUT_PATH" for-each-ref --format='delete %(refname)' refs/remotes/ |
+            git -C "$CHECKOUT_PATH" update-ref --stdin
+          remote_count="$(git -C "$CHECKOUT_PATH" remote | wc -l)"
+          remote_ref_count="$(git -C "$CHECKOUT_PATH" for-each-ref --format='%(refname)' refs/remotes/ | wc -l)"
+          if [[ "$remote_count" -ne 0 || "$remote_ref_count" -ne 0 ]]; then
+            printf '%s\n' "checkout still exposes remotes or remote-tracking refs" >&2
+            exit 1
+          fi
+          head_sha="$(git -C "$CHECKOUT_PATH" rev-parse HEAD)"
+          base_sha="$(git -C "$CHECKOUT_PATH" rev-parse HEAD^1)"
+          test -n "$head_sha"
+          test -n "$base_sha"
 
       - name: Fail closed when merge result is unavailable
         if: always() && steps.checkout-merge.outcome != 'success'

@@ -14,13 +14,6 @@ internal static class BackfillInventoryRule
 {
     private const string BackfillPath = BackfillInventoryLoader.RelativePath;
 
-    private static readonly Regex CasePattern = new(
-        "^D5-T[0-9]{4}$",
-        RegexOptions.CultureInvariant);
-
-    private static readonly Regex TaskDeclarationPattern = new(
-        "TASK (?<case>D5-T[0-9]{4})",
-        RegexOptions.CultureInvariant);
     private static readonly Regex SourceIdPattern = new(
         "^[a-z0-9]+(?:[.-][a-z0-9]+)*$",
         RegexOptions.CultureInvariant);
@@ -66,7 +59,7 @@ internal static class BackfillInventoryRule
 
         var root = document.Root;
         if (!root.Keys.ToHashSet(StringComparer.Ordinal).SetEquals(
-                ["schema_version", "ledger", "sources", "ticket_index"]))
+                ["schema_version", "ledger", "sources"]))
         {
             findings.Add(new RuleFinding(BackfillPath, "BACKFILL top-level keys are not canonical"));
         }
@@ -92,8 +85,6 @@ internal static class BackfillInventoryRule
                 findings);
         }
 
-        root.TryGetValue("ticket_index", out var ticketIndex);
-        ValidateTicketIndex(context.Current, ticketIndex, findings);
         return findings.ToImmutable();
     }
 
@@ -307,81 +298,4 @@ internal static class BackfillInventoryRule
     // && snapshot.Files.Keys.Any(path => IsCanonicalPath(path.Value)). Then remove the legacy
     // Load(string), RelativePath, dispatch branch, and legacy tests together.
 
-    private static void ValidateTicketIndex(
-        RepositorySnapshot snapshot,
-        object? rawTicketIndex,
-        ImmutableArray<RuleFinding>.Builder findings)
-    {
-        if (rawTicketIndex is not List<object?> ticketIndex)
-        {
-            findings.Add(new RuleFinding(BackfillPath, "ticket_index must be a list"));
-            return;
-        }
-
-        var tickets = new Dictionary<string, RepositoryFile>(StringComparer.Ordinal);
-        foreach (var rawTicket in ticketIndex)
-        {
-            if (rawTicket is not Dictionary<string, object?> ticket
-                || !ticket.Keys.ToHashSet(StringComparer.Ordinal).SetEquals(["case_id", "gid"]))
-            {
-                findings.Add(new RuleFinding(
-                    BackfillPath,
-                    "ticket_index entry must contain only case_id and gid"));
-                continue;
-            }
-
-            ticket.TryGetValue("case_id", out var rawCaseId);
-            ticket.TryGetValue("gid", out var rawGid);
-            if (rawCaseId is not string caseId
-                || !CasePattern.IsMatch(caseId)
-                || rawGid is not string gidText)
-            {
-                findings.Add(new RuleFinding(
-                    BackfillPath,
-                    "ticket_index entry has an invalid case_id or gid"));
-                continue;
-            }
-
-            if (!Gid.TryParse(gidText, out var gid)
-                || !gid.Path.Value.EndsWith(".lean", StringComparison.Ordinal)
-                || !snapshot.Files.TryGetValue(gid.Path, out var target))
-            {
-                findings.Add(new RuleFinding(
-                    BackfillPath,
-                    $"dangling ticket {caseId}: ticket target Lean file is absent"));
-                continue;
-            }
-
-            if (!tickets.TryAdd(caseId, target))
-            {
-                findings.Add(new RuleFinding(BackfillPath, $"duplicate ticket case: {caseId}"));
-            }
-        }
-
-        foreach (var (caseId, target) in tickets.OrderBy(static item => item.Key, StringComparer.Ordinal))
-        {
-            var declarations = TaskDeclarationPattern.Matches(target.Text)
-                .Select(static match => match.Groups["case"].Value);
-            if (!declarations.Contains(caseId, StringComparer.Ordinal))
-            {
-                findings.Add(new RuleFinding(
-                    BackfillPath,
-                    $"ticket {caseId} target does not declare TASK {caseId}: {target.Path.Value}"));
-            }
-        }
-
-        var frontierCases = snapshot.Files
-            .Where(static item => item.Key.Value.StartsWith("D5/X_Frontier/", StringComparison.Ordinal)
-                && item.Key.Value.EndsWith(".lean", StringComparison.Ordinal))
-            .SelectMany(static item => TaskDeclarationPattern.Matches(item.Value.Text))
-            .Select(static match => match.Groups["case"].Value)
-            .ToHashSet(StringComparer.Ordinal);
-        var missing = frontierCases.Where(caseId => !tickets.ContainsKey(caseId)).Order(StringComparer.Ordinal).ToArray();
-        if (missing.Length > 0)
-        {
-            findings.Add(new RuleFinding(
-                BackfillPath,
-                "frontier TASK cases are missing from ticket_index: " + string.Join(", ", missing)));
-        }
-    }
 }

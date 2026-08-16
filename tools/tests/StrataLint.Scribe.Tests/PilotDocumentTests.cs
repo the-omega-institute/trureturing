@@ -599,14 +599,6 @@ public sealed class DocumentDiscoveryTests
     private static IReadOnlyDictionary<string, LiteratureCitation> RepositoryCitations() =>
         LibraryNoteCatalog.Load(RepositoryAccessor.Discover(RepositoryRootCriterion.GlobalJsonAndBlueprintDirectoryNotFound).Root.FullPath).Citations;
 
-    private static string CanonicalSourcePath(string sourcePath)
-    {
-        var normalized = sourcePath.Replace('\\', '/');
-        var blueprint = normalized.LastIndexOf("Blueprint/", StringComparison.Ordinal);
-        Assert.True(blueprint >= 0, $"Scribe source path is outside Blueprint/: {sourcePath}");
-        return normalized[blueprint..];
-    }
-
     private static IEnumerable<DocumentBlock> Descendants(BlockSequence content)
     {
         foreach (var block in content.Items)

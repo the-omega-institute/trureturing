@@ -85,7 +85,6 @@ internal static partial class CoverWorld
                 hostedSibling.UnresolvedSubitems);
         }
 
-        builder.Append("ticket_index: []\n");
         return builder.ToString();
     }
 

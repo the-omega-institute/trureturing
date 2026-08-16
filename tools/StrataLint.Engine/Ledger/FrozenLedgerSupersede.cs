@@ -69,10 +69,42 @@ public static partial class FrozenLedger
                 $"Supersede target {protectedBaseEntry.Material.RepoPath.Value} recorded axiom closure is unknown.");
         }
 
-        if (payload.StatementId != protectedBaseEntry.Material.StatementId)
+        var declarationKeys = payload.DeclarationStatementIds
+            .Select(static declaration => (declaration.Kind, declaration.DeclarationNameKey))
+            .OrderBy(static declaration => declaration.Kind, StringComparer.Ordinal)
+            .ThenBy(static declaration => declaration.DeclarationNameKey, StringComparer.Ordinal);
+        var protectedDeclarationKeys = protectedBaseEntry.Payload.DeclarationStatementIds
+            .Select(static declaration => (declaration.Kind, declaration.DeclarationNameKey))
+            .OrderBy(static declaration => declaration.Kind, StringComparer.Ordinal)
+            .ThenBy(static declaration => declaration.DeclarationNameKey, StringComparer.Ordinal);
+        if (!declarationKeys.SequenceEqual(protectedDeclarationKeys))
         {
             throw new FormatException(
-                $"Supersede target {protectedBaseEntry.Material.RepoPath.Value} is not the same theorem as the protected-base node.");
+                $"Supersede target {protectedBaseEntry.Material.RepoPath.Value} declaration keys differ from the protected-base node.");
+        }
+
+        if (payload.StatementId != protectedBaseEntry.Material.StatementId)
+        {
+            var pinsChanged = !payload.Input.SupportingBlobOids
+                .Order(StringComparer.Ordinal)
+                .SequenceEqual(
+                    protectedBaseEntry.Payload.Input.SupportingBlobOids.Order(StringComparer.Ordinal),
+                    StringComparer.Ordinal);
+            if (!pinsChanged)
+            {
+                throw new FormatException(
+                    $"Supersede target {protectedBaseEntry.Material.RepoPath.Value} statement identity changed but environment pins did not change.");
+            }
+
+            // Identity branch B relies on elaboration being deterministic in (source bytes,
+            // environment): if the elaborated Expr changed while the source blob did not, the
+            // changed pins account for the drift. Reattest already relies on the same premise.
+            if (payload.Input.DescriptorBlobOid
+                != protectedBaseEntry.Payload.Input.DescriptorBlobOid)
+            {
+                throw new FormatException(
+                    $"Supersede target {protectedBaseEntry.Material.RepoPath.Value} statement identity and source blob both changed from the protected-base node.");
+            }
         }
 
         if (payload.AxiomClosure.Except(

@@ -260,6 +260,24 @@ public static partial class FrozenLedger
         }
     }
 
+    internal static FrozenRevokePayload ReadTrustedRevoke(JsonElement payload)
+    {
+        var evidence = payload.GetProperty("evidence");
+        if (evidence.ValueKind != JsonValueKind.Array)
+        {
+            throw new FormatException("trusted Revoke evidence is not an array");
+        }
+
+        return new FrozenRevokePayload(
+            RequiredStringArray(payload, "affected_case_ids"),
+            ParseFrozenNodeIds(payload, "affected_frozen_node_ids"),
+            RequiredString(payload, "closure_hash"),
+            evidence.EnumerateArray().Select(ParseEvidence).ToImmutableArray(),
+            RequiredString(payload, "graph_root"),
+            RequiredStringArray(payload, "root_case_ids"),
+            ParseFrozenNodeIds(payload, "root_frozen_node_ids"));
+    }
+
     private static FrozenFreezePayload ParseHistoricalFreeze(
         JsonElement payload,
         TrustedFrozenGitReferences trustedReferences)

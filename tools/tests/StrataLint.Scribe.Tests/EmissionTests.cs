@@ -654,8 +654,7 @@ public sealed class EmissionTests
     {
         var repository = RepositoryAccessor.Discover(RepositoryRootCriterion.GlobalJsonAndBlueprintInvalidOperation);
         var ledgerSources = repository.EnumerateFiles(
-                RepositoryRelativePath.Create("Meta/Digestion/backfill"), "*")
-            .Append(RepositoryRelativePath.Create(BackfillInventoryLoader.TicketIndexPath));
+            RepositoryRelativePath.Create("Meta/Digestion/backfill"), "*");
         foreach (var source in ledgerSources)
         {
             var destination = Path.Combine(destinationRoot, source.Value);

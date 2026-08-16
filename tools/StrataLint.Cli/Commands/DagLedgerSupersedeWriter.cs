@@ -24,10 +24,8 @@ internal static class DagLedgerSupersedeWriter
                 repositoryRoot,
                 repository,
                 new FileLeanReportSource(arguments[1]));
-            var baselineFiles = DagLedgerCommandPreparation.ReadLedgerDirectoryFiles(
-                candidate.LedgerPath);
-            var protectedBase = FrozenLedgerBaseViewReader.Read(RepositorySnapshot.Create(
-                baselineFiles.ToImmutableDictionary(static file => file.Path)));
+            var baselineFiles = candidate.BaselineFiles;
+            var protectedBase = candidate.BaseView;
             var pins = FrozenLedger.EnvironmentPins(candidate.Catalog.Environment);
             var generated = BuildEvents(protectedBase, candidate.Catalog, pins);
             if (generated.IsEmpty)
@@ -52,24 +50,17 @@ internal static class DagLedgerSupersedeWriter
                 generated);
 
             var eventFiles = generated.Select(static item => item.File).ToImmutableArray();
-            var prospectiveFiles = baselineFiles.AddRange(eventFiles);
-            var prospective = FrozenLedgerBaseViewReader.Read(RepositorySnapshot.Create(
-                prospectiveFiles.ToImmutableDictionary(static file => file.Path)));
-            if (prospective.EventCount != protectedBase.EventCount + generated.Length
-                || generated.Any(item =>
-                    prospective.ActiveByCase[item.Payload.CaseId].Material.FrozenNodeId
-                        != item.Payload.FrozenNodeId))
-            {
-                throw new InvalidOperationException(
-                    "prospective Supersede projection does not retain the validated candidate state");
-            }
+            _ = DagLedgerCommandPreparation.ValidateGeneratedEventFiles(
+                protectedBase,
+                eventFiles,
+                "generated frozen ledger suffix");
 
             DagLedgerAppendWriter.WriteEventFiles(
                 candidate.LedgerPath,
                 eventFiles,
-                candidate.BaselineBytes);
+                candidate.BaselineFiles);
             var output = $"LEDGER_SUPERSEDE appended_supersedes={generated.Length} "
-                + $"events={prospective.EventCount}\n"
+                + $"events={protectedBase.EventCount + generated.Length}\n"
                 + string.Concat(generated.Select(item =>
                     $"SUPERSEDED {protectedBase.ActiveByCase[item.Payload.CaseId].Material.RepoPath.Value}\n"));
             return new CommandResult(true, output, string.Empty);

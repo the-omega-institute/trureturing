@@ -6,8 +6,6 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.ObserverMemory;
 
 internal sealed class RecordCorrelationMonogamyDocument : IScribeDocumentDefinition
 {
-    private const string LeanPrefix = "D5/S3/ObserverMemory/RecordCorrelationMonogamy.";
-
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create("A perfect Z-address copy in one fixed record pointer eliminates its conjugate X correlation.",
         H("Address-Record Correlation Monogamy"),
         Blocks(
