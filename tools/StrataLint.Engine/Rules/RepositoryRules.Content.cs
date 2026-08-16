@@ -123,7 +123,7 @@ internal static partial class RepositoryRules
             return ImmutableArray.Create(new RuleFinding(path, "queries must be a list"));
         }
 
-        var tasks = CollectTasks(context.Current, null).Keys.ToHashSet(StringComparer.Ordinal);
+        var tasks = CollectTaskCodes(context.Current);
         var findings = ImmutableArray.CreateBuilder<RuleFinding>();
         var ids = new HashSet<string>(StringComparer.Ordinal);
         foreach (var rawQuery in queries)

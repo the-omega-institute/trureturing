@@ -110,13 +110,11 @@ golden-ledger/
 
 **A6 Lean 声明命名**(承 mathlib)定理 `snake_case`(主语_性质);类型 `CamelCase`;命名空间=路径;上游通用层居 `Metallic.*` 且以参数 D 陈述(H10)。
 
-**A7 任务码** `THEORY"-T"<四位>`(D5-T0042,永久不复用);工单块(SL-013):
+**A7 任务码** `THEORY"-T"<四位>`(D5-T0042,永久不复用);工单块只要求包含 `TASK D5-T0042`,块内为自由散文:
 ```lean
-/-- TASK D5-T0042 | 难度:1–5 | 依赖:就绪✓/欠(GID) | 尝试:n
-    提示:…
-    尸检:PR#118 归纳死于进位交错;PR#123 Zsqrtd 路死于符号 -/
+/-- TASK D5-T0042
+    可自由记录目标、线索、失败战史与后续条件。 -/
 ```
-尸检只增不删;**领单前置 = 读毕全部尸检。**
 
 **A8 常数码** `D5/E/values--json` 是 Scribe 对 Lean 常数定义与外置计算实例的 canonical 投影;十四个正式定义唯一住在 `D5/S3/Constants/Values.lean`,计算参数作为数据住在 `Golden/values-kernels.toml`,程序集只保留 schema、fail-closed loader、计算核与 writer。根 schema 为 `{attestation,constants,schema_version}`,其中 `constants` 按 `id` 严格排序且恰含十四项。每项含 `{id,lean_gid,lean_statement_sha256,status,definition,formula,refs,value,decimal,error,exact_value,method,provenance,reference_value,reference_error,comparison,open_reason,kernel_receipts}`;`provenance` 必须等于该项具体 `lean_gid`,共享 attestation 的 `provenance` 必须列全十四个 GID,不得再写裸 `Lean`。`status∈{emitted,registered-open}`,未足以转译者须 value/error 为 null、收据为空并给 open_reason,不得以 appendix 观测值补洞;误差条为最坏项负责。含 libm 的浮点投影固定发射十四位小数(value/window result 按最近值,error 按该十进制网格向上取整),量化位数与策略须入 kernel receipt,raw kernel 参数不因旧观测值调谐。SL-018 机器绑定 GID 唯一存在、声明 `kind=def`、标准三公理闭包及 inspector statement SHA-256;因这些定义是 `noncomputable ℝ`,十进制结果不冒充 Lean kernel 求值,attestation 必须以 `numeric_binding=not-kernel-evaluated:noncomputable-real` 明示该边界。修订史只归 git,工作树不保留历史兼容层。
 **A8.1 复合常数**(验收补丁):非标量常数用点分子键——`D5/delta.mean`、`D5/delta.amp`、`D5/delta.period`(δ-亏项之形态学三元);家族共享 `D5/delta._meta` 记法。
@@ -218,7 +216,7 @@ warn→required 的升红义务逐预算结算,只许另开独立 PR/check,不�
 | H9 | 溯源(LLM PR 必携转录+模型版本) | 门官 |
 | H10 | 通用性头必填;标 G 者禁 import 实例事实 | SL-010 |
 | H11 | 词表律(目录名∈domains.yaml) | SL-011 |
-| H12 | 任务码永久、尸检只增 | SL-013 |
+| H12 | 任务码永久 | SL-013 |
 
 注:SL-007/009 保留空号(H7/H9 为门官策略非 lint);现役至 SL-023:SL-020 为 Lean 环境公理/状态律,SL-021 为未实例化坐标律,SL-022 为元层门,SL-023 为 Describe LaTeX epoch 规则。
 
@@ -248,7 +246,7 @@ warn→required 的升红义务逐预算结算,只许另开独立 PR/check,不�
 | 门官 Gate(决定论) | CI+合并策略:全部 SL、H7/H9、预算闸、门控执行 | 合并权 | 升格级 PR 无机器绿判词不并 | 一切 PR |
 
 ## 5.2 五铁律
-陈述回声先行(先审题后判卷——防"证对了错题");失败即尸检入工单块(不许重走死路);利益回避(旗判分离之智能体形态);无转录不收 LLM PR。**通信即工件**(v7.7 成文):智能体间一切协调经由库内工件——PR/issue/工单块/卷宗;禁库外旁路信道,**未见于工件之协调视同未发生**——溯源链无旁门。
+陈述回声先行(先审题后判卷——防"证对了错题");失败战史入工单自由散文(不许重走死路);利益回避(旗判分离之智能体形态);无转录不收 LLM PR。**通信即工件**(v7.7 成文):智能体间一切协调经由库内工件——PR/issue/工单块/卷宗;禁库外旁路信道,**未见于工件之协调视同未发生**——溯源链无旁门。
 
 ## 5.3 上下文结构(A2 有限视野之兑现)
 `agents/CONTEXT.md`(≤2K token,CI 校长):理论一句话、W1–W3 约定、目录地图、GID 文法、风格规约——有限上下文智能体之唯一必读;回声模板、判词模板随附。
@@ -374,7 +372,7 @@ recipe(A11)→ `Meta/papergen`(决定论):拉 Blueprint 散文 + **语法生成�
 残差当信号(拟合残差之系统结构 = 未知谱线,非噪声——立异常单);二阶地层法(减去已知各层,研究余项);双法对质(关键量必两条独立路);恒等式誊写链(闭式 = 逐步代换之链,每步单独可验);不动点解法(自洽方程于 1/φ=φ−1 处显式解);Fibonacci/对数周期窗(振荡量取全周期窗均,禁半窗);收据分拣(新现象按 φ/(−1/φ) 本征轴归位);结构变现(每个抽象同一——K-理论、拓扑等价——须开一张可算支票,如隙标定九中九);认亲优先(先查典再宣新;重新发现不冒充发现)。
 
 ## 11.4 旗-判协议与常数悬赏生命周期
-**旗**:候选闭式/候选关系,登记于所涉 Frontier 工单(候选值、来源、预测差);**判**:σ-处决制——实测与候选差 >3σ 即毙(毙刑记录入尸检:本账战史 46σ、5.6σ 等),<1σ 且过独立复算方可升格猜想;**零误升为荣誉指标**(升格后被毙 = 事故复盘)。**悬赏生命周期**:算到 n 位(误差条最坏项)→ 候选词典扫(**整数关系探测 PSLQ/LLL 入 Evidence/kernels 标配**+领域词汇表:本库为 ℚ(√5)-Hecke L′、Stark 对数、ζ-值组合)→ 旗 → σ-判 → 升格或归档;八位为悬赏起步线(防伪匹配)。
+**旗**:候选闭式/候选关系,登记于所涉 Frontier 工单(候选值、来源、预测差);**判**:σ-处决制——实测与候选差 >3σ 即毙(败选记录留档:本账战史 46σ、5.6σ 等),<1σ 且过独立复算方可升格猜想;**零误升为荣誉指标**(升格后被毙 = 事故复盘)。**悬赏生命周期**:算到 n 位(误差条最坏项)→ 候选词典扫(**整数关系探测 PSLQ/LLL 入 Evidence/kernels 标配**+领域词汇表:本库为 ℚ(√5)-Hecke L′、Stark 对数、ζ-值组合)→ 旗 → σ-判 → 升格或归档;八位为悬赏起步线(防伪匹配)。
 
 ## 11.5 数值方法论细则(Evidence/POLICY.md 全文义务)
 误差条为最坏项负责;插值可用于尾、不可用于结论;条件收敛恒等式过双极限须显式核亏项(δ-教训);振荡感知拟合(疑对数周期者,先周期扫描后定均值);整数精确优先(如 {kφ} 之 isqrt-迭代,禁浮点累积);共线性检查(拟合基含近共线项——如 ε² 与 ε²log——须报条件数并做交替剔除审);滑窗一致性(结论须对窗口位置稳定)。**显式种子律**(一切随机性显式播种并记录,复跑同值为验收条件);**环境钉版**(通用 Evidence 依赖锁文件 + 容器指纹入库;Scribe values 投影不用 host fingerprint 污染 canonical bytes,改由共享 attestation 的组合 input SHA-256 绑定 `global.json`、`Directory.Build.props`、`Directory.Packages.props`、Scribe `packages.lock.json` 与 Lean ticket,并以 A8 固定量化跨平台收敛——五年后同输入与 emitter version 必须同值)。
