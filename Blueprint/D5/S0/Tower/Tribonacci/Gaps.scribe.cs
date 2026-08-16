@@ -22,7 +22,12 @@ internal sealed class TribonacciGapsDocument : IScribeDocumentDefinition
                     DeclarationHandle.Create(
                         "D5/S0/Tower/Tribonacci/Gaps.consecutive_nameValue_gap"),
                     H("Consecutive Tribonacci three-gap invariant"),
-                    StatementSource.WithoutFormula(),
+                    StatementSource.FromAuthor(new Formula.Bind(
+                        FormulaQuantifier.ForAll,
+                        FormulaIdentifier.Create("Q"),
+                        naturals,
+                        Call("IsTribonacciGap", q,
+                            Call("adjacentDifference", q, Id("i"))))),
                     AssessedProvenance.FromRepo(),
                     Blocks(Paragraph(Text(
                         "Every consecutive difference is t^-Q, t^-(Q+1), or the sum of "
@@ -63,7 +68,11 @@ internal sealed class TribonacciGapsDocument : IScribeDocumentDefinition
                     DeclarationHandle.Create(
                         "D5/S0/Tower/Tribonacci/Gaps.adjacent_gap_spectrum"),
                     H("Exact Tribonacci three-gap spectrum"),
-                    StatementSource.WithoutFormula(),
+                    StatementSource.FromAuthor(new Formula.Bind(
+                        FormulaQuantifier.ForAll,
+                        FormulaIdentifier.Create("Q"),
+                        naturals,
+                        Call("adjacentGapSpectrumCard", q))),
                     AssessedProvenance.FromRepo(),
                     Blocks(Paragraph(Text(
                         "The level-three witnesses persist in the zero-prefix block at every "
