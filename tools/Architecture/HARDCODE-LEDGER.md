@@ -710,3 +710,41 @@ with only SL-022 diagnostics and no blocking content diagnostic.
 - Distributed clones make history tampering observable, so false judgments go through detection, appeal, correction, and accountability rather than prior cryptographic gilding.
 - The admitted table records only date, quoted authorization, fully qualified declaration name, and canonical statement SHA-256; SL-008 requires every baseline declaration unchanged and exactly one matching addition.
 - Missing authorization, hash drift, piggybacking, malformed rows, and historical deletion/rewrite remain hard failures; signature, issuer attestation, identity check, nonce, replay state, and authorization consumption do not exist.
+
+## UNCONSUMED-ARTIFACT-AUDIT round 1 (2026-08-17)
+
+Recorded so that round 2 has something to diff against. Spec 11.24 makes the stop
+criterion `two consecutive full audits with zero new gaps`, and requires the round
+count and new-gap curve to be kept; without a round-1 record the criterion cannot
+be evaluated at all.
+
+Input version: `bf0d97896`. Method: per-surface enumeration, each surface reduced to
+a machine reading before any deletion. Confirmed gaps are candidates that survived
+independent verification and were merged as deletions or registered as named opens.
+
+| Surface | Reading | Confirmed gaps |
+|---|---|---|
+| Shell functions and scripts | 115 functions, 15 scripts, zero-call 0 | 0 |
+| NuGet packages | 11 central versions, every one referenced by a csproj | 0 |
+| C# member reachability | raw 7713, mechanical false positives 99.46%, true candidates 42 | 42 |
+| Prose path references | 162 raw, minus reserved coordinates, mathlib paths, globs and dated reports | 1 |
+| CLI verbs | 24 registered, only `validate-blueprint-pins` had no data, doc or caller | 1 |
+| Test-tree support types | 77 non-test types, zero-reference 5, false positives 4 | 1 |
+| `.github/` | every referenced script exists; `STRATALINT_TIMING` is consumed by `harness-gate.sh` | 0 |
+| `Library/` | 34 anchors, 33 cited; `bell1964epr` is an under-citation in a live Bell module, not an orphan | 0 |
+| `skills/` | install contract in each `SKILL.md` plus use receipts in three reports | 0 |
+| `docs/reports/**` | 25 named diagnoses, sole copy of their conclusions; dossier, not projection | 0 |
+
+Merged this round: 13 pull requests, net 1474 lines removed. The two largest were
+whole machines guarding something that was not there: `BlueprintPins` validated a
+manifest format with no instance in the repository, and the ticket index mirror
+carried 78 lines of validation whose three checks only guarded the mirror itself.
+
+Six named opens were registered rather than deleted, each with a closing condition:
+`D5-T0035` through `D5-T0040`.
+
+**Round 2 must repeat every surface above on a later input version and report the same
+table.** Two consecutive rounds of all-zero confirmed gaps reach the fixed point; any
+non-zero row restarts the count. A surface whose classification is inherited from this
+round does not count as an independent challenge.
+
