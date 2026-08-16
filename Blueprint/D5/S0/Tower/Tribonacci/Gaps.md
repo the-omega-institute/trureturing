@@ -8,7 +8,7 @@ A joint strong induction tracks both internal adjacent differences and the termi
 
 **Theorem 1.1 (Consecutive Tribonacci three-gap invariant).**
 
-Lean statement: `D5/S0/Tower/Tribonacci/Gaps.consecutive_nameValue_gap`
+$$\forall Q \in N,\; \operatorname{IsTribonacciGap}\left(Q, \operatorname{adjacentDifference}\left(Q, i\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S0/Tower/Tribonacci/Gaps.consecutive_nameValue_gap` (`✓ std3`). ∎
 
@@ -44,7 +44,7 @@ Strictness of the indexed values and bijectivity of the prefix enumeration separ
 
 **Theorem 1.4 (Exact Tribonacci three-gap spectrum).**
 
-Lean statement: `D5/S0/Tower/Tribonacci/Gaps.adjacent_gap_spectrum`
+$$\forall Q \in N,\; \operatorname{adjacentGapSpectrumCard}\left(Q\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S0/Tower/Tribonacci/Gaps.adjacent_gap_spectrum` (`✓ std3`). ∎
 
