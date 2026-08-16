@@ -15,14 +15,43 @@ public static partial class FrozenLedger
             baseline,
             catalog,
             trustedReferences,
-            TrustedRevocationReceiptStore.Empty(baseline));
+            TrustedRevocationReceiptStore.Empty(baseline),
+            requireCompleteCatalog: true);
+
+    internal static FrozenLedgerValidationOutcome ValidateCandidatePrefix(
+        FrozenLedgerSyntax syntax,
+        FrozenLedgerConsistent baseline,
+        FrozenMaterialCatalog catalog,
+        TrustedFrozenGitReferences trustedReferences) =>
+        ValidateCandidate(
+            syntax,
+            baseline,
+            catalog,
+            trustedReferences,
+            TrustedRevocationReceiptStore.Empty(baseline),
+            requireCompleteCatalog: false);
 
     public static FrozenLedgerValidationOutcome ValidateCandidate(
         FrozenLedgerSyntax syntax,
         FrozenLedgerConsistent baseline,
         FrozenMaterialCatalog catalog,
         TrustedFrozenGitReferences trustedReferences,
-        TrustedRevocationReceiptStore trustedRevocationReceipts)
+        TrustedRevocationReceiptStore trustedRevocationReceipts) =>
+        ValidateCandidate(
+            syntax,
+            baseline,
+            catalog,
+            trustedReferences,
+            trustedRevocationReceipts,
+            requireCompleteCatalog: true);
+
+    private static FrozenLedgerValidationOutcome ValidateCandidate(
+        FrozenLedgerSyntax syntax,
+        FrozenLedgerConsistent baseline,
+        FrozenMaterialCatalog catalog,
+        TrustedFrozenGitReferences trustedReferences,
+        TrustedRevocationReceiptStore trustedRevocationReceipts,
+        bool requireCompleteCatalog)
     {
         ArgumentNullException.ThrowIfNull(syntax);
         ArgumentNullException.ThrowIfNull(baseline);
@@ -31,7 +60,6 @@ public static partial class FrozenLedger
         ArgumentNullException.ThrowIfNull(trustedRevocationReceipts);
         try
         {
-            ValidateSyntaxEnvelope(syntax);
             if (!syntax.RawBytes.AsSpan().StartsWith(baseline.RawBytes.AsSpan()))
             {
                 throw new FormatException(
@@ -42,6 +70,8 @@ public static partial class FrozenLedger
             {
                 throw new FormatException("Candidate frozen ledger truncated the baseline event prefix.");
             }
+
+            ValidateSuffixSyntaxEnvelope(syntax, baseline.Events.Length);
 
             var events = baseline.Events.ToBuilder();
             var active = baseline.ActiveEntries.ToDictionary(static item => item.Key, static item => item.Value, StringComparer.Ordinal);
@@ -176,13 +206,14 @@ public static partial class FrozenLedger
                 .OrderBy(static path => path.Value, StringComparer.Ordinal)
                 .Select(static path => path.Value)
                 .ToArray();
-            if (missing.Length > 0)
+            if (requireCompleteCatalog && missing.Length > 0)
             {
                 throw new FormatException("Closed modules are missing Freeze events: " + string.Join(", ", missing));
             }
 
-            if (actual.Count != expected.Count
-                || expected.Any(item => actual[item.Key].Material.FrozenNodeId != item.Value.FrozenNodeId))
+            if ((requireCompleteCatalog && actual.Count != expected.Count)
+                || actual.Any(item => !expected.TryGetValue(item.Key, out var expectedMaterial)
+                    || item.Value.Material.FrozenNodeId != expectedMaterial.FrozenNodeId))
             {
                 throw new FormatException(
                     "Active frozen view does not exactly match the current Closed module identities.");
