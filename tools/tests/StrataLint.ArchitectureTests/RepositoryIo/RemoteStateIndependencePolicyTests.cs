@@ -33,7 +33,7 @@ public sealed class RemoteStateIndependencePolicyTests
             new RemoteStateSource("RemoteDependentTests.cs", source)));
 
         Assert.Equal("RemoteDependentTests.cs:7", finding.Location);
-        Assert.Equal("remote revision", finding.Operation);
+        Assert.Equal("disallowed revision", finding.Operation);
     }
 
     [Fact]
@@ -54,7 +54,7 @@ public sealed class RemoteStateIndependencePolicyTests
             new RemoteStateSource("DynamicRevisionTests.cs", source)));
 
         Assert.Equal("DynamicRevisionTests.cs:6", finding.Location);
-        Assert.Contains("not provably local", finding.Message, StringComparison.Ordinal);
+        Assert.Contains("not head or base", finding.Message, StringComparison.Ordinal);
     }
 
     [Fact]
@@ -77,6 +77,31 @@ public sealed class RemoteStateIndependencePolicyTests
             new RemoteStateSource("EquivalentRemoteTests.cs", source)));
 
         Assert.Equal("EquivalentRemoteTests.cs:8", finding.Location);
+    }
+
+    [Theory]
+    [InlineData("refs/heads/dev")]
+    [InlineData("refs/tags/v1")]
+    [InlineData("HEAD~1")]
+    [InlineData("0123456789012345678901234567890123456789")]
+    public void RealRepositoryOnlyHeadAndBaseReferencesAreAllowed(string revision)
+    {
+        var source = $$"""
+            class OtherRevisionTests
+            {
+                void ReadsOtherRevision()
+                {
+                    var checkout = TestRepositoryLayout.FindRoot();
+                    new GitRepositoryGateway(checkout).ReadRevision("{{revision}}");
+                }
+            }
+            """;
+
+        var finding = Assert.Single(RemoteStateIndependencePolicy.InspectTestSource(
+            new RemoteStateSource("OtherRevisionTests.cs", source)));
+
+        Assert.Equal("OtherRevisionTests.cs:6", finding.Location);
+        Assert.Contains("not head or base", finding.Message, StringComparison.Ordinal);
     }
 
     [Fact]
@@ -119,6 +144,27 @@ public sealed class RemoteStateIndependencePolicyTests
 
         Assert.Equal("ProcessFetchTests.cs:6", finding.Location);
         Assert.Equal("git fetch", finding.Operation);
+    }
+
+    [Fact]
+    public void RealRepositoryBoundedProcessUnknownArgumentsFailClosed()
+    {
+        const string source = """
+            class ProcessGitTests
+            {
+                void ReadsUnknownRevision(string[] arguments)
+                {
+                    var checkout = TestRepositoryLayout.FindRoot();
+                    BoundedProcessRunner.Run("git", arguments, checkout);
+                }
+            }
+            """;
+
+        var finding = Assert.Single(RemoteStateIndependencePolicy.InspectTestSource(
+            new RemoteStateSource("ProcessGitTests.cs", source)));
+
+        Assert.Equal("ProcessGitTests.cs:6", finding.Location);
+        Assert.Equal("git command", finding.Operation);
     }
 
     [Fact]
@@ -225,6 +271,7 @@ public sealed class RemoteStateIndependencePolicyTests
                     var repository = new GitRepositoryGateway(checkout);
                     repository.ReadCurrent();
                     repository.ReadRevision("HEAD");
+                    repository.ReadRevision("HEAD^1");
                 }
             }
             """;
@@ -276,13 +323,86 @@ public sealed class RemoteStateIndependencePolicyTests
                   - uses: actions/checkout@v4
                   - name: Inspect checked out objects
                     run: |
-                      git rev-parse HEAD
-                      git diff --name-only "$base_sha" "$head_sha"
+                      base="$(git rev-parse HEAD^1)"
+                      head="$(git rev-parse HEAD)"
+                      git diff --name-only "$base" "$head"
                       git diff -- path/to/working-tree-file
             """;
 
         Assert.Empty(RemoteStateIndependencePolicy.InspectWorkflowSource(
             new RemoteStateSource(".github/workflows/local.yml", workflow)));
+    }
+
+    [Fact]
+    public void PostCheckoutHeadSecondParentIsRejected()
+    {
+        const string workflow = """
+            jobs:
+              test:
+                steps:
+                  - uses: actions/checkout@v4
+                  - run: git rev-parse --verify HEAD^2
+            """;
+
+        var finding = Assert.Single(RemoteStateIndependencePolicy.InspectWorkflowSource(
+            new RemoteStateSource(".github/workflows/second-parent.yml", workflow)));
+
+        Assert.Equal(".github/workflows/second-parent.yml:5", finding.Location);
+        Assert.Equal("disallowed revision", finding.Operation);
+    }
+
+    [Fact]
+    public void PostCheckoutArbitraryRevisionVariableIsRejected()
+    {
+        const string workflow = """
+            jobs:
+              test:
+                steps:
+                  - uses: actions/checkout@v4
+                  - run: |
+                      revision="${{ github.event.before }}"
+                      git diff "$revision" HEAD
+            """;
+
+        var finding = Assert.Single(RemoteStateIndependencePolicy.InspectWorkflowSource(
+            new RemoteStateSource(".github/workflows/arbitrary.yml", workflow)));
+
+        Assert.Equal(".github/workflows/arbitrary.yml:7", finding.Location);
+        Assert.Equal("disallowed revision", finding.Operation);
+    }
+
+    [Fact]
+    public void PostCheckoutLsRemoteIsRejected()
+    {
+        const string workflow = """
+            jobs:
+              test:
+                steps:
+                  - uses: actions/checkout@v4
+                  - run: git ls-remote origin refs/heads/dev
+            """;
+
+        var finding = Assert.Single(RemoteStateIndependencePolicy.InspectWorkflowSource(
+            new RemoteStateSource(".github/workflows/ls-remote.yml", workflow)));
+
+        Assert.Equal(".github/workflows/ls-remote.yml:5", finding.Location);
+        Assert.Equal("git ls-remote", finding.Operation);
+    }
+
+    [Fact]
+    public void ActionsCheckoutReferenceIsExempt()
+    {
+        const string workflow = """
+            jobs:
+              test:
+                steps:
+                  - uses: actions/checkout@v4
+                    with:
+                      ref: refs/remotes/origin/dev
+            """;
+
+        Assert.Empty(RemoteStateIndependencePolicy.InspectWorkflowSource(
+            new RemoteStateSource(".github/workflows/checkout.yml", workflow)));
     }
 
     [Fact]

@@ -2,7 +2,6 @@ using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using StrataLint.Engine;
-using System.Text;
 using System.Text.RegularExpressions;
 using YamlDotNet.Core;
 using YamlDotNet.RepresentationModel;
@@ -11,75 +10,33 @@ namespace StrataLint.ArchitectureTests;
 
 internal sealed record RemoteStateSource(string Path, string Content);
 
-internal sealed record RemoteStateFinding(
-    string Path,
-    int Line,
-    string Operation,
-    string Message)
+internal sealed record RemoteStateFinding(string Path, int Line, string Operation, string Message)
 {
     internal string Location => $"{Path}:{Line}";
-
     public override string ToString() => $"{Location}: {Operation}: {Message}";
 }
 
 internal static partial class RemoteStateIndependencePolicy
 {
+    private static readonly IReadOnlySet<string> AllowedRevisions =
+        new HashSet<string>(StringComparer.Ordinal) { "HEAD", "HEAD^1" };
     private static readonly IReadOnlySet<string> RevisionReaders =
-        new HashSet<string>(StringComparer.Ordinal)
-        {
-            "ReadRevision",
-            "ReadRevisionFile",
-        };
-
-    private static readonly IReadOnlySet<string> FetchingGitCommands =
-        new HashSet<string>(StringComparer.Ordinal)
-        {
-            "fetch",
-            "ls-remote",
-            "pull",
-        };
-
-    private static readonly IReadOnlySet<string> RemoteApiCommands =
-        new HashSet<string>(StringComparer.Ordinal)
-        {
-            "api",
-            "issue",
-            "pr",
-            "release",
-            "repo",
-            "run",
-            "search",
-            "workflow",
-        };
-
-    private static readonly IReadOnlySet<string> RevisionResolvingGitCommands =
-        new HashSet<string>(StringComparer.Ordinal)
-        {
-            "branch",
-            "cat-file",
-            "checkout",
-            "diff",
-            "log",
-            "ls-tree",
-            "merge-base",
-            "reset",
-            "rev-parse",
-            "show",
-            "switch",
-        };
-
-    private static readonly IReadOnlySet<string> GitOptionsWithValues =
-        new HashSet<string>(StringComparer.Ordinal)
-        {
-            "-C",
-            "-c",
-            "--config-env",
-            "--exec-path",
-            "--git-dir",
-            "--namespace",
-            "--super-prefix",
-            "--work-tree",
-        };
+        new HashSet<string>(StringComparer.Ordinal) { "ReadRevision", "ReadRevisionFile" };
+    private static readonly IReadOnlySet<string> RemoteGitCommands =
+        new HashSet<string>(StringComparer.Ordinal) { "fetch", "ls-remote", "pull" };
+    private static readonly IReadOnlySet<string> RevisionGitCommands = new HashSet<string>(StringComparer.Ordinal)
+    {
+        "branch", "cat-file", "checkout", "diff", "log", "ls-tree", "merge-base",
+        "reset", "rev-parse", "show", "switch",
+    };
+    private static readonly IReadOnlySet<string> RemoteApiCommands = new HashSet<string>(StringComparer.Ordinal)
+    {
+        "api", "issue", "pr", "release", "repo", "run", "search", "workflow",
+    };
+    private static readonly IReadOnlySet<string> HttpQueryMethods = new HashSet<string>(StringComparer.Ordinal)
+    {
+        "GetAsync", "GetByteArrayAsync", "GetStreamAsync", "GetStringAsync", "PostAsync", "SendAsync",
+    };
 
     internal static IReadOnlyList<RemoteStateFinding> InspectRepository(string repositoryRoot)
     {
@@ -89,97 +46,59 @@ internal static partial class RemoteStateIndependencePolicy
             if (file.RelativePath.StartsWith("tools/tests/", StringComparison.Ordinal)
                 && file.RelativePath.EndsWith(".cs", StringComparison.Ordinal))
             {
-                findings.AddRange(InspectTestSource(new RemoteStateSource(
-                    file.RelativePath,
-                    File.ReadAllText(file.FullPath))));
+                findings.AddRange(InspectTestSource(new(file.RelativePath, File.ReadAllText(file.FullPath))));
             }
             else if (file.RelativePath.StartsWith(".github/workflows/", StringComparison.Ordinal)
                      && (file.RelativePath.EndsWith(".yml", StringComparison.Ordinal)
                          || file.RelativePath.EndsWith(".yaml", StringComparison.Ordinal)))
             {
-                findings.AddRange(InspectWorkflowSource(new RemoteStateSource(
-                    file.RelativePath,
-                    File.ReadAllText(file.FullPath))));
+                findings.AddRange(InspectWorkflowSource(new(file.RelativePath, File.ReadAllText(file.FullPath))));
             }
         }
-
-        return findings
-            .OrderBy(static finding => finding.Path, StringComparer.Ordinal)
-            .ThenBy(static finding => finding.Line)
-            .ThenBy(static finding => finding.Operation, StringComparer.Ordinal)
-            .ToArray();
+        return findings.OrderBy(static item => item.Path, StringComparer.Ordinal)
+            .ThenBy(static item => item.Line).ThenBy(static item => item.Operation, StringComparer.Ordinal).ToArray();
     }
 
     internal static IReadOnlyList<RemoteStateFinding> InspectTestSource(RemoteStateSource source)
     {
         var tree = CSharpSyntaxTree.ParseText(source.Content);
         var root = tree.GetRoot();
-        var findings = tree.GetDiagnostics()
-            .Where(static diagnostic => diagnostic.Severity == DiagnosticSeverity.Error)
-            .Select(diagnostic => new RemoteStateFinding(
-                source.Path,
-                diagnostic.Location.GetLineSpan().StartLinePosition.Line + 1,
-                "unrecognized C#",
-                diagnostic.GetMessage()))
+        var findings = tree.GetDiagnostics().Where(static item => item.Severity == DiagnosticSeverity.Error)
+            .Select(item => new RemoteStateFinding(source.Path,
+                item.Location.GetLineSpan().StartLinePosition.Line + 1, "unrecognized C#", item.GetMessage()))
             .ToList();
+
         foreach (var invocation in root.DescendantNodes().OfType<InvocationExpressionSyntax>())
         {
-            var scope = AnalysisScope(invocation, root);
-            var constants = DeriveStringConstants(scope);
-            var realRoots = DeriveRealRepositoryVariables(scope);
-            var realGateways = DeriveRealGatewayVariables(scope, realRoots);
+            var scope = Scope(invocation, root);
             var method = InvocationName(invocation);
-            findings.AddRange(InspectProcessInvocation(
-                source.Path,
-                invocation,
-                constants,
-                realRoots));
-            if (RevisionReaders.Contains(method)
-                && UsesRealGateway(invocation, realRoots, realGateways))
+            if (RevisionReaders.Contains(method) && UsesRealGateway(invocation, scope))
             {
                 var revision = invocation.ArgumentList.Arguments.FirstOrDefault()?.Expression;
-                if (revision is null
-                    || !TryConstantString(revision, constants, out var value)
-                    || !IsProvenRemoteIndependentRevision(value))
+                if (revision is null || !IsAllowedRevision(revision))
                 {
-                    findings.Add(Finding(
-                        source.Path,
-                        invocation,
-                        "remote revision",
-                        revision is not null && TryConstantString(revision, constants, out value)
-                            ? $"real repository resolves remote-tracking or ambiguous revision '{value}'"
-                            : "real repository revision is not provably local or content-addressed"));
+                    findings.Add(Finding(source.Path, invocation, "disallowed revision",
+                        "real checkout revision is not head or base (HEAD or HEAD^1)"));
                 }
             }
-
-            if (method == "InspectAdmissionTopology"
-                && UsesRealGateway(invocation, realRoots, realGateways))
+            if (method == "InspectAdmissionTopology" && UsesRealGateway(invocation, scope))
             {
-                findings.Add(Finding(
-                    source.Path,
-                    invocation,
-                    "remote API",
-                    "real repository topology inspection calls git ls-remote"));
+                findings.Add(Finding(source.Path, invocation, "remote API",
+                    "real checkout topology inspection calls git ls-remote"));
             }
 
-            if (method == "RunGit"
-                && invocation.ArgumentList.Arguments.Count >= 2
-                && DependsOnRealRepository(
-                    invocation.ArgumentList.Arguments[0].Expression,
-                    realRoots))
+            findings.AddRange(InspectProcessInvocation(source.Path, invocation, scope));
+            if (HttpQueryMethods.Contains(method) && UsesHttpClient(invocation, scope))
             {
-                var arguments = invocation.ArgumentList.Arguments.Skip(1)
-                    .Select(static argument => argument.Expression)
-                    .Select(expression => TryConstantString(expression, constants, out var value)
-                        ? value
-                        : null)
-                    .ToArray();
-                findings.AddRange(InspectGitArguments(source.Path, invocation, arguments));
+                var target = invocation.ArgumentList.Arguments.FirstOrDefault()?.Expression;
+                if (target is null || !TryLiteral(target, out var uri) || IsRepositoryApiUrl(uri))
+                {
+                    findings.Add(Finding(source.Path, invocation, "remote API",
+                        "test HTTP query is not proven independent of live repository state"));
+                }
             }
         }
-
         findings.AddRange(InspectProcessStartInfos(source.Path, root));
-
         return findings;
     }
 
@@ -192,38 +111,19 @@ internal static partial class RemoteStateIndependencePolicy
         }
         catch (YamlException exception)
         {
-            return
-            [
-                new RemoteStateFinding(
-                    source.Path,
-                    checked((int)exception.Start.Line + 1),
-                    "unrecognized workflow",
-                    exception.Message),
-            ];
+            return [new(source.Path, checked((int)exception.Start.Line + 1),
+                "unrecognized workflow", exception.Message)];
         }
-
-        if (stream.Documents.Count != 1
-            || stream.Documents[0].RootNode is not YamlMappingNode root
+        if (stream.Documents.Count != 1 || stream.Documents[0].RootNode is not YamlMappingNode root
             || !TryMapping(root, "jobs", out var jobs))
         {
-            return
-            [
-                new RemoteStateFinding(
-                    source.Path,
-                    1,
-                    "unrecognized workflow",
-                    "workflow must contain one jobs mapping"),
-            ];
+            return [new(source.Path, 1, "unrecognized workflow", "workflow must contain one jobs mapping")];
         }
 
         var findings = new List<RemoteStateFinding>();
         foreach (var job in jobs.Children.Values.OfType<YamlMappingNode>())
         {
-            if (!TrySequence(job, "steps", out var steps))
-            {
-                continue;
-            }
-
+            if (!TrySequence(job, "steps", out var steps)) continue;
             var checkoutSeen = false;
             foreach (var step in steps.Children.OfType<YamlMappingNode>())
             {
@@ -233,478 +133,295 @@ internal static partial class RemoteStateIndependencePolicy
                     checkoutSeen = true;
                     continue;
                 }
-
-                if (!checkoutSeen)
-                {
-                    continue;
-                }
-
+                if (!checkoutSeen) continue;
                 if (TryScalar(step, "uses", out uses)
                     && uses.Value?.StartsWith("actions/github-script@", StringComparison.Ordinal) is true)
                 {
-                    findings.Add(new RemoteStateFinding(
-                        source.Path,
-                        checked((int)uses.Start.Line + 1),
-                        "remote API",
+                    findings.Add(new(source.Path, checked((int)uses.Start.Line + 1), "remote API",
                         "post-checkout github-script may query live repository state"));
                 }
-
                 if (TryScalar(step, "run", out var run))
                 {
-                    findings.AddRange(InspectShell(
-                        source.Path,
-                        run.Value ?? string.Empty,
-                        WorkflowScalarFirstLine(run)));
+                    findings.AddRange(InspectShell(source.Path, run.Value ?? string.Empty,
+                        checked((int)run.Start.Line + (run.Style is ScalarStyle.Literal or ScalarStyle.Folded ? 1 : 0))));
                 }
             }
         }
-
         return findings;
     }
 
-    private static IReadOnlyDictionary<string, string> DeriveStringConstants(SyntaxNode root)
+    private static IEnumerable<RemoteStateFinding> InspectProcessInvocation(
+        string path, InvocationExpressionSyntax invocation, SyntaxNode scope)
     {
-        var constants = new Dictionary<string, string>(StringComparer.Ordinal);
-        bool changed;
-        do
+        var call = invocation.ArgumentList.Arguments;
+        if (InvocationName(invocation) == "RunGit" && call.Count >= 2
+            && IsRealCheckout(call[0].Expression, scope))
         {
-            changed = false;
-            foreach (var variable in root.DescendantNodes().OfType<VariableDeclaratorSyntax>())
-            {
-                if (!constants.ContainsKey(variable.Identifier.ValueText)
-                    && variable.Initializer is not null
-                    && TryConstantString(variable.Initializer.Value, constants, out var value))
-                {
-                    constants.Add(variable.Identifier.ValueText, value);
-                    changed = true;
-                }
-            }
+            foreach (var finding in InspectGit(path, invocation,
+                         call.Skip(1).Select(static item => LiteralOrNull(item.Expression)).ToArray()))
+                yield return finding;
         }
-        while (changed);
-        return constants;
-    }
-
-    private static IReadOnlySet<string> DeriveRealRepositoryVariables(SyntaxNode root)
-    {
-        var variables = new HashSet<string>(StringComparer.Ordinal);
-        bool changed;
-        do
-        {
-            changed = false;
-            foreach (var variable in root.DescendantNodes().OfType<VariableDeclaratorSyntax>())
-            {
-                if (variable.Initializer is not null
-                    && DependsOnRealRepository(variable.Initializer.Value, variables))
-                {
-                    changed |= variables.Add(variable.Identifier.ValueText);
-                }
-            }
-
-            foreach (var assignment in root.DescendantNodes().OfType<AssignmentExpressionSyntax>())
-            {
-                if (assignment.Left is IdentifierNameSyntax identifier
-                    && DependsOnRealRepository(assignment.Right, variables))
-                {
-                    changed |= variables.Add(identifier.Identifier.ValueText);
-                }
-            }
-        }
-        while (changed);
-        return variables;
-    }
-
-    private static IReadOnlySet<string> DeriveRealGatewayVariables(
-        SyntaxNode root,
-        IReadOnlySet<string> realRoots)
-    {
-        var variables = new HashSet<string>(StringComparer.Ordinal);
-        bool changed;
-        do
-        {
-            changed = false;
-            foreach (var variable in root.DescendantNodes().OfType<VariableDeclaratorSyntax>())
-            {
-                if (variable.Initializer is not null
-                    && IsRealGatewayExpression(variable.Initializer.Value, realRoots, variables))
-                {
-                    changed |= variables.Add(variable.Identifier.ValueText);
-                }
-            }
-        }
-        while (changed);
-        return variables;
-    }
-
-    private static bool DependsOnRealRepository(
-        ExpressionSyntax expression,
-        IReadOnlySet<string> realRoots) =>
-        expression.DescendantNodesAndSelf().OfType<InvocationExpressionSyntax>()
-            .Any(static invocation =>
-                InvocationName(invocation) == "FindRoot"
-                && invocation.Expression is MemberAccessExpressionSyntax member
-                && RightmostName(member.Expression).EndsWith("RepositoryLayout", StringComparison.Ordinal))
-        || expression.DescendantNodesAndSelf().OfType<IdentifierNameSyntax>()
-            .Any(identifier => realRoots.Contains(identifier.Identifier.ValueText));
-
-    private static bool UsesRealGateway(
-        InvocationExpressionSyntax invocation,
-        IReadOnlySet<string> realRoots,
-        IReadOnlySet<string> realGateways) =>
-        invocation.Expression is MemberAccessExpressionSyntax member
-        && IsRealGatewayExpression(member.Expression, realRoots, realGateways);
-
-    private static bool IsRealGatewayExpression(
-        ExpressionSyntax expression,
-        IReadOnlySet<string> realRoots,
-        IReadOnlySet<string> realGateways) => expression switch
-    {
-        IdentifierNameSyntax identifier => realGateways.Contains(identifier.Identifier.ValueText),
-        ParenthesizedExpressionSyntax parenthesized =>
-            IsRealGatewayExpression(parenthesized.Expression, realRoots, realGateways),
-        ObjectCreationExpressionSyntax creation
-            when RightmostName(creation.Type) == "GitRepositoryGateway" =>
-            creation.ArgumentList?.Arguments.FirstOrDefault() is { } argument
-            && DependsOnRealRepository(argument.Expression, realRoots),
-        _ => false,
-    };
-
-    private static bool TryConstantString(
-        ExpressionSyntax expression,
-        IReadOnlyDictionary<string, string> constants,
-        out string value)
-    {
-        switch (expression)
-        {
-            case LiteralExpressionSyntax literal when literal.IsKind(SyntaxKind.StringLiteralExpression):
-                value = literal.Token.ValueText;
-                return true;
-            case IdentifierNameSyntax identifier
-                when constants.TryGetValue(identifier.Identifier.ValueText, out var constant):
-                value = constant;
-                return true;
-            case ParenthesizedExpressionSyntax parenthesized:
-                return TryConstantString(parenthesized.Expression, constants, out value);
-            case BinaryExpressionSyntax binary when binary.IsKind(SyntaxKind.AddExpression)
-                && TryConstantString(binary.Left, constants, out var left)
-                && TryConstantString(binary.Right, constants, out var right):
-                value = left + right;
-                return true;
-            default:
-                value = string.Empty;
-                return false;
-        }
-    }
-
-    private static bool IsProvenRemoteIndependentRevision(string revision) =>
-        GitObjectId().IsMatch(revision)
-        || HeadRevision().IsMatch(revision)
-        || revision.StartsWith("refs/heads/", StringComparison.Ordinal)
-        || revision.StartsWith("refs/tags/", StringComparison.Ordinal)
-        || revision.StartsWith("heads/", StringComparison.Ordinal)
-        || revision.StartsWith("tags/", StringComparison.Ordinal);
-
-    private static IEnumerable<RemoteStateFinding> InspectGitArguments(
-        string path,
-        SyntaxNode invocation,
-        IReadOnlyList<string?> arguments)
-    {
-        if (arguments.Count == 0 || arguments[0] is null)
-        {
+        if (InvocationName(invocation) != "Run"
+            || invocation.Expression is not MemberAccessExpressionSyntax run
+            || RightmostName(run.Expression) != "BoundedProcessRunner" || call.Count < 2
+            || !TryLiteral(call[0].Expression, out var executable))
             yield break;
-        }
 
-        var command = arguments[0]!;
-        if (FetchingGitCommands.Contains(command))
+        if (IsExecutable(executable, "git") && call.Count >= 3 && IsRealCheckout(call[2].Expression, scope))
         {
-            yield return Finding(path, invocation, $"git {command}",
-                "real repository command contacts a remote");
-            yield break;
+            if (!TryStrings(call[1].Expression, out var args))
+            {
+                yield return Finding(path, invocation, "git command",
+                    "real checkout git command is not statically known");
+                yield break;
+            }
+            foreach (var finding in InspectGit(path, invocation, args)) yield return finding;
         }
-
-        if (RevisionResolvingGitCommands.Contains(command)
-            && arguments.Skip(1).TakeWhile(static argument => argument != "--")
-                .OfType<string>().Any(IsRemoteTrackingRevision))
+        else if (TryStrings(call[1].Expression, out var args) && IsExecutable(executable, "gh")
+                 && (args.Count == 0 || RemoteApiCommands.Contains(args[0] ?? string.Empty)))
         {
-            yield return Finding(path, invocation, "remote revision",
-                "real repository git command resolves a remote-tracking revision");
+            yield return Finding(path, invocation, "remote API",
+                "test invokes GitHub CLI against live repository state");
+        }
+        else if ((IsExecutable(executable, "curl") || IsExecutable(executable, "wget"))
+                 && args.OfType<string>().Any(IsRepositoryApiUrl))
+        {
+            yield return Finding(path, invocation, "remote API", "test process queries a live repository API");
         }
     }
 
-    private static IReadOnlyList<RemoteStateFinding> InspectShell(
-        string path,
-        string script,
-        int firstLine)
+    private static IEnumerable<RemoteStateFinding> InspectProcessStartInfos(string path, SyntaxNode root)
     {
-        var tokens = TokenizeShell(script);
-        var findings = new List<RemoteStateFinding>();
-        for (var index = 0; index < tokens.Count; index++)
+        foreach (var variable in root.DescendantNodes().OfType<VariableDeclaratorSyntax>())
         {
-            if (tokens[index].IsBoundary)
-            {
+            if (variable.Initializer?.Value is not ObjectCreationExpressionSyntax creation
+                || RightmostName(creation.Type) != "ProcessStartInfo"
+                || creation.ArgumentList?.Arguments.FirstOrDefault() is not { } executable
+                || !TryLiteral(executable.Expression, out var name) || !IsExecutable(name, "git")
+                || variable.FirstAncestorOrSelf<BaseMethodDeclarationSyntax>() is not { } method)
                 continue;
-            }
+            var workingDirectories = creation.Initializer?.Expressions.OfType<AssignmentExpressionSyntax>()
+                .Where(static item => item.Left is IdentifierNameSyntax { Identifier.ValueText: "WorkingDirectory" })
+                .Select(static item => item.Right) ?? [];
+            if (!workingDirectories.Any(item => IsRealCheckout(item, method))) continue;
 
-            if (IsExecutable(tokens[index].Value, "git"))
-            {
-                var commandIndex = GitCommandIndex(tokens, index);
-                if (commandIndex is null)
-                {
-                    continue;
-                }
+            var receiver = variable.Identifier.ValueText;
+            var args = creation.ArgumentList.Arguments.Skip(1).Select(static item => item.Expression)
+                .Concat(method.DescendantNodes().OfType<InvocationExpressionSyntax>()
+                    .Where(item => item.Expression is MemberAccessExpressionSyntax add
+                        && add.Name.Identifier.ValueText == "Add"
+                        && IsMember(add.Expression, receiver, "ArgumentList"))
+                    .SelectMany(static item => item.ArgumentList.Arguments.Select(static arg => arg.Expression)))
+                .Select(LiteralOrNull).ToArray();
+            foreach (var finding in InspectGit(path, creation, args)) yield return finding;
+        }
+    }
 
-                var command = tokens[commandIndex.Value].Value;
-                if (FetchingGitCommands.Contains(command)
-                    || command == "remote" && NextValue(tokens, commandIndex.Value) == "update"
-                    || command == "submodule" && NextValue(tokens, commandIndex.Value) == "update"
-                        && !CommandValues(tokens, commandIndex.Value).Contains("--no-fetch", StringComparer.Ordinal))
-                {
-                    findings.Add(new RemoteStateFinding(
-                        path,
-                        firstLine + tokens[index].Line - 1,
-                        $"git {command}",
-                        "post-checkout command may contact a repository remote"));
-                    continue;
-                }
+    private static IReadOnlyList<RemoteStateFinding> InspectShell(string path, string script, int firstLine)
+    {
+        var allowed = new HashSet<string>(AllowedRevisions, StringComparer.Ordinal);
+        foreach (Match match in HeadOrBaseAssignment().Matches(script))
+        {
+            allowed.Add("$" + match.Groups["name"].Value);
+            allowed.Add("${" + match.Groups["name"].Value + "}");
+        }
 
-                if (RevisionResolvingGitCommands.Contains(command)
-                    && GitRevisionValues(tokens, commandIndex.Value)
-                        .Any(IsRemoteTrackingRevision))
-                {
-                    findings.Add(new RemoteStateFinding(
-                        path,
-                        firstLine + tokens[index].Line - 1,
-                        "remote revision",
-                        "post-checkout git command resolves a remote-tracking revision"));
-                }
-            }
-            else if (IsExecutable(tokens[index].Value, "gh")
-                     && RemoteApiCommands.Contains(NextValue(tokens, index) ?? string.Empty))
+        var code = ShellCode(script);
+        var findings = new List<RemoteStateFinding>();
+        foreach (Match match in GitInvocation().Matches(code))
+        {
+            var args = ShellWords().Matches(match.Groups["args"].Value)
+                .Select(static item => WordValue(item)).Cast<string?>().ToArray();
+            findings.AddRange(InspectGit(path, firstLine + CountLines(code, match.Index),
+                match.Groups["command"].Value, args, allowed));
+        }
+        foreach (Match match in GitHubCliInvocation().Matches(code))
+        {
+            findings.Add(new(path, firstLine + CountLines(code, match.Index), "remote API",
+                "post-checkout GitHub CLI command queries live repository state"));
+        }
+        foreach (Match match in DownloadInvocation().Matches(code))
+        {
+            if (ShellWords().Matches(match.Groups["args"].Value).Select(static item => WordValue(item))
+                .Any(IsRepositoryApiUrl))
             {
-                findings.Add(new RemoteStateFinding(
-                    path,
-                    firstLine + tokens[index].Line - 1,
-                    "remote API",
-                    "post-checkout GitHub CLI command queries live repository state"));
-            }
-            else if ((IsExecutable(tokens[index].Value, "curl")
-                      || IsExecutable(tokens[index].Value, "wget"))
-                     && CommandValues(tokens, index).Any(IsRepositoryApiUrl))
-            {
-                findings.Add(new RemoteStateFinding(
-                    path,
-                    firstLine + tokens[index].Line - 1,
-                    "remote API",
+                findings.Add(new(path, firstLine + CountLines(code, match.Index), "remote API",
                     "post-checkout command queries a live repository API"));
             }
         }
-
         return findings;
     }
 
-    private static int? GitCommandIndex(IReadOnlyList<ShellToken> tokens, int gitIndex)
+    private static IEnumerable<RemoteStateFinding> InspectGit(
+        string path, SyntaxNode node, IReadOnlyList<string?> arguments)
     {
-        for (var index = gitIndex + 1; index < tokens.Count && !tokens[index].IsBoundary; index++)
+        if (arguments.Count == 0 || arguments[0] is null)
         {
-            var value = tokens[index].Value;
-            if (GitOptionsWithValues.Contains(value))
-            {
-                index++;
-                continue;
-            }
-
-            if (value.StartsWith("-", StringComparison.Ordinal))
-            {
-                continue;
-            }
-
-            return index;
+            yield return Finding(path, node, "git command", "real checkout git command is not statically known");
+            yield break;
         }
-
-        return null;
+        foreach (var finding in InspectGit(path,
+                     node.GetLocation().GetLineSpan().StartLinePosition.Line + 1,
+                     arguments[0]!, arguments.Skip(1).ToArray(), AllowedRevisions))
+            yield return finding;
     }
 
-    private static string? NextValue(IReadOnlyList<ShellToken> tokens, int index) =>
-        index + 1 < tokens.Count && !tokens[index + 1].IsBoundary
-            ? tokens[index + 1].Value
-            : null;
-
-    private static IReadOnlyList<string> CommandValues(
-        IReadOnlyList<ShellToken> tokens,
-        int start)
+    private static IEnumerable<RemoteStateFinding> InspectGit(
+        string path, int line, string command, IReadOnlyList<string?> arguments,
+        IReadOnlySet<string> allowed)
     {
-        var values = new List<string>();
-        for (var index = start + 1; index < tokens.Count && !tokens[index].IsBoundary; index++)
+        if (RemoteGitCommands.Contains(command))
         {
-            values.Add(tokens[index].Value);
+            yield return new(path, line, $"git {command}",
+                "real checkout command contacts a repository remote");
+            yield break;
         }
-        return values;
-    }
-
-    private static IEnumerable<string> GitRevisionValues(
-        IReadOnlyList<ShellToken> tokens,
-        int commandIndex)
-    {
-        for (var index = commandIndex + 1;
-             index < tokens.Count && !tokens[index].IsBoundary;
-             index++)
+        if (!RevisionGitCommands.Contains(command)) yield break;
+        if (RevisionOperands(arguments).Any(item => item is null || !allowed.Contains(item)))
         {
-            var value = tokens[index].Value;
-            if (value == "--")
-            {
-                yield break;
-            }
-            if (!value.StartsWith("-", StringComparison.Ordinal))
-            {
-                yield return value;
-            }
+            yield return new(path, line, "disallowed revision",
+                $"git {command} resolves a revision that is not head or base (HEAD or HEAD^1)");
         }
     }
 
-    private static IReadOnlyList<ShellToken> TokenizeShell(string script)
+    private static IEnumerable<string?> RevisionOperands(IReadOnlyList<string?> arguments)
     {
-        var tokens = new List<ShellToken>();
-        var value = new StringBuilder();
-        var line = 1;
-        var tokenLine = line;
-        char quote = '\0';
-
-        void Flush()
+        foreach (var value in arguments)
         {
-            if (value.Length == 0)
-            {
-                return;
-            }
-            tokens.Add(new ShellToken(value.ToString(), tokenLine, false));
-            value.Clear();
+            if (value == "--") yield break;
+            if (value is null || !value.StartsWith("-", StringComparison.Ordinal)) yield return value;
         }
-
-        void Boundary()
-        {
-            Flush();
-            if (tokens.Count == 0 || !tokens[^1].IsBoundary)
-            {
-                tokens.Add(new ShellToken(string.Empty, line, true));
-            }
-        }
-
-        for (var index = 0; index < script.Length; index++)
-        {
-            var current = script[index];
-            if (current == '\\' && index + 1 < script.Length)
-            {
-                if (script[index + 1] == '\n')
-                {
-                    line++;
-                    index++;
-                    continue;
-                }
-                if (value.Length == 0) tokenLine = line;
-                value.Append(script[++index]);
-                continue;
-            }
-
-            if (quote != '\'' && current == '$' && index + 1 < script.Length
-                && script[index + 1] == '(')
-            {
-                Boundary();
-                index++;
-                continue;
-            }
-
-            if (quote == '\0' && current is '\'' or '"')
-            {
-                if (value.Length == 0) tokenLine = line;
-                quote = current;
-                continue;
-            }
-            if (quote != '\0' && current == quote)
-            {
-                quote = '\0';
-                continue;
-            }
-
-            if (quote == '\0' && current == '#'
-                && (index == 0 || char.IsWhiteSpace(script[index - 1])))
-            {
-                Flush();
-                while (index < script.Length && script[index] != '\n') index++;
-                if (index < script.Length)
-                {
-                    Boundary();
-                    line++;
-                }
-                continue;
-            }
-
-            if (quote == '\0' && current == '\n')
-            {
-                Boundary();
-                line++;
-                continue;
-            }
-            if (quote == '\0' && (char.IsWhiteSpace(current) || current is ';' or '|' or '&' or '(' or ')'))
-            {
-                if (current is ';' or '|' or '&' or '(' or ')') Boundary();
-                else Flush();
-                continue;
-            }
-
-            if (value.Length == 0) tokenLine = line;
-            value.Append(current);
-        }
-        Flush();
-        return tokens;
     }
 
-    private static bool IsRemoteTrackingRevision(string value)
+    private static bool IsAllowedRevision(ExpressionSyntax expression) =>
+        TryLiteral(expression, out var value) && AllowedRevisions.Contains(value);
+
+    private static bool UsesRealGateway(InvocationExpressionSyntax invocation, SyntaxNode scope) =>
+        invocation.Expression is MemberAccessExpressionSyntax member
+        && IsRealGateway(member.Expression, scope, new HashSet<string>(StringComparer.Ordinal));
+
+    private static bool IsRealGateway(ExpressionSyntax expression, SyntaxNode scope, ISet<string> visited)
     {
-        var revision = value.Trim('"', '\'');
-        if (revision.StartsWith("refs/remotes/", StringComparison.Ordinal)
-            || revision.StartsWith("remotes/", StringComparison.Ordinal))
+        if (expression is ParenthesizedExpressionSyntax grouped)
+            return IsRealGateway(grouped.Expression, scope, visited);
+        if (expression is ObjectCreationExpressionSyntax creation
+            && RightmostName(creation.Type) == "GitRepositoryGateway")
+            return creation.ArgumentList?.Arguments.FirstOrDefault() is { } argument
+                && IsRealCheckout(argument.Expression, scope);
+        return expression is IdentifierNameSyntax identifier && visited.Add(identifier.Identifier.ValueText)
+            && Initializers(scope, identifier.Identifier.ValueText)
+                .Any(item => IsRealGateway(item, scope, visited));
+    }
+
+    private static bool IsRealCheckout(ExpressionSyntax expression, SyntaxNode scope) =>
+        IsRealCheckout(expression, scope, new HashSet<string>(StringComparer.Ordinal));
+
+    private static bool IsRealCheckout(ExpressionSyntax expression, SyntaxNode scope, ISet<string> visited)
+    {
+        if (expression.DescendantNodesAndSelf().OfType<InvocationExpressionSyntax>()
+            .Any(static item => InvocationName(item) == "FindRoot"
+                && item.Expression is MemberAccessExpressionSyntax member
+                && RightmostName(member.Expression).EndsWith("RepositoryLayout", StringComparison.Ordinal)))
+            return true;
+        return expression is IdentifierNameSyntax identifier && visited.Add(identifier.Identifier.ValueText)
+            && Initializers(scope, identifier.Identifier.ValueText)
+                .Any(item => IsRealCheckout(item, scope, visited));
+    }
+
+    private static IEnumerable<ExpressionSyntax> Initializers(SyntaxNode scope, string identifier) =>
+        scope.DescendantNodes().OfType<VariableDeclaratorSyntax>()
+            .Where(item => item.Identifier.ValueText == identifier && item.Initializer is not null)
+            .Select(static item => item.Initializer!.Value);
+
+    private static bool UsesHttpClient(InvocationExpressionSyntax invocation, SyntaxNode scope)
+    {
+        if (invocation.Expression is not MemberAccessExpressionSyntax member) return false;
+        if (member.Expression is ObjectCreationExpressionSyntax creation)
+            return RightmostName(creation.Type) == "HttpClient";
+        return member.Expression is IdentifierNameSyntax identifier
+            && scope.DescendantNodes().OfType<VariableDeclaratorSyntax>().Any(item =>
+                item.Identifier.ValueText == identifier.Identifier.ValueText
+                && item.Parent is VariableDeclarationSyntax declaration
+                && (RightmostName(declaration.Type) == "HttpClient"
+                    || item.Initializer?.Value is ObjectCreationExpressionSyntax client
+                        && RightmostName(client.Type) == "HttpClient"));
+    }
+
+    private static bool TryLiteral(ExpressionSyntax expression, out string value)
+    {
+        if (expression is LiteralExpressionSyntax literal && literal.IsKind(SyntaxKind.StringLiteralExpression))
         {
+            value = literal.Token.ValueText;
             return true;
         }
+        value = string.Empty;
+        return false;
+    }
+    private static string? LiteralOrNull(ExpressionSyntax expression) =>
+        TryLiteral(expression, out var value) ? value : null;
 
-        if (revision.StartsWith("refs/heads/", StringComparison.Ordinal)
-            || revision.StartsWith("refs/tags/", StringComparison.Ordinal)
-            || revision.StartsWith("heads/", StringComparison.Ordinal)
-            || revision.StartsWith("tags/", StringComparison.Ordinal)
-            || revision.StartsWith("./", StringComparison.Ordinal)
-            || revision.StartsWith("../", StringComparison.Ordinal)
-            || revision.Contains("${{", StringComparison.Ordinal)
-            || revision.StartsWith('$'))
+    private static bool TryStrings(ExpressionSyntax expression, out IReadOnlyList<string?> values)
+    {
+        IEnumerable<ExpressionSyntax>? elements = expression switch
         {
-            return false;
-        }
-
-        return revision.Contains('/', StringComparison.Ordinal)
-            && !Uri.TryCreate(revision, UriKind.Absolute, out _);
+            CollectionExpressionSyntax items => items.Elements.OfType<ExpressionElementSyntax>()
+                .Select(static item => item.Expression),
+            ArrayCreationExpressionSyntax array => array.Initializer?.Expressions,
+            ImplicitArrayCreationExpressionSyntax array => array.Initializer.Expressions,
+            _ => null,
+        };
+        values = elements?.Select(LiteralOrNull).ToArray() ?? [];
+        return elements is not null;
     }
 
-    private static bool IsRepositoryApiUrl(string value) =>
-        Uri.TryCreate(value, UriKind.Absolute, out var uri)
+    private static string ShellCode(string script)
+    {
+        var result = script.ToCharArray();
+        char quote = '\0';
+        for (var index = 0; index < result.Length; index++)
+        {
+            var current = result[index];
+            if (current == '\\' && index + 1 < result.Length) { index++; continue; }
+            if (quote == '\0' && current == '\'') { quote = '\''; result[index] = ' '; continue; }
+            if (quote == '\'')
+            {
+                if (current == '\'') quote = '\0';
+                if (current != '\n') result[index] = ' ';
+                continue;
+            }
+            if (quote == '\0' && current == '"') { quote = '"'; continue; }
+            if (quote == '"' && current == '"') { quote = '\0'; continue; }
+            if (quote == '\0' && current == '#'
+                && (index == 0 || char.IsWhiteSpace(result[index - 1])))
+            {
+                while (index < result.Length && result[index] != '\n') result[index++] = ' ';
+            }
+        }
+        return new string(result);
+    }
+
+    private static string WordValue(Match match) => match.Groups["double"].Success
+        ? match.Groups["double"].Value
+        : match.Groups["single"].Success ? match.Groups["single"].Value : match.Groups["bare"].Value;
+    private static int CountLines(string value, int end) => value.AsSpan(0, end).Count('\n');
+    private static bool IsRepositoryApiUrl(string value) => Uri.TryCreate(value, UriKind.Absolute, out var uri)
         && (string.Equals(uri.Host, "api.github.com", StringComparison.OrdinalIgnoreCase)
             || string.Equals(uri.Host, "gitlab.com", StringComparison.OrdinalIgnoreCase)
                 && uri.AbsolutePath.StartsWith("/api/", StringComparison.Ordinal)
             || uri.Host.EndsWith(".github.com", StringComparison.OrdinalIgnoreCase)
                 && uri.AbsolutePath.StartsWith("/api/", StringComparison.Ordinal));
-
     private static bool IsExecutable(string value, string executable) =>
         string.Equals(value, executable, StringComparison.Ordinal)
         || value.EndsWith('/' + executable, StringComparison.Ordinal);
-
-    private static string InvocationName(InvocationExpressionSyntax invocation) =>
-        invocation.Expression switch
-        {
-            IdentifierNameSyntax identifier => identifier.Identifier.ValueText,
-            GenericNameSyntax generic => generic.Identifier.ValueText,
-            MemberAccessExpressionSyntax member => member.Name.Identifier.ValueText,
-            _ => string.Empty,
-        };
-
-    private static SyntaxNode AnalysisScope(SyntaxNode node, SyntaxNode root) =>
+    private static string InvocationName(InvocationExpressionSyntax invocation) => invocation.Expression switch
+    {
+        IdentifierNameSyntax identifier => identifier.Identifier.ValueText,
+        GenericNameSyntax generic => generic.Identifier.ValueText,
+        MemberAccessExpressionSyntax member => member.Name.Identifier.ValueText,
+        _ => string.Empty,
+    };
+    private static SyntaxNode Scope(SyntaxNode node, SyntaxNode root) =>
         node.FirstAncestorOrSelf<BaseMethodDeclarationSyntax>() ?? root;
-
     private static string RightmostName(SyntaxNode node) => node switch
     {
         IdentifierNameSyntax identifier => identifier.Identifier.ValueText,
@@ -713,72 +430,39 @@ internal static partial class RemoteStateIndependencePolicy
         MemberAccessExpressionSyntax member => member.Name.Identifier.ValueText,
         _ => string.Empty,
     };
+    private static bool IsMember(ExpressionSyntax expression, string receiver, string member) =>
+        expression is MemberAccessExpressionSyntax access && access.Name.Identifier.ValueText == member
+        && access.Expression is IdentifierNameSyntax identifier && identifier.Identifier.ValueText == receiver;
+    private static RemoteStateFinding Finding(string path, SyntaxNode node, string operation, string message) =>
+        new(path, node.GetLocation().GetLineSpan().StartLinePosition.Line + 1, operation, message);
 
-    private static RemoteStateFinding Finding(
-        string path,
-        SyntaxNode node,
-        string operation,
-        string message) => new(
-            path,
-            node.GetLocation().GetLineSpan().StartLinePosition.Line + 1,
-            operation,
-            message);
-
-    private static bool TryMapping(
-        YamlMappingNode parent,
-        string key,
-        out YamlMappingNode mapping)
+    private static bool TryMapping(YamlMappingNode parent, string key, out YamlMappingNode mapping)
     {
-        if (parent.Children.TryGetValue(new YamlScalarNode(key), out var node)
-            && node is YamlMappingNode value)
-        {
-            mapping = value;
-            return true;
-        }
-        mapping = null!;
-        return false;
+        if (parent.Children.TryGetValue(new YamlScalarNode(key), out var node) && node is YamlMappingNode value)
+        { mapping = value; return true; }
+        mapping = null!; return false;
+    }
+    private static bool TrySequence(YamlMappingNode parent, string key, out YamlSequenceNode sequence)
+    {
+        if (parent.Children.TryGetValue(new YamlScalarNode(key), out var node) && node is YamlSequenceNode value)
+        { sequence = value; return true; }
+        sequence = null!; return false;
+    }
+    private static bool TryScalar(YamlMappingNode parent, string key, out YamlScalarNode scalar)
+    {
+        if (parent.Children.TryGetValue(new YamlScalarNode(key), out var node) && node is YamlScalarNode value)
+        { scalar = value; return true; }
+        scalar = null!; return false;
     }
 
-    private static bool TrySequence(
-        YamlMappingNode parent,
-        string key,
-        out YamlSequenceNode sequence)
-    {
-        if (parent.Children.TryGetValue(new YamlScalarNode(key), out var node)
-            && node is YamlSequenceNode value)
-        {
-            sequence = value;
-            return true;
-        }
-        sequence = null!;
-        return false;
-    }
-
-    private static bool TryScalar(
-        YamlMappingNode parent,
-        string key,
-        out YamlScalarNode scalar)
-    {
-        if (parent.Children.TryGetValue(new YamlScalarNode(key), out var node)
-            && node is YamlScalarNode value)
-        {
-            scalar = value;
-            return true;
-        }
-        scalar = null!;
-        return false;
-    }
-
-    private static int WorkflowScalarFirstLine(YamlScalarNode scalar) =>
-        checked((int)scalar.Start.Line
-            + (scalar.Style is YamlDotNet.Core.ScalarStyle.Literal
-                or YamlDotNet.Core.ScalarStyle.Folded ? 1 : 0));
-
-    private sealed record ShellToken(string Value, int Line, bool IsBoundary);
-
-    [GeneratedRegex("^[0-9a-fA-F]{40}(?:[0-9a-fA-F]{24})?$")]
-    private static partial Regex GitObjectId();
-
-    [GeneratedRegex("^HEAD(?:(?:\\^|~)[0-9]*|\\^\\{(?:commit|tree)\\})*$", RegexOptions.CultureInvariant)]
-    private static partial Regex HeadRevision();
+    [GeneratedRegex("(?m)^[ \\t]*(?<name>[A-Za-z_][A-Za-z0-9_]*)=\\\"?[$][(]git(?:[ \\t]+-C[ \\t]+[^ \\t]+)?[ \\t]+rev-parse[ \\t]+HEAD(?:\\^1)?[ \\t]*[)]\\\"?[ \\t]*$")]
+    private static partial Regex HeadOrBaseAssignment();
+    [GeneratedRegex("(?<![A-Za-z0-9_-])(?:[^ \\t/]+/)?git(?:[ \\t]+-C[ \\t]+(?:\\\"[^\\\"]*\\\"|[^ \\t]+))*[ \\t]+(?<command>[a-z][a-z-]*)(?<args>[^;\\r\\n|&)<]*)")]
+    private static partial Regex GitInvocation();
+    [GeneratedRegex("(?<![A-Za-z0-9_-])gh[ \\t]+(?:api|issue|pr|release|repo|run|search|workflow)\\b")]
+    private static partial Regex GitHubCliInvocation();
+    [GeneratedRegex("(?<![A-Za-z0-9_-])(?:curl|wget)[ \\t]+(?<args>[^;\\r\\n|&]*)")]
+    private static partial Regex DownloadInvocation();
+    [GeneratedRegex("(?:\\\"(?<double>[^\\\"]*)\\\"|'(?<single>[^']*)'|(?<bare>[^ \\t]+))")]
+    private static partial Regex ShellWords();
 }
