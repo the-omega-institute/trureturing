@@ -330,11 +330,29 @@ artifact_id = "none"
 runtime_disposition = "committed-source"
 
 [[files]]
-pattern = "docs/*.md"
+pattern = "docs/CONTRIBUTING.md"
 kind = "program"
 produced_by = "none"
 consumed_by = ["developer"]
 verified_by = ["repository-policy"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+
+[[files]]
+pattern = "docs/GOVERNANCE.md"
+kind = "program"
+produced_by = "none"
+consumed_by = ["developer"]
+verified_by = ["repository-policy"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+
+[[files]]
+pattern = "docs/MISSION.md"
+kind = "data"
+produced_by = "none"
+consumed_by = ["MissionFileLoader"]
+verified_by = ["MissionFileLoader"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
 

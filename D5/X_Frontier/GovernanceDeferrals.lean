@@ -163,3 +163,23 @@ def githubAdmissionLookupRulingTicket : Unit := ()
     提示:This is not a decision this lane can make; hand it to the projection contract owner. Spec A17.1 names `StatementProjectionFixtureLoader.FromLean` as the unique construction entry for `lean-derived` formula provenance, but production never calls it: `Describe.cs` materializes through `StatementProjectionFixtureLoader.Assess`, and a symbol-level reachability measurement over Cli/Engine/Scribe found the method has zero references. Deleting it would silently adjudicate the mismatch in favour of the implementation; leaving it unrecorded leaves a spec claim with no enforcing consumer. Close only when the owner either rewrites A17.1 to name the live route or restores the method as that route.
     尸检:none -/
 def statementProjectionFromLeanRulingTicket : Unit := ()
+
+/-- TASK D5-T0039 | 难度:3 | 依赖:欠(novelty-measurement-receipt) | 尝试:0
+    提示:Define and install the machine-replayable measurement and receipt contract for the MISSION WorthVector novelty factor; until such a receipt exists, docs/MISSION.md must retain open(D5-T0039) and no complete worth score may be claimed.
+    尸检:none -/
+def missionNoveltyMeasurementTicket : Unit := ()
+
+/-- TASK D5-T0040 | 难度:3 | 依赖:欠(dependency-readiness-measurement-receipt) | 尝试:0
+    提示:Define and install the machine-replayable measurement and receipt contract for the MISSION WorthVector dependency-readiness factor; until such a receipt exists, docs/MISSION.md must retain open(D5-T0040) and no complete worth score may be claimed.
+    尸检:none -/
+def missionDependencyReadinessMeasurementTicket : Unit := ()
+
+/-- TASK D5-T0041 | 难度:3 | 依赖:欠(structural-realization-measurement-receipt) | 尝试:0
+    提示:Define and install the machine-replayable measurement and receipt contract for the MISSION WorthVector structural-realization factor; until such a receipt exists, docs/MISSION.md must retain open(D5-T0041) and no complete worth score may be claimed.
+    尸检:none -/
+def missionStructuralRealizationMeasurementTicket : Unit := ()
+
+/-- TASK D5-T0042 | 难度:3 | 依赖:欠(receipt-potential-measurement-receipt) | 尝试:0
+    提示:Define and install the machine-replayable measurement and receipt contract for the MISSION WorthVector receipt-potential factor; until such a receipt exists, docs/MISSION.md must retain open(D5-T0042) and no complete worth score may be claimed.
+    尸检:none -/
+def missionReceiptPotentialMeasurementTicket : Unit := ()

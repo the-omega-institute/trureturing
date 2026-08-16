@@ -422,7 +422,11 @@ CONTEXT.md(1 页)→ 各地层 `INDEX.md`(CI 从文件头 digest 行聚合)→ �
 **规划以本账历史轮次作为智能体能力回归测试**——拟将每个关键轮封装为一个测试用例 `{id, 输入: 当轮可见状态快照, 判分: 是否达到当轮结论或更好, 预算}`。首批用例:C-01 从定义出发八位复算 C_φ(判:值与误差条);C-02 给定 145–148 轮数据找出 ε²log 主犯(判:嫌疑人清单与定罪);C-03 由极格间距认亲 Hecke 1921(判:检索命中);C-04 G/I/E 自分类(判:分解比例);C-05 复现四旗四毙之任一 σ-处决。**新模型/新官上岗须过金丝雀的义务当前为 `deferred`;登记于 2026-08-15,无执法机器,重启须先建门。"这个 spec 能否复现我们的研究"仍为待建测试目标,不得冒领为现役 CI 作业。**
 
 ## 11.20 纲领文件(目标函数:什么算进展)
-`docs/MISSION.md`:北极星 = 两颗心脏(可仰望不可硬攻);价值序 = **理解 > 数量,诚实 > 速度,负知识与正结果等价记账**;探索靶评分 = 新颖性 × 依赖就绪度 × 结构变现潜力(可开支票否)× 收据潜力;禁令 = 刷 sorry 数、堆平凡引理、追引用。**PLAYBOOK 答"怎么找",MISSION 答"什么值得找"——无此文件,飞轮高速空转。**
+`docs/MISSION.md`:北极星 = 两颗心脏(可仰望不可硬攻);价值序 = **理解 > 数量,诚实 > 速度,负知识与正结果等价记账**;WorthVector 恰含四因子:新颖性、依赖就绪度、结构变现潜力(可开支票否)、收据潜力。每因子的状态恰为 `measured(value, receipt_ref)` 或 `open(case_id)` 二选一;`case_id` 必须经现役 ticket index 解析到含同号 TASK 块的永久案,悬空引用 fail-closed。
+
+`docs/MISSION.md` 的唯一机读面是恰一个 `mission-v1` fenced block,由 `MissionFileLoader` 以 strict UTF-8、无 BOM、LF 与封闭 JSON schema 解析为 typed WorthVector;文件缺失、不可解析、未知/缺失因子、状态字段混用或悬空案号均返回 typed error,禁止默认填 `0`、`1` 或任何常数。任一因子为 `open` 时,禁止乘法合成标量,禁止输出或自称完整 worth score/argmax;此时唯一合法的选择标签是 `bootstrap eligibility order`,且 tie-break 恰按 `canonical candidate id` 稳定破。同一输入的 typed 结果及该退化序必须逐字节可重放。仅当四因子全部携真实 `measured(value, receipt_ref)` 时,完整 worth argmax 才进入合法域;P0 不测量、不产生标量、不枚举或排序候选。
+
+禁令 = 刷 sorry 数、堆平凡引理、追引用。**PLAYBOOK 答"怎么找",MISSION 答"什么值得找"——无此文件,飞轮高速空转。**
 
 ## 11.21 回填溯源清单(消化完整性)
 <!-- BACKFILL_ENTRY_ACCEPTANCE: required=atom_id,cas_ref,coverage_gids,fingerprints,receipts,status;exactly_one=ast_path|boundary;optional=- -->
@@ -764,6 +768,7 @@ Blueprint markdown 已证有仓内语义 consumer，移出 PR-A；只有独立 P
 
 # CHANGELOG(原位演进史;只追加)
 
+- **v7.16 R5**(2026-08-16):`THEORY-GENERATION-P0` 将 11.20 的 MISSION 目标函数从缺失散文补成可执行契约:`mission-v1` strict loader、WorthVector 四因子封闭和、`measured(value, receipt_ref)|open(case_id)` 二选一、open 案号永久 TASK 双向解析,以及任一 open 时禁止完整 worth 标量/argmax、只许 `bootstrap eligibility order` 并按 canonical candidate id 稳定破。同 PR 首次落 `docs/MISSION.md`;四因子均诚实登记为 `open(D5-T0039..D5-T0042)`,零伪造测量。本轮只激活目标实例与 loader,不枚举候选、不排序、不重建 formalize,禁令仍为刷 sorry 数、堆平凡引理、追引用。
 - **v7.16 R4**(2026-08-14):补 A14.1,记环境升级的首次实测读数并勘正 A14 的一项前提。本仓自建库以来从未升级过 toolchain(`git log --follow -- lean-toolchain` 仅一条,2026-07-11 建库提交),故 A14 的解锁条件此前从无数据支撑。2026-08-14 首次实际执行 v4.31.0→v4.33.0 并取得读数:编译层可达(18/536 文件失败 3.4%,修复后 `lake build` rc=0,定理陈述被改 0 条);但 A14 所列解锁前提之一「statement identity 不变」**经验证伪**——在源文件逐字节相同的 498 个模块中,4,262 条声明有 **672 条(15.77%)** 的 `statement_material` 因 mathlib 重构类型类层级而变化,涉及 211 个本仓未改动的模块。该量是上游演化的函数,非本仓尽责可达成,故 A14 不得继续以其为解锁前提。同时记 `open(FROZEN-IDENTITY-AMBIENT-DRIFT)`:准入门 SL-008 只在候选 changeset 改动某模块时校验其冻结身份,实测点名集合与本仓改动集合精确重合,对 211 个未改动模块的漂移零发现,而该性质可在本仓零文件变动下被环境破坏。本条只记读数与前提证伪,不设计解锁机制;环境升级闭包仍不得主张。
 - **v7.16 R3**(2026-08-13):补 A17.2,立第三方 Lean 成果的两种准入形(依赖/移植)与其机器判据。立条之由为 CLAUDE.md 第 11 条有序路径的实测洞:③「按 spec A17 可准入的第三方」因 A17 三谓词现役全 `open` 而事实关闭,路径遂塌缩为 ②→④本地证明,即同条所禁之重证;本条补出移植形,并把形式选择降为 toolchain 与 mathlib `rev` 的机器比较,不由偏好判。同时钉死移植形四项义务(许可证与 NOTICE 链、入仓后照常执法、axiom 闭包不扩张、退役条件必须对本仓自己的钉版可判);禁以「上游被 mathlib 接受」为到期条件,反例为 mathlib PR #40037 于 2026-06-09 以 AI 投稿规范关闭未合并。判例读数见 A17.2。
 - **v7.16 R2**(2026-08-12):勘正 A17 与 11.23 的 Anchor 分类及双轨权威。现役 sealed `Anchor` 仅为 `lit/<bibkey>` 与 `mathlib/{module,decl}/<Lean.Name>`;`gict`/`pzg` 降回 provenance 注记,`spec/<payload>` 经全仓实现、D5 头与 Scribe 实例检索无定义而记 `open(SPEC-ANCHOR-CLASSIFICATION)`。SL-017 现役 Lean 头准入面如实收窄为 import 闭包可达的 `mathlib/module`;文献 Anchor 的现役成员资格由 L-plane note + Scribe validator 承担。11.23 删除不存在的 typed catalog、`Unregistered` 字节登记与 Engine 消费投影路线,只保留 Library query 的 source/target/identifier 防幻引链和理论 provenance 非承重边界;A5 同步撤下机器会拒绝的 `gict` 头部样例。

@@ -1,0 +1,517 @@
+using System.Collections.Immutable;
+using System.Text.Json;
+using Dunet;
+using Markdig;
+using Markdig.Syntax;
+
+namespace StrataLint.Engine;
+
+internal enum WorthFactorId
+{
+    Novelty,
+    DependencyReadiness,
+    StructuralRealization,
+    ReceiptPotential,
+}
+
+[Union(EnableImplicitConversions = false)]
+internal partial record WorthFactorState
+{
+    public partial record Measured(decimal Value, string ReceiptRef);
+
+    public partial record Open(string CaseId);
+}
+
+internal sealed record WorthFactor(WorthFactorId Id, WorthFactorState State);
+
+internal sealed record WorthVector(ImmutableArray<WorthFactor> Factors);
+
+internal enum WorthSelectionOrder
+{
+    BootstrapEligibilityOrder,
+    CompleteWorthArgmax,
+}
+
+internal sealed record MissionSelectionPolicy(
+    WorthSelectionOrder OrderKind,
+    string TieBreak);
+
+internal sealed record MissionPolicy(
+    string NorthStarTarget,
+    string NorthStarPolicy,
+    ImmutableArray<string> ValueOrder,
+    WorthVector WorthVector,
+    MissionSelectionPolicy Selection,
+    ImmutableArray<string> Prohibitions);
+
+internal enum MissionLoadErrorCode
+{
+    Missing,
+    InvalidFormat,
+    InvalidSchema,
+    InvalidWorthVector,
+    InvalidWorthState,
+    DanglingCaseReference,
+    InvalidSelection,
+}
+
+internal sealed record MissionLoadError(MissionLoadErrorCode Code, string Message);
+
+[Union(EnableImplicitConversions = false)]
+internal partial record MissionLoadOutcome
+{
+    public partial record Loaded(MissionPolicy Policy);
+
+    public partial record Invalid(MissionLoadError Error);
+}
+
+internal static class MissionFileLoader
+{
+    internal const string RelativePath = "docs/MISSION.md";
+
+    private const string Schema = "trureturing-mission-v1";
+    private const string MissionFence = "mission-v1";
+    private const string BootstrapOrder = "bootstrap eligibility order";
+    private const string CompleteArgmax = "complete worth argmax";
+    private const string CanonicalTieBreak = "canonical candidate id";
+
+    private static readonly MarkdownPipeline MarkdownPipeline = new MarkdownPipelineBuilder()
+        .UsePreciseSourceLocation()
+        .Build();
+
+    private static readonly ImmutableArray<(string Name, WorthFactorId Id)> FactorOrder =
+    [
+        ("novelty", WorthFactorId.Novelty),
+        ("dependency_readiness", WorthFactorId.DependencyReadiness),
+        ("structural_realization", WorthFactorId.StructuralRealization),
+        ("receipt_potential", WorthFactorId.ReceiptPotential),
+    ];
+
+    internal static MissionLoadOutcome Load(RepositorySnapshot snapshot)
+    {
+        ArgumentNullException.ThrowIfNull(snapshot);
+        if (!snapshot.TryGetFile(RelativePath, out var mission))
+        {
+            return Invalid(
+                MissionLoadErrorCode.Missing,
+                $"MISSION file is missing: {RelativePath}");
+        }
+
+        if (mission.IsOpaque || mission.HasBom || mission.HasCarriageReturn
+            || !mission.Text.EndsWith('\n'))
+        {
+            return Invalid(
+                MissionLoadErrorCode.InvalidFormat,
+                "MISSION must be strict UTF-8 without BOM, use LF line endings, and end with LF");
+        }
+
+        try
+        {
+            var policy = ParseMission(mission.Text);
+            ValidateOpenCases(snapshot, policy);
+            return new MissionLoadOutcome.Loaded(policy);
+        }
+        catch (MissionContractException exception)
+        {
+            return Invalid(exception.Code, exception.Message);
+        }
+        catch (JsonException exception)
+        {
+            return Invalid(MissionLoadErrorCode.InvalidFormat, exception.Message);
+        }
+        catch (FormatException exception)
+        {
+            return Invalid(MissionLoadErrorCode.InvalidFormat, exception.Message);
+        }
+    }
+
+    internal static MissionLoadOutcome LoadRepository(string repositoryRoot)
+    {
+        ArgumentException.ThrowIfNullOrWhiteSpace(repositoryRoot);
+        try
+        {
+            return SnapshotDecoder.Decode(GitRepositorySnapshotReader.ReadCurrent(repositoryRoot)) switch
+            {
+                SnapshotDecodeOutcome.Decoded decoded => Load(decoded.Snapshot),
+                SnapshotDecodeOutcome.InfrastructureFailure failure =>
+                    Invalid(MissionLoadErrorCode.InvalidFormat, failure.Message),
+            };
+        }
+        catch (Exception exception) when (
+            exception is IOException or InvalidOperationException or UnauthorizedAccessException)
+        {
+            return Invalid(MissionLoadErrorCode.InvalidFormat, exception.Message);
+        }
+    }
+
+    internal static byte[] CanonicalBytes(MissionPolicy policy)
+    {
+        ArgumentNullException.ThrowIfNull(policy);
+        var factors = policy.WorthVector.Factors.Select(static factor => new
+        {
+            factor = FactorName(factor.Id),
+            state = factor.State switch
+            {
+                WorthFactorState.Open open => (object)new
+                {
+                    case_id = open.CaseId,
+                    state = "open",
+                },
+                WorthFactorState.Measured measured => new
+                {
+                    receipt_ref = measured.ReceiptRef,
+                    state = "measured",
+                    value = measured.Value,
+                },
+                _ => throw new InvalidOperationException("Unknown worth factor state."),
+            },
+        });
+        var material = JsonSerializer.SerializeToElement(new
+        {
+            north_star = new
+            {
+                policy = policy.NorthStarPolicy,
+                target = policy.NorthStarTarget,
+            },
+            prohibitions = policy.Prohibitions,
+            schema = Schema,
+            selection = new
+            {
+                order_kind = SelectionName(policy.Selection.OrderKind),
+                tie_break = policy.Selection.TieBreak,
+            },
+            value_order = policy.ValueOrder,
+            worth_vector = factors,
+        });
+        return StructuredCanonicalWriter.WriteJson(material).ToArray();
+    }
+
+    private static MissionPolicy ParseMission(string source)
+    {
+        var fences = Markdown.Parse(source, MarkdownPipeline)
+            .Descendants<FencedCodeBlock>()
+            .ToArray();
+        if (fences is not [var fence]
+            || !string.Equals(fence.Info?.ToString(), MissionFence, StringComparison.Ordinal))
+        {
+            throw Error(
+                MissionLoadErrorCode.InvalidFormat,
+                $"MISSION must contain exactly one {MissionFence} fenced block");
+        }
+
+        using var document = JsonDocument.Parse(fence.Lines.ToString());
+        var root = RequireObject(document.RootElement, MissionLoadErrorCode.InvalidSchema, "root");
+        RequireExactKeys(
+            root,
+            ["schema", "north_star", "value_order", "worth_vector", "selection", "prohibitions"],
+            MissionLoadErrorCode.InvalidSchema,
+            "root");
+        if (!string.Equals(
+                RequireString(root, "schema", MissionLoadErrorCode.InvalidSchema),
+                Schema,
+                StringComparison.Ordinal))
+        {
+            throw Error(MissionLoadErrorCode.InvalidSchema, $"schema must be {Schema}");
+        }
+
+        var northStar = RequireObject(
+            RequireProperty(root, "north_star", MissionLoadErrorCode.InvalidSchema),
+            MissionLoadErrorCode.InvalidSchema,
+            "north_star");
+        RequireExactKeys(
+            northStar,
+            ["target", "policy"],
+            MissionLoadErrorCode.InvalidSchema,
+            "north_star");
+
+        var valueOrder = RequireStringArray(
+            RequireProperty(root, "value_order", MissionLoadErrorCode.InvalidSchema),
+            MissionLoadErrorCode.InvalidSchema,
+            "value_order");
+        var prohibitions = RequireStringArray(
+            RequireProperty(root, "prohibitions", MissionLoadErrorCode.InvalidSchema),
+            MissionLoadErrorCode.InvalidSchema,
+            "prohibitions");
+        var worthVector = ParseWorthVector(RequireProperty(
+            root,
+            "worth_vector",
+            MissionLoadErrorCode.InvalidWorthVector));
+        var selection = ParseSelection(
+            RequireProperty(root, "selection", MissionLoadErrorCode.InvalidSelection),
+            worthVector);
+
+        return new MissionPolicy(
+            RequireString(northStar, "target", MissionLoadErrorCode.InvalidSchema),
+            RequireString(northStar, "policy", MissionLoadErrorCode.InvalidSchema),
+            valueOrder,
+            worthVector,
+            selection,
+            prohibitions);
+    }
+
+    private static WorthVector ParseWorthVector(JsonElement value)
+    {
+        var vector = RequireObject(value, MissionLoadErrorCode.InvalidWorthVector, "worth_vector");
+        RequireExactKeys(
+            vector,
+            FactorOrder.Select(static factor => factor.Name),
+            MissionLoadErrorCode.InvalidWorthVector,
+            "worth_vector");
+        return new WorthVector(FactorOrder
+            .Select(factor => new WorthFactor(
+                factor.Id,
+                ParseWorthState(RequireProperty(
+                    vector,
+                    factor.Name,
+                    MissionLoadErrorCode.InvalidWorthVector), factor.Name)))
+            .ToImmutableArray());
+    }
+
+    private static WorthFactorState ParseWorthState(JsonElement value, string factorName)
+    {
+        var state = RequireObject(
+            value,
+            MissionLoadErrorCode.InvalidWorthState,
+            $"worth_vector.{factorName}");
+        var stateName = RequireString(state, "state", MissionLoadErrorCode.InvalidWorthState);
+        if (string.Equals(stateName, "open", StringComparison.Ordinal))
+        {
+            RequireExactKeys(
+                state,
+                ["state", "case_id"],
+                MissionLoadErrorCode.InvalidWorthState,
+                $"worth_vector.{factorName}");
+            var caseId = RequireString(state, "case_id", MissionLoadErrorCode.InvalidWorthState);
+            if (!CaseId.TryCreate(caseId, out _))
+            {
+                throw Error(
+                    MissionLoadErrorCode.InvalidWorthState,
+                    $"worth_vector.{factorName}.case_id is not a canonical case id");
+            }
+
+            return new WorthFactorState.Open(caseId);
+        }
+
+        if (string.Equals(stateName, "measured", StringComparison.Ordinal))
+        {
+            RequireExactKeys(
+                state,
+                ["state", "value", "receipt_ref"],
+                MissionLoadErrorCode.InvalidWorthState,
+                $"worth_vector.{factorName}");
+            var number = RequireProperty(state, "value", MissionLoadErrorCode.InvalidWorthState);
+            if (number.ValueKind is not JsonValueKind.Number || !number.TryGetDecimal(out var measured))
+            {
+                throw Error(
+                    MissionLoadErrorCode.InvalidWorthState,
+                    $"worth_vector.{factorName}.value must be an exact decimal number");
+            }
+
+            return new WorthFactorState.Measured(
+                measured,
+                RequireString(state, "receipt_ref", MissionLoadErrorCode.InvalidWorthState));
+        }
+
+        throw Error(
+            MissionLoadErrorCode.InvalidWorthState,
+            $"worth_vector.{factorName}.state must be open or measured");
+    }
+
+    private static MissionSelectionPolicy ParseSelection(JsonElement value, WorthVector vector)
+    {
+        var selection = RequireObject(value, MissionLoadErrorCode.InvalidSelection, "selection");
+        RequireExactKeys(
+            selection,
+            ["order_kind", "tie_break"],
+            MissionLoadErrorCode.InvalidSelection,
+            "selection");
+        var orderName = RequireString(selection, "order_kind", MissionLoadErrorCode.InvalidSelection);
+        var order = orderName switch
+        {
+            BootstrapOrder => WorthSelectionOrder.BootstrapEligibilityOrder,
+            CompleteArgmax => WorthSelectionOrder.CompleteWorthArgmax,
+            _ => throw Error(
+                MissionLoadErrorCode.InvalidSelection,
+                $"selection.order_kind must be {BootstrapOrder} or {CompleteArgmax}"),
+        };
+        var tieBreak = RequireString(selection, "tie_break", MissionLoadErrorCode.InvalidSelection);
+        if (!string.Equals(tieBreak, CanonicalTieBreak, StringComparison.Ordinal))
+        {
+            throw Error(
+                MissionLoadErrorCode.InvalidSelection,
+                $"selection.tie_break must be {CanonicalTieBreak}");
+        }
+
+        if (vector.Factors.Any(static factor => factor.State is WorthFactorState.Open)
+            && order is not WorthSelectionOrder.BootstrapEligibilityOrder)
+        {
+            throw Error(
+                MissionLoadErrorCode.InvalidSelection,
+                "an open worth factor forbids a complete worth score or argmax");
+        }
+
+        return new MissionSelectionPolicy(order, tieBreak);
+    }
+
+    private static void ValidateOpenCases(RepositorySnapshot snapshot, MissionPolicy policy)
+    {
+        if (!snapshot.TryGetFile(BackfillInventoryLoader.TicketIndexPath, out var index))
+        {
+            throw Error(
+                MissionLoadErrorCode.DanglingCaseReference,
+                $"ticket index is missing: {BackfillInventoryLoader.TicketIndexPath}");
+        }
+
+        ImmutableArray<BackfillTicketReference> tickets;
+        try
+        {
+            tickets = BackfillInventoryLoader.ParseTickets(index.Text);
+        }
+        catch (FormatException exception)
+        {
+            throw Error(MissionLoadErrorCode.DanglingCaseReference, exception.Message);
+        }
+
+        foreach (var open in policy.WorthVector.Factors
+                     .Select(static factor => factor.State)
+                     .OfType<WorthFactorState.Open>())
+        {
+            var matches = tickets.Where(ticket => string.Equals(
+                ticket.CaseId,
+                open.CaseId,
+                StringComparison.Ordinal)).ToArray();
+            if (matches is not [var ticket])
+            {
+                throw Error(
+                    MissionLoadErrorCode.DanglingCaseReference,
+                    $"case {open.CaseId} must have exactly one ticket-index entry");
+            }
+
+            var targetPath = ticket.Gid.EndsWith(".lean", StringComparison.Ordinal)
+                ? ticket.Gid
+                : ticket.Gid + ".lean";
+            if (!snapshot.TryGetFile(targetPath, out var target)
+                || !target.Text.Contains($"TASK {open.CaseId} |", StringComparison.Ordinal))
+            {
+                throw Error(
+                    MissionLoadErrorCode.DanglingCaseReference,
+                    $"case {open.CaseId} does not resolve to a matching TASK block in {targetPath}");
+            }
+        }
+    }
+
+    private static JsonElement RequireObject(
+        JsonElement value,
+        MissionLoadErrorCode code,
+        string name)
+    {
+        if (value.ValueKind is not JsonValueKind.Object)
+        {
+            throw Error(code, $"{name} must be an object");
+        }
+
+        return value;
+    }
+
+    private static JsonElement RequireProperty(
+        JsonElement value,
+        string name,
+        MissionLoadErrorCode code)
+    {
+        if (!value.TryGetProperty(name, out var property))
+        {
+            throw Error(code, $"missing required property: {name}");
+        }
+
+        return property;
+    }
+
+    private static string RequireString(
+        JsonElement value,
+        string name,
+        MissionLoadErrorCode code)
+    {
+        var property = RequireProperty(value, name, code);
+        if (property.ValueKind is not JsonValueKind.String
+            || string.IsNullOrWhiteSpace(property.GetString()))
+        {
+            throw Error(code, $"{name} must be a non-empty string");
+        }
+
+        return property.GetString()!;
+    }
+
+    private static ImmutableArray<string> RequireStringArray(
+        JsonElement value,
+        MissionLoadErrorCode code,
+        string name)
+    {
+        if (value.ValueKind is not JsonValueKind.Array)
+        {
+            throw Error(code, $"{name} must be an array");
+        }
+
+        var result = ImmutableArray.CreateBuilder<string>();
+        foreach (var item in value.EnumerateArray())
+        {
+            if (item.ValueKind is not JsonValueKind.String
+                || string.IsNullOrWhiteSpace(item.GetString()))
+            {
+                throw Error(code, $"{name} items must be non-empty strings");
+            }
+
+            result.Add(item.GetString()!);
+        }
+
+        if (result.Count == 0)
+        {
+            throw Error(code, $"{name} must not be empty");
+        }
+
+        return result.ToImmutable();
+    }
+
+    private static void RequireExactKeys(
+        JsonElement value,
+        IEnumerable<string> expected,
+        MissionLoadErrorCode code,
+        string name)
+    {
+        var actual = value.EnumerateObject().Select(static property => property.Name).ToArray();
+        var required = expected.ToArray();
+        if (actual.Length != required.Length
+            || actual.Distinct(StringComparer.Ordinal).Count() != actual.Length
+            || !actual.ToHashSet(StringComparer.Ordinal).SetEquals(required))
+        {
+            throw Error(code, $"{name} has unknown, duplicate, or missing properties");
+        }
+    }
+
+    private static string FactorName(WorthFactorId factor) => factor switch
+    {
+        WorthFactorId.Novelty => "novelty",
+        WorthFactorId.DependencyReadiness => "dependency_readiness",
+        WorthFactorId.StructuralRealization => "structural_realization",
+        WorthFactorId.ReceiptPotential => "receipt_potential",
+        _ => throw new InvalidOperationException("Unknown worth factor."),
+    };
+
+    private static string SelectionName(WorthSelectionOrder order) => order switch
+    {
+        WorthSelectionOrder.BootstrapEligibilityOrder => BootstrapOrder,
+        WorthSelectionOrder.CompleteWorthArgmax => CompleteArgmax,
+        _ => throw new InvalidOperationException("Unknown worth selection order."),
+    };
+
+    private static MissionLoadOutcome.Invalid Invalid(MissionLoadErrorCode code, string message) =>
+        new(new MissionLoadError(code, message));
+
+    private static MissionContractException Error(MissionLoadErrorCode code, string message) =>
+        new(code, message);
+
+    private sealed class MissionContractException(MissionLoadErrorCode code, string message)
+        : FormatException(message)
+    {
+        internal MissionLoadErrorCode Code { get; } = code;
+    }
+}
