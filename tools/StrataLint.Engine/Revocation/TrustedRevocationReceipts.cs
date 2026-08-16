@@ -133,7 +133,7 @@ public sealed class TrustedRevocationReceiptStore
                 var bytes = matches[0].RawBytes;
                 var evidence = ParseAndValidateReceipt(baseline, bytes);
                 var sha = "sha256:" + Convert.ToHexStringLower(SHA256.HashData(bytes.AsSpan()));
-                receipts.Add(oid, new TrustedReceipt(bytes, sha, evidence));
+                receipts.Add(oid, new TrustedReceipt(bytes, sha, WithReceiptAddress(evidence, oid, sha)));
             }
 
             return new RevocationReceiptStoreOutcome.Accepted(new TrustedRevocationReceiptStore(
@@ -163,6 +163,14 @@ public sealed class TrustedRevocationReceiptStore
         message = string.Empty;
         return true;
     }
+
+    internal ImmutableArray<RevocationEvidence> Evidence => byOid
+        .OrderBy(static item => item.Key, StringComparer.Ordinal)
+        .Select(static item => item.Value.Evidence)
+        .ToImmutableArray();
+
+    internal static string ReceiptBlobOid(RevocationEvidence evidence) =>
+        ReceiptAddress(evidence).Oid;
 
     internal static void ValidateClaim(FrozenLedgerConsistent baseline, RevocationEvidence evidence)
     {
@@ -212,13 +220,23 @@ public sealed class TrustedRevocationReceiptStore
             _ => throw new FormatException($"Unknown typed revocation receipt {type}."),
         };
         if (String(root, "kind") != "revocation-receipt"
-            || Integer(root, "schema_version") != 1
-            || String(root, "baseline_head_hash") != baseline.HeadHash
-            || String(root, "baseline_graph_root") != baseline.GraphRoot
-            || !bytes.AsSpan().SequenceEqual(
+            || Integer(root, "schema_version") != 1)
+        {
+            throw new FormatException("Revocation receipt has an unsupported kind or schema version.");
+        }
+
+        var receiptHead = String(root, "baseline_head_hash");
+        var receiptGraph = String(root, "baseline_graph_root");
+        if (receiptHead != baseline.HeadHash || receiptGraph != baseline.GraphRoot)
+        {
+            throw new FormatException(
+                $"Revocation receipt is bound to another baseline (head={receiptHead == baseline.HeadHash}, graph={receiptGraph == baseline.GraphRoot}).");
+        }
+
+        if (!bytes.AsSpan().SequenceEqual(
                 RevocationReceiptWriter.Write(baseline.HeadHash, baseline.GraphRoot, evidence).AsSpan()))
         {
-            throw new FormatException("Revocation receipt is noncanonical or bound to another baseline.");
+            throw new FormatException("Revocation receipt bytes are noncanonical.");
         }
 
         ValidateClaim(baseline, evidence);
@@ -283,6 +301,34 @@ public sealed class TrustedRevocationReceiptStore
         RevocationEvidence.ContentAddressMismatch item => (item.ReceiptBlobOid, item.ReceiptSha256),
         _ => throw new FormatException("Unknown revocation evidence variant."),
     };
+
+    private static RevocationEvidence WithReceiptAddress(
+        RevocationEvidence evidence,
+        string oid,
+        string sha256) => evidence switch
+        {
+            RevocationEvidence.KernelWitnessFailure item => item with
+            {
+                ReceiptBlobOid = oid,
+                ReceiptSha256 = sha256,
+            },
+            RevocationEvidence.AllowedAxiomRetired item => item with
+            {
+                ReceiptBlobOid = oid,
+                ReceiptSha256 = sha256,
+            },
+            RevocationEvidence.FormalContradictionCertificate item => item with
+            {
+                ReceiptBlobOid = oid,
+                ReceiptSha256 = sha256,
+            },
+            RevocationEvidence.ContentAddressMismatch item => item with
+            {
+                ReceiptBlobOid = oid,
+                ReceiptSha256 = sha256,
+            },
+            _ => throw new FormatException("Unknown revocation evidence variant."),
+        };
 
     private static FrozenNodeId FrozenNode(string value) =>
         FrozenHashSyntax.IsSha256(value)

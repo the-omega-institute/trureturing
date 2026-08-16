@@ -99,7 +99,9 @@ internal sealed class FrozenLedgerBaseView
                     sequence,
                     eventHash,
                     previousHash,
-                    FrozenLedgerBaseViewReader.ReadReattest(item.Payload)),
+                    FrozenLedgerBaseViewReader.ReadReattest(
+                        item.Payload,
+                        ReadActiveBefore(item, byDagHash).Payload)),
                 FrozenLedger.SupersedeEventType => new FrozenLedgerEvent.Supersede(
                     sequence,
                     eventHash,
@@ -144,7 +146,7 @@ internal sealed class FrozenLedgerBaseView
                 ? string.Empty
                 : RequiredLinearString(syntax.Lines[^1].Value, "event_hash"),
             corpusRoot: string.Empty,
-            graphRoot: string.Empty,
+            graphRoot: FrozenLedger.ComputeFrozenGraphRoot(activeNodes),
             activeEntries,
             AllCaseIds,
             superseded,
@@ -280,7 +282,7 @@ internal static class FrozenLedgerBaseViewReader
             allCaseIds,
             events.Select(static item => item.EventHash).ToImmutableHashSet(StringComparer.Ordinal),
             events.Select(static item => item.Identity)
-                .Concat(events.Where(static item => item.EventType == FrozenLedger.SupersedeEventType)
+                .Concat(events.Where(static item => item.Payload.TryGetProperty("frozen_node_id", out _))
                     .Select(static item => FrozenLedgerAttestationChain.RequiredString(
                         item.Payload,
                         "frozen_node_id")))
@@ -352,7 +354,7 @@ internal static class FrozenLedgerBaseViewReader
             "Freeze" => CoordinateValues.FromFreeze(ReadFreeze(
                 coordinate.Payload,
                 coordinate.EventHash).Payload),
-            "Reattest" => CoordinateValues.FromReattest(ReadReattest(coordinate.Payload)),
+            "Reattest" => CoordinateValues.FromReattest(ReadReattest(coordinate.Payload, freeze.Payload)),
             FrozenLedger.SupersedeEventType => CoordinateValues.FromSupersede(
                 ReadSupersede(coordinate.Payload)),
             _ => throw new InvalidOperationException(
@@ -361,7 +363,7 @@ internal static class FrozenLedgerBaseViewReader
         var headValues = head.EventType switch
         {
             "Freeze" => HeadValues.FromFreeze(ReadFreeze(head.Payload, head.EventHash).Payload),
-            "Reattest" => HeadValues.FromReattest(ReadReattest(head.Payload)),
+            "Reattest" => HeadValues.FromReattest(ReadReattest(head.Payload, freeze.Payload)),
             FrozenLedger.SupersedeEventType => HeadValues.FromSupersede(ReadSupersede(head.Payload)),
             _ => throw new InvalidOperationException(
                 $"trusted protected-base head event has unsupported type {head.EventType}"),
@@ -469,19 +471,19 @@ internal static class FrozenLedgerBaseViewReader
 
         var payloadClone = payload.Clone();
         var rootClone = root.Clone();
-        var identity = eventType == FrozenLedger.SupersedeEventType
-            ? eventHash
-            : payload.TryGetProperty("frozen_node_id", out var frozenNodeId)
-                && frozenNodeId.ValueKind == JsonValueKind.String
-                    ? frozenNodeId.GetString()!
-                    : eventHash;
+        var schemaVersion = root.GetProperty("schema_version").GetInt32();
+        var identity = FrozenLedgerCanonicalWriter.EventIdentity(
+            eventType,
+            payload,
+            eventHash,
+            schemaVersion);
         return new TrustedFrozenLedgerEvent(
             file.Path,
             eventType,
             eventHash,
             identity,
             payloadClone,
-            root.GetProperty("schema_version").GetInt32(),
+            schemaVersion,
             file.RawBytes,
             rootClone);
     }
@@ -489,7 +491,10 @@ internal static class FrozenLedgerBaseViewReader
     internal static FrozenActiveEntry ReadFreeze(JsonElement payload, string eventHash)
     {
         var input = ReadInput(payload.GetProperty("input"));
-        var path = ReadPath(FrozenLedgerAttestationChain.RequiredString(payload, "node_path"));
+        var currentShape = !payload.TryGetProperty("node_path", out _);
+        var path = ReadPath(currentShape
+            ? input.DescriptorSelector
+            : FrozenLedgerAttestationChain.RequiredString(payload, "node_path"));
         var declarations = ReadDeclarations(payload.GetProperty("declaration_statement_ids"));
         var statement = StatementId.Create(
             FrozenLedgerAttestationChain.RequiredString(payload, "statement_id"));
@@ -500,19 +505,34 @@ internal static class FrozenLedgerBaseViewReader
         var prerequisites = ReadFrozenNodeIds(payload, "prerequisite_frozen_node_ids");
         var axiomClosure = ReadOptionalAxiomClosure(payload);
         var freeze = new FrozenFreezePayload(
-            FrozenLedgerAttestationChain.RequiredString(payload, "case_class"),
+            currentShape
+                ? "active-frozen"
+                : FrozenLedgerAttestationChain.RequiredString(payload, "case_class"),
             FrozenLedgerAttestationChain.RequiredString(payload, "case_id"),
             declarations,
-            FrozenLedgerAttestationChain.RequiredString(payload, "evaluation"),
-            ReadExpected(payload.GetProperty("expected")),
+            currentShape
+                ? "admission"
+                : FrozenLedgerAttestationChain.RequiredString(payload, "evaluation"),
+            currentShape
+                ? new FrozenExpectedVerdict(
+                    ImmutableArray.Create("admit"),
+                    "none",
+                    ImmutableArray<FrozenExpectedDiagnostic>.Empty)
+                : ReadExpected(payload.GetProperty("expected")),
             frozen,
             input,
-            FrozenLedgerAttestationChain.RequiredString(payload, "input_fingerprint"),
+            currentShape
+                ? witness.Value
+                : FrozenLedgerAttestationChain.RequiredString(payload, "input_fingerprint"),
             path,
             prerequisites,
-            FrozenLedgerAttestationChain.RequiredString(payload, "semantic_receipt"),
+            currentShape
+                ? frozen.Value
+                : FrozenLedgerAttestationChain.RequiredString(payload, "semantic_receipt"),
             statement,
-            FrozenLedgerAttestationChain.RequiredString(payload, "truth_state"),
+            currentShape
+                ? nameof(TruthState.Closed)
+                : FrozenLedgerAttestationChain.RequiredString(payload, "truth_state"),
             witness)
         {
             AxiomClosure = axiomClosure,
@@ -532,34 +552,48 @@ internal static class FrozenLedgerBaseViewReader
             AxiomClosureKnown: !axiomClosure.IsDefault);
     }
 
-    internal static FrozenReattestPayload ReadReattest(JsonElement payload)
+    internal static FrozenReattestPayload ReadReattest(
+        JsonElement payload,
+        FrozenFreezePayload identitySource)
     {
         var input = ReadInput(payload.GetProperty("input"));
         var caseId = FrozenLedgerAttestationChain.RequiredString(payload, "case_id");
-        var fingerprint = FrozenLedgerAttestationChain.RequiredString(payload, "input_fingerprint");
         var previous = FrozenLedgerAttestationChain.RequiredString(
             payload,
             "previous_attestation_event_hash");
-        var receipt = FrozenLedgerAttestationChain.RequiredString(payload, "semantic_receipt");
         if (!payload.TryGetProperty("declaration_statement_ids", out var declarations))
         {
+            var fingerprint = payload.TryGetProperty("input_fingerprint", out _)
+                ? FrozenLedgerAttestationChain.RequiredString(payload, "input_fingerprint")
+                : identitySource.InputFingerprint;
+            var receipt = payload.TryGetProperty("semantic_receipt", out _)
+                ? FrozenLedgerAttestationChain.RequiredString(payload, "semantic_receipt")
+                : identitySource.SemanticReceipt;
             return new FrozenReattestPayload(caseId, input, fingerprint, previous, receipt)
             {
                 AxiomClosure = ReadOptionalAxiomClosure(payload),
             };
         }
 
+        var witness = WitnessId.Create(
+            FrozenLedgerAttestationChain.RequiredString(payload, "witness_id"));
+        var frozen = FrozenNodeId.Create(
+            FrozenLedgerAttestationChain.RequiredString(payload, "frozen_node_id"));
         return new FrozenReattestPayload(
             caseId,
             ReadDeclarations(declarations),
-            FrozenNodeId.Create(FrozenLedgerAttestationChain.RequiredString(payload, "frozen_node_id")),
+            frozen,
             input,
-            fingerprint,
+            payload.TryGetProperty("input_fingerprint", out _)
+                ? FrozenLedgerAttestationChain.RequiredString(payload, "input_fingerprint")
+                : witness.Value,
             ReadFrozenNodeIds(payload, "prerequisite_frozen_node_ids"),
             previous,
-            receipt,
+            payload.TryGetProperty("semantic_receipt", out _)
+                ? FrozenLedgerAttestationChain.RequiredString(payload, "semantic_receipt")
+                : frozen.Value,
             StatementId.Create(FrozenLedgerAttestationChain.RequiredString(payload, "statement_id")),
-            WitnessId.Create(FrozenLedgerAttestationChain.RequiredString(payload, "witness_id")))
+            witness)
         {
             AxiomClosure = ReadOptionalAxiomClosure(payload),
         };
@@ -571,7 +605,7 @@ internal static class FrozenLedgerBaseViewReader
         ReadDeclarations(payload.GetProperty("declaration_statement_ids")),
         ReadEnvironmentPins(payload.GetProperty("environment")),
         FrozenNodeId.Create(FrozenLedgerAttestationChain.RequiredString(payload, "frozen_node_id")),
-        ReadInput(payload.GetProperty("input")),
+        ReadSupersedeInput(payload.GetProperty("input")),
         ReadFrozenNodeIds(payload, "prerequisite_frozen_node_ids"),
         FrozenLedgerAttestationChain.RequiredString(payload, "previous_attestation_event_hash"),
         StatementId.Create(FrozenLedgerAttestationChain.RequiredString(payload, "statement_id")),
@@ -590,6 +624,14 @@ internal static class FrozenLedgerBaseViewReader
         FrozenLedgerAttestationChain.RequiredString(value, "descriptor_selector"),
         FrozenLedgerAttestationChain.RequiredString(value, "materializer"),
         FrozenLedgerAttestationChain.RequiredStringArray(value, "supporting_blob_oids"));
+
+    private static FrozenLedgerInput ReadSupersedeInput(JsonElement value) => new(
+        FrozenLedgerAttestationChain.RequiredString(value, "base_commit_oid"),
+        FrozenLedgerAttestationChain.RequiredString(value, "base_tree_oid"),
+        FrozenLedgerAttestationChain.RequiredString(value, "descriptor_blob_oid"),
+        FrozenLedgerAttestationChain.RequiredString(value, "descriptor_selector"),
+        FrozenLedgerAttestationChain.RequiredString(value, "materializer"),
+        ImmutableArray<string>.Empty);
 
     private static ImmutableArray<FrozenDeclarationStatement> ReadDeclarations(JsonElement value)
     {

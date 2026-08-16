@@ -201,6 +201,9 @@ internal sealed class StubCliEnvironment(
     public CommandResult ReattestLedger(IReadOnlyList<string> arguments) =>
         new(false, string.Empty, "ledger reattest is not configured in this fixture");
 
+    public CommandResult RevokeLedger(IReadOnlyList<string> arguments) =>
+        new(false, string.Empty, "ledger revoke is not configured in this fixture");
+
     public CommandResult SupersedeLedger(IReadOnlyList<string> arguments) =>
         new(false, string.Empty, "ledger supersede is not configured in this fixture");
 

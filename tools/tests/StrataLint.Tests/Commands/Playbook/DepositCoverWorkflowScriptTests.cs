@@ -635,8 +635,20 @@ public sealed partial class DepositCoverWorkflowScriptTests
             {
                 using var document = JsonDocument.Parse(File.ReadAllText(path));
                 var root = document.RootElement;
-                return root.GetProperty("event_type").GetString() == "Freeze"
-                    && root.GetProperty("payload").GetProperty("node_path").GetString() == leanPath;
+                if (!root.TryGetProperty("event_type", out var eventType)
+                    || eventType.GetString() != "Freeze")
+                {
+                    return false;
+                }
+
+                var payload = root.GetProperty("payload");
+                var selector = payload.TryGetProperty("input", out var input)
+                    && input.TryGetProperty("descriptor_selector", out var descriptorSelector)
+                        ? descriptorSelector.GetString()
+                        : payload.TryGetProperty("node_path", out var nodePath)
+                            ? nodePath.GetString()
+                            : null;
+                return selector == leanPath;
             });
 
         private static string ReattestEvent(
