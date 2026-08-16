@@ -340,7 +340,10 @@ public sealed partial class FrozenLedgerTests
             freeze.EventHash,
             freeze.Payload.SemanticReceipt,
             StatementId.Create(Sha256("different-statement")),
-            freeze.Payload.WitnessId);
+            freeze.Payload.WitnessId)
+        {
+            AxiomClosure = freeze.Payload.AxiomClosure,
+        };
         var line = FrozenLedgerCanonicalWriter.WriteEvent(
             "Reattest",
             FrozenLedgerCanonicalWriter.ReattestElement(forged),
@@ -408,6 +411,22 @@ public sealed partial class FrozenLedgerTests
             var line = syntax.Lines[sequence].Value;
             var payload = JsonNode.Parse(line.GetProperty("payload").GetRawText())!.AsObject();
             payload.Remove("axiom_closure");
+            if (line.GetProperty("event_type").GetString() == "Freeze")
+            {
+                var input = payload["input"]!.AsObject();
+                payload["case_class"] = "active-frozen";
+                payload["evaluation"] = "admission";
+                payload["expected"] = new JsonObject
+                {
+                    ["allowed_dispositions"] = new JsonArray("admit"),
+                    ["diagnostic_match"] = "none",
+                    ["required_diagnostics"] = new JsonArray(),
+                };
+                payload["input_fingerprint"] = payload["witness_id"]!.GetValue<string>();
+                payload["node_path"] = input["descriptor_selector"]!.GetValue<string>();
+                payload["semantic_receipt"] = payload["frozen_node_id"]!.GetValue<string>();
+                payload["truth_state"] = nameof(TruthState.Closed);
+            }
             var encoded = FrozenLedgerCanonicalWriter.WriteEvent(
                 line.GetProperty("event_type").GetString()!,
                 JsonSerializer.SerializeToElement(payload),

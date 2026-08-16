@@ -93,6 +93,7 @@ internal sealed class ProductionFrozenLedgerAdmissionServices : IFrozenLedgerAdm
 
         var inputs = ImmutableArray.CreateBuilder<FrozenLedgerInput>();
         var environmentReferences = ImmutableArray.CreateBuilder<FrozenEnvironmentReference>();
+        var receiptOids = ImmutableArray.CreateBuilder<string>();
         var requiredAncestorCommitOids = ImmutableArray.CreateBuilder<string>();
         foreach (var item in loaded)
         {
@@ -114,6 +115,11 @@ internal sealed class ProductionFrozenLedgerAdmissionServices : IFrozenLedgerAdm
                         requiredAncestorCommitOids.Add(input.BaseCommitOid);
                     }
                 }
+                else if (item.EventType == "Revoke")
+                {
+                    receiptOids.AddRange(FrozenLedger.ReadTrustedRevoke(item.Payload).Evidence
+                        .Select(TrustedRevocationReceiptStore.ReceiptBlobOid));
+                }
             }
             catch (Exception exception) when (exception is FormatException
                 or InvalidOperationException
@@ -128,12 +134,12 @@ internal sealed class ProductionFrozenLedgerAdmissionServices : IFrozenLedgerAdm
         var references = FrozenLedgerReferenceSet.Create(
             inputs.ToImmutable(),
             environmentReferences.ToImmutable(),
-            [],
+            receiptOids.ToImmutable(),
             requiredAncestorCommitOids);
         TrustedFrozenGitReferences trusted;
         try
         {
-            trusted = inputs.Count == 0 && environmentReferences.Count == 0
+            trusted = inputs.Count == 0 && environmentReferences.Count == 0 && receiptOids.Count == 0
                 ? TrustedFrozenGitReferences.CreateForTrustedAdapter([], [])
                 : validateReferences(references);
         }
@@ -156,11 +162,34 @@ internal sealed class ProductionFrozenLedgerAdmissionServices : IFrozenLedgerAdm
                 "candidate frozen-ledger delta does not extend the protected-base dependency DAG");
         }
 
+        FrozenLedgerConsistent? revocationBaseline = null;
+        TrustedRevocationReceiptStore? revocationReceipts = null;
+        if (loaded.Any(static item => item.EventType == "Revoke"))
+        {
+            var baselineSyntax = DagLedgerCommandPreparation.LoadTrustedLedgerFiles(
+                baseView,
+                "protected-base frozen ledger");
+            revocationBaseline = baseView.ToWriterBaseline(baselineSyntax);
+            revocationReceipts = TrustedRevocationReceiptStore.Materialize(
+                revocationBaseline,
+                protectedBase,
+                receiptOids) switch
+            {
+                RevocationReceiptStoreOutcome.Accepted accepted => accepted.Capability,
+                RevocationReceiptStoreOutcome.Rejected rejected =>
+                    throw new FrozenLedgerAdmissionPreparationException(
+                        deltaPaths.OrderBy(static path => path.Value, StringComparer.Ordinal).ToImmutableArray(),
+                        "candidate Revoke receipt is invalid: " + rejected.Message),
+            };
+        }
+
         return new FrozenLedgerAdmissionPreparation(
             baseView,
             ordered,
             producerPaths.Value,
-            trusted);
+            trusted,
+            revocationBaseline,
+            revocationReceipts);
     }
 
     private static void RejectClosurelessAddedFreezes(
@@ -193,8 +222,23 @@ internal sealed class ProductionFrozenLedgerAdmissionServices : IFrozenLedgerAdm
                 || !root.TryGetProperty("payload", out var payload)
                 || payload.ValueKind != JsonValueKind.Object
                 || payload.TryGetProperty("axiom_closure", out _)
-                || !payload.TryGetProperty("node_path", out var nodePath)
-                || nodePath.ValueKind != JsonValueKind.String)
+                )
+            {
+                return null;
+            }
+
+            JsonElement nodePath;
+            if (!payload.TryGetProperty("node_path", out nodePath))
+            {
+                if (!payload.TryGetProperty("input", out var input)
+                    || input.ValueKind != JsonValueKind.Object
+                    || !input.TryGetProperty("descriptor_selector", out nodePath))
+                {
+                    return null;
+                }
+            }
+
+            if (nodePath.ValueKind != JsonValueKind.String)
             {
                 return null;
             }

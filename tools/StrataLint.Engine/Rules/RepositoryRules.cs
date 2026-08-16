@@ -50,7 +50,7 @@ internal static partial class RepositoryRules
         ImmutableHashSet.Create(
             StringComparer.Ordinal,
             "anomaly", "anomalies", "case", "case_id", "category", "exception", "exceptions",
-            "failure", "failures", "kind", "record_type", "resolution", "state", "tension",
+            "evidence_type", "failure", "failures", "kind", "record_type", "resolution", "state", "tension",
             "tensions", "type", "unresolved");
 
     internal static ImmutableArray<RuleRegistration> CreateRegistrations() =>
