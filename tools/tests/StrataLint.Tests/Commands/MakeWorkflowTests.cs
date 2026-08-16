@@ -367,6 +367,7 @@ public sealed partial class MakeWorkflowTests
         Assert.Contains("Install pinned Lean toolchain on cache miss", workflow, StringComparison.Ordinal);
         Assert.Contains("Restore candidate Lean build artifacts on cache miss", workflow, StringComparison.Ordinal);
         Assert.DoesNotContain("uses: actions/cache@v4", workflow, StringComparison.Ordinal);
+        AssertLakeCacheContract(admission, workflow);
     }
 
     [Fact]
