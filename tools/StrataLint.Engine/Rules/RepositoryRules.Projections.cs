@@ -32,7 +32,7 @@ internal static partial class RepositoryRules
             .Order(StringComparer.Ordinal)
             .Select(static stem => new RuleFinding(
                 stem + ".scribe.cs",
-                "Blueprint Scribe source has no matching .md projection")));
+                "Blueprint Scribe source has no matching .md committed oracle")));
 
         var changedMarkdown = context.Changes.Paths
             .Where(static path => IsBlueprintPath(path.Value, ".md"))
@@ -53,7 +53,7 @@ internal static partial class RepositoryRules
             .Where(path => !hasChangedScribeSource && !digestionEmissions.Contains(path.Value))
             .Select(static path => new RuleFinding(
                 path.Value,
-                "Blueprint markdown is a projection: emit it from a Scribe or digestion source change")));
+                "Blueprint markdown is a committed renderer oracle: update it from a Scribe or digestion source change")));
         return findings.ToImmutable();
     }
 
