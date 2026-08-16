@@ -51,6 +51,7 @@ internal sealed class FrozenLedgerAdmissionScope
         var allChanges = changes.Entries
             .Where(change => environmentChanges.Contains(change.Path)
                 || change.Path.Value == "Trureturing.lean"
+                || FrozenLedgerDeltaPredicate.IsDeltaDefinitionInput(change.Path.Value)
                 || preparation.LeanReportProducerPaths.Contains(change.Path.Value))
             .Select(static change => change.Path)
             .ToImmutableHashSet();

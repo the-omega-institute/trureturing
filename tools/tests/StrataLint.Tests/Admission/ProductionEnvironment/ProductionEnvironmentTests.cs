@@ -10,9 +10,7 @@ public sealed partial class ProductionEnvironmentTests
     [Fact]
     public void CheckEvaluatesProtectedChangeContentAndReturnsStructuredMetaSignal()
     {
-        var fixture = new RuleFixture();
-        fixture.AddBackfillTargets();
-        AddFrozenLedger(fixture);
+        var fixture = TrustedFrozenFixture();
         const string protectedPath = RuleFixture.SyntheticProtectedPath;
         var gateway = new FakeRepositoryGateway(
             RawChangeSet.Create(new[] { protectedPath }),
@@ -347,9 +345,7 @@ public sealed partial class ProductionEnvironmentTests
     public void CheckRoutesAnyProtectedChangeBeforeBaseEmitterDependencyMismatch()
     {
         using var temporary = new TemporaryDirectory();
-        var fixture = new RuleFixture();
-        fixture.AddBackfillTargets();
-        AddFrozenLedger(fixture);
+        var fixture = TrustedFrozenFixture();
         var environment = new ProductionCliEnvironment(
             temporary.Path,
             new FakeRepositoryGateway(
@@ -513,19 +509,26 @@ public sealed partial class ProductionEnvironmentTests
         return (snapshot, lean, dag);
     }
 
-    private static void AddFrozenLedger(RuleFixture fixture)
+    private static FrozenLedgerConsistent AddFrozenLedger(RuleFixture fixture)
     {
         const string toolchain = "leanprover/lean4:v4.24.0\n";
+        const string lakefile = "name = \"Fixture\"\n";
         const string manifest = "{}\n";
         fixture.Files["lean-toolchain"] = toolchain;
         fixture.Baseline["lean-toolchain"] = toolchain;
+        fixture.Files["lakefile.toml"] = lakefile;
+        fixture.Baseline["lakefile.toml"] = lakefile;
         fixture.Files["lake-manifest.json"] = manifest;
         fixture.Baseline["lake-manifest.json"] = manifest;
         var environment = new FrozenEnvironmentAttestation(
             FrozenLedgerTestData.GitOid('a'),
             FrozenLedgerTestData.GitOid('b'),
             FrozenLedgerTestData.GitBlobOid(toolchain),
-            FrozenLedgerTestData.GitBlobOid(manifest));
+            FrozenLedgerTestData.GitBlobOid(manifest))
+        {
+            LakefilePath = "lakefile.toml",
+            LakefileBlobOid = FrozenLedgerTestData.GitBlobOid(lakefile),
+        };
         var baselineCatalog = Catalog(fixture.Baseline, fixture.BaselineReports, environment);
         var currentCatalog = Catalog(fixture.Files, fixture.Reports, environment);
         var baselineLedger = FrozenLedgerGenerator.GenerateGenesis(
@@ -542,6 +545,7 @@ public sealed partial class ProductionEnvironmentTests
             currentCatalog);
         SetLedger(fixture.Files, Encoding.UTF8.GetString(currentLedger.AsSpan()));
         SetLedger(fixture.Baseline, Encoding.UTF8.GetString(baselineLedger.AsSpan()));
+        return baselineCapability;
 
         static FrozenMaterialCatalog Catalog(
             IReadOnlyDictionary<string, string> files,

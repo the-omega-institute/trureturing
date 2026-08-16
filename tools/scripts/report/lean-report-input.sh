@@ -94,6 +94,90 @@ producer_declared_paths() {
   done
 }
 
+producer_reachable_script_paths() {
+  python3 - "$REPOSITORY" <<'PY'
+import pathlib
+import re
+import sys
+
+root = pathlib.Path(sys.argv[1]).resolve()
+entrypoints = (
+    pathlib.PurePosixPath(".github/workflows/ci.yml"),
+    pathlib.PurePosixPath("tools/lean-inspector/inspect.sh"),
+    pathlib.PurePosixPath("tools/scripts/lean-report-pair.sh"),
+    pathlib.PurePosixPath("tools/scripts/report/lean-report-input.sh"),
+)
+reference_pattern = re.compile(
+    r"(?P<path>(?:\$[A-Z_][A-Z0-9_]*|\$\{[A-Z_][A-Z0-9_]*\}|[A-Za-z0-9_.-]+)"
+    r"(?:/[A-Za-z0-9_.$@{}+-]+)+\.sh)(?![A-Za-z0-9_.])"
+)
+
+
+def source_text(relative):
+    path = root.joinpath(*relative.parts).resolve()
+    try:
+        path.relative_to(root)
+    except ValueError as error:
+        raise SystemExit(f"lean-report-input: producer script escaped repository: {relative}") from error
+    if not path.is_file():
+        raise SystemExit(f"lean-report-input: reachable producer input is absent: {relative}")
+    text = path.read_text(encoding="utf-8")
+    if relative == pathlib.PurePosixPath(".github/workflows/ci.yml"):
+        start_marker = "  lean-inspect:\n"
+        end_marker = "  baseline-admission:\n"
+        if start_marker not in text or end_marker not in text:
+            raise SystemExit("lean-report-input: Lean-report workflow job boundaries are absent")
+        text = text[text.index(start_marker):text.index(end_marker)]
+    return text
+
+
+def normalize(reference, source):
+    if "/candidate/" in reference:
+        reference = reference.split("/candidate/", 1)[1]
+    elif reference.startswith("candidate/"):
+        reference = reference[len("candidate/"):]
+    elif reference.startswith("$"):
+        reference = reference.split("/", 1)[1]
+        if reference.startswith("candidate/"):
+            reference = reference[len("candidate/"):]
+    if reference.startswith(("tools/", ".github/")):
+        candidate = pathlib.PurePosixPath(reference)
+    else:
+        candidate = source.parent.joinpath(pathlib.PurePosixPath(reference))
+    normalized = pathlib.PurePosixPath(pathlib.PurePosixPath(candidate).as_posix())
+    parts = []
+    for part in normalized.parts:
+        if part in ("", "."):
+            continue
+        if part == "..":
+            if not parts:
+                raise SystemExit(f"lean-report-input: producer script escaped repository: {reference}")
+            parts.pop()
+        else:
+            parts.append(part)
+    return pathlib.PurePosixPath(*parts)
+
+
+pending = list(entrypoints)
+reachable = set()
+while pending:
+    source = pending.pop()
+    if source in reachable:
+        continue
+    text = source_text(source)
+    reachable.add(source)
+    for match in reference_pattern.finditer(text):
+        if text[max(0, match.start() - 3):match.start()] == "://":
+            continue
+        referenced = normalize(match.group("path"), source)
+        if referenced not in reachable:
+            pending.append(referenced)
+
+for relative in sorted(reachable, key=lambda path: path.as_posix().encode("utf-8")):
+    print(relative.as_posix())
+PY
+}
+
 producer_compile_paths() {
   local project json
   for project in \
@@ -127,8 +211,10 @@ PY
 
 complete_producer_paths() {
   local compile_paths="$TMP_ROOT/producer-compile-paths"
+  local script_paths="$TMP_ROOT/producer-script-paths"
   producer_compile_paths > "$compile_paths" || return 1
-  { cat "$compile_paths"; producer_declared_paths; } | sort -u
+  producer_reachable_script_paths > "$script_paths" || return 1
+  { cat "$compile_paths"; cat "$script_paths"; producer_declared_paths; } | sort -u
 }
 
 producer_sha256() {

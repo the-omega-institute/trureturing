@@ -14,6 +14,16 @@ public sealed class FrozenLedgerDeltaPredicateTests
         "lake-manifest.json",
         "Trureturing.lean",
         "D5/S0/Carrier/Ring.lean",
+        ".github/workflows/ci.yml",
+        "tools/scripts/report/lean-report-input.sh",
+        "Directory.Build.props",
+        "Directory.Build.targets",
+        "Directory.Packages.props",
+        "global.json",
+        "tools/StrataLint.Cli/StrataLint.Cli.csproj",
+        "tools/StrataLint.Engine/StrataLint.Engine.csproj",
+        "tools/StrataLint.Cli/Admission/ProductionCliEnvironment.cs",
+        "tools/StrataLint.Engine/Ledger/Admission/FrozenLedgerDeltaPredicate.cs",
     };
 
     [Theory]
