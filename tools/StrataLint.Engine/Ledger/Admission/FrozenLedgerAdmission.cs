@@ -217,7 +217,11 @@ public static partial class FrozenLedger
                 {
                     if (item.EventType == "Freeze")
                     {
-                        var freeze = ParseFreeze(item.Payload, catalog, trustedReferences);
+                        var freeze = ParseFreeze(
+                            item.Payload,
+                            catalog,
+                            trustedReferences,
+                            requireCatalogRevisionIdentity: false);
                         if (!allCaseIds.Add(freeze.CaseId)
                             || activePathCases.ContainsKey(freeze.NodePath))
                         {

@@ -143,3 +143,18 @@ def specialZoneAlphabetAnchoringTicket : Unit := ()
     提示:Enforce ast_path uniqueness within each ledger source: the live path checks only atom_id uniqueness, so duplicate ast_path values currently have no machine finding. This gap predates and is independent of removing production-unreachable TheoryIngestion; that dead code never ran and therefore never enforced the invariant. Close only by adding a finding in BackfillInventoryRule or DigestionStatusEvaluator plus a red fixture for duplicate same-source ast_path values.
     尸检:none -/
 def ledgerSourceAstPathUniquenessTicket : Unit := ()
+
+/-- TASK D5-T0035 | 难度:3 | 依赖:欠(owner-ruling) | 尝试:0
+    提示:This is not a decision this lane can make; hand it to the A2b contract owner. `BackfillInventoryLoader.RelativePath` remains the live constant `Meta/BACKFILL.yaml` even though that path is no longer indexed, while `BackfillInventoryLoader.RootPath` names the active `Meta/Digestion/backfill/` shards; `DigestStatusCommand.hasLegacyLedger` still preserves the legacy single-file ledger's raw bytes, so `tools/Architecture/HARDCODE-LEDGER.md:57` records SL-016's authoritative path as the dead path. Close only when the owner rules whether the A2b dual-read layer stays and the same PR corrects `HARDCODE-LEDGER.md:57`.
+    尸检:none -/
+def a2bLegacyDualReadRulingTicket : Unit := ()
+
+/-- TASK D5-T0036 | 难度:3 | 依赖:欠(owner-ruling) | 尝试:0
+    提示:This is not a decision this lane can make; hand it to the repository policy owner. `CLAUDE.md:27` still names a TheoryIsolation guard deleted by `46220826c`, whose verdict says that `TheoryIsolationPolicy` hid from itself by concatenating its own tokens; the narrow reading that forbids theory-volume paths or names has zero D5/Blueprint matches, while the broad reading that forbids every `pzg` or `gict` token has three D5 files, including `D5/S1/Digit/PrimeAxis/FiniteDescriptionPZGCode.lean`. Until the owner defines what zero knowledge and zero location prohibit, even the open scope is inaccurate; close only when the owner chooses either a fail-closed consumer resistant to concatenation bypass or a rewrite of the guard-existence claim in `CLAUDE.md:27`, both at tau=0, and also rules on the corresponding `HARDCODE-LEDGER.md` guard-matrix row.
+    尸检:none -/
+def theoryIsolationSemanticsRulingTicket : Unit := ()
+
+/-- TASK D5-T0037 | 难度:3 | 依赖:欠(owner-ruling) | 尝试:0
+    提示:This is not a decision this lane can make; hand it to the admission-gate owner. Admission is offline and fail-closed under spec A12/A17 and `CLAUDE.md` rule 11, so GitHub issue numbers cannot be a resolvable case vocabulary, while the A7/SL-013 TASK system's machine role is the case-address space: `FrozenContentAddress` rejects every Open module without a `D5-Tnnnn` reference, `RepositoryRules.StructuredScan` uses the same vocabulary for SL-019 anomaly accounting, and deferred rule case ids enter `RuleCatalog.RootSha256`. Close only when the owner rules whether the gate may query GitHub; if yes, full retirement becomes cheaper, and if no, only the ticket skin (`难度`, `尝试`, `提示`, and `尸检`) can retire while the case-id skeleton remains.
+    尸检:none -/
+def githubAdmissionLookupRulingTicket : Unit := ()

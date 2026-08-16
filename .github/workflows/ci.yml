@@ -477,11 +477,9 @@ jobs:
           scribe="$GITHUB_WORKSPACE/.judge-binaries/scribe/StrataLint.Scribe.dll"
           test -s "$report"
           test -s "$scribe"
-          cd "$GITHUB_WORKSPACE/candidate"
-          STRATALINT_LEAN_REPORT="$report" dotnet "$scribe" projections --check --report "$report"
-          STRATALINT_LEAN_REPORT="$report" dotnet "$scribe" emit --check
-          STRATALINT_LEAN_REPORT="$report" dotnet "$scribe" emit-values --check
-          STRATALINT_LEAN_REPORT="$report" dotnet "$scribe" describe-report --check
+          base="${{ steps.base.outputs.sha }}"
+          /bin/bash "$GITHUB_WORKSPACE/candidate/tools/scripts/workflow/scribe-content-checks.sh" \
+            "$report" "$scribe" "$base"
 
       - name: Stage candidate canonical Lean report cache
         shell: bash
