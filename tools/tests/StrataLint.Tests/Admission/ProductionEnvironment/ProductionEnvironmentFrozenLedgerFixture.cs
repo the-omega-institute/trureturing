@@ -94,7 +94,7 @@ public sealed partial class ProductionEnvironmentTests
     }
 
     [Fact]
-    public void CheckAdmitsAddedLedgerEventsWhoseAnchorsResolve()
+    public void CheckAdmitsAddedFreezeAnchoredToPhaseAWhenCurrentRevisionIsPhaseB()
     {
         using var temporary = new TemporaryDirectory();
         var fixture = new RuleFixture();
@@ -110,7 +110,11 @@ public sealed partial class ProductionEnvironmentTests
             RawChangeSet.CreateWithKinds(
                 addedLedgerPaths.Select(static path => (path, RawChangeKind.Added))),
             Snapshot(fixture.Files),
-            Snapshot(fixture.Baseline));
+            Snapshot(fixture.Baseline),
+            currentRevisionResolver: static () => new FrozenRevisionIdentity(
+                new string('c', 40),
+                FrozenLedgerTestData.GitOid('c'),
+                FrozenLedgerTestData.GitOid('d')));
         var ledger = new ProductionFrozenLedgerAdmissionServices(
             "/repo",
             ImmutableHashSet<string>.Empty);
@@ -129,6 +133,7 @@ public sealed partial class ProductionEnvironmentTests
         Assert.Equal(1, ledger.DeltaEventLoadCount);
         Assert.Equal(1, ledger.AdmissionCatalogBuildCount);
         Assert.Equal(1, ledger.IncrementalValidationCount);
+        Assert.Equal(1, gateway.CurrentRevisionResolutionCount);
         var deltaReferences = Assert.Single(gateway.FrozenReferenceValidations);
         Assert.Contains(FrozenLedgerTestData.GitOid('a'), deltaReferences.CommitOids);
     }
