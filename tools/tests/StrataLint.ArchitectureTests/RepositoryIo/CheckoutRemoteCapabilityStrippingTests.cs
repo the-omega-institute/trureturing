@@ -30,9 +30,11 @@ public sealed class CheckoutRemoteCapabilityStrippingTests
               test:
                 steps:
                   - uses: actions/checkout@v4
+                    id: checkout-current
                     with:
                       path: source
                   - name: Strip checkout remote state
+                    if: steps.checkout-current.outcome == 'success'
                     shell: bash
                     env:
                       CHECKOUT_PATH: source
@@ -92,9 +94,74 @@ public sealed class CheckoutRemoteCapabilityStrippingTests
                 "explicit failure exit",
                 "HEAD smoke test",
                 "HEAD^1 smoke test",
+                "checkout success gate",
             },
             missing);
     }
+
+    [Fact]
+    public void StripWithFalseConditionIsRejected()
+    {
+        var finding = AssertGateRejected("false");
+
+        Assert.Contains("checkout success gate", finding.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void StripReferencingDifferentCheckoutIdIsRejected()
+    {
+        var firstJob = CompleteStripWorkflow.Replace(
+            "if: steps.checkout-current.outcome == 'success'",
+            "if: steps.checkout-other.outcome == 'success'",
+            StringComparison.Ordinal);
+        var otherJob = CompleteStripWorkflow
+            .Replace("jobs:\n  test:", "  other:", StringComparison.Ordinal)
+            .Replace("checkout-current", "checkout-other", StringComparison.Ordinal);
+        var workflow = $"{firstJob}\n{otherJob}";
+
+        Assert.NotEqual(CompleteStripWorkflow, firstJob);
+        Assert.Contains("id: checkout-other", workflow, StringComparison.Ordinal);
+
+        var finding = Assert.Single(InspectWorkflow(".github/workflows/different-id.yml", workflow));
+
+        Assert.Contains("checkout success gate", finding.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void StripWithAlwaysConditionIsRejected()
+    {
+        var finding = AssertGateRejected("always()");
+
+        Assert.Contains("checkout success gate", finding.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void StripWithSuccessFunctionConditionIsRejected()
+    {
+        var finding = AssertGateRejected("success()");
+
+        Assert.Contains("checkout success gate", finding.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void CheckoutWithoutIdIsRejected()
+    {
+        var workflow = string.Join(
+            '\n',
+            CompleteStripWorkflow
+                .Split('\n')
+                .Where(static line => !line.TrimStart().Equals("id: checkout-current", StringComparison.Ordinal)));
+
+        Assert.NotEqual(CompleteStripWorkflow, workflow);
+
+        var finding = Assert.Single(InspectWorkflow(".github/workflows/no-id.yml", workflow));
+
+        Assert.Contains("checkout success gate", finding.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void StripGatedByItsCheckoutSuccessIsAccepted() =>
+        Assert.Empty(InspectWorkflow(".github/workflows/success-gate.yml", CompleteStripWorkflow));
 
     [Theory]
     [InlineData("name: Strip checkout remote state", "name: Something else", "canonical step name")]
@@ -139,6 +206,18 @@ public sealed class CheckoutRemoteCapabilityStrippingTests
         Assert.Contains("immediately followed", finding.Message, StringComparison.Ordinal);
     }
 
+    private static CheckoutStripFinding AssertGateRejected(string condition)
+    {
+        var broken = CompleteStripWorkflow.Replace(
+            "steps.checkout-current.outcome == 'success'",
+            condition,
+            StringComparison.Ordinal);
+
+        Assert.NotEqual(CompleteStripWorkflow, broken);
+
+        return Assert.Single(InspectWorkflow(".github/workflows/broken-gate.yml", broken));
+    }
+
     private static IReadOnlyList<CheckoutStripFinding> InspectWorkflow(string path, string content)
     {
         var stream = new YamlStream();
@@ -169,7 +248,7 @@ public sealed class CheckoutRemoteCapabilityStrippingTests
                     continue;
                 }
 
-                var missing = MissingStripContracts(strip, checkoutPath);
+                var missing = MissingStripContracts(strip, checkout, checkoutPath);
                 if (missing.Count > 0)
                 {
                     findings.Add(new(path, checkoutLine,
@@ -181,7 +260,10 @@ public sealed class CheckoutRemoteCapabilityStrippingTests
         return findings;
     }
 
-    private static IReadOnlyList<string> MissingStripContracts(YamlMappingNode step, string checkoutPath)
+    private static IReadOnlyList<string> MissingStripContracts(
+        YamlMappingNode step,
+        YamlMappingNode checkout,
+        string checkoutPath)
     {
         var missing = new List<string>();
         Require(Scalar(step, "name") == StripStepName, "canonical step name");
@@ -209,6 +291,9 @@ public sealed class CheckoutRemoteCapabilityStrippingTests
             && script.Contains("test -n \"$head_sha\"", StringComparison.Ordinal), "HEAD smoke test");
         Require(script.Contains("base_sha=\"$(git -C \"$CHECKOUT_PATH\" rev-parse HEAD^1)\"", StringComparison.Ordinal)
             && script.Contains("test -n \"$base_sha\"", StringComparison.Ordinal), "HEAD^1 smoke test");
+        var checkoutId = Scalar(checkout, "id");
+        Require(checkoutId.Length > 0
+            && Scalar(step, "if") == $"steps.{checkoutId}.outcome == 'success'", "checkout success gate");
         return missing;
 
         void Require(bool condition, string contract)
