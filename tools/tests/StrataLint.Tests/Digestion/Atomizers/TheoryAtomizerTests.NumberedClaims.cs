@@ -192,6 +192,19 @@ public sealed partial class TheoryAtomizerTests
     }
 
     [Fact]
+    public void PzgClausePlanChildrenResolveThroughTheCanonicalClaimResolver()
+    {
+        var bytes = Encoding.UTF8.GetBytes(
+            "# PZG\n\n**定理 9.10**。第一条。\n\n**第二条**。第二条。\n");
+        var document = PzgAtomizer.Atomize(bytes, DigestionTestSupport.Rules);
+        var child = Assert.Single(document.ClausePlans).Children[1];
+
+        var resolved = document.ResolveClaim(child.AstPath);
+
+        Assert.Same(child, resolved);
+    }
+
+    [Fact]
     public void ProductionSourcesHaveStableAtomizationClassificationsAndFingerprints()
     {
         var root = TestRepositoryLayout.FindRoot();
