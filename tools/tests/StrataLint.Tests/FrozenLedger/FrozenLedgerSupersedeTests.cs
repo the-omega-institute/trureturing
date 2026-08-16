@@ -90,9 +90,33 @@ public sealed partial class FrozenLedgerTests
     }
 
     [Fact]
-    public void SupersedeRejectsDifferentStatementId()
+    public void SupersedeAcceptsUnchangedSourceWithAmbientStatementDriftAndSmallerClosure()
     {
-        var fixture = SupersedeFixture(candidateStatementMaterial: "different-elaborated-expression");
+        var fixture = SupersedeFixture(
+            baselineAxioms: ["Classical.choice", "propext"],
+            candidateAxioms: ["propext"],
+            candidateStatementMaterial: "ambiently-different-elaborated-expression");
+
+        var accepted = Assert.IsType<FrozenLedgerValidationOutcome.Accepted>(
+            ValidateCandidate(
+                LoadedSupersedeLedger(AppendSupersede(fixture).AsSpan()),
+                fixture.Baseline,
+                fixture.CandidateCatalog)).Capability;
+
+        Assert.Equal(fixture.CandidateNode.FrozenNodeId, accepted.ActiveFrozenNodes.Single().FrozenNodeId);
+        Assert.Contains(fixture.BaselineNode.FrozenNodeId, accepted.SupersededFrozenNodeIds);
+    }
+
+    [Fact]
+    public void SupersedeRejectsChangedSourceAndStatementEvenWhenClosureShrinks()
+    {
+        var fixture = SupersedeFixture(
+            baselineAxioms: ["Classical.choice", "propext"],
+            candidateAxioms: ["propext"],
+            baselineSource: "theorem a : True /\\ True := by simp\n",
+            candidateSource: SupersedeSource,
+            baselineStatementMaterial: "And True True",
+            candidateStatementMaterial: "True");
 
         var rejected = Assert.IsType<FrozenLedgerValidationOutcome.Rejected>(
             ValidateCandidate(
@@ -100,7 +124,48 @@ public sealed partial class FrozenLedgerTests
                 fixture.Baseline,
                 fixture.CandidateCatalog));
 
-        Assert.Contains("same theorem", rejected.Message, StringComparison.OrdinalIgnoreCase);
+        Assert.Contains("source blob", rejected.Message, StringComparison.OrdinalIgnoreCase);
+    }
+
+    [Fact]
+    public void SupersedeRejectsChangedIncludedDeclarationKeyWithUnchangedSource()
+    {
+        var fixture = SupersedeFixture(
+            baselineDeclarations: ["a"],
+            candidateDeclarations: ["renamed"],
+            candidateStatementMaterial: "ambiently-different-elaborated-expression");
+
+        var rejected = Assert.IsType<FrozenLedgerValidationOutcome.Rejected>(
+            ValidateCandidate(
+                LoadedSupersedeLedger(AppendSupersede(fixture).AsSpan()),
+                fixture.Baseline,
+                fixture.CandidateCatalog));
+
+        Assert.Contains("declaration keys", rejected.Message, StringComparison.OrdinalIgnoreCase);
+    }
+
+    [Fact]
+    public void SupersedeRejectsStatementDriftWhenSupportingBlobOidsAreUnchanged()
+    {
+        var fixture = SupersedeFixture(
+            candidateStatementMaterial: "ambiently-different-elaborated-expression");
+        var payload = SupersedePayload(fixture);
+        var baseEntry = Assert.Single(fixture.Baseline.ActiveEntries).Value;
+        var unchangedPinsEntry = baseEntry with
+        {
+            Payload = baseEntry.Payload with
+            {
+                Input = baseEntry.Payload.Input with
+                {
+                    SupportingBlobOids = payload.Input.SupportingBlobOids,
+                },
+            },
+        };
+
+        var exception = Assert.Throws<FormatException>(() =>
+            FrozenLedger.ValidateSupersedeStrength(payload, unchangedPinsEntry));
+
+        Assert.Contains("environment pins did not change", exception.Message, StringComparison.OrdinalIgnoreCase);
     }
 
     [Fact]
@@ -211,8 +276,14 @@ public sealed partial class FrozenLedgerTests
     private static SupersedeTestFixture SupersedeFixture(
         IEnumerable<string>? baselineAxioms = null,
         IEnumerable<string>? candidateAxioms = null,
-        string candidateStatementMaterial = "same-elaborated-expression")
+        string? baselineSource = null,
+        string? candidateSource = null,
+        string baselineStatementMaterial = "same-elaborated-expression",
+        string candidateStatementMaterial = "same-elaborated-expression",
+        IEnumerable<string>? baselineDeclarations = null,
+        IEnumerable<string>? candidateDeclarations = null)
     {
+        var protectedSource = baselineSource ?? SupersedeSource;
         var baselineCatalog = BuildCatalogWithEnvironment(
             "leanprover/lean4:v4.31.0\n",
             "[package]\nname = \"old\"\n",
@@ -221,10 +292,10 @@ public sealed partial class FrozenLedgerTests
             GitOid('b'),
             ModuleWithReport(
                 "A",
-                SupersedeSource,
-                "same-elaborated-expression",
+                protectedSource,
+                baselineStatementMaterial,
                 baselineAxioms,
-                ["a"]));
+                baselineDeclarations ?? ["a"]));
         var candidateCatalog = BuildCatalogWithEnvironment(
             "leanprover/lean4:v4.33.0\n",
             "[package]\nname = \"new\"\n",
@@ -233,10 +304,10 @@ public sealed partial class FrozenLedgerTests
             GitOid('d'),
             ModuleWithReport(
                 "A",
-                SupersedeSource,
+                candidateSource ?? protectedSource,
                 candidateStatementMaterial,
                 candidateAxioms ?? baselineAxioms,
-                ["a"]));
+                candidateDeclarations ?? baselineDeclarations ?? ["a"]));
         var baselineBytes = FrozenLedgerGenerator.GenerateGenesis(
             baselineCatalog,
             new FrozenGenesisDescriptor(GitOid('e'), RuleCatalog.Default.RootSha256));
