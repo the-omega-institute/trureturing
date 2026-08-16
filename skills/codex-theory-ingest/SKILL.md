@@ -58,6 +58,7 @@ applicable:
 ```text
 step
 commit_sha
+resolved_base_sha
 pr_number
 pr_head_sha
 atom_id
@@ -65,21 +66,45 @@ atom_cas_ref
 command
 exit_code
 diagnostic
+command_log_path
 pr_rest_state
 pr_rest_merged
 pr_rest_merged_at
 required_checks
-git_status_short
+git_status_porcelain
+dirty_artifact_sha256
 auxiliary_branch
 ```
 
-The immutable identity fields are `commit_sha`, `pr_number`, `pr_head_sha`, and
-`atom_cas_ref`; capture each as soon as it exists. `command` is the exact command
-text, `exit_code` is its integer result, and `diagnostic` preserves machine output
-verbatim. A branch name is a mutable convenience only and never substitutes for
-an identity field. Preserve every canonical-writer output and the resulting tree
-exactly as found: do not hand-fix, delete, reset, or clean generated artifacts to
-make the failure look tidy.
+The immutable identity fields are `commit_sha`, `resolved_base_sha`, `pr_number`,
+`pr_head_sha`, `atom_cas_ref`, and `dirty_artifact_sha256`; capture each as soon
+as it exists. `command` is the exact command text, `exit_code` is its integer
+result, and `diagnostic` preserves machine output verbatim. A branch name is a
+mutable convenience only and never substitutes for an identity field. Preserve
+every canonical-writer output and the resulting tree exactly as found: do not
+hand-fix, delete, reset, or clean generated artifacts to make the failure look
+tidy.
+
+Before the first state-machine command, start one complete command log in a
+durable evidence directory outside the worktree. Append every exact command,
+its stdout and stderr verbatim, and its integer exit code. For any `open`
+terminal reached before the current lane's commit, `null` is forbidden for the
+four execution-state fields below:
+
+- `resolved_base_sha`: the resolved commit SHA used as that lane's base, or the
+  result of `git merge-base origin/dev HEAD` if no later command selected a base;
+- `git_status_porcelain`: the unedited output of
+  `git status --porcelain=v1 --untracked-files=all`;
+- `dirty_artifact_sha256`: one path and SHA-256 pair for every present dirty file
+  and every canonical-writer output, including untracked files, computed with
+  `shasum -a 256` or an equivalent byte-wise SHA-256 tool;
+- `command_log_path`: the absolute retained path of the complete command log.
+  Seal the log by naming the final file with its SHA-256 and making it read-only
+  before reporting the path; never keep appending to the sealed file.
+
+Together, the resolved base, raw porcelain state, per-artifact hashes, and sealed
+log identify the uncommitted execution state for another lane. A committed HEAD,
+PR head, branch name, or one atom CAS reference does not substitute for them.
 
 For both pull requests, resolve the PR number immediately after `make pr-open`,
 record the branch's current `commit_sha`, and make the first REST observation.
@@ -98,10 +123,12 @@ must be a valid JSON array whose entries contain all four requested string-value
 fields and whose bucket is one of `pass`, `fail`, `pending`, `skipping`, or
 `cancel`. Parse it before interpreting the checks exit code: any `fail` or
 `cancel` bucket is an immediate failed-check `open`, whatever the exit code. With
-no such bucket, exit 8 is a successful checks observation if and only if at least
-one bucket is `pending`; exit 0 is successful if and only if every bucket is
-`pass` or `skipping`. Every other exit/output/bucket combination is an observation
-failure and ends `open`.
+no such bucket, any `pending` bucket is a successful checks observation that
+continues waiting when the command exits 0; exit 8 with at least one `pending`
+bucket is also accepted for CLI-version compatibility. Only a payload whose every
+bucket is `pass` or `skipping`, with exit 0, is checks-ready. Malformed JSON, an
+unknown or ill-typed bucket, exit 8 without `pending`, or any other exit code is
+an observation failure and ends `open`.
 
 After both observations succeed, REST `merged == true` together with non-null
 `merged_at` is the only `MERGED` verdict; do not use GraphQL or
