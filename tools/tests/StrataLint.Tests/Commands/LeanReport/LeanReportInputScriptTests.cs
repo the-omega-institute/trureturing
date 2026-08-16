@@ -163,6 +163,36 @@ public sealed class LeanReportInputScriptTests
             Lines(modules));
     }
 
+    [Fact]
+    public void CacheClosureHashesSeparateConfigurationFromSources()
+    {
+        using var fixture = new LeanReportInputFixture();
+        var before = fixture.CacheIdentity();
+
+        fixture.Append("lean-toolchain", "mutation\n");
+        var configChanged = fixture.CacheIdentity();
+        Assert.NotEqual(before.Config, configChanged.Config);
+        Assert.Equal(before.Sources, configChanged.Sources);
+
+        fixture.Append("D5/Probe.lean", "mutation\n");
+        var sourceChanged = fixture.CacheIdentity();
+        Assert.Equal(configChanged.Config, sourceChanged.Config);
+        Assert.NotEqual(configChanged.Sources, sourceChanged.Sources);
+    }
+
+    [Fact]
+    public void AddingASecondSourceWithIdenticalContentsChangesTheSourcesHash()
+    {
+        using var fixture = new LeanReportInputFixture();
+        var before = fixture.CacheIdentity();
+
+        fixture.WriteSource("D5/Copy.lean", "theorem probe : True := by trivial\n");
+
+        var after = fixture.CacheIdentity();
+        Assert.Equal(before.Config, after.Config);
+        Assert.NotEqual(before.Sources, after.Sources);
+    }
+
     [Theory]
     [InlineData("source")]
     [InlineData("toolchain")]
@@ -315,6 +345,16 @@ public sealed class LeanReportInputScriptTests
             Assert.Equal(0, result.ExitCode);
             return Encoding.UTF8.GetString(result.StandardOutput)
                 .Split(' ', StringSplitOptions.RemoveEmptyEntries)[1];
+        }
+
+        internal (string Sources, string Config) CacheIdentity()
+        {
+            var result = Run("address");
+            Assert.Equal(0, result.ExitCode);
+            var parts = Encoding.UTF8.GetString(result.StandardOutput)
+                .Split(' ', StringSplitOptions.RemoveEmptyEntries);
+            Assert.Equal(4, parts.Length);
+            return (parts[2], parts[3].Trim());
         }
 
         internal void Append(string relativePath, string contents) => File.AppendAllText(

@@ -63,9 +63,15 @@ jobs:
           set -euo pipefail
           helper="$GITHUB_WORKSPACE/candidate/tools/scripts/report/lean-report-input.sh"
           test -x "$helper"
-          read -r address _ <<< "$("$helper" address --repository "$GITHUB_WORKSPACE/candidate")"
+          read -r address producer_sha256 sources_sha256 config_sha256 \
+            <<< "$("$helper" address --repository "$GITHUB_WORKSPACE/candidate")"
           [[ "$address" =~ ^[0-9a-f]{64}$ ]]
+          [[ "$producer_sha256" =~ ^[0-9a-f]{64}$ ]]
+          [[ "$sources_sha256" =~ ^[0-9a-f]{64}$ ]]
+          [[ "$config_sha256" =~ ^[0-9a-f]{64}$ ]]
           echo "address=$address" >> "$GITHUB_OUTPUT"
+          echo "sources_sha256=$sources_sha256" >> "$GITHUB_OUTPUT"
+          echo "config_sha256=$config_sha256" >> "$GITHUB_OUTPUT"
 
       - name: Restore candidate canonical Lean report
         id: lean-report-cache
@@ -100,16 +106,29 @@ jobs:
           "$HOME/.elan/bin/elan" default "$toolchain"
           "$HOME/.elan/bin/lake" --version
 
-      - name: Restore candidate Lean build artifacts on cache miss
+      - name: Restore candidate Lean dependency artifacts on cache miss
+        id: lake-deps-cache
         if: steps.lean-report-cache.outputs.cache-hit != 'true'
         uses: actions/cache/restore@v4
         with:
           path: |
-            candidate/.lake
+            candidate/.lake/packages
+            candidate/.lake/config
+            candidate/.lake/.stratalint-lean-cache-stamp.json
             ~/.cache/mathlib
-          key: ${{ runner.os }}-${{ runner.arch }}-lake-${{ hashFiles('candidate/lake-manifest.json') }}-${{ hashFiles('candidate/lean-toolchain') }}-${{ github.event.pull_request.head.sha }}
+          key: ${{ runner.os }}-${{ runner.arch }}-lake-deps-v1-${{ steps.lean-report-input.outputs.config_sha256 }}
           restore-keys: |
-            ${{ runner.os }}-${{ runner.arch }}-lake-${{ hashFiles('candidate/lake-manifest.json') }}-${{ hashFiles('candidate/lean-toolchain') }}-
+            ${{ runner.os }}-${{ runner.arch }}-lake-deps-v1-${{ steps.lean-report-input.outputs.config_sha256 }}
+
+      - name: Restore candidate Lean build artifacts on cache miss
+        id: lake-build-cache
+        if: steps.lean-report-cache.outputs.cache-hit != 'true'
+        uses: actions/cache/restore@v4
+        with:
+          path: candidate/.lake/build
+          key: ${{ runner.os }}-${{ runner.arch }}-lake-build-v1-${{ steps.lean-report-input.outputs.config_sha256 }}-${{ steps.lean-report-input.outputs.sources_sha256 }}
+          restore-keys: |
+            ${{ runner.os }}-${{ runner.arch }}-lake-build-v1-${{ steps.lean-report-input.outputs.config_sha256 }}-
 
       - name: Produce candidate canonical Lean report on cache miss
         if: steps.lean-report-cache.outputs.cache-hit != 'true'

@@ -369,10 +369,15 @@ jobs:
           set -euo pipefail
           helper="$GITHUB_WORKSPACE/candidate/tools/scripts/report/lean-report-input.sh"
           test -x "$helper"
-          read -r address _ _ \
+          read -r address producer_sha256 sources_sha256 config_sha256 \
             <<< "$("$helper" address --repository "$GITHUB_WORKSPACE/candidate")"
           [[ "$address" =~ ^[0-9a-f]{64}$ ]]
+          [[ "$producer_sha256" =~ ^[0-9a-f]{64}$ ]]
+          [[ "$sources_sha256" =~ ^[0-9a-f]{64}$ ]]
+          [[ "$config_sha256" =~ ^[0-9a-f]{64}$ ]]
           echo "address=$address" >> "$GITHUB_OUTPUT"
+          echo "sources_sha256=$sources_sha256" >> "$GITHUB_OUTPUT"
+          echo "config_sha256=$config_sha256" >> "$GITHUB_OUTPUT"
           # 报告地址的原像是 producer(MSBuild 求值的 Cli/Engine Compile 集 + 声明的
           # project/build/lock/global 输入 + inspector)、Lean 源(Trureturing.lean +
           # D5/**/*.lean)与 config(toolchain/lake-manifest/lakefile)三者的清单哈希。
@@ -454,17 +459,29 @@ jobs:
             --configuration Release \
             --output .judge-binaries/scribe
 
-      - name: Restore candidate Lean build artifacts
+      - name: Restore candidate Lean dependency artifacts
+        id: lake-deps-cache
         if: steps.report-reuse.outcome != 'success'
-
         uses: actions/cache/restore@v4
         with:
           path: |
-            candidate/.lake
+            candidate/.lake/packages
+            candidate/.lake/config
+            candidate/.lake/.stratalint-lean-cache-stamp.json
             ~/.cache/mathlib
-          key: ${{ runner.os }}-${{ runner.arch }}-lake-${{ hashFiles('candidate/lake-manifest.json') }}-${{ hashFiles('candidate/lean-toolchain') }}-${{ github.event.pull_request.head.sha || github.sha }}
+          key: ${{ runner.os }}-${{ runner.arch }}-lake-deps-v1-${{ steps.lean-report-input.outputs.config_sha256 }}
           restore-keys: |
-            ${{ runner.os }}-${{ runner.arch }}-lake-${{ hashFiles('candidate/lake-manifest.json') }}-${{ hashFiles('candidate/lean-toolchain') }}-
+            ${{ runner.os }}-${{ runner.arch }}-lake-deps-v1-${{ steps.lean-report-input.outputs.config_sha256 }}
+
+      - name: Restore candidate Lean project build artifacts
+        id: lake-build-cache
+        if: steps.report-reuse.outcome != 'success'
+        uses: actions/cache/restore@v4
+        with:
+          path: candidate/.lake/build
+          key: ${{ runner.os }}-${{ runner.arch }}-lake-build-v1-${{ steps.lean-report-input.outputs.config_sha256 }}-${{ steps.lean-report-input.outputs.sources_sha256 }}
+          restore-keys: |
+            ${{ runner.os }}-${{ runner.arch }}-lake-build-v1-${{ steps.lean-report-input.outputs.config_sha256 }}-
 
       - name: Produce source-bound canonical Lean reports
         if: steps.report-reuse.outcome != 'success'
@@ -523,8 +540,8 @@ jobs:
       # no writable scopes". The two saves below already carry this exact guard; this
       # one was missing it, so every PR attempted a write it could not perform. dev-push
       # runs do write it successfully (run 31389340892).
-      # 命中缓存时 elan/lake 目录未被恢复也未被填充,回存会写入空态并污染下一轮;
-      # 报告 key 也已存在,重写无意义。三个 save 一律只在真正跑过生产路径时执行。
+      # 命中报告缓存时 elan/lake 目录未被恢复也未被填充,回存会写入空态并污染下一轮;
+      # 分层 lake cache exact hit 时对应 key 也已存在。四个 save 只在真正跑过生产路径时执行。
       - name: Save candidate canonical Lean report (dev push only)
         if: success() && steps.report-reuse.outcome != 'success' && github.event_name == 'push' && github.ref == 'refs/heads/dev'
         uses: actions/cache/save@v4
@@ -541,8 +558,8 @@ jobs:
           if-no-files-found: warn
           retention-days: 7
 
-      # 命中缓存时 elan/lake 目录未被恢复也未被填充,回存会写入空态并污染下一轮;
-      # 报告 key 也已存在,重写无意义。三个 save 一律只在真正跑过生产路径时执行。
+      # 命中报告缓存时 elan/lake 目录未被恢复也未被填充,回存会写入空态并污染下一轮;
+      # 分层 lake cache exact hit 时对应 key 也已存在。四个 save 只在真正跑过生产路径时执行。
       - name: Save elan toolchains (dev push only)
         # 不挂在 success() 上:elan 装成功就该存。否则一次下载失败会让 job 红、缓存不写、
         # 下次继续 miss,故障自我延续。
@@ -552,18 +569,29 @@ jobs:
           path: ~/.elan
           key: ${{ runner.os }}-${{ runner.arch }}-elan-${{ hashFiles('candidate/lean-toolchain') }}
 
-      # 命中缓存时 elan/lake 目录未被恢复也未被填充,回存会写入空态并污染下一轮;
-      # 报告 key 也已存在,重写无意义。三个 save 一律只在真正跑过生产路径时执行。
-      - name: Save Lean build artifacts (dev push only)
-        if: success() && steps.report-reuse.outcome != 'success' && github.event_name == 'push' && github.ref == 'refs/heads/dev'
+      # 命中报告缓存时 elan/lake 目录未被恢复也未被填充,回存会写入空态并污染下一轮;
+      # 分层 lake cache exact hit 时对应 key 也已存在。四个 save 只在真正跑过生产路径时执行。
+      - name: Save Lean dependency artifacts (dev push only)
+        if: success() && steps.report-reuse.outcome != 'success' && steps.lake-deps-cache.outputs.cache-hit != 'true' && github.event_name == 'push' && github.ref == 'refs/heads/dev'
         continue-on-error: true
         timeout-minutes: 12
         uses: actions/cache/save@v4
         with:
           path: |
-            candidate/.lake
+            candidate/.lake/packages
+            candidate/.lake/config
+            candidate/.lake/.stratalint-lean-cache-stamp.json
             ~/.cache/mathlib
-          key: ${{ runner.os }}-${{ runner.arch }}-lake-${{ hashFiles('candidate/lake-manifest.json') }}-${{ hashFiles('candidate/lean-toolchain') }}-${{ github.event.pull_request.head.sha || github.sha }}
+          key: ${{ runner.os }}-${{ runner.arch }}-lake-deps-v1-${{ steps.lean-report-input.outputs.config_sha256 }}
+
+      - name: Save Lean project build artifacts (dev push only)
+        if: success() && steps.report-reuse.outcome != 'success' && steps.lake-build-cache.outputs.cache-hit != 'true' && github.event_name == 'push' && github.ref == 'refs/heads/dev'
+        continue-on-error: true
+        timeout-minutes: 12
+        uses: actions/cache/save@v4
+        with:
+          path: candidate/.lake/build
+          key: ${{ runner.os }}-${{ runner.arch }}-lake-build-v1-${{ steps.lean-report-input.outputs.config_sha256 }}-${{ steps.lean-report-input.outputs.sources_sha256 }}
 
   baseline-admission:
     name: Content-addressed dev baseline admission
