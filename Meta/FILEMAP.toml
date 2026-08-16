@@ -285,15 +285,6 @@ artifact_id = "none"
 runtime_disposition = "committed-ledger"
 
 [[files]]
-pattern = "Meta/Digestion/ticket-index.toml"
-kind = "data"
-produced_by = "none"
-consumed_by = ["BackfillInventoryLoader"]
-verified_by = ["BackfillInventoryLoader"]
-artifact_id = "none"
-runtime_disposition = "committed-source"
-
-[[files]]
 pattern = "Meta/FILEMAP.toml"
 kind = "data"
 produced_by = "none"

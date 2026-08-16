@@ -56,7 +56,6 @@ public sealed partial class MakeWorkflowTests
     [InlineData("Library/notes/probe.md")]
     [InlineData("Golden/Projection/probe.json")]
     [InlineData("Meta/BACKFILL.yaml")]
-    [InlineData("Meta/Digestion/ticket-index.toml")]
     [InlineData("Meta/Digestion/backfill/probe.yaml")]
     [InlineData("Golden/values-kernels.toml")]
     [InlineData("Evidence/D5/values.json")]

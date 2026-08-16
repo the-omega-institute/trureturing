@@ -25,8 +25,7 @@ public sealed class DefaultTheorySourceTests
         "    path: " + DeclaredPath,
         "    atomizer: " + AtomizerRegistry.GenericId,
         "    entries:",
-        entry,
-        "ticket_index: []");
+        entry);
 
     private static string Entry(DigestionAtom atom, string casRef) => string.Join(
         "\n",
