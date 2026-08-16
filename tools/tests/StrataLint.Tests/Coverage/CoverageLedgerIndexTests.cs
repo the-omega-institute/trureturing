@@ -73,7 +73,7 @@ public sealed class CoverageLedgerIndexTests
     }
 
     [Fact]
-    public void EnvironmentRecoordinateReplacesTheActiveNodeIdentityWithoutChangingCoveragePath()
+    public void SupersedeReplacesTheActiveNodeIdentityWithoutChangingCoveragePath()
     {
         const string oldNode = "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
         const string newNode = "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb";
@@ -81,9 +81,10 @@ public sealed class CoverageLedgerIndexTests
         var bytes = Encoding.UTF8.GetBytes(
             "{\"event_type\":\"Genesis\",\"payload\":{}}\n"
             + Freeze(oldNode, path)
-            + "{\"event_type\":\"EnvironmentRecoordinate\",\"payload\":{"
-            + "\"new_frozen_node_id\":\"" + newNode + "\","
-            + "\"old_frozen_node_id\":\"" + oldNode + "\"}}\n"
+            + "{\"event_type\":\"Supersede\",\"payload\":{"
+            + "\"case_id\":\"active-frozen/test\","
+            + "\"frozen_node_id\":\"" + newNode + "\","
+            + "\"input\":{\"descriptor_selector\":\"" + path + "\"}}}\n"
             + "{\"event_type\":\"Revoke\",\"payload\":{\"affected_frozen_node_ids\":[\""
             + newNode + "\"]}}\n");
         var syntax = Assert.IsType<DagLedgerLoadOutcome.Loaded>(DagLedgerLoader.Load(bytes)).Syntax;

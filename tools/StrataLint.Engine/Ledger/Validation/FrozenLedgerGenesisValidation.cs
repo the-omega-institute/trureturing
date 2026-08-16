@@ -88,7 +88,7 @@ public static partial class FrozenLedger
                 {
                     throw new FormatException("Genesis may occur only once at sequence zero.");
                 }
-                else if (eventType is "Reattest" or EnvironmentRecoordinateEventType or "Revoke")
+                else if (eventType is "Reattest" or SupersedeEventType or "Revoke")
                 {
                     throw new FormatException($"{eventType} requires candidate-prefix validation and cannot occur in Genesis.");
                 }
@@ -140,6 +140,7 @@ public static partial class FrozenLedger
                 ComputeFrozenGraphRoot(catalog.ClosedNodes),
                 activeEntries,
                 caseIds.ToImmutableHashSet(StringComparer.Ordinal),
+                ImmutableHashSet<FrozenNodeId>.Empty,
                 ImmutableHashSet<FrozenNodeId>.Empty));
         }
         catch (Exception exception) when (exception is FormatException or JsonException or InvalidOperationException)

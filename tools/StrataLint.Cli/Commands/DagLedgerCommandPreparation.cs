@@ -68,7 +68,7 @@ internal static class DagLedgerCommandPreparation
             candidate.Snapshot);
     }
 
-    private static DagLedgerCandidateMaterial PrepareCandidate(
+    internal static DagLedgerCandidateMaterial PrepareCandidate(
         string repositoryRoot,
         IRepositoryGateway repository,
         ILeanReportSource leanReportSource)
@@ -331,12 +331,12 @@ internal static class DagLedgerCommandPreparation
                 "Freeze" => DependenciesPresent(item.Payload, "prerequisite_frozen_node_ids", identities),
                 "Reattest" => item.Payload.TryGetProperty("previous_attestation_event_hash", out var previous)
                     && hashes.Contains(previous.GetString()!),
-                FrozenLedger.EnvironmentRecoordinateEventType =>
+                FrozenLedger.SupersedeEventType =>
                     item.Payload.TryGetProperty("previous_attestation_event_hash", out var previous)
                     && hashes.Contains(previous.GetString()!)
                     && DependenciesPresent(
                         item.Payload,
-                        "new_prerequisite_frozen_node_ids",
+                        "prerequisite_frozen_node_ids",
                         identities),
                 "Revoke" => DependenciesPresent(item.Payload, "root_frozen_node_ids", identities),
                 _ => true,
@@ -350,6 +350,12 @@ internal static class DagLedgerCommandPreparation
             remaining.RemoveAt(index);
             result.Add(item);
             identities.Add(item.Identity);
+            if (item.EventType == FrozenLedger.SupersedeEventType
+                && item.Payload.TryGetProperty("frozen_node_id", out var frozenNodeId)
+                && frozenNodeId.ValueKind == JsonValueKind.String)
+            {
+                identities.Add(frozenNodeId.GetString()!);
+            }
             hashes.Add(item.EventHash);
         }
 
