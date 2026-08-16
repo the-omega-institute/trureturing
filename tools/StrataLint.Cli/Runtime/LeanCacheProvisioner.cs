@@ -7,7 +7,8 @@ internal sealed record LeanCacheProvisionResult(
     string Strategy,
     string Method,
     string? Warning,
-    MathlibCachePruneOutcome PruneOutcome);
+    MathlibCachePruneOutcome PruneOutcome,
+    ClonefileReceipt Clonefile);
 
 internal sealed record MathlibCachePruneOutcome(
     string Scope,
@@ -40,36 +41,6 @@ internal sealed class LeanCachePublisher : ILeanCachePublisher
     }
 }
 
-internal class LeanCacheProvisionException : InvalidOperationException
-{
-    internal LeanCacheProvisionException(
-        string message,
-        MathlibCachePruneOutcome pruneOutcome,
-        Exception? innerException = null)
-        : base(message, innerException) => PruneOutcome = pruneOutcome;
-
-    internal MathlibCachePruneOutcome PruneOutcome { get; }
-}
-
-internal sealed class MathlibOleanCompletenessException : LeanCacheProvisionException
-{
-    internal MathlibOleanCompletenessException(
-        int? missingOleanFiles,
-        IReadOnlyList<string> missingOleanSamples,
-        string message,
-        MathlibCachePruneOutcome? pruneOutcome = null,
-        Exception? innerException = null)
-        : base(message, pruneOutcome ?? MathlibCachePruneOutcome.NotRun, innerException)
-    {
-        MissingOleanFiles = missingOleanFiles;
-        MissingOleanSamples = missingOleanSamples;
-    }
-
-    internal int? MissingOleanFiles { get; }
-
-    internal IReadOnlyList<string> MissingOleanSamples { get; }
-}
-
 internal static class LeanCacheProvisioner
 {
     private enum CacheTreeOwnership
@@ -80,6 +51,9 @@ internal static class LeanCacheProvisioner
 
     internal const int DefaultProvisionBudgetSeconds = 1800;
     private const int MissingOleanSampleLimit = 5;
+    private static readonly TimeSpan[] CloneRetryBackoffs =
+        [TimeSpan.FromMilliseconds(250), TimeSpan.FromMilliseconds(500),
+         TimeSpan.FromMilliseconds(1000), TimeSpan.FromMilliseconds(2000)];
     private static readonly UTF8Encoding StrictUtf8 = new(false, true);
 
     // Cold provisioning spans package clones plus olean download and extraction. Five minutes
@@ -123,7 +97,8 @@ internal static class LeanCacheProvisioner
         string lakeExecutable,
         IWorktreeProcessRunner runner,
         LeanCacheWriterGuard writerGuard,
-        IDirectoryCloner cloner) =>
+        IDirectoryCloner cloner,
+        Action<TimeSpan>? wait = null) =>
         Provision(
             selection,
             worktreeRoot,
@@ -132,7 +107,9 @@ internal static class LeanCacheProvisioner
             runner,
             writerGuard,
             cloner,
-            LeanCachePublisher.Instance);
+            LeanCachePublisher.Instance,
+            RemovePartial,
+            wait);
 
     internal static LeanCacheProvisionResult Provision(
         LeanCacheDonorSelection selection,
@@ -163,11 +140,13 @@ internal static class LeanCacheProvisioner
         LeanCacheWriterGuard writerGuard,
         IDirectoryCloner cloner,
         ILeanCachePublisher publisher,
-        Action<string> removePartial)
+        Action<string> removePartial,
+        Action<TimeSpan>? wait = null)
     {
         ArgumentNullException.ThrowIfNull(cloner);
         ArgumentNullException.ThrowIfNull(publisher);
         ArgumentNullException.ThrowIfNull(removePartial);
+        wait ??= Thread.Sleep;
         ArgumentNullException.ThrowIfNull(writerGuard);
         writerGuard.RequireOwnershipOf(Path.Combine(worktreeRoot, ".lake"));
         if (selection.Donor is null)
@@ -175,7 +154,14 @@ internal static class LeanCacheProvisioner
             var notice = Join(
                 selection.Notice,
                 "refusing to clone .lake and running lake exe cache get");
-            return Fetch(worktreeRoot, pins, lakeExecutable, runner, notice, removePartial);
+            return Fetch(
+                worktreeRoot,
+                pins,
+                lakeExecutable,
+                runner,
+                notice,
+                removePartial,
+                ClonefileReceipt.NotRun);
         }
 
         var source = Path.Combine(selection.Donor, ".lake");
@@ -183,6 +169,7 @@ internal static class LeanCacheProvisioner
         EnsureAbsent(target);
         var staged = target + ".stage-" + Path.GetRandomFileName();
         string? cloneWarning;
+        ClonefileReceipt cloneReceipt;
         var cloned = TryClone(
             selection,
             source,
@@ -193,6 +180,9 @@ internal static class LeanCacheProvisioner
             runner,
             cloner,
             publisher,
+            removePartial,
+            wait,
+            out cloneReceipt,
             out cloneWarning);
         if (cloned is not null) return cloned;
 
@@ -202,7 +192,8 @@ internal static class LeanCacheProvisioner
             lakeExecutable,
             runner,
             Join(selection.Notice, cloneWarning),
-            removePartial);
+            removePartial,
+            cloneReceipt);
     }
 
     internal static LeanCacheProvisionResult ReproduceExisting(
@@ -241,7 +232,8 @@ internal static class LeanCacheProvisioner
             "cache-get",
             "cache-get",
             "ran the current-pin producer in place; the pin-identity stamp was published only after producer and live completeness verification succeeded",
-            pruneOutcome);
+            pruneOutcome,
+            ClonefileReceipt.NotRun);
     }
 
     private static LeanCacheProvisionResult? TryClone(
@@ -254,11 +246,15 @@ internal static class LeanCacheProvisioner
         IWorktreeProcessRunner runner,
         IDirectoryCloner cloner,
         ILeanCachePublisher publisher,
+        Action<string> removePartial,
+        Action<TimeSpan> wait,
+        out ClonefileReceipt cloneReceipt,
         out string? warning)
     {
         using var guard = selection.TakeGuard() ?? LeanCacheGuard.TryAcquireShared(source);
         if (guard is null)
         {
+            cloneReceipt = ClonefileReceipt.NotRun;
             warning = "donor cache guard is busy";
             return null;
         }
@@ -266,6 +262,7 @@ internal static class LeanCacheProvisioner
         if (!LeanCacheStamp.Matches(source, pins, out var stampReason)
             || LeanCacheBusyProbe.IsBusy(selection.Donor!, runner))
         {
+            cloneReceipt = ClonefileReceipt.NotRun;
             warning = stampReason ?? "donor worktree is busy";
             return null;
         }
@@ -274,18 +271,15 @@ internal static class LeanCacheProvisioner
 
         // One clonefile(2) call clones the entire hierarchy inside the kernel. A per-file walk
         // over the same tree pays a system call per entry and is roughly 60x slower on a warm .lake.
-        string? clonefileError;
-        try
-        {
-            clonefileError = cloner.Clone(source, staged);
-        }
-        catch (Exception exception)
-        {
-            RemovePartial(staged);
-            clonefileError = exception.Message;
-        }
+        var clone = CloneWithRetry(
+            source,
+            staged,
+            cloner,
+            removePartial,
+            wait,
+            out cloneReceipt);
 
-        if (clonefileError is null)
+        if (clone.Succeeded)
         {
             return PublishStaged(
                 source,
@@ -297,10 +291,21 @@ internal static class LeanCacheProvisioner
                 publisher,
                 "clonefile",
                 null,
+                cloneReceipt,
+                removePartial,
                 out warning);
         }
 
-        RemovePartial(staged);
+        var exit = new CloneReceiptExit(
+            cloneReceipt,
+            $"clonefile failed ({clone.Message})");
+        if (!exit.TryCleanup(staged, removePartial, "staging cleanup"))
+        {
+            exit.AppendWarning("ordinary copy skipped");
+            cloneReceipt = exit.Receipt;
+            warning = exit.Warning;
+            return null;
+        }
         ProcessOutput copy;
         try
         {
@@ -312,8 +317,10 @@ internal static class LeanCacheProvisioner
         }
         catch (Exception exception)
         {
-            RemovePartial(staged);
-            warning = $"clonefile failed ({clonefileError}); ordinary copy failed ({exception.Message})";
+            exit.AppendWarning($"ordinary copy failed ({exception.Message})");
+            exit.TryCleanup(staged, removePartial, "staging cleanup");
+            cloneReceipt = exit.Receipt;
+            warning = exit.Warning;
             return null;
         }
 
@@ -328,14 +335,66 @@ internal static class LeanCacheProvisioner
                 runner,
                 publisher,
                 "copy",
-                $"clonefile failed ({clonefileError}); used slow ordinary copy",
+                Join(exit.Warning, "used slow ordinary copy"),
+                exit.Receipt,
+                removePartial,
                 out warning);
         }
 
         var copyError = Error(copy, "cp -R failed");
-        warning = $"clonefile failed ({clonefileError}); ordinary copy failed ({copyError})";
-        RemovePartial(staged);
+        exit.AppendWarning($"ordinary copy failed ({copyError})");
+        exit.TryCleanup(staged, removePartial, "staging cleanup");
+        cloneReceipt = exit.Receipt;
+        warning = exit.Warning;
         return null;
+    }
+
+    private static DirectoryCloneResult CloneWithRetry(
+        string source,
+        string staged,
+        IDirectoryCloner cloner,
+        Action<string> removePartial,
+        Action<TimeSpan> wait,
+        out ClonefileReceipt receipt)
+    {
+        var attempts = 0;
+        var errnos = new List<int>();
+        for (var index = 0; ; index++)
+        {
+            DirectoryCloneResult result;
+            try
+            {
+                result = cloner.Clone(source, staged);
+            }
+            catch (Exception exception)
+            {
+                receipt = new ClonefileReceipt(attempts, errnos.ToArray(), null);
+                return new DirectoryCloneResult(false, false, null, 0, exception.Message);
+            }
+
+            attempts += result.Attempts;
+            if (result.Errno is int errno) errnos.Add(errno);
+            if (result.Succeeded || !result.Retryable || index == CloneRetryBackoffs.Length)
+            {
+                receipt = new ClonefileReceipt(attempts, errnos.ToArray(), null);
+                return result;
+            }
+
+            try
+            {
+                removePartial(staged);
+            }
+            catch (Exception exception)
+            {
+                receipt = new ClonefileReceipt(attempts, errnos.ToArray(), exception.Message);
+                return result with
+                {
+                    Retryable = false,
+                    Message = $"{result.Message}; retry cleanup failed ({exception.Message})",
+                };
+            }
+            wait(CloneRetryBackoffs[index]);
+        }
     }
 
     private static LeanCacheProvisionResult? PublishStaged(
@@ -348,6 +407,8 @@ internal static class LeanCacheProvisioner
         ILeanCachePublisher publisher,
         string method,
         string? warning,
+        ClonefileReceipt cloneReceipt,
+        Action<string> removePartial,
         out string? finalWarning)
     {
         try
@@ -358,18 +419,19 @@ internal static class LeanCacheProvisioner
             if (!LeanCacheStamp.Matches(source, pins, out var stampReason)
                 || LeanCacheBusyProbe.IsBusy(donorRoot, runner))
             {
-                RemovePartial(staged);
+                removePartial(staged);
                 finalWarning = stampReason ?? "donor became busy after staging; discarded staging copy";
                 return null;
             }
 
             publisher.Publish(staged, target, pins);
         }
-        catch
+        catch (Exception exception)
         {
-            RemovePartial(staged);
-            RemovePartial(target);
-            throw;
+            var exit = new CloneReceiptExit(cloneReceipt, warning);
+            exit.TryCleanup(staged, removePartial, "staging cleanup");
+            exit.TryCleanup(target, removePartial, "published cache cleanup");
+            throw exit.Wrap(exception);
         }
 
         finalWarning = warning;
@@ -377,7 +439,8 @@ internal static class LeanCacheProvisioner
             "cloned",
             method,
             warning,
-            MathlibCachePruneOutcome.NotRun);
+            MathlibCachePruneOutcome.NotRun,
+            cloneReceipt);
     }
 
     private static LeanCacheProvisionResult Fetch(
@@ -386,7 +449,8 @@ internal static class LeanCacheProvisioner
         string lakeExecutable,
         IWorktreeProcessRunner runner,
         string? warning,
-        Action<string> removePartial)
+        Action<string> removePartial,
+        ClonefileReceipt cloneReceipt)
     {
         try
         {
@@ -402,7 +466,8 @@ internal static class LeanCacheProvisioner
                 "cache-get",
                 "cache-get",
                 Join(warning, "used lake exe cache get then lake exe cache clean"),
-                pruneOutcome);
+                pruneOutcome,
+                cloneReceipt);
         }
         catch (MathlibOleanCompletenessException exception)
         {
@@ -411,21 +476,24 @@ internal static class LeanCacheProvisioner
                 exception.MissingOleanSamples,
                 Join(warning, $"cache fallback failed ({exception.Message})"),
                 exception.PruneOutcome,
-                exception);
+                exception,
+                cloneReceipt);
         }
         catch (LeanCacheProvisionException exception)
         {
             throw new LeanCacheProvisionException(
                 Join(warning, $"cache fallback failed ({exception.Message})"),
                 exception.PruneOutcome,
-                exception);
+                exception,
+                cloneReceipt);
         }
         catch (Exception exception)
         {
             throw new LeanCacheProvisionException(
                 Join(warning, $"cache fallback failed ({exception.Message})"),
                 MathlibCachePruneOutcome.NotRun,
-                exception);
+                exception,
+                cloneReceipt);
         }
     }
 
