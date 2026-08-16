@@ -32,17 +32,41 @@ internal enum WorthSelectionOrder
     CompleteWorthArgmax,
 }
 
+internal enum MissionNorthStarTarget
+{
+    TwoHearts,
+}
+
+internal enum MissionNorthStarPolicy
+{
+    AspirationalNotDirect,
+}
+
+internal enum MissionValue
+{
+    UnderstandingOverQuantity,
+    HonestyOverSpeed,
+    NegativeKnowledgeEqualsPositiveResults,
+}
+
+internal enum MissionProhibition
+{
+    SorryCountOptimization,
+    TrivialLemmaAccumulation,
+    CitationChasing,
+}
+
 internal sealed record MissionSelectionPolicy(
     WorthSelectionOrder OrderKind,
     string TieBreak);
 
 internal sealed record MissionPolicy(
-    string NorthStarTarget,
-    string NorthStarPolicy,
-    ImmutableArray<string> ValueOrder,
+    MissionNorthStarTarget NorthStarTarget,
+    MissionNorthStarPolicy NorthStarPolicy,
+    ImmutableArray<MissionValue> ValueOrder,
     WorthVector WorthVector,
     MissionSelectionPolicy Selection,
-    ImmutableArray<string> Prohibitions);
+    ImmutableArray<MissionProhibition> Prohibitions);
 
 internal enum MissionLoadErrorCode
 {
@@ -74,6 +98,8 @@ internal static class MissionFileLoader
     private const string BootstrapOrder = "bootstrap eligibility order";
     private const string CompleteArgmax = "complete worth argmax";
     private const string CanonicalTieBreak = "canonical candidate id";
+    private const string CanonicalNorthStarTarget = "two hearts";
+    private const string CanonicalNorthStarPolicy = "aspirational-not-direct";
 
     private static readonly MarkdownPipeline MarkdownPipeline = new MarkdownPipelineBuilder()
         .UsePreciseSourceLocation()
@@ -85,6 +111,20 @@ internal static class MissionFileLoader
         ("dependency_readiness", WorthFactorId.DependencyReadiness),
         ("structural_realization", WorthFactorId.StructuralRealization),
         ("receipt_potential", WorthFactorId.ReceiptPotential),
+    ];
+
+    private static readonly ImmutableArray<(string Name, MissionValue Value)> CanonicalValueOrder =
+    [
+        ("understanding-over-quantity", MissionValue.UnderstandingOverQuantity),
+        ("honesty-over-speed", MissionValue.HonestyOverSpeed),
+        ("negative-knowledge-equals-positive-results", MissionValue.NegativeKnowledgeEqualsPositiveResults),
+    ];
+
+    private static readonly ImmutableArray<(string Name, MissionProhibition Value)> CanonicalProhibitions =
+    [
+        ("sorry-count optimization", MissionProhibition.SorryCountOptimization),
+        ("trivial-lemma accumulation", MissionProhibition.TrivialLemmaAccumulation),
+        ("citation chasing", MissionProhibition.CitationChasing),
     ];
 
     internal static MissionLoadOutcome Load(RepositorySnapshot snapshot)
@@ -173,14 +213,18 @@ internal static class MissionFileLoader
                 policy = policy.NorthStarPolicy,
                 target = policy.NorthStarTarget,
             },
-            prohibitions = policy.Prohibitions,
+            prohibitions = policy.Prohibitions
+                .Select(ProhibitionName)
+                .ToImmutableArray(),
             schema = Schema,
             selection = new
             {
                 order_kind = SelectionName(policy.Selection.OrderKind),
                 tie_break = policy.Selection.TieBreak,
             },
-            value_order = policy.ValueOrder,
+            value_order = policy.ValueOrder
+                .Select(ValueName)
+                .ToImmutableArray(),
             worth_vector = factors,
         });
         return StructuredCanonicalWriter.WriteJson(material).ToArray();
@@ -224,30 +268,53 @@ internal static class MissionFileLoader
             MissionLoadErrorCode.InvalidSchema,
             "north_star");
 
-        var valueOrder = RequireStringArray(
+        var northStarTarget = ParseNorthStarTarget(northStar);
+        var northStarPolicy = ParseNorthStarPolicy(northStar);
+        var valueOrder = RequireCanonicalArray(
             RequireProperty(root, "value_order", MissionLoadErrorCode.InvalidSchema),
             MissionLoadErrorCode.InvalidSchema,
-            "value_order");
-        var prohibitions = RequireStringArray(
+            "value_order",
+            CanonicalValueOrder);
+        var prohibitions = RequireCanonicalArray(
             RequireProperty(root, "prohibitions", MissionLoadErrorCode.InvalidSchema),
             MissionLoadErrorCode.InvalidSchema,
-            "prohibitions");
+            "prohibitions",
+            CanonicalProhibitions);
         var worthVector = ParseWorthVector(RequireProperty(
             root,
             "worth_vector",
             MissionLoadErrorCode.InvalidWorthVector));
+        RejectP0MeasuredFactors(worthVector);
         var selection = ParseSelection(
             RequireProperty(root, "selection", MissionLoadErrorCode.InvalidSelection),
             worthVector);
 
         return new MissionPolicy(
-            RequireString(northStar, "target", MissionLoadErrorCode.InvalidSchema),
-            RequireString(northStar, "policy", MissionLoadErrorCode.InvalidSchema),
+            northStarTarget,
+            northStarPolicy,
             valueOrder,
             worthVector,
             selection,
             prohibitions);
     }
+
+    private static MissionNorthStarTarget ParseNorthStarTarget(JsonElement northStar) =>
+        RequireString(northStar, "target", MissionLoadErrorCode.InvalidSchema) switch
+        {
+            CanonicalNorthStarTarget => MissionNorthStarTarget.TwoHearts,
+            _ => throw Error(
+                MissionLoadErrorCode.InvalidSchema,
+                $"north_star.target must be {CanonicalNorthStarTarget}"),
+        };
+
+    private static MissionNorthStarPolicy ParseNorthStarPolicy(JsonElement northStar) =>
+        RequireString(northStar, "policy", MissionLoadErrorCode.InvalidSchema) switch
+        {
+            CanonicalNorthStarPolicy => MissionNorthStarPolicy.AspirationalNotDirect,
+            _ => throw Error(
+                MissionLoadErrorCode.InvalidSchema,
+                $"north_star.policy must be {CanonicalNorthStarPolicy}"),
+        };
 
     private static WorthVector ParseWorthVector(JsonElement value)
     {
@@ -315,6 +382,18 @@ internal static class MissionFileLoader
         throw Error(
             MissionLoadErrorCode.InvalidWorthState,
             $"worth_vector.{factorName}.state must be open or measured");
+    }
+
+    private static void RejectP0MeasuredFactors(WorthVector vector)
+    {
+        foreach (var factor in vector.Factors
+                     .Where(static factor => factor.State is WorthFactorState.Measured))
+        {
+            throw Error(
+                MissionLoadErrorCode.InvalidWorthState,
+                $"worth_vector.{FactorName(factor.Id)} measured is fail-closed in P0 "
+                + $"until receipt contract {MeasurementCaseId(factor.Id)} is implemented");
+        }
     }
 
     private static MissionSelectionPolicy ParseSelection(JsonElement value, WorthVector vector)
@@ -471,6 +550,26 @@ internal static class MissionFileLoader
         return result.ToImmutable();
     }
 
+    private static ImmutableArray<T> RequireCanonicalArray<T>(
+        JsonElement value,
+        MissionLoadErrorCode code,
+        string name,
+        ImmutableArray<(string Name, T Value)> canonical)
+        where T : struct, Enum
+    {
+        var actual = RequireStringArray(value, code, name);
+        if (!actual.SequenceEqual(
+                canonical.Select(static item => item.Name),
+                StringComparer.Ordinal))
+        {
+            throw Error(
+                code,
+                $"{name} must exactly match the canonical ordered values");
+        }
+
+        return canonical.Select(static item => item.Value).ToImmutableArray();
+    }
+
     private static void RequireExactKeys(
         JsonElement value,
         IEnumerable<string> expected,
@@ -494,6 +593,32 @@ internal static class MissionFileLoader
         WorthFactorId.StructuralRealization => "structural_realization",
         WorthFactorId.ReceiptPotential => "receipt_potential",
         _ => throw new InvalidOperationException("Unknown worth factor."),
+    };
+
+    private static string MeasurementCaseId(WorthFactorId factor) => factor switch
+    {
+        WorthFactorId.Novelty => "D5-T0039",
+        WorthFactorId.DependencyReadiness => "D5-T0040",
+        WorthFactorId.StructuralRealization => "D5-T0041",
+        WorthFactorId.ReceiptPotential => "D5-T0042",
+        _ => throw new InvalidOperationException("Unknown worth factor."),
+    };
+
+    private static string ValueName(MissionValue value) => value switch
+    {
+        MissionValue.UnderstandingOverQuantity => "understanding-over-quantity",
+        MissionValue.HonestyOverSpeed => "honesty-over-speed",
+        MissionValue.NegativeKnowledgeEqualsPositiveResults =>
+            "negative-knowledge-equals-positive-results",
+        _ => throw new InvalidOperationException("Unknown mission value."),
+    };
+
+    private static string ProhibitionName(MissionProhibition prohibition) => prohibition switch
+    {
+        MissionProhibition.SorryCountOptimization => "sorry-count optimization",
+        MissionProhibition.TrivialLemmaAccumulation => "trivial-lemma accumulation",
+        MissionProhibition.CitationChasing => "citation chasing",
+        _ => throw new InvalidOperationException("Unknown mission prohibition."),
     };
 
     private static string SelectionName(WorthSelectionOrder order) => order switch

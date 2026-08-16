@@ -157,9 +157,60 @@ public sealed class MissionFileLoaderTests
         Assert.Equal(MissionLoadErrorCode.InvalidSelection, invalid.Error.Code);
     }
 
-    [Fact]
-    public void RepositoryMissionLoadsFourRegisteredOpenFactors()
+    public static TheoryData<string> RepositoryMissionCases => new()
     {
+        "canonical",
+        "measured:novelty:D5-T0039",
+        "measured:dependency_readiness:D5-T0040",
+        "measured:structural_realization:D5-T0041",
+        "measured:receipt_potential:D5-T0042",
+        "measured:all",
+        "north_star:target",
+        "north_star:policy",
+        "value_order:unknown",
+        "value_order:missing",
+        "value_order:duplicate",
+        "value_order:reordered",
+        "prohibitions:unknown",
+        "prohibitions:missing",
+        "prohibitions:duplicate",
+        "prohibitions:reordered",
+        "format:bom",
+        "format:crlf",
+        "format:missing-final-lf",
+        "format:invalid-utf8",
+        "schema:root:unknown",
+        "schema:root:duplicate",
+        "schema:root:missing",
+        "schema:north_star:unknown",
+        "schema:north_star:duplicate",
+        "schema:north_star:missing",
+        "schema:selection:unknown",
+        "schema:selection:duplicate",
+        "schema:selection:missing",
+        "tie_break",
+        "ticket:missing-task-block",
+    };
+
+    [Theory]
+    [MemberData(nameof(RepositoryMissionCases))]
+    public void RepositoryMissionContractIsTypedAndFailClosed(string scenario)
+    {
+        if (scenario != "canonical")
+        {
+            var fixture = RepositoryScenario(scenario);
+            var invalid = Assert.IsType<MissionLoadOutcome.Invalid>(
+                LoadRepository(fixture.Mission, fixture.Target));
+
+            Assert.Equal(fixture.ErrorCode, invalid.Error.Code);
+            if (fixture.MessageFragment is not null)
+            {
+                Assert.Contains(fixture.MessageFragment, invalid.Error.Message, StringComparison.Ordinal);
+            }
+
+            return;
+        }
+
         var root = TestRepositoryLayout.FindRoot();
         var loaded = Assert.IsType<MissionLoadOutcome.Loaded>(
             MissionFileLoader.LoadRepository(root));
@@ -168,6 +219,255 @@ public sealed class MissionFileLoaderTests
         Assert.All(
             loaded.Policy.WorthVector.Factors,
             factor => Assert.IsType<WorthFactorState.Open>(factor.State));
+        Assert.Equal("MissionNorthStarTarget", loaded.Policy.NorthStarTarget.GetType().Name);
+        Assert.Equal("TwoHearts", loaded.Policy.NorthStarTarget.ToString());
+        Assert.Equal("MissionNorthStarPolicy", loaded.Policy.NorthStarPolicy.GetType().Name);
+        Assert.Equal("AspirationalNotDirect", loaded.Policy.NorthStarPolicy.ToString());
+        Assert.Equal(
+            ["UnderstandingOverQuantity", "HonestyOverSpeed", "NegativeKnowledgeEqualsPositiveResults"],
+            loaded.Policy.ValueOrder.Select(static value => value.ToString()));
+        Assert.All(loaded.Policy.ValueOrder, static value => Assert.IsNotType<string>((object)value));
+        Assert.Equal(
+            ["SorryCountOptimization", "TrivialLemmaAccumulation", "CitationChasing"],
+            loaded.Policy.Prohibitions.Select(static value => value.ToString()));
+        Assert.All(loaded.Policy.Prohibitions, static value => Assert.IsNotType<string>((object)value));
+    }
+
+    private static RepositoryCase RepositoryScenario(string scenario)
+    {
+        if (scenario.StartsWith("measured:", StringComparison.Ordinal)
+            && scenario is not "measured:all")
+        {
+            var parts = scenario.Split(':');
+            return Case(
+                WithMeasuredFactor(ValidMission, parts[1], parts[2]),
+                MissionLoadErrorCode.InvalidWorthState,
+                parts[2]);
+        }
+
+        if (scenario.StartsWith("value_order:", StringComparison.Ordinal))
+        {
+            return ChangedCase(
+                MutateValueOrder(scenario["value_order:".Length..]),
+                MissionLoadErrorCode.InvalidSchema);
+        }
+
+        if (scenario.StartsWith("prohibitions:", StringComparison.Ordinal))
+        {
+            return ChangedCase(
+                MutateProhibitions(scenario["prohibitions:".Length..]),
+                MissionLoadErrorCode.InvalidSchema);
+        }
+
+        if (scenario.StartsWith("schema:", StringComparison.Ordinal))
+        {
+            var parts = scenario.Split(':');
+            return ChangedCase(
+                MutateObjectLayer(parts[1], parts[2]),
+                parts[1] == "selection"
+                    ? MissionLoadErrorCode.InvalidSelection
+                    : MissionLoadErrorCode.InvalidSchema);
+        }
+
+        return scenario switch
+        {
+            "measured:all" => Case(
+                AllMeasuredMission(),
+                MissionLoadErrorCode.InvalidWorthState,
+                "D5-T0039"),
+            "north_star:target" => ChangedCase(
+                ValidMission.Replace("\"two hearts\"", "\"three hearts\"", StringComparison.Ordinal),
+                MissionLoadErrorCode.InvalidSchema),
+            "north_star:policy" => ChangedCase(
+                ValidMission.Replace(
+                    "\"aspirational-not-direct\"",
+                    "\"direct\"",
+                    StringComparison.Ordinal),
+                MissionLoadErrorCode.InvalidSchema),
+            "format:bom" => BytesCase(
+                Encoding.UTF8.GetPreamble().Concat(Encoding.UTF8.GetBytes(ValidMission)).ToArray(),
+                MissionLoadErrorCode.InvalidFormat),
+            "format:crlf" => BytesCase(
+                Encoding.UTF8.GetBytes(ValidMission.Replace("\n", "\r\n", StringComparison.Ordinal)),
+                MissionLoadErrorCode.InvalidFormat),
+            "format:missing-final-lf" => BytesCase(
+                Encoding.UTF8.GetBytes(ValidMission.TrimEnd('\n')),
+                MissionLoadErrorCode.InvalidFormat),
+            "format:invalid-utf8" => BytesCase(
+                Encoding.UTF8.GetBytes(ValidMission)[..^1].Append((byte)0xff).ToArray(),
+                MissionLoadErrorCode.InvalidFormat),
+            "tie_break" => ChangedCase(
+                ValidMission.Replace(
+                    "canonical candidate id",
+                    "display order",
+                    StringComparison.Ordinal),
+                MissionLoadErrorCode.InvalidSelection),
+            "ticket:missing-task-block" => Case(
+                ValidMission,
+                MissionLoadErrorCode.DanglingCaseReference,
+                "D5-T0039",
+                GovernanceDeferrals.Replace(
+                    "/-- TASK D5-T0039 | difficulty:3 -/",
+                    "/-- receipt contract is not a TASK block -/",
+                    StringComparison.Ordinal)),
+            _ => throw new ArgumentOutOfRangeException(nameof(scenario), scenario, null),
+        };
+    }
+
+    private static RepositoryCase ChangedCase(string mission, MissionLoadErrorCode errorCode)
+    {
+        Assert.NotEqual(ValidMission, mission);
+        return Case(mission, errorCode);
+    }
+
+    private static RepositoryCase Case(
+        string mission,
+        MissionLoadErrorCode errorCode,
+        string? messageFragment = null,
+        string? target = null) =>
+        BytesCase(Encoding.UTF8.GetBytes(mission), errorCode, messageFragment, target);
+
+    private static RepositoryCase BytesCase(
+        byte[] mission,
+        MissionLoadErrorCode errorCode,
+        string? messageFragment = null,
+        string? target = null) =>
+        new(mission, target, errorCode, messageFragment);
+
+    private sealed record RepositoryCase(
+        byte[] Mission,
+        string? Target,
+        MissionLoadErrorCode ErrorCode,
+        string? MessageFragment);
+
+    private static string WithMeasuredFactor(string mission, string factor, string caseId) =>
+        mission.Replace(
+            $"\"{factor}\": {{ \"state\": \"open\", \"case_id\": \"{caseId}\" }}",
+            $"\"{factor}\": {{ \"state\": \"measured\", \"value\": 1.25, \"receipt_ref\": \"receipt:invented:{factor}\" }}",
+            StringComparison.Ordinal);
+
+    private static string AllMeasuredMission()
+    {
+        var mission = ValidMission;
+        foreach (var (factor, caseId) in new[]
+                 {
+                     ("novelty", "D5-T0039"),
+                     ("dependency_readiness", "D5-T0040"),
+                     ("structural_realization", "D5-T0041"),
+                     ("receipt_potential", "D5-T0042"),
+                 })
+        {
+            mission = WithMeasuredFactor(mission, factor, caseId);
+        }
+
+        return mission.Replace(
+            "bootstrap eligibility order",
+            "complete worth argmax",
+            StringComparison.Ordinal);
+    }
+
+    private static string MutateValueOrder(string mutation) => mutation switch
+    {
+        "unknown" => ValidMission.Replace(
+            "understanding-over-quantity",
+            "quantity-over-understanding",
+            StringComparison.Ordinal),
+        "missing" => ValidMission.Replace(
+            "\"honesty-over-speed\",",
+            string.Empty,
+            StringComparison.Ordinal),
+        "duplicate" => ValidMission.Replace(
+            "negative-knowledge-equals-positive-results",
+            "honesty-over-speed",
+            StringComparison.Ordinal),
+        "reordered" => ValidMission
+            .Replace("understanding-over-quantity", "value-order-placeholder", StringComparison.Ordinal)
+            .Replace("honesty-over-speed", "understanding-over-quantity", StringComparison.Ordinal)
+            .Replace("value-order-placeholder", "honesty-over-speed", StringComparison.Ordinal),
+        _ => throw new ArgumentOutOfRangeException(nameof(mutation), mutation, null),
+    };
+
+    private static string MutateProhibitions(string mutation) => mutation switch
+    {
+        "unknown" => ValidMission.Replace(
+            "sorry-count optimization",
+            "proof-count optimization",
+            StringComparison.Ordinal),
+        "missing" => ValidMission.Replace(
+            "\"trivial-lemma accumulation\",",
+            string.Empty,
+            StringComparison.Ordinal),
+        "duplicate" => ValidMission.Replace(
+            "citation chasing",
+            "trivial-lemma accumulation",
+            StringComparison.Ordinal),
+        "reordered" => ValidMission
+            .Replace("sorry-count optimization", "prohibition-placeholder", StringComparison.Ordinal)
+            .Replace("trivial-lemma accumulation", "sorry-count optimization", StringComparison.Ordinal)
+            .Replace("prohibition-placeholder", "trivial-lemma accumulation", StringComparison.Ordinal),
+        _ => throw new ArgumentOutOfRangeException(nameof(mutation), mutation, null),
+    };
+
+    private static string MutateObjectLayer(string layer, string mutation) => (layer, mutation) switch
+    {
+        ("root", "unknown") => ValidMission.Replace(
+            "  \"schema\": \"trureturing-mission-v1\",",
+            "  \"schema\": \"trureturing-mission-v1\",\n  \"unknown\": true,",
+            StringComparison.Ordinal),
+        ("root", "duplicate") => ValidMission.Replace(
+            "  \"schema\": \"trureturing-mission-v1\",",
+            "  \"schema\": \"trureturing-mission-v1\",\n  \"schema\": \"trureturing-mission-v1\",",
+            StringComparison.Ordinal),
+        ("root", "missing") => ValidMission.Replace(
+            "  \"schema\": \"trureturing-mission-v1\",\n",
+            string.Empty,
+            StringComparison.Ordinal),
+        ("north_star", "unknown") => ValidMission.Replace(
+            "    \"policy\": \"aspirational-not-direct\"",
+            "    \"policy\": \"aspirational-not-direct\",\n    \"unknown\": true",
+            StringComparison.Ordinal),
+        ("north_star", "duplicate") => ValidMission.Replace(
+            "    \"target\": \"two hearts\",",
+            "    \"target\": \"two hearts\",\n    \"target\": \"two hearts\",",
+            StringComparison.Ordinal),
+        ("north_star", "missing") => ValidMission.Replace(
+            "    \"target\": \"two hearts\",\n    \"policy\": \"aspirational-not-direct\"",
+            "    \"target\": \"two hearts\"",
+            StringComparison.Ordinal),
+        ("selection", "unknown") => ValidMission.Replace(
+            "    \"tie_break\": \"canonical candidate id\"",
+            "    \"tie_break\": \"canonical candidate id\",\n    \"unknown\": true",
+            StringComparison.Ordinal),
+        ("selection", "duplicate") => ValidMission.Replace(
+            "    \"tie_break\": \"canonical candidate id\"",
+            "    \"tie_break\": \"canonical candidate id\",\n    \"tie_break\": \"canonical candidate id\"",
+            StringComparison.Ordinal),
+        ("selection", "missing") => ValidMission.Replace(
+            "    \"order_kind\": \"bootstrap eligibility order\",\n    \"tie_break\": \"canonical candidate id\"",
+            "    \"tie_break\": \"canonical candidate id\"",
+            StringComparison.Ordinal),
+        _ => throw new ArgumentOutOfRangeException(nameof(mutation), $"{layer}/{mutation}", null),
+    };
+
+    private static MissionLoadOutcome LoadRepository(byte[] mission, string? target = null)
+    {
+        using var repository = new TemporaryDirectory();
+        ReviewRegressionTests.RunGit(repository.Path, "init", "--quiet");
+        WriteFile(repository.Path, BackfillInventoryLoader.TicketIndexPath, Encoding.UTF8.GetBytes(TicketIndex));
+        WriteFile(
+            repository.Path,
+            "D5/X_Frontier/GovernanceDeferrals.lean",
+            Encoding.UTF8.GetBytes(target ?? GovernanceDeferrals));
+        WriteFile(repository.Path, MissionFileLoader.RelativePath, mission);
+        ReviewRegressionTests.RunGit(repository.Path, "add", ".");
+        return MissionFileLoader.LoadRepository(repository.Path);
+    }
+
+    private static void WriteFile(string root, string relativePath, byte[] contents)
+    {
+        var path = Path.Combine(root, relativePath);
+        Directory.CreateDirectory(Path.GetDirectoryName(path)!);
+        File.WriteAllBytes(path, contents);
     }
 
     private static RepositorySnapshot Snapshot(string? mission)
