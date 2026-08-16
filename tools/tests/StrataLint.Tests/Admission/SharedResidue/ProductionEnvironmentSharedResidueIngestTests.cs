@@ -65,77 +65,70 @@ public sealed partial class ProductionEnvironmentTests
                 StringComparison.Ordinal));
     }
 
-    private static string SharedResidueLedger(
+    private static BackfillInventoryDocument SharedResidueLedger(
         string atomizerId,
         DigestionAtom atom,
         bool clearFirst,
         bool clearSecond,
         bool includeSecondFirstSourceAtom,
-        bool clearSecondFirstSourceAtom) => $$"""
-        schema_version: 3
-        ledger: theory-digestion-v1
-        sources:
-          - source_id: source-a
-            path: {{RuleFixture.FixtureDigestionSourcePath}}
-            atomizer: {{atomizerId}}
-            acknowledged_stale: []
-            entries:
-              - atom_id: atom-a
-                ast_path: {{atom.AstPath}}
-                fingerprints:
-                  raw_sha256: {{atom.Fingerprints.RawSha256}}
-                  normalized_sha256: {{atom.Fingerprints.NormalizedSha256}}
-                cas_ref: {{atom.Fingerprints.RawSha256}}
-                coverage_gids: []
-                receipts:
-                  coverage: []
-                  scribe: []
-                  unresolved_subitems: {{(clearFirst ? "[]" : "\n            - shared-residue")}}
-                  chain_atoms: []
-                  tail_authorization: null
-                status:
-                  migration: residual
-                  truth: open
-        {{(includeSecondFirstSourceAtom ? $$"""
-              - atom_id: atom-a-duplicate
-                ast_path: {{atom.AstPath}}
-                fingerprints:
-                  raw_sha256: {{atom.Fingerprints.RawSha256}}
-                  normalized_sha256: {{atom.Fingerprints.NormalizedSha256}}
-                cas_ref: {{atom.Fingerprints.RawSha256}}
-                coverage_gids: []
-                receipts:
-                  coverage: []
-                  scribe: []
-                  unresolved_subitems: {{(clearSecondFirstSourceAtom ? "[]" : "\n            - shared-residue")}}
-                  chain_atoms: []
-                  tail_authorization: null
-                status:
-                  migration: residual
-                  truth: open
-        """ : string.Empty)}}
-          - source_id: source-b
-            path: docs/CONTRIBUTING.md
-            atomizer: {{atomizerId}}
-            acknowledged_stale: []
-            entries:
-              - atom_id: atom-b
-                ast_path: {{atom.AstPath}}
-                fingerprints:
-                  raw_sha256: {{atom.Fingerprints.RawSha256}}
-                  normalized_sha256: {{atom.Fingerprints.NormalizedSha256}}
-                cas_ref: {{atom.Fingerprints.RawSha256}}
-                coverage_gids: []
-                receipts:
-                  coverage: []
-                  scribe: []
-                  unresolved_subitems: {{(clearSecond ? "[]" : "\n            - shared-residue")}}
-                  chain_atoms: []
-                  tail_authorization: null
-                status:
-                  migration: residual
-                  truth: open
-        """;
+        bool clearSecondFirstSourceAtom)
+    {
+        DigestionLedgerEntry Entry(
+            string sourceId,
+            string sourcePath,
+            string atomId,
+            bool clear) => new(
+                sourceId,
+                sourcePath,
+                atomizerId,
+                atomId,
+                atom.AstPath,
+                null,
+                atom.Fingerprints,
+                [],
+                new DigestionReceipts(
+                    [],
+                    [],
+                    clear ? [] : ["shared-residue"],
+                    [],
+                    null),
+                new DigestionStatus(
+                    DigestionMigrationState.Residual,
+                    DigestionTruthState.Open),
+                atom.Fingerprints.RawSha256);
+
+        var sourceAEntries = new List<DigestionLedgerEntry>
+        {
+            Entry("source-a", RuleFixture.FixtureDigestionSourcePath, "atom-a", clearFirst),
+        };
+        if (includeSecondFirstSourceAtom)
+        {
+            sourceAEntries.Add(Entry(
+                "source-a",
+                RuleFixture.FixtureDigestionSourcePath,
+                "atom-a-duplicate",
+                clearSecondFirstSourceAtom));
+        }
+
+        return BackfillInventoryDocument.Create(
+        [
+            new DigestionLedgerSource(
+                "source-a",
+                RuleFixture.FixtureDigestionSourcePath,
+                atomizerId,
+                [],
+                GenreRegistryCheck.Collected([]),
+                [.. sourceAEntries]),
+            new DigestionLedgerSource(
+                "source-b",
+                "docs/CONTRIBUTING.md",
+                atomizerId,
+                [],
+                GenreRegistryCheck.Collected([]),
+                [Entry("source-b", "docs/CONTRIBUTING.md", "atom-b", clearSecond)]),
+        ],
+        []);
+    }
 
     private static CommandResult RunSharedResidueIngest(
         bool clearFirst,

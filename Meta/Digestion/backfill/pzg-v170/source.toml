@@ -1,3 +1,5 @@
 source_id = "pzg-v170"
 path = "docs/develop/theory/PZG_BEDC.md"
 atomizer = "pzg-v1"
+genre_registry_check = "collected"
+unregistered_genres = []

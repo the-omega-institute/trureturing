@@ -1,3 +1,5 @@
 source_id = "qdo-v1"
 path = "docs/develop/theory/QUANTITATIVE_DIAGONALIZATION_OBSERVER_COMPLETION.md"
 atomizer = "dialect:qdo"
+genre_registry_check = "collected"
+unregistered_genres = []

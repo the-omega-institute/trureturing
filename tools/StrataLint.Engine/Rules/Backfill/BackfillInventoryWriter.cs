@@ -8,11 +8,43 @@ internal static class BackfillInventoryWriter
 {
     private static readonly UTF8Encoding StrictUtf8 = new(false, true);
 
-    internal static ImmutableArray<byte> Write(BackfillInventoryDocument document) =>
-        Write(document, preserveReceiptSyntax: false);
+    internal static ImmutableArray<byte> Write(BackfillInventoryDocument document)
+    {
+        ArgumentNullException.ThrowIfNull(document);
+        var builder = new StringBuilder();
+        Line(builder, $"schema_version: {BackfillInventoryLoader.SchemaVersion}");
+        Line(builder, $"ledger: {BackfillInventoryLoader.LedgerName}");
+        Line(builder, "sources:");
+        foreach (var source in document.RequireDigestionSources())
+        {
+            EnsureLineBreak(builder);
+            Line(builder, $"  - source_id: {Scalar(source.SourceId)}");
+            Line(builder, $"    path: {Scalar(source.SourcePath)}");
+            Line(builder, $"    atomizer: {Scalar(source.Atomizer)}");
+            if (source.AcknowledgedStale.Length > 0
+                || source.Entries.Any(static entry => entry.Boundary is null))
+            {
+                Strings(builder, "    acknowledged_stale", source.AcknowledgedStale, 6);
+            }
 
-    internal static ImmutableArray<byte> WriteForIngest(BackfillInventoryDocument document) =>
-        Write(document, preserveReceiptSyntax: true);
+            Line(builder, source.Entries.Length == 0 ? "    entries: []" : "    entries:");
+            foreach (var entry in source.Entries)
+            {
+                EnsureLineBreak(builder);
+                Entry(builder, entry);
+            }
+        }
+
+        return ImmutableArray.CreateRange(StrictUtf8.GetBytes(builder.ToString()));
+    }
+
+    private static void EnsureLineBreak(StringBuilder builder)
+    {
+        if (builder.Length > 0 && builder[^1] != '\n')
+        {
+            builder.Append('\n');
+        }
+    }
 
     internal static ImmutableArray<byte> WriteEntry(DigestionLedgerEntry entry)
     {
@@ -69,10 +101,19 @@ internal static class BackfillInventoryWriter
     internal static ImmutableArray<byte> WriteSourceMetadata(DigestionLedgerSource source)
     {
         ArgumentNullException.ThrowIfNull(source);
+        ValidateGenreRegistryCheck(source.GenreRegistryCheck);
         var builder = new StringBuilder();
         Line(builder, $"source_id = {TomlScalar(source.SourceId)}");
         Line(builder, $"path = {TomlScalar(source.SourcePath)}");
         Line(builder, $"atomizer = {TomlScalar(source.Atomizer)}");
+        Line(
+            builder,
+            $"genre_registry_check = {TomlScalar(GenreRegistryCheckNames.Render(source.GenreRegistryCheck.Kind))}");
+        Line(
+            builder,
+            "unregistered_genres = ["
+            + string.Join(", ", source.GenreRegistryCheck.UnregisteredGenres.Select(TomlGenreToken))
+            + "]");
         if (source.AcknowledgedStale.Length > 0)
         {
             Line(
@@ -85,53 +126,23 @@ internal static class BackfillInventoryWriter
         return ImmutableArray.CreateRange(StrictUtf8.GetBytes(builder.ToString()));
     }
 
-    private static ImmutableArray<byte> Write(
-        BackfillInventoryDocument document,
-        bool preserveReceiptSyntax)
+    private static void ValidateGenreRegistryCheck(GenreRegistryCheck check)
     {
-        ArgumentNullException.ThrowIfNull(document);
-        var builder = new StringBuilder();
-        Line(builder, $"schema_version: {BackfillInventoryLoader.SchemaVersion}");
-        Line(builder, $"ledger: {BackfillInventoryLoader.LedgerName}");
-        Line(builder, "sources:");
-        foreach (var source in document.RequireDigestionSources())
+        ArgumentNullException.ThrowIfNull(check);
+        var tokens = check.UnregisteredGenres;
+        if (tokens.Any(string.IsNullOrWhiteSpace)
+            || !tokens.SequenceEqual(
+                tokens.Distinct(StringComparer.Ordinal).Order(StringComparer.Ordinal),
+                StringComparer.Ordinal))
         {
-            EnsureLineBreak(builder);
-            Line(builder, $"  - source_id: {Scalar(source.SourceId)}");
-            Line(builder, $"    path: {Scalar(source.SourcePath)}");
-            Line(builder, $"    atomizer: {Scalar(source.Atomizer)}");
-            if (source.AcknowledgedStale.Length > 0
-                || source.Entries.Any(static entry => entry.Boundary is null))
-            {
-                Strings(builder, "    acknowledged_stale", source.AcknowledgedStale, 6);
-            }
-
-            Line(builder, source.Entries.Length == 0 ? "    entries: []" : "    entries:");
-            foreach (var entry in source.Entries)
-            {
-                EnsureLineBreak(builder);
-                if (preserveReceiptSyntax && entry.ReceiptSyntax is { } syntax)
-                {
-                    var receipt = BackfillReceiptPreimage.RewriteStatus(
-                        syntax,
-                        entry.ProjectedStatus);
-                    builder.Append(StrictUtf8.GetString(receipt.AsSpan()));
-                }
-                else
-                {
-                    Entry(builder, entry);
-                }
-            }
+            throw new InvalidOperationException(
+                "unregistered genres must contain sorted unique nonempty tokens");
         }
 
-        return ImmutableArray.CreateRange(StrictUtf8.GetBytes(builder.ToString()));
-    }
-
-    private static void EnsureLineBreak(StringBuilder builder)
-    {
-        if (builder.Length > 0 && builder[^1] != '\n')
+        if (check.Kind == GenreRegistryCheckKind.NoRegistry && !tokens.IsEmpty)
         {
-            builder.Append('\n');
+            throw new InvalidOperationException(
+                "no-registry requires empty unregistered genres");
         }
     }
 
@@ -332,6 +343,38 @@ internal static class BackfillInventoryWriter
         }
 
         return $"\"{value}\"";
+    }
+
+    private static string TomlGenreToken(string value)
+    {
+        var builder = new StringBuilder(value.Length + 2);
+        builder.Append('"');
+        foreach (var character in value)
+        {
+            switch (character)
+            {
+                case '"': builder.Append("\\\""); break;
+                case '\\': builder.Append("\\\\"); break;
+                case '\b': builder.Append("\\b"); break;
+                case '\t': builder.Append("\\t"); break;
+                case '\n': builder.Append("\\n"); break;
+                case '\f': builder.Append("\\f"); break;
+                case '\r': builder.Append("\\r"); break;
+                default:
+                    if (character < ' ' || character == '\u007f')
+                    {
+                        builder.Append("\\u")
+                            .Append(((int)character).ToString("X4", CultureInfo.InvariantCulture));
+                    }
+                    else
+                    {
+                        builder.Append(character);
+                    }
+                    break;
+            }
+        }
+
+        return builder.Append('"').ToString();
     }
 
     private static bool RequiresStringQuotes(string value) =>

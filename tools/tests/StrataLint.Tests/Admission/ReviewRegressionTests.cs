@@ -150,13 +150,9 @@ public sealed partial class ReviewRegressionTests
     {
         var fixture = new RuleFixture();
         fixture.AddBackfillTargets();
-        fixture.UseLegacyBackfill();
-        const string expected = "          migration: partial\n          truth: closed";
-        const string falseProjection = "          migration: absorbed\n          truth: closed";
-        fixture.Files["Meta/BACKFILL.yaml"] = fixture.Files["Meta/BACKFILL.yaml"].Replace(
-            expected,
-            falseProjection,
-            StringComparison.Ordinal);
+        var atom = fixture.Files[RuleFixture.FixtureBackfillAtomPath];
+        fixture.Files.Remove(RuleFixture.FixtureBackfillAtomPath);
+        fixture.Files[$"{BackfillInventoryLoader.RootPath}fixture-source/absorbed-closed/fixture-atom.yaml"] = atom;
 
         var evaluation = RuleCatalog.Default.EvaluateSingle(RuleId.CreateKnown(16), fixture.Build());
 
@@ -186,24 +182,17 @@ public sealed partial class ReviewRegressionTests
     }
 
     [Fact]
-    public void Sl016RejectsDuplicateSourceIdEvenWhenTheLaterSourceHasNoEntries()
+    public void Sl016RejectsSourceIdThatDoesNotMatchItsDirectory()
     {
         var fixture = new RuleFixture();
         fixture.AddBackfillTargets();
-        fixture.UseLegacyBackfill();
-        const string duplicate =
-            "  - source_id: fixture-source\n"
-            + "    path: docs/CONTRIBUTING.md\n"
-            + "    atomizer: none\n"
-            + "    entries: []\n";
-        fixture.Files["Meta/BACKFILL.yaml"] += duplicate;
+        fixture.Files[$"{BackfillInventoryLoader.RootPath}different-directory/source.toml"] =
+            fixture.Files[RuleFixture.FixtureBackfillSourcePath];
 
         var evaluation = RuleCatalog.Default.EvaluateSingle(RuleId.CreateKnown(16), fixture.Build());
 
         Assert.Contains(evaluation.Diagnostics, diagnostic =>
-            diagnostic.Message.Contains("duplicate source_id", StringComparison.Ordinal));
-        Assert.Contains(evaluation.Diagnostics, diagnostic =>
-            diagnostic.Message.Contains("must contain at least one atomic entry", StringComparison.Ordinal));
+            diagnostic.Message.Contains("source metadata path disagrees with source_id", StringComparison.Ordinal));
     }
 
     [Fact]

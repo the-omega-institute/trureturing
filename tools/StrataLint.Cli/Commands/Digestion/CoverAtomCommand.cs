@@ -146,7 +146,6 @@ internal static partial class CoverAtomCommand
                     Scribe = target.Receipts.Scribe.AddRange(
                         addedReceipts.Select(static receipt => receipt.Scribe)),
                 },
-                ReceiptSyntax = null,
             };
             var plannedDocument = ReplaceEntry(document, options.AtomId, covered);
 
@@ -177,12 +176,10 @@ internal static partial class CoverAtomCommand
                     })
                     .ToImmutableArray());
 
-            var finalBytes = BackfillInventoryWriter.WriteForIngest(refreshed);
             var finalRaw = IngestCommand.ReplaceLedger(
                 currentRaw,
                 document,
-                refreshed,
-                finalBytes);
+                refreshed);
             var finalSnapshot = Decode(finalRaw);
             var finalDocument = LoadDocument(finalSnapshot);
             var evaluation = DigestionStatusEvaluator.Evaluate(

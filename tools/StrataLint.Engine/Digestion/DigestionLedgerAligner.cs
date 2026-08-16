@@ -46,10 +46,17 @@ internal sealed record DigestionSourceClausePlan(
 
 internal sealed record DigestionIngestFallback(string SourceId, string Reason);
 
+internal sealed record GenreResolutionReclassification(
+    string SourceId,
+    string AtomId,
+    string AstPath);
+
 internal sealed record DigestionLedgerAlignment(
     ImmutableDictionary<string, DigestionReceiptAlignment> EntryAlignments,
     ImmutableDictionary<string, DigestionAtom> MatchedAtoms,
+    ImmutableDictionary<string, GenreRegistryCheck> GenreRegistryChecks,
     ImmutableArray<StructuredResidualAdmission> Residual,
+    ImmutableArray<GenreResolutionReclassification> GenreReclassifications,
     ImmutableArray<DigestionSourceClausePlan> ClausePlans,
     ImmutableHashSet<string> ClausePlanChainParents,
     ImmutableHashSet<string> VerifiedClausePlanParents,
@@ -124,7 +131,10 @@ internal static partial class DigestionLedgerAligner
         var alignments = ImmutableDictionary.CreateBuilder<string, DigestionReceiptAlignment>(
             StringComparer.Ordinal);
         var matchedAtoms = ImmutableDictionary.CreateBuilder<string, DigestionAtom>(StringComparer.Ordinal);
+        var genreRegistryChecks = ImmutableDictionary.CreateBuilder<string, GenreRegistryCheck>(
+            StringComparer.Ordinal);
         var residual = ImmutableArray.CreateBuilder<StructuredResidualAdmission>();
+        var genreReclassifications = ImmutableArray.CreateBuilder<GenreResolutionReclassification>();
         var clausePlans = ImmutableArray.CreateBuilder<DigestionSourceClausePlan>();
         var clausePlanChainParents = ImmutableHashSet.CreateBuilder<string>(StringComparer.Ordinal);
         var verifiedClausePlanParents = ImmutableHashSet.CreateBuilder<string>(StringComparer.Ordinal);
@@ -218,6 +228,10 @@ internal static partial class DigestionLedgerAligner
                 }
 
                 var registeredAtomizer = AtomizerRegistry.IsRegistered(source.Atomizer);
+                if (source.Atomizer == AtomizerRegistry.NoAtomizerId)
+                {
+                    genreRegistryChecks[source.SourceId] = GenreRegistryCheck.NoGenreRegistry;
+                }
                 var hasClausePlanChains = registeredAtomizer
                     && AtomizerRegistry.EmitsClausePlans(source.Atomizer)
                     && source.Entries.Any(static entry => entry.Receipts.ChainAtoms.Length > 0);
@@ -356,15 +370,7 @@ internal static partial class DigestionLedgerAligner
                     return;
                 }
 
-                // Ingest must refuse the addressed token instead of degrading the whole volume
-                // to a coarse atom. Admission has a separate probe so reconciliation outcomes
-                // remain unchanged.
-                if (mode != DigestionAlignmentMode.Admission
-                    && !atomized.UnregisteredGenres.IsEmpty)
-                {
-                    findings.Add(UnregisteredGenreFinding(source, atomized.UnregisteredGenres));
-                    return;
-                }
+                genreRegistryChecks[source.SourceId] = atomized.GenreRegistryCheck;
 
                 if (atomized.Claims.Length == 0)
                 {
@@ -435,6 +441,61 @@ internal static partial class DigestionLedgerAligner
                 }
 
                 var matchedAstPaths = new HashSet<string>(StringComparer.Ordinal);
+                var reclassifiedAtomIds = new HashSet<string>(StringComparer.Ordinal);
+                if (mode == DigestionAlignmentMode.Ingest && atomizerRules is not null)
+                {
+                    foreach (var atom in atomized.Claims)
+                    {
+                        var candidates = source.Entries.Where(entry =>
+                                cas.ValidAtomIds.Contains(entry.AtomId)
+                                && entry.Fingerprints.RawSha256 == atom.Fingerprints.RawSha256
+                                && UnregisteredGenreLocator.TryGetToken(entry.AstPath, out var token)
+                                && source.GenreRegistryCheck.Kind == GenreRegistryCheckKind.Collected
+                                && source.GenreRegistryCheck.UnregisteredGenres.Contains(
+                                    token,
+                                    StringComparer.Ordinal)
+                                && IsExactGenreResolution(
+                                    source.Atomizer,
+                                    token,
+                                    entry.AstPath,
+                                    atom.AstPath,
+                                    atomizerRules))
+                            .ToArray();
+                        if (candidates.Length == 0)
+                        {
+                            continue;
+                        }
+
+                        if (candidates.Length != 1
+                            || !reclassifiedAtomIds.Add(candidates[0].AtomId))
+                        {
+                            findings.Add(
+                                $"source {source.SourceId} genre reclassification is ambiguous: "
+                                + atom.AstPath);
+                            continue;
+                        }
+
+                        var existing = candidates[0];
+                        if (source.Entries.Any(entry =>
+                                entry.AtomId != existing.AtomId
+                                && entry.AstPath == atom.AstPath))
+                        {
+                            findings.Add(
+                                $"source {source.SourceId} genre reclassification ast_path collides: "
+                                + atom.AstPath);
+                            continue;
+                        }
+
+                        matchedAstPaths.Add(atom.AstPath);
+                        matchedAtoms[existing.AtomId] = atom;
+                        alignments[existing.AtomId] = DigestionReceiptAlignment.Seen;
+                        genreReclassifications.Add(new GenreResolutionReclassification(
+                            source.SourceId,
+                            existing.AtomId,
+                            atom.AstPath));
+                    }
+                }
+
                 var sourceStale = new List<string>();
                 if (coarseReplacementObligations.Length > 0 && !claims.ContainsKey("coarse/source"))
                 {
@@ -550,7 +611,9 @@ internal static partial class DigestionLedgerAligner
         return new DigestionLedgerAlignment(
             alignments.ToImmutable(),
             matchedAtoms.ToImmutable(),
+            genreRegistryChecks.ToImmutable(),
             residual.ToImmutable(),
+            genreReclassifications.ToImmutable(),
             clausePlans.ToImmutable(),
             clausePlanChainParents.ToImmutable(),
             verifiedClausePlanParents.ToImmutable(),
@@ -559,127 +622,4 @@ internal static partial class DigestionLedgerAligner
             findings.Order(StringComparer.Ordinal).ToImmutableArray());
     }
 
-    private static void AddCoarseFallback(
-        DigestionLedgerSource source,
-        ImmutableArray<byte> sourceBytes,
-        string reason,
-        IReadOnlySet<string> validAtomIds,
-        ISet<string> suggestedAtomIds,
-        ImmutableArray<StructuredResidualAdmission>.Builder residual,
-        ImmutableArray<DigestionIngestFallback>.Builder fallbacks)
-    {
-        var fingerprints = DigestionFingerprint.ComputeOpaque(sourceBytes.AsSpan());
-        fallbacks.Add(new DigestionIngestFallback(source.SourceId, reason));
-        if (source.Entries.Any(entry =>
-                validAtomIds.Contains(entry.AtomId)
-                && entry.AstPath == "coarse/source"
-                && entry.CasRef == fingerprints.RawSha256))
-        {
-            return;
-        }
-
-        var atom = new DigestionAtom(
-            "coarse/source",
-            0,
-            sourceBytes.Length,
-            sourceBytes,
-            fingerprints,
-            []);
-        var registration = AtomizerRegistry.Require(source.Atomizer);
-        residual.Add(new StructuredResidualAdmission(
-            source.SourceId,
-            source.SourcePath,
-            source.Atomizer,
-            atom,
-            SuggestedAtomId(source, registration, atom, "coarse", suggestedAtomIds),
-            new DigestionStatus(DigestionMigrationState.Residual, DigestionTruthState.Open)));
-    }
-
-    private static string SuggestedAtomId(
-        DigestionLedgerSource source,
-        AtomizerRegistration registration,
-        DigestionAtom atom,
-        string kind,
-        ISet<string> suggestedAtomIds)
-    {
-        var stem = registration.ResidualPrefix
-            + $"-{kind}-"
-            + atom.Fingerprints.RawSha256["sha256:".Length..];
-        if (suggestedAtomIds.Add(stem))
-        {
-            return stem;
-        }
-
-        var occurrenceBytes = Encoding.UTF8.GetBytes(source.SourceId + "\0" + atom.AstPath);
-        var occurrence = Convert.ToHexStringLower(SHA256.HashData(occurrenceBytes));
-        var qualified = stem + "-" + occurrence;
-        suggestedAtomIds.Add(qualified);
-        return qualified;
-    }
-
-    private static Dictionary<string, DigestionLedgerSource> BaselineSources(
-        BackfillInventoryDocument? baselineDocument,
-        ImmutableArray<string>.Builder findings)
-    {
-        var result = new Dictionary<string, DigestionLedgerSource>(StringComparer.Ordinal);
-        if (baselineDocument is null)
-        {
-            return result;
-        }
-
-        foreach (var source in baselineDocument.RequireDigestionSources())
-        {
-            if (!result.TryAdd(source.SourceId, source))
-            {
-                findings.Add($"baseline ledger contains duplicate source_id: {source.SourceId}");
-            }
-        }
-
-        return result;
-    }
-
-    private static HashSet<string> InheritedEntries(
-        BackfillInventoryDocument? baselineDocument) =>
-        (baselineDocument?.RequireDigestionEntries() ?? [])
-            .Select(CanonicalEntry)
-            .ToHashSet(StringComparer.Ordinal);
-
-    internal static bool FingerprintsMatch(DigestionFingerprints left, DigestionFingerprints right) =>
-        left.RawSha256 == right.RawSha256
-        || left.NormalizedSha256 == right.NormalizedSha256;
-
-    private static bool HasUniqueAstPaths(ImmutableArray<DigestionAtom> claims) =>
-        claims.Select(static claim => claim.AstPath).Distinct(StringComparer.Ordinal).Count()
-        == claims.Length;
-
-    private static bool EntryIdentityEqual(
-        DigestionLedgerEntry candidate,
-        DigestionLedgerEntry baseline) =>
-        candidate.SourceId == baseline.SourceId
-        && candidate.AtomId == baseline.AtomId
-        && candidate.Fingerprints == baseline.Fingerprints;
-
-    private static bool CoarseReplacementIdentityEqual(
-        DigestionLedgerEntry candidate,
-        DigestionLedgerEntry baseline) =>
-        candidate.AstPath == "coarse/source"
-        && baseline.AstPath == "coarse/source"
-        && candidate.Boundary == baseline.Boundary
-        && candidate.CasRef == baseline.CasRef
-        && EntryIdentityEqual(candidate, baseline);
-
-    private static DigestionLedgerEntry[] CoarseReplacementObligations(
-        DigestionLedgerSource baseline,
-        DigestionLedgerSource? candidate) =>
-        baseline.Entries.Where(entry =>
-            entry.AstPath == "coarse/source"
-            && (candidate is null
-                || !candidate.Entries.Any(candidateEntry =>
-                    CoarseReplacementIdentityEqual(candidateEntry, entry))
-                || baseline.AcknowledgedStale.Contains(entry.AtomId, StringComparer.Ordinal)
-                || baseline.Atomizer != candidate.Atomizer
-                || candidate.AcknowledgedStale.Contains(
-                    entry.AtomId,
-                    StringComparer.Ordinal)))
-            .ToArray();
 }

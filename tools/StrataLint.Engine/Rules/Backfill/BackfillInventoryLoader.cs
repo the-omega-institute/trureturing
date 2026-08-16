@@ -20,25 +20,15 @@ internal sealed class BackfillInventoryDocument
     private readonly IReadOnlyDictionary<string, object?> root;
     private readonly ImmutableArray<BackfillTicketReference> derivedTickets;
     private readonly ImmutableArray<DigestionLedgerSource> projectedSources;
-    private readonly ImmutableArray<BackfillReceiptSyntax> receiptSyntaxes;
-
-    internal BackfillInventoryDocument(
-        IReadOnlyDictionary<string, object?> root,
-        ImmutableArray<BackfillReceiptSyntax> receiptSyntaxes)
-        : this(root, [], default, receiptSyntaxes)
-    {
-    }
 
     private BackfillInventoryDocument(
         IReadOnlyDictionary<string, object?> root,
         ImmutableArray<BackfillTicketReference> derivedTickets,
-        ImmutableArray<DigestionLedgerSource> projectedSources,
-        ImmutableArray<BackfillReceiptSyntax> receiptSyntaxes)
+        ImmutableArray<DigestionLedgerSource> projectedSources)
     {
         this.root = root;
         this.derivedTickets = derivedTickets;
         this.projectedSources = projectedSources;
-        this.receiptSyntaxes = receiptSyntaxes;
     }
 
     internal IReadOnlyDictionary<string, object?> Root => root;
@@ -53,80 +43,19 @@ internal sealed class BackfillInventoryDocument
             ["ledger"] = BackfillInventoryLoader.LedgerName,
             ["sources"] = new List<object?>(),
         };
-        return new BackfillInventoryDocument(root, tickets, sources, []);
+        return new BackfillInventoryDocument(root, tickets, sources);
     }
 
     internal ImmutableArray<BackfillTicketReference> RequireTickets() => derivedTickets;
 
-    internal ImmutableArray<DigestionLedgerSource> RequireDigestionSources()
-    {
-        if (!projectedSources.IsDefault)
-        {
-            return projectedSources;
-        }
-
-        var rawSources = List(root, "sources", "sources must be a list");
-        var sources = ImmutableArray.CreateBuilder<DigestionLedgerSource>();
-        var receiptIndex = 0;
-        foreach (var rawSource in rawSources)
-        {
-            var source = Mapping(rawSource, "sources must contain mappings");
-            ExactKeys(
-                source,
-                source.ContainsKey("acknowledged_stale")
-                    ? ["source_id", "path", "atomizer", "acknowledged_stale", "entries"]
-                    : ["source_id", "path", "atomizer", "entries"],
-                "source");
-            var sourceId = Scalar(source, "source_id", "source_id");
-            var sourcePath = Scalar(source, "path", $"source {sourceId} path");
-            var atomizer = Scalar(source, "atomizer", $"source {sourceId} atomizer");
-            var acknowledgedStale = source.ContainsKey("acknowledged_stale")
-                ? Strings(
-                    List(source, "acknowledged_stale", $"source {sourceId} acknowledged_stale must be a list"),
-                    $"source {sourceId} acknowledged_stale")
-                : ImmutableArray<string>.Empty;
-            var entries = ImmutableArray.CreateBuilder<DigestionLedgerEntry>();
-            foreach (var rawEntry in List(source, "entries", $"source {sourceId} entries must be a list"))
-            {
-                if (receiptIndex >= receiptSyntaxes.Length)
-                {
-                    throw new FormatException("BACKFILL receipt preimage count is incomplete");
-                }
-
-                entries.Add(ParseEntry(
-                    sourceId,
-                    sourcePath,
-                    atomizer,
-                    rawEntry,
-                    receiptSyntaxes[receiptIndex++]));
-            }
-
-            sources.Add(new DigestionLedgerSource(
-                sourceId,
-                sourcePath,
-                atomizer,
-                acknowledgedStale,
-                entries.ToImmutable()));
-        }
-
-        if (receiptIndex != receiptSyntaxes.Length)
-        {
-            throw new FormatException("BACKFILL receipt preimage count exceeds parsed entries");
-        }
-
-        return sources.ToImmutable();
-    }
+    internal ImmutableArray<DigestionLedgerSource> RequireDigestionSources() => projectedSources;
 
     internal ImmutableArray<DigestionLedgerEntry> RequireDigestionEntries() =>
         RequireDigestionSources().SelectMany(static source => source.Entries).ToImmutableArray();
 
     internal BackfillInventoryDocument WithDigestionSources(
         ImmutableArray<DigestionLedgerSource> sources) =>
-        new(root, RequireTickets(), sources, receiptSyntaxes);
-
-    internal BackfillInventoryDocument WithDerivedTickets(
-        ImmutableArray<BackfillTicketReference> tickets) =>
-        new(root, tickets, projectedSources, receiptSyntaxes);
+        new(root, RequireTickets(), sources);
 
     internal ImmutableArray<string> RequireReferencedGids()
     {
@@ -152,8 +81,7 @@ internal sealed class BackfillInventoryDocument
         string sourceId,
         string sourcePath,
         string atomizer,
-        object? rawEntry,
-        BackfillReceiptSyntax? receiptSyntax)
+        object? rawEntry)
     {
         var entry = Mapping(rawEntry, $"source {sourceId} entries must be mappings");
         var hasBoundary = entry.ContainsKey("boundary");
@@ -220,7 +148,6 @@ internal sealed class BackfillInventoryDocument
             new DigestionStatus(
                 ParseMigration(Scalar(status, "migration", $"entry {atomId} migration")),
                 ParseTruth(Scalar(status, "truth", $"entry {atomId} truth"))),
-            receiptSyntax,
             Scalar(entry, "cas_ref", $"entry {atomId} cas_ref"));
     }
 
@@ -398,8 +325,8 @@ internal sealed class BackfillInventoryDocument
 
 internal static partial class BackfillInventoryLoader
 {
-    private const string CoexistingStorageMessage =
-        "legacy and directory digestion ledgers cannot coexist";
+    private const string LegacyStorageMessage =
+        "legacy digestion ledger is unsupported; migrate to directory storage";
 
     internal const string RelativePath = "Meta/BACKFILL.yaml";
     internal const int SchemaVersion = 3;
@@ -423,47 +350,26 @@ internal static partial class BackfillInventoryLoader
             && state[1] is "closed" or "tail" or "open";
     }
 
-    internal static BackfillInventoryDocument Load(string text)
-    {
-        if (YamlSubsetParser.Parse(text) is not Dictionary<string, object?> root)
-        {
-            throw new FormatException("BACKFILL top-level YAML value must be a mapping");
-        }
+    internal static BackfillInventoryDocument Load(RepositorySnapshot snapshot) =>
+        LoadSnapshot(snapshot, allowOmittedGenreRegistryProjection: false);
 
-        if (root.GetValueOrDefault("schema_version") is not int version || version != SchemaVersion)
-        {
-            throw new FormatException($"BACKFILL must use schema_version {SchemaVersion}; legacy schemas are not read");
-        }
+    internal static BackfillInventoryDocument LoadBaseline(RepositorySnapshot snapshot) =>
+        LoadSnapshot(snapshot, allowOmittedGenreRegistryProjection: true);
 
-        if (root.GetValueOrDefault("ledger") is not string ledger
-            || !string.Equals(ledger, LedgerName, StringComparison.Ordinal))
-        {
-            throw new FormatException($"BACKFILL ledger must be {LedgerName}");
-        }
-
-        return new BackfillInventoryDocument(root, BackfillReceiptPreimage.Extract(text));
-    }
-
-    internal static BackfillInventoryDocument Load(RepositorySnapshot snapshot)
+    private static BackfillInventoryDocument LoadSnapshot(
+        RepositorySnapshot snapshot,
+        bool allowOmittedGenreRegistryProjection)
     {
         ArgumentNullException.ThrowIfNull(snapshot);
-        var hasLegacy = snapshot.TryGetFile(RelativePath, out var legacyFile);
+        if (snapshot.TryGetFile(RelativePath, out _))
+        {
+            throw new FormatException(LegacyStorageMessage);
+        }
+
         var canonicalDirectoryPaths = snapshot.Files.Keys
             .Where(path => IsCanonicalPath(path.Value))
             .ToArray();
         var hasDirectory = canonicalDirectoryPaths.Length > 0;
-
-        if (hasLegacy && hasDirectory)
-        {
-            throw new FormatException(CoexistingStorageMessage);
-        }
-
-        if (hasLegacy)
-        {
-            var document = Load(legacyFile!.Text).WithDerivedTickets(DeriveTickets(snapshot));
-            ValidateQuarantineMachineFormMarkers(snapshot, document);
-            return document;
-        }
 
         if (!hasDirectory)
         {
@@ -479,13 +385,13 @@ internal static partial class BackfillInventoryLoader
             }
         }
 
-        var directoryDocument = LoadDirectorySnapshot(snapshot);
+        var directoryDocument = LoadDirectorySnapshot(
+            snapshot,
+            allowOmittedGenreRegistryProjection);
         ValidateQuarantineMachineFormMarkers(snapshot, directoryDocument);
         return directoryDocument;
     }
 
-    // 磁盘树的双形态入口:与 Load(RepositorySnapshot) 同语义——旧单文件与新目录
-    // 台账二选一;两形态并存由快照路径 Load(RepositorySnapshot) 在规则层拒绝。
     internal static BackfillInventoryDocument LoadRoot(string repositoryRoot)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(repositoryRoot);
@@ -497,23 +403,19 @@ internal static partial class BackfillInventoryLoader
             root,
             RootPath.Replace('/', Path.DirectorySeparatorChar));
         var hasLegacy = File.Exists(legacyPath);
+        if (hasLegacy)
+        {
+            throw new FormatException(LegacyStorageMessage);
+        }
+
         var hasDirectory = Directory.Exists(directoryPath)
             && Directory.EnumerateFiles(directoryPath, "*", SearchOption.AllDirectories)
                 .Select(path => Path.GetRelativePath(root, path)
                     .Replace(Path.DirectorySeparatorChar, '/'))
                 .Any(IsCanonicalPath);
-        if (hasLegacy && hasDirectory)
-        {
-            throw new FormatException(CoexistingStorageMessage);
-        }
-
-        return hasLegacy
-            ? LoadRootSnapshot(
-                root,
-                EnumerateFormalizationReceiptPaths(root)
-                    .Concat(EnumerateD5LeanPaths(root))
-                    .Prepend(legacyPath))
-            : LoadDirectory(repositoryRoot);
+        return hasDirectory
+            ? LoadDirectory(repositoryRoot)
+            : throw new FormatException("required governance document is missing");
     }
 
     internal static BackfillInventoryDocument LoadDirectory(string repositoryRoot)
@@ -542,7 +444,9 @@ internal static partial class BackfillInventoryLoader
         };
     }
 
-    private static BackfillInventoryDocument LoadDirectorySnapshot(RepositorySnapshot snapshot)
+    private static BackfillInventoryDocument LoadDirectorySnapshot(
+        RepositorySnapshot snapshot,
+        bool allowOmittedGenreRegistryProjection)
     {
         var metadata = snapshot.Files
             .Where(static pair => pair.Key.Value.StartsWith(RootPath, StringComparison.Ordinal)
@@ -558,7 +462,11 @@ internal static partial class BackfillInventoryLoader
         foreach (var (metadataPath, metadataFile) in metadata)
         {
             var sourceRoot = metadataPath.Value[..^"source.toml".Length];
-            var fields = ParseSourceMetadata(metadataFile.Text, metadataPath.Value);
+            var metadataParse = ParseSourceMetadata(
+                metadataFile.Text,
+                metadataPath.Value,
+                allowOmittedGenreRegistryProjection);
+            var fields = metadataParse.Fields;
             var sourceId = fields["source_id"].Single();
             if (!string.Equals(sourceRoot, $"{RootPath}{sourceId}/", StringComparison.Ordinal))
             {
@@ -593,17 +501,30 @@ internal static partial class BackfillInventoryLoader
                     sourceId,
                     fields["path"].Single(),
                     fields["atomizer"].Single(),
-                    entry,
-                    null);
+                    entry);
                 entries.Add(parsedEntry);
             }
 
-            sources.Add(new DigestionLedgerSource(
+            var parsedSource = new DigestionLedgerSource(
                 sourceId,
                 fields["path"].Single(),
                 fields["atomizer"].Single(),
                 fields.GetValueOrDefault("acknowledged_stale", []).ToImmutableArray(),
-                entries.ToImmutable()));
+                ParseGenreRegistryCheck(fields, metadataPath.Value),
+                entries.ToImmutable());
+            var canonicalMetadata = BackfillInventoryWriter.WriteSourceMetadata(parsedSource);
+            if (metadataParse.OmittedGenreRegistryProjection)
+            {
+                canonicalMetadata = RemoveGenreRegistryProjection(canonicalMetadata);
+            }
+
+            if (!canonicalMetadata.AsSpan().SequenceEqual(metadataFile.RawBytes.AsSpan()))
+            {
+                throw new FormatException(
+                    $"source metadata is not canonically encoded: {metadataPath.Value}");
+            }
+
+            sources.Add(parsedSource);
         }
 
         var sourceRoots = metadata
@@ -621,6 +542,15 @@ internal static partial class BackfillInventoryLoader
         }
 
         return BackfillInventoryDocument.Create(sources.ToImmutable(), DeriveTickets(snapshot));
+    }
+
+    private static ImmutableArray<byte> RemoveGenreRegistryProjection(ImmutableArray<byte> metadata)
+    {
+        var lines = System.Text.Encoding.UTF8.GetString(metadata.AsSpan())
+            .Split('\n')
+            .Where(static line => !line.StartsWith("genre_registry_check = ", StringComparison.Ordinal)
+                && !line.StartsWith("unregistered_genres = ", StringComparison.Ordinal));
+        return ImmutableArray.CreateRange(System.Text.Encoding.UTF8.GetBytes(string.Join('\n', lines)));
     }
 
     internal static ImmutableArray<BackfillTicketReference> DeriveTickets(
@@ -659,105 +589,6 @@ internal static partial class BackfillInventoryLoader
         return Directory.Exists(d5Root)
             ? Directory.EnumerateFiles(d5Root, "*.lean", SearchOption.AllDirectories)
             : [];
-    }
-
-    private static Dictionary<string, List<string>> ParseSourceMetadata(string text, string path)
-    {
-        var result = new Dictionary<string, List<string>>(StringComparer.Ordinal);
-        foreach (var rawLine in text.Split('\n', StringSplitOptions.RemoveEmptyEntries))
-        {
-            var split = rawLine.Split(" = ", 2, StringSplitOptions.None);
-            if (split.Length != 2)
-            {
-                throw new FormatException($"invalid source metadata: {path}");
-            }
-
-            List<string> values;
-            try
-            {
-                values = ParseTomlValues(split[1]);
-            }
-            catch (FormatException) when (split[0] is "source_id" or "path" or "atomizer")
-            {
-                throw new FormatException(
-                    $"source metadata identity fields must be single quoted strings: {path}");
-            }
-
-            if (split[0] is "source_id" or "path" or "atomizer"
-                && split[1].StartsWith('['))
-            {
-                throw new FormatException(
-                    $"source metadata identity fields must be single quoted strings: {path}");
-            }
-
-            if (split[0] == "acknowledged_stale"
-                && (!split[1].StartsWith('[')
-                    || !split[1].EndsWith(']')
-                    || values.Any(string.IsNullOrWhiteSpace)))
-            {
-                throw new FormatException(
-                    $"acknowledged_stale must be a quoted string array without blank elements: {path}");
-            }
-
-            if (!result.TryAdd(split[0], values))
-            {
-                throw new FormatException($"invalid source metadata: {path}");
-            }
-        }
-
-        if (!result.Keys.ToHashSet(StringComparer.Ordinal).SetEquals(
-                result.ContainsKey("acknowledged_stale")
-                    ? ["source_id", "path", "atomizer", "acknowledged_stale"]
-                    : ["source_id", "path", "atomizer"]))
-        {
-            throw new FormatException($"source metadata keys are not canonical: {path}");
-        }
-
-
-        if (result["source_id"].Count != 1
-            || result["path"].Count != 1
-            || result["atomizer"].Count != 1
-            || string.IsNullOrWhiteSpace(result["source_id"][0])
-            || string.IsNullOrWhiteSpace(result["path"][0])
-            || string.IsNullOrWhiteSpace(result["atomizer"][0]))
-        {
-            throw new FormatException(
-                $"source metadata identity fields must be single quoted strings: {path}");
-        }
-
-        return result;
-    }
-
-    private static List<string> ParseTomlValues(string encoded)
-    {
-        if (encoded.StartsWith('[') || encoded.EndsWith(']'))
-        {
-            if (!encoded.StartsWith('[') || !encoded.EndsWith(']'))
-            {
-                throw new FormatException("source metadata values must be quoted strings");
-            }
-
-            var body = encoded[1..^1];
-            if (body.Length == 0) return [];
-            return body.Split(", ", StringSplitOptions.None)
-                .Select(ParseQuotedTomlScalar)
-                .ToList();
-        }
-
-        return [ParseQuotedTomlScalar(encoded)];
-    }
-
-    private static string ParseQuotedTomlScalar(string encoded)
-    {
-        if (encoded.Length < 2
-            || encoded[0] != '"'
-            || encoded[^1] != '"'
-            || encoded.AsSpan(1, encoded.Length - 2).Contains('"'))
-        {
-            throw new FormatException("source metadata values must be quoted strings");
-        }
-
-        return encoded[1..^1];
     }
 
 }

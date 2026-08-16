@@ -69,7 +69,7 @@ golden-ledger/
 ├── Chronicle/<YYYY>/<MM>/<DD>-<slug>.md  (+ INDEX.md 由 CI 生成, LEGACY.md 旧评注映射)
 ├── Library/{queries.yaml, anchors.bib, notes/<bibkey>.md, <Domain>/<bibkey>.md}
 ├── Papers/{recipes/, frozen/<paper-id>/}(build/ 不入库)
-├── Meta/{StrataLint(含 split/papergen 等子命令位), domains.yaml, registry.yaml, BACKFILL.yaml}
+├── Meta/{StrataLint(含 split/papergen 等子命令位), domains.yaml, registry.yaml, Digestion/{backfill/}}
 ├── agents/{CONTEXT.md, scout.md…gate.md, theorist.md, echo-template.md, verdict-template.md}
 ├── docs/{CONTRIBUTING.md(防命理墙+可证伪七条), GOVERNANCE.md, history/}
 ├── lakefile.lean  lean-toolchain  .github/workflows/
@@ -430,15 +430,14 @@ CONTEXT.md(1 页)→ 各地层 `INDEX.md`(CI 从文件头 digest 行聚合)→ �
 
 ## 11.21 回填溯源清单(消化完整性)
 <!-- BACKFILL_ENTRY_ACCEPTANCE: required=atom_id,cas_ref,coverage_gids,fingerprints,receipts,status;exactly_one=ast_path|boundary;optional=- -->
-`Meta/BACKFILL.yaml` 是 **Digestion Ledger** 唯一真源,现役且仅现役 schema 为 `schema_version: 3` / `ledger: theory-digestion-v1`;旧 anchor/disposition 格式经一次迁移只存于 git 历史,运行时无兼容读者、无双读。每个 source 恰含 `{source_id,path,atomizer,entries}`,其中 `source_id` 全局唯一、文件正名且文件名禁空格;每个原子 entry 的共同必选字段为 `{atom_id,fingerprints:{raw_sha256,normalized_sha256},cas_ref,coverage_gids,receipts,status}`,边界字段互斥二选一:嵌套 `boundary:{ast_path,start_byte,end_byte}` 或顶层 `ast_path`,无 entry 级可选字段。canonical 账本 1035 条 entry 中 1023 条采用顶层 `ast_path`、12 条采用嵌套 `boundary`,且 loader 强制 1035/1035 均携 `cas_ref`;故 THEORY-ERRATUM(11.27)的案件主键 `(cas_ref, atom_id)` 对每条已摄入理论收据成立。raw 指纹绑定原始字节,normalized 指纹只容许 UTF-8 BOM、CRLF/CR→LF 与 Unicode NFC 的受限规范化;二者均为 `sha256:<64 lowercase hex>`。
+`Meta/Digestion/backfill/` 是 **Digestion Ledger** 唯一现役目录真源;旧 `Meta/BACKFILL.yaml` aggregate 与更早 anchor/disposition 格式经一次迁移只存于 git 历史,运行时无兼容读者、无双读。目录账本中每个 `source.toml` 恰含必填 `{source_id,path,atomizer,genre_registry_check,unregistered_genres}`;`acknowledged_stale` 仅在非空时出现,出现则元素非空且编码 canonical。其中 `genre_registry_check ∈ {collected,no-registry}`,`unregistered_genres` 为排序、去重且无空 token 的 raw token 列表;`no-registry` 必配空列表,`collected` 可空或非空,缺必填字段、额外字段或非 canonical 编码均拒。`source_id` 全局唯一、文件正名且文件名禁空格;每个原子 entry 的共同必选字段为 `{atom_id,fingerprints:{raw_sha256,normalized_sha256},cas_ref,coverage_gids,receipts,status}`,边界字段互斥二选一:嵌套 `boundary:{ast_path,start_byte,end_byte}` 或顶层 `ast_path`,无 entry 级可选字段。canonical 账本 3460 条 entry 中 3448 条采用顶层 `ast_path`、12 条采用嵌套 `boundary`,且 loader 强制 3460/3460 均携 `cas_ref`;故 THEORY-ERRATUM(11.27)的案件主键 `(cas_ref, atom_id)` 对每条已摄入理论收据成立。raw 指纹绑定原始字节,normalized 指纹只容许 UTF-8 BOM、CRLF/CR→LF 与 Unicode NFC 的受限规范化;二者均为 `sha256:<64 lowercase hex>`。
 
-〔勘注 2026-08-15·待裁决 open〕上述「Digestion Ledger 唯一真源」所指的物理路径 `Meta/BACKFILL.yaml` 已不存在（由提交 `5f34ebbd` 删除）；现役存储为 `Meta/Digestion/backfill/` 目录形态。对「Digestion Ledger 唯一真源」这句表述作何修订，属于 τ 更重的真源变更，须提请属主裁决；本勘注只记录冲突并将该问题保持为待裁决的 `open`，不代判唯一真源应为何者。
 
-**双轴状态由机器派生,status 只是受检投影,禁手写冒领。**迁移轴为 `{residual,partial,absorbed}`:仅完成 extract/identify 而无语义目标或收据进展者为 residual;已识别目标 GID 或已有迁移收据但合取未齐者为 partial;原子本地收据与全部 `chain_atoms` 均闭合者才为 absorbed。真值轴为 `{closed,tail,open}`:Lean 闭包 Closed 才是 closed;Tail 只有在 migration 已 absorbed 且 `tools/Authorizations/digestion-tail/<atom_id>.json` 之 canonical 工件逐字绑定 atom 与全部 Tail GID 时才投影为 **absorbed-tail**,否则一律 open;Tail 不计已证。SL-016 对 source 结构、边界可重现、指纹、目标 GID、收据、双轴重算一致性逐项 fail-closed,任一 stored status 与派生不同即红。
+**双轴状态由机器派生,status 只是受检投影,禁手写冒领。**迁移轴为 `{residual,partial,absorbed}`:仅完成 extract/identify 而无语义目标或收据进展者为 residual;已识别目标 GID 或已有迁移收据但合取未齐者为 partial;原子本地收据与全部 `chain_atoms` 均闭合者才为 absorbed。真值轴为 `{closed,tail,open}`:Lean 闭包 Closed 才是 closed;Tail 只有在 migration 已 absorbed 且 `tools/Authorizations/digestion-tail/<atom_id>.json` 之 canonical 工件逐字绑定 atom 与全部 Tail GID 时才投影为 **absorbed-tail**,否则一律 open;Tail 不计已证。SL-016 对 source 结构、边界可重现、指纹、目标 GID、收据、genre registry 投影一致性(重算的二态与 raw token 集须与 `source.toml` marker 逐字相等)、双轴重算一致性逐项 fail-closed,任一 stored status 或 genre marker 与派生不同即红;未注册 token 的非空集合本身不构成拒绝。
 
 **消化 = 语义权威迁移;删除只是收据齐备后的物理后果,禁以删代证。**理论原子可删除当且仅当以下合取全真:adapter 对该 unit 边界机器可重现;全部主张有逐 GID coverage receipt;目标 GID 存在;Lean 为 Closed,或已按上款获 absorbed-tail 授权;Scribe definition 被 `DocumentDefinitions` 发现且其 canonical Markdown 本轮现产成功,账本 Scribe receipt 的 `definition_sha256` 与当前 `.scribe.cs` 真源一致、保留的 `emission_sha256` 与本轮 producer 现产 `VerifiedScribeEmissions` 一致,且 declaration reference capability 逐 GID 对齐;tracked `.md` 与 run-local `tools/Generated/scribe-emissions.v1.json` 均为投影,不参与 `deletable` 判词,后者只作审计输出且不得自证执行成功;`unresolved_subitems` 为空;全部连锁迁移完成。缺一则 `deletable=false`,并由 `digest-status [--json]` 输出缺口。`Blueprint/**/*.scribe.cs` 虽由 FILEMAP 如实分类为程序集外 typed data,仍属既有 SL-022 保护面;已闭合的 `RESIDENCE-EPOCH` 只退休其五个精确 Golden 旧路径,不得借数据分类收缩 Blueprint predecessor contract。任一独立的 `ProtectedSurfaceVerificationRequired` 变更下,若基线 Scribe 因候选执行依赖演进而无法签发 capability,则以无 capability 继续 SL-016+SL-022:不得在同一基线下宣称相关原子 absorbed。无保护面变更的 producer-current 验证失败仍为 infrastructure 硬失败,不得借投影分类绕过发射验证。
 
-理论切分只有三个显式 adapter:`gict-v1`、`pzg-v1` 与 `observer-v1`;前二者识别编号 claim kind,后者只识别 OBSERVER-QUANTUM 现役方言的 24 个粗体题签与七个枚举散文段首,合计 31 个语义 locator,未知粗体题签(含前导空白)、六个已知前缀的标签漂移及重复 locator 直接失败。三者均以确定性 Markdown AST 产生 claim atom + heading context scaffold,分片可 byte-exact 重组,未知 claim kind 或重复 locator 歧义直接失败,不得演化为通用 adapter 平台。注册 adapter 替代基线 whole-source `coarse/source` 时,新细 claims 入 residual,粗项以 `acknowledged_stale` 退役但保留原 `cas_ref`;基线 `source_id` 与该粗项的 `atom_id`/`ast_path`/指纹/`cas_ref` identity 必须逐字留存,已结算 source 不得改回 `none`,变异、消失或任何 AST path/source 下的 coarse CAS clone 均拒,后续同 adapter 基线不得令其复活为 seen。摄入协议固定为 **extract → identify → subtract digested → admit residual**:registry 只在 raw 或受限 normalized 指纹唯一命中 ledger receipt 时自动判 seen 并 subtract;同一 incoming atom 多命中、一收据多命中、raw residual 指纹重复或 normalized residual 指纹重复均 fail-closed;语义改写即使沿用 AST path,只要指纹改变就以完整 raw SHA-256 签发新的唯一 `residual-open` atom ID。
+理论切分的现役 adapter 平台由 `generic-v1`、内建 `cone-v1`/`gict-v1`/`observer-v1`/`periodic-tree-v1`/`pzg-v1`/`wm-v1`,以及 `Meta/Digestion/atomizers.toml` 声明的 dialect 组成。带 genre registry 的 adapter 对每个可识别 claim 作全函数分类 `Known(kind) | Open(token)`:前者使用 canonical kind 定址;后者必须保留全部 claim 字节并逐 atom 进入 `residual-open`,地址唯一采用 `unregistered/<Uri.EscapeDataString(token)>/<原 number>`(无 number 的现役形态止于 escaped token),同时由同一次 resolution 投影 `source.toml` marker,`unregistered/` 为保留命名空间且不存 token 代表元。重复 locator、字节缺口、缺 H1、revision 断裂、非法 UTF-8 等结构歧义仍 fail-closed 并沿既有 coarse 规则处理;已有 fine 基线时绝不准退回 coarse。注册 adapter 替代基线 whole-source `coarse/source` 时,新细 claims 入 residual,粗项以 `acknowledged_stale` 退役但保留原 `cas_ref`;基线 `source_id` 与该粗项的 `atom_id`/`ast_path`/指纹/`cas_ref` identity 必须逐字留存,已结算 source 不得改回 `none`,变异、消失或任何 AST path/source 下的 coarse CAS clone 均拒,后续同 adapter 基线不得令其复活为 seen。摄入协议固定为 **extract → identify → subtract digested → admit residual**:registry 只在 raw 或受限 normalized 指纹唯一命中 ledger receipt 时自动判 seen 并 subtract;同一 incoming atom 多命中、一收据多命中、raw residual 指纹重复或 normalized residual 指纹重复均 fail-closed。既有 `unregistered/` 条目仅当 raw SHA-256 与当前 atom 完全相同、旧地址所编码的 exact token 现由该 source registry 解析为当前 canonical kind、且新地址在 source 内未被占用时,才以 `(source_id,atom_id)` 原位改写 `ast_path`,保持 `atom_id`/`cas_ref`/收据不变并移除 marker token;地址碰撞即红,不得推广为通用 rename。语义改写即使沿用 AST path,只要指纹改变就以完整 raw SHA-256 签发新的唯一 `residual-open` atom ID。
 
 ## 11.22 编排文件与一致性自检(deferred)
 编排文件 schema、模型升级流程与 spec ↔ 仓库漂移自检当前均为 `deferred`;登记于 2026-08-15,无执法机器,重启须先建门,不得冒领为现役 CI 作业。
@@ -519,7 +518,7 @@ canonical command 只有在返回 `0` 且 `OUT` 是满足指定 schema 的单个
 | 当前 projection 补偿与 ledger 共用分类器 | `tools/scripts/pr-shepherd.sh:100-131,175-209` |
 | Blueprint markdown 110 tracked files、242,880 bytes，且有仓内语义消费者 | GoalArtifact E1、E8 |
 | BACKFILL 是 tracked source/消化账本，不是 disposable projection | `CLAUDE.md` 第 6 条；GoalArtifact E6 |
-| `golden-ledger-repo-spec.md` 是 BACKFILL 的消化 source，条目使用绝对 `start_byte`/`end_byte` | `Meta/BACKFILL.yaml:32218-32226`；该 source 后续条目边界见 `32242-32246` 至少延续至 `32445-32446` |
+| `golden-ledger-repo-spec.md` 是现役目录账本的消化 source，12 个条目使用绝对 `start_byte`/`end_byte` | `Meta/Digestion/backfill/golden-ledger-spec-v7.11/source.toml` 与其 12 个 atom 文件；`Meta/BACKFILL.yaml:32218-32446` 仅为历史坐标 |
 | Freeze case ID 永久不可复用；Revoke 只移除 active，不移除 `allCaseIds` | `FrozenLedgerCandidateValidation.cs:48,77-85,158-165`；`FrozenLedgerHistoryValidation.cs:51,90-97,167-182` |
 
 ### 2.2 ASSUMED-UNVERIFIED 与阻断
@@ -538,7 +537,7 @@ canonical command 只有在返回 `0` 且 `OUT` 是满足指定 schema 的单个
 
 **父原则：治理须按「语义权威、所有权、可再生性与可逆性」，而非「物理居所」分类对象。** 当前仓库的物理居所、committed 字节、保护等级与写者拓扑，没有服从该原则：本应由程序与权威输入决定的可再生投影，被路径或 committed 副本反向赋予承重地位；本应由数据所有者维护的数据被编码进程序；具有真实权威的账本被实现成多写者共享线性尾。R1、R2、R3 的既有判词全部保留，并归为对该应然父原则的三种已冻结实然偏离；该父原则解释 R1、F1、F5、F6、F7，不单独解释 R2、R3，也不覆盖 F2/F3。
 
-R1：可再生全局 aggregate 入库，令独立 source change 争用相同路径。其字面强化实例是 `docs/develop/spec/golden-ledger-repo-spec.md` 为 `Meta/BACKFILL.yaml:32218-32219` 的消化 source，而 atom 边界以绝对 `start_byte`/`end_byte` 保存（首项 `32223-32226`，后续项如 `32243-32246`）：在 spec 中间插入 bytes 会使其后所有边界整体位移，即“派生数据入库”与脆弱位置锚合流。PR #806 的 merge `48194acd39767b418a7938181d81546a97f2eebb` 同时改 spec 与 BACKFILL；评审提供的“插入 1052 bytes 导致 24 对边界各移 1052、fingerprints 不变”本轮未从 merge diff 独立复算，标 `ASSUMED-UNVERIFIED AU-BACKFILL-OFFSET-806`；测法是对该 merge 的正确 first-parent 做逐 atom boundary/fingerprint 差分。无论该历史数字是否成立，当前 schema 的绝对 byte 边界已由上述行号直接证实。凡修改该 spec 的 PR 必须在同 PR 运行 `make ingest BASE=origin/dev` 重算 BACKFILL/CAS 派生项，禁止手改。
+R1：可再生全局 aggregate 入库，令独立 source change 争用相同路径。其历史强化实例是 `docs/develop/spec/golden-ledger-repo-spec.md` 曾为历史路径 `Meta/BACKFILL.yaml:32218-32219` 的消化 source，而 atom 边界以绝对 `start_byte`/`end_byte` 保存（首项 `32223-32226`，后续项如 `32243-32246`）：在 spec 中间插入 bytes 会使其后所有边界整体位移，即“派生数据入库”与脆弱位置锚合流。PR #806 的 merge `48194acd39767b418a7938181d81546a97f2eebb` 同时改 spec 与历史 aggregate BACKFILL；评审提供的“插入 1052 bytes 导致 24 对边界各移 1052、fingerprints 不变”本轮未从 merge diff 独立复算，标 `ASSUMED-UNVERIFIED AU-BACKFILL-OFFSET-806`；测法是对该 merge 的正确 first-parent 做逐 atom boundary/fingerprint 差分。无论该历史数字是否成立，现役目录 schema 的嵌套 boundary 仍使用绝对 byte 坐标。凡修改该 spec 的 PR 必须在同 PR 运行 `make ingest BASE=origin/dev` 重算目录账本/CAS 派生项，禁止手改。
 
 **F1 居所不变量：**`disposable-projection` 不得住于保护面前缀之下；分类严格引用 `CLAUDE.md` 第〇节的四项合取与未知/外部依赖 fail-closed 条款，不在本 SPEC 另写定义。P0-F1 当前只迁 `truth-graph`；`scribe-emissions` 的 base judge consumer 边界及 bootstrap 前置见 §12.1，不得以双次重建或当前全绿冒充完整依赖闭包（`anchor-catalog` 已整体退役，无 consumer 可迁）。实测该类计算物因住 `tools/` 前缀下而触发 `conservative 529s`，同类的 `Generated/DAG.md` 住顶层则从不触发。
 
@@ -546,9 +545,8 @@ R1：可再生全局 aggregate 入库，令独立 source change 争用相同路�
 
 **F7 补偿机制退场：**为「投影冲突」而建的补偿面（冲突分类器、自动重算链、FIFO 租约）的存在理由是被守错的对象；消除病因即按 §12.9 既有删除条件删除它们，不得优化或另立退场机制；实测 `pr-shepherd` 一族约 3,361 行，为生产 harness 的 7.6%，且并未补偿住。
 
-R2：`ExpectedMacros` 把 corpus 派生集合写进程序。R3：并行 freeze intent 争用一条 canonical linear tail。R4：BACKFILL 是 source/消化账本热点，性质未测，移出本 SPEC；§4 因而保持 `Meta/BACKFILL.yaml` 为 `kind=data`、`runtime_disposition="committed-source"`、conflict policy 为“随 source 同 PR 运行 canonical ingest 重算，禁手改”，与当前 FILEMAP `Meta/FILEMAP.toml:184-189` 一致。
+R2：`ExpectedMacros` 把 corpus 派生集合写进程序。R3：并行 freeze intent 争用一条 canonical linear tail。R4：现役 Digestion 目录账本是 source/消化账本热点，性质未测，移出本 SPEC；§4 因而保持 `Meta/Digestion/backfill/**` 为 `kind=data`、`runtime_disposition="committed-source"`、conflict policy 为“随 source 同 PR 运行 canonical ingest 重算，禁手改”，与当前 FILEMAP 对该现役 pattern 的分类一致。
 
-〔勘注 2026-08-15〕PR #1810 已于 2026-08-15 从 `Meta/FILEMAP.toml` 删除 `pattern = "Meta/BACKFILL.yaml"` 条目，因该路径无 tracked 对象；同一 PR 立 `FILEMAP-PATTERN-EMPTY` 谓词，禁止非 `run-local` 的 pattern 无对象，故该条目不能以原形态恢复。现役消化账本为 `Meta/Digestion/backfill/` 目录形态，其 FILEMAP 覆盖由 `Meta/Digestion/backfill/**` 与 `Meta/Digestion/ticket-index.toml` 两条条目承担。R4 原判词中「与当前 FILEMAP 一致」的引用坐标 `Meta/FILEMAP.toml:184-189` 已失效。
 
 〔勘注 2026-08-17〕`Meta/Digestion/ticket-index.toml` 已删除:该文件是 `case_id`→TASK GID 映射的手工镜像,而该映射完全可由全仓 `D5/**/*.lean` 的 TASK token 派生;守它的三重校验(目标存在、目标确实声明该 TASK、X_Frontier TASK 须在索引中)在派生形态下各自恒真,故无独立检测消失。实测该镜像本身覆盖 28/29——`D5-T0020` 住 `D5/S1/Depth/Finite.lean`(不在 X_Frontier)故从未被要求登记;改为派生后覆盖全仓。现役消化账本的 FILEMAP 覆盖由 `Meta/Digestion/backfill/**` 一条条目承担。
 
@@ -568,7 +566,7 @@ runtime_disposition = "committed-source|committed-ledger|run-local"
 artifact_id = "<stable-id|none>"
 ```
 
-现有 `kind`、`produced_by`、`consumed_by`、`verified_by` 继续表达 kind、producer、consumer、verifier。六个受守 aggregate 的既有精确 path entry 分别取得 `A-DAG/A-TRUTH/A-SCRIBE/A-ANCHOR/A-VALUES/A-FILEMAP`，`runtime_disposition="run-local"`；authority 分别指向现有 Lean/Scribe/anchor/value-kernel/FILEMAP source。echo residual 以 `Generated/echo-residuals/*.md` 单条 glob 登记，按 `source_id` 分片，是不入 Git 索引、按需由 producer 现算的 run-local 人读投影，不取得 artifact ID。Blueprint markdown 与 BACKFILL 的唯一现状均标 `committed-source`，frozen accepted event 路径标 `committed-ledger`。P0-BLUEPRINT 若通过，只能在其原子 PR 内直接改为最终 disposition；不得预埋迁移态。glob 匹配必须仍唯一；缺字段、未知枚举、重复 artifact_id 或 run-local path 无 producer/verifier均 schema reject。
+现有 `kind`、`produced_by`、`consumed_by`、`verified_by` 继续表达 kind、producer、consumer、verifier。六个受守 aggregate 的既有精确 path entry 分别取得 `A-DAG/A-TRUTH/A-SCRIBE/A-ANCHOR/A-VALUES/A-FILEMAP`，`runtime_disposition="run-local"`；authority 分别指向现有 Lean/Scribe/anchor/value-kernel/FILEMAP source。echo residual 以 `Generated/echo-residuals/*.md` 单条 glob 登记，按 `source_id` 分片，是不入 Git 索引、按需由 producer 现算的 run-local 人读投影，不取得 artifact ID。Blueprint markdown 与现役 Digestion 目录账本均标 `committed-source`，frozen accepted event 路径标 `committed-ledger`。P0-BLUEPRINT 若通过，只能在其原子 PR 内直接改为最终 disposition；不得预埋迁移态。glob 匹配必须仍唯一；缺字段、未知枚举、重复 artifact_id 或 run-local path 无 producer/verifier均 schema reject。
 
 §4 的人读表由 `make filemap --disposition-table` 从 FILEMAP 生成；P0-2 的 `artifacts` 数组由同一已解析对象生成。verifier 对生成表 bytes、数组 JCS digest 与 `filemap_sha256` 重算比对。不得维护 companion、硬编码 artifact 数组或让 `GeneratedArtifactInventory.All` 再声明 disposition；现有 inventory 若继续提供 producer dispatch，只能按 FILEMAP artifact_id join 并由 policy 断言集合相等。
 
@@ -712,7 +710,7 @@ REMOVED：未封闭的 P0-1 command 与 LOG_MANIFEST/event 分类协议。效果
 
 1. 禁 merge driver、union、rerere 与 ledger 文本 union。
 2. 禁继续提交跨 source 的全局 projection；六个受守 aggregate 维持其各自职责，echo residual 只提交按 `source_id` 分片的人读快照；禁通用 CAS/emitter 平台。
-3. 禁把 Blueprint/BACKFILL 一刀切出库；二者不在 PR-A。
+3. 禁把 Blueprint/现役 Digestion 目录账本一刀切出库；二者不在 PR-A。
 4. 禁削弱 C0、baseline admission、三 required checks 或 semantic obligation。
 5. 禁 CI 回写 disposable projection；source/ledger 只能走各自协议。
 6. 禁手写 `DocumentDefinitions`/macro 中央 snapshot。
@@ -749,7 +747,7 @@ REMOVED：通用 rollback 状态机、线上 404 observer、rollback dry-run gat
 
 ## 12.11 范围限制与 disputed findings
 
-Blueprint markdown 已证有仓内语义 consumer，移出 PR-A；只有独立 P0-BLUEPRINT 完成发布与 consumer 闭包后才可提案。BACKFILL 是 source/消化账本，归独立 P0-BACKFILL。本 SPEC 不声称解释近期所有 source conflict，也不建设长期迁移、artifact hosting 或 deploy rollback 平台。
+Blueprint markdown 已证有仓内语义 consumer，移出 PR-A；只有独立 P0-BLUEPRINT 完成发布与 consumer 闭包后才可提案。现役 Digestion 目录账本是 source/消化账本，归独立 P0-BACKFILL。本 SPEC 不声称解释近期所有 source conflict，也不建设长期迁移、artifact hosting 或 deploy rollback 平台。
 
 `disputed_findings`：
 

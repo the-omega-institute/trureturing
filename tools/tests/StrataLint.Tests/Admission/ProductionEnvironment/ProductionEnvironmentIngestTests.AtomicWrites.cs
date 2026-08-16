@@ -7,6 +7,29 @@ namespace StrataLint.Tests;
 public sealed partial class ProductionEnvironmentTests
 {
     [Fact]
+    public void IngestReplacementRejectsLegacySingleFileLedger()
+    {
+        var ledger = IngestLedger(
+            SyntheticNumberedAtomizer.Id,
+            Assert.Single(AtomizerRegistry.Atomize(
+                SyntheticNumberedAtomizer.Id,
+                Encoding.UTF8.GetBytes("# Synthetic\n\n**定理 1.1(A)**。claim。\n"),
+                DigestionTestSupport.Rules).Claims));
+        var raw = RawRepositorySnapshot.Create([
+            new RawRepositoryEntry(
+                BackfillInventoryLoader.RelativePath,
+                BackfillInventoryWriter.Write(ledger)),
+        ]);
+
+        var exception = Assert.Throws<InvalidOperationException>(() => IngestCommand.ReplaceLedger(
+            raw,
+            ledger,
+            ledger));
+
+        Assert.Equal("ingest does not write legacy digestion ledgers", exception.Message);
+    }
+
+    [Fact]
     public void AtomicLedgerReplacementPreservesExistingBytesWhenCommitFails()
     {
         using var temporary = new TemporaryDirectory();
@@ -132,9 +155,9 @@ public sealed partial class ProductionEnvironmentTests
         var atomized = PzgAtomizer.Atomize(sourceBytes, DigestionTestSupport.Rules);
         var parentAtom = Assert.Single(atomized.Claims);
         var children = Assert.Single(atomized.ClausePlans).Children;
-        var ledgerText = IngestLedger(AtomizerRegistry.PzgId, parentAtom)
-            .Replace("atom_id: old-receipt", "atom_id: parent", StringComparison.Ordinal);
-        var currentDocument = BackfillInventoryLoader.Load(ledgerText);
+        var currentDocument = MapOnlyEntry(
+            IngestLedger(AtomizerRegistry.PzgId, parentAtom),
+            entry => entry with { AtomId = "parent" });
         var source = Assert.Single(currentDocument.RequireDigestionSources());
         var parent = Assert.Single(source.Entries);
         var childIds = new[] { "pzg-child-1", "pzg-child-2" };
@@ -145,7 +168,6 @@ public sealed partial class ProductionEnvironmentTests
             Fingerprints = children[index].Fingerprints,
             CasRef = children[index].Fingerprints.RawSha256,
             Receipts = new DigestionReceipts([], [], [], [], null),
-            ReceiptSyntax = null,
         };
         var finalDocument = currentDocument.WithDigestionSources(
         [
@@ -156,25 +178,20 @@ public sealed partial class ProductionEnvironmentTests
                     parent with
                     {
                         Receipts = parent.Receipts with { ChainAtoms = [.. childIds] },
-                        ReceiptSyntax = null,
                     },
                     ChildEntry(0),
                     ChildEntry(1),
                 ],
             },
         ]);
-        var currentFiles = DirectoryLedgerTestSupport.Project(
-            new Dictionary<string, string>(StringComparer.Ordinal)
-            {
-                [BackfillInventoryLoader.RelativePath] = ledgerText,
-            });
+        var currentFiles = new Dictionary<string, string>(StringComparer.Ordinal);
+        DirectoryLedgerTestSupport.ReplaceWithProjection(currentFiles, currentDocument);
         var currentRaw = RawRepositorySnapshot.Create(currentFiles.Select(static pair =>
             RawRepositoryEntry.FromText(pair.Key, pair.Value)));
         var finalRaw = IngestCommand.ReplaceLedger(
             currentRaw,
             currentDocument,
-            finalDocument,
-            BackfillInventoryWriter.WriteForIngest(finalDocument));
+            finalDocument);
         var updates = IngestCommand.LedgerUpdates(currentRaw, finalRaw);
         var prefix = currentRaw.Entries.ToDictionary(static entry => entry.Path, StringComparer.Ordinal);
 

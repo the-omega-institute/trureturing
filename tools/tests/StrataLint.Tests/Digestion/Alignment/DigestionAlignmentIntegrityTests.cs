@@ -20,10 +20,10 @@ public sealed partial class DigestionAlignmentTests
             DigestionFingerprint.Compute(forgedBytes),
             []);
         var forgedCapture = DigestionCasStore.Capture(forgedBytes);
-        var baseline = BackfillInventoryLoader.Load(Ledger([], Entry("baseline-receipt", currentAtom)));
-        var candidate = BackfillInventoryLoader.Load(Ledger(
+        var baseline = Ledger([], Entry("baseline-receipt", currentAtom));
+        var candidate = Ledger(
             [],
-            CasEntry("forged-receipt", forgedAtom, forgedCapture.Reference)));
+            CasEntry("forged-receipt", forgedAtom, forgedCapture.Reference));
 
         var result = DigestionLedgerAligner.Evaluate(
             candidate,
@@ -44,12 +44,12 @@ public sealed partial class DigestionAlignmentTests
         var oldAtom = Atom("claim/historical", oldBytes);
         var currentAtom = Atom("claim/historical", currentBytes);
         var oldCapture = DigestionCasStore.Capture(oldAtom.RawBytes.AsSpan());
-        var baseline = BackfillInventoryLoader.Load(Ledger(
+        var baseline = Ledger(
             [],
-            CasEntry("historical-receipt", oldAtom, oldCapture.Reference)));
-        var candidate = BackfillInventoryLoader.Load(Ledger(
+            CasEntry("historical-receipt", oldAtom, oldCapture.Reference));
+        var candidate = Ledger(
             [],
-            CasEntry("historical-receipt", oldAtom, oldCapture.Reference)));
+            CasEntry("historical-receipt", oldAtom, oldCapture.Reference));
 
         var result = DigestionLedgerAligner.Evaluate(
             candidate,
@@ -70,12 +70,12 @@ public sealed partial class DigestionAlignmentTests
         var oldAtom = Atom("claim/historical", oldBytes);
         var currentAtom = Atom("claim/historical", currentBytes);
         var oldCapture = DigestionCasStore.Capture(oldAtom.RawBytes.AsSpan());
-        var baseline = BackfillInventoryLoader.Load(Ledger(
+        var baseline = Ledger(
             [],
-            CasEntry("historical-receipt", oldAtom, oldCapture.Reference)));
+            CasEntry("historical-receipt", oldAtom, oldCapture.Reference));
         var candidateEntry = CasEntry("historical-receipt", oldAtom, oldCapture.Reference)
-            .Replace("ast_path: claim/historical", "ast_path: claim/tampered", StringComparison.Ordinal);
-        var candidate = BackfillInventoryLoader.Load(Ledger([], candidateEntry));
+            with { AstPath = "claim/tampered" };
+        var candidate = Ledger([], candidateEntry);
 
         var result = DigestionLedgerAligner.Evaluate(
             candidate,
@@ -97,11 +97,8 @@ public sealed partial class DigestionAlignmentTests
         var currentAtom = Atom("claim/historical", currentBytes);
         var oldCapture = DigestionCasStore.Capture(oldAtom.RawBytes.AsSpan());
         var entry = CasEntry("historical-receipt", oldAtom, oldCapture.Reference);
-        var baseline = BackfillInventoryLoader.Load(Ledger([], entry));
-        var candidate = BackfillInventoryLoader.Load(Ledger([], entry).Replace(
-            "source_id: source",
-            "source_id: moved-source",
-            StringComparison.Ordinal));
+        var baseline = Ledger([], entry);
+        var candidate = WithSourceId(Ledger([], entry), "moved-source");
 
         var result = DigestionLedgerAligner.Evaluate(
             candidate,
@@ -122,10 +119,10 @@ public sealed partial class DigestionAlignmentTests
         var currentCapture = DigestionCasStore.Capture(currentAtom.RawBytes.AsSpan());
         var baselineBytes = Encoding.UTF8.GetBytes("baseline span");
         var baselineAtom = Atom("claim/baseline", baselineBytes);
-        var baseline = BackfillInventoryLoader.Load(Ledger([], Entry("baseline-receipt", baselineAtom)));
-        var candidate = BackfillInventoryLoader.Load(Ledger(
+        var baseline = Ledger([], Entry("baseline-receipt", baselineAtom));
+        var candidate = Ledger(
             [],
-            CasEntry("live-receipt", currentAtom, currentCapture.Reference)));
+            CasEntry("live-receipt", currentAtom, currentCapture.Reference));
 
         var result = DigestionLedgerAligner.Evaluate(
             candidate,
@@ -145,9 +142,9 @@ public sealed partial class DigestionAlignmentTests
         var currentBytes = Encoding.UTF8.GetBytes("# SYNTH-VOL\n\n**定理 1.1(A)**。rewritten。\n");
         var oldAtom = Assert.Single(AtomizerRegistry.Atomize(AtomizerRegistry.GictId, oldBytes, DigestionTestSupport.Rules).Claims);
         var oldCapture = DigestionCasStore.Capture(oldAtom.RawBytes.AsSpan());
-        var loaded = BackfillInventoryLoader.Load(Ledger(
+        var loaded = Ledger(
             [],
-            CasEntry("old-receipt", oldAtom, oldCapture.Reference)));
+            CasEntry("old-receipt", oldAtom, oldCapture.Reference));
         var source = Assert.Single(loaded.RequireDigestionSources());
         var oldEntry = Assert.Single(source.Entries) with
         {
@@ -194,9 +191,9 @@ public sealed partial class DigestionAlignmentTests
         var parentCapture = DigestionCasStore.Capture(parentBytes);
         var firstCapture = DigestionCasStore.Capture(first.RawBytes.AsSpan());
         var secondCapture = DigestionCasStore.Capture(second.RawBytes.AsSpan());
-        var baseline = BackfillInventoryLoader.Load(Ledger(
+        var baseline = Ledger(
             [],
-            CasEntry("parent", parent, parentCapture.Reference)));
+            CasEntry("parent", parent, parentCapture.Reference));
         var source = Assert.Single(baseline.RequireDigestionSources());
         var parentEntry = Assert.Single(source.Entries);
         var firstId = "gict-residual-" + firstCapture.Reference["sha256:".Length..];
@@ -214,7 +211,6 @@ public sealed partial class DigestionAlignmentTests
                     parentEntry with
                     {
                         Receipts = parentEntry.Receipts with { ChainAtoms = [firstId, secondId] },
-                        ReceiptSyntax = null,
                     },
                     firstEntry,
                     secondEntry,
@@ -269,9 +265,9 @@ public sealed partial class DigestionAlignmentTests
         var second = SpannedAtom(parent, 3, 6, 2);
         var parentCapture = DigestionCasStore.Capture(parent.RawBytes.AsSpan());
         var firstCapture = DigestionCasStore.Capture(first.RawBytes.AsSpan());
-        var baseline = BackfillInventoryLoader.Load(Ledger(
+        var baseline = Ledger(
             [],
-            CasEntry("parent", parent, parentCapture.Reference)));
+            CasEntry("parent", parent, parentCapture.Reference));
         var source = Assert.Single(baseline.RequireDigestionSources());
         var parentEntry = Assert.Single(source.Entries);
         var firstId = "gict-residual-" + firstCapture.Reference["sha256:".Length..];
@@ -284,7 +280,6 @@ public sealed partial class DigestionAlignmentTests
                     parentEntry with
                     {
                         Receipts = parentEntry.Receipts with { ChainAtoms = [firstId] },
-                        ReceiptSyntax = null,
                     },
                     ChildEntry(parentEntry, firstId, first, firstCapture.Reference),
                 ],
@@ -315,14 +310,24 @@ public sealed partial class DigestionAlignmentTests
     {
         var (sourceBytes, _, candidate, parentCapture, childCapture) = MalformedPzgClauseSubset();
         var fixture = new RuleFixture();
-        fixture.UseLegacyBackfill();
         fixture.AddBackfillTargets();
         fixture.Files[RuleFixture.FixtureDigestionSourcePath] = Encoding.UTF8.GetString(sourceBytes);
         fixture.Files[parentCapture.RelativePath] = Encoding.UTF8.GetString(parentCapture.Bytes.AsSpan());
         fixture.Files[childCapture.RelativePath] = Encoding.UTF8.GetString(childCapture.Bytes.AsSpan());
-        fixture.Files[BackfillInventoryLoader.RelativePath] = Encoding.UTF8.GetString(
-            BackfillInventoryWriter.WriteForIngest(candidate).AsSpan())
-            .Replace("docs/source.md", RuleFixture.FixtureDigestionSourcePath, StringComparison.Ordinal);
+        var candidateSource = Assert.Single(candidate.RequireDigestionSources());
+        DirectoryLedgerTestSupport.ReplaceWithProjection(
+            fixture.Files,
+            candidate.WithDigestionSources(
+            [
+                candidateSource with
+                {
+                    SourcePath = RuleFixture.FixtureDigestionSourcePath,
+                    Entries = candidateSource.Entries.Select(entry => entry with
+                    {
+                        SourcePath = RuleFixture.FixtureDigestionSourcePath,
+                    }).ToImmutableArray(),
+                },
+            ]));
 
         var evaluation = RuleCatalog.Default.EvaluateSingle(
             RuleId.CreateKnown(16),
@@ -356,9 +361,9 @@ public sealed partial class DigestionAlignmentTests
         var bytes = Encoding.UTF8.GetBytes("registered locator");
         var atom = Atom("theorem/clause/fixture", bytes);
         var captured = DigestionCasStore.Capture(bytes);
-        var ledger = BackfillInventoryLoader.Load(Ledger(
+        var ledger = Ledger(
             [],
-            CasEntry("registered-locator", atom, captured.Reference)));
+            CasEntry("registered-locator", atom, captured.Reference));
 
         var result = DigestionLedgerAligner.Evaluate(
             ledger,
@@ -382,22 +387,22 @@ public sealed partial class DigestionAlignmentTests
         Assert.Equal(2, claims.Length);
         var parentCapture = DigestionCasStore.Capture(claims[0].RawBytes.AsSpan());
         var childCapture = DigestionCasStore.Capture(claims[1].RawBytes.AsSpan());
-        var loaded = BackfillInventoryLoader.Load(Ledger(
+        var loaded = Ledger(
             [],
             CasEntry("parent", claims[0], parentCapture.Reference),
-            CasEntry("generic-child", claims[1], childCapture.Reference)));
+            CasEntry("generic-child", claims[1], childCapture.Reference));
         var source = Assert.Single(loaded.RequireDigestionSources());
         var parent = Assert.Single(source.Entries, static entry => entry.AtomId == "parent");
         var ledger = loaded.WithDigestionSources(
         [
             source with
             {
+                GenreRegistryCheck = GenreRegistryCheck.Collected([]),
                 Entries =
                 [
                     parent with
                     {
                         Receipts = parent.Receipts with { ChainAtoms = ["generic-child"] },
-                        ReceiptSyntax = null,
                     },
                     Assert.Single(source.Entries, static entry => entry.AtomId == "generic-child"),
                 ],
@@ -438,9 +443,9 @@ public sealed partial class DigestionAlignmentTests
         var parent = Assert.Single(atomized.Claims);
         Assert.Single(atomized.ClausePlans);
         var captured = DigestionCasStore.Capture(parent.RawBytes.AsSpan());
-        var loaded = BackfillInventoryLoader.Load(
-            Ledger([], CasEntry("parent", parent, captured.Reference))
-                .Replace(AtomizerRegistry.GictId, AtomizerRegistry.PzgId, StringComparison.Ordinal));
+        var loaded = WithAtomizer(
+            Ledger([], CasEntry("parent", parent, captured.Reference)),
+            AtomizerRegistry.PzgId);
         var source = Assert.Single(loaded.RequireDigestionSources());
         var absorbedParent = Assert.Single(source.Entries) with
         {
@@ -479,9 +484,9 @@ public sealed partial class DigestionAlignmentTests
         var first = plan.Children[0];
         var parentCapture = DigestionCasStore.Capture(parent.RawBytes.AsSpan());
         var firstCapture = DigestionCasStore.Capture(first.RawBytes.AsSpan());
-        var baseline = BackfillInventoryLoader.Load(
-            Ledger([], CasEntry("parent", parent, parentCapture.Reference))
-                .Replace(AtomizerRegistry.GictId, AtomizerRegistry.PzgId, StringComparison.Ordinal));
+        var baseline = WithAtomizer(
+            Ledger([], CasEntry("parent", parent, parentCapture.Reference)),
+            AtomizerRegistry.PzgId);
         var source = Assert.Single(baseline.RequireDigestionSources());
         var parentEntry = Assert.Single(source.Entries);
         var firstId = "pzg-residual-" + firstCapture.Reference["sha256:".Length..];
@@ -513,7 +518,6 @@ public sealed partial class DigestionAlignmentTests
             ProjectedStatus = new DigestionStatus(
                 DigestionMigrationState.Absorbed,
                 DigestionTruthState.Closed),
-            ReceiptSyntax = null,
             CasRef = atom.Fingerprints.RawSha256,
         };
         var candidate = baseline.WithDigestionSources(
@@ -568,9 +572,9 @@ public sealed partial class DigestionAlignmentTests
         var parentCapture = DigestionCasStore.Capture(parent.RawBytes.AsSpan());
         var firstCapture = DigestionCasStore.Capture(first.RawBytes.AsSpan());
         var invalidCapture = DigestionCasStore.Capture(invalidSecond.RawBytes.AsSpan());
-        var baseline = BackfillInventoryLoader.Load(Ledger(
+        var baseline = Ledger(
             [],
-            CasEntry("parent", parent, parentCapture.Reference)));
+            CasEntry("parent", parent, parentCapture.Reference));
         var source = Assert.Single(baseline.RequireDigestionSources());
         var parentEntry = Assert.Single(source.Entries);
         var firstId = "gict-residual-" + firstCapture.Reference["sha256:".Length..];
@@ -584,7 +588,6 @@ public sealed partial class DigestionAlignmentTests
                     parentEntry with
                     {
                         Receipts = parentEntry.Receipts with { ChainAtoms = [firstId, invalidId] },
-                        ReceiptSyntax = null,
                     },
                     ChildEntry(parentEntry, firstId, first, firstCapture.Reference),
                     ChildEntry(parentEntry, invalidId, invalidSecond, invalidCapture.Reference),
@@ -655,9 +658,9 @@ public sealed partial class DigestionAlignmentTests
         var first = Assert.Single(atomized.ClausePlans).Children[0];
         var parentCapture = DigestionCasStore.Capture(parent.RawBytes.AsSpan());
         var childCapture = DigestionCasStore.Capture(first.RawBytes.AsSpan());
-        var baseline = BackfillInventoryLoader.Load(
-            Ledger([], CasEntry("parent", parent, parentCapture.Reference))
-                .Replace(AtomizerRegistry.GictId, AtomizerRegistry.PzgId, StringComparison.Ordinal));
+        var baseline = WithAtomizer(
+            Ledger([], CasEntry("parent", parent, parentCapture.Reference)),
+            AtomizerRegistry.PzgId);
         var source = Assert.Single(baseline.RequireDigestionSources());
         var parentEntry = Assert.Single(source.Entries);
         var childId = "pzg-residual-" + childCapture.Reference["sha256:".Length..];
@@ -670,7 +673,6 @@ public sealed partial class DigestionAlignmentTests
                     parentEntry with
                     {
                         Receipts = parentEntry.Receipts with { ChainAtoms = [childId] },
-                        ReceiptSyntax = null,
                     },
                     ChildEntry(parentEntry, childId, first, childCapture.Reference),
                 ],
@@ -694,7 +696,6 @@ public sealed partial class DigestionAlignmentTests
             ProjectedStatus = new DigestionStatus(
                 DigestionMigrationState.Residual,
                 DigestionTruthState.Open),
-            ReceiptSyntax = null,
             CasRef = casRef,
         };
 

@@ -43,34 +43,36 @@ public sealed partial class TheoryAtomizerTests
     }
 
     [Fact]
-    public void UnknownClaimLeadsAreReportedAllAtOnceNotOneRunPerLead()
+    public void UnknownClaimLeadsAreAllAdmittedAndReportedInTheMarker()
     {
         var bytes = Encoding.UTF8.GetBytes(
             "# PZG\n\n**甲体 1.1(A)**。一。\n\n**乙体 2.2(B)**。二。\n\n**丙体 3.3(C)**。三。\n");
 
         var alignment = AlignUnregisteredGenres(bytes);
 
+        Assert.Empty(alignment.Findings);
         Assert.Equal(
-            "source source uses claim genres its dialect does not register: 丙体, 乙体, 甲体. "
-            + $"Register them in {TheoryAtomizerDataLoader.DataPath} or correct the volume.",
-            Assert.Single(alignment.Findings));
-        Assert.Empty(alignment.Residual);
+            ["unregistered/%E7%94%B2%E4%BD%93/1.1", "unregistered/%E4%B9%99%E4%BD%93/2.2", "unregistered/%E4%B8%99%E4%BD%93/3.3"],
+            alignment.Residual.Select(static item => item.Atom.AstPath).ToArray());
+        Assert.Equal(
+            ["丙体", "乙体", "甲体"],
+            alignment.GenreRegistryChecks["source"].UnregisteredGenres.ToArray());
         Assert.Empty(alignment.Fallbacks);
     }
 
     [Fact]
-    public void ARepeatedUnknownLeadIsNamedOnceInTheSingleFinding()
+    public void ARepeatedUnknownLeadIsNamedOnceInTheMarker()
     {
         var bytes = Encoding.UTF8.GetBytes(
             "# PZG\n\n**甲体 1.1(A)**。一。\n\n**甲体 2.2(B)**。二。\n\n**乙体 3.3(C)**。三。\n");
 
         var alignment = AlignUnregisteredGenres(bytes);
 
+        Assert.Empty(alignment.Findings);
+        Assert.Equal(3, alignment.Residual.Length);
         Assert.Equal(
-            "source source uses claim genres its dialect does not register: 乙体, 甲体. "
-            + $"Register them in {TheoryAtomizerDataLoader.DataPath} or correct the volume.",
-            Assert.Single(alignment.Findings));
-        Assert.Empty(alignment.Residual);
+            ["乙体", "甲体"],
+            alignment.GenreRegistryChecks["source"].UnregisteredGenres.ToArray());
         Assert.Empty(alignment.Fallbacks);
     }
 

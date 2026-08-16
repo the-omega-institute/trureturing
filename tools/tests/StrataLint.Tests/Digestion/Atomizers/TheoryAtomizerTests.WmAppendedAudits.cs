@@ -78,13 +78,13 @@ public sealed partial class TheoryAtomizerTests
         var captures = baseline.Claims
             .Select(static atom => DigestionCasStore.Capture(atom.RawBytes.AsSpan()))
             .ToArray();
-        var ledger = BackfillInventoryLoader.Load(
+        var ledger = DigestionAlignmentTests.WithAtomizer(
             DigestionAlignmentTests.Ledger(
-                    [],
-                    baseline.Claims
-                        .Select((atom, index) => DigestionAlignmentTests.Entry($"wm-v02-{index}", atom))
-                        .ToArray())
-                .Replace(AtomizerRegistry.GictId, AtomizerRegistry.WmId, StringComparison.Ordinal));
+                [],
+                baseline.Claims
+                    .Select((atom, index) => DigestionAlignmentTests.Entry($"wm-v02-{index}", atom))
+                    .ToArray()),
+            AtomizerRegistry.WmId);
         var sourceBytes = Encoding.UTF8.GetBytes(CanonicalWmV03Fixture());
         var snapshot = DigestionAlignmentTests.Snapshot(sourceBytes, captures);
 

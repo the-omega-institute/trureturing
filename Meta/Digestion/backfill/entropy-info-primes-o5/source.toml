@@ -1,3 +1,5 @@
 source_id = "entropy-info-primes-o5"
 path = "docs/develop/theory/ENTROPY-INFO-PRIMES-O5.md"
 atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

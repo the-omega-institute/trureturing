@@ -1,3 +1,5 @@
 source_id = "interface-v1"
 path = "docs/develop/theory/INTERFACE_PAPER.md"
 atomizer = "pzg-v1"
+genre_registry_check = "collected"
+unregistered_genres = []

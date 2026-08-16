@@ -46,31 +46,30 @@ public sealed partial class ProductionEnvironmentTests
             definitionHash,
             emissionPath,
             emissionHash);
-        var ledger = IngestLedger(atomizerId, atom)
-            .Replace(
-                "        coverage_gids: []",
-                $"        coverage_gids:\n          - {coveredGid}",
-                StringComparison.Ordinal)
-            .Replace(
-                "          coverage: []",
-                $$"""
-                          coverage:
-                            - gid: {{coveredGid}}
-                              source_sha256: {{atom.Fingerprints.RawSha256}}
-                              target_sha256: {{targetHash}}
-                """,
-                StringComparison.Ordinal)
-            .Replace(
-                "          scribe: []",
-                $$"""
-                          scribe:
-                            - gid: {{coveredGid}}
-                              definition_sha256: {{definitionHash}}
-                              emission_sha256: {{emissionHash}}
-                """,
-                StringComparison.Ordinal)
-            .Replace("          migration: residual", "          migration: absorbed", StringComparison.Ordinal)
-            .Replace("          truth: open", "          truth: closed", StringComparison.Ordinal);
+        var ledger = MapOnlyEntry(IngestLedger(atomizerId, atom), entry => entry with
+        {
+            CoverageGids = [coveredGid],
+            Receipts = entry.Receipts with
+            {
+                Coverage =
+                [
+                    new DigestionCoverageReceipt(
+                        coveredGid,
+                        atom.Fingerprints.RawSha256,
+                        targetHash),
+                ],
+                Scribe =
+                [
+                    new DigestionScribeReceipt(
+                        coveredGid,
+                        definitionHash,
+                        emissionHash),
+                ],
+            },
+            ProjectedStatus = new DigestionStatus(
+                DigestionMigrationState.Absorbed,
+                DigestionTruthState.Closed),
+        });
         var attestation = Encoding.UTF8.GetString(ScribeEmissionAttestation.Write([record]).AsSpan());
         var source = Encoding.UTF8.GetString(sourceBytes);
         var cas = Encoding.UTF8.GetString(captured.Bytes.AsSpan());
@@ -127,7 +126,7 @@ public sealed partial class ProductionEnvironmentTests
                 _ => outcome.GetType().FullName,
             });
 
-        var baselineDocument = BackfillInventoryLoader.Load(ledger);
+        var baselineDocument = ledger;
         var currentLean = Assert.IsType<LeanValidationOutcome.Accepted>(
             LeanClosureValidator.Validate(current, currentReport)).Capability;
         var currentStatus = Assert.Single(DigestionStatusEvaluator.Evaluate(
@@ -144,10 +143,16 @@ public sealed partial class ProductionEnvironmentTests
         const string changedEmission = "# Candidate changed a previously verified emission\n";
         var changedEmissionHash = DigestionFingerprint.Compute(
             Encoding.UTF8.GetBytes(changedEmission)).RawSha256;
-        var changedLedger = ledger.Replace(
-            emissionHash,
-            changedEmissionHash,
-            StringComparison.Ordinal);
+        var changedLedger = MapOnlyEntry(ledger, entry => entry with
+        {
+            Receipts = entry.Receipts with
+            {
+                Scribe = entry.Receipts.Scribe.Select(receipt => receipt with
+                {
+                    EmissionSha256 = changedEmissionHash,
+                }).ToImmutableArray(),
+            },
+        });
         var changedFiles = new Dictionary<string, string>(fixture.Files, StringComparer.Ordinal)
         {
             [emissionPath] = changedEmission,

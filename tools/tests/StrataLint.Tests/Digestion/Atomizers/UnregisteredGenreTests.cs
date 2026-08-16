@@ -4,17 +4,16 @@ using StrataLint.Engine;
 namespace StrataLint.Tests;
 
 /// <summary>
-/// Where the refusal of an unregistered genre token belongs.
+/// Where the open accounting of an unregistered genre token belongs.
 ///
 /// It used to live in the parser, which threw; ingest caught the throw and replaced the
 /// entire volume with one <c>coarse/source</c> atom — and exited zero. So one unwritten word
 /// cost pzg-v170 all 1354 of its addressed claims, and the run reported success. The lexicon
 /// was acting as a gate on a document it does not own, and the gate leaked.
 ///
-/// The invariant is real — every genre token must be registered — but it belongs to the
-/// layer that admits atoms, not to the one that reads bytes. So the parser addresses the
-/// claim by its own token and records it, and the ledger refuses. Both axes get stronger:
-/// the structure survives, and the run now fails instead of succeeding with a blob.
+/// Registration debt belongs to the ledger rather than the byte reader. The parser addresses
+/// the claim by its own token, and the ledger admits it only with an exact open projection.
+/// Both axes remain explicit: the structure survives, and omission of the debt still fails.
 /// </summary>
 public sealed class UnregisteredGenreTests
 {
@@ -29,7 +28,7 @@ public sealed class UnregisteredGenreTests
 
         var document = PzgAtomizer.Atomize(bytes, DigestionTestSupport.Rules);
 
-        Assert.Equal(["theorem/1.1", "未登记体/2.3"], Paths(document));
+        Assert.Equal(["theorem/1.1", "unregistered/%E6%9C%AA%E7%99%BB%E8%AE%B0%E4%BD%93/2.3"], Paths(document));
         Assert.Equal(bytes, document.Reassemble().ToArray());
     }
 
@@ -41,7 +40,7 @@ public sealed class UnregisteredGenreTests
 
         var document = GictAtomizer.Atomize(bytes, DigestionTestSupport.Rules);
 
-        Assert.Equal(["theorem/1.1", "未登记体/2.3"], Paths(document));
+        Assert.Equal(["theorem/1.1", "unregistered/%E6%9C%AA%E7%99%BB%E8%AE%B0%E4%BD%93/2.3"], Paths(document));
         Assert.Equal(bytes, document.Reassemble().ToArray());
     }
 
@@ -52,23 +51,40 @@ public sealed class UnregisteredGenreTests
 
         var document = AtomizerRegistry.Atomize("dialect:qdo", bytes, DigestionTestSupport.Rules);
 
-        Assert.Equal(["theorem/22.2", "未登记体/3.4"], Paths(document));
+        Assert.Equal(
+            ["theorem/22.2", "unregistered/%E6%9C%AA%E7%99%BB%E8%AE%B0%E4%BD%93/3.4"],
+            Paths(document));
         Assert.Equal(bytes, document.Reassemble().ToArray());
     }
 
     [Fact]
-    public void ObserverUnregisteredClaimLeadIsALedgerFindingWithoutACoarseFallback()
+    public void ObserverUnregisteredClaimLeadIsAdmittedWithoutACoarseFallback()
     {
         var bytes = Encoding.UTF8.GetBytes(
             "# Observer\n\n**定理(观察者代数的唯一形态)。** known。\n\n**新判词。** unknown。\n");
 
         var alignment = Align(AtomizerRegistry.ObserverId, bytes);
 
-        var finding = Assert.Single(alignment.Findings);
-        Assert.Contains("uses claim genres its dialect does not register", finding, StringComparison.Ordinal);
-        Assert.Contains("**新判词。**", finding, StringComparison.Ordinal);
+        Assert.Empty(alignment.Findings);
         Assert.Empty(alignment.Fallbacks);
-        Assert.Empty(alignment.Residual);
+        Assert.Equal(2, alignment.Residual.Length);
+        Assert.Contains(alignment.Residual, item =>
+            item.Atom.AstPath == "unregistered/%2A%2A%E6%96%B0%E5%88%A4%E8%AF%8D%E3%80%82%2A%2A");
+        Assert.Equal(
+            ["**新判词。**"],
+            alignment.GenreRegistryChecks["source"].UnregisteredGenres.ToArray());
+    }
+
+    [Fact]
+    public void ObserverUsesTheSharedUnregisteredNamespace()
+    {
+        var bytes = Encoding.UTF8.GetBytes("# Observer\n\n**新判词。** unknown。\n");
+
+        var document = ObserverAtomizer.Atomize(bytes, DigestionTestSupport.Rules);
+
+        Assert.Equal(
+            "unregistered/%2A%2A%E6%96%B0%E5%88%A4%E8%AF%8D%E3%80%82%2A%2A",
+            Assert.Single(document.Claims).AstPath);
     }
 
     [Fact]
@@ -90,7 +106,7 @@ public sealed class UnregisteredGenreTests
     }
 
     [Fact]
-    public void ConeUnregisteredClaimGenreIsALedgerFindingWithoutACoarseFallback()
+    public void ConeUnregisteredClaimGenreIsAdmittedWithoutACoarseFallback()
     {
         var bytes = Encoding.UTF8.GetBytes(
             "# 正锥纲领:形式化定理与证明\n\n"
@@ -100,11 +116,29 @@ public sealed class UnregisteredGenreTests
 
         var alignment = Align(AtomizerRegistry.ConeId, bytes);
 
-        var finding = Assert.Single(alignment.Findings);
-        Assert.Contains("uses claim genres its dialect does not register", finding, StringComparison.Ordinal);
-        Assert.Contains("猜想", finding, StringComparison.Ordinal);
+        Assert.Empty(alignment.Findings);
         Assert.Empty(alignment.Fallbacks);
-        Assert.Empty(alignment.Residual);
+        Assert.Equal(2, alignment.Residual.Length);
+        Assert.Contains(alignment.Residual, item =>
+            item.Atom.AstPath == "unregistered/%E7%8C%9C%E6%83%B3/3.6");
+        Assert.Equal(
+            ["猜想"],
+            alignment.GenreRegistryChecks["source"].UnregisteredGenres.ToArray());
+    }
+
+    [Fact]
+    public void ConeUsesTheSharedUnregisteredNamespace()
+    {
+        var bytes = Encoding.UTF8.GetBytes(
+            "# 正锥纲领:形式化定理与证明\n\n"
+            + "## 第三章 路径散度理论\n\n"
+            + "**猜想 3.6(未登记标题)[证]。**unknown。\n");
+
+        var document = ConeAtomizer.Atomize(bytes, DigestionTestSupport.Rules);
+
+        Assert.Equal(
+            "unregistered/%E7%8C%9C%E6%83%B3/3.6",
+            Assert.Single(document.Claims).AstPath);
     }
 
     [Fact]
@@ -133,7 +167,7 @@ public sealed class UnregisteredGenreTests
             "# PZG\n\n**定理 1.1**。一。\n\n**未登记体 2.1**。二。\n\n**引理 3.1**。三。\n");
 
         Assert.Equal(
-            ["theorem/1.1", "未登记体/2.1", "lemma/3.1"],
+            ["theorem/1.1", "unregistered/%E6%9C%AA%E7%99%BB%E8%AE%B0%E4%BD%93/2.1", "lemma/3.1"],
             Paths(PzgAtomizer.Atomize(bytes, DigestionTestSupport.Rules)));
     }
 
@@ -170,7 +204,7 @@ public sealed class UnregisteredGenreTests
 
     private static DigestionLedgerAlignment Align(string atomizerId, byte[] bytes)
     {
-        var ledger = BackfillInventoryLoader.Load(DigestionTestSupport.EmptyLedger(atomizerId));
+        var ledger = DigestionTestSupport.EmptyDocument(atomizerId);
         return DigestionLedgerAligner.Evaluate(
             ledger,
             DigestionTestSupport.Snapshot(("docs/source.md", bytes)),

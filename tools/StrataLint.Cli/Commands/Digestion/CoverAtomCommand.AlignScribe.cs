@@ -80,7 +80,6 @@ internal static partial class CoverAtomCommand
                             : receipt)
                     .ToImmutableArray(),
             },
-            ReceiptSyntax = null,
         };
         var planned = ReplaceEntry(document, options.AtomId, alignedEntry);
         var derived = DigestionStatusEvaluator.Evaluate(
@@ -92,12 +91,10 @@ internal static partial class CoverAtomCommand
             validateProjectedStatus: false);
         RequireNoConflictMarkedSources(derived);
         RequireAlignedScribeReceipt(EvaluationFor(derived, options.AtomId), options.Gid);
-        var finalBytes = BackfillInventoryWriter.WriteForIngest(planned);
         var finalRaw = IngestCommand.ReplaceLedger(
             currentRaw,
             document,
-            planned,
-            finalBytes);
+            planned);
         var finalSnapshot = Decode(finalRaw);
         var finalDocument = LoadDocument(finalSnapshot);
         var finalEvaluation = DigestionStatusEvaluator.Evaluate(

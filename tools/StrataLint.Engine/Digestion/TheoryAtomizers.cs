@@ -46,10 +46,59 @@ internal sealed record DigestionClausePlan(
     string ParentAstPath,
     ImmutableArray<DigestionAtom> Children);
 
+internal static class UnregisteredGenreLocator
+{
+    internal const string Prefix = "unregistered/";
+
+    internal static string ForToken(string token) =>
+        Prefix + Uri.EscapeDataString(token);
+
+    internal static string ForNumbered(string token, string number) =>
+        ForToken(token) + "/" + number;
+
+    internal static bool MatchesToken(string astPath, string token)
+    {
+        var tokenPath = ForToken(token);
+        return string.Equals(astPath, tokenPath, StringComparison.Ordinal)
+            || astPath.StartsWith(tokenPath + "/", StringComparison.Ordinal);
+    }
+
+    internal static bool TryGetToken(string astPath, out string token)
+    {
+        token = string.Empty;
+        if (!astPath.StartsWith(Prefix, StringComparison.Ordinal))
+        {
+            return false;
+        }
+
+        var suffix = astPath[Prefix.Length..];
+        var separator = suffix.IndexOf('/', StringComparison.Ordinal);
+        var encoded = separator < 0 ? suffix : suffix[..separator];
+        if (encoded.Length == 0)
+        {
+            return false;
+        }
+
+        token = Uri.UnescapeDataString(encoded);
+        return token.Length > 0
+            && string.Equals(Uri.EscapeDataString(token), encoded, StringComparison.Ordinal);
+    }
+}
+
 internal enum GenreRegistryCheckKind
 {
     Collected,
     NoRegistry,
+}
+
+internal static class GenreRegistryCheckNames
+{
+    internal static string Render(GenreRegistryCheckKind kind) => kind switch
+    {
+        GenreRegistryCheckKind.Collected => "collected",
+        GenreRegistryCheckKind.NoRegistry => "no-registry",
+        _ => throw new ArgumentOutOfRangeException(nameof(kind)),
+    };
 }
 
 /// <summary>
@@ -321,7 +370,9 @@ internal sealed class NumberedClaims
 
         var token = unknown.Groups["kind"].Value;
         unregistered.Add(token);
-        return token + "/" + unknown.Groups["number"].Value;
+        return UnregisteredGenreLocator.ForNumbered(
+            token,
+            unknown.Groups["number"].Value);
     }
 
     private string Kind(string value) =>

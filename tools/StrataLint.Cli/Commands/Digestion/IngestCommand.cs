@@ -26,7 +26,7 @@ internal static partial class IngestCommand
             var current = Decode(currentRaw);
             var baseline = Decode(baselineRaw);
             var document = LoadDocument(current);
-            var baselineDocument = LoadDocument(baseline);
+            var baselineDocument = LoadBaselineDocument(baseline);
             var plan = DigestionIngestor.Plan(document, current, baselineDocument);
             var crossVolumeClearanceGaps = RenderCrossVolumeClearanceGaps(
                 plan.Document,
@@ -36,9 +36,8 @@ internal static partial class IngestCommand
                 plan.Document,
                 current,
                 baseline);
-            var plannedBytes = BackfillInventoryWriter.WriteForIngest(plan.Document);
             var plannedRaw = AddCasObjects(
-                ReplaceLedger(currentRaw, document, plan.Document, plannedBytes),
+                ReplaceLedger(currentRaw, document, plan.Document),
                 plan.CasObjects);
             var plannedSnapshot = Decode(plannedRaw);
             var plannedDocument = LoadDocument(plannedSnapshot);
@@ -71,9 +70,8 @@ internal static partial class IngestCommand
                             .ToImmutableArray(),
                     })
                     .ToImmutableArray());
-            var finalBytes = BackfillInventoryWriter.WriteForIngest(refreshed);
             var finalRaw = AddCasObjects(
-                ReplaceLedger(currentRaw, document, refreshed, finalBytes),
+                ReplaceLedger(currentRaw, document, refreshed),
                 plan.CasObjects);
             var finalSnapshot = Decode(finalRaw);
             var finalDocument = LoadDocument(finalSnapshot);
@@ -95,6 +93,12 @@ internal static partial class IngestCommand
 
             var ledgerUpdates = LedgerUpdates(currentRaw, finalRaw);
             var changed = ledgerUpdates.Length > 0;
+            var openGenres = finalDocument.RequireDigestionSources()
+                .SelectMany(static source => source.GenreRegistryCheck.UnregisteredGenres.Select(token =>
+                    (source.SourceId, Token: token)))
+                .OrderBy(static item => item.SourceId, StringComparer.Ordinal)
+                .ThenBy(static item => item.Token, StringComparer.Ordinal)
+                .ToImmutableArray();
             var createdCasPaths = WriteCasObjects(repositoryRoot, plan.CasObjects);
             try
             {
@@ -111,8 +115,12 @@ internal static partial class IngestCommand
                 $"INGEST stale_acknowledged={plan.StaleAcknowledged} "
                 + $"residual_open_added={plan.ResidualOpenAdded} "
                 + $"coarse_fallbacks={plan.Fallbacks.Length} "
+                + $"open_genres={openGenres.Length} "
                 + $"cas_objects_written={createdCasPaths.Length} "
                 + $"ledger_changed={changed.ToString().ToLowerInvariant()}\n"
+                + string.Concat(openGenres.Select(static item =>
+                    $"INGEST_OPEN_GENRE source={item.SourceId} "
+                    + $"token={DigestStatusCommand.RenderDetail(item.Token)}\n"))
                 + string.Concat(plan.Fallbacks.Select(static fallback =>
                     $"INGEST_FALLBACK source={fallback.SourceId} reason={fallback.Reason}\n"))
                 + string.Concat(silentZeroWarnings.Select(static warning =>
@@ -232,26 +240,23 @@ internal static partial class IngestCommand
     private static BackfillInventoryDocument LoadDocument(RepositorySnapshot snapshot) =>
         BackfillInventoryLoader.Load(snapshot);
 
+    /// <summary>
+    /// The protected base predates the one-step required-marker migration, so it is read with
+    /// the historical keyset. Every candidate-side read stays on the strict loader.
+    /// </summary>
+    private static BackfillInventoryDocument LoadBaselineDocument(RepositorySnapshot snapshot) =>
+        BackfillInventoryLoader.LoadBaseline(snapshot);
+
     internal static RawRepositorySnapshot ReplaceLedger(
         RawRepositorySnapshot snapshot,
         BackfillInventoryDocument current,
-        BackfillInventoryDocument replacement,
-        ImmutableArray<byte> bytes)
+        BackfillInventoryDocument replacement)
     {
         var matches = snapshot.Entries.Count(static entry =>
             entry.Path == BackfillInventoryLoader.RelativePath);
-        if (matches == 1)
+        if (matches > 0)
         {
-            return RawRepositorySnapshot.Create(snapshot.Entries.Select(entry =>
-                entry.Path == BackfillInventoryLoader.RelativePath
-                    ? new RawRepositoryEntry(entry.Path, bytes)
-                    : entry));
-        }
-
-        if (matches != 0)
-        {
-            throw new InvalidOperationException(
-                $"snapshot contains duplicate {BackfillInventoryLoader.RelativePath} entries");
+            throw new InvalidOperationException("ingest does not write legacy digestion ledgers");
         }
 
         var entries = snapshot.Entries.ToDictionary(static entry => entry.Path, StringComparer.Ordinal);
@@ -342,6 +347,10 @@ internal static partial class IngestCommand
         DigestionLedgerSource replacement) =>
         string.Equals(current.SourcePath, replacement.SourcePath, StringComparison.Ordinal)
         && string.Equals(current.Atomizer, replacement.Atomizer, StringComparison.Ordinal)
+        && current.GenreRegistryCheck.Kind == replacement.GenreRegistryCheck.Kind
+        && current.GenreRegistryCheck.UnregisteredGenres.SequenceEqual(
+            replacement.GenreRegistryCheck.UnregisteredGenres,
+            StringComparer.Ordinal)
         && current.AcknowledgedStale.SequenceEqual(replacement.AcknowledgedStale);
 
     private static string ExistingAtomPath(

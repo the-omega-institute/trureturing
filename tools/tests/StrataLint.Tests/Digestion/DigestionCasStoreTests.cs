@@ -27,7 +27,7 @@ public sealed class DigestionCasStoreTests
     {
         var referenced = DigestionCasStore.Capture(Encoding.UTF8.GetBytes("referenced atom\n"));
         var orphan = DigestionCasStore.Capture(Encoding.UTF8.GetBytes("orphan atom\n"));
-        var document = BackfillInventoryLoader.Load(Ledger(referenced.Reference));
+        var document = Ledger(referenced.Reference);
         var snapshot = Snapshot(
             new RawRepositoryEntry(referenced.RelativePath, referenced.Bytes),
             new RawRepositoryEntry(orphan.RelativePath, orphan.Bytes));
@@ -42,7 +42,7 @@ public sealed class DigestionCasStoreTests
     {
         var captured = DigestionCasStore.Capture(Encoding.UTF8.GetBytes("bound atom\n"));
         var other = DigestionCasStore.Capture(Encoding.UTF8.GetBytes("other atom\n"));
-        var document = BackfillInventoryLoader.Load(Ledger(captured.Reference, other.Reference));
+        var document = Ledger(captured.Reference, other.Reference);
         var snapshot = Snapshot(new RawRepositoryEntry(captured.RelativePath, captured.Bytes));
 
         var evaluation = DigestionCasStore.Evaluate(document, snapshot);
@@ -57,7 +57,7 @@ public sealed class DigestionCasStoreTests
     {
         var captured = DigestionCasStore.Capture(Encoding.UTF8.GetBytes("expected atom\n"));
         var tampered = DigestionCasStore.Capture(Encoding.UTF8.GetBytes("tampered atom\n"));
-        var document = BackfillInventoryLoader.Load(Ledger(captured.Reference));
+        var document = Ledger(captured.Reference);
         var snapshot = Snapshot(new RawRepositoryEntry(captured.RelativePath, tampered.Bytes));
 
         var evaluation = DigestionCasStore.Evaluate(document, snapshot);
@@ -72,7 +72,7 @@ public sealed class DigestionCasStoreTests
     public void MissingReferencedBlobIsRejected()
     {
         var captured = DigestionCasStore.Capture(Encoding.UTF8.GetBytes("missing atom\n"));
-        var document = BackfillInventoryLoader.Load(Ledger(captured.Reference));
+        var document = Ledger(captured.Reference);
 
         var evaluation = DigestionCasStore.Evaluate(document, Snapshot());
 
@@ -86,7 +86,7 @@ public sealed class DigestionCasStoreTests
     {
         var bytes = ImmutableArray.Create<byte>(0xff, 0x00, 0xfe, (byte)'\n');
         var captured = DigestionCasStore.Capture(bytes.AsSpan());
-        var document = BackfillInventoryLoader.Load(Ledger(captured.Reference));
+        var document = Ledger(captured.Reference);
         var snapshot = Snapshot(new RawRepositoryEntry(captured.RelativePath, captured.Bytes));
 
         var evaluation = DigestionCasStore.Evaluate(document, snapshot);
@@ -104,29 +104,31 @@ public sealed class DigestionCasStoreTests
         Assert.IsType<SnapshotDecodeOutcome.Decoded>(
             SnapshotDecoder.Decode(RawRepositorySnapshot.Create(entries))).Snapshot;
 
-    private static string Ledger(string casRef, string? rawSha256 = null) => $$"""
-        schema_version: 3
-        ledger: theory-digestion-v1
-        sources:
-          - source_id: synthetic-source
-            path: docs/source.md
-            atomizer: {{AtomizerRegistry.NoAtomizerId}}
-            entries:
-              - atom_id: synthetic-atom
-                ast_path: theorem/1.1
-                fingerprints:
-                  raw_sha256: {{rawSha256 ?? casRef}}
-                  normalized_sha256: {{casRef}}
-                cas_ref: {{casRef}}
-                coverage_gids: []
-                receipts:
-                  coverage: []
-                  scribe: []
-                  unresolved_subitems: []
-                  chain_atoms: []
-                  tail_authorization: null
-                status:
-                  migration: residual
-                  truth: open
-        """;
+    private static BackfillInventoryDocument Ledger(string casRef, string? rawSha256 = null) =>
+        BackfillInventoryDocument.Create(
+        [
+            new DigestionLedgerSource(
+                "synthetic-source",
+                "docs/source.md",
+                AtomizerRegistry.NoAtomizerId,
+                [],
+                GenreRegistryCheck.NoGenreRegistry,
+                [
+                    new DigestionLedgerEntry(
+                        "synthetic-source",
+                        "docs/source.md",
+                        AtomizerRegistry.NoAtomizerId,
+                        "synthetic-atom",
+                        "theorem/1.1",
+                        null,
+                        new DigestionFingerprints(rawSha256 ?? casRef, casRef),
+                        [],
+                        new DigestionReceipts([], [], [], [], null),
+                        new DigestionStatus(
+                            DigestionMigrationState.Residual,
+                            DigestionTruthState.Open),
+                        casRef),
+                ]),
+        ],
+        []);
 }

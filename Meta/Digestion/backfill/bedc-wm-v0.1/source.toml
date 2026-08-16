@@ -1,3 +1,5 @@
 source_id = "bedc-wm-v0.1"
 path = "docs/develop/theory/BEDC-WM.md"
 atomizer = "wm-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

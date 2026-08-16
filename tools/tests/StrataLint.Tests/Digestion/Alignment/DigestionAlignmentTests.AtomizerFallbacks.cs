@@ -130,10 +130,10 @@ public sealed partial class DigestionAlignmentTests
             fingerprints,
             []);
         var captured = DigestionCasStore.Capture(sourceBytes.AsSpan());
-        var ledger = BackfillInventoryLoader.Load(Ledger(
+        var ledger = Ledger(
             [],
-            CasEntry("existing-receipt", existing, captured.Reference)));
-        var baseline = BackfillInventoryLoader.Load(Ledger([]));
+            CasEntry("existing-receipt", existing, captured.Reference));
+        var baseline = Ledger([]);
         var unrecognized = new AtomizedTheoryDocument(
             [],
             [new DigestionSlice(false, sourceBytes)],
@@ -159,9 +159,9 @@ public sealed partial class DigestionAlignmentTests
         var first = new DigestionAtom("theorem/1.1", 0, 1, atomBytes, fingerprints, []);
         var second = new DigestionAtom("theorem/1.2", 1, 2, atomBytes, fingerprints, []);
         var captured = DigestionCasStore.Capture(atomBytes.AsSpan());
-        var ledger = BackfillInventoryLoader.Load(Ledger(
+        var ledger = Ledger(
             [],
-            CasEntry("first-receipt", first, captured.Reference)));
+            CasEntry("first-receipt", first, captured.Reference));
         var atomized = new AtomizedTheoryDocument(
             [first, second],
             [new DigestionSlice(true, atomBytes), new DigestionSlice(true, atomBytes)],
@@ -192,16 +192,12 @@ public sealed partial class DigestionAlignmentTests
             DigestionFingerprint.ComputeOpaque(coarseBytes.AsSpan()),
             []);
         var captured = DigestionCasStore.Capture(coarseBytes.AsSpan());
-        var priorAtomizer = SyntheticNumberedAtomizer.Id;
-        var baseline = BackfillInventoryLoader.Load(Ledger(
+        var baseline = Ledger(
             [],
-            CasEntry("coarse-receipt", coarse, captured.Reference)));
-        var candidate = BackfillInventoryLoader.Load(
-            Ledger([], CasEntry("coarse-receipt", coarse, captured.Reference))
-                .Replace(
-                    $"atomizer: {priorAtomizer}",
-                    $"atomizer: {AtomizerRegistry.ObserverId}",
-                    StringComparison.Ordinal));
+            CasEntry("coarse-receipt", coarse, captured.Reference));
+        var candidate = WithAtomizer(
+            Ledger([], CasEntry("coarse-receipt", coarse, captured.Reference)),
+            AtomizerRegistry.ObserverId);
 
         var plan = DigestionIngestor.Plan(
             candidate,
@@ -230,8 +226,7 @@ public sealed partial class DigestionAlignmentTests
             DigestionReceiptAlignment.Stale,
             admitted.AlignmentFor("coarse-receipt"));
 
-        var migrated = BackfillInventoryLoader.Load(Encoding.UTF8.GetString(
-            BackfillInventoryWriter.WriteForIngest(plan.Document).AsSpan()));
+        var migrated = plan.Document;
         var settled = DigestionIngestor.Plan(
             migrated,
             Snapshot(sourceBytes, new[] { captured }.Concat(plan.CasObjects)),
@@ -258,27 +253,22 @@ public sealed partial class DigestionAlignmentTests
             DigestionFingerprint.ComputeOpaque(coarseBytes.AsSpan()),
             []);
         var captured = DigestionCasStore.Capture(coarseBytes.AsSpan());
-        var priorAtomizer = SyntheticNumberedAtomizer.Id;
-        var original = BackfillInventoryLoader.Load(Ledger(
+        var original = Ledger(
             [],
-            CasEntry("coarse-receipt", coarse, captured.Reference)));
-        var adapterCandidate = BackfillInventoryLoader.Load(
-            Ledger([], CasEntry("coarse-receipt", coarse, captured.Reference))
-                .Replace(
-                    $"atomizer: {priorAtomizer}",
-                    $"atomizer: {AtomizerRegistry.ObserverId}",
-                    StringComparison.Ordinal));
+            CasEntry("coarse-receipt", coarse, captured.Reference));
+        var adapterCandidate = WithAtomizer(
+            Ledger([], CasEntry("coarse-receipt", coarse, captured.Reference)),
+            AtomizerRegistry.ObserverId);
         var plan = DigestionIngestor.Plan(
             adapterCandidate,
             Snapshot(sourceBytes, [captured]),
             original);
-        var settledBytes = Encoding.UTF8.GetString(
-            BackfillInventoryWriter.WriteForIngest(plan.Document).AsSpan());
-        var settled = BackfillInventoryLoader.Load(settledBytes);
-        var revived = BackfillInventoryLoader.Load(settledBytes.Replace(
-            "    acknowledged_stale:\n      - coarse-receipt\n",
-            "    acknowledged_stale: []\n",
-            StringComparison.Ordinal));
+        var settled = plan.Document;
+        var settledSource = Assert.Single(settled.RequireDigestionSources());
+        var revived = settled.WithDigestionSources(
+        [
+            settledSource with { AcknowledgedStale = [] },
+        ]);
 
         var result = DigestionLedgerAligner.Evaluate(
             revived,
@@ -434,9 +424,9 @@ public sealed partial class DigestionAlignmentTests
             DigestionFingerprint.ComputeOpaque(coarseBytes.AsSpan()),
             []);
         var captured = DigestionCasStore.Capture(coarseBytes.AsSpan());
-        var baseline = BackfillInventoryLoader.Load(Ledger(
+        var baseline = Ledger(
             [],
-            CasEntry("coarse-receipt", coarse, captured.Reference)));
+            CasEntry("coarse-receipt", coarse, captured.Reference));
         var source = Assert.Single(baseline.RequireDigestionSources());
         const string renamedSourceId = "renamed-source";
         var candidate = baseline.WithDigestionSources(
@@ -484,22 +474,17 @@ public sealed partial class DigestionAlignmentTests
             DigestionFingerprint.ComputeOpaque(coarseBytes.AsSpan()),
             []);
         var captured = DigestionCasStore.Capture(coarseBytes.AsSpan());
-        var priorAtomizer = SyntheticNumberedAtomizer.Id;
-        var original = BackfillInventoryLoader.Load(Ledger(
+        var original = Ledger(
             [],
-            CasEntry("coarse-receipt", coarse, captured.Reference)));
-        var adapterCandidate = BackfillInventoryLoader.Load(
-            Ledger([], CasEntry("coarse-receipt", coarse, captured.Reference))
-                .Replace(
-                    $"atomizer: {priorAtomizer}",
-                    $"atomizer: {AtomizerRegistry.ObserverId}",
-                    StringComparison.Ordinal));
+            CasEntry("coarse-receipt", coarse, captured.Reference));
+        var adapterCandidate = WithAtomizer(
+            Ledger([], CasEntry("coarse-receipt", coarse, captured.Reference)),
+            AtomizerRegistry.ObserverId);
         var plan = DigestionIngestor.Plan(
             adapterCandidate,
             Snapshot(sourceBytes, [captured]),
             original);
-        var settled = BackfillInventoryLoader.Load(Encoding.UTF8.GetString(
-            BackfillInventoryWriter.WriteForIngest(plan.Document).AsSpan()));
+        var settled = plan.Document;
         return (sourceBytes, captured, plan, settled);
     }
 }

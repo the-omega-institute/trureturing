@@ -59,7 +59,6 @@ internal sealed record DigestionLedgerEntry(
     ImmutableArray<string> CoverageGids,
     DigestionReceipts Receipts,
     DigestionStatus ProjectedStatus,
-    BackfillReceiptSyntax? ReceiptSyntax,
     string CasRef);
 
 internal sealed record DigestionLedgerSource(
@@ -67,14 +66,5 @@ internal sealed record DigestionLedgerSource(
     string SourcePath,
     string Atomizer,
     ImmutableArray<string> AcknowledgedStale,
-    ImmutableArray<DigestionLedgerEntry> Entries)
-{
-    internal DigestionLedgerSource(
-        string sourceId,
-        string sourcePath,
-        string atomizer,
-        ImmutableArray<DigestionLedgerEntry> entries)
-        : this(sourceId, sourcePath, atomizer, [], entries)
-    {
-    }
-}
+    GenreRegistryCheck GenreRegistryCheck,
+    ImmutableArray<DigestionLedgerEntry> Entries);

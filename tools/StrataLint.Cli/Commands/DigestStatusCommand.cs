@@ -1,5 +1,6 @@
 using System.Collections.Immutable;
 using System.Text;
+using System.Text.Encodings.Web;
 using System.Text.Json;
 using StrataLint.Engine;
 
@@ -13,6 +14,7 @@ internal static class DigestStatusCommand
     {
         WriteIndented = true,
         PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower,
+        Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
     };
 
     internal static CommandResult Run(
@@ -29,10 +31,6 @@ internal static class DigestStatusCommand
         {
             var options = ParseArguments(arguments);
             var snapshot = Decode(repository.ReadCurrent());
-            // 双形态:旧单文件在则台账指纹沿用其原始字节(逐字节兼容既有收据);
-            // 目录形态以 canonical writer 的输出字节定义指纹。
-            var hasLegacyLedger =
-                snapshot.TryGetFile(BackfillInventoryLoader.RelativePath, out var ledgerFile);
 
             if (options.FormalizeCandidates)
             {
@@ -41,7 +39,7 @@ internal static class DigestStatusCommand
                 BackfillInventoryDocument? formalizeBaselineDocument = null;
                 if (options.BaselineRevision is not null)
                 {
-                    formalizeBaselineDocument = BackfillInventoryLoader.Load(
+                    formalizeBaselineDocument = BackfillInventoryLoader.LoadBaseline(
                         Decode(repository.ReadRevision(options.BaselineRevision)));
                 }
 
@@ -59,9 +57,7 @@ internal static class DigestStatusCommand
                     RenderFormalizeCandidates(
                         formalizeEvaluation,
                         snapshot,
-                        hasLegacyLedger
-                            ? ledgerFile!.RawBytes
-                            : BackfillInventoryWriter.Write(formalizeDocument),
+                        BackfillInventoryWriter.Write(formalizeDocument),
                         formalizeLeanReport),
                     string.Empty);
             }
@@ -75,7 +71,7 @@ internal static class DigestStatusCommand
             if (options.BaselineRevision is not null)
             {
                 baselineSnapshot = Decode(repository.ReadRevision(options.BaselineRevision));
-                baselineDocument = BackfillInventoryLoader.Load(baselineSnapshot);
+                baselineDocument = BackfillInventoryLoader.LoadBaseline(baselineSnapshot);
             }
 
             var evaluation = DigestionStatusEvaluator.Evaluate(
@@ -123,7 +119,7 @@ internal static class DigestStatusCommand
             snapshot,
             ValidateLean(snapshot, leanReport),
             scribeEmissionVerifier.Verify(leanReport),
-            BackfillInventoryLoader.Load(baseline),
+            BackfillInventoryLoader.LoadBaseline(baseline),
             baselineSnapshot: baseline);
         if (evaluation.Findings.Length > 0)
         {
@@ -185,12 +181,14 @@ internal static class DigestStatusCommand
             foreach (var gap in entry.Gaps)
             {
                 writer.WriteLine(
-                    $"GAP atom={entry.Entry.AtomId} code={gap.Code} detail={JsonSerializer.Serialize(gap.Detail)}");
+                    $"GAP atom={entry.Entry.AtomId} code={gap.Code} detail={RenderDetail(gap.Detail)}");
             }
         }
 
         return writer.ToString();
     }
+
+    internal static string RenderDetail(string detail) => JsonSerializer.Serialize(detail, JsonOptions);
 
     private static string RenderJson(DigestionLedgerEvaluation evaluation)
     {
