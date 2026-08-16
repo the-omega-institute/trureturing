@@ -269,22 +269,12 @@ public sealed class AdmissionWorkflowTests
 
         var reconciliation = namedSteps[reconciliationIndex].Node;
         var run = Assert.IsType<YamlScalarNode>(reconciliation.Children[new YamlScalarNode("run")]).Value!;
-        var commands = new[]
-        {
-            "projections --check --report \"$report\"",
-            "emit --check",
-            "emit-values --check",
-            "describe-report --check",
-        };
-        var previous = -1;
-        foreach (var command in commands)
-        {
-            var index = run.IndexOf(command, StringComparison.Ordinal);
-            Assert.True(index > previous, $"mathematical command is absent or out of order: {command}");
-            previous = index;
-        }
-        Assert.Contains("STRATALINT_LEAN_REPORT=\"$report\"", run, StringComparison.Ordinal);
+        Assert.Contains("tools/scripts/workflow/scribe-content-checks.sh", run, StringComparison.Ordinal);
+        Assert.Contains("steps.base.outputs.sha", run, StringComparison.Ordinal);
+        Assert.Contains("\"$report\" \"$scribe\" \"$base\"", run, StringComparison.Ordinal);
         Assert.Contains(".judge-binaries/scribe/StrataLint.Scribe.dll", run, StringComparison.Ordinal);
+        Assert.DoesNotContain("--changes-file", run, StringComparison.Ordinal);
+        Assert.DoesNotContain("--producer-paths-file", run, StringComparison.Ordinal);
         Assert.DoesNotContain("dotnet test", run, StringComparison.Ordinal);
         Assert.DoesNotContain("tools/tests", run, StringComparison.Ordinal);
     }

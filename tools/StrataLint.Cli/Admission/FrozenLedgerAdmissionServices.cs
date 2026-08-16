@@ -90,6 +90,7 @@ internal sealed class ProductionFrozenLedgerAdmissionServices : IFrozenLedgerAdm
 
         var inputs = ImmutableArray.CreateBuilder<FrozenLedgerInput>();
         var environmentReferences = ImmutableArray.CreateBuilder<FrozenEnvironmentReference>();
+        var requiredAncestorCommitOids = ImmutableArray.CreateBuilder<string>();
         foreach (var item in loaded)
         {
             try
@@ -111,6 +112,10 @@ internal sealed class ProductionFrozenLedgerAdmissionServices : IFrozenLedgerAdm
                 else if (item.Input is { } input)
                 {
                     inputs.Add(input);
+                    if (item.EventType == "Freeze")
+                    {
+                        requiredAncestorCommitOids.Add(input.BaseCommitOid);
+                    }
                 }
             }
             catch (Exception exception) when (exception is FormatException
@@ -126,7 +131,8 @@ internal sealed class ProductionFrozenLedgerAdmissionServices : IFrozenLedgerAdm
         var references = FrozenLedgerReferenceSet.Create(
             inputs.ToImmutable(),
             environmentReferences.ToImmutable(),
-            []);
+            [],
+            requiredAncestorCommitOids);
         TrustedFrozenGitReferences trusted;
         try
         {

@@ -8,7 +8,7 @@ namespace StrataLint.Engine;
 
 public static class LeanAxiomFacts
 {
-    private static readonly ImmutableHashSet<string> StandardAxioms =
+    public static ImmutableHashSet<string> StandardAxioms { get; } =
         ImmutableHashSet.Create(StringComparer.Ordinal, "propext", "Classical.choice", "Quot.sound");
 
     public static bool IsStandard(string axiom) => StandardAxioms.Contains(axiom);
