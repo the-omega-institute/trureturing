@@ -41,6 +41,10 @@ internal static class TaskBlockReferenceSyntax
         // /-, -/, --, or " bytes inert are comments, quoted strings/chars, raw strings,
         // guillemet identifiers, and interpolated-string literal chunks. Numerals, ordinary
         // identifiers, and other tokens do not change those bytes and are intentionally out of scope.
+        // Ambiguous literal introducers enter their skip state without guessing Lean token starts.
+        // A false entry can only suppress a TASK count, which ValidateOpenCases rejects as a
+        // DanglingCaseReference; a missed entry could admit inert TASK text, so suppression is
+        // the fail-closed direction.
         for (var index = 0; index < text.Length;)
         {
             var current = text[index];
@@ -153,7 +157,7 @@ internal static class TaskBlockReferenceSyntax
     private static bool TrySkipRawString(string text, int index, out int end)
     {
         end = index;
-        if (text[index] != 'r' || !IsTokenStart(text, index))
+        if (text[index] != 'r')
         {
             return false;
         }
@@ -207,8 +211,7 @@ internal static class TaskBlockReferenceSyntax
     private static bool IsCharacterLiteralStart(string text, int index)
     {
         return index + 1 < text.Length
-            && text[index + 1] != '\''
-            && IsTokenStart(text, index);
+            && text[index + 1] != '\'';
     }
 
     private static int SkipCharacterLiteral(string text, int index)
@@ -244,19 +247,13 @@ internal static class TaskBlockReferenceSyntax
             index++;
         }
 
-        return index < text.Length && text[index] == '\'' ? index + 1 : index;
-    }
+        if (index < text.Length && text[index] == '\'')
+        {
+            return index + 1;
+        }
 
-    private static bool IsTokenStart(string text, int index)
-    {
-        return index == 0 || !IsIdentifierContinuation(text[index - 1]);
-    }
-
-    private static bool IsIdentifierContinuation(char value)
-    {
-        return char.IsLetterOrDigit(value)
-            || value is '_' or '\'' or '!' or '?' or '»'
-            || value >= 0x80;
+        // Without the expected closer, token ownership is ambiguous; suppress the remaining scan.
+        return text.Length;
     }
 
     private static int SkipGuillemetIdentifier(string text, int index)
@@ -271,9 +268,8 @@ internal static class TaskBlockReferenceSyntax
 
     private static bool IsInterpolatedStringStart(string text, int quoteIndex)
     {
-        return quoteIndex > 1
-            && text[quoteIndex - 1] == '!'
-            && IsIdentifierContinuation(text[quoteIndex - 2]);
+        return quoteIndex > 0
+            && text[quoteIndex - 1] == '!';
     }
 
     private static int SkipInterpolatedString(string text, int index)

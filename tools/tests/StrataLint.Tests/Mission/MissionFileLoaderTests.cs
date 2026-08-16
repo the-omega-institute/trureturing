@@ -255,6 +255,22 @@ public sealed class MissionFileLoaderTests
     }
 
     [Fact]
+    public void AmbiguousCharacterLiteralIntroducerCannotRevealATaskBlock()
+    {
+        var target = ReplaceNoveltyTaskBlock("""
+            def staleMissionMarker := identifier'"
+            /-- TASK D5-T0040
+                This text follows an ambiguous character-literal introducer. -/
+            """);
+
+        var invalid = Assert.IsType<MissionLoadOutcome.Invalid>(
+            LoadRepository(Encoding.UTF8.GetBytes(ValidMission), target));
+
+        Assert.Equal(MissionLoadErrorCode.DanglingCaseReference, invalid.Error.Code);
+        Assert.Contains("D5-T0040", invalid.Error.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
     public void TaskBlockTextInsideAZeroHashRawStringCannotSatisfyAnOpenCaseReference()
     {
         var target = ReplaceNoveltyTaskBlock("""
@@ -279,6 +295,24 @@ public sealed class MissionFileLoaderTests
             /-- TASK D5-T0040
                 This text is inside a multi-hash raw string. -/
             "##
+            """);
+
+        var invalid = Assert.IsType<MissionLoadOutcome.Invalid>(
+            LoadRepository(Encoding.UTF8.GetBytes(ValidMission), target));
+
+        Assert.Equal(MissionLoadErrorCode.DanglingCaseReference, invalid.Error.Code);
+        Assert.Contains("D5-T0040", invalid.Error.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void TaskBlockTextInsideANumeralAdjacentRawStringCannotSatisfyAnOpenCaseReference()
+    {
+        var target = ReplaceNoveltyTaskBlock("""
+            def staleMissionMarker := 1r##"
+            An unescaped " does not close this raw string.
+            /-- TASK D5-T0040
+                This text is inside a numeral-adjacent raw string. -/
+            "## -- " keeps the legacy scanner synchronized after the raw terminator.
             """);
 
         var invalid = Assert.IsType<MissionLoadOutcome.Invalid>(
