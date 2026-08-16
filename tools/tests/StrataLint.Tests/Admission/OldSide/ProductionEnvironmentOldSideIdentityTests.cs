@@ -75,7 +75,7 @@ public sealed partial class ProductionEnvironmentTests
     //   保守比较问「候选在扩展哪个受保护状态」→ protected base;
     //   append-only 保留性问「候选是否删了它出发时就有的东西」→ **fork point(merge-base)**。
     // 二者被同一个 `baseline` 快照回答,于是 #1146 之后,dev 在候选分叉之后追加的任何
-    // append-only 条目(Chronicle、尸检、冻结账本证书、Digestion CAS)都会被读成
+    // append-only 条目(Chronicle、冻结账本证书、Digestion CAS)都会被读成
     // 「候选删除了受保护之物」。
     //
     // 生产实证:PR #1150 撞上
