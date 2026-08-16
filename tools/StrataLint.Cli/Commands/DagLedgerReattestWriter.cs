@@ -86,7 +86,8 @@ internal static class DagLedgerReattestWriter
 
             var newFiles = DagLedgerAppendWriter.BuildNewEventFiles(
                 generatedSyntax.Lines,
-                context.Baseline.Events.Length);
+                context.Baseline.Events.Length,
+                currentBaselineSyntax);
             var simulatedFiles = baselineFiles.AddRange(newFiles);
             var simulatedEvents = LoadFileEvents(simulatedFiles, "prospective frozen ledger");
             var simulatedSyntax = DagLedgerCommandPreparation.LoadLedgerFiles(
