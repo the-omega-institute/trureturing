@@ -603,14 +603,6 @@ internal static class FileMapPolicy
         return findings;
     }
 
-    internal static IReadOnlyList<string> ResidenceViolations(string repositoryRoot)
-    {
-        ArgumentException.ThrowIfNullOrWhiteSpace(repositoryRoot);
-        return ResidenceViolations(
-            FileMapLoader.LoadRepository(repositoryRoot),
-            TrackedPaths(repositoryRoot));
-    }
-
     internal static IReadOnlyList<string> ResidenceViolations(
         FileMapManifest manifest,
         IEnumerable<string> paths)

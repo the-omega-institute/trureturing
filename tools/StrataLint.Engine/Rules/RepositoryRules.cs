@@ -55,10 +55,6 @@ internal static partial class RepositoryRules
         "anomal|exception|failure|(?<!ex)tension",
         RegexOptions.IgnoreCase | RegexOptions.CultureInvariant);
 
-    private static readonly Regex Sha256Pattern = new(
-        "^[0-9a-f]{64}$",
-        RegexOptions.CultureInvariant);
-
     private static readonly ImmutableHashSet<string> AnomalySchemaKeys =
         ImmutableHashSet.Create(
             StringComparer.Ordinal,
