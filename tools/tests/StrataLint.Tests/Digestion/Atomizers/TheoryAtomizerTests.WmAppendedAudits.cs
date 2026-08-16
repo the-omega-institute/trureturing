@@ -75,29 +75,44 @@ public sealed partial class TheoryAtomizerTests
             AtomizerRegistry.WmId,
             Encoding.UTF8.GetBytes(CanonicalWmV02Fixture()),
             DigestionTestSupport.Rules);
-        var ledger = baseline.Claims
-            .Select((atom, index) => LedgerEntry(
-                $"wm-v02-{index}",
-                AtomizerRegistry.WmId,
-                atom))
+        var captures = baseline.Claims
+            .Select(static atom => DigestionCasStore.Capture(atom.RawBytes.AsSpan()))
             .ToArray();
+        var ledger = BackfillInventoryLoader.Load(
+            DigestionAlignmentTests.Ledger(
+                    [],
+                    baseline.Claims
+                        .Select((atom, index) => DigestionAlignmentTests.Entry($"wm-v02-{index}", atom))
+                        .ToArray())
+                .Replace(AtomizerRegistry.GictId, AtomizerRegistry.WmId, StringComparison.Ordinal));
+        var sourceBytes = Encoding.UTF8.GetBytes(CanonicalWmV03Fixture());
+        var snapshot = DigestionAlignmentTests.Snapshot(sourceBytes, captures);
 
-        var result = TheoryIngestion.AdmitResidual(
-            AtomizerRegistry.WmId,
-            Encoding.UTF8.GetBytes(CanonicalWmV03Fixture()),
+        var alignment = DigestionLedgerAligner.Evaluate(
             ledger,
-            DigestionTestSupport.Rules);
+            snapshot,
+            ledger,
+            DigestionAlignmentMode.Ingest);
+        var plan = DigestionIngestor.Plan(ledger, snapshot, ledger);
 
-        Assert.Equal(baseline.Claims.Length, result.Seen.Length);
-        Assert.All(result.Seen, static seen =>
-            Assert.Equal(DigestionFingerprintMatch.Raw, seen.Match));
+        Assert.Empty(alignment.Findings);
+        Assert.All(ledger.RequireDigestionEntries(), entry => Assert.Equal(
+            DigestionReceiptAlignment.Seen,
+            alignment.AlignmentFor(entry.AtomId)));
+        Assert.Equal(2, plan.ResidualOpenAdded);
+        var baselineAtomIds = ledger.RequireDigestionEntries()
+            .Select(static entry => entry.AtomId)
+            .ToHashSet(StringComparer.Ordinal);
+        var residual = plan.Document.RequireDigestionEntries()
+            .Where(entry => !baselineAtomIds.Contains(entry.AtomId))
+            .ToArray();
         Assert.Equal(
             ["audit/v0.3", "version/v0.3"],
-            result.Residual.Select(static item => item.Atom.AstPath).Order(StringComparer.Ordinal));
-        Assert.All(result.Residual, static residual =>
+            residual.Select(static entry => entry.AstPath).Order(StringComparer.Ordinal));
+        Assert.All(residual, static entry =>
         {
-            Assert.Equal(DigestionMigrationState.Residual, residual.ProjectedStatus.Migration);
-            Assert.Equal(DigestionTruthState.Open, residual.ProjectedStatus.Truth);
+            Assert.Equal(DigestionMigrationState.Residual, entry.ProjectedStatus.Migration);
+            Assert.Equal(DigestionTruthState.Open, entry.ProjectedStatus.Truth);
         });
     }
 

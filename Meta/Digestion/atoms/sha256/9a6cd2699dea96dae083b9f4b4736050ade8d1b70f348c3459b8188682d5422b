@@ -1,0 +1,23 @@
+### 定义 37.10（自配对锥）
+
+令 \(\mathcal T\) 为一个 \(\ast\)-空间，定义：
+
+\[
+\boxed{
+\mathcal T_+
+=
+\left\{
+\sum_{j=1}^m g_j^\ast g_j:
+m<\infty
+\right\}.
+}
+\]
+
+线性泛函 \(\Omega\) 为正，当且仅当：
+
+\[
+\Omega(g^\ast g)\ge0
+\qquad
+\forall g.
+\]
+

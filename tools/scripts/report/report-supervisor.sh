@@ -23,7 +23,7 @@ done
 [[ $# -gt 0 ]] || { echo "report-supervisor: command is required after --" >&2; exit 2; }
 
 REPOSITORY_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../../.." && pwd -P)"
-PERF_EVENT_LIB="$REPOSITORY_ROOT/tools/scripts/perf-event-lib.sh"
+PERF_EVENT_LIB="$REPOSITORY_ROOT/tools/scripts/lib/perf-event-lib.sh"
 [[ -r "$PERF_EVENT_LIB" ]] || exit 2
 source "$PERF_EVENT_LIB"
 if [[ -d /private/tmp ]]; then DEFAULT_HOST_TMP=/private/tmp; else DEFAULT_HOST_TMP=/tmp; fi

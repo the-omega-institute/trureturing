@@ -197,7 +197,10 @@ internal sealed class AtomizedTheoryDocument
 
     internal DigestionAtom ResolveClaim(string astPath)
     {
-        var exact = Claims.Where(atom => atom.AstPath == astPath).ToArray();
+        var exact = Claims
+            .Concat(ClausePlans.SelectMany(static plan => plan.Children))
+            .Where(atom => atom.AstPath == astPath)
+            .ToArray();
         if (exact.Length == 1)
         {
             return exact[0];
@@ -370,12 +373,31 @@ internal static class PeriodicTreeAtomizer
         "^(?<number>[0-9]+)\\.\\s+",
         RegexOptions.CultureInvariant);
 
-    internal static AtomizedTheoryDocument Atomize(ReadOnlySpan<byte> bytes, TheoryAtomizerRules _) =>
-        MarkdownAstAtomizer.Atomize(
+    internal static AtomizedTheoryDocument Atomize(ReadOnlySpan<byte> bytes, TheoryAtomizerRules _)
+    {
+        var document = MarkdownAstAtomizer.Atomize(
             bytes,
             static _ => null,
             static () => GenreRegistryCheck.NoGenreRegistry,
             identifyHeading: IdentifyHeading);
+        if (document.Claims.Length > 0 || bytes.IsEmpty)
+        {
+            return document;
+        }
+
+        var rawBytes = ImmutableArray.CreateRange(bytes.ToArray());
+        var atom = new DigestionAtom(
+            "coarse/source",
+            0,
+            rawBytes.Length,
+            rawBytes,
+            DigestionFingerprint.ComputeOpaque(rawBytes.AsSpan()),
+            []);
+        return new AtomizedTheoryDocument(
+            [atom],
+            [new DigestionSlice(true, rawBytes)],
+            GenreRegistryCheck.NoGenreRegistry);
+    }
 
     private static string? IdentifyHeading(string heading)
     {

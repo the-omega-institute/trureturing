@@ -14,17 +14,6 @@ internal sealed record DagLedgerCommandContext(
     LeanAxiomReport Report,
     RepositorySnapshot Snapshot);
 
-internal sealed record DagLedgerRecoordinateContext(
-    string LedgerPath,
-    byte[] BaselineBytes,
-    FrozenLedgerConsistent Baseline,
-    FrozenMaterialCatalog Catalog,
-    LeanAxiomReport CandidateReport,
-    RepositorySnapshot CandidateSnapshot,
-    LeanAxiomReport OldReport,
-    RepositorySnapshot OldSnapshot,
-    FrozenEnvironmentPins OldEnvironment);
-
 internal sealed record DagLedgerCandidateMaterial(
     string LedgerPath,
     byte[] BaselineBytes,
@@ -57,7 +46,9 @@ internal static class DagLedgerCommandPreparation
     {
         var candidate = PrepareCandidate(repositoryRoot, repository, leanReportSource);
         var baselineReferences = ScanReferences(candidate.BaselineSyntax, "existing frozen ledger");
-        var trustedBaselineReferences = repository.ValidateFrozenReferences(baselineReferences);
+        var trustedBaselineReferences = TrustedFrozenGitReferences.CreateForTrustedAdapter(
+            baselineReferences.Inputs,
+            baselineReferences.EnvironmentReferences);
         var baseline = FrozenLedger.ValidateHistoryPrefix(
             candidate.BaselineSyntax,
             candidate.Catalog,
@@ -75,49 +66,6 @@ internal static class DagLedgerCommandPreparation
             candidate.Catalog,
             candidate.Report,
             candidate.Snapshot);
-    }
-
-    internal static DagLedgerRecoordinateContext PrepareRecoordinate(
-        string repositoryRoot,
-        IRepositoryGateway repository,
-        string oldEnvironmentRevision,
-        string oldLeanReport,
-        string candidateLeanReport)
-    {
-        var candidate = PrepareCandidate(
-            repositoryRoot,
-            repository,
-            new FileLeanReportSource(candidateLeanReport));
-        var baselineReferences = ScanReferences(candidate.BaselineSyntax, "existing frozen ledger");
-        var trustedBaselineReferences = repository.ValidateFrozenReferences(baselineReferences);
-        var baseline = FrozenLedger.ValidateHistoryForEnvironmentRecoordinate(
-            candidate.BaselineSyntax,
-            candidate.Catalog,
-            trustedBaselineReferences) switch
-        {
-            FrozenLedgerValidationOutcome.Accepted accepted => accepted.Capability,
-            FrozenLedgerValidationOutcome.Rejected rejected => throw new InvalidOperationException(
-                "existing frozen ledger is invalid: " + rejected.Message),
-            _ => throw new InvalidOperationException("unknown ledger validation outcome"),
-        };
-
-        var oldIdentity = Ask(() => repository.ResolveFrozenRevision(oldEnvironmentRevision));
-        var oldSnapshot = Decode(Ask(() => repository.ReadFrozenRevision(oldIdentity.Revision)));
-        var (oldReport, _) = LoadLean(oldSnapshot, new FileLeanReportSource(oldLeanReport));
-        var oldEnvironment = EnvironmentPins(BuildEnvironment(
-            oldSnapshot,
-            oldIdentity.CommitOid,
-            oldIdentity.TreeOid));
-        return new DagLedgerRecoordinateContext(
-            candidate.LedgerPath,
-            candidate.BaselineBytes,
-            baseline,
-            candidate.Catalog,
-            candidate.Report,
-            candidate.Snapshot,
-            oldReport,
-            oldSnapshot,
-            oldEnvironment);
     }
 
     private static DagLedgerCandidateMaterial PrepareCandidate(
@@ -194,6 +142,54 @@ internal static class DagLedgerCommandPreparation
             FrozenMaterialOutcome.Rejected rejected => throw new InvalidOperationException(rejected.Message),
             _ => throw new InvalidOperationException("unknown frozen material outcome"),
         };
+    }
+
+    internal static FrozenMaterialCatalog BuildAdmissionCatalog(
+        RepositorySnapshot snapshot,
+        AcceptedLeanClosure lean,
+        AcyclicTruthDag dag,
+        FrozenLedgerBaseView baseView,
+        FrozenLedgerAdmissionScope scope,
+        FrozenRevisionIdentity currentIdentity)
+    {
+        var environment = BuildEnvironment(
+            snapshot,
+            baseView.Origin.CommitOid,
+            baseView.Origin.TreeOid);
+        if (currentIdentity.CommitOid.StartsWith("git-sha256:", StringComparison.Ordinal)
+            != environment.OriginCommitOid.StartsWith("git-sha256:", StringComparison.Ordinal))
+        {
+            throw new InvalidOperationException(
+                "current revision and frozen Genesis use different Git hash algorithms");
+        }
+
+        var algorithm = environment.OriginCommitOid.StartsWith("git-sha256:", StringComparison.Ordinal)
+            ? HashAlgorithmName.SHA256
+            : HashAlgorithmName.SHA1;
+        var attestations = dag.Nodes
+            .Where(node => node.State is TruthState.Closed
+                && node.ModuleName is not null
+                && scope.Paths.Contains(node.RepoPath))
+            .Select(node => new FrozenModuleAttestation(
+                node.RepoPath,
+                FrozenContentAddress.ComputeGitBlobOid(
+                    snapshot.Files[node.RepoPath].RawBytes.AsSpan(),
+                    algorithm))
+            {
+                BaseCommitOid = currentIdentity.CommitOid,
+                BaseTreeOid = currentIdentity.TreeOid,
+            })
+            .ToImmutableArray();
+        return FrozenContentAddress.BuildAdmissionCatalog(
+            snapshot,
+            lean,
+            dag,
+            environment,
+            attestations,
+            scope.Paths,
+            baseView.ActiveByPath.ToDictionary(
+                static item => item.Key,
+                static item => item.Value.Material));
     }
 
     internal static TruthContext BuildTruth(
@@ -436,21 +432,6 @@ internal static class DagLedgerCommandPreparation
                 algorithm),
         }
             : result;
-    }
-
-    private static FrozenEnvironmentPins EnvironmentPins(FrozenEnvironmentAttestation environment)
-    {
-        if (environment.LakefilePath is null || environment.LakefileBlobOid is null)
-        {
-            throw new InvalidOperationException(
-                "EnvironmentRecoordinate requires exactly one pinned lakefile.toml or lakefile.lean");
-        }
-
-        return new FrozenEnvironmentPins(
-            environment.LakeManifestBlobOid,
-            environment.LakefileBlobOid,
-            RepoPath.CreateKnown(environment.LakefilePath),
-            environment.LeanToolchainBlobOid);
     }
 
     /// Bytes that will not decode are a fault in the repository we were handed, not a verdict about

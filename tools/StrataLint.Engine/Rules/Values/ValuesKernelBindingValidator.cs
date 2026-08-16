@@ -8,9 +8,6 @@ internal static partial class ValuesKernelBindingValidator
 {
     internal const string RelativePath = "Golden/values-kernels.toml";
 
-    private static readonly ImmutableHashSet<string> RequiredAxioms =
-        ImmutableHashSet.Create(StringComparer.Ordinal, "Classical.choice", "Quot.sound", "propext");
-
     [GeneratedRegex("^[0-9a-f]{64}$", RegexOptions.CultureInvariant)]
     private static partial Regex Sha256Pattern();
 
@@ -79,11 +76,13 @@ internal static partial class ValuesKernelBindingValidator
         }
 
         var actualAxioms = declaration.Axioms.ToImmutableHashSet(StringComparer.Ordinal);
-        if (!actualAxioms.SetEquals(RequiredAxioms))
+        if (!actualAxioms.SetEquals(LeanAxiomFacts.StandardAxioms))
         {
             findings.Add(Finding(
                 binding,
-                "axiom closure mismatch: expected [Classical.choice, Quot.sound, propext], found ["
+                "axiom closure mismatch: expected ["
+                + string.Join(", ", LeanAxiomFacts.StandardAxioms.Order(StringComparer.Ordinal))
+                + "], found ["
                 + string.Join(", ", actualAxioms.Order(StringComparer.Ordinal))
                 + "]"));
         }

@@ -13,12 +13,21 @@ public sealed class LeanReportInputScriptTests
     private const string LeanModelsPath = "tools/StrataLint.Engine/Snapshot/LeanModels.cs";
     private const string TestSourcePath = "tools/tests/StrataLint.Tests/Snapshot/LeanModelsTests.cs";
     private const string BlueprintSourcePath = "Blueprint/D5/Probe.scribe.cs";
+    private const string ScribeSourcePath = "tools/StrataLint.Scribe/Emission/FixtureEmitter.cs";
+    private const string ScribeContentChecksPath =
+        "tools/scripts/workflow/scribe-content-checks.sh";
     private static readonly string PairScriptPath = string.Join(
         '/', "tools", "scripts", "lean-report-pair.sh");
+    private const string SupervisorScriptPath = "tools/scripts/report/report-supervisor.sh";
+    private const string PerformanceLibraryPath = "tools/scripts/lib/perf-event-lib.sh";
+    private const string ToolchainInstallerPath = "tools/scripts/workflow/install-lean-toolchain.sh";
+    private const string WorkflowPath = ".github/workflows/ci.yml";
     private static readonly string CliProjectPath = string.Join(
         '/', "tools", "StrataLint.Cli", "StrataLint.Cli.csproj");
     private static readonly string EngineProjectPath = string.Join(
         '/', "tools", "StrataLint.Engine", "StrataLint.Engine.csproj");
+    private static readonly string ScribeProjectPath = string.Join(
+        '/', "tools", "StrataLint.Scribe", "StrataLint.Scribe.csproj");
     private static readonly string EngineLockPath = string.Join(
         '/', "tools", "StrataLint.Engine", "packages.lock.json");
     private static readonly string CliLockPath = string.Join(
@@ -69,6 +78,72 @@ public sealed class LeanReportInputScriptTests
 
         Assert.NotEqual(before, fixture.Producer());
     }
+
+    [Fact]
+    public void ProducerPathsDeriveEveryReachableShellDependency()
+    {
+        using var fixture = new LeanReportInputFixture();
+        const string derivedProbe = "tools/scripts/report/derived-producer.sh";
+        fixture.WriteSource(derivedProbe, "#!/usr/bin/env bash\n");
+        fixture.Append(PairScriptPath, "\n\"$SCRIPT_DIR/report/derived-producer.sh\"\n");
+
+        var result = fixture.RunCommand("producer-paths");
+
+        Assert.Equal(0, result.ExitCode);
+        var paths = Lines(result);
+        Assert.Contains(InputHelperPath, paths);
+        Assert.Contains("Directory.Build.props", paths);
+        Assert.Contains(RawReportPath, paths);
+        Assert.Contains(LeanModelsPath, paths);
+        Assert.Contains(SupervisorScriptPath, paths);
+        Assert.Contains(PerformanceLibraryPath, paths);
+        Assert.Contains(ToolchainInstallerPath, paths);
+        Assert.Contains(WorkflowPath, paths);
+        Assert.Contains(derivedProbe, paths);
+        Assert.DoesNotContain(TestSourcePath, paths);
+        Assert.DoesNotContain(BlueprintSourcePath, paths);
+    }
+
+    [Fact]
+    public void ProducerPathsCommandExposesTheCanonicalDeclaredAndCompileClosure()
+    {
+        using var fixture = new LeanReportInputFixture();
+
+        var result = fixture.RunCommand("producer-paths");
+
+        Assert.Equal(0, result.ExitCode);
+        var paths = Lines(result);
+        Assert.Contains(InputHelperPath, paths);
+        Assert.Contains("Directory.Build.props", paths);
+        Assert.Contains(RawReportPath, paths);
+        Assert.Contains(LeanModelsPath, paths);
+        Assert.DoesNotContain(TestSourcePath, paths);
+        Assert.DoesNotContain(BlueprintSourcePath, paths);
+    }
+
+    [Fact]
+    public void ScribeProducerPathsDeriveCompileItemsAndReachableShellDependencies()
+    {
+        using var fixture = new LeanReportInputFixture();
+        const string derivedProbe = "tools/scripts/workflow/derived-scribe-input.sh";
+        fixture.WriteSource(derivedProbe, "#!/usr/bin/env bash\n");
+        fixture.Append(
+            ScribeContentChecksPath,
+            "\n\"$REPO_ROOT/tools/scripts/workflow/derived-scribe-input.sh\"\n");
+
+        var result = fixture.RunCommand("scribe-producer-paths");
+
+        Assert.Equal(0, result.ExitCode);
+        var paths = Lines(result);
+        Assert.Contains(BlueprintSourcePath, paths);
+        Assert.Contains(ScribeSourcePath, paths);
+        Assert.Contains(LeanModelsPath, paths);
+        Assert.Contains(ScribeProjectPath, paths);
+        Assert.Contains(ScribeContentChecksPath, paths);
+        Assert.Contains(derivedProbe, paths);
+        Assert.DoesNotContain(TestSourcePath, paths);
+    }
+
     [Fact]
     public void ModulesEnumerateAllManagedSources()
     {
@@ -151,11 +226,27 @@ public sealed class LeanReportInputScriptTests
             Write(LeanModelsPath, "// fixture\n");
             Write(TestSourcePath, "// fixture\n");
             Write(BlueprintSourcePath, "// fixture\n");
-            Write(PairScriptPath, "#!/usr/bin/env bash\n");
+            Write(ScribeSourcePath, "// fixture\n");
+            var root = TestRepositoryLayout.FindRoot();
+            Write(PairScriptPath, File.ReadAllText(Path.Combine(root, PairScriptPath), Encoding.UTF8));
+            Write(
+                SupervisorScriptPath,
+                File.ReadAllText(Path.Combine(root, SupervisorScriptPath), Encoding.UTF8));
+            Write(PerformanceLibraryPath, "#!/usr/bin/env bash\n");
+            Write(ToolchainInstallerPath, "#!/usr/bin/env bash\n");
+            Write(ScribeContentChecksPath, "#!/usr/bin/env bash\n");
+            Write(
+                WorkflowPath,
+                File.ReadAllText(Path.Combine(root, WorkflowPath), Encoding.UTF8));
             Write("Directory.Build.props", "<Project />\n");
             Write("Directory.Packages.props", "<Project />\n");
             Write(CliProjectPath, "<Project Sdk=\"Microsoft.NET.Sdk\" />\n");
             Write(EngineProjectPath, "<Project Sdk=\"Microsoft.NET.Sdk\" />\n");
+            Write(
+                ScribeProjectPath,
+                "<Project Sdk=\"Microsoft.NET.Sdk\"><ItemGroup>"
+                    + "<Compile Include=\"../../Blueprint/**/*.scribe.cs\" />"
+                    + "</ItemGroup></Project>\n");
             Write(EngineLockPath, "{}\n");
             Write(CliLockPath, "{}\n");
             Write(ScribeLockPath, "{}\n");

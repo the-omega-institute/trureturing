@@ -1,0 +1,36 @@
+### 定义 36.4（pro-object）
+
+一个 pro-object 是一个函子
+
+\[
+\mathbf X:I\longrightarrow\mathcal C.
+\]
+
+记其阶段对象为：
+
+\[
+X_i=\mathbf X(i).
+\]
+
+对箭头 \(j\to i\)，记遗忘或粗化映射为：
+
+\[
+p_{ji}:X_j\to X_i.
+\]
+
+pro-object 的本质不是预先存在的集合
+
+\[
+\varprojlim_iX_i,
+\]
+
+而是整个 cofiltered 图：
+
+\[
+\boxed{
+\mathbf X=(X_i,p_{ji})_{i\in I}.
+}
+\]
+
+即使 \(\mathcal C\) 中不存在相应极限，\(\mathbf X\) 仍然是良定义的 pro-object。
+

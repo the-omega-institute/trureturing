@@ -18,6 +18,7 @@ make lean-report
 CHECK_BASE_ARGS=()
 if base_sha="$(git merge-base HEAD origin/dev 2>/dev/null)" && [ -n "$base_sha" ]; then
   CHECK_BASE_ARGS=(--protected-base "$base_sha")
+  export STRATALINT_SCRIBE_BASE="$base_sha"
 fi
 set +e
 dotnet run --project tools/StrataLint.Cli/StrataLint.Cli.csproj --configuration Release -- \

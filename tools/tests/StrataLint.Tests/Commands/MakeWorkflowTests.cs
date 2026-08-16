@@ -12,6 +12,8 @@ public sealed partial class MakeWorkflowTests
     private const string LocalHarnessGateScriptPath =
         "tools/scripts/local-harness-gate.sh";
     private const string PreflightScriptPath = "tools/scripts/preflight.sh";
+    private const string AdmissionBaseScriptPath =
+        "tools/scripts/lib/admission-base-lib.sh";
     private const string ScribeContentChecksScriptPath =
         "tools/scripts/workflow/scribe-content-checks.sh";
     private const string InstallLeanToolchainScriptPath =
@@ -36,7 +38,7 @@ public sealed partial class MakeWorkflowTests
         "tools/scripts/report/lean-report-input.sh";
     private const string LeanReportPairScriptPath = "tools/scripts/lean-report-pair.sh";
     private const string PerfReportScriptPath = "tools/scripts/perf-report.sh";
-    private const string PerfEventScriptPath = "tools/scripts/perf-event-lib.sh";
+    private const string PerfEventScriptPath = "tools/scripts/lib/perf-event-lib.sh";
     private const string ToolsMakefilePath = "tools/Makefile";
     private const string AdmissionWorkflowPath = ".github/workflows/ci.yml";
     private const string TheoryIngestWorkflowPath = ".github/workflows/theory-ingest.yml";
@@ -56,7 +58,6 @@ public sealed partial class MakeWorkflowTests
         "show-atom",
         "deliver-check",
         "receipts-stage",
-        "derived-refresh",
         "deposit",
         "cover",
         "worktree",
@@ -232,25 +233,40 @@ public sealed partial class MakeWorkflowTests
     }
 
     [Fact]
-    public void PreflightPinsOneStrictAncestorBeforeExpensiveStagesAndReportsBaseAdvanceAdvisory()
+    public void AdmissionEntrypointsDelegateForkResolutionToOneLibrary()
     {
         var root = TestRepositoryLayout.FindRoot();
         var preflight = File.ReadAllText(Path.Combine(root, PreflightScriptPath));
+        var localGate = File.ReadAllText(Path.Combine(root, LocalHarnessGateScriptPath));
+        var admissionBase = File.ReadAllText(Path.Combine(root, AdmissionBaseScriptPath));
 
-        var fetchIndex = preflight.IndexOf("fetch --prune", StringComparison.Ordinal);
-        var pinIndex = preflight.IndexOf(
-            "BASE_SHA=\"$(git rev-parse --verify \"${BASE_REF}^{commit}\")\"",
-            StringComparison.Ordinal);
-        var ancestorIndex = preflight.IndexOf("merge-base --is-ancestor", StringComparison.Ordinal);
-        var buildIndex = preflight.IndexOf("CI=true make -C tools dotnet", StringComparison.Ordinal);
-
-        Assert.True(fetchIndex >= 0, "preflight must perform the run's single base fetch");
-        Assert.True(pinIndex > fetchIndex, "the exact base OID must be resolved after the fetch");
-        Assert.True(ancestorIndex > pinIndex, "the pinned OID must retain strict ancestor validation");
-        Assert.True(buildIndex > ancestorIndex, "base validation must precede every expensive stage");
+        const string source = "source \"$ROOT/tools/scripts/lib/admission-base-lib.sh\"";
+        const string preflightResolve = "admission_resolve_base \"$ROOT\" \"$BASE_REF\"";
+        const string localResolve =
+            "admission_resolve_base \"$CANDIDATE_ROOT\" \"$BASE_REF\"";
+        string[] ordered = ["ROOT=\"$(git rev-parse --show-toplevel)\"", source, "fetch --prune", preflightResolve, "CI=true make -C tools dotnet"];
+        var cursor = -1;
+        foreach (var fragment in ordered)
+        {
+            cursor = preflight.IndexOf(fragment, cursor + 1, StringComparison.Ordinal);
+            Assert.True(cursor >= 0, $"preflight contract is absent or out of order: {fragment}");
+        }
+        Assert.Contains(source, localGate, StringComparison.Ordinal);
+        Assert.Contains(localResolve, localGate, StringComparison.Ordinal);
+        Assert.DoesNotContain("BASE_RESOLUTION_FAILED", preflight, StringComparison.Ordinal);
+        Assert.DoesNotContain("BASE_RESOLUTION_FAILED", localGate, StringComparison.Ordinal);
+        Assert.Single(Regex.Matches(admissionBase, "BASE_RESOLUTION_FAILED").Cast<Match>());
+        Assert.Single(Regex.Matches(
+            admissionBase,
+            "\\bgit\\s+-C\\s+\"\\$repository_root\"\\s+merge-base\\b").Cast<Match>());
+        Assert.DoesNotContain("git merge-base", preflight, StringComparison.Ordinal);
+        Assert.DoesNotContain("git -C \"$CANDIDATE_ROOT\" merge-base", localGate, StringComparison.Ordinal);
+        Assert.DoesNotContain("merge-base --is-ancestor", preflight, StringComparison.Ordinal);
         Assert.Contains("make gate BASE=\"$BASE_SHA\"", preflight, StringComparison.Ordinal);
-        Assert.Contains("BASE_ADVANCED pinned=%s observed=%s", preflight, StringComparison.Ordinal);
+        Assert.Contains("\"$observed_base\" != \"$BASE_TIP_SHA\"", preflight, StringComparison.Ordinal);
         Assert.Contains("|| true", preflight[preflight.IndexOf("BASE_ADVANCED", StringComparison.Ordinal)..], StringComparison.Ordinal);
+        Assert.DoesNotContain("merge-base --is-ancestor", localGate, StringComparison.Ordinal);
+        Assert.DoesNotContain("pinned base is not a strict ancestor", localGate, StringComparison.Ordinal);
     }
 
     [Fact]

@@ -73,7 +73,8 @@ internal static partial class DigestionLedgerAligner
         BackfillInventoryDocument? baselineDocument,
         DigestionAlignmentMode mode,
         Func<string, TheoryAtomizer>? atomizerResolver = null,
-        RepositorySnapshot? baselineSnapshot = null)
+        RepositorySnapshot? baselineSnapshot = null,
+        DigestionCasEvaluation? casEvaluation = null)
     {
         ArgumentNullException.ThrowIfNull(document);
         ArgumentNullException.ThrowIfNull(snapshot);
@@ -130,7 +131,7 @@ internal static partial class DigestionLedgerAligner
         var fallbacks = ImmutableArray.CreateBuilder<DigestionIngestFallback>();
         var actualStale = ImmutableArray.CreateBuilder<string>();
         var suggestedAtomIds = new HashSet<string>(StringComparer.Ordinal);
-        var cas = DigestionCasStore.Evaluate(document, snapshot);
+        var cas = casEvaluation ?? DigestionCasStore.Evaluate(document, snapshot);
         findings.AddRange(cas.Findings);
         var inheritedEntries = InheritedEntries(baselineDocument);
         foreach (var entry in document.RequireDigestionEntries()

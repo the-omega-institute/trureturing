@@ -1,3 +1,4 @@
+using System.Collections.Immutable;
 using System.Text;
 using StrataLint.Cli;
 using StrataLint.Engine;
@@ -42,6 +43,26 @@ public sealed class CanonicalSnapshotTests
 
         var failure = Assert.IsType<CanonicalizationOutcome.InfrastructureFailure>(outcome);
         Assert.Contains("canonical", failure.Message, StringComparison.OrdinalIgnoreCase);
+    }
+
+    [Fact]
+    public void CanonicalSnapshotWriterEmitsTheCanonicalDocumentBytes()
+    {
+        Assert.True(RepoPath.TryCreate("scratch/note.txt", out var path));
+        var registrySha256 = new string('a', 64);
+        var fileSha256 = new string('b', 64);
+        var entries = ImmutableArray.Create(new SnapshotEntry(path, 3, fileSha256));
+        var expected = Encoding.UTF8.GetBytes(
+            "schema_version: 1\n"
+            + $"registry_sha256: {registrySha256}\n"
+            + "files:\n"
+            + "  - path_utf8_hex: 736372617463682f6e6f74652e747874\n"
+            + "    length: 3\n"
+            + $"    sha256: {fileSha256}\n");
+
+        var actual = CanonicalSnapshotWriter.Write(registrySha256, entries);
+
+        Assert.Equal(expected, actual.ToArray());
     }
 
     [Fact]

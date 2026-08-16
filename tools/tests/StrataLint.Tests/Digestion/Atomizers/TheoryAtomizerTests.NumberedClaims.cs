@@ -1,6 +1,7 @@
 using System.Collections.Immutable;
 using System.Reflection;
 using System.Text;
+using StrataLint.Cli;
 using StrataLint.Engine;
 
 namespace StrataLint.Tests;
@@ -188,5 +189,111 @@ public sealed partial class TheoryAtomizerTests
                 child.Fingerprints.RawSha256)));
         Assert.All(plan.Children.Zip(repeated.Children), pair =>
             Assert.Equal(pair.First.RawBytes.ToArray(), pair.Second.RawBytes.ToArray()));
+    }
+
+    [Fact]
+    public void PzgClausePlanChildrenResolveThroughTheCanonicalClaimResolver()
+    {
+        var bytes = Encoding.UTF8.GetBytes(
+            "# PZG\n\n**定理 9.10**。第一条。\n\n**第二条**。第二条。\n");
+        var document = PzgAtomizer.Atomize(bytes, DigestionTestSupport.Rules);
+        var child = Assert.Single(document.ClausePlans).Children[1];
+
+        var resolved = document.ResolveClaim(child.AstPath);
+
+        Assert.Same(child, resolved);
+    }
+
+    [Fact]
+    public void ProductionSourcesHaveStableAtomizationClassificationsAndFingerprints()
+    {
+        var root = TestRepositoryLayout.FindRoot();
+        var bytes = File.ReadAllBytes(Path.Combine(root, FourthProductionSource));
+
+        var document = AtomizerRegistry.Atomize(
+            AtomizerRegistry.PzgId,
+            bytes,
+            DigestionTestSupport.Rules);
+
+        Assert.Equal(37, document.Claims.Length);
+        Assert.Equal(
+            [
+                ("corollary", 2),
+                ("definition", 5),
+                ("example", 1),
+                ("lemma", 2),
+                ("observation", 3),
+                ("proposition", 3),
+                ("remark", 8),
+                ("theorem", 13),
+            ],
+            document.Claims
+                .GroupBy(static atom => atom.AstPath.Split('/')[0], StringComparer.Ordinal)
+                .Select(static group => (Kind: group.Key, Count: group.Count()))
+                .OrderBy(static item => item.Kind, StringComparer.Ordinal));
+
+        var landing = document.ResolveClaim("lemma/3.1");
+        var escape = document.ResolveClaim("theorem/3.4");
+        Assert.Equal(
+            "sha256:9d52e41b062f81b1ce93cf241bf4ef9806f6e6de3fe9d6d10b5dc2de6d1f929a",
+            landing.Fingerprints.RawSha256);
+        Assert.Equal(
+            "sha256:c0a63f4cbbe848e456ae1f847150de6bf63e59a5295bf711230af4bbb4860cab",
+            escape.Fingerprints.RawSha256);
+        Assert.Contains("*证明。*", Encoding.UTF8.GetString(landing.RawBytes.AsSpan()), StringComparison.Ordinal);
+        Assert.Contains("*证明。*", Encoding.UTF8.GetString(escape.RawBytes.AsSpan()), StringComparison.Ordinal);
+        Assert.DoesNotContain("隐藏独立性", Encoding.UTF8.GetString(escape.RawBytes.AsSpan()), StringComparison.Ordinal);
+
+        const string sourceId = "periodic-tree-registry";
+        const string sourcePath = "docs/develop/theory/PERIODIC_TREE_registry.jsonl";
+        var sourceRoot = $"{BackfillInventoryLoader.RootPath}{sourceId}/";
+        var sourceBytes = File.ReadAllBytes(Path.Combine(root, sourcePath));
+        var casPath = DigestionCasStore.RootPath
+            + DigestionFingerprint.ComputeOpaque(sourceBytes).RawSha256["sha256:".Length..];
+        var relativePaths = Directory
+            .EnumerateFiles(Path.Combine(root, sourceRoot), "*", SearchOption.AllDirectories)
+            .Select(path => Path.GetRelativePath(root, path).Replace(Path.DirectorySeparatorChar, '/'))
+            .Append(sourcePath)
+            .Append(TheoryAtomizerDataLoader.DataPath)
+            .Append(BackfillInventoryLoader.TicketIndexPath)
+            .Append(casPath)
+            .Distinct(StringComparer.Ordinal)
+            .ToArray();
+        var raw = RawRepositorySnapshot.Create(relativePaths.Select(path => new RawRepositoryEntry(
+            path,
+            ImmutableArray.CreateRange(File.ReadAllBytes(Path.Combine(root, path))))));
+        var snapshot = Assert.IsType<SnapshotDecodeOutcome.Decoded>(
+            SnapshotDecoder.Decode(raw)).Snapshot;
+        var source = Assert.Single(BackfillInventoryLoader.Load(snapshot).RequireDigestionSources());
+        Assert.Equal(AtomizerRegistry.PeriodicTreeId, source.Atomizer);
+        Assert.True(AtomizerRegistry.IsRegistered(source.Atomizer));
+        var registryDocument = AtomizerRegistry.Atomize(
+            source.Atomizer,
+            sourceBytes,
+            DigestionTestSupport.Rules);
+        var registryAtom = Assert.Single(registryDocument.Claims);
+        Assert.Equal("coarse/source", registryAtom.AstPath);
+        Assert.Equal(DigestionFingerprint.ComputeOpaque(sourceBytes), registryAtom.Fingerprints);
+        Assert.Equal(sourceBytes, registryAtom.RawBytes.ToArray());
+        Assert.Equal(sourceBytes, registryDocument.Reassemble().ToArray());
+        var environment = new ProductionCliEnvironment(
+            root,
+            new FakeRepositoryGateway(RawChangeSet.Create([]), raw, null),
+            new FakeLeanReportSource(LeanAxiomReport.Create(
+                new Dictionary<string, LeanFileReport>(StringComparer.Ordinal))),
+            new FakeScribeEmissionVerifier(null));
+        var console = new BufferedConsole();
+
+        var exitCode = CliApplication.Run(
+            ["digest-status", "--formalize-candidates"],
+            environment,
+            console);
+
+        Assert.Equal(0, exitCode);
+        Assert.DoesNotContain(
+            "atomizer recognition is incomplete or empty",
+            console.Output,
+            StringComparison.Ordinal);
+        Assert.Equal(string.Empty, console.Error);
     }
 }

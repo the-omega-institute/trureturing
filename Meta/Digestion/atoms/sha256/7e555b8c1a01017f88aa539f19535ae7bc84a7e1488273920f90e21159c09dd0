@@ -1,0 +1,18 @@
+### 定理 37.11（GNS 零范数传播）
+
+若 \(\Omega\) 为正泛函，且：
+
+\[
+\Omega(g^\ast g)=0,
+\]
+
+则：
+
+\[
+\boxed{
+\Omega(h^\ast g)=0
+\qquad
+\forall h.
+}
+\]
+

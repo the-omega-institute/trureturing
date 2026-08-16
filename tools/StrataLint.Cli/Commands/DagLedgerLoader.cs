@@ -128,6 +128,33 @@ public static class DagLedgerLoader
         return true;
     }
 
+    internal static bool TryOrderIncrementalDag(
+        ImmutableArray<DagLedgerFileEvent> events,
+        IReadOnlySet<string> knownIdentities,
+        IReadOnlySet<string> knownHashes,
+        out ImmutableArray<DagLedgerFileEvent> ordered)
+    {
+        var remaining = events.OrderBy(static item => item.Identity, StringComparer.Ordinal).ToList();
+        var result = ImmutableArray.CreateBuilder<DagLedgerFileEvent>(events.Length);
+        var placedIdentities = knownIdentities.ToHashSet(StringComparer.Ordinal);
+        var placedHashes = knownHashes.ToHashSet(StringComparer.Ordinal);
+        while (remaining.Count > 0)
+        {
+            var index = remaining.FindIndex(item =>
+                CanPlace(item, placedCount: 1, placedIdentities, placedHashes));
+            if (index < 0)
+            {
+                ordered = ImmutableArray<DagLedgerFileEvent>.Empty;
+                return false;
+            }
+
+            Place(remaining[index], remaining, result, placedIdentities, placedHashes);
+        }
+
+        ordered = result.MoveToImmutable();
+        return true;
+    }
+
     private static bool CanPlace(
         DagLedgerFileEvent item,
         int placedCount,

@@ -394,7 +394,7 @@ public sealed partial class DepositCoverWorkflowScriptTests
         "stdout:\n" + Encoding.UTF8.GetString(result.StandardOutput)
         + "\nstderr:\n" + Encoding.UTF8.GetString(result.StandardError);
 
-    private sealed partial class TransactionFixture : IDisposable
+    internal sealed partial class TransactionFixture : IDisposable
     {
         internal const string AtomId = "atom-1";
         internal const string Gid = "D5/S0/Carrier/Probe.probe";
@@ -431,6 +431,7 @@ public sealed partial class DepositCoverWorkflowScriptTests
             WriteFile(BackfillPath, $"atom_id: {AtomId}\ncoverage: false\naligned: false\n");
             WriteMakeStub();
             WriteDotnetStub();
+            WriteGitGuardStub();
             Git("init", "-q");
             Git("config", "user.email", "playbook@example.invalid");
             Git("config", "user.name", "Playbook Test");

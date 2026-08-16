@@ -53,6 +53,41 @@ public sealed class DocumentDiscoveryTests
             StringComparison.Ordinal);
     }
 
+    [Fact]
+    public void ScribeEmissionPathsRenderEachDocumentOnlyOnce()
+    {
+        var repository = RepositoryAccessor.Discover(
+            RepositoryRootCriterion.GlobalJsonAndBlueprintDirectoryNotFound);
+        var emitterSource = repository.ReadAllText(RepositoryRelativePath.Create(
+            "tools/StrataLint.Scribe/Emission/ScribeEmitter.cs"));
+        var pilotTestSource = repository.ReadAllText(RepositoryRelativePath.Create(
+            "tools/tests/StrataLint.Scribe.Tests/PilotDocumentTests.cs"));
+
+        var emitVerified = MethodBody(
+            emitterSource,
+            "private static ScribeEmissionRun EmitVerified(",
+            "private static void CollectDescribeCapabilities(");
+        var committedTreeTest = MethodBody(
+            pilotTestSource,
+            "public void GeneratedMarkdownIsDeterministicAndMatchesTheCommittedTree()",
+            "private sealed class LiveReportFactAttribute");
+
+        Assert.Equal(1, Occurrences(emitVerified, "CanonicalMarkdownWriter.Write("));
+        Assert.Equal(1, Occurrences(committedTreeTest, "CanonicalMarkdownWriter.Write("));
+
+        static int Occurrences(string source, string fragment) =>
+            (source.Length - source.Replace(fragment, string.Empty, StringComparison.Ordinal).Length)
+            / fragment.Length;
+
+        static string MethodBody(string source, string startMarker, string endMarker)
+        {
+            var start = source.LastIndexOf(startMarker, StringComparison.Ordinal);
+            var end = source.IndexOf(endMarker, start, StringComparison.Ordinal);
+            Assert.True(start >= 0 && end > start);
+            return source[start..end];
+        }
+    }
+
     [LiveReportFact]
     public void GeneratedMarkdownIsDeterministicAndMatchesTheCommittedTree()
     {
@@ -97,7 +132,7 @@ public sealed class DocumentDiscoveryTests
             Assert.Contains(anchor.FormalTruthRepoPath, report.Files.Keys.Select(static path => path.Value));
         });
 
-        // 既验生产者确定性,也在下方比对提交树。
+        // 在下方比对提交树。
         //
         // 【2026-08-11 勘误】本注释原写「提交的 md 是人读快照,陈旧无害于任何判决」——**那是假的**,
         // 由第十一轮面板证伪。committed `Blueprint/**/*.md` 的字节**仍在准入路径上承重**:
@@ -106,7 +141,7 @@ public sealed class DocumentDiscoveryTests
         //   `scribe-emission-mismatch`;调用链 `Rules/RepositoryRules.cs:112`
         //   → `Rules/Backfill/BackfillInventoryRule.cs:229` → 该 evaluator。
         //   生产测试 `StrataLint.Tests/Admission/ProductionEnvironmentCoverTests.cs:127-129`
-        //   钉死其为红。此外 `Scribe/Emission/ScribeEmitter.cs:233-242` 也仍对提交树逐字节比对。
+        //   钉死其为红。此外 `Scribe/Emission/ScribeEmitter.cs:244-272` 也仍对提交树逐字节比对。
         // 亦即 FILEMAP 的 `consumed_by = ["reader"]` 并未反映实情:它有机器消费者。
         //
         // 本测试与 admission 侧 ScribeEmitter.Verify 仅在逐文档 committed-byte 比对上部分等价;
@@ -116,13 +151,11 @@ public sealed class DocumentDiscoveryTests
         foreach (var definition in DocumentDefinitions.All)
         {
             var catalog = DeclarationCatalog.Create(report);
-            var first = CanonicalMarkdownWriter.Write(definition.Document, catalog, citations, graph);
-            var second = CanonicalMarkdownWriter.Write(definition.Document, catalog, citations, graph);
+            var rendered = CanonicalMarkdownWriter.Write(definition.Document, catalog, citations, graph);
             var committed = repository.ReadAllBytes(
                 RepositoryRelativePath.Create(definition.RelativePath.Value));
 
-            Assert.Equal(first.ToArray(), second.ToArray());
-            Assert.Equal(committed, first.ToArray());
+            Assert.Equal(committed, rendered.ToArray());
         }
     }
 

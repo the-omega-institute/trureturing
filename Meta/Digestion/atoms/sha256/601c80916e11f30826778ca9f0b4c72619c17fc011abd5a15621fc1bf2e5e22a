@@ -1,0 +1,48 @@
+### 定义 36.20（离线缺陷 section）
+
+一个离线缺陷 section 是一族：
+
+\[
+\boxed{
+\delta
+=
+(\delta_j)_{j\in\mathcal J_{\mathrm{RH}}},
+}
+\]
+
+其中：
+
+\[
+\delta_j\in\overline D_j,
+\]
+
+并且在所有已定义的 transition、restriction 或 correspondence 下相容。
+
+复平面图中的坐标满足：
+
+\[
+\delta_{\mathsf C}
+=
+[\rho],
+\qquad
+\Re\rho\neq\frac12.
+\]
+
+Cayley 图中的坐标为：
+
+\[
+\delta_{\mathsf{Cay}}
+=
+(\theta_\rho,\beta_\rho),
+\qquad
+\beta_\rho\neq0.
+\]
+
+但完整离线对象不是 \(\rho\) 或 \(\beta_\rho\) 单独之一，而是：
+
+\[
+\boxed{
+\text{全部观察图中的相容非零 section}.
+}
+\]
+
