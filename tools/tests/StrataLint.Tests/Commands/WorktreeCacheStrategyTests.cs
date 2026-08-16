@@ -243,16 +243,64 @@ public sealed class WorktreeCacheStrategyTests
                 "--skip-restore",
             ],
             runner,
-            new RecordingDirectoryCloner { FailureReason = "clonefile unavailable" });
+            new RecordingDirectoryCloner
+            {
+                Results = new Queue<DirectoryCloneResult>(
+                    [new(false, false, 17, 1, "clonefile unavailable")]),
+            });
 
         Assert.True(result.Success, result.Error);
         Assert.Contains("\"cache_strategy\":\"cloned\"", result.Output, StringComparison.Ordinal);
         Assert.Contains("\"cache_method\":\"copy\"", result.Output, StringComparison.Ordinal);
+        Assert.Contains("\"clonefile_errno\":17", result.Output, StringComparison.Ordinal);
+        Assert.Contains("\"clonefile_errnos\":[17]", result.Output, StringComparison.Ordinal);
+        Assert.Contains("\"clonefile_attempts\":1", result.Output, StringComparison.Ordinal);
         Assert.Contains("clonefile unavailable", result.Error, StringComparison.Ordinal);
         File.WriteAllText(donorFile, "donor changed\n");
         Assert.Equal(
             "warm cache\n",
             File.ReadAllText(Path.Combine(target, ".lake", "build", "cache.bin")));
+    }
+
+    [Fact]
+    public void RetrySuccessKeepsPriorErrnoInTheWorktreeReceipt()
+    {
+        using var repository = new TemporaryDirectory();
+        InitializeRepository(repository.Path);
+        WriteCache(repository.Path, "warm cache\n");
+        var target = Path.Combine(repository.Path, "retry-success");
+        var scripted = new Queue<DirectoryCloneResult>(
+        [
+            new(false, true, 5, 1, "clonefile(2) failed: EIO"),
+            new(true, false, null, 1, null),
+        ]);
+        var cloner = new RecordingDirectoryCloner
+        {
+            Results = scripted,
+            AfterClone = (_, path) =>
+            {
+                if (scripted.Count > 0) Directory.CreateDirectory(path);
+            },
+        };
+
+        var result = WorktreeCommand.Run(
+            repository.Path,
+            [
+                "--branch", "harness/retry-success",
+                "--path", target,
+                "--base", "HEAD",
+                "--skip-restore",
+            ],
+            new RecordingWorktreeProcessRunner(),
+            cloner,
+            wait: static _ => { });
+
+        Assert.True(result.Success, result.Error);
+        Assert.Equal(2, cloner.Invocations.Count);
+        Assert.Contains("\"cache_method\":\"clonefile\"", result.Output, StringComparison.Ordinal);
+        Assert.Contains("\"clonefile_errno\":5", result.Output, StringComparison.Ordinal);
+        Assert.Contains("\"clonefile_errnos\":[5]", result.Output, StringComparison.Ordinal);
+        Assert.Contains("\"clonefile_attempts\":2", result.Output, StringComparison.Ordinal);
     }
 
     [Fact]
@@ -416,26 +464,22 @@ public sealed class WorktreeCacheStrategyTests
         Assert.DoesNotContain("export PATH=", init, StringComparison.Ordinal);
         Assert.DoesNotContain("export PATH=", clean, StringComparison.Ordinal);
 
-        // A per-file clonefile walk over .lake costs one system call per entry: 197.5s
-        // against 3.3s for the single directory-level clonefile(2). Assembled rather than
-        // written out so this guard is not its own counterexample.
-        var shellForm = "cp" + " -c";
-        var argumentForm = "\"-c\"" + ", " + "\"-R\"";
-        var scanned = Directory
-            .EnumerateFiles(Path.Combine(root, "tools"), "*", SearchOption.AllDirectories)
-            .Where(static path => !path.Contains($"{Path.DirectorySeparatorChar}bin{Path.DirectorySeparatorChar}", StringComparison.Ordinal))
-            .Where(static path => !path.Contains($"{Path.DirectorySeparatorChar}obj{Path.DirectorySeparatorChar}", StringComparison.Ordinal))
-            .Where(static path => Path.GetExtension(path) is ".cs" or ".sh" or ".yml" or ".yaml" or ".md")
-            .Append(Path.Combine(root, "Makefile"))
-            .Append(Path.Combine(root, "README.md"))
-            .ToArray();
-        Assert.NotEmpty(scanned);
-        Assert.Empty(scanned
-            .Where(path => File.ReadAllText(path) is var text
-                && (text.Contains(shellForm, StringComparison.Ordinal)
-                    || text.Contains(argumentForm, StringComparison.Ordinal)))
-            .Select(path => Path.GetRelativePath(root, path))
-            .ToArray());
+        // A per-file clone walk costs one system call per entry. Build the rejected forms
+        // dynamically so the repository-wide guard does not match its own source.
+        var cloneFlag = string.Concat('-', 'c');
+        var recursiveFlag = string.Concat('-', 'R');
+        var shellForm = $"cp {cloneFlag}";
+        var argumentForm = $"\"{cloneFlag}\", \"{recursiveFlag}\"";
+        var scan = BoundedProcessRunner.Run(
+            "git",
+            ["grep", "-n", "-I", "-e", shellForm, "-e", argumentForm, "--", "."],
+            root,
+            TimeSpan.FromSeconds(30),
+            1024 * 1024);
+
+        Assert.Equal(
+            1,
+            scan.ExitCode);
     }
 
     private static void InitializeRepository(string root)
@@ -486,15 +530,32 @@ internal sealed class RecordingDirectoryCloner : IDirectoryCloner
 
     internal string? FailureReason { get; init; }
 
+    internal Queue<DirectoryCloneResult> Results { get; init; } = [];
+
+    internal Exception? ExceptionToThrow { get; init; }
+
+    internal Action<string, string>? BeforeClone { get; init; }
+
     internal Action<string, string>? AfterClone { get; init; }
 
-    public string? Clone(string source, string target)
+    public DirectoryCloneResult Clone(string source, string target)
     {
         Invocations.Add((source, target));
-        if (FailureReason is not null) return FailureReason;
+        if (ExceptionToThrow is not null) throw ExceptionToThrow;
+        BeforeClone?.Invoke(source, target);
+        var result = Results.Count > 0
+            ? Results.Dequeue()
+            : FailureReason is null
+                ? new DirectoryCloneResult(true, false, null, 1, null)
+                : new DirectoryCloneResult(false, false, null, 1, FailureReason);
+        if (!result.Succeeded)
+        {
+            AfterClone?.Invoke(source, target);
+            return result;
+        }
         CopyTree(new DirectoryInfo(source), new DirectoryInfo(target));
         AfterClone?.Invoke(source, target);
-        return null;
+        return result;
     }
 
     private static void CopyTree(DirectoryInfo source, DirectoryInfo target)
@@ -525,6 +586,8 @@ internal sealed class RecordingWorktreeProcessRunner : IWorktreeProcessRunner
     internal List<WorktreeProcessInvocation> Invocations { get; } = [];
 
     internal bool FailCopy { get; init; }
+
+    internal bool ThrowCopy { get; init; }
 
     internal string? LakeFileName { get; init; }
 
@@ -573,6 +636,11 @@ internal sealed class RecordingWorktreeProcessRunner : IWorktreeProcessRunner
         if (fileName == "cp" && arguments.FirstOrDefault() == "-R" && FailCopy)
         {
             return Failure("ordinary copy unavailable");
+        }
+
+        if (fileName == "cp" && arguments.FirstOrDefault() == "-R" && ThrowCopy)
+        {
+            throw new IOException("ordinary copy threw");
         }
 
         if (fileName == "lsof")

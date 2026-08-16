@@ -297,11 +297,13 @@ public sealed partial class MakeWorkflowTests
         var verifyIndex = workflow.IndexOf(
             "- name: Install and verify candidate canonical Lean report",
             StringComparison.Ordinal);
-        var baseIndex = workflow.IndexOf("- name: Resolve merge-base SHA", StringComparison.Ordinal);
+        var baseIndex = workflow.IndexOf(
+            "- name: Resolve checked merge result's dev parent",
+            StringComparison.Ordinal);
         var ingestIndex = workflow.IndexOf("          make ingest BASE=${{ steps.base.outputs.sha }}\n", StringComparison.Ordinal);
 
         Assert.True(runnerIndex >= 0, "theory ingest must use the arm runner");
-        Assert.True(baseIndex >= 0, "theory ingest must resolve a merge-base SHA");
+        Assert.True(baseIndex >= 0, "theory ingest must resolve the checked merge result's dev parent");
         Assert.True(addressIndex > baseIndex, "report address must follow base resolution");
         Assert.True(restoreIndex > addressIndex, "report restore must use the resolved address");
         Assert.True(verifyIndex > restoreIndex, "restored report must be verified before consumption");
@@ -369,6 +371,7 @@ public sealed partial class MakeWorkflowTests
         Assert.DoesNotContain("uses: actions/cache@v4", workflow, StringComparison.Ordinal);
     }
 
+
     [Fact]
     public void TheoryIngestRunsCandidateClosureWithoutOverlay()
     {
@@ -388,6 +391,29 @@ public sealed partial class MakeWorkflowTests
         Assert.DoesNotContain("Overlay judge", workflow, StringComparison.Ordinal);
         Assert.DoesNotContain("rsync", workflow, StringComparison.Ordinal);
         Assert.DoesNotContain("--exclude", workflow, StringComparison.Ordinal);
+
+        // 折入而非新开 [Fact]:ScribeTestMapDeriver 把每个读仓库的测试方法记为
+        // conservative unknown,上限 280 已满;本方法已读同一个 workflow,断言折进来
+        // 保住命题而不增计数。抬上限等于绕过检测器,禁。
+        Assert.Contains("id: checkout-merge", workflow, StringComparison.Ordinal);
+        Assert.Contains(
+            "continue-on-error: ${{ github.event_name == 'pull_request_target' }}",
+            workflow,
+            StringComparison.Ordinal);
+        Assert.Contains(
+            "ref: ${{ format('refs/pull/{0}/merge', github.event.pull_request.number) }}",
+            workflow,
+            StringComparison.Ordinal);
+        Assert.Contains("Fail closed when merge result is unavailable", workflow, StringComparison.Ordinal);
+        Assert.Contains("steps.checkout-merge.outcome != 'success'", workflow, StringComparison.Ordinal);
+        Assert.Contains("conflicted pull requests have no merge result", workflow, StringComparison.Ordinal);
+        Assert.Contains(
+            "sha=\"$(git -C candidate rev-parse HEAD^1)\"",
+            workflow,
+            StringComparison.Ordinal);
+        Assert.DoesNotContain("git -C candidate fetch", workflow, StringComparison.Ordinal);
+        Assert.DoesNotContain("git -C candidate merge-base", workflow, StringComparison.Ordinal);
+        Assert.DoesNotContain("HEAD^2", workflow, StringComparison.Ordinal);
     }
 
     [Fact]

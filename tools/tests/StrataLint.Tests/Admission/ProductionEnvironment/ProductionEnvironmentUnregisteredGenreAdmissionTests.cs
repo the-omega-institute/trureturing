@@ -66,6 +66,28 @@ public sealed partial class ProductionEnvironmentTests
         AssertUnregisteredGenreRejection(outcome);
     }
 
+    [Fact]
+    public void CheckStillReportsSl016ForQdoGenreOutsideTheSuffixClass()
+    {
+        var fixture = new RuleFixture();
+        fixture.AddBackfillTargets();
+        const string atomizerId = "dialect:qdo";
+        var baselineBytes = Encoding.UTF8.GetBytes("# QDO\n\n## 定理 40.1\n\nold。\n");
+        var candidateBytes = Encoding.UTF8.GetBytes(
+            "# QDO\n\n## 定理 40.1\n\nold。\n\n## 未登记体 40.2\n\nnew。\n");
+        var atom = Assert.Single(AtomizerRegistry.Atomize(
+            atomizerId,
+            baselineBytes,
+            DigestionTestSupport.Rules).Claims);
+        fixture.Files[RuleFixture.FixtureDigestionSourcePath] = Encoding.UTF8.GetString(candidateBytes);
+        fixture.Baseline[RuleFixture.FixtureDigestionSourcePath] = Encoding.UTF8.GetString(baselineBytes);
+        InstallLedger(fixture, IngestLedger(atomizerId, atom), atom);
+
+        var outcome = CheckGenreCandidate(fixture);
+
+        AssertUnregisteredGenreRejection(outcome);
+    }
+
     private static AdmissionOutcome CheckGenreCandidate(RuleFixture fixture)
     {
         var environment = new ProductionCliEnvironment(

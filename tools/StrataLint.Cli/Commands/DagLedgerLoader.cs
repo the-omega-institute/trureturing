@@ -174,6 +174,12 @@ public static class DagLedgerLoader
         remaining.Remove(item);
         ordered.Add(item);
         placedIdentities.Add(item.Identity);
+        if (item.EventType == FrozenLedger.SupersedeEventType
+            && item.Payload.TryGetProperty("frozen_node_id", out var frozenNodeId)
+            && frozenNodeId.ValueKind == JsonValueKind.String)
+        {
+            placedIdentities.Add(frozenNodeId.GetString()!);
+        }
         placedHashes.Add(item.EventHash);
     }
 
@@ -202,12 +208,12 @@ public static class DagLedgerLoader
                 && placedHashes.Contains(previous.GetString()!);
         }
 
-        if (item.EventType == FrozenLedger.EnvironmentRecoordinateEventType)
+        if (item.EventType == FrozenLedger.SupersedeEventType)
         {
             return item.Payload.TryGetProperty("previous_attestation_event_hash", out var previous)
                 && previous.ValueKind == JsonValueKind.String
                 && placedHashes.Contains(previous.GetString()!)
-                && item.Payload.TryGetProperty("new_prerequisite_frozen_node_ids", out var prerequisites)
+                && item.Payload.TryGetProperty("prerequisite_frozen_node_ids", out var prerequisites)
                 && prerequisites.ValueKind == JsonValueKind.Array
                 && prerequisites.EnumerateArray().All(prerequisite =>
                     prerequisite.ValueKind == JsonValueKind.String

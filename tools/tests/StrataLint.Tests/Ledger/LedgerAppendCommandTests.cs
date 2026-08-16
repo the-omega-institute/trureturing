@@ -309,13 +309,14 @@ public sealed class LedgerAppendCommandTests
         return result;
     }
 
-    private sealed class LedgerAppendFixture : IDisposable
+    internal sealed class LedgerAppendFixture : IDisposable
     {
         private readonly TemporaryDirectory temporary = new();
 
         internal LedgerAppendFixture(
             bool driftARepresentation = false,
-            string currentAStatementMaterial = "True")
+            string currentAStatementMaterial = "True",
+            bool pinBump = false)
         {
             var baselineA = FrozenLedgerTestData.ModuleWithReport(
                 "A",
@@ -339,7 +340,10 @@ public sealed class LedgerAppendCommandTests
 
             var files = new Dictionary<string, string>(StringComparer.Ordinal)
             {
-                ["lean-toolchain"] = "leanprover/lean4:v4.24.0\n",
+                ["lean-toolchain"] = pinBump
+                    ? "leanprover/lean4:v4.25.0\n"
+                    : "leanprover/lean4:v4.24.0\n",
+                ["lakefile.toml"] = "[package]\nname = \"fixture\"\n",
                 ["lake-manifest.json"] = "{}\n",
                 [FrozenLedgerTestData.PathFor("A")] = candidateA.Source,
                 [FrozenLedgerTestData.PathFor("B")] = b.Source,

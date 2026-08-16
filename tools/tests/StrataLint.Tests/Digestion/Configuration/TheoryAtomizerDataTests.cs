@@ -208,6 +208,106 @@ public sealed class TheoryAtomizerDataTests
     }
 
     [Fact]
+    public void LoaderAcceptsGenreSuffixAndDerivesItsKindFromTheBareExactGenre()
+    {
+        var rules = Load(SuffixData(BareExampleGenre, ExampleSuffix));
+        var bytes = Encoding.UTF8.GetBytes("# Probe\n\n## 极小反例 1.1\n\n证。\n");
+
+        var document = AtomizerRegistry.Atomize("dialect:suffix-probe", bytes, rules);
+
+        Assert.Equal("example/1.1", Assert.Single(document.Claims).AstPath);
+        Assert.Empty(document.UnregisteredGenres);
+    }
+
+    [Fact]
+    public void LoaderRejectsGenreSuffixForAnUndeclaredDialect()
+    {
+        var data = SuffixData(BareExampleGenre, """
+            [[dialect.genre_suffix]]
+            dialect = "ghost-volume"
+            suffix = "例"
+            """);
+
+        var error = Assert.Throws<FormatException>(() => Load(data));
+
+        Assert.Contains("ghost-volume", error.Message, StringComparison.Ordinal);
+        Assert.Contains("not declared", error.Message, StringComparison.OrdinalIgnoreCase);
+    }
+
+    [Fact]
+    public void LoaderRejectsGenreSuffixWithoutSameDialectBareExactGenre()
+    {
+        var data = Minimal.TrimEnd('\n') + "\n\n" + """
+            [[dialect]]
+            id = "bare-head-owner"
+            claim = "^(?<kind>\\p{L}+)\\s+(?<number>[0-9]+(?:\\.[0-9]+)+)"
+            target = "heading"
+
+            [[dialect]]
+            id = "suffix-probe"
+            claim = "^(?<kind>\\p{L}+)\\s+(?<number>[0-9]+(?:\\.[0-9]+)+)"
+            target = "heading"
+
+            [[dialect.genre]]
+            dialect = "bare-head-owner"
+            token = "例"
+            kind = "example"
+
+            [[dialect.genre_suffix]]
+            dialect = "suffix-probe"
+            suffix = "例"
+            """ + "\n";
+
+        var error = Assert.Throws<FormatException>(() => Load(data));
+
+        Assert.Contains("bare exact genre", error.Message, StringComparison.Ordinal);
+        Assert.Contains("例", error.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void LoaderRejectsDuplicateGenreSuffixWithinADialect()
+    {
+        var data = SuffixData(BareExampleGenre, ExampleSuffix + "\n\n" + ExampleSuffix);
+
+        var error = Assert.Throws<FormatException>(() => Load(data));
+
+        Assert.Contains("Duplicate genre suffix", error.Message, StringComparison.Ordinal);
+        Assert.Contains("例", error.Message, StringComparison.Ordinal);
+    }
+
+    [Theory]
+    [InlineData("", "empty")]
+    [InlineData("例1", "letters")]
+    public void LoaderRejectsEmptyOrNonLetterGenreSuffix(string suffix, string expectedMessage)
+    {
+        var data = SuffixData(BareExampleGenre, $$"""
+            [[dialect.genre_suffix]]
+            dialect = "suffix-probe"
+            suffix = "{{suffix}}"
+            """);
+
+        var error = Assert.Throws<FormatException>(() => Load(data));
+
+        Assert.Contains(expectedMessage, error.Message, StringComparison.OrdinalIgnoreCase);
+    }
+
+    [Fact]
+    public void LoaderRejectsRedundantExactGenreCoveredBySameKindSuffix()
+    {
+        var data = SuffixData(BareExampleGenre + "\n\n" + """
+            [[dialect.genre]]
+            dialect = "suffix-probe"
+            token = "特例"
+            kind = "example"
+            """, ExampleSuffix);
+
+        var error = Assert.Throws<FormatException>(() => Load(data));
+
+        Assert.Contains("redundant exact genre", error.Message, StringComparison.OrdinalIgnoreCase);
+        Assert.Contains("特例", error.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
     public void TryLoadReportsAnAbsentDataFileWithoutThrowing()
     {
         // A tree that predates this data surface carries no atomizers.toml at all. Treating that
@@ -249,4 +349,28 @@ public sealed class TheoryAtomizerDataTests
 
     private static TheoryAtomizerRules Load(string text) => TheoryAtomizerDataLoader.Load(
         DigestionTestSupport.Snapshot((TheoryAtomizerDataLoader.DataPath, Encoding.UTF8.GetBytes(text))));
+
+    private static string SuffixData(string genres, string suffixes) => Minimal.TrimEnd('\n') + "\n\n" + $$"""
+        [[dialect]]
+        id = "suffix-probe"
+        claim = "^(?<kind>\\p{L}+)\\s+(?<number>[0-9]+(?:\\.[0-9]+)+)"
+        target = "heading"
+
+        {{genres}}
+
+        {{suffixes}}
+        """ + "\n";
+
+    private const string BareExampleGenre = """
+        [[dialect.genre]]
+        dialect = "suffix-probe"
+        token = "例"
+        kind = "example"
+        """;
+
+    private const string ExampleSuffix = """
+        [[dialect.genre_suffix]]
+        dialect = "suffix-probe"
+        suffix = "例"
+        """;
 }

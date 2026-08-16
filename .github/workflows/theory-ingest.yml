@@ -1,5 +1,5 @@
-# 理论卷自动摄入:PR 触碰 docs/develop/theory/** 时,在候选树跑 make ingest,
-# base 只以 merge-base SHA 参与对象级 diff。
+# 理论卷自动摄入:PR 触碰 docs/develop/theory/** 时,在 GitHub merge result 上跑 make ingest,
+# base 只以该 merge commit 的第一父提交 SHA 参与对象级 diff。
 # 不回写 echo residual 投影:它是允许陈旧的人读快照(CLAUDE.md 第〇节),按需由
 # `make echo-residual-summary` 重发,消费者应调 producer 现算而非读仓内分片。
 name: theory-ingest
@@ -24,24 +24,30 @@ jobs:
     runs-on: ubuntu-24.04-arm
     timeout-minutes: 36
     steps:
-      - name: Check out PR head (data + commit target)
+      - name: Check out checked merge result
+        id: checkout-merge
+        continue-on-error: ${{ github.event_name == 'pull_request_target' }}
         uses: actions/checkout@v4
         with:
-          ref: ${{ github.event.pull_request.head.sha }}
-          repository: ${{ github.event.pull_request.head.repo.full_name }}
+          ref: ${{ format('refs/pull/{0}/merge', github.event.pull_request.number) }}
           path: candidate
           fetch-depth: 0
           persist-credentials: false
 
-      - name: Resolve merge-base SHA
+      - name: Fail closed when merge result is unavailable
+        if: always() && steps.checkout-merge.outcome != 'success'
+        shell: bash
+        run: |
+          set -euo pipefail
+          printf '%s\n' "cannot check out GitHub merge ref refs/pull/${{ github.event.pull_request.number }}/merge; conflicted pull requests have no merge result, so theory ingest fails closed" >&2
+          exit 1
+
+      - name: Resolve checked merge result's dev parent
         id: base
         shell: bash
         run: |
           set -euo pipefail
-          base="${{ github.event.pull_request.base.sha }}"
-          head="${{ github.event.pull_request.head.sha }}"
-          git -C candidate fetch --no-tags --quiet origin "$base" 2>/dev/null || true
-          sha="$(git -C candidate merge-base "$base" "$head")"
+          sha="$(git -C candidate rev-parse HEAD^1)"
           test -n "$sha"
           echo "sha=$sha" >> "$GITHUB_OUTPUT"
 
@@ -139,7 +145,7 @@ jobs:
             "Lean report input address: sha256:${{ steps.lean-report-input.outputs.address }}" \
             >> "$GITHUB_STEP_SUMMARY"
 
-      - name: Run ingest with merge-base SHA
+      - name: Run ingest with checked dev parent SHA
         shell: bash
         run: |
           set -euo pipefail
