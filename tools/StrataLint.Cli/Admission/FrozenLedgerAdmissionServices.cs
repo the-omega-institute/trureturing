@@ -1,5 +1,6 @@
 using System.Collections.Immutable;
 using System.Text;
+using System.Text.Json;
 using StrataLint.Engine;
 
 namespace StrataLint.Cli;
@@ -64,10 +65,12 @@ internal sealed class ProductionFrozenLedgerAdmissionServices : IFrozenLedgerAdm
         }
 
         var deltaFiles = deltaPaths.Select(path => current.TryGetFile(path.Value, out var file)
-            ? file
-            : throw new FrozenLedgerAdmissionPreparationException(
-                [path],
-                "added frozen-ledger delta path is absent from the candidate snapshot"));
+                ? file
+                : throw new FrozenLedgerAdmissionPreparationException(
+                    [path],
+                    "added frozen-ledger delta path is absent from the candidate snapshot"))
+            .ToImmutableArray();
+        RejectClosurelessAddedFreezes(deltaFiles);
         DeltaEventLoadCount++;
         var loaded = FrozenAcceptedEventLoader.LoadFiles(deltaFiles) switch
         {
@@ -95,19 +98,13 @@ internal sealed class ProductionFrozenLedgerAdmissionServices : IFrozenLedgerAdm
         {
             try
             {
-                if (item.EventType == FrozenLedger.EnvironmentRecoordinateEventType)
+                if (item.EventType == FrozenLedger.SupersedeEventType)
                 {
-                    var payload = FrozenLedger.ParseEnvironmentRecoordinate(item.Payload);
-                    inputs.Add(payload.OldInput);
-                    inputs.Add(payload.NewInput);
+                    var payload = FrozenLedger.ParseSupersede(item.Payload);
+                    inputs.Add(payload.Input);
                     environmentReferences.Add(new FrozenEnvironmentReference(
-                        payload.OldInput,
-                        payload.OldEnvironment,
-                        payload.SourceSha256));
-                    environmentReferences.Add(new FrozenEnvironmentReference(
-                        payload.NewInput,
-                        payload.NewEnvironment,
-                        payload.SourceSha256));
+                        payload.Input,
+                        payload.Environment));
                 }
                 else if (item.Input is { } input)
                 {
@@ -164,6 +161,52 @@ internal sealed class ProductionFrozenLedgerAdmissionServices : IFrozenLedgerAdm
             ordered,
             producerPaths.Value,
             trusted);
+    }
+
+    private static void RejectClosurelessAddedFreezes(
+        ImmutableArray<RepositoryFile> deltaFiles)
+    {
+        foreach (var file in deltaFiles)
+        {
+            var nodePath = ClosurelessFreezeNodePath(file);
+            if (nodePath is null)
+            {
+                continue;
+            }
+
+            throw new FrozenLedgerAdmissionPreparationException(
+                [nodePath],
+                $"Added Freeze event for {nodePath.Value} must carry axiom_closure. "
+                    + $"delta witness: {file.Path.Value}");
+        }
+    }
+
+    private static RepoPath? ClosurelessFreezeNodePath(RepositoryFile file)
+    {
+        try
+        {
+            using var document = JsonDocument.Parse(file.RawBytes.AsSpan().ToArray());
+            var root = document.RootElement;
+            if (!root.TryGetProperty("event_type", out var eventType)
+                || eventType.ValueKind != JsonValueKind.String
+                || eventType.GetString() != "Freeze"
+                || !root.TryGetProperty("payload", out var payload)
+                || payload.ValueKind != JsonValueKind.Object
+                || payload.TryGetProperty("axiom_closure", out _)
+                || !payload.TryGetProperty("node_path", out var nodePath)
+                || nodePath.ValueKind != JsonValueKind.String)
+            {
+                return null;
+            }
+
+            return RepoPath.TryCreate(nodePath.GetString()!, out var parsedPath)
+                ? parsedPath
+                : null;
+        }
+        catch (JsonException)
+        {
+            return null;
+        }
     }
 
     public AdmissionOutcome? Validate(

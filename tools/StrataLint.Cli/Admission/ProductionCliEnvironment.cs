@@ -19,8 +19,6 @@ internal interface IRepositoryGateway
 
     PreparedRepository Prepare(string? protectedBase);
 
-    FrozenRevisionIdentity ResolveFrozenRevision(string revision);
-
     FrozenRevisionIdentity ResolveCurrentRevision();
 
     RawRepositorySnapshot ReadCurrent();
@@ -584,6 +582,9 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
 
     public CommandResult ReattestLedger(IReadOnlyList<string> arguments) =>
         DagLedgerReattestWriter.Reattest(repositoryRoot, repository, arguments);
+
+    public CommandResult SupersedeLedger(IReadOnlyList<string> arguments) =>
+        DagLedgerSupersedeWriter.Supersede(repositoryRoot, repository, arguments);
 
     public CommandResult SyncLedger(IReadOnlyList<string> arguments) =>
         DagLedgerSyncWriter.Sync(repositoryRoot, repository, arguments);

@@ -2,6 +2,7 @@ using System.Collections.Immutable;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
+using System.Text.Json.Nodes;
 using StrataLint.Cli;
 using StrataLint.Engine;
 
@@ -94,6 +95,62 @@ public sealed partial class ProductionEnvironmentTests
     }
 
     [Fact]
+    public void CheckRejectsAddedFreezeWithoutAxiomClosureAndNamesNodePath()
+    {
+        using var temporary = new TemporaryDirectory();
+        var fixture = AddedFrozenRingFixture();
+        var freezePath = AddedFreezePathFor(fixture, RuleFixture.RingPath);
+        RewriteFreezeWithoutAxiomClosure(
+            fixture.Files,
+            freezePath,
+            FrozenLedgerCanonicalWriter.CurrentDagSchemaVersion);
+        var addedLedgerPaths = AddedLedgerPaths(fixture);
+        var environment = new ProductionCliEnvironment(
+            "/repo",
+            new FakeRepositoryGateway(
+                RawChangeSet.CreateWithKinds(
+                    addedLedgerPaths.Select(static path => (path, RawChangeKind.Added))),
+                Snapshot(fixture.Files),
+                Snapshot(fixture.Baseline)),
+            new FakeLeanReportSource(null));
+
+        var outcome = environment.Check(
+            ["--candidate-lean-report", WriteCandidateReport(temporary, fixture)]);
+
+        var rejected = Assert.IsType<AdmissionOutcome.RuleRejected>(outcome);
+        var diagnostic = Assert.Single(
+            rejected.Diagnostics.Where(static item => item.RuleId == RuleId.CreateKnown(8)));
+        Assert.Equal(RuleFixture.RingPath, diagnostic.Path);
+        Assert.Contains(
+            $"Added Freeze event for {RuleFixture.RingPath} must carry axiom_closure.",
+            diagnostic.Message,
+            StringComparison.Ordinal);
+        Assert.Contains("delta witness: " + freezePath, diagnostic.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void CheckAdmitsHistoricalClosurelessV2FreezeDuringIncrementalEvaluation()
+    {
+        using var temporary = new TemporaryDirectory();
+        var fixture = TrustedFrozenFixture();
+        var freezePath = FreezePathFor(fixture, RuleFixture.RingPath);
+        RewriteFreezeWithoutAxiomClosure(fixture.Files, freezePath, schemaVersion: 2);
+        RewriteFreezeWithoutAxiomClosure(fixture.Baseline, freezePath, schemaVersion: 2);
+        var environment = new ProductionCliEnvironment(
+            "/repo",
+            new FakeRepositoryGateway(
+                RawChangeSet.CreateWithKinds([(RuleFixture.RingPath, RawChangeKind.Modified)]),
+                Snapshot(fixture.Files),
+                Snapshot(fixture.Baseline)),
+            new FakeLeanReportSource(null));
+
+        var outcome = environment.Check(
+            ["--candidate-lean-report", WriteCandidateReport(temporary, fixture)]);
+
+        Assert.IsType<AdmissionOutcome.Admitted>(outcome);
+    }
+
+    [Fact]
     public void CheckAdmitsAddedFreezeAnchoredToPhaseAWhenCurrentRevisionIsPhaseB()
     {
         using var temporary = new TemporaryDirectory();
@@ -160,61 +217,6 @@ public sealed partial class ProductionEnvironmentTests
         Assert.Equal(
             FrozenLedgerTestData.GitOid('a'),
             Assert.Single(deltaReferences.RequiredAncestorCommitOids));
-    }
-
-    [Fact]
-    public void CheckValidatesBothEnvironmentReferencesOfAnAddedRecoordinateEvent()
-    {
-        var (path, contents) = FrozenLedgerTests.EnvironmentRecoordinateDagEvent();
-        var fixture = new RuleFixture();
-        fixture.AddBackfillTargets();
-        AddFrozenLedger(fixture);
-        fixture.Files[path] = contents;
-        FrozenLedgerReferenceSet? captured = null;
-        var service = new ProductionFrozenLedgerAdmissionServices(
-            "/repo",
-            ImmutableHashSet<string>.Empty);
-
-        var failure = Assert.Throws<FrozenLedgerAdmissionPreparationException>(() =>
-            service.Prepare(
-                Decode(Snapshot(fixture.Files)),
-                Decode(Snapshot(fixture.Baseline)),
-                RawChangeSet.CreateWithKinds([(path, RawChangeKind.Added)]),
-                references =>
-                {
-                    captured = references;
-                    throw new FrozenReferenceRejectionException(
-                        FrozenReferenceRejectionKind.MissingObject,
-                        "synthetic added EnvironmentRecoordinate anchor rejection");
-                }));
-
-        Assert.Contains(
-            "synthetic added EnvironmentRecoordinate anchor rejection",
-            failure.Message,
-            StringComparison.Ordinal);
-        Assert.Equal(path, Assert.Single(failure.Paths).Value);
-        Assert.NotNull(captured);
-        Assert.Equal(2, captured.Inputs.Length);
-        Assert.Equal(2, captured.EnvironmentReferences.Length);
-        Assert.Empty(captured.RequiredAncestorCommitOids);
-        var oldReference = Assert.Single(
-            captured.EnvironmentReferences,
-            reference => reference.Input.BaseCommitOid == FrozenLedgerTestData.GitOid('a'));
-        var newReference = Assert.Single(
-            captured.EnvironmentReferences,
-            reference => reference.Input.BaseCommitOid == FrozenLedgerTestData.GitOid('c'));
-        Assert.Equal(FrozenLedgerTestData.GitOid('b'), oldReference.Input.BaseTreeOid);
-        Assert.Equal(FrozenLedgerTestData.GitOid('d'), newReference.Input.BaseTreeOid);
-        Assert.NotEqual(
-            oldReference.Environment.LeanToolchainBlobOid,
-            newReference.Environment.LeanToolchainBlobOid);
-        Assert.NotEqual(
-            oldReference.Environment.LakeManifestBlobOid,
-            newReference.Environment.LakeManifestBlobOid);
-        Assert.Equal("lakefile.toml", oldReference.Environment.LakefilePath.Value);
-        Assert.Equal("lakefile.toml", newReference.Environment.LakefilePath.Value);
-        Assert.Equal(FrozenLedgerTestData.PathFor("A"), oldReference.Input.DescriptorSelector);
-        Assert.Equal(FrozenLedgerTestData.PathFor("A"), newReference.Input.DescriptorSelector);
     }
 
     [Fact]
@@ -302,95 +304,6 @@ public sealed partial class ProductionEnvironmentTests
         return Assert.Single(AddedLedgerPaths(fixture), path => EventType(fixture.Files[path]) == "Reattest");
     }
 
-    private static void DriftEnvironmentAndStatementIdentity(RuleFixture fixture, string statementType)
-    {
-        fixture.Files["lean-toolchain"] = "leanprover/lean4:v4.25.0\n";
-        fixture.Reports[RuleFixture.RingPath] = new LeanFileReport(
-            [],
-            [new LeanDeclaration("goldenRing", "def", statementType, [])]);
-    }
-
-    private static string AddEnvironmentRecoordinate(
-        RuleFixture fixture,
-        FrozenLedgerConsistent baselineLedger,
-        LeanFileReport eventReport)
-    {
-        _ = baselineLedger;
-        var eventReports = new Dictionary<string, LeanFileReport>(fixture.Reports, StringComparer.Ordinal)
-        {
-            [RuleFixture.RingPath] = eventReport,
-        };
-        var candidateCatalog = BuildFrozenCatalog(fixture.Files, eventReports);
-        var baseView = FrozenLedgerBaseViewReader.Read(Decode(Snapshot(fixture.Baseline)));
-        var oldEnvironment = FrozenEnvironment(fixture.Baseline);
-        var newEnvironment = FrozenEnvironment(fixture.Files);
-        var oldPins = FrozenPins(oldEnvironment);
-        var newPins = FrozenPins(newEnvironment);
-        string? ringEventPath = null;
-        foreach (var active in baseView.ActiveByPath.Values.OrderBy(
-            static entry => entry.Material.RepoPath.Value,
-            StringComparer.Ordinal))
-        {
-            var modulePath = active.Material.RepoPath;
-            var candidate = candidateCatalog.ByPath[modulePath];
-            var newReport = eventReports[modulePath.Value];
-            var oldReport = fixture.BaselineReports[modulePath.Value];
-            var oldInput = active.Payload.Input with
-            {
-                SupportingBlobOids = EnvironmentOids(oldPins),
-            };
-            var newInput = FrozenLedgerCanonicalWriter.FreezePayload(newEnvironment, candidate).Input with
-            {
-                SupportingBlobOids = EnvironmentOids(newPins),
-            };
-            var payload = new FrozenEnvironmentRecoordinatePayload(
-                active.Payload.CaseId,
-                candidate.DeclarationStatementIds,
-                active.Material.DeclarationStatementIds,
-                newPins,
-                oldPins,
-                FrozenLedger.EnvironmentRecoordinateUnprovedEquivalence,
-                nameof(TruthState.Closed),
-                candidate.AxiomClosure,
-                candidate.FrozenNodeId,
-                newReport.Imports.Distinct(StringComparer.Ordinal).Order(StringComparer.Ordinal).ToImmutableArray(),
-                newInput,
-                candidate.PrerequisiteFrozenNodeIds,
-                candidate.StatementId,
-                candidate.WitnessId,
-                oldReport.Declarations.SelectMany(static declaration => declaration.Axioms)
-                    .Distinct(StringComparer.Ordinal)
-                    .Order(StringComparer.Ordinal)
-                    .ToImmutableArray(),
-                active.Material.FrozenNodeId,
-                oldReport.Imports.Distinct(StringComparer.Ordinal).Order(StringComparer.Ordinal).ToImmutableArray(),
-                oldInput,
-                active.Material.PrerequisiteFrozenNodeIds,
-                active.Material.StatementId,
-                active.Material.WitnessId,
-                active.LastAttestationEventHash,
-                "sha256:" + Convert.ToHexStringLower(SHA256.HashData(
-                    Encoding.UTF8.GetBytes(fixture.Files[modulePath.Value]))));
-            var element = FrozenLedgerCanonicalWriter.EnvironmentRecoordinateElement(payload);
-            var encoded = FrozenLedgerCanonicalWriter.WriteDagEvent(
-                FrozenLedger.EnvironmentRecoordinateEventType,
-                element);
-            var identity = FrozenLedgerCanonicalWriter.EventIdentity(
-                FrozenLedger.EnvironmentRecoordinateEventType,
-                element,
-                encoded.Hash);
-            var path = FrozenLedgerChangeClassifier.AcceptedPath(identity);
-            fixture.Files[path] = Encoding.UTF8.GetString(encoded.Bytes.AsSpan());
-            if (modulePath.Value == RuleFixture.RingPath)
-            {
-                ringEventPath = path;
-            }
-        }
-
-        Assert.NotNull(ringEventPath);
-        return ringEventPath;
-    }
-
     private static FrozenMaterialCatalog BuildFrozenCatalog(
         IReadOnlyDictionary<string, string> files,
         IReadOnlyDictionary<string, LeanFileReport> reports)
@@ -438,5 +351,25 @@ public sealed partial class ProductionEnvironmentTests
     {
         using var document = JsonDocument.Parse(contents);
         return document.RootElement.GetProperty("event_type").GetString()!;
+    }
+
+    private static void RewriteFreezeWithoutAxiomClosure(
+        IDictionary<string, string> files,
+        string eventPath,
+        int schemaVersion)
+    {
+        using var document = JsonDocument.Parse(files[eventPath]);
+        var root = document.RootElement;
+        Assert.Equal("Freeze", root.GetProperty("event_type").GetString());
+        var payload = JsonNode.Parse(root.GetProperty("payload").GetRawText())!.AsObject();
+        Assert.True(payload.Remove("axiom_closure"));
+        var payloadElement = JsonSerializer.SerializeToElement(payload);
+        var encoded = FrozenLedgerCanonicalWriter.WriteDagEvent(
+            "Freeze",
+            payloadElement,
+            schemaVersion);
+        var identity = FrozenLedgerCanonicalWriter.EventIdentity("Freeze", payloadElement, encoded.Hash);
+        Assert.Equal(eventPath, FrozenLedgerChangeClassifier.AcceptedPath(identity));
+        files[eventPath] = Encoding.UTF8.GetString(encoded.Bytes.AsSpan());
     }
 }

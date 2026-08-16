@@ -46,6 +46,8 @@ public static partial class FrozenLedger
             var events = baseline.Events.ToBuilder();
             var active = baseline.ActiveEntries.ToDictionary(static item => item.Key, static item => item.Value, StringComparer.Ordinal);
             var allCaseIds = baseline.AllCaseIds.ToHashSet(StringComparer.Ordinal);
+            var superseded = baseline.SupersededFrozenNodeIds.ToHashSet();
+            var supersededBaseCases = new HashSet<string>(StringComparer.Ordinal);
             var revoked = baseline.RevokedFrozenNodeIds.ToHashSet();
             var activePathCases = active.Values.ToDictionary(
                 static item => item.Material.RepoPath,
@@ -95,20 +97,11 @@ public static partial class FrozenLedger
                 {
                     var reattest = ParseReattest(payload, active, trustedReferences);
                     var entry = active[reattest.CaseId];
-                    FrozenNodeMaterial? material = null;
-                    if (!reattest.IsLegacyFormat)
-                    {
-                        if (!catalog.ByPath.TryGetValue(
-                            entry.Material.RepoPath,
-                            out var candidateMaterial))
-                        {
-                            throw new FormatException(
-                                $"Reattest target {entry.Material.RepoPath.Value} is no longer Closed.");
-                        }
-
-                        ValidateReattestMaterial(reattest, candidateMaterial);
-                        material = candidateMaterial;
-                    }
+                    var material = ValidateReattestCandidateMaterial(
+                        reattest,
+                        entry,
+                        catalog,
+                        "is no longer Closed");
 
                     active[reattest.CaseId] = ApplyReattest(
                         entry,
@@ -122,22 +115,31 @@ public static partial class FrozenLedger
                         previousHash,
                         reattest));
                 }
-                else if (eventType == EnvironmentRecoordinateEventType)
+                else if (eventType == SupersedeEventType)
                 {
-                    var recoordinate = ValidateEnvironmentRecoordinate(
+                    var supersede = ValidateSupersede(
                         payload,
                         active,
                         trustedReferences,
                         catalog);
-                    active[recoordinate.CaseId] = ApplyEnvironmentRecoordinate(
-                        active[recoordinate.CaseId],
-                        recoordinate,
+                    if (!baseline.ActiveEntries.TryGetValue(supersede.CaseId, out var baseEntry)
+                        || !supersededBaseCases.Add(supersede.CaseId))
+                    {
+                        throw new FormatException(
+                            "Supersede must target each protected-base active case at most once.");
+                    }
+
+                    ValidateSupersedeStrength(supersede, baseEntry);
+                    superseded.Add(baseEntry.Material.FrozenNodeId);
+                    active[supersede.CaseId] = ApplySupersede(
+                        active[supersede.CaseId],
+                        supersede,
                         eventHash);
-                    events.Add(new FrozenLedgerEvent.EnvironmentRecoordinate(
+                    events.Add(new FrozenLedgerEvent.Supersede(
                         sequence,
                         eventHash,
                         previousHash,
-                        recoordinate));
+                        supersede));
                 }
                 else if (eventType == "Revoke")
                 {
@@ -203,6 +205,7 @@ public static partial class FrozenLedger
                 ComputeFrozenGraphRoot(catalog.ClosedNodes),
                 activeEntries,
                 allCaseIds.ToImmutableHashSet(StringComparer.Ordinal),
+                superseded.ToImmutableHashSet(),
                 revoked.ToImmutableHashSet()));
         }
         catch (Exception exception) when (exception is FormatException or JsonException or InvalidOperationException)
@@ -214,16 +217,26 @@ public static partial class FrozenLedger
     private static FrozenReattestPayload ParseReattest(
         JsonElement payload,
         IReadOnlyDictionary<string, FrozenActiveEntry> active,
-        TrustedFrozenGitReferences trustedReferences)
+        TrustedFrozenGitReferences trustedReferences,
+        bool requireAxiomClosure = false)
     {
-        if (HasExactObjectFields(
-            payload,
-            "case_id", "input", "input_fingerprint", "previous_attestation_event_hash", "semantic_receipt"))
+        var legacy = HasExactObjectFields(
+                payload,
+                FrozenLedgerReferenceProjection.LegacyReattestPayloadFields)
+            || HasExactObjectFields(
+                payload,
+                FrozenLedgerReferenceProjection.LegacyReattestPayloadFieldsV3);
+        if (legacy)
         {
+            if (requireAxiomClosure && !payload.TryGetProperty("axiom_closure", out _))
+            {
+                throw new FormatException("New Reattest payload must record axiom_closure.");
+            }
+
             return ParseLegacyReattest(payload, active, trustedReferences);
         }
 
-        return ParseExtendedReattest(payload, active, trustedReferences);
+        return ParseExtendedReattest(payload, active, trustedReferences, requireAxiomClosure);
     }
 
     private static FrozenReattestPayload ParseLegacyReattest(
@@ -231,16 +244,16 @@ public static partial class FrozenLedger
         IReadOnlyDictionary<string, FrozenActiveEntry> active,
         TrustedFrozenGitReferences trustedReferences)
     {
-        RequireObjectFields(
-            payload,
-            "Reattest payload",
-            "case_id", "input", "input_fingerprint", "previous_attestation_event_hash", "semantic_receipt");
+        RequireEventPayloadFields(payload, "Reattest");
         var result = new FrozenReattestPayload(
             RequiredString(payload, "case_id"),
             ParseInput(payload.GetProperty("input")),
             RequiredString(payload, "input_fingerprint"),
             RequiredString(payload, "previous_attestation_event_hash"),
-            RequiredString(payload, "semantic_receipt"));
+            RequiredString(payload, "semantic_receipt"))
+        {
+            AxiomClosure = ParseOptionalAxiomClosure(payload),
+        };
         if (!trustedReferences.Covers(result.Input))
         {
             throw new FormatException("Reattest input has no validated Git commit/tree/blob capability.");
@@ -269,14 +282,15 @@ public static partial class FrozenLedger
     private static FrozenReattestPayload ParseExtendedReattest(
         JsonElement payload,
         IReadOnlyDictionary<string, FrozenActiveEntry> active,
-        TrustedFrozenGitReferences trustedReferences)
+        TrustedFrozenGitReferences trustedReferences,
+        bool requireAxiomClosure)
     {
-        RequireObjectFields(
-            payload,
-            "Reattest payload",
-            "case_id", "declaration_statement_ids", "frozen_node_id", "input", "input_fingerprint",
-            "prerequisite_frozen_node_ids", "previous_attestation_event_hash", "semantic_receipt",
-            "statement_id", "witness_id");
+        RequireEventPayloadFields(payload, "Reattest");
+        if (requireAxiomClosure && !payload.TryGetProperty("axiom_closure", out _))
+        {
+            throw new FormatException("New Reattest payload must record axiom_closure.");
+        }
+
         var result = new FrozenReattestPayload(
             RequiredString(payload, "case_id"),
             ParseDeclarationStatementIds(payload),
@@ -287,7 +301,10 @@ public static partial class FrozenLedger
             RequiredString(payload, "previous_attestation_event_hash"),
             RequiredString(payload, "semantic_receipt"),
             ParseStatementId(RequiredString(payload, "statement_id"), "Reattest statement"),
-            ParseWitnessId(RequiredString(payload, "witness_id"), "Reattest witness"));
+            ParseWitnessId(RequiredString(payload, "witness_id"), "Reattest witness"))
+        {
+            AxiomClosure = ParseOptionalAxiomClosure(payload),
+        };
         if (!trustedReferences.Covers(result.Input))
         {
             throw new FormatException("Reattest input has no validated Git commit/tree/blob capability.");
@@ -330,6 +347,8 @@ public static partial class FrozenLedger
             || payload.StatementId != material.StatementId
             || payload.WitnessId != material.WitnessId
             || payload.FrozenNodeId != material.FrozenNodeId
+            || payload.HasAxiomClosure
+                && !payload.AxiomClosure.SequenceEqual(material.AxiomClosure)
             || !payload.PrerequisiteFrozenNodeIds.SequenceEqual(material.PrerequisiteFrozenNodeIds)
             || payload.Input.DescriptorBlobOid != material.Attestation.SourceBlobOid
             || payload.Input.DescriptorSelector != material.RepoPath.Value)
@@ -337,6 +356,38 @@ public static partial class FrozenLedger
             throw new FormatException(
                 $"Reattest does not match recomputed material for {material.RepoPath.Value}.");
         }
+    }
+
+    private static FrozenNodeMaterial? ValidateReattestCandidateMaterial(
+        FrozenReattestPayload payload,
+        FrozenActiveEntry entry,
+        FrozenMaterialCatalog catalog,
+        string closedStatus)
+    {
+        if (payload.IsLegacyFormat && !payload.HasAxiomClosure)
+        {
+            return null;
+        }
+
+        if (!catalog.ByPath.TryGetValue(entry.Material.RepoPath, out var material))
+        {
+            throw new FormatException(
+                $"Reattest target {entry.Material.RepoPath.Value} {closedStatus}.");
+        }
+
+        if (payload.IsLegacyFormat)
+        {
+            if (!payload.AxiomClosure.SequenceEqual(material.AxiomClosure))
+            {
+                throw new FormatException(
+                    $"Reattest does not match recomputed material for {material.RepoPath.Value}.");
+            }
+
+            return null;
+        }
+
+        ValidateReattestMaterial(payload, material);
+        return material;
     }
 
     private static FrozenRevokePayload ParseRevoke(

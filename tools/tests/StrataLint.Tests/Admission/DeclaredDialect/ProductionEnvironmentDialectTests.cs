@@ -105,9 +105,12 @@ public sealed partial class ProductionEnvironmentTests
     private static string WithProbeDialect(string data)
     {
         var genres = data.IndexOf("[[dialect.genre]]", StringComparison.Ordinal);
-        return genres < 0
+        var withDeclaration = genres < 0
             ? data.TrimEnd('\n') + "\n\n" + DialectDeclaration + "\n\n" + DialectGenres + "\n"
-            : data[..genres] + DialectDeclaration + "\n\n"
-                + data[genres..].TrimEnd('\n') + "\n\n" + DialectGenres + "\n";
+            : data[..genres] + DialectDeclaration + "\n\n" + data[genres..];
+        var suffixes = withDeclaration.IndexOf("[[dialect.genre_suffix]]", StringComparison.Ordinal);
+        return suffixes < 0 || genres < 0
+            ? withDeclaration
+            : withDeclaration[..suffixes] + DialectGenres + "\n\n" + withDeclaration[suffixes..];
     }
 }

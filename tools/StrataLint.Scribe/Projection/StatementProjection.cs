@@ -186,10 +186,8 @@ internal static class StatementV1Decoder
         private string Atom() { var length = checked((int)UInt()); Take(":"); if (position + length > text.Length) throw Error("Atom exceeds input."); var result = text.Substring(position, length); position += length; return result; }
         private string Word(int length) { if (position + length > text.Length) throw Error("Unexpected end."); var result = text.Substring(position, length); position += length; return result; }
         private FormatException Error(string message) => new($"{message} At byte {Encoding.UTF8.GetByteCount(text.AsSpan(0, position))}.");
-        private static uint UInt(Parser parser) => parser.UInt();
         private static LeanExpr Expr(Parser parser) { var result = parser.Expr(); parser.End(); return result; }
         private static LeanLevel Level(Parser parser) { var result = parser.Level(); parser.End(); return result; }
-        private static string Name(Parser parser) { var result = parser.Name(); parser.End(); return result; }
     }
 }
 

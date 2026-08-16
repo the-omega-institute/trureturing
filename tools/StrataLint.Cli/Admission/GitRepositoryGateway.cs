@@ -175,42 +175,6 @@ internal sealed partial class GitRepositoryGateway : IRepositoryGateway
             entry => $"protected base has non-regular entry {entry.Path} ({entry.Mode} {entry.ObjectType})"));
     }
 
-    internal RawRepositoryEntry ReadRevisionFile(string revision, string path)
-    {
-        if (!IsObjectId(revision))
-        {
-            throw new FrozenReferenceRejectionException(
-                FrozenReferenceRejectionKind.InvalidReference,
-                "revision file read requires an exact commit OID");
-        }
-        RequireObjectType(revision, "commit");
-
-        if (!RepoPath.TryCreate(path, out _))
-        {
-            throw new ArgumentException("revision file path is invalid", nameof(path));
-        }
-
-        var matches = ParseTree(GitBytes("ls-tree", "-z", revision, "--", path)).ToArray();
-        if (matches.Length != 1 || !string.Equals(matches[0].Path, path, StringComparison.Ordinal))
-        {
-            throw new FrozenReferenceRejectionException(
-                FrozenReferenceRejectionKind.MissingObject,
-                $"revision file is missing: {path}");
-        }
-
-        var entry = matches[0];
-        if (entry.Mode is not ("100644" or "100755") || entry.ObjectType != "blob")
-        {
-            throw new FrozenReferenceRejectionException(
-                FrozenReferenceRejectionKind.WrongObjectType,
-                $"revision file is not regular: {path} ({entry.Mode} {entry.ObjectType})");
-        }
-
-        return new RawRepositoryEntry(
-            path,
-            ImmutableArray.CreateRange(GitBytes("show", $"{revision}:{path}")));
-    }
-
     private IEnumerable<RawRepositoryEntry> ReadTreeBlobs(
         IReadOnlyList<TreeEntry> tree,
         Func<TreeEntry, string> invalidEntryMessage)

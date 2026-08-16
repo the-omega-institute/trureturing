@@ -211,10 +211,17 @@ public static partial class FrozenLedger
             var activePathCases = active.Values.ToDictionary(
                 static entry => entry.Material.RepoPath,
                 static entry => entry.Payload.CaseId);
+            var supersededBaseCases = new HashSet<string>(StringComparer.Ordinal);
             foreach (var item in preparation.DeltaEvents)
             {
                 try
                 {
+                    if (item.SchemaVersion != FrozenLedgerCanonicalWriter.CurrentDagSchemaVersion)
+                    {
+                        throw new FormatException(
+                            $"New accepted event must use schema_version {FrozenLedgerCanonicalWriter.CurrentDagSchemaVersion}.");
+                    }
+
                     if (item.EventType == "Freeze")
                     {
                         var freeze = ParseFreeze(
@@ -237,22 +244,17 @@ public static partial class FrozenLedger
                     }
                     else if (item.EventType == "Reattest")
                     {
-                        var reattest = ParseReattest(item.Payload, active, trustedReferences);
+                        var reattest = ParseReattest(
+                            item.Payload,
+                            active,
+                            trustedReferences,
+                            requireAxiomClosure: true);
                         var entry = active[reattest.CaseId];
-                        FrozenNodeMaterial? material = null;
-                        if (!reattest.IsLegacyFormat)
-                        {
-                            if (!catalog.ByPath.TryGetValue(
-                                entry.Material.RepoPath,
-                                out var candidateMaterial))
-                            {
-                                throw new FormatException(
-                                    $"Reattest target {entry.Material.RepoPath.Value} is not Closed.");
-                            }
-
-                            ValidateReattestMaterial(reattest, candidateMaterial);
-                            material = candidateMaterial;
-                        }
+                        var material = ValidateReattestCandidateMaterial(
+                            reattest,
+                            entry,
+                            catalog,
+                            "is not Closed");
 
                         active[reattest.CaseId] = ApplyReattest(
                             entry,
@@ -260,16 +262,26 @@ public static partial class FrozenLedger
                             item.EventHash,
                             material);
                     }
-                    else if (item.EventType == EnvironmentRecoordinateEventType)
+                    else if (item.EventType == SupersedeEventType)
                     {
-                        var recoordinate = ValidateEnvironmentRecoordinate(
+                        var supersede = ValidateSupersede(
                             item.Payload,
                             active,
                             trustedReferences,
                             catalog);
-                        active[recoordinate.CaseId] = ApplyEnvironmentRecoordinate(
-                            active[recoordinate.CaseId],
-                            recoordinate,
+                        if (!preparation.BaseView.ActiveByCase.TryGetValue(
+                                supersede.CaseId,
+                                out var protectedBaseEntry)
+                            || !supersededBaseCases.Add(supersede.CaseId))
+                        {
+                            throw new FormatException(
+                                "Supersede must target each protected-base active case exactly once.");
+                        }
+
+                        ValidateSupersedeStrength(supersede, protectedBaseEntry);
+                        active[supersede.CaseId] = ApplySupersede(
+                            active[supersede.CaseId],
+                            supersede,
                             item.EventHash);
                     }
                     else if (item.EventType == "Revoke")
@@ -291,7 +303,26 @@ public static partial class FrozenLedger
                         && RepoPath.TryCreate(input.DescriptorSelector, out var parsedPath)
                             ? parsedPath
                             : item.SourcePath;
-                    return Failure([affectedPath], [item.SourcePath], exception.Message);
+                    var witnesses = scope.Paths.Contains(affectedPath)
+                        ? scope.WitnessesFor(affectedPath)
+                        : ImmutableArray.Create(item.SourcePath);
+                    return Failure([affectedPath], witnesses, exception.Message);
+                }
+            }
+
+            if (scope.EnvironmentChanged)
+            {
+                foreach (var baseEntry in preparation.BaseView.ActiveByCase.Values.OrderBy(
+                    static entry => entry.Material.RepoPath.Value,
+                    StringComparer.Ordinal))
+                {
+                    if (!supersededBaseCases.Contains(baseEntry.Payload.CaseId))
+                    {
+                        return Failure(
+                            [baseEntry.Material.RepoPath],
+                            scope.WitnessesFor(baseEntry.Material.RepoPath),
+                            $"Active module {baseEntry.Material.RepoPath.Value} is missing a Supersede event for the environment pin change.");
+                    }
                 }
             }
 
@@ -324,9 +355,7 @@ public static partial class FrozenLedger
                 var activeEntry = entry!;
                 var expectedMaterial = material!;
                 var materialMatches = HistoricalActiveFreezeMatches(activeEntry.Payload, expectedMaterial);
-                var environmentMatches = activeEntry.Environment is null
-                    || EnvironmentMatches(activeEntry.Environment, catalog.Environment);
-                if (materialMatches && environmentMatches)
+                if (materialMatches)
                 {
                     continue;
                 }
@@ -339,14 +368,6 @@ public static partial class FrozenLedger
                         [path],
                         scope.WitnessesFor(path),
                         $"Active module {path.Value} statement identity changed; append Revoke first.");
-                }
-
-                if (!environmentMatches)
-                {
-                    return Failure(
-                        [path],
-                        scope.WitnessesFor(path),
-                        $"Active module {path.Value} environment pins changed; an accepted EnvironmentRecoordinate event is required.");
                 }
 
                 return Failure(

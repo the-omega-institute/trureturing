@@ -155,8 +155,9 @@ public static partial class FrozenLedgerGenerator
                     $"Active module {path.Value} statement identity changed; append Revoke before rerunning ledger-sync.");
             }
 
-            if (entry.Material.FrozenNodeId == candidate.FrozenNodeId
-                && entry.Payload.Input.DescriptorBlobOid == candidate.Attestation.SourceBlobOid)
+            var materialUnchanged = entry.Material.FrozenNodeId == candidate.FrozenNodeId
+                && entry.Payload.Input.DescriptorBlobOid == candidate.Attestation.SourceBlobOid;
+            if (materialUnchanged && entry.AxiomClosureKnown)
             {
                 continue;
             }
@@ -164,32 +165,17 @@ public static partial class FrozenLedgerGenerator
             var input = FrozenLedgerCanonicalWriter.FreezePayload(
                 candidateCatalog.Environment,
                 candidate).Input;
-            if (entry.Environment is { } activeEnvironment)
-            {
-                if (activeEnvironment.LeanToolchainBlobOid
-                        != candidateCatalog.Environment.LeanToolchainBlobOid
-                    || activeEnvironment.LakeManifestBlobOid
-                        != candidateCatalog.Environment.LakeManifestBlobOid
-                    || activeEnvironment.LakefilePath.Value
-                        != candidateCatalog.Environment.LakefilePath
-                    || activeEnvironment.LakefileBlobOid
-                        != candidateCatalog.Environment.LakefileBlobOid)
+            var payload = materialUnchanged
+                ? new FrozenReattestPayload(
+                    entry.Payload.CaseId,
+                    input,
+                    candidate.WitnessId.Value,
+                    entry.LastAttestationEventHash,
+                    candidate.FrozenNodeId.Value)
                 {
-                    throw new InvalidOperationException(
-                        $"Active module {path.Value} environment changed; an accepted EnvironmentRecoordinate event is required before ledger-sync.");
+                    AxiomClosure = candidate.AxiomClosure,
                 }
-
-                input = input with
-                {
-                    SupportingBlobOids = new[]
-                    {
-                        activeEnvironment.LakeManifestBlobOid,
-                        activeEnvironment.LakefileBlobOid,
-                        activeEnvironment.LeanToolchainBlobOid,
-                    }.Order(StringComparer.Ordinal).ToImmutableArray(),
-                };
-            }
-            var payload = ExtendedReattestPayload(entry.Payload.CaseId, entry, candidate, input);
+                : ExtendedReattestPayload(entry.Payload.CaseId, entry, candidate, input);
             payloads.Add(("Reattest", FrozenLedgerCanonicalWriter.ReattestElement(payload)));
         }
 
@@ -211,7 +197,10 @@ public static partial class FrozenLedgerGenerator
             entry.LastAttestationEventHash,
             material.FrozenNodeId.Value,
             material.StatementId,
-            material.WitnessId);
+            material.WitnessId)
+        {
+            AxiomClosure = material.AxiomClosure,
+        };
 
     public static ImmutableArray<byte> AppendRevocation(
         FrozenLedgerConsistent baseline,
@@ -275,6 +264,8 @@ public static partial class FrozenLedgerGenerator
 
 internal static class FrozenLedgerCanonicalWriter
 {
+    internal const int CurrentDagSchemaVersion = 3;
+
     private sealed record EnvelopeField(string Name, bool InV1, bool InV2);
 
     private static readonly EnvelopeField[] EnvelopeFieldTable =
@@ -329,7 +320,10 @@ internal static class FrozenLedgerCanonicalWriter
             node.FrozenNodeId.Value,
             node.StatementId,
             nameof(TruthState.Closed),
-            node.WitnessId);
+            node.WitnessId)
+        {
+            AxiomClosure = node.AxiomClosure,
+        };
     }
 
     internal static JsonElement GenesisElement(
@@ -344,8 +338,9 @@ internal static class FrozenLedgerCanonicalWriter
             rule_catalog_root = descriptor.RuleCatalogRoot,
         });
 
-    internal static JsonElement FreezeElement(FrozenFreezePayload payload) =>
-        JsonSerializer.SerializeToElement(new
+    internal static JsonElement FreezeElement(FrozenFreezePayload payload)
+    {
+        var element = JsonSerializer.SerializeToElement(new
         {
             case_class = payload.CaseClass,
             case_id = payload.CaseId,
@@ -367,6 +362,8 @@ internal static class FrozenLedgerCanonicalWriter
             truth_state = payload.TruthState,
             witness_id = payload.WitnessId.Value,
         });
+        return WithAxiomClosure(element, payload.AxiomClosure);
+    }
 
     internal static JsonElement ExpectedElement(FrozenExpectedVerdict expected) =>
         JsonSerializer.SerializeToElement(new
@@ -396,7 +393,7 @@ internal static class FrozenLedgerCanonicalWriter
     {
         if (payload.IsLegacyFormat)
         {
-            return JsonSerializer.SerializeToElement(new
+            var element = JsonSerializer.SerializeToElement(new
             {
                 case_id = payload.CaseId,
                 input = InputElement(payload.Input),
@@ -404,6 +401,7 @@ internal static class FrozenLedgerCanonicalWriter
                 previous_attestation_event_hash = payload.PreviousAttestationEventHash,
                 semantic_receipt = payload.SemanticReceipt,
             });
+            return WithAxiomClosure(element, payload.AxiomClosure);
         }
 
         if (!payload.IsExtendedFormat)
@@ -418,7 +416,7 @@ internal static class FrozenLedgerCanonicalWriter
             ?? throw new InvalidOperationException("Extended Reattest is missing statement_id.");
         var witnessId = payload.WitnessId
             ?? throw new InvalidOperationException("Extended Reattest is missing witness_id.");
-        return JsonSerializer.SerializeToElement(new
+        var extended = JsonSerializer.SerializeToElement(new
         {
             case_id = payload.CaseId,
             declaration_statement_ids = payload.DeclarationStatementIds.Select(static declaration => new
@@ -436,6 +434,21 @@ internal static class FrozenLedgerCanonicalWriter
             statement_id = statementId.Value,
             witness_id = witnessId.Value,
         });
+        return WithAxiomClosure(extended, payload.AxiomClosure);
+    }
+
+    private static JsonElement WithAxiomClosure(
+        JsonElement value,
+        ImmutableArray<string> axiomClosure)
+    {
+        if (axiomClosure.IsDefault)
+        {
+            return value;
+        }
+
+        var result = JsonNode.Parse(value.GetRawText())!.AsObject();
+        result.Add("axiom_closure", JsonSerializer.SerializeToNode(axiomClosure));
+        return JsonSerializer.SerializeToElement(result);
     }
 
     internal static JsonElement RevokeElement(FrozenRevokePayload payload) =>
@@ -450,41 +463,20 @@ internal static class FrozenLedgerCanonicalWriter
             root_frozen_node_ids = payload.RootFrozenNodeIds.Select(static id => id.Value),
         });
 
-    internal static JsonElement EnvironmentRecoordinateElement(
-        FrozenEnvironmentRecoordinatePayload payload) =>
+    internal static JsonElement SupersedeElement(FrozenSupersedePayload payload) =>
         JsonSerializer.SerializeToElement(new
         {
+            axiom_closure = payload.AxiomClosure,
             case_id = payload.CaseId,
-            declaration_statement_ids = new
-            {
-                @new = DeclarationStatementIdsElement(payload.NewDeclarationStatementIds),
-                old = DeclarationStatementIdsElement(payload.OldDeclarationStatementIds),
-            },
-            environment = new
-            {
-                @new = EnvironmentPinsElement(payload.NewEnvironment),
-                old = EnvironmentPinsElement(payload.OldEnvironment),
-            },
-            equivalence_status = payload.EquivalenceStatus,
-            kernel_verdict = payload.KernelVerdict,
-            new_axiom_closure = payload.NewAxiomClosure,
-            new_frozen_node_id = payload.NewFrozenNodeId.Value,
-            new_imports = payload.NewImports,
-            new_input = InputElement(payload.NewInput),
-            new_prerequisite_frozen_node_ids = payload.NewPrerequisiteFrozenNodeIds
+            declaration_statement_ids = DeclarationStatementIdsElement(payload.DeclarationStatementIds),
+            environment = EnvironmentPinsElement(payload.Environment),
+            frozen_node_id = payload.FrozenNodeId.Value,
+            input = InputElement(payload.Input),
+            prerequisite_frozen_node_ids = payload.PrerequisiteFrozenNodeIds
                 .Select(static id => id.Value),
-            new_statement_id = payload.NewStatementId.Value,
-            new_witness_id = payload.NewWitnessId.Value,
-            old_axiom_closure = payload.OldAxiomClosure,
-            old_frozen_node_id = payload.OldFrozenNodeId.Value,
-            old_imports = payload.OldImports,
-            old_input = InputElement(payload.OldInput),
-            old_prerequisite_frozen_node_ids = payload.OldPrerequisiteFrozenNodeIds
-                .Select(static id => id.Value),
-            old_statement_id = payload.OldStatementId.Value,
-            old_witness_id = payload.OldWitnessId.Value,
             previous_attestation_event_hash = payload.PreviousAttestationEventHash,
-            source_sha256 = payload.SourceSha256,
+            statement_id = payload.StatementId.Value,
+            witness_id = payload.WitnessId.Value,
         });
 
     private static object DeclarationStatementIdsElement(
@@ -509,7 +501,6 @@ internal static class FrozenLedgerCanonicalWriter
         {
             environment = EnvironmentPinsElement(reference.Environment),
             input = InputElement(reference.Input),
-            source_sha256 = reference.SourceSha256,
         });
 
     internal static JsonElement EvidenceElement(RevocationEvidence evidence) => evidence switch
@@ -559,8 +550,18 @@ internal static class FrozenLedgerCanonicalWriter
 
     internal static (ImmutableArray<byte> Bytes, string Hash) WriteDagEvent(
         string eventType,
-        JsonElement payload) =>
-        WriteEnvelope(eventType, payload, 2, null, null);
+        JsonElement payload,
+        int schemaVersion = CurrentDagSchemaVersion)
+    {
+        if (schemaVersion is not (2 or CurrentDagSchemaVersion))
+        {
+            throw new ArgumentOutOfRangeException(
+                nameof(schemaVersion),
+                "Content-addressed event schema_version must be 2 or 3.");
+        }
+
+        return WriteEnvelope(eventType, payload, schemaVersion, null, null);
+    }
 
     internal static bool ValidateDagEvent(
         JsonElement value,
@@ -591,13 +592,13 @@ internal static class FrozenLedgerCanonicalWriter
             return false;
         }
 
-        if (version != 2)
+        if (version is not (2 or CurrentDagSchemaVersion))
         {
-            message = "content-addressed event schema_version must be 2.";
+            message = "content-addressed event schema_version must be 2 or 3.";
             return false;
         }
 
-        var encoded = WriteDagEvent(eventType.GetString()!, payload);
+        var encoded = WriteDagEvent(eventType.GetString()!, payload, version);
         eventHash = claimedHash.GetString()!;
         if (!string.Equals(encoded.Hash, eventHash, StringComparison.Ordinal))
         {
@@ -611,10 +612,12 @@ internal static class FrozenLedgerCanonicalWriter
 
     internal static string EventIdentity(string eventType, JsonElement payload, string eventHash)
     {
-        var propertyName = eventType == FrozenLedger.EnvironmentRecoordinateEventType
-            ? "new_frozen_node_id"
-            : "frozen_node_id";
-        return payload.TryGetProperty(propertyName, out var frozenNodeId)
+        if (eventType == FrozenLedger.SupersedeEventType)
+        {
+            return eventHash;
+        }
+
+        return payload.TryGetProperty("frozen_node_id", out var frozenNodeId)
             && frozenNodeId.ValueKind == JsonValueKind.String
             ? frozenNodeId.GetString()!
             : eventHash;

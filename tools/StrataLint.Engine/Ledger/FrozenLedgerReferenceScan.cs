@@ -139,9 +139,22 @@ internal static class FrozenLedgerReferenceProjection
         "semantic_receipt", "statement_id", "truth_state", "witness_id",
     ];
 
+    internal static string[] FreezePayloadFieldsV3 { get; } =
+    [
+        "axiom_closure", "case_class", "case_id", "declaration_statement_ids", "evaluation", "expected",
+        "frozen_node_id", "input", "input_fingerprint", "node_path", "prerequisite_frozen_node_ids",
+        "semantic_receipt", "statement_id", "truth_state", "witness_id",
+    ];
+
     internal static string[] LegacyReattestPayloadFields { get; } =
     [
         "case_id", "input", "input_fingerprint", "previous_attestation_event_hash", "semantic_receipt",
+    ];
+
+    internal static string[] LegacyReattestPayloadFieldsV3 { get; } =
+    [
+        "axiom_closure", "case_id", "input", "input_fingerprint",
+        "previous_attestation_event_hash", "semantic_receipt",
     ];
 
     internal static string[] ExtendedReattestPayloadFields { get; } =
@@ -151,20 +164,24 @@ internal static class FrozenLedgerReferenceProjection
         "statement_id", "witness_id",
     ];
 
+    internal static string[] ExtendedReattestPayloadFieldsV3 { get; } =
+    [
+        "axiom_closure", "case_id", "declaration_statement_ids", "frozen_node_id", "input",
+        "input_fingerprint", "prerequisite_frozen_node_ids", "previous_attestation_event_hash",
+        "semantic_receipt", "statement_id", "witness_id",
+    ];
+
     internal static string[] RevokePayloadFields { get; } =
     [
         "affected_case_ids", "affected_frozen_node_ids", "closure_hash", "evidence",
         "graph_root", "root_case_ids", "root_frozen_node_ids",
     ];
 
-    internal static string[] EnvironmentRecoordinatePayloadFields { get; } =
+    internal static string[] SupersedePayloadFields { get; } =
     [
-        "case_id", "declaration_statement_ids", "environment", "equivalence_status",
-        "kernel_verdict", "new_axiom_closure", "new_frozen_node_id", "new_imports", "new_input",
-        "new_prerequisite_frozen_node_ids", "new_statement_id", "new_witness_id",
-        "old_axiom_closure", "old_frozen_node_id", "old_imports", "old_input",
-        "old_prerequisite_frozen_node_ids", "old_statement_id", "old_witness_id",
-        "previous_attestation_event_hash", "source_sha256",
+        "axiom_closure", "case_id", "declaration_statement_ids", "environment",
+        "frozen_node_id", "input", "prerequisite_frozen_node_ids",
+        "previous_attestation_event_hash", "statement_id", "witness_id",
     ];
 
     internal static ImmutableDictionary<string, string[]> OidFields { get; } =
@@ -194,30 +211,22 @@ internal static class FrozenLedgerReferenceProjection
             [
                 "evidence[].receipt_blob_oid",
             ],
-            [FrozenLedger.EnvironmentRecoordinateEventType] =
+            [FrozenLedger.SupersedeEventType] =
             [
-                "environment.new.lake_manifest_blob_oid",
-                "environment.new.lakefile_blob_oid",
-                "environment.new.lean_toolchain_blob_oid",
-                "environment.old.lake_manifest_blob_oid",
-                "environment.old.lakefile_blob_oid",
-                "environment.old.lean_toolchain_blob_oid",
-                "new_input.base_commit_oid",
-                "new_input.base_tree_oid",
-                "new_input.descriptor_blob_oid",
-                "new_input.supporting_blob_oids",
-                "old_input.base_commit_oid",
-                "old_input.base_tree_oid",
-                "old_input.descriptor_blob_oid",
-                "old_input.supporting_blob_oids",
+                "environment.lake_manifest_blob_oid",
+                "environment.lakefile_blob_oid",
+                "environment.lean_toolchain_blob_oid",
+                "input.base_commit_oid",
+                "input.base_tree_oid",
+                "input.descriptor_blob_oid",
+                "input.supporting_blob_oids",
             ],
         }.ToImmutableDictionary(StringComparer.Ordinal);
 }
 
 public sealed record FrozenEnvironmentReference(
     FrozenLedgerInput Input,
-    FrozenEnvironmentPins Environment,
-    string SourceSha256);
+    FrozenEnvironmentPins Environment);
 
 [Union(EnableImplicitConversions = false)]
 public partial record FrozenLedgerReferenceScanOutcome
@@ -237,7 +246,8 @@ public static partial class FrozenLedger
 {
     internal static FrozenLedgerInput? ParseAcceptedEventInput(
         string eventType,
-        JsonElement payload)
+        JsonElement payload,
+        int schemaVersion)
     {
         if (eventType == "Genesis")
         {
@@ -250,7 +260,7 @@ public static partial class FrozenLedger
 
         if (eventType is "Freeze" or "Reattest")
         {
-            RequireEventPayloadFields(payload, eventType);
+            RequireEventPayloadFields(payload, eventType, schemaVersion);
             if (!payload.TryGetProperty("input", out var input))
             {
                 throw new FormatException($"{eventType} payload is missing input fields.");
@@ -259,9 +269,9 @@ public static partial class FrozenLedger
             return ParseInput(input);
         }
 
-        if (eventType == EnvironmentRecoordinateEventType)
+        if (eventType == SupersedeEventType)
         {
-            return ParseEnvironmentRecoordinate(payload).NewInput;
+            return ParseSupersede(payload).Input;
         }
 
         if (eventType == "Revoke")
@@ -387,21 +397,14 @@ public static partial class FrozenLedger
                         blobs.Add(oid);
                     }
                 }
-                else if (eventType == EnvironmentRecoordinateEventType)
+                else if (eventType == SupersedeEventType)
                 {
-                    var recoordinate = ParseEnvironmentRecoordinate(payload);
-                    inputs.Add(recoordinate.OldInput);
-                    inputs.Add(recoordinate.NewInput);
+                    var supersede = ParseSupersede(payload);
+                    inputs.Add(supersede.Input);
                     environmentReferences.Add(new FrozenEnvironmentReference(
-                        recoordinate.OldInput,
-                        recoordinate.OldEnvironment,
-                        recoordinate.SourceSha256));
-                    environmentReferences.Add(new FrozenEnvironmentReference(
-                        recoordinate.NewInput,
-                        recoordinate.NewEnvironment,
-                        recoordinate.SourceSha256));
-                    AddInputReferences(recoordinate.OldInput, commits, trees, blobs);
-                    AddInputReferences(recoordinate.NewInput, commits, trees, blobs);
+                        supersede.Input,
+                        supersede.Environment));
+                    AddInputReferences(supersede.Input, commits, trees, blobs);
                 }
                 else
                 {
@@ -426,18 +429,50 @@ public static partial class FrozenLedger
         }
     }
 
-    private static void RequireEventPayloadFields(JsonElement payload, string eventType)
+    private static void RequireEventPayloadFields(
+        JsonElement payload,
+        string eventType,
+        int? schemaVersion = null)
     {
         if (eventType == "Freeze")
         {
+            if (schemaVersion is null
+                && (HasExactObjectFields(payload, FrozenLedgerReferenceProjection.FreezePayloadFields)
+                    || HasExactObjectFields(payload, FrozenLedgerReferenceProjection.FreezePayloadFieldsV3)))
+            {
+                return;
+            }
+
             RequireObjectFields(
                 payload,
                 "Freeze payload",
-                FrozenLedgerReferenceProjection.FreezePayloadFields);
+                schemaVersion == 3
+                    ? FrozenLedgerReferenceProjection.FreezePayloadFieldsV3
+                    : FrozenLedgerReferenceProjection.FreezePayloadFields);
             return;
         }
 
-        if (HasExactObjectFields(payload, FrozenLedgerReferenceProjection.LegacyReattestPayloadFields))
+        var allowed = schemaVersion switch
+        {
+            2 => new[]
+            {
+                FrozenLedgerReferenceProjection.LegacyReattestPayloadFields,
+                FrozenLedgerReferenceProjection.ExtendedReattestPayloadFields,
+            },
+            3 => new[]
+            {
+                FrozenLedgerReferenceProjection.LegacyReattestPayloadFieldsV3,
+                FrozenLedgerReferenceProjection.ExtendedReattestPayloadFieldsV3,
+            },
+            _ => new[]
+            {
+                FrozenLedgerReferenceProjection.LegacyReattestPayloadFields,
+                FrozenLedgerReferenceProjection.ExtendedReattestPayloadFields,
+                FrozenLedgerReferenceProjection.LegacyReattestPayloadFieldsV3,
+                FrozenLedgerReferenceProjection.ExtendedReattestPayloadFieldsV3,
+            },
+        };
+        if (allowed.Any(fields => HasExactObjectFields(payload, fields)))
         {
             return;
         }
@@ -445,7 +480,9 @@ public static partial class FrozenLedger
         RequireObjectFields(
             payload,
             "Reattest payload",
-            FrozenLedgerReferenceProjection.ExtendedReattestPayloadFields);
+            schemaVersion == 2
+                ? FrozenLedgerReferenceProjection.ExtendedReattestPayloadFields
+                : FrozenLedgerReferenceProjection.ExtendedReattestPayloadFieldsV3);
     }
 
     private static void AddInputReferences(

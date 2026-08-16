@@ -17,7 +17,23 @@ internal sealed record DeclaredDialect(
     string Id,
     string ClaimPattern,
     ImmutableArray<AtomizerMapping> Genres,
+    ImmutableArray<AtomizerMapping> GenreSuffixes,
     bool HeadingClaims);
+
+internal static class GenreSuffixResolver
+{
+    internal static ImmutableArray<AtomizerMapping> Order(IEnumerable<AtomizerMapping> suffixes) =>
+        suffixes.OrderByDescending(static item => item.Token.Length)
+            .ThenBy(static item => item.Token, StringComparer.Ordinal)
+            .ToImmutableArray();
+
+    internal static AtomizerMapping? Resolve(
+        string token,
+        ImmutableArray<AtomizerMapping> orderedSuffixes) =>
+        orderedSuffixes.FirstOrDefault(suffix =>
+            token.Length > suffix.Token.Length
+            && token.EndsWith(suffix.Token, StringComparison.Ordinal));
+}
 
 internal sealed class TheoryAtomizerRules
 {
@@ -78,7 +94,6 @@ internal sealed class TheoryAtomizerRules
 internal static class TheoryAtomizerDataLoader
 {
     internal const string DataPath = "Meta/Digestion/atomizers.toml";
-    internal static ImmutableArray<string> InputPaths { get; } = [DataPath];
     private static readonly UTF8Encoding StrictUtf8 = new(false, true);
     private static readonly Regex LocatorPattern = new(
         "^[A-Za-z0-9][A-Za-z0-9.-]*(?:/[A-Za-z0-9][A-Za-z0-9.-]*)+$",
@@ -91,6 +106,7 @@ internal static class TheoryAtomizerDataLoader
         "observer.claim_prefixes", "cone.claim_prefixes", "gict.genres",
         "gict.claim_prefixes", "gict.constants", "pzg.genres", "pzg.markers",
         "pzg.heading_prefixes", "wm.headings", "dialect", "dialect.genre",
+        "dialect.genre_suffix",
     ];
 
     /// <summary>
@@ -98,7 +114,8 @@ internal static class TheoryAtomizerDataLoader
     /// repository that has not needed one yet is not thereby malformed.
     /// </summary>
     private static readonly ImmutableHashSet<string> OptionalSections = ImmutableHashSet.Create(
-        StringComparer.Ordinal, "cone.claim_prefixes", "dialect", "dialect.genre");
+        StringComparer.Ordinal, "cone.claim_prefixes", "dialect", "dialect.genre",
+        "dialect.genre_suffix");
 
     internal static TheoryAtomizerRules Load(RepositorySnapshot snapshot)
     {
@@ -234,7 +251,10 @@ internal static class TheoryAtomizerDataLoader
         var pzgMarkers = ParseNamedLiterals(entries["pzg.markers"], ["trace-note"]);
         var pzgHeadings = ParseMappings(entries["pzg.heading_prefixes"], "prefix", "locator", locator: true);
         var wm = ParseWm(entries["wm.headings"]);
-        var dialects = ParseDialects(entries["dialect"], entries["dialect.genre"]);
+        var dialects = ParseDialects(
+            entries["dialect"],
+            entries["dialect.genre"],
+            entries["dialect.genre_suffix"]);
         return new TheoryAtomizerRules(
             observer, coneClaims, gictGenres, gictClaims, gictConstants,
             pzgGenres, pzgMarkers, pzgHeadings, wm, dialects);
@@ -248,9 +268,12 @@ internal static class TheoryAtomizerDataLoader
     /// </summary>
     private static ImmutableDictionary<string, DeclaredDialect> ParseDialects(
         List<Dictionary<string, string>> declarations,
-        List<Dictionary<string, string>> genreRows)
+        List<Dictionary<string, string>> genreRows,
+        List<Dictionary<string, string>> genreSuffixRows)
     {
         var genresById = new Dictionary<string, ImmutableArray<AtomizerMapping>.Builder>(
+            StringComparer.Ordinal);
+        var genreSuffixesById = new Dictionary<string, ImmutableArray<AtomizerMapping>.Builder>(
             StringComparer.Ordinal);
         var ids = new HashSet<string>(StringComparer.Ordinal);
         var builder = ImmutableDictionary.CreateBuilder<string, DeclaredDialect>(StringComparer.Ordinal);
@@ -291,6 +314,7 @@ internal static class TheoryAtomizerDataLoader
             }
 
             genresById[row["id"]] = ImmutableArray.CreateBuilder<AtomizerMapping>();
+            genreSuffixesById[row["id"]] = ImmutableArray.CreateBuilder<AtomizerMapping>();
         }
 
         foreach (var row in genreRows)
@@ -323,6 +347,64 @@ internal static class TheoryAtomizerDataLoader
             genres.Add(new AtomizerMapping(row["token"], row["kind"]));
         }
 
+        foreach (var row in genreSuffixRows)
+        {
+            RequireFields(row, "dialect", "suffix");
+            var dialectId = row["dialect"];
+            var suffix = row["suffix"];
+            if (!genreSuffixesById.TryGetValue(dialectId, out var suffixes))
+            {
+                throw new FormatException(
+                    $"Genre suffix '{suffix}' names dialect '{dialectId}', which is not declared. "
+                    + "Declared dialects: "
+                    + (ids.Count == 0 ? "(none)" : string.Join(", ", ids.Order(StringComparer.Ordinal)))
+                    + ".");
+            }
+
+            if (suffix.Any(static character => !char.IsLetter(character)))
+            {
+                throw new FormatException(
+                    $"Genre suffix '{suffix}' in dialect '{dialectId}' must contain only letters.");
+            }
+
+            if (suffixes.Any(item => item.Token == suffix))
+            {
+                throw new FormatException(
+                    $"Duplicate genre suffix '{suffix}' in dialect '{dialectId}'.");
+            }
+
+            var head = genresById[dialectId].FirstOrDefault(item => item.Token == suffix);
+            if (head is null)
+            {
+                throw new FormatException(
+                    $"Genre suffix '{suffix}' in dialect '{dialectId}' does not name a bare exact genre "
+                    + "in the same dialect.");
+            }
+
+            suffixes.Add(new AtomizerMapping(suffix, head.Value));
+        }
+
+        var orderedGenreSuffixesById = genreSuffixesById.ToDictionary(
+            static pair => pair.Key,
+            static pair => GenreSuffixResolver.Order(pair.Value),
+            StringComparer.Ordinal);
+
+        foreach (var dialectId in ids)
+        {
+            foreach (var genre in genresById[dialectId])
+            {
+                var winningSuffix = GenreSuffixResolver.Resolve(
+                    genre.Token,
+                    orderedGenreSuffixesById[dialectId]);
+                if (winningSuffix is not null && genre.Value == winningSuffix.Value)
+                {
+                    throw new FormatException(
+                        $"Dialect '{dialectId}' has redundant exact genre '{genre.Token}': suffix "
+                        + $"'{winningSuffix.Token}' derives the same kind '{genre.Value}'.");
+                }
+            }
+        }
+
         foreach (var row in declarations)
         {
             // Longest first so a longer token wins over a shorter one that prefixes it,
@@ -331,10 +413,12 @@ internal static class TheoryAtomizerDataLoader
                 .OrderByDescending(static item => item.Token.Length)
                 .ThenBy(static item => item.Token, StringComparer.Ordinal)
                 .ToImmutableArray();
+            var genreSuffixes = orderedGenreSuffixesById[row["id"]];
             builder.Add(row["id"], new DeclaredDialect(
                 row["id"],
                 row["claim"],
                 genres,
+                genreSuffixes,
                 row.GetValueOrDefault("target") == "heading"));
         }
 

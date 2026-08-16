@@ -81,7 +81,11 @@ public static class FrozenAcceptedEventLoader
                 var value = document.RootElement.Clone();
                 var eventType = value.GetProperty("event_type").GetString()!;
                 var payload = value.GetProperty("payload").Clone();
-                var input = FrozenLedger.ParseAcceptedEventInput(eventType, payload);
+                var schemaVersion = value.GetProperty("schema_version").GetInt32();
+                var input = FrozenLedger.ParseAcceptedEventInput(
+                    eventType,
+                    payload,
+                    schemaVersion);
 
                 events.Add(new DagLedgerFileEvent(
                     file.Path,
@@ -89,7 +93,7 @@ public static class FrozenAcceptedEventLoader
                     eventHash,
                     eventType,
                     payload,
-                    value.GetProperty("schema_version").GetInt32(),
+                    schemaVersion,
                     new FrozenLedgerLineSyntax(ImmutableArray.CreateRange(bytes.ToArray()), value),
                     input));
             }

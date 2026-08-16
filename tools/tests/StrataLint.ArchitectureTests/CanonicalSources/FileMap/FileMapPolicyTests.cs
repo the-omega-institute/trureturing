@@ -9,7 +9,7 @@ namespace StrataLint.ArchitectureTests;
 public sealed partial class FileMapPolicyTests
 {
     [Fact]
-    public void ComputationalProjectionsHaveCanonicalFileMapEntries()
+    public void ComputationalProjectionsAndBlueprintOracleHaveCanonicalFileMapEntries()
     {
         var expectedPaths = new HashSet<string>(
             [
@@ -31,6 +31,22 @@ public sealed partial class FileMapPolicyTests
             Assert.Equal(artifact.Producer, entry.ProducedBy);
             Assert.Contains(artifact.Producer, entry.VerifiedBy, StringComparer.Ordinal);
         });
+        const string pattern = "Blueprint/**/*.md";
+        var entry = Assert.Single(manifest.Match("Blueprint/D5/S0/Carrier/Ring.md"));
+
+        Assert.Equal(pattern, entry.Pattern);
+        Assert.Equal(FileMapKind.Data, entry.Kind);
+        Assert.Equal("ScribeEmitter", entry.ProducedBy);
+        Assert.Equal(
+            ["DigestionStatusEvaluator", "ScribeEmitter", "reader"],
+            entry.ConsumedBy.ToArray());
+        Assert.Equal(["ScribeEmitter"], entry.VerifiedBy.ToArray());
+        Assert.DoesNotContain(
+            GeneratedArtifactInventory.All,
+            artifact => entry.Matches(artifact.Path));
+        Assert.DoesNotContain(
+            FileMapPolicy.InspectRepository(root),
+            finding => finding.Path == pattern);
     }
 
     [Fact]
@@ -218,10 +234,11 @@ public sealed partial class FileMapPolicyTests
     }
 
     [Fact]
-    public void DanglingGeneratedActorIsRejectedByTheRedFixture()
+    public void DanglingGeneratedAndDataActorsAreRejectedByTheRedFixture()
     {
+        const string pattern = "Generated/output.json";
         var manifest = Parse(Entry(
-            "Generated/output.json",
+            pattern,
             "generated",
             "MissingEmitter",
             "reader",
@@ -238,6 +255,21 @@ public sealed partial class FileMapPolicyTests
             Assert.Equal("FILEMAP-ACTOR-DANGLING", finding.Code);
             Assert.Contains("MissingEmitter", finding.Message, StringComparison.Ordinal);
         });
+        var declaredTypes = new HashSet<string>(StringComparer.Ordinal) { "ScribeEmitter" };
+        var danglingProducer = Assert.Single(FileMapPolicy.InspectDeclaredActors(
+            Parse(Entry(pattern, "data", "MissingEmitter", "reader", "ScribeEmitter")),
+            declaredTypes,
+            "fixture-root"));
+        var danglingConsumer = Assert.Single(FileMapPolicy.InspectDeclaredActors(
+            Parse(Entry(pattern, "data", "none", "DigestionStatusEvaluator", "ScribeEmitter")),
+            declaredTypes,
+            "fixture-root"));
+
+        Assert.Contains("produced_by names MissingEmitter", danglingProducer.Message, StringComparison.Ordinal);
+        Assert.Contains(
+            "consumed_by names DigestionStatusEvaluator",
+            danglingConsumer.Message,
+            StringComparison.Ordinal);
     }
 
     [Fact]
@@ -500,17 +532,8 @@ public sealed partial class FileMapPolicyTests
     }
 
     [Fact]
-    public void InventoryBackedBlueprintGlobAndAggregateRemainAccepted()
+    public void InventoryBackedAggregateRemainsAccepted()
     {
-        var blueprintManifest = Parse(Entry(
-            "Blueprint/**/*.md",
-            "generated",
-            "ScribeEmitter",
-            "reader",
-            "ScribeEmitter"));
-        var blueprint = new GeneratedArtifactIdentity(
-            "Blueprint/Foundations/example.md",
-            "ScribeEmitter");
         var aggregateManifest = Parse(DispositionEntry(
             "Generated/summary.json",
             "generated",
@@ -524,10 +547,6 @@ public sealed partial class FileMapPolicyTests
             "SummaryEmitter",
             "A-SUMMARY");
 
-        Assert.Empty(FileMapPolicy.InspectGeneratedInventory(
-            blueprintManifest,
-            [blueprint.Path],
-            [blueprint]));
         Assert.Empty(FileMapPolicy.InspectGeneratedInventory(
             aggregateManifest,
             [aggregate.Path],
