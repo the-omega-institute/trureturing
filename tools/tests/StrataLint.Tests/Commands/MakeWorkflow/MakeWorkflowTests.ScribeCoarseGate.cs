@@ -26,6 +26,25 @@ public sealed partial class MakeWorkflowTests
             fixture.Invocations());
     }
 
+    [Fact]
+    [UnsupportedOSPlatform("windows")]
+    public void ScribeCoarseGateSkipsEmissionProcessesForAnEmptyDelta()
+    {
+        if (OperatingSystem.IsWindows()) return;
+
+        using var fixture = new ScribeCoarseGateFixture();
+
+        var result = fixture.Run();
+
+        Assert.Equal(0, result.ExitCode);
+        Assert.Equal(
+            [
+                $"{fixture.ScribeDll} projections --check --report {fixture.Report}",
+                $"{fixture.ScribeDll} describe-report --check",
+            ],
+            fixture.Invocations());
+    }
+
     [Theory]
     [InlineData("Blueprint/D5/Probe.scribe.cs")]
     [InlineData("Blueprint/D5/Probe.md")]
