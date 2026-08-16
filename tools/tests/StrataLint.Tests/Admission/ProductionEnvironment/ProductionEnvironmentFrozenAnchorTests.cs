@@ -126,9 +126,11 @@ public sealed partial class ProductionEnvironmentTests
                 catalog,
                 preparation.TrustedDeltaReferences));
 
-        Assert.Equal(RuleFixture.RingPath, Assert.Single(failure.AffectedPaths).Value);
+        Assert.Equal(
+            FrozenLedgerTestData.PathFor("BackfillTarget"),
+            Assert.Single(failure.AffectedPaths).Value);
         Assert.Equal("lean-toolchain", Assert.Single(failure.DeltaWitnessPaths).Value);
-        Assert.Contains("environment pins changed", failure.Message, StringComparison.Ordinal);
+        Assert.Contains("missing a Supersede event", failure.Message, StringComparison.Ordinal);
     }
 
     [Fact]
@@ -308,62 +310,6 @@ public sealed partial class ProductionEnvironmentTests
     }
 
     [Fact]
-    public void Sl008AllowsAmbientDriftWithMatchingAddedEnvironmentRecoordinate()
-    {
-        using var temporary = new TemporaryDirectory();
-        var fixture = TrustedFrozenFixtureWithLedger(out var baselineLedger);
-        DriftEnvironmentAndStatementIdentity(fixture, "Int");
-        var recoordinatePath = AddEnvironmentRecoordinate(
-            fixture,
-            baselineLedger,
-            fixture.Reports[RuleFixture.RingPath]);
-        var recoordinatePaths = AddedLedgerPaths(fixture);
-        var gateway = new FakeRepositoryGateway(
-            RawChangeSet.CreateWithKinds(
-                new[] { ("lean-toolchain", RawChangeKind.Modified) }
-                    .Concat(recoordinatePaths.Select(static path => (path, RawChangeKind.Added)))),
-            Snapshot(fixture.Files),
-            Snapshot(fixture.Baseline));
-        var environment = new ProductionCliEnvironment(
-            "/repo",
-            gateway,
-            new FakeLeanReportSource(null));
-
-        var outcome = environment.Check(
-            ["--candidate-lean-report", WriteCandidateReport(temporary, fixture)]);
-
-        var accepted = Assert.IsType<AdmissionOutcome.ProtectedSurfaceChange>(outcome);
-        Assert.All(
-            accepted.Sl022Diagnostics,
-            static item => Assert.Equal(RuleId.CreateKnown(22), item.RuleId));
-        var captured = Assert.Single(gateway.FrozenReferenceValidations);
-        Assert.Equal(recoordinatePaths.Length * 2, captured.Inputs.Length);
-        Assert.Equal(recoordinatePaths.Length * 2, captured.EnvironmentReferences.Length);
-        var oldReference = Assert.Single(
-            captured.EnvironmentReferences,
-            reference => reference.Input.DescriptorSelector == RuleFixture.RingPath
-                && reference.Environment.LeanToolchainBlobOid
-                    == FrozenLedgerTestData.GitBlobOid(fixture.Baseline["lean-toolchain"]));
-        var newReference = Assert.Single(
-            captured.EnvironmentReferences,
-            reference => reference.Input.DescriptorSelector == RuleFixture.RingPath
-                && reference.Environment.LeanToolchainBlobOid
-                    == FrozenLedgerTestData.GitBlobOid(fixture.Files["lean-toolchain"]));
-        Assert.Equal(FrozenLedgerTestData.GitOid('b'), oldReference.Input.BaseTreeOid);
-        Assert.Equal(FrozenLedgerTestData.GitOid('b'), newReference.Input.BaseTreeOid);
-        Assert.NotEqual(
-            oldReference.Environment.LeanToolchainBlobOid,
-            newReference.Environment.LeanToolchainBlobOid);
-        Assert.Equal(
-            oldReference.Environment.LakeManifestBlobOid,
-            newReference.Environment.LakeManifestBlobOid);
-        Assert.Equal("lakefile.toml", oldReference.Environment.LakefilePath.Value);
-        Assert.Equal("lakefile.toml", newReference.Environment.LakefilePath.Value);
-        Assert.Equal(RuleFixture.RingPath, oldReference.Input.DescriptorSelector);
-        Assert.Equal(RuleFixture.RingPath, newReference.Input.DescriptorSelector);
-    }
-
-    [Fact]
     public void CheckRejectsAddedModuleWhoseFreezeCapturedAnEarlierBranchBlob()
     {
         using var temporary = new TemporaryDirectory();
@@ -431,45 +377,6 @@ public sealed partial class ProductionEnvironmentTests
         Assert.Contains("material/blob drift", diagnostic.Message, StringComparison.Ordinal);
         Assert.Contains(
             "delta witness: " + RuleFixture.RingPath,
-            diagnostic.Message,
-            StringComparison.Ordinal);
-    }
-
-    [Fact]
-    public void Sl008RejectsAmbientDriftWhenAddedEnvironmentRecoordinateHasDifferentNewIdentity()
-    {
-        using var temporary = new TemporaryDirectory();
-        var fixture = TrustedFrozenFixtureWithLedger(out var baselineLedger);
-        DriftEnvironmentAndStatementIdentity(fixture, "Int");
-        var recoordinatePath = AddEnvironmentRecoordinate(
-            fixture,
-            baselineLedger,
-            new LeanFileReport(
-                [],
-                [new LeanDeclaration("goldenRing", "def", "Bool", [])]));
-        var recoordinatePaths = AddedLedgerPaths(fixture);
-        var environment = new ProductionCliEnvironment(
-            "/repo",
-            new FakeRepositoryGateway(
-                RawChangeSet.CreateWithKinds(
-                    new[] { ("lean-toolchain", RawChangeKind.Modified) }
-                        .Concat(recoordinatePaths.Select(static path => (path, RawChangeKind.Added)))),
-                Snapshot(fixture.Files),
-                Snapshot(fixture.Baseline)),
-            new FakeLeanReportSource(null));
-
-        var outcome = environment.Check(
-            ["--candidate-lean-report", WriteCandidateReport(temporary, fixture)]);
-
-        var rejected = Assert.IsType<AdmissionOutcome.RuleRejected>(outcome);
-        var diagnostic = Assert.Single(
-            rejected.Diagnostics.Where(static item => item.RuleId == RuleId.CreateKnown(8)));
-        Assert.True(
-            diagnostic.Path == RuleFixture.RingPath,
-            diagnostic.Render());
-        Assert.Contains("do not match candidate Closed material", diagnostic.Message, StringComparison.Ordinal);
-        Assert.Contains(
-            recoordinatePath,
             diagnostic.Message,
             StringComparison.Ordinal);
     }

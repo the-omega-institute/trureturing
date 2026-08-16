@@ -280,7 +280,7 @@ public static class RevocationPlanner
         var reverse = new Dictionary<FrozenNodeId, HashSet<FrozenNodeId>>();
         var eventArray = events.ToImmutableArray();
         var currentEdges = eventArray.Any(static item =>
-                item is FrozenLedgerEvent.EnvironmentRecoordinate)
+                item is FrozenLedgerEvent.Supersede)
             ? activeEntries.Values.Select(static entry => (
                 Node: entry.Material.FrozenNodeId,
                 Prerequisites: entry.Material.PrerequisiteFrozenNodeIds))
