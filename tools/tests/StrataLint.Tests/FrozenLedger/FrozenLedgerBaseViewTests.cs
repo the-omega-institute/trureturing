@@ -89,21 +89,12 @@ public sealed class FrozenLedgerBaseViewTests
             snapshot.Files.Count(item =>
                 FrozenLedgerChangeClassifier.IsAcceptedEventPath(item.Key.Value)),
             view.EventCount);
-        var source = File.ReadAllText(Path.Combine(
-            root,
-            "tools",
-            "StrataLint.Engine",
-            "Ledger",
-            "Admission",
-            "FrozenLedgerBaseView.cs"));
+        var source = snapshot.Files[RepoPath.CreateKnown(
+            "tools/StrataLint.Engine/Ledger/Admission/FrozenLedgerBaseView.cs")].Text;
         Assert.DoesNotContain("FrozenLedger.ApplyReattest", source, StringComparison.Ordinal);
         Assert.DoesNotContain("FrozenLedger.ApplySupersede", source, StringComparison.Ordinal);
-        var preparation = File.ReadAllText(Path.Combine(
-            root,
-            "tools",
-            "StrataLint.Cli",
-            "Commands",
-            "DagLedgerCommandPreparation.cs"));
+        var preparation = snapshot.Files[RepoPath.CreateKnown(
+            "tools/StrataLint.Cli/Commands/DagLedgerCommandPreparation.cs")].Text;
         Assert.DoesNotContain("FrozenLedger.ValidateHistoryPrefix", preparation, StringComparison.Ordinal);
         Assert.DoesNotContain("FrozenLedger.ScanReferences", preparation, StringComparison.Ordinal);
     }

@@ -152,8 +152,7 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
                 current);
             var verifiedScribeEmissions = VerifyScribeForAdmission(
                 scribeEmissionVerifier,
-                candidateLeanReport,
-                bootstrap);
+                candidateLeanReport);
             var evaluation = SnapshotAdmissionCore.Evaluate(
                 current,
                 baseline,
@@ -496,23 +495,14 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
 
     internal static VerifiedScribeEmissions? VerifyScribeForAdmission(
         IScribeEmissionVerifier? verifier,
-        LeanAxiomReport report,
-        BootstrapOutcome bootstrap)
+        LeanAxiomReport report)
     {
         if (verifier is null)
         {
             return null;
         }
 
-        try
-        {
-            return verifier.Verify(report);
-        }
-        catch (InvalidOperationException) when (
-            bootstrap is BootstrapOutcome.ProtectedSurfaceVerificationRequired)
-        {
-            return null;
-        }
+        return verifier.Verify(report);
     }
 
     public CommandResult RenderDag(IReadOnlyList<string> arguments) =>

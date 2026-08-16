@@ -103,35 +103,11 @@ internal sealed class VerifiedScribeEmissions
     internal ImmutableArray<ScribeDescribeLatexRecord> DescribeLatexRecords => describeLatexRecords;
 }
 
-internal sealed class ScribeEmissionAttestation
+internal static class ScribeEmissionAttestation
 {
     internal const string RelativePath = "tools/Generated/scribe-emissions.v1.json";
 
     private const string Schema = "scribe-emission-attestation-v1";
-
-    private readonly RepositorySnapshot snapshot;
-
-    private ScribeEmissionAttestation(RepositorySnapshot snapshot) => this.snapshot = snapshot;
-
-    internal bool TryGet(string gid, out ScribeEmissionRecord record)
-    {
-        var definitionPath = DefinitionPath(gid);
-        var emissionPath = EmissionPath(gid);
-        if (!snapshot.TryGetFile(definitionPath, out var definition)
-            || !snapshot.TryGetFile(emissionPath, out var emission))
-        {
-            record = null!;
-            return false;
-        }
-
-        record = new ScribeEmissionRecord(
-            gid,
-            definitionPath,
-            DigestionFingerprint.Compute(definition.RawBytes.AsSpan()).RawSha256,
-            emissionPath,
-            DigestionFingerprint.Compute(emission.RawBytes.AsSpan()).RawSha256);
-        return true;
-    }
 
     internal static ImmutableArray<byte> Write(IEnumerable<ScribeEmissionRecord> values)
     {
@@ -153,12 +129,6 @@ internal sealed class ScribeEmissionAttestation
             }),
         };
         return StructuredCanonicalWriter.WriteJson(JsonSerializer.SerializeToElement(material));
-    }
-
-    internal static ScribeEmissionAttestation FromSnapshot(RepositorySnapshot snapshot)
-    {
-        ArgumentNullException.ThrowIfNull(snapshot);
-        return new ScribeEmissionAttestation(snapshot);
     }
 
     internal static void ValidateRecords(IReadOnlyList<ScribeEmissionRecord> records)
