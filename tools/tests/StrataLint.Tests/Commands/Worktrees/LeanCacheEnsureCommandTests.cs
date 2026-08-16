@@ -78,7 +78,7 @@ public sealed class LeanCacheEnsureCommandTests
         Assert.Equal(
             ["get", "clean"],
             runner.Invocations
-                .Where(static call => call.FileName == "lake")
+                .Where(static call => Path.GetFileName(call.FileName) == "lake")
                 .Select(static call => call.Arguments[2])
                 .ToArray());
         using var receipt = ParseReceipt(result.Output);
@@ -101,13 +101,13 @@ public sealed class LeanCacheEnsureCommandTests
         var lake = Path.Combine(repository.Path, ".lake");
         var pins = ReadPins(repository.Path);
 
-        using var stamp = JsonDocument.Parse(File.ReadAllText(LeanCacheStamp.PathFor(lake)));
+        using var stamp = LeanCacheFixtureFile.ParseJson(LeanCacheStamp.PathFor(lake));
 
         Assert.Equal(pins.LeanToolchain, Convert.FromBase64String(
             stamp.RootElement.GetProperty("lean_toolchain_base64").GetString()!));
         Assert.Equal(pins.LakeManifest, Convert.FromBase64String(
             stamp.RootElement.GetProperty("lake_manifest_base64").GetString()!));
-        Assert.Empty(Directory.EnumerateFiles(lake, ".stratalint-lean-cache-stamp.*.tmp"));
+        Assert.Empty(Directory.GetFiles(lake, ".stratalint-lean-cache-stamp.*.tmp"));
     }
 
     [Theory]
@@ -221,7 +221,7 @@ public sealed class LeanCacheEnsureCommandTests
         var result = WorktreeCommand.Run(repository.Path, ["ensure-cache"], runner);
 
         Assert.False(result.Success);
-        Assert.Equal("repository-owned bytes\n", File.ReadAllText(lake));
+        Assert.Equal("repository-owned bytes\n", LeanCacheFixtureFile.ReadText(lake));
         Assert.Empty(runner.Invocations);
         using var receipt = ParseReceipt(result.Error);
         Assert.Equal("corrupt", receipt.RootElement.GetProperty("stamp_miss").GetString());
@@ -788,4 +788,12 @@ public sealed class LeanCacheRunScriptTests
             path,
             UnixFileMode.UserRead | UnixFileMode.UserWrite | UnixFileMode.UserExecute);
     }
+}
+
+internal static class LeanCacheFixtureFile
+{
+    internal static JsonDocument ParseJson(string path) =>
+        JsonDocument.Parse(File.ReadAllText(path));
+
+    internal static string ReadText(string path) => File.ReadAllText(path);
 }

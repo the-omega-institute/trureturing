@@ -41,6 +41,7 @@ public sealed class LeanCacheProvisionerTests
                 new LeanCacheDonorSelection(donor.Path, null),
                 root,
                 pins,
+                "lake",
                 runner,
                 writerGuard,
                 new RecordingDirectoryCloner { FailureReason = "clonefile unavailable" });
@@ -96,6 +97,7 @@ public sealed class LeanCacheProvisionerTests
             LeanCacheProvisioner.ReproduceExisting(
                 target.Path,
                 ReadPins(target.Path),
+                "lake",
                 runner,
                 writerGuard,
                 CountFiles));
@@ -157,6 +159,7 @@ public sealed class LeanCacheProvisionerTests
                 new LeanCacheDonorSelection(null, "fixture has no donor"),
                 target.Path,
                 ReadPins(target.Path),
+                "lake",
                 runner,
                 writerGuard,
                 new RecordingDirectoryCloner(),
@@ -201,6 +204,7 @@ public sealed class LeanCacheProvisionerTests
                 selection,
                 target.Path,
                 ReadPins(target.Path),
+                "lake",
                 runner,
                 writerGuard,
                 cloner));
@@ -225,6 +229,7 @@ public sealed class LeanCacheProvisionerTests
             LeanCacheProvisioner.ReproduceExisting(
                 target.Path,
                 ReadPins(target.Path),
+                "lake",
                 runner,
                 writerGuard));
 
@@ -259,6 +264,7 @@ public sealed class LeanCacheProvisionerTests
             selection,
             target.Path,
             ReadPins(target.Path),
+            "lake",
             runner,
             writerGuard,
             new RecordingDirectoryCloner(),
@@ -286,6 +292,7 @@ public sealed class LeanCacheProvisionerTests
                 new LeanCacheDonorSelection(null, "fixture has no donor"),
                 root,
                 ReadPins(root),
+                "lake",
                 runner,
                 writerGuard);
 

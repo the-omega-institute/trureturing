@@ -104,14 +104,23 @@ internal static class LeanCacheProvisioner
         LeanCacheDonorSelection selection,
         string worktreeRoot,
         LeanPinSet pins,
+        string lakeExecutable,
         IWorktreeProcessRunner runner,
         LeanCacheWriterGuard writerGuard) =>
-        Provision(selection, worktreeRoot, pins, runner, writerGuard, new ApfsDirectoryCloner());
+        Provision(
+            selection,
+            worktreeRoot,
+            pins,
+            lakeExecutable,
+            runner,
+            writerGuard,
+            new ApfsDirectoryCloner());
 
     internal static LeanCacheProvisionResult Provision(
         LeanCacheDonorSelection selection,
         string worktreeRoot,
         LeanPinSet pins,
+        string lakeExecutable,
         IWorktreeProcessRunner runner,
         LeanCacheWriterGuard writerGuard,
         IDirectoryCloner cloner) =>
@@ -119,6 +128,7 @@ internal static class LeanCacheProvisioner
             selection,
             worktreeRoot,
             pins,
+            lakeExecutable,
             runner,
             writerGuard,
             cloner,
@@ -128,6 +138,7 @@ internal static class LeanCacheProvisioner
         LeanCacheDonorSelection selection,
         string worktreeRoot,
         LeanPinSet pins,
+        string lakeExecutable,
         IWorktreeProcessRunner runner,
         LeanCacheWriterGuard writerGuard,
         IDirectoryCloner cloner,
@@ -136,6 +147,7 @@ internal static class LeanCacheProvisioner
             selection,
             worktreeRoot,
             pins,
+            lakeExecutable,
             runner,
             writerGuard,
             cloner,
@@ -146,6 +158,7 @@ internal static class LeanCacheProvisioner
         LeanCacheDonorSelection selection,
         string worktreeRoot,
         LeanPinSet pins,
+        string lakeExecutable,
         IWorktreeProcessRunner runner,
         LeanCacheWriterGuard writerGuard,
         IDirectoryCloner cloner,
@@ -162,7 +175,7 @@ internal static class LeanCacheProvisioner
             var notice = Join(
                 selection.Notice,
                 "refusing to clone .lake and running lake exe cache get");
-            return Fetch(worktreeRoot, pins, runner, notice, removePartial);
+            return Fetch(worktreeRoot, pins, lakeExecutable, runner, notice, removePartial);
         }
 
         var source = Path.Combine(selection.Donor, ".lake");
@@ -186,6 +199,7 @@ internal static class LeanCacheProvisioner
         return Fetch(
             worktreeRoot,
             pins,
+            lakeExecutable,
             runner,
             Join(selection.Notice, cloneWarning),
             removePartial);
@@ -194,13 +208,21 @@ internal static class LeanCacheProvisioner
     internal static LeanCacheProvisionResult ReproduceExisting(
         string worktreeRoot,
         LeanPinSet pins,
+        string lakeExecutable,
         IWorktreeProcessRunner runner,
         LeanCacheWriterGuard writerGuard) =>
-        ReproduceExisting(worktreeRoot, pins, runner, writerGuard, CountLtarFiles);
+        ReproduceExisting(
+            worktreeRoot,
+            pins,
+            lakeExecutable,
+            runner,
+            writerGuard,
+            CountLtarFiles);
 
     internal static LeanCacheProvisionResult ReproduceExisting(
         string worktreeRoot,
         LeanPinSet pins,
+        string lakeExecutable,
         IWorktreeProcessRunner runner,
         LeanCacheWriterGuard writerGuard,
         Func<string, int> countLtarFiles)
@@ -210,6 +232,7 @@ internal static class LeanCacheProvisioner
         var pruneOutcome = RunCacheGet(
             worktreeRoot,
             pins,
+            lakeExecutable,
             runner,
             CacheTreeOwnership.PreExisting,
             countLtarFiles,
@@ -360,6 +383,7 @@ internal static class LeanCacheProvisioner
     private static LeanCacheProvisionResult Fetch(
         string worktreeRoot,
         LeanPinSet pins,
+        string lakeExecutable,
         IWorktreeProcessRunner runner,
         string? warning,
         Action<string> removePartial)
@@ -369,6 +393,7 @@ internal static class LeanCacheProvisioner
             var pruneOutcome = RunCacheGet(
                 worktreeRoot,
                 pins,
+                lakeExecutable,
                 runner,
                 CacheTreeOwnership.CreatedByThisCall,
                 CountLtarFiles,
@@ -407,6 +432,7 @@ internal static class LeanCacheProvisioner
     private static MathlibCachePruneOutcome RunCacheGet(
         string worktreeRoot,
         LeanPinSet pins,
+        string lakeExecutable,
         IWorktreeProcessRunner runner,
         CacheTreeOwnership ownership,
         Func<string, int> countLtarFiles,
@@ -417,7 +443,7 @@ internal static class LeanCacheProvisioner
         try
         {
             var result = runner.Run(
-                "lake",
+                lakeExecutable,
                 ["exe", "cache", "get"],
                 worktreeRoot,
                 ProvisionBudget);
@@ -437,7 +463,7 @@ internal static class LeanCacheProvisioner
             try
             {
                 clean = runner.Run(
-                    "lake",
+                    lakeExecutable,
                     ["exe", "cache", "clean"],
                     worktreeRoot,
                     ProvisionBudget);

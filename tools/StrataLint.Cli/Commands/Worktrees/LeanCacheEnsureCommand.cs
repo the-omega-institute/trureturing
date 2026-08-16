@@ -55,6 +55,17 @@ internal static class LeanCacheEnsureCommand
                 reason: pinReason ?? "Lean pin files are unavailable");
         }
 
+        if (!LeanLakeExecutable.TryResolve(out var lakeExecutable, out var lakeReason))
+        {
+            return FailureReceipt(
+                "failed",
+                root,
+                donor: null,
+                method: "none",
+                pins.Sha256,
+                lakeReason);
+        }
+
         var lake = Path.Combine(root, ".lake");
         using var guard = LeanCacheWriterGuard.TryAcquire(lake);
         if (guard is null)
@@ -68,7 +79,14 @@ internal static class LeanCacheEnsureCommand
                 "canonical cache writer guard is busy");
         }
 
-        return EnsureLocked(root, pins, runner, cloner, guard, countLtarFiles);
+        return EnsureLocked(
+            root,
+            pins,
+            lakeExecutable,
+            runner,
+            cloner,
+            guard,
+            countLtarFiles);
     }
 
     internal static CommandResult RunWithWriter(
@@ -116,6 +134,7 @@ internal static class LeanCacheEnsureCommand
         var ensured = EnsureLocked(
             root,
             pins,
+            command[0],
             runner,
             cloner,
             guard,
@@ -143,6 +162,7 @@ internal static class LeanCacheEnsureCommand
     private static CommandResult EnsureLocked(
         string root,
         LeanPinSet pins,
+        string lakeExecutable,
         IWorktreeProcessRunner runner,
         IDirectoryCloner cloner,
         LeanCacheWriterGuard writerGuard,
@@ -204,6 +224,7 @@ internal static class LeanCacheEnsureCommand
                         var reproduced = LeanCacheProvisioner.ReproduceExisting(
                             root,
                             pins,
+                            lakeExecutable,
                             runner,
                             writerGuard,
                             countLtarFiles);
@@ -282,6 +303,7 @@ internal static class LeanCacheEnsureCommand
                     selection,
                     root,
                     pins,
+                    lakeExecutable,
                     runner,
                     writerGuard,
                     cloner);

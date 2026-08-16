@@ -85,6 +85,10 @@ internal static class WorktreeCommand
         try
         {
             options = ParseArguments(repositoryRoot, arguments);
+            if (!LeanLakeExecutable.TryResolve(out var lakeExecutable, out var lakeReason))
+            {
+                throw new InvalidOperationException(lakeReason);
+            }
             ValidatePreflight(options, runner);
             GitWorktreeInventory.FetchRemoteBase(options.Source, options.Base, runner);
             VerifyBase(options, runner);
@@ -114,6 +118,7 @@ internal static class WorktreeCommand
                 donor,
                 options.Path,
                 pins,
+                lakeExecutable,
                 runner,
                 targetWriter,
                 cloner);

@@ -221,7 +221,8 @@ public sealed class WorktreeCacheStrategyTests
         Assert.Contains("pin bytes", result.Error, StringComparison.OrdinalIgnoreCase);
         Assert.Contains(
             runner.Invocations,
-            static call => call.FileName == "lake" && call.Arguments.SequenceEqual(["exe", "cache", "get"]));
+            static call => Path.GetFileName(call.FileName) == "lake"
+                && call.Arguments.SequenceEqual(["exe", "cache", "get"]));
     }
 
     [Fact]
@@ -525,6 +526,8 @@ internal sealed class RecordingWorktreeProcessRunner : IWorktreeProcessRunner
 
     internal bool FailCopy { get; init; }
 
+    internal string? LakeFileName { get; init; }
+
     internal bool FailLake { get; init; }
 
     internal bool FailClean { get; init; }
@@ -580,7 +583,8 @@ internal sealed class RecordingWorktreeProcessRunner : IWorktreeProcessRunner
                 : Success();
         }
 
-        if (fileName == "lake")
+        if ((LakeFileName is null && Path.GetFileName(fileName) == "lake")
+            || fileName == LakeFileName)
         {
             if (arguments.SequenceEqual(["exe", "cache", "get"]))
             {

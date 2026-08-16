@@ -5,23 +5,37 @@ namespace StrataLint.Tests;
 public sealed partial class MakeWorkflowTests
 {
     [Fact]
+    public void PreflightScenarioScriptClosureFollowsTheSourceDirectory()
+    {
+        using var source = new TemporaryDirectory();
+        using var destination = new TemporaryDirectory();
+        var futureScript = Path.Combine(
+            source.Path,
+            "tools",
+            "scripts",
+            "future",
+            "arbitrary.sh");
+        Directory.CreateDirectory(Path.GetDirectoryName(futureScript)!);
+        File.WriteAllText(futureScript, "#!/usr/bin/env bash\n");
+
+        CopyPreflightScriptClosure(source.Path, destination.Path);
+
+        Assert.True(File.Exists(Path.Combine(
+            destination.Path,
+            "tools",
+            "scripts",
+            "future",
+            "arbitrary.sh")));
+    }
+
+    [Fact]
     public void PreflightScenarioLeavesTheSourceTreeAndItsCanonicalReportUntouched()
     {
         if (OperatingSystem.IsWindows()) return;
 
         var canonicalSource = TestRepositoryLayout.FindRoot();
         using var source = new TemporaryDirectory();
-        foreach (var relativePath in new[]
-        {
-            PreflightScriptPath,
-            "tools/scripts/perf-event-lib.sh",
-            ScribeContentChecksScriptPath,
-        })
-        {
-            var destination = Path.Combine(source.Path, relativePath);
-            Directory.CreateDirectory(Path.GetDirectoryName(destination)!);
-            File.Copy(Path.Combine(canonicalSource, relativePath), destination);
-        }
+        CopyPreflightScriptClosure(canonicalSource, source.Path);
         var sourceReport = Path.Combine(
             source.Path,
             ".lake",
@@ -108,16 +122,10 @@ public sealed partial class MakeWorkflowTests
         var root = Path.Combine(fixture.Path, "candidate");
         var binDirectory = Path.Combine(fixture.Path, "bin");
         var preflight = Path.Combine(root, PreflightScriptPath);
-        var perfEvents = Path.Combine(root, "tools", "scripts", "perf-event-lib.sh");
-        var scribeChecks = Path.Combine(root, ScribeContentChecksScriptPath);
         var report = Path.Combine(root, ".lake", "build", "stratalint", "raw-lean-report.json");
-        Directory.CreateDirectory(Path.GetDirectoryName(preflight)!);
-        Directory.CreateDirectory(Path.GetDirectoryName(scribeChecks)!);
+        CopyPreflightScriptClosure(sourceRoot, root);
         Directory.CreateDirectory(Path.GetDirectoryName(report)!);
         Directory.CreateDirectory(binDirectory);
-        File.Copy(Path.Combine(sourceRoot, PreflightScriptPath), preflight);
-        File.Copy(Path.Combine(sourceRoot, "tools/scripts/perf-event-lib.sh"), perfEvents);
-        File.Copy(Path.Combine(sourceRoot, ScribeContentChecksScriptPath), scribeChecks);
         File.WriteAllText(
             report,
             "{\"modules\":[],\"schema\":\"stratalint-raw-lean-report-v1\"}\n");
@@ -127,8 +135,12 @@ public sealed partial class MakeWorkflowTests
         RunScenarioGit(root, "config", "user.name", "Preflight Fixture");
         RunScenarioGit(root, "add", "README.md", "tools");
         RunScenarioGit(root, "commit", "-m", "fixture base");
-        File.AppendAllText(Path.Combine(root, "README.md"), "candidate\n");
-        RunScenarioGit(root, "add", "README.md");
+        var candidatePath = scenario == "stale-values"
+            ? Path.Combine(root, "Golden", "values-kernels.toml")
+            : Path.Combine(root, "README.md");
+        Directory.CreateDirectory(Path.GetDirectoryName(candidatePath)!);
+        File.AppendAllText(candidatePath, "candidate\n");
+        RunScenarioGit(root, "add", Path.GetRelativePath(root, candidatePath));
         RunScenarioGit(root, "commit", "-m", "fixture candidate");
         WriteExecutable(
             Path.Combine(binDirectory, "git"),
@@ -210,6 +222,21 @@ public sealed partial class MakeWorkflowTests
             64 * 1024);
 
         return result;
+    }
+
+    private static void CopyPreflightScriptClosure(string sourceRoot, string destinationRoot)
+    {
+        var sourceScripts = Path.Combine(sourceRoot, "tools", "scripts");
+        foreach (var source in Directory.GetFiles(
+            sourceScripts,
+            "*",
+            SearchOption.AllDirectories))
+        {
+            var relativePath = Path.GetRelativePath(sourceRoot, source);
+            var destination = Path.Combine(destinationRoot, relativePath);
+            Directory.CreateDirectory(Path.GetDirectoryName(destination)!);
+            File.Copy(source, destination);
+        }
     }
 
     private static void RunScenarioGit(string root, params string[] arguments)
