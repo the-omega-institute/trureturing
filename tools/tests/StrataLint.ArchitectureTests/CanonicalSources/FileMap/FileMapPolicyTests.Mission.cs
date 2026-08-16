@@ -21,7 +21,10 @@ public sealed partial class FileMapPolicyTests
                 RepositoryLayout.FindRoot(),
                 repository);
             var missionPath = Path.Combine(repository, MissionFileLoader.RelativePath);
-            var mission = File.ReadAllText(missionPath);
+            var mission = RunMissionGit(
+                repository,
+                "show",
+                $"HEAD:{MissionFileLoader.RelativePath}");
             foreach (var (factor, caseId) in new[]
                      {
                          ("novelty", "D5-T0039"),
@@ -59,7 +62,7 @@ public sealed partial class FileMapPolicyTests
         }
     }
 
-    private static void RunMissionGit(string workingDirectory, params string[] arguments)
+    private static string RunMissionGit(string workingDirectory, params string[] arguments)
     {
         var startInfo = new ProcessStartInfo("git")
         {
@@ -76,7 +79,9 @@ public sealed partial class FileMapPolicyTests
         using var process = Process.Start(startInfo)
             ?? throw new InvalidOperationException("failed to start git");
         process.WaitForExit();
+        var standardOutput = process.StandardOutput.ReadToEnd();
         var standardError = process.StandardError.ReadToEnd();
         Assert.True(process.ExitCode == 0, standardError);
+        return standardOutput;
     }
 }

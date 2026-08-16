@@ -210,8 +210,8 @@ internal static class MissionFileLoader
         {
             north_star = new
             {
-                policy = policy.NorthStarPolicy,
-                target = policy.NorthStarTarget,
+                policy = NorthStarPolicyName(policy.NorthStarPolicy),
+                target = NorthStarTargetName(policy.NorthStarTarget),
             },
             prohibitions = policy.Prohibitions
                 .Select(ProhibitionName)
@@ -602,6 +602,18 @@ internal static class MissionFileLoader
         WorthFactorId.StructuralRealization => "D5-T0041",
         WorthFactorId.ReceiptPotential => "D5-T0042",
         _ => throw new InvalidOperationException("Unknown worth factor."),
+    };
+
+    private static string NorthStarTargetName(MissionNorthStarTarget target) => target switch
+    {
+        MissionNorthStarTarget.TwoHearts => CanonicalNorthStarTarget,
+        _ => throw new InvalidOperationException("Unknown mission north-star target."),
+    };
+
+    private static string NorthStarPolicyName(MissionNorthStarPolicy policy) => policy switch
+    {
+        MissionNorthStarPolicy.AspirationalNotDirect => CanonicalNorthStarPolicy,
+        _ => throw new InvalidOperationException("Unknown mission north-star policy."),
     };
 
     private static string ValueName(MissionValue value) => value switch

@@ -1,4 +1,5 @@
 using System.Text;
+using System.Text.Json;
 using StrataLint.Engine;
 
 namespace StrataLint.Tests;
@@ -129,6 +130,10 @@ public sealed class MissionFileLoaderTests
         Assert.Equal(
             MissionFileLoader.CanonicalBytes(first.Policy),
             MissionFileLoader.CanonicalBytes(second.Policy));
+        using var canonical = JsonDocument.Parse(MissionFileLoader.CanonicalBytes(first.Policy));
+        var northStar = canonical.RootElement.GetProperty("north_star");
+        Assert.Equal("two hearts", northStar.GetProperty("target").GetString());
+        Assert.Equal("aspirational-not-direct", northStar.GetProperty("policy").GetString());
         Assert.Equal(
             new[]
             {
