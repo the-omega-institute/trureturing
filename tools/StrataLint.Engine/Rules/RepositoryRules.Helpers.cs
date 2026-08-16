@@ -130,7 +130,7 @@ internal static partial class RepositoryRules
         foreach (var (path, file) in FormalFiles(snapshot)
             .OrderBy(static item => item.Path.Value, StringComparer.Ordinal))
         {
-            foreach (Match match in TaskTokenPattern.Matches(file.Text))
+            foreach (Match match in TaskBlockReferenceSyntax.TaskTokenPattern.Matches(file.Text))
             {
                 result.Add(match.Groups["code"].Value);
             }
