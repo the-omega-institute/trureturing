@@ -42,7 +42,6 @@ internal static class DigestionTestSupport
             path: docs/source.md
             atomizer: {{atomizerId}}
             entries: []
-        ticket_index: []
         """;
 
     internal static string ReceiptList(string key, string value, int spaces) => value == "[]"

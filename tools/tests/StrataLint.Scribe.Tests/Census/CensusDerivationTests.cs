@@ -53,7 +53,6 @@ public sealed class CensusDerivationTests
                         status:
                           migration: absorbed
                           truth: closed
-                ticket_index: []
                 """);
             var census = ReceiptFreeDocumentCatalog.Load(
                 repositoryRoot,
@@ -108,9 +107,6 @@ public sealed class CensusDerivationTests
                   chain_atoms: []
                   tail_authorization: null
                 """);
-            TemporaryFileSystem.File.WriteAllText(
-                Path.Combine(repositoryRoot, "Meta", "Digestion", "ticket-index.toml"),
-                string.Empty);
             var census = ReceiptFreeDocumentCatalog.Load(
                 repositoryRoot,
                 [Document(receiptBoundGid), Document(receiptFreeGid)]);

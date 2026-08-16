@@ -121,6 +121,5 @@ public sealed partial class ProductionEnvironmentTests
             atomizer: {{atomizerId}}
             acknowledged_stale: []
             entries: []
-        ticket_index: []
         """;
 }
