@@ -5,12 +5,64 @@ namespace StrataLint.Tests;
 public sealed partial class MakeWorkflowTests
 {
     [Fact]
-    public void PreflightScenarioFixtureDoesNotOwnTheCanonicalLeanReport()
+    public void PreflightScenarioLeavesTheSourceTreeAndItsCanonicalReportUntouched()
     {
-        Assert.DoesNotContain(
-            typeof(MakeWorkflowTests).GetNestedTypes(
-                System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Public),
-            static type => type.Name == "ScenarioLeanReport");
+        if (OperatingSystem.IsWindows()) return;
+
+        var canonicalSource = TestRepositoryLayout.FindRoot();
+        using var source = new TemporaryDirectory();
+        foreach (var relativePath in new[]
+        {
+            PreflightScriptPath,
+            "tools/scripts/perf-event-lib.sh",
+            ScribeContentChecksScriptPath,
+        })
+        {
+            var destination = Path.Combine(source.Path, relativePath);
+            Directory.CreateDirectory(Path.GetDirectoryName(destination)!);
+            File.Copy(Path.Combine(canonicalSource, relativePath), destination);
+        }
+        var sourceReport = Path.Combine(
+            source.Path,
+            ".lake",
+            "build",
+            "stratalint",
+            "raw-lean-report.json");
+        Directory.CreateDirectory(Path.GetDirectoryName(sourceReport)!);
+        var sentinel = System.Text.Encoding.UTF8.GetBytes(
+            "canonical-source-report-sentinel: byte-distinct and not a fixture report\n");
+        File.WriteAllBytes(sourceReport, sentinel);
+        File.WriteAllText(Path.Combine(source.Path, "README.md"), "synthetic source\n");
+        RunScenarioGit(source.Path, "init", "--initial-branch=dev");
+        RunScenarioGit(source.Path, "config", "user.email", "preflight@example.invalid");
+        RunScenarioGit(source.Path, "config", "user.name", "Preflight Fixture");
+        RunScenarioGit(source.Path, "add", ".");
+        RunScenarioGit(source.Path, "commit", "-m", "synthetic source baseline");
+        var headBefore = RunScenarioGitForOutput(source.Path, "rev-parse", "HEAD");
+        var statusBefore = RunScenarioGitForOutput(
+            source.Path,
+            "status",
+            "--porcelain=v1",
+            "--untracked-files=all");
+        var sourceReportBlobBefore = RunScenarioGitForOutput(
+            source.Path,
+            "hash-object",
+            sourceReport);
+
+        var result = RunPreflightScenario("pass", source.Path);
+
+        Assert.Equal(
+            sourceReportBlobBefore,
+            RunScenarioGitForOutput(source.Path, "hash-object", sourceReport));
+        Assert.Equal(headBefore, RunScenarioGitForOutput(source.Path, "rev-parse", "HEAD"));
+        Assert.Equal(
+            statusBefore,
+            RunScenarioGitForOutput(
+                source.Path,
+                "status",
+                "--porcelain=v1",
+                "--untracked-files=all"));
+        Assert.Equal(0, result.ExitCode);
     }
 
     [Theory]
@@ -32,7 +84,7 @@ public sealed partial class MakeWorkflowTests
     {
         if (OperatingSystem.IsWindows()) return;
 
-        var result = RunPreflightScenario(scenario);
+        var result = RunPreflightScenario(scenario, TestRepositoryLayout.FindRoot());
 
         Assert.Equal(expectedExitCode, result.ExitCode);
     }
@@ -42,7 +94,7 @@ public sealed partial class MakeWorkflowTests
     {
         if (OperatingSystem.IsWindows()) return;
 
-        var result = RunPreflightScenario("stale-values");
+        var result = RunPreflightScenario("stale-values", TestRepositoryLayout.FindRoot());
 
         // The stale-values shim exits 44 from `emit-values --check`; scribe-content-checks.sh
         // runs under `set -e`, so preflight must surface exactly that code.
@@ -50,9 +102,8 @@ public sealed partial class MakeWorkflowTests
     }
 
     [System.Runtime.Versioning.UnsupportedOSPlatform("windows")]
-    private static ProcessOutput RunPreflightScenario(string scenario)
+    private static ProcessOutput RunPreflightScenario(string scenario, string sourceRoot)
     {
-        var workTarget = TestRepositoryLayout.FindRoot();
         using var fixture = new TemporaryDirectory();
         var root = Path.Combine(fixture.Path, "candidate");
         var binDirectory = Path.Combine(fixture.Path, "bin");
@@ -64,9 +115,9 @@ public sealed partial class MakeWorkflowTests
         Directory.CreateDirectory(Path.GetDirectoryName(scribeChecks)!);
         Directory.CreateDirectory(Path.GetDirectoryName(report)!);
         Directory.CreateDirectory(binDirectory);
-        File.Copy(Path.Combine(workTarget, PreflightScriptPath), preflight);
-        File.Copy(Path.Combine(workTarget, "tools/scripts/perf-event-lib.sh"), perfEvents);
-        File.Copy(Path.Combine(workTarget, ScribeContentChecksScriptPath), scribeChecks);
+        File.Copy(Path.Combine(sourceRoot, PreflightScriptPath), preflight);
+        File.Copy(Path.Combine(sourceRoot, "tools/scripts/perf-event-lib.sh"), perfEvents);
+        File.Copy(Path.Combine(sourceRoot, ScribeContentChecksScriptPath), scribeChecks);
         File.WriteAllText(
             report,
             "{\"modules\":[],\"schema\":\"stratalint-raw-lean-report-v1\"}\n");
@@ -174,6 +225,22 @@ public sealed partial class MakeWorkflowTests
             throw new InvalidOperationException(
                 System.Text.Encoding.UTF8.GetString(result.StandardError));
         }
+    }
+
+    private static string RunScenarioGitForOutput(string root, params string[] arguments)
+    {
+        var result = BoundedProcessRunner.Run(
+            "/usr/bin/git",
+            arguments,
+            root,
+            TimeSpan.FromSeconds(10),
+            64 * 1024);
+        if (result.ExitCode != 0)
+        {
+            throw new InvalidOperationException(
+                System.Text.Encoding.UTF8.GetString(result.StandardError));
+        }
+        return System.Text.Encoding.UTF8.GetString(result.StandardOutput);
     }
 
     [System.Runtime.Versioning.UnsupportedOSPlatform("windows")]

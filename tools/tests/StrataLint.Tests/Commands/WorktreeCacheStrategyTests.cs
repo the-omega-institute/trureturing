@@ -529,6 +529,8 @@ internal sealed class RecordingWorktreeProcessRunner : IWorktreeProcessRunner
 
     internal bool FailClean { get; init; }
 
+    internal bool ThrowClean { get; init; }
+
     internal bool OmitMathlibOleans { get; init; }
 
     internal bool FailDotnet { get; init; }
@@ -598,6 +600,7 @@ internal sealed class RecordingWorktreeProcessRunner : IWorktreeProcessRunner
 
             if (arguments.SequenceEqual(["exe", "cache", "clean"]))
             {
+                if (ThrowClean) throw new IOException("cache clean threw");
                 if (FailClean) return Failure("cache clean failed");
                 foreach (var path in Directory.EnumerateFiles(MathlibCacheFixture.CurrentPath, "*.ltar"))
                 {

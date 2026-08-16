@@ -11,10 +11,30 @@ internal sealed record LeanCacheProvisionResult(
 
 internal sealed record MathlibCachePruneOutcome(
     string Scope,
-    int DeletedFiles,
+    int? DeletedFiles,
     string CleanStatus)
 {
     internal static MathlibCachePruneOutcome NotRun { get; } = new("machine", 0, "not-run");
+}
+
+internal interface ILeanCachePublisher
+{
+    void Publish(string staged, string target, LeanPinSet pins);
+}
+
+internal sealed class LeanCachePublisher : ILeanCachePublisher
+{
+    internal static LeanCachePublisher Instance { get; } = new();
+
+    private LeanCachePublisher()
+    {
+    }
+
+    public void Publish(string staged, string target, LeanPinSet pins)
+    {
+        Directory.Move(staged, target);
+        LeanCacheStamp.Write(target, pins);
+    }
 }
 
 internal class LeanCacheProvisionException : InvalidOperationException
@@ -91,9 +111,27 @@ internal static class LeanCacheProvisioner
         LeanPinSet pins,
         IWorktreeProcessRunner runner,
         LeanCacheWriterGuard writerGuard,
-        IDirectoryCloner cloner)
+        IDirectoryCloner cloner) =>
+        Provision(
+            selection,
+            worktreeRoot,
+            pins,
+            runner,
+            writerGuard,
+            cloner,
+            LeanCachePublisher.Instance);
+
+    internal static LeanCacheProvisionResult Provision(
+        LeanCacheDonorSelection selection,
+        string worktreeRoot,
+        LeanPinSet pins,
+        IWorktreeProcessRunner runner,
+        LeanCacheWriterGuard writerGuard,
+        IDirectoryCloner cloner,
+        ILeanCachePublisher publisher)
     {
         ArgumentNullException.ThrowIfNull(cloner);
+        ArgumentNullException.ThrowIfNull(publisher);
         ArgumentNullException.ThrowIfNull(writerGuard);
         writerGuard.RequireOwnershipOf(Path.Combine(worktreeRoot, ".lake"));
         if (selection.Donor is null)
@@ -118,6 +156,7 @@ internal static class LeanCacheProvisioner
             pins,
             runner,
             cloner,
+            publisher,
             out cloneWarning);
         if (cloned is not null) return cloned;
 
@@ -132,14 +171,24 @@ internal static class LeanCacheProvisioner
         string worktreeRoot,
         LeanPinSet pins,
         IWorktreeProcessRunner runner,
-        LeanCacheWriterGuard writerGuard)
+        LeanCacheWriterGuard writerGuard) =>
+        ReproduceExisting(worktreeRoot, pins, runner, writerGuard, CountLtarFiles);
+
+    internal static LeanCacheProvisionResult ReproduceExisting(
+        string worktreeRoot,
+        LeanPinSet pins,
+        IWorktreeProcessRunner runner,
+        LeanCacheWriterGuard writerGuard,
+        Func<string, int> countLtarFiles)
     {
+        ArgumentNullException.ThrowIfNull(countLtarFiles);
         writerGuard.RequireOwnershipOf(Path.Combine(worktreeRoot, ".lake"));
         var pruneOutcome = RunCacheGet(
             worktreeRoot,
             pins,
             runner,
-            CacheTreeOwnership.PreExisting);
+            CacheTreeOwnership.PreExisting,
+            countLtarFiles);
         return new LeanCacheProvisionResult(
             "cache-get",
             "cache-get",
@@ -156,6 +205,7 @@ internal static class LeanCacheProvisioner
         LeanPinSet pins,
         IWorktreeProcessRunner runner,
         IDirectoryCloner cloner,
+        ILeanCachePublisher publisher,
         out string? warning)
     {
         using var guard = selection.TakeGuard() ?? LeanCacheGuard.TryAcquireShared(source);
@@ -196,6 +246,7 @@ internal static class LeanCacheProvisioner
                 selection.Donor!,
                 pins,
                 runner,
+                publisher,
                 "clonefile",
                 null,
                 out warning);
@@ -227,6 +278,7 @@ internal static class LeanCacheProvisioner
                 selection.Donor!,
                 pins,
                 runner,
+                publisher,
                 "copy",
                 $"clonefile failed ({clonefileError}); used slow ordinary copy",
                 out warning);
@@ -245,6 +297,7 @@ internal static class LeanCacheProvisioner
         string donorRoot,
         LeanPinSet pins,
         IWorktreeProcessRunner runner,
+        ILeanCachePublisher publisher,
         string method,
         string? warning,
         out string? finalWarning)
@@ -262,8 +315,7 @@ internal static class LeanCacheProvisioner
                 return null;
             }
 
-            Directory.Move(staged, target);
-            LeanCacheStamp.Write(target, pins);
+            publisher.Publish(staged, target, pins);
         }
         catch
         {
@@ -292,7 +344,8 @@ internal static class LeanCacheProvisioner
                 worktreeRoot,
                 pins,
                 runner,
-                CacheTreeOwnership.CreatedByThisCall);
+                CacheTreeOwnership.CreatedByThisCall,
+                CountLtarFiles);
             return new LeanCacheProvisionResult(
                 "cache-get",
                 "cache-get",
@@ -328,7 +381,8 @@ internal static class LeanCacheProvisioner
         string worktreeRoot,
         LeanPinSet pins,
         IWorktreeProcessRunner runner,
-        CacheTreeOwnership ownership)
+        CacheTreeOwnership ownership,
+        Func<string, int> countLtarFiles)
     {
         var lake = Path.Combine(worktreeRoot, ".lake");
         var pruneOutcome = MathlibCachePruneOutcome.NotRun;
@@ -349,7 +403,8 @@ internal static class LeanCacheProvisioner
             VerifyPrivateDirectory(lake);
             VerifyMathlibOleans(lake);
             var sharedCache = MathlibCacheDirectory(worktreeRoot);
-            var beforeClean = CountLtarFiles(sharedCache);
+            var beforeClean = countLtarFiles(sharedCache);
+            pruneOutcome = new MathlibCachePruneOutcome("machine", null, "attempted");
             ProcessOutput clean;
             try
             {
@@ -361,21 +416,48 @@ internal static class LeanCacheProvisioner
             }
             catch (Exception exception)
             {
-                var afterFailedClean = CountLtarFiles(sharedCache);
-                pruneOutcome = new MathlibCachePruneOutcome(
-                    "machine",
-                    Math.Max(0, beforeClean - afterFailedClean),
-                    "failed");
+                pruneOutcome = new MathlibCachePruneOutcome("machine", null, "failed");
+                try
+                {
+                    var afterFailedClean = countLtarFiles(sharedCache);
+                    pruneOutcome = pruneOutcome with
+                    {
+                        DeletedFiles = Math.Max(0, beforeClean - afterFailedClean),
+                    };
+                }
+                catch (Exception inventoryException)
+                {
+                    throw new LeanCacheProvisionException(
+                        $"lake exe cache clean failed: {exception.Message}; "
+                        + $"post-clean cache inventory failed: {inventoryException.Message}",
+                        pruneOutcome,
+                        new AggregateException(exception, inventoryException));
+                }
                 throw new LeanCacheProvisionException(
                     $"lake exe cache clean failed: {exception.Message}",
                     pruneOutcome,
                     exception);
             }
-            var afterClean = CountLtarFiles(sharedCache);
             pruneOutcome = new MathlibCachePruneOutcome(
                 "machine",
-                Math.Max(0, beforeClean - afterClean),
+                null,
                 clean.ExitCode == 0 ? "succeeded" : "failed");
+            try
+            {
+                var afterClean = countLtarFiles(sharedCache);
+                pruneOutcome = pruneOutcome with
+                {
+                    DeletedFiles = Math.Max(0, beforeClean - afterClean),
+                };
+            }
+            catch (Exception inventoryException)
+            {
+                throw new LeanCacheProvisionException(
+                    $"lake exe cache clean {pruneOutcome.CleanStatus}; "
+                    + $"post-clean cache inventory failed: {inventoryException.Message}",
+                    pruneOutcome,
+                    inventoryException);
+            }
             if (clean.ExitCode != 0)
             {
                 throw new LeanCacheProvisionException(

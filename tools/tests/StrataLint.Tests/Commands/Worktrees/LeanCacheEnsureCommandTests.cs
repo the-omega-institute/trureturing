@@ -135,6 +135,39 @@ public sealed class LeanCacheEnsureCommandTests
     }
 
     [Fact]
+    public void InternallyInconsistentStampAndProducerFailurePreserveExistingProjection()
+    {
+        using var repository = new TemporaryDirectory();
+        using var sharedCache = new MathlibCacheFixture();
+        InitializeRepository(repository.Path);
+        WriteCache(repository.Path, "must survive inconsistent stamp\n");
+        var lake = Path.Combine(repository.Path, ".lake");
+        var ownedOlean = Path.Combine(lake, "build", "lib", "lean", "Trureturing", "Owned.olean");
+        Directory.CreateDirectory(Path.GetDirectoryName(ownedOlean)!);
+        File.WriteAllText(ownedOlean, "must survive\n");
+        var pins = ReadPins(repository.Path);
+        File.WriteAllText(
+            LeanCacheStamp.PathFor(lake),
+            JsonSerializer.Serialize(new
+            {
+                schema = "stratalint-lean-cache-v1",
+                pin_sha256 = "sha256:" + new string('0', 64),
+                lean_toolchain_base64 = Convert.ToBase64String(pins.LeanToolchain),
+                lake_manifest_base64 = Convert.ToBase64String(pins.LakeManifest),
+            }) + "\n");
+        var runner = new RecordingWorktreeProcessRunner { FailLake = true };
+
+        var result = WorktreeCommand.Run(repository.Path, ["ensure-cache"], runner);
+
+        Assert.False(result.Success);
+        Assert.True(File.Exists(Path.Combine(lake, "build", "cache.bin")));
+        Assert.True(File.Exists(ownedOlean));
+        Assert.Equal([true], runner.CacheGetExistingProjectionObservations);
+        using var receipt = ParseReceipt(result.Error);
+        Assert.Equal("corrupt", receipt.RootElement.GetProperty("stamp_miss").GetString());
+    }
+
+    [Fact]
     public void StampForPreviousPinsDeletesOldLakeBeforeProvisioning()
     {
         using var repository = new TemporaryDirectory();

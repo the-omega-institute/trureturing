@@ -48,7 +48,7 @@ internal sealed record LeanPinSet(byte[] LeanToolchain, byte[] LakeManifest, str
         LeanToolchain.AsSpan().SequenceEqual(other.LeanToolchain)
         && LakeManifest.AsSpan().SequenceEqual(other.LakeManifest);
 
-    private static LeanPinSet Create(byte[] toolchain, byte[] manifest)
+    internal static LeanPinSet Create(byte[] toolchain, byte[] manifest)
     {
         using var hash = IncrementalHash.CreateHash(HashAlgorithmName.SHA256);
         AppendField(hash, "lean-toolchain", toolchain);
@@ -172,9 +172,15 @@ internal static class LeanCacheStamp
 
             var toolchainBytes = Convert.FromBase64String(toolchain.GetString()!);
             var manifestBytes = Convert.FromBase64String(manifest.GetString()!);
-            if (sha256.GetString() != pins.Sha256
-                || !toolchainBytes.AsSpan().SequenceEqual(pins.LeanToolchain)
-                || !manifestBytes.AsSpan().SequenceEqual(pins.LakeManifest))
+            var embeddedPins = LeanPinSet.Create(toolchainBytes, manifestBytes);
+            if (sha256.GetString() != embeddedPins.Sha256)
+            {
+                return new LeanCacheStampInspection(
+                    LeanCacheStampState.Corrupt,
+                    "cache producer stamp pin hash is inconsistent with its embedded pin bytes");
+            }
+
+            if (sha256.GetString() != pins.Sha256 || !embeddedPins.HasSameBytes(pins))
             {
                 return new LeanCacheStampInspection(
                     LeanCacheStampState.Mismatch,
