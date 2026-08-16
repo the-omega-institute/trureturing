@@ -159,15 +159,4 @@ internal static class DagLedgerReattestWriter
         }
     }
 
-    private static ImmutableArray<DagLedgerFileEvent> LoadFileEvents(
-        IEnumerable<RepositoryFile> files,
-        string label) =>
-        DagLedgerLoader.LoadFiles(files) switch
-        {
-            DagLedgerFilesLoadOutcome.Loaded loaded => loaded.Events,
-            DagLedgerFilesLoadOutcome.Invalid invalid => throw new InvalidOperationException(
-                label + " syntax is invalid: " + invalid.Message),
-            _ => throw new InvalidOperationException("unknown ledger files load outcome"),
-        };
-
 }
