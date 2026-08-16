@@ -46,15 +46,73 @@ Follow these steps in order. Do not pass a step until its postcondition holds.
 Unless a step names a bounded recovery, every command result has exactly one
 successor: exit 0 with the stated postcondition satisfied advances to the next
 step; any nonzero exit or unmet postcondition ends in evidence-complete `open`.
-Likewise, every pull request has exactly one terminal successor: `MERGED`
-advances or completes the workflow, while any terminal non-merged state ends in
+Pull requests use the bounded observation protocol below: REST-confirmed
+`MERGED` advances or completes the workflow; a failed required check, a terminal
+non-merged REST state, an observation failure, or budget exhaustion ends in
 evidence-complete `open`. There are no implicit retries.
 
-Every such `open` report must identify the step, reproduce the exact command,
-record its exit code or external terminal state and machine diagnostic, name the
-branch, and include the complete `git status --short` tree state. Preserve every
-canonical-writer output and the resulting tree exactly as found: do not hand-fix,
-delete, reset, or clean generated artifacts to make the failure look tidy.
+Every `open` report uses this schema without adding, removing, or renaming
+fields. Use `null` plus a reason in `diagnostic` when a field is not yet
+applicable:
+
+```text
+step
+commit_sha
+pr_number
+pr_head_sha
+atom_id
+atom_cas_ref
+command
+exit_code
+diagnostic
+pr_rest_state
+pr_rest_merged
+pr_rest_merged_at
+required_checks
+git_status_short
+auxiliary_branch
+```
+
+The immutable identity fields are `commit_sha`, `pr_number`, `pr_head_sha`, and
+`atom_cas_ref`; capture each as soon as it exists. `command` is the exact command
+text, `exit_code` is its integer result, and `diagnostic` preserves machine output
+verbatim. A branch name is a mutable convenience only and never substitutes for
+an identity field. Preserve every canonical-writer output and the resulting tree
+exactly as found: do not hand-fix, delete, reset, or clean generated artifacts to
+make the failure look tidy.
+
+For both pull requests, resolve the PR number immediately after `make pr-open`,
+record the branch's current `commit_sha`, and make the first REST observation.
+That observation must be exit 0 and valid JSON containing `head.sha`, `state`,
+`merged`, and `merged_at`; its `head.sha` must equal `commit_sha`. Capture that
+value as `pr_head_sha`. On every later observation, REST must again exit 0, return
+those fields with their expected JSON types, and have `head.sha == pr_head_sha`.
+A REST nonzero exit, malformed response, missing or ill-typed field, or SHA
+mismatch is an observation failure and ends immediately in the fixed-schema
+`open` state.
+
+Poll at most 30 times at 60-second intervals. Each poll must freshly read
+`gh api repos/{owner}/{repo}/pulls/<pr-number>` and
+`gh pr checks <pr-number> --required --json bucket,name,state,link`. Checks output
+must be a valid JSON array whose entries contain all four requested string-valued
+fields and whose bucket is one of `pass`, `fail`, `pending`, `skipping`, or
+`cancel`. Parse it before interpreting the checks exit code: any `fail` or
+`cancel` bucket is an immediate failed-check `open`, whatever the exit code. With
+no such bucket, exit 8 is a successful checks observation if and only if at least
+one bucket is `pending`; exit 0 is successful if and only if every bucket is
+`pass` or `skipping`. Every other exit/output/bucket combination is an observation
+failure and ends `open`.
+
+After both observations succeed, REST `merged == true` together with non-null
+`merged_at` is the only `MERGED` verdict; do not use GraphQL or
+`gh pr view --json state` for that verdict because its state can lag REST. REST
+`state == "closed"` without the merged pair is terminal non-merged. REST
+`state == "open"` with no failed check continues while budget remains, even when
+all checks currently pass. Any other REST state/merged combination is an
+observation failure. Poll once immediately and sleep only before a remaining
+attempt, so the budget has at most 29 sleeps. If attempt 30 still has no terminal
+verdict, end evidence-complete `open` with the PR number, captured head SHA, REST
+fields, and every required check's current name, state, bucket, and link.
 
 ### 0. Establish isolation
 
@@ -146,13 +204,12 @@ ordered pull requests even while its former machine enforcement is deferred.
 `Meta/registry.yaml` under `governance_documents`, preserving canonical ordering.
 Do not add the volume or digestion data. Commit, run `make preflight`, push, and
 run `make pr-open`; every command must exit 0. After `make pr-open`, do not push
-further changes to that branch. Poll until the PR is `MERGED` or reaches a
-terminal non-merged state. Only `MERGED` advances to the theory PR; a command
-failure or terminal non-merged state takes the global `open` transition with the
-retained registration branch, exact command and exit code or PR state, machine
-diagnostic, and tree state. A green or merely open PR is not a postcondition. If
-the exact path is already present in the protected base, prove that fact from
-`origin/dev` and do not create a duplicate registration PR.
+further changes to that branch. Apply the bounded pull-request observation
+protocol. Only its REST-confirmed `MERGED` verdict advances to the theory PR; all
+of its `open` successors use the fixed evidence schema. A green or merely open PR
+is not a postcondition. If the exact path is already present in the protected
+base, prove that fact from `origin/dev` and do not create a duplicate registration
+PR.
 
 **Theory PR:** After registration is merged, create a fresh worktree from the
 new `origin/dev`. Confirm that its registry already contains the path, then add
@@ -173,13 +230,35 @@ make ingest
 
 Require exit 0, `coarse_fallbacks=0`, `ledger_changed=true`, and
 `residual_open_added` greater than zero. There is one named recovery. If, and
-only if, `make ingest` exits 2 and its output contains one of these canonical
-report-prerequisite diagnostics (where `<path>` is the path emitted by the
-machine):
+only if, `make ingest` exits 2 and at least one complete output line matches one
+of these owner-stage predicates, treat it as a report prerequisite:
 
-- `report-consumer: raw Lean report is missing at <path>; run make lean-report first`
-- `report-consumer: raw Lean report bundle is incomplete at <path>; run make lean-report first`
-- `report-consumer: consumption failed; the raw Lean report may be stale, run make lean-report first`
+- it starts `report-consumer: raw Lean report is missing at ` and ends
+  `; run make lean-report first`;
+- it starts `report-consumer: raw Lean report bundle is incomplete at ` and ends
+  `; run make lean-report first`;
+- it starts `lean-report-input: ` and ends `; run make lean-report first`.
+
+The later supervisor line `report-consumer: consumption failed; the raw Lean
+report may be stale, run make lean-report first` never satisfies this predicate,
+even when the overall exit is 2.
+
+This predicate comes from the current owners: `report-consumer.sh:16-18` owns
+missing reports, `report-consumer.sh:33-36` owns incomplete bundles,
+`lean-report-input.sh:343-398` owns SHA, attestation, and repository-input
+freshness, while `report-consumer.sh:45-46` appends the excluded generic line
+after every nonzero supervised command. `CliApplication.cs:289-294` maps every
+failed `CommandResult`, including semantic ingest failures, to exit 2. The
+2026-08-17 owner-output probes were:
+
+- report temporarily absent, `make ingest` exit 2:
+  `report-consumer: raw Lean report is missing at /Users/auric/trureturing-theorygen-intake/.lake/build/stratalint/raw-lean-report.json; run make lean-report first`;
+- provenance member temporarily absent, `make ingest` exit 2:
+  `report-consumer: raw Lean report bundle is incomplete at /Users/auric/trureturing-theorygen-intake/.lake/build/stratalint/raw-lean-report.json.provenance.json; run make lean-report first`;
+- SHA member replaced by an invalid fixture, `make ingest` exit 2:
+  `lean-report-input: raw Lean report SHA is stale; run make lean-report first`;
+- valid bundle with a supervised `/bin/bash -c 'exit 2'`, exit 2:
+  `report-consumer: consumption failed; the raw Lean report may be stale, run make lean-report first`.
 
 run `make lean-report` exactly once, require exit 0, then retry `make ingest`
 exactly once. The retry must itself exit 0 and satisfy every ingest postcondition
@@ -245,11 +324,10 @@ make pr-open HEAD=<branch> TITLE='<title>' BODY=<body-file>
 ```
 
 Require preflight and both publication commands to exit 0. Do not push further
-changes after `make pr-open`; a follow-up requires a new branch. Poll the PR's
-machine state until it is `MERGED` or reaches a terminal non-merged state.
-Report completion only for `MERGED`. Otherwise report evidence-complete `open`
-with the terminal state, failed command or check, exit code, and retained branch.
-Never introduce a human-review waiting state.
+changes after `make pr-open`; a follow-up requires a new branch. Apply the bounded
+pull-request observation protocol. Report completion only for its REST-confirmed
+`MERGED` verdict. Every other successor is evidence-complete `open` using the
+fixed schema; never introduce a human-review waiting state.
 
 Postcondition: the theory PR is `MERGED`, or the run ends honestly as
 evidence-complete `open`. Downstream formalization begins by invoking
