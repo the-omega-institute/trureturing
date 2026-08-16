@@ -304,6 +304,7 @@ public sealed partial class ProductionEnvironmentTests
         Assert.Equal(1, ledger.IncrementalValidationCount);
         var deltaReferences = Assert.Single(gateway.FrozenReferenceValidations);
         Assert.Contains(FrozenLedgerTestData.GitOid('a'), deltaReferences.CommitOids);
+        Assert.Empty(deltaReferences.RequiredAncestorCommitOids);
     }
 
     [Fact]
