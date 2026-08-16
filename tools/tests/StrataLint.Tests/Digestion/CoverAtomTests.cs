@@ -236,12 +236,12 @@ public sealed partial class CoverAtomTests
     }
 
     [Fact]
-    public void CoverRejectsUnverifiedScribeEmissionAsPartialClosed()
+    public void CoverRejectsMissingProducerEmissionAsPartialClosed()
     {
         var (result, after, before) = Execute(new CoverSpec { VerifyScribe = false });
 
         Assert.False(result.Success);
-        Assert.Contains("scribe-emission-unverified", result.Error, StringComparison.Ordinal);
+        Assert.Contains("scribe-emission-missing", result.Error, StringComparison.Ordinal);
         Assert.Contains("partial-closed", result.Error, StringComparison.Ordinal);
         Assert.Equal(before, after);
     }

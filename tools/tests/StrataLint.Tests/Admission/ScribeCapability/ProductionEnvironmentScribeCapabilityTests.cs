@@ -13,19 +13,15 @@ public sealed partial class ProductionEnvironmentTests
     public void ProtectedSurfaceAdmissionCannotSkipProjectionReconciliationFailure()
     {
         var report = LeanAxiomReport.Create(new Dictionary<string, LeanFileReport>());
-        var bootstrap = BootstrapGate.Evaluate(RawChangeSet.Create([
-            RuleFixture.SyntheticProtectedPath,
-        ]));
 
         Assert.Throws<InvalidDataException>(() =>
             ProductionCliEnvironment.VerifyScribeForAdmission(
                 new ProjectionReconciliationFailureVerifier(),
-                report,
-                bootstrap));
+                report));
     }
 
     [Fact]
-    public void CheckPreservesPriorCoverageWhenProtectedScribeGrowthOutrunsBaseEmitter()
+    public void CheckUsesCurrentProducerCapabilityDuringProtectedScribeGrowth()
     {
         var fixture = new RuleFixture();
         fixture.AddBackfillTargets();
@@ -115,9 +111,8 @@ public sealed partial class ProductionEnvironmentTests
         var changes = RawChangeSet.Create([newScribePath]);
         var bootstrap = BootstrapGate.Evaluate(changes);
         var verifiedScribeEmissions = ProductionCliEnvironment.VerifyScribeForAdmission(
-            new FakeScribeEmissionVerifier(null),
-            currentReport,
-            bootstrap);
+            new FakeScribeEmissionVerifier(VerifiedScribeEmissions.Create([record], [coveredGid])),
+            currentReport);
 
         var outcome = SnapshotAdmissionCore.Evaluate(
             current,
@@ -181,7 +176,7 @@ public sealed partial class ProductionEnvironmentTests
         Assert.Equal(DigestionMigrationState.Partial, changedStatus.DerivedStatus.Migration);
         Assert.Equal(DigestionTruthState.Closed, changedStatus.DerivedStatus.Truth);
         Assert.False(changedStatus.Deletable);
-        Assert.Contains(changedStatus.Gaps, gap => gap.Code == "scribe-emission-unverified");
+        Assert.Contains(changedStatus.Gaps, gap => gap.Code == "scribe-emission-mismatch");
     }
 }
 

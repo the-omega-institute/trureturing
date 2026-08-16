@@ -85,6 +85,37 @@ public sealed class MarkdownWriterTests
     }
 
     [Fact]
+    public void EscapedFormulaSpacingHasCanonicalDocumentBytes()
+    {
+        var document = ScribeDocument.Create(
+            CreateHeader(),
+            Heading.Create("Escaped sample"),
+            BlockSequence.Create(
+            [
+                Describe.Example(
+                    DescribeId.Create("escaped-spacing"),
+                    Heading.Create("Escaped spacing"),
+                    F.Seq(F.Id("x"), F.Esc, F.Id("y")),
+                    AssessedProvenance.FromRepo(),
+                    BlockSequence.Create([Paragraph(new Inline.Text(TextRun.Create("Stable.")))])),
+            ]));
+
+        var bytes = CanonicalMarkdownWriter.Write(document);
+
+        Assert.Equal(
+            Encoding.UTF8.GetBytes(
+                "# Escaped sample\n\n"
+                + "## Abstract\n\n"
+                + "The real embedding is injective.\n\n"
+                + "**Example 1.1 (Escaped spacing).**\n\n"
+                + "$$\nx\\ y\n$$\n\n"
+                + "*Source.* Repository-derived.\n\n"
+                + "*Commentary.*\n\n"
+                + "Stable.\n"),
+            bytes.ToArray());
+    }
+
+    [Fact]
     public void WriterEmitsAcademicMarkdownWithAstNumberingAndLeanProofs()
     {
         var paragraph = Paragraph(

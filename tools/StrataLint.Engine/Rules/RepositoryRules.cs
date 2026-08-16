@@ -136,8 +136,8 @@ internal static partial class RepositoryRules
             AdmissionEffect.Observe),
         Register(
             25,
-            "Blueprint committed renderer oracle",
-            new RepositoryRule(RepositoryScoped, BlueprintProjectionSource)),
+            "Blueprint source-projection skeleton",
+            new RepositoryRule(RepositoryScoped, BlueprintProjectionSkeleton)),
         Register(
             26,
             "Scribe legacy constructor budget",

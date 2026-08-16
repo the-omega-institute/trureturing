@@ -71,9 +71,9 @@ runtime_disposition = "committed-source"
 
 [[files]]
 pattern = "Blueprint/**/*.md"
-kind = "data"
+kind = "generated"
 produced_by = "ScribeEmitter"
-consumed_by = ["DigestionStatusEvaluator", "ScribeEmitter", "reader"]
+consumed_by = ["ScribeEmitter", "reader"]
 verified_by = ["ScribeEmitter"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
