@@ -35,8 +35,6 @@ internal interface ICliEnvironment
 
     CommandResult Route(IReadOnlyList<string> arguments);
 
-    ExplicitCommandResult ValidateBlueprintPins(IReadOnlyList<string> arguments);
-
     CommandResult SelfTest(IReadOnlyList<string> arguments);
 
     CommandResult RenderDag(IReadOnlyList<string> arguments);
@@ -44,6 +42,8 @@ internal interface ICliEnvironment
     CommandResult AppendLedger(IReadOnlyList<string> arguments);
 
     CommandResult ReattestLedger(IReadOnlyList<string> arguments);
+
+    CommandResult RevokeLedger(IReadOnlyList<string> arguments);
 
     CommandResult SupersedeLedger(IReadOnlyList<string> arguments);
 
@@ -111,6 +111,8 @@ internal static class CliApplication
                 RenderCommand(environment.AppendLedger(tail), console),
             ["ledger-reattest"] = static (environment, tail, console) =>
                 RenderCommand(environment.ReattestLedger(tail), console),
+            ["ledger-revoke"] = static (environment, tail, console) =>
+                RenderCommand(environment.RevokeLedger(tail), console),
             ["ledger-supersede"] = static (environment, tail, console) =>
                 RenderCommand(environment.SupersedeLedger(tail), console),
             ["ledger-sync"] = static (environment, tail, console) =>
@@ -127,8 +129,6 @@ internal static class CliApplication
                 RenderCommand(environment.ShowAtom(tail), console),
             ["topology"] = static (environment, tail, console) =>
                 RenderTopology(environment.Topology(tail), console),
-            ["validate-blueprint-pins"] = static (environment, tail, console) =>
-                RenderExplicit(environment.ValidateBlueprintPins(tail), console),
             ["worktree"] = static (environment, tail, console) =>
                 RenderCommand(environment.Worktree(tail), console),
         }.ToImmutableDictionary(StringComparer.Ordinal);

@@ -22,10 +22,6 @@ internal static partial class RepositoryRules
         + "状态\\s*[:：]\\s*(?:已证|承典|条件|开放)|〔(?:已证|承典|条件|开放)〕)",
         RegexOptions.IgnoreCase | RegexOptions.CultureInvariant);
 
-    private static readonly Regex TaskTokenPattern = new(
-        "TASK\\s+(?<code>D5-T[0-9]{4})",
-        RegexOptions.CultureInvariant);
-
     private static readonly Regex SafeFieldPattern = new(
         "^[A-Za-z0-9_/.-]+$",
         RegexOptions.CultureInvariant);
@@ -54,7 +50,7 @@ internal static partial class RepositoryRules
         ImmutableHashSet.Create(
             StringComparer.Ordinal,
             "anomaly", "anomalies", "case", "case_id", "category", "exception", "exceptions",
-            "failure", "failures", "kind", "record_type", "resolution", "state", "tension",
+            "evidence_type", "failure", "failures", "kind", "record_type", "resolution", "state", "tension",
             "tensions", "type", "unresolved");
 
     internal static ImmutableArray<RuleRegistration> CreateRegistrations() =>
@@ -130,8 +126,8 @@ internal static partial class RepositoryRules
             AdmissionEffect.Observe),
         Register(
             25,
-            "Blueprint committed renderer oracle",
-            new RepositoryRule(RepositoryScoped, BlueprintProjectionSource)),
+            "Blueprint source-projection skeleton",
+            new RepositoryRule(RepositoryScoped, BlueprintProjectionSkeleton)),
         Register(
             26,
             "Scribe legacy constructor budget",

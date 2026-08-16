@@ -114,6 +114,34 @@ public sealed class RuleEngineTests
         Assert.Empty(diagnostics);
     }
 
+    [Theory]
+    [InlineData("outer-comment")]
+    [InlineData("five-digit")]
+    public void RepositoryRulesTaskTokenRecognitionRetainsDevSemantics(string scenario)
+    {
+        const string path = "D5/X_Frontier/DevTaskTokenSemantics.lean";
+        const string gid = "D5/X_Frontier/DevTaskTokenSemantics";
+        const string caseId = "D5-T0097";
+        var fixture = new RuleFixture();
+        fixture.AddTask(path, gid, scenario == "five-digit" ? caseId + "0" : caseId);
+        if (scenario == "outer-comment")
+        {
+            fixture.Files[path] = fixture.Files[path].Replace(
+                "/-- TASK D5-T0097",
+                "/-\n/-- TASK D5-T0097",
+                StringComparison.Ordinal) + "-/\n";
+        }
+
+        fixture.Files["Evidence/D5/S0/Carrier/Result.run.json"] =
+            $"{{\"anomaly\":\"fixture drift\",\"case_id\":\"{caseId}\"}}\n";
+
+        var diagnostics = RuleCatalog.Default.EvaluateSingle(
+            RuleId.CreateKnown(19),
+            fixture.Build()).Diagnostics;
+
+        Assert.Empty(diagnostics);
+    }
+
     [Fact]
     public void DirectoryBackfillReachesSharedDownstreamValidationWithoutFormatDiagnostics()
     {
@@ -230,88 +258,16 @@ public sealed class RuleEngineTests
     }
 
     [Fact]
-    public void Sl025RejectsChangedBlueprintMarkdownWithoutChangedScribeSource()
+    public void Sl025DoesNotGovernBlueprintMarkdownContent()
     {
         var fixture = new RuleFixture();
-        fixture.Files[RuleFixture.BlueprintPath] = "# Changed golden ring\n";
+        fixture.Files[RuleFixture.BlueprintPath] = "# Arbitrary reader snapshot\n";
 
-        var diagnostic = Assert.Single(EvaluateSl025(fixture));
-
-        Assert.Equal(RuleFixture.BlueprintPath, diagnostic.Path);
+        Assert.Empty(EvaluateSl025(fixture));
         Assert.Equal(
-            "Blueprint markdown is a committed renderer oracle: update it from a Scribe or digestion source change",
-            diagnostic.Message);
-        Assert.Equal(
-            "Blueprint committed renderer oracle",
+            "Blueprint source-projection skeleton",
             RuleCatalog.Default.Descriptors.Single(
                 descriptor => descriptor.Id == RuleId.CreateKnown(25)).Title);
-    }
-
-    [Fact]
-    public void Sl025AcceptsChangedBlueprintMarkdownWithChangedScribeSource()
-    {
-        const string sourcePath = "Blueprint/D5/S0/Carrier/Ring.scribe.cs";
-        var fixture = new RuleFixture();
-        fixture.Files[RuleFixture.BlueprintPath] = "# Changed golden ring\n";
-        fixture.Files[sourcePath] = "// changed source\n";
-        fixture.Baseline[sourcePath] = "// baseline source\n";
-        fixture.Changes.Add(sourcePath);
-
-        Assert.Empty(EvaluateSl025(fixture));
-    }
-
-    [Fact]
-    public void Sl025AcceptsChangedBlueprintMarkdownWithChangedDigestionLedgerSource()
-    {
-        const string sourcePath =
-            "Meta/Digestion/backfill/delta-v0.1/partial-closed/delta-atom.yaml";
-        var fixture = new RuleFixture();
-        fixture.UseValidDirectoryBackfill();
-        fixture.Files[RuleFixture.BlueprintPath] = "# Changed golden ring\n";
-        fixture.Files[sourcePath] = fixture.Files[sourcePath].Replace(
-            "D5/S0/Carrier/BackfillTarget",
-            "D5/S0/Carrier/Ring.goldenRing",
-            StringComparison.Ordinal);
-        fixture.Changes.Add(sourcePath);
-
-        Assert.Empty(EvaluateSl025(fixture));
-    }
-
-    [Fact]
-    public void Sl025RejectsChangedBlueprintMarkdownWithUnrelatedDigestionLedgerSource()
-    {
-        const string sourcePath =
-            "Meta/Digestion/backfill/delta-v0.1/partial-closed/delta-atom.yaml";
-        var fixture = new RuleFixture();
-        fixture.UseValidDirectoryBackfill();
-        fixture.Files[RuleFixture.BlueprintPath] = "# Changed golden ring\n";
-        fixture.Files[sourcePath] += "\n";
-        fixture.Changes.Add(sourcePath);
-
-        var diagnostic = Assert.Single(EvaluateSl025(fixture));
-
-        Assert.Equal(RuleFixture.BlueprintPath, diagnostic.Path);
-    }
-
-    [Fact]
-    public void Sl025AcceptsUnchangedBlueprintMarkdownListedInChanges()
-    {
-        var fixture = new RuleFixture();
-
-        Assert.Empty(EvaluateSl025(fixture));
-    }
-
-    [Fact]
-    public void Sl025AcceptsChangedScribeSourceWithoutBlueprintMarkdown()
-    {
-        const string sourcePath = "Blueprint/D5/S0/Carrier/Ring.scribe.cs";
-        var fixture = new RuleFixture();
-        fixture.Changes.Clear();
-        fixture.Changes.Add(sourcePath);
-        fixture.Files[sourcePath] = "// changed source\n";
-        fixture.Baseline[sourcePath] = "// baseline source\n";
-
-        Assert.Empty(EvaluateSl025(fixture));
     }
 
     [Fact]
@@ -327,7 +283,7 @@ public sealed class RuleEngineTests
     }
 
     [Fact]
-    public void Sl025RejectsScribeSourceWithoutMatchingBlueprintMarkdown()
+    public void Sl025RejectsScribeSourceWithoutMatchingMarkdownProjection()
     {
         var fixture = new RuleFixture();
         fixture.Files.Remove(RuleFixture.BlueprintPath);
@@ -335,7 +291,7 @@ public sealed class RuleEngineTests
         var diagnostic = Assert.Single(EvaluateSl025(fixture), item =>
             item.Path == RuleFixture.BlueprintSourcePath);
 
-        Assert.Equal("Blueprint Scribe source has no matching .md committed oracle", diagnostic.Message);
+        Assert.Equal("Blueprint Scribe source has no matching .md projection", diagnostic.Message);
     }
 
     private static ImmutableArray<Diagnostic> EvaluateSl025(RuleFixture fixture)

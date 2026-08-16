@@ -9,7 +9,19 @@ namespace StrataLint.ArchitectureTests;
 public sealed partial class FileMapPolicyTests
 {
     [Fact]
-    public void ComputationalProjectionsAndBlueprintOracleHaveCanonicalFileMapEntries()
+    public void MissionHasARegisteredGoldenDataResidence()
+    {
+        var manifest = FileMapLoader.LoadRepository(RepositoryLayout.FindRoot());
+
+        var entry = Assert.Single(manifest.Match(MissionFileLoader.RelativePath));
+        Assert.Equal(FileMapKind.Data, entry.Kind);
+        Assert.Equal("MissionFileLoader", Assert.Single(entry.ConsumedBy));
+        Assert.Equal("MissionFileLoader", Assert.Single(entry.VerifiedBy));
+        AssertInventedMeasuredReceiptsSurfaceAsMissionContractFinding();
+    }
+
+    [Fact]
+    public void ComputationalProjectionsHaveCanonicalFileMapEntries()
     {
         var expectedPaths = new HashSet<string>(
             [
@@ -35,13 +47,13 @@ public sealed partial class FileMapPolicyTests
         var entry = Assert.Single(manifest.Match("Blueprint/D5/S0/Carrier/Ring.md"));
 
         Assert.Equal(pattern, entry.Pattern);
-        Assert.Equal(FileMapKind.Data, entry.Kind);
+        Assert.Equal(FileMapKind.Generated, entry.Kind);
         Assert.Equal("ScribeEmitter", entry.ProducedBy);
         Assert.Equal(
-            ["DigestionStatusEvaluator", "ScribeEmitter", "reader"],
+            ["ScribeEmitter", "reader"],
             entry.ConsumedBy.ToArray());
         Assert.Equal(["ScribeEmitter"], entry.VerifiedBy.ToArray());
-        Assert.DoesNotContain(
+        Assert.Contains(
             GeneratedArtifactInventory.All,
             artifact => entry.Matches(artifact.Path));
         Assert.DoesNotContain(

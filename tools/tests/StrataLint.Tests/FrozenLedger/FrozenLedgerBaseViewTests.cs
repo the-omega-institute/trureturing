@@ -52,7 +52,7 @@ public sealed class FrozenLedgerBaseViewTests
         Assert.DoesNotContain(loadedV2Only.Events, static item => item.SchemaVersion == 3);
         AssertExistingV2Freeze(Assert.Single(loadedV2Only.Events));
 
-        var v3Genesis = WriteV3Genesis();
+        var v3Genesis = WriteGenesis(schemaVersion: 3);
         var withV3 = new Dictionary<string, string>(v2Only, StringComparer.Ordinal)
         {
             [FrozenLedgerChangeClassifier.AcceptedPath(v3Genesis.Hash)] =
@@ -66,12 +66,12 @@ public sealed class FrozenLedgerBaseViewTests
     }
 
     [Fact]
-    public void NewContentAddressedEventsUseSchemaV3()
+    public void NewContentAddressedEventsUseSchemaV4()
     {
-        var encoded = WriteV3Genesis();
+        var encoded = WriteGenesis();
         using var document = JsonDocument.Parse(encoded.Bytes.AsSpan()[..^1].ToArray());
 
-        Assert.Equal(3, document.RootElement.GetProperty("schema_version").GetInt32());
+        Assert.Equal(4, document.RootElement.GetProperty("schema_version").GetInt32());
     }
 
     [Fact]
@@ -89,21 +89,12 @@ public sealed class FrozenLedgerBaseViewTests
             snapshot.Files.Count(item =>
                 FrozenLedgerChangeClassifier.IsAcceptedEventPath(item.Key.Value)),
             view.EventCount);
-        var source = File.ReadAllText(Path.Combine(
-            root,
-            "tools",
-            "StrataLint.Engine",
-            "Ledger",
-            "Admission",
-            "FrozenLedgerBaseView.cs"));
+        var source = snapshot.Files[RepoPath.CreateKnown(
+            "tools/StrataLint.Engine/Ledger/Admission/FrozenLedgerBaseView.cs")].Text;
         Assert.DoesNotContain("FrozenLedger.ApplyReattest", source, StringComparison.Ordinal);
         Assert.DoesNotContain("FrozenLedger.ApplySupersede", source, StringComparison.Ordinal);
-        var preparation = File.ReadAllText(Path.Combine(
-            root,
-            "tools",
-            "StrataLint.Cli",
-            "Commands",
-            "DagLedgerCommandPreparation.cs"));
+        var preparation = snapshot.Files[RepoPath.CreateKnown(
+            "tools/StrataLint.Cli/Commands/DagLedgerCommandPreparation.cs")].Text;
         Assert.DoesNotContain("FrozenLedger.ValidateHistoryPrefix", preparation, StringComparison.Ordinal);
         Assert.DoesNotContain("FrozenLedger.ScanReferences", preparation, StringComparison.Ordinal);
     }
@@ -132,7 +123,8 @@ public sealed class FrozenLedgerBaseViewTests
         Assert.Equal(ExistingV2NodePath, Assert.IsType<FrozenLedgerInput>(item.Input).DescriptorSelector);
     }
 
-    private static (ImmutableArray<byte> Bytes, string Hash) WriteV3Genesis() =>
+    private static (ImmutableArray<byte> Bytes, string Hash) WriteGenesis(
+        int schemaVersion = FrozenLedgerCanonicalWriter.CurrentDagSchemaVersion) =>
         FrozenLedgerCanonicalWriter.WriteDagEvent(
             "Genesis",
             JsonSerializer.SerializeToElement(new
@@ -142,7 +134,8 @@ public sealed class FrozenLedgerBaseViewTests
                 origin_tree_oid = FrozenLedgerTestData.GitOid('3'),
                 protocol_version = 1,
                 rule_catalog_root = RuleCatalog.Default.RootSha256,
-            }));
+            }),
+            schemaVersion);
 
     private static RepositorySnapshot Snapshot(IReadOnlyDictionary<string, string> files) =>
         Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(

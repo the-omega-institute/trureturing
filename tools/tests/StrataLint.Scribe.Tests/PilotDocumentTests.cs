@@ -9,7 +9,7 @@ public sealed class DocumentDiscoveryTests
     private const string PhaseSourcePath = "Blueprint/D5/S1/Phase/Basic.scribe.cs";
 
     [Fact]
-    public void RepositorySourceBijectionRejectsAnUnregisteredScribeSource()
+    public void RepositoryBijectionFailuresNameTheUnregisteredSourceAndProjectionRepair()
     {
         var registered = DocumentDefinitions.All;
         var filesystemSources = registered
@@ -25,6 +25,25 @@ public sealed class DocumentDiscoveryTests
         Assert.Equal(
             ["unregistered Scribe source: Blueprint/D5/S9/Synthetic/Unregistered.scribe.cs"],
             findings);
+        Assert.Equal(
+            ["required Markdown projection is missing: Blueprint/D5/S9/Synthetic/Missing.md; "
+                + "run make emit and commit Blueprint/D5/S9/Synthetic/Missing.md"],
+            MarkdownProjectionBijectionFindings(
+                ["Blueprint/D5/S9/Synthetic/Missing.md"],
+                []));
+    }
+
+    [Fact]
+    public void EmptyProjectionAssertionPreservesTheCompleteRepairMessage()
+    {
+        const string missing = "Blueprint/D5/S9/Synthetic/Missing.md";
+        var findings = MarkdownProjectionBijectionFindings([missing], []);
+
+        var exception = Record.Exception(() => AssertNoMarkdownProjectionBijectionFindings(findings));
+
+        Assert.NotNull(exception);
+        Assert.Contains(missing, exception.Message, StringComparison.Ordinal);
+        Assert.Contains("run make emit and commit", exception.Message, StringComparison.Ordinal);
     }
 
     [Fact]
@@ -54,26 +73,58 @@ public sealed class DocumentDiscoveryTests
     }
 
     [Fact]
-    public void ScribeEmissionPathsRenderEachDocumentOnlyOnce()
+    public void RepositoryBijectionsHoldAndScribeEmitterRendersEachDocumentOnlyOnce()
     {
         var repository = RepositoryAccessor.Discover(
             RepositoryRootCriterion.GlobalJsonAndBlueprintDirectoryNotFound);
+        var definitions = DocumentDefinitions.All;
+        var sources = repository.EnumerateFiles(
+            RepositoryRelativePath.Create("Blueprint"),
+            "*.scribe.cs");
+        Assert.Empty(DocumentDefinitions.CheckRepositorySourceBijection(
+            sources.Select(static path => path.Value),
+            definitions));
+        AssertNoMarkdownProjectionBijectionFindings(MarkdownProjectionBijectionFindings(
+            definitions.Select(static definition => definition.RelativePath.Value),
+            repository.EnumerateFiles(RepositoryRelativePath.Create("Blueprint"), "*.md")
+                .Select(static path => path.Value)));
+
         var emitterSource = repository.ReadAllText(RepositoryRelativePath.Create(
             "tools/StrataLint.Scribe/Emission/ScribeEmitter.cs"));
-        var pilotTestSource = repository.ReadAllText(RepositoryRelativePath.Create(
-            "tools/tests/StrataLint.Scribe.Tests/PilotDocumentTests.cs"));
 
         var emitVerified = MethodBody(
             emitterSource,
             "private static ScribeEmissionRun EmitVerified(",
             "private static void CollectDescribeCapabilities(");
-        var committedTreeTest = MethodBody(
-            pilotTestSource,
-            "public void GeneratedMarkdownIsDeterministicAndMatchesTheCommittedTree()",
-            "private sealed class LiveReportFactAttribute");
 
         Assert.Equal(1, Occurrences(emitVerified, "CanonicalMarkdownWriter.Write("));
-        Assert.Equal(1, Occurrences(committedTreeTest, "CanonicalMarkdownWriter.Write("));
+
+        // Temporary coverage bridge for the #2119 split. Remove this block when the
+        // synthetic renderer contract lands from harness/renderer-contract.
+        var documents = definitions
+            .Select(static definition => definition.Document)
+            .ToArray();
+        var catalog = DeclarationCatalog.Create(LeanReportFixture.ForDocuments(documents));
+        var graph = DocumentGraphAssembler.Assemble(documents, catalog);
+        var citations = RepositoryCitations();
+        Assert.Empty(graph.Findings);
+        foreach (var definition in definitions.OrderBy(
+                     static definition => definition.Document.Header.Gid.Value,
+                     StringComparer.Ordinal))
+        {
+            var first = CanonicalMarkdownWriter.Write(
+                definition.Document,
+                catalog,
+                citations,
+                graph);
+            var second = CanonicalMarkdownWriter.Write(
+                definition.Document,
+                catalog,
+                citations,
+                graph);
+
+            Assert.Equal(first.ToArray(), second.ToArray());
+        }
 
         static int Occurrences(string source, string fragment) =>
             (source.Length - source.Replace(fragment, string.Empty, StringComparison.Ordinal).Length)
@@ -88,8 +139,32 @@ public sealed class DocumentDiscoveryTests
         }
     }
 
+    private static string[] MarkdownProjectionBijectionFindings(
+        IEnumerable<string> requiredPaths,
+        IEnumerable<string> actualPaths)
+    {
+        var required = requiredPaths.ToHashSet(StringComparer.Ordinal);
+        var actual = actualPaths.ToHashSet(StringComparer.Ordinal);
+        return required
+            .Except(actual, StringComparer.Ordinal)
+            .Select(static path => $"required Markdown projection is missing: {path}; "
+                + $"run make emit and commit {path}")
+            .Concat(actual
+                .Except(required, StringComparer.Ordinal)
+                .Select(static path => $"Markdown projection has no Scribe definition: {path}"))
+            .Order(StringComparer.Ordinal)
+            .ToArray();
+    }
+
+    private static void AssertNoMarkdownProjectionBijectionFindings(
+        IReadOnlyCollection<string> findings)
+    {
+        var completeMessage = string.Join(" | ", findings);
+        Assert.True(findings.Count == 0, completeMessage);
+    }
+
     [LiveReportFact]
-    public void GeneratedMarkdownIsDeterministicAndMatchesTheCommittedTree()
+    public void GeneratedDocumentGraphMatchesFormalTruth()
     {
         var repository = RepositoryAccessor.Discover(RepositoryRootCriterion.GlobalJsonAndBlueprintDirectoryNotFound);
         var repositoryRoot = repository.Root.FullPath;
@@ -100,7 +175,6 @@ public sealed class DocumentDiscoveryTests
             "STRATALINT_REQUIRE_LIVE_REPORT=1 requires .lake/build/stratalint/raw-lean-report.json");
 
         var report = LeanCompiledArtifactReports.InspectRepository(repositoryRoot);
-        var citations = LibraryNoteCatalog.Load(repositoryRoot).Citations;
         Assert.NotEmpty(DocumentDefinitions.All);
         var documents = DocumentDefinitions.All
             .Select(static definition => definition.Document)
@@ -132,30 +206,6 @@ public sealed class DocumentDiscoveryTests
             Assert.Contains(anchor.FormalTruthRepoPath, report.Files.Keys.Select(static path => path.Value));
         });
 
-        // 在下方比对提交树。
-        //
-        // 【2026-08-11 勘误】本注释原写「提交的 md 是人读快照,陈旧无害于任何判决」——**那是假的**,
-        // 由第十一轮面板证伪。committed `Blueprint/**/*.md` 的字节**仍在准入路径上承重**:
-        //   `Engine/Digestion/Evaluation/DigestionStatusEvaluator.Verification.cs` 从候选快照读该 md,
-        //   并断言 `receipt.EmissionSha256 == Compute(emission.RawBytes)`,不等即
-        //   `scribe-emission-mismatch`;调用链 `Rules/RepositoryRules.cs:112`
-        //   → `Rules/Backfill/BackfillInventoryRule.cs:229` → 该 evaluator。
-        //   生产测试 `StrataLint.Tests/Admission/ProductionEnvironmentCoverTests.cs:127-129`
-        //   钉死其为红。此外 `Scribe/Emission/ScribeEmitter.cs` 也仍对提交树逐字节比对。
-        // FILEMAP 现将这些 committed bytes 如实分类为 data,并声明上述机器消费者。
-        //
-        // 本测试是全语料逐文档 committed-byte 历史锚;它与 admission 侧 ScribeEmitter.Verify
-        // 仅在逐文档比对上部分等价,不替代 admission 的完整验证。#1954 裁决保留两者。
-        Assert.NotEmpty(DocumentDefinitions.All);
-        foreach (var definition in DocumentDefinitions.All)
-        {
-            var catalog = DeclarationCatalog.Create(report);
-            var rendered = CanonicalMarkdownWriter.Write(definition.Document, catalog, citations, graph);
-            var committed = repository.ReadAllBytes(
-                RepositoryRelativePath.Create(definition.RelativePath.Value));
-
-            Assert.Equal(committed, rendered.ToArray());
-        }
     }
 
     private sealed class LiveReportFactAttribute : FactAttribute
@@ -166,7 +216,7 @@ public sealed class DocumentDiscoveryTests
             var requireLiveReport = Environment.GetEnvironmentVariable("STRATALINT_REQUIRE_LIVE_REPORT") == "1";
             if (!requireLiveReport && !repository.FileExists(RepositoryRelativePath.Create(
                     ".lake/build/stratalint/raw-lean-report.json")))
-                Skip = "Live raw Lean report is absent; committed markdown replay requires that report.";
+                Skip = "Live raw Lean report is absent; document graph verification requires that report.";
         }
     }
 

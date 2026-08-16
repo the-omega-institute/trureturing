@@ -140,3 +140,20 @@ def vi5ObserverPtAuditReport : Unit := ()
     `docs/develop/spec/golden-ledger-repo-spec.md` 的样例 7 仍展示已退役的五字段 A7 语法。
     该样例是 `spec-acceptance-07` 这条未消化开放义务的内容；其 `receipts.coverage` 为空，
     并由 CAS 逐字节钉定。消除此处不一致须先消化该条目或执行收据级操作，本 lane 无权。 -/
+def retiredA7SampleReceiptDeferralTicket : Unit := ()
+
+/-- TASK D5-T0040
+    The novelty factor's machine-replayable measurement receipt contract has not been established. Until it lands, docs/MISSION.md must remain open(D5-T0040) and must not claim a complete worth score. -/
+def missionNoveltyMeasurementTicket : Unit := ()
+
+/-- TASK D5-T0041
+    The dependency-readiness factor's machine-replayable measurement receipt contract has not been established. Until it lands, docs/MISSION.md must remain open(D5-T0041) and must not claim a complete worth score. -/
+def missionDependencyReadinessMeasurementTicket : Unit := ()
+
+/-- TASK D5-T0042
+    The structural-realization factor's machine-replayable measurement receipt contract has not been established. Until it lands, docs/MISSION.md must remain open(D5-T0042) and must not claim a complete worth score. -/
+def missionStructuralRealizationMeasurementTicket : Unit := ()
+
+/-- TASK D5-T0043
+    The receipt-potential factor's machine-replayable measurement receipt contract has not been established. Until it lands, docs/MISSION.md must remain open(D5-T0043) and must not claim a complete worth score. -/
+def missionReceiptPotentialMeasurementTicket : Unit := ()

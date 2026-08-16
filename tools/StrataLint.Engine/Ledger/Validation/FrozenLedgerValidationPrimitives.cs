@@ -84,7 +84,13 @@ public static partial class FrozenLedger
         bool requireCatalogRevisionIdentity = true)
     {
         RequireEventPayloadFields(payload, "Freeze");
-        var pathText = RequiredString(payload, "node_path");
+        var currentShape = HasExactObjectFields(
+            payload,
+            FrozenLedgerReferenceProjection.FreezePayloadFieldsV4);
+        var input = ParseInput(payload.GetProperty("input"));
+        var pathText = currentShape
+            ? input.DescriptorSelector
+            : RequiredString(payload, "node_path");
         if (!RepoPath.TryCreate(pathText, out var path) || !catalog.ByPath.TryGetValue(path, out var expectedMaterial))
         {
             throw new FormatException($"Freeze targets a non-Closed or unknown module {pathText}.");
@@ -100,26 +106,30 @@ public static partial class FrozenLedger
             throw new FormatException("Freeze contains a malformed content address.");
         }
 
-        var expectedVerdict = ParseExpected(payload.GetProperty("expected"));
+        var expectedVerdict = currentShape
+            ? new FrozenExpectedVerdict(
+                ImmutableArray.Create("admit"),
+                "none",
+                ImmutableArray<FrozenExpectedDiagnostic>.Empty)
+            : ParseExpected(payload.GetProperty("expected"));
         var declarationStatementIds = ParseDeclarationStatementIds(payload);
-        var input = ParseInput(payload.GetProperty("input"));
         var prerequisites = RequiredStringArray(payload, "prerequisite_frozen_node_ids")
             .Select(FrozenNodeId.Create)
             .ToImmutableArray();
         var result = new FrozenFreezePayload(
-            RequiredString(payload, "case_class"),
+            currentShape ? "active-frozen" : RequiredString(payload, "case_class"),
             RequiredString(payload, "case_id"),
             declarationStatementIds,
-            RequiredString(payload, "evaluation"),
+            currentShape ? "admission" : RequiredString(payload, "evaluation"),
             expectedVerdict,
             FrozenNodeId.Create(frozenText),
             input,
-            RequiredString(payload, "input_fingerprint"),
+            currentShape ? witnessText : RequiredString(payload, "input_fingerprint"),
             path,
             prerequisites,
-            RequiredString(payload, "semantic_receipt"),
+            currentShape ? frozenText : RequiredString(payload, "semantic_receipt"),
             StatementId.Create(statementText),
-            RequiredString(payload, "truth_state"),
+            currentShape ? nameof(TruthState.Closed) : RequiredString(payload, "truth_state"),
             WitnessId.Create(witnessText))
         {
             AxiomClosure = ParseOptionalAxiomClosure(payload),
@@ -305,7 +315,7 @@ public static partial class FrozenLedger
         return FrozenContentHash.Compute(FrozenHashDomains.FrozenCorpus, stream.ToArray());
     }
 
-    private static string ComputeFrozenGraphRoot(
+    internal static string ComputeFrozenGraphRoot(
         IEnumerable<FrozenNodeMaterial> nodes)
     {
         var material = JsonSerializer.SerializeToElement(new

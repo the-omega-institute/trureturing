@@ -19,7 +19,7 @@ public static partial class FrozenLedger
             ParseDeclarationStatementArray(payload.GetProperty("declaration_statement_ids")),
             ParseEnvironmentPins(payload.GetProperty("environment")),
             ParseFrozenNodeId(RequiredString(payload, "frozen_node_id"), "Supersede frozen node"),
-            ParseInput(payload.GetProperty("input")),
+            ParseSupersedeInput(payload.GetProperty("input")),
             ParseFrozenNodeIds(payload, "prerequisite_frozen_node_ids"),
             RequiredString(payload, "previous_attestation_event_hash"),
             ParseStatementId(RequiredString(payload, "statement_id"), "Supersede statement"),
@@ -85,10 +85,14 @@ public static partial class FrozenLedger
 
         if (payload.StatementId != protectedBaseEntry.Material.StatementId)
         {
-            var pinsChanged = !payload.Input.SupportingBlobOids
-                .Order(StringComparer.Ordinal)
+            var candidatePins = EnvironmentPinOids(payload.Environment)
+                .Order(StringComparer.Ordinal);
+            var protectedPins = protectedBaseEntry.Environment is { } protectedEnvironment
+                ? EnvironmentPinOids(protectedEnvironment)
+                : protectedBaseEntry.Payload.Input.SupportingBlobOids;
+            var pinsChanged = !candidatePins
                 .SequenceEqual(
-                    protectedBaseEntry.Payload.Input.SupportingBlobOids.Order(StringComparer.Ordinal),
+                    protectedPins.Order(StringComparer.Ordinal),
                     StringComparer.Ordinal);
             if (!pinsChanged)
             {
@@ -233,6 +237,30 @@ public static partial class FrozenLedger
         return result;
     }
 
+    private static FrozenLedgerInput ParseSupersedeInput(JsonElement value)
+    {
+        RequireObjectFields(
+            value,
+            "Supersede input",
+            "base_commit_oid", "base_tree_oid", "descriptor_blob_oid", "descriptor_selector",
+            "materializer");
+        var result = new FrozenLedgerInput(
+            RequiredString(value, "base_commit_oid"),
+            RequiredString(value, "base_tree_oid"),
+            RequiredString(value, "descriptor_blob_oid"),
+            RequiredString(value, "descriptor_selector"),
+            RequiredString(value, "materializer"),
+            ImmutableArray<string>.Empty);
+        if (!FrozenHashSyntax.IsGitOid(result.BaseCommitOid)
+            || !FrozenHashSyntax.IsGitOid(result.BaseTreeOid)
+            || !FrozenHashSyntax.IsGitOid(result.DescriptorBlobOid))
+        {
+            throw new FormatException("Supersede input has a malformed Git object reference.");
+        }
+
+        return result;
+    }
+
     private static ImmutableArray<string> ParseSortedUniqueStrings(JsonElement payload, string name)
     {
         var result = RequiredStringArray(payload, name);
@@ -274,12 +302,10 @@ public static partial class FrozenLedger
                 "Supersede statement ID does not match declaration statement IDs.");
         }
 
-        var expectedPins = EnvironmentPinOids(payload.Environment)
-            .Order(StringComparer.Ordinal);
-        if (!payload.Input.SupportingBlobOids.SequenceEqual(expectedPins, StringComparer.Ordinal))
+        if (!payload.Input.SupportingBlobOids.IsEmpty)
         {
             throw new FormatException(
-                "Supersede input does not contain exactly its three named environment pins.");
+                "Supersede input must not duplicate its named environment pins.");
         }
     }
 

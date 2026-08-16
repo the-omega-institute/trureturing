@@ -6,7 +6,9 @@ internal sealed record FrozenLedgerAdmissionPreparation(
     FrozenLedgerBaseView BaseView,
     ImmutableArray<DagLedgerFileEvent> DeltaEvents,
     ImmutableHashSet<string> LeanReportProducerPaths,
-    TrustedFrozenGitReferences TrustedDeltaReferences);
+    TrustedFrozenGitReferences TrustedDeltaReferences,
+    FrozenLedgerConsistent? RevocationBaseline = null,
+    TrustedRevocationReceiptStore? TrustedRevocationReceipts = null);
 
 internal sealed record FrozenLedgerAdmissionFailure(
     ImmutableArray<RepoPath> AffectedPaths,
@@ -79,6 +81,18 @@ internal sealed class FrozenLedgerAdmissionScope
             if (item.Input is { } input && RepoPath.TryCreate(input.DescriptorSelector, out var path))
             {
                 Add(path, [item.SourcePath]);
+            }
+
+            if (item.EventType == "Revoke")
+            {
+                var revoke = FrozenLedger.ReadTrustedRevoke(item.Payload);
+                foreach (var caseId in revoke.AffectedCaseIds)
+                {
+                    if (preparation.BaseView.ActiveByCase.TryGetValue(caseId, out var entry))
+                    {
+                        Add(entry.Material.RepoPath, [item.SourcePath]);
+                    }
+                }
             }
         }
 
@@ -286,8 +300,17 @@ public static partial class FrozenLedger
                     }
                     else if (item.EventType == "Revoke")
                     {
-                        throw new FormatException(
-                            "incremental admission does not support Revoke; writer-side full validation is required");
+                        var baseline = preparation.RevocationBaseline
+                            ?? throw new FormatException("Revoke admission baseline is unavailable.");
+                        var receipts = preparation.TrustedRevocationReceipts
+                            ?? throw new FormatException("Revoke admission receipt capability is unavailable.");
+                        var revoke = ParseRevoke(item.Payload, baseline, active, receipts);
+                        foreach (var caseId in revoke.AffectedCaseIds)
+                        {
+                            var entry = active[caseId];
+                            active.Remove(caseId);
+                            activePathCases.Remove(entry.Material.RepoPath);
+                        }
                     }
                     else
                     {

@@ -572,11 +572,31 @@ public sealed partial class DepositCoverWorkflowScriptTests
 
         internal void WriteCyclicReattestationChain()
         {
+            const string freezeHash =
+                "sha256:9999999999999999999999999999999999999999999999999999999999999999";
+            const string frozenNodeId =
+                "sha256:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc";
             const string firstHash =
                 "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
             const string secondHash =
                 "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb";
             const string caseId = "active-frozen/cyclic-probe";
+            var freeze = JsonSerializer.Serialize(new
+            {
+                event_hash = freezeHash,
+                event_type = "Freeze",
+                payload = new
+                {
+                    case_id = caseId,
+                    frozen_node_id = frozenNodeId,
+                    input = new
+                    {
+                        descriptor_blob_oid =
+                            "git-sha1:0000000000000000000000000000000000000000",
+                    },
+                    node_path = LeanPath,
+                },
+            });
             var first = ReattestEvent(
                 caseId,
                 firstHash,
@@ -590,6 +610,7 @@ public sealed partial class DepositCoverWorkflowScriptTests
                 secondHash,
                 "git-sha1:1111111111111111111111111111111111111111");
             WriteLedger(
+                (frozenNodeId["sha256:".Length..] + ".json", freeze),
                 ("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.json", first),
                 ("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb.json", second));
         }
@@ -635,8 +656,20 @@ public sealed partial class DepositCoverWorkflowScriptTests
             {
                 using var document = JsonDocument.Parse(File.ReadAllText(path));
                 var root = document.RootElement;
-                return root.GetProperty("event_type").GetString() == "Freeze"
-                    && root.GetProperty("payload").GetProperty("node_path").GetString() == leanPath;
+                if (!root.TryGetProperty("event_type", out var eventType)
+                    || eventType.GetString() != "Freeze")
+                {
+                    return false;
+                }
+
+                var payload = root.GetProperty("payload");
+                var selector = payload.TryGetProperty("input", out var input)
+                    && input.TryGetProperty("descriptor_selector", out var descriptorSelector)
+                        ? descriptorSelector.GetString()
+                        : payload.TryGetProperty("node_path", out var nodePath)
+                            ? nodePath.GetString()
+                            : null;
+                return selector == leanPath;
             });
 
         private static string ReattestEvent(

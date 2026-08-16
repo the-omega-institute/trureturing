@@ -73,6 +73,12 @@ public sealed class FrozenLedgerReferenceSet
         var trees = inputs.Select(static input => input.BaseTreeOid);
         var blobs = inputs.Select(static input => input.DescriptorBlobOid)
             .Concat(inputs.SelectMany(static input => input.SupportingBlobOids))
+            .Concat(environmentReferences.SelectMany(static reference => new[]
+            {
+                reference.Environment.LakeManifestBlobOid,
+                reference.Environment.LakefileBlobOid,
+                reference.Environment.LeanToolchainBlobOid,
+            }))
             .Concat(receiptOids);
         return Create(
             inputs,
@@ -146,6 +152,12 @@ internal static class FrozenLedgerReferenceProjection
         "semantic_receipt", "statement_id", "truth_state", "witness_id",
     ];
 
+    internal static string[] FreezePayloadFieldsV4 { get; } =
+    [
+        "axiom_closure", "case_id", "declaration_statement_ids", "frozen_node_id", "input",
+        "prerequisite_frozen_node_ids", "statement_id", "witness_id",
+    ];
+
     internal static string[] LegacyReattestPayloadFields { get; } =
     [
         "case_id", "input", "input_fingerprint", "previous_attestation_event_hash", "semantic_receipt",
@@ -169,6 +181,17 @@ internal static class FrozenLedgerReferenceProjection
         "axiom_closure", "case_id", "declaration_statement_ids", "frozen_node_id", "input",
         "input_fingerprint", "prerequisite_frozen_node_ids", "previous_attestation_event_hash",
         "semantic_receipt", "statement_id", "witness_id",
+    ];
+
+    internal static string[] LegacyReattestPayloadFieldsV4 { get; } =
+    [
+        "axiom_closure", "case_id", "input", "previous_attestation_event_hash",
+    ];
+
+    internal static string[] ExtendedReattestPayloadFieldsV4 { get; } =
+    [
+        "axiom_closure", "case_id", "declaration_statement_ids", "frozen_node_id", "input",
+        "prerequisite_frozen_node_ids", "previous_attestation_event_hash", "statement_id", "witness_id",
     ];
 
     internal static string[] RevokePayloadFields { get; } =
@@ -514,7 +537,8 @@ public static partial class FrozenLedger
         {
             if (schemaVersion is null
                 && (HasExactObjectFields(payload, FrozenLedgerReferenceProjection.FreezePayloadFields)
-                    || HasExactObjectFields(payload, FrozenLedgerReferenceProjection.FreezePayloadFieldsV3)))
+                    || HasExactObjectFields(payload, FrozenLedgerReferenceProjection.FreezePayloadFieldsV3)
+                    || HasExactObjectFields(payload, FrozenLedgerReferenceProjection.FreezePayloadFieldsV4)))
             {
                 return;
             }
@@ -522,9 +546,12 @@ public static partial class FrozenLedger
             RequireObjectFields(
                 payload,
                 "Freeze payload",
-                schemaVersion == 3
-                    ? FrozenLedgerReferenceProjection.FreezePayloadFieldsV3
-                    : FrozenLedgerReferenceProjection.FreezePayloadFields);
+                schemaVersion switch
+                {
+                    3 => FrozenLedgerReferenceProjection.FreezePayloadFieldsV3,
+                    4 => FrozenLedgerReferenceProjection.FreezePayloadFieldsV4,
+                    _ => FrozenLedgerReferenceProjection.FreezePayloadFields,
+                });
             return;
         }
 
@@ -540,12 +567,19 @@ public static partial class FrozenLedger
                 FrozenLedgerReferenceProjection.LegacyReattestPayloadFieldsV3,
                 FrozenLedgerReferenceProjection.ExtendedReattestPayloadFieldsV3,
             },
+            4 => new[]
+            {
+                FrozenLedgerReferenceProjection.LegacyReattestPayloadFieldsV4,
+                FrozenLedgerReferenceProjection.ExtendedReattestPayloadFieldsV4,
+            },
             _ => new[]
             {
                 FrozenLedgerReferenceProjection.LegacyReattestPayloadFields,
                 FrozenLedgerReferenceProjection.ExtendedReattestPayloadFields,
                 FrozenLedgerReferenceProjection.LegacyReattestPayloadFieldsV3,
                 FrozenLedgerReferenceProjection.ExtendedReattestPayloadFieldsV3,
+                FrozenLedgerReferenceProjection.LegacyReattestPayloadFieldsV4,
+                FrozenLedgerReferenceProjection.ExtendedReattestPayloadFieldsV4,
             },
         };
         if (allowed.Any(fields => HasExactObjectFields(payload, fields)))
@@ -556,9 +590,12 @@ public static partial class FrozenLedger
         RequireObjectFields(
             payload,
             "Reattest payload",
-            schemaVersion == 2
-                ? FrozenLedgerReferenceProjection.ExtendedReattestPayloadFields
-                : FrozenLedgerReferenceProjection.ExtendedReattestPayloadFieldsV3);
+            schemaVersion switch
+            {
+                2 => FrozenLedgerReferenceProjection.ExtendedReattestPayloadFields,
+                4 => FrozenLedgerReferenceProjection.ExtendedReattestPayloadFieldsV4,
+                _ => FrozenLedgerReferenceProjection.ExtendedReattestPayloadFieldsV3,
+            });
     }
 
     private static void AddInputReferences(

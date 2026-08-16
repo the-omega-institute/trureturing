@@ -177,7 +177,8 @@ public sealed partial class ProductionEnvironmentTests
                 using var document = JsonDocument.Parse(item.Value);
                 var root = document.RootElement;
                 return root.GetProperty("event_type").GetString() == "Freeze"
-                    && root.GetProperty("payload").GetProperty("node_path").GetString() == nodePath;
+                    && root.GetProperty("payload").GetProperty("input")
+                        .GetProperty("descriptor_selector").GetString() == nodePath;
             }).Key;
         var root = JsonNode.Parse(fixture.Files[freezePath])!.AsObject();
         root["payload"]!.AsObject().Remove("axiom_closure");
