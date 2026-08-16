@@ -92,7 +92,52 @@ public sealed class QdoGenreSuffixTests
 
         AssertGenreTable(LegacyGictGenres, migrated.GictGenres);
         AssertGenreTable(LegacyPzgGenres, migrated.PzgGenres);
-        Assert.Equal(["qdo"], migrated.Dialects.Keys.Order(StringComparer.Ordinal));
+        Assert.Contains("qdo", migrated.Dialects.Keys);
+    }
+
+    [Fact]
+    public void ConservativityOracleAdmitsAMonotoneGenreAddition()
+    {
+        // The oracle freezes legacy behaviour, not the future catalogue: adding a genre that
+        // conflicts with no legacy mapping is a conservative extension and must stay green,
+        // otherwise every new token would have to edit this test.
+        var extended = InsertBefore(
+            CanonicalData,
+            "[[pzg.markers]]",
+            """
+            [[pzg.genres]]
+            token = "增补观察"
+            kind = "observation"
+
+
+            """);
+        var migrated = LoadRules(extended);
+
+        AssertGenreTable(LegacyGictGenres, migrated.GictGenres);
+        AssertGenreTable(LegacyPzgGenres, migrated.PzgGenres);
+        Assert.Contains(
+            migrated.PzgGenres,
+            item => item.Token == "增补观察" && item.Value == "observation");
+    }
+
+    [Fact]
+    public void ConservativityOracleRejectsARewrittenLegacyMapping()
+    {
+        var rewritten = LoadRules(CanonicalData.Replace(
+            """
+            [[pzg.genres]]
+            token = "约定"
+            kind = "specification"
+            """,
+            """
+            [[pzg.genres]]
+            token = "约定"
+            kind = "note"
+            """,
+            StringComparison.Ordinal));
+
+        Assert.Throws<Xunit.Sdk.ContainsException>(
+            () => AssertGenreTable(LegacyPzgGenres, rewritten.PzgGenres));
     }
 
     [Fact]
@@ -157,14 +202,21 @@ public sealed class QdoGenreSuffixTests
         DigestionTestSupport.Snapshot(
             (TheoryAtomizerDataLoader.DataPath, Encoding.UTF8.GetBytes(data))));
 
+    /// <summary>
+    /// Conservative extension is inclusion, not equality: every legacy mapping must still be
+    /// present with its old kind. Asserting set equality would freeze the future catalogue and
+    /// turn this oracle into a second copy of the canonical data, so registering any new genre
+    /// would have to edit this test.
+    /// </summary>
     private static void AssertGenreTable(
         IEnumerable<(string Token, string Kind)> expected,
         IEnumerable<AtomizerMapping> actual)
     {
-        Assert.Equal(
-            expected.OrderBy(static item => item.Token, StringComparer.Ordinal),
-            actual.Select(static item => (item.Token, Kind: item.Value))
-                .OrderBy(static item => item.Token, StringComparer.Ordinal));
+        var current = actual.ToArray();
+        foreach (var (token, kind) in expected)
+        {
+            Assert.Contains(current, item => item.Token == token && item.Value == kind);
+        }
     }
 
     private static (byte[] Bytes, string[] ExpectedPaths) Pr2096Fixture()
