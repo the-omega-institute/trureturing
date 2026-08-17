@@ -106,7 +106,9 @@ public sealed class LedgerAppendCommandTests
     [Fact]
     public void ProductionCommandDirectsExistingIdentityDriftToLedgerSyncWithoutWriting()
     {
-        using var fixture = new LedgerAppendFixture(driftARepresentation: true);
+        using var fixture = new LedgerAppendFixture(
+            driftARepresentation: true,
+            reportADriftInChangeSet: true);
         var result = fixture.Environment.AppendLedger(
             new[] { "--candidate-lean-report", fixture.ReportPath });
 
@@ -138,6 +140,23 @@ public sealed class LedgerAppendCommandTests
 
         Assert.True(result.Success, result.Error);
         Assert.Contains("appended_freezes=2", result.Output, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void WriterPreparationDoesNotRehashAnUnchangedClosedDescriptor()
+    {
+        using var fixture = new LedgerAppendFixture(
+            driftARepresentation: true,
+            reportADriftInChangeSet: false);
+
+        var preparation = DagLedgerCommandPreparation.Prepare(
+            fixture.Root,
+            fixture.Gateway,
+            fixture.ReportPath);
+
+        Assert.Equal(
+            new[] { FrozenLedgerTestData.PathFor("B"), FrozenLedgerTestData.PathFor("C") },
+            preparation.Catalog.ClosedNodes.Select(static node => node.RepoPath.Value));
     }
 
     [Fact]
@@ -353,7 +372,8 @@ public sealed class LedgerAppendCommandTests
             string currentAStatementMaterial = "True",
             bool pinBump = false,
             bool addSecondClosedModule = true,
-            bool historicalReattest = false)
+            bool historicalReattest = false,
+            bool reportADriftInChangeSet = false)
         {
             var baselineA = FrozenLedgerTestData.ModuleWithReport(
                 "A",
@@ -425,7 +445,12 @@ public sealed class LedgerAppendCommandTests
             FrozenLedgerTestData.WriteLedgerDirectory(LedgerPath, BaselineBytes);
             ReportPath = Path.Combine(temporary.Path, "candidate-lean-report.json");
             File.WriteAllBytes(ReportPath, RawLeanReportArtifact.Write(snapshot, report).AsSpan());
-            Gateway = new FakeRepositoryGateway(RawChangeSet.Create([]), raw, null);
+            Gateway = new FakeRepositoryGateway(
+                RawChangeSet.Create(reportADriftInChangeSet
+                    ? [FrozenLedgerTestData.PathFor("A")]
+                    : []),
+                raw,
+                null);
             Environment = new ProductionCliEnvironment(
                 temporary.Path,
                 Gateway,

@@ -480,9 +480,19 @@ public sealed class LedgerReattestCommandTests
             FrozenLedgerTestData.WriteLedgerDirectory(LedgerPath, BaselineBytes);
             ReportPath = Path.Combine(temporary.Path, "candidate-lean-report.json");
             File.WriteAllBytes(ReportPath, RawLeanReportArtifact.Write(snapshot, report).AsSpan());
+            var changedPaths = new List<string>();
+            if (descriptorDrift)
+            {
+                changedPaths.Add(FrozenLedgerTestData.PathFor("A"));
+            }
+            if (pinBump)
+            {
+                changedPaths.Add("lean-toolchain");
+            }
+
             Environment = new ProductionCliEnvironment(
                 temporary.Path,
-                new FakeRepositoryGateway(RawChangeSet.Create([]), raw, null),
+                new FakeRepositoryGateway(RawChangeSet.Create(changedPaths), raw, null),
                 new FakeLeanReportSource(null));
             CandidateCatalog = BuildCandidateCatalog(
                 snapshot,

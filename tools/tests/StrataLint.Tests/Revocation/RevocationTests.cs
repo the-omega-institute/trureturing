@@ -1,5 +1,6 @@
 using System.Collections.Immutable;
 using System.Reflection;
+using System.Security.Cryptography;
 using System.Text;
 using StrataLint.Cli;
 using StrataLint.Engine;
@@ -110,6 +111,65 @@ public sealed partial class RevocationTests
         var rejected = Assert.IsType<RevocationEvidenceValidationOutcome.Rejected>(
             RevocationEvidenceValidator.Validate(replay, ledger, store));
         Assert.Contains("typed", rejected.Message, StringComparison.OrdinalIgnoreCase);
+    }
+
+    [Fact]
+    public void RequestedReceiptOidsIndexEachProtectedBlobOnce()
+    {
+        var ledger = Genesis(BuildCatalog(Module("A"), Module("B")));
+        var a = Node(ledger, "A");
+        var b = Node(ledger, "B");
+        var first = RevocationReceiptWriter.Write(ledger, KernelFailure(a));
+        var second = RevocationReceiptWriter.Write(ledger, KernelFailure(b));
+        var snapshot = Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(
+            RawRepositorySnapshot.Create(
+            [
+                new RawRepositoryEntry("Evidence/D5/revocation-a.json", first),
+                new RawRepositoryEntry("Evidence/D5/revocation-b.json", second),
+            ]))).Snapshot;
+        var requested = new[]
+        {
+            GitBlobOid(Encoding.UTF8.GetString(first.AsSpan())),
+            GitBlobOid(Encoding.UTF8.GetString(second.AsSpan())),
+        };
+        var computations = 0;
+
+        var outcome = TrustedRevocationReceiptStore.Materialize(
+            ledger,
+            snapshot,
+            requested,
+            (bytes, algorithm) =>
+            {
+                computations++;
+                return FrozenContentAddress.ComputeGitBlobOid(bytes.AsSpan(), algorithm);
+            });
+
+        Assert.IsType<RevocationReceiptStoreOutcome.Accepted>(outcome);
+        Assert.Equal(2, computations);
+    }
+
+    [Fact]
+    public void NoncanonicalTrustedReceiptBytesAreRejected()
+    {
+        var ledger = Genesis(BuildCatalog(Module("A")));
+        var node = Assert.Single(ledger.ActiveFrozenNodes);
+        var canonical = RevocationReceiptWriter.Write(ledger, KernelFailure(node));
+        var noncanonicalText = Encoding.UTF8.GetString(canonical.AsSpan())
+            .Replace(": ", ":", StringComparison.Ordinal);
+        var noncanonical = ImmutableArray.CreateRange(Encoding.UTF8.GetBytes(noncanonicalText));
+        var oid = FrozenContentAddress.ComputeGitBlobOid(
+            noncanonical.AsSpan(),
+            HashAlgorithmName.SHA1);
+        var snapshot = Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(
+            RawRepositorySnapshot.Create(
+            [
+                new RawRepositoryEntry("Evidence/D5/revocation.json", noncanonical),
+            ]))).Snapshot;
+
+        var rejected = Assert.IsType<RevocationReceiptStoreOutcome.Rejected>(
+            TrustedRevocationReceiptStore.Materialize(ledger, snapshot, [oid]));
+
+        Assert.Contains("noncanonical", rejected.Message, StringComparison.OrdinalIgnoreCase);
     }
 
     [Fact]
