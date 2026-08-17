@@ -91,6 +91,17 @@ internal sealed partial class RuleFixture
         Files[MissionFileLoader.RelativePath] = Mission("retired", [deliveryGid]);
     }
 
+    internal void AddUnfrozenRetiredDeliveryDeclaration()
+    {
+        Reports[currentMotivationPath] = Report(
+            declarations: Reports[currentMotivationPath].Declarations.Append(
+                new LeanDeclaration(
+                    "D5.S0.Carrier.unfrozen_delivery",
+                    "theorem",
+                    "statement-v1(unfrozen-delivery)",
+                    [])));
+    }
+
     internal void RemoveTheoristTargetReport() => Reports.Remove(currentTheoristPath);
 
     internal void RemoveCurrentFrontierReports()
@@ -269,7 +280,7 @@ internal sealed partial class RuleFixture
             ? Report(declarations:
             [
                 new LeanDeclaration(
-                    "D5.S0.Carrier.Euclidean.golden_division",
+                    "D5.S0.Carrier.golden_division",
                     "theorem",
                     "statement-v1(retired-delivery)",
                     [])

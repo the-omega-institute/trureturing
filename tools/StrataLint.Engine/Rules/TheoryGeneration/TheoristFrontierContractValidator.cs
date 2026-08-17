@@ -17,11 +17,13 @@ internal static class TheoristFrontierContractValidator
     internal static ImmutableArray<RuleFinding> Evaluate(RuleEvaluationContext context)
     {
         ArgumentNullException.ThrowIfNull(context);
+        var currentMission = LoadMission(context.Current);
         var targets = context.Lean.Report.Files.Keys
             .Where(IsFrontier)
             .Concat(context.Baseline.Files
-                .Where(static item => IsFrontier(item.Key)
-                    && CountOccurrences(item.Value.Text, Marker) > 0)
+                .Where(item => IsFrontier(item.Key)
+                    && (CountOccurrences(item.Value.Text, Marker) > 0
+                        || currentMission.Retirements.ContainsKey(item.Key)))
                 .Select(static item => item.Key))
             .Distinct()
             .OrderBy(static path => path.Value, StringComparer.Ordinal)
@@ -30,8 +32,6 @@ internal static class TheoristFrontierContractValidator
         {
             return [];
         }
-
-        var currentMission = LoadMission(context.Current);
         var baselineMission = LoadMission(context.Baseline);
         var findings = ImmutableArray.CreateBuilder<RuleFinding>();
         FrozenLedgerBaseView? frozen = null;
@@ -58,6 +58,32 @@ internal static class TheoristFrontierContractValidator
                     is FrontierEligibilityKind.DeclarationReadyMathematicalOpen
                 && baselineOwner is not null
                 && baselineOwner is not FrontierEligibilityKind.DeclarationReadyMathematicalOpen;
+
+            var isRetiredBaselineSource = baselineFile is not null
+                && currentOwner is FrontierEligibilityKind.Retired;
+            if (isRetiredBaselineSource)
+            {
+                frozen ??= FrozenLedgerBaseViewReader.Read(context.Current);
+                if (!currentMission.Retirements.TryGetValue(path, out var deliveryGids))
+                {
+                    findings.Add(new RuleFinding(
+                        path.Value,
+                        "retired Frontier owner has no delivery evidence"));
+                }
+                else
+                {
+                    findings.AddRange(ValidateRetirement(
+                        path,
+                        deliveryGids,
+                        context.Lean.Report,
+                        frozen));
+                }
+
+                if (!hasCurrentSource || currentFile is null)
+                {
+                    continue;
+                }
+            }
 
             if (isNew && currentOwner is null or FrontierEligibilityKind.Unknown)
             {
@@ -91,27 +117,6 @@ internal static class TheoristFrontierContractValidator
 
             if (!hasCurrentSource || currentFile is null)
             {
-                if (currentOwner is FrontierEligibilityKind.Retired)
-                {
-                    frozen ??= FrozenLedgerBaseViewReader.Read(context.Current);
-                    if (!currentMission.Retirements.TryGetValue(path, out var deliveryGids))
-                    {
-                        findings.Add(new RuleFinding(
-                            path.Value,
-                            "retired Frontier owner has no delivery evidence"));
-                    }
-                    else
-                    {
-                        findings.AddRange(ValidateRetirement(
-                            path,
-                            deliveryGids,
-                            context.Lean.Report,
-                            frozen));
-                    }
-
-                    continue;
-                }
-
                 findings.Add(new RuleFinding(path.Value, "theorist contract source is unavailable"));
                 continue;
             }
@@ -384,8 +389,7 @@ internal static class TheoristFrontierContractValidator
         {
             if (!Gid.TryParse(deliveryGid, out var gid)
                 || gid.ToTarget() is not Target.Formal { Declaration: not null } formal
-                || !frozen.ActiveByPath.TryGetValue(formal.Path, out var active)
-                || !report.Files.TryGetValue(formal.Path, out var module))
+                || !frozen.ActiveByPath.TryGetValue(formal.Path, out var active))
             {
                 findings.Add(new RuleFinding(
                     retiredPath.Value,
@@ -393,15 +397,22 @@ internal static class TheoristFrontierContractValidator
                 continue;
             }
 
-            var expectedName = deliveryGid.Replace('/', '.');
-            var declarations = module.Declarations.Where(declaration => string.Equals(
-                declaration.Name,
-                expectedName,
-                StringComparison.Ordinal)).ToArray();
-            if (declarations is not [var declaration]
-                || !active.Material.DeclarationStatementIds.Any(item =>
-                    string.Equals(item.DeclarationNameKey, declaration.NameKey, StringComparison.Ordinal)
-                    && string.Equals(item.Kind, declaration.Kind, StringComparison.Ordinal)))
+            DigestionFormalizationSignature signature;
+            try
+            {
+                signature = DigestionFormalizationReceipt.ResolveSignature(gid, report);
+            }
+            catch (FormatException)
+            {
+                findings.Add(new RuleFinding(
+                    retiredPath.Value,
+                    $"retired delivery GID does not resolve to an active frozen declaration: {deliveryGid}"));
+                continue;
+            }
+
+            if (!active.Material.DeclarationStatementIds.Any(item =>
+                    string.Equals(item.DeclarationNameKey, signature.NameKey, StringComparison.Ordinal)
+                    && string.Equals(item.Kind, signature.Kind, StringComparison.Ordinal)))
             {
                 findings.Add(new RuleFinding(
                     retiredPath.Value,

@@ -317,6 +317,42 @@ public sealed class TheoristFrontierContractTests
     }
 
     [Fact]
+    public void RetiredLegacyBaselineWithoutContractIsAllowedWithActiveDeliveryEvidence()
+    {
+        var fixture = LegacyRetiredBaseline();
+
+        Assert.Empty(Evaluate(fixture));
+    }
+
+    [Fact]
+    public void RetiredLegacyBaselineWithoutContractRejectsExistingUnfrozenDelivery()
+    {
+        var fixture = LegacyRetiredBaseline();
+        fixture.AddUnfrozenRetiredDeliveryDeclaration();
+        fixture.RetireTheoristTarget("D5/S0/Carrier/Euclidean.unfrozen_delivery");
+
+        var diagnostic = Assert.Single(Evaluate(fixture));
+
+        Assert.Contains(
+            "does not resolve to an active frozen declaration",
+            diagnostic.Message,
+            StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void RetiredLegacyBaselineWithoutContractRejectsMissingDeliveryDeclaration()
+    {
+        var fixture = LegacyRetiredBaseline("D5/S0/Carrier/Euclidean.missing_delivery");
+
+        var diagnostic = Assert.Single(Evaluate(fixture));
+
+        Assert.Contains(
+            "does not resolve to an active frozen declaration",
+            diagnostic.Message,
+            StringComparison.Ordinal);
+    }
+
+    [Fact]
     public void CurrentContractCarrierWithoutCompiledReportFailsClosed()
     {
         var fixture = BaselineContractCarrier();
@@ -345,18 +381,6 @@ public sealed class TheoristFrontierContractTests
         Assert.Contains("theorist contract source is unavailable", diagnostic.Message, StringComparison.Ordinal);
     }
 
-    [Fact]
-    public void DeletedLegacyBaselineModuleWithoutContractDoesNotEnterTheMigratedClass()
-    {
-        var fixture = new RuleFixture();
-        fixture.AddHistoricalTheoristTarget(
-            "prime-norm-irreducibility",
-            baselineOwnerKind: "declaration-ready-mathematical-open");
-        fixture.DeleteTheoristTargetAndOwner();
-
-        Assert.Empty(Evaluate(fixture));
-    }
-
     private static RuleFixture BaselineContractCarrier()
     {
         var fixture = new RuleFixture();
@@ -364,6 +388,18 @@ public sealed class TheoristFrontierContractTests
             "prime-norm-irreducibility",
             baselineOwnerKind: "declaration-ready-mathematical-open",
             baselineIncludeContract: true);
+        return fixture;
+    }
+
+    private static RuleFixture LegacyRetiredBaseline(string deliveryGid = "D5/S0/Carrier/Euclidean.golden_division")
+    {
+        var fixture = new RuleFixture();
+        fixture.AddHistoricalTheoristTarget(
+            "prime-norm-irreducibility",
+            includeContract: false,
+            baselineOwnerKind: "declaration-ready-mathematical-open",
+            baselineIncludeContract: false);
+        fixture.RetireTheoristTarget(deliveryGid);
         return fixture;
     }
 
