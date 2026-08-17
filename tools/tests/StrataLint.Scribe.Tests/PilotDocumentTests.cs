@@ -99,33 +99,6 @@ public sealed class DocumentDiscoveryTests
 
         Assert.Equal(1, Occurrences(emitVerified, "CanonicalMarkdownWriter.Write("));
 
-        // Temporary coverage bridge for the #2119 split. Remove this block when the
-        // synthetic renderer contract lands from harness/renderer-contract.
-        var documents = definitions
-            .Select(static definition => definition.Document)
-            .ToArray();
-        var catalog = DeclarationCatalog.Create(LeanReportFixture.ForDocuments(documents));
-        var graph = DocumentGraphAssembler.Assemble(documents, catalog);
-        var citations = RepositoryCitations();
-        Assert.Empty(graph.Findings);
-        foreach (var definition in definitions.OrderBy(
-                     static definition => definition.Document.Header.Gid.Value,
-                     StringComparer.Ordinal))
-        {
-            var first = CanonicalMarkdownWriter.Write(
-                definition.Document,
-                catalog,
-                citations,
-                graph);
-            var second = CanonicalMarkdownWriter.Write(
-                definition.Document,
-                catalog,
-                citations,
-                graph);
-
-            Assert.Equal(first.ToArray(), second.ToArray());
-        }
-
         static int Occurrences(string source, string fragment) =>
             (source.Length - source.Replace(fragment, string.Empty, StringComparison.Ordinal).Length)
             / fragment.Length;

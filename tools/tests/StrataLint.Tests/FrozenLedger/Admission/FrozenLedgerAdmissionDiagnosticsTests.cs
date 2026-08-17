@@ -1,0 +1,386 @@
+using System.Collections.Immutable;
+using StrataLint.Engine;
+
+namespace StrataLint.Tests;
+
+public sealed class FrozenLedgerAdmissionDiagnosticsTests
+{
+    private const string ModulePath = "D5/S0/Carrier/A.lean";
+    private const string AlternateModulePath = "D5/S0/Carrier/Actual.lean";
+
+    [Theory]
+    [InlineData("DeclarationStatementIds")]
+    [InlineData("StatementId")]
+    [InlineData("WitnessId")]
+    [InlineData("FrozenNodeId")]
+    [InlineData("PrerequisiteFrozenNodeIds")]
+    [InlineData("Input.DescriptorBlobOid")]
+    [InlineData("Input.DescriptorSelector")]
+    public void Sl008DiagnosticNamesExpectedAndActualForEachComparedField(string field)
+    {
+        var scenario = CreateScenario(field);
+
+        var failure = Assert.IsType<FrozenLedgerAdmissionFailure>(Evaluate(scenario));
+
+        Assert.Contains(field + " expected=", failure.Message, StringComparison.Ordinal);
+        Assert.Contains(scenario.ExpectedProbe, failure.Message, StringComparison.Ordinal);
+        Assert.Contains(scenario.ActualProbe, failure.Message, StringComparison.Ordinal);
+    }
+
+    [Theory]
+    [InlineData("DeclarationStatementIds", "missing")]
+    [InlineData("DeclarationStatementIds", "extra")]
+    [InlineData("DeclarationStatementIds", "order")]
+    [InlineData("PrerequisiteFrozenNodeIds", "missing")]
+    [InlineData("PrerequisiteFrozenNodeIds", "extra")]
+    [InlineData("PrerequisiteFrozenNodeIds", "order")]
+    public void Sl008SequenceDiagnosticIdentifiesTheConcreteDifference(string field, string shape)
+    {
+        var scenario = CreateSequenceScenario(field, shape);
+
+        var failure = Assert.IsType<FrozenLedgerAdmissionFailure>(Evaluate(scenario));
+
+        Assert.Contains(field + " expected=", failure.Message, StringComparison.Ordinal);
+        Assert.Contains(scenario.ExpectedProbe, failure.Message, StringComparison.Ordinal);
+        Assert.Contains(scenario.ActualProbe, failure.Message, StringComparison.Ordinal);
+        Assert.Contains(scenario.ShapeProbe, failure.Message, StringComparison.Ordinal);
+    }
+
+    [Theory]
+    [InlineData("match")]
+    [InlineData("DeclarationStatementIds")]
+    [InlineData("StatementId")]
+    [InlineData("WitnessId")]
+    [InlineData("FrozenNodeId")]
+    [InlineData("PrerequisiteFrozenNodeIds")]
+    [InlineData("Input.DescriptorBlobOid")]
+    [InlineData("Input.DescriptorSelector")]
+    [InlineData("all")]
+    public void Sl008AdmissionDecisionMatchesLegacySevenFieldPredicate(string mutation)
+    {
+        var scenario = CreateScenario(mutation);
+        var legacyDecision = LegacyHistoricalActiveFreezeMatches(
+            scenario.Payload,
+            scenario.ExpectedMaterial);
+
+        var failure = Evaluate(scenario);
+
+        Assert.Equal(legacyDecision, failure is null);
+    }
+
+    [Fact]
+    public void Sl008FieldDifferenceOrderingIsFixed()
+    {
+        var scenario = CreateScenario("all");
+
+        var failure = Assert.IsType<FrozenLedgerAdmissionFailure>(Evaluate(scenario));
+
+        var fields = new[]
+        {
+            "DeclarationStatementIds",
+            "StatementId",
+            "WitnessId",
+            "FrozenNodeId",
+            "PrerequisiteFrozenNodeIds",
+            "Input.DescriptorBlobOid",
+            "Input.DescriptorSelector",
+        };
+        var offsets = fields
+            .Select(field => failure.Message.IndexOf(field + " expected=", StringComparison.Ordinal))
+            .ToArray();
+        Assert.All(offsets, static offset => Assert.True(offset >= 0));
+        Assert.Equal(offsets.Order().ToArray(), offsets);
+    }
+
+    [Fact]
+    public void Sl008FieldDifferenceDiagnosticIsByteDeterministic()
+    {
+        var scenario = CreateScenario("WitnessId", "FrozenNodeId");
+        var expected =
+            $"Active module {ModulePath} has material/blob drift and lacks a matching Reattest event; run ledger-sync.; "
+            + "field differences: "
+            + $"WitnessId expected={Sha256('c')}, actual={Sha256('2')}; "
+            + $"FrozenNodeId expected={Sha256('d')}, actual={Sha256('3')}; "
+            + $"delta witness: {ModulePath}";
+
+        var first = Assert.IsType<FrozenLedgerAdmissionFailure>(Evaluate(scenario));
+        var second = Assert.IsType<FrozenLedgerAdmissionFailure>(Evaluate(scenario));
+
+        Assert.Equal(expected, first.Message);
+        Assert.Equal(expected, second.Message);
+    }
+
+    private static FrozenLedgerAdmissionFailure? Evaluate(DiagnosticScenario scenario)
+    {
+        var activeEntry = new FrozenActiveEntry(
+            scenario.ActualMaterial,
+            scenario.Payload,
+            Sha256('f'));
+        var baseView = new FrozenLedgerBaseView(
+            new FrozenLedgerOrigin(FrozenLedgerTestData.GitOid('a'), FrozenLedgerTestData.GitOid('b')),
+            [],
+            ImmutableDictionary.CreateRange(
+                StringComparer.Ordinal,
+                [new KeyValuePair<string, FrozenActiveEntry>(scenario.Payload.CaseId, activeEntry)]),
+            ImmutableHashSet.Create(StringComparer.Ordinal, scenario.Payload.CaseId),
+            ImmutableHashSet<string>.Empty,
+            ImmutableHashSet<string>.Empty);
+        var preparation = new FrozenLedgerAdmissionPreparation(
+            baseView,
+            [],
+            ImmutableHashSet<string>.Empty,
+            TrustedFrozenGitReferences.CreateForTrustedAdapter([], []));
+        var changes = RawChangeSet.CreateWithKinds([(ModulePath, RawChangeKind.Modified)]);
+        var scope = FrozenLedgerAdmissionScope.Create(changes, preparation, scenario.Catalog.Dag);
+        var expectedCatalog = FrozenMaterialCatalog.Create(
+            scenario.Catalog.Dag,
+            scenario.Catalog.Environment,
+            [scenario.ExpectedMaterial],
+            scenario.Catalog.OpenCases,
+            scenario.Catalog.TailRegistrations);
+
+        return FrozenLedger.ValidateAdmissionDelta(
+            preparation,
+            scope,
+            expectedCatalog,
+            preparation.TrustedDeltaReferences);
+    }
+
+    private static DiagnosticScenario CreateScenario(params string[] mutations)
+    {
+        var mutationSet = mutations.ToImmutableHashSet(StringComparer.Ordinal);
+        var catalog = FrozenLedgerTestData.BuildCatalog(FrozenLedgerTestData.Module("A"));
+        var actual = Assert.Single(catalog.ClosedNodes) with
+        {
+            DeclarationStatementIds =
+            [
+                Declaration("decl-a", '6'),
+                Declaration("decl-b", '7'),
+            ],
+            StatementId = StatementId.Create(Sha256('1')),
+            WitnessId = WitnessId.Create(Sha256('2')),
+            FrozenNodeId = FrozenNodeId.Create(Sha256('3')),
+            PrerequisiteFrozenNodeIds =
+            [
+                FrozenNodeId.Create(Sha256('4')),
+                FrozenNodeId.Create(Sha256('5')),
+            ],
+            Attestation = new FrozenModuleAttestation(
+                RepoPath.CreateKnown(ModulePath),
+                FrozenLedgerTestData.GitOid('1')),
+        };
+        var expected = actual;
+        if (mutationSet.Contains("DeclarationStatementIds") || mutationSet.Contains("all"))
+        {
+            expected = expected with
+            {
+                DeclarationStatementIds =
+                [
+                    Declaration("decl-a", '6'),
+                    Declaration("decl-c", 'a'),
+                ],
+            };
+        }
+
+        if (mutationSet.Contains("StatementId") || mutationSet.Contains("all"))
+        {
+            expected = expected with { StatementId = StatementId.Create(Sha256('b')) };
+        }
+
+        if (mutationSet.Contains("WitnessId") || mutationSet.Contains("all"))
+        {
+            expected = expected with { WitnessId = WitnessId.Create(Sha256('c')) };
+        }
+
+        if (mutationSet.Contains("FrozenNodeId") || mutationSet.Contains("all"))
+        {
+            expected = expected with { FrozenNodeId = FrozenNodeId.Create(Sha256('d')) };
+        }
+
+        if (mutationSet.Contains("PrerequisiteFrozenNodeIds") || mutationSet.Contains("all"))
+        {
+            expected = expected with
+            {
+                PrerequisiteFrozenNodeIds =
+                [
+                    FrozenNodeId.Create(Sha256('e')),
+                    FrozenNodeId.Create(Sha256('f')),
+                ],
+            };
+        }
+
+        if (mutationSet.Contains("Input.DescriptorBlobOid") || mutationSet.Contains("all"))
+        {
+            expected = expected with
+            {
+                Attestation = expected.Attestation with
+                {
+                    SourceBlobOid = FrozenLedgerTestData.GitOid('2'),
+                },
+            };
+        }
+
+        var payload = PayloadFrom(actual);
+        if (mutationSet.Contains("Input.DescriptorSelector") || mutationSet.Contains("all"))
+        {
+            payload = payload with
+            {
+                Input = payload.Input with { DescriptorSelector = AlternateModulePath },
+            };
+        }
+
+        var (expectedProbe, actualProbe) = ProbeFor(
+            mutations.Length == 1 ? mutations[0] : "all",
+            payload,
+            expected);
+        return new DiagnosticScenario(
+            catalog,
+            actual,
+            expected,
+            payload,
+            expectedProbe,
+            actualProbe,
+            string.Empty);
+    }
+
+    private static DiagnosticScenario CreateSequenceScenario(string field, string shape)
+    {
+        var scenario = CreateScenario("match");
+        var expected = scenario.ExpectedMaterial;
+        string expectedProbe;
+        string actualProbe;
+        string shapeProbe;
+        if (field == "DeclarationStatementIds")
+        {
+            var actual = scenario.ActualMaterial.DeclarationStatementIds;
+            var third = Declaration("decl-c", 'a');
+            var sequence = shape switch
+            {
+                "missing" => actual.Add(third),
+                "extra" => actual.RemoveAt(1),
+                "order" => [actual[1], actual[0]],
+                _ => throw new ArgumentOutOfRangeException(nameof(shape)),
+            };
+            expected = expected with { DeclarationStatementIds = sequence };
+            expectedProbe = FormatDeclarations(sequence);
+            actualProbe = FormatDeclarations(actual);
+            shapeProbe = shape switch
+            {
+                "missing" => $"missing=[{FormatDeclaration(third)}]",
+                "extra" => $"extra=[{FormatDeclaration(actual[1])}]",
+                "order" => "order differs",
+                _ => throw new ArgumentOutOfRangeException(nameof(shape)),
+            };
+        }
+        else
+        {
+            var actual = scenario.ActualMaterial.PrerequisiteFrozenNodeIds;
+            var third = FrozenNodeId.Create(Sha256('a'));
+            var sequence = shape switch
+            {
+                "missing" => actual.Add(third),
+                "extra" => actual.RemoveAt(1),
+                "order" => [actual[1], actual[0]],
+                _ => throw new ArgumentOutOfRangeException(nameof(shape)),
+            };
+            expected = expected with { PrerequisiteFrozenNodeIds = sequence };
+            expectedProbe = FormatNodeIds(sequence);
+            actualProbe = FormatNodeIds(actual);
+            shapeProbe = shape switch
+            {
+                "missing" => $"missing=[{third.Value}]",
+                "extra" => $"extra=[{actual[1].Value}]",
+                "order" => "order differs",
+                _ => throw new ArgumentOutOfRangeException(nameof(shape)),
+            };
+        }
+
+        return scenario with
+        {
+            ExpectedMaterial = expected,
+            ExpectedProbe = expectedProbe,
+            ActualProbe = actualProbe,
+            ShapeProbe = shapeProbe,
+        };
+    }
+
+    private static FrozenFreezePayload PayloadFrom(FrozenNodeMaterial material) => new(
+        "active-frozen",
+        "active-frozen/diagnostic",
+        material.DeclarationStatementIds,
+        "admission",
+        new FrozenExpectedVerdict(["admit"], "none", []),
+        material.FrozenNodeId,
+        new FrozenLedgerInput(
+            FrozenLedgerTestData.GitOid('a'),
+            FrozenLedgerTestData.GitOid('b'),
+            material.Attestation.SourceBlobOid,
+            material.RepoPath.Value,
+            "repository-snapshot-v1",
+            []),
+        material.WitnessId.Value,
+        material.RepoPath,
+        material.PrerequisiteFrozenNodeIds,
+        material.FrozenNodeId.Value,
+        material.StatementId,
+        nameof(TruthState.Closed),
+        material.WitnessId)
+    {
+        AxiomClosure = material.AxiomClosure,
+    };
+
+    private static bool LegacyHistoricalActiveFreezeMatches(
+        FrozenFreezePayload payload,
+        FrozenNodeMaterial material) =>
+        payload.DeclarationStatementIds.SequenceEqual(material.DeclarationStatementIds)
+        && payload.StatementId == material.StatementId
+        && payload.WitnessId == material.WitnessId
+        && payload.FrozenNodeId == material.FrozenNodeId
+        && payload.PrerequisiteFrozenNodeIds.SequenceEqual(material.PrerequisiteFrozenNodeIds)
+        && payload.Input.DescriptorBlobOid == material.Attestation.SourceBlobOid
+        && payload.Input.DescriptorSelector == material.RepoPath.Value;
+
+    private static (string Expected, string Actual) ProbeFor(
+        string field,
+        FrozenFreezePayload payload,
+        FrozenNodeMaterial material) => field switch
+        {
+            "DeclarationStatementIds" =>
+                (FormatDeclarations(material.DeclarationStatementIds),
+                    FormatDeclarations(payload.DeclarationStatementIds)),
+            "StatementId" => (material.StatementId.Value, payload.StatementId.Value),
+            "WitnessId" => (material.WitnessId.Value, payload.WitnessId.Value),
+            "FrozenNodeId" => (material.FrozenNodeId.Value, payload.FrozenNodeId.Value),
+            "PrerequisiteFrozenNodeIds" =>
+                (FormatNodeIds(material.PrerequisiteFrozenNodeIds),
+                    FormatNodeIds(payload.PrerequisiteFrozenNodeIds)),
+            "Input.DescriptorBlobOid" =>
+                (material.Attestation.SourceBlobOid, payload.Input.DescriptorBlobOid),
+            "Input.DescriptorSelector" =>
+                (material.RepoPath.Value, payload.Input.DescriptorSelector),
+            _ => (material.StatementId.Value, payload.StatementId.Value),
+        };
+
+    private static FrozenDeclarationStatement Declaration(string key, char hashDigit) =>
+        new(key, "theorem", StatementId.Create(Sha256(hashDigit)));
+
+    private static string FormatDeclarations(IEnumerable<FrozenDeclarationStatement> declarations) =>
+        "[" + string.Join(", ", declarations.Select(FormatDeclaration)) + "]";
+
+    private static string FormatDeclaration(FrozenDeclarationStatement declaration) =>
+        $"{declaration.DeclarationNameKey}|{declaration.Kind}|{declaration.StatementId.Value}";
+
+    private static string FormatNodeIds(IEnumerable<FrozenNodeId> nodeIds) =>
+        "[" + string.Join(", ", nodeIds.Select(static item => item.Value)) + "]";
+
+    private static string Sha256(char digit) => $"sha256:{new string(digit, 64)}";
+
+    private sealed record DiagnosticScenario(
+        FrozenMaterialCatalog Catalog,
+        FrozenNodeMaterial ActualMaterial,
+        FrozenNodeMaterial ExpectedMaterial,
+        FrozenFreezePayload Payload,
+        string ExpectedProbe,
+        string ActualProbe,
+        string ShapeProbe);
+}

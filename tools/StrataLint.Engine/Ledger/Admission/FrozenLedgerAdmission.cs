@@ -377,11 +377,16 @@ public static partial class FrozenLedger
 
                 var activeEntry = entry!;
                 var expectedMaterial = material!;
-                var materialMatches = HistoricalActiveFreezeMatches(activeEntry.Payload, expectedMaterial);
+                var materialMatches = HistoricalActiveFreezeMatches(
+                    activeEntry.Payload,
+                    expectedMaterial,
+                    out var materialDifferences);
                 if (materialMatches)
                 {
                     continue;
                 }
+
+                var differenceMessage = string.Join("; ", materialDifferences);
 
                 if (activeEntry.Payload.StatementId != expectedMaterial.StatementId
                     || !activeEntry.Payload.DeclarationStatementIds.SequenceEqual(
@@ -390,13 +395,13 @@ public static partial class FrozenLedger
                     return Failure(
                         [path],
                         scope.WitnessesFor(path),
-                        $"Active module {path.Value} statement identity changed; append Revoke first.");
+                        $"Active module {path.Value} statement identity changed; append Revoke first.; field differences: {differenceMessage}");
                 }
 
                 return Failure(
                     [path],
                     scope.WitnessesFor(path),
-                    $"Active module {path.Value} has material/blob drift and lacks a matching Reattest event; run ledger-sync.");
+                    $"Active module {path.Value} has material/blob drift and lacks a matching Reattest event; run ledger-sync.; field differences: {differenceMessage}");
             }
 
             return null;
@@ -419,4 +424,119 @@ public static partial class FrozenLedger
             witnesses,
             message + "; delta witness: "
                 + string.Join(", ", witnesses.Select(static item => item.Value)));
+
+    private static bool HistoricalActiveFreezeMatches(
+        FrozenFreezePayload payload,
+        FrozenNodeMaterial material,
+        out ImmutableArray<string> differences)
+    {
+        var result = ImmutableArray.CreateBuilder<string>();
+        if (!payload.DeclarationStatementIds.SequenceEqual(material.DeclarationStatementIds))
+        {
+            result.Add(SequenceDifference(
+                "DeclarationStatementIds",
+                material.DeclarationStatementIds,
+                payload.DeclarationStatementIds,
+                static item =>
+                    $"{item.DeclarationNameKey}|{item.Kind}|{item.StatementId.Value}"));
+        }
+
+        if (payload.StatementId != material.StatementId)
+        {
+            result.Add(ScalarDifference(
+                "StatementId",
+                material.StatementId.Value,
+                payload.StatementId.Value));
+        }
+
+        if (payload.WitnessId != material.WitnessId)
+        {
+            result.Add(ScalarDifference(
+                "WitnessId",
+                material.WitnessId.Value,
+                payload.WitnessId.Value));
+        }
+
+        if (payload.FrozenNodeId != material.FrozenNodeId)
+        {
+            result.Add(ScalarDifference(
+                "FrozenNodeId",
+                material.FrozenNodeId.Value,
+                payload.FrozenNodeId.Value));
+        }
+
+        if (!payload.PrerequisiteFrozenNodeIds.SequenceEqual(material.PrerequisiteFrozenNodeIds))
+        {
+            result.Add(SequenceDifference(
+                "PrerequisiteFrozenNodeIds",
+                material.PrerequisiteFrozenNodeIds,
+                payload.PrerequisiteFrozenNodeIds,
+                static item => item.Value));
+        }
+
+        if (payload.Input.DescriptorBlobOid != material.Attestation.SourceBlobOid)
+        {
+            result.Add(ScalarDifference(
+                "Input.DescriptorBlobOid",
+                material.Attestation.SourceBlobOid,
+                payload.Input.DescriptorBlobOid));
+        }
+
+        if (payload.Input.DescriptorSelector != material.RepoPath.Value)
+        {
+            result.Add(ScalarDifference(
+                "Input.DescriptorSelector",
+                material.RepoPath.Value,
+                payload.Input.DescriptorSelector));
+        }
+
+        differences = result.ToImmutable();
+        return differences.IsEmpty;
+    }
+
+    private static string ScalarDifference(string field, string expected, string actual) =>
+        $"{field} expected={expected}, actual={actual}";
+
+    private static string SequenceDifference<T>(
+        string field,
+        ImmutableArray<T> expected,
+        ImmutableArray<T> actual,
+        Func<T, string> format)
+    {
+        var missing = MissingItems(expected, actual);
+        var extra = MissingItems(actual, expected);
+        var shape = missing.IsEmpty && extra.IsEmpty
+            ? "order differs"
+            : $"missing={FormatSequence(missing, format)}, extra={FormatSequence(extra, format)}";
+        return $"{field} expected={FormatSequence(expected, format)}, "
+            + $"actual={FormatSequence(actual, format)}, {shape}";
+    }
+
+    private static ImmutableArray<T> MissingItems<T>(
+        ImmutableArray<T> expected,
+        ImmutableArray<T> actual)
+    {
+        var remaining = actual.ToList();
+        var missing = ImmutableArray.CreateBuilder<T>();
+        foreach (var item in expected)
+        {
+            var index = remaining.FindIndex(candidate =>
+                EqualityComparer<T>.Default.Equals(candidate, item));
+            if (index < 0)
+            {
+                missing.Add(item);
+            }
+            else
+            {
+                remaining.RemoveAt(index);
+            }
+        }
+
+        return missing.ToImmutable();
+    }
+
+    private static string FormatSequence<T>(
+        ImmutableArray<T> items,
+        Func<T, string> format) =>
+        "[" + string.Join(", ", items.Select(format)) + "]";
 }

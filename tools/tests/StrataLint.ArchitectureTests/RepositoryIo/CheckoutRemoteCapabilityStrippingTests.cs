@@ -58,7 +58,9 @@ public sealed class CheckoutRemoteCapabilityStrippingTests
     public void CheckoutWithCompleteRemoteCapabilityStrippingIsAccepted() =>
         Assert.Empty(InspectWorkflow(".github/workflows/complete.yml", CompleteStripWorkflow));
 
-    // The strip step is the machine guarantee that CI cannot reach a remote. Its
+    // The strip step eliminates name-based remote resolution; it is NOT a proof that CI
+    // cannot reach a remote (fetch-depth: 0 leaves every branch's objects in the local
+    // object database, so a raw OID recorded before the strip still resolves). Its
     // individual contracts were unpinned: deleting the remote-removal contract left every
     // test green, so a workflow edit that hollowed the step out would have landed silently.
     // These two pin the contract set itself and each contract's rejection.
