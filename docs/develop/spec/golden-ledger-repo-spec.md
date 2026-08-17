@@ -457,7 +457,7 @@ CONTEXT.md(1 页)→ 各地层 `INDEX.md`(CI 从文件头 digest 行聚合)→ �
 凡 PR/轮次文本中**出现而未解决**之异常(意外数值、顺手发现之张力、失败的旁路尝试),必须当轮立案(工单/issue/黄牌)并在判词"账平声明"中列出案号;门官对含未立案异常之 PR 拒并——**浮账不许静默溜走;"账,平"从此不是一句仪文,是一个可判的谓词:平 ⟺ 浮账集为空。**
 
 ## 11.26 迁移遗孤四条(六审补:v2→v7 全量 diff 清扫,迁移债清零)
-**术语对照表**:`Meta/glossary.csv`(zh↔en 逐词钉死:纤维词=fiber word、避峰=Bragg avoidance、账平=ledger balanced…);Blueprint 与 papergen 引用之,译名漂移 = lint 红——双语项目之唯一译名权威。
+**术语对照表**〔勘注 2026-08-17·open(`D5-T0044`)〕原表述称 `Meta/glossary.csv` 为双语项目之唯一译名权威,由 Blueprint 与 papergen 引用,译名漂移判 lint 红。实测三项皆不成立:全仓 `.csv` 文件数为 0,该文件不存在;papergen 已退役(其退役票为 `D5-T0006`);`glossary` 在 `tools/` 零命中,不存在任何译名漂移 lint。本卷因此不再声称存在译名权威;是否建立由 `D5-T0044` 承接。`Meta/registry.yaml` 的 `artifact_kinds` 仍保留 `csv`——它是 Evidence GID `--tag` 的封闭字母表成员,属保留坐标,不因无对象而删。
 **演替/弃用律**:强化/推广取代旧定理时(先例:6.180 铆钉→6.182 梁),旧陈述**不删**,加 `@[deprecated (since := …)] → 新 GID`;新代码禁引弃用项(lint 警);演替三型(strengthen/generalize/correct,correct 必挂 errata)记于新定理 docstring——**历史不删,新用禁引。**
 **大件数据律**:大于阈值之产物(零点表/谱表)入 LFS 或声明"可再生"(脚本+预算);二者皆无 = CI 红;断链即红——git 内只存哈希与再生方式。
 **继任预案**:`docs/SUCCESSION.md`——维护权移交规则、密钥托管、"若本库十年无人维护"之自动开放遗嘱(归档触发条件)——**理论要活得比我们久,就把这句话写进制度。**
