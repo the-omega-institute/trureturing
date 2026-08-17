@@ -12,7 +12,8 @@ internal sealed record DescribeNodeRecord(
     string FormulaProvenance,
     string? ProjectionFailureReason,
     string Provenance,
-    string? LiteratureGid);
+    string? LiteratureGid,
+    ImmutableArray<string> AcknowledgementGids);
 
 internal sealed record DescribeObservation(string Code, string Path, string Detail);
 
@@ -206,7 +207,10 @@ internal sealed class DescribeReport
                         describe.FormulaProvenance == StatementFormulaProvenance.LeanDerived ? "lean-derived" : "hand-authored",
                         ProjectionFailure(describe),
                         DescribeVocabulary.CanonicalName(describe.ProvenanceKind),
-                        describe.LiteratureReference?.Value));
+                        describe.LiteratureReference?.Value,
+                        describe.AcknowledgementReferences
+                            .Select(static reference => reference.Value)
+                            .ToImmutableArray()));
                     if (string.Equals(describe.Id.Value, PlainSlug(describe.Title.Value), StringComparison.Ordinal))
                     {
                         observations.Add(new DescribeObservation(

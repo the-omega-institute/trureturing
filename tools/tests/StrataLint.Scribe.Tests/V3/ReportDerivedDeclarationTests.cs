@@ -136,7 +136,7 @@ public sealed class ReportDerivedDeclarationTests
             DeclarationHandle.Create(Gid),
             DefinitionDsl.H("Claim"),
             AuthoredStatement(),
-            new AssessedProvenance.RepoDerived(),
+            AssessedProvenance.FromRepo(),
             DefinitionDsl.Blocks(DefinitionDsl.Paragraph(DefinitionDsl.Text("Narrative"))));
 
         var error = Assert.Throws<InvalidOperationException>(() => catalog.ResolveKind(describe));
@@ -153,7 +153,7 @@ public sealed class ReportDerivedDeclarationTests
             DeclarationHandle.Create(Gid),
             DefinitionDsl.H("Claim"),
             AuthoredStatement(),
-            new AssessedProvenance.RepoDerived(),
+            AssessedProvenance.FromRepo(),
             DefinitionDsl.Blocks(DefinitionDsl.Paragraph(DefinitionDsl.Text("Narrative"))));
         var document = ScribeNode.Create(
             "Digest",

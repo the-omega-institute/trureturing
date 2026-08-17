@@ -21,4 +21,3 @@ The three conjuncts appear in parameter order 1, 0, and -1. No claim about any o
 ## References
 
 - Truth anchor: `D5/S3/Constants/Midslope/ThreeValueEvaluation.three_value_evaluation`
-- Dependency: [D5/S3/Constants/MidslopeCurvatureValues](../MidslopeCurvatureValues.md)

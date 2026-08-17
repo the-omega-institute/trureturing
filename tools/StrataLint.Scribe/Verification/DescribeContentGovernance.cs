@@ -201,8 +201,8 @@ internal static class DescribeContentGovernance
                 .Select(static anchor => anchor.BibKey.Value)
                 .Concat(EnumerateBlocks(document.Content)
                     .OfType<DocumentBlock.Describe>()
-                    .Where(static describe => describe.LiteratureReference is not null)
-                    .Select(static describe => describe.LiteratureReference!.BibKey.Value)))
+                    .SelectMany(ReferencedNotes)
+                    .Select(static reference => reference.BibKey.Value)))
             .Distinct(StringComparer.Ordinal)
             .Order(StringComparer.Ordinal);
         foreach (var bibkey in references)
@@ -236,6 +236,15 @@ internal static class DescribeContentGovernance
                     $"referenced Library note {bibkey} must bind its DOI and retain its "
                         + "canonical verified locator scope"));
             }
+        }
+    }
+
+    private static IEnumerable<LibraryNoteRef> ReferencedNotes(DocumentBlock.Describe describe)
+    {
+        if (describe.LiteratureReference is { } literature) yield return literature;
+        foreach (var acknowledgement in describe.AcknowledgementReferences)
+        {
+            yield return acknowledgement;
         }
     }
 

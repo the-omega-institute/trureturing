@@ -1,0 +1,17 @@
+ast_path: theorem/6.3
+fingerprints:
+  raw_sha256: sha256:2a0be2b846836d5e2d99df38f3c1866ee90bcec2d070b1a2f77ccee5f6687029
+  normalized_sha256: sha256:2a0be2b846836d5e2d99df38f3c1866ee90bcec2d070b1a2f77ccee5f6687029
+cas_ref: sha256:2a0be2b846836d5e2d99df38f3c1866ee90bcec2d070b1a2f77ccee5f6687029
+coverage_gids:
+  - D5/S3/Constants/Midslope/ThreeValueEvaluation.three_value_evaluation
+receipts:
+  coverage:
+    - gid: D5/S3/Constants/Midslope/ThreeValueEvaluation.three_value_evaluation
+      source_sha256: sha256:2a0be2b846836d5e2d99df38f3c1866ee90bcec2d070b1a2f77ccee5f6687029
+      target_sha256: sha256:c52fa63d632c5cf06f92afa736ddc400ff737da77376e1871cbc4cd926662307
+  scribe:
+    - gid: D5/S3/Constants/Midslope/ThreeValueEvaluation.three_value_evaluation
+      definition_sha256: sha256:99fae34b6a81413149106e58266d70ad404a28a0c293cf92ec55613a6ddcc0de
+      emission_sha256: sha256:f7cd105aec63baea064cb301840a77d96a4c135fe6ff3d270ddf84c3172d0dad
+  unresolved_subitems: []

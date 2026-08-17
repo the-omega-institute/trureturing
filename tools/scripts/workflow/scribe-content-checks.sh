@@ -49,7 +49,7 @@ if [[ "${#CHANGED_PATHS[@]}" -gt 0 ]]; then
       Meta/Digestion/backfill/*|Golden/values-kernels.toml|Evidence/D5/values.json|\
       .github/workflows/ci.yml|Directory.Build.props|Directory.Build.targets|Directory.Packages.props|\
       global.json|tools/StrataLint.Scribe/*|tools/StrataLint.Engine/*|tools/StrataLint.Cli/*|\
-      tools/Architecture/*|tools/lean-inspector/*|tools/scripts/workflow/scribe-content-checks.sh|\
+      tools/Architecture/BannedSymbols*.txt|tools/lean-inspector/*|tools/scripts/workflow/scribe-content-checks.sh|\
       tools/scripts/report/lean-report-input.sh)
         requires_emission_checks=1
         break

@@ -61,6 +61,10 @@ public sealed class LedgerSupersedeCommandTests
         Assert.Single(references.CommitOids);
         Assert.Single(references.TreeOids);
         Assert.Equal(4, references.BlobOids.Length);
+        var supersede = Assert.Single(view.Events, static item => item.EventType == "Supersede");
+        Assert.False(
+            supersede.Payload.GetProperty("input").TryGetProperty("supporting_blob_oids", out _),
+            "Supersede input duplicated its named environment pins");
 
         var afterFirst = FrozenLedgerTestData.ReadLedgerDirectory(fixture.LedgerPath);
         var second = fixture.Environment.SupersedeLedger(arguments);

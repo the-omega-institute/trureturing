@@ -35,6 +35,7 @@ jobs:
           persist-credentials: false
 
       - name: Strip checkout remote state
+        if: steps.checkout-merge.outcome == 'success'
         shell: bash
         env:
           CHECKOUT_PATH: candidate
