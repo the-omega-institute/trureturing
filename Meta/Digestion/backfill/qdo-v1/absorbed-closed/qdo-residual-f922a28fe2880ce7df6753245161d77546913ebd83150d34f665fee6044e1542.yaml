@@ -1,0 +1,17 @@
+ast_path: theorem/24.4
+fingerprints:
+  raw_sha256: sha256:f922a28fe2880ce7df6753245161d77546913ebd83150d34f665fee6044e1542
+  normalized_sha256: sha256:f922a28fe2880ce7df6753245161d77546913ebd83150d34f665fee6044e1542
+cas_ref: sha256:f922a28fe2880ce7df6753245161d77546913ebd83150d34f665fee6044e1542
+coverage_gids:
+  - D5/S3/Observer/MetricGeometry/FinitePredictionTruncation.finite_prediction_truncation_formula_and_error
+receipts:
+  coverage:
+    - gid: D5/S3/Observer/MetricGeometry/FinitePredictionTruncation.finite_prediction_truncation_formula_and_error
+      source_sha256: sha256:f922a28fe2880ce7df6753245161d77546913ebd83150d34f665fee6044e1542
+      target_sha256: sha256:0a1a4c98f25fb7632e356322284ac0a8a07b5ad198d575546a5d690e8072cb32
+  scribe:
+    - gid: D5/S3/Observer/MetricGeometry/FinitePredictionTruncation.finite_prediction_truncation_formula_and_error
+      definition_sha256: sha256:517c73ad12498c901d8fc8d8089bc8cb0e20c7a14dd47c411aa2dc7297536693
+      emission_sha256: sha256:c6b78d3c01b0acb0e3ddad6e820c825695954d65c845234ee70c7ac44dc84e9b
+  unresolved_subitems: []
