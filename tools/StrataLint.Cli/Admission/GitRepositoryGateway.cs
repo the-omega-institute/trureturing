@@ -136,6 +136,17 @@ internal sealed partial class GitRepositoryGateway : IRepositoryGateway
                 "protected base equals clean candidate HEAD; history comparison would be vacuous");
         }
 
+        return new PreparedRepository(revision, changeBase, ReadChanges(changeBase));
+    }
+
+    public RawChangeSet ReadCurrentChanges()
+    {
+        var head = GitText("rev-parse", "HEAD").Trim();
+        return ReadChanges(head);
+    }
+
+    private RawChangeSet ReadChanges(string changeBase)
+    {
         var changes = ParseChanges(GitBytes(
                 "diff",
                 "--name-status",
@@ -153,7 +164,7 @@ internal sealed partial class GitRepositoryGateway : IRepositoryGateway
                 .First())
             .OrderBy(static change => change.Path, StringComparer.Ordinal)
             .ToArray();
-        return new PreparedRepository(revision, changeBase, RawChangeSet.CreateWithKinds(changes));
+        return RawChangeSet.CreateWithKinds(changes);
     }
 
     private static int ChangeKindPriority(RawChangeKind kind) => kind switch

@@ -67,6 +67,25 @@ public sealed class ValuesBindingRuleTests
     }
 
     [Fact]
+    public void ChangedLeanToolchainWakesSl018ForItsStoredBinding()
+    {
+        var fixture = Fixture();
+        fixture.Files["lean-toolchain"] = "leanprover/lean4:v4.25.0\n";
+        fixture.Baseline["lean-toolchain"] = "leanprover/lean4:v4.24.0\n";
+        fixture.Reports[RuleFixture.ValuesBindingPath] = new LeanFileReport(
+            [],
+            [Declaration(kind: "theorem")]);
+        var completed = Assert.IsType<RuleExecutionOutcome.Completed>(
+            RuleCatalog.Default.Execute(fixture.Build(
+                RawChangeSet.Create(["lean-toolchain"]))));
+
+        Assert.Contains(
+            completed.Capability.Diagnostics,
+            static diagnostic => diagnostic.RuleId == RuleId.CreateKnown(18)
+                && diagnostic.Message.Contains("expected kind=def, found theorem", StringComparison.Ordinal));
+    }
+
+    [Fact]
     public void MissingOrAmbiguousGidIsRejectedBySl018()
     {
         var missing = Fixture();

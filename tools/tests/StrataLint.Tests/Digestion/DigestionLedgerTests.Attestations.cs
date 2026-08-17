@@ -155,6 +155,68 @@ public sealed partial class DigestionLedgerTests
     }
 
     [Fact]
+    public void CandidateDeltaDoesNotPromoteBaselinePartialWithStaleScribeReceipts()
+    {
+        const string gid = "D5/S0/Carrier/Probe";
+        const string targetPath = "D5/S0/Carrier/Probe.lean";
+        var source = Encoding.UTF8.GetBytes("# GICT\n\n**定理 1.1(Test)**。claim。\n");
+        var atom = Assert.Single(GictAtomizer.Atomize(source, DigestionTestSupport.Rules).Claims);
+        var target = Encoding.UTF8.GetBytes(Lean(gid));
+        var definition = Encoding.UTF8.GetBytes("current scribe definition\n");
+        var emission = Encoding.UTF8.GetBytes("# Current emitted narrative\n");
+        var definitionHash = DigestionFingerprint.Compute(definition).RawSha256;
+        var emissionHash = DigestionFingerprint.Compute(emission).RawSha256;
+        var staleDefinitionHash = DigestionFingerprint.Compute(
+            Encoding.UTF8.GetBytes("stale scribe definition\n")).RawSha256;
+        var staleEmissionHash = DigestionFingerprint.Compute(
+            Encoding.UTF8.GetBytes("# Stale emitted narrative\n")).RawSha256;
+        var coverage = $$"""
+            - gid: {{gid}}
+              source_sha256: {{atom.Fingerprints.RawSha256}}
+              target_sha256: {{DigestionFingerprint.Compute(target).RawSha256}}
+            """;
+        var scribe = $$"""
+            - gid: {{gid}}
+              definition_sha256: {{staleDefinitionHash}}
+              emission_sha256: {{staleEmissionHash}}
+            """;
+        var document = BackfillInventoryLoader.Load(LedgerYaml(
+            atom,
+            migration: "partial",
+            truth: "closed",
+            coverageReceipts: coverage,
+            scribeReceipts: scribe,
+            coverageGid: gid));
+        var record = new ScribeEmissionRecord(
+            gid,
+            ScribeEmissionAttestation.DefinitionPath(gid),
+            definitionHash,
+            ScribeEmissionAttestation.EmissionPath(gid),
+            emissionHash);
+        var snapshot = Snapshot(
+            ("docs/source.md", source),
+            CasFile(atom),
+            (targetPath, target),
+            (record.DefinitionPath, definition),
+            (record.EmissionPath, emission));
+
+        var evaluation = DigestionStatusEvaluator.Evaluate(
+            document,
+            snapshot,
+            AcceptedLean(targetPath),
+            VerifiedScribeEmissions.Create([record]),
+            baselineDocument: document,
+            baselineSnapshot: snapshot);
+        var status = Assert.Single(evaluation.Entries);
+
+        Assert.Equal(DigestionMigrationState.Partial, status.DerivedStatus.Migration);
+        Assert.Contains(status.Gaps, static gap => gap.Code == "scribe-definition-mismatch");
+        Assert.Contains(status.Gaps, static gap => gap.Code == "scribe-emission-mismatch");
+        Assert.DoesNotContain(evaluation.Findings, static finding =>
+            finding.Contains("handwritten status", StringComparison.Ordinal));
+    }
+
+    [Fact]
     public void TailCannotAppearBeforeAbsorptionAndExternalAuthorizationReceipt()
     {
         var source = Encoding.UTF8.GetBytes("# GICT\n\n**定理 1.1(Test)**。claim。\n");
