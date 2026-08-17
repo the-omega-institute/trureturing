@@ -219,6 +219,27 @@ internal static class DigestionIngestor
             staleAcknowledged += acknowledgments.Count(priorAcknowledgment =>
                 !priorAcknowledgments.Contains(priorAcknowledgment));
             var entries = source.Entries.ToBuilder();
+            foreach (var reclassification in alignment.GenreReclassifications.Where(item =>
+                         item.SourceId == source.SourceId))
+            {
+                var matches = entries
+                    .Select((entry, index) => (Entry: entry, Index: index))
+                    .Where(item => item.Entry.AtomId == reclassification.AtomId)
+                    .ToArray();
+                if (matches.Length != 1)
+                {
+                    throw new FormatException(
+                        $"ingest genre reclassification atom_id resolves to {matches.Length} entries: "
+                        + reclassification.AtomId);
+                }
+
+                var (entry, index) = matches[0];
+                entries[index] = entry with
+                {
+                    AstPath = reclassification.AstPath,
+                };
+            }
+
             if (residualBySource.TryGetValue(source.SourceId, out var residual))
             {
                 foreach (var item in residual)
