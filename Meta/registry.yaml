@@ -1,5 +1,6 @@
 schema_version: 1
 root_files:
+  - ".editorconfig"
   - ".gitignore"
   - "AGENTS.md"
   - "CLAUDE.md"
@@ -20,6 +21,7 @@ governance_documents:
   - "Meta/FILEMAP.toml"
   - "docs/CONTRIBUTING.md"
   - "docs/GOVERNANCE.md"
+  - "docs/MISSION.md"
   - "docs/develop/spec/golden-ledger-repo-spec.md"
   - "docs/develop/theory/BEDC-WM.md"
   - "docs/develop/theory/CONE_PROGRAM_FORMAL.md"

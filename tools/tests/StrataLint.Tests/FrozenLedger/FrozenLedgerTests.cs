@@ -11,35 +11,6 @@ namespace StrataLint.Tests;
 public sealed partial class FrozenLedgerTests
 {
     [Fact]
-    public void ReferenceProjectionOidFieldsEqualTheClosedEventSchema()
-    {
-        var inputFields = OidProperties(typeof(FrozenLedgerInput), "input");
-        var schema = new Dictionary<string, string[]>(StringComparer.Ordinal)
-        {
-            ["Genesis"] = OidProperties(typeof(FrozenGenesisPayload)),
-            ["Freeze"] = inputFields,
-            ["Reattest"] = inputFields,
-            [FrozenLedger.SupersedeEventType] = OidProperties(typeof(FrozenLedgerInput), "input")
-                .Concat(OidProperties(typeof(FrozenEnvironmentPins), "environment"))
-                .Order(StringComparer.Ordinal)
-                .ToArray(),
-            ["Revoke"] = typeof(RevocationEvidence).GetNestedTypes()
-                .SelectMany(static type => OidProperties(type, "evidence[]"))
-                .Distinct(StringComparer.Ordinal)
-                .Order(StringComparer.Ordinal)
-                .ToArray(),
-        };
-
-        Assert.Equal(
-            schema.Keys.Order(StringComparer.Ordinal),
-            FrozenLedgerReferenceProjection.OidFields.Keys.Order(StringComparer.Ordinal));
-        foreach (var (eventType, fields) in schema)
-        {
-            Assert.Equal(fields, FrozenLedgerReferenceProjection.OidFields[eventType]);
-        }
-    }
-
-    [Fact]
     public void ReferenceProjectionRejectsUnknownFieldsForEveryEventPayloadSchema()
     {
         var catalog = BuildCatalog(Module("A"));
@@ -334,11 +305,10 @@ public sealed partial class FrozenLedgerTests
         Assert.Equal(
             new[]
             {
+                "axiom_closure",
                 "case_id",
                 "input",
-                "input_fingerprint",
                 "previous_attestation_event_hash",
-                "semantic_receipt",
             },
             reattestPayload.EnumerateObject()
                 .Select(static property => property.Name)
@@ -410,14 +380,5 @@ public sealed partial class FrozenLedgerTests
 
         Assert.Contains("unknown, missing, or duplicate fields", rejected.Message, StringComparison.Ordinal);
     }
-
-    private static string[] OidProperties(Type type, string? prefix = null) =>
-        type.GetProperties()
-            .Where(static property => property.Name.EndsWith("Oid", StringComparison.Ordinal)
-                || property.Name.EndsWith("Oids", StringComparison.Ordinal))
-            .Select(property => (prefix is null ? string.Empty : prefix + ".")
-                + JsonNamingPolicy.SnakeCaseLower.ConvertName(property.Name))
-            .Order(StringComparer.Ordinal)
-            .ToArray();
 
 }

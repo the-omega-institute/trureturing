@@ -43,6 +43,15 @@ artifact_id = "none"
 runtime_disposition = "committed-source"
 
 [[files]]
+pattern = ".editorconfig"
+kind = "program"
+produced_by = "none"
+consumed_by = ["dotnet"]
+verified_by = ["make-gate"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+
+[[files]]
 pattern = ".github/**"
 kind = "program"
 produced_by = "none"
@@ -276,15 +285,6 @@ artifact_id = "none"
 runtime_disposition = "committed-ledger"
 
 [[files]]
-pattern = "Meta/Digestion/ticket-index.toml"
-kind = "data"
-produced_by = "none"
-consumed_by = ["BackfillInventoryLoader"]
-verified_by = ["BackfillInventoryLoader"]
-artifact_id = "none"
-runtime_disposition = "committed-source"
-
-[[files]]
 pattern = "Meta/FILEMAP.toml"
 kind = "data"
 produced_by = "none"
@@ -330,11 +330,29 @@ artifact_id = "none"
 runtime_disposition = "committed-source"
 
 [[files]]
-pattern = "docs/*.md"
+pattern = "docs/CONTRIBUTING.md"
 kind = "program"
 produced_by = "none"
 consumed_by = ["developer"]
 verified_by = ["repository-policy"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+
+[[files]]
+pattern = "docs/GOVERNANCE.md"
+kind = "program"
+produced_by = "none"
+consumed_by = ["developer"]
+verified_by = ["repository-policy"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+
+[[files]]
+pattern = "docs/MISSION.md"
+kind = "data"
+produced_by = "none"
+consumed_by = ["MissionFileLoader"]
+verified_by = ["MissionFileLoader"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
 

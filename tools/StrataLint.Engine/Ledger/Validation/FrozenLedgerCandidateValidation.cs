@@ -15,14 +15,43 @@ public static partial class FrozenLedger
             baseline,
             catalog,
             trustedReferences,
-            TrustedRevocationReceiptStore.Empty(baseline));
+            TrustedRevocationReceiptStore.Empty(baseline),
+            requireCompleteCatalog: true);
+
+    internal static FrozenLedgerValidationOutcome ValidateCandidatePrefix(
+        FrozenLedgerSyntax syntax,
+        FrozenLedgerConsistent baseline,
+        FrozenMaterialCatalog catalog,
+        TrustedFrozenGitReferences trustedReferences) =>
+        ValidateCandidate(
+            syntax,
+            baseline,
+            catalog,
+            trustedReferences,
+            TrustedRevocationReceiptStore.Empty(baseline),
+            requireCompleteCatalog: false);
 
     public static FrozenLedgerValidationOutcome ValidateCandidate(
         FrozenLedgerSyntax syntax,
         FrozenLedgerConsistent baseline,
         FrozenMaterialCatalog catalog,
         TrustedFrozenGitReferences trustedReferences,
-        TrustedRevocationReceiptStore trustedRevocationReceipts)
+        TrustedRevocationReceiptStore trustedRevocationReceipts) =>
+        ValidateCandidate(
+            syntax,
+            baseline,
+            catalog,
+            trustedReferences,
+            trustedRevocationReceipts,
+            requireCompleteCatalog: true);
+
+    private static FrozenLedgerValidationOutcome ValidateCandidate(
+        FrozenLedgerSyntax syntax,
+        FrozenLedgerConsistent baseline,
+        FrozenMaterialCatalog catalog,
+        TrustedFrozenGitReferences trustedReferences,
+        TrustedRevocationReceiptStore trustedRevocationReceipts,
+        bool requireCompleteCatalog)
     {
         ArgumentNullException.ThrowIfNull(syntax);
         ArgumentNullException.ThrowIfNull(baseline);
@@ -31,7 +60,6 @@ public static partial class FrozenLedger
         ArgumentNullException.ThrowIfNull(trustedRevocationReceipts);
         try
         {
-            ValidateSyntaxEnvelope(syntax);
             if (!syntax.RawBytes.AsSpan().StartsWith(baseline.RawBytes.AsSpan()))
             {
                 throw new FormatException(
@@ -42,6 +70,8 @@ public static partial class FrozenLedger
             {
                 throw new FormatException("Candidate frozen ledger truncated the baseline event prefix.");
             }
+
+            ValidateSuffixSyntaxEnvelope(syntax, baseline.Events.Length);
 
             var events = baseline.Events.ToBuilder();
             var active = baseline.ActiveEntries.ToDictionary(static item => item.Key, static item => item.Value, StringComparer.Ordinal);
@@ -176,13 +206,14 @@ public static partial class FrozenLedger
                 .OrderBy(static path => path.Value, StringComparer.Ordinal)
                 .Select(static path => path.Value)
                 .ToArray();
-            if (missing.Length > 0)
+            if (requireCompleteCatalog && missing.Length > 0)
             {
                 throw new FormatException("Closed modules are missing Freeze events: " + string.Join(", ", missing));
             }
 
-            if (actual.Count != expected.Count
-                || expected.Any(item => actual[item.Key].Material.FrozenNodeId != item.Value.FrozenNodeId))
+            if ((requireCompleteCatalog && actual.Count != expected.Count)
+                || actual.Any(item => !expected.TryGetValue(item.Key, out var expectedMaterial)
+                    || item.Value.Material.FrozenNodeId != expectedMaterial.FrozenNodeId))
             {
                 throw new FormatException(
                     "Active frozen view does not exactly match the current Closed module identities.");
@@ -225,7 +256,10 @@ public static partial class FrozenLedger
                 FrozenLedgerReferenceProjection.LegacyReattestPayloadFields)
             || HasExactObjectFields(
                 payload,
-                FrozenLedgerReferenceProjection.LegacyReattestPayloadFieldsV3);
+                FrozenLedgerReferenceProjection.LegacyReattestPayloadFieldsV3)
+            || HasExactObjectFields(
+                payload,
+                FrozenLedgerReferenceProjection.LegacyReattestPayloadFieldsV4);
         if (legacy)
         {
             if (requireAxiomClosure && !payload.TryGetProperty("axiom_closure", out _))
@@ -245,12 +279,21 @@ public static partial class FrozenLedger
         TrustedFrozenGitReferences trustedReferences)
     {
         RequireEventPayloadFields(payload, "Reattest");
+        var caseId = RequiredString(payload, "case_id");
+        var currentShape = HasExactObjectFields(
+            payload,
+            FrozenLedgerReferenceProjection.LegacyReattestPayloadFieldsV4);
+        if (!active.TryGetValue(caseId, out var prior))
+        {
+            throw new FormatException("Reattest targets an inactive or unknown case.");
+        }
+
         var result = new FrozenReattestPayload(
-            RequiredString(payload, "case_id"),
+            caseId,
             ParseInput(payload.GetProperty("input")),
-            RequiredString(payload, "input_fingerprint"),
+            currentShape ? prior.Payload.InputFingerprint : RequiredString(payload, "input_fingerprint"),
             RequiredString(payload, "previous_attestation_event_hash"),
-            RequiredString(payload, "semantic_receipt"))
+            currentShape ? prior.Payload.SemanticReceipt : RequiredString(payload, "semantic_receipt"))
         {
             AxiomClosure = ParseOptionalAxiomClosure(payload),
         };
@@ -291,17 +334,22 @@ public static partial class FrozenLedger
             throw new FormatException("New Reattest payload must record axiom_closure.");
         }
 
+        var witnessText = RequiredString(payload, "witness_id");
+        var frozenText = RequiredString(payload, "frozen_node_id");
+        var currentShape = HasExactObjectFields(
+            payload,
+            FrozenLedgerReferenceProjection.ExtendedReattestPayloadFieldsV4);
         var result = new FrozenReattestPayload(
             RequiredString(payload, "case_id"),
             ParseDeclarationStatementIds(payload),
-            ParseFrozenNodeId(RequiredString(payload, "frozen_node_id"), "Reattest node"),
+            ParseFrozenNodeId(frozenText, "Reattest node"),
             ParseInput(payload.GetProperty("input")),
-            RequiredString(payload, "input_fingerprint"),
+            currentShape ? witnessText : RequiredString(payload, "input_fingerprint"),
             ParseFrozenNodeIds(payload, "prerequisite_frozen_node_ids"),
             RequiredString(payload, "previous_attestation_event_hash"),
-            RequiredString(payload, "semantic_receipt"),
+            currentShape ? frozenText : RequiredString(payload, "semantic_receipt"),
             ParseStatementId(RequiredString(payload, "statement_id"), "Reattest statement"),
-            ParseWitnessId(RequiredString(payload, "witness_id"), "Reattest witness"))
+            ParseWitnessId(witnessText, "Reattest witness"))
         {
             AxiomClosure = ParseOptionalAxiomClosure(payload),
         };

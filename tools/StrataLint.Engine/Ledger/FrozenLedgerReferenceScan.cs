@@ -73,6 +73,12 @@ public sealed class FrozenLedgerReferenceSet
         var trees = inputs.Select(static input => input.BaseTreeOid);
         var blobs = inputs.Select(static input => input.DescriptorBlobOid)
             .Concat(inputs.SelectMany(static input => input.SupportingBlobOids))
+            .Concat(environmentReferences.SelectMany(static reference => new[]
+            {
+                reference.Environment.LakeManifestBlobOid,
+                reference.Environment.LakefileBlobOid,
+                reference.Environment.LeanToolchainBlobOid,
+            }))
             .Concat(receiptOids);
         return Create(
             inputs,
@@ -146,6 +152,12 @@ internal static class FrozenLedgerReferenceProjection
         "semantic_receipt", "statement_id", "truth_state", "witness_id",
     ];
 
+    internal static string[] FreezePayloadFieldsV4 { get; } =
+    [
+        "axiom_closure", "case_id", "declaration_statement_ids", "frozen_node_id", "input",
+        "prerequisite_frozen_node_ids", "statement_id", "witness_id",
+    ];
+
     internal static string[] LegacyReattestPayloadFields { get; } =
     [
         "case_id", "input", "input_fingerprint", "previous_attestation_event_hash", "semantic_receipt",
@@ -171,6 +183,17 @@ internal static class FrozenLedgerReferenceProjection
         "semantic_receipt", "statement_id", "witness_id",
     ];
 
+    internal static string[] LegacyReattestPayloadFieldsV4 { get; } =
+    [
+        "axiom_closure", "case_id", "input", "previous_attestation_event_hash",
+    ];
+
+    internal static string[] ExtendedReattestPayloadFieldsV4 { get; } =
+    [
+        "axiom_closure", "case_id", "declaration_statement_ids", "frozen_node_id", "input",
+        "prerequisite_frozen_node_ids", "previous_attestation_event_hash", "statement_id", "witness_id",
+    ];
+
     internal static string[] RevokePayloadFields { get; } =
     [
         "affected_case_ids", "affected_frozen_node_ids", "closure_hash", "evidence",
@@ -184,44 +207,6 @@ internal static class FrozenLedgerReferenceProjection
         "previous_attestation_event_hash", "statement_id", "witness_id",
     ];
 
-    internal static ImmutableDictionary<string, string[]> OidFields { get; } =
-        new Dictionary<string, string[]>(StringComparer.Ordinal)
-        {
-            ["Genesis"] =
-            [
-                GeneratorBlobOid,
-                OriginCommitOid,
-                OriginTreeOid,
-            ],
-            ["Freeze"] =
-            [
-                "input.base_commit_oid",
-                "input.base_tree_oid",
-                "input.descriptor_blob_oid",
-                "input.supporting_blob_oids",
-            ],
-            ["Reattest"] =
-            [
-                "input.base_commit_oid",
-                "input.base_tree_oid",
-                "input.descriptor_blob_oid",
-                "input.supporting_blob_oids",
-            ],
-            ["Revoke"] =
-            [
-                "evidence[].receipt_blob_oid",
-            ],
-            [FrozenLedger.SupersedeEventType] =
-            [
-                "environment.lake_manifest_blob_oid",
-                "environment.lakefile_blob_oid",
-                "environment.lean_toolchain_blob_oid",
-                "input.base_commit_oid",
-                "input.base_tree_oid",
-                "input.descriptor_blob_oid",
-                "input.supporting_blob_oids",
-            ],
-        }.ToImmutableDictionary(StringComparer.Ordinal);
 }
 
 public sealed record FrozenEnvironmentReference(
@@ -429,6 +414,120 @@ public static partial class FrozenLedger
         }
     }
 
+    internal static FrozenLedgerReferenceScanOutcome ScanSuffixReferences(
+        FrozenLedgerSyntax syntax,
+        int startIndex,
+        string previousHash)
+    {
+        ArgumentNullException.ThrowIfNull(syntax);
+        try
+        {
+            if (startIndex < 0 || startIndex > syntax.Lines.Length)
+            {
+                throw new ArgumentOutOfRangeException(nameof(startIndex));
+            }
+
+            ValidateSuffixSyntaxEnvelope(syntax, startIndex);
+
+            var inputs = ImmutableArray.CreateBuilder<FrozenLedgerInput>();
+            var environmentReferences = ImmutableArray.CreateBuilder<FrozenEnvironmentReference>();
+            var receipts = ImmutableHashSet.CreateBuilder<string>(StringComparer.Ordinal);
+            var commits = ImmutableHashSet.CreateBuilder<string>(StringComparer.Ordinal);
+            var trees = ImmutableHashSet.CreateBuilder<string>(StringComparer.Ordinal);
+            var blobs = ImmutableHashSet.CreateBuilder<string>(StringComparer.Ordinal);
+            var previous = previousHash;
+            for (var index = startIndex; index < syntax.Lines.Length; index++)
+            {
+                var line = syntax.Lines[index];
+                var root = line.Value;
+                RequireObjectFields(
+                    root,
+                    "event envelope",
+                    "event_hash", "event_type", "payload", "previous_hash", "schema_version", "sequence");
+                RequireCanonicalLine(line);
+                var sequence = RequiredNonnegativeInteger(root, "sequence");
+                var recordedPrevious = RequiredString(root, "previous_hash");
+                var eventHash = RequiredString(root, "event_hash");
+                if (sequence != index
+                    || RequiredNonnegativeInteger(root, "schema_version") != 1
+                    || !string.Equals(recordedPrevious, previous, StringComparison.Ordinal)
+                    || !FrozenHashSyntax.IsSha256(eventHash)
+                    || !string.Equals(eventHash, ComputeEventHash(root), StringComparison.Ordinal))
+                {
+                    throw new FormatException("Frozen suffix sequence/hash chain is invalid.");
+                }
+
+                var eventType = RequiredString(root, "event_type");
+                var payload = root.GetProperty("payload");
+                if (eventType is "Freeze" or "Reattest")
+                {
+                    RequireEventPayloadFields(payload, eventType);
+                    var parsed = ParseInput(payload.GetProperty("input"));
+                    inputs.Add(parsed);
+                    AddInputReferences(parsed, commits, trees, blobs);
+                }
+                else if (eventType == "Revoke")
+                {
+                    RequireObjectFields(
+                        payload,
+                        "Revoke payload",
+                        FrozenLedgerReferenceProjection.RevokePayloadFields);
+                    var evidence = payload.GetProperty("evidence");
+                    if (evidence.ValueKind != JsonValueKind.Array)
+                    {
+                        throw new FormatException("Revoke payload is missing evidence fields.");
+                    }
+
+                    foreach (var item in evidence.EnumerateArray().Select(ParseEvidence))
+                    {
+                        var (oid, _) = EvidenceReceipt(item);
+                        if (!FrozenHashSyntax.IsGitOid(oid))
+                        {
+                            throw new FormatException(
+                                "Revoke evidence receipt has a malformed Git blob OID.");
+                        }
+
+                        receipts.Add(oid);
+                        blobs.Add(oid);
+                    }
+                }
+                else if (eventType == SupersedeEventType)
+                {
+                    var supersede = ParseSupersede(payload);
+                    inputs.Add(supersede.Input);
+                    environmentReferences.Add(new FrozenEnvironmentReference(
+                        supersede.Input,
+                        supersede.Environment));
+                    AddInputReferences(supersede.Input, commits, trees, blobs);
+                }
+                else
+                {
+                    throw new FormatException(
+                        $"Event type {eventType} is not legal in a candidate suffix.");
+                }
+
+                previous = eventHash;
+            }
+
+            return new FrozenLedgerReferenceScanOutcome.Accepted(FrozenLedgerReferenceSet.Create(
+                inputs.ToImmutable(),
+                environmentReferences.ToImmutable(),
+                receipts.Order(StringComparer.Ordinal).ToImmutableArray(),
+                commits,
+                trees,
+                blobs));
+        }
+        catch (Exception exception) when (
+            exception is ArgumentOutOfRangeException
+                or FormatException
+                or JsonException
+                or InvalidOperationException
+                or KeyNotFoundException)
+        {
+            return new FrozenLedgerReferenceScanOutcome.Rejected(exception.Message);
+        }
+    }
+
     private static void RequireEventPayloadFields(
         JsonElement payload,
         string eventType,
@@ -438,7 +537,8 @@ public static partial class FrozenLedger
         {
             if (schemaVersion is null
                 && (HasExactObjectFields(payload, FrozenLedgerReferenceProjection.FreezePayloadFields)
-                    || HasExactObjectFields(payload, FrozenLedgerReferenceProjection.FreezePayloadFieldsV3)))
+                    || HasExactObjectFields(payload, FrozenLedgerReferenceProjection.FreezePayloadFieldsV3)
+                    || HasExactObjectFields(payload, FrozenLedgerReferenceProjection.FreezePayloadFieldsV4)))
             {
                 return;
             }
@@ -446,9 +546,12 @@ public static partial class FrozenLedger
             RequireObjectFields(
                 payload,
                 "Freeze payload",
-                schemaVersion == 3
-                    ? FrozenLedgerReferenceProjection.FreezePayloadFieldsV3
-                    : FrozenLedgerReferenceProjection.FreezePayloadFields);
+                schemaVersion switch
+                {
+                    3 => FrozenLedgerReferenceProjection.FreezePayloadFieldsV3,
+                    4 => FrozenLedgerReferenceProjection.FreezePayloadFieldsV4,
+                    _ => FrozenLedgerReferenceProjection.FreezePayloadFields,
+                });
             return;
         }
 
@@ -464,12 +567,19 @@ public static partial class FrozenLedger
                 FrozenLedgerReferenceProjection.LegacyReattestPayloadFieldsV3,
                 FrozenLedgerReferenceProjection.ExtendedReattestPayloadFieldsV3,
             },
+            4 => new[]
+            {
+                FrozenLedgerReferenceProjection.LegacyReattestPayloadFieldsV4,
+                FrozenLedgerReferenceProjection.ExtendedReattestPayloadFieldsV4,
+            },
             _ => new[]
             {
                 FrozenLedgerReferenceProjection.LegacyReattestPayloadFields,
                 FrozenLedgerReferenceProjection.ExtendedReattestPayloadFields,
                 FrozenLedgerReferenceProjection.LegacyReattestPayloadFieldsV3,
                 FrozenLedgerReferenceProjection.ExtendedReattestPayloadFieldsV3,
+                FrozenLedgerReferenceProjection.LegacyReattestPayloadFieldsV4,
+                FrozenLedgerReferenceProjection.ExtendedReattestPayloadFieldsV4,
             },
         };
         if (allowed.Any(fields => HasExactObjectFields(payload, fields)))
@@ -480,9 +590,12 @@ public static partial class FrozenLedger
         RequireObjectFields(
             payload,
             "Reattest payload",
-            schemaVersion == 2
-                ? FrozenLedgerReferenceProjection.ExtendedReattestPayloadFields
-                : FrozenLedgerReferenceProjection.ExtendedReattestPayloadFieldsV3);
+            schemaVersion switch
+            {
+                2 => FrozenLedgerReferenceProjection.ExtendedReattestPayloadFields,
+                4 => FrozenLedgerReferenceProjection.ExtendedReattestPayloadFieldsV4,
+                _ => FrozenLedgerReferenceProjection.ExtendedReattestPayloadFieldsV3,
+            });
     }
 
     private static void AddInputReferences(

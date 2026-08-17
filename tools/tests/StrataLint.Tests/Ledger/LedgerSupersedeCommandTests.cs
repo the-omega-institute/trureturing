@@ -55,6 +55,16 @@ public sealed class LedgerSupersedeCommandTests
         Assert.Equal(
             FrozenLedgerTestData.GitBlobOid("leanprover/lean4:v4.25.0\n"),
             active.Environment.LeanToolchainBlobOid);
+        var references = Assert.Single(fixture.Gateway.FrozenReferenceValidations);
+        Assert.Single(references.Inputs);
+        Assert.Single(references.EnvironmentReferences);
+        Assert.Single(references.CommitOids);
+        Assert.Single(references.TreeOids);
+        Assert.Equal(4, references.BlobOids.Length);
+        var supersede = Assert.Single(view.Events, static item => item.EventType == "Supersede");
+        Assert.False(
+            supersede.Payload.GetProperty("input").TryGetProperty("supporting_blob_oids", out _),
+            "Supersede input duplicated its named environment pins");
 
         var afterFirst = FrozenLedgerTestData.ReadLedgerDirectory(fixture.LedgerPath);
         var second = fixture.Environment.SupersedeLedger(arguments);
@@ -62,5 +72,6 @@ public sealed class LedgerSupersedeCommandTests
         Assert.True(second.Success, second.Error);
         Assert.Contains("no changed environment pins", second.Output, StringComparison.Ordinal);
         Assert.Equal(afterFirst, FrozenLedgerTestData.ReadLedgerDirectory(fixture.LedgerPath));
+        Assert.Single(fixture.Gateway.FrozenReferenceValidations);
     }
 }

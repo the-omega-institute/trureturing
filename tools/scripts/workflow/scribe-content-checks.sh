@@ -45,11 +45,11 @@ if [[ "${#CHANGED_PATHS[@]}" -gt 0 ]]; then
   for path in "${CHANGED_PATHS[@]}"; do
     case "$path" in
       Blueprint/*|D5/*.lean|Trureturing.lean|lean-toolchain|lake-manifest.json|lakefile.toml|lakefile.lean|\
-      Library/*|Golden/Projection/*|Meta/BACKFILL.yaml|Meta/Digestion/ticket-index.toml|\
+      Library/*|Golden/Projection/*|Meta/BACKFILL.yaml|\
       Meta/Digestion/backfill/*|Golden/values-kernels.toml|Evidence/D5/values.json|\
       .github/workflows/ci.yml|Directory.Build.props|Directory.Build.targets|Directory.Packages.props|\
       global.json|tools/StrataLint.Scribe/*|tools/StrataLint.Engine/*|tools/StrataLint.Cli/*|\
-      tools/Architecture/*|tools/lean-inspector/*|tools/scripts/workflow/scribe-content-checks.sh|\
+      tools/Architecture/BannedSymbols*.txt|tools/lean-inspector/*|tools/scripts/workflow/scribe-content-checks.sh|\
       tools/scripts/report/lean-report-input.sh)
         requires_emission_checks=1
         break

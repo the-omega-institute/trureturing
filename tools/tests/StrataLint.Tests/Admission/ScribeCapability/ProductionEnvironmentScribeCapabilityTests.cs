@@ -25,11 +25,6 @@ public sealed partial class ProductionEnvironmentTests
     {
         var fixture = new RuleFixture();
         fixture.AddBackfillTargets();
-        var ticketIndex = "ticket_index:\n" + string.Concat(
-            BackfillInventoryLoader.Load(fixture.Build().Current)
-                .RequireTickets()
-                .Select(static ticket =>
-                    $"  - case_id: {ticket.CaseId}\n    gid: {ticket.Gid}\n"));
         var atomizerId = SyntheticNumberedAtomizer.Id;
         var sourceBytes = Encoding.UTF8.GetBytes("# Synthetic\n\n**定理 1.1(A)**。covered。\n");
         var atom = Assert.Single(AtomizerRegistry.Atomize(atomizerId, sourceBytes, DigestionTestSupport.Rules).Claims);
@@ -75,8 +70,7 @@ public sealed partial class ProductionEnvironmentTests
                 """,
                 StringComparison.Ordinal)
             .Replace("          migration: residual", "          migration: absorbed", StringComparison.Ordinal)
-            .Replace("          truth: open", "          truth: closed", StringComparison.Ordinal)
-            .Replace("ticket_index: []", ticketIndex, StringComparison.Ordinal);
+            .Replace("          truth: open", "          truth: closed", StringComparison.Ordinal);
         var attestation = Encoding.UTF8.GetString(ScribeEmissionAttestation.Write([record]).AsSpan());
         var source = Encoding.UTF8.GetString(sourceBytes);
         var cas = Encoding.UTF8.GetString(captured.Bytes.AsSpan());

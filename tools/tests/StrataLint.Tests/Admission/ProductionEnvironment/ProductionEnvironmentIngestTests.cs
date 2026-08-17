@@ -300,7 +300,6 @@ public sealed partial class ProductionEnvironmentTests
                 path: {{RuleFixture.FixtureDigestionSourcePath}}
                 atomizer: {{atomizerId}}
                 entries: []
-            ticket_index: []
             """;
         fixture.Files[RuleFixture.FixtureDigestionSourcePath] = sourceText;
         fixture.Baseline[RuleFixture.FixtureDigestionSourcePath] = sourceText;
@@ -380,7 +379,6 @@ public sealed partial class ProductionEnvironmentTests
                 path: {{RuleFixture.FixtureDigestionSourcePath}}
                 atomizer: {{atomizerId}}
                 entries: []
-            ticket_index: []
             """;
         fixture.Files[RuleFixture.FixtureDigestionSourcePath] = malformedText;
         fixture.Baseline[RuleFixture.FixtureDigestionSourcePath] = malformedText;
@@ -589,7 +587,6 @@ public sealed partial class ProductionEnvironmentTests
                 status:
                   migration: residual
                   truth: open
-        ticket_index: []
         """;
 
     private static void AssertByteIdenticalGenericChainIngest(string chainAtomId)
@@ -682,7 +679,6 @@ public sealed partial class ProductionEnvironmentTests
         {
             files[$"{BackfillInventoryLoader.RootPath}fixture-source/source.toml"] = sourceMetadata;
             files[DirectoryAtomPath("old-receipt", "residual-open")] = atomText;
-            files[BackfillInventoryLoader.TicketIndexPath] = string.Empty;
         }
     }
 
@@ -744,6 +740,5 @@ public sealed partial class ProductionEnvironmentTests
                 status:
                   migration: residual
                   truth: open
-        ticket_index: []
         """;
 }

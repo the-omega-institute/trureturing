@@ -260,12 +260,36 @@ public static partial class FrozenLedger
         }
     }
 
+    internal static FrozenRevokePayload ReadTrustedRevoke(JsonElement payload)
+    {
+        var evidence = payload.GetProperty("evidence");
+        if (evidence.ValueKind != JsonValueKind.Array)
+        {
+            throw new FormatException("trusted Revoke evidence is not an array");
+        }
+
+        return new FrozenRevokePayload(
+            RequiredStringArray(payload, "affected_case_ids"),
+            ParseFrozenNodeIds(payload, "affected_frozen_node_ids"),
+            RequiredString(payload, "closure_hash"),
+            evidence.EnumerateArray().Select(ParseEvidence).ToImmutableArray(),
+            RequiredString(payload, "graph_root"),
+            RequiredStringArray(payload, "root_case_ids"),
+            ParseFrozenNodeIds(payload, "root_frozen_node_ids"));
+    }
+
     private static FrozenFreezePayload ParseHistoricalFreeze(
         JsonElement payload,
         TrustedFrozenGitReferences trustedReferences)
     {
         RequireEventPayloadFields(payload, "Freeze");
-        var pathText = RequiredString(payload, "node_path");
+        var currentShape = HasExactObjectFields(
+            payload,
+            FrozenLedgerReferenceProjection.FreezePayloadFieldsV4);
+        var input = ParseInput(payload.GetProperty("input"));
+        var pathText = currentShape
+            ? input.DescriptorSelector
+            : RequiredString(payload, "node_path");
         if (!RepoPath.TryCreate(pathText, out var path))
         {
             throw new FormatException($"Freeze has invalid node_path {pathText}.");
@@ -275,19 +299,24 @@ public static partial class FrozenLedger
         var witness = ParseWitnessId(RequiredString(payload, "witness_id"), "Freeze witness");
         var frozen = ParseFrozenNodeId(RequiredString(payload, "frozen_node_id"), "Freeze node");
         var result = new FrozenFreezePayload(
-            RequiredString(payload, "case_class"),
+            currentShape ? "active-frozen" : RequiredString(payload, "case_class"),
             RequiredString(payload, "case_id"),
             ParseDeclarationStatementIds(payload),
-            RequiredString(payload, "evaluation"),
-            ParseExpected(payload.GetProperty("expected")),
+            currentShape ? "admission" : RequiredString(payload, "evaluation"),
+            currentShape
+                ? new FrozenExpectedVerdict(
+                    ImmutableArray.Create("admit"),
+                    "none",
+                    ImmutableArray<FrozenExpectedDiagnostic>.Empty)
+                : ParseExpected(payload.GetProperty("expected")),
             frozen,
-            ParseInput(payload.GetProperty("input")),
-            RequiredString(payload, "input_fingerprint"),
+            input,
+            currentShape ? witness.Value : RequiredString(payload, "input_fingerprint"),
             path,
             ParseFrozenNodeIds(payload, "prerequisite_frozen_node_ids"),
-            RequiredString(payload, "semantic_receipt"),
+            currentShape ? frozen.Value : RequiredString(payload, "semantic_receipt"),
             statement,
-            RequiredString(payload, "truth_state"),
+            currentShape ? nameof(TruthState.Closed) : RequiredString(payload, "truth_state"),
             witness)
         {
             AxiomClosure = ParseOptionalAxiomClosure(payload),

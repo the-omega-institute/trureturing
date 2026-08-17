@@ -75,6 +75,35 @@ public sealed class LedgerAppendCommandTests
     }
 
     [Fact]
+    public void ProductionCommandWithOneAppendValidatesOnlyTheSuffixOids()
+    {
+        using var fixture = new LedgerAppendFixture(
+            addSecondClosedModule: false,
+            historicalReattest: true);
+        var preparation = DagLedgerCommandPreparation.Prepare(
+            fixture.Root,
+            fixture.Gateway,
+            fixture.ReportPath);
+
+        Assert.Equal(3, preparation.BaseView.EventCount);
+
+        var result = fixture.Environment.AppendLedger(
+            new[] { "--candidate-lean-report", fixture.ReportPath });
+
+        Assert.True(result.Success, result.Error);
+        Assert.Contains("appended_freezes=1", result.Output, StringComparison.Ordinal);
+        var references = Assert.Single(fixture.Gateway.FrozenReferenceValidations);
+        Assert.Single(references.Inputs);
+        Assert.Equal(FrozenLedgerTestData.PathFor("B"), references.Inputs[0].DescriptorSelector);
+        Assert.DoesNotContain(
+            references.Inputs,
+            static input => input.DescriptorSelector == FrozenLedgerTestData.PathFor("A"));
+        Assert.Single(references.CommitOids);
+        Assert.Single(references.TreeOids);
+        Assert.Equal(3, references.BlobOids.Length);
+    }
+
+    [Fact]
     public void ProductionCommandDirectsExistingIdentityDriftToLedgerSyncWithoutWriting()
     {
         using var fixture = new LedgerAppendFixture(driftARepresentation: true);
@@ -186,6 +215,8 @@ public sealed class LedgerAppendCommandTests
         var candidateSyntax = Assert.IsType<DagLedgerLoadOutcome.Loaded>(
             DagLedgerLoader.Load(candidateBytes.AsSpan())).Syntax;
         FrozenLedgerTestData.WriteLedgerDirectory(temporary.Path, baselineBytes);
+        var expectedBaselineFiles = DagLedgerCommandPreparation.ReadLedgerDirectoryFiles(
+            temporary.Path);
         Assert.True(DagLedgerCommandPreparation.LoadLedgerDirectory(
                 temporary.Path,
                 "early baseline recheck").RawBytes.AsSpan().SequenceEqual(baselineBytes.AsSpan()));
@@ -208,7 +239,7 @@ public sealed class LedgerAppendCommandTests
                 temporary.Path,
                 candidateSyntax.Lines,
                 baseline.Events.Length,
-                expectedBaselineBytes: baselineBytes.ToArray()));
+                expectedBaselineFiles: expectedBaselineFiles));
 
         Assert.Contains("accepted event files changed", exception.Message, StringComparison.Ordinal);
         var after = DirectorySnapshot(temporary.Path);
@@ -316,7 +347,9 @@ public sealed class LedgerAppendCommandTests
         internal LedgerAppendFixture(
             bool driftARepresentation = false,
             string currentAStatementMaterial = "True",
-            bool pinBump = false)
+            bool pinBump = false,
+            bool addSecondClosedModule = true,
+            bool historicalReattest = false)
         {
             var baselineA = FrozenLedgerTestData.ModuleWithReport(
                 "A",
@@ -331,12 +364,26 @@ public sealed class LedgerAppendCommandTests
             var b = FrozenLedgerTestData.Module("B", imports: new[] { "A" });
             var c = FrozenLedgerTestData.Module("C", imports: new[] { "B" });
             var baselineCatalog = FrozenLedgerTestData.BuildCatalog(baselineA);
-            CandidateCatalog = FrozenLedgerTestData.BuildCatalog(candidateA, b, c);
+            CandidateCatalog = addSecondClosedModule
+                ? FrozenLedgerTestData.BuildCatalog(candidateA, b, c)
+                : FrozenLedgerTestData.BuildCatalog(candidateA, b);
             BaselineBytes = FrozenLedgerGenerator.GenerateGenesis(
                 baselineCatalog,
                 new FrozenGenesisDescriptor(
                     FrozenLedgerTestData.GitOid('e'),
                     RuleCatalog.Default.RootSha256));
+            if (historicalReattest)
+            {
+                var syntax = Assert.IsType<DagLedgerLoadOutcome.Loaded>(
+                    DagLedgerLoader.Load(BaselineBytes.AsSpan())).Syntax;
+                var baseline = Assert.IsType<FrozenLedgerValidationOutcome.Accepted>(
+                    FrozenLedgerTestData.ValidateGenesis(syntax, baselineCatalog)).Capability;
+                var entry = Assert.Single(baseline.ActiveEntries).Value;
+                BaselineBytes = FrozenLedgerGenerator.AppendReattestation(
+                    baseline,
+                    entry.Payload.CaseId,
+                    entry.Payload.Input);
+            }
 
             var files = new Dictionary<string, string>(StringComparer.Ordinal)
             {
@@ -347,19 +394,26 @@ public sealed class LedgerAppendCommandTests
                 ["lake-manifest.json"] = "{}\n",
                 [FrozenLedgerTestData.PathFor("A")] = candidateA.Source,
                 [FrozenLedgerTestData.PathFor("B")] = b.Source,
-                [FrozenLedgerTestData.PathFor("C")] = c.Source,
             };
+            if (addSecondClosedModule)
+            {
+                files.Add(FrozenLedgerTestData.PathFor("C"), c.Source);
+            }
             FrozenLedgerTestData.AddLedgerFiles(files, BaselineBytes);
             var raw = RawRepositorySnapshot.Create(
                 files.Select(static item => RawRepositoryEntry.FromText(item.Key, item.Value)));
             var snapshot = Assert.IsType<SnapshotDecodeOutcome.Decoded>(
                 SnapshotDecoder.Decode(raw)).Snapshot;
-            var report = LeanAxiomReport.Create(new Dictionary<string, LeanFileReport>(StringComparer.Ordinal)
+            var reports = new Dictionary<string, LeanFileReport>(StringComparer.Ordinal)
             {
                 [FrozenLedgerTestData.PathFor("A")] = Report("A", currentAStatementMaterial),
                 [FrozenLedgerTestData.PathFor("B")] = Report("B", "True", "A"),
-                [FrozenLedgerTestData.PathFor("C")] = Report("C", "True", "B"),
-            });
+            };
+            if (addSecondClosedModule)
+            {
+                reports.Add(FrozenLedgerTestData.PathFor("C"), Report("C", "True", "B"));
+            }
+            var report = LeanAxiomReport.Create(reports);
 
             LedgerPath = Path.Combine(
                 temporary.Path,
@@ -367,9 +421,10 @@ public sealed class LedgerAppendCommandTests
             FrozenLedgerTestData.WriteLedgerDirectory(LedgerPath, BaselineBytes);
             ReportPath = Path.Combine(temporary.Path, "candidate-lean-report.json");
             File.WriteAllBytes(ReportPath, RawLeanReportArtifact.Write(snapshot, report).AsSpan());
+            Gateway = new FakeRepositoryGateway(RawChangeSet.Create([]), raw, null);
             Environment = new ProductionCliEnvironment(
                 temporary.Path,
-                new FakeRepositoryGateway(RawChangeSet.Create([]), raw, null),
+                Gateway,
                 new FakeLeanReportSource(null));
         }
 
@@ -378,6 +433,8 @@ public sealed class LedgerAppendCommandTests
         internal FrozenMaterialCatalog CandidateCatalog { get; }
 
         internal ProductionCliEnvironment Environment { get; }
+
+        internal FakeRepositoryGateway Gateway { get; }
 
         internal string LedgerPath { get; }
 

@@ -22,15 +22,6 @@ internal static partial class RepositoryRules
         + "状态\\s*[:：]\\s*(?:已证|承典|条件|开放)|〔(?:已证|承典|条件|开放)〕)",
         RegexOptions.IgnoreCase | RegexOptions.CultureInvariant);
 
-    private static readonly Regex TaskTokenPattern = new(
-        "TASK\\s+(D[0-9]+-T[0-9]{4})",
-        RegexOptions.CultureInvariant);
-
-    private static readonly Regex TaskPattern = new(
-        "/-- TASK (?<code>D5-T[0-9]{4}) \\| 难度:[1-5] \\| 依赖:[^\\n|]+ \\| 尝试:[0-9]+\\n"
-        + "\\s+提示:[^\\n]+\\n\\s+尸检:(?<autopsy>[^\\n]+) -/",
-        RegexOptions.CultureInvariant);
-
     private static readonly Regex SafeFieldPattern = new(
         "^[A-Za-z0-9_/.-]+$",
         RegexOptions.CultureInvariant);
@@ -59,7 +50,7 @@ internal static partial class RepositoryRules
         ImmutableHashSet.Create(
             StringComparer.Ordinal,
             "anomaly", "anomalies", "case", "case_id", "category", "exception", "exceptions",
-            "failure", "failures", "kind", "record_type", "resolution", "state", "tension",
+            "evidence_type", "failure", "failures", "kind", "record_type", "resolution", "state", "tension",
             "tensions", "type", "unresolved");
 
     internal static ImmutableArray<RuleRegistration> CreateRegistrations() =>
@@ -88,9 +79,8 @@ internal static partial class RepositoryRules
         Register(10, "Generality closure", new RepositoryRule(GeneralSource, Generality)),
         Register(11, "Controlled domains", new RepositoryRule(DomainScoped, Domains)),
         Register(12, "Six-line Lean header", new RepositoryRule(Formal, Headers)),
-        // 台账不再执法:11/20 个工单块的尸检是 none,而它曾阻止清理它所描述的东西
-        // (退役 papergen 时删不掉那个「从未建成」的工单)。条目保留、位置不动 ——
-        // 目录里有按位置取 descriptor 的消费者,抽掉一条会让它们静默错位。
+        // SL-013 remains deferred and has no rejection predicate. Keep this descriptor in place:
+        // positional consumers would silently bind later registrations to the wrong rule otherwise.
         Register(
             13,
             "Permanent task ledger",

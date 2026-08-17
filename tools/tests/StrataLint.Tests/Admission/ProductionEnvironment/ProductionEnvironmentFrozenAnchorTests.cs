@@ -159,7 +159,7 @@ public sealed partial class ProductionEnvironmentTests
         Assert.Equal(incompletePath, incompleteDiagnostic.Path);
         Assert.Contains("delta is invalid", incompleteDiagnostic.Message, StringComparison.Ordinal);
 
-        // Retain the existing incremental-Revoke rejection in the same repository-reading test.
+        // An empty Revoke is parsed by incremental admission and rejected by the shared planner.
         var fixture = new RuleFixture();
         fixture.AddBackfillTargets();
         fixture.Files["Meta/registry.yaml"] = TestRegistry.Canonical;
@@ -197,7 +197,7 @@ public sealed partial class ProductionEnvironmentTests
             rejected.Diagnostics.Where(static item => item.RuleId == RuleId.CreateKnown(8)));
         Assert.Equal(path, diagnostic.Path);
         Assert.Contains(
-            "incremental admission does not support Revoke",
+            "Revocation evidence is empty",
             diagnostic.Message,
             StringComparison.Ordinal);
     }
@@ -646,7 +646,8 @@ public sealed partial class ProductionEnvironmentTests
             using var document = JsonDocument.Parse(fixture.Files[path]);
             var root = document.RootElement;
             return root.GetProperty("event_type").GetString() == "Freeze"
-                && root.GetProperty("payload").GetProperty("node_path").GetString() == nodePath;
+                && root.GetProperty("payload").GetProperty("input")
+                    .GetProperty("descriptor_selector").GetString() == nodePath;
         });
 
     private static string FreezePathFor(RuleFixture fixture, string nodePath) =>
@@ -660,7 +661,8 @@ public sealed partial class ProductionEnvironmentTests
             using var document = JsonDocument.Parse(item.Value);
             var root = document.RootElement;
             return root.GetProperty("event_type").GetString() == "Freeze"
-                && root.GetProperty("payload").GetProperty("node_path").GetString() == nodePath;
+                && root.GetProperty("payload").GetProperty("input")
+                    .GetProperty("descriptor_selector").GetString() == nodePath;
         }).Key;
 
     private static string WriteCandidateReport(TemporaryDirectory temporary, RuleFixture fixture)

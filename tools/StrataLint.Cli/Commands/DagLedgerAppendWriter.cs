@@ -40,10 +40,11 @@ internal static class DagLedgerAppendWriter
             var candidateSyntax = DagLedgerCommandPreparation.LoadLedger(
                 candidateBytes.AsSpan(),
                 "generated frozen ledger");
-            var candidateReferences = DagLedgerCommandPreparation.ScanReferences(
+            var trustedCandidateReferences = DagLedgerCommandPreparation.ValidateSuffixReferences(
+                repository,
                 candidateSyntax,
+                context.Baseline,
                 "generated frozen ledger");
-            var trustedCandidateReferences = repository.ValidateFrozenReferences(candidateReferences);
             var candidate = FrozenLedger.ValidateCandidate(
                 candidateSyntax,
                 context.Baseline,
@@ -55,20 +56,14 @@ internal static class DagLedgerAppendWriter
                     "generated frozen ledger is invalid: " + rejected.Message),
                 _ => throw new InvalidOperationException("unknown ledger validation outcome"),
             };
-            var currentBaseline = DagLedgerCommandPreparation.LoadLedgerDirectory(
-                context.LedgerPath,
-                "existing frozen ledger");
-            if (!currentBaseline.RawBytes.AsSpan().SequenceEqual(context.BaselineBytes))
-            {
-                throw new InvalidOperationException("accepted event files changed while ledger-append was validating them");
-            }
+            RequireUnchangedBaseline(context.LedgerPath, context.BaselineFiles, "ledger-append");
 
             WriteNewEvents(
                 context.LedgerPath,
                 candidateSyntax.Lines,
                 context.Baseline.Events.Length,
-                context.BaselineBytes,
-                currentBaseline);
+                context.BaselineFiles,
+                context.BaselineSyntax);
             var appended = candidate.Events.Skip(context.Baseline.Events.Length).ToImmutableArray();
             var reattests = appended
                 .OfType<FrozenLedgerEvent.Reattest>()
@@ -107,12 +102,12 @@ internal static class DagLedgerAppendWriter
         string directory,
         IEnumerable<FrozenLedgerLineSyntax> lines,
         int skip = 0,
-        byte[]? expectedBaselineBytes = null,
+        ImmutableArray<RepositoryFile> expectedBaselineFiles = default,
         FrozenLedgerSyntax? existingSyntax = null) =>
         WriteEventFiles(
             directory,
             BuildNewEventFiles(lines, skip, existingSyntax),
-            expectedBaselineBytes);
+            expectedBaselineFiles);
 
     internal static ImmutableArray<RepositoryFile> BuildNewEventFiles(
         IEnumerable<FrozenLedgerLineSyntax> lines,
@@ -162,7 +157,8 @@ internal static class DagLedgerAppendWriter
             var identity = FrozenLedgerCanonicalWriter.EventIdentity(
                 eventType,
                 payload,
-                encoded.Hash);
+                encoded.Hash,
+                schemaVersion);
             var path = RepoPath.CreateKnown(
                 $"{FrozenLedgerChangeClassifier.AcceptedRoot}/{identity[7..]}.json");
             files.Add(new RepositoryFile(
@@ -177,14 +173,12 @@ internal static class DagLedgerAppendWriter
     internal static void WriteEventFiles(
         string directory,
         IEnumerable<RepositoryFile> files,
-        byte[]? expectedBaselineBytes = null)
+        ImmutableArray<RepositoryFile> expectedBaselineFiles = default)
     {
         var lockPath = Path.Combine(directory, ".ledger-write.lock");
         using var publicationLock = AcquirePublicationLock(lockPath);
-        if (expectedBaselineBytes is not null
-            && !DagLedgerCommandPreparation.LoadLedgerDirectory(
-                    directory,
-                    "existing frozen ledger").RawBytes.AsSpan().SequenceEqual(expectedBaselineBytes))
+        if (!expectedBaselineFiles.IsDefault
+            && !LedgerDirectoryMatches(directory, expectedBaselineFiles))
         {
             throw new InvalidOperationException(
                 "accepted event files changed while the ledger command was validating them");
@@ -231,6 +225,33 @@ internal static class DagLedgerAppendWriter
             CleanupStagingDirectory(stagingDirectory);
             throw;
         }
+    }
+
+    internal static void RequireUnchangedBaseline(
+        string directory,
+        ImmutableArray<RepositoryFile> expectedFiles,
+        string command)
+    {
+        if (!LedgerDirectoryMatches(directory, expectedFiles))
+        {
+            throw new InvalidOperationException(
+                $"accepted event files changed while {command} was validating them");
+        }
+    }
+
+    private static bool LedgerDirectoryMatches(
+        string directory,
+        ImmutableArray<RepositoryFile> expectedFiles)
+    {
+        var actual = DagLedgerCommandPreparation.ReadLedgerDirectoryFiles(directory);
+        if (actual.Length != expectedFiles.Length)
+        {
+            return false;
+        }
+
+        var expectedByPath = expectedFiles.ToDictionary(static file => file.Path);
+        return actual.All(file => expectedByPath.TryGetValue(file.Path, out var expected)
+            && file.RawBytes.AsSpan().SequenceEqual(expected.RawBytes.AsSpan()));
     }
 
     internal static void RollbackCreatedFiles(IEnumerable<string> createdPaths)

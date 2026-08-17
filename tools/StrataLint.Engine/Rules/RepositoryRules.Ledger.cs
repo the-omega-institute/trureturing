@@ -13,7 +13,7 @@ internal static partial class RepositoryRules
     private static ImmutableArray<RuleFinding> Ledger(RuleEvaluationContext context)
     {
         var findings = ImmutableArray.CreateBuilder<RuleFinding>();
-        var tasks = CollectTasks(context.Current, null).Keys.ToHashSet(StringComparer.Ordinal);
+        var tasks = CollectTaskCodes(context.Current);
         foreach (var (path, file) in context.Current.Files)
         {
             var governed = IsGovernedStructured(path, context.Policy);

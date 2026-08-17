@@ -5,8 +5,6 @@ namespace StrataLint.Tests;
 
 public sealed partial class TheoryAtomizerTests
 {
-    private const string SecondProductionSource =
-        "docs/develop/theory/PZG_BEDC.md";
     private const string FourthProductionSource =
         "docs/develop/theory/INTERFACE_PAPER.md";
 

@@ -84,7 +84,10 @@ public sealed partial class FrozenLedgerTests
             frozen.Value,
             statement,
             nameof(TruthState.Closed),
-            witness);
+            witness)
+        {
+            AxiomClosure = ImmutableArray<string>.Empty,
+        };
         var line = FrozenLedgerCanonicalWriter.WriteEvent(
             "Freeze",
             FrozenLedgerCanonicalWriter.FreezeElement(payload),
@@ -101,41 +104,7 @@ public sealed partial class FrozenLedgerTests
     }
 
     [Fact]
-    public void ReattestCannotChangeSemanticReceipt()
-    {
-        var catalog = BuildCatalog(Module("A"));
-        var bytes = FrozenLedgerGenerator.GenerateGenesis(
-            catalog,
-            new FrozenGenesisDescriptor(GitOid('e'), RuleCatalog.Default.RootSha256));
-        var baseline = Assert.IsType<FrozenLedgerValidationOutcome.Accepted>(
-            ValidateGenesis(
-                Assert.IsType<DagLedgerLoadOutcome.Loaded>(DagLedgerLoader.Load(bytes.AsSpan())).Syntax,
-                catalog)).Capability;
-        var freeze = Assert.IsType<FrozenLedgerEvent.Freeze>(baseline.Events[1]);
-        var forged = new FrozenReattestPayload(
-            freeze.Payload.CaseId,
-            freeze.Payload.Input,
-            freeze.Payload.InputFingerprint,
-            freeze.EventHash,
-            Sha256("different-semantic-receipt"));
-        var line = FrozenLedgerCanonicalWriter.WriteEvent(
-            "Reattest",
-            FrozenLedgerCanonicalWriter.ReattestElement(forged),
-            baseline.HeadHash,
-            baseline.Events.Length).Bytes;
-
-        var rejected = Assert.IsType<FrozenLedgerValidationOutcome.Rejected>(
-            ValidateCandidate(
-                Assert.IsType<DagLedgerLoadOutcome.Loaded>(
-                    DagLedgerLoader.Load(bytes.Concat(line).ToArray())).Syntax,
-                baseline,
-                catalog));
-
-        Assert.Contains("semantic identity", rejected.Message, StringComparison.OrdinalIgnoreCase);
-    }
-
-    [Fact]
-    public void ReattestCannotSwapDescriptorBytesWhileEchoingTheOldFingerprint()
+    public void ReattestCannotSwapDescriptorBytes()
     {
         var catalog = BuildCatalog(Module("A"));
         var bytes = FrozenLedgerGenerator.GenerateGenesis(
@@ -151,7 +120,10 @@ public sealed partial class FrozenLedgerTests
             freeze.Payload.Input with { DescriptorBlobOid = GitOid('f') },
             freeze.Payload.InputFingerprint,
             freeze.EventHash,
-            freeze.Payload.SemanticReceipt);
+            freeze.Payload.SemanticReceipt)
+        {
+            AxiomClosure = freeze.Payload.AxiomClosure,
+        };
         var line = FrozenLedgerCanonicalWriter.WriteEvent(
             "Reattest",
             FrozenLedgerCanonicalWriter.ReattestElement(forged),

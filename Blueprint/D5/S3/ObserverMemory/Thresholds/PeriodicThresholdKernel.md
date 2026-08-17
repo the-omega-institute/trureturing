@@ -23,4 +23,3 @@ Repository search found and the proof applies the weaker quantitative finite-orb
 ## References
 
 - Truth anchor: `D5/S3/ObserverMemory/Thresholds/PeriodicThresholdKernel.eventual_threshold_iff_reachable_periodic`
-- Dependency: [D5/S3/ObserverMemory/Prediction/FiniteOrbitPeriodBound](../Prediction/FiniteOrbitPeriodBound.md)

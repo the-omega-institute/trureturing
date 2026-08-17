@@ -6,9 +6,7 @@ namespace StrataLint.Tests;
 
 public sealed partial class MakeWorkflowTests
 {
-    private const string DotnetBuildScriptPath = "tools/scripts/dotnet-build.sh";
     private const string ScribeScriptPath = "tools/scripts/scribe.sh";
-    private const string SelftestScriptPath = "tools/scripts/stratalint-selftest.sh";
     private const string LocalHarnessGateScriptPath =
         "tools/scripts/local-harness-gate.sh";
     private const string PreflightScriptPath = "tools/scripts/preflight.sh";
@@ -18,7 +16,6 @@ public sealed partial class MakeWorkflowTests
         "tools/scripts/workflow/scribe-content-checks.sh";
     private const string InstallLeanToolchainScriptPath =
         "tools/scripts/workflow/install-lean-toolchain.sh";
-    private const string CleanLanesScriptPath = "tools/scripts/clean-lanes.sh";
     private const string WorktreeInitScriptPath = "tools/scripts/worktree-init.sh";
     private const string LeanReportScriptPath =
         "tools/scripts/report/lean-report.sh";
@@ -37,7 +34,6 @@ public sealed partial class MakeWorkflowTests
     private const string LeanReportInputScriptPath =
         "tools/scripts/report/lean-report-input.sh";
     private const string LeanReportPairScriptPath = "tools/scripts/lean-report-pair.sh";
-    private const string PerfReportScriptPath = "tools/scripts/perf-report.sh";
     private const string PerfEventScriptPath = "tools/scripts/lib/perf-event-lib.sh";
     private const string RendererContractUpdateScriptPath =
         "tools/scripts/update-renderer-contract.sh";

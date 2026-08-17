@@ -85,14 +85,16 @@ public sealed class AdmissionWorkflowTests
     public void PushFallbackBaseIsCheckedHeadFirstParent()
     {
         var baselineScript = BaselineResolutionScript(SharedAdmissionWorkflow);
-        var pushBranch = baselineScript[
-            baselineScript.IndexOf("else", StringComparison.Ordinal)..];
 
         Assert.Contains(
             "sha=\"$(git -C candidate rev-parse HEAD^1)\"",
-            pushBranch,
+            baselineScript,
             StringComparison.Ordinal);
-        Assert.DoesNotContain("$GITHUB_SHA^", pushBranch, StringComparison.Ordinal);
+        Assert.Single(Regex.Matches(
+            baselineScript,
+            Regex.Escape("sha=\"$(git -C candidate rev-parse HEAD^1)\"")));
+        Assert.DoesNotContain("github.event.before", baselineScript, StringComparison.Ordinal);
+        Assert.DoesNotContain("$GITHUB_SHA^", baselineScript, StringComparison.Ordinal);
     }
 
     [Fact]
@@ -107,7 +109,7 @@ public sealed class AdmissionWorkflowTests
                 steps,
                 step => step.Children.TryGetValue(new YamlScalarNode("uses"), out var uses)
                     && uses is YamlScalarNode { Value: "actions/checkout@v4" });
-            Assert.True(checkoutIndex >= 0 && checkoutIndex + 1 < steps.Length);
+            Assert.True(checkoutIndex >= 0 && checkoutIndex + 2 < steps.Length);
 
             var checkout = steps[checkoutIndex];
             Assert.Equal("checkout-merge", Assert.IsType<YamlScalarNode>(
@@ -115,7 +117,8 @@ public sealed class AdmissionWorkflowTests
             Assert.Equal("${{ github.event_name == 'pull_request_target' }}", Assert.IsType<YamlScalarNode>(
                 checkout.Children[new YamlScalarNode("continue-on-error")]).Value);
 
-            var failure = steps[checkoutIndex + 1];
+            Assert.Equal("Strip checkout remote state", StepName(steps[checkoutIndex + 1]));
+            var failure = steps[checkoutIndex + 2];
             Assert.Equal("Fail closed when merge result is unavailable", StepName(failure));
             var condition = Assert.IsType<YamlScalarNode>(
                 failure.Children[new YamlScalarNode("if")]).Value ?? string.Empty;
