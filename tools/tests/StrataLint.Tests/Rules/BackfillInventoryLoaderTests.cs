@@ -146,11 +146,136 @@ public sealed class BackfillInventoryLoaderTests
         Assert.Equal($"backfill atom is not owned by exactly one source: {path}", exception.Message);
     }
 
+    [Fact]
+    public void SourceMetadataRejectsHistoricalSchemaInCandidate()
+    {
+        var sourcePath = $"{BackfillInventoryLoader.RootPath}delta-v0.1/source.toml";
+        var exception = Assert.Throws<FormatException>(() => BackfillInventoryLoader.Load(Snapshot(
+            (sourcePath,
+                "source_id = \"delta-v0.1\"\n"
+                + "path = \"docs/delta.md\"\n"
+                + "atomizer = \"none\"\n"),
+            Atom("delta-v0.1", "residual-open", "delta-atom", "theorem/delta"))));
+
+        Assert.Equal($"source metadata keys are not canonical: {sourcePath}", exception.Message);
+    }
+
+    [Fact]
+    public void SourceMetadataAcceptsHistoricalSchemaOnlyInBaseline()
+    {
+        var sourcePath = $"{BackfillInventoryLoader.RootPath}delta-v0.1/source.toml";
+        var document = BackfillInventoryLoader.LoadBaseline(Snapshot(
+            (sourcePath,
+                "source_id = \"delta-v0.1\"\n"
+                + "path = \"docs/delta.md\"\n"
+                + "atomizer = \"none\"\n"
+                + "acknowledged_stale = [\"old-one\"]\n"),
+            Atom("delta-v0.1", "residual-open", "delta-atom", "theorem/delta")));
+
+        var source = Assert.Single(document.RequireDigestionSources());
+        Assert.Equal(["old-one"], source.AcknowledgedStale.ToArray());
+        AssertGenreRegistryProjectionUnavailable(source);
+    }
+
+    [Fact]
+    public void BaselineCurrentSchemaGenreProjectionIsAlsoUnavailable()
+    {
+        var sourcePath = $"{BackfillInventoryLoader.RootPath}delta-v0.1/source.toml";
+        var document = BackfillInventoryLoader.LoadBaseline(Snapshot(
+            (sourcePath,
+                "source_id = \"delta-v0.1\"\n"
+                + "path = \"docs/delta.md\"\n"
+                + "atomizer = \"pzg-v1\"\n"
+                + "genre_registry_check = \"collected\"\n"
+                + "unregistered_genres = [\"未登记体\"]\n"),
+            Atom("delta-v0.1", "residual-open", "delta-atom", "theorem/delta")));
+
+        AssertGenreRegistryProjectionUnavailable(
+            Assert.Single(document.RequireDigestionSources()));
+    }
+
+    [Fact]
+    public void SourceMetadataRejectsInvalidGenreRegistryCheck()
+    {
+        var sourcePath = $"{BackfillInventoryLoader.RootPath}delta-v0.1/source.toml";
+        var exception = Assert.Throws<FormatException>(() => BackfillInventoryLoader.Load(Snapshot(
+            (sourcePath,
+                "source_id = \"delta-v0.1\"\n"
+                + "path = \"docs/delta.md\"\n"
+                + "atomizer = \"pzg-v1\"\n"
+                + "genre_registry_check = \"unknown\"\n"
+                + "unregistered_genres = []\n"),
+            Atom("delta-v0.1", "residual-open", "delta-atom", "theorem/delta"))));
+
+        Assert.Equal($"invalid genre_registry_check: {sourcePath}", exception.Message);
+    }
+
+    [Fact]
+    public void SourceMetadataRejectsNoRegistryWithUnregisteredGenres()
+    {
+        var sourcePath = $"{BackfillInventoryLoader.RootPath}delta-v0.1/source.toml";
+        var exception = Assert.Throws<FormatException>(() => BackfillInventoryLoader.Load(Snapshot(
+            (sourcePath,
+                "source_id = \"delta-v0.1\"\n"
+                + "path = \"docs/delta.md\"\n"
+                + "atomizer = \"none\"\n"
+                + "genre_registry_check = \"no-registry\"\n"
+                + "unregistered_genres = [\"未登记体\"]\n"),
+            Atom("delta-v0.1", "residual-open", "delta-atom", "theorem/delta"))));
+
+        Assert.Equal(
+            $"no-registry requires empty unregistered_genres: {sourcePath}",
+            exception.Message);
+    }
+
     [Theory]
-    [InlineData("source_id = [\"delta-v0.1\"]\npath = \"docs/delta.md\"\natomizer = \"none\"\n")]
-    [InlineData("source_id = \"delta-v0.1\"\npath = [\"docs/delta.md\", \"docs/epsilon.md\"]\natomizer = \"none\"\n")]
-    [InlineData("source_id = \"delta-v0.1\"\npath = \"docs/delta.md\"\natomizer = []\n")]
-    [InlineData("source_id = \"delta-v0.1\" trailing\npath = \"docs/delta.md\"\natomizer = \"none\"\n")]
+    [InlineData("[\"\"]")]
+    [InlineData("[\"未登记体\", \"另一体\"]")]
+    [InlineData("[\"未登记体\", \"未登记体\"]")]
+    public void SourceMetadataRejectsBlankUnsortedOrDuplicateUnregisteredGenres(
+        string unregisteredGenres)
+    {
+        var sourcePath = $"{BackfillInventoryLoader.RootPath}delta-v0.1/source.toml";
+        var exception = Assert.Throws<FormatException>(() => BackfillInventoryLoader.Load(Snapshot(
+            (sourcePath,
+                "source_id = \"delta-v0.1\"\n"
+                + "path = \"docs/delta.md\"\n"
+                + "atomizer = \"pzg-v1\"\n"
+                + "genre_registry_check = \"collected\"\n"
+                + $"unregistered_genres = {unregisteredGenres}\n"),
+            Atom("delta-v0.1", "residual-open", "delta-atom", "theorem/delta"))));
+
+        Assert.Equal(
+            $"unregistered_genres must contain sorted unique nonempty tokens: {sourcePath}",
+            exception.Message);
+    }
+
+    [Fact]
+    public void SourceMetadataGenreProjectionRoundTripsCanonicalBytes()
+    {
+        var sourcePath = $"{BackfillInventoryLoader.RootPath}delta-v0.1/source.toml";
+        var metadata =
+            "source_id = \"delta-v0.1\"\n"
+            + "path = \"docs/delta.md\"\n"
+            + "atomizer = \"pzg-v1\"\n"
+            + "genre_registry_check = \"collected\"\n"
+            + "unregistered_genres = [\"另一体\", \"未登记体\"]\n"
+            + "acknowledged_stale = [\"old-one\"]\n";
+        var document = BackfillInventoryLoader.Load(Snapshot(
+            (sourcePath, metadata),
+            Atom("delta-v0.1", "residual-open", "delta-atom", "theorem/delta")));
+
+        Assert.Equal(
+            Encoding.UTF8.GetBytes(metadata),
+            BackfillInventoryWriter.WriteSourceMetadata(
+                Assert.Single(document.RequireDigestionSources())).ToArray());
+    }
+
+    [Theory]
+    [InlineData("source_id = [\"delta-v0.1\"]\npath = \"docs/delta.md\"\natomizer = \"none\"\ngenre_registry_check = \"no-registry\"\nunregistered_genres = []\n")]
+    [InlineData("source_id = \"delta-v0.1\"\npath = [\"docs/delta.md\", \"docs/epsilon.md\"]\natomizer = \"none\"\ngenre_registry_check = \"no-registry\"\nunregistered_genres = []\n")]
+    [InlineData("source_id = \"delta-v0.1\"\npath = \"docs/delta.md\"\natomizer = []\ngenre_registry_check = \"no-registry\"\nunregistered_genres = []\n")]
+    [InlineData("source_id = \"delta-v0.1\" trailing\npath = \"docs/delta.md\"\natomizer = \"none\"\ngenre_registry_check = \"no-registry\"\nunregistered_genres = []\n")]
     public void SourceMetadataRequiresExactlyOneQuotedScalarPerIdentityField(string metadata)
     {
         var path = $"{BackfillInventoryLoader.RootPath}delta-v0.1/source.toml";
@@ -166,7 +291,7 @@ public sealed class BackfillInventoryLoaderTests
     {
         var sourcePath = $"{BackfillInventoryLoader.RootPath}delta-v0.1/source.toml";
         var document = BackfillInventoryLoader.Load(Snapshot(
-            (sourcePath, "source_id = \"delta-v0.1\"\npath = \"docs/delta.md\"\natomizer = \"none\"\nacknowledged_stale = [\"old-one\", \"old-two\"]\n"),
+            (sourcePath, "source_id = \"delta-v0.1\"\npath = \"docs/delta.md\"\natomizer = \"none\"\ngenre_registry_check = \"no-registry\"\nunregistered_genres = []\nacknowledged_stale = [\"old-one\", \"old-two\"]\n"),
             Atom("delta-v0.1", "residual-open", "delta-atom", "theorem/delta")));
 
         Assert.Equal(
@@ -175,14 +300,14 @@ public sealed class BackfillInventoryLoaderTests
     }
 
     [Fact]
-    public void SourceMetadataAllowsEmptyAcknowledgedStaleArray()
+    public void SourceMetadataRejectsNoncanonicalEmptyAcknowledgedStaleArray()
     {
         var sourcePath = $"{BackfillInventoryLoader.RootPath}delta-v0.1/source.toml";
-        var document = BackfillInventoryLoader.Load(Snapshot(
-            (sourcePath, "source_id = \"delta-v0.1\"\npath = \"docs/delta.md\"\natomizer = \"none\"\nacknowledged_stale = []\n"),
-            Atom("delta-v0.1", "residual-open", "delta-atom", "theorem/delta")));
+        var exception = Assert.Throws<FormatException>(() => BackfillInventoryLoader.Load(Snapshot(
+            (sourcePath, "source_id = \"delta-v0.1\"\npath = \"docs/delta.md\"\natomizer = \"none\"\ngenre_registry_check = \"no-registry\"\nunregistered_genres = []\nacknowledged_stale = []\n"),
+            Atom("delta-v0.1", "residual-open", "delta-atom", "theorem/delta"))));
 
-        Assert.Empty(Assert.Single(document.RequireDigestionSources()).AcknowledgedStale);
+        Assert.Equal($"source metadata is not canonically encoded: {sourcePath}", exception.Message);
     }
 
     [Theory]
@@ -194,7 +319,7 @@ public sealed class BackfillInventoryLoaderTests
     {
         var sourcePath = $"{BackfillInventoryLoader.RootPath}delta-v0.1/source.toml";
         var exception = Assert.Throws<FormatException>(() => BackfillInventoryLoader.Load(Snapshot(
-            (sourcePath, $"source_id = \"delta-v0.1\"\npath = \"docs/delta.md\"\natomizer = \"none\"\nacknowledged_stale = {encoded}\n"),
+            (sourcePath, $"source_id = \"delta-v0.1\"\npath = \"docs/delta.md\"\natomizer = \"none\"\ngenre_registry_check = \"no-registry\"\nunregistered_genres = []\nacknowledged_stale = {encoded}\n"),
             Atom("delta-v0.1", "residual-open", "delta-atom", "theorem/delta"))));
 
         Assert.Equal($"acknowledged_stale must be a quoted string array without blank elements: {sourcePath}", exception.Message);
@@ -552,9 +677,21 @@ public sealed class BackfillInventoryLoaderTests
         return Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(raw)).Snapshot;
     }
 
+    private static void AssertGenreRegistryProjectionUnavailable(DigestionLedgerSource source)
+    {
+        Assert.Equal(GenreRegistryProjection.Unavailable, source.GenreRegistryProjection);
+        Assert.NotEqual(
+            GenreRegistryProjection.Available(GenreRegistryCheck.NoGenreRegistry),
+            source.GenreRegistryProjection);
+        var exception = Assert.Throws<InvalidOperationException>(() => source.GenreRegistryCheck);
+        Assert.Equal("genre registry projection is unavailable", exception.Message);
+    }
+
     private static (string Path, string Text) Source(string sourceId, string path, string atomizer) =>
         ($"{BackfillInventoryLoader.RootPath}{sourceId}/source.toml",
-            $"source_id = \"{sourceId}\"\npath = \"{path}\"\natomizer = \"{atomizer}\"\n");
+            $"source_id = \"{sourceId}\"\npath = \"{path}\"\natomizer = \"{atomizer}\"\n"
+            + $"genre_registry_check = \"{(atomizer == AtomizerRegistry.NoAtomizerId ? "no-registry" : "collected")}\"\n"
+            + "unregistered_genres = []\n");
 
     private static (string Path, string Text) Atom(
         string sourceId,

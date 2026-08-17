@@ -284,7 +284,7 @@ internal static class BackfillInventoryRule
     {
         try
         {
-            return BackfillInventoryLoader.Load(baseline);
+            return BackfillInventoryLoader.LoadBaseline(baseline);
         }
         catch (FormatException exception) when (
             string.Equals(exception.Message, "required governance document is missing", StringComparison.Ordinal))

@@ -1,3 +1,5 @@
 source_id = "cone-v1"
 path = "docs/develop/theory/CONE_PROGRAM_FORMAL.md"
 atomizer = "cone-v1"
+genre_registry_check = "collected"
+unregistered_genres = []
