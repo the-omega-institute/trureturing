@@ -608,7 +608,9 @@ public sealed partial class DigestionAlignmentTests
             baseline);
 
         Assert.Equal(0, plan.StaleAcknowledged);
-        Assert.Empty(Assert.Single(plan.Document.RequireDigestionSources()).AcknowledgedStale);
+        Assert.Equal(
+            ["old-receipt"],
+            Assert.Single(plan.Document.RequireDigestionSources()).AcknowledgedStale.ToArray());
     }
 
     [Fact]
