@@ -1,0 +1,17 @@
+ast_path: corollary/2.2
+fingerprints:
+  raw_sha256: sha256:11b1a5fd861ba4cdfeb6d0b960c829985e5e82c2cfffa878ed9f945fb22bc574
+  normalized_sha256: sha256:11b1a5fd861ba4cdfeb6d0b960c829985e5e82c2cfffa878ed9f945fb22bc574
+cas_ref: sha256:11b1a5fd861ba4cdfeb6d0b960c829985e5e82c2cfffa878ed9f945fb22bc574
+coverage_gids:
+  - D5/S3/DivergenceSupport/Equality/PetzClassicalCorollary.zero_defect_equivalences_and_permutation_channel
+receipts:
+  coverage:
+    - gid: D5/S3/DivergenceSupport/Equality/PetzClassicalCorollary.zero_defect_equivalences_and_permutation_channel
+      source_sha256: sha256:11b1a5fd861ba4cdfeb6d0b960c829985e5e82c2cfffa878ed9f945fb22bc574
+      target_sha256: sha256:29466383694b7724b4a096a55c88045a3b3bb6d1c5eae69e6ff6e89c8023f91d
+  scribe:
+    - gid: D5/S3/DivergenceSupport/Equality/PetzClassicalCorollary.zero_defect_equivalences_and_permutation_channel
+      definition_sha256: sha256:33d07c206ad4884676221e7ab6c2566ae4b41fb489186ad34f8e0dfa0c206a16
+      emission_sha256: sha256:d3b08bf0b8e5909112310b3fec93f3c7339527b9819a2d06f13d919913ba95bc
+  unresolved_subitems: []
