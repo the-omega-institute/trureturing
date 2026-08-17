@@ -201,6 +201,24 @@ assert_candidate_theory_is_regular_data() {
   done < <(git -C "$repository" ls-tree -r -z "$head_sha" -- docs/develop/theory)
 }
 
+apply_merged_theory_delta() {
+  local repository="$1"
+  local object_repository="$2"
+  local base_sha="$3"
+  local merged_tree_sha="$4"
+  ensure_scratch
+  local theory_patch="$scratch_root/merged-theory.patch"
+  git -C "$object_repository" diff \
+    --binary --full-index --no-color --no-ext-diff --no-renames \
+    "$base_sha" "$merged_tree_sha" -- docs/develop/theory > "$theory_patch"
+  [[ -s "$theory_patch" ]] || fail \
+    "candidate merge result contains no theory delta from the event base"
+  if ! git -C "$repository" apply \
+      --index --whitespace=nowarn --binary -- "$theory_patch"; then
+    fail "candidate merge-result theory delta does not apply to the event base"
+  fi
+}
+
 replace_final_outputs() {
   local repository="$1"
   local head_sha="$2"
@@ -274,15 +292,24 @@ writeback() {
     "trusted checkout does not equal the event base SHA"
   [[ "$(git -C "$candidate_data" rev-parse HEAD)" == "$head_sha" ]] || fail \
     "candidate data checkout does not equal the event head SHA"
+  local fork_sha
+  if ! fork_sha="$(git -C "$candidate_data" merge-base "$base_sha" "$head_sha")" \
+      || [[ -z "$fork_sha" ]]; then
+    fail "cannot resolve the immutable fork point of event base and head"
+  fi
+  assert_producer_closure_unchanged "$candidate_data" "$fork_sha" "$head_sha"
+  assert_candidate_theory_is_regular_data "$candidate_data" "$head_sha"
+  local merged_tree_sha
+  if ! merged_tree_sha="$(git -C "$candidate_data" merge-tree \
+      --write-tree "$base_sha" "$head_sha")" \
+      || [[ ! "$merged_tree_sha" =~ ^[0-9a-f]+$ ]]; then
+    fail "event base and head do not have a conflict-free merge result"
+  fi
   git -C "$repository" fetch --no-tags "$candidate_data" "$head_sha"
-  git -C "$repository" merge-base --is-ancestor "$base_sha" "$head_sha" || fail \
-    "event base is not an ancestor of event head"
-  assert_producer_closure_unchanged "$repository" "$base_sha" "$head_sha"
-  assert_candidate_theory_is_regular_data "$repository" "$head_sha"
   load_producer_write_patterns "$repository"
 
-  rsync -a --delete --exclude='.git' \
-    "$candidate_data/docs/develop/theory/" "$repository/docs/develop/theory/"
+  apply_merged_theory_delta \
+    "$repository" "$candidate_data" "$base_sha" "$merged_tree_sha"
   make -C "$repository" ingest BASE=HEAD
 
   ensure_scratch
@@ -328,7 +355,6 @@ writeback() {
   git -C "$repository" merge-base --is-ancestor "$head_sha" "$commit_sha" || fail \
     "writeback commit is not a fast-forward child of event head"
   git -C "$repository" push --porcelain \
-    --force-with-lease="$remote_ref:$head_sha" \
     "$remote_url" "$commit_sha:$remote_ref"
 }
 
