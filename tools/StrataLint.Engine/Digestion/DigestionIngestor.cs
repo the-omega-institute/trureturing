@@ -108,6 +108,8 @@ internal static class DigestionIngestor
                 sourceId,
                 path,
                 AtomizerRegistry.GenericId,
+                [],
+                GenreRegistryProjection.Available(GenreRegistryCheck.NoGenreRegistry),
                 ImmutableArray<DigestionLedgerEntry>.Empty));
         }
 

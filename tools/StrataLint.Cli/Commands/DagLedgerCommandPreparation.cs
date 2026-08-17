@@ -81,11 +81,13 @@ internal static class DagLedgerCommandPreparation
         var report = truth.Report;
         var lean = truth.Lean;
         var dag = truth.Dag;
+        var changes = Ask(repository.ReadCurrentChanges);
         var catalog = BuildWriterCatalog(
             snapshot,
             lean,
             dag,
             baseView,
+            changes,
             Ask(repository.ResolveCurrentRevision));
 
         return new DagLedgerCandidateMaterial(
@@ -111,6 +113,7 @@ internal static class DagLedgerCommandPreparation
         AcceptedLeanClosure lean,
         AcyclicTruthDag dag,
         FrozenLedgerBaseView baseView,
+        RawChangeSet changes,
         FrozenRevisionIdentity currentIdentity)
     {
         var environment = BuildEnvironment(
@@ -130,12 +133,11 @@ internal static class DagLedgerCommandPreparation
         var closedNodes = dag.TopologicalOrder
             .Where(static node => node.State is TruthState.Closed && node.ModuleName is not null)
             .ToImmutableArray();
+        var changedPaths = changes.Paths.ToImmutableHashSet();
         var selectedPaths = closedNodes
             .Where(node => !baseView.ActiveByPath.TryGetValue(node.RepoPath, out var entry)
                 || !entry.AxiomClosureKnown
-                || entry.Payload.Input.DescriptorBlobOid != FrozenContentAddress.ComputeGitBlobOid(
-                    snapshot.Files[node.RepoPath].RawBytes.AsSpan(),
-                    algorithm)
+                || changedPaths.Contains(node.RepoPath)
                 || FrozenLedger.EnvironmentPinsChanged(environment, entry))
             .Select(static node => node.RepoPath)
             .ToHashSet();

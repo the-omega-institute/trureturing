@@ -206,8 +206,7 @@ public sealed partial class DigestionLedgerTests
             AcceptedLean(targetPath),
             VerifiedScribeEmissions.Create([record]),
             baselineDocument: document,
-            baselineSnapshot: snapshot,
-            changes: RawChangeSet.Create(["tools/StrataLint.Engine/Rules/Unrelated.cs"]));
+            baselineSnapshot: snapshot);
         var status = Assert.Single(evaluation.Entries);
 
         Assert.Equal(DigestionMigrationState.Partial, status.DerivedStatus.Migration);

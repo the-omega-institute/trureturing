@@ -51,6 +51,8 @@ internal sealed partial class RuleFixture
         source_id = "fixture-source"
         path = "docs/GOVERNANCE.md"
         atomizer = "none"
+        genre_registry_check = "no-registry"
+        unregistered_genres = []
         """ + "\n";
     internal const string FixtureBackfillAtom = """
         boundary:
@@ -172,7 +174,8 @@ internal sealed partial class RuleFixture
     {
         RemoveDigestionLedger(Files);
         Files[$"{BackfillInventoryLoader.RootPath}delta-v0.1/source.toml"] =
-            $"source_id = \"delta-v0.1\"\npath = \"{FixtureDigestionSourcePath}\"\natomizer = \"none\"\n";
+            $"source_id = \"delta-v0.1\"\npath = \"{FixtureDigestionSourcePath}\"\natomizer = \"none\"\n"
+            + "genre_registry_check = \"no-registry\"\nunregistered_genres = []\n";
         Files[$"{BackfillInventoryLoader.RootPath}delta-v0.1/residual-open/delta-atom.yaml"] = """
             boundary:
               ast_path: manual/delta
@@ -196,7 +199,8 @@ internal sealed partial class RuleFixture
     {
         const string sourcePath = "delta-v0.1/source.toml";
         const string atomPath = "delta-v0.1/partial-closed/delta-atom.yaml";
-        var source = $"source_id = \"delta-v0.1\"\npath = \"{FixtureDigestionSourcePath}\"\natomizer = \"none\"\n";
+        var source = $"source_id = \"delta-v0.1\"\npath = \"{FixtureDigestionSourcePath}\"\natomizer = \"none\"\n"
+            + "genre_registry_check = \"no-registry\"\nunregistered_genres = []\n";
         var atom = $"""
             boundary:
               ast_path: manual/fixture

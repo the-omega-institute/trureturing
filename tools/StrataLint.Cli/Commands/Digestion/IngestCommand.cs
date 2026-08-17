@@ -26,7 +26,7 @@ internal static partial class IngestCommand
             var current = Decode(currentRaw);
             var baseline = Decode(baselineRaw);
             var document = LoadDocument(current);
-            var baselineDocument = LoadDocument(baseline);
+            var baselineDocument = BackfillInventoryLoader.LoadBaseline(baseline);
             var plan = DigestionIngestor.Plan(document, current, baselineDocument);
             var crossVolumeClearanceGaps = RenderCrossVolumeClearanceGaps(
                 plan.Document,

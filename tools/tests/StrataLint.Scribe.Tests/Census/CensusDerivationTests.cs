@@ -87,7 +87,9 @@ public sealed class CensusDerivationTests
                 source_id = "synthetic-source"
                 path = "docs/synthetic.md"
                 atomizer = "synthetic-v1"
-                """);
+                genre_registry_check = "collected"
+                unregistered_genres = []
+                """ + "\n");
             TemporaryFileSystem.File.WriteAllText(
                 Path.Combine(sourceRoot, "absorbed-closed", "synthetic-atom.yaml"),
                 $$"""
