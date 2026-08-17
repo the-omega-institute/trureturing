@@ -199,7 +199,7 @@ public sealed class TheoryCandidatesTests
             [],
             [
                 new LeanDeclaration(
-                    "D5.X_Frontier.GoldenUnitsUFD.generated_open",
+                    "D5.X_Frontier.FrontierMathematicalOpen.generated_open",
                     "theorem",
                     "statement-v1(uparams=[],type=ec(ns(n0,4:True),[]))",
                     ["sorryAx"]),
@@ -212,13 +212,13 @@ public sealed class TheoryCandidatesTests
         var candidate = Assert.Single(
             json.RootElement.GetProperty("candidates").EnumerateArray(),
             static item => item.GetProperty("source_ref").GetString()
-                == "D5/X_Frontier/GoldenUnitsUFD");
+                == "D5/X_Frontier/FrontierMathematicalOpen");
         Assert.Equal("frontier_problem", candidate.GetProperty("source_kind").GetString());
         Assert.Equal("theorist", candidate.GetProperty("downstream_lane").GetString());
         Assert.DoesNotContain(
             json.RootElement.GetProperty("candidates").EnumerateArray(),
             static item => item.GetProperty("source_ref").GetString()
-                == "D5/X_Frontier/GoldenUnitsUFD.generated_open");
+                == "D5/X_Frontier/FrontierMathematicalOpen.generated_open");
     }
 
     [Fact]
