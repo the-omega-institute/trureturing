@@ -60,11 +60,24 @@ internal sealed record MissionSelectionPolicy(
     WorthSelectionOrder OrderKind,
     string TieBreak);
 
+internal enum FrontierEligibilityKind
+{
+    DeclarationReadyMathematicalOpen,
+    MathematicalNotYetStated,
+    Governance,
+    Unknown,
+}
+
+internal sealed record FrontierEligibilityEntry(
+    string SourceRef,
+    FrontierEligibilityKind Kind);
+
 internal sealed record MissionPolicy(
     MissionNorthStarTarget NorthStarTarget,
     MissionNorthStarPolicy NorthStarPolicy,
     ImmutableArray<MissionValue> ValueOrder,
     WorthVector WorthVector,
+    ImmutableArray<FrontierEligibilityEntry> FrontierEligibility,
     MissionSelectionPolicy Selection,
     ImmutableArray<MissionProhibition> Prohibitions);
 
@@ -149,6 +162,7 @@ internal static class MissionFileLoader
         {
             var policy = ParseMission(mission.Text);
             ValidateOpenCases(snapshot, policy);
+            ValidateFrontierEligibility(snapshot, policy.FrontierEligibility);
             return new MissionLoadOutcome.Loaded(policy);
         }
         catch (MissionContractException exception)
@@ -216,6 +230,11 @@ internal static class MissionFileLoader
             prohibitions = policy.Prohibitions
                 .Select(ProhibitionName)
                 .ToImmutableArray(),
+            frontier_eligibility = policy.FrontierEligibility.Select(static entry => new
+            {
+                kind = FrontierEligibilityKindName(entry.Kind),
+                source_ref = entry.SourceRef,
+            }).ToImmutableArray(),
             schema = Schema,
             selection = new
             {
@@ -245,9 +264,15 @@ internal static class MissionFileLoader
 
         using var document = JsonDocument.Parse(fence.Lines.ToString());
         var root = RequireObject(document.RootElement, MissionLoadErrorCode.InvalidSchema, "root");
+        var hasFrontierEligibility = root.TryGetProperty("frontier_eligibility", out var frontierValue);
         RequireExactKeys(
             root,
-            ["schema", "north_star", "value_order", "worth_vector", "selection", "prohibitions"],
+            hasFrontierEligibility
+                ? [
+                    "schema", "north_star", "value_order", "worth_vector",
+                    "frontier_eligibility", "selection", "prohibitions",
+                ]
+                : ["schema", "north_star", "value_order", "worth_vector", "selection", "prohibitions"],
             MissionLoadErrorCode.InvalidSchema,
             "root");
         if (!string.Equals(
@@ -285,6 +310,9 @@ internal static class MissionFileLoader
             "worth_vector",
             MissionLoadErrorCode.InvalidWorthVector));
         RejectP0MeasuredFactors(worthVector);
+        var frontierEligibility = hasFrontierEligibility
+            ? ParseFrontierEligibility(frontierValue)
+            : [];
         var selection = ParseSelection(
             RequireProperty(root, "selection", MissionLoadErrorCode.InvalidSelection),
             worthVector);
@@ -294,6 +322,7 @@ internal static class MissionFileLoader
             northStarPolicy,
             valueOrder,
             worthVector,
+            frontierEligibility,
             selection,
             prohibitions);
     }
@@ -382,6 +411,60 @@ internal static class MissionFileLoader
         throw Error(
             MissionLoadErrorCode.InvalidWorthState,
             $"worth_vector.{factorName}.state must be open or measured");
+    }
+
+    private static ImmutableArray<FrontierEligibilityEntry> ParseFrontierEligibility(
+        JsonElement value)
+    {
+        if (value.ValueKind is not JsonValueKind.Array)
+        {
+            throw Error(MissionLoadErrorCode.InvalidSchema, "frontier_eligibility must be an array");
+        }
+
+        var entries = value.EnumerateArray()
+            .Select((item, index) => ParseFrontierEligibilityEntry(item, index))
+            .ToImmutableArray();
+        if (entries.Select(static entry => entry.SourceRef)
+            .Distinct(StringComparer.Ordinal).Count() != entries.Length)
+        {
+            throw Error(
+                MissionLoadErrorCode.InvalidSchema,
+                "frontier_eligibility source_ref values must be unique");
+        }
+
+        if (!entries.Select(static entry => entry.SourceRef).SequenceEqual(
+                entries.Select(static entry => entry.SourceRef).Order(StringComparer.Ordinal),
+                StringComparer.Ordinal))
+        {
+            throw Error(
+                MissionLoadErrorCode.InvalidSchema,
+                "frontier_eligibility must be ordered by source_ref");
+        }
+
+        return entries;
+    }
+
+    private static FrontierEligibilityEntry ParseFrontierEligibilityEntry(
+        JsonElement value,
+        int index)
+    {
+        var name = $"frontier_eligibility[{index}]";
+        var entry = RequireObject(value, MissionLoadErrorCode.InvalidSchema, name);
+        RequireExactKeys(entry, ["source_ref", "kind"], MissionLoadErrorCode.InvalidSchema, name);
+        var sourceRef = RequireString(entry, "source_ref", MissionLoadErrorCode.InvalidSchema);
+        var kindName = RequireString(entry, "kind", MissionLoadErrorCode.InvalidSchema);
+        var kind = kindName switch
+        {
+            "declaration-ready-mathematical-open" =>
+                FrontierEligibilityKind.DeclarationReadyMathematicalOpen,
+            "mathematical-not-yet-stated" => FrontierEligibilityKind.MathematicalNotYetStated,
+            "governance" => FrontierEligibilityKind.Governance,
+            "unknown" => FrontierEligibilityKind.Unknown,
+            _ => throw Error(
+                MissionLoadErrorCode.InvalidSchema,
+                $"{name}.kind is not a canonical Frontier eligibility kind"),
+        };
+        return new FrontierEligibilityEntry(sourceRef, kind);
     }
 
     private static void RejectP0MeasuredFactors(WorthVector vector)
@@ -495,6 +578,30 @@ internal static class MissionFileLoader
                     throw Error(
                         MissionLoadErrorCode.DanglingCaseReference,
                         $"case {open.CaseId} returned an unsupported TASK scan result in {targetPath}");
+            }
+        }
+    }
+
+    private static void ValidateFrontierEligibility(
+        RepositorySnapshot snapshot,
+        ImmutableArray<FrontierEligibilityEntry> entries)
+    {
+        foreach (var entry in entries)
+        {
+            if (!Gid.TryParse(entry.SourceRef, out var gid)
+                || !entry.SourceRef.StartsWith("D5/X_Frontier/", StringComparison.Ordinal)
+                || gid.Path.Value != entry.SourceRef + ".lean")
+            {
+                throw Error(
+                    MissionLoadErrorCode.InvalidSchema,
+                    $"frontier_eligibility source_ref is not a canonical Frontier file GID: {entry.SourceRef}");
+            }
+
+            if (!snapshot.TryGetFile(gid.Path.Value, out _))
+            {
+                throw Error(
+                    MissionLoadErrorCode.InvalidSchema,
+                    $"frontier_eligibility target is missing: {gid.Path.Value}");
             }
         }
     }
@@ -651,6 +758,16 @@ internal static class MissionFileLoader
         MissionProhibition.TrivialLemmaAccumulation => "trivial-lemma accumulation",
         MissionProhibition.CitationChasing => "citation chasing",
         _ => throw new InvalidOperationException("Unknown mission prohibition."),
+    };
+
+    private static string FrontierEligibilityKindName(FrontierEligibilityKind kind) => kind switch
+    {
+        FrontierEligibilityKind.DeclarationReadyMathematicalOpen =>
+            "declaration-ready-mathematical-open",
+        FrontierEligibilityKind.MathematicalNotYetStated => "mathematical-not-yet-stated",
+        FrontierEligibilityKind.Governance => "governance",
+        FrontierEligibilityKind.Unknown => "unknown",
+        _ => throw new InvalidOperationException("Unknown Frontier eligibility kind."),
     };
 
     internal static string SelectionName(WorthSelectionOrder order) => order switch

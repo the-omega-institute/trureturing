@@ -85,7 +85,7 @@ public sealed class CliOutcomeTests
         var environment = new StubCliEnvironment(Admitted(), theoryCandidates: projected);
 
         var exitCode = CliApplication.Run(
-            ["theory-candidates", "--owner-override", "open problem"],
+            ["theory-candidates", "--owner-override-file", "problem.txt"],
             environment,
             console);
 

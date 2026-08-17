@@ -9,8 +9,10 @@ namespace StrataLint.Cli;
 
 internal enum FrontierCandidateClassification
 {
-    MathematicalOpen,
-    GovernanceTicket,
+    DeclarationReadyMathematicalOpen,
+    MathematicalNotYetStated,
+    Governance,
+    Unknown,
     OutsideFrontier,
     NotOpen,
     Unaddressed,
@@ -24,9 +26,15 @@ internal sealed record TheoryCandidate(
     string DownstreamLane,
     string? ProblemText);
 
+internal sealed record OwnerOverrideInput(
+    ImmutableArray<byte> RawBytes,
+    string ProblemText,
+    string ContentSha256);
+
 internal static class TheoryCandidatesCommand
 {
     private const string FrontierPrefix = "D5/X_Frontier/";
+    private static readonly UTF8Encoding StrictUtf8 = new(false, true);
 
     internal static CommandResult Run(
         IRepositoryGateway repository,
@@ -48,13 +56,34 @@ internal static class TheoryCandidatesCommand
                 MissionLoadOutcome.Invalid invalid => throw new FormatException(invalid.Error.Message),
                 _ => throw new InvalidOperationException("MISSION loader returned an unsupported outcome"),
             };
-            var ticketModules = BackfillInventoryLoader.DeriveTickets(truth.Snapshot)
-                .Select(static ticket => ticket.Gid)
-                .ToHashSet(StringComparer.Ordinal);
-            var frontierCandidates = truth.Dag.Nodes
-                .Where(node => ClassifyFrontier(node, ticketModules)
-                    == FrontierCandidateClassification.MathematicalOpen)
-                .Select(node => FrontierCandidate(node, truth.Snapshot))
+            var eligibility = mission.FrontierEligibility.ToDictionary(
+                static entry => entry.SourceRef,
+                static entry => entry.Kind,
+                StringComparer.Ordinal);
+            var classifiedFrontier = truth.Dag.Nodes
+                .Select(node => (Node: node, Classification: ClassifyFrontier(node, eligibility)))
+                .Where(static item => item.Classification is not (
+                    FrontierCandidateClassification.OutsideFrontier
+                    or FrontierCandidateClassification.NotOpen))
+                .ToArray();
+            var unclassified = classifiedFrontier
+                .Where(static item => item.Classification is
+                    FrontierCandidateClassification.Unknown
+                    or FrontierCandidateClassification.Unaddressed)
+                .Select(static item => item.Node.RepoPath.Value)
+                .Order(StringComparer.Ordinal)
+                .ToArray();
+            if (unclassified.Length > 0)
+            {
+                throw new InvalidOperationException(
+                    "unclassified Frontier source(s): " + string.Join(", ", unclassified));
+            }
+
+            var frontierCandidates = classifiedFrontier
+                .Where(static item => item.Classification is
+                    FrontierCandidateClassification.DeclarationReadyMathematicalOpen
+                    or FrontierCandidateClassification.MathematicalNotYetStated)
+                .Select(item => FrontierCandidate(item.Node, item.Classification, truth.Snapshot))
                 .ToArray();
 
             var digestion = DigestionStatusEvaluator.Evaluate(
@@ -82,6 +111,8 @@ internal static class TheoryCandidatesCommand
                     null));
             var output = TheoryCandidateProjection.Render(
                 TruthGraphSnapshotIdentity.Compute(truth.Snapshot),
+                RawLeanReportArtifact.ContentAddress(
+                    RawLeanReportArtifact.Write(truth.Snapshot, truth.Report).AsSpan()),
                 mission,
                 frontierCandidates.Concat(atomCandidates).ToArray(),
                 ownerOverride);
@@ -102,10 +133,10 @@ internal static class TheoryCandidatesCommand
 
     internal static FrontierCandidateClassification ClassifyFrontier(
         TruthNode node,
-        IReadOnlySet<string> ticketModules)
+        IReadOnlyDictionary<string, FrontierEligibilityKind> eligibility)
     {
         ArgumentNullException.ThrowIfNull(node);
-        ArgumentNullException.ThrowIfNull(ticketModules);
+        ArgumentNullException.ThrowIfNull(eligibility);
         if (node.State != TruthState.Open)
         {
             return FrontierCandidateClassification.NotOpen;
@@ -122,29 +153,51 @@ internal static class TheoryCandidatesCommand
             return FrontierCandidateClassification.Unaddressed;
         }
 
-        return ticketModules.Contains(node.Gid.Value)
-            ? FrontierCandidateClassification.GovernanceTicket
-            : FrontierCandidateClassification.MathematicalOpen;
+        if (!eligibility.TryGetValue(node.Gid.Value, out var kind))
+        {
+            return FrontierCandidateClassification.Unknown;
+        }
+
+        return kind switch
+        {
+            FrontierEligibilityKind.DeclarationReadyMathematicalOpen =>
+                FrontierCandidateClassification.DeclarationReadyMathematicalOpen,
+            FrontierEligibilityKind.MathematicalNotYetStated =>
+                FrontierCandidateClassification.MathematicalNotYetStated,
+            FrontierEligibilityKind.Governance => FrontierCandidateClassification.Governance,
+            FrontierEligibilityKind.Unknown => FrontierCandidateClassification.Unknown,
+            _ => throw new InvalidOperationException("unsupported Frontier eligibility kind"),
+        };
     }
 
     private static TheoryCandidate FrontierCandidate(
         TruthNode node,
+        FrontierCandidateClassification classification,
         RepositorySnapshot snapshot)
     {
         var gid = node.Gid
             ?? throw new InvalidOperationException(
                 $"mathematical Frontier node has no canonical GID: {node.RepoPath.Value}");
         var file = snapshot.Files[node.RepoPath];
+        var (sourceKind, downstreamLane) = classification switch
+        {
+            FrontierCandidateClassification.DeclarationReadyMathematicalOpen =>
+                ("frontier_declaration_ready", "prover"),
+            FrontierCandidateClassification.MathematicalNotYetStated =>
+                ("frontier_problem", "theorist"),
+            _ => throw new InvalidOperationException(
+                $"non-mathematical Frontier classification cannot become a candidate: {classification}"),
+        };
         return new TheoryCandidate(
             "frontier/" + gid.Value,
-            "frontier_open",
+            sourceKind,
             gid.Value,
             "sha256:" + Convert.ToHexStringLower(SHA256.HashData(file.RawBytes.AsSpan())),
-            "prover",
+            downstreamLane,
             null);
     }
 
-    private static string? ParseArguments(IReadOnlyList<string> arguments)
+    private static OwnerOverrideInput? ParseArguments(IReadOnlyList<string> arguments)
     {
         if (arguments.Count == 0)
         {
@@ -152,14 +205,32 @@ internal static class TheoryCandidatesCommand
         }
 
         if (arguments.Count == 2
-            && arguments[0] == "--owner-override"
+            && arguments[0] == "--owner-override-file"
             && !string.IsNullOrWhiteSpace(arguments[1]))
         {
-            return arguments[1];
+            var rawBytes = ImmutableArray.CreateRange(File.ReadAllBytes(arguments[1]));
+            var contentSha256 = "sha256:"
+                + Convert.ToHexStringLower(SHA256.HashData(rawBytes.AsSpan()));
+            string problemText;
+            try
+            {
+                problemText = StrictUtf8.GetString(rawBytes.AsSpan());
+            }
+            catch (DecoderFallbackException exception)
+            {
+                throw new FormatException("owner override must be strict UTF-8", exception);
+            }
+
+            if (string.IsNullOrWhiteSpace(problemText))
+            {
+                throw new FormatException("owner override must contain a non-whitespace open problem");
+            }
+
+            return new OwnerOverrideInput(rawBytes, problemText, contentSha256);
         }
 
         throw new ArgumentException(
-            "USAGE: StrataLint theory-candidates [--owner-override OPEN_PROBLEM]");
+            "USAGE: StrataLint theory-candidates [--owner-override-file PATH]");
     }
 }
 
@@ -174,11 +245,13 @@ internal static class TheoryCandidateProjection
 
     internal static string Render(
         string inputSnapshotSha256,
+        string leanReportSha256,
         MissionPolicy mission,
         IReadOnlyList<TheoryCandidate> repositoryCandidates,
-        string? ownerOverride)
+        OwnerOverrideInput? ownerOverride)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(inputSnapshotSha256);
+        ArgumentException.ThrowIfNullOrWhiteSpace(leanReportSha256);
         ArgumentNullException.ThrowIfNull(mission);
         ArgumentNullException.ThrowIfNull(repositoryCandidates);
         if (mission.Selection.OrderKind != WorthSelectionOrder.BootstrapEligibilityOrder)
@@ -191,15 +264,13 @@ internal static class TheoryCandidateProjection
         TheoryCandidate? ownerCandidate = null;
         if (ownerOverride is not null)
         {
-            var problemBytes = StrictUtf8.GetBytes(ownerOverride);
-            var contentSha256 = "sha256:" + Convert.ToHexStringLower(SHA256.HashData(problemBytes));
             ownerCandidate = new TheoryCandidate(
-                "owner_override/" + contentSha256["sha256:".Length..],
+                "owner_override/" + ownerOverride.ContentSha256["sha256:".Length..],
                 "owner_override",
-                contentSha256,
-                contentSha256,
-                "prover",
-                ownerOverride);
+                ownerOverride.ContentSha256,
+                ownerOverride.ContentSha256,
+                "theorist",
+                ownerOverride.ProblemText);
             candidates.Add(ownerCandidate);
         }
 
@@ -221,6 +292,7 @@ internal static class TheoryCandidateProjection
             selection_receipt = new
             {
                 input_snapshot_sha256 = inputSnapshotSha256,
+                lean_report_sha256 = leanReportSha256,
                 candidate_set_sha256 = candidateSetSha256,
                 ordering_version = "theory-candidates-bootstrap-v1",
                 order_kind = MissionFileLoader.SelectionName(mission.Selection.OrderKind),
