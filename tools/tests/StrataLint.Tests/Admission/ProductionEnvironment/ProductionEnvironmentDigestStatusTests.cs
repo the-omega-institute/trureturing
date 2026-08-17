@@ -24,7 +24,9 @@ public sealed partial class ProductionEnvironmentTests
         fixture.Files[RuleFixture.FixtureBackfillSourcePath] =
             $"source_id = \"fixture-source\"\n"
             + $"path = \"{RuleFixture.FixtureDigestionSourcePath}\"\n"
-            + $"atomizer = \"{atomizerId}\"\n";
+            + $"atomizer = \"{atomizerId}\"\n"
+            + "genre_registry_check = \"collected\"\n"
+            + "unregistered_genres = []\n";
         fixture.Files.Remove(RuleFixture.FixtureBackfillAtomPath);
         fixture.Files[$"{BackfillInventoryLoader.RootPath}fixture-source/residual-open/normalized-receipt.yaml"] = $$"""
             ast_path: {{atom.AstPath}}
