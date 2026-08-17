@@ -60,6 +60,16 @@ addresses in a run-local log outside the worktree. A nonzero command or unmet
 postcondition ends in the evidence-complete `open` terminal unless the step
 explicitly names a repair followed by a fresh execution of that same gate.
 
+There are only two authoring-time exit exceptions. A read-only search command
+may use its documented no-match exit (for example, `rg` exit 1) as a negative
+search result when stdout is empty and stderr contains no failure; record that
+status rather than converting it to exit 0. In Step 5, an initial scoped
+`lake build <Dotted.Module.Name>` may be followed by at most two authoring
+repair-and-rerun attempts, each addressing the preceding elaboration diagnostic.
+A third nonzero scoped build ends `open`. These exceptions do not apply to
+`make lean-report`, P1/P2 production, adversarial review, preflight, or
+publication.
+
 There are exactly two terminal states:
 
 - `success`: the pull request is REST-confirmed `MERGED`, its merge commit and
@@ -133,12 +143,17 @@ and no unrelated or unexplained change is present.
 
 ### 1. Select one machine-issued theorist candidate
 
-Run exactly one of:
+First produce a fresh canonical report from the current isolated tree, then run
+exactly one selection command:
 
 ```sh
+make lean-report
 make theory-candidates
 make theory-candidates OWNER_OVERRIDE_FILE=/absolute/path/to/strict-utf8-question.txt
 ```
+
+The two `theory-candidates` lines are alternatives, not sequential commands.
+The report command and the chosen selection command must each exit 0.
 
 Capture stdout without editing or normalizing it. Select only the candidate
 named by `selection_receipt.selected_candidate_id`; do not rescore, reorder, or
@@ -160,9 +175,10 @@ read the exact `<source_ref>.lean` bytes, confirm their SHA-256 equals the P1
 bytes without using a TASK number to infer its semantic class. Any other shape
 ends `open` with the mismatch named.
 
-Postcondition: the unmodified P1 selection receipt, selected candidate ID,
-content address, source reference, source kind, nullable P1 problem text, exact
-question input bytes, and `theorist` lane are recorded.
+Postcondition: a fresh report for the exact current source snapshot exists; the
+unmodified P1 selection receipt, selected candidate ID, content address, source
+reference, source kind, nullable P1 problem text, exact question input bytes,
+and `theorist` lane are recorded.
 
 ### 2. Ground and echo the question
 
@@ -375,8 +391,14 @@ Push the already reviewed and admitted commit, then use the repository door:
 
 ```sh
 git push -u origin <branch>
-make pr-open HEAD=<branch> TITLE='<title>' [BODY=<file>]
+make pr-open HEAD=<branch> TITLE='<title>' BODY=<pr-body-file>
 ```
+
+The body file is mandatory. It must carry the selection receipt, problem echo,
+all six Theorist outputs, target and statement addresses, full adversarial
+result with evidence references, immutable base and commit SHAs, exact changed
+paths, and Step 7 commands with exit codes. The durable GitHub PR body is the
+coordination artifact; the run-local command log remains supporting evidence.
 
 After `make pr-open`, the mutation boundary is closed: do not push further
 changes to that branch. Observe the PR through the GitHub REST API until it is
@@ -404,17 +426,21 @@ Report `success` only with the REST-confirmed `MERGED` state,
 selection receipt, six theorist outputs, the full adversarial result, and all
 Step 7 exit codes. There is no third state.
 
-The resulting declaration remains open. A later `prover` lane may prove it and
-must use the repository's current `deliver-check` workflow. This skill never
-calls `deposit`, and the target is not a digestion atom for
-`codex-formalize`.
+The resulting declaration remains open. Current P2 admission makes the contract
+sticky once it reaches the protected baseline and requires the selected
+declaration to retain `sorryAx`; simply deleting `sorry` is therefore not a
+machine-admissible proof-delivery transition. Proof delivery stays explicitly
+`open` until the spec and harness define that transition. When it exists, its
+owner is the `prover` lane through `deliver-check`, never `deposit` or
+`codex-formalize`; this skill does not claim that transition exists today.
 
 ## Prohibitions
 
 - Do not edit `Meta/Digestion/**`, `Golden/Frozen/**`, Library or Evidence
   receipts, generated receipts, or any frozen module.
 - Do not call `codex-formalize`, `deposit`, `freeze`, or `cover`; do not create
-  a substitute for `deliver-check`.
+  a substitute for `deliver-check` or imply that it currently admits the P2
+  contracted-open to proved transition.
 - Do not prove the generated declaration in the same lane, remove its `sorry`,
   call it closed, or claim it is Lean-verified. The only generated truth state
   is machine-derived `open` from `sorryAx`.
@@ -443,8 +469,9 @@ calls `deposit`, and the target is not a digestion atom for
 - Creating a missing computation receipt belongs to the `numericist` lane; this
   workflow can only name the handoff and start a new run after that receipt
   lands.
-- Proof search, theorem delivery, and freezing belong to the later `prover`
-  lane and `deliver-check`.
+- Proof search and freezing are outside this skill. The theorem-delivery
+  transition from a P2 contracted open declaration is a named `open` harness
+  gap; once defined, it belongs to the `prover` lane and `deliver-check`.
 - External theory-document ingestion belongs to `codex-theory-ingest`;
   residual-atom formalization belongs to `codex-formalize`.
 
