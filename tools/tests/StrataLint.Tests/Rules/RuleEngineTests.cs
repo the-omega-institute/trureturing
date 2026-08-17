@@ -198,6 +198,8 @@ public sealed class RuleEngineTests
     {
         var fixture = new RuleFixture();
         fixture.AddBackfillTargets();
+        fixture.Changes.Clear();
+        fixture.Changes.Add(RuleFixture.FixtureCasPath);
         fixture.Files[RuleFixture.FixtureCasPath] = "corrupt";
         fixture.Files[RuleFixture.FixtureBackfillAtomPath] = fixture.Files[
                 RuleFixture.FixtureBackfillAtomPath]
@@ -206,13 +208,75 @@ public sealed class RuleEngineTests
                 "coverage_gids:\n  - D5/S0/Carrier/BackfillTarget\n  - D5/S0/Carrier/BackfillTarget",
                 StringComparison.Ordinal);
 
-        var diagnostics = RuleCatalog.Default.EvaluateSingle(
-            RuleId.CreateKnown(16),
-            fixture.Build()).Diagnostics;
+        var completed = Assert.IsType<RuleExecutionOutcome.Completed>(
+            RuleCatalog.Default.Execute(fixture.Build()));
 
-        Assert.Contains(diagnostics, diagnostic => diagnostic.Message.Contains(
-            $"entry {RuleFixture.FixtureAtomId} CAS blob hash mismatch: {RuleFixture.FixtureCasPath}",
-            StringComparison.Ordinal));
+        Assert.Contains(completed.Capability.Diagnostics, diagnostic =>
+            diagnostic.RuleId == RuleId.CreateKnown(16)
+            && diagnostic.Message.Contains(
+                $"entry {RuleFixture.FixtureAtomId} CAS blob hash mismatch: {RuleFixture.FixtureCasPath}",
+                StringComparison.Ordinal));
+    }
+
+    [Fact]
+    public void Sl016DoesNotReplayCommittedCasIntegrityForAnUnrelatedCandidateDelta()
+    {
+        var fixture = new RuleFixture();
+        fixture.AddBackfillTargets();
+        fixture.Files[RuleFixture.FixtureCasPath] = "trusted committed bytes";
+        var context = fixture.Build(RawChangeSet.Create(["notes/unrelated.txt"]));
+
+        var completed = Assert.IsType<RuleExecutionOutcome.Completed>(
+            RuleCatalog.Default.Execute(context));
+
+        Assert.DoesNotContain(
+            completed.Capability.Diagnostics,
+            static diagnostic => diagnostic.RuleId == RuleId.CreateKnown(16));
+    }
+
+    [Fact]
+    public void Sl016RehashesCoverageReceiptWhenEvidenceTargetChanges()
+    {
+        const string evidenceGid = "D5/E/values--json";
+        var fixture = new RuleFixture();
+        fixture.AddValuesProjection();
+        var baselineTarget = fixture.Files[RuleFixture.ValuesProjectionPath];
+        var targetSha256 = DigestionFingerprint.Compute(
+            Encoding.UTF8.GetBytes(baselineTarget)).RawSha256;
+        foreach (var files in new[] { fixture.Files, fixture.Baseline, fixture.ForkPoint })
+        {
+            files[RuleFixture.ValuesProjectionPath] = baselineTarget;
+            files[RuleFixture.FixtureBackfillAtomPath] = files[RuleFixture.FixtureBackfillAtomPath]
+                .Replace(
+                    "D5/S0/Carrier/BackfillTarget",
+                    evidenceGid,
+                    StringComparison.Ordinal)
+                .Replace(
+                    "coverage: []",
+                    "coverage:\n"
+                    + $"    - gid: {evidenceGid}\n"
+                    + $"      source_sha256: {RuleFixture.FixtureCasReference}\n"
+                    + $"      target_sha256: {targetSha256}",
+                    StringComparison.Ordinal);
+        }
+
+        fixture.Files[RuleFixture.ValuesProjectionPath] = baselineTarget + " ";
+        var changes = RawChangeSet.Create([RuleFixture.ValuesProjectionPath]);
+        var context = fixture.Build(changes);
+        var document = BackfillInventoryLoader.Load(context.Current);
+        var evaluation = DigestionStatusEvaluator.Evaluate(
+            document,
+            context.Current,
+            context.Lean,
+            baselineDocument: BackfillInventoryLoader.Load(context.ForkPoint),
+            baselineSnapshot: context.ForkPoint,
+            casEvaluation: DigestionCasStore.Evaluate(document, context.Current, changes),
+            changes: changes);
+
+        Assert.True(BackfillInventoryRule.IsAffectedBy(context));
+        Assert.Contains(
+            Assert.Single(evaluation.Entries).Gaps,
+            static gap => gap.Code == "coverage-receipt-mismatch");
     }
 
     [Fact]

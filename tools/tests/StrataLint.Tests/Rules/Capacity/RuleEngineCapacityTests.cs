@@ -333,6 +333,111 @@ public sealed class RuleEngineCapacityTests
             diagnostic.Message);
     }
 
+    [Fact]
+    public void Sl003DoesNotChargeCandidateForUnknownDebtAlreadyPresentAtItsForkPoint()
+    {
+        var methods = UnknownMethodNames(281);
+        var fixture = UnknownDebtFixture(
+            current: [("Synthetic.Tests", methods)],
+            forkPoint: [("Synthetic.Tests", methods)]);
+
+        var diagnostics = RuleCatalog.Default.EvaluateSingle(
+            RuleId.CreateKnown(3),
+            fixture.Build()).Diagnostics;
+
+        AssertNoBlockingUnknownDebt(diagnostics);
+    }
+
+    [Fact]
+    public void Sl003BlocksAndNamesTheUnknownMethodIntroducedByTheCandidate()
+    {
+        var forkMethods = UnknownMethodNames(280);
+        var currentMethods = forkMethods.Append("Debt280").ToArray();
+        var fixture = UnknownDebtFixture(
+            current: [("Synthetic.Tests", currentMethods)],
+            forkPoint: [("Synthetic.Tests", forkMethods)]);
+
+        var diagnostic = Assert.Single(
+            RuleCatalog.Default.EvaluateSingle(RuleId.CreateKnown(3), fixture.Build()).Diagnostics,
+            static item => item.Message.Contains("unknown test method", StringComparison.Ordinal));
+
+        Assert.Equal(AdmissionEffect.Block, diagnostic.AdmissionEffect);
+        Assert.Contains("DebtTests.Debt280", diagnostic.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void Sl003ToleratesTheUnionOfTwoIndividuallyCompliantUnknownDebtSets()
+    {
+        var firstMethods = UnknownMethodNames(280);
+        var secondMethods = UnknownMethodNames(281).Skip(1).ToArray();
+        var unionMethods = firstMethods.Union(secondMethods, StringComparer.Ordinal).ToArray();
+        var first = UnknownDebtFixture(
+            current: [("Synthetic.Tests", firstMethods)],
+            forkPoint: [("Synthetic.Tests", firstMethods)]);
+        var second = UnknownDebtFixture(
+            current: [("Synthetic.Tests", secondMethods)],
+            forkPoint: [("Synthetic.Tests", secondMethods)]);
+        var union = UnknownDebtFixture(
+            current: [("Synthetic.Tests", unionMethods)],
+            forkPoint: [("Synthetic.Tests", unionMethods)]);
+
+        AssertNoBlockingUnknownDebt(RuleCatalog.Default.EvaluateSingle(
+            RuleId.CreateKnown(3), first.Build()).Diagnostics);
+        AssertNoBlockingUnknownDebt(RuleCatalog.Default.EvaluateSingle(
+            RuleId.CreateKnown(3), second.Build()).Diagnostics);
+        Assert.Equal(281, unionMethods.Length);
+        AssertNoBlockingUnknownDebt(RuleCatalog.Default.EvaluateSingle(
+            RuleId.CreateKnown(3), union.Build()).Diagnostics);
+    }
+
+    [Fact]
+    public void Sl003RejectsRepositoryUnknownDebtPastTheToleranceBand()
+    {
+        var methods = UnknownMethodNames(282);
+        var fixture = UnknownDebtFixture(
+            current: [("Synthetic.Tests", methods)],
+            forkPoint: [("Synthetic.Tests", methods)]);
+
+        var diagnostic = Assert.Single(
+            RuleCatalog.Default.EvaluateSingle(RuleId.CreateKnown(3), fixture.Build()).Diagnostics,
+            static item => item.Message.Contains("repository tolerance", StringComparison.Ordinal)
+                && item.Message.Contains("unknown test methods", StringComparison.Ordinal));
+
+        Assert.Equal(AdmissionEffect.Block, diagnostic.AdmissionEffect);
+        Assert.Contains("282", diagnostic.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void Sl003TreatsAnUnknownMethodRenameAsNewDebt()
+    {
+        var fixture = UnknownDebtFixture(
+            current: [("Synthetic.Tests", ["RenamedDebt"])],
+            forkPoint: [("Synthetic.Tests", ["OriginalDebt"])]);
+
+        var diagnostic = Assert.Single(
+            RuleCatalog.Default.EvaluateSingle(RuleId.CreateKnown(3), fixture.Build()).Diagnostics,
+            static item => item.Message.Contains("unknown test method", StringComparison.Ordinal));
+
+        Assert.Equal(AdmissionEffect.Block, diagnostic.AdmissionEffect);
+        Assert.Contains("DebtTests.RenamedDebt", diagnostic.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void Sl003TreatsAnUnknownMethodMoveAcrossProjectPartitionsAsNewDebt()
+    {
+        var fixture = UnknownDebtFixture(
+            current: [("Beta.Tests", ["MovedDebt"])],
+            forkPoint: [("Alpha.Tests", ["MovedDebt"])]);
+
+        var diagnostic = Assert.Single(
+            RuleCatalog.Default.EvaluateSingle(RuleId.CreateKnown(3), fixture.Build()).Diagnostics,
+            static item => item.Message.Contains("unknown test method", StringComparison.Ordinal));
+
+        Assert.Equal(AdmissionEffect.Block, diagnostic.AdmissionEffect);
+        Assert.Contains("tools/tests/Beta.Tests", diagnostic.Message, StringComparison.Ordinal);
+        Assert.Contains("DebtTests.MovedDebt", diagnostic.Message, StringComparison.Ordinal);
+    }
+
     private const string OverfullBucketPath = "Blueprint/D5/S0/Overfull";
 
     private const string OverfullExcludedPath = $"{OverfullBucketPath}/Projection.md";
@@ -365,6 +470,48 @@ public sealed class RuleEngineCapacityTests
     private static int CapacityPathCount(RepositorySnapshot snapshot) =>
         RepositoryRules.CapacityPathsByDirectory(snapshot.Files.Keys)
             .GetValueOrDefault(OverfullBucketPath)?.Count ?? 0;
+
+    private static RuleFixture UnknownDebtFixture(
+        IReadOnlyList<(string Partition, IReadOnlyList<string> Methods)> current,
+        IReadOnlyList<(string Partition, IReadOnlyList<string> Methods)> forkPoint)
+    {
+        var fixture = new RuleFixture();
+        foreach (var (partition, methods) in current)
+        {
+            AddUnknownDebtPartition(fixture.Files, partition, methods);
+            AddUnknownDebtPartition(fixture.Baseline, partition, methods);
+        }
+
+        foreach (var (partition, methods) in forkPoint)
+        {
+            AddUnknownDebtPartition(fixture.ForkPoint, partition, methods);
+        }
+
+        return fixture;
+    }
+
+    private static void AddUnknownDebtPartition(
+        IDictionary<string, string> files,
+        string partition,
+        IReadOnlyList<string> methods)
+    {
+        var root = $"tools/tests/{partition}";
+        files[$"{root}/{partition}.csproj"] =
+            "<Project><ItemGroup><PackageReference Include=\"xunit\" /></ItemGroup></Project>\n";
+        files[$"{root}/DebtTests.cs"] = "class DebtTests\n{\n"
+            + string.Join('\n', methods.Select(static method =>
+                $"[Fact] public void {method}() {{ var path = GetPath(); File.ReadAllText(path); }}"))
+            + "\n}\n";
+    }
+
+    private static string[] UnknownMethodNames(int count) => Enumerable.Range(0, count)
+        .Select(static index => $"Debt{index:000}")
+        .ToArray();
+
+    private static void AssertNoBlockingUnknownDebt(ImmutableArray<Diagnostic> diagnostics) =>
+        Assert.DoesNotContain(diagnostics, static item =>
+            item.AdmissionEffect == AdmissionEffect.Block
+            && item.Message.Contains("unknown test method", StringComparison.Ordinal));
 
     private static LeanFileReport EmptyLeanReport() =>
         new(ImmutableArray<string>.Empty, ImmutableArray<LeanDeclaration>.Empty);

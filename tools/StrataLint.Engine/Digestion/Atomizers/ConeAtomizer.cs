@@ -64,7 +64,7 @@ internal static class ConeAtomizer
             if (mapping is null)
             {
                 unregistered.Add(genre);
-                return genre + "/" + semanticNumber;
+                return UnregisteredGenreLocator.ForNumbered(genre, semanticNumber);
             }
 
             var templates = mapping.Value.Split('|');
@@ -92,7 +92,7 @@ internal static class ConeAtomizer
 
     private static void ValidateChapter(DigestionAtom atom)
     {
-        var chapterNumber = atom.AstPath[(atom.AstPath.IndexOf('/', StringComparison.Ordinal) + 1)..]
+        var chapterNumber = atom.AstPath[(atom.AstPath.LastIndexOf('/') + 1)..]
             .Split('.')[0];
         var actualChapter = atom.Context.LastOrDefault(static item => item.Level == 2)?.Text;
         var heading = actualChapter is null ? null : ChapterHeadingPattern.Match(actualChapter);

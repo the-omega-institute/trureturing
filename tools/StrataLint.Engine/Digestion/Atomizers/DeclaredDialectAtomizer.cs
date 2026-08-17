@@ -66,7 +66,7 @@ internal static class DeclaredDialectAtomizer
 
         // Same contract as the built-in dialects: a lead that fits the shape but names no
         // registered genre is addressed by its own token and recorded, never silently skipped
-        // and never allowed to cost the volume its other claims. The ledger refuses it.
+        // and never allowed to cost the volume its other claims. The ledger records it as open.
         var token = match.Groups["kind"].Value;
         var genre = dialect.Genres.FirstOrDefault(item => item.Token == token);
         genre ??= GenreSuffixResolver.Resolve(token, dialect.GenreSuffixes);
@@ -75,6 +75,8 @@ internal static class DeclaredDialectAtomizer
             unregistered.Add(token);
         }
 
-        return (genre?.Value ?? token) + "/" + match.Groups["number"].Value;
+        return genre is null
+            ? UnregisteredGenreLocator.ForNumbered(token, match.Groups["number"].Value)
+            : genre.Value + "/" + match.Groups["number"].Value;
     }
 }

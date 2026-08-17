@@ -7,17 +7,83 @@ public sealed class ScribeTestMapDeriverTests
     {
         var map = ScribeTestMapDeriver.DeriveRepository(RepositoryLayout.FindRoot());
 
-        // Baseline observed on phase 4a branch: 280 methods are still conservative
-        // unknowns. Until the parser can resolve them, they must not increase.
-        Assert.InRange(
-            map.Methods.Count(static method => method.IsUnknown),
-            0,
-            280);
+        Assert.Equal(280, ScribeUnknownDebtPolicy.UnknownDebtLimit);
+        Assert.Equal(281, ScribeUnknownDebtPolicy.UnknownDebtToleranceLimit);
+        Assert.Empty(ScribeUnknownDebtPolicy.InspectCurrent(map));
         Assert.All(
             map.Methods.SelectMany(static method => method.Paths),
             path => Assert.True(
                 ScribeTestMapDeriver.IsDeclaredPathAllowed(path),
                 $"undeclared repository read path: {path}"));
+    }
+
+    [Fact]
+    public void UnknownDebtPartitionsAreDerivedFromXunitProjectInputs()
+    {
+        const string xunitProject =
+            "<Project><ItemGroup><PackageReference Include=\"xunit\" /></ItemGroup></Project>";
+        const string compileProof = "<Project />";
+
+        var partitions = ScribeTestMapDeriver.DeriveProjectPartitions(
+        [
+            ("tools/tests/Alpha.Tests/Alpha.Tests.csproj", xunitProject),
+            ("tools/tests/NewPartition.Tests/NewPartition.Tests.csproj", xunitProject),
+            ("tools/tests/CompileProof/CompileProof.csproj", compileProof),
+        ]);
+
+        Assert.Equal(
+            ["tools/tests/Alpha.Tests", "tools/tests/NewPartition.Tests"],
+            partitions.Select(static partition => partition.Key));
+    }
+
+    [Fact]
+    public void UnknownDebtBaselineSchemaV1GroupsMethodsByDerivedPartitionKey()
+    {
+        const string source = """
+            class DebtTests {
+              [Fact] public void ReadsVariable() {
+                var path = GetPath();
+                File.ReadAllText(path);
+              }
+            }
+            """;
+        var map = ScribeTestMapDeriver.DeriveSources(
+        [
+            new("tools/tests/Alpha.Tests/DebtTests.cs", source, "tools/tests/Alpha.Tests"),
+            new("tools/tests/Beta.Tests/DebtTests.cs", source, "tools/tests/Beta.Tests"),
+        ],
+        []);
+
+        var baseline = ScribeUnknownDebtBaselineV1.Create(map);
+
+        Assert.Equal(ScribeUnknownDebtBaselineV1.CurrentSchemaVersion, baseline.SchemaVersion);
+        Assert.Equal(2, baseline.UnknownCount);
+        Assert.Equal(
+            ["tools/tests/Alpha.Tests", "tools/tests/Beta.Tests"],
+            baseline.Partitions.Keys);
+    }
+
+    [Fact]
+    public void UnknownDebtPastToleranceIsDetectedRepositoryWide()
+    {
+        var methods = string.Join('\n', Enumerable.Range(
+                0,
+                ScribeUnknownDebtPolicy.UnknownDebtToleranceLimit + 1)
+            .Select(static index =>
+                $"[Fact] public void Debt{index:000}() {{ var path = GetPath(); File.ReadAllText(path); }}"));
+        var map = ScribeTestMapDeriver.DeriveSources(
+        [
+            new(
+                "tools/tests/Synthetic.Tests/DebtTests.cs",
+                $"class DebtTests {{\n{methods}\n}}",
+                "tools/tests/Synthetic.Tests"),
+        ],
+        []);
+
+        var finding = Assert.Single(ScribeUnknownDebtPolicy.InspectCurrent(map));
+
+        Assert.Equal(AdmissionEffect.Block, finding.Effect);
+        Assert.Contains("repository tolerance 281", finding.Message, StringComparison.Ordinal);
     }
 
     [Fact]

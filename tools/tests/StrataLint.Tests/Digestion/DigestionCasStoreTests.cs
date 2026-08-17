@@ -69,6 +69,31 @@ public sealed class DigestionCasStoreTests
     }
 
     [Fact]
+    public void CandidateDeltaRehashesOnlyChangedCasObjects()
+    {
+        var captured = DigestionCasStore.Capture(Encoding.UTF8.GetBytes("expected atom\n"));
+        var tampered = DigestionCasStore.Capture(Encoding.UTF8.GetBytes("tampered atom\n"));
+        var document = BackfillInventoryLoader.Load(Ledger(captured.Reference));
+        var snapshot = Snapshot(new RawRepositoryEntry(captured.RelativePath, tampered.Bytes));
+
+        var unrelated = DigestionCasStore.Evaluate(
+            document,
+            snapshot,
+            RawChangeSet.Create(["notes/unrelated.txt"]));
+        var changed = DigestionCasStore.Evaluate(
+            document,
+            snapshot,
+            RawChangeSet.Create([captured.RelativePath]));
+
+        Assert.Equal(0, unrelated.RehashedObjectCount);
+        Assert.Empty(unrelated.Findings);
+        Assert.Equal(1, changed.RehashedObjectCount);
+        Assert.Contains(changed.Findings, finding => finding.Contains(
+            "CAS blob hash mismatch",
+            StringComparison.Ordinal));
+    }
+
+    [Fact]
     public void MissingReferencedBlobIsRejected()
     {
         var captured = DigestionCasStore.Capture(Encoding.UTF8.GetBytes("missing atom\n"));

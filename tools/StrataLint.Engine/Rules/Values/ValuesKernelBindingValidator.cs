@@ -12,6 +12,12 @@ internal static partial class ValuesKernelBindingValidator
     private static partial Regex Sha256Pattern();
 
     internal static ImmutableArray<RuleFinding> Validate(string text, LeanAxiomReport report)
+        => Validate(text, report, changes: null);
+
+    internal static ImmutableArray<RuleFinding> Validate(
+        string text,
+        LeanAxiomReport report,
+        RawChangeSet? changes)
     {
         var findings = ImmutableArray.CreateBuilder<RuleFinding>();
         ImmutableArray<ValueBinding> bindings;
@@ -25,13 +31,35 @@ internal static partial class ValuesKernelBindingValidator
             return findings.ToImmutable();
         }
 
-        foreach (var binding in bindings)
+        var validateAll = changes is null || changes.Paths.Any(static path =>
+            path.Value == RelativePath);
+        foreach (var binding in bindings.Where(binding =>
+                     validateAll || BindingInputChanged(binding, changes!)))
         {
             Validate(binding, report, findings);
         }
 
         return findings.ToImmutable();
     }
+
+    internal static bool ReferencesChangedLeanInput(string text, RawChangeSet changes)
+    {
+        ArgumentNullException.ThrowIfNull(changes);
+        try
+        {
+            return Parse(text).Any(binding => BindingInputChanged(binding, changes));
+        }
+        catch (FormatException)
+        {
+            // An unchanged malformed binding belongs to the trusted base. A candidate edit to
+            // this file is caught by the direct RelativePath branch before this method is called.
+            return false;
+        }
+    }
+
+    private static bool BindingInputChanged(ValueBinding binding, RawChangeSet changes) =>
+        Gid.TryParse(binding.LeanGid, out var gid)
+        && changes.Paths.Any(path => path == gid.Path);
 
     private static void Validate(
         ValueBinding binding,

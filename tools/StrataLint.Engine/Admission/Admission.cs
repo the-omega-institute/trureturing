@@ -248,7 +248,7 @@ public static class AdmissionPipeline
         return RuleCatalog.Default.Execute(context) switch
         {
             RuleExecutionOutcome.Completed completed => Complete(
-                current, policy, lean, completed.Capability, metaEvaluation),
+                current, policy, lean, completed.Capability, metaEvaluation, changes),
             RuleExecutionOutcome.InfrastructureFailure failure =>
                 new AdmissionOutcome.InfrastructureFailure(failure.Message),
         };
@@ -259,7 +259,8 @@ public static class AdmissionPipeline
         ValidatedPolicy policy,
         AcceptedLeanClosure lean,
         CompletedRuleSet rules,
-        MetaEvaluationProfile metaEvaluation)
+        MetaEvaluationProfile metaEvaluation,
+        RawChangeSet changes)
     {
         var rejected = AdmissionEngine.RejectIfNeeded(rules, metaEvaluation);
         if (rejected is not null)
@@ -267,7 +268,7 @@ public static class AdmissionPipeline
             return rejected;
         }
 
-        return RepositoryCanonicalizer.Validate(current, policy) switch
+        return RepositoryCanonicalizer.Validate(current, policy, changes) switch
         {
             CanonicalizationOutcome.Accepted accepted => AdmissionEngine.Decide(
                 policy,

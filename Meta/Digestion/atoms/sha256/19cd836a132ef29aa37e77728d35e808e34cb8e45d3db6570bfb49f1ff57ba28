@@ -1,0 +1,21 @@
+### 定理 38.4（组合缺陷链）
+
+若：
+
+\[
+X\overset q\longrightarrow Y
+\overset r\longrightarrow Z,
+\]
+
+且缺陷由严格差值定义，则：
+
+\[
+\boxed{
+\delta_M(r\circ q;x,y)
+=
+\delta_M(q;x,y)
++
+\delta_M(r;qx,qy).
+}
+\]
+
