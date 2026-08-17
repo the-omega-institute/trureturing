@@ -1,0 +1,17 @@
+ast_path: theorem/22.10
+fingerprints:
+  raw_sha256: sha256:0a2bb4a698677c020b729f7d3e2b1bf85b103fe7b66f54a253828a6eccfcad2d
+  normalized_sha256: sha256:0a2bb4a698677c020b729f7d3e2b1bf85b103fe7b66f54a253828a6eccfcad2d
+cas_ref: sha256:0a2bb4a698677c020b729f7d3e2b1bf85b103fe7b66f54a253828a6eccfcad2d
+coverage_gids:
+  - D5/S3/ObserverMemory/Refinement/GradedPredictionShift.graded_prediction_shift
+receipts:
+  coverage:
+    - gid: D5/S3/ObserverMemory/Refinement/GradedPredictionShift.graded_prediction_shift
+      source_sha256: sha256:0a2bb4a698677c020b729f7d3e2b1bf85b103fe7b66f54a253828a6eccfcad2d
+      target_sha256: sha256:5f65e830133b5d5c16d3f09b6e59995bccecc183f40399b42fc610e587c65f0a
+  scribe:
+    - gid: D5/S3/ObserverMemory/Refinement/GradedPredictionShift.graded_prediction_shift
+      definition_sha256: sha256:1ea6e8a5fd0bf63ecf34f0eb0b4babcfffd489888ece1cc94458bfb54a0b82c1
+      emission_sha256: sha256:4efb9320e8b412706c315df569ab04711125fdddfec559370ae6213a270c85f5
+  unresolved_subitems: []

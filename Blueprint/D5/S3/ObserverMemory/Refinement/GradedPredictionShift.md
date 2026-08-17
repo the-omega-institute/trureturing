@@ -25,5 +25,3 @@ Pinned Mathlib quotient-map, quotient-congruence, kernel-range, and bijection co
 ## References
 
 - Truth anchor: `D5/S3/ObserverMemory/Refinement/GradedPredictionShift.graded_prediction_shift`
-- Dependency: [D5/S3/ObserverMemory/Prediction/PredictionPartitionStability](../Prediction/PredictionPartitionStability.md)
-- Dependency: [D5/S3/ObserverMemory/Refinement/PredictionCompletion](PredictionCompletion.md)
