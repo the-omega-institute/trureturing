@@ -13,7 +13,7 @@ public sealed class ShowAtomTests
     private const string AdapterAtomizerId = AtomizerRegistry.PeriodicTreeId;
 
     [Fact]
-    public void BoundaryAtomPrintsItsByteExactParagraphNormalizedTextAndVerifiedHashesWithoutWriting()
+    public void BoundaryAtomPrintsItsByteExactParagraphNormalizedTextAndRecordedHashesWithoutWriting()
     {
         const string sourcePath = "fixtures/show-atom/boundary.md";
         const string prefix = "preface\r\n";
@@ -46,8 +46,8 @@ public sealed class ShowAtomTests
             result.Output,
             StringComparison.Ordinal);
         Assert.Contains(
-            $"HASH_VERIFY raw_sha256={rawSha256} normalized_sha256={normalizedSha256} "
-                + $"cas_ref={rawSha256} status=match\n",
+            $"HASH_RECORD raw_sha256={rawSha256} normalized_sha256={normalizedSha256} "
+                + $"cas_ref={rawSha256} source=ledger\n",
             result.Output,
             StringComparison.Ordinal);
         Assert.Contains($"BEGIN_RAW_TEXT\n{rawText}END_RAW_TEXT\n", result.Output, StringComparison.Ordinal);
@@ -91,9 +91,9 @@ public sealed class ShowAtomTests
             result.Output,
             StringComparison.Ordinal);
         Assert.Contains(
-            $"HASH_VERIFY raw_sha256={fingerprints.RawSha256} "
+            $"HASH_RECORD raw_sha256={fingerprints.RawSha256} "
                 + $"normalized_sha256={fingerprints.NormalizedSha256} "
-                + $"cas_ref={fingerprints.RawSha256} status=match\n",
+                + $"cas_ref={fingerprints.RawSha256} source=ledger\n",
             result.Output,
             StringComparison.Ordinal);
     }
@@ -146,14 +146,21 @@ public sealed class ShowAtomTests
     }
 
     [Fact]
-    public void CasBlobHashMismatchFailsClosedBeforePrintingText()
+    public void CommittedCasBytesAreTrustedWithoutReplayingRecordedHashes()
     {
         const string sourcePath = "fixtures/show-atom/adapter.md";
         const string rawText = "## 1. Synthetic section\n\nSynthetic claim.\n";
         var rawBytes = Encoding.UTF8.GetBytes(rawText);
         var fingerprints = DigestionFingerprint.Compute(rawBytes);
+        var ledger = AdapterLedger(sourcePath, fingerprints.RawSha256, fingerprints.NormalizedSha256)
+            .Replace(
+                $"    atomizer: {AdapterAtomizerId}\n",
+                $"    atomizer: {AdapterAtomizerId}\n"
+                    + "    acknowledged_stale:\n"
+                    + $"      - {AdapterAtomId}\n",
+                StringComparison.Ordinal);
         var files = FixtureFiles(
-            AdapterLedger(sourcePath, fingerprints.RawSha256, fingerprints.NormalizedSha256),
+            ledger,
             sourcePath,
             rawBytes,
             fingerprints.RawSha256,
@@ -161,11 +168,15 @@ public sealed class ShowAtomTests
 
         var result = Environment("/repo", files).ShowAtom(["--atom-id", AdapterAtomId]);
 
-        Assert.False(result.Success);
-        Assert.Equal(string.Empty, result.Output);
+        Assert.True(result.Success, result.Error);
+        Assert.Equal(string.Empty, result.Error);
+        Assert.Contains("STALE_READ status=stale source=cas", result.Output, StringComparison.Ordinal);
+        Assert.Contains("BEGIN_RAW_TEXT\ncorrupt CAS bytes\nEND_RAW_TEXT", result.Output, StringComparison.Ordinal);
         Assert.Contains(
-            $"SHOW_ATOM_INVALID atom {AdapterAtomId} CAS blob hash mismatch",
-            result.Error,
+            $"HASH_RECORD raw_sha256={fingerprints.RawSha256} "
+                + $"normalized_sha256={fingerprints.NormalizedSha256} "
+                + $"cas_ref={fingerprints.RawSha256} source=ledger",
+            result.Output,
             StringComparison.Ordinal);
     }
 
@@ -223,7 +234,7 @@ public sealed class ShowAtomTests
     }
 
     [Fact]
-    public void SupersededGenerationReadsStrictlyVerifiedHistoricalCasAndMarksItStale()
+    public void SupersededGenerationReadsCommittedHistoricalCasAndMarksItStale()
     {
         const string sourcePath = "fixtures/show-atom/adapter.md";
         var oldBytes = Encoding.UTF8.GetBytes(
@@ -251,7 +262,7 @@ public sealed class ShowAtomTests
     }
 
     [Fact]
-    public void AcknowledgedStaleEntryReadsStrictlyVerifiedHistoricalCasAndMarksItStale()
+    public void AcknowledgedStaleEntryReadsCommittedHistoricalCasAndMarksItStale()
     {
         const string sourcePath = "fixtures/show-atom/adapter.md";
         var oldBytes = Encoding.UTF8.GetBytes(
@@ -382,7 +393,6 @@ public sealed class ShowAtomTests
                 status:
                   migration: partial
                   truth: open
-        ticket_index: []
         """;
 
     private static string AdapterLedger(
@@ -410,7 +420,6 @@ public sealed class ShowAtomTests
                 status:
                   migration: partial
                   truth: open
-        ticket_index: []
         """;
 
     private static string AdapterGenerationLedger(
@@ -452,7 +461,6 @@ public sealed class ShowAtomTests
                 status:
                   migration: partial
                   truth: open
-        ticket_index: []
         """;
 
     private static string SyntheticAtomizerData => """

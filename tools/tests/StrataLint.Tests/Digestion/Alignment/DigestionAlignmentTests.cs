@@ -363,7 +363,7 @@ public sealed partial class DigestionAlignmentTests
             DigestionAlignmentMode.Admission);
 
         Assert.Empty(admitted.Findings);
-        Assert.Equal(DigestionReceiptAlignment.Seen, admitted.AlignmentFor("old-receipt"));
+        Assert.Equal(DigestionReceiptAlignment.Stale, admitted.AlignmentFor("old-receipt"));
         Assert.Equal(DigestionReceiptAlignment.Seen, admitted.AlignmentFor("new-receipt"));
         Assert.Empty(admitted.Residual);
     }
@@ -442,7 +442,7 @@ public sealed partial class DigestionAlignmentTests
             DigestionAlignmentMode.Ingest);
 
         Assert.Empty(result.Findings);
-        Assert.Equal(DigestionReceiptAlignment.Seen, result.AlignmentFor("old-receipt"));
+        Assert.Equal(DigestionReceiptAlignment.Stale, result.AlignmentFor("old-receipt"));
     }
 
     [Fact]
@@ -464,7 +464,7 @@ public sealed partial class DigestionAlignmentTests
             DigestionAlignmentMode.Ingest);
 
         Assert.Empty(result.Findings);
-        Assert.Equal(DigestionReceiptAlignment.Seen, result.AlignmentFor("old-receipt"));
+        Assert.Equal(DigestionReceiptAlignment.Stale, result.AlignmentFor("old-receipt"));
     }
 
     [Fact]
@@ -486,7 +486,7 @@ public sealed partial class DigestionAlignmentTests
             DigestionAlignmentMode.Ingest);
 
         Assert.Empty(result.Findings);
-        Assert.Equal(DigestionReceiptAlignment.Seen, result.AlignmentFor("old-receipt"));
+        Assert.Equal(DigestionReceiptAlignment.Stale, result.AlignmentFor("old-receipt"));
     }
 
     [Fact]
@@ -517,7 +517,7 @@ public sealed partial class DigestionAlignmentTests
             DigestionAlignmentMode.Ingest);
 
         Assert.Empty(result.Findings);
-        Assert.Equal(DigestionReceiptAlignment.Seen, result.AlignmentFor("old-receipt"));
+        Assert.Equal(DigestionReceiptAlignment.Stale, result.AlignmentFor("old-receipt"));
     }
 
     [Fact]
@@ -622,7 +622,7 @@ public sealed partial class DigestionAlignmentTests
     }
 
     [Fact]
-    public void IngestPreservesHistoricalCasAndRegistersEveryResidualOpenClaim()
+    public void IngestRetiresReplacedHistoricalCasAndRegistersEveryResidualOpenClaim()
     {
         var oldBytes = Encoding.UTF8.GetBytes("# GICT\n\n**定理 1.1(A)**。old。\n");
         var currentBytes = Encoding.UTF8.GetBytes(
@@ -636,9 +636,9 @@ public sealed partial class DigestionAlignmentTests
         var source = Assert.Single(plan.Document.RequireDigestionSources());
         var added = source.Entries.Where(static entry => entry.AtomId != "old-receipt").ToArray();
 
-        Assert.Equal(0, plan.StaleAcknowledged);
+        Assert.Equal(1, plan.StaleAcknowledged);
         Assert.Equal(2, plan.ResidualOpenAdded);
-        Assert.Empty(source.AcknowledgedStale);
+        Assert.Equal(["old-receipt"], source.AcknowledgedStale.ToArray());
         Assert.Equal(2, added.Length);
         Assert.All(added, entry =>
         {
@@ -660,27 +660,9 @@ public sealed partial class DigestionAlignmentTests
 
         Assert.Empty(admitted.Findings);
         Assert.Empty(admitted.Residual);
-    }
-
-    [Fact]
-    public void IngestDropsObsoleteAcknowledgmentWithoutCreatingANewOne()
-    {
-        var oldBytes = Encoding.UTF8.GetBytes("# GICT\n\n**定理 1.1(A)**。old。\n");
-        var currentBytes = Encoding.UTF8.GetBytes("# GICT\n\n**定理 1.1(A)**。rewritten。\n");
-        var oldAtom = Assert.Single(GictAtomizer.Atomize(oldBytes, DigestionTestSupport.Rules).Claims);
-        var oldCapture = DigestionCasStore.Capture(oldAtom.RawBytes.AsSpan());
-        var baseline = BackfillInventoryLoader.Load(Ledger([], Entry("old-receipt", oldAtom)));
-        var acknowledged = BackfillInventoryLoader.Load(Ledger(
-            ["old-receipt"],
-            Entry("old-receipt", oldAtom)));
-
-        var plan = DigestionIngestor.Plan(
-            acknowledged,
-            Snapshot(currentBytes, [oldCapture]),
-            baseline);
-
-        Assert.Equal(0, plan.StaleAcknowledged);
-        Assert.Empty(Assert.Single(plan.Document.RequireDigestionSources()).AcknowledgedStale);
+        Assert.Equal(
+            DigestionReceiptAlignment.Stale,
+            admitted.AlignmentFor("old-receipt"));
     }
 
     [Fact]
@@ -732,7 +714,8 @@ public sealed partial class DigestionAlignmentTests
     internal static RepositorySnapshot Snapshot(
         byte[] sourceBytes,
         IEnumerable<DigestionCasObject>? casObjects = null,
-        string sourcePath = "docs/source.md")
+        string sourcePath = "docs/source.md",
+        IEnumerable<RawRepositoryEntry>? extraEntries = null)
     {
         var entries = new List<RawRepositoryEntry>
         {
@@ -743,6 +726,7 @@ public sealed partial class DigestionAlignmentTests
         };
         entries.AddRange((casObjects ?? []).Select(static item =>
             new RawRepositoryEntry(item.RelativePath, item.Bytes)));
+        entries.AddRange(extraEntries ?? []);
         var raw = RawRepositorySnapshot.Create(entries);
         return Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(raw)).Snapshot;
     }

@@ -448,7 +448,6 @@ internal static partial class IngestCommand
             }
         }
 
-        AddIfFile(BackfillInventoryLoader.TicketIndexPath);
         return result;
 
         void AddIfFile(string relativePath)

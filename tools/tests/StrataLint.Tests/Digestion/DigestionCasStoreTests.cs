@@ -128,6 +128,5 @@ public sealed class DigestionCasStoreTests
                 status:
                   migration: residual
                   truth: open
-        ticket_index: []
         """;
 }

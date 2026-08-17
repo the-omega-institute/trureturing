@@ -52,60 +52,6 @@ public sealed partial class ReviewRegressionTests
     }
 
     [Fact]
-    public void Cf1BootstrapTicketCannotDisappearFromProtectedBackfillInventory()
-    {
-        var fixture = new RuleFixture();
-        fixture.AddBackfillTargets();
-        fixture.Files[BackfillInventoryLoader.TicketIndexPath] = fixture.Files[
-                BackfillInventoryLoader.TicketIndexPath]
-            .Replace(
-            "D5-T0017 = \"D5/X_Frontier/RequiredChecks\"\n",
-            string.Empty,
-            StringComparison.Ordinal);
-
-        var evaluation = RuleCatalog.Default.EvaluateSingle(RuleId.CreateKnown(16), fixture.Build());
-
-        Assert.Contains(
-            evaluation.Diagnostics,
-            diagnostic => diagnostic.Message.Contains("D5-T0017", StringComparison.Ordinal));
-    }
-
-    [Fact]
-    public void Sl016RejectsTicketWhoseTargetDoesNotDeclareItsCase()
-    {
-        var fixture = new RuleFixture();
-        fixture.AddBackfillTargets();
-        fixture.Files[RuleFixture.HeartsDraftPath] = fixture.Files[RuleFixture.HeartsDraftPath].Replace(
-            "TASK D5-T0018 ",
-            "TASK D5-T0099 ",
-            StringComparison.Ordinal);
-
-        var evaluation = RuleCatalog.Default.EvaluateSingle(RuleId.CreateKnown(16), fixture.Build());
-
-        Assert.Contains(
-            evaluation.Diagnostics,
-            diagnostic => diagnostic.Message.Contains(
-                "ticket D5-T0018 target does not declare TASK D5-T0018",
-                StringComparison.Ordinal));
-    }
-
-    [Fact]
-    public void Sl016RejectsFrontierTaskMissingFromTicketIndex()
-    {
-        var fixture = new RuleFixture();
-        fixture.AddBackfillTargets();
-        fixture.Files[RuleFixture.HeartsDraftPath] += "\n/-- TASK D5-T0099 -/\n";
-
-        var evaluation = RuleCatalog.Default.EvaluateSingle(RuleId.CreateKnown(16), fixture.Build());
-
-        Assert.Contains(
-            evaluation.Diagnostics,
-            diagnostic => diagnostic.Message.Contains(
-                "frontier TASK cases are missing from ticket_index: D5-T0099",
-                StringComparison.Ordinal));
-    }
-
-    [Fact]
     public void Sl016AcceptsTheNeutralSyntheticDigestionLedger()
     {
         var fixture = new RuleFixture();
@@ -249,12 +195,8 @@ public sealed partial class ReviewRegressionTests
             "  - source_id: fixture-source\n"
             + "    path: docs/CONTRIBUTING.md\n"
             + "    atomizer: none\n"
-            + "    entries: []\n"
-            + "ticket_index:\n";
-        fixture.Files["Meta/BACKFILL.yaml"] = fixture.Files["Meta/BACKFILL.yaml"].Replace(
-            "ticket_index:\n",
-            duplicate,
-            StringComparison.Ordinal);
+            + "    entries: []\n";
+        fixture.Files["Meta/BACKFILL.yaml"] += duplicate;
 
         var evaluation = RuleCatalog.Default.EvaluateSingle(RuleId.CreateKnown(16), fixture.Build());
 

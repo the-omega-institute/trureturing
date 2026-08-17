@@ -28,6 +28,26 @@ public sealed partial class MakeWorkflowTests
 
     [Fact]
     [UnsupportedOSPlatform("windows")]
+    public void ScribeCoarseGateSkipsEmissionProcessesForTheHardcodeLedger()
+    {
+        if (OperatingSystem.IsWindows()) return;
+
+        using var fixture = new ScribeCoarseGateFixture();
+        fixture.Change("tools/Architecture/HARDCODE-LEDGER.md");
+
+        var result = fixture.Run();
+
+        Assert.Equal(0, result.ExitCode);
+        Assert.Equal(
+            [
+                $"{fixture.ScribeDll} projections --check --report {fixture.Report}",
+                $"{fixture.ScribeDll} describe-report --check",
+            ],
+            fixture.Invocations());
+    }
+
+    [Fact]
+    [UnsupportedOSPlatform("windows")]
     public void ScribeCoarseGateSkipsEmissionProcessesForAnEmptyDelta()
     {
         if (OperatingSystem.IsWindows()) return;
@@ -56,13 +76,13 @@ public sealed partial class MakeWorkflowTests
     [InlineData("Library/notes/probe.md")]
     [InlineData("Golden/Projection/probe.json")]
     [InlineData("Meta/BACKFILL.yaml")]
-    [InlineData("Meta/Digestion/ticket-index.toml")]
     [InlineData("Meta/Digestion/backfill/probe.yaml")]
     [InlineData("Golden/values-kernels.toml")]
     [InlineData("Evidence/D5/values.json")]
+    [InlineData("tools/Architecture/BannedSymbols.txt")]
     [InlineData("tools/StrataLint.Scribe/Emission/Probe.cs")]
     [UnsupportedOSPlatform("windows")]
-    public void ScribeCoarseGateRunsBothEmissionChecksForDirectClosureInputs(string changedPath)
+    public void ScribeCoarseGateRunsRequiredChecksWithoutMarkdownFreshness(string changedPath)
     {
         if (OperatingSystem.IsWindows()) return;
 
@@ -75,7 +95,6 @@ public sealed partial class MakeWorkflowTests
         Assert.Equal(
             [
                 $"{fixture.ScribeDll} projections --check --report {fixture.Report}",
-                $"{fixture.ScribeDll} emit --check",
                 $"{fixture.ScribeDll} emit-values --check",
                 $"{fixture.ScribeDll} describe-report --check",
             ],
@@ -94,7 +113,7 @@ public sealed partial class MakeWorkflowTests
         var result = fixture.Run();
 
         Assert.Equal(0, result.ExitCode);
-        Assert.Contains(
+        Assert.DoesNotContain(
             fixture.Invocations(),
             invocation => invocation == $"{fixture.ScribeDll} emit --check");
         Assert.Contains(

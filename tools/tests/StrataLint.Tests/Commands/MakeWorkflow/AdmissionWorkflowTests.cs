@@ -6,6 +6,8 @@ namespace StrataLint.Tests;
 
 public sealed class AdmissionWorkflowTests
 {
+    private static readonly string SharedAdmissionWorkflow = AdmissionWorkflow();
+
     [Fact]
     public void BaselineAdmissionNeedsExactlyLeanInspect()
     {
@@ -16,20 +18,119 @@ public sealed class AdmissionWorkflowTests
         Assert.False(BaselineNeedsExactlyLeanInspect(tampered));
     }
 
-    // 法官那棵树必须是候选的分叉点,不是 dev 的当前 tip。用 tip 会让在飞的 PR 被
-    // 分叉之后才落地的规则追溯判决:候选没碰的东西,却要按它没见过的规则受审。
-    // 分叉点让 append-only 规则只问候选从哪里出发,不会把 dev 后加的条目归罪于候选。
+    // 历史方法名保留,避免删除或改名既有测试;契约已改为 merge result 的 dev 父提交。
     [Fact]
     public void DevBaselineIsTheForkPointNotTheMovingDevTip()
     {
         var workflow = AdmissionWorkflow();
         var resolve = BaselineResolutionScript(workflow);
 
-        Assert.Contains("merge-base", resolve, StringComparison.Ordinal);
-        Assert.DoesNotContain(
-            "sha=\"${{ github.event.pull_request.base.sha }}\"",
-            resolve,
+        Assert.Contains("sha=\"$(git -C candidate rev-parse HEAD^1)\"", resolve, StringComparison.Ordinal);
+        Assert.DoesNotContain("merge-base", resolve, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void AllJobsCheckoutMergeResultAndKeepPushFallback()
+    {
+        const string expectedRef = "${{ github.event_name == 'pull_request_target' && format('refs/pull/{0}/merge', github.event.pull_request.number) || github.sha }}";
+        var workflow = SharedAdmissionWorkflow;
+
+        foreach (var jobName in new[] { "candidate-engineering", "lean-inspect", "baseline-admission" })
+        {
+            var checkout = Assert.Single(
+                JobSteps(workflow, jobName),
+                step => step.Children.TryGetValue(new YamlScalarNode("uses"), out var uses)
+                    && uses is YamlScalarNode { Value: "actions/checkout@v4" });
+            var with = Assert.IsType<YamlMappingNode>(checkout.Children[new YamlScalarNode("with")]);
+            var checkoutRef = Assert.IsType<YamlScalarNode>(with.Children[new YamlScalarNode("ref")]).Value;
+            Assert.Equal(expectedRef, checkoutRef);
+        }
+    }
+
+    [Fact]
+    public void PullRequestDeltaIsDevParentToCheckedMergeResult()
+    {
+        var workflow = SharedAdmissionWorkflow;
+        var scope = Assert.Single(
+            JobSteps(workflow, "candidate-engineering"),
+            step => step.Children.TryGetValue(new YamlScalarNode("id"), out var id)
+                && id is YamlScalarNode { Value: "scope" });
+        var scopeScript = Assert.IsType<YamlScalarNode>(
+            scope.Children[new YamlScalarNode("run")]).Value ?? string.Empty;
+        var baselineScript = BaselineResolutionScript(workflow);
+
+        Assert.Contains(
+            "base_sha=\"$(git -C candidate rev-parse HEAD^1)\"",
+            scopeScript,
             StringComparison.Ordinal);
+        Assert.Contains(
+            "candidate_sha=\"$(git -C candidate rev-parse HEAD)\"",
+            scopeScript,
+            StringComparison.Ordinal);
+        Assert.Contains(
+            "git -C candidate diff --name-only -z --no-renames --diff-filter=ACDMRTUXB \"$base_sha\" \"$candidate_sha\"",
+            scopeScript,
+            StringComparison.Ordinal);
+        Assert.DoesNotContain("merge-base", scopeScript, StringComparison.Ordinal);
+        Assert.Contains(
+            "sha=\"$(git -C candidate rev-parse HEAD^1)\"",
+            baselineScript,
+            StringComparison.Ordinal);
+        Assert.DoesNotContain("merge-base", baselineScript, StringComparison.Ordinal);
+        Assert.DoesNotContain("HEAD^2", scopeScript, StringComparison.Ordinal);
+        Assert.DoesNotContain("HEAD^2", baselineScript, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void PushFallbackBaseIsCheckedHeadFirstParent()
+    {
+        var baselineScript = BaselineResolutionScript(SharedAdmissionWorkflow);
+
+        Assert.Contains(
+            "sha=\"$(git -C candidate rev-parse HEAD^1)\"",
+            baselineScript,
+            StringComparison.Ordinal);
+        Assert.Single(Regex.Matches(
+            baselineScript,
+            Regex.Escape("sha=\"$(git -C candidate rev-parse HEAD^1)\"")));
+        Assert.DoesNotContain("github.event.before", baselineScript, StringComparison.Ordinal);
+        Assert.DoesNotContain("$GITHUB_SHA^", baselineScript, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void MissingMergeResultFailsClosedWithConflictMessage()
+    {
+        var workflow = SharedAdmissionWorkflow;
+
+        foreach (var jobName in new[] { "candidate-engineering", "lean-inspect", "baseline-admission" })
+        {
+            var steps = JobSteps(workflow, jobName);
+            var checkoutIndex = Array.FindIndex(
+                steps,
+                step => step.Children.TryGetValue(new YamlScalarNode("uses"), out var uses)
+                    && uses is YamlScalarNode { Value: "actions/checkout@v4" });
+            Assert.True(checkoutIndex >= 0 && checkoutIndex + 2 < steps.Length);
+
+            var checkout = steps[checkoutIndex];
+            Assert.Equal("checkout-merge", Assert.IsType<YamlScalarNode>(
+                checkout.Children[new YamlScalarNode("id")]).Value);
+            Assert.Equal("${{ github.event_name == 'pull_request_target' }}", Assert.IsType<YamlScalarNode>(
+                checkout.Children[new YamlScalarNode("continue-on-error")]).Value);
+
+            Assert.Equal("Strip checkout remote state", StepName(steps[checkoutIndex + 1]));
+            var failure = steps[checkoutIndex + 2];
+            Assert.Equal("Fail closed when merge result is unavailable", StepName(failure));
+            var condition = Assert.IsType<YamlScalarNode>(
+                failure.Children[new YamlScalarNode("if")]).Value ?? string.Empty;
+            var script = Assert.IsType<YamlScalarNode>(
+                failure.Children[new YamlScalarNode("run")]).Value ?? string.Empty;
+            Assert.Contains("always()", condition, StringComparison.Ordinal);
+            Assert.Contains("steps.checkout-merge.outcome != 'success'", condition, StringComparison.Ordinal);
+            Assert.Contains("refs/pull/${{ github.event.pull_request.number }}/merge", script, StringComparison.Ordinal);
+            Assert.Contains("conflicted pull requests have no merge result", script, StringComparison.Ordinal);
+            Assert.Contains("admission fails closed", script, StringComparison.Ordinal);
+            Assert.Contains("exit 1", script, StringComparison.Ordinal);
+        }
     }
 
     [Fact]
@@ -43,12 +144,18 @@ public sealed class AdmissionWorkflowTests
         Assert.True(steps.Length > 3);
         Assert.Equal("Check out candidate", StepName(steps[0]));
 
-        var scope = steps[1];
+        var scopeIndex = Array.FindIndex(
+            steps,
+            step => step.Children.TryGetValue(new YamlScalarNode("id"), out var id)
+                && id is YamlScalarNode { Value: "scope" });
+        Assert.True(scopeIndex > 0);
+        var scope = steps[scopeIndex];
         Assert.Equal("scope", Assert.IsType<YamlScalarNode>(
             scope.Children[new YamlScalarNode("id")]).Value);
         var scopeScript = Assert.IsType<YamlScalarNode>(
             scope.Children[new YamlScalarNode("run")]).Value ?? string.Empty;
-        Assert.Contains("merge-base", scopeScript, StringComparison.Ordinal);
+        Assert.Contains("git -C candidate rev-parse HEAD^1", scopeScript, StringComparison.Ordinal);
+        Assert.Contains("git -C candidate rev-parse HEAD", scopeScript, StringComparison.Ordinal);
         Assert.Contains("git -C candidate diff", scopeScript, StringComparison.Ordinal);
         Assert.Contains("--no-renames", scopeScript, StringComparison.Ordinal);
         Assert.Matches(
@@ -78,7 +185,7 @@ public sealed class AdmissionWorkflowTests
             StepScript(steps, "Run candidate selftest twice and compare bytes"));
 
         Assert.All(
-            steps[2..^1],
+            steps[(scopeIndex + 1)..^1],
             step => Assert.Contains(
                 "steps.scope.outputs.run == 'true'",
                 Assert.IsType<YamlScalarNode>(step.Children[new YamlScalarNode("if")]).Value,
@@ -336,6 +443,12 @@ public sealed class AdmissionWorkflowTests
 
     private static YamlMappingNode Job(string workflow, string job) =>
         Assert.IsType<YamlMappingNode>(Jobs(workflow).Children[new YamlScalarNode(job)]);
+
+    private static YamlMappingNode[] JobSteps(string workflow, string job) =>
+        Assert.IsType<YamlSequenceNode>(Job(workflow, job).Children[new YamlScalarNode("steps")])
+            .Children
+            .OfType<YamlMappingNode>()
+            .ToArray();
 
     private static string StepName(YamlMappingNode step) =>
         Assert.IsType<YamlScalarNode>(step.Children[new YamlScalarNode("name")]).Value ?? string.Empty;

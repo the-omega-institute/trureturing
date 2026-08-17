@@ -1,0 +1,17 @@
+ast_path: theorem/21.9
+fingerprints:
+  raw_sha256: sha256:2a5f063ecf391c9319192439dab40808cdc7b673660e5954cf9d67ef8e288ca6
+  normalized_sha256: sha256:2a5f063ecf391c9319192439dab40808cdc7b673660e5954cf9d67ef8e288ca6
+cas_ref: sha256:2a5f063ecf391c9319192439dab40808cdc7b673660e5954cf9d67ef8e288ca6
+coverage_gids:
+  - D5/S3/ObserverMemory/Thresholds/PeriodicThresholdKernel.eventual_threshold_iff_reachable_periodic
+receipts:
+  coverage:
+    - gid: D5/S3/ObserverMemory/Thresholds/PeriodicThresholdKernel.eventual_threshold_iff_reachable_periodic
+      source_sha256: sha256:2a5f063ecf391c9319192439dab40808cdc7b673660e5954cf9d67ef8e288ca6
+      target_sha256: sha256:8875c67697ae5f99bfce747eed8640462ff749c14283ee11b39c36077d39f15a
+  scribe:
+    - gid: D5/S3/ObserverMemory/Thresholds/PeriodicThresholdKernel.eventual_threshold_iff_reachable_periodic
+      definition_sha256: sha256:673d6a143f2e4a3809e4e8152dc448ce672bf6725ea76626651501c33e4616bc
+      emission_sha256: sha256:2598002502944bc268f441c38e06b7912c44d9f87c71649f7facce6a7a5ce072
+  unresolved_subitems: []

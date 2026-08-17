@@ -13,8 +13,12 @@ internal static class GeneratedArtifactInventory
 
     private static ImmutableArray<GeneratedArtifactIdentity> Build()
     {
-        var artifacts = new[]
-            {
+        var artifacts = DocumentDefinitions.All
+            .Select(static definition => new GeneratedArtifactIdentity(
+                definition.RelativePath.Value,
+                nameof(ScribeEmitter)))
+            .Concat(
+            [
                 new GeneratedArtifactIdentity(
                     CanonicalValuesWriter.RelativePath,
                     nameof(ValuesEmitter),
@@ -35,7 +39,7 @@ internal static class GeneratedArtifactInventory
                     ScribeEmitter.AttestationRelativePath,
                     nameof(ScribeEmitter),
                     "A-SCRIBE"),
-            }
+            ])
             .OrderBy(static artifact => artifact.Path, StringComparer.Ordinal)
             .ToImmutableArray();
         if (artifacts.Select(static artifact => artifact.Path)

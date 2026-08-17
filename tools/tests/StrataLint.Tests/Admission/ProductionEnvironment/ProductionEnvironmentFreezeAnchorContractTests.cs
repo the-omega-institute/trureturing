@@ -38,7 +38,7 @@ public sealed partial class ProductionEnvironmentTests
     [InlineData("descriptor-not-in-tree", "descriptor selector does not resolve")]
     [InlineData("supporting-blob-unreachable", "supporting blob is not reachable")]
     [InlineData("forged-statement", "does not match recomputed material")]
-    [InlineData("invalid-truth-state", "does not match recomputed material")]
+    [InlineData("invalid-case-id", "does not match recomputed material")]
     public void IncrementalAdmissionRejectsFreezeBoundaryViolation(
         string violation,
         string expectedMessage)
@@ -192,8 +192,8 @@ public sealed partial class ProductionEnvironmentTests
             case "forged-statement":
                 payload["statement_id"] = "sha256:" + new string('9', 64);
                 break;
-            case "invalid-truth-state":
-                payload["truth_state"] = nameof(TruthState.Open);
+            case "invalid-case-id":
+                payload["case_id"] = "active-frozen/" + new string('9', 64);
                 break;
             default:
                 throw new ArgumentOutOfRangeException(nameof(violation), violation, "unknown fixture violation");

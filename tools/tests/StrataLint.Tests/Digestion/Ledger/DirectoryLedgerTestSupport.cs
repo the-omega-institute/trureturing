@@ -28,9 +28,6 @@ internal static class DirectoryLedgerTestSupport
             }
         }
 
-        result[BackfillInventoryLoader.TicketIndexPath] = string.Concat(
-            ledger.RequireTickets().Select(static ticket =>
-                $"{ticket.CaseId} = \"{ticket.Gid}\"\n"));
         return result;
     }
 

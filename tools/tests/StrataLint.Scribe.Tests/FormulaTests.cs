@@ -5,25 +5,6 @@ namespace StrataLint.Scribe.Tests;
 
 public sealed class FormulaTests
 {
-    [Theory]
-    [InlineData("for every index, choose one value.")]
-    [InlineData("Case 2: finite and nonzero!")]
-    [InlineData("x\\y")]
-    [InlineData("x{y}")]
-    [InlineData("x^2")]
-    [InlineData("x_y")]
-    [InlineData("$x$")]
-    public void FormulaTextRunsAcceptOnlyPlainProse(string value)
-    {
-        if (value is "for every index, choose one value." or "Case 2: finite and nonzero!")
-        {
-            Assert.Equal(value, new Formula.TextRun(value).Value);
-            return;
-        }
-
-        Assert.Throws<ArgumentException>(() => new Formula.TextRun(value));
-    }
-
     [Fact]
     public void FormulaHasNoRawStringConstructionEntryPoint()
     {

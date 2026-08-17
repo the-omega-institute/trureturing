@@ -23,4 +23,3 @@ The proof pushes the refined joint law through the first-coordinate-preserving m
 ## References
 
 - Truth anchor: `D5/S3/Entropy/Forgetting/CompletionEntropyMinimality.completion_conditional_entropy_le_of_factorization`
-- Dependency: [D5/S3/Entropy/Forgetting/CapacityMonotone](CapacityMonotone.md)

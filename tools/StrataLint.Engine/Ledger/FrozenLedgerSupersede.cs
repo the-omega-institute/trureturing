@@ -19,7 +19,7 @@ public static partial class FrozenLedger
             ParseDeclarationStatementArray(payload.GetProperty("declaration_statement_ids")),
             ParseEnvironmentPins(payload.GetProperty("environment")),
             ParseFrozenNodeId(RequiredString(payload, "frozen_node_id"), "Supersede frozen node"),
-            ParseInput(payload.GetProperty("input")),
+            ParseSupersedeInput(payload.GetProperty("input")),
             ParseFrozenNodeIds(payload, "prerequisite_frozen_node_ids"),
             RequiredString(payload, "previous_attestation_event_hash"),
             ParseStatementId(RequiredString(payload, "statement_id"), "Supersede statement"),
@@ -69,10 +69,37 @@ public static partial class FrozenLedger
                 $"Supersede target {protectedBaseEntry.Material.RepoPath.Value} recorded axiom closure is unknown.");
         }
 
-        if (payload.StatementId != protectedBaseEntry.Material.StatementId)
+        var declarationKeys = payload.DeclarationStatementIds
+            .Select(static declaration => (declaration.Kind, declaration.DeclarationNameKey))
+            .OrderBy(static declaration => declaration.Kind, StringComparer.Ordinal)
+            .ThenBy(static declaration => declaration.DeclarationNameKey, StringComparer.Ordinal);
+        var protectedDeclarationKeys = protectedBaseEntry.Payload.DeclarationStatementIds
+            .Select(static declaration => (declaration.Kind, declaration.DeclarationNameKey))
+            .OrderBy(static declaration => declaration.Kind, StringComparer.Ordinal)
+            .ThenBy(static declaration => declaration.DeclarationNameKey, StringComparer.Ordinal);
+        if (!declarationKeys.SequenceEqual(protectedDeclarationKeys))
         {
             throw new FormatException(
-                $"Supersede target {protectedBaseEntry.Material.RepoPath.Value} is not the same theorem as the protected-base node.");
+                $"Supersede target {protectedBaseEntry.Material.RepoPath.Value} declaration keys differ from the protected-base node.");
+        }
+
+        if (payload.StatementId != protectedBaseEntry.Material.StatementId)
+        {
+            if (!EnvironmentPinsChanged(payload.Environment, protectedBaseEntry))
+            {
+                throw new FormatException(
+                    $"Supersede target {protectedBaseEntry.Material.RepoPath.Value} statement identity changed but environment pins did not change.");
+            }
+
+            // Identity branch B relies on elaboration being deterministic in (source bytes,
+            // environment): if the elaborated Expr changed while the source blob did not, the
+            // changed pins account for the drift. Reattest already relies on the same premise.
+            if (payload.Input.DescriptorBlobOid
+                != protectedBaseEntry.Payload.Input.DescriptorBlobOid)
+            {
+                throw new FormatException(
+                    $"Supersede target {protectedBaseEntry.Material.RepoPath.Value} statement identity and source blob both changed from the protected-base node.");
+            }
         }
 
         if (payload.AxiomClosure.Except(
@@ -82,6 +109,66 @@ public static partial class FrozenLedger
             throw new FormatException(
                 $"Supersede target {protectedBaseEntry.Material.RepoPath.Value} axiom closure is not a subset of the protected-base closure.");
         }
+    }
+
+    internal static bool EnvironmentPinsChanged(
+        FrozenEnvironmentPins candidate,
+        FrozenActiveEntry protectedBaseEntry)
+    {
+        ArgumentNullException.ThrowIfNull(candidate);
+        ArgumentNullException.ThrowIfNull(protectedBaseEntry);
+        if (protectedBaseEntry.Environment is { } protectedEnvironment)
+        {
+            return candidate != protectedEnvironment;
+        }
+
+        return LegacyEnvironmentPinsChanged(
+            candidate.LakeManifestBlobOid,
+            candidate.LeanToolchainBlobOid,
+            protectedBaseEntry);
+    }
+
+    internal static bool EnvironmentPinsChanged(
+        FrozenEnvironmentAttestation candidate,
+        FrozenActiveEntry protectedBaseEntry)
+    {
+        ArgumentNullException.ThrowIfNull(candidate);
+        ArgumentNullException.ThrowIfNull(protectedBaseEntry);
+        if (protectedBaseEntry.Environment is { } protectedEnvironment)
+        {
+            if (candidate.LakefilePath is null
+                || candidate.LakefileBlobOid is null
+                || !RepoPath.TryCreate(candidate.LakefilePath, out var lakefilePath))
+            {
+                return true;
+            }
+
+            return new FrozenEnvironmentPins(
+                candidate.LakeManifestBlobOid,
+                candidate.LakefileBlobOid,
+                lakefilePath,
+                candidate.LeanToolchainBlobOid) != protectedEnvironment;
+        }
+
+        return LegacyEnvironmentPinsChanged(
+            candidate.LakeManifestBlobOid,
+            candidate.LeanToolchainBlobOid,
+            protectedBaseEntry);
+    }
+
+    private static bool LegacyEnvironmentPinsChanged(
+        string lakeManifestBlobOid,
+        string leanToolchainBlobOid,
+        FrozenActiveEntry protectedBaseEntry)
+    {
+        var candidateLegacyPins = new[]
+        {
+            lakeManifestBlobOid,
+            leanToolchainBlobOid,
+        }.Order(StringComparer.Ordinal);
+        return !candidateLegacyPins.SequenceEqual(
+            protectedBaseEntry.Payload.Input.SupportingBlobOids.Order(StringComparer.Ordinal),
+            StringComparer.Ordinal);
     }
 
     internal static FrozenActiveEntry ApplySupersede(
@@ -201,6 +288,30 @@ public static partial class FrozenLedger
         return result;
     }
 
+    private static FrozenLedgerInput ParseSupersedeInput(JsonElement value)
+    {
+        RequireObjectFields(
+            value,
+            "Supersede input",
+            "base_commit_oid", "base_tree_oid", "descriptor_blob_oid", "descriptor_selector",
+            "materializer");
+        var result = new FrozenLedgerInput(
+            RequiredString(value, "base_commit_oid"),
+            RequiredString(value, "base_tree_oid"),
+            RequiredString(value, "descriptor_blob_oid"),
+            RequiredString(value, "descriptor_selector"),
+            RequiredString(value, "materializer"),
+            ImmutableArray<string>.Empty);
+        if (!FrozenHashSyntax.IsGitOid(result.BaseCommitOid)
+            || !FrozenHashSyntax.IsGitOid(result.BaseTreeOid)
+            || !FrozenHashSyntax.IsGitOid(result.DescriptorBlobOid))
+        {
+            throw new FormatException("Supersede input has a malformed Git object reference.");
+        }
+
+        return result;
+    }
+
     private static ImmutableArray<string> ParseSortedUniqueStrings(JsonElement payload, string name)
     {
         var result = RequiredStringArray(payload, name);
@@ -242,12 +353,10 @@ public static partial class FrozenLedger
                 "Supersede statement ID does not match declaration statement IDs.");
         }
 
-        var expectedPins = EnvironmentPinOids(payload.Environment)
-            .Order(StringComparer.Ordinal);
-        if (!payload.Input.SupportingBlobOids.SequenceEqual(expectedPins, StringComparer.Ordinal))
+        if (!payload.Input.SupportingBlobOids.IsEmpty)
         {
             throw new FormatException(
-                "Supersede input does not contain exactly its three named environment pins.");
+                "Supersede input must not duplicate its named environment pins.");
         }
     }
 

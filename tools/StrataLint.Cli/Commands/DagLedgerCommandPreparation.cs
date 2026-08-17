@@ -9,7 +9,10 @@ namespace StrataLint.Cli;
 internal sealed record DagLedgerCommandContext(
     string LedgerPath,
     byte[] BaselineBytes,
+    ImmutableArray<RepositoryFile> BaselineFiles,
+    FrozenLedgerSyntax BaselineSyntax,
     FrozenLedgerConsistent Baseline,
+    FrozenLedgerBaseView BaseView,
     FrozenMaterialCatalog Catalog,
     LeanAxiomReport Report,
     RepositorySnapshot Snapshot);
@@ -18,6 +21,8 @@ internal sealed record DagLedgerCandidateMaterial(
     string LedgerPath,
     byte[] BaselineBytes,
     FrozenLedgerSyntax BaselineSyntax,
+    FrozenLedgerBaseView BaseView,
+    ImmutableArray<RepositoryFile> BaselineFiles,
     FrozenMaterialCatalog Catalog,
     LeanAxiomReport Report,
     RepositorySnapshot Snapshot);
@@ -45,24 +50,14 @@ internal static class DagLedgerCommandPreparation
         ILeanReportSource leanReportSource)
     {
         var candidate = PrepareCandidate(repositoryRoot, repository, leanReportSource);
-        var baselineReferences = ScanReferences(candidate.BaselineSyntax, "existing frozen ledger");
-        var trustedBaselineReferences = TrustedFrozenGitReferences.CreateForTrustedAdapter(
-            baselineReferences.Inputs,
-            baselineReferences.EnvironmentReferences);
-        var baseline = FrozenLedger.ValidateHistoryPrefix(
-            candidate.BaselineSyntax,
-            candidate.Catalog,
-            trustedBaselineReferences) switch
-        {
-            FrozenLedgerValidationOutcome.Accepted accepted => accepted.Capability,
-            FrozenLedgerValidationOutcome.Rejected rejected => throw new InvalidOperationException(
-                "existing frozen ledger is invalid: " + rejected.Message),
-            _ => throw new InvalidOperationException("unknown ledger validation outcome"),
-        };
+        var baseline = candidate.BaseView.ToWriterBaseline(candidate.BaselineSyntax);
         return new DagLedgerCommandContext(
             candidate.LedgerPath,
             candidate.BaselineBytes,
+            candidate.BaselineFiles,
+            candidate.BaselineSyntax,
             baseline,
+            candidate.BaseView,
             candidate.Catalog,
             candidate.Report,
             candidate.Snapshot);
@@ -76,24 +71,29 @@ internal static class DagLedgerCommandPreparation
         var ledgerPath = Path.Combine(
             repositoryRoot,
             FrozenLedgerChangeClassifier.AcceptedRoot.Replace('/', Path.DirectorySeparatorChar));
-        var baselineSyntax = LoadLedgerDirectory(ledgerPath, "existing frozen ledger");
+        var baselineFiles = ReadLedgerDirectoryFiles(ledgerPath);
+        var baseView = FrozenLedgerBaseViewReader.Read(RepositorySnapshot.Create(
+            baselineFiles.ToImmutableDictionary(static file => file.Path)));
+        var baselineSyntax = LoadTrustedLedgerFiles(baseView, "existing frozen ledger");
         var baselineBytes = baselineSyntax.RawBytes.ToArray();
         var truth = BuildTruth(repository, leanReportSource);
         var snapshot = truth.Snapshot;
         var report = truth.Report;
         var lean = truth.Lean;
         var dag = truth.Dag;
-        var catalog = BuildCatalog(
+        var catalog = BuildWriterCatalog(
             snapshot,
             lean,
             dag,
-            baselineSyntax,
+            baseView,
             Ask(repository.ResolveCurrentRevision));
 
         return new DagLedgerCandidateMaterial(
             ledgerPath,
             baselineBytes,
             baselineSyntax,
+            baseView,
+            baselineFiles,
             catalog,
             report,
             snapshot);
@@ -103,17 +103,20 @@ internal static class DagLedgerCommandPreparation
     /// Prepare that any DAG consumer needs, without the frozen-ledger work. Callers that only want
     /// the graph (the DAG projection command) share this assembly line rather than growing a
     /// second, drifting copy of it.
-    /// The frozen material catalog for a snapshot. Prepare needs it for the writer path and the
-    /// admission final-state gate needs it for the read-only path; they share this one assembly
-    /// line rather than growing a second, drifting copy of the attestation algebra.
-    internal static FrozenMaterialCatalog BuildCatalog(
+    /// Builds material only for candidate-affected Closed paths. The DAG still carries the complete
+    /// candidate Closed path set so writers can detect additions and removals without recomputing
+    /// identities already trusted from the base ledger.
+    internal static FrozenMaterialCatalog BuildWriterCatalog(
         RepositorySnapshot snapshot,
         AcceptedLeanClosure lean,
         AcyclicTruthDag dag,
-        FrozenLedgerSyntax ledgerSyntax,
+        FrozenLedgerBaseView baseView,
         FrozenRevisionIdentity currentIdentity)
     {
-        var environment = BuildEnvironment(snapshot, ledgerSyntax);
+        var environment = BuildEnvironment(
+            snapshot,
+            baseView.Origin.CommitOid,
+            baseView.Origin.TreeOid);
         if (currentIdentity.CommitOid.StartsWith("git-sha256:", StringComparison.Ordinal)
             != environment.OriginCommitOid.StartsWith("git-sha256:", StringComparison.Ordinal))
         {
@@ -124,8 +127,28 @@ internal static class DagLedgerCommandPreparation
         var algorithm = environment.OriginCommitOid.StartsWith("git-sha256:", StringComparison.Ordinal)
             ? HashAlgorithmName.SHA256
             : HashAlgorithmName.SHA1;
-        var attestations = dag.Nodes
+        var closedNodes = dag.TopologicalOrder
             .Where(static node => node.State is TruthState.Closed && node.ModuleName is not null)
+            .ToImmutableArray();
+        var selectedPaths = closedNodes
+            .Where(node => !baseView.ActiveByPath.TryGetValue(node.RepoPath, out var entry)
+                || !entry.AxiomClosureKnown
+                || entry.Payload.Input.DescriptorBlobOid != FrozenContentAddress.ComputeGitBlobOid(
+                    snapshot.Files[node.RepoPath].RawBytes.AsSpan(),
+                    algorithm)
+                || FrozenLedger.EnvironmentPinsChanged(environment, entry))
+            .Select(static node => node.RepoPath)
+            .ToHashSet();
+        foreach (var node in closedNodes)
+        {
+            if (dag.DependenciesOf(node.RepoPath).Any(selectedPaths.Contains))
+            {
+                selectedPaths.Add(node.RepoPath);
+            }
+        }
+
+        var attestations = closedNodes
+            .Where(node => selectedPaths.Contains(node.RepoPath))
             .Select(node => new FrozenModuleAttestation(
                 node.RepoPath,
                 FrozenContentAddress.ComputeGitBlobOid(
@@ -136,12 +159,16 @@ internal static class DagLedgerCommandPreparation
                 BaseTreeOid = currentIdentity.TreeOid,
             })
             .ToImmutableArray();
-        return FrozenContentAddress.Build(snapshot, lean, dag, environment, attestations) switch
-        {
-            FrozenMaterialOutcome.Accepted accepted => accepted.Capability,
-            FrozenMaterialOutcome.Rejected rejected => throw new InvalidOperationException(rejected.Message),
-            _ => throw new InvalidOperationException("unknown frozen material outcome"),
-        };
+        return FrozenContentAddress.BuildAdmissionCatalog(
+            snapshot,
+            lean,
+            dag,
+            environment,
+            attestations,
+            selectedPaths,
+            baseView.ActiveByPath.ToDictionary(
+                static item => item.Key,
+                static item => item.Value.Material));
     }
 
     internal static FrozenMaterialCatalog BuildAdmissionCatalog(
@@ -316,6 +343,54 @@ internal static class DagLedgerCommandPreparation
         return DagLedgerLoader.ToLinearSyntax(OrderForReplay(ordered));
     }
 
+    internal static FrozenLedgerSyntax LoadTrustedLedgerFiles(
+        FrozenLedgerBaseView baseView,
+        string label)
+    {
+        ArgumentNullException.ThrowIfNull(baseView);
+        var events = baseView.Events.Select(static item => new DagLedgerFileEvent(
+            item.SourcePath,
+            item.Identity,
+            item.EventHash,
+            item.EventType,
+            item.Payload,
+            item.SchemaVersion,
+            new FrozenLedgerLineSyntax(item.RawBytes, item.Root, item.EventHash),
+            Input: null)).ToImmutableArray();
+        if (!DagLedgerLoader.TryOrderClosedDag(
+                events,
+                ImmutableArray<string>.Empty,
+                out var ordered))
+        {
+            throw new InvalidOperationException(
+                label + " cannot be projected into the writer's linear event order");
+        }
+
+        return DagLedgerLoader.ToLinearSyntax(OrderForReplay(ordered));
+    }
+
+    internal static FrozenLedgerSyntax LoadTrustedLedgerWithSuffix(
+        FrozenLedgerBaseView baseView,
+        ImmutableArray<RepositoryFile> suffixFiles,
+        string label)
+    {
+        ArgumentNullException.ThrowIfNull(baseView);
+        var suffix = ValidateGeneratedEventFiles(baseView, suffixFiles, label);
+        var events = baseView.Events.Select(static item => new DagLedgerFileEvent(
+                item.SourcePath,
+                item.Identity,
+                item.EventHash,
+                item.EventType,
+                item.Payload,
+                item.SchemaVersion,
+                new FrozenLedgerLineSyntax(item.RawBytes, item.Root, item.EventHash),
+                Input: null))
+            .Concat(suffix)
+            .OrderBy(static item => item.Identity, StringComparer.Ordinal)
+            .ToImmutableArray();
+        return DagLedgerLoader.ToLinearSyntax(OrderForReplay(events));
+    }
+
     private static ImmutableArray<DagLedgerFileEvent> OrderForReplay(
         ImmutableArray<DagLedgerFileEvent> events)
     {
@@ -328,7 +403,8 @@ internal static class DagLedgerCommandPreparation
             var index = remaining.FindIndex(item => item.EventType switch
             {
                 "Genesis" => result.Count == 0,
-                "Freeze" => DependenciesPresent(item.Payload, "prerequisite_frozen_node_ids", identities),
+                "Freeze" => result.Count > 0
+                    && DependenciesPresent(item.Payload, "prerequisite_frozen_node_ids", identities),
                 "Reattest" => item.Payload.TryGetProperty("previous_attestation_event_hash", out var previous)
                     && hashes.Contains(previous.GetString()!),
                 FrozenLedger.SupersedeEventType =>
@@ -343,15 +419,17 @@ internal static class DagLedgerCommandPreparation
             });
             if (index < 0)
             {
-                throw new InvalidOperationException("frozen ledger has no valid linear replay order");
+                throw new InvalidOperationException(
+                    "frozen ledger has no valid linear replay order; remaining="
+                    + string.Join(",", remaining.Select(static item =>
+                        $"{item.EventType}:{item.Identity}")));
             }
 
             var item = remaining[index];
             remaining.RemoveAt(index);
             result.Add(item);
             identities.Add(item.Identity);
-            if (item.EventType == FrozenLedger.SupersedeEventType
-                && item.Payload.TryGetProperty("frozen_node_id", out var frozenNodeId)
+            if (item.Payload.TryGetProperty("frozen_node_id", out var frozenNodeId)
                 && frozenNodeId.ValueKind == JsonValueKind.String)
             {
                 identities.Add(frozenNodeId.GetString()!);
@@ -371,10 +449,28 @@ internal static class DagLedgerCommandPreparation
         && dependencies.EnumerateArray().All(item =>
             item.ValueKind == JsonValueKind.String && identities.Contains(item.GetString()!));
 
-    internal static FrozenLedgerReferenceSet ScanReferences(
+    internal static TrustedFrozenGitReferences ValidateSuffixReferences(
+        IRepositoryGateway repository,
         FrozenLedgerSyntax syntax,
-        string label) =>
-        FrozenLedger.ScanReferences(syntax) switch
+        FrozenLedgerConsistent baseline,
+        string label)
+    {
+        var references = ScanSuffixReferences(syntax, baseline, label);
+        return references.CommitOids.IsEmpty
+            && references.TreeOids.IsEmpty
+            && references.BlobOids.IsEmpty
+            && references.EnvironmentReferences.IsEmpty
+                ? TrustedFrozenGitReferences.CreateForTrustedAdapter([], [])
+                : repository.ValidateFrozenReferences(references);
+    }
+
+    internal static FrozenLedgerReferenceSet ScanSuffixReferences(
+        FrozenLedgerSyntax syntax,
+        FrozenLedgerConsistent baseline,
+        string label) => FrozenLedger.ScanSuffixReferences(
+            syntax,
+            baseline.Events.Length,
+            baseline.HeadHash) switch
         {
             FrozenLedgerReferenceScanOutcome.Accepted accepted => accepted.References,
             FrozenLedgerReferenceScanOutcome.Rejected rejected => throw new InvalidOperationException(
@@ -382,29 +478,29 @@ internal static class DagLedgerCommandPreparation
             _ => throw new InvalidOperationException("unknown ledger reference scan outcome"),
         };
 
-    private static FrozenEnvironmentAttestation BuildEnvironment(
-        RepositorySnapshot snapshot,
-        FrozenLedgerSyntax syntax)
+    internal static ImmutableArray<DagLedgerFileEvent> ValidateGeneratedEventFiles(
+        FrozenLedgerBaseView baseView,
+        ImmutableArray<RepositoryFile> files,
+        string label)
     {
-        if (syntax.Lines.Length == 0)
+        var events = DagLedgerLoader.LoadFiles(files) switch
         {
-            throw new InvalidOperationException("frozen ledger is missing");
-        }
-
-        // The first line is only known to be a JSON object at this point -- DagLedgerLoader
-        // checks line shape, not that the ledger opens with a Genesis event. Reading positionally
-        // and letting JsonElement throw would hand callers a bare KeyNotFoundException instead of
-        // a statement about the ledger.
-        if (!syntax.Lines[0].Value.TryGetProperty("payload", out var payload))
+            DagLedgerFilesLoadOutcome.Loaded loaded => loaded.Events,
+            DagLedgerFilesLoadOutcome.Invalid invalid => throw new InvalidOperationException(
+                label + " syntax is invalid: " + invalid.Message),
+            _ => throw new InvalidOperationException("unknown ledger files load outcome"),
+        };
+        if (!DagLedgerLoader.TryOrderIncrementalDag(
+                events,
+                baseView.EventIdentities,
+                baseView.EventHashes,
+                out var ordered))
         {
             throw new InvalidOperationException(
-                "frozen ledger does not open with a Genesis event: first entry carries no payload");
+                label + " does not extend the trusted frozen-ledger dependency DAG");
         }
 
-        return BuildEnvironment(
-            snapshot,
-            RequiredString(payload, "origin_commit_oid"),
-            RequiredString(payload, "origin_tree_oid"));
+        return ordered;
     }
 
     private static FrozenEnvironmentAttestation BuildEnvironment(
@@ -431,12 +527,12 @@ internal static class DagLedgerCommandPreparation
             FrozenContentAddress.ComputeGitBlobOid(manifest.RawBytes.AsSpan(), algorithm));
         return lakefiles.Length == 1
             ? result with
-        {
-            LakefilePath = lakefiles[0],
-            LakefileBlobOid = FrozenContentAddress.ComputeGitBlobOid(
+            {
+                LakefilePath = lakefiles[0],
+                LakefileBlobOid = FrozenContentAddress.ComputeGitBlobOid(
                 snapshot.Files[RepoPath.CreateKnown(lakefiles[0])].RawBytes.AsSpan(),
                 algorithm),
-        }
+            }
             : result;
     }
 
@@ -463,8 +559,4 @@ internal static class DagLedgerCommandPreparation
                 throw new InvalidOperationException(failure.Message),
         };
 
-    private static string RequiredString(JsonElement value, string name) =>
-        value.TryGetProperty(name, out var property) && property.ValueKind == JsonValueKind.String
-            ? property.GetString() ?? throw new FormatException($"{name} must not be null")
-            : throw new FormatException($"{name} must be a string");
 }

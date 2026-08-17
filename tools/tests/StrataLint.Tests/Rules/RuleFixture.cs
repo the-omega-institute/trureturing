@@ -46,43 +46,6 @@ internal sealed partial class RuleFixture
                 status:
                   migration: partial
                   truth: closed
-        ticket_index:
-          - case_id: D5-T0001
-            gid: D5/X_Frontier/HeartsDraft
-          - case_id: D5-T0002
-            gid: D5/X_Frontier/StrataLintLeanEnvironment
-          - case_id: D5-T0003
-            gid: D5/X_Frontier/ValuesProducer
-          - case_id: D5-T0004
-            gid: D5/X_Frontier/SplitTool
-          - case_id: D5-T0005
-            gid: D5/X_Frontier/PaperGenerator
-          - case_id: D5-T0006
-            gid: D5/X_Frontier/D5P001
-          - case_id: D5-T0007
-            gid: D5/X_Frontier/RequiredChecks
-          - case_id: D5-T0008
-            gid: D5/X_Frontier/GoldenUnitsUFD
-          - case_id: D5-T0009
-            gid: D5/X_Frontier/FutureInstances
-          - case_id: D5-T0010
-            gid: D5/X_Frontier/ToolchainUpgrade
-          - case_id: D5-T0011
-            gid: D5/X_Frontier/GovernanceDeferrals
-          - case_id: D5-T0012
-            gid: D5/X_Frontier/GovernanceDeferrals
-          - case_id: D5-T0013
-            gid: D5/X_Frontier/GovernanceDeferrals
-          - case_id: D5-T0014
-            gid: D5/X_Frontier/GovernanceDeferrals
-          - case_id: D5-T0015
-            gid: D5/X_Frontier/GovernanceDeferrals
-          - case_id: D5-T0016
-            gid: D5/X_Frontier/GovernanceDeferrals
-          - case_id: D5-T0017
-            gid: D5/X_Frontier/RequiredChecks
-          - case_id: D5-T0018
-            gid: D5/X_Frontier/HeartsDraft
         """ + "\n";
     internal const string FixtureBackfillSource = """
         source_id = "fixture-source"
@@ -107,27 +70,6 @@ internal sealed partial class RuleFixture
           chain_atoms: []
           tail_authorization: null
         """ + "\n";
-    internal const string FixtureTicketIndex = """
-        D5-T0001 = "D5/X_Frontier/HeartsDraft"
-        D5-T0002 = "D5/X_Frontier/StrataLintLeanEnvironment"
-        D5-T0003 = "D5/X_Frontier/ValuesProducer"
-        D5-T0004 = "D5/X_Frontier/SplitTool"
-        D5-T0005 = "D5/X_Frontier/PaperGenerator"
-        D5-T0006 = "D5/X_Frontier/D5P001"
-        D5-T0007 = "D5/X_Frontier/RequiredChecks"
-        D5-T0008 = "D5/X_Frontier/GoldenUnitsUFD"
-        D5-T0009 = "D5/X_Frontier/FutureInstances"
-        D5-T0010 = "D5/X_Frontier/ToolchainUpgrade"
-        D5-T0011 = "D5/X_Frontier/GovernanceDeferrals"
-        D5-T0012 = "D5/X_Frontier/GovernanceDeferrals"
-        D5-T0013 = "D5/X_Frontier/GovernanceDeferrals"
-        D5-T0014 = "D5/X_Frontier/GovernanceDeferrals"
-        D5-T0015 = "D5/X_Frontier/GovernanceDeferrals"
-        D5-T0016 = "D5/X_Frontier/GovernanceDeferrals"
-        D5-T0017 = "D5/X_Frontier/RequiredChecks"
-        D5-T0018 = "D5/X_Frontier/HeartsDraft"
-        """ + "\n";
-
     internal const string RingPath = "D5/S0/Carrier/Ring.lean";
     internal const string ValuesBindingPath = "D5/S0/Carrier/ValuesBinding.lean";
     internal const string BlueprintPath = "Blueprint/D5/S0/Carrier/Ring.md";
@@ -135,7 +77,6 @@ internal sealed partial class RuleFixture
     internal const string NotationPath = "D5/S0/Conventions/Notation.lean";
     internal const string AssumptionDebtPath = "D5/X_Assumptions/AxiomDebt.lean";
     internal const string HeartsPath = "D5/X_Frontier/Hearts.lean";
-    internal const string HeartsDraftPath = "D5/X_Frontier/HeartsDraft.lean";
     internal const string ThreeDistancePath = "D5/S1/Phase/ThreeDistance.lean";
     internal const string TowerManifestPath = RepositoryRules.TowerManifestPath;
     internal const string ValuesProjectionPath = RepositoryPathPolicy.ValuesProjectionPath;
@@ -161,7 +102,6 @@ internal sealed partial class RuleFixture
             ["Meta/domains.yaml"] = TestRegistry.Domains,
             [FixtureBackfillSourcePath] = FixtureBackfillSource,
             [FixtureBackfillAtomPath] = FixtureBackfillAtom,
-            [BackfillInventoryLoader.TicketIndexPath] = FixtureTicketIndex,
             [TheoryAtomizerDataLoader.DataPath] = File.ReadAllText(
                 Path.Combine(repositoryRoot, TheoryAtomizerDataLoader.DataPath), Encoding.UTF8),
             ["Meta/registry.yaml"] = TestRegistry.Canonical,
@@ -228,7 +168,7 @@ internal sealed partial class RuleFixture
         }
     }
 
-    internal void UseSyntheticDirectoryBackfill(string ticketIndex)
+    internal void UseSyntheticDirectoryBackfill()
     {
         RemoveDigestionLedger(Files);
         Files[$"{BackfillInventoryLoader.RootPath}delta-v0.1/source.toml"] =
@@ -250,14 +190,10 @@ internal sealed partial class RuleFixture
               chain_atoms: []
               tail_authorization: null
             """ + "\n";
-        Files[BackfillInventoryLoader.TicketIndexPath] = ticketIndex;
     }
 
     internal void UseValidDirectoryBackfill()
     {
-        var document = BackfillInventoryLoader.Load(Decode(Files));
-        var ticketIndex = string.Concat(document.RequireTickets().Select(static ticket =>
-            $"{ticket.CaseId} = \"{ticket.Gid}\"\n"));
         const string sourcePath = "delta-v0.1/source.toml";
         const string atomPath = "delta-v0.1/partial-closed/delta-atom.yaml";
         var source = $"source_id = \"delta-v0.1\"\npath = \"{FixtureDigestionSourcePath}\"\natomizer = \"none\"\n";
@@ -285,7 +221,6 @@ internal sealed partial class RuleFixture
             RemoveDigestionLedger(files);
             files[BackfillInventoryLoader.RootPath + sourcePath] = source;
             files[BackfillInventoryLoader.RootPath + atomPath] = atom;
-            files[BackfillInventoryLoader.TicketIndexPath] = ticketIndex;
         }
     }
 
@@ -497,12 +432,13 @@ internal sealed partial class RuleFixture
     internal void AddFutureTheory() =>
         Files["D8/S0/Carrier/Ring.lean"] = "future\n";
 
-    internal void AddTask(string path, string gid, string code, string autopsy = "none")
+    internal void AddTask(string path, string gid, string code, string? history = null)
     {
         Files[path] = HeaderFor(gid, "E")
-            + $"/-- TASK {code} | 难度:3 | 依赖:就绪 | 尝试:0\n"
-            + "    提示:Fixture task.\n"
-            + $"    尸检:{autopsy} -/\n"
+            + $"/-- TASK {code}\n"
+            + "    Fixture task."
+            + (history is null ? "" : $"\n    {history}")
+            + " -/\n"
             + "def fixtureTask : Unit := ()\n";
         Reports[path] = Report();
     }
@@ -575,11 +511,10 @@ internal sealed partial class RuleFixture
             if (ticketsByGid.TryGetValue(gidText, out var cases))
             {
                 text += string.Concat(cases.Where(caseId =>
-                        !text.Contains($"TASK {caseId} ", StringComparison.Ordinal))
+                        !text.Contains($"TASK {caseId}", StringComparison.Ordinal))
                     .Select(static caseId =>
-                    $"/-- TASK {caseId} | 难度:3 | 依赖:就绪 | 尝试:0\n"
-                    + "    提示:Fixture task.\n"
-                    + "    尸检:none -/\n"
+                    $"/-- TASK {caseId}\n"
+                    + "    Fixture task. -/\n"
                     + $"def fixtureTask{caseId[4..]} : Unit := ()\n"));
             }
 
@@ -607,9 +542,8 @@ internal sealed partial class RuleFixture
         var path = gid + ".lean";
         Files[path] = HeaderFor(gid, "E")
             + string.Concat(Enumerable.Range(1, 18).Select(static number =>
-                $"/-- TASK D5-T{number:0000} | 难度:3 | 依赖:就绪 | 尝试:0\n"
-                + "    提示:Fixture task.\n"
-                + "    尸检:none -/\n"
+                $"/-- TASK D5-T{number:0000}\n"
+                + "    Fixture task. -/\n"
                 + $"def fixtureTask{number:0000} : Unit := ()\n"));
         Reports[path] = Report();
     }

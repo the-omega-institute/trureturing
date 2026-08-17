@@ -244,7 +244,7 @@ public sealed class EmissionTests
     }
 
     [Fact]
-    public void VerificationRejectsJointlyForgedEmissionAndAttestation()
+    public void VerificationUsesCurrentRenderInsteadOfJointlyForgedSnapshot()
     {
         var root = Path.Combine(
             Path.GetTempPath(),
@@ -301,7 +301,12 @@ public sealed class EmissionTests
 
             var verification = ScribeEmitter.Verify(root, error, report);
 
-            Assert.Null(verification);
+            Assert.NotNull(verification);
+            Assert.True(verification!.TryGet(
+                DocumentDefinitions.All[0].Document.Header.Gid.Value,
+                out var verified));
+            Assert.Equal(Sha256(originalEmission), verified.EmissionSha256);
+            Assert.NotEqual(Sha256(forgedEmission), verified.EmissionSha256);
             Assert.Contains("out of date", error.ToString(), StringComparison.Ordinal);
         }
         finally
@@ -415,7 +420,7 @@ public sealed class EmissionTests
     }
 
     [Fact]
-    public void VerificationRejectsForgedBaseOwnedEmissionDressedAsCandidateOnly()
+    public void VerificationUsesCurrentRenderWhenSnapshotForgeryIncludesCandidateOnlyEntry()
     {
         var root = Path.Combine(
             Path.GetTempPath(),
@@ -429,11 +434,9 @@ public sealed class EmissionTests
                 DocumentDefinitions.All.Select(static definition => definition.Document));
             PrepareEmittedRepository(root, report);
 
-            // Corrupt a base-owned emission whose .scribe.cs is compiled into the base binary, then
-            // disguise it as an innocent candidate-only addition: patch the forged doc's attestation
-            // hash AND splice in a candidate-only entry. The base binary still renders the true bytes,
-            // so per-document rendering must catch the corruption and refuse the whole capability;
-            // base-owned corruption must never be laundered through the candidate-only tolerance.
+            // Forge both a reader snapshot and its run-local attestation, then splice in a candidate-only
+            // entry. Verification must ignore both forged byte sources and issue the capability from the
+            // canonical render produced by this run.
             var emissionPath = Path.Combine(root, DocumentDefinitions.All[0].RelativePath.Value);
             var originalEmission = TemporaryFileSystem.File.ReadAllBytes(emissionPath);
             var forgedEmission = Encoding.UTF8.GetBytes("# forged emission\n");
@@ -456,19 +459,22 @@ public sealed class EmissionTests
             var verification = ScribeEmitter.Verify(root, verifyError, report);
 
             Assert.Equal(1, exit);
-            Assert.Null(verification);
+            Assert.NotNull(verification);
+            Assert.True(verification!.TryGet(
+                DocumentDefinitions.All[0].Document.Header.Gid.Value,
+                out var verified));
+            Assert.Equal(Sha256(originalEmission), verified.EmissionSha256);
+            Assert.NotEqual(Sha256(forgedEmission), verified.EmissionSha256);
             foreach (var diagnostic in new[] { emitError.ToString(), verifyError.ToString() })
             {
                 Assert.Contains(
-                    $"out of date: {targetPath}: renderer output differs from committed oracle",
+                    $"out of date: {targetPath}: reader snapshot differs from current renderer output",
                     diagnostic,
                     StringComparison.Ordinal);
-                Assert.Contains("review the diff first", diagnostic, StringComparison.Ordinal);
-                Assert.Contains("only if this change is intentional", diagnostic, StringComparison.Ordinal);
                 Assert.Contains("run make emit", diagnostic, StringComparison.Ordinal);
                 Assert.Contains($"commit {targetPath}", diagnostic, StringComparison.Ordinal);
                 Assert.DoesNotContain(
-                    "committed renderer oracle missing",
+                    "reader snapshot missing",
                     diagnostic,
                     StringComparison.Ordinal);
             }
@@ -527,7 +533,7 @@ public sealed class EmissionTests
     }
 
     [Fact]
-    public void VerificationRejectsMaterializedDocumentWithMissingEmission()
+    public void VerificationProducesCurrentCapabilityWhenReaderSnapshotIsMissing()
     {
         var root = Path.Combine(
             Path.GetTempPath(),
@@ -540,11 +546,11 @@ public sealed class EmissionTests
                 DocumentDefinitions.All.Select(static definition => definition.Document));
             PrepareEmittedRepository(root, report);
 
-            // A materialized document keeps its .scribe.cs source in the tree; a missing .md emission is
-            // then a deleted or out-of-date base-owned emission, not a candidate-only addition. It must
-            // still void the capability locally, never be laundered through the not-materialized skip.
+            // A missing tracked .md remains reportable in check mode, but the producer has enough source
+            // to render and verify the document, so snapshot absence cannot void the current capability.
             var target = DocumentDefinitions.All[0];
             var targetPath = target.RelativePath.Value;
+            var canonicalEmission = TemporaryFileSystem.File.ReadAllBytes(Path.Combine(root, targetPath));
             TemporaryFileSystem.File.Delete(Path.Combine(root, targetPath));
 
             var emitError = new StringWriter();
@@ -558,17 +564,19 @@ public sealed class EmissionTests
             var verification = ScribeEmitter.Verify(root, verifyError, report);
 
             Assert.Equal(1, exit);
-            Assert.Null(verification);
+            Assert.NotNull(verification);
+            Assert.True(verification!.TryGet(target.Document.Header.Gid.Value, out var verified));
+            Assert.Equal(Sha256(canonicalEmission), verified.EmissionSha256);
             foreach (var diagnostic in new[] { emitError.ToString(), verifyError.ToString() })
             {
                 Assert.Contains(
-                    $"out of date: {targetPath}: committed renderer oracle missing",
+                    $"out of date: {targetPath}: reader snapshot missing",
                     diagnostic,
                     StringComparison.Ordinal);
                 Assert.Contains("run make emit", diagnostic, StringComparison.Ordinal);
                 Assert.Contains($"commit {targetPath}", diagnostic, StringComparison.Ordinal);
                 Assert.DoesNotContain(
-                    "renderer output differs from committed oracle",
+                    "reader snapshot differs from current renderer output",
                     diagnostic,
                     StringComparison.Ordinal);
             }
@@ -646,8 +654,7 @@ public sealed class EmissionTests
     {
         var repository = RepositoryAccessor.Discover(RepositoryRootCriterion.GlobalJsonAndBlueprintInvalidOperation);
         var ledgerSources = repository.EnumerateFiles(
-                RepositoryRelativePath.Create("Meta/Digestion/backfill"), "*")
-            .Append(RepositoryRelativePath.Create(BackfillInventoryLoader.TicketIndexPath));
+            RepositoryRelativePath.Create("Meta/Digestion/backfill"), "*");
         foreach (var source in ledgerSources)
         {
             var destination = Path.Combine(destinationRoot, source.Value);

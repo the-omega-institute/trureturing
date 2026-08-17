@@ -1,3 +1,4 @@
 source_id = "interface-philosophy-v4"
 path = "docs/develop/theory/INTERFACE_PHILOSOPHY.md"
 atomizer = "pzg-v1"
+acknowledged_stale = ["pzg-residual-2d8151b867c9ca439d1a3bc825184ba4d712b7e0519da4fcf9d302f289f5c06d", "pzg-residual-4e514e96a98402f0c1333b772593fdc8142a6c278bc8ff8271e8cafda27ca050", "pzg-residual-5101bd6496a4373b04259fc907c8000d573a40eaf41cea53129cc84cb997021c", "pzg-residual-53bd8d665806b1a3f250fb172d88cf37dcada8848898d23a2f84d31cce01be10", "pzg-residual-c264d2fe760293756f342603a2f916e656d31dd223a8d8c48e4642d7aa72abdc", "pzg-residual-e964b8a834bfdf267f716ff8375e8f35b525a8ce9b9c26bacac00aa0c69a0d97", "pzg-residual-f65f532bf8306bc13920168a950a59d322e97ad5c2e5fc943945ab7232e3de60"]

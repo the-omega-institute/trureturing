@@ -90,5 +90,6 @@ internal static class DescribeReportWriter
         projection_failure_reason = node.ProjectionFailureReason,
         provenance = node.Provenance,
         literature_gid = node.LiteratureGid,
+        acknowledgement_gids = node.AcknowledgementGids,
     };
 }

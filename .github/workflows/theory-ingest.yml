@@ -1,5 +1,5 @@
-# 理论卷自动摄入:PR 触碰 docs/develop/theory/** 时,在候选树跑 make ingest,
-# base 只以 merge-base SHA 参与对象级 diff。
+# 理论卷自动摄入:PR 触碰 docs/develop/theory/** 时,在 GitHub merge result 上跑 make ingest,
+# base 只以该 merge commit 的第一父提交 SHA 参与对象级 diff。
 # 不回写 echo residual 投影:它是允许陈旧的人读快照(CLAUDE.md 第〇节),按需由
 # `make echo-residual-summary` 重发,消费者应调 producer 现算而非读仓内分片。
 name: theory-ingest
@@ -24,24 +24,51 @@ jobs:
     runs-on: ubuntu-24.04-arm
     timeout-minutes: 36
     steps:
-      - name: Check out PR head (data + commit target)
+      - name: Check out checked merge result
+        id: checkout-merge
+        continue-on-error: ${{ github.event_name == 'pull_request_target' }}
         uses: actions/checkout@v4
         with:
-          ref: ${{ github.event.pull_request.head.sha }}
-          repository: ${{ github.event.pull_request.head.repo.full_name }}
+          ref: ${{ format('refs/pull/{0}/merge', github.event.pull_request.number) }}
           path: candidate
           fetch-depth: 0
           persist-credentials: false
 
-      - name: Resolve merge-base SHA
+      - name: Strip checkout remote state
+        if: steps.checkout-merge.outcome == 'success'
+        shell: bash
+        env:
+          CHECKOUT_PATH: candidate
+        run: |
+          set -euo pipefail
+          git -C "$CHECKOUT_PATH" remote remove origin
+          git -C "$CHECKOUT_PATH" for-each-ref --format='delete %(refname)' refs/remotes/ |
+            git -C "$CHECKOUT_PATH" update-ref --stdin
+          remote_count="$(git -C "$CHECKOUT_PATH" remote | wc -l)"
+          remote_ref_count="$(git -C "$CHECKOUT_PATH" for-each-ref --format='%(refname)' refs/remotes/ | wc -l)"
+          if [[ "$remote_count" -ne 0 || "$remote_ref_count" -ne 0 ]]; then
+            printf '%s\n' "checkout still exposes remotes or remote-tracking refs" >&2
+            exit 1
+          fi
+          head_sha="$(git -C "$CHECKOUT_PATH" rev-parse HEAD)"
+          base_sha="$(git -C "$CHECKOUT_PATH" rev-parse HEAD^1)"
+          test -n "$head_sha"
+          test -n "$base_sha"
+
+      - name: Fail closed when merge result is unavailable
+        if: always() && steps.checkout-merge.outcome != 'success'
+        shell: bash
+        run: |
+          set -euo pipefail
+          printf '%s\n' "cannot check out GitHub merge ref refs/pull/${{ github.event.pull_request.number }}/merge; conflicted pull requests have no merge result, so theory ingest fails closed" >&2
+          exit 1
+
+      - name: Resolve checked merge result's dev parent
         id: base
         shell: bash
         run: |
           set -euo pipefail
-          base="${{ github.event.pull_request.base.sha }}"
-          head="${{ github.event.pull_request.head.sha }}"
-          git -C candidate fetch --no-tags --quiet origin "$base" 2>/dev/null || true
-          sha="$(git -C candidate merge-base "$base" "$head")"
+          sha="$(git -C candidate rev-parse HEAD^1)"
           test -n "$sha"
           echo "sha=$sha" >> "$GITHUB_OUTPUT"
 
@@ -57,9 +84,15 @@ jobs:
           set -euo pipefail
           helper="$GITHUB_WORKSPACE/candidate/tools/scripts/report/lean-report-input.sh"
           test -x "$helper"
-          read -r address _ <<< "$("$helper" address --repository "$GITHUB_WORKSPACE/candidate")"
+          read -r address producer_sha256 sources_sha256 config_sha256 \
+            <<< "$("$helper" address --repository "$GITHUB_WORKSPACE/candidate")"
           [[ "$address" =~ ^[0-9a-f]{64}$ ]]
+          [[ "$producer_sha256" =~ ^[0-9a-f]{64}$ ]]
+          [[ "$sources_sha256" =~ ^[0-9a-f]{64}$ ]]
+          [[ "$config_sha256" =~ ^[0-9a-f]{64}$ ]]
           echo "address=$address" >> "$GITHUB_OUTPUT"
+          echo "sources_sha256=$sources_sha256" >> "$GITHUB_OUTPUT"
+          echo "config_sha256=$config_sha256" >> "$GITHUB_OUTPUT"
 
       - name: Restore candidate canonical Lean report
         id: lean-report-cache
@@ -94,16 +127,29 @@ jobs:
           "$HOME/.elan/bin/elan" default "$toolchain"
           "$HOME/.elan/bin/lake" --version
 
-      - name: Restore candidate Lean build artifacts on cache miss
+      - name: Restore candidate Lean dependency artifacts on cache miss
+        id: lake-deps-cache
         if: steps.lean-report-cache.outputs.cache-hit != 'true'
         uses: actions/cache/restore@v4
         with:
           path: |
-            candidate/.lake
+            candidate/.lake/packages
+            candidate/.lake/config
+            candidate/.lake/.stratalint-lean-cache-stamp.json
             ~/.cache/mathlib
-          key: ${{ runner.os }}-${{ runner.arch }}-lake-${{ hashFiles('candidate/lake-manifest.json') }}-${{ hashFiles('candidate/lean-toolchain') }}-${{ github.event.pull_request.head.sha }}
+          key: ${{ runner.os }}-${{ runner.arch }}-lake-deps-v1-${{ steps.lean-report-input.outputs.config_sha256 }}
           restore-keys: |
-            ${{ runner.os }}-${{ runner.arch }}-lake-${{ hashFiles('candidate/lake-manifest.json') }}-${{ hashFiles('candidate/lean-toolchain') }}-
+            ${{ runner.os }}-${{ runner.arch }}-lake-deps-v1-${{ steps.lean-report-input.outputs.config_sha256 }}
+
+      - name: Restore candidate Lean build artifacts on cache miss
+        id: lake-build-cache
+        if: steps.lean-report-cache.outputs.cache-hit != 'true'
+        uses: actions/cache/restore@v4
+        with:
+          path: candidate/.lake/build
+          key: ${{ runner.os }}-${{ runner.arch }}-lake-build-v1-${{ steps.lean-report-input.outputs.config_sha256 }}-${{ steps.lean-report-input.outputs.sources_sha256 }}
+          restore-keys: |
+            ${{ runner.os }}-${{ runner.arch }}-lake-build-v1-${{ steps.lean-report-input.outputs.config_sha256 }}-
 
       - name: Produce candidate canonical Lean report on cache miss
         if: steps.lean-report-cache.outputs.cache-hit != 'true'
@@ -139,7 +185,7 @@ jobs:
             "Lean report input address: sha256:${{ steps.lean-report-input.outputs.address }}" \
             >> "$GITHUB_STEP_SUMMARY"
 
-      - name: Run ingest with merge-base SHA
+      - name: Run ingest with checked dev parent SHA
         shell: bash
         run: |
           set -euo pipefail

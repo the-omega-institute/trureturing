@@ -18,9 +18,9 @@ public sealed class FileMapEmitterTests
 
             [[files]]
             pattern = "Blueprint/**/*.md"
-            kind = "data"
+            kind = "generated"
             produced_by = "ScribeEmitter"
-            consumed_by = ["DigestionStatusEvaluator", "ScribeEmitter", "reader"]
+            consumed_by = ["ScribeEmitter", "reader"]
             verified_by = ["ScribeEmitter"]
             runtime_disposition = "committed-source"
             artifact_id = "none"
@@ -51,7 +51,7 @@ public sealed class FileMapEmitterTests
 
         Assert.True(first.AsSpan().SequenceEqual(second.AsSpan()));
         Assert.Contains(
-            "ScribeEmitter --produces--> [Blueprint/**/*.md | data]",
+            "ScribeEmitter --produces--> [Blueprint/**/*.md | generated]",
             markdown,
             StringComparison.Ordinal);
         Assert.Contains(
@@ -106,14 +106,16 @@ public sealed class FileMapEmitterTests
             .Select(static artifact => artifact.Path)
             .Order(StringComparer.Ordinal)
             .ToArray();
-        var expected = new[]
-            {
+        var expected = DocumentDefinitions.All
+            .Select(static definition => definition.RelativePath.Value)
+            .Concat(
+            [
                 CanonicalValuesWriter.RelativePath,
                 DagEmitter.RelativePath,
                 DagEmitter.TruthGraphRelativePath,
                 FileMapEmitter.RelativePath,
                 ScribeEmitter.AttestationRelativePath,
-            }
+            ])
             .Order(StringComparer.Ordinal)
             .ToArray();
 
