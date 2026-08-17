@@ -45,7 +45,6 @@ internal static partial class DigestionStatusEvaluator
                 emptyTruthNodes,
                 verifiedScribeEmissions: null,
                 genreChecks[entry.SourceId],
-                changes: null,
                 findings))
             .ToArray();
         DeriveMigration(work);
@@ -60,8 +59,7 @@ internal static partial class DigestionStatusEvaluator
         BackfillInventoryDocument? baselineDocument = null,
         bool validateProjectedStatus = true,
         RepositorySnapshot? baselineSnapshot = null,
-        DigestionCasEvaluation? casEvaluation = null,
-        RawChangeSet? changes = null)
+        DigestionCasEvaluation? casEvaluation = null)
     {
         ArgumentNullException.ThrowIfNull(document);
         ArgumentNullException.ThrowIfNull(snapshot);
@@ -110,7 +108,6 @@ internal static partial class DigestionStatusEvaluator
                 nodes,
                 verifiedScribeEmissions,
                 genreChecks[entry.SourceId],
-                changes,
                 findings)).ToArray();
         DeriveMigration(work);
         RequireDecompositionBeforeNewAbsorption(
@@ -206,13 +203,12 @@ internal static partial class DigestionStatusEvaluator
         IReadOnlyDictionary<RepoPath, TruthNode> nodes,
         VerifiedScribeEmissions? verifiedScribeEmissions,
         GenreRegistryCheck genreRegistryCheck,
-        RawChangeSet? changes,
         ImmutableArray<string>.Builder findings)
     {
         var gaps = new List<DigestionGap>();
         var boundary = entry.Atomizer == AtomizerRegistry.NoAtomizerId
             && entry.Boundary is not null
-                ? VerifyBoundary(entry, snapshot, changes, gaps, findings)
+                ? VerifyBoundary(entry, snapshot, gaps, findings)
                 : VerifyStructuredAlignment(entry, alignment, gaps, findings);
         var targetStates = new List<(string Gid, TruthState State)>();
         var existingTargets = new Dictionary<string, RepositoryFile>(StringComparer.Ordinal);
@@ -241,12 +237,11 @@ internal static partial class DigestionStatusEvaluator
             gaps.Add(new DigestionGap("coverage-gid-missing", entry.AtomId));
         }
 
-        var coverage = VerifyCoverageReceipts(entry, existingTargets, changes, gaps, findings);
+        var coverage = VerifyCoverageReceipts(entry, existingTargets, gaps, findings);
         var scribe = VerifyScribeReceipts(
             entry,
             snapshot,
             verifiedScribeEmissions,
-            changes,
             gaps,
             findings);
         if (entry.Receipts.UnresolvedSubitems.Length > 0)
