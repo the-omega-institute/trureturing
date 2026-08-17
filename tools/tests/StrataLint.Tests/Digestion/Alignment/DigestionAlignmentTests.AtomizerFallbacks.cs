@@ -328,15 +328,12 @@ public sealed partial class DigestionAlignmentTests
             []);
         var coarseCapture = DigestionCasStore.Capture(coarseBytes.AsSpan());
         var fineCapture = DigestionCasStore.Capture(fineBytes.AsSpan());
-        var ledger = BackfillInventoryLoader.Load(
+        var ledger = WithAtomizer(
             Ledger(
-                    [],
-                    LegacyEntry("coarse-receipt", coarse),
-                    LegacyEntry("fine-receipt", fine))
-                .Replace(
-                    $"atomizer: {AtomizerRegistry.GictId}",
-                    $"atomizer: {AtomizerRegistry.NoAtomizerId}",
-                    StringComparison.Ordinal));
+                [],
+                BoundaryEntry("coarse-receipt", coarse),
+                BoundaryEntry("fine-receipt", fine)),
+            AtomizerRegistry.NoAtomizerId);
 
         var plan = DigestionIngestor.Plan(
             ledger,
@@ -356,15 +353,19 @@ public sealed partial class DigestionAlignmentTests
         var (sourceBytes, coarseCapture, fineCapture, ledger) = MissedCoarseReplacement();
         var snapshot = Snapshot(sourceBytes, [coarseCapture, fineCapture]);
         var first = DigestionIngestor.Plan(ledger, snapshot, ledger);
-        var firstBytes = BackfillInventoryWriter.WriteForIngest(first.Document);
-        var settled = BackfillInventoryLoader.Load(Encoding.UTF8.GetString(firstBytes.AsSpan()));
+        var firstBytes = DirectoryLedgerTestSupport.Image(first.Document);
+        using var temporary = new TemporaryDirectory();
+        var persisted = new Dictionary<string, string>(StringComparer.Ordinal);
+        DirectoryLedgerTestSupport.ReplaceWithProjection(persisted, first.Document);
+        DirectoryLedgerTestSupport.Write(temporary.Path, persisted);
+        var settled = BackfillInventoryLoader.LoadRoot(temporary.Path);
 
         var second = DigestionIngestor.Plan(settled, snapshot, settled);
-        var secondBytes = BackfillInventoryWriter.WriteForIngest(second.Document);
+        var secondBytes = DirectoryLedgerTestSupport.Image(second.Document);
 
         Assert.Equal(0, second.StaleAcknowledged);
         Assert.Equal(0, second.ResidualOpenAdded);
-        Assert.Equal(firstBytes.ToArray(), secondBytes.ToArray());
+        Assert.Equal(firstBytes, secondBytes);
     }
 
     [Fact]
@@ -638,19 +639,16 @@ public sealed partial class DigestionAlignmentTests
             DigestionTestSupport.Rules).Claims);
         var coarseCapture = DigestionCasStore.Capture(coarseBytes.AsSpan());
         var fineCapture = DigestionCasStore.Capture(fine.RawBytes.AsSpan());
-        var ledger = BackfillInventoryLoader.Load(
+        var ledger = WithAtomizer(
             Ledger(
-                    [],
-                    legacySyntax
-                        ? LegacyEntry("coarse-receipt", coarse)
-                        : CasEntry("coarse-receipt", coarse, coarseCapture.Reference),
-                    legacySyntax
-                        ? LegacyEntry("fine-receipt", fine)
-                        : CasEntry("fine-receipt", fine, fineCapture.Reference))
-                .Replace(
-                    $"atomizer: {AtomizerRegistry.GictId}",
-                    $"atomizer: {AtomizerRegistry.ObserverId}",
-                    StringComparison.Ordinal));
+                [],
+                legacySyntax
+                    ? BoundaryEntry("coarse-receipt", coarse)
+                    : CasEntry("coarse-receipt", coarse, coarseCapture.Reference),
+                legacySyntax
+                    ? BoundaryEntry("fine-receipt", fine)
+                    : CasEntry("fine-receipt", fine, fineCapture.Reference)),
+            AtomizerRegistry.ObserverId);
         return (sourceBytes, coarseCapture, fineCapture, ledger);
     }
 }
