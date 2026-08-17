@@ -63,4 +63,5 @@ Taking the supremum of the equal value sets turns the internal name-grid champio
 - Truth anchor: `D5/S0/Tower/ErgodicBridge/Tribonacci.tribonacci_lower_value_sets_eq`
 - Truth anchor: `D5/S0/Tower/ErgodicBridge/Tribonacci.tribonacci_optimal_value_eq_ergodic_optimal_value`
 - Dependency: [D5/S0/Tower/DBonacciGeneral/TribonacciPeriodicMaximin](../DBonacciGeneral/TribonacciPeriodicMaximin.md)
+- Dependency: [D5/S0/Tower/ErgodicBridge/General](General.md)
 - Dependency: [D5/S0/Tower/Tribonacci/ChampionOrbit](../Tribonacci/ChampionOrbit.md)

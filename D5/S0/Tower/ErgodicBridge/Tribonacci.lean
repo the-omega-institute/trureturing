@@ -6,6 +6,7 @@
    digest: Tribonacci name-grid liminf equals the lower arm value of its three-gap orbit. -/
 
 import D5.S0.Tower.DBonacciGeneral.TribonacciPeriodicMaximin
+import D5.S0.Tower.ErgodicBridge.General
 import D5.S0.Tower.Tribonacci.ChampionOrbit
 
 /- Library-search audit trail (2026-08-17):
@@ -23,28 +24,28 @@ import D5.S0.Tower.Tribonacci.ChampionOrbit
 namespace D5.S0.Tower.ErgodicBridge.Tribonacci
 
 local notation "t" => D5.S0.Tower.Tribonacci.Values.tribonacciConstant
-local notation "State" =>
+local notation "TState" =>
   D5.S0.Tower.DBonacciGeneral.TribonacciPeriodicGenerator.TribonacciPeriodicState
 local notation "gapLength" =>
   D5.S0.Tower.DBonacciGeneral.TribonacciPeriodicGenerator.tribonacciPeriodicGapLength
-local notation "transition" =>
+local notation "tTransition" =>
   D5.S0.Tower.DBonacciGeneral.TribonacciPeriodicGenerator.tribonacciPeriodicTransition
-local notation "stateArm" =>
+local notation "tStateArm" =>
   D5.S0.Tower.DBonacciGeneral.TribonacciPeriodicMaximin.tribonacciPeriodicStateArm
 
 /-- The natural state interval depends on the current gap letter. -/
-def TribonacciUnitState (state : State) : Prop :=
+def TribonacciUnitState (state : TState) : Prop :=
   0 <= state.coordinate /\ state.coordinate <= gapLength state.kind
 
 /-- A state codes the two normalized arms of the adjacent grid gap containing `x`. -/
-def TribonacciGridCoding (Q : Nat) (x : Real) (state : State) : Prop :=
+def TribonacciGridCoding (Q : Nat) (x : Real) (state : TState) : Prop :=
   TribonacciUnitState state /\
     D5.S0.Tower.Tribonacci.ChampionOrbit.IsTribonacciOrbitGap Q x
       state.coordinate (gapLength state.kind - state.coordinate)
 
 /-- Lower arm value along the expanding three-gap orbit. -/
-noncomputable def tribonacciOrbitLowerValue (state : State) : Real :=
-  Filter.liminf (fun n => stateArm ((transition^[n]) state)) Filter.atTop
+noncomputable def tribonacciOrbitLowerValue (state : TState) : Real :=
+  Filter.liminf (fun n => tStateArm ((tTransition^[n]) state)) Filter.atTop
 
 theorem tribonacci_inverse_eq_quadratic : t⁻¹ = t ^ 2 - t - 1 :=
   D5.S0.Tower.DBonacciGeneral.TribonacciPeriodicEnumeration.tribonacci_inverse_polynomial
@@ -58,9 +59,9 @@ theorem tribonacci_mul_combined_sub_one : t * (t - 1) - 1 = t⁻¹ := by
   rw [tribonacci_inverse_eq_quadratic]
   ring
 
-theorem tribonacci_survivor_eq_state_arm (Q : Nat) (x : Real) (state : State)
+theorem tribonacci_survivor_eq_state_arm (Q : Nat) (x : Real) (state : TState)
     (hcode : TribonacciGridCoding Q x state) :
-    D5.S0.Tower.Tribonacci.Survivor.tribonacciSurvivor Q x = stateArm state := by
+    D5.S0.Tower.Tribonacci.Survivor.tribonacciSurvivor Q x = tStateArm state := by
   rcases hcode with ⟨⟨hcoordinate0, hcoordinate1⟩, hgap⟩
   apply D5.S0.Tower.Tribonacci.ChampionOrbit.tribonacciSurvivor_eq_of_orbit_gap
       (hgap := hgap)
@@ -113,7 +114,7 @@ theorem tribonacci_grid_coding_in_gap (Q : Nat) (x : Real)
           D5.S0.Tower.Tribonacci.Values.indexedNameValue Q
             (D5.S0.Tower.Tribonacci.Survivor.tribonacciGapLeft Q i) =
         gapLength kind * t ^ (-(Q : Int))) :
-    ∃ state : State, state.kind = kind /\ TribonacciGridCoding Q x state := by
+    ∃ state : TState, state.kind = kind /\ TribonacciGridCoding Q x state := by
   let a := D5.S0.Tower.Tribonacci.Values.indexedNameValue Q
     (D5.S0.Tower.Tribonacci.Survivor.tribonacciGapLeft Q i)
   let b := D5.S0.Tower.Tribonacci.Values.indexedNameValue Q
@@ -144,7 +145,7 @@ theorem tribonacci_grid_coding_in_gap (Q : Nat) (x : Real)
 /-- Every point in an internal Tribonacci-name hull has a typed gap code. -/
 theorem tribonacci_grid_coding_exists_of_mem_hull (Q : Nat) (x : Real)
     (hx : x ∈ D5.S0.Tower.Tribonacci.Survivor.tribonacciNameHull Q) :
-    ∃ state : State, TribonacciGridCoding Q x state := by
+    ∃ state : TState, TribonacciGridCoding Q x state := by
   rcases Set.mem_iUnion.mp hx with ⟨i, hxi⟩
   obtain ⟨kind, hgap⟩ := tribonacci_gap_eq_periodic_length Q i
   obtain ⟨state, _, hcode⟩ :=
@@ -263,9 +264,9 @@ theorem tribonacci_inserted_empty_positions (Q : Nat)
       (D5.S0.Tower.Tribonacci.Substitution.gapRight Q i)).1 at hlt
   omega
 
-theorem tribonacci_transition_unit (state : State)
+theorem tribonacci_transition_unit (state : TState)
     (hunit : TribonacciUnitState state) :
-    TribonacciUnitState (transition state) := by
+    TribonacciUnitState (tTransition state) := by
   rcases state with ⟨kind, u⟩
   rcases hunit with ⟨hu0, hu1⟩
   cases kind with
@@ -328,9 +329,9 @@ theorem tribonacci_transition_unit (state : State)
             t * u - 1 <= t * (t - 1) - 1 := sub_le_sub_right hmul 1
             _ = t⁻¹ := tribonacci_mul_combined_sub_one
 
-theorem tribonacci_grid_coding_transition (Q : Nat) (x : Real) (state : State)
+theorem tribonacci_grid_coding_transition (Q : Nat) (x : Real) (state : TState)
     (hcode : TribonacciGridCoding Q x state) :
-    TribonacciGridCoding (Q + 1) x (transition state) := by
+    TribonacciGridCoding (Q + 1) x (tTransition state) := by
   rcases state with ⟨kind, u⟩
   rcases hcode with ⟨hunit, hgap⟩
   cases kind with
@@ -383,10 +384,10 @@ theorem tribonacci_grid_coding_transition (Q : Nat) (x : Real) (state : State)
         apply Fin.ext
         simpa [next, D5.S0.Tower.Tribonacci.Survivor.tribonacciGapRight] using
           hpositions
-      change TribonacciGridCoding (Q + 1) x (⟨.large, t * u⟩ : State)
+      change TribonacciGridCoding (Q + 1) x (⟨.large, t * u⟩ : TState)
       refine ⟨by simpa only [
           D5.S0.Tower.DBonacciGeneral.TribonacciPeriodicGenerator.tribonacciPeriodicTransition]
-          using tribonacci_transition_unit (⟨.small, u⟩ : State) ⟨hu0, hu1⟩,
+          using tribonacci_transition_unit (⟨.small, u⟩ : TState) ⟨hu0, hu1⟩,
         next, ?_, ?_⟩
       · rw [hnextLeft, D5.S0.Tower.Tribonacci.Substitution.levelEmbedding_value]
         calc
@@ -456,7 +457,7 @@ theorem tribonacci_grid_coding_transition (Q : Nat) (x : Real) (state : State)
         refine ⟨by simpa [
             D5.S0.Tower.DBonacciGeneral.TribonacciPeriodicGenerator.tribonacciPeriodicTransition,
             hbranch] using
-              tribonacci_transition_unit (⟨.combined, u⟩ : State) ⟨hu0, hu1⟩,
+              tribonacci_transition_unit (⟨.combined, u⟩ : TState) ⟨hu0, hu1⟩,
           next, ?_, ?_⟩
         · rw [hnextLeft, D5.S0.Tower.Tribonacci.Substitution.levelEmbedding_value]
           calc
@@ -502,7 +503,7 @@ theorem tribonacci_grid_coding_transition (Q : Nat) (x : Real) (state : State)
         refine ⟨by simpa [
             D5.S0.Tower.DBonacciGeneral.TribonacciPeriodicGenerator.tribonacciPeriodicTransition,
             hbranch] using
-              tribonacci_transition_unit (⟨.combined, u⟩ : State) ⟨hu0, hu1⟩,
+              tribonacci_transition_unit (⟨.combined, u⟩ : TState) ⟨hu0, hu1⟩,
           next, ?_, ?_⟩
         · rw [hnextLeft]
           calc
@@ -577,7 +578,7 @@ theorem tribonacci_grid_coding_transition (Q : Nat) (x : Real) (state : State)
         refine ⟨by simpa [
             D5.S0.Tower.DBonacciGeneral.TribonacciPeriodicGenerator.tribonacciPeriodicTransition,
             hbranch] using
-              tribonacci_transition_unit (⟨.large, u⟩ : State) ⟨hu0, hu1⟩,
+              tribonacci_transition_unit (⟨.large, u⟩ : TState) ⟨hu0, hu1⟩,
           next, ?_, ?_⟩
         · rw [hnextLeft, D5.S0.Tower.Tribonacci.Substitution.levelEmbedding_value]
           calc
@@ -623,7 +624,7 @@ theorem tribonacci_grid_coding_transition (Q : Nat) (x : Real) (state : State)
         refine ⟨by simpa [
             D5.S0.Tower.DBonacciGeneral.TribonacciPeriodicGenerator.tribonacciPeriodicTransition,
             hbranch] using
-              tribonacci_transition_unit (⟨.large, u⟩ : State) ⟨hu0, hu1⟩,
+              tribonacci_transition_unit (⟨.large, u⟩ : TState) ⟨hu0, hu1⟩,
           next, ?_, ?_⟩
         · rw [hnextLeft]
           calc
@@ -645,47 +646,8 @@ theorem tribonacci_grid_coding_transition (Q : Nat) (x : Real) (state : State)
           rw [hright, D5.S0.Tower.Tribonacci.ChampionOrbit.tribonacci_scale_succ Q]
           ring
 
-theorem tribonacci_grid_coding_iterate (Q : Nat) (x : Real) (state : State)
-    (hcode : TribonacciGridCoding Q x state) (n : Nat) :
-    TribonacciGridCoding (Q + n) x ((transition^[n]) state) := by
-  induction n with
-  | zero => simpa using hcode
-  | succ n ih =>
-      rw [Function.iterate_succ_apply']
-      simpa [Nat.add_assoc] using tribonacci_grid_coding_transition (Q + n) x _ ih
-
-theorem tribonacci_survivor_eq_orbit_arm (Q : Nat) (x : Real) (state : State)
-    (hcode : TribonacciGridCoding Q x state) (n : Nat) :
-    D5.S0.Tower.Tribonacci.Survivor.tribonacciSurvivor (Q + n) x =
-      stateArm ((transition^[n]) state) := by
-  exact tribonacci_survivor_eq_state_arm (Q + n) x _
-    (tribonacci_grid_coding_iterate Q x state hcode n)
-
-theorem tribonacci_ergodic_bridge_of_coding (Q : Nat) (x : Real) (state : State)
-    (hcode : TribonacciGridCoding Q x state) :
-    Filter.liminf
-        (fun level => D5.S0.Tower.Tribonacci.Survivor.tribonacciSurvivor level x)
-        Filter.atTop =
-      tribonacciOrbitLowerValue state := by
-  rw [← Filter.liminf_nat_add
-    (fun level => D5.S0.Tower.Tribonacci.Survivor.tribonacciSurvivor level x) Q]
-  unfold tribonacciOrbitLowerValue
-  apply Filter.liminf_congr
-  filter_upwards [] with n
-  simpa [Nat.add_comm] using tribonacci_survivor_eq_orbit_arm Q x state hcode n
-
-/-- Every internal grid point has the same lower value as a three-gap orbit. -/
-theorem tribonacci_ergodic_bridge (Q : Nat) (x : Real)
-    (hx : x ∈ D5.S0.Tower.Tribonacci.Survivor.tribonacciNameHull Q) :
-    ∃ state : State, TribonacciUnitState state /\
-      Filter.liminf
-          (fun level => D5.S0.Tower.Tribonacci.Survivor.tribonacciSurvivor level x)
-          Filter.atTop = tribonacciOrbitLowerValue state := by
-  obtain ⟨state, hcode⟩ := tribonacci_grid_coding_exists_of_mem_hull Q x hx
-  exact ⟨state, hcode.1, tribonacci_ergodic_bridge_of_coding Q x state hcode⟩
-
 /-- All three typed state intervals occur already in the level-three grid. -/
-theorem tribonacci_unit_state_has_grid_realization (state : State)
+theorem tribonacci_unit_state_has_grid_realization (state : TState)
     (hunit : TribonacciUnitState state) :
     ∃ x ∈ D5.S0.Tower.Tribonacci.Survivor.tribonacciNameHull 3,
       TribonacciGridCoding 3 x state := by
@@ -713,47 +675,104 @@ theorem tribonacci_unit_state_has_grid_realization (state : State)
         D5.S0.Tower.Tribonacci.Survivor.tribonacciGapLeft,
         D5.S0.Tower.Tribonacci.Survivor.tribonacciGapRight] using hcombined
 
-/-- Conversely, every typed unit state has an internal grid realization. -/
-theorem tribonacci_ergodic_bridge_reverse (state : State)
+def tribonacciStateLetter (state : TState) :
+    D5.S0.Tower.DBonacci.GapAlphabet.DBonacciGapLetter 3 :=
+  match state.kind with
+  | .small => ⟨0, by omega⟩
+  | .combined => ⟨1, by omega⟩
+  | .large => ⟨2, by omega⟩
+
+def tribonacciGapOfLetter
+    (letter : D5.S0.Tower.DBonacci.GapAlphabet.DBonacciGapLetter 3) :
+    D5.S0.Tower.DBonacciGeneral.TribonacciPeriodicGenerator.TribonacciPeriodicGap :=
+  if letter.1 = 0 then .small else if letter.1 = 1 then .combined else .large
+
+def tribonacciStateOf
+    (letter : D5.S0.Tower.DBonacci.GapAlphabet.DBonacciGapLetter 3) (u : Real) :
+    TState := ⟨tribonacciGapOfLetter letter, u⟩
+
+noncomputable def tribonacciLetterExtent
+    (letter : D5.S0.Tower.DBonacci.GapAlphabet.DBonacciGapLetter 3) : Real :=
+  gapLength (tribonacciGapOfLetter letter)
+
+/-- Tribonacci geometry discharges the general bridge laws at `d = 3`. -/
+noncomputable def tribonacciBridgeData :
+    D5.S0.Tower.ErgodicBridge.General.DBonacciErgodicBridge 3 (by omega) where
+  State := TState
+  stateLetter := tribonacciStateLetter
+  coordinate := fun state => state.coordinate
+  stateOf := tribonacciStateOf
+  gapExtent := tribonacciLetterExtent
+  transition := tTransition
+  stateArm := tStateArm
+  unitState := TribonacciUnitState
+  gridCarrier := D5.S0.Tower.Tribonacci.Survivor.tribonacciNameHull
+  gridObservable := D5.S0.Tower.Tribonacci.Survivor.tribonacciSurvivor
+  gridCoding := TribonacciGridCoding
+  firstLevel := 0
+  realizationLevel := 3
+  realizationLevel_valid := by omega
+  stateOf_letter := by intro letter u; fin_cases letter <;> rfl
+  stateOf_coordinate := by intro letter u; rfl
+  state_eta := by intro state; rcases state with ⟨kind, u⟩; cases kind <;> rfl
+  unitState_iff := by intro state; rcases state with ⟨kind, u⟩; cases kind <;> rfl
+  coding_unit := by intro Q x state hcode; exact hcode.1
+  coding_observable := tribonacci_survivor_eq_state_arm
+  coding_transition := by intro Q _ x state; exact tribonacci_grid_coding_transition Q x state
+  coding_exists := by intro Q _ x; exact tribonacci_grid_coding_exists_of_mem_hull Q x
+  letter_realization := by
+    intro letter u hu0 hu1
+    fin_cases letter
+    · exact tribonacci_unit_state_has_grid_realization ⟨.small, u⟩ ⟨hu0, hu1⟩
+    · exact tribonacci_unit_state_has_grid_realization ⟨.combined, u⟩ ⟨hu0, hu1⟩
+    · exact tribonacci_unit_state_has_grid_realization ⟨.large, u⟩ ⟨hu0, hu1⟩
+
+/-- Every internal grid point has the lower value of a three-gap orbit. -/
+theorem tribonacci_ergodic_bridge (Q : Nat) (x : Real)
+    (hx : x ∈ D5.S0.Tower.Tribonacci.Survivor.tribonacciNameHull Q) :
+    ∃ state : TState, TribonacciUnitState state /\
+      Filter.liminf
+          (fun level => D5.S0.Tower.Tribonacci.Survivor.tribonacciSurvivor level x)
+          Filter.atTop = tribonacciOrbitLowerValue state := by
+  simpa [D5.S0.Tower.ErgodicBridge.General.gridLowerValue,
+    D5.S0.Tower.ErgodicBridge.General.orbitLowerValue, tribonacciBridgeData,
+    tribonacciOrbitLowerValue] using
+      D5.S0.Tower.ErgodicBridge.General.ergodic_bridge
+        tribonacciBridgeData Q (by change 0 <= Q; omega) x hx
+
+/-- Every typed unit state has an internal grid realization. -/
+theorem tribonacci_ergodic_bridge_reverse (state : TState)
     (hunit : TribonacciUnitState state) :
     ∃ x ∈ D5.S0.Tower.Tribonacci.Survivor.tribonacciNameHull 3,
       Filter.liminf
           (fun level => D5.S0.Tower.Tribonacci.Survivor.tribonacciSurvivor level x)
           Filter.atTop = tribonacciOrbitLowerValue state := by
-  obtain ⟨x, hx, hcode⟩ := tribonacci_unit_state_has_grid_realization state hunit
-  exact ⟨x, hx, tribonacci_ergodic_bridge_of_coding 3 x state hcode⟩
+  simpa [D5.S0.Tower.ErgodicBridge.General.gridLowerValue,
+    D5.S0.Tower.ErgodicBridge.General.orbitLowerValue, tribonacciBridgeData,
+    tribonacciOrbitLowerValue] using
+      D5.S0.Tower.ErgodicBridge.General.ergodic_bridge_reverse
+        tribonacciBridgeData state hunit
 
 def tribonacciGridLowerValues : Set Real :=
-  {value | ∃ Q : Nat,
-    ∃ x ∈ D5.S0.Tower.Tribonacci.Survivor.tribonacciNameHull Q,
-      value = Filter.liminf
-        (fun level => D5.S0.Tower.Tribonacci.Survivor.tribonacciSurvivor level x)
-        Filter.atTop}
+  D5.S0.Tower.ErgodicBridge.General.gridLowerValues tribonacciBridgeData
 
 def tribonacciErgodicLowerValues : Set Real :=
-  {value | ∃ state : State,
-    TribonacciUnitState state /\ value = tribonacciOrbitLowerValue state}
+  D5.S0.Tower.ErgodicBridge.General.ergodicLowerValues tribonacciBridgeData
 
 theorem tribonacci_lower_value_sets_eq :
-    tribonacciGridLowerValues = tribonacciErgodicLowerValues := by
-  ext value
-  constructor
-  · rintro ⟨Q, x, hx, hvalue⟩
-    obtain ⟨state, hunit, hbridge⟩ := tribonacci_ergodic_bridge Q x hx
-    exact ⟨state, hunit, hvalue.trans hbridge⟩
-  · rintro ⟨state, hunit, hvalue⟩
-    obtain ⟨x, hx, hbridge⟩ := tribonacci_ergodic_bridge_reverse state hunit
-    exact ⟨3, x, hx, hvalue.trans hbridge.symm⟩
+    tribonacciGridLowerValues = tribonacciErgodicLowerValues :=
+  D5.S0.Tower.ErgodicBridge.General.lower_value_sets_eq tribonacciBridgeData
 
-noncomputable def tribonacciGridOptimalValue : Real := sSup tribonacciGridLowerValues
+noncomputable def tribonacciGridOptimalValue : Real :=
+  D5.S0.Tower.ErgodicBridge.General.gridOptimalValue tribonacciBridgeData
 
 noncomputable def tribonacciErgodicOptimalValue : Real :=
-  sSup tribonacciErgodicLowerValues
+  D5.S0.Tower.ErgodicBridge.General.ergodicOptimalValue tribonacciBridgeData
 
-/-- The internal Tribonacci champion objective is the three-gap ergodic optimum. -/
+/-- The Tribonacci theorem is the `d = 3` substitution into the general bridge. -/
 theorem tribonacci_optimal_value_eq_ergodic_optimal_value :
-    tribonacciGridOptimalValue = tribonacciErgodicOptimalValue := by
-  rw [tribonacciGridOptimalValue, tribonacciErgodicOptimalValue,
-    tribonacci_lower_value_sets_eq]
+    tribonacciGridOptimalValue = tribonacciErgodicOptimalValue :=
+  D5.S0.Tower.ErgodicBridge.General.optimal_value_eq_ergodic_optimal_value
+    tribonacciBridgeData
 
 end D5.S0.Tower.ErgodicBridge.Tribonacci
