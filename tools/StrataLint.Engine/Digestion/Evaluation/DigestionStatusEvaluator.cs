@@ -35,6 +35,7 @@ internal static partial class DigestionStatusEvaluator
                 entry,
                 alignment.AlignmentFor(entry.AtomId),
                 alignment.AtomFor(entry.AtomId),
+                null,
                 snapshot,
                 emptyLeanReport,
                 emptyTruthNodes,
@@ -90,16 +91,22 @@ internal static partial class DigestionStatusEvaluator
         };
         var nodes = dag.Nodes.ToDictionary(static node => node.RepoPath);
         var work = entries.Select(entry =>
-            Inspect(
+        {
+            var baselineMigration = baselineEntries.TryGetValue(entry.AtomId, out var baselineEntry)
+                ? baselineEntry.ProjectedStatus.Migration
+                : (DigestionMigrationState?)null;
+            return Inspect(
                 entry,
                 alignment.AlignmentFor(entry.AtomId),
                 alignment.AtomFor(entry.AtomId),
+                baselineMigration,
                 snapshot,
                 lean.Report,
                 nodes,
                 verifiedScribeEmissions,
                 changes,
-                findings)).ToArray();
+                findings);
+        }).ToArray();
         DeriveMigration(work);
         RequireDecompositionBeforeNewAbsorption(
             work,
@@ -189,6 +196,7 @@ internal static partial class DigestionStatusEvaluator
         DigestionLedgerEntry entry,
         DigestionReceiptAlignment alignment,
         DigestionAtom? atom,
+        DigestionMigrationState? baselineMigration,
         RepositorySnapshot snapshot,
         LeanAxiomReport leanReport,
         IReadOnlyDictionary<RepoPath, TruthNode> nodes,
@@ -197,9 +205,14 @@ internal static partial class DigestionStatusEvaluator
         ImmutableArray<string>.Builder findings)
     {
         var gaps = new List<DigestionGap>();
+        // Partial does not reveal whether local evidence is stale or only a chain is open.
+        // Revalidate it before allowing a candidate delta to derive a stronger status.
+        var localEvidenceChanges = baselineMigration is null or DigestionMigrationState.Partial
+            ? null
+            : changes;
         var boundary = entry.Atomizer == AtomizerRegistry.NoAtomizerId
             && entry.Boundary is not null
-                ? VerifyBoundary(entry, snapshot, changes, gaps, findings)
+                ? VerifyBoundary(entry, snapshot, localEvidenceChanges, gaps, findings)
                 : VerifyStructuredAlignment(entry, alignment, gaps, findings);
         var targetStates = new List<(string Gid, TruthState State)>();
         var existingTargets = new Dictionary<string, RepositoryFile>(StringComparer.Ordinal);
@@ -228,12 +241,17 @@ internal static partial class DigestionStatusEvaluator
             gaps.Add(new DigestionGap("coverage-gid-missing", entry.AtomId));
         }
 
-        var coverage = VerifyCoverageReceipts(entry, existingTargets, changes, gaps, findings);
+        var coverage = VerifyCoverageReceipts(
+            entry,
+            existingTargets,
+            localEvidenceChanges,
+            gaps,
+            findings);
         var scribe = VerifyScribeReceipts(
             entry,
             snapshot,
             verifiedScribeEmissions,
-            changes,
+            localEvidenceChanges,
             gaps,
             findings);
         if (entry.Receipts.UnresolvedSubitems.Length > 0)
