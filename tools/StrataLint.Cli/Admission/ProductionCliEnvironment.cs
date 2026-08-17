@@ -24,6 +24,8 @@ internal interface IRepositoryGateway
 
     RawRepositorySnapshot ReadRevision(string revision);
 
+    RawChangeSet ReadCurrentChanges();
+
     TrustedFrozenGitReferences ValidateFrozenReferences(FrozenLedgerReferenceSet references);
 }
 

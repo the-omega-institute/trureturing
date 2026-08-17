@@ -59,7 +59,7 @@ public sealed class ShowAtomTests
     }
 
     [Fact]
-    public void RegisteredAtomizerReplaysTheSourceAndPrintsTheKnownAtomParagraph()
+    public void RegisteredAtomizerEntryPrintsItsCommittedCasParagraph()
     {
         const string sourcePath = "fixtures/show-atom/adapter.md";
         const string rawText = "## 1. Synthetic section\r\n\r\nCafe\u0301 receipt.\r\n";
@@ -181,7 +181,31 @@ public sealed class ShowAtomTests
     }
 
     [Fact]
-    public void ReusedAstPathWithDifferentContentFailsClosedInsteadOfShowingAnotherAtom()
+    public void CurrentAtomReadsCommittedCasWithoutReplayingChangedSource()
+    {
+        const string sourcePath = "fixtures/show-atom/adapter.md";
+        var committedBytes = Encoding.UTF8.GetBytes(
+            "## 1. Synthetic section\n\nCommitted synthetic content.\n");
+        var changedSourceBytes = Encoding.UTF8.GetBytes(
+            "## 1. Synthetic section\n\nChanged source content.\n");
+        var fingerprints = DigestionFingerprint.Compute(committedBytes);
+        var files = FixtureFiles(
+            AdapterLedger(sourcePath, fingerprints.RawSha256, fingerprints.NormalizedSha256),
+            sourcePath,
+            changedSourceBytes,
+            fingerprints.RawSha256,
+            committedBytes);
+
+        var result = Environment("/repo", files).ShowAtom(["--atom-id", AdapterAtomId]);
+
+        Assert.True(result.Success, result.Error);
+        Assert.DoesNotContain("STALE_READ", result.Output, StringComparison.Ordinal);
+        Assert.Contains("Committed synthetic content", result.Output, StringComparison.Ordinal);
+        Assert.DoesNotContain("Changed source content", result.Output, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void ReusedAstPathReadsTheRequestedAtomsCommittedCas()
     {
         const string sourcePath = "fixtures/show-atom/adapter.md";
         var oldBytes = Encoding.UTF8.GetBytes(
@@ -198,21 +222,18 @@ public sealed class ShowAtomTests
 
         var result = Environment("/repo", files).ShowAtom(["--atom-id", AdapterAtomId]);
 
-        Assert.False(result.Success);
-        Assert.Equal(string.Empty, result.Output);
-        Assert.Contains(
-            $"SHOW_ATOM_INVALID atom {AdapterAtomId} raw hash mismatch",
-            result.Error,
-            StringComparison.Ordinal);
-        Assert.DoesNotContain("current", result.Output, StringComparison.Ordinal);
+        Assert.True(result.Success, result.Error);
+        Assert.Contains("Old synthetic content", result.Output, StringComparison.Ordinal);
+        Assert.DoesNotContain("Current synthetic content", result.Output, StringComparison.Ordinal);
     }
 
     [Fact]
-    public void ConflictMarkedSourceFailsClosedBeforeShowAtomPrintsIt()
+    public void ConflictMarkedSourceDoesNotAffectCommittedCasRead()
     {
         const string sourcePath = "fixtures/show-atom/conflicted.md";
         var sourceBytes = Encoding.UTF8.GetBytes("<<<<<<< HEAD\nreceipt\n=======\n");
-        var fingerprints = DigestionFingerprint.Compute(sourceBytes);
+        var casBytes = Encoding.UTF8.GetBytes("committed receipt\n");
+        var fingerprints = DigestionFingerprint.Compute(casBytes);
         var files = FixtureFiles(
             BoundaryLedger(
                 sourcePath,
@@ -223,14 +244,13 @@ public sealed class ShowAtomTests
             sourcePath,
             sourceBytes,
             fingerprints.RawSha256,
-            sourceBytes);
+            casBytes);
 
         var result = Environment("/repo", files).ShowAtom(["--atom-id", BoundaryAtomId]);
 
-        Assert.False(result.Success);
-        Assert.Equal(string.Empty, result.Output);
-        Assert.Contains("INGEST-CONFLICT-MARKER-001", result.Error, StringComparison.Ordinal);
-        Assert.Contains($"{sourcePath}:1", result.Error, StringComparison.Ordinal);
+        Assert.True(result.Success, result.Error);
+        Assert.Contains("committed receipt", result.Output, StringComparison.Ordinal);
+        Assert.DoesNotContain("<<<<<<<", result.Output, StringComparison.Ordinal);
     }
 
     [Fact]
