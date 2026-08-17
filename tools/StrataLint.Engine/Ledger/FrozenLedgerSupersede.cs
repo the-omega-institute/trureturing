@@ -85,16 +85,7 @@ public static partial class FrozenLedger
 
         if (payload.StatementId != protectedBaseEntry.Material.StatementId)
         {
-            var candidatePins = EnvironmentPinOids(payload.Environment)
-                .Order(StringComparer.Ordinal);
-            var protectedPins = protectedBaseEntry.Environment is { } protectedEnvironment
-                ? EnvironmentPinOids(protectedEnvironment)
-                : protectedBaseEntry.Payload.Input.SupportingBlobOids;
-            var pinsChanged = !candidatePins
-                .SequenceEqual(
-                    protectedPins.Order(StringComparer.Ordinal),
-                    StringComparer.Ordinal);
-            if (!pinsChanged)
+            if (!EnvironmentPinsChanged(payload.Environment, protectedBaseEntry))
             {
                 throw new FormatException(
                     $"Supersede target {protectedBaseEntry.Material.RepoPath.Value} statement identity changed but environment pins did not change.");
@@ -118,6 +109,66 @@ public static partial class FrozenLedger
             throw new FormatException(
                 $"Supersede target {protectedBaseEntry.Material.RepoPath.Value} axiom closure is not a subset of the protected-base closure.");
         }
+    }
+
+    internal static bool EnvironmentPinsChanged(
+        FrozenEnvironmentPins candidate,
+        FrozenActiveEntry protectedBaseEntry)
+    {
+        ArgumentNullException.ThrowIfNull(candidate);
+        ArgumentNullException.ThrowIfNull(protectedBaseEntry);
+        if (protectedBaseEntry.Environment is { } protectedEnvironment)
+        {
+            return candidate != protectedEnvironment;
+        }
+
+        return LegacyEnvironmentPinsChanged(
+            candidate.LakeManifestBlobOid,
+            candidate.LeanToolchainBlobOid,
+            protectedBaseEntry);
+    }
+
+    internal static bool EnvironmentPinsChanged(
+        FrozenEnvironmentAttestation candidate,
+        FrozenActiveEntry protectedBaseEntry)
+    {
+        ArgumentNullException.ThrowIfNull(candidate);
+        ArgumentNullException.ThrowIfNull(protectedBaseEntry);
+        if (protectedBaseEntry.Environment is { } protectedEnvironment)
+        {
+            if (candidate.LakefilePath is null
+                || candidate.LakefileBlobOid is null
+                || !RepoPath.TryCreate(candidate.LakefilePath, out var lakefilePath))
+            {
+                return true;
+            }
+
+            return new FrozenEnvironmentPins(
+                candidate.LakeManifestBlobOid,
+                candidate.LakefileBlobOid,
+                lakefilePath,
+                candidate.LeanToolchainBlobOid) != protectedEnvironment;
+        }
+
+        return LegacyEnvironmentPinsChanged(
+            candidate.LakeManifestBlobOid,
+            candidate.LeanToolchainBlobOid,
+            protectedBaseEntry);
+    }
+
+    private static bool LegacyEnvironmentPinsChanged(
+        string lakeManifestBlobOid,
+        string leanToolchainBlobOid,
+        FrozenActiveEntry protectedBaseEntry)
+    {
+        var candidateLegacyPins = new[]
+        {
+            lakeManifestBlobOid,
+            leanToolchainBlobOid,
+        }.Order(StringComparer.Ordinal);
+        return !candidateLegacyPins.SequenceEqual(
+            protectedBaseEntry.Payload.Input.SupportingBlobOids.Order(StringComparer.Ordinal),
+            StringComparer.Ordinal);
     }
 
     internal static FrozenActiveEntry ApplySupersede(

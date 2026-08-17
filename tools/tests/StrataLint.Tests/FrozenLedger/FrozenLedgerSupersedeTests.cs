@@ -145,27 +145,53 @@ public sealed partial class FrozenLedgerTests
     }
 
     [Fact]
-    public void SupersedeRejectsStatementDriftWhenSupportingBlobOidsAreUnchanged()
+    public void SupersedeRejectsStatementDriftWhenNamedEnvironmentPinsAreUnchanged()
     {
         var fixture = SupersedeFixture(
             candidateStatementMaterial: "ambiently-different-elaborated-expression");
         var payload = SupersedePayload(fixture);
         var baseEntry = Assert.Single(fixture.Baseline.ActiveEntries).Value;
-        var unchangedPinsEntry = baseEntry with
-        {
-            Payload = baseEntry.Payload with
-            {
-                Input = baseEntry.Payload.Input with
-                {
-                    SupportingBlobOids = payload.Input.SupportingBlobOids,
-                },
-            },
-        };
+        var unchangedPinsEntry = baseEntry with { Environment = payload.Environment };
 
         var exception = Assert.Throws<FormatException>(() =>
             FrozenLedger.ValidateSupersedeStrength(payload, unchangedPinsEntry));
 
         Assert.Contains("environment pins did not change", exception.Message, StringComparison.OrdinalIgnoreCase);
+    }
+
+    [Fact]
+    public void LegacyFreezeRejectsStatementDriftWhenActualEnvironmentIsUnchanged()
+    {
+        var fixture = SupersedeFixture(
+            candidateStatementMaterial: "ambiently-different-elaborated-expression");
+        var payload = SupersedePayload(fixture) with
+        {
+            Environment = new FrozenEnvironmentPins(
+                GitBlobOid("{\"version\":\"old\"}\n"),
+                GitBlobOid("[package]\nname = \"old\"\n"),
+                RepoPath.CreateKnown("lakefile.toml"),
+                GitBlobOid("leanprover/lean4:v4.31.0\n")),
+        };
+        var legacyEntry = Assert.Single(fixture.Baseline.ActiveEntries).Value;
+        Assert.Null(legacyEntry.Environment);
+        Assert.Equal(2, legacyEntry.Payload.Input.SupportingBlobOids.Length);
+
+        var exception = Assert.Throws<FormatException>(() =>
+            FrozenLedger.ValidateSupersedeStrength(payload, legacyEntry));
+
+        Assert.Contains("environment pins did not change", exception.Message, StringComparison.OrdinalIgnoreCase);
+    }
+
+    [Fact]
+    public void LegacyFreezeAcceptsStatementDriftWhenActualEnvironmentChanged()
+    {
+        var fixture = SupersedeFixture(
+            candidateStatementMaterial: "ambiently-different-elaborated-expression");
+        var payload = SupersedePayload(fixture);
+        var legacyEntry = Assert.Single(fixture.Baseline.ActiveEntries).Value;
+        Assert.Null(legacyEntry.Environment);
+
+        FrozenLedger.ValidateSupersedeStrength(payload, legacyEntry);
     }
 
     [Fact]

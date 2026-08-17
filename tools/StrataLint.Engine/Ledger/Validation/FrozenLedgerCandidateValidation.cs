@@ -200,9 +200,12 @@ public static partial class FrozenLedger
                 previous = eventHash;
             }
 
-            var expected = catalog.ClosedNodes.ToDictionary(static node => node.RepoPath);
+            var currentClosedPaths = catalog.Dag.Nodes
+                .Where(static node => node.State is TruthState.Closed && node.ModuleName is not null)
+                .Select(static node => node.RepoPath)
+                .ToHashSet();
             var actual = active.Values.ToDictionary(static entry => entry.Material.RepoPath);
-            var missing = expected.Keys.Except(actual.Keys)
+            var missing = currentClosedPaths.Except(actual.Keys)
                 .OrderBy(static path => path.Value, StringComparer.Ordinal)
                 .Select(static path => path.Value)
                 .ToArray();
@@ -211,9 +214,9 @@ public static partial class FrozenLedger
                 throw new FormatException("Closed modules are missing Freeze events: " + string.Join(", ", missing));
             }
 
-            if ((requireCompleteCatalog && actual.Count != expected.Count)
-                || actual.Any(item => !expected.TryGetValue(item.Key, out var expectedMaterial)
-                    || item.Value.Material.FrozenNodeId != expectedMaterial.FrozenNodeId))
+            if (actual.Keys.Any(path => !currentClosedPaths.Contains(path))
+                || actual.Any(item => catalog.ByPath.TryGetValue(item.Key, out var candidateMaterial)
+                    && item.Value.Material.FrozenNodeId != candidateMaterial.FrozenNodeId))
             {
                 throw new FormatException(
                     "Active frozen view does not exactly match the current Closed module identities.");
@@ -233,7 +236,7 @@ public static partial class FrozenLedger
                 activeNodes,
                 previous,
                 corpusRoot,
-                ComputeFrozenGraphRoot(catalog.ClosedNodes),
+                ComputeFrozenGraphRoot(activeNodes),
                 activeEntries,
                 allCaseIds.ToImmutableHashSet(StringComparer.Ordinal),
                 superseded.ToImmutableHashSet(),
