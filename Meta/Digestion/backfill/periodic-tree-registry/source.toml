@@ -1,3 +1,5 @@
 source_id = "periodic-tree-registry"
 path = "docs/develop/theory/PERIODIC_TREE_registry.jsonl"
 atomizer = "periodic-tree-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

@@ -17,12 +17,11 @@ public sealed partial class CoverAtomTests
     public void AlignScribeReceiptUsesVerifiedFingerprintsAndIsIdempotent()
     {
         var inputs = CoverWorld.Materialize(CoverWorld.StaleReceiptSpec());
+        var currentFiles = DirectoryLedgerTestSupport.Project(inputs.Files);
         using var temporary = new TemporaryDirectory();
-        var outputPath = Path.Combine(temporary.Path, BackfillInventoryLoader.RelativePath);
-        Directory.CreateDirectory(Path.GetDirectoryName(outputPath)!);
-        File.WriteAllText(outputPath, inputs.Ledger, new UTF8Encoding(false));
+        DirectoryLedgerTestSupport.Write(temporary.Path, currentFiles);
 
-        var first = CoverWorld.Environment(temporary.Path, inputs, inputs.Files)
+        var first = CoverWorld.Environment(temporary.Path, inputs, currentFiles)
             .AlignScribeReceipt(CoverWorld.AlignArgs(inputs));
 
         Assert.True(first.Success, first.Error);
@@ -34,31 +33,26 @@ public sealed partial class CoverAtomTests
         Assert.Contains("old_emission_sha256=sha256:bbbbbbbb", first.Output, StringComparison.Ordinal);
         Assert.Contains("new_emission_sha256=sha256:", first.Output, StringComparison.Ordinal);
         Assert.Contains("ledger_changed=true", first.Output, StringComparison.Ordinal);
-        var afterFirst = File.ReadAllText(outputPath);
+        var afterFirst = DirectoryLedgerTestSupport.Image(
+            BackfillInventoryLoader.LoadRoot(temporary.Path));
         Assert.True(inputs.VerifiedEmissions!.TryGet(
             inputs.Gid[..inputs.Gid.LastIndexOf('.')], out var verifiedRecord));
         Assert.Equal(
-            inputs.Ledger
-                .Replace(
-                    "sha256:" + new string('a', 64),
-                    verifiedRecord.DefinitionSha256,
-                    StringComparison.Ordinal)
-                .Replace(
-                    "sha256:" + new string('b', 64),
-                    verifiedRecord.EmissionSha256,
-                    StringComparison.Ordinal),
+            ExpectedAlignedScribeImage(inputs, verifiedRecord),
             afterFirst);
 
-        var replayFiles = new Dictionary<string, string>(inputs.Files, StringComparer.Ordinal)
-        {
-            [BackfillInventoryLoader.RelativePath] = afterFirst,
-        };
+        var replayFiles = new Dictionary<string, string>(currentFiles, StringComparer.Ordinal);
+        DirectoryLedgerTestSupport.ReplaceWithProjection(
+            replayFiles,
+            BackfillInventoryLoader.LoadRoot(temporary.Path));
         var second = CoverWorld.Environment(temporary.Path, inputs, replayFiles)
             .AlignScribeReceipt(CoverWorld.AlignArgs(inputs));
 
         Assert.True(second.Success, second.Error);
         Assert.Contains("ledger_changed=false", second.Output, StringComparison.Ordinal);
-        Assert.Equal(afterFirst, File.ReadAllText(outputPath));
+        Assert.Equal(
+            afterFirst,
+            DirectoryLedgerTestSupport.Image(BackfillInventoryLoader.LoadRoot(temporary.Path)));
     }
 
     [Theory]
@@ -88,32 +82,24 @@ public sealed partial class CoverAtomTests
             OtherAtomBinding = ("drifted-sibling", "D5/S0/Carrier/Probe.sibling"),
         };
         var inputs = CoverWorld.Materialize(spec);
+        var currentFiles = DirectoryLedgerTestSupport.Project(inputs.Files);
         using var temporary = new TemporaryDirectory();
-        var outputPath = Path.Combine(temporary.Path, BackfillInventoryLoader.RelativePath);
-        Directory.CreateDirectory(Path.GetDirectoryName(outputPath)!);
-        File.WriteAllText(outputPath, inputs.Ledger, new UTF8Encoding(false));
-        var result = CoverWorld.Environment(temporary.Path, inputs, inputs.Files)
+        DirectoryLedgerTestSupport.Write(temporary.Path, currentFiles);
+        var result = CoverWorld.Environment(temporary.Path, inputs, currentFiles)
             .AlignScribeReceipt(CoverWorld.AlignArgs(inputs));
 
         Assert.True(result.Success, result.Error);
         Assert.True(inputs.VerifiedEmissions!.TryGet(
             inputs.Gid[..inputs.Gid.LastIndexOf('.')], out var verifiedRecord));
-        var expected = inputs.Ledger
-            .Replace(
-                "sha256:" + new string('a', 64),
-                verifiedRecord.DefinitionSha256,
-                StringComparison.Ordinal)
-            .Replace(
-                "sha256:" + new string('b', 64),
-                verifiedRecord.EmissionSha256,
-                StringComparison.Ordinal);
-        Assert.Equal(expected, File.ReadAllText(outputPath));
+        Assert.Equal(
+            ExpectedAlignedScribeImage(inputs, verifiedRecord),
+            DirectoryLedgerTestSupport.Image(BackfillInventoryLoader.LoadRoot(temporary.Path)));
     }
 
     [Fact]
     public void CoverBindsDeletableDeclarationAndWritesCoverageReceipts()
     {
-        var (result, after, before) = Execute(new CoverSpec());
+        var (result, after, before, afterDocument) = Execute(new CoverSpec());
 
         Assert.True(result.Success, result.Error);
         Assert.Contains($"COVER atom_id={CoverWorld.DefaultAtomId}", result.Output, StringComparison.Ordinal);
@@ -122,7 +108,7 @@ public sealed partial class CoverAtomTests
         Assert.NotEqual(before, after);
 
         var entry = Assert.Single(
-            BackfillInventoryLoader.Load(after).RequireDigestionEntries(),
+            afterDocument.RequireDigestionEntries(),
             candidate => candidate.AtomId == CoverWorld.DefaultAtomId);
         Assert.Equal(["D5/S0/Carrier/Probe.probe"], entry.CoverageGids.ToArray());
         Assert.Single(entry.Receipts.Coverage);
@@ -134,7 +120,7 @@ public sealed partial class CoverAtomTests
     [Fact]
     public void CoverRejectsAtomThatAlreadyHasCoverage()
     {
-        var (result, after, before) = Execute(new CoverSpec
+        var (result, after, before, _) = Execute(new CoverSpec
         {
             InitialCoverage = ImmutableArray.Create("D5/S0/Carrier/Probe.probe"),
         });
@@ -147,7 +133,7 @@ public sealed partial class CoverAtomTests
     [Fact]
     public void CoverRejectsAtomThatIsNotOpen()
     {
-        var (result, after, before) = Execute(new CoverSpec
+        var (result, after, before, _) = Execute(new CoverSpec
         {
             Migration = "partial",
             Truth = "closed",
@@ -163,7 +149,7 @@ public sealed partial class CoverAtomTests
     {
         var spec = new CoverSpec();
         var envelopePath = "Meta/Digestion/formalizations/" + spec.AtomId + ".v1.json";
-        var (result, after, before) = Execute(
+        var (result, after, before, _) = Execute(
             spec,
             ["--cover-atom", "no-such-atom", "--gid", spec.Gid, "--base", "baseline",
                 "--envelope", envelopePath]);
@@ -176,7 +162,7 @@ public sealed partial class CoverAtomTests
     [Fact]
     public void CoverRejectsGidWithoutDeclarationSelector()
     {
-        var (result, after, before) = Execute(new CoverSpec { Declaration = null });
+        var (result, after, before, _) = Execute(new CoverSpec { Declaration = null });
 
         Assert.False(result.Success);
         Assert.Contains("must select a Lean declaration", result.Error, StringComparison.Ordinal);
@@ -186,7 +172,7 @@ public sealed partial class CoverAtomTests
     [Fact]
     public void CoverRejectsGidAlreadyBoundInBaselineLedger()
     {
-        var (result, after, before) = Execute(new CoverSpec
+        var (result, after, before, _) = Execute(new CoverSpec
         {
             BaselineCoverageGid = "D5/S0/Carrier/Probe.probe",
         });
@@ -199,7 +185,7 @@ public sealed partial class CoverAtomTests
     [Fact]
     public void CoverRejectsGidAlreadyBoundToAnotherAtom()
     {
-        var (result, after, before) = Execute(new CoverSpec
+        var (result, after, before, _) = Execute(new CoverSpec
         {
             OtherAtomBinding = ("sibling-atom", "D5/S0/Carrier/Probe.probe"),
         });
@@ -212,7 +198,7 @@ public sealed partial class CoverAtomTests
     [Fact]
     public void CoverRejectsDeclarationAbsentFromLeanReport()
     {
-        var (result, after, before) = Execute(new CoverSpec
+        var (result, after, before, _) = Execute(new CoverSpec
         {
             ReportDeclarations = ImmutableArray.Create("unrelated"),
         });
@@ -225,7 +211,7 @@ public sealed partial class CoverAtomTests
     [Fact]
     public void CoverRejectsDeclarationProvedOnlyWithSorry()
     {
-        var (result, after, before) = Execute(new CoverSpec
+        var (result, after, before, _) = Execute(new CoverSpec
         {
             TargetAxioms = ImmutableArray.Create("sorryAx"),
         });
@@ -238,7 +224,7 @@ public sealed partial class CoverAtomTests
     [Fact]
     public void CoverRejectsMissingProducerEmissionAsPartialClosed()
     {
-        var (result, after, before) = Execute(new CoverSpec { VerifyScribe = false });
+        var (result, after, before, _) = Execute(new CoverSpec { VerifyScribe = false });
 
         Assert.False(result.Success);
         Assert.Contains("scribe-emission-missing", result.Error, StringComparison.Ordinal);
@@ -252,7 +238,7 @@ public sealed partial class CoverAtomTests
         // The atom's durable CAS blob is absent, so its content-addressed
         // fingerprint can no longer be reproduced: cover fails closed rather than
         // binding a declaration to an unverifiable source atom.
-        var (result, after, before) = Execute(new CoverSpec { IncludeCasBlob = false });
+        var (result, after, before, _) = Execute(new CoverSpec { IncludeCasBlob = false });
 
         Assert.False(result.Success);
         Assert.Contains("CAS blob is missing", result.Error, StringComparison.Ordinal);
@@ -267,7 +253,7 @@ public sealed partial class CoverAtomTests
         // tail authorization — so it would reach Absorbed-Tail-deletable — cover
         // must reject: spec §3.4 ③ requires TruthDag=Closed with no
         // sorry/private/unregistered axiom.
-        var (result, after, before) = Execute(new CoverSpec
+        var (result, after, before, _) = Execute(new CoverSpec
         {
             TargetAxioms = ImmutableArray.Create("customAxiom"),
             TailAuthorized = true,
@@ -286,17 +272,21 @@ public sealed partial class CoverAtomTests
         // validated against (a concurrent cover deposited in between). cover must
         // abort rather than silently overwrite the other deposit (lost update).
         var inputs = CoverWorld.Materialize(new CoverSpec());
+        var currentFiles = DirectoryLedgerTestSupport.Project(inputs.Files);
+        var baselineFiles = DirectoryLedgerTestSupport.Project(inputs.Baseline);
         using var temporary = new TemporaryDirectory();
-        var outputPath = Path.Combine(temporary.Path, BackfillInventoryLoader.RelativePath);
-        Directory.CreateDirectory(Path.GetDirectoryName(outputPath)!);
-        var concurrent = inputs.Ledger + "\n# concurrent deposit\n";
+        DirectoryLedgerTestSupport.Write(temporary.Path, currentFiles);
+        var atomPath = currentFiles.Keys.Single(path =>
+            path.EndsWith($"/{CoverWorld.DefaultAtomId}.yaml", StringComparison.Ordinal));
+        var outputPath = Path.Combine(temporary.Path, atomPath.Replace('/', Path.DirectorySeparatorChar));
+        var concurrent = currentFiles[atomPath] + "# concurrent deposit\n";
         File.WriteAllText(outputPath, concurrent, new UTF8Encoding(false));
         var environment = new ProductionCliEnvironment(
             temporary.Path,
             new FakeRepositoryGateway(
                 RawChangeSet.Create(Array.Empty<string>()),
-                CoverWorld.Raw(inputs.Files),
-                CoverWorld.Raw(inputs.Baseline)),
+                CoverWorld.Raw(currentFiles),
+                CoverWorld.Raw(baselineFiles)),
             new FakeLeanReportSource(inputs.Report),
             new FakeScribeEmissionVerifier(inputs.VerifiedEmissions));
 
@@ -317,16 +307,21 @@ public sealed partial class CoverAtomTests
         // ledger and overwrite the missing deposit (no-silent-failure, first
         // principle). The gateway still holds the ledger cover validated against.
         var inputs = CoverWorld.Materialize(new CoverSpec());
+        var currentFiles = DirectoryLedgerTestSupport.Project(inputs.Files);
+        var baselineFiles = DirectoryLedgerTestSupport.Project(inputs.Baseline);
         using var temporary = new TemporaryDirectory();
-        var outputPath = Path.Combine(temporary.Path, BackfillInventoryLoader.RelativePath);
-        Directory.CreateDirectory(Path.GetDirectoryName(outputPath)!);
+        DirectoryLedgerTestSupport.Write(temporary.Path, currentFiles);
+        var atomPath = currentFiles.Keys.Single(path =>
+            path.EndsWith($"/{CoverWorld.DefaultAtomId}.yaml", StringComparison.Ordinal));
+        var outputPath = Path.Combine(temporary.Path, atomPath.Replace('/', Path.DirectorySeparatorChar));
+        File.Delete(outputPath);
         Assert.False(File.Exists(outputPath));
         var environment = new ProductionCliEnvironment(
             temporary.Path,
             new FakeRepositoryGateway(
                 RawChangeSet.Create(Array.Empty<string>()),
-                CoverWorld.Raw(inputs.Files),
-                CoverWorld.Raw(inputs.Baseline)),
+                CoverWorld.Raw(currentFiles),
+                CoverWorld.Raw(baselineFiles)),
             new FakeLeanReportSource(inputs.Report),
             new FakeScribeEmissionVerifier(inputs.VerifiedEmissions));
 
@@ -343,7 +338,7 @@ public sealed partial class CoverAtomTests
     public void CoverRejectsIncompleteArguments()
     {
         var spec = new CoverSpec();
-        var (result, after, before) = Execute(spec, ["--cover-atom", spec.AtomId]);
+        var (result, after, before, _) = Execute(spec, ["--cover-atom", spec.AtomId]);
 
         Assert.False(result.Success);
         Assert.Contains("USAGE: StrataLint cover-atom", result.Error, StringComparison.Ordinal);
@@ -370,21 +365,23 @@ public sealed partial class CoverAtomTests
         Assert.Contains("Scribe emission verifier is unavailable", result.Error, StringComparison.Ordinal);
     }
 
-    private static (CommandResult Result, string After, string Before) Execute(
+    private static CoverExecution Execute(
         CoverSpec spec,
         IReadOnlyList<string>? args = null)
     {
         var inputs = spec.Materialize();
+        var currentFiles = DirectoryLedgerTestSupport.Project(inputs.Files);
+        var baselineFiles = DirectoryLedgerTestSupport.Project(inputs.Baseline);
         using var temporary = new TemporaryDirectory();
-        var outputPath = Path.Combine(temporary.Path, BackfillInventoryLoader.RelativePath);
-        Directory.CreateDirectory(Path.GetDirectoryName(outputPath)!);
-        File.WriteAllText(outputPath, inputs.Ledger, new UTF8Encoding(false));
+        DirectoryLedgerTestSupport.Write(temporary.Path, currentFiles);
+        var before = DirectoryLedgerTestSupport.Image(
+            BackfillInventoryLoader.LoadRoot(temporary.Path));
         var environment = new ProductionCliEnvironment(
             temporary.Path,
             new FakeRepositoryGateway(
                 RawChangeSet.Create(Array.Empty<string>()),
-                CoverWorld.Raw(inputs.Files),
-                CoverWorld.Raw(inputs.Baseline)),
+                CoverWorld.Raw(currentFiles),
+                CoverWorld.Raw(baselineFiles)),
             new FakeLeanReportSource(inputs.Report),
             new FakeScribeEmissionVerifier(inputs.VerifiedEmissions));
         var effectiveArgs = args
@@ -393,7 +390,36 @@ public sealed partial class CoverAtomTests
 
         var result = environment.CoverAtom(effectiveArgs);
 
-        return (result, File.ReadAllText(outputPath), inputs.Ledger);
+        var afterDocument = BackfillInventoryLoader.LoadRoot(temporary.Path);
+        var after = DirectoryLedgerTestSupport.Image(afterDocument);
+        return new CoverExecution(result, after, before, afterDocument);
+    }
+
+    private static string ExpectedAlignedScribeImage(
+        CoverInputs inputs,
+        ScribeEmissionRecord verifiedRecord)
+    {
+        var sources = inputs.Document.RequireDigestionSources()
+            .Select(source => source with
+            {
+                Entries = source.Entries.Select(entry => entry with
+                {
+                    Receipts = entry.Receipts with
+                    {
+                        Scribe = entry.Receipts.Scribe.Select(receipt =>
+                            entry.AtomId == CoverWorld.DefaultAtomId
+                                && receipt.Gid == inputs.Gid
+                                ? receipt with
+                                {
+                                    DefinitionSha256 = verifiedRecord.DefinitionSha256,
+                                    EmissionSha256 = verifiedRecord.EmissionSha256,
+                                }
+                                : receipt).ToImmutableArray(),
+                    },
+                }).ToImmutableArray(),
+            })
+            .ToImmutableArray();
+        return DirectoryLedgerTestSupport.Image(inputs.Document.WithDigestionSources(sources));
     }
 }
 
@@ -404,7 +430,8 @@ internal sealed record CoverInputs(
     VerifiedScribeEmissions? VerifiedEmissions,
     string Gid,
     string EnvelopePath,
-    string Ledger);
+    string Ledger,
+    BackfillInventoryDocument Document);
 
 internal sealed record CoverHostedSiblingSpec(
     string AtomId,
@@ -585,7 +612,7 @@ internal static partial class CoverWorld
             tailAuthSha = DigestionFingerprint.Compute(tailAuthBytes.AsSpan()).RawSha256;
         }
 
-        var ledger = BuildLedger(
+        var document = BuildLedger(
             spec,
             atom,
             spec.InitialCoverage,
@@ -596,10 +623,10 @@ internal static partial class CoverWorld
             hostedAtom,
             hostedSourcePath,
             useHostedBaselineCoverage: false);
+        var ledger = DirectoryLedgerTestSupport.Image(document);
         var envelopePath = "Meta/Digestion/formalizations/" + spec.AtomId + ".v1.json";
         var files = new Dictionary<string, string>(StringComparer.Ordinal)
         {
-            [BackfillInventoryLoader.RelativePath] = ledger,
             ["Meta/registry.yaml"] = TestRegistry.Canonical,
             ["Meta/domains.yaml"] = TestRegistry.Domains,
             [RuleFixture.FixtureDigestionSourcePath] = Encoding.UTF8.GetString(sourceBytes),
@@ -608,6 +635,7 @@ internal static partial class CoverWorld
             [ScribeEmissionAttestation.EmissionPath(spec.ModuleGid)] = Encoding.UTF8.GetString(emission),
             [ScribeEmissionAttestation.RelativePath] = Encoding.UTF8.GetString(attestation.AsSpan()),
         };
+        DirectoryLedgerTestSupport.ReplaceWithProjection(files, document);
         if (hostedAtom is not null)
         {
             files[hostedSourcePath] = Encoding.UTF8.GetString(hostedSourceBytes);
@@ -652,20 +680,18 @@ internal static partial class CoverWorld
         var baselineCoverage = spec.BaselineCoverageGid is not null
             ? ImmutableArray.Create(spec.BaselineCoverageGid)
             : spec.InitialCoverage;
-        var baseline = new Dictionary<string, string>(files, StringComparer.Ordinal)
-        {
-            [BackfillInventoryLoader.RelativePath] =
-                BuildLedger(
-                    spec,
-                    atom,
-                    baselineCoverage,
-                    includeOtherAtom: false,
-                    null,
-                    null,
-                    hostedAtom: hostedAtom,
-                    hostedSourcePath: hostedSourcePath,
-                    useHostedBaselineCoverage: true),
-        };
+        var baselineDocument = BuildLedger(
+            spec,
+            atom,
+            baselineCoverage,
+            includeOtherAtom: false,
+            null,
+            null,
+            hostedAtom: hostedAtom,
+            hostedSourcePath: hostedSourcePath,
+            useHostedBaselineCoverage: true);
+        var baseline = new Dictionary<string, string>(files, StringComparer.Ordinal);
+        DirectoryLedgerTestSupport.ReplaceWithProjection(baseline, baselineDocument);
 
         // File-level declaration newness (gate ②c): by default the covered Lean
         // file is new relative to the baseline (absent). BaselineTargetIdentical
@@ -702,7 +728,15 @@ internal static partial class CoverWorld
             ? VerifiedScribeEmissions.Create(records, MaterializeVerifiedGids(spec))
             : VerifiedScribeEmissions.Empty;
 
-        return new CoverInputs(files, baseline, report, verified, spec.Gid, envelopePath, ledger);
+        return new CoverInputs(
+            files,
+            baseline,
+            report,
+            verified,
+            spec.Gid,
+            envelopePath,
+            ledger,
+            document);
     }
 
     // Build the pre-committed digestion-formalization-v1 receipt bytes. Defaults

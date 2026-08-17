@@ -32,7 +32,8 @@ internal static partial class ValuesKernelBindingValidator
         }
 
         var validateAll = changes is null || changes.Paths.Any(static path =>
-            path.Value == RelativePath);
+            path.Value == RelativePath
+            || FrozenLedgerDeltaPredicate.IsEnvironmentInput(path.Value));
         foreach (var binding in bindings.Where(binding =>
                      validateAll || BindingInputChanged(binding, changes!)))
         {

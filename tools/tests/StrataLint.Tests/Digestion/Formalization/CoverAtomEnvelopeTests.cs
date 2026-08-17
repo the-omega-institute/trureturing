@@ -24,13 +24,14 @@ public sealed partial class CoverAtomTests
         };
         var inputs = spec.Materialize();
 
-        var (result, after, before) = Execute(
+        var execution = Execute(
             spec,
             ["--cover-atom", spec.AtomId,
                 "--gid", inputs.Gid,
                 "--gid", secondaryGid,
                 "--base", "baseline",
                 "--envelope", inputs.EnvelopePath]);
+        var (result, after, before) = execution;
 
         Assert.False(result.Success);
         Assert.Contains("initial cover requires exactly one --gid", result.Error, StringComparison.Ordinal);
@@ -59,13 +60,14 @@ public sealed partial class CoverAtomTests
         };
         var inputs = spec.Materialize();
 
-        var (result, after, before) = Execute(
+        var execution = Execute(
             spec,
             ["--cover-atom", spec.AtomId,
                 "--gid", inputs.Gid,
                 "--gid", secondaryGid,
                 "--base", "baseline",
                 "--envelope", inputs.EnvelopePath]);
+        var (result, after, before) = execution;
 
         Assert.False(result.Success);
         Assert.Contains("primary_gid", result.Error, StringComparison.Ordinal);
@@ -91,18 +93,19 @@ public sealed partial class CoverAtomTests
         };
         var inputs = spec.Materialize();
 
-        var (result, after, before) = Execute(
+        var execution = Execute(
             spec,
             ["--cover-atom", spec.AtomId,
                 "--gid", inputs.Gid,
                 "--gid", secondaryGid,
                 "--base", "baseline",
                 "--envelope", inputs.EnvelopePath]);
+        var (result, after, before) = execution;
 
         Assert.True(result.Success, result.Error);
         Assert.NotEqual(before, after);
         var entry = Assert.Single(
-            BackfillInventoryLoader.Load(after).RequireDigestionEntries(),
+            execution.AfterDocument.RequireDigestionEntries(),
             candidate => candidate.AtomId == CoverWorld.DefaultAtomId);
         Assert.Equal([inputs.Gid, secondaryGid], entry.CoverageGids.ToArray());
         Assert.Equal([inputs.Gid, secondaryGid],
@@ -444,13 +447,14 @@ public sealed partial class CoverAtomTests
         // declaration-signature match against the pre-committed receipt, which is
         // base-agnostic: a base-owned declaration whose current signature equals the
         // pinned signature is admitted with an honest `--base baseline`.
-        var (result, after, before) = Execute(new CoverSpec { BaselineTargetIdentical = true });
+        var execution = Execute(new CoverSpec { BaselineTargetIdentical = true });
+        var (result, after, before) = execution;
 
         Assert.True(result.Success, result.Error);
         Assert.Contains("ledger_changed=true", result.Output, StringComparison.Ordinal);
         Assert.NotEqual(before, after);
         var entry = Assert.Single(
-            BackfillInventoryLoader.Load(after).RequireDigestionEntries(),
+            execution.AfterDocument.RequireDigestionEntries(),
             candidate => candidate.AtomId == CoverWorld.DefaultAtomId);
         Assert.Equal(["D5/S0/Carrier/Probe.probe"], entry.CoverageGids.ToArray());
         Assert.Equal(DigestionTruthState.Closed, entry.ProjectedStatus.Truth);
@@ -602,13 +606,14 @@ public sealed partial class CoverAtomTests
     [Fact]
     public void CoverAcceptsWhenReceiptIsPreCommittedInBaselineAndSignatureMatches()
     {
-        var (result, after, before) = Execute(new CoverSpec { EnvelopeInBaseline = true });
+        var execution = Execute(new CoverSpec { EnvelopeInBaseline = true });
+        var (result, after, before) = execution;
 
         Assert.True(result.Success, result.Error);
         Assert.Contains("ledger_changed=true", result.Output, StringComparison.Ordinal);
         Assert.NotEqual(before, after);
         var entry = Assert.Single(
-            BackfillInventoryLoader.Load(after).RequireDigestionEntries(),
+            execution.AfterDocument.RequireDigestionEntries(),
             candidate => candidate.AtomId == CoverWorld.DefaultAtomId);
         Assert.Equal(["D5/S0/Carrier/Probe.probe"], entry.CoverageGids.ToArray());
         Assert.Equal(DigestionTruthState.Closed, entry.ProjectedStatus.Truth);

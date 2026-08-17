@@ -1,3 +1,5 @@
 source_id = "periodic-tree"
 path = "docs/develop/theory/PERIODIC_TREE.md"
 atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

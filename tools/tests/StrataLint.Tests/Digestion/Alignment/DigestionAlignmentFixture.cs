@@ -1,111 +1,94 @@
+using System.Collections.Immutable;
 using StrataLint.Engine;
 
 namespace StrataLint.Tests;
 
 public sealed partial class DigestionAlignmentTests
 {
-    internal static string Ledger(IReadOnlyList<string> acknowledgedStale, params string[] entries)
-    {
-        var acknowledgments = acknowledgedStale.Count == 0
-            ? "[]"
-            : "\n" + string.Join("\n", acknowledgedStale.Select(static value => "      - " + value));
-        var renderedEntries = entries.Length == 0
-            ? "    entries: []"
-            : "    entries:\n" + string.Join("\n", entries);
-        return $$"""
-            schema_version: 3
-            ledger: theory-digestion-v1
-            sources:
-              - source_id: source
-                path: docs/source.md
-                atomizer: {{string.Concat("gi", "ct", "-v1")}}
-                acknowledged_stale: {{acknowledgments}}
-            {{renderedEntries}}
-            """;
-    }
+    internal static BackfillInventoryDocument Ledger(
+        IReadOnlyList<string> acknowledgedStale,
+        params DigestionLedgerEntry[] entries) =>
+        LedgerForPath("docs/source.md", acknowledgedStale, entries);
 
-    internal static string Entry(string atomId, DigestionAtom atom) =>
-        Entry(atomId, atom.AstPath, atom.Fingerprints);
+    internal static BackfillInventoryDocument LedgerForPath(
+        string sourcePath,
+        IReadOnlyList<string> acknowledgedStale,
+        params DigestionLedgerEntry[] entries) =>
+        BackfillInventoryDocument.Create(
+        [
+            new DigestionLedgerSource(
+                "source",
+                sourcePath,
+                AtomizerRegistry.GictId,
+                acknowledgedStale.ToImmutableArray(),
+                GenreRegistryProjection.Available(GenreRegistryCheck.NoGenreRegistry),
+                entries.ToImmutableArray()),
+        ],
+        []);
 
-    private static string CasEntry(string atomId, DigestionAtom atom, string casRef) => $$"""
-              - atom_id: {{atomId}}
-                ast_path: {{atom.AstPath}}
-                fingerprints:
-                  raw_sha256: {{atom.Fingerprints.RawSha256}}
-                  normalized_sha256: {{atom.Fingerprints.NormalizedSha256}}
-                cas_ref: {{casRef}}
-                coverage_gids: []
-                receipts:
-                  coverage: []
-                  scribe: []
-                  unresolved_subitems: []
-                  chain_atoms: []
-                  tail_authorization: null
-                status:
-                  migration: residual
-                  truth: open
-        """;
+    internal static DigestionLedgerEntry Entry(string atomId, DigestionAtom atom) =>
+        EntryForPath(atomId, atom.AstPath, atom.Fingerprints);
 
-    private static string LegacyEntry(string atomId, DigestionAtom atom) => $$"""
-                  - atom_id: {{atomId}}
-                    boundary:
-                      ast_path: {{atom.AstPath}}
-                      start_byte: {{atom.StartByte}}
-                      end_byte: {{atom.EndByte}}
-                    fingerprints:
-                      raw_sha256: {{atom.Fingerprints.RawSha256}}
-                      normalized_sha256: {{atom.Fingerprints.NormalizedSha256}}
-                    cas_ref: {{atom.Fingerprints.RawSha256}}
-                    coverage_gids: []
-                    receipts:
-                      coverage: []
-                      scribe: []
-                      unresolved_subitems: []
-                      chain_atoms: []
-                      tail_authorization: null
-                    status:
-                      migration: residual
-                      truth: open
-            """;
+    private static DigestionLedgerEntry CasEntry(
+        string atomId,
+        DigestionAtom atom,
+        string casRef) =>
+        EntryForPath(atomId, atom.AstPath, atom.Fingerprints) with { CasRef = casRef };
 
-    private static string StatusFirstEntry(string atomId, DigestionAtom atom) => $$"""
-                  - status:
-                      migration: residual
-                      truth: open
-                    atom_id: {{atomId}}
-                    ast_path: {{atom.AstPath}}
-                    fingerprints:
-                      raw_sha256: {{atom.Fingerprints.RawSha256}}
-                      normalized_sha256: {{atom.Fingerprints.NormalizedSha256}}
-                    cas_ref: {{atom.Fingerprints.RawSha256}}
-                    coverage_gids: []
-                    receipts:
-                      coverage: []
-                      scribe: []
-                      unresolved_subitems: []
-                      chain_atoms: []
-                      tail_authorization: null
-            """;
+    private static DigestionLedgerEntry BoundaryEntry(string atomId, DigestionAtom atom) =>
+        Entry(atomId, atom) with
+        {
+            Boundary = new DigestionBoundary(atom.AstPath, atom.StartByte, atom.EndByte),
+        };
 
-    private static string Entry(
+    private static DigestionLedgerEntry EntryForPath(
         string atomId,
         string astPath,
-        DigestionFingerprints fingerprints) => $$"""
-                  - atom_id: {{atomId}}
-                    ast_path: {{astPath}}
-                    fingerprints:
-                      raw_sha256: {{fingerprints.RawSha256}}
-                      normalized_sha256: {{fingerprints.NormalizedSha256}}
-                    cas_ref: {{fingerprints.RawSha256}}
-                    coverage_gids: []
-                    receipts:
-                      coverage: []
-                      scribe: []
-                      unresolved_subitems: []
-                      chain_atoms: []
-                      tail_authorization: null
-                    status:
-                      migration: residual
-                      truth: open
-            """;
+        DigestionFingerprints fingerprints) => new(
+            "source",
+            "docs/source.md",
+            AtomizerRegistry.GictId,
+            atomId,
+            astPath,
+            null,
+            fingerprints,
+            [],
+            new DigestionReceipts([], [], [], [], null),
+            new DigestionStatus(DigestionMigrationState.Residual, DigestionTruthState.Open),
+            fingerprints.RawSha256);
+
+    internal static BackfillInventoryDocument WithAtomizer(
+        BackfillInventoryDocument document,
+        string atomizer)
+    {
+        var source = Assert.Single(document.RequireDigestionSources());
+        return document.WithDigestionSources(
+        [
+            source with
+            {
+                Atomizer = atomizer,
+                Entries = source.Entries
+                    .Select(entry => entry with { Atomizer = atomizer })
+                    .ToImmutableArray(),
+            },
+        ]);
+    }
+
+    internal static BackfillInventoryDocument WithSourceId(
+        BackfillInventoryDocument document,
+        string sourceId)
+    {
+        var source = Assert.Single(document.RequireDigestionSources());
+        return document.WithDigestionSources(
+        [
+            source with
+            {
+                SourceId = sourceId,
+                Entries = source.Entries
+                    .Select(entry => entry with { SourceId = sourceId })
+                    .ToImmutableArray(),
+            },
+        ]);
+    }
+
 }

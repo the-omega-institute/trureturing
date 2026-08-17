@@ -140,17 +140,15 @@ public sealed class EmitFormalizationReceiptTests
         var receiptText = File.ReadAllText(Path.Combine(temporary.Path, relativeOut));
 
         // PR-2: the committed receipt is now part of the snapshot; cover consumes it.
-        var files = new Dictionary<string, string>(inputs.Files, StringComparer.Ordinal)
+        var files = DirectoryLedgerTestSupport.Project(new Dictionary<string, string>(inputs.Files, StringComparer.Ordinal)
         {
             [relativeOut] = receiptText,
-        };
-        var baseline = new Dictionary<string, string>(inputs.Baseline, StringComparer.Ordinal)
+        });
+        var baseline = DirectoryLedgerTestSupport.Project(new Dictionary<string, string>(inputs.Baseline, StringComparer.Ordinal)
         {
             [relativeOut] = receiptText,
-        };
-        var ledgerPath = Path.Combine(temporary.Path, BackfillInventoryLoader.RelativePath);
-        Directory.CreateDirectory(Path.GetDirectoryName(ledgerPath)!);
-        File.WriteAllText(ledgerPath, inputs.Ledger, new UTF8Encoding(false));
+        });
+        DirectoryLedgerTestSupport.Write(temporary.Path, files);
         var coverEnvironment = new ProductionCliEnvironment(
             temporary.Path,
             new FakeRepositoryGateway(
@@ -167,7 +165,7 @@ public sealed class EmitFormalizationReceiptTests
         Assert.True(cover.Success, cover.Error);
         Assert.Contains("ledger_changed=true", cover.Output, StringComparison.Ordinal);
         var entry = Assert.Single(
-            BackfillInventoryLoader.Load(File.ReadAllText(ledgerPath)).RequireDigestionEntries(),
+            BackfillInventoryLoader.LoadRoot(temporary.Path).RequireDigestionEntries(),
             candidate => candidate.AtomId == CoverWorld.DefaultAtomId);
         Assert.Equal([inputs.Gid], entry.CoverageGids.ToArray());
         Assert.Equal(DigestionTruthState.Closed, entry.ProjectedStatus.Truth);
@@ -253,12 +251,19 @@ public sealed class EmitFormalizationReceiptTests
         Assert.Contains("USAGE: StrataLint emit-formalization-receipt", result.Error, StringComparison.Ordinal);
     }
 
-    private static ProductionCliEnvironment BuildEmitEnvironment(string repositoryRoot, CoverInputs inputs) =>
-        new(
+    private static ProductionCliEnvironment BuildEmitEnvironment(string repositoryRoot, CoverInputs inputs)
+    {
+        var directoryInputs = inputs with
+        {
+            Files = DirectoryLedgerTestSupport.Project(inputs.Files),
+            Baseline = DirectoryLedgerTestSupport.Project(inputs.Baseline),
+        };
+        return new(
             repositoryRoot,
             new FakeRepositoryGateway(
                 RawChangeSet.Create(Array.Empty<string>()),
-                CoverWorld.Raw(inputs.Files),
-                CoverWorld.Raw(inputs.Baseline)),
-            new FakeLeanReportSource(inputs.Report));
+                CoverWorld.Raw(directoryInputs.Files),
+                CoverWorld.Raw(directoryInputs.Baseline)),
+            new FakeLeanReportSource(directoryInputs.Report));
+    }
 }

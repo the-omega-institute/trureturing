@@ -33,19 +33,12 @@ internal static class ShowAtomCommand
             var source = document.RequireDigestionSources()
                 .Single(item => item.SourceId == entry.SourceId);
             var casBytes = ReadCommittedCas(snapshot, entry);
-            if (source.AcknowledgedStale.Contains(entry.AtomId, StringComparer.Ordinal))
-            {
-                return new CommandResult(true, Render(entry, casBytes, stale: true), string.Empty);
-            }
-
-            var replayedBytes = Replay(snapshot, source, entry);
-            if (HasVerifiedCurrentGeneration(snapshot, source, entry, replayedBytes))
-            {
-                return new CommandResult(true, Render(entry, casBytes, stale: true), string.Empty);
-            }
-
-            VerifyReplay(entry, replayedBytes, casBytes);
-            return new CommandResult(true, Render(entry, replayedBytes, stale: false), string.Empty);
+            var entryIndex = source.Entries.IndexOf(entry);
+            var stale = source.AcknowledgedStale.Contains(entry.AtomId, StringComparer.Ordinal)
+                || source.Entries
+                    .Skip(entryIndex + 1)
+                    .Any(candidate => candidate.AstPath == entry.AstPath);
+            return new CommandResult(true, Render(entry, casBytes, stale), string.Empty);
         }
         catch (Exception exception) when (
             exception is FormatException
@@ -73,48 +66,6 @@ internal static class ShowAtomCommand
         return arguments[1];
     }
 
-    private static ImmutableArray<byte> Replay(
-        RepositorySnapshot snapshot,
-        DigestionLedgerSource source,
-        DigestionLedgerEntry entry)
-    {
-        if (!snapshot.TryGetFile(source.SourcePath, out var sourceFile))
-        {
-            throw new FormatException(
-                $"atom {entry.AtomId} source is missing: {source.SourcePath}");
-        }
-
-        if (DigestionSourceConflictMarkers.FindFirstLine(sourceFile.RawBytes.AsSpan()) is { } line)
-        {
-            throw new FormatException(
-                DigestionSourceConflictMarkers.FormatFinding(source.SourcePath, line));
-        }
-
-        if (source.Atomizer == AtomizerRegistry.NoAtomizerId)
-        {
-            var boundary = entry.Boundary
-                ?? throw new FormatException(
-                    $"atom {entry.AtomId} has no boundary for atomizer none");
-            if (boundary.StartByte < 0
-                || boundary.EndByte <= boundary.StartByte
-                || boundary.EndByte > sourceFile.RawBytes.Length)
-            {
-                throw new FormatException(
-                    $"atom {entry.AtomId} boundary is outside {source.SourcePath}");
-            }
-
-            return ImmutableArray.CreateRange(
-                sourceFile.RawBytes.AsSpan()[boundary.StartByte..boundary.EndByte].ToArray());
-        }
-
-        var rules = TheoryAtomizerDataLoader.Load(snapshot);
-        var replayed = AtomizerRegistry.Atomize(
-            source.Atomizer,
-            sourceFile.RawBytes.AsSpan(),
-            rules);
-        return replayed.ResolveClaim(entry.AstPath).RawBytes;
-    }
-
     private static ImmutableArray<byte> ReadCommittedCas(
         RepositorySnapshot snapshot,
         DigestionLedgerEntry entry)
@@ -140,63 +91,6 @@ internal static class ShowAtomCommand
         }
 
         return casBlob.RawBytes;
-    }
-
-    private static bool HasVerifiedCurrentGeneration(
-        RepositorySnapshot snapshot,
-        DigestionLedgerSource source,
-        DigestionLedgerEntry requested,
-        ImmutableArray<byte> replayedBytes)
-    {
-        var replayed = DigestionFingerprint.Compute(replayedBytes.AsSpan());
-        var replacements = source.Entries.Where(entry =>
-                entry.AtomId != requested.AtomId
-                && entry.AstPath == requested.AstPath
-                && entry.Fingerprints == replayed
-                && entry.CasRef == replayed.RawSha256)
-            .ToArray();
-        if (replacements.Length == 0)
-        {
-            return false;
-        }
-
-        if (replacements.Length > 1)
-        {
-            throw new FormatException(
-                $"atom {requested.AtomId} current generation is ambiguous at {requested.AstPath}");
-        }
-
-        var replacementCas = ReadCommittedCas(snapshot, replacements[0]);
-        VerifyReplay(replacements[0], replayedBytes, replacementCas);
-        return true;
-    }
-
-    private static void VerifyReplay(
-        DigestionLedgerEntry entry,
-        ImmutableArray<byte> replayedBytes,
-        ImmutableArray<byte> casBytes)
-    {
-        var replayed = DigestionFingerprint.Compute(replayedBytes.AsSpan());
-        if (replayed.RawSha256 != entry.Fingerprints.RawSha256)
-        {
-            throw new FormatException(
-                $"atom {entry.AtomId} raw hash mismatch: expected "
-                + $"{entry.Fingerprints.RawSha256}, actual {replayed.RawSha256}");
-        }
-
-        if (replayed.NormalizedSha256 != entry.Fingerprints.NormalizedSha256)
-        {
-            throw new FormatException(
-                $"atom {entry.AtomId} normalized hash mismatch: expected "
-                + $"{entry.Fingerprints.NormalizedSha256}, actual {replayed.NormalizedSha256}");
-        }
-
-        if (replayed.RawSha256 != entry.CasRef
-            || !replayedBytes.AsSpan().SequenceEqual(casBytes.AsSpan()))
-        {
-            throw new FormatException(
-                $"atom {entry.AtomId} replayed bytes mismatch cas_ref {entry.CasRef}");
-        }
     }
 
     private static string Render(

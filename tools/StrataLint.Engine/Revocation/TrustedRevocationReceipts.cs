@@ -98,7 +98,19 @@ public sealed class TrustedRevocationReceiptStore
     public static RevocationReceiptStoreOutcome Materialize(
         FrozenLedgerConsistent baseline,
         RepositorySnapshot protectedSnapshot,
-        IEnumerable<string> requestedBlobOids)
+        IEnumerable<string> requestedBlobOids) =>
+        Materialize(
+            baseline,
+            protectedSnapshot,
+            requestedBlobOids,
+            static (bytes, algorithm) =>
+                FrozenContentAddress.ComputeGitBlobOid(bytes.AsSpan(), algorithm));
+
+    internal static RevocationReceiptStoreOutcome Materialize(
+        FrozenLedgerConsistent baseline,
+        RepositorySnapshot protectedSnapshot,
+        IEnumerable<string> requestedBlobOids,
+        Func<ImmutableArray<byte>, HashAlgorithmName, string> computeGitBlobOid)
     {
         ArgumentNullException.ThrowIfNull(baseline);
         ArgumentNullException.ThrowIfNull(protectedSnapshot);
@@ -115,22 +127,29 @@ public sealed class TrustedRevocationReceiptStore
             }
 
             var files = protectedSnapshot.Files.Values.ToImmutableArray();
+            var filesByOid = new Dictionary<string, RepositoryFile>(StringComparer.Ordinal);
+            foreach (var algorithm in requested
+                .Select(static oid => oid.StartsWith("git-sha1:", StringComparison.Ordinal)
+                    ? HashAlgorithmName.SHA1
+                    : HashAlgorithmName.SHA256)
+                .Distinct())
+            {
+                foreach (var file in files)
+                {
+                    filesByOid.TryAdd(computeGitBlobOid(file.RawBytes, algorithm), file);
+                }
+            }
+
             var receipts = ImmutableDictionary.CreateBuilder<string, TrustedReceipt>(StringComparer.Ordinal);
             foreach (var oid in requested)
             {
-                var algorithm = oid.StartsWith("git-sha1:", StringComparison.Ordinal)
-                    ? HashAlgorithmName.SHA1
-                    : HashAlgorithmName.SHA256;
-                var matches = files.Where(file =>
-                        FrozenContentAddress.ComputeGitBlobOid(file.RawBytes.AsSpan(), algorithm) == oid)
-                    .ToArray();
-                if (matches.Length == 0)
+                if (!filesByOid.TryGetValue(oid, out var file))
                 {
                     throw new FormatException(
                         $"Revocation receipt {oid} is not a blob in the protected baseline snapshot.");
                 }
 
-                var bytes = matches[0].RawBytes;
+                var bytes = file.RawBytes;
                 var evidence = ParseAndValidateReceipt(baseline, bytes);
                 var sha = "sha256:" + Convert.ToHexStringLower(SHA256.HashData(bytes.AsSpan()));
                 receipts.Add(oid, new TrustedReceipt(bytes, sha, WithReceiptAddress(evidence, oid, sha)));

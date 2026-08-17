@@ -41,6 +41,28 @@ public sealed class QdoGenreSuffixTests
     }
 
     [Fact]
+    public void Pr2096FixtureIngestsAll363ClaimsIntoAnEmptyLedger()
+    {
+        var (bytes, expectedPaths) = Pr2096Fixture();
+        var ledger = DigestionTestSupport.EmptyDocument("dialect:qdo");
+
+        var plan = DigestionIngestor.Plan(
+            ledger,
+            DigestionTestSupport.Snapshot(("docs/source.md", bytes)),
+            ledger);
+
+        var source = Assert.Single(plan.Document.RequireDigestionSources());
+        Assert.Equal(363, plan.ResidualOpenAdded);
+        Assert.Equal(363, source.Entries.Length);
+        Assert.Equal(363, plan.CasObjects.Length);
+        Assert.Empty(plan.Fallbacks);
+        Assert.Empty(source.GenreRegistryCheck.UnregisteredGenres);
+        Assert.Equal(
+            expectedPaths.Order(StringComparer.Ordinal),
+            source.Entries.Select(static entry => entry.AstPath).Order(StringComparer.Ordinal));
+    }
+
+    [Fact]
     public void AnUnlistedCompoundEndingInExampleHeadClosesTheProductiveClass()
     {
         var bytes = Encoding.UTF8.GetBytes("# QDO\n\n## 极小反例 40.1\n\n证。\n");

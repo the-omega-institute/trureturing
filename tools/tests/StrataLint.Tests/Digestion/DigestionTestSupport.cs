@@ -34,15 +34,55 @@ internal static class DigestionTestSupport
         }
     }
 
-    internal static string EmptyLedger(string atomizerId) => $$"""
-        schema_version: 3
-        ledger: theory-digestion-v1
-        sources:
-          - source_id: source
-            path: docs/source.md
-            atomizer: {{atomizerId}}
-            entries: []
-        """;
+    internal static BackfillInventoryDocument EmptyDocument(string atomizerId) =>
+        Document(atomizerId, []);
+
+    internal static BackfillInventoryDocument Document(
+        string atomizerId,
+        ImmutableArray<DigestionLedgerEntry> entries,
+        string sourceId = "source",
+        string sourcePath = "docs/source.md",
+        GenreRegistryCheck? genreRegistryCheck = null,
+        ImmutableArray<string> acknowledgedStale = default,
+        ImmutableArray<BackfillTicketReference> tickets = default) =>
+        BackfillInventoryDocument.Create(
+        [
+            new DigestionLedgerSource(
+                sourceId,
+                sourcePath,
+                atomizerId,
+                acknowledgedStale.IsDefault ? [] : acknowledgedStale,
+                GenreRegistryProjection.Available(
+                    genreRegistryCheck ?? GenreRegistryCheck.NoGenreRegistry),
+                entries),
+        ],
+        tickets.IsDefault ? [] : tickets);
+
+    internal static DigestionLedgerEntry Entry(
+        DigestionAtom atom,
+        string atomId,
+        string atomizerId,
+        DigestionMigrationState migration = DigestionMigrationState.Residual,
+        DigestionTruthState truth = DigestionTruthState.Open,
+        ImmutableArray<string> coverageGids = default,
+        DigestionReceipts? receipts = null,
+        bool includeBoundary = false,
+        string sourceId = "source",
+        string sourcePath = "docs/source.md",
+        string? casRef = null) => new(
+            sourceId,
+            sourcePath,
+            atomizerId,
+            atomId,
+            atom.AstPath,
+            includeBoundary
+                ? new DigestionBoundary(atom.AstPath, atom.StartByte, atom.EndByte)
+                : null,
+            atom.Fingerprints,
+            coverageGids.IsDefault ? [] : coverageGids,
+            receipts ?? new DigestionReceipts([], [], [], [], null),
+            new DigestionStatus(migration, truth),
+            casRef ?? atom.Fingerprints.RawSha256);
 
     internal static string ReceiptList(string key, string value, int spaces) => value == "[]"
         ? new string(' ', spaces) + key + ": []"

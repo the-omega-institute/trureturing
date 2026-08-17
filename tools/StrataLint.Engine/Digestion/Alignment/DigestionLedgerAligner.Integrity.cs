@@ -16,14 +16,29 @@ internal static partial class DigestionLedgerAligner
         Func<string, TheoryAtomizer> atomizerResolver)
     {
         if (mode != DigestionAlignmentMode.Admission
-            || candidateSource.Atomizer == AtomizerRegistry.NoAtomizerId
-            || !registeredAtomizer
-            || atomizerRules is null
             || AtomizerDecisionClosureEqualBaseline(
                 candidateSnapshot,
                 baselineSnapshot,
                 candidateSource,
-                baselineSource)
+                baselineSource))
+        {
+            return null;
+        }
+
+        if (candidateSource.Atomizer == AtomizerRegistry.NoAtomizerId)
+        {
+            return GenreRegistryChecksEqual(
+                candidateSource.GenreRegistryCheck,
+                GenreRegistryCheck.NoGenreRegistry)
+                    ? null
+                    : GenreRegistryProjectionFinding(
+                        candidateSource,
+                        candidateSource.GenreRegistryCheck,
+                        GenreRegistryCheck.NoGenreRegistry);
+        }
+
+        if (!registeredAtomizer
+            || atomizerRules is null
             || !candidateSnapshot.TryGetFile(candidateSource.SourcePath, out var sourceFile))
         {
             return null;
@@ -44,23 +59,42 @@ internal static partial class DigestionLedgerAligner
         }
 
         if (AtomizerIntegrityFailure(atomized, sourceFile.RawBytes.AsSpan()) is not null
-            || !HasUniqueAstPaths(atomized.Claims)
-            || atomized.Claims.Length == 0
-            || atomized.GenreRegistryCheck.Kind != GenreRegistryCheckKind.Collected
-            || atomized.UnregisteredGenres.IsEmpty)
+            || !HasUniqueAstPaths(atomized.Claims))
         {
             return null;
         }
 
-        return UnregisteredGenreFinding(candidateSource, atomized.UnregisteredGenres);
+        return GenreRegistryChecksEqual(
+            candidateSource.GenreRegistryCheck,
+            atomized.GenreRegistryCheck)
+                ? null
+                : GenreRegistryProjectionFinding(
+                    candidateSource,
+                    candidateSource.GenreRegistryCheck,
+                    atomized.GenreRegistryCheck);
     }
 
-    private static string UnregisteredGenreFinding(
+    private static bool GenreRegistryChecksEqual(
+        GenreRegistryCheck left,
+        GenreRegistryCheck right) =>
+        left.Kind == right.Kind
+        && left.UnregisteredGenres.SequenceEqual(
+            right.UnregisteredGenres,
+            StringComparer.Ordinal);
+
+    private static string GenreRegistryProjectionFinding(
         DigestionLedgerSource source,
-        ImmutableArray<string> unregisteredGenres) =>
-        $"source {source.SourceId} uses claim genres its dialect does not register: "
-        + string.Join(", ", unregisteredGenres)
-        + $". Register them in {TheoryAtomizerDataLoader.DataPath} or correct the volume.";
+        GenreRegistryCheck stored,
+        GenreRegistryCheck recomputed) =>
+        $"source {source.SourceId} genre registry projection differs: "
+        + $"stored {RenderGenreRegistryCheck(stored)}; "
+        + $"recomputed {RenderGenreRegistryCheck(recomputed)}";
+
+    private static string RenderGenreRegistryCheck(GenreRegistryCheck check) =>
+        GenreRegistryCheckNames.Render(check.Kind)
+        + " ["
+        + string.Join(", ", check.UnregisteredGenres)
+        + "]";
 
     private static bool AtomizerDecisionClosureEqualBaseline(
         RepositorySnapshot candidateSnapshot,
@@ -163,11 +197,65 @@ internal static partial class DigestionLedgerAligner
             }
         }
 
+        var unregisteredGenreFailure = UnregisteredGenreIntegrityFailure(document);
+        if (unregisteredGenreFailure is not null)
+        {
+            return unregisteredGenreFailure;
+        }
 
         var clausePlanFailure = ClausePlanIntegrityFailure(document);
         if (clausePlanFailure is not null)
         {
             return clausePlanFailure;
+        }
+
+        return null;
+    }
+
+    private static string? UnregisteredGenreIntegrityFailure(AtomizedTheoryDocument document)
+    {
+        var claimTokens = ImmutableArray.CreateBuilder<string>();
+        foreach (var claim in document.Claims.Where(static atom =>
+                     atom.AstPath.StartsWith(UnregisteredGenreLocator.Prefix, StringComparison.Ordinal)))
+        {
+            if (!UnregisteredGenreLocator.TryGetToken(claim.AstPath, out var token))
+            {
+                return $"claim {claim.AstPath} uses a noncanonical reserved unregistered namespace path";
+            }
+
+            claimTokens.Add(token);
+        }
+
+        var expectedTokens = claimTokens
+            .Distinct(StringComparer.Ordinal)
+            .Order(StringComparer.Ordinal)
+            .ToImmutableArray();
+        var check = document.GenreRegistryCheck;
+        if (check.Kind != GenreRegistryCheckKind.Collected && !expectedTokens.IsEmpty
+            || check.Kind == GenreRegistryCheckKind.Collected
+            && !check.UnregisteredGenres.SequenceEqual(expectedTokens, StringComparer.Ordinal))
+        {
+            return "reserved unregistered namespace differs from genre registry check: "
+                + $"paths [{string.Join(", ", expectedTokens)}]; "
+                + $"marker {RenderGenreRegistryCheck(check)}";
+        }
+
+        foreach (var atom in document.Claims
+                     .Concat(document.ClausePlans.SelectMany(static plan => plan.Children))
+                     .Where(static atom => atom.AstPath.StartsWith(
+                         UnregisteredGenreLocator.Prefix,
+                         StringComparison.Ordinal)))
+        {
+            if (!UnregisteredGenreLocator.TryGetToken(atom.AstPath, out var token))
+            {
+                return $"claim {atom.AstPath} uses a noncanonical reserved unregistered namespace path";
+            }
+
+            if (!expectedTokens.Contains(token, StringComparer.Ordinal))
+            {
+                return "reserved unregistered namespace differs from genre registry check: "
+                    + $"claim {atom.AstPath} has no top-level open genre";
+            }
         }
 
         return null;

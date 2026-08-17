@@ -102,6 +102,19 @@ public sealed class TheoryAtomizerDataTests
     }
 
     [Fact]
+    public void LoaderRejectsConfiguredLocatorInReservedUnregisteredNamespace()
+    {
+        var data = Minimal.Replace(
+            "locator = \"theorem/known\"",
+            "locator = \"unregistered/known\"",
+            StringComparison.Ordinal);
+
+        var error = Assert.Throws<FormatException>(() => Load(data));
+
+        Assert.Contains("reserved unregistered namespace", error.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
     public void SyntheticRulesChangeObserverGenreConstantAndHeadingRecognition()
     {
         var data = Load(Minimal
@@ -169,11 +182,10 @@ public sealed class TheoryAtomizerDataTests
     }
 
     [Fact]
-    public void UnknownNumberedGenreStillFailsClosed()
+    public void UnknownNumberedGenreIsAdmittedAsOpenDebt()
     {
         var bytes = Encoding.UTF8.GetBytes("**未知体裁 1.1** body");
-        var ledger = BackfillInventoryLoader.Load(
-            DigestionTestSupport.EmptyLedger(FirstScheme + "-v1"));
+        var ledger = DigestionTestSupport.EmptyDocument(FirstScheme + "-v1");
         var alignment = DigestionLedgerAligner.Evaluate(
             ledger,
             DigestionTestSupport.Snapshot(
@@ -182,10 +194,13 @@ public sealed class TheoryAtomizerDataTests
             ledger,
             DigestionAlignmentMode.Ingest);
 
-        var finding = Assert.Single(alignment.Findings);
-        Assert.Contains("source source", finding, StringComparison.Ordinal);
-        Assert.Contains("未知体裁", finding, StringComparison.Ordinal);
-        Assert.Empty(alignment.Residual);
+        Assert.Empty(alignment.Findings);
+        Assert.Equal(
+            "unregistered/%E6%9C%AA%E7%9F%A5%E4%BD%93%E8%A3%81/1.1",
+            Assert.Single(alignment.Residual).Atom.AstPath);
+        Assert.Equal(
+            ["未知体裁"],
+            alignment.GenreRegistryChecks["source"].UnregisteredGenres.ToArray());
         Assert.Empty(alignment.Fallbacks);
     }
 
