@@ -276,7 +276,10 @@ public sealed class TheoristFrontierContractTests
         var diagnostic = Assert.Single(Evaluate(fixture));
 
         Assert.Equal("D5/X_Frontier/PrimeNormIrreducibility.lean", diagnostic.Path);
-        Assert.Contains("theorist contract source is unavailable", diagnostic.Message, StringComparison.Ordinal);
+        Assert.Contains(
+            "deleted Frontier source requires a retired owner with delivery evidence",
+            diagnostic.Message,
+            StringComparison.Ordinal);
     }
 
     [Fact]
@@ -378,7 +381,30 @@ public sealed class TheoristFrontierContractTests
         var diagnostic = Assert.Single(EvaluateContext(context));
 
         Assert.Equal("D5/X_Frontier/PrimeNormIrreducibility.lean", diagnostic.Path);
-        Assert.Contains("theorist contract source is unavailable", diagnostic.Message, StringComparison.Ordinal);
+        Assert.Contains(
+            "deleted Frontier source requires a retired owner with delivery evidence",
+            diagnostic.Message,
+            StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void DeletedLegacyBaselineWithoutContractIsRejectedWithoutRetirementEvidence()
+    {
+        var fixture = new RuleFixture();
+        fixture.AddHistoricalTheoristTarget(
+            "prime-norm-irreducibility",
+            includeContract: false,
+            baselineOwnerKind: "declaration-ready-mathematical-open",
+            baselineIncludeContract: false);
+        fixture.DeleteTheoristTargetAndOwner();
+
+        var diagnostic = Assert.Single(Evaluate(fixture));
+
+        Assert.Equal("D5/X_Frontier/PrimeNormIrreducibility.lean", diagnostic.Path);
+        Assert.Contains(
+            "deleted Frontier source requires a retired owner with delivery evidence",
+            diagnostic.Message,
+            StringComparison.Ordinal);
     }
 
     private static RuleFixture BaselineContractCarrier()

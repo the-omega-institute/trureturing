@@ -23,7 +23,8 @@ internal static class TheoristFrontierContractValidator
             .Concat(context.Baseline.Files
                 .Where(item => IsFrontier(item.Key)
                     && (CountOccurrences(item.Value.Text, Marker) > 0
-                        || currentMission.Retirements.ContainsKey(item.Key)))
+                        || currentMission.Retirements.ContainsKey(item.Key)
+                        || !context.Current.TryGetFile(item.Key.Value, out _)))
                 .Select(static item => item.Key))
             .Distinct()
             .OrderBy(static path => path.Value, StringComparer.Ordinal)
@@ -58,6 +59,18 @@ internal static class TheoristFrontierContractValidator
                     is FrontierEligibilityKind.DeclarationReadyMathematicalOpen
                 && baselineOwner is not null
                 && baselineOwner is not FrontierEligibilityKind.DeclarationReadyMathematicalOpen;
+
+            var isDeletedBaselineSource = baselineFile is not null && !hasCurrentSource;
+            if (isDeletedBaselineSource
+                && currentOwner is not FrontierEligibilityKind.Retired)
+            {
+                findings.Add(new RuleFinding(
+                    path.Value,
+                    currentMission.UnreadableReason is { } retirementOwnerReason
+                        ? Undecidable("deleted Frontier source retirement ownership", retirementOwnerReason)
+                        : "deleted Frontier source requires a retired owner with delivery evidence"));
+                continue;
+            }
 
             var isRetiredBaselineSource = baselineFile is not null
                 && currentOwner is FrontierEligibilityKind.Retired;
