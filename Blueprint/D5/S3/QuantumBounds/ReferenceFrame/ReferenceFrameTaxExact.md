@@ -6,7 +6,7 @@ The finite exchange model has an exact fidelity bridge, sharp tax, restricted fl
 
 **Theorem 1.1 (The finite reference-frame tax is exact).**
 
-Lean statement: `D5/S3/QuantumBounds/ReferenceFrame/ReferenceFrameTaxExact.reference_frame_tax_exact`
+$$\begin{gathered} N \in \mathbb{N},\quad2\leq N\longrightarrow \\ U_{N}^{*} U_{N} = I,\quad n(exchange(x)) = n(x), \\ \mathcal{E}_{c}(\rho) = \sum_{r \in \operatorname{Fin}(N)} K_{r} \rho K_{r}^{*}, \\ F_{e}(c) = Q_{N}(c) = \lvert Jc\rvert_{2}^{2}, \\ F_{e}^{\mathrm{opt}}(N):=\max_{\sum_{i} c_{i}^{2}=1} F_{e}(c) = \operatorname{cos}(\frac{\pi}{N+1})^{2}, \\ 1-F_{e}^{\mathrm{opt}}(N) = \sin(\frac{\pi}{N+1})^{2}, \\ 2\leq N \longrightarrow 1-Q_{N}((\frac{1}{\sqrt{N}})_{m \in \operatorname{Fin}(N)}) = \frac{3}{2N}, \\ \operatorname{squaredTopEigenspace}(N) = \operatorname{topModeSpace}(N),\quad\operatorname{finrank}_{\mathbb{R}}(\operatorname{squaredTopEigenspace}(N)) = 2 \end{gathered}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/QuantumBounds/ReferenceFrame/ReferenceFrameTaxExact.reference_frame_tax_exact` (`✓ std3`). ∎
 
