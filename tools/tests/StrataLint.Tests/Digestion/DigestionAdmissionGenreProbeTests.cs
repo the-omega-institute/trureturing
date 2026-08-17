@@ -221,6 +221,48 @@ public sealed partial class DigestionAlignmentTests
     }
 
     [Fact]
+    public void AdmissionDoesNotReatomizeForAnUnrelatedRepositoryChange()
+    {
+        var sourceBytes = Encoding.UTF8.GetBytes("# PZG\n\n**未登记体 2.1**。claim。\n");
+        var atomized = PzgAtomizer.Atomize(sourceBytes, DigestionTestSupport.Rules);
+        var atom = Assert.Single(atomized.Claims);
+        var captured = DigestionCasStore.Capture(atom.RawBytes.AsSpan());
+        var ledger = WithGenreCheck(
+            WithAtomizer(
+                Ledger([], CasEntry("inherited-receipt", atom, captured.Reference)),
+                AtomizerRegistry.PzgId),
+            atomized.GenreRegistryCheck);
+        var baselineSnapshot = DigestionTestSupport.Snapshot(
+            ("docs/source.md", sourceBytes),
+            (captured.RelativePath, captured.Bytes.ToArray()),
+            (TheoryAtomizerDataLoader.DataPath, DigestionTestSupport.RulesBytes.ToArray()),
+            ("tools/StrataLint.Engine/Digestion/Atomizers/PzgAtomizer.cs", Encoding.UTF8.GetBytes("same")),
+            ("Meta/domains.yaml", Encoding.UTF8.GetBytes("old")));
+        var candidateSnapshot = DigestionTestSupport.Snapshot(
+            ("docs/source.md", sourceBytes),
+            (captured.RelativePath, captured.Bytes.ToArray()),
+            (TheoryAtomizerDataLoader.DataPath, DigestionTestSupport.RulesBytes.ToArray()),
+            ("tools/StrataLint.Engine/Digestion/Atomizers/PzgAtomizer.cs", Encoding.UTF8.GetBytes("same")),
+            ("Meta/domains.yaml", Encoding.UTF8.GetBytes("new")));
+        var calls = 0;
+
+        var result = DigestionLedgerAligner.Evaluate(
+            ledger,
+            candidateSnapshot,
+            ledger,
+            DigestionAlignmentMode.Admission,
+            _ => (_, _) =>
+            {
+                calls++;
+                return atomized;
+            },
+            baselineSnapshot);
+
+        Assert.Equal(0, calls);
+        Assert.Empty(result.Findings);
+    }
+
+    [Fact]
     public void AdmissionGenreProbeDefersToAtomizerIntegrityFinding()
     {
         var baselineBytes = Encoding.UTF8.GetBytes("old");

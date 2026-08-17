@@ -83,7 +83,7 @@ internal static class DagLedgerSyncWriter
                 + $"head={generated.HeadHash}\n"
                 + string.Concat(reattests.Select(item =>
                     $"REATTESTED {context.Baseline.ActiveEntries[item.Payload.CaseId].Material.RepoPath.Value}\n"))
-                + string.Concat(freezes.Select(static item => $"FROZEN {item.Payload.NodePath.Value}\n"));
+                + string.Concat(freezes.Select(static item => $"FROZEN {item.Payload.Input.DescriptorSelector}\n"));
             return new CommandResult(true, output, string.Empty);
         }
         catch (Exception exception) when (

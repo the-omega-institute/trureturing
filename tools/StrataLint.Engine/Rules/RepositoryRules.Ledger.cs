@@ -88,6 +88,46 @@ internal static partial class RepositoryRules
             }
         }
 
+        ValidateCandidateRevocationReceipts(context, findings);
+
         return findings.ToImmutable();
+    }
+
+    private static void ValidateCandidateRevocationReceipts(
+        RuleEvaluationContext context,
+        ImmutableArray<RuleFinding>.Builder findings)
+    {
+        FrozenLedgerConsistent? baseline = null;
+        foreach (var path in context.Changes.Paths
+                     .Where(static path => path.Value.StartsWith("Evidence/D5/", StringComparison.Ordinal))
+                     .OrderBy(static path => path.Value, StringComparer.Ordinal))
+        {
+            if (!context.Current.Files.TryGetValue(path, out var file)
+                || !path.Value.EndsWith(".json", StringComparison.Ordinal))
+            {
+                continue;
+            }
+
+            try
+            {
+                using var document = JsonDocument.Parse(file.RawBytes.AsMemory());
+                if (!document.RootElement.TryGetProperty("kind", out var kind)
+                    || kind.ValueKind != JsonValueKind.String
+                    || kind.GetString() != "revocation-receipt")
+                {
+                    continue;
+                }
+
+                baseline ??= FrozenLedgerBaseViewReader.Read(context.Baseline).ToWriterBaseline();
+                TrustedRevocationReceiptStore.ValidateCandidateReceipt(baseline, file.RawBytes);
+            }
+            catch (Exception exception) when (
+                exception is FormatException or InvalidOperationException or JsonException)
+            {
+                findings.Add(new RuleFinding(
+                    path.Value,
+                    "revocation receipt write gate rejected candidate: " + exception.Message));
+            }
+        }
     }
 }

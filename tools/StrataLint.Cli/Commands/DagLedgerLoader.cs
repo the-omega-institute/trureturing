@@ -221,10 +221,12 @@ public static class DagLedgerLoader
 
         if (item.EventType == "Revoke")
         {
-            return item.Payload.TryGetProperty("root_frozen_node_ids", out var roots)
-                && roots.ValueKind == JsonValueKind.Array
-                && roots.EnumerateArray().All(root =>
-                    root.ValueKind == JsonValueKind.String
+            return item.Payload.TryGetProperty("evidence", out var evidence)
+                && evidence.ValueKind == JsonValueKind.Array
+                && evidence.EnumerateArray().All(entry =>
+                    entry.ValueKind == JsonValueKind.Object
+                    && entry.TryGetProperty("root_frozen_node_id", out var root)
+                    && root.ValueKind == JsonValueKind.String
                     && placedIdentities.Contains(root.GetString()!));
         }
 

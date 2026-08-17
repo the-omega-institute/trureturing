@@ -370,6 +370,32 @@ public sealed class RuleEngineTests
             string.Join(" | ", untouched));
     }
 
+    [Fact]
+    public void Sl016ComparesProjectedStatusOnlyWhenItsAuthorityClosureChanges()
+    {
+        var fixture = new RuleFixture();
+        fixture.AddBackfillTargets();
+        foreach (var files in new[] { fixture.Files, fixture.Baseline, fixture.ForkPoint })
+        {
+            var atom = files[RuleFixture.FixtureBackfillAtomPath];
+            files.Remove(RuleFixture.FixtureBackfillAtomPath);
+            files[$"{BackfillInventoryLoader.RootPath}fixture-source/absorbed-closed/fixture-atom.yaml"] = atom;
+        }
+
+        var unrelated = Assert.IsType<RuleExecutionOutcome.Completed>(RuleCatalog.Default.Execute(
+            fixture.Build(RawChangeSet.Create([RuleFixture.BlueprintPath])))).Capability;
+
+        Assert.DoesNotContain(unrelated.Diagnostics, diagnostic =>
+            diagnostic.Message.Contains("handwritten status", StringComparison.Ordinal));
+
+        fixture.Files[RuleFixture.FixtureDigestionSourcePath] += "changed";
+        var relevant = Assert.IsType<RuleExecutionOutcome.Completed>(RuleCatalog.Default.Execute(
+            fixture.Build(RawChangeSet.Create([RuleFixture.FixtureDigestionSourcePath])))).Capability;
+
+        Assert.Contains(relevant.Diagnostics, diagnostic =>
+            diagnostic.Message.Contains("handwritten status", StringComparison.Ordinal));
+    }
+
     private static ImmutableArray<string> EvidenceDriftGaps(
         RuleFixture fixture,
         RawChangeSet changes)
