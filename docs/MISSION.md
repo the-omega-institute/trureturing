@@ -24,6 +24,52 @@
     "structural_realization": { "state": "open", "case_id": "D5-T0042" },
     "receipt_potential": { "state": "open", "case_id": "D5-T0043" }
   },
+  "frontier_eligibility": [
+    {
+      "source_ref": "D5/X_Frontier/D5P001",
+      "kind": "governance"
+    },
+    {
+      "source_ref": "D5/X_Frontier/FutureInstances",
+      "kind": "governance"
+    },
+    {
+      "source_ref": "D5/X_Frontier/GoldenUnitsUFD",
+      "kind": "mathematical-not-yet-stated"
+    },
+    {
+      "source_ref": "D5/X_Frontier/GovernanceDeferrals",
+      "kind": "governance"
+    },
+    {
+      "source_ref": "D5/X_Frontier/Hearts",
+      "kind": "declaration-ready-mathematical-open"
+    },
+    {
+      "source_ref": "D5/X_Frontier/HeartsDraft",
+      "kind": "governance"
+    },
+    {
+      "source_ref": "D5/X_Frontier/PaperGenerator",
+      "kind": "governance"
+    },
+    {
+      "source_ref": "D5/X_Frontier/RequiredChecks",
+      "kind": "governance"
+    },
+    {
+      "source_ref": "D5/X_Frontier/SplitTool",
+      "kind": "governance"
+    },
+    {
+      "source_ref": "D5/X_Frontier/ToolchainUpgrade",
+      "kind": "governance"
+    },
+    {
+      "source_ref": "D5/X_Frontier/ValuesProducer",
+      "kind": "mathematical-not-yet-stated"
+    }
+  ],
   "selection": {
     "order_kind": "bootstrap eligibility order",
     "tie_break": "canonical candidate id"

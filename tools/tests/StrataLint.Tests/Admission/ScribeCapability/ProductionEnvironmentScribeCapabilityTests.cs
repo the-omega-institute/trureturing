@@ -17,6 +17,7 @@ public sealed partial class ProductionEnvironmentTests
         Assert.Throws<InvalidDataException>(() =>
             ProductionCliEnvironment.VerifyScribeForAdmission(
                 new ProjectionReconciliationFailureVerifier(),
+                RepositorySnapshot.Create([]),
                 report));
     }
 
@@ -106,6 +107,7 @@ public sealed partial class ProductionEnvironmentTests
         var bootstrap = BootstrapGate.Evaluate(changes);
         var verifiedScribeEmissions = ProductionCliEnvironment.VerifyScribeForAdmission(
             new FakeScribeEmissionVerifier(VerifiedScribeEmissions.Create([record], [coveredGid])),
+            current,
             currentReport);
 
         var outcome = SnapshotAdmissionCore.Evaluate(
@@ -176,6 +178,6 @@ public sealed partial class ProductionEnvironmentTests
 
 internal sealed class ProjectionReconciliationFailureVerifier : IScribeEmissionVerifier
 {
-    public VerifiedScribeEmissions Verify(LeanAxiomReport report) =>
+    public VerifiedScribeEmissions Verify(RepositorySnapshot snapshot, LeanAxiomReport report) =>
         throw new InvalidDataException("projection fixture/live-report disagreement");
 }

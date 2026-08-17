@@ -1,0 +1,523 @@
+using System.Security.Cryptography;
+using System.Text;
+using System.Text.Json;
+using StrataLint.Cli;
+using StrataLint.Engine;
+
+namespace StrataLint.Tests;
+
+public sealed class TheoryCandidatesTests
+{
+    private const string MathematicalFrontierPath = "D5/X_Frontier/GoldenUnitsUFD.lean";
+    private const string DeclarationReadyFrontierPath = "D5/X_Frontier/Hearts.lean";
+    private const string GovernanceFrontierPath = "D5/X_Frontier/GovernanceTicket.lean";
+    private const string NonFrontierOpenPath = "D5/S0/Carrier/UnfinishedFact.lean";
+    private const string ResidualAtomPath =
+        "Meta/Digestion/backfill/fixture-source/residual-open/fixture-atom.yaml";
+    private const string PartialAtomPath =
+        "Meta/Digestion/backfill/fixture-source/partial-open/partial-atom.yaml";
+    private static readonly string FixtureMission = """
+        # Mission
+
+        ```mission-v1
+        {
+          "schema": "trureturing-mission-v1",
+          "north_star": {
+            "target": "two hearts",
+            "policy": "aspirational-not-direct"
+          },
+          "value_order": [
+            "understanding-over-quantity",
+            "honesty-over-speed",
+            "negative-knowledge-equals-positive-results"
+          ],
+          "worth_vector": {
+            "novelty": { "state": "open", "case_id": "D5-T0040" },
+            "dependency_readiness": { "state": "open", "case_id": "D5-T0041" },
+            "structural_realization": { "state": "open", "case_id": "D5-T0042" },
+            "receipt_potential": { "state": "open", "case_id": "D5-T0043" }
+          },
+          "frontier_eligibility": [
+            {
+              "source_ref": "D5/X_Frontier/GoldenUnitsUFD",
+              "kind": "mathematical-not-yet-stated"
+            },
+            {
+              "source_ref": "D5/X_Frontier/GovernanceTicket",
+              "kind": "governance"
+            },
+            {
+              "source_ref": "D5/X_Frontier/Hearts",
+              "kind": "declaration-ready-mathematical-open"
+            },
+            {
+              "source_ref": "D5/X_Frontier/MissionTickets",
+              "kind": "governance"
+            }
+          ],
+          "selection": {
+            "order_kind": "bootstrap eligibility order",
+            "tie_break": "canonical candidate id"
+          },
+          "prohibitions": [
+            "sorry-count optimization",
+            "trivial-lemma accumulation",
+            "citation chasing"
+          ]
+        }
+        ```
+        """ + "\n";
+
+    [Fact]
+    public void EnumeratesOnlyMathematicalOpenFrontierAndDerivedResidualOpenAtoms()
+    {
+        var fixture = CandidateFixture();
+
+        var result = Run(fixture);
+
+        Assert.True(result.Success, result.Error);
+        using var json = JsonDocument.Parse(result.Output);
+        var candidates = json.RootElement.GetProperty("candidates").EnumerateArray().ToArray();
+        Assert.Equal(
+            [
+                "atom/fixture-atom",
+                "frontier/D5/X_Frontier/GoldenUnitsUFD",
+                "frontier/D5/X_Frontier/Hearts.o5_independence",
+                "frontier/D5/X_Frontier/Hearts.o6WeilPositivityStatement",
+            ],
+            candidates.Select(static candidate => candidate.GetProperty("candidate_id").GetString()));
+        Assert.DoesNotContain(candidates, candidate =>
+            candidate.GetProperty("source_ref").GetString() is
+                "D5/X_Frontier/GovernanceTicket" or "D5/S0/Carrier/UnfinishedFact" or "partial-atom");
+        Assert.Equal(
+            ["codex-formalize", "theorist", "prover", "prover"],
+            candidates.Select(static candidate => candidate.GetProperty("downstream_lane").GetString()));
+        Assert.All(candidates, static candidate =>
+            Assert.Equal(1, candidate.EnumerateObject().Count(static property =>
+                property.NameEquals("downstream_lane"))));
+    }
+
+    [Fact]
+    public void DeclarationReadyFrontierEmitsOneAddressedCandidatePerOpenProposition()
+    {
+        var fixture = CandidateFixture();
+        var report = fixture.Reports[DeclarationReadyFrontierPath];
+        var statements = CanonicalStatementWriter.DeclarationStatementIds(
+                RepoPath.CreateKnown(DeclarationReadyFrontierPath),
+                report)
+            .ToDictionary(static statement => statement.DeclarationNameKey, StringComparer.Ordinal);
+
+        var result = Run(fixture);
+
+        Assert.True(result.Success, result.Error);
+        using var json = JsonDocument.Parse(result.Output);
+        var candidates = json.RootElement.GetProperty("candidates").EnumerateArray()
+            .Where(static candidate => candidate.GetProperty("downstream_lane").GetString() == "prover")
+            .ToDictionary(
+                static candidate => candidate.GetProperty("source_ref").GetString()!,
+                StringComparer.Ordinal);
+        Assert.Equal(
+            [
+                "D5/X_Frontier/Hearts.o5_independence",
+                "D5/X_Frontier/Hearts.o6WeilPositivityStatement",
+            ],
+            candidates.Keys.Order(StringComparer.Ordinal));
+        Assert.Equal(
+            "frontier/D5/X_Frontier/Hearts.o5_independence",
+            candidates["D5/X_Frontier/Hearts.o5_independence"]
+                .GetProperty("candidate_id").GetString());
+        Assert.Equal(
+            statements[report.Declarations.Single(static declaration =>
+                    declaration.Name.EndsWith(".o5_independence", StringComparison.Ordinal)).NameKey]
+                .StatementId.Value,
+            candidates["D5/X_Frontier/Hearts.o5_independence"]
+                .GetProperty("content_sha256").GetString());
+        Assert.Equal(
+            statements[report.Declarations.Single(static declaration =>
+                    declaration.Name.EndsWith(".o6WeilPositivityStatement", StringComparison.Ordinal)).NameKey]
+                .StatementId.Value,
+            candidates["D5/X_Frontier/Hearts.o6WeilPositivityStatement"]
+                .GetProperty("content_sha256").GetString());
+
+    }
+
+    [Fact]
+    public void FrontierClassifierKeepsEveryFailureDirectionDistinct()
+    {
+        var fixture = CandidateFixture();
+        var (snapshot, dag) = Truth(fixture);
+        var mission = Assert.IsType<MissionLoadOutcome.Loaded>(MissionFileLoader.Load(snapshot)).Policy;
+        var eligibility = mission.FrontierEligibility.ToDictionary(
+            static entry => entry.SourceRef,
+            static entry => entry.Kind,
+            StringComparer.Ordinal);
+
+        Assert.Equal(
+            FrontierCandidateClassification.MathematicalNotYetStated,
+            Classify(MathematicalFrontierPath));
+        Assert.Equal(
+            FrontierCandidateClassification.Governance,
+            Classify(GovernanceFrontierPath));
+        Assert.Equal(
+            FrontierCandidateClassification.OutsideFrontier,
+            Classify(NonFrontierOpenPath));
+        Assert.Equal(
+            FrontierCandidateClassification.NotOpen,
+            Classify(RuleFixture.RingPath));
+
+        FrontierCandidateClassification Classify(string path) =>
+            TheoryCandidatesCommand.ClassifyFrontier(
+                dag.Nodes.Single(node => node.RepoPath.Value == path),
+                eligibility);
+    }
+
+    [Fact]
+    public void GoldenUnitsUfdTaskAddressDoesNotChangeItsMathematicalEligibility()
+    {
+        var fixture = CandidateFixture();
+        var (snapshot, dag) = Truth(fixture);
+        var mission = Assert.IsType<MissionLoadOutcome.Loaded>(MissionFileLoader.Load(snapshot)).Policy;
+        var eligibility = mission.FrontierEligibility.ToDictionary(
+            static entry => entry.SourceRef,
+            static entry => entry.Kind,
+            StringComparer.Ordinal);
+
+        var classification = TheoryCandidatesCommand.ClassifyFrontier(
+            dag.Nodes.Single(node => node.RepoPath.Value == MathematicalFrontierPath),
+            eligibility);
+
+        Assert.Equal(FrontierCandidateClassification.MathematicalNotYetStated, classification);
+    }
+
+    [Fact]
+    public void RepositoryFrontierEligibilityCoversLiveCorpusAndKeepsTaskBearingKindsDistinct()
+    {
+        var root = TestRepositoryLayout.FindRoot();
+        var snapshot = Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(
+            GitRepositorySnapshotReader.ReadCurrent(root))).Snapshot;
+        var mission = Assert.IsType<MissionLoadOutcome.Loaded>(MissionFileLoader.Load(snapshot)).Policy;
+        var eligibility = mission.FrontierEligibility.ToDictionary(
+            static entry => entry.SourceRef,
+            static entry => entry.Kind,
+            StringComparer.Ordinal);
+        var frontierPaths = snapshot.Files.Keys
+            .Select(static path => path.Value)
+            .Where(static path => path.StartsWith("D5/X_Frontier/", StringComparison.Ordinal)
+                && path.EndsWith(".lean", StringComparison.Ordinal))
+            .Order(StringComparer.Ordinal)
+            .ToArray();
+
+        Assert.Equal(
+            frontierPaths,
+            mission.FrontierEligibility
+                .Select(static entry => entry.SourceRef + ".lean")
+                .Order(StringComparer.Ordinal));
+        Assert.Equal(
+            FrontierCandidateClassification.MathematicalNotYetStated,
+            Classify("D5/X_Frontier/GoldenUnitsUFD"));
+        Assert.Equal(
+            FrontierCandidateClassification.Governance,
+            Classify("D5/X_Frontier/GovernanceDeferrals"));
+        Assert.Contains(
+            "TASK D5-T0008",
+            snapshot.Files[RepoPath.CreateKnown("D5/X_Frontier/GoldenUnitsUFD.lean")].Text,
+            StringComparison.Ordinal);
+        Assert.Contains(
+            "TASK D5-T0011",
+            snapshot.Files[RepoPath.CreateKnown("D5/X_Frontier/GovernanceDeferrals.lean")].Text,
+            StringComparison.Ordinal);
+
+        FrontierCandidateClassification Classify(string sourceRef)
+        {
+            Assert.True(Gid.TryParse(sourceRef, out var gid));
+            return TheoryCandidatesCommand.ClassifyFrontier(
+                TruthNode.Create(gid.Path, gid, TruthState.Open, sourceRef.Replace('/', '.')),
+                eligibility);
+        }
+    }
+
+    [Fact]
+    public void OwnerOverrideIsContentAddressedAndCannotMasqueradeAsRepositoryOrdering()
+    {
+        var fixture = CandidateFixture();
+        const string problem = "Does \"x\" imply $HOME and `id`?\nClassify ξ exactly.\n";
+        using var directory = new TemporaryDirectory();
+        var problemPath = Path.Combine(directory.Path, "owner-problem.txt");
+        File.WriteAllBytes(problemPath, Encoding.UTF8.GetBytes(problem));
+
+        var first = Run(fixture, "--owner-override-file", problemPath);
+        var replay = Run(fixture, "--owner-override-file", problemPath);
+
+        Assert.True(first.Success, first.Error);
+        Assert.Equal(Encoding.UTF8.GetBytes(first.Output), Encoding.UTF8.GetBytes(replay.Output));
+        using var json = JsonDocument.Parse(first.Output);
+        var root = json.RootElement;
+        var receipt = root.GetProperty("selection_receipt");
+        var owner = Assert.Single(root.GetProperty("candidates").EnumerateArray(), static candidate =>
+            candidate.GetProperty("source_kind").GetString() == "owner_override");
+        var problemSha256 = "sha256:" + Convert.ToHexStringLower(
+            SHA256.HashData(Encoding.UTF8.GetBytes(problem)));
+        Assert.Equal(problemSha256, owner.GetProperty("content_sha256").GetString());
+        Assert.Equal(problem, owner.GetProperty("problem_text").GetString());
+        Assert.Equal("theorist", owner.GetProperty("downstream_lane").GetString());
+        Assert.Equal("owner_override", receipt.GetProperty("selection_mode").GetString());
+        Assert.Equal(owner.GetProperty("candidate_id").GetString(),
+            receipt.GetProperty("selected_candidate_id").GetString());
+        Assert.DoesNotContain("worth", first.Output, StringComparison.OrdinalIgnoreCase);
+        Assert.DoesNotContain("argmax", first.Output, StringComparison.OrdinalIgnoreCase);
+    }
+
+    [Fact]
+    public void CanonicalOrderingAndReceiptHashesAreReplayStable()
+    {
+        var fixture = CandidateFixture();
+
+        var first = Run(fixture);
+        var replay = RunCore(fixture, reverseSnapshotEntries: true);
+
+        Assert.True(first.Success, first.Error);
+        Assert.Equal(Encoding.UTF8.GetBytes(first.Output), Encoding.UTF8.GetBytes(replay.Output));
+        using var json = JsonDocument.Parse(first.Output);
+        var root = json.RootElement;
+        var candidates = root.GetProperty("candidates");
+        var ids = candidates.EnumerateArray()
+            .Select(static candidate => candidate.GetProperty("candidate_id").GetString())
+            .ToArray();
+        Assert.Equal(ids.Order(StringComparer.Ordinal), ids);
+        var expectedCandidateSetSha256 = CandidateSetSha256(candidates);
+        var receipt = root.GetProperty("selection_receipt");
+        Assert.Equal(expectedCandidateSetSha256,
+            receipt.GetProperty("candidate_set_sha256").GetString());
+        Assert.Matches("^sha256:[0-9a-f]{64}$",
+            receipt.GetProperty("input_snapshot_sha256").GetString());
+        Assert.Matches("^sha256:[0-9a-f]{64}$",
+            receipt.GetProperty("lean_report_sha256").GetString());
+        Assert.Equal("theory-candidates-bootstrap-v1",
+            receipt.GetProperty("ordering_version").GetString());
+        Assert.Equal("bootstrap eligibility order",
+            receipt.GetProperty("order_kind").GetString());
+        Assert.Equal("canonical candidate id", receipt.GetProperty("tie_break").GetString());
+        Assert.Equal(ids[0], receipt.GetProperty("selected_candidate_id").GetString());
+        Assert.DoesNotContain("worth", first.Output, StringComparison.OrdinalIgnoreCase);
+        Assert.DoesNotContain("argmax", first.Output, StringComparison.OrdinalIgnoreCase);
+    }
+
+    [Fact]
+    public void LeanReportMaterialParticipatesInTheSelectionReceipt()
+    {
+        var baseline = CandidateFixture();
+        var changedReport = CandidateFixture();
+        changedReport.Reports[GovernanceFrontierPath] = new LeanFileReport(
+            [],
+            [new LeanDeclaration("governanceTicket", "def", "Unit", [])]);
+
+        var first = Run(baseline);
+        var changed = Run(changedReport);
+
+        Assert.True(first.Success, first.Error);
+        Assert.True(changed.Success, changed.Error);
+        using var firstJson = JsonDocument.Parse(first.Output);
+        using var changedJson = JsonDocument.Parse(changed.Output);
+        var firstReceipt = firstJson.RootElement.GetProperty("selection_receipt");
+        var changedReceipt = changedJson.RootElement.GetProperty("selection_receipt");
+        Assert.Equal(
+            firstReceipt.GetProperty("input_snapshot_sha256").GetString(),
+            changedReceipt.GetProperty("input_snapshot_sha256").GetString());
+        Assert.NotEqual(
+            firstReceipt.GetProperty("lean_report_sha256").GetString(),
+            changedReceipt.GetProperty("lean_report_sha256").GetString());
+        Assert.Equal(
+            firstReceipt.GetProperty("candidate_set_sha256").GetString(),
+            changedReceipt.GetProperty("candidate_set_sha256").GetString());
+    }
+
+    [Fact]
+    public void UnclassifiedFrontierFailsClosedInsteadOfBecomingMathematicalOrGovernance()
+    {
+        var fixture = CandidateFixture();
+        const string path = "D5/X_Frontier/Unclassified.lean";
+        fixture.Files[path] = "def unclassified : Unit := ()\n";
+        fixture.Reports[path] = EmptyReport();
+
+        var result = Run(fixture);
+
+        Assert.False(result.Success);
+        Assert.Empty(result.Output);
+        Assert.Contains("unclassified Frontier", result.Error, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void OwnerOverrideRejectsInvalidUtf8WithoutRewritingTheInput()
+    {
+        using var directory = new TemporaryDirectory();
+        var problemPath = Path.Combine(directory.Path, "invalid-utf8.txt");
+        File.WriteAllBytes(problemPath, [0xff]);
+
+        var result = Run(CandidateFixture(), "--owner-override-file", problemPath);
+
+        Assert.False(result.Success);
+        Assert.Empty(result.Output);
+        Assert.Contains("strict UTF-8", result.Error, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void NonBootstrapMissionSelectionFailsClosedBeforeProjection()
+    {
+        var fixture = CandidateFixture();
+        var (snapshot, _) = Truth(fixture);
+        var loaded = Assert.IsType<MissionLoadOutcome.Loaded>(MissionFileLoader.Load(snapshot));
+        var unsupported = loaded.Policy with
+        {
+            Selection = new MissionSelectionPolicy(
+                WorthSelectionOrder.CompleteWorthArgmax,
+                loaded.Policy.Selection.TieBreak),
+        };
+
+        var exception = Assert.Throws<InvalidOperationException>(() =>
+            TheoryCandidateProjection.Render(
+                "sha256:" + new string('0', 64),
+                "sha256:" + new string('1', 64),
+                unsupported,
+                [],
+                ownerOverride: null));
+
+        Assert.Contains("bootstrap selection is unavailable", exception.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void CommandRejectsMissingMissionAndMalformedArguments()
+    {
+        var fixture = CandidateFixture();
+        fixture.Files.Remove(MissionFileLoader.RelativePath);
+
+        var missing = Run(fixture);
+        var duplicate = Run(
+            CandidateFixture(),
+            "--owner-override-file", "first",
+            "--owner-override-file", "second");
+
+        Assert.False(missing.Success);
+        Assert.Empty(missing.Output);
+        Assert.Contains("MISSION file is missing", missing.Error, StringComparison.Ordinal);
+        Assert.False(duplicate.Success);
+        Assert.Empty(duplicate.Output);
+        Assert.Contains("USAGE: StrataLint theory-candidates", duplicate.Error, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void ProductionQueryLeavesItsRepositoryRootByteIdentical()
+    {
+        using var directory = new TemporaryDirectory();
+        Assert.Empty(Directory.GetFileSystemEntries(directory.Path));
+
+        var result = RunCore(CandidateFixture(), repositoryRoot: directory.Path);
+
+        Assert.True(result.Success, result.Error);
+        Assert.Empty(Directory.GetFileSystemEntries(directory.Path));
+    }
+
+    private static CommandResult Run(
+        RuleFixture fixture,
+        params string[] arguments) =>
+        RunCore(fixture, arguments, reverseSnapshotEntries: false, repositoryRoot: "/repo");
+
+    private static CommandResult RunCore(
+        RuleFixture fixture,
+        IReadOnlyList<string>? arguments = null,
+        bool reverseSnapshotEntries = false,
+        string repositoryRoot = "/repo")
+    {
+        var entries = reverseSnapshotEntries
+            ? fixture.Files.Reverse().Select(static pair => RawRepositoryEntry.FromText(pair.Key, pair.Value))
+            : fixture.Files.Select(static pair => RawRepositoryEntry.FromText(pair.Key, pair.Value));
+        var environment = new ProductionCliEnvironment(
+            repositoryRoot,
+            new FakeRepositoryGateway(
+                RawChangeSet.Create([]),
+                RawRepositorySnapshot.Create(entries),
+                null),
+            new FakeLeanReportSource(LeanAxiomReport.Create(fixture.Reports)),
+            new FakeScribeEmissionVerifier(VerifiedScribeEmissions.Empty));
+        return environment.TheoryCandidates(arguments ?? []);
+    }
+
+    private static (RepositorySnapshot Snapshot, AcyclicTruthDag Dag) Truth(RuleFixture fixture)
+    {
+        var snapshot = Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(
+            RawRepositorySnapshot.Create(fixture.Files.Select(static pair =>
+                RawRepositoryEntry.FromText(pair.Key, pair.Value))))).Snapshot;
+        var lean = Assert.IsType<LeanValidationOutcome.Accepted>(LeanClosureValidator.Validate(
+            snapshot,
+            LeanAxiomReport.Create(fixture.Reports))).Capability;
+        var dag = Assert.IsType<DagBuildOutcome.Accepted>(AcyclicTruthDag.Build(snapshot, lean)).Capability;
+        return (snapshot, dag);
+    }
+
+    private static RuleFixture CandidateFixture()
+    {
+        var fixture = new RuleFixture();
+        fixture.Files.Remove(RuleFixture.FixtureBackfillAtomPath);
+        fixture.Files[ResidualAtomPath] = RuleFixture.FixtureBackfillAtom.Replace(
+            "coverage_gids:\n  - D5/S0/Carrier/BackfillTarget",
+            "coverage_gids: []",
+            StringComparison.Ordinal);
+        fixture.Files[PartialAtomPath] = RuleFixture.FixtureBackfillAtom
+            .Replace("manual/fixture", "manual/partial", StringComparison.Ordinal)
+            .Replace(
+                "D5/S0/Carrier/BackfillTarget",
+                "D5/X_Frontier/GoldenUnitsUFD",
+                StringComparison.Ordinal);
+        fixture.Files[MissionFileLoader.RelativePath] = FixtureMission;
+        fixture.Files["D5/X_Frontier/MissionTickets.lean"] = string.Concat(
+            Enumerable.Range(40, 4).Select(static number =>
+                $"/-- TASK D5-T{number:0000}\n    Measurement contract remains open. -/\n"
+                + $"def missionTicket{number:0000} : Unit := ()\n"));
+        fixture.Files[MathematicalFrontierPath] =
+            "/-- TASK D5-T0008\n"
+            + "    Prove every norm-unit is plus or minus an integral phi power, then derive Euclidean or PID structure. -/\n"
+            + "def goldenUnitsPrincipalIdealDelivery : Unit := ()\n";
+        fixture.Files[GovernanceFrontierPath] =
+            "/- TASK D5-T0100\n    Harness work item. -/\ndef governanceTicket : Unit := ()\n";
+        fixture.Files[DeclarationReadyFrontierPath] =
+            "theorem o5_independence : True := by sorry\n"
+            + "def o6WeilPositivityStatement : Prop := True\n"
+            + "def supportValue : Nat := 0\n";
+        fixture.Files[NonFrontierOpenPath] = "theorem unfinishedFact : True := by sorry\n";
+        fixture.Reports["D5/X_Frontier/MissionTickets.lean"] = EmptyReport();
+        fixture.Reports[MathematicalFrontierPath] = EmptyReport();
+        fixture.Reports[GovernanceFrontierPath] = EmptyReport();
+        fixture.Reports[DeclarationReadyFrontierPath] = new LeanFileReport(
+            [],
+            [
+                new LeanDeclaration(
+                    "D5.X_Frontier.Hearts.o5_independence",
+                    "theorem",
+                    "statement-v1(uparams=[],type=ec(ns(n0,4:True),[]))",
+                    ["sorryAx"]),
+                new LeanDeclaration(
+                    "D5.X_Frontier.Hearts.o6WeilPositivityStatement",
+                    "def",
+                    "statement-v1(uparams=[],type=es(l0),value=ec(ns(n0,4:True),[]))",
+                    []),
+                new LeanDeclaration(
+                    "D5.X_Frontier.Hearts.supportValue",
+                    "def",
+                    "statement-v1(uparams=[],type=ec(ns(n0,3:Nat),[]),value=ei(ln(0)))",
+                    []),
+            ]);
+        fixture.Reports[NonFrontierOpenPath] = new LeanFileReport(
+            [],
+            [new LeanDeclaration("unfinishedFact", "theorem", "True", ["sorryAx"])]);
+        return fixture;
+    }
+
+    private static LeanFileReport EmptyReport() => new([], []);
+
+    private static string CandidateSetSha256(JsonElement candidates)
+    {
+        var canonical = StructuredCanonicalWriter.WriteJson(candidates);
+        var prefix = Encoding.UTF8.GetBytes("theory-candidate-set-v1\0");
+        return "sha256:" + Convert.ToHexStringLower(SHA256.HashData(
+            prefix.Concat(canonical).ToArray()));
+    }
+}

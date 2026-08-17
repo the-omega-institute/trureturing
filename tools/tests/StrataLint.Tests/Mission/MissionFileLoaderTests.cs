@@ -45,6 +45,7 @@ public sealed partial class MissionFileLoaderTests
             "structural_realization": { "state": "open", "case_id": "D5-T0042" },
             "receipt_potential": { "state": "open", "case_id": "D5-T0043" }
           },
+        """ + FrontierEligibilityJson + """
           "selection": {
             "order_kind": "bootstrap eligibility order",
             "tie_break": "canonical candidate id"
@@ -520,6 +521,14 @@ public sealed partial class MissionFileLoaderTests
             ["SorryCountOptimization", "TrivialLemmaAccumulation", "CitationChasing"],
             loaded.Policy.Prohibitions.Select(static value => value.ToString()));
         Assert.All(loaded.Policy.Prohibitions, static value => Assert.IsNotType<string>((object)value));
+        Assert.Contains(
+            loaded.Policy.FrontierEligibility,
+            static entry => entry.SourceRef == "D5/X_Frontier/GoldenUnitsUFD"
+                && entry.Kind == FrontierEligibilityKind.MathematicalNotYetStated);
+        Assert.Contains(
+            loaded.Policy.FrontierEligibility,
+            static entry => entry.SourceRef == "D5/X_Frontier/Hearts"
+                && entry.Kind == FrontierEligibilityKind.DeclarationReadyMathematicalOpen);
     }
 
     private static RepositoryCase RepositoryScenario(string scenario)

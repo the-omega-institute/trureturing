@@ -238,6 +238,10 @@ public sealed partial class ProductionEnvironmentTests
         Assert.False(result.Success);
         Assert.Contains("scribe-definition-mismatch", result.Error, StringComparison.Ordinal);
         Assert.Equal(inputs.Ledger, File.ReadAllText(outputPath));
+
+        // Extend this already-paid repository-read test: the map budget is structural and must
+        // not be raised merely to add another representative of the same Scribe rule.
+        AssertProductionScribeVerifierMaterializesOnlyTheCapturedSnapshot();
     }
 
     [Fact]
@@ -322,6 +326,32 @@ public sealed partial class ProductionEnvironmentTests
                 CoverWorld.Raw(inputs.Baseline)),
             new FakeLeanReportSource(inputs.Report),
             new FakeScribeEmissionVerifier(inputs.VerifiedEmissions));
+
+    private static void AssertProductionScribeVerifierMaterializesOnlyTheCapturedSnapshot()
+    {
+        string? materializedRoot = null;
+        string? observed = null;
+        var verification = VerifiedScribeEmissions.Empty;
+        var callback = new Func<string, LeanAxiomReport, VerifiedScribeEmissions>((root, _) =>
+        {
+            materializedRoot = root;
+            observed = File.ReadAllText(Path.Combine(root, "captured", "probe.txt"), Encoding.UTF8);
+            return verification;
+        });
+        var verifier = new ProductionScribeEmissionVerifier(callback);
+        var snapshot = Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(
+            RawRepositorySnapshot.Create([
+                RawRepositoryEntry.FromText("captured/probe.txt", "captured bytes\n"),
+            ]))).Snapshot;
+
+        var actual = verifier.Verify(snapshot, LeanAxiomReport.Create(
+            new Dictionary<string, LeanFileReport>()));
+
+        Assert.Same(verification, actual);
+        Assert.Equal("captured bytes\n", observed);
+        Assert.NotNull(materializedRoot);
+        Assert.False(Directory.Exists(materializedRoot));
+    }
 
     private static string[] CoverArgs(CoverInputs inputs) =>
         ["--cover-atom", CoverWorld.DefaultAtomId, "--gid", inputs.Gid, "--base", "baseline",

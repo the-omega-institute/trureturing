@@ -70,7 +70,7 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
             repositoryRoot,
             new GitRepositoryGateway(repositoryRoot),
             new PrecomputedLeanReportSource(repositoryRoot),
-            new ProductionScribeEmissionVerifier(repositoryRoot),
+            new ProductionScribeEmissionVerifier(),
             new ProductionFrozenLedgerAdmissionServices(repositoryRoot))
     {
     }
@@ -152,6 +152,7 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
                 current);
             var verifiedScribeEmissions = VerifyScribeForAdmission(
                 scribeEmissionVerifier,
+                current,
                 candidateLeanReport);
             var evaluation = SnapshotAdmissionCore.Evaluate(
                 current,
@@ -282,6 +283,18 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
                 string.Empty,
                 "DIGEST_STATUS_INVALID Scribe emission verifier is unavailable\n")
             : DigestStatusCommand.Run(
+                repository,
+                leanReportSource,
+                scribeEmissionVerifier,
+                arguments);
+
+    public CommandResult TheoryCandidates(IReadOnlyList<string> arguments) =>
+        scribeEmissionVerifier is null
+            ? new CommandResult(
+                false,
+                string.Empty,
+                "THEORY_CANDIDATES_INVALID Scribe emission verifier is unavailable\n")
+            : TheoryCandidatesCommand.Run(
                 repository,
                 leanReportSource,
                 scribeEmissionVerifier,
@@ -495,6 +508,7 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
 
     internal static VerifiedScribeEmissions? VerifyScribeForAdmission(
         IScribeEmissionVerifier? verifier,
+        RepositorySnapshot snapshot,
         LeanAxiomReport report)
     {
         if (verifier is null)
@@ -502,7 +516,7 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
             return null;
         }
 
-        return verifier.Verify(report);
+        return verifier.Verify(snapshot, report);
     }
 
     public CommandResult RenderDag(IReadOnlyList<string> arguments) =>

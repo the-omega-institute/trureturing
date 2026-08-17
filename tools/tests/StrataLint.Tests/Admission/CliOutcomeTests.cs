@@ -54,6 +54,23 @@ public sealed class CliOutcomeTests
         Assert.Equal(error, console.Error);
     }
 
+    [Fact]
+    public void TheoryCandidatesDelegatesToTheReadOnlyEnvironment()
+    {
+        var projected = new CommandResult(true, "{\"schema\":\"stratalint-theory-candidates-v1\"}\n", string.Empty);
+        var console = new BufferedConsole();
+        var environment = new StubCliEnvironment(Admitted(), theoryCandidates: projected);
+
+        var exitCode = CliApplication.Run(
+            ["theory-candidates", "--owner-override-file", "problem.txt"],
+            environment,
+            console);
+
+        Assert.Equal(0, exitCode);
+        Assert.Equal(projected.Output, console.Output);
+        Assert.Empty(console.Error);
+    }
+
     private static AdmissionOutcome Outcome(string fixture) => fixture switch
     {
         "admitted" => Admitted(),
@@ -122,7 +139,8 @@ public sealed class CliOutcomeTests
 internal sealed class StubCliEnvironment(
     AdmissionOutcome outcome,
     ExplicitCommandResult? echoVerify = null,
-    ExplicitCommandResult? fileMapConform = null) : ICliEnvironment
+    ExplicitCommandResult? fileMapConform = null,
+    CommandResult? theoryCandidates = null) : ICliEnvironment
 {
     public AdmissionOutcome Check(IReadOnlyList<string> arguments) => outcome;
 
@@ -134,6 +152,9 @@ internal sealed class StubCliEnvironment(
 
     public CommandResult DigestStatus(IReadOnlyList<string> arguments) =>
         new(false, string.Empty, "digest status is not configured in this fixture");
+
+    public CommandResult TheoryCandidates(IReadOnlyList<string> arguments) =>
+        theoryCandidates ?? new(false, string.Empty, "theory candidates are not configured in this fixture");
 
     public CommandResult ShowAtom(IReadOnlyList<string> arguments) =>
         new(false, string.Empty, "show atom is not configured in this fixture");
