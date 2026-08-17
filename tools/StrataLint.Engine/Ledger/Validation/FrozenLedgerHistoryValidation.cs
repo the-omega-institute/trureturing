@@ -299,17 +299,6 @@ public static partial class FrozenLedger
         var statement = ParseStatementId(RequiredString(payload, "statement_id"), "Freeze statement");
         var witness = ParseWitnessId(RequiredString(payload, "witness_id"), "Freeze witness");
         var frozen = ParseFrozenNodeId(RequiredString(payload, "frozen_node_id"), "Freeze node");
-        var caseClass = currentShape ? "active-frozen" : RequiredString(payload, "case_class");
-        var evaluation = currentShape ? "admission" : RequiredString(payload, "evaluation");
-        var expected = currentShape
-            ? new FrozenExpectedVerdict(
-                ImmutableArray.Create("admit"),
-                "none",
-                ImmutableArray<FrozenExpectedDiagnostic>.Empty)
-            : ParseExpected(payload.GetProperty("expected"));
-        var inputFingerprint = currentShape ? witness.Value : RequiredString(payload, "input_fingerprint");
-        var semanticReceipt = currentShape ? frozen.Value : RequiredString(payload, "semantic_receipt");
-        var truthState = currentShape ? nameof(TruthState.Closed) : RequiredString(payload, "truth_state");
         var result = new FrozenFreezePayload(
             RequiredString(payload, "case_id"),
             ParseDeclarationStatementIds(payload),
@@ -325,15 +314,24 @@ public static partial class FrozenLedger
         {
             throw new FormatException("Historical Freeze input has no validated Git commit/tree/blob capability.");
         }
-        if (caseClass != "active-frozen"
-            || result.CaseId != FrozenLedgerCanonicalWriter.CaseId(frozen)
-            || evaluation != "admission"
-            || truthState != nameof(TruthState.Closed)
-            || !expected.AllowedDispositions.SequenceEqual(new[] { "admit" }, StringComparer.Ordinal)
-            || expected.DiagnosticMatch != "none"
-            || expected.RequiredDiagnostics.Length != 0
-            || inputFingerprint != witness.Value
-            || semanticReceipt != frozen.Value
+        if (!currentShape)
+        {
+            var expected = ParseExpected(payload.GetProperty("expected"));
+            if (RequiredString(payload, "case_class") != "active-frozen"
+                || RequiredString(payload, "evaluation") != "admission"
+                || RequiredString(payload, "truth_state") != nameof(TruthState.Closed)
+                || !expected.AllowedDispositions.SequenceEqual(new[] { "admit" }, StringComparer.Ordinal)
+                || expected.DiagnosticMatch != "none"
+                || expected.RequiredDiagnostics.Length != 0
+                || RequiredString(payload, "input_fingerprint") != witness.Value
+                || RequiredString(payload, "semantic_receipt") != frozen.Value)
+            {
+                throw new FormatException(
+                    $"Historical Freeze payload is not a canonical Closed module at {path.Value}.");
+            }
+        }
+
+        if (result.CaseId != FrozenLedgerCanonicalWriter.CaseId(frozen)
             || result.Input.DescriptorSelector != path.Value
             || result.Input.Materializer != "repository-snapshot-v1")
         {
