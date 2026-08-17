@@ -81,11 +81,11 @@ internal static class DagLedgerCommandPreparation
         var report = truth.Report;
         var lean = truth.Lean;
         var dag = truth.Dag;
-        var catalog = BuildCatalog(
+        var catalog = BuildWriterCatalog(
             snapshot,
             lean,
             dag,
-            baselineSyntax,
+            baseView,
             Ask(repository.ResolveCurrentRevision));
 
         return new DagLedgerCandidateMaterial(
@@ -103,17 +103,20 @@ internal static class DagLedgerCommandPreparation
     /// Prepare that any DAG consumer needs, without the frozen-ledger work. Callers that only want
     /// the graph (the DAG projection command) share this assembly line rather than growing a
     /// second, drifting copy of it.
-    /// The frozen material catalog for a snapshot. Prepare needs it for the writer path and the
-    /// admission final-state gate needs it for the read-only path; they share this one assembly
-    /// line rather than growing a second, drifting copy of the attestation algebra.
-    internal static FrozenMaterialCatalog BuildCatalog(
+    /// Builds material only for candidate-affected Closed paths. The DAG still carries the complete
+    /// candidate Closed path set so writers can detect additions and removals without recomputing
+    /// identities already trusted from the base ledger.
+    internal static FrozenMaterialCatalog BuildWriterCatalog(
         RepositorySnapshot snapshot,
         AcceptedLeanClosure lean,
         AcyclicTruthDag dag,
-        FrozenLedgerSyntax ledgerSyntax,
+        FrozenLedgerBaseView baseView,
         FrozenRevisionIdentity currentIdentity)
     {
-        var environment = BuildEnvironment(snapshot, ledgerSyntax);
+        var environment = BuildEnvironment(
+            snapshot,
+            baseView.Origin.CommitOid,
+            baseView.Origin.TreeOid);
         if (currentIdentity.CommitOid.StartsWith("git-sha256:", StringComparison.Ordinal)
             != environment.OriginCommitOid.StartsWith("git-sha256:", StringComparison.Ordinal))
         {
@@ -124,8 +127,28 @@ internal static class DagLedgerCommandPreparation
         var algorithm = environment.OriginCommitOid.StartsWith("git-sha256:", StringComparison.Ordinal)
             ? HashAlgorithmName.SHA256
             : HashAlgorithmName.SHA1;
-        var attestations = dag.Nodes
+        var closedNodes = dag.TopologicalOrder
             .Where(static node => node.State is TruthState.Closed && node.ModuleName is not null)
+            .ToImmutableArray();
+        var selectedPaths = closedNodes
+            .Where(node => !baseView.ActiveByPath.TryGetValue(node.RepoPath, out var entry)
+                || !entry.AxiomClosureKnown
+                || entry.Payload.Input.DescriptorBlobOid != FrozenContentAddress.ComputeGitBlobOid(
+                    snapshot.Files[node.RepoPath].RawBytes.AsSpan(),
+                    algorithm)
+                || FrozenLedger.EnvironmentPinsChanged(environment, entry))
+            .Select(static node => node.RepoPath)
+            .ToHashSet();
+        foreach (var node in closedNodes)
+        {
+            if (dag.DependenciesOf(node.RepoPath).Any(selectedPaths.Contains))
+            {
+                selectedPaths.Add(node.RepoPath);
+            }
+        }
+
+        var attestations = closedNodes
+            .Where(node => selectedPaths.Contains(node.RepoPath))
             .Select(node => new FrozenModuleAttestation(
                 node.RepoPath,
                 FrozenContentAddress.ComputeGitBlobOid(
@@ -136,12 +159,16 @@ internal static class DagLedgerCommandPreparation
                 BaseTreeOid = currentIdentity.TreeOid,
             })
             .ToImmutableArray();
-        return FrozenContentAddress.Build(snapshot, lean, dag, environment, attestations) switch
-        {
-            FrozenMaterialOutcome.Accepted accepted => accepted.Capability,
-            FrozenMaterialOutcome.Rejected rejected => throw new InvalidOperationException(rejected.Message),
-            _ => throw new InvalidOperationException("unknown frozen material outcome"),
-        };
+        return FrozenContentAddress.BuildAdmissionCatalog(
+            snapshot,
+            lean,
+            dag,
+            environment,
+            attestations,
+            selectedPaths,
+            baseView.ActiveByPath.ToDictionary(
+                static item => item.Key,
+                static item => item.Value.Material));
     }
 
     internal static FrozenMaterialCatalog BuildAdmissionCatalog(
@@ -478,31 +505,6 @@ internal static class DagLedgerCommandPreparation
 
     private static FrozenEnvironmentAttestation BuildEnvironment(
         RepositorySnapshot snapshot,
-        FrozenLedgerSyntax syntax)
-    {
-        if (syntax.Lines.Length == 0)
-        {
-            throw new InvalidOperationException("frozen ledger is missing");
-        }
-
-        // The first line is only known to be a JSON object at this point -- DagLedgerLoader
-        // checks line shape, not that the ledger opens with a Genesis event. Reading positionally
-        // and letting JsonElement throw would hand callers a bare KeyNotFoundException instead of
-        // a statement about the ledger.
-        if (!syntax.Lines[0].Value.TryGetProperty("payload", out var payload))
-        {
-            throw new InvalidOperationException(
-                "frozen ledger does not open with a Genesis event: first entry carries no payload");
-        }
-
-        return BuildEnvironment(
-            snapshot,
-            RequiredString(payload, "origin_commit_oid"),
-            RequiredString(payload, "origin_tree_oid"));
-    }
-
-    private static FrozenEnvironmentAttestation BuildEnvironment(
-        RepositorySnapshot snapshot,
         string originCommit,
         string originTree)
     {
@@ -557,8 +559,4 @@ internal static class DagLedgerCommandPreparation
                 throw new InvalidOperationException(failure.Message),
         };
 
-    private static string RequiredString(JsonElement value, string name) =>
-        value.TryGetProperty(name, out var property) && property.ValueKind == JsonValueKind.String
-            ? property.GetString() ?? throw new FormatException($"{name} must not be null")
-            : throw new FormatException($"{name} must be a string");
 }

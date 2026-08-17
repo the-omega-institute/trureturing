@@ -140,7 +140,15 @@ public static partial class FrozenLedgerGenerator
         var reattestations = ReattestationEvents(baseline, candidateCatalog);
         var activeAfterReattestation = baseline.ActiveEntries.Values.ToDictionary(
             static entry => entry.Material.RepoPath,
-            entry => candidateCatalog.ByPath[entry.Material.RepoPath]);
+            static entry => entry.Material);
+        foreach (var (path, candidate) in candidateCatalog.ByPath)
+        {
+            if (activeAfterReattestation.ContainsKey(path))
+            {
+                activeAfterReattestation[path] = candidate;
+            }
+        }
+
         var freezes = MissingFreezeEvents(activeAfterReattestation, candidateCatalog);
         return Append(baseline, reattestations.AddRange(freezes));
     }
@@ -151,15 +159,24 @@ public static partial class FrozenLedgerGenerator
     {
         var activeByPath = baseline.ActiveEntries.Values.ToDictionary(
             static entry => entry.Material.RepoPath);
+        var currentClosedPaths = candidateCatalog.Dag.Nodes
+            .Where(static node => node.State is TruthState.Closed && node.ModuleName is not null)
+            .Select(static node => node.RepoPath)
+            .ToHashSet();
         var payloads = ImmutableArray.CreateBuilder<(string Type, JsonElement Payload)>();
         foreach (var (path, entry) in activeByPath.OrderBy(
             static item => item.Key.Value,
             StringComparer.Ordinal))
         {
-            if (!candidateCatalog.ByPath.TryGetValue(path, out var candidate))
+            if (!currentClosedPaths.Contains(path))
             {
                 throw new InvalidOperationException(
                     $"Active module {path.Value} is no longer Closed; append Revoke before rerunning ledger-sync.");
+            }
+
+            if (!candidateCatalog.ByPath.TryGetValue(path, out var candidate))
+            {
+                continue;
             }
 
             if (entry.Payload.StatementId != candidate.StatementId
