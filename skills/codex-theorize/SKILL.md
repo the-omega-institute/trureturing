@@ -60,8 +60,9 @@ explicitly names a repair followed by a fresh execution of that same gate.
 
 There are exactly two terminal states:
 
-- `success`: a pull request is open, its target declaration GID is named, and
-  every Step 1-7 postcondition is evidenced;
+- `success`: the pull request is REST-confirmed `MERGED`, its merge commit and
+  target declaration GID are named, and every Step 1-7 postcondition is
+  evidenced;
 - `open`: the stopping step and named gap are recorded together with every
   artifact and machine diagnostic reached so far. Existing-result reuse,
   missing evidence, a wall, and infrastructure failure are all honest `open`
@@ -92,6 +93,10 @@ changed_paths
 git_status_porcelain
 commit_sha
 pr_number
+pr_state
+merged_at
+merge_commit_sha
+landed_dev_sha
 named_gap
 command_log_path
 ```
@@ -140,9 +145,17 @@ candidate belongs to that lane and ends this run `open`; it is not permission to
 reinterpret the item. Natural-language problem text must never be sent directly
 to a prover.
 
+Branch on `source_kind`. An `owner_override` must carry the exact nonblank
+`problem_text` decoded from the address-bound override bytes. A repository
+`frontier_problem` carries `problem_text=null` by P1 design: retain that null,
+read the exact `<source_ref>.lean` bytes, confirm their SHA-256 equals the P1
+`content_sha256`, and quote the owner-issued mathematical request from those
+bytes without using a TASK number to infer its semantic class. Any other shape
+ends `open` with the mismatch named.
+
 Postcondition: the unmodified P1 selection receipt, selected candidate ID,
-content address, source reference, problem text, and `theorist` lane are
-recorded.
+content address, source reference, source kind, nullable P1 problem text, exact
+question input bytes, and `theorist` lane are recorded.
 
 ### 2. Ground and echo the question
 
@@ -202,6 +215,13 @@ missing receipt. Do not create or edit an Evidence receipt in this lane, and do
 not place data in code, comments, `Meta/`, or an ad hoc transcript. The final
 list must be nonempty, ordinal-sorted, and unique.
 
+The machine handoff owner for that missing receipt is `numericist`, whose
+charter permits Evidence writes. Record the exact calculation specification and
+required receipt kind in the `open` terminal. Only after a numericist PR returns
+the canonical Evidence GID and is REST-confirmed `MERGED` may a new
+`codex-theorize` run select the problem again; do not resurrect this terminal
+run or treat the handoff as success.
+
 If no relevant computation is possible, end `open` and name why, including the
 missing data or executable specification. A prose claim that calculation would
 be unhelpful does not discharge this step.
@@ -212,9 +232,16 @@ explicit.
 
 ### 5. State exactly one open Lean declaration
 
-Create or transform the natural owner into
-`D5/X_Frontier/<Target>.lean`. Update the same module's
-`docs/MISSION.md.frontier_eligibility` entry to
+For `source_kind="frontier_problem"`, the only natural owner is the P1
+`source_ref`; edit that existing module and no other. For
+`source_kind="owner_override"`, the content address is not a Frontier owner:
+construct the strict manifest for the intended D5 `X_Frontier` module and run
+the repository's canonical route command. Proceed only when canonical route
+returns one `D5/X_Frontier/<Target>` GID and path; a route rejection, capacity
+finding, or non-Frontier result ends `open` without inventing an address.
+
+Create or transform only that machine-returned natural owner. Add or update the
+same module's `docs/MISSION.md.frontier_eligibility` entry to
 `declaration-ready-mathematical-open`; never infer eligibility from TASK text,
 path, name, or `sorry`. The module must elaborate and contain exactly one
 `include_in_statement=true` declaration whose compiled axiom closure contains
@@ -301,14 +328,15 @@ make preflight BASE=origin/dev
 validation, route/check admission against the protected base, and the three CI
 preconditions. Do not replace it with a hand-picked validator or a producing
 seat's judgment. If `origin/dev` advances, follow the live harness diagnostic;
-never enable strict branch protection or bypass a failed check. Do not regenerate an existing generated receipt solely because the selected owner is its attested
-input; end `open` and name that coupling instead.
+never enable strict branch protection or bypass a failed check. Do not
+regenerate an existing generated receipt solely because the selected owner is
+its attested input; end `open` and name that coupling instead.
 
 Postcondition: `make preflight BASE=origin/dev` exits 0 on the exact intended
 tree, and the report records the resolved base SHA, candidate report address,
 target GID, and changed paths.
 
-### 8. Open the pull request and stop
+### 8. Open the pull request, then observe merge
 
 Commit only the theory-generation artifacts, push the current branch, and use
 the repository door:
@@ -318,10 +346,17 @@ git push -u origin <branch>
 make pr-open HEAD=<branch> TITLE='<title>' [BODY=<file>]
 ```
 
-After `make pr-open`, do not push further changes to that branch. Report
-`success` only with the opened PR number, commit SHA, target declaration GID,
-selection receipt, six theorist outputs, adversarial result, and all Step 7 exit
-codes. Otherwise report the fixed evidence-complete `open` terminal. There is no
+After `make pr-open`, the mutation boundary is closed: do not push further
+changes to that branch. Observe the PR through the GitHub REST API until it is
+machine-confirmed `MERGED`, then fetch `dev` and verify the returned merge commit
+is an ancestor of `origin/dev`. An unmerged `CLOSED` PR, failed required check,
+merge conflict, or unavailable observation ends evidence-complete `open` with
+the REST payload or diagnostic named; an ordinary in-progress PR remains under
+read-only observation and is not success.
+
+Report `success` only with the REST-confirmed `MERGED` state, `merged_at`, merge
+commit SHA, landed `dev` SHA, target declaration GID, selection receipt, six
+theorist outputs, adversarial result, and all Step 7 exit codes. There is no
 third state.
 
 The resulting declaration remains open. A later `prover` lane may prove it and
@@ -360,6 +395,9 @@ calls `deposit`, and the target is not a digestion atom for
   skill; an open WorthVector remains bootstrap-only.
 - Library and Evidence schemas, Lean compilation, report production, admission,
   and PR mechanics remain owned by their existing repository components.
+- Creating a missing computation receipt belongs to the `numericist` lane; this
+  workflow can only name the handoff and start a new run after that receipt
+  lands.
 - Proof search, theorem delivery, and freezing belong to the later `prover`
   lane and `deliver-check`.
 - External theory-document ingestion belongs to `codex-theory-ingest`;
