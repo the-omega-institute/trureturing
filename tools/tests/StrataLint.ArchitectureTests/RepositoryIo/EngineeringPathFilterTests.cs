@@ -117,7 +117,7 @@ public sealed class EngineeringPathFilterTests
     [Fact]
     public void WorkflowDelegatesExternalScopeToConsumerDerivationInsteadOfAPathList()
     {
-        var script = ScopeScript(RepositoryLayout.FindRoot());
+        var script = ScopeScript();
 
         Assert.DoesNotContain("engineering_triggers", script, StringComparison.Ordinal);
         Assert.Contains(
@@ -130,9 +130,10 @@ public sealed class EngineeringPathFilterTests
         Assert.Contains("fails closed", script, StringComparison.OrdinalIgnoreCase);
     }
 
-    private static string ScopeScript(string repositoryRoot)
+    private static string ScopeScript()
     {
-        var workflow = File.ReadAllText(Path.Combine(repositoryRoot, ".github", "workflows", "ci.yml"));
+        var workflow = File.ReadAllText(
+            Path.Combine(RepositoryLayout.FindRoot(), ".github", "workflows", "ci.yml"));
         var stream = new YamlStream();
         stream.Load(new StringReader(workflow));
         var root = (YamlMappingNode)stream.Documents[0].RootNode;

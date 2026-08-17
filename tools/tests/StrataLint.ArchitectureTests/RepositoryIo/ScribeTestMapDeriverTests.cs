@@ -389,6 +389,23 @@ public sealed class ScribeTestMapDeriverTests
     }
 
     [Fact]
+    public void RepositoryLayoutCombineDerivesItsLiteralPath()
+    {
+        const string source = """
+            class WorkflowTests {
+              [Fact] public void ReadsWorkflow() => File.ReadAllText(
+                Path.Combine(RepositoryLayout.FindRoot(), ".github", "workflows", "ci.yml"));
+            }
+            """;
+
+        var map = DeriveSources([new("WorkflowTests.cs", source)]);
+
+        var method = Assert.Single(map.Methods);
+        Assert.Equal([".github/workflows/ci.yml"], method.Paths);
+        Assert.False(method.IsUnknown);
+    }
+
+    [Fact]
     public void DiscoveryDirectoryContributesBothMarkersToPaths()
     {
         const string source = """

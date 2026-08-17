@@ -375,11 +375,36 @@ internal static class ScribeTestMapDeriver
             && literal.IsKind(SyntaxKind.StringLiteralExpression))
         {
             paths.Add(literal.Token.ValueText.Replace('\\', '/'));
+            return;
         }
-        else
+
+        if (argument is InvocationExpressionSyntax
+            {
+                Expression: MemberAccessExpressionSyntax
+                {
+                    Expression: IdentifierNameSyntax { Identifier.ValueText: "Path" },
+                    Name.Identifier.ValueText: "Combine",
+                },
+            } combine
+            && combine.ArgumentList.Arguments is { Count: >= 2 } arguments
+            && arguments[0].Expression is InvocationExpressionSyntax
+            {
+                Expression: MemberAccessExpressionSyntax
+                {
+                    Name.Identifier.ValueText: "FindRoot",
+                } findRoot,
+            }
+            && findRoot.Expression.ToString().EndsWith("RepositoryLayout", StringComparison.Ordinal)
+            && arguments.Skip(1).All(static item => item.Expression is LiteralExpressionSyntax
+                { RawKind: (int)SyntaxKind.StringLiteralExpression }))
         {
-            reasons.Add(TestMapUnknownReason.VariablePath);
+            paths.Add(string.Join(
+                '/',
+                arguments.Skip(1).Select(static item => ((LiteralExpressionSyntax)item.Expression).Token.ValueText)));
+            return;
         }
+
+        reasons.Add(TestMapUnknownReason.VariablePath);
     }
 
     private static void AddDiscoveryPaths(
