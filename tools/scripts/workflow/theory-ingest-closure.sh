@@ -35,9 +35,12 @@ ensure_scratch() {
 load_producer_write_patterns() {
   local repository="$1"
   local output
-  if ! output="$(dotnet run --no-build \
-      --project "$repository/tools/StrataLint.Cli/StrataLint.Cli.csproj" \
-      --configuration Release -- filemap-conform --producer-write-set IngestCommand)"; then
+  if ! output="$(
+      cd "$repository"
+      dotnet run --no-build \
+        --project tools/StrataLint.Cli/StrataLint.Cli.csproj \
+        --configuration Release -- filemap-conform --producer-write-set IngestCommand
+    )"; then
     fail "cannot derive IngestCommand committed write set"
   fi
 

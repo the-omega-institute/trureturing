@@ -83,6 +83,23 @@ public sealed class TheoryIngestClosureScriptTests
     }
 
     [Fact]
+    public void ProposalDerivesFileMapWriteSetFromRepositoryWhenCalledOutsideRepository()
+    {
+        using var fixture = new TheoryIngestClosureFixture();
+        fixture.CommitTheoryChange();
+        fixture.Write("Declared/Output/generated.txt", "trusted output\n");
+
+        var result = fixture.ProposeFromOutsideRepository();
+
+        Assert.True(
+            result.ExitCode == 0,
+            $"propose exited {result.ExitCode}\n"
+            + $"stdout:\n{Encoding.UTF8.GetString(result.StandardOutput)}\n"
+            + $"stderr:\n{Encoding.UTF8.GetString(result.StandardError)}");
+        Assert.Contains("Declared/Output/generated.txt", fixture.ReadProposal(), StringComparison.Ordinal);
+    }
+
+    [Fact]
     public void ProposalBytesMustExactlyMatchTrustedRecomputationBeforeAuthorization()
     {
         using var fixture = new TheoryIngestClosureFixture();
@@ -217,11 +234,16 @@ public sealed class TheoryIngestClosureScriptTests
             Write("Outside/existing.txt", "base outside\n");
             Write("docs/develop/theory/volume/theory.md", "# volume\n");
             Write("docs/develop/theory/volume/source.toml", "[source]\nid=\"volume\"\n");
+            Write("Meta/FILEMAP.toml", "# fixture FILEMAP\n");
             Write("write-pattern.txt", writePattern + "\n");
             Write("test-bin/dotnet", """
                 #!/usr/bin/env bash
                 set -euo pipefail
                 printf '%s\n' "$*" >> "$DOTNET_ARGUMENTS_PATH"
+                [[ -f Meta/FILEMAP.toml ]] || {
+                  printf '%s\n' 'INFRASTRUCTURE_FAILURE filemap-conform: missing Meta/FILEMAP.toml' >&2
+                  exit 1
+                }
                 cat "$WRITE_PATTERN_PATH"
                 """ + "\n");
             if (!OperatingSystem.IsWindows())
@@ -230,7 +252,7 @@ public sealed class TheoryIngestClosureScriptTests
                     Path.Combine(binDirectory, "dotnet"),
                     UnixFileMode.UserRead | UnixFileMode.UserWrite | UnixFileMode.UserExecute);
             }
-            RunGit("add", "Declared", "Outside", "docs");
+            RunGit("add", "Declared", "Outside", "docs", "Meta");
             RunGit("commit", "-qm", "base");
         }
 
@@ -275,6 +297,17 @@ public sealed class TheoryIngestClosureScriptTests
             repository.Path,
             "HEAD^1",
             proposalPath);
+
+        internal ProcessOutput ProposeFromOutsideRepository()
+        {
+            using var workingDirectory = new TemporaryDirectory();
+            return RunScriptFrom(
+                workingDirectory.Path,
+                "propose",
+                repository.Path,
+                "HEAD^1",
+                proposalPath);
+        }
 
         internal ProcessOutput Authorize(string proposal, string trusted) =>
             RunScript("authorize", proposal, trusted);
@@ -474,6 +507,11 @@ public sealed class TheoryIngestClosureScriptTests
 
         private ProcessOutput RunScript(params string[] arguments)
         {
+            return RunScriptFrom(repository.Path, arguments);
+        }
+
+        private ProcessOutput RunScriptFrom(string workingDirectory, params string[] arguments)
+        {
             var script = Path.Combine(
                 PrOpenScriptTests.RepositoryRoot(),
                 "tools", "scripts", "workflow", "theory-ingest-closure.sh");
@@ -487,7 +525,7 @@ public sealed class TheoryIngestClosureScriptTests
                     script,
                     .. arguments,
                 ],
-                repository.Path,
+                workingDirectory,
                 TimeSpan.FromSeconds(30),
                 1024 * 1024);
         }
