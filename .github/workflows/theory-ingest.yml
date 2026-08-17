@@ -1,5 +1,5 @@
-# 理论卷自动摄入:PR 触碰 docs/develop/theory/** 时,在 GitHub merge result 上跑 make ingest,
-# base 只以该 merge commit 的第一父提交 SHA 参与对象级 diff。
+# 理论卷自动摄入:只读 job 在 GitHub merge result 上生成候选提案;最小写 job 以事件
+# base SHA 钉住的 producer 对事件 head 的理论源独立重算,逐字节相等才快进写回。
 # 不回写 echo residual 投影:它是允许陈旧的人读快照(CLAUDE.md 第〇节),按需由
 # `make echo-residual-summary` 重发,消费者应调 producer 现算而非读仓内分片。
 name: theory-ingest
@@ -19,8 +19,11 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  auto-ingest:
-    name: Auto-ingest theory volumes
+  propose:
+    name: Propose theory ingest closure
+    permissions:
+      actions: read
+      contents: read
     runs-on: ubuntu-24.04-arm
     timeout-minutes: 36
     steps:
@@ -192,9 +195,168 @@ jobs:
           cd candidate
           make ingest BASE=${{ steps.base.outputs.sha }}
 
-      - name: Enforce theory ingest closure
+      - name: Produce declared-write-set proposal
         shell: bash
         run: |
           set -euo pipefail
           "$GITHUB_WORKSPACE/candidate/tools/scripts/workflow/theory-ingest-closure.sh" \
-            "$GITHUB_WORKSPACE/candidate"
+            propose \
+            "$GITHUB_WORKSPACE/candidate" \
+            "${{ steps.base.outputs.sha }}" \
+            "$GITHUB_WORKSPACE/proposal/theory-ingest.patch"
+
+      - name: Upload untrusted ingest proposal
+        uses: actions/upload-artifact@v4
+        with:
+          name: theory-ingest-proposal
+          path: proposal/theory-ingest.patch
+          if-no-files-found: error
+          retention-days: 1
+
+  writeback:
+    name: Authorize and write back theory ingest closure
+    needs: propose
+    permissions:
+      actions: read
+      contents: write
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 36
+    steps:
+      - name: Reject fork pull requests
+        shell: bash
+        env:
+          HEAD_REPOSITORY: ${{ github.event.pull_request.head.repo.full_name }}
+          BASE_REPOSITORY: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+          if [[ "$HEAD_REPOSITORY" != "$BASE_REPOSITORY" ]]; then
+            printf '%s\n' "fork pull requests cannot receive theory ingest writeback" >&2
+            exit 1
+          fi
+
+      - name: Check out pinned base producer
+        id: checkout-trusted
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.base.sha }}
+          path: trusted
+          fetch-depth: 2
+          persist-credentials: true
+
+      - name: Strip checkout remote state
+        if: steps.checkout-trusted.outcome == 'success'
+        shell: bash
+        env:
+          CHECKOUT_PATH: trusted
+        run: |
+          set -euo pipefail
+          git -C "$CHECKOUT_PATH" remote remove origin
+          git -C "$CHECKOUT_PATH" for-each-ref --format='delete %(refname)' refs/remotes/ |
+            git -C "$CHECKOUT_PATH" update-ref --stdin
+          remote_count="$(git -C "$CHECKOUT_PATH" remote | wc -l)"
+          remote_ref_count="$(git -C "$CHECKOUT_PATH" for-each-ref --format='%(refname)' refs/remotes/ | wc -l)"
+          if [[ "$remote_count" -ne 0 || "$remote_ref_count" -ne 0 ]]; then
+            printf '%s\n' "checkout still exposes remotes or remote-tracking refs" >&2
+            exit 1
+          fi
+          head_sha="$(git -C "$CHECKOUT_PATH" rev-parse HEAD)"
+          base_sha="$(git -C "$CHECKOUT_PATH" rev-parse HEAD^1)"
+          test -n "$head_sha"
+          test -n "$base_sha"
+
+      - name: Check out candidate theory as data
+        id: checkout-candidate-data
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ github.repository }}
+          ref: ${{ github.event.pull_request.head.sha }}
+          path: candidate-data
+          sparse-checkout: docs/develop/theory
+          sparse-checkout-cone-mode: false
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Strip checkout remote state
+        if: steps.checkout-candidate-data.outcome == 'success'
+        shell: bash
+        env:
+          CHECKOUT_PATH: candidate-data
+        run: |
+          set -euo pipefail
+          git -C "$CHECKOUT_PATH" remote remove origin
+          git -C "$CHECKOUT_PATH" for-each-ref --format='delete %(refname)' refs/remotes/ |
+            git -C "$CHECKOUT_PATH" update-ref --stdin
+          remote_count="$(git -C "$CHECKOUT_PATH" remote | wc -l)"
+          remote_ref_count="$(git -C "$CHECKOUT_PATH" for-each-ref --format='%(refname)' refs/remotes/ | wc -l)"
+          if [[ "$remote_count" -ne 0 || "$remote_ref_count" -ne 0 ]]; then
+            printf '%s\n' "checkout still exposes remotes or remote-tracking refs" >&2
+            exit 1
+          fi
+          head_sha="$(git -C "$CHECKOUT_PATH" rev-parse HEAD)"
+          base_sha="$(git -C "$CHECKOUT_PATH" rev-parse HEAD^1)"
+          test -n "$head_sha"
+          test -n "$base_sha"
+
+      - name: Install pinned SDK from trusted base
+        uses: actions/setup-dotnet@v4
+        with:
+          global-json-file: trusted/global.json
+
+      - name: Install pinned Lean toolchain from trusted base
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [[ ! -x "$HOME/.elan/bin/elan" ]]; then
+            curl --proto '=https' --tlsv1.2 -sSf https://elan.lean-lang.org/elan-init.sh \
+              | sh -s -- -y --default-toolchain none
+          fi
+          toolchain="$(tr -d '\r\n' < trusted/lean-toolchain)"
+          test -n "$toolchain"
+          if ! "$HOME/.elan/bin/elan" toolchain list 2>/dev/null | grep -qF "$toolchain"; then
+            "$HOME/.elan/bin/elan" toolchain install "$toolchain"
+          fi
+          "$HOME/.elan/bin/elan" default "$toolchain"
+          "$HOME/.elan/bin/lake" --version
+
+      - name: Build trusted producer
+        shell: bash
+        run: |
+          set -euo pipefail
+          dotnet build trusted/tools/StrataLint.sln -c Release --warnaserror
+
+      - name: Produce trusted canonical Lean report
+        timeout-minutes: 30
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd trusted
+          export PATH="$HOME/.elan/bin:$PATH"
+          make lean-report
+
+      - name: Download untrusted ingest proposal
+        uses: actions/download-artifact@v4
+        with:
+          name: theory-ingest-proposal
+          path: proposal
+
+      - name: Recompute, authorize, and write back
+        shell: bash
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+          HEAD_REF: ${{ github.event.pull_request.head.ref }}
+          HEAD_REPOSITORY: ${{ github.event.pull_request.head.repo.full_name }}
+          BASE_REPOSITORY: ${{ github.repository }}
+          REMOTE_URL: ${{ github.server_url }}/${{ github.repository }}.git
+        run: |
+          set -euo pipefail
+          [[ "$HEAD_REPOSITORY" == "$BASE_REPOSITORY" ]]
+          "$GITHUB_WORKSPACE/trusted/tools/scripts/workflow/theory-ingest-closure.sh" \
+            writeback \
+            "$GITHUB_WORKSPACE/trusted" \
+            "$GITHUB_WORKSPACE/candidate-data" \
+            "$GITHUB_WORKSPACE/proposal/theory-ingest.patch" \
+            "$BASE_SHA" \
+            "$HEAD_SHA" \
+            "$HEAD_REF" \
+            "$REMOTE_URL"
