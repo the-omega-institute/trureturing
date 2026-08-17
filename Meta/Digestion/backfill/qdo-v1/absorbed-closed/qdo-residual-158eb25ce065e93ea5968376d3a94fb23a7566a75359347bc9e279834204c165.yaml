@@ -1,0 +1,17 @@
+ast_path: theorem/5.2
+fingerprints:
+  raw_sha256: sha256:158eb25ce065e93ea5968376d3a94fb23a7566a75359347bc9e279834204c165
+  normalized_sha256: sha256:158eb25ce065e93ea5968376d3a94fb23a7566a75359347bc9e279834204c165
+cas_ref: sha256:158eb25ce065e93ea5968376d3a94fb23a7566a75359347bc9e279834204c165
+coverage_gids:
+  - D5/S3/QuantumContext/GroupValuedDiagonalEscape.group_valued_diagonal_escape
+receipts:
+  coverage:
+    - gid: D5/S3/QuantumContext/GroupValuedDiagonalEscape.group_valued_diagonal_escape
+      source_sha256: sha256:158eb25ce065e93ea5968376d3a94fb23a7566a75359347bc9e279834204c165
+      target_sha256: sha256:cbcb6159214f5c263cc76b501118fe311f3f777d2a30958c2bab35d7175a7a1d
+  scribe:
+    - gid: D5/S3/QuantumContext/GroupValuedDiagonalEscape.group_valued_diagonal_escape
+      definition_sha256: sha256:ba6110351ef414c923c7dba608cf2cf21b845ef78d63a708ceaedd2d0615743a
+      emission_sha256: sha256:7e6a4edd2982e806aadbd946e678e430e1c169a53c5b3ec75b3e3b6f7b081f9b
+  unresolved_subitems: []

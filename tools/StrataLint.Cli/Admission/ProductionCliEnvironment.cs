@@ -48,6 +48,7 @@ internal interface IFrozenLedgerAdmissionServices
         FrozenLedgerAdmissionPreparation preparation,
         RepositorySnapshot current,
         AcceptedLeanClosure lean,
+        LeanAxiomReport report,
         AcyclicTruthDag dag,
         RawChangeSet changes,
         FrozenRevisionIdentity currentIdentity);
@@ -212,6 +213,7 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
                 frozenLedgerPreparation,
                 current,
                 evaluation.CurrentLean,
+                candidateLeanReport,
                 evaluation.CurrentDag,
                 prepared.Changes,
                 currentIdentity);

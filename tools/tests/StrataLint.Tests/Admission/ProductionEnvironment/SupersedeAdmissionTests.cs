@@ -97,6 +97,85 @@ public sealed partial class ProductionEnvironmentTests
             reference => reference.Environment.LeanToolchainBlobOid == oldToolchain);
     }
 
+    [Fact]
+    public void ProductionCheckRejectsSupersedeWhenARepositoryImportChanged()
+    {
+        using var temporary = new TemporaryDirectory();
+        var fixture = new RuleFixture();
+        fixture.AddBackfillTargets();
+        var dependencyPath = FrozenLedgerTestData.PathFor("BackfillTarget");
+        const string dependencyModule = "D5.S0.Carrier.BackfillTarget";
+        fixture.Reports[RuleFixture.RingPath] = RingReport(
+            [],
+            "Nat",
+            [dependencyModule]);
+        _ = AddFrozenLedger(fixture);
+        foreach (var item in fixture.Files)
+        {
+            fixture.Baseline[item.Key] = item.Value;
+        }
+        foreach (var item in fixture.Reports)
+        {
+            fixture.BaselineReports[item.Key] = item.Value;
+        }
+
+        fixture.Files["lean-toolchain"] = "leanprover/lean4:v4.25.0\n";
+        fixture.Files[dependencyPath] += "-- imported meaning changed\n";
+        fixture.Reports[RuleFixture.RingPath] = RingReport(
+            [],
+            "ambiently-weakened-imported-expression",
+            [dependencyModule]);
+        AddSupersedeEvents(fixture);
+        var eventChanges = AddedLedgerPaths(fixture)
+            .Select(static path => (path, RawChangeKind.Added));
+        var gateway = new FakeRepositoryGateway(
+            RawChangeSet.CreateWithKinds(
+                new[]
+                {
+                    ("lean-toolchain", RawChangeKind.Modified),
+                    (dependencyPath, RawChangeKind.Modified),
+                }.Concat(eventChanges)),
+            Snapshot(fixture.Files),
+            Snapshot(fixture.Baseline));
+
+        var outcome = CheckPinBump(temporary, fixture, gateway);
+
+        AssertSupersedeRejection(outcome, "import closure");
+    }
+
+    [Fact]
+    public void ProductionCheckRejectsWeakerMeaningFromAnUntrackedExternalImport()
+    {
+        using var temporary = new TemporaryDirectory();
+        var fixture = new RuleFixture();
+        fixture.AddBackfillTargets();
+        fixture.Files[RuleFixture.RingPath] = fixture.Files[RuleFixture.RingPath]
+            .Replace("def goldenRing", "import External.Foo\n\ndef goldenRing", StringComparison.Ordinal);
+        fixture.Reports[RuleFixture.RingPath] = RingReport(
+            [],
+            "Nat.Prime 2",
+            ["External.Foo"]);
+        fixture.Baseline[RuleFixture.RingPath] = fixture.Files[RuleFixture.RingPath];
+        fixture.BaselineReports[RuleFixture.RingPath] = fixture.Reports[RuleFixture.RingPath];
+        _ = AddFrozenLedger(fixture);
+        foreach (var item in fixture.Files)
+        {
+            fixture.Baseline[item.Key] = item.Value;
+        }
+        foreach (var item in fixture.Reports)
+        {
+            fixture.BaselineReports[item.Key] = item.Value;
+        }
+
+        fixture.Files["lean-toolchain"] = "leanprover/lean4:v4.25.0\n";
+        fixture.Reports[RuleFixture.RingPath] = RingReport([], "True", ["External.Foo"]);
+        AddSupersedeEvents(fixture);
+
+        var outcome = CheckPinBump(temporary, fixture, PinBumpGateway(fixture));
+
+        AssertSupersedeRejection(outcome, "external import");
+    }
+
     private static RuleFixture CreatePinBumpFixture(
         ImmutableArray<string> baselineAxioms,
         ImmutableArray<string> candidateAxioms)
@@ -119,9 +198,12 @@ public sealed partial class ProductionEnvironmentTests
         return fixture;
     }
 
-    private static LeanFileReport RingReport(ImmutableArray<string> axioms) => new(
-        [],
-        [new LeanDeclaration("goldenRing", "def", "Nat", axioms)]);
+    private static LeanFileReport RingReport(
+        ImmutableArray<string> axioms,
+        string statementMaterial = "Nat",
+        ImmutableArray<string> imports = default) => new(
+        imports.IsDefault ? [] : imports,
+        [new LeanDeclaration("goldenRing", "def", statementMaterial, axioms)]);
 
     private static void AddSupersedeEvents(RuleFixture fixture, string? skipPath = null)
     {
@@ -214,8 +296,13 @@ public sealed partial class ProductionEnvironmentTests
     private static void AssertSupersedeRejection(AdmissionOutcome outcome, string message)
     {
         var rejected = Assert.IsType<AdmissionOutcome.RuleRejected>(outcome);
-        var diagnostic = Assert.Single(
-            rejected.Diagnostics.Where(static item => item.RuleId == RuleId.CreateKnown(8)));
+        var matching = rejected.Diagnostics
+            .Where(static item => item.RuleId == RuleId.CreateKnown(8))
+            .ToArray();
+        Assert.True(
+            matching.Length == 1,
+            string.Join("\n", rejected.Diagnostics.Select(static item => item.Render())));
+        var diagnostic = matching[0];
         Assert.Contains(message, diagnostic.Message, StringComparison.OrdinalIgnoreCase);
         Assert.Contains("delta witness:", diagnostic.Message, StringComparison.Ordinal);
         Assert.Contains("lean-toolchain", diagnostic.Message, StringComparison.Ordinal);

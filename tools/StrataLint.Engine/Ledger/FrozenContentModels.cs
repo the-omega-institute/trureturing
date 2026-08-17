@@ -13,6 +13,7 @@ internal static class FrozenHashDomains
     internal const string FrozenNode = "trureturing:frozen-node:v1\0";
     internal const string FrozenGraph = "trureturing:frozen-graph:v1\0";
     internal const string FrozenEvent = "trureturing:frozen-event:v1\0";
+    internal const string FrozenEventSet = "trureturing:frozen-event-set:v1\0";
     internal const string FrozenCase = "trureturing:frozen-case:v1\0";
     internal const string FrozenClass = "trureturing:frozen-class:v1\0";
     internal const string FrozenCorpus = "trureturing:frozen-corpus:v1\0";

@@ -417,6 +417,7 @@ public static partial class FrozenLedger
     internal static FrozenLedgerReferenceScanOutcome ScanSuffixReferences(
         FrozenLedgerSyntax syntax,
         int startIndex,
+        int sequenceOffset,
         string previousHash)
     {
         ArgumentNullException.ThrowIfNull(syntax);
@@ -448,7 +449,7 @@ public static partial class FrozenLedger
                 var sequence = RequiredNonnegativeInteger(root, "sequence");
                 var recordedPrevious = RequiredString(root, "previous_hash");
                 var eventHash = RequiredString(root, "event_hash");
-                if (sequence != index
+                if (sequence != sequenceOffset + index
                     || RequiredNonnegativeInteger(root, "schema_version") != 1
                     || !string.Equals(recordedPrevious, previous, StringComparison.Ordinal)
                     || !FrozenHashSyntax.IsSha256(eventHash)
