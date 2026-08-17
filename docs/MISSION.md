@@ -26,6 +26,10 @@
   },
   "frontier_eligibility": [
     {
+      "source_ref": "D5/X_Frontier/CphiPositivity",
+      "kind": "declaration-ready-mathematical-open"
+    },
+    {
       "source_ref": "D5/X_Frontier/D5P001",
       "kind": "governance"
     },
