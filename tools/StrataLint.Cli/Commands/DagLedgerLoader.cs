@@ -174,8 +174,7 @@ public static class DagLedgerLoader
         remaining.Remove(item);
         ordered.Add(item);
         placedIdentities.Add(item.Identity);
-        if (item.EventType == FrozenLedger.SupersedeEventType
-            && item.Payload.TryGetProperty("frozen_node_id", out var frozenNodeId)
+        if (item.Payload.TryGetProperty("frozen_node_id", out var frozenNodeId)
             && frozenNodeId.ValueKind == JsonValueKind.String)
         {
             placedIdentities.Add(frozenNodeId.GetString()!);
@@ -218,6 +217,15 @@ public static class DagLedgerLoader
                 && prerequisites.EnumerateArray().All(prerequisite =>
                     prerequisite.ValueKind == JsonValueKind.String
                     && placedIdentities.Contains(prerequisite.GetString()!));
+        }
+
+        if (item.EventType == "Revoke")
+        {
+            return item.Payload.TryGetProperty("root_frozen_node_ids", out var roots)
+                && roots.ValueKind == JsonValueKind.Array
+                && roots.EnumerateArray().All(root =>
+                    root.ValueKind == JsonValueKind.String
+                    && placedIdentities.Contains(root.GetString()!));
         }
 
         return true;

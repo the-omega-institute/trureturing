@@ -305,11 +305,10 @@ public sealed partial class FrozenLedgerTests
         Assert.Equal(
             new[]
             {
+                "axiom_closure",
                 "case_id",
                 "input",
-                "input_fingerprint",
                 "previous_attestation_event_hash",
-                "semantic_receipt",
             },
             reattestPayload.EnumerateObject()
                 .Select(static property => property.Name)
