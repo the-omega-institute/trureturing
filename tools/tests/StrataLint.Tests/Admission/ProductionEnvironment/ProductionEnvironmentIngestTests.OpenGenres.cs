@@ -87,14 +87,13 @@ public sealed partial class ProductionEnvironmentTests
         Assert.Equal(
             UnregisteredGenreLocator.ForToken(token),
             Assert.Single(source.Entries).AstPath);
-        var metadataPath = Path.Combine(
-            temporary.Path,
-            BackfillInventoryLoader.RootPath.Replace('/', Path.DirectorySeparatorChar),
-            "fixture-source",
-            "source.toml");
+        // The loader already requires the committed bytes to equal the writer's canonical
+        // output, so asserting the writer proves what the file holds without reading a
+        // path the conservative test-map parser cannot resolve.
         Assert.Contains(
             "unregistered_genres = [\"**新\\\"判\\\\词。**\"]",
-            File.ReadAllText(metadataPath),
+            Encoding.UTF8.GetString(
+                BackfillInventoryWriter.WriteSourceMetadata(source).AsSpan()),
             StringComparison.Ordinal);
     }
 
