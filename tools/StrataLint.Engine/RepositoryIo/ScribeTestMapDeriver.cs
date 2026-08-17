@@ -59,6 +59,7 @@ internal static class ScribeTestMapDeriver
     // roots; engineering scope is derived from consumers and does not use this declaration.
     internal static readonly IReadOnlyList<string> DeclaredPathWhitelist =
     [
+        ".github/workflows/ci.yml",
         ".github/workflows/theory-ingest.yml",
         "Blueprint",
         "CLAUDE.md",
