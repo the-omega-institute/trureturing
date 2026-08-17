@@ -85,6 +85,33 @@ public sealed class GitRepositoryGatewayRevisionTests
     }
 
     [Fact]
+    public void ReadCurrentChangesReportsOnlyWorkingTreeDeltaFromHead()
+    {
+        using var repository = new TemporaryDirectory();
+        ReviewRegressionTests.RunGit(repository.Path, "init");
+        ReviewRegressionTests.RunGit(repository.Path, "config", "user.email", "stratalint@example.invalid");
+        ReviewRegressionTests.RunGit(repository.Path, "config", "user.name", "StrataLint Tests");
+        File.WriteAllText(Path.Combine(repository.Path, "tracked.txt"), "baseline\n", new UTF8Encoding(false));
+        ReviewRegressionTests.RunGit(repository.Path, "add", "tracked.txt");
+        ReviewRegressionTests.RunGit(repository.Path, "commit", "-m", "working changes fixture");
+        var gateway = new GitRepositoryGateway(repository.Path);
+
+        Assert.Empty(gateway.ReadCurrentChanges().Entries);
+
+        File.WriteAllText(Path.Combine(repository.Path, "tracked.txt"), "changed\n", new UTF8Encoding(false));
+        File.WriteAllText(Path.Combine(repository.Path, "untracked.txt"), "new\n", new UTF8Encoding(false));
+
+        Assert.Equal(
+            new[]
+            {
+                ("tracked.txt", RawChangeKind.Modified),
+                ("untracked.txt", RawChangeKind.Added),
+            },
+            gateway.ReadCurrentChanges().Entries
+                .Select(static change => (change.Path.Value, change.Kind)));
+    }
+
+    [Fact]
     public void PreparePrefersModifiedOverCopySourceForTheSamePath()
     {
         using var repository = new TemporaryDirectory();
