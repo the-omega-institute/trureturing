@@ -142,6 +142,31 @@ public sealed class TheoryCandidatesTests
     }
 
     [Fact]
+    public void CandidateProjectionEnumeratesFrontierSubBucketsRecursively()
+    {
+        var fixture = CandidateFixture();
+        const string nestedGid = "D5/X_Frontier/Conjectures/GoldenUnitsUFD";
+        const string nestedPath = nestedGid + ".lean";
+        fixture.Files[nestedPath] = fixture.Files[MathematicalFrontierPath];
+        fixture.Files.Remove(MathematicalFrontierPath);
+        fixture.Reports[nestedPath] = fixture.Reports[MathematicalFrontierPath];
+        fixture.Reports.Remove(MathematicalFrontierPath);
+        fixture.Files[MissionFileLoader.RelativePath] = fixture.Files[MissionFileLoader.RelativePath]
+            .Replace("D5/X_Frontier/GoldenUnitsUFD", nestedGid, StringComparison.Ordinal);
+        fixture.Files[PartialAtomPath] = fixture.Files[PartialAtomPath]
+            .Replace("D5/X_Frontier/GoldenUnitsUFD", nestedGid, StringComparison.Ordinal);
+
+        var result = Run(fixture);
+
+        Assert.True(result.Success, result.Error);
+        using var json = JsonDocument.Parse(result.Output);
+        Assert.Contains(
+            json.RootElement.GetProperty("candidates").EnumerateArray(),
+            candidate => candidate.GetProperty("candidate_id").GetString()
+                == "frontier/" + nestedGid);
+    }
+
+    [Fact]
     public void FrontierClassifierKeepsEveryFailureDirectionDistinct()
     {
         var fixture = CandidateFixture();

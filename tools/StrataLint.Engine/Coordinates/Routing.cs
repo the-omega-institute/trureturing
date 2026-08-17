@@ -277,12 +277,22 @@ public static class RouteEngine
 
         if (domain is "X_Assumptions" or "X_Certificates" or "X_Frontier")
         {
-            if (subDomain is not null)
+            if (subDomain is null)
+            {
+                return (ImmutableArray.Create(domain, module), null);
+            }
+
+            if (!string.Equals(domain, "X_Frontier", StringComparison.Ordinal))
             {
                 throw new FormatException("special-zone route cannot have a subdomain");
             }
 
-            return (ImmutableArray.Create(domain, module), null);
+            if (!CamelPattern.IsMatch(subDomain))
+            {
+                throw new FormatException("subdomain must be CamelCase");
+            }
+
+            return (ImmutableArray.Create(domain, subDomain, module), null);
         }
 
         if (subDomain is not null && !CamelPattern.IsMatch(subDomain))

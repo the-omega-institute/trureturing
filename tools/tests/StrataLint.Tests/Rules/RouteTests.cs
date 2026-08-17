@@ -75,7 +75,6 @@ public sealed class RouteTests
     [Theory]
     [InlineData("X_Assumptions")]
     [InlineData("X_Certificates")]
-    [InlineData("X_Frontier")]
     public void SpecialZoneRouteRejectsSubDomainAtItsOwningAssertion(string specialZone)
     {
         var manifest = new ManifestSyntax(
@@ -85,6 +84,18 @@ public sealed class RouteTests
 
         Assert.Equal(RuleId.CreateKnown(15), rejected.RuleId);
         Assert.Equal("special-zone route cannot have a subdomain", rejected.Message);
+    }
+
+    [Fact]
+    public void FrontierRouteUsesARegisteredShapeSubBucketAfterCapacitySplit()
+    {
+        var manifest = new ManifestSyntax(
+            "D5", "F", "X_Frontier", "Probe", "G", "", "lean", "", SubDomain: "Conjectures");
+
+        var routed = Assert.IsType<RouteOutcome.Routed>(RouteEngine.Route(Policy(), manifest));
+
+        Assert.Equal("D5/X_Frontier/Conjectures/Probe", routed.Result.Gid.Value);
+        Assert.Equal("D5/X_Frontier/Conjectures/Probe.lean", routed.Result.Path.Value);
     }
 
     [Theory]

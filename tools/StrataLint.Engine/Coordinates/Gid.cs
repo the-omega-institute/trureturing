@@ -319,7 +319,10 @@ public sealed class Gid : IEquatable<Gid>
             && IsStratum(parts[0])
             && parts[1..^1].All(CamelPattern.IsMatch)
             && (parts.Length == 3 || !string.Equals(parts[1], parts[2], StringComparison.Ordinal));
-        var special = parts.Length == 2 && IsSpecialZone(parts[0]);
+        var special = parts.Length == 2 && IsSpecialZone(parts[0])
+            || parts.Length == 3
+                && string.Equals(parts[0], "X_Frontier", StringComparison.Ordinal)
+                && CamelPattern.IsMatch(parts[1]);
         if (!ordinary && !special)
         {
             throw new FormatException("Formal coordinates are not canonical.");

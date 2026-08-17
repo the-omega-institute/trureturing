@@ -1,3 +1,4 @@
+using System.Collections.Immutable;
 using System.Text;
 using System.Text.Json;
 using StrataLint.Engine;
@@ -93,6 +94,45 @@ internal sealed partial class RuleFixture
         {
             Reports.Remove(path);
         }
+    }
+
+    internal void MoveTheoristTargetToFrontierSubBucket(string bucket)
+    {
+        var oldPath = currentTheoristPath;
+        var oldGid = oldPath[..^".lean".Length];
+        var module = oldGid[(oldGid.LastIndexOf('/') + 1)..];
+        var newGid = $"D5/X_Frontier/{bucket}/{module}";
+        var newPath = newGid + ".lean";
+        var oldQualified = oldGid.Replace('/', '.');
+        var newQualified = newGid.Replace('/', '.');
+        var oldReport = Reports[oldPath];
+        var oldStatement = Assert.Single(CanonicalStatementWriter.DeclarationStatementIds(
+            RepoPath.CreateKnown(oldPath),
+            oldReport));
+        var newReport = oldReport with
+        {
+            Declarations = oldReport.Declarations.Select(declaration => declaration with
+            {
+                Name = declaration.Name.Replace(oldQualified, newQualified, StringComparison.Ordinal),
+                NameKey = declaration.NameKey.Replace(oldQualified, newQualified, StringComparison.Ordinal),
+            }).ToImmutableArray(),
+        };
+        var newStatement = Assert.Single(CanonicalStatementWriter.DeclarationStatementIds(
+            RepoPath.CreateKnown(newPath),
+            newReport));
+        var source = Files[oldPath]
+            .Replace(oldGid, newGid, StringComparison.Ordinal)
+            .Replace(oldQualified, newQualified, StringComparison.Ordinal)
+            .Replace(oldStatement.StatementId.Value, newStatement.StatementId.Value, StringComparison.Ordinal);
+
+        Files.Remove(oldPath);
+        Reports.Remove(oldPath);
+        Changes.Remove(oldPath);
+        Files[newPath] = source;
+        Reports[newPath] = newReport;
+        Changes.Add(newPath);
+        currentTheoristPath = newPath;
+        Files[MissionFileLoader.RelativePath] = Mission("declaration-ready-mathematical-open");
     }
 
     internal void MutateTheoristTarget(string mutation)

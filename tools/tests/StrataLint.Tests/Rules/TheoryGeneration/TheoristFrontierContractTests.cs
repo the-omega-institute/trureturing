@@ -67,6 +67,18 @@ public sealed class TheoristFrontierContractTests
         Assert.Empty(diagnostics);
     }
 
+    [Fact]
+    public void FrontierSubBucketContractAndMissionOwnerAreValidatedRecursively()
+    {
+        var fixture = new RuleFixture();
+        fixture.AddHistoricalTheoristTarget("prime-norm-irreducibility");
+        fixture.MoveTheoristTargetToFrontierSubBucket("Conjectures");
+
+        var diagnostics = Evaluate(fixture);
+
+        Assert.Empty(diagnostics);
+    }
+
     [Theory]
     [MemberData(nameof(HistoricalCandidates))]
     public void HistoricalFixtureMatchesTheRecordedTheorySelfGrowthBlob(string fixtureName)
