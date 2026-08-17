@@ -494,7 +494,11 @@ public sealed partial class DepositCoverWorkflowScriptTests
                 {
                     case_id = caseId,
                     frozen_node_id = frozenNodeId,
-                    input = new { descriptor_blob_oid = descriptorBlobOid },
+                    input = new
+                    {
+                        descriptor_blob_oid = descriptorBlobOid,
+                        descriptor_selector = LeanPath,
+                    },
                     node_path = LeanPath,
                 },
             });
@@ -520,7 +524,11 @@ public sealed partial class DepositCoverWorkflowScriptTests
                     case_id = "active-frozen/stale-probe",
                     frozen_node_id =
                         "sha256:3333333333333333333333333333333333333333333333333333333333333333",
-                    input = new { descriptor_blob_oid = descriptorBlobOid },
+                    input = new
+                    {
+                        descriptor_blob_oid = descriptorBlobOid,
+                        descriptor_selector = LeanPath,
+                    },
                     node_path = LeanPath,
                 },
             });
@@ -548,6 +556,7 @@ public sealed partial class DepositCoverWorkflowScriptTests
                     {
                         descriptor_blob_oid =
                             "git-sha1:0000000000000000000000000000000000000000",
+                        descriptor_selector = LeanPath,
                     },
                     node_path = LeanPath,
                 },
@@ -593,6 +602,7 @@ public sealed partial class DepositCoverWorkflowScriptTests
                     {
                         descriptor_blob_oid =
                             "git-sha1:0000000000000000000000000000000000000000",
+                        descriptor_selector = LeanPath,
                     },
                     node_path = LeanPath,
                 },
@@ -666,9 +676,7 @@ public sealed partial class DepositCoverWorkflowScriptTests
                 var selector = payload.TryGetProperty("input", out var input)
                     && input.TryGetProperty("descriptor_selector", out var descriptorSelector)
                         ? descriptorSelector.GetString()
-                        : payload.TryGetProperty("node_path", out var nodePath)
-                            ? nodePath.GetString()
-                            : null;
+                        : null;
                 return selector == leanPath;
             });
 

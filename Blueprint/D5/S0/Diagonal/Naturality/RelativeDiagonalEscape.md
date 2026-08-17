@@ -23,4 +23,3 @@ Loogle found Function.exists_fixed_point_of_surjective as a related surjectivity
 ## References
 
 - Truth anchor: `D5/S0/Diagonal/Naturality/RelativeDiagonalEscape.relative_diagonal_escape`
-- Dependency: [D5/S0/Diagonal/EscapeCount](../EscapeCount.md)

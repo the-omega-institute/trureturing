@@ -72,7 +72,7 @@ public sealed partial class DepositCoverWorkflowScriptTests
                 else
                   event_id=3333333333333333333333333333333333333333333333333333333333333333
                 fi
-                printf '{"event_type": "Freeze", "payload": {"case_id": "active-frozen/%s", "frozen_node_id": "sha256:%s", "input": {"base_commit_oid": "%s", "descriptor_blob_oid": "%s"}, "node_path": "%s"}}\n' \
+                printf '{"event_type": "Freeze", "payload": {"case_id": "active-frozen/%s", "frozen_node_id": "sha256:%s", "input": {"base_commit_oid": "%s", "descriptor_blob_oid": "%s", "descriptor_selector": "%s"}}, "schema_version": 4}\n' \
                   "$event_id" "$event_id" "$base_commit_oid" "$descriptor_blob_oid" "$target_module" \
                   > "Golden/Frozen/accepted/${event_id}.json"
                 if [[ -n ${PLAYBOOK_MUTATE_RECEIPT_AFTER_PREPARE:-} ]]; then

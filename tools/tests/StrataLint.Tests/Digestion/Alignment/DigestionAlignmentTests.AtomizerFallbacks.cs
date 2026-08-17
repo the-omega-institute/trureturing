@@ -245,6 +245,134 @@ public sealed partial class DigestionAlignmentTests
     }
 
     [Fact]
+    public void IngestTreatsRegisteredLegacyFineReceiptAsAdapterReplacementIntent()
+    {
+        var (sourceBytes, coarseCapture, fineCapture, ledger) = MissedCoarseReplacement();
+        var coarseBefore = Assert.Single(ledger.RequireDigestionEntries(), static entry =>
+            entry.AtomId == "coarse-receipt");
+
+        var plan = DigestionIngestor.Plan(
+            ledger,
+            Snapshot(sourceBytes, [coarseCapture, fineCapture]),
+            ledger);
+        var source = Assert.Single(plan.Document.RequireDigestionSources());
+        var coarseAfter = Assert.Single(source.Entries, static entry =>
+            entry.AtomId == "coarse-receipt");
+
+        Assert.Equal(1, plan.StaleAcknowledged);
+        Assert.Equal(["coarse-receipt"], source.AcknowledgedStale.ToArray());
+        Assert.Equal(coarseBefore.AtomId, coarseAfter.AtomId);
+        Assert.Equal(coarseBefore.AstPath, coarseAfter.AstPath);
+        Assert.Equal(coarseBefore.Fingerprints, coarseAfter.Fingerprints);
+        Assert.Equal(coarseBefore.CasRef, coarseAfter.CasRef);
+    }
+
+    [Fact]
+    public void AlignmentTreatsRegisteredLegacyFineReceiptAsAdapterReplacementIntent()
+    {
+        var (sourceBytes, coarseCapture, fineCapture, ledger) =
+            MissedCoarseReplacement(legacySyntax: true);
+
+        var result = DigestionLedgerAligner.Evaluate(
+            ledger,
+            Snapshot(sourceBytes, [coarseCapture, fineCapture]),
+            ledger,
+            DigestionAlignmentMode.Ingest);
+
+        Assert.Equal(["coarse-receipt"], result.ActualStale.ToArray());
+        Assert.Equal(
+            DigestionReceiptAlignment.Stale,
+            result.AlignmentFor("coarse-receipt"));
+    }
+
+    [Fact]
+    public void AlignmentKeepsCoarseReceiptWhenRegisteredAdapterHasNoFineReceipt()
+    {
+        var (sourceBytes, coarseCapture, _, ledger) = MissedCoarseReplacement();
+        var source = Assert.Single(ledger.RequireDigestionSources());
+        var coarseOnly = ledger.WithDigestionSources(
+            [source with
+            {
+                Entries = source.Entries
+                    .Where(static entry => entry.AstPath == "coarse/source")
+                    .ToImmutableArray(),
+            }]);
+
+        var result = DigestionLedgerAligner.Evaluate(
+            coarseOnly,
+            Snapshot(sourceBytes, [coarseCapture]),
+            coarseOnly,
+            DigestionAlignmentMode.Ingest);
+
+        Assert.Empty(result.ActualStale);
+        Assert.Equal(
+            DigestionReceiptAlignment.Seen,
+            result.AlignmentFor("coarse-receipt"));
+    }
+
+    [Fact]
+    public void IngestDoesNotRetireCoarseReceiptForFineReceiptWithoutRegisteredAdapter()
+    {
+        var sourceBytes = Encoding.UTF8.GetBytes("# Legacy\n\nfine claim\n");
+        var coarseBytes = ImmutableArray.CreateRange(sourceBytes);
+        var coarse = new DigestionAtom(
+            "coarse/source",
+            0,
+            sourceBytes.Length,
+            coarseBytes,
+            DigestionFingerprint.ComputeOpaque(coarseBytes.AsSpan()),
+            []);
+        var fineBytes = ImmutableArray.CreateRange(Encoding.UTF8.GetBytes("fine claim"));
+        var fineStart = sourceBytes.AsSpan().IndexOf(fineBytes.AsSpan());
+        var fine = new DigestionAtom(
+            "legacy/fine",
+            fineStart,
+            fineStart + fineBytes.Length,
+            fineBytes,
+            DigestionFingerprint.Compute(fineBytes.AsSpan()),
+            []);
+        var coarseCapture = DigestionCasStore.Capture(coarseBytes.AsSpan());
+        var fineCapture = DigestionCasStore.Capture(fineBytes.AsSpan());
+        var ledger = BackfillInventoryLoader.Load(
+            Ledger(
+                    [],
+                    LegacyEntry("coarse-receipt", coarse),
+                    LegacyEntry("fine-receipt", fine))
+                .Replace(
+                    $"atomizer: {AtomizerRegistry.GictId}",
+                    $"atomizer: {AtomizerRegistry.NoAtomizerId}",
+                    StringComparison.Ordinal));
+
+        var plan = DigestionIngestor.Plan(
+            ledger,
+            Snapshot(sourceBytes, [coarseCapture, fineCapture]),
+            ledger);
+
+        Assert.Equal(0, plan.StaleAcknowledged);
+        var source = Assert.Single(plan.Document.RequireDigestionSources());
+        Assert.Empty(source.AcknowledgedStale);
+        Assert.Contains(source.Entries, static entry => entry.AstPath == "coarse/source");
+        Assert.Contains(source.Entries, static entry => entry.AstPath == "legacy/fine");
+    }
+
+    [Fact]
+    public void RepairedCoarseRetirementIsIdempotentAcrossConsecutiveIngests()
+    {
+        var (sourceBytes, coarseCapture, fineCapture, ledger) = MissedCoarseReplacement();
+        var snapshot = Snapshot(sourceBytes, [coarseCapture, fineCapture]);
+        var first = DigestionIngestor.Plan(ledger, snapshot, ledger);
+        var firstBytes = BackfillInventoryWriter.WriteForIngest(first.Document);
+        var settled = BackfillInventoryLoader.Load(Encoding.UTF8.GetString(firstBytes.AsSpan()));
+
+        var second = DigestionIngestor.Plan(settled, snapshot, settled);
+        var secondBytes = BackfillInventoryWriter.WriteForIngest(second.Document);
+
+        Assert.Equal(0, second.StaleAcknowledged);
+        Assert.Equal(0, second.ResidualOpenAdded);
+        Assert.Equal(firstBytes.ToArray(), secondBytes.ToArray());
+    }
+
+    [Fact]
     public void AdmissionRejectsRemovingASettledCoarseReplacementAcknowledgment()
     {
         var sourceBytes = Encoding.UTF8.GetBytes(
@@ -501,5 +629,43 @@ public sealed partial class DigestionAlignmentTests
         var settled = BackfillInventoryLoader.Load(Encoding.UTF8.GetString(
             BackfillInventoryWriter.WriteForIngest(plan.Document).AsSpan()));
         return (sourceBytes, captured, plan, settled);
+    }
+
+    private static (
+        byte[] SourceBytes,
+        DigestionCasObject CoarseCapture,
+        DigestionCasObject FineCapture,
+        BackfillInventoryDocument Ledger) MissedCoarseReplacement(bool legacySyntax = false)
+    {
+        var sourceBytes = Encoding.UTF8.GetBytes(
+            "# Observer\n\n**\u5b9a\u7406(\u89c2\u5bdf\u8005\u4ee3\u6570\u7684\u552f\u4e00\u5f62\u6001)\u3002** claim\u3002\n");
+        var coarseBytes = ImmutableArray.CreateRange(sourceBytes);
+        var coarse = new DigestionAtom(
+            "coarse/source",
+            0,
+            sourceBytes.Length,
+            coarseBytes,
+            DigestionFingerprint.ComputeOpaque(coarseBytes.AsSpan()),
+            []);
+        var fine = Assert.Single(AtomizerRegistry.Atomize(
+            AtomizerRegistry.ObserverId,
+            sourceBytes,
+            DigestionTestSupport.Rules).Claims);
+        var coarseCapture = DigestionCasStore.Capture(coarseBytes.AsSpan());
+        var fineCapture = DigestionCasStore.Capture(fine.RawBytes.AsSpan());
+        var ledger = BackfillInventoryLoader.Load(
+            Ledger(
+                    [],
+                    legacySyntax
+                        ? LegacyEntry("coarse-receipt", coarse)
+                        : CasEntry("coarse-receipt", coarse, coarseCapture.Reference),
+                    legacySyntax
+                        ? LegacyEntry("fine-receipt", fine)
+                        : CasEntry("fine-receipt", fine, fineCapture.Reference))
+                .Replace(
+                    $"atomizer: {AtomizerRegistry.GictId}",
+                    $"atomizer: {AtomizerRegistry.ObserverId}",
+                    StringComparison.Ordinal));
+        return (sourceBytes, coarseCapture, fineCapture, ledger);
     }
 }

@@ -157,3 +157,11 @@ def missionStructuralRealizationMeasurementTicket : Unit := ()
 /-- TASK D5-T0043
     The receipt-potential factor's machine-replayable measurement receipt contract has not been established. Until it lands, docs/MISSION.md must remain open(D5-T0043) and must not claim a complete worth score. -/
 def missionReceiptPotentialMeasurementTicket : Unit := ()
+
+/- TASK D5-T0044
+    双语译名权威不存在。spec 曾称 `Meta/glossary.csv` 是 zh↔en 逐词钉死的唯一译名权威,
+    由 Blueprint 与 papergen 引用,译名漂移判 lint 红;实测全仓 `.csv` 文件数为 0、
+    papergen 已退役(`D5-T0006`)、`glossary` 在 `tools/` 零命中,三项声称皆不成立。
+    本仓确为双语,译名漂移是真风险,但至今无一例被记录的漂移事故。
+    关闭条件:要么建立术语表与其漂移检测并给出首例事故依据,要么裁定不建立并从本卷删去该段。 -/
+

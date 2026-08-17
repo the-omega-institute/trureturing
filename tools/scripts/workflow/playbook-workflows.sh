@@ -146,7 +146,7 @@ freeze_exists() {
   fi
 
   if ! freeze_case_ids="$(jq -rsc --arg node "$MODULE_PATH" '
-      map(select(.event_type == "Freeze" and .payload.node_path == $node))
+      map(select(.event_type == "Freeze" and .payload.input.descriptor_selector == $node))
       | map(
           (.payload.case_id // null) as $case
           | if (($case | type) == "string") then
@@ -261,7 +261,7 @@ freeze_exists() {
         elif $event.event_type == "Freeze" then
           ($event.payload.case_id // null) as $case
           | ($event.payload.frozen_node_id // null) as $frozen_id
-          | ($event.payload.node_path // null) as $path
+          | ($event.payload.input.descriptor_selector // null) as $path
           | ($event.payload.input.descriptor_blob_oid // null) as $blob
           | if (($case | type) != "string"
               or ($frozen_id | type) != "string"

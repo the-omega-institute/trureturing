@@ -1,0 +1,17 @@
+ast_path: theorem/34.8
+fingerprints:
+  raw_sha256: sha256:94226df529e8ce946327d424dc19b735a4c1f897a2134b67a011f18c79be7249
+  normalized_sha256: sha256:94226df529e8ce946327d424dc19b735a4c1f897a2134b67a011f18c79be7249
+cas_ref: sha256:94226df529e8ce946327d424dc19b735a4c1f897a2134b67a011f18c79be7249
+coverage_gids:
+  - D5/S0/Diagonal/Feedback/StrategicResponseObstruction.strategic_response_precludes_universal_predictor
+receipts:
+  coverage:
+    - gid: D5/S0/Diagonal/Feedback/StrategicResponseObstruction.strategic_response_precludes_universal_predictor
+      source_sha256: sha256:94226df529e8ce946327d424dc19b735a4c1f897a2134b67a011f18c79be7249
+      target_sha256: sha256:eabcd0ce9a856a6d8aa41c00d684e57652265513a6949a9117b8d6df5e304fac
+  scribe:
+    - gid: D5/S0/Diagonal/Feedback/StrategicResponseObstruction.strategic_response_precludes_universal_predictor
+      definition_sha256: sha256:5abcb5ee341c71aa09fb0d64903b808d747794e335527a8306f6e2b3353564bd
+      emission_sha256: sha256:e65b4bc72026f8006346a9bebf337aae96ed9588a68776698f49c78c6114c09e
+  unresolved_subitems: []
