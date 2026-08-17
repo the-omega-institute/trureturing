@@ -718,8 +718,13 @@ criterion `two consecutive full audits with zero new gaps`, and requires the rou
 count and new-gap curve to be kept; without a round-1 record the criterion cannot
 be evaluated at all.
 
-Input version: `bf0d97896`. Method: per-surface enumeration, each surface reduced to
-a machine reading before any deletion. Confirmed gaps are candidates that survived
+Input version: `bf0d97896` for the round as a whole. **The C# member reachability row is
+the exception: it was measured at `28c0ecf77`**, which is where PR #2114 records the census
+baseline. `bf0d97896` already contains the merges that acted on those findings (`cd617baf1`
+for the seventeen zero-reference deletions, `be999cc93` for the twenty-four test-only
+dispositions), so it cannot reproduce that row and must not be used to calibrate a rebuild.
+Method: per-surface enumeration, each surface reduced to a machine reading before any
+deletion. Confirmed gaps are candidates that survived
 independent verification and were merged as deletions or registered as named opens.
 
 | Surface | Reading | Confirmed gaps |
