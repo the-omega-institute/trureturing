@@ -48,6 +48,8 @@ satisfies the P2 contract. It does not prove or freeze that declaration.
   - owns the live P2 validation details.
 - `skills/codex-formalize/SKILL.md` - owns residual-atom formalization; it is a
   downstream boundary, not a subroutine of this workflow.
+- `skills/codex-theory-ingest/SKILL.md` - owns the family-wide bounded REST
+  pull-request observation protocol reused in Step 8.
 
 ## State machine
 
@@ -92,6 +94,8 @@ commands_and_exit_codes
 changed_paths
 git_status_porcelain
 commit_sha
+resolved_base_sha
+preflight_exit_code
 pr_number
 pr_state
 merged_at
@@ -327,20 +331,27 @@ Require the intended diff only, then run the canonical full gate:
 
 ```sh
 git status --short
-make preflight BASE=origin/dev
+git rev-parse HEAD
+git rev-parse origin/dev
+git diff --name-only <resolved-base-sha>...HEAD
+make preflight BASE=<resolved-base-sha>
 ```
 
 `make preflight` owns report production, engineering tests, live P2/SL-002
 validation, route/check admission against the protected base, and the three CI
-preconditions. Do not replace it with a hand-picked validator or a producing
-seat's judgment. If `origin/dev` advances, follow the live harness diagnostic;
-never enable strict branch protection or bypass a failed check. Do not
+preconditions. Capture the two `git rev-parse` outputs before preflight and
+substitute the exact 40-hex base result for `<resolved-base-sha>`; do not let a
+moving branch name stand in for that identity. Record the changed-path output
+and command exit code in the run-local log. Do not replace preflight with a
+hand-picked validator or a producing seat's judgment. If `origin/dev` advances,
+follow the live harness diagnostic; never enable strict branch protection or
+bypass a failed check. Do not
 regenerate an existing generated receipt solely because the selected owner is
 its attested input; end `open` and name that coupling instead.
 
-Postcondition: `make preflight BASE=origin/dev` exits 0 on the exact intended
-tree, and the report records the resolved base SHA, candidate report address,
-target GID, and changed paths.
+Postcondition: `make preflight BASE=<resolved-base-sha>` exits 0, HEAD still
+equals the captured `commit_sha`, and the immutable base SHA, exact changed
+paths, and preflight exit code are present in the command log.
 
 ### 8. Open the pull request, then observe merge
 
@@ -357,8 +368,17 @@ changes to that branch. Observe the PR through the GitHub REST API until it is
 machine-confirmed `MERGED`, then fetch `dev` and verify the returned merge commit
 is an ancestor of `origin/dev`. An unmerged `CLOSED` PR, failed required check,
 merge conflict, or unavailable observation ends evidence-complete `open` with
-the REST payload or diagnostic named; an ordinary in-progress PR remains under
-read-only observation and is not success.
+the REST payload or diagnostic named.
+
+Apply the bounded observation protocol from `codex-theory-ingest` without
+variation. Poll at most 30 times at 60-second intervals, with the first REST and
+required-check observations immediate and at most 29 sleeps. Run this long poll
+through the host's background-job mechanism and retain its true exit sentinel;
+never use shell `&`. Every poll freshly reads the REST PR object and required
+checks, validates the fixed JSON fields and captured head SHA, and applies that
+protocol's exact exit-code and bucket rules. An ordinary in-progress PR
+continues only while budget remains; attempt 30 without a terminal verdict ends
+evidence-complete `open` with the latest REST and required-check payloads.
 
 Report `success` only with the REST-confirmed `MERGED` state, `merged_at`, merge
 commit SHA, landed `dev` SHA, target declaration GID, selection receipt, six
