@@ -143,6 +143,7 @@ public sealed class FrozenLedgerAdmissionDiagnosticsTests
             preparation,
             scope,
             expectedCatalog,
+            changes,
             preparation.TrustedDeltaReferences);
     }
 

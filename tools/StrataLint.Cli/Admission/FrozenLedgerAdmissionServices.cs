@@ -295,6 +295,7 @@ internal sealed class ProductionFrozenLedgerAdmissionServices : IFrozenLedgerAdm
             preparation,
             scope,
             catalog,
+            changes,
             preparation.TrustedDeltaReferences);
         return failure is null
             ? null

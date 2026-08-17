@@ -97,14 +97,10 @@ public sealed partial class FrozenLedgerTests
             candidateAxioms: ["propext"],
             candidateStatementMaterial: "ambiently-different-elaborated-expression");
 
-        var accepted = Assert.IsType<FrozenLedgerValidationOutcome.Accepted>(
-            ValidateCandidate(
-                LoadedSupersedeLedger(AppendSupersede(fixture).AsSpan()),
-                fixture.Baseline,
-                fixture.CandidateCatalog)).Capability;
-
-        Assert.Equal(fixture.CandidateNode.FrozenNodeId, accepted.ActiveFrozenNodes.Single().FrozenNodeId);
-        Assert.Contains(fixture.BaselineNode.FrozenNodeId, accepted.SupersededFrozenNodeIds);
+        FrozenLedger.ValidateSupersedeStrength(
+            SupersedePayload(fixture),
+            Assert.Single(fixture.Baseline.ActiveEntries).Value,
+            repositoryImportClosureUnchanged: true);
     }
 
     [Fact]
@@ -154,7 +150,10 @@ public sealed partial class FrozenLedgerTests
         var unchangedPinsEntry = baseEntry with { Environment = payload.Environment };
 
         var exception = Assert.Throws<FormatException>(() =>
-            FrozenLedger.ValidateSupersedeStrength(payload, unchangedPinsEntry));
+            FrozenLedger.ValidateSupersedeStrength(
+                payload,
+                unchangedPinsEntry,
+                repositoryImportClosureUnchanged: true));
 
         Assert.Contains("environment pins did not change", exception.Message, StringComparison.OrdinalIgnoreCase);
     }
@@ -177,7 +176,10 @@ public sealed partial class FrozenLedgerTests
         Assert.Equal(2, legacyEntry.Payload.Input.SupportingBlobOids.Length);
 
         var exception = Assert.Throws<FormatException>(() =>
-            FrozenLedger.ValidateSupersedeStrength(payload, legacyEntry));
+            FrozenLedger.ValidateSupersedeStrength(
+                payload,
+                legacyEntry,
+                repositoryImportClosureUnchanged: true));
 
         Assert.Contains("environment pins did not change", exception.Message, StringComparison.OrdinalIgnoreCase);
     }
@@ -191,7 +193,10 @@ public sealed partial class FrozenLedgerTests
         var legacyEntry = Assert.Single(fixture.Baseline.ActiveEntries).Value;
         Assert.Null(legacyEntry.Environment);
 
-        FrozenLedger.ValidateSupersedeStrength(payload, legacyEntry);
+        FrozenLedger.ValidateSupersedeStrength(
+            payload,
+            legacyEntry,
+            repositoryImportClosureUnchanged: true);
     }
 
     [Fact]

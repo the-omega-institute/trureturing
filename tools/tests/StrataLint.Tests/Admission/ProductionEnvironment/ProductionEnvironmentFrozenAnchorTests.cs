@@ -124,6 +124,7 @@ public sealed partial class ProductionEnvironmentTests
                 preparation,
                 scope,
                 catalog,
+                changes,
                 preparation.TrustedDeltaReferences));
 
         Assert.Equal(

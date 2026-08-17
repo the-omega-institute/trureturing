@@ -373,24 +373,48 @@ public sealed class LedgerAppendCommandTests
             bool pinBump = false,
             bool addSecondClosedModule = true,
             bool historicalReattest = false,
-            bool reportADriftInChangeSet = false)
+            bool reportADriftInChangeSet = false,
+            bool aImportsB = false,
+            bool reportBDriftInChangeSet = false)
         {
+            var aSource = aImportsB
+                ? "import D5.S0.Carrier.B\ntheorem a : B.P := B.proof\n"
+                : "theorem a : True := by trivial\n";
             var baselineA = FrozenLedgerTestData.ModuleWithReport(
                 "A",
-                "theorem a : True := by trivial\n",
-                "True");
+                aSource,
+                "True") with
+            {
+                Imports = aImportsB ? ImmutableArray.Create("B") : ImmutableArray<string>.Empty,
+            };
             var candidateA = FrozenLedgerTestData.ModuleWithReport(
                 "A",
                 driftARepresentation
                     ? "-- representation changed\ntheorem a : True := by trivial\n"
                     : baselineA.Source,
-                currentAStatementMaterial);
-            var b = FrozenLedgerTestData.Module("B", imports: new[] { "A" });
+                currentAStatementMaterial) with
+            {
+                Imports = baselineA.Imports,
+            };
+            var baselineB = aImportsB
+                ? FrozenLedgerTestData.Module(
+                    "B",
+                    source: "namespace B\ndef P : Prop := Nat.Prime 2\ntheorem proof : P := by decide\nend B\n")
+                : null;
+            var candidateB = aImportsB
+                ? FrozenLedgerTestData.Module(
+                    "B",
+                    source: reportBDriftInChangeSet
+                        ? "namespace B\ndef P : Prop := True\ntheorem proof : P := trivial\nend B\n"
+                        : baselineB!.Source)
+                : FrozenLedgerTestData.Module("B", imports: new[] { "A" });
             var c = FrozenLedgerTestData.Module("C", imports: new[] { "B" });
-            var baselineCatalog = FrozenLedgerTestData.BuildCatalog(baselineA);
+            var baselineCatalog = aImportsB
+                ? FrozenLedgerTestData.BuildCatalog(baselineA, baselineB!)
+                : FrozenLedgerTestData.BuildCatalog(baselineA);
             CandidateCatalog = addSecondClosedModule
-                ? FrozenLedgerTestData.BuildCatalog(candidateA, b, c)
-                : FrozenLedgerTestData.BuildCatalog(candidateA, b);
+                ? FrozenLedgerTestData.BuildCatalog(candidateA, candidateB, c)
+                : FrozenLedgerTestData.BuildCatalog(candidateA, candidateB);
             BaselineBytes = FrozenLedgerGenerator.GenerateGenesis(
                 baselineCatalog,
                 new FrozenGenesisDescriptor(
@@ -417,7 +441,7 @@ public sealed class LedgerAppendCommandTests
                 ["lakefile.toml"] = "[package]\nname = \"fixture\"\n",
                 ["lake-manifest.json"] = "{}\n",
                 [FrozenLedgerTestData.PathFor("A")] = candidateA.Source,
-                [FrozenLedgerTestData.PathFor("B")] = b.Source,
+                [FrozenLedgerTestData.PathFor("B")] = candidateB.Source,
             };
             if (addSecondClosedModule)
             {
@@ -430,12 +454,18 @@ public sealed class LedgerAppendCommandTests
                 SnapshotDecoder.Decode(raw)).Snapshot;
             var reports = new Dictionary<string, LeanFileReport>(StringComparer.Ordinal)
             {
-                [FrozenLedgerTestData.PathFor("A")] = Report("A", currentAStatementMaterial),
-                [FrozenLedgerTestData.PathFor("B")] = Report("B", "True", "A"),
+                [FrozenLedgerTestData.PathFor("A")] = Report(
+                    "A",
+                    currentAStatementMaterial,
+                    aImportsB ? new[] { "B" } : Array.Empty<string>()),
+                [FrozenLedgerTestData.PathFor("B")] = Report(
+                    "B",
+                    "True",
+                    aImportsB ? Array.Empty<string>() : new[] { "A" }),
             };
             if (addSecondClosedModule)
             {
-                reports.Add(FrozenLedgerTestData.PathFor("C"), Report("C", "True", "B"));
+                reports.Add(FrozenLedgerTestData.PathFor("C"), Report("C", "True", ["B"]));
             }
             var report = LeanAxiomReport.Create(reports);
 
@@ -446,9 +476,13 @@ public sealed class LedgerAppendCommandTests
             ReportPath = Path.Combine(temporary.Path, "candidate-lean-report.json");
             File.WriteAllBytes(ReportPath, RawLeanReportArtifact.Write(snapshot, report).AsSpan());
             Gateway = new FakeRepositoryGateway(
-                RawChangeSet.Create(reportADriftInChangeSet
-                    ? [FrozenLedgerTestData.PathFor("A")]
-                    : []),
+                RawChangeSet.Create(
+                    (reportADriftInChangeSet
+                        ? new[] { FrozenLedgerTestData.PathFor("A") }
+                        : Array.Empty<string>())
+                    .Concat(reportBDriftInChangeSet
+                        ? new[] { FrozenLedgerTestData.PathFor("B") }
+                        : Array.Empty<string>())),
                 raw,
                 null);
             Environment = new ProductionCliEnvironment(
@@ -476,8 +510,8 @@ public sealed class LedgerAppendCommandTests
         private static LeanFileReport Report(
             string name,
             string statementMaterial,
-            params string[] imports) => new(
-            imports.Select(static item => $"D5.S0.Carrier.{item}").ToImmutableArray(),
+            IEnumerable<string>? imports = null) => new(
+            (imports ?? []).Select(static item => $"D5.S0.Carrier.{item}").ToImmutableArray(),
             ImmutableArray.Create(new LeanDeclaration(
                 name.ToLowerInvariant(),
                 "theorem",
