@@ -2,6 +2,8 @@ namespace StrataLint.ArchitectureTests;
 
 public sealed class ScribeTestMapDeriverTests
 {
+    private const string SdkProject = "<Project Sdk=\"Microsoft.NET.Sdk\" />";
+
     private static readonly IReadOnlySet<string> CompileFailProofProjectExemptionRemovalOnlyBaseline =
         new HashSet<string>(StringComparer.Ordinal)
         {
@@ -25,11 +27,137 @@ public sealed class ScribeTestMapDeriverTests
     }
 
     [Fact]
+    public void BlueprintScribeDefinitionsAreAttributedToStrataLintScribeByMsBuildCompileItems()
+    {
+        var repositoryRoot = RepositoryLayout.FindRoot();
+        var map = ScribeTestMapDeriver.DeriveRepository(repositoryRoot);
+        var blueprint = map.CompileProjectBySourcePath
+            .Where(static pair => pair.Key.StartsWith("Blueprint/", StringComparison.Ordinal)
+                && pair.Key.EndsWith(".scribe.cs", StringComparison.Ordinal))
+            .OrderBy(static pair => pair.Key, StringComparer.Ordinal)
+            .ToArray();
+        var tracked = GitIndexRepositoryFiles.Enumerate(repositoryRoot)
+            .Select(static file => file.RelativePath)
+            .Where(static path => path.StartsWith("Blueprint/", StringComparison.Ordinal)
+                && path.EndsWith(".scribe.cs", StringComparison.Ordinal))
+            .Order(StringComparer.Ordinal)
+            .ToArray();
+
+        Assert.Equal(tracked, blueprint.Select(static pair => pair.Key));
+        Assert.All(
+            blueprint,
+            pair => Assert.Equal(
+                "tools/StrataLint.Scribe/StrataLint.Scribe.csproj",
+                pair.Value));
+    }
+
+    [Fact]
+    public void CrossDirectoryCompileOwnershipIsAdmittedWithoutFinding()
+    {
+        var snapshot = Snapshot(
+            ("tools/tests/BannedApiCompileFailProof/BannedApiCompileFailProof.csproj", SdkProject),
+            ("tools/tests/CompileFailProof/CompileFailProof.csproj", SdkProject),
+            ("src/App/App.csproj", """
+                <Project Sdk="Microsoft.NET.Sdk">
+                  <ItemGroup><Compile Include="../../shared/**/*.cs" /></ItemGroup>
+                </Project>
+                """),
+            ("shared/Linked.cs", "class Linked { }"));
+
+        var map = ScribeTestMapDeriver.DeriveSnapshot(snapshot);
+
+        Assert.True(map.CompileProjectBySourcePath.TryGetValue("shared/Linked.cs", out var owner));
+        Assert.Equal("src/App/App.csproj", owner);
+        Assert.Empty(ScribeUnknownDebtPolicy.InspectCurrent(map));
+    }
+
+    [Fact]
+    public void AmbiguousCompileOwnershipProducesBlockingFinding()
+    {
+        const string linkedProject = """
+            <Project Sdk="Microsoft.NET.Sdk">
+              <ItemGroup><Compile Include="../../shared/**/*.cs" /></ItemGroup>
+            </Project>
+            """;
+        using var repository = CreateTrackedRepository(
+            ("tools/tests/BannedApiCompileFailProof/BannedApiCompileFailProof.csproj", SdkProject),
+            ("tools/tests/CompileFailProof/CompileFailProof.csproj", SdkProject),
+            ("src/A/A.csproj", linkedProject),
+            ("src/B/B.csproj", linkedProject),
+            ("shared/Linked.cs", "class Linked { }"));
+
+        var finding = Assert.Single(
+            ScribeUnknownDebtPolicy.InspectCurrent(
+                ScribeTestMapDeriver.DeriveRepository(repository.Path)),
+            static candidate => candidate.Path == "shared/Linked.cs");
+
+        Assert.Equal(AdmissionEffect.Block, finding.Effect);
+        Assert.Contains("ambiguous", finding.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void FullRepositoryOrphanCheckRejectsSourceAbsentFromCompileItems()
+    {
+        var snapshot = ManagedSnapshot(
+            ("Blueprint/D5/S0/Sample.scribe.cs", "class SampleDefinition { }"));
+
+        var finding = Assert.Single(ScribeUnknownDebtPolicy.InspectCurrent(
+            ScribeTestMapDeriver.DeriveSnapshot(snapshot)));
+
+        Assert.Equal("Blueprint/D5/S0/Sample.scribe.cs", finding.Path);
+        Assert.Equal(AdmissionEffect.Block, finding.Effect);
+        Assert.Contains("MSBuild Compile items", finding.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void MsBuildCompileQueryFailureProducesBlockingFinding()
+    {
+        using var repository = CreateTrackedRepository(
+            ("tools/tests/BannedApiCompileFailProof/BannedApiCompileFailProof.csproj", SdkProject),
+            ("tools/tests/CompileFailProof/CompileFailProof.csproj", SdkProject));
+
+        var map = ScribeTestMapDeriver.DeriveRepository(
+            repository.Path,
+            Path.Combine(repository.Path, "missing-dotnet"));
+        var finding = Assert.Single(
+            map.CompileQueryFindings,
+            static candidate => candidate.Path.EndsWith(
+                "BannedApiCompileFailProof.csproj",
+                StringComparison.Ordinal));
+
+        Assert.All(
+            map.CompileQueryFindings,
+            static candidate => Assert.Contains("failed closed", candidate.Message, StringComparison.Ordinal));
+        Assert.Contains(
+            ScribeUnknownDebtPolicy.InspectCurrent(map),
+            candidate => candidate.Path == finding.Path
+                && candidate.Effect == AdmissionEffect.Block);
+    }
+
+    [Fact]
+    public void MsBuildCompileQueryTimeoutProducesBlockingFinding()
+    {
+        using var repository = CreateTrackedRepository(
+            ("tools/tests/BannedApiCompileFailProof/BannedApiCompileFailProof.csproj", SdkProject));
+
+        var map = ScribeTestMapDeriver.DeriveRepository(
+            repository.Path,
+            timeout: TimeSpan.Zero);
+        var finding = Assert.Single(map.CompileQueryFindings);
+
+        Assert.Contains("timed out", finding.Message, StringComparison.Ordinal);
+        Assert.Contains(
+            ScribeUnknownDebtPolicy.InspectCurrent(map),
+            candidate => candidate.Path == finding.Path
+                && candidate.Effect == AdmissionEffect.Block);
+    }
+
+    [Fact]
     public void UnknownDebtPartitionsAreDerivedFromXunitProjectInputs()
     {
         const string xunitProject =
-            "<Project><ItemGroup><PackageReference Include=\"xunit\" /></ItemGroup></Project>";
-        const string compileProof = "<Project />";
+            "<Project Sdk=\"Microsoft.NET.Sdk\"><ItemGroup><PackageReference Include=\"xunit\" /></ItemGroup></Project>";
+        const string compileProof = "<Project Sdk=\"Microsoft.NET.Sdk\" />";
 
         var partitions = ScribeTestMapDeriver.DeriveProjectPartitions(
         [
@@ -47,7 +175,7 @@ public sealed class ScribeTestMapDeriverTests
     public void EvaluateRejectsManagedProjectWithoutDirectXunitReference()
     {
         var snapshot = ManagedSnapshot(
-            ("tools/tests/Missing.Tests/Missing.Tests.csproj", "<Project />"),
+            ("tools/tests/Missing.Tests/Missing.Tests.csproj", SdkProject),
             ("tools/tests/Missing.Tests/DebtTests.cs", UnknownSource("DebtTests", "ReadsVariable")));
 
         var map = ScribeTestMapDeriver.DeriveSnapshot(snapshot);
@@ -65,8 +193,8 @@ public sealed class ScribeTestMapDeriverTests
     public void DeclaredCompileFailProofProjectsAreAdmittedWithoutFinding()
     {
         var snapshot = Snapshot(
-            ("tools/tests/BannedApiCompileFailProof/BannedApiCompileFailProof.csproj", "<Project />"),
-            ("tools/tests/CompileFailProof/CompileFailProof.csproj", "<Project />"));
+            ("tools/tests/BannedApiCompileFailProof/BannedApiCompileFailProof.csproj", SdkProject),
+            ("tools/tests/CompileFailProof/CompileFailProof.csproj", SdkProject));
 
         var map = ScribeTestMapDeriver.DeriveSnapshot(snapshot);
 
@@ -97,7 +225,7 @@ public sealed class ScribeTestMapDeriverTests
         Assert.Empty(map.Methods);
         Assert.Equal("tools/tests/Missing.Tests/DebtTests.cs", finding.Path);
         Assert.Equal(AdmissionEffect.Block, finding.Effect);
-        Assert.Contains("no tracked project", finding.Message, StringComparison.Ordinal);
+        Assert.Contains("absent from every tracked project", finding.Message, StringComparison.Ordinal);
     }
 
     [Fact]
@@ -105,7 +233,7 @@ public sealed class ScribeTestMapDeriverTests
     {
         var snapshot = Snapshot(
             ("tools/tests/BannedApiCompileFailProof/BannedApiViolations.cs", "class BannedApiViolations { }"),
-            ("tools/tests/CompileFailProof/CompileFailProof.csproj", "<Project />"),
+            ("tools/tests/CompileFailProof/CompileFailProof.csproj", SdkProject),
             ("tools/tests/CompileFailProof/MissingCapability.cs", "class MissingCapability { }"));
 
         var findings = ScribeUnknownDebtPolicy.InspectCurrent(
@@ -123,9 +251,9 @@ public sealed class ScribeTestMapDeriverTests
     public void DeriveRepositoryPropagatesUnclassifiedManagedProjectsToBlockingFindings()
     {
         using var repository = CreateTrackedRepository(
-            ("tools/tests/BannedApiCompileFailProof/BannedApiCompileFailProof.csproj", "<Project />"),
-            ("tools/tests/CompileFailProof/CompileFailProof.csproj", "<Project />"),
-            ("tools/tests/Missing.Tests/Missing.Tests.csproj", "<Project />"),
+            ("tools/tests/BannedApiCompileFailProof/BannedApiCompileFailProof.csproj", SdkProject),
+            ("tools/tests/CompileFailProof/CompileFailProof.csproj", SdkProject),
+            ("tools/tests/Missing.Tests/Missing.Tests.csproj", SdkProject),
             ("tools/tests/Missing.Tests/DebtTests.cs", UnknownSource("DebtTests", "ReadsVariable")));
 
         var map = ScribeTestMapDeriver.DeriveRepository(repository.Path);
@@ -139,8 +267,8 @@ public sealed class ScribeTestMapDeriverTests
     public void DeriveRepositoryPropagatesOrphanManagedSourcesToBlockingFindings()
     {
         using var repository = CreateTrackedRepository(
-            ("tools/tests/BannedApiCompileFailProof/BannedApiCompileFailProof.csproj", "<Project />"),
-            ("tools/tests/CompileFailProof/CompileFailProof.csproj", "<Project />"),
+            ("tools/tests/BannedApiCompileFailProof/BannedApiCompileFailProof.csproj", SdkProject),
+            ("tools/tests/CompileFailProof/CompileFailProof.csproj", SdkProject),
             ("tools/tests/Missing.Tests/DebtTests.cs", UnknownSource("DebtTests", "ReadsVariable")));
 
         var map = ScribeTestMapDeriver.DeriveRepository(repository.Path);
@@ -155,7 +283,7 @@ public sealed class ScribeTestMapDeriverTests
     {
         using var repository = CreateTrackedRepository(
             ("tools/tests/BannedApiCompileFailProof/BannedApiViolations.cs", "class BannedApiViolations { }"),
-            ("tools/tests/CompileFailProof/CompileFailProof.csproj", "<Project />"));
+            ("tools/tests/CompileFailProof/CompileFailProof.csproj", SdkProject));
 
         var findings = ScribeUnknownDebtPolicy.InspectCurrent(
             ScribeTestMapDeriver.DeriveRepository(repository.Path));
@@ -181,32 +309,10 @@ public sealed class ScribeTestMapDeriverTests
     }
 
     [Fact]
-    public void ManagedSourceOrphanCheckDoesNotInspectBlueprintScribeDefinitions()
-    {
-        var snapshot = ManagedSnapshot(
-            ("Blueprint/D5/S0/Sample.scribe.cs", "class SampleDefinition { }"));
-
-        var map = ScribeTestMapDeriver.DeriveSnapshot(snapshot);
-
-        Assert.Empty(ScribeUnknownDebtPolicy.InspectCurrent(map));
-    }
-
-    [Fact]
-    public void ManagedSourceOrphanCheckDoesNotInspectProductionSources()
-    {
-        var snapshot = ManagedSnapshot(
-            ("tools/StrataLint.Engine/Sample.cs", "class SampleProductionType { }"));
-
-        var map = ScribeTestMapDeriver.DeriveSnapshot(snapshot);
-
-        Assert.Empty(ScribeUnknownDebtPolicy.InspectCurrent(map));
-    }
-
-    [Fact]
     public void DeriveSnapshotDiscoversXunitProjectsAcrossTheWholeRepository()
     {
         const string xunitProject =
-            "<Project><ItemGroup><PackageReference Include=\"xunit\" /></ItemGroup></Project>";
+            "<Project Sdk=\"Microsoft.NET.Sdk\"><ItemGroup><PackageReference Include=\"xunit\" /></ItemGroup></Project>";
         var snapshot = Snapshot(
             ("experiments/External.Tests/External.Tests.csproj", xunitProject),
             ("experiments/External.Tests/ExternalTests.cs", "class ExternalTests { [Fact] public void Runs() { } }"));
@@ -474,8 +580,8 @@ public sealed class ScribeTestMapDeriverTests
     private static RepositorySnapshot ManagedSnapshot(params (string Path, string Content)[] files) =>
         Snapshot(files.Concat(
         [
-            ("tools/tests/BannedApiCompileFailProof/BannedApiCompileFailProof.csproj", "<Project />"),
-            ("tools/tests/CompileFailProof/CompileFailProof.csproj", "<Project />"),
+            ("tools/tests/BannedApiCompileFailProof/BannedApiCompileFailProof.csproj", SdkProject),
+            ("tools/tests/CompileFailProof/CompileFailProof.csproj", SdkProject),
         ]).ToArray());
 
     private static TemporaryRepository CreateTrackedRepository(
