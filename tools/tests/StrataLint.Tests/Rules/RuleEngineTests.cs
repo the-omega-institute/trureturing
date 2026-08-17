@@ -270,13 +270,80 @@ public sealed class RuleEngineTests
             context.Lean,
             baselineDocument: BackfillInventoryLoader.Load(context.ForkPoint),
             baselineSnapshot: context.ForkPoint,
-            casEvaluation: DigestionCasStore.Evaluate(document, context.Current, changes),
-            changes: changes);
+            casEvaluation: DigestionCasStore.Evaluate(document, context.Current, changes));
 
         Assert.True(BackfillInventoryRule.IsAffectedBy(context));
         Assert.Contains(
             Assert.Single(evaluation.Entries).Gaps,
             static gap => gap.Code == "coverage-receipt-mismatch");
+    }
+
+    [Fact]
+    public void Sl016DerivedStatusIsTheSameWhetherOrNotTheEntryIsInTheCandidateDelta()
+    {
+        // A gap that is a property of the tree must be reported no matter which paths this
+        // particular candidate happens to touch. Scoping verification to the delta once made
+        // an unchanged entry report success instead of the verdict its base actually had,
+        // which flipped its derived migration from partial to absorbed and rejected every
+        // pull request that did not happen to touch it (2026-08-17, 34 entries, dev blocked).
+        const string evidenceGid = "D5/E/values--json";
+        var fixture = new RuleFixture();
+        fixture.AddValuesProjection();
+        var baselineTarget = fixture.Files[RuleFixture.ValuesProjectionPath];
+        var targetSha256 = DigestionFingerprint.Compute(
+            Encoding.UTF8.GetBytes(baselineTarget)).RawSha256;
+        foreach (var files in new[] { fixture.Files, fixture.Baseline, fixture.ForkPoint })
+        {
+            files[RuleFixture.ValuesProjectionPath] = baselineTarget;
+            files[RuleFixture.FixtureBackfillAtomPath] = files[RuleFixture.FixtureBackfillAtomPath]
+                .Replace(
+                    "D5/S0/Carrier/BackfillTarget",
+                    evidenceGid,
+                    StringComparison.Ordinal)
+                .Replace(
+                    "coverage: []",
+                    "coverage:\n"
+                    + $"    - gid: {evidenceGid}\n"
+                    + $"      source_sha256: {RuleFixture.FixtureCasReference}\n"
+                    + $"      target_sha256: {targetSha256}",
+                    StringComparison.Ordinal);
+        }
+
+        // The committed target drifted from the receipt it is hashed against.
+        fixture.Files[RuleFixture.ValuesProjectionPath] = baselineTarget + " ";
+
+        var touched = EvidenceDriftGaps(
+            fixture,
+            RawChangeSet.Create([RuleFixture.ValuesProjectionPath]));
+        var untouched = EvidenceDriftGaps(
+            fixture,
+            RawChangeSet.Create(["notes/unrelated.txt"]));
+
+        Assert.Contains("coverage-receipt-mismatch:" + evidenceGid, touched);
+        Assert.Equal(
+            string.Join(" | ", touched),
+            string.Join(" | ", untouched));
+    }
+
+    private static ImmutableArray<string> EvidenceDriftGaps(
+        RuleFixture fixture,
+        RawChangeSet changes)
+    {
+        var context = fixture.Build(changes);
+        var document = BackfillInventoryLoader.Load(context.Current);
+        var evaluation = DigestionStatusEvaluator.Evaluate(
+            document,
+            context.Current,
+            context.Lean,
+            baselineDocument: BackfillInventoryLoader.Load(context.ForkPoint),
+            baselineSnapshot: context.ForkPoint,
+            casEvaluation: DigestionCasStore.Evaluate(document, context.Current, changes));
+        return
+        [
+            .. Assert.Single(evaluation.Entries).Gaps
+                .Select(static gap => gap.Code + ":" + gap.Detail)
+                .Order(StringComparer.Ordinal),
+        ];
     }
 
     [Fact]
