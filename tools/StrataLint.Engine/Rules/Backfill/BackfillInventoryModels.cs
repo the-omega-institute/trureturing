@@ -59,7 +59,6 @@ internal sealed record DigestionLedgerEntry(
     ImmutableArray<string> CoverageGids,
     DigestionReceipts Receipts,
     DigestionStatus ProjectedStatus,
-    BackfillReceiptSyntax? ReceiptSyntax,
     string CasRef);
 
 internal sealed record GenreRegistryProjection

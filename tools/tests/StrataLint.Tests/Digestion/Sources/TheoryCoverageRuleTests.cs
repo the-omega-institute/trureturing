@@ -25,16 +25,6 @@ public sealed class TheoryCoverageRuleTests
                 .Select(static path => $"  - \"{path}\"\n")),
             StringComparison.Ordinal);
 
-    private static string Ledger() => string.Join(
-        "\n",
-        "schema_version: 3",
-        "ledger: theory-digestion-v1",
-        "sources:",
-        "  - source_id: digested",
-        "    path: " + DigestedPath,
-        "    atomizer: " + AtomizerRegistry.GenericId,
-        "    entries: []");
-
     private static string[] Findings(string registry)
     {
         var outcome = RegistryLoader.Load(
@@ -51,7 +41,12 @@ public sealed class TheoryCoverageRuleTests
                     policy,
                     DigestionTestSupport.AcceptedLean(Array.Empty<string>()),
                     null),
-                BackfillInventoryLoader.Load(Ledger()))
+                DigestionTestSupport.Document(
+                    AtomizerRegistry.GenericId,
+                    [],
+                    "digested",
+                    DigestedPath,
+                    GenreRegistryCheck.Collected([])))
             .Select(static finding => finding.Message)
             .ToArray();
     }

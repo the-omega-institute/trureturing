@@ -36,6 +36,24 @@ public sealed class GenericAtomizerTests
     }
 
     [Fact]
+    public void GenericGenreCannotOccupyTheReservedUnregisteredNamespace()
+    {
+        var bytes = Encoding.UTF8.GetBytes("# Probe\n\n## unregistered 1.1\n\nclaim。\n");
+        var ledger = DigestionTestSupport.EmptyDocument(AtomizerRegistry.GenericId);
+
+        var alignment = DigestionLedgerAligner.Evaluate(
+            ledger,
+            DigestionTestSupport.Snapshot(("docs/source.md", bytes)),
+            ledger,
+            DigestionAlignmentMode.Ingest);
+
+        Assert.Contains(alignment.Findings, finding => finding.Contains(
+            "reserved unregistered namespace",
+            StringComparison.Ordinal));
+        Assert.Empty(alignment.Residual);
+    }
+
+    [Fact]
     public void ABoldNumberedParagraphLeadIsAClaimAndABareNumberIsAnItem()
     {
         var document = Atomize("# 卷首\n\n**定理 1.1(甲)**。一。\n\n**1.2**。二。\n");

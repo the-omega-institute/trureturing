@@ -23,4 +23,3 @@ Loogle and LeanSearch both returned Function.semiconj_iff_comp_eq for the compos
 ## References
 
 - Truth anchor: `D5/S0/Diagonal/Naturality/QuotientTwistBlindness.quotient_twist_blindness`
-- Dependency: [D5/S0/Diagonal/Naturality/CoordinateRestrictionNaturality](CoordinateRestrictionNaturality.md)

@@ -8,7 +8,7 @@ namespace StrataLint.Tests;
 public sealed partial class ProductionEnvironmentTests
 {
     [Fact]
-    public void CheckRejectsAnUnregisteredGenreBehindInheritedReceipts()
+    public void CheckRejectsAnUnprojectedOpenGenreBehindInheritedReceipts()
     {
         var fixture = new RuleFixture();
         fixture.AddBackfillTargets();
@@ -23,15 +23,15 @@ public sealed partial class ProductionEnvironmentTests
             DigestionTestSupport.Rules).Claims);
         fixture.Files[RuleFixture.FixtureDigestionSourcePath] = Encoding.UTF8.GetString(candidateBytes);
         fixture.Baseline[RuleFixture.FixtureDigestionSourcePath] = Encoding.UTF8.GetString(baselineBytes);
-        InstallLedger(fixture, IngestLedger(atomizerId, atom), atom);
+        InstallProjectedLedger(fixture, IngestLedger(atomizerId, atom), atom);
 
         var outcome = CheckGenreCandidate(fixture);
 
-        AssertUnregisteredGenreRejection(outcome);
+        AssertGenreProjectionRejection(outcome);
     }
 
     [Fact]
-    public void CheckRejectsAnUnregisteredGenreBehindAMatchingCoarseReceipt()
+    public void CheckRejectsAnUnprojectedOpenGenreBehindAMatchingCoarseReceipt()
     {
         var fixture = new RuleFixture();
         fixture.AddBackfillTargets();
@@ -63,11 +63,11 @@ public sealed partial class ProductionEnvironmentTests
 
         var outcome = CheckGenreCandidate(fixture);
 
-        AssertUnregisteredGenreRejection(outcome);
+        AssertGenreProjectionRejection(outcome);
     }
 
     [Fact]
-    public void CheckStillReportsSl016ForQdoGenreOutsideTheSuffixClass()
+    public void CheckStillReportsSl016ForUnprojectedQdoOpenGenre()
     {
         var fixture = new RuleFixture();
         fixture.AddBackfillTargets();
@@ -81,11 +81,11 @@ public sealed partial class ProductionEnvironmentTests
             DigestionTestSupport.Rules).Claims);
         fixture.Files[RuleFixture.FixtureDigestionSourcePath] = Encoding.UTF8.GetString(candidateBytes);
         fixture.Baseline[RuleFixture.FixtureDigestionSourcePath] = Encoding.UTF8.GetString(baselineBytes);
-        InstallLedger(fixture, IngestLedger(atomizerId, atom), atom);
+        InstallProjectedLedger(fixture, IngestLedger(atomizerId, atom), atom);
 
         var outcome = CheckGenreCandidate(fixture);
 
-        AssertUnregisteredGenreRejection(outcome);
+        AssertGenreProjectionRejection(outcome);
     }
 
     private static AdmissionOutcome CheckGenreCandidate(RuleFixture fixture)
@@ -100,26 +100,24 @@ public sealed partial class ProductionEnvironmentTests
         return CheckWithReports(environment, fixture);
     }
 
-    private static void AssertUnregisteredGenreRejection(AdmissionOutcome outcome)
+    private static void AssertGenreProjectionRejection(AdmissionOutcome outcome)
     {
         var rejected = Assert.IsType<AdmissionOutcome.RuleRejected>(outcome);
         var finding = Assert.Single(rejected.Diagnostics.Where(diagnostic =>
             diagnostic.RuleId == RuleId.CreateKnown(16)
             && diagnostic.Message.Contains(
-                "source fixture-source uses claim genres its dialect does not register",
+                "source fixture-source genre registry projection differs",
                 StringComparison.Ordinal)));
         Assert.Contains("未登记体", finding.Message, StringComparison.Ordinal);
-        Assert.Contains(TheoryAtomizerDataLoader.DataPath, finding.Message, StringComparison.Ordinal);
+        Assert.Contains("stored collected []", finding.Message, StringComparison.Ordinal);
+        Assert.Contains("recomputed collected [未登记体]", finding.Message, StringComparison.Ordinal);
     }
 
-    private static string EmptyRegisteredLedger(string atomizerId) => $$"""
-        schema_version: 3
-        ledger: theory-digestion-v1
-        sources:
-          - source_id: fixture-source
-            path: {{RuleFixture.FixtureDigestionSourcePath}}
-            atomizer: {{atomizerId}}
-            acknowledged_stale: []
-            entries: []
-        """;
+    private static BackfillInventoryDocument EmptyRegisteredLedger(string atomizerId) =>
+        DigestionTestSupport.Document(
+            atomizerId,
+            [],
+            "fixture-source",
+            RuleFixture.FixtureDigestionSourcePath,
+            GenreRegistryCheck.Collected([]));
 }

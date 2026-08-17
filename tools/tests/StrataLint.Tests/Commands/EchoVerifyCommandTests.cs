@@ -91,7 +91,6 @@ public sealed class EchoVerifyCommandTests
             [],
             new DigestionReceipts([], [], [], [], null),
             status,
-            null,
             "sha256:synthetic");
         return new DigestionEntryEvaluation(
             entry,
