@@ -44,6 +44,7 @@ internal static class BackfillInventoryRule
                 || path.Value.StartsWith(
                     "tools/Authorizations/digestion-tail/",
                     StringComparison.Ordinal)
+                || FrozenLedgerDeltaPredicate.IsEnvironmentInput(path.Value)
                 || context.Policy.GovernanceDocuments.Contains(path))
             {
                 return true;

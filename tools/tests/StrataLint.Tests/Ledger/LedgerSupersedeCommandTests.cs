@@ -91,4 +91,37 @@ public sealed class LedgerSupersedeCommandTests
         Assert.Equal(FrozenLedgerCanonicalWriter.CurrentDagSchemaVersion, supersede.SchemaVersion);
         Assert.Equal(4, supersede.SchemaVersion);
     }
+
+    [Fact]
+    public void ReviewSupersedeCurrentlyAcceptsWeakerMeaningFromChangedImportedModule()
+    {
+        using var fixture = new LedgerAppendCommandTests.LedgerAppendFixture(
+            currentAStatementMaterial: "ambiently-weakened-imported-expression",
+            pinBump: true,
+            aImportsB: true,
+            reportBDriftInChangeSet: true);
+        var before = FrozenLedgerTestData.ReadLedgerDirectory(fixture.LedgerPath);
+
+        var result = fixture.Environment.SupersedeLedger(
+            ["--candidate-lean-report", fixture.ReportPath]);
+
+        Assert.False(result.Success, result.Output);
+        Assert.Contains("import closure", result.Error, StringComparison.OrdinalIgnoreCase);
+        Assert.Equal(before, FrozenLedgerTestData.ReadLedgerDirectory(fixture.LedgerPath));
+    }
+
+    [Fact]
+    public void SupersedeAcceptsPinBumpStatementDriftWhenRepositoryImportClosureIsByteUnchanged()
+    {
+        using var fixture = new LedgerAppendCommandTests.LedgerAppendFixture(
+            currentAStatementMaterial: "ambiently-different-elaborated-expression",
+            pinBump: true,
+            aImportsB: true);
+
+        var result = fixture.Environment.SupersedeLedger(
+            ["--candidate-lean-report", fixture.ReportPath]);
+
+        Assert.True(result.Success, result.Error);
+        Assert.Contains("appended_supersedes=2", result.Output, StringComparison.Ordinal);
+    }
 }

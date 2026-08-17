@@ -27,7 +27,11 @@ internal static class DagLedgerSupersedeWriter
             var baselineFiles = candidate.BaselineFiles;
             var protectedBase = candidate.BaseView;
             var pins = FrozenLedger.EnvironmentPins(candidate.Catalog.Environment);
-            var generated = BuildEvents(protectedBase, candidate.Catalog, pins);
+            var generated = BuildEvents(
+                protectedBase,
+                candidate.Catalog,
+                candidate.Changes,
+                pins);
             if (generated.IsEmpty)
             {
                 return new CommandResult(
@@ -46,6 +50,7 @@ internal static class DagLedgerSupersedeWriter
             ValidateGeneratedEvents(
                 protectedBase,
                 candidate.Catalog,
+                candidate.Changes,
                 trustedCandidateReferences,
                 generated);
 
@@ -86,6 +91,7 @@ internal static class DagLedgerSupersedeWriter
     private static ImmutableArray<GeneratedSupersede> BuildEvents(
         FrozenLedgerBaseView protectedBase,
         FrozenMaterialCatalog candidateCatalog,
+        RawChangeSet changes,
         FrozenEnvironmentPins pins)
     {
         var result = ImmutableArray.CreateBuilder<GeneratedSupersede>();
@@ -121,7 +127,13 @@ internal static class DagLedgerSupersedeWriter
                 entry.LastAttestationEventHash,
                 material.StatementId,
                 material.WitnessId);
-            FrozenLedger.ValidateSupersedeStrength(payload, entry);
+            FrozenLedger.ValidateSupersedeStrength(
+                payload,
+                entry,
+                LeanImportClosure.RepositoryClosureIsUnchanged(
+                    candidateCatalog.Dag,
+                    entry.Material.RepoPath,
+                    changes));
             var element = FrozenLedgerCanonicalWriter.SupersedeElement(payload);
             var encoded = FrozenLedgerCanonicalWriter.WriteDagEvent(
                 FrozenLedger.SupersedeEventType,
@@ -146,6 +158,7 @@ internal static class DagLedgerSupersedeWriter
     private static void ValidateGeneratedEvents(
         FrozenLedgerBaseView protectedBase,
         FrozenMaterialCatalog candidateCatalog,
+        RawChangeSet changes,
         TrustedFrozenGitReferences trustedReferences,
         ImmutableArray<GeneratedSupersede> generated)
     {
@@ -159,10 +172,11 @@ internal static class DagLedgerSupersedeWriter
                 item.Element,
                 active,
                 trustedReferences,
-                candidateCatalog);
-            FrozenLedger.ValidateSupersedeStrength(
-                payload,
-                protectedBase.ActiveByCase[payload.CaseId]);
+                candidateCatalog,
+                LeanImportClosure.RepositoryClosureIsUnchanged(
+                    candidateCatalog.Dag,
+                    active[item.Payload.CaseId].Material.RepoPath,
+                    changes));
             active[payload.CaseId] = FrozenLedger.ApplySupersede(
                 active[payload.CaseId],
                 payload,

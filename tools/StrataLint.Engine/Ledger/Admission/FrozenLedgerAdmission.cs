@@ -209,11 +209,13 @@ public static partial class FrozenLedger
         FrozenLedgerAdmissionPreparation preparation,
         FrozenLedgerAdmissionScope scope,
         FrozenMaterialCatalog catalog,
+        RawChangeSet changes,
         TrustedFrozenGitReferences trustedReferences)
     {
         ArgumentNullException.ThrowIfNull(preparation);
         ArgumentNullException.ThrowIfNull(scope);
         ArgumentNullException.ThrowIfNull(catalog);
+        ArgumentNullException.ThrowIfNull(changes);
         ArgumentNullException.ThrowIfNull(trustedReferences);
         try
         {
@@ -282,17 +284,20 @@ public static partial class FrozenLedger
                             item.Payload,
                             active,
                             trustedReferences,
-                            catalog);
-                        if (!preparation.BaseView.ActiveByCase.TryGetValue(
-                                supersede.CaseId,
-                                out var protectedBaseEntry)
+                            catalog,
+                            LeanImportClosure.RepositoryClosureIsUnchanged(
+                                catalog.Dag,
+                                active[FrozenLedgerAttestationChain.RequiredString(
+                                    item.Payload,
+                                    "case_id")].Material.RepoPath,
+                                changes));
+                        if (!preparation.BaseView.ActiveByCase.ContainsKey(supersede.CaseId)
                             || !supersededBaseCases.Add(supersede.CaseId))
                         {
                             throw new FormatException(
                                 "Supersede must target each protected-base active case exactly once.");
                         }
 
-                        ValidateSupersedeStrength(supersede, protectedBaseEntry);
                         active[supersede.CaseId] = ApplySupersede(
                             active[supersede.CaseId],
                             supersede,
