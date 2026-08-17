@@ -25,6 +25,7 @@ internal sealed record DagLedgerCandidateMaterial(
     ImmutableArray<RepositoryFile> BaselineFiles,
     FrozenMaterialCatalog Catalog,
     LeanAxiomReport Report,
+    RawChangeSet Changes,
     RepositorySnapshot Snapshot);
 
 internal sealed record TruthContext(
@@ -98,6 +99,7 @@ internal static class DagLedgerCommandPreparation
             baselineFiles,
             catalog,
             report,
+            changes,
             snapshot);
     }
 

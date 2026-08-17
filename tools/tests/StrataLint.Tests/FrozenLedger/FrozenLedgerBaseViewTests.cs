@@ -99,6 +99,33 @@ public sealed class FrozenLedgerBaseViewTests
         Assert.DoesNotContain("FrozenLedger.ScanReferences", preparation, StringComparison.Ordinal);
     }
 
+    [Fact]
+    public void BaseProjectionConsumesHistoricalLegacyReattestBeforeRevoke()
+    {
+        var view = FrozenLedgerBaseViewReader.Read(Snapshot(
+            ReattestedThenRevokedFiles(ReattestShape.HistoricalLegacy)));
+
+        Assert.Empty(view.ActiveByCase);
+    }
+
+    [Fact]
+    public void BaseProjectionConsumesSchemaV4LegacyReattestBeforeRevoke()
+    {
+        var view = FrozenLedgerBaseViewReader.Read(Snapshot(
+            ReattestedThenRevokedFiles(ReattestShape.SchemaV4Legacy)));
+
+        Assert.Empty(view.ActiveByCase);
+    }
+
+    [Fact]
+    public void BaseProjectionConsumesSchemaV4ExtendedReattestBeforeRevoke()
+    {
+        var view = FrozenLedgerBaseViewReader.Read(Snapshot(
+            ReattestedThenRevokedFiles(ReattestShape.SchemaV4Extended)));
+
+        Assert.Empty(view.ActiveByCase);
+    }
+
     private static DagLedgerFilesLoadOutcome.Loaded LoadAccepted(
         IReadOnlyDictionary<string, string> files)
     {
@@ -121,6 +148,98 @@ public sealed class FrozenLedgerBaseViewTests
         Assert.Equal(2, item.SchemaVersion);
         Assert.Equal(ExistingV2FrozenId, item.Payload.GetProperty("frozen_node_id").GetString());
         Assert.Equal(ExistingV2NodePath, Assert.IsType<FrozenLedgerInput>(item.Input).DescriptorSelector);
+    }
+
+    private static IReadOnlyDictionary<string, string> ReattestedThenRevokedFiles(
+        ReattestShape shape)
+    {
+        var catalog = FrozenLedgerTestData.BuildCatalog(FrozenLedgerTestData.Module("A"));
+        var generated = FrozenLedgerGenerator.GenerateGenesis(
+            catalog,
+            new FrozenGenesisDescriptor(FrozenLedgerTestData.GitOid('e'), RuleCatalog.Default.RootSha256));
+        var files = new Dictionary<string, string>(StringComparer.Ordinal);
+        FrozenLedgerTestData.AddLedgerFiles(files, generated);
+        var frozen = Assert.Single(FrozenLedgerBaseViewReader.Read(Snapshot(files)).ActiveByCase).Value;
+        var freshNodeId = "sha256:" + new string('b', 64);
+        var input = frozen.Payload.Input;
+        var inputElement = new
+        {
+            base_commit_oid = input.BaseCommitOid,
+            base_tree_oid = input.BaseTreeOid,
+            descriptor_blob_oid = input.DescriptorBlobOid,
+            descriptor_selector = input.DescriptorSelector,
+            materializer = input.Materializer,
+            supporting_blob_oids = input.SupportingBlobOids,
+        };
+        var reattestPayload = shape switch
+        {
+            ReattestShape.HistoricalLegacy => JsonSerializer.SerializeToElement(new
+            {
+                axiom_closure = frozen.Material.AxiomClosure,
+                case_id = frozen.Payload.CaseId,
+                input = inputElement,
+                input_fingerprint = freshNodeId,
+                previous_attestation_event_hash = frozen.LastAttestationEventHash,
+                semantic_receipt = freshNodeId,
+            }),
+            ReattestShape.SchemaV4Legacy => JsonSerializer.SerializeToElement(new
+            {
+                axiom_closure = frozen.Material.AxiomClosure,
+                case_id = frozen.Payload.CaseId,
+                input = inputElement,
+                previous_attestation_event_hash = frozen.LastAttestationEventHash,
+            }),
+            ReattestShape.SchemaV4Extended => JsonSerializer.SerializeToElement(new
+            {
+                axiom_closure = frozen.Material.AxiomClosure,
+                case_id = frozen.Payload.CaseId,
+                declaration_statement_ids = frozen.Material.DeclarationStatementIds.Select(static item => new
+                {
+                    declaration_name_key = item.DeclarationNameKey,
+                    kind = item.Kind,
+                    statement_id = item.StatementId.Value,
+                }),
+                frozen_node_id = freshNodeId,
+                input = inputElement,
+                prerequisite_frozen_node_ids = frozen.Material.PrerequisiteFrozenNodeIds.Select(
+                    static item => item.Value),
+                previous_attestation_event_hash = frozen.LastAttestationEventHash,
+                statement_id = frozen.Material.StatementId.Value,
+                witness_id = freshNodeId,
+            }),
+            _ => throw new ArgumentOutOfRangeException(nameof(shape)),
+        };
+        var reattest = FrozenLedgerCanonicalWriter.WriteDagEvent(
+            "Reattest",
+            reattestPayload,
+            shape is ReattestShape.HistoricalLegacy ? 3 : 4);
+        files[FrozenLedgerChangeClassifier.AcceptedPath(reattest.Hash)] =
+            Encoding.UTF8.GetString(reattest.Bytes.AsSpan());
+        var revokedNodeId = shape is ReattestShape.SchemaV4Legacy
+            ? frozen.Material.FrozenNodeId.Value
+            : freshNodeId;
+        var revoke = FrozenLedgerCanonicalWriter.WriteDagEvent(
+            "Revoke",
+            JsonSerializer.SerializeToElement(new
+            {
+                affected_case_ids = Array.Empty<string>(),
+                affected_frozen_node_ids = new[] { revokedNodeId },
+                closure_hash = FrozenLedgerCanonicalWriter.ZeroHash,
+                evidence = Array.Empty<object>(),
+                graph_root = FrozenLedgerCanonicalWriter.ZeroHash,
+                root_case_ids = Array.Empty<string>(),
+                root_frozen_node_ids = new[] { revokedNodeId },
+            }));
+        files[FrozenLedgerChangeClassifier.AcceptedPath(revoke.Hash)] =
+            Encoding.UTF8.GetString(revoke.Bytes.AsSpan());
+        return files;
+    }
+
+    private enum ReattestShape
+    {
+        HistoricalLegacy,
+        SchemaV4Legacy,
+        SchemaV4Extended,
     }
 
     private static (ImmutableArray<byte> Bytes, string Hash) WriteGenesis(
