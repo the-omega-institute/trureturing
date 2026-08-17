@@ -60,6 +60,14 @@ addresses in a run-local log outside the worktree. A nonzero command or unmet
 postcondition ends in the evidence-complete `open` terminal unless the step
 explicitly names a repair followed by a fresh execution of that same gate.
 
+Run each potentially long or duration-unknown command as its own host-managed
+background job. The job itself must wait for its children and write its true
+exit code to a per-command sentinel; wait for both the host completion event and
+that sentinel before continuing. Never launch with shell `&`, `nohup`, or
+`setsid`. Every `make lean-report`, scoped `lake build`, sshx, and
+`make preflight` invocation uses this rule. Later command blocks specify order,
+not foreground launch mode.
+
 There are only two authoring-time exit exceptions. A read-only search command
 may use its documented no-match exit (for example, `rg` exit 1) as a negative
 search result when stdout is empty and stderr contains no failure; record that
