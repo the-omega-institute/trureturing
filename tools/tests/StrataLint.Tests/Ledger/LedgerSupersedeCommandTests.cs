@@ -124,4 +124,37 @@ public sealed class LedgerSupersedeCommandTests
         Assert.True(result.Success, result.Error);
         Assert.Contains("appended_supersedes=2", result.Output, StringComparison.Ordinal);
     }
+
+    [Fact]
+    public void SupersedeAcceptsPinnedExternalImportElaborationDrift()
+    {
+        using var fixture = new LedgerAppendCommandTests.LedgerAppendFixture(
+            currentAStatementMaterial: "ambiently-different-elaborated-expression",
+            pinBump: true,
+            aImportsExternal: true,
+            externalPackagePinned: true);
+
+        var result = fixture.Environment.SupersedeLedger(
+            ["--candidate-lean-report", fixture.ReportPath]);
+
+        Assert.True(result.Success, result.Error);
+        Assert.Contains("appended_supersedes=1", result.Output, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void SupersedeRejectsWeakerMeaningFromAnUntrackedExternalImport()
+    {
+        using var fixture = new LedgerAppendCommandTests.LedgerAppendFixture(
+            currentAStatementMaterial: "True",
+            pinBump: true,
+            aImportsExternal: true);
+        var before = FrozenLedgerTestData.ReadLedgerDirectory(fixture.LedgerPath);
+
+        var result = fixture.Environment.SupersedeLedger(
+            ["--candidate-lean-report", fixture.ReportPath]);
+
+        Assert.False(result.Success, result.Output);
+        Assert.Contains("external import", result.Error, StringComparison.OrdinalIgnoreCase);
+        Assert.Equal(before, FrozenLedgerTestData.ReadLedgerDirectory(fixture.LedgerPath));
+    }
 }

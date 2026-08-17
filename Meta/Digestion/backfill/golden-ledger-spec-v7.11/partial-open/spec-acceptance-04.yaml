@@ -1,7 +1,7 @@
 boundary:
   ast_path: sample/04
-  start_byte: 66992
-  end_byte: 67158
+  start_byte: 68112
+  end_byte: 68278
 fingerprints:
   raw_sha256: sha256:f687d7504bb441c95a8d659c346bffb3a30d758f3757b0e0a34a58742251a09c
   normalized_sha256: sha256:f687d7504bb441c95a8d659c346bffb3a30d758f3757b0e0a34a58742251a09c

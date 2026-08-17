@@ -210,7 +210,9 @@ public static partial class FrozenLedger
         FrozenLedgerAdmissionScope scope,
         FrozenMaterialCatalog catalog,
         RawChangeSet changes,
-        TrustedFrozenGitReferences trustedReferences)
+        TrustedFrozenGitReferences trustedReferences,
+        LeanAxiomReport? report = null,
+        RepositorySnapshot? snapshot = null)
     {
         ArgumentNullException.ThrowIfNull(preparation);
         ArgumentNullException.ThrowIfNull(scope);
@@ -291,7 +293,14 @@ public static partial class FrozenLedger
                                 active[FrozenLedgerAttestationChain.RequiredString(
                                     item.Payload,
                                     "case_id")].Material.RepoPath,
-                                changes));
+                                changes),
+                            report is null || snapshot is null
+                                || LeanImportClosure.ExternalImportsHaveNamedPinCoverage(
+                                    report,
+                                    active[FrozenLedgerAttestationChain.RequiredString(
+                                        item.Payload,
+                                        "case_id")].Material.RepoPath,
+                                    snapshot));
                         if (!preparation.BaseView.ActiveByCase.ContainsKey(supersede.CaseId)
                             || !supersededBaseCases.Add(supersede.CaseId))
                         {
