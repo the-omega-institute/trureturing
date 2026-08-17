@@ -124,15 +124,6 @@ artifact_id = "none"
 runtime_disposition = "committed-ledger"
 
 [[files]]
-pattern = "Evidence/D5/**/*.result.json"
-kind = "data"
-produced_by = "none"
-consumed_by = ["TheoristFrontierContractValidator", "reader"]
-verified_by = ["SnapshotDecoder"]
-artifact_id = "none"
-runtime_disposition = "committed-source"
-
-[[files]]
 pattern = "Evidence/D5/values.json"
 kind = "generated"
 produced_by = "ValuesEmitter"

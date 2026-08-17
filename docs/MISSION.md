@@ -34,6 +34,10 @@
       "kind": "governance"
     },
     {
+      "source_ref": "D5/X_Frontier/GoldenUnitsUFD",
+      "kind": "mathematical-not-yet-stated"
+    },
+    {
       "source_ref": "D5/X_Frontier/GovernanceDeferrals",
       "kind": "governance"
     },
@@ -64,10 +68,6 @@
     {
       "source_ref": "D5/X_Frontier/ValuesProducer",
       "kind": "mathematical-not-yet-stated"
-    },
-    {
-      "source_ref": "D5/X_Frontier/ZeckendorfNormSign",
-      "kind": "declaration-ready-mathematical-open"
     }
   ],
   "selection": {
