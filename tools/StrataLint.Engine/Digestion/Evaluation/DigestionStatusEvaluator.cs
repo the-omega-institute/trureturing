@@ -29,6 +29,11 @@ internal static partial class DigestionStatusEvaluator
         var emptyLeanReport = LeanAxiomReport.Create(
             new Dictionary<string, LeanFileReport>(StringComparer.Ordinal));
         var emptyTruthNodes = new Dictionary<RepoPath, TruthNode>();
+        var genreChecks = document.RequireDigestionSources()
+            .ToDictionary(
+                static source => source.SourceId,
+                static source => source.GenreRegistryCheck,
+                StringComparer.Ordinal);
         var work = entries
             .Where(static entry => entry.CoverageGids.Length == 0)
             .Select(entry => Inspect(
@@ -39,6 +44,7 @@ internal static partial class DigestionStatusEvaluator
                 emptyLeanReport,
                 emptyTruthNodes,
                 verifiedScribeEmissions: null,
+                genreChecks[entry.SourceId],
                 changes: null,
                 findings))
             .ToArray();
@@ -89,6 +95,11 @@ internal static partial class DigestionStatusEvaluator
                 "truth DAG is cyclic: " + string.Join(" -> ", rejected.Witness.Select(static path => path.Value))),
         };
         var nodes = dag.Nodes.ToDictionary(static node => node.RepoPath);
+        var genreChecks = document.RequireDigestionSources()
+            .ToDictionary(
+                static source => source.SourceId,
+                static source => source.GenreRegistryCheck,
+                StringComparer.Ordinal);
         var work = entries.Select(entry =>
             Inspect(
                 entry,
@@ -98,6 +109,7 @@ internal static partial class DigestionStatusEvaluator
                 lean.Report,
                 nodes,
                 verifiedScribeEmissions,
+                genreChecks[entry.SourceId],
                 changes,
                 findings)).ToArray();
         DeriveMigration(work);
@@ -193,6 +205,7 @@ internal static partial class DigestionStatusEvaluator
         LeanAxiomReport leanReport,
         IReadOnlyDictionary<RepoPath, TruthNode> nodes,
         VerifiedScribeEmissions? verifiedScribeEmissions,
+        GenreRegistryCheck genreRegistryCheck,
         RawChangeSet? changes,
         ImmutableArray<string>.Builder findings)
     {
@@ -242,6 +255,12 @@ internal static partial class DigestionStatusEvaluator
             {
                 gaps.Add(new DigestionGap("unresolved-subitem", subitem));
             }
+        }
+
+        foreach (var token in genreRegistryCheck.UnregisteredGenres.Where(token =>
+                     UnregisteredGenreLocator.MatchesToken(entry.AstPath, token)))
+        {
+            gaps.Add(new DigestionGap("unregistered-genre", token));
         }
 
         var localComplete = boundary

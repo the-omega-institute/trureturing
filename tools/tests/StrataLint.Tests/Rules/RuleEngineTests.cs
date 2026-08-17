@@ -173,6 +173,38 @@ public sealed class RuleEngineTests
     }
 
     [Fact]
+    public void Sl016DifferentialIgnoresUnavailableBaselineGenreProjection()
+    {
+        var fixture = new RuleFixture();
+        fixture.AddBackfillTargets();
+        fixture.ForkPoint[RuleFixture.FixtureBackfillSourcePath] = RemoveGenreMarkers(
+            fixture.ForkPoint[RuleFixture.FixtureBackfillSourcePath]);
+
+        var diagnostics = RuleCatalog.Default.EvaluateSingle(
+            RuleId.CreateKnown(16),
+            fixture.Build()).Diagnostics;
+
+        Assert.Empty(diagnostics);
+    }
+
+    [Fact]
+    public void Sl016RejectsLegacyGenreMarkerSchemaInCandidate()
+    {
+        var fixture = new RuleFixture();
+        fixture.AddBackfillTargets();
+        fixture.Files[RuleFixture.FixtureBackfillSourcePath] = RemoveGenreMarkers(
+            fixture.Files[RuleFixture.FixtureBackfillSourcePath]);
+
+        var diagnostic = Assert.Single(RuleCatalog.Default.EvaluateSingle(
+            RuleId.CreateKnown(16),
+            fixture.Build()).Diagnostics);
+
+        Assert.Equal(
+            $"source metadata keys are not canonical: {RuleFixture.FixtureBackfillSourcePath}",
+            diagnostic.Message);
+    }
+
+    [Fact]
     public void Sl016ChecksMissingCasBlobBeforeOtherReceiptValidationCanReturnEarly()
     {
         var fixture = new RuleFixture();
@@ -192,6 +224,10 @@ public sealed class RuleEngineTests
         Assert.Contains(diagnostics, diagnostic => diagnostic.Message ==
             $"entry {RuleFixture.FixtureAtomId} CAS blob is missing: {RuleFixture.FixtureCasPath}");
     }
+
+    private static string RemoveGenreMarkers(string metadata) => metadata
+        .Replace("genre_registry_check = \"no-registry\"\n", string.Empty, StringComparison.Ordinal)
+        .Replace("unregistered_genres = []\n", string.Empty, StringComparison.Ordinal);
 
     [Fact]
     public void Sl016ChecksCasBlobHashBeforeOtherReceiptValidationCanReturnEarly()

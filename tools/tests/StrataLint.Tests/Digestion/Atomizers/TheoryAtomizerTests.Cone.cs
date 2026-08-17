@@ -97,7 +97,9 @@ public sealed partial class TheoryAtomizerTests
             bytes,
             ConeRules);
 
-        Assert.Equal("unregistered/%E7%8C%9C%E6%83%B3/3.6", Assert.Single(document.Claims).AstPath);
+        Assert.Equal(
+            "unregistered/%E7%8C%9C%E6%83%B3/3.6",
+            Assert.Single(document.Claims).AstPath);
         Assert.Equal(["猜想"], document.UnregisteredGenres.ToArray());
     }
 

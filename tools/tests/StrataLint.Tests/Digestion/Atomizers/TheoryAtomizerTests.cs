@@ -415,17 +415,20 @@ public sealed partial class TheoryAtomizerTests
     }
 
     [Fact]
-    public void UnknownNumberedClaimKindIsClassifiedAsALedgerFinding()
+    public void UnknownNumberedClaimKindIsClassifiedAsOpenLedgerDebt()
     {
         var bytes = Encoding.UTF8.GetBytes(
             "# PZG\n\n**未知体 1.1(Unknown kind)**。claim。\n");
 
         var alignment = AlignUnregisteredGenres(bytes);
 
-        var finding = Assert.Single(alignment.Findings);
-        Assert.Contains("source source", finding, StringComparison.Ordinal);
-        Assert.Contains("未知体", finding, StringComparison.Ordinal);
-        Assert.Empty(alignment.Residual);
+        Assert.Empty(alignment.Findings);
+        Assert.Equal(
+            "unregistered/%E6%9C%AA%E7%9F%A5%E4%BD%93/1.1",
+            Assert.Single(alignment.Residual).Atom.AstPath);
+        Assert.Equal(
+            ["未知体"],
+            alignment.GenreRegistryChecks["source"].UnregisteredGenres.ToArray());
         Assert.Empty(alignment.Fallbacks);
     }
 
@@ -668,8 +671,7 @@ public sealed partial class TheoryAtomizerTests
 
     private static DigestionLedgerAlignment AlignUnregisteredGenres(byte[] bytes)
     {
-        var ledger = BackfillInventoryLoader.Load(
-            DigestionTestSupport.EmptyLedger(AtomizerRegistry.PzgId));
+        var ledger = DigestionTestSupport.EmptyDocument(AtomizerRegistry.PzgId);
         return DigestionLedgerAligner.Evaluate(
             ledger,
             DigestionTestSupport.Snapshot(("docs/source.md", bytes)),

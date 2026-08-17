@@ -1,3 +1,4 @@
+using System.Collections.Immutable;
 using System.Text;
 using StrataLint.Cli;
 using StrataLint.Engine;
@@ -96,18 +97,17 @@ public sealed class DigestionSourceConflictMarkerTests
         {
             [RuleFixture.FixtureDigestionSourcePath] = "<<<<<<< HEAD\nconflicted source\n",
         };
+        files = DirectoryLedgerTestSupport.Project(files);
         using var temporary = new TemporaryDirectory();
-        var ledgerPath = Path.Combine(temporary.Path, BackfillInventoryLoader.RelativePath);
-        Directory.CreateDirectory(Path.GetDirectoryName(ledgerPath)!);
-        var before = Encoding.UTF8.GetBytes(inputs.Ledger);
-        File.WriteAllBytes(ledgerPath, before);
+        DirectoryLedgerTestSupport.Write(temporary.Path, files);
+        var before = DirectoryLedgerTestSupport.Image(temporary.Path);
 
         var result = CoverWorld.Environment(temporary.Path, inputs, files)
             .AlignScribeReceipt(CoverWorld.AlignArgs(inputs));
 
         Assert.False(result.Success);
         Assert.Contains("INGEST-CONFLICT-MARKER-001", result.Error, StringComparison.Ordinal);
-        Assert.Equal(before, File.ReadAllBytes(ledgerPath));
+        Assert.Equal(before, DirectoryLedgerTestSupport.Image(temporary.Path));
     }
 
     private static DigestionIngestPlan Plan(string sourcePath, string source)
@@ -115,15 +115,12 @@ public sealed class DigestionSourceConflictMarkerTests
 
     private static DigestionIngestPlan Plan(string sourcePath, byte[] sourceBytes)
     {
-        var ledger = BackfillInventoryLoader.Load($$"""
-            schema_version: 3
-            ledger: theory-digestion-v1
-            sources:
-              - source_id: synthetic-source
-                path: {{sourcePath}}
-                atomizer: {{AtomizerRegistry.GenericId}}
-                entries: []
-            """);
+        var ledger = DigestionTestSupport.Document(
+            AtomizerRegistry.GenericId,
+            [],
+            "synthetic-source",
+            sourcePath,
+            GenreRegistryCheck.Collected([]));
         var snapshot = DigestionTestSupport.Snapshot((sourcePath, sourceBytes));
         return DigestionIngestor.Plan(ledger, snapshot, ledger);
     }
@@ -134,42 +131,34 @@ public sealed class DigestionSourceConflictMarkerTests
         var receiptBytes = sourceBytes[..(firstLineEnd >= 0 ? firstLineEnd + 1 : sourceBytes.Length)];
         var fingerprints = DigestionFingerprint.Compute(receiptBytes);
         var cas = DigestionCasStore.Capture(receiptBytes);
-        var ledgerText = $$"""
-            schema_version: 3
-            ledger: theory-digestion-v1
-            sources:
-              - source_id: canonical-spec
-                path: {{CanonicalSpecPath}}
-                atomizer: {{AtomizerRegistry.NoAtomizerId}}
-                entries:
-                  - atom_id: canonical-spec-fixture
-                    boundary:
-                      ast_path: manual/spec
-                      start_byte: 0
-                      end_byte: {{receiptBytes.Length}}
-                    fingerprints:
-                      raw_sha256: {{fingerprints.RawSha256}}
-                      normalized_sha256: {{fingerprints.NormalizedSha256}}
-                    cas_ref: {{cas.Reference}}
-                    coverage_gids: []
-                    receipts:
-                      coverage: []
-                      scribe: []
-                      unresolved_subitems: []
-                      chain_atoms: []
-                      tail_authorization: null
-                    status:
-                      migration: residual
-                      truth: open
-            """;
-        var ledger = BackfillInventoryLoader.Load(ledgerText);
+        var ledgerEntry = new DigestionLedgerEntry(
+            "canonical-spec",
+            CanonicalSpecPath,
+            AtomizerRegistry.NoAtomizerId,
+            "canonical-spec-fixture",
+            "manual/spec",
+            new DigestionBoundary("manual/spec", 0, receiptBytes.Length),
+            fingerprints,
+            [],
+            new DigestionReceipts([], [], [], [], null),
+            new DigestionStatus(DigestionMigrationState.Residual, DigestionTruthState.Open),
+            cas.Reference);
+        var ledger = DigestionTestSupport.Document(
+            AtomizerRegistry.NoAtomizerId,
+            [ledgerEntry],
+            "canonical-spec",
+            CanonicalSpecPath);
         var policy = RegistryLoadAssert.Accepted(RegistryLoader.Load(
             Encoding.UTF8.GetBytes(TestRegistry.Canonical),
             Encoding.UTF8.GetBytes(TestRegistry.Domains))).Policy;
-        var snapshot = DigestionTestSupport.Snapshot(
-            (CanonicalSpecPath, sourceBytes),
-            (BackfillInventoryLoader.RelativePath, Encoding.UTF8.GetBytes(ledgerText)),
-            (cas.RelativePath, cas.Bytes.ToArray()));
+        var files = new Dictionary<string, string>(StringComparer.Ordinal)
+        {
+            [CanonicalSpecPath] = Encoding.UTF8.GetString(sourceBytes),
+            [cas.RelativePath] = Encoding.UTF8.GetString(cas.Bytes.AsSpan()),
+        };
+        DirectoryLedgerTestSupport.ReplaceWithProjection(files, ledger);
+        var snapshot = Assert.IsType<SnapshotDecodeOutcome.Decoded>(
+            SnapshotDecoder.Decode(CoverWorld.Raw(files))).Snapshot;
 
         return BackfillInventoryRule.EvaluateDocument(
                 new BackfillInventoryValidationContext(

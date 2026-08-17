@@ -7,28 +7,58 @@ namespace StrataLint.Tests;
 public sealed class BackfillInventoryLoaderTests
 {
     [Fact]
-    public void SnapshotLegacyShapeDelegatesByteIdenticallyToTextLoader()
+    public void LegacySingleFileParserAndPreimageSupportDoNotExist()
+    {
+        var legacyLoad = typeof(BackfillInventoryLoader)
+            .GetMethods(System.Reflection.BindingFlags.Static
+                | System.Reflection.BindingFlags.Public
+                | System.Reflection.BindingFlags.NonPublic)
+            .SingleOrDefault(method => method.Name == "Load"
+                && method.GetParameters() is [{ ParameterType: var parameterType }]
+                && parameterType == typeof(string));
+        var legacyWrite = typeof(BackfillInventoryWriter)
+            .GetMethods(System.Reflection.BindingFlags.Static
+                | System.Reflection.BindingFlags.Public
+                | System.Reflection.BindingFlags.NonPublic)
+            .SingleOrDefault(method => method.Name == "WriteForIngest");
+        var aggregateWrite = typeof(BackfillInventoryWriter)
+            .GetMethods(System.Reflection.BindingFlags.Static
+                | System.Reflection.BindingFlags.Public
+                | System.Reflection.BindingFlags.NonPublic)
+            .SingleOrDefault(method => method.Name == "Write"
+                && method.GetParameters() is [{ ParameterType: var parameterType }]
+                && parameterType == typeof(BackfillInventoryDocument));
+        var legacyPreimage = typeof(BackfillInventoryLoader).Assembly.GetType(
+            "StrataLint.Engine.BackfillReceiptPreimage");
+
+        Assert.Null(legacyLoad);
+        Assert.Null(legacyWrite);
+        Assert.Null(aggregateWrite);
+        Assert.Null(legacyPreimage);
+    }
+
+    [Fact]
+    public void RuntimeSnapshotRejectsLegacySingleFileLedger()
     {
         var fields = LoaderEntryFields().ToHashSet(StringComparer.Ordinal);
         fields.Remove("boundary");
         var text = EntryFixture(fields);
 
-        var direct = BackfillInventoryLoader.Load(text);
-        var dispatched = BackfillInventoryLoader.Load(Snapshot((BackfillInventoryLoader.RelativePath, text)));
+        var exception = Assert.Throws<FormatException>(() =>
+            BackfillInventoryLoader.Load(Snapshot((BackfillInventoryLoader.RelativePath, text))));
 
-        Assert.Equal(
-            BackfillInventoryWriter.Write(direct).ToArray(),
-            BackfillInventoryWriter.Write(dispatched).ToArray());
+        Assert.Equal("legacy digestion ledger is unsupported; migrate to directory storage", exception.Message);
     }
 
     [Fact]
-    public void DirectoryShapeProjectsTwoSourcesAndAtoms()
+    public void DirectoryShapeProjectsTwoSourcesAtomsAndDerivedTask()
     {
         var snapshot = Snapshot(
             Source("delta-v0.1", "docs/delta.md", "none"),
             Source("epsilon-v0.1", "docs/epsilon.md", "none"),
             Atom("delta-v0.1", "residual-open", "delta-atom", "theorem/delta"),
-            Atom("epsilon-v0.1", "partial-closed", "epsilon-atom", "theorem/epsilon"));
+            Atom("epsilon-v0.1", "partial-closed", "epsilon-atom", "theorem/epsilon"),
+            ("D5/X_Frontier/SyntheticDelta.lean", "/-- TASK D5-T0098 -/\ndef task : Unit := ()\n"));
 
         var document = BackfillInventoryLoader.Load(snapshot);
 
@@ -36,6 +66,9 @@ public sealed class BackfillInventoryLoaderTests
             document.RequireDigestionSources().Select(static source => source.SourceId).ToArray());
         Assert.Equal(["delta-atom", "epsilon-atom"],
             document.RequireDigestionEntries().Select(static entry => entry.AtomId).ToArray());
+        var ticket = Assert.Single(document.RequireTickets());
+        Assert.Equal("D5-T0098", ticket.CaseId);
+        Assert.Equal("D5/X_Frontier/SyntheticDelta", ticket.Gid);
         Assert.Collection(
             document.RequireDigestionEntries(),
             entry =>
@@ -86,7 +119,7 @@ public sealed class BackfillInventoryLoaderTests
             Source("delta-v0.1", "docs/delta.md", "none"),
             Atom("delta-v0.1", "residual-open", "delta-atom", "theorem/delta"))));
 
-        Assert.Equal("legacy and directory digestion ledgers cannot coexist", exception.Message);
+        Assert.Equal("legacy digestion ledger is unsupported; migrate to directory storage", exception.Message);
     }
 
     [Fact]
@@ -112,7 +145,26 @@ public sealed class BackfillInventoryLoaderTests
         var exception = Assert.Throws<FormatException>(() =>
             BackfillInventoryLoader.LoadRoot(temporary.Path));
 
-        Assert.Equal("legacy and directory digestion ledgers cannot coexist", exception.Message);
+        Assert.Equal("legacy digestion ledger is unsupported; migrate to directory storage", exception.Message);
+    }
+
+    [Fact]
+    public void DiskRootRejectsLegacySingleFileLedger()
+    {
+        using var temporary = new TemporaryDirectory();
+        var legacyPath = Path.Combine(
+            temporary.Path,
+            BackfillInventoryLoader.RelativePath.Replace('/', Path.DirectorySeparatorChar));
+        Directory.CreateDirectory(Path.GetDirectoryName(legacyPath)!);
+        File.WriteAllText(
+            legacyPath,
+            EntryFixture(LoaderEntryFields().ToHashSet(StringComparer.Ordinal)),
+            new UTF8Encoding(false));
+
+        var exception = Assert.Throws<FormatException>(() =>
+            BackfillInventoryLoader.LoadRoot(temporary.Path));
+
+        Assert.Equal("legacy digestion ledger is unsupported; migrate to directory storage", exception.Message);
     }
 
     [Fact]
@@ -287,6 +339,146 @@ public sealed class BackfillInventoryLoaderTests
     }
 
     [Fact]
+    public void SourceMetadataRequiresAndLoadsTheGenreRegistryProjection()
+    {
+        var sourcePath = $"{BackfillInventoryLoader.RootPath}delta-v0.1/source.toml";
+        var metadata = """
+            source_id = "delta-v0.1"
+            path = "docs/delta.md"
+            atomizer = "pzg-v1"
+            genre_registry_check = "collected"
+            unregistered_genres = ["另一体", "未登记体"]
+            """ + "\n";
+        var document = BackfillInventoryLoader.Load(Snapshot(
+            (sourcePath, metadata),
+            Atom("delta-v0.1", "residual-open", "delta-atom", "theorem/delta")));
+
+        var source = Assert.Single(document.RequireDigestionSources());
+        Assert.Equal(
+            metadata,
+            Encoding.UTF8.GetString(BackfillInventoryWriter.WriteSourceMetadata(source).AsSpan()));
+    }
+
+    [Fact]
+    public void SourceMetadataWithoutGenreRegistryProjectionIsRejected()
+    {
+        var sourcePath = $"{BackfillInventoryLoader.RootPath}delta-v0.1/source.toml";
+
+        var exception = Assert.Throws<FormatException>(() => BackfillInventoryLoader.Load(Snapshot(
+            (sourcePath, "source_id = \"delta-v0.1\"\npath = \"docs/delta.md\"\natomizer = \"none\"\n"),
+            Atom("delta-v0.1", "residual-open", "delta-atom", "theorem/delta"))));
+
+        Assert.Equal($"source metadata keys are not canonical: {sourcePath}", exception.Message);
+    }
+
+    [Fact]
+    public void BaselineWithoutGenreProjectionIsUnavailableAndCannotBeReadAsNoRegistry()
+    {
+        var source = Source("delta-v0.1", "docs/delta.md", "none");
+        var legacy = source.Text
+            .Replace("genre_registry_check = \"no-registry\"\n", string.Empty, StringComparison.Ordinal)
+            .Replace("unregistered_genres = []\n", string.Empty, StringComparison.Ordinal);
+        var document = BackfillInventoryLoader.LoadBaseline(Snapshot(
+            (source.Path, legacy),
+            Atom("delta-v0.1", "residual-open", "delta-atom", "theorem/delta")));
+
+        var loadedSource = Assert.Single(document.RequireDigestionSources());
+        Assert.Equal(GenreRegistryProjection.Unavailable, loadedSource.GenreRegistryProjection);
+        Assert.NotEqual(
+            GenreRegistryProjection.Available(GenreRegistryCheck.NoGenreRegistry),
+            loadedSource.GenreRegistryProjection);
+        var exception = Assert.Throws<InvalidOperationException>(
+            () => loadedSource.GenreRegistryCheck);
+        Assert.Equal("genre registry projection is unavailable", exception.Message);
+    }
+
+    [Fact]
+    public void BaselineWithGenreMetadataStillExposesAnUnavailableProjection()
+    {
+        var source = Source("delta-v0.1", "docs/delta.md", "pzg-v1");
+        var document = BackfillInventoryLoader.LoadBaseline(Snapshot(
+            source,
+            Atom("delta-v0.1", "residual-open", "delta-atom", "theorem/delta")));
+
+        var loadedSource = Assert.Single(document.RequireDigestionSources());
+        Assert.Equal(GenreRegistryProjection.Unavailable, loadedSource.GenreRegistryProjection);
+        var exception = Assert.Throws<InvalidOperationException>(
+            () => loadedSource.GenreRegistryCheck);
+        Assert.Equal("genre registry projection is unavailable", exception.Message);
+    }
+
+    [Fact]
+    public void SourceMetadataRejectsInvalidGenreRegistryProjections()
+    {
+        var invalidProjections = new[]
+        {
+            "genre_registry_check = \"collected\"\nunregistered_genres = [\"未登记体\", \"另一体\"]\n",
+            "genre_registry_check = \"collected\"\nunregistered_genres = [\"未登记体\", \"未登记体\"]\n",
+            "genre_registry_check = \"collected\"\nunregistered_genres = [\"\"]\n",
+            "genre_registry_check = \"collected\"\nunregistered_genres = \"未登记体\"\n",
+            "genre_registry_check = [\"collected\"]\nunregistered_genres = []\n",
+            "genre_registry_check = \"no-registry\"\nunregistered_genres = [\"未登记体\"]\n",
+            "genre_registry_check = \"unknown\"\nunregistered_genres = []\n",
+        };
+        var sourcePath = $"{BackfillInventoryLoader.RootPath}delta-v0.1/source.toml";
+        foreach (var projection in invalidProjections)
+        {
+            Assert.Throws<FormatException>(() => BackfillInventoryLoader.Load(Snapshot(
+                (sourcePath,
+                    "source_id = \"delta-v0.1\"\n"
+                    + "path = \"docs/delta.md\"\n"
+                    + "atomizer = \"pzg-v1\"\n"
+                    + projection),
+                Atom("delta-v0.1", "residual-open", "delta-atom", "theorem/delta"))));
+        }
+    }
+
+    [Theory]
+    [InlineData("zeta", "alpha")]
+    [InlineData("same", "same")]
+    [InlineData(" ", null)]
+    public void SourceMetadataWriterRejectsInvalidGenreRegistryProjections(
+        string first,
+        string? second)
+    {
+        var source = Assert.Single(BackfillInventoryLoader.Load(Snapshot(
+            Source("delta-v0.1", "docs/delta.md", "pzg-v1")))
+            .RequireDigestionSources());
+        var tokens = second is null
+            ? System.Collections.Immutable.ImmutableArray.Create(first)
+            : System.Collections.Immutable.ImmutableArray.Create(first, second);
+        source = source with
+        {
+            GenreRegistryProjection = GenreRegistryProjection.Available(
+                GenreRegistryCheck.Collected(tokens)),
+        };
+
+        var exception = Assert.Throws<InvalidOperationException>(() =>
+            BackfillInventoryWriter.WriteSourceMetadata(source));
+
+        Assert.Contains("unregistered genres", exception.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void SourceMetadataMustUseCanonicalWriterEncoding()
+    {
+        var sourcePath = $"{BackfillInventoryLoader.RootPath}delta-v0.1/source.toml";
+        var noncanonical = """
+            path = "docs/delta.md"
+            source_id = "delta-v0.1"
+            atomizer = "pzg-v1"
+            genre_registry_check = "collected"
+            unregistered_genres = []
+            """ + "\n";
+
+        var exception = Assert.Throws<FormatException>(() => BackfillInventoryLoader.Load(Snapshot(
+            (sourcePath, noncanonical),
+            Atom("delta-v0.1", "residual-open", "delta-atom", "theorem/delta"))));
+
+        Assert.Equal($"source metadata is not canonically encoded: {sourcePath}", exception.Message);
+    }
+
+    [Fact]
     public void SourceMetadataPreservesAcknowledgedStaleArray()
     {
         var sourcePath = $"{BackfillInventoryLoader.RootPath}delta-v0.1/source.toml";
@@ -305,6 +497,16 @@ public sealed class BackfillInventoryLoaderTests
         var sourcePath = $"{BackfillInventoryLoader.RootPath}delta-v0.1/source.toml";
         var exception = Assert.Throws<FormatException>(() => BackfillInventoryLoader.Load(Snapshot(
             (sourcePath, "source_id = \"delta-v0.1\"\npath = \"docs/delta.md\"\natomizer = \"none\"\ngenre_registry_check = \"no-registry\"\nunregistered_genres = []\nacknowledged_stale = []\n"),
+            Atom("delta-v0.1", "residual-open", "delta-atom", "theorem/delta"))));
+        Assert.Equal($"source metadata is not canonically encoded: {sourcePath}", exception.Message);
+    }
+
+    [Fact]
+    public void HistoricalBaselineRejectsNoncanonicalEmptyAcknowledgedStaleArray()
+    {
+        var sourcePath = $"{BackfillInventoryLoader.RootPath}delta-v0.1/source.toml";
+        var exception = Assert.Throws<FormatException>(() => BackfillInventoryLoader.LoadBaseline(Snapshot(
+            (sourcePath, "source_id = \"delta-v0.1\"\npath = \"docs/delta.md\"\natomizer = \"none\"\nacknowledged_stale = []\n"),
             Atom("delta-v0.1", "residual-open", "delta-atom", "theorem/delta"))));
 
         Assert.Equal($"source metadata is not canonically encoded: {sourcePath}", exception.Message);
@@ -354,67 +556,55 @@ public sealed class BackfillInventoryLoaderTests
     [InlineData("Meta/Digestion/backfill/delta-v0.1/residual-frozen/atom.yaml")]
     [InlineData("Meta/Digestion/backfill/delta-v0.1/residual-open/nested/atom.yaml")]
     [InlineData("Meta/Digestion/backfill/delta-v0.1/notes.toml")]
+    [InlineData("Meta/Digestion/ticket-index.yaml")]
     [InlineData("Meta/BACKFILL.yaml")]
     public void NoncanonicalDigestionLedgerPathsAreRejected(string path)
         => Assert.False(BackfillInventoryLoader.IsCanonicalPath(path));
 
-    // chain_atoms / tail_authorization 在 dev 现有记录里均为空,故目录形态允许省略;
-    // 活值仍由 loader 与 writer 完整保留,不得静默丢弃。
     [Fact]
-    public void ReceiptsWithoutRetiredLegacyKeysAreAccepted()
+    public void DirectoryReceiptsWithoutOptionalLiveKeysAreAccepted()
     {
-        var fields = LoaderEntryFields().ToHashSet(StringComparer.Ordinal);
-        fields.Remove("boundary");
-        Assert.True(TryLoadEntry(EntryFixture(fields).Replace(
-            "              chain_atoms: []\n              tail_authorization: null\n", string.Empty)));
+        var atom = Atom("delta-v0.1", "residual-open", "delta-atom", "theorem/delta");
+        var withoutOptionalKeys = atom.Text
+            .Replace("  chain_atoms: []\n", string.Empty, StringComparison.Ordinal)
+            .Replace("  tail_authorization: null\n", string.Empty, StringComparison.Ordinal);
+
+        var entry = Assert.Single(BackfillInventoryLoader.Load(Snapshot(
+            Source("delta-v0.1", "docs/delta.md", "none"),
+            (atom.Path, withoutOptionalKeys))).RequireDigestionEntries());
+
+        Assert.Empty(entry.Receipts.ChainAtoms);
+        Assert.Null(entry.Receipts.TailAuthorization);
     }
 
     [Fact]
-    public void MissingCasRefIsRejected()
+    public void DirectoryAtomWithoutCasRefIsRejected()
     {
-        var fields = LoaderEntryFields().ToHashSet(StringComparer.Ordinal);
-        fields.Remove("cas_ref");
-        fields.Remove("boundary");
+        var atom = Atom("delta-v0.1", "residual-open", "delta-atom", "theorem/delta");
+        var withoutCasRef = atom.Text.Replace(
+            "cas_ref: sha256:0000000000000000000000000000000000000000000000000000000000000000\n",
+            string.Empty,
+            StringComparison.Ordinal);
 
-        var exception = Assert.Throws<FormatException>(() =>
-            BackfillInventoryLoader.Load(EntryFixture(fields)).RequireDigestionEntries());
+        var exception = Assert.Throws<FormatException>(() => BackfillInventoryLoader.Load(Snapshot(
+            Source("delta-v0.1", "docs/delta.md", "none"),
+            (atom.Path, withoutCasRef))));
 
-        Assert.Equal("source synthetic-source entry keys are not canonical", exception.Message);
+        Assert.Equal("source delta-v0.1 entry keys are not canonical", exception.Message);
     }
 
     [Fact]
-    public void CasRefRoundTripsCanonically()
+    public void DirectoryCasRefRoundTripsCanonically()
     {
-        var text = """
-            schema_version: 3
-            ledger: theory-digestion-v1
-            sources:
-              - source_id: synthetic-source
-                path: docs/source.md
-                atomizer: synthetic-v1
-                entries:
-                  - atom_id: synthetic-atom
-                    ast_path: theorem/1.1
-                    fingerprints:
-                      raw_sha256: sha256:0000000000000000000000000000000000000000000000000000000000000000
-                      normalized_sha256: sha256:1111111111111111111111111111111111111111111111111111111111111111
-                    cas_ref: sha256:0000000000000000000000000000000000000000000000000000000000000000
-                    coverage_gids: []
-                    receipts:
-                      coverage: []
-                      scribe: []
-                      unresolved_subitems: []
-                      chain_atoms: []
-                      tail_authorization: null
-                    status:
-                      migration: residual
-                      truth: open
-            """;
-
-        var document = BackfillInventoryLoader.Load(text);
+        var atom = Atom("delta-v0.1", "residual-open", "delta-atom", "theorem/delta");
+        var document = BackfillInventoryLoader.Load(Snapshot(
+            Source("delta-v0.1", "docs/delta.md", "none"),
+            atom));
         var entry = Assert.Single(document.RequireDigestionEntries());
-        var roundTripped = BackfillInventoryLoader.Load(
-            Encoding.UTF8.GetString(BackfillInventoryWriter.Write(document).AsSpan()));
+        var written = Encoding.UTF8.GetString(BackfillInventoryWriter.WriteAtom(entry).AsSpan());
+        var roundTripped = BackfillInventoryLoader.Load(Snapshot(
+            Source("delta-v0.1", "docs/delta.md", "none"),
+            (atom.Path, written)));
 
         Assert.Equal(
             "sha256:0000000000000000000000000000000000000000000000000000000000000000",
@@ -423,89 +613,39 @@ public sealed class BackfillInventoryLoaderTests
     }
 
     [Fact]
-    public void ProjectsCoverageReferencesFromSyntheticBackfill()
+    public void DirectoryLedgerProjectsCoverageReferences()
     {
-        const string yaml = """
-            schema_version: 3
-            ledger: theory-digestion-v1
-            sources:
-              - source_id: synthetic-source
-                path: docs/synthetic.md
-                atomizer: none
-                entries:
-                  - atom_id: synthetic-atom
-                    boundary:
-                      ast_path: manual/synthetic
-                      start_byte: 0
-                      end_byte: 1
-                    fingerprints:
-                      raw_sha256: sha256:0000000000000000000000000000000000000000000000000000000000000000
-                      normalized_sha256: sha256:0000000000000000000000000000000000000000000000000000000000000000
-                    cas_ref: sha256:0000000000000000000000000000000000000000000000000000000000000000
-                    coverage_gids:
-                      - D5/X_Frontier/SyntheticSourceTarget
-                    receipts:
-                      coverage: []
-                      scribe: []
-                      unresolved_subitems: []
-                      chain_atoms: []
-                      tail_authorization: null
-                    status:
-                      migration: partial
-                      truth: open
-            """;
+        var atom = Atom("delta-v0.1", "partial-open", "delta-atom", "manual/delta");
+        var withCoverage = atom.Text.Replace(
+            "coverage_gids: []",
+            "coverage_gids:\n  - D5/X_Frontier/SyntheticSourceTarget",
+            StringComparison.Ordinal);
+        var inventory = BackfillInventoryLoader.Load(Snapshot(
+            Source("delta-v0.1", "docs/delta.md", "none"),
+            (atom.Path, withCoverage)));
 
-        var inventory = BackfillInventoryLoader.Load(yaml);
-
-        Assert.Equal(3, inventory.Root["schema_version"]);
-        Assert.Equal("synthetic-atom", Assert.Single(inventory.RequireDigestionEntries()).AtomId);
         Assert.Equal(
             ["D5/X_Frontier/SyntheticSourceTarget"],
             inventory.RequireReferencedGids().ToArray());
     }
 
     [Fact]
-    public void ExpandedSourceProjectsStructuralIdentityAndStaleAcknowledgments()
+    public void DirectorySourceProjectsIdentityAndStaleAcknowledgments()
     {
-        const string yaml = """
-            schema_version: 3
-            ledger: theory-digestion-v1
-            sources:
-              - source_id: synthetic-source
-                path: docs/synthetic.md
-                atomizer: synthetic-v1
-                acknowledged_stale:
-                  - synthetic-stale
-                entries:
-                  - atom_id: synthetic-stale
-                    ast_path: theorem/1.1
-                    fingerprints:
-                      raw_sha256: sha256:0000000000000000000000000000000000000000000000000000000000000000
-                      normalized_sha256: sha256:0000000000000000000000000000000000000000000000000000000000000000
-                    cas_ref: sha256:0000000000000000000000000000000000000000000000000000000000000000
-                    coverage_gids: []
-                    receipts:
-                      coverage: []
-                      scribe: []
-                      unresolved_subitems: []
-                      chain_atoms: []
-                      tail_authorization: null
-                    status:
-                      migration: residual
-                      truth: open
-            """;
+        var source = Source("delta-v0.1", "docs/delta.md", "pzg-v1");
+        var withStale = source.Text + "acknowledged_stale = [\"delta-atom\"]\n";
+        var inventory = BackfillInventoryLoader.Load(Snapshot(
+            (source.Path, withStale),
+            Atom("delta-v0.1", "residual-open", "delta-atom", "theorem/delta")));
+        var loadedSource = Assert.Single(inventory.RequireDigestionSources());
+        var entry = Assert.Single(loadedSource.Entries);
 
-        var inventory = BackfillInventoryLoader.Load(yaml);
-        var source = Assert.Single(inventory.RequireDigestionSources());
-        var entry = Assert.Single(source.Entries);
-
-        Assert.Equal(["synthetic-stale"], source.AcknowledgedStale.ToArray());
-        Assert.Equal("theorem/1.1", entry.AstPath);
+        Assert.Equal("delta-v0.1", loadedSource.SourceId);
+        Assert.Equal("docs/delta.md", loadedSource.SourcePath);
+        Assert.Equal("pzg-v1", loadedSource.Atomizer);
+        Assert.Equal(["delta-atom"], loadedSource.AcknowledgedStale.ToArray());
+        Assert.Equal("theorem/delta", entry.AstPath);
         Assert.Null(entry.Boundary);
-
-        var roundTripped = BackfillInventoryLoader.Load(
-            System.Text.Encoding.UTF8.GetString(BackfillInventoryWriter.Write(inventory).AsSpan()));
-        Assert.Empty(roundTripped.RequireTickets());
     }
 
     [Theory]
@@ -515,74 +655,23 @@ public sealed class BackfillInventoryLoaderTests
     [InlineData("0")]
     [InlineData("+1")]
     [InlineData("01")]
-    [InlineData("|")]
-    [InlineData("|-")]
-    [InlineData("|+")]
-    [InlineData(">")]
-    [InlineData(">-")]
-    [InlineData(">+")]
-    public void CanonicalWriterQuotesStringScalarsThatTheParserWouldCoerce(string atomId)
+    public void DirectoryAtomWriterQuotesYamlScalarLookingAstPaths(string astPath)
     {
-        var yaml = $$"""
-            schema_version: 3
-            ledger: theory-digestion-v1
-            sources:
-              - source_id: synthetic-source
-                path: docs/synthetic.md
-                atomizer: synthetic-v1
-                acknowledged_stale: []
-                entries:
-                  - atom_id: '{{atomId}}'
-                    ast_path: theorem/1.1
-                    fingerprints:
-                      raw_sha256: sha256:0000000000000000000000000000000000000000000000000000000000000000
-                      normalized_sha256: sha256:0000000000000000000000000000000000000000000000000000000000000000
-                    cas_ref: sha256:0000000000000000000000000000000000000000000000000000000000000000
-                    coverage_gids: []
-                    receipts:
-                      coverage: []
-                      scribe: []
-                      unresolved_subitems: []
-                      chain_atoms: []
-                      tail_authorization: null
-                    status:
-                      migration: residual
-                      truth: open
-            """;
-        var inventory = BackfillInventoryLoader.Load(yaml);
-
-        var written = System.Text.Encoding.UTF8.GetString(
-            BackfillInventoryWriter.Write(inventory).AsSpan());
-        var roundTripped = BackfillInventoryLoader.Load(written);
-        var source = Assert.Single(roundTripped.RequireDigestionSources());
-
-        Assert.Equal(atomId, Assert.Single(source.Entries).AtomId);
-        Assert.Contains($"atom_id: '{atomId}'", written, StringComparison.Ordinal);
-    }
-
-    [Fact]
-    public void CanonicalWriterRoundTripsTheCurrentLedgerByteExact()
-    {
-        var root = TestRepositoryLayout.FindRoot();
-        var path = Path.Combine(root, BackfillInventoryLoader.RelativePath);
-        if (File.Exists(path))
+        var atom = Atom("delta-v0.1", "residual-open", "delta-atom", "theorem/delta");
+        var entry = Assert.Single(BackfillInventoryLoader.Load(Snapshot(
+            Source("delta-v0.1", "docs/delta.md", "none"),
+            atom)).RequireDigestionEntries()) with
         {
-            var expected = File.ReadAllBytes(path);
+            AstPath = astPath,
+        };
 
-            var actual = BackfillInventoryWriter.Write(
-                BackfillInventoryLoader.Load(File.ReadAllText(path)));
+        var written = Encoding.UTF8.GetString(BackfillInventoryWriter.WriteAtom(entry).AsSpan());
+        var roundTripped = BackfillInventoryLoader.Load(Snapshot(
+            Source("delta-v0.1", "docs/delta.md", "none"),
+            (atom.Path, written)));
 
-            Assert.Equal(expected, actual.ToArray());
-            return;
-        }
-
-        // 目录形态没有单文件字节可对照;互逆契约改为当前台账在 Write∘Load
-        // 上的字节不动点。
-        var first = BackfillInventoryWriter.Write(BackfillInventoryLoader.LoadRoot(root));
-        var second = BackfillInventoryWriter.Write(
-            BackfillInventoryLoader.Load(System.Text.Encoding.UTF8.GetString(first.AsSpan())));
-
-        Assert.Equal(first.ToArray(), second.ToArray());
+        Assert.Equal(astPath, Assert.Single(roundTripped.RequireDigestionEntries()).AstPath);
+        Assert.Contains($"ast_path: '{astPath}'", written, StringComparison.Ordinal);
     }
 
     [Fact]
@@ -655,19 +744,6 @@ public sealed class BackfillInventoryLoaderTests
             "TASK case D5-T0098 is declared by multiple D5 Lean modules: "
             + "D5/S0/Synthetic/First, D5/S1/Synthetic/Second",
             exception.Message);
-    }
-
-    private static bool TryLoadEntry(string yaml)
-    {
-        try
-        {
-            BackfillInventoryLoader.Load(yaml).RequireDigestionEntries();
-            return true;
-        }
-        catch (FormatException)
-        {
-            return false;
-        }
     }
 
     private static RepositorySnapshot Snapshot(params (string Path, string Text)[] files)

@@ -56,6 +56,13 @@ internal static class UnregisteredGenreLocator
     internal static string ForNumbered(string token, string number) =>
         ForToken(token) + "/" + number;
 
+    internal static bool MatchesToken(string astPath, string token)
+    {
+        var tokenPath = ForToken(token);
+        return string.Equals(astPath, tokenPath, StringComparison.Ordinal)
+            || astPath.StartsWith(tokenPath + "/", StringComparison.Ordinal);
+    }
+
     internal static bool TryGetToken(string astPath, out string token)
     {
         token = string.Empty;
@@ -78,6 +85,12 @@ internal static class UnregisteredGenreLocator
     }
 }
 
+internal enum GenreRegistryCheckKind
+{
+    Collected,
+    NoRegistry,
+}
+
 internal static class GenreRegistryCheckNames
 {
     internal static string Render(GenreRegistryCheckKind kind) => kind switch
@@ -86,12 +99,6 @@ internal static class GenreRegistryCheckNames
         GenreRegistryCheckKind.NoRegistry => "no-registry",
         _ => throw new ArgumentOutOfRangeException(nameof(kind)),
     };
-}
-
-internal enum GenreRegistryCheckKind
-{
-    Collected,
-    NoRegistry,
 }
 
 /// <summary>

@@ -89,7 +89,7 @@ public sealed class GenericDialectTests
 
     private static DigestionLedgerAlignment Align(string atomizerId, byte[] bytes, string data)
     {
-        var ledger = BackfillInventoryLoader.Load(DigestionTestSupport.EmptyLedger(atomizerId));
+        var ledger = DigestionTestSupport.EmptyDocument(atomizerId);
         return DigestionLedgerAligner.Evaluate(
             ledger,
             DigestionTestSupport.Snapshot(
@@ -115,17 +115,20 @@ public sealed class GenericDialectTests
     }
 
     [Fact]
-    public void AnUnregisteredGenreInADeclaredDialectStillFailsClosed()
+    public void AnUnregisteredGenreInADeclaredDialectIsAdmittedAsOpen()
     {
         var bytes = Encoding.UTF8.GetBytes("# 探针卷\n\n**未登记体 1.1(甲)**。一。\n");
 
         var alignment = Align($"dialect:{DialectId}", bytes, RulesWith(ProbeDialect));
 
-        var finding = Assert.Single(alignment.Findings);
-        Assert.Contains("source source", finding, StringComparison.Ordinal);
-        Assert.Contains("未登记体", finding, StringComparison.Ordinal);
-        Assert.Empty(alignment.Residual);
+        Assert.Empty(alignment.Findings);
+        Assert.Equal(
+            "unregistered/%E6%9C%AA%E7%99%BB%E8%AE%B0%E4%BD%93/1.1",
+            Assert.Single(alignment.Residual).Atom.AstPath);
         Assert.Empty(alignment.Fallbacks);
+        Assert.Equal(
+            ["未登记体"],
+            alignment.GenreRegistryChecks["source"].UnregisteredGenres.ToArray());
     }
 
     [Fact]
@@ -186,7 +189,7 @@ public sealed class GenericDialectTests
     }
 
     [Fact]
-    public void AnUnregisteredGenreOnAHeadingStillFailsClosed()
+    public void AnUnregisteredGenreOnAHeadingIsAdmittedAsOpen()
     {
         var bytes = Encoding.UTF8.GetBytes("# 探针卷\n\n## 未登记体 1.1(甲)\n");
 
@@ -195,11 +198,14 @@ public sealed class GenericDialectTests
             bytes,
             RulesWith(HeadingProbeDialect));
 
-        var finding = Assert.Single(alignment.Findings);
-        Assert.Contains("source source", finding, StringComparison.Ordinal);
-        Assert.Contains("未登记体", finding, StringComparison.Ordinal);
-        Assert.Empty(alignment.Residual);
+        Assert.Empty(alignment.Findings);
+        Assert.Equal(
+            "unregistered/%E6%9C%AA%E7%99%BB%E8%AE%B0%E4%BD%93/1.1",
+            Assert.Single(alignment.Residual).Atom.AstPath);
         Assert.Empty(alignment.Fallbacks);
+        Assert.Equal(
+            ["未登记体"],
+            alignment.GenreRegistryChecks["source"].UnregisteredGenres.ToArray());
     }
 
     [Fact]

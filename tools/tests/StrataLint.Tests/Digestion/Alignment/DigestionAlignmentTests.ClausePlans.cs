@@ -22,9 +22,9 @@ public sealed partial class DigestionAlignmentTests
             sourceBytes,
             DigestionTestSupport.Rules).Claims);
         var parentCapture = DigestionCasStore.Capture(parent.RawBytes.AsSpan());
-        var loaded = BackfillInventoryLoader.Load(
-            Ledger([], CasEntry("parent", parent, parentCapture.Reference))
-                .Replace(AtomizerRegistry.GictId, AtomizerRegistry.PzgId, StringComparison.Ordinal));
+        var loaded = WithAtomizer(
+            Ledger([], CasEntry("parent", parent, parentCapture.Reference)),
+            AtomizerRegistry.PzgId);
         var source = Assert.Single(loaded.RequireDigestionSources());
         var parentEntry = Assert.Single(source.Entries);
         var ledger = loaded.WithDigestionSources(
@@ -39,7 +39,6 @@ public sealed partial class DigestionAlignmentTests
                         {
                             UnresolvedSubitems = ["secondary-verdict"],
                         },
-                        ReceiptSyntax = null,
                     },
                 ],
             },
@@ -69,17 +68,17 @@ public sealed partial class DigestionAlignmentTests
             Assert.Equal(DigestionTruthState.Open, child.ProjectedStatus.Truth);
         });
 
-        var firstBytes = BackfillInventoryWriter.WriteForIngest(first.Document);
-        var migrated = BackfillInventoryLoader.Load(Encoding.UTF8.GetString(firstBytes.AsSpan()));
+        var firstBytes = DirectoryLedgerTestSupport.Image(first.Document);
+        var migrated = first.Document;
         var second = DigestionIngestor.Plan(
             migrated,
             Snapshot(sourceBytes, first.CasObjects.Prepend(parentCapture)),
             ledger);
-        var secondBytes = BackfillInventoryWriter.WriteForIngest(second.Document);
+        var secondBytes = DirectoryLedgerTestSupport.Image(second.Document);
 
         Assert.Equal(0, second.ResidualOpenAdded);
         Assert.Empty(second.CasObjects);
-        Assert.Equal(firstBytes.ToArray(), secondBytes.ToArray());
+        Assert.Equal(firstBytes, secondBytes);
     }
 
     [Fact]
@@ -113,12 +112,12 @@ public sealed partial class DigestionAlignmentTests
         var parentCaptures = atomized.Claims
             .Select(parent => DigestionCasStore.Capture(parent.RawBytes.AsSpan()))
             .ToArray();
-        var ledger = BackfillInventoryLoader.Load(
+        var ledger = WithAtomizer(
             Ledger(
                 [],
                 CasEntry("parent-18-7", atomized.Claims[0], parentCaptures[0].Reference),
-                CasEntry("parent-18-8", atomized.Claims[1], parentCaptures[1].Reference))
-                .Replace(AtomizerRegistry.GictId, AtomizerRegistry.PzgId, StringComparison.Ordinal));
+                CasEntry("parent-18-8", atomized.Claims[1], parentCaptures[1].Reference)),
+            AtomizerRegistry.PzgId);
 
         var plan = DigestionIngestor.Plan(
             ledger,
@@ -158,9 +157,9 @@ public sealed partial class DigestionAlignmentTests
         Assert.NotEqual(lfParent.Fingerprints.RawSha256, crlfParent.Fingerprints.RawSha256);
         Assert.Equal(lfParent.Fingerprints.NormalizedSha256, crlfParent.Fingerprints.NormalizedSha256);
         var parentCapture = DigestionCasStore.Capture(lfParent.RawBytes.AsSpan());
-        var ledger = BackfillInventoryLoader.Load(
-            Ledger([], CasEntry("parent", lfParent, parentCapture.Reference))
-                .Replace(AtomizerRegistry.GictId, AtomizerRegistry.PzgId, StringComparison.Ordinal));
+        var ledger = WithAtomizer(
+            Ledger([], CasEntry("parent", lfParent, parentCapture.Reference)),
+            AtomizerRegistry.PzgId);
 
         var exception = Assert.Throws<FormatException>(() => DigestionIngestor.Plan(
             ledger,
@@ -196,9 +195,9 @@ public sealed partial class DigestionAlignmentTests
             _ => throw new ArgumentOutOfRangeException(nameof(defect)),
         };
         var parentCapture = DigestionCasStore.Capture(parentBytes);
-        var baseline = BackfillInventoryLoader.Load(Ledger(
+        var baseline = Ledger(
             [],
-            CasEntry("parent", parent, parentCapture.Reference)));
+            CasEntry("parent", parent, parentCapture.Reference));
         var source = Assert.Single(baseline.RequireDigestionSources());
         var parentEntry = Assert.Single(source.Entries);
         var childCaptures = children
@@ -215,7 +214,6 @@ public sealed partial class DigestionAlignmentTests
                     parentEntry with
                     {
                         Receipts = parentEntry.Receipts with { ChainAtoms = childIds },
-                        ReceiptSyntax = null,
                     },
                     .. children.Select((child, index) => ChildEntry(
                         parentEntry,
@@ -263,9 +261,9 @@ public sealed partial class DigestionAlignmentTests
         var childCaptures = children
             .Select(static child => DigestionCasStore.Capture(child.RawBytes.AsSpan()))
             .ToArray();
-        var baseline = BackfillInventoryLoader.Load(Ledger(
+        var baseline = Ledger(
             [],
-            CasEntry("parent", parent, parentCapture.Reference)));
+            CasEntry("parent", parent, parentCapture.Reference));
         var source = Assert.Single(baseline.RequireDigestionSources());
         var parentEntry = Assert.Single(source.Entries);
         var childIds = childCaptures.Select((capture, index) =>
@@ -279,7 +277,6 @@ public sealed partial class DigestionAlignmentTests
                     parentEntry with
                     {
                         Receipts = parentEntry.Receipts with { ChainAtoms = childIds },
-                        ReceiptSyntax = null,
                     },
                     .. children.Select((child, index) => ChildEntry(
                         parentEntry,
@@ -342,9 +339,9 @@ public sealed partial class DigestionAlignmentTests
             [new DigestionClausePlan(parent.AstPath, [first, second])],
             GenreRegistryCheck.NoGenreRegistry);
         var captured = DigestionCasStore.Capture(parentBytes.AsSpan());
-        var ledger = BackfillInventoryLoader.Load(Ledger(
+        var ledger = Ledger(
             [],
-            CasEntry("parent", parent, captured.Reference)));
+            CasEntry("parent", parent, captured.Reference));
 
         var result = DigestionLedgerAligner.Evaluate(
             ledger,
@@ -384,9 +381,9 @@ public sealed partial class DigestionAlignmentTests
             [new DigestionClausePlan(parent.AstPath, [first, second])],
             GenreRegistryCheck.NoGenreRegistry);
         var captured = DigestionCasStore.Capture(parentBytes.AsSpan());
-        var ledger = BackfillInventoryLoader.Load(Ledger(
+        var ledger = Ledger(
             [],
-            CasEntry("parent", parent, captured.Reference)));
+            CasEntry("parent", parent, captured.Reference));
 
         var result = DigestionLedgerAligner.Evaluate(
             ledger,

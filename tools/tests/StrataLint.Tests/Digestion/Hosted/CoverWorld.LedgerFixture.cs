@@ -1,13 +1,11 @@
 using System.Collections.Immutable;
-using System.Text;
-using StrataLint.Cli;
 using StrataLint.Engine;
 
 namespace StrataLint.Tests;
 
 internal static partial class CoverWorld
 {
-    private static string BuildLedger(
+    private static BackfillInventoryDocument BuildLedger(
         CoverSpec spec,
         DigestionAtom atom,
         ImmutableArray<string> coverage,
@@ -19,17 +17,11 @@ internal static partial class CoverWorld
         string? hostedSourcePath = null,
         bool useHostedBaselineCoverage = false)
     {
-        var builder = new StringBuilder();
-        builder.Append("schema_version: 3\n");
-        builder.Append("ledger: theory-digestion-v1\n");
-        builder.Append("sources:\n");
-        builder.Append("  - source_id: fixture-source\n");
-        builder.Append($"    path: {RuleFixture.FixtureDigestionSourcePath}\n");
-        builder.Append($"    atomizer: {SyntheticNumberedAtomizer.Id}\n");
-        builder.Append("    acknowledged_stale: []\n");
-        builder.Append("    entries:\n");
-        AppendEntry(
-            builder,
+        var sources = ImmutableArray.CreateBuilder<DigestionLedgerSource>();
+        var entries = ImmutableArray.CreateBuilder<DigestionLedgerEntry>();
+        entries.Add(Entry(
+            "fixture-source",
+            RuleFixture.FixtureDigestionSourcePath,
             spec.AtomId,
             atom.AstPath,
             atom.Fingerprints,
@@ -41,15 +33,16 @@ internal static partial class CoverWorld
             targetSha256,
             spec.InitialDefinitionSha256,
             spec.InitialEmissionSha256,
-            spec.InitialUnresolvedSubitems);
+            spec.InitialUnresolvedSubitems));
         if (includeOtherAtom && spec.OtherAtomBinding is { } other)
         {
-            AppendEntry(
-                builder,
+            entries.Add(Entry(
+                "fixture-source",
+                RuleFixture.FixtureDigestionSourcePath,
                 other.AtomId,
                 "theorem/sibling",
                 atom.Fingerprints,
-                ImmutableArray.Create(other.Gid),
+                [other.Gid],
                 "partial",
                 "closed",
                 null,
@@ -57,39 +50,55 @@ internal static partial class CoverWorld
                 null,
                 null,
                 null,
-                []);
+                []));
         }
 
-        if (spec.HostedSibling is { } hostedSibling && hostedAtom is not null && hostedSourcePath is not null)
+        sources.Add(new DigestionLedgerSource(
+            "fixture-source",
+            RuleFixture.FixtureDigestionSourcePath,
+            SyntheticNumberedAtomizer.Id,
+            [],
+            GenreRegistryProjection.Available(GenreRegistryCheck.Collected([])),
+            entries.ToImmutable()));
+
+        if (spec.HostedSibling is { } hostedSibling
+            && hostedAtom is not null
+            && hostedSourcePath is not null)
         {
-            builder.Append("  - source_id: fixture-hosted-source\n");
-            builder.Append($"    path: {hostedSourcePath}\n");
-            builder.Append($"    atomizer: {SyntheticNumberedAtomizer.Id}\n");
-            builder.Append("    acknowledged_stale: []\n");
-            builder.Append("    entries:\n");
-            AppendEntry(
-                builder,
-                hostedSibling.AtomId,
-                hostedAtom.AstPath,
-                hostedAtom.Fingerprints,
-                useHostedBaselineCoverage
-                    ? hostedSibling.BaselineCoverage
-                    : hostedSibling.CurrentCoverage,
-                "partial",
-                "closed",
-                null,
-                null,
-                null,
-                null,
-                null,
-                hostedSibling.UnresolvedSubitems);
+            var hostedCoverage = useHostedBaselineCoverage
+                ? hostedSibling.BaselineCoverage
+                : hostedSibling.CurrentCoverage;
+            sources.Add(new DigestionLedgerSource(
+                "fixture-hosted-source",
+                hostedSourcePath,
+                SyntheticNumberedAtomizer.Id,
+                [],
+                GenreRegistryProjection.Available(GenreRegistryCheck.Collected([])),
+                [
+                    Entry(
+                        "fixture-hosted-source",
+                        hostedSourcePath,
+                        hostedSibling.AtomId,
+                        hostedAtom.AstPath,
+                        hostedAtom.Fingerprints,
+                        hostedCoverage,
+                        "partial",
+                        "closed",
+                        null,
+                        null,
+                        null,
+                        null,
+                        null,
+                        hostedSibling.UnresolvedSubitems),
+                ]));
         }
 
-        return builder.ToString();
+        return BackfillInventoryDocument.Create(sources.ToImmutable(), []);
     }
 
-    private static void AppendEntry(
-        StringBuilder builder,
+    private static DigestionLedgerEntry Entry(
+        string sourceId,
+        string sourcePath,
         string atomId,
         string astPath,
         DigestionFingerprints fingerprints,
@@ -103,75 +112,55 @@ internal static partial class CoverWorld
         string? emissionSha256,
         ImmutableArray<string> unresolvedSubitems)
     {
-        builder.Append($"      - atom_id: {atomId}\n");
-        builder.Append($"        ast_path: {astPath}\n");
-        builder.Append("        fingerprints:\n");
-        builder.Append($"          raw_sha256: {fingerprints.RawSha256}\n");
-        builder.Append($"          normalized_sha256: {fingerprints.NormalizedSha256}\n");
-        builder.Append($"        cas_ref: {fingerprints.RawSha256}\n");
-        if (coverage.Length == 0)
-        {
-            builder.Append("        coverage_gids: []\n");
-        }
-        else
-        {
-            builder.Append("        coverage_gids:\n");
-            foreach (var gid in coverage)
-            {
-                builder.Append($"          - {gid}\n");
-            }
-        }
-
-        builder.Append("        receipts:\n");
-        if (coverage.Length == 1 && targetSha256 is not null)
-        {
-            builder.Append("          coverage:\n");
-            builder.Append($"            - gid: {coverage[0]}\n");
-            builder.Append($"              source_sha256: {fingerprints.RawSha256}\n");
-            builder.Append($"              target_sha256: {targetSha256}\n");
-        }
-        else
-        {
-            builder.Append("          coverage: []\n");
-        }
-
-        if (coverage.Length == 1 && definitionSha256 is not null && emissionSha256 is not null)
-        {
-            builder.Append("          scribe:\n");
-            builder.Append($"            - gid: {coverage[0]}\n");
-            builder.Append($"              definition_sha256: {definitionSha256}\n");
-            builder.Append($"              emission_sha256: {emissionSha256}\n");
-        }
-        else
-        {
-            builder.Append("          scribe: []\n");
-        }
-        if (unresolvedSubitems.Length == 0)
-        {
-            builder.Append("          unresolved_subitems: []\n");
-        }
-        else
-        {
-            builder.Append("          unresolved_subitems:\n");
-            foreach (var subitem in unresolvedSubitems)
-            {
-                builder.Append($"            - {subitem}\n");
-            }
-        }
-        builder.Append("          chain_atoms: []\n");
-        if (tailAuthPath is not null && tailAuthSha is not null)
-        {
-            builder.Append("          tail_authorization:\n");
-            builder.Append($"            path: {tailAuthPath}\n");
-            builder.Append($"            sha256: {tailAuthSha}\n");
-        }
-        else
-        {
-            builder.Append("          tail_authorization: null\n");
-        }
-
-        builder.Append("        status:\n");
-        builder.Append($"          migration: {migration}\n");
-        builder.Append($"          truth: {truth}\n");
+        var coverageReceipts = coverage.Length == 1 && targetSha256 is not null
+            ? ImmutableArray.Create(new DigestionCoverageReceipt(
+                coverage[0],
+                fingerprints.RawSha256,
+                targetSha256))
+            : [];
+        var scribeReceipts = coverage.Length == 1
+            && definitionSha256 is not null
+            && emissionSha256 is not null
+                ? ImmutableArray.Create(new DigestionScribeReceipt(
+                    coverage[0],
+                    definitionSha256,
+                    emissionSha256))
+                : [];
+        var tailAuthorization = tailAuthPath is not null && tailAuthSha is not null
+            ? new DigestionExternalReceipt(tailAuthPath, tailAuthSha)
+            : null;
+        return new DigestionLedgerEntry(
+            sourceId,
+            sourcePath,
+            SyntheticNumberedAtomizer.Id,
+            atomId,
+            astPath,
+            null,
+            fingerprints,
+            coverage,
+            new DigestionReceipts(
+                coverageReceipts,
+                scribeReceipts,
+                unresolvedSubitems,
+                [],
+                tailAuthorization),
+            new DigestionStatus(Migration(migration), Truth(truth)),
+            fingerprints.RawSha256);
     }
+
+    private static DigestionMigrationState Migration(string value) => value switch
+    {
+        "residual" => DigestionMigrationState.Residual,
+        "partial" => DigestionMigrationState.Partial,
+        "absorbed" => DigestionMigrationState.Absorbed,
+        _ => throw new ArgumentOutOfRangeException(nameof(value)),
+    };
+
+    private static DigestionTruthState Truth(string value) => value switch
+    {
+        "closed" => DigestionTruthState.Closed,
+        "tail" => DigestionTruthState.Tail,
+        "open" => DigestionTruthState.Open,
+        _ => throw new ArgumentOutOfRangeException(nameof(value)),
+    };
 }

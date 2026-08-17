@@ -351,7 +351,7 @@ public sealed partial class DigestionAlignmentTests
         var baseline = WithAtomizer(
             Ledger([], CasEntry("coarse-receipt", coarse, coarseCapture.Reference)),
             AtomizerRegistry.NoAtomizerId);
-        var entries = new List<string>
+        var entries = new List<DigestionLedgerEntry>
         {
             CasEntry("coarse-receipt", coarse, coarseCapture.Reference),
         };
@@ -374,19 +374,12 @@ public sealed partial class DigestionAlignmentTests
         {
             candidate = WithGenreCheck(candidate, candidateAtomized.GenreRegistryCheck);
         }
-
         return new CoarseMigrationFixture(
             baseline,
             candidate,
             Snapshot(baselineBytes, [coarseCapture]),
             Snapshot(candidateBytes, captures));
     }
-
-    private static BackfillInventoryDocument WithAtomizer(string ledger, string atomizerId) =>
-        BackfillInventoryLoader.Load(ledger.Replace(
-            $"atomizer: {AtomizerRegistry.GictId}",
-            $"atomizer: {atomizerId}",
-            StringComparison.Ordinal));
 
     private static BackfillInventoryDocument WithGenreCheck(
         BackfillInventoryDocument document,

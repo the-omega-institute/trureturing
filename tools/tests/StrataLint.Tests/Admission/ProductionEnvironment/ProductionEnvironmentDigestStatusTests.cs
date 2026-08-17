@@ -144,7 +144,7 @@ public sealed partial class ProductionEnvironmentTests
         var currentBytes = Encoding.UTF8.GetBytes("# Synthetic\n\n**定理 1.1(A)**。rewritten。\n");
         var oldAtom = Assert.Single(AtomizerRegistry.Atomize(atomizerId, oldBytes, DigestionTestSupport.Rules).Claims);
         var baselineLedger = IngestLedger(atomizerId, oldAtom);
-        var baselineDocument = BackfillInventoryLoader.Load(baselineLedger);
+        var baselineDocument = baselineLedger;
         var oldCapture = DigestionCasStore.Capture(oldAtom.RawBytes.AsSpan());
         var planningSnapshot = Decode(Snapshot(new Dictionary<string, string>(StringComparer.Ordinal)
         {
@@ -153,11 +153,9 @@ public sealed partial class ProductionEnvironmentTests
             [oldCapture.RelativePath] = Encoding.UTF8.GetString(oldCapture.Bytes.AsSpan()),
         }));
         var plan = DigestionIngestor.Plan(baselineDocument, planningSnapshot, baselineDocument);
-        var candidateLedger = Encoding.UTF8.GetString(
-            BackfillInventoryWriter.Write(plan.Document).AsSpan());
         fixture.Files[RuleFixture.FixtureDigestionSourcePath] = Encoding.UTF8.GetString(currentBytes);
         fixture.Baseline[RuleFixture.FixtureDigestionSourcePath] = Encoding.UTF8.GetString(oldBytes);
-        DirectoryLedgerTestSupport.ReplaceWithProjection(fixture.Files, candidateLedger);
+        DirectoryLedgerTestSupport.ReplaceWithProjection(fixture.Files, plan.Document);
         DirectoryLedgerTestSupport.ReplaceWithProjection(fixture.Baseline, baselineLedger);
         fixture.Files.Remove(RuleFixture.FixtureCasPath);
         fixture.Baseline.Remove(RuleFixture.FixtureCasPath);
@@ -196,17 +194,59 @@ public sealed partial class ProductionEnvironmentTests
     }
 
     [Fact]
+    public void DigestStatusDiffDoesNotRequireBaselineGenreProjection()
+    {
+        var fixture = new RuleFixture();
+        fixture.AddBackfillTargets();
+        DowngradeBaselineGenreMarkerSchema(fixture);
+        var environment = DigestStatusEnvironment(fixture);
+
+        var result = environment.DigestStatus(["--json", "--base", "baseline"]);
+
+        Assert.True(result.Success, result.Error);
+    }
+
+    [Fact]
+    public void FormalizeCandidatesDiffDoesNotRequireBaselineGenreProjection()
+    {
+        var fixture = new RuleFixture();
+        fixture.AddBackfillTargets();
+        DowngradeBaselineGenreMarkerSchema(fixture);
+        var environment = DigestStatusEnvironment(fixture);
+
+        var result = environment.DigestStatus(["--formalize-candidates", "--base", "baseline"]);
+
+        Assert.True(result.Success, result.Error);
+    }
+
+    [Fact]
+    public void ResidualShardDiffDoesNotRequireBaselineGenreProjection()
+    {
+        var fixture = new RuleFixture();
+        fixture.AddBackfillTargets();
+        DowngradeBaselineGenreMarkerSchema(fixture);
+        var repository = new FakeRepositoryGateway(
+            RawChangeSet.Create(Array.Empty<string>()),
+            Snapshot(fixture.Files),
+            Snapshot(fixture.Baseline));
+
+        var shards = DigestStatusCommand.RenderShards(
+            repository,
+            new FakeLeanReportSource(LeanAxiomReport.Create(fixture.Reports)),
+            new FakeScribeEmissionVerifier(VerifiedScribeEmissions.Empty),
+            "baseline");
+
+        Assert.Contains("Generated/echo-residuals/fixture-source.md", shards.Keys);
+    }
+
+    [Fact]
     public void DigestStatusFailsClosedWhenProjectedStatusWasHandwrittenIncorrectly()
     {
         var fixture = new RuleFixture();
         fixture.AddBackfillTargets();
-        fixture.UseLegacyBackfill();
-        const string expected = "          migration: partial\n          truth: closed";
-        const string falseProjection = "          migration: absorbed\n          truth: closed";
-        fixture.Files["Meta/BACKFILL.yaml"] = fixture.Files["Meta/BACKFILL.yaml"].Replace(
-            expected,
-            falseProjection,
-            StringComparison.Ordinal);
+        var atom = fixture.Files[RuleFixture.FixtureBackfillAtomPath];
+        fixture.Files.Remove(RuleFixture.FixtureBackfillAtomPath);
+        fixture.Files[$"{BackfillInventoryLoader.RootPath}fixture-source/absorbed-closed/fixture-atom.yaml"] = atom;
         var environment = new ProductionCliEnvironment(
             "/repo",
             new FakeRepositoryGateway(
@@ -240,5 +280,22 @@ public sealed partial class ProductionEnvironmentTests
 
         Assert.False(result.Success);
         Assert.Contains("Scribe emission verification failed", result.Error, StringComparison.Ordinal);
+    }
+
+    private static ProductionCliEnvironment DigestStatusEnvironment(RuleFixture fixture) => new(
+        "/repo",
+        new FakeRepositoryGateway(
+            RawChangeSet.Create(Array.Empty<string>()),
+            Snapshot(fixture.Files),
+            Snapshot(fixture.Baseline)),
+        new FakeLeanReportSource(LeanAxiomReport.Create(fixture.Reports)),
+        new FakeScribeEmissionVerifier(VerifiedScribeEmissions.Empty));
+
+    private static void DowngradeBaselineGenreMarkerSchema(RuleFixture fixture)
+    {
+        fixture.Baseline[RuleFixture.FixtureBackfillSourcePath] = fixture.Baseline[
+                RuleFixture.FixtureBackfillSourcePath]
+            .Replace("genre_registry_check = \"no-registry\"\n", string.Empty, StringComparison.Ordinal)
+            .Replace("unregistered_genres = []\n", string.Empty, StringComparison.Ordinal);
     }
 }

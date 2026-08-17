@@ -252,7 +252,6 @@ internal static class DigestionIngestor
                         CoverageGids: inheritedCoverage,
                         new DigestionReceipts([], [], inheritedUnresolvedSubitems, [], null),
                         item.ProjectedStatus,
-                        ReceiptSyntax: null,
                         CasRef: captured.Reference));
                     residualOpenAdded++;
                 }
@@ -315,7 +314,6 @@ internal static class DigestionIngestor
                             new DigestionStatus(
                                 DigestionMigrationState.Residual,
                                 DigestionTruthState.Open),
-                            ReceiptSyntax: null,
                             CasRef: captured.Reference));
                         childIds.Add(childId);
                         residualOpenAdded++;
@@ -328,7 +326,6 @@ internal static class DigestionIngestor
                             UnresolvedSubitems = [],
                             ChainAtoms = childIds.MoveToImmutable(),
                         },
-                        ReceiptSyntax = null,
                     };
                 }
             }
@@ -432,7 +429,6 @@ internal static class DigestionIngestor
             : entry with
             {
                 Boundary = rebound,
-                ReceiptSyntax = null,
             };
     }
 
@@ -468,7 +464,6 @@ internal static class DigestionIngestor
                             : entry with
                             {
                                 Boundary = null,
-                                ReceiptSyntax = null,
                             })
                         .ToImmutableArray(),
                 })

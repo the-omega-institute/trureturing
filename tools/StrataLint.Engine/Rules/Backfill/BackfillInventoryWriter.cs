@@ -8,12 +8,6 @@ internal static class BackfillInventoryWriter
 {
     private static readonly UTF8Encoding StrictUtf8 = new(false, true);
 
-    internal static ImmutableArray<byte> Write(BackfillInventoryDocument document) =>
-        Write(document, preserveReceiptSyntax: false);
-
-    internal static ImmutableArray<byte> WriteForIngest(BackfillInventoryDocument document) =>
-        Write(document, preserveReceiptSyntax: true);
-
     internal static ImmutableArray<byte> WriteEntry(DigestionLedgerEntry entry)
     {
         ArgumentNullException.ThrowIfNull(entry);
@@ -69,19 +63,18 @@ internal static class BackfillInventoryWriter
     internal static ImmutableArray<byte> WriteSourceMetadata(DigestionLedgerSource source)
     {
         ArgumentNullException.ThrowIfNull(source);
-        var genreRegistryCheck = source.GenreRegistryCheck;
-        ValidateGenreRegistryCheck(genreRegistryCheck);
+        ValidateGenreRegistryCheck(source.GenreRegistryCheck);
         var builder = new StringBuilder();
         Line(builder, $"source_id = {TomlScalar(source.SourceId)}");
         Line(builder, $"path = {TomlScalar(source.SourcePath)}");
         Line(builder, $"atomizer = {TomlScalar(source.Atomizer)}");
         Line(
             builder,
-            $"genre_registry_check = {TomlScalar(GenreRegistryCheckNames.Render(genreRegistryCheck.Kind))}");
+            $"genre_registry_check = {TomlScalar(GenreRegistryCheckNames.Render(source.GenreRegistryCheck.Kind))}");
         Line(
             builder,
             "unregistered_genres = ["
-            + string.Join(", ", genreRegistryCheck.UnregisteredGenres.Select(TomlGenreToken))
+            + string.Join(", ", source.GenreRegistryCheck.UnregisteredGenres.Select(TomlGenreToken))
             + "]");
         if (source.AcknowledgedStale.Length > 0)
         {
@@ -97,6 +90,7 @@ internal static class BackfillInventoryWriter
 
     private static void ValidateGenreRegistryCheck(GenreRegistryCheck check)
     {
+        ArgumentNullException.ThrowIfNull(check);
         var tokens = check.UnregisteredGenres;
         if (tokens.Any(string.IsNullOrWhiteSpace)
             || !tokens.SequenceEqual(
@@ -111,56 +105,6 @@ internal static class BackfillInventoryWriter
         {
             throw new InvalidOperationException(
                 "no-registry requires empty unregistered genres");
-        }
-    }
-
-    private static ImmutableArray<byte> Write(
-        BackfillInventoryDocument document,
-        bool preserveReceiptSyntax)
-    {
-        ArgumentNullException.ThrowIfNull(document);
-        var builder = new StringBuilder();
-        Line(builder, $"schema_version: {BackfillInventoryLoader.SchemaVersion}");
-        Line(builder, $"ledger: {BackfillInventoryLoader.LedgerName}");
-        Line(builder, "sources:");
-        foreach (var source in document.RequireDigestionSources())
-        {
-            EnsureLineBreak(builder);
-            Line(builder, $"  - source_id: {Scalar(source.SourceId)}");
-            Line(builder, $"    path: {Scalar(source.SourcePath)}");
-            Line(builder, $"    atomizer: {Scalar(source.Atomizer)}");
-            if (source.AcknowledgedStale.Length > 0
-                || source.Entries.Any(static entry => entry.Boundary is null))
-            {
-                Strings(builder, "    acknowledged_stale", source.AcknowledgedStale, 6);
-            }
-
-            Line(builder, source.Entries.Length == 0 ? "    entries: []" : "    entries:");
-            foreach (var entry in source.Entries)
-            {
-                EnsureLineBreak(builder);
-                if (preserveReceiptSyntax && entry.ReceiptSyntax is { } syntax)
-                {
-                    var receipt = BackfillReceiptPreimage.RewriteStatus(
-                        syntax,
-                        entry.ProjectedStatus);
-                    builder.Append(StrictUtf8.GetString(receipt.AsSpan()));
-                }
-                else
-                {
-                    Entry(builder, entry);
-                }
-            }
-        }
-
-        return ImmutableArray.CreateRange(StrictUtf8.GetBytes(builder.ToString()));
-    }
-
-    private static void EnsureLineBreak(StringBuilder builder)
-    {
-        if (builder.Length > 0 && builder[^1] != '\n')
-        {
-            builder.Append('\n');
         }
     }
 

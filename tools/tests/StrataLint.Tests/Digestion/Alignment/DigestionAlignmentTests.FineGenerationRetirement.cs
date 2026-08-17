@@ -22,13 +22,13 @@ public sealed partial class DigestionAlignmentTests
         var formalized = Generation("formalized-old");
         var frozen = Generation("frozen-old");
         var currentBytes = Encoding.UTF8.GetBytes("# GICT\n\n**定理 1.1(A)**。current。\n");
-        var loaded = BackfillInventoryLoader.Load(Ledger(
+        var loaded = Ledger(
             [],
             CasEntry("unowned-receipt", unowned.Atom, unowned.Capture.Reference),
             CasEntry("covered-receipt", covered.Atom, covered.Capture.Reference),
             CasEntry("coverage-receipt", receipted.Atom, receipted.Capture.Reference),
             CasEntry("formalized-receipt", formalized.Atom, formalized.Capture.Reference),
-            CasEntry("frozen-receipt", frozen.Atom, frozen.Capture.Reference)));
+            CasEntry("frozen-receipt", frozen.Atom, frozen.Capture.Reference));
         var source = Assert.Single(loaded.RequireDigestionSources());
         const string gid = "D5/S0/Synthetic/Receipt.owned_generation";
         var candidate = loaded.WithDigestionSources(
@@ -40,7 +40,6 @@ public sealed partial class DigestionAlignmentTests
                     "covered-receipt" => entry with
                     {
                         CoverageGids = [gid],
-                        ReceiptSyntax = null,
                     },
                     "coverage-receipt" => entry with
                     {
@@ -54,7 +53,6 @@ public sealed partial class DigestionAlignmentTests
                                     entry.Fingerprints.RawSha256),
                             ],
                         },
-                        ReceiptSyntax = null,
                     },
                     _ => entry,
                 }).ToImmutableArray(),
@@ -97,8 +95,12 @@ public sealed partial class DigestionAlignmentTests
         Assert.Equal(["unowned-receipt"], plannedSource.AcknowledgedStale.ToArray());
         Assert.Equal(1, first.ResidualOpenAdded);
 
-        var firstBytes = BackfillInventoryWriter.WriteForIngest(first.Document);
-        var settled = BackfillInventoryLoader.Load(Encoding.UTF8.GetString(firstBytes.AsSpan()));
+        var firstBytes = DirectoryLedgerTestSupport.Image(first.Document);
+        using var temporary = new TemporaryDirectory();
+        var persisted = new Dictionary<string, string>(StringComparer.Ordinal);
+        DirectoryLedgerTestSupport.ReplaceWithProjection(persisted, first.Document);
+        DirectoryLedgerTestSupport.Write(temporary.Path, persisted);
+        var settled = BackfillInventoryLoader.LoadRoot(temporary.Path);
         var second = DigestionIngestor.Plan(
             settled,
             Snapshot(
@@ -106,11 +108,11 @@ public sealed partial class DigestionAlignmentTests
                 historicalCaptures.Concat(first.CasObjects),
                 extraEntries: ownershipArtifacts),
             settled);
-        var secondBytes = BackfillInventoryWriter.WriteForIngest(second.Document);
+        var secondBytes = DirectoryLedgerTestSupport.Image(second.Document);
 
         Assert.Equal(0, second.StaleAcknowledged);
         Assert.Equal(0, second.ResidualOpenAdded);
-        Assert.Equal(firstBytes.ToArray(), secondBytes.ToArray());
+        Assert.Equal(firstBytes, secondBytes);
     }
 
     [Fact]
@@ -120,10 +122,10 @@ public sealed partial class DigestionAlignmentTests
         var currentBytes = Encoding.UTF8.GetBytes("# GICT\n\n**定理 1.1(A)**。rewritten。\n");
         var oldAtom = Assert.Single(GictAtomizer.Atomize(oldBytes, DigestionTestSupport.Rules).Claims);
         var oldCapture = DigestionCasStore.Capture(oldAtom.RawBytes.AsSpan());
-        var baseline = BackfillInventoryLoader.Load(Ledger([], Entry("old-receipt", oldAtom)));
-        var acknowledged = BackfillInventoryLoader.Load(Ledger(
+        var baseline = Ledger([], Entry("old-receipt", oldAtom));
+        var acknowledged = Ledger(
             ["old-receipt"],
-            Entry("old-receipt", oldAtom)));
+            Entry("old-receipt", oldAtom));
 
         var plan = DigestionIngestor.Plan(
             acknowledged,
