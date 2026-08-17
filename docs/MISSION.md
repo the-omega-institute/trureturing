@@ -67,7 +67,7 @@
     },
     {
       "source_ref": "D5/X_Frontier/ValuesProducer",
-      "kind": "declaration-ready-mathematical-open"
+      "kind": "mathematical-not-yet-stated"
     }
   ],
   "selection": {

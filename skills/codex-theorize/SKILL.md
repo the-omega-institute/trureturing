@@ -175,9 +175,10 @@ name differs.
 
 Every source actually relied on must have a canonical, existing Library-plane
 receipt GID `D5/L/...`. The final list must be nonempty, ordinal-sorted, and
-unique. If an external source is load-bearing but has no repository Library
-receipt, create the source note in the existing Library shape before proceeding;
-do not cite an unrecorded URL or model recollection as a receipt.
+unique. If an external source is load-bearing but has no existing repository
+Library receipt, end `open` and name that missing receipt. Do not create or edit
+a source receipt in this lane, and do not cite an unrecorded URL or model
+recollection as a receipt.
 
 An equal or stronger existing theorem ends this run evidence-complete `open`
 with a bind/reuse recommendation naming the hit and its frozen address. Do not
@@ -196,9 +197,9 @@ or a checked Lean evaluation. Record inputs, executable method, output, and the
 interpretation separately; computation is evidence, not proof.
 
 The computation must resolve to a canonical existing Evidence-plane receipt
-GID `D5/E/...--<kind>`. If no suitable receipt exists, add an Evidence artifact
-using the repository's current evidence conventions and retain its provenance;
-do not place data in code, comments, `Meta/`, or an ad hoc transcript. The final
+GID `D5/E/...--<kind>`. If no suitable receipt exists, end `open` and name that
+missing receipt. Do not create or edit an Evidence receipt in this lane, and do
+not place data in code, comments, `Meta/`, or an ad hoc transcript. The final
 list must be nonempty, ordinal-sorted, and unique.
 
 If no relevant computation is possible, end `open` and name why, including the
@@ -224,6 +225,12 @@ falsifier still negates that exact statement. The proposition must not be
 `True`, a restatement of a hypothesis, a definition installed to make itself
 true, a weaker duplicate, or a classifier invented solely to make the theorem
 hold.
+
+If the only semantically valid reusable owner is an attested input of an
+existing generated receipt and changing that owner makes admission require the
+receipt to be regenerated, end `open`. Name the owner-to-receipt coupling and
+the machine diagnostic; do not expand this lane's write authority to make the
+candidate pass.
 
 Embed exactly one current P2 contract block in the source. Copy its field names
 and delimiters from section 11.20.2 rather than memory:
@@ -294,7 +301,8 @@ make preflight BASE=origin/dev
 validation, route/check admission against the protected base, and the three CI
 preconditions. Do not replace it with a hand-picked validator or a producing
 seat's judgment. If `origin/dev` advances, follow the live harness diagnostic;
-never enable strict branch protection or bypass a failed check.
+never enable strict branch protection or bypass a failed check. Do not regenerate an existing generated receipt solely because the selected owner is its attested
+input; end `open` and name that coupling instead.
 
 Postcondition: `make preflight BASE=origin/dev` exits 0 on the exact intended
 tree, and the report records the resolved base SHA, candidate report address,
@@ -323,8 +331,8 @@ calls `deposit`, and the target is not a digestion atom for
 
 ## Prohibitions
 
-- Do not edit `Meta/Digestion/**`, `Golden/Frozen/**`, generated receipts, or
-  any frozen module.
+- Do not edit `Meta/Digestion/**`, `Golden/Frozen/**`, Library or Evidence
+  receipts, generated receipts, or any frozen module.
 - Do not call `codex-formalize`, `deposit`, `freeze`, or `cover`; do not create
   a substitute for `deliver-check`.
 - Do not prove the generated declaration in the same lane, remove its `sorry`,
