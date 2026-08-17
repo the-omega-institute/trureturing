@@ -61,6 +61,10 @@ public sealed class LedgerAppendCommandTests
         var accepted = Assert.IsType<FrozenLedgerValidationOutcome.Accepted>(
             FrozenLedgerTestData.ValidateHistory(syntax, fixture.CandidateCatalog));
         Assert.Equal(3, accepted.Capability.ActiveFrozenNodes.Length);
+        var persistedFiles = DagLedgerCommandPreparation.ReadLedgerDirectoryFiles(fixture.LedgerPath);
+        var persistedView = FrozenLedgerBaseViewReader.Read(RepositorySnapshot.Create(
+            persistedFiles.ToImmutableDictionary(static file => file.Path)));
+        Assert.Contains($"head={persistedView.EventSetRoot()}", result.Output, StringComparison.Ordinal);
         Assert.Equal(
             new[]
             {

@@ -26,6 +26,60 @@ public sealed class RuleEngineTests
         { 19, "anomaly" },
         { 20, "axiom" },
         { 21, "future" },
+        { 25, "blueprint-skeleton" },
+        { 26, "legacy-scribe" },
+    };
+
+    public static TheoryData<int, string> AffectedInputs => new()
+    {
+        { 1, RuleFixture.RingPath },
+        { 2, RuleFixture.RingPath },
+        { 3, RuleFixture.RingPath },
+        { 4, RuleFixture.BlueprintPath },
+        { 5, "Chronicle/2026/07/10-old.md" },
+        { 6, RuleFixture.BlueprintPath },
+        { 8, RuleFixture.HeartsPath },
+        { 10, RuleFixture.RingPath },
+        { 11, RuleFixture.RingPath },
+        { 12, RuleFixture.RingPath },
+        { 15, "notes/new-artifact.txt" },
+        { 16, RuleFixture.FixtureBackfillSourcePath },
+        { 17, "Library/queries.yaml" },
+        { 18, ValuesKernelBindingValidator.RelativePath },
+        { 18, "Directory.Build.props" },
+        { 19, "Evidence/D5/S0/Carrier/Result.run.json" },
+        { 20, RuleFixture.RingPath },
+        { 21, "D8/S0/Carrier/Ring.lean" },
+        { 22, RuleFixture.SyntheticProtectedPath },
+        { 23, RuleFixture.BlueprintSourcePath },
+        { 23, "Directory.Build.props" },
+        { 25, RuleFixture.BlueprintPath },
+        { 26, RuleFixture.BlueprintSourcePath },
+    };
+
+    public static TheoryData<int, string?> UnaffectedInputs => new()
+    {
+        { 1, RuleFixture.BlueprintPath },
+        { 2, RuleFixture.BlueprintPath },
+        { 3, RuleFixture.BlueprintPath },
+        { 4, "Chronicle/2026/07/10-old.md" },
+        { 5, RuleFixture.BlueprintPath },
+        { 6, "tools/README.md" },
+        { 8, RuleFixture.BlueprintPath },
+        { 10, RuleFixture.BlueprintPath },
+        { 11, "Chronicle/2026/07/10-old.md" },
+        { 12, RuleFixture.BlueprintPath },
+        { 15, null },
+        { 16, "Chronicle/2026/07/10-old.md" },
+        { 17, "Chronicle/2026/07/10-old.md" },
+        { 18, "Chronicle/2026/07/10-old.md" },
+        { 19, RuleFixture.BlueprintPath },
+        { 20, RuleFixture.BlueprintPath },
+        { 21, RuleFixture.BlueprintPath },
+        { 22, RuleFixture.BlueprintPath },
+        { 23, "Chronicle/2026/07/10-old.md" },
+        { 25, "Chronicle/2026/07/10-old.md" },
+        { 26, "Chronicle/2026/07/10-old.md" },
     };
 
     [Fact]
@@ -75,6 +129,125 @@ public sealed class RuleEngineTests
             redResult.Diagnostics,
             diagnostic => Assert.Equal(RuleId.CreateKnown(number), diagnostic.RuleId));
         Assert.Null(redResult.DeferredCase);
+    }
+
+    [Theory]
+    [MemberData(nameof(BlockingCases))]
+    public void CandidateThatChangesBlockingRuleInputStillWakesAndRejects(
+        int number,
+        string mutation)
+    {
+        var fixture = new RuleFixture();
+        if (number == 16)
+        {
+            fixture.AddBackfillTargets();
+        }
+        fixture.Apply(mutation);
+        var changedPath = mutation switch
+        {
+            "upward-import" or "sorry" or "file-capacity" or "generality" or "header" or "axiom" =>
+                RuleFixture.RingPath,
+            "mirror" or "badge" => RuleFixture.BlueprintPath,
+            "chronicle" => "Chronicle/2026/07/10-old.md",
+            "heart" => RuleFixture.HeartsPath,
+            "domain" => "D5/S0/Unknown/Bad.lean",
+            "formula" => "Evidence/D5/S0/Carrier/Formula.check.json",
+            "backfill" => RuleFixture.FixtureBackfillSourcePath,
+            "query" => "Library/queries.yaml",
+            "values" => "Evidence/D5/values.result.json",
+            "anomaly" => "Evidence/D5/S0/Carrier/Result.run.json",
+            "future" => "D8/S0/Carrier/Ring.lean",
+            "blueprint-skeleton" or "legacy-scribe" => RuleFixture.BlueprintSourcePath,
+            _ => throw new ArgumentOutOfRangeException(nameof(mutation)),
+        };
+        fixture.Changes.Clear();
+        fixture.Changes.Add(changedPath);
+        var context = number == 20
+            ? fixture.BuildForRuleCompatibility()
+            : fixture.Build(RawChangeSet.Create([changedPath]));
+
+        var completed = Assert.IsType<RuleExecutionOutcome.Completed>(
+            RuleCatalog.Default.Execute(context)).Capability;
+
+        Assert.Contains(RuleId.CreateKnown(number), completed.ExecutedRules);
+        Assert.Contains(completed.Diagnostics, diagnostic => diagnostic.RuleId == RuleId.CreateKnown(number));
+    }
+
+    [Fact]
+    public void Sl002ExecutesWhenAReferencedTheoristReceiptIsDeleted()
+    {
+        const string receiptPath = "Library/Carrier/fixture2026contract.md";
+        var fixture = new RuleFixture();
+        fixture.AddHistoricalTheoristTarget("prime-norm-irreducibility");
+        fixture.Baseline[receiptPath] = fixture.Files[receiptPath];
+        fixture.ForkPoint[receiptPath] = fixture.Files[receiptPath];
+        fixture.MutateTheoristTarget("missing-search-receipt");
+
+        var completed = Assert.IsType<RuleExecutionOutcome.Completed>(
+            RuleCatalog.Default.Execute(fixture.Build(RawChangeSet.Create([receiptPath])))).Capability;
+
+        Assert.Contains(RuleId.CreateKnown(2), completed.ExecutedRules);
+        Assert.Contains(completed.Diagnostics, diagnostic =>
+            diagnostic.RuleId == RuleId.CreateKnown(2)
+            && diagnostic.Path == "D5/X_Frontier/PrimeNormIrreducibility.lean"
+            && diagnostic.Message.Contains("does not resolve", StringComparison.Ordinal));
+    }
+
+    [Fact]
+    public void Sl017ExecutesWhenAReferencedQueryTargetIsDeleted()
+    {
+        const string targetPath = "Library/notes/fixture-target.md";
+        const string queries = """
+            schema_version: 1
+            queries:
+              - id: D5-Q0099
+                target_gid: D5/L/fixture-target
+                doi: 10.1000/fixture
+            """;
+        var fixture = new RuleFixture();
+        fixture.Files["Library/queries.yaml"] = queries;
+        fixture.Baseline["Library/queries.yaml"] = queries;
+        fixture.ForkPoint["Library/queries.yaml"] = queries;
+        fixture.Baseline[targetPath] = "# Fixture target\n";
+        fixture.ForkPoint[targetPath] = "# Fixture target\n";
+
+        var completed = Assert.IsType<RuleExecutionOutcome.Completed>(
+            RuleCatalog.Default.Execute(fixture.Build(RawChangeSet.Create([targetPath])))).Capability;
+
+        Assert.Contains(RuleId.CreateKnown(17), completed.ExecutedRules);
+        Assert.Contains(completed.Diagnostics, diagnostic =>
+            diagnostic.RuleId == RuleId.CreateKnown(17)
+            && diagnostic.Path == "Library/queries.yaml"
+            && diagnostic.Message.Contains("target GID is missing", StringComparison.Ordinal));
+    }
+
+    [Theory]
+    [MemberData(nameof(AffectedInputs))]
+    public void ActiveRuleExecutesWhenItsInputClosureChanges(int number, string path)
+    {
+        var fixture = new RuleFixture();
+        var completed = Assert.IsType<RuleExecutionOutcome.Completed>(
+            RuleCatalog.Default.Execute(fixture.Build(RawChangeSet.Create([path])))).Capability;
+
+        Assert.Contains(RuleId.CreateKnown(number), completed.ExecutedRules);
+    }
+
+    [Theory]
+    [MemberData(nameof(UnaffectedInputs))]
+    public void ActiveRuleIsRecordedAsSkippedWhenItsInputClosureDoesNotChange(
+        int number,
+        string? path)
+    {
+        var fixture = new RuleFixture();
+        var changes = RawChangeSet.Create(path is null ? [] : [path]);
+        var completed = Assert.IsType<RuleExecutionOutcome.Completed>(
+            RuleCatalog.Default.Execute(fixture.Build(changes))).Capability;
+        var skippedProperty = typeof(CompletedRuleSet).GetProperty("SkippedRules");
+        Assert.NotNull(skippedProperty);
+        var skipped = Assert.IsType<ImmutableArray<RuleId>>(skippedProperty!.GetValue(completed));
+
+        Assert.DoesNotContain(RuleId.CreateKnown(number), completed.ExecutedRules);
+        Assert.Contains(RuleId.CreateKnown(number), skipped);
     }
 
     [Fact]
@@ -324,6 +497,16 @@ public sealed class RuleEngineTests
     }
 
     [Fact]
+    public void AtomizerImplementationChangeWakesSl016BecauseItsProjectionCanDrift()
+    {
+        var fixture = new RuleFixture();
+        var context = fixture.Build(RawChangeSet.Create(
+            ["tools/StrataLint.Engine/Digestion/Atomizers/PzgAtomizer.cs"]));
+
+        Assert.True(BackfillInventoryRule.IsAffectedBy(context));
+    }
+
+    [Fact]
     public void Sl016DerivedStatusIsTheSameWhetherOrNotTheEntryIsInTheCandidateDelta()
     {
         // A gap that is a property of the tree must be reported no matter which paths this
@@ -524,11 +707,11 @@ public sealed class RuleEngineTests
     public void CoverageManifestNamesEveryRuleWithARealRedOrDeferredBranch()
     {
         var exercised = BlockingCases.Select(item => (int)item[0])
-            .Concat(new[] { 7, 9, 13, 14, 22, 23, 25 })
+            .Concat(new[] { 7, 9, 13, 14, 22, 23 })
             .Order()
             .ToArray();
 
-        Assert.Equal(Enumerable.Range(1, 23).Append(25), exercised);
+        Assert.Equal(Enumerable.Range(1, 23).Append(25).Append(26), exercised);
     }
 
     [Fact]

@@ -226,7 +226,8 @@ internal static partial class RepositoryRules
         if (context.Changes.Paths.Any(static path =>
                 path.Value == ValuesKernelBindingValidator.RelativePath
                 || path.Value.StartsWith("Evidence/D5/values.", StringComparison.Ordinal)
-                || FrozenLedgerDeltaPredicate.IsEnvironmentInput(path.Value)))
+                || FrozenLedgerDeltaPredicate.IsEnvironmentInput(path.Value)
+                || FrozenLedgerDeltaPredicate.IsDeltaDefinitionInput(path.Value)))
         {
             return true;
         }

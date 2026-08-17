@@ -262,6 +262,46 @@ public sealed partial class DigestionAlignmentTests
         Assert.Empty(result.Findings);
     }
 
+    [Theory]
+    [InlineData("Directory.Packages.props")]
+    [InlineData("tools/StrataLint.Engine/StrataLint.Engine.csproj")]
+    public void AdmissionRechecksWhenAtomizerBuildInputChanges(string changedPath)
+    {
+        var sourceBytes = Encoding.UTF8.GetBytes("# PZG\n\n**未登记体 2.1**。claim。\n");
+        var atomized = PzgAtomizer.Atomize(sourceBytes, DigestionTestSupport.Rules);
+        var atom = Assert.Single(atomized.Claims);
+        var captured = DigestionCasStore.Capture(atom.RawBytes.AsSpan());
+        var ledger = WithGenreCheck(
+            WithAtomizer(
+                Ledger([], CasEntry("inherited-receipt", atom, captured.Reference)),
+                AtomizerRegistry.PzgId),
+            atomized.GenreRegistryCheck);
+        var baselineSnapshot = DigestionTestSupport.Snapshot(
+            ("docs/source.md", sourceBytes),
+            (captured.RelativePath, captured.Bytes.ToArray()),
+            (changedPath, Encoding.UTF8.GetBytes("old")));
+        var candidateSnapshot = DigestionTestSupport.Snapshot(
+            ("docs/source.md", sourceBytes),
+            (captured.RelativePath, captured.Bytes.ToArray()),
+            (changedPath, Encoding.UTF8.GetBytes("new")));
+        var calls = 0;
+
+        var result = DigestionLedgerAligner.Evaluate(
+            ledger,
+            candidateSnapshot,
+            ledger,
+            DigestionAlignmentMode.Admission,
+            _ => (_, _) =>
+            {
+                calls++;
+                return atomized;
+            },
+            baselineSnapshot);
+
+        Assert.Equal(1, calls);
+        Assert.Empty(result.Findings);
+    }
+
     [Fact]
     public void AdmissionGenreProbeDefersToAtomizerIntegrityFinding()
     {

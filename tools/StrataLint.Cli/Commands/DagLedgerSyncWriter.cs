@@ -46,7 +46,7 @@ internal static class DagLedgerSyncWriter
                 _ => throw new InvalidOperationException("unknown ledger validation outcome"),
             };
 
-            if (generatedBytes.AsSpan().SequenceEqual(context.BaselineBytes))
+            if (generatedBytes.IsEmpty)
             {
                 return new CommandResult(
                     true,
@@ -61,9 +61,8 @@ internal static class DagLedgerSyncWriter
 
             var pending = DagLedgerAppendWriter.BuildNewEventFiles(
                 generatedSyntax.Lines,
-                context.Baseline.Events.Length,
-                context.BaselineSyntax);
-            _ = DagLedgerCommandPreparation.ValidateGeneratedEventFiles(
+                knownDagHashes: context.BaseView.EventHashes);
+            var prospective = DagLedgerCommandPreparation.ValidateGeneratedEventFiles(
                 context.BaseView,
                 pending,
                 "generated frozen ledger suffix");
@@ -80,7 +79,7 @@ internal static class DagLedgerSyncWriter
             var freezes = suffix.OfType<FrozenLedgerEvent.Freeze>().ToImmutableArray();
             var output = $"LEDGER_SYNC appended_reattests={reattests.Length} "
                 + $"appended_freezes={freezes.Length} events={generated.Events.Length} "
-                + $"head={generated.HeadHash}\n"
+                + $"head={context.BaseView.EventSetRoot(prospective.Select(static item => item.EventHash))}\n"
                 + string.Concat(reattests.Select(item =>
                     $"REATTESTED {context.Baseline.ActiveEntries[item.Payload.CaseId].Material.RepoPath.Value}\n"))
                 + string.Concat(freezes.Select(static item => $"FROZEN {item.Payload.Input.DescriptorSelector}\n"));
