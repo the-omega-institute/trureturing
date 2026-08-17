@@ -166,10 +166,7 @@ internal sealed class ProductionFrozenLedgerAdmissionServices : IFrozenLedgerAdm
         TrustedRevocationReceiptStore? revocationReceipts = null;
         if (loaded.Any(static item => item.EventType == "Revoke"))
         {
-            var baselineSyntax = DagLedgerCommandPreparation.LoadTrustedLedgerFiles(
-                baseView,
-                "protected-base frozen ledger");
-            revocationBaseline = baseView.ToWriterBaseline(baselineSyntax);
+            revocationBaseline = baseView.ToWriterBaseline();
             revocationReceipts = TrustedRevocationReceiptStore.Materialize(
                 revocationBaseline,
                 protectedBase,

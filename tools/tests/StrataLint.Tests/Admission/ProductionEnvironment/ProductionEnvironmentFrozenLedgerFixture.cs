@@ -16,10 +16,7 @@ public sealed partial class ProductionEnvironmentTests
         using var temporary = new TemporaryDirectory();
         var fixture = TrustedFrozenFixtureWithLedger(out _);
         var baseView = FrozenLedgerBaseViewReader.Read(Decode(Snapshot(fixture.Baseline)));
-        var baselineSyntax = DagLedgerCommandPreparation.LoadTrustedLedgerFiles(
-            baseView,
-            "test protected-base ledger");
-        var baselineLedger = baseView.ToWriterBaseline(baselineSyntax);
+        var baselineLedger = baseView.ToWriterBaseline();
         var node = baselineLedger.ActiveFrozenNodes.Single(
             static item => item.RepoPath.Value == RuleFixture.RingPath);
         var provisional = new RevocationEvidence.KernelWitnessFailure(

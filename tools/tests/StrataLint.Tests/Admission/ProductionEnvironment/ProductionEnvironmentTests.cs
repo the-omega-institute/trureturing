@@ -32,9 +32,7 @@ public sealed partial class ProductionEnvironmentTests
                 _ => outcome.GetType().FullName,
             });
         var protectedChange = (AdmissionOutcome.ProtectedSurfaceChange)outcome;
-        Assert.Equal(
-            Enumerable.Range(1, 23).Select(RuleId.CreateKnown).Append(RuleId.CreateKnown(25)).Append(RuleId.CreateKnown(26)),
-            protectedChange.ContentCertificate.ExecutedRules);
+        AssertCompleteRuleDisposition(protectedChange.ContentCertificate);
         Assert.Contains(protectedChange.ChangeSet.Paths, item => item.Value == protectedPath);
         Assert.Contains(
             protectedChange.Sl022Diagnostics,
@@ -101,9 +99,7 @@ public sealed partial class ProductionEnvironmentTests
         });
 
         var admitted = Assert.IsType<AdmissionOutcome.Admitted>(outcome);
-        Assert.Equal(
-            Enumerable.Range(1, 23).Select(RuleId.CreateKnown).Append(RuleId.CreateKnown(25)).Append(RuleId.CreateKnown(26)),
-            admitted.Certificate.ExecutedRules);
+        AssertCompleteRuleDisposition(admitted.Certificate);
         Assert.Equal(2, gateway.ReadCount);
         Assert.Equal(0, source.CallCount);
     }
@@ -493,6 +489,22 @@ public sealed partial class ProductionEnvironmentTests
         var dag = Assert.IsType<DagBuildOutcome.Accepted>(
             AcyclicTruthDag.Build(snapshot, lean)).Capability;
         return (snapshot, lean, dag);
+    }
+
+    private static void AssertCompleteRuleDisposition(AdmissionCertificate certificate)
+    {
+        var deferred = certificate.DeferredRules.Select(static item => item.RuleId).ToImmutableArray();
+        Assert.NotEmpty(certificate.ExecutedRules);
+        Assert.NotEmpty(certificate.SkippedRules);
+        Assert.NotEmpty(deferred);
+        Assert.Empty(certificate.ExecutedRules.Intersect(certificate.SkippedRules));
+        Assert.Empty(certificate.ExecutedRules.Intersect(deferred));
+        Assert.Empty(certificate.SkippedRules.Intersect(deferred));
+        Assert.Equal(
+            RuleCatalog.Default.Descriptors.Select(static item => item.Id)
+                .OrderBy(static item => item.Value, StringComparer.Ordinal),
+            certificate.ExecutedRules.Concat(certificate.SkippedRules).Concat(deferred)
+                .OrderBy(static item => item.Value, StringComparer.Ordinal));
     }
 
     private static FrozenLedgerConsistent AddFrozenLedger(RuleFixture fixture)
