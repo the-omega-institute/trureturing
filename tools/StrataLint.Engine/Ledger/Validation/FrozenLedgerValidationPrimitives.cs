@@ -106,21 +106,10 @@ public static partial class FrozenLedger
             throw new FormatException("Freeze contains a malformed content address.");
         }
 
-        var caseClass = currentShape ? "active-frozen" : RequiredString(payload, "case_class");
-        var evaluation = currentShape ? "admission" : RequiredString(payload, "evaluation");
-        var expectedVerdict = currentShape
-            ? new FrozenExpectedVerdict(
-                ImmutableArray.Create("admit"),
-                "none",
-                ImmutableArray<FrozenExpectedDiagnostic>.Empty)
-            : ParseExpected(payload.GetProperty("expected"));
         var declarationStatementIds = ParseDeclarationStatementIds(payload);
         var prerequisites = RequiredStringArray(payload, "prerequisite_frozen_node_ids")
             .Select(FrozenNodeId.Create)
             .ToImmutableArray();
-        var inputFingerprint = currentShape ? witnessText : RequiredString(payload, "input_fingerprint");
-        var semanticReceipt = currentShape ? frozenText : RequiredString(payload, "semantic_receipt");
-        var truthState = currentShape ? nameof(TruthState.Closed) : RequiredString(payload, "truth_state");
         var result = new FrozenFreezePayload(
             RequiredString(payload, "case_id"),
             declarationStatementIds,
@@ -137,21 +126,29 @@ public static partial class FrozenLedger
             throw new FormatException("Freeze input has no validated Git commit/tree/blob capability.");
         }
         var expectedCaseId = FrozenLedgerCanonicalWriter.CaseId(expectedMaterial.FrozenNodeId);
-        if (caseClass != "active-frozen"
-            || result.CaseId != expectedCaseId
-            || evaluation != "admission"
-            || truthState != nameof(TruthState.Closed)
-            || !expectedVerdict.AllowedDispositions.SequenceEqual(new[] { "admit" }, StringComparer.Ordinal)
-            || expectedVerdict.DiagnosticMatch != "none"
-            || expectedVerdict.RequiredDiagnostics.Length != 0
+        if (!currentShape)
+        {
+            var expectedVerdict = ParseExpected(payload.GetProperty("expected"));
+            if (RequiredString(payload, "case_class") != "active-frozen"
+                || RequiredString(payload, "evaluation") != "admission"
+                || RequiredString(payload, "truth_state") != nameof(TruthState.Closed)
+                || !expectedVerdict.AllowedDispositions.SequenceEqual(new[] { "admit" }, StringComparer.Ordinal)
+                || expectedVerdict.DiagnosticMatch != "none"
+                || expectedVerdict.RequiredDiagnostics.Length != 0
+                || RequiredString(payload, "input_fingerprint") != expectedMaterial.WitnessId.Value
+                || RequiredString(payload, "semantic_receipt") != expectedMaterial.FrozenNodeId.Value)
+            {
+                throw new FormatException($"Freeze payload does not match recomputed material for {path.Value}.");
+            }
+        }
+
+        if (result.CaseId != expectedCaseId
             || !result.DeclarationStatementIds.SequenceEqual(expectedMaterial.DeclarationStatementIds)
             || result.StatementId != expectedMaterial.StatementId
             || result.WitnessId != expectedMaterial.WitnessId
             || result.FrozenNodeId != expectedMaterial.FrozenNodeId
             || result.HasAxiomClosure
                 && !result.AxiomClosure.SequenceEqual(expectedMaterial.AxiomClosure)
-            || inputFingerprint != expectedMaterial.WitnessId.Value
-            || semanticReceipt != expectedMaterial.FrozenNodeId.Value
             || !result.PrerequisiteFrozenNodeIds.SequenceEqual(expectedMaterial.PrerequisiteFrozenNodeIds)
             || requireCatalogRevisionIdentity
                 && (result.Input.BaseCommitOid
