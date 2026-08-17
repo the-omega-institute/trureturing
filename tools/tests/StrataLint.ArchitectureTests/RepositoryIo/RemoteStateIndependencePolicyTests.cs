@@ -3,7 +3,8 @@ namespace StrataLint.ArchitectureTests;
 /// <summary>
 /// Pins the recognized-shape early-feedback boundary of <see cref="RemoteStateIndependencePolicy"/>.
 /// These tests do not claim execution-path completeness; CI remote capability stripping provides
-/// the remote-unreachability guarantee.
+/// the post-checkout strip step, which eliminates name-based remote resolution but is not a
+/// remote-unreachability guarantee; see CLAUDE.md for the measured residuals.
 /// </summary>
 public sealed class RemoteStateEarlyFeedbackPolicyTests
 {
