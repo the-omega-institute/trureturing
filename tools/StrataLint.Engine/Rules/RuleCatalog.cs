@@ -111,7 +111,14 @@ public sealed class RuleCatalog
                     continue;
                 }
 
-                diagnostics.AddRange(Stamp(descriptor, registration.Rule.Evaluate(context)));
+                if (!registration.Rule.IsAffectedBy(context))
+                {
+                    continue;
+                }
+
+                diagnostics.AddRange(Stamp(
+                    descriptor,
+                    registration.Rule.EvaluateCandidateDelta(context)));
             }
 
             return new RuleExecutionOutcome.Completed(CompletedRuleSet.Create(

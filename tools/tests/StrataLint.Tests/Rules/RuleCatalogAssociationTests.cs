@@ -114,6 +114,27 @@ public sealed class RuleCatalogAssociationTests
     }
 
     [Fact]
+    public void RuleCatalogDoesNotInvokeRulesUnaffectedByTheCandidateDelta()
+    {
+        var rule = new CountingUnaffectedRule();
+        var registrations = Enumerable.Range(1, 23).Append(25).Append(26)
+            .Select(number => Registration(
+                Descriptor(
+                    number,
+                    $"descriptor {number}",
+                    DisplaySeverity.Error,
+                    AdmissionEffect.Block),
+                rule))
+            .ToImmutableArray();
+        var catalog = RuleCatalog.CreateForTesting(registrations);
+
+        var outcome = catalog.Execute(new RuleFixture().Build());
+
+        Assert.IsType<RuleExecutionOutcome.Completed>(outcome);
+        Assert.Equal(0, rule.EvaluationCount);
+    }
+
+    [Fact]
     public void ApplicableToPreservesPairAssociationsAndCatalogOrder()
     {
         const string firstPath = "association/first.txt";
@@ -249,5 +270,20 @@ public sealed class RuleCatalogAssociationTests
             appliesTo(artifact);
 
         public ImmutableArray<RuleFinding> Evaluate(RuleEvaluationContext context) => findings;
+    }
+
+    private sealed class CountingUnaffectedRule : IRepositoryRule
+    {
+        internal int EvaluationCount { get; private set; }
+
+        public bool AppliesTo(RepositoryFile artifact, RuleApplicabilityContext context) => false;
+
+        public bool IsAffectedBy(RuleEvaluationContext context) => false;
+
+        public ImmutableArray<RuleFinding> Evaluate(RuleEvaluationContext context)
+        {
+            EvaluationCount++;
+            return [];
+        }
     }
 }

@@ -10,7 +10,8 @@ internal sealed record DigestionCasObject(
 
 internal sealed record DigestionCasEvaluation(
     ImmutableArray<string> Findings,
-    ImmutableHashSet<string> ValidAtomIds);
+    ImmutableHashSet<string> ValidAtomIds,
+    int RehashedObjectCount);
 
 internal static class DigestionCasStore
 {
@@ -46,13 +47,26 @@ internal static class DigestionCasStore
 
     internal static ImmutableArray<string> ValidateAppendOnly(
         RepositorySnapshot current,
-        RepositorySnapshot baseline)
+        RepositorySnapshot baseline) =>
+        ValidateAppendOnly(current, baseline, changes: null);
+
+    internal static ImmutableArray<string> ValidateAppendOnly(
+        RepositorySnapshot current,
+        RepositorySnapshot baseline,
+        RawChangeSet? changes)
     {
         ArgumentNullException.ThrowIfNull(current);
         ArgumentNullException.ThrowIfNull(baseline);
         var findings = ImmutableArray.CreateBuilder<string>();
-        foreach (var (path, baselineBlob) in baseline.Files
-                     .Where(static item => IsCanonicalPath(item.Key.Value))
+        var baselineCas = baseline.Files
+            .Where(static item => IsCanonicalPath(item.Key.Value));
+        if (changes is not null)
+        {
+            var changedPaths = changes.Paths.ToImmutableHashSet();
+            baselineCas = baselineCas.Where(item => changedPaths.Contains(item.Key));
+        }
+
+        foreach (var (path, baselineBlob) in baselineCas
                      .OrderBy(static item => item.Key.Value, StringComparer.Ordinal))
         {
             if (!current.Files.TryGetValue(path, out var currentBlob))
@@ -70,24 +84,35 @@ internal static class DigestionCasStore
 
     internal static DigestionCasEvaluation Evaluate(
         BackfillInventoryDocument document,
-        RepositorySnapshot snapshot)
+        RepositorySnapshot snapshot) =>
+        Evaluate(document, snapshot, changes: null);
+
+    internal static DigestionCasEvaluation Evaluate(
+        BackfillInventoryDocument document,
+        RepositorySnapshot snapshot,
+        RawChangeSet? changes)
     {
         ArgumentNullException.ThrowIfNull(document);
         ArgumentNullException.ThrowIfNull(snapshot);
         var findings = ImmutableArray.CreateBuilder<string>();
         var referencedPaths = new HashSet<string>(StringComparer.Ordinal);
         var validAtomIds = ImmutableHashSet.CreateBuilder<string>(StringComparer.Ordinal);
+        var rehashedObjectCount = 0;
         foreach (var entry in document.RequireDigestionEntries())
         {
             var reference = entry.CasRef;
+            var entryChanged = changes is null || EntryChanged(entry, changes);
             if (!DigestionFingerprint.IsCanonicalSha256(reference))
             {
-                findings.Add($"entry {entry.AtomId} cas_ref must use canonical sha256:<64 lowercase hex>");
+                if (entryChanged)
+                {
+                    findings.Add($"entry {entry.AtomId} cas_ref must use canonical sha256:<64 lowercase hex>");
+                }
                 continue;
             }
 
             var valid = true;
-            if (entry.Fingerprints.RawSha256 != reference)
+            if (entryChanged && entry.Fingerprints.RawSha256 != reference)
             {
                 findings.Add(
                     $"entry {entry.AtomId} cas_ref {reference} differs from raw fingerprint "
@@ -97,19 +122,30 @@ internal static class DigestionCasStore
 
             var path = RootPath + reference["sha256:".Length..];
             referencedPaths.Add(path);
+            var blobChanged = changes is null || changes.Paths.Any(changed => changed.Value == path);
+            if (!entryChanged && !blobChanged)
+            {
+                validAtomIds.Add(entry.AtomId);
+                continue;
+            }
+
             if (!snapshot.TryGetFile(path, out var blob))
             {
                 findings.Add($"entry {entry.AtomId} CAS blob is missing: {path}");
                 continue;
             }
 
-            var actual = Capture(blob.RawBytes.AsSpan()).Reference;
-            if (actual != reference)
+            if (blobChanged)
             {
-                findings.Add(
-                    $"entry {entry.AtomId} CAS blob hash mismatch: {path} "
-                    + $"declares {reference} but contains {actual}");
-                valid = false;
+                var actual = Capture(blob.RawBytes.AsSpan()).Reference;
+                rehashedObjectCount++;
+                if (actual != reference)
+                {
+                    findings.Add(
+                        $"entry {entry.AtomId} CAS blob hash mismatch: {path} "
+                        + $"declares {reference} but contains {actual}");
+                    valid = false;
+                }
             }
 
             if (valid)
@@ -118,9 +154,16 @@ internal static class DigestionCasStore
             }
         }
 
-        foreach (var path in snapshot.Files.Keys
-                     .Select(static path => path.Value)
-                     .Where(static path => path.StartsWith(RootPath, StringComparison.Ordinal)))
+        var candidateCasPaths = snapshot.Files.Keys
+            .Select(static path => path.Value)
+            .Where(static path => path.StartsWith(RootPath, StringComparison.Ordinal));
+        if (changes is not null)
+        {
+            var changedPaths = changes.Paths.Select(static path => path.Value).ToHashSet(StringComparer.Ordinal);
+            candidateCasPaths = candidateCasPaths.Where(changedPaths.Contains);
+        }
+
+        foreach (var path in candidateCasPaths)
         {
             if (!referencedPaths.Contains(path))
             {
@@ -130,6 +173,21 @@ internal static class DigestionCasStore
 
         return new DigestionCasEvaluation(
             findings.Order(StringComparer.Ordinal).ToImmutableArray(),
-            validAtomIds.ToImmutable());
+            validAtomIds.ToImmutable(),
+            rehashedObjectCount);
+    }
+
+    internal static bool EntryChanged(DigestionLedgerEntry entry, RawChangeSet changes)
+    {
+        if (changes.Paths.Any(static path => path.Value == BackfillInventoryLoader.RelativePath))
+        {
+            return true;
+        }
+
+        var sourcePrefix = BackfillInventoryLoader.RootPath + entry.SourceId + "/";
+        var suffix = "/" + entry.AtomId + ".yaml";
+        return changes.Paths.Any(path =>
+            path.Value.StartsWith(sourcePrefix, StringComparison.Ordinal)
+            && path.Value.EndsWith(suffix, StringComparison.Ordinal));
     }
 }

@@ -221,7 +221,30 @@ internal static partial class RepositoryRules
         }
     }
 
-    private static ImmutableArray<RuleFinding> Values(RuleEvaluationContext context)
+    private static bool ValuesAffected(RuleEvaluationContext context)
+    {
+        if (context.Changes.Paths.Any(static path =>
+                path.Value == ValuesKernelBindingValidator.RelativePath
+                || path.Value.StartsWith("Evidence/D5/values.", StringComparison.Ordinal)))
+        {
+            return true;
+        }
+
+        return context.Current.TryGetFile(ValuesKernelBindingValidator.RelativePath, out var values)
+            && ValuesKernelBindingValidator.ReferencesChangedLeanInput(
+                values.Text,
+                context.Changes);
+    }
+
+    private static ImmutableArray<RuleFinding> Values(RuleEvaluationContext context) =>
+        Values(context, changes: null);
+
+    private static ImmutableArray<RuleFinding> ValuesCandidateDelta(RuleEvaluationContext context) =>
+        Values(context, context.Changes);
+
+    private static ImmutableArray<RuleFinding> Values(
+        RuleEvaluationContext context,
+        RawChangeSet? changes)
     {
         var findings = context.Current.Files.Keys
             .Where(static path =>
@@ -241,7 +264,10 @@ internal static partial class RepositoryRules
         }
         else
         {
-            findings.AddRange(ValuesKernelBindingValidator.Validate(values.Text, context.Lean.Report));
+            findings.AddRange(ValuesKernelBindingValidator.Validate(
+                values.Text,
+                context.Lean.Report,
+                changes));
         }
 
         return findings.ToImmutable();
