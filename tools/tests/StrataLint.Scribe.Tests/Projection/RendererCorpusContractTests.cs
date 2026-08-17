@@ -9,7 +9,7 @@ namespace StrataLint.Scribe.Tests;
 public sealed partial class FormulaCorpusInventoryTests
 {
     private const string CanonicalRendererSha256 =
-        "77080f3340682167092530f688595b52561e9db873fa996f44ca7b124fa58982";
+        "06adfa5dce8c04773b5fc7055261e32ff89e063fb187b87bc5ab85dacd4d44d9";
     private const string UpdateCommand = "make -C tools update-renderer-contract";
 
     [Fact]
@@ -398,6 +398,10 @@ public sealed partial class FormulaCorpusInventoryTests
         formulas.Add(new Formula.Power(function, one));
         formulas.Add(new Formula.Power(function, script));
         formulas.Add(new Formula.Power(function, subscript));
+        // 仓库实际使用的 Power 子组合,由 AssertRendererVocabularyCoverage 点名要求覆盖。
+        formulas.Add(new Formula.Power(function, sequence));
+        formulas.Add(new Formula.Power(function, x));
+        formulas.Add(new Formula.Power(one, one));
         formulas.Add(new Formula.Power(digits, group));
         formulas.Add(new Formula.Power(digits, sequence));
         formulas.Add(new Formula.Power(digits, word));
