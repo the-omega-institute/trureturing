@@ -60,8 +60,7 @@ internal static class DagLedgerRevokeWriter
 
             var eventFiles = DagLedgerAppendWriter.BuildNewEventFiles(
                 candidate.Lines,
-                context.Baseline.Events.Length,
-                context.BaselineSyntax);
+                knownDagHashes: context.BaseView.EventHashes);
             _ = DagLedgerCommandPreparation.ValidateGeneratedEventFiles(
                 context.BaseView,
                 eventFiles,

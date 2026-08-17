@@ -66,12 +66,13 @@ public static partial class FrozenLedger
                     "Candidate frozen ledger does not retain the exact baseline byte prefix.");
             }
 
-            if (syntax.Lines.Length < baseline.Events.Length)
+            var baselineLineCount = baseline.Events.Length - baseline.SyntaxStartSequence;
+            if (syntax.Lines.Length < baselineLineCount)
             {
                 throw new FormatException("Candidate frozen ledger truncated the baseline event prefix.");
             }
 
-            ValidateSuffixSyntaxEnvelope(syntax, baseline.Events.Length);
+            ValidateSuffixSyntaxEnvelope(syntax, baselineLineCount);
 
             var events = baseline.Events.ToBuilder();
             var active = baseline.ActiveEntries.ToDictionary(static item => item.Key, static item => item.Value, StringComparer.Ordinal);
@@ -83,7 +84,7 @@ public static partial class FrozenLedger
                 static item => item.Material.RepoPath,
                 static item => item.Payload.CaseId);
             var previous = baseline.HeadHash;
-            for (var index = baseline.Events.Length; index < syntax.Lines.Length; index++)
+            for (var index = baselineLineCount; index < syntax.Lines.Length; index++)
             {
                 var line = syntax.Lines[index];
                 var root = line.Value;
@@ -95,7 +96,7 @@ public static partial class FrozenLedger
                 var sequence = RequiredNonnegativeInteger(root, "sequence");
                 var previousHash = RequiredString(root, "previous_hash");
                 var eventHash = RequiredString(root, "event_hash");
-                if (sequence != index
+                if (sequence != baseline.SyntaxStartSequence + index
                     || RequiredNonnegativeInteger(root, "schema_version") != 1
                     || !string.Equals(previousHash, previous, StringComparison.Ordinal)
                     || !FrozenHashSyntax.IsSha256(eventHash)
@@ -241,7 +242,8 @@ public static partial class FrozenLedger
                 activeEntries,
                 allCaseIds.ToImmutableHashSet(StringComparer.Ordinal),
                 superseded.ToImmutableHashSet(),
-                revoked.ToImmutableHashSet()));
+                revoked.ToImmutableHashSet(),
+                baseline.SyntaxStartSequence));
         }
         catch (Exception exception) when (exception is FormatException or JsonException or InvalidOperationException)
         {

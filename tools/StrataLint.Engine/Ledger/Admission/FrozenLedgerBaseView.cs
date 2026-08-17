@@ -1,6 +1,5 @@
 using System.Collections.Immutable;
 using System.Text.Json;
-using System.Text.Json.Nodes;
 
 namespace StrataLint.Engine;
 
@@ -52,168 +51,20 @@ internal sealed class FrozenLedgerBaseView
 
     internal int EventCount => Events.Length;
 
-    internal FrozenLedgerConsistent ToWriterBaseline() => ToWriterBaseline(ToWriterSyntax());
-
-    internal FrozenLedgerSyntax ToWriterSyntax()
+    internal FrozenLedgerConsistent ToWriterBaseline()
     {
-        var remaining = Events.ToList();
-        var ordered = ImmutableArray.CreateBuilder<TrustedFrozenLedgerEvent>(Events.Length);
-        var identities = new HashSet<string>(StringComparer.Ordinal);
-        var hashes = new HashSet<string>(StringComparer.Ordinal);
-        while (remaining.Count > 0)
-        {
-            var index = remaining.FindIndex(item => ReplayDependenciesPresent(item, ordered.Count, identities, hashes));
-            if (index < 0)
-            {
-                throw new InvalidOperationException(
-                    "trusted frozen ledger has no valid linear replay order");
-            }
-
-            var item = remaining[index];
-            remaining.RemoveAt(index);
-            ordered.Add(item);
-            identities.Add(item.Identity);
-            if (item.Payload.TryGetProperty("frozen_node_id", out var frozenNodeId)
-                && frozenNodeId.ValueKind == JsonValueKind.String)
-            {
-                identities.Add(frozenNodeId.GetString()!);
-            }
-            hashes.Add(item.EventHash);
-        }
-
-        var raw = ImmutableArray.CreateBuilder<byte>();
-        var lines = ImmutableArray.CreateBuilder<FrozenLedgerLineSyntax>();
-        var previous = FrozenLedgerCanonicalWriter.ZeroHash;
-        var dagToLinearHash = new Dictionary<string, string>(StringComparer.Ordinal);
-        for (var sequence = 0; sequence < ordered.Count; sequence++)
-        {
-            var item = ordered[sequence];
-            var payload = item.Payload;
-            if (payload.TryGetProperty("previous_attestation_event_hash", out var dagPrevious))
-            {
-                var rewritten = JsonNode.Parse(payload.GetRawText())!.AsObject();
-                rewritten["previous_attestation_event_hash"] = dagToLinearHash[dagPrevious.GetString()!];
-                payload = JsonSerializer.SerializeToElement(rewritten);
-            }
-
-            var encoded = FrozenLedgerCanonicalWriter.WriteEvent(
-                item.EventType,
-                payload,
-                previous,
-                sequence);
-            using var document = JsonDocument.Parse(encoded.Bytes.AsSpan()[..^1].ToArray());
-            raw.AddRange(encoded.Bytes);
-            lines.Add(new FrozenLedgerLineSyntax(
-                encoded.Bytes,
-                document.RootElement.Clone(),
-                item.EventHash));
-            dagToLinearHash.Add(item.EventHash, encoded.Hash);
-            previous = encoded.Hash;
-        }
-
-        return new FrozenLedgerSyntax(raw.ToImmutable(), lines.ToImmutable());
-    }
-
-    private static bool ReplayDependenciesPresent(
-        TrustedFrozenLedgerEvent item,
-        int placedCount,
-        HashSet<string> identities,
-        HashSet<string> hashes) => item.EventType switch
-        {
-            "Genesis" => placedCount == 0,
-            "Freeze" => placedCount > 0
-                && DependenciesPresent(item.Payload, "prerequisite_frozen_node_ids", identities),
-            "Reattest" => PreviousPresent(item.Payload, hashes),
-            FrozenLedger.SupersedeEventType => PreviousPresent(item.Payload, hashes)
-                && DependenciesPresent(item.Payload, "prerequisite_frozen_node_ids", identities),
-            "Revoke" => RevokeRoots(item.Payload).All(root => identities.Contains(root)),
-            _ => true,
-        };
-
-    private static bool PreviousPresent(JsonElement payload, HashSet<string> hashes) =>
-        payload.TryGetProperty("previous_attestation_event_hash", out var previous)
-        && previous.ValueKind == JsonValueKind.String
-        && hashes.Contains(previous.GetString()!);
-
-    private static bool DependenciesPresent(
-        JsonElement payload,
-        string property,
-        HashSet<string> identities) =>
-        payload.TryGetProperty(property, out var dependencies)
-        && dependencies.ValueKind == JsonValueKind.Array
-        && dependencies.EnumerateArray().All(item =>
-            item.ValueKind == JsonValueKind.String && identities.Contains(item.GetString()!));
-
-    private static IEnumerable<string> RevokeRoots(JsonElement payload) =>
-        payload.GetProperty("evidence").EnumerateArray().Select(static item =>
-            item.GetProperty("root_frozen_node_id").GetString()!);
-
-    internal FrozenLedgerConsistent ToWriterBaseline(FrozenLedgerSyntax syntax)
-    {
-        ArgumentNullException.ThrowIfNull(syntax);
-        if (syntax.Lines.Length != Events.Length)
-        {
-            throw new InvalidOperationException(
-                "trusted frozen ledger projection and linear writer view have different event counts");
-        }
-
         var byDagHash = Events.ToDictionary(static item => item.EventHash, StringComparer.Ordinal);
-        var linearHashByDagHash = syntax.Lines.ToDictionary(
-            static line => line.SourceDagEventHash
-                ?? throw new InvalidOperationException(
-                    "trusted frozen ledger linear view lost its content-addressed source hash"),
-            static line => RequiredLinearString(line.Value, "event_hash"),
-            StringComparer.Ordinal);
-        var typed = syntax.Lines.Select(line =>
+        var typed = ImmutableArray.CreateBuilder<FrozenLedgerEvent>(Events.Length);
+        for (var sequence = 0; sequence < Events.Length; sequence++)
         {
-            var sourceHash = line.SourceDagEventHash!;
-            if (!byDagHash.TryGetValue(sourceHash, out var item))
-            {
-                throw new InvalidOperationException(
-                    "trusted frozen ledger linear view names an absent content-addressed event");
-            }
+            var item = Events[sequence];
+            var previousHash = sequence == 0
+                ? FrozenLedgerCanonicalWriter.ZeroHash
+                : Events[sequence - 1].EventHash;
+            typed.Add(ProjectWriterEvent(item, sequence, previousHash));
+        }
 
-            var sequence = line.Value.GetProperty("sequence").GetInt32();
-            var eventHash = RequiredLinearString(line.Value, "event_hash");
-            var previousHash = RequiredLinearString(line.Value, "previous_hash");
-            return item.EventType switch
-            {
-                "Genesis" => (FrozenLedgerEvent)new FrozenLedgerEvent.Genesis(
-                    sequence,
-                    eventHash,
-                    previousHash,
-                    ReadGenesis(item.Payload)),
-                "Freeze" => new FrozenLedgerEvent.Freeze(
-                    sequence,
-                    eventHash,
-                    previousHash,
-                    FrozenLedgerBaseViewReader.ReadFreeze(item.Payload, eventHash).Payload),
-                "Reattest" => new FrozenLedgerEvent.Reattest(
-                    sequence,
-                    eventHash,
-                    previousHash,
-                    FrozenLedgerBaseViewReader.ReadReattest(item.Payload)),
-                FrozenLedger.SupersedeEventType => new FrozenLedgerEvent.Supersede(
-                    sequence,
-                    eventHash,
-                    previousHash,
-                    FrozenLedgerBaseViewReader.ReadSupersede(item.Payload)),
-                "Revoke" => new FrozenLedgerEvent.Revoke(
-                    sequence,
-                    eventHash,
-                    previousHash,
-                    FrozenLedger.ReadTrustedRevoke(item.Payload)),
-                _ => throw new InvalidOperationException(
-                    $"trusted frozen ledger contains unsupported event type {item.EventType}"),
-            };
-        }).ToImmutableArray();
-        var activeEntries = ActiveByCase.ToImmutableDictionary(
-            static item => item.Key,
-            item => item.Value with
-            {
-                LastAttestationEventHash = linearHashByDagHash[item.Value.LastAttestationEventHash],
-            },
-            StringComparer.Ordinal);
+        var activeEntries = ActiveByCase;
         var superseded = Events
             .Where(static item => item.EventType == FrozenLedger.SupersedeEventType)
             .Select(item => ReadActiveBefore(item, byDagHash).Material.FrozenNodeId)
@@ -230,18 +81,65 @@ internal sealed class FrozenLedgerBaseView
             .OrderBy(static material => material.RepoPath.Value, StringComparer.Ordinal)
             .ToImmutableArray();
         return FrozenLedgerConsistent.Create(
-            syntax.RawBytes,
-            typed,
+            ImmutableArray<byte>.Empty,
+            typed.ToImmutable(),
             activeNodes,
-            syntax.Lines.Length == 0
-                ? string.Empty
-                : RequiredLinearString(syntax.Lines[^1].Value, "event_hash"),
+            EventSetRoot(),
             corpusRoot: string.Empty,
             graphRoot: FrozenLedger.ComputeFrozenGraphRoot(activeNodes),
             activeEntries,
             AllCaseIds,
             superseded,
-            revoked);
+            revoked,
+            syntaxStartSequence: Events.Length);
+    }
+
+    private static FrozenLedgerEvent ProjectWriterEvent(
+        TrustedFrozenLedgerEvent item,
+        int sequence,
+        string previousHash) => item.EventType switch
+        {
+            "Genesis" => new FrozenLedgerEvent.Genesis(
+                sequence,
+                item.EventHash,
+                previousHash,
+                ReadGenesis(item.Payload)),
+            "Freeze" => new FrozenLedgerEvent.Freeze(
+                sequence,
+                item.EventHash,
+                previousHash,
+                FrozenLedgerBaseViewReader.ReadFreeze(item.Payload, item.EventHash).Payload),
+            "Reattest" => new FrozenLedgerEvent.Reattest(
+                sequence,
+                item.EventHash,
+                previousHash,
+                FrozenLedgerBaseViewReader.ReadReattest(item.Payload)),
+            FrozenLedger.SupersedeEventType => new FrozenLedgerEvent.Supersede(
+                sequence,
+                item.EventHash,
+                previousHash,
+                FrozenLedgerBaseViewReader.ReadSupersede(item.Payload)),
+            "Revoke" => new FrozenLedgerEvent.Revoke(
+                sequence,
+                item.EventHash,
+                previousHash,
+                FrozenLedger.ReadTrustedRevoke(item.Payload)),
+            _ => throw new InvalidOperationException(
+                $"trusted frozen ledger contains unsupported event type {item.EventType}"),
+        };
+
+    internal string EventSetRoot(IEnumerable<string>? suffixEventHashes = null)
+    {
+        var material = JsonSerializer.SerializeToElement(new
+        {
+            event_hashes = Events.Select(static item => item.EventHash)
+                .Concat(suffixEventHashes ?? [])
+                .Order(StringComparer.Ordinal),
+            schema = "frozen-event-set-v1",
+        });
+        return FrozenContentHash.Compute(
+            FrozenHashDomains.FrozenEventSet,
+            StructuredCanonicalWriter.WriteJson(material).AsSpan());
     }
 
     private static FrozenActiveEntry ReadActiveBefore(
@@ -264,8 +162,6 @@ internal sealed class FrozenLedgerBaseView
         payload.GetProperty("protocol_version").GetInt32(),
         FrozenLedgerAttestationChain.RequiredString(payload, "rule_catalog_root"));
 
-    private static string RequiredLinearString(JsonElement value, string property) =>
-        FrozenLedgerAttestationChain.RequiredString(value, property);
 }
 
 internal static class FrozenLedgerAttestationChain

@@ -26,7 +26,7 @@ internal static class DagLedgerReattestWriter
             var candidateBytes = FrozenLedgerGenerator.AppendReattestation(
                 context.Baseline,
                 context.Catalog);
-            if (candidateBytes.AsSpan().SequenceEqual(context.BaselineBytes))
+            if (candidateBytes.IsEmpty)
             {
                 return new CommandResult(
                     true,
@@ -85,9 +85,8 @@ internal static class DagLedgerReattestWriter
 
             var newFiles = DagLedgerAppendWriter.BuildNewEventFiles(
                 generatedSyntax.Lines,
-                context.Baseline.Events.Length,
-                context.BaselineSyntax);
-            var prospectiveSyntax = DagLedgerCommandPreparation.LoadTrustedLedgerWithSuffix(
+                knownDagHashes: context.BaseView.EventHashes);
+            var prospective = DagLedgerCommandPreparation.ValidateGeneratedEventFiles(
                 context.BaseView,
                 newFiles,
                 "generated frozen ledger suffix");
@@ -111,7 +110,7 @@ internal static class DagLedgerReattestWriter
             var output = $"LEDGER_REATTEST appended_reattests={appended.Length} "
                 + $"appended_freezes={appendedFreezes.Length} "
                 + $"events={context.BaseView.EventCount + newFiles.Length} "
-                + $"head={prospectiveSyntax.Lines[^1].Value.GetProperty("event_hash").GetString()}\n"
+                + $"head={context.BaseView.EventSetRoot(prospective.Select(static item => item.EventHash))}\n"
                 + string.Concat(appended.Select(item =>
                     $"REATTESTED {context.Baseline.ActiveEntries[item.Payload.CaseId].Material.RepoPath.Value}\n"))
                 + string.Concat(appendedFreezes.Select(static item =>
