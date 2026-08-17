@@ -162,23 +162,16 @@ public sealed partial class DigestionLedgerTests
             Encoding.UTF8.GetBytes("stale scribe definition\n")).RawSha256;
         var staleEmissionHash = DigestionFingerprint.Compute(
             Encoding.UTF8.GetBytes("# Stale emitted narrative\n")).RawSha256;
-        var coverage = $$"""
-            - gid: {{gid}}
-              source_sha256: {{atom.Fingerprints.RawSha256}}
-              target_sha256: {{DigestionFingerprint.Compute(target).RawSha256}}
-            """;
-        var scribe = $$"""
-            - gid: {{gid}}
-              definition_sha256: {{staleDefinitionHash}}
-              emission_sha256: {{staleEmissionHash}}
-            """;
-        var document = BackfillInventoryLoader.Load(LedgerYaml(
+        var document = Ledger(
             atom,
-            migration: "partial",
-            truth: "closed",
-            coverageReceipts: coverage,
-            scribeReceipts: scribe,
-            coverageGid: gid));
+            DigestionMigrationState.Partial,
+            DigestionTruthState.Closed,
+            gid,
+            new DigestionCoverageReceipt(
+                gid,
+                atom.Fingerprints.RawSha256,
+                DigestionFingerprint.Compute(target).RawSha256),
+            new DigestionScribeReceipt(gid, staleDefinitionHash, staleEmissionHash));
         var record = new ScribeEmissionRecord(
             gid,
             ScribeEmissionAttestation.DefinitionPath(gid),
