@@ -381,9 +381,31 @@ public sealed class LedgerAppendCommandTests
             bool aImportsB = false,
             bool reportBDriftInChangeSet = false,
             bool aImportsExternal = false,
-            bool externalPackagePinned = false)
+            bool externalPackagePinned = false,
+            bool externalPackagePinBump = false,
+            bool externalPackageManifestOnlyDrift = false)
         {
+            if ((externalPackagePinBump || externalPackageManifestOnlyDrift)
+                && !externalPackagePinned)
+            {
+                throw new ArgumentException(
+                    "An external package pin delta requires a pinned external package.");
+            }
+
             var externalImport = externalPackagePinned ? "Mathlib.Foo" : "External.Foo";
+            const string baselineToolchain = "leanprover/lean4:v4.24.0\n";
+            var currentToolchain = pinBump
+                ? "leanprover/lean4:v4.25.0\n"
+                : baselineToolchain;
+            const string lakefile = "[package]\nname = \"fixture\"\n";
+            var baselineManifest = externalPackagePinned
+                ? "{\"packages\":[{\"name\":\"mathlib\",\"type\":\"git\",\"rev\":\"abc123\"}]}\n"
+                : "{}\n";
+            var currentManifest = externalPackagePinBump
+                ? "{\"packages\":[{\"name\":\"mathlib\",\"type\":\"git\",\"rev\":\"def456\"}]}\n"
+                : externalPackageManifestOnlyDrift
+                    ? "{\"packages\":[{\"name\":\"mathlib\",\"type\":\"git\",\"rev\":\"abc123\",\"metadata\":\"changed\"}]}\n"
+                    : baselineManifest;
             var aSource = aImportsB
                 ? "import D5.S0.Carrier.B\ntheorem a : B.P := B.proof\n"
                 : aImportsExternal
@@ -423,11 +445,39 @@ public sealed class LedgerAppendCommandTests
                 : FrozenLedgerTestData.Module("B", imports: new[] { "A" });
             var c = FrozenLedgerTestData.Module("C", imports: new[] { "B" });
             var baselineCatalog = aImportsB
-                ? FrozenLedgerTestData.BuildCatalog(baselineA, baselineB!)
-                : FrozenLedgerTestData.BuildCatalog(baselineA);
+                ? FrozenLedgerTestData.BuildCatalogWithEnvironment(
+                    baselineToolchain,
+                    lakefile,
+                    baselineManifest,
+                    FrozenLedgerTestData.GitOid('a'),
+                    FrozenLedgerTestData.GitOid('b'),
+                    baselineA,
+                    baselineB!)
+                : FrozenLedgerTestData.BuildCatalogWithEnvironment(
+                    baselineToolchain,
+                    lakefile,
+                    baselineManifest,
+                    FrozenLedgerTestData.GitOid('a'),
+                    FrozenLedgerTestData.GitOid('b'),
+                    baselineA);
             CandidateCatalog = addSecondClosedModule
-                ? FrozenLedgerTestData.BuildCatalog(candidateA, candidateB, c)
-                : FrozenLedgerTestData.BuildCatalog(candidateA, candidateB);
+                ? FrozenLedgerTestData.BuildCatalogWithEnvironment(
+                    currentToolchain,
+                    lakefile,
+                    currentManifest,
+                    FrozenLedgerTestData.GitOid('a'),
+                    FrozenLedgerTestData.GitOid('b'),
+                    candidateA,
+                    candidateB,
+                    c)
+                : FrozenLedgerTestData.BuildCatalogWithEnvironment(
+                    currentToolchain,
+                    lakefile,
+                    currentManifest,
+                    FrozenLedgerTestData.GitOid('a'),
+                    FrozenLedgerTestData.GitOid('b'),
+                    candidateA,
+                    candidateB);
             BaselineBytes = FrozenLedgerGenerator.GenerateGenesis(
                 baselineCatalog,
                 new FrozenGenesisDescriptor(
@@ -448,13 +498,9 @@ public sealed class LedgerAppendCommandTests
 
             var files = new Dictionary<string, string>(StringComparer.Ordinal)
             {
-                ["lean-toolchain"] = pinBump
-                    ? "leanprover/lean4:v4.25.0\n"
-                    : "leanprover/lean4:v4.24.0\n",
-                ["lakefile.toml"] = "[package]\nname = \"fixture\"\n",
-                ["lake-manifest.json"] = externalPackagePinned
-                    ? "{\"packages\":[{\"name\":\"mathlib\",\"type\":\"git\",\"rev\":\"abc123\"}]}\n"
-                    : "{}\n",
+                ["lean-toolchain"] = currentToolchain,
+                ["lakefile.toml"] = lakefile,
+                ["lake-manifest.json"] = currentManifest,
                 [FrozenLedgerTestData.PathFor("A")] = candidateA.Source,
                 [FrozenLedgerTestData.PathFor("B")] = candidateB.Source,
             };
@@ -463,8 +509,21 @@ public sealed class LedgerAppendCommandTests
                 files.Add(FrozenLedgerTestData.PathFor("C"), c.Source);
             }
             FrozenLedgerTestData.AddLedgerFiles(files, BaselineBytes);
+            var baselineFiles = new Dictionary<string, string>(files, StringComparer.Ordinal)
+            {
+                ["lean-toolchain"] = baselineToolchain,
+                ["lakefile.toml"] = lakefile,
+                ["lake-manifest.json"] = baselineManifest,
+                [FrozenLedgerTestData.PathFor("A")] = baselineA.Source,
+            };
+            if (baselineB is not null)
+            {
+                baselineFiles[FrozenLedgerTestData.PathFor("B")] = baselineB.Source;
+            }
             var raw = RawRepositorySnapshot.Create(
                 files.Select(static item => RawRepositoryEntry.FromText(item.Key, item.Value)));
+            var baselineRaw = RawRepositorySnapshot.Create(
+                baselineFiles.Select(static item => RawRepositoryEntry.FromText(item.Key, item.Value)));
             var snapshot = Assert.IsType<SnapshotDecodeOutcome.Decoded>(
                 SnapshotDecoder.Decode(raw)).Snapshot;
             var reports = new Dictionary<string, LeanFileReport>(StringComparer.Ordinal)
@@ -503,7 +562,7 @@ public sealed class LedgerAppendCommandTests
                         ? new[] { FrozenLedgerTestData.PathFor("B") }
                         : Array.Empty<string>())),
                 raw,
-                null);
+                baselineRaw);
             Environment = new ProductionCliEnvironment(
                 temporary.Path,
                 Gateway,

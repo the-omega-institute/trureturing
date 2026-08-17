@@ -87,6 +87,36 @@ public sealed partial class FrozenLedgerTests
     }
 
     [Fact]
+    public void CorpusRootCaseLeafPreimageIsPinnedToCurrentFreezePayload()
+    {
+        var catalog = BuildCatalog(Module("A"));
+        var payload = FrozenLedgerCanonicalWriter.FreezePayload(
+            catalog.Environment,
+            Assert.Single(catalog.ClosedNodes));
+        var currentFreezePreimage = StructuredCanonicalWriter.WriteJson(
+            FrozenLedgerCanonicalWriter.FreezeElement(payload));
+        var expected = FrozenContentHash.Compute(
+            FrozenHashDomains.FrozenCase,
+            currentFreezePreimage.AsSpan());
+        Assert.Equal(
+            "sha256:bc26beb01426312924f4e7ab9a8c3c133e613c24a3a17debb6d8cd6b9c0b94fc",
+            expected);
+        Assert.Equal(expected, FrozenLedger.ComputeCaseLeaf(payload));
+
+        var bytes = FrozenLedgerGenerator.GenerateGenesis(
+            catalog,
+            new FrozenGenesisDescriptor(GitOid('e'), RuleCatalog.Default.RootSha256));
+        var syntax = Assert.IsType<DagLedgerLoadOutcome.Loaded>(
+            DagLedgerLoader.Load(bytes.AsSpan())).Syntax;
+        var capability = Assert.IsType<FrozenLedgerValidationOutcome.Accepted>(
+            ValidateGenesis(syntax, catalog)).Capability;
+        var corpusRoot = capability.CorpusRoot;
+        Assert.Equal(
+            "sha256:82961043af5cddc9bc587e38ed7714f16ad6f18ebf13fa3e2f531832d55a1f17",
+            corpusRoot);
+    }
+
+    [Fact]
     public void SemanticallyEqualButNoncanonicalEventBytesFailClosed()
     {
         var catalog = BuildCatalog(Module("A"));

@@ -27,13 +27,29 @@ internal static class DagLedgerSupersedeWriter
             var baselineFiles = candidate.BaselineFiles;
             var protectedBase = candidate.BaseView;
             var pins = FrozenLedger.EnvironmentPins(candidate.Catalog.Environment);
+            var protectedSnapshots = new Dictionary<string, RepositorySnapshot>(StringComparer.Ordinal);
+            RepositorySnapshot ProtectedSnapshot(FrozenActiveEntry entry)
+            {
+                var taggedCommit = entry.Payload.Input.BaseCommitOid;
+                if (!protectedSnapshots.TryGetValue(taggedCommit, out var snapshot))
+                {
+                    var revision = taggedCommit[(taggedCommit.IndexOf(':') + 1)..];
+                    snapshot = DecodeProtectedSnapshot(DagLedgerCommandPreparation.Ask(
+                        () => repository.ReadRevision(revision)));
+                    protectedSnapshots.Add(taggedCommit, snapshot);
+                }
+
+                return snapshot;
+            }
+
             var generated = BuildEvents(
                 protectedBase,
                 candidate.Catalog,
                 candidate.Report,
                 candidate.Changes,
                 candidate.Snapshot,
-                pins);
+                pins,
+                ProtectedSnapshot);
             if (generated.IsEmpty)
             {
                 return new CommandResult(
@@ -56,7 +72,8 @@ internal static class DagLedgerSupersedeWriter
                 candidate.Changes,
                 candidate.Snapshot,
                 trustedCandidateReferences,
-                generated);
+                generated,
+                ProtectedSnapshot);
 
             var eventFiles = generated.Select(static item => item.File).ToImmutableArray();
             _ = DagLedgerCommandPreparation.ValidateGeneratedEventFiles(
@@ -98,7 +115,8 @@ internal static class DagLedgerSupersedeWriter
         LeanAxiomReport report,
         RawChangeSet changes,
         RepositorySnapshot snapshot,
-        FrozenEnvironmentPins pins)
+        FrozenEnvironmentPins pins,
+        Func<FrozenActiveEntry, RepositorySnapshot> protectedSnapshot)
     {
         var result = ImmutableArray.CreateBuilder<GeneratedSupersede>();
         foreach (var entry in protectedBase.ActiveByCase.Values.OrderBy(
@@ -143,7 +161,17 @@ internal static class DagLedgerSupersedeWriter
                 LeanImportClosure.ExternalImportsHaveNamedPinCoverage(
                     report,
                     entry.Material.RepoPath,
-                    snapshot));
+                    snapshot),
+                material.StatementId == entry.Material.StatementId
+                    || LeanImportClosure.RelevantSemanticPinsChanged(
+                        report,
+                        entry.Material.RepoPath,
+                        entry,
+                        protectedSnapshot(entry),
+                        snapshot),
+                LeanImportClosure.CandidateStatementsAvoidTrivialTruth(
+                    report,
+                    entry.Material.RepoPath));
             var element = FrozenLedgerCanonicalWriter.SupersedeElement(payload);
             var encoded = FrozenLedgerCanonicalWriter.WriteDagEvent(
                 FrozenLedger.SupersedeEventType,
@@ -172,7 +200,8 @@ internal static class DagLedgerSupersedeWriter
         RawChangeSet changes,
         RepositorySnapshot snapshot,
         TrustedFrozenGitReferences trustedReferences,
-        ImmutableArray<GeneratedSupersede> generated)
+        ImmutableArray<GeneratedSupersede> generated,
+        Func<FrozenActiveEntry, RepositorySnapshot> protectedSnapshot)
     {
         var active = protectedBase.ActiveByCase.ToDictionary(
             static item => item.Key,
@@ -189,10 +218,20 @@ internal static class DagLedgerSupersedeWriter
                     candidateCatalog.Dag,
                     active[item.Payload.CaseId].Material.RepoPath,
                     changes),
-                LeanImportClosure.ExternalImportsHaveNamedPinCoverage(
-                    report,
-                    active[item.Payload.CaseId].Material.RepoPath,
-                    snapshot));
+                    LeanImportClosure.ExternalImportsHaveNamedPinCoverage(
+                        report,
+                        active[item.Payload.CaseId].Material.RepoPath,
+                        snapshot),
+                    item.Payload.StatementId == active[item.Payload.CaseId].Material.StatementId
+                        || LeanImportClosure.RelevantSemanticPinsChanged(
+                            report,
+                            active[item.Payload.CaseId].Material.RepoPath,
+                            active[item.Payload.CaseId],
+                            protectedSnapshot(active[item.Payload.CaseId]),
+                            snapshot),
+                    LeanImportClosure.CandidateStatementsAvoidTrivialTruth(
+                        report,
+                        active[item.Payload.CaseId].Material.RepoPath));
             active[payload.CaseId] = FrozenLedger.ApplySupersede(
                 active[payload.CaseId],
                 payload,
@@ -200,6 +239,15 @@ internal static class DagLedgerSupersedeWriter
                 candidateCatalog.ByPath[active[payload.CaseId].Material.RepoPath]);
         }
     }
+
+    private static RepositorySnapshot DecodeProtectedSnapshot(RawRepositorySnapshot raw) =>
+        SnapshotDecoder.Decode(raw) switch
+        {
+            SnapshotDecodeOutcome.Decoded decoded => decoded.Snapshot,
+            SnapshotDecodeOutcome.InfrastructureFailure failure => throw new InvalidOperationException(
+                "protected semantic-pin snapshot is unavailable: " + failure.Message),
+        };
+
     private sealed record GeneratedSupersede(
         FrozenSupersedePayload Payload,
         string EventHash,

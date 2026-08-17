@@ -135,7 +135,10 @@ public static partial class FrozenLedger
                         active,
                         trustedReferences,
                         candidateCatalog: null,
-                        repositoryImportClosureUnchanged: false);
+                        repositoryImportClosureUnchanged: false,
+                        externalImportsCoveredByNamedPins: true,
+                        relevantSemanticPinsChanged: false,
+                        candidateStatementsAvoidTrivialTruth: true);
                     var oldEntry = active[supersede.CaseId];
                     superseded.Add(oldEntry.Material.FrozenNodeId);
                     active[supersede.CaseId] = ApplySupersede(

@@ -34,7 +34,9 @@ public static partial class FrozenLedger
         TrustedFrozenGitReferences trustedReferences,
         FrozenMaterialCatalog? candidateCatalog,
         bool repositoryImportClosureUnchanged,
-        bool externalImportsCoveredByNamedPins = true)
+        bool externalImportsCoveredByNamedPins,
+        bool relevantSemanticPinsChanged,
+        bool candidateStatementsAvoidTrivialTruth)
     {
         var result = ParseSupersede(payload);
         if (!active.TryGetValue(result.CaseId, out var entry)
@@ -48,7 +50,9 @@ public static partial class FrozenLedger
             result,
             entry,
             repositoryImportClosureUnchanged,
-            externalImportsCoveredByNamedPins);
+            externalImportsCoveredByNamedPins,
+            relevantSemanticPinsChanged,
+            candidateStatementsAvoidTrivialTruth);
 
         var reference = new FrozenEnvironmentReference(result.Input, result.Environment);
         if (!trustedReferences.Covers(result.Input) || !trustedReferences.Covers(reference))
@@ -69,7 +73,9 @@ public static partial class FrozenLedger
         FrozenSupersedePayload payload,
         FrozenActiveEntry protectedBaseEntry,
         bool repositoryImportClosureUnchanged,
-        bool externalImportsCoveredByNamedPins = true)
+        bool externalImportsCoveredByNamedPins,
+        bool relevantSemanticPinsChanged,
+        bool candidateStatementsAvoidTrivialTruth)
     {
         if (!protectedBaseEntry.AxiomClosureKnown)
         {
@@ -118,6 +124,18 @@ public static partial class FrozenLedger
             {
                 throw new FormatException(
                     $"Supersede target {protectedBaseEntry.Material.RepoPath.Value} statement identity changed while an external import lacks named pin coverage.");
+            }
+
+            if (!relevantSemanticPinsChanged)
+            {
+                throw new FormatException(
+                    $"Supersede target {protectedBaseEntry.Material.RepoPath.Value} statement identity changed while no relevant imported semantic pin changed.");
+            }
+
+            if (!candidateStatementsAvoidTrivialTruth)
+            {
+                throw new FormatException(
+                    $"Supersede target {protectedBaseEntry.Material.RepoPath.Value} candidate statement collapses to the trivial truth True.");
             }
         }
 

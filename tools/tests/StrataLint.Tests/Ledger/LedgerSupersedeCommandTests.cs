@@ -130,15 +130,49 @@ public sealed class LedgerSupersedeCommandTests
     {
         using var fixture = new LedgerAppendCommandTests.LedgerAppendFixture(
             currentAStatementMaterial: "ambiently-different-elaborated-expression",
-            pinBump: true,
             aImportsExternal: true,
-            externalPackagePinned: true);
+            externalPackagePinned: true,
+            externalPackagePinBump: true);
 
         var result = fixture.Environment.SupersedeLedger(
             ["--candidate-lean-report", fixture.ReportPath]);
 
         Assert.True(result.Success, result.Error);
         Assert.Contains("appended_supersedes=1", result.Output, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void SupersedeRejectsWeakerMeaningFromPinnedExternalImport()
+    {
+        using var fixture = new LedgerAppendCommandTests.LedgerAppendFixture(
+            currentAStatementMaterial: "True",
+            pinBump: true,
+            aImportsExternal: true,
+            externalPackagePinned: true);
+        var before = FrozenLedgerTestData.ReadLedgerDirectory(fixture.LedgerPath);
+
+        var result = fixture.Environment.SupersedeLedger(
+            ["--candidate-lean-report", fixture.ReportPath]);
+
+        Assert.False(result.Success, result.Output);
+        Assert.Contains("trivial truth", result.Error, StringComparison.OrdinalIgnoreCase);
+        Assert.Equal(before, FrozenLedgerTestData.ReadLedgerDirectory(fixture.LedgerPath));
+    }
+
+    [Fact]
+    public void SupersedeRejectsStatementDriftWhenOnlyManifestMetadataChanges()
+    {
+        using var fixture = new LedgerAppendCommandTests.LedgerAppendFixture(
+            currentAStatementMaterial: "ambiently-different-elaborated-expression",
+            aImportsExternal: true,
+            externalPackagePinned: true,
+            externalPackageManifestOnlyDrift: true);
+
+        var result = fixture.Environment.SupersedeLedger(
+            ["--candidate-lean-report", fixture.ReportPath]);
+
+        Assert.False(result.Success, result.Output);
+        Assert.Contains("semantic pin", result.Error, StringComparison.OrdinalIgnoreCase);
     }
 
     [Fact]
