@@ -93,7 +93,7 @@ public sealed class LedgerSupersedeCommandTests
     }
 
     [Fact]
-    public void ReviewSupersedeCurrentlyAcceptsWeakerMeaningFromChangedImportedModule()
+    public void SupersedeRejectsWeakerMeaningFromChangedImportedModule()
     {
         using var fixture = new LedgerAppendCommandTests.LedgerAppendFixture(
             currentAStatementMaterial: "ambiently-weakened-imported-expression",
