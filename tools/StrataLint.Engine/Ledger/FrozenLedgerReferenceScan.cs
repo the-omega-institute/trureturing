@@ -197,7 +197,7 @@ internal static class FrozenLedgerReferenceProjection
     internal static string[] RevokePayloadFields { get; } =
     [
         "affected_case_ids", "affected_frozen_node_ids", "closure_hash", "evidence",
-        "graph_root", "root_case_ids", "root_frozen_node_ids",
+        "graph_root", "root_case_ids",
     ];
 
     internal static string[] SupersedePayloadFields { get; } =

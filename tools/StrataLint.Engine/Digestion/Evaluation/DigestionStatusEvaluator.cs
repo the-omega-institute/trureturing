@@ -120,6 +120,7 @@ internal static partial class DigestionStatusEvaluator
                 findings);
         }).ToArray();
         DeriveMigration(work);
+        PropagateStatusAuthorityChanges(work);
         RequireDecompositionBeforeNewAbsorption(
             work,
             baselineEntries,
@@ -174,7 +175,9 @@ internal static partial class DigestionStatusEvaluator
             CompleteChainGaps(item, work);
             var truth = DeriveTruth(item, snapshot);
             var status = new DigestionStatus(item.Migration, truth);
-            if (validateProjectedStatus && status != item.Entry.ProjectedStatus)
+            if (validateProjectedStatus
+                && item.StatusAuthorityChanged
+                && status != item.Entry.ProjectedStatus)
             {
                 findings.Add(
                     $"entry {item.Entry.AtomId} handwritten status "
@@ -296,7 +299,73 @@ internal static partial class DigestionStatusEvaluator
         var hasProgress = existingTargets.Count > 0
             || entry.Receipts.Coverage.Length > 0
             || entry.Receipts.Scribe.Length > 0;
-        return new EntryWork(entry, alignment, atom, gaps, targetStates, localComplete, hasProgress);
+        return new EntryWork(
+            entry,
+            alignment,
+            atom,
+            gaps,
+            targetStates,
+            localComplete,
+            hasProgress,
+            StatusAuthorityClosureChanged(entry, baselineMigration, changes));
+    }
+
+    private static bool StatusAuthorityClosureChanged(
+        DigestionLedgerEntry entry,
+        DigestionMigrationState? baselineMigration,
+        RawChangeSet? changes)
+    {
+        if (baselineMigration is null || changes is null || DigestionCasStore.EntryChanged(entry, changes))
+        {
+            return true;
+        }
+
+        if (PathChanged(changes, entry.SourcePath)
+            || PathChanged(changes, TheoryAtomizerDataLoader.DataPath)
+            || DigestionFingerprint.IsCanonicalSha256(entry.CasRef)
+                && PathChanged(changes, DigestionCasStore.RootPath + entry.CasRef["sha256:".Length..])
+            || entry.Receipts.TailAuthorization is { } tail && PathChanged(changes, tail.Path))
+        {
+            return true;
+        }
+
+        foreach (var gidText in entry.CoverageGids)
+        {
+            if (!Gid.TryParse(gidText, out var gid))
+            {
+                continue;
+            }
+
+            var documentGid = ScribeEmissionAttestation.DocumentGid(gidText);
+            if (PathChanged(changes, gid.Path.Value)
+                || PathChanged(changes, ScribeEmissionAttestation.DefinitionPath(documentGid))
+                || PathChanged(changes, ScribeEmissionAttestation.EmissionPath(documentGid)))
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private static void PropagateStatusAuthorityChanges(IReadOnlyList<EntryWork> work)
+    {
+        var byId = work.ToDictionary(static item => item.Entry.AtomId, StringComparer.Ordinal);
+        var changed = true;
+        while (changed)
+        {
+            changed = false;
+            foreach (var item in work.Where(static item => !item.StatusAuthorityChanged))
+            {
+                if (item.Entry.Receipts.ChainAtoms.Any(atomId =>
+                        byId.TryGetValue(atomId, out var dependency)
+                        && dependency.StatusAuthorityChanged))
+                {
+                    item.StatusAuthorityChanged = true;
+                    changed = true;
+                }
+            }
+        }
     }
 
     private static bool DeclarationExists(
@@ -445,7 +514,8 @@ internal static partial class DigestionStatusEvaluator
         List<DigestionGap> gaps,
         List<(string Gid, TruthState State)> targetStates,
         bool localComplete,
-        bool hasProgress)
+        bool hasProgress,
+        bool statusAuthorityChanged)
     {
         internal DigestionLedgerEntry Entry { get; } = entry;
 
@@ -460,6 +530,8 @@ internal static partial class DigestionStatusEvaluator
         internal bool LocalComplete { get; } = localComplete;
 
         internal bool HasProgress { get; } = hasProgress;
+
+        internal bool StatusAuthorityChanged { get; set; } = statusAuthorityChanged;
 
         internal DigestionMigrationState Migration { get; set; }
     }

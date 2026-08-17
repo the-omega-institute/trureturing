@@ -126,19 +126,13 @@ public sealed class TrustedRevocationReceiptStore
                 throw new FormatException("Revocation receipt request contains a malformed Git blob OID.");
             }
 
-            var files = protectedSnapshot.Files.Values.ToImmutableArray();
-            var filesByOid = new Dictionary<string, RepositoryFile>(StringComparer.Ordinal);
-            foreach (var algorithm in requested
-                .Select(static oid => oid.StartsWith("git-sha1:", StringComparison.Ordinal)
-                    ? HashAlgorithmName.SHA1
-                    : HashAlgorithmName.SHA256)
-                .Distinct())
-            {
-                foreach (var file in files)
-                {
-                    filesByOid.TryAdd(computeGitBlobOid(file.RawBytes, algorithm), file);
-                }
-            }
+            var filesByOid = protectedSnapshot.Files.Values
+                .Where(static file => file.GitBlobOid is not null)
+                .GroupBy(static file => file.GitBlobOid!, StringComparer.Ordinal)
+                .ToDictionary(
+                    static group => group.Key,
+                    static group => group.First(),
+                    StringComparer.Ordinal);
 
             var receipts = ImmutableDictionary.CreateBuilder<string, TrustedReceipt>(StringComparer.Ordinal);
             foreach (var oid in requested)
@@ -150,7 +144,7 @@ public sealed class TrustedRevocationReceiptStore
                 }
 
                 var bytes = file.RawBytes;
-                var evidence = ParseAndValidateReceipt(baseline, bytes);
+                var evidence = ParseTrustedReceipt(bytes);
                 var sha = "sha256:" + Convert.ToHexStringLower(SHA256.HashData(bytes.AsSpan()));
                 receipts.Add(oid, new TrustedReceipt(bytes, sha, WithReceiptAddress(evidence, oid, sha)));
             }
@@ -172,8 +166,7 @@ public sealed class TrustedRevocationReceiptStore
         var (oid, sha) = ReceiptAddress(evidence);
         if (!byOid.TryGetValue(oid, out var receipt)
             || receipt.Sha256 != sha
-            || !receipt.Bytes.AsSpan().SequenceEqual(
-                RevocationReceiptWriter.Write(BaselineHeadHash, BaselineGraphRoot, evidence).AsSpan()))
+            || !SameClaim(receipt.Evidence, evidence))
         {
             message = "Revocation evidence does not match a typed receipt from the protected baseline.";
             return false;
@@ -217,20 +210,23 @@ public sealed class TrustedRevocationReceiptStore
         }
     }
 
-    private static RevocationEvidence ParseAndValidateReceipt(
+    internal static void ValidateCandidateReceipt(
         FrozenLedgerConsistent baseline,
-        ImmutableArray<byte> bytes)
+        ImmutableArray<byte> bytes) =>
+        _ = ParseAndValidateReceipt(baseline, bytes);
+
+    private static RevocationEvidence ParseTrustedReceipt(ImmutableArray<byte> bytes)
     {
         if (bytes.Length == 0 || bytes[^1] != (byte)'\n' || bytes.AsSpan().Contains((byte)'\r'))
         {
-            throw new FormatException("Revocation receipt must be one LF-terminated canonical JSON object.");
+            throw new FormatException("Revocation receipt must be one LF-terminated JSON object.");
         }
 
         using var document = JsonDocument.Parse(bytes.AsMemory());
         var root = document.RootElement;
         var type = String(root, "evidence_type");
         var evidenceRoot = FrozenNode(String(root, "root_frozen_node_id"));
-        RevocationEvidence evidence = type switch
+        var evidence = type switch
         {
             nameof(RevocationEvidence.KernelWitnessFailure) => ParseKernel(root, evidenceRoot),
             nameof(RevocationEvidence.AllowedAxiomRetired) => ParseAxiom(root, evidenceRoot),
@@ -243,6 +239,17 @@ public sealed class TrustedRevocationReceiptStore
         {
             throw new FormatException("Revocation receipt has an unsupported kind or schema version.");
         }
+
+        return evidence;
+    }
+
+    private static RevocationEvidence ParseAndValidateReceipt(
+        FrozenLedgerConsistent baseline,
+        ImmutableArray<byte> bytes)
+    {
+        var evidence = ParseTrustedReceipt(bytes);
+        using var document = JsonDocument.Parse(bytes.AsMemory());
+        var root = document.RootElement;
 
         var receiptHead = String(root, "baseline_head_hash");
         var receiptGraph = String(root, "baseline_graph_root");
@@ -261,6 +268,26 @@ public sealed class TrustedRevocationReceiptStore
         ValidateClaim(baseline, evidence);
         return evidence;
     }
+
+    private static bool SameClaim(RevocationEvidence trusted, RevocationEvidence candidate) =>
+        (trusted, candidate) switch
+        {
+            (RevocationEvidence.KernelWitnessFailure left, RevocationEvidence.KernelWitnessFailure right) =>
+                left.RootFrozenNodeId == right.RootFrozenNodeId
+                && left.FailedWitnessId == right.FailedWitnessId,
+            (RevocationEvidence.AllowedAxiomRetired left, RevocationEvidence.AllowedAxiomRetired right) =>
+                left.RootFrozenNodeId == right.RootFrozenNodeId
+                && left.AxiomName == right.AxiomName,
+            (RevocationEvidence.FormalContradictionCertificate left,
+                RevocationEvidence.FormalContradictionCertificate right) =>
+                left.RootFrozenNodeId == right.RootFrozenNodeId
+                && left.ContradictedStatementId == right.ContradictedStatementId,
+            (RevocationEvidence.ContentAddressMismatch left, RevocationEvidence.ContentAddressMismatch right) =>
+                left.RootFrozenNodeId == right.RootFrozenNodeId
+                && left.ExpectedSha256 == right.ExpectedSha256
+                && left.ActualSha256 == right.ActualSha256,
+            _ => false,
+        };
 
     private static RevocationEvidence ParseKernel(JsonElement value, FrozenNodeId root)
     {

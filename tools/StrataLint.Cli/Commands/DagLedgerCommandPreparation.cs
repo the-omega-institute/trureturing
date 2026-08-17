@@ -352,25 +352,16 @@ internal static class DagLedgerCommandPreparation
         string label)
     {
         ArgumentNullException.ThrowIfNull(baseView);
-        var events = baseView.Events.Select(static item => new DagLedgerFileEvent(
-            item.SourcePath,
-            item.Identity,
-            item.EventHash,
-            item.EventType,
-            item.Payload,
-            item.SchemaVersion,
-            new FrozenLedgerLineSyntax(item.RawBytes, item.Root, item.EventHash),
-            Input: null)).ToImmutableArray();
-        if (!DagLedgerLoader.TryOrderClosedDag(
-                events,
-                ImmutableArray<string>.Empty,
-                out var ordered))
+        try
+        {
+            return baseView.ToWriterSyntax();
+        }
+        catch (InvalidOperationException exception)
         {
             throw new InvalidOperationException(
-                label + " cannot be projected into the writer's linear event order");
+                label + " cannot be projected into the writer's linear event order",
+                exception);
         }
-
-        return DagLedgerLoader.ToLinearSyntax(OrderForReplay(ordered));
     }
 
     internal static FrozenLedgerSyntax LoadTrustedLedgerWithSuffix(
@@ -418,7 +409,7 @@ internal static class DagLedgerCommandPreparation
                         item.Payload,
                         "prerequisite_frozen_node_ids",
                         identities),
-                "Revoke" => DependenciesPresent(item.Payload, "root_frozen_node_ids", identities),
+                "Revoke" => RevokeDependenciesPresent(item.Payload, identities),
                 _ => true,
             });
             if (index < 0)
@@ -452,6 +443,17 @@ internal static class DagLedgerCommandPreparation
         && dependencies.ValueKind == JsonValueKind.Array
         && dependencies.EnumerateArray().All(item =>
             item.ValueKind == JsonValueKind.String && identities.Contains(item.GetString()!));
+
+    private static bool RevokeDependenciesPresent(
+        JsonElement payload,
+        HashSet<string> identities) =>
+        payload.TryGetProperty("evidence", out var evidence)
+        && evidence.ValueKind == JsonValueKind.Array
+        && evidence.EnumerateArray().All(item =>
+            item.ValueKind == JsonValueKind.Object
+            && item.TryGetProperty("root_frozen_node_id", out var root)
+            && root.ValueKind == JsonValueKind.String
+            && identities.Contains(root.GetString()!));
 
     internal static TrustedFrozenGitReferences ValidateSuffixReferences(
         IRepositoryGateway repository,

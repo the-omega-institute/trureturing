@@ -22,8 +22,6 @@ public static partial class FrozenLedger
                         ? payload.AxiomClosure
                         : entry.Payload.AxiomClosure,
                     Input = payload.Input,
-                    InputFingerprint = payload.InputFingerprint,
-                    SemanticReceipt = payload.SemanticReceipt,
                 },
                 LastAttestationEventHash = eventHash,
                 AxiomClosureKnown = entry.AxiomClosureKnown || payload.HasAxiomClosure,
@@ -62,9 +60,7 @@ public static partial class FrozenLedger
                     : entry.Payload.AxiomClosure,
                 FrozenNodeId = frozenNodeId,
                 Input = payload.Input,
-                InputFingerprint = payload.InputFingerprint,
                 PrerequisiteFrozenNodeIds = payload.PrerequisiteFrozenNodeIds,
-                SemanticReceipt = payload.SemanticReceipt,
                 StatementId = statementId,
                 WitnessId = witnessId,
             },

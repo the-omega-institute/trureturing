@@ -109,18 +109,19 @@ public static partial class FrozenLedger
                 if (eventType == "Freeze")
                 {
                     var freeze = ParseFreeze(payload, catalog, trustedReferences);
+                    var freezePath = RepoPath.CreateKnown(freeze.Input.DescriptorSelector);
                     if (!allCaseIds.Add(freeze.CaseId)
-                        || activePathCases.ContainsKey(freeze.NodePath))
+                        || activePathCases.ContainsKey(freezePath))
                     {
                         throw new FormatException(
                             "Freeze reused a historical case ID or an active module path; correction requires Revoke first.");
                     }
 
-                    var material = catalog.ByPath[freeze.NodePath];
+                    var material = catalog.ByPath[freezePath];
                     active.Add(
                         freeze.CaseId,
                         new FrozenActiveEntry(material, freeze, eventHash));
-                    activePathCases.Add(freeze.NodePath, freeze.CaseId);
+                    activePathCases.Add(freezePath, freeze.CaseId);
                     events.Add(new FrozenLedgerEvent.Freeze(sequence, eventHash, previousHash, freeze));
                 }
                 else if (eventType == "Reattest")
@@ -291,12 +292,16 @@ public static partial class FrozenLedger
             throw new FormatException("Reattest targets an inactive or unknown case.");
         }
 
+        var inputFingerprint = currentShape
+            ? prior.Payload.WitnessId.Value
+            : RequiredString(payload, "input_fingerprint");
+        var semanticReceipt = currentShape
+            ? prior.Payload.FrozenNodeId.Value
+            : RequiredString(payload, "semantic_receipt");
         var result = new FrozenReattestPayload(
             caseId,
             ParseInput(payload.GetProperty("input")),
-            currentShape ? prior.Payload.InputFingerprint : RequiredString(payload, "input_fingerprint"),
-            RequiredString(payload, "previous_attestation_event_hash"),
-            currentShape ? prior.Payload.SemanticReceipt : RequiredString(payload, "semantic_receipt"))
+            RequiredString(payload, "previous_attestation_event_hash"))
         {
             AxiomClosure = ParseOptionalAxiomClosure(payload),
         };
@@ -306,8 +311,8 @@ public static partial class FrozenLedger
         }
         if (!active.TryGetValue(result.CaseId, out var entry)
             || result.PreviousAttestationEventHash != entry.LastAttestationEventHash
-            || result.InputFingerprint != entry.Payload.InputFingerprint
-            || result.SemanticReceipt != entry.Payload.SemanticReceipt)
+            || inputFingerprint != entry.Payload.WitnessId.Value
+            || semanticReceipt != entry.Payload.FrozenNodeId.Value)
         {
             throw new FormatException(
                 "Reattest targets an inactive/unknown case or changes semantic identity.");
@@ -342,15 +347,15 @@ public static partial class FrozenLedger
         var currentShape = HasExactObjectFields(
             payload,
             FrozenLedgerReferenceProjection.ExtendedReattestPayloadFieldsV4);
+        var inputFingerprint = currentShape ? witnessText : RequiredString(payload, "input_fingerprint");
+        var semanticReceipt = currentShape ? frozenText : RequiredString(payload, "semantic_receipt");
         var result = new FrozenReattestPayload(
             RequiredString(payload, "case_id"),
             ParseDeclarationStatementIds(payload),
             ParseFrozenNodeId(frozenText, "Reattest node"),
             ParseInput(payload.GetProperty("input")),
-            currentShape ? witnessText : RequiredString(payload, "input_fingerprint"),
             ParseFrozenNodeIds(payload, "prerequisite_frozen_node_ids"),
             RequiredString(payload, "previous_attestation_event_hash"),
-            currentShape ? frozenText : RequiredString(payload, "semantic_receipt"),
             ParseStatementId(RequiredString(payload, "statement_id"), "Reattest statement"),
             ParseWitnessId(witnessText, "Reattest witness"))
         {
@@ -376,8 +381,8 @@ public static partial class FrozenLedger
                 "Reattest targets an inactive/unknown case or changes statement identity.");
         }
 
-        if (result.InputFingerprint != witnessId.Value
-            || result.SemanticReceipt != frozenNodeId.Value
+        if (inputFingerprint != witnessId.Value
+            || semanticReceipt != frozenNodeId.Value
             || result.Input.DescriptorSelector != entry.Payload.Input.DescriptorSelector
             || result.Input.Materializer != entry.Payload.Input.Materializer
             || !result.Input.SupportingBlobOids.SequenceEqual(entry.Payload.Input.SupportingBlobOids))
@@ -451,11 +456,10 @@ public static partial class FrozenLedger
             payload,
             "Revoke payload",
             "affected_case_ids", "affected_frozen_node_ids", "closure_hash", "evidence",
-            "graph_root", "root_case_ids", "root_frozen_node_ids");
+            "graph_root", "root_case_ids");
         var affectedCases = RequiredStringArray(payload, "affected_case_ids");
         var affectedIds = ParseFrozenNodeIds(payload, "affected_frozen_node_ids");
         var rootCases = RequiredStringArray(payload, "root_case_ids");
-        var rootIds = ParseFrozenNodeIds(payload, "root_frozen_node_ids");
         var evidenceElement = payload.GetProperty("evidence");
         if (evidenceElement.ValueKind != JsonValueKind.Array)
         {
@@ -467,6 +471,11 @@ public static partial class FrozenLedger
         if (!evidenceKeys.SequenceEqual(evidenceKeys.Order(StringComparer.Ordinal), StringComparer.Ordinal))
         {
             throw new FormatException("Revoke evidence must be ordinal-sorted by root and variant.");
+        }
+        var rootIds = evidence.Select(EvidenceRoot).ToImmutableArray();
+        if (rootIds.Distinct().Count() != rootIds.Length)
+        {
+            throw new FormatException("Revoke must carry exactly one evidence item per root.");
         }
 
         var validated = evidence.Select(item =>
@@ -518,8 +527,7 @@ public static partial class FrozenLedger
             closureHash,
             evidence,
             graphRoot,
-            rootCases,
-            rootIds);
+            rootCases);
     }
 
 }

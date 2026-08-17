@@ -178,7 +178,6 @@ public sealed partial class ProductionEnvironmentTests
                 evidence = Array.Empty<object>(),
                 graph_root = "sha256:" + new string('2', 64),
                 root_case_ids = Array.Empty<string>(),
-                root_frozen_node_ids = Array.Empty<string>(),
             }));
         var path = FrozenLedgerChangeClassifier.AcceptedPath(encoded.Hash);
         fixture.Files[path] = System.Text.Encoding.UTF8.GetString(encoded.Bytes.AsSpan());

@@ -457,7 +457,10 @@ public sealed partial class ProductionEnvironmentTests
     }
 
     private static RawRepositorySnapshot Snapshot(IReadOnlyDictionary<string, string> files) =>
-        RawRepositorySnapshot.Create(files.Select(pair => RawRepositoryEntry.FromText(pair.Key, pair.Value)));
+        RawRepositorySnapshot.Create(files.Select(pair => new RawRepositoryEntry(
+            pair.Key,
+            ImmutableArray.CreateRange(Encoding.UTF8.GetBytes(pair.Value)),
+            FrozenLedgerTestData.GitBlobOid(pair.Value))));
 
     private static RepositorySnapshot Decode(RawRepositorySnapshot raw) =>
         Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(raw)).Snapshot;

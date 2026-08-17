@@ -31,8 +31,7 @@ public static partial class FrozenLedgerGenerator
         previous = genesis.Hash;
         var freezes = catalog.ClosedNodes
             .Select(node => FrozenLedgerCanonicalWriter.FreezePayload(catalog.Environment, node))
-            .OrderBy(static payload => payload.CaseClass, StringComparer.Ordinal)
-            .ThenBy(static payload => payload.CaseId, StringComparer.Ordinal)
+            .OrderBy(static payload => payload.CaseId, StringComparer.Ordinal)
             .ToArray();
         for (var index = 0; index < freezes.Length; index++)
         {
@@ -88,8 +87,7 @@ public static partial class FrozenLedgerGenerator
         var payloads = candidateCatalog.ClosedNodes
             .Where(node => !activeByPath.ContainsKey(node.RepoPath))
             .Select(node => FrozenLedgerCanonicalWriter.FreezePayload(candidateCatalog.Environment, node))
-            .OrderBy(static payload => payload.CaseClass, StringComparer.Ordinal)
-            .ThenBy(static payload => payload.CaseId, StringComparer.Ordinal)
+            .OrderBy(static payload => payload.CaseId, StringComparer.Ordinal)
             .Select(static payload => (Type: "Freeze", Payload: FrozenLedgerCanonicalWriter.FreezeElement(payload)))
             .ToImmutableArray();
         return payloads;
@@ -111,9 +109,7 @@ public static partial class FrozenLedgerGenerator
         var payload = new FrozenReattestPayload(
             caseId,
             input,
-            entry.Payload.InputFingerprint,
-            entry.LastAttestationEventHash,
-            entry.Payload.SemanticReceipt)
+            entry.LastAttestationEventHash)
         {
             AxiomClosure = entry.Payload.AxiomClosure,
         };
@@ -216,9 +212,7 @@ public static partial class FrozenLedgerGenerator
                 ? new FrozenReattestPayload(
                     entry.Payload.CaseId,
                     input,
-                    candidate.WitnessId.Value,
-                    entry.LastAttestationEventHash,
-                    candidate.FrozenNodeId.Value)
+                    entry.LastAttestationEventHash)
                 {
                     AxiomClosure = candidate.AxiomClosure,
                 }
@@ -239,10 +233,8 @@ public static partial class FrozenLedgerGenerator
             material.DeclarationStatementIds,
             material.FrozenNodeId,
             input,
-            material.WitnessId.Value,
             material.PrerequisiteFrozenNodeIds,
             entry.LastAttestationEventHash,
-            material.FrozenNodeId.Value,
             material.StatementId,
             material.WitnessId)
         {
@@ -275,8 +267,7 @@ public static partial class FrozenLedgerGenerator
                 .ThenBy(static item => item.GetType().Name, StringComparer.Ordinal)
                 .ToImmutableArray(),
             plan.GraphRoot,
-            rootCases,
-            plan.RootFrozenNodeIds);
+            rootCases);
         return Append(
             baseline,
             ImmutableArray.Create(("Revoke", FrozenLedgerCanonicalWriter.RevokeElement(payload))));
@@ -345,14 +336,8 @@ internal static class FrozenLedgerCanonicalWriter
             environment.LakeManifestBlobOid,
         }.Distinct(StringComparer.Ordinal).Order(StringComparer.Ordinal).ToImmutableArray();
         return new FrozenFreezePayload(
-            "active-frozen",
             CaseId(node.FrozenNodeId),
             node.DeclarationStatementIds,
-            "admission",
-            new FrozenExpectedVerdict(
-                ImmutableArray.Create("admit"),
-                "none",
-                ImmutableArray<FrozenExpectedDiagnostic>.Empty),
             node.FrozenNodeId,
             new FrozenLedgerInput(
                 node.Attestation.BaseCommitOid ?? environment.OriginCommitOid,
@@ -361,12 +346,8 @@ internal static class FrozenLedgerCanonicalWriter
                 node.RepoPath.Value,
                 "repository-snapshot-v1",
                 supporting),
-            node.WitnessId.Value,
-            node.RepoPath,
             node.PrerequisiteFrozenNodeIds,
-            node.FrozenNodeId.Value,
             node.StatementId,
-            nameof(TruthState.Closed),
             node.WitnessId)
         {
             AxiomClosure = node.AxiomClosure,
@@ -389,7 +370,6 @@ internal static class FrozenLedgerCanonicalWriter
     {
         var element = JsonSerializer.SerializeToElement(new
         {
-            case_class = payload.CaseClass,
             case_id = payload.CaseId,
             declaration_statement_ids = payload.DeclarationStatementIds.Select(static declaration => new
             {
@@ -397,20 +377,12 @@ internal static class FrozenLedgerCanonicalWriter
                 kind = declaration.Kind,
                 statement_id = declaration.StatementId.Value,
             }),
-            evaluation = payload.Evaluation,
-            expected = ExpectedElement(payload.Expected),
             frozen_node_id = payload.FrozenNodeId.Value,
             input = InputElement(payload.Input),
-            input_fingerprint = payload.InputFingerprint,
-            node_path = payload.NodePath.Value,
             prerequisite_frozen_node_ids = payload.PrerequisiteFrozenNodeIds.Select(static id => id.Value),
-            semantic_receipt = payload.SemanticReceipt,
             statement_id = payload.StatementId.Value,
-            truth_state = payload.TruthState,
             witness_id = payload.WitnessId.Value,
         });
-        element = WithoutFields(element, "input_fingerprint", "node_path", "semantic_receipt");
-        element = WithoutFields(element, "case_class", "evaluation", "expected", "truth_state");
         return WithAxiomClosure(element, payload.AxiomClosure);
     }
 
@@ -446,11 +418,8 @@ internal static class FrozenLedgerCanonicalWriter
             {
                 case_id = payload.CaseId,
                 input = InputElement(payload.Input),
-                input_fingerprint = payload.InputFingerprint,
                 previous_attestation_event_hash = payload.PreviousAttestationEventHash,
-                semantic_receipt = payload.SemanticReceipt,
             });
-            element = WithoutFields(element, "input_fingerprint", "semantic_receipt");
             return WithAxiomClosure(element, payload.AxiomClosure);
         }
 
@@ -477,26 +446,12 @@ internal static class FrozenLedgerCanonicalWriter
             }),
             frozen_node_id = frozenNodeId.Value,
             input = InputElement(payload.Input),
-            input_fingerprint = payload.InputFingerprint,
             prerequisite_frozen_node_ids = payload.PrerequisiteFrozenNodeIds.Select(static id => id.Value),
             previous_attestation_event_hash = payload.PreviousAttestationEventHash,
-            semantic_receipt = payload.SemanticReceipt,
             statement_id = statementId.Value,
             witness_id = witnessId.Value,
         });
-        extended = WithoutFields(extended, "input_fingerprint", "semantic_receipt");
         return WithAxiomClosure(extended, payload.AxiomClosure);
-    }
-
-    private static JsonElement WithoutFields(JsonElement value, params string[] fields)
-    {
-        var result = JsonNode.Parse(value.GetRawText())!.AsObject();
-        foreach (var field in fields)
-        {
-            result.Remove(field);
-        }
-
-        return JsonSerializer.SerializeToElement(result);
     }
 
     private static JsonElement WithAxiomClosure(
@@ -522,7 +477,6 @@ internal static class FrozenLedgerCanonicalWriter
             evidence = payload.Evidence.Select(EvidenceElement),
             graph_root = payload.GraphRoot,
             root_case_ids = payload.RootCaseIds,
-            root_frozen_node_ids = payload.RootFrozenNodeIds.Select(static id => id.Value),
         });
 
     internal static JsonElement SupersedeElement(FrozenSupersedePayload payload)
@@ -600,7 +554,6 @@ internal static class FrozenLedgerCanonicalWriter
         {
             actual_sha256 = item.ActualSha256,
             evidence_type = nameof(RevocationEvidence.ContentAddressMismatch),
-            expected_sha256 = item.ExpectedSha256,
             receipt_blob_oid = item.ReceiptBlobOid,
             receipt_sha256 = item.ReceiptSha256,
             root_frozen_node_id = item.RootFrozenNodeId.Value,

@@ -115,7 +115,7 @@ internal static class DagLedgerReattestWriter
                 + string.Concat(appended.Select(item =>
                     $"REATTESTED {context.Baseline.ActiveEntries[item.Payload.CaseId].Material.RepoPath.Value}\n"))
                 + string.Concat(appendedFreezes.Select(static item =>
-                    $"FROZEN {item.Payload.NodePath.Value}\n"));
+                    $"FROZEN {item.Payload.Input.DescriptorSelector}\n"));
             return new CommandResult(true, output, string.Empty);
         }
         // Preparation marks report and repository faults now. Without these two the wrapped

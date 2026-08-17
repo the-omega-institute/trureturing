@@ -70,7 +70,7 @@ public sealed class LedgerAppendCommandTests
             accepted.Capability.Events
                 .OfType<FrozenLedgerEvent.Freeze>()
                 .Skip(1)
-                .Select(static item => item.Payload.NodePath.Value)
+                .Select(static item => item.Payload.Input.DescriptorSelector)
                 .Order(StringComparer.Ordinal));
     }
 
