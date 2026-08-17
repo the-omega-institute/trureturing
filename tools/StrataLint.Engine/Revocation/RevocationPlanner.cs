@@ -104,7 +104,6 @@ public static class RevocationEvidenceValidator
                     : message);
             }
 
-            TrustedRevocationReceiptStore.ValidateClaim(ledger, evidence);
             return new RevocationEvidenceValidationOutcome.Accepted(
                 ValidatedRevocationEvidence.Create(
                     evidence,

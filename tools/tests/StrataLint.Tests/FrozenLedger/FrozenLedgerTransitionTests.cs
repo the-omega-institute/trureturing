@@ -59,13 +59,7 @@ public sealed partial class FrozenLedgerTests
         var frozen = FrozenNodeId.Create(Sha256("frozen"));
         var payload = new FrozenFreezePayload(
             "active-frozen",
-            "active-frozen/" + frozen.Value[7..],
             ImmutableArray<FrozenDeclarationStatement>.Empty,
-            "admission",
-            new FrozenExpectedVerdict(
-                ImmutableArray.Create("admit"),
-                "none",
-                ImmutableArray<FrozenExpectedDiagnostic>.Empty),
             frozen,
             new FrozenLedgerInput(
                 catalog.Environment.OriginCommitOid,
@@ -78,12 +72,8 @@ public sealed partial class FrozenLedgerTests
                     catalog.Environment.LakeManifestBlobOid,
                     catalog.Environment.LeanToolchainBlobOid,
                 }.Order(StringComparer.Ordinal).ToImmutableArray()),
-            witness.Value,
-            path,
             ImmutableArray<FrozenNodeId>.Empty,
-            frozen.Value,
             statement,
-            nameof(TruthState.Closed),
             witness)
         {
             AxiomClosure = ImmutableArray<string>.Empty,
@@ -118,9 +108,7 @@ public sealed partial class FrozenLedgerTests
         var forged = new FrozenReattestPayload(
             freeze.Payload.CaseId,
             freeze.Payload.Input with { DescriptorBlobOid = GitOid('f') },
-            freeze.Payload.InputFingerprint,
-            freeze.EventHash,
-            freeze.Payload.SemanticReceipt)
+            freeze.EventHash)
         {
             AxiomClosure = freeze.Payload.AxiomClosure,
         };

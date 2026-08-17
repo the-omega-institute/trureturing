@@ -5,7 +5,10 @@ using Dunet;
 
 namespace StrataLint.Engine;
 
-public sealed record RawRepositoryEntry(string Path, ImmutableArray<byte> Bytes)
+public sealed record RawRepositoryEntry(
+    string Path,
+    ImmutableArray<byte> Bytes,
+    string? GitBlobOid = null)
 {
     public static RawRepositoryEntry FromText(string path, string text) =>
         new(path, ImmutableArray.CreateRange(new UTF8Encoding(false, true).GetBytes(text)));
@@ -30,12 +33,14 @@ public sealed class RepositoryFile
         RepoPath path,
         ImmutableArray<byte> rawBytes,
         string text,
-        bool isOpaque = false)
+        bool isOpaque = false,
+        string? gitBlobOid = null)
     {
         Path = path;
         RawBytes = rawBytes;
         Text = text;
         IsOpaque = isOpaque;
+        GitBlobOid = gitBlobOid;
         HasBom = text.StartsWith('\uFEFF');
         HasCarriageReturn = text.Contains('\r');
         HasTrailingWhitespace = text
@@ -50,6 +55,8 @@ public sealed class RepositoryFile
     public string Text { get; }
 
     public bool IsOpaque { get; }
+
+    public string? GitBlobOid { get; }
 
     public bool HasBom { get; }
 
@@ -126,7 +133,18 @@ public static class SnapshotDecoder
                     }
                 }
 
-                builder.Add(path, new RepositoryFile(path, entry.Bytes, text, isOpaque));
+                if (entry.GitBlobOid is not null && !FrozenHashSyntax.IsGitOid(entry.GitBlobOid))
+                {
+                    throw new FormatException(
+                        $"Repository file has an invalid trusted Git blob identity: {path.Value}.");
+                }
+
+                builder.Add(path, new RepositoryFile(
+                    path,
+                    entry.Bytes,
+                    text,
+                    isOpaque,
+                    entry.GitBlobOid));
             }
 
             return new SnapshotDecodeOutcome.Decoded(RepositorySnapshot.Create(builder.ToImmutable()));
