@@ -77,7 +77,7 @@ internal static class BackfillInventoryWriter
         Line(builder, $"atomizer = {TomlScalar(source.Atomizer)}");
         Line(
             builder,
-            $"genre_registry_check = {TomlScalar(RenderGenreRegistryCheck(genreRegistryCheck.Kind))}");
+            $"genre_registry_check = {TomlScalar(GenreRegistryCheckNames.Render(genreRegistryCheck.Kind))}");
         Line(
             builder,
             "unregistered_genres = ["
@@ -113,13 +113,6 @@ internal static class BackfillInventoryWriter
                 "no-registry requires empty unregistered genres");
         }
     }
-
-    private static string RenderGenreRegistryCheck(GenreRegistryCheckKind kind) => kind switch
-    {
-        GenreRegistryCheckKind.Collected => "collected",
-        GenreRegistryCheckKind.NoRegistry => "no-registry",
-        _ => throw new ArgumentOutOfRangeException(nameof(kind)),
-    };
 
     private static ImmutableArray<byte> Write(
         BackfillInventoryDocument document,

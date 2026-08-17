@@ -55,6 +55,37 @@ internal static class UnregisteredGenreLocator
 
     internal static string ForNumbered(string token, string number) =>
         ForToken(token) + "/" + number;
+
+    internal static bool TryGetToken(string astPath, out string token)
+    {
+        token = string.Empty;
+        if (!astPath.StartsWith(Prefix, StringComparison.Ordinal))
+        {
+            return false;
+        }
+
+        var suffix = astPath[Prefix.Length..];
+        var separator = suffix.IndexOf('/', StringComparison.Ordinal);
+        var encoded = separator < 0 ? suffix : suffix[..separator];
+        if (encoded.Length == 0)
+        {
+            return false;
+        }
+
+        token = Uri.UnescapeDataString(encoded);
+        return token.Length > 0
+            && string.Equals(Uri.EscapeDataString(token), encoded, StringComparison.Ordinal);
+    }
+}
+
+internal static class GenreRegistryCheckNames
+{
+    internal static string Render(GenreRegistryCheckKind kind) => kind switch
+    {
+        GenreRegistryCheckKind.Collected => "collected",
+        GenreRegistryCheckKind.NoRegistry => "no-registry",
+        _ => throw new ArgumentOutOfRangeException(nameof(kind)),
+    };
 }
 
 internal enum GenreRegistryCheckKind

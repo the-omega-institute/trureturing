@@ -184,6 +184,14 @@ internal static class DigestionIngestor
         var residualOpenAdded = 0;
         foreach (var source in migrationDocument.RequireDigestionSources())
         {
+            var resolvedSource = alignment.GenreRegistryChecks.TryGetValue(
+                source.SourceId,
+                out var genreRegistryCheck)
+                    ? source with
+                    {
+                        GenreRegistryProjection = GenreRegistryProjection.Available(genreRegistryCheck),
+                    }
+                    : source;
             if (!AtomizerRegistry.IsRegistered(source.Atomizer))
             {
                 if (source.Atomizer != AtomizerRegistry.NoAtomizerId)
@@ -191,14 +199,14 @@ internal static class DigestionIngestor
                     throw new FormatException($"ingest source {source.SourceId} has unknown atomizer {source.Atomizer}");
                 }
 
-                sources.Add(CaptureBoundarySource(source, snapshot, casObjects));
+                sources.Add(CaptureBoundarySource(resolvedSource, snapshot, casObjects));
                 continue;
             }
 
             if (source.Entries.Length > 0
                 && !source.Entries.Any(static entry => entry.Boundary is null))
             {
-                sources.Add(source);
+                sources.Add(resolvedSource);
                 continue;
             }
 
@@ -325,7 +333,7 @@ internal static class DigestionIngestor
                 }
             }
 
-            sources.Add(source with
+            sources.Add(resolvedSource with
             {
                 AcknowledgedStale = acknowledgments,
                 Entries = entries.ToImmutable(),
