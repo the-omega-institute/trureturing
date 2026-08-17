@@ -1,5 +1,4 @@
 using System.Collections.Immutable;
-using System.Globalization;
 using System.Text;
 
 namespace StrataLint.Engine;
@@ -10,7 +9,9 @@ internal static partial class BackfillInventoryLoader
         Dictionary<string, List<string>> Fields,
         GenreRegistryProjection GenreRegistryProjection);
 
-    private static ParsedSourceMetadata ParseCandidateSourceMetadata(string text, string path)
+    private static ParsedSourceMetadata ParseCandidateSourceMetadata(
+        string text,
+        string path)
     {
         var fields = ParseSourceMetadataFields(text, path);
         RequireCandidateSourceMetadataKeys(fields, path);
@@ -19,12 +20,13 @@ internal static partial class BackfillInventoryLoader
         RequireCanonicalSourceMetadata(
             text,
             path,
-            BackfillInventoryWriter.WriteSourceMetadata(
-                Source(fields, GenreRegistryProjection.Available(check))));
+            BackfillInventoryWriter.WriteSourceMetadata(Source(fields, GenreRegistryProjection.Available(check))));
         return new ParsedSourceMetadata(fields, GenreRegistryProjection.Available(check));
     }
 
-    private static ParsedSourceMetadata ParseBaselineSourceMetadata(string text, string path)
+    private static ParsedSourceMetadata ParseBaselineSourceMetadata(
+        string text,
+        string path)
     {
         var fields = ParseSourceMetadataFields(text, path);
         var keys = fields.Keys.ToHashSet(StringComparer.Ordinal);
@@ -137,6 +139,7 @@ internal static partial class BackfillInventoryLoader
             "genre_registry_check",
             "unregistered_genres",
         };
+
         if (fields.ContainsKey("acknowledged_stale"))
         {
             keys.Add("acknowledged_stale");
@@ -285,7 +288,7 @@ internal static partial class BackfillInventoryLoader
                 throw new FormatException("source metadata values must be quoted strings");
             }
 
-            var value = new StringBuilder();
+            var value = new System.Text.StringBuilder();
             var closed = false;
             while (index < end)
             {
@@ -316,7 +319,11 @@ internal static partial class BackfillInventoryLoader
             }
 
             values.Add(value.ToString());
-            if (index == end) break;
+            if (index == end)
+            {
+                break;
+            }
+
             if (index + 1 >= end || encoded[index] != ',' || encoded[index + 1] != ' ')
             {
                 throw new FormatException("source metadata values must be quoted strings");
@@ -332,7 +339,7 @@ internal static partial class BackfillInventoryLoader
         string encoded,
         ref int index,
         int end,
-        StringBuilder value)
+        System.Text.StringBuilder value)
     {
         if (index >= end)
         {
@@ -364,8 +371,8 @@ internal static partial class BackfillInventoryLoader
         if (index + digits > end
             || !int.TryParse(
                 encoded.AsSpan(index, digits),
-                NumberStyles.HexNumber,
-                CultureInfo.InvariantCulture,
+                System.Globalization.NumberStyles.HexNumber,
+                System.Globalization.CultureInfo.InvariantCulture,
                 out var scalar)
             || scalar > 0x10ffff
             || scalar is >= 0xd800 and <= 0xdfff)
@@ -375,5 +382,37 @@ internal static partial class BackfillInventoryLoader
 
         index += digits;
         return char.ConvertFromUtf32(scalar);
+    }
+
+    internal static ImmutableArray<BackfillTicketReference> ParseTickets(string text)
+    {
+        var tickets = ImmutableArray.CreateBuilder<BackfillTicketReference>();
+        foreach (var line in text.Split('\n', StringSplitOptions.RemoveEmptyEntries))
+        {
+            var parts = line.Split(" = ", 2, StringSplitOptions.None);
+            if (parts.Length != 2)
+            {
+                throw new FormatException("invalid digestion ticket index");
+            }
+
+            List<string> values;
+            try
+            {
+                values = ParseTomlValues(parts[1]);
+            }
+            catch (FormatException)
+            {
+                throw new FormatException("invalid digestion ticket index");
+            }
+
+            if (values.Count != 1)
+            {
+                throw new FormatException("invalid digestion ticket index");
+            }
+
+            tickets.Add(new BackfillTicketReference(parts[0], values[0]));
+        }
+
+        return tickets.ToImmutable();
     }
 }

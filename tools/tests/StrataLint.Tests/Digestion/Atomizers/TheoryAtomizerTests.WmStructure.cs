@@ -189,9 +189,8 @@ public sealed partial class TheoryAtomizerTests
     public void WmV1StructuralDriftStillTakesTheCoarsePath()
     {
         var bytes = Encoding.UTF8.GetBytes(
-            CanonicalWmFixture().Replace(WmTitle, "# Unknown WM", StringComparison.Ordinal));
-        var ledger = BackfillInventoryLoader.Load(
-            DigestionTestSupport.EmptyLedger(AtomizerRegistry.WmId));
+            CanonicalWmFixture().Replace(WmTitle, "BEDC-WM", StringComparison.Ordinal));
+        var ledger = DigestionTestSupport.EmptyDocument(AtomizerRegistry.WmId);
 
         var alignment = DigestionLedgerAligner.Evaluate(
             ledger,

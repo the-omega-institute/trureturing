@@ -14,60 +14,6 @@ public sealed class CensusDerivationTests
     }
 
     [Fact]
-    public void SyntheticBackfillReceiptDeterminesCensusDirection()
-    {
-        const string receiptBoundGid = "D5/S0/Test/ReceiptBound";
-        const string receiptFreeGid = "D5/S0/Test/ReceiptFree";
-        var repositoryRoot = Path.Combine(
-            Path.GetTempPath(),
-            "stratalint-census-" + Guid.NewGuid().ToString("N"));
-        TemporaryFileSystem.Directory.CreateDirectory(Path.Combine(repositoryRoot, "Meta"));
-        try
-        {
-            TemporaryFileSystem.File.WriteAllText(
-                Path.Combine(repositoryRoot, BackfillInventoryLoader.RelativePath),
-                $$"""
-                schema_version: 3
-                ledger: theory-digestion-v1
-                sources:
-                  - source_id: synthetic-source
-                    path: docs/synthetic.md
-                    atomizer: synthetic-v1
-                    entries:
-                      - atom_id: synthetic-atom
-                        ast_path: theorem/synthetic
-                        fingerprints:
-                          raw_sha256: sha256:0000000000000000000000000000000000000000000000000000000000000000
-                          normalized_sha256: sha256:0000000000000000000000000000000000000000000000000000000000000000
-                        cas_ref: sha256:0000000000000000000000000000000000000000000000000000000000000000
-                        coverage_gids: []
-                        receipts:
-                          coverage: []
-                          scribe:
-                            - gid: {{receiptBoundGid}}.formalized
-                              definition_sha256: sha256:1111111111111111111111111111111111111111111111111111111111111111
-                              emission_sha256: sha256:2222222222222222222222222222222222222222222222222222222222222222
-                          unresolved_subitems: []
-                          chain_atoms: []
-                          tail_authorization: null
-                        status:
-                          migration: absorbed
-                          truth: closed
-                """);
-            var census = ReceiptFreeDocumentCatalog.Load(
-                repositoryRoot,
-                [Document(receiptBoundGid), Document(receiptFreeGid)]);
-
-            Assert.Equal([receiptBoundGid], census.ReceiptBoundDocumentGids);
-            Assert.Equal([receiptFreeGid], census.ReceiptFreeDocumentGids);
-        }
-        finally
-        {
-            TemporaryFileSystem.Directory.Delete(repositoryRoot, recursive: true);
-        }
-    }
-
-    [Fact]
     public void SyntheticDirectoryLedgerDeterminesCensusDirection()
     {
         const string receiptBoundGid = "D5/S0/Test/ReceiptBound";
@@ -89,7 +35,8 @@ public sealed class CensusDerivationTests
                 atomizer = "synthetic-v1"
                 genre_registry_check = "collected"
                 unregistered_genres = []
-                """ + "\n");
+
+                """.Replace("\r\n", "\n", StringComparison.Ordinal));
             TemporaryFileSystem.File.WriteAllText(
                 Path.Combine(sourceRoot, "absorbed-closed", "synthetic-atom.yaml"),
                 $$"""

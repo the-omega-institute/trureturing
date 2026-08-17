@@ -152,13 +152,15 @@ public sealed class ShowAtomTests
         const string rawText = "## 1. Synthetic section\n\nSynthetic claim.\n";
         var rawBytes = Encoding.UTF8.GetBytes(rawText);
         var fingerprints = DigestionFingerprint.Compute(rawBytes);
-        var ledger = AdapterLedger(sourcePath, fingerprints.RawSha256, fingerprints.NormalizedSha256)
-            .Replace(
-                $"    atomizer: {AdapterAtomizerId}\n",
-                $"    atomizer: {AdapterAtomizerId}\n"
-                    + "    acknowledged_stale:\n"
-                    + $"      - {AdapterAtomId}\n",
-                StringComparison.Ordinal);
+        var adapterLedger = AdapterLedger(
+            sourcePath,
+            fingerprints.RawSha256,
+            fingerprints.NormalizedSha256);
+        var ledger = adapterLedger.WithDigestionSources(
+        [
+            .. adapterLedger.RequireDigestionSources()
+                .Select(source => source with { AcknowledgedStale = [AdapterAtomId] }),
+        ]);
         var files = FixtureFiles(
             ledger,
             sourcePath,
@@ -291,15 +293,14 @@ public sealed class ShowAtomTests
             "## 1. Synthetic section\n\nCurrent synthetic content.\n");
         var oldFingerprints = DigestionFingerprint.Compute(oldBytes);
         var ledger = AdapterLedger(
-                sourcePath,
-                oldFingerprints.RawSha256,
-                oldFingerprints.NormalizedSha256)
-            .Replace(
-                $"    atomizer: {AdapterAtomizerId}\n",
-                $"    atomizer: {AdapterAtomizerId}\n"
-                    + "    acknowledged_stale:\n"
-                    + $"      - {AdapterAtomId}\n",
-                StringComparison.Ordinal);
+            sourcePath,
+            oldFingerprints.RawSha256,
+            oldFingerprints.NormalizedSha256);
+        var ledgerSource = Assert.Single(ledger.RequireDigestionSources());
+        ledger = ledger.WithDigestionSources(
+        [
+            ledgerSource with { AcknowledgedStale = [AdapterAtomId] },
+        ]);
         var files = FixtureFiles(
             ledger,
             sourcePath,
@@ -351,13 +352,13 @@ public sealed class ShowAtomTests
             new FakeLeanReportSource(report: null));
 
     private static RawRepositorySnapshot FixtureFiles(
-        string ledger,
+        BackfillInventoryDocument ledger,
         string sourcePath,
         byte[] sourceBytes,
         string casRef,
-        byte[] casBytes) => RawRepositorySnapshot.Create(
-        [
-            RawRepositoryEntry.FromText(BackfillInventoryLoader.RelativePath, ledger),
+        byte[] casBytes) => SnapshotWithLedger(
+            ledger,
+            [
             RawRepositoryEntry.FromText(
                 TheoryAtomizerDataLoader.DataPath,
                 SyntheticAtomizerData),
@@ -365,15 +366,15 @@ public sealed class ShowAtomTests
             new RawRepositoryEntry(
                 DigestionCasStore.RootPath + casRef["sha256:".Length..],
                 ImmutableArray.CreateRange(casBytes)),
-        ]);
+            ]);
 
     private static RawRepositorySnapshot AdapterGenerationFixtureFiles(
-        string ledger,
+        BackfillInventoryDocument ledger,
         string sourcePath,
         byte[] sourceBytes,
-        params (string Reference, byte[] Bytes)[] casObjects) => RawRepositorySnapshot.Create(
-        [
-            RawRepositoryEntry.FromText(BackfillInventoryLoader.RelativePath, ledger),
+        params (string Reference, byte[] Bytes)[] casObjects) => SnapshotWithLedger(
+            ledger,
+            [
             RawRepositoryEntry.FromText(
                 TheoryAtomizerDataLoader.DataPath,
                 SyntheticAtomizerData),
@@ -381,107 +382,127 @@ public sealed class ShowAtomTests
             .. casObjects.Select(static item => new RawRepositoryEntry(
                 DigestionCasStore.RootPath + item.Reference["sha256:".Length..],
                 ImmutableArray.CreateRange(item.Bytes))),
-        ]);
+            ]);
 
-    private static string BoundaryLedger(
+    private static BackfillInventoryDocument BoundaryLedger(
         string sourcePath,
         int startByte,
         int endByte,
         string rawSha256,
-        string normalizedSha256) => $$"""
-        schema_version: 3
-        ledger: theory-digestion-v1
-        sources:
-          - source_id: boundary-source
-            path: {{sourcePath}}
-            atomizer: {{AtomizerRegistry.NoAtomizerId}}
-            entries:
-              - atom_id: {{BoundaryAtomId}}
-                boundary:
-                  ast_path: sample/01
-                  start_byte: {{startByte}}
-                  end_byte: {{endByte}}
-                fingerprints:
-                  raw_sha256: {{rawSha256}}
-                  normalized_sha256: {{normalizedSha256}}
-                cas_ref: {{rawSha256}}
-                coverage_gids: []
-                receipts:
-                  coverage: []
-                  scribe: []
-                  unresolved_subitems: []
-                status:
-                  migration: partial
-                  truth: open
-        """;
+        string normalizedSha256) => Document(
+            "boundary-source",
+            sourcePath,
+            AtomizerRegistry.NoAtomizerId,
+            [Entry(
+                "boundary-source",
+                sourcePath,
+                AtomizerRegistry.NoAtomizerId,
+                BoundaryAtomId,
+                "sample/01",
+                new DigestionFingerprints(rawSha256, normalizedSha256),
+                new DigestionBoundary("sample/01", startByte, endByte))]);
 
-    private static string AdapterLedger(
+    private static BackfillInventoryDocument AdapterLedger(
         string sourcePath,
         string rawSha256,
-        string normalizedSha256) => $$"""
-        schema_version: 3
-        ledger: theory-digestion-v1
-        sources:
-          - source_id: adapter-source
-            path: {{sourcePath}}
-            atomizer: {{AdapterAtomizerId}}
-            entries:
-              - atom_id: {{AdapterAtomId}}
-                ast_path: {{AdapterAstPath}}
-                fingerprints:
-                  raw_sha256: {{rawSha256}}
-                  normalized_sha256: {{normalizedSha256}}
-                cas_ref: {{rawSha256}}
-                coverage_gids: []
-                receipts:
-                  coverage: []
-                  scribe: []
-                  unresolved_subitems: []
-                status:
-                  migration: partial
-                  truth: open
-        """;
+        string normalizedSha256) => Document(
+            "adapter-source",
+            sourcePath,
+            AdapterAtomizerId,
+            [Entry(
+                "adapter-source",
+                sourcePath,
+                AdapterAtomizerId,
+                AdapterAtomId,
+                AdapterAstPath,
+                new DigestionFingerprints(rawSha256, normalizedSha256))]);
 
-    private static string AdapterGenerationLedger(
+    private static BackfillInventoryDocument AdapterGenerationLedger(
         string sourcePath,
         DigestionFingerprints oldFingerprints,
-        DigestionFingerprints currentFingerprints) => $$"""
-        schema_version: 3
-        ledger: theory-digestion-v1
-        sources:
-          - source_id: adapter-source
-            path: {{sourcePath}}
-            atomizer: {{AdapterAtomizerId}}
-            entries:
-              - atom_id: {{AdapterAtomId}}
-                ast_path: {{AdapterAstPath}}
-                fingerprints:
-                  raw_sha256: {{oldFingerprints.RawSha256}}
-                  normalized_sha256: {{oldFingerprints.NormalizedSha256}}
-                cas_ref: {{oldFingerprints.RawSha256}}
-                coverage_gids: []
-                receipts:
-                  coverage: []
-                  scribe: []
-                  unresolved_subitems: []
-                status:
-                  migration: partial
-                  truth: open
-              - atom_id: adapter-current
-                ast_path: {{AdapterAstPath}}
-                fingerprints:
-                  raw_sha256: {{currentFingerprints.RawSha256}}
-                  normalized_sha256: {{currentFingerprints.NormalizedSha256}}
-                cas_ref: {{currentFingerprints.RawSha256}}
-                coverage_gids: []
-                receipts:
-                  coverage: []
-                  scribe: []
-                  unresolved_subitems: []
-                status:
-                  migration: partial
-                  truth: open
-        """;
+        DigestionFingerprints currentFingerprints) => Document(
+            "adapter-source",
+            sourcePath,
+            AdapterAtomizerId,
+            [
+                Entry(
+                    "adapter-source",
+                    sourcePath,
+                    AdapterAtomizerId,
+                    AdapterAtomId,
+                    AdapterAstPath,
+                    oldFingerprints),
+                Entry(
+                    "adapter-source",
+                    sourcePath,
+                    AdapterAtomizerId,
+                    "adapter-current",
+                    AdapterAstPath,
+                    currentFingerprints),
+            ]);
+
+    private static BackfillInventoryDocument Document(
+        string sourceId,
+        string sourcePath,
+        string atomizer,
+        ImmutableArray<DigestionLedgerEntry> entries) => BackfillInventoryDocument.Create(
+        [
+            new DigestionLedgerSource(
+                sourceId,
+                sourcePath,
+                atomizer,
+                [],
+                GenreRegistryProjection.Available(
+                    atomizer == AtomizerRegistry.NoAtomizerId
+                        ? GenreRegistryCheck.NoGenreRegistry
+                        : GenreRegistryCheck.Collected([])),
+                entries),
+        ],
+        []);
+
+    private static DigestionLedgerEntry Entry(
+        string sourceId,
+        string sourcePath,
+        string atomizer,
+        string atomId,
+        string astPath,
+        DigestionFingerprints fingerprints,
+        DigestionBoundary? boundary = null) => new(
+            sourceId,
+            sourcePath,
+            atomizer,
+            atomId,
+            astPath,
+            boundary,
+            fingerprints,
+            [],
+            new DigestionReceipts([], [], [], [], null),
+            new DigestionStatus(DigestionMigrationState.Partial, DigestionTruthState.Open),
+            fingerprints.RawSha256);
+
+    private static RawRepositorySnapshot SnapshotWithLedger(
+        BackfillInventoryDocument ledger,
+        IEnumerable<RawRepositoryEntry> otherEntries)
+    {
+        var entries = otherEntries.ToList();
+        foreach (var source in ledger.RequireDigestionSources())
+        {
+            entries.Add(new RawRepositoryEntry(
+                $"{BackfillInventoryLoader.RootPath}{source.SourceId}/source.toml",
+                BackfillInventoryWriter.WriteSourceMetadata(source)));
+            foreach (var entry in source.Entries)
+            {
+                var state = DigestionStatusNames.Migration(entry.ProjectedStatus.Migration)
+                    + "-"
+                    + DigestionStatusNames.Truth(entry.ProjectedStatus.Truth);
+                entries.Add(new RawRepositoryEntry(
+                    $"{BackfillInventoryLoader.RootPath}{source.SourceId}/{state}/{entry.AtomId}.yaml",
+                    BackfillInventoryWriter.WriteAtom(entry)));
+            }
+        }
+
+        return RawRepositorySnapshot.Create(entries);
+    }
 
     private static string SyntheticAtomizerData => """
         schema_version = 1

@@ -25,7 +25,7 @@ public sealed class DigestionQuarantineTests
         var quarantine = "quarantine:\n  " + presentField;
 
         var error = Assert.Throws<FormatException>(() =>
-            BackfillInventoryLoader.Load(LegacyLedger(Atom(AtomId, quarantine)))
+            BackfillInventoryLoader.Load(DirectorySnapshot(Atom(AtomId, quarantine)))
                 .RequireDigestionEntries());
 
         Assert.Contains(missingField, error.Message, StringComparison.Ordinal);
@@ -34,7 +34,7 @@ public sealed class DigestionQuarantineTests
     [Fact]
     public void LoaderRoundTripsTypedQuarantineWithoutChangingExistingReceiptSemantics()
     {
-        var document = BackfillInventoryLoader.Load(LegacyLedger(Atom(AtomId, Quarantine)));
+        var document = BackfillInventoryLoader.Load(DirectorySnapshot(Atom(AtomId, Quarantine)));
         var entry = Assert.Single(document.RequireDigestionEntries());
 
         var atomBytes = BackfillInventoryWriter.WriteAtom(entry);
@@ -42,7 +42,7 @@ public sealed class DigestionQuarantineTests
 
         Assert.Contains(Indent(Quarantine, 2), atomText, StringComparison.Ordinal);
         Assert.Equal(
-            entry with { ReceiptSyntax = null },
+            entry,
             Assert.Single(BackfillInventoryLoader.Load(DirectorySnapshot(atomText))
                 .RequireDigestionEntries()));
     }
@@ -56,7 +56,7 @@ public sealed class DigestionQuarantineTests
             StringComparison.Ordinal);
 
         var error = Assert.Throws<FormatException>(() =>
-            BackfillInventoryLoader.Load(LegacyLedger(atom)).RequireDigestionEntries());
+            BackfillInventoryLoader.Load(DirectorySnapshot(atom)).RequireDigestionEntries());
 
         Assert.Contains("machine-form", error.Message, StringComparison.Ordinal);
     }
@@ -76,12 +76,12 @@ public sealed class DigestionQuarantineTests
     }
 
     [Fact]
-    public void LegacySnapshotLoaderRejectsQuarantineWhenFormalizationMarkerExists()
+    public void SnapshotLoaderRejectsLegacyStorageBeforeInspectingFormalizationMarkers()
     {
         var snapshot = DigestionTestSupport.Snapshot(
         [
             (BackfillInventoryLoader.RelativePath,
-                Encoding.UTF8.GetBytes(LegacyLedger(Atom(AtomId, Quarantine)))),
+                Encoding.UTF8.GetBytes("schema_version: 3\n")),
             (DigestionFormalizationReceipt.RootPath + AtomId
                 + DigestionFormalizationReceipt.PathSuffix,
                 FormalizationMarker()),
@@ -89,7 +89,7 @@ public sealed class DigestionQuarantineTests
 
         var error = Assert.Throws<FormatException>(() => BackfillInventoryLoader.Load(snapshot));
 
-        Assert.Contains("machine-form", error.Message, StringComparison.Ordinal);
+        Assert.Contains("legacy digestion ledger is unsupported", error.Message, StringComparison.Ordinal);
     }
 
     [Fact]
@@ -111,9 +111,26 @@ public sealed class DigestionQuarantineTests
     [Fact]
     public void ResidualSummaryListsQuarantinedItemsOutsideMainCounts()
     {
-        var ledger = BackfillInventoryLoader.Load(LegacyLedger(
-            Atom("atom-main", string.Empty, "proof-one", "proof-two"),
-            Atom("atom-quarantined", Quarantine, "semantic-one", "semantic-two")));
+        var ledger = BackfillInventoryDocument.Create(
+        [
+            new DigestionLedgerSource(
+                "fixture-source",
+                "docs/source.md",
+                AtomizerRegistry.NoAtomizerId,
+                [],
+                GenreRegistryProjection.Available(GenreRegistryCheck.NoGenreRegistry),
+                [
+                    TypedAtom("atom-main", null, "proof-one", "proof-two"),
+                    TypedAtom(
+                        "atom-quarantined",
+                        new DigestionQuarantine(
+                            "interpretive statement has no machine predicate",
+                            "typed predicate or frozen witness"),
+                        "semantic-one",
+                        "semantic-two"),
+                ]),
+        ],
+        []);
         var entries = ledger.RequireDigestionEntries()
             .Select(static entry => new DigestionEntryEvaluation(
                 entry,
@@ -166,16 +183,6 @@ public sealed class DigestionQuarantineTests
             """ + "\n";
         Assert.Equal(expected, summary);
     }
-
-    private static string LegacyLedger(params string[] atoms) =>
-        "schema_version: 3\n"
-        + "ledger: theory-digestion-v1\n"
-        + "sources:\n"
-        + "  - source_id: fixture-source\n"
-        + "    path: docs/source.md\n"
-        + "    atomizer: none\n"
-        + "    entries:\n"
-        + string.Concat(atoms.Select(static atom => LedgerEntry(atom) + "\n"));
 
     private static string Atom(
         string atomId,
@@ -244,12 +251,21 @@ public sealed class DigestionQuarantineTests
         }
     }
 
-    private static string LedgerEntry(string atom)
-    {
-        var lines = atom.Split('\n');
-        return "      - " + lines[0]
-            + string.Concat(lines.Skip(1).Select(static line => "\n        " + line));
-    }
+    private static DigestionLedgerEntry TypedAtom(
+        string atomId,
+        DigestionQuarantine? quarantine,
+        params string[] unresolvedSubitems) => new(
+            "fixture-source",
+            "docs/source.md",
+            AtomizerRegistry.NoAtomizerId,
+            atomId,
+            $"fixture/{atomId}",
+            null,
+            new DigestionFingerprints(Digest, Digest),
+            [],
+            new DigestionReceipts([], [], [.. unresolvedSubitems], [], null, quarantine),
+            new DigestionStatus(DigestionMigrationState.Residual, DigestionTruthState.Open),
+            Digest);
 
     private static string ToDirectoryAtom(string atom)
     {

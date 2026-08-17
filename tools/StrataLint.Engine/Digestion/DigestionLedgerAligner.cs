@@ -49,6 +49,7 @@ internal sealed record DigestionIngestFallback(string SourceId, string Reason);
 internal sealed record DigestionLedgerAlignment(
     ImmutableDictionary<string, DigestionReceiptAlignment> EntryAlignments,
     ImmutableDictionary<string, DigestionAtom> MatchedAtoms,
+    ImmutableDictionary<string, GenreRegistryCheck> GenreRegistryChecks,
     ImmutableArray<StructuredResidualAdmission> Residual,
     ImmutableArray<DigestionSourceClausePlan> ClausePlans,
     ImmutableHashSet<string> ClausePlanChainParents,
@@ -124,6 +125,8 @@ internal static partial class DigestionLedgerAligner
         var alignments = ImmutableDictionary.CreateBuilder<string, DigestionReceiptAlignment>(
             StringComparer.Ordinal);
         var matchedAtoms = ImmutableDictionary.CreateBuilder<string, DigestionAtom>(StringComparer.Ordinal);
+        var genreRegistryChecks = ImmutableDictionary.CreateBuilder<string, GenreRegistryCheck>(
+            StringComparer.Ordinal);
         var residual = ImmutableArray.CreateBuilder<StructuredResidualAdmission>();
         var clausePlans = ImmutableArray.CreateBuilder<DigestionSourceClausePlan>();
         var clausePlanChainParents = ImmutableHashSet.CreateBuilder<string>(StringComparer.Ordinal);
@@ -222,6 +225,11 @@ internal static partial class DigestionLedgerAligner
                 }
 
                 var registeredAtomizer = AtomizerRegistry.IsRegistered(source.Atomizer);
+                if (source.Atomizer == AtomizerRegistry.NoAtomizerId)
+                {
+                    genreRegistryChecks[source.SourceId] = GenreRegistryCheck.NoGenreRegistry;
+                }
+
                 var hasClausePlanChains = registeredAtomizer
                     && AtomizerRegistry.EmitsClausePlans(source.Atomizer)
                     && source.Entries.Any(static entry => entry.Receipts.ChainAtoms.Length > 0);
@@ -360,15 +368,7 @@ internal static partial class DigestionLedgerAligner
                     return;
                 }
 
-                // Ingest must refuse the addressed token instead of degrading the whole volume
-                // to a coarse atom. Admission has a separate probe so reconciliation outcomes
-                // remain unchanged.
-                if (mode != DigestionAlignmentMode.Admission
-                    && !atomized.UnregisteredGenres.IsEmpty)
-                {
-                    findings.Add(UnregisteredGenreFinding(source, atomized.UnregisteredGenres));
-                    return;
-                }
+                genreRegistryChecks[source.SourceId] = atomized.GenreRegistryCheck;
 
                 if (atomized.Claims.Length == 0)
                 {
@@ -586,6 +586,7 @@ internal static partial class DigestionLedgerAligner
         return new DigestionLedgerAlignment(
             alignments.ToImmutable(),
             matchedAtoms.ToImmutable(),
+            genreRegistryChecks.ToImmutable(),
             residual.ToImmutable(),
             clausePlans.ToImmutable(),
             clausePlanChainParents.ToImmutable(),

@@ -332,8 +332,4 @@ internal static class BackfillInventoryRule
         }
     }
 
-    // Contract the compatibility branch when this protected-baseline condition becomes true:
-    // !snapshot.TryGetFile(RelativePath, out _)
-    // && snapshot.Files.Keys.Any(path => IsCanonicalPath(path.Value)). Then remove the legacy
-    // Load(string), RelativePath, dispatch branch, and legacy tests together.
 }

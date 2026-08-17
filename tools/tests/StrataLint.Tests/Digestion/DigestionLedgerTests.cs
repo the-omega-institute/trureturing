@@ -13,13 +13,10 @@ public sealed partial class DigestionLedgerTests
         var source = Encoding.UTF8.GetBytes("# GICT\n\n**定理 1.1(Test)**。claim。\n");
         var atom = Assert.Single(GictAtomizer.Atomize(source, DigestionTestSupport.Rules).Claims);
         var captured = DigestionCasStore.Capture(atom.RawBytes.AsSpan());
-        var yaml = LedgerYaml(
+        var document = Ledger(
             atom,
-            migration: "partial",
-            truth: "open",
-            coverageReceipts: "[]",
-            scribeReceipts: "[]");
-        var document = BackfillInventoryLoader.Load(yaml);
+            DigestionMigrationState.Partial,
+            DigestionTruthState.Open);
         var snapshot = Snapshot((captured.RelativePath, captured.Bytes.ToArray()));
 
         var status = Assert.Single(DigestionStatusEvaluator.Evaluate(
@@ -45,17 +42,11 @@ public sealed partial class DigestionLedgerTests
             DigestionFingerprint.Compute(source),
             ImmutableArray<DigestionContext>.Empty);
         var captured = DigestionCasStore.Capture(source);
-        var yaml = LedgerYaml(
-                atom,
-                migration: "partial",
-                truth: "open",
-                coverageReceipts: "[]",
-                scribeReceipts: "[]")
-            .Replace(
-                $"atomizer: {AtomizerRegistry.GictId}",
-                $"atomizer: {AtomizerRegistry.NoAtomizerId}",
-                StringComparison.Ordinal);
-        var document = BackfillInventoryLoader.Load(yaml);
+        var document = Ledger(
+            atom,
+            DigestionMigrationState.Partial,
+            DigestionTruthState.Open,
+            atomizer: AtomizerRegistry.NoAtomizerId);
         var snapshot = Snapshot((captured.RelativePath, captured.Bytes.ToArray()));
 
         var status = Assert.Single(DigestionStatusEvaluator.Evaluate(
@@ -79,24 +70,18 @@ public sealed partial class DigestionLedgerTests
             ImmutableArray.CreateRange(sourceBytes),
             DigestionFingerprint.Compute(sourceBytes),
             ImmutableArray<DigestionContext>.Empty);
-        var ledgerText = LedgerYaml(
-                atom,
-                migration: "partial",
-                truth: "open",
-                coverageReceipts: "[]",
-                scribeReceipts: "[]")
-            .Replace(
-                $"atomizer: {AtomizerRegistry.GictId}",
-                $"atomizer: {AtomizerRegistry.NoAtomizerId}",
-                StringComparison.Ordinal);
-        var ledger = BackfillInventoryLoader.Load(ledgerText);
+        var ledger = Ledger(
+            atom,
+            DigestionMigrationState.Partial,
+            DigestionTruthState.Open,
+            atomizer: AtomizerRegistry.NoAtomizerId);
 
         var first = DigestionIngestor.Plan(
             ledger,
             Snapshot(("docs/source.md", sourceBytes), CasFile(atom)),
             ledger);
-        var firstBytes = BackfillInventoryWriter.WriteForIngest(first.Document);
-        var migrated = BackfillInventoryLoader.Load(Encoding.UTF8.GetString(firstBytes.AsSpan()));
+        var firstBytes = DirectoryLedgerTestSupport.Image(first.Document);
+        var migrated = first.Document;
 
         var migratedEntry = Assert.Single(migrated.RequireDigestionEntries());
         Assert.NotNull(migratedEntry.Boundary);
@@ -109,10 +94,10 @@ public sealed partial class DigestionLedgerTests
                 ("docs/source.md", sourceBytes),
                 CasFile(atom)),
             ledger);
-        var secondBytes = BackfillInventoryWriter.WriteForIngest(second.Document);
+        var secondBytes = DirectoryLedgerTestSupport.Image(second.Document);
 
         Assert.Empty(second.CasObjects);
-        Assert.Equal(firstBytes.ToArray(), secondBytes.ToArray());
+        Assert.Equal(firstBytes, secondBytes);
     }
 
     [Fact]
@@ -122,14 +107,14 @@ public sealed partial class DigestionLedgerTests
         var sourceBytes = Encoding.UTF8.GetBytes(
             "# Synthetic\n\n**定理 1.1(A)**。first。\n\n**定理 1.2(B)**。second。\n");
         var atoms = AtomizerRegistry.Atomize(atomizerId, sourceBytes, DigestionTestSupport.Rules).Claims;
-        var ledger = BackfillInventoryLoader.Load(EmptyLedger(atomizerId));
+        var ledger = EmptyDocument(atomizerId);
 
         var first = DigestionIngestor.Plan(
             ledger,
             Snapshot(("docs/source.md", sourceBytes)),
             ledger);
-        var firstBytes = BackfillInventoryWriter.WriteForIngest(first.Document);
-        var migrated = BackfillInventoryLoader.Load(Encoding.UTF8.GetString(firstBytes.AsSpan()));
+        var firstBytes = DirectoryLedgerTestSupport.Image(first.Document);
+        var migrated = first.Document;
         var entries = Assert.Single(first.Document.RequireDigestionSources()).Entries;
 
         Assert.Equal(atoms.Length, first.ResidualOpenAdded);
@@ -154,11 +139,11 @@ public sealed partial class DigestionLedgerTests
             migrated,
             Snapshot(sourceBytes, first.CasObjects),
             ledger);
-        var secondBytes = BackfillInventoryWriter.WriteForIngest(second.Document);
+        var secondBytes = DirectoryLedgerTestSupport.Image(second.Document);
 
         Assert.Equal(0, second.ResidualOpenAdded);
         Assert.Empty(second.CasObjects);
-        Assert.Equal(firstBytes.ToArray(), secondBytes.ToArray());
+        Assert.Equal(firstBytes, secondBytes);
     }
 
     [Fact]
@@ -169,8 +154,8 @@ public sealed partial class DigestionLedgerTests
         var atom = Assert.Single(GictAtomizer.Atomize(
             sourceBytes,
             DigestionTestSupport.Rules).Claims);
-        var document = BackfillInventoryLoader.Load(StructuralLedgerYaml(atom));
-        var expected = BackfillInventoryWriter.WriteForIngest(document);
+        var document = StructuralLedger(atom);
+        var expected = DirectoryLedgerTestSupport.Image(document);
 
         var replay = DigestionIngestor.Plan(
             document,
@@ -179,7 +164,7 @@ public sealed partial class DigestionLedgerTests
 
         Assert.Equal(0, replay.ResidualOpenAdded);
         Assert.Empty(replay.CasObjects);
-        Assert.Equal(expected.ToArray(), BackfillInventoryWriter.WriteForIngest(replay.Document).ToArray());
+        Assert.Equal(expected, DirectoryLedgerTestSupport.Image(replay.Document));
     }
 
     [Fact]
@@ -190,10 +175,16 @@ public sealed partial class DigestionLedgerTests
         var atom = Assert.Single(GictAtomizer.Atomize(
             sourceBytes,
             DigestionTestSupport.Rules).Claims);
-        var document = BackfillInventoryLoader.Load(StructuralLedgerYaml(atom).Replace(
-            "          chain_atoms: []",
-            "          chain_atoms:\n            - missing-child",
-            StringComparison.Ordinal));
+        var document = StructuralLedger(atom);
+        var source = Assert.Single(document.RequireDigestionSources());
+        var entry = Assert.Single(source.Entries);
+        document = document.WithDigestionSources(
+        [
+            source with
+            {
+                Entries = [entry with { Receipts = entry.Receipts with { ChainAtoms = ["missing-child"] } }],
+            },
+        ]);
 
         var status = Assert.Single(DigestionStatusEvaluator.Evaluate(
             document,
@@ -224,27 +215,17 @@ public sealed partial class DigestionLedgerTests
         var emission = Encoding.UTF8.GetBytes("# emitted narrative\n");
         var definitionHash = DigestionFingerprint.Compute(definition).RawSha256;
         var emissionHash = DigestionFingerprint.Compute(emission).RawSha256;
-        var coverage = $$"""
-            - gid: {{gid}}
-              source_sha256: {{atom.Fingerprints.RawSha256}}
-              target_sha256: {{DigestionFingerprint.Compute(target).RawSha256}}
-            """;
-        var scribe = $$"""
-            - gid: {{gid}}
-              definition_sha256: {{definitionHash}}
-              emission_sha256: {{emissionHash}}
-            """;
-        var template = BackfillInventoryLoader.Load(LedgerYaml(
-                atom,
-                migration: "absorbed",
-                truth: "closed",
-                coverageReceipts: coverage,
-                scribeReceipts: scribe,
-                coverageGid: gid)
-            .Replace(
-                $"atomizer: {AtomizerRegistry.GictId}",
-                $"atomizer: {AtomizerRegistry.NoAtomizerId}",
-                StringComparison.Ordinal));
+        var template = Ledger(
+            atom,
+            DigestionMigrationState.Absorbed,
+            DigestionTruthState.Closed,
+            gid,
+            new DigestionCoverageReceipt(
+                gid,
+                atom.Fingerprints.RawSha256,
+                DigestionFingerprint.Compute(target).RawSha256),
+            new DigestionScribeReceipt(gid, definitionHash, emissionHash),
+            atomizer: AtomizerRegistry.NoAtomizerId);
         var source = Assert.Single(template.RequireDigestionSources());
         var entry = Assert.Single(source.Entries);
         var chained = template.WithDigestionSources(
@@ -257,15 +238,13 @@ public sealed partial class DigestionLedgerTests
                     {
                         AtomId = "chain-parent",
                         Receipts = entry.Receipts with { ChainAtoms = ["chain-middle"] },
-                        ReceiptSyntax = null,
                     },
                     entry with
                     {
                         AtomId = "chain-middle",
                         Receipts = entry.Receipts with { ChainAtoms = ["chain-leaf"] },
-                        ReceiptSyntax = null,
                     },
-                    entry with { AtomId = "chain-leaf", ReceiptSyntax = null },
+                    entry with { AtomId = "chain-leaf" },
                 ],
             },
         ]);
@@ -307,18 +286,18 @@ public sealed partial class DigestionLedgerTests
         const string sourcePath = "docs/develop/theory/non-utf8.bin";
         var atomizerId = SyntheticNumberedAtomizer.Id;
         var sourceBytes = new byte[] { 0xff, 0x00, 0xfe };
-        var ledger = BackfillInventoryLoader.Load(
-            EmptyLedger(atomizerId).Replace(
-                "path: docs/source.md",
-                $"path: {sourcePath}",
-                StringComparison.Ordinal));
+        var ledger = Document(
+            atomizerId,
+            [],
+            sourcePath: sourcePath,
+            genreRegistryCheck: GenreRegistryCheck.Collected([]));
 
         var first = DigestionIngestor.Plan(
             ledger,
             Snapshot((sourcePath, sourceBytes)),
             ledger);
-        var firstBytes = BackfillInventoryWriter.WriteForIngest(first.Document);
-        var migrated = BackfillInventoryLoader.Load(Encoding.UTF8.GetString(firstBytes.AsSpan()));
+        var firstBytes = DirectoryLedgerTestSupport.Image(first.Document);
+        var migrated = first.Document;
 
         var fallback = Assert.Single(first.Fallbacks);
         Assert.Equal("source", fallback.SourceId);
@@ -339,52 +318,11 @@ public sealed partial class DigestionLedgerTests
                 .Prepend((sourcePath, sourceBytes))
                 .ToArray()),
             ledger);
-        var secondBytes = BackfillInventoryWriter.WriteForIngest(second.Document);
+        var secondBytes = DirectoryLedgerTestSupport.Image(second.Document);
 
         Assert.Equal(0, second.ResidualOpenAdded);
         Assert.Empty(second.CasObjects);
-        Assert.Equal(firstBytes.ToArray(), secondBytes.ToArray());
-    }
-
-    [Fact]
-    public void LoaderReadsOnlySchemaThreeAtomicEntries()
-    {
-        var source = Encoding.UTF8.GetBytes("# GICT\n\n**定理 1.1(Test)**。claim。\n");
-        var atom = Assert.Single(GictAtomizer.Atomize(source, DigestionTestSupport.Rules).Claims);
-        var yaml = LedgerYaml(
-            atom,
-            migration: "partial",
-            truth: "open",
-            coverageReceipts: "[]",
-            scribeReceipts: "[]");
-
-        var document = BackfillInventoryLoader.Load(yaml);
-        var entry = Assert.Single(document.RequireDigestionEntries());
-
-        Assert.Equal(3, document.Root["schema_version"]);
-        Assert.Equal("gict-1.1", entry.AtomId);
-        Assert.Equal("theorem/1.1", entry.AstPath);
-        Assert.NotNull(entry.Boundary);
-        Assert.Equal(["D5/X_Frontier/Probe"], document.RequireReferencedGids().ToArray());
-    }
-
-    [Fact]
-    public void LegacyAnchorDispositionSchemaHasNoCompatibilityReader()
-    {
-        const string legacy = """
-            schema_version: 2
-            inventory: m0-protected-v1
-            sources:
-              - id: GICT-v3.6
-                path: docs/source.md
-                entries:
-                  - anchor: old
-                    disposition: D5/X_Frontier/Probe
-            """;
-
-        var error = Assert.Throws<FormatException>(() => BackfillInventoryLoader.Load(legacy));
-
-        Assert.Contains("schema_version 3", error.Message, StringComparison.Ordinal);
+        Assert.Equal(firstBytes, secondBytes);
     }
 
     [Fact]
@@ -397,15 +335,13 @@ public sealed partial class DigestionLedgerTests
             CasFile(atom),
             ("D5/X_Frontier/Probe.lean", Encoding.UTF8.GetBytes(Lean("D5/X_Frontier/Probe"))));
         var lean = AcceptedLean("D5/X_Frontier/Probe.lean");
-        var yaml = LedgerYaml(
+        var ledger = Ledger(
             atom,
-            migration: "absorbed",
-            truth: "closed",
-            coverageReceipts: "[]",
-            scribeReceipts: "[]");
+            DigestionMigrationState.Absorbed,
+            DigestionTruthState.Closed);
 
         var evaluation = DigestionStatusEvaluator.Evaluate(
-            BackfillInventoryLoader.Load(yaml),
+            ledger,
             snapshot,
             lean);
         var status = Assert.Single(evaluation.Entries);
@@ -423,19 +359,14 @@ public sealed partial class DigestionLedgerTests
     {
         var source = Encoding.UTF8.GetBytes("# GICT\n\n**定理 1.1(Test)**。claim。\n");
         var atom = Assert.Single(GictAtomizer.Atomize(source, DigestionTestSupport.Rules).Claims);
-        var yaml = LedgerYaml(
-                atom,
-                migration: "residual",
-                truth: "open",
-                coverageReceipts: "[]",
-                scribeReceipts: "[]")
-            .Replace(
-                "        coverage_gids:\n          - D5/X_Frontier/Probe",
-                "        coverage_gids: []",
-                StringComparison.Ordinal);
+        var ledger = Ledger(
+            atom,
+            DigestionMigrationState.Residual,
+            DigestionTruthState.Open,
+            includeCoverageGid: false);
 
         var status = Assert.Single(DigestionStatusEvaluator.Evaluate(
-            BackfillInventoryLoader.Load(yaml),
+            ledger,
             Snapshot(("docs/source.md", source), CasFile(atom)),
             AcceptedLean(Array.Empty<string>())).Entries);
 
@@ -445,12 +376,71 @@ public sealed partial class DigestionLedgerTests
     }
 
     [Fact]
+    public void UnregisteredGenreDebtDoesNotChangeClosedTruthButPreventsDeletion()
+    {
+        const string token = "**新判词。**";
+        const string gid = "D5/S0/Carrier/Probe";
+        const string targetPath = "D5/S0/Carrier/Probe.lean";
+        var source = Encoding.UTF8.GetBytes($"# Observer\n\n{token} claim。\n");
+        var atom = Assert.Single(ObserverAtomizer.Atomize(source, DigestionTestSupport.Rules).Claims);
+        var target = Encoding.UTF8.GetBytes(Lean(gid));
+        var definition = Encoding.UTF8.GetBytes("scribe definition\n");
+        var emission = Encoding.UTF8.GetBytes("# emitted narrative\n");
+        var definitionHash = DigestionFingerprint.Compute(definition).RawSha256;
+        var emissionHash = DigestionFingerprint.Compute(emission).RawSha256;
+        var record = new ScribeEmissionRecord(
+            gid,
+            ScribeEmissionAttestation.DefinitionPath(gid),
+            definitionHash,
+            ScribeEmissionAttestation.EmissionPath(gid),
+            emissionHash);
+        var loaded = Ledger(
+            atom,
+            DigestionMigrationState.Absorbed,
+            DigestionTruthState.Closed,
+            gid,
+            new DigestionCoverageReceipt(
+                gid,
+                atom.Fingerprints.RawSha256,
+                DigestionFingerprint.Compute(target).RawSha256),
+            new DigestionScribeReceipt(gid, definitionHash, emissionHash),
+            atomizer: AtomizerRegistry.ObserverId);
+        var document = loaded.WithDigestionSources(
+        [
+            Assert.Single(loaded.RequireDigestionSources()) with
+            {
+                GenreRegistryProjection = GenreRegistryProjection.Available(
+                    GenreRegistryCheck.Collected([token])),
+            },
+        ]);
+        var snapshot = Snapshot(
+            ("docs/source.md", source),
+            CasFile(atom),
+            (targetPath, target),
+            (record.DefinitionPath, definition),
+            (record.EmissionPath, emission));
+
+        var status = Assert.Single(DigestionStatusEvaluator.Evaluate(
+            document,
+            snapshot,
+            AcceptedLean(targetPath),
+            VerifiedScribeEmissions.Create([record]),
+            baselineDocument: document).Entries);
+
+        Assert.Equal(DigestionMigrationState.Absorbed, status.DerivedStatus.Migration);
+        Assert.Equal(DigestionTruthState.Closed, status.DerivedStatus.Truth);
+        var gap = Assert.Single(status.Gaps);
+        Assert.Equal("unregistered-genre", gap.Code);
+        Assert.Equal(token, gap.Detail);
+        Assert.False(status.Deletable);
+    }
+
+    [Fact]
     public void StructuralRawSeenReplacesTheBoundaryPrerequisite()
     {
         var source = Encoding.UTF8.GetBytes("# GICT\n\n**定理 1.1(Test)**。claim。\n");
         var atom = Assert.Single(GictAtomizer.Atomize(source, DigestionTestSupport.Rules).Claims);
-        var yaml = StructuralLedgerYaml(atom);
-        var document = BackfillInventoryLoader.Load(yaml);
+        var document = StructuralLedger(atom);
 
         var status = Assert.Single(DigestionStatusEvaluator.Evaluate(
             document,
@@ -471,7 +461,7 @@ public sealed partial class DigestionLedgerTests
         var currentBytes = Encoding.UTF8.GetBytes(
             "# GICT\n\n**定理 1.1(Test)**。claim。\n");
         var atom = Assert.Single(GictAtomizer.Atomize(ledgerBytes, DigestionTestSupport.Rules).Claims);
-        var document = BackfillInventoryLoader.Load(StructuralLedgerYaml(atom));
+        var document = StructuralLedger(atom);
 
         var status = Assert.Single(DigestionStatusEvaluator.Evaluate(
             document,
@@ -504,23 +494,16 @@ public sealed partial class DigestionLedgerTests
             definitionHash,
             ScribeEmissionAttestation.EmissionPath(moduleGid),
             emissionHash);
-        var coverage = $$"""
-            - gid: {{declarationGid}}
-              source_sha256: {{atom.Fingerprints.RawSha256}}
-              target_sha256: {{DigestionFingerprint.Compute(target).RawSha256}}
-            """;
-        var scribe = $$"""
-            - gid: {{declarationGid}}
-              definition_sha256: {{definitionHash}}
-              emission_sha256: {{emissionHash}}
-            """;
-        var yaml = LedgerYaml(
+        var ledger = Ledger(
             atom,
-            migration: "absorbed",
-            truth: "closed",
-            coverageReceipts: coverage,
-            scribeReceipts: scribe,
-            coverageGid: declarationGid);
+            DigestionMigrationState.Absorbed,
+            DigestionTruthState.Closed,
+            declarationGid,
+            new DigestionCoverageReceipt(
+                declarationGid,
+                atom.Fingerprints.RawSha256,
+                DigestionFingerprint.Compute(target).RawSha256),
+            new DigestionScribeReceipt(declarationGid, definitionHash, emissionHash));
         var snapshotFiles = new List<(string Path, byte[] Bytes)>
         {
             ("docs/source.md", source),
@@ -535,7 +518,7 @@ public sealed partial class DigestionLedgerTests
         var snapshot = Snapshot([.. snapshotFiles]);
 
         return Assert.Single(DigestionStatusEvaluator.Evaluate(
-            BackfillInventoryLoader.Load(yaml),
+            ledger,
             snapshot,
             AcceptedLean(targetPath),
             VerifiedScribeEmissions.Create([record], describedDeclarations)).Entries);
@@ -554,27 +537,19 @@ public sealed partial class DigestionLedgerTests
         var emission = Encoding.UTF8.GetBytes("# emitted narrative\n");
         var definitionHash = DigestionFingerprint.Compute(definition).RawSha256;
         var emissionHash = DigestionFingerprint.Compute(emission).RawSha256;
-        var coverage = $$"""
-            - gid: {{gid}}
-              source_sha256: {{atom.Fingerprints.RawSha256}}
-              target_sha256: {{DigestionFingerprint.Compute(target).RawSha256}}
-            """;
-        var scribe = $$"""
-            - gid: {{gid}}
-              definition_sha256: {{definitionHash}}
-              emission_sha256: {{emissionHash}}
-            """;
-        var yaml = LedgerYaml(
-                atom,
-                migration: "absorbed",
-                truth: "tail",
-                coverageReceipts: coverage,
-                scribeReceipts: scribe,
-                coverageGid: gid)
-            .Replace(
-                "tail_authorization: null",
-                $"tail_authorization:\n            path: {authorizationPath}\n            sha256: {DigestionFingerprint.Compute(authorization).RawSha256}",
-                StringComparison.Ordinal);
+        var ledger = Ledger(
+            atom,
+            DigestionMigrationState.Absorbed,
+            DigestionTruthState.Tail,
+            gid,
+            new DigestionCoverageReceipt(
+                gid,
+                atom.Fingerprints.RawSha256,
+                DigestionFingerprint.Compute(target).RawSha256),
+            new DigestionScribeReceipt(gid, definitionHash, emissionHash),
+            tailAuthorization: new DigestionExternalReceipt(
+                authorizationPath,
+                DigestionFingerprint.Compute(authorization).RawSha256));
         var attestation = ScribeEmissionAttestation.Write(
         [
             new ScribeEmissionRecord(
@@ -606,70 +581,64 @@ public sealed partial class DigestionLedgerTests
                 emissionHash),
         ]);
         return Assert.Single(DigestionStatusEvaluator.Evaluate(
-            BackfillInventoryLoader.Load(yaml),
+            ledger,
             snapshot,
             AcceptedLean((targetPath, report)),
             verifiedEmissions).Entries);
     }
 
-    private static string LedgerYaml(
+    private static BackfillInventoryDocument Ledger(
         DigestionAtom atom,
-        string migration,
-        string truth,
-        string coverageReceipts,
-        string scribeReceipts,
-        string coverageGid = "D5/X_Frontier/Probe") => $$"""
-        schema_version: 3
-        ledger: theory-digestion-v1
-        sources:
-          - source_id: {{AtomizerRegistry.GictId}}
-            path: docs/source.md
-            atomizer: {{AtomizerRegistry.GictId}}
-            entries:
-              - atom_id: gict-1.1
-                boundary:
-                  ast_path: {{atom.AstPath}}
-                  start_byte: {{atom.StartByte}}
-                  end_byte: {{atom.EndByte}}
-                fingerprints:
-                  raw_sha256: {{atom.Fingerprints.RawSha256}}
-                  normalized_sha256: {{atom.Fingerprints.NormalizedSha256}}
-                cas_ref: {{atom.Fingerprints.RawSha256}}
-                coverage_gids:
-                  - {{coverageGid}}
-                receipts:
-        {{ReceiptList("coverage", coverageReceipts, 10)}}
-        {{ReceiptList("scribe", scribeReceipts, 10)}}
-                  unresolved_subitems: []
-                  chain_atoms: []
-                  tail_authorization: null
-                status:
-                  migration: {{migration}}
-                  truth: {{truth}}
-        """;
+        DigestionMigrationState migration,
+        DigestionTruthState truth,
+        string coverageGid = "D5/X_Frontier/Probe",
+        DigestionCoverageReceipt? coverageReceipt = null,
+        DigestionScribeReceipt? scribeReceipt = null,
+        string atomizer = AtomizerRegistry.GictId,
+        bool includeCoverageGid = true,
+        bool includeBoundary = true,
+        DigestionExternalReceipt? tailAuthorization = null)
+    {
+        var receipts = new DigestionReceipts(
+            coverageReceipt is null ? [] : [coverageReceipt],
+            scribeReceipt is null ? [] : [scribeReceipt],
+            [],
+            [],
+            tailAuthorization);
+        var entry = DigestionTestSupport.Entry(
+            atom,
+            "gict-1.1",
+            atomizer,
+            migration,
+            truth,
+            includeCoverageGid ? [coverageGid] : [],
+            receipts,
+            includeBoundary,
+            AtomizerRegistry.GictId);
+        return DigestionTestSupport.Document(
+            atomizer,
+            [entry],
+            AtomizerRegistry.GictId);
+    }
 
-    private static string StructuralLedgerYaml(DigestionAtom atom) =>
-        LedgerYaml(
-                atom,
-                migration: "residual",
-                truth: "open",
-                coverageReceipts: "[]",
-                scribeReceipts: "[]")
-            .Replace(
-                $"    atomizer: {AtomizerRegistry.GictId}\n    entries:",
-                $"    atomizer: {AtomizerRegistry.GictId}\n    acknowledged_stale: []\n    entries:",
-                StringComparison.Ordinal)
-            .Replace(
-                $"        boundary:\n"
-                + $"          ast_path: {atom.AstPath}\n"
-                + $"          start_byte: {atom.StartByte}\n"
-                + $"          end_byte: {atom.EndByte}\n",
-                $"        ast_path: {atom.AstPath}\n",
-                StringComparison.Ordinal)
-            .Replace(
-                "        coverage_gids:\n          - D5/X_Frontier/Probe",
-                "        coverage_gids: []",
-                StringComparison.Ordinal);
+    private static BackfillInventoryDocument StructuralLedger(DigestionAtom atom)
+    {
+        var document = Ledger(
+            atom,
+            DigestionMigrationState.Residual,
+            DigestionTruthState.Open,
+            includeCoverageGid: false,
+            includeBoundary: false);
+        var source = Assert.Single(document.RequireDigestionSources());
+        return document.WithDigestionSources(
+        [
+            source with
+            {
+                GenreRegistryProjection = GenreRegistryProjection.Available(
+                    GenreRegistryCheck.Collected([])),
+            },
+        ]);
+    }
 
     private static (BackfillInventoryDocument Ledger, DigestionCasObject Captured)
         CasBackedNoAtomizerLedger(byte[] receiptBytes)
@@ -681,16 +650,10 @@ public sealed partial class DigestionLedgerTests
             ImmutableArray.CreateRange(receiptBytes),
             DigestionFingerprint.Compute(receiptBytes),
             ImmutableArray<DigestionContext>.Empty);
-        var yaml = LedgerYaml(
-                atom,
-                migration: "partial",
-                truth: "open",
-                coverageReceipts: "[]",
-                scribeReceipts: "[]")
-            .Replace(
-                $"atomizer: {AtomizerRegistry.GictId}",
-                $"atomizer: {AtomizerRegistry.NoAtomizerId}",
-                StringComparison.Ordinal);
-        return (BackfillInventoryLoader.Load(yaml), DigestionCasStore.Capture(receiptBytes));
+        return (Ledger(
+            atom,
+            DigestionMigrationState.Partial,
+            DigestionTruthState.Open,
+            atomizer: AtomizerRegistry.NoAtomizerId), DigestionCasStore.Capture(receiptBytes));
     }
 }
