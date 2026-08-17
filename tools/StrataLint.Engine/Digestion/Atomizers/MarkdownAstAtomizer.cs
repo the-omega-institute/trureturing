@@ -24,7 +24,8 @@ internal static class MarkdownAstAtomizer
         Func<string, string?>? identifyFirstTableCellSource = null,
         Func<string, ImmutableArray<MarkdownBlock>>? parse = null,
         Func<MarkdownTableRow, string?>? identifyTableRow = null,
-        bool dropEmptyHeadingClaims = false)
+        bool dropEmptyHeadingClaims = false,
+        bool extendLineClaims = true)
     {
         ArgumentNullException.ThrowIfNull(genreRegistryCheck);
         var raw = bytes.ToArray();
@@ -101,9 +102,9 @@ internal static class MarkdownAstAtomizer
                     candidates.Add(new Candidate(
                         lineClaim.AstPath!,
                         lineClaim.Line.Start,
-                        lineClaim.Line.End,
+                        extendLineClaims ? text.Length : lineClaim.Line.End,
                         headings.ToImmutableArray(),
-                        Extend: false));
+                        Extend: extendLineClaims));
                 }
 
                 continue;

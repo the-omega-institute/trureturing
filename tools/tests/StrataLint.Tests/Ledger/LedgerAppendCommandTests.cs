@@ -120,20 +120,24 @@ public sealed class LedgerAppendCommandTests
     }
 
     [Fact]
-    public void ProductionCommandRejectsStatementChangesWithRevokeGuidanceWithoutWriting()
+    public void WriterPreparationBuildsOnlyCandidateDeltaAndTrustsCommittedBaseIdentity()
     {
         using var fixture = new LedgerAppendFixture(currentAStatementMaterial: "False");
+
+        var preparation = DagLedgerCommandPreparation.Prepare(
+            fixture.Root,
+            fixture.Gateway,
+            fixture.ReportPath);
+
+        Assert.Equal(
+            new[] { FrozenLedgerTestData.PathFor("B"), FrozenLedgerTestData.PathFor("C") },
+            preparation.Catalog.ClosedNodes.Select(static node => node.RepoPath.Value));
 
         var result = fixture.Environment.AppendLedger(
             new[] { "--candidate-lean-report", fixture.ReportPath });
 
-        Assert.False(result.Success, result.Output);
-        Assert.Contains(FrozenLedgerTestData.PathFor("A"), result.Error, StringComparison.Ordinal);
-        Assert.Contains("statement identity", result.Error, StringComparison.OrdinalIgnoreCase);
-        Assert.Contains("Revoke", result.Error, StringComparison.Ordinal);
-        Assert.Equal(
-            fixture.BaselineBytes.AsSpan().ToArray(),
-            FrozenLedgerTestData.ReadLedgerDirectory(fixture.LedgerPath));
+        Assert.True(result.Success, result.Error);
+        Assert.Contains("appended_freezes=2", result.Output, StringComparison.Ordinal);
     }
 
     [Fact]
