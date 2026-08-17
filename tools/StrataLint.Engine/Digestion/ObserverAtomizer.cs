@@ -37,7 +37,7 @@ internal static class ObserverAtomizer
         {
             var token = TheorySourceFormatException.ClaimLead(paragraph);
             unregistered.Add(token);
-            return "unregistered/" + Uri.EscapeDataString(token);
+            return UnregisteredGenreLocator.ForToken(token);
         }
         return null;
     }

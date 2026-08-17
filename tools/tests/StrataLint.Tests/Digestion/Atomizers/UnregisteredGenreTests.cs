@@ -22,37 +22,37 @@ public sealed class UnregisteredGenreTests
         document.Claims.Select(static claim => claim.AstPath).ToArray();
 
     [Fact]
-    public void PzgAddressesAnUnregisteredNumberedGenreByItsOwnToken()
+    public void PzgAddressesAnUnregisteredNumberedGenreInTheReservedNamespace()
     {
         var bytes = Encoding.UTF8.GetBytes(
             "# PZG\n\n**定理 1.1(甲)**。一。\n\n**未登记体 2.3(乙)**。二。\n");
 
         var document = PzgAtomizer.Atomize(bytes, DigestionTestSupport.Rules);
 
-        Assert.Equal(["theorem/1.1", "未登记体/2.3"], Paths(document));
+        Assert.Equal(["theorem/1.1", "unregistered/%E6%9C%AA%E7%99%BB%E8%AE%B0%E4%BD%93/2.3"], Paths(document));
         Assert.Equal(bytes, document.Reassemble().ToArray());
     }
 
     [Fact]
-    public void GictAddressesAnUnregisteredNumberedGenreByItsOwnToken()
+    public void GictAddressesAnUnregisteredNumberedGenreInTheReservedNamespace()
     {
         var bytes = Encoding.UTF8.GetBytes(
             "# GICT\n\n**定理 1.1(甲)**。一。\n\n**未登记体 2.3(乙)**。二。\n");
 
         var document = GictAtomizer.Atomize(bytes, DigestionTestSupport.Rules);
 
-        Assert.Equal(["theorem/1.1", "未登记体/2.3"], Paths(document));
+        Assert.Equal(["theorem/1.1", "unregistered/%E6%9C%AA%E7%99%BB%E8%AE%B0%E4%BD%93/2.3"], Paths(document));
         Assert.Equal(bytes, document.Reassemble().ToArray());
     }
 
     [Fact]
-    public void ADeclaredDialectAddressesAnUnregisteredGenreByItsOwnToken()
+    public void ADeclaredDialectAddressesAnUnregisteredGenreInTheReservedNamespace()
     {
         var bytes = Encoding.UTF8.GetBytes("# QDO\n\n## 定理 22.2\n\n证。\n\n## 未登记体 3.4\n\n证。\n");
 
         var document = AtomizerRegistry.Atomize("dialect:qdo", bytes, DigestionTestSupport.Rules);
 
-        Assert.Equal(["theorem/22.2", "未登记体/3.4"], Paths(document));
+        Assert.Equal(["theorem/22.2", "unregistered/%E6%9C%AA%E7%99%BB%E8%AE%B0%E4%BD%93/3.4"], Paths(document));
         Assert.Equal(bytes, document.Reassemble().ToArray());
     }
 
@@ -133,7 +133,7 @@ public sealed class UnregisteredGenreTests
             "# PZG\n\n**定理 1.1**。一。\n\n**未登记体 2.1**。二。\n\n**引理 3.1**。三。\n");
 
         Assert.Equal(
-            ["theorem/1.1", "未登记体/2.1", "lemma/3.1"],
+            ["theorem/1.1", "unregistered/%E6%9C%AA%E7%99%BB%E8%AE%B0%E4%BD%93/2.1", "lemma/3.1"],
             Paths(PzgAtomizer.Atomize(bytes, DigestionTestSupport.Rules)));
     }
 

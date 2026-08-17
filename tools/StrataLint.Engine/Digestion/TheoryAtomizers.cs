@@ -46,6 +46,17 @@ internal sealed record DigestionClausePlan(
     string ParentAstPath,
     ImmutableArray<DigestionAtom> Children);
 
+internal static class UnregisteredGenreLocator
+{
+    internal const string Prefix = "unregistered/";
+
+    internal static string ForToken(string token) =>
+        Prefix + Uri.EscapeDataString(token);
+
+    internal static string ForNumbered(string token, string number) =>
+        ForToken(token) + "/" + number;
+}
+
 internal enum GenreRegistryCheckKind
 {
     Collected,
@@ -321,7 +332,9 @@ internal sealed class NumberedClaims
 
         var token = unknown.Groups["kind"].Value;
         unregistered.Add(token);
-        return token + "/" + unknown.Groups["number"].Value;
+        return UnregisteredGenreLocator.ForNumbered(
+            token,
+            unknown.Groups["number"].Value);
     }
 
     private string Kind(string value) =>
