@@ -218,6 +218,85 @@ public sealed partial class FrozenLedgerTests
     }
 
     [Fact]
+    public void SupersedeRejectsForgedPrerequisiteCoordinates()
+    {
+        var fixture = SupersedeFixture();
+        var payload = FrozenLedgerCanonicalWriter.SupersedeElement(SupersedePayload(fixture));
+        var mutable = JsonNode.Parse(payload.GetRawText())!.AsObject();
+        mutable["prerequisite_frozen_node_ids"] = new JsonArray(
+            Sha256("forged-prerequisite"));
+
+        var rejected = Assert.IsType<FrozenLedgerValidationOutcome.Rejected>(
+            ValidateCandidate(
+                LoadedSupersedeLedger(AppendSupersede(fixture, mutable).AsSpan()),
+                fixture.Baseline,
+                fixture.CandidateCatalog));
+
+        Assert.Contains("candidate Closed material", rejected.Message, StringComparison.OrdinalIgnoreCase);
+    }
+
+    [Fact]
+    public void LakefileOnlyPinChangeIsAnEnvironmentChange()
+    {
+        var fixture = SupersedeFixture();
+        var payload = SupersedePayload(fixture);
+        var protectedEntry = FrozenLedger.ApplySupersede(
+            Assert.Single(fixture.Baseline.ActiveEntries).Value,
+            payload,
+            Sha256("first-supersede"));
+        var lakefileOnly = payload.Environment with
+        {
+            LakefileBlobOid = GitOid('f'),
+        };
+
+        Assert.True(FrozenLedger.EnvironmentPinsChanged(lakefileOnly, protectedEntry));
+    }
+
+    [Fact]
+    public void BranchBClosureIncludesTransitiveRepositoryImports()
+    {
+        var catalog = BuildCatalog(
+            Module("A", imports: ["B"]),
+            Module("B", imports: ["C"]),
+            Module("C"));
+
+        Assert.False(LeanImportClosure.RepositoryClosureIsUnchanged(
+            catalog.Dag,
+            RepoPathFor("A"),
+            RawChangeSet.Create([PathFor("C")])));
+    }
+
+    [Fact]
+    public void BranchBRejectsTransitiveUntrackedExternalImports()
+    {
+        var files = new Dictionary<string, string>(StringComparer.Ordinal)
+        {
+            [PathFor("A")] = "theorem a : True := by trivial\n",
+            [PathFor("B")] = "theorem b : True := by trivial\n",
+            ["lean-toolchain"] = "leanprover/lean4:v4.24.0\n",
+            ["lakefile.toml"] = "name = \"fixture\"\n",
+            ["lake-manifest.json"] = "{}\n",
+        };
+        var raw = RawRepositorySnapshot.Create(
+            files.Select(static item => RawRepositoryEntry.FromText(item.Key, item.Value)));
+        var snapshot = Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(raw)).Snapshot;
+        var report = LeanAxiomReport.Create(new Dictionary<string, LeanFileReport>(StringComparer.Ordinal)
+        {
+            [PathFor("A")] = new LeanFileReport(
+                ["D5.S0.Carrier.B"],
+                [new LeanDeclaration("a", "theorem", "True", [])]),
+            [PathFor("B")] = new LeanFileReport(["External.Foo"], [
+                new LeanDeclaration("b", "theorem", "True", []),
+            ]),
+        });
+
+        Assert.False(LeanImportClosure.ExternalImportsHaveNamedPinCoverage(
+            report,
+            RepoPathFor("A"),
+            snapshot));
+    }
+
+    [Fact]
     public void SupersedeDagOrdersChangedPrerequisiteBeforeItsDependent()
     {
         var oldPrerequisite = Sha256("old-prerequisite");

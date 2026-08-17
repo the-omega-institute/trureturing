@@ -30,7 +30,9 @@ internal static class DagLedgerSupersedeWriter
             var generated = BuildEvents(
                 protectedBase,
                 candidate.Catalog,
+                candidate.Report,
                 candidate.Changes,
+                candidate.Snapshot,
                 pins);
             if (generated.IsEmpty)
             {
@@ -50,7 +52,9 @@ internal static class DagLedgerSupersedeWriter
             ValidateGeneratedEvents(
                 protectedBase,
                 candidate.Catalog,
+                candidate.Report,
                 candidate.Changes,
+                candidate.Snapshot,
                 trustedCandidateReferences,
                 generated);
 
@@ -91,7 +95,9 @@ internal static class DagLedgerSupersedeWriter
     private static ImmutableArray<GeneratedSupersede> BuildEvents(
         FrozenLedgerBaseView protectedBase,
         FrozenMaterialCatalog candidateCatalog,
+        LeanAxiomReport report,
         RawChangeSet changes,
+        RepositorySnapshot snapshot,
         FrozenEnvironmentPins pins)
     {
         var result = ImmutableArray.CreateBuilder<GeneratedSupersede>();
@@ -133,7 +139,11 @@ internal static class DagLedgerSupersedeWriter
                 LeanImportClosure.RepositoryClosureIsUnchanged(
                     candidateCatalog.Dag,
                     entry.Material.RepoPath,
-                    changes));
+                    changes),
+                LeanImportClosure.ExternalImportsHaveNamedPinCoverage(
+                    report,
+                    entry.Material.RepoPath,
+                    snapshot));
             var element = FrozenLedgerCanonicalWriter.SupersedeElement(payload);
             var encoded = FrozenLedgerCanonicalWriter.WriteDagEvent(
                 FrozenLedger.SupersedeEventType,
@@ -158,7 +168,9 @@ internal static class DagLedgerSupersedeWriter
     private static void ValidateGeneratedEvents(
         FrozenLedgerBaseView protectedBase,
         FrozenMaterialCatalog candidateCatalog,
+        LeanAxiomReport report,
         RawChangeSet changes,
+        RepositorySnapshot snapshot,
         TrustedFrozenGitReferences trustedReferences,
         ImmutableArray<GeneratedSupersede> generated)
     {
@@ -176,7 +188,11 @@ internal static class DagLedgerSupersedeWriter
                 LeanImportClosure.RepositoryClosureIsUnchanged(
                     candidateCatalog.Dag,
                     active[item.Payload.CaseId].Material.RepoPath,
-                    changes));
+                    changes),
+                LeanImportClosure.ExternalImportsHaveNamedPinCoverage(
+                    report,
+                    active[item.Payload.CaseId].Material.RepoPath,
+                    snapshot));
             active[payload.CaseId] = FrozenLedger.ApplySupersede(
                 active[payload.CaseId],
                 payload,

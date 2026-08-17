@@ -1,9 +1,19 @@
 using System.Collections.Immutable;
+using System.Text.Json;
 
 namespace StrataLint.Engine;
 
 internal static class LeanImportClosure
 {
+    private static readonly ImmutableHashSet<string> ToolchainModuleRoots =
+        ImmutableHashSet.Create(StringComparer.Ordinal, "Init", "Lake", "Lean", "Std");
+    private static readonly ImmutableDictionary<string, string> PinnedPackageByModuleRoot =
+        new Dictionary<string, string>(StringComparer.Ordinal)
+        {
+            ["Batteries"] = "batteries",
+            ["Mathlib"] = "mathlib",
+        }.ToImmutableDictionary(StringComparer.Ordinal);
+
     internal static bool RepositoryClosureIsUnchanged(
         AcyclicTruthDag dag,
         RepoPath startPath,
@@ -112,6 +122,115 @@ internal static class LeanImportClosure
         }
 
         return false;
+    }
+
+    internal static bool ExternalImportsHaveNamedPinCoverage(
+        LeanAxiomReport report,
+        RepoPath startPath,
+        RepositorySnapshot snapshot)
+    {
+        ArgumentNullException.ThrowIfNull(report);
+        ArgumentNullException.ThrowIfNull(snapshot);
+        var external = ExternalImports(report, startPath);
+        if (external.IsEmpty)
+        {
+            return true;
+        }
+
+        var packages = PinnedGitPackages(snapshot);
+        return external.All(import =>
+        {
+            var separator = import.IndexOf('.');
+            var root = separator < 0 ? import : import[..separator];
+            return ToolchainModuleRoots.Contains(root)
+                || PinnedPackageByModuleRoot.TryGetValue(root, out var package)
+                    && packages.Contains(package);
+        });
+    }
+
+    private static ImmutableHashSet<string> ExternalImports(
+        LeanAxiomReport report,
+        RepoPath startPath)
+    {
+        var reportsByModule = report.Files.ToDictionary(
+            static item => ModuleName(item.Key),
+            static item => item.Value,
+            StringComparer.Ordinal);
+        var startModule = ModuleName(startPath);
+        if (!reportsByModule.ContainsKey(startModule))
+        {
+            return ImmutableHashSet<string>.Empty;
+        }
+
+        var external = ImmutableHashSet.CreateBuilder<string>(StringComparer.Ordinal);
+        var pending = new Stack<string>();
+        var visited = new HashSet<string>(StringComparer.Ordinal);
+        pending.Push(startModule);
+        while (pending.TryPop(out var module))
+        {
+            if (!visited.Add(module) || !reportsByModule.TryGetValue(module, out var file))
+            {
+                continue;
+            }
+
+            foreach (var import in file.Imports)
+            {
+                if (reportsByModule.ContainsKey(import))
+                {
+                    pending.Push(import);
+                }
+                else
+                {
+                    external.Add(import);
+                }
+            }
+        }
+
+        return external.ToImmutable();
+    }
+
+    private static ImmutableHashSet<string> PinnedGitPackages(RepositorySnapshot snapshot)
+    {
+        var packages = ImmutableHashSet.CreateBuilder<string>(StringComparer.OrdinalIgnoreCase);
+        if (!snapshot.TryGetFile("lake-manifest.json", out var manifest))
+        {
+            return packages.ToImmutable();
+        }
+
+        try
+        {
+            using var document = JsonDocument.Parse(manifest.RawBytes.AsSpan().ToArray());
+            if (!document.RootElement.TryGetProperty("packages", out var entries)
+                || entries.ValueKind != JsonValueKind.Array)
+            {
+                return packages.ToImmutable();
+            }
+
+            foreach (var entry in entries.EnumerateArray())
+            {
+                if (entry.ValueKind != JsonValueKind.Object
+                    || !entry.TryGetProperty("name", out var name)
+                    || name.ValueKind != JsonValueKind.String
+                    || string.IsNullOrWhiteSpace(name.GetString())
+                    || !entry.TryGetProperty("type", out var type)
+                    || type.ValueKind != JsonValueKind.String
+                    || type.GetString() != "git"
+                    || !entry.TryGetProperty("rev", out var revision)
+                    || revision.ValueKind != JsonValueKind.String
+                    || string.IsNullOrWhiteSpace(revision.GetString()))
+                {
+                    continue;
+                }
+
+                packages.Add(name.GetString()!);
+            }
+        }
+        catch (JsonException)
+        {
+            return ImmutableHashSet<string>.Empty.WithComparer(StringComparer.OrdinalIgnoreCase);
+        }
+
+        return packages.ToImmutable();
     }
 
     internal static string ModuleName(RepoPath path)

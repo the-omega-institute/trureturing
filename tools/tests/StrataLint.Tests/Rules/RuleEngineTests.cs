@@ -497,6 +497,16 @@ public sealed class RuleEngineTests
     }
 
     [Fact]
+    public void AtomizerImplementationChangeWakesSl016BecauseItsProjectionCanDrift()
+    {
+        var fixture = new RuleFixture();
+        var context = fixture.Build(RawChangeSet.Create(
+            ["tools/StrataLint.Engine/Digestion/Atomizers/PzgAtomizer.cs"]));
+
+        Assert.True(BackfillInventoryRule.IsAffectedBy(context));
+    }
+
+    [Fact]
     public void Sl016DerivedStatusIsTheSameWhetherOrNotTheEntryIsInTheCandidateDelta()
     {
         // A gap that is a property of the tree must be reported no matter which paths this
