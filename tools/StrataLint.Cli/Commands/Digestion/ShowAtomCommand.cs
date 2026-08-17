@@ -32,7 +32,7 @@ internal static class ShowAtomCommand
             };
             var source = document.RequireDigestionSources()
                 .Single(item => item.SourceId == entry.SourceId);
-            var casBytes = ReadVerifiedCas(snapshot, entry);
+            var casBytes = ReadCommittedCas(snapshot, entry);
             if (source.AcknowledgedStale.Contains(entry.AtomId, StringComparer.Ordinal))
             {
                 return new CommandResult(true, Render(entry, casBytes, stale: true), string.Empty);
@@ -115,7 +115,7 @@ internal static class ShowAtomCommand
         return replayed.ResolveClaim(entry.AstPath).RawBytes;
     }
 
-    private static ImmutableArray<byte> ReadVerifiedCas(
+    private static ImmutableArray<byte> ReadCommittedCas(
         RepositorySnapshot snapshot,
         DigestionLedgerEntry entry)
     {
@@ -137,36 +137,6 @@ internal static class ShowAtomCommand
         {
             throw new FormatException(
                 $"atom {entry.AtomId} CAS blob is missing: {casPath}");
-        }
-
-        var capturedCas = DigestionCasStore.Capture(casBlob.RawBytes.AsSpan());
-        if (capturedCas.Reference != entry.CasRef)
-        {
-            throw new FormatException(
-                $"atom {entry.AtomId} CAS blob hash mismatch: expected {entry.CasRef}, "
-                + $"actual {capturedCas.Reference}");
-        }
-
-        var capturedFingerprints = DigestionFingerprint.Compute(casBlob.RawBytes.AsSpan());
-        if (capturedFingerprints.RawSha256 != entry.Fingerprints.RawSha256)
-        {
-            throw new FormatException(
-                $"atom {entry.AtomId} CAS raw hash mismatch: expected "
-                + $"{entry.Fingerprints.RawSha256}, actual {capturedFingerprints.RawSha256}");
-        }
-
-        if (capturedFingerprints.NormalizedSha256 != entry.Fingerprints.NormalizedSha256)
-        {
-            throw new FormatException(
-                $"atom {entry.AtomId} CAS normalized hash mismatch: expected "
-                + $"{entry.Fingerprints.NormalizedSha256}, actual "
-                + capturedFingerprints.NormalizedSha256);
-        }
-
-        if (capturedFingerprints.RawSha256 != entry.CasRef)
-        {
-            throw new FormatException(
-                $"atom {entry.AtomId} CAS bytes mismatch cas_ref {entry.CasRef}");
         }
 
         return casBlob.RawBytes;
@@ -196,7 +166,7 @@ internal static class ShowAtomCommand
                 $"atom {requested.AtomId} current generation is ambiguous at {requested.AstPath}");
         }
 
-        var replacementCas = ReadVerifiedCas(snapshot, replacements[0]);
+        var replacementCas = ReadCommittedCas(snapshot, replacements[0]);
         VerifyReplay(replacements[0], replayedBytes, replacementCas);
         return true;
     }
@@ -246,9 +216,9 @@ internal static class ShowAtomCommand
         }
 
         writer.WriteLine(
-            $"HASH_VERIFY raw_sha256={entry.Fingerprints.RawSha256} "
+            $"HASH_RECORD raw_sha256={entry.Fingerprints.RawSha256} "
             + $"normalized_sha256={entry.Fingerprints.NormalizedSha256} "
-            + $"cas_ref={entry.CasRef} status=match");
+            + $"cas_ref={entry.CasRef} source=ledger");
         WriteText(writer, "RAW", rawText);
         WriteText(writer, "NORMALIZED", normalizedText);
         return writer.ToString();

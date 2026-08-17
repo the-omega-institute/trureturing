@@ -1,4 +1,5 @@
 using System.Text;
+using System.Text.Json;
 using StrataLint.Cli;
 using StrataLint.Engine;
 
@@ -135,7 +136,7 @@ public sealed partial class ProductionEnvironmentTests
     }
 
     [Fact]
-    public void DigestStatusReportsHistoricalAndCurrentCasReceiptsAsSeen()
+    public void DigestStatusReportsHistoricalCasReceiptAsStaleAndCurrentReceiptAsSeen()
     {
         var fixture = new RuleFixture();
         var atomizerId = SyntheticNumberedAtomizer.Id;
@@ -177,8 +178,19 @@ public sealed partial class ProductionEnvironmentTests
         var result = environment.DigestStatus(["--json", "--base", "baseline"]);
 
         Assert.True(result.Success, result.Error);
-        Assert.Contains("\"alignment\": \"seen\"", result.Output, StringComparison.Ordinal);
-        Assert.DoesNotContain("stale-receipt-not-deletable", result.Output, StringComparison.Ordinal);
+        using var json = JsonDocument.Parse(result.Output);
+        var entries = json.RootElement.GetProperty("entries").EnumerateArray().ToArray();
+        var historical = Assert.Single(
+            entries,
+            static entry => entry.GetProperty("atom_id").GetString() == "old-receipt");
+        var current = Assert.Single(
+            entries,
+            static entry => entry.GetProperty("atom_id").GetString() != "old-receipt");
+        Assert.Equal("stale", historical.GetProperty("alignment").GetString());
+        Assert.Equal("seen", current.GetProperty("alignment").GetString());
+        Assert.Contains(
+            historical.GetProperty("gaps").EnumerateArray(),
+            static gap => gap.GetProperty("code").GetString() == "stale-receipt-not-deletable");
     }
 
     [Fact]

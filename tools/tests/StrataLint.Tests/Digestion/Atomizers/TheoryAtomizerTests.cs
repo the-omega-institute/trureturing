@@ -8,6 +8,9 @@ public sealed partial class TheoryAtomizerTests
     private const string FourthProductionSource =
         "docs/develop/theory/INTERFACE_PAPER.md";
 
+    private const string InterfacePhilosophySource =
+        "docs/develop/theory/INTERFACE_PHILOSOPHY.md";
+
     [Fact]
     public void RegistryFailsClosedForAnUnknownAtomizerAndListsRegisteredIds()
     {
@@ -586,6 +589,84 @@ public sealed partial class TheoryAtomizerTests
         Assert.Equal(repeatedRemarks[0].Fingerprints, repeatedRemarks[1].Fingerprints);
         Assert.Equal(repeatedCorollaries[0].Fingerprints, repeatedCorollaries[1].Fingerprints);
         Assert.NotEqual(incompatibleTheorems[0].Fingerprints, incompatibleTheorems[1].Fingerprints);
+    }
+
+    [Fact]
+    public void PzgMultiClaimParagraphIncludesIndentedAndUnindentedContinuationLines()
+    {
+        const string firstClaim =
+            "**定理 1.1(First)**。lead。\n"
+            + "  indented continuation。\n"
+            + "unindented continuation。\n";
+        var bytes = Encoding.UTF8.GetBytes(
+            "# PZG\n\n"
+            + firstClaim
+            + "**引理 1.2(Second)**。next。\n");
+
+        var document = PzgAtomizer.Atomize(bytes, DigestionTestSupport.Rules);
+        var atom = Assert.Single(document.Claims.Where(static item => item.AstPath == "theorem/1.1"));
+
+        Assert.Equal(firstClaim, Encoding.UTF8.GetString(atom.RawBytes.AsSpan()));
+        Assert.Equal(bytes, document.Reassemble().ToArray());
+    }
+
+    [Fact]
+    public void PzgLastClaimInMultiClaimParagraphExtendsThroughFollowingProofParagraphs()
+    {
+        const string lastClaimAndProof =
+            "**引理 1.2(Second)**。lead。\n\n"
+            + "ordinary proof paragraph。\n\n"
+            + "second proof paragraph。\n\n";
+        var bytes = Encoding.UTF8.GetBytes(
+            "# PZG\n\n"
+            + "**定理 1.1(First)**。lead。\n"
+            + lastClaimAndProof
+            + "**命题 1.3(Next)**。next。\n");
+
+        var document = PzgAtomizer.Atomize(bytes, DigestionTestSupport.Rules);
+        var atom = Assert.Single(document.Claims.Where(static item => item.AstPath == "lemma/1.2"));
+
+        Assert.Equal(lastClaimAndProof, Encoding.UTF8.GetString(atom.RawBytes.AsSpan()));
+        Assert.Equal(bytes, document.Reassemble().ToArray());
+    }
+
+    [Fact]
+    public void PzgSingleClaimParagraphStillExtendsThroughFollowingProofParagraphs()
+    {
+        const string claimAndProof =
+            "**定理 2.1(Single)**。lead。\n\n"
+            + "ordinary proof paragraph。\n\n";
+        var bytes = Encoding.UTF8.GetBytes(
+            "# PZG\n\n"
+            + claimAndProof
+            + "**引理 2.2(Next)**。next。\n");
+
+        var document = PzgAtomizer.Atomize(bytes, DigestionTestSupport.Rules);
+        var atom = Assert.Single(document.Claims.Where(static item => item.AstPath == "theorem/2.1"));
+
+        Assert.Equal(claimAndProof, Encoding.UTF8.GetString(atom.RawBytes.AsSpan()));
+        Assert.Equal(bytes, document.Reassemble().ToArray());
+    }
+
+    [Fact]
+    public void InterfacePhilosophyTheorem612IncludesBothContinuationLines()
+    {
+        var root = TestRepositoryLayout.FindRoot();
+        var bytes = File.ReadAllBytes(Path.Combine(root, InterfacePhilosophySource));
+
+        var document = PzgAtomizer.Atomize(bytes, DigestionTestSupport.Rules);
+        var atom = Assert.Single(document.Claims.Where(static item => item.AstPath == "theorem/6.12"));
+        var rawText = Encoding.UTF8.GetString(atom.RawBytes.AsSpan());
+
+        Assert.Contains(
+            "  −k_min − O(log Q) ≤ log(|C_Q(R)| / |F_Q|) ≤ −K(y|x) + O(log Q)。",
+            rawText,
+            StringComparison.Ordinal);
+        Assert.Contains(
+            "(iii)[证纲] 对定理 6.6 之构造记录可加强选取",
+            rawText,
+            StringComparison.Ordinal);
+        Assert.DoesNotContain("**案卷 6.12.1", rawText, StringComparison.Ordinal);
     }
 
     private static DigestionLedgerAlignment AlignUnregisteredGenres(byte[] bytes)
