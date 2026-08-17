@@ -321,6 +321,15 @@ artifact_id = "none"
 runtime_disposition = "committed-source"
 
 [[files]]
+pattern = "Problems/*.md"
+kind = "data"
+produced_by = "none"
+consumed_by = ["DescribeRepositoryValidator", "agent"]
+verified_by = ["ProblemCandidateCatalog"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+
+[[files]]
 pattern = "README.md"
 kind = "data"
 produced_by = "none"
