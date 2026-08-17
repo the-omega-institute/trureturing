@@ -1,0 +1,16 @@
+### 定义 38.10（形式完成）
+
+\[
+\widehat X_{\mathrm{form}}
+=
+\varprojlim_n C_n.
+\]
+
+一个元素为相容族：
+
+\[
+c=(c_n)_{n\ge0},
+\qquad
+p_{n+1,n}(c_{n+1})=c_n.
+\]
+
