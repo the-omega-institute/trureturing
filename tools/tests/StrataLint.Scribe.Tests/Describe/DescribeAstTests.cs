@@ -80,6 +80,26 @@ public sealed class DescribeAstTests
     }
 
     [Fact]
+    public void RepoDerivedProvenanceCanCarryTypedAcknowledgements()
+    {
+        var factory = Assert.Single(
+            typeof(AssessedProvenance).GetMethods(BindingFlags.Static | BindingFlags.Public),
+            static method => method.Name == nameof(AssessedProvenance.FromRepo)
+                && method.GetParameters() is [{ ParameterType: var parameterType }]
+                && parameterType == typeof(LibraryNoteRef[]));
+        var landau = LibraryNoteRef.Create("D5/L/Quantum/landau1987violation");
+
+        var provenance = Assert.IsAssignableFrom<AssessedProvenance>(
+            factory.Invoke(null, [new[] { landau }]));
+        var acknowledgementProperty = Assert.IsAssignableFrom<System.Collections.IEnumerable>(
+            provenance.GetType().GetProperty("Acknowledgements")?.GetValue(provenance));
+
+        Assert.Equal(
+            [landau],
+            acknowledgementProperty.Cast<LibraryNoteRef>());
+    }
+
+    [Fact]
     public void DescribeStatementIsAClosedFormulaOrLeanReferenceChoice()
     {
         var formula = DescribeStatement.FromFormula(new Formula.Phi());
