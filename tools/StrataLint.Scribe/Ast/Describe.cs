@@ -1,3 +1,4 @@
+using System.Collections.Immutable;
 using System.Text.RegularExpressions;
 
 namespace StrataLint.Scribe;
@@ -86,15 +87,37 @@ public abstract record DescribeStatement
 public abstract record AssessedProvenance
 {
     private AssessedProvenance() { }
-    public sealed record RepoDerived : AssessedProvenance;
+    public sealed record RepoDerived(
+        ImmutableArray<LibraryNoteRef> Acknowledgements) : AssessedProvenance;
     public sealed record LiteratureAttested(LibraryNoteRef NoteRef) : AssessedProvenance;
-    public sealed record SuspectedNovel(GidRef SearchReceipt) : AssessedProvenance;
+    public sealed record SuspectedNovel(
+        GidRef SearchReceipt,
+        ImmutableArray<LibraryNoteRef> Acknowledgements) : AssessedProvenance;
 
-    public static AssessedProvenance FromRepo() => new RepoDerived();
+    public static AssessedProvenance FromRepo(params LibraryNoteRef[] acknowledgements) =>
+        new RepoDerived(NormalizeAcknowledgements(acknowledgements));
     public static AssessedProvenance FromLiterature(LibraryNoteRef noteRef) =>
         new LiteratureAttested(noteRef ?? throw new ArgumentNullException(nameof(noteRef)));
-    public static AssessedProvenance NovelAfterSearch(GidRef searchReceipt) =>
-        new SuspectedNovel(searchReceipt ?? throw new ArgumentNullException(nameof(searchReceipt)));
+    public static AssessedProvenance NovelAfterSearch(
+        GidRef searchReceipt,
+        params LibraryNoteRef[] acknowledgements) =>
+        new SuspectedNovel(
+            searchReceipt ?? throw new ArgumentNullException(nameof(searchReceipt)),
+            NormalizeAcknowledgements(acknowledgements));
+
+    private static ImmutableArray<LibraryNoteRef> NormalizeAcknowledgements(
+        LibraryNoteRef[] acknowledgements)
+    {
+        ArgumentNullException.ThrowIfNull(acknowledgements);
+        if (acknowledgements.Any(static acknowledgement => acknowledgement is null))
+        {
+            throw new ArgumentException(
+                "Acknowledgements cannot contain null references.",
+                nameof(acknowledgements));
+        }
+
+        return [.. acknowledgements];
+    }
 
 }
 
