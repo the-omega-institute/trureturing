@@ -86,20 +86,54 @@ public sealed class RequiredJobExecutionTests
             .ToArray();
     }
 
-    // 「真的影响执行」= 出现在某步骤自身的 if: 表达式里,且该表达式不是恒假门控。
-    // 注释、run 正文里的 echo、以及 `false && …` 都不算——它们在场却不改变任何判决。
+    // 「真的影响执行」= 出现在某步骤自身的 if: 表达式里,且该表达式的取值**真的随它变**。
+    //
+    // 两轮被绕的记录(黑名单打不赢):
+    //   第八轮 首版是 workflow.Contains("steps.<id>.outcome") —— 纯文本匹配。
+    //          注释、`if:false` 步骤里的 echo、`false && …` 三种惰性引用全部通过。
+    //   第九轮 收窄为「非恒假门控」后仍被绕:`true || …`、`always() || …` —— **恒真**同样让引用失效,
+    //          因为条件永远成立,outcome 是什么都无所谓。三席各自命中。
+    //
+    // 故改用**白名单形状**(本仓先例:#2249 的 strip 契约只接受规范直线程序):
+    //   `||` 是让引用失效的唯一途径——析取的另一支恒真即短路,引用不再影响结果;
+    //   `false` 常量让整个表达式恒假,步骤永不执行。
+    //   两者皆禁,则表达式只剩合取,而合取中每一支都能改变结果。
+    //
+    // 边界(不冒领):这挡的是**无意中写错**,不是蓄意绕过——蓄意者仍可写一个形式合法却
+    // 什么都不做的消费者步骤。静态检查无法判定「失败被妥善处理」。守护标为**早反馈**。
     private static bool HasEffectiveOutcomeConsumer(YamlMappingNode job, string id) =>
         Steps(job).Any(step =>
             Scalar(step, "if") is { Length: > 0 } condition
             && condition.Contains("steps." + id + ".outcome", StringComparison.Ordinal)
-            && !IsConstantFalseGate(condition));
+            && IsConjunctiveGate(condition));
 
-    private static bool IsConstantFalseGate(string condition)
+    private static bool IsConjunctiveGate(string condition)
     {
-        var trimmed = condition.Trim().TrimStart('$', '{').TrimEnd('}', ' ').Trim();
-        return trimmed.Equals("false", StringComparison.Ordinal)
-            || trimmed.StartsWith("false &&", StringComparison.Ordinal)
-            || trimmed.StartsWith("false&&", StringComparison.Ordinal);
+        var normalized = condition.Replace("${{", " ", StringComparison.Ordinal)
+            .Replace("}}", " ", StringComparison.Ordinal);
+        return !normalized.Contains("||", StringComparison.Ordinal)
+            && !ContainsConstantToken(normalized, "false")
+            && !ContainsConstantToken(normalized, "true")
+            && !normalized.Contains("always(", StringComparison.Ordinal);
+    }
+
+    // 只认独立成词的常量,避免误伤 `== 'true'` 这类字符串比较。
+    private static bool ContainsConstantToken(string text, string token)
+    {
+        for (var i = text.IndexOf(token, StringComparison.Ordinal); i >= 0;
+             i = text.IndexOf(token, i + 1, StringComparison.Ordinal))
+        {
+            var before = i == 0 ? ' ' : text[i - 1];
+            var afterIndex = i + token.Length;
+            var after = afterIndex >= text.Length ? ' ' : text[afterIndex];
+            if (!char.IsLetterOrDigit(before) && before != '\'' && before != '_'
+                && !char.IsLetterOrDigit(after) && after != '\'' && after != '_')
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     private static string AdmissionWorkflowText() =>

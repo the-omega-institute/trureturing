@@ -121,6 +121,31 @@ public sealed class CoverageLedgerIndexTests
     // 正确行为是**保持当前 active 不动**,而不是拒。
     // 我先前据「id 恒等于前驱」判定「丢失无害」而结案——那只证明了信息不丢失,
     // 没检查消费者能不能拿到它:消费者不看前驱,只看当前事件。等值不蕴含可用。
+    // v2/v3 的 legacy 形以别名 semantic_receipt 记 node id,且**会改身份**(v2 extended 155 条即此类)。
+    // 该回退分支原先无任何测试覆盖:第九轮实测删掉它 9/9 全过、零具名红。
+    // 钉住它——否则读 append-only 历史的能力可以被悄悄删掉而无人发现。
+    [Fact]
+    public void LegacyReattestWithSemanticReceiptAliasReplacesTheActiveIdentity()
+    {
+        const string frozen = "sha256:1111111111111111111111111111111111111111111111111111111111111111";
+        const string reattested = "sha256:2222222222222222222222222222222222222222222222222222222222222222";
+        const string path = "D5/S0/Carrier/Ring.lean";
+        var bytes = Encoding.UTF8.GetBytes(
+            "{\"event_type\":\"Genesis\",\"payload\":{}}\n"
+            + "{\"event_type\":\"Freeze\",\"payload\":{\"frozen_node_id\":\"" + frozen
+            + "\",\"input\":{\"descriptor_selector\":\"" + path + "\"}}}\n"
+            + "{\"event_type\":\"Reattest\",\"payload\":{\"semantic_receipt\":\"" + reattested
+            + "\",\"input\":{\"descriptor_selector\":\"" + path + "\"}}}\n"
+            + "{\"event_type\":\"Revoke\",\"payload\":{\"affected_frozen_node_ids\":[\"" + reattested + "\"]}}\n");
+        var syntax = Assert.IsType<DagLedgerLoadOutcome.Loaded>(DagLedgerLoader.Load(bytes)).Syntax;
+
+        var loaded = Assert.IsType<FrozenCoverageLoadOutcome.Loaded>(
+            FrozenCoverageLedger.Load(syntax));
+
+        // Revoke 指向的是 Reattest 之后的 id;回退分支若被删,该 id 不在 active 表里 ⟹ 路径仍残留。
+        Assert.Empty(loaded.ActiveFrozenPaths);
+    }
+
     [Fact]
     public void SchemaV4LegacyReattestWithoutAnyNodeIdKeepsTheExistingIdentity()
     {
