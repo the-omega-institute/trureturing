@@ -3,7 +3,7 @@ namespace StrataLint.ArchitectureTests;
 public sealed class ScribeTestMapDeriverTests
 {
     [Fact]
-    public void RepositoryMapStaysWithinUnknownDebtToleranceAndEveryPathIsDeclared()
+    public void RepositoryMapHasNoUnknownGrowthAndEveryPathIsDeclared()
     {
         var map = ScribeTestMapDeriver.DeriveRepository(RepositoryLayout.FindRoot());
 
