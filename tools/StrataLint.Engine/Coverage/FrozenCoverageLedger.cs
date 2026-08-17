@@ -65,10 +65,21 @@ public static class FrozenCoverageLedger
                         // Reattest 换 frozen_node_id(witness 含 source blob),路径不变。
                         // 不跟着换,后续 Revoke 指向新 id 时 active 表里没有它 ⟹ 整册被拒。
                         // v4 用正名 frozen_node_id;v2/v3 的 legacy 形只有别名 semantic_receipt。
+                        // 三形:v4 extended 用正名 frozen_node_id;v2/v3 legacy 用别名
+                        // semantic_receipt;**v4 legacy 两者皆无** —— 它只在 materialUnchanged 时
+                        // 产生,此时 id 未变,故保持当前 active 不动。
                         var reattested = payload.TryGetProperty("frozen_node_id", out var freshNode)
                             && freshNode.ValueKind == JsonValueKind.String
                                 ? freshNode.GetString()!
-                                : RequiredString(payload, "semantic_receipt");
+                                : payload.TryGetProperty("semantic_receipt", out var receipt)
+                                    && receipt.ValueKind == JsonValueKind.String
+                                        ? receipt.GetString()!
+                                        : null;
+                        if (reattested is null)
+                        {
+                            break;
+                        }
+
                         var reattestPath = RequiredString(
                             payload.GetProperty("input"), "descriptor_selector");
                         var priorNode = active.SingleOrDefault(item => item.Value.Value == reattestPath);
