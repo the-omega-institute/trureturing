@@ -136,8 +136,6 @@ internal sealed class GoldenDocument : IScribeDocumentDefinition
                     GidRef.Create("D5/S0/Tower/Champions/GoldenAsymptotic")),
                 DocumentEdge.Dependency.Create(
                     GidRef.Create("D5/S0/Tower/Champions/GoldenSurvivorTubes")),
-                DocumentEdge.Dependency.Create(
-                    GidRef.Create("D5/S0/Tower/ErgodicBridge/General")),
             ]));
     }
 }

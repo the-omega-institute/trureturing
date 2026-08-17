@@ -64,4 +64,3 @@ Taking the supremum of the equal value sets turns the internal name-grid champio
 - Truth anchor: `D5/S0/Tower/ErgodicBridge/Golden.golden_optimal_value_eq_ergodic_optimal_value`
 - Dependency: [D5/S0/Tower/Champions/GoldenAsymptotic](../Champions/GoldenAsymptotic.md)
 - Dependency: [D5/S0/Tower/Champions/GoldenSurvivorTubes](../Champions/GoldenSurvivorTubes.md)
-- Dependency: [D5/S0/Tower/ErgodicBridge/General](General.md)

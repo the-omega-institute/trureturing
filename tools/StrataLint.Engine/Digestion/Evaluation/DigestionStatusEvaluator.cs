@@ -40,11 +40,13 @@ internal static partial class DigestionStatusEvaluator
                 entry,
                 alignment.AlignmentFor(entry.AtomId),
                 alignment.AtomFor(entry.AtomId),
+                baselineMigration: null,
                 snapshot,
                 emptyLeanReport,
                 emptyTruthNodes,
                 verifiedScribeEmissions: null,
                 genreChecks[entry.SourceId],
+                changes: null,
                 findings))
             .ToArray();
         DeriveMigration(work);
@@ -59,7 +61,8 @@ internal static partial class DigestionStatusEvaluator
         BackfillInventoryDocument? baselineDocument = null,
         bool validateProjectedStatus = true,
         RepositorySnapshot? baselineSnapshot = null,
-        DigestionCasEvaluation? casEvaluation = null)
+        DigestionCasEvaluation? casEvaluation = null,
+        RawChangeSet? changes = null)
     {
         ArgumentNullException.ThrowIfNull(document);
         ArgumentNullException.ThrowIfNull(snapshot);
@@ -99,16 +102,23 @@ internal static partial class DigestionStatusEvaluator
                 static source => source.GenreRegistryCheck,
                 StringComparer.Ordinal);
         var work = entries.Select(entry =>
-            Inspect(
+        {
+            var baselineMigration = baselineEntries.TryGetValue(entry.AtomId, out var baselineEntry)
+                ? baselineEntry.ProjectedStatus.Migration
+                : (DigestionMigrationState?)null;
+            return Inspect(
                 entry,
                 alignment.AlignmentFor(entry.AtomId),
                 alignment.AtomFor(entry.AtomId),
+                baselineMigration,
                 snapshot,
                 lean.Report,
                 nodes,
                 verifiedScribeEmissions,
                 genreChecks[entry.SourceId],
-                findings)).ToArray();
+                changes,
+                findings);
+        }).ToArray();
         DeriveMigration(work);
         RequireDecompositionBeforeNewAbsorption(
             work,
@@ -198,17 +208,22 @@ internal static partial class DigestionStatusEvaluator
         DigestionLedgerEntry entry,
         DigestionReceiptAlignment alignment,
         DigestionAtom? atom,
+        DigestionMigrationState? baselineMigration,
         RepositorySnapshot snapshot,
         LeanAxiomReport leanReport,
         IReadOnlyDictionary<RepoPath, TruthNode> nodes,
         VerifiedScribeEmissions? verifiedScribeEmissions,
         GenreRegistryCheck genreRegistryCheck,
+        RawChangeSet? changes,
         ImmutableArray<string>.Builder findings)
     {
         var gaps = new List<DigestionGap>();
+        // A new entry has no baseline verdict to reuse, so it must be checked in full even
+        // if a malformed change set omits its ledger path.
+        var verificationChanges = baselineMigration is null ? null : changes;
         var boundary = entry.Atomizer == AtomizerRegistry.NoAtomizerId
             && entry.Boundary is not null
-                ? VerifyBoundary(entry, snapshot, gaps, findings)
+                ? VerifyBoundary(entry, snapshot, verificationChanges, gaps, findings)
                 : VerifyStructuredAlignment(entry, alignment, gaps, findings);
         var targetStates = new List<(string Gid, TruthState State)>();
         var existingTargets = new Dictionary<string, RepositoryFile>(StringComparer.Ordinal);
@@ -237,11 +252,17 @@ internal static partial class DigestionStatusEvaluator
             gaps.Add(new DigestionGap("coverage-gid-missing", entry.AtomId));
         }
 
-        var coverage = VerifyCoverageReceipts(entry, existingTargets, gaps, findings);
+        var coverage = VerifyCoverageReceipts(
+            entry,
+            existingTargets,
+            verificationChanges,
+            gaps,
+            findings);
         var scribe = VerifyScribeReceipts(
             entry,
             snapshot,
             verifiedScribeEmissions,
+            verificationChanges,
             gaps,
             findings);
         if (entry.Receipts.UnresolvedSubitems.Length > 0)
@@ -258,7 +279,15 @@ internal static partial class DigestionStatusEvaluator
             gaps.Add(new DigestionGap("unregistered-genre", token));
         }
 
-        var localComplete = boundary
+        // Partial is an aggregate baseline verdict: at least one local predicate failed,
+        // but the ledger does not record which one. Skipped predicates therefore cannot be
+        // combined into a new success. Touching the entry replays every predicate and earns
+        // a fresh verdict; otherwise the baseline keeps this entry locally incomplete.
+        var baselineKeepsLocalIncomplete = baselineMigration == DigestionMigrationState.Partial
+            && changes is not null
+            && !DigestionCasStore.EntryChanged(entry, changes);
+        var localComplete = !baselineKeepsLocalIncomplete
+            && boundary
             && existingTargets.Count == entry.CoverageGids.Distinct(StringComparer.Ordinal).Count()
             && entry.CoverageGids.Length > 0
             && coverage
