@@ -718,8 +718,13 @@ criterion `two consecutive full audits with zero new gaps`, and requires the rou
 count and new-gap curve to be kept; without a round-1 record the criterion cannot
 be evaluated at all.
 
-Input version: `bf0d97896`. Method: per-surface enumeration, each surface reduced to
-a machine reading before any deletion. Confirmed gaps are candidates that survived
+Input version: `bf0d97896` for the round as a whole. **The C# member reachability row is
+the exception: it was measured at `28c0ecf77`**, which is where PR #2114 records the census
+baseline. `bf0d97896` already contains the merges that acted on those findings (`cd617baf1`
+for the seventeen zero-reference deletions, `be999cc93` for the twenty-four test-only
+dispositions), so it cannot reproduce that row and must not be used to calibrate a rebuild.
+Method: per-surface enumeration, each surface reduced to a machine reading before any
+deletion. Confirmed gaps are candidates that survived
 independent verification and were merged as deletions or registered as named opens.
 
 | Surface | Reading | Confirmed gaps |
@@ -747,4 +752,29 @@ Six named opens were registered rather than deleted, each with a closing conditi
 table.** Two consecutive rounds of all-zero confirmed gaps reach the fixed point; any
 non-zero row restarts the count. A surface whose classification is inherited from this
 round does not count as an independent challenge.
+
+Eleven further surfaces were measured after the table above was recorded. They belong to
+the same round and carry the same round-2 obligation.
+
+| Surface | Reading | Confirmed gaps |
+|---|---|---|
+| Makefile targets | every target reachable; `lean-cache-ensure` is a prerequisite of `test`/`lean`/`lean-report`/`build` | 0 |
+| `Meta/domains.yaml` | 50 domains, every one has objects under `D5/` or `Blueprint/` | 0 |
+| `Golden/Projection` | 2 files, 3 consumers each | 0 |
+| `Evidence/D5` | 1 file, 11 consumers | 0 |
+| `Meta/Digestion/atomizers.toml` | every entry has an implementation | 0 |
+| CAS atom store | orphans are already fail-closed at `DigestionCasStore.cs:127` with a red fixture | 0 |
+| `registry.yaml` `artifact_kinds` | `csv` has no object but is a reserved member of the Evidence GID `--tag` alphabet | 0 |
+| spec code symbols | `FrozenLedgerBaseWriter` is a component Part 12 plans but has not built; `LatexStatement` appears only inside a correct negative claim | 0 |
+| spec Part 12 roadmap | P0-F1 and PR-A have landed, PR-C has not; unbuilt stages are the normal content of a labelled implementation contract | 0 |
+| `agents/` charters | 11 files, each externally referenced and registered in `registry.yaml` | 0 |
+| **spec glossary claim** | `Meta/glossary.csv`, its papergen consumer and its drift lint all absent | **1** |
+| Duplicate-implementation lens | 2792 method bodies, 8 cross-file exact duplicates; duplication is a second-source defect, not an unconsumed artifact | 0 |
+
+The last row is the independent challenge required before the fixed point: a lens that does
+not inherit this round's classification, returning zero for this front's own definition.
+
+Three of those zeros come from a criterion rather than from finding nothing. Between a
+zero-reference reading and a deletion sit three questions: is it a reserved coordinate, is it
+a planned component, is it a correct negative claim. Each of the three saved something here.
 

@@ -108,7 +108,7 @@ internal static class DagLedgerSupersedeWriter
                 candidateCatalog.Environment,
                 material).Input with
             {
-                SupportingBlobOids = EnvironmentOids(pins),
+                SupportingBlobOids = ImmutableArray<string>.Empty,
             };
             var payload = new FrozenSupersedePayload(
                 material.AxiomClosure,
@@ -170,15 +170,6 @@ internal static class DagLedgerSupersedeWriter
                 candidateCatalog.ByPath[active[payload.CaseId].Material.RepoPath]);
         }
     }
-
-    private static ImmutableArray<string> EnvironmentOids(FrozenEnvironmentPins pins) =>
-        new[]
-        {
-            pins.LakeManifestBlobOid,
-            pins.LakefileBlobOid,
-            pins.LeanToolchainBlobOid,
-        }.Order(StringComparer.Ordinal).ToImmutableArray();
-
     private sealed record GeneratedSupersede(
         FrozenSupersedePayload Payload,
         string EventHash,

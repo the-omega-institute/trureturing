@@ -23,4 +23,3 @@ The upper bound applies the imported semiconjugacy-defect definition pointwise. 
 ## References
 
 - Truth anchor: `D5/S3/Observer/Naturality/DiagonalNaturalityDefect.diagonal_naturality_defect_eq_semiconjugacy_defect`
-- Dependency: [D5/S3/Observer/MetricGeometry/SemiconjugacyComposition](../MetricGeometry/SemiconjugacyComposition.md)

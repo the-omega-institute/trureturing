@@ -21,4 +21,3 @@ Every natural-number multiple of f remains bounded and has zero update defect, h
 ## References
 
 - Truth anchor: `D5/S3/Observer/Separation/InvariantObservableInfinity.invariant_separation_distance_eq_top`
-- Dependency: [D5/S3/Observer/ObserverMetric](../ObserverMetric.md)

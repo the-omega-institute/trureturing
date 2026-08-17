@@ -25,5 +25,3 @@ Repository search found those two supporting declarations but no duplicate of th
 ## References
 
 - Truth anchor: `D5/S3/ObserverMemory/Prediction/CompletionDiagonalNaturality.completion_quotient_diagonal_naturality`
-- Dependency: [D5/S0/Diagonal/Naturality/CoordinateRestrictionNaturality](../../../S0/Diagonal/Naturality/CoordinateRestrictionNaturality.md)
-- Dependency: [D5/S3/ObserverMemory/Prediction/ItineraryCompletion](ItineraryCompletion.md)
