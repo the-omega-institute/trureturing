@@ -218,7 +218,10 @@ internal sealed partial class GitRepositoryGateway : IRepositoryGateway
                 standardInput: input)
             .StandardOutput;
         var blobs = ParseBatchObjects(objects, output);
-        return tree.Select(entry => new RawRepositoryEntry(entry.Path, blobs[entry.ObjectId]));
+        return tree.Select(entry => new RawRepositoryEntry(
+            entry.Path,
+            blobs[entry.ObjectId],
+            (entry.ObjectId.Length == 40 ? "git-sha1:" : "git-sha256:") + entry.ObjectId));
     }
 
     private static int BatchOutputLimit(IEnumerable<TreeEntry> entries)

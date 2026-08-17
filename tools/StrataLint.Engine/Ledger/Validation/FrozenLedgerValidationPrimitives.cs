@@ -106,6 +106,8 @@ public static partial class FrozenLedger
             throw new FormatException("Freeze contains a malformed content address.");
         }
 
+        var caseClass = currentShape ? "active-frozen" : RequiredString(payload, "case_class");
+        var evaluation = currentShape ? "admission" : RequiredString(payload, "evaluation");
         var expectedVerdict = currentShape
             ? new FrozenExpectedVerdict(
                 ImmutableArray.Create("admit"),
@@ -116,20 +118,16 @@ public static partial class FrozenLedger
         var prerequisites = RequiredStringArray(payload, "prerequisite_frozen_node_ids")
             .Select(FrozenNodeId.Create)
             .ToImmutableArray();
+        var inputFingerprint = currentShape ? witnessText : RequiredString(payload, "input_fingerprint");
+        var semanticReceipt = currentShape ? frozenText : RequiredString(payload, "semantic_receipt");
+        var truthState = currentShape ? nameof(TruthState.Closed) : RequiredString(payload, "truth_state");
         var result = new FrozenFreezePayload(
-            currentShape ? "active-frozen" : RequiredString(payload, "case_class"),
             RequiredString(payload, "case_id"),
             declarationStatementIds,
-            currentShape ? "admission" : RequiredString(payload, "evaluation"),
-            expectedVerdict,
             FrozenNodeId.Create(frozenText),
             input,
-            currentShape ? witnessText : RequiredString(payload, "input_fingerprint"),
-            path,
             prerequisites,
-            currentShape ? frozenText : RequiredString(payload, "semantic_receipt"),
             StatementId.Create(statementText),
-            currentShape ? nameof(TruthState.Closed) : RequiredString(payload, "truth_state"),
             WitnessId.Create(witnessText))
         {
             AxiomClosure = ParseOptionalAxiomClosure(payload),
@@ -139,21 +137,21 @@ public static partial class FrozenLedger
             throw new FormatException("Freeze input has no validated Git commit/tree/blob capability.");
         }
         var expectedCaseId = FrozenLedgerCanonicalWriter.CaseId(expectedMaterial.FrozenNodeId);
-        if (result.CaseClass != "active-frozen"
+        if (caseClass != "active-frozen"
             || result.CaseId != expectedCaseId
-            || result.Evaluation != "admission"
-            || result.TruthState != nameof(TruthState.Closed)
-            || !result.Expected.AllowedDispositions.SequenceEqual(new[] { "admit" }, StringComparer.Ordinal)
-            || result.Expected.DiagnosticMatch != "none"
-            || result.Expected.RequiredDiagnostics.Length != 0
+            || evaluation != "admission"
+            || truthState != nameof(TruthState.Closed)
+            || !expectedVerdict.AllowedDispositions.SequenceEqual(new[] { "admit" }, StringComparer.Ordinal)
+            || expectedVerdict.DiagnosticMatch != "none"
+            || expectedVerdict.RequiredDiagnostics.Length != 0
             || !result.DeclarationStatementIds.SequenceEqual(expectedMaterial.DeclarationStatementIds)
             || result.StatementId != expectedMaterial.StatementId
             || result.WitnessId != expectedMaterial.WitnessId
             || result.FrozenNodeId != expectedMaterial.FrozenNodeId
             || result.HasAxiomClosure
                 && !result.AxiomClosure.SequenceEqual(expectedMaterial.AxiomClosure)
-            || result.InputFingerprint != expectedMaterial.WitnessId.Value
-            || result.SemanticReceipt != expectedMaterial.FrozenNodeId.Value
+            || inputFingerprint != expectedMaterial.WitnessId.Value
+            || semanticReceipt != expectedMaterial.FrozenNodeId.Value
             || !result.PrerequisiteFrozenNodeIds.SequenceEqual(expectedMaterial.PrerequisiteFrozenNodeIds)
             || requireCatalogRevisionIdentity
                 && (result.Input.BaseCommitOid
@@ -340,13 +338,16 @@ public static partial class FrozenLedger
     {
         var material = JsonSerializer.SerializeToElement(new
         {
-            case_class = payload.CaseClass,
+            case_class = "active-frozen",
             case_id = payload.CaseId,
-            evaluation = payload.Evaluation,
-            expected = FrozenLedgerCanonicalWriter.ExpectedElement(payload.Expected),
+            evaluation = "admission",
+            expected = FrozenLedgerCanonicalWriter.ExpectedElement(new FrozenExpectedVerdict(
+                ImmutableArray.Create("admit"),
+                "none",
+                ImmutableArray<FrozenExpectedDiagnostic>.Empty)),
             input = FrozenLedgerCanonicalWriter.InputElement(payload.Input),
-            input_fingerprint = payload.InputFingerprint,
-            semantic_receipt = payload.SemanticReceipt,
+            input_fingerprint = payload.WitnessId.Value,
+            semantic_receipt = payload.FrozenNodeId.Value,
         });
         return FrozenContentHash.Compute(
             FrozenHashDomains.FrozenCase,

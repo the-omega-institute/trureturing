@@ -245,18 +245,19 @@ public static partial class FrozenLedger
                             catalog,
                             trustedReferences,
                             requireCatalogRevisionIdentity: false);
+                        var freezePath = RepoPath.CreateKnown(freeze.Input.DescriptorSelector);
                         if (!allCaseIds.Add(freeze.CaseId)
-                            || activePathCases.ContainsKey(freeze.NodePath))
+                            || activePathCases.ContainsKey(freezePath))
                         {
                             throw new FormatException(
                                 "Freeze reused a historical case ID or active module path.");
                         }
 
-                        var material = catalog.ByPath[freeze.NodePath];
+                        var material = catalog.ByPath[freezePath];
                         active.Add(
                             freeze.CaseId,
                             new FrozenActiveEntry(material, freeze, item.EventHash));
-                        activePathCases.Add(freeze.NodePath, freeze.CaseId);
+                        activePathCases.Add(freezePath, freeze.CaseId);
                     }
                     else if (item.EventType == "Reattest")
                     {

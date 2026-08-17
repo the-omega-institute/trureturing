@@ -107,7 +107,7 @@ public sealed class LedgerReattestCommandTests
         var backlogIndex = accepted.Events
             .Select(static (item, index) => (item, index))
             .Single(pair => pair.item is FrozenLedgerEvent.Freeze freeze
-                && freeze.Payload.NodePath.Value == FrozenLedgerTestData.PathFor(fixture.BacklogModule))
+                && freeze.Payload.Input.DescriptorSelector == FrozenLedgerTestData.PathFor(fixture.BacklogModule))
             .index;
         Assert.Equal(backlogReplaysFirst, backlogIndex < reattestIndex);
         Assert.Contains($"head={accepted.HeadHash}", result.Output, StringComparison.Ordinal);

@@ -98,8 +98,9 @@ public static partial class FrozenLedger
                 else if (eventType == "Freeze")
                 {
                     var freeze = ParseHistoricalFreeze(payload, trustedReferences);
+                    var freezePath = RepoPath.CreateKnown(freeze.Input.DescriptorSelector);
                     if (!allCaseIds.Add(freeze.CaseId)
-                        || !activePaths.Add(freeze.NodePath))
+                        || !activePaths.Add(freezePath))
                     {
                         throw new FormatException("Frozen history reused a case ID or active module path.");
                     }
@@ -275,8 +276,7 @@ public static partial class FrozenLedger
             RequiredString(payload, "closure_hash"),
             evidence.EnumerateArray().Select(ParseEvidence).ToImmutableArray(),
             RequiredString(payload, "graph_root"),
-            RequiredStringArray(payload, "root_case_ids"),
-            ParseFrozenNodeIds(payload, "root_frozen_node_ids"));
+            RequiredStringArray(payload, "root_case_ids"));
     }
 
     private static FrozenFreezePayload ParseHistoricalFreeze(
@@ -299,25 +299,24 @@ public static partial class FrozenLedger
         var statement = ParseStatementId(RequiredString(payload, "statement_id"), "Freeze statement");
         var witness = ParseWitnessId(RequiredString(payload, "witness_id"), "Freeze witness");
         var frozen = ParseFrozenNodeId(RequiredString(payload, "frozen_node_id"), "Freeze node");
+        var caseClass = currentShape ? "active-frozen" : RequiredString(payload, "case_class");
+        var evaluation = currentShape ? "admission" : RequiredString(payload, "evaluation");
+        var expected = currentShape
+            ? new FrozenExpectedVerdict(
+                ImmutableArray.Create("admit"),
+                "none",
+                ImmutableArray<FrozenExpectedDiagnostic>.Empty)
+            : ParseExpected(payload.GetProperty("expected"));
+        var inputFingerprint = currentShape ? witness.Value : RequiredString(payload, "input_fingerprint");
+        var semanticReceipt = currentShape ? frozen.Value : RequiredString(payload, "semantic_receipt");
+        var truthState = currentShape ? nameof(TruthState.Closed) : RequiredString(payload, "truth_state");
         var result = new FrozenFreezePayload(
-            currentShape ? "active-frozen" : RequiredString(payload, "case_class"),
             RequiredString(payload, "case_id"),
             ParseDeclarationStatementIds(payload),
-            currentShape ? "admission" : RequiredString(payload, "evaluation"),
-            currentShape
-                ? new FrozenExpectedVerdict(
-                    ImmutableArray.Create("admit"),
-                    "none",
-                    ImmutableArray<FrozenExpectedDiagnostic>.Empty)
-                : ParseExpected(payload.GetProperty("expected")),
             frozen,
             input,
-            currentShape ? witness.Value : RequiredString(payload, "input_fingerprint"),
-            path,
             ParseFrozenNodeIds(payload, "prerequisite_frozen_node_ids"),
-            currentShape ? frozen.Value : RequiredString(payload, "semantic_receipt"),
             statement,
-            currentShape ? nameof(TruthState.Closed) : RequiredString(payload, "truth_state"),
             witness)
         {
             AxiomClosure = ParseOptionalAxiomClosure(payload),
@@ -326,15 +325,15 @@ public static partial class FrozenLedger
         {
             throw new FormatException("Historical Freeze input has no validated Git commit/tree/blob capability.");
         }
-        if (result.CaseClass != "active-frozen"
+        if (caseClass != "active-frozen"
             || result.CaseId != FrozenLedgerCanonicalWriter.CaseId(frozen)
-            || result.Evaluation != "admission"
-            || result.TruthState != nameof(TruthState.Closed)
-            || !result.Expected.AllowedDispositions.SequenceEqual(new[] { "admit" }, StringComparer.Ordinal)
-            || result.Expected.DiagnosticMatch != "none"
-            || result.Expected.RequiredDiagnostics.Length != 0
-            || result.InputFingerprint != witness.Value
-            || result.SemanticReceipt != frozen.Value
+            || evaluation != "admission"
+            || truthState != nameof(TruthState.Closed)
+            || !expected.AllowedDispositions.SequenceEqual(new[] { "admit" }, StringComparer.Ordinal)
+            || expected.DiagnosticMatch != "none"
+            || expected.RequiredDiagnostics.Length != 0
+            || inputFingerprint != witness.Value
+            || semanticReceipt != frozen.Value
             || result.Input.DescriptorSelector != path.Value
             || result.Input.Materializer != "repository-snapshot-v1")
         {
@@ -345,14 +344,16 @@ public static partial class FrozenLedger
     }
 
     private static FrozenNodeMaterial HistoricalMaterial(FrozenFreezePayload payload) => new(
-        payload.NodePath,
+        RepoPath.CreateKnown(payload.Input.DescriptorSelector),
         payload.DeclarationStatementIds,
         payload.StatementId,
         payload.WitnessId,
         payload.FrozenNodeId,
         payload.PrerequisiteFrozenNodeIds,
         payload.HasAxiomClosure ? payload.AxiomClosure : ImmutableArray<string>.Empty,
-        new FrozenModuleAttestation(payload.NodePath, payload.Input.DescriptorBlobOid));
+        new FrozenModuleAttestation(
+            RepoPath.CreateKnown(payload.Input.DescriptorSelector),
+            payload.Input.DescriptorBlobOid));
 
     private static bool HistoricalActiveFreezeMatches(
         FrozenFreezePayload payload,

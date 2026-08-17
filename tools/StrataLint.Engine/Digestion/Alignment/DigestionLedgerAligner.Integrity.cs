@@ -114,17 +114,31 @@ internal static partial class DigestionLedgerAligner
             TheoryAtomizerDataLoader.DataPath,
             baselineSnapshot,
             TheoryAtomizerDataLoader.DataPath)
-        // Atomizer implementations have no narrower stable content address. Whole-tree equality
-        // proves their code closure is unchanged; any candidate change pays the cheap recheck.
-        && RepositoryBytesEqual(candidateSnapshot, baselineSnapshot);
+        && AtomizerImplementationClosureEqualBaseline(candidateSnapshot, baselineSnapshot);
 
-    private static bool RepositoryBytesEqual(
+    private static bool AtomizerImplementationClosureEqualBaseline(
         RepositorySnapshot candidateSnapshot,
-        RepositorySnapshot baselineSnapshot) =>
-        candidateSnapshot.Files.Count == baselineSnapshot.Files.Count
-        && candidateSnapshot.Files.All(candidate =>
-            baselineSnapshot.Files.TryGetValue(candidate.Key, out var baseline)
-            && candidate.Value.RawBytes.AsSpan().SequenceEqual(baseline.RawBytes.AsSpan()));
+        RepositorySnapshot baselineSnapshot)
+    {
+        var paths = candidateSnapshot.Files.Keys
+            .Concat(baselineSnapshot.Files.Keys)
+            .Select(static path => path.Value)
+            .Where(IsAtomizerImplementationPath)
+            .Distinct(StringComparer.Ordinal);
+        return paths.All(path => FileBytesEqual(
+            candidateSnapshot,
+            path,
+            baselineSnapshot,
+            path));
+    }
+
+    private static bool IsAtomizerImplementationPath(string path) =>
+        path.StartsWith("tools/StrataLint.Engine/Digestion/Atomizers/", StringComparison.Ordinal)
+        || path.StartsWith("tools/StrataLint.Engine/Digestion/Wm/", StringComparison.Ordinal)
+        || path is "tools/StrataLint.Engine/Digestion/AtomizerRegistry.cs"
+            or "tools/StrataLint.Engine/Digestion/ObserverAtomizer.cs"
+            or "tools/StrataLint.Engine/Digestion/TheoryAtomizers.cs"
+            or "tools/StrataLint.Engine/Digestion/Configuration/TheoryAtomizerDataLoader.cs";
 
     private static bool FileBytesEqual(
         RepositorySnapshot candidateSnapshot,
