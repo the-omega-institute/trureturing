@@ -131,6 +131,10 @@ internal static partial class DigestionLedgerAligner
         var fallbacks = ImmutableArray.CreateBuilder<DigestionIngestFallback>();
         var actualStale = ImmutableArray.CreateBuilder<string>();
         var suggestedAtomIds = new HashSet<string>(StringComparer.Ordinal);
+        var ownedAtomIds = FindOwnedAtomIds(
+            snapshot,
+            sources.SelectMany(static source => source.Entries)
+                .Select(static entry => entry.AtomId));
         var cas = casEvaluation ?? DigestionCasStore.Evaluate(document, snapshot);
         findings.AddRange(cas.Findings);
         var inheritedEntries = InheritedEntries(baselineDocument);
@@ -499,22 +503,54 @@ internal static partial class DigestionLedgerAligner
                     findings);
 
                 var registration = AtomizerRegistry.Require(source.Atomizer);
-                foreach (var atom in atomized.Claims.Where(atom => !matchedAstPaths.Contains(atom.AstPath)))
+                foreach (var atom in atomized.Claims)
                 {
-                    residual.Add(new StructuredResidualAdmission(
-                        source.SourceId,
-                        source.SourcePath,
-                        source.Atomizer,
-                        atom,
-                        SuggestedAtomId(
+                    var matchingAtomIds = source.Entries
+                        .Where(entry => cas.ValidAtomIds.Contains(entry.AtomId)
+                            && entry.AstPath == atom.AstPath
+                            && FingerprintsMatch(entry.Fingerprints, atom.Fingerprints))
+                        .Select(static entry => entry.AtomId)
+                        .Distinct(StringComparer.Ordinal)
+                        .ToArray();
+                    string? authoritativeAtomId = matchingAtomIds.Length == 1
+                        ? matchingAtomIds[0]
+                        : null;
+                    if (!matchedAstPaths.Contains(atom.AstPath))
+                    {
+                        authoritativeAtomId = SuggestedAtomId(
                             source,
                             registration,
                             atom,
                             "residual",
-                            suggestedAtomIds),
-                        new DigestionStatus(
-                            DigestionMigrationState.Residual,
-                            DigestionTruthState.Open)));
+                            suggestedAtomIds);
+                        residual.Add(new StructuredResidualAdmission(
+                            source.SourceId,
+                            source.SourcePath,
+                            source.Atomizer,
+                            atom,
+                            authoritativeAtomId,
+                            new DigestionStatus(
+                                DigestionMigrationState.Residual,
+                                DigestionTruthState.Open)));
+                    }
+
+                    if (authoritativeAtomId is null)
+                    {
+                        continue;
+                    }
+
+                    foreach (var priorGeneration in source.Entries.Where(entry =>
+                                 entry.AstPath == atom.AstPath
+                                 && entry.AtomId != authoritativeAtomId
+                                 && !FingerprintsMatch(entry.Fingerprints, atom.Fingerprints)
+                                 && alignments.GetValueOrDefault(entry.AtomId)
+                                    == DigestionReceiptAlignment.Seen
+                                 && IsUnownedResidualOpen(entry, ownedAtomIds)))
+                    {
+                        alignments[priorGeneration.AtomId] = DigestionReceiptAlignment.Stale;
+                        sourceStale.Add(priorGeneration.AtomId);
+                        actualStale.Add(priorGeneration.AtomId);
+                    }
                 }
 
                 if (mode == DigestionAlignmentMode.Admission)

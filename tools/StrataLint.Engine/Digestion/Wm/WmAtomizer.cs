@@ -37,7 +37,8 @@ internal static partial class WmAtomizer
             bytes,
             Identify,
             static () => GenreRegistryCheck.NoGenreRegistry,
-            identifyHeading: heading => IdentifyHeading(heading, rules));
+            identifyHeading: heading => IdentifyHeading(heading, rules),
+            extendLineClaims: false);
         var raw = bytes.ToArray();
         var text = StrictUtf8.GetString(raw);
         ValidateStructure(text, scaffold, rules);

@@ -153,7 +153,8 @@ internal static class CleanLanesCommand
         foreach (var item in inventory.Where(static item =>
             item.Branch is not null && WorktreeCommand.IsManagedBranch(item.Branch)))
         {
-            if (string.Equals(item.GitDirectory, currentGitDirectory, StringComparison.Ordinal))
+            if (string.Equals(item.Path, repositoryRoot, StringComparison.Ordinal)
+                || string.Equals(item.GitDirectory, currentGitDirectory, StringComparison.Ordinal))
             {
                 events.Add(BlockedWorktree(item, "current"));
                 continue;
@@ -165,18 +166,45 @@ internal static class CleanLanesCommand
                 continue;
             }
 
-            var status = RunGit(
-                item.Path,
-                ["status", "--porcelain=v1", "-z", "--untracked-files=all"],
-                runner,
-                "could not inspect worktree status");
+            if (!HasGitMarker(item.Path))
+            {
+                events.Add(BlockedWorktree(item, "unreadable"));
+                continue;
+            }
+
+            ProcessOutput status;
+            try
+            {
+                status = RunGit(
+                    item.Path,
+                    ["status", "--porcelain=v1", "-z", "--untracked-files=all"],
+                    runner,
+                    "could not inspect worktree status");
+            }
+            catch (Exception exception) when (exception is not OutOfMemoryException)
+            {
+                events.Add(BlockedWorktree(item, "unreadable"));
+                continue;
+            }
+
             if (status.StandardOutput.Length != 0)
             {
                 events.Add(BlockedWorktree(item, "dirty"));
                 continue;
             }
 
-            if (!IsAncestor(repositoryRoot, item.Head, baseCommit, runner))
+            bool merged;
+            try
+            {
+                merged = IsAncestor(repositoryRoot, item.Head, baseCommit, runner);
+            }
+            catch (Exception exception) when (exception is not OutOfMemoryException)
+            {
+                events.Add(BlockedWorktree(item, "unreadable"));
+                continue;
+            }
+
+            if (!merged)
             {
                 events.Add(BlockedWorktree(item, "unmerged"));
                 continue;
@@ -258,9 +286,12 @@ internal static class CleanLanesCommand
         ICollection<CleanLaneEvent> events,
         IWorktreeProcessRunner runner)
     {
-        var registeredByGitDirectory = inventory.ToDictionary(
-            static item => item.GitDirectory,
-            StringComparer.Ordinal);
+        var registeredByGitDirectory = inventory
+            .Where(static item => item.GitDirectory is not null)
+            .ToDictionary(
+                static item => item.GitDirectory!,
+                static item => item,
+                StringComparer.Ordinal);
         foreach (var path in tempRoots
             .Where(Directory.Exists)
             .SelectMany(static root => Directory.EnumerateDirectories(
@@ -489,7 +520,7 @@ internal static class CleanLanesCommand
                     path,
                     head,
                     branch,
-                    ResolveGitDirectory(path, runner)));
+                    TryResolveRegisteredGitDirectory(path, runner)));
                 path = null;
                 head = null;
                 branch = null;
@@ -546,6 +577,21 @@ internal static class CleanLanesCommand
             : null;
     }
 
+    private static string? TryResolveRegisteredGitDirectory(
+        string path,
+        IWorktreeProcessRunner runner)
+    {
+        if (!Directory.Exists(path) || !HasGitMarker(path)) return null;
+        try
+        {
+            return TryResolveGitDirectory(path, runner);
+        }
+        catch (Exception exception) when (exception is not OutOfMemoryException)
+        {
+            return null;
+        }
+    }
+
     private static bool IsAncestor(
         string repositoryRoot,
         string ancestor,
@@ -578,6 +624,10 @@ internal static class CleanLanesCommand
 
     private static string Decode(byte[] bytes) => StrictUtf8.GetString(bytes);
 
+    private static bool HasGitMarker(string path) =>
+        File.Exists(Path.Combine(path, ".git"))
+        || Directory.Exists(Path.Combine(path, ".git"));
+
     private static CleanLaneEvent BlockedWorktree(RegisteredWorktree item, string reason) =>
         new("lane_worktree", item.Path, item.Branch, item.Head, "skipped", reason);
 
@@ -592,7 +642,7 @@ internal static class CleanLanesCommand
         string Path,
         string Head,
         string? Branch,
-        string GitDirectory);
+        string? GitDirectory);
 
     private sealed record CleanLaneEvent(
         string Kind,
