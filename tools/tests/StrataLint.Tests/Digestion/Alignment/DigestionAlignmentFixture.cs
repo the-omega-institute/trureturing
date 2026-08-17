@@ -21,7 +21,7 @@ public sealed partial class DigestionAlignmentTests
                 sourcePath,
                 AtomizerRegistry.GictId,
                 acknowledgedStale.ToImmutableArray(),
-                GenreRegistryCheck.NoGenreRegistry,
+                GenreRegistryProjection.Available(GenreRegistryCheck.NoGenreRegistry),
                 entries.ToImmutableArray()),
         ],
         []);

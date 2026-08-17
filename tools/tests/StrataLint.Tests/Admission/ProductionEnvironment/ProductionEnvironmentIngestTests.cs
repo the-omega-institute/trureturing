@@ -540,8 +540,7 @@ public sealed partial class ProductionEnvironmentTests
         Assert.Contains("residual_open_added=2", first.Output, StringComparison.Ordinal);
         Assert.Contains("ledger_changed=true", first.Output, StringComparison.Ordinal);
         var migrated = BackfillInventoryLoader.LoadRoot(temporary.Path);
-        var migratedText = Encoding.UTF8.GetString(BackfillInventoryWriter.Write(migrated).AsSpan());
-        Assert.DoesNotContain("boundary:", migratedText, StringComparison.Ordinal);
+        var migratedImage = DirectoryLedgerTestSupport.Image(migrated);
         Assert.All(migrated.RequireDigestionEntries(), static entry => Assert.Null(entry.Boundary));
         DirectoryLedgerTestSupport.ReplaceWithProjection(fixture.Files, migrated);
         foreach (var entry in migrated.RequireDigestionEntries().Where(static entry =>
@@ -571,9 +570,8 @@ public sealed partial class ProductionEnvironmentTests
         Assert.Contains("cas_objects_written=0", second.Output, StringComparison.Ordinal);
         Assert.Contains("ledger_changed=false", second.Output, StringComparison.Ordinal);
         Assert.Equal(
-            migratedText,
-            Encoding.UTF8.GetString(
-                BackfillInventoryWriter.Write(BackfillInventoryLoader.LoadRoot(temporary.Path)).AsSpan()));
+            migratedImage,
+            DirectoryLedgerTestSupport.Image(BackfillInventoryLoader.LoadRoot(temporary.Path)));
     }
 
     private static BackfillInventoryDocument IngestLedger(string atomizerId, DigestionAtom atom) =>

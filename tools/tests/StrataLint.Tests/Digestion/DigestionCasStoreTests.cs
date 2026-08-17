@@ -112,7 +112,7 @@ public sealed class DigestionCasStoreTests
                 "docs/source.md",
                 AtomizerRegistry.NoAtomizerId,
                 [],
-                GenreRegistryCheck.NoGenreRegistry,
+                GenreRegistryProjection.Available(GenreRegistryCheck.NoGenreRegistry),
                 [
                     new DigestionLedgerEntry(
                         "synthetic-source",

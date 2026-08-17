@@ -51,6 +51,27 @@ public sealed partial class ProductionEnvironmentTests
     }
 
     [Fact]
+    public void CoverAtomDiffDoesNotRequireBaselineGenreProjection()
+    {
+        var inputs = DirectoryInputs(CoverWorld.Materialize(new CoverSpec()));
+        var historicalBaseline = new Dictionary<string, string>(inputs.Baseline, StringComparer.Ordinal);
+        var metadata = Assert.Single(historicalBaseline, static pair =>
+            pair.Key.EndsWith("/source.toml", StringComparison.Ordinal));
+        historicalBaseline[metadata.Key] = metadata.Value
+            .Replace("genre_registry_check = \"collected\"\n", string.Empty, StringComparison.Ordinal)
+            .Replace("unregistered_genres = []\n", string.Empty, StringComparison.Ordinal);
+        inputs = inputs with { Baseline = historicalBaseline };
+        using var temporary = new TemporaryDirectory();
+        DirectoryLedgerTestSupport.Write(temporary.Path, inputs.Files);
+        var environment = BuildCoverEnvironment(temporary.Path, inputs, inputs.Files);
+
+        var result = environment.CoverAtom(CoverArgs(inputs));
+
+        Assert.True(result.Success, result.Error);
+        Assert.Contains("ledger_changed=true", result.Output, StringComparison.Ordinal);
+    }
+
+    [Fact]
     public void CoverAtomRejectsDriftInUnchangedDirectoryLedgerMetadata()
     {
         var inputs = CoverWorld.Materialize(new CoverSpec());
@@ -206,10 +227,10 @@ public sealed partial class ProductionEnvironmentTests
         Assert.True(exitCode == 0, $"exit_code={exitCode} stderr={console.Error}");
         Assert.Equal(string.Empty, console.Error);
         Assert.Contains("ledger_changed=true", console.Output, StringComparison.Ordinal);
-        var alignedLedger = Encoding.UTF8.GetString(
-            BackfillInventoryWriter.Write(BackfillInventoryLoader.LoadRoot(temporary.Path)).AsSpan());
+        var alignedLedger = DirectoryLedgerTestSupport.Image(
+            BackfillInventoryLoader.LoadRoot(temporary.Path));
         Assert.NotEqual(
-            Encoding.UTF8.GetString(BackfillInventoryWriter.Write(driftedDocument).AsSpan()),
+            DirectoryLedgerTestSupport.Image(driftedDocument),
             alignedLedger);
         var alignedFiles = FilesWithLedgerFromRoot(driftedFiles, temporary.Path);
         var status = CoverWorld.Environment(temporary.Path, inputs, alignedFiles)

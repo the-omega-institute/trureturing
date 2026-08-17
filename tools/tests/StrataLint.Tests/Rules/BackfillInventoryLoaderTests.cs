@@ -21,11 +21,19 @@ public sealed class BackfillInventoryLoaderTests
                 | System.Reflection.BindingFlags.Public
                 | System.Reflection.BindingFlags.NonPublic)
             .SingleOrDefault(method => method.Name == "WriteForIngest");
+        var aggregateWrite = typeof(BackfillInventoryWriter)
+            .GetMethods(System.Reflection.BindingFlags.Static
+                | System.Reflection.BindingFlags.Public
+                | System.Reflection.BindingFlags.NonPublic)
+            .SingleOrDefault(method => method.Name == "Write"
+                && method.GetParameters() is [{ ParameterType: var parameterType }]
+                && parameterType == typeof(BackfillInventoryDocument));
         var legacyPreimage = typeof(BackfillInventoryLoader).Assembly.GetType(
             "StrataLint.Engine.BackfillReceiptPreimage");
 
         Assert.Null(legacyLoad);
         Assert.Null(legacyWrite);
+        Assert.Null(aggregateWrite);
         Assert.Null(legacyPreimage);
     }
 
@@ -239,7 +247,7 @@ public sealed class BackfillInventoryLoaderTests
     }
 
     [Fact]
-    public void SourceMetadataAcceptsLegacyGenreProjectionOnlyInBaseline()
+    public void BaselineWithoutGenreProjectionIsUnavailableAndCannotBeReadAsNoRegistry()
     {
         var source = Source("delta-v0.1", "docs/delta.md", "none");
         var legacy = source.Text
@@ -249,9 +257,29 @@ public sealed class BackfillInventoryLoaderTests
             (source.Path, legacy),
             Atom("delta-v0.1", "residual-open", "delta-atom", "theorem/delta")));
 
-        Assert.Equal(
-            GenreRegistryCheckKind.NoRegistry,
-            Assert.Single(document.RequireDigestionSources()).GenreRegistryCheck.Kind);
+        var loadedSource = Assert.Single(document.RequireDigestionSources());
+        Assert.Equal(GenreRegistryProjection.Unavailable, loadedSource.GenreRegistryProjection);
+        Assert.NotEqual(
+            GenreRegistryProjection.Available(GenreRegistryCheck.NoGenreRegistry),
+            loadedSource.GenreRegistryProjection);
+        var exception = Assert.Throws<InvalidOperationException>(
+            () => loadedSource.GenreRegistryCheck);
+        Assert.Equal("genre registry projection is unavailable", exception.Message);
+    }
+
+    [Fact]
+    public void BaselineWithGenreMetadataStillExposesAnUnavailableProjection()
+    {
+        var source = Source("delta-v0.1", "docs/delta.md", "pzg-v1");
+        var document = BackfillInventoryLoader.LoadBaseline(Snapshot(
+            source,
+            Atom("delta-v0.1", "residual-open", "delta-atom", "theorem/delta")));
+
+        var loadedSource = Assert.Single(document.RequireDigestionSources());
+        Assert.Equal(GenreRegistryProjection.Unavailable, loadedSource.GenreRegistryProjection);
+        var exception = Assert.Throws<InvalidOperationException>(
+            () => loadedSource.GenreRegistryCheck);
+        Assert.Equal("genre registry projection is unavailable", exception.Message);
     }
 
     [Fact]
@@ -296,7 +324,8 @@ public sealed class BackfillInventoryLoaderTests
             : System.Collections.Immutable.ImmutableArray.Create(first, second);
         source = source with
         {
-            GenreRegistryCheck = GenreRegistryCheck.Collected(tokens),
+            GenreRegistryProjection = GenreRegistryProjection.Available(
+                GenreRegistryCheck.Collected(tokens)),
         };
 
         var exception = Assert.Throws<InvalidOperationException>(() =>
@@ -343,6 +372,17 @@ public sealed class BackfillInventoryLoaderTests
         var sourcePath = $"{BackfillInventoryLoader.RootPath}delta-v0.1/source.toml";
         var exception = Assert.Throws<FormatException>(() => BackfillInventoryLoader.Load(Snapshot(
             (sourcePath, "source_id = \"delta-v0.1\"\npath = \"docs/delta.md\"\natomizer = \"none\"\ngenre_registry_check = \"no-registry\"\nunregistered_genres = []\nacknowledged_stale = []\n"),
+            Atom("delta-v0.1", "residual-open", "delta-atom", "theorem/delta"))));
+
+        Assert.Equal($"source metadata is not canonically encoded: {sourcePath}", exception.Message);
+    }
+
+    [Fact]
+    public void HistoricalBaselineRejectsNoncanonicalEmptyAcknowledgedStaleArray()
+    {
+        var sourcePath = $"{BackfillInventoryLoader.RootPath}delta-v0.1/source.toml";
+        var exception = Assert.Throws<FormatException>(() => BackfillInventoryLoader.LoadBaseline(Snapshot(
+            (sourcePath, "source_id = \"delta-v0.1\"\npath = \"docs/delta.md\"\natomizer = \"none\"\nacknowledged_stale = []\n"),
             Atom("delta-v0.1", "residual-open", "delta-atom", "theorem/delta"))));
 
         Assert.Equal($"source metadata is not canonically encoded: {sourcePath}", exception.Message);

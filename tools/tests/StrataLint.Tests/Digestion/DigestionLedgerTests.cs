@@ -80,7 +80,7 @@ public sealed partial class DigestionLedgerTests
             ledger,
             Snapshot(("docs/source.md", sourceBytes), CasFile(atom)),
             ledger);
-        var firstBytes = BackfillInventoryWriter.Write(first.Document);
+        var firstBytes = DirectoryLedgerTestSupport.Image(first.Document);
         var migrated = first.Document;
 
         var migratedEntry = Assert.Single(migrated.RequireDigestionEntries());
@@ -94,10 +94,10 @@ public sealed partial class DigestionLedgerTests
                 ("docs/source.md", sourceBytes),
                 CasFile(atom)),
             ledger);
-        var secondBytes = BackfillInventoryWriter.Write(second.Document);
+        var secondBytes = DirectoryLedgerTestSupport.Image(second.Document);
 
         Assert.Empty(second.CasObjects);
-        Assert.Equal(firstBytes.ToArray(), secondBytes.ToArray());
+        Assert.Equal(firstBytes, secondBytes);
     }
 
     [Fact]
@@ -113,7 +113,7 @@ public sealed partial class DigestionLedgerTests
             ledger,
             Snapshot(("docs/source.md", sourceBytes)),
             ledger);
-        var firstBytes = BackfillInventoryWriter.Write(first.Document);
+        var firstBytes = DirectoryLedgerTestSupport.Image(first.Document);
         var migrated = first.Document;
         var entries = Assert.Single(first.Document.RequireDigestionSources()).Entries;
 
@@ -139,11 +139,11 @@ public sealed partial class DigestionLedgerTests
             migrated,
             Snapshot(sourceBytes, first.CasObjects),
             ledger);
-        var secondBytes = BackfillInventoryWriter.Write(second.Document);
+        var secondBytes = DirectoryLedgerTestSupport.Image(second.Document);
 
         Assert.Equal(0, second.ResidualOpenAdded);
         Assert.Empty(second.CasObjects);
-        Assert.Equal(firstBytes.ToArray(), secondBytes.ToArray());
+        Assert.Equal(firstBytes, secondBytes);
     }
 
     [Fact]
@@ -155,7 +155,7 @@ public sealed partial class DigestionLedgerTests
             sourceBytes,
             DigestionTestSupport.Rules).Claims);
         var document = StructuralLedger(atom);
-        var expected = BackfillInventoryWriter.Write(document);
+        var expected = DirectoryLedgerTestSupport.Image(document);
 
         var replay = DigestionIngestor.Plan(
             document,
@@ -164,7 +164,7 @@ public sealed partial class DigestionLedgerTests
 
         Assert.Equal(0, replay.ResidualOpenAdded);
         Assert.Empty(replay.CasObjects);
-        Assert.Equal(expected.ToArray(), BackfillInventoryWriter.Write(replay.Document).ToArray());
+        Assert.Equal(expected, DirectoryLedgerTestSupport.Image(replay.Document));
     }
 
     [Fact]
@@ -296,7 +296,7 @@ public sealed partial class DigestionLedgerTests
             ledger,
             Snapshot((sourcePath, sourceBytes)),
             ledger);
-        var firstBytes = BackfillInventoryWriter.Write(first.Document);
+        var firstBytes = DirectoryLedgerTestSupport.Image(first.Document);
         var migrated = first.Document;
 
         var fallback = Assert.Single(first.Fallbacks);
@@ -318,11 +318,11 @@ public sealed partial class DigestionLedgerTests
                 .Prepend((sourcePath, sourceBytes))
                 .ToArray()),
             ledger);
-        var secondBytes = BackfillInventoryWriter.Write(second.Document);
+        var secondBytes = DirectoryLedgerTestSupport.Image(second.Document);
 
         Assert.Equal(0, second.ResidualOpenAdded);
         Assert.Empty(second.CasObjects);
-        Assert.Equal(firstBytes.ToArray(), secondBytes.ToArray());
+        Assert.Equal(firstBytes, secondBytes);
     }
 
     [Fact]
@@ -409,7 +409,8 @@ public sealed partial class DigestionLedgerTests
         [
             Assert.Single(loaded.RequireDigestionSources()) with
             {
-                GenreRegistryCheck = GenreRegistryCheck.Collected([token]),
+                GenreRegistryProjection = GenreRegistryProjection.Available(
+                    GenreRegistryCheck.Collected([token])),
             },
         ]);
         var snapshot = Snapshot(
@@ -620,13 +621,24 @@ public sealed partial class DigestionLedgerTests
             AtomizerRegistry.GictId);
     }
 
-    private static BackfillInventoryDocument StructuralLedger(DigestionAtom atom) =>
-        Ledger(
+    private static BackfillInventoryDocument StructuralLedger(DigestionAtom atom)
+    {
+        var document = Ledger(
             atom,
             DigestionMigrationState.Residual,
             DigestionTruthState.Open,
             includeCoverageGid: false,
             includeBoundary: false);
+        var source = Assert.Single(document.RequireDigestionSources());
+        return document.WithDigestionSources(
+        [
+            source with
+            {
+                GenreRegistryProjection = GenreRegistryProjection.Available(
+                    GenreRegistryCheck.Collected([])),
+            },
+        ]);
+    }
 
     private static (BackfillInventoryDocument Ledger, DigestionCasObject Captured)
         CasBackedNoAtomizerLedger(byte[] receiptBytes)

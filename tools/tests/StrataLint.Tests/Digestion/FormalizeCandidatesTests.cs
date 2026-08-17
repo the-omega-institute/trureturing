@@ -380,8 +380,7 @@ public sealed class FormalizeCandidatesTests
         Assert.True(result.Success, result.Error);
         using var json = JsonDocument.Parse(result.Output);
         Assert.Equal(
-            DigestionFingerprint.ComputeOpaque(
-                BackfillInventoryWriter.Write(ledger).AsSpan()).RawSha256,
+            DigestionLedgerPreimage.ComputeSha256(ledger),
             json.RootElement.GetProperty("ledger_sha256").GetString());
         var candidate = Assert.Single(json.RootElement.GetProperty("candidates").EnumerateArray());
         Assert.Equal(
@@ -390,6 +389,46 @@ public sealed class FormalizeCandidatesTests
         Assert.Contains("完整推导", candidate.GetProperty("atom_text").GetString(), StringComparison.Ordinal);
         Assert.Equal(entry.Atom.Fingerprints.RawSha256, candidate.GetProperty("raw_sha256").GetString());
         Assert.Equal(entry.Atom.Fingerprints.RawSha256, candidate.GetProperty("cas_ref").GetString());
+    }
+
+    [Fact]
+    public void DirectoryLedgerHashChangesWhenOnlyGenreRegistryCheckChanges()
+    {
+        var ledger = Ledger([Entry("source", "complete-atom", "定理", "6.2")]);
+        var source = Assert.Single(ledger.RequireDigestionSources());
+        var changed = ledger.WithDigestionSources(
+        [
+            source with
+            {
+                GenreRegistryProjection = GenreRegistryProjection.Available(
+                    GenreRegistryCheck.NoGenreRegistry),
+            },
+        ]);
+
+        var before = DigestionLedgerPreimage.ComputeSha256(ledger);
+        var after = DigestionLedgerPreimage.ComputeSha256(changed);
+
+        Assert.NotEqual(before, after);
+    }
+
+    [Fact]
+    public void DirectoryLedgerHashChangesWhenOnlyUnregisteredGenresChange()
+    {
+        var ledger = Ledger([Entry("source", "complete-atom", "定理", "6.3")]);
+        var source = Assert.Single(ledger.RequireDigestionSources());
+        var changed = ledger.WithDigestionSources(
+        [
+            source with
+            {
+                GenreRegistryProjection = GenreRegistryProjection.Available(
+                    GenreRegistryCheck.Collected(["未登记体"])),
+            },
+        ]);
+
+        var before = DigestionLedgerPreimage.ComputeSha256(ledger);
+        var after = DigestionLedgerPreimage.ComputeSha256(changed);
+
+        Assert.NotEqual(before, after);
     }
 
     [Fact]
@@ -596,7 +635,7 @@ public sealed class FormalizeCandidatesTests
                     $"synthetic/{source.Key}.md",
                     AtomizerRegistry.PzgId,
                     [],
-                    GenreRegistryCheck.Collected([]),
+                    GenreRegistryProjection.Available(GenreRegistryCheck.Collected([])),
                     source.Select(static entry => new DigestionLedgerEntry(
                         entry.SourceId,
                         $"synthetic/{entry.SourceId}.md",

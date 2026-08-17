@@ -35,7 +35,7 @@ public sealed partial class DigestionAlignmentTests
         Assert.Equal(captured.Reference, coarse.Fingerprints.RawSha256);
         Assert.Equal(opaqueBytes, captured.Bytes.ToArray());
 
-        var firstBytes = BackfillInventoryWriter.Write(plan.Document);
+        var firstBytes = DirectoryLedgerTestSupport.Image(plan.Document);
         var migrated = plan.Document;
         var second = DigestionIngestor.Plan(
             migrated,
@@ -44,12 +44,12 @@ public sealed partial class DigestionAlignmentTests
                 plan.CasObjects,
                 theoryPath),
             ledger);
-        var secondBytes = BackfillInventoryWriter.Write(second.Document);
+        var secondBytes = DirectoryLedgerTestSupport.Image(second.Document);
 
         Assert.Single(second.Fallbacks);
         Assert.Equal(0, second.ResidualOpenAdded);
         Assert.Empty(second.CasObjects);
-        Assert.Equal(firstBytes.ToArray(), secondBytes.ToArray());
+        Assert.Equal(firstBytes, secondBytes);
     }
 
     [Fact]
@@ -148,7 +148,7 @@ public sealed partial class DigestionAlignmentTests
         var ledger = Ledger([], Entry("seen-receipt", atoms[0]));
 
         var first = DigestionIngestor.Plan(ledger, Snapshot(sourceBytes, [seenCapture]), ledger);
-        var firstBytes = BackfillInventoryWriter.Write(first.Document);
+        var firstBytes = DirectoryLedgerTestSupport.Image(first.Document);
         var migrated = first.Document;
 
         Assert.Equal(1, first.ResidualOpenAdded);
@@ -167,11 +167,11 @@ public sealed partial class DigestionAlignmentTests
             migrated,
             Snapshot(sourceBytes, first.CasObjects.Prepend(seenCapture)),
             ledger);
-        var secondBytes = BackfillInventoryWriter.Write(second.Document);
+        var secondBytes = DirectoryLedgerTestSupport.Image(second.Document);
 
         Assert.Equal(0, second.ResidualOpenAdded);
         Assert.Empty(second.CasObjects);
-        Assert.Equal(firstBytes.ToArray(), secondBytes.ToArray());
+        Assert.Equal(firstBytes, secondBytes);
     }
 
     [Fact]
@@ -620,23 +620,22 @@ public sealed partial class DigestionAlignmentTests
             baseline,
             Snapshot(currentBytes, [oldCapture]),
             baseline);
-        var firstBytes = BackfillInventoryWriter.Write(first.Document);
+        var firstBytes = DirectoryLedgerTestSupport.Image(first.Document);
         var migrated = first.Document;
         var second = DigestionIngestor.Plan(
             migrated,
             Snapshot(currentBytes, first.CasObjects.Prepend(oldCapture)),
             baseline);
-        var secondBytes = BackfillInventoryWriter.Write(second.Document);
+        var secondBytes = DirectoryLedgerTestSupport.Image(second.Document);
 
         Assert.Equal(0, first.StaleAcknowledged);
         Assert.Equal(2, first.ResidualOpenAdded);
         var source = Assert.Single(first.Document.RequireDigestionSources());
         Assert.Empty(source.AcknowledgedStale);
         Assert.All(source.Entries, static entry => Assert.Null(entry.Boundary));
-        Assert.DoesNotContain("boundary:", Encoding.UTF8.GetString(firstBytes.AsSpan()), StringComparison.Ordinal);
         Assert.Equal(0, second.StaleAcknowledged);
         Assert.Equal(0, second.ResidualOpenAdded);
-        Assert.Equal(firstBytes.ToArray(), secondBytes.ToArray());
+        Assert.Equal(firstBytes, secondBytes);
     }
 
     private static (BackfillInventoryDocument Ledger, DigestionCasObject Capture) ExistingCasBackedLedger()

@@ -385,7 +385,10 @@ public sealed partial class DigestionAlignmentTests
         BackfillInventoryDocument document,
         GenreRegistryCheck check) =>
         document.WithDigestionSources(document.RequireDigestionSources()
-            .Select(source => source with { GenreRegistryCheck = check })
+            .Select(source => source with
+            {
+                GenreRegistryProjection = GenreRegistryProjection.Available(check),
+            })
             .ToImmutableArray());
 
     private sealed record CoarseMigrationFixture(

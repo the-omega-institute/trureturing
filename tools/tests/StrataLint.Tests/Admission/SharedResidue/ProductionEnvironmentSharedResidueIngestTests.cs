@@ -117,14 +117,14 @@ public sealed partial class ProductionEnvironmentTests
                 RuleFixture.FixtureDigestionSourcePath,
                 atomizerId,
                 [],
-                GenreRegistryCheck.Collected([]),
+                GenreRegistryProjection.Available(GenreRegistryCheck.Collected([])),
                 [.. sourceAEntries]),
             new DigestionLedgerSource(
                 "source-b",
                 "docs/CONTRIBUTING.md",
                 atomizerId,
                 [],
-                GenreRegistryCheck.Collected([]),
+                GenreRegistryProjection.Available(GenreRegistryCheck.Collected([])),
                 [Entry("source-b", "docs/CONTRIBUTING.md", "atom-b", clearSecond)]),
         ],
         []);

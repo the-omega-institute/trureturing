@@ -109,7 +109,7 @@ internal static class DigestionIngestor
                 path,
                 AtomizerRegistry.GenericId,
                 [],
-                GenreRegistryCheck.NoGenreRegistry,
+                GenreRegistryProjection.Available(GenreRegistryCheck.NoGenreRegistry),
                 ImmutableArray<DigestionLedgerEntry>.Empty));
         }
 
@@ -187,7 +187,10 @@ internal static class DigestionIngestor
             var resolvedSource = alignment.GenreRegistryChecks.TryGetValue(
                 source.SourceId,
                 out var genreRegistryCheck)
-                    ? source with { GenreRegistryCheck = genreRegistryCheck }
+                    ? source with
+                    {
+                        GenreRegistryProjection = GenreRegistryProjection.Available(genreRegistryCheck),
+                    }
                     : source;
             if (!AtomizerRegistry.IsRegistered(source.Atomizer))
             {

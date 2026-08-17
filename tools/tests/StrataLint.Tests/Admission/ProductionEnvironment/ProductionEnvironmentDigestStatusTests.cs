@@ -182,7 +182,7 @@ public sealed partial class ProductionEnvironmentTests
     }
 
     [Fact]
-    public void DigestStatusAcceptsHistoricalGenreMarkerSchemaOnlyInBaseline()
+    public void DigestStatusDiffDoesNotRequireBaselineGenreProjection()
     {
         var fixture = new RuleFixture();
         fixture.AddBackfillTargets();
@@ -195,7 +195,7 @@ public sealed partial class ProductionEnvironmentTests
     }
 
     [Fact]
-    public void FormalizeCandidatesAcceptsHistoricalGenreMarkerSchemaOnlyInBaseline()
+    public void FormalizeCandidatesDiffDoesNotRequireBaselineGenreProjection()
     {
         var fixture = new RuleFixture();
         fixture.AddBackfillTargets();
@@ -208,7 +208,7 @@ public sealed partial class ProductionEnvironmentTests
     }
 
     [Fact]
-    public void ResidualShardRenderingAcceptsHistoricalGenreMarkerSchemaOnlyInBaseline()
+    public void ResidualShardDiffDoesNotRequireBaselineGenreProjection()
     {
         var fixture = new RuleFixture();
         fixture.AddBackfillTargets();

@@ -1,4 +1,5 @@
 using System.Collections.Immutable;
+using System.Text;
 
 namespace StrataLint.Engine;
 
@@ -6,12 +7,57 @@ internal static partial class BackfillInventoryLoader
 {
     private sealed record ParsedSourceMetadata(
         Dictionary<string, List<string>> Fields,
-        bool OmittedGenreRegistryProjection);
+        GenreRegistryProjection GenreRegistryProjection);
 
-    private static ParsedSourceMetadata ParseSourceMetadata(
+    private static ParsedSourceMetadata ParseCandidateSourceMetadata(
         string text,
-        string path,
-        bool allowOmittedGenreRegistryProjection)
+        string path)
+    {
+        var fields = ParseSourceMetadataFields(text, path);
+        RequireCandidateSourceMetadataKeys(fields, path);
+        RequireSourceIdentity(fields, path);
+        var check = ParseGenreRegistryCheck(fields, path);
+        RequireCanonicalSourceMetadata(
+            text,
+            path,
+            BackfillInventoryWriter.WriteSourceMetadata(Source(fields, GenreRegistryProjection.Available(check))));
+        return new ParsedSourceMetadata(fields, GenreRegistryProjection.Available(check));
+    }
+
+    private static ParsedSourceMetadata ParseBaselineSourceMetadata(
+        string text,
+        string path)
+    {
+        var fields = ParseSourceMetadataFields(text, path);
+        var keys = fields.Keys.ToHashSet(StringComparer.Ordinal);
+        var currentKeys = CandidateSourceMetadataKeys(fields);
+        var historicalKeys = HistoricalSourceMetadataKeys(fields);
+        if (!keys.SetEquals(currentKeys) && !keys.SetEquals(historicalKeys))
+        {
+            throw new FormatException($"source metadata keys are not canonical: {path}");
+        }
+
+        RequireSourceIdentity(fields, path);
+        if (keys.SetEquals(currentKeys))
+        {
+            var check = ParseGenreRegistryCheck(fields, path);
+            RequireCanonicalSourceMetadata(
+                text,
+                path,
+                BackfillInventoryWriter.WriteSourceMetadata(
+                    Source(fields, GenreRegistryProjection.Available(check))));
+        }
+        else
+        {
+            RequireCanonicalSourceMetadata(text, path, WriteHistoricalSourceMetadata(fields));
+        }
+
+        return new ParsedSourceMetadata(fields, GenreRegistryProjection.Unavailable);
+    }
+
+    private static Dictionary<string, List<string>> ParseSourceMetadataFields(
+        string text,
+        string path)
     {
         var result = new Dictionary<string, List<string>>(StringComparer.Ordinal);
         foreach (var rawLine in text.Split('\n', StringSplitOptions.RemoveEmptyEntries))
@@ -68,53 +114,99 @@ internal static partial class BackfillInventoryLoader
             }
         }
 
-        var keys = result.Keys.ToHashSet(StringComparer.Ordinal);
-        var hasAcknowledgedStale = result.ContainsKey("acknowledged_stale");
-        string[] currentKeys = hasAcknowledgedStale
-                    ? [
-                        "source_id",
-                        "path",
-                        "atomizer",
-                        "genre_registry_check",
-                        "unregistered_genres",
-                        "acknowledged_stale",
-                    ]
-                    : [
-                        "source_id",
-                        "path",
-                        "atomizer",
-                        "genre_registry_check",
-                        "unregistered_genres",
-                    ];
-        string[] legacyKeys = hasAcknowledgedStale
-            ? ["source_id", "path", "atomizer", "acknowledged_stale"]
-            : ["source_id", "path", "atomizer"];
-        var omittedGenreRegistryProjection = allowOmittedGenreRegistryProjection
-            && keys.SetEquals(legacyKeys);
-        if (!keys.SetEquals(currentKeys) && !omittedGenreRegistryProjection)
+        return result;
+    }
+
+    private static void RequireCandidateSourceMetadataKeys(
+        IReadOnlyDictionary<string, List<string>> fields,
+        string path)
+    {
+        if (!fields.Keys.ToHashSet(StringComparer.Ordinal).SetEquals(
+                CandidateSourceMetadataKeys(fields)))
         {
             throw new FormatException($"source metadata keys are not canonical: {path}");
         }
+    }
 
+    private static string[] CandidateSourceMetadataKeys(
+        IReadOnlyDictionary<string, List<string>> fields)
+    {
+        var keys = new List<string>
+        {
+            "source_id",
+            "path",
+            "atomizer",
+            "genre_registry_check",
+            "unregistered_genres",
+        };
 
-        if (result["source_id"].Count != 1
-            || result["path"].Count != 1
-            || result["atomizer"].Count != 1
-            || string.IsNullOrWhiteSpace(result["source_id"][0])
-            || string.IsNullOrWhiteSpace(result["path"][0])
-            || string.IsNullOrWhiteSpace(result["atomizer"][0]))
+        if (fields.ContainsKey("acknowledged_stale"))
+        {
+            keys.Add("acknowledged_stale");
+        }
+
+        return [.. keys];
+    }
+
+    private static string[] HistoricalSourceMetadataKeys(
+        IReadOnlyDictionary<string, List<string>> fields) =>
+        fields.ContainsKey("acknowledged_stale")
+            ? ["source_id", "path", "atomizer", "acknowledged_stale"]
+            : ["source_id", "path", "atomizer"];
+
+    private static void RequireSourceIdentity(
+        IReadOnlyDictionary<string, List<string>> fields,
+        string path)
+    {
+        if (fields["source_id"].Count != 1
+            || fields["path"].Count != 1
+            || fields["atomizer"].Count != 1
+            || string.IsNullOrWhiteSpace(fields["source_id"][0])
+            || string.IsNullOrWhiteSpace(fields["path"][0])
+            || string.IsNullOrWhiteSpace(fields["atomizer"][0]))
         {
             throw new FormatException(
                 $"source metadata identity fields must be single quoted strings: {path}");
         }
+    }
 
-        if (omittedGenreRegistryProjection)
+    private static DigestionLedgerSource Source(
+        IReadOnlyDictionary<string, List<string>> fields,
+        GenreRegistryProjection projection) =>
+        new(
+            fields["source_id"].Single(),
+            fields["path"].Single(),
+            fields["atomizer"].Single(),
+            fields.GetValueOrDefault("acknowledged_stale", []).ToImmutableArray(),
+            projection,
+            []);
+
+    private static ImmutableArray<byte> WriteHistoricalSourceMetadata(
+        IReadOnlyDictionary<string, List<string>> fields)
+    {
+        var builder = new StringBuilder();
+        builder.Append("source_id = \"").Append(fields["source_id"].Single()).Append("\"\n");
+        builder.Append("path = \"").Append(fields["path"].Single()).Append("\"\n");
+        builder.Append("atomizer = \"").Append(fields["atomizer"].Single()).Append("\"\n");
+        if (fields.TryGetValue("acknowledged_stale", out var stale) && stale.Count > 0)
         {
-            result.Add("genre_registry_check", ["no-registry"]);
-            result.Add("unregistered_genres", []);
+            builder.Append("acknowledged_stale = [")
+                .Append(string.Join(", ", stale.Select(static value => $"\"{value}\"")))
+                .Append("]\n");
         }
 
-        return new ParsedSourceMetadata(result, omittedGenreRegistryProjection);
+        return ImmutableArray.CreateRange(Encoding.UTF8.GetBytes(builder.ToString()));
+    }
+
+    private static void RequireCanonicalSourceMetadata(
+        string text,
+        string path,
+        ImmutableArray<byte> canonical)
+    {
+        if (!canonical.AsSpan().SequenceEqual(Encoding.UTF8.GetBytes(text)))
+        {
+            throw new FormatException($"source metadata is not canonically encoded: {path}");
+        }
     }
 
     private static GenreRegistryCheck ParseGenreRegistryCheck(

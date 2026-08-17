@@ -8,44 +8,6 @@ internal static class BackfillInventoryWriter
 {
     private static readonly UTF8Encoding StrictUtf8 = new(false, true);
 
-    internal static ImmutableArray<byte> Write(BackfillInventoryDocument document)
-    {
-        ArgumentNullException.ThrowIfNull(document);
-        var builder = new StringBuilder();
-        Line(builder, $"schema_version: {BackfillInventoryLoader.SchemaVersion}");
-        Line(builder, $"ledger: {BackfillInventoryLoader.LedgerName}");
-        Line(builder, "sources:");
-        foreach (var source in document.RequireDigestionSources())
-        {
-            EnsureLineBreak(builder);
-            Line(builder, $"  - source_id: {Scalar(source.SourceId)}");
-            Line(builder, $"    path: {Scalar(source.SourcePath)}");
-            Line(builder, $"    atomizer: {Scalar(source.Atomizer)}");
-            if (source.AcknowledgedStale.Length > 0
-                || source.Entries.Any(static entry => entry.Boundary is null))
-            {
-                Strings(builder, "    acknowledged_stale", source.AcknowledgedStale, 6);
-            }
-
-            Line(builder, source.Entries.Length == 0 ? "    entries: []" : "    entries:");
-            foreach (var entry in source.Entries)
-            {
-                EnsureLineBreak(builder);
-                Entry(builder, entry);
-            }
-        }
-
-        return ImmutableArray.CreateRange(StrictUtf8.GetBytes(builder.ToString()));
-    }
-
-    private static void EnsureLineBreak(StringBuilder builder)
-    {
-        if (builder.Length > 0 && builder[^1] != '\n')
-        {
-            builder.Append('\n');
-        }
-    }
-
     internal static ImmutableArray<byte> WriteEntry(DigestionLedgerEntry entry)
     {
         ArgumentNullException.ThrowIfNull(entry);

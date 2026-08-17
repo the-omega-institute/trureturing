@@ -173,7 +173,7 @@ public sealed class RuleEngineTests
     }
 
     [Fact]
-    public void Sl016AcceptsLegacyGenreMarkerSchemaOnlyInBaseline()
+    public void Sl016DifferentialIgnoresUnavailableBaselineGenreProjection()
     {
         var fixture = new RuleFixture();
         fixture.AddBackfillTargets();

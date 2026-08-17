@@ -58,7 +58,7 @@ internal static partial class CoverWorld
             RuleFixture.FixtureDigestionSourcePath,
             SyntheticNumberedAtomizer.Id,
             [],
-            GenreRegistryCheck.Collected([]),
+            GenreRegistryProjection.Available(GenreRegistryCheck.Collected([])),
             entries.ToImmutable()));
 
         if (spec.HostedSibling is { } hostedSibling
@@ -73,7 +73,7 @@ internal static partial class CoverWorld
                 hostedSourcePath,
                 SyntheticNumberedAtomizer.Id,
                 [],
-                GenreRegistryCheck.Collected([]),
+                GenreRegistryProjection.Available(GenreRegistryCheck.Collected([])),
                 [
                     Entry(
                         "fixture-hosted-source",

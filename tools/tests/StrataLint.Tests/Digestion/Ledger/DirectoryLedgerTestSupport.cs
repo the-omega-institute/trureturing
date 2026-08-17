@@ -14,7 +14,11 @@ internal static class DirectoryLedgerTestSupport
         {
             var projectedSource = source.Atomizer == AtomizerRegistry.NoAtomizerId
                 ? source
-                : source with { GenreRegistryCheck = GenreRegistryCheck.Collected([]) };
+                : source with
+                {
+                    GenreRegistryProjection = GenreRegistryProjection.Available(
+                        GenreRegistryCheck.Collected([])),
+                };
             result[$"{BackfillInventoryLoader.RootPath}{source.SourceId}/source.toml"] =
                 Encoding.UTF8.GetString(BackfillInventoryWriter.WriteSourceMetadata(projectedSource).AsSpan());
             foreach (var entry in source.Entries)
@@ -42,7 +46,11 @@ internal static class DirectoryLedgerTestSupport
         {
             var projectedSource = source.Atomizer == AtomizerRegistry.NoAtomizerId
                 ? source
-                : source with { GenreRegistryCheck = GenreRegistryCheck.Collected([]) };
+                : source with
+                {
+                    GenreRegistryProjection = GenreRegistryProjection.Available(
+                        GenreRegistryCheck.Collected([])),
+                };
             entries.Add(new RawRepositoryEntry(
                 $"{BackfillInventoryLoader.RootPath}{source.SourceId}/source.toml",
                 BackfillInventoryWriter.WriteSourceMetadata(projectedSource)));
@@ -124,6 +132,33 @@ internal static class DirectoryLedgerTestSupport
             + "\0"
             + Convert.ToBase64String(File.ReadAllBytes(path))
             + "\n"));
+    }
+
+    internal static string Image(BackfillInventoryDocument ledger)
+    {
+        var files = new List<(string Path, byte[] Bytes)>();
+        foreach (var source in ledger.RequireDigestionSources())
+        {
+            files.Add((
+                $"{BackfillInventoryLoader.RootPath}{source.SourceId}/source.toml",
+                BackfillInventoryWriter.WriteSourceMetadata(source).ToArray()));
+            foreach (var entry in source.Entries)
+            {
+                var state = DigestionStatusNames.Migration(entry.ProjectedStatus.Migration)
+                    + "-"
+                    + DigestionStatusNames.Truth(entry.ProjectedStatus.Truth);
+                files.Add((
+                    $"{BackfillInventoryLoader.RootPath}{source.SourceId}/{state}/{entry.AtomId}.yaml",
+                    BackfillInventoryWriter.WriteAtom(entry).ToArray()));
+            }
+        }
+
+        return string.Concat(files
+            .OrderBy(static file => file.Path, StringComparer.Ordinal)
+            .Select(static file => file.Path
+                + "\0"
+                + Convert.ToBase64String(file.Bytes)
+                + "\n"));
     }
 
     private static void RemoveLedger(IDictionary<string, string> files)

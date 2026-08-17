@@ -57,7 +57,7 @@ internal static class DigestStatusCommand
                     RenderFormalizeCandidates(
                         formalizeEvaluation,
                         snapshot,
-                        BackfillInventoryWriter.Write(formalizeDocument),
+                        formalizeDocument,
                         formalizeLeanReport),
                     string.Empty);
             }
@@ -222,7 +222,7 @@ internal static class DigestStatusCommand
     private static string RenderFormalizeCandidates(
         DigestionLedgerEvaluation evaluation,
         RepositorySnapshot snapshot,
-        ImmutableArray<byte> ledgerBytes,
+        BackfillInventoryDocument ledger,
         LeanAxiomReport leanReport)
     {
         var projections = evaluation.Entries
@@ -240,7 +240,7 @@ internal static class DigestStatusCommand
         var material = new
         {
             schema = "stratalint-formalize-candidates-v3",
-            ledger_sha256 = DigestionFingerprint.ComputeOpaque(ledgerBytes.AsSpan()).RawSha256,
+            ledger_sha256 = DigestionLedgerPreimage.ComputeSha256(ledger),
             candidates = projections
                 .Where(static item => item.Candidate is not null)
                 .Select(static item => item.Candidate!),

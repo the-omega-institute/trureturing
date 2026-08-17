@@ -397,7 +397,8 @@ public sealed partial class DigestionAlignmentTests
         [
             source with
             {
-                GenreRegistryCheck = GenreRegistryCheck.Collected([]),
+                GenreRegistryProjection = GenreRegistryProjection.Available(
+                    GenreRegistryCheck.Collected([])),
                 Entries =
                 [
                     parent with

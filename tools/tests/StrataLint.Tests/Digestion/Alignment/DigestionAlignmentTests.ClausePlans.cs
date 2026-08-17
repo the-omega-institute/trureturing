@@ -68,17 +68,17 @@ public sealed partial class DigestionAlignmentTests
             Assert.Equal(DigestionTruthState.Open, child.ProjectedStatus.Truth);
         });
 
-        var firstBytes = BackfillInventoryWriter.Write(first.Document);
+        var firstBytes = DirectoryLedgerTestSupport.Image(first.Document);
         var migrated = first.Document;
         var second = DigestionIngestor.Plan(
             migrated,
             Snapshot(sourceBytes, first.CasObjects.Prepend(parentCapture)),
             ledger);
-        var secondBytes = BackfillInventoryWriter.Write(second.Document);
+        var secondBytes = DirectoryLedgerTestSupport.Image(second.Document);
 
         Assert.Equal(0, second.ResidualOpenAdded);
         Assert.Empty(second.CasObjects);
-        Assert.Equal(firstBytes.ToArray(), secondBytes.ToArray());
+        Assert.Equal(firstBytes, secondBytes);
     }
 
     [Fact]

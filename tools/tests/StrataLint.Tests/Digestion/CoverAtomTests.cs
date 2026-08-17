@@ -33,20 +33,12 @@ public sealed partial class CoverAtomTests
         Assert.Contains("old_emission_sha256=sha256:bbbbbbbb", first.Output, StringComparison.Ordinal);
         Assert.Contains("new_emission_sha256=sha256:", first.Output, StringComparison.Ordinal);
         Assert.Contains("ledger_changed=true", first.Output, StringComparison.Ordinal);
-        var afterFirst = Encoding.UTF8.GetString(
-            BackfillInventoryWriter.Write(BackfillInventoryLoader.LoadRoot(temporary.Path)).AsSpan());
+        var afterFirst = DirectoryLedgerTestSupport.Image(
+            BackfillInventoryLoader.LoadRoot(temporary.Path));
         Assert.True(inputs.VerifiedEmissions!.TryGet(
             inputs.Gid[..inputs.Gid.LastIndexOf('.')], out var verifiedRecord));
         Assert.Equal(
-            inputs.Ledger
-                .Replace(
-                    "sha256:" + new string('a', 64),
-                    verifiedRecord.DefinitionSha256,
-                    StringComparison.Ordinal)
-                .Replace(
-                    "sha256:" + new string('b', 64),
-                    verifiedRecord.EmissionSha256,
-                    StringComparison.Ordinal),
+            ExpectedAlignedScribeImage(inputs, verifiedRecord),
             afterFirst);
 
         var replayFiles = new Dictionary<string, string>(currentFiles, StringComparer.Ordinal);
@@ -60,8 +52,7 @@ public sealed partial class CoverAtomTests
         Assert.Contains("ledger_changed=false", second.Output, StringComparison.Ordinal);
         Assert.Equal(
             afterFirst,
-            Encoding.UTF8.GetString(
-                BackfillInventoryWriter.Write(BackfillInventoryLoader.LoadRoot(temporary.Path)).AsSpan()));
+            DirectoryLedgerTestSupport.Image(BackfillInventoryLoader.LoadRoot(temporary.Path)));
     }
 
     [Theory]
@@ -100,19 +91,9 @@ public sealed partial class CoverAtomTests
         Assert.True(result.Success, result.Error);
         Assert.True(inputs.VerifiedEmissions!.TryGet(
             inputs.Gid[..inputs.Gid.LastIndexOf('.')], out var verifiedRecord));
-        var expected = inputs.Ledger
-            .Replace(
-                "sha256:" + new string('a', 64),
-                verifiedRecord.DefinitionSha256,
-                StringComparison.Ordinal)
-            .Replace(
-                "sha256:" + new string('b', 64),
-                verifiedRecord.EmissionSha256,
-                StringComparison.Ordinal);
         Assert.Equal(
-            expected,
-            Encoding.UTF8.GetString(
-                BackfillInventoryWriter.Write(BackfillInventoryLoader.LoadRoot(temporary.Path)).AsSpan()));
+            ExpectedAlignedScribeImage(inputs, verifiedRecord),
+            DirectoryLedgerTestSupport.Image(BackfillInventoryLoader.LoadRoot(temporary.Path)));
     }
 
     [Fact]
@@ -393,8 +374,8 @@ public sealed partial class CoverAtomTests
         var baselineFiles = DirectoryLedgerTestSupport.Project(inputs.Baseline);
         using var temporary = new TemporaryDirectory();
         DirectoryLedgerTestSupport.Write(temporary.Path, currentFiles);
-        var before = Encoding.UTF8.GetString(
-            BackfillInventoryWriter.Write(BackfillInventoryLoader.LoadRoot(temporary.Path)).AsSpan());
+        var before = DirectoryLedgerTestSupport.Image(
+            BackfillInventoryLoader.LoadRoot(temporary.Path));
         var environment = new ProductionCliEnvironment(
             temporary.Path,
             new FakeRepositoryGateway(
@@ -410,8 +391,35 @@ public sealed partial class CoverAtomTests
         var result = environment.CoverAtom(effectiveArgs);
 
         var afterDocument = BackfillInventoryLoader.LoadRoot(temporary.Path);
-        var after = Encoding.UTF8.GetString(BackfillInventoryWriter.Write(afterDocument).AsSpan());
+        var after = DirectoryLedgerTestSupport.Image(afterDocument);
         return new CoverExecution(result, after, before, afterDocument);
+    }
+
+    private static string ExpectedAlignedScribeImage(
+        CoverInputs inputs,
+        ScribeEmissionRecord verifiedRecord)
+    {
+        var sources = inputs.Document.RequireDigestionSources()
+            .Select(source => source with
+            {
+                Entries = source.Entries.Select(entry => entry with
+                {
+                    Receipts = entry.Receipts with
+                    {
+                        Scribe = entry.Receipts.Scribe.Select(receipt =>
+                            entry.AtomId == CoverWorld.DefaultAtomId
+                                && receipt.Gid == inputs.Gid
+                                ? receipt with
+                                {
+                                    DefinitionSha256 = verifiedRecord.DefinitionSha256,
+                                    EmissionSha256 = verifiedRecord.EmissionSha256,
+                                }
+                                : receipt).ToImmutableArray(),
+                    },
+                }).ToImmutableArray(),
+            })
+            .ToImmutableArray();
+        return DirectoryLedgerTestSupport.Image(inputs.Document.WithDigestionSources(sources));
     }
 }
 
@@ -615,7 +623,7 @@ internal static partial class CoverWorld
             hostedAtom,
             hostedSourcePath,
             useHostedBaselineCoverage: false);
-        var ledger = Encoding.UTF8.GetString(BackfillInventoryWriter.Write(document).AsSpan());
+        var ledger = DirectoryLedgerTestSupport.Image(document);
         var envelopePath = "Meta/Digestion/formalizations/" + spec.AtomId + ".v1.json";
         var files = new Dictionary<string, string>(StringComparer.Ordinal)
         {

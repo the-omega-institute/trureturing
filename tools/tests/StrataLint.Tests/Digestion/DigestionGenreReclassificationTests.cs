@@ -137,7 +137,8 @@ public sealed partial class DigestionLedgerTests
         [
             openSource with
             {
-                GenreRegistryCheck = GenreRegistryCheck.Collected(["另一体"]),
+                GenreRegistryProjection = GenreRegistryProjection.Available(
+                    GenreRegistryCheck.Collected(["另一体"])),
             },
         ]);
 

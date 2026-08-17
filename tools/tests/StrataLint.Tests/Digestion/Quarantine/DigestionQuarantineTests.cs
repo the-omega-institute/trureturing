@@ -118,7 +118,7 @@ public sealed class DigestionQuarantineTests
                 "docs/source.md",
                 AtomizerRegistry.NoAtomizerId,
                 [],
-                GenreRegistryCheck.NoGenreRegistry,
+                GenreRegistryProjection.Available(GenreRegistryCheck.NoGenreRegistry),
                 [
                     TypedAtom("atom-main", null, "proof-one", "proof-two"),
                     TypedAtom(

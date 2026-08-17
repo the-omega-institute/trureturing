@@ -18,7 +18,7 @@ public sealed partial class ProductionEnvironmentTests
         var raw = RawRepositorySnapshot.Create([
             new RawRepositoryEntry(
                 BackfillInventoryLoader.RelativePath,
-                BackfillInventoryWriter.Write(ledger)),
+                [.. Encoding.UTF8.GetBytes(DirectoryLedgerTestSupport.Image(ledger))]),
         ]);
 
         var exception = Assert.Throws<InvalidOperationException>(() => IngestCommand.ReplaceLedger(

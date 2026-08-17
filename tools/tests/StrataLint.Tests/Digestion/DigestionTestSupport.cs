@@ -52,7 +52,8 @@ internal static class DigestionTestSupport
                 sourcePath,
                 atomizerId,
                 acknowledgedStale.IsDefault ? [] : acknowledgedStale,
-                genreRegistryCheck ?? GenreRegistryCheck.NoGenreRegistry,
+                GenreRegistryProjection.Available(
+                    genreRegistryCheck ?? GenreRegistryCheck.NoGenreRegistry),
                 entries),
         ],
         tickets.IsDefault ? [] : tickets);

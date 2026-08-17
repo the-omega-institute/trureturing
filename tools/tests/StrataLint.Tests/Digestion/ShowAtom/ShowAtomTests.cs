@@ -419,9 +419,10 @@ public sealed class ShowAtomTests
                 sourcePath,
                 atomizer,
                 [],
-                atomizer == AtomizerRegistry.NoAtomizerId
-                    ? GenreRegistryCheck.NoGenreRegistry
-                    : GenreRegistryCheck.Collected([]),
+                GenreRegistryProjection.Available(
+                    atomizer == AtomizerRegistry.NoAtomizerId
+                        ? GenreRegistryCheck.NoGenreRegistry
+                        : GenreRegistryCheck.Collected([])),
                 entries),
         ],
         []);

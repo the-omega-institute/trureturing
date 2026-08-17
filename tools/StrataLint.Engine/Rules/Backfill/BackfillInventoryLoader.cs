@@ -351,14 +351,14 @@ internal static partial class BackfillInventoryLoader
     }
 
     internal static BackfillInventoryDocument Load(RepositorySnapshot snapshot) =>
-        LoadSnapshot(snapshot, allowOmittedGenreRegistryProjection: false);
+        LoadSnapshot(snapshot, LoadCandidateDirectorySnapshot);
 
     internal static BackfillInventoryDocument LoadBaseline(RepositorySnapshot snapshot) =>
-        LoadSnapshot(snapshot, allowOmittedGenreRegistryProjection: true);
+        LoadSnapshot(snapshot, LoadBaselineDirectorySnapshot);
 
     private static BackfillInventoryDocument LoadSnapshot(
         RepositorySnapshot snapshot,
-        bool allowOmittedGenreRegistryProjection)
+        Func<RepositorySnapshot, BackfillInventoryDocument> loadDirectory)
     {
         ArgumentNullException.ThrowIfNull(snapshot);
         if (snapshot.TryGetFile(RelativePath, out _))
@@ -385,9 +385,7 @@ internal static partial class BackfillInventoryLoader
             }
         }
 
-        var directoryDocument = LoadDirectorySnapshot(
-            snapshot,
-            allowOmittedGenreRegistryProjection);
+        var directoryDocument = loadDirectory(snapshot);
         ValidateQuarantineMachineFormMarkers(snapshot, directoryDocument);
         return directoryDocument;
     }
@@ -444,9 +442,17 @@ internal static partial class BackfillInventoryLoader
         };
     }
 
+    private static BackfillInventoryDocument LoadCandidateDirectorySnapshot(
+        RepositorySnapshot snapshot) =>
+        LoadDirectorySnapshot(snapshot, ParseCandidateSourceMetadata);
+
+    private static BackfillInventoryDocument LoadBaselineDirectorySnapshot(
+        RepositorySnapshot snapshot) =>
+        LoadDirectorySnapshot(snapshot, ParseBaselineSourceMetadata);
+
     private static BackfillInventoryDocument LoadDirectorySnapshot(
         RepositorySnapshot snapshot,
-        bool allowOmittedGenreRegistryProjection)
+        Func<string, string, ParsedSourceMetadata> parseSourceMetadata)
     {
         var metadata = snapshot.Files
             .Where(static pair => pair.Key.Value.StartsWith(RootPath, StringComparison.Ordinal)
@@ -462,10 +468,9 @@ internal static partial class BackfillInventoryLoader
         foreach (var (metadataPath, metadataFile) in metadata)
         {
             var sourceRoot = metadataPath.Value[..^"source.toml".Length];
-            var metadataParse = ParseSourceMetadata(
+            var metadataParse = parseSourceMetadata(
                 metadataFile.Text,
-                metadataPath.Value,
-                allowOmittedGenreRegistryProjection);
+                metadataPath.Value);
             var fields = metadataParse.Fields;
             var sourceId = fields["source_id"].Single();
             if (!string.Equals(sourceRoot, $"{RootPath}{sourceId}/", StringComparison.Ordinal))
@@ -510,20 +515,8 @@ internal static partial class BackfillInventoryLoader
                 fields["path"].Single(),
                 fields["atomizer"].Single(),
                 fields.GetValueOrDefault("acknowledged_stale", []).ToImmutableArray(),
-                ParseGenreRegistryCheck(fields, metadataPath.Value),
+                metadataParse.GenreRegistryProjection,
                 entries.ToImmutable());
-            var canonicalMetadata = BackfillInventoryWriter.WriteSourceMetadata(parsedSource);
-            if (metadataParse.OmittedGenreRegistryProjection)
-            {
-                canonicalMetadata = RemoveGenreRegistryProjection(canonicalMetadata);
-            }
-
-            if (!canonicalMetadata.AsSpan().SequenceEqual(metadataFile.RawBytes.AsSpan()))
-            {
-                throw new FormatException(
-                    $"source metadata is not canonically encoded: {metadataPath.Value}");
-            }
-
             sources.Add(parsedSource);
         }
 
@@ -542,15 +535,6 @@ internal static partial class BackfillInventoryLoader
         }
 
         return BackfillInventoryDocument.Create(sources.ToImmutable(), DeriveTickets(snapshot));
-    }
-
-    private static ImmutableArray<byte> RemoveGenreRegistryProjection(ImmutableArray<byte> metadata)
-    {
-        var lines = System.Text.Encoding.UTF8.GetString(metadata.AsSpan())
-            .Split('\n')
-            .Where(static line => !line.StartsWith("genre_registry_check = ", StringComparison.Ordinal)
-                && !line.StartsWith("unregistered_genres = ", StringComparison.Ordinal));
-        return ImmutableArray.CreateRange(System.Text.Encoding.UTF8.GetBytes(string.Join('\n', lines)));
     }
 
     internal static ImmutableArray<BackfillTicketReference> DeriveTickets(
