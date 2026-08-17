@@ -1,9 +1,9 @@
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
-using StrataLint.Engine;
+using System.Globalization;
 
-namespace StrataLint.ArchitectureTests;
+namespace StrataLint.Engine;
 
 internal sealed record RepositoryReadSource(string Assembly, string Path, string Content);
 internal sealed record IndirectRepositoryReadSite(string Path, int Line, string ReaderType)
@@ -13,8 +13,6 @@ internal sealed record IndirectRepositoryReadSite(string Path, int Line, string 
 
 internal static class ProductionRepositoryReadDeriver
 {
-    private const string ScribeTestsPrefix = "tools/tests/StrataLint.Scribe.Tests/";
-
     internal static IReadOnlySet<string> DeriveRepositoryReaderTypes(string repositoryRoot) =>
         DeriveReaderTypes(ProductionSources(repositoryRoot));
 
@@ -40,7 +38,8 @@ internal static class ProductionRepositoryReadDeriver
 
         foreach (var source in sources)
         {
-            var directLines = RepositoryIoAccessPolicy.InspectSource(source.Source.Path, source.Source.Content)
+            var directLines = RepositoryIoAccessPolicy
+                .InspectSource(source.Source.Path, source.Source.Content)
                 .Select(static finding => FindingLine(finding.Message))
                 .Where(static line => line is not null)
                 .Select(static line => line!.Value)
@@ -88,16 +87,15 @@ internal static class ProductionRepositoryReadDeriver
         return new RepositoryReadAnalysis(readers, directReaders, internalTypes);
     }
 
-    internal static IReadOnlyList<IndirectRepositoryReadSite> InspectScribeTests(
-        string repositoryRoot)
+    internal static IReadOnlyList<IndirectRepositoryReadSite> InspectTests(
+        IEnumerable<RepositoryReadSource> productionSources,
+        IEnumerable<TestMapSource> testSources)
     {
-        var analysis = Analyze(ProductionSources(repositoryRoot));
-        return GitIndexRepositoryFiles.Enumerate(repositoryRoot)
-            .Where(static file => file.RelativePath.StartsWith(ScribeTestsPrefix, StringComparison.Ordinal)
-                && file.RelativePath.EndsWith(".cs", StringComparison.Ordinal))
-            .SelectMany(file => InspectTestSource(
-                file.RelativePath,
-                File.ReadAllText(file.FullPath),
+        var analysis = Analyze(productionSources);
+        return testSources
+            .SelectMany(source => InspectTestSource(
+                source.Path,
+                source.Content,
                 analysis.Readers.Where(analysis.InternalTypes.Contains)
                     .ToHashSet(StringComparer.Ordinal)))
             .OrderBy(static site => site.Path, StringComparer.Ordinal)
@@ -198,6 +196,25 @@ internal static class ProductionRepositoryReadDeriver
             .ToArray();
     }
 
+    private static int? FindingLine(string message)
+    {
+        const string prefix = "line ";
+        if (!message.StartsWith(prefix, StringComparison.Ordinal))
+        {
+            return null;
+        }
+
+        var colon = message.IndexOf(':', prefix.Length);
+        return colon > prefix.Length
+            && int.TryParse(
+                message.AsSpan(prefix.Length, colon - prefix.Length),
+                NumberStyles.Integer,
+                CultureInfo.InvariantCulture,
+                out var line)
+                ? line
+                : null;
+    }
+
     private static bool IsRepositoryRoot(
         ExpressionSyntax expression,
         IReadOnlySet<string> repositoryVariables) =>
@@ -255,21 +272,6 @@ internal static class ProductionRepositoryReadDeriver
         }
 
         return RightmostName(member.Expression);
-    }
-
-    private static int? FindingLine(string message)
-    {
-        const string prefix = "line ";
-        if (!message.StartsWith(prefix, StringComparison.Ordinal))
-        {
-            return null;
-        }
-
-        var colon = message.IndexOf(':', prefix.Length);
-        return colon > prefix.Length
-            && int.TryParse(message.AsSpan(prefix.Length, colon - prefix.Length), out var line)
-                ? line
-                : null;
     }
 
     private static string ProjectName(string path)

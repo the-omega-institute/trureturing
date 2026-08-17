@@ -495,12 +495,10 @@ public sealed partial class ReviewRegressionTests
         // chain instead. DigestionCasStoreTests keeps pinning what the pass itself rejects; this
         // pins the shape of the chain that carries its result.
         //
-        // These assertions live inside this test rather than a separately named one because
-        // ScribeTestMapDeriver cannot resolve a literal read path in StrataLint.Tests — the project
-        // has no RepositoryAccessor — so every repository-reading [Fact] here counts as a
-        // conservative unknown, and RepositoryMapHasNoUnknownGrowthAndEveryPathIsDeclared caps
-        // those at 280. Cf9 already reads BackfillInventoryRule.cs, so the assertions extend a read
-        // that is already paid for.
+        // These assertions live inside this test because Cf9 already reads
+        // BackfillInventoryRule.cs, so they extend a read that is already paid for. Unknown
+        // repository-read debt is now charged to the candidate that introduces a method identity
+        // after its fork point; the repository-wide tolerance net remains separate.
         var casChainSource = engineSource
             + File.ReadAllText(
                 Path.Combine(TestRepositoryLayout.FindRoot(), "tools", "StrataLint.Engine", "Digestion", "DigestionLedgerAligner.cs"),
