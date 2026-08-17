@@ -1,0 +1,17 @@
+ast_path: theorem/5.4
+fingerprints:
+  raw_sha256: sha256:29dbc0f22f81e47fd93f0011befd30cd967a228dfe360662617303ab588dd044
+  normalized_sha256: sha256:29dbc0f22f81e47fd93f0011befd30cd967a228dfe360662617303ab588dd044
+cas_ref: sha256:29dbc0f22f81e47fd93f0011befd30cd967a228dfe360662617303ab588dd044
+coverage_gids:
+  - D5/S3/Quantum/CloningMachine.machine_entropy_closed_form
+receipts:
+  coverage:
+    - gid: D5/S3/Quantum/CloningMachine.machine_entropy_closed_form
+      source_sha256: sha256:29dbc0f22f81e47fd93f0011befd30cd967a228dfe360662617303ab588dd044
+      target_sha256: sha256:dc3804e92b1cc27f6d05a5894ca30c3165a174b43ae9eebb93db04a331deb4bc
+  scribe:
+    - gid: D5/S3/Quantum/CloningMachine.machine_entropy_closed_form
+      definition_sha256: sha256:9b146243d29cdd36e7417252024bc4ae9aa98c31e12b4cd38112b63643e6784b
+      emission_sha256: sha256:d3c48f934c8be0076d920547c198a32f269ea666345454b99a34d73b6e5b5b1b
+  unresolved_subitems: []
