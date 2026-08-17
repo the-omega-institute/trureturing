@@ -106,6 +106,7 @@ internal sealed class BackfillInventoryDocument
                 sourcePath,
                 atomizer,
                 acknowledgedStale,
+                GenreRegistryProjection.Unavailable,
                 entries.ToImmutable()));
         }
 
@@ -444,7 +445,15 @@ internal static partial class BackfillInventoryLoader
         return new BackfillInventoryDocument(root, BackfillReceiptPreimage.Extract(text));
     }
 
-    internal static BackfillInventoryDocument Load(RepositorySnapshot snapshot)
+    internal static BackfillInventoryDocument Load(RepositorySnapshot snapshot) =>
+        LoadSnapshot(snapshot, LoadCandidateDirectorySnapshot);
+
+    internal static BackfillInventoryDocument LoadBaseline(RepositorySnapshot snapshot) =>
+        LoadSnapshot(snapshot, LoadBaselineDirectorySnapshot);
+
+    private static BackfillInventoryDocument LoadSnapshot(
+        RepositorySnapshot snapshot,
+        Func<RepositorySnapshot, BackfillInventoryDocument> loadDirectory)
     {
         ArgumentNullException.ThrowIfNull(snapshot);
         var hasLegacy = snapshot.TryGetFile(RelativePath, out var legacyFile);
@@ -479,7 +488,7 @@ internal static partial class BackfillInventoryLoader
             }
         }
 
-        var directoryDocument = LoadDirectorySnapshot(snapshot);
+        var directoryDocument = loadDirectory(snapshot);
         ValidateQuarantineMachineFormMarkers(snapshot, directoryDocument);
         return directoryDocument;
     }
@@ -542,7 +551,17 @@ internal static partial class BackfillInventoryLoader
         };
     }
 
-    private static BackfillInventoryDocument LoadDirectorySnapshot(RepositorySnapshot snapshot)
+    private static BackfillInventoryDocument LoadCandidateDirectorySnapshot(
+        RepositorySnapshot snapshot) =>
+        LoadDirectorySnapshot(snapshot, ParseCandidateSourceMetadata);
+
+    private static BackfillInventoryDocument LoadBaselineDirectorySnapshot(
+        RepositorySnapshot snapshot) =>
+        LoadDirectorySnapshot(snapshot, ParseBaselineSourceMetadata);
+
+    private static BackfillInventoryDocument LoadDirectorySnapshot(
+        RepositorySnapshot snapshot,
+        Func<string, string, ParsedSourceMetadata> parseSourceMetadata)
     {
         var metadata = snapshot.Files
             .Where(static pair => pair.Key.Value.StartsWith(RootPath, StringComparison.Ordinal)
@@ -558,7 +577,8 @@ internal static partial class BackfillInventoryLoader
         foreach (var (metadataPath, metadataFile) in metadata)
         {
             var sourceRoot = metadataPath.Value[..^"source.toml".Length];
-            var fields = ParseSourceMetadata(metadataFile.Text, metadataPath.Value);
+            var metadataParse = parseSourceMetadata(metadataFile.Text, metadataPath.Value);
+            var fields = metadataParse.Fields;
             var sourceId = fields["source_id"].Single();
             if (!string.Equals(sourceRoot, $"{RootPath}{sourceId}/", StringComparison.Ordinal))
             {
@@ -603,6 +623,7 @@ internal static partial class BackfillInventoryLoader
                 fields["path"].Single(),
                 fields["atomizer"].Single(),
                 fields.GetValueOrDefault("acknowledged_stale", []).ToImmutableArray(),
+                metadataParse.GenreRegistryProjection,
                 entries.ToImmutable()));
         }
 
@@ -659,105 +680,6 @@ internal static partial class BackfillInventoryLoader
         return Directory.Exists(d5Root)
             ? Directory.EnumerateFiles(d5Root, "*.lean", SearchOption.AllDirectories)
             : [];
-    }
-
-    private static Dictionary<string, List<string>> ParseSourceMetadata(string text, string path)
-    {
-        var result = new Dictionary<string, List<string>>(StringComparer.Ordinal);
-        foreach (var rawLine in text.Split('\n', StringSplitOptions.RemoveEmptyEntries))
-        {
-            var split = rawLine.Split(" = ", 2, StringSplitOptions.None);
-            if (split.Length != 2)
-            {
-                throw new FormatException($"invalid source metadata: {path}");
-            }
-
-            List<string> values;
-            try
-            {
-                values = ParseTomlValues(split[1]);
-            }
-            catch (FormatException) when (split[0] is "source_id" or "path" or "atomizer")
-            {
-                throw new FormatException(
-                    $"source metadata identity fields must be single quoted strings: {path}");
-            }
-
-            if (split[0] is "source_id" or "path" or "atomizer"
-                && split[1].StartsWith('['))
-            {
-                throw new FormatException(
-                    $"source metadata identity fields must be single quoted strings: {path}");
-            }
-
-            if (split[0] == "acknowledged_stale"
-                && (!split[1].StartsWith('[')
-                    || !split[1].EndsWith(']')
-                    || values.Any(string.IsNullOrWhiteSpace)))
-            {
-                throw new FormatException(
-                    $"acknowledged_stale must be a quoted string array without blank elements: {path}");
-            }
-
-            if (!result.TryAdd(split[0], values))
-            {
-                throw new FormatException($"invalid source metadata: {path}");
-            }
-        }
-
-        if (!result.Keys.ToHashSet(StringComparer.Ordinal).SetEquals(
-                result.ContainsKey("acknowledged_stale")
-                    ? ["source_id", "path", "atomizer", "acknowledged_stale"]
-                    : ["source_id", "path", "atomizer"]))
-        {
-            throw new FormatException($"source metadata keys are not canonical: {path}");
-        }
-
-
-        if (result["source_id"].Count != 1
-            || result["path"].Count != 1
-            || result["atomizer"].Count != 1
-            || string.IsNullOrWhiteSpace(result["source_id"][0])
-            || string.IsNullOrWhiteSpace(result["path"][0])
-            || string.IsNullOrWhiteSpace(result["atomizer"][0]))
-        {
-            throw new FormatException(
-                $"source metadata identity fields must be single quoted strings: {path}");
-        }
-
-        return result;
-    }
-
-    private static List<string> ParseTomlValues(string encoded)
-    {
-        if (encoded.StartsWith('[') || encoded.EndsWith(']'))
-        {
-            if (!encoded.StartsWith('[') || !encoded.EndsWith(']'))
-            {
-                throw new FormatException("source metadata values must be quoted strings");
-            }
-
-            var body = encoded[1..^1];
-            if (body.Length == 0) return [];
-            return body.Split(", ", StringSplitOptions.None)
-                .Select(ParseQuotedTomlScalar)
-                .ToList();
-        }
-
-        return [ParseQuotedTomlScalar(encoded)];
-    }
-
-    private static string ParseQuotedTomlScalar(string encoded)
-    {
-        if (encoded.Length < 2
-            || encoded[0] != '"'
-            || encoded[^1] != '"'
-            || encoded.AsSpan(1, encoded.Length - 2).Contains('"'))
-        {
-            throw new FormatException("source metadata values must be quoted strings");
-        }
-
-        return encoded[1..^1];
     }
 
 }

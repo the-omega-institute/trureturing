@@ -16,8 +16,16 @@ internal static class DirectoryLedgerTestSupport
         RemoveLedger(result);
         foreach (var source in ledger.RequireDigestionSources())
         {
+            var projectedSource = source with
+            {
+                GenreRegistryProjection = GenreRegistryProjection.Available(
+                    source.Atomizer == AtomizerRegistry.NoAtomizerId
+                        ? GenreRegistryCheck.NoGenreRegistry
+                        : GenreRegistryCheck.Collected([])),
+            };
             result[$"{BackfillInventoryLoader.RootPath}{source.SourceId}/source.toml"] =
-                Encoding.UTF8.GetString(BackfillInventoryWriter.WriteSourceMetadata(source).AsSpan());
+                Encoding.UTF8.GetString(
+                    BackfillInventoryWriter.WriteSourceMetadata(projectedSource).AsSpan());
             foreach (var entry in source.Entries)
             {
                 var state = DigestionStatusNames.Migration(entry.ProjectedStatus.Migration)

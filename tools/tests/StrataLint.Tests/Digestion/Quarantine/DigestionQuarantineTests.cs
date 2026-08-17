@@ -216,7 +216,9 @@ public sealed class DigestionQuarantineTests
                 source_id = "fixture-source"
                 path = "docs/source.md"
                 atomizer = "none"
-                """)),
+                genre_registry_check = "no-registry"
+                unregistered_genres = []
+                """ + "\n")),
             ($"{BackfillInventoryLoader.RootPath}fixture-source/residual-open/{AtomId}.yaml",
                 Encoding.UTF8.GetBytes(ToDirectoryAtom(atom))),
         };

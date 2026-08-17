@@ -673,7 +673,9 @@ public sealed partial class ProductionEnvironmentTests
         fixture.Baseline.Remove(BackfillInventoryLoader.RelativePath);
         var sourceMetadata = $"source_id = \"fixture-source\"\n"
             + $"path = \"{RuleFixture.FixtureDigestionSourcePath}\"\n"
-            + $"atomizer = \"{atomizerId}\"\n";
+            + $"atomizer = \"{atomizerId}\"\n"
+            + $"genre_registry_check = \"{(atomizerId == AtomizerRegistry.NoAtomizerId ? "no-registry" : "collected")}\"\n"
+            + "unregistered_genres = []\n";
         var atomText = DirectoryAtom(atom);
         foreach (var files in new[] { fixture.Files, fixture.Baseline })
         {

@@ -69,7 +69,7 @@ internal static partial class CoverAtomCommand
             var current = Decode(currentRaw);
             var baseline = Decode(baselineRaw);
             var document = LoadDocument(current);
-            var baselineDocument = LoadDocument(baseline);
+            var baselineDocument = BackfillInventoryLoader.LoadBaseline(baseline);
 
             // Gate ②(a): every cover GID must select a Lean declaration, not just a
             // module (module-level coverage is ingest's residual boundary, not a
