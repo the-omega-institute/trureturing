@@ -307,7 +307,8 @@ internal static class BackfillInventoryRule
                 context.VerifiedScribeEmissions,
                 LoadBaselineDocument(context.Baseline),
                 baselineSnapshot: context.Baseline,
-                casEvaluation: casEvaluation);
+                casEvaluation: casEvaluation,
+                changes: context.Changes);
             foreach (var finding in evaluation.Findings)
             {
                 findings.Add(new RuleFinding(BackfillPath, finding));

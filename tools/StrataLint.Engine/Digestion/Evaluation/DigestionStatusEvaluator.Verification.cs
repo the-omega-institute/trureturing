@@ -35,9 +35,18 @@ internal static partial class DigestionStatusEvaluator
     private static bool VerifyBoundary(
         DigestionLedgerEntry entry,
         RepositorySnapshot snapshot,
+        RawChangeSet? changes,
         ICollection<DigestionGap> gaps,
         ImmutableArray<string>.Builder findings)
     {
+        if (changes is not null
+            && !DigestionCasStore.EntryChanged(entry, changes)
+            && !PathChanged(changes, entry.SourcePath)
+            && !PathChanged(changes, TheoryAtomizerDataLoader.DataPath))
+        {
+            return true;
+        }
+
         var boundary = entry.Boundary;
         if (boundary is null)
         {
@@ -147,6 +156,7 @@ internal static partial class DigestionStatusEvaluator
     private static bool VerifyCoverageReceipts(
         DigestionLedgerEntry entry,
         IReadOnlyDictionary<string, RepositoryFile> targets,
+        RawChangeSet? changes,
         ICollection<DigestionGap> gaps,
         ImmutableArray<string>.Builder findings)
     {
@@ -158,6 +168,15 @@ internal static partial class DigestionStatusEvaluator
             {
                 gaps.Add(new DigestionGap("coverage-receipt-missing", gid));
                 complete = false;
+                continue;
+            }
+
+            var targetChanged = Gid.TryParse(gid, out var parsedGid)
+                && PathChanged(changes, parsedGid.Path.Value);
+            if (changes is not null
+                && !DigestionCasStore.EntryChanged(entry, changes)
+                && !targetChanged)
+            {
                 continue;
             }
 
@@ -183,6 +202,7 @@ internal static partial class DigestionStatusEvaluator
         DigestionLedgerEntry entry,
         RepositorySnapshot snapshot,
         VerifiedScribeEmissions? verifiedEmissions,
+        RawChangeSet? changes,
         ICollection<DigestionGap> gaps,
         ImmutableArray<string>.Builder findings)
     {
@@ -202,6 +222,11 @@ internal static partial class DigestionStatusEvaluator
             var emissionPath = ScribeEmissionAttestation.EmissionPath(documentGid);
             var selectsDeclaration = Gid.TryParse(gid, out var parsedGid)
                 && parsedGid.ToTarget() is Target.Formal { Declaration: not null };
+            var receiptInputChanged = changes is null
+                || DigestionCasStore.EntryChanged(entry, changes)
+                || PathChanged(changes, definitionPath)
+                || PathChanged(changes, emissionPath)
+                || parsedGid is not null && PathChanged(changes, parsedGid.Path.Value);
             ScribeEmissionRecord? verified = null;
             if (verifiedEmissions is null)
             {
@@ -232,6 +257,7 @@ internal static partial class DigestionStatusEvaluator
                 complete = false;
             }
             else if (hasReceipt
+                && receiptInputChanged
                 && (receipt!.DefinitionSha256
                     != DigestionFingerprint.Compute(definition.RawBytes.AsSpan()).RawSha256
                     || verified is not null
@@ -243,6 +269,7 @@ internal static partial class DigestionStatusEvaluator
             }
 
             if (hasReceipt
+                && receiptInputChanged
                 && verified is not null
                 && (verified.EmissionPath != emissionPath
                     || verified.EmissionSha256 != receipt!.EmissionSha256))
@@ -260,4 +287,7 @@ internal static partial class DigestionStatusEvaluator
 
         return complete;
     }
+
+    private static bool PathChanged(RawChangeSet? changes, string path) =>
+        changes is null || changes.Paths.Any(changed => changed.Value == path);
 }
