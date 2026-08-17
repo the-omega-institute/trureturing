@@ -128,8 +128,6 @@ internal sealed class TribonacciDocument : IScribeDocumentDefinition
                     GidRef.Create("D5/S0/Tower/DBonacciGeneral/TribonacciPeriodicMaximin")),
                 DocumentEdge.Dependency.Create(
                     GidRef.Create("D5/S0/Tower/Tribonacci/ChampionOrbit")),
-                DocumentEdge.Dependency.Create(
-                    GidRef.Create("D5/S0/Tower/ErgodicBridge/General")),
             ]));
     }
 }
