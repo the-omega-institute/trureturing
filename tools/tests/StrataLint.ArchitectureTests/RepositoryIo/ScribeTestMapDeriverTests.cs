@@ -37,6 +37,63 @@ public sealed class ScribeTestMapDeriverTests
     }
 
     [Fact]
+    public void EvaluateRejectsManagedProjectWithoutDirectXunitReference()
+    {
+        var snapshot = Snapshot(
+            ("tools/tests/Missing.Tests/Missing.Tests.csproj", "<Project />"),
+            ("tools/tests/Missing.Tests/DebtTests.cs", UnknownSource("DebtTests", "ReadsVariable")));
+
+        var map = ScribeTestMapDeriver.DeriveSnapshot(snapshot);
+        var finding = Assert.Single(ScribeUnknownDebtPolicy.Evaluate(map, map));
+        var inspectionFinding = Assert.Single(ScribeUnknownDebtPolicy.InspectCurrent(map));
+
+        Assert.Empty(map.Methods);
+        Assert.Equal(finding, inspectionFinding);
+        Assert.Equal("tools/tests/Missing.Tests/Missing.Tests.csproj", finding.Path);
+        Assert.Equal(AdmissionEffect.Block, finding.Effect);
+        Assert.Contains("neither", finding.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void DeclaredCompileFailProofProjectsAreAdmittedWithoutFinding()
+    {
+        var snapshot = Snapshot(
+            ("tools/tests/BannedApiCompileFailProof/BannedApiCompileFailProof.csproj", "<Project />"),
+            ("tools/tests/CompileFailProof/CompileFailProof.csproj", "<Project />"));
+
+        var map = ScribeTestMapDeriver.DeriveSnapshot(snapshot);
+
+        Assert.Empty(ScribeUnknownDebtPolicy.Evaluate(map, map));
+    }
+
+    [Fact]
+    public void CompileFailProofProjectExemptionBaselineAllowsOnlyRemoval()
+    {
+        Assert.Empty(ScribeTestMapDeriver.FindAddedCompileFailProofProjectExemptions(
+            ScribeTestMapDeriver.CompileFailProofProjectExemptions));
+        Assert.Equal(
+            ["tools/tests/NewCompileFailProof/NewCompileFailProof.csproj"],
+            ScribeTestMapDeriver.FindAddedCompileFailProofProjectExemptions(
+                ScribeTestMapDeriver.CompileFailProofProjectExemptions.Append(
+                    "tools/tests/NewCompileFailProof/NewCompileFailProof.csproj")));
+    }
+
+    [Fact]
+    public void DeriveSnapshotDiscoversXunitProjectsAcrossTheWholeRepository()
+    {
+        const string xunitProject =
+            "<Project><ItemGroup><PackageReference Include=\"xunit\" /></ItemGroup></Project>";
+        var snapshot = Snapshot(
+            ("experiments/External.Tests/External.Tests.csproj", xunitProject),
+            ("experiments/External.Tests/ExternalTests.cs", "class ExternalTests { [Fact] public void Runs() { } }"));
+
+        var method = Assert.Single(ScribeTestMapDeriver.DeriveSnapshot(snapshot).Methods);
+
+        Assert.Equal("experiments/External.Tests", method.PartitionKey);
+        Assert.Equal("experiments/External.Tests/ExternalTests.cs", method.SourcePath);
+    }
+
+    [Fact]
     public void UnknownDebtBaselineSchemaV1GroupsMethodsByDerivedPartitionKey()
     {
         const string source = """
@@ -84,6 +141,80 @@ public sealed class ScribeTestMapDeriverTests
 
         Assert.Equal(AdmissionEffect.Block, finding.Effect);
         Assert.Contains("repository tolerance 281", finding.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void UnknownDebtIdentityIncludesPartitionKey()
+    {
+        var forkPoint = UnknownMap(
+            "tools/tests/Alpha.Tests",
+            "tools/tests/Shared/DebtTests.cs",
+            "DebtTests",
+            "ReadsVariable");
+        var current = UnknownMap(
+            "tools/tests/Beta.Tests",
+            "tools/tests/Shared/DebtTests.cs",
+            "DebtTests",
+            "ReadsVariable");
+
+        AssertIntroducedUnknown(current, forkPoint, "tools/tests/Beta.Tests::DebtTests.ReadsVariable");
+    }
+
+    [Fact]
+    public void UnknownDebtIdentityIncludesSourcePath()
+    {
+        var forkPoint = UnknownMap(
+            "tools/tests/Alpha.Tests",
+            "tools/tests/Alpha.Tests/PreviousDebtTests.cs",
+            "DebtTests",
+            "ReadsVariable");
+        var current = UnknownMap(
+            "tools/tests/Alpha.Tests",
+            "tools/tests/Alpha.Tests/CurrentDebtTests.cs",
+            "DebtTests",
+            "ReadsVariable");
+
+        AssertIntroducedUnknown(current, forkPoint, "tools/tests/Alpha.Tests::DebtTests.ReadsVariable");
+    }
+
+    [Fact]
+    public void UnknownDebtIdentityIncludesTypeAndMethod()
+    {
+        var forkPoint = UnknownMap(
+            "tools/tests/Alpha.Tests",
+            "tools/tests/Alpha.Tests/DebtTests.cs",
+            "PreviousDebtTests",
+            "ReadsVariable");
+        var current = UnknownMap(
+            "tools/tests/Alpha.Tests",
+            "tools/tests/Alpha.Tests/DebtTests.cs",
+            "CurrentDebtTests",
+            "ReadsVariable");
+
+        AssertIntroducedUnknown(current, forkPoint, "tools/tests/Alpha.Tests::CurrentDebtTests.ReadsVariable");
+    }
+
+    [Fact]
+    public void UnknownDebtAtToleranceWithoutIntroductionIsObserved()
+    {
+        var methods = string.Join('\n', Enumerable.Range(
+                0,
+                ScribeUnknownDebtPolicy.UnknownDebtToleranceLimit)
+            .Select(static index =>
+                $"[Fact] public void Debt{index:000}() {{ var path = GetPath(); File.ReadAllText(path); }}"));
+        var map = ScribeTestMapDeriver.DeriveSources(
+        [
+            new(
+                "tools/tests/Synthetic.Tests/DebtTests.cs",
+                $"class DebtTests {{\n{methods}\n}}",
+                "tools/tests/Synthetic.Tests"),
+        ],
+        []);
+
+        var finding = Assert.Single(ScribeUnknownDebtPolicy.Evaluate(map, map));
+
+        Assert.Equal(AdmissionEffect.Observe, finding.Effect);
+        Assert.Contains("this change introduced none", finding.Message, StringComparison.Ordinal);
     }
 
     [Fact]
@@ -180,6 +311,40 @@ public sealed class ScribeTestMapDeriverTests
             }
             """;
         return DeriveSources([new("LiteralTests.cs", source)]);
+    }
+
+    private static ScribeTestMap UnknownMap(
+        string partition,
+        string sourcePath,
+        string typeName,
+        string methodName) => ScribeTestMapDeriver.DeriveSources(
+        [new(sourcePath, UnknownSource(typeName, methodName), partition)],
+        []);
+
+    private static string UnknownSource(string typeName, string methodName) => $$"""
+        class {{typeName}} {
+          [Fact] public void {{methodName}}() {
+            var path = GetPath();
+            File.ReadAllText(path);
+          }
+        }
+        """;
+
+    private static void AssertIntroducedUnknown(
+        ScribeTestMap current,
+        ScribeTestMap forkPoint,
+        string displayIdentity)
+    {
+        var finding = Assert.Single(ScribeUnknownDebtPolicy.Evaluate(current, forkPoint));
+        Assert.Equal(AdmissionEffect.Block, finding.Effect);
+        Assert.Contains(displayIdentity, finding.Message, StringComparison.Ordinal);
+    }
+
+    private static RepositorySnapshot Snapshot(params (string Path, string Content)[] files)
+    {
+        var raw = RawRepositorySnapshot.Create(files.Select(static file =>
+            RawRepositoryEntry.FromText(file.Path, file.Content)));
+        return Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(raw)).Snapshot;
     }
 
     private static ScribeTestMap DeriveDiscoveryWithAccessorMarker(string markerExpression)

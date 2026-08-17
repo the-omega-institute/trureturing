@@ -35,9 +35,13 @@ internal sealed record ScribeUnknownDebtBaselineV1(
     internal IEnumerable<ScribeTestMethod> UnknownMethods() =>
         Partitions.Values.SelectMany(static partition => partition.UnknownMethods.Values);
 
-    internal bool Contains(ScribeTestMethod method) =>
-        Partitions.TryGetValue(method.PartitionKey, out var partition)
-        && partition.UnknownMethods.ContainsKey(method.Identity);
+    internal bool Contains(ScribeTestMethod method) => UnknownMethods().Any(candidate =>
+        new[]
+        {
+            candidate.PartitionKey == method.PartitionKey,
+            candidate.SourcePath == method.SourcePath,
+            candidate.Id == method.Id,
+        }.All(static componentMatches => componentMatches));
 }
 
 internal sealed record ScribeUnknownDebtFinding(
@@ -67,6 +71,7 @@ internal static class ScribeUnknownDebtPolicy
         var current = ScribeUnknownDebtBaselineV1.Create(currentMap);
         var forkPoint = ScribeUnknownDebtBaselineV1.Create(forkPointMap);
         var findings = ImmutableArray.CreateBuilder<ScribeUnknownDebtFinding>();
+        AddUnclassifiedProjectFindings(currentMap, findings);
         var introduced = current.UnknownMethods()
             .Where(method => !forkPoint.Contains(method))
             .OrderBy(static method => method.PartitionKey, StringComparer.Ordinal)
@@ -108,16 +113,32 @@ internal static class ScribeUnknownDebtPolicy
     internal static ImmutableArray<ScribeUnknownDebtFinding> InspectCurrent(ScribeTestMap currentMap)
     {
         var current = ScribeUnknownDebtBaselineV1.Create(currentMap);
-        return current.UnknownCount <= UnknownDebtToleranceLimit
-            ? []
-            :
-            [
-                new ScribeUnknownDebtFinding(
-                    "tools/tests",
-                    $"repository contains {current.UnknownCount} conservative unknown test methods "
-                        + $"(admission limit {UnknownDebtLimit}, repository tolerance "
-                        + $"{UnknownDebtToleranceLimit}; reduce parser debt)",
-                    AdmissionEffect.Block),
-            ];
+        var findings = ImmutableArray.CreateBuilder<ScribeUnknownDebtFinding>();
+        AddUnclassifiedProjectFindings(currentMap, findings);
+        if (current.UnknownCount > UnknownDebtToleranceLimit)
+        {
+            findings.Add(new ScribeUnknownDebtFinding(
+                "tools/tests",
+                $"repository contains {current.UnknownCount} conservative unknown test methods "
+                    + $"(admission limit {UnknownDebtLimit}, repository tolerance "
+                    + $"{UnknownDebtToleranceLimit}; reduce parser debt)",
+                AdmissionEffect.Block));
+        }
+
+        return findings.ToImmutable();
+    }
+
+    private static void AddUnclassifiedProjectFindings(
+        ScribeTestMap map,
+        ImmutableArray<ScribeUnknownDebtFinding>.Builder findings)
+    {
+        foreach (var path in map.UnclassifiedManagedProjectPaths)
+        {
+            findings.Add(new ScribeUnknownDebtFinding(
+                path,
+                "managed test project is neither an xUnit project with a direct PackageReference "
+                    + "nor a declared compile-fail proof exemption",
+                AdmissionEffect.Block));
+        }
     }
 }

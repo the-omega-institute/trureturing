@@ -33,12 +33,33 @@ internal sealed record ScribeTestMethod(
     internal string DisplayIdentity => $"{PartitionKey}::{Id}";
 }
 
-internal sealed record ScribeTestMap(IReadOnlyList<ScribeTestMethod> Methods);
+internal sealed record ScribeTestMap(
+    IReadOnlyList<ScribeTestMethod> Methods,
+    IReadOnlyList<string> UnclassifiedManagedProjectPaths);
 
 internal sealed record ScribeTestProjectPartition(string Key, string Prefix);
 
 internal static class ScribeTestMapDeriver
 {
+    private const string ManagedTestProjectPrefix = "tools/tests/";
+
+    // These projects are deliberately compiled to fail by preflight. Keep this declaration
+    // removal-only: a new non-xUnit project must first establish its own governed class rather
+    // than silently extending the exception set.
+    internal static readonly IReadOnlySet<string> CompileFailProofProjectExemptions =
+        new HashSet<string>(StringComparer.Ordinal)
+        {
+            "tools/tests/BannedApiCompileFailProof/BannedApiCompileFailProof.csproj",
+            "tools/tests/CompileFailProof/CompileFailProof.csproj",
+        };
+
+    private static readonly IReadOnlySet<string> PinnedCompileFailProofProjectExemptionBaseline =
+        new HashSet<string>(StringComparer.Ordinal)
+        {
+            "tools/tests/BannedApiCompileFailProof/BannedApiCompileFailProof.csproj",
+            "tools/tests/CompileFailProof/CompileFailProof.csproj",
+        };
+
     // This is the read surface used by the engineering path-filter guard. Entries are either
     // exact files or directory roots; adding a new repository read requires updating
     // this declaration and its review-visible guard.
@@ -73,9 +94,12 @@ internal static class ScribeTestMapDeriver
     internal static ScribeTestMap DeriveRepository(string repositoryRoot)
     {
         var files = GitIndexRepositoryFiles.Enumerate(repositoryRoot);
-        var partitions = DeriveProjectPartitions(files
+        var projectFiles = files
             .Where(static file => file.RelativePath.EndsWith(".csproj", StringComparison.Ordinal))
-            .Select(file => (file.RelativePath, File.ReadAllText(file.FullPath))));
+            .Select(file => (file.RelativePath, File.ReadAllText(file.FullPath)))
+            .ToArray();
+        var partitions = DeriveProjectPartitions(projectFiles);
+        var unclassifiedProjects = FindUnclassifiedManagedProjects(projectFiles);
         var sources = files
             .Where(file => file.RelativePath.EndsWith(".cs", StringComparison.Ordinal)
                 && TryPartition(file.RelativePath, partitions, out _))
@@ -94,14 +118,17 @@ internal static class ScribeTestMapDeriver
         var indirectSites = ProductionRepositoryReadDeriver.InspectTests(productionSources, sources)
             .Select(static site => (site.Path, site.Line))
             .ToArray();
-        return DeriveSources(sources, indirectSites);
+        return DeriveSources(sources, indirectSites, unclassifiedProjects);
     }
 
     internal static ScribeTestMap DeriveSnapshot(RepositorySnapshot snapshot)
     {
-        var partitions = DeriveProjectPartitions(snapshot.Files.Values
+        var projectFiles = snapshot.Files.Values
             .Where(static file => file.Path.Value.EndsWith(".csproj", StringComparison.Ordinal))
-            .Select(static file => (file.Path.Value, file.Text)));
+            .Select(static file => (file.Path.Value, file.Text))
+            .ToArray();
+        var partitions = DeriveProjectPartitions(projectFiles);
+        var unclassifiedProjects = FindUnclassifiedManagedProjects(projectFiles);
         var sources = snapshot.Files.Values
             .Where(file => file.Path.Value.EndsWith(".cs", StringComparison.Ordinal)
                 && TryPartition(file.Path.Value, partitions, out _))
@@ -120,7 +147,7 @@ internal static class ScribeTestMapDeriver
         var indirectSites = ProductionRepositoryReadDeriver.InspectTests(productionSources, sources)
             .Select(static site => (site.Path, site.Line))
             .ToArray();
-        return DeriveSources(sources, indirectSites);
+        return DeriveSources(sources, indirectSites, unclassifiedProjects);
     }
 
     internal static IReadOnlyList<ScribeTestProjectPartition> DeriveProjectPartitions(
@@ -135,9 +162,25 @@ internal static class ScribeTestMapDeriver
         .OrderBy(static partition => partition.Key, StringComparer.Ordinal)
         .ToArray();
 
+    internal static IReadOnlyList<string> FindUnclassifiedManagedProjects(
+        IEnumerable<(string Path, string Content)> projectFiles) => projectFiles
+        .Where(static project => project.Path.StartsWith(ManagedTestProjectPrefix, StringComparison.Ordinal))
+        .Where(project => !IsXunitProject(project.Content)
+            && !CompileFailProofProjectExemptions.Contains(project.Path))
+        .Select(static project => project.Path)
+        .Order(StringComparer.Ordinal)
+        .ToArray();
+
+    internal static IReadOnlyList<string> FindAddedCompileFailProofProjectExemptions(
+        IEnumerable<string> exemptions) => exemptions
+        .Except(PinnedCompileFailProofProjectExemptionBaseline, StringComparer.Ordinal)
+        .Order(StringComparer.Ordinal)
+        .ToArray();
+
     internal static ScribeTestMap DeriveSources(
         IEnumerable<TestMapSource> sourceFiles,
-        IEnumerable<(string Path, int Line)> indirectProductionSites)
+        IEnumerable<(string Path, int Line)> indirectProductionSites,
+        IReadOnlyList<string>? unclassifiedManagedProjectPaths = null)
     {
         var parsed = sourceFiles.Select(Parse).ToArray();
         var discoveryPaths = ExtractDiscoveryPaths(parsed);
@@ -191,11 +234,13 @@ internal static class ScribeTestMapDeriver
                 reasons.Order().ToArray()));
         }
 
-        return new ScribeTestMap(results
-            .OrderBy(static method => method.PartitionKey, StringComparer.Ordinal)
-            .ThenBy(static method => method.SourcePath, StringComparer.Ordinal)
-            .ThenBy(static method => method.Id, StringComparer.Ordinal)
-            .ToArray());
+        return new ScribeTestMap(
+            results
+                .OrderBy(static method => method.PartitionKey, StringComparer.Ordinal)
+                .ThenBy(static method => method.SourcePath, StringComparer.Ordinal)
+                .ThenBy(static method => method.Id, StringComparer.Ordinal)
+                .ToArray(),
+            unclassifiedManagedProjectPaths ?? []);
     }
 
     private static bool IsXunitProject(string content)
