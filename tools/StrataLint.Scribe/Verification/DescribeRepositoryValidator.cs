@@ -155,6 +155,10 @@ internal static class DescribeRepositoryValidator
                     {
                         ValidateLiterature(documentGid, literature, notes, findings);
                     }
+                    foreach (var acknowledgement in describe.AcknowledgementReferences)
+                    {
+                        ValidateLiterature(documentGid, acknowledgement, notes, findings);
+                    }
                     ValidateBlocks(
                         repositoryRoot,
                         documentGid,

@@ -35,6 +35,8 @@ public sealed partial class MakeWorkflowTests
         "tools/scripts/report/lean-report-input.sh";
     private const string LeanReportPairScriptPath = "tools/scripts/lean-report-pair.sh";
     private const string PerfEventScriptPath = "tools/scripts/lib/perf-event-lib.sh";
+    private const string RendererContractUpdateScriptPath =
+        "tools/scripts/update-renderer-contract.sh";
     private const string ToolsMakefilePath = "tools/Makefile";
     private const string AdmissionWorkflowPath = ".github/workflows/ci.yml";
     private const string TheoryIngestWorkflowPath = ".github/workflows/theory-ingest.yml";
@@ -68,6 +70,7 @@ public sealed partial class MakeWorkflowTests
         "dotnet",
         "test",
         "selftest",
+        "update-renderer-contract",
         "perf-report",
         "clean-lanes",
     ];

@@ -42,7 +42,14 @@ public static class FrozenCoverageLedger
                         break;
                     case "Freeze":
                         var nodeId = RequiredString(payload, "frozen_node_id");
-                        var pathText = RequiredString(payload, "node_path");
+                        // schema v4 retired the node_path alias; the authoritative path has
+                        // always been input.descriptor_selector. Committed v2/v3 events keep
+                        // the alias, so read the authority first and fall back for history.
+                        var pathText = payload.TryGetProperty("input", out var freezeInput)
+                            && freezeInput.TryGetProperty("descriptor_selector", out var selector)
+                            && selector.ValueKind == JsonValueKind.String
+                                ? selector.GetString()!
+                                : RequiredString(payload, "node_path");
                         if (!FrozenHashSyntax.IsSha256(nodeId)
                             || !RepoPath.TryCreate(pathText, out var path)
                             || !active.TryAdd(nodeId, path))

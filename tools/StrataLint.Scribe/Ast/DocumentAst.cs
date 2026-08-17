@@ -191,6 +191,13 @@ public abstract record DocumentBlock
             ? literature.NoteRef
             : null;
 
+        public ImmutableArray<LibraryNoteRef> AcknowledgementReferences => AssessedProvenance switch
+        {
+            AssessedProvenance.RepoDerived repository => repository.Acknowledgements,
+            AssessedProvenance.SuspectedNovel novel => novel.Acknowledgements,
+            _ => [],
+        };
+
         public BlockSequence Content { get; }
 
         public Formula? StatementFormula { get; }
