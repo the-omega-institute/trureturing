@@ -35,7 +35,6 @@ internal static partial class DigestionStatusEvaluator
                 entry,
                 alignment.AlignmentFor(entry.AtomId),
                 alignment.AtomFor(entry.AtomId),
-                null,
                 snapshot,
                 emptyLeanReport,
                 emptyTruthNodes,
@@ -89,15 +88,10 @@ internal static partial class DigestionStatusEvaluator
         };
         var nodes = dag.Nodes.ToDictionary(static node => node.RepoPath);
         var work = entries.Select(entry =>
-        {
-            var baselineMigration = baselineEntries.TryGetValue(entry.AtomId, out var baselineEntry)
-                ? baselineEntry.ProjectedStatus.Migration
-                : (DigestionMigrationState?)null;
-            return Inspect(
+            Inspect(
                 entry,
                 alignment.AlignmentFor(entry.AtomId),
                 alignment.AtomFor(entry.AtomId),
-                baselineMigration,
                 snapshot,
                 lean.Report,
                 nodes,
@@ -192,7 +186,6 @@ internal static partial class DigestionStatusEvaluator
         DigestionLedgerEntry entry,
         DigestionReceiptAlignment alignment,
         DigestionAtom? atom,
-        DigestionMigrationState? baselineMigration,
         RepositorySnapshot snapshot,
         LeanAxiomReport leanReport,
         IReadOnlyDictionary<RepoPath, TruthNode> nodes,
