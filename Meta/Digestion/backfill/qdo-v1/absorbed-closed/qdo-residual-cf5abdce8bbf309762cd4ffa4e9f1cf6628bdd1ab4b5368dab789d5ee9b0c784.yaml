@@ -1,0 +1,17 @@
+ast_path: theorem/19.11
+fingerprints:
+  raw_sha256: sha256:cf5abdce8bbf309762cd4ffa4e9f1cf6628bdd1ab4b5368dab789d5ee9b0c784
+  normalized_sha256: sha256:cf5abdce8bbf309762cd4ffa4e9f1cf6628bdd1ab4b5368dab789d5ee9b0c784
+cas_ref: sha256:cf5abdce8bbf309762cd4ffa4e9f1cf6628bdd1ab4b5368dab789d5ee9b0c784
+coverage_gids:
+  - D5/S3/ObserverMemory/Prediction/ConditionalEntropyStability.prediction_stability_depth_eq_conditional_entropy_zero
+receipts:
+  coverage:
+    - gid: D5/S3/ObserverMemory/Prediction/ConditionalEntropyStability.prediction_stability_depth_eq_conditional_entropy_zero
+      source_sha256: sha256:cf5abdce8bbf309762cd4ffa4e9f1cf6628bdd1ab4b5368dab789d5ee9b0c784
+      target_sha256: sha256:d0848dfa2b3928ef3e670590057f4dd27aa70b8cdec2875a12332aebb0484938
+  scribe:
+    - gid: D5/S3/ObserverMemory/Prediction/ConditionalEntropyStability.prediction_stability_depth_eq_conditional_entropy_zero
+      definition_sha256: sha256:56ba59439b2eee6e65a5d16535e1a1e9250f94d43ca96aed1611836cf4491a92
+      emission_sha256: sha256:f57e709501c97cb87cb1678169970000906c29df71236faafd3c4a4b66b1624e
+  unresolved_subitems: []

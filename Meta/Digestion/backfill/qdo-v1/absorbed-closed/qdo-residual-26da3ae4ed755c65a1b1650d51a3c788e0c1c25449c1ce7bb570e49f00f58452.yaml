@@ -1,0 +1,17 @@
+ast_path: theorem/19.3
+fingerprints:
+  raw_sha256: sha256:26da3ae4ed755c65a1b1650d51a3c788e0c1c25449c1ce7bb570e49f00f58452
+  normalized_sha256: sha256:26da3ae4ed755c65a1b1650d51a3c788e0c1c25449c1ce7bb570e49f00f58452
+cas_ref: sha256:26da3ae4ed755c65a1b1650d51a3c788e0c1c25449c1ce7bb570e49f00f58452
+coverage_gids:
+  - D5/S3/Observer/Separation/FiniteFutureCongruence.finite_future_maximal_congruence
+receipts:
+  coverage:
+    - gid: D5/S3/Observer/Separation/FiniteFutureCongruence.finite_future_maximal_congruence
+      source_sha256: sha256:26da3ae4ed755c65a1b1650d51a3c788e0c1c25449c1ce7bb570e49f00f58452
+      target_sha256: sha256:59f335f953bf5db57edff009fc969d539043f1e5830622ca2a645836b52f2096
+  scribe:
+    - gid: D5/S3/Observer/Separation/FiniteFutureCongruence.finite_future_maximal_congruence
+      definition_sha256: sha256:99cee876265bea9e65c448f92f85872d160bba4f6afb9f4b0a262e3664662229
+      emission_sha256: sha256:b1c9b3d79622af4671e554b07aba7dc219c90862c5452a05f31297e02c00223b
+  unresolved_subitems: []
