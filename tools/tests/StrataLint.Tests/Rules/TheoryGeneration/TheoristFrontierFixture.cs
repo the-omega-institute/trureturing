@@ -76,6 +76,25 @@ internal sealed partial class RuleFixture
     internal void CorruptMission() =>
         Files[MissionFileLoader.RelativePath] = "# Mission fixture without a mission-v1 fence\n";
 
+    internal void DeleteTheoristTargetAndOwner()
+    {
+        Files.Remove(currentTheoristPath);
+        Reports.Remove(currentTheoristPath);
+        Files[MissionFileLoader.RelativePath] = Mission(null);
+    }
+
+    internal void RemoveTheoristTargetReport() => Reports.Remove(currentTheoristPath);
+
+    internal void RemoveCurrentFrontierReports()
+    {
+        foreach (var path in Reports.Keys
+                     .Where(static path => path.StartsWith("D5/X_Frontier/", StringComparison.Ordinal))
+                     .ToArray())
+        {
+            Reports.Remove(path);
+        }
+    }
+
     internal void MutateTheoristTarget(string mutation)
     {
         switch (mutation)

@@ -267,6 +267,75 @@ public sealed class TheoristFrontierContractTests
         Assert.Contains("theorist contract is required", diagnostic.Message, StringComparison.Ordinal);
     }
 
+    [Fact]
+    public void DeletedBaselineContractCarrierIsRejectedWhenItsOwnerEntryIsAlsoDeleted()
+    {
+        var fixture = BaselineContractCarrier();
+        fixture.DeleteTheoristTargetAndOwner();
+
+        var diagnostic = Assert.Single(Evaluate(fixture));
+
+        Assert.Equal("D5/X_Frontier/PrimeNormIrreducibility.lean", diagnostic.Path);
+        Assert.Contains("theorist contract source is unavailable", diagnostic.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void CurrentContractCarrierWithoutCompiledReportFailsClosed()
+    {
+        var fixture = BaselineContractCarrier();
+        fixture.RemoveTheoristTargetReport();
+
+        var diagnostic = Assert.Single(EvaluateForRuleCompatibility(fixture));
+
+        Assert.Equal("D5/X_Frontier/PrimeNormIrreducibility.lean", diagnostic.Path);
+        Assert.Contains("theorist contract compiled report is unavailable", diagnostic.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void DeletedBaselineContractCarrierDefeatsTheEmptyCandidateReportEscape()
+    {
+        var fixture = BaselineContractCarrier();
+        fixture.DeleteTheoristTargetAndOwner();
+        fixture.RemoveCurrentFrontierReports();
+        var context = fixture.BuildForRuleCompatibility();
+        Assert.DoesNotContain(
+            context.Lean.Report.Files.Keys,
+            static path => path.Value.StartsWith("D5/X_Frontier/", StringComparison.Ordinal));
+
+        var diagnostic = Assert.Single(EvaluateContext(context));
+
+        Assert.Equal("D5/X_Frontier/PrimeNormIrreducibility.lean", diagnostic.Path);
+        Assert.Contains("theorist contract source is unavailable", diagnostic.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void DeletedLegacyBaselineModuleWithoutContractDoesNotEnterTheMigratedClass()
+    {
+        var fixture = new RuleFixture();
+        fixture.AddHistoricalTheoristTarget(
+            "prime-norm-irreducibility",
+            baselineOwnerKind: "declaration-ready-mathematical-open");
+        fixture.DeleteTheoristTargetAndOwner();
+
+        Assert.Empty(Evaluate(fixture));
+    }
+
+    private static RuleFixture BaselineContractCarrier()
+    {
+        var fixture = new RuleFixture();
+        fixture.AddHistoricalTheoristTarget(
+            "prime-norm-irreducibility",
+            baselineOwnerKind: "declaration-ready-mathematical-open",
+            baselineIncludeContract: true);
+        return fixture;
+    }
+
     private static ImmutableArray<Diagnostic> Evaluate(RuleFixture fixture) =>
-        RuleCatalog.Default.EvaluateSingle(RuleId.CreateKnown(2), fixture.Build()).Diagnostics;
+        EvaluateContext(fixture.Build());
+
+    private static ImmutableArray<Diagnostic> EvaluateForRuleCompatibility(RuleFixture fixture) =>
+        EvaluateContext(fixture.BuildForRuleCompatibility());
+
+    private static ImmutableArray<Diagnostic> EvaluateContext(RuleEvaluationContext context) =>
+        RuleCatalog.Default.EvaluateSingle(RuleId.CreateKnown(2), context).Diagnostics;
 }

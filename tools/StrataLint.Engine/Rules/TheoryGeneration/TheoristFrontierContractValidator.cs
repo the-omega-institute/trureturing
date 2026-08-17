@@ -17,9 +17,14 @@ internal static class TheoristFrontierContractValidator
     internal static ImmutableArray<RuleFinding> Evaluate(RuleEvaluationContext context)
     {
         ArgumentNullException.ThrowIfNull(context);
-        var targets = context.Lean.Report.Files
-            .Where(static item => IsFrontier(item.Key))
-            .OrderBy(static item => item.Key.Value, StringComparer.Ordinal)
+        var targets = context.Lean.Report.Files.Keys
+            .Where(IsFrontier)
+            .Concat(context.Baseline.Files
+                .Where(static item => IsFrontier(item.Key)
+                    && CountOccurrences(item.Value.Text, Marker) > 0)
+                .Select(static item => item.Key))
+            .Distinct()
+            .OrderBy(static path => path.Value, StringComparer.Ordinal)
             .ToArray();
         if (targets.Length == 0)
         {
@@ -30,8 +35,9 @@ internal static class TheoristFrontierContractValidator
         var baselineMission = LoadMission(context.Baseline);
         var findings = ImmutableArray.CreateBuilder<RuleFinding>();
         FrozenLedgerBaseView? frozen = null;
-        foreach (var (path, report) in targets)
+        foreach (var path in targets)
         {
+            var hasCurrentReport = context.Lean.Report.Files.TryGetValue(path, out var report);
             var isNew = !context.Baseline.TryGetFile(path.Value, out var baselineFile);
             var hasCurrentSource = context.Current.TryGetFile(path.Value, out var currentFile);
             var currentHasContract = currentFile is not null
@@ -64,6 +70,7 @@ internal static class TheoristFrontierContractValidator
             }
 
             if (currentOwner is FrontierEligibilityKind.MathematicalNotYetStated
+                && report is not null
                 && report.Declarations.Any(UsesSorry))
             {
                 findings.Add(new RuleFinding(
@@ -82,6 +89,20 @@ internal static class TheoristFrontierContractValidator
                 continue;
             }
 
+            if (!hasCurrentSource || currentFile is null)
+            {
+                findings.Add(new RuleFinding(path.Value, "theorist contract source is unavailable"));
+                continue;
+            }
+
+            if (!hasCurrentReport || report is null)
+            {
+                findings.Add(new RuleFinding(
+                    path.Value,
+                    "theorist contract compiled report is unavailable"));
+                continue;
+            }
+
             if (currentOwner is not FrontierEligibilityKind.DeclarationReadyMathematicalOpen)
             {
                 findings.Add(new RuleFinding(
@@ -89,12 +110,6 @@ internal static class TheoristFrontierContractValidator
                     currentMission.UnreadableReason is { } ownershipReason
                         ? Undecidable("theorist contract ownership", ownershipReason)
                         : "theorist contract requires declaration-ready-mathematical-open ownership"));
-                continue;
-            }
-
-            if (!hasCurrentSource || currentFile is null)
-            {
-                findings.Add(new RuleFinding(path.Value, "theorist contract source is unavailable"));
                 continue;
             }
 
