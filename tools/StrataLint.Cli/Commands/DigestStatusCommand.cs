@@ -41,7 +41,7 @@ internal static class DigestStatusCommand
                 BackfillInventoryDocument? formalizeBaselineDocument = null;
                 if (options.BaselineRevision is not null)
                 {
-                    formalizeBaselineDocument = BackfillInventoryLoader.Load(
+                    formalizeBaselineDocument = BackfillInventoryLoader.LoadBaseline(
                         Decode(repository.ReadRevision(options.BaselineRevision)));
                 }
 
@@ -75,7 +75,7 @@ internal static class DigestStatusCommand
             if (options.BaselineRevision is not null)
             {
                 baselineSnapshot = Decode(repository.ReadRevision(options.BaselineRevision));
-                baselineDocument = BackfillInventoryLoader.Load(baselineSnapshot);
+                baselineDocument = BackfillInventoryLoader.LoadBaseline(baselineSnapshot);
             }
 
             var evaluation = DigestionStatusEvaluator.Evaluate(
@@ -123,7 +123,7 @@ internal static class DigestStatusCommand
             snapshot,
             ValidateLean(snapshot, leanReport),
             scribeEmissionVerifier.Verify(snapshot, leanReport),
-            BackfillInventoryLoader.Load(baseline),
+            BackfillInventoryLoader.LoadBaseline(baseline),
             baselineSnapshot: baseline);
         if (evaluation.Findings.Length > 0)
         {

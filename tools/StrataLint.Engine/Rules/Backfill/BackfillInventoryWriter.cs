@@ -69,10 +69,20 @@ internal static class BackfillInventoryWriter
     internal static ImmutableArray<byte> WriteSourceMetadata(DigestionLedgerSource source)
     {
         ArgumentNullException.ThrowIfNull(source);
+        var genreRegistryCheck = source.GenreRegistryCheck;
+        ValidateGenreRegistryCheck(genreRegistryCheck);
         var builder = new StringBuilder();
         Line(builder, $"source_id = {TomlScalar(source.SourceId)}");
         Line(builder, $"path = {TomlScalar(source.SourcePath)}");
         Line(builder, $"atomizer = {TomlScalar(source.Atomizer)}");
+        Line(
+            builder,
+            $"genre_registry_check = {TomlScalar(RenderGenreRegistryCheck(genreRegistryCheck.Kind))}");
+        Line(
+            builder,
+            "unregistered_genres = ["
+            + string.Join(", ", genreRegistryCheck.UnregisteredGenres.Select(TomlGenreToken))
+            + "]");
         if (source.AcknowledgedStale.Length > 0)
         {
             Line(
@@ -84,6 +94,32 @@ internal static class BackfillInventoryWriter
 
         return ImmutableArray.CreateRange(StrictUtf8.GetBytes(builder.ToString()));
     }
+
+    private static void ValidateGenreRegistryCheck(GenreRegistryCheck check)
+    {
+        var tokens = check.UnregisteredGenres;
+        if (tokens.Any(string.IsNullOrWhiteSpace)
+            || !tokens.SequenceEqual(
+                tokens.Distinct(StringComparer.Ordinal).Order(StringComparer.Ordinal),
+                StringComparer.Ordinal))
+        {
+            throw new InvalidOperationException(
+                "unregistered genres must contain sorted unique nonempty tokens");
+        }
+
+        if (check.Kind == GenreRegistryCheckKind.NoRegistry && !tokens.IsEmpty)
+        {
+            throw new InvalidOperationException(
+                "no-registry requires empty unregistered genres");
+        }
+    }
+
+    private static string RenderGenreRegistryCheck(GenreRegistryCheckKind kind) => kind switch
+    {
+        GenreRegistryCheckKind.Collected => "collected",
+        GenreRegistryCheckKind.NoRegistry => "no-registry",
+        _ => throw new ArgumentOutOfRangeException(nameof(kind)),
+    };
 
     private static ImmutableArray<byte> Write(
         BackfillInventoryDocument document,
@@ -332,6 +368,38 @@ internal static class BackfillInventoryWriter
         }
 
         return $"\"{value}\"";
+    }
+
+    private static string TomlGenreToken(string value)
+    {
+        var builder = new StringBuilder(value.Length + 2);
+        builder.Append('"');
+        foreach (var character in value)
+        {
+            switch (character)
+            {
+                case '"': builder.Append("\\\""); break;
+                case '\\': builder.Append("\\\\"); break;
+                case '\b': builder.Append("\\b"); break;
+                case '\t': builder.Append("\\t"); break;
+                case '\n': builder.Append("\\n"); break;
+                case '\f': builder.Append("\\f"); break;
+                case '\r': builder.Append("\\r"); break;
+                default:
+                    if (character < ' ' || character == '\u007f')
+                    {
+                        builder.Append("\\u")
+                            .Append(((int)character).ToString("X4", CultureInfo.InvariantCulture));
+                    }
+                    else
+                    {
+                        builder.Append(character);
+                    }
+                    break;
+            }
+        }
+
+        return builder.Append('"').ToString();
     }
 
     private static bool RequiresStringQuotes(string value) =>

@@ -62,19 +62,31 @@ internal sealed record DigestionLedgerEntry(
     BackfillReceiptSyntax? ReceiptSyntax,
     string CasRef);
 
+internal sealed record GenreRegistryProjection
+{
+    private readonly GenreRegistryCheck? value;
+
+    private GenreRegistryProjection(GenreRegistryCheck? value) => this.value = value;
+
+    internal static GenreRegistryProjection Unavailable { get; } = new((GenreRegistryCheck?)null);
+
+    internal static GenreRegistryProjection Available(GenreRegistryCheck value)
+    {
+        ArgumentNullException.ThrowIfNull(value);
+        return new GenreRegistryProjection(value);
+    }
+
+    internal GenreRegistryCheck RequireAvailable() => value
+        ?? throw new InvalidOperationException("genre registry projection is unavailable");
+}
+
 internal sealed record DigestionLedgerSource(
     string SourceId,
     string SourcePath,
     string Atomizer,
     ImmutableArray<string> AcknowledgedStale,
+    GenreRegistryProjection GenreRegistryProjection,
     ImmutableArray<DigestionLedgerEntry> Entries)
 {
-    internal DigestionLedgerSource(
-        string sourceId,
-        string sourcePath,
-        string atomizer,
-        ImmutableArray<DigestionLedgerEntry> entries)
-        : this(sourceId, sourcePath, atomizer, [], entries)
-    {
-    }
+    internal GenreRegistryCheck GenreRegistryCheck => GenreRegistryProjection.RequireAvailable();
 }
