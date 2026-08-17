@@ -1,4 +1,5 @@
 using System.Collections.Immutable;
+using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
 using StrataLint.Engine;
@@ -65,6 +66,19 @@ public sealed class TheoristFrontierContractTests
             context).Diagnostics;
 
         Assert.Empty(diagnostics);
+    }
+
+    [Theory]
+    [MemberData(nameof(HistoricalCandidates))]
+    public void HistoricalFixtureMatchesTheRecordedTheorySelfGrowthBlob(string fixtureName)
+    {
+        var (source, blobOid) = RuleFixture.HistoricalTheoristBlob(fixtureName);
+
+        Assert.Equal(
+            blobOid,
+            FrozenContentAddress.ComputeGitBlobOid(
+                Encoding.UTF8.GetBytes(source),
+                HashAlgorithmName.SHA1));
     }
 
     [Theory]
@@ -202,6 +216,44 @@ public sealed class TheoristFrontierContractTests
     }
 
     [Fact]
+    public void UnreadableMissionReportsAnUndecidableOwnerRatherThanAnUnclassifiedModule()
+    {
+        var fixture = new RuleFixture();
+        fixture.AddHistoricalTheoristTarget("prime-norm-irreducibility", includeContract: false);
+        fixture.CorruptMission();
+
+        var diagnostics = Evaluate(fixture);
+
+        // Every new Frontier module loses its owner at once, so the whole set must say so.
+        Assert.NotEmpty(diagnostics);
+        Assert.All(diagnostics, diagnostic => Assert.Contains(
+            "Frontier owner is undecidable because docs/MISSION.md does not load: "
+            + "MISSION must contain exactly one mission-v1 fenced block",
+            diagnostic.Message,
+            StringComparison.Ordinal));
+        Assert.Contains(
+            diagnostics,
+            diagnostic => diagnostic.Path == "D5/X_Frontier/PrimeNormIrreducibility.lean");
+    }
+
+    [Fact]
+    public void UnreadableMissionDoesNotSilentlyAdmitAContractCarrier()
+    {
+        var fixture = new RuleFixture();
+        fixture.AddHistoricalTheoristTarget(
+            "prime-norm-irreducibility",
+            baselineOwnerKind: "declaration-ready-mathematical-open");
+        fixture.CorruptMission();
+
+        var diagnostic = Assert.Single(Evaluate(fixture));
+
+        Assert.Contains(
+            "theorist contract ownership is undecidable because docs/MISSION.md does not load",
+            diagnostic.Message,
+            StringComparison.Ordinal);
+    }
+
+    [Fact]
     public void MigratedContractCannotBeDeletedAfterItEntersTheBaseline()
     {
         var fixture = new RuleFixture();
@@ -223,6 +275,7 @@ public sealed class TheoristFrontierContractTests
 internal sealed partial class RuleFixture
 {
     private const string TheoristTargetPath = "D5/X_Frontier/PrimeNormIrreducibility.lean";
+    private const string AuditBlockMarker = "/- Frontier-generation audit:";
     private const string SearchReceiptGid = "D5/L/Carrier/fixture2026contract";
     private const string SearchReceiptPath = "Library/Carrier/fixture2026contract.md";
     private const string ComputationReceiptGid = "D5/E/S0/Carrier/Probe.result--json";
@@ -264,10 +317,9 @@ internal sealed partial class RuleFixture
             historical.ModuleGid + "." + historical.Declaration,
             statement.StatementId.Value,
             historical.MotivationGid);
-        Files[historical.Path] = historical.Source.Replace(
-            "__THEORIST_CONTRACT__",
-            includeContract ? contract : string.Empty,
-            StringComparison.Ordinal);
+        Files[historical.Path] = includeContract
+            ? InsertContract(historical.Source, contract)
+            : historical.Source;
         Changes.Add(historical.Path);
 
         AddTheoristSupportFiles();
@@ -275,10 +327,9 @@ internal sealed partial class RuleFixture
 
         if (baselineOwnerKind is not null)
         {
-            Baseline[historical.Path] = historical.Source.Replace(
-                "__THEORIST_CONTRACT__",
-                baselineIncludeContract ? contract : string.Empty,
-                StringComparison.Ordinal);
+            Baseline[historical.Path] = baselineIncludeContract
+                ? InsertContract(historical.Source, contract)
+                : historical.Source;
             ForkPoint[historical.Path] = Baseline[historical.Path];
             BaselineReports[historical.Path] = Reports[historical.Path];
             Baseline[MissionFileLoader.RelativePath] = Mission(baselineOwnerKind);
@@ -289,6 +340,9 @@ internal sealed partial class RuleFixture
             BaselineReports[ticketPath] = Reports[ticketPath];
         }
     }
+
+    internal void CorruptMission() =>
+        Files[MissionFileLoader.RelativePath] = "# Mission fixture without a mission-v1 fence\n";
 
     internal void MutateTheoristTarget(string mutation)
     {
@@ -580,6 +634,23 @@ internal sealed partial class RuleFixture
         return $"# Mission fixture\n\n```mission-v1\n{json}\n```\n";
     }
 
+    internal static (string Source, string BlobOid) HistoricalTheoristBlob(string fixtureName) =>
+        fixtureName switch
+        {
+            "finite-depth-metric" =>
+                (HistoricalFiniteDepthMetric.Source, HistoricalFiniteDepthMetric.BlobOid),
+            "prime-norm-irreducibility" =>
+                (HistoricalPrimeNormIrreducibility.Source, HistoricalPrimeNormIrreducibility.BlobOid),
+            _ => throw new ArgumentOutOfRangeException(nameof(fixtureName)),
+        };
+
+    private static string InsertContract(string pristine, string contract)
+    {
+        var index = pristine.IndexOf(AuditBlockMarker, StringComparison.Ordinal);
+        Assert.True(index > 0, $"historical fixture has no {AuditBlockMarker} block");
+        return pristine[..index] + contract + "\n\n" + pristine[index..];
+    }
+
     private static string TheoristContract(
         string gid,
         string statementSha256,
@@ -636,8 +707,12 @@ internal sealed partial class RuleFixture
         string StatementMaterial,
         string MotivationGid,
         string MotivationPath,
+        string BlobOid,
         string Source);
 
+    // Source is the verbatim theory-selfgrowth output; BlobOid is the Git object it came from
+    // (`git rev-parse <commit>:<path>`). HistoricalFixtureMatchesTheRecordedTheorySelfGrowthBlob
+    // keeps the two bound, so the provenance claim cannot silently drift into a paraphrase.
     private static readonly HistoricalTheoristFixture HistoricalFiniteDepthMetric = new(
         "D5/X_Frontier/FiniteDepthMetric.lean",
         "D5/X_Frontier/FiniteDepthMetric",
@@ -646,6 +721,7 @@ internal sealed partial class RuleFixture
         "statement-v1(finite-depth-metric-exists)",
         "D5/S1/Depth/JointCoordinates",
         "D5/S1/Depth/JointCoordinates.lean",
+        "git-sha1:b63331738d33edfc62fb0ca095e9d2e4fd32a5b8",
         """
         /- GID: D5/X_Frontier/FiniteDepthMetric
            generality: I
@@ -659,8 +735,6 @@ internal sealed partial class RuleFixture
         namespace D5.X_Frontier.FiniteDepthMetric
 
         open D5.S1.Depth
-
-        __THEORIST_CONTRACT__
 
         /- Frontier-generation audit:
            selected GID: D5/S1/Depth/Finite.depthMetricL2Open
@@ -703,6 +777,7 @@ internal sealed partial class RuleFixture
         "statement-v1(prime-norm-irreducibility)",
         "D5/S0/Carrier/Euclidean",
         "D5/S0/Carrier/Euclidean.lean",
+        "git-sha1:5c997521182be82f34ece80264d342081bfbc870",
         """
         /- GID: D5/X_Frontier/PrimeNormIrreducibility
            generality: I
@@ -717,8 +792,6 @@ internal sealed partial class RuleFixture
         namespace D5.X_Frontier.PrimeNormIrreducibility
 
         open D5.S0.Carrier
-
-        __THEORIST_CONTRACT__
 
         /- Frontier-generation audit:
            selected GID: D5/S0/Carrier/Euclidean.prime_norm_irreducible

@@ -57,7 +57,9 @@ internal static class TheoristFrontierContractValidator
             {
                 findings.Add(new RuleFinding(
                     path.Value,
-                    "Frontier owner is unknown; docs/MISSION.md.frontier_eligibility must classify the new module"));
+                    currentMission.UnreadableReason is { } missingOwnerReason
+                        ? Undecidable("Frontier owner", missingOwnerReason)
+                        : "Frontier owner is unknown; docs/MISSION.md.frontier_eligibility must classify the new module"));
                 continue;
             }
 
@@ -84,7 +86,9 @@ internal static class TheoristFrontierContractValidator
             {
                 findings.Add(new RuleFinding(
                     path.Value,
-                    "theorist contract requires declaration-ready-mathematical-open ownership"));
+                    currentMission.UnreadableReason is { } ownershipReason
+                        ? Undecidable("theorist contract ownership", ownershipReason)
+                        : "theorist contract requires declaration-ready-mathematical-open ownership"));
                 continue;
             }
 
@@ -333,6 +337,8 @@ internal static class TheoristFrontierContractValidator
         }
     }
 
+    // An unreadable MISSION is absence of authority, not an owner verdict. Carry the reason so the
+    // diagnostic names the file to repair instead of telling the author to classify a module.
     private static MissionOwners LoadMission(RepositorySnapshot snapshot) =>
         MissionFileLoader.Load(snapshot) switch
         {
@@ -342,11 +348,16 @@ internal static class TheoristFrontierContractValidator
                         ? gid.Path
                         : throw new InvalidOperationException(
                             $"MISSION owner has invalid GID {entry.SourceRef}"),
-                    static entry => entry.Kind)),
-            MissionLoadOutcome.Invalid => new MissionOwners(
-                ImmutableDictionary<RepoPath, FrontierEligibilityKind>.Empty),
+                    static entry => entry.Kind),
+                null),
+            MissionLoadOutcome.Invalid invalid => new MissionOwners(
+                ImmutableDictionary<RepoPath, FrontierEligibilityKind>.Empty,
+                invalid.Error.Message),
             _ => throw new InvalidOperationException("unknown MISSION load outcome"),
         };
+
+    private static string Undecidable(string subject, string reason) =>
+        $"{subject} is undecidable because {MissionFileLoader.RelativePath} does not load: {reason}";
 
     private static bool IsFrontier(RepoPath path) =>
         path.Value.StartsWith(FrontierPrefix, StringComparison.Ordinal)
@@ -427,5 +438,6 @@ internal static class TheoristFrontierContractValidator
     }
 
     private sealed record MissionOwners(
-        ImmutableDictionary<RepoPath, FrontierEligibilityKind> Entries);
+        ImmutableDictionary<RepoPath, FrontierEligibilityKind> Entries,
+        string? UnreadableReason);
 }
