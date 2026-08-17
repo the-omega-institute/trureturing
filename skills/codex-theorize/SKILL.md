@@ -262,15 +262,21 @@ candidate pass.
 Embed exactly one current P2 contract block in the source. Copy its field names
 and delimiters from section 11.20.2 rather than memory:
 
-```text
-THEORIST_FRONTIER_CONTRACT_V1
-schema = trureturing-theorist-frontier-v1
-exact_statement = canonical declaration GID plus statement address
-motivation_gids = Step 2 active frozen receipts
-falsifier = Step 2 nonblank falsifier
-search_receipt_gids = Step 3 Library receipts
-computation_receipt_gids = Step 4 Evidence receipts
-triage_class = theorem | window | wall
+```lean
+/- THEORIST_FRONTIER_CONTRACT_V1
+{
+  "schema": "trureturing-theorist-frontier-v1",
+  "exact_statement": {
+    "gid": "D5/X_Frontier/<Target>.<declaration>",
+    "statement_sha256": "sha256:<64 lowercase hex>"
+  },
+  "motivation_gids": ["D5/<active-frozen-formal-gid>"],
+  "falsifier": "<nonblank falsifier>",
+  "search_receipt_gids": ["D5/L/<canonical-library-address>"],
+  "computation_receipt_gids": ["D5/E/<canonical-evidence-address>--<kind>"],
+  "triage_class": "<theorem|window|wall>"
+}
+-/
 ```
 
 To obtain the statement address without guessing, first elaborate and run
