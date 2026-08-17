@@ -190,6 +190,38 @@ public sealed class TheoryCandidatesTests
     }
 
     [Fact]
+    public void TheoristOnlySourceChangeCannotIssueDeclarationReadyOwnership()
+    {
+        var fixture = CandidateFixture();
+        fixture.Files[MathematicalFrontierPath] =
+            "theorem generated_open : True := by sorry\n";
+        fixture.Reports[MathematicalFrontierPath] = new LeanFileReport(
+            [],
+            [
+                new LeanDeclaration(
+                    "D5.X_Frontier.GoldenUnitsUFD.generated_open",
+                    "theorem",
+                    "statement-v1(uparams=[],type=ec(ns(n0,4:True),[]))",
+                    ["sorryAx"]),
+            ]);
+
+        var result = Run(fixture);
+
+        Assert.True(result.Success, result.Error);
+        using var json = JsonDocument.Parse(result.Output);
+        var candidate = Assert.Single(
+            json.RootElement.GetProperty("candidates").EnumerateArray(),
+            static item => item.GetProperty("source_ref").GetString()
+                == "D5/X_Frontier/GoldenUnitsUFD");
+        Assert.Equal("frontier_problem", candidate.GetProperty("source_kind").GetString());
+        Assert.Equal("theorist", candidate.GetProperty("downstream_lane").GetString());
+        Assert.DoesNotContain(
+            json.RootElement.GetProperty("candidates").EnumerateArray(),
+            static item => item.GetProperty("source_ref").GetString()
+                == "D5/X_Frontier/GoldenUnitsUFD.generated_open");
+    }
+
+    [Fact]
     public void RepositoryFrontierEligibilityCoversLiveCorpusAndKeepsTaskBearingKindsDistinct()
     {
         var root = TestRepositoryLayout.FindRoot();
