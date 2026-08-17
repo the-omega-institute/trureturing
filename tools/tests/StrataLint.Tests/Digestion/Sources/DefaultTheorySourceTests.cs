@@ -16,43 +16,25 @@ public sealed class DefaultTheorySourceTests
     private const string UndeclaredPath = "docs/develop/theory/UNDECLARED_VOLUME.md";
     private const string Markdown = "# 未声明卷\n\n## 定理 1.1\n\n证。\n";
 
-    private static string Ledger(string entry) => string.Join(
-        "\n",
-        "schema_version: 3",
-        "ledger: theory-digestion-v1",
-        "sources:",
-        "  - source_id: declared",
-        "    path: " + DeclaredPath,
-        "    atomizer: " + AtomizerRegistry.GenericId,
-        "    entries:",
-        entry);
-
-    private static string Entry(DigestionAtom atom, string casRef) => string.Join(
-        "\n",
-        "      - atom_id: generic-residual-" + atom.Fingerprints.RawSha256["sha256:".Length..],
-        "        ast_path: " + atom.AstPath,
-        "        fingerprints:",
-        "          raw_sha256: " + atom.Fingerprints.RawSha256,
-        "          normalized_sha256: " + atom.Fingerprints.NormalizedSha256,
-        "        cas_ref: " + casRef,
-        "        coverage_gids: []",
-        "        receipts:",
-        "          coverage: []",
-        "          scribe: []",
-        "          unresolved_subitems: []",
-        "          chain_atoms: []",
-        "          tail_authorization: null",
-        "        status:",
-        "          migration: residual",
-        "          truth: open");
-
     private static DigestionIngestPlan PlanWith(params (string Path, byte[] Bytes)[] extraFiles)
     {
         var declaredBytes = Encoding.UTF8.GetBytes("# 已声明卷\n\n## 定理 9.9\n\n证。\n");
         var declared = GenericAtomizer.Atomize(declaredBytes, TheoryAtomizerRules.None);
         var atom = declared.Claims.First(static claim => claim.AstPath == "定理/9.9");
         var capture = DigestionCasStore.Capture(atom.RawBytes.AsSpan());
-        var ledger = BackfillInventoryLoader.Load(Ledger(Entry(atom, capture.Reference)));
+        var entry = DigestionTestSupport.Entry(
+            atom,
+            "generic-residual-" + atom.Fingerprints.RawSha256["sha256:".Length..],
+            AtomizerRegistry.GenericId,
+            sourceId: "declared",
+            sourcePath: DeclaredPath,
+            casRef: capture.Reference);
+        var ledger = DigestionTestSupport.Document(
+            AtomizerRegistry.GenericId,
+            [entry],
+            "declared",
+            DeclaredPath,
+            GenreRegistryCheck.Collected([]));
         var files = extraFiles
             .Append((DeclaredPath, declaredBytes))
             .Append((capture.RelativePath, capture.Bytes.ToArray()))

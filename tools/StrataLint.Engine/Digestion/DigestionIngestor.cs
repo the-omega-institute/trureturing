@@ -108,6 +108,8 @@ internal static class DigestionIngestor
                 sourceId,
                 path,
                 AtomizerRegistry.GenericId,
+                [],
+                GenreRegistryProjection.Available(GenreRegistryCheck.NoGenreRegistry),
                 ImmutableArray<DigestionLedgerEntry>.Empty));
         }
 
@@ -182,6 +184,14 @@ internal static class DigestionIngestor
         var residualOpenAdded = 0;
         foreach (var source in migrationDocument.RequireDigestionSources())
         {
+            var resolvedSource = alignment.GenreRegistryChecks.TryGetValue(
+                source.SourceId,
+                out var genreRegistryCheck)
+                    ? source with
+                    {
+                        GenreRegistryProjection = GenreRegistryProjection.Available(genreRegistryCheck),
+                    }
+                    : source;
             if (!AtomizerRegistry.IsRegistered(source.Atomizer))
             {
                 if (source.Atomizer != AtomizerRegistry.NoAtomizerId)
@@ -189,14 +199,14 @@ internal static class DigestionIngestor
                     throw new FormatException($"ingest source {source.SourceId} has unknown atomizer {source.Atomizer}");
                 }
 
-                sources.Add(CaptureBoundarySource(source, snapshot, casObjects));
+                sources.Add(CaptureBoundarySource(resolvedSource, snapshot, casObjects));
                 continue;
             }
 
             if (source.Entries.Length > 0
                 && !source.Entries.Any(static entry => entry.Boundary is null))
             {
-                sources.Add(source);
+                sources.Add(resolvedSource);
                 continue;
             }
 
@@ -242,7 +252,6 @@ internal static class DigestionIngestor
                         CoverageGids: inheritedCoverage,
                         new DigestionReceipts([], [], inheritedUnresolvedSubitems, [], null),
                         item.ProjectedStatus,
-                        ReceiptSyntax: null,
                         CasRef: captured.Reference));
                     residualOpenAdded++;
                 }
@@ -305,7 +314,6 @@ internal static class DigestionIngestor
                             new DigestionStatus(
                                 DigestionMigrationState.Residual,
                                 DigestionTruthState.Open),
-                            ReceiptSyntax: null,
                             CasRef: captured.Reference));
                         childIds.Add(childId);
                         residualOpenAdded++;
@@ -318,12 +326,11 @@ internal static class DigestionIngestor
                             UnresolvedSubitems = [],
                             ChainAtoms = childIds.MoveToImmutable(),
                         },
-                        ReceiptSyntax = null,
                     };
                 }
             }
 
-            sources.Add(source with
+            sources.Add(resolvedSource with
             {
                 AcknowledgedStale = acknowledgments,
                 Entries = entries.ToImmutable(),
@@ -422,7 +429,6 @@ internal static class DigestionIngestor
             : entry with
             {
                 Boundary = rebound,
-                ReceiptSyntax = null,
             };
     }
 
@@ -458,7 +464,6 @@ internal static class DigestionIngestor
                             : entry with
                             {
                                 Boundary = null,
-                                ReceiptSyntax = null,
                             })
                         .ToImmutableArray(),
                 })

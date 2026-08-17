@@ -29,6 +29,11 @@ internal static partial class DigestionStatusEvaluator
         var emptyLeanReport = LeanAxiomReport.Create(
             new Dictionary<string, LeanFileReport>(StringComparer.Ordinal));
         var emptyTruthNodes = new Dictionary<RepoPath, TruthNode>();
+        var genreChecks = document.RequireDigestionSources()
+            .ToDictionary(
+                static source => source.SourceId,
+                static source => source.GenreRegistryCheck,
+                StringComparer.Ordinal);
         var work = entries
             .Where(static entry => entry.CoverageGids.Length == 0)
             .Select(entry => Inspect(
@@ -39,7 +44,7 @@ internal static partial class DigestionStatusEvaluator
                 emptyLeanReport,
                 emptyTruthNodes,
                 verifiedScribeEmissions: null,
-                changes: null,
+                genreChecks[entry.SourceId],
                 findings))
             .ToArray();
         DeriveMigration(work);
@@ -54,8 +59,7 @@ internal static partial class DigestionStatusEvaluator
         BackfillInventoryDocument? baselineDocument = null,
         bool validateProjectedStatus = true,
         RepositorySnapshot? baselineSnapshot = null,
-        DigestionCasEvaluation? casEvaluation = null,
-        RawChangeSet? changes = null)
+        DigestionCasEvaluation? casEvaluation = null)
     {
         ArgumentNullException.ThrowIfNull(document);
         ArgumentNullException.ThrowIfNull(snapshot);
@@ -89,6 +93,11 @@ internal static partial class DigestionStatusEvaluator
                 "truth DAG is cyclic: " + string.Join(" -> ", rejected.Witness.Select(static path => path.Value))),
         };
         var nodes = dag.Nodes.ToDictionary(static node => node.RepoPath);
+        var genreChecks = document.RequireDigestionSources()
+            .ToDictionary(
+                static source => source.SourceId,
+                static source => source.GenreRegistryCheck,
+                StringComparer.Ordinal);
         var work = entries.Select(entry =>
             Inspect(
                 entry,
@@ -98,7 +107,7 @@ internal static partial class DigestionStatusEvaluator
                 lean.Report,
                 nodes,
                 verifiedScribeEmissions,
-                changes,
+                genreChecks[entry.SourceId],
                 findings)).ToArray();
         DeriveMigration(work);
         RequireDecompositionBeforeNewAbsorption(
@@ -193,13 +202,13 @@ internal static partial class DigestionStatusEvaluator
         LeanAxiomReport leanReport,
         IReadOnlyDictionary<RepoPath, TruthNode> nodes,
         VerifiedScribeEmissions? verifiedScribeEmissions,
-        RawChangeSet? changes,
+        GenreRegistryCheck genreRegistryCheck,
         ImmutableArray<string>.Builder findings)
     {
         var gaps = new List<DigestionGap>();
         var boundary = entry.Atomizer == AtomizerRegistry.NoAtomizerId
             && entry.Boundary is not null
-                ? VerifyBoundary(entry, snapshot, changes, gaps, findings)
+                ? VerifyBoundary(entry, snapshot, gaps, findings)
                 : VerifyStructuredAlignment(entry, alignment, gaps, findings);
         var targetStates = new List<(string Gid, TruthState State)>();
         var existingTargets = new Dictionary<string, RepositoryFile>(StringComparer.Ordinal);
@@ -228,12 +237,11 @@ internal static partial class DigestionStatusEvaluator
             gaps.Add(new DigestionGap("coverage-gid-missing", entry.AtomId));
         }
 
-        var coverage = VerifyCoverageReceipts(entry, existingTargets, changes, gaps, findings);
+        var coverage = VerifyCoverageReceipts(entry, existingTargets, gaps, findings);
         var scribe = VerifyScribeReceipts(
             entry,
             snapshot,
             verifiedScribeEmissions,
-            changes,
             gaps,
             findings);
         if (entry.Receipts.UnresolvedSubitems.Length > 0)
@@ -242,6 +250,12 @@ internal static partial class DigestionStatusEvaluator
             {
                 gaps.Add(new DigestionGap("unresolved-subitem", subitem));
             }
+        }
+
+        foreach (var token in genreRegistryCheck.UnregisteredGenres.Where(token =>
+                     UnregisteredGenreLocator.MatchesToken(entry.AstPath, token)))
+        {
+            gaps.Add(new DigestionGap("unregistered-genre", token));
         }
 
         var localComplete = boundary

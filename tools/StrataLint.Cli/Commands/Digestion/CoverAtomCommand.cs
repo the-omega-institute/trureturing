@@ -69,7 +69,7 @@ internal static partial class CoverAtomCommand
             var current = Decode(currentRaw);
             var baseline = Decode(baselineRaw);
             var document = LoadDocument(current);
-            var baselineDocument = LoadDocument(baseline);
+            var baselineDocument = BackfillInventoryLoader.LoadBaseline(baseline);
 
             // Gate ②(a): every cover GID must select a Lean declaration, not just a
             // module (module-level coverage is ingest's residual boundary, not a
@@ -146,7 +146,6 @@ internal static partial class CoverAtomCommand
                     Scribe = target.Receipts.Scribe.AddRange(
                         addedReceipts.Select(static receipt => receipt.Scribe)),
                 },
-                ReceiptSyntax = null,
             };
             var plannedDocument = ReplaceEntry(document, options.AtomId, covered);
 
@@ -177,12 +176,10 @@ internal static partial class CoverAtomCommand
                     })
                     .ToImmutableArray());
 
-            var finalBytes = BackfillInventoryWriter.WriteForIngest(refreshed);
             var finalRaw = IngestCommand.ReplaceLedger(
                 currentRaw,
                 document,
-                refreshed,
-                finalBytes);
+                refreshed);
             var finalSnapshot = Decode(finalRaw);
             var finalDocument = LoadDocument(finalSnapshot);
             var evaluation = DigestionStatusEvaluator.Evaluate(

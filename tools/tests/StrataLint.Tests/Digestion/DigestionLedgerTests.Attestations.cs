@@ -18,16 +18,6 @@ public sealed partial class DigestionLedgerTests
         var targetHash = DigestionFingerprint.Compute(target).RawSha256;
         var definitionHash = DigestionFingerprint.Compute(definition).RawSha256;
         var emissionHash = DigestionFingerprint.Compute(emission).RawSha256;
-        var coverage = $$"""
-            - gid: D5/S0/Carrier/Probe
-              source_sha256: {{atom.Fingerprints.RawSha256}}
-              target_sha256: {{targetHash}}
-            """;
-        var scribe = $$"""
-            - gid: D5/S0/Carrier/Probe
-              definition_sha256: {{definitionHash}}
-              emission_sha256: {{emissionHash}}
-            """;
         var scribeAttestation = ScribeEmissionAttestation.Write(
         [
             new ScribeEmissionRecord(
@@ -37,13 +27,19 @@ public sealed partial class DigestionLedgerTests
                 "Blueprint/D5/S0/Carrier/Probe.md",
                 emissionHash),
         ]).ToArray();
-        var yaml = LedgerYaml(
+        var ledger = Ledger(
             atom,
-            migration: "absorbed",
-            truth: "closed",
-            coverageReceipts: coverage,
-            scribeReceipts: scribe,
-            coverageGid: "D5/S0/Carrier/Probe");
+            DigestionMigrationState.Absorbed,
+            DigestionTruthState.Closed,
+            "D5/S0/Carrier/Probe",
+            new DigestionCoverageReceipt(
+                "D5/S0/Carrier/Probe",
+                atom.Fingerprints.RawSha256,
+                targetHash),
+            new DigestionScribeReceipt(
+                "D5/S0/Carrier/Probe",
+                definitionHash,
+                emissionHash));
         var snapshot = Snapshot(
             ("docs/source.md", source),
             CasFile(atom),
@@ -54,7 +50,7 @@ public sealed partial class DigestionLedgerTests
         var lean = AcceptedLean("D5/S0/Carrier/Probe.lean");
 
         var evaluation = DigestionStatusEvaluator.Evaluate(
-            BackfillInventoryLoader.Load(yaml),
+            ledger,
             snapshot,
             lean);
         var status = Assert.Single(evaluation.Entries);
@@ -74,23 +70,19 @@ public sealed partial class DigestionLedgerTests
         var target = Encoding.UTF8.GetBytes(Lean("D5/S0/Carrier/Probe"));
         var definition = Encoding.UTF8.GetBytes("arbitrary definition bytes\n");
         var emission = Encoding.UTF8.GetBytes("arbitrary emission bytes\n");
-        var coverage = $$"""
-            - gid: D5/S0/Carrier/Probe
-              source_sha256: {{atom.Fingerprints.RawSha256}}
-              target_sha256: {{DigestionFingerprint.Compute(target).RawSha256}}
-            """;
-        var scribe = $$"""
-            - gid: D5/S0/Carrier/Probe
-              definition_sha256: {{DigestionFingerprint.Compute(definition).RawSha256}}
-              emission_sha256: {{DigestionFingerprint.Compute(emission).RawSha256}}
-            """;
-        var yaml = LedgerYaml(
+        var ledger = Ledger(
             atom,
-            migration: "absorbed",
-            truth: "closed",
-            coverageReceipts: coverage,
-            scribeReceipts: scribe,
-            coverageGid: "D5/S0/Carrier/Probe");
+            DigestionMigrationState.Absorbed,
+            DigestionTruthState.Closed,
+            "D5/S0/Carrier/Probe",
+            new DigestionCoverageReceipt(
+                "D5/S0/Carrier/Probe",
+                atom.Fingerprints.RawSha256,
+                DigestionFingerprint.Compute(target).RawSha256),
+            new DigestionScribeReceipt(
+                "D5/S0/Carrier/Probe",
+                DigestionFingerprint.Compute(definition).RawSha256,
+                DigestionFingerprint.Compute(emission).RawSha256));
         var snapshot = Snapshot(
             ("docs/source.md", source),
             CasFile(atom),
@@ -99,7 +91,7 @@ public sealed partial class DigestionLedgerTests
             ("Blueprint/D5/S0/Carrier/Probe.md", emission));
 
         var status = Assert.Single(DigestionStatusEvaluator.Evaluate(
-            BackfillInventoryLoader.Load(yaml),
+            ledger,
             snapshot,
             AcceptedLean("D5/S0/Carrier/Probe.lean")).Entries);
 
@@ -155,6 +147,61 @@ public sealed partial class DigestionLedgerTests
     }
 
     [Fact]
+    public void CandidateDeltaDoesNotPromoteBaselinePartialWithStaleScribeReceipts()
+    {
+        const string gid = "D5/S0/Carrier/Probe";
+        const string targetPath = "D5/S0/Carrier/Probe.lean";
+        var source = Encoding.UTF8.GetBytes("# GICT\n\n**定理 1.1(Test)**。claim。\n");
+        var atom = Assert.Single(GictAtomizer.Atomize(source, DigestionTestSupport.Rules).Claims);
+        var target = Encoding.UTF8.GetBytes(Lean(gid));
+        var definition = Encoding.UTF8.GetBytes("current scribe definition\n");
+        var emission = Encoding.UTF8.GetBytes("# Current emitted narrative\n");
+        var definitionHash = DigestionFingerprint.Compute(definition).RawSha256;
+        var emissionHash = DigestionFingerprint.Compute(emission).RawSha256;
+        var staleDefinitionHash = DigestionFingerprint.Compute(
+            Encoding.UTF8.GetBytes("stale scribe definition\n")).RawSha256;
+        var staleEmissionHash = DigestionFingerprint.Compute(
+            Encoding.UTF8.GetBytes("# Stale emitted narrative\n")).RawSha256;
+        var document = Ledger(
+            atom,
+            DigestionMigrationState.Partial,
+            DigestionTruthState.Closed,
+            gid,
+            new DigestionCoverageReceipt(
+                gid,
+                atom.Fingerprints.RawSha256,
+                DigestionFingerprint.Compute(target).RawSha256),
+            new DigestionScribeReceipt(gid, staleDefinitionHash, staleEmissionHash));
+        var record = new ScribeEmissionRecord(
+            gid,
+            ScribeEmissionAttestation.DefinitionPath(gid),
+            definitionHash,
+            ScribeEmissionAttestation.EmissionPath(gid),
+            emissionHash);
+        var snapshot = Snapshot(
+            ("docs/source.md", source),
+            CasFile(atom),
+            (targetPath, target),
+            (record.DefinitionPath, definition),
+            (record.EmissionPath, emission));
+
+        var evaluation = DigestionStatusEvaluator.Evaluate(
+            document,
+            snapshot,
+            AcceptedLean(targetPath),
+            VerifiedScribeEmissions.Create([record]),
+            baselineDocument: document,
+            baselineSnapshot: snapshot);
+        var status = Assert.Single(evaluation.Entries);
+
+        Assert.Equal(DigestionMigrationState.Partial, status.DerivedStatus.Migration);
+        Assert.Contains(status.Gaps, static gap => gap.Code == "scribe-definition-mismatch");
+        Assert.Contains(status.Gaps, static gap => gap.Code == "scribe-emission-mismatch");
+        Assert.DoesNotContain(evaluation.Findings, static finding =>
+            finding.Contains("handwritten status", StringComparison.Ordinal));
+    }
+
+    [Fact]
     public void TailCannotAppearBeforeAbsorptionAndExternalAuthorizationReceipt()
     {
         var source = Encoding.UTF8.GetBytes("# GICT\n\n**定理 1.1(Test)**。claim。\n");
@@ -166,16 +213,14 @@ public sealed partial class DigestionLedgerTests
             ImmutableArray<string>.Empty,
             [new LeanDeclaration("tailProbe", "axiom", "True", ["tailProbe"])]);
         var lean = AcceptedLean((targetPath, report));
-        var yaml = LedgerYaml(
+        var ledger = Ledger(
             atom,
-            migration: "partial",
-            truth: "open",
-            coverageReceipts: "[]",
-            scribeReceipts: "[]",
-            coverageGid: "D5/X_Assumptions/Probe");
+            DigestionMigrationState.Partial,
+            DigestionTruthState.Open,
+            "D5/X_Assumptions/Probe");
 
         var status = Assert.Single(DigestionStatusEvaluator.Evaluate(
-            BackfillInventoryLoader.Load(yaml),
+            ledger,
             snapshot,
             lean).Entries);
 
@@ -223,27 +268,35 @@ public sealed partial class DigestionLedgerTests
             ImmutableArray.CreateRange(source),
             DigestionFingerprint.Compute(source),
             ImmutableArray<DigestionContext>.Empty);
-        var yaml = LedgerYaml(
-                syntheticAtom,
-                migration: "partial",
-                truth: "open",
-                coverageReceipts: "[]",
-                scribeReceipts: "[]")
-            .Replace(
-                $"atomizer: {AtomizerRegistry.GictId}",
-                $"atomizer: {AtomizerRegistry.NoAtomizerId}",
-                StringComparison.Ordinal)
-            .Replace(
-                syntheticAtom.Fingerprints.RawSha256,
-                "sha256:" + new string('0', 64),
-                StringComparison.Ordinal);
+        var ledger = Ledger(
+            syntheticAtom,
+            DigestionMigrationState.Partial,
+            DigestionTruthState.Open,
+            atomizer: AtomizerRegistry.NoAtomizerId);
+        var ledgerSource = Assert.Single(ledger.RequireDigestionSources());
+        var ledgerEntry = Assert.Single(ledgerSource.Entries);
+        var falseFingerprint = "sha256:" + new string('0', 64);
+        ledger = ledger.WithDigestionSources(
+        [
+            ledgerSource with
+            {
+                Entries =
+                [
+                    ledgerEntry with
+                    {
+                        Fingerprints = new DigestionFingerprints(falseFingerprint, falseFingerprint),
+                        CasRef = falseFingerprint,
+                    },
+                ],
+            },
+        ]);
         var snapshot = Snapshot(
             ("docs/source.md", source),
             CasFile(syntheticAtom),
             ("D5/X_Frontier/Probe.lean", Encoding.UTF8.GetBytes(Lean("D5/X_Frontier/Probe"))));
 
         var evaluation = DigestionStatusEvaluator.Evaluate(
-            BackfillInventoryLoader.Load(yaml),
+            ledger,
             snapshot,
             AcceptedLean("D5/X_Frontier/Probe.lean"));
 

@@ -195,11 +195,10 @@ public sealed partial class ProductionEnvironmentTests
     }
 
     [Fact]
-    public void CheckMapsUndecodableLegacyBoundaryToSl016RuleRejection()
+    public void CheckMapsUndecodableBoundaryToSl016RuleRejection()
     {
         using var temporary = new TemporaryDirectory();
         var fixture = new RuleFixture();
-        fixture.UseLegacyBackfill();
         var atomizerId = SyntheticNumberedAtomizer.Id;
         var baselineBytes = Encoding.UTF8.GetBytes("# Synthetic\n\n**定理 1.1(A)**。old。\n");
         var atom = Assert.Single(AtomizerRegistry.Atomize(atomizerId, baselineBytes, DigestionTestSupport.Rules).Claims);
@@ -208,15 +207,12 @@ public sealed partial class ProductionEnvironmentTests
             .Concat(inserted)
             .Concat(baselineBytes[(atom.EndByte - 1)..])
             .ToArray();
-        var ledger = LegacyIngestLedger(atomizerId, atom).Replace(
-            $"atomizer: {atomizerId}",
-            $"atomizer: {AtomizerRegistry.NoAtomizerId}",
-            StringComparison.Ordinal);
+        var ledger = BoundaryIngestLedger(AtomizerRegistry.NoAtomizerId, atom);
         var captured = DigestionCasStore.Capture(atom.RawBytes.AsSpan());
         fixture.Files[RuleFixture.FixtureDigestionSourcePath] = Encoding.UTF8.GetString(currentBytes);
         fixture.Baseline[RuleFixture.FixtureDigestionSourcePath] = Encoding.UTF8.GetString(baselineBytes);
-        fixture.Files[BackfillInventoryLoader.RelativePath] = ledger;
-        fixture.Baseline[BackfillInventoryLoader.RelativePath] = ledger;
+        DirectoryLedgerTestSupport.ReplaceWithProjection(fixture.Files, ledger);
+        DirectoryLedgerTestSupport.ReplaceWithProjection(fixture.Baseline, ledger);
         fixture.Files.Remove(RuleFixture.FixtureCasPath);
         fixture.Baseline.Remove(RuleFixture.FixtureCasPath);
         fixture.Files[captured.RelativePath] = Encoding.UTF8.GetString(captured.Bytes.AsSpan());
@@ -605,6 +601,8 @@ internal sealed class FakeRepositoryGateway(
         return WithAtomizerData(
             baseline ?? throw new InvalidOperationException("baseline snapshot should not be read"));
     }
+
+    public RawChangeSet ReadCurrentChanges() => changes;
 
     public TrustedFrozenGitReferences ValidateFrozenReferences(FrozenLedgerReferenceSet references)
     {

@@ -110,12 +110,4 @@ public sealed class CanonicalSnapshotTests
         Assert.Empty(entries);
     }
 
-    [Fact]
-    public void BackfillWriterRoundTripsEmptyEntriesSource()
-    {
-        var text = "schema_version: 3\nledger: theory-digestion-v1\nsources:\n  - source_id: fresh\n    path: docs/source.md\n    atomizer: none\n    entries: []\n";
-        var document = StrataLint.Engine.BackfillInventoryLoader.Load(text);
-        var sources = document.RequireDigestionSources();
-        Assert.Empty(sources[0].Entries);
-    }
 }

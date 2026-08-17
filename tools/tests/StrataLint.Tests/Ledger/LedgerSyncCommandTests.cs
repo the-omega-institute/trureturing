@@ -359,7 +359,10 @@ public sealed class LedgerSyncCommandTests
             FrozenLedgerTestData.WriteLedgerDirectory(LedgerPath, BaselineBytes);
             ReportPath = Path.Combine(temporary.Path, "candidate-lean-report.json");
             File.WriteAllBytes(ReportPath, RawLeanReportArtifact.Write(snapshot, report).AsSpan());
-            Gateway = new FakeRepositoryGateway(RawChangeSet.Create([]), raw, null);
+            var changedPaths = candidates
+                .Take(candidateChangeCount)
+                .Select(static module => FrozenLedgerTestData.PathFor(module.Name));
+            Gateway = new FakeRepositoryGateway(RawChangeSet.Create(changedPaths), raw, null);
             Environment = new ProductionCliEnvironment(
                 temporary.Path,
                 Gateway,

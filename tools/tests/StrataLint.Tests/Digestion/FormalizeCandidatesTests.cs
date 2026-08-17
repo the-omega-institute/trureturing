@@ -380,7 +380,7 @@ public sealed class FormalizeCandidatesTests
         Assert.True(result.Success, result.Error);
         using var json = JsonDocument.Parse(result.Output);
         Assert.Equal(
-            DigestionFingerprint.Compute(Encoding.UTF8.GetBytes(ledger)).RawSha256,
+            DigestionLedgerPreimage.ComputeSha256(ledger),
             json.RootElement.GetProperty("ledger_sha256").GetString());
         var candidate = Assert.Single(json.RootElement.GetProperty("candidates").EnumerateArray());
         Assert.Equal(
@@ -389,6 +389,46 @@ public sealed class FormalizeCandidatesTests
         Assert.Contains("完整推导", candidate.GetProperty("atom_text").GetString(), StringComparison.Ordinal);
         Assert.Equal(entry.Atom.Fingerprints.RawSha256, candidate.GetProperty("raw_sha256").GetString());
         Assert.Equal(entry.Atom.Fingerprints.RawSha256, candidate.GetProperty("cas_ref").GetString());
+    }
+
+    [Fact]
+    public void DirectoryLedgerHashChangesWhenOnlyGenreRegistryCheckChanges()
+    {
+        var ledger = Ledger([Entry("source", "complete-atom", "定理", "6.2")]);
+        var source = Assert.Single(ledger.RequireDigestionSources());
+        var changed = ledger.WithDigestionSources(
+        [
+            source with
+            {
+                GenreRegistryProjection = GenreRegistryProjection.Available(
+                    GenreRegistryCheck.NoGenreRegistry),
+            },
+        ]);
+
+        var before = DigestionLedgerPreimage.ComputeSha256(ledger);
+        var after = DigestionLedgerPreimage.ComputeSha256(changed);
+
+        Assert.NotEqual(before, after);
+    }
+
+    [Fact]
+    public void DirectoryLedgerHashChangesWhenOnlyUnregisteredGenresChange()
+    {
+        var ledger = Ledger([Entry("source", "complete-atom", "定理", "6.3")]);
+        var source = Assert.Single(ledger.RequireDigestionSources());
+        var changed = ledger.WithDigestionSources(
+        [
+            source with
+            {
+                GenreRegistryProjection = GenreRegistryProjection.Available(
+                    GenreRegistryCheck.Collected(["未登记体"])),
+            },
+        ]);
+
+        var before = DigestionLedgerPreimage.ComputeSha256(ledger);
+        var after = DigestionLedgerPreimage.ComputeSha256(changed);
+
+        Assert.NotEqual(before, after);
     }
 
     [Fact]
@@ -470,7 +510,7 @@ public sealed class FormalizeCandidatesTests
         IReadOnlyList<EntryFixture> entries,
         bool includeCas = true,
         bool driftCas = false,
-        string? ledger = null,
+        BackfillInventoryDocument? ledger = null,
         byte[]? formalizationReceipt = null,
         LeanAxiomReport? leanReport = null)
     {
@@ -493,11 +533,11 @@ public sealed class FormalizeCandidatesTests
         ledger ??= Ledger(entries);
         var files = new List<RawRepositoryEntry>
         {
-            RawRepositoryEntry.FromText(BackfillInventoryLoader.RelativePath, ledger),
             new(
                 TheoryAtomizerDataLoader.DataPath,
                 ImmutableArray.CreateRange(DigestionTestSupport.RulesBytes)),
         };
+        AddLedgerFiles(files, ledger);
         foreach (var source in sources)
         {
             files.Add(new RawRepositoryEntry(
@@ -527,9 +567,9 @@ public sealed class FormalizeCandidatesTests
         }
 
         var environment = new ProductionCliEnvironment(
-            "/repo",
-            new FakeRepositoryGateway(
-                RawChangeSet.Create(Array.Empty<string>()),
+                "/repo",
+                new FakeRepositoryGateway(
+                    RawChangeSet.Create(Array.Empty<string>()),
                 RawRepositorySnapshot.Create(files),
                 null),
             new FakeLeanReportSource(leanReport ?? CurrentLeanReport(entries)),
@@ -585,54 +625,73 @@ public sealed class FormalizeCandidatesTests
             truth);
     }
 
-    private static string Ledger(IReadOnlyList<EntryFixture> entries)
+    private static BackfillInventoryDocument Ledger(IReadOnlyList<EntryFixture> entries)
     {
-        var builder = new StringBuilder();
-        builder.AppendLine("schema_version: 3");
-        builder.AppendLine("ledger: theory-digestion-v1");
-        builder.AppendLine("sources:");
-        foreach (var source in entries.GroupBy(static entry => entry.SourceId, StringComparer.Ordinal))
-        {
-            builder.AppendLine($"  - source_id: {source.Key}");
-            builder.AppendLine($"    path: synthetic/{source.Key}.md");
-            builder.AppendLine($"    atomizer: {AtomizerRegistry.PzgId}");
-            builder.AppendLine("    acknowledged_stale: []");
-            builder.AppendLine("    entries:");
-            foreach (var entry in source)
-            {
-                builder.AppendLine($"      - atom_id: {entry.AtomId}");
-                builder.AppendLine($"        ast_path: {entry.Atom.AstPath}");
-                builder.AppendLine("        fingerprints:");
-                builder.AppendLine($"          raw_sha256: {entry.Atom.Fingerprints.RawSha256}");
-                builder.AppendLine($"          normalized_sha256: {entry.Atom.Fingerprints.NormalizedSha256}");
-                builder.AppendLine($"        cas_ref: {entry.Atom.Fingerprints.RawSha256}");
-                if (entry.CoverageGids.Length == 0)
-                {
-                    builder.AppendLine("        coverage_gids: []");
-                }
-                else
-                {
-                    builder.AppendLine("        coverage_gids:");
-                    foreach (var gid in entry.CoverageGids)
-                    {
-                        builder.AppendLine($"          - {gid}");
-                    }
-                }
+        return BackfillInventoryDocument.Create(
+            entries
+                .GroupBy(static entry => entry.SourceId, StringComparer.Ordinal)
+                .Select(source => new DigestionLedgerSource(
+                    source.Key,
+                    $"synthetic/{source.Key}.md",
+                    AtomizerRegistry.PzgId,
+                    [],
+                    GenreRegistryProjection.Available(GenreRegistryCheck.Collected([])),
+                    source.Select(static entry => new DigestionLedgerEntry(
+                        entry.SourceId,
+                        $"synthetic/{entry.SourceId}.md",
+                        AtomizerRegistry.PzgId,
+                        entry.AtomId,
+                        entry.Atom.AstPath,
+                        null,
+                        entry.Atom.Fingerprints,
+                        ImmutableArray.CreateRange(entry.CoverageGids),
+                        new DigestionReceipts([], [], [], [], null),
+                        new DigestionStatus(
+                            Migration(entry.Migration),
+                            Truth(entry.Truth)),
+                        entry.Atom.Fingerprints.RawSha256))
+                        .ToImmutableArray()))
+                .ToImmutableArray(),
+            []);
+    }
 
-                builder.AppendLine("        receipts:");
-                builder.AppendLine("          coverage: []");
-                builder.AppendLine("          scribe: []");
-                builder.AppendLine("          unresolved_subitems: []");
-                builder.AppendLine("          chain_atoms: []");
-                builder.AppendLine("          tail_authorization: null");
-                builder.AppendLine("        status:");
-                builder.AppendLine($"          migration: {entry.Migration}");
-                builder.AppendLine($"          truth: {entry.Truth}");
+    private static void AddLedgerFiles(
+        ICollection<RawRepositoryEntry> files,
+        BackfillInventoryDocument ledger)
+    {
+        foreach (var source in ledger.RequireDigestionSources())
+        {
+            files.Add(new RawRepositoryEntry(
+                $"{BackfillInventoryLoader.RootPath}{source.SourceId}/source.toml",
+                BackfillInventoryWriter.WriteSourceMetadata(source)));
+            foreach (var entry in source.Entries)
+            {
+                var state = DigestionStatusNames.Migration(entry.ProjectedStatus.Migration)
+                    + "-"
+                    + DigestionStatusNames.Truth(entry.ProjectedStatus.Truth);
+                files.Add(new RawRepositoryEntry(
+                    $"{BackfillInventoryLoader.RootPath}{source.SourceId}/{state}/{entry.AtomId}.yaml",
+                    BackfillInventoryWriter.WriteAtom(entry)));
             }
         }
 
-        return builder.ToString();
     }
+
+    private static DigestionMigrationState Migration(string value) => value switch
+    {
+        "residual" => DigestionMigrationState.Residual,
+        "partial" => DigestionMigrationState.Partial,
+        "absorbed" => DigestionMigrationState.Absorbed,
+        _ => throw new ArgumentOutOfRangeException(nameof(value)),
+    };
+
+    private static DigestionTruthState Truth(string value) => value switch
+    {
+        "closed" => DigestionTruthState.Closed,
+        "tail" => DigestionTruthState.Tail,
+        "open" => DigestionTruthState.Open,
+        _ => throw new ArgumentOutOfRangeException(nameof(value)),
+    };
 
     private sealed record EntryFixture(
         string SourceId,
