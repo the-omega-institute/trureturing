@@ -1,10 +1,12 @@
 using System.Text;
+using StrataLint.Scribe;
 
 namespace StrataLint.Cli;
 
 internal static class FileMapConformCommand
 {
-    internal const string Usage = "USAGE: StrataLint filemap-conform";
+    internal const string Usage =
+        "USAGE: StrataLint filemap-conform [--producer-write-set PRODUCER]";
 
     internal static ExplicitCommandResult Run(
         IReadOnlyList<string> arguments,
@@ -12,13 +14,40 @@ internal static class FileMapConformCommand
     {
         ArgumentNullException.ThrowIfNull(arguments);
         ArgumentException.ThrowIfNullOrWhiteSpace(repositoryRoot);
-        if (arguments.Count != 0)
+        var writeSetQuery = arguments.Count == 2
+            && arguments[0] == "--producer-write-set"
+            && !string.IsNullOrWhiteSpace(arguments[1]);
+        if (arguments.Count != 0 && !writeSetQuery)
         {
             return new ExplicitCommandResult(2, string.Empty, Usage + "\n");
         }
 
         try
         {
+            if (writeSetQuery)
+            {
+                var patterns = FileMapLoader.LoadRepository(repositoryRoot).Entries
+                    .Where(entry => string.Equals(
+                        entry.ProducedBy,
+                        arguments[1],
+                        StringComparison.Ordinal))
+                    .Where(static entry => entry.RuntimeDisposition.StartsWith(
+                        "committed-",
+                        StringComparison.Ordinal))
+                    .Select(static entry => entry.Pattern)
+                    .Order(StringComparer.Ordinal)
+                    .ToArray();
+                return patterns.Length == 0
+                    ? new ExplicitCommandResult(
+                        2,
+                        string.Empty,
+                        $"INFRASTRUCTURE_FAILURE filemap-conform: producer {arguments[1]} has no committed write set\n")
+                    : new ExplicitCommandResult(
+                        0,
+                        string.Concat(patterns.Select(static pattern => pattern + "\n")),
+                        string.Empty);
+            }
+
             return Render(FileMapPolicy.InspectRepository(repositoryRoot));
         }
         catch (Exception exception)
