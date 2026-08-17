@@ -50,6 +50,8 @@ internal static partial class RepositoryRules
             }
         }
 
+        findings.AddRange(TheoristFrontierContractValidator.Evaluate(context));
+
         return findings.ToImmutable();
     }
 
