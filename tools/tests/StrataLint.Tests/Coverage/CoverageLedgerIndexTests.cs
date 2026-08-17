@@ -112,4 +112,21 @@ public sealed class CoverageLedgerIndexTests
     private static string Freeze(string node, string path) =>
         "{\"event_type\":\"Freeze\",\"payload\":{\"frozen_node_id\":\"" + node
         + "\",\"node_path\":\"" + path + "\"}}\n";
+
+    [Fact]
+    public void SchemaV4FreezeWithoutNodePathAliasIsIndexedByItsDescriptorSelector()
+    {
+        const string node = "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb";
+        var bytes = Encoding.UTF8.GetBytes(
+            "{\"event_type\":\"Genesis\",\"payload\":{}}\n"
+            + "{\"event_type\":\"Freeze\",\"payload\":{\"frozen_node_id\":\"" + node
+            + "\",\"input\":{\"descriptor_selector\":\"D5/S0/Carrier/Ring.lean\"}}}\n");
+        var syntax = Assert.IsType<DagLedgerLoadOutcome.Loaded>(DagLedgerLoader.Load(bytes)).Syntax;
+
+        var loaded = Assert.IsType<FrozenCoverageLoadOutcome.Loaded>(
+            FrozenCoverageLedger.Load(syntax));
+
+        Assert.True(RepoPath.TryCreate("D5/S0/Carrier/Ring.lean", out var expected));
+        Assert.Contains(expected, loaded.ActiveFrozenPaths);
+    }
 }
