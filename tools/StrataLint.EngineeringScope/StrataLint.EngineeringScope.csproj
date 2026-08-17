@@ -1,0 +1,10 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>StrataLint.EngineeringScope</RootNamespace>
+    <AssemblyName>StrataLint.EngineeringScope</AssemblyName>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="../StrataLint.Engine/StrataLint.Engine.csproj" />
+  </ItemGroup>
+</Project>

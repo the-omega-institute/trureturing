@@ -55,9 +55,8 @@ internal static class ScribeTestMapDeriver
             "tools/tests/CompileFailProof/CompileFailProof.csproj",
         };
 
-    // This is the read surface used by the engineering path-filter guard. Entries are either
-    // exact files or directory roots; adding a new repository read requires updating
-    // this declaration and its review-visible guard.
+    // This list governs the declared-path debt check. Entries are either exact files or directory
+    // roots; engineering scope is derived from consumers and does not use this declaration.
     internal static readonly IReadOnlyList<string> DeclaredPathWhitelist =
     [
         ".github/workflows/theory-ingest.yml",
