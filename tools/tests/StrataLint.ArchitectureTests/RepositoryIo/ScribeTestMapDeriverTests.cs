@@ -2,6 +2,13 @@ namespace StrataLint.ArchitectureTests;
 
 public sealed class ScribeTestMapDeriverTests
 {
+    private static readonly IReadOnlySet<string> CompileFailProofProjectExemptionRemovalOnlyBaseline =
+        new HashSet<string>(StringComparer.Ordinal)
+        {
+            "tools/tests/BannedApiCompileFailProof/BannedApiCompileFailProof.csproj",
+            "tools/tests/CompileFailProof/CompileFailProof.csproj",
+        };
+
     [Fact]
     public void RepositoryMapHasNoUnknownGrowthAndEveryPathIsDeclared()
     {
@@ -34,6 +41,180 @@ public sealed class ScribeTestMapDeriverTests
         Assert.Equal(
             ["tools/tests/Alpha.Tests", "tools/tests/NewPartition.Tests"],
             partitions.Select(static partition => partition.Key));
+    }
+
+    [Fact]
+    public void EvaluateRejectsManagedProjectWithoutDirectXunitReference()
+    {
+        var snapshot = ManagedSnapshot(
+            ("tools/tests/Missing.Tests/Missing.Tests.csproj", "<Project />"),
+            ("tools/tests/Missing.Tests/DebtTests.cs", UnknownSource("DebtTests", "ReadsVariable")));
+
+        var map = ScribeTestMapDeriver.DeriveSnapshot(snapshot);
+        var finding = Assert.Single(ScribeUnknownDebtPolicy.Evaluate(map, map));
+        var inspectionFinding = Assert.Single(ScribeUnknownDebtPolicy.InspectCurrent(map));
+
+        Assert.Empty(map.Methods);
+        Assert.Equal(finding, inspectionFinding);
+        Assert.Equal("tools/tests/Missing.Tests/Missing.Tests.csproj", finding.Path);
+        Assert.Equal(AdmissionEffect.Block, finding.Effect);
+        Assert.Contains("neither", finding.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void DeclaredCompileFailProofProjectsAreAdmittedWithoutFinding()
+    {
+        var snapshot = Snapshot(
+            ("tools/tests/BannedApiCompileFailProof/BannedApiCompileFailProof.csproj", "<Project />"),
+            ("tools/tests/CompileFailProof/CompileFailProof.csproj", "<Project />"));
+
+        var map = ScribeTestMapDeriver.DeriveSnapshot(snapshot);
+
+        Assert.Empty(ScribeUnknownDebtPolicy.Evaluate(map, map));
+    }
+
+    [Fact]
+    public void CompileFailProofProjectExemptionBaselineAllowsOnlyRemoval()
+    {
+        Assert.Empty(ScribeTestMapDeriver.CompileFailProofProjectExemptions
+            .Except(CompileFailProofProjectExemptionRemovalOnlyBaseline, StringComparer.Ordinal));
+        Assert.Equal(
+            ["tools/tests/NewCompileFailProof/NewCompileFailProof.csproj"],
+            ScribeTestMapDeriver.CompileFailProofProjectExemptions
+                .Append("tools/tests/NewCompileFailProof/NewCompileFailProof.csproj")
+                .Except(CompileFailProofProjectExemptionRemovalOnlyBaseline, StringComparer.Ordinal));
+    }
+
+    [Fact]
+    public void EvaluateRejectsManagedSourceWithoutAnyProject()
+    {
+        var snapshot = ManagedSnapshot(
+            ("tools/tests/Missing.Tests/DebtTests.cs", UnknownSource("DebtTests", "ReadsVariable")));
+
+        var map = ScribeTestMapDeriver.DeriveSnapshot(snapshot);
+        var finding = Assert.Single(ScribeUnknownDebtPolicy.InspectCurrent(map));
+
+        Assert.Empty(map.Methods);
+        Assert.Equal("tools/tests/Missing.Tests/DebtTests.cs", finding.Path);
+        Assert.Equal(AdmissionEffect.Block, finding.Effect);
+        Assert.Contains("no tracked project", finding.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void EvaluateRejectsDanglingCompileFailProofProjectExemption()
+    {
+        var snapshot = Snapshot(
+            ("tools/tests/BannedApiCompileFailProof/BannedApiViolations.cs", "class BannedApiViolations { }"),
+            ("tools/tests/CompileFailProof/CompileFailProof.csproj", "<Project />"),
+            ("tools/tests/CompileFailProof/MissingCapability.cs", "class MissingCapability { }"));
+
+        var findings = ScribeUnknownDebtPolicy.InspectCurrent(
+            ScribeTestMapDeriver.DeriveSnapshot(snapshot));
+        var finding = Assert.Single(findings, static candidate =>
+            candidate.Message.Contains("declared compile-fail proof exemption", StringComparison.Ordinal));
+
+        Assert.Equal(
+            "tools/tests/BannedApiCompileFailProof/BannedApiCompileFailProof.csproj",
+            finding.Path);
+        Assert.Equal(AdmissionEffect.Block, finding.Effect);
+    }
+
+    [Fact]
+    public void DeriveRepositoryPropagatesUnclassifiedManagedProjectsToBlockingFindings()
+    {
+        using var repository = CreateTrackedRepository(
+            ("tools/tests/BannedApiCompileFailProof/BannedApiCompileFailProof.csproj", "<Project />"),
+            ("tools/tests/CompileFailProof/CompileFailProof.csproj", "<Project />"),
+            ("tools/tests/Missing.Tests/Missing.Tests.csproj", "<Project />"),
+            ("tools/tests/Missing.Tests/DebtTests.cs", UnknownSource("DebtTests", "ReadsVariable")));
+
+        var map = ScribeTestMapDeriver.DeriveRepository(repository.Path);
+        var finding = Assert.Single(ScribeUnknownDebtPolicy.InspectCurrent(map));
+
+        Assert.Equal("tools/tests/Missing.Tests/Missing.Tests.csproj", finding.Path);
+        Assert.Equal(AdmissionEffect.Block, finding.Effect);
+    }
+
+    [Fact]
+    public void DeriveRepositoryPropagatesOrphanManagedSourcesToBlockingFindings()
+    {
+        using var repository = CreateTrackedRepository(
+            ("tools/tests/BannedApiCompileFailProof/BannedApiCompileFailProof.csproj", "<Project />"),
+            ("tools/tests/CompileFailProof/CompileFailProof.csproj", "<Project />"),
+            ("tools/tests/Missing.Tests/DebtTests.cs", UnknownSource("DebtTests", "ReadsVariable")));
+
+        var map = ScribeTestMapDeriver.DeriveRepository(repository.Path);
+        var finding = Assert.Single(ScribeUnknownDebtPolicy.InspectCurrent(map));
+
+        Assert.Equal("tools/tests/Missing.Tests/DebtTests.cs", finding.Path);
+        Assert.Equal(AdmissionEffect.Block, finding.Effect);
+    }
+
+    [Fact]
+    public void DeriveRepositoryPropagatesDanglingCompileFailProofExemptionsToBlockingFindings()
+    {
+        using var repository = CreateTrackedRepository(
+            ("tools/tests/BannedApiCompileFailProof/BannedApiViolations.cs", "class BannedApiViolations { }"),
+            ("tools/tests/CompileFailProof/CompileFailProof.csproj", "<Project />"));
+
+        var findings = ScribeUnknownDebtPolicy.InspectCurrent(
+            ScribeTestMapDeriver.DeriveRepository(repository.Path));
+        var finding = Assert.Single(findings, static candidate =>
+            candidate.Message.Contains("declared compile-fail proof exemption", StringComparison.Ordinal));
+
+        Assert.Equal(
+            "tools/tests/BannedApiCompileFailProof/BannedApiCompileFailProof.csproj",
+            finding.Path);
+        Assert.Equal(AdmissionEffect.Block, finding.Effect);
+    }
+
+    [Fact]
+    public void RepositoryMapHasNoDanglingCompileFailProofProjectExemptions()
+    {
+        var findings = ScribeUnknownDebtPolicy
+            .InspectCurrent(ScribeTestMapDeriver.DeriveRepository(RepositoryLayout.FindRoot()))
+            .Where(static finding => finding.Message.Contains(
+                "declared compile-fail proof exemption",
+                StringComparison.Ordinal));
+
+        Assert.Empty(findings);
+    }
+
+    [Fact]
+    public void ManagedSourceOrphanCheckDoesNotInspectBlueprintScribeDefinitions()
+    {
+        var snapshot = ManagedSnapshot(
+            ("Blueprint/D5/S0/Sample.scribe.cs", "class SampleDefinition { }"));
+
+        var map = ScribeTestMapDeriver.DeriveSnapshot(snapshot);
+
+        Assert.Empty(ScribeUnknownDebtPolicy.InspectCurrent(map));
+    }
+
+    [Fact]
+    public void ManagedSourceOrphanCheckDoesNotInspectProductionSources()
+    {
+        var snapshot = ManagedSnapshot(
+            ("tools/StrataLint.Engine/Sample.cs", "class SampleProductionType { }"));
+
+        var map = ScribeTestMapDeriver.DeriveSnapshot(snapshot);
+
+        Assert.Empty(ScribeUnknownDebtPolicy.InspectCurrent(map));
+    }
+
+    [Fact]
+    public void DeriveSnapshotDiscoversXunitProjectsAcrossTheWholeRepository()
+    {
+        const string xunitProject =
+            "<Project><ItemGroup><PackageReference Include=\"xunit\" /></ItemGroup></Project>";
+        var snapshot = Snapshot(
+            ("experiments/External.Tests/External.Tests.csproj", xunitProject),
+            ("experiments/External.Tests/ExternalTests.cs", "class ExternalTests { [Fact] public void Runs() { } }"));
+
+        var method = Assert.Single(ScribeTestMapDeriver.DeriveSnapshot(snapshot).Methods);
+
+        Assert.Equal("experiments/External.Tests", method.PartitionKey);
+        Assert.Equal("experiments/External.Tests/ExternalTests.cs", method.SourcePath);
     }
 
     [Fact]
@@ -84,6 +265,80 @@ public sealed class ScribeTestMapDeriverTests
 
         Assert.Equal(AdmissionEffect.Block, finding.Effect);
         Assert.Contains("repository tolerance 281", finding.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void UnknownDebtIdentityIncludesPartitionKey()
+    {
+        var forkPoint = UnknownMap(
+            "tools/tests/Alpha.Tests",
+            "tools/tests/Shared/DebtTests.cs",
+            "DebtTests",
+            "ReadsVariable");
+        var current = UnknownMap(
+            "tools/tests/Beta.Tests",
+            "tools/tests/Shared/DebtTests.cs",
+            "DebtTests",
+            "ReadsVariable");
+
+        AssertIntroducedUnknown(current, forkPoint, "tools/tests/Beta.Tests::DebtTests.ReadsVariable");
+    }
+
+    [Fact]
+    public void UnknownDebtIdentityIncludesSourcePath()
+    {
+        var forkPoint = UnknownMap(
+            "tools/tests/Alpha.Tests",
+            "tools/tests/Alpha.Tests/PreviousDebtTests.cs",
+            "DebtTests",
+            "ReadsVariable");
+        var current = UnknownMap(
+            "tools/tests/Alpha.Tests",
+            "tools/tests/Alpha.Tests/CurrentDebtTests.cs",
+            "DebtTests",
+            "ReadsVariable");
+
+        AssertIntroducedUnknown(current, forkPoint, "tools/tests/Alpha.Tests::DebtTests.ReadsVariable");
+    }
+
+    [Fact]
+    public void UnknownDebtIdentityIncludesTypeAndMethod()
+    {
+        var forkPoint = UnknownMap(
+            "tools/tests/Alpha.Tests",
+            "tools/tests/Alpha.Tests/DebtTests.cs",
+            "PreviousDebtTests",
+            "ReadsVariable");
+        var current = UnknownMap(
+            "tools/tests/Alpha.Tests",
+            "tools/tests/Alpha.Tests/DebtTests.cs",
+            "CurrentDebtTests",
+            "ReadsVariable");
+
+        AssertIntroducedUnknown(current, forkPoint, "tools/tests/Alpha.Tests::CurrentDebtTests.ReadsVariable");
+    }
+
+    [Fact]
+    public void UnknownDebtAtToleranceWithoutIntroductionIsObserved()
+    {
+        var methods = string.Join('\n', Enumerable.Range(
+                0,
+                ScribeUnknownDebtPolicy.UnknownDebtToleranceLimit)
+            .Select(static index =>
+                $"[Fact] public void Debt{index:000}() {{ var path = GetPath(); File.ReadAllText(path); }}"));
+        var map = ScribeTestMapDeriver.DeriveSources(
+        [
+            new(
+                "tools/tests/Synthetic.Tests/DebtTests.cs",
+                $"class DebtTests {{\n{methods}\n}}",
+                "tools/tests/Synthetic.Tests"),
+        ],
+        []);
+
+        var finding = Assert.Single(ScribeUnknownDebtPolicy.Evaluate(map, map));
+
+        Assert.Equal(AdmissionEffect.Observe, finding.Effect);
+        Assert.Contains("this change introduced none", finding.Message, StringComparison.Ordinal);
     }
 
     [Fact]
@@ -180,6 +435,88 @@ public sealed class ScribeTestMapDeriverTests
             }
             """;
         return DeriveSources([new("LiteralTests.cs", source)]);
+    }
+
+    private static ScribeTestMap UnknownMap(
+        string partition,
+        string sourcePath,
+        string typeName,
+        string methodName) => ScribeTestMapDeriver.DeriveSources(
+        [new(sourcePath, UnknownSource(typeName, methodName), partition)],
+        []);
+
+    private static string UnknownSource(string typeName, string methodName) => $$"""
+        class {{typeName}} {
+          [Fact] public void {{methodName}}() {
+            var path = GetPath();
+            File.ReadAllText(path);
+          }
+        }
+        """;
+
+    private static void AssertIntroducedUnknown(
+        ScribeTestMap current,
+        ScribeTestMap forkPoint,
+        string displayIdentity)
+    {
+        var finding = Assert.Single(ScribeUnknownDebtPolicy.Evaluate(current, forkPoint));
+        Assert.Equal(AdmissionEffect.Block, finding.Effect);
+        Assert.Contains(displayIdentity, finding.Message, StringComparison.Ordinal);
+    }
+
+    private static RepositorySnapshot Snapshot(params (string Path, string Content)[] files)
+    {
+        var raw = RawRepositorySnapshot.Create(files.Select(static file =>
+            RawRepositoryEntry.FromText(file.Path, file.Content)));
+        return Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(raw)).Snapshot;
+    }
+
+    private static RepositorySnapshot ManagedSnapshot(params (string Path, string Content)[] files) =>
+        Snapshot(files.Concat(
+        [
+            ("tools/tests/BannedApiCompileFailProof/BannedApiCompileFailProof.csproj", "<Project />"),
+            ("tools/tests/CompileFailProof/CompileFailProof.csproj", "<Project />"),
+        ]).ToArray());
+
+    private static TemporaryRepository CreateTrackedRepository(
+        params (string Path, string Content)[] files)
+    {
+        var repository = new TemporaryRepository();
+        foreach (var file in files)
+        {
+            var fullPath = Path.Combine(
+                repository.Path,
+                file.Path.Replace('/', Path.DirectorySeparatorChar));
+            Directory.CreateDirectory(Path.GetDirectoryName(fullPath)!);
+            File.WriteAllText(fullPath, file.Content);
+        }
+
+        Assert.Equal(0, RunGit(repository.Path, "init").ExitCode);
+        Assert.Equal(0, RunGit(repository.Path, "add", "--all").ExitCode);
+        return repository;
+    }
+
+    private static ProcessOutput RunGit(string repositoryRoot, params string[] arguments) =>
+        BoundedProcessRunner.Run(
+            "git",
+            arguments,
+            repositoryRoot,
+            TimeSpan.FromSeconds(30),
+            1024 * 1024);
+
+    private sealed class TemporaryRepository : IDisposable
+    {
+        internal TemporaryRepository()
+        {
+            Path = System.IO.Path.Combine(
+                System.IO.Path.GetTempPath(),
+                $"stratalint-test-map-{Guid.NewGuid():N}");
+            Directory.CreateDirectory(Path);
+        }
+
+        internal string Path { get; }
+
+        public void Dispose() => Directory.Delete(Path, recursive: true);
     }
 
     private static ScribeTestMap DeriveDiscoveryWithAccessorMarker(string markerExpression)
