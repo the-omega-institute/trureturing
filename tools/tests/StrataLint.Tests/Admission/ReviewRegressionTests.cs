@@ -379,7 +379,7 @@ public sealed partial class ReviewRegressionTests
         fixture.SetRingDeclaration("invented", "theorem", "unregistered.axiom");
         var currentReport = LeanAxiomReport.Create(fixture.Reports);
         var gateway = new FakeRepositoryGateway(
-            RawChangeSet.Create(new[] { RuleFixture.BlueprintPath }),
+            RawChangeSet.Create(new[] { RuleFixture.RingPath }),
             Snapshot(fixture.Files),
             Snapshot(fixture.Baseline));
         var environment = new ProductionCliEnvironment(

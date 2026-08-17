@@ -7,15 +7,19 @@ namespace StrataLint.Engine;
 
 public sealed class AdmissionCertificate
 {
+    public const int CurrentFormatVersion = 2;
+
     private AdmissionCertificate(
         string fingerprint,
         string canonicalSha256,
         ImmutableArray<RuleId> executedRules,
+        ImmutableArray<RuleId> skippedRules,
         ImmutableArray<DeferredRule> deferredRules)
     {
         Fingerprint = fingerprint;
         CanonicalSha256 = canonicalSha256;
         ExecutedRules = executedRules;
+        SkippedRules = skippedRules;
         DeferredRules = deferredRules;
     }
 
@@ -23,7 +27,11 @@ public sealed class AdmissionCertificate
 
     public string CanonicalSha256 { get; }
 
+    public int FormatVersion => CurrentFormatVersion;
+
     public ImmutableArray<RuleId> ExecutedRules { get; }
+
+    public ImmutableArray<RuleId> SkippedRules { get; }
 
     public ImmutableArray<DeferredRule> DeferredRules { get; }
 
@@ -33,9 +41,15 @@ public sealed class AdmissionCertificate
     {
         var material = string.Join(
             '\n',
-            new[] { canonical.Sha256 }
-                .Concat(rules.ExecutedRules.Select(static item => item.Value))
-                .Concat(rules.DeferredRules.Select(static item => $"{item.RuleId.Value}:{item.CaseId.Value}")))
+            new[]
+                {
+                    $"admission-certificate-v{CurrentFormatVersion}",
+                    $"canonical:{canonical.Sha256}",
+                }
+                .Concat(rules.ExecutedRules.Select(static item => $"executed:{item.Value}"))
+                .Concat(rules.SkippedRules.Select(static item => $"skipped:{item.Value}"))
+                .Concat(rules.DeferredRules.Select(static item =>
+                    $"deferred:{item.RuleId.Value}:{item.CaseId.Value}")))
             + "\n";
         var fingerprint = Convert.ToHexStringLower(
             SHA256.HashData(new UTF8Encoding(false, true).GetBytes(material)));
@@ -43,6 +57,7 @@ public sealed class AdmissionCertificate
             fingerprint,
             canonical.Sha256,
             rules.ExecutedRules,
+            rules.SkippedRules,
             rules.DeferredRules);
     }
 }

@@ -110,7 +110,10 @@ public sealed class LedgerReattestCommandTests
                 && freeze.Payload.Input.DescriptorSelector == FrozenLedgerTestData.PathFor(fixture.BacklogModule))
             .index;
         Assert.Equal(backlogReplaysFirst, backlogIndex < reattestIndex);
-        Assert.Contains($"head={accepted.HeadHash}", result.Output, StringComparison.Ordinal);
+        var acceptedFiles = DagLedgerCommandPreparation.ReadLedgerDirectoryFiles(fixture.LedgerPath);
+        var acceptedView = FrozenLedgerBaseViewReader.Read(RepositorySnapshot.Create(
+            acceptedFiles.ToImmutableDictionary(static file => file.Path)));
+        Assert.Contains($"head={acceptedView.EventSetRoot()}", result.Output, StringComparison.Ordinal);
         Assert.IsType<FrozenLedgerValidationOutcome.Accepted>(
             FrozenLedger.ValidateHistoryPrefix(
                 candidateSyntax,
