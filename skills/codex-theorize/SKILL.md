@@ -67,8 +67,9 @@ status rather than converting it to exit 0. In Step 5, an initial scoped
 `lake build <Dotted.Module.Name>` may be followed by at most two authoring
 repair-and-rerun attempts, each addressing the preceding elaboration diagnostic.
 A third nonzero scoped build ends `open`. These exceptions do not apply to
-`make lean-report`, P1/P2 production, adversarial review, preflight, or
-publication.
+`make lean-report`, failed P1/P2 production, adversarial review, preflight, or
+publication. Step 5's two scheduled P1 address projections run on changed
+source snapshots; they are not retries of the Step 1 selection.
 
 There are exactly two terminal states:
 
@@ -89,6 +90,7 @@ candidate_id
 candidate_content_sha256
 selection_mode
 selection_receipt
+address_refresh_receipts
 problem_echo
 motivation_gids
 target_gid
@@ -104,6 +106,7 @@ commands_and_exit_codes
 changed_paths
 git_status_porcelain
 commit_sha
+protected_tip_sha
 resolved_base_sha
 preflight_exit_code
 pr_number
@@ -282,8 +285,29 @@ receipt to be regenerated, end `open`. Name the owner-to-receipt coupling and
 the machine diagnostic; do not expand this lane's write authority to make the
 candidate pass.
 
-Embed exactly one current P2 contract block in the source. Copy its field names
-and delimiters from section 11.20.2 rather than memory:
+After the declaration and MISSION owner are ready, run the bounded address
+handshake. The Step 1 `selection_receipt` remains the sole selection authority
+for the run; neither address projection may rescore, reroute, or replace the
+selected `candidate_id`:
+
+```sh
+lake build <Dotted.Module.Name>
+make lean-report
+make theory-candidates
+```
+
+The scoped build follows the authoring repair rule above. The report and P1
+commands must exit 0. Capture the unmodified P1 stdout as
+`address_refresh_receipts[0]`, locate the target's declaration-ready candidate
+by its canonical declaration GID, and require `source_kind` to be
+`frontier_declaration_ready` and `downstream_lane` to be `prover`. Its
+`content_sha256` is the `CanonicalStatementWriter` statement address. Do not
+pass the Step 1 owner-override file here: the routed Frontier module is now the
+machine owner.
+
+Only after P1 issues that address, embed exactly one current P2 contract block
+in the source. Copy its field names and delimiters from section 11.20.2 rather
+than memory:
 
 ```lean
 /- THEORIST_FRONTIER_CONTRACT_V1
@@ -302,25 +326,26 @@ and delimiters from section 11.20.2 rather than memory:
 -/
 ```
 
-To obtain the statement address without guessing, first elaborate and run
-`make lean-report`, then run `make theory-candidates` and read the matching
-declaration-ready candidate's `content_sha256`; it is the
-`CanonicalStatementWriter` address owned by P1. Place that exact address in the
-contract, regenerate the report, and confirm replay returns the same address.
-Do not derive an address from a file hash, file GID, declaration name, or theory
-number.
-
-Run a scoped Lean build while iterating and the canonical producer when final:
+Place the issued address in the contract, then perform exactly one replay on the
+contracted source:
 
 ```sh
-lake build <Dotted.Module.Name>
 make lean-report
+make theory-candidates
 ```
+
+Capture the second unmodified stdout as `address_refresh_receipts[1]`. Require
+the same canonical declaration GID to resolve to the same `content_sha256`; the
+selection fields and candidate-set hash may differ because the repository
+snapshot changed. A missing target, changed target address, nonzero producer,
+or any further refresh ends `open`. Do not derive an address from a file hash,
+file GID, declaration name, theory number, or the Step 1 candidate address.
 
 Postcondition: the exact statement elaborates; the module has exactly one open
 declaration; the P2 contract binds the replay-stable canonical statement
-address; and every GID array is nonempty, sorted, unique, and resolvable by its
-owner.
+address; both address-refresh receipts are retained without replacing the Step
+1 selection receipt; and every GID array is nonempty, sorted, unique, and
+resolvable by its owner.
 
 ### 6. Run the full independent adversarial review stage
 
@@ -362,28 +387,30 @@ git status --short
 git fetch origin dev
 git rev-parse HEAD
 git rev-parse origin/dev
+git merge-base origin/dev HEAD
 git diff --name-only <resolved-base-sha>...HEAD
 make preflight BASE=<resolved-base-sha>
 ```
 
 `make preflight` owns report production, engineering tests, live P2/SL-002
 validation, route/check admission against the protected base, and the three CI
-preconditions. Require the post-commit worktree to be clean. Capture the two
-`git rev-parse` outputs only after the fetch and before preflight, and substitute
-the exact 40-hex base result for `<resolved-base-sha>`; do not let a moving
-branch name stand in for that identity. The captured HEAD is the final
-`commit_sha` that admission and publication must preserve. Record the
-changed-path output and command exit code in the run-local log. Do not replace
-preflight with a hand-picked validator or a producing seat's judgment. If
-`origin/dev` advances, follow the live harness diagnostic; never enable strict
-branch protection or bypass a failed check. Do not
+preconditions. Require the post-commit worktree to be clean. After the fetch,
+record `git rev-parse HEAD` as the final `commit_sha`, `git rev-parse origin/dev`
+as `protected_tip_sha`, and `git merge-base origin/dev HEAD` as
+`resolved_base_sha`. Substitute that exact 40-hex merge-base result for
+`<resolved-base-sha>` in both commands; do not label the protected tip as the
+admission base or let a moving branch name stand in for either identity. Record
+the changed-path output and command exit code in the run-local log. Do not
+replace preflight with a hand-picked validator or a producing seat's judgment.
+If `origin/dev` advances, follow the live harness diagnostic; never enable
+strict branch protection or bypass a failed check. Do not
 regenerate an existing generated receipt solely because the selected owner is
 its attested input; end `open` and name that coupling instead.
 
 Postcondition: `make preflight BASE=<resolved-base-sha>` exits 0, HEAD still
-equals the captured `commit_sha`, the worktree is clean, and the immutable base
-SHA, exact changed paths, and preflight exit code are present in the command
-log.
+equals the captured `commit_sha`, the worktree is clean, and the immutable
+protected tip, actual admission merge-base, exact changed paths, and preflight
+exit code are present in the command log.
 
 ### 8. Open the pull request, then observe merge
 
