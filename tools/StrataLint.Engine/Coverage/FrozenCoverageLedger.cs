@@ -62,6 +62,24 @@ public static class FrozenCoverageLedger
                         }
                         break;
                     case "Reattest":
+                        // Reattest 换 frozen_node_id(witness 含 source blob),路径不变。
+                        // 不跟着换,后续 Revoke 指向新 id 时 active 表里没有它 ⟹ 整册被拒。
+                        // v4 用正名 frozen_node_id;v2/v3 的 legacy 形只有别名 semantic_receipt。
+                        var reattested = payload.TryGetProperty("frozen_node_id", out var freshNode)
+                            && freshNode.ValueKind == JsonValueKind.String
+                                ? freshNode.GetString()!
+                                : RequiredString(payload, "semantic_receipt");
+                        var reattestPath = RequiredString(
+                            payload.GetProperty("input"), "descriptor_selector");
+                        var priorNode = active.SingleOrDefault(item => item.Value.Value == reattestPath);
+                        if (!FrozenHashSyntax.IsSha256(reattested)
+                            || priorNode.Equals(default(KeyValuePair<string, RepoPath>))
+                            || !active.Remove(priorNode.Key, out var reattestedPath)
+                            || !active.TryAdd(reattested, reattestedPath))
+                        {
+                            throw new FormatException(
+                                "Reattest has an invalid or inactive node identity");
+                        }
                         break;
                     case "Supersede":
                         var caseId = RequiredString(payload, "case_id");
