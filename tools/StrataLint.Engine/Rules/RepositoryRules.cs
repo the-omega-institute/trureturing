@@ -98,12 +98,19 @@ internal static partial class RepositoryRules
         Register(
             16,
             "Digestion ledger",
-            new RepositoryRule(BackfillScoped, BackfillInventoryRule.Evaluate)),
+            new RepositoryRule(
+                BackfillScoped,
+                BackfillInventoryRule.Evaluate,
+                BackfillInventoryRule.IsAffectedBy,
+                BackfillInventoryRule.EvaluateCandidateDelta)),
         Register(
             17,
             "Typed anchor membership",
             new RepositoryRule(AnchorReferenceScoped, ResolvableAnchors)),
-        Register(18, "Machine-produced values", new RepositoryRule(ValuesScoped, Values)),
+        Register(
+            18,
+            "Machine-produced values",
+            new RepositoryRule(ValuesScoped, Values, ValuesAffected, ValuesCandidateDelta)),
         Register(
             19,
             "Balanced anomaly ledger",

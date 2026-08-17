@@ -22,7 +22,12 @@ internal interface IRepositoryRule
 {
     bool AppliesTo(RepositoryFile artifact, RuleApplicabilityContext context);
 
+    bool IsAffectedBy(RuleEvaluationContext context) => true;
+
     ImmutableArray<RuleFinding> Evaluate(RuleEvaluationContext context);
+
+    ImmutableArray<RuleFinding> EvaluateCandidateDelta(RuleEvaluationContext context) =>
+        Evaluate(context);
 }
 
 internal sealed class RuleApplicabilityContext
@@ -172,11 +177,19 @@ internal sealed class RuleEvaluationContext
 
 internal sealed class RepositoryRule(
     Func<RepositoryFile, RuleApplicabilityContext, bool> appliesTo,
-    Func<RuleEvaluationContext, ImmutableArray<RuleFinding>> evaluate) : IRepositoryRule
+    Func<RuleEvaluationContext, ImmutableArray<RuleFinding>> evaluate,
+    Func<RuleEvaluationContext, bool>? isAffectedBy = null,
+    Func<RuleEvaluationContext, ImmutableArray<RuleFinding>>? evaluateCandidateDelta = null) : IRepositoryRule
 {
     public bool AppliesTo(RepositoryFile artifact, RuleApplicabilityContext context) =>
         appliesTo(artifact, context);
 
+    public bool IsAffectedBy(RuleEvaluationContext context) =>
+        isAffectedBy?.Invoke(context) ?? true;
+
     public ImmutableArray<RuleFinding> Evaluate(RuleEvaluationContext context) =>
         evaluate(context);
+
+    public ImmutableArray<RuleFinding> EvaluateCandidateDelta(RuleEvaluationContext context) =>
+        (evaluateCandidateDelta ?? evaluate)(context);
 }

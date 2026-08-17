@@ -12,6 +12,8 @@ public sealed class ValuesBindingRuleTests
     public void TamperedStatementSha256IsRejectedBySl018()
     {
         var fixture = Fixture();
+        fixture.Changes.Clear();
+        fixture.Changes.Add(ValuesKernelBindingValidator.RelativePath);
         var text = fixture.Files[ValuesKernelBindingValidator.RelativePath];
         var valueStart = text.IndexOf("lean_statement_sha256 = \"", StringComparison.Ordinal)
             + "lean_statement_sha256 = \"".Length;
@@ -26,6 +28,42 @@ public sealed class ValuesBindingRuleTests
             diagnostic.Path == ValuesKernelBindingValidator.RelativePath
             && diagnostic.Message.Contains("D5/S0/Carrier/ValuesBinding.fixtureValue", StringComparison.Ordinal)
             && diagnostic.Message.Contains("statement SHA-256 mismatch", StringComparison.Ordinal));
+    }
+
+    [Fact]
+    public void Sl018DoesNotReplayCommittedStatementIdsForAnUnrelatedCandidateDelta()
+    {
+        var fixture = Fixture();
+        var text = fixture.Files[ValuesKernelBindingValidator.RelativePath];
+        var valueStart = text.IndexOf("lean_statement_sha256 = \"", StringComparison.Ordinal)
+            + "lean_statement_sha256 = \"".Length;
+        fixture.Files[ValuesKernelBindingValidator.RelativePath] = string.Concat(
+            text.AsSpan(0, valueStart),
+            text[valueStart] == '0' ? "1" : "0",
+            text.AsSpan(valueStart + 1));
+        var completed = Assert.IsType<RuleExecutionOutcome.Completed>(
+            RuleCatalog.Default.Execute(fixture.Build(RawChangeSet.Create(["notes/unrelated.txt"]))));
+
+        Assert.DoesNotContain(
+            completed.Capability.Diagnostics,
+            static diagnostic => diagnostic.RuleId == RuleId.CreateKnown(18));
+    }
+
+    [Fact]
+    public void ChangedLeanInputStillRevalidatesItsStoredSl018Binding()
+    {
+        var fixture = Fixture();
+        fixture.Reports[RuleFixture.ValuesBindingPath] = new LeanFileReport(
+            [],
+            [Declaration(kind: "theorem")]);
+        var completed = Assert.IsType<RuleExecutionOutcome.Completed>(
+            RuleCatalog.Default.Execute(fixture.Build(
+                RawChangeSet.Create([RuleFixture.ValuesBindingPath]))));
+
+        Assert.Contains(
+            completed.Capability.Diagnostics,
+            static diagnostic => diagnostic.RuleId == RuleId.CreateKnown(18)
+                && diagnostic.Message.Contains("expected kind=def, found theorem", StringComparison.Ordinal));
     }
 
     [Fact]
@@ -62,10 +100,22 @@ public sealed class ValuesBindingRuleTests
             diagnostic.Message.Contains("axiom closure mismatch", StringComparison.Ordinal));
     }
 
-    private static RuleFixture Fixture() => new();
+    private static RuleFixture Fixture()
+    {
+        var fixture = new RuleFixture();
+        fixture.Changes.Clear();
+        fixture.Changes.Add(ValuesKernelBindingValidator.RelativePath);
+        return fixture;
+    }
 
-    private static ImmutableArray<Diagnostic> Evaluate(RuleFixture fixture) =>
-        RuleCatalog.Default.EvaluateSingle(RuleId.CreateKnown(18), fixture.Build()).Diagnostics;
+    private static ImmutableArray<Diagnostic> Evaluate(RuleFixture fixture)
+    {
+        var completed = Assert.IsType<RuleExecutionOutcome.Completed>(
+            RuleCatalog.Default.Execute(fixture.Build()));
+        return completed.Capability.Diagnostics
+            .Where(static diagnostic => diagnostic.RuleId == RuleId.CreateKnown(18))
+            .ToImmutableArray();
+    }
 
     private static LeanDeclaration Declaration(
         string kind = "def",
