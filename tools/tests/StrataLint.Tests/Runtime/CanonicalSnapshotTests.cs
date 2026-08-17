@@ -31,18 +31,52 @@ public sealed class CanonicalSnapshotTests
     [Fact]
     public void NoncanonicalStructuredArtifactCannotProduceCapability()
     {
+        const string path = "Evidence/D5/S0/Carrier/Result.run.json";
         var fixture = new RuleFixture();
-        fixture.Files["Evidence/D5/S0/Carrier/Result.run.json"] = "{\"omega\":2,\"alpha\":1}\n";
-        var context = fixture.Build();
+        fixture.Files[path] = "{\"alpha\":1, \"omega\":2}\n";
+        var changes = RawChangeSet.Create([path]);
+        var context = fixture.Build(changes);
         var policy = RegistryLoadAssert.Accepted(
             RegistryLoader.Load(
                 Encoding.UTF8.GetBytes(TestRegistry.Canonical),
                 Encoding.UTF8.GetBytes(TestRegistry.Domains))).Policy;
 
-        var outcome = RepositoryCanonicalizer.Validate(context.Current, policy);
+        var outcome = RepositoryCanonicalizer.Validate(context.Current, policy, changes);
 
         var failure = Assert.IsType<CanonicalizationOutcome.InfrastructureFailure>(outcome);
         Assert.Contains("canonical", failure.Message, StringComparison.OrdinalIgnoreCase);
+    }
+
+    [Fact]
+    public void UnchangedNoncanonicalStructuredArtifactDoesNotReplayItsFixedPoint()
+    {
+        var fixture = new RuleFixture();
+        fixture.AddBackfillTargets();
+        fixture.Files["Evidence/D5/S0/Carrier/Result.run.json"] = "{\"alpha\":1, \"omega\":2}\n";
+        var changes = RawChangeSet.Create(["notes/unrelated.txt"]);
+        var context = fixture.Build(changes);
+        var policy = RegistryLoadAssert.Accepted(
+            RegistryLoader.Load(
+                Encoding.UTF8.GetBytes(TestRegistry.Canonical),
+                Encoding.UTF8.GetBytes(TestRegistry.Domains))).Policy;
+        var metaClear = Assert.IsType<BootstrapOutcome.Clear>(
+            BootstrapGate.Evaluate(changes)).Capability;
+
+        var outcome = AdmissionPipeline.Evaluate(
+            context.Current,
+            context.Baseline,
+            policy,
+            context.Lean,
+            changes,
+            metaClear);
+
+        Assert.True(
+            outcome is AdmissionOutcome.Admitted,
+            outcome is AdmissionOutcome.RuleRejected rejected
+                ? string.Join('\n', rejected.Diagnostics.Select(static item => item.Render()))
+                : outcome is AdmissionOutcome.InfrastructureFailure failure
+                    ? failure.Message
+                    : outcome.GetType().Name);
     }
 
     [Fact]

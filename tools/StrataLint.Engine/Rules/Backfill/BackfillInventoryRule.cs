@@ -8,7 +8,8 @@ internal sealed record BackfillInventoryValidationContext(
     RepositorySnapshot Baseline,
     ValidatedPolicy Policy,
     AcceptedLeanClosure Lean,
-    VerifiedScribeEmissions? VerifiedScribeEmissions);
+    VerifiedScribeEmissions? VerifiedScribeEmissions,
+    RawChangeSet? Changes = null);
 
 internal static class BackfillInventoryRule
 {
@@ -22,6 +23,39 @@ internal static class BackfillInventoryRule
         RegexOptions.CultureInvariant);
 
     internal static ImmutableArray<RuleFinding> Evaluate(RuleEvaluationContext context)
+        => Evaluate(context, changes: null);
+
+    internal static ImmutableArray<RuleFinding> EvaluateCandidateDelta(RuleEvaluationContext context)
+        => Evaluate(context, context.Changes);
+
+    internal static bool IsAffectedBy(RuleEvaluationContext context)
+    {
+        foreach (var path in context.Changes.Paths)
+        {
+            if (BackfillInventoryLoader.IsCanonicalPath(path.Value)
+                || DigestionCasStore.IsCanonicalPath(path.Value)
+                || path.Value == BackfillInventoryLoader.RelativePath
+                || path.Value == TheoryAtomizerDataLoader.DataPath
+                || path.Value is "Meta/registry.yaml" or "Meta/domains.yaml"
+                || path.Value.StartsWith("D5/", StringComparison.Ordinal)
+                    && path.Value.EndsWith(".lean", StringComparison.Ordinal)
+                || path.Value.StartsWith("Evidence/D5/", StringComparison.Ordinal)
+                || path.Value.StartsWith("Blueprint/", StringComparison.Ordinal)
+                || path.Value.StartsWith(
+                    "tools/Authorizations/digestion-tail/",
+                    StringComparison.Ordinal)
+                || context.Policy.GovernanceDocuments.Contains(path))
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private static ImmutableArray<RuleFinding> Evaluate(
+        RuleEvaluationContext context,
+        RawChangeSet? changes)
     {
         BackfillInventoryDocument document;
         try
@@ -39,7 +73,8 @@ internal static class BackfillInventoryRule
                 context.ForkPoint,
                 context.Policy,
                 context.Lean,
-                context.VerifiedScribeEmissions),
+                context.VerifiedScribeEmissions,
+                changes),
             document);
     }
 
@@ -52,7 +87,8 @@ internal static class BackfillInventoryRule
         var findings = ImmutableArray.CreateBuilder<RuleFinding>();
         foreach (var finding in DigestionCasStore.ValidateAppendOnly(
                      context.Current,
-                     context.Baseline))
+                     context.Baseline,
+                     context.Changes))
         {
             findings.Add(new RuleFinding(BackfillPath, finding));
         }
@@ -248,7 +284,10 @@ internal static class BackfillInventoryRule
         // CAS integrity is part of SL-016 itself, so it must run even when another
         // receipt-shape finding below would otherwise return before status derivation.
         // The result is threaded into the alignment pass below, which used to recompute it.
-        var casEvaluation = DigestionCasStore.Evaluate(document, context.Current);
+        var casEvaluation = DigestionCasStore.Evaluate(
+            document,
+            context.Current,
+            context.Changes);
         foreach (var finding in casEvaluation.Findings)
         {
             findings.Add(new RuleFinding(BackfillPath, finding));
@@ -268,7 +307,8 @@ internal static class BackfillInventoryRule
                 context.VerifiedScribeEmissions,
                 LoadBaselineDocument(context.Baseline),
                 baselineSnapshot: context.Baseline,
-                casEvaluation: casEvaluation);
+                casEvaluation: casEvaluation,
+                changes: context.Changes);
             foreach (var finding in evaluation.Findings)
             {
                 findings.Add(new RuleFinding(BackfillPath, finding));
@@ -297,5 +337,4 @@ internal static class BackfillInventoryRule
     // !snapshot.TryGetFile(RelativePath, out _)
     // && snapshot.Files.Keys.Any(path => IsCanonicalPath(path.Value)). Then remove the legacy
     // Load(string), RelativePath, dispatch branch, and legacy tests together.
-
 }
