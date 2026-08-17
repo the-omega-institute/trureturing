@@ -116,6 +116,31 @@ public sealed class CoverageLedgerIndexTests
     // Reattest 会改 frozen_node_id(witness 含 source blob,重新 attest 即变):实测 971 个
     // lineage 中 107 个记录过多于一个 frozen_node_id。该消费者原先对 Reattest 直接 break,
     // 于是后续 Revoke 指向 Reattest 之后的 active id 时,active 表里没有它 ⟹ 被拒。
+    // v4 的 legacy 形 Reattest 两个 node-id 字段都没有:正名 frozen_node_id 从来只属 extended 形,
+    // 别名 semantic_receipt 随 schema v4 退役。它只在 materialUnchanged 时产生,故此时 id 未变,
+    // 正确行为是**保持当前 active 不动**,而不是拒。
+    // 我先前据「id 恒等于前驱」判定「丢失无害」而结案——那只证明了信息不丢失,
+    // 没检查消费者能不能拿到它:消费者不看前驱,只看当前事件。等值不蕴含可用。
+    [Fact]
+    public void SchemaV4LegacyReattestWithoutAnyNodeIdKeepsTheExistingIdentity()
+    {
+        const string frozen = "sha256:eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee";
+        const string path = "D5/S0/Carrier/Ring.lean";
+        var bytes = Encoding.UTF8.GetBytes(
+            "{\"event_type\":\"Genesis\",\"payload\":{}}\n"
+            + "{\"event_type\":\"Freeze\",\"payload\":{\"frozen_node_id\":\"" + frozen
+            + "\",\"input\":{\"descriptor_selector\":\"" + path + "\"}}}\n"
+            + "{\"event_type\":\"Reattest\",\"payload\":{\"case_id\":\"active-frozen/x\","
+            + "\"input\":{\"descriptor_selector\":\"" + path + "\"}}}\n"
+            + "{\"event_type\":\"Revoke\",\"payload\":{\"affected_frozen_node_ids\":[\"" + frozen + "\"]}}\n");
+        var syntax = Assert.IsType<DagLedgerLoadOutcome.Loaded>(DagLedgerLoader.Load(bytes)).Syntax;
+
+        var loaded = Assert.IsType<FrozenCoverageLoadOutcome.Loaded>(
+            FrozenCoverageLedger.Load(syntax));
+
+        Assert.Empty(loaded.ActiveFrozenPaths);
+    }
+
     [Fact]
     public void ReattestReplacesTheActiveNodeIdentityBeforeRevocation()
     {

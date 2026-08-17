@@ -44,17 +44,20 @@ public sealed class RequiredJobExecutionTests
     {
         // 抑制失败本身不是病——病是抑制之后**没人再看它**。合法的两形:
         //   uses: 型(第三方 action,失败语义由 action 自己定,如 actions/cache/save)
-        //   run:  型但有 id 且该 id 的 outcome 被后续引用(判词回落到别处,如 report-reuse:
-        //         缓存服务失败 → 下游 `outcome != 'success'` 走完整生产路径)
-        // 违规形恰是 F3 报的那个:给 `Run candidate golden and integration tests` 加
-        // continue-on-error,失败被吞掉、无人过问,而 job 仍报成功。
-        var workflow = AdmissionWorkflowText();
+        //   run:  型但有 id 且该 id 的 outcome **真的影响执行**(判词回落到别处,如 report-reuse:
+        //         缓存服务失败 → 下游四个重活步骤以 `outcome != 'success'` 走完整生产路径)
+        //
+        // 2026-08-17 第八轮:首版判据是 workflow.Contains("steps.<id>.outcome") —— **纯文本匹配**,
+        // 四席各自构造了不同的惰性引用全都骗过它:一行 YAML 注释;`if: false` 的步骤里 echo 它;
+        // `false && steps.x.outcome != 'success'`。文本在场 ≠ 判词生效。
+        // 故判据改为:该引用必须出现在**某个步骤自己的 `if:` 表达式**里(注释与 run 正文不算),
+        // 且那个步骤本身不得是恒假门控(`if: false` / 以 `false &&` 起头)。
         var offenders = RequiredJobs()
             .SelectMany(job => Steps(job.Value)
                 .Where(static step => step.Children.ContainsKey(new YamlScalarNode("continue-on-error")))
                 .Where(step => !step.Children.ContainsKey(new YamlScalarNode("uses")))
                 .Where(step => Scalar(step, "id") is not { Length: > 0 } id
-                    || !workflow.Contains("steps." + id + ".outcome", StringComparison.Ordinal))
+                    || !HasEffectiveOutcomeConsumer(job.Value, id))
                 .Select(step => job.Key + " / " + Scalar(step, "name")))
             .ToArray();
 
@@ -81,6 +84,22 @@ public sealed class RequiredJobExecutionTests
                 (YamlMappingNode)item.Value))
             .Where(static item => RequiredCheckNames.Contains(Scalar(item.Value, "name"), StringComparer.Ordinal))
             .ToArray();
+    }
+
+    // 「真的影响执行」= 出现在某步骤自身的 if: 表达式里,且该表达式不是恒假门控。
+    // 注释、run 正文里的 echo、以及 `false && …` 都不算——它们在场却不改变任何判决。
+    private static bool HasEffectiveOutcomeConsumer(YamlMappingNode job, string id) =>
+        Steps(job).Any(step =>
+            Scalar(step, "if") is { Length: > 0 } condition
+            && condition.Contains("steps." + id + ".outcome", StringComparison.Ordinal)
+            && !IsConstantFalseGate(condition));
+
+    private static bool IsConstantFalseGate(string condition)
+    {
+        var trimmed = condition.Trim().TrimStart('$', '{').TrimEnd('}', ' ').Trim();
+        return trimmed.Equals("false", StringComparison.Ordinal)
+            || trimmed.StartsWith("false &&", StringComparison.Ordinal)
+            || trimmed.StartsWith("false&&", StringComparison.Ordinal);
     }
 
     private static string AdmissionWorkflowText() =>
