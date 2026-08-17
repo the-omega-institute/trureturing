@@ -263,6 +263,12 @@ internal sealed partial class RuleFixture
             case "anomaly": Files["Evidence/D5/S0/Carrier/Result.run.json"] = "{\"anomaly\": \"fixture drift\"}\n"; break;
             case "axiom": SetRingDeclaration("invented", "axiom", "invented"); break;
             case "future": AddFutureTheory(); break;
+            case "blueprint-skeleton": Files.Remove(BlueprintSourcePath); break;
+            case "legacy-scribe":
+                Files[BlueprintSourcePath] = "DefinitionDsl.LeanTheorem(x);\n";
+                Changes.Clear();
+                Changes.Add(BlueprintSourcePath);
+                break;
             default: throw new ArgumentOutOfRangeException(nameof(mutation));
         }
     }
