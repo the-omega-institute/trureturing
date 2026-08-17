@@ -449,6 +449,35 @@ Frontier 语义资格的唯一数据 owner 是 `docs/MISSION.md` 的可选 `fron
 
 逐字节重放判据：同一 snapshot、同一 canonical Lean report、同一 override bytes（或均无）必须产生同一 stdout；改变其中任一承重输入必须改变相应 input address，改变 report 而候选不变时 `lean_report_sha256` 仍必须变化。任一 MISSION schema/引用错误、未分类 Frontier、消化 finding、Scribe capability 失败、报告不可用或 override 解码错误均不产部分 JSON，只在 stderr 发 `THEORY_CANDIDATES_INVALID ...` 并非零退出。P1 不实现 formalize、ingest、freeze 或 P3 理论生成状态机。
 
+### 11.20.2 THEORY-GENERATION-P2（Theorist Frontier 生成契约）
+
+`agents/theorist.md` 的现役输出句逐字为：`Output: motivation GIDs, exact statement, falsifier, evidence, source search, and triage class.`。P2 只把该既有类机器化，不另造生成器、worth 测量、formalize、deposit 或 freeze 表面。执法归入现役 `SL-002`；不复活退役的 `SL-024`，不新增人审门。
+
+**适用域由 typed owner 决定。** 对 `D5/X_Frontier/*.lean`，下列三者之并集须携且通过契约：候选树新增且 `docs/MISSION.md.frontier_eligibility` 明示为 `declaration-ready-mathematical-open` 的模块；受保护基线中 owner 由另一显式 kind 转成该 kind 的模块；候选树或受保护基线任一侧已携本契约的模块。末项使首次 opt-in 当轮即受检，并使已迁模块不能删契约或改 owner；不得让坏契约先合入、到下一基线才产生延迟红。旧基线中同为 declaration-ready 但尚无契约者宽松加载，直至上述迁移事件发生；这是唯一迁移宽松处。新增 Frontier 缺 owner 或 owner=`unknown` 时如实 fail-closed；owner=`mathematical-not-yet-stated` 却已出现 elaborated `sorryAx` 声明时为类型矛盾；owner=`governance` 不因 TASK、有无 `sorry`、名称或路径形状被推断为理论生成。语法只派生真值状态，不签发语义类别。`docs/MISSION.md` 自身不可加载时不得坍缩为「owner 缺失」这一确定判词：owner 一律报为 undecidable 并逐字带上 loader 的失败原因，使读者去修 MISSION 而非去分类模块；该情形的阻断集与 owner 缺失时相同，本条只约束判词，不扩张门。
+
+契约在 Lean 源内恰出现一次，载体为 `/- THEORIST_FRONTIER_CONTRACT_V1` 换行、一个 JSON object、换行 `-/`。object 封闭为以下字段，未知、缺失、重复 key 均拒绝：
+
+```
+{
+  "schema": "trureturing-theorist-frontier-v1",
+  "exact_statement": {
+    "gid": "D5/X_Frontier/Module.declaration",
+    "statement_sha256": "sha256:<64 lowercase hex>"
+  },
+  "motivation_gids": ["D5/<formal-module-or-declaration>"],
+  "falsifier": "<nonblank machine-carried text>",
+  "search_receipt_gids": ["D5/L/<canonical-library-address>"],
+  "computation_receipt_gids": ["D5/E/<canonical-evidence-address>--<kind>"],
+  "triage_class": "theorem"
+}
+```
+
+三个 GID 数组皆须非空、ordinal 排序且无重复。`exact_statement.gid` 必须在同模块恰选一个 `include_in_statement=true` 的声明，且该模块恰有这一个待决声明；`statement_sha256` 必须逐字等于同一 compiled report 上 `CanonicalStatementWriter` 的 declaration statement address。该声明必须由 compiled report 的 axiom closure 含 `sorryAx` 派生为 `open`；契约没有 `status`、`truth_state`、`proved` 等自报字段，validator 也不产真值判决。删掉 `sorry` 后即不再满足本类，不得把生成物冒充已证。
+
+`motivation_gids` 每项须解析为 Formal-plane GID，其 module path 必须属于当前 `Golden/Frozen/accepted/` 经 `FrozenLedgerBaseViewReader` 投影出的 `ActiveByPath` 集合；仅文件存在、已撤销历史事件或散文提及均不算成员。`search_receipt_gids` 每项须为 Library-plane GID 且其正名文件存在；`computation_receipt_gids` 每项须为 Evidence-plane GID 且其正名文件存在。`falsifier` 只验非空，不冒充已执行反证；三档初判的封闭词表恰为 `{theorem,window,wall}`，即 §11.2 问答轮「三档裁决(定理级/窗/墙)」与 §11.8 分诊台之同一词表的机器形，不是本节新造的分类器；此处判类型、不判真值。
+
+机器验收须同时钉住四件事：新 Frontier 样例经真实 Lean elaboration 产出 `sorryAx` 与 canonical statement address；同一 report 通过 SL-002；完整规则集可签发 admission；删改任一守卫得到 `compile_errors=0 ∧ test_exit≠0`，恢复后绿。`424f0ae95:D5/X_Frontier/FiniteDepthMetric.lean` 与 `82639b893:D5/X_Frontier/PrimeNormIrreducibility.lean` 是历史回归夹具，须分别有合规形与字段/引用变异的违规形；夹具是测试数据，不因此取得 Frozen 真值地位。这两条对 Git 对象的引用本身必须机器可判，不得只以散文声称：夹具持有的是那两个 blob 的逐字节原文，并与其记录的 blob OID（`git-sha1:b63331738d33edfc62fb0ca095e9d2e4fd32a5b8`、`git-sha1:5c997521182be82f34ece80264d342081bfbc870`）在测试内重算比对，改一字节即红；契约以插入方式叠加于该原文之上，故「无契约形」恰是 theory-selfgrowth 当时的产物原样，而非其改写。比对在进程内由 blob 哈希完成，不依赖测试环境可达那两个 commit。
+
 ## 11.21 回填溯源清单(消化完整性)
 <!-- BACKFILL_ENTRY_ACCEPTANCE: required=atom_id,cas_ref,coverage_gids,fingerprints,receipts,status;exactly_one=ast_path|boundary;optional=- -->
 `Meta/BACKFILL.yaml` 是 **Digestion Ledger** 唯一真源,现役且仅现役 schema 为 `schema_version: 3` / `ledger: theory-digestion-v1`;旧 anchor/disposition 格式经一次迁移只存于 git 历史,运行时无兼容读者、无双读。每个 source 恰含 `{source_id,path,atomizer,entries}`,其中 `source_id` 全局唯一、文件正名且文件名禁空格;每个原子 entry 的共同必选字段为 `{atom_id,fingerprints:{raw_sha256,normalized_sha256},cas_ref,coverage_gids,receipts,status}`,边界字段互斥二选一:嵌套 `boundary:{ast_path,start_byte,end_byte}` 或顶层 `ast_path`,无 entry 级可选字段。canonical 账本 1035 条 entry 中 1023 条采用顶层 `ast_path`、12 条采用嵌套 `boundary`,且 loader 强制 1035/1035 均携 `cas_ref`;故 THEORY-ERRATUM(11.27)的案件主键 `(cas_ref, atom_id)` 对每条已摄入理论收据成立。raw 指纹绑定原始字节,normalized 指纹只容许 UTF-8 BOM、CRLF/CR→LF 与 Unicode NFC 的受限规范化;二者均为 `sha256:<64 lowercase hex>`。`show-atom` 直接读取已提交的 CAS blob 字节及 entry 的 `cas_ref`/fingerprint 字段,不得对该 blob 重算哈希再与账内字段比对;已提交字节的完整性由 git object OID 保证,输出以 `HASH_RECORD ... source=ledger` 明示记录而不冒充重验结果。candidate source replay 仍只用于判当前 generation 与选择展示内容,不重审历史 CAS 对象。
@@ -791,6 +820,7 @@ Blueprint markdown 已证有仓内语义 consumer，移出 PR-A；只有独立 P
 
 # CHANGELOG(原位演进史;只追加)
 
+- **v7.16 R11**(2026-08-17):`THEORY-GENERATION-P2` 在 §11.20.2 先定义 Theorist Frontier 生成契约再落实例守卫：逐字承接 `agents/theorist.md` 的 motivation/exact statement/falsifier/evidence/source search/triage 六项输出，以 `docs/MISSION.md.frontier_eligibility` 的 typed owner 限定新增、显式 owner 转换、候选 opt-in 与已迁模块，禁止用 TASK、名称、路径或 `sorry` 推断语义。契约封闭为 `trureturing-theorist-frontier-v1`，exact declaration GID 与 `CanonicalStatementWriter` 地址同绑，motivation 必须属于 active Frozen 集，检索/计算收据分别解析到 Library/Evidence，三档词表封闭为 theorem/window/wall；open 只从 compiled `sorryAx` 派生且 schema 禁自报真值。执法并入 SL-002，不复活 SL-024；旧 declaration-ready 基线无契约仍可加载。两份 theory-selfgrowth 历史候选以其 Git blob OID 机器绑定后迁为双向回归夹具（持原文字节、契约叠加其上，改一字节即红），另以真实 Lean elaboration→SL-002→admission 测试钉死 X_Frontier 带 sorry 的合法链路；MISSION 不可加载时判词报 undecidable 并带 loader 原因，不坍缩为 owner 缺失。本修订不实现 P3 生成器、不测 worth、不重建 formalize/deposit/freeze。
 - **v7.16 R10**(2026-08-17):`THEORY-GENERATION-P1` 在 §11.20.1 原位定义候选投影类后再承接实例：封闭 `stratalint-theory-candidates-v1` schema、snapshot + canonical Lean report + owner 原始 bytes 的输入闭包、bootstrap/override 选择与逐字节重放收据；Frontier 资格由 `docs/MISSION.md.frontier_eligibility` 唯一承载，封闭为 declaration-ready mathematics / mathematics-not-yet-stated / governance / unknown，明确 TASK 只作案件地址、不得推断语义。declaration-ready 模块只按 captured report 展开 `theorem+sorryAx` 与 `def : Prop`，每个 prover candidate 以 declaration GID + canonical statement address 锁定一个回声目标；Scribe capability 从同一 snapshot 的一次性 pinned materialization 计算，不再混读 live root。旧基线缺字段仍可解码，但 P1 对缺项和 unknown fail-closed；lane 封闭为 `prover/theorist/codex-formalize`，原始 owner 问题进 theorist，禁止越过陈述回声直送 prover。owner Make 表面改为文件运输，hash 在 strict UTF-8 解码前绑定原始 bytes。本修订不重建 ingest/formalize/freeze，不新增人审门，不写 tracked projection。
   **同期勘正(A14.3):** Supersede Branch B 的不变输入由依赖方单文件扩为 candidate DAG 的传递仓内 import 闭包,并以 authoritative base→head `RawChangeSet` 判零变化;仓内 import 改弱反例现 fail-closed,纯 pin bump 且闭包字节不变仍放行。SL-016 补环境 pin affected 边,SL-018 的 affected 与 delta validation 同步补传递 import;base/coverage 投影钉住 historical legacy、v4 legacy、v4 extended Reattest 三形。
 - **v7.16 R9**(2026-08-17,#2119):落地 R7 留给后继分支的 renderer 契约,并删除 `PilotDocumentTests` 中的临时同进程双次现产断言。跨版本 renderer 回归改由 producer 自身承担:全 Scribe 语料按 GID 排序,对 GID 与本轮现产 bytes 作长度分帧后冻结聚合 SHA-256;该契约**不读取 committed Markdown**,故不构成对投影的守卫,只钉定 producer 在版本演进下的行为。契约值由 `update-renderer-contract` 现算刷新,非手写清单。至此 #2119 的「删守卫」与「加强 producer 测试」两半全部落地。
