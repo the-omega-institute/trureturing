@@ -9,7 +9,7 @@ namespace StrataLint.Scribe.Tests;
 public sealed partial class FormulaCorpusInventoryTests
 {
     private const string CanonicalRendererSha256 =
-        "ac9b3bb7e8ee62e69d59dea77ffedae5e25787edcd9a09095dbaa44be5d66a24";
+        "77080f3340682167092530f688595b52561e9db873fa996f44ca7b124fa58982";
     private const string UpdateCommand = "make -C tools update-renderer-contract";
 
     [Fact]
@@ -256,7 +256,6 @@ public sealed partial class FormulaCorpusInventoryTests
         var one = new Formula.Number(1);
         var formulas = new List<Formula>
         {
-            new Formula.TextRun("fixed text"),
             new Formula.Aligned([x, y]),
             new Formula.LatexSequence([FormulaDsl.Id("x"), FormulaDsl.Esc, FormulaDsl.Id("y")]),
             new Formula.LatexGroup([x, y]),

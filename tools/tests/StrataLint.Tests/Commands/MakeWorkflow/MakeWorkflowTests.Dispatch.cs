@@ -153,6 +153,12 @@ public sealed partial class MakeWorkflowTests
             "$(HERE)/scripts/update-renderer-contract.sh",
             Recipe(makefile, "update-renderer-contract"),
             StringComparison.Ordinal);
+
+        // The recipe assertion above only checks the Makefile text. A recipe naming a script
+        // that does not exist is a dangling reference, so the entrypoint itself is checked here.
+        Assert.True(
+            File.Exists(Path.Combine(root, RendererContractUpdateScriptPath)),
+            $"{RendererContractUpdateScriptPath} is named by the update-renderer-contract recipe but is absent");
         Assert.Contains("$(HERE)/scripts/perf-report.sh", Recipe(makefile, "perf-report"), StringComparison.Ordinal);
         Assert.Contains("$(HERE)/../Golden/perf-budgets.toml", Recipe(makefile, "perf-report"), StringComparison.Ordinal);
         Assert.Contains("$(HERE)/scripts/clean-lanes.sh", Recipe(makefile, "clean-lanes"), StringComparison.Ordinal);
