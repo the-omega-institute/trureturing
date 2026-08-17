@@ -31,7 +31,7 @@ internal static class MsBuildCompileOracle
             {
                 var output = BoundedProcessRunner.Run(
                     dotnet,
-                    ["msbuild", projectPath, "-getItem:Compile", "-nologo", "-nodeReuse:false"],
+                    QueryArguments(repositoryRoot, projectPath),
                     repositoryRoot,
                     timeout ?? DefaultTimeout,
                     MaximumOutputBytes);
@@ -45,8 +45,7 @@ internal static class MsBuildCompileOracle
 
                 foreach (var sourcePath in ParseCompilePaths(
                              output.StandardOutput,
-                             repositoryRoot,
-                             projectPath))
+                             repositoryRoot))
                 {
                     if (owners.TryGetValue(sourcePath, out var owner) && owner != projectPath)
                     {
@@ -63,6 +62,7 @@ internal static class MsBuildCompileOracle
                 or JsonException
                 or DecoderFallbackException
                 or IOException
+                or UnauthorizedAccessException
                 or TimeoutException
                 or Win32Exception)
             {
@@ -100,8 +100,7 @@ internal static class MsBuildCompileOracle
 
     private static IEnumerable<string> ParseCompilePaths(
         byte[] json,
-        string repositoryRoot,
-        string projectPath)
+        string repositoryRoot)
     {
         using var document = JsonDocument.Parse(StrictUtf8.GetString(json));
         if (!document.RootElement.TryGetProperty("Items", out var items)
@@ -111,22 +110,18 @@ internal static class MsBuildCompileOracle
             throw new JsonException("MSBuild output has no Items.Compile array");
         }
 
-        var root = Path.GetFullPath(repositoryRoot);
+        var root = CanonicalizePath(repositoryRoot);
         foreach (var item in compile.EnumerateArray())
         {
             if (!item.TryGetProperty("FullPath", out var fullPathValue)
                 || fullPathValue.GetString() is not { Length: > 0 } fullPath
                 || !Path.IsPathFullyQualified(fullPath)
-                || !item.TryGetProperty("Identity", out var identityValue)
-                || identityValue.GetString() is not { Length: > 0 } identity)
+                || ContainsParentTraversal(fullPath))
             {
-                throw new JsonException("MSBuild Compile item has no Identity and absolute FullPath");
+                throw new JsonException("MSBuild Compile item has no traversal-free absolute FullPath");
             }
 
-            var evaluatedPath = Path.IsPathFullyQualified(identity)
-                ? identity
-                : Path.Combine(root, ProjectDirectory(projectPath), identity);
-            var relative = Path.GetRelativePath(root, Path.GetFullPath(evaluatedPath));
+            var relative = Path.GetRelativePath(root, CanonicalizePath(fullPath));
             if (relative != ".." && !relative.StartsWith(".." + Path.DirectorySeparatorChar, StringComparison.Ordinal))
             {
                 yield return relative.Replace(Path.DirectorySeparatorChar, '/');
@@ -134,8 +129,76 @@ internal static class MsBuildCompileOracle
         }
     }
 
-    private static string ProjectDirectory(string projectPath) =>
-        projectPath.LastIndexOf('/') is var slash && slash >= 0 ? projectPath[..slash] : ".";
+    private static IReadOnlyList<string> QueryArguments(string repositoryRoot, string projectPath)
+    {
+        var props = FindDirectoryBuildFile(repositoryRoot, projectPath, "Directory.Build.props");
+        var targets = FindDirectoryBuildFile(repositoryRoot, projectPath, "Directory.Build.targets");
+        var arguments = new List<string>
+        {
+            "msbuild",
+            projectPath,
+            "-getItem:Compile",
+            "-nologo",
+            "-noAutoResponse",
+            "-nodeReuse:false",
+            $"-property:ImportDirectoryBuildProps={(props is null ? "false" : "true")}",
+            $"-property:ImportDirectoryBuildTargets={(targets is null ? "false" : "true")}",
+        };
+        if (props is not null) arguments.Add($"-property:DirectoryBuildPropsPath={props}");
+        if (targets is not null) arguments.Add($"-property:DirectoryBuildTargetsPath={targets}");
+        return arguments;
+    }
+
+    private static string? FindDirectoryBuildFile(
+        string repositoryRoot,
+        string projectPath,
+        string fileName)
+    {
+        var root = Path.TrimEndingDirectorySeparator(Path.GetFullPath(repositoryRoot));
+        var current = Directory.GetParent(Path.GetFullPath(projectPath, root));
+        while (current is not null)
+        {
+            var relative = Path.GetRelativePath(root, current.FullName);
+            if (relative == ".." || relative.StartsWith(".." + Path.DirectorySeparatorChar, StringComparison.Ordinal))
+            {
+                break;
+            }
+
+            var candidate = Path.Combine(current.FullName, fileName);
+            if (File.Exists(candidate)) return candidate;
+            if (relative == ".") break;
+            current = current.Parent;
+        }
+
+        return null;
+    }
+
+    private static bool ContainsParentTraversal(string path) => path
+        .Split(['/', '\\'], StringSplitOptions.RemoveEmptyEntries)
+        .Contains("..", StringComparer.Ordinal);
+
+    private static string CanonicalizePath(string path)
+    {
+        var fullPath = Path.GetFullPath(path);
+        var root = Path.GetPathRoot(fullPath)!;
+        var current = root;
+        foreach (var segment in fullPath[root.Length..]
+                     .Split(Path.DirectorySeparatorChar, StringSplitOptions.RemoveEmptyEntries))
+        {
+            var candidate = Path.Combine(current, segment);
+            FileSystemInfo info = Directory.Exists(candidate)
+                ? new DirectoryInfo(candidate)
+                : new FileInfo(candidate);
+            if (info.ResolveLinkTarget(returnFinalTarget: true) is { } target)
+            {
+                candidate = target.FullName;
+            }
+
+            current = candidate;
+        }
+
+        return Path.TrimEndingDirectorySeparator(current);
+    }
 
     private static string ResolveDotnetExecutable()
     {

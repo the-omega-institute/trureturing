@@ -134,7 +134,7 @@ internal static class ScribeTestMapDeriver
             using var checkout = MsBuildCompileOracle.Materialize(snapshot);
             return DeriveTracked(tracked, MsBuildCompileOracle.Query(checkout.Root, projects));
         }
-        catch (IOException exception)
+        catch (Exception exception) when (exception is IOException or UnauthorizedAccessException)
         {
             return DeriveTracked(tracked, new MsBuildCompileMap(
                 new Dictionary<string, string>(StringComparer.Ordinal),
