@@ -1,4 +1,5 @@
 using System.Text;
+using System.Text.Json;
 using StrataLint.Cli;
 using StrataLint.Engine;
 
@@ -60,6 +61,109 @@ public sealed class CleanLanesCommandTests
         Assert.Contains("\"kind\":\"orphan_branch\"", result.Output, StringComparison.Ordinal);
         Assert.Contains("\"kind\":\"temp_judge\"", result.Output, StringComparison.Ordinal);
         Assert.Equal(3, Count(result.Output, "\"action\":\"would_remove\""));
+    }
+
+    [Fact]
+    public void UnreadableRegisteredLaneIsSkippedWithoutHidingHealthyLanes()
+    {
+        using var fixture = new CleanLanesFixture();
+        var unreadable = fixture.AddMergedLane("harness/unreadable");
+        var healthy = fixture.AddMergedLane("harness/healthy");
+        File.Delete(Path.Combine(unreadable, ".git"));
+
+        Assert.True(Directory.Exists(unreadable));
+        Assert.False(File.Exists(Path.Combine(unreadable, ".git")));
+
+        var result = fixture.Run();
+
+        Assert.True(result.Success, result.Error);
+        var items = ReadItems(result.Output);
+        Assert.Contains(items, item =>
+            ItemMatches(item, unreadable, "skipped", "unreadable"));
+        Assert.Contains(items, item =>
+            ItemMatches(item, healthy, "would_remove", "merged_clean"));
+    }
+
+    [Fact]
+    public void AncestryInspectionFailureSkipsOnlyAffectedLane()
+    {
+        using var fixture = new CleanLanesFixture();
+        var unreadable = fixture.AddMergedLane("harness/ancestry-unreadable");
+        var unreadableHead = fixture.Head(unreadable);
+        fixture.AdvanceDev();
+        var healthy = fixture.AddMergedLane("harness/ancestry-healthy");
+        var runner = new SelectiveFailureRunner(
+            arguments => arguments.Count > 2
+                && arguments[0] == "merge-base"
+                && arguments[2] == unreadableHead,
+            "synthetic ancestry inspection failure");
+
+        var result = fixture.RunWith(runner);
+
+        Assert.True(result.Success, result.Error);
+        var items = ReadItems(result.Output);
+        Assert.Contains(items, item =>
+            ItemMatches(item, unreadable, "skipped", "unreadable"));
+        Assert.Contains(items, item =>
+            ItemMatches(item, healthy, "would_remove", "merged_clean"));
+    }
+
+    [Fact]
+    public void BaseResolutionFailureRemainsFailClosed()
+    {
+        using var fixture = new CleanLanesFixture();
+        var runner = new SelectiveFailureRunner(
+            arguments => arguments.Count > 0
+                && arguments[0] == "rev-parse"
+                && arguments[^1] == "dev^{commit}",
+            "synthetic base resolution failure");
+
+        var result = fixture.RunWith(runner);
+
+        Assert.False(result.Success);
+        Assert.Empty(result.Output);
+        Assert.Equal("CLEAN_LANES_FAILED synthetic base resolution failure\n", result.Error);
+    }
+
+    [Fact]
+    public void WorktreeEnumerationFailureRemainsFailClosed()
+    {
+        using var fixture = new CleanLanesFixture();
+        var runner = new SelectiveFailureRunner(
+            arguments => arguments.Count > 1
+                && arguments[0] == "worktree"
+                && arguments[1] == "list",
+            "synthetic worktree enumeration failure");
+
+        var result = fixture.RunWith(runner);
+
+        Assert.False(result.Success);
+        Assert.Empty(result.Output);
+        Assert.Equal("CLEAN_LANES_FAILED synthetic worktree enumeration failure\n", result.Error);
+    }
+
+    [Fact]
+    public void BlockedWorktreesRetainEstablishedReasons()
+    {
+        using var fixture = new CleanLanesFixture();
+        fixture.SwitchToManagedBranch("harness/current");
+        var missing = fixture.AddMergedLane("harness/missing");
+        var dirty = fixture.AddMergedLane("harness/dirty", dirty: true);
+        var unmerged = fixture.AddUnmergedLane("harness/unmerged");
+        Directory.Delete(missing, recursive: true);
+
+        var result = fixture.Run();
+
+        Assert.True(result.Success, result.Error);
+        var items = ReadItems(result.Output);
+        Assert.Contains(items, item =>
+            ItemMatches(item, fixture.RepositoryRoot, "skipped", "current"));
+        Assert.Contains(items, item =>
+            ItemMatches(item, missing, "skipped", "missing"));
+        Assert.Contains(items, item =>
+            ItemMatches(item, dirty, "skipped", "dirty"));
+        Assert.Contains(items, item =>
+            ItemMatches(item, unmerged, "skipped", "unmerged"));
     }
 
     [Fact]
@@ -129,8 +233,52 @@ public sealed class CleanLanesCommandTests
         Assert.Contains("\"reason\":\"not_judge_tree\"", result.Output, StringComparison.Ordinal);
     }
 
+    [Fact]
+    public void ForceRemovalFailureRemainsFailClosed()
+    {
+        using var fixture = new CleanLanesFixture();
+        var lane = fixture.AddMergedLane("harness/remove-failure");
+        var runner = new SelectiveFailureRunner(
+            arguments => arguments.Count > 1
+                && arguments[0] == "worktree"
+                && arguments[1] == "remove",
+            "synthetic worktree removal failure");
+
+        var result = fixture.RunWith(runner, "--force");
+
+        Assert.False(result.Success);
+        Assert.Empty(result.Output);
+        Assert.Equal("CLEAN_LANES_FAILED synthetic worktree removal failure\n", result.Error);
+        Assert.True(Directory.Exists(lane));
+        Assert.True(fixture.BranchExists("harness/remove-failure"));
+    }
+
     private static int Count(string value, string needle) =>
         value.Split(needle, StringSplitOptions.None).Length - 1;
+
+    private static IReadOnlyList<JsonElement> ReadItems(string output)
+    {
+        var items = new List<JsonElement>();
+        foreach (var line in output.Split('\n', StringSplitOptions.RemoveEmptyEntries))
+        {
+            using var document = JsonDocument.Parse(line);
+            if (document.RootElement.GetProperty("event").GetString() == "clean_lanes_item")
+            {
+                items.Add(document.RootElement.Clone());
+            }
+        }
+
+        return items;
+    }
+
+    private static bool ItemMatches(
+        JsonElement item,
+        string path,
+        string action,
+        string reason) =>
+        item.GetProperty("path").GetString() == path
+        && item.GetProperty("action").GetString() == action
+        && item.GetProperty("reason").GetString() == reason;
 
     private static string Escape(string value) => value.Replace("\\", "\\\\", StringComparison.Ordinal);
 
@@ -153,7 +301,8 @@ public sealed class CleanLanesCommandTests
             Git(repository.Path, "commit", "-m", "fixture baseline");
         }
 
-        internal string RepositoryRoot => repository.Path;
+        internal string RepositoryRoot =>
+            Git(repository.Path, "rev-parse", "--show-toplevel").Trim();
 
         internal string AddMergedLane(string branch, bool dirty = false)
         {
@@ -167,7 +316,7 @@ public sealed class CleanLanesCommandTests
                     new UTF8Encoding(false));
             }
 
-            return path;
+            return Git(path, "rev-parse", "--show-toplevel").Trim();
         }
 
         internal string AddUnmergedLane(string branch)
@@ -181,6 +330,21 @@ public sealed class CleanLanesCommandTests
             Git(path, "commit", "-m", "unmerged branch commit");
             return path;
         }
+
+        internal void AdvanceDev()
+        {
+            File.AppendAllText(
+                Path.Combine(repository.Path, "README.md"),
+                "advance\n",
+                new UTF8Encoding(false));
+            Git(repository.Path, "add", "README.md");
+            Git(repository.Path, "commit", "-m", "advance dev");
+        }
+
+        internal string Head(string path) => Git(path, "rev-parse", "HEAD").Trim();
+
+        internal void SwitchToManagedBranch(string branch) =>
+            Git(repository.Path, "switch", "-c", branch);
 
         internal void AddOrphan(string branch, bool merged)
         {
@@ -242,13 +406,18 @@ public sealed class CleanLanesCommandTests
         }
 
         internal CommandResult Run(params string[] arguments)
+            => RunWith(new ProductionWorktreeProcessRunner(), arguments);
+
+        internal CommandResult RunWith(
+            IWorktreeProcessRunner runner,
+            params string[] arguments)
         {
             var allArguments = new List<string> { "--base", "dev" };
             allArguments.AddRange(arguments);
             return CleanLanesCommand.Run(
                 repository.Path,
                 allArguments,
-                new ProductionWorktreeProcessRunner(),
+                runner,
                 [temp.Path]);
         }
 
@@ -301,5 +470,21 @@ public sealed class CleanLanesCommandTests
 
         private static string Git(string root, params string[] arguments) =>
             ReviewRegressionTests.RunGit(root, arguments);
+    }
+
+    private sealed class SelectiveFailureRunner(
+        Func<IReadOnlyList<string>, bool> shouldFail,
+        string error) : IWorktreeProcessRunner
+    {
+        private readonly ProductionWorktreeProcessRunner inner = new();
+
+        public ProcessOutput Run(
+            string fileName,
+            IReadOnlyList<string> arguments,
+            string workingDirectory,
+            TimeSpan timeout) =>
+            fileName == "git" && shouldFail(arguments)
+                ? new ProcessOutput(128, [], Encoding.UTF8.GetBytes(error + "\n"))
+                : inner.Run(fileName, arguments, workingDirectory, timeout);
     }
 }
