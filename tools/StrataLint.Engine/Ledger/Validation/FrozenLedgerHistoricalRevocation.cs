@@ -15,11 +15,10 @@ public static partial class FrozenLedger
             payload,
             "Revoke payload",
             "affected_case_ids", "affected_frozen_node_ids", "closure_hash", "evidence",
-            "graph_root", "root_case_ids", "root_frozen_node_ids");
+            "graph_root", "root_case_ids");
         var affectedCases = RequiredStringArray(payload, "affected_case_ids");
         var affectedIds = ParseFrozenNodeIds(payload, "affected_frozen_node_ids");
         var rootCases = RequiredStringArray(payload, "root_case_ids");
-        var rootIds = ParseFrozenNodeIds(payload, "root_frozen_node_ids");
         var evidenceElement = payload.GetProperty("evidence");
         if (evidenceElement.ValueKind != JsonValueKind.Array)
         {
@@ -34,11 +33,11 @@ public static partial class FrozenLedger
         }
 
         var evidenceRoots = evidence.Select(EvidenceRoot).ToImmutableArray();
-        if (evidenceRoots.Distinct().Count() != evidenceRoots.Length
-            || !evidenceRoots.OrderBy(static id => id.Value, StringComparer.Ordinal).SequenceEqual(rootIds))
+        if (evidenceRoots.Distinct().Count() != evidenceRoots.Length)
         {
             throw new FormatException("Historical Revoke must carry exactly one evidence item per root.");
         }
+        var rootIds = evidenceRoots;
 
         var activeById = active.Values.ToDictionary(
             static entry => entry.Material.FrozenNodeId,
@@ -72,8 +71,7 @@ public static partial class FrozenLedger
             closureHash,
             evidence,
             graphRoot,
-            rootCases,
-            rootIds);
+            rootCases);
     }
 
     private static void ValidateHistoricalEvidence(

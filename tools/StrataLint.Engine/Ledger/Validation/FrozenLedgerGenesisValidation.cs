@@ -73,15 +73,16 @@ public static partial class FrozenLedger
                 else if (string.Equals(eventType, "Freeze", StringComparison.Ordinal))
                 {
                     var freeze = ParseFreeze(payload, catalog, trustedReferences);
+                    var freezePath = RepoPath.CreateKnown(freeze.Input.DescriptorSelector);
                     if (!freezes.TryAdd(
-                            freeze.NodePath,
-                            (catalog.ByPath[freeze.NodePath], freeze, eventHash))
+                            freezePath,
+                            (catalog.ByPath[freezePath], freeze, eventHash))
                         || !caseIds.Add(freeze.CaseId))
                     {
                         throw new FormatException("Frozen module path or case ID was reused.");
                     }
 
-                    freezeOrder.Add((freeze.CaseClass, freeze.CaseId));
+                    freezeOrder.Add(("active-frozen", freeze.CaseId));
                     events.Add(new FrozenLedgerEvent.Freeze(sequence, eventHash, previousHash, freeze));
                 }
                 else if (string.Equals(eventType, "Genesis", StringComparison.Ordinal))

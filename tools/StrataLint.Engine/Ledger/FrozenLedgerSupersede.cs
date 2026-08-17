@@ -32,7 +32,8 @@ public static partial class FrozenLedger
         JsonElement payload,
         IReadOnlyDictionary<string, FrozenActiveEntry> active,
         TrustedFrozenGitReferences trustedReferences,
-        FrozenMaterialCatalog? candidateCatalog)
+        FrozenMaterialCatalog? candidateCatalog,
+        bool repositoryImportClosureUnchanged)
     {
         var result = ParseSupersede(payload);
         if (!active.TryGetValue(result.CaseId, out var entry)
@@ -42,7 +43,7 @@ public static partial class FrozenLedger
                 "Supersede targets no active case or does not extend its attestation chain.");
         }
 
-        ValidateSupersedeStrength(result, entry);
+        ValidateSupersedeStrength(result, entry, repositoryImportClosureUnchanged);
 
         var reference = new FrozenEnvironmentReference(result.Input, result.Environment);
         if (!trustedReferences.Covers(result.Input) || !trustedReferences.Covers(reference))
@@ -61,7 +62,8 @@ public static partial class FrozenLedger
 
     internal static void ValidateSupersedeStrength(
         FrozenSupersedePayload payload,
-        FrozenActiveEntry protectedBaseEntry)
+        FrozenActiveEntry protectedBaseEntry,
+        bool repositoryImportClosureUnchanged)
     {
         if (!protectedBaseEntry.AxiomClosureKnown)
         {
@@ -91,14 +93,19 @@ public static partial class FrozenLedger
                     $"Supersede target {protectedBaseEntry.Material.RepoPath.Value} statement identity changed but environment pins did not change.");
             }
 
-            // Identity branch B relies on elaboration being deterministic in (source bytes,
-            // environment): if the elaborated Expr changed while the source blob did not, the
-            // changed pins account for the drift. Reattest already relies on the same premise.
+            // Branch B attributes drift to the environment only when both the descriptor and its
+            // transitive repository import closure are unchanged.
             if (payload.Input.DescriptorBlobOid
                 != protectedBaseEntry.Payload.Input.DescriptorBlobOid)
             {
                 throw new FormatException(
                     $"Supersede target {protectedBaseEntry.Material.RepoPath.Value} statement identity and source blob both changed from the protected-base node.");
+            }
+
+            if (!repositoryImportClosureUnchanged)
+            {
+                throw new FormatException(
+                    $"Supersede target {protectedBaseEntry.Material.RepoPath.Value} statement identity changed while its repository import closure changed from the protected base.");
             }
         }
 
@@ -200,9 +207,7 @@ public static partial class FrozenLedger
                 DeclarationStatementIds = payload.DeclarationStatementIds,
                 FrozenNodeId = payload.FrozenNodeId,
                 Input = payload.Input,
-                InputFingerprint = payload.WitnessId.Value,
                 PrerequisiteFrozenNodeIds = payload.PrerequisiteFrozenNodeIds,
-                SemanticReceipt = payload.FrozenNodeId.Value,
                 StatementId = payload.StatementId,
                 WitnessId = payload.WitnessId,
             },

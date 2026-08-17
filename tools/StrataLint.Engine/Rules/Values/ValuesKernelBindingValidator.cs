@@ -33,9 +33,10 @@ internal static partial class ValuesKernelBindingValidator
 
         var validateAll = changes is null || changes.Paths.Any(static path =>
             path.Value == RelativePath
-            || FrozenLedgerDeltaPredicate.IsEnvironmentInput(path.Value));
+            || FrozenLedgerDeltaPredicate.IsEnvironmentInput(path.Value)
+            || FrozenLedgerDeltaPredicate.IsDeltaDefinitionInput(path.Value));
         foreach (var binding in bindings.Where(binding =>
-                     validateAll || BindingInputChanged(binding, changes!)))
+                     validateAll || BindingInputChanged(binding, report, changes!)))
         {
             Validate(binding, report, findings);
         }
@@ -43,12 +44,16 @@ internal static partial class ValuesKernelBindingValidator
         return findings.ToImmutable();
     }
 
-    internal static bool ReferencesChangedLeanInput(string text, RawChangeSet changes)
+    internal static bool ReferencesChangedLeanInput(
+        string text,
+        LeanAxiomReport report,
+        RawChangeSet changes)
     {
+        ArgumentNullException.ThrowIfNull(report);
         ArgumentNullException.ThrowIfNull(changes);
         try
         {
-            return Parse(text).Any(binding => BindingInputChanged(binding, changes));
+            return Parse(text).Any(binding => BindingInputChanged(binding, report, changes));
         }
         catch (FormatException)
         {
@@ -58,9 +63,12 @@ internal static partial class ValuesKernelBindingValidator
         }
     }
 
-    private static bool BindingInputChanged(ValueBinding binding, RawChangeSet changes) =>
+    private static bool BindingInputChanged(
+        ValueBinding binding,
+        LeanAxiomReport report,
+        RawChangeSet changes) =>
         Gid.TryParse(binding.LeanGid, out var gid)
-        && changes.Paths.Any(path => path == gid.Path);
+        && LeanImportClosure.RepositoryPaths(report, gid.Path).Overlaps(changes.Paths);
 
     private static void Validate(
         ValueBinding binding,

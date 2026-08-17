@@ -1,6 +1,5 @@
 using System.Collections.Immutable;
 using System.Reflection;
-using System.Security.Cryptography;
 using System.Text;
 using StrataLint.Cli;
 using StrataLint.Engine;
@@ -88,7 +87,10 @@ public sealed partial class RevocationTests
         var snapshot = Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(
             RawRepositorySnapshot.Create(new[]
             {
-                new RawRepositoryEntry("Evidence/D5/revocation-receipt.json", receiptBytes),
+                new RawRepositoryEntry(
+                    "Evidence/D5/revocation-receipt.json",
+                    receiptBytes,
+                    receiptOid),
             }))).Snapshot;
         var store = Assert.IsType<RevocationReceiptStoreOutcome.Accepted>(
             TrustedRevocationReceiptStore.Materialize(
@@ -114,7 +116,7 @@ public sealed partial class RevocationTests
     }
 
     [Fact]
-    public void RequestedReceiptOidsIndexEachProtectedBlobOnce()
+    public void RequestedReceiptOidsUseProtectedGitBlobIdentitiesWithoutRehashing()
     {
         var ledger = Genesis(BuildCatalog(Module("A"), Module("B")));
         var a = Node(ledger, "A");
@@ -124,8 +126,14 @@ public sealed partial class RevocationTests
         var snapshot = Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(
             RawRepositorySnapshot.Create(
             [
-                new RawRepositoryEntry("Evidence/D5/revocation-a.json", first),
-                new RawRepositoryEntry("Evidence/D5/revocation-b.json", second),
+                new RawRepositoryEntry(
+                    "Evidence/D5/revocation-a.json",
+                    first,
+                    GitBlobOid(Encoding.UTF8.GetString(first.AsSpan()))),
+                new RawRepositoryEntry(
+                    "Evidence/D5/revocation-b.json",
+                    second,
+                    GitBlobOid(Encoding.UTF8.GetString(second.AsSpan()))),
             ]))).Snapshot;
         var requested = new[]
         {
@@ -145,31 +153,78 @@ public sealed partial class RevocationTests
             });
 
         Assert.IsType<RevocationReceiptStoreOutcome.Accepted>(outcome);
-        Assert.Equal(2, computations);
+        Assert.Equal(0, computations);
     }
 
     [Fact]
-    public void NoncanonicalTrustedReceiptBytesAreRejected()
+    public void CandidateReceiptWriteGateRejectsAnIncorrectLedgerBinding()
+    {
+        var catalog = BuildCatalog(Module("A"));
+        var ledger = Genesis(catalog);
+        var fixture = ReceiptAdmissionFixture(ledger);
+        var receiptBaseline = ReceiptBaseline(fixture);
+        var node = Assert.Single(receiptBaseline.ActiveFrozenNodes);
+        var invalid = new RevocationEvidence.KernelWitnessFailure(
+            node.FrozenNodeId,
+            WitnessId.Create(Sha256("wrong-witness")),
+            string.Empty,
+            string.Empty);
+        var receipt = RevocationReceiptWriter.Write(
+            receiptBaseline.HeadHash,
+            receiptBaseline.GraphRoot,
+            invalid);
+        const string path = "Evidence/D5/S0/Carrier/Revocation.run.json";
+        fixture.Files[path] = Encoding.UTF8.GetString(receipt.AsSpan());
+
+        var evaluation = RuleCatalog.Default.EvaluateSingle(
+            RuleId.CreateKnown(19),
+            fixture.Build(RawChangeSet.Create([path])));
+
+        Assert.Contains(evaluation.Diagnostics, diagnostic =>
+            diagnostic.Path == path
+            && diagnostic.Message.Contains("active witness", StringComparison.OrdinalIgnoreCase));
+    }
+
+    [Fact]
+    public void CandidateReceiptWriteGateAcceptsACorrectLedgerBinding()
+    {
+        var catalog = BuildCatalog(Module("A"));
+        var ledger = Genesis(catalog);
+        var fixture = ReceiptAdmissionFixture(ledger);
+        var receiptBaseline = ReceiptBaseline(fixture);
+        var receipt = RevocationReceiptWriter.Write(
+            receiptBaseline,
+            KernelFailure(Assert.Single(receiptBaseline.ActiveFrozenNodes)));
+        const string path = "Evidence/D5/S0/Carrier/Revocation.run.json";
+        fixture.Files[path] = Encoding.UTF8.GetString(receipt.AsSpan());
+
+        var evaluation = RuleCatalog.Default.EvaluateSingle(
+            RuleId.CreateKnown(19),
+            fixture.Build(RawChangeSet.Create([path])));
+
+        Assert.DoesNotContain(evaluation.Diagnostics, diagnostic => diagnostic.Path == path);
+    }
+
+    [Fact]
+    public void CandidateReceiptWriteGateRejectsNoncanonicalBytes()
     {
         var ledger = Genesis(BuildCatalog(Module("A")));
-        var node = Assert.Single(ledger.ActiveFrozenNodes);
-        var canonical = RevocationReceiptWriter.Write(ledger, KernelFailure(node));
+        var fixture = ReceiptAdmissionFixture(ledger);
+        var receiptBaseline = ReceiptBaseline(fixture);
+        var node = Assert.Single(receiptBaseline.ActiveFrozenNodes);
+        var canonical = RevocationReceiptWriter.Write(receiptBaseline, KernelFailure(node));
         var noncanonicalText = Encoding.UTF8.GetString(canonical.AsSpan())
             .Replace(": ", ":", StringComparison.Ordinal);
-        var noncanonical = ImmutableArray.CreateRange(Encoding.UTF8.GetBytes(noncanonicalText));
-        var oid = FrozenContentAddress.ComputeGitBlobOid(
-            noncanonical.AsSpan(),
-            HashAlgorithmName.SHA1);
-        var snapshot = Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(
-            RawRepositorySnapshot.Create(
-            [
-                new RawRepositoryEntry("Evidence/D5/revocation.json", noncanonical),
-            ]))).Snapshot;
+        const string path = "Evidence/D5/S0/Carrier/Revocation.run.json";
+        fixture.Files[path] = noncanonicalText;
 
-        var rejected = Assert.IsType<RevocationReceiptStoreOutcome.Rejected>(
-            TrustedRevocationReceiptStore.Materialize(ledger, snapshot, [oid]));
+        var evaluation = RuleCatalog.Default.EvaluateSingle(
+            RuleId.CreateKnown(19),
+            fixture.Build(RawChangeSet.Create([path])));
 
-        Assert.Contains("noncanonical", rejected.Message, StringComparison.OrdinalIgnoreCase);
+        Assert.Contains(evaluation.Diagnostics, diagnostic =>
+            diagnostic.Path == path
+            && diagnostic.Message.Contains("noncanonical", StringComparison.OrdinalIgnoreCase));
     }
 
     [Fact]
@@ -354,6 +409,18 @@ public sealed partial class RevocationTests
             ValidateGenesis(Load(bytes), catalog)).Capability;
     }
 
+    private static RuleFixture ReceiptAdmissionFixture(FrozenLedgerConsistent ledger)
+    {
+        var fixture = new RuleFixture();
+        AddLedgerFiles(fixture.Files, ledger.RawBytes);
+        AddLedgerFiles(fixture.Baseline, ledger.RawBytes);
+        AddLedgerFiles(fixture.ForkPoint, ledger.RawBytes);
+        return fixture;
+    }
+
+    private static FrozenLedgerConsistent ReceiptBaseline(RuleFixture fixture) =>
+        FrozenLedgerBaseViewReader.Read(fixture.Build().Baseline).ToWriterBaseline();
+
     private static FrozenLedgerSyntax Load(IEnumerable<byte> bytes)
     {
         var array = bytes.ToArray();
@@ -374,7 +441,10 @@ public sealed partial class RevocationTests
             var oid = GitBlobOid(text);
             var sha = Sha256(text);
             evidence.Add(WithReceipt(item, oid, sha));
-            entries.Add(new RawRepositoryEntry($"Evidence/D5/revocation-{index}.json", bytes));
+            entries.Add(new RawRepositoryEntry(
+                $"Evidence/D5/revocation-{index}.json",
+                bytes,
+                oid));
             oids.Add(oid);
         }
 

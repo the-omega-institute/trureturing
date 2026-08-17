@@ -85,11 +85,11 @@ public static partial class FrozenLedger
         RequireObjectFields(
             value,
             "ContentAddressMismatch evidence",
-            "actual_sha256", "evidence_type", "expected_sha256", "receipt_blob_oid",
-            "receipt_sha256", "root_frozen_node_id");
+            "actual_sha256", "evidence_type", "receipt_blob_oid", "receipt_sha256",
+            "root_frozen_node_id");
         return new RevocationEvidence.ContentAddressMismatch(
             root,
-            RequiredString(value, "expected_sha256"),
+            root.Value,
             RequiredString(value, "actual_sha256"),
             RequiredString(value, "receipt_blob_oid"),
             RequiredString(value, "receipt_sha256"));

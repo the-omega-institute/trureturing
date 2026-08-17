@@ -86,6 +86,40 @@ public sealed class ValuesBindingRuleTests
     }
 
     [Fact]
+    public void ChangedLeanReportDefinitionWakesAndRevalidatesItsStoredSl018Binding()
+    {
+        var fixture = Fixture();
+        fixture.Reports[RuleFixture.ValuesBindingPath] = new LeanFileReport(
+            [],
+            [Declaration(kind: "theorem")]);
+        var completed = Assert.IsType<RuleExecutionOutcome.Completed>(
+            RuleCatalog.Default.Execute(fixture.Build(
+                RawChangeSet.Create(["Directory.Build.props"]))));
+
+        Assert.Contains(
+            completed.Capability.Diagnostics,
+            static diagnostic => diagnostic.RuleId == RuleId.CreateKnown(18)
+                && diagnostic.Message.Contains("expected kind=def, found theorem", StringComparison.Ordinal));
+    }
+
+    [Fact]
+    public void ChangedTransitiveLeanImportWakesAndRevalidatesItsStoredSl018Binding()
+    {
+        var fixture = Fixture();
+        fixture.Reports[RuleFixture.ValuesBindingPath] = new LeanFileReport(
+            ["D5.S0.Carrier.Ring"],
+            [Declaration(kind: "theorem")]);
+        var completed = Assert.IsType<RuleExecutionOutcome.Completed>(
+            RuleCatalog.Default.Execute(fixture.Build(
+                RawChangeSet.Create([RuleFixture.RingPath]))));
+
+        Assert.Contains(
+            completed.Capability.Diagnostics,
+            static diagnostic => diagnostic.RuleId == RuleId.CreateKnown(18)
+                && diagnostic.Message.Contains("expected kind=def, found theorem", StringComparison.Ordinal));
+    }
+
+    [Fact]
     public void MissingOrAmbiguousGidIsRejectedBySl018()
     {
         var missing = Fixture();

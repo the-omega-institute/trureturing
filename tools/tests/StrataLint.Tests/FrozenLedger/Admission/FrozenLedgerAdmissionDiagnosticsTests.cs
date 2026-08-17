@@ -143,6 +143,7 @@ public sealed class FrozenLedgerAdmissionDiagnosticsTests
             preparation,
             scope,
             expectedCatalog,
+            changes,
             preparation.TrustedDeltaReferences);
     }
 
@@ -306,10 +307,7 @@ public sealed class FrozenLedgerAdmissionDiagnosticsTests
 
     private static FrozenFreezePayload PayloadFrom(FrozenNodeMaterial material) => new(
         "active-frozen",
-        "active-frozen/diagnostic",
         material.DeclarationStatementIds,
-        "admission",
-        new FrozenExpectedVerdict(["admit"], "none", []),
         material.FrozenNodeId,
         new FrozenLedgerInput(
             FrozenLedgerTestData.GitOid('a'),
@@ -318,12 +316,8 @@ public sealed class FrozenLedgerAdmissionDiagnosticsTests
             material.RepoPath.Value,
             "repository-snapshot-v1",
             []),
-        material.WitnessId.Value,
-        material.RepoPath,
         material.PrerequisiteFrozenNodeIds,
-        material.FrozenNodeId.Value,
         material.StatementId,
-        nameof(TruthState.Closed),
         material.WitnessId)
     {
         AxiomClosure = material.AxiomClosure,

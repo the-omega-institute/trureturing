@@ -28,7 +28,7 @@ internal static class DagLedgerAppendWriter
             var candidateBytes = FrozenLedgerGenerator.AppendMissingFreezes(
                 context.Baseline,
                 context.Catalog);
-            if (candidateBytes.AsSpan().SequenceEqual(context.BaselineBytes))
+            if (candidateBytes.IsEmpty)
             {
                 return new CommandResult(
                     true,
@@ -58,12 +58,14 @@ internal static class DagLedgerAppendWriter
             };
             RequireUnchangedBaseline(context.LedgerPath, context.BaselineFiles, "ledger-append");
 
-            WriteNewEvents(
-                context.LedgerPath,
+            var pending = BuildNewEventFiles(
                 candidateSyntax.Lines,
-                context.Baseline.Events.Length,
-                context.BaselineFiles,
-                context.BaselineSyntax);
+                knownDagHashes: context.BaseView.EventHashes);
+            var prospective = DagLedgerCommandPreparation.ValidateGeneratedEventFiles(
+                context.BaseView,
+                pending,
+                "generated frozen ledger suffix");
+            WriteEventFiles(context.LedgerPath, pending, context.BaselineFiles);
             var appended = candidate.Events.Skip(context.Baseline.Events.Length).ToImmutableArray();
             var reattests = appended
                 .OfType<FrozenLedgerEvent.Reattest>()
@@ -72,10 +74,11 @@ internal static class DagLedgerAppendWriter
                 .OfType<FrozenLedgerEvent.Freeze>()
                 .ToImmutableArray();
             var output = $"LEDGER_APPEND appended_reattests={reattests.Length} appended_freezes={freezes.Length} "
-                + $"events={candidate.Events.Length} head={candidate.HeadHash}\n"
+                + $"events={candidate.Events.Length} "
+                + $"head={context.BaseView.EventSetRoot(prospective.Select(static item => item.EventHash))}\n"
                 + string.Concat(reattests.Select(item =>
                     $"REATTESTED {context.Baseline.ActiveEntries[item.Payload.CaseId].Material.RepoPath.Value}\n"))
-                + string.Concat(freezes.Select(static item => $"FROZEN {item.Payload.NodePath.Value}\n"));
+                + string.Concat(freezes.Select(static item => $"FROZEN {item.Payload.Input.DescriptorSelector}\n"));
             return new CommandResult(true, output, string.Empty);
         }
         // Preparation marks report and repository faults now. Without these two the wrapped
@@ -112,7 +115,8 @@ internal static class DagLedgerAppendWriter
     internal static ImmutableArray<RepositoryFile> BuildNewEventFiles(
         IEnumerable<FrozenLedgerLineSyntax> lines,
         int skip = 0,
-        FrozenLedgerSyntax? existingSyntax = null)
+        FrozenLedgerSyntax? existingSyntax = null,
+        IReadOnlySet<string>? knownDagHashes = null)
     {
         var files = ImmutableArray.CreateBuilder<RepositoryFile>();
         var linearToDagHash = new Dictionary<string, string>(StringComparer.Ordinal);
@@ -139,9 +143,18 @@ internal static class DagLedgerAppendWriter
 
             if (payload.TryGetProperty("previous_attestation_event_hash", out var previous))
             {
-                var rewritten = JsonNode.Parse(payload.GetRawText())!.AsObject();
-                rewritten["previous_attestation_event_hash"] = linearToDagHash[previous.GetString()!];
-                payload = JsonSerializer.SerializeToElement(rewritten);
+                var previousHash = previous.GetString()!;
+                if (linearToDagHash.TryGetValue(previousHash, out var dagPrevious))
+                {
+                    var rewritten = JsonNode.Parse(payload.GetRawText())!.AsObject();
+                    rewritten["previous_attestation_event_hash"] = dagPrevious;
+                    payload = JsonSerializer.SerializeToElement(rewritten);
+                }
+                else if (knownDagHashes is null || !knownDagHashes.Contains(previousHash))
+                {
+                    throw new InvalidOperationException(
+                        "generated attestation names an unknown predecessor");
+                }
             }
 
             var schemaVersion = sequence < skip && !payload.TryGetProperty("axiom_closure", out _)

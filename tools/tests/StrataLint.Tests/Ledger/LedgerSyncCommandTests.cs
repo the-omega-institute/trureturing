@@ -34,6 +34,10 @@ public sealed class LedgerSyncCommandTests
             FrozenLedgerTestData.ValidateHistory(syntax, fixture.CandidateCatalog)).Capability;
         Assert.IsType<FrozenLedgerEvent.Reattest>(accepted.Events[^2]);
         Assert.IsType<FrozenLedgerEvent.Freeze>(accepted.Events[^1]);
+        var persistedFiles = DagLedgerCommandPreparation.ReadLedgerDirectoryFiles(fixture.LedgerPath);
+        var persistedView = FrozenLedgerBaseViewReader.Read(RepositorySnapshot.Create(
+            persistedFiles.ToImmutableDictionary(static file => file.Path)));
+        Assert.Contains($"head={persistedView.EventSetRoot()}", console.Output, StringComparison.Ordinal);
     }
 
     [Fact]

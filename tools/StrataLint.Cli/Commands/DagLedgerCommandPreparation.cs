@@ -8,9 +8,7 @@ namespace StrataLint.Cli;
 
 internal sealed record DagLedgerCommandContext(
     string LedgerPath,
-    byte[] BaselineBytes,
     ImmutableArray<RepositoryFile> BaselineFiles,
-    FrozenLedgerSyntax BaselineSyntax,
     FrozenLedgerConsistent Baseline,
     FrozenLedgerBaseView BaseView,
     FrozenMaterialCatalog Catalog,
@@ -19,12 +17,11 @@ internal sealed record DagLedgerCommandContext(
 
 internal sealed record DagLedgerCandidateMaterial(
     string LedgerPath,
-    byte[] BaselineBytes,
-    FrozenLedgerSyntax BaselineSyntax,
     FrozenLedgerBaseView BaseView,
     ImmutableArray<RepositoryFile> BaselineFiles,
     FrozenMaterialCatalog Catalog,
     LeanAxiomReport Report,
+    RawChangeSet Changes,
     RepositorySnapshot Snapshot);
 
 internal sealed record TruthContext(
@@ -50,12 +47,10 @@ internal static class DagLedgerCommandPreparation
         ILeanReportSource leanReportSource)
     {
         var candidate = PrepareCandidate(repositoryRoot, repository, leanReportSource);
-        var baseline = candidate.BaseView.ToWriterBaseline(candidate.BaselineSyntax);
+        var baseline = candidate.BaseView.ToWriterBaseline();
         return new DagLedgerCommandContext(
             candidate.LedgerPath,
-            candidate.BaselineBytes,
             candidate.BaselineFiles,
-            candidate.BaselineSyntax,
             baseline,
             candidate.BaseView,
             candidate.Catalog,
@@ -74,8 +69,6 @@ internal static class DagLedgerCommandPreparation
         var baselineFiles = ReadLedgerDirectoryFiles(ledgerPath);
         var baseView = FrozenLedgerBaseViewReader.Read(RepositorySnapshot.Create(
             baselineFiles.ToImmutableDictionary(static file => file.Path)));
-        var baselineSyntax = LoadTrustedLedgerFiles(baseView, "existing frozen ledger");
-        var baselineBytes = baselineSyntax.RawBytes.ToArray();
         var truth = BuildTruth(repository, leanReportSource);
         var snapshot = truth.Snapshot;
         var report = truth.Report;
@@ -92,12 +85,11 @@ internal static class DagLedgerCommandPreparation
 
         return new DagLedgerCandidateMaterial(
             ledgerPath,
-            baselineBytes,
-            baselineSyntax,
             baseView,
             baselineFiles,
             catalog,
             report,
+            changes,
             snapshot);
     }
 
@@ -345,54 +337,6 @@ internal static class DagLedgerCommandPreparation
         return DagLedgerLoader.ToLinearSyntax(OrderForReplay(ordered));
     }
 
-    internal static FrozenLedgerSyntax LoadTrustedLedgerFiles(
-        FrozenLedgerBaseView baseView,
-        string label)
-    {
-        ArgumentNullException.ThrowIfNull(baseView);
-        var events = baseView.Events.Select(static item => new DagLedgerFileEvent(
-            item.SourcePath,
-            item.Identity,
-            item.EventHash,
-            item.EventType,
-            item.Payload,
-            item.SchemaVersion,
-            new FrozenLedgerLineSyntax(item.RawBytes, item.Root, item.EventHash),
-            Input: null)).ToImmutableArray();
-        if (!DagLedgerLoader.TryOrderClosedDag(
-                events,
-                ImmutableArray<string>.Empty,
-                out var ordered))
-        {
-            throw new InvalidOperationException(
-                label + " cannot be projected into the writer's linear event order");
-        }
-
-        return DagLedgerLoader.ToLinearSyntax(OrderForReplay(ordered));
-    }
-
-    internal static FrozenLedgerSyntax LoadTrustedLedgerWithSuffix(
-        FrozenLedgerBaseView baseView,
-        ImmutableArray<RepositoryFile> suffixFiles,
-        string label)
-    {
-        ArgumentNullException.ThrowIfNull(baseView);
-        var suffix = ValidateGeneratedEventFiles(baseView, suffixFiles, label);
-        var events = baseView.Events.Select(static item => new DagLedgerFileEvent(
-                item.SourcePath,
-                item.Identity,
-                item.EventHash,
-                item.EventType,
-                item.Payload,
-                item.SchemaVersion,
-                new FrozenLedgerLineSyntax(item.RawBytes, item.Root, item.EventHash),
-                Input: null))
-            .Concat(suffix)
-            .OrderBy(static item => item.Identity, StringComparer.Ordinal)
-            .ToImmutableArray();
-        return DagLedgerLoader.ToLinearSyntax(OrderForReplay(events));
-    }
-
     private static ImmutableArray<DagLedgerFileEvent> OrderForReplay(
         ImmutableArray<DagLedgerFileEvent> events)
     {
@@ -416,7 +360,7 @@ internal static class DagLedgerCommandPreparation
                         item.Payload,
                         "prerequisite_frozen_node_ids",
                         identities),
-                "Revoke" => DependenciesPresent(item.Payload, "root_frozen_node_ids", identities),
+                "Revoke" => RevokeDependenciesPresent(item.Payload, identities),
                 _ => true,
             });
             if (index < 0)
@@ -451,6 +395,17 @@ internal static class DagLedgerCommandPreparation
         && dependencies.EnumerateArray().All(item =>
             item.ValueKind == JsonValueKind.String && identities.Contains(item.GetString()!));
 
+    private static bool RevokeDependenciesPresent(
+        JsonElement payload,
+        HashSet<string> identities) =>
+        payload.TryGetProperty("evidence", out var evidence)
+        && evidence.ValueKind == JsonValueKind.Array
+        && evidence.EnumerateArray().All(item =>
+            item.ValueKind == JsonValueKind.Object
+            && item.TryGetProperty("root_frozen_node_id", out var root)
+            && root.ValueKind == JsonValueKind.String
+            && identities.Contains(root.GetString()!));
+
     internal static TrustedFrozenGitReferences ValidateSuffixReferences(
         IRepositoryGateway repository,
         FrozenLedgerSyntax syntax,
@@ -471,7 +426,8 @@ internal static class DagLedgerCommandPreparation
         FrozenLedgerConsistent baseline,
         string label) => FrozenLedger.ScanSuffixReferences(
             syntax,
-            baseline.Events.Length,
+            baseline.Events.Length - baseline.SyntaxStartSequence,
+            baseline.SyntaxStartSequence,
             baseline.HeadHash) switch
         {
             FrozenLedgerReferenceScanOutcome.Accepted accepted => accepted.References,

@@ -86,6 +86,10 @@ internal sealed partial class RuleFixture
     internal const string HarnessGatePath = RepositoryPathPolicy.HarnessGatePath;
     internal const string SyntheticProtectedPath =
         "tools/StrataLint.Engine/SyntheticProtected.cs";
+    internal const string BannedApiCompileFailProofProjectPath =
+        "tools/tests/BannedApiCompileFailProof/BannedApiCompileFailProof.csproj";
+    internal const string CompileFailProofProjectPath =
+        "tools/tests/CompileFailProof/CompileFailProof.csproj";
 
     private const string Header = """
         /- GID: D5/S0/Carrier/Ring
@@ -115,6 +119,8 @@ internal sealed partial class RuleFixture
             [BlueprintSourcePath] = "// synthetic Scribe definition\n",
             [FixtureDigestionSourcePath] = FixtureDigestionSource,
             [FixtureCasPath] = FixtureDigestionSource,
+            [BannedApiCompileFailProofProjectPath] = "<Project />\n",
+            [CompileFailProofProjectPath] = "<Project />\n",
         };
         Baseline = new Dictionary<string, string>(Files, StringComparer.Ordinal);
         Reports = new Dictionary<string, LeanFileReport>(StringComparer.Ordinal)
@@ -257,6 +263,12 @@ internal sealed partial class RuleFixture
             case "anomaly": Files["Evidence/D5/S0/Carrier/Result.run.json"] = "{\"anomaly\": \"fixture drift\"}\n"; break;
             case "axiom": SetRingDeclaration("invented", "axiom", "invented"); break;
             case "future": AddFutureTheory(); break;
+            case "blueprint-skeleton": Files.Remove(BlueprintSourcePath); break;
+            case "legacy-scribe":
+                Files[BlueprintSourcePath] = "DefinitionDsl.LeanTheorem(x);\n";
+                Changes.Clear();
+                Changes.Add(BlueprintSourcePath);
+                break;
             default: throw new ArgumentOutOfRangeException(nameof(mutation));
         }
     }

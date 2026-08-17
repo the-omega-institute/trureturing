@@ -209,11 +209,13 @@ public static partial class FrozenLedger
         FrozenLedgerAdmissionPreparation preparation,
         FrozenLedgerAdmissionScope scope,
         FrozenMaterialCatalog catalog,
+        RawChangeSet changes,
         TrustedFrozenGitReferences trustedReferences)
     {
         ArgumentNullException.ThrowIfNull(preparation);
         ArgumentNullException.ThrowIfNull(scope);
         ArgumentNullException.ThrowIfNull(catalog);
+        ArgumentNullException.ThrowIfNull(changes);
         ArgumentNullException.ThrowIfNull(trustedReferences);
         try
         {
@@ -243,18 +245,19 @@ public static partial class FrozenLedger
                             catalog,
                             trustedReferences,
                             requireCatalogRevisionIdentity: false);
+                        var freezePath = RepoPath.CreateKnown(freeze.Input.DescriptorSelector);
                         if (!allCaseIds.Add(freeze.CaseId)
-                            || activePathCases.ContainsKey(freeze.NodePath))
+                            || activePathCases.ContainsKey(freezePath))
                         {
                             throw new FormatException(
                                 "Freeze reused a historical case ID or active module path.");
                         }
 
-                        var material = catalog.ByPath[freeze.NodePath];
+                        var material = catalog.ByPath[freezePath];
                         active.Add(
                             freeze.CaseId,
                             new FrozenActiveEntry(material, freeze, item.EventHash));
-                        activePathCases.Add(freeze.NodePath, freeze.CaseId);
+                        activePathCases.Add(freezePath, freeze.CaseId);
                     }
                     else if (item.EventType == "Reattest")
                     {
@@ -282,17 +285,20 @@ public static partial class FrozenLedger
                             item.Payload,
                             active,
                             trustedReferences,
-                            catalog);
-                        if (!preparation.BaseView.ActiveByCase.TryGetValue(
-                                supersede.CaseId,
-                                out var protectedBaseEntry)
+                            catalog,
+                            LeanImportClosure.RepositoryClosureIsUnchanged(
+                                catalog.Dag,
+                                active[FrozenLedgerAttestationChain.RequiredString(
+                                    item.Payload,
+                                    "case_id")].Material.RepoPath,
+                                changes));
+                        if (!preparation.BaseView.ActiveByCase.ContainsKey(supersede.CaseId)
                             || !supersededBaseCases.Add(supersede.CaseId))
                         {
                             throw new FormatException(
                                 "Supersede must target each protected-base active case exactly once.");
                         }
 
-                        ValidateSupersedeStrength(supersede, protectedBaseEntry);
                         active[supersede.CaseId] = ApplySupersede(
                             active[supersede.CaseId],
                             supersede,

@@ -72,7 +72,10 @@ public sealed class LedgerRevokeCommandTests
             };
             AddLedgerFiles(files, baselineBytes);
             var raw = RawRepositorySnapshot.Create(
-                files.Select(static item => RawRepositoryEntry.FromText(item.Key, item.Value)));
+                files.Select(static item => new RawRepositoryEntry(
+                    item.Key,
+                    ImmutableArray.CreateRange(Encoding.UTF8.GetBytes(item.Value)),
+                    GitBlobOid(item.Value))));
             var snapshot = Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(raw)).Snapshot;
             var report = LeanAxiomReport.Create(
                 new Dictionary<string, LeanFileReport>(StringComparer.Ordinal));

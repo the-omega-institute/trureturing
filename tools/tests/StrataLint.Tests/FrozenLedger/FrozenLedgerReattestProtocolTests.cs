@@ -335,10 +335,8 @@ public sealed partial class FrozenLedgerTests
             freeze.Payload.DeclarationStatementIds,
             freeze.Payload.FrozenNodeId,
             freeze.Payload.Input,
-            freeze.Payload.InputFingerprint,
             freeze.Payload.PrerequisiteFrozenNodeIds,
             freeze.EventHash,
-            freeze.Payload.SemanticReceipt,
             StatementId.Create(Sha256("different-statement")),
             freeze.Payload.WitnessId)
         {

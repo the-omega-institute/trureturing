@@ -57,11 +57,13 @@ public sealed class CompletedRuleSet
     private CompletedRuleSet(
         ImmutableArray<Diagnostic> diagnostics,
         ImmutableArray<DeferredRule> deferredRules,
-        ImmutableArray<RuleId> executedRules)
+        ImmutableArray<RuleId> executedRules,
+        ImmutableArray<RuleId> skippedRules)
     {
         Diagnostics = diagnostics;
         DeferredRules = deferredRules;
         ExecutedRules = executedRules;
+        SkippedRules = skippedRules;
     }
 
     public ImmutableArray<Diagnostic> Diagnostics { get; }
@@ -70,11 +72,14 @@ public sealed class CompletedRuleSet
 
     public ImmutableArray<RuleId> ExecutedRules { get; }
 
+    public ImmutableArray<RuleId> SkippedRules { get; }
+
     internal static CompletedRuleSet Create(
         ImmutableArray<Diagnostic> diagnostics,
         ImmutableArray<DeferredRule> deferredRules,
-        ImmutableArray<RuleId> executedRules) =>
-        new(diagnostics, deferredRules, executedRules);
+        ImmutableArray<RuleId> executedRules,
+        ImmutableArray<RuleId> skippedRules) =>
+        new(diagnostics, deferredRules, executedRules, skippedRules);
 }
 
 [Union(EnableImplicitConversions = false)]

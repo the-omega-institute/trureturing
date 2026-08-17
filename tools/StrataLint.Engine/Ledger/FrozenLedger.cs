@@ -37,19 +37,12 @@ public sealed record FrozenGenesisPayload(
     string RuleCatalogRoot);
 
 public sealed record FrozenFreezePayload(
-    string CaseClass,
     string CaseId,
     ImmutableArray<FrozenDeclarationStatement> DeclarationStatementIds,
-    string Evaluation,
-    FrozenExpectedVerdict Expected,
     FrozenNodeId FrozenNodeId,
     FrozenLedgerInput Input,
-    string InputFingerprint,
-    RepoPath NodePath,
     ImmutableArray<FrozenNodeId> PrerequisiteFrozenNodeIds,
-    string SemanticReceipt,
     StatementId StatementId,
-    string TruthState,
     WitnessId WitnessId)
 {
     public ImmutableArray<string> AxiomClosure { get; init; }
@@ -62,10 +55,8 @@ public sealed record FrozenReattestPayload(
     ImmutableArray<FrozenDeclarationStatement> DeclarationStatementIds,
     FrozenNodeId? FrozenNodeId,
     FrozenLedgerInput Input,
-    string InputFingerprint,
     ImmutableArray<FrozenNodeId> PrerequisiteFrozenNodeIds,
     string PreviousAttestationEventHash,
-    string SemanticReceipt,
     StatementId? StatementId,
     WitnessId? WitnessId)
 {
@@ -76,18 +67,14 @@ public sealed record FrozenReattestPayload(
     public FrozenReattestPayload(
         string caseId,
         FrozenLedgerInput input,
-        string inputFingerprint,
-        string previousAttestationEventHash,
-        string semanticReceipt)
+        string previousAttestationEventHash)
         : this(
             caseId,
             default,
             null,
             input,
-            inputFingerprint,
             default,
             previousAttestationEventHash,
-            semanticReceipt,
             null,
             null)
     {
@@ -114,8 +101,7 @@ public sealed record FrozenRevokePayload(
     string ClosureHash,
     ImmutableArray<RevocationEvidence> Evidence,
     string GraphRoot,
-    ImmutableArray<string> RootCaseIds,
-    ImmutableArray<FrozenNodeId> RootFrozenNodeIds);
+    ImmutableArray<string> RootCaseIds);
 
 public sealed record FrozenEnvironmentPins(
     string LakeManifestBlobOid,
@@ -181,7 +167,8 @@ public sealed class FrozenLedgerConsistent
         ImmutableDictionary<string, FrozenActiveEntry> activeEntries,
         ImmutableHashSet<string> allCaseIds,
         ImmutableHashSet<FrozenNodeId> supersededFrozenNodeIds,
-        ImmutableHashSet<FrozenNodeId> revokedFrozenNodeIds)
+        ImmutableHashSet<FrozenNodeId> revokedFrozenNodeIds,
+        int syntaxStartSequence)
     {
         RawBytes = rawBytes;
         Events = events;
@@ -193,6 +180,7 @@ public sealed class FrozenLedgerConsistent
         AllCaseIds = allCaseIds;
         SupersededFrozenNodeIds = supersededFrozenNodeIds;
         RevokedFrozenNodeIds = revokedFrozenNodeIds;
+        SyntaxStartSequence = syntaxStartSequence;
     }
 
     public ImmutableArray<FrozenLedgerEvent> Events { get; }
@@ -215,6 +203,8 @@ public sealed class FrozenLedgerConsistent
 
     internal ImmutableHashSet<string> AllCaseIds { get; }
 
+    internal int SyntaxStartSequence { get; }
+
     internal static FrozenLedgerConsistent Create(
         ImmutableArray<byte> rawBytes,
         ImmutableArray<FrozenLedgerEvent> events,
@@ -225,7 +215,8 @@ public sealed class FrozenLedgerConsistent
         ImmutableDictionary<string, FrozenActiveEntry> activeEntries,
         ImmutableHashSet<string> allCaseIds,
         ImmutableHashSet<FrozenNodeId> supersededFrozenNodeIds,
-        ImmutableHashSet<FrozenNodeId> revokedFrozenNodeIds) =>
+        ImmutableHashSet<FrozenNodeId> revokedFrozenNodeIds,
+        int syntaxStartSequence = 0) =>
         new(
             rawBytes,
             events,
@@ -236,7 +227,8 @@ public sealed class FrozenLedgerConsistent
             activeEntries,
             allCaseIds,
             supersededFrozenNodeIds,
-            revokedFrozenNodeIds);
+            revokedFrozenNodeIds,
+            syntaxStartSequence);
 }
 
 internal sealed record FrozenActiveEntry(

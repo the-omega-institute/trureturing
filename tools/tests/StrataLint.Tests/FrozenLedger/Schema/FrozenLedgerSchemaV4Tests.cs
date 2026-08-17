@@ -1,3 +1,5 @@
+using System.Collections.Immutable;
+using System.Reflection;
 using System.Text.Json;
 using StrataLint.Cli;
 using StrataLint.Engine;
@@ -45,6 +47,55 @@ public sealed class FrozenLedgerSchemaV4Tests
         {
             Assert.False(payload.TryGetProperty(field, out _), $"current Freeze emitted {field}");
         }
+    }
+
+    [Fact]
+    public void CurrentRuntimePayloadContractsOmitRetiredWriterFields()
+    {
+        var freezeFields = typeof(FrozenFreezePayload)
+            .GetProperties(BindingFlags.Instance | BindingFlags.Public | BindingFlags.DeclaredOnly)
+            .Select(static property => property.Name)
+            .ToHashSet(StringComparer.Ordinal);
+        var reattestFields = typeof(FrozenReattestPayload)
+            .GetProperties(BindingFlags.Instance | BindingFlags.Public | BindingFlags.DeclaredOnly)
+            .Select(static property => property.Name)
+            .ToHashSet(StringComparer.Ordinal);
+
+        Assert.Empty(freezeFields.Intersect(
+        [
+            "CaseClass",
+            "Evaluation",
+            "Expected",
+            "InputFingerprint",
+            "NodePath",
+            "SemanticReceipt",
+            "TruthState",
+        ]));
+        Assert.Empty(reattestFields.Intersect(["InputFingerprint", "SemanticReceipt"]));
+    }
+
+    [Fact]
+    public void CurrentRevokeWriterOmitsEventLocalRootAndExpectedAddressAliases()
+    {
+        var root = FrozenNodeId.Create(Sha256("root"));
+        var evidence = new RevocationEvidence.ContentAddressMismatch(
+            root,
+            root.Value,
+            Sha256("actual"),
+            GitOid('a'),
+            Sha256("receipt"));
+        var payload = FrozenLedgerCanonicalWriter.RevokeElement(new FrozenRevokePayload(
+            ImmutableArray.Create("active-frozen/root"),
+            ImmutableArray.Create(root),
+            Sha256("closure"),
+            ImmutableArray.Create<RevocationEvidence>(evidence),
+            Sha256("graph"),
+            ImmutableArray.Create("active-frozen/root")));
+
+        Assert.False(payload.TryGetProperty("root_frozen_node_ids", out _));
+        var encodedEvidence = Assert.Single(payload.GetProperty("evidence").EnumerateArray().ToArray());
+        Assert.False(encodedEvidence.TryGetProperty("expected_sha256", out _));
+        Assert.Equal(root.Value, encodedEvidence.GetProperty("root_frozen_node_id").GetString());
     }
 
     private static void AssertProjectionAliasesAbsent(JsonElement payload, bool includesNodePath)

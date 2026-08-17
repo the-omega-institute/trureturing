@@ -33,7 +33,6 @@ public sealed partial class FrozenLedgerTests
             evidence = Array.Empty<object>(),
             graph_root = FrozenLedgerCanonicalWriter.ZeroHash,
             root_case_ids = Array.Empty<string>(),
-            root_frozen_node_ids = Array.Empty<string>(),
         });
         var revokeLine = FrozenLedgerCanonicalWriter.WriteEvent(
             "Revoke",
@@ -264,7 +263,7 @@ public sealed partial class FrozenLedgerTests
                 baseline,
                 candidateCatalog)).Capability;
         var appended = accepted.Events.OfType<FrozenLedgerEvent.Freeze>()
-            .Single(static item => item.Payload.NodePath.Value.EndsWith("/B.lean", StringComparison.Ordinal));
+            .Single(static item => item.Payload.Input.DescriptorSelector.EndsWith("/B.lean", StringComparison.Ordinal));
 
         Assert.Equal(GitOid('f'), appended.Payload.Input.BaseCommitOid);
         Assert.Equal(GitOid('1'), appended.Payload.Input.BaseTreeOid);
