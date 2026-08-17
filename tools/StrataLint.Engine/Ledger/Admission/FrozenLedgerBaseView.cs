@@ -178,6 +178,7 @@ internal static class FrozenLedgerAttestationChain
     internal static ImmutableArray<TrustedFrozenLedgerEvent> ActiveAttestations(
         ImmutableArray<TrustedFrozenLedgerEvent> events)
     {
+        var byHash = events.ToDictionary(static item => item.EventHash, StringComparer.Ordinal);
         var superseded = events
             .Where(static item => item.EventType is "Reattest" or FrozenLedger.SupersedeEventType)
             .Select(static item => RequiredString(item.Payload, "previous_attestation_event_hash"))
@@ -199,23 +200,59 @@ internal static class FrozenLedgerAttestationChain
                 && (revokedCases.Count == 0
                     || !revokedCases.Contains(RequiredString(item.Payload, "case_id")))
                 && (revokedNodes.Count == 0
-                    || !revokedNodes.Contains(ActiveFrozenNodeId(item))))
+                    || !revokedNodes.Contains(ActiveFrozenNodeId(item, byHash))))
             .ToImmutableArray();
     }
 
-    private static string ActiveFrozenNodeId(TrustedFrozenLedgerEvent item) =>
-        item.EventType switch
+    private static string ActiveFrozenNodeId(
+        TrustedFrozenLedgerEvent item,
+        IReadOnlyDictionary<string, TrustedFrozenLedgerEvent> byHash)
+    {
+        var visiting = new HashSet<string>(StringComparer.Ordinal);
+        var current = item;
+        while (true)
         {
-            FrozenLedger.SupersedeEventType => RequiredString(item.Payload, "frozen_node_id"),
-            "Reattest" when item.Payload.TryGetProperty("frozen_node_id", out _) =>
-                RequiredString(item.Payload, "frozen_node_id"),
-            "Reattest" => RequiredString(item.Payload, "semantic_receipt"),
-            "Freeze" when item.Payload.TryGetProperty("frozen_node_id", out _) =>
-                RequiredString(item.Payload, "frozen_node_id"),
-            "Freeze" => item.Identity,
-            _ => throw new InvalidOperationException(
-                $"trusted protected-base attestation has unsupported type {item.EventType}"),
-        };
+            if (!visiting.Add(current.EventHash))
+            {
+                throw new InvalidOperationException(
+                    "trusted protected-base attestation chain contains a cycle");
+            }
+
+            if (current.EventType == FrozenLedger.SupersedeEventType
+                || current.Payload.TryGetProperty("frozen_node_id", out _))
+            {
+                return RequiredString(current.Payload, "frozen_node_id");
+            }
+
+            if (current.EventType == "Reattest"
+                && current.Payload.TryGetProperty("semantic_receipt", out _))
+            {
+                return RequiredString(current.Payload, "semantic_receipt");
+            }
+
+            if (current.EventType == "Reattest")
+            {
+                var previousHash = RequiredString(
+                    current.Payload,
+                    "previous_attestation_event_hash");
+                if (!byHash.TryGetValue(previousHash, out current!))
+                {
+                    throw new InvalidOperationException(
+                        "trusted protected-base attestation chain names an absent predecessor");
+                }
+
+                continue;
+            }
+
+            if (current.EventType == "Freeze")
+            {
+                return current.Identity;
+            }
+
+            throw new InvalidOperationException(
+                $"trusted protected-base attestation has unsupported type {current.EventType}");
+        }
+    }
 
     internal static string RequiredString(JsonElement value, string property) =>
         value.TryGetProperty(property, out var child) && child.ValueKind == JsonValueKind.String

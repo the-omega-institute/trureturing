@@ -234,6 +234,7 @@ internal static partial class RepositoryRules
         return context.Current.TryGetFile(ValuesKernelBindingValidator.RelativePath, out var values)
             && ValuesKernelBindingValidator.ReferencesChangedLeanInput(
                 values.Text,
+                context.Lean.Report,
                 context.Changes);
     }
 

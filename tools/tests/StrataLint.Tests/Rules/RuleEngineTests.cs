@@ -315,6 +315,15 @@ public sealed class RuleEngineTests
     }
 
     [Fact]
+    public void LeanToolchainChangeWakesSl016BecauseItsLeanReportInputCanDrift()
+    {
+        var fixture = new RuleFixture();
+        var context = fixture.Build(RawChangeSet.Create(["lean-toolchain"]));
+
+        Assert.True(BackfillInventoryRule.IsAffectedBy(context));
+    }
+
+    [Fact]
     public void Sl016DerivedStatusIsTheSameWhetherOrNotTheEntryIsInTheCandidateDelta()
     {
         // A gap that is a property of the tree must be reported no matter which paths this

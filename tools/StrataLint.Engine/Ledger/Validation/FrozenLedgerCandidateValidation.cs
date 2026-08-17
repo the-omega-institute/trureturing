@@ -151,7 +151,8 @@ public static partial class FrozenLedger
                         payload,
                         active,
                         trustedReferences,
-                        catalog);
+                        catalog,
+                        repositoryImportClosureUnchanged: false);
                     if (!baseline.ActiveEntries.TryGetValue(supersede.CaseId, out var baseEntry)
                         || !supersededBaseCases.Add(supersede.CaseId))
                     {
@@ -159,7 +160,6 @@ public static partial class FrozenLedger
                             "Supersede must target each protected-base active case at most once.");
                     }
 
-                    ValidateSupersedeStrength(supersede, baseEntry);
                     superseded.Add(baseEntry.Material.FrozenNodeId);
                     active[supersede.CaseId] = ApplySupersede(
                         active[supersede.CaseId],
