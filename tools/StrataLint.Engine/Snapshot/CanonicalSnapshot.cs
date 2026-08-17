@@ -43,6 +43,12 @@ public partial record CanonicalizationOutcome
 public static class RepositoryCanonicalizer
 {
     public static CanonicalizationOutcome Validate(RepositorySnapshot snapshot, ValidatedPolicy policy)
+        => Validate(snapshot, policy, changes: null);
+
+    public static CanonicalizationOutcome Validate(
+        RepositorySnapshot snapshot,
+        ValidatedPolicy policy,
+        RawChangeSet? changes)
     {
         ArgumentNullException.ThrowIfNull(snapshot);
         ArgumentNullException.ThrowIfNull(policy);
@@ -60,7 +66,8 @@ public static class RepositoryCanonicalizer
                 throw new FormatException("Repository domain bytes do not match the validated canonical policy.");
             }
 
-            ValidateStructuredArtifacts(snapshot, policy);
+            ValidateStructuredArtifacts(snapshot, policy, changes);
+
             var expectedEntries = snapshot.Files
                 .OrderBy(static item => item.Key.Value, StringComparer.Ordinal)
                 .Select(static item => SnapshotEntry.FromFile(item.Key, item.Value))
@@ -76,11 +83,22 @@ public static class RepositoryCanonicalizer
         }
     }
 
-    private static void ValidateStructuredArtifacts(RepositorySnapshot snapshot, ValidatedPolicy policy)
+    private static void ValidateStructuredArtifacts(
+        RepositorySnapshot snapshot,
+        ValidatedPolicy policy,
+        RawChangeSet? changes)
     {
-        foreach (var (path, file) in snapshot.Files.OrderBy(static item => item.Key.Value, StringComparer.Ordinal))
+        var paths = changes is null
+            ? snapshot.Files.Keys.OrderBy(static path => path.Value, StringComparer.Ordinal)
+            : changes.Paths.OrderBy(static path => path.Value, StringComparer.Ordinal);
+        foreach (var path in paths)
         {
             if (!path.Value.StartsWith("Evidence/D5/", StringComparison.Ordinal))
+            {
+                continue;
+            }
+
+            if (!snapshot.Files.TryGetValue(path, out var file))
             {
                 continue;
             }
