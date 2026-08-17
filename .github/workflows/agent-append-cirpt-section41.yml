@@ -1,0 +1,130 @@
+name: Agent append C-IRPT section 41
+
+on:
+  push:
+    branches:
+      - agent/tmp-cirpt-formal-calculus-20260818
+
+permissions:
+  contents: write
+
+jobs:
+  append:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Verify payload, append section 41, and self-clean
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          target='docs/develop/theory/QUANTITATIVE_DIAGONALIZATION_OBSERVER_COMPLETION.md'
+          payload_dir='.agent_tmp/cirpt_section41'
+          workflow='.github/workflows/agent-append-cirpt-section41.yml'
+          expected_b64_sha='44d6130b47246a6bef8e95f87c74ef912451960ac937494de7f2c04600edccff'
+          expected_gz_sha='3fc862848e83325f5a1a3b893d246cd314d88c9fabff14650251d1a8ce9a9797'
+          expected_md_sha='ca8ffa558aeddd9ff529ed853bc345e4d1cf36d00d137d5c748b6a576d537157'
+
+          parts=(
+            ".agent_tmp/cirpt_section41/part_00.b64"
+            ".agent_tmp/cirpt_section41/part_01.b64"
+            ".agent_tmp/cirpt_section41/part_02.b64"
+            ".agent_tmp/cirpt_section41/part_03.b64"
+            ".agent_tmp/cirpt_section41/part_04.b64"
+            ".agent_tmp/cirpt_section41/part_05.b64"
+            ".agent_tmp/cirpt_section41/part_06.b64"
+          )
+
+          test -f "$target"
+          test -f "$workflow"
+          for p in "${parts[@]}"; do test -f "$p"; done
+
+          printf '%s  %s\n' '6f35a1b0ef99eaf568048d0b5a325059b3dc7b72ab4b2e796726533a412a5412' ".agent_tmp/cirpt_section41/part_00.b64" | sha256sum -c -
+          printf '%s  %s\n' '7e70a2a92322f269893021996dd33b4c4437d03c3050a57e718daf039c462e80' ".agent_tmp/cirpt_section41/part_01.b64" | sha256sum -c -
+          printf '%s  %s\n' '387c4592595d065554e5a8a47d63a9a6d83a286cc77966b8192bb6b65850a823' ".agent_tmp/cirpt_section41/part_02.b64" | sha256sum -c -
+          printf '%s  %s\n' 'dcdd98e0a8ef8427f251d3e2c5ce0df92f2fab0df4d7d93042257633eca2aa2d' ".agent_tmp/cirpt_section41/part_03.b64" | sha256sum -c -
+          printf '%s  %s\n' 'cacfcc4953522af3e2f198898bd59b9af33dffc60f93ec0034306b1bacf1c2f3' ".agent_tmp/cirpt_section41/part_04.b64" | sha256sum -c -
+          printf '%s  %s\n' 'f7da9cc3bd7532fbb1df0805e7e8ff2b30dccf4f7ed366ed9324c131ee5d45f5' ".agent_tmp/cirpt_section41/part_05.b64" | sha256sum -c -
+          printf '%s  %s\n' 'ffda520b0417468b7842dfc22d2e46cfeae3f37e97f7e7baccc65c89fcc9b5c1' ".agent_tmp/cirpt_section41/part_06.b64" | sha256sum -c -
+
+          cat "${parts[@]}" > /tmp/cirpt_section41.b64
+          test "$(wc -c < /tmp/cirpt_section41.b64)" -eq 23588
+          printf '%s  %s\n' "$expected_b64_sha" /tmp/cirpt_section41.b64 | sha256sum -c -
+
+          base64 --decode /tmp/cirpt_section41.b64 > /tmp/cirpt_section41.md.gz
+          test "$(wc -c < /tmp/cirpt_section41.md.gz)" -eq 17690
+          printf '%s  %s\n' "$expected_gz_sha" /tmp/cirpt_section41.md.gz | sha256sum -c -
+
+          gzip -dc /tmp/cirpt_section41.md.gz > /tmp/cirpt_section41.md
+          test "$(wc -c < /tmp/cirpt_section41.md)" -eq 47894
+          printf '%s  %s\n' "$expected_md_sha" /tmp/cirpt_section41.md | sha256sum -c -
+
+          old_sha="$(sha256sum "$target" | awk '{print $1}')"
+          old_bytes="$(wc -c < "$target")"
+          old_lines="$(wc -l < "$target")"
+
+          test "$(grep -c '^# 41\. 追加：构造性界面—余量过程论的完整形式化演算$' "$target" || true)" -eq 0
+
+          python3 - "$target" /tmp/cirpt_section41.md "$old_sha" "$old_bytes" <<'PY'
+          import hashlib
+          import pathlib
+          import sys
+
+          target = pathlib.Path(sys.argv[1])
+          appendix = pathlib.Path(sys.argv[2]).read_bytes()
+          expected_old_sha = sys.argv[3]
+          expected_old_bytes = int(sys.argv[4])
+
+          old = target.read_bytes()
+          assert len(old) == expected_old_bytes
+          assert hashlib.sha256(old).hexdigest() == expected_old_sha
+
+          if old.endswith(b"\n\n"):
+              separator = b""
+          elif old.endswith(b"\n"):
+              separator = b"\n"
+          else:
+              separator = b"\n\n"
+
+          new = old + separator + appendix
+          heading = "# 41. 追加：构造性界面—余量过程论的完整形式化演算".encode("utf-8")
+          ending = "## 41.83 最终结论".encode("utf-8")
+
+          assert new[:len(old)] == old
+          assert new.count(heading) == 1
+          assert new.count(ending) == 1
+
+          target.write_bytes(new)
+          reread = target.read_bytes()
+          assert reread[:len(old)] == old
+          assert len(reread) > len(old)
+
+          print(f"old_sha={expected_old_sha}")
+          print(f"old_bytes={len(old)}")
+          print(f"new_bytes={len(reread)}")
+          print(f"appended_bytes={len(reread)-len(old)}")
+          print(f"new_sha={hashlib.sha256(reread).hexdigest()}")
+          PY
+
+          git diff --check
+          numstat="$(git diff --numstat -- "$target")"
+          additions="$(printf '%s\n' "$numstat" | awk '{print $1}')"
+          deletions="$(printf '%s\n' "$numstat" | awk '{print $2}')"
+          test -n "$additions"
+          test "$deletions" = '0'
+
+          new_lines="$(wc -l < "$target")"
+          printf 'old_lines=%s\nnew_lines=%s\nadditions=%s\ndeletions=%s\n' \
+            "$old_lines" "$new_lines" "$additions" "$deletions"
+
+          rm -rf .agent_tmp
+          rm -f "$workflow"
+
+          git config user.name 'the-omega-institute-agent'
+          git config user.email 'actions@users.noreply.github.com'
+          git add -A
+          git commit -m 'docs(theory): append complete constructive IRPT calculus'
+          git push origin HEAD
