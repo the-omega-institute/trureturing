@@ -1,3 +1,4 @@
+using System.Text.RegularExpressions;
 using YamlDotNet.RepresentationModel;
 
 namespace StrataLint.Tests;
@@ -105,17 +106,36 @@ public sealed class RequiredJobExecutionTests
         Steps(job).Any(step =>
             Scalar(step, "if") is { Length: > 0 } condition
             && condition.Contains("steps." + id + ".outcome", StringComparison.Ordinal)
-            && IsConjunctiveGate(condition));
+            && IsEffectiveComparison(condition, id));
 
-    private static bool IsConjunctiveGate(string condition)
+    // 判据经三轮才写到点上:
+    //   八轮 文本包含        → 注释 / if:false 里 echo / `false &&` 全过
+    //   九轮 黑名单禁恒假     → `true ||`、`always() ||` 恒真同样让引用失效
+    //   十轮 黑名单禁 || 与常量 → `steps.x.outcome != steps.x.outcome` 自比较恒假,仍过
+    // 三次都是在列举**禁止的形态**,而形态列不完。
+    //
+    // 白名单的正确写法:该引用必须**与字符串字面量比较**——那才直接表达「这个 outcome
+    // 真的在被判断」。自比较、与另一引用比较、裸引用(非空字符串恒真)一律不算。
+    // 另保留 `||`/常量/always 的排除,因为它们能让整个合取失效而与右操作数无关。
+    private static bool IsEffectiveComparison(string condition, string id)
     {
         var normalized = condition.Replace("${{", " ", StringComparison.Ordinal)
             .Replace("}}", " ", StringComparison.Ordinal);
-        return !normalized.Contains("||", StringComparison.Ordinal)
-            && !ContainsConstantToken(normalized, "false")
-            && !ContainsConstantToken(normalized, "true")
-            && !normalized.Contains("always(", StringComparison.Ordinal);
+        if (normalized.Contains("||", StringComparison.Ordinal)
+            || ContainsConstantToken(normalized, "false")
+            || ContainsConstantToken(normalized, "true")
+            || normalized.Contains("always(", StringComparison.Ordinal))
+        {
+            return false;
+        }
+
+        return OutcomeLiteralComparison(id).IsMatch(normalized);
     }
+
+    // steps.<id>.outcome 之后必须紧跟 == 或 != 与一个带引号的字面量。
+    private static Regex OutcomeLiteralComparison(string id) => new(
+        @"steps\." + Regex.Escape(id) + @"\.outcome\s*(==|!=)\s*'[^']*'",
+        RegexOptions.CultureInvariant);
 
     // 只认独立成词的常量,避免误伤 `== 'true'` 这类字符串比较。
     private static bool ContainsConstantToken(string text, string token)
