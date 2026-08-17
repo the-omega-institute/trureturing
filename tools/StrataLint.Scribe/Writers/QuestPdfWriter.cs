@@ -229,16 +229,8 @@ public static class QuestPdfWriter
 
         if (describe.LiteratureReference is { } literature)
         {
-            if (citations is null
-                || !citations.TryGetValue(literature.BibKey.Value, out var citation))
-            {
-                throw new InvalidOperationException(
-                    $"Academic citation is unavailable for {literature.Value}.");
-            }
-
             column.Item().Text(
-                $"Citation. {citation.Authors} ({citation.Year}). {citation.Title}. "
-                + $"DOI: https://doi.org/{citation.Doi.Value}.").FontSize(8);
+                AcademicReferenceLine("Citation", literature, citations)).FontSize(8);
         }
         else
         {
@@ -249,6 +241,14 @@ public static class QuestPdfWriter
                     "suspected-novel" => "Source. Suspected novel.",
                     var provenance => $"Source. {provenance}.",
                 }).FontSize(8);
+            foreach (var acknowledgement in describe.AcknowledgementReferences)
+            {
+                column.Item().Text(
+                    AcademicReferenceLine(
+                        "Acknowledgement",
+                        acknowledgement,
+                        citations)).FontSize(8);
+            }
         }
 
         column.Item().Text("Commentary.").Italic();
@@ -260,6 +260,22 @@ public static class QuestPdfWriter
             declarations,
             citations,
             ref describeNumber);
+    }
+
+    private static string AcademicReferenceLine(
+        string label,
+        LibraryNoteRef reference,
+        IReadOnlyDictionary<string, LiteratureCitation>? citations)
+    {
+        if (citations is null
+            || !citations.TryGetValue(reference.BibKey.Value, out var citation))
+        {
+            throw new InvalidOperationException(
+                $"Academic citation is unavailable for {reference.Value}.");
+        }
+
+        return $"{label}. {citation.Authors} ({citation.Year}). {citation.Title}. "
+            + $"DOI: https://doi.org/{citation.Doi.Value}.";
     }
 
     private static bool IsTheoremClass(DescribeKind kind) =>
