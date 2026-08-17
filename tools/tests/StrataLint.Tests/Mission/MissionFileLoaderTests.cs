@@ -524,7 +524,8 @@ public sealed partial class MissionFileLoaderTests
         Assert.Contains(
             loaded.Policy.FrontierEligibility,
             static entry => entry.SourceRef == "D5/X_Frontier/GoldenUnitsUFD"
-                && entry.Kind == FrontierEligibilityKind.MathematicalNotYetStated);
+                && entry.Kind == FrontierEligibilityKind.Retired
+                && entry.DeliveryGids.Length == 4);
         Assert.Contains(
             loaded.Policy.FrontierEligibility,
             static entry => entry.SourceRef == "D5/X_Frontier/Hearts"

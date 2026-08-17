@@ -12,6 +12,7 @@ internal sealed partial class RuleFixture
     private const string SearchReceiptPath = "Library/Carrier/fixture2026contract.md";
     private const string ComputationReceiptGid = "D5/E/S0/Carrier/Probe.result--json";
     private const string ComputationReceiptPath = "Evidence/D5/S0/Carrier/Probe.result.json";
+    private const string RetiredDeliveryGid = "D5/S0/Carrier/Euclidean.golden_division";
 
     private string currentTheoristPath = TheoristTargetPath;
     private string currentTheoristDeclaration = "prime_norm_irreducible";
@@ -81,6 +82,24 @@ internal sealed partial class RuleFixture
         Files.Remove(currentTheoristPath);
         Reports.Remove(currentTheoristPath);
         Files[MissionFileLoader.RelativePath] = Mission(null);
+    }
+
+    internal void RetireTheoristTarget(string deliveryGid = RetiredDeliveryGid)
+    {
+        Files.Remove(currentTheoristPath);
+        Reports.Remove(currentTheoristPath);
+        Files[MissionFileLoader.RelativePath] = Mission("retired", [deliveryGid]);
+    }
+
+    internal void AddUnfrozenRetiredDeliveryDeclaration()
+    {
+        Reports[currentMotivationPath] = Report(
+            declarations: Reports[currentMotivationPath].Declarations.Append(
+                new LeanDeclaration(
+                    "D5.S0.Carrier.unfrozen_delivery",
+                    "theorem",
+                    "statement-v1(unfrozen-delivery)",
+                    [])));
     }
 
     internal void RemoveTheoristTargetReport() => Reports.Remove(currentTheoristPath);
@@ -255,6 +274,21 @@ internal sealed partial class RuleFixture
     {
         Files[SearchReceiptPath] = "# Search receipt fixture\n";
         Files[ComputationReceiptPath] = "{}\n";
+        Files[currentMotivationPath] = HeaderFor(currentMotivationGid, "G");
+        Reports[currentMotivationPath] = currentMotivationPath
+                is "D5/S0/Carrier/Euclidean.lean"
+            ? Report(declarations:
+            [
+                new LeanDeclaration(
+                    "D5.S0.Carrier.golden_division",
+                    "theorem",
+                    "statement-v1(retired-delivery)",
+                    [])
+                {
+                    NameKey = "fixture-retired-delivery",
+                },
+            ])
+            : Report();
         AddFrozenMotivationMembership();
 
         const string ticketPath = "D5/X_Frontier/MissionTickets.lean";
@@ -287,7 +321,14 @@ internal sealed partial class RuleFixture
                 axiom_closure = Array.Empty<string>(),
                 case_class = "active-frozen",
                 case_id = "active-frozen/theorist-contract-fixture",
-                declaration_statement_ids = Array.Empty<object>(),
+                declaration_statement_ids = Reports[currentMotivationPath].Declarations.Select(
+                    static declaration => new
+                    {
+                        declaration_name_key = declaration.NameKey,
+                        kind = declaration.Kind,
+                        statement_id =
+                            "sha256:dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+                    }).ToArray(),
                 evaluation = "admission",
                 expected = new
                 {
@@ -331,16 +372,23 @@ internal sealed partial class RuleFixture
         }
     }
 
-    private string Mission(string? targetOwnerKind)
+    private string Mission(string? targetOwnerKind, string[]? deliveryGids = null)
     {
         var eligibility = new List<object>();
         if (targetOwnerKind is not null)
         {
-            eligibility.Add(new
-            {
-                source_ref = currentTheoristPath[..^5],
-                kind = targetOwnerKind,
-            });
+            eligibility.Add(targetOwnerKind == "retired"
+                ? new
+                {
+                    source_ref = currentTheoristPath[..^5],
+                    kind = targetOwnerKind,
+                    delivery_gids = deliveryGids ?? [],
+                }
+                : new
+                {
+                    source_ref = currentTheoristPath[..^5],
+                    kind = targetOwnerKind,
+                });
         }
         eligibility.Add(new
         {
