@@ -71,7 +71,7 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
             repositoryRoot,
             new GitRepositoryGateway(repositoryRoot),
             new PrecomputedLeanReportSource(repositoryRoot),
-            new ProductionScribeEmissionVerifier(repositoryRoot),
+            new ProductionScribeEmissionVerifier(),
             new ProductionFrozenLedgerAdmissionServices(repositoryRoot))
     {
     }
@@ -153,6 +153,7 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
                 current);
             var verifiedScribeEmissions = VerifyScribeForAdmission(
                 scribeEmissionVerifier,
+                current,
                 candidateLeanReport,
                 bootstrap);
             var evaluation = SnapshotAdmissionCore.Evaluate(
@@ -567,6 +568,7 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
 
     internal static VerifiedScribeEmissions? VerifyScribeForAdmission(
         IScribeEmissionVerifier? verifier,
+        RepositorySnapshot snapshot,
         LeanAxiomReport report,
         BootstrapOutcome bootstrap)
     {
@@ -577,7 +579,7 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
 
         try
         {
-            return verifier.Verify(report);
+            return verifier.Verify(snapshot, report);
         }
         catch (InvalidOperationException) when (
             bootstrap is BootstrapOutcome.ProtectedSurfaceVerificationRequired)

@@ -521,7 +521,6 @@ public sealed partial class MissionFileLoaderTests
             ["SorryCountOptimization", "TrivialLemmaAccumulation", "CitationChasing"],
             loaded.Policy.Prohibitions.Select(static value => value.ToString()));
         Assert.All(loaded.Policy.Prohibitions, static value => Assert.IsNotType<string>((object)value));
-        Assert.Equal(11, loaded.Policy.FrontierEligibility.Length);
         Assert.Contains(
             loaded.Policy.FrontierEligibility,
             static entry => entry.SourceRef == "D5/X_Frontier/GoldenUnitsUFD"

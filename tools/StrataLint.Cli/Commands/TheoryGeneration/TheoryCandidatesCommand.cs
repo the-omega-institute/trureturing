@@ -83,14 +83,18 @@ internal static class TheoryCandidatesCommand
                 .Where(static item => item.Classification is
                     FrontierCandidateClassification.DeclarationReadyMathematicalOpen
                     or FrontierCandidateClassification.MathematicalNotYetStated)
-                .Select(item => FrontierCandidate(item.Node, item.Classification, truth.Snapshot))
+                .SelectMany(item => FrontierCandidates(
+                    item.Node,
+                    item.Classification,
+                    truth.Snapshot,
+                    truth.Report))
                 .ToArray();
 
             var digestion = DigestionStatusEvaluator.Evaluate(
                 BackfillInventoryLoader.Load(truth.Snapshot),
                 truth.Snapshot,
                 truth.Lean,
-                scribeEmissionVerifier.Verify(truth.Report));
+                scribeEmissionVerifier.Verify(truth.Snapshot, truth.Report));
             if (digestion.Findings.Length > 0)
             {
                 throw new InvalidOperationException(
@@ -170,31 +174,113 @@ internal static class TheoryCandidatesCommand
         };
     }
 
-    private static TheoryCandidate FrontierCandidate(
+    private static IReadOnlyList<TheoryCandidate> FrontierCandidates(
         TruthNode node,
         FrontierCandidateClassification classification,
-        RepositorySnapshot snapshot)
+        RepositorySnapshot snapshot,
+        LeanAxiomReport report)
     {
         var gid = node.Gid
             ?? throw new InvalidOperationException(
                 $"mathematical Frontier node has no canonical GID: {node.RepoPath.Value}");
         var file = snapshot.Files[node.RepoPath];
-        var (sourceKind, downstreamLane) = classification switch
+        if (classification == FrontierCandidateClassification.MathematicalNotYetStated)
         {
-            FrontierCandidateClassification.DeclarationReadyMathematicalOpen =>
-                ("frontier_declaration_ready", "prover"),
-            FrontierCandidateClassification.MathematicalNotYetStated =>
-                ("frontier_problem", "theorist"),
-            _ => throw new InvalidOperationException(
-                $"non-mathematical Frontier classification cannot become a candidate: {classification}"),
-        };
-        return new TheoryCandidate(
-            "frontier/" + gid.Value,
-            sourceKind,
-            gid.Value,
-            "sha256:" + Convert.ToHexStringLower(SHA256.HashData(file.RawBytes.AsSpan())),
-            downstreamLane,
-            null);
+            return
+            [
+                new TheoryCandidate(
+                    "frontier/" + gid.Value,
+                    "frontier_problem",
+                    gid.Value,
+                    "sha256:" + Convert.ToHexStringLower(SHA256.HashData(file.RawBytes.AsSpan())),
+                    "theorist",
+                    null),
+            ];
+        }
+
+        if (classification != FrontierCandidateClassification.DeclarationReadyMathematicalOpen)
+        {
+            throw new InvalidOperationException(
+                $"non-mathematical Frontier classification cannot become a candidate: {classification}");
+        }
+
+        if (!report.Files.TryGetValue(node.RepoPath, out var fileReport))
+        {
+            throw new InvalidOperationException(
+                $"Lean report has no declaration-ready Frontier source: {node.RepoPath.Value}");
+        }
+
+        var statementIds = CanonicalStatementWriter.DeclarationStatementIds(node.RepoPath, fileReport)
+            .ToDictionary(
+                static statement => (statement.DeclarationNameKey, statement.Kind),
+                static statement => statement.StatementId.Value);
+        var candidates = fileReport.Declarations
+            .Where(IsOpenProposition)
+            .Select(declaration =>
+            {
+                var declarationGid = DeclarationGid(gid, node.RepoPath, declaration);
+                if (!statementIds.TryGetValue((declaration.NameKey, declaration.Kind), out var statementId))
+                {
+                    throw new InvalidOperationException(
+                        $"Lean report declaration has no canonical statement address: {declarationGid}");
+                }
+
+                return new TheoryCandidate(
+                    "frontier/" + declarationGid,
+                    "frontier_declaration_ready",
+                    declarationGid,
+                    statementId,
+                    "prover",
+                    null);
+            })
+            .OrderBy(static candidate => candidate.CandidateId, StringComparer.Ordinal)
+            .ToArray();
+        if (candidates.Length == 0)
+        {
+            throw new InvalidOperationException(
+                $"declaration-ready Frontier source has no report-addressed open proposition: {gid.Value}");
+        }
+
+        return candidates;
+    }
+
+    private static bool IsOpenProposition(LeanDeclaration declaration)
+    {
+        if (!declaration.IncludeInStatement)
+        {
+            return false;
+        }
+
+        if (string.Equals(declaration.Kind, "theorem", StringComparison.Ordinal))
+        {
+            return declaration.Axioms.Contains("sorryAx", StringComparer.Ordinal);
+        }
+
+        return string.Equals(declaration.Kind, "def", StringComparison.Ordinal)
+            && StatementV1Decoder.Decode(declaration.TypeRepresentation).Type
+                is LeanExpr.Sort { Level: LeanLevel.Zero };
+    }
+
+    private static string DeclarationGid(Gid moduleGid, RepoPath modulePath, LeanDeclaration declaration)
+    {
+        var qualifiedPrefix = moduleGid.Value.Replace('/', '.') + ".";
+        if (!declaration.Name.StartsWith(qualifiedPrefix, StringComparison.Ordinal))
+        {
+            throw new InvalidOperationException(
+                $"Lean report declaration is outside its Frontier module: {declaration.Name}");
+        }
+
+        var selector = declaration.Name[qualifiedPrefix.Length..];
+        var value = moduleGid.Value + "." + selector;
+        if (selector.Contains('.', StringComparison.Ordinal)
+            || !Gid.TryParse(value, out var declarationGid)
+            || declarationGid.Path != modulePath)
+        {
+            throw new InvalidOperationException(
+                $"Lean report declaration has no canonical declaration GID: {declaration.Name}");
+        }
+
+        return declarationGid.Value;
     }
 
     private static OwnerOverrideInput? ParseArguments(IReadOnlyList<string> arguments)

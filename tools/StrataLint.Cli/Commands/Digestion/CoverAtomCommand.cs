@@ -95,7 +95,7 @@ internal static partial class CoverAtomCommand
             var addedGids = options.Gids.Where(gid => !existingGids.Contains(gid)).ToImmutableArray();
             var report = leanReportSource.Load(current);
             var lean = ValidateLean(current, report);
-            var verifiedScribeEmissions = scribeEmissionVerifier.Verify(report);
+            var verifiedScribeEmissions = scribeEmissionVerifier.Verify(current, report);
             var beforeEvaluation = DigestionStatusEvaluator.Evaluate(
                 document,
                 current,

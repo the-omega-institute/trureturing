@@ -9,6 +9,7 @@ namespace StrataLint.Tests;
 public sealed class TheoryCandidatesTests
 {
     private const string MathematicalFrontierPath = "D5/X_Frontier/GoldenUnitsUFD.lean";
+    private const string DeclarationReadyFrontierPath = "D5/X_Frontier/Hearts.lean";
     private const string GovernanceFrontierPath = "D5/X_Frontier/GovernanceTicket.lean";
     private const string NonFrontierOpenPath = "D5/S0/Carrier/UnfinishedFact.lean";
     private const string ResidualAtomPath =
@@ -46,6 +47,10 @@ public sealed class TheoryCandidatesTests
               "kind": "governance"
             },
             {
+              "source_ref": "D5/X_Frontier/Hearts",
+              "kind": "declaration-ready-mathematical-open"
+            },
+            {
               "source_ref": "D5/X_Frontier/MissionTickets",
               "kind": "governance"
             }
@@ -74,17 +79,66 @@ public sealed class TheoryCandidatesTests
         using var json = JsonDocument.Parse(result.Output);
         var candidates = json.RootElement.GetProperty("candidates").EnumerateArray().ToArray();
         Assert.Equal(
-            ["atom/fixture-atom", "frontier/D5/X_Frontier/GoldenUnitsUFD"],
+            [
+                "atom/fixture-atom",
+                "frontier/D5/X_Frontier/GoldenUnitsUFD",
+                "frontier/D5/X_Frontier/Hearts.o5_independence",
+                "frontier/D5/X_Frontier/Hearts.o6WeilPositivityStatement",
+            ],
             candidates.Select(static candidate => candidate.GetProperty("candidate_id").GetString()));
         Assert.DoesNotContain(candidates, candidate =>
             candidate.GetProperty("source_ref").GetString() is
                 "D5/X_Frontier/GovernanceTicket" or "D5/S0/Carrier/UnfinishedFact" or "partial-atom");
         Assert.Equal(
-            ["codex-formalize", "theorist"],
+            ["codex-formalize", "theorist", "prover", "prover"],
             candidates.Select(static candidate => candidate.GetProperty("downstream_lane").GetString()));
         Assert.All(candidates, static candidate =>
             Assert.Equal(1, candidate.EnumerateObject().Count(static property =>
                 property.NameEquals("downstream_lane"))));
+    }
+
+    [Fact]
+    public void DeclarationReadyFrontierEmitsOneAddressedCandidatePerOpenProposition()
+    {
+        var fixture = CandidateFixture();
+        var report = fixture.Reports[DeclarationReadyFrontierPath];
+        var statements = CanonicalStatementWriter.DeclarationStatementIds(
+                RepoPath.CreateKnown(DeclarationReadyFrontierPath),
+                report)
+            .ToDictionary(static statement => statement.DeclarationNameKey, StringComparer.Ordinal);
+
+        var result = Run(fixture);
+
+        Assert.True(result.Success, result.Error);
+        using var json = JsonDocument.Parse(result.Output);
+        var candidates = json.RootElement.GetProperty("candidates").EnumerateArray()
+            .Where(static candidate => candidate.GetProperty("downstream_lane").GetString() == "prover")
+            .ToDictionary(
+                static candidate => candidate.GetProperty("source_ref").GetString()!,
+                StringComparer.Ordinal);
+        Assert.Equal(
+            [
+                "D5/X_Frontier/Hearts.o5_independence",
+                "D5/X_Frontier/Hearts.o6WeilPositivityStatement",
+            ],
+            candidates.Keys.Order(StringComparer.Ordinal));
+        Assert.Equal(
+            "frontier/D5/X_Frontier/Hearts.o5_independence",
+            candidates["D5/X_Frontier/Hearts.o5_independence"]
+                .GetProperty("candidate_id").GetString());
+        Assert.Equal(
+            statements[report.Declarations.Single(static declaration =>
+                    declaration.Name.EndsWith(".o5_independence", StringComparison.Ordinal)).NameKey]
+                .StatementId.Value,
+            candidates["D5/X_Frontier/Hearts.o5_independence"]
+                .GetProperty("content_sha256").GetString());
+        Assert.Equal(
+            statements[report.Declarations.Single(static declaration =>
+                    declaration.Name.EndsWith(".o6WeilPositivityStatement", StringComparison.Ordinal)).NameKey]
+                .StatementId.Value,
+            candidates["D5/X_Frontier/Hearts.o6WeilPositivityStatement"]
+                .GetProperty("content_sha256").GetString());
+
     }
 
     [Fact]
@@ -424,10 +478,33 @@ public sealed class TheoryCandidatesTests
             + "def goldenUnitsPrincipalIdealDelivery : Unit := ()\n";
         fixture.Files[GovernanceFrontierPath] =
             "/- TASK D5-T0100\n    Harness work item. -/\ndef governanceTicket : Unit := ()\n";
+        fixture.Files[DeclarationReadyFrontierPath] =
+            "theorem o5_independence : True := by sorry\n"
+            + "def o6WeilPositivityStatement : Prop := True\n"
+            + "def supportValue : Nat := 0\n";
         fixture.Files[NonFrontierOpenPath] = "theorem unfinishedFact : True := by sorry\n";
         fixture.Reports["D5/X_Frontier/MissionTickets.lean"] = EmptyReport();
         fixture.Reports[MathematicalFrontierPath] = EmptyReport();
         fixture.Reports[GovernanceFrontierPath] = EmptyReport();
+        fixture.Reports[DeclarationReadyFrontierPath] = new LeanFileReport(
+            [],
+            [
+                new LeanDeclaration(
+                    "D5.X_Frontier.Hearts.o5_independence",
+                    "theorem",
+                    "statement-v1(uparams=[],type=ec(ns(n0,4:True),[]))",
+                    ["sorryAx"]),
+                new LeanDeclaration(
+                    "D5.X_Frontier.Hearts.o6WeilPositivityStatement",
+                    "def",
+                    "statement-v1(uparams=[],type=es(l0),value=ec(ns(n0,4:True),[]))",
+                    []),
+                new LeanDeclaration(
+                    "D5.X_Frontier.Hearts.supportValue",
+                    "def",
+                    "statement-v1(uparams=[],type=ec(ns(n0,3:Nat),[]),value=ei(ln(0)))",
+                    []),
+            ]);
         fixture.Reports[NonFrontierOpenPath] = new LeanFileReport(
             [],
             [new LeanDeclaration("unfinishedFact", "theorem", "True", ["sorryAx"])]);

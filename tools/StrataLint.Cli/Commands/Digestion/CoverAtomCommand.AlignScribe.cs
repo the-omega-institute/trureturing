@@ -55,7 +55,7 @@ internal static partial class CoverAtomCommand
 
         var report = leanReportSource.Load(current);
         var lean = ValidateLean(current, report);
-        var verified = scribeEmissionVerifier.Verify(report);
+        var verified = scribeEmissionVerifier.Verify(current, report);
         var documentGid = ScribeEmissionAttestation.DocumentGid(options.Gid);
         if (!verified.TryGet(documentGid, out var verifiedRecord)
             || !verified.ReferencesDeclaration(options.Gid))

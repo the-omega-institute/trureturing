@@ -44,7 +44,7 @@ internal static partial class IngestCommand
             var plannedDocument = LoadDocument(plannedSnapshot);
             var report = leanReportSource.Load(current);
             var lean = ValidateLean(plannedSnapshot, report);
-            var verifiedScribeEmissions = scribeEmissionVerifier.Verify(report);
+            var verifiedScribeEmissions = scribeEmissionVerifier.Verify(plannedSnapshot, report);
             var derived = DigestionStatusEvaluator.Evaluate(
                 plannedDocument,
                 plannedSnapshot,

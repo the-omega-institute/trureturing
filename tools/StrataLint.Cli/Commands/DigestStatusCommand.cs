@@ -68,7 +68,7 @@ internal static class DigestStatusCommand
 
             var leanReport = leanReportSource.Load(snapshot);
             var lean = ValidateLean(snapshot, leanReport);
-            var verifiedScribeEmissions = scribeEmissionVerifier.Verify(leanReport);
+            var verifiedScribeEmissions = scribeEmissionVerifier.Verify(snapshot, leanReport);
             var document = BackfillInventoryLoader.Load(snapshot);
             BackfillInventoryDocument? baselineDocument = null;
             RepositorySnapshot? baselineSnapshot = null;
@@ -122,7 +122,7 @@ internal static class DigestStatusCommand
             BackfillInventoryLoader.Load(snapshot),
             snapshot,
             ValidateLean(snapshot, leanReport),
-            scribeEmissionVerifier.Verify(leanReport),
+            scribeEmissionVerifier.Verify(snapshot, leanReport),
             BackfillInventoryLoader.Load(baseline),
             baselineSnapshot: baseline);
         if (evaluation.Findings.Length > 0)
