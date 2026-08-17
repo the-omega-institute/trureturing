@@ -93,7 +93,7 @@ internal static class DagLedgerSupersedeWriter
             static item => item.Material.RepoPath.Value,
             StringComparer.Ordinal))
         {
-            if (entry.Environment == pins)
+            if (!FrozenLedger.EnvironmentPinsChanged(pins, entry))
             {
                 continue;
             }
