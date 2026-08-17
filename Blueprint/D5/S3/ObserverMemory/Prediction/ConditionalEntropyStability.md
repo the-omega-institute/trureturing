@@ -25,5 +25,3 @@ A normalized full-support probability law is a special case: normalization is no
 ## References
 
 - Truth anchor: `D5/S3/ObserverMemory/Prediction/ConditionalEntropyStability.prediction_stability_depth_eq_conditional_entropy_zero`
-- Dependency: [D5/S3/Entropy/ConditionalEntropyEquality](../../Entropy/ConditionalEntropyEquality.md)
-- Dependency: [D5/S3/Entropy/Forgetting/CapacityMonotone](../../Entropy/Forgetting/CapacityMonotone.md)
