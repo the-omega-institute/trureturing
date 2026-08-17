@@ -113,6 +113,30 @@ public sealed class CoverageLedgerIndexTests
         "{\"event_type\":\"Freeze\",\"payload\":{\"frozen_node_id\":\"" + node
         + "\",\"node_path\":\"" + path + "\"}}\n";
 
+    // Reattest 会改 frozen_node_id(witness 含 source blob,重新 attest 即变):实测 971 个
+    // lineage 中 107 个记录过多于一个 frozen_node_id。该消费者原先对 Reattest 直接 break,
+    // 于是后续 Revoke 指向 Reattest 之后的 active id 时,active 表里没有它 ⟹ 被拒。
+    [Fact]
+    public void ReattestReplacesTheActiveNodeIdentityBeforeRevocation()
+    {
+        const string frozen = "sha256:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc";
+        const string reattested = "sha256:dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd";
+        const string path = "D5/S0/Carrier/Ring.lean";
+        var bytes = Encoding.UTF8.GetBytes(
+            "{\"event_type\":\"Genesis\",\"payload\":{}}\n"
+            + "{\"event_type\":\"Freeze\",\"payload\":{\"frozen_node_id\":\"" + frozen
+            + "\",\"input\":{\"descriptor_selector\":\"" + path + "\"}}}\n"
+            + "{\"event_type\":\"Reattest\",\"payload\":{\"frozen_node_id\":\"" + reattested
+            + "\",\"input\":{\"descriptor_selector\":\"" + path + "\"}}}\n"
+            + "{\"event_type\":\"Revoke\",\"payload\":{\"affected_frozen_node_ids\":[\"" + reattested + "\"]}}\n");
+        var syntax = Assert.IsType<DagLedgerLoadOutcome.Loaded>(DagLedgerLoader.Load(bytes)).Syntax;
+
+        var loaded = Assert.IsType<FrozenCoverageLoadOutcome.Loaded>(
+            FrozenCoverageLedger.Load(syntax));
+
+        Assert.Empty(loaded.ActiveFrozenPaths);
+    }
+
     [Fact]
     public void SchemaV4FreezeWithoutNodePathAliasIsIndexedByItsDescriptorSelector()
     {
