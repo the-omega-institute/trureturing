@@ -62,6 +62,23 @@ jobs:
           test "$(wc -c < /tmp/cirpt_section41.md)" -eq 47894
           printf '%s  %s\n' "$expected_md_sha" /tmp/cirpt_section41.md | sha256sum -c -
 
+          # Normalize only the newly appended payload. Existing target bytes remain untouched.
+          python3 - /tmp/cirpt_section41.md <<'PY'
+          import hashlib
+          import pathlib
+          import sys
+
+          path = pathlib.Path(sys.argv[1])
+          raw = path.read_text(encoding="utf-8")
+          clean = "\n".join(line.rstrip(" \t") for line in raw.splitlines())
+          if raw.endswith("\n"):
+              clean += "\n"
+          path.write_text(clean, encoding="utf-8")
+          data = path.read_bytes()
+          assert len(data) == 47879
+          assert hashlib.sha256(data).hexdigest() == "4894c76fcb938ed79820443215fa2a9e765ccfcb85850e4039a1b87e63077af3"
+          PY
+
           old_sha="$(sha256sum "$target" | awk '{print $1}')"
           old_bytes="$(wc -c < "$target")"
           old_lines="$(wc -l < "$target")"
