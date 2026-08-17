@@ -75,41 +75,57 @@ public sealed class DocumentGraphTests
     }
 
     [Fact]
-    public void ReferenceLinksAreDeterministicAndRoleOrdered()
+    public void ReferenceLinksHaveCanonicalBytesAcrossOrderingAndGraphContext()
     {
         var lean = LeanDeclarationRef.Create("D5/S0/Test/Target.anchor");
         var target = Document("D5/S0/Test/Target");
+        var auxiliary = Document("D5/S0/Test/Auxiliary");
         var source = Document(
             "D5/S0/Test/Source",
             [
+                DocumentEdge.Dependency.Create(GidRef.Create("D5/S0/Test/Target")),
                 DocumentEdge.NarrativeReference.ToDescribe(
                     GidRef.Create("D5/S0/Test/Target"), DescribeId.Create("target")),
                 DocumentEdge.TruthAnchor.Create(lean),
-                DocumentEdge.Dependency.Create(GidRef.Create("D5/S0/Test/Target")),
+                DocumentEdge.Dependency.Create(GidRef.Create("D5/S0/Test/Auxiliary")),
             ]);
         var report = LeanReport(lean);
         var catalog = DeclarationCatalog.Create(report);
-        var graph = DocumentGraphAssembler.Assemble([source, target], catalog);
+        var graph = DocumentGraphAssembler.Assemble([source, target, auxiliary], catalog);
         Assert.Empty(graph.Findings);
 
         var first = CanonicalMarkdownWriter.Write(source, catalog, graph: graph);
         var second = CanonicalMarkdownWriter.Write(source, catalog, graph: graph);
-        Assert.True(first.AsSpan().SequenceEqual(second.AsSpan()));
-        var markdown = Encoding.UTF8.GetString(first.AsSpan());
-        var targetMarkdown = Encoding.UTF8.GetString(
-            CanonicalMarkdownWriter.Write(target, catalog, graph: graph).AsSpan());
-        var truthIndex = markdown.IndexOf(
-            "- Truth anchor: `D5/S0/Test/Target.anchor`", StringComparison.Ordinal);
-        var dependencyIndex = markdown.IndexOf(
-            "- Dependency: [D5/S0/Test/Target](Target.md)", StringComparison.Ordinal);
-        var narrativeIndex = markdown.IndexOf(
-            "- Narrative reference: [D5/S0/Test/Target#describe/target](Target.md#describe-target)",
-            StringComparison.Ordinal);
-        Assert.Contains("## References", markdown, StringComparison.Ordinal);
-        Assert.Contains("<a id=\"describe-target\"></a>", targetMarkdown, StringComparison.Ordinal);
-        Assert.True(
-            truthIndex >= 0 && truthIndex < dependencyIndex && dependencyIndex < narrativeIndex,
-            $"indices={truthIndex},{dependencyIndex},{narrativeIndex}\n{markdown}");
+        var expectedSource = Encoding.UTF8.GetBytes(
+            "# D5/S0/Test/Source\n\n"
+            + "## Abstract\n\n"
+            + "Test document.\n\n"
+            + "**Remark 1.1 (Target).**\n\n"
+            + "$$\n1\n$$\n\n"
+            + "*Source.* Repository-derived.\n\n"
+            + "*Commentary.*\n\n"
+            + "Body.\n\n"
+            + "## References\n\n"
+            + "- Truth anchor: `D5/S0/Test/Target.anchor`\n"
+            + "- Dependency: [D5/S0/Test/Auxiliary](Auxiliary.md)\n"
+            + "- Dependency: [D5/S0/Test/Target](Target.md)\n"
+            + "- Narrative reference: [D5/S0/Test/Target#describe/target](Target.md#describe-target)\n");
+        var expectedTarget = Encoding.UTF8.GetBytes(
+            "# D5/S0/Test/Target\n\n"
+            + "## Abstract\n\n"
+            + "Test document.\n\n"
+            + "<a id=\"describe-target\"></a>\n\n"
+            + "**Remark 1.1 (Target).**\n\n"
+            + "$$\n1\n$$\n\n"
+            + "*Source.* Repository-derived.\n\n"
+            + "*Commentary.*\n\n"
+            + "Body.\n");
+
+        Assert.Equal(expectedSource, first.ToArray());
+        Assert.Equal(expectedSource, second.ToArray());
+        Assert.Equal(
+            expectedTarget,
+            CanonicalMarkdownWriter.Write(target, catalog, graph: graph).ToArray());
     }
 
     [Fact]

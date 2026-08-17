@@ -486,7 +486,8 @@ public sealed partial class DigestionLedgerTests
 
     private static DigestionEntryEvaluation EvaluateDeclarationCoverage(
         string declarationGid,
-        IEnumerable<string> describedDeclarations)
+        IEnumerable<string> describedDeclarations,
+        bool includeCommittedEmission = true)
     {
         var source = Encoding.UTF8.GetBytes("# GICT\n\n**定理 1.1(Test)**。claim。\n");
         var atom = Assert.Single(GictAtomizer.Atomize(source, DigestionTestSupport.Rules).Claims);
@@ -520,12 +521,18 @@ public sealed partial class DigestionLedgerTests
             coverageReceipts: coverage,
             scribeReceipts: scribe,
             coverageGid: declarationGid);
-        var snapshot = Snapshot(
+        var snapshotFiles = new List<(string Path, byte[] Bytes)>
+        {
             ("docs/source.md", source),
             CasFile(atom),
             (targetPath, target),
             (ScribeEmissionAttestation.DefinitionPath(moduleGid), definition),
-            (ScribeEmissionAttestation.EmissionPath(moduleGid), emission));
+        };
+        if (includeCommittedEmission)
+        {
+            snapshotFiles.Add((ScribeEmissionAttestation.EmissionPath(moduleGid), emission));
+        }
+        var snapshot = Snapshot([.. snapshotFiles]);
 
         return Assert.Single(DigestionStatusEvaluator.Evaluate(
             BackfillInventoryLoader.Load(yaml),

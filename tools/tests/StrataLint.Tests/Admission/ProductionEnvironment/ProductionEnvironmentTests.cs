@@ -305,7 +305,7 @@ public sealed partial class ProductionEnvironmentTests
     }
 
     [Fact]
-    public void CheckRoutesScribeDefinitionEvolutionToProtectedSurfaceBeforeBaseEmitterMismatch()
+    public void CheckRequiresCurrentProducerCapabilityForScribeDefinitionEvolution()
     {
         using var temporary = new TemporaryDirectory();
         var fixture = new RuleFixture();
@@ -326,23 +326,12 @@ public sealed partial class ProductionEnvironmentTests
 
         var outcome = CheckWithReports(environment, fixture);
 
-        Assert.True(
-            outcome is AdmissionOutcome.ProtectedSurfaceChange,
-            outcome switch
-            {
-                AdmissionOutcome.RuleRejected rejected => string.Join(
-                    '\n',
-                    rejected.Diagnostics.Select(static diagnostic => diagnostic.Render())),
-                AdmissionOutcome.InfrastructureFailure failure => failure.Message,
-                _ => outcome.GetType().FullName,
-            });
-        var protectedChange = (AdmissionOutcome.ProtectedSurfaceChange)outcome;
-        Assert.Contains(protectedChange.ChangeSet.Paths, path => path.Value == scribePath);
-        Assert.Contains(protectedChange.Sl022Diagnostics, diagnostic => diagnostic.Path == scribePath);
+        var failure = Assert.IsType<AdmissionOutcome.InfrastructureFailure>(outcome);
+        Assert.Contains("Scribe emission verification failed", failure.Message, StringComparison.Ordinal);
     }
 
     [Fact]
-    public void CheckRoutesAnyProtectedChangeBeforeBaseEmitterDependencyMismatch()
+    public void CheckRequiresCurrentProducerCapabilityForAnyProtectedChange()
     {
         using var temporary = new TemporaryDirectory();
         var fixture = TrustedFrozenFixture();
@@ -357,10 +346,8 @@ public sealed partial class ProductionEnvironmentTests
 
         var outcome = CheckWithReports(environment, fixture);
 
-        var protectedChange = Assert.IsType<AdmissionOutcome.ProtectedSurfaceChange>(outcome);
-        Assert.Contains(
-            protectedChange.ChangeSet.Paths,
-            path => path.Value == RuleFixture.SyntheticProtectedPath);
+        var failure = Assert.IsType<AdmissionOutcome.InfrastructureFailure>(outcome);
+        Assert.Contains("Scribe emission verification failed", failure.Message, StringComparison.Ordinal);
     }
 
     [Fact]

@@ -223,24 +223,7 @@ public static class CanonicalMarkdownWriter
 
         if (describe.LiteratureReference is { } literature)
         {
-            if (citations is null
-                || !citations.TryGetValue(literature.BibKey.Value, out var citation))
-            {
-                throw new InvalidOperationException(
-                    $"Academic citation is unavailable for {literature.Value}.");
-            }
-
-            builder.Append("\n\n*Citation.* ")
-                .Append(citation.Authors)
-                .Append(" (")
-                .Append(citation.Year)
-                .Append("). *")
-                .Append(citation.Title)
-                .Append("*. DOI: [")
-                .Append(citation.Doi.Value)
-                .Append("](https://doi.org/")
-                .Append(citation.Doi.Value)
-                .Append(").");
+            AppendAcademicReference(builder, "Citation", literature, citations);
         }
         else
         {
@@ -251,6 +234,14 @@ public static class CanonicalMarkdownWriter
                 "suspected-novel" => "Suspected novel.",
                 var provenance => provenance + ".",
             });
+            foreach (var acknowledgement in describe.AcknowledgementReferences)
+            {
+                AppendAcademicReference(
+                    builder,
+                    "Acknowledgement",
+                    acknowledgement,
+                    citations);
+            }
         }
 
         builder.Append("\n\n*Commentary.*\n\n");
@@ -263,6 +254,34 @@ public static class CanonicalMarkdownWriter
             citations,
             referencedDescribeIds,
             ref describeNumber);
+    }
+
+    private static void AppendAcademicReference(
+        StringBuilder builder,
+        string label,
+        LibraryNoteRef reference,
+        IReadOnlyDictionary<string, LiteratureCitation>? citations)
+    {
+        if (citations is null
+            || !citations.TryGetValue(reference.BibKey.Value, out var citation))
+        {
+            throw new InvalidOperationException(
+                $"Academic citation is unavailable for {reference.Value}.");
+        }
+
+        builder.Append("\n\n*")
+            .Append(label)
+            .Append(".* ")
+            .Append(citation.Authors)
+            .Append(" (")
+            .Append(citation.Year)
+            .Append("). *")
+            .Append(citation.Title)
+            .Append("*. DOI: [")
+            .Append(citation.Doi.Value)
+            .Append("](https://doi.org/")
+            .Append(citation.Doi.Value)
+            .Append(").");
     }
 
     private static IReadOnlySet<string> ReferencedDescribeIds(

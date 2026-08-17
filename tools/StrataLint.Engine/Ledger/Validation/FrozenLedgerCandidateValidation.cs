@@ -256,7 +256,10 @@ public static partial class FrozenLedger
                 FrozenLedgerReferenceProjection.LegacyReattestPayloadFields)
             || HasExactObjectFields(
                 payload,
-                FrozenLedgerReferenceProjection.LegacyReattestPayloadFieldsV3);
+                FrozenLedgerReferenceProjection.LegacyReattestPayloadFieldsV3)
+            || HasExactObjectFields(
+                payload,
+                FrozenLedgerReferenceProjection.LegacyReattestPayloadFieldsV4);
         if (legacy)
         {
             if (requireAxiomClosure && !payload.TryGetProperty("axiom_closure", out _))
@@ -276,12 +279,21 @@ public static partial class FrozenLedger
         TrustedFrozenGitReferences trustedReferences)
     {
         RequireEventPayloadFields(payload, "Reattest");
+        var caseId = RequiredString(payload, "case_id");
+        var currentShape = HasExactObjectFields(
+            payload,
+            FrozenLedgerReferenceProjection.LegacyReattestPayloadFieldsV4);
+        if (!active.TryGetValue(caseId, out var prior))
+        {
+            throw new FormatException("Reattest targets an inactive or unknown case.");
+        }
+
         var result = new FrozenReattestPayload(
-            RequiredString(payload, "case_id"),
+            caseId,
             ParseInput(payload.GetProperty("input")),
-            RequiredString(payload, "input_fingerprint"),
+            currentShape ? prior.Payload.InputFingerprint : RequiredString(payload, "input_fingerprint"),
             RequiredString(payload, "previous_attestation_event_hash"),
-            RequiredString(payload, "semantic_receipt"))
+            currentShape ? prior.Payload.SemanticReceipt : RequiredString(payload, "semantic_receipt"))
         {
             AxiomClosure = ParseOptionalAxiomClosure(payload),
         };
@@ -322,17 +334,22 @@ public static partial class FrozenLedger
             throw new FormatException("New Reattest payload must record axiom_closure.");
         }
 
+        var witnessText = RequiredString(payload, "witness_id");
+        var frozenText = RequiredString(payload, "frozen_node_id");
+        var currentShape = HasExactObjectFields(
+            payload,
+            FrozenLedgerReferenceProjection.ExtendedReattestPayloadFieldsV4);
         var result = new FrozenReattestPayload(
             RequiredString(payload, "case_id"),
             ParseDeclarationStatementIds(payload),
-            ParseFrozenNodeId(RequiredString(payload, "frozen_node_id"), "Reattest node"),
+            ParseFrozenNodeId(frozenText, "Reattest node"),
             ParseInput(payload.GetProperty("input")),
-            RequiredString(payload, "input_fingerprint"),
+            currentShape ? witnessText : RequiredString(payload, "input_fingerprint"),
             ParseFrozenNodeIds(payload, "prerequisite_frozen_node_ids"),
             RequiredString(payload, "previous_attestation_event_hash"),
-            RequiredString(payload, "semantic_receipt"),
+            currentShape ? frozenText : RequiredString(payload, "semantic_receipt"),
             ParseStatementId(RequiredString(payload, "statement_id"), "Reattest statement"),
-            ParseWitnessId(RequiredString(payload, "witness_id"), "Reattest witness"))
+            ParseWitnessId(witnessText, "Reattest witness"))
         {
             AxiomClosure = ParseOptionalAxiomClosure(payload),
         };

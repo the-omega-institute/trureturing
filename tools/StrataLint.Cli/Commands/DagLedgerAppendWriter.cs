@@ -157,7 +157,8 @@ internal static class DagLedgerAppendWriter
             var identity = FrozenLedgerCanonicalWriter.EventIdentity(
                 eventType,
                 payload,
-                encoded.Hash);
+                encoded.Hash,
+                schemaVersion);
             var path = RepoPath.CreateKnown(
                 $"{FrozenLedgerChangeClassifier.AcceptedRoot}/{identity[7..]}.json");
             files.Add(new RepositoryFile(

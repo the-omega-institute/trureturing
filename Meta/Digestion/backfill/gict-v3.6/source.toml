@@ -1,3 +1,4 @@
 source_id = "gict-v3.6"
 path = "docs/develop/theory/GICT.md"
 atomizer = "gict-v1"
+acknowledged_stale = ["gict-coarse-f682c5cea3d83e7ec47dcf541da517f7dfc05f4957021b2a36c0b49746a568f4"]

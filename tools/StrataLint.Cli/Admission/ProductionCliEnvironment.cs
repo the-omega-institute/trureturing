@@ -1,5 +1,4 @@
 using System.Collections.Immutable;
-using System.Text;
 using System.Text.Json;
 using StrataLint.Engine;
 
@@ -154,8 +153,7 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
             var verifiedScribeEmissions = VerifyScribeForAdmission(
                 scribeEmissionVerifier,
                 current,
-                candidateLeanReport,
-                bootstrap);
+                candidateLeanReport);
             var evaluation = SnapshotAdmissionCore.Evaluate(
                 current,
                 baseline,
@@ -455,64 +453,6 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
             string.Empty);
     }
 
-    public ExplicitCommandResult ValidateBlueprintPins(IReadOnlyList<string> arguments)
-    {
-        try
-        {
-            if (arguments.Count != 1)
-            {
-                return new ExplicitCommandResult(
-                    2,
-                    string.Empty,
-                    "USAGE: StrataLint validate-blueprint-pins PIN_MANIFEST|-\n");
-            }
-
-            var manifestBytes = arguments[0] == "-"
-                ? ReadStandardInput()
-                : ReadRepositoryFile(arguments[0]);
-            var loaded = BlueprintPinManifestLoader.Load(manifestBytes);
-            if (loaded is BlueprintPinManifestLoadOutcome.Rejected malformed)
-            {
-                return new ExplicitCommandResult(
-                    1,
-                    $"BLUEPRINT_PINS_REJECTED manifest: {malformed.Message}\n",
-                    string.Empty);
-            }
-
-            var manifest = ((BlueprintPinManifestLoadOutcome.Loaded)loaded).Manifest;
-            var outcome = BlueprintPinValidator.Validate(
-                LoadRegistry().Policy,
-                Decode(repository.ReadCurrent()),
-                manifest);
-            if (outcome is BlueprintPinValidationOutcome.Rejected rejected)
-            {
-                return new ExplicitCommandResult(
-                    1,
-                    string.Concat(rejected.Diagnostics.Select(
-                        static diagnostic => $"BLUEPRINT_PINS_REJECTED {diagnostic}\n")),
-                    string.Empty);
-            }
-
-            var accepted = (BlueprintPinValidationOutcome.Accepted)outcome;
-            var output = $"BLUEPRINT_PINS_ACCEPTED gid={accepted.TargetGid} "
-                + $"generality={accepted.Generality} anchors={accepted.AnchorCount} "
-                + $"imports={accepted.ImportCount}\n";
-            foreach (var unverified in accepted.Unverified)
-            {
-                output += $"ASSUMED-UNVERIFIED {unverified}\n";
-            }
-
-            return new ExplicitCommandResult(0, output, string.Empty);
-        }
-        catch (Exception exception)
-        {
-            return new ExplicitCommandResult(
-                2,
-                string.Empty,
-                $"BLUEPRINT_PINS_INFRASTRUCTURE {exception.Message}\n");
-        }
-    }
-
     public CommandResult SelfTest(IReadOnlyList<string> arguments)
     {
         try
@@ -569,23 +509,14 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
     internal static VerifiedScribeEmissions? VerifyScribeForAdmission(
         IScribeEmissionVerifier? verifier,
         RepositorySnapshot snapshot,
-        LeanAxiomReport report,
-        BootstrapOutcome bootstrap)
+        LeanAxiomReport report)
     {
         if (verifier is null)
         {
             return null;
         }
 
-        try
-        {
-            return verifier.Verify(snapshot, report);
-        }
-        catch (InvalidOperationException) when (
-            bootstrap is BootstrapOutcome.ProtectedSurfaceVerificationRequired)
-        {
-            return null;
-        }
+        return verifier.Verify(snapshot, report);
     }
 
     public CommandResult RenderDag(IReadOnlyList<string> arguments) =>
@@ -596,6 +527,9 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
 
     public CommandResult ReattestLedger(IReadOnlyList<string> arguments) =>
         DagLedgerReattestWriter.Reattest(repositoryRoot, repository, arguments);
+
+    public CommandResult RevokeLedger(IReadOnlyList<string> arguments) =>
+        DagLedgerRevokeWriter.Revoke(repositoryRoot, repository, arguments);
 
     public CommandResult SupersedeLedger(IReadOnlyList<string> arguments) =>
         DagLedgerSupersedeWriter.Supersede(repositoryRoot, repository, arguments);

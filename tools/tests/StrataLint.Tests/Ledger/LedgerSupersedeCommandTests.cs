@@ -61,6 +61,10 @@ public sealed class LedgerSupersedeCommandTests
         Assert.Single(references.CommitOids);
         Assert.Single(references.TreeOids);
         Assert.Equal(4, references.BlobOids.Length);
+        var supersede = Assert.Single(view.Events, static item => item.EventType == "Supersede");
+        Assert.False(
+            supersede.Payload.GetProperty("input").TryGetProperty("supporting_blob_oids", out _),
+            "Supersede input duplicated its named environment pins");
 
         var afterFirst = FrozenLedgerTestData.ReadLedgerDirectory(fixture.LedgerPath);
         var second = fixture.Environment.SupersedeLedger(arguments);
@@ -69,5 +73,22 @@ public sealed class LedgerSupersedeCommandTests
         Assert.Contains("no changed environment pins", second.Output, StringComparison.Ordinal);
         Assert.Equal(afterFirst, FrozenLedgerTestData.ReadLedgerDirectory(fixture.LedgerPath));
         Assert.Single(fixture.Gateway.FrozenReferenceValidations);
+    }
+
+    [Fact]
+    public void ProductionSupersedeWriterEmitsCurrentSchemaV4()
+    {
+        using var fixture = new LedgerAppendCommandTests.LedgerAppendFixture(pinBump: true);
+
+        var result = fixture.Environment.SupersedeLedger(
+            ["--candidate-lean-report", fixture.ReportPath]);
+
+        Assert.True(result.Success, result.Error);
+        var files = DagLedgerCommandPreparation.ReadLedgerDirectoryFiles(fixture.LedgerPath);
+        var view = FrozenLedgerBaseViewReader.Read(RepositorySnapshot.Create(
+            files.ToImmutableDictionary(static file => file.Path)));
+        var supersede = Assert.Single(view.Events, static item => item.EventType == "Supersede");
+        Assert.Equal(FrozenLedgerCanonicalWriter.CurrentDagSchemaVersion, supersede.SchemaVersion);
+        Assert.Equal(4, supersede.SchemaVersion);
     }
 }

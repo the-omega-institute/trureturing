@@ -42,7 +42,8 @@ public sealed partial class FormulaCorpusInventoryTests
     [Fact]
     public void InventoryAllLegacyLatexStatementsAndSyntaxFamilies()
     {
-        var entries = DocumentDefinitions.Discover(typeof(DocumentDefinitions).Assembly)
+        var definitions = DocumentDefinitions.Discover(typeof(DocumentDefinitions).Assembly);
+        var entries = definitions
             .SelectMany(static definition => EnumerateDescribe(definition.Document.Content)
                 .Where(static node => node.StatementFormula is not null)
                 .Select(node => new
@@ -77,6 +78,7 @@ public sealed partial class FormulaCorpusInventoryTests
         AssertSyntaxFamily(corpus, "type arrow", "\\to", "\\mapsto");
         AssertSyntaxFamily(corpus, "large operator", "\\sum", "\\prod", "\\int", "\\lim");
         AssertSyntaxFamily(corpus, "presentation", "\\begin", "\\text", "\\quad");
+        AssertRendererVocabularyCoverage(definitions);
     }
 
     [Fact]

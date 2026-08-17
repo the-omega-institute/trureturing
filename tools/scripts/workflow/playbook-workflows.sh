@@ -105,21 +105,16 @@ commit_all_if_needed() {
 }
 
 freeze_exists() {
-  local active_state current_blob current_identity
-  local ledger_files=()
+  local active_state current_blob current_identity freeze_case_ids grep_output grep_status
+  local ledger_file target_case_id
+  local git_grep_arguments=() module_ledger_files=() related_ledger_files=()
+  local target_case_ids=()
   if ! command -v jq >/dev/null 2>&1; then
     echo "PLAYBOOK_INVALID jq is required to inspect $FROZEN_LEDGER" >&2
     return 2
   fi
   if [[ ! -d "$FROZEN_LEDGER" ]]; then
     echo "PLAYBOOK_INVALID frozen ledger is missing: $FROZEN_LEDGER" >&2
-    return 2
-  fi
-  while IFS= read -r ledger_file; do
-    ledger_files+=("$ledger_file")
-  done < <(compgen -G "$FROZEN_LEDGER/*.json" || true)
-  if [[ "${#ledger_files[@]}" -gt 0 ]] && ! jq empty "${ledger_files[@]}" >/dev/null; then
-    echo "PLAYBOOK_INVALID frozen ledger contains invalid JSON: $FROZEN_LEDGER" >&2
     return 2
   fi
 
@@ -135,13 +130,86 @@ freeze_exists() {
       return 2
       ;;
   esac
-  [[ "${#ledger_files[@]}" -gt 0 ]] || return 1
 
-  if ! active_state="$(jq -sc --arg node "$MODULE_PATH" --arg identity "$current_identity" '
-      ([.[]
+  if grep_output="$(git grep --untracked -l -F -e "$MODULE_PATH" \
+      -- "$FROZEN_LEDGER/*.json" 2>&1)"; then
+    while IFS= read -r ledger_file; do
+      [[ -z "$ledger_file" ]] || module_ledger_files+=("$ledger_file")
+    done <<< "$grep_output"
+  else
+    grep_status=$?
+    if [[ "$grep_status" -eq 1 ]]; then
+      return 1
+    fi
+    echo "PLAYBOOK_INVALID failed to locate target module ledger shards: $grep_output" >&2
+    return 2
+  fi
+
+  if ! freeze_case_ids="$(jq -rsc --arg node "$MODULE_PATH" '
+      map(select(.event_type == "Freeze" and .payload.input.descriptor_selector == $node))
+      | map(
+          (.payload.case_id // null) as $case
+          | if (($case | type) == "string") then
+              $case
+            else
+              error("Freeze is missing its case identity")
+            end)
+      | unique[]
+    ' "${module_ledger_files[@]}" 2>&1)"; then
+    echo "PLAYBOOK_INVALID failed to inspect target module ledger shards: $freeze_case_ids" >&2
+    return 2
+  fi
+  [[ -n "$freeze_case_ids" ]] || return 1
+
+  while IFS= read -r target_case_id; do
+    [[ -z "$target_case_id" ]] || target_case_ids+=("$target_case_id")
+  done <<< "$freeze_case_ids"
+  git_grep_arguments=(grep --untracked -l -F)
+  for target_case_id in "${target_case_ids[@]}"; do
+    git_grep_arguments+=(-e "$target_case_id")
+  done
+  git_grep_arguments+=(-- "$FROZEN_LEDGER/*.json")
+  if grep_output="$(git "${git_grep_arguments[@]}" 2>&1)"; then
+    while IFS= read -r ledger_file; do
+      [[ -z "$ledger_file" ]] || related_ledger_files+=("$ledger_file")
+    done <<< "$grep_output"
+  else
+    grep_status=$?
+    if [[ "$grep_status" -eq 1 ]]; then
+      echo "PLAYBOOK_INVALID target Freeze case has no ledger shards" >&2
+    else
+      echo "PLAYBOOK_INVALID failed to locate target case ledger shards: $grep_output" >&2
+    fi
+    return 2
+  fi
+
+  if ! active_state="$(jq -sc \
+      --arg node "$MODULE_PATH" \
+      --arg identity "$current_identity" \
+      --arg target_cases "$freeze_case_ids" '
+      ($target_cases | split("\n")) as $target_case_ids
+      | [.[]
+        | select(
+            if (.event_type == "Freeze"
+                or .event_type == "Reattest"
+                or .event_type == "Supersede") then
+              (.payload.case_id // null) as $case
+              | (($case | type) == "string"
+                  and (($target_case_ids | index($case)) != null))
+            elif .event_type == "Revoke" then
+              (.payload.affected_case_ids // null) as $cases
+              | if (($cases | type) != "array") then
+                  error("Revoke is missing affected active identities")
+                else
+                  any($cases[];
+                    . as $case | (($target_case_ids | index($case)) != null))
+                end
+            else
+              false
+            end)] as $events
+      | ([$events[]
         | select(.event_type == "Revoke")
         | .payload.affected_frozen_node_ids[]] | unique) as $revoked_ids
-      | . as $events
       | (reduce $events[] as $event ({};
           ($event.event_hash // null) as $event_hash
           | if (($event_hash | type) == "string") then .[$event_hash] = $event else . end
@@ -193,7 +261,7 @@ freeze_exists() {
         elif $event.event_type == "Freeze" then
           ($event.payload.case_id // null) as $case
           | ($event.payload.frozen_node_id // null) as $frozen_id
-          | ($event.payload.node_path // null) as $path
+          | ($event.payload.input.descriptor_selector // null) as $path
           | ($event.payload.input.descriptor_blob_oid // null) as $blob
           | if (($case | type) != "string"
               or ($frozen_id | type) != "string"
@@ -247,8 +315,8 @@ freeze_exists() {
       | with_entries(
           select(.value.frozen_node_id as $id | ($revoked_ids | index($id) | not)))
       | any(.[]; .node_path == $node and .descriptor_blob_oid == $identity)
-    ' "${ledger_files[@]}" 2>&1)"; then
-    echo "PLAYBOOK_INVALID failed to replay frozen ledger $FROZEN_LEDGER: $active_state" >&2
+    ' "${related_ledger_files[@]}" 2>&1)"; then
+    echo "PLAYBOOK_INVALID failed to replay target module frozen ledger shards: $active_state" >&2
     return 2
   fi
 

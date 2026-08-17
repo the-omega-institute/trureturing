@@ -376,7 +376,8 @@ internal static class DagLedgerCommandPreparation
             var index = remaining.FindIndex(item => item.EventType switch
             {
                 "Genesis" => result.Count == 0,
-                "Freeze" => DependenciesPresent(item.Payload, "prerequisite_frozen_node_ids", identities),
+                "Freeze" => result.Count > 0
+                    && DependenciesPresent(item.Payload, "prerequisite_frozen_node_ids", identities),
                 "Reattest" => item.Payload.TryGetProperty("previous_attestation_event_hash", out var previous)
                     && hashes.Contains(previous.GetString()!),
                 FrozenLedger.SupersedeEventType =>
@@ -391,15 +392,17 @@ internal static class DagLedgerCommandPreparation
             });
             if (index < 0)
             {
-                throw new InvalidOperationException("frozen ledger has no valid linear replay order");
+                throw new InvalidOperationException(
+                    "frozen ledger has no valid linear replay order; remaining="
+                    + string.Join(",", remaining.Select(static item =>
+                        $"{item.EventType}:{item.Identity}")));
             }
 
             var item = remaining[index];
             remaining.RemoveAt(index);
             result.Add(item);
             identities.Add(item.Identity);
-            if (item.EventType == FrozenLedger.SupersedeEventType
-                && item.Payload.TryGetProperty("frozen_node_id", out var frozenNodeId)
+            if (item.Payload.TryGetProperty("frozen_node_id", out var frozenNodeId)
                 && frozenNodeId.ValueKind == JsonValueKind.String)
             {
                 identities.Add(frozenNodeId.GetString()!);
@@ -522,12 +525,12 @@ internal static class DagLedgerCommandPreparation
             FrozenContentAddress.ComputeGitBlobOid(manifest.RawBytes.AsSpan(), algorithm));
         return lakefiles.Length == 1
             ? result with
-        {
-            LakefilePath = lakefiles[0],
-            LakefileBlobOid = FrozenContentAddress.ComputeGitBlobOid(
+            {
+                LakefilePath = lakefiles[0],
+                LakefileBlobOid = FrozenContentAddress.ComputeGitBlobOid(
                 snapshot.Files[RepoPath.CreateKnown(lakefiles[0])].RawBytes.AsSpan(),
                 algorithm),
-        }
+            }
             : result;
     }
 

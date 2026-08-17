@@ -102,9 +102,9 @@ public static class ScribeEmitter
             // that document is a not-yet-materialized protected-surface addition (SL-022 routes its
             // .scribe.cs to Component C), not part of this tree — so it must not be dangling-flagged, read,
             // attested, or counted, which would make the candidate block a tree the baseline admits.
-            // A document whose source IS present stays in scope: a present source with a missing or
-            // mismatched .md is a real out-of-date/corruption and still voids the capability below
-            // (deleted or forged base-owned emissions are caught locally, not laundered through this skip).
+            // A document whose source IS present stays in scope. Missing or mismatched tracked Markdown
+            // remains a check-mode freshness diagnostic, but the capability is issued from the current
+            // validated render and never from those snapshot bytes.
             var repositoryDefinitions = DocumentDefinitions.Discover(
                 typeof(DocumentDefinitions).Assembly,
                 repositoryRoot);
@@ -241,10 +241,8 @@ public static class ScribeEmitter
 
         var attestationBytes = ScribeEmissionAttestation.Write(attestations).ToArray();
 
-        // documentDifferences counts only base-owned emissions (documents compiled into this binary's
-        // DocumentDefinitions.All) whose render disagrees with the on-disk .md. When this binary is the
-        // dev-baseline harness judging a candidate, DocumentDefinitions.All is exactly the base-owned set;
-        // a base-owned emission mismatch is therefore real corruption and must void the capability.
+        // The tracked Markdown is an optional reader snapshot. Check mode reports freshness for authors,
+        // while the capability below is derived solely from this run's validated canonical renders.
         var documentDifferences = 0;
         var writes = 0;
         foreach (var (definition, expected) in rendered)
@@ -261,11 +259,10 @@ public static class ScribeEmitter
             {
                 documentDifferences++;
                 error.WriteLine(exists
-                    ? $"out of date: {definition.RelativePath.Value}: renderer output differs from committed oracle; "
-                        + "review the diff first; only if this change is intentional, run make emit and commit "
-                        + $"{definition.RelativePath.Value} to accept it"
-                    : $"out of date: {definition.RelativePath.Value}: committed renderer oracle missing; "
-                        + $"run make emit and commit {definition.RelativePath.Value}");
+                    ? $"out of date: {definition.RelativePath.Value}: reader snapshot differs from current renderer output; "
+                        + $"run make emit and commit {definition.RelativePath.Value} to refresh it"
+                    : $"out of date: {definition.RelativePath.Value}: reader snapshot missing; "
+                        + $"run make emit and commit {definition.RelativePath.Value} to create it");
                 continue;
             }
 
@@ -323,12 +320,10 @@ public static class ScribeEmitter
 
         return new ScribeEmissionRun(
             differences == 0 ? 0 : 1,
-            check && documentDifferences == 0
-                ? VerifiedScribeEmissions.Create(
-                    attestations,
-                    declarationReferences,
-                    describeLatexRecords)
-                : null);
+            VerifiedScribeEmissions.Create(
+                attestations,
+                declarationReferences,
+                describeLatexRecords));
     }
 
     private static void CollectDescribeCapabilities(

@@ -20,7 +20,7 @@ internal sealed class LandauCommutingCollapseDocument : IScribeDocumentDefinitio
                     "chsh_square_eq_four_of_local_pair_commutes"),
                 H("Local commutativity collapses the CHSH square"),
                 StatementSource.FromAuthor(CommutingCollapseFormula()),
-                AssessedProvenance.FromRepo(),
+                AssessedProvenance.FromRepo(Landau),
                 Blocks(
                     Paragraph(Text(
                         "Let A0 and A1 and B0 and B1 be finite complex Hermitian " +
@@ -29,15 +29,10 @@ internal sealed class LandauCommutingCollapseDocument : IScribeDocumentDefinitio
                         "The proof specializes LandauIdentity.landau_identity: the local " +
                         "commutation equality makes one commutator, and hence their " +
                         "Kronecker product, zero.")),
-                    Paragraph(
-                        Text(
-                            "Contextual historical credit and the verified bibliographic " +
-                            "metadata and access limit are recorded in "),
-                        Ref(Landau.Value),
-                        Text(
-                            ". The article text was not readable, so this repository-derived " +
-                            "provenance does not claim that the paper states this exact " +
-                            "commuting-pair corollary.")),
+                    Paragraph(Text(
+                        "The acknowledged article's full text was not readable, so this " +
+                        "repository-derived provenance does not claim that the article " +
+                        "states this exact commuting-pair corollary.")),
                     Paragraph(Text(
                         "This is only the algebraic square equality under a commuting local " +
                         "pair. It does not assert an expectation bound of two, an " +

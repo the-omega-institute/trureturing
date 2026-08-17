@@ -55,29 +55,6 @@ public sealed class CliOutcomeTests
     }
 
     [Fact]
-    public void ValidateBlueprintPinsDelegatesToTheAuthoringEnvironment()
-    {
-        var unsupportedAnchor = string.Concat("pz", "g/proposition/9.2");
-        var rejection = $"BLUEPRINT_PINS_REJECTED anchor '{unsupportedAnchor}' is not accepted\n";
-        var console = new BufferedConsole();
-        var environment = new StubCliEnvironment(
-            Admitted(),
-            blueprintPins: new ExplicitCommandResult(
-                1,
-                rejection,
-                string.Empty));
-
-        var exitCode = CliApplication.Run(
-            ["validate-blueprint-pins", "pins.json"],
-            environment,
-            console);
-
-        Assert.Equal(1, exitCode);
-        Assert.Equal(rejection, console.Output);
-        Assert.Equal(string.Empty, console.Error);
-    }
-
-    [Fact]
     public void TheoryCandidatesDelegatesToTheReadOnlyEnvironment()
     {
         var projected = new CommandResult(true, "{\"schema\":\"stratalint-theory-candidates-v1\"}\n", string.Empty);
@@ -162,7 +139,6 @@ public sealed class CliOutcomeTests
 internal sealed class StubCliEnvironment(
     AdmissionOutcome outcome,
     ExplicitCommandResult? echoVerify = null,
-    ExplicitCommandResult? blueprintPins = null,
     ExplicitCommandResult? fileMapConform = null,
     CommandResult? theoryCandidates = null) : ICliEnvironment
 {
@@ -207,9 +183,6 @@ internal sealed class StubCliEnvironment(
     public CommandResult Route(IReadOnlyList<string> arguments) =>
         new(false, string.Empty, "route is not configured in this fixture");
 
-    public ExplicitCommandResult ValidateBlueprintPins(IReadOnlyList<string> arguments) =>
-        blueprintPins ?? new(2, string.Empty, "blueprint pin validation is not configured in this fixture");
-
     public CommandResult SelfTest(IReadOnlyList<string> arguments) =>
         new(false, string.Empty, "selftest is not configured in this fixture");
 
@@ -221,6 +194,9 @@ internal sealed class StubCliEnvironment(
 
     public CommandResult ReattestLedger(IReadOnlyList<string> arguments) =>
         new(false, string.Empty, "ledger reattest is not configured in this fixture");
+
+    public CommandResult RevokeLedger(IReadOnlyList<string> arguments) =>
+        new(false, string.Empty, "ledger revoke is not configured in this fixture");
 
     public CommandResult SupersedeLedger(IReadOnlyList<string> arguments) =>
         new(false, string.Empty, "ledger supersede is not configured in this fixture");

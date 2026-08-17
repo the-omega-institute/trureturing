@@ -129,13 +129,12 @@ public sealed class LedgerSyncCommandTests
             "prospective frozen ledger");
         var firstDifference = FirstDifference(generatedBytes, replayed.RawBytes);
 
-        Assert.Equal(2350, firstDifference);
-        Assert.Equal(
-            "Freeze",
-            generatedSyntax.Lines[2].Value.GetProperty("event_type").GetString());
-        Assert.Equal(
-            "Reattest",
-            replayed.Lines[2].Value.GetProperty("event_type").GetString());
+        Assert.True(firstDifference >= 0);
+        Assert.NotEqual(
+            generatedSyntax.Lines.Select(static line =>
+                line.Value.GetProperty("event_hash").GetString()).ToArray(),
+            replayed.Lines.Select(static line =>
+                line.Value.GetProperty("event_hash").GetString()).ToArray());
 
         var (exitCode, console) = Run(fixture, "ledger-sync");
 

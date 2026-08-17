@@ -30,9 +30,11 @@ public sealed class CheckoutRemoteCapabilityStrippingTests
               test:
                 steps:
                   - uses: actions/checkout@v4
+                    id: checkout-current
                     with:
                       path: source
                   - name: Strip checkout remote state
+                    if: steps.checkout-current.outcome == 'success'
                     shell: bash
                     env:
                       CHECKOUT_PATH: source
@@ -44,6 +46,7 @@ public sealed class CheckoutRemoteCapabilityStrippingTests
                       remote_count="$(git -C "$CHECKOUT_PATH" remote | wc -l)"
                       remote_ref_count="$(git -C "$CHECKOUT_PATH" for-each-ref --format='%(refname)' refs/remotes/ | wc -l)"
                       if [[ "$remote_count" -ne 0 || "$remote_ref_count" -ne 0 ]]; then
+                        printf '%s\n' "checkout still exposes remotes or remote-tracking refs" >&2
                         exit 1
                       fi
                       head_sha="$(git -C "$CHECKOUT_PATH" rev-parse HEAD)"
@@ -56,7 +59,9 @@ public sealed class CheckoutRemoteCapabilityStrippingTests
     public void CheckoutWithCompleteRemoteCapabilityStrippingIsAccepted() =>
         Assert.Empty(InspectWorkflow(".github/workflows/complete.yml", CompleteStripWorkflow));
 
-    // The strip step is the machine guarantee that CI cannot reach a remote. Its
+    // The strip step eliminates name-based remote resolution; it is NOT a proof that CI
+    // cannot reach a remote (fetch-depth: 0 leaves every branch's objects in the local
+    // object database, so a raw OID recorded before the strip still resolves). Its
     // individual contracts were unpinned: deleting the remote-removal contract left every
     // test green, so a workflow edit that hollowed the step out would have landed silently.
     // These two pin the contract set itself and each contract's rejection.
@@ -68,6 +73,7 @@ public sealed class CheckoutRemoteCapabilityStrippingTests
                 with:
                   path: source
               - name: Unrelated step
+                continue-on-error: true
         """;
 
     [Fact]
@@ -92,9 +98,113 @@ public sealed class CheckoutRemoteCapabilityStrippingTests
                 "explicit failure exit",
                 "HEAD smoke test",
                 "HEAD^1 smoke test",
+                "checkout success gate",
+                "failure propagation",
+                "reachable ordered strip actions",
             },
             missing);
     }
+
+    [Fact]
+    public void StripWithFalseConditionIsRejected()
+    {
+        var finding = AssertGateRejected("false");
+
+        Assert.Contains("checkout success gate", finding.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void StripReferencingDifferentCheckoutIdIsRejected()
+    {
+        var firstJob = CompleteStripWorkflow.Replace(
+            "if: steps.checkout-current.outcome == 'success'",
+            "if: steps.checkout-other.outcome == 'success'",
+            StringComparison.Ordinal);
+        var otherJob = CompleteStripWorkflow
+            .Replace("jobs:\n  test:", "  other:", StringComparison.Ordinal)
+            .Replace("checkout-current", "checkout-other", StringComparison.Ordinal);
+        var workflow = $"{firstJob}\n{otherJob}";
+
+        Assert.NotEqual(CompleteStripWorkflow, firstJob);
+        Assert.Contains("id: checkout-other", workflow, StringComparison.Ordinal);
+
+        var finding = Assert.Single(InspectWorkflow(".github/workflows/different-id.yml", workflow));
+
+        Assert.Contains("checkout success gate", finding.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void StripWithAlwaysConditionIsRejected()
+    {
+        var finding = AssertGateRejected("always()");
+
+        Assert.Contains("checkout success gate", finding.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void StripWithSuccessFunctionConditionIsRejected()
+    {
+        var finding = AssertGateRejected("success()");
+
+        Assert.Contains("checkout success gate", finding.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void CheckoutWithoutIdIsRejected()
+    {
+        var workflow = string.Join(
+            '\n',
+            CompleteStripWorkflow
+                .Split('\n')
+                .Where(static line => !line.TrimStart().Equals("id: checkout-current", StringComparison.Ordinal)));
+
+        Assert.NotEqual(CompleteStripWorkflow, workflow);
+
+        var finding = Assert.Single(InspectWorkflow(".github/workflows/no-id.yml", workflow));
+
+        Assert.Contains("checkout success gate", finding.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void StripGatedByItsCheckoutSuccessIsAccepted() =>
+        Assert.Empty(InspectWorkflow(".github/workflows/success-gate.yml", CompleteStripWorkflow));
+
+    [Theory]
+    [InlineData("true")]
+    [InlineData("false")]
+    [InlineData("${{ matrix.allow_failure }}")]
+    public void StripStepWithAnyContinueOnErrorValueIsRejected(string value)
+    {
+        var broken = CompleteStripWorkflow.Replace(
+            "if: steps.checkout-current.outcome == 'success'",
+            $"continue-on-error: {value}\n        if: steps.checkout-current.outcome == 'success'",
+            StringComparison.Ordinal);
+
+        Assert.NotEqual(CompleteStripWorkflow, broken);
+
+        var finding = Assert.Single(InspectWorkflow(".github/workflows/ignored-failure.yml", broken));
+
+        Assert.Contains("failure propagation", finding.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void StripWithEarlySuccessfulExitBeforeRemoteRemovalIsRejected()
+    {
+        var broken = CompleteStripWorkflow.Replace(
+            "set -euo pipefail",
+            "set -euo pipefail\n          exit 0",
+            StringComparison.Ordinal);
+
+        Assert.NotEqual(CompleteStripWorkflow, broken);
+
+        var finding = Assert.Single(InspectWorkflow(".github/workflows/early-exit.yml", broken));
+
+        Assert.Contains("reachable ordered strip actions", finding.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void StripWithoutFailureSuppressionAndWithReachableActionsIsAccepted() =>
+        Assert.Empty(InspectWorkflow(".github/workflows/reachable.yml", CompleteStripWorkflow));
 
     [Theory]
     [InlineData("name: Strip checkout remote state", "name: Something else", "canonical step name")]
@@ -139,6 +249,18 @@ public sealed class CheckoutRemoteCapabilityStrippingTests
         Assert.Contains("immediately followed", finding.Message, StringComparison.Ordinal);
     }
 
+    private static CheckoutStripFinding AssertGateRejected(string condition)
+    {
+        var broken = CompleteStripWorkflow.Replace(
+            "steps.checkout-current.outcome == 'success'",
+            condition,
+            StringComparison.Ordinal);
+
+        Assert.NotEqual(CompleteStripWorkflow, broken);
+
+        return Assert.Single(InspectWorkflow(".github/workflows/broken-gate.yml", broken));
+    }
+
     private static IReadOnlyList<CheckoutStripFinding> InspectWorkflow(string path, string content)
     {
         var stream = new YamlStream();
@@ -169,7 +291,7 @@ public sealed class CheckoutRemoteCapabilityStrippingTests
                     continue;
                 }
 
-                var missing = MissingStripContracts(strip, checkoutPath);
+                var missing = MissingStripContracts(strip, checkout, checkoutPath);
                 if (missing.Count > 0)
                 {
                     findings.Add(new(path, checkoutLine,
@@ -181,7 +303,10 @@ public sealed class CheckoutRemoteCapabilityStrippingTests
         return findings;
     }
 
-    private static IReadOnlyList<string> MissingStripContracts(YamlMappingNode step, string checkoutPath)
+    private static IReadOnlyList<string> MissingStripContracts(
+        YamlMappingNode step,
+        YamlMappingNode checkout,
+        string checkoutPath)
     {
         var missing = new List<string>();
         Require(Scalar(step, "name") == StripStepName, "canonical step name");
@@ -209,6 +334,11 @@ public sealed class CheckoutRemoteCapabilityStrippingTests
             && script.Contains("test -n \"$head_sha\"", StringComparison.Ordinal), "HEAD smoke test");
         Require(script.Contains("base_sha=\"$(git -C \"$CHECKOUT_PATH\" rev-parse HEAD^1)\"", StringComparison.Ordinal)
             && script.Contains("test -n \"$base_sha\"", StringComparison.Ordinal), "HEAD^1 smoke test");
+        var checkoutId = Scalar(checkout, "id");
+        Require(checkoutId.Length > 0
+            && Scalar(step, "if") == $"steps.{checkoutId}.outcome == 'success'", "checkout success gate");
+        Require(!step.Children.ContainsKey(new YamlScalarNode("continue-on-error")), "failure propagation");
+        Require(HasCanonicalStripProgram(script), "reachable ordered strip actions");
         return missing;
 
         void Require(bool condition, string contract)
@@ -216,6 +346,29 @@ public sealed class CheckoutRemoteCapabilityStrippingTests
             if (!condition) missing.Add(contract);
         }
     }
+
+    private static bool HasCanonicalStripProgram(string script) =>
+        string.Equals(
+            script.Replace("\r\n", "\n", StringComparison.Ordinal).TrimEnd(),
+            CanonicalStripProgram,
+            StringComparison.Ordinal);
+
+    private const string CanonicalStripProgram = """
+        set -euo pipefail
+        git -C "$CHECKOUT_PATH" remote remove origin
+        git -C "$CHECKOUT_PATH" for-each-ref --format='delete %(refname)' refs/remotes/ |
+          git -C "$CHECKOUT_PATH" update-ref --stdin
+        remote_count="$(git -C "$CHECKOUT_PATH" remote | wc -l)"
+        remote_ref_count="$(git -C "$CHECKOUT_PATH" for-each-ref --format='%(refname)' refs/remotes/ | wc -l)"
+        if [[ "$remote_count" -ne 0 || "$remote_ref_count" -ne 0 ]]; then
+          printf '%s\n' "checkout still exposes remotes or remote-tracking refs" >&2
+          exit 1
+        fi
+        head_sha="$(git -C "$CHECKOUT_PATH" rev-parse HEAD)"
+        base_sha="$(git -C "$CHECKOUT_PATH" rev-parse HEAD^1)"
+        test -n "$head_sha"
+        test -n "$base_sha"
+        """;
 
     private static string CheckoutPath(YamlMappingNode checkout) =>
         checkout.Children.TryGetValue(new YamlScalarNode("with"), out var withNode)
