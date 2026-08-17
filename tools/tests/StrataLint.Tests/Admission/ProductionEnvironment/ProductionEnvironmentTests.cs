@@ -602,6 +602,8 @@ internal sealed class FakeRepositoryGateway(
             baseline ?? throw new InvalidOperationException("baseline snapshot should not be read"));
     }
 
+    public RawChangeSet ReadCurrentChanges() => changes;
+
     public TrustedFrozenGitReferences ValidateFrozenReferences(FrozenLedgerReferenceSet references)
     {
         FrozenReferenceValidations.Add(references);
