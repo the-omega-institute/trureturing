@@ -129,6 +129,13 @@ internal static partial class RepositoryRules
     private static ImmutableArray<RuleFinding> Capacity(RuleEvaluationContext context)
     {
         var findings = ImmutableArray.CreateBuilder<RuleFinding>();
+        findings.AddRange(ScribeUnknownDebtPolicy.Evaluate(
+                ScribeTestMapDeriver.DeriveSnapshot(context.Current),
+                ScribeTestMapDeriver.DeriveSnapshot(context.ForkPoint))
+            .Select(static finding => new RuleFinding(
+                finding.Path,
+                finding.Message,
+                finding.Effect)));
         foreach (var (path, file) in context.Current.Files)
         {
             if (IsCapacityExcluded(path.Value))

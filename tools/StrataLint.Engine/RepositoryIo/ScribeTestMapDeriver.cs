@@ -1,8 +1,9 @@
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using System.Xml.Linq;
 
-namespace StrataLint.ArchitectureTests;
+namespace StrataLint.Engine;
 
 internal enum TestMapUnknownReason
 {
@@ -13,27 +14,31 @@ internal enum TestMapUnknownReason
     Other,
 }
 
-internal sealed record TestMapSource(string Path, string Content);
+internal sealed record TestMapSource(
+    string Path,
+    string Content,
+    string PartitionKey = "synthetic");
 
 internal sealed record ScribeTestMethod(
+    string PartitionKey,
+    string SourcePath,
     string Id,
     IReadOnlyList<string> Paths,
     IReadOnlyList<TestMapUnknownReason> UnknownReasons)
 {
     internal bool IsUnknown => UnknownReasons.Count != 0;
+
+    internal string Identity => $"{SourcePath}::{Id}";
+
+    internal string DisplayIdentity => $"{PartitionKey}::{Id}";
 }
 
 internal sealed record ScribeTestMap(IReadOnlyList<ScribeTestMethod> Methods);
 
+internal sealed record ScribeTestProjectPartition(string Key, string Prefix);
+
 internal static class ScribeTestMapDeriver
 {
-    internal static readonly IReadOnlyList<string> ProjectPrefixes =
-    [
-        "tools/tests/StrataLint.ArchitectureTests/",
-        "tools/tests/StrataLint.Scribe.Tests/",
-        "tools/tests/StrataLint.Tests/",
-    ];
-
     // This is the read surface used by the engineering path-filter guard. Entries are either
     // exact files or directory roots; adding a new repository read requires updating
     // this declaration and its review-visible guard.
@@ -67,17 +72,68 @@ internal static class ScribeTestMapDeriver
 
     internal static ScribeTestMap DeriveRepository(string repositoryRoot)
     {
-        var sources = GitIndexRepositoryFiles.Enumerate(repositoryRoot)
-            .Where(file => ProjectPrefixes.Any(prefix =>
-                    file.RelativePath.StartsWith(prefix, StringComparison.Ordinal))
-                && file.RelativePath.EndsWith(".cs", StringComparison.Ordinal))
-            .Select(file => new TestMapSource(file.RelativePath, File.ReadAllText(file.FullPath)))
+        var files = GitIndexRepositoryFiles.Enumerate(repositoryRoot);
+        var partitions = DeriveProjectPartitions(files
+            .Where(static file => file.RelativePath.EndsWith(".csproj", StringComparison.Ordinal))
+            .Select(file => (file.RelativePath, File.ReadAllText(file.FullPath))));
+        var sources = files
+            .Where(file => file.RelativePath.EndsWith(".cs", StringComparison.Ordinal)
+                && TryPartition(file.RelativePath, partitions, out _))
+            .Select(file => new TestMapSource(
+                file.RelativePath,
+                File.ReadAllText(file.FullPath),
+                PartitionFor(file.RelativePath, partitions).Key))
             .ToArray();
-        var indirectSites = ProductionRepositoryReadDeriver.InspectScribeTests(repositoryRoot)
+        var productionSources = files
+            .Where(static file => IsProductionSource(file.RelativePath))
+            .Select(file => new RepositoryReadSource(
+                ProjectName(file.RelativePath),
+                file.RelativePath,
+                File.ReadAllText(file.FullPath)))
+            .ToArray();
+        var indirectSites = ProductionRepositoryReadDeriver.InspectTests(productionSources, sources)
             .Select(static site => (site.Path, site.Line))
             .ToArray();
         return DeriveSources(sources, indirectSites);
     }
+
+    internal static ScribeTestMap DeriveSnapshot(RepositorySnapshot snapshot)
+    {
+        var partitions = DeriveProjectPartitions(snapshot.Files.Values
+            .Where(static file => file.Path.Value.EndsWith(".csproj", StringComparison.Ordinal))
+            .Select(static file => (file.Path.Value, file.Text)));
+        var sources = snapshot.Files.Values
+            .Where(file => file.Path.Value.EndsWith(".cs", StringComparison.Ordinal)
+                && TryPartition(file.Path.Value, partitions, out _))
+            .Select(file => new TestMapSource(
+                file.Path.Value,
+                file.Text,
+                PartitionFor(file.Path.Value, partitions).Key))
+            .ToArray();
+        var productionSources = snapshot.Files.Values
+            .Where(static file => IsProductionSource(file.Path.Value))
+            .Select(static file => new RepositoryReadSource(
+                ProjectName(file.Path.Value),
+                file.Path.Value,
+                file.Text))
+            .ToArray();
+        var indirectSites = ProductionRepositoryReadDeriver.InspectTests(productionSources, sources)
+            .Select(static site => (site.Path, site.Line))
+            .ToArray();
+        return DeriveSources(sources, indirectSites);
+    }
+
+    internal static IReadOnlyList<ScribeTestProjectPartition> DeriveProjectPartitions(
+        IEnumerable<(string Path, string Content)> projectFiles) => projectFiles
+        .Where(static project => IsXunitProject(project.Content))
+        .Select(static project =>
+        {
+            var slash = project.Path.LastIndexOf('/');
+            var key = slash < 0 ? "." : project.Path[..slash];
+            return new ScribeTestProjectPartition(key, key + "/");
+        })
+        .OrderBy(static partition => partition.Key, StringComparer.Ordinal)
+        .ToArray();
 
     internal static ScribeTestMap DeriveSources(
         IEnumerable<TestMapSource> sourceFiles,
@@ -86,7 +142,8 @@ internal static class ScribeTestMapDeriver
         var parsed = sourceFiles.Select(Parse).ToArray();
         var discoveryPaths = ExtractDiscoveryPaths(parsed);
         var methods = parsed.SelectMany(static source => source.Methods).ToArray();
-        var methodsByTypeAndName = methods.GroupBy(static method => (method.TypeName, method.Name))
+        var methodsByTypeAndName = methods
+            .GroupBy(static method => (method.TypeName, method.Name))
             .ToDictionary(static group => group.Key, static group => group.ToArray());
         var indirect = indirectProductionSites.ToArray();
         var results = new List<ScribeTestMethod>();
@@ -127,12 +184,59 @@ internal static class ScribeTestMapDeriver
             }
 
             results.Add(new ScribeTestMethod(
+                test.PartitionKey,
+                test.Path,
                 $"{test.TypeName}.{test.Name}",
                 paths.Order(StringComparer.Ordinal).ToArray(),
                 reasons.Order().ToArray()));
         }
 
-        return new ScribeTestMap(results.OrderBy(static method => method.Id, StringComparer.Ordinal).ToArray());
+        return new ScribeTestMap(results
+            .OrderBy(static method => method.PartitionKey, StringComparer.Ordinal)
+            .ThenBy(static method => method.SourcePath, StringComparer.Ordinal)
+            .ThenBy(static method => method.Id, StringComparer.Ordinal)
+            .ToArray());
+    }
+
+    private static bool IsXunitProject(string content)
+    {
+        var document = XDocument.Parse(content, LoadOptions.None);
+        return document.Descendants().Any(static element =>
+            element.Name.LocalName == "PackageReference"
+            && string.Equals(
+                (string?)element.Attribute("Include"),
+                "xunit",
+                StringComparison.OrdinalIgnoreCase));
+    }
+
+    private static bool TryPartition(
+        string path,
+        IReadOnlyList<ScribeTestProjectPartition> partitions,
+        out ScribeTestProjectPartition? partition)
+    {
+        partition = partitions
+            .Where(item => path.StartsWith(item.Prefix, StringComparison.Ordinal))
+            .OrderByDescending(static item => item.Prefix.Length)
+            .FirstOrDefault();
+        return partition is not null;
+    }
+
+    private static ScribeTestProjectPartition PartitionFor(
+        string path,
+        IReadOnlyList<ScribeTestProjectPartition> partitions) =>
+        TryPartition(path, partitions, out var partition)
+            ? partition!
+            : throw new InvalidOperationException($"test source {path} has no xUnit project partition");
+
+    private static bool IsProductionSource(string path) =>
+        path.StartsWith("tools/StrataLint.", StringComparison.Ordinal)
+        && path.EndsWith(".cs", StringComparison.Ordinal)
+        && !path.Contains(".Tests/", StringComparison.Ordinal);
+
+    private static string ProjectName(string path)
+    {
+        var slash = path.IndexOf('/', "tools/".Length);
+        return path["tools/".Length..slash];
     }
 
     private static void InspectMethod(
@@ -306,6 +410,7 @@ internal static class ScribeTestMapDeriver
             var span = method.GetLocation().GetLineSpan();
             return new ParsedMethod(
                 source.Path,
+                source.PartitionKey,
                 type.Identifier.ValueText,
                 method.Identifier.ValueText,
                 method.AttributeLists.SelectMany(static list => list.Attributes)
@@ -320,6 +425,7 @@ internal static class ScribeTestMapDeriver
     private sealed record ParsedSource(SyntaxNode Root, IReadOnlyList<ParsedMethod> Methods);
     private sealed record ParsedMethod(
         string Path,
+        string PartitionKey,
         string TypeName,
         string Name,
         bool IsTest,

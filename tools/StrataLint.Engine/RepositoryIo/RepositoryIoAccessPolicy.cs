@@ -1,10 +1,9 @@
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
-using StrataLint.Engine;
 using System.Xml.Linq;
 
-namespace StrataLint.ArchitectureTests;
+namespace StrataLint.Engine;
 
 internal sealed record RepositoryIoAccessFinding(string Path, string Api, string Message);
 internal sealed record RepositoryIoTestProject(string Project, string Prefix, bool IsExempt);
@@ -354,17 +353,4 @@ internal static class RepositoryIoAccessPolicy
         MemberAccessExpressionSyntax member => member.Name.Identifier.ValueText,
         _ => string.Empty,
     };
-}
-
-public sealed class RepositoryIoAccessPolicyTests
-{
-    [Fact]
-    public void RepositoryTestsHaveNoUnapprovedDirectReadsOrAddedExemptions()
-    {
-        var root = RepositoryLayout.FindRoot();
-
-        Assert.Empty(RepositoryIoAccessPolicy.InspectRepository(root));
-        Assert.Empty(RepositoryIoAccessPolicy.FindAddedExemptions(
-            RepositoryIoAccessPolicy.DeferredProjectExemptions));
-    }
 }

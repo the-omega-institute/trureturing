@@ -392,9 +392,8 @@ public sealed partial class MakeWorkflowTests
         Assert.DoesNotContain("rsync", workflow, StringComparison.Ordinal);
         Assert.DoesNotContain("--exclude", workflow, StringComparison.Ordinal);
 
-        // 折入而非新开 [Fact]:ScribeTestMapDeriver 把每个读仓库的测试方法记为
-        // conservative unknown,上限 280 已满;本方法已读同一个 workflow,断言折进来
-        // 保住命题而不增计数。抬上限等于绕过检测器,禁。
+        // 折入而非新开 [Fact]:这组断言共享同一 workflow 输入与同一行为主题,避免重复读取。
+        // unknown 债务现由 SL-003 对 fork-point 增量负责,全仓检测仍保留 280/281 两条线。
         Assert.Contains("id: checkout-merge", workflow, StringComparison.Ordinal);
         Assert.Contains(
             "continue-on-error: ${{ github.event_name == 'pull_request_target' }}",
