@@ -17,11 +17,14 @@ internal static class TheoristFrontierContractValidator
     internal static ImmutableArray<RuleFinding> Evaluate(RuleEvaluationContext context)
     {
         ArgumentNullException.ThrowIfNull(context);
+        var currentMission = LoadMission(context.Current);
         var targets = context.Lean.Report.Files.Keys
             .Where(IsFrontier)
             .Concat(context.Baseline.Files
-                .Where(static item => IsFrontier(item.Key)
-                    && CountOccurrences(item.Value.Text, Marker) > 0)
+                .Where(item => IsFrontier(item.Key)
+                    && (CountOccurrences(item.Value.Text, Marker) > 0
+                        || currentMission.Retirements.ContainsKey(item.Key)
+                        || !context.Current.TryGetFile(item.Key.Value, out _)))
                 .Select(static item => item.Key))
             .Distinct()
             .OrderBy(static path => path.Value, StringComparer.Ordinal)
@@ -30,8 +33,6 @@ internal static class TheoristFrontierContractValidator
         {
             return [];
         }
-
-        var currentMission = LoadMission(context.Current);
         var baselineMission = LoadMission(context.Baseline);
         var findings = ImmutableArray.CreateBuilder<RuleFinding>();
         FrozenLedgerBaseView? frozen = null;
@@ -58,6 +59,44 @@ internal static class TheoristFrontierContractValidator
                     is FrontierEligibilityKind.DeclarationReadyMathematicalOpen
                 && baselineOwner is not null
                 && baselineOwner is not FrontierEligibilityKind.DeclarationReadyMathematicalOpen;
+
+            var isDeletedBaselineSource = baselineFile is not null && !hasCurrentSource;
+            if (isDeletedBaselineSource
+                && currentOwner is not FrontierEligibilityKind.Retired)
+            {
+                findings.Add(new RuleFinding(
+                    path.Value,
+                    currentMission.UnreadableReason is { } retirementOwnerReason
+                        ? Undecidable("deleted Frontier source retirement ownership", retirementOwnerReason)
+                        : "deleted Frontier source requires a retired owner with delivery evidence"));
+                continue;
+            }
+
+            var isRetiredBaselineSource = baselineFile is not null
+                && currentOwner is FrontierEligibilityKind.Retired;
+            if (isRetiredBaselineSource)
+            {
+                frozen ??= FrozenLedgerBaseViewReader.Read(context.Current);
+                if (!currentMission.Retirements.TryGetValue(path, out var deliveryGids))
+                {
+                    findings.Add(new RuleFinding(
+                        path.Value,
+                        "retired Frontier owner has no delivery evidence"));
+                }
+                else
+                {
+                    findings.AddRange(ValidateRetirement(
+                        path,
+                        deliveryGids,
+                        context.Lean.Report,
+                        frozen));
+                }
+
+                if (!hasCurrentSource || currentFile is null)
+                {
+                    continue;
+                }
+            }
 
             if (isNew && currentOwner is null or FrontierEligibilityKind.Unknown)
             {
@@ -352,6 +391,51 @@ internal static class TheoristFrontierContractValidator
         }
     }
 
+    private static ImmutableArray<RuleFinding> ValidateRetirement(
+        RepoPath retiredPath,
+        ImmutableArray<string> deliveryGids,
+        LeanAxiomReport report,
+        FrozenLedgerBaseView frozen)
+    {
+        var findings = ImmutableArray.CreateBuilder<RuleFinding>();
+        foreach (var deliveryGid in deliveryGids)
+        {
+            if (!Gid.TryParse(deliveryGid, out var gid)
+                || gid.ToTarget() is not Target.Formal { Declaration: not null } formal
+                || !frozen.ActiveByPath.TryGetValue(formal.Path, out var active))
+            {
+                findings.Add(new RuleFinding(
+                    retiredPath.Value,
+                    $"retired delivery GID does not resolve to an active frozen declaration: {deliveryGid}"));
+                continue;
+            }
+
+            DigestionFormalizationSignature signature;
+            try
+            {
+                signature = DigestionFormalizationReceipt.ResolveSignature(gid, report);
+            }
+            catch (FormatException)
+            {
+                findings.Add(new RuleFinding(
+                    retiredPath.Value,
+                    $"retired delivery GID does not resolve to an active frozen declaration: {deliveryGid}"));
+                continue;
+            }
+
+            if (!active.Material.DeclarationStatementIds.Any(item =>
+                    string.Equals(item.DeclarationNameKey, signature.NameKey, StringComparison.Ordinal)
+                    && string.Equals(item.Kind, signature.Kind, StringComparison.Ordinal)))
+            {
+                findings.Add(new RuleFinding(
+                    retiredPath.Value,
+                    $"retired delivery GID does not resolve to an active frozen declaration: {deliveryGid}"));
+            }
+        }
+
+        return findings.ToImmutable();
+    }
+
     // An unreadable MISSION is absence of authority, not an owner verdict. Carry the reason so the
     // diagnostic names the file to repair instead of telling the author to classify a module.
     private static MissionOwners LoadMission(RepositorySnapshot snapshot) =>
@@ -364,9 +448,18 @@ internal static class TheoristFrontierContractValidator
                         : throw new InvalidOperationException(
                             $"MISSION owner has invalid GID {entry.SourceRef}"),
                     static entry => entry.Kind),
+                loaded.Policy.FrontierEligibility
+                    .Where(static entry => entry.Kind is FrontierEligibilityKind.Retired)
+                    .ToImmutableDictionary(
+                        static entry => Gid.TryParse(entry.SourceRef, out var gid)
+                            ? gid.Path
+                            : throw new InvalidOperationException(
+                                $"MISSION retirement has invalid GID {entry.SourceRef}"),
+                        static entry => entry.DeliveryGids),
                 null),
             MissionLoadOutcome.Invalid invalid => new MissionOwners(
                 ImmutableDictionary<RepoPath, FrontierEligibilityKind>.Empty,
+                ImmutableDictionary<RepoPath, ImmutableArray<string>>.Empty,
                 invalid.Error.Message),
             _ => throw new InvalidOperationException("unknown MISSION load outcome"),
         };
@@ -454,5 +547,6 @@ internal static class TheoristFrontierContractValidator
 
     private sealed record MissionOwners(
         ImmutableDictionary<RepoPath, FrontierEligibilityKind> Entries,
+        ImmutableDictionary<RepoPath, ImmutableArray<string>> Retirements,
         string? UnreadableReason);
 }
