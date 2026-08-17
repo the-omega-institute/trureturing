@@ -7,7 +7,6 @@
 
 import D5.S0.Tower.Champions.GoldenAsymptotic
 import D5.S0.Tower.Champions.GoldenSurvivorTubes
-import D5.S0.Tower.ErgodicBridge.General
 
 /- Library-search audit trail (2026-08-17):
    * Repository search found the exact grid survivor, typed containing-gap arms,
@@ -236,8 +235,7 @@ theorem golden_grid_coding_transition (Q : Nat) (hQ : 2 <= Q) (x : Real)
             hpositions.2
         let v := phi ^ 2 * u - phi
         have hv0 : 0 <= v := by
-          have hmul := mul_lt_mul_of_pos_left (lt_of_not_ge hbranch)
-            (sq_pos_of_pos Real.goldenRatio_pos)
+          have hmul := mul_lt_mul_of_pos_left (lt_of_not_ge hbranch) (sq_pos_of_pos Real.goldenRatio_pos)
           rw [golden_phi_sq_mul_inverse] at hmul
           exact (sub_pos.mpr hmul).le
         have hv1 : v <= 1 := by
@@ -658,71 +656,45 @@ theorem golden_ergodic_bridge_reverse
   obtain ⟨x, hx, hcode⟩ := golden_unit_state_has_grid_realization state hunit
   exact ⟨x, hx, golden_ergodic_bridge_of_coding 2 (by omega) x state hcode⟩
 
-def goldenStateLetter
-    (state : D5.S0.Tower.Champions.GoldenSurvivorTubes.GoldenSurvivorState) :
-    D5.S0.Tower.DBonacci.GapAlphabet.DBonacciGapLetter 2 :=
-  match state.kind with
-  | .large => ⟨0, by omega⟩
-  | .small => ⟨1, by omega⟩
-
-def goldenStateOf
-    (letter : D5.S0.Tower.DBonacci.GapAlphabet.DBonacciGapLetter 2) (u : Real) :
-    D5.S0.Tower.Champions.GoldenSurvivorTubes.GoldenSurvivorState :=
-  if letter.1 = 0 then ⟨.large, u⟩ else ⟨.small, u⟩
-
-/-- The golden geometry discharges the general bridge laws at `d = 2`. -/
-noncomputable def goldenBridgeData :
-    D5.S0.Tower.ErgodicBridge.General.DBonacciErgodicBridge 2 (by omega) where
-  State := D5.S0.Tower.Champions.GoldenSurvivorTubes.GoldenSurvivorState
-  stateLetter := goldenStateLetter
-  coordinate := fun state => state.coordinate
-  stateOf := goldenStateOf
-  gapExtent := fun _ => 1
-  transition := D5.S0.Tower.Champions.GoldenSurvivorTubes.goldenTransition
-  stateArm := D5.S0.Tower.Champions.GoldenSurvivorTubes.goldenStateArm
-  unitState := GoldenUnitState
-  gridCarrier := D5.S0.Tower.MetricGeometry.GoldenSurvivor.goldenNameHull
-  gridObservable := D5.S0.Tower.MetricGeometry.GoldenSurvivor.goldenSurvivor
-  gridCoding := GoldenGridCoding
-  firstLevel := 2
-  realizationLevel := 2
-  realizationLevel_valid := by omega
-  stateOf_letter := by intro letter u; fin_cases letter <;> rfl
-  stateOf_coordinate := by intro letter u; fin_cases letter <;> rfl
-  state_eta := by intro state; rcases state with ⟨kind, u⟩; cases kind <;> rfl
-  unitState_iff := by intro state; rcases state with ⟨kind, u⟩; cases kind <;> rfl
-  coding_unit := by intro Q x state hcode; exact hcode.1
-  coding_observable := golden_survivor_eq_state_arm
-  coding_transition := golden_grid_coding_transition
-  coding_exists := by
-    intro Q _ x
-    exact golden_grid_coding_exists_of_mem_hull Q x
-  letter_realization := by
-    intro letter u hu0 hu1
-    fin_cases letter
-    · exact golden_unit_state_has_grid_realization ⟨.large, u⟩ ⟨hu0, hu1⟩
-    · exact golden_unit_state_has_grid_realization ⟨.small, u⟩ ⟨hu0, hu1⟩
-
+/-- Lower asymptotic values attained by points carried by an internal
+golden-name hull. -/
 def goldenGridLowerValues : Set Real :=
-  D5.S0.Tower.ErgodicBridge.General.gridLowerValues goldenBridgeData
+  {value | ∃ Q : Nat, 2 <= Q /\
+    ∃ x ∈ D5.S0.Tower.MetricGeometry.GoldenSurvivor.goldenNameHull Q,
+      value = Filter.liminf
+        (fun level =>
+          D5.S0.Tower.MetricGeometry.GoldenSurvivor.goldenSurvivor level x)
+        Filter.atTop}
 
+/-- Lower asymptotic arm values attained by unit states of the expanding map. -/
 def goldenErgodicLowerValues : Set Real :=
-  D5.S0.Tower.ErgodicBridge.General.ergodicLowerValues goldenBridgeData
+  {value | ∃ state :
+      D5.S0.Tower.Champions.GoldenSurvivorTubes.GoldenSurvivorState,
+    GoldenUnitState state /\ value = goldenOrbitLowerValue state}
 
+/-- The internal name-grid problem and the unit-state dynamical problem attain
+exactly the same lower asymptotic values. -/
 theorem golden_lower_value_sets_eq :
-    goldenGridLowerValues = goldenErgodicLowerValues :=
-  D5.S0.Tower.ErgodicBridge.General.lower_value_sets_eq goldenBridgeData
+    goldenGridLowerValues = goldenErgodicLowerValues := by
+  ext value
+  constructor
+  · rintro ⟨Q, hQ, x, hx, hvalue⟩
+    obtain ⟨state, hunit, hbridge⟩ := golden_ergodic_bridge Q hQ x hx
+    exact ⟨state, hunit, hvalue.trans hbridge⟩
+  · rintro ⟨state, hunit, hvalue⟩
+    obtain ⟨x, hx, hbridge⟩ := golden_ergodic_bridge_reverse state hunit
+    exact ⟨2, by omega, x, hx, hvalue.trans hbridge.symm⟩
 
-noncomputable def goldenGridOptimalValue : Real :=
-  D5.S0.Tower.ErgodicBridge.General.gridOptimalValue goldenBridgeData
+/-- The name-grid champion objective on the internal carrier. -/
+noncomputable def goldenGridOptimalValue : Real := sSup goldenGridLowerValues
 
-noncomputable def goldenErgodicOptimalValue : Real :=
-  D5.S0.Tower.ErgodicBridge.General.ergodicOptimalValue goldenBridgeData
+/-- Ergodic maximin objective for the arm observable on unit states. -/
+noncomputable def goldenErgodicOptimalValue : Real := sSup goldenErgodicLowerValues
 
-/-- The golden theorem is the `d = 2` substitution into the general bridge. -/
+/-- Bidirectional coding turns the internal golden champion problem into
+ergodic optimization of the lower arm observable. -/
 theorem golden_optimal_value_eq_ergodic_optimal_value :
-    goldenGridOptimalValue = goldenErgodicOptimalValue :=
-  D5.S0.Tower.ErgodicBridge.General.optimal_value_eq_ergodic_optimal_value
-    goldenBridgeData
+    goldenGridOptimalValue = goldenErgodicOptimalValue := by
+  rw [goldenGridOptimalValue, goldenErgodicOptimalValue, golden_lower_value_sets_eq]
 
 end D5.S0.Tower.ErgodicBridge.Golden
