@@ -169,6 +169,7 @@ internal static class TheoryCandidatesCommand
             FrontierEligibilityKind.MathematicalNotYetStated =>
                 FrontierCandidateClassification.MathematicalNotYetStated,
             FrontierEligibilityKind.Governance => FrontierCandidateClassification.Governance,
+            FrontierEligibilityKind.Retired => FrontierCandidateClassification.NotOpen,
             FrontierEligibilityKind.Unknown => FrontierCandidateClassification.Unknown,
             _ => throw new InvalidOperationException("unsupported Frontier eligibility kind"),
         };
