@@ -55,12 +55,12 @@ internal static partial class RepositoryRules
 
     internal static ImmutableArray<RuleRegistration> CreateRegistrations() =>
     [
-        Register(1, "Stratum import closure", new RepositoryRule(ManagedLean, Imports)),
-        Register(2, "Sorry closure", new RepositoryRule(ManagedLean, Sorry)),
-        Register(3, "Capacity pressure", new RepositoryRule(CapacityScoped, Capacity)),
-        Register(4, "Mirror completeness", new RepositoryRule(Formal, Mirrors)),
-        Register(5, "Chronicle append only", new RepositoryRule(ChronicleScoped, Chronicle)),
-        Register(6, "Generated status", new RepositoryRule(StatusScoped, Badges)),
+        Register(1, "Stratum import closure", new RepositoryRule(ManagedLean, Imports, LeanReportAffected)),
+        Register(2, "Sorry closure", new RepositoryRule(ManagedLean, Sorry, SorryAffected)),
+        Register(3, "Capacity pressure", new RepositoryRule(CapacityScoped, Capacity, CapacityAffected)),
+        Register(4, "Mirror completeness", new RepositoryRule(Formal, Mirrors, MirrorsAffected)),
+        Register(5, "Chronicle append only", new RepositoryRule(ChronicleScoped, Chronicle, ChronicleAffected)),
+        Register(6, "Generated status", new RepositoryRule(StatusScoped, Badges, StatusAffected)),
         Register(
             7,
             "Conflict-of-interest gate",
@@ -68,7 +68,7 @@ internal static partial class RepositoryRules
             AdmissionEffect.HumanGate,
             CaseId.CreateKnown("D5-T0011"),
             "trust"),
-        Register(8, "Frozen Hearts semantics", new RepositoryRule(HeartsScoped, Hearts)),
+        Register(8, "Frozen Hearts semantics", new RepositoryRule(HeartsScoped, Hearts, HeartsAffected)),
         Register(
             9,
             "Provenance gate",
@@ -76,9 +76,9 @@ internal static partial class RepositoryRules
             AdmissionEffect.HumanGate,
             CaseId.CreateKnown("D5-T0012"),
             "trust"),
-        Register(10, "Generality closure", new RepositoryRule(GeneralSource, Generality)),
-        Register(11, "Controlled domains", new RepositoryRule(DomainScoped, Domains)),
-        Register(12, "Six-line Lean header", new RepositoryRule(Formal, Headers)),
+        Register(10, "Generality closure", new RepositoryRule(GeneralSource, Generality, LeanReportAffected)),
+        Register(11, "Controlled domains", new RepositoryRule(DomainScoped, Domains, DomainsAffected)),
+        Register(12, "Six-line Lean header", new RepositoryRule(Formal, Headers, FormalSourceAffected)),
         // SL-013 remains deferred and has no rejection predicate. Keep this descriptor in place:
         // positional consumers would silently bind later registrations to the wrong rule otherwise.
         Register(
@@ -94,7 +94,7 @@ internal static partial class RepositoryRules
         Register(
             15,
             "Machine field and GID grammar",
-            new RepositoryRule(AllArtifacts, AddressesAndFormulas)),
+            new RepositoryRule(AllArtifacts, AddressesAndFormulas, RepositoryShapeAffected)),
         Register(
             16,
             "Digestion ledger",
@@ -106,7 +106,7 @@ internal static partial class RepositoryRules
         Register(
             17,
             "Typed anchor membership",
-            new RepositoryRule(AnchorReferenceScoped, ResolvableAnchors)),
+            new RepositoryRule(AnchorReferenceScoped, ResolvableAnchors, AnchorsAffected)),
         Register(
             18,
             "Machine-produced values",
@@ -114,31 +114,31 @@ internal static partial class RepositoryRules
         Register(
             19,
             "Balanced anomaly ledger",
-            new RepositoryRule(StructuredOrChronicle, Ledger)),
-        Register(20, "Lean axiom closure", new RepositoryRule(ManagedLean, Axioms)),
+            new RepositoryRule(StructuredOrChronicle, Ledger, LedgerAffected)),
+        Register(20, "Lean axiom closure", new RepositoryRule(ManagedLean, Axioms, LeanReportAffected)),
         Register(
             21,
             "Instantiated coordinate gate",
-            new RepositoryRule(InstantiationScoped, Instantiation)),
+            new RepositoryRule(InstantiationScoped, Instantiation, InstantiationAffected)),
         Register(
             22,
             "Meta bootstrap gate",
-            new RepositoryRule(BootstrapScoped, Bootstrap),
+            new RepositoryRule(BootstrapScoped, Bootstrap, BootstrapAffected),
             AdmissionEffect.HumanGate,
             category: "trust"),
         Register(
             23,
             "Describe LaTeX statement",
-            new RepositoryRule(ScribeDefinitionScoped, DescribeLatex),
+            new RepositoryRule(ScribeDefinitionScoped, DescribeLatex, DescribeLatexAffected),
             AdmissionEffect.Observe),
         Register(
             25,
             "Blueprint source-projection skeleton",
-            new RepositoryRule(RepositoryScoped, BlueprintProjectionSkeleton)),
+            new RepositoryRule(RepositoryScoped, BlueprintProjectionSkeleton, BlueprintSkeletonAffected)),
         Register(
             26,
             "Scribe legacy constructor budget",
-            new RepositoryRule(RepositoryScoped, ScribeLegacyConstructorBudget)),
+            new RepositoryRule(RepositoryScoped, ScribeLegacyConstructorBudget, ScribeSourceAffected)),
     ];
 
     private static RuleRegistration Register(

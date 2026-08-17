@@ -161,14 +161,18 @@ public sealed partial class RevocationTests
     {
         var catalog = BuildCatalog(Module("A"));
         var ledger = Genesis(catalog);
-        var node = Assert.Single(ledger.ActiveFrozenNodes);
+        var fixture = ReceiptAdmissionFixture(ledger);
+        var receiptBaseline = ReceiptBaseline(fixture);
+        var node = Assert.Single(receiptBaseline.ActiveFrozenNodes);
         var invalid = new RevocationEvidence.KernelWitnessFailure(
             node.FrozenNodeId,
             WitnessId.Create(Sha256("wrong-witness")),
             string.Empty,
             string.Empty);
-        var receipt = RevocationReceiptWriter.Write(ledger.HeadHash, ledger.GraphRoot, invalid);
-        var fixture = ReceiptAdmissionFixture(ledger);
+        var receipt = RevocationReceiptWriter.Write(
+            receiptBaseline.HeadHash,
+            receiptBaseline.GraphRoot,
+            invalid);
         const string path = "Evidence/D5/S0/Carrier/Revocation.run.json";
         fixture.Files[path] = Encoding.UTF8.GetString(receipt.AsSpan());
 
@@ -186,10 +190,11 @@ public sealed partial class RevocationTests
     {
         var catalog = BuildCatalog(Module("A"));
         var ledger = Genesis(catalog);
-        var receipt = RevocationReceiptWriter.Write(
-            ledger,
-            KernelFailure(Assert.Single(ledger.ActiveFrozenNodes)));
         var fixture = ReceiptAdmissionFixture(ledger);
+        var receiptBaseline = ReceiptBaseline(fixture);
+        var receipt = RevocationReceiptWriter.Write(
+            receiptBaseline,
+            KernelFailure(Assert.Single(receiptBaseline.ActiveFrozenNodes)));
         const string path = "Evidence/D5/S0/Carrier/Revocation.run.json";
         fixture.Files[path] = Encoding.UTF8.GetString(receipt.AsSpan());
 
@@ -204,11 +209,12 @@ public sealed partial class RevocationTests
     public void CandidateReceiptWriteGateRejectsNoncanonicalBytes()
     {
         var ledger = Genesis(BuildCatalog(Module("A")));
-        var node = Assert.Single(ledger.ActiveFrozenNodes);
-        var canonical = RevocationReceiptWriter.Write(ledger, KernelFailure(node));
+        var fixture = ReceiptAdmissionFixture(ledger);
+        var receiptBaseline = ReceiptBaseline(fixture);
+        var node = Assert.Single(receiptBaseline.ActiveFrozenNodes);
+        var canonical = RevocationReceiptWriter.Write(receiptBaseline, KernelFailure(node));
         var noncanonicalText = Encoding.UTF8.GetString(canonical.AsSpan())
             .Replace(": ", ":", StringComparison.Ordinal);
-        var fixture = ReceiptAdmissionFixture(ledger);
         const string path = "Evidence/D5/S0/Carrier/Revocation.run.json";
         fixture.Files[path] = noncanonicalText;
 
@@ -411,6 +417,9 @@ public sealed partial class RevocationTests
         AddLedgerFiles(fixture.ForkPoint, ledger.RawBytes);
         return fixture;
     }
+
+    private static FrozenLedgerConsistent ReceiptBaseline(RuleFixture fixture) =>
+        FrozenLedgerBaseViewReader.Read(fixture.Build().Baseline).ToWriterBaseline();
 
     private static FrozenLedgerSyntax Load(IEnumerable<byte> bytes)
     {

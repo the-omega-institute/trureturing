@@ -117,9 +117,7 @@ public static class RegistryPolicyCompiler
 
     public static RegistryLoadOutcome Compile(
         RegistrySyntax syntax,
-        ImmutableArray<DomainSyntax> domains,
-        ReadOnlySpan<byte> rawRegistryBytes,
-        ReadOnlySpan<byte> rawDomainsBytes)
+        ImmutableArray<DomainSyntax> domains)
     {
         ArgumentNullException.ThrowIfNull(syntax);
         try
@@ -192,16 +190,7 @@ public static class RegistryPolicyCompiler
             }
 
             var canonicalRegistryBytes = RegistryCanonicalWriter.Write(syntax);
-            if (!rawRegistryBytes.SequenceEqual(canonicalRegistryBytes.AsSpan()))
-            {
-                throw new FormatException("Registry bytes are not canonical.");
-            }
-
             var canonicalDomainsBytes = DomainsCanonicalWriter.Write(domains);
-            if (!rawDomainsBytes.SequenceEqual(canonicalDomainsBytes.AsSpan()))
-            {
-                throw new FormatException("Domain vocabulary bytes are not canonical.");
-            }
 
             var policy = ValidatedPolicy.Create(
                 rootFiles,

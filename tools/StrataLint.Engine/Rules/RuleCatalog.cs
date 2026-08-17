@@ -92,11 +92,9 @@ public sealed class RuleCatalog
             }
 
             var diagnostics = ImmutableArray.CreateBuilder<Diagnostic>();
-            diagnostics.AddRange(RepositoryPathPolicy.Evaluate(
-                context.Current,
-                context.Policy,
-                RegistrationFor(RuleId.CreateKnown(15)).Descriptor));
             var deferred = ImmutableArray.CreateBuilder<DeferredRule>();
+            var executed = ImmutableArray.CreateBuilder<RuleId>();
+            var skipped = ImmutableArray.CreateBuilder<RuleId>();
             foreach (var registration in registrations)
             {
                 var descriptor = registration.Descriptor;
@@ -113,7 +111,17 @@ public sealed class RuleCatalog
 
                 if (!registration.Rule.IsAffectedBy(context))
                 {
+                    skipped.Add(descriptor.Id);
                     continue;
+                }
+
+                executed.Add(descriptor.Id);
+                if (descriptor.Id == RuleId.CreateKnown(15))
+                {
+                    diagnostics.AddRange(RepositoryPathPolicy.Evaluate(
+                        context.Current,
+                        context.Policy,
+                        descriptor));
                 }
 
                 diagnostics.AddRange(Stamp(
@@ -127,7 +135,8 @@ public sealed class RuleCatalog
                     .ThenBy(item => item.Message, StringComparer.Ordinal)
                     .ToImmutableArray(),
                 deferred.ToImmutable(),
-                expected));
+                executed.ToImmutable(),
+                skipped.ToImmutable()));
         }
         catch (Exception exception)
         {

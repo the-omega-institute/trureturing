@@ -167,7 +167,8 @@ public sealed class FrozenLedgerConsistent
         ImmutableDictionary<string, FrozenActiveEntry> activeEntries,
         ImmutableHashSet<string> allCaseIds,
         ImmutableHashSet<FrozenNodeId> supersededFrozenNodeIds,
-        ImmutableHashSet<FrozenNodeId> revokedFrozenNodeIds)
+        ImmutableHashSet<FrozenNodeId> revokedFrozenNodeIds,
+        int syntaxStartSequence)
     {
         RawBytes = rawBytes;
         Events = events;
@@ -179,6 +180,7 @@ public sealed class FrozenLedgerConsistent
         AllCaseIds = allCaseIds;
         SupersededFrozenNodeIds = supersededFrozenNodeIds;
         RevokedFrozenNodeIds = revokedFrozenNodeIds;
+        SyntaxStartSequence = syntaxStartSequence;
     }
 
     public ImmutableArray<FrozenLedgerEvent> Events { get; }
@@ -201,6 +203,8 @@ public sealed class FrozenLedgerConsistent
 
     internal ImmutableHashSet<string> AllCaseIds { get; }
 
+    internal int SyntaxStartSequence { get; }
+
     internal static FrozenLedgerConsistent Create(
         ImmutableArray<byte> rawBytes,
         ImmutableArray<FrozenLedgerEvent> events,
@@ -211,7 +215,8 @@ public sealed class FrozenLedgerConsistent
         ImmutableDictionary<string, FrozenActiveEntry> activeEntries,
         ImmutableHashSet<string> allCaseIds,
         ImmutableHashSet<FrozenNodeId> supersededFrozenNodeIds,
-        ImmutableHashSet<FrozenNodeId> revokedFrozenNodeIds) =>
+        ImmutableHashSet<FrozenNodeId> revokedFrozenNodeIds,
+        int syntaxStartSequence = 0) =>
         new(
             rawBytes,
             events,
@@ -222,7 +227,8 @@ public sealed class FrozenLedgerConsistent
             activeEntries,
             allCaseIds,
             supersededFrozenNodeIds,
-            revokedFrozenNodeIds);
+            revokedFrozenNodeIds,
+            syntaxStartSequence);
 }
 
 internal sealed record FrozenActiveEntry(

@@ -29,6 +29,24 @@ public sealed class RuleCatalogAssociationTests
     }
 
     [Fact]
+    public void EveryActiveRepositoryRuleDeclaresAnAffectedClosure()
+    {
+        var affectedPredicateType = typeof(Func<RuleEvaluationContext, bool>);
+        var active = RepositoryRules.CreateRegistrations()
+            .Where(static registration => registration.Descriptor.Lifecycle is RuleLifecycle.Active);
+
+        foreach (var registration in active)
+        {
+            var predicateField = registration.Rule.GetType()
+                .GetFields(System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic)
+                .SingleOrDefault(field => field.FieldType == affectedPredicateType);
+            Assert.True(
+                predicateField?.GetValue(registration.Rule) is not null,
+                $"{registration.Descriptor.Id.Value} has no explicit affected closure");
+        }
+    }
+
+    [Fact]
     public void EvaluateSingleStampsFindingsWithTheDescriptorPairedToTheSelectedRule()
     {
         var firstDescriptor = Descriptor(
@@ -130,8 +148,15 @@ public sealed class RuleCatalogAssociationTests
 
         var outcome = catalog.Execute(new RuleFixture().Build());
 
-        Assert.IsType<RuleExecutionOutcome.Completed>(outcome);
+        var completed = Assert.IsType<RuleExecutionOutcome.Completed>(outcome).Capability;
         Assert.Equal(0, rule.EvaluationCount);
+        Assert.Empty(completed.ExecutedRules);
+        var skippedProperty = typeof(CompletedRuleSet).GetProperty("SkippedRules");
+        Assert.NotNull(skippedProperty);
+        var skipped = Assert.IsType<ImmutableArray<RuleId>>(skippedProperty!.GetValue(completed));
+        Assert.Equal(
+            registrations.Select(static registration => registration.Descriptor.Id),
+            skipped);
     }
 
     [Fact]

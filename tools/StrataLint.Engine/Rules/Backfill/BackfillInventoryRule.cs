@@ -36,6 +36,7 @@ internal static class BackfillInventoryRule
                 || DigestionCasStore.IsCanonicalPath(path.Value)
                 || path.Value == BackfillInventoryLoader.RelativePath
                 || path.Value == TheoryAtomizerDataLoader.DataPath
+                || DigestionLedgerAligner.IsAtomizerImplementationPath(path.Value)
                 || path.Value is "Meta/registry.yaml" or "Meta/domains.yaml"
                 || path.Value.StartsWith("D5/", StringComparison.Ordinal)
                     && path.Value.EndsWith(".lean", StringComparison.Ordinal)

@@ -37,6 +37,38 @@ public sealed class RegistryTests
         Assert.Equal(2, firstAccepted.Policy.ArtifactKinds.Count);
     }
 
+    [Theory]
+    [InlineData(true)]
+    [InlineData(false)]
+    public void RegistryCompilerDefersStoredByteCanonicalityToSnapshotWriteGate(
+        bool mutateRegistry)
+    {
+        var registry = mutateRegistry
+            ? CanonicalRegistry.Replace(
+                "schema_version: 1",
+                "schema_version: \"1\"",
+                StringComparison.Ordinal)
+            : CanonicalRegistry;
+        var domains = mutateRegistry
+            ? TestRegistry.Domains
+            : TestRegistry.Domains.Replace(
+                "stratum: S0",
+                "stratum: \"S0\"",
+                StringComparison.Ordinal);
+
+        var outcome = RegistryLoader.Load(
+            Encoding.UTF8.GetBytes(registry),
+            Encoding.UTF8.GetBytes(domains));
+
+        var accepted = RegistryLoadAssert.Accepted(outcome);
+        Assert.Equal(
+            Encoding.UTF8.GetBytes(CanonicalRegistry),
+            accepted.Policy.CanonicalRegistryBytes.ToArray());
+        Assert.Equal(
+            Encoding.UTF8.GetBytes(TestRegistry.Domains),
+            accepted.Policy.CanonicalDomainsBytes.ToArray());
+    }
+
     public static TheoryData<string, string> InvalidDocuments => new()
     {
         { CanonicalRegistry.Replace("schema_version: 1", "schema_version: 2", StringComparison.Ordinal), "schema_version" },
