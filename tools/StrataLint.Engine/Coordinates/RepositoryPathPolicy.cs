@@ -246,8 +246,7 @@ internal static partial class RepositoryPathPolicy
             scope = "kernels";
         }
         else if (coordinates is [var special, _]
-                && special is "X_Assumptions" or "X_Certificates" or "X_Frontier"
-            || coordinates is ["X_Frontier", _, _])
+            && special is "X_Assumptions" or "X_Certificates" or "X_Frontier")
         {
             scope = "special";
         }

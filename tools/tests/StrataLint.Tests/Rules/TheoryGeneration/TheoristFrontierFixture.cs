@@ -1,4 +1,3 @@
-using System.Collections.Immutable;
 using System.Text;
 using System.Text.Json;
 using StrataLint.Engine;
@@ -13,6 +12,7 @@ internal sealed partial class RuleFixture
     private const string SearchReceiptPath = "Library/Carrier/fixture2026contract.md";
     private const string ComputationReceiptGid = "D5/E/S0/Carrier/Probe.result--json";
     private const string ComputationReceiptPath = "Evidence/D5/S0/Carrier/Probe.result.json";
+    private const string RetiredDeliveryGid = "D5/S0/Carrier/Euclidean.golden_division";
 
     private string currentTheoristPath = TheoristTargetPath;
     private string currentTheoristDeclaration = "prime_norm_irreducible";
@@ -84,6 +84,13 @@ internal sealed partial class RuleFixture
         Files[MissionFileLoader.RelativePath] = Mission(null);
     }
 
+    internal void RetireTheoristTarget(string deliveryGid = RetiredDeliveryGid)
+    {
+        Files.Remove(currentTheoristPath);
+        Reports.Remove(currentTheoristPath);
+        Files[MissionFileLoader.RelativePath] = Mission("retired", [deliveryGid]);
+    }
+
     internal void RemoveTheoristTargetReport() => Reports.Remove(currentTheoristPath);
 
     internal void RemoveCurrentFrontierReports()
@@ -94,45 +101,6 @@ internal sealed partial class RuleFixture
         {
             Reports.Remove(path);
         }
-    }
-
-    internal void MoveTheoristTargetToFrontierSubBucket(string bucket)
-    {
-        var oldPath = currentTheoristPath;
-        var oldGid = oldPath[..^".lean".Length];
-        var module = oldGid[(oldGid.LastIndexOf('/') + 1)..];
-        var newGid = $"D5/X_Frontier/{bucket}/{module}";
-        var newPath = newGid + ".lean";
-        var oldQualified = oldGid.Replace('/', '.');
-        var newQualified = newGid.Replace('/', '.');
-        var oldReport = Reports[oldPath];
-        var oldStatement = Assert.Single(CanonicalStatementWriter.DeclarationStatementIds(
-            RepoPath.CreateKnown(oldPath),
-            oldReport));
-        var newReport = oldReport with
-        {
-            Declarations = oldReport.Declarations.Select(declaration => declaration with
-            {
-                Name = declaration.Name.Replace(oldQualified, newQualified, StringComparison.Ordinal),
-                NameKey = declaration.NameKey.Replace(oldQualified, newQualified, StringComparison.Ordinal),
-            }).ToImmutableArray(),
-        };
-        var newStatement = Assert.Single(CanonicalStatementWriter.DeclarationStatementIds(
-            RepoPath.CreateKnown(newPath),
-            newReport));
-        var source = Files[oldPath]
-            .Replace(oldGid, newGid, StringComparison.Ordinal)
-            .Replace(oldQualified, newQualified, StringComparison.Ordinal)
-            .Replace(oldStatement.StatementId.Value, newStatement.StatementId.Value, StringComparison.Ordinal);
-
-        Files.Remove(oldPath);
-        Reports.Remove(oldPath);
-        Changes.Remove(oldPath);
-        Files[newPath] = source;
-        Reports[newPath] = newReport;
-        Changes.Add(newPath);
-        currentTheoristPath = newPath;
-        Files[MissionFileLoader.RelativePath] = Mission("declaration-ready-mathematical-open");
     }
 
     internal void MutateTheoristTarget(string mutation)
@@ -295,6 +263,21 @@ internal sealed partial class RuleFixture
     {
         Files[SearchReceiptPath] = "# Search receipt fixture\n";
         Files[ComputationReceiptPath] = "{}\n";
+        Files[currentMotivationPath] = HeaderFor(currentMotivationGid, "G");
+        Reports[currentMotivationPath] = currentMotivationPath
+                is "D5/S0/Carrier/Euclidean.lean"
+            ? Report(declarations:
+            [
+                new LeanDeclaration(
+                    "D5.S0.Carrier.Euclidean.golden_division",
+                    "theorem",
+                    "statement-v1(retired-delivery)",
+                    [])
+                {
+                    NameKey = "fixture-retired-delivery",
+                },
+            ])
+            : Report();
         AddFrozenMotivationMembership();
 
         const string ticketPath = "D5/X_Frontier/MissionTickets.lean";
@@ -327,7 +310,14 @@ internal sealed partial class RuleFixture
                 axiom_closure = Array.Empty<string>(),
                 case_class = "active-frozen",
                 case_id = "active-frozen/theorist-contract-fixture",
-                declaration_statement_ids = Array.Empty<object>(),
+                declaration_statement_ids = Reports[currentMotivationPath].Declarations.Select(
+                    static declaration => new
+                    {
+                        declaration_name_key = declaration.NameKey,
+                        kind = declaration.Kind,
+                        statement_id =
+                            "sha256:dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+                    }).ToArray(),
                 evaluation = "admission",
                 expected = new
                 {
@@ -371,16 +361,23 @@ internal sealed partial class RuleFixture
         }
     }
 
-    private string Mission(string? targetOwnerKind)
+    private string Mission(string? targetOwnerKind, string[]? deliveryGids = null)
     {
         var eligibility = new List<object>();
         if (targetOwnerKind is not null)
         {
-            eligibility.Add(new
-            {
-                source_ref = currentTheoristPath[..^5],
-                kind = targetOwnerKind,
-            });
+            eligibility.Add(targetOwnerKind == "retired"
+                ? new
+                {
+                    source_ref = currentTheoristPath[..^5],
+                    kind = targetOwnerKind,
+                    delivery_gids = deliveryGids ?? [],
+                }
+                : new
+                {
+                    source_ref = currentTheoristPath[..^5],
+                    kind = targetOwnerKind,
+                });
         }
         eligibility.Add(new
         {

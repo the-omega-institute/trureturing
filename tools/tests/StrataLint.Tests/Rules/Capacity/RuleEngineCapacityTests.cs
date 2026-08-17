@@ -103,23 +103,6 @@ public sealed class RuleEngineCapacityTests
     }
 
     [Fact]
-    public void Sl003CountsFrontierRootAndSplitSubBucketIndependently()
-    {
-        var paths = Enumerable.Range(0, RepositoryRules.DirectoryFileLimit)
-            .Select(static index => $"D5/X_Frontier/Root{index:00}.lean")
-            .Concat(Enumerable.Range(0, RepositoryRules.DirectoryFileLimit)
-                .Select(static index => $"D5/X_Frontier/Conjectures/Nested{index:00}.lean"))
-            .Select(RepoPath.CreateKnown);
-
-        var directories = RepositoryRules.CapacityPathsByDirectory(paths);
-
-        Assert.Equal(RepositoryRules.DirectoryFileLimit, directories["D5/X_Frontier"].Count);
-        Assert.Equal(
-            RepositoryRules.DirectoryFileLimit,
-            directories["D5/X_Frontier/Conjectures"].Count);
-    }
-
-    [Fact]
     public void Sl003RefusesNetGrowthOfAnOverfullBucket()
     {
         var fixture = OverfullBucket(forkPointCount: 11, currentCount: 13);

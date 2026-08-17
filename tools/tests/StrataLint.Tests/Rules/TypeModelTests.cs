@@ -265,7 +265,7 @@ public sealed class TypeModelTests
         var issue = Assert.IsType<RepositoryPathIssue>(RepositoryPathPolicy.Validate(path, Policy()));
         Assert.Equal("SL-000", issue.RuleId.Value);
         Assert.Equal(
-            "noncanonical formal artifact: formal address must be Sn/Domain[/SubDomain]/Module or X_Zone/[Bucket/]Module",
+            "noncanonical formal artifact: formal address must be Sn/Domain[/SubDomain]/Module or X_Zone/Module",
             issue.Message);
         Assert.False(RepositoryPathPolicy.TryResolve(path, Policy(), out _));
     }

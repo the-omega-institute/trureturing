@@ -8,7 +8,7 @@ namespace StrataLint.Tests;
 
 public sealed class TheoryCandidatesTests
 {
-    private const string MathematicalFrontierPath = "D5/X_Frontier/GoldenUnitsUFD.lean";
+    private const string MathematicalFrontierPath = "D5/X_Frontier/FrontierMathematicalOpen.lean";
     private const string DeclarationReadyFrontierPath = "D5/X_Frontier/Hearts.lean";
     private const string GovernanceFrontierPath = "D5/X_Frontier/GovernanceTicket.lean";
     private const string NonFrontierOpenPath = "D5/S0/Carrier/UnfinishedFact.lean";
@@ -39,7 +39,7 @@ public sealed class TheoryCandidatesTests
           },
           "frontier_eligibility": [
             {
-              "source_ref": "D5/X_Frontier/GoldenUnitsUFD",
+              "source_ref": "D5/X_Frontier/FrontierMathematicalOpen",
               "kind": "mathematical-not-yet-stated"
             },
             {
@@ -81,7 +81,7 @@ public sealed class TheoryCandidatesTests
         Assert.Equal(
             [
                 "atom/fixture-atom",
-                "frontier/D5/X_Frontier/GoldenUnitsUFD",
+                "frontier/D5/X_Frontier/FrontierMathematicalOpen",
                 "frontier/D5/X_Frontier/Hearts.o5_independence",
                 "frontier/D5/X_Frontier/Hearts.o6WeilPositivityStatement",
             ],
@@ -139,31 +139,6 @@ public sealed class TheoryCandidatesTests
             candidates["D5/X_Frontier/Hearts.o6WeilPositivityStatement"]
                 .GetProperty("content_sha256").GetString());
 
-    }
-
-    [Fact]
-    public void CandidateProjectionEnumeratesFrontierSubBucketsRecursively()
-    {
-        var fixture = CandidateFixture();
-        const string nestedGid = "D5/X_Frontier/Conjectures/GoldenUnitsUFD";
-        const string nestedPath = nestedGid + ".lean";
-        fixture.Files[nestedPath] = fixture.Files[MathematicalFrontierPath];
-        fixture.Files.Remove(MathematicalFrontierPath);
-        fixture.Reports[nestedPath] = fixture.Reports[MathematicalFrontierPath];
-        fixture.Reports.Remove(MathematicalFrontierPath);
-        fixture.Files[MissionFileLoader.RelativePath] = fixture.Files[MissionFileLoader.RelativePath]
-            .Replace("D5/X_Frontier/GoldenUnitsUFD", nestedGid, StringComparison.Ordinal);
-        fixture.Files[PartialAtomPath] = fixture.Files[PartialAtomPath]
-            .Replace("D5/X_Frontier/GoldenUnitsUFD", nestedGid, StringComparison.Ordinal);
-
-        var result = Run(fixture);
-
-        Assert.True(result.Success, result.Error);
-        using var json = JsonDocument.Parse(result.Output);
-        Assert.Contains(
-            json.RootElement.GetProperty("candidates").EnumerateArray(),
-            candidate => candidate.GetProperty("candidate_id").GetString()
-                == "frontier/" + nestedGid);
     }
 
     [Fact]
@@ -235,20 +210,20 @@ public sealed class TheoryCandidatesTests
         Assert.Equal(
             frontierPaths,
             mission.FrontierEligibility
+                .Where(entry => snapshot.TryGetFile(entry.SourceRef + ".lean", out _))
                 .Select(static entry => entry.SourceRef + ".lean")
                 .Order(StringComparer.Ordinal));
         Assert.Equal(
             FrontierCandidateClassification.MathematicalNotYetStated,
-            Classify("D5/X_Frontier/GoldenUnitsUFD"));
+            Classify("D5/X_Frontier/ValuesProducer"));
         Assert.Equal(
             FrontierCandidateClassification.Governance,
             Classify("D5/X_Frontier/GovernanceDeferrals"));
+        Assert.Equal(
+            FrontierCandidateClassification.NotOpen,
+            Classify("D5/X_Frontier/GoldenUnitsUFD"));
         Assert.Contains(
             "TASK D5-T0008",
-            snapshot.Files[RepoPath.CreateKnown("D5/X_Frontier/GoldenUnitsUFD.lean")].Text,
-            StringComparison.Ordinal);
-        Assert.Contains(
-            "TASK D5-T0011",
             snapshot.Files[RepoPath.CreateKnown("D5/X_Frontier/GovernanceDeferrals.lean")].Text,
             StringComparison.Ordinal);
 
@@ -490,7 +465,7 @@ public sealed class TheoryCandidatesTests
             .Replace("manual/fixture", "manual/partial", StringComparison.Ordinal)
             .Replace(
                 "D5/S0/Carrier/BackfillTarget",
-                "D5/X_Frontier/GoldenUnitsUFD",
+                "D5/X_Frontier/FrontierMathematicalOpen",
                 StringComparison.Ordinal);
         fixture.Files[MissionFileLoader.RelativePath] = FixtureMission;
         fixture.Files["D5/X_Frontier/MissionTickets.lean"] = string.Concat(
@@ -498,7 +473,7 @@ public sealed class TheoryCandidatesTests
                 $"/-- TASK D5-T{number:0000}\n    Measurement contract remains open. -/\n"
                 + $"def missionTicket{number:0000} : Unit := ()\n"));
         fixture.Files[MathematicalFrontierPath] =
-            "/-- TASK D5-T0008\n"
+            "/-- TASK D5-T0099\n"
             + "    Prove every norm-unit is plus or minus an integral phi power, then derive Euclidean or PID structure. -/\n"
             + "def goldenUnitsPrincipalIdealDelivery : Unit := ()\n";
         fixture.Files[GovernanceFrontierPath] =

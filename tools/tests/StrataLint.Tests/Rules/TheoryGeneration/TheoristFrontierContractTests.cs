@@ -67,18 +67,6 @@ public sealed class TheoristFrontierContractTests
         Assert.Empty(diagnostics);
     }
 
-    [Fact]
-    public void FrontierSubBucketContractAndMissionOwnerAreValidatedRecursively()
-    {
-        var fixture = new RuleFixture();
-        fixture.AddHistoricalTheoristTarget("prime-norm-irreducibility");
-        fixture.MoveTheoristTargetToFrontierSubBucket("Conjectures");
-
-        var diagnostics = Evaluate(fixture);
-
-        Assert.Empty(diagnostics);
-    }
-
     [Theory]
     [MemberData(nameof(HistoricalCandidates))]
     public void HistoricalFixtureMatchesTheRecordedTheorySelfGrowthBlob(string fixtureName)
@@ -289,6 +277,43 @@ public sealed class TheoristFrontierContractTests
 
         Assert.Equal("D5/X_Frontier/PrimeNormIrreducibility.lean", diagnostic.Path);
         Assert.Contains("theorist contract source is unavailable", diagnostic.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void RetiredBaselineContractCarrierIsAllowedWithActiveDeliveryEvidence()
+    {
+        var fixture = BaselineContractCarrier();
+        fixture.RetireTheoristTarget();
+
+        Assert.Empty(Evaluate(fixture));
+    }
+
+    [Fact]
+    public void RetiredBaselineContractCarrierIsRejectedWhenDeliveryIsNotActiveFrozen()
+    {
+        var fixture = BaselineContractCarrier();
+        fixture.RetireTheoristTarget("D5/S0/Carrier/Ring.fixture_delivery");
+
+        var diagnostic = Assert.Single(Evaluate(fixture));
+
+        Assert.Contains(
+            "does not resolve to an active frozen declaration",
+            diagnostic.Message,
+            StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void RetiredBaselineContractCarrierIsRejectedWhenDeliveryDeclarationIsNotFrozen()
+    {
+        var fixture = BaselineContractCarrier();
+        fixture.RetireTheoristTarget("D5/S0/Carrier/Euclidean.missing_delivery");
+
+        var diagnostic = Assert.Single(Evaluate(fixture));
+
+        Assert.Contains(
+            "does not resolve to an active frozen declaration",
+            diagnostic.Message,
+            StringComparison.Ordinal);
     }
 
     [Fact]

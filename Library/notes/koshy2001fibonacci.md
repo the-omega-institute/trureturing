@@ -8,7 +8,7 @@ claim: Golden-ratio identities, Fibonacci matrices, and exact Fibonacci formulas
 strata_touched:
   - D5/S0/Carrier/GoldenRatio
   - D5/S1/Scale/FibonacciEigen
-  - D5/X_Frontier/Conjectures/ZeckendorfNormSign
+  - D5/X_Frontier/ZeckendorfNormSign
 license: citation-only
 triage: anchor
 ---

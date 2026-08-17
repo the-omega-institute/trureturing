@@ -1,4 +1,4 @@
-/- GID: D5/X_Frontier/Conjectures/ZeckendorfNormSign
+/- GID: D5/X_Frontier/ZeckendorfNormSign
    generality: I
    mirror-B: none(waiver:open-frontier-conjecture)
    mirror-E: D5/E/S1/Deficit/ZeckendorfNormSign.result--json
@@ -8,7 +8,7 @@
 import D5.S0.Conventions.WDigits
 import D5.S1.Deficit.DoubleFaceLength
 
-namespace D5.X_Frontier.Conjectures.ZeckendorfNormSign
+namespace D5.X_Frontier.ZeckendorfNormSign
 
 open D5.S0.Carrier
 open D5.S0.Conventions
@@ -36,8 +36,8 @@ it does not prove it.
 {
   "schema": "trureturing-theorist-frontier-v1",
   "exact_statement": {
-    "gid": "D5/X_Frontier/Conjectures/ZeckendorfNormSign.betaGolden_norm_sign_of_least_zeckendorf_index",
-    "statement_sha256": "sha256:4456d98bab5d30f02251fdb9fe6d2256263c566c7cafade256960c114817559c"
+    "gid": "D5/X_Frontier/ZeckendorfNormSign.betaGolden_norm_sign_of_least_zeckendorf_index",
+    "statement_sha256": "sha256:1b704dcf2c3663f0398f5cac6d43cf8d48c797c2d618b66ca597fec1ffda060b"
   },
   "motivation_gids": [
     "D5/S0/Carrier/Norm",
@@ -68,4 +68,4 @@ theorem betaGolden_norm_sign_of_least_zeckendorf_index
       (norm (betaGolden v) < 0 ↔ Odd k) := by
   sorry
 
-end D5.X_Frontier.Conjectures.ZeckendorfNormSign
+end D5.X_Frontier.ZeckendorfNormSign

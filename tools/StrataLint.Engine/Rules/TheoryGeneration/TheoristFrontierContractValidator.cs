@@ -91,6 +91,27 @@ internal static class TheoristFrontierContractValidator
 
             if (!hasCurrentSource || currentFile is null)
             {
+                if (currentOwner is FrontierEligibilityKind.Retired)
+                {
+                    frozen ??= FrozenLedgerBaseViewReader.Read(context.Current);
+                    if (!currentMission.Retirements.TryGetValue(path, out var deliveryGids))
+                    {
+                        findings.Add(new RuleFinding(
+                            path.Value,
+                            "retired Frontier owner has no delivery evidence"));
+                    }
+                    else
+                    {
+                        findings.AddRange(ValidateRetirement(
+                            path,
+                            deliveryGids,
+                            context.Lean.Report,
+                            frozen));
+                    }
+
+                    continue;
+                }
+
                 findings.Add(new RuleFinding(path.Value, "theorist contract source is unavailable"));
                 continue;
             }
@@ -352,6 +373,45 @@ internal static class TheoristFrontierContractValidator
         }
     }
 
+    private static ImmutableArray<RuleFinding> ValidateRetirement(
+        RepoPath retiredPath,
+        ImmutableArray<string> deliveryGids,
+        LeanAxiomReport report,
+        FrozenLedgerBaseView frozen)
+    {
+        var findings = ImmutableArray.CreateBuilder<RuleFinding>();
+        foreach (var deliveryGid in deliveryGids)
+        {
+            if (!Gid.TryParse(deliveryGid, out var gid)
+                || gid.ToTarget() is not Target.Formal { Declaration: not null } formal
+                || !frozen.ActiveByPath.TryGetValue(formal.Path, out var active)
+                || !report.Files.TryGetValue(formal.Path, out var module))
+            {
+                findings.Add(new RuleFinding(
+                    retiredPath.Value,
+                    $"retired delivery GID does not resolve to an active frozen declaration: {deliveryGid}"));
+                continue;
+            }
+
+            var expectedName = deliveryGid.Replace('/', '.');
+            var declarations = module.Declarations.Where(declaration => string.Equals(
+                declaration.Name,
+                expectedName,
+                StringComparison.Ordinal)).ToArray();
+            if (declarations is not [var declaration]
+                || !active.Material.DeclarationStatementIds.Any(item =>
+                    string.Equals(item.DeclarationNameKey, declaration.NameKey, StringComparison.Ordinal)
+                    && string.Equals(item.Kind, declaration.Kind, StringComparison.Ordinal)))
+            {
+                findings.Add(new RuleFinding(
+                    retiredPath.Value,
+                    $"retired delivery GID does not resolve to an active frozen declaration: {deliveryGid}"));
+            }
+        }
+
+        return findings.ToImmutable();
+    }
+
     // An unreadable MISSION is absence of authority, not an owner verdict. Carry the reason so the
     // diagnostic names the file to repair instead of telling the author to classify a module.
     private static MissionOwners LoadMission(RepositorySnapshot snapshot) =>
@@ -364,9 +424,18 @@ internal static class TheoristFrontierContractValidator
                         : throw new InvalidOperationException(
                             $"MISSION owner has invalid GID {entry.SourceRef}"),
                     static entry => entry.Kind),
+                loaded.Policy.FrontierEligibility
+                    .Where(static entry => entry.Kind is FrontierEligibilityKind.Retired)
+                    .ToImmutableDictionary(
+                        static entry => Gid.TryParse(entry.SourceRef, out var gid)
+                            ? gid.Path
+                            : throw new InvalidOperationException(
+                                $"MISSION retirement has invalid GID {entry.SourceRef}"),
+                        static entry => entry.DeliveryGids),
                 null),
             MissionLoadOutcome.Invalid invalid => new MissionOwners(
                 ImmutableDictionary<RepoPath, FrontierEligibilityKind>.Empty,
+                ImmutableDictionary<RepoPath, ImmutableArray<string>>.Empty,
                 invalid.Error.Message),
             _ => throw new InvalidOperationException("unknown MISSION load outcome"),
         };
@@ -454,5 +523,6 @@ internal static class TheoristFrontierContractValidator
 
     private sealed record MissionOwners(
         ImmutableDictionary<RepoPath, FrontierEligibilityKind> Entries,
+        ImmutableDictionary<RepoPath, ImmutableArray<string>> Retirements,
         string? UnreadableReason);
 }
