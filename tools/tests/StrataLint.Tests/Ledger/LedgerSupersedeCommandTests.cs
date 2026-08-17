@@ -74,4 +74,21 @@ public sealed class LedgerSupersedeCommandTests
         Assert.Equal(afterFirst, FrozenLedgerTestData.ReadLedgerDirectory(fixture.LedgerPath));
         Assert.Single(fixture.Gateway.FrozenReferenceValidations);
     }
+
+    [Fact]
+    public void ProductionSupersedeWriterEmitsCurrentSchemaV4()
+    {
+        using var fixture = new LedgerAppendCommandTests.LedgerAppendFixture(pinBump: true);
+
+        var result = fixture.Environment.SupersedeLedger(
+            ["--candidate-lean-report", fixture.ReportPath]);
+
+        Assert.True(result.Success, result.Error);
+        var files = DagLedgerCommandPreparation.ReadLedgerDirectoryFiles(fixture.LedgerPath);
+        var view = FrozenLedgerBaseViewReader.Read(RepositorySnapshot.Create(
+            files.ToImmutableDictionary(static file => file.Path)));
+        var supersede = Assert.Single(view.Events, static item => item.EventType == "Supersede");
+        Assert.Equal(FrozenLedgerCanonicalWriter.CurrentDagSchemaVersion, supersede.SchemaVersion);
+        Assert.Equal(4, supersede.SchemaVersion);
+    }
 }
