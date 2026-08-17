@@ -97,8 +97,11 @@ commit_sha
 resolved_base_sha
 preflight_exit_code
 pr_number
-pr_state
-merged_at
+pr_head_sha
+pr_rest_state
+pr_rest_merged
+pr_rest_merged_at
+required_checks
 merge_commit_sha
 landed_dev_sha
 named_gap
@@ -303,11 +306,12 @@ declaration; the P2 contract binds the replay-stable canonical statement
 address; and every GID array is nonempty, sorted, unique, and resolvable by its
 owner.
 
-### 6. Run an independent adversarial check
+### 6. Run the full independent adversarial review stage
 
-Send the Step 1-5 artifact and receipts to an independent machine seat through
-the configured sshx runner. The producing seat must not review itself. Ask the
-seat to check:
+Send the Step 1-5 artifact and receipts through the configured sshx runner's
+full review stage, not a single-seat shortcut. Require three independent review
+seats, including at least one heterogeneous model family; the producing seat
+must not occupy a review seat. Ask every seat to check:
 
 - equal or stronger duplicates in `D5/`, mathlib, and Library;
 - definitional tautology, invented classifiers, vacuous hypotheses, and
@@ -316,21 +320,30 @@ seat to check:
 - dropped clauses, weaker hypotheses, changed quantifiers, or hard-coded prose;
 - exact P2 shape and the honesty of `theorem|window|wall` triage.
 
-Treat the seat as an untrusted adviser: its only allowed routing result is
-`candidate` or `open`, and it never creates truth, approval, proof, or a human
+Treat every seat as an untrusted adviser: its only allowed routing result is
+`candidate` or `open`, and no seat creates truth, approval, proof, or a human
 gate. Resolve each concrete finding against source bytes and machine owners,
-then rerun the affected prior steps. If the independent seat is unavailable or
-a finding cannot be resolved, end evidence-complete `open`.
+then rerun the affected prior steps and the full review stage. If the configured
+multi-seat stage is unavailable, lacks the heterogeneous seat, does not
+converge on `candidate`, or leaves a finding unresolved, end evidence-complete
+`open`.
 
-Postcondition: an independent result and its evidence reference are recorded;
-all findings are resolved; and the result is `candidate`.
+Postcondition: the full three-seat result and every evidence reference are
+recorded; all findings are resolved; the heterogeneous-seat obligation is
+evidenced; and the converged result is `candidate`.
 
 ### 7. Run the complete machine admission chain
 
-Require the intended diff only, then run the canonical full gate:
+Commit the reviewed theory-generation artifacts before admission, then fetch
+the protected tip, pin it by immutable identity, and run the canonical full
+gate:
 
 ```sh
 git status --short
+git add <reviewed-theory-generation-artifacts>
+git commit -m '<focused theory-generation commit>'
+git status --short
+git fetch origin dev
 git rev-parse HEAD
 git rev-parse origin/dev
 git diff --name-only <resolved-base-sha>...HEAD
@@ -339,24 +352,26 @@ make preflight BASE=<resolved-base-sha>
 
 `make preflight` owns report production, engineering tests, live P2/SL-002
 validation, route/check admission against the protected base, and the three CI
-preconditions. Capture the two `git rev-parse` outputs before preflight and
-substitute the exact 40-hex base result for `<resolved-base-sha>`; do not let a
-moving branch name stand in for that identity. Record the changed-path output
-and command exit code in the run-local log. Do not replace preflight with a
-hand-picked validator or a producing seat's judgment. If `origin/dev` advances,
-follow the live harness diagnostic; never enable strict branch protection or
-bypass a failed check. Do not
+preconditions. Require the post-commit worktree to be clean. Capture the two
+`git rev-parse` outputs only after the fetch and before preflight, and substitute
+the exact 40-hex base result for `<resolved-base-sha>`; do not let a moving
+branch name stand in for that identity. The captured HEAD is the final
+`commit_sha` that admission and publication must preserve. Record the
+changed-path output and command exit code in the run-local log. Do not replace
+preflight with a hand-picked validator or a producing seat's judgment. If
+`origin/dev` advances, follow the live harness diagnostic; never enable strict
+branch protection or bypass a failed check. Do not
 regenerate an existing generated receipt solely because the selected owner is
 its attested input; end `open` and name that coupling instead.
 
 Postcondition: `make preflight BASE=<resolved-base-sha>` exits 0, HEAD still
-equals the captured `commit_sha`, and the immutable base SHA, exact changed
-paths, and preflight exit code are present in the command log.
+equals the captured `commit_sha`, the worktree is clean, and the immutable base
+SHA, exact changed paths, and preflight exit code are present in the command
+log.
 
 ### 8. Open the pull request, then observe merge
 
-Commit only the theory-generation artifacts, push the current branch, and use
-the repository door:
+Push the already reviewed and admitted commit, then use the repository door:
 
 ```sh
 git push -u origin <branch>
@@ -370,20 +385,24 @@ is an ancestor of `origin/dev`. An unmerged `CLOSED` PR, failed required check,
 merge conflict, or unavailable observation ends evidence-complete `open` with
 the REST payload or diagnostic named.
 
-Apply the bounded observation protocol from `codex-theory-ingest` without
-variation. Poll at most 30 times at 60-second intervals, with the first REST and
-required-check observations immediate and at most 29 sleeps. Run this long poll
-through the host's background-job mechanism and retain its true exit sentinel;
-never use shell `&`. Every poll freshly reads the REST PR object and required
-checks, validates the fixed JSON fields and captured head SHA, and applies that
-protocol's exact exit-code and bucket rules. An ordinary in-progress PR
-continues only while budget remains; attempt 30 without a terminal verdict ends
-evidence-complete `open` with the latest REST and required-check payloads.
+Apply only the bounded REST/check polling, validation, exit-code, bucket, and
+verdict rules from `codex-theory-ingest`; this workflow retains the terminal
+schema above. Poll at most 30 times at 60-second intervals, with the first REST
+and required-check observations immediate and at most 29 sleeps. Run this long
+poll through the host's background-job mechanism and retain its true exit
+sentinel; never use shell `&`. Every poll freshly reads the REST PR object and
+required checks, validates the fixed JSON fields and captured head SHA, and
+applies those rules exactly. Record `pr_head_sha`, `pr_rest_state`,
+`pr_rest_merged`, `pr_rest_merged_at`, and the complete current
+`required_checks` payload in every reached terminal report. An ordinary
+in-progress PR continues only while budget remains; attempt 30 without a
+terminal verdict ends evidence-complete `open` with the latest REST and
+required-check payloads.
 
-Report `success` only with the REST-confirmed `MERGED` state, `merged_at`, merge
-commit SHA, landed `dev` SHA, target declaration GID, selection receipt, six
-theorist outputs, adversarial result, and all Step 7 exit codes. There is no
-third state.
+Report `success` only with the REST-confirmed `MERGED` state,
+`pr_rest_merged_at`, merge commit SHA, landed `dev` SHA, target declaration GID,
+selection receipt, six theorist outputs, the full adversarial result, and all
+Step 7 exit codes. There is no third state.
 
 The resulting declaration remains open. A later `prover` lane may prove it and
 must use the repository's current `deliver-check` workflow. This skill never
