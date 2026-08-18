@@ -4,52 +4,28 @@ namespace StrataLint.Tests;
 // CI 只**校验**账本是否闭合(SL-016 在 required 的 admission 检查里),不代跑消化。
 //
 // 此前的形态是一个 `pull_request_target` workflow:只读 job 产提案 + 最小写 job
-// 独立重算后写回 PR 分支。它的存在拖出一整条串行缺陷链(CWD 解析、两层超时预算、
+// 独立重算后写回 PR 分支。它拖出一整条串行缺陷链(CWD 解析、两层超时预算、
 // 事件快照式 strict),而它本要服务的第三方 PR 场景**结构上不可行**——
 // `GITHUB_TOKEN` 对 fork 无写权限。整套已删除。
 //
-// 本测试钉住「不再长回来」:任何 workflow 都不得代跑消化 producer。
-public sealed class DigestionIsNotACiConcernTests
+// 作用面(不冒领):本守卫只判 `ci.yml`——删除 theory-ingest 后它是仓内**唯一**的
+// workflow。若日后新增 workflow,本守卫不会自动覆盖它;但新增 workflow 属 SL-022
+// 保护面变更,必经评审,届时须一并扩展此处。不用目录枚举,因为那会让 Scribe
+// 测试映射无法静态确定读取面(TestMapUnknownReason.DirectoryEnumeration)。
+public sealed partial class MakeWorkflowTests
 {
     [Fact]
-    public void NoWorkflowRunsTheDigestionProducer()
+    public void NoWorkflowRunsTheDigestionProducerOrWritesBackToAPullRequest()
     {
-        var workflows = Directory.GetFiles(
-            Path.Combine(TestRepositoryLayout.FindRoot(), ".github", "workflows"),
-            "*.yml");
-        Assert.NotEmpty(workflows);
+        var workflow = File.ReadAllText(
+            Path.Combine(TestRepositoryLayout.FindRoot(), AdmissionWorkflowPath));
 
-        var offenders = workflows
-            .Where(static path =>
-            {
-                var text = File.ReadAllText(path);
-                return text.Contains("make ingest", StringComparison.Ordinal)
-                    || text.Contains("-- ingest", StringComparison.Ordinal)
-                    || text.Contains("theory-ingest-closure", StringComparison.Ordinal);
-            })
-            .Select(Path.GetFileName)
-            .ToArray();
-
-        Assert.Empty(offenders);
-    }
-
-    [Fact]
-    public void NoWorkflowWritesBackToAPullRequestBranch()
-    {
-        var workflows = Directory.GetFiles(
-            Path.Combine(TestRepositoryLayout.FindRoot(), ".github", "workflows"),
-            "*.yml");
-
-        var offenders = workflows
-            .Where(static path =>
-            {
-                var text = File.ReadAllText(path);
-                return text.Contains("force-with-lease", StringComparison.Ordinal)
-                    || text.Contains("theory-ingest-bot", StringComparison.Ordinal);
-            })
-            .Select(Path.GetFileName)
-            .ToArray();
-
-        Assert.Empty(offenders);
+        Assert.DoesNotContain("make ingest", workflow, StringComparison.Ordinal);
+        Assert.DoesNotContain("theory-ingest-closure", workflow, StringComparison.Ordinal);
+        Assert.DoesNotContain("force-with-lease", workflow, StringComparison.Ordinal);
+        Assert.DoesNotContain("theory-ingest-bot", workflow, StringComparison.Ordinal);
+        // 不断言「不得用 pull_request_target」:ci.yml 本就以它承载 admission 的信任拓扑
+        // (workflow 文本取自 base 侧),与消化无关。本守卫判的是「不代跑消化、不写回」,
+        // 不是触发器形态。
     }
 }

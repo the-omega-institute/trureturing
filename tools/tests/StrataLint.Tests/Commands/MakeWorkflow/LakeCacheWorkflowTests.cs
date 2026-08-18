@@ -18,7 +18,7 @@ public sealed partial class MakeWorkflowTests
     [Fact]
     public void AdmissionWorkflowHonoursTheLakeCacheContract() =>
         AssertLakeCacheContract(
-            File.ReadAllText(Path.Combine(TestRepositoryLayout.FindRoot(), ".github/workflows/ci.yml")));
+            File.ReadAllText(Path.Combine(TestRepositoryLayout.FindRoot(), AdmissionWorkflowPath)));
 
     private static void AssertLakeCacheContract(string admissionWorkflow)
     {
