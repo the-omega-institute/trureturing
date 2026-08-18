@@ -83,6 +83,23 @@ public sealed class TheoryIngestClosureScriptTests
     }
 
     [Fact]
+    public void ProposalDerivesFileMapWriteSetFromRepositoryWhenCalledOutsideRepository()
+    {
+        using var fixture = new TheoryIngestClosureFixture();
+        fixture.CommitTheoryChange();
+        fixture.Write("Declared/Output/generated.txt", "trusted output\n");
+
+        var result = fixture.ProposeFromOutsideRepository();
+
+        Assert.True(
+            result.ExitCode == 0,
+            $"propose exited {result.ExitCode}\n"
+            + $"stdout:\n{Encoding.UTF8.GetString(result.StandardOutput)}\n"
+            + $"stderr:\n{Encoding.UTF8.GetString(result.StandardError)}");
+        Assert.Contains("Declared/Output/generated.txt", fixture.ReadProposal(), StringComparison.Ordinal);
+    }
+
+    [Fact]
     public void ProposalBytesMustExactlyMatchTrustedRecomputationBeforeAuthorization()
     {
         using var fixture = new TheoryIngestClosureFixture();
@@ -164,6 +181,38 @@ public sealed class TheoryIngestClosureScriptTests
             StringComparison.Ordinal);
     }
 
+    [Fact]
+    public void BehindBaseAlreadyClosedCandidateIsAcceptedAndPreservesBaseTheory()
+    {
+        using var fixture = new TheoryIngestClosureFixture();
+
+        var result = fixture.WritebackBehindBaseAlreadyClosedCandidate();
+
+        Assert.Equal(0, result.ExitCode);
+        Assert.Contains(
+            "candidate head is already closed",
+            Encoding.UTF8.GetString(result.StandardOutput),
+            StringComparison.Ordinal);
+        Assert.Equal(
+            "# base-only theory\n",
+            fixture.Read("docs/develop/theory/base-only/theory.md"));
+    }
+
+    [Fact]
+    public void WritebackCommitHasExactlyEventHeadAsItsParent()
+    {
+        using var fixture = new TheoryIngestClosureFixture();
+
+        var transaction = fixture.WritebackWithDeclaredOutputDelta();
+
+        Assert.True(
+            transaction.Output.ExitCode == 0,
+            $"writeback exited {transaction.Output.ExitCode}\n"
+            + $"stdout:\n{Encoding.UTF8.GetString(transaction.Output.StandardOutput)}\n"
+            + $"stderr:\n{Encoding.UTF8.GetString(transaction.Output.StandardError)}");
+        Assert.Equal(transaction.EventHeadSha, transaction.ParentShas);
+    }
+
     private sealed class TheoryIngestClosureFixture : IDisposable
     {
         private readonly TemporaryDirectory repository = new();
@@ -185,11 +234,16 @@ public sealed class TheoryIngestClosureScriptTests
             Write("Outside/existing.txt", "base outside\n");
             Write("docs/develop/theory/volume/theory.md", "# volume\n");
             Write("docs/develop/theory/volume/source.toml", "[source]\nid=\"volume\"\n");
+            Write("Meta/FILEMAP.toml", "# fixture FILEMAP\n");
             Write("write-pattern.txt", writePattern + "\n");
             Write("test-bin/dotnet", """
                 #!/usr/bin/env bash
                 set -euo pipefail
                 printf '%s\n' "$*" >> "$DOTNET_ARGUMENTS_PATH"
+                [[ -f Meta/FILEMAP.toml ]] || {
+                  printf '%s\n' 'INFRASTRUCTURE_FAILURE filemap-conform: missing Meta/FILEMAP.toml' >&2
+                  exit 1
+                }
                 cat "$WRITE_PATTERN_PATH"
                 """ + "\n");
             if (!OperatingSystem.IsWindows())
@@ -198,7 +252,7 @@ public sealed class TheoryIngestClosureScriptTests
                     Path.Combine(binDirectory, "dotnet"),
                     UnixFileMode.UserRead | UnixFileMode.UserWrite | UnixFileMode.UserExecute);
             }
-            RunGit("add", "Declared", "Outside", "docs");
+            RunGit("add", "Declared", "Outside", "docs", "Meta");
             RunGit("commit", "-qm", "base");
         }
 
@@ -244,6 +298,17 @@ public sealed class TheoryIngestClosureScriptTests
             "HEAD^1",
             proposalPath);
 
+        internal ProcessOutput ProposeFromOutsideRepository()
+        {
+            using var workingDirectory = new TemporaryDirectory();
+            return RunScriptFrom(
+                workingDirectory.Path,
+                "propose",
+                repository.Path,
+                "HEAD^1",
+                proposalPath);
+        }
+
         internal ProcessOutput Authorize(string proposal, string trusted) =>
             RunScript("authorize", proposal, trusted);
 
@@ -272,11 +337,148 @@ public sealed class TheoryIngestClosureScriptTests
             ? File.ReadAllText(dotnetArgumentsPath)
             : string.Empty;
 
+        internal string Read(string relativePath) =>
+            File.ReadAllText(Path.Combine(repository.Path, relativePath));
+
+        internal ProcessOutput WritebackBehindBaseAlreadyClosedCandidate()
+        {
+            Write("docs/develop/theory/volume/theory.md", "# candidate theory\n");
+            Write("Declared/Output/generated.txt", "candidate closed output\n");
+            Commit("closed candidate");
+            var headSha = GitText("rev-parse", "HEAD");
+            var forkSha = GitText("rev-parse", "HEAD^1");
+
+            RunGit("switch", "--detach", forkSha);
+            Write("Makefile", "# base-only producer change\n");
+            Write("docs/develop/theory/base-only/theory.md", "# base-only theory\n");
+            Commit("advance base");
+            var baseSha = GitText("rev-parse", "HEAD");
+
+            using var candidateData = new TemporaryDirectory();
+            Directory.Delete(candidateData.Path);
+            RunGit("clone", "-q", "--no-hardlinks", repository.Path, candidateData.Path);
+            RunGitAt(candidateData.Path, "checkout", "--detach", headSha);
+
+            Write("write-pattern.txt", "Declared/Output/**\n");
+            Write("test-bin/dotnet", """
+                #!/usr/bin/env bash
+                set -euo pipefail
+                printf '%s\n' "$*" >> "$DOTNET_ARGUMENTS_PATH"
+                cat "$WRITE_PATTERN_PATH"
+                """ + "\n");
+            Write("test-bin/make", """
+                #!/usr/bin/env bash
+                set -euo pipefail
+                [[ "$1" == "-C" ]]
+                printf '%s\n' 'candidate closed output' > "$2/Declared/Output/generated.txt"
+                """ + "\n");
+            MakeExecutable("test-bin/dotnet");
+            MakeExecutable("test-bin/make");
+
+            var proposal = CapturePatch(baseSha, headSha, ":(glob)Declared/Output/**");
+            return RunScript(
+                "writeback",
+                repository.Path,
+                candidateData.Path,
+                proposal,
+                baseSha,
+                headSha,
+                "candidate",
+                repository.Path);
+        }
+
+        internal (ProcessOutput Output, string EventHeadSha, string ParentShas)
+            WritebackWithDeclaredOutputDelta()
+        {
+            Write("docs/develop/theory/volume/theory.md", "# candidate theory\n");
+            Commit("candidate theory change");
+            var headSha = GitText("rev-parse", "HEAD");
+            var forkSha = GitText("rev-parse", "HEAD^1");
+
+            RunGit("switch", "--detach", forkSha);
+            Write("docs/develop/theory/base-only/theory.md", "# base-only theory\n");
+            Commit("advance base");
+            var baseSha = GitText("rev-parse", "HEAD");
+
+            using var candidateData = new TemporaryDirectory();
+            Directory.Delete(candidateData.Path);
+            RunGit("clone", "-q", "--no-hardlinks", repository.Path, candidateData.Path);
+            RunGitAt(
+                candidateData.Path,
+                "fetch",
+                "-q",
+                "--no-tags",
+                repository.Path,
+                baseSha,
+                headSha);
+            RunGitAt(candidateData.Path, "checkout", "--detach", headSha);
+
+            Write("write-pattern.txt", "Declared/Output/**\n");
+            Write("test-bin/dotnet", """
+                #!/usr/bin/env bash
+                set -euo pipefail
+                printf '%s\n' "$*" >> "$DOTNET_ARGUMENTS_PATH"
+                cat "$WRITE_PATTERN_PATH"
+                """ + "\n");
+            Write("test-bin/make", """
+                #!/usr/bin/env bash
+                set -euo pipefail
+                [[ "$1" == "-C" ]]
+                printf '%s\n' 'trusted recomputation' > "$2/Declared/Output/existing.txt"
+                """ + "\n");
+            MakeExecutable("test-bin/dotnet");
+            MakeExecutable("test-bin/make");
+
+            Write("Declared/Output/existing.txt", "trusted recomputation\n");
+            var proposal = CapturePatch(baseSha, "Declared/Output");
+
+            using var remote = new TemporaryDirectory();
+            RunGitAt(remote.Path, "init", "--bare", "-q", ".");
+            var output = RunScript(
+                "writeback",
+                repository.Path,
+                candidateData.Path,
+                proposal,
+                baseSha,
+                headSha,
+                "candidate",
+                remote.Path);
+            var parentShas = output.ExitCode == 0
+                ? GitTextAt(remote.Path, "show", "-s", "--format=%P", "refs/heads/candidate")
+                : string.Empty;
+            return (output, headSha, parentShas);
+        }
+
         internal string WriteExternal(string name, string contents)
         {
             var path = Path.Combine(repository.Path, name);
             File.WriteAllText(path, contents, new UTF8Encoding(false));
             return path;
+        }
+
+        private string CapturePatch(string oldRevision, string newRevision, string pathspec)
+        {
+            var path = WriteExternal("writeback-proposal.patch", string.Empty);
+            var result = BoundedProcessRunner.Run(
+                "git",
+                [
+                    "diff", "--binary", "--full-index", "--no-color", "--no-ext-diff",
+                    "--no-renames", oldRevision, newRevision, "--", pathspec,
+                ],
+                repository.Path,
+                TimeSpan.FromSeconds(30),
+                1024 * 1024);
+            Assert.Equal(0, result.ExitCode);
+            File.WriteAllBytes(path, result.StandardOutput);
+            return path;
+        }
+
+        private string GitText(params string[] arguments)
+        {
+            var result = BoundedProcessRunner.Run(
+                "git", arguments, repository.Path, TimeSpan.FromSeconds(30), 1024 * 1024);
+            Assert.Equal(0, result.ExitCode);
+            return Encoding.UTF8.GetString(result.StandardOutput).Trim();
         }
 
         public void Dispose() => repository.Dispose();
@@ -288,7 +490,27 @@ public sealed class TheoryIngestClosureScriptTests
             Assert.Equal(0, result.ExitCode);
         }
 
+        private static void RunGitAt(string workingDirectory, params string[] arguments)
+        {
+            var result = BoundedProcessRunner.Run(
+                "git", arguments, workingDirectory, TimeSpan.FromSeconds(30), 1024 * 1024);
+            Assert.Equal(0, result.ExitCode);
+        }
+
+        private static string GitTextAt(string workingDirectory, params string[] arguments)
+        {
+            var result = BoundedProcessRunner.Run(
+                "git", arguments, workingDirectory, TimeSpan.FromSeconds(30), 1024 * 1024);
+            Assert.Equal(0, result.ExitCode);
+            return Encoding.UTF8.GetString(result.StandardOutput).Trim();
+        }
+
         private ProcessOutput RunScript(params string[] arguments)
+        {
+            return RunScriptFrom(repository.Path, arguments);
+        }
+
+        private ProcessOutput RunScriptFrom(string workingDirectory, params string[] arguments)
         {
             var script = Path.Combine(
                 PrOpenScriptTests.RepositoryRoot(),
@@ -303,7 +525,7 @@ public sealed class TheoryIngestClosureScriptTests
                     script,
                     .. arguments,
                 ],
-                repository.Path,
+                workingDirectory,
                 TimeSpan.FromSeconds(30),
                 1024 * 1024);
         }

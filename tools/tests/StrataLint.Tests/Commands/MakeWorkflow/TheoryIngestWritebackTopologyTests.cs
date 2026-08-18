@@ -47,22 +47,19 @@ public sealed class TheoryIngestWritebackTopologyTests
                 && uses.StartsWith("actions/cache", StringComparison.Ordinal));
         Assert.DoesNotContain(
             steps,
-            static step => TryScalar(step, "working-directory", out var directory)
-                && directory.Contains("candidate", StringComparison.Ordinal));
+            static step => TryScalar(step, "run", out _)
+                && step.Children.ContainsKey(new YamlScalarNode("working-directory")));
 
         var scripts = steps
             .Where(static step => TryScalar(step, "run", out _))
-            .Select(static step => Scalar(step, "run"))
+            .Select(static step => (
+                Name: Scalar(step, "name"),
+                Script: NormalizeScript(Scalar(step, "run"))))
             .ToArray();
-        Assert.DoesNotContain(
-            scripts,
-            static script => script.Contains("candidate-data/", StringComparison.Ordinal)
-                || script.Contains("cd candidate-data", StringComparison.Ordinal)
-                || script.Contains("make -C candidate", StringComparison.Ordinal)
-                || Regex.IsMatch(script, @"(?:bash|sh|source|exec)\s+[^\n]*candidate"));
+        Assert.Equal(ApprovedWritebackRunScripts(), scripts);
         Assert.Contains(
             scripts,
-            static script => script.Contains(
+            static script => script.Script.Contains(
                 "$GITHUB_WORKSPACE/trusted/tools/scripts/workflow/theory-ingest-closure.sh",
                 StringComparison.Ordinal));
 
@@ -110,9 +107,15 @@ public sealed class TheoryIngestWritebackTopologyTests
         var script = LoadScript();
 
         Assert.Contains(
-            "assert_producer_closure_unchanged \"$repository\" \"$base_sha\" \"$head_sha\"",
+            "assert_producer_closure_unchanged \"$candidate_data\" \"$fork_sha\" \"$head_sha\"",
             script,
             StringComparison.Ordinal);
+        Assert.Contains(
+            "merge-base \"$base_sha\" \"$head_sha\"",
+            script,
+            StringComparison.Ordinal);
+        Assert.Contains("merge-tree", script, StringComparison.Ordinal);
+        Assert.DoesNotContain("rsync -a --delete", script, StringComparison.Ordinal);
         Assert.Contains("Makefile", script, StringComparison.Ordinal);
         Assert.Contains("tools/StrataLint.*", script, StringComparison.Ordinal);
         Assert.Contains("tools/scripts/*", script, StringComparison.Ordinal);
@@ -122,23 +125,34 @@ public sealed class TheoryIngestWritebackTopologyTests
     }
 
     [Fact]
-    public void WriteTransactionPinsEventHeadAndUsesExpectedOldShaLeaseWithoutForceUpdate()
+    public void WriteTransactionPinsEventHeadAndUsesPlainPushWithoutAnyForceForm()
     {
         var workflow = Render(Job(LoadWorkflow(), "writeback"));
         var script = LoadScript();
+        var pushMatch = Regex.Match(
+            script,
+            @"(?m)^  git -C ""\$repository"" push[^\r\n]*\\\r?\n(?:[^\r\n]*\\\r?\n)*[^\r\n]*");
+        Assert.True(pushMatch.Success, "writeback must contain an explicit git push command");
+        var pushCommand = pushMatch.Value;
 
         Assert.Contains("github.event.pull_request.head.sha", workflow, StringComparison.Ordinal);
         Assert.Contains("github.event.pull_request.head.ref", workflow, StringComparison.Ordinal);
         Assert.Contains("github.event.pull_request.head.repo.full_name", workflow, StringComparison.Ordinal);
         Assert.Contains("github.repository", workflow, StringComparison.Ordinal);
-        Assert.Contains("--force-with-lease=\"$remote_ref:$head_sha\"", script, StringComparison.Ordinal);
-        Assert.Contains("\"$commit_sha:$remote_ref\"", script, StringComparison.Ordinal);
+        Assert.Contains("\"$commit_sha:$remote_ref\"", pushCommand, StringComparison.Ordinal);
         Assert.Contains(
             "merge-base --is-ancestor \"$head_sha\" \"$commit_sha\"",
             script,
             StringComparison.Ordinal);
-        Assert.DoesNotContain("--force \"", script, StringComparison.Ordinal);
-        Assert.DoesNotContain("+$commit_sha", script, StringComparison.Ordinal);
+        Assert.DoesNotContain("--force", pushCommand, StringComparison.Ordinal);
+        Assert.DoesNotContain("--force-with-lease", pushCommand, StringComparison.Ordinal);
+        Assert.DoesNotContain("--force-if-includes", pushCommand, StringComparison.Ordinal);
+        Assert.DoesNotMatch(
+            new Regex(@"(?m)(?:^|[ \t])[""']?-f[""']?(?:[ \t\\]|$)"),
+            pushCommand);
+        Assert.DoesNotMatch(
+            new Regex(@"(?m)(?:^|[ \t])[""']?\+[^ \t\r\n]*:[^ \t\r\n]+"),
+            pushCommand);
     }
 
     private static YamlMappingNode LoadWorkflow()
@@ -151,6 +165,110 @@ public sealed class TheoryIngestWritebackTopologyTests
 
     private static string LoadScript() => TestRepositoryLayout.ReadAllText(
         RepositoryRelativePath.Create("tools/scripts/workflow/theory-ingest-closure.sh"));
+
+    private static (string Name, string Script)[] ApprovedWritebackRunScripts() =>
+    [
+        (
+            "Reject fork pull requests",
+            NormalizeScript(
+                """
+                set -euo pipefail
+                if [[ "$HEAD_REPOSITORY" != "$BASE_REPOSITORY" ]]; then
+                  printf '%s\n' "fork pull requests cannot receive theory ingest writeback" >&2
+                  exit 1
+                fi
+                """)),
+        (
+            "Strip checkout remote state",
+            NormalizeScript(
+                """
+                set -euo pipefail
+                git -C "$CHECKOUT_PATH" remote remove origin
+                git -C "$CHECKOUT_PATH" for-each-ref --format='delete %(refname)' refs/remotes/ |
+                  git -C "$CHECKOUT_PATH" update-ref --stdin
+                remote_count="$(git -C "$CHECKOUT_PATH" remote | wc -l)"
+                remote_ref_count="$(git -C "$CHECKOUT_PATH" for-each-ref --format='%(refname)' refs/remotes/ | wc -l)"
+                if [[ "$remote_count" -ne 0 || "$remote_ref_count" -ne 0 ]]; then
+                  printf '%s\n' "checkout still exposes remotes or remote-tracking refs" >&2
+                  exit 1
+                fi
+                head_sha="$(git -C "$CHECKOUT_PATH" rev-parse HEAD)"
+                base_sha="$(git -C "$CHECKOUT_PATH" rev-parse HEAD^1)"
+                test -n "$head_sha"
+                test -n "$base_sha"
+                """)),
+        (
+            "Strip checkout remote state",
+            NormalizeScript(
+                """
+                set -euo pipefail
+                git -C "$CHECKOUT_PATH" remote remove origin
+                git -C "$CHECKOUT_PATH" for-each-ref --format='delete %(refname)' refs/remotes/ |
+                  git -C "$CHECKOUT_PATH" update-ref --stdin
+                remote_count="$(git -C "$CHECKOUT_PATH" remote | wc -l)"
+                remote_ref_count="$(git -C "$CHECKOUT_PATH" for-each-ref --format='%(refname)' refs/remotes/ | wc -l)"
+                if [[ "$remote_count" -ne 0 || "$remote_ref_count" -ne 0 ]]; then
+                  printf '%s\n' "checkout still exposes remotes or remote-tracking refs" >&2
+                  exit 1
+                fi
+                head_sha="$(git -C "$CHECKOUT_PATH" rev-parse HEAD)"
+                base_sha="$(git -C "$CHECKOUT_PATH" rev-parse HEAD^1)"
+                test -n "$head_sha"
+                test -n "$base_sha"
+                """)),
+        (
+            "Install pinned Lean toolchain from trusted base",
+            NormalizeScript(
+                """
+                set -euo pipefail
+                if [[ ! -x "$HOME/.elan/bin/elan" ]]; then
+                  curl --proto '=https' --tlsv1.2 -sSf https://elan.lean-lang.org/elan-init.sh \
+                    | sh -s -- -y --default-toolchain none
+                fi
+                toolchain="$(tr -d '\r\n' < trusted/lean-toolchain)"
+                test -n "$toolchain"
+                if ! "$HOME/.elan/bin/elan" toolchain list 2>/dev/null | grep -qF "$toolchain"; then
+                  "$HOME/.elan/bin/elan" toolchain install "$toolchain"
+                fi
+                "$HOME/.elan/bin/elan" default "$toolchain"
+                "$HOME/.elan/bin/lake" --version
+                """)),
+        (
+            "Build trusted producer",
+            NormalizeScript(
+                """
+                set -euo pipefail
+                dotnet build trusted/tools/StrataLint.sln -c Release --warnaserror
+                """)),
+        (
+            "Produce trusted canonical Lean report",
+            NormalizeScript(
+                """
+                set -euo pipefail
+                cd trusted
+                export PATH="$HOME/.elan/bin:$PATH"
+                make lean-report
+                """)),
+        (
+            "Recompute, authorize, and write back",
+            NormalizeScript(
+                """
+                set -euo pipefail
+                [[ "$HEAD_REPOSITORY" == "$BASE_REPOSITORY" ]]
+                "$GITHUB_WORKSPACE/trusted/tools/scripts/workflow/theory-ingest-closure.sh" \
+                  writeback \
+                  "$GITHUB_WORKSPACE/trusted" \
+                  "$GITHUB_WORKSPACE/candidate-data" \
+                  "$GITHUB_WORKSPACE/proposal/theory-ingest.patch" \
+                  "$BASE_SHA" \
+                  "$HEAD_SHA" \
+                  "$HEAD_REF" \
+                  "$REMOTE_URL"
+                """)),
+    ];
+
+    private static string NormalizeScript(string script) =>
+        script.Replace("\r\n", "\n", StringComparison.Ordinal).Trim();
 
     private static YamlMappingNode Job(YamlMappingNode workflow, string name) =>
         Mapping(Mapping(workflow, "jobs"), name);
