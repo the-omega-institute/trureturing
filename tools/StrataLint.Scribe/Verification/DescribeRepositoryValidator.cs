@@ -12,7 +12,8 @@ internal static class DescribeRepositoryValidator
         IEnumerable<ScribeDocument> documents,
         LeanAxiomReport? leanReport = null,
         LibraryNoteCatalogInspection? libraryInspection = null,
-        DeclarationCatalog? declarationCatalog = null)
+        DeclarationCatalog? declarationCatalog = null,
+        ProblemCandidateCatalogInspection? problemInspection = null)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(repositoryRoot);
         ArgumentNullException.ThrowIfNull(documents);
@@ -104,11 +105,63 @@ internal static class DescribeRepositoryValidator
             }
         }
 
+        var inspectedProblems = problemInspection ?? ProblemCandidateCatalog.Inspect(repositoryRoot);
+        findings.AddRange(inspectedProblems.Findings.Select(static finding =>
+            new DescribeRedFinding(finding.Code, finding.Path, finding.Message)));
+        foreach (var candidate in inspectedProblems.Candidates)
+        {
+            foreach (var reference in candidate.MotivationGids)
+            {
+                ValidateGid(
+                    repositoryRoot,
+                    candidate.RelativePath,
+                    reference,
+                    generatedPaths,
+                    leanReport,
+                    findings,
+                    "dangling-problem-gid");
+            }
+
+            ValidateProblemSource(candidate, notes, findings);
+        }
+
         return findings
             .OrderBy(static finding => finding.Path, StringComparer.Ordinal)
             .ThenBy(static finding => finding.Code, StringComparer.Ordinal)
             .ThenBy(static finding => finding.Message, StringComparer.Ordinal)
             .ToImmutableArray();
+    }
+
+    /// <summary>
+    /// Binds a problem candidate to its literature note. The note owns the paper's
+    /// identity, so the candidate's <c>arxiv_id</c> is not a second source of truth:
+    /// it must reproduce the arXiv DOI the note already carries, and a candidate
+    /// whose bibkey names no note is a dangling reference rather than a stylistic slip.
+    /// </summary>
+    private static void ValidateProblemSource(
+        ProblemCandidate candidate,
+        IReadOnlyDictionary<string, LibraryNote> notes,
+        ImmutableArray<DescribeRedFinding>.Builder findings)
+    {
+        if (!notes.TryGetValue(candidate.BibKey.Value, out var note))
+        {
+            findings.Add(new DescribeRedFinding(
+                "dangling-problem-bibkey",
+                candidate.RelativePath,
+                $"bibkey does not resolve to a Library note: {candidate.BibKey.Value}"));
+            return;
+        }
+
+        var expected = "10.48550/arXiv." + candidate.ArxivId;
+        if (note.Doi is null
+            || !string.Equals(note.Doi.Value, expected, StringComparison.OrdinalIgnoreCase))
+        {
+            findings.Add(new DescribeRedFinding(
+                "problem-source-mismatch",
+                candidate.RelativePath,
+                $"arxiv_id {candidate.ArxivId} expects DOI {expected} in "
+                + $"{note.RelativePath}, which carries {note.Doi?.Value ?? "no DOI"}"));
+        }
     }
 
     private static void ValidateBlocks(
