@@ -25,5 +25,3 @@ Every depth before m_star consumes at least one new quotient class. Surjectivity
 ## References
 
 - Truth anchor: `D5/S3/Observer/Separation/FiniteObservationRefinementBound.finite_observation_refinement_and_stability_bound`
-- Dependency: [D5/S3/Observer/Separation/FiniteFutureCongruence](FiniteFutureCongruence.md)
-- Dependency: [D5/S3/ObserverMemory/Refinement/GradedPredictionShift](../../ObserverMemory/Refinement/GradedPredictionShift.md)
