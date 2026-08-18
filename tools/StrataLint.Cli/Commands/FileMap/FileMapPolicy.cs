@@ -22,6 +22,8 @@ internal static class FileMapPolicy
         "tools/StrataLint.Scribe/Library/LibraryNoteCatalog.cs";
     private const string MissionFileLoaderPath =
         "tools/StrataLint.Engine/Mission/MissionFileLoader.cs";
+    private const string ProblemCandidateCatalogPath =
+        "tools/StrataLint.Scribe/Problems/ProblemCandidateCatalog.cs";
     private const string RegistryLoaderPath =
         "tools/StrataLint.Cli/Commands/RegistryLoader.cs";
     private const string ScribeEmitterPath =
@@ -57,6 +59,7 @@ internal static class FileMapPolicy
             ["GateAuthorityRootCatalogLoader"] = GateAuthorityRootCatalogLoaderPath,
             ["LibraryNoteCatalog"] = LibraryNoteCatalogPath,
             [nameof(MissionFileLoader)] = MissionFileLoaderPath,
+            ["ProblemCandidateCatalog"] = ProblemCandidateCatalogPath,
             ["PerfBudgetLoader"] = PerfBudgetLoaderPath,
             ["RegistryLoader"] = RegistryLoaderPath,
             ["ScribeEmitter"] = ScribeEmitterPath,
