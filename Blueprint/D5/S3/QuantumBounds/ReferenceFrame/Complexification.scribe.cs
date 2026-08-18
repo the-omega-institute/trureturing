@@ -1,4 +1,5 @@
 using static StrataLint.Scribe.DefinitionDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.QuantumBounds.ReferenceFrame;
 
@@ -16,7 +17,14 @@ internal sealed class ComplexificationDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create(
                     LeanPrefix + "complex_entanglement_fidelity_eq_nearest_neighbor_quadratic"),
                 H("Complex fidelity is the nearest-neighbour quadratic"),
-                StatementSource.WithoutFormula(),
+                StatementSource.FromAuthor(F.Disp(F.Seq(
+                    F.Forall, F.Sp, F.Id("c"), F.Sp, F.InMacro, F.Sp,
+                    F.Mathbb, F.Grp(F.Id("C")), F.Caret, F.Grp(F.Id("N")),
+                    F.Comma, F.Quad, F.Sp,
+                    F.Id("F"), F.Underscore, F.Grp(F.Id("e")),
+                    F.Open, F.Id("c"), F.Close, F.Sp, F.Eq, F.Sp,
+                    F.Lvert, F.Sp, F.Id("J"), F.Id("c"), F.Rvert,
+                    F.Underscore, F.Grp(F.D(2)), F.Caret, F.Grp(F.D(2))))),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "The finite Kraus trace expression is evaluated with complex reference "
@@ -28,7 +36,18 @@ internal sealed class ComplexificationDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create(
                     LeanPrefix + "complex_tax_optimum_eq_real_optimum"),
                 H("The complex optimum equals the real optimum"),
-                StatementSource.WithoutFormula(),
+                StatementSource.FromAuthor(F.Disp(F.Seq(
+                    F.D(1), F.Leq, F.Sp, F.Id("N"), F.Sp, F.Longrightarrow, F.Sp,
+                    F.Operatorname, F.Grp(F.Id("max")), F.Underscore,
+                    F.Grp(F.Id("c"), F.InMacro, F.Mathbb, F.Grp(F.Id("C")),
+                        F.Caret, F.Grp(F.Id("N")), F.Comma, F.Sp,
+                        F.Lvert, F.Sp, F.Id("c"), F.Rvert, F.Underscore, F.Grp(F.D(2)),
+                        F.Eq, F.D(1)), F.Sp,
+                    F.Id("F"), F.Underscore, F.Grp(F.Id("e")),
+                    F.Open, F.Id("c"), F.Close, F.Sp, F.Eq, F.Sp,
+                    F.Operatorname, F.Grp(F.Id("cos")), F.Open,
+                    F.Frac, F.Grp(F.Pi), F.Grp(F.Id("N"), F.Plus, F.D(1)),
+                    F.Close, F.Caret, F.Grp(F.D(2))))),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "Writing each amplitude as a real part plus I times an imaginary part "
@@ -40,7 +59,16 @@ internal sealed class ComplexificationDocument : IScribeDocumentDefinition
                 DescribeId.Create("the-complex-top-eigenspace-has-dimension-two"),
                 DeclarationHandle.Create(LeanPrefix + "complex_top_eigenspace_finrank"),
                 H("The complex top eigenspace has dimension two"),
-                StatementSource.WithoutFormula(),
+                StatementSource.FromAuthor(F.Disp(F.Seq(
+                    F.D(2), F.Leq, F.Sp, F.Id("N"), F.Sp, F.Longrightarrow, F.Sp,
+                    F.Operatorname, F.Grp(F.Id("finrank")), F.Underscore,
+                    F.Grp(F.Mathbb, F.Grp(F.Id("C"))), F.Sp,
+                    F.Operatorname, F.Grp(F.Id("eigenspace")), F.Open,
+                    F.Id("J"), F.Caret, F.Grp(F.D(2)), F.Comma, F.Sp,
+                    F.Operatorname, F.Grp(F.Id("cos")), F.Open,
+                    F.Frac, F.Grp(F.Pi), F.Grp(F.Id("N"), F.Plus, F.D(1)),
+                    F.Close, F.Caret, F.Grp(F.D(2)), F.Close,
+                    F.Sp, F.Eq, F.Sp, F.D(2)))),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "Real and imaginary parts of a complex squared-top eigenvector lie in the "
@@ -52,7 +80,14 @@ internal sealed class ComplexificationDocument : IScribeDocumentDefinition
                 DescribeId.Create("the-complex-flat-vector-has-the-exact-tax"),
                 DeclarationHandle.Create(LeanPrefix + "flat_tax_complex"),
                 H("The complex flat vector has the exact tax"),
-                StatementSource.WithoutFormula(),
+                StatementSource.FromAuthor(F.Disp(F.Seq(
+                    F.D(2), F.Leq, F.Sp, F.Id("N"), F.Sp, F.Longrightarrow, F.Sp,
+                    F.D(1), F.Sp, F.Minus, F.Sp,
+                    F.Id("F"), F.Underscore, F.Grp(F.Id("e")),
+                    F.Open, F.Id("m"), F.Sp, F.Mapsto, F.Sp,
+                    F.D(1), F.Slash, F.Sqrt, F.Grp(F.Id("N")), F.Close,
+                    F.Sp, F.Eq, F.Sp,
+                    F.Frac, F.Grp(F.D(3)), F.Grp(F.D(2), F.Id("N"))))),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "The flat complex vector is the real flat vector under the canonical "

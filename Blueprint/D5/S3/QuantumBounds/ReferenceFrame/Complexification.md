@@ -6,7 +6,7 @@ The finite exchange-channel fidelity, sharp optimum, and paired top eigenspace e
 
 **Theorem 1.1 (Complex fidelity is the nearest-neighbour quadratic).**
 
-Lean statement: `D5/S3/QuantumBounds/ReferenceFrame/Complexification.complex_entanglement_fidelity_eq_nearest_neighbor_quadratic`
+$$\forall c \in \mathbb{C}^{N},\quad F_{e}(c) = \lvert Jc\rvert_{2}^{2}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/QuantumBounds/ReferenceFrame/Complexification.complex_entanglement_fidelity_eq_nearest_neighbor_quadratic` (`✓ std3`). ∎
 
@@ -18,7 +18,7 @@ The finite Kraus trace expression is evaluated with complex reference amplitudes
 
 **Theorem 1.2 (The complex optimum equals the real optimum).**
 
-Lean statement: `D5/S3/QuantumBounds/ReferenceFrame/Complexification.complex_tax_optimum_eq_real_optimum`
+$$1\leq N \longrightarrow \operatorname{max}_{c\in\mathbb{C}^{N}, \lvert c\rvert_{2}=1} F_{e}(c) = \operatorname{cos}(\frac{\pi}{N+1})^{2}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/QuantumBounds/ReferenceFrame/Complexification.complex_tax_optimum_eq_real_optimum` (`✓ std3`). ∎
 
@@ -30,7 +30,7 @@ Writing each amplitude as a real part plus I times an imaginary part splits both
 
 **Theorem 1.3 (The complex top eigenspace has dimension two).**
 
-Lean statement: `D5/S3/QuantumBounds/ReferenceFrame/Complexification.complex_top_eigenspace_finrank`
+$$2\leq N \longrightarrow \operatorname{finrank}_{\mathbb{C}} \operatorname{eigenspace}(J^{2}, \operatorname{cos}(\frac{\pi}{N+1})^{2}) = 2$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/QuantumBounds/ReferenceFrame/Complexification.complex_top_eigenspace_finrank` (`✓ std3`). ∎
 
@@ -42,7 +42,7 @@ Real and imaginary parts of a complex squared-top eigenvector lie in the frozen 
 
 **Theorem 1.4 (The complex flat vector has the exact tax).**
 
-Lean statement: `D5/S3/QuantumBounds/ReferenceFrame/Complexification.flat_tax_complex`
+$$2\leq N \longrightarrow 1 - F_{e}(m \mapsto 1/\sqrt{N}) = \frac{3}{2N}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/QuantumBounds/ReferenceFrame/Complexification.flat_tax_complex` (`✓ std3`). ∎
 
