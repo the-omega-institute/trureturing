@@ -1,0 +1,17 @@
+ast_path: theorem/22.12
+fingerprints:
+  raw_sha256: sha256:1c3a819efbaf31462202ea37649b9c7940e6d3131548e5c9080458aa4233aedb
+  normalized_sha256: sha256:1c3a819efbaf31462202ea37649b9c7940e6d3131548e5c9080458aa4233aedb
+cas_ref: sha256:1c3a819efbaf31462202ea37649b9c7940e6d3131548e5c9080458aa4233aedb
+coverage_gids:
+  - D5/S3/ObserverMemory/Fusion/CompatibleFusionEmbedding.compatible_fusion_embedding
+receipts:
+  coverage:
+    - gid: D5/S3/ObserverMemory/Fusion/CompatibleFusionEmbedding.compatible_fusion_embedding
+      source_sha256: sha256:1c3a819efbaf31462202ea37649b9c7940e6d3131548e5c9080458aa4233aedb
+      target_sha256: sha256:71cf4324c66d160342032d3a468d25e12547446034cf7f3434d0897f1c12239d
+  scribe:
+    - gid: D5/S3/ObserverMemory/Fusion/CompatibleFusionEmbedding.compatible_fusion_embedding
+      definition_sha256: sha256:f259620753bc405efc5073eeb2454b6e1b6865ce0ac56a97b2f3fb998b037712
+      emission_sha256: sha256:e9e6cf1fe325c06615b82d7f8fbdbcb3895885c35ab926f97d2f273f309beb9f
+  unresolved_subitems: []

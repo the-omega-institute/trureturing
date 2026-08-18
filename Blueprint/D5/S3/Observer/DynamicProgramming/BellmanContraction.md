@@ -23,4 +23,3 @@ Pinned Mathlib and Loogle supplied ContractingWith.fixedPoint_unique' and abs_ma
 ## References
 
 - Truth anchor: `D5/S3/Observer/DynamicProgramming/BellmanContraction.bellman_operator_contracting_unique_fixed_point`
-- Dependency: [D5/S3/Observer/MetricGeometry/BellmanMaxEquation](../MetricGeometry/BellmanMaxEquation.md)
