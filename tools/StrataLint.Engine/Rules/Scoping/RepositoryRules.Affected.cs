@@ -14,6 +14,12 @@ internal static partial class RepositoryRules
             || FrozenLedgerChangeClassifier.IsAcceptedEventPath(path))
         || TheoristReceiptReferenceChanged(context);
 
+    private static bool DeliveryStatementIdentityAffected(RuleEvaluationContext context) =>
+        LeanReportAffected(context)
+        || Changed(context, static path =>
+            path == MissionFileLoader.RelativePath
+            || FrozenLedgerChangeClassifier.IsAcceptedEventPath(path));
+
     private static bool CapacityAffected(RuleEvaluationContext context) =>
         Changed(context, static path =>
             !IsCapacityExcluded(path)

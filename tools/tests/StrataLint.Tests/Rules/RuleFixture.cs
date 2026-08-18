@@ -276,6 +276,15 @@ internal sealed partial class RuleFixture
                 Changes.Clear();
                 Changes.Add(BlueprintSourcePath);
                 break;
+            case "delivery-statement-identity":
+                AddHistoricalTheoristTarget(
+                    "prime-norm-irreducibility",
+                    baselineOwnerKind: "declaration-ready-mathematical-open",
+                    baselineIncludeContract: true);
+                AlignRetiredBaselineStatementToDelivery();
+                RetireTheoristTarget();
+                MutateRetiredDeliveryStatement("weakened");
+                break;
             default: throw new ArgumentOutOfRangeException(nameof(mutation));
         }
     }

@@ -10,9 +10,9 @@ internal static class TheoristFrontierContractValidator
     private const string Schema = "trureturing-theorist-frontier-v1";
     private const string EndMarker = "\n-/";
     private const string FrontierPrefix = "D5/X_Frontier/";
-
     private static readonly ImmutableHashSet<string> TriageClasses =
         ImmutableHashSet.Create(StringComparer.Ordinal, "theorem", "window", "wall");
+
 
     internal static ImmutableArray<RuleFinding> Evaluate(RuleEvaluationContext context)
     {
@@ -154,6 +154,35 @@ internal static class TheoristFrontierContractValidator
 
             frozen ??= FrozenLedgerBaseViewReader.Read(context.Current);
             findings.AddRange(Validate(path, currentFile.Text, report, context.Current, frozen));
+        }
+
+        return findings.ToImmutable();
+    }
+
+    internal static ImmutableArray<RuleFinding> EvaluateDeliveryIdentity(
+        RuleEvaluationContext context)
+    {
+        ArgumentNullException.ThrowIfNull(context);
+        var currentMission = LoadMission(context.Current);
+        var findings = ImmutableArray.CreateBuilder<RuleFinding>();
+        FrozenLedgerBaseView? frozen = null;
+        foreach (var retiredPath in context.Baseline.Files.Keys
+                     .Where(path => IsFrontier(path)
+                         && !context.Current.TryGetFile(path.Value, out _))
+                     .OrderBy(static path => path.Value, StringComparer.Ordinal))
+        {
+            if (!currentMission.Retirements.TryGetValue(retiredPath, out var deliveryGids))
+            {
+                continue;
+            }
+
+            frozen ??= FrozenLedgerBaseViewReader.Read(context.Current);
+            findings.AddRange(ValidateDeliveryIdentity(
+                retiredPath,
+                deliveryGids,
+                context.Lean.Report,
+                context.Baseline,
+                frozen));
         }
 
         return findings.ToImmutable();
@@ -305,12 +334,11 @@ internal static class TheoristFrontierContractValidator
             return;
         }
 
-        var statement = CanonicalStatementWriter.DeclarationStatementIds(path, report)
-            .SingleOrDefault(item => item.DeclarationNameKey == declaration.NameKey
-                && item.Kind == declaration.Kind);
-        if (statement is null
-            || !TryString(exact, "statement_sha256", out var statementSha256)
-            || !string.Equals(statement.StatementId.Value, statementSha256, StringComparison.Ordinal))
+        if (!TryString(exact, "statement_sha256", out var statementSha256)
+            || !string.Equals(
+                CanonicalStatementWriter.StatementTypeAddress(declaration.TypeRepresentation),
+                statementSha256,
+                StringComparison.Ordinal))
         {
             findings.Add(new RuleFinding(
                 path.Value,
@@ -400,32 +428,7 @@ internal static class TheoristFrontierContractValidator
         var findings = ImmutableArray.CreateBuilder<RuleFinding>();
         foreach (var deliveryGid in deliveryGids)
         {
-            if (!Gid.TryParse(deliveryGid, out var gid)
-                || gid.ToTarget() is not Target.Formal { Declaration: not null } formal
-                || !frozen.ActiveByPath.TryGetValue(formal.Path, out var active))
-            {
-                findings.Add(new RuleFinding(
-                    retiredPath.Value,
-                    $"retired delivery GID does not resolve to an active frozen declaration: {deliveryGid}"));
-                continue;
-            }
-
-            DigestionFormalizationSignature signature;
-            try
-            {
-                signature = DigestionFormalizationReceipt.ResolveSignature(gid, report);
-            }
-            catch (FormatException)
-            {
-                findings.Add(new RuleFinding(
-                    retiredPath.Value,
-                    $"retired delivery GID does not resolve to an active frozen declaration: {deliveryGid}"));
-                continue;
-            }
-
-            if (!active.Material.DeclarationStatementIds.Any(item =>
-                    string.Equals(item.DeclarationNameKey, signature.NameKey, StringComparison.Ordinal)
-                    && string.Equals(item.Kind, signature.Kind, StringComparison.Ordinal)))
+            if (!TryResolveActiveFrozenDelivery(deliveryGid, report, frozen, out _))
             {
                 findings.Add(new RuleFinding(
                     retiredPath.Value,
@@ -434,6 +437,144 @@ internal static class TheoristFrontierContractValidator
         }
 
         return findings.ToImmutable();
+    }
+
+    private static ImmutableArray<RuleFinding> ValidateDeliveryIdentity(
+        RepoPath retiredPath,
+        ImmutableArray<string> deliveryGids,
+        LeanAxiomReport report,
+        RepositorySnapshot baseline,
+        FrozenLedgerBaseView frozen)
+    {
+        var findings = ImmutableArray.CreateBuilder<RuleFinding>();
+        var baselineStatement = ReadRetiredBaselineStatement(retiredPath, baseline, findings);
+        if (baselineStatement is null)
+        {
+            return findings.ToImmutable();
+        }
+
+        var hasMatchingStatement = deliveryGids.Any(deliveryGid =>
+            TryResolveActiveFrozenDelivery(deliveryGid, report, frozen, out var signature)
+            && string.Equals(
+                CanonicalStatementWriter.StatementTypeAddress(signature.Type),
+                baselineStatement,
+                StringComparison.Ordinal));
+        if (!hasMatchingStatement)
+        {
+            findings.Add(new RuleFinding(
+                retiredPath.Value,
+                "no delivery declaration has the baseline Frontier contract statement"));
+        }
+
+        return findings.ToImmutable();
+    }
+
+    private static bool TryResolveActiveFrozenDelivery(
+        string deliveryGid,
+        LeanAxiomReport report,
+        FrozenLedgerBaseView frozen,
+        out DigestionFormalizationSignature signature)
+    {
+        signature = null!;
+        if (!Gid.TryParse(deliveryGid, out var gid)
+            || gid.ToTarget() is not Target.Formal { Declaration: not null } formal
+            || !frozen.ActiveByPath.TryGetValue(formal.Path, out var active))
+        {
+            return false;
+        }
+
+        try
+        {
+            signature = DigestionFormalizationReceipt.ResolveSignature(gid, report);
+        }
+        catch (FormatException)
+        {
+            return false;
+        }
+
+        var resolved = signature;
+        return active.Material.DeclarationStatementIds.Any(item =>
+            string.Equals(item.DeclarationNameKey, resolved.NameKey, StringComparison.Ordinal)
+            && string.Equals(item.Kind, resolved.Kind, StringComparison.Ordinal));
+    }
+
+    private static string? ReadRetiredBaselineStatement(
+        RepoPath retiredPath,
+        RepositorySnapshot baseline,
+        ImmutableArray<RuleFinding>.Builder findings)
+    {
+        if (!baseline.TryGetFile(retiredPath.Value, out var baselineFile))
+        {
+            findings.Add(new RuleFinding(
+                retiredPath.Value,
+                "baseline Frontier source is unavailable"));
+            return null;
+        }
+
+        var source = baselineFile.Text;
+        if (CountOccurrences(source, Marker) == 0)
+        {
+            findings.Add(new RuleFinding(
+                retiredPath.Value,
+                "baseline Frontier contract block is missing"));
+            return null;
+        }
+
+        if (CountOccurrences(source, Marker) != 1)
+        {
+            findings.Add(new RuleFinding(
+                retiredPath.Value,
+                "baseline Frontier contract block is duplicated"));
+            return null;
+        }
+
+        var start = source.IndexOf(Marker, StringComparison.Ordinal) + Marker.Length;
+        var end = source.IndexOf(EndMarker, start, StringComparison.Ordinal);
+        if (end < 0)
+        {
+            findings.Add(new RuleFinding(
+                retiredPath.Value,
+                "baseline Frontier contract closing marker is missing"));
+            return null;
+        }
+
+        JsonElement root;
+        try
+        {
+            using var document = JsonDocument.Parse(source[start..end]);
+            root = document.RootElement.Clone();
+        }
+        catch (JsonException exception)
+        {
+            findings.Add(new RuleFinding(
+                retiredPath.Value,
+                $"baseline Frontier contract is not valid JSON: {exception.Message}"));
+            return null;
+        }
+
+        if (!HasExactKeys(
+                root,
+                "schema",
+                "exact_statement",
+                "motivation_gids",
+                "falsifier",
+                "search_receipt_gids",
+                "computation_receipt_gids",
+                "triage_class")
+            || !TryString(root, "schema", out var schema)
+            || schema != Schema
+            || !root.TryGetProperty("exact_statement", out var exact)
+            || !HasExactKeys(exact, "gid", "statement_sha256")
+            || !TryString(exact, "statement_sha256", out var statement)
+            || !FrozenHashSyntax.IsSha256(statement))
+        {
+            findings.Add(new RuleFinding(
+                retiredPath.Value,
+                "baseline Frontier exact_statement is not canonical"));
+            return null;
+        }
+
+        return statement;
     }
 
     // An unreadable MISSION is absence of authority, not an owner verdict. Carry the reason so the

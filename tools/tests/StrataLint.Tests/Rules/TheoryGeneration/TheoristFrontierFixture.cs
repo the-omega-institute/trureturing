@@ -43,12 +43,9 @@ internal sealed partial class RuleFixture
             historical.StatementMaterial,
             ["sorryAx"]);
         Reports[historical.Path] = Report(declarations: [declaration]);
-        var statement = Assert.Single(CanonicalStatementWriter.DeclarationStatementIds(
-            RepoPath.CreateKnown(historical.Path),
-            Reports[historical.Path]));
         var contract = TheoristContract(
             historical.ModuleGid + "." + historical.Declaration,
-            statement.StatementId.Value,
+            CanonicalStatementWriter.StatementTypeAddress(declaration.TypeRepresentation),
             historical.MotivationGid);
         Files[historical.Path] = includeContract
             ? InsertContract(historical.Source, contract)
@@ -84,11 +81,83 @@ internal sealed partial class RuleFixture
         Files[MissionFileLoader.RelativePath] = Mission(null);
     }
 
-    internal void RetireTheoristTarget(string deliveryGid = RetiredDeliveryGid)
+    internal void DeleteTheoristTargetWithOwner(string ownerKind)
     {
         Files.Remove(currentTheoristPath);
         Reports.Remove(currentTheoristPath);
-        Files[MissionFileLoader.RelativePath] = Mission("retired", [deliveryGid]);
+        Files[MissionFileLoader.RelativePath] = Mission(ownerKind);
+    }
+
+    internal void RetireTheoristTarget(string deliveryGid = RetiredDeliveryGid)
+    {
+        RetireTheoristTargetWithDeliveries(deliveryGid);
+    }
+
+    internal void RetireTheoristTargetWithDeliveries(params string[] deliveryGids)
+    {
+        Files.Remove(currentTheoristPath);
+        Reports.Remove(currentTheoristPath);
+        Files[MissionFileLoader.RelativePath] = Mission("retired", deliveryGids);
+    }
+
+    internal void AlignRetiredBaselineStatementToDelivery() =>
+        ReplaceBaselineContract(
+            "statement_sha256",
+            CanonicalStatementWriter.StatementTypeAddress("statement-v1(retired-delivery)"));
+
+    internal void MutateRetiredBaselineStatement(string mutation)
+    {
+        var replacement = mutation switch
+        {
+            "changed" => CanonicalStatementWriter.StatementTypeAddress(
+                "statement-v1(changed-delivery)"),
+            _ => throw new ArgumentOutOfRangeException(nameof(mutation)),
+        };
+        ReplaceBaselineContract("statement_sha256", replacement);
+    }
+
+    internal void RemoveRetiredBaselineContract()
+    {
+        var source = Baseline[currentTheoristPath];
+        var start = source.IndexOf("/- THEORIST_FRONTIER_CONTRACT_V1", StringComparison.Ordinal);
+        var end = source.IndexOf("\n-/", start, StringComparison.Ordinal);
+        Assert.True(start >= 0 && end > start);
+        Baseline[currentTheoristPath] = source.Remove(start, end + 3 - start);
+    }
+
+    internal void MalformedRetiredBaselineContract()
+    {
+        var source = Baseline[currentTheoristPath];
+        var malformed = source.Replace("\"falsifier\":", "\"falsifier\"", StringComparison.Ordinal);
+        Assert.NotEqual(source, malformed);
+        Baseline[currentTheoristPath] = malformed;
+    }
+
+    internal void AddMismatchingFrozenRetiredDelivery()
+    {
+        Reports[currentMotivationPath] = Report(
+            declarations: Reports[currentMotivationPath].Declarations.Append(
+                new LeanDeclaration(
+                    "D5.S0.Carrier.mismatched_delivery",
+                    "theorem",
+                    "statement-v1(mismatched-retired-delivery)",
+                    [])
+                {
+                    NameKey = "fixture-mismatched-retired-delivery",
+                }));
+        AddFrozenMotivationMembership();
+    }
+
+    internal void MutateRetiredDeliveryStatement(string mutation)
+    {
+        var type = mutation switch
+        {
+            "weakened" => "statement-v1(retired-delivery-with-extra-hypothesis)",
+            _ => throw new ArgumentOutOfRangeException(nameof(mutation)),
+        };
+        Reports[currentMotivationPath] = Report(
+            declarations: Reports[currentMotivationPath].Declarations
+                .Select(declaration => declaration with { TypeRepresentation = type }));
     }
 
     internal void AddUnfrozenRetiredDeliveryDeclaration()
@@ -496,6 +565,17 @@ internal sealed partial class RuleFixture
             contract,
             replaced,
             StringComparison.Ordinal);
+    }
+
+    private void ReplaceBaselineContract(string property, string replacement)
+    {
+        var source = Baseline[currentTheoristPath];
+        var start = source.IndexOf("statement_sha256\":\"", StringComparison.Ordinal);
+        Assert.True(start >= 0, $"baseline contract has no {property}");
+        start += "statement_sha256\":\"".Length;
+        var end = source.IndexOf('"', start);
+        Assert.True(end > start);
+        Baseline[currentTheoristPath] = source[..start] + replacement + source[end..];
     }
 
     private sealed record HistoricalTheoristFixture(

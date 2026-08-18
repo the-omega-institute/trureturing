@@ -139,6 +139,13 @@ internal static partial class RepositoryRules
             26,
             "Scribe legacy constructor budget",
             new RepositoryRule(RepositoryScoped, ScribeLegacyConstructorBudget, ScribeSourceAffected)),
+        Register(
+            27,
+            "Frontier delivery statement identity",
+            new RepositoryRule(
+                ManagedLean,
+                DeliveryStatementIdentity,
+                DeliveryStatementIdentityAffected)),
     ];
 
     private static RuleRegistration Register(

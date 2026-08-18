@@ -288,7 +288,88 @@ public sealed class TheoristFrontierContractTests
         var fixture = BaselineContractCarrier();
         fixture.RetireTheoristTarget();
 
-        Assert.Empty(Evaluate(fixture));
+        Assert.Empty(EvaluateSorry(fixture));
+        Assert.Empty(EvaluateDeliveryIdentity(fixture));
+    }
+
+    [Fact]
+    public void RetiredDeliveryWithWeakenedStatementIsRejectedByStatementIdentityRule()
+    {
+        var fixture = BaselineContractCarrier();
+        fixture.AlignRetiredBaselineStatementToDelivery();
+        fixture.RetireTheoristTarget();
+        fixture.MutateRetiredDeliveryStatement("weakened");
+
+        var diagnostic = Assert.Single(EvaluateDeliveryIdentity(fixture));
+
+        Assert.Equal(RuleId.CreateKnown(27), diagnostic.RuleId);
+        Assert.Contains("no delivery declaration has", diagnostic.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void RetiredDeliveryWithChangedBaselineStatementIsRejectedByStatementIdentityRule()
+    {
+        var fixture = BaselineContractCarrier();
+        fixture.AlignRetiredBaselineStatementToDelivery();
+        fixture.MutateRetiredBaselineStatement("changed");
+        fixture.RetireTheoristTarget();
+
+        var diagnostic = Assert.Single(EvaluateDeliveryIdentity(fixture));
+
+        Assert.Equal(RuleId.CreateKnown(27), diagnostic.RuleId);
+        Assert.Contains("no delivery declaration has", diagnostic.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void RetiredDeliveryWithMissingBaselineContractIsRejectedByStatementIdentityRule()
+    {
+        var fixture = BaselineContractCarrier();
+        fixture.RemoveRetiredBaselineContract();
+        fixture.RetireTheoristTarget();
+
+        var diagnostic = Assert.Single(EvaluateDeliveryIdentity(fixture));
+
+        Assert.Equal(RuleId.CreateKnown(27), diagnostic.RuleId);
+        Assert.Contains("baseline Frontier contract block is missing", diagnostic.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void RetiredDeliveryWithMalformedBaselineContractIsRejectedByStatementIdentityRule()
+    {
+        var fixture = BaselineContractCarrier();
+        fixture.MalformedRetiredBaselineContract();
+        fixture.RetireTheoristTarget();
+
+        var diagnostic = Assert.Single(EvaluateDeliveryIdentity(fixture));
+
+        Assert.Equal(RuleId.CreateKnown(27), diagnostic.RuleId);
+        Assert.Contains("baseline Frontier contract is not valid JSON", diagnostic.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void RetiredDeliveryIdentityAcceptsAtLeastOneMatchingFrozenDeclaration()
+    {
+        var fixture = BaselineContractCarrier();
+        fixture.AddMismatchingFrozenRetiredDelivery();
+        fixture.RetireTheoristTargetWithDeliveries(
+            "D5/S0/Carrier/Euclidean.golden_division",
+            "D5/S0/Carrier/Euclidean.mismatched_delivery");
+
+        Assert.Empty(EvaluateDeliveryIdentity(fixture));
+    }
+
+    [Fact]
+    public void GovernanceFrontierEntryIsOutsideDeliveryStatementIdentityRule()
+    {
+        var fixture = new RuleFixture();
+        fixture.AddHistoricalTheoristTarget(
+            "prime-norm-irreducibility",
+            ownerKind: "governance",
+            baselineOwnerKind: "governance",
+            baselineIncludeContract: true);
+        fixture.DeleteTheoristTargetWithOwner("governance");
+
+        Assert.Empty(EvaluateDeliveryIdentity(fixture));
     }
 
     [Fact]
@@ -297,7 +378,7 @@ public sealed class TheoristFrontierContractTests
         var fixture = BaselineContractCarrier();
         fixture.RetireTheoristTarget("D5/S0/Carrier/Ring.fixture_delivery");
 
-        var diagnostic = Assert.Single(Evaluate(fixture));
+        var diagnostic = Assert.Single(EvaluateSorry(fixture));
 
         Assert.Contains(
             "does not resolve to an active frozen declaration",
@@ -311,7 +392,7 @@ public sealed class TheoristFrontierContractTests
         var fixture = BaselineContractCarrier();
         fixture.RetireTheoristTarget("D5/S0/Carrier/Euclidean.missing_delivery");
 
-        var diagnostic = Assert.Single(Evaluate(fixture));
+        var diagnostic = Assert.Single(EvaluateSorry(fixture));
 
         Assert.Contains(
             "does not resolve to an active frozen declaration",
@@ -320,11 +401,14 @@ public sealed class TheoristFrontierContractTests
     }
 
     [Fact]
-    public void RetiredLegacyBaselineWithoutContractIsAllowedWithActiveDeliveryEvidence()
+    public void RetiredLegacyBaselineWithoutContractIsRejectedByStatementIdentityRule()
     {
         var fixture = LegacyRetiredBaseline();
 
-        Assert.Empty(Evaluate(fixture));
+        var diagnostic = Assert.Single(EvaluateDeliveryIdentity(fixture));
+
+        Assert.Equal(RuleId.CreateKnown(27), diagnostic.RuleId);
+        Assert.Contains("baseline Frontier contract block is missing", diagnostic.Message, StringComparison.Ordinal);
     }
 
     [Fact]
@@ -334,7 +418,7 @@ public sealed class TheoristFrontierContractTests
         fixture.AddUnfrozenRetiredDeliveryDeclaration();
         fixture.RetireTheoristTarget("D5/S0/Carrier/Euclidean.unfrozen_delivery");
 
-        var diagnostic = Assert.Single(Evaluate(fixture));
+        var diagnostic = Assert.Single(EvaluateSorry(fixture));
 
         Assert.Contains(
             "does not resolve to an active frozen declaration",
@@ -347,7 +431,7 @@ public sealed class TheoristFrontierContractTests
     {
         var fixture = LegacyRetiredBaseline("D5/S0/Carrier/Euclidean.missing_delivery");
 
-        var diagnostic = Assert.Single(Evaluate(fixture));
+        var diagnostic = Assert.Single(EvaluateSorry(fixture));
 
         Assert.Contains(
             "does not resolve to an active frozen declaration",
@@ -414,6 +498,7 @@ public sealed class TheoristFrontierContractTests
             "prime-norm-irreducibility",
             baselineOwnerKind: "declaration-ready-mathematical-open",
             baselineIncludeContract: true);
+        fixture.AlignRetiredBaselineStatementToDelivery();
         return fixture;
     }
 
@@ -430,7 +515,13 @@ public sealed class TheoristFrontierContractTests
     }
 
     private static ImmutableArray<Diagnostic> Evaluate(RuleFixture fixture) =>
+        EvaluateSorry(fixture);
+
+    private static ImmutableArray<Diagnostic> EvaluateSorry(RuleFixture fixture) =>
         EvaluateContext(fixture.Build());
+
+    private static ImmutableArray<Diagnostic> EvaluateDeliveryIdentity(RuleFixture fixture) =>
+        RuleCatalog.Default.EvaluateSingle(RuleId.CreateKnown(27), fixture.Build()).Diagnostics;
 
     private static ImmutableArray<Diagnostic> EvaluateForRuleCompatibility(RuleFixture fixture) =>
         EvaluateContext(fixture.BuildForRuleCompatibility());

@@ -225,12 +225,12 @@ public sealed class StandaloneLeanInspectorTests
         var firstSnapshot = TheoristSnapshot(path, source);
         var firstReport = new TestLeanReportProducer(repository.Path).Inspect(firstSnapshot);
         var firstFileReport = firstReport.Files[RepoPath.CreateKnown(path)];
-        var statement = Assert.Single(CanonicalStatementWriter.DeclarationStatementIds(
-            RepoPath.CreateKnown(path),
-            firstFileReport));
+        var firstStatementAddress = CanonicalStatementWriter.StatementTypeAddress(
+            firstFileReport.Declarations.Single(static item =>
+                item.Name == "D5.X_Frontier.ElaborationProbe.generated_open").TypeRepresentation);
         var finalSource = source.Replace(
             statementPlaceholder,
-            statement.StatementId.Value,
+            firstStatementAddress,
             StringComparison.Ordinal);
         var finalSnapshot = TheoristSnapshot(path, finalSource);
         var finalReport = new TestLeanReportProducer(repository.Path).Inspect(finalSnapshot);
@@ -239,10 +239,8 @@ public sealed class StandaloneLeanInspectorTests
             item.Name == "D5.X_Frontier.ElaborationProbe.generated_open"));
         Assert.Contains("sorryAx", declaration.Axioms);
         Assert.Equal(
-            statement.StatementId,
-            Assert.Single(CanonicalStatementWriter.DeclarationStatementIds(
-                RepoPath.CreateKnown(path),
-                finalFileReport)).StatementId);
+            firstStatementAddress,
+            CanonicalStatementWriter.StatementTypeAddress(declaration.TypeRepresentation));
 
         var fixture = new RuleFixture();
         fixture.AddElaboratedTheoristTarget(finalSource, finalFileReport);
