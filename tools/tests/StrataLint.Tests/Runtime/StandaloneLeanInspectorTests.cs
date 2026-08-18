@@ -211,8 +211,8 @@ public sealed class StandaloneLeanInspectorTests
 
             namespace D5.X_Frontier.ElaborationProbe
 
-            /- THEORIST_FRONTIER_CONTRACT_V1
-            {"schema":"trureturing-theorist-frontier-v1","exact_statement":{"gid":"D5/X_Frontier/ElaborationProbe.generated_open","statement_sha256":"{{statementPlaceholder}}"},"motivation_gids":["D5/S0/Carrier/Ring"],"falsifier":"a counterexample to True","search_receipt_gids":["D5/L/Carrier/fixture2026contract"],"computation_receipt_gids":["D5/E/S0/Carrier/Probe.result--json"],"triage_class":"theorem"}
+            /- THEORIST_FRONTIER_CONTRACT_V2
+            {"schema":"trureturing-theorist-frontier-v2","exact_statement":{"gid":"D5/X_Frontier/ElaborationProbe.generated_open","statement_sha256":"{{statementPlaceholder}}"},"motivation_gids":["D5/S0/Carrier/Ring"],"falsifier":"a counterexample to True","search_receipt_gids":["D5/L/Carrier/fixture2026contract"],"computation_receipt_gids":["D5/E/S0/Carrier/Probe.result--json"],"triage_class":"theorem"}
             -/
 
             theorem generated_open : True := by

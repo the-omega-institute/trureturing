@@ -5,9 +5,10 @@ namespace StrataLint.Engine;
 
 internal static class TheoristFrontierContractValidator
 {
-    internal const string Marker = "/- THEORIST_FRONTIER_CONTRACT_V1\n";
+    internal const string Marker = "/- THEORIST_FRONTIER_CONTRACT_V2\n";
 
-    private const string Schema = "trureturing-theorist-frontier-v1";
+    private const string LegacyMarker = "/- THEORIST_FRONTIER_CONTRACT_V1\n";
+    private const string Schema = "trureturing-theorist-frontier-v2";
     private const string EndMarker = "\n-/";
     private const string FrontierPrefix = "D5/X_Frontier/";
     private static readonly ImmutableHashSet<string> TriageClasses =
@@ -43,8 +44,12 @@ internal static class TheoristFrontierContractValidator
             var hasCurrentSource = context.Current.TryGetFile(path.Value, out var currentFile);
             var currentHasContract = currentFile is not null
                 && CountOccurrences(currentFile.Text, Marker) > 0;
+            var currentHasLegacyContract = currentFile is not null
+                && CountOccurrences(currentFile.Text, LegacyMarker) > 0;
             var baselineHadContract = baselineFile is not null
                 && CountOccurrences(baselineFile.Text, Marker) > 0;
+            var baselineHadLegacyContract = baselineFile is not null
+                && CountOccurrences(baselineFile.Text, LegacyMarker) > 0;
             FrontierEligibilityKind? currentOwner = currentMission.Entries.TryGetValue(
                 path,
                 out var typedCurrentOwner)
@@ -119,7 +124,9 @@ internal static class TheoristFrontierContractValidator
             }
 
             var requiresContract = currentHasContract
+                || currentHasLegacyContract
                 || baselineHadContract
+                || baselineHadLegacyContract
                 || transitionedToDeclarationReady
                 || isNew && currentOwner
                     is FrontierEligibilityKind.DeclarationReadyMathematicalOpen;
@@ -163,14 +170,40 @@ internal static class TheoristFrontierContractValidator
         RuleEvaluationContext context)
     {
         ArgumentNullException.ThrowIfNull(context);
-        var currentMission = LoadMission(context.Current);
-        var findings = ImmutableArray.CreateBuilder<RuleFinding>();
-        FrozenLedgerBaseView? frozen = null;
-        foreach (var retiredPath in context.Baseline.Files.Keys
-                     .Where(path => IsFrontier(path)
-                         && !context.Current.TryGetFile(path.Value, out _))
-                     .OrderBy(static path => path.Value, StringComparer.Ordinal))
+        var retiredPaths = context.Baseline.Files.Keys
+            .Where(path => IsFrontier(path)
+                && !context.Current.TryGetFile(path.Value, out _))
+            .OrderBy(static path => path.Value, StringComparer.Ordinal)
+            .ToArray();
+        if (retiredPaths.Length == 0)
         {
+            return [];
+        }
+
+        var findings = ImmutableArray.CreateBuilder<RuleFinding>();
+        var baselineMission = LoadMission(context.Baseline);
+        if (baselineMission.UnreadableReason is { } baselineReason)
+        {
+            foreach (var retiredPath in retiredPaths)
+            {
+                findings.Add(new RuleFinding(
+                    retiredPath.Value,
+                    Undecidable("baseline Frontier ownership", baselineReason)));
+            }
+
+            return findings.ToImmutable();
+        }
+
+        var currentMission = LoadMission(context.Current);
+        FrozenLedgerBaseView? frozen = null;
+        foreach (var retiredPath in retiredPaths)
+        {
+            if (baselineMission.Entries.TryGetValue(retiredPath, out var baselineOwner)
+                && baselineOwner is FrontierEligibilityKind.Governance)
+            {
+                continue;
+            }
+
             if (!currentMission.Retirements.TryGetValue(retiredPath, out var deliveryGids))
             {
                 continue;
@@ -196,6 +229,13 @@ internal static class TheoristFrontierContractValidator
         FrozenLedgerBaseView frozen)
     {
         var findings = ImmutableArray.CreateBuilder<RuleFinding>();
+        if (CountOccurrences(source, LegacyMarker) > 0)
+        {
+            return [new RuleFinding(
+                path.Value,
+                "THEORIST_FRONTIER_CONTRACT_V1 is legacy; V2 type-address contract is required")];
+        }
+
         var count = CountOccurrences(source, Marker);
         if (count == 0)
         {
@@ -512,6 +552,14 @@ internal static class TheoristFrontierContractValidator
         }
 
         var source = baselineFile.Text;
+        if (CountOccurrences(source, LegacyMarker) > 0)
+        {
+            findings.Add(new RuleFinding(
+                retiredPath.Value,
+                "baseline Frontier contract uses legacy V1 statement identity; V2 type-address contract is required"));
+            return null;
+        }
+
         if (CountOccurrences(source, Marker) == 0)
         {
             findings.Add(new RuleFinding(

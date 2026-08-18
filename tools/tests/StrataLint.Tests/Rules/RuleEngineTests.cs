@@ -56,9 +56,6 @@ public sealed class RuleEngineTests
         { 23, "Directory.Build.props" },
         { 25, RuleFixture.BlueprintPath },
         { 26, RuleFixture.BlueprintSourcePath },
-        { 27, MissionFileLoader.RelativePath },
-        { 27, RuleFixture.RingPath },
-        { 27, FrozenLedgerChangeClassifier.AcceptedRoot + "/fixture-event.json" },
     };
 
     public static TheoryData<int, string?> UnaffectedInputs => new()
@@ -84,6 +81,9 @@ public sealed class RuleEngineTests
         { 23, "Chronicle/2026/07/10-old.md" },
         { 25, "Chronicle/2026/07/10-old.md" },
         { 26, "Chronicle/2026/07/10-old.md" },
+        { 27, MissionFileLoader.RelativePath },
+        { 27, RuleFixture.RingPath },
+        { 27, FrozenLedgerChangeClassifier.AcceptedRoot + "/fixture-event.json" },
         { 27, "Chronicle/2026/07/10-old.md" },
     };
 
@@ -163,7 +163,8 @@ public sealed class RuleEngineTests
             "anomaly" => "Evidence/D5/S0/Carrier/Result.run.json",
             "future" => "D8/S0/Carrier/Ring.lean",
             "blueprint-skeleton" or "legacy-scribe" => RuleFixture.BlueprintSourcePath,
-            "delivery-statement-identity" => MissionFileLoader.RelativePath,
+            "delivery-statement-identity" =>
+                "D5/X_Frontier/PrimeNormIrreducibility.lean",
             _ => throw new ArgumentOutOfRangeException(nameof(mutation)),
         };
         fixture.Changes.Clear();

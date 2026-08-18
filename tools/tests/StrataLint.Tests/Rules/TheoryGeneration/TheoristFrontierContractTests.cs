@@ -283,7 +283,7 @@ public sealed class TheoristFrontierContractTests
     }
 
     [Fact]
-    public void RetiredBaselineContractCarrierIsAllowedWithActiveDeliveryEvidence()
+    public void MigratedV2BaselineContractWithMatchingTypeAddressIsAccepted()
     {
         var fixture = BaselineContractCarrier();
         fixture.RetireTheoristTarget();
@@ -359,16 +359,17 @@ public sealed class TheoristFrontierContractTests
     }
 
     [Fact]
-    public void GovernanceFrontierEntryIsOutsideDeliveryStatementIdentityRule()
+    public void BaselineGovernanceRetirementWithActiveDeliveryIsAcceptedByFullRulePair()
     {
         var fixture = new RuleFixture();
         fixture.AddHistoricalTheoristTarget(
             "prime-norm-irreducibility",
-            ownerKind: "governance",
+            ownerKind: "declaration-ready-mathematical-open",
             baselineOwnerKind: "governance",
-            baselineIncludeContract: true);
-        fixture.DeleteTheoristTargetWithOwner("governance");
+            baselineIncludeContract: false);
+        fixture.RetireTheoristTarget();
 
+        Assert.Empty(EvaluateSorry(fixture));
         Assert.Empty(EvaluateDeliveryIdentity(fixture));
     }
 
@@ -401,14 +402,43 @@ public sealed class TheoristFrontierContractTests
     }
 
     [Fact]
-    public void RetiredLegacyBaselineWithoutContractIsRejectedByStatementIdentityRule()
+    public void ParentV1BaselineContractIsRejectedAsLegacyByStatementIdentityRule()
     {
-        var fixture = LegacyRetiredBaseline();
+        var fixture = BaselineContractCarrier();
+        fixture.ReplaceRetiredBaselineWithLiteralParentV1Contract();
+        fixture.RetireTheoristTarget();
 
         var diagnostic = Assert.Single(EvaluateDeliveryIdentity(fixture));
 
         Assert.Equal(RuleId.CreateKnown(27), diagnostic.RuleId);
-        Assert.Contains("baseline Frontier contract block is missing", diagnostic.Message, StringComparison.Ordinal);
+        Assert.Contains("legacy V1", diagnostic.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void ParentV1CandidateContractIsRejectedAsLegacyByGenerationRule()
+    {
+        var fixture = new RuleFixture();
+        fixture.AddHistoricalTheoristTarget("prime-norm-irreducibility");
+        fixture.ReplaceCurrentContractWithLiteralParentV1Contract();
+
+        var diagnostic = Assert.Single(EvaluateSorry(fixture));
+
+        Assert.Contains("V1 is legacy", diagnostic.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void DeletedFrontierWithUnreadableBaselineMissionIsRejectedAsUndecidable()
+    {
+        var fixture = BaselineContractCarrier();
+        fixture.CorruptBaselineMission();
+        fixture.RetireTheoristTarget();
+
+        var diagnostic = Assert.Single(EvaluateDeliveryIdentity(fixture));
+
+        Assert.Contains(
+            "baseline Frontier ownership is undecidable because docs/MISSION.md does not load",
+            diagnostic.Message,
+            StringComparison.Ordinal);
     }
 
     [Fact]

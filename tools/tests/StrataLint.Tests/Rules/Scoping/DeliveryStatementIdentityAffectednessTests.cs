@@ -1,0 +1,53 @@
+using StrataLint.Engine;
+
+namespace StrataLint.Tests;
+
+public sealed class DeliveryStatementIdentityAffectednessTests
+{
+    [Theory]
+    [InlineData("docs/MISSION.md")]
+    [InlineData(RuleFixture.RingPath)]
+    [InlineData("Golden/Frozen/accepted/fixture-event.json")]
+    public void DeliveryStatementIdentitySkipsValidationInputsWithoutAFrontierDeletion(string path)
+    {
+        var fixture = new RuleFixture();
+        var completed = Assert.IsType<RuleExecutionOutcome.Completed>(
+            RuleCatalog.Default.Execute(fixture.Build(RawChangeSet.Create([path])))).Capability;
+
+        Assert.DoesNotContain(RuleId.CreateKnown(27), completed.ExecutedRules);
+    }
+
+    [Fact]
+    public void DeliveryStatementIdentitySkipsAModifiedFrontierSourceThatWasNotDeleted()
+    {
+        const string path = "D5/X_Frontier/PrimeNormIrreducibility.lean";
+        var fixture = new RuleFixture();
+        fixture.AddHistoricalTheoristTarget(
+            "prime-norm-irreducibility",
+            baselineOwnerKind: "declaration-ready-mathematical-open",
+            baselineIncludeContract: true);
+
+        var completed = Assert.IsType<RuleExecutionOutcome.Completed>(
+            RuleCatalog.Default.Execute(fixture.Build(RawChangeSet.Create([path])))).Capability;
+
+        Assert.DoesNotContain(RuleId.CreateKnown(27), completed.ExecutedRules);
+    }
+
+    [Fact]
+    public void DeliveryStatementIdentityExecutesWhenABaselineFrontierSourceIsDeleted()
+    {
+        const string path = "D5/X_Frontier/PrimeNormIrreducibility.lean";
+        var fixture = new RuleFixture();
+        fixture.AddHistoricalTheoristTarget(
+            "prime-norm-irreducibility",
+            baselineOwnerKind: "declaration-ready-mathematical-open",
+            baselineIncludeContract: true);
+        fixture.AlignRetiredBaselineStatementToDelivery();
+        fixture.RetireTheoristTarget();
+
+        var completed = Assert.IsType<RuleExecutionOutcome.Completed>(
+            RuleCatalog.Default.Execute(fixture.Build(RawChangeSet.Create([path])))).Capability;
+
+        Assert.Contains(RuleId.CreateKnown(27), completed.ExecutedRules);
+    }
+}

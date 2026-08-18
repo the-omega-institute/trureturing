@@ -13,6 +13,13 @@ internal sealed partial class RuleFixture
     private const string ComputationReceiptGid = "D5/E/S0/Carrier/Probe.result--json";
     private const string ComputationReceiptPath = "Evidence/D5/S0/Carrier/Probe.result.json";
     private const string RetiredDeliveryGid = "D5/S0/Carrier/Euclidean.golden_division";
+    private const string ParentV1StatementAddress =
+        "sha256:a20f6bafe7333a1146e6de8e1ff1c70b6167907eee609faee07c45650b7595f3";
+    private const string ParentV1Contract =
+        "/- THEORIST_FRONTIER_CONTRACT_V1\n"
+        + "{\"schema\":\"trureturing-theorist-frontier-v1\",\"exact_statement\":{\"gid\":\"D5/X_Frontier/PrimeNormIrreducibility.prime_norm_irreducible\",\"statement_sha256\":\""
+        + ParentV1StatementAddress
+        + "\"},\"motivation_gids\":[\"D5/S0/Carrier/Euclidean\"],\"falsifier\":\"a finite counterexample fiber\",\"search_receipt_gids\":[\"D5/L/Carrier/fixture2026contract\"],\"computation_receipt_gids\":[\"D5/E/S0/Carrier/Probe.result--json\"],\"triage_class\":\"theorem\"}\n-/";
 
     private string currentTheoristPath = TheoristTargetPath;
     private string currentTheoristDeclaration = "prime_norm_irreducible";
@@ -74,6 +81,10 @@ internal sealed partial class RuleFixture
     internal void CorruptMission() =>
         Files[MissionFileLoader.RelativePath] = "# Mission fixture without a mission-v1 fence\n";
 
+    internal void CorruptBaselineMission() =>
+        Baseline[MissionFileLoader.RelativePath] =
+            "# Baseline Mission fixture without a mission-v1 fence\n";
+
     internal void DeleteTheoristTargetAndOwner()
     {
         Files.Remove(currentTheoristPath);
@@ -119,7 +130,7 @@ internal sealed partial class RuleFixture
     internal void RemoveRetiredBaselineContract()
     {
         var source = Baseline[currentTheoristPath];
-        var start = source.IndexOf("/- THEORIST_FRONTIER_CONTRACT_V1", StringComparison.Ordinal);
+        var start = source.IndexOf("/- THEORIST_FRONTIER_CONTRACT_V2", StringComparison.Ordinal);
         var end = source.IndexOf("\n-/", start, StringComparison.Ordinal);
         Assert.True(start >= 0 && end > start);
         Baseline[currentTheoristPath] = source.Remove(start, end + 3 - start);
@@ -131,6 +142,38 @@ internal sealed partial class RuleFixture
         var malformed = source.Replace("\"falsifier\":", "\"falsifier\"", StringComparison.Ordinal);
         Assert.NotEqual(source, malformed);
         Baseline[currentTheoristPath] = malformed;
+    }
+
+    internal void ReplaceRetiredBaselineWithLiteralParentV1Contract()
+    {
+        var parentStatement = Assert.Single(CanonicalStatementWriter.DeclarationStatementIds(
+            RepoPath.CreateKnown(currentTheoristPath),
+            BaselineReports[currentTheoristPath]));
+        Assert.Equal(ParentV1StatementAddress, parentStatement.StatementId.Value);
+
+        var source = Baseline[currentTheoristPath];
+        var start = source.IndexOf("/- THEORIST_FRONTIER_CONTRACT_", StringComparison.Ordinal);
+        var end = source.IndexOf("\n-/", start, StringComparison.Ordinal);
+        Assert.True(start >= 0 && end > start);
+        Baseline[currentTheoristPath] = source[..start]
+            + ParentV1Contract
+            + source[(end + 3)..];
+    }
+
+    internal void ReplaceCurrentContractWithLiteralParentV1Contract()
+    {
+        var parentStatement = Assert.Single(CanonicalStatementWriter.DeclarationStatementIds(
+            RepoPath.CreateKnown(currentTheoristPath),
+            Reports[currentTheoristPath]));
+        Assert.Equal(ParentV1StatementAddress, parentStatement.StatementId.Value);
+
+        var source = Files[currentTheoristPath];
+        var start = source.IndexOf("/- THEORIST_FRONTIER_CONTRACT_", StringComparison.Ordinal);
+        var end = source.IndexOf("\n-/", start, StringComparison.Ordinal);
+        Assert.True(start >= 0 && end > start);
+        Files[currentTheoristPath] = source[..start]
+            + ParentV1Contract
+            + source[(end + 3)..];
     }
 
     internal void AddMismatchingFrozenRetiredDelivery()
@@ -212,8 +255,8 @@ internal sealed partial class RuleFixture
                 break;
             case "wrong-schema":
                 ReplaceContract(
-                    "trureturing-theorist-frontier-v1",
-                    "trureturing-theorist-frontier-v2");
+                    "trureturing-theorist-frontier-v2",
+                    "trureturing-theorist-frontier-v3");
                 break;
             case "blank-falsifier":
                 ReplaceContract("\"falsifier\":\"a finite counterexample fiber\"", "\"falsifier\":\" \"");
@@ -526,7 +569,7 @@ internal sealed partial class RuleFixture
     {
         var json = JsonSerializer.Serialize(new
         {
-            schema = "trureturing-theorist-frontier-v1",
+            schema = "trureturing-theorist-frontier-v2",
             exact_statement = new
             {
                 gid,
@@ -538,13 +581,13 @@ internal sealed partial class RuleFixture
             computation_receipt_gids = new[] { ComputationReceiptGid },
             triage_class = "theorem",
         });
-        return $"/- THEORIST_FRONTIER_CONTRACT_V1\n{json}\n-/";
+        return $"/- THEORIST_FRONTIER_CONTRACT_V2\n{json}\n-/";
     }
 
     private string ExtractContract()
     {
         var source = Files[currentTheoristPath];
-        var start = source.IndexOf("/- THEORIST_FRONTIER_CONTRACT_V1", StringComparison.Ordinal);
+        var start = source.IndexOf("/- THEORIST_FRONTIER_CONTRACT_V2", StringComparison.Ordinal);
         var end = source.IndexOf("\n-/", start, StringComparison.Ordinal);
         Assert.True(start >= 0 && end > start);
         return source[start..(end + 3)];
