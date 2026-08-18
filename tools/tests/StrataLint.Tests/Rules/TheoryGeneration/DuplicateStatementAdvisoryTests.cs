@@ -32,6 +32,7 @@ public sealed class DuplicateStatementAdvisoryTests
         "D5.S1.Phase.DuplicateRight.match_cons",
         "D5.S1.Phase.DuplicateRight.congr_simp_of_eq",
         "D5.S1.Phase.DuplicateRight.instability_bound",
+        "D5.S1.Phase.DuplicateRight.instΔLemma",
     };
 
     [Fact]
@@ -169,9 +170,10 @@ public sealed class DuplicateStatementAdvisoryTests
         Assert.Contains(declarationName, diagnostic.Message, StringComparison.Ordinal);
     }
 
-    // The census that motivated this rule found automatic instances (defs, e.g.
-    // instIsTransNatLeHAddOfNat_d5 twelve times over) to be the largest source of
-    // colliding statements. They are not proof work anybody duplicated.
+    // The census that motivated this rule found automatic instances to be the
+    // largest source of colliding statements; the inspector records the Prop-valued
+    // ones as theorems (caught by the inst marker clause), and this case pins the
+    // def-recorded direction. Neither is proof work anybody duplicated.
     [Fact]
     public void AutomaticInstanceDefinitionsAreOutsideTheAdvisory()
     {
