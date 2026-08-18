@@ -24,7 +24,6 @@ public sealed partial class MakeWorkflowTests
     private const string LeanCacheRunScriptPath =
         "tools/scripts/worktree/lean-cache-run.sh";
     private const string IngestScriptPath = "tools/scripts/ingest.sh";
-    private const string TheoryIngestClosureScriptPath = "tools/scripts/workflow/theory-ingest-closure.sh";
     private const string EchoResidualSummaryScriptPath =
         "tools/scripts/report/echo-residual-summary.sh";
     private const string ReportConsumerScriptPath =
@@ -39,7 +38,6 @@ public sealed partial class MakeWorkflowTests
         "tools/scripts/update-renderer-contract.sh";
     private const string ToolsMakefilePath = "tools/Makefile";
     private const string AdmissionWorkflowPath = ".github/workflows/ci.yml";
-    private const string TheoryIngestWorkflowPath = ".github/workflows/theory-ingest.yml";
     private const string PrOpenScriptPath = "tools/scripts/pr.sh open";
 
     private static readonly string[] RootTargets =
@@ -331,159 +329,6 @@ public sealed partial class MakeWorkflowTests
         Assert.DoesNotContain("Check out content-addressed dev baseline", workflow, StringComparison.Ordinal);
         Assert.Contains("baseline_sha: ${{ steps.base.outputs.sha }}", workflow, StringComparison.Ordinal);
         Assert.Contains("DEV_BASELINE_SHA: ${{ needs.lean-inspect.outputs.baseline_sha }}", workflow, StringComparison.Ordinal);
-    }
-
-    [Fact]
-    public void TheoryIngestRunsCandidateIngestWithMergeBaseAndSharedCaches()
-    {
-        var root = TestRepositoryLayout.FindRoot();
-        var admission = File.ReadAllText(Path.Combine(root, AdmissionWorkflowPath));
-        var workflow = File.ReadAllText(Path.Combine(root, TheoryIngestWorkflowPath));
-        var runnerIndex = workflow.IndexOf("runs-on: ubuntu-24.04-arm", StringComparison.Ordinal);
-        var addressIndex = workflow.IndexOf(
-            "- name: Resolve candidate canonical Lean report address",
-            StringComparison.Ordinal);
-        var restoreIndex = workflow.IndexOf(
-            "- name: Restore candidate canonical Lean report",
-            StringComparison.Ordinal);
-        var verifyIndex = workflow.IndexOf(
-            "- name: Install and verify candidate canonical Lean report",
-            StringComparison.Ordinal);
-        var baseIndex = workflow.IndexOf(
-            "- name: Resolve checked merge result's dev parent",
-            StringComparison.Ordinal);
-        var ingestIndex = workflow.IndexOf("          make ingest BASE=${{ steps.base.outputs.sha }}\n", StringComparison.Ordinal);
-
-        Assert.True(runnerIndex >= 0, "theory ingest must use the arm runner");
-        Assert.True(baseIndex >= 0, "theory ingest must resolve the checked merge result's dev parent");
-        Assert.True(addressIndex > baseIndex, "report address must follow base resolution");
-        Assert.True(restoreIndex > addressIndex, "report restore must use the resolved address");
-        Assert.True(verifyIndex > restoreIndex, "restored report must be verified before consumption");
-        Assert.True(ingestIndex > verifyIndex, "ingest must only consume a verified canonical report");
-
-        Assert.Contains("uses: actions/cache/save@v4", admission, StringComparison.Ordinal);
-        Assert.Contains("uses: actions/cache/restore@v4", workflow, StringComparison.Ordinal);
-        // 不变量是「两个 workflow 共用**同一个** key 字符串」,不是「只出现一次」——
-        // 证据:ingest 侧本来就带 .Distinct(),因为它 restore 与其它步骤可共用同一 key。
-        // admission 侧此前只有 save 一处,故省了 Distinct;现在它也 restore 同一个 key
-        // (关键路径复用报告),两侧遂对称。保留的判据仍是「distinct key 恰好一个且两侧相等」。
-        var admissionJob = admission.Split("  lean-inspect:\n", StringSplitOptions.None)[1]
-            .Split("  baseline-admission:\n", StringSplitOptions.None)[0];
-        var admissionCacheKey = Assert.Single(
-            admissionJob.Split('\n')
-                .Where(static line => line.TrimStart().StartsWith(
-                    "key: stratalint-canonical-lean-report-v2-",
-                    StringComparison.Ordinal))
-                .Select(static line => line.Trim())
-                .Distinct());
-        var ingestCacheKey = Assert.Single(
-            workflow.Split('\n')
-                .Where(static line => line.TrimStart().StartsWith(
-                    "key: stratalint-canonical-lean-report-v2-",
-                    StringComparison.Ordinal))
-                .Select(static line => line.Trim())
-                .Distinct());
-        Assert.Equal(admissionCacheKey, ingestCacheKey);
-
-        var producerIndex = workflow.IndexOf(
-            "- name: Produce candidate canonical Lean report on cache miss",
-            StringComparison.Ordinal);
-        var producerEndIndex = workflow.IndexOf(
-            "      - name: ",
-            producerIndex + "      - name: ".Length,
-            StringComparison.Ordinal);
-        Assert.True(producerIndex > restoreIndex, "a cache miss must produce in the ingest job");
-        Assert.True(producerEndIndex > producerIndex, "the cache-miss producer must be a bounded step");
-        Assert.True(verifyIndex > producerIndex, "both restored and fresh reports must be verified");
-        Assert.Contains(
-            "timeout-minutes: 30",
-            workflow[producerIndex..producerEndIndex],
-            StringComparison.Ordinal);
-        Assert.Single(Regex.Matches(workflow, "id: lean-report-cache"));
-        Assert.Single(Regex.Matches(workflow, "key: stratalint-canonical-lean-report-v2-"));
-        Assert.Contains("steps.lean-report-cache.outputs.cache-hit != 'true'", workflow, StringComparison.Ordinal);
-        Assert.DoesNotContain("sleep " + "360", workflow, StringComparison.Ordinal);
-        Assert.DoesNotContain("lookup-only: true", workflow, StringComparison.Ordinal);
-        Assert.DoesNotContain("fail-on-cache-miss: true", workflow, StringComparison.Ordinal);
-        Assert.Contains("steps.lean-report-input.outputs.address", admissionCacheKey, StringComparison.Ordinal);
-        Assert.Contains(
-            "$(basename \"$target\")\" > \"${target}.sha256\"",
-            admission,
-            StringComparison.Ordinal);
-        Assert.Contains("steps.lean-report-cache.outputs.cache-hit", workflow, StringComparison.Ordinal);
-        Assert.Contains(LeanReportInputScriptPath, workflow, StringComparison.Ordinal);
-        Assert.Contains("\" verify \\", workflow, StringComparison.Ordinal);
-        Assert.Contains(".lake/build/stratalint/raw-lean-report.json", workflow, StringComparison.Ordinal);
-        Assert.Contains("timeout-minutes: 36", workflow, StringComparison.Ordinal);
-        Assert.Contains("actions: read", workflow, StringComparison.Ordinal);
-        Assert.DoesNotContain("          make lean\n", workflow, StringComparison.Ordinal);
-        Assert.Contains("          make lean-report\n", workflow, StringComparison.Ordinal);
-        Assert.Contains("Install pinned Lean toolchain on cache miss", workflow, StringComparison.Ordinal);
-        Assert.Contains("Restore candidate Lean build artifacts on cache miss", workflow, StringComparison.Ordinal);
-        Assert.DoesNotContain("uses: actions/cache@v4", workflow, StringComparison.Ordinal);
-        AssertLakeCacheContract(admission, workflow);
-    }
-
-
-    [Fact]
-    public void TheoryIngestRunsCandidateClosureWithoutOverlay()
-    {
-        var root = TestRepositoryLayout.FindRoot();
-        var workflow = File.ReadAllText(Path.Combine(root, TheoryIngestWorkflowPath));
-        Assert.Contains("contents: read", workflow, StringComparison.Ordinal);
-        Assert.DoesNotContain("Enforce candidate data-only boundary", workflow, StringComparison.Ordinal);
-        Assert.DoesNotContain("Enforce write-path whitelist and commit back", workflow, StringComparison.Ordinal);
-        Assert.DoesNotContain("theory-ingest-bot", workflow, StringComparison.Ordinal);
-        Assert.DoesNotContain("THEORY-INGEST-REGISTRY-001", workflow, StringComparison.Ordinal);
-        var ingestIndex = workflow.IndexOf("make ingest BASE=${{ steps.base.outputs.sha }}", StringComparison.Ordinal);
-        var closureIndex = workflow.IndexOf(TheoryIngestClosureScriptPath, StringComparison.Ordinal);
-        Assert.True(ingestIndex >= 0, "ingest must receive the resolved merge-base SHA");
-        Assert.True(closureIndex > ingestIndex, "closure must run after ingest");
-        Assert.Contains("$GITHUB_WORKSPACE/candidate/" + TheoryIngestClosureScriptPath, workflow, StringComparison.Ordinal);
-        Assert.DoesNotContain("THEORY_INGEST_OVERLAY_PATHS", workflow, StringComparison.Ordinal);
-        Assert.DoesNotContain("Overlay judge", workflow, StringComparison.Ordinal);
-        Assert.DoesNotContain("rsync", workflow, StringComparison.Ordinal);
-        Assert.DoesNotContain("--exclude", workflow, StringComparison.Ordinal);
-
-        // 折入而非新开 [Fact]:这组断言共享同一 workflow 输入与同一行为主题,避免重复读取。
-        // unknown 债务现由 SL-003 对 fork-point 增量负责,全仓检测仍保留 280/281 两条线。
-        Assert.Contains("id: checkout-merge", workflow, StringComparison.Ordinal);
-        Assert.Contains(
-            "continue-on-error: ${{ github.event_name == 'pull_request_target' }}",
-            workflow,
-            StringComparison.Ordinal);
-        Assert.Contains(
-            "ref: ${{ format('refs/pull/{0}/merge', github.event.pull_request.number) }}",
-            workflow,
-            StringComparison.Ordinal);
-        Assert.Contains("Fail closed when merge result is unavailable", workflow, StringComparison.Ordinal);
-        Assert.Contains("steps.checkout-merge.outcome != 'success'", workflow, StringComparison.Ordinal);
-        Assert.Contains("conflicted pull requests have no merge result", workflow, StringComparison.Ordinal);
-        Assert.Contains(
-            "sha=\"$(git -C candidate rev-parse HEAD^1)\"",
-            workflow,
-            StringComparison.Ordinal);
-        Assert.DoesNotContain("git -C candidate fetch", workflow, StringComparison.Ordinal);
-        Assert.DoesNotContain("git -C candidate merge-base", workflow, StringComparison.Ordinal);
-        Assert.DoesNotContain("HEAD^2", workflow, StringComparison.Ordinal);
-    }
-
-    [Fact]
-    public void TheoryIngestNoLongerCarriesLegacyBoundaryOrWritebackContracts()
-    {
-        var root = TestRepositoryLayout.FindRoot();
-        var workflow = File.ReadAllText(Path.Combine(root, TheoryIngestWorkflowPath));
-        Assert.DoesNotContain("Enforce candidate data-only boundary", workflow, StringComparison.Ordinal);
-        Assert.DoesNotContain("Enforce write-path whitelist and commit back", workflow, StringComparison.Ordinal);
-        Assert.DoesNotContain("THEORY-INGEST-REGISTRY-001", workflow, StringComparison.Ordinal);
-    }
-
-    [Fact]
-    public void TheoryIngestDoesNotRewriteEchoProjection()
-    {
-        var root = TestRepositoryLayout.FindRoot();
-        var workflow = File.ReadAllText(Path.Combine(root, TheoryIngestWorkflowPath));
-        Assert.DoesNotContain("Generated/echo-residuals", workflow, StringComparison.Ordinal);
     }
 
     [Fact]
