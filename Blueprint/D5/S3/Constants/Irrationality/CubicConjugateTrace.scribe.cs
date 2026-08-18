@@ -1,15 +1,15 @@
 using static StrataLint.Scribe.DefinitionDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S0.Tower.Tribonacci;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Constants.Irrationality;
 
-internal sealed class ConjugateTraceDocument : IScribeDocumentDefinition
+internal sealed class CubicConjugateTraceDocument : IScribeDocumentDefinition
 {
     public DocumentDefinition Create()
     {
         var statement = Call("Irrational",
             Subtract(Num(1), Id("tribonacciConstant")));
 
-        const string declarationPrefix = "D5/S0/Tower/Tribonacci/ConjugateTrace.";
+        const string declarationPrefix = "D5/S3/Constants/Irrationality/CubicConjugateTrace.";
 
         return DocumentDefinition.Create(ScribeNode.Create(
             "The two non-Perron roots sum to one minus the base, which is irrational.",

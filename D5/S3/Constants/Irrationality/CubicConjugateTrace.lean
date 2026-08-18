@@ -1,6 +1,6 @@
-/- GID: D5/S0/Tower/Tribonacci/ConjugateTrace
+/- GID: D5/S3/Constants/Irrationality/CubicConjugateTrace
    generality: I
-   mirror-B: D5/B/S0/Tower/Tribonacci/ConjugateTrace
+   mirror-B: D5/B/S3/Constants/Irrationality/CubicConjugateTrace
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    digest: The two non-Perron roots sum to one minus the base, which is irrational. -/
@@ -16,9 +16,14 @@ import D5.S3.Constants.Irrationality.TribonacciIrrationality
    * The irrationality of the base landed separately in this session; without it
      the non-integrality of the conjugate pair's sum cannot be concluded.
    * No Vieta machinery is needed: the quadratic cofactor is explicit in the
-     existing factorisation, so its root sum is read off its coefficients. -/
+     existing factorisation, so its root sum is read off its coefficients.
+   * Placed in S3, not beside the cubic in S0, because SL-001 forbids a stratum
+     from importing upward and the irrationality this depends on lives in S3.  A
+     module belongs at the stratum of its highest dependency, not at the stratum
+     its subject matter suggests; the first draft was rejected for putting it in
+     S0 next to the polynomial it concerns. -/
 
-namespace D5.S0.Tower.Tribonacci.ConjugateTrace
+namespace D5.S3.Constants.Irrationality.CubicConjugateTrace
 
 open D5.S0.Tower.Tribonacci.Values
 open D5.S0.Tower.Tribonacci.Binet
@@ -73,4 +78,4 @@ theorem cubic_trace_is_not_carried_by_the_perron_root :
       Irrational (1 - t) :=
   ⟨cubic_splits_exact, conjugate_pair_sum_irrational⟩
 
-end D5.S0.Tower.Tribonacci.ConjugateTrace
+end D5.S3.Constants.Irrationality.CubicConjugateTrace
