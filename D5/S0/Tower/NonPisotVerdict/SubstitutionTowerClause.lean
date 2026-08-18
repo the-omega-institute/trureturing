@@ -129,11 +129,16 @@ theorem clause_frontier_expansion_is_aperiodic :
       ∀ n, N ≤ n → beta13GreedyDigit (n + p) = beta13GreedyDigit n :=
   digits_not_eventually_periodic
 
+/-- The affine fixed-point enumeration up to period eleven exhibits the optimal
+cycle: no orbit of period at most eleven has minimum above the champion value,
+and that value is attained. -/
+theorem clause_enumeration_to_eleven_is_optimal :
+    IsGreatest tribonacciPeriodicOrbitMinimaEleven (championValue t) :=
+  tribonacci_periodic_orbit_maximin_eleven
+
 /-- The substitution-tower clause, its assertions conjoined.
 
-Eight of the nine sentences appear here; the ninth, that the affine fixed-point
-enumeration up to period eleven exhibits the optimal cycle, is added once its
-aggregate lands.  One conjunct is the refutation of a false sentence rather than
+All nine sentences appear here.  One conjunct is the refutation of a false sentence rather than
 that sentence: the clause claims the strict forbidden region empties by depth
 sixty, and it does not.
 
@@ -169,8 +174,9 @@ theorem substitution_tower_clause :
       Tendsto (fun d : Nat => championValue (dbonacciPerronRoot d)) atTop (nhds (1 / 3)) ∧
       (tribonacciBackwardSurvivor tribonacciStrictSurvivorSet 60).Nonempty ∧
       (D5.S0.Tower.NonPisot.GapCounts.beta13NormalizedGapSpectrum 6).card = 6 ∧
-      ¬ ∃ p N : Nat, 0 < p ∧
-        ∀ n, N ≤ n → beta13GreedyDigit (n + p) = beta13GreedyDigit n :=
+      (¬ ∃ p N : Nat, 0 < p ∧
+        ∀ n, N ≤ n → beta13GreedyDigit (n + p) = beta13GreedyDigit n) ∧
+      IsGreatest tribonacciPeriodicOrbitMinimaEleven (championValue t) :=
   ⟨clause_gap_refinement_is_the_substitution,
     clause_champion_is_the_ergodic_optimum,
     clause_initial_formula_holds_only_on_the_cubic,
@@ -179,6 +185,7 @@ theorem substitution_tower_clause :
     clause_boundary_continuity,
     clause_depth_sixty_claim_is_false,
     clause_gap_types_grow_past_the_boundary,
-    clause_frontier_expansion_is_aperiodic⟩
+    clause_frontier_expansion_is_aperiodic,
+    clause_enumeration_to_eleven_is_optimal⟩
 
 end D5.S0.Tower.NonPisotVerdict.SubstitutionTowerClause
