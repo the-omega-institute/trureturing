@@ -34,12 +34,24 @@ public sealed partial class MakeWorkflowTests
     private static void AssertLakeCacheSitesUseTheSamePartitionedKeyTemplates(
         IReadOnlyCollection<CacheStep> steps)
     {
-        Assert.Equal(6, steps.Count);
-
         var dependencies = steps.Where(static step => IsLakeDependencyPath(step.Path)).ToArray();
         var builds = steps.Where(static step => step.Path == "candidate/.lake/build").ToArray();
-        Assert.Equal(3, dependencies.Length);
-        Assert.Equal(3, builds.Length);
+
+        // 不写死站点数。原先断言恰 6 个(3 依赖 + 3 构建),那是 ci.yml 与已删除的
+        // theory-ingest 两站点之和——写死使「增删一个站点」被迫改测试
+        // (CLAUDE.md 商余结构)。改判结构:每个缓存步骤都必须落入两层之一、
+        // 不留未分类者,且两层各自既有 restore 又有 save。
+        Assert.NotEmpty(steps);
+        Assert.Equal(steps.Count, dependencies.Length + builds.Length);
+        foreach (var layer in new[] { dependencies, builds })
+        {
+            Assert.Contains(
+                layer,
+                static step => step.Uses.StartsWith("actions/cache/restore@", StringComparison.Ordinal));
+            Assert.Contains(
+                layer,
+                static step => !step.Uses.StartsWith("actions/cache/restore@", StringComparison.Ordinal));
+        }
 
         Assert.All(dependencies, step => Assert.Equal(DependencyKey, step.Key));
         Assert.All(builds, step => Assert.Equal(BuildKey, step.Key));
