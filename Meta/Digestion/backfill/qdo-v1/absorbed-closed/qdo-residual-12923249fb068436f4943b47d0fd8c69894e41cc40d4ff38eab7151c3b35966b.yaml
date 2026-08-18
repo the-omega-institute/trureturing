@@ -1,0 +1,17 @@
+ast_path: theorem/19.1
+fingerprints:
+  raw_sha256: sha256:12923249fb068436f4943b47d0fd8c69894e41cc40d4ff38eab7151c3b35966b
+  normalized_sha256: sha256:12923249fb068436f4943b47d0fd8c69894e41cc40d4ff38eab7151c3b35966b
+cas_ref: sha256:12923249fb068436f4943b47d0fd8c69894e41cc40d4ff38eab7151c3b35966b
+coverage_gids:
+  - D5/S3/Observer/Separation/FiniteObservationRefinementBound.finite_observation_refinement_and_stability_bound
+receipts:
+  coverage:
+    - gid: D5/S3/Observer/Separation/FiniteObservationRefinementBound.finite_observation_refinement_and_stability_bound
+      source_sha256: sha256:12923249fb068436f4943b47d0fd8c69894e41cc40d4ff38eab7151c3b35966b
+      target_sha256: sha256:eae0a62c836e5b9675b6561db748cbd4ffa988d4d0ed99b787f54f4d4e3be346
+  scribe:
+    - gid: D5/S3/Observer/Separation/FiniteObservationRefinementBound.finite_observation_refinement_and_stability_bound
+      definition_sha256: sha256:6693801f1f705830978b13058b204185045ba1859a516dd0cb412c522a9c3d86
+      emission_sha256: sha256:f6772b93f267e8dfc90157aed3873d251983f7a0b74b841e06aedbc3a88e6e6b
+  unresolved_subitems: []
