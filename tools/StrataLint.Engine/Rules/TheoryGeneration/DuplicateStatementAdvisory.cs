@@ -16,6 +16,7 @@ internal static class DuplicateStatementAdvisory
     internal const string Code = "duplicate-statement";
 
     private const string EquationLemma = "eq_def";
+    private const string AutoInstancePrefix = "inst";
     private const string EquationIndexPrefix = "eq_";
     private const string MatchAuxiliaryPrefix = "match_";
     private const string CongruenceLemma = "congr_simp";
@@ -85,7 +86,7 @@ internal static class DuplicateStatementAdvisory
 
     // A module report carries every constant the module declares, and the census
     // found the colliding ones to be overwhelmingly machine-made: automatic
-    // instances (instIsTransNatLeHAddOfNat_d5 twelve times over) are defs, and the
+    // instances can reach here recorded as theorems (see IsAutoInstance), and the
     // equation compiler emits the rest. Nobody duplicated proof work writing those.
     private static bool IsAuthoredTheorem(LeanDeclaration declaration) =>
         declaration.IncludeInStatement
@@ -103,7 +104,18 @@ internal static class DuplicateStatementAdvisory
         || string.Equals(component, EquationLemma, StringComparison.Ordinal)
         || IsIndexed(component, EquationIndexPrefix)
         || IsIndexed(component, MatchAuxiliaryPrefix)
-        || string.Equals(component, CongruenceLemma, StringComparison.Ordinal);
+        || string.Equals(component, CongruenceLemma, StringComparison.Ordinal)
+        || IsAutoInstance(component);
+
+    // The 2026-08-18 census falsified the assumption that automatic instances are
+    // defs: the inspector records Prop-valued instances (instIsTransNatLeHAddOfNat_d5
+    // twelve times over) as theorems, so kind alone cannot exclude them. Lean's
+    // instance namer emits inst followed by an uppercase type head; a human name
+    // like instability_bound continues past inst in lowercase and must survive.
+    private static bool IsAutoInstance(string component) =>
+        component.Length > AutoInstancePrefix.Length
+        && component.StartsWith(AutoInstancePrefix, StringComparison.Ordinal)
+        && char.IsAsciiLetterUpper(component[AutoInstancePrefix.Length]);
 
     private static bool IsIndexed(string component, string prefix)
     {

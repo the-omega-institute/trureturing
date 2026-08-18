@@ -16,6 +16,7 @@ public sealed class DuplicateStatementAdvisoryTests
         "D5.S1.Phase.DuplicateRight.eq_def",
         "D5.S1.Phase.DuplicateRight.match_1",
         "D5.S1.Phase.DuplicateRight.congr_simp",
+        "D5.S1.Phase.DuplicateRight.instIsTransNatLeHAddOfNat_d5",
     };
 
     // Names a human writes that resemble the generated ones above. Widening any
@@ -30,6 +31,7 @@ public sealed class DuplicateStatementAdvisoryTests
         "D5.S1.Phase.DuplicateRight.eq_def_of_lt",
         "D5.S1.Phase.DuplicateRight.match_cons",
         "D5.S1.Phase.DuplicateRight.congr_simp_of_eq",
+        "D5.S1.Phase.DuplicateRight.instability_bound",
     };
 
     [Fact]
