@@ -43,6 +43,8 @@ internal sealed class SandwichPhasePeriodDocument : IScribeDocumentDefinition
                 "D5/S3/PrimeForms/Crossing/WindingOrbitZero")),
         ]));
 
+    // D() takes individual decimal digits, not a value: D(12) is the byte 12 and is
+    // rejected at emit time by Formula.LatexDigits. Twelve is written D(1, 2).
     private static Formula Iterate(Formula exponent, Formula state) =>
         Seq(F.Id("sigma"), Caret, Grp(exponent), Open, state, Close);
 
@@ -57,6 +59,6 @@ internal sealed class SandwichPhasePeriodDocument : IScribeDocumentDefinition
         return Disp(Seq(
             Forall, Sp, step, InMacro, Sp, Mathbb, Grp(F.Id("N")), Comma, Esc,
             Phase(Iterate(Seq(step, Plus, D(6)), matrix)), Sp, Eq, Sp,
-            Phase(Iterate(step, matrix)), Sp, Minus, Sp, D(12), Dot));
+            Phase(Iterate(step, matrix)), Sp, Minus, Sp, D(1, 2), Dot));
     }
 }
