@@ -1,0 +1,9 @@
+theory: D5
+plane: F
+domain: Quantum
+subdomain: Dynamics
+module: ObserverOrbitClosure
+generality: G
+selector: ""
+artifact: lean
+tag: ""
