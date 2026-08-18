@@ -64,6 +64,9 @@ internal static class ScribeTestMapDeriver
     // this declaration and its review-visible guard.
     internal static readonly IReadOnlyList<string> DeclaredPathWhitelist =
     [
+        // 消化退出 CI 后,ci.yml 是仓内唯一的 workflow;守卫「无 workflow 代跑消化」
+        // 与 lake 缓存契约都声明式读它(此前二者读的是已删除的 theory-ingest.yml)。
+        ".github/workflows/ci.yml",
         "Blueprint",
         "CLAUDE.md",
         "D5",
