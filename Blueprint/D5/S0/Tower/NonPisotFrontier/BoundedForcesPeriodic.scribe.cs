@@ -58,11 +58,10 @@ internal sealed class BoundedForcesPeriodicDocument : IScribeDocumentDefinition
                         "Boundedness is a hypothesis here, not a conclusion. Supplying it for the "
                             + "greedy remainders is immediate; supplying it on the conjugate side "
                             + "is exactly what the escape estimate denies, and that opposition is "
-                            + "the point of the chain this module belongs to."))),
+                            + "the point of the chain this module belongs to. Nothing about any "
+                            + "particular base appears here, by the generality ordering; the "
+                            + "instantiation lives one tier down."))),
                     DescribeRole.Theorem)),
-            [
-                DocumentEdge.Dependency.Create(GidRef.Create(
-                    "D5/S0/Tower/NonPisotFrontier/BetaThirteen")),
-            ]));
+            []));
     }
 }

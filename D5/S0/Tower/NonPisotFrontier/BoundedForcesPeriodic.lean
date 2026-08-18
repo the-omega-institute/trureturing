@@ -5,21 +5,21 @@
    anchors: []
    digest: Under an expanding multiplier a bounded orbit is zero, so periodic digits repeat. -/
 
-import D5.S0.Tower.NonPisotFrontier.BetaThirteen
-import D5.S0.Tower.NonPisotFrontier.PeriodicCollapse
+import Mathlib.Analysis.Real.Sqrt
 
 /- Library-search audit trail (2026-08-18):
    * Searched on the shape rather than on a name: an orbit of `w ↦ c * w` that
      stays bounded when `1 < |c|`.  The repository has expanding-step lemmas for
      the frontier conjugate specifically, none stated for an arbitrary
      multiplier, and none about what periodic digits do to the remainders.
+   * This module is general, so by SL-010 it may not import the instance-level
+     frontier artifacts.  Everything tying it to that base lives one tier down,
+     in `CollapseIsExpanding`.
    * Pinned Mathlib supplies `pow_unbounded_of_one_lt`, `abs_pow` and `abs_le`;
      the argument uses nothing else. -/
 
 namespace D5.S0.Tower.NonPisotFrontier.BoundedForcesPeriodic
 
-open D5.S0.Tower.NonPisotFrontier.BetaThirteen
-open D5.S0.Tower.NonPisotFrontier.PeriodicCollapse
 
 /-- Along an expanding linear step the distance from the origin is exact. -/
 theorem abs_orbit_eq {c : Real} {w : Nat → Real}
@@ -75,40 +75,5 @@ theorem periodic_digits_force_periodic_orbit {c M : Real} {p N : Nat} {r d : Nat
   rw [h3] at hk
   linarith
 
-/-- The frontier base is expanding, so its bounded orbits inherit the same rigidity. -/
-theorem frontier_base_is_expanding : 1 < |betaThirteen| := by
-  have h := two_lt_betaThirteen
-  rw [abs_of_pos (by linarith)]
-  linarith
-
-/- The period-block collapse proved at the shorter level is this lemma at the
-   multiplier `β' ^ p`.  Deriving it here, by the general route, is what keeps
-   the two from drifting: the general form arrived second, and by then the
-   specific one was frozen, so an in-place link is the last chance to make the
-   relationship machine-checked rather than a remark. -/
-
-/-- The signed step; the frozen module states it only under absolute value. -/
-theorem collapse_signed_step {p : Nat} (hp : p ≠ 0) (c y : Real) (k : Nat) :
-    collapseIterate p c (k + 1) y - collapseCentre p c
-      = betaThirteenConjugate ^ p
-          * (collapseIterate p c k y - collapseCentre p c) := by
-  have hspec := collapseCentre_spec hp c
-  rw [collapseIterate]
-  linarith [hspec]
-
-/-- Hence the distance identity there is an instance of the orbit identity here. -/
-theorem collapse_distance_from_general {p : Nat} (hp : p ≠ 0) (c y : Real) (k : Nat) :
-    |collapseIterate p c k y - collapseCentre p c|
-      = |betaThirteenConjugate ^ p| ^ k * |y - collapseCentre p c| := by
-  have h := abs_orbit_eq (c := betaThirteenConjugate ^ p)
-    (w := fun j => collapseIterate p c j y - collapseCentre p c)
-    (fun j => collapse_signed_step hp c y j) k
-  simpa [collapseIterate] using h
-
-/-- And that is exactly the statement proved there, reached by the other route. -/
-theorem general_yields_collapse_distance {p : Nat} (hp : p ≠ 0) (c y : Real) (k : Nat) :
-    |collapseIterate p c k y - collapseCentre p c|
-      = (|betaThirteenConjugate| ^ p) ^ k * |y - collapseCentre p c| := by
-  rw [collapse_distance_from_general hp, abs_pow]
 
 end D5.S0.Tower.NonPisotFrontier.BoundedForcesPeriodic
