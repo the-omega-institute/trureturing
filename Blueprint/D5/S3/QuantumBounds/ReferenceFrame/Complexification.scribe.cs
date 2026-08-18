@@ -62,12 +62,12 @@ internal sealed class ComplexificationDocument : IScribeDocumentDefinition
                 StatementSource.FromAuthor(F.Disp(F.Seq(
                     F.D(2), F.Leq, F.Sp, F.Id("N"), F.Sp, F.Longrightarrow, F.Sp,
                     F.Operatorname, F.Grp(F.Id("finrank")), F.Underscore,
-                    F.Grp(F.Mathbb, F.Grp(F.Id("C"))), F.Sp,
+                    F.Grp(F.Mathbb, F.Grp(F.Id("C"))), F.Open,
                     F.Operatorname, F.Grp(F.Id("eigenspace")), F.Open,
                     F.Id("J"), F.Caret, F.Grp(F.D(2)), F.Comma, F.Sp,
                     F.Operatorname, F.Grp(F.Id("cos")), F.Open,
                     F.Frac, F.Grp(F.Pi), F.Grp(F.Id("N"), F.Plus, F.D(1)),
-                    F.Close, F.Caret, F.Grp(F.D(2)), F.Close,
+                    F.Close, F.Caret, F.Grp(F.D(2)), F.Close, F.Close,
                     F.Sp, F.Eq, F.Sp, F.D(2)))),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(

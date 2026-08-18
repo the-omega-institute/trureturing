@@ -30,7 +30,7 @@ Writing each amplitude as a real part plus I times an imaginary part splits both
 
 **Theorem 1.3 (The complex top eigenspace has dimension two).**
 
-$$2\leq N \longrightarrow \operatorname{finrank}_{\mathbb{C}} \operatorname{eigenspace}(J^{2}, \operatorname{cos}(\frac{\pi}{N+1})^{2}) = 2$$
+$$2\leq N \longrightarrow \operatorname{finrank}_{\mathbb{C}}(\operatorname{eigenspace}(J^{2}, \operatorname{cos}(\frac{\pi}{N+1})^{2})) = 2$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/QuantumBounds/ReferenceFrame/Complexification.complex_top_eigenspace_finrank` (`✓ std3`). ∎
 
