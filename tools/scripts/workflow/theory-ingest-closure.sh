@@ -35,9 +35,16 @@ ensure_scratch() {
 load_producer_write_patterns() {
   local repository="$1"
   local output
-  if ! output="$(dotnet run --no-build \
-      --project "$repository/tools/StrataLint.Cli/StrataLint.Cli.csproj" \
-      --configuration Release -- filemap-conform --producer-write-set IngestCommand)"; then
+  # StrataLint 以进程 CWD 为仓根(`StrataLint.Cli/Program.cs`),故须先站到仓根再调;
+  # CI 的 CWD 是检出目录之外一层,不切则 `Meta/FILEMAP.toml` 解析不到。
+  # `cd` 失败在 `$( )` 子 shell 里不被 `set -e` 中止(实测:bash 会继续执行),
+  # 故显式 `|| exit`,否则会静默地在错误目录跑 CLI——正是本函数要修的那个失败形态。
+  if ! output="$(
+      cd "$repository" || exit 1
+      dotnet run --no-build \
+        --project tools/StrataLint.Cli/StrataLint.Cli.csproj \
+        --configuration Release -- filemap-conform --producer-write-set IngestCommand
+    )"; then
     fail "cannot derive IngestCommand committed write set"
   fi
 
