@@ -334,32 +334,35 @@ public sealed partial class MakeWorkflowTests
     }
 
     [Fact]
-    public void TheoryIngestRunsCandidateIngestWithMergeBaseAndSharedCaches()
+    public void TheoryIngestRunsOneBaseOwnedReportWithSharedCachesAndColdBudget()
     {
-        var root = TestRepositoryLayout.FindRoot();
-        var admission = File.ReadAllText(Path.Combine(root, AdmissionWorkflowPath));
-        var workflow = File.ReadAllText(Path.Combine(root, TheoryIngestWorkflowPath));
+        var admission = TestRepositoryLayout.ReadAllText(
+            RepositoryRelativePath.Create(".github/workflows/ci.yml"));
+        var workflow = TestRepositoryLayout.ReadAllText(
+            RepositoryRelativePath.Create(".github/workflows/theory-ingest.yml"));
         var runnerIndex = workflow.IndexOf("runs-on: ubuntu-24.04-arm", StringComparison.Ordinal);
         var addressIndex = workflow.IndexOf(
-            "- name: Resolve candidate canonical Lean report address",
+            "- name: Resolve trusted canonical Lean report address",
             StringComparison.Ordinal);
         var restoreIndex = workflow.IndexOf(
-            "- name: Restore candidate canonical Lean report",
+            "- name: Restore trusted canonical Lean report",
             StringComparison.Ordinal);
         var verifyIndex = workflow.IndexOf(
-            "- name: Install and verify candidate canonical Lean report",
+            "- name: Install and verify trusted canonical Lean report",
             StringComparison.Ordinal);
-        var baseIndex = workflow.IndexOf(
-            "- name: Resolve checked merge result's dev parent",
+        var guardIndex = workflow.IndexOf(
+            "- name: Reject event heads that change trusted inputs",
             StringComparison.Ordinal);
-        var ingestIndex = workflow.IndexOf("          make ingest BASE=${{ steps.base.outputs.sha }}\n", StringComparison.Ordinal);
+        var prepareIndex = workflow.IndexOf(
+            "- name: Run base-owned ingest and seal trusted closure",
+            StringComparison.Ordinal);
 
         Assert.True(runnerIndex >= 0, "theory ingest must use the arm runner");
-        Assert.True(baseIndex >= 0, "theory ingest must resolve the checked merge result's dev parent");
-        Assert.True(addressIndex > baseIndex, "report address must follow base resolution");
+        Assert.True(guardIndex >= 0, "candidate inputs must be rejected before expensive production");
+        Assert.True(addressIndex > guardIndex, "report address must follow the candidate input guard");
         Assert.True(restoreIndex > addressIndex, "report restore must use the resolved address");
         Assert.True(verifyIndex > restoreIndex, "restored report must be verified before consumption");
-        Assert.True(ingestIndex > verifyIndex, "ingest must only consume a verified canonical report");
+        Assert.True(prepareIndex > verifyIndex, "ingest must only consume a verified canonical report");
 
         Assert.Contains("uses: actions/cache/save@v4", admission, StringComparison.Ordinal);
         Assert.Contains("uses: actions/cache/restore@v4", workflow, StringComparison.Ordinal);
@@ -386,7 +389,7 @@ public sealed partial class MakeWorkflowTests
         Assert.Equal(admissionCacheKey, ingestCacheKey);
 
         var producerIndex = workflow.IndexOf(
-            "- name: Produce candidate canonical Lean report on cache miss",
+            "- name: Produce trusted canonical Lean report on cache miss",
             StringComparison.Ordinal);
         var producerEndIndex = workflow.IndexOf(
             "      - name: ",
@@ -396,7 +399,7 @@ public sealed partial class MakeWorkflowTests
         Assert.True(producerEndIndex > producerIndex, "the cache-miss producer must be a bounded step");
         Assert.True(verifyIndex > producerIndex, "both restored and fresh reports must be verified");
         Assert.Contains(
-            "timeout-minutes: 30",
+            "timeout-minutes: 60",
             workflow[producerIndex..producerEndIndex],
             StringComparison.Ordinal);
         Assert.Single(Regex.Matches(workflow, "id: lean-report-cache"));
@@ -413,33 +416,33 @@ public sealed partial class MakeWorkflowTests
         Assert.Contains("steps.lean-report-cache.outputs.cache-hit", workflow, StringComparison.Ordinal);
         Assert.Contains(LeanReportInputScriptPath, workflow, StringComparison.Ordinal);
         Assert.Contains("\" verify \\", workflow, StringComparison.Ordinal);
-        Assert.Contains(".lake/build/stratalint/raw-lean-report.json", workflow, StringComparison.Ordinal);
-        Assert.Contains("timeout-minutes: 36", workflow, StringComparison.Ordinal);
+        Assert.Contains("trusted/.lake/build/stratalint/raw-lean-report.json", workflow, StringComparison.Ordinal);
+        Assert.Contains("timeout-minutes: 75", workflow, StringComparison.Ordinal);
         Assert.Contains("actions: read", workflow, StringComparison.Ordinal);
         Assert.DoesNotContain("          make lean\n", workflow, StringComparison.Ordinal);
-        Assert.Contains("          make lean-report\n", workflow, StringComparison.Ordinal);
+        Assert.Single(Regex.Matches(workflow, "make lean-report"));
         Assert.Contains("Install pinned Lean toolchain on cache miss", workflow, StringComparison.Ordinal);
-        Assert.Contains("Restore candidate Lean build artifacts on cache miss", workflow, StringComparison.Ordinal);
+        Assert.Contains("Restore trusted Lean build artifacts on cache miss", workflow, StringComparison.Ordinal);
         Assert.DoesNotContain("uses: actions/cache@v4", workflow, StringComparison.Ordinal);
         AssertLakeCacheContract(admission, workflow);
     }
 
 
     [Fact]
-    public void TheoryIngestRunsCandidateClosureWithoutOverlay()
+    public void TheoryIngestConsumesOnlyCandidateTheoryDataWithoutOverlay()
     {
-        var root = TestRepositoryLayout.FindRoot();
-        var workflow = File.ReadAllText(Path.Combine(root, TheoryIngestWorkflowPath));
+        var workflow = TestRepositoryLayout.ReadAllText(
+            RepositoryRelativePath.Create(".github/workflows/theory-ingest.yml"));
         Assert.Contains("contents: read", workflow, StringComparison.Ordinal);
         Assert.DoesNotContain("Enforce candidate data-only boundary", workflow, StringComparison.Ordinal);
         Assert.DoesNotContain("Enforce write-path whitelist and commit back", workflow, StringComparison.Ordinal);
         Assert.DoesNotContain("theory-ingest-bot", workflow, StringComparison.Ordinal);
         Assert.DoesNotContain("THEORY-INGEST-REGISTRY-001", workflow, StringComparison.Ordinal);
-        var ingestIndex = workflow.IndexOf("make ingest BASE=${{ steps.base.outputs.sha }}", StringComparison.Ordinal);
+        var guardIndex = workflow.IndexOf("guard-inputs", StringComparison.Ordinal);
         var closureIndex = workflow.IndexOf(TheoryIngestClosureScriptPath, StringComparison.Ordinal);
-        Assert.True(ingestIndex >= 0, "ingest must receive the resolved merge-base SHA");
-        Assert.True(closureIndex > ingestIndex, "closure must run after ingest");
-        Assert.Contains("$GITHUB_WORKSPACE/candidate/" + TheoryIngestClosureScriptPath, workflow, StringComparison.Ordinal);
+        Assert.True(guardIndex >= 0, "the event head input closure must be checked");
+        Assert.True(closureIndex >= 0, "the base-owned closure script must run");
+        Assert.Contains("$GITHUB_WORKSPACE/trusted/" + TheoryIngestClosureScriptPath, workflow, StringComparison.Ordinal);
         Assert.DoesNotContain("THEORY_INGEST_OVERLAY_PATHS", workflow, StringComparison.Ordinal);
         Assert.DoesNotContain("Overlay judge", workflow, StringComparison.Ordinal);
         Assert.DoesNotContain("rsync", workflow, StringComparison.Ordinal);
@@ -447,25 +450,12 @@ public sealed partial class MakeWorkflowTests
 
         // 折入而非新开 [Fact]:这组断言共享同一 workflow 输入与同一行为主题,避免重复读取。
         // unknown 债务现由 SL-003 对 fork-point 增量负责,全仓检测仍保留 280/281 两条线。
-        Assert.Contains("id: checkout-merge", workflow, StringComparison.Ordinal);
-        Assert.Contains(
-            "continue-on-error: ${{ github.event_name == 'pull_request_target' }}",
-            workflow,
-            StringComparison.Ordinal);
-        Assert.Contains(
-            "ref: ${{ format('refs/pull/{0}/merge', github.event.pull_request.number) }}",
-            workflow,
-            StringComparison.Ordinal);
-        Assert.Contains("Fail closed when merge result is unavailable", workflow, StringComparison.Ordinal);
-        Assert.Contains("steps.checkout-merge.outcome != 'success'", workflow, StringComparison.Ordinal);
-        Assert.Contains("conflicted pull requests have no merge result", workflow, StringComparison.Ordinal);
-        Assert.Contains(
-            "sha=\"$(git -C candidate rev-parse HEAD^1)\"",
-            workflow,
-            StringComparison.Ordinal);
-        Assert.DoesNotContain("git -C candidate fetch", workflow, StringComparison.Ordinal);
-        Assert.DoesNotContain("git -C candidate merge-base", workflow, StringComparison.Ordinal);
-        Assert.DoesNotContain("HEAD^2", workflow, StringComparison.Ordinal);
+        Assert.Contains("id: checkout-trusted", workflow, StringComparison.Ordinal);
+        Assert.Contains("ref: ${{ github.event.pull_request.base.sha }}", workflow, StringComparison.Ordinal);
+        Assert.Contains("id: checkout-candidate-data", workflow, StringComparison.Ordinal);
+        Assert.Contains("sparse-checkout: docs/develop/theory", workflow, StringComparison.Ordinal);
+        Assert.DoesNotContain("refs/pull/", workflow, StringComparison.Ordinal);
+        Assert.DoesNotContain("checkout-merge", workflow, StringComparison.Ordinal);
     }
 
     [Fact]

@@ -31,7 +31,7 @@ public sealed partial class MakeWorkflowTests
         Assert.Equal(6, steps.Count);
 
         var dependencies = steps.Where(static step => IsLakeDependencyPath(step.Path)).ToArray();
-        var builds = steps.Where(static step => step.Path == "candidate/.lake/build").ToArray();
+        var builds = steps.Where(static step => IsLakeBuildPath(step.Path)).ToArray();
         Assert.Equal(3, dependencies.Length);
         Assert.Equal(3, builds.Length);
 
@@ -112,7 +112,7 @@ public sealed partial class MakeWorkflowTests
     private static IEnumerable<CacheStep> ParseLakeCacheSteps(IEnumerable<string> workflows) =>
         workflows.SelectMany(workflow => ParseWorkflowSteps(workflow)
             .Where(static step => LakeCacheScalar(step, "uses").StartsWith("actions/cache/", StringComparison.Ordinal))
-            .Where(static step => LakeCacheScalar(LakeCacheMapping(step, "with"), "path").Contains("candidate/.lake", StringComparison.Ordinal))
+            .Where(static step => LakeCacheScalar(LakeCacheMapping(step, "with"), "path").Contains("/.lake", StringComparison.Ordinal))
             .Select(step =>
             {
                 var with = LakeCacheMapping(step, "with");
@@ -125,16 +125,29 @@ public sealed partial class MakeWorkflowTests
                     LakeCacheScalar(step, "if"));
             }));
 
-    private static bool IsLakeDependencyPath(string path) =>
-        path.Split('\n', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
-            .SequenceEqual(
-                [
-                    "candidate/.lake/packages",
-                    "candidate/.lake/config",
-                    "candidate/.lake/.stratalint-lean-cache-stamp.json",
-                    "~/.cache/mathlib",
-                ],
-                StringComparer.Ordinal);
+    private static bool IsLakeDependencyPath(string path)
+    {
+        var parts = path.Split(
+            '\n',
+            StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+        if (parts.Length != 4 || parts[3] != "~/.cache/mathlib")
+        {
+            return false;
+        }
+
+        var root = parts[0].Split("/.lake/", StringSplitOptions.None)[0];
+        return parts.SequenceEqual(
+            [
+                $"{root}/.lake/packages",
+                $"{root}/.lake/config",
+                $"{root}/.lake/.stratalint-lean-cache-stamp.json",
+                "~/.cache/mathlib",
+            ],
+            StringComparer.Ordinal);
+    }
+
+    private static bool IsLakeBuildPath(string path) =>
+        path is "candidate/.lake/build" or "trusted/.lake/build";
 
     private static string ExactLakeCacheSaveCondition(string cacheStepId) =>
         $"success() && steps.report-reuse.outcome != 'success'"
