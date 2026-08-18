@@ -82,6 +82,27 @@ public sealed class TheoryIngestClosureScriptTests
             StringComparison.Ordinal);
     }
 
+    // StrataLint 的仓根**就是**进程 CWD(`StrataLint.Cli/Program.cs`:
+    // `new ProductionCliEnvironment(Environment.CurrentDirectory)`),故凡调用 CLI 者
+    // 必须先站到仓根。CI 把仓库检出在 `candidate/` 子目录、以其父为 CWD,而本地
+    // `make preflight` 的 CWD 恰好是仓根——该缺陷只在 CI 显形。此测试把那个前提钉住。
+    [Fact]
+    public void ProducerWriteSetDerivationInvokesTheCliFromTheRepositoryRoot()
+    {
+        using var fixture = new TheoryIngestClosureFixture();
+        fixture.CommitTheoryChange();
+        fixture.Write("Declared/Output/generated.txt", "declared output\n");
+
+        var result = fixture.Propose();
+
+        Assert.Equal(0, result.ExitCode);
+        var invocationDirectories = fixture.ReadDotnetWorkingDirectories();
+        Assert.NotEmpty(invocationDirectories);
+        Assert.All(
+            invocationDirectories,
+            directory => Assert.Equal(fixture.PhysicalRepositoryPath(), directory));
+    }
+
     [Fact]
     public void ProposalBytesMustExactlyMatchTrustedRecomputationBeforeAuthorization()
     {
@@ -168,8 +189,14 @@ public sealed class TheoryIngestClosureScriptTests
     {
         private readonly TemporaryDirectory repository = new();
 
+        // CI 从仓库外一层调用本脚本(检出在 `candidate/` 子目录,进程 CWD 是其父)。
+        // 脚手架若在仓根内跑,就与 `make preflight` 共享同一个盲区:凡按进程 CWD
+        // 解析仓内路径的缺陷一律不可见(CLAUDE.md「验证条件不得与被验对象耦合」)。
+        private readonly TemporaryDirectory workingDirectory = new();
+
         private readonly string proposalPath;
         private readonly string dotnetArgumentsPath;
+        private readonly string dotnetWorkingDirectoryPath;
         private readonly string binDirectory;
 
         internal TheoryIngestClosureFixture(string writePattern = "Declared/Output/**")
@@ -180,6 +207,7 @@ public sealed class TheoryIngestClosureScriptTests
             binDirectory = Path.Combine(repository.Path, "test-bin");
             proposalPath = Path.Combine(repository.Path, "proposal", "theory-ingest.patch");
             dotnetArgumentsPath = Path.Combine(repository.Path, "dotnet-arguments.txt");
+            dotnetWorkingDirectoryPath = Path.Combine(repository.Path, "dotnet-working-directory.txt");
             Directory.CreateDirectory(binDirectory);
             Write("Declared/Output/existing.txt", "base output\n");
             Write("Outside/existing.txt", "base outside\n");
@@ -190,6 +218,7 @@ public sealed class TheoryIngestClosureScriptTests
                 #!/usr/bin/env bash
                 set -euo pipefail
                 printf '%s\n' "$*" >> "$DOTNET_ARGUMENTS_PATH"
+                pwd -P >> "$DOTNET_WORKING_DIRECTORY_PATH"
                 cat "$WRITE_PATTERN_PATH"
                 """ + "\n");
             if (!OperatingSystem.IsWindows())
@@ -272,6 +301,27 @@ public sealed class TheoryIngestClosureScriptTests
             ? File.ReadAllText(dotnetArgumentsPath)
             : string.Empty;
 
+        internal IReadOnlyList<string> ReadDotnetWorkingDirectories() =>
+            File.Exists(dotnetWorkingDirectoryPath)
+                ? File.ReadAllText(dotnetWorkingDirectoryPath).Split(
+                    '\n',
+                    StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
+                : [];
+
+        // `pwd -P` 与仓库路径须经同一机制求值:macOS 的 TemporaryDirectory 在 /var 下,
+        // 而 /var 是指向 /private/var 的符号链接,两侧不同源比较会得到假红。
+        internal string PhysicalRepositoryPath()
+        {
+            var result = BoundedProcessRunner.Run(
+                "/usr/bin/env",
+                ["bash", "-c", "cd \"$1\" && pwd -P", "_", repository.Path],
+                repository.Path,
+                TimeSpan.FromSeconds(30),
+                1024 * 1024);
+            Assert.Equal(0, result.ExitCode);
+            return Encoding.UTF8.GetString(result.StandardOutput).Trim();
+        }
+
         internal string WriteExternal(string name, string contents)
         {
             var path = Path.Combine(repository.Path, name);
@@ -279,7 +329,11 @@ public sealed class TheoryIngestClosureScriptTests
             return path;
         }
 
-        public void Dispose() => repository.Dispose();
+        public void Dispose()
+        {
+            repository.Dispose();
+            workingDirectory.Dispose();
+        }
 
         internal void RunGit(params string[] arguments)
         {
@@ -298,12 +352,13 @@ public sealed class TheoryIngestClosureScriptTests
                 [
                     $"PATH={binDirectory}{Path.PathSeparator}{Environment.GetEnvironmentVariable("PATH")}",
                     $"DOTNET_ARGUMENTS_PATH={dotnetArgumentsPath}",
+                    $"DOTNET_WORKING_DIRECTORY_PATH={dotnetWorkingDirectoryPath}",
                     $"WRITE_PATTERN_PATH={Path.Combine(repository.Path, "write-pattern.txt")}",
                     "bash",
                     script,
                     .. arguments,
                 ],
-                repository.Path,
+                workingDirectory.Path,
                 TimeSpan.FromSeconds(30),
                 1024 * 1024);
         }
