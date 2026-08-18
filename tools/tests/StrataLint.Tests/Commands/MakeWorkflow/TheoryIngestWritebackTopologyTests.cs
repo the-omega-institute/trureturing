@@ -104,6 +104,66 @@ public sealed class TheoryIngestWritebackTopologyTests
         Assert.DoesNotContain("Meta/Digestion/backfill/**", script, StringComparison.Ordinal);
     }
 
+    // trusted 侧按 WritebackJobNeverExecutesCandidateFilesOrConsumesProposalAsCommands 的
+    // 不变量不得用 actions/cache,故须自行拉取上游依赖再全量编译本仓树。二者耗时分布不同:
+    // 实测 run 32153488843 依赖拉取 539s、本仓树构建 >=1268s(被 30 分钟墙杀,无上界)。
+    // 合在一步则任一超支都只留下一个无差别的「超时」读数,连冷跑上界都取不到。
+    // 且 job 预算必须容得下各步预算之和——原先 job 36m 装不下 30m 的步骤加其余步骤。
+    [Fact]
+    public void WritebackTimesDependencyFetchSeparatelyFromOwnTreeBuild()
+    {
+        var writeback = Job(LoadWorkflow(), "writeback");
+        var steps = Sequence(writeback, "steps").Children.OfType<YamlMappingNode>().ToArray();
+
+        int IndexOfStepRunning(string command) => Array.FindIndex(
+            steps,
+            step => TryScalar(step, "run", out var run)
+                && run.Contains(command, StringComparison.Ordinal));
+
+        var fetchIndex = IndexOfStepRunning("make lean-cache-ensure");
+        var buildIndex = IndexOfStepRunning("make lean-report");
+
+        Assert.True(fetchIndex >= 0, "the trusted dependency fetch must be its own timed step");
+        Assert.True(buildIndex >= 0, "the trusted own-tree build must be its own timed step");
+        Assert.True(
+            fetchIndex < buildIndex,
+            "the dependency fetch must precede the own-tree build so each is separately timed");
+
+        var stepBudgets = steps
+            .Where(static step => TryScalar(step, "timeout-minutes", out _))
+            .Select(static step => int.Parse(
+                Scalar(step, "timeout-minutes"),
+                System.Globalization.CultureInfo.InvariantCulture))
+            .ToArray();
+
+        Assert.Equal(2, stepBudgets.Length);
+        Assert.All(stepBudgets, static budget => Assert.True(budget > 0));
+
+        var jobBudget = int.Parse(
+            Scalar(writeback, "timeout-minutes"),
+            System.Globalization.CultureInfo.InvariantCulture);
+        Assert.True(
+            jobBudget >= stepBudgets.Sum(),
+            $"job budget {jobBudget}m cannot hold its own step budgets summing to {stepBudgets.Sum()}m");
+
+        // 内层预算须严格小于步骤预算,否则先撞 GitHub 的步骤墙,失败只留下一句无信息的
+        // 「步骤超时」;先撞内层才拿得到 `lake timed out after N seconds` 与调用现场。
+        foreach (var index in new[] { fetchIndex, buildIndex })
+        {
+            var step = steps[index];
+            var stepBudgetSeconds = int.Parse(
+                Scalar(step, "timeout-minutes"),
+                System.Globalization.CultureInfo.InvariantCulture) * 60;
+            var innerBudgetSeconds = int.Parse(
+                Scalar(Mapping(step, "env"), "STRATALINT_LEAN_CACHE_TIMEOUT_SECONDS"),
+                System.Globalization.CultureInfo.InvariantCulture);
+            Assert.True(
+                innerBudgetSeconds < stepBudgetSeconds,
+                $"inner budget {innerBudgetSeconds}s must be under the step budget "
+                    + $"{stepBudgetSeconds}s so a timeout reports its own call site");
+        }
+    }
+
     [Fact]
     public void WritebackFailsClosedWhenCandidateChangesProducerClosure()
     {
