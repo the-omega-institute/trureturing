@@ -110,10 +110,10 @@ public sealed class TheoryIngestClosureScriptTests
         var result = fixture.PrepareFromOutsideRepository();
 
         Assert.True(result.ExitCode == 0, Diagnostic("prepare", result));
-        Assert.True(File.Exists(fixture.ArtifactPatch));
-        Assert.True(File.Exists(fixture.ArtifactEnvelope));
-        Assert.True(File.Exists(fixture.ArtifactEnvelopeDigest));
-        using var envelope = JsonDocument.Parse(File.ReadAllBytes(fixture.ArtifactEnvelope));
+        Assert.True(fixture.ArtifactPatchExists());
+        Assert.True(fixture.ArtifactEnvelopeExists());
+        Assert.True(fixture.ArtifactEnvelopeDigestExists());
+        using var envelope = JsonDocument.Parse(fixture.ReadArtifactEnvelope());
         Assert.Equal(
             new[]
             {
@@ -129,7 +129,7 @@ public sealed class TheoryIngestClosureScriptTests
         Assert.Equal(fixture.HeadSha, envelope.RootElement.GetProperty("head_sha").GetString());
         Assert.Equal("sha256:" + new string('a', 64), envelope.RootElement
             .GetProperty("report_input_address").GetString());
-        Assert.Contains("Declared/Output/existing.txt", File.ReadAllText(fixture.ArtifactPatch));
+        Assert.Contains("Declared/Output/existing.txt", fixture.ReadArtifactPatch());
         Assert.Contains(
             "filemap-conform --producer-write-set IngestCommand",
             fixture.ReadDotnetArguments(),
@@ -264,6 +264,16 @@ public sealed class TheoryIngestClosureScriptTests
         internal string ArtifactEnvelope => Path.Combine(artifact.Path, "theory-ingest-envelope.json");
 
         internal string ArtifactEnvelopeDigest => ArtifactEnvelope + ".sha256";
+
+        internal bool ArtifactPatchExists() => File.Exists(ArtifactPatch);
+
+        internal bool ArtifactEnvelopeExists() => File.Exists(ArtifactEnvelope);
+
+        internal bool ArtifactEnvelopeDigestExists() => File.Exists(ArtifactEnvelopeDigest);
+
+        internal byte[] ReadArtifactEnvelope() => File.ReadAllBytes(ArtifactEnvelope);
+
+        internal string ReadArtifactPatch() => File.ReadAllText(ArtifactPatch);
 
         internal void ChangeCandidateTheory() =>
             ChangeCandidate("docs/develop/theory/volume/theory.md", "# candidate theory\n");

@@ -64,6 +64,7 @@ internal static class ScribeTestMapDeriver
     // this declaration and its review-visible guard.
     internal static readonly IReadOnlyList<string> DeclaredPathWhitelist =
     [
+        ".github/workflows/ci.yml",
         ".github/workflows/theory-ingest.yml",
         "Blueprint",
         "CLAUDE.md",

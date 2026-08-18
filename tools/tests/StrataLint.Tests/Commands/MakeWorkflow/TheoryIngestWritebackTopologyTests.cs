@@ -72,7 +72,7 @@ public sealed class TheoryIngestWritebackTopologyTests
     public void TrustedPreparationDoesNotAuthorizeAnyCandidateProposal()
     {
         var workflow = TestRepositoryLayout.ReadAllText(
-            RepositoryRelativePath.Create(WorkflowPath));
+            RepositoryRelativePath.Create(".github/workflows/theory-ingest.yml"));
         var script = LoadScript();
 
         Assert.DoesNotContain("propose:", workflow, StringComparison.Ordinal);
@@ -226,7 +226,7 @@ public sealed class TheoryIngestWritebackTopologyTests
     {
         var stream = new YamlStream();
         stream.Load(new StringReader(TestRepositoryLayout.ReadAllText(
-            RepositoryRelativePath.Create(WorkflowPath))));
+            RepositoryRelativePath.Create(".github/workflows/theory-ingest.yml"))));
         return Assert.IsType<YamlMappingNode>(Assert.Single(stream.Documents).RootNode);
     }
 

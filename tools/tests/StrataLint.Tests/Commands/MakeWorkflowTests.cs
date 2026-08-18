@@ -336,9 +336,10 @@ public sealed partial class MakeWorkflowTests
     [Fact]
     public void TheoryIngestRunsOneBaseOwnedReportWithSharedCachesAndColdBudget()
     {
-        var root = TestRepositoryLayout.FindRoot();
-        var admission = File.ReadAllText(Path.Combine(root, AdmissionWorkflowPath));
-        var workflow = File.ReadAllText(Path.Combine(root, TheoryIngestWorkflowPath));
+        var admission = TestRepositoryLayout.ReadAllText(
+            RepositoryRelativePath.Create(".github/workflows/ci.yml"));
+        var workflow = TestRepositoryLayout.ReadAllText(
+            RepositoryRelativePath.Create(".github/workflows/theory-ingest.yml"));
         var runnerIndex = workflow.IndexOf("runs-on: ubuntu-24.04-arm", StringComparison.Ordinal);
         var addressIndex = workflow.IndexOf(
             "- name: Resolve trusted canonical Lean report address",
@@ -430,8 +431,8 @@ public sealed partial class MakeWorkflowTests
     [Fact]
     public void TheoryIngestConsumesOnlyCandidateTheoryDataWithoutOverlay()
     {
-        var root = TestRepositoryLayout.FindRoot();
-        var workflow = File.ReadAllText(Path.Combine(root, TheoryIngestWorkflowPath));
+        var workflow = TestRepositoryLayout.ReadAllText(
+            RepositoryRelativePath.Create(".github/workflows/theory-ingest.yml"));
         Assert.Contains("contents: read", workflow, StringComparison.Ordinal);
         Assert.DoesNotContain("Enforce candidate data-only boundary", workflow, StringComparison.Ordinal);
         Assert.DoesNotContain("Enforce write-path whitelist and commit back", workflow, StringComparison.Ordinal);
