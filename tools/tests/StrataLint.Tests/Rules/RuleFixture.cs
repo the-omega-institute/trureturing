@@ -281,7 +281,7 @@ internal sealed partial class RuleFixture
                     "prime-norm-irreducibility",
                     baselineOwnerKind: "declaration-ready-mathematical-open",
                     baselineIncludeContract: true);
-                AlignRetiredBaselineStatementToDelivery();
+                ReplaceRetiredBaselineWithLiteralV2Contract();
                 RetireTheoristTarget();
                 MutateRetiredDeliveryStatement("weakened");
                 break;

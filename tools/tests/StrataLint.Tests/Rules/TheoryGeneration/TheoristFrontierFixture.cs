@@ -12,6 +12,7 @@ internal sealed partial class RuleFixture
     private const string SearchReceiptPath = "Library/Carrier/fixture2026contract.md";
     private const string ComputationReceiptGid = "D5/E/S0/Carrier/Probe.result--json";
     private const string ComputationReceiptPath = "Evidence/D5/S0/Carrier/Probe.result.json";
+    private const string BackfillTargetPath = "D5/S0/Carrier/BackfillTarget.lean";
     private const string RetiredDeliveryGid = "D5/S0/Carrier/Euclidean.golden_division";
     private const string ParentV1StatementAddress =
         "sha256:a20f6bafe7333a1146e6de8e1ff1c70b6167907eee609faee07c45650b7595f3";
@@ -111,22 +112,6 @@ internal sealed partial class RuleFixture
         Files[MissionFileLoader.RelativePath] = Mission("retired", deliveryGids);
     }
 
-    internal void AlignRetiredBaselineStatementToDelivery() =>
-        ReplaceBaselineContract(
-            "statement_sha256",
-            CanonicalStatementWriter.StatementTypeAddress("statement-v1(retired-delivery)"));
-
-    internal void MutateRetiredBaselineStatement(string mutation)
-    {
-        var replacement = mutation switch
-        {
-            "changed" => CanonicalStatementWriter.StatementTypeAddress(
-                "statement-v1(changed-delivery)"),
-            _ => throw new ArgumentOutOfRangeException(nameof(mutation)),
-        };
-        ReplaceBaselineContract("statement_sha256", replacement);
-    }
-
     internal void RemoveRetiredBaselineContract()
     {
         var source = Baseline[currentTheoristPath];
@@ -151,13 +136,7 @@ internal sealed partial class RuleFixture
             BaselineReports[currentTheoristPath]));
         Assert.Equal(ParentV1StatementAddress, parentStatement.StatementId.Value);
 
-        var source = Baseline[currentTheoristPath];
-        var start = source.IndexOf("/- THEORIST_FRONTIER_CONTRACT_", StringComparison.Ordinal);
-        var end = source.IndexOf("\n-/", start, StringComparison.Ordinal);
-        Assert.True(start >= 0 && end > start);
-        Baseline[currentTheoristPath] = source[..start]
-            + ParentV1Contract
-            + source[(end + 3)..];
+        ReplaceRetiredBaselineContract(ParentV1Contract);
     }
 
     internal void ReplaceCurrentContractWithLiteralParentV1Contract()
@@ -384,6 +363,13 @@ internal sealed partial class RuleFixture
 
     private void AddTheoristSupportFiles()
     {
+        var backfillTarget = HeaderFor("D5/S0/Carrier/BackfillTarget", "G")
+            + "def theoristBackfillTargetFixture : Unit := ()\n";
+        Files[BackfillTargetPath] = backfillTarget;
+        Baseline[BackfillTargetPath] = backfillTarget;
+        ForkPoint[BackfillTargetPath] = backfillTarget;
+        Reports[BackfillTargetPath] = Report();
+        BaselineReports[BackfillTargetPath] = Report();
         Files[SearchReceiptPath] = "# Search receipt fixture\n";
         Files[ComputationReceiptPath] = "{}\n";
         Files[currentMotivationPath] = HeaderFor(currentMotivationGid, "G");
@@ -619,6 +605,15 @@ internal sealed partial class RuleFixture
         var end = source.IndexOf('"', start);
         Assert.True(end > start);
         Baseline[currentTheoristPath] = source[..start] + replacement + source[end..];
+    }
+
+    private void ReplaceRetiredBaselineContract(string replacement)
+    {
+        var source = Baseline[currentTheoristPath];
+        var start = source.IndexOf("/- THEORIST_FRONTIER_CONTRACT_", StringComparison.Ordinal);
+        var end = source.IndexOf("\n-/", start, StringComparison.Ordinal);
+        Assert.True(start >= 0 && end > start);
+        Baseline[currentTheoristPath] = source[..start] + replacement + source[(end + 3)..];
     }
 
     private sealed record HistoricalTheoristFixture(

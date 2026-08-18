@@ -42,7 +42,7 @@ public sealed class DeliveryStatementIdentityAffectednessTests
             "prime-norm-irreducibility",
             baselineOwnerKind: "declaration-ready-mathematical-open",
             baselineIncludeContract: true);
-        fixture.AlignRetiredBaselineStatementToDelivery();
+        fixture.ReplaceRetiredBaselineWithLiteralV2Contract();
         fixture.RetireTheoristTarget();
 
         var completed = Assert.IsType<RuleExecutionOutcome.Completed>(

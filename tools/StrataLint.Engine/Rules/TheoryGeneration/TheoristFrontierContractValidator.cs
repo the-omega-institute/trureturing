@@ -538,7 +538,7 @@ internal static class TheoristFrontierContractValidator
             && string.Equals(item.Kind, resolved.Kind, StringComparison.Ordinal));
     }
 
-    private static string? ReadRetiredBaselineStatement(
+    internal static string? ReadRetiredBaselineStatement(
         RepoPath retiredPath,
         RepositorySnapshot baseline,
         ImmutableArray<RuleFinding>.Builder findings)
