@@ -220,7 +220,12 @@ jobs:
       actions: read
       contents: write
     runs-on: ubuntu-24.04-arm
-    timeout-minutes: 36
+    # policy-override(非派生值)。date=2026-08-19 case=#2451 owner=仓库 τ=0 owner
+    # = 25(依赖拉取)+ 75(本仓树构建)+ 10(检出/SDK/toolchain/producer 构建/写回,
+    # 实测该 run 的这些步骤合计约 1.5m,取 10m 容尾)。propose job 的 36m 不变——
+    # 其基准是按 candidate 路径实测的,与 trusted 路径不同,不得共用一个数。
+    # 退出条件:#2451 关闭,或完整冷跑分布齐备后按「量腹而食」改为容量派生值。
+    timeout-minutes: 110
     steps:
       - name: Reject fork pull requests
         shell: bash
@@ -324,8 +329,30 @@ jobs:
           set -euo pipefail
           dotnet build trusted/tools/StrataLint.sln -c Release --warnaserror
 
+      # 分段计时:trusted 侧按不变量不得用 actions/cache(独立重算),故须自行拉取上游
+      # mathlib 产物再全量编译本仓树。二者耗时分布不同,合在一步则任一超支都只留下
+      # 一个「30 分钟被杀」的无差别读数,无法定位——实测即如此,连冷跑上界都取不到。
+      # `lean-report` 本就依赖 `lean-cache-ensure`,拆步顺其结构,不改变所做之事。
+      - name: Fetch trusted Lean dependency artifacts
+        # policy-override(非派生值)。date=2026-08-19 case=#2451 owner=仓库 τ=0 owner
+        # 依据:run 32153488843 分段实测,本段 539s(`lake exe cache get`,走网络)。
+        # 取 25m ≈ 2.8x 以容纳网络长尾。
+        # 退出条件:#2451 关闭,或按容量派生的吞吐收据齐备,届时改为派生值或撤销。
+        timeout-minutes: 25
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd trusted
+          export PATH="$HOME/.elan/bin:$PATH"
+          make lean-cache-ensure
+
       - name: Produce trusted canonical Lean report
-        timeout-minutes: 30
+        # policy-override(非派生值)。date=2026-08-19 case=#2451 owner=仓库 τ=0 owner
+        # 依据:同一 run 本段实测 >=1268s 且**被 30 分钟墙杀死、未跑完**,故只有下界、无上界。
+        # 本预算的目的正是取得一次**完整**冷跑读数;取 75m 使观测不再被墙截断。
+        # 有限次跑不能证明上界,故此值不冒充容量派生。
+        # 退出条件:同上——完整冷跑分布出来后按 CLAUDE.md「量腹而食」定派生值。
+        timeout-minutes: 75
         shell: bash
         run: |
           set -euo pipefail
