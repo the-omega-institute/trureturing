@@ -145,6 +145,23 @@ public sealed class TheoryIngestWritebackTopologyTests
         Assert.True(
             jobBudget >= stepBudgets.Sum(),
             $"job budget {jobBudget}m cannot hold its own step budgets summing to {stepBudgets.Sum()}m");
+
+        // 内层预算须严格小于步骤预算,否则先撞 GitHub 的步骤墙,失败只留下一句无信息的
+        // 「步骤超时」;先撞内层才拿得到 `lake timed out after N seconds` 与调用现场。
+        foreach (var index in new[] { fetchIndex, buildIndex })
+        {
+            var step = steps[index];
+            var stepBudgetSeconds = int.Parse(
+                Scalar(step, "timeout-minutes"),
+                System.Globalization.CultureInfo.InvariantCulture) * 60;
+            var innerBudgetSeconds = int.Parse(
+                Scalar(Mapping(step, "env"), "STRATALINT_LEAN_CACHE_TIMEOUT_SECONDS"),
+                System.Globalization.CultureInfo.InvariantCulture);
+            Assert.True(
+                innerBudgetSeconds < stepBudgetSeconds,
+                $"inner budget {innerBudgetSeconds}s must be under the step budget "
+                    + $"{stepBudgetSeconds}s so a timeout reports its own call site");
+        }
     }
 
     [Fact]

@@ -340,6 +340,10 @@ jobs:
         # 退出条件:#2451 关闭,或按容量派生的吞吐收据齐备,届时改为派生值或撤销。
         timeout-minutes: 25
         shell: bash
+        env:
+          # 内层预算须严格小于步骤预算:否则先撞 GitHub 的步骤墙,只留下一句无信息的
+          # 「步骤超时」;先撞内层则得到 `lake timed out after N seconds` 与调用现场。
+          STRATALINT_LEAN_CACHE_TIMEOUT_SECONDS: 1200
         run: |
           set -euo pipefail
           cd trusted
@@ -354,6 +358,13 @@ jobs:
         # 退出条件:同上——完整冷跑分布出来后按 CLAUDE.md「量腹而食」定派生值。
         timeout-minutes: 75
         shell: bash
+        env:
+          # 同上:内层严格小于步骤预算。默认 1800s(LeanCacheProvisioner
+          # .DefaultProvisionBudgetSeconds,案号 #1910)对本仓当前 D5 规模已不够——
+          # 实测本地 28 核机器上 `lake build` 亦撞该 1800s 墙,CI 的 #2404 同形。
+          # 该值经 STRATALINT_LEAN_CACHE_TIMEOUT_SECONDS 覆盖(clamp 300..7200),
+          # 是既有设计旋钮,不改常数本身。
+          STRATALINT_LEAN_CACHE_TIMEOUT_SECONDS: 4200
         run: |
           set -euo pipefail
           cd trusted
