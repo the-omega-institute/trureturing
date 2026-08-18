@@ -1,0 +1,17 @@
+ast_path: theorem/24.3
+fingerprints:
+  raw_sha256: sha256:754c6e650668dbaa9c45d59f71dbfd1751b368bcfb72afdf6f3156619c21e377
+  normalized_sha256: sha256:754c6e650668dbaa9c45d59f71dbfd1751b368bcfb72afdf6f3156619c21e377
+cas_ref: sha256:754c6e650668dbaa9c45d59f71dbfd1751b368bcfb72afdf6f3156619c21e377
+coverage_gids:
+  - D5/S3/Observer/DynamicProgramming/BellmanContraction.bellman_operator_contracting_unique_fixed_point
+receipts:
+  coverage:
+    - gid: D5/S3/Observer/DynamicProgramming/BellmanContraction.bellman_operator_contracting_unique_fixed_point
+      source_sha256: sha256:754c6e650668dbaa9c45d59f71dbfd1751b368bcfb72afdf6f3156619c21e377
+      target_sha256: sha256:ec183789ccd3e6b7262db3f11a5e573fb42862fbd49b83c2bfb41b782291a201
+  scribe:
+    - gid: D5/S3/Observer/DynamicProgramming/BellmanContraction.bellman_operator_contracting_unique_fixed_point
+      definition_sha256: sha256:567792d5cf888b835712f8f6b54d2f42e91eb9b2e723182222571c85bb36a6e6
+      emission_sha256: sha256:0b8274a3ec827c6b4cd296322436bd79bc83673813b77448e0bedcbd4435df66
+  unresolved_subitems: []
