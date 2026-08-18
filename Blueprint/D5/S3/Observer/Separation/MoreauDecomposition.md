@@ -27,4 +27,3 @@ Repository search found the existing cone residual witness but no full existence
 ## References
 
 - Truth anchor: `D5/S3/Observer/Separation/MoreauDecomposition.moreau_decomposition`
-- Dependency: [D5/S3/Observer/Separation/ConeResidualWitness](ConeResidualWitness.md)
