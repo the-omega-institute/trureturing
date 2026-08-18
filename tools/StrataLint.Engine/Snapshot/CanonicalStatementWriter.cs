@@ -1,10 +1,19 @@
 using System.Collections.Immutable;
+using System.Text;
 using System.Text.Json;
 
 namespace StrataLint.Engine;
 
 internal static class CanonicalStatementWriter
 {
+    // Lean's report already carries the canonical elaborated statement bytes.
+    // This address intentionally excludes declaration/module identity so a
+    // Frontier declaration can be compared with its delivered F declaration.
+    internal static string StatementTypeAddress(string typeRepresentation) =>
+        FrozenContentHash.Compute(
+            FrozenHashDomains.Statement,
+            Encoding.UTF8.GetBytes(typeRepresentation).AsSpan());
+
     internal static ImmutableArray<FrozenDeclarationStatement> DeclarationStatementIds(
         RepoPath path,
         LeanFileReport report) =>
