@@ -1,9 +1,0 @@
-theory: D5
-plane: F
-domain: Quantum
-subdomain: FixedAlgebra
-module: RecordFixedAlgebraDecomposition
-generality: G
-selector: ""
-artifact: lean
-tag: ""

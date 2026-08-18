@@ -1,9 +1,0 @@
-theory: D5
-plane: F
-domain: ObserverMemory
-subdomain: PredictionCertificates
-module: LocalCertificateMinimality
-generality: G
-selector: ""
-artifact: lean
-tag: ""
