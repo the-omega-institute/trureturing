@@ -33,50 +33,51 @@ internal sealed class CongruenceKernelDocument : IScribeDocumentDefinition
     private static Formula Apply(Formula function, Formula argument) =>
         Seq(function, Open, argument, Close);
 
-    private static Formula PairIn(Formula left, Formula right, Formula relation) =>
-        Seq(Open, left, Comma, Sp, right, Close, Sp, InMacro, Sp, relation);
-
     private static Formula TheoremFormula()
     {
         Formula state = F.Id("Y");
         Formula relation = F.Id("R");
-        Formula kernel = F.Id("C");
-        Formula update = F.Id("tau");
-        Formula left = F.Id("y");
-        Formula right = F.Id("yPrime");
+        Formula update = Tau;
         Formula other = F.Id("S");
+        Formula relationType = Call("StateRelation", state);
+        Formula kernel = Seq(F.Id("C"), Underscore, Grp(update));
         Formula kernelAt = Apply(kernel, relation);
-        Formula pairKernel = PairIn(left, right, kernelAt);
-        Formula pairRelation = PairIn(left, right, relation);
-        Formula pairOther = PairIn(left, right, other);
-        Formula shiftedKernel = PairIn(Apply(update, left), Apply(update, right), kernelAt);
-        Formula shiftedOther = PairIn(Apply(update, left), Apply(update, right), other);
+        Formula kernelAtOther = Apply(kernel, other);
 
         Formula equivalence = Call("Equivalence", kernelAt);
-        Formula congruence = Seq(
-            Forall, Sp, left, Comma, Sp, right, Comma, Sp, pairKernel,
-            Sp, Rightarrow, Sp, shiftedKernel);
+        Formula congruence = Call("TauCongruence", update, kernelAt);
         Formula contraction = Seq(kernelAt, Sp, Subseteq, Sp, relation);
         Formula monotone = Seq(
-            Forall, Sp, other, Comma, Sp, other, Sp, Subseteq, Sp, relation,
-            Sp, Rightarrow, Sp, Apply(kernel, other), Sp, Subseteq, Sp, kernelAt);
+            Forall, Sp, other, Colon, Sp, relationType, Comma, Sp,
+            other, Sp, Subseteq, Sp, relation, Sp, Rightarrow, Sp,
+            kernelAtOther, Sp, Subseteq, Sp, kernelAt);
         Formula idempotent = Seq(Apply(kernel, kernelAt), Sp, Eq, Sp, kernelAt);
         Formula maximal = Seq(
-            Forall, Sp, other, Comma, Sp, other, Sp, Subseteq, Sp, relation, Sp,
-            Land, Sp, shiftedOther, Sp, Rightarrow, Sp,
-            Apply(kernel, other), Sp, Subseteq, Sp, kernelAt);
+            Forall, Sp, other, Colon, Sp, relationType, Comma, Sp,
+            Call("TauCongruence", update, other), Sp, Rightarrow, Sp,
+            other, Sp, Subseteq, Sp, relation, Sp, Rightarrow, Sp,
+            other, Sp, Subseteq, Sp, kernelAt);
         Formula iff = Seq(
-            Forall, Sp, other, Comma, Sp,
-            Open, shiftedOther, Sp, Rightarrow, Sp, relation, Sp, Subseteq, Sp,
-            kernelAt, Close, Sp, Rightarrow, Sp,
+            Forall, Sp, other, Colon, Sp, relationType, Comma, Sp,
+            Call("TauCongruence", update, other), Sp, Rightarrow, Sp,
+            Open,
             Open, other, Sp, Subseteq, Sp, relation, Close, Sp, Iff, Sp,
-            Open, other, Sp, Subseteq, Sp, kernelAt, Close);
+            Open, other, Sp, Subseteq, Sp, kernelAt, Close,
+            Close);
 
         return Disp(Seq(
-            Forall, Sp, state, Comma, Sp, relation, Comma, RowBreak,
+            Begin, Grp(F.Id("gathered")),
+            Forall, Sp, state, Colon, Sp, Operatorname, Grp(F.Id("Type")), Comma, Sp,
+            update, Colon, Sp, state, Sp, To, Sp, state, Comma, RowBreak,
+            relation, Colon, Sp, relationType, Comma, Sp,
+            Call("Equivalence", relation), Sp, Rightarrow, RowBreak,
             equivalence, Sp, Land, Sp, congruence, Sp, Land, Sp,
-            contraction, Sp, Land, Sp, monotone, Sp, Land, Sp,
-            idempotent, Sp, Land, Sp, maximal, Sp, Land, Sp, iff, Dot));
+            contraction, Sp, Land, RowBreak,
+            Open, monotone, Close, Sp, Land, Sp,
+            idempotent, Sp, Land, RowBreak,
+            Open, maximal, Close, Sp, Land, RowBreak,
+            Open, iff, Close, Dot,
+            End, Grp(F.Id("gathered"))));
     }
 
     private static Formula Call(string name, params Formula[] arguments)
