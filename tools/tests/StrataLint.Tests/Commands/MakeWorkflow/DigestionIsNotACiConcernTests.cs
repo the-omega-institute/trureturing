@@ -17,8 +17,11 @@ public sealed partial class MakeWorkflowTests
     [Fact]
     public void NoWorkflowRunsTheDigestionProducerOrWritesBackToAPullRequest()
     {
-        var workflow = File.ReadAllText(
-            Path.Combine(TestRepositoryLayout.FindRoot(), AdmissionWorkflowPath));
+        // 用 TestRepositoryLayout.ReadAllText + 内联字面量:Scribe 测试映射只认这一形
+        // (AddLiteralCreatePath 要求 RepositoryRelativePath.Create 的实参是字符串字面量),
+        // 其余写法一律记为 VariablePath 未知债。故此处不用常量、不用 Path.Combine。
+        var workflow = TestRepositoryLayout.ReadAllText(
+            RepositoryRelativePath.Create(".github/workflows/ci.yml"));
 
         Assert.DoesNotContain("make ingest", workflow, StringComparison.Ordinal);
         Assert.DoesNotContain("theory-ingest-closure", workflow, StringComparison.Ordinal);
