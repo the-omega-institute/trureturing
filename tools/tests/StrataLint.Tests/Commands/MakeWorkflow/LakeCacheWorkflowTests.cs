@@ -12,11 +12,17 @@ public sealed partial class MakeWorkflowTests
     private const string BuildRestoreKey =
         "${{ runner.os }}-${{ runner.arch }}-lake-build-v1-${{ steps.lean-report-input.outputs.config_sha256 }}-";
 
-    private static void AssertLakeCacheContract(
-        string admissionWorkflow,
-        string theoryIngestWorkflow)
+    // 原先此契约跨两个站点(ci.yml 的 admission job 与已删除的 theory-ingest)。
+    // 消化退出 CI 后只剩一个站点,但五条断言里两条完全不依赖站点(纯合成键模板推理)、
+    // 两条是逐站点的——故契约保留并接到 ci.yml,不随被删站点一起静默消失。
+    [Fact]
+    public void AdmissionWorkflowHonoursTheLakeCacheContract() =>
+        AssertLakeCacheContract(
+            File.ReadAllText(Path.Combine(TestRepositoryLayout.FindRoot(), ".github/workflows/ci.yml")));
+
+    private static void AssertLakeCacheContract(string admissionWorkflow)
     {
-        var workflows = new[] { admissionWorkflow, theoryIngestWorkflow };
+        var workflows = new[] { admissionWorkflow };
         var steps = ParseLakeCacheSteps(workflows).ToArray();
         AssertLakeCacheSitesUseTheSamePartitionedKeyTemplates(steps);
         AssertConfigAndSourceChangesInvalidateOnlyTheirOwningLayers();

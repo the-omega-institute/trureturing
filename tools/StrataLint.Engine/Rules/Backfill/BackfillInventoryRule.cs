@@ -188,8 +188,12 @@ internal static class BackfillInventoryRule
                     $"source {source.SourceId} must contain at least one atomic entry"));
             }
 
+            // 理论卷按**规则**治理(路径在理论根下),不再逐个枚举进 registry.yaml:
+            // 否则第三方 PR 加一个 markdown 就被迫改 harness,而它的名字无法预先枚举
+            // (与 docs/reports/ 同性质;CLAUDE.md 商余结构)。其余治理文档仍按清单。
             if (!RepoPath.TryCreate(source.SourcePath, out var sourcePath)
-                || !context.Policy.GovernanceDocuments.Contains(sourcePath))
+                || !(context.Policy.GovernanceDocuments.Contains(sourcePath)
+                    || DigestionOpaquePathPolicy.IsTheoryDocument(sourcePath)))
             {
                 // First thing a new volume hits, so the verdict carries its own remedy
                 // rather than leaving the reader to find which registry field is meant.
