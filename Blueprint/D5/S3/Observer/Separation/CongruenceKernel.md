@@ -6,7 +6,7 @@ The all-iterate pullback of an equivalence is its maximal forward congruence.
 
 **Theorem 1.1 (Maximal forward congruence inside an equivalence).**
 
-$$\forall Y, R,\\\operatorname{Equivalence}(C(R)) \land \forall y, yPrime, (y, yPrime) \in C(R) \Rightarrow (tau(y), tau(yPrime)) \in C(R) \land C(R) \subseteq R \land \forall S, S \subseteq R \Rightarrow C(S) \subseteq C(R) \land C(C(R)) = C(R) \land \forall S, S \subseteq R \land (tau(y), tau(yPrime)) \in S \Rightarrow C(S) \subseteq C(R) \land \forall S, ((tau(y), tau(yPrime)) \in S \Rightarrow R \subseteq C(R)) \Rightarrow (S \subseteq R) \iff (S \subseteq C(R)).$$
+$$\begin{gathered}\forall Y: \operatorname{Type}, \tau: Y \to Y,\\R: \operatorname{StateRelation}(Y), \operatorname{Equivalence}(R) \Rightarrow\\\operatorname{Equivalence}(C_{\tau}(R)) \land \operatorname{TauCongruence}(\tau, C_{\tau}(R)) \land C_{\tau}(R) \subseteq R \land\\(\forall S: \operatorname{StateRelation}(Y), S \subseteq R \Rightarrow C_{\tau}(S) \subseteq C_{\tau}(R)) \land C_{\tau}(C_{\tau}(R)) = C_{\tau}(R) \land\\(\forall S: \operatorname{StateRelation}(Y), \operatorname{TauCongruence}(\tau, S) \Rightarrow S \subseteq R \Rightarrow S \subseteq C_{\tau}(R)) \land\\(\forall S: \operatorname{StateRelation}(Y), \operatorname{TauCongruence}(\tau, S) \Rightarrow ((S \subseteq R) \iff (S \subseteq C_{\tau}(R)))).\end{gathered}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Observer/Separation/CongruenceKernel.congruence_kernel_laws` (`✓ std3`). ∎
 
