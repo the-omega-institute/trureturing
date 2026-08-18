@@ -146,6 +146,14 @@ internal static partial class RepositoryRules
                 ManagedLean,
                 DeliveryStatementIdentity,
                 DeliveryStatementIdentityAffected)),
+        Register(
+            28,
+            "Duplicate statement advisory",
+            new RepositoryRule(
+                ManagedLean,
+                DuplicateStatementAdvisory.Evaluate,
+                DuplicateStatementAdvisory.IsAffectedBy),
+            AdmissionEffect.Observe),
     ];
 
     private static RuleRegistration Register(
