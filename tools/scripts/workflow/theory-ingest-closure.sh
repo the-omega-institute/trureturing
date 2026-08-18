@@ -3,9 +3,14 @@ set -euo pipefail
 
 export LC_ALL=C
 
+theory_ingest_script_directory="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+source "$theory_ingest_script_directory/theory-ingest-github-cas.sh"
+
 scratch_root=""
 WRITE_PATTERNS=()
 WRITE_PATHSPECS=()
+CANDIDATE_INPUT_PATTERNS=()
+CANDIDATE_INPUT_PATHSPECS=()
 MERGED_TREE_SHA=""
 THEORY_TREE_SHA=""
 ENVELOPE_BASE_SHA=""
@@ -14,6 +19,7 @@ ENVELOPE_PATCH_SHA256=""
 ENVELOPE_REPORT_INPUT_ADDRESS=""
 ENVELOPE_REPORT_SHA256=""
 ENVELOPE_THEORY_TREE_SHA=""
+GITHUB_REMOTE_COMMIT_SHA=""
 
 cleanup() {
   if [[ -n "$scratch_root" && -d "$scratch_root" ]]; then
@@ -117,6 +123,54 @@ PY
   set_write_patterns "$output"
 }
 
+load_candidate_input_patterns() {
+  local repository="$1"
+  local output
+  if ! output="$(python3 - "$repository/Meta/FILEMAP.toml" <<'PY'
+import pathlib
+import sys
+import tomllib
+
+path = pathlib.Path(sys.argv[1])
+with path.open("rb") as stream:
+    document = tomllib.load(stream)
+entries = document.get("files")
+if not isinstance(entries, list):
+    raise SystemExit("FILEMAP files must be an array")
+patterns = []
+for entry in entries:
+    if not isinstance(entry, dict):
+        raise SystemExit("FILEMAP entry must be a table")
+    consumers = entry.get("consumed_by")
+    if (entry.get("produced_by") == "none"
+            and isinstance(consumers, list)
+            and "IngestCommand" in consumers
+            and isinstance(entry.get("runtime_disposition"), str)
+            and entry["runtime_disposition"].startswith("committed-")):
+        pattern = entry.get("pattern")
+        if not isinstance(pattern, str) or not pattern:
+            raise SystemExit("IngestCommand FILEMAP input pattern must be a non-empty string")
+        patterns.append(pattern)
+if not patterns or patterns != sorted(set(patterns)):
+    raise SystemExit("IngestCommand FILEMAP input patterns must be non-empty, unique, and sorted")
+print("\n".join(patterns))
+PY
+  )"; then
+    fail "cannot derive the candidate data set from pinned-base FILEMAP"
+  fi
+
+  CANDIDATE_INPUT_PATTERNS=()
+  CANDIDATE_INPUT_PATHSPECS=()
+  local pattern
+  while IFS= read -r pattern; do
+    [[ -n "$pattern" ]] || fail "FILEMAP candidate data set contains an empty pattern"
+    CANDIDATE_INPUT_PATTERNS+=("$pattern")
+    CANDIDATE_INPUT_PATHSPECS+=(":(glob)$pattern")
+  done <<< "$output"
+  [[ "${#CANDIDATE_INPUT_PATHSPECS[@]}" -gt 0 ]] || fail \
+    "FILEMAP declares no candidate data consumed by IngestCommand"
+}
+
 initialize_index() {
   local repository="$1"
   local revision="$2"
@@ -217,20 +271,26 @@ validate_patch_into_index() {
 }
 
 assert_report_input_closure_unchanged() {
-  local candidate_data="$1"
-  local fork_sha="$2"
-  local head_sha="$3"
+  local repository="$1"
+  local candidate_data="$2"
+  local fork_sha="$3"
+  local head_sha="$4"
+  load_candidate_input_patterns "$repository"
+  ensure_scratch
+  local allowed_path="$scratch_root/candidate-inputs.$RANDOM"
+  git -C "$candidate_data" diff --name-only -z "$fork_sha" "$head_sha" -- \
+    "${CANDIDATE_INPUT_PATHSPECS[@]}" > "$allowed_path"
   local changed_path
   local bad=()
   while IFS= read -r -d '' changed_path; do
-    case "$changed_path" in
-      D5/*.lean|Trureturing.lean|lean-toolchain|lake-manifest.json|lakefile.toml|lakefile.lean|\
-      Makefile|Directory.Build.props|Directory.Build.targets|Directory.Packages.props|global.json|\
-      tools/StrataLint.*|tools/lean-inspector/*|tools/scripts/*|Meta/FILEMAP.toml|\
-      .github/workflows/ci.yml|.github/workflows/theory-ingest.yml)
-        bad+=("$changed_path")
-        ;;
-    esac
+    local allowed_candidate authorized=false
+    while IFS= read -r -d '' allowed_candidate; do
+      if [[ "$allowed_candidate" == "$changed_path" ]]; then
+        authorized=true
+        break
+      fi
+    done < "$allowed_path"
+    [[ "$authorized" == true ]] || bad+=("$changed_path")
   done < <(git -C "$candidate_data" diff --name-only -z "$fork_sha" "$head_sha")
   if [[ "${#bad[@]}" -ne 0 ]]; then
     printf '%s\n' "${bad[@]}" >&2
@@ -269,7 +329,8 @@ resolve_candidate_authority() {
       || [[ -z "$fork_sha" ]]; then
     fail "cannot resolve the immutable fork point of event base and head"
   fi
-  assert_report_input_closure_unchanged "$candidate_data" "$fork_sha" "$head_sha"
+  assert_report_input_closure_unchanged \
+    "$repository" "$candidate_data" "$fork_sha" "$head_sha"
   assert_candidate_theory_is_regular_data "$candidate_data" "$head_sha"
   if ! MERGED_TREE_SHA="$(git -C "$candidate_data" merge-tree \
       --write-tree "$base_sha" "$head_sha")" \
@@ -594,6 +655,46 @@ validate_command() {
     "$repository" "$base_revision" "$patch_path" "$scratch_root/validated.index"
 }
 
+read_remote_ref() {
+  local repository="$1"
+  local remote_url="$2"
+  local remote_ref="$3"
+  local remote_line remote_name extra
+  if ! remote_line="$(git -C "$repository" ls-remote --exit-code --heads \
+      "$remote_url" "$remote_ref")"; then
+    fail "remote head drifted from the event head"
+  fi
+  read -r REMOTE_HEAD remote_name extra <<< "$remote_line"
+  [[ "$remote_name" == "$remote_ref" && -z "$extra" ]] || fail \
+    "remote head drifted from the event head"
+}
+
+is_local_bare_remote() {
+  local remote_url="$1"
+  [[ "$remote_url" == /* && -d "$remote_url" \
+    && "$(git --git-dir="$remote_url" rev-parse --is-bare-repository 2>/dev/null)" == "true" ]]
+}
+
+atomic_update_remote_ref() {
+  local repository="$1"
+  local remote_url="$2"
+  local remote_ref="$3"
+  local expected_sha="$4"
+  local new_sha="$5"
+  if is_local_bare_remote "$remote_url"; then
+    git --git-dir="$remote_url" fetch -q --no-tags --no-write-fetch-head \
+      "$repository" "$new_sha" || fail "cannot transfer the writeback object"
+    git --git-dir="$remote_url" update-ref \
+      "$remote_ref" "$new_sha" "$expected_sha" || fail \
+        "remote head changed before atomic update"
+  else
+    atomic_update_github_ref "$remote_ref" "$expected_sha" "$new_sha"
+  fi
+  read_remote_ref "$repository" "$remote_url" "$remote_ref"
+  [[ "$REMOTE_HEAD" == "$new_sha" ]] || fail \
+    "remote head does not equal the committed writeback"
+}
+
 writeback() {
   [[ "$#" -eq 6 ]] || usage
   local repository="$1"
@@ -625,7 +726,8 @@ writeback() {
       || [[ -z "$fork_sha" ]]; then
     fail "cannot resolve the immutable fork point of event base and head"
   fi
-  assert_report_input_closure_unchanged "$repository" "$fork_sha" "$head_sha"
+  assert_report_input_closure_unchanged \
+    "$repository" "$repository" "$fork_sha" "$head_sha"
   assert_candidate_theory_is_regular_data "$repository" "$head_sha"
   if ! MERGED_TREE_SHA="$(git -C "$repository" merge-tree \
       --write-tree "$base_sha" "$head_sha")" \
@@ -643,13 +745,8 @@ writeback() {
   validate_patch_into_index "$repository" "$head_sha" "$patch" "$final_index"
 
   local remote_ref="refs/heads/$head_ref"
-  local remote_line remote_head remote_name extra
-  if ! remote_line="$(git -C "$repository" ls-remote --exit-code --heads \
-      "$remote_url" "$remote_ref")"; then
-    fail "remote head drifted from the event head"
-  fi
-  read -r remote_head remote_name extra <<< "$remote_line"
-  [[ "$remote_head" == "$head_sha" && "$remote_name" == "$remote_ref" && -z "$extra" ]] || fail \
+  read_remote_ref "$repository" "$remote_url" "$remote_ref"
+  [[ "$REMOTE_HEAD" == "$head_sha" ]] || fail \
     "remote head drifted from the event head"
   if [[ ! -s "$patch" ]]; then
     printf '%s\n' "theory ingest writeback is a no-op: event head is already closed"
@@ -669,8 +766,12 @@ writeback() {
     "writeback commit does not have exactly the event head as parent"
   git -C "$repository" merge-base --is-ancestor "$head_sha" "$commit_sha" || fail \
     "writeback commit is not a fast-forward child of event head"
-  git -C "$repository" push --porcelain \
-    "$remote_url" "$commit_sha:$remote_ref"
+  if ! is_local_bare_remote "$remote_url"; then
+    create_github_writeback_commit "$repository" "$final_index" "$head_sha"
+    commit_sha="$GITHUB_REMOTE_COMMIT_SHA"
+  fi
+  atomic_update_remote_ref \
+    "$repository" "$remote_url" "$remote_ref" "$head_sha" "$commit_sha"
 }
 
 [[ "$#" -ge 1 ]] || usage

@@ -1,5 +1,5 @@
 # 理论卷自动摄入:只读 trusted-prepare 从事件 base 的 producer 与候选 theory 数据
-# 计算唯一 canonical 结果;writeback 只校验该 run 的 artifact 并普通快进写回。
+# 计算唯一 canonical 结果;writeback 只校验该 run 的 artifact 并以 CAS 快进写回。
 # 不回写 echo residual 投影:它是允许陈旧的人读快照,按需由 producer 现算。
 name: theory-ingest
 
@@ -147,8 +147,26 @@ jobs:
           path: .canonical-lean-report-cache
           key: stratalint-canonical-lean-report-v2-${{ steps.lean-report-input.outputs.address }}
 
-      - name: Restore elan and pinned Lean toolchain cache on cache miss
-        if: steps.lean-report-cache.outputs.cache-hit != 'true'
+      - name: Validate restored trusted canonical Lean report
+        id: lean-report-cache-validation
+        if: steps.lean-report-cache.outputs.cache-hit == 'true'
+        continue-on-error: true
+        shell: bash
+        run: |
+          set -euo pipefail
+          source="$GITHUB_WORKSPACE/.canonical-lean-report-cache/raw-lean-report.json"
+          report="$GITHUB_WORKSPACE/trusted/.lake/build/stratalint/raw-lean-report.json"
+          mkdir -p "$(dirname "$report")"
+          for suffix in '' .sha256 .input.attestation .provenance.json; do
+            test -s "${source}${suffix}"
+            cp "${source}${suffix}" "${report}${suffix}"
+          done
+          "$GITHUB_WORKSPACE/trusted/tools/scripts/report/lean-report-input.sh" verify \
+            --repository "$GITHUB_WORKSPACE/trusted" \
+            --report "$report"
+
+      - name: Restore elan and pinned Lean toolchain for cold production
+        if: steps.lean-report-cache-validation.outcome != 'success'
         uses: actions/cache/restore@v4
         with:
           path: ~/.elan
@@ -156,8 +174,8 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-${{ runner.arch }}-elan-
 
-      - name: Install pinned Lean toolchain on cache miss
-        if: steps.lean-report-cache.outputs.cache-hit != 'true'
+      - name: Install pinned Lean toolchain for cold production
+        if: steps.lean-report-cache-validation.outcome != 'success'
         shell: bash
         run: |
           set -euo pipefail
@@ -173,9 +191,9 @@ jobs:
           "$HOME/.elan/bin/elan" default "$toolchain"
           "$HOME/.elan/bin/lake" --version
 
-      - name: Restore trusted Lean dependency artifacts on cache miss
+      - name: Restore trusted Lean dependency artifacts for cold production
         id: lake-deps-cache
-        if: steps.lean-report-cache.outputs.cache-hit != 'true'
+        if: steps.lean-report-cache-validation.outcome != 'success'
         uses: actions/cache/restore@v4
         with:
           path: |
@@ -187,9 +205,9 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-${{ runner.arch }}-lake-deps-v1-${{ steps.lean-report-input.outputs.config_sha256 }}
 
-      - name: Restore trusted Lean build artifacts on cache miss
+      - name: Restore trusted Lean build artifacts for cold production
         id: lake-build-cache
-        if: steps.lean-report-cache.outputs.cache-hit != 'true'
+        if: steps.lean-report-cache-validation.outcome != 'success'
         uses: actions/cache/restore@v4
         with:
           path: trusted/.lake/build
@@ -197,31 +215,27 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-${{ runner.arch }}-lake-build-v1-${{ steps.lean-report-input.outputs.config_sha256 }}-
 
-      - name: Produce trusted canonical Lean report on cache miss
-        if: steps.lean-report-cache.outputs.cache-hit != 'true'
-        # #2402 measured a cold miss exceeding the old 30m cap. This 60m step is
-        # 2x that observed lower bound; the 75m job leaves 15m for setup and two ingest passes.
+      - name: Produce trusted canonical Lean report from cold path
+        if: steps.lean-report-cache-validation.outcome != 'success'
+        # ASSUMED-UNVERIFIED: #2402 established only that a cold build exceeds 30m.
+        # The 60m cap is a lower-bound extrapolation, not a completed cold-build measurement.
         timeout-minutes: 60
         shell: bash
         run: |
           set -euo pipefail
           cd trusted
           export PATH="$HOME/.elan/bin:$PATH"
+          report=".lake/build/stratalint/raw-lean-report.json"
+          for suffix in '' .sha256 .input.attestation .provenance.json; do
+            rm -f -- "${report}${suffix}"
+          done
           make lean-report
 
       - name: Install and verify trusted canonical Lean report
         shell: bash
         run: |
           set -euo pipefail
-          source="$GITHUB_WORKSPACE/.canonical-lean-report-cache/raw-lean-report.json"
           report="$GITHUB_WORKSPACE/trusted/.lake/build/stratalint/raw-lean-report.json"
-          if [[ "${{ steps.lean-report-cache.outputs.cache-hit }}" == "true" ]]; then
-            mkdir -p "$(dirname "$report")"
-            for suffix in '' .sha256 .input.attestation .provenance.json; do
-              test -s "${source}${suffix}"
-              cp "${source}${suffix}" "${report}${suffix}"
-            done
-          fi
           for suffix in '' .sha256 .input.attestation .provenance.json; do
             test -s "${report}${suffix}"
           done
@@ -280,7 +294,7 @@ jobs:
           ref: ${{ github.event.pull_request.base.sha }}
           path: trusted-validator
           fetch-depth: 0
-          persist-credentials: true
+          persist-credentials: false
 
       - name: Strip checkout remote state
         if: steps.checkout-validator.outcome == 'success'
@@ -309,7 +323,7 @@ jobs:
           name: theory-ingest-trusted-closure
           path: trusted-artifact
 
-      - name: Validate, commit, and plain-push trusted closure
+      - name: Validate, commit, and compare-and-swap trusted closure
         shell: bash
         env:
           BASE_SHA: ${{ github.event.pull_request.base.sha }}
@@ -318,6 +332,10 @@ jobs:
           HEAD_REPOSITORY: ${{ github.event.pull_request.head.repo.full_name }}
           BASE_REPOSITORY: ${{ github.repository }}
           REMOTE_URL: ${{ github.server_url }}/${{ github.repository }}.git
+          GITHUB_API_URL: ${{ github.api_url }}
+          GITHUB_GRAPHQL_URL: ${{ github.graphql_url }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          GITHUB_TOKEN: ${{ github.token }}
         run: |
           set -euo pipefail
           [[ "$HEAD_REPOSITORY" == "$BASE_REPOSITORY" ]]

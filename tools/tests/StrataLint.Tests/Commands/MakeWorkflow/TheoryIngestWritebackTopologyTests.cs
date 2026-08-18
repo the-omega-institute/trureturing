@@ -5,8 +5,6 @@ namespace StrataLint.Tests;
 
 public sealed class TheoryIngestWritebackTopologyTests
 {
-    private const string WorkflowPath = ".github/workflows/theory-ingest.yml";
-
     [Fact]
     public void TheoryIngestUsesOneReadOnlyTrustedPreparationAndOneMinimalWriteback()
     {
@@ -69,6 +67,21 @@ public sealed class TheoryIngestWritebackTopologyTests
     }
 
     [Fact]
+    public void WritebackExecutionClosureDoesNotInvokeCanonicalProducers()
+    {
+        var writeback = Render(Job(LoadWorkflow(), "writeback"));
+        var scriptFunctions = ShellFunctions(LoadScript() + "\n" + LoadGithubCasScript());
+        var reachable = ReachableFunctions("writeback", scriptFunctions);
+        var executionClosure = writeback + "\n" + string.Join(
+            "\n",
+            reachable.Select(name => scriptFunctions[name]));
+        var producer = new Regex(
+            @"(?im)\bmake\s+(?:-C\s+\S+\s+)?(?:ingest|lean-report)\b|\bdotnet\s+run\b[^\r\n]*\bStrataLint\b");
+
+        Assert.DoesNotMatch(producer, executionClosure);
+    }
+
+    [Fact]
     public void TrustedPreparationDoesNotAuthorizeAnyCandidateProposal()
     {
         var workflow = TestRepositoryLayout.ReadAllText(
@@ -90,20 +103,33 @@ public sealed class TheoryIngestWritebackTopologyTests
 
         Assert.Contains("guard-inputs", prepare, StringComparison.Ordinal);
         Assert.Contains(
-            "assert_report_input_closure_unchanged \"$candidate_data\" \"$fork_sha\" \"$head_sha\"",
+            "assert_report_input_closure_unchanged",
             script,
             StringComparison.Ordinal);
-        Assert.Contains("D5/*.lean", script, StringComparison.Ordinal);
-        Assert.Contains("Trureturing.lean", script, StringComparison.Ordinal);
-        Assert.Contains("lean-toolchain", script, StringComparison.Ordinal);
-        Assert.Contains("lake-manifest.json", script, StringComparison.Ordinal);
-        Assert.Contains("lakefile.toml", script, StringComparison.Ordinal);
-        Assert.Contains("lakefile.lean", script, StringComparison.Ordinal);
-        Assert.Contains("tools/StrataLint.*", script, StringComparison.Ordinal);
-        Assert.Contains("tools/scripts/*", script, StringComparison.Ordinal);
-        Assert.Contains("Meta/FILEMAP.toml", script, StringComparison.Ordinal);
-        Assert.Contains(WorkflowPath, script, StringComparison.Ordinal);
+        Assert.Contains("\"$repository\" \"$candidate_data\" \"$fork_sha\" \"$head_sha\"", script, StringComparison.Ordinal);
+        Assert.Contains("load_candidate_input_patterns", script, StringComparison.Ordinal);
+        Assert.Contains("CANDIDATE_INPUT_PATHSPECS", script, StringComparison.Ordinal);
+        Assert.Contains("consumed_by", script, StringComparison.Ordinal);
+        Assert.Contains("IngestCommand", script, StringComparison.Ordinal);
+        Assert.DoesNotContain("D5/*.lean|Trureturing.lean", script, StringComparison.Ordinal);
         Assert.Contains("split the theory-only PR", script, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void InvalidLeanReportCacheFallsBackToColdProduction()
+    {
+        var prepare = Job(LoadWorkflow(), "trusted-prepare");
+        var steps = Sequence(prepare, "steps").Children.OfType<YamlMappingNode>().ToArray();
+        var validation = Step(steps, "Validate restored trusted canonical Lean report");
+        Assert.Equal("lean-report-cache-validation", Scalar(validation, "id"));
+        Assert.Equal("true", Scalar(validation, "continue-on-error"));
+
+        const string fallback = "steps.lean-report-cache-validation.outcome != 'success'";
+        Assert.Equal(fallback, Scalar(Step(steps, "Restore elan and pinned Lean toolchain for cold production"), "if"));
+        Assert.Equal(fallback, Scalar(Step(steps, "Install pinned Lean toolchain for cold production"), "if"));
+        Assert.Equal(fallback, Scalar(Step(steps, "Restore trusted Lean dependency artifacts for cold production"), "if"));
+        Assert.Equal(fallback, Scalar(Step(steps, "Restore trusted Lean build artifacts for cold production"), "if"));
+        Assert.Equal(fallback, Scalar(Step(steps, "Produce trusted canonical Lean report from cold path"), "if"));
     }
 
     [Fact]
@@ -168,36 +194,38 @@ public sealed class TheoryIngestWritebackTopologyTests
     }
 
     [Fact]
-    public void WriteTransactionPinsEventHeadAndUsesPlainPushWithoutAnyForceForm()
+    public void WriteTransactionUsesAtomicCompareAndSwapWithoutAnyForcePushForm()
     {
         var workflow = Render(Job(LoadWorkflow(), "writeback"));
-        var script = LoadScript();
-        var pushMatch = Regex.Match(
-            script,
-            @"(?m)^  git -C ""\$repository"" push[^\r\n]*\\\r?\n(?:[^\r\n]*\\\r?\n)*[^\r\n]*");
-        Assert.True(pushMatch.Success, "writeback must contain an explicit git push command");
-        var pushCommand = pushMatch.Value;
+        var script = LoadScript() + "\n" + LoadGithubCasScript();
 
         Assert.Contains("github.event.pull_request.head.sha", workflow, StringComparison.Ordinal);
         Assert.Contains("github.event.pull_request.head.ref", workflow, StringComparison.Ordinal);
         Assert.Contains("github.event.pull_request.head.repo.full_name", workflow, StringComparison.Ordinal);
         Assert.Contains("github.repository", workflow, StringComparison.Ordinal);
-        Assert.Contains("\"$commit_sha:$remote_ref\"", pushCommand, StringComparison.Ordinal);
+        Assert.Contains("github.token", workflow, StringComparison.Ordinal);
+        Assert.Contains(
+            "source \"$theory_ingest_script_directory/theory-ingest-github-cas.sh\"",
+            LoadScript(),
+            StringComparison.Ordinal);
         Assert.Contains("commit-tree \"$tree_sha\" -p \"$head_sha\"", script, StringComparison.Ordinal);
         Assert.Contains(
             "merge-base --is-ancestor \"$head_sha\" \"$commit_sha\"",
             script,
             StringComparison.Ordinal);
+        Assert.Matches(
+            new Regex(@"update-ref\s+\\?\s*""\$remote_ref""\s+""\$new_sha""\s+""\$expected_sha"""),
+            script);
+        Assert.Contains("UpdateRefsInput", script, StringComparison.Ordinal);
+        Assert.Contains("\"beforeOid\": sys.argv[4]", script, StringComparison.Ordinal);
+        Assert.Contains("\"afterOid\": sys.argv[5]", script, StringComparison.Ordinal);
+        Assert.Contains("\"name\": sys.argv[3]", script, StringComparison.Ordinal);
+        Assert.Contains("\"force\": False", script, StringComparison.Ordinal);
+        Assert.Contains("remote head does not equal the committed writeback", script, StringComparison.Ordinal);
         Assert.Contains("remote head drifted from the event head", script, StringComparison.Ordinal);
-        Assert.DoesNotContain("--force", pushCommand, StringComparison.Ordinal);
-        Assert.DoesNotContain("--force-with-lease", pushCommand, StringComparison.Ordinal);
-        Assert.DoesNotContain("--force-if-includes", pushCommand, StringComparison.Ordinal);
-        Assert.DoesNotMatch(
-            new Regex(@"(?m)(?:^|[ \t])[""']?-f[""']?(?:[ \t\\]|$)"),
-            pushCommand);
-        Assert.DoesNotMatch(
-            new Regex(@"(?m)(?:^|[ \t])[""']?\+[^ \t\r\n]*:[^ \t\r\n]+"),
-            pushCommand);
+        Assert.DoesNotContain("git -C \"$repository\" push", script, StringComparison.Ordinal);
+        Assert.DoesNotContain("--force-with-lease", script, StringComparison.Ordinal);
+        Assert.DoesNotContain("--force-if-includes", script, StringComparison.Ordinal);
     }
 
     [Fact]
@@ -232,6 +260,73 @@ public sealed class TheoryIngestWritebackTopologyTests
 
     private static string LoadScript() => TestRepositoryLayout.ReadAllText(
         RepositoryRelativePath.Create("tools/scripts/workflow/theory-ingest-closure.sh"));
+
+    private static string LoadGithubCasScript() => TestRepositoryLayout.ReadAllText(
+        RepositoryRelativePath.Create("tools/scripts/workflow/theory-ingest-github-cas.sh"));
+
+    private static YamlMappingNode Step(IEnumerable<YamlMappingNode> steps, string name) =>
+        Assert.Single(steps, step => TryScalar(step, "name", out var actual) && actual == name);
+
+    private static IReadOnlyDictionary<string, string> ShellFunctions(string script)
+    {
+        var functions = new Dictionary<string, string>(StringComparer.Ordinal);
+        var lines = script.Replace("\r\n", "\n", StringComparison.Ordinal).Split('\n');
+        var declaration = new Regex(@"^([a-z][a-z0-9_]*)\(\) \{$");
+        var heredoc = new Regex(@"<<-?'?([A-Z][A-Z0-9_]*)'?");
+        for (var index = 0; index < lines.Length; index++)
+        {
+            var match = declaration.Match(lines[index]);
+            if (!match.Success) continue;
+            var body = new List<string>();
+            string? heredocEnd = null;
+            for (index++; index < lines.Length; index++)
+            {
+                var line = lines[index];
+                if (heredocEnd is not null)
+                {
+                    body.Add(line);
+                    if (line == heredocEnd) heredocEnd = null;
+                    continue;
+                }
+
+                var heredocMatch = heredoc.Match(line);
+                if (heredocMatch.Success) heredocEnd = heredocMatch.Groups[1].Value;
+                if (line == "}") break;
+                body.Add(line);
+            }
+
+            functions.Add(match.Groups[1].Value, string.Join('\n', body));
+        }
+
+        return functions;
+    }
+
+    private static IReadOnlySet<string> ReachableFunctions(
+        string entrypoint,
+        IReadOnlyDictionary<string, string> functions)
+    {
+        var reachable = new HashSet<string>(StringComparer.Ordinal);
+        var pending = new Stack<string>();
+        pending.Push(entrypoint);
+        while (pending.TryPop(out var name))
+        {
+            Assert.True(functions.ContainsKey(name), $"shell function is absent: {name}");
+            if (!reachable.Add(name)) continue;
+            var body = functions[name];
+            foreach (var candidate in functions.Keys)
+            {
+                if (!reachable.Contains(candidate)
+                    && Regex.IsMatch(
+                        body,
+                        $@"(?m)(?:^[ \t]*(?:(?:if|elif|while|until)[ \t]+!?[ \t]*)?|[;&|][ \t]*|\$\([ \t]*){Regex.Escape(candidate)}(?=[ \t>""'$()\\]|$)"))
+                {
+                    pending.Push(candidate);
+                }
+            }
+        }
+
+        return reachable;
+    }
 
     private static YamlMappingNode Job(YamlMappingNode workflow, string name) =>
         Mapping(Mapping(workflow, "jobs"), name);

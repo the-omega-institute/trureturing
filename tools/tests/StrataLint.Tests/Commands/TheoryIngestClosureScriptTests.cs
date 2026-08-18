@@ -14,9 +14,17 @@ public sealed class TheoryIngestClosureScriptTests
     [InlineData("lakefile.toml")]
     [InlineData("lakefile.lean")]
     [InlineData("Makefile")]
+    [InlineData("Directory.Build.props")]
+    [InlineData("Directory.Build.targets")]
+    [InlineData("Directory.Packages.props")]
+    [InlineData("global.json")]
+    [InlineData("Blueprint/D5/Test.scribe.cs")]
+    [InlineData("Meta/Digestion/atomizers.toml")]
     [InlineData("tools/StrataLint.Engine/Test.cs")]
+    [InlineData("tools/lean-inspector/Inspector.lean")]
     [InlineData("tools/scripts/ingest.sh")]
     [InlineData("Meta/FILEMAP.toml")]
+    [InlineData(".github/workflows/ci.yml")]
     [InlineData(".github/workflows/theory-ingest.yml")]
     public void EventHeadLeanReportInputClosureChangesFailClosed(string path)
     {
@@ -30,6 +38,17 @@ public sealed class TheoryIngestClosureScriptTests
             "split the theory-only PR",
             Encoding.UTF8.GetString(result.StandardError),
             StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void EventHeadAllowsOnlyFileMapDerivedIngestCandidateData()
+    {
+        using var fixture = new TheoryIngestClosureFixture();
+        fixture.ChangeCandidateTheory();
+
+        var result = fixture.GuardInputs();
+
+        Assert.True(result.ExitCode == 0, Diagnostic("guard-inputs", result));
     }
 
     [Fact]
@@ -183,6 +202,23 @@ public sealed class TheoryIngestClosureScriptTests
         Assert.Contains("remote head drifted from the event head", Error(result), StringComparison.Ordinal);
     }
 
+    [Fact]
+    public void WritebackRejectsRefDeletedAfterPrecheckWithoutRecreatingIt()
+    {
+        using var fixture = new TheoryIngestClosureFixture();
+        fixture.ChangeCandidateTheory();
+        var prepare = fixture.Prepare();
+        Assert.True(prepare.ExitCode == 0, Diagnostic("prepare", prepare));
+        fixture.SeedRemoteAtEventHead();
+        fixture.DeleteRemoteAfterPrecheck();
+
+        var result = fixture.Writeback();
+
+        Assert.NotEqual(0, result.ExitCode);
+        Assert.False(fixture.RemoteHeadExists());
+        Assert.Contains("remote head changed before atomic update", Error(result), StringComparison.Ordinal);
+    }
+
     private static string Error(ProcessOutput output) => Encoding.UTF8.GetString(output.StandardError);
 
     private static string Diagnostic(string operation, ProcessOutput output) =>
@@ -200,6 +236,7 @@ public sealed class TheoryIngestClosureScriptTests
         private readonly string binDirectory;
         private readonly string dotnetArgumentsPath;
         private bool candidateChanged;
+        private bool deleteRemoteAfterPrecheck;
 
         internal TheoryIngestClosureFixture()
         {
@@ -217,8 +254,16 @@ public sealed class TheoryIngestClosureScriptTests
             WriteBase("lakefile.toml", "name = \"fixture\"\n");
             WriteBase("lakefile.lean", "import Lake\n");
             WriteBase("Makefile", "# fixture\n");
+            WriteBase("Directory.Build.props", "<Project />\n");
+            WriteBase("Directory.Build.targets", "<Project />\n");
+            WriteBase("Directory.Packages.props", "<Project />\n");
+            WriteBase("global.json", "{}\n");
+            WriteBase("Blueprint/D5/Test.scribe.cs", "// fixture\n");
+            WriteBase("Meta/Digestion/atomizers.toml", "schema_version = 1\n");
             WriteBase("tools/StrataLint.Engine/Test.cs", "// fixture\n");
+            WriteBase("tools/lean-inspector/Inspector.lean", "def fixture : True := by trivial\n");
             WriteBase("tools/scripts/ingest.sh", "#!/usr/bin/env bash\n");
+            WriteBase(".github/workflows/ci.yml", "name: fixture-ci\n");
             WriteBase(".github/workflows/theory-ingest.yml", "name: fixture\n");
             WriteBase("Meta/FILEMAP.toml", FileMap);
             WriteBase("tools/scripts/report/lean-report-input.sh", ReportInputHelper);
@@ -248,8 +293,10 @@ public sealed class TheoryIngestClosureScriptTests
             Directory.CreateDirectory(binDirectory);
             WriteAbsolute(Path.Combine(binDirectory, "dotnet"), DotnetStub);
             WriteAbsolute(Path.Combine(binDirectory, "make"), MakeStub);
+            WriteAbsolute(Path.Combine(binDirectory, "git"), GitWrapper);
             MakeExecutable(repository.Path, "test-bin/dotnet");
             MakeExecutable(repository.Path, "test-bin/make");
+            MakeExecutable(repository.Path, "test-bin/git");
             InstallReport(repository.Path);
 
             RunGitAt(remote.Path, "init", "--bare", "-q", ".");
@@ -342,6 +389,19 @@ public sealed class TheoryIngestClosureScriptTests
             WriteAt(candidate.Path, "docs/develop/theory/volume/after.md", "# after\n");
             CommitCandidate("advance remote");
             RunGitAt(candidate.Path, "push", "-q", remote.Path, "HEAD:refs/heads/candidate");
+        }
+
+        internal void DeleteRemoteAfterPrecheck() => deleteRemoteAfterPrecheck = true;
+
+        internal bool RemoteHeadExists()
+        {
+            var result = BoundedProcessRunner.Run(
+                "git",
+                ["--git-dir", remote.Path, "show-ref", "--verify", "--quiet", "refs/heads/candidate"],
+                repository.Path,
+                TimeSpan.FromSeconds(30),
+                1024 * 1024);
+            return result.ExitCode == 0;
         }
 
         internal ProcessOutput Writeback() => RunScript(
@@ -437,6 +497,10 @@ public sealed class TheoryIngestClosureScriptTests
                 [
                     $"PATH={binDirectory}{Path.PathSeparator}{Environment.GetEnvironmentVariable("PATH")}",
                     $"DOTNET_ARGUMENTS_PATH={dotnetArgumentsPath}",
+                    "REAL_GIT=/usr/bin/git",
+                    $"DELETE_REMOTE_AFTER_LS_REMOTE={(deleteRemoteAfterPrecheck ? "1" : "0")}",
+                    $"DELETE_REMOTE_GIT_DIR={remote.Path}",
+                    "DELETE_REMOTE_REF=refs/heads/candidate",
                     "bash",
                     script,
                     .. arguments,
@@ -507,6 +571,15 @@ public sealed class TheoryIngestClosureScriptTests
             status = "closed"
 
             [[files]]
+            pattern = "Blueprint/**/*.scribe.cs"
+            kind = "data"
+            produced_by = "none"
+            consumed_by = ["ScribeEmitter"]
+            verified_by = ["fixture"]
+            artifact_id = "none"
+            runtime_disposition = "committed-source"
+
+            [[files]]
             pattern = "Declared/Output/**"
             kind = "ledger"
             produced_by = "IngestCommand"
@@ -514,6 +587,15 @@ public sealed class TheoryIngestClosureScriptTests
             verified_by = ["fixture"]
             artifact_id = "none"
             runtime_disposition = "committed-ledger"
+
+            [[files]]
+            pattern = "docs/develop/theory/**"
+            kind = "data"
+            produced_by = "none"
+            consumed_by = ["IngestCommand"]
+            verified_by = ["fixture"]
+            artifact_id = "none"
+            runtime_disposition = "committed-source"
             """ + "\n";
 
         private static readonly string ReportInputHelper = """
@@ -548,6 +630,23 @@ public sealed class TheoryIngestClosureScriptTests
             shift 2
             [[ "$1" == "ingest" ]]
             printf '%s\n' 'trusted recomputation' > "$repository/Declared/Output/existing.txt"
+            """ + "\n";
+
+        private static readonly string GitWrapper = """
+            #!/usr/bin/env bash
+            set -euo pipefail
+            if [[ "${DELETE_REMOTE_AFTER_LS_REMOTE:-0}" == "1" && "$*" == *"ls-remote --exit-code --heads"* ]]; then
+              set +e
+              output="$("$REAL_GIT" "$@")"
+              status=$?
+              set -e
+              [[ -z "$output" ]] || printf '%s\n' "$output"
+              if [[ "$status" -eq 0 ]]; then
+                "$REAL_GIT" --git-dir="$DELETE_REMOTE_GIT_DIR" update-ref -d "$DELETE_REMOTE_REF"
+              fi
+              exit "$status"
+            fi
+            exec "$REAL_GIT" "$@"
             """ + "\n";
     }
 }

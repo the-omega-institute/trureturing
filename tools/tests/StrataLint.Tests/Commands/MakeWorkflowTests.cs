@@ -389,7 +389,7 @@ public sealed partial class MakeWorkflowTests
         Assert.Equal(admissionCacheKey, ingestCacheKey);
 
         var producerIndex = workflow.IndexOf(
-            "- name: Produce trusted canonical Lean report on cache miss",
+            "- name: Produce trusted canonical Lean report from cold path",
             StringComparison.Ordinal);
         var producerEndIndex = workflow.IndexOf(
             "      - name: ",
@@ -402,9 +402,15 @@ public sealed partial class MakeWorkflowTests
             "timeout-minutes: 60",
             workflow[producerIndex..producerEndIndex],
             StringComparison.Ordinal);
-        Assert.Single(Regex.Matches(workflow, "id: lean-report-cache"));
+        Assert.Single(Regex.Matches(
+            workflow,
+            "^        id: lean-report-cache\\r?$",
+            RegexOptions.Multiline));
         Assert.Single(Regex.Matches(workflow, "key: stratalint-canonical-lean-report-v2-"));
-        Assert.Contains("steps.lean-report-cache.outputs.cache-hit != 'true'", workflow, StringComparison.Ordinal);
+        Assert.Contains(
+            "steps.lean-report-cache-validation.outcome != 'success'",
+            workflow,
+            StringComparison.Ordinal);
         Assert.DoesNotContain("sleep " + "360", workflow, StringComparison.Ordinal);
         Assert.DoesNotContain("lookup-only: true", workflow, StringComparison.Ordinal);
         Assert.DoesNotContain("fail-on-cache-miss: true", workflow, StringComparison.Ordinal);
@@ -418,11 +424,12 @@ public sealed partial class MakeWorkflowTests
         Assert.Contains("\" verify \\", workflow, StringComparison.Ordinal);
         Assert.Contains("trusted/.lake/build/stratalint/raw-lean-report.json", workflow, StringComparison.Ordinal);
         Assert.Contains("timeout-minutes: 75", workflow, StringComparison.Ordinal);
+        Assert.Contains("ASSUMED-UNVERIFIED", workflow, StringComparison.Ordinal);
         Assert.Contains("actions: read", workflow, StringComparison.Ordinal);
         Assert.DoesNotContain("          make lean\n", workflow, StringComparison.Ordinal);
         Assert.Single(Regex.Matches(workflow, "make lean-report"));
-        Assert.Contains("Install pinned Lean toolchain on cache miss", workflow, StringComparison.Ordinal);
-        Assert.Contains("Restore trusted Lean build artifacts on cache miss", workflow, StringComparison.Ordinal);
+        Assert.Contains("Install pinned Lean toolchain for cold production", workflow, StringComparison.Ordinal);
+        Assert.Contains("Restore trusted Lean build artifacts for cold production", workflow, StringComparison.Ordinal);
         Assert.DoesNotContain("uses: actions/cache@v4", workflow, StringComparison.Ordinal);
         AssertLakeCacheContract(admission, workflow);
     }
