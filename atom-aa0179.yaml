@@ -1,9 +1,0 @@
-theory: D5
-plane: F
-domain: Quantum
-subdomain: Decoherence
-module: ProjectedUnistochasticDynamics
-generality: G
-selector: ""
-artifact: lean
-tag: ""
