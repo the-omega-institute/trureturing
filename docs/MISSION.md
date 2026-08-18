@@ -77,7 +77,10 @@
     },
     {
       "source_ref": "D5/X_Frontier/ZeckendorfNormSign",
-      "kind": "declaration-ready-mathematical-open"
+      "kind": "retired",
+      "delivery_gids": [
+        "D5/S1/Deficit/Displacement/ZeckendorfNormSign.betaGolden_norm_sign_of_least_zeckendorf_index"
+      ]
     }
   ],
   "selection": {
