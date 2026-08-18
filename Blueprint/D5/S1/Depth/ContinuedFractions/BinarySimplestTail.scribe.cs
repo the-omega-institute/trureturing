@@ -1,6 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S1.Depth;
+namespace StrataLint.Scribe.Blueprint.D5.S1.Depth.ContinuedFractions;
 
 internal sealed class BinarySimplestTailDocument : IScribeDocumentDefinition
 {
@@ -22,7 +22,7 @@ internal sealed class BinarySimplestTailDocument : IScribeDocumentDefinition
                             new Formula.Fraction(Num(1), Num(3)))),
                     new Formula.Fraction(Num(1), Num(3)))));
 
-        const string declarationPrefix = "D5/S1/Depth/BinarySimplestTail.";
+        const string declarationPrefix = "D5/S1/Depth/ContinuedFractions/BinarySimplestTail.";
 
         return DocumentDefinition.Create(ScribeNode.Create(
             "One third is the binary tower's constant arm, and the golden tail is the rational "

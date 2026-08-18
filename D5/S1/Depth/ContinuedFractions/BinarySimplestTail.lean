@@ -1,6 +1,6 @@
-/- GID: D5/S1/Depth/BinarySimplestTail
+/- GID: D5/S1/Depth/ContinuedFractions/BinarySimplestTail
    generality: I
-   mirror-B: D5/B/S1/Depth/BinarySimplestTail
+   mirror-B: D5/B/S1/Depth/ContinuedFractions/BinarySimplestTail
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    digest: One third is the binary tower's constant arm and the golden tail is its analogue. -/
@@ -11,6 +11,10 @@ import D5.S0.Tower.MetricGeometry.RadixGridDistance
 
 /- Library-search audit trail (2026-08-19):
    * Probe: one conjunct first, to settle the header shape before the rest.
+   * Placed in the continued-fractions subdirectory: `D5/S1/Depth` already held
+     twelve entries, which is the admission limit, and SL-003 rejected the
+     thirteenth.  I had counted that limit deliberately a few hours earlier when
+     splitting another directory, and did not count it here.
    * All the provable content already exists.  `binary_arm` gives the constant
      arm of one third on the binary tower; `golden_ratio_continued_fraction`
      gives the all-ones tail.  Neither is restated.
@@ -19,7 +23,7 @@ import D5.S0.Tower.MetricGeometry.RadixGridDistance
      a theorem; the repository has six covered atoms carrying such annotations,
      each covered by its provable part only. -/
 
-namespace D5.S1.Depth.BinarySimplestTail
+namespace D5.S1.Depth.ContinuedFractions.BinarySimplestTail
 
 open D5.S0.Tower.ConstantArms
 open D5.S1.Depth.GoldenContinuedFraction
@@ -74,4 +78,4 @@ theorem binary_simplest_tail_package :
     golden_tail_is_all_ones,
     fun Q hQ => (binary_champion_arm_is_constant Q hQ).2⟩
 
-end D5.S1.Depth.BinarySimplestTail
+end D5.S1.Depth.ContinuedFractions.BinarySimplestTail
