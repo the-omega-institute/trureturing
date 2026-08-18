@@ -1,0 +1,9 @@
+theory: D5
+plane: F
+domain: ObserverMemory
+subdomain: Algorithms
+module: ControlledSignatureStabilization
+generality: G
+selector: ""
+artifact: lean
+tag: ""
