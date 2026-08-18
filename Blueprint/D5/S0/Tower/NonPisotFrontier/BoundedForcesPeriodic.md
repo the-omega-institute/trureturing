@@ -18,10 +18,8 @@ $$1 < \left|c\right| \Rightarrow \forall n \in N,\; N \le n \Rightarrow \operato
 
 *Commentary.*
 
-Boundedness is a hypothesis here, not a conclusion. Supplying it for the greedy remainders is immediate; supplying it on the conjugate side is exactly what the escape estimate denies, and that opposition is the point of the chain this module belongs to.
+Boundedness is a hypothesis here, not a conclusion. Supplying it for the greedy remainders is immediate; supplying it on the conjugate side is exactly what the escape estimate denies, and that opposition is the point of the chain this module belongs to. Nothing about any particular base appears here, by the generality ordering; the instantiation lives one tier down.
 
 ## References
 
 - Truth anchor: `D5/S0/Tower/NonPisotFrontier/BoundedForcesPeriodic.periodic_digits_force_periodic_orbit`
-- Dependency: [D5/S0/Tower/NonPisotFrontier/BetaThirteen](BetaThirteen.md)
-- Dependency: [D5/S0/Tower/NonPisotFrontier/PeriodicCollapse](PeriodicCollapse.md)
