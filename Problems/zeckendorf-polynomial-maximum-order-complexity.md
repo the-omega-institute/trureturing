@@ -25,11 +25,11 @@ length needed to generate its first `N` values, as defined in the paper.
 
 Conjecture 3, quoted from arXiv:2106.09959v1:
 
-> "The sequence \\(\mathcal S_Z\\) along polynomial subsequences, denoted by
-> \\(\mathcal S_{Z,P}\\) for a polynomial \\(P\\) of degree \\(d\geq2\\),
-> verifies \\(M(\mathcal S_{Z,P},N)\asymp N^{1/(2d)}\\), i.e. there are
-> \\(c,C>0\\) such as for all \\(N\\) large enough we have
-> \\(cN^{1/(2d)}\leq M(\mathcal S_{Z,P},N)\leq CN^{1/(2d)}\\)."
+> “The sequence \(\mathcal S_Z\) along polynomial subsequences, denoted by
+> \(\mathcal S_{Z,P}\) for a polynomial \(P\) of degree \(d\geq2\),
+> verifies \(M(\mathcal S_{Z,P},N)\asymp N^{1/(2d)}\), i.e. there are
+> \(c,C>0\) such as for all \(N\) large enough we have
+> \(cN^{1/(2d)}\leq M(\mathcal S_{Z,P},N)\leq CN^{1/(2d)}\).”
 
 The paper has already proved the matching lower bound for monic `P` in `Z[X]` of
 degree `d >= 2` with `P(N_0)` contained in `N_0`; the new mathematical content is
@@ -44,11 +44,11 @@ The real-valued bound must be encoded with explicit ceilings and floors.
 
 The paper states the difficulty:
 
-> "The maximum order complexity of \\(\mathcal S_\varphi\\) is algorithmically
-> more difficult to handle."
+> “The maximum order complexity of \(\mathcal S_\varphi\) is algorithmically
+> more difficult to handle.”
 
-> "With our program and our machine, it is not possible to compute the maximum
-> order complexity of a sequence any further than \\(10^9\\) terms."
+> “With our program and our machine, it is not possible to compute the maximum
+> order complexity of a sequence any further than \(10^9\) terms.”
 
 The authors say the square plot supports the conjecture but the cube plot does
 not clarify it; proving the conjecture would show their lower bound is sharp.

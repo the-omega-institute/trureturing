@@ -27,13 +27,13 @@ adjacent ones from the left, split from the right, then merge from the left.
 
 Conjecture 1.7, quoted from arXiv:2508.20222v2:
 
-> "The LGS has the longest game length."
+> “The LGS has the longest game length.”
 
 Status statement, quoted from the same version:
 
-> "The longest-game strategy described in Conjecture 1.7 is supported by
+> “The longest-game strategy described in Conjecture 1.7 is supported by
 > empirical simulations. However, a rigorous proof establishing its optimality
-> remains an open problem."
+> remains an open problem.”
 
 Proposed formalization, after importing the five moves exactly:
 
@@ -51,9 +51,9 @@ LGS run.
 The paper says the conjecture is backed by exhaustive simulations rather than a
 proof. In its broader exact game-tree analysis it also states:
 
-> "Due to the combinatorial explosion in the number of game states and legal
-> move sequences, a full resolution of the winner for \\(n>25\\) was
-> computationally infeasible."
+> “Due to the combinatorial explosion in the number of game states and legal
+> move sequences, a full resolution of the winner for \(n>25\) was
+> computationally infeasible.”
 
 That second quote concerns winner computation, not directly Conjecture 1.7, but
 it identifies the same state-space obstacle. For length, the paper proves only

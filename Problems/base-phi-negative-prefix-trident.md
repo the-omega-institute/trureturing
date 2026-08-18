@@ -30,14 +30,14 @@ morphisms.
 
 The conjecture, quoted from arXiv:2305.08349v1:
 
-> "Let \\(\beta(N)=\beta^+(N)\cdot\beta^-(N)\\) be the base phi expansion of the
-> number \\(N\\). Let \\(w\\) be a word of length \\(m\\). Let \\(R_{\cdot w}\\)
-> be the sequence of occurrences of numbers \\(N\\) such that the first \\(m\\)
-> digits of \\(\beta^-(N)\\) are equal to \\(w\\), i.e.,
-> \\(d_{-1}\ldots d_{-m}(N)=w\\). Then there exist two Lucas numbers \\(a\\) and
-> \\(b\\) such that either \\(R_{\cdot w}=V_F\\), or \\(R_{\cdot w}=V_G\\), or
-> \\(R_{\cdot w}=V_H\\). A second possibility is that \\(R_{\cdot w}\\) is a
-> union of three of such sequences."
+> “Let \(\beta(N)=\beta^+(N)\cdot\beta^-(N)\) be the base phi expansion of the
+> number \(N\). Let \(w\) be a word of length \(m\). Let \(R_{\cdot w}\)
+> be the sequence of occurrences of numbers \(N\) such that the first \(m\)
+> digits of \(\beta^-(N)\) are equal to \(w\), i.e.,
+> \(d_{-1}\ldots d_{-m}(N)=w\). Then there exist two Lucas numbers \(a\) and
+> \(b\) such that either \(R_{\cdot w}=V_F\), or \(R_{\cdot w}=V_G\), or
+> \(R_{\cdot w}=V_H\). A second possibility is that \(R_{\cdot w}\) is a
+> union of three of such sequences.”
 
 Proposed formal target: port the paper's parameterized definitions faithfully,
 then prove that every admissible negative prefix cylinder has an occurrence set
@@ -47,9 +47,9 @@ periodicity or occurrence.
 
 The paper states the obstruction:
 
-> "However, this does not work. The reason is that the \\(\beta^-(N)\\) words do
-> not occur in lexicographical order, in contrast with the \\(\beta^+(N)\\)
-> words."
+> “However, this does not work. The reason is that the \(\beta^-(N)\) words do
+> not occur in lexicographical order, in contrast with the \(\beta^+(N)\)
+> words.”
 
 It adds that some occurrence sequences are Lucas-Wythoff and some are not,
 although they remain close to that form. It exhibits the first `V_G`, the first

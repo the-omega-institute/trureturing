@@ -24,11 +24,11 @@ extraction.
 
 Quoted from arXiv:2405.02727v1:
 
-> "Could it be that there are even smaller automata that answer correctly on
-> inputs of the form \\(b^i\\) (but might give a different answer for other
-> inputs)?"
+> “Could it be that there are even smaller automata that answer correctly on
+> inputs of the form \(b^i\) (but might give a different answer for other
+> inputs)?”
 
-> "We do not know the answer to this question, in general."
+> “We do not know the answer to this question, in general.”
 
 The concrete target is the unresolved base-4 phi instance: prove that the
 paper's 22-state Walnut DFAO is minimal among DFAOs which are correct on the
@@ -38,25 +38,25 @@ at most 21 states exists.
 
 The paper also says:
 
-> "It is conceivable that the automata produced by our method are indeed minimal
-> and unique in general, and we leave this as an open question."
+> “It is conceivable that the automata produced by our method are indeed minimal
+> and unique in general, and we leave this as an open question.”
 
 Minimality of the fixed base-4 instance is narrower and mechanically
 falsifiable; uniqueness should remain a separate target.
 
 The paper states the difficulty:
 
-> "The question is likely difficult; in terms of computational complexity, it is
+> “The question is likely difficult; in terms of computational complexity, it is
 > a special case of a problem known to be NP-hard, namely, the problem of
-> inferring a minimal DFAO from incomplete data."
+> inferring a minimal DFAO from incomplete data.”
 
-> "For this reason, \\(\varphi\\) in base 4 ... encountered prohibitively long
+> “For this reason, \(\varphi\) in base 4 ... encountered prohibitively long
 > solving times before the required number of states (22 states ...) could be
 > reached, preventing the minimality of the Walnut solutions from being
-> determined."
+> determined.”
 
-> "For \\(\varphi\\) in base 4, it took over 25 hours for the 78'th digit set to
-> be declared UNSAT at 13 states..."
+> “For \(\varphi\) in base 4, it took over 25 hours for the 78'th digit set to
+> be declared UNSAT at 13 states...”
 
 The paper explains that both the digit set needed for a candidate and the
 representation length of each digit position can be arbitrarily large.

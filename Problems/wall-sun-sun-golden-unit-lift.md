@@ -28,13 +28,13 @@ infinitely many such primes exist.
 
 Quoted from the introduction of arXiv:2603.25343v1:
 
-> "A natural question was asked by Wall in his paper: Can there be a prime
-> \\(p\\) such that \\(\pi(p)=\pi(p^2)\\)?"
+> “A natural question was asked by Wall in his paper: Can there be a prime
+> \(p\) such that \(\pi(p)=\pi(p^2)\)?”
 
-> "It is known that up to \\(10^{14}\\), there are no such primes (cf. [16]).
+> “It is known that up to \(10^{14}\), there are no such primes (cf. [16]).
 > Still, using heuristics and probabilistic arguments, some authors conjecture
-> the existence of infinitely many primes \\(p\\) satisfying
-> \\(\pi(p)=\pi(p^2)\\) [7, 11]."
+> the existence of infinitely many primes \(p\) satisfying
+> \(\pi(p)=\pi(p^2)\) [7, 11].”
 
 The same paper identifies the classical case with `d = 5` and says there are no
 known `WSS(5)` primes.
@@ -48,8 +48,8 @@ Stronger:   Set.Infinite {p | Nat.Prime p ∧ pisanoPeriod p = pisanoPeriod (p^2
 
 The paper states the difficulty:
 
-> "The question of Wall for these sequences is related to certain deep
-> arithmetic properties of real quadratic fields."
+> “The question of Wall for these sequences is related to certain deep
+> arithmetic properties of real quadratic fields.”
 
 It makes this precise for its generalized recurrence: equality of the periods
 modulo `p` and `p^2` corresponds, subject to stated hypotheses, to failure of

@@ -26,9 +26,9 @@ Zeckendorf decomposition is reached. Let `L_N` be the number of moves.
 
 Conjecture 1.7, quoted from arXiv:2210.11038v1:
 
-> "In the limit \\(N\to\infty\\), the distribution of the number of moves in a
-> random Zeckendorf game on input \\(N\\) converges to a Gaussian, with
-> expectation and variance approximately \\(0.215N\\)."
+> “In the limit \(N\to\infty\), the distribution of the number of moves in a
+> random Zeckendorf game on input \(N\) converges to a Gaussian, with
+> expectation and variance approximately \(0.215N\).”
 
 The paper studies both the uniform measure `mu_N` on complete games and the path
 measure `P_N` obtained by choosing uniformly among legal moves at each state.
@@ -49,9 +49,9 @@ stronger pointwise bound `|P_N(A ∩ B) - P_N(A) P_N(B)| <= C/k^(2+epsilon)`.
 
 The paper states the difficulty:
 
-> "The scope of this result is admittedly restricted..."
+> “The scope of this result is admittedly restricted...”
 
-> "...it is unclear how to extend this to the entirety of \\(\Omega_N\\)."
+> “...it is unclear how to extend this to the entirety of \(\Omega_N\).”
 
 The paper obtains Gaussianity only on certain natural partition components. Its
 full-space obstacle is dependence between separated move indicators; the open
