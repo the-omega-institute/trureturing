@@ -1,0 +1,10 @@
+## 定义 46.2（语境同义）
+
+\[
+t_1\equiv_kt_2
+\iff
+\llbracket t_1\rrbracket_k
+\simeq_{\mathrm{con}}
+\llbracket t_2\rrbracket_k.
+\]
+

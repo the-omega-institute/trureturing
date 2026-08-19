@@ -1,0 +1,12 @@
+## 定义 40.2（道德运气见证）
+
+\[
+\boxed{
+\operatorname{MoralLuck}(x,y)
+\iff
+C_{\mathrm{ctrl}}x=C_{\mathrm{ctrl}}y
+\land
+Jx\ne Jy.
+}
+\]
+

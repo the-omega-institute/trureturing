@@ -1,0 +1,11 @@
+## 定义 27.6（证据必然）
+
+\[
+\Box_{E,a}P
+\iff
+\forall x,
+\operatorname{Adm}(x)
+\land E(x)=E(a)
+\to P(x).
+\]
+

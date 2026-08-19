@@ -1,0 +1,28 @@
+## 定理 16.1（最小保守完成）
+
+\(\operatorname{Comp}_K(C)\) 满足：
+
+\[
+C\preceq\operatorname{Comp}_K(C),
+\qquad
+E_K\preceq\operatorname{Comp}_K(C).
+\]
+
+若概念 \(D\) 同时满足：
+
+\[
+C\preceq D,
+\qquad
+E_K\preceq D,
+\]
+
+则：
+
+\[
+\boxed{
+\operatorname{Comp}_K(C)\preceq D.
+}
+\]
+
+所以它是保留旧概念并使目标可决定的最小共同精化。\(\square\)
+

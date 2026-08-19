@@ -1,0 +1,8 @@
+## 定义 17.1（预测等价）
+
+\[
+x\sim_q^\infty y
+\iff
+\forall n,\ q(F^nx)=q(F^ny).
+\]
+

@@ -1,0 +1,18 @@
+### 证明
+
+加上再减去 \(\overline Gq_DF\)：
+
+\[
+\begin{aligned}
+q_EGF-\overline G\overline Fq_C
+&=(q_EG-\overline Gq_D)F
++\overline G(q_DF-\overline Fq_C).
+\end{aligned}
+\]
+
+\(\square\)
+
+若 \(\overline G\) 为 Lipschitz，则得到次可加缺陷界。哲学误差由此可以沿推理链、制度链或时间链运输，而不只是被笼统称为“偏差”。
+
+---
+

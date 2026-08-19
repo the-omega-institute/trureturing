@@ -1,0 +1,10 @@
+# 52. 宗教哲学的非循环纪律
+
+可以定义：
+
+\[
+\operatorname{NecessaryBeing}:X\to\mathsf{Prop},
+\]
+
+或：
+

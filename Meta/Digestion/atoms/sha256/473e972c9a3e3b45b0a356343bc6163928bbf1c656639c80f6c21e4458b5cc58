@@ -1,0 +1,89 @@
+# 60. 最小 Lean 核心草案
+
+```lean
+universe u v w
+
+structure Concept (X : Type u) where
+  View : Type v
+  read : X → View
+
+namespace Concept
+
+def ObsEq (C : Concept X) (x y : X) : Prop :=
+  C.read x = C.read y
+
+def Fiber (C : Concept X) (b : C.View) : Type _ :=
+  {x : X // C.read x = b}
+
+def AdmissibleFiber
+    (C : Concept X)
+    (admit : X → Prop)
+    (b : C.View) : Type _ :=
+  {x : X // admit x ∧ C.read x = b}
+
+def Refines (fine coarse : Concept X) : Type _ :=
+  Σ p : fine.View → coarse.View,
+    ∀ x, coarse.read x = p (fine.read x)
+
+def Joint (C D : Concept X) : Concept X where
+  View := C.View × D.View
+  read x := (C.read x, D.read x)
+
+def Descends
+    (current : Concept X)
+    (future : Concept Y)
+    (F : X → Y) : Type _ :=
+  Σ fbar : current.View → future.View,
+    ∀ x, future.read (F x) = fbar (current.read x)
+
+def CarryWitness
+    (current : Concept X)
+    (future : Concept Y)
+    (F : X → Y) : Type _ :=
+  Σ x y : X,
+    current.read x = current.read y ×
+      future.read (F x) ≠ future.read (F y)
+
+def StableAt
+    (C : Concept X)
+    (admit : X → Prop)
+    (P : X → Prop)
+    (a : X) : Prop :=
+  ∀ x, admit x → C.read x = C.read a →
+    (P x ↔ P a)
+
+def Knows
+    (C : Concept X)
+    (admit : X → Prop)
+    (P : X → Prop)
+    (a : X) : Prop :=
+  admit a ∧ P a ∧
+    ∀ x, admit x → C.read x = C.read a → P x
+
+end Concept
+```
+
+第一承重定理：
+
+```lean
+theorem noCarry_of_descends
+    (h : Concept.Descends current future F) :
+    IsEmpty (Concept.CarryWitness current future F)
+```
+
+第二承重定理：
+
+```lean
+theorem joint_least_common_refinement :
+  Concept.Refines (Concept.Joint C D) C ×
+  Concept.Refines (Concept.Joint C D) D ×
+  (∀ E,
+    Concept.Refines E C →
+    Concept.Refines E D →
+    Concept.Refines E (Concept.Joint C D))
+```
+
+具体参数方向在正式实现时应与仓库统一，并通过编译校正。
+
+---
+

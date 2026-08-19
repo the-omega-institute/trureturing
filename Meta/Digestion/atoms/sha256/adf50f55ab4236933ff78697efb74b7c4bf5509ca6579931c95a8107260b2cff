@@ -1,0 +1,8 @@
+## 定义 9.1（逻辑蕴涵）
+
+\[
+P\models_{\operatorname{Adm}}Q
+\iff
+\forall x,\operatorname{Adm}(x)\to P(x)\to Q(x).
+\]
+

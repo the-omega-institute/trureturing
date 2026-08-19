@@ -1,0 +1,8 @@
+## 62.2 过程链
+
+1. descent 排除 carry；
+2. 有限无 carry 反向构造；
+3. 定量 defect 组合律；
+4. completion 的 extensive、monotone、idempotent；
+5. 预测完成最小性。
+

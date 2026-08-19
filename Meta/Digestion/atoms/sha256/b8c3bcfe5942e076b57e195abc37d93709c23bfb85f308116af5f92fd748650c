@@ -1,0 +1,16 @@
+## 定义 7.2（概念等价）
+
+\[
+\boxed{
+C\simeq_{\mathrm{con}}D
+\iff
+C\preceq D
+\land
+D\preceq C.
+}
+\]
+
+它表示相同的区分能力，不要求相同名称、相同标签或相同 codomain。
+
+---
+

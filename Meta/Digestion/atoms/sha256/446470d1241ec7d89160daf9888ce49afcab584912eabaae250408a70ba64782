@@ -1,0 +1,16 @@
+\[
+\boxed{
+\kappa_s(a,b)+\kappa_s(a+b,c)
+=
+\kappa_s(b,c)+\kappa_s(a,b+c).
+}
+\]
+
+若改变截面：
+
+\[
+s'(a)=s(a)+\beta(a),
+\]
+
+则：
+
