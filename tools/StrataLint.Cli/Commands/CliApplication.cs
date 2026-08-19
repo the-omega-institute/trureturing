@@ -228,6 +228,17 @@ internal static class CliApplication
                 $"DEFERRED {deferred.RuleId.Value} case={deferred.CaseId.Value} {deferred.Title}\n");
         }
 
+        // 非阻断的观察项照样打印。判词产出却不可见即浮账(CLAUDE.md 第 20 条红线:
+        // 允许 open,不允许浮账),而此前本路径把 Observe 判词全部丢掉——在 Observe
+        // 罕见时不显眼,理论卷「尚未消化」改判 Observe 后它就成了承重缺口。
+        foreach (var observation in admitted.Observations
+            .OrderBy(static item => item.RuleId.Value, StringComparer.Ordinal)
+            .ThenBy(static item => item.Path, StringComparer.Ordinal)
+            .ThenBy(static item => item.Message, StringComparer.Ordinal))
+        {
+            console.WriteOutput("OBSERVED " + observation.Render() + "\n");
+        }
+
         return 0;
     }
 
