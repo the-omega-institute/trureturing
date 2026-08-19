@@ -62,6 +62,10 @@ public sealed class TheoryCoverageRuleTests
         Assert.Contains("make ingest", finding, StringComparison.Ordinal);
     }
 
+    // 断言指名到 DigestedPath,不是「什么都不该报」。理论卷改按路径规则治理后,本检查
+    // 迭代的是**文件树**而非 registry 清单,而本夹具的树里本就还有一个未消化的
+    // GOVERNED.md——它被报出来正是新行为要的。旧的宽断言只在「清单决定哪些理论卷受治理」
+    // 的前提下成立,而那个前提已被移除。
     [Fact]
     public void ATheoryDocumentThatHasASourceIsNotReported()
     {
@@ -69,6 +73,7 @@ public sealed class TheoryCoverageRuleTests
 
         Assert.DoesNotContain(
             findings,
-            static message => message.Contains("has no digestion source", StringComparison.Ordinal));
+            static message => message.Contains(DigestedPath, StringComparison.Ordinal)
+                && message.Contains("has no digestion source", StringComparison.Ordinal));
     }
 }
