@@ -1,0 +1,10 @@
+### 定义 40.18（实现谓词）
+
+定义：
+
+\[
+\operatorname{Realizable}:
+\widehat X_{\mathrm{form}}
+\to\mathsf{Prop}.
+\]
+

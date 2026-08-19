@@ -39004,3 +39004,3131 @@ F_n&=\text{在该层运输结构的 FLOW},\\
 接缝、准入条件和对自身闭合的逃逸。}
 }
 \]
+
+---
+
+# 40. 追加：构造性无领域公理的界面—余量过程论
+## Conservative Definitional Interface–Remainder Process Theory
+### Dependent Fibers, Descent Defects, Causal Completion, and Explicit Existence
+
+## 40.0 文档地位与本节目标
+
+本节继续第 38–39 节的追加式发展，但把“最小原语理论”从解释性纲领收紧为一个可以独立形式化、比较模型并接受反例审计的数学框架。
+
+本节的核心问题是：
+
+\[
+\boxed{
+\text{能否不增加任何领域公理，
+仅使用基础类型论中的定义、构造与条件定理，
+发展 CUT / FLOW / ADMIT / ANCHOR 理论？}
+}
+\]
+
+答案分成两层。
+
+第一层是肯定的：
+
+\[
+\boxed{
+\text{可以把该理论构造成基础类型论上的保守定义扩张。}
+}
+\]
+
+也就是说：
+
+- 不增加“世界必然存在某种对象”的领域公理；
+- 不预设每个商都有全局截面；
+- 不预设每个逆系统都有全局 section；
+- 不预设每个形式完成都可实现；
+- 不预设正性、因果闭合、解析延拓或 RH；
+- 所有非空性都必须由具体项见证；
+- 所有规律都写成带前件的定理。
+
+第二层是否定的：
+
+\[
+\boxed{
+\text{不存在脱离基础逻辑、类型形成规则、等号和推理规则的绝对“零公理数学”。}
+}
+\]
+
+定义仍然依赖某个基础系统。例如在构造性版本中，可以选择：
+
+\[
+\mathsf{MLTT}
+\]
+
+或 Lean 内核所提供的：
+
+- universes；
+- \(\Pi\)-类型；
+- \(\Sigma\)-类型；
+- identity type；
+- inductive types；
+- recursion；
+- definitional equality。
+
+因此，本节采用的准确声明是：
+
+\[
+\boxed{
+\textbf{C-IRPT 是构造性依赖类型论上的保守定义性学说，
+不引入额外领域公理。}
+}
+\]
+
+其中：
+
+\[
+\textbf{C-IRPT}
+=
+\textbf{Constructive Interface–Remainder Process Theory}.
+\]
+
+本节没有证明 C-IRPT 是一切数学基础中唯一的最小语言，也没有证明全部项目内容都已成为该语言的定理。它只完成：
+
+1. 原语的定义性还原；
+2. 无选择的商余分解；
+3. 数据、性质与存在证明的严格分层；
+4. 动力下降、carry、记忆和完成的构造性定义；
+5. 学术上的范畴论定位；
+6. 形式化路线与可证伪边界；
+7. RH 桥梁中“不能由定义代替证明”的精确定位。
+
+---
+
+# Part I：无领域公理的准确含义
+
+## 40.1 三种“无公理”必须分开
+
+### 定义 40.1（绝对零公理）
+
+若一个体系声称不依赖任何：
+
+- 逻辑规则；
+- 类型形成规则；
+- 等号规则；
+- 归纳原则；
+- 基础对象；
+
+则称其声称绝对零公理。
+
+该概念不能承载通常意义上的数学推导，因为连“定义”“证明”和“相等”都尚未获得意义。
+
+因此本节不采用该声明。
+
+### 定义 40.2（无领域公理）
+
+设 \(T_0\) 为冻结的基础理论。若扩展 \(T\) 只加入可展开定义，而不增加关于特定领域对象存在或满足某性质的新公理，则称：
+
+\[
+T
+\]
+
+相对于 \(T_0\) 无领域公理。
+
+这正是本节采用的意义。
+
+### 定义 40.3（无暗账）
+
+一个理论满足无暗账纪律，当且仅当：
+
+1. 所有使用的基础规则可列出；
+2. 所有局部前件显式出现在定理陈述中；
+3. 所有存在性由项、构造或非空证明给出；
+4. 不把待证结论放入定义；
+5. 不用隐式选择生成全局截面；
+6. 不把形式逆极限自动称为真实对象；
+7. 不把条件性表示定理误报为无条件来源定理。
+
+因此：
+
+\[
+\boxed{
+\text{无暗账比“绝对无公理”更严格，也更可审计。}
+}
+\]
+
+---
+
+## 40.2 保守定义扩张
+
+设基础语言为：
+
+\[
+\mathcal L_0,
+\]
+
+基础理论为：
+
+\[
+T_0.
+\]
+
+通过显式定义加入新符号，得到：
+
+\[
+\mathcal L_{\mathrm{CIRPT}}
+\supseteq
+\mathcal L_0.
+\]
+
+每个新符号必须能够机械展开为 \(\mathcal L_0\) 中的表达式。
+
+### 定义 40.4（定义翻译）
+
+记：
+
+\[
+(-)^\flat:
+\mathcal L_{\mathrm{CIRPT}}
+\to
+\mathcal L_0
+\]
+
+为递归展开全部 C-IRPT 定义的翻译。
+
+### 定理 40.1（定义性保守性）
+
+如果 C-IRPT 只通过显式定义扩展 \(T_0\)，那么对任何旧语言命题：
+
+\[
+\varphi\in\mathcal L_0,
+\]
+
+若：
+
+\[
+T_{\mathrm{CIRPT}}\vdash\varphi,
+\]
+
+则：
+
+\[
+T_0\vdash\varphi.
+\]
+
+### 证明
+
+将 C-IRPT 推导中的每个新定义展开。由于没有加入新的不可展开公理，展开后的推导完全位于 \(T_0\) 中。故旧语言中不会凭定义获得新的无前件定理。 \(\square\)
+
+这条定理说明：
+
+\[
+\boxed{
+\text{C-IRPT 可以重新组织证明，但不能仅凭新术语制造真理。}
+}
+\]
+
+因此，它的研究价值必须来自：
+
+- 更短的统一证明；
+- 新的普适性质；
+- 模型间转移；
+- 缺陷分解；
+- 新的构造；
+- 新的反例；
+- 对开放问题前件的精确隔离。
+
+---
+
+## 40.3 定义类型不等于构造项
+
+若写：
+
+\[
+X:\mathsf{Type},
+\]
+
+只说明 \(X\) 是一个候选类型。
+
+它不推出：
+
+\[
+x:X.
+\]
+
+同理，定义：
+
+\[
+\operatorname{ObserverType}
+\]
+
+不推出观察者存在。
+
+定义：
+
+\[
+\operatorname{PhysicalZeroSection}
+\]
+
+也不推出某个零点 section 存在。
+
+### 原理 40.1（存在见证纪律）
+
+对任意类型 \(X\)，存在性必须由：
+
+\[
+x:X
+\]
+
+或：
+
+\[
+\operatorname{Nonempty}(X)
+\]
+
+的证明见证。
+
+因此：
+
+\[
+\boxed{
+\text{定义可能性空间}
+\neq
+\text{证明世界中有对象占据该空间。}
+}
+\]
+
+---
+
+## 40.4 定义性质不等于证明性质成立
+
+设：
+
+\[
+\operatorname{Lawful}:X\to\mathsf{Prop}.
+\]
+
+定义：
+
+\[
+\operatorname{Lawful}(x)
+\]
+
+只给出判定条件。
+
+它不自动产生：
+
+\[
+h:\operatorname{Lawful}(x).
+\]
+
+所以项目应当分离：
+
+\[
+\boxed{
+\texttt{RawModel}
+}
+\]
+
+与：
+
+\[
+\boxed{
+\texttt{IsLawful RawModel}.
+}
+\]
+
+必要时可以再打包：
+
+\[
+\texttt{Model}
+=
+\sum_{M:\texttt{RawModel}}
+\texttt{IsLawful}(M).
+\]
+
+但打包结构本身仍要求每个模型携带自己的证明，不是全局公理。
+
+---
+
+## 40.5 不能通过定义解决开放问题
+
+例如，若定义：
+
+\[
+\operatorname{AdmissibleZero}(\rho)
+\iff
+\xi(\rho)=0
+\wedge
+\Re\rho=\frac12,
+\]
+
+则：
+
+\[
+\operatorname{AdmissibleZero}(\rho)
+\Longrightarrow
+\Re\rho=\frac12
+\]
+
+只是投影结构字段，并不推进 RH。
+
+同样，若把：
+
+\[
+\mathrm{RH}
+\]
+
+写入 `ZetaWorld` 的字段，再假设存在 `world : ZetaWorld`，则只是把 RH 改名为模型存在性。
+
+### 原理 40.2（非循环准入）
+
+领域准入谓词：
+
+\[
+\operatorname{Adm}
+\]
+
+不得包含目标结论本身，也不得包含与目标结论已知等价、但未经独立构造的条件。
+
+因此，RH 模型中的准入门必须从：
+
+- prime-side 数据；
+- 无条件正性；
+- 明确增长界；
+- 解析域；
+- 可闭性；
+- 归一化；
+- 记录或过程结构；
+
+独立定义和证明。
+
+---
+
+# Part II：原语的定义性还原
+
+## 40.6 最底层只有类型与有类型态射
+
+在最底层，C-IRPT 不需要把：
+
+\[
+\mathsf{CUT},
+\mathsf{FLOW},
+\mathsf{ADMIT},
+\mathsf{ANCHOR}
+\]
+
+视为四种不同的本体物质。
+
+它们都可表示为有类型态射或依赖类型数据。
+
+\[
+\boxed{
+\begin{aligned}
+\mathsf{CUT}
+&:\ q:X\to B,\\
+\mathsf{FLOW}
+&:\ F:X\to Y,\\
+\mathsf{ADMIT}
+&:\ A:X\to\mathsf{Prop},\\
+\mathsf{ANCHOR}
+&:\ a:\sum_{x:X}A(x).
+\end{aligned}
+}
+\]
+
+所以：
+
+\[
+\boxed{
+\text{四原语是语义角色最小集，不是逻辑原语最小集。}
+}
+\]
+
+若把角色全部删除，只剩“映射”，理论虽然更短，却失去：
+
+- 哪个映射在定义可见性；
+- 哪个映射在表达过程；
+- 哪个谓词在执行准入；
+- 哪个项在固定观察起点；
+
+这些承重信息。
+
+因此 C-IRPT 是：
+
+\[
+\boxed{
+\text{role-typed morphism calculus}.
+}
+\]
+
+---
+
+## 40.7 CUT 的无选择定义
+
+### 定义 40.5（界面切分）
+
+一个 CUT 是：
+
+\[
+\boxed{
+q:X\to B.
+}
+\]
+
+它诱导相对同一性：
+
+\[
+x\sim_qy
+\iff
+q(x)=q(y).
+\]
+
+其中 \(B\) 是当前界面保留的分类坐标。
+
+### 定义 40.6（依赖余纤维）
+
+对：
+
+\[
+b:B,
+\]
+
+定义：
+
+\[
+\boxed{
+R_q(b)
+=
+\sum_{x:X}
+(q(x)=b).
+}
+\]
+
+它是商坐标 \(b\) 下仍未被 CUT 区分的完整余结构。
+
+注意：
+
+\[
+R_q(b)
+\]
+
+不是一个预先给定的统一余数类型，而是依赖于 \(b\) 的纤维。
+
+---
+
+## 40.8 无选择商余正规形
+
+### 定理 40.2（规范依赖商余分解）
+
+对任意：
+
+\[
+q:X\to B,
+\]
+
+存在规范等价：
+
+\[
+\boxed{
+X
+\simeq
+\sum_{b:B}R_q(b).
+}
+\]
+
+### 构造
+
+定义：
+
+\[
+\eta_q(x)
+=
+\left(
+q(x),
+x,
+\operatorname{refl}_{q(x)}
+\right).
+\]
+
+反向映射：
+
+\[
+\mu_q(b,x,h)=x.
+\]
+
+则：
+
+\[
+\mu_q(\eta_q(x))=x
+\]
+
+定义性成立。
+
+反向复合：
+
+\[
+\eta_q(\mu_q(b,x,h))
+\]
+
+与：
+
+\[
+(b,x,h)
+\]
+
+由路径归纳相等。故得到等价。 \(\square\)
+
+因此，最一般的商余公式不是：
+
+\[
+X\cong B\times R,
+\]
+
+而是：
+
+\[
+\boxed{
+X
+\simeq
+\sum_{b:B}R_q(b).
+}
+\]
+
+该公式：
+
+- 不需要选择公理；
+- 不需要 \(q\) 满射；
+- 不需要全局截面；
+- 不需要所有纤维同构；
+- 不需要拓扑平凡化；
+- 不需要线性结构。
+
+这是 C-IRPT 最底层、最重要的定义性恒等式。
+
+---
+
+## 40.9 直积分解是额外定理
+
+若存在某个统一类型 \(R\) 和等价族：
+
+\[
+\phi_b:R_q(b)\simeq R
+\]
+
+且该族满足所需连续性或相容性，才能得到：
+
+\[
+X\simeq B\times R.
+\]
+
+若进一步存在截面：
+
+\[
+s:B\to X,
+\qquad
+q\circ s=\operatorname{id}_B,
+\]
+
+才可把某些纤维余量相对于代表 \(s(b)\) 坐标化。
+
+因此：
+
+\[
+\boxed{
+\text{依赖纤维是定义；
+全局余数坐标是平凡化定理。}
+}
+\]
+
+项目中的 solenoid：
+
+\[
+0\to K\to\Sigma\to\mathbb T\to0
+\]
+
+必须先被看成圆上的依赖纤维系统，而不能未经证明就写成：
+
+\[
+\Sigma\cong\mathbb T\times K.
+\]
+
+全局不可平凡性正是 monodromy 与接缝的来源之一。
+
+---
+
+## 40.10 FLOW 的定义
+
+### 定义 40.7（作用）
+
+一个 FLOW 是一个有类型映射：
+
+\[
+\boxed{
+F:X\to Y.
+}
+\]
+
+它本身不预设：
+
+- 可逆；
+- 连续；
+- 线性；
+- 正；
+- 保测度；
+- 局部；
+- 可计算；
+- 因果；
+- 解析。
+
+这些性质都应由额外谓词定义并逐项证明。
+
+### 定义 40.8（可迭代 FLOW）
+
+若 \(X=Y\)，则可以定义：
+
+\[
+F^0=\operatorname{id}_X,
+\qquad
+F^{n+1}=F\circ F^n.
+\]
+
+离散时间只是该迭代的索引，不是额外本体实体。
+
+连续时间 FLOW 则需要显式给出：
+
+\[
+T:\mathbb R_{\ge0}\to(X\to X)
+\]
+
+以及半群律证明：
+
+\[
+T_{s+t}=T_s\circ T_t.
+\]
+
+---
+
+## 40.11 ADMIT 的定义
+
+### 定义 40.9（准入谓词）
+
+一个 ADMIT 结构是：
+
+\[
+\boxed{
+A:X\to\mathsf{Prop}.
+}
+\]
+
+合法对象类型为：
+
+\[
+\boxed{
+X_A
+=
+\sum_{x:X}A(x).
+}
+\]
+
+该定义不宣称 \(X_A\) 非空。
+
+### 例 40.1
+
+不同模型中的 ADMIT 可以是：
+
+\[
+\begin{aligned}
+A(x)&:\iff x\ge0,\\
+A(\rho)&:\iff \rho\succeq0\wedge\operatorname{Tr}\rho=1,\\
+A(f)&:\iff f\text{ 可积},\\
+A(u)&:\iff E(u)<\infty,\\
+A(M)&:\iff M\text{ 可计算},\\
+A(g)&:\iff \Omega(g^*g)\ge0.
+\end{aligned}
+\]
+
+这些是不同谓词，不应被词语“合法”掩盖差异。
+
+---
+
+## 40.12 ANCHOR 的定义
+
+### 定义 40.10（合法锚）
+
+给定：
+
+\[
+q:X\to B,
+\qquad
+b:B,
+\]
+
+锚点类型定义为：
+
+\[
+\boxed{
+\operatorname{Anchor}(q,b)
+=
+R_q(b).
+}
+\]
+
+若还要求准入：
+
+\[
+A:X\to\mathsf{Prop},
+\]
+
+则：
+
+\[
+\boxed{
+\operatorname{AdmissibleAnchor}(q,A,b)
+=
+\sum_{a:R_q(b)}A(\pi_Xa).
+}
+\]
+
+锚点存在性不是定义；必须构造该类型中的项。
+
+---
+
+# Part III：refinement、下降与 carry
+
+## 40.13 Refinement 是因子化数据
+
+### 定义 40.11（界面精化）
+
+给定：
+
+\[
+q:X\to B,
+\qquad
+q':X\to B',
+\]
+
+定义 \(q'\) 精化 \(q\)，当且仅当存在：
+
+\[
+p:B'\to B
+\]
+
+和同伦：
+
+\[
+h:\prod_{x:X}q(x)=p(q'(x)).
+\]
+
+记为：
+
+\[
+\boxed{
+\operatorname{Refines}(q',q).
+}
+\]
+
+它是一个数据类型：
+
+\[
+\sum_{p:B'\to B}
+\prod_{x:X}
+q(x)=p(q'(x)).
+\]
+
+因此 refinement 不是一个外加偏序公理，而是映射因子化。
+
+---
+
+## 40.14 Refinement 的复合
+
+### 定理 40.3（refinement 复合）
+
+若：
+
+\[
+q=pq',
+\qquad
+q'=rq'',
+\]
+
+则：
+
+\[
+q=(pr)q''.
+\]
+
+故 refinement 可复合。
+
+恒等映射给出自反性。
+
+如果把 quotient codomain 的同构视为相同，则 refinement 在相应同构类上形成预序；若不取同构类，则它形成一个因子化范畴，而不只是布尔关系。
+
+---
+
+## 40.15 动力下降
+
+### 定义 40.12（精确下降）
+
+给定：
+
+\[
+q_X:X\to B,
+\qquad
+q_Y:Y\to C,
+\qquad
+F:X\to Y,
+\]
+
+定义 \(F\) 能沿 CUT 下降，当且仅当存在：
+
+\[
+\overline F:B\to C
+\]
+
+使：
+
+\[
+\boxed{
+q_Y\circ F
+=
+\overline F\circ q_X.
+}
+\]
+
+类型论数据为：
+
+\[
+\sum_{\overline F:B\to C}
+\prod_{x:X}
+q_Y(Fx)=\overline F(q_Xx).
+\]
+
+该定义不预设下降映射存在。
+
+---
+
+## 40.16 当前同类是否仍改变未来
+
+### 定义 40.13（causal carry witness）
+
+定义 carry 见证类型：
+
+\[
+\boxed{
+\operatorname{CarryWitness}(F;q_X,q_Y)
+}
+\]
+
+为：
+
+\[
+\sum_{x,y:X}
+\left(
+q_X(x)=q_X(y)
+\right)
+\times
+\left(
+q_Y(Fx)\neq q_Y(Fy)
+\right).
+\]
+
+它直接表达：
+
+\[
+\boxed{
+\text{当前 CUT 商掉的余差，仍能改变未来 CUT 的输出。}
+}
+\]
+
+因此，因果相关性可以在最低层定义为：
+
+\[
+\boxed{
+\text{余纤维差异是否穿过 FLOW 变成未来可见差异。}
+}
+\]
+
+---
+
+## 40.17 下降排除 carry
+
+### 定理 40.4（精确下降无 carry）
+
+若 \(F\) 存在精确下降：
+
+\[
+q_YF=\overline Fq_X,
+\]
+
+则：
+
+\[
+\operatorname{CarryWitness}(F;q_X,q_Y)
+\]
+
+为空。
+
+### 证明
+
+若：
+
+\[
+q_X(x)=q_X(y),
+\]
+
+则：
+
+\[
+q_Y(Fx)
+=
+\overline F(q_Xx)
+=
+\overline F(q_Xy)
+=
+q_Y(Fy).
+\]
+
+故不可能同时满足未来读出不等。 \(\square\)
+
+---
+
+## 40.18 反向命题的构造性边界
+
+“没有下降就必有一个 carry witness”在一般构造性逻辑中并不自动成立，因为从：
+
+\[
+\neg\forall x,y,\ P(x,y)
+\]
+
+提取：
+
+\[
+\exists x,y,\ \neg P(x,y)
+\]
+
+可能需要可判定性、有限性或经典原则。
+
+因此应区分：
+
+\[
+\boxed{
+\text{正见证：显式给出 }(x,y);
+}
+\]
+
+与：
+
+\[
+\boxed{
+\text{负陈述：无法构造下降映射}.
+}
+\]
+
+在有限可判定模型中，可以穷举得到反向构造；在一般无限模型中，必须逐例证明。
+
+这是 C-IRPT 的重要构造性纪律：
+
+\[
+\boxed{
+\text{不能把“没有闭合证明”自动升级为“存在显式缺陷对象”。}
+}
+\]
+
+---
+
+## 40.19 有效像上的下降
+
+若 \(q_X\) 不满射，则 \(\overline F\) 在 \(B\setminus\operatorname{im}(q_X)\) 上没有由 \(F\) 决定的值。
+
+无选择版本应先定义像：
+
+\[
+\operatorname{Im}(q_X)
+=
+\sum_{b:B}
+\left\|
+R_{q_X}(b)
+\right\|,
+\]
+
+其中截断符号表示只记录存在性。
+
+在像上，若 \(F\) 对纤维常值，则可以定义唯一诱导映射：
+
+\[
+\overline F_{\operatorname{im}}:
+\operatorname{Im}(q_X)\to C.
+\]
+
+要扩张到整个 \(B\)，需要：
+
+- \(q_X\) 满射；
+- 或给出 \(B\setminus\operatorname{im}(q_X)\) 上的额外定义；
+- 或使用选择／默认值。
+
+因此，“商动力唯一”应始终附带满射或有效像前件。
+
+---
+
+## 40.20 方格语言
+
+一个界面—过程方格是：
+
+\[
+\begin{array}{ccc}
+X&\xrightarrow{F}&Y\\
+\downarrow q_X&&\downarrow q_Y\\
+B&\xrightarrow{\overline F}&C.
+\end{array}
+\]
+
+定义方格余差：
+
+\[
+\boxed{
+\epsilon_\square(x)
+=
+q_Y(Fx)-\overline F(q_Xx)
+}
+\]
+
+只在具有加法或差值结构的模型中成立。
+
+更一般地，可以定义成一条路径、距离或关系见证：
+
+\[
+q_Y(Fx)
+\rightsquigarrow
+\overline F(q_Xx).
+\]
+
+精确方格即该见证为恒等路径。
+
+---
+
+## 40.21 加性模型中的组合恒等式
+
+设：
+
+\[
+F:X\to Y,
+\qquad
+G:Y\to Z,
+\]
+
+并给出候选商 FLOW：
+
+\[
+\overline F:B\to C,
+\qquad
+\overline G:C\to D.
+\]
+
+定义：
+
+\[
+\epsilon_F
+=
+q_YF-\overline Fq_X,
+\]
+
+\[
+\epsilon_G
+=
+q_ZG-\overline Gq_Y.
+\]
+
+则：
+
+\[
+\boxed{
+\epsilon_{GF}
+=
+\epsilon_G\circ F
++
+\overline G\circ\epsilon_F.
+}
+\]
+
+### 证明
+
+\[
+\begin{aligned}
+q_ZGF-\overline G\overline Fq_X
+&=
+(q_ZG-\overline Gq_Y)F
++\overline G(q_YF-\overline Fq_X).
+\end{aligned}
+\]
+
+即得。 \(\square\)
+
+所以 carry 不是无结构误差；它服从链式运输律。
+
+---
+
+# Part IV：截面、carry cocycle 与 gauge
+
+## 40.22 局部余坐标需要截面
+
+在加性扩张中，设：
+
+\[
+0\to R\overset{i}\to X\overset{q}\to B\to0.
+\]
+
+若给出集合截面：
+
+\[
+s:B\to X,
+\qquad
+qs=\operatorname{id}_B,
+\]
+
+则每个 \(x\) 可相对于该截面写成：
+
+\[
+x=s(qx)+i(r_s(x)).
+\]
+
+但 \(s\) 是附加数据，不是 CUT 的定义性组成。
+
+---
+
+## 40.23 加法 carry
+
+### 定义 40.14（截面 carry）
+
+定义：
+
+\[
+\boxed{
+\kappa_s(a,b)
+=
+s(a)+s(b)-s(a+b).
+}
+\]
+
+由于：
+
+\[
+q(\kappa_s(a,b))=0,
+\]
+
+它落在余核 \(R\) 中。
+
+商余坐标上的加法为：
+
+\[
+\boxed{
+(a,r)\boxplus_s(b,t)
+=
+\left(
+a+b,\,
+r+t+\kappa_s(a,b)
+\right).
+}
+\]
+
+---
+
+## 40.24 结合律产生 cocycle 恒等式
+
+### 定理 40.5（carry cocycle）
+
+加法结合律蕴含：
+
+\[
+\boxed{
+\kappa_s(a,b)
++
+\kappa_s(a+b,c)
+=
+\kappa_s(b,c)
++
+\kappa_s(a,b+c).
+}
+\]
+
+### 证明
+
+分别展开：
+
+\[
+s(a)+s(b)+s(c)-s(a+b+c)
+\]
+
+的两种括号方式。 \(\square\)
+
+因此：
+
+\[
+\boxed{
+\text{结合律是 carry 的路径无关性。}
+}
+\]
+
+---
+
+## 40.25 截面变化是 gauge 变化
+
+若：
+
+\[
+s'(a)=s(a)+\beta(a),
+\]
+
+则：
+
+\[
+\boxed{
+\kappa_{s'}(a,b)
+=
+\kappa_s(a,b)
++
+\beta(a)+\beta(b)-\beta(a+b).
+}
+\]
+
+即：
+
+\[
+\kappa_{s'}=\kappa_s+\delta\beta.
+\]
+
+所以：
+
+- 具体 carry 数值依赖坐标截面；
+- 接缝的上同调类在适当模型中保持不变；
+- \([\kappa]=0\) 表示存在一种截面把 carry 平坦化。
+
+但本节不声称每种非线性、非群或高范畴 carry 都由普通群上同调完全分类。
+
+---
+
+## 40.26 无截面时的正确对象
+
+当不存在全局截面时，不应伪造一个全局余数函数。
+
+正确数据是：
+
+- 局部截面 \(s_i\)；
+- 交叠上的 transition \(g_{ij}\)；
+- 三重交叠上的 coherence；
+- 路径绕行后的 monodromy；
+- 可能的高阶 cocycle。
+
+所以：
+
+\[
+\boxed{
+\text{全局余量不是一个数，而可能是一套局部纤维与接缝图册。}
+}
+\]
+
+这正是项目 solenoid、量子上下文和锚定观察者结构共享的骨架。
+
+---
+
+# Part V：因果完成与记忆的纯定义构造
+
+## 40.27 预测等价
+
+设：
+
+- \(P\) 是过去类型；
+- \(F\) 是未来观察类型；
+- \(K:P\to\mathcal D(F)\) 给出每个过去的未来条件律。
+
+定义：
+
+\[
+p\sim_Kp'
+\iff
+K(p)=K(p').
+\]
+
+### 定义 40.15（因果状态 CUT）
+
+定义：
+
+\[
+\boxed{
+q_K:P\to\operatorname{Im}(K),
+\qquad
+q_K(p)=K(p).
+}
+\]
+
+它直接把所有未来预测相同的过去归为一类。
+
+这不需要假设某个抽象“最小充分统计量”存在；它由 \(K\) 的像显式构造。
+
+---
+
+## 40.28 规范因果完成
+
+给定任意当前 CUT：
+
+\[
+q:P\to C,
+\]
+
+定义增强 CUT：
+
+\[
+\boxed{
+q^\sharp(p)
+=
+\left(
+q(p),K(p)
+\right).
+}
+\]
+
+则：
+
+\[
+K
+\]
+
+显然下降到 \(q^\sharp\)：
+
+\[
+\overline K(c,\mu)=\mu.
+\]
+
+所以 \(q^\sharp\) 是一个显式的预测闭合扩张。
+
+它未必最小，因为可能存在冗余的 \(q(p)\) 坐标。
+
+将其再商掉未来律相同的部分，得到 \(q_K\)，才是规范预测商。
+
+---
+
+## 40.29 最小性
+
+### 定理 40.6（因果状态因子化）
+
+若某个 CUT：
+
+\[
+r:P\to R
+\]
+
+预测充分，即存在：
+
+\[
+\overline K:R\to\mathcal D(F)
+\]
+
+满足：
+
+\[
+K=\overline K\circ r,
+\]
+
+则 \(q_K\) 通过 \(r\) 因子化：
+
+\[
+\boxed{
+q_K
+=
+\operatorname{Im}(\overline K)\circ r.
+}
+\]
+
+因此，任何预测充分接口至少要区分所有不同未来律。
+
+在适当像／商同构意义下，\(q_K\) 是最粗预测充分 CUT。
+
+这是一条构造性普适性质，而不是外加“最小因果状态公理”。
+
+---
+
+## 40.30 记忆是状态化的 carry
+
+在块动力模型：
+
+\[
+\begin{aligned}
+v_{t+1}&=Av_t+Bh_t,\\
+h_{t+1}&=Cv_t+Dh_t,
+\end{aligned}
+\]
+
+消去 \(h_t\) 得：
+
+\[
+v_{t+1}
+=
+Av_t
++
+BD^th_0
++
+\sum_{j=0}^{t-1}BD^{t-1-j}Cv_j.
+\]
+
+定义记忆核：
+
+\[
+K_{t-1-j}=BD^{t-1-j}C.
+\]
+
+所以：
+
+\[
+\boxed{
+\text{记忆不是新增公理；
+它是隐藏余纤维被消去后，carry 在商动力中的精确残影。}
+}
+\]
+
+若重新把足够的隐藏状态加入可见状态，非 Markov 商动力可恢复为一阶闭合 FLOW。
+
+---
+
+## 40.31 记忆最小化问题
+
+定义一类候选扩张：
+
+\[
+m:P\to M
+\]
+
+使：
+
+\[
+(C,m)
+\]
+
+预测充分。
+
+最小记忆问题是寻找在某种复杂度、维数或 refinement 序下最小的 \(M\)。
+
+C-IRPT 不假设该最小对象总存在；它把存在性转化为：
+
+- 像构造；
+- 商构造；
+- 紧致性；
+- 有限状态最小化；
+- 或伴随函子存在性；
+
+的具体定理。
+
+---
+
+# Part VI：观察者与完成
+
+## 40.32 观察者塔
+
+设指标范畴为 \(I\)，每层有：
+
+\[
+X_i,
+\]
+
+层间映射：
+
+\[
+p_{ji}:X_j\to X_i.
+\]
+
+### 定义 40.16（相容观察者）
+
+观察者类型定义为：
+
+\[
+\boxed{
+\operatorname{Obs}(\mathbf X)
+=
+\sum_{x:\prod_iX_i}
+\prod_{j\succeq i}
+p_{ji}(x_j)=x_i.
+}
+\]
+
+它就是逆极限 cone 的项类型。
+
+该定义不保证非空。
+
+---
+
+## 40.33 ADMIT 后的物理观察者
+
+若每层有：
+
+\[
+A_i:X_i\to\mathsf{Prop},
+\]
+
+定义：
+
+\[
+\boxed{
+\operatorname{PhysObs}(\mathbf X,\mathbf A)
+=
+\sum_{x:\operatorname{Obs}(\mathbf X)}
+\prod_iA_i(x_i).
+}
+\]
+
+还可以加入统一界：
+
+\[
+\sup_iE_i(x_i)<\infty,
+\]
+
+或矩阵级正性、normality、可积性等条件。
+
+因此：
+
+\[
+\boxed{
+\text{形式相容}
+\neq
+\text{物理可实现}.
+}
+\]
+
+---
+
+## 40.34 形式完成与实现完成
+
+### 定义 40.17（形式完成）
+
+\[
+\widehat X_{\mathrm{form}}
+=
+\varprojlim_iX_i.
+\]
+
+### 定义 40.18（实现谓词）
+
+定义：
+
+\[
+\operatorname{Realizable}:
+\widehat X_{\mathrm{form}}
+\to\mathsf{Prop}.
+\]
+
+### 定义 40.19（实现完成）
+
+\[
+\boxed{
+\widehat X_{\mathrm{real}}
+=
+\sum_{x:\widehat X_{\mathrm{form}}}
+\operatorname{Realizable}(x).
+}
+\]
+
+定义本身不保证：
+
+\[
+\widehat X_{\mathrm{real}}\neq\varnothing.
+\]
+
+---
+
+## 40.35 完成中的三类缺陷
+
+给定有限层缺陷：
+
+\[
+\delta_i,
+\]
+
+必须区分：
+
+\[
+\boxed{
+\begin{aligned}
+\delta_{\mathrm{stage}}
+&=\text{有限层本身的余差},\\
+\delta_{\mathrm{limit}}
+&=\text{相容极限中的闭合失败},\\
+\delta_{\mathrm{real}}
+&=\text{形式 section 无法实现的缺陷}.
+\end{aligned}
+}
+\]
+
+理想的完成保持定理应具有形式：
+
+\[
+\boxed{
+\delta_\infty
+\preceq
+\liminf_i\delta_i
++
+\delta_{\mathrm{real}}.
+}
+\]
+
+这不是定义，而是未来需要在每种模型中证明的主定理。
+
+---
+
+## 40.36 一个定义不能替代紧致性
+
+以下命题都不是“完成”的定义性后果：
+
+\[
+\varprojlim_iX_i\neq\varnothing;
+\]
+
+\[
+\varprojlim_iX_i\text{ 紧致};
+\]
+
+\[
+\varprojlim_iX_i\text{ 连通};
+\]
+
+\[
+\text{正锥在极限中保持严格非退化};
+\]
+
+\[
+\text{形式幂级数可解析实现};
+\]
+
+\[
+\text{有限正 Gram 塔产生可闭 GNS 形式}.
+\]
+
+它们必须依赖各领域的：
+
+- 紧致性；
+- 完备性；
+- 一致界；
+- Montel 型定理；
+- 能量估计；
+- form closability；
+- Mittag–Leffler 条件；
+- 或其他实现定理。
+
+---
+
+# Part VII：对角化作为可选扩张
+
+## 40.37 对角化不属于最小静态核心
+
+CUT、FLOW、ADMIT、ANCHOR 本身不自动提供：
+
+- self-application；
+- evaluation；
+- 指数对象；
+- 无固定点 twist；
+- 命名清单。
+
+因此对角化是 C-IRPT 的扩展模块：
+
+\[
+\boxed{
+\mathrm{C\text{-}IRPT}_\Delta.
+}
+\]
+
+---
+
+## 40.38 对角数据
+
+给定：
+
+\[
+g:A\to(A\to Y),
+\]
+
+评价：
+
+\[
+\operatorname{ev}(f,a)=f(a),
+\]
+
+和 twist：
+
+\[
+\tau:Y\to Y,
+\]
+
+定义：
+
+\[
+\boxed{
+d_g(a)=\tau(g(a)(a)).
+}
+\]
+
+如果：
+
+\[
+\forall y,\quad\tau(y)\neq y,
+\]
+
+则：
+
+\[
+d_g\notin\operatorname{range}(g).
+\]
+
+该结论是条件定理，不是对角化定义的一部分。
+
+---
+
+## 40.39 构造性逃逸证明
+
+假设存在：
+
+\[
+a_0:A
+\]
+
+使：
+
+\[
+g(a_0)=d_g.
+\]
+
+在 \(a_0\) 处评价：
+
+\[
+g(a_0)(a_0)
+=
+d_g(a_0)
+=
+\tau(g(a_0)(a_0)),
+\]
+
+与 \(\tau\) 无固定点矛盾。
+
+故不存在这样的 \(a_0\)。 \(\square\)
+
+该证明不需要排中律。
+
+---
+
+## 40.40 对角缺陷与普通 carry 的区别
+
+普通 carry 问：
+
+\[
+\text{FLOW 能否下降到当前 CUT？}
+\]
+
+对角缺陷问：
+
+\[
+\text{当前 CUT 是否声称能够表示包含自身评价规则的全部对象？}
+\]
+
+所以：
+
+\[
+\boxed{
+\text{对角化是自表示闭合审计，不是所有余差的同义词。}
+}
+\]
+
+---
+
+# Part VIII：范畴论学术定位
+
+## 40.41 C-IRPT 的基础对象不是集合，而是方格
+
+C-IRPT 的基本情形是：
+
+\[
+\begin{array}{ccc}
+X&\xrightarrow{F}&Y\\
+\downarrow q_X&&\downarrow q_Y\\
+B&\xrightarrow{\overline F}&C.
+\end{array}
+\]
+
+其中：
+
+- 水平箭头是 FLOW；
+- 垂直箭头是 CUT；
+- 方格记录下降、缺陷或 transport；
+- ADMIT 是附着于对象和箭头的 doctrine；
+- ANCHOR 是点、截面或 cone。
+
+因此其最自然数学容器不是普通一范畴，而是：
+
+\[
+\boxed{
+\text{双范畴／equipment／double category}.
+}
+\]
+
+---
+
+## 40.42 缺陷富集
+
+选择一个有序值幺半对象：
+
+\[
+\mathcal V
+\]
+
+表示缺陷值，例如：
+
+\[
+[0,\infty],
+\]
+
+正锥，
+
+半序集合，
+
+或见证类型。
+
+对每个方格赋：
+
+\[
+\delta(\square)\in\mathcal V.
+\]
+
+要求：
+
+\[
+\delta(\square)=0
+\iff
+\square\text{ 精确交换},
+\]
+
+并满足水平、垂直组合律或次可加界。
+
+因此，定量版本可学术化为：
+
+\[
+\boxed{
+\textbf{defect-enriched double category of interfaces and processes}.
+}
+\]
+
+---
+
+## 40.43 ADMIT 是 doctrine
+
+ADMIT 不应只是一个全局布尔函数，而应随模型变化形成：
+
+- 子对象纤维；
+- 谓词纤维；
+- 正锥纤维；
+- effect module；
+- 可计算对象类；
+- 能量有限对象类。
+
+它需要沿 FLOW 有：
+
+- 正向保持；
+- 逆像；
+- 推前；
+- 张量稳定；
+- 极限稳定。
+
+因此范畴论上更接近：
+
+\[
+\boxed{
+\text{indexed doctrine／fibration of admissible predicates}.
+}
+\]
+
+---
+
+## 40.44 ANCHOR 是点与 section
+
+在集合模型中：
+
+\[
+a:1\to X
+\]
+
+是点。
+
+在纤维模型中：
+
+\[
+a:B\to X
+\]
+
+可能是 section。
+
+在逆系统中，ANCHOR 是 compatible cone。
+
+在量子 GNS 模型中，它可以是：
+
+- 状态；
+- 循环向量；
+- 正泛函；
+- 记录链。
+
+所以 ANCHOR 是一个角色族，而不是单一代数类型。
+
+---
+
+## 40.45 学术名称
+
+本节建议正式名称：
+
+\[
+\boxed{
+\textbf{Constructive Interface–Remainder Process Theory}
+}
+\]
+
+缩写：
+
+\[
+\boxed{
+\textbf{C-IRPT}.
+}
+\]
+
+学术副标题可为：
+
+> **A conservative definitional doctrine for dependent fibers, descent defects, causal completion, and observer sections.**
+
+数学主归属：
+
+\[
+\boxed{
+\text{Applied Category Theory}
++
+\text{Categorical Systems Theory}
++
+\text{Constructive Type Theory}.
+}
+\]
+
+次级关联包括：
+
+- fibrations and indexed categories；
+- double categories；
+- process theories；
+- coalgebra；
+- abstract interpretation；
+- Markov categories；
+- operator systems；
+- noncommutative probability；
+- sheaf contextuality；
+- formal completions；
+- cohomological extension theory。
+
+---
+
+# Part IX：与相邻理论的严格区分
+
+## 40.46 与普通范畴论的区别
+
+普通范畴论已经提供对象、态射、组合和普适性质。
+
+C-IRPT 的新增重点不在“重新发明态射”，而在同时指定：
+
+1. 哪些态射承担 CUT 角色；
+2. 哪些态射承担 FLOW 角色；
+3. CUT 与 FLOW 方格的下降缺陷；
+4. 余纤维与 carry；
+5. 准入 doctrine；
+6. 锚定与观察者 section；
+7. refinement 与 realization；
+8. 自应用审计扩展。
+
+因此它是一个特定的结构包，而不是替代范畴论。
+
+---
+
+## 40.47 与抽象解释的关系
+
+抽象解释研究：
+
+\[
+\text{concrete state}
+\to
+\text{abstract state}
+\]
+
+以及抽象转换的可靠性。
+
+C-IRPT 的 CUT 与之相近，但额外强调：
+
+- 被商掉的依赖余纤维；
+- carry 的因果回流；
+- 记录与观察者；
+- 多层逆完成；
+- ADMIT 与物理实现；
+- 对角自审计。
+
+所以抽象解释是 C-IRPT 的一个重要模型，而不是全部理论。
+
+---
+
+## 40.48 与煤代数的关系
+
+煤代数研究：
+
+\[
+X\to F(X)
+\]
+
+的行为与最终语义。
+
+C-IRPT 中 FLOW 可以是煤代数结构，预测等价可以由行为映射定义。
+
+但 C-IRPT 额外保留：
+
+- 不同 CUT；
+- 余纤维；
+- 下降缺陷；
+- 准入；
+- 锚定；
+- 多模型 completion。
+
+---
+
+## 40.49 与 Markov category 的关系
+
+概率 FLOW 可以位于 Markov category 中。
+
+CUT 可以实现为 statistic 或 channel。
+
+预测充分、恢复与数据处理等号可在该模型中表达。
+
+但 C-IRPT 不把所有 FLOW 预设为随机过程；确定性、线性、解析、程序与量子 FLOW 都属于不同模型。
+
+---
+
+## 40.50 与 sheaf／topos 的关系
+
+当局部 CUT 形成覆盖并需要拼接时：
+
+- section 表示局部选择；
+- cocycle 表示接缝；
+- 全局 section 不存在表示 contextuality 或拓扑障碍。
+
+C-IRPT 可以使用 sheaf 作为局部—全局模型，但不把所有余量都等同于上同调类。
+
+---
+
+# Part X：项目各理论在 C-IRPT 中的重排
+
+## 40.51 算术
+
+### CUT
+
+\[
+q_b(n)=n\bmod b.
+\]
+
+### REMAINDER
+
+给定余类下的整数纤维。
+
+### FLOW
+
+加法、乘法、取负、除法算法。
+
+### CARRY
+
+标准数字截面不保持加法或乘法的 cocycle。
+
+### ADMIT
+
+整数范围、规范余数区间、终止性、唯一表示。
+
+所以：
+
+\[
+\boxed{
+\text{算术}
+=
+\text{商余纤维上的 FLOW 与 carry}.
+}
+\]
+
+---
+
+## 40.52 GICT 与 PZG
+
+项目的 A/Z/G 三轴可读为不同 CUT：
+
+\[
+\begin{aligned}
+A&=\text{尺度商},\\
+Z&=\text{数字展开商},\\
+G&=\text{相位商}.
+\end{aligned}
+\]
+
+PZG 素数指数坐标提供离散乘法纤维。
+
+Zeckendorf 归约中的进位提供 carry。
+
+黄金比例相关固定点提供特定 FLOW 下的自相似锚。
+
+但这些是 C-IRPT 的算术模型，不应被定义成 C-IRPT 的唯一基础模型。
+
+---
+
+## 40.53 Solenoid
+
+正合列：
+
+\[
+0\to K\to\Sigma\to\mathbb T\to0
+\]
+
+给出：
+
+- 可见连续基底 \(\mathbb T\)；
+- 隐藏 profinite 纤维 \(K\)；
+- 局部 ANCHOR；
+- 绕行 transport；
+- monodromy carry；
+- 交叉积 FLOW；
+- 记录账本。
+
+它是“连续基底 + 离散逆完成纤维 + 非平凡接缝”的规范样本。
+
+---
+
+## 40.54 量子观察者
+
+### CUT
+
+operator system 或测量上下文：
+
+\[
+q_O(\rho)
+=
+\left(
+\operatorname{Tr}(\rho E)
+\right)_{E\in\mathcal S_O}.
+\]
+
+### FLOW
+
+CP channel、instrument、unitary 或 modular flow。
+
+### ADMIT
+
+矩阵正锥塔：
+
+\[
+\{M_n(\mathcal A)_+\}_{n\ge1}
+\]
+
+以及归一化、normality 和张量相容。
+
+### ANCHOR
+
+状态、GNS 循环向量或记录链。
+
+### CARRY
+
+被当前 operator system 商掉的相干或关联仍进入未来读出。
+
+因此：
+
+\[
+\boxed{
+\text{量子性}
+=
+\text{多个矩阵有序 CUT 网络不能由单一全局经典截面同时平坦化}.
+}
+\]
+
+---
+
+## 40.55 正锥纲领
+
+GNS 恒等式：
+
+\[
+\operatorname{Tr}(\rho x^*x)
+=
+\|x\sqrt\rho\|_{\mathrm{HS}}^2
+\]
+
+说明 ADMIT 的一个核心形式是：
+
+\[
+\boxed{
+\text{自配对能够实现为范数平方。}
+}
+\]
+
+数据处理不等式可写成：
+
+\[
+\text{原区分量}
+=
+\text{CUT 后区分量}
++
+\text{非负余量}.
+\]
+
+所以：
+
+\[
+\boxed{
+\text{不等式是隐藏余量后的影；
+等式是余量归零和恢复闭合。}
+}
+\]
+
+---
+
+## 40.56 BEDC 与世界模型
+
+在无外部输入的有限模型中：
+
+- CUT 是有限预测状态分类；
+- FLOW 是自回归更新；
+- ADMIT 是参数、上下文和计算预算；
+- ANCHOR 是初始 prompt／隐藏状态／记录；
+- carry 是当前预测类遗漏、但仍影响未来的隐藏差异。
+
+“一次稳定即永久稳定”对应：
+
+\[
+\text{预测 CUT 达到 FLOW 不变闭包}.
+\]
+
+外部工具或数据不是简单噪声，而是：
+
+\[
+\boxed{
+\text{向旧商世界注入新的余坐标并改变 carry 结构。}
+}
+\]
+
+---
+
+# Part XI：RH 中定义与证明的边界
+
+## 40.57 RH 的 C-IRPT 数据
+
+可以定义一个候选结构：
+
+\[
+\mathfrak Z
+=
+\left(
+\mathsf{CUT}_{\mathrm{prime}},
+\mathsf{CUT}_{\mathrm{Weil}},
+\mathsf{CUT}_{\mathrm{Li}},
+\mathsf{CUT}_{\mathrm{NB}},
+\mathsf{FLOW}_{\log},
+\mathsf{Mirror},
+\mathsf{ADMIT},
+\mathsf{ANCHOR}
+\right).
+\]
+
+但这只是签名。
+
+必须另外构造和证明：
+
+- prime-side FLOW；
+- 零点谱实现；
+- 正性；
+- 归一化；
+- 镜像内部性；
+- normal completion；
+- 显式公式忠实性；
+- 极限保持。
+
+---
+
+## 40.58 离线二地址模型是定义性实例
+
+对假想：
+
+\[
+\rho=\frac12+\delta+i\gamma,
+\]
+
+可定义：
+
+\[
+G_\rho
+=
+i\gamma I
++
+\delta
+\begin{pmatrix}
+0&1\\
+1&0
+\end{pmatrix}.
+\]
+
+并定义临界商投影 \(P_{\mathrm{crit}}\)。
+
+直接计算：
+
+\[
+\boxed{
+\|[P_{\mathrm{crit}},G_\rho]\|
+=
+|\delta|.
+}
+\]
+
+这是一条二维模型定理。
+
+它不证明真实 zeta 存在该 \(G_\rho\) 表示。
+
+---
+
+## 40.59 定义性 RH 伪证明禁令
+
+禁止以下步骤：
+
+1. 定义 \(G_\rho\) 时直接输入零点实部；
+2. 定义 ADMIT 时要求 \(\delta=0\)；
+3. 声称所有物理模式必须 ADMIT；
+4. 得出 RH。
+
+该推理把结论写入准入谓词。
+
+正确路线必须是：
+
+\[
+\boxed{
+\text{prime data}
+\to
+\text{无循环构造 }G
+\to
+\text{证明正保归一}
+\to
+\text{证明零点忠实谱实现}
+\to
+\text{镜像刚性}
+\to
+\delta=0.
+}
+\]
+
+---
+
+## 40.60 条件正因果镜像刚性
+
+如果已构造同一个 base-norm 正空间，并证明：
+
+\[
+T_tv_\rho
+=
+e^{(\delta+i\gamma)t}v_\rho,
+\]
+
+则正、保归一 FLOW 的收缩给出：
+
+\[
+\delta\le0.
+\]
+
+若镜像模式也在同一空间：
+
+\[
+T_tv_\rho^\sharp
+=
+e^{(-\delta+i\gamma)t}v_\rho^\sharp,
+\]
+
+则：
+
+\[
+-\delta\le0.
+\]
+
+故：
+
+\[
+\boxed{
+\delta=0.
+}
+\]
+
+这条线性刚性是条件定理。
+
+未完成工作全部位于前件的 prime-side 构造，而不是二维不等式本身。
+
+---
+
+# Part XII：严格构造性 Lean 核心
+
+## 40.61 最小定义
+
+```lean
+universe u v w
+
+structure Cut (X : Type u) where
+  Base : Type v
+  proj : X → Base
+
+def Fiber {X : Type u} (q : Cut X) (b : q.Base) : Type u :=
+  {x : X // q.proj x = b}
+
+def Flow (X : Type u) (Y : Type v) : Type (max u v) :=
+  X → Y
+
+def Admit (X : Type u) : Type u :=
+  X → Prop
+
+def Real {X : Type u} (A : Admit X) : Type u :=
+  {x : X // A x}
+
+def Anchor {X : Type u} (q : Cut X) (b : q.Base) : Type u :=
+  Fiber q b
+```
+
+这些定义不需要领域公理。
+
+---
+
+## 40.62 Refinement 与下降
+
+```lean
+def Refines {X : Type u} (q q' : Cut X) : Type _ :=
+  Σ p : q'.Base → q.Base,
+    ∀ x, q.proj x = p (q'.proj x)
+
+def Descends
+    {X : Type u} {Y : Type v}
+    (qX : Cut X) (qY : Cut Y)
+    (F : X → Y) : Type _ :=
+  Σ fbar : qX.Base → qY.Base,
+    ∀ x, qY.proj (F x) = fbar (qX.proj x)
+
+def CarryWitness
+    {X : Type u} {Y : Type v}
+    (qX : Cut X) (qY : Cut Y)
+    (F : X → Y) : Type _ :=
+  Σ x y : X,
+    qX.proj x = qX.proj y ∧
+    qY.proj (F x) ≠ qY.proj (F y)
+```
+
+注意 `Descends` 使用 `Type` 而不是只用 `Prop`，因此下降映射和交换证明均被保留为数据。
+
+---
+
+## 40.63 规范依赖分解
+
+可定义：
+
+```lean
+def split {X : Type u} (q : Cut X) :
+    X → Σ b : q.Base, Fiber q b :=
+  fun x => ⟨q.proj x, ⟨x, rfl⟩⟩
+
+def merge {X : Type u} (q : Cut X) :
+    (Σ b : q.Base, Fiber q b) → X :=
+  fun z => z.2.1
+```
+
+并证明二者互逆。
+
+该模块应成为：
+
+```text
+D5/S0/InterfaceKernel/DependentFiber.lean
+```
+
+的首个核心定理。
+
+---
+
+## 40.64 RawModel 与 IsLawful
+
+```lean
+structure RawIRPT where
+  Obj    : Type u
+  cut    : Cut Obj
+  step   : Obj → Obj
+  admit  : Obj → Prop
+
+def IsLawful (M : RawIRPT) : Prop :=
+  (∀ x, M.admit x → M.admit (M.step x)) ∧
+  Descends M.cut M.cut M.step
+```
+
+不应直接写：
+
+```lean
+axiom everyRawIRPT_isLawful : ∀ M, IsLawful M
+```
+
+正确方式是对具体模型证明：
+
+```lean
+theorem concrete_isLawful :
+  IsLawful concrete := by
+  ...
+```
+
+---
+
+## 40.65 不使用选择生成全局截面
+
+禁止从：
+
+\[
+\forall b,\ \exists x,\ q(x)=b
+\]
+
+未经审计地得到一个全局函数：
+
+\[
+s:B\to X.
+\]
+
+严格构造版本要求：
+
+\[
+\forall b,\ \sum_{x:X}q(x)=b,
+\]
+
+即每个 \(b\) 都携带具体见证。
+
+如果只有命题截断的存在性，构造全局 section 可能需要 choice。
+
+因此核心库默认保留依赖纤维，不提供通用 `chooseSection`。
+
+---
+
+## 40.66 Quotient 的纪律
+
+若使用 Lean quotient，必须区分：
+
+- 商类型的形成；
+- 商映射；
+- 商递归；
+- 商代表选择。
+
+`Quot.sound` 允许从关系证明商相等。
+
+它不提供每个商类的代表选择。
+
+因此：
+
+\[
+\boxed{
+\text{形成商不等于选择规范余数。}
+}
+\]
+
+---
+
+## 40.67 经典便利层与构造核心层
+
+建议库分为：
+
+```text
+InterfaceKernel/Constructive/
+InterfaceKernel/Classical/
+```
+
+构造核心层禁止：
+
+- `Classical.choice`；
+- 无声明排中律；
+- 非构造性有限见证提取；
+- 隐式全局截面。
+
+经典便利层可以在明确 import 后提供：
+
+- 选择截面；
+- 基选择；
+- Hahn–Banach 分离；
+- 紧致性等价；
+- 传统谱理论工具。
+
+所有下游定理必须标出使用了哪一层。
+
+---
+
+## 40.68 基础信任账
+
+“无领域公理”审计应报告：
+
+1. Lean kernel；
+2. quotient soundness；
+3. proof irrelevance／propext 是否出现；
+4. Classical.choice 是否出现；
+5. 外部分析定理的公理闭包；
+6. 是否有 `sorry`；
+7. 是否有项目自定义 `axiom`。
+
+因此：
+
+\[
+\boxed{
+\texttt{\#print axioms}
+}
+\]
+
+不是装饰，而是 C-IRPT 无暗账纪律的一部分。
+
+---
+
+# Part XIII：正式理论的主定理计划
+
+## 40.69 自由语法模型
+
+第一项承重工作是定义 C-IRPT 的自由语法：
+
+- 对象类型；
+- CUT 生成元；
+- FLOW 生成元；
+- 方格；
+- ADMIT 谓词；
+- ANCHOR 项；
+- 组合；
+- 等式与重写。
+
+然后证明其初始性：
+
+\[
+\boxed{
+\operatorname{Hom}
+(
+\mathsf{FreeCIRPT}(\Sigma),
+M
+)
+\simeq
+\operatorname{Interpretation}(\Sigma,M).
+}
+\]
+
+这会证明 C-IRPT 不是一组比喻，而是一门有明确模型语义的形式演算。
+
+---
+
+## 40.70 健全性
+
+对每个模型 \(M\)，定义解释：
+
+\[
+\llbracket-\rrbracket_M.
+\]
+
+证明所有推导规则在模型中保持：
+
+- 类型正确；
+- 方格组合；
+- defect 零值；
+- ADMIT；
+- anchor 相容性。
+
+---
+
+## 40.71 相对完备性
+
+在可控片段中，研究：
+
+\[
+\text{所有模型中成立}
+\Longrightarrow
+\text{自由语法中可推导}.
+\]
+
+完整高阶版本可能过强，但有限代数片段、线性片段和有限状态片段可以分别建立完备性结果。
+
+---
+
+## 40.72 因果完成反射
+
+目标是证明因果闭合对象形成反射子范畴：
+
+\[
+\mathbf{CausalClosed}
+\hookrightarrow
+\mathbf{InterfaceFlow}.
+\]
+
+存在：
+
+\[
+\boxed{
+\mathsf{CausalComplete}
+\dashv
+\mathsf{Forget}.
+}
+\]
+
+在预测核已给出的模型中，因果状态像构造是该伴随的候选。
+
+---
+
+## 40.73 缺陷表示定理
+
+抽象 defect 不应只有名字。
+
+目标是在不同模型中证明：
+
+\[
+\partial=0
+\]
+
+分别等价于：
+
+\[
+\begin{aligned}
+&\text{kernel-pair preservation},\\
+&\text{无 causal carry witness},\\
+&PFQ=0,\\
+&\text{数据处理等号／恢复},\\
+&\text{transition cocycle 平凡},\\
+&\text{余尾消失},\\
+&\text{全局 section 可拼接}.
+\end{aligned}
+\]
+
+数值缺陷不必相同，但零缺陷的语义应由模型函子保持。
+
+---
+
+## 40.74 可容许完成保持
+
+目标是在明确条件下证明：
+
+\[
+\delta_i\to0
+\]
+
+何时推出：
+
+\[
+\delta_\infty=0.
+\]
+
+同时构造反例说明以下失败机制：
+
+- 质量逃向无穷；
+- 正锥退化；
+- normality 丢失；
+- 形式 germ 不收敛；
+- 极限与商不交换；
+- section 只局部存在；
+- derived obstruction 非零。
+
+---
+
+## 40.75 原语独立性
+
+要证明语义角色最小性，应构造模型分离：
+
+1. 同一 FLOW，不同 CUT，产生不同 carry；
+2. 同一 CUT，不同 FLOW，产生不同因果；
+3. 同一 CUT/FLOW，不同 ADMIT，产生不同真实对象；
+4. 同一结构，一个有 compatible ANCHOR，一个无；
+5. 同一有限塔，不同 realization doctrine，产生不同连续对象。
+
+若删除某一角色会使这些模型不可区分，则说明该角色不是冗余语义。
+
+---
+
+## 40.76 模型转移定理
+
+必须选择至少三个真正异质的模型建立非平凡转移：
+
+1. 有限集合／自动机；
+2. 有限维线性或概率系统；
+3. operator-system／量子系统。
+
+证明同一抽象定理在三个模型中分别给出具体、已有意义的结果。
+
+这会把“统一语言”升级为“统一证明运输”。
+
+---
+
+# Part XIV：可发表性与学术结构
+
+## 40.77 第一篇核心论文的合理范围
+
+建议首篇独立论文只处理：
+
+> **Constructive Interface–Remainder Process Theory: Dependent Fibers, Descent Defects, and Causal Completion**
+
+核心结果控制在：
+
+1. 无选择依赖商余分解；
+2. role-typed CUT/FLOW/ADMIT/ANCHOR；
+3. 精确下降与 carry witness；
+4. 方格组合与缺陷链式律；
+5. 因果状态的规范像构造；
+6. 观察者 cone 与形式／实现完成；
+7. 三个模型实例；
+8. Lean 构造核心。
+
+不应在第一篇把 RH、量子引力、经济和全部哲学主张都作为主定理。
+
+---
+
+## 40.78 第二篇：定量缺陷双范畴
+
+第二篇可以研究：
+
+- \(\mathcal V\)-值 defect；
+- 水平／垂直组合；
+- tensor；
+- recovery；
+- completion；
+- 反射子范畴；
+- stability constants。
+
+标题可为：
+
+> **Defect-Enriched Double Categories of Observation and Dynamics**
+
+---
+
+## 40.79 第三篇：矩阵有序观察者
+
+第三篇处理：
+
+- operator systems；
+- matrix cone towers；
+- completely positive FLOW；
+- instruments；
+- record-generated centers；
+- GNS；
+- contextuality；
+- observer completion。
+
+---
+
+## 40.80 RH 论文必须独立
+
+只有在 prime-side 六座桥中至少关闭一座具有新数学内容的桥后，才适合形成 RH 专文。
+
+在此之前，RH 应保持为：
+
+\[
+\boxed{
+\text{C-IRPT 的高风险条件性应用与研究程序。}
+}
+\]
+
+而不是理论合法性的主要宣传依据。
+
+---
+
+# Part XV：严格非主张
+
+## 40.81 本节不声称
+
+1. 不声称数学可以脱离任何基础逻辑而绝对无公理。
+2. 不声称定义能够生成未构造的存在。
+3. 不声称定义 `Observer` 就证明观察者非空。
+4. 不声称定义 `Realizable` 就证明形式完成可实现。
+5. 不声称每个 CUT 都满射。
+6. 不声称每个 CUT 都有全局截面。
+7. 不声称每个依赖纤维系统都是直积。
+8. 不声称所有 carry 都有数值。
+9. 不声称所有非下降都可构造显式 witness。
+10. 不声称所有 carry 都由普通群上同调分类。
+11. 不声称所有 refinement 构成反对称偏序而非因子化范畴。
+12. 不声称所有因果完成都有最小有限状态。
+13. 不声称所有逆系统都有非空极限。
+14. 不声称所有形式 section 都满足 ADMIT。
+15. 不声称所有有限层正性自动通过极限。
+16. 不声称所有解析形式 germ 都能全局实现。
+17. 不声称 CUT/FLOW/ADMIT/ANCHOR 是唯一可能的语义角色集。
+18. 不声称四角色已经被证明绝对最小。
+19. 不声称 C-IRPT 替代普通范畴论。
+20. 不声称 C-IRPT 替代领域具体估计。
+21. 不声称量子理论只是一种坐标伪影。
+22. 不声称非交换性总能被更大空间平坦化。
+23. 不声称时间只由 carry 产生。
+24. 不声称熵只有一种余纤维解释。
+25. 不声称对角化是全部闭合缺陷的同义词。
+26. 不声称离线二维模型是真实 zeta 算子模型。
+27. 不声称 prime-side 正 FLOW 已经构造。
+28. 不声称函数方程镜像已在同一正 normal completion 中实现。
+29. 不声称条件正因果镜像刚性的前件已对 zeta 关闭。
+30. 不声称本节证明 RH。
+31. 不声称本节新增定理已经 Lean-closed。
+32. 不声称无 `Classical.choice` 就自动没有任何其他基础依赖。
+33. 不声称保守定义扩张本身产生新领域结论。
+34. 不声称术语统一等于对象同构。
+35. 不声称项目全部历史文档必须被立即重写为 C-IRPT。
+
+---
+
+# Part XVI：本节最终统一
+
+## 40.82 最底层公式
+
+对任意 CUT：
+
+\[
+q:X\to B,
+\]
+
+都有规范依赖分解：
+
+\[
+\boxed{
+X
+\simeq
+\sum_{b:B}
+\sum_{x:X}
+(q(x)=b).
+}
+\]
+
+这是无选择、无全局截面、无领域公理的商余正规形。
+
+---
+
+## 40.83 最小语义核
+
+\[
+\boxed{
+\mathfrak K_{\mathrm{CIRPT}}
+=
+(
+\mathsf{CUT},
+\mathsf{FLOW},
+\mathsf{ADMIT};
+\mathsf{ANCHOR}
+).
+}
+\]
+
+其中：
+
+\[
+\begin{aligned}
+\mathsf{CUT}
+&=\text{规定当前相对同一性},\\
+\mathsf{FLOW}
+&=\text{运输对象和差异},\\
+\mathsf{ADMIT}
+&=\text{形式对象进入可实现世界的谓词},\\
+\mathsf{ANCHOR}
+&=\text{合法纤维中的具体项}.
+\end{aligned}
+\]
+
+---
+
+## 40.84 第一层派生概念
+
+\[
+\boxed{
+\mathsf{REMAINDER}
+=
+\operatorname{Fiber}(\mathsf{CUT}),
+}
+\]
+
+\[
+\boxed{
+\mathsf{CARRY}
+=
+\operatorname{FailureOfDescent}
+(\mathsf{CUT},\mathsf{FLOW}),
+}
+\]
+
+\[
+\boxed{
+\mathsf{MEMORY}
+=
+\operatorname{StateRealization}
+(\text{historical carry}),
+}
+\]
+
+\[
+\boxed{
+\mathsf{OBSERVER}
+=
+\operatorname{CompatibleAdmissibleAnchor}
+(\mathsf{CUT}^{\infty}),
+}
+\]
+
+\[
+\boxed{
+\mathsf{CONTINUUM}
+=
+\operatorname{Realizable}
+\left(
+\operatorname{InverseComplete}
+(\mathsf{CUT}^{\infty})
+\right).
+}
+\]
+
+---
+
+## 40.85 理论的准确学术声明
+
+\[
+\boxed{
+\textbf{C-IRPT 是构造性依赖类型论上的保守定义性过程学说。}
+}
+\]
+
+它研究：
+
+\[
+\boxed{
+\text{界面怎样制造相对同一性，
+余纤维怎样保存被商掉的差异，
+FLOW 怎样把余差重新带回未来，
+ADMIT 怎样区分形式结构与可实现结构，
+ANCHOR 怎样把整体固定为一个观察起点，
+完成怎样把有限分类历史变为全局对象。}
+}
+\]
+
+---
+
+## 40.86 “无公理”的最终准确表达
+
+正确宣言不是：
+
+\[
+\text{“该理论不依赖任何公理。”}
+\]
+
+而是：
+
+\[
+\boxed{
+\text{“该理论不以新增领域公理填补结构缺口；
+缺口要么保持为显式空类型，
+要么由构造项、见证、实现定理或带前件证明关闭。”}
+}
+\]
+
+因此：
+
+\[
+\boxed{
+T_{\mathrm{CIRPT}}
+=
+T_{\mathrm{base}}
++
+\text{可展开定义}
++
+\text{显式构造}
++
+\text{条件定理}.
+}
+\]
+
+---
+
+## 40.87 最终一句
+
+\[
+\boxed{
+\text{定义能够告诉我们什么结构算作世界；
+只有构造和证明才能告诉我们这样的世界是否存在。}
+}

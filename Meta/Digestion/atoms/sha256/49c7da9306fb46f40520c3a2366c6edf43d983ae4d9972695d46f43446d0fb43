@@ -1,0 +1,40 @@
+### 定义 40.12（精确下降）
+
+给定：
+
+\[
+q_X:X\to B,
+\qquad
+q_Y:Y\to C,
+\qquad
+F:X\to Y,
+\]
+
+定义 \(F\) 能沿 CUT 下降，当且仅当存在：
+
+\[
+\overline F:B\to C
+\]
+
+使：
+
+\[
+\boxed{
+q_Y\circ F
+=
+\overline F\circ q_X.
+}
+\]
+
+类型论数据为：
+
+\[
+\sum_{\overline F:B\to C}
+\prod_{x:X}
+q_Y(Fx)=\overline F(q_Xx).
+\]
+
+该定义不预设下降映射存在。
+
+---
+

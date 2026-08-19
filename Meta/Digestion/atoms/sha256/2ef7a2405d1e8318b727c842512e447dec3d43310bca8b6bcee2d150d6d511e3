@@ -1,0 +1,41 @@
+### 定义 40.13（causal carry witness）
+
+定义 carry 见证类型：
+
+\[
+\boxed{
+\operatorname{CarryWitness}(F;q_X,q_Y)
+}
+\]
+
+为：
+
+\[
+\sum_{x,y:X}
+\left(
+q_X(x)=q_X(y)
+\right)
+\times
+\left(
+q_Y(Fx)\neq q_Y(Fy)
+\right).
+\]
+
+它直接表达：
+
+\[
+\boxed{
+\text{当前 CUT 商掉的余差，仍能改变未来 CUT 的输出。}
+}
+\]
+
+因此，因果相关性可以在最低层定义为：
+
+\[
+\boxed{
+\text{余纤维差异是否穿过 FLOW 变成未来可见差异。}
+}
+\]
+
+---
+
