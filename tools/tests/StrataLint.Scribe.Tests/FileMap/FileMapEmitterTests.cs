@@ -115,6 +115,7 @@ public sealed class FileMapEmitterTests
                 DagEmitter.TruthGraphRelativePath,
                 FileMapEmitter.RelativePath,
                 ScribeEmitter.AttestationRelativePath,
+                TruthExportModel.RelativePath,
             ])
             .Order(StringComparer.Ordinal)
             .ToArray();

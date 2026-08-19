@@ -213,6 +213,57 @@ internal static class DagLedgerCommandPreparation
                 static item => item.Value.Material));
     }
 
+    /// Builds material for EVERY Closed module (the complete catalog), not only the
+    /// candidate-affected paths that PrepareCandidate's writer catalog covers. truth-export needs
+    /// the whole catalog so the STRICT FrozenLedger.ValidateHistory can reconcile the entire active
+    /// frozen set against the current Closed DAG; a partial catalog would make the strict validator
+    /// reject every unlisted active node as "outside the current Closed catalog". This reuses the
+    /// same owners as admission -- BuildEnvironment (bound to the Genesis origin so ParseGenesis
+    /// accepts), FrozenContentAddress.ComputeGitBlobOid for per-file blob identities, and the
+    /// FrozenContentAddress.Build complete-catalog builder -- so it is reuse, not a second copy of
+    /// the identity computation.
+    internal static FrozenMaterialCatalog BuildCompleteCatalog(
+        RepositorySnapshot snapshot,
+        AcceptedLeanClosure lean,
+        AcyclicTruthDag dag,
+        FrozenLedgerBaseView baseView,
+        FrozenRevisionIdentity currentIdentity)
+    {
+        var environment = BuildEnvironment(
+            snapshot,
+            baseView.Origin.CommitOid,
+            baseView.Origin.TreeOid);
+        if (currentIdentity.CommitOid.StartsWith("git-sha256:", StringComparison.Ordinal)
+            != environment.OriginCommitOid.StartsWith("git-sha256:", StringComparison.Ordinal))
+        {
+            throw new InvalidOperationException(
+                "current revision and frozen Genesis use different Git hash algorithms");
+        }
+
+        var algorithm = environment.OriginCommitOid.StartsWith("git-sha256:", StringComparison.Ordinal)
+            ? HashAlgorithmName.SHA256
+            : HashAlgorithmName.SHA1;
+        var attestations = dag.TopologicalOrder
+            .Where(static node => node.State is TruthState.Closed && node.ModuleName is not null)
+            .Select(node => new FrozenModuleAttestation(
+                node.RepoPath,
+                FrozenContentAddress.ComputeGitBlobOid(
+                    snapshot.Files[node.RepoPath].RawBytes.AsSpan(),
+                    algorithm))
+            {
+                BaseCommitOid = currentIdentity.CommitOid,
+                BaseTreeOid = currentIdentity.TreeOid,
+            })
+            .ToImmutableArray();
+        return FrozenContentAddress.Build(snapshot, lean, dag, environment, attestations) switch
+        {
+            FrozenMaterialOutcome.Accepted accepted => accepted.Capability,
+            FrozenMaterialOutcome.Rejected rejected => throw new InvalidOperationException(
+                "complete frozen catalog build failed: " + rejected.Message),
+            _ => throw new InvalidOperationException("unknown frozen material outcome"),
+        };
+    }
+
     internal static TruthContext BuildTruth(
         IRepositoryGateway repository,
         ILeanReportSource leanReportSource)

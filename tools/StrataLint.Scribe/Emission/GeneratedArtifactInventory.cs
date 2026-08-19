@@ -32,6 +32,10 @@ internal static class GeneratedArtifactInventory
                     nameof(DagEmitter),
                     "A-TRUTH"),
                 new GeneratedArtifactIdentity(
+                    TruthExportModel.RelativePath,
+                    TruthExportModel.ProducerName,
+                    "A-TRUTHEXPORT"),
+                new GeneratedArtifactIdentity(
                     FileMapEmitter.RelativePath,
                     nameof(FileMapEmitter),
                     "A-FILEMAP"),

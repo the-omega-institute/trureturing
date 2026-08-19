@@ -234,6 +234,9 @@ internal sealed class StubCliEnvironment(
     public CommandResult SyncLedger(IReadOnlyList<string> arguments) =>
         new(false, string.Empty, "ledger sync is not configured in this fixture");
 
+    public ExplicitCommandResult TruthExport(IReadOnlyList<string> arguments) =>
+        new(2, string.Empty, "truth export is not configured in this fixture");
+
     public CommandResult CleanLanes(IReadOnlyList<string> arguments) =>
         new(false, string.Empty, "clean lanes is not configured in this fixture");
 

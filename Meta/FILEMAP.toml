@@ -166,6 +166,17 @@ artifact_id = "none"
 runtime_disposition = "run-local"
 
 [[files]]
+pattern = "Generated/truth-export.v1.json"
+kind = "generated"
+produced_by = "TruthExportCommand"
+consumed_by = ["TruthExportJsonReader"]
+verified_by = ["TruthExportCommand"]
+artifact_id = "A-TRUTHEXPORT"
+runtime_disposition = "run-local"
+mode = "100644"
+history_requirement = "not-required"
+
+[[files]]
 pattern = "Generated/truth-graph.v1.json"
 kind = "generated"
 produced_by = "DagEmitter"
