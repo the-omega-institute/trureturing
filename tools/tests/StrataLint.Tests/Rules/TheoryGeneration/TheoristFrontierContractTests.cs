@@ -283,12 +283,151 @@ public sealed class TheoristFrontierContractTests
     }
 
     [Fact]
-    public void RetiredBaselineContractCarrierIsAllowedWithActiveDeliveryEvidence()
+    public void LiteralMigratedV2BaselineContractWithFixedMatchingHashIsAcceptedByFullActiveCatalog()
     {
         var fixture = BaselineContractCarrier();
         fixture.RetireTheoristTarget();
 
-        Assert.Empty(Evaluate(fixture));
+        AssertFullActiveCatalogAccepts(fixture);
+    }
+
+    [Fact]
+    public void RetiredDeliveryWithWeakenedStatementIsRejectedByStatementIdentityRule()
+    {
+        var fixture = BaselineContractCarrier();
+        fixture.RetireTheoristTarget();
+        fixture.MutateRetiredDeliveryStatement("weakened");
+
+        var diagnostic = Assert.Single(EvaluateDeliveryIdentity(fixture));
+
+        Assert.Equal(RuleId.CreateKnown(27), diagnostic.RuleId);
+        Assert.Contains("no delivery declaration has", diagnostic.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void LiteralV2BaselineHashThatDoesNotMatchDeliveryStatementIsRejected()
+    {
+        var fixture = BaselineContractCarrier();
+        fixture.ReplaceRetiredBaselineStatementWithMismatchingLiteralHash();
+        fixture.RetireTheoristTarget();
+
+        var diagnostic = Assert.Single(EvaluateDeliveryIdentity(fixture));
+
+        Assert.Equal(RuleId.CreateKnown(27), diagnostic.RuleId);
+        Assert.Contains("no delivery declaration has", diagnostic.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void RetiredDeliveryWithMissingBaselineContractIsRejectedByStatementIdentityRule()
+    {
+        var fixture = BaselineContractCarrier();
+        fixture.RemoveRetiredBaselineContract();
+        fixture.RetireTheoristTarget();
+
+        var diagnostic = Assert.Single(EvaluateDeliveryIdentity(fixture));
+
+        Assert.Equal(RuleId.CreateKnown(27), diagnostic.RuleId);
+        Assert.Contains("baseline Frontier contract block is missing", diagnostic.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void MissingBaselineSourceIsRejectedByStatementIdentityParser()
+    {
+        var baseline = Assert.IsType<SnapshotDecodeOutcome.Decoded>(
+            SnapshotDecoder.Decode(RawRepositorySnapshot.Create([]))).Snapshot;
+        var findings = ImmutableArray.CreateBuilder<RuleFinding>();
+
+        var statement = TheoristFrontierContractValidator.ReadRetiredBaselineStatement(
+            RepoPath.CreateKnown("D5/X_Frontier/Missing.lean"),
+            baseline,
+            findings);
+
+        Assert.Null(statement);
+        var finding = Assert.Single(findings);
+        Assert.Equal("D5/X_Frontier/Missing.lean", finding.Path);
+        Assert.Equal("baseline Frontier source is unavailable", finding.Message);
+    }
+
+    [Fact]
+    public void DuplicateV2BaselineMarkerIsRejectedByStatementIdentityRule()
+    {
+        var fixture = BaselineContractCarrier();
+        fixture.DuplicateRetiredBaselineContract();
+        fixture.RetireTheoristTarget();
+
+        var diagnostic = Assert.Single(EvaluateDeliveryIdentity(fixture));
+
+        Assert.Equal(RuleId.CreateKnown(27), diagnostic.RuleId);
+        Assert.Contains("baseline Frontier contract block is duplicated", diagnostic.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void MissingV2BaselineClosingMarkerIsRejectedByStatementIdentityRule()
+    {
+        var fixture = BaselineContractCarrier();
+        fixture.RemoveRetiredBaselineContractClosingMarker();
+        fixture.RetireTheoristTarget();
+
+        var diagnostic = Assert.Single(EvaluateDeliveryIdentity(fixture));
+
+        Assert.Equal(RuleId.CreateKnown(27), diagnostic.RuleId);
+        Assert.Contains("baseline Frontier contract closing marker is missing", diagnostic.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void RetiredDeliveryWithMalformedBaselineContractIsRejectedByStatementIdentityRule()
+    {
+        var fixture = BaselineContractCarrier();
+        fixture.MalformedRetiredBaselineContract();
+        fixture.RetireTheoristTarget();
+
+        var diagnostic = Assert.Single(EvaluateDeliveryIdentity(fixture));
+
+        Assert.Equal(RuleId.CreateKnown(27), diagnostic.RuleId);
+        Assert.Contains("baseline Frontier contract is not valid JSON", diagnostic.Message, StringComparison.Ordinal);
+    }
+
+    [Theory]
+    [InlineData("keys")]
+    [InlineData("schema")]
+    [InlineData("hash")]
+    public void NoncanonicalV2BaselineKeysSchemaOrHashIsRejectedByStatementIdentityRule(
+        string corruption)
+    {
+        var fixture = BaselineContractCarrier();
+        fixture.CorruptRetiredBaselineContractCanonicalForm(corruption);
+        fixture.RetireTheoristTarget();
+
+        var diagnostic = Assert.Single(EvaluateDeliveryIdentity(fixture));
+
+        Assert.Equal(RuleId.CreateKnown(27), diagnostic.RuleId);
+        Assert.Contains("baseline Frontier exact_statement is not canonical", diagnostic.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void RetiredDeliveryIdentityWithMixedFrozenDeclarationsIsAcceptedByFullActiveCatalog()
+    {
+        var fixture = BaselineContractCarrier();
+        fixture.AddMismatchingFrozenRetiredDelivery();
+        fixture.RetireTheoristTargetWithDeliveries(
+            "D5/S0/Carrier/Euclidean.golden_division",
+            "D5/S0/Carrier/Euclidean.mismatched_delivery");
+
+        AssertFullActiveCatalogAccepts(fixture);
+    }
+
+    [Fact]
+    public void BaselineGovernanceRetirementWithActiveDeliveryIsAcceptedByFullActiveCatalog()
+    {
+        var fixture = new RuleFixture();
+        fixture.AddHistoricalTheoristTarget(
+            "prime-norm-irreducibility",
+            ownerKind: "declaration-ready-mathematical-open",
+            baselineOwnerKind: "governance",
+            baselineIncludeContract: false);
+        fixture.RetireTheoristTarget();
+
+        AssertFullActiveCatalogAccepts(fixture);
     }
 
     [Fact]
@@ -297,7 +436,7 @@ public sealed class TheoristFrontierContractTests
         var fixture = BaselineContractCarrier();
         fixture.RetireTheoristTarget("D5/S0/Carrier/Ring.fixture_delivery");
 
-        var diagnostic = Assert.Single(Evaluate(fixture));
+        var diagnostic = Assert.Single(EvaluateSorry(fixture));
 
         Assert.Contains(
             "does not resolve to an active frozen declaration",
@@ -311,7 +450,7 @@ public sealed class TheoristFrontierContractTests
         var fixture = BaselineContractCarrier();
         fixture.RetireTheoristTarget("D5/S0/Carrier/Euclidean.missing_delivery");
 
-        var diagnostic = Assert.Single(Evaluate(fixture));
+        var diagnostic = Assert.Single(EvaluateSorry(fixture));
 
         Assert.Contains(
             "does not resolve to an active frozen declaration",
@@ -320,11 +459,43 @@ public sealed class TheoristFrontierContractTests
     }
 
     [Fact]
-    public void RetiredLegacyBaselineWithoutContractIsAllowedWithActiveDeliveryEvidence()
+    public void ParentV1BaselineContractIsRejectedAsLegacyByStatementIdentityRule()
     {
-        var fixture = LegacyRetiredBaseline();
+        var fixture = BaselineContractCarrier();
+        fixture.ReplaceRetiredBaselineWithLiteralParentV1Contract();
+        fixture.RetireTheoristTarget();
 
-        Assert.Empty(Evaluate(fixture));
+        var diagnostic = Assert.Single(EvaluateDeliveryIdentity(fixture));
+
+        Assert.Equal(RuleId.CreateKnown(27), diagnostic.RuleId);
+        Assert.Contains("legacy V1", diagnostic.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void ParentV1CandidateContractIsRejectedAsLegacyByGenerationRule()
+    {
+        var fixture = new RuleFixture();
+        fixture.AddHistoricalTheoristTarget("prime-norm-irreducibility");
+        fixture.ReplaceCurrentContractWithLiteralParentV1Contract();
+
+        var diagnostic = Assert.Single(EvaluateSorry(fixture));
+
+        Assert.Contains("V1 is legacy", diagnostic.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void DeletedFrontierWithUnreadableBaselineMissionIsRejectedAsUndecidable()
+    {
+        var fixture = BaselineContractCarrier();
+        fixture.CorruptBaselineMission();
+        fixture.RetireTheoristTarget();
+
+        var diagnostic = Assert.Single(EvaluateDeliveryIdentity(fixture));
+
+        Assert.Contains(
+            "baseline Frontier ownership is undecidable because docs/MISSION.md does not load",
+            diagnostic.Message,
+            StringComparison.Ordinal);
     }
 
     [Fact]
@@ -334,7 +505,7 @@ public sealed class TheoristFrontierContractTests
         fixture.AddUnfrozenRetiredDeliveryDeclaration();
         fixture.RetireTheoristTarget("D5/S0/Carrier/Euclidean.unfrozen_delivery");
 
-        var diagnostic = Assert.Single(Evaluate(fixture));
+        var diagnostic = Assert.Single(EvaluateSorry(fixture));
 
         Assert.Contains(
             "does not resolve to an active frozen declaration",
@@ -347,7 +518,7 @@ public sealed class TheoristFrontierContractTests
     {
         var fixture = LegacyRetiredBaseline("D5/S0/Carrier/Euclidean.missing_delivery");
 
-        var diagnostic = Assert.Single(Evaluate(fixture));
+        var diagnostic = Assert.Single(EvaluateSorry(fixture));
 
         Assert.Contains(
             "does not resolve to an active frozen declaration",
@@ -414,6 +585,7 @@ public sealed class TheoristFrontierContractTests
             "prime-norm-irreducibility",
             baselineOwnerKind: "declaration-ready-mathematical-open",
             baselineIncludeContract: true);
+        fixture.ReplaceRetiredBaselineWithLiteralV2Contract();
         return fixture;
     }
 
@@ -430,11 +602,33 @@ public sealed class TheoristFrontierContractTests
     }
 
     private static ImmutableArray<Diagnostic> Evaluate(RuleFixture fixture) =>
+        EvaluateSorry(fixture);
+
+    private static ImmutableArray<Diagnostic> EvaluateSorry(RuleFixture fixture) =>
         EvaluateContext(fixture.Build());
+
+    private static ImmutableArray<Diagnostic> EvaluateDeliveryIdentity(RuleFixture fixture) =>
+        RuleCatalog.Default.EvaluateSingle(RuleId.CreateKnown(27), fixture.Build()).Diagnostics;
 
     private static ImmutableArray<Diagnostic> EvaluateForRuleCompatibility(RuleFixture fixture) =>
         EvaluateContext(fixture.BuildForRuleCompatibility());
 
     private static ImmutableArray<Diagnostic> EvaluateContext(RuleEvaluationContext context) =>
         RuleCatalog.Default.EvaluateSingle(RuleId.CreateKnown(2), context).Diagnostics;
+
+    private static void AssertFullActiveCatalogAccepts(RuleFixture fixture)
+    {
+        var completed = Assert.IsType<RuleExecutionOutcome.Completed>(
+            RuleCatalog.Default.Execute(fixture.Build())).Capability;
+
+        Assert.Empty(completed.Diagnostics);
+        var expectedActiveRules = RuleCatalog.Default.Descriptors
+            .Where(static descriptor => descriptor.Lifecycle is RuleLifecycle.Active)
+            .Select(static descriptor => descriptor.Id)
+            .OrderBy(static id => id.Value, StringComparer.Ordinal);
+        var accountedActiveRules = completed.ExecutedRules
+            .Concat(completed.SkippedRules)
+            .OrderBy(static id => id.Value, StringComparer.Ordinal);
+        Assert.Equal(expectedActiveRules, accountedActiveRules);
+    }
 }

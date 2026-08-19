@@ -12,11 +12,18 @@ public sealed partial class MakeWorkflowTests
     private const string BuildRestoreKey =
         "${{ runner.os }}-${{ runner.arch }}-lake-build-v1-${{ steps.lean-report-input.outputs.config_sha256 }}-";
 
-    private static void AssertLakeCacheContract(
-        string admissionWorkflow,
-        string theoryIngestWorkflow)
+    // 原先此契约跨两个站点(ci.yml 的 admission job 与已删除的 theory-ingest)。
+    // 消化退出 CI 后只剩一个站点,但五条断言里两条完全不依赖站点(纯合成键模板推理)、
+    // 两条是逐站点的——故契约保留并接到 ci.yml,不随被删站点一起静默消失。
+    [Fact]
+    public void AdmissionWorkflowHonoursTheLakeCacheContract() =>
+        AssertLakeCacheContract(
+            TestRepositoryLayout.ReadAllText(
+                RepositoryRelativePath.Create(".github/workflows/ci.yml")));
+
+    private static void AssertLakeCacheContract(string admissionWorkflow)
     {
-        var workflows = new[] { admissionWorkflow, theoryIngestWorkflow };
+        var workflows = new[] { admissionWorkflow };
         var steps = ParseLakeCacheSteps(workflows).ToArray();
         AssertLakeCacheSitesUseTheSamePartitionedKeyTemplates(steps);
         AssertConfigAndSourceChangesInvalidateOnlyTheirOwningLayers();
@@ -28,12 +35,24 @@ public sealed partial class MakeWorkflowTests
     private static void AssertLakeCacheSitesUseTheSamePartitionedKeyTemplates(
         IReadOnlyCollection<CacheStep> steps)
     {
-        Assert.Equal(6, steps.Count);
-
         var dependencies = steps.Where(static step => IsLakeDependencyPath(step.Path)).ToArray();
         var builds = steps.Where(static step => step.Path == "candidate/.lake/build").ToArray();
-        Assert.Equal(3, dependencies.Length);
-        Assert.Equal(3, builds.Length);
+
+        // 不写死站点数。原先断言恰 6 个(3 依赖 + 3 构建),那是 ci.yml 与已删除的
+        // theory-ingest 两站点之和——写死使「增删一个站点」被迫改测试
+        // (CLAUDE.md 商余结构)。改判结构:每个缓存步骤都必须落入两层之一、
+        // 不留未分类者,且两层各自既有 restore 又有 save。
+        Assert.NotEmpty(steps);
+        Assert.Equal(steps.Count, dependencies.Length + builds.Length);
+        foreach (var layer in new[] { dependencies, builds })
+        {
+            Assert.Contains(
+                layer,
+                static step => step.Uses.StartsWith("actions/cache/restore@", StringComparison.Ordinal));
+            Assert.Contains(
+                layer,
+                static step => !step.Uses.StartsWith("actions/cache/restore@", StringComparison.Ordinal));
+        }
 
         Assert.All(dependencies, step => Assert.Equal(DependencyKey, step.Key));
         Assert.All(builds, step => Assert.Equal(BuildKey, step.Key));

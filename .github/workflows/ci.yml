@@ -417,7 +417,7 @@ jobs:
           # D5/**/*.lean)与 config(toolchain/lake-manifest/lakefile)三者的清单哈希。
 
       # 一事不再理:报告是其输入闭包的纯函数,而该闭包已被内容寻址(上一步)。
-      # dev push 早已把结果按同一 key 存下(下方 Save 步),theory-ingest 也已在读它;
+      # dev push 早已把结果按同一 key 存下(下方 Save 步);
       # 只有 CI 自己的关键路径从不读 —— 于是每个 PR 重付一次 lake 恢复 + 报告生产
       # (2026-08-11 实测 92s + 83s),哪怕闭包逐字节未变。
       #

@@ -1,0 +1,16 @@
+### 定理 40.5（carry cocycle）
+
+加法结合律蕴含：
+
+\[
+\boxed{
+\kappa_s(a,b)
++
+\kappa_s(a+b,c)
+=
+\kappa_s(b,c)
++
+\kappa_s(a,b+c).
+}
+\]
+
