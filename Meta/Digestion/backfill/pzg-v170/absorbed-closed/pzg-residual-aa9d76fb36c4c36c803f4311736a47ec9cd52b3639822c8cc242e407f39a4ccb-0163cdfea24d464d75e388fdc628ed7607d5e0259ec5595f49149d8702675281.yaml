@@ -1,0 +1,17 @@
+ast_path: route/21.1/clause/2
+fingerprints:
+  raw_sha256: sha256:aa9d76fb36c4c36c803f4311736a47ec9cd52b3639822c8cc242e407f39a4ccb
+  normalized_sha256: sha256:aa9d76fb36c4c36c803f4311736a47ec9cd52b3639822c8cc242e407f39a4ccb
+cas_ref: sha256:aa9d76fb36c4c36c803f4311736a47ec9cd52b3639822c8cc242e407f39a4ccb
+coverage_gids:
+  - D5/S3/PrimeForms/GaussianIntegers/GaussianIntegerNorm.gaussian_integer_mul_conj_eq_sq_add_sq
+receipts:
+  coverage:
+    - gid: D5/S3/PrimeForms/GaussianIntegers/GaussianIntegerNorm.gaussian_integer_mul_conj_eq_sq_add_sq
+      source_sha256: sha256:aa9d76fb36c4c36c803f4311736a47ec9cd52b3639822c8cc242e407f39a4ccb
+      target_sha256: sha256:1c0506fe543abc80daac69f5d3c1b39769c4618ff6c17f7aa7014a62f5f3fd26
+  scribe:
+    - gid: D5/S3/PrimeForms/GaussianIntegers/GaussianIntegerNorm.gaussian_integer_mul_conj_eq_sq_add_sq
+      definition_sha256: sha256:99d411a6dc7a0be435638085c87f6b2c86ada398d4c53748140b45e4382f1cdc
+      emission_sha256: sha256:eb19ed288610bfa9d34afdc521ce67dffbfcd99ad8cb5071225a73fdf2d5d9d9
+  unresolved_subitems: []

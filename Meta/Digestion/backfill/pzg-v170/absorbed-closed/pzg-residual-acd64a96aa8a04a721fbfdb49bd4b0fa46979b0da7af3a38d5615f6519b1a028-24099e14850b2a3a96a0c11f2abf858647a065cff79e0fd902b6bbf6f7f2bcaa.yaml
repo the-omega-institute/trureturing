@@ -1,0 +1,17 @@
+ast_path: theorem-form/6.194/clause/1
+fingerprints:
+  raw_sha256: sha256:acd64a96aa8a04a721fbfdb49bd4b0fa46979b0da7af3a38d5615f6519b1a028
+  normalized_sha256: sha256:acd64a96aa8a04a721fbfdb49bd4b0fa46979b0da7af3a38d5615f6519b1a028
+cas_ref: sha256:acd64a96aa8a04a721fbfdb49bd4b0fa46979b0da7af3a38d5615f6519b1a028
+coverage_gids:
+  - D5/S3/Constants/Enclosures/GoldenAmplitudeEnclosure.ah_seven_digit_enclosure
+receipts:
+  coverage:
+    - gid: D5/S3/Constants/Enclosures/GoldenAmplitudeEnclosure.ah_seven_digit_enclosure
+      source_sha256: sha256:acd64a96aa8a04a721fbfdb49bd4b0fa46979b0da7af3a38d5615f6519b1a028
+      target_sha256: sha256:37ec3cd36cb4f07e803d980f64a7e86a991baea078d7545b5f8da61f9da2a89b
+  scribe:
+    - gid: D5/S3/Constants/Enclosures/GoldenAmplitudeEnclosure.ah_seven_digit_enclosure
+      definition_sha256: sha256:2fdc8f0c38e41f4b2ec62457f91efd049ed3bc86383229135f0ba1956a1199ce
+      emission_sha256: sha256:6d7bf5784b8630a111fb826c29d2f06a247b4ff62159bcc27b1145478659ebcb
+  unresolved_subitems: []
