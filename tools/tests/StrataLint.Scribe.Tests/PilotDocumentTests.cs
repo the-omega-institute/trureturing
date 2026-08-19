@@ -1,6 +1,7 @@
 using System.Collections.Immutable;
 using System.Reflection;
 using StrataLint.Engine;
+using Trureturing.Truth;
 
 namespace StrataLint.Scribe.Tests;
 
@@ -157,7 +158,7 @@ public sealed class DocumentDiscoveryTests
             documents,
             DeclarationCatalog.Create(report),
             census.ReceiptFreeDocumentGids);
-        var projection = DocumentGraphExportProjection.Create(
+        var projection = DocumentGraphProjectionBuilder.Create(
             DocumentDefinitions.All.Select(definition => new DocumentGraphDocument(
                 definition.RelativePath.Value,
                 definition.Document,

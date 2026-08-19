@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <RootNamespace>Trureturing.Truth</RootNamespace>
+    <AssemblyName>Trureturing.Truth</AssemblyName>
+    <IsPackable>true</IsPackable>
+    <PackageId>Trureturing.Truth</PackageId>
+    <Version>0.1.0</Version>
+    <Description>Authoritative, self-contained truth-graph read/write/verify API for the trureturing golden ledger. Sits at the bottom of the dependency graph and depends only on the .NET base class library.</Description>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.CodeAnalysis.BannedApiAnalyzers" PrivateAssets="all" />
+    <AdditionalFiles Include="../Architecture/BannedSymbols.txt" />
+    <AdditionalFiles Include="../Architecture/BannedSymbols.Determinism.txt" />
+    <AdditionalFiles Include="../Architecture/BannedSymbols.Guid.txt" />
+  </ItemGroup>
+</Project>

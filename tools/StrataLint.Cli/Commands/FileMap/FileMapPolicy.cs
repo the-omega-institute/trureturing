@@ -43,7 +43,7 @@ internal static class FileMapPolicy
     private const string ValuesKernelLoaderPath =
         "tools/StrataLint.Scribe/Values/ValuesKernelDataLoader.cs";
     private const string YamlSubsetParserPath =
-        "tools/StrataLint.Engine/Coordinates/YamlSubsetParser.cs";
+        "tools/Trureturing.Truth/YamlSubsetParser.cs";
     private const string RepositoryPathPolicyPath =
         "tools/StrataLint.Engine/Coordinates/RepositoryPathPolicy.cs";
 
