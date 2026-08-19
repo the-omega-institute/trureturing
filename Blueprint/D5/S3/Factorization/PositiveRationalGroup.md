@@ -47,4 +47,3 @@ Transporting the natural logarithm through the equivalence extends prime-exponen
 - Truth anchor: `D5/S3/Factorization/PositiveRationalGroup.primeExponentEquivPositiveRational`
 - Truth anchor: `D5/S3/Factorization/PositiveRationalGroup.rational_log_length_add`
 - Truth anchor: `D5/S3/Factorization/PositiveRationalGroup.signed_prime_ledger_equiv_positive_rationals`
-- Dependency: [D5/S3/Factorization/FreeCommMonoid](FreeCommMonoid.md)
