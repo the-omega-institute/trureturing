@@ -1,0 +1,20 @@
+### 定义 40.16（相容观察者）
+
+观察者类型定义为：
+
+\[
+\boxed{
+\operatorname{Obs}(\mathbf X)
+=
+\sum_{x:\prod_iX_i}
+\prod_{j\succeq i}
+p_{ji}(x_j)=x_i.
+}
+\]
+
+它就是逆极限 cone 的项类型。
+
+该定义不保证非空。
+
+---
+

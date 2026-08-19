@@ -1,0 +1,16 @@
+### 定理 40.4（精确下降无 carry）
+
+若 \(F\) 存在精确下降：
+
+\[
+q_YF=\overline Fq_X,
+\]
+
+则：
+
+\[
+\operatorname{CarryWitness}(F;q_X,q_Y)
+\]
+
+为空。
+
