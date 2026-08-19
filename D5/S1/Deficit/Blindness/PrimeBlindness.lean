@@ -1,6 +1,6 @@
-/- GID: D5/S1/Deficit/PrimeBlindness
+/- GID: D5/S1/Deficit/Blindness/PrimeBlindness
    generality: I
-   mirror-B: D5/B/S1/Deficit/PrimeBlindness
+   mirror-B: D5/B/S1/Deficit/Blindness/PrimeBlindness
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    digest: Primality of the inputs does not determine the golden Beatty deficit. -/
@@ -25,7 +25,7 @@ import D5.S1.Deficit.ZeckendorfDisplacementReading
      therefore speaks about `beattyDeficit`, which is public.
 -/
 
-namespace D5.S1.Deficit.PrimeBlindness
+namespace D5.S1.Deficit.Blindness.PrimeBlindness
 
 open D5.S0.Conventions
 open D5.S1.Deficit.GoldenPhaseDeficit
@@ -70,4 +70,4 @@ theorem beattyDeficit_not_determined_by_primality :
 
 #print axioms beattyDeficit_not_determined_by_primality
 
-end D5.S1.Deficit.PrimeBlindness
+end D5.S1.Deficit.Blindness.PrimeBlindness

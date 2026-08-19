@@ -2,7 +2,7 @@ using static StrataLint.Scribe.DefinitionDsl;
 using static StrataLint.Scribe.FormulaDsl;
 using F = StrataLint.Scribe.FormulaDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S1.Deficit;
+namespace StrataLint.Scribe.Blueprint.D5.S1.Deficit.Blindness;
 
 internal sealed class PrimeBlindnessDocument : IScribeDocumentDefinition
 {
@@ -25,7 +25,7 @@ internal sealed class PrimeBlindnessDocument : IScribeDocumentDefinition
             Describe.Lean(
                 DescribeId.Create("primality-does-not-determine-the-beatty-deficit"),
                 DeclarationHandle.Create(
-                    "D5/S1/Deficit/PrimeBlindness.beattyDeficit_not_determined_by_primality"),
+                    "D5/S1/Deficit/Blindness/PrimeBlindness.beattyDeficit_not_determined_by_primality"),
                 H("Primality does not determine the Beatty deficit"),
                 StatementSource.FromAuthor(BlindFormula()),
                 AssessedProvenance.FromRepo(),
