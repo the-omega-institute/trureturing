@@ -1,0 +1,17 @@
+ast_path: theorem-form/6.190/clause/2
+fingerprints:
+  raw_sha256: sha256:b34da537aacf5271beff785417a57bbcdfd480f72bee3586672738a9062741a3
+  normalized_sha256: sha256:b34da537aacf5271beff785417a57bbcdfd480f72bee3586672738a9062741a3
+cas_ref: sha256:b34da537aacf5271beff785417a57bbcdfd480f72bee3586672738a9062741a3
+coverage_gids:
+  - D5/S3/Fourier/GoldenReciprocityFixedPoint.golden_reciprocity_fixed_point
+receipts:
+  coverage:
+    - gid: D5/S3/Fourier/GoldenReciprocityFixedPoint.golden_reciprocity_fixed_point
+      source_sha256: sha256:b34da537aacf5271beff785417a57bbcdfd480f72bee3586672738a9062741a3
+      target_sha256: sha256:420be08ecc31826be4e33e8346ded8ddccb9a1b6d5e5f246923c7c3fcdb64aa6
+  scribe:
+    - gid: D5/S3/Fourier/GoldenReciprocityFixedPoint.golden_reciprocity_fixed_point
+      definition_sha256: sha256:1edb352da284d80c7154fe158b80db905d4040646ad519f888fbb69bb3363e21
+      emission_sha256: sha256:4a8ea6c088a6c3ef1d3b486d60305bb50a57d4300db0a65e9933775af7741c88
+  unresolved_subitems: []
