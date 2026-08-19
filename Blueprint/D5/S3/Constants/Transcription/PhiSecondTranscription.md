@@ -21,4 +21,3 @@ This theorem covers only the source's exact second-order transcription clause; i
 ## References
 
 - Truth anchor: `D5/S3/Constants/Transcription/PhiSecondTranscription.phi_second_transcription_exact`
-- Dependency: [D5/S3/Constants/SturmianDirichletValue](../SturmianDirichletValue.md)
