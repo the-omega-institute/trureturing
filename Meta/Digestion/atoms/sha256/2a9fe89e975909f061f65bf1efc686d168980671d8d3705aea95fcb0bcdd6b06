@@ -1,0 +1,34 @@
+## 定义 35.3（现象概念）
+
+候选现象概念：
+
+\[
+\Phi:X\to B_\Phi.
+\]
+
+公共行为联合概念：
+
+\[
+P_{\mathrm{pub}}=\bigvee_iK_i.
+\]
+
+若：
+
+\[
+\Phi\preceq P_{\mathrm{pub}},
+\]
+
+则现象差异随附于公共可访问信息。
+
+若存在：
+
+\[
+P_{\mathrm{pub}}(x)=P_{\mathrm{pub}}(y),
+\qquad
+\Phi(x)\ne\Phi(y),
+\]
+
+则得到形式 zombie witness。
+
+它只证明所选现象概念不由所选公共概念决定，不证明现实世界存在哲学僵尸。
+

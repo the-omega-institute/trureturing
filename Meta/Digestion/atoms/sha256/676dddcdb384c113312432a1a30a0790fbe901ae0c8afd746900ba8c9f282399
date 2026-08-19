@@ -1,0 +1,20 @@
+## 定义 8.2（极端概念）
+
+最粗概念：
+
+\[
+\bot_X=(\mathbf1,!).
+\]
+
+最细概念：
+
+\[
+\top_X=(X,\operatorname{id}_X).
+\]
+
+对所有 \(C\)：
+
+\[
+\bot_X\preceq C\preceq\top_X.
+\]
+

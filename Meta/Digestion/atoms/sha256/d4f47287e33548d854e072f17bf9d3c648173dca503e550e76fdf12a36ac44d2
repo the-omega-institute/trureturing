@@ -1,0 +1,11 @@
+\[
+\widehat X_{\mathrm{real}}
+=
+\sum_{x:\widehat X_{\mathrm{form}}}
+\operatorname{Realizable}(x).
+\]
+
+形式相容不推出现实可实现。一个理论可以内部融贯而没有实际模型；一个无穷精度概念可以形式存在，却违反能量、正性、可计算性、normality、可积性或经验准入。
+
+---
+

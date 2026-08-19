@@ -1,0 +1,12 @@
+## 定义 26.3（实质变化）
+
+\[
+\boxed{
+\operatorname{SubstantialChange}_{S,F}(x)
+\iff
+S(Fx)\ne S(x).
+}
+\]
+
+“同一个对象发生变化”因此不是矛盾，而是一个概念保持、另一个概念改变。
+

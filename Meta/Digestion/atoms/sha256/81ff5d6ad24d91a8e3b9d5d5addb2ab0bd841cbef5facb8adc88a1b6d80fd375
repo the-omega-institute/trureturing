@@ -1,0 +1,22 @@
+# 36. 自我表示与对角边界
+
+给定：
+
+\[
+g:A\to(A\to Y)
+\]
+
+和无固定点 twist：
+
+\[
+\tau:Y\to Y,
+\qquad
+\forall y,\tau(y)\ne y.
+\]
+
+定义：
+
+\[
+d_g(a)=\tau(g(a)(a)).
+\]
+

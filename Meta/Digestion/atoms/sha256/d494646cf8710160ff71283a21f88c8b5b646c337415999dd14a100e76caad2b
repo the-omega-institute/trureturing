@@ -1,0 +1,24 @@
+## 定义 19.5（实用成功）
+
+给定价值准则 \(V\)、策略 \(\pi\) 和阈值 \(\theta\)：
+
+\[
+\operatorname{Successful}(T,\pi,a)
+\iff
+V(F_\pi a)\succeq\theta.
+\]
+
+一般不存在：
+
+\[
+\operatorname{Coherent}
+\Rightarrow
+\operatorname{Corresponding}
+\Rightarrow
+\operatorname{Successful}.
+\]
+
+融贯、符合与实用成功是不同谓词。
+
+---
+

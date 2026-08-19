@@ -1,0 +1,26 @@
+### 构造
+
+正向：
+
+\[
+x\mapsto(q_Cx,x,\operatorname{refl}_{q_Cx}).
+\]
+
+反向：
+
+\[
+(b,x,h)\mapsto x.
+\]
+
+一个方向定义性成立，另一个方向由路径归纳成立。\(\square\)
+
+同理：
+
+\[
+\boxed{
+\sum_{x:X}\operatorname{Adm}(x)
+\simeq
+\sum_{b:B_C}R_C^{\operatorname{Adm}}(b).
+}
+\]
+

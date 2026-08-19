@@ -1,0 +1,20 @@
+## 定义 20.1（稳健知识）
+
+\[
+\boxed{
+\begin{aligned}
+\operatorname{Know}_E(P,a)
+\iff{}&
+\operatorname{Adm}(a)
+\land P(a)\\
+&\land
+\forall x,
+\operatorname{Adm}(x)
+\land E(x)=E(a)
+\to P(x).
+\end{aligned}
+}
+\]
+
+即命题不仅在实际锚点为真，而且在所有与当前证据不可区分的合法状态中都为真。
+

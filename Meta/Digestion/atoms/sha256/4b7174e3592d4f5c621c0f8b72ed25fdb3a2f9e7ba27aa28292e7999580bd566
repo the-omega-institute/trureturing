@@ -1,0 +1,12 @@
+## 定义 41.3（权利）
+
+权利是一类被禁止的转换：
+
+\[
+\operatorname{RightViolation}
+\subseteq
+X\times U\times X.
+\]
+
+合法制度 FLOW 必须避开这些转换，即使违反权利可提高某个总价值函数。
+

@@ -1,0 +1,9 @@
+\[
+\boxed{
+\operatorname{PhysObs}
+=
+\sum_{x:\operatorname{Obs}(\mathbf X)}
+\prod_iA_i(x_i).
+}
+\]
+

@@ -1,0 +1,29 @@
+# 42. 制度与四类权力
+
+一个制度可表示为：
+
+\[
+\mathcal I
+=(X,C_{\mathrm{inst}},F_{\mathrm{inst}},
+\operatorname{Adm}_{\mathrm{inst}},a_{\mathrm{canon}}).
+\]
+
+权力至少分为：
+
+\[
+\begin{aligned}
+\text{分类权力}
+&=\text{决定哪些 CUT 被制度采用};\\
+\text{过程权力}
+&=\text{决定哪些 FLOW 可发生};\\
+\text{准入权力}
+&=\text{决定哪些对象、主张或行动被接受};\\
+\text{锚定权力}
+&=\text{决定谁被当作典型、合法或有资格发言的主体}.
+\end{aligned}
+\]
+
+这些权力作用在不同型别上，不能只用一个资源总量概念替代。
+
+---
+

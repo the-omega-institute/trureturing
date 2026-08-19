@@ -1,0 +1,10 @@
+## 定义 43.2（相关伤害盲点）
+
+对伤害概念 \(H\)，存在：
+
+\[
+C_{\mathrm{off}}x=C_{\mathrm{off}}y,
+\qquad
+H(Fx)\ne H(Fy).
+\]
+
