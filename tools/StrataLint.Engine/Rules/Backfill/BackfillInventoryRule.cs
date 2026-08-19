@@ -46,6 +46,11 @@ internal static class BackfillInventoryRule
                     "tools/Authorizations/digestion-tail/",
                     StringComparison.Ordinal)
                 || FrozenLedgerDeltaPredicate.IsEnvironmentInput(path.Value)
+                // 理论卷按路径规则治理后,`GovernanceDocuments` 里已无理论路径;
+                // 若此处仍只靠那张清单,只改理论卷的候选就**整条规则不触发**
+                // (RuleCatalog 对未命中的规则整条跳过),消化账本检测随之失效。
+                // 实测见 #2462:追加一条可原子化命题、不跑 make ingest,gate EXIT=0。
+                || DigestionOpaquePathPolicy.IsTheoryDocument(path)
                 || context.Policy.GovernanceDocuments.Contains(path))
             {
                 return true;
@@ -138,8 +143,11 @@ internal static class BackfillInventoryRule
         IEnumerable<string> declaredPaths,
         ImmutableArray<RuleFinding>.Builder findings)
     {
+        // 扫**文件树**,不扫 registry 清单。理论卷已改为按路径规则治理,不再逐个枚举进
+        // governance_documents;若这里仍遍历那张清单,清单一空本检查就静默失效——
+        // 那正是「新增 markdown 无人过问」的旧病换了个方向复发。
         var declared = declaredPaths.ToHashSet(StringComparer.Ordinal);
-        foreach (var path in context.Policy.GovernanceDocuments
+        foreach (var path in context.Current.Files.Keys
                      .Select(static path => path.Value)
                      .Where(static path => path.StartsWith(
                          DigestionOpaquePathPolicy.TheoryRootPath,
@@ -147,10 +155,14 @@ internal static class BackfillInventoryRule
                      .Where(path => !declared.Contains(path))
                      .Order(StringComparer.Ordinal))
         {
+            // 与「未登记残余原子」同理:全新理论卷入库但尚未跑 ingest,是账本四态里的
+            // `open`,不是违规。一个只改 markdown 的 PR 不该被它挡住——第三方本来就
+            // 跑不了本仓的 producer。判词照发(带补救命令),但不阻断准入。
             findings.Add(new RuleFinding(
                 BackfillPath,
                 $"theory document '{path}' has no digestion source: run make ingest, "
-                + "which registers it with the default atomizer"));
+                + "which registers it with the default atomizer",
+                AdmissionEffect.Observe));
         }
     }
 
@@ -188,8 +200,12 @@ internal static class BackfillInventoryRule
                     $"source {source.SourceId} must contain at least one atomic entry"));
             }
 
+            // 理论卷按**规则**治理(路径在理论根下),不再逐个枚举进 registry.yaml:
+            // 否则第三方 PR 加一个 markdown 就被迫改 harness,而它的名字无法预先枚举
+            // (与 docs/reports/ 同性质;CLAUDE.md 商余结构)。其余治理文档仍按清单。
             if (!RepoPath.TryCreate(source.SourcePath, out var sourcePath)
-                || !context.Policy.GovernanceDocuments.Contains(sourcePath))
+                || !(context.Policy.GovernanceDocuments.Contains(sourcePath)
+                    || DigestionOpaquePathPolicy.IsTheoryDocument(sourcePath)))
             {
                 // First thing a new volume hits, so the verdict carries its own remedy
                 // rather than leaving the reader to find which registry field is meant.
@@ -314,6 +330,13 @@ internal static class BackfillInventoryRule
             foreach (var finding in evaluation.Findings)
             {
                 findings.Add(new RuleFinding(BackfillPath, finding));
+            }
+
+            // 观察项不阻断准入。理论卷入库后尚未消化是账本四态里的 `open`,
+            // 由本地 `make ingest` 闭合;它不该挡住一个只改 markdown 的 PR。
+            foreach (var observation in evaluation.Observations)
+            {
+                findings.Add(new RuleFinding(BackfillPath, observation, AdmissionEffect.Observe));
             }
         }
         catch (FormatException exception)
