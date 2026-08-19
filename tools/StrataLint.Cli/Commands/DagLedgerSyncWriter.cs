@@ -13,16 +13,17 @@ internal static class DagLedgerSyncWriter
     {
         try
         {
-            if (arguments.Count != 2 || arguments[0] != "--candidate-lean-report")
+            if (!TryParseArguments(arguments, out var candidateLeanReport, out var baseRevision))
             {
                 throw new InvalidOperationException(
-                    "USAGE: StrataLint ledger-sync --candidate-lean-report FILE");
+                    "USAGE: StrataLint ledger-sync --candidate-lean-report FILE [--base REV]");
             }
 
             var context = DagLedgerCommandPreparation.Prepare(
                 repositoryRoot,
                 repository,
-                arguments[1]);
+                candidateLeanReport,
+                baseRevision);
             var generatedBytes = FrozenLedgerGenerator.AppendSynchronization(
                 context.Baseline,
                 context.Catalog);
@@ -101,6 +102,55 @@ internal static class DagLedgerSyncWriter
                 string.Empty,
                 "LEDGER_SYNC_FAILED " + (exception.InnerException ?? exception).Message + "\n");
         }
+    }
+
+    /// Parses `--candidate-lean-report FILE [--base REV]` (either flag order, each at most once).
+    /// `--base` is optional; omitting it leaves baseRevision null, which callers must treat as "use
+    /// the default uncommitted-changes view" to keep the no-flag path byte-identical to before this
+    /// flag existed (issue #2474). The value is passed through verbatim -- this parser never
+    /// resolves or defaults it to a remote ref; only the caller decides what revision REV names
+    /// (CLAUDE.md 第Ⅵ节 git reference discipline).
+    private static bool TryParseArguments(
+        IReadOnlyList<string> arguments,
+        out string candidateLeanReport,
+        out string? baseRevision)
+    {
+        candidateLeanReport = string.Empty;
+        baseRevision = null;
+        string? report = null;
+        string? @base = null;
+        var index = 0;
+        while (index < arguments.Count)
+        {
+            if (arguments[index] == "--candidate-lean-report"
+                && report is null
+                && index + 1 < arguments.Count)
+            {
+                report = arguments[index + 1];
+                index += 2;
+                continue;
+            }
+
+            if (arguments[index] == "--base"
+                && @base is null
+                && index + 1 < arguments.Count)
+            {
+                @base = arguments[index + 1];
+                index += 2;
+                continue;
+            }
+
+            return false;
+        }
+
+        if (report is null)
+        {
+            return false;
+        }
+
+        candidateLeanReport = report;
+        baseRevision = @base;
+        return true;
     }
 
 }

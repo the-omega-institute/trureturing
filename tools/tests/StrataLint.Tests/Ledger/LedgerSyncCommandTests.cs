@@ -41,6 +41,68 @@ public sealed class LedgerSyncCommandTests
     }
 
     [Fact]
+    public void ProductionCommandWithoutBaseFlagNeverCallsReadChanges()
+    {
+        // Requirement 1 (加性、默认行为完全不变): omitting --base must keep using
+        // repository.ReadCurrentChanges() exactly as before this flag existed. Asserting
+        // ReadChangesCalls is empty proves the new code path is not on the default route, not
+        // merely that the output happens to match.
+        using var fixture = new LedgerSyncFixture(blobChanged: true, addClosedModule: true);
+
+        var (exitCode, console) = Run(fixture, "ledger-sync");
+
+        Assert.Equal(0, exitCode);
+        Assert.Equal(string.Empty, console.Error);
+        Assert.Contains("appended_reattests=1", console.Output, StringComparison.Ordinal);
+        Assert.Contains("appended_freezes=1", console.Output, StringComparison.Ordinal);
+        Assert.Empty(fixture.Gateway.ReadChangesCalls);
+    }
+
+    [Fact]
+    public void ProductionCommandWithoutBaseFlagReportsNoChangesWhenTheDeltaIsAlreadyCommitted()
+    {
+        // Reproduces issue #2474: a comment-only edit to an *already-frozen* module is a
+        // Reattest, and Reattest selection requires the path to appear in changedPaths (see
+        // DagLedgerCommandPreparation.BuildWriterCatalog). A change that is already committed
+        // (so ReadCurrentChanges(), the uncommitted-only working-tree diff, is empty) makes that
+        // module invisible to ledger-sync without --base, even though the same delta is real
+        // against a committed base revision. addClosedModule stays false here: a brand-new
+        // module would be selected unconditionally (it is absent from baseView.ActiveByPath
+        // regardless of changedPaths) and would not exercise the bug.
+        using var fixture = new LedgerSyncFixture(
+            blobChanged: true,
+            addClosedModule: false,
+            currentChangesEmpty: true);
+
+        var (exitCode, console) = Run(fixture, "ledger-sync");
+
+        Assert.Equal(0, exitCode);
+        Assert.Equal(string.Empty, console.Error);
+        Assert.Contains("no ledger changes", console.Output, StringComparison.Ordinal);
+        Assert.Empty(fixture.Gateway.ReadChangesCalls);
+    }
+
+    [Fact]
+    public void ProductionCommandWithBaseFlagReadsChangesFromThatRevisionAndUnblocksTheSameFixture()
+    {
+        // Requirement 2, and the fix for #2474 on the exact fixture that reproduces it above:
+        // --base REV switches the change set to repository.ReadChanges(REV) -- the committed
+        // delta against REV -- instead of the (here, empty) uncommitted delta.
+        using var fixture = new LedgerSyncFixture(
+            blobChanged: true,
+            addClosedModule: false,
+            currentChangesEmpty: true);
+
+        var (exitCode, console) = Run(fixture, "ledger-sync", baseRevision: "committed-base-rev");
+
+        Assert.Equal(0, exitCode);
+        Assert.Equal(string.Empty, console.Error);
+        Assert.Contains("appended_reattests=1", console.Output, StringComparison.Ordinal);
+        Assert.Contains("appended_freezes=0", console.Output, StringComparison.Ordinal);
+        Assert.Equal(new[] { "committed-base-rev" }, fixture.Gateway.ReadChangesCalls);
+    }
+
+    [Fact]
     public void ProductionCommandRejectsStatementChangesWithoutWriting()
     {
         using var fixture = new LedgerSyncFixture(
@@ -229,13 +291,14 @@ public sealed class LedgerSyncCommandTests
 
     private static (int ExitCode, BufferedConsole Console) Run(
         LedgerSyncFixture fixture,
-        string command)
+        string command,
+        string? baseRevision = null)
     {
         var console = new BufferedConsole();
-        var exitCode = CliApplication.Run(
-            new[] { command, "--candidate-lean-report", fixture.ReportPath },
-            fixture.Environment,
-            console);
+        var arguments = baseRevision is null
+            ? new[] { command, "--candidate-lean-report", fixture.ReportPath }
+            : new[] { command, "--candidate-lean-report", fixture.ReportPath, "--base", baseRevision };
+        var exitCode = CliApplication.Run(arguments, fixture.Environment, console);
         return (exitCode, console);
     }
 
@@ -249,7 +312,8 @@ public sealed class LedgerSyncCommandTests
             string candidateStatement = "True",
             int existingModuleCount = 1,
             int historicalReattestCount = 0,
-            int? changedModuleCount = null)
+            int? changedModuleCount = null,
+            bool currentChangesEmpty = false)
         {
             if (historicalReattestCount < 0 || historicalReattestCount > existingModuleCount)
             {
@@ -365,8 +429,16 @@ public sealed class LedgerSyncCommandTests
             File.WriteAllBytes(ReportPath, RawLeanReportArtifact.Write(snapshot, report).AsSpan());
             var changedPaths = candidates
                 .Take(candidateChangeCount)
-                .Select(static module => FrozenLedgerTestData.PathFor(module.Name));
-            Gateway = new FakeRepositoryGateway(RawChangeSet.Create(changedPaths), raw, null);
+                .Select(static module => FrozenLedgerTestData.PathFor(module.Name))
+                .ToArray();
+            var currentChanges = currentChangesEmpty
+                ? RawChangeSet.Create(Array.Empty<string>())
+                : RawChangeSet.Create(changedPaths);
+            Gateway = new FakeRepositoryGateway(
+                currentChanges,
+                raw,
+                null,
+                changesForBase: _ => RawChangeSet.Create(changedPaths));
             Environment = new ProductionCliEnvironment(
                 temporary.Path,
                 Gateway,
