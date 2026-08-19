@@ -23,4 +23,3 @@ Repository search found the existing complementary-projection machinery but no t
 ## References
 
 - Truth anchor: `D5/S3/Quantum/Algebra/FutureWordOrthogonalResidual.future_word_orthogonal_residual`
-- Dependency: [D5/S3/Quantum/Algebra/OrthogonalProjectionComplement](OrthogonalProjectionComplement.md)

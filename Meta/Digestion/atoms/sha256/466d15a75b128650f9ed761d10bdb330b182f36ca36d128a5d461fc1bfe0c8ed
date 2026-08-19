@@ -1,0 +1,22 @@
+### 定理 41.10（恢复当前读出）
+
+设：
+
+\[
+\operatorname{head}(u)=u(0).
+\]
+
+则：
+
+\[
+\boxed{
+q
+=
+\operatorname{head}
+\circ
+\operatorname{Tr}_{q,F}.
+}
+\]
+
+---
+

@@ -1,0 +1,31 @@
+## 定义 5.3（相对同一性）
+
+\[
+\boxed{
+x\sim_Cy
+\iff
+q_C(x)=q_C(y).
+}
+\]
+
+必须区分：
+
+\[
+\begin{aligned}
+x=y
+&:\text{恒等类型中的同一};\\
+x\sim_Cy
+&:\text{概念相对同一};\\
+x\simeq y
+&:\text{结构等价};\\
+x\sim_{\mathrm{orbit}}y
+&:\text{过程轨道等价};\\
+x\equiv_{\mathrm{law}}y
+&:\text{法律或制度同一}.
+\end{aligned}
+\]
+
+哲学争论中的“同一个”必须标明是哪一种关系。
+
+---
+

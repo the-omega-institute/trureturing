@@ -1,0 +1,33 @@
+# 61. Lean 依赖顺序
+
+建议单一依赖链：
+
+```text
+FormalPhilosophy/Kernel/Concept
+→ FormalPhilosophy/Kernel/Fiber
+→ FormalPhilosophy/Kernel/Refinement
+→ FormalPhilosophy/Kernel/Joint
+→ FormalPhilosophy/Kernel/Descent
+→ FormalPhilosophy/Kernel/Carry
+→ FormalPhilosophy/Kernel/Completion
+→ FormalPhilosophy/Prediction/Itinerary
+→ FormalPhilosophy/Epistemology/Truth
+→ FormalPhilosophy/Epistemology/Knowledge
+→ FormalPhilosophy/Epistemology/Gettier
+→ FormalPhilosophy/Metaphysics/Essence
+→ FormalPhilosophy/Metaphysics/Substance
+→ FormalPhilosophy/Causality/Intervention
+→ FormalPhilosophy/Time/Record
+→ FormalPhilosophy/Mind/ObserverSelf
+→ FormalPhilosophy/Agency/Freedom
+→ FormalPhilosophy/Normativity/IsOught
+→ FormalPhilosophy/Ethics/Responsibility
+→ FormalPhilosophy/Social/Institution
+→ FormalPhilosophy/Dialectics/Completion
+→ FormalPhilosophy/Models/Historical
+```
+
+应优先复用仓库现有预测完成、线性 quotient、观察者距离和对角逃逸结果，不复制平行定理。
+
+---
+

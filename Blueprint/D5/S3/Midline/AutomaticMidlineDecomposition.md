@@ -23,4 +23,3 @@ This is a partial closure of the automatic-midline clause. The square-summabilit
 ## References
 
 - Truth anchor: `D5/S3/Midline/AutomaticMidlineDecomposition.half_density_unitarity_iff_self_resonance`
-- Dependency: [D5/S3/Midline/UniversalHeatTrace](UniversalHeatTrace.md)

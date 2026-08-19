@@ -8,6 +8,7 @@ claim: Golden-ratio identities, Fibonacci matrices, and exact Fibonacci formulas
 strata_touched:
   - D5/S0/Carrier/GoldenRatio
   - D5/S1/Scale/FibonacciEigen
+  - D5/S1/Deficit/Displacement/ZeckendorfNormSign
 license: citation-only
 triage: anchor
 ---
@@ -36,6 +37,23 @@ the two formal declarations.
   string and received HTTP 422. Reissuing the same queries with JSON supplied
   on stdin produced the results above; no bibliographic conclusion was drawn
   from the failed requests.
+- 2026-08-17: Searched the D5 Lean source by statement shape for combinations
+  of `betaGolden`, `norm`, least Zeckendorf index, parity, and sign. No exact
+  declaration was found; one broad-regex hit in `RationalSpectrum` was
+  unrelated.
+- 2026-08-17: Searched the pinned Mathlib source for Zeckendorf declarations
+  combined with parity, norm, conjugate, or sign. The combined query exited 1
+  with no match.
+- 2026-08-17: Queried Loogle for `Nat.zeckendorf`. Its seven results were the
+  standard representation, canonicality, decoding, and uniqueness API; none
+  related least-index parity to a quadratic norm sign.
+- 2026-08-17: Posted the exact LeanSearch query `Zeckendorf representation
+  least occupied index parity determines sign of the golden conjugate norm`.
+  Results covered the standard Zeckendorf API and Binet formula, with no exact
+  or equivalent sign theorem.
+- 2026-08-17: Queried arXiv for `all:"Zeckendorf" AND all:"golden ratio" AND
+  all:"conjugate"`; the API reported `totalResults=0`. This finite search
+  supports only a `suspected-novel` classification, not established novelty.
 
 ## Verified locator
 

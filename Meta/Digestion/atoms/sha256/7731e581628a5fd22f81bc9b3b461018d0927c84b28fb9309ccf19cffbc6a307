@@ -1,0 +1,18 @@
+### 定理 41.20
+
+若：
+
+\[
+\mathcal S_n=\mathcal S_{n+1},
+\]
+
+则：
+
+\[
+\boxed{
+\mathcal S_{n+r}=\mathcal S_n
+\quad
+\forall r\ge0.
+}
+\]
+

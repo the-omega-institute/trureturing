@@ -1,0 +1,17 @@
+ast_path: theorem/18.10
+fingerprints:
+  raw_sha256: sha256:496bb38a0cbe605aee89661e15bd6a99a8fadfc7306b9572ab3a8c6c0a6d9259
+  normalized_sha256: sha256:496bb38a0cbe605aee89661e15bd6a99a8fadfc7306b9572ab3a8c6c0a6d9259
+cas_ref: sha256:496bb38a0cbe605aee89661e15bd6a99a8fadfc7306b9572ab3a8c6c0a6d9259
+coverage_gids:
+  - D5/S3/Factorization/PositiveRationalGroup.signed_prime_ledger_equiv_positive_rationals
+receipts:
+  coverage:
+    - gid: D5/S3/Factorization/PositiveRationalGroup.signed_prime_ledger_equiv_positive_rationals
+      source_sha256: sha256:496bb38a0cbe605aee89661e15bd6a99a8fadfc7306b9572ab3a8c6c0a6d9259
+      target_sha256: sha256:f37e365504d4c9bdad26a0264fa501bfd6e8d38d5f5fbb1c028db50d8d8bcff9
+  scribe:
+    - gid: D5/S3/Factorization/PositiveRationalGroup.signed_prime_ledger_equiv_positive_rationals
+      definition_sha256: sha256:91e5005118d7eb6beae11984528bee710725d3b07c9b46d31d06b125fffaa6b1
+      emission_sha256: sha256:2bc9d0403f32729c41aca172495f45e5c0ce3321a0162d30010d00912e9b94b2
+  unresolved_subitems: []

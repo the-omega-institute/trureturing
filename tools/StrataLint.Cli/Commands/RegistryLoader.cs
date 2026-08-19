@@ -27,7 +27,7 @@ public static class RegistryLoader
         {
             var syntax = ParseRegistrySyntax(registryBytes);
             var domains = ParseDomainsSyntax(domainsBytes);
-            return RegistryPolicyCompiler.Compile(syntax, domains, registryBytes, domainsBytes);
+            return RegistryPolicyCompiler.Compile(syntax, domains);
         }
         catch (Exception exception) when (exception is DecoderFallbackException or YamlException or FormatException)
         {

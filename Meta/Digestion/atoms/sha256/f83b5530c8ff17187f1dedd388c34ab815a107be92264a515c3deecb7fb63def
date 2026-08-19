@@ -1,0 +1,39 @@
+### 定义 41.25（未来等价）
+
+\[
+\boxed{
+x\sim_\infty y
+\iff
+\forall n,\quad
+q(F^nx)=q(F^ny).
+}
+\]
+
+即：
+
+\[
+x\sim_\infty y
+\iff
+\operatorname{Tr}_{q,F}(x)
+=
+\operatorname{Tr}_{q,F}(y).
+\]
+
+在有效商范畴中，其商：
+
+\[
+X/{\sim_\infty}
+\]
+
+就是最小因果状态空间。
+
+这同时统一：
+
+- Myhill–Nerode 等价；
+- 控制论不可观测商；
+- computational mechanics causal states；
+- 项目中的 Heisenberg 预测闭包；
+- 有限状态未来区分稳定。
+
+---
+

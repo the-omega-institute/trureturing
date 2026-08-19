@@ -1,0 +1,8 @@
+## 定义 27.5（领域必然）
+
+\[
+\Box_{\operatorname{Adm}}P
+\iff
+\forall x,\operatorname{Adm}(x)\to P(x).
+\]
+

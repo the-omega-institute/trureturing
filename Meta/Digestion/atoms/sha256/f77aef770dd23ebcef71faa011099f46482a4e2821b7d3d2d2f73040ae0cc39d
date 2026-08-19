@@ -1,0 +1,8 @@
+## 定义 49.1（经验等价）
+
+\[
+\theta\sim_K\theta'
+\iff
+K(\theta)=K(\theta').
+\]
+

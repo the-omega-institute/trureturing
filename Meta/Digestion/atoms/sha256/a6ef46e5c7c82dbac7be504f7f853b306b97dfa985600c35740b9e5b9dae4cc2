@@ -1,0 +1,12 @@
+## 定义 26.1（过程相对实体）
+
+若对过程族 \(\mathcal F\)：
+
+\[
+\forall F\in\mathcal F,\forall x,
+\quad
+S(Fx)=S(x),
+\]
+
+则 \(S\) 是该过程族下的实体身份概念。
+

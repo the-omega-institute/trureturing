@@ -1,0 +1,20 @@
+# 45. 承认与多观察者兼容
+
+设两个观察者概念：
+
+\[
+C_1:X\to B_1,
+\qquad
+C_2:X\to B_2.
+\]
+
+联合概念像：
+
+\[
+\operatorname{Im}(C_1\vee C_2)
+\hookrightarrow
+\operatorname{Im}(C_1)
+\times
+\operatorname{Im}(C_2).
+\]
+

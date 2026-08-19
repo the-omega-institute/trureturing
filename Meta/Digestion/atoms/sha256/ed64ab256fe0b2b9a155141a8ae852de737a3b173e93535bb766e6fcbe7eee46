@@ -1,0 +1,10 @@
+## 定义 27.3（动力可达）
+
+\[
+\Diamond_F^aP
+\iff
+\exists u,n,
+\operatorname{Adm}(F_u^na)
+\land P(F_u^na).
+\]
+

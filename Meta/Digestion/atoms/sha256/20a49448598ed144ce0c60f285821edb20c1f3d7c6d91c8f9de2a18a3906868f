@@ -1,0 +1,35 @@
+### 定义 40.14（截面 carry）
+
+定义：
+
+\[
+\boxed{
+\kappa_s(a,b)
+=
+s(a)+s(b)-s(a+b).
+}
+\]
+
+由于：
+
+\[
+q(\kappa_s(a,b))=0,
+\]
+
+它落在余核 \(R\) 中。
+
+商余坐标上的加法为：
+
+\[
+\boxed{
+(a,r)\boxplus_s(b,t)
+=
+\left(
+a+b,\,
+r+t+\kappa_s(a,b)
+\right).
+}
+\]
+
+---
+

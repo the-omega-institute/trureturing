@@ -1,0 +1,17 @@
+ast_path: theorem/4.4
+fingerprints:
+  raw_sha256: sha256:2a68d5833e74a5efda6aa512d8a126c6d1082ada8d77a088c16d39c4d2e7aeb1
+  normalized_sha256: sha256:2a68d5833e74a5efda6aa512d8a126c6d1082ada8d77a088c16d39c4d2e7aeb1
+cas_ref: sha256:2a68d5833e74a5efda6aa512d8a126c6d1082ada8d77a088c16d39c4d2e7aeb1
+coverage_gids:
+  - D5/S3/QuantumChannels/ContractionSpectrumOrder.contraction_spectrum_order
+receipts:
+  coverage:
+    - gid: D5/S3/QuantumChannels/ContractionSpectrumOrder.contraction_spectrum_order
+      source_sha256: sha256:2a68d5833e74a5efda6aa512d8a126c6d1082ada8d77a088c16d39c4d2e7aeb1
+      target_sha256: sha256:642fa0050a68db1e2c6b358076c585c923e7ad8631010eda5d861dba01c44a47
+  scribe:
+    - gid: D5/S3/QuantumChannels/ContractionSpectrumOrder.contraction_spectrum_order
+      definition_sha256: sha256:7778505ee3dd17bc2f51e645643ad4579cea10562f2dddaa1afca0dda19ea7fb
+      emission_sha256: sha256:f170b3780a85a55c7d5c497706e32d0d0e86c5b8b55fc0e58199ff7bd5cf0923
+  unresolved_subitems: []

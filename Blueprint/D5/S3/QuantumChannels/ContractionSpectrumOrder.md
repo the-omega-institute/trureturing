@@ -23,5 +23,3 @@ This records the pointwise contraction-ratio ordering, the key lemma from which 
 ## References
 
 - Truth anchor: `D5/S3/QuantumChannels/ContractionSpectrumOrder.contraction_spectrum_order`
-- Dependency: [D5/S3/Quantum/DoubleArtanhBounds](../Quantum/DoubleArtanhBounds.md)
-- Dependency: [D5/S3/QuantumChannels/AmplitudeDampingContraction](AmplitudeDampingContraction.md)

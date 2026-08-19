@@ -1,0 +1,24 @@
+\[
+\boxed{
+\operatorname{Compat}_{\operatorname{Adm}}(C,D)
+=
+\left\{
+(c,d)\mid
+\exists x,
+\operatorname{Adm}(x)
+\land q_Cx=c
+\land q_Dx=d
+\right\}.
+}
+\]
+
+一般只有：
+
+\[
+\operatorname{Compat}_{\operatorname{Adm}}(C,D)
+\subseteq
+\operatorname{Im}_{\operatorname{Adm}}(C)
+\times
+\operatorname{Im}_{\operatorname{Adm}}(D).
+\]
+

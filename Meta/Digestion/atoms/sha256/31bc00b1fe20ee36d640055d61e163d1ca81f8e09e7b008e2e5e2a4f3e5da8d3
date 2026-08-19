@@ -1,0 +1,20 @@
+### 定理 40.1（定义性保守性）
+
+如果 C-IRPT 只通过显式定义扩展 \(T_0\)，那么对任何旧语言命题：
+
+\[
+\varphi\in\mathcal L_0,
+\]
+
+若：
+
+\[
+T_{\mathrm{CIRPT}}\vdash\varphi,
+\]
+
+则：
+
+\[
+T_0\vdash\varphi.
+\]
+

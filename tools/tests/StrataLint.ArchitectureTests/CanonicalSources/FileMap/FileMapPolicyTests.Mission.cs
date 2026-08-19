@@ -89,7 +89,6 @@ public sealed partial class FileMapPolicyTests
                     overwrite: true);
                 RunMissionGit(repository, "add", "--", relativePath);
             }
-
             const string targetRelativePath = "D5/X_Frontier/GovernanceDeferrals.lean";
             var targetPath = Path.Combine(repository, targetRelativePath);
             var target = RunMissionGit(repository, "show", $":{targetRelativePath}");

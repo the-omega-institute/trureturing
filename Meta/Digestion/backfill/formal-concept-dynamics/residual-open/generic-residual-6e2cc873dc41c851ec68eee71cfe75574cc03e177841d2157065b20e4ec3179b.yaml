@@ -1,0 +1,10 @@
+ast_path: section/50-数学存在与数学哲学
+fingerprints:
+  raw_sha256: sha256:6e2cc873dc41c851ec68eee71cfe75574cc03e177841d2157065b20e4ec3179b
+  normalized_sha256: sha256:6e2cc873dc41c851ec68eee71cfe75574cc03e177841d2157065b20e4ec3179b
+cas_ref: sha256:6e2cc873dc41c851ec68eee71cfe75574cc03e177841d2157065b20e4ec3179b
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

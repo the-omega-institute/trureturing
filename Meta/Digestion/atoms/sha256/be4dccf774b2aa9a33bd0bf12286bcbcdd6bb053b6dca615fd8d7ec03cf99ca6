@@ -1,0 +1,21 @@
+## 定义 21.1（Gettier 见证）
+
+\[
+\boxed{
+\begin{aligned}
+\operatorname{Gettier}(P,a)
+\iff{}&
+P(a)
+\land\operatorname{Bel}_E(P,a)
+\land\operatorname{Just}(E(a),P)\\
+&\land
+\exists x,
+\operatorname{Adm}(x)
+\land E(x)=E(a)
+\land\neg P(x).
+\end{aligned}
+}
+\]
+
+因此：
+

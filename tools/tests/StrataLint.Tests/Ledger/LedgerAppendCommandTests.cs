@@ -379,17 +379,26 @@ public sealed class LedgerAppendCommandTests
             bool historicalReattest = false,
             bool reportADriftInChangeSet = false,
             bool aImportsB = false,
-            bool reportBDriftInChangeSet = false)
+            bool reportBDriftInChangeSet = false,
+            bool aImportsExternal = false,
+            bool externalPackagePinned = false)
         {
+            var externalImport = externalPackagePinned ? "Mathlib.Foo" : "External.Foo";
             var aSource = aImportsB
                 ? "import D5.S0.Carrier.B\ntheorem a : B.P := B.proof\n"
-                : "theorem a : True := by trivial\n";
+                : aImportsExternal
+                    ? $"import {externalImport}\ntheorem a : External.P := External.proof\n"
+                    : "theorem a : True := by trivial\n";
             var baselineA = FrozenLedgerTestData.ModuleWithReport(
                 "A",
                 aSource,
-                "True") with
+                aImportsExternal ? "Nat.Prime 2" : "True") with
             {
-                Imports = aImportsB ? ImmutableArray.Create("B") : ImmutableArray<string>.Empty,
+                Imports = aImportsB
+                    ? ImmutableArray.Create("B")
+                    : aImportsExternal
+                        ? ImmutableArray.Create(externalImport)
+                        : ImmutableArray<string>.Empty,
             };
             var candidateA = FrozenLedgerTestData.ModuleWithReport(
                 "A",
@@ -443,7 +452,9 @@ public sealed class LedgerAppendCommandTests
                     ? "leanprover/lean4:v4.25.0\n"
                     : "leanprover/lean4:v4.24.0\n",
                 ["lakefile.toml"] = "[package]\nname = \"fixture\"\n",
-                ["lake-manifest.json"] = "{}\n",
+                ["lake-manifest.json"] = externalPackagePinned
+                    ? "{\"packages\":[{\"name\":\"mathlib\",\"type\":\"git\",\"rev\":\"abc123\"}]}\n"
+                    : "{}\n",
                 [FrozenLedgerTestData.PathFor("A")] = candidateA.Source,
                 [FrozenLedgerTestData.PathFor("B")] = candidateB.Source,
             };
@@ -461,7 +472,11 @@ public sealed class LedgerAppendCommandTests
                 [FrozenLedgerTestData.PathFor("A")] = Report(
                     "A",
                     currentAStatementMaterial,
-                    aImportsB ? new[] { "B" } : Array.Empty<string>()),
+                    aImportsB
+                        ? new[] { "B" }
+                        : aImportsExternal
+                            ? new[] { externalImport }
+                            : Array.Empty<string>()),
                 [FrozenLedgerTestData.PathFor("B")] = Report(
                     "B",
                     "True",
@@ -515,7 +530,10 @@ public sealed class LedgerAppendCommandTests
             string name,
             string statementMaterial,
             IEnumerable<string>? imports = null) => new(
-            (imports ?? []).Select(static item => $"D5.S0.Carrier.{item}").ToImmutableArray(),
+            (imports ?? []).Select(static item => item.Contains('.', StringComparison.Ordinal)
+                    ? item
+                    : $"D5.S0.Carrier.{item}")
+                .ToImmutableArray(),
             ImmutableArray.Create(new LeanDeclaration(
                 name.ToLowerInvariant(),
                 "theorem",

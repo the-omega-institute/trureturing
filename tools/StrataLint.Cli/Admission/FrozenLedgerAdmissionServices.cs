@@ -254,6 +254,7 @@ internal sealed class ProductionFrozenLedgerAdmissionServices : IFrozenLedgerAdm
         FrozenLedgerAdmissionPreparation preparation,
         RepositorySnapshot current,
         AcceptedLeanClosure lean,
+        LeanAxiomReport report,
         AcyclicTruthDag dag,
         RawChangeSet changes,
         FrozenRevisionIdentity currentIdentity)
@@ -293,7 +294,9 @@ internal sealed class ProductionFrozenLedgerAdmissionServices : IFrozenLedgerAdm
             scope,
             catalog,
             changes,
-            preparation.TrustedDeltaReferences);
+            preparation.TrustedDeltaReferences,
+            report,
+            current);
         return failure is null
             ? null
             : RuleRejection(failure.AffectedPaths, failure.Message);
