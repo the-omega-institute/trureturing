@@ -1,0 +1,18 @@
+### 定理 41.11（预测完成普适性）
+
+存在：
+
+\[
+\Phi:C\to B^{\mathbb N}
+\]
+
+使：
+
+\[
+\boxed{
+\operatorname{Tr}_{q,F}
+=
+\Phi r.
+}
+\]
+

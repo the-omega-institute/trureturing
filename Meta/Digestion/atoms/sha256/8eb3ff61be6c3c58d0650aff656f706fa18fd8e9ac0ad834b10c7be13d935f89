@@ -1,0 +1,27 @@
+### 定理 41.19
+
+对状态 \(\rho,\sigma\)，以下等价：
+
+\[
+q_{\mathcal S_0}(\Phi^k\rho)
+=
+q_{\mathcal S_0}(\Phi^k\sigma)
+\quad
+\forall k\ge0,
+\]
+
+与：
+
+\[
+\boxed{
+\operatorname{Tr}
+\bigl(
+(\rho-\sigma)A
+\bigr)
+=
+0
+\quad
+\forall A\in\mathcal S_\infty.
+}
+\]
+

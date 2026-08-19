@@ -1,0 +1,8 @@
+### 定理 41.6（下降推出零 carry）
+
+若 \(F\) 下降，则：
+
+\[
+\operatorname{NoCarry}(F;q_X,q_Y).
+\]
+

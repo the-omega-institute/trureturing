@@ -1,0 +1,17 @@
+### 定义 41.13（零 carry）
+
+\[
+\boxed{
+\operatorname{NoCarry}(F;q_X,q_Y)
+}
+\]
+
+定义为：
+
+\[
+\forall x,y:X,\quad
+q_X(x)=q_X(y)
+\Longrightarrow
+q_Y(Fx)=q_Y(Fy).
+\]
+
