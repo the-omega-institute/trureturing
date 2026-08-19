@@ -138,8 +138,11 @@ internal static class BackfillInventoryRule
         IEnumerable<string> declaredPaths,
         ImmutableArray<RuleFinding>.Builder findings)
     {
+        // 扫**文件树**,不扫 registry 清单。理论卷已改为按路径规则治理,不再逐个枚举进
+        // governance_documents;若这里仍遍历那张清单,清单一空本检查就静默失效——
+        // 那正是「新增 markdown 无人过问」的旧病换了个方向复发。
         var declared = declaredPaths.ToHashSet(StringComparer.Ordinal);
-        foreach (var path in context.Policy.GovernanceDocuments
+        foreach (var path in context.Current.Files.Keys
                      .Select(static path => path.Value)
                      .Where(static path => path.StartsWith(
                          DigestionOpaquePathPolicy.TheoryRootPath,
@@ -147,10 +150,14 @@ internal static class BackfillInventoryRule
                      .Where(path => !declared.Contains(path))
                      .Order(StringComparer.Ordinal))
         {
+            // 与「未登记残余原子」同理:全新理论卷入库但尚未跑 ingest,是账本四态里的
+            // `open`,不是违规。一个只改 markdown 的 PR 不该被它挡住——第三方本来就
+            // 跑不了本仓的 producer。判词照发(带补救命令),但不阻断准入。
             findings.Add(new RuleFinding(
                 BackfillPath,
                 $"theory document '{path}' has no digestion source: run make ingest, "
-                + "which registers it with the default atomizer"));
+                + "which registers it with the default atomizer",
+                AdmissionEffect.Observe));
         }
     }
 
@@ -318,6 +325,13 @@ internal static class BackfillInventoryRule
             foreach (var finding in evaluation.Findings)
             {
                 findings.Add(new RuleFinding(BackfillPath, finding));
+            }
+
+            // 观察项不阻断准入。理论卷入库后尚未消化是账本四态里的 `open`,
+            // 由本地 `make ingest` 闭合;它不该挡住一个只改 markdown 的 PR。
+            foreach (var observation in evaluation.Observations)
+            {
+                findings.Add(new RuleFinding(BackfillPath, observation, AdmissionEffect.Observe));
             }
         }
         catch (FormatException exception)
