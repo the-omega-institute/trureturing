@@ -8,7 +8,6 @@ internal static partial class RepositoryPathPolicy
 {
     internal const string AssumptionRegistryPath = "D5/X_Assumptions/REGISTRY.md";
     internal const string WorkflowPath = ".github/workflows/ci.yml";
-    internal const string TheoryIngestWorkflowPath = ".github/workflows/theory-ingest.yml";
     internal const string HarnessGatePath = ".github/scripts/harness-gate.sh";
 
     internal static ImmutableArray<Diagnostic> Evaluate(
@@ -76,7 +75,7 @@ internal static partial class RepositoryPathPolicy
             or "Library/queries.yaml" or AssumptionRegistryPath
             or "tools/tests/StrataLint.Tests/Fixtures/fixture-registry.yaml"
             or "Golden/values-kernels.toml"
-            or WorkflowPath or TheoryIngestWorkflowPath
+            or WorkflowPath
             or ".github/CODEOWNERS"
             or HarnessGatePath
             || value.StartsWith("tools/", StringComparison.Ordinal)
@@ -84,10 +83,15 @@ internal static partial class RepositoryPathPolicy
             || BackfillInventoryLoader.IsCanonicalPath(value)
             || DigestionFormalizationReceipt.IsCanonicalPath(value)
             || IsEchoResidualShardPath(value)
+            || ProblemPoolPaths.IsCanonicalPath(value)
             || FrozenLedgerChangeClassifier.IsAcceptedEventPath(value)
             || value.StartsWith("skills/", StringComparison.Ordinal)
             || value.StartsWith(".codex/skills/", StringComparison.Ordinal)
             || value.StartsWith("docs/reports/", StringComparison.Ordinal)
+            // 理论卷与 docs/reports/ 同性质:第三方 PR 带进来的卷名无法预先枚举,
+            // 逐个写进 registry.yaml 会让「加一个 markdown」被迫改 harness
+            // (CLAUDE.md 商余结构:harness 存规则,不存代表元)。
+            || value.StartsWith(DigestionOpaquePathPolicy.TheoryRootPath, StringComparison.Ordinal)
             || IsGoldenProjectionData(value)
             || IsCanonicalFutureCoordinate(value))
         {

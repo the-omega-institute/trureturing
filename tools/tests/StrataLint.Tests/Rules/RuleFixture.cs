@@ -90,6 +90,8 @@ internal sealed partial class RuleFixture
         "tools/tests/BannedApiCompileFailProof/BannedApiCompileFailProof.csproj";
     internal const string CompileFailProofProjectPath =
         "tools/tests/CompileFailProof/CompileFailProof.csproj";
+    private const string ScribeProjectPath =
+        "tools/StrataLint.Scribe/StrataLint.Scribe.csproj";
 
     private const string Header = """
         /- GID: D5/S0/Carrier/Ring
@@ -119,8 +121,13 @@ internal sealed partial class RuleFixture
             [BlueprintSourcePath] = "// synthetic Scribe definition\n",
             [FixtureDigestionSourcePath] = FixtureDigestionSource,
             [FixtureCasPath] = FixtureDigestionSource,
-            [BannedApiCompileFailProofProjectPath] = "<Project />\n",
-            [CompileFailProofProjectPath] = "<Project />\n",
+            [ScribeProjectPath] = """
+                <Project Sdk="Microsoft.NET.Sdk">
+                  <ItemGroup><Compile Include="../../Blueprint/**/*.scribe.cs" /></ItemGroup>
+                </Project>
+                """ + "\n",
+            [BannedApiCompileFailProofProjectPath] = "<Project Sdk=\"Microsoft.NET.Sdk\" />\n",
+            [CompileFailProofProjectPath] = "<Project Sdk=\"Microsoft.NET.Sdk\" />\n",
         };
         Baseline = new Dictionary<string, string>(Files, StringComparer.Ordinal);
         Reports = new Dictionary<string, LeanFileReport>(StringComparer.Ordinal)
@@ -268,6 +275,15 @@ internal sealed partial class RuleFixture
                 Files[BlueprintSourcePath] = "DefinitionDsl.LeanTheorem(x);\n";
                 Changes.Clear();
                 Changes.Add(BlueprintSourcePath);
+                break;
+            case "delivery-statement-identity":
+                AddHistoricalTheoristTarget(
+                    "prime-norm-irreducibility",
+                    baselineOwnerKind: "declaration-ready-mathematical-open",
+                    baselineIncludeContract: true);
+                ReplaceRetiredBaselineWithLiteralV2Contract();
+                RetireTheoristTarget();
+                MutateRetiredDeliveryStatement("weakened");
                 break;
             default: throw new ArgumentOutOfRangeException(nameof(mutation));
         }

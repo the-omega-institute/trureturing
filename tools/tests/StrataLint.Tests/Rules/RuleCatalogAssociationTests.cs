@@ -97,7 +97,7 @@ public sealed class RuleCatalogAssociationTests
     public void ExecuteStampsAUniqueFindingWithItsPairedDescriptorAcrossACompleteCatalog()
     {
         var uniqueFinding = new RuleFinding("unique/path.txt", "finding from rule seventeen");
-        var registrations = Enumerable.Range(1, 23).Append(25).Append(26)
+        var registrations = Enumerable.Range(1, 23).Append(25).Append(26).Append(27).Append(28)
             .Select(number => new RuleRegistration(
                 Descriptor(
                     number,
@@ -135,7 +135,7 @@ public sealed class RuleCatalogAssociationTests
     public void RuleCatalogDoesNotInvokeRulesUnaffectedByTheCandidateDelta()
     {
         var rule = new CountingUnaffectedRule();
-        var registrations = Enumerable.Range(1, 23).Append(25).Append(26)
+        var registrations = Enumerable.Range(1, 23).Append(25).Append(26).Append(27).Append(28)
             .Select(number => Registration(
                 Descriptor(
                     number,
@@ -255,7 +255,7 @@ public sealed class RuleCatalogAssociationTests
     public void DefaultCatalogRootMatchesCharacterizedRegressionValue()
     {
         Assert.Equal(
-            "sha256:705cd2891cd60e454c2789dc31f451182dcbf88174723b4d06d299ba7ad51cc4",
+            "sha256:f217ba7fe148563732f9a8c34844a36802ba1ef18fbd34474fbca36114f01392",
             RuleCatalog.Default.RootSha256);
     }
 

@@ -1,0 +1,17 @@
+ast_path: theorem/4.2′/clause/2
+fingerprints:
+  raw_sha256: sha256:7b7ed5a483aa69713b01a04742ec3b46b4c27f133e7a79d836e32f42624904ad
+  normalized_sha256: sha256:7b7ed5a483aa69713b01a04742ec3b46b4c27f133e7a79d836e32f42624904ad
+cas_ref: sha256:7b7ed5a483aa69713b01a04742ec3b46b4c27f133e7a79d836e32f42624904ad
+coverage_gids:
+  - D5/S0/Tower/GoldenClauseTwo/ErrataPackage.golden_clause_two_errata_package
+receipts:
+  coverage:
+    - gid: D5/S0/Tower/GoldenClauseTwo/ErrataPackage.golden_clause_two_errata_package
+      source_sha256: sha256:7b7ed5a483aa69713b01a04742ec3b46b4c27f133e7a79d836e32f42624904ad
+      target_sha256: sha256:34893e807e4a3b78613786ed903d366164011e9b60cd5a45de5878ff4e84c841
+  scribe:
+    - gid: D5/S0/Tower/GoldenClauseTwo/ErrataPackage.golden_clause_two_errata_package
+      definition_sha256: sha256:895735039be69677ad0fbcbcf1b8d571cac6ed28b61abf8f1228d3d4b2de9921
+      emission_sha256: sha256:edecbf91198946f51bbd5c9bee2e773f512db84c8663f2c797342580ca059ca5
+  unresolved_subitems: []

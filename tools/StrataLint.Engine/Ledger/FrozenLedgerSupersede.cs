@@ -33,7 +33,8 @@ public static partial class FrozenLedger
         IReadOnlyDictionary<string, FrozenActiveEntry> active,
         TrustedFrozenGitReferences trustedReferences,
         FrozenMaterialCatalog? candidateCatalog,
-        bool repositoryImportClosureUnchanged)
+        bool repositoryImportClosureUnchanged,
+        bool externalImportsCoveredByNamedPins = true)
     {
         var result = ParseSupersede(payload);
         if (!active.TryGetValue(result.CaseId, out var entry)
@@ -43,7 +44,11 @@ public static partial class FrozenLedger
                 "Supersede targets no active case or does not extend its attestation chain.");
         }
 
-        ValidateSupersedeStrength(result, entry, repositoryImportClosureUnchanged);
+        ValidateSupersedeStrength(
+            result,
+            entry,
+            repositoryImportClosureUnchanged,
+            externalImportsCoveredByNamedPins);
 
         var reference = new FrozenEnvironmentReference(result.Input, result.Environment);
         if (!trustedReferences.Covers(result.Input) || !trustedReferences.Covers(reference))
@@ -63,7 +68,8 @@ public static partial class FrozenLedger
     internal static void ValidateSupersedeStrength(
         FrozenSupersedePayload payload,
         FrozenActiveEntry protectedBaseEntry,
-        bool repositoryImportClosureUnchanged)
+        bool repositoryImportClosureUnchanged,
+        bool externalImportsCoveredByNamedPins = true)
     {
         if (!protectedBaseEntry.AxiomClosureKnown)
         {
@@ -106,6 +112,12 @@ public static partial class FrozenLedger
             {
                 throw new FormatException(
                     $"Supersede target {protectedBaseEntry.Material.RepoPath.Value} statement identity changed while its repository import closure changed from the protected base.");
+            }
+
+            if (!externalImportsCoveredByNamedPins)
+            {
+                throw new FormatException(
+                    $"Supersede target {protectedBaseEntry.Material.RepoPath.Value} statement identity changed while an external import lacks named pin coverage.");
             }
         }
 

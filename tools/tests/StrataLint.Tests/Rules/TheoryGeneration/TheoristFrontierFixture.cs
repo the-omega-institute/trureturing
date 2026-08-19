@@ -12,6 +12,15 @@ internal sealed partial class RuleFixture
     private const string SearchReceiptPath = "Library/Carrier/fixture2026contract.md";
     private const string ComputationReceiptGid = "D5/E/S0/Carrier/Probe.result--json";
     private const string ComputationReceiptPath = "Evidence/D5/S0/Carrier/Probe.result.json";
+    private const string BackfillTargetPath = "D5/S0/Carrier/BackfillTarget.lean";
+    private const string RetiredDeliveryGid = "D5/S0/Carrier/Euclidean.golden_division";
+    private const string ParentV1StatementAddress =
+        "sha256:a20f6bafe7333a1146e6de8e1ff1c70b6167907eee609faee07c45650b7595f3";
+    private const string ParentV1Contract =
+        "/- THEORIST_FRONTIER_CONTRACT_V1\n"
+        + "{\"schema\":\"trureturing-theorist-frontier-v1\",\"exact_statement\":{\"gid\":\"D5/X_Frontier/PrimeNormIrreducibility.prime_norm_irreducible\",\"statement_sha256\":\""
+        + ParentV1StatementAddress
+        + "\"},\"motivation_gids\":[\"D5/S0/Carrier/Euclidean\"],\"falsifier\":\"a finite counterexample fiber\",\"search_receipt_gids\":[\"D5/L/Carrier/fixture2026contract\"],\"computation_receipt_gids\":[\"D5/E/S0/Carrier/Probe.result--json\"],\"triage_class\":\"theorem\"}\n-/";
 
     private string currentTheoristPath = TheoristTargetPath;
     private string currentTheoristDeclaration = "prime_norm_irreducible";
@@ -42,12 +51,9 @@ internal sealed partial class RuleFixture
             historical.StatementMaterial,
             ["sorryAx"]);
         Reports[historical.Path] = Report(declarations: [declaration]);
-        var statement = Assert.Single(CanonicalStatementWriter.DeclarationStatementIds(
-            RepoPath.CreateKnown(historical.Path),
-            Reports[historical.Path]));
         var contract = TheoristContract(
             historical.ModuleGid + "." + historical.Declaration,
-            statement.StatementId.Value,
+            CanonicalStatementWriter.StatementTypeAddress(declaration.TypeRepresentation),
             historical.MotivationGid);
         Files[historical.Path] = includeContract
             ? InsertContract(historical.Source, contract)
@@ -76,11 +82,115 @@ internal sealed partial class RuleFixture
     internal void CorruptMission() =>
         Files[MissionFileLoader.RelativePath] = "# Mission fixture without a mission-v1 fence\n";
 
+    internal void CorruptBaselineMission() =>
+        Baseline[MissionFileLoader.RelativePath] =
+            "# Baseline Mission fixture without a mission-v1 fence\n";
+
     internal void DeleteTheoristTargetAndOwner()
     {
         Files.Remove(currentTheoristPath);
         Reports.Remove(currentTheoristPath);
         Files[MissionFileLoader.RelativePath] = Mission(null);
+    }
+
+    internal void DeleteTheoristTargetWithOwner(string ownerKind)
+    {
+        Files.Remove(currentTheoristPath);
+        Reports.Remove(currentTheoristPath);
+        Files[MissionFileLoader.RelativePath] = Mission(ownerKind);
+    }
+
+    internal void RetireTheoristTarget(string deliveryGid = RetiredDeliveryGid)
+    {
+        RetireTheoristTargetWithDeliveries(deliveryGid);
+    }
+
+    internal void RetireTheoristTargetWithDeliveries(params string[] deliveryGids)
+    {
+        Files.Remove(currentTheoristPath);
+        Reports.Remove(currentTheoristPath);
+        Files[MissionFileLoader.RelativePath] = Mission("retired", deliveryGids);
+    }
+
+    internal void RemoveRetiredBaselineContract()
+    {
+        var source = Baseline[currentTheoristPath];
+        var start = source.IndexOf("/- THEORIST_FRONTIER_CONTRACT_V2", StringComparison.Ordinal);
+        var end = source.IndexOf("\n-/", start, StringComparison.Ordinal);
+        Assert.True(start >= 0 && end > start);
+        Baseline[currentTheoristPath] = source.Remove(start, end + 3 - start);
+    }
+
+    internal void MalformedRetiredBaselineContract()
+    {
+        var source = Baseline[currentTheoristPath];
+        var malformed = source.Replace("\"falsifier\":", "\"falsifier\"", StringComparison.Ordinal);
+        Assert.NotEqual(source, malformed);
+        Baseline[currentTheoristPath] = malformed;
+    }
+
+    internal void ReplaceRetiredBaselineWithLiteralParentV1Contract()
+    {
+        var parentStatement = Assert.Single(CanonicalStatementWriter.DeclarationStatementIds(
+            RepoPath.CreateKnown(currentTheoristPath),
+            BaselineReports[currentTheoristPath]));
+        Assert.Equal(ParentV1StatementAddress, parentStatement.StatementId.Value);
+
+        ReplaceRetiredBaselineContract(ParentV1Contract);
+    }
+
+    internal void ReplaceCurrentContractWithLiteralParentV1Contract()
+    {
+        var parentStatement = Assert.Single(CanonicalStatementWriter.DeclarationStatementIds(
+            RepoPath.CreateKnown(currentTheoristPath),
+            Reports[currentTheoristPath]));
+        Assert.Equal(ParentV1StatementAddress, parentStatement.StatementId.Value);
+
+        var source = Files[currentTheoristPath];
+        var start = source.IndexOf("/- THEORIST_FRONTIER_CONTRACT_", StringComparison.Ordinal);
+        var end = source.IndexOf("\n-/", start, StringComparison.Ordinal);
+        Assert.True(start >= 0 && end > start);
+        Files[currentTheoristPath] = source[..start]
+            + ParentV1Contract
+            + source[(end + 3)..];
+    }
+
+    internal void AddMismatchingFrozenRetiredDelivery()
+    {
+        Reports[currentMotivationPath] = Report(
+            declarations: Reports[currentMotivationPath].Declarations.Append(
+                new LeanDeclaration(
+                    "D5.S0.Carrier.mismatched_delivery",
+                    "theorem",
+                    "statement-v1(mismatched-retired-delivery)",
+                    [])
+                {
+                    NameKey = "fixture-mismatched-retired-delivery",
+                }));
+        AddFrozenMotivationMembership();
+    }
+
+    internal void MutateRetiredDeliveryStatement(string mutation)
+    {
+        var type = mutation switch
+        {
+            "weakened" => "statement-v1(retired-delivery-with-extra-hypothesis)",
+            _ => throw new ArgumentOutOfRangeException(nameof(mutation)),
+        };
+        Reports[currentMotivationPath] = Report(
+            declarations: Reports[currentMotivationPath].Declarations
+                .Select(declaration => declaration with { TypeRepresentation = type }));
+    }
+
+    internal void AddUnfrozenRetiredDeliveryDeclaration()
+    {
+        Reports[currentMotivationPath] = Report(
+            declarations: Reports[currentMotivationPath].Declarations.Append(
+                new LeanDeclaration(
+                    "D5.S0.Carrier.unfrozen_delivery",
+                    "theorem",
+                    "statement-v1(unfrozen-delivery)",
+                    [])));
     }
 
     internal void RemoveTheoristTargetReport() => Reports.Remove(currentTheoristPath);
@@ -124,8 +234,8 @@ internal sealed partial class RuleFixture
                 break;
             case "wrong-schema":
                 ReplaceContract(
-                    "trureturing-theorist-frontier-v1",
-                    "trureturing-theorist-frontier-v2");
+                    "trureturing-theorist-frontier-v2",
+                    "trureturing-theorist-frontier-v3");
                 break;
             case "blank-falsifier":
                 ReplaceContract("\"falsifier\":\"a finite counterexample fiber\"", "\"falsifier\":\" \"");
@@ -253,8 +363,30 @@ internal sealed partial class RuleFixture
 
     private void AddTheoristSupportFiles()
     {
+        var backfillTarget = HeaderFor("D5/S0/Carrier/BackfillTarget", "G")
+            + "def theoristBackfillTargetFixture : Unit := ()\n";
+        Files[BackfillTargetPath] = backfillTarget;
+        Baseline[BackfillTargetPath] = backfillTarget;
+        ForkPoint[BackfillTargetPath] = backfillTarget;
+        Reports[BackfillTargetPath] = Report();
+        BaselineReports[BackfillTargetPath] = Report();
         Files[SearchReceiptPath] = "# Search receipt fixture\n";
         Files[ComputationReceiptPath] = "{}\n";
+        Files[currentMotivationPath] = HeaderFor(currentMotivationGid, "G");
+        Reports[currentMotivationPath] = currentMotivationPath
+                is "D5/S0/Carrier/Euclidean.lean"
+            ? Report(declarations:
+            [
+                new LeanDeclaration(
+                    "D5.S0.Carrier.golden_division",
+                    "theorem",
+                    "statement-v1(retired-delivery)",
+                    [])
+                {
+                    NameKey = "fixture-retired-delivery",
+                },
+            ])
+            : Report();
         AddFrozenMotivationMembership();
 
         const string ticketPath = "D5/X_Frontier/MissionTickets.lean";
@@ -287,7 +419,14 @@ internal sealed partial class RuleFixture
                 axiom_closure = Array.Empty<string>(),
                 case_class = "active-frozen",
                 case_id = "active-frozen/theorist-contract-fixture",
-                declaration_statement_ids = Array.Empty<object>(),
+                declaration_statement_ids = Reports[currentMotivationPath].Declarations.Select(
+                    static declaration => new
+                    {
+                        declaration_name_key = declaration.NameKey,
+                        kind = declaration.Kind,
+                        statement_id =
+                            "sha256:dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+                    }).ToArray(),
                 evaluation = "admission",
                 expected = new
                 {
@@ -331,16 +470,23 @@ internal sealed partial class RuleFixture
         }
     }
 
-    private string Mission(string? targetOwnerKind)
+    private string Mission(string? targetOwnerKind, string[]? deliveryGids = null)
     {
         var eligibility = new List<object>();
         if (targetOwnerKind is not null)
         {
-            eligibility.Add(new
-            {
-                source_ref = currentTheoristPath[..^5],
-                kind = targetOwnerKind,
-            });
+            eligibility.Add(targetOwnerKind == "retired"
+                ? new
+                {
+                    source_ref = currentTheoristPath[..^5],
+                    kind = targetOwnerKind,
+                    delivery_gids = deliveryGids ?? [],
+                }
+                : new
+                {
+                    source_ref = currentTheoristPath[..^5],
+                    kind = targetOwnerKind,
+                });
         }
         eligibility.Add(new
         {
@@ -409,7 +555,7 @@ internal sealed partial class RuleFixture
     {
         var json = JsonSerializer.Serialize(new
         {
-            schema = "trureturing-theorist-frontier-v1",
+            schema = "trureturing-theorist-frontier-v2",
             exact_statement = new
             {
                 gid,
@@ -421,13 +567,13 @@ internal sealed partial class RuleFixture
             computation_receipt_gids = new[] { ComputationReceiptGid },
             triage_class = "theorem",
         });
-        return $"/- THEORIST_FRONTIER_CONTRACT_V1\n{json}\n-/";
+        return $"/- THEORIST_FRONTIER_CONTRACT_V2\n{json}\n-/";
     }
 
     private string ExtractContract()
     {
         var source = Files[currentTheoristPath];
-        var start = source.IndexOf("/- THEORIST_FRONTIER_CONTRACT_V1", StringComparison.Ordinal);
+        var start = source.IndexOf("/- THEORIST_FRONTIER_CONTRACT_V2", StringComparison.Ordinal);
         var end = source.IndexOf("\n-/", start, StringComparison.Ordinal);
         Assert.True(start >= 0 && end > start);
         return source[start..(end + 3)];
@@ -448,6 +594,26 @@ internal sealed partial class RuleFixture
             contract,
             replaced,
             StringComparison.Ordinal);
+    }
+
+    private void ReplaceBaselineContract(string property, string replacement)
+    {
+        var source = Baseline[currentTheoristPath];
+        var start = source.IndexOf("statement_sha256\":\"", StringComparison.Ordinal);
+        Assert.True(start >= 0, $"baseline contract has no {property}");
+        start += "statement_sha256\":\"".Length;
+        var end = source.IndexOf('"', start);
+        Assert.True(end > start);
+        Baseline[currentTheoristPath] = source[..start] + replacement + source[end..];
+    }
+
+    private void ReplaceRetiredBaselineContract(string replacement)
+    {
+        var source = Baseline[currentTheoristPath];
+        var start = source.IndexOf("/- THEORIST_FRONTIER_CONTRACT_", StringComparison.Ordinal);
+        var end = source.IndexOf("\n-/", start, StringComparison.Ordinal);
+        Assert.True(start >= 0 && end > start);
+        Baseline[currentTheoristPath] = source[..start] + replacement + source[(end + 3)..];
     }
 
     private sealed record HistoricalTheoristFixture(
