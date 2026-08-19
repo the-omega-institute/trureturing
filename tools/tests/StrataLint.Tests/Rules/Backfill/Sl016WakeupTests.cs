@@ -25,4 +25,26 @@ public sealed class Sl016WakeupTests
         Assert.True(BackfillInventoryRule.IsAffectedBy(context));
     }
 
+    // IsOpaque 名出三类输入,其改动都能移动原子投影。理论那一类由上面钉住;CAS 那一类
+    // 此前无钉子,而「唯一析取项静默失配」正是本文件刚发生过的事故(#2459 清空
+    // governance_documents 后,理论卷那一路无声失效)。同形状,同钉法。
+    //
+    // 第三类 `Meta/Digestion/atomizers.toml` **不在此处钉**:它同时被 governance_documents
+    // 命中,故删掉 IsAffectedBy 里那条专用析取项也不会让任何测试变红(已实测)。
+    // 那条析取项因此是双保险而非死代码——一旦该文件像理论卷那样被移出清单,它就是
+    // 唯一的退路。要钉住它需要一份不含该条目的 registry 夹具,另行处理,不在此假装已钉。
+    [Fact]
+    public void ContentAddressedAtomChangeWakesSl016()
+    {
+        const string path =
+            "Meta/Digestion/atoms/sha256/0000000000000000000000000000000000000000000000000000000000000000";
+        Assert.True(
+            DigestionOpaquePathPolicy.IsOpaque(RepoPath.CreateKnown(path)),
+            $"{path} is expected to be an opaque digestion input");
+
+        var fixture = new RuleFixture();
+
+        Assert.True(BackfillInventoryRule.IsAffectedBy(fixture.Build(RawChangeSet.Create([path]))));
+    }
+
 }

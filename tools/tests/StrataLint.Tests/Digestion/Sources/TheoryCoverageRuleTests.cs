@@ -15,20 +15,17 @@ public sealed class TheoryCoverageRuleTests
     private const string GovernedPath = "docs/develop/theory/GOVERNED.md";
     private const string DigestedPath = "docs/develop/theory/DIGESTED.md";
 
-    /// <summary>The loader requires canonical bytes, so the paths go in sorted position.</summary>
-    private static string Registry(params string[] theoryDocuments) =>
-        TestRegistry.Canonical.Replace(
-            "  - \"docs/develop/spec/golden-ledger-repo-spec.md\"\n",
-            "  - \"docs/develop/spec/golden-ledger-repo-spec.md\"\n"
-            + string.Concat(theoryDocuments
-                .Order(StringComparer.Ordinal)
-                .Select(static path => $"  - \"{path}\"\n")),
-            StringComparison.Ordinal);
-
-    private static string[] Findings(string registry)
+    /// <summary>
+    /// The real registry, unmodified. It enumerates no theory volume — that is the point.
+    /// Injecting the volumes into governance_documents here would let the check pass whether
+    /// it iterates the tree or the list, so the tree-derived behaviour would not be pinned at
+    /// all: reverting the production iteration source leaves every assertion green. That is
+    /// the shape that let the #2459 regression through unnoticed.
+    /// </summary>
+    private static string[] Findings()
     {
         var outcome = RegistryLoader.Load(
-            Encoding.UTF8.GetBytes(registry),
+            Encoding.UTF8.GetBytes(TestRegistry.Canonical),
             Encoding.UTF8.GetBytes(TestRegistry.Domains));
         var policy = RegistryLoadAssert.Accepted(outcome).Policy;
         var snapshot = DigestionTestSupport.Snapshot(
@@ -54,7 +51,7 @@ public sealed class TheoryCoverageRuleTests
     [Fact]
     public void AGovernedTheoryDocumentWithNoDigestionSourceIsReported()
     {
-        var findings = Findings(Registry(GovernedPath, DigestedPath));
+        var findings = Findings();
 
         var finding = Assert.Single(findings, message =>
             message.Contains("has no digestion source", StringComparison.Ordinal));
@@ -69,7 +66,7 @@ public sealed class TheoryCoverageRuleTests
     [Fact]
     public void ATheoryDocumentThatHasASourceIsNotReported()
     {
-        var findings = Findings(Registry(DigestedPath));
+        var findings = Findings();
 
         Assert.DoesNotContain(
             findings,
