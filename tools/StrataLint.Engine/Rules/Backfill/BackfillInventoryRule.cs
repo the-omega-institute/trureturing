@@ -46,6 +46,11 @@ internal static class BackfillInventoryRule
                     "tools/Authorizations/digestion-tail/",
                     StringComparison.Ordinal)
                 || FrozenLedgerDeltaPredicate.IsEnvironmentInput(path.Value)
+                // 理论卷按路径规则治理后,`GovernanceDocuments` 里已无理论路径;
+                // 若此处仍只靠那张清单,只改理论卷的候选就**整条规则不触发**
+                // (RuleCatalog 对未命中的规则整条跳过),消化账本检测随之失效。
+                // 实测见 #2462:追加一条可原子化命题、不跑 make ingest,gate EXIT=0。
+                || DigestionOpaquePathPolicy.IsTheoryDocument(path)
                 || context.Policy.GovernanceDocuments.Contains(path))
             {
                 return true;
