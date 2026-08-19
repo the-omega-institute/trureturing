@@ -239,6 +239,12 @@ internal static class BackfillInventoryWriter
         Line(builder, "  quarantine:");
         Line(builder, $"    justification: {Scalar(quarantine.Justification)}");
         Line(builder, $"    reentry_condition: {Scalar(quarantine.ReentryCondition)}");
+        // 仅在有值时输出:既有条目无 blocker_class,若无条件写出会改动其字节,
+        // 导致全量账本 churn 并连带触发 SL-008 材料漂移。
+        if (quarantine.BlockerClass is { } blockerClass)
+        {
+            Line(builder, $"    blocker_class: {Scalar(blockerClass)}");
+        }
     }
 
     private static void Quarantine(StringBuilder builder, DigestionQuarantine? quarantine)
@@ -251,6 +257,10 @@ internal static class BackfillInventoryWriter
         Line(builder, "          quarantine:");
         Line(builder, $"            justification: {Scalar(quarantine.Justification)}");
         Line(builder, $"            reentry_condition: {Scalar(quarantine.ReentryCondition)}");
+        if (quarantine.BlockerClass is { } nestedBlockerClass)
+        {
+            Line(builder, $"            blocker_class: {Scalar(nestedBlockerClass)}");
+        }
     }
 
     private static void Strings(
