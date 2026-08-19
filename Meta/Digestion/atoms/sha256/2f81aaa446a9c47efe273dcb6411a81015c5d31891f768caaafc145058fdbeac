@@ -1,0 +1,15 @@
+## 定义 16.1（相对完成）
+
+\[
+\boxed{
+\operatorname{Comp}_K(C)
+=C\vee E_K.
+}
+\]
+
+即：
+
+\[
+x\mapsto(q_Cx,Kx).
+\]
+

@@ -1,0 +1,12 @@
+### 定义 41.19（形式观察者）
+
+形式观察者就是：
+
+\[
+\boxed{
+\operatorname{Obs}(\mathbf X)
+=
+\varprojlim_nX_n.
+}
+\]
+

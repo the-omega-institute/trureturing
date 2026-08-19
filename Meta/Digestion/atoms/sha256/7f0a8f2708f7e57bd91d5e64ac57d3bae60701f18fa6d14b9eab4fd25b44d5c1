@@ -1,0 +1,14 @@
+## 定义 19.3（概念稳定）
+
+\[
+\boxed{
+\operatorname{Stable}_C(P,a)
+\iff
+\forall x,
+\operatorname{Adm}(x)
+\land q_Cx=q_Ca
+\to
+(P(x)\leftrightarrow P(a)).
+}
+\]
+

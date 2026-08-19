@@ -1,0 +1,12 @@
+## 定义 30.4（结构涌现）
+
+若：
+
+\[
+H\not\preceq L_{\mathrm{local}},
+\qquad
+H\preceq L_{\mathrm{global}},
+\]
+
+则高层性质不能由单个局部读出决定，但能由整体联合状态决定。
+

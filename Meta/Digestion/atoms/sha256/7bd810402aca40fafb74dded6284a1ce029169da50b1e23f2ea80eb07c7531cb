@@ -1,0 +1,17 @@
+### 定义 41.15（合法 FLOW）
+
+\(F:X\to Y\) 合法，若：
+
+\[
+\boxed{
+\forall x:X,\quad
+A_X(x)\Longrightarrow A_Y(Fx).
+}
+\]
+
+合法 FLOW 对复合封闭：
+
+若 \(F\) 与 \(G\) 合法，则 \(GF\) 合法。
+
+---
+

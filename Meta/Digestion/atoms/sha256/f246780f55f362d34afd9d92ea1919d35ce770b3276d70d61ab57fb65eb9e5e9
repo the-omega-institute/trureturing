@@ -1,0 +1,9 @@
+## 定义 27.4（主体能力）
+
+\[
+\operatorname{Can}_\pi(P,a)
+\iff
+\exists u\in\operatorname{Available}_\pi(a),
+P(F_u a).
+\]
+

@@ -1,0 +1,17 @@
+### 定理 41.22
+
+若：
+
+\[
+\forall y:Y,\quad
+\tau(y)\neq y,
+\]
+
+则：
+
+\[
+\boxed{
+d_g\notin\operatorname{range}(g).
+}
+\]
+

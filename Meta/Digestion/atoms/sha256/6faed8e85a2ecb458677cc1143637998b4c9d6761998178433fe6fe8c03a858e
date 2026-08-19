@@ -1,0 +1,11 @@
+### 定义 41.22（分离性）
+
+\[
+\boxed{
+\operatorname{Separated}(\eta)
+\iff
+\forall x,y,\quad
+\eta(x)=\eta(y)\Longrightarrow x=y.
+}
+\]
+

@@ -1,0 +1,18 @@
+## 定理 20.2（证据精化单调性）
+
+若：
+
+\[
+E\preceq E',
+\]
+
+即 \(E'\) 更精细，则：
+
+\[
+\boxed{
+\operatorname{Know}_E(P,a)
+\Longrightarrow
+\operatorname{Know}_{E'}(P,a).
+}
+\]
+

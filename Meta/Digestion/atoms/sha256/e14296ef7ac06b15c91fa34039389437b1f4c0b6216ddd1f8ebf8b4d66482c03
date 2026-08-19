@@ -1,0 +1,24 @@
+\[
+\mathfrak M
+=
+(X,\operatorname{Adm},a,\mathcal F,\mathcal C).
+\]
+
+一个概念不是单纯谓词，而是分类映射：
+
+\[
+C=(B_C,q_C),
+\qquad
+q_C:X\to B_C.
+\]
+
+它规定相对同一性：
+
+\[
+x\sim_Cy
+\iff
+q_C(x)=q_C(y),
+\]
+
+并留下依赖余纤维：
+

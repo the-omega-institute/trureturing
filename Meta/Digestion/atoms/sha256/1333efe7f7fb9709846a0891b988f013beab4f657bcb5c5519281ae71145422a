@@ -1,0 +1,14 @@
+# 38. 是—应当独立性
+
+描述性结构包括：
+
+\[
+(X,\operatorname{Adm}_{\mathrm{phys}},F,C,a).
+\]
+
+规范结构另给：
+
+\[
+\operatorname{Permitted}:X\times U\to\mathsf{Prop}.
+\]
+

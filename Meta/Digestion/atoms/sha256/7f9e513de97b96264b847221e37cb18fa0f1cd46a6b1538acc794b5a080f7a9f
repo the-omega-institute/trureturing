@@ -1,0 +1,12 @@
+\[
+K_{n+1}
+=
+\operatorname{Interpret}(T,C_{n+1}).
+\]
+
+这形成：
+
+\[
+C_n\to K_n\to C_{n+1}\to K_{n+1}\to\cdots.
+\]
+

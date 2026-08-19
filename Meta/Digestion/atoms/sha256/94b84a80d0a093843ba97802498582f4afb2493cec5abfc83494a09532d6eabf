@@ -1,0 +1,30 @@
+### 定义 41.12（严格下降）
+
+称 \(F\) 能下降到商坐标，若存在：
+
+\[
+\bar F:B\to C
+\]
+
+满足：
+
+\[
+\boxed{
+q_YF=\bar Fq_X.
+}
+\]
+
+类型化写作：
+
+\[
+\boxed{
+\operatorname{Descends}(F;q_X,q_Y)
+=
+\sum_{\bar F:B\to C}
+\prod_{x:X}
+q_Y(Fx)=\bar F(q_Xx).
+}
+\]
+
+---
+

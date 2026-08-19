@@ -1,0 +1,20 @@
+## 原理 4.1（Raw／Lawful 分离）
+
+必须分开：
+
+\[
+\texttt{RawModel}
+\qquad\text{与}\qquad
+\texttt{IsLawful RawModel}.
+\]
+
+不得添加：
+
+```lean
+axiom everyRawModel_isLawful : ∀ M, IsLawful M
+```
+
+而应对每个具体模型给出证明。
+
+---
+
