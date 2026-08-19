@@ -21,4 +21,3 @@ The finite quotient character is then determined by its value at one. The pinned
 ## References
 
 - Truth anchor: `D5/S1/Dynamics/ProfiniteCharacter.continuous_character_factors_through_residue`
-- Dependency: [D5/S1/Dynamics/ProfiniteIntegers](ProfiniteIntegers.md)
