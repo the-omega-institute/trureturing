@@ -23,4 +23,3 @@ The proof derives the scalar integral by an explicit antiderivative, uses Hermit
 ## References
 
 - Truth anchor: `D5/S3/Resource/LogDet/PathSpectralClassical.log_det_path_spectral_classical`
-- Dependency: [D5/S3/Resource/LogDetDivergence](../LogDetDivergence.md)
