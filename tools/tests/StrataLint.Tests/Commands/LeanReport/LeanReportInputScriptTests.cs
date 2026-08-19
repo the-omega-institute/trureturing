@@ -9,7 +9,7 @@ public sealed class LeanReportInputScriptTests
 {
     private const string InputHelperPath = "tools/scripts/report/lean-report-input.sh";
     private const string RawReportPath = "tools/StrataLint.Engine/Snapshot/RawLeanReportArtifact.cs";
-    private const string CanonicalWriterPath = "tools/StrataLint.Engine/Snapshot/StructuredCanonicalWriter.cs";
+    private const string CanonicalWriterPath = "tools/Trureturing.Truth/StructuredCanonicalWriter.cs";
     private const string LeanModelsPath = "tools/StrataLint.Engine/Snapshot/LeanModels.cs";
     private const string TestSourcePath = "tools/tests/StrataLint.Tests/Snapshot/LeanModelsTests.cs";
     private const string BlueprintSourcePath = "Blueprint/D5/Probe.scribe.cs";
@@ -34,6 +34,10 @@ public sealed class LeanReportInputScriptTests
         '/', "tools", "StrataLint.Cli", "packages.lock.json");
     private static readonly string ScribeLockPath = string.Join(
         '/', "tools", "StrataLint.Scribe", "packages.lock.json");
+    private static readonly string TruthProjectPath = string.Join(
+        '/', "tools", "Trureturing.Truth", "Trureturing.Truth.csproj");
+    private static readonly string TruthLockPath = string.Join(
+        '/', "tools", "Trureturing.Truth", "packages.lock.json");
 
     [Fact]
     public void ProductionSourceClosureChangesProducer()
@@ -277,9 +281,11 @@ public sealed class LeanReportInputScriptTests
                 "<Project Sdk=\"Microsoft.NET.Sdk\"><ItemGroup>"
                     + "<Compile Include=\"../../Blueprint/**/*.scribe.cs\" />"
                     + "</ItemGroup></Project>\n");
+            Write(TruthProjectPath, "<Project Sdk=\"Microsoft.NET.Sdk\" />\n");
             Write(EngineLockPath, "{}\n");
             Write(CliLockPath, "{}\n");
             Write(ScribeLockPath, "{}\n");
+            Write(TruthLockPath, "{}\n");
             Write("global.json", "{}\n");
             File.WriteAllText(report, "{}\n", new UTF8Encoding(false));
             var digest = Convert.ToHexStringLower(SHA256.HashData(File.ReadAllBytes(report)));
