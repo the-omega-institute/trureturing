@@ -23,5 +23,3 @@ The existing radical bound applied to powers of two gives the strict unit window
 ## References
 
 - Truth anchor: `D5/S3/Axis/LambdaMinusDirichletSeries.lambda_minus_dirichlet_series`
-- Dependency: [D5/S1/Deficit/Displacement/GoldenContractionRadicalBound](../../S1/Deficit/Displacement/GoldenContractionRadicalBound.md)
-- Dependency: [D5/S1/Deficit/LambdaMinusAdditive](../../S1/Deficit/LambdaMinusAdditive.md)
