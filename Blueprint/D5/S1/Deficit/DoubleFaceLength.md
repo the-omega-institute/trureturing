@@ -23,4 +23,3 @@ This is the two-face spread of Theorem 6.47's two closed forms lambdaPlus(n) = l
 ## References
 
 - Truth anchor: `D5/S1/Deficit/DoubleFaceLength.lambdaPlus_sub_lambdaMinus`
-- Dependency: [D5/S1/Deficit/AlmostAdditivity](AlmostAdditivity.md)
