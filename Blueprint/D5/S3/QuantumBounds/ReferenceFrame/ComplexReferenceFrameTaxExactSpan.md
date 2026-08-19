@@ -25,4 +25,3 @@ The lower bound on N records the frozen one-level counterexample to the flat for
 ## References
 
 - Truth anchor: `D5/S3/QuantumBounds/ReferenceFrame/ComplexReferenceFrameTaxExactSpan.complex_reference_frame_tax_exact_span`
-- Dependency: [D5/S3/QuantumBounds/ReferenceFrame/ComplexReferenceFrameTaxExact](ComplexReferenceFrameTaxExact.md)
