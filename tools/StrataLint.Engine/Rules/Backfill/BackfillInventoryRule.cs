@@ -46,6 +46,8 @@ internal static class BackfillInventoryRule
                     "tools/Authorizations/digestion-tail/",
                     StringComparison.Ordinal)
                 || FrozenLedgerDeltaPredicate.IsEnvironmentInput(path.Value)
+                // 理论卷按路径规则唤醒,不靠 registry.yaml 枚举:卷名无法预先枚举。
+                || DigestionOpaquePathPolicy.IsTheoryDocument(path)
                 || context.Policy.GovernanceDocuments.Contains(path))
             {
                 return true;
@@ -139,11 +141,11 @@ internal static class BackfillInventoryRule
         ImmutableArray<RuleFinding>.Builder findings)
     {
         var declared = declaredPaths.ToHashSet(StringComparer.Ordinal);
-        foreach (var path in context.Policy.GovernanceDocuments
+        // 卷从**树**上按路径规则枚举,不从 registry.yaml 的代表元清单取:卷名无法预先枚举,
+        // 且清单一旦不含理论卷,此处迭代空集,判词恒不产出(CLAUDE.md 恒值判据)。
+        foreach (var path in context.Current.Files.Keys
+                     .Where(DigestionOpaquePathPolicy.IsTheoryDocument)
                      .Select(static path => path.Value)
-                     .Where(static path => path.StartsWith(
-                         DigestionOpaquePathPolicy.TheoryRootPath,
-                         StringComparison.Ordinal))
                      .Where(path => !declared.Contains(path))
                      .Order(StringComparer.Ordinal))
         {

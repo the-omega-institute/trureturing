@@ -504,6 +504,28 @@ public sealed class RuleEngineTests
     }
 
     [Fact]
+    public void TheoryDocumentChangeWakesSl016BecauseItsAtomProjectionCanDrift()
+    {
+        var fixture = new RuleFixture();
+        var context = fixture.Build(RawChangeSet.Create(
+            ["docs/develop/theory/INTERFACE_PAPER.md"]));
+
+        Assert.True(BackfillInventoryRule.IsAffectedBy(context));
+    }
+
+    [Fact]
+    public void UnenumeratedTheoryDocumentChangeWakesSl016BecauseVolumeNamesCannotBeListed()
+    {
+        // A third-party volume name cannot be pre-enumerated in registry.yaml; the trigger
+        // must come from the theory path rule, not from a representative list.
+        var fixture = new RuleFixture();
+        var context = fixture.Build(RawChangeSet.Create(
+            ["docs/develop/theory/A_VOLUME_THAT_IS_IN_NO_LIST.md"]));
+
+        Assert.True(BackfillInventoryRule.IsAffectedBy(context));
+    }
+
+    [Fact]
     public void AtomizerImplementationChangeWakesSl016BecauseItsProjectionCanDrift()
     {
         var fixture = new RuleFixture();
