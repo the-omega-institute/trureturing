@@ -21,10 +21,10 @@ public sealed class TheoryCoverageRuleTests
     private const string GovernedPath = "docs/develop/theory/GOVERNED.md";
     private const string DigestedPath = "docs/develop/theory/DIGESTED.md";
 
-    private static string[] Findings(params string[] treeTheoryDocuments)
+    private static string[] Findings(string registry, params string[] treeTheoryDocuments)
     {
         var outcome = RegistryLoader.Load(
-            Encoding.UTF8.GetBytes(TestRegistry.Canonical),
+            Encoding.UTF8.GetBytes(registry),
             Encoding.UTF8.GetBytes(TestRegistry.Domains));
         var policy = RegistryLoadAssert.Accepted(outcome).Policy;
         var snapshot = DigestionTestSupport.Snapshot(
@@ -51,7 +51,7 @@ public sealed class TheoryCoverageRuleTests
     [Fact]
     public void ATheoryDocumentInTheTreeWithNoDigestionSourceIsReported()
     {
-        var findings = Findings(GovernedPath, DigestedPath);
+        var findings = Findings(TestRegistry.Canonical, GovernedPath, DigestedPath);
 
         var finding = Assert.Single(findings, message =>
             message.Contains("has no digestion source", StringComparison.Ordinal));
@@ -62,7 +62,7 @@ public sealed class TheoryCoverageRuleTests
     [Fact]
     public void ATheoryDocumentThatHasASourceIsNotReported()
     {
-        var findings = Findings(DigestedPath);
+        var findings = Findings(TestRegistry.Canonical, DigestedPath);
 
         Assert.DoesNotContain(
             findings,
@@ -70,16 +70,23 @@ public sealed class TheoryCoverageRuleTests
     }
 
     [Fact]
-    public void AVolumeAbsentFromRegistryGovernanceIsStillReported()
+    public void CoverageStaysTreeDerivedEvenWhenTheRegistryAlsoNamesTheVolume()
     {
-        // The registry used here is the real one, which enumerates no theory volume at all.
-        // Before the path rule this case produced no finding: the loop had nothing to iterate.
-        Assert.DoesNotContain("docs/develop/theory/", TestRegistry.Canonical, StringComparison.Ordinal);
+        // Independence from registry contents, tested in the direction that can regress:
+        // naming the volumes in governance_documents must neither remove a finding nor
+        // duplicate one. Pinning "the canonical registry lists no theory path" instead would
+        // only track the fixture, which is how the vacuous version stayed green.
+        var withGovernance = TestRegistry.Canonical.Replace(
+            "  - \"docs/develop/spec/golden-ledger-repo-spec.md\"\n",
+            "  - \"docs/develop/spec/golden-ledger-repo-spec.md\"\n"
+            + $"  - \"{GovernedPath}\"\n",
+            StringComparison.Ordinal);
 
-        var findings = Findings(GovernedPath, DigestedPath);
+        var withoutGovernance = Findings(TestRegistry.Canonical, GovernedPath, DigestedPath);
+        var alsoGoverned = Findings(withGovernance, GovernedPath, DigestedPath);
 
-        Assert.Contains(
-            findings,
-            static message => message.Contains("has no digestion source", StringComparison.Ordinal));
+        Assert.Equal(withoutGovernance, alsoGoverned);
+        Assert.Single(alsoGoverned, message =>
+            message.Contains("has no digestion source", StringComparison.Ordinal));
     }
 }
