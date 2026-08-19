@@ -150,7 +150,6 @@ q_DF=\overline Fq_C,
 \boxed{
 \text{不得因为一个哲学概念可被定义，
 便宣称其指称对象已被构造。}
-}
 \]
 
 第二条禁令为：
@@ -159,7 +158,6 @@ q_DF=\overline Fq_C,
 \boxed{
 \text{不得因为一个模型内部闭合，
 便宣称它忠实、现实或规范正当。}
-}
 \]
 
 第三条禁令为：
@@ -168,7 +166,6 @@ q_DF=\overline Fq_C,
 \boxed{
 \text{不得把历史哲学解释当作数学等价，
 也不得把数学重构当作文本事实。}
-}
 \]
 
 ---
@@ -297,7 +294,6 @@ E_2\Rightarrow E_3.
 \mathfrak M_{\mathrm{raw}}
 =
 (X,\operatorname{Adm},a,U,F,O,\mathcal C).
-}
 \]
 
 其中：
@@ -361,7 +357,6 @@ axiom everyRawModel_isLawful : ∀ M, IsLawful M
 C=(B_C,q_C),
 \qquad
 q_C:X\to B_C.
-}
 \]
 
 其中 \(B_C\) 为概念值类型，\(q_C\) 为读出。
@@ -387,7 +382,6 @@ q_C:X\to B_C.
 x\sim_Cy
 \iff
 q_C(x)=q_C(y).
-}
 \]
 
 必须区分：
@@ -422,7 +416,6 @@ x\equiv_{\mathrm{law}}y
 R_C(b)
 =
 \sum_{x:X}(q_Cx=b).
-}
 \]
 
 加入准入：
@@ -435,7 +428,6 @@ R_C^{\operatorname{Adm}}(b)
 \operatorname{Adm}(x)
 \times
 (q_Cx=b).
-}
 \]
 
 余纤维不是“缺失信息”的模糊隐喻，而是概念值固定以后仍可变化的完整依赖类型。
@@ -449,7 +441,6 @@ R_C^{\operatorname{Adm}}(b)
 X
 \simeq
 \sum_{b:B_C}R_C(b).
-}
 \]
 
 ### 构造
@@ -475,7 +466,6 @@ x\mapsto(q_Cx,x,\operatorname{refl}_{q_Cx}).
 \sum_{x:X}\operatorname{Adm}(x)
 \simeq
 \sum_{b:B_C}R_C^{\operatorname{Adm}}(b).
-}
 \]
 
 ## 推论 6.2（形式—余量双层）
@@ -487,7 +477,6 @@ x\mapsto(q_Cx,x,\operatorname{refl}_{q_Cx}).
 \text{可表达坐标}
 +
 \text{该坐标下的依赖余量}.
-}
 \]
 
 但不能未经证明写成：
@@ -529,7 +518,8 @@ q_C=p\circ q_D.
 若 \(C\preceq D\)，则：
 
 \[
-\boxed{x\sim_Dy
+\boxed{
+x\sim_Dy
 \Longrightarrow
 x\sim_Cy.}
 \]
@@ -565,7 +555,6 @@ C\simeq_{\mathrm{con}}D
 C\preceq D
 \land
 D\preceq C.
-}
 \]
 
 它表示相同的区分能力，不要求相同名称、相同标签或相同 codomain。
@@ -582,7 +571,6 @@ C\vee D
 =
 (B_C\times B_D,
  x\mapsto(q_Cx,q_Dx)).
-}
 \]
 
 于是：
@@ -654,7 +642,6 @@ D\preceq C\vee D.
 \operatorname{Con}(X)/\simeq_{\mathrm{con}}
 \cong
 \operatorname{EqRel}(X)^{\mathrm{op}}.
-}
 \]
 
 概念越精细，核等价关系越小。联合概念对应等价关系交；共同粗化对应等价闭包后的并。
@@ -776,7 +763,6 @@ q_DF=\overline Fq_C.
 \land q_Cx=c
 \land q_Dx=d
 \right\}.
-}
 \]
 
 一般只有：
@@ -811,7 +797,6 @@ q_DF=\overline Fq_C.
 |\operatorname{Compat}(C,D)|
 }
 \ge0.
-}
 \]
 
 它衡量分别合法的概念状态中有多少组合不能共同属于同一个世界。
@@ -853,7 +838,6 @@ D=(B_D,q_D)\text{ on }Y,
 \[
 \boxed{
 q_DF=\overline Fq_C.
-}
 \]
 
 这表示宏观未来完全由当前概念值决定。
@@ -888,7 +872,6 @@ q_DF=\overline Fq_C.
 (q_Cx=q_Cy)
 \times
 (q_DFx\ne q_DFy).
-}
 \]
 
 它表达：
@@ -897,7 +880,6 @@ q_DF=\overline Fq_C.
 \boxed{
 \text{当前概念删除的差异，
 经过过程后成为未来概念可见的差异。}
-}
 \]
 
 ## 定理 13.1（下降排除 carry）
@@ -946,7 +928,6 @@ q_DFy.
 =
 \sup_x
 d_D(q_DFx,\overline Fq_Cx).
-}
 \]
 
 在加性模型中定义：
@@ -974,7 +955,6 @@ X\xrightarrow{F}Y\xrightarrow{G}Z
 \epsilon_G\circ F
 +
 \overline G\circ\epsilon_F.
-}
 \]
 
 ### 证明
@@ -1035,7 +1015,6 @@ qs=\operatorname{id}_B.
 \kappa_s(a,b)+\kappa_s(a+b,c)
 =
 \kappa_s(b,c)+\kappa_s(a,b+c).
-}
 \]
 
 若改变截面：
@@ -1077,7 +1056,6 @@ E_K=(Y,K).
 \boxed{
 \operatorname{Comp}_K(C)
 =C\vee E_K.
-}
 \]
 
 即：
@@ -1109,7 +1087,6 @@ E_K\preceq D,
 \[
 \boxed{
 \operatorname{Comp}_K(C)\preceq D.
-}
 \]
 
 所以它是保留旧概念并使目标可决定的最小共同精化。\(\square\)
@@ -1154,7 +1131,6 @@ q:X\to B.
 \[
 \boxed{
 K_q(x)(n)=q(F^nx).
-}
 \]
 
 ## 定义 17.1（预测等价）
@@ -1170,7 +1146,6 @@ x\sim_q^\infty y
 \[
 \boxed{
 Z_q=X/{\sim_q^\infty}.
-}
 \]
 
 ## 定理 17.1（预测充分性）
@@ -1206,7 +1181,6 @@ q(F^nFx)=q(F^{n+1}x)=q(F^{n+1}y)=q(F^nFy).
 \text{相对于未来行为的本质}
 =
 \text{完整未来的最小充分概念}.
-}
 \]
 
 ## 定义 17.3（记忆扩张）
@@ -1230,7 +1204,6 @@ q^m(x)=(q(x),m(x)).
 \text{记忆}
 =
 \text{为状态化历史 carry 而保留的最小附加坐标}.
-}
 \]
 
 ---
@@ -1251,7 +1224,6 @@ p_{ji}:X_j\to X_i.
 =
 \sum_{x:\prod_iX_i}
 \prod_{j\succeq i}p_{ji}(x_j)=x_i.
-}
 \]
 
 它是逆极限 cone 的项类型。
@@ -1266,7 +1238,6 @@ p_{ji}:X_j\to X_i.
 =
 \sum_{x:\operatorname{Obs}(\mathbf X)}
 \prod_iA_i(x_i).
-}
 \]
 
 ## 定义 18.3（形式／现实完成）
@@ -1305,7 +1276,6 @@ P:X\to\mathsf{Prop}.
 \operatorname{True}_a(P)
 \iff
 P(a).
-}
 \]
 
 ## 定义 19.2（模型有效性）
@@ -1315,7 +1285,6 @@ P(a).
 \mathfrak M\models P
 \iff
 \forall x,\operatorname{Adm}(x)\to P(x).
-}
 \]
 
 ## 定义 19.3（概念稳定）
@@ -1329,7 +1298,6 @@ P(a).
 \land q_Cx=q_Ca
 \to
 (P(x)\leftrightarrow P(a)).
-}
 \]
 
 ## 定义 19.4（理论融贯）
@@ -1383,7 +1351,6 @@ E:X\to B_E.
 \land E(x)=E(a)
 \to P(x).
 \end{aligned}
-}
 \]
 
 即命题不仅在实际锚点为真，而且在所有与当前证据不可区分的合法状态中都为真。
@@ -1411,7 +1378,6 @@ E\preceq E',
 \operatorname{Know}_E(P,a)
 \Longrightarrow
 \operatorname{Know}_{E'}(P,a).
-}
 \]
 
 ### 证明
@@ -1473,7 +1439,6 @@ P(a)
 \land E(x)=E(a)
 \land\neg P(x).
 \end{aligned}
-}
 \]
 
 因此：
@@ -1487,7 +1452,6 @@ P(a)
 \text{信念与辩护}
 -
 \text{证据纤维稳定性}.
-}
 \]
 
 ## 最小模型 21.1
@@ -1554,7 +1518,6 @@ P(w_1)=\mathsf{False},
 H_n(x)
 =
 (q(x),q(Fx),\ldots,q(F^nx)).
-}
 \]
 
 设未来目标：
@@ -1614,7 +1577,6 @@ K(x)\ne K(y).
 \text{下降前件}
 \Rightarrow
 \text{未来预测}.
-}
 \]
 
 ---
@@ -1699,7 +1661,6 @@ X\simeq\sum_{b:B_C}R_C(b)
 b&=\text{形式坐标};\\
 R_C(b)&=\text{实现该形式的依赖质料空间}.
 \end{aligned}
-}
 \]
 
 质料不是完全脱离形式的统一裸底物；不同形式值下的纤维可以具有不同大小、拓扑、代数结构或准入条件。
@@ -1749,7 +1710,6 @@ S(Fx)=S(x),
 S(Fx)=S(x)
 \land
 A(Fx)\ne A(x).
-}
 \]
 
 ## 定义 26.3（实质变化）
@@ -1759,7 +1719,6 @@ A(Fx)\ne A(x).
 \operatorname{SubstantialChange}_{S,F}(x)
 \iff
 S(Fx)\ne S(x).
-}
 \]
 
 “同一个对象发生变化”因此不是矛盾，而是一个概念保持、另一个概念改变。
@@ -1777,7 +1736,6 @@ S(Fx)\ne S(x).
 \text{目标忠实}
 +
 \text{非平凡分辨率}.
-}
 \]
 
 ---
@@ -1887,7 +1845,6 @@ E_K=(Y,K)
 \boxed{
 \operatorname{Essence}_K(X)
 =E_K.
-}
 \]
 
 本质不是无条件附着在对象上的神秘清单，而是相对于要解释、预测、保存或规范化的行为目标定义的最小充分分类。
@@ -1904,7 +1861,6 @@ P(a)
 \operatorname{Adm}(x)
 \land Kx=Ka
 \to P(x).
-}
 \]
 
 在保持指定本质行为不变的全部合法实现中，属性 \(P\) 均保持。
@@ -1963,7 +1919,6 @@ q_o:X\to B_o.
 H\text{ 随附于 }L
 \iff
 H\preceq L.
-}
 \]
 
 即低层同一蕴含高层同一。
@@ -2039,7 +1994,6 @@ q_B(I_ua)=q_B(I_va)\\
 &\land q_C(I_ua)\ne q_C(I_va)\\
 &\land q_D(F(I_ua))\ne q_D(F(I_va)).
 \end{aligned}
-}
 \]
 
 它要求背景保持，原因变量被改变，结果随之改变。
@@ -2075,7 +2029,6 @@ C\to M\to D
 \text{干预因果}
 \ne
 \text{实际因果链}.
-}
 \]
 
 ---
@@ -2135,7 +2088,6 @@ qF=\overline Fq.
 \text{微观决定论}
 \not\Rightarrow
 \text{任意观察层的闭合可预测性}.
-}
 \]
 
 观察者不确定性可以来自当前概念隐藏的余量，而不必来自微观随机性。
@@ -2259,7 +2211,6 @@ S(x_t)=S(x_{t+1})
 \[
 \boxed{
 I:S\to\operatorname{Concept}(X).
-}
 \]
 
 每个主体状态选择一种对象呈现方式。
@@ -2452,7 +2403,6 @@ A(\pi x)\ne A(\pi y).
 \text{理由响应}
 +
 \text{非强迫准入}.
-}
 \]
 
 ## 定义 37.6（分支自由）
@@ -2612,7 +2562,6 @@ J:X\to L.
 C_{\mathrm{ctrl}}x=C_{\mathrm{ctrl}}y
 \land
 Jx\ne Jy.
-}
 \]
 
 ## 定理 40.1（道德运气—下降等价）
@@ -2634,7 +2583,6 @@ Jx\ne Jy.
 R(x)=R(y)
 \Longrightarrow
 T(x)=T(y).
-}
 \]
 
 即待遇通过相关概念因子化。
@@ -2648,7 +2596,6 @@ T(x)=T(y).
 T(gx)=T(x)
 \quad
 \forall g,x.
-}
 \]
 
 在有效轨道 quotient 下，公平等价于 \(T\) 通过 \(X/G\) 因子化。
@@ -2737,7 +2684,6 @@ H(Fx)\ne H(Fy).
 \text{官方闭合}
 +
 \text{对相关目标不忠实}.
-}
 \]
 
 一个制度可以高度稳定、统计一致、可计算并成功预测自己的官方指标，同时系统性删除对人们实际后果重要的差异。
@@ -2830,7 +2776,6 @@ C_2:X\to B_2.
 (b_1,b_2)
 \in
 \operatorname{Im}_{\operatorname{Adm}}(C_1\vee C_2).
-}
 \]
 
 即存在一个共同合法世界同时实现双方描述。
@@ -2861,7 +2806,6 @@ C_2:X\to B_2.
 \boxed{
 \llbracket-\rrbracket:
 K\to L\to\operatorname{Concept}(X).
-}
 \]
 
 一个词的意义包括：
@@ -3003,7 +2947,6 @@ K(\theta)=K(\theta').
 \[
 \boxed{
 \text{是否把经验预测核商视为完整理论同一性}.
-}
 \]
 
 ## 定义 49.3（可证伪见证）
@@ -3197,7 +3140,6 @@ C^+
 \text{具体普遍性}
 &=\text{该完成的普适最小性}.
 \end{aligned}
-}
 \]
 
 否定不是 \(P\land\neg P\)，而是当前概念的闭合主张被反例击穿。
@@ -3226,7 +3168,8 @@ C_0\preceq C_1\preceq C_2\preceq\cdots.
 
 \[
 \operatorname{Comp}_{K_n}(C_\infty)
-\simeq_{\mathrm{con}}C_\infty,
+\simeq_{\mathrm{con}}
+C_\infty,
 \]
 
 则 \(C_\infty\) 相对于该问题族成熟。
@@ -3310,7 +3253,6 @@ R_\mu(D)\le R_\mu(C).
 \boxed{
 \operatorname{Blind}_\mu(C;K)
 =H(K(X)\mid q_C(X)).
-}
 \]
 
 ## 定理 56.2（完成信息成本）
@@ -3406,7 +3348,6 @@ H(x_1,x_2)=x_1\oplus x_2.
 \text{历史解释争论}
 &=\text{数学模型与文本证据的对应不同}.
 \end{aligned}
-}
 \]
 
 这不是取消哲学争论，而是避免用逻辑矛盾掩盖模型、概念、准入和锚点差异。
@@ -3441,7 +3382,6 @@ B_C&\xrightarrow{\overline F}&B_D.
 \[
 \boxed{
 \text{defect-enriched double category of concepts and processes}.
-}
 \]
 
 概念格给出静态语义；双范畴给出概念与过程的交互；fibration 给出依赖余量；completion 给出缺陷修复；observer cone 给出主体；doctrine 给出合法性与规范性。
@@ -3705,7 +3645,6 @@ FormalPhilosophy/Kernel/Concept
 \text{模型转移}
 +
 \text{kernel 可审计性}.
-}
 \]
 
 ---
@@ -3766,7 +3705,6 @@ FormalPhilosophy/Kernel/Concept
 \mathfrak M
 =
 (X,\operatorname{Adm},a,\mathcal F,\mathcal C).
-}
 \]
 
 ## 66.2 概念公式
@@ -3776,7 +3714,6 @@ FormalPhilosophy/Kernel/Concept
 C=(B_C,q_C),
 \qquad
 X\simeq\sum_{b:B_C}R_C(b).
-}
 \]
 
 ## 66.3 过程公式
@@ -3788,7 +3725,6 @@ q_DF
 \overline Fq_C
 +
 \epsilon_F.
-}
 \]
 
 零缺陷表示下降；非零缺陷由 carry、距离或关系见证表达。
@@ -3799,7 +3735,6 @@ q_DF
 \boxed{
 \operatorname{Comp}_K(C)
 =C\vee E_K.
-}
 \]
 
 它是保留旧概念并决定目标的最小精化。
@@ -3812,7 +3747,6 @@ q_DF
 =
 \operatorname{AdmissibleCompatibleAnchor}
 (\mathcal C^\infty).
-}
 \]
 
 ## 66.6 哲学字典
@@ -3877,7 +3811,6 @@ q_DF
 \textbf{对角边界}
 &=\text{自表示系统在无固定点 twist 下的逃逸审计}.
 \end{aligned}
-}
 \]
 
 ## 66.7 总公式
@@ -3897,7 +3830,6 @@ q_DF
 \text{建立最小完成}
 \to
 \text{证明跨模型普适性}.
-}
 \]
 
 ## 66.8 最终命题
@@ -3910,6 +3842,7 @@ q_DF
 任何过程都可能把余量带回未来；
 任何完成都需要现实准入；
 任何自表示都可能遭遇对角逃逸。}
+}
 \]
 
 形式哲学的任务不是消灭这些边界，而是准确说明：
@@ -3925,7 +3858,8 @@ q_DF
 
 \[
 \boxed{
-\text{概念不是静态标签，n而是被反例、过程、观察者和实现条件持续审计的可修复结构。}
+\text{概念不是静态标签，
+而是被反例、过程、观察者和实现条件持续审计的可修复结构。}
 \]
 
 ---
