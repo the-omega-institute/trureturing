@@ -56,14 +56,18 @@ internal static class LeanCacheProvisioner
     /// machine capacity, and it must not be presented as one.
     ///
     /// Domain: every process this budget is passed to, which is more than the build.
-    /// It bounds `cp -R` of the donor cache (:322), `lake exe cache get` (:523),
-    /// `lake exe cache clean` (:543), the `lake build` that follows a fetch, and — via
-    /// `CommandBudget` — the command `LeanCacheEnsureCommand` runs (:138) and the
-    /// arbitrary command of `worktree with-cache-writer`. A number chosen against the
-    /// build alone therefore also lengthens how long a hung `cp` or a stalled cache
-    /// fetch is tolerated; that is accepted here as the cost of the triage.
-    /// Out of domain: the `dotnet restore` timeout at WorktreeCommand.cs:137, which is a
-    /// separate knob that merely happened to carry the same literal and is not touched.
+    /// It bounds the `cp -R` that clones the donor cache, `lake exe cache get`,
+    /// `lake exe cache clean`, and — through `CommandBudget` — the one arbitrary command
+    /// `LeanCacheEnsureCommand` runs for `worktree with-cache-writer`, which in this
+    /// repository is `lake build` from the Makefile and both the `lake build` and the
+    /// `lake env lean --run Inspector.lean` that `tools/lean-inspector/inspect.sh`
+    /// passes. A number chosen against the build alone therefore also lengthens how long
+    /// a hung `cp` or a stalled cache fetch is tolerated; that is accepted here as the
+    /// cost of the triage. Deliberately no line numbers: an earlier version of this
+    /// comment cited three, and inserting the comment shifted every one of them, so all
+    /// three were false the moment they were committed.
+    /// Out of domain: the `dotnet restore` timeout in `WorktreeCommand`, a separate knob
+    /// that merely happened to carry the same literal and is not touched here.
     ///
     /// Positive readings — ElonSG only, 2026-08-20; ANOTHER MACHINE MUST REMEASURE, and
     /// none of these numbers is reproducible from this repository, so they are this
@@ -104,8 +108,11 @@ internal static class LeanCacheProvisioner
          TimeSpan.FromMilliseconds(1000), TimeSpan.FromMilliseconds(2000)];
     private static readonly UTF8Encoding StrictUtf8 = new(false, true);
 
-    // Cold provisioning spans package clones plus olean download and extraction. Five minutes
-    // permits useful fail-fast runs; two hours gives that path 4x headroom without an unbounded hang.
+    // Cold provisioning spans package clones plus olean download and extraction. The five
+    // minute floor permits useful fail-fast runs; the two hour ceiling leaves twice the
+    // declared default above without an unbounded hang. (That ratio read 4x while the
+    // default was 1800s; the policy-override above moved the default and this sentence
+    // had to move with it.)
     private static TimeSpan ProvisionBudget
     {
         get
