@@ -178,6 +178,19 @@ public sealed class LedgerSyncCommandTests
     }
 
     [Fact]
+    public void ProductionCommandRejectsEmptyBaseValueAsUsage()
+    {
+        using var fixture = new LedgerSyncFixture(blobChanged: false, addClosedModule: false);
+
+        var (exitCode, console) = RunArgs(
+            fixture, "ledger-sync", "--candidate-lean-report", fixture.ReportPath, "--base", string.Empty);
+
+        Assert.Equal(2, exitCode);
+        Assert.Contains("USAGE", console.Error, StringComparison.Ordinal);
+        Assert.Empty(fixture.Gateway.ReadChangesCalls);
+    }
+
+    [Fact]
     public void ProductionCommandRejectsDuplicateBaseFlag()
     {
         // Review finding (2): the "@base is null" uniqueness guard already rejected a repeated

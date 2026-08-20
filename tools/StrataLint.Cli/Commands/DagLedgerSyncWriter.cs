@@ -134,6 +134,7 @@ internal static class DagLedgerSyncWriter
             if (arguments[index] == "--candidate-lean-report"
                 && report is null
                 && index + 1 < arguments.Count
+                && !string.IsNullOrWhiteSpace(arguments[index + 1])
                 && !IsFlagShaped(arguments[index + 1]))
             {
                 report = arguments[index + 1];
@@ -144,6 +145,7 @@ internal static class DagLedgerSyncWriter
             if (arguments[index] == "--base"
                 && @base is null
                 && index + 1 < arguments.Count
+                && !string.IsNullOrWhiteSpace(arguments[index + 1])
                 && !IsFlagShaped(arguments[index + 1]))
             {
                 @base = arguments[index + 1];
