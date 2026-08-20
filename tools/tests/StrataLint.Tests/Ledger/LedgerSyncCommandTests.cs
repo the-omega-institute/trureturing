@@ -103,6 +103,47 @@ public sealed class LedgerSyncCommandTests
     }
 
     [Fact]
+    public void ProductionCommandWithBaseFlagIsIdempotentAcrossAccumulatedRepeatedRuns()
+    {
+        // Governance finding (nyxid-oracle, 2026-08-20): a fixed --base REV makes
+        // GitRepositoryGateway.ReadChanges(REV) an *accumulated* diff -- unlike
+        // ReadCurrentChanges(), it never empties out once the edit is committed. So a second
+        // `ledger-sync --base REV` run still selects module A via clause (c) (changedPaths still
+        // contains its path), even though the on-disk ledger already carries the Reattest the
+        // first run wrote. If the writer only asked "was this path selected" and not "does the
+        // ledger already match this candidate's material", the second run would append a
+        // duplicate Reattest into the append-only ledger -- which cannot be rolled back.
+        //
+        // This locks down that FrozenLedgerCanonicalWriter's per-path convergence check
+        // (materialUnchanged && entry.AxiomClosureKnown -> skip; see
+        // FrozenLedgerCanonicalWriter.cs:201-206) is what makes the second run a no-op, not
+        // selection. Selection only decides candidacy; convergence decides whether anything is
+        // actually appended.
+        using var fixture = new LedgerSyncFixture(
+            blobChanged: true,
+            addClosedModule: false,
+            currentChangesEmpty: true);
+
+        var (firstExitCode, firstConsole) = Run(fixture, "ledger-sync", baseRevision: "committed-base-rev");
+
+        Assert.Equal(0, firstExitCode);
+        Assert.Equal(string.Empty, firstConsole.Error);
+        Assert.Contains("appended_reattests=1", firstConsole.Output, StringComparison.Ordinal);
+        var ledgerAfterFirstRun = FrozenLedgerTestData.ReadLedgerDirectory(fixture.LedgerPath);
+
+        var (secondExitCode, secondConsole) = Run(fixture, "ledger-sync", baseRevision: "committed-base-rev");
+
+        Assert.Equal(0, secondExitCode);
+        Assert.Equal(string.Empty, secondConsole.Error);
+        Assert.Contains("no ledger changes", secondConsole.Output, StringComparison.Ordinal);
+        Assert.DoesNotContain("REATTESTED", secondConsole.Output, StringComparison.Ordinal);
+        Assert.Equal(ledgerAfterFirstRun, FrozenLedgerTestData.ReadLedgerDirectory(fixture.LedgerPath));
+        Assert.Equal(
+            new[] { "committed-base-rev", "committed-base-rev" },
+            fixture.Gateway.ReadChangesCalls);
+    }
+
+    [Fact]
     public void ProductionCommandRejectsFlagShapedValueForBaseFlag()
     {
         // Review finding (1): git diff treats "--cached" as a flag (compare against the index),
