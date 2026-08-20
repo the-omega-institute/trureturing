@@ -1,0 +1,17 @@
+ast_path: definition/2.4
+fingerprints:
+  raw_sha256: sha256:8f0ea7d802c3374e1e7e180343c936251b8488cd332a1354e226d484535ed16b
+  normalized_sha256: sha256:8f0ea7d802c3374e1e7e180343c936251b8488cd332a1354e226d484535ed16b
+cas_ref: sha256:8f0ea7d802c3374e1e7e180343c936251b8488cd332a1354e226d484535ed16b
+coverage_gids:
+  - D5/S0/Diagonal/Lawvere/QualitativeEscape.self_application_fragment_package
+receipts:
+  coverage:
+    - gid: D5/S0/Diagonal/Lawvere/QualitativeEscape.self_application_fragment_package
+      source_sha256: sha256:8f0ea7d802c3374e1e7e180343c936251b8488cd332a1354e226d484535ed16b
+      target_sha256: sha256:13459be4f4c34a8631e41aef3f4caa23f3b531e9baff4b2ce11d8bdfab0f7985
+  scribe:
+    - gid: D5/S0/Diagonal/Lawvere/QualitativeEscape.self_application_fragment_package
+      definition_sha256: sha256:3a2d75d6279322b3a1079534fa03fb3a4c3cf1efdf19eaf581a7e012398a08bf
+      emission_sha256: sha256:8d55ff9026397fb7e64e4ea92d4ddc8576c5ecbfce8759024ea9a23ad8b3c3b1
+  unresolved_subitems: []
