@@ -1,0 +1,9 @@
+## 定义 227.1（公开行为等价）
+
+[
+x\sim_{\mathrm{pub}}y
+\iff
+\forall m\in M,\quad
+P(F_mx)=P(F_my).
+]
+

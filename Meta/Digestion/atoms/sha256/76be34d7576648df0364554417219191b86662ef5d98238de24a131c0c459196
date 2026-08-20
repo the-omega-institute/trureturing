@@ -1,0 +1,73 @@
+# 494. 当前最深层的新结论
+
+本轮最承重的结论可以压缩为九条。
+
+第一，**相对同一性可以进一步推广为观察拓扑**：
+
+[
+\boxed{
+\text{状态不必完全同纤维，
+也可以只在某种局部精度下不可区分。}
+}
+]
+
+第二，**纤维知识只是拓扑知识的离散分区特例**。
+
+第三，**连续世界中的非平凡硬分类必然依赖真实断裂或不连续决策边界**。
+
+第四，**当精确解释不存在时，条件期望给出规范的最佳可测近似，而不是任意拟合函数**。
+
+第五，**校准、准确性、充分性和结构知识是四种不同性质**。
+
+第六，**共同先验、Bayesian 更新和共同知识若全部成立，公开后验分歧不能持续**。
+
+第七，**信息设计可以控制后验分布，但所有真实信号都受“后验平均等于先验”的守恒约束**。
+
+第八，**默认推理的非单调性来自最正常模型层发生变化，而不是经典逻辑本身失效**。
+
+第九，也是最重要的一条：
+
+[
+\boxed{
+\text{一个成熟推理系统必须能够同时处理：
+局部而非全局可知、
+近似而非精确可预测、
+战略而非被动的信息效应、
+可撤回而非单调的默认结论，
+以及矛盾但尚未被证明虚假的证据状态。}
+}
+]
+
+因此，整套理论可以继续写成：
+
+[
+\boxed{
+\begin{aligned}
+\textbf{Formal Concept Dynamics}
+={}&
+\textbf{a topology of observational knowledge}\
+&+
+\textbf{a measurable projection theory of approximate explanation}\
+&+
+\textbf{a strategic theory of information structures}\
+&+
+\textbf{a ranked semantics of defeasible reasoning}\
+&+
+\textbf{a paraconsistent algebra of conflicting evidence}.
+\end{aligned}
+}
+]
+
+最凝练的一句是：
+
+[
+\boxed{
+\text{世界并不总把自己交给主体作为一个离散、确定、无矛盾的答案；
+主体得到的往往只是邻域、分布、战略信号、默认模型和冲突证据。
+形式哲学的任务不是强迫它们伪装成确定真值，
+而是为每一种不完备结构规定正确的推理边界。}
+]
+以下从 **§495** 继续。仍然只进行纸面推理，不处理 GitHub，也不把新增定义与定理标记为已经获得 Lean proof term 的 `Closed` 结论。
+
+---
+

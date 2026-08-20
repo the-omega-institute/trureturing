@@ -1,0 +1,16 @@
+## 定义 278.2（激励相容）
+
+真实报告为最优，当：
+
+[
+\boxed{
+u(\theta,g(\theta))
+\ge
+u(\theta,g(r))
+\quad
+\forall\theta,r.
+}
+]
+
+---
+

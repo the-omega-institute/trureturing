@@ -1,0 +1,22 @@
+# 251. 集体代理来自联合信息和共同记忆的闭合
+
+设有主体集合 (I)。
+
+每个主体拥有本地概念：
+
+[
+C_i:X\to B_i.
+]
+
+沟通协议产生 transcript：
+
+[
+\operatorname{Tr}:X\to B_{\operatorname{Tr}}.
+]
+
+集体行动为：
+
+[
+J:X\to U.
+]
+

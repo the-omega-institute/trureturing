@@ -1,0 +1,23 @@
+## 定理 68.3（反射普适性质）
+
+令：
+
+\[
+\operatorname{Suff}_T
+=\{D\mid E_T\preceq D\}.
+\]
+
+若 \(D\in\operatorname{Suff}_T\)，则：
+
+\[
+\boxed{
+\operatorname{cl}_T(C)\preceq D
+\iff
+C\preceq D.
+}
+\]
+
+所以完成把任意概念送到最近的目标充分固定点。
+
+---
+

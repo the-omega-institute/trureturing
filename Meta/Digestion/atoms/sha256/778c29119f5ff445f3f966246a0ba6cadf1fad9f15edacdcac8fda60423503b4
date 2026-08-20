@@ -1,0 +1,22 @@
+## 定义 457.1（账本充分）
+
+[
+\boxed{
+E_T\preceq L.
+}
+]
+
+即存在：
+
+[
+\overline T:B_L\to Y
+]
+
+使：
+
+[
+T=\overline T\circ L.
+]
+
+---
+

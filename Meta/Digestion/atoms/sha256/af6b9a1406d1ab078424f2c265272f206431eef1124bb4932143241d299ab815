@@ -1,0 +1,23 @@
+[
+C_{\mathcal E'}
+===============
+
+\bigvee_{e\in\mathcal E'}E_e.
+]
+
+显然：
+
+[
+C_{\mathcal E}
+\preceq
+C_{\mathcal E'}.
+]
+
+所以：
+
+[
+\ker C_{\mathcal E'}
+\subseteq
+\ker C_{\mathcal E}.
+]
+

@@ -1,0 +1,14 @@
+## 529.1 前置条件层
+
+[
+\boxed{
+\operatorname{sp}_F
+\dashv
+\operatorname{wp}_F.
+}
+]
+
+从前提向前计算后果，与从目标向后计算所需条件，形成同一个伴随。
+
+---
+

@@ -1,0 +1,20 @@
+# 82. 最大可预测未来商的关系构造
+
+在可达未来 \(Y_F=\operatorname{Im}F\) 上，以关系：
+
+\[
+yS_{F,C}y'
+\iff
+\exists x,x',\ Fx=y,\ Fx'=y',\ Cx=Cx'
+\]
+
+生成最小等价闭包 \(\approx_{F,C}\)。定义：
+
+\[
+\operatorname{Pred}_F(C)=Y_F/{\approx_{F,C}}.
+\]
+
+它是当前概念 \(C\) 能可靠决定的最精细未来概念，并具体实现第 71 节的 \(F_*C\)。
+
+---
+

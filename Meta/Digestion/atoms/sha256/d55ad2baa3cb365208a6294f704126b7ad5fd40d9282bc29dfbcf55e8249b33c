@@ -1,0 +1,12 @@
+# 81. 复合缺陷定位
+
+对：
+
+\[
+X\xrightarrow F Y\xrightarrow G Z
+\]
+
+和概念 \(C,D,E\)，若复合有 carry，则在中间概念相等可判定时，要么 \(F:C\to D\) 已有 carry，要么 \(G:D\to E\) 有 carry。因果审计因此可以寻找隐藏差异第一次穿过哪个 CUT。
+
+---
+

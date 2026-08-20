@@ -1,0 +1,25 @@
+## 边界
+
+理论 revision 可能重新加入世界：
+
+[
+U(S)\not\subseteq S.
+]
+
+此时不再是纯学习，而是模型重构。
+
+所以必须区分：
+
+[
+\boxed{
+\begin{aligned}
+\text{learning}
+&=\text{缩小当前可能域};\
+\text{revision}
+&=\text{允许重新扩张或重排可能域}.
+\end{aligned}
+}
+]
+
+---
+

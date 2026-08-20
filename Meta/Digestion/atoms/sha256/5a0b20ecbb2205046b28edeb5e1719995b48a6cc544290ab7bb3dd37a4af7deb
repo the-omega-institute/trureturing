@@ -1,0 +1,22 @@
+### 证明
+
+若：
+
+[
+C=p\circ D,
+\qquad
+D=q\circ E,
+]
+
+则：
+
+[
+C=p\circ q\circ E.
+]
+
+复合程序所需资源由 (p,q) 的组合预算控制。 (\square)
+
+因此普通概念范畴可以升级成一个资源加权的 enriched structure。
+
+---
+

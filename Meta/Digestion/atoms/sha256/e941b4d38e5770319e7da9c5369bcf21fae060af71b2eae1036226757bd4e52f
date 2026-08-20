@@ -1,0 +1,22 @@
+# 473. 概念精化的均方价值具有 Pythagorean 分解
+
+若：
+
+[
+C\preceq D,
+]
+
+则：
+
+[
+\sigma(C)\subseteq\sigma(D).
+]
+
+记：
+
+[
+P_C T=\mathbb E[T\mid C],
+\qquad
+P_D T=\mathbb E[T\mid D].
+]
+

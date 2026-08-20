@@ -1,0 +1,22 @@
+# 121. 缺陷的单调序
+
+\[
+\Delta(C;T)=\ker C\setminus\ker T.
+\]
+
+若 \(C\preceq D\)，则：
+
+\[
+\boxed{\Delta(D;T)\subseteq\Delta(C;T).}
+\]
+
+若目标 \(S\preceq T\)，则：
+
+\[
+\boxed{\Delta(C;S)\subseteq\Delta(C;T).}
+\]
+
+更细源概念缩小缺陷；更细目标扩大潜在缺陷。
+
+---
+

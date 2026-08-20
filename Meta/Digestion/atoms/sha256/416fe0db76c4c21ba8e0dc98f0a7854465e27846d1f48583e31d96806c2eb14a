@@ -1,0 +1,13 @@
+[
+\boxed{
+W_E
+===
+
+\mathbb E
+\left[
+\max_{u\in U}
+\mathbb E[V(X,u)\mid E]
+\right].
+}
+]
+

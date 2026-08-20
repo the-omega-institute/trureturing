@@ -1,0 +1,22 @@
+## 定理 147.1（历史敏感性阻碍结果还原）
+
+若存在两条路径：
+
+[
+\gamma,\gamma'\in\Gamma
+]
+
+满足：
+
+[
+e(\gamma)=e(\gamma'),
+]
+
+但：
+
+[
+J(\gamma)\neq J(\gamma'),
+]
+
+则不存在结果函数 (\overline J) 表示该规范。
+

@@ -1,0 +1,36 @@
+## 定义 499.1（归纳不变量）
+
+集合 (J\subseteq X) 是安全不变量，当：
+
+[
+\boxed{
+I_0\subseteq J,
+}
+]
+
+[
+\boxed{
+J\subseteq S,
+}
+]
+
+并且：
+
+[
+\boxed{
+J\subseteq\operatorname{wp}^{\forall}_R(J).
+}
+]
+
+最后一个条件等价于：
+
+[
+x\in J
+\land
+xRy
+\Longrightarrow
+y\in J.
+]
+
+---
+

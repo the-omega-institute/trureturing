@@ -1,0 +1,16 @@
+## 定理 512.2（最小性）
+
+若概念 (D) 满足：
+
+[
+C\preceq D
+]
+
+且所有干预 (F_u) 都在 (D) 上下降，则：
+
+[
+\boxed{
+\operatorname{Dyn}_M(C)\preceq D.
+}
+]
+

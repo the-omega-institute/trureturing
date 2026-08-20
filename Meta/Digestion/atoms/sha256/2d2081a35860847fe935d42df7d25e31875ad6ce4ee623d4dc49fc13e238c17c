@@ -1,0 +1,16 @@
+## 定理 146.1（状态交换推出所有目标交换）
+
+若：
+
+[
+F_uF_v=F_vF_u,
+]
+
+则对任意目标 (T)：
+
+[
+\operatorname{Comm}_T(u,v)=\varnothing.
+]
+
+---
+

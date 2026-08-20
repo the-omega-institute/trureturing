@@ -1,0 +1,36 @@
+## 定义 377.1（统一有界知识）
+
+[
+\boxed{
+\begin{aligned}
+\operatorname{Know}^{,r}_C(P,a)
+\iff{}&
+\operatorname{Adm}(a)
+\land P(a)\
+&\land
+\exists f\in\mathcal A_r,
+\quad
+\forall x,\
+P(x)=f(C(x)).
+\end{aligned}
+}
+]
+
+它表示：
+
+1. (P) 事实上为真；
+2. (P) 由证据概念决定；
+3. 主体拥有资源预算内的统一判定程序。
+
+因此：
+
+[
+\operatorname{Know}^{,r}_C(P,a)
+\Longrightarrow
+\operatorname{Know}_C(P,a).
+]
+
+反向一般不成立。
+
+---
+

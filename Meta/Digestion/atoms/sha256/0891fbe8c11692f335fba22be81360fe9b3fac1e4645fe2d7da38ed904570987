@@ -1,0 +1,28 @@
+## 定理 232.1（经验可识别性）
+
+模型性质：
+
+[
+T:\Theta\to Y
+]
+
+可由允许实验制度识别，当且仅当：
+
+[
+\boxed{
+E_T\preceq\Theta_{\mathrm{emp}}.
+}
+]
+
+即：
+
+[
+\theta\sim_{\mathcal P}\theta'
+\Longrightarrow
+T(\theta)=T(\theta').
+]
+
+若两个理论在全部允许实验中等价，但 (T) 不同，则 (T) 在当前实验制度下属于经验余量。
+
+---
+

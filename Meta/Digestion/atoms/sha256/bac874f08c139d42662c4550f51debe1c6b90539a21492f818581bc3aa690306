@@ -1,0 +1,18 @@
+## 右弱化
+
+若：
+
+[
+A\sim_\kappa P,
+\qquad
+P\subseteq Q,
+]
+
+则：
+
+[
+\boxed{
+A\sim_\kappa Q.
+}
+]
+

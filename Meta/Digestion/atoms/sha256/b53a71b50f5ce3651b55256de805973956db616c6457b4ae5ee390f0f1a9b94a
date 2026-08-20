@@ -1,0 +1,13 @@
+## 定义 382.1（行为等价）
+
+[
+\boxed{
+x\sim_\beta y
+\iff
+\forall m\in M,\quad
+O(F_mx)=O(F_my).
+}
+]
+
+行为商：
+

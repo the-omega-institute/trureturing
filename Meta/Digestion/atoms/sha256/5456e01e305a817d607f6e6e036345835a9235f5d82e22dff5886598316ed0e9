@@ -1,0 +1,10 @@
+## 定理 200.1（被动自适应上界）
+
+任何只使用实验族 (U) 的确定性自适应协议，其 transcript 都通过 (E_{\mathrm{all}}) 因子化：
+
+[
+\boxed{
+\operatorname{Tr}*{\pi}\preceq E*{\mathrm{all}}.
+}
+]
+

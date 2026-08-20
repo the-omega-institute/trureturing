@@ -1,0 +1,16 @@
+### 传递性
+
+[
+A\Rightarrow B,
+\qquad
+B\Rightarrow C
+]
+
+推出：
+
+[
+\boxed{
+A\Rightarrow C.
+}
+]
+

@@ -1,0 +1,16 @@
+## 定义 165.1（proof-carrying trust）
+
+主体 (A) 接受报告 (m)，仅当存在：
+
+[
+\pi
+]
+
+使：
+
+[
+\operatorname{Valid}(\pi,m).
+]
+
+因此：
+

@@ -1,0 +1,43 @@
+## 定理 256.1（名称稳定不等于制度同一充分）
+
+可以存在一个恒定名称概念：
+
+[
+I(x)=\text{“Institution A”}
+]
+
+对所有变化都稳定，但如果不同微观状态产生不同未来规则、承诺或决定：
+
+[
+K(x)\neq K(y),
+]
+
+则 (I) 对制度行为不忠实。
+
+所以制度实体性需要：
+
+[
+\boxed{
+\text{成员变化下稳定}
++
+\text{规则、记录与承诺上的预测充分}.
+}
+]
+
+制度的规范身份更接近：
+
+[
+\operatorname{Dyn}
+\left(
+E_{\mathrm{rules}}
+\vee
+E_{\mathrm{records}}
+\vee
+E_{\mathrm{commitments}}
+\right),
+]
+
+而不是一个名称标签。
+
+---
+

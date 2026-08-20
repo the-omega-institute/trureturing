@@ -1,0 +1,32 @@
+## 定义 428.1（目标相对双解释）
+
+若对每个 (T\in\mathcal T_X)：
+
+[
+T\circ k\circ h=T,
+]
+
+并且对每个 (S\in\mathcal T_Y)：
+
+[
+S\circ h\circ k=S,
+]
+
+则称 (X,Y) 相对于这些目标族双解释。
+
+这里不要求：
+
+[
+k\circ h=\operatorname{id}_X,
+]
+
+也不要求：
+
+[
+h\circ k=\operatorname{id}_Y.
+]
+
+它们可以在目标无关余量上不同。
+
+---
+
