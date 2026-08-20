@@ -176,6 +176,41 @@ public sealed partial class ProductionEnvironmentTests
         AssertSupersedeRejection(outcome, "external import");
     }
 
+    [Fact]
+    public void ProductionCheckRejectsWeakerMeaningFromPinnedExternalImportWithUnchangedGitRevision()
+    {
+        using var temporary = new TemporaryDirectory();
+        var fixture = new RuleFixture();
+        fixture.AddBackfillTargets();
+        const string baselineManifest =
+            "{\"packages\":[{\"name\":\"mathlib\",\"type\":\"git\",\"rev\":\"abc123\"}]}\n";
+        fixture.Files[RuleFixture.RingPath] = fixture.Files[RuleFixture.RingPath]
+            .Replace("def goldenRing", "import Mathlib.Foo\n\ndef goldenRing", StringComparison.Ordinal);
+        fixture.Reports[RuleFixture.RingPath] = RingReport(
+            [],
+            "Nat.Prime 2",
+            ["Mathlib.Foo"]);
+        fixture.Baseline[RuleFixture.RingPath] = fixture.Files[RuleFixture.RingPath];
+        fixture.BaselineReports[RuleFixture.RingPath] = fixture.Reports[RuleFixture.RingPath];
+        _ = AddFrozenLedger(fixture, baselineManifest);
+        foreach (var item in fixture.Files)
+        {
+            fixture.Baseline[item.Key] = item.Value;
+        }
+        foreach (var item in fixture.Reports)
+        {
+            fixture.BaselineReports[item.Key] = item.Value;
+        }
+
+        fixture.Files["lean-toolchain"] = "leanprover/lean4:v4.25.0\n";
+        fixture.Reports[RuleFixture.RingPath] = RingReport([], "True", ["Mathlib.Foo"]);
+        AddSupersedeEvents(fixture);
+
+        var outcome = CheckPinBump(temporary, fixture, PinBumpGateway(fixture));
+
+        AssertSupersedeRejection(outcome, "trivial truth");
+    }
+
     private static RuleFixture CreatePinBumpFixture(
         ImmutableArray<string> baselineAxioms,
         ImmutableArray<string> candidateAxioms)

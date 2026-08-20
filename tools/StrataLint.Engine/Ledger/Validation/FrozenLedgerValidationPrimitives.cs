@@ -305,7 +305,7 @@ public static partial class FrozenLedger
         WriteUInt64(stream, 0);
         WriteUInt64(stream, 0);
         Span<byte> version = stackalloc byte[sizeof(uint)];
-        BinaryPrimitives.WriteUInt32BigEndian(version, 1);
+        BinaryPrimitives.WriteUInt32BigEndian(version, 2);
         stream.Write(version);
         return FrozenContentHash.Compute(FrozenHashDomains.FrozenCorpus, stream.ToArray());
     }
@@ -331,21 +331,9 @@ public static partial class FrozenLedger
             StructuredCanonicalWriter.WriteJson(material).AsSpan());
     }
 
-    private static string ComputeCaseLeaf(FrozenFreezePayload payload)
+    internal static string ComputeCaseLeaf(FrozenFreezePayload payload)
     {
-        var material = JsonSerializer.SerializeToElement(new
-        {
-            case_class = "active-frozen",
-            case_id = payload.CaseId,
-            evaluation = "admission",
-            expected = FrozenLedgerCanonicalWriter.ExpectedElement(new FrozenExpectedVerdict(
-                ImmutableArray.Create("admit"),
-                "none",
-                ImmutableArray<FrozenExpectedDiagnostic>.Empty)),
-            input = FrozenLedgerCanonicalWriter.InputElement(payload.Input),
-            input_fingerprint = payload.WitnessId.Value,
-            semantic_receipt = payload.FrozenNodeId.Value,
-        });
+        var material = FrozenLedgerCanonicalWriter.FreezeElement(payload);
         return FrozenContentHash.Compute(
             FrozenHashDomains.FrozenCase,
             StructuredCanonicalWriter.WriteJson(material).AsSpan());

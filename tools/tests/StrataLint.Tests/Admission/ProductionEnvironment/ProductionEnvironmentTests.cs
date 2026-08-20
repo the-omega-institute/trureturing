@@ -507,11 +507,12 @@ public sealed partial class ProductionEnvironmentTests
                 .OrderBy(static item => item.Value, StringComparer.Ordinal));
     }
 
-    private static FrozenLedgerConsistent AddFrozenLedger(RuleFixture fixture)
+    private static FrozenLedgerConsistent AddFrozenLedger(
+        RuleFixture fixture,
+        string manifest = "{}\n")
     {
         const string toolchain = "leanprover/lean4:v4.24.0\n";
         const string lakefile = "name = \"Fixture\"\n";
-        const string manifest = "{}\n";
         fixture.Files["lean-toolchain"] = toolchain;
         fixture.Baseline["lean-toolchain"] = toolchain;
         fixture.Files["lakefile.toml"] = lakefile;
