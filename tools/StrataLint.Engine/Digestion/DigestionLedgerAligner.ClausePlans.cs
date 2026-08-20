@@ -4,6 +4,39 @@ namespace StrataLint.Engine;
 
 internal static partial class DigestionLedgerAligner
 {
+    private static bool ClausePlanInputsChanged(
+        DigestionLedgerSource source,
+        RawChangeSet? changes)
+    {
+        if (changes is null)
+        {
+            return true;
+        }
+
+        if (changes.Paths.Any(path =>
+                path.Value == source.SourcePath
+                || path.Value == TheoryAtomizerDataLoader.DataPath
+                || IsAtomizerImplementationPath(path.Value)
+                || path.Value == BackfillInventoryLoader.RelativePath
+                || path.Value == $"{BackfillInventoryLoader.RootPath}{source.SourceId}/source.toml"))
+        {
+            return true;
+        }
+
+        foreach (var entry in source.Entries)
+        {
+            if (DigestionCasStore.EntryChanged(entry, changes)
+                || DigestionFingerprint.IsCanonicalSha256(entry.CasRef)
+                    && changes.Paths.Any(path => path.Value ==
+                        DigestionCasStore.RootPath + entry.CasRef["sha256:".Length..]))
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     private static string? ClausePlanIntegrityFailure(AtomizedTheoryDocument document)
     {
         var parentPaths = new HashSet<string>(StringComparer.Ordinal);

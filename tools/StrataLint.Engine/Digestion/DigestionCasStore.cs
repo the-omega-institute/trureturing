@@ -187,7 +187,8 @@ internal static class DigestionCasStore
         var sourcePrefix = BackfillInventoryLoader.RootPath + entry.SourceId + "/";
         var suffix = "/" + entry.AtomId + ".yaml";
         return changes.Paths.Any(path =>
-            path.Value.StartsWith(sourcePrefix, StringComparison.Ordinal)
-            && path.Value.EndsWith(suffix, StringComparison.Ordinal));
+            path.Value == sourcePrefix + "source.toml"
+            || path.Value.StartsWith(sourcePrefix, StringComparison.Ordinal)
+                && path.Value.EndsWith(suffix, StringComparison.Ordinal));
     }
 }
