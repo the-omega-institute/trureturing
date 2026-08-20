@@ -317,9 +317,22 @@ internal static class DagLedgerCommandPreparation
 
     internal static FrozenLedgerSyntax LoadLedgerFiles(
         IEnumerable<RepositoryFile> files,
-        string label)
+        string label) =>
+        LoadLedgerFiles(files, label, trustRecordedHashes: false);
+
+    internal static FrozenLedgerSyntax LoadTrustedLedgerFiles(
+        IEnumerable<RepositoryFile> files,
+        string label) =>
+        LoadLedgerFiles(files, label, trustRecordedHashes: true);
+
+    private static FrozenLedgerSyntax LoadLedgerFiles(
+        IEnumerable<RepositoryFile> files,
+        string label,
+        bool trustRecordedHashes)
     {
-        var events = DagLedgerLoader.LoadFiles(files) switch
+        var events = (trustRecordedHashes
+            ? DagLedgerLoader.LoadTrustedFiles(files)
+            : DagLedgerLoader.LoadFiles(files)) switch
         {
             DagLedgerFilesLoadOutcome.Loaded loaded => loaded.Events,
             DagLedgerFilesLoadOutcome.Invalid invalid => throw new InvalidOperationException(

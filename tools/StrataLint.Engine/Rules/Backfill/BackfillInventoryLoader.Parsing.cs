@@ -40,16 +40,7 @@ internal static partial class BackfillInventoryLoader
         RequireSourceIdentity(fields, path);
         if (keys.SetEquals(currentKeys))
         {
-            var check = ParseGenreRegistryCheck(fields, path);
-            RequireCanonicalSourceMetadata(
-                text,
-                path,
-                BackfillInventoryWriter.WriteSourceMetadata(
-                    Source(fields, GenreRegistryProjection.Available(check))));
-        }
-        else
-        {
-            RequireCanonicalSourceMetadata(text, path, WriteHistoricalSourceMetadata(fields));
+            _ = ParseGenreRegistryCheck(fields, path);
         }
 
         return new ParsedSourceMetadata(fields, GenreRegistryProjection.Unavailable);
@@ -180,23 +171,6 @@ internal static partial class BackfillInventoryLoader
             fields.GetValueOrDefault("acknowledged_stale", []).ToImmutableArray(),
             projection,
             []);
-
-    private static ImmutableArray<byte> WriteHistoricalSourceMetadata(
-        IReadOnlyDictionary<string, List<string>> fields)
-    {
-        var builder = new StringBuilder();
-        builder.Append("source_id = \"").Append(fields["source_id"].Single()).Append("\"\n");
-        builder.Append("path = \"").Append(fields["path"].Single()).Append("\"\n");
-        builder.Append("atomizer = \"").Append(fields["atomizer"].Single()).Append("\"\n");
-        if (fields.TryGetValue("acknowledged_stale", out var stale) && stale.Count > 0)
-        {
-            builder.Append("acknowledged_stale = [")
-                .Append(string.Join(", ", stale.Select(static value => $"\"{value}\"")))
-                .Append("]\n");
-        }
-
-        return ImmutableArray.CreateRange(Encoding.UTF8.GetBytes(builder.ToString()));
-    }
 
     private static void RequireCanonicalSourceMetadata(
         string text,

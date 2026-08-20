@@ -77,6 +77,9 @@ public static class DagLedgerLoader
     public static DagLedgerFilesLoadOutcome LoadFiles(IEnumerable<RepositoryFile> files) =>
         FrozenAcceptedEventLoader.LoadFiles(files);
 
+    internal static DagLedgerFilesLoadOutcome LoadTrustedFiles(IEnumerable<RepositoryFile> files) =>
+        FrozenAcceptedEventLoader.LoadTrustedFiles(files);
+
     public static bool TryOrderClosedDag(
         ImmutableArray<DagLedgerFileEvent> events,
         ImmutableArray<string> preferredIdentityPrefix,

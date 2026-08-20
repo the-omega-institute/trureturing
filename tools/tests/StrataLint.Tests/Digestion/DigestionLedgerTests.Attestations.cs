@@ -258,6 +258,80 @@ public sealed partial class DigestionLedgerTests
     }
 
     [Fact]
+    public void TrustedTailAuthorizationBytesAndRecordedHashAreNotReplayed()
+    {
+        const string atomId = "gict-1.1";
+        const string gid = "D5/X_Assumptions/Probe";
+        var canonical = TailAuthorizationArtifact.Write(atomId, [gid]);
+        var noncanonical = Encoding.UTF8.GetBytes(
+            Encoding.UTF8.GetString(canonical.AsSpan()).Replace("\": ", "\":", StringComparison.Ordinal));
+
+        var status = EvaluateCompleteTail(
+            TailAuthorizationArtifact.PathFor(atomId),
+            noncanonical,
+            "sha256:" + new string('0', 64));
+
+        Assert.Equal(DigestionTruthState.Tail, status.DerivedStatus.Truth);
+        Assert.True(status.Deletable);
+        Assert.Empty(status.Gaps);
+    }
+
+    [Fact]
+    public void TailAuthorizationWriteGateRejectsChangedBytesThatMismatchReceiptHash()
+    {
+        const string atomId = "gict-1.1";
+        const string gid = "D5/X_Assumptions/Probe";
+        var path = TailAuthorizationArtifact.PathFor(atomId);
+        var authorization = TailAuthorizationArtifact.Write(atomId, [gid]).ToArray();
+
+        var status = EvaluateCompleteTail(
+            path,
+            authorization,
+            "sha256:" + new string('0', 64),
+            RawChangeSet.Create([path]));
+
+        Assert.Equal(DigestionTruthState.Open, status.DerivedStatus.Truth);
+        Assert.Contains(status.Gaps, gap => gap.Code == "tail-authorization-invalid");
+    }
+
+    [Fact]
+    public void TailAuthorizationWriteGateRejectsChangedNoncanonicalBytes()
+    {
+        const string atomId = "gict-1.1";
+        const string gid = "D5/X_Assumptions/Probe";
+        var path = TailAuthorizationArtifact.PathFor(atomId);
+        var canonical = TailAuthorizationArtifact.Write(atomId, [gid]);
+        var noncanonical = Encoding.UTF8.GetBytes(
+            Encoding.UTF8.GetString(canonical.AsSpan()).Replace("\": ", "\":", StringComparison.Ordinal));
+
+        var status = EvaluateCompleteTail(
+            path,
+            noncanonical,
+            DigestionFingerprint.Compute(noncanonical).RawSha256,
+            RawChangeSet.Create([path]));
+
+        Assert.Equal(DigestionTruthState.Open, status.DerivedStatus.Truth);
+        Assert.Contains(status.Gaps, gap => gap.Code == "tail-authorization-invalid");
+    }
+
+    [Fact]
+    public void TailAuthorizationSelectionBindingStillRejectsADifferentGid()
+    {
+        const string atomId = "gict-1.1";
+        var authorization = TailAuthorizationArtifact.Write(
+            atomId,
+            ["D5/X_Assumptions/Different"]);
+
+        var status = EvaluateCompleteTail(
+            TailAuthorizationArtifact.PathFor(atomId),
+            authorization.ToArray());
+
+        Assert.Equal(DigestionTruthState.Open, status.DerivedStatus.Truth);
+        Assert.False(status.Deletable);
+        Assert.Contains(status.Gaps, gap => gap.Code == "tail-authorization-invalid");
+    }
+
+    [Fact]
     public void SourceWithoutAdapterStillRejectsAValidlyFormattedButFalseRawFingerprint()
     {
         var source = Encoding.UTF8.GetBytes("# manual source\n\nclaim\n");

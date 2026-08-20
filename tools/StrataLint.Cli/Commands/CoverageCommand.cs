@@ -112,7 +112,7 @@ internal static class CoverageCommand
             throw new InvalidOperationException("frozen ledger is missing");
         }
 
-        var syntax = DagLedgerCommandPreparation.LoadLedgerFiles(files, "frozen ledger");
+        var syntax = DagLedgerCommandPreparation.LoadTrustedLedgerFiles(files, "frozen ledger");
         return FrozenCoverageLedger.Load(syntax) switch
         {
             FrozenCoverageLoadOutcome.Loaded loaded => loaded.ActiveFrozenPaths,
