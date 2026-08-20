@@ -64,8 +64,11 @@ internal static class LeanCacheProvisioner
     /// passes. A number chosen against the build alone therefore also lengthens how long
     /// a hung `cp` or a stalled cache fetch is tolerated; that is accepted here as the
     /// cost of the triage. Deliberately no line numbers: an earlier version of this
-    /// comment cited three, and inserting the comment shifted every one of them, so all
-    /// three were false the moment they were committed.
+    /// comment carried five line references, and the three that pointed into this file
+    /// were copied from the pre-insertion text. Inserting the comment moved each of those
+    /// three targets down twelve lines, so all three were false the moment they were
+    /// committed. (The two cross-file references were still correct; the point is that a
+    /// local anchor cannot survive its own comment.)
     /// Out of domain: the `dotnet restore` timeout in `WorktreeCommand`, a separate knob
     /// that merely happened to carry the same literal and is not touched here.
     ///
