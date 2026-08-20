@@ -47,4 +47,15 @@ public sealed class Sha256SumsTests
             "sha256:2d097763a5dbd7c002e835714ab586464c01647822a7f19b6528ab26993b715d",
             Sha256Sums.ReleaseDigest(sums));
     }
+
+    [Fact]
+    public void ReleaseDigestOverBytesIsByteFaithfulForMalformedUtf8()
+    {
+        // 0xFF and 0xFE are both invalid UTF-8 and decode to the SAME replacement character, so a
+        // digest taken over a decoded-then-re-encoded string would collapse them to one value. The
+        // byte overload a verifier must use hashes the raw bytes and keeps them distinct.
+        Assert.NotEqual(
+            Sha256Sums.ReleaseDigest(new byte[] { 0xFF }),
+            Sha256Sums.ReleaseDigest(new byte[] { 0xFE }));
+    }
 }

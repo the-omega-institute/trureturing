@@ -162,4 +162,45 @@ public sealed class TruthReleaseVerificationTests
             Directory.Delete(directory, recursive: true);
         }
     }
+
+    [Fact]
+    public void RejectsADuplicateArtifactFilename()
+    {
+        var directory = BuildBundle();
+        try
+        {
+            // Point two artifact slots at the same file. A mere count-of-seven check would pass, but the
+            // seven required artifacts no longer map to seven distinct, individually-bound files.
+            var dup = ManifestJson.Replace("\"truth-graph.v1.json\"", "\"declarations.v1.json\"", StringComparison.Ordinal);
+            File.WriteAllText(Path.Combine(directory, "release-manifest.v1.json"), dup, new UTF8Encoding(false));
+            Assert.Throws<FormatException>(() => TruthReleaseVerification.Verify(directory, GoldenReleaseDigest));
+        }
+        finally
+        {
+            Directory.Delete(directory, recursive: true);
+        }
+    }
+
+    [Fact]
+    public void RejectsASymlinkedArtifact()
+    {
+        var directory = BuildBundle();
+        var externalDirectory = Directory.CreateTempSubdirectory("truthverify-ext").FullName;
+        try
+        {
+            // A symlink whose target's bytes match the recorded hash would pass a lexical path check and
+            // byte comparison, yet the file is not contained in the bundle. Verify must refuse the symlink.
+            var external = Path.Combine(externalDirectory, "external.txt");
+            File.WriteAllText(external, "declarations", new UTF8Encoding(false));
+            var artifact = Path.Combine(directory, "declarations.v1.json");
+            File.Delete(artifact);
+            File.CreateSymbolicLink(artifact, external);
+            Assert.Throws<FormatException>(() => TruthReleaseVerification.Verify(directory, GoldenReleaseDigest));
+        }
+        finally
+        {
+            Directory.Delete(directory, recursive: true);
+            Directory.Delete(externalDirectory, recursive: true);
+        }
+    }
 }

@@ -88,4 +88,31 @@ public sealed class TruthReleaseManifestReaderTests
             StringComparison.Ordinal);
         Assert.Throws<FormatException>(() => TruthReleaseManifestReader.Read(bad));
     }
+
+    [Fact]
+    public void RejectsReadOnlyFalse()
+    {
+        var bad = ValidManifest.Replace("\"read_only\": true", "\"read_only\": false", StringComparison.Ordinal);
+        Assert.Throws<FormatException>(() => TruthReleaseManifestReader.Read(bad));
+    }
+
+    [Fact]
+    public void RejectsAnUnexpectedTopLevelProperty()
+    {
+        var bad = ValidManifest.Replace(
+            "\"produced_at\": \"2026-08-20T00:00:00Z\"",
+            "\"produced_at\": \"2026-08-20T00:00:00Z\", \"rogue\": 1",
+            StringComparison.Ordinal);
+        Assert.Throws<FormatException>(() => TruthReleaseManifestReader.Read(bad));
+    }
+
+    [Fact]
+    public void RejectsACheckThatIsNotSuccess()
+    {
+        var bad = ValidManifest.Replace(
+            "{ \"name\": \"Canonical Lean report production\", \"conclusion\": \"success\" }",
+            "{ \"name\": \"Canonical Lean report production\", \"conclusion\": \"failure\" }",
+            StringComparison.Ordinal);
+        Assert.Throws<FormatException>(() => TruthReleaseManifestReader.Read(bad));
+    }
 }
