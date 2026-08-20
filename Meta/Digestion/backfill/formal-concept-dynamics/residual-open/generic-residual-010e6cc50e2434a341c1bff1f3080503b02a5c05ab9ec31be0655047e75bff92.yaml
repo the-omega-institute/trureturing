@@ -1,0 +1,10 @@
+ast_path: section/284-个体偏好传递不保证多数关系传递
+fingerprints:
+  raw_sha256: sha256:010e6cc50e2434a341c1bff1f3080503b02a5c05ab9ec31be0655047e75bff92
+  normalized_sha256: sha256:010e6cc50e2434a341c1bff1f3080503b02a5c05ab9ec31be0655047e75bff92
+cas_ref: sha256:010e6cc50e2434a341c1bff1f3080503b02a5c05ab9ec31be0655047e75bff92
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

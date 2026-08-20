@@ -1,0 +1,18 @@
+## 析取
+
+若：
+
+[
+A\sim_\kappa R,
+\qquad
+B\sim_\kappa R,
+]
+
+则：
+
+[
+\boxed{
+A\cup B\sim_\kappa R.
+}
+]
+

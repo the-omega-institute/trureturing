@@ -1,0 +1,42 @@
+# 203. 不存在脱离目标的唯一最佳实验
+
+设实验概念 (E_1,E_2) 不可比较：
+
+[
+E_1\not\preceq E_2,
+\qquad
+E_2\not\preceq E_1.
+]
+
+取目标：
+
+[
+T_1=E_1,
+\qquad
+T_2=E_2.
+]
+
+则：
+
+[
+E_{T_1}\preceq E_1,
+]
+
+但：
+
+[
+E_{T_1}\not\preceq E_2.
+]
+
+反之：
+
+[
+E_{T_2}\preceq E_2,
+]
+
+但：
+
+[
+E_{T_2}\not\preceq E_1.
+]
+

@@ -1,0 +1,26 @@
+### 证明
+
+任取合法 (x)。
+
+由准入保持：
+
+[
+\operatorname{Adm}_Y(hx).
+]
+
+由 (\mathfrak N\models P)：
+
+[
+P(hx).
+]
+
+所以：
+
+[
+(P\circ h)(x).
+]
+
+(\square)
+
+---
+

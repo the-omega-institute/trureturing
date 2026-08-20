@@ -1,0 +1,29 @@
+## 定理 495.1（最弱性）
+
+对任意前置条件：
+
+[
+P:X\to\mathsf{Prop},
+]
+
+以下等价：
+
+[
+\boxed{
+\forall x,\quad
+P(x)\to Q(Fx)
+}
+]
+
+与：
+
+[
+\boxed{
+P\subseteq\operatorname{wp}_F(Q).
+}
+]
+
+因此 (\operatorname{wp}_F(Q)) 是所有能够保证 (Q) 的前置条件中最弱、适用域最大的一个。
+
+---
+

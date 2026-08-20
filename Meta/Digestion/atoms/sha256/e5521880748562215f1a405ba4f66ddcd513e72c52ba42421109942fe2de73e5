@@ -1,0 +1,95 @@
+## 290.2 当前最深的新结论
+
+本轮产生六条新的承重结论。
+
+第一，**可逆性相对于恢复目标，而不是一个绝对二值**：
+
+[
+\boxed{
+\text{过程可以对价值可逆、对身份不可逆。}
+}
+]
+
+第二，**申诉不是重复原判断，而是加入原概念缺少的目标相关区别**：
+
+[
+\boxed{
+E_T\preceq C\vee A.
+}
+]
+
+第三，**非支配比实际善意更强**：
+
+[
+\boxed{
+\text{制度不能只承诺不滥用信息，
+还必须限制自己能够实施的政策空间。}
+}
+]
+
+第四，**真实揭示需要激励结构**：
+
+[
+\boxed{
+\text{可表达}
+\not\Rightarrow
+\text{会真实表达}.
+}
+]
+
+第五，**合同和法律的绝对完备要求封闭世界**：
+
+[
+\boxed{
+\text{开放对象域和开放目标生成器必然产生新不完备。}
+}
+]
+
+第六，**集体偏好固定以后，过程顺序仍可能决定结果**：
+
+[
+\boxed{
+\text{议程本身是一种因果和政治权力。}
+}
+]
+
+---
+
+整套理论由此继续发展为：
+
+[
+\boxed{
+\begin{aligned}
+\textbf{Formal Concept Dynamics}
+={}&
+\textbf{a theory of reversible decisions}\
+&+
+\textbf{a theory of appeal and contestability}\
+&+
+\textbf{a capability theory of non-domination}\
+&+
+\textbf{an incentive theory of truthful interfaces}\
+&+
+\textbf{a theory of contractual incompleteness}\
+&+
+\textbf{a process theory of collective rationality}\
+&+
+\textbf{a structural theory of controlled forgetting}.
+\end{aligned}
+}
+]
+
+最凝练的一句是：
+
+[
+\boxed{
+\text{一个制度是否正当，
+不能只看它现在输出了什么；
+还必须看它凭什么区分、能够怎样区别对待、
+错误如何被看见、决定能否被撤回、
+主体是否能真实表达，以及修复权掌握在谁手中。}
+]
+以下从 **§291** 继续。仍然只进行纸面推理，不处理 GitHub，也不把新增定义与定理标记为已经获得 Lean proof term 的 `Closed` 结论。
+
+---
+

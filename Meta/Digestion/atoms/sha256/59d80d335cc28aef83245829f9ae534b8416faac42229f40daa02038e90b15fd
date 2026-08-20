@@ -1,0 +1,111 @@
+# 331. 当前最深层的新结论
+
+本轮最重要的结论可以压缩为七条。
+
+第一，**不确定性没有单一标量本体**：
+
+[
+\boxed{
+\text{状态无知、未来随机、模型竞争和价值分歧是不同型别。}
+}
+]
+
+第二，**正确行动所需的信息可能远少于完整解释所需的信息**：
+
+[
+\boxed{
+\text{决策本质}
+\preceq
+\text{预测本质}.
+}
+]
+
+第三，**反事实解释若没有可达过程，就可能只是对主体无用的比较**：
+
+[
+\boxed{
+\text{Explanation}
+\neq
+\text{Recourse}.
+}
+]
+
+第四，**因果结构不能自动生成规范责任**：
+
+[
+\boxed{
+\text{Cause}
+\neq
+\text{Blame}.
+}
+]
+
+第五，**权利能否真正存在于制度实践中，取决于侵害是否能被合法审计接口识别**：
+
+[
+\boxed{
+\text{Right declaration}
+\neq
+\text{Right enforceability}.
+}
+]
+
+第六，**严格身份在分支与融合中必然失败，必须由继承和 transport 结构替代**：
+
+[
+\boxed{
+\text{Identity}
+\neq
+\text{Memory inheritance}
+\neq
+\text{Rights inheritance}.
+}
+]
+
+第七，**秘密、知识和权力共享同一个联盟阈值结构**：
+
+[
+\boxed{
+\text{谁能联合知道什么，
+也决定谁能联合根据该知识区别行动。}
+}
+]
+
+---
+
+整套理论由此继续发展为：
+
+[
+\boxed{
+\begin{aligned}
+\textbf{Formal Concept Dynamics}
+={}&
+\textbf{a typed theory of uncertainty}\
+&+
+\textbf{a theory of decision essences and option value}\
+&+
+\textbf{a reachability theory of counterfactual recourse}\
+&+
+\textbf{a hypergraph theory of actual causation}\
+&+
+\textbf{a process theory of rights}\
+&+
+\textbf{a transport theory of branching identity}\
+&+
+\textbf{a threshold theory of collective knowledge and power}.
+\end{aligned}
+}
+]
+
+最凝练的一句是：
+
+[
+\boxed{
+\text{一个界面不仅决定主体看见什么；
+它还决定主体能够选择什么、改变什么、证明什么、
+继承什么，以及必须与多少其他主体联合，才能获得新的现实能力。}
+]
+以下从 **§332** 继续。仍然只进行纸面推理，不处理 GitHub，也不把新增定义与定理标记为已经获得 Lean proof term 的 `Closed` 结论。
+
+---
+

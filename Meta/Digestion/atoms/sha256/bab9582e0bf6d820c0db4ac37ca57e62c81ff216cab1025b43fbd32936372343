@@ -1,0 +1,19 @@
+## 定义 267.1（完整可争议性）
+
+[
+\boxed{
+\forall x\in\mathcal E,\quad
+\exists w:W,
+\quad
+\operatorname{Applicable}(x,w)
+\land
+\operatorname{Valid}(x,w)
+\land
+J_w(x)=T(x).
+}
+]
+
+也就是说，每一个错误状态都存在一个受制度接受、且足以触发正确修复的挑战。
+
+---
+

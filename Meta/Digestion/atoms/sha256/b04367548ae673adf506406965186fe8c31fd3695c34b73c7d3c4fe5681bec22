@@ -1,0 +1,17 @@
+[
+\boxed{
+\widehat T_C
+============
+
+\mathbb E[T\mid\sigma(C)].
+}
+]
+
+由可测因子化，可写成：
+
+[
+\widehat T_C=g_C(C)
+]
+
+几乎处处成立。
+

@@ -1,0 +1,23 @@
+[
+\Delta(C;T)
+===========
+
+{(x,y)\mid Cx=Cy,\ T(x)\neq T(y)}.
+]
+
+一个测试：
+
+[
+\tau
+]
+
+可以覆盖若干缺陷见证。
+
+定义：
+
+[
+\operatorname{Cover}(\tau)
+\subseteq
+\Delta(C;T).
+]
+

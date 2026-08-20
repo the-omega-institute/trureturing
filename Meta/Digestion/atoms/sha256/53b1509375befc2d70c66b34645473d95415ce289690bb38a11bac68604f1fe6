@@ -1,0 +1,28 @@
+## 定理 505.1（信息精化缩小答案集）
+
+若：
+
+[
+S\sqsubseteq S',
+]
+
+即：
+
+[
+S'\subseteq S,
+]
+
+则：
+
+[
+\boxed{
+\operatorname{Ans}_T(S')
+\subseteq
+\operatorname{Ans}_T(S).
+}
+]
+
+更多信息不能增加仍可能的答案。
+
+---
+

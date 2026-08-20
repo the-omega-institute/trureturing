@@ -1,0 +1,17 @@
+[
+\boxed{
+\operatorname{Imp}_\mu(C;T)
+===========================
+
+\sum_b
+\Pr(C=b)
+\left[
+1-
+\sum_t
+\Pr(T=t\mid C=b)^2
+\right].
+}
+]
+
+---
+

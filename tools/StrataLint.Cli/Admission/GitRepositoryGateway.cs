@@ -145,7 +145,7 @@ internal sealed partial class GitRepositoryGateway : IRepositoryGateway
         return ReadChanges(head);
     }
 
-    private RawChangeSet ReadChanges(string changeBase)
+    public RawChangeSet ReadChanges(string changeBase)
     {
         var changes = ParseChanges(GitBytes(
                 "diff",

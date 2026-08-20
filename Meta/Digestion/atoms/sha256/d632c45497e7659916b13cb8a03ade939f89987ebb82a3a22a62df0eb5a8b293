@@ -1,0 +1,10 @@
+[
+\boxed{
+A^*(x)
+======
+
+\operatorname{argmin}_{a\in A}
+L_K(x)(a).
+}
+]
+

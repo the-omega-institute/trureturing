@@ -1,0 +1,23 @@
+[
+C^{-1}(U)
+=========
+
+D^{-1}(p^{-1}(U)).
+]
+
+因 (p) 连续，(p^{-1}(U)) 在 (B_D) 中开，因此该集合属于 (\tau_D)。(\square)
+
+所以：
+
+[
+\boxed{
+\text{概念 refinement}
+\Longrightarrow
+\text{观察拓扑 refinement}.
+}
+]
+
+更细概念允许更小的可观察邻域。
+
+---
+

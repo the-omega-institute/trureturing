@@ -1,0 +1,26 @@
+[
+\operatorname{Rev}_P\operatorname{Rev}_Q(A)
+===========================================
+
+{2,3}.
+]
+
+因此：
+
+[
+\boxed{
+\operatorname{Rev}_Q\operatorname{Rev}_P
+\neq
+\operatorname{Rev}_P\operatorname{Rev}_Q.
+}
+]
+
+所以理论 revision 的路径依赖不是偶然现象，而来自：
+
+* 冲突时保留什么；
+* 哪个证据更新得更晚；
+* 使用什么距离；
+* 哪些前提有更高优先级。
+
+---
+

@@ -1,0 +1,16 @@
+[
+\boxed{
+B(h_{t+1})
+==========
+
+\left{
+F_u(x)
+;\middle|;
+x\in B(h_t),
+\ O(F_u(x))=o_{t+1}
+\right}.
+}
+]
+
+---
+

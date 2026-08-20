@@ -1,0 +1,32 @@
+## 定义 181.2（分类自破坏）
+
+若：
+
+[
+\Psi_C(x)\neq C(x),
+]
+
+则分类行为本身破坏了原分类。
+
+因此制度分类不是单纯读取：
+
+[
+X\to B,
+]
+
+而是一个闭环：
+
+[
+\boxed{
+X
+\xrightarrow{C}
+B
+\xrightarrow{\text{response}}
+X
+\xrightarrow{C}
+B.
+}
+]
+
+---
+

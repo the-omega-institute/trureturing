@@ -1,0 +1,14 @@
+[
+\boxed{
+\operatorname{Trace}_{\alpha}(x)
+================================
+
+\left(
+O(x),
+O(F_{u_1}x),
+O(F_{u_2}F_{u_1}x),
+\ldots
+\right).
+}
+]
+

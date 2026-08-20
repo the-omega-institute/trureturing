@@ -1,0 +1,26 @@
+## 定理 250.1（后验自批准不足）
+
+一般可以出现：
+
+[
+\boxed{
+\neg\operatorname{Auth}*x(G),
+\qquad
+\operatorname{Auth}*{Gx}(G).
+}
+]
+
+例如，(G) 同时修改了主体的行动偏好与“什么修改是可接受的”这一标准。
+
+所以：
+
+[
+\boxed{
+\text{主体被改变以后认可该改变}
+\not\Rightarrow
+\text{该改变在改变前获得授权}.
+}
+]
+
+---
+

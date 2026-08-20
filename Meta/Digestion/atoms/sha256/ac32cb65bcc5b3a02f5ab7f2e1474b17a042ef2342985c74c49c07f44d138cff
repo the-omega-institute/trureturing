@@ -1,0 +1,28 @@
+## 定理 377.1（资源单调性）
+
+若：
+
+[
+r\le s
+]
+
+并且：
+
+[
+\mathcal A_r\subseteq\mathcal A_s,
+]
+
+则：
+
+[
+\boxed{
+\operatorname{Know}^{,r}_C(P,a)
+\Longrightarrow
+\operatorname{Know}^{,s}_C(P,a).
+}
+]
+
+资源增加可以把语义上已有、但操作上不可达的真理变成可用知识。
+
+---
+

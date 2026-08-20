@@ -1,0 +1,17 @@
+[
+\boxed{
+\operatorname{Comm}_T(u,v)
+==========================
+
+\left{
+x
+;\middle|;
+T(F_uF_vx)
+\neq
+T(F_vF_ux)
+\right}.
+}
+]
+
+若该集合非空，则干预顺序会改变目标。
+

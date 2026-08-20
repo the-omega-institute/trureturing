@@ -1,0 +1,16 @@
+## 左逻辑等价
+
+若：
+
+[
+A=B,
+]
+
+则：
+
+[
+A\sim_\kappa P
+\iff
+B\sim_\kappa P.
+]
+

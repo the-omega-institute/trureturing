@@ -1,0 +1,66 @@
+## 462.11 当前最深的新结论
+
+本轮最承重的结论可以压缩为七条。
+
+第一，**理论翻译的正确单位不是词语，而是状态、过程、锚点和目标的交换结构**。
+
+第二，**一个抽象模型可以安全但不精确；它产生的反例可能只是概念过粗，而不是现实反例**。
+
+第三，**安全不是单纯减少数据或权限，而是在读取知识能力和写入过程能力上共同寻找授权充分的最小结构**。
+
+第四，**判例中的“区分”是事实概念 refinement，而“推翻”是旧裁判目标本身发生变化**。
+
+第五，**协商失败可以来自事实不一致，也可以来自价值可接受集真正无交；更多信息只能修复前者**。
+
+第六，**拒答不是知识失败的被动表现，而是给定概念下唯一具有最大覆盖率的零错误策略**。
+
+第七，也是最重要的一条：
+
+[
+\boxed{
+\text{保存、翻译、抽象、裁判和回答的共同问题，
+都是一个接口是否保留了目标所需区别；
+而所谓安全、保守、合法或可信，
+只是对允许保留、允许删除和允许行动的不同 doctrine。}
+}
+]
+
+因此整套理论可以进一步写成：
+
+[
+\boxed{
+\begin{aligned}
+\textbf{Formal Concept Dynamics}
+={}&
+\textbf{a theory of model interpretation}\
+&+
+\textbf{a Galois theory of safe abstraction}\
+&+
+\textbf{an information-flow theory of security}\
+&+
+\textbf{a minimal-permission theory of capability}\
+&+
+\textbf{a factorization theory of legal precedent}\
+&+
+\textbf{an intersection theory of agreement}\
+&+
+\textbf{a maximal-safe theory of epistemic abstention}\
+&+
+\textbf{a provenance theory of historical ledgers}.
+\end{aligned}
+}
+]
+
+最凝练的一句是：
+
+[
+\boxed{
+\text{一个成熟体系不仅要知道何时能够推出答案，
+还要知道何时只能得到安全上界、何时反例只是抽象伪影、
+何时权限超过目标需要、何时规则不足以裁判，
+以及何时唯一正确的回答就是拒绝伪装成知道。}
+]
+以下从 **§463** 继续。仍然只进行纸面推理，不处理 GitHub，也不把新增定义与定理标记为已经获得 Lean proof term 的 `Closed` 结论。
+
+---
+

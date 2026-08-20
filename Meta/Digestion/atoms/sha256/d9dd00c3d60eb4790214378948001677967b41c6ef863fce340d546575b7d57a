@@ -1,0 +1,28 @@
+## 定理 472.1（最优均方预测）
+
+对任意平方可积函数：
+
+[
+h:B_C\to\mathbb R,
+]
+
+有：
+
+[
+\boxed{
+\mathbb E
+\left[
+(T-\widehat T_C)^2
+\right]
+\le
+\mathbb E
+\left[
+(T-h(C))^2
+\right].
+}
+]
+
+所以条件期望是所有只使用概念 (C) 的预测器中的均方最优者。
+
+---
+

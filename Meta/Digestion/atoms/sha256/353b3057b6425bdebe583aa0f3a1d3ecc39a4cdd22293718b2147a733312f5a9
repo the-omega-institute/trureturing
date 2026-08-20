@@ -1,0 +1,32 @@
+## 定义 432.1（Galois 抽象）
+
+给出：
+
+[
+\alpha:\mathcal P(X)\to A,
+]
+
+[
+\gamma:A\to\mathcal P(X),
+]
+
+满足：
+
+[
+\boxed{
+\alpha(S)\sqsubseteq a
+\iff
+S\subseteq\gamma(a).
+}
+]
+
+于是：
+
+[
+S\subseteq\gamma(\alpha(S)),
+]
+
+即抽象至少包含原具体集合。
+
+---
+

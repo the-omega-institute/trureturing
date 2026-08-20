@@ -1,0 +1,14 @@
+[
+\boxed{
+x\sim_{\mathrm{exp}}y
+\iff
+\forall\alpha,\quad
+\operatorname{Trace}_{\alpha}(x)
+================================
+
+\operatorname{Trace}_{\alpha}(y).
+}
+]
+
+实验商：
+

@@ -1,0 +1,12 @@
+# 130. 解释唯一性取决于 doctrine 的 meet 闭合
+
+令 \(\mathcal E\subseteq\operatorname{Con}(X)\) 为允许解释类，\(\mathcal E_T=\{C\in\mathcal E\mid E_T\preceq C\}\)。若 \(\mathcal E_T\neq\varnothing\) 且 \(\mathcal E\) 对相关 meet 闭合，则：
+
+\[
+C_T^*=\bigwedge_{C\in\mathcal E_T}C
+\]
+
+是唯一最粗可接受解释。若 doctrine 不对 meet 闭合，则可出现多个互不可比较的最小解释，没有规范唯一核心。
+
+---
+

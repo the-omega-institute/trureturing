@@ -572,10 +572,13 @@ internal sealed class FakeRepositoryGateway(
     RawRepositorySnapshot? current,
     RawRepositorySnapshot? baseline,
     Func<FrozenLedgerReferenceSet, TrustedFrozenGitReferences>? frozenReferenceValidator = null,
-    Func<FrozenRevisionIdentity>? currentRevisionResolver = null)
+    Func<FrozenRevisionIdentity>? currentRevisionResolver = null,
+    Func<string, RawChangeSet>? changesForBase = null)
     : IRepositoryGateway
 {
     internal int ReadCount { get; private set; }
+
+    internal List<string> ReadChangesCalls { get; } = [];
 
     internal List<FrozenLedgerReferenceSet> FrozenReferenceValidations { get; } = [];
 
@@ -619,6 +622,14 @@ internal sealed class FakeRepositoryGateway(
     }
 
     public RawChangeSet ReadCurrentChanges() => changes;
+
+    public RawChangeSet ReadChanges(string changeBase)
+    {
+        ReadChangesCalls.Add(changeBase);
+        return changesForBase?.Invoke(changeBase)
+            ?? throw new InvalidOperationException(
+                "ReadChanges(base) should not be called without a configured changesForBase");
+    }
 
     public TrustedFrozenGitReferences ValidateFrozenReferences(FrozenLedgerReferenceSet references)
     {

@@ -1,0 +1,26 @@
+[
+N_b
+===
+
+\left|
+{T(x)\mid C(x)=b}
+\right|.
+]
+
+令：
+
+[
+m^*(C;T)=\max_bN_b.
+]
+
+若一个最坏深度为 (d) 的二值自适应协议能够回答 (T)，则：
+
+[
+\boxed{
+d\ge
+\left\lceil
+\log_2m^*(C;T)
+\right\rceil.
+}
+]
+

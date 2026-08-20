@@ -1,0 +1,20 @@
+# 443. 判例的 ratio decidendi 是允许 doctrine 中的最粗充分事实概念
+
+设案件状态类型：
+
+[
+X.
+]
+
+裁判结果：
+
+[
+J:X\to Y.
+]
+
+允许作为法律理由的概念类：
+
+[
+\mathcal E\subseteq\operatorname{Con}(X).
+]
+
