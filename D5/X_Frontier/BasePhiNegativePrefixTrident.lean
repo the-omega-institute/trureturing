@@ -1,8 +1,8 @@
 /- GID: D5/X_Frontier/BasePhiNegativePrefixTrident
-   generality: G
+   generality: I
    mirror-B: none(waiver:negative-base-phi-frontier)
    mirror-E: D5/E/S1/Words/BasePhiNegativePrefixTrident.result--json
-   anchors: [D5/S0/Conventions/WDigits, D5/S1/Words/GoldenMechanicalWord]
+   anchors: []
    digest: Classify admissible negative base-phi prefix occurrence sets by Lucas-gap trident families. -/
 
 import D5.S0.Carrier.Units
