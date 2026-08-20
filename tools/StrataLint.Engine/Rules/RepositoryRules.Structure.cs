@@ -288,6 +288,7 @@ internal static partial class RepositoryRules
     private static ImmutableArray<RuleFinding> Chronicle(RuleEvaluationContext context) =>
         context.ForkPoint.Files
             .Where(static item => item.Key.Value.StartsWith("Chronicle/", StringComparison.Ordinal))
+            .Where(item => context.IsBaseFactAffected(item.Key.Value))
             .Where(item => !context.Current.TryGetFile(item.Key.Value, out var current)
                 || !current.RawBytes.AsSpan().SequenceEqual(item.Value.RawBytes.AsSpan()))
             .Select(static item => new RuleFinding(item.Key.Value, "tracked Chronicle entries are append-only"))
@@ -295,7 +296,9 @@ internal static partial class RepositoryRules
 
     private static ImmutableArray<RuleFinding> Badges(RuleEvaluationContext context) =>
         context.Current.Files
-            .Where(static item => IsStatusScope(item.Key.Value) && BadgePattern.IsMatch(item.Value.Text))
+            .Where(item => IsStatusScope(item.Key.Value)
+                && context.IsBaseFactAffected(item.Key.Value)
+                && BadgePattern.IsMatch(item.Value.Text))
             .Select(static item => new RuleFinding(item.Key.Value, "hand-written status badge is forbidden"))
             .ToImmutableArray();
 
@@ -436,7 +439,13 @@ internal static partial class RepositoryRules
         {
             if (!TryHeader(file.Text, out var header))
             {
-                findings.Add(new RuleFinding(path.Value, "expected the exact six-line header at byte zero"));
+                if (context.IsBaseFactAffected(path.Value))
+                {
+                    findings.Add(new RuleFinding(
+                        path.Value,
+                        "expected the exact six-line header at byte zero"));
+                }
+
                 continue;
             }
 
@@ -447,7 +456,8 @@ internal static partial class RepositoryRules
         foreach (var (path, header) in headers)
         {
             var expected = path.Value[..^5];
-            if (counts[header.Gid] == 1
+            if (context.IsBaseFactAffected(path.Value)
+                && counts[header.Gid] == 1
                 && Gid.TryParse(header.Gid, out _)
                 && !string.Equals(header.Gid, expected, StringComparison.Ordinal))
             {

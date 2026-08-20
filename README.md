@@ -29,9 +29,9 @@ the pinned Lean environment and emits source-bound canonical JSON plus a SHA-256
 sidecar; `check` consumes the candidate report without invoking Lean. Baseline and fork-point
 state remain Git object snapshots used by repository rules.
 
-`worktree` fetches a remote base, compares the exact `lean-toolchain` and
-`lake-manifest.json` bytes, and only then copies `.lake` from a matching worktree.
-On macOS it clones the whole tree with one APFS `clonefile(2)` call, reports and
-falls back to an ordinary copy when clonefile is unavailable, and uses
-`lake exe cache get` when no pinned donor matches. It never shares `.lake` through a symlink and restores locked .NET
-dependencies unless `--skip-restore` is explicit.
+`worktree` fetches a remote base and creates the worktree with no `.lake` directory.
+The canonical Lean wrapper materializes a private cache on demand, using an APFS
+`clonefile(2)` donor copy on macOS when possible and `lake exe cache get` otherwise;
+`make lean-cache-ensure` is an explicit, optional prewarm target. The cache is never
+shared through a symlink, and worktree creation restores locked .NET dependencies
+unless `--skip-restore` is explicit.
