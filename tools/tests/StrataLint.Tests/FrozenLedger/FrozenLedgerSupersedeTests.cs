@@ -58,35 +58,168 @@ public sealed partial class FrozenLedgerTests
     }
 
     [Fact]
-    public void SupersedeRejectsLargerClosure()
+    public void SupersedeAcceptsPropextWithEmptyProtectedBaseClosure()
+    {
+        var fixture = SupersedeFixture(
+            baselineAxioms: [],
+            candidateAxioms: ["propext"]);
+
+        var accepted = Assert.IsType<FrozenLedgerValidationOutcome.Accepted>(
+            ValidateCandidate(
+                LoadedSupersedeLedger(AppendSupersede(fixture).AsSpan()),
+                fixture.Baseline,
+                fixture.CandidateCatalog)).Capability;
+
+        Assert.Equal(fixture.CandidateNode.FrozenNodeId, accepted.ActiveFrozenNodes.Single().FrozenNodeId);
+    }
+
+    [Fact]
+    public void SupersedeAcceptsLargerStandardClosure()
     {
         var fixture = SupersedeFixture(
             baselineAxioms: ["propext"],
             candidateAxioms: ["Classical.choice", "propext"]);
 
-        var rejected = Assert.IsType<FrozenLedgerValidationOutcome.Rejected>(
+        var accepted = Assert.IsType<FrozenLedgerValidationOutcome.Accepted>(
             ValidateCandidate(
                 LoadedSupersedeLedger(AppendSupersede(fixture).AsSpan()),
                 fixture.Baseline,
-                fixture.CandidateCatalog));
+                fixture.CandidateCatalog)).Capability;
 
-        Assert.Contains("axiom closure", rejected.Message, StringComparison.OrdinalIgnoreCase);
+        Assert.Equal(fixture.CandidateNode.FrozenNodeId, accepted.ActiveFrozenNodes.Single().FrozenNodeId);
     }
 
     [Fact]
-    public void SupersedeRejectsIncomparableClosure()
+    public void SupersedeAcceptsIncomparableStandardClosure()
     {
         var fixture = SupersedeFixture(
             baselineAxioms: ["propext"],
             candidateAxioms: ["Classical.choice"]);
 
-        var rejected = Assert.IsType<FrozenLedgerValidationOutcome.Rejected>(
+        var accepted = Assert.IsType<FrozenLedgerValidationOutcome.Accepted>(
             ValidateCandidate(
                 LoadedSupersedeLedger(AppendSupersede(fixture).AsSpan()),
                 fixture.Baseline,
-                fixture.CandidateCatalog));
+                fixture.CandidateCatalog)).Capability;
 
-        Assert.Contains("axiom closure", rejected.Message, StringComparison.OrdinalIgnoreCase);
+        Assert.Equal(fixture.CandidateNode.FrozenNodeId, accepted.ActiveFrozenNodes.Single().FrozenNodeId);
+    }
+
+    [Fact]
+    public void SupersedeRejectsClosureContainingNonStandardAxiom()
+    {
+        var fixture = SupersedeFixture(
+            baselineAxioms: [],
+            candidateAxioms: ["propext"]);
+        var payload = SupersedePayload(fixture) with
+        {
+            AxiomClosure = ["propext", "random.nonstandard_axiom"],
+        };
+
+        var exception = Assert.Throws<FormatException>(() =>
+            FrozenLedger.ValidateSupersedeStrength(
+                payload,
+                Assert.Single(fixture.Baseline.ActiveEntries).Value,
+                repositoryImportClosureUnchanged: true,
+                externalImportsCoveredByNamedPins: true,
+                relevantSemanticPinsChanged: true,
+                candidateStatementsAvoidTrivialTruth: true));
+
+        Assert.Contains("standard", exception.Message, StringComparison.OrdinalIgnoreCase);
+    }
+
+    [Fact]
+    public void SupersedeClosurePredicateIsExactlyStandardAxiomSubset()
+    {
+        foreach (var subset in StandardAxiomSubsets())
+        {
+            var fixture = SupersedeFixture(candidateAxioms: subset);
+            var baseEntry = Assert.Single(fixture.Baseline.ActiveEntries).Value;
+            var payload = SupersedePayload(fixture) with { AxiomClosure = subset };
+
+            FrozenLedger.ValidateSupersedeStrength(
+                payload,
+                baseEntry,
+                repositoryImportClosureUnchanged: true,
+                externalImportsCoveredByNamedPins: true,
+                relevantSemanticPinsChanged: true,
+                candidateStatementsAvoidTrivialTruth: true);
+
+            var nonstandardPayload = payload with
+            {
+                AxiomClosure = subset.Add("random.nonstandard_axiom"),
+            };
+            var exception = Assert.Throws<FormatException>(() =>
+                FrozenLedger.ValidateSupersedeStrength(
+                    nonstandardPayload,
+                    baseEntry,
+                    repositoryImportClosureUnchanged: true,
+                    externalImportsCoveredByNamedPins: true,
+                    relevantSemanticPinsChanged: true,
+                    candidateStatementsAvoidTrivialTruth: true));
+            Assert.Contains("standard", exception.Message, StringComparison.OrdinalIgnoreCase);
+        }
+    }
+
+    [Fact]
+    public void SupersedeDecisionDoesNotDependOnRecordedBaseClosure()
+    {
+        var fixture = SupersedeFixture(candidateAxioms: ["propext"]);
+        var entry = Assert.Single(fixture.Baseline.ActiveEntries).Value;
+        var payload = SupersedePayload(fixture);
+
+        foreach (var oldClosure in StandardAxiomSubsets())
+        {
+            var knownEntry = entry with
+            {
+                Material = entry.Material with { AxiomClosure = oldClosure },
+                AxiomClosureKnown = true,
+            };
+            FrozenLedger.ValidateSupersedeStrength(
+                payload,
+                knownEntry,
+                repositoryImportClosureUnchanged: true,
+                externalImportsCoveredByNamedPins: true,
+                relevantSemanticPinsChanged: true,
+                candidateStatementsAvoidTrivialTruth: true);
+        }
+
+        foreach (var oldClosure in new[] { ImmutableArray<string>.Empty, default(ImmutableArray<string>) })
+        {
+            var unknownEntry = entry with
+            {
+                Material = entry.Material with { AxiomClosure = oldClosure },
+                AxiomClosureKnown = false,
+            };
+            FrozenLedger.ValidateSupersedeStrength(
+                payload,
+                unknownEntry,
+                repositoryImportClosureUnchanged: true,
+                externalImportsCoveredByNamedPins: true,
+                relevantSemanticPinsChanged: true,
+                candidateStatementsAvoidTrivialTruth: true);
+        }
+    }
+
+    [Fact]
+    public void SupersedeRejectsMissingRecomputedClosureFailClosed()
+    {
+        var fixture = SupersedeFixture(candidateAxioms: []);
+        var payload = SupersedePayload(fixture) with
+        {
+            AxiomClosure = default,
+        };
+
+        var exception = Assert.Throws<FormatException>(() =>
+            FrozenLedger.ValidateSupersedeStrength(
+                payload,
+                Assert.Single(fixture.Baseline.ActiveEntries).Value,
+                repositoryImportClosureUnchanged: true,
+                externalImportsCoveredByNamedPins: true,
+                relevantSemanticPinsChanged: true,
+                candidateStatementsAvoidTrivialTruth: true));
+
+        Assert.Contains("missing", exception.Message, StringComparison.OrdinalIgnoreCase);
     }
 
     [Fact]
@@ -512,6 +645,17 @@ public sealed partial class FrozenLedgerTests
 
     private static FrozenLedgerSyntax LoadedSupersedeLedger(ReadOnlySpan<byte> bytes) =>
         Assert.IsType<DagLedgerLoadOutcome.Loaded>(DagLedgerLoader.Load(bytes)).Syntax;
+
+    private static IEnumerable<ImmutableArray<string>> StandardAxiomSubsets()
+    {
+        var axioms = LeanAxiomFacts.StandardAxioms.Order(StringComparer.Ordinal).ToArray();
+        for (var mask = 0; mask < 1 << axioms.Length; mask++)
+        {
+            yield return axioms
+                .Where((_, index) => (mask & (1 << index)) != 0)
+                .ToImmutableArray();
+        }
+    }
 
     private static DagLedgerFileEvent DagEvent(
         string identity,

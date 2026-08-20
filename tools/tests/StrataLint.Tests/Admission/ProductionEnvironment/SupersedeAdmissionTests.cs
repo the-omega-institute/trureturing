@@ -23,7 +23,7 @@ public sealed partial class ProductionEnvironmentTests
     }
 
     [Fact]
-    public void PinBumpWithLargerSupersedeClosureIsRejected()
+    public void PinBumpWithLargerStandardSupersedeClosureIsAccepted()
     {
         using var temporary = new TemporaryDirectory();
         var fixture = CreatePinBumpFixture(["propext"], ["Classical.choice", "propext"]);
@@ -31,11 +31,11 @@ public sealed partial class ProductionEnvironmentTests
 
         var outcome = CheckPinBump(temporary, fixture, PinBumpGateway(fixture));
 
-        AssertSupersedeRejection(outcome, "axiom closure");
+        Assert.IsType<AdmissionOutcome.ProtectedSurfaceChange>(outcome);
     }
 
     [Fact]
-    public void PinBumpWithIncomparableSupersedeClosureIsRejected()
+    public void PinBumpWithIncomparableStandardSupersedeClosureIsAccepted()
     {
         using var temporary = new TemporaryDirectory();
         var fixture = CreatePinBumpFixture(["propext"], ["Classical.choice"]);
@@ -43,7 +43,20 @@ public sealed partial class ProductionEnvironmentTests
 
         var outcome = CheckPinBump(temporary, fixture, PinBumpGateway(fixture));
 
-        AssertSupersedeRejection(outcome, "axiom closure");
+        Assert.IsType<AdmissionOutcome.ProtectedSurfaceChange>(outcome);
+    }
+
+    [Fact]
+    public void PinBumpWithNonStandardSupersedeClosureIsRejected()
+    {
+        using var temporary = new TemporaryDirectory();
+        var fixture = CreatePinBumpFixture([], []);
+        AddSupersedeEvents(fixture);
+        InjectNonStandardSupersedeAxiom(fixture);
+
+        var outcome = CheckPinBump(temporary, fixture, PinBumpGateway(fixture));
+
+        AssertSupersedeRejection(outcome, "standard");
     }
 
     [Fact]
@@ -59,7 +72,7 @@ public sealed partial class ProductionEnvironmentTests
     }
 
     [Fact]
-    public void PinBumpWithUnknownRecordedClosureIsRejected()
+    public void PinBumpWithUnknownRecordedClosureIsAccepted()
     {
         using var temporary = new TemporaryDirectory();
         var fixture = CreatePinBumpFixture([], []);
@@ -68,7 +81,7 @@ public sealed partial class ProductionEnvironmentTests
 
         var outcome = CheckPinBump(temporary, fixture, PinBumpGateway(fixture));
 
-        AssertSupersedeRejection(outcome, "recorded axiom closure is unknown");
+        Assert.IsType<AdmissionOutcome.ProtectedSurfaceChange>(outcome);
     }
 
     [Fact]
@@ -302,6 +315,30 @@ public sealed partial class ProductionEnvironmentTests
         var withoutClosure = root.ToJsonString() + "\n";
         fixture.Files[freezePath] = withoutClosure;
         fixture.Baseline[freezePath] = withoutClosure;
+    }
+
+    private static void InjectNonStandardSupersedeAxiom(RuleFixture fixture)
+    {
+        foreach (var path in AddedLedgerPaths(fixture)
+                     .Where(path => EventType(fixture.Files[path]) == FrozenLedger.SupersedeEventType)
+                     .ToArray())
+        {
+            var root = JsonNode.Parse(fixture.Files[path])!.AsObject();
+            root["payload"]!.AsObject()["axiom_closure"]!.AsArray()
+                .Add("random.nonstandard_axiom");
+            var payload = JsonSerializer.Deserialize<JsonElement>(
+                root["payload"]!.ToJsonString());
+            var encoded = FrozenLedgerCanonicalWriter.WriteDagEvent(
+                FrozenLedger.SupersedeEventType,
+                payload);
+            var identity = FrozenLedgerCanonicalWriter.EventIdentity(
+                FrozenLedger.SupersedeEventType,
+                payload,
+                encoded.Hash);
+            fixture.Files.Remove(path);
+            fixture.Files[FrozenLedgerChangeClassifier.AcceptedPath(identity)] =
+                Encoding.UTF8.GetString(encoded.Bytes.AsSpan());
+        }
     }
 
     private static FakeRepositoryGateway PinBumpGateway(RuleFixture fixture)
