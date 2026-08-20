@@ -1,0 +1,25 @@
+## 定理 73.1
+
+\(K_C\) 满足：
+
+- 事实性：\(K_CP\subseteq P\)；
+- 单调性；
+- 幂等性：\(K_CK_CP=K_CP\)；
+- 合取保持。
+
+定义：
+
+\[
+\Diamond_CP(a)
+\iff
+\exists x,\ x\sim_Ca\land P(x).
+\]
+
+则 \(\Diamond_C\) 是相应闭包算子。在经典或适当稳定条件下：
+
+\[
+K_CP=\neg\Diamond_C\neg P.
+\]
+
+---
+

@@ -1,0 +1,10 @@
+## 稳定为假
+
+[
+\boxed{
+R_E^A(b)\neq\varnothing
+\land
+\forall x\in R_E^A(b),\ \neg P(x).
+}
+]
+

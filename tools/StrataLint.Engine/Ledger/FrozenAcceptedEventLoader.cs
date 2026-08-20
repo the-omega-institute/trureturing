@@ -28,6 +28,14 @@ public static class FrozenAcceptedEventLoader
     private static readonly UTF8Encoding StrictUtf8 = new(false, true);
 
     public static DagLedgerFilesLoadOutcome LoadFiles(IEnumerable<RepositoryFile> files)
+        => LoadFiles(files, validateRecordedHash: true);
+
+    internal static DagLedgerFilesLoadOutcome LoadTrustedFiles(IEnumerable<RepositoryFile> files)
+        => LoadFiles(files, validateRecordedHash: false);
+
+    private static DagLedgerFilesLoadOutcome LoadFiles(
+        IEnumerable<RepositoryFile> files,
+        bool validateRecordedHash)
     {
         ArgumentNullException.ThrowIfNull(files);
         try
@@ -49,11 +57,18 @@ public static class FrozenAcceptedEventLoader
                 }
 
                 using var document = JsonDocument.Parse(bytes[..^1].ToArray());
-                if (!FrozenLedgerCanonicalWriter.ValidateDagEvent(
-                    document.RootElement,
-                    out var identity,
-                    out var eventHash,
-                    out var validationMessage))
+                var valid = validateRecordedHash
+                    ? FrozenLedgerCanonicalWriter.ValidateDagEvent(
+                        document.RootElement,
+                        out var identity,
+                        out var eventHash,
+                        out var validationMessage)
+                    : FrozenLedgerCanonicalWriter.ReadTrustedDagEvent(
+                        document.RootElement,
+                        out identity,
+                        out eventHash,
+                        out validationMessage);
+                if (!valid)
                 {
                     throw new FormatException(validationMessage);
                 }

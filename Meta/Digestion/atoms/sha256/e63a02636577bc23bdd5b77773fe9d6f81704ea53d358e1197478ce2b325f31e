@@ -1,0 +1,33 @@
+[
+C_{\mathrm{cons}}(x)
+====================
+
+C_{\mathrm{cons}}(y),
+]
+
+但：
+
+[
+T(x)\neq T(y).
+]
+
+所以：
+
+[
+\boxed{
+\text{agreement}
+\neq
+\text{truth sufficiency}.
+}
+]
+
+共识的认识价值来自：
+
+* 证据是否独立；
+* 专家接口是否目标充分；
+* provenance 是否可信；
+* 反例是否开放；
+* 结果是否跨环境稳定。
+
+---
+

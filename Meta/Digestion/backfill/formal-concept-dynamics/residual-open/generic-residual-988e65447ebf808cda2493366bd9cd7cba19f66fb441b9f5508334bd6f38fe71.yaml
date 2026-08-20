@@ -1,0 +1,10 @@
+ast_path: 命题/376.1
+fingerprints:
+  raw_sha256: sha256:988e65447ebf808cda2493366bd9cd7cba19f66fb441b9f5508334bd6f38fe71
+  normalized_sha256: sha256:988e65447ebf808cda2493366bd9cd7cba19f66fb441b9f5508334bd6f38fe71
+cas_ref: sha256:988e65447ebf808cda2493366bd9cd7cba19f66fb441b9f5508334bd6f38fe71
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

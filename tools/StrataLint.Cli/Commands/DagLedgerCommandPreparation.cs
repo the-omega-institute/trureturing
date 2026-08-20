@@ -35,18 +35,27 @@ internal static class DagLedgerCommandPreparation
     internal static DagLedgerCommandContext Prepare(
         string repositoryRoot,
         IRepositoryGateway repository,
-        string candidateLeanReport) =>
-        Prepare(repositoryRoot, repository, new FileLeanReportSource(candidateLeanReport));
+        string candidateLeanReport,
+        string? changeBase = null) =>
+        Prepare(repositoryRoot, repository, new FileLeanReportSource(candidateLeanReport), changeBase);
 
     /// Same preparation, with the raw report supplied by the caller rather than read from a path.
     /// Callers that already hold an ILeanReportSource (the CLI environment does) get the
     /// authoritative FrozenLedgerConsistent without a second copy of this assembly line.
+    ///
+    /// changeBase is optional and defaults to null, which preserves the original behaviour byte
+    /// for byte: the change set still comes from repository.ReadCurrentChanges() (uncommitted
+    /// working-tree delta against HEAD). Passing a revision switches the change set to that
+    /// revision's delta against the working tree instead (repository.ReadChanges(changeBase)),
+    /// which is what lets a caller match `make gate BASE=<rev>`'s committed-delta view (issue
+    /// #2474: a change that is already committed reads as empty against ReadCurrentChanges alone).
     internal static DagLedgerCommandContext Prepare(
         string repositoryRoot,
         IRepositoryGateway repository,
-        ILeanReportSource leanReportSource)
+        ILeanReportSource leanReportSource,
+        string? changeBase = null)
     {
-        var candidate = PrepareCandidate(repositoryRoot, repository, leanReportSource);
+        var candidate = PrepareCandidate(repositoryRoot, repository, leanReportSource, changeBase);
         var baseline = candidate.BaseView.ToWriterBaseline();
         return new DagLedgerCommandContext(
             candidate.LedgerPath,
@@ -61,7 +70,8 @@ internal static class DagLedgerCommandPreparation
     internal static DagLedgerCandidateMaterial PrepareCandidate(
         string repositoryRoot,
         IRepositoryGateway repository,
-        ILeanReportSource leanReportSource)
+        ILeanReportSource leanReportSource,
+        string? changeBase = null)
     {
         var ledgerPath = Path.Combine(
             repositoryRoot,
@@ -74,7 +84,9 @@ internal static class DagLedgerCommandPreparation
         var report = truth.Report;
         var lean = truth.Lean;
         var dag = truth.Dag;
-        var changes = Ask(repository.ReadCurrentChanges);
+        var changes = changeBase is null
+            ? Ask(repository.ReadCurrentChanges)
+            : Ask(() => repository.ReadChanges(changeBase));
         var catalog = BuildWriterCatalog(
             snapshot,
             lean,
@@ -317,9 +329,22 @@ internal static class DagLedgerCommandPreparation
 
     internal static FrozenLedgerSyntax LoadLedgerFiles(
         IEnumerable<RepositoryFile> files,
-        string label)
+        string label) =>
+        LoadLedgerFiles(files, label, trustRecordedHashes: false);
+
+    internal static FrozenLedgerSyntax LoadTrustedLedgerFiles(
+        IEnumerable<RepositoryFile> files,
+        string label) =>
+        LoadLedgerFiles(files, label, trustRecordedHashes: true);
+
+    private static FrozenLedgerSyntax LoadLedgerFiles(
+        IEnumerable<RepositoryFile> files,
+        string label,
+        bool trustRecordedHashes)
     {
-        var events = DagLedgerLoader.LoadFiles(files) switch
+        var events = (trustRecordedHashes
+            ? DagLedgerLoader.LoadTrustedFiles(files)
+            : DagLedgerLoader.LoadFiles(files)) switch
         {
             DagLedgerFilesLoadOutcome.Loaded loaded => loaded.Events,
             DagLedgerFilesLoadOutcome.Invalid invalid => throw new InvalidOperationException(

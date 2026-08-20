@@ -1,0 +1,23 @@
+[
+\boxed{
+h(F^X_u x)
+==========
+
+F^Y_{\phi(u)}(hx).
+}
+]
+
+即：
+
+[
+\begin{array}{ccc}
+X&\xrightarrow{F^X_u}&X\
+\downarrow h&&\downarrow h\
+Y&\xrightarrow{F^Y_{\phi(u)}}&Y
+\end{array}
+]
+
+交换。
+
+---
+

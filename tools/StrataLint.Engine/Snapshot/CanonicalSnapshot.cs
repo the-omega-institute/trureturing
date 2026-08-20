@@ -54,14 +54,16 @@ public static class RepositoryCanonicalizer
         ArgumentNullException.ThrowIfNull(policy);
         try
         {
-            if (!snapshot.TryGetFile("Meta/registry.yaml", out var registry)
-                || !registry.RawBytes.AsSpan().SequenceEqual(policy.CanonicalRegistryBytes.AsSpan()))
+            if (RequiresWriteValidation(changes, "Meta/registry.yaml")
+                && (!snapshot.TryGetFile("Meta/registry.yaml", out var registry)
+                    || !registry.RawBytes.AsSpan().SequenceEqual(policy.CanonicalRegistryBytes.AsSpan())))
             {
                 throw new FormatException("Repository registry bytes do not match the validated canonical policy.");
             }
 
-            if (!snapshot.TryGetFile("Meta/domains.yaml", out var domains)
-                || !domains.RawBytes.AsSpan().SequenceEqual(policy.CanonicalDomainsBytes.AsSpan()))
+            if (RequiresWriteValidation(changes, "Meta/domains.yaml")
+                && (!snapshot.TryGetFile("Meta/domains.yaml", out var domains)
+                    || !domains.RawBytes.AsSpan().SequenceEqual(policy.CanonicalDomainsBytes.AsSpan())))
             {
                 throw new FormatException("Repository domain bytes do not match the validated canonical policy.");
             }
@@ -82,6 +84,9 @@ public static class RepositoryCanonicalizer
                 $"Repository canonicalization failed closed: {exception.Message}");
         }
     }
+
+    private static bool RequiresWriteValidation(RawChangeSet? changes, string path) =>
+        changes is null || changes.Paths.Any(candidate => candidate.Value == path);
 
     private static void ValidateStructuredArtifacts(
         RepositorySnapshot snapshot,

@@ -1,0 +1,20 @@
+# 224. 概念 refinement 对旧问题是保守的
+
+若：
+
+[
+C\preceq D,
+]
+
+则任何旧目标 (T) 若满足：
+
+[
+E_T\preceq C,
+]
+
+必满足：
+
+[
+E_T\preceq D.
+]
+

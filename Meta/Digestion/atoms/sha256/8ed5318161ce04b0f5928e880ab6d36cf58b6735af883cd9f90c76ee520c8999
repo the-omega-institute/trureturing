@@ -1,0 +1,29 @@
+# 197. 问题本身就是一个概念
+
+设状态类型为 (X)。一个问题并不只是自然语言句子，而是一个答案映射：
+
+[
+\boxed{
+Q:X\to A_Q.
+}
+]
+
+其中 (A_Q) 是允许的答案类型。
+
+例如：
+
+[
+\begin{aligned}
+Q_{\mathrm{yes/no}}&:X\to\mathbf 2,\
+Q_{\mathrm{identity}}&:X\to I,\
+Q_{\mathrm{prediction}}&:X\to Y,\
+Q_{\mathrm{normative}}&:X\to L.
+\end{aligned}
+]
+
+因此，一个问题恰好诱导目标概念：
+
+[
+E_Q=(A_Q,Q).
+]
+

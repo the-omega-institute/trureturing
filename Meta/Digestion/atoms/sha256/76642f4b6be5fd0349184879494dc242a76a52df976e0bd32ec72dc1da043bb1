@@ -1,0 +1,53 @@
+# 324. “零知识”不能意味着连被证明命题都不泄漏
+
+设秘密：
+
+[
+S:X\to B_S.
+]
+
+需要证明的公开命题：
+
+[
+Q=h\circ S.
+]
+
+证明 transcript：
+
+[
+P:X\to B_P.
+]
+
+若证明使验证者能够确定 (Q)：
+
+[
+\boxed{
+E_Q\preceq P,
+}
+]
+
+由于：
+
+[
+E_Q\preceq E_S,
+]
+
+(E_Q) 是 (P) 与 (E_S) 的共同下界。
+
+因此：
+
+[
+\boxed{
+E_Q
+\preceq
+P\wedge E_S.
+}
+]
+
+所以如果 (Q) 非常值：
+
+[
+P\wedge E_S
+\not\simeq\bot.
+]
+

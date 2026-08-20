@@ -1,0 +1,16 @@
+# 69. 固定目标完成必然交换
+
+对固定目标 \(S,T\)：
+
+\[
+\operatorname{cl}_S\operatorname{cl}_T(C)
+\simeq
+C\vee E_T\vee E_S
+\simeq
+\operatorname{cl}_T\operatorname{cl}_S(C).
+\]
+
+因此真正的历史路径依赖不能只来自固定目标的静态 join。它至少需要目标、过程、准入、可实现性或对象类型随历史改变。
+
+---
+

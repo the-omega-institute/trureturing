@@ -1,0 +1,19 @@
+[
+\boxed{
+U_{\mathrm{safe}}(x)
+====================
+
+\left{
+u\in U(x)
+;\middle|;
+R_u(x)\subseteq K^*
+\right}.
+}
+]
+
+由 (K^*) 的定义：
+
+[
+U_{\mathrm{safe}}(x)\neq\varnothing.
+]
+

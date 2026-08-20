@@ -1,0 +1,10 @@
+ast_path: section/第三人称优势
+fingerprints:
+  raw_sha256: sha256:92b071f8fe3792dc94533f5ee22aa4858516def214f966fa4e30dd12e630026a
+  normalized_sha256: sha256:92b071f8fe3792dc94533f5ee22aa4858516def214f966fa4e30dd12e630026a
+cas_ref: sha256:92b071f8fe3792dc94533f5ee22aa4858516def214f966fa4e30dd12e630026a
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

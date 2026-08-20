@@ -1,0 +1,64 @@
+[
+\boxed{
+\mathfrak Q
+===========
+
+(
+T,
+C,
+p,
+\Delta,
+R,
+\Pi
+),
+}
+]
+
+其中：
+
+[
+\begin{aligned}
+T&=\text{要回答的问题};\
+C&=\text{当前信息界面};\
+p&=\text{因子化或证明见证};\
+\Delta&=\text{缺陷和反模型};\
+R&=\text{最小修复};\
+\Pi&=\text{proof provenance}.
+\end{aligned}
+]
+
+因此，整套理论的总公式进一步发展为：
+
+[
+\boxed{
+\begin{aligned}
+\textbf{Formal Concept Dynamics}
+={}&
+\textbf{a calculus of questions}\
+&+
+\textbf{an algebra of experiments}\
+&+
+\textbf{a provenance theory of trust}\
+&+
+\textbf{a belief-state theory of agency}\
+&+
+\textbf{a structural theory of privacy and power}\
+&+
+\textbf{an empirical quotient theory of mind and science}.
+\end{aligned}
+}
+]
+
+最凝练的一句是：
+
+[
+\boxed{
+\text{一个系统知道什么，取决于它能区分什么；
+它能控制什么，取决于这些区别能支持什么政策；
+它应当被允许知道什么，则取决于我们愿意赋予它多少区别对待世界的能力。}
+}
+]
+以下从 **§238** 继续。仍然只进行纸面推理，不处理 GitHub，也不把这些新增定义与定理标记为已经获得 Lean proof term 的 `Closed` 结论。
+
+---
+

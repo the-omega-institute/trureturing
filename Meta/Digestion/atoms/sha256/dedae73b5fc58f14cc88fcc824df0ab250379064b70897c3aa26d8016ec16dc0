@@ -1,0 +1,15 @@
+[
+\boxed{
+T
+=
+
+\underbrace{\widehat T_C}*{\text{概念可表达部分}}
++
+\underbrace{(T-\widehat T_C)}*{\text{对 }C\text{ 正交的残差}}.
+}
+]
+
+这给出精确因子化失败时的规范近似分解。
+
+---
+

@@ -73,13 +73,52 @@ public sealed class CanonicalSnapshotTests
                 Encoding.UTF8.GetBytes(TestRegistry.Canonical),
                 Encoding.UTF8.GetBytes(TestRegistry.Domains))).Policy;
 
-        var outcome = RepositoryCanonicalizer.Validate(context.Current, policy);
+        var changedPath = mutateRegistry ? "Meta/registry.yaml" : "Meta/domains.yaml";
+        var outcome = RepositoryCanonicalizer.Validate(
+            context.Current,
+            policy,
+            RawChangeSet.Create([changedPath]));
 
         var failure = Assert.IsType<CanonicalizationOutcome.InfrastructureFailure>(outcome);
         Assert.Contains(
             mutateRegistry ? "registry bytes" : "domain bytes",
             failure.Message,
             StringComparison.OrdinalIgnoreCase);
+    }
+
+    [Theory]
+    [InlineData(true)]
+    [InlineData(false)]
+    public void TrustedPolicyBytesAreNotReplayedForAnUnrelatedCandidateDelta(bool mutateRegistry)
+    {
+        var fixture = new RuleFixture();
+        if (mutateRegistry)
+        {
+            fixture.Files["Meta/registry.yaml"] = TestRegistry.Canonical.Replace(
+                "schema_version: 1",
+                "schema_version: \"1\"",
+                StringComparison.Ordinal);
+        }
+        else
+        {
+            fixture.Files["Meta/domains.yaml"] = TestRegistry.Domains.Replace(
+                "stratum: S0",
+                "stratum: \"S0\"",
+                StringComparison.Ordinal);
+        }
+
+        var context = fixture.Build();
+        var policy = RegistryLoadAssert.Accepted(
+            RegistryLoader.Load(
+                Encoding.UTF8.GetBytes(TestRegistry.Canonical),
+                Encoding.UTF8.GetBytes(TestRegistry.Domains))).Policy;
+
+        var outcome = RepositoryCanonicalizer.Validate(
+            context.Current,
+            policy,
+            RawChangeSet.Create(["notes/unrelated.txt"]));
+
+        Assert.IsType<CanonicalizationOutcome.Accepted>(outcome);
     }
 
     [Fact]

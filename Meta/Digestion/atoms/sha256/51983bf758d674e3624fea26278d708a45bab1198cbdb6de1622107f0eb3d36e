@@ -1,0 +1,36 @@
+# 169. 鲁棒充分性比普通充分性更强
+
+普通充分性只要求：
+
+[
+Cx=Cy\Rightarrow Tx=Ty.
+]
+
+鲁棒充分性还要求在小扰动邻域中目标不跨界。
+
+给定 (\varepsilon>0)，定义：
+
+[
+\boxed{
+\operatorname{RobustSuff}_\varepsilon(C;T)
+}
+]
+
+当所有距离不超过 (\varepsilon) 且概念不可区分的状态都具有相同目标值。
+
+即：
+
+[
+Cx=Cy
+\land
+d(x,y)\le\varepsilon
+\Longrightarrow
+Tx=Ty.
+]
+
+若普通充分性成立，则任意 (\varepsilon) 都成立。
+
+但在近似概念、量化读出或容差概念中，普通零误差和扰动鲁棒性必须分开。
+
+---
+

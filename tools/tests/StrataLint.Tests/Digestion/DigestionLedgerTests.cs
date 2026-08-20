@@ -526,7 +526,9 @@ public sealed partial class DigestionLedgerTests
 
     private static DigestionEntryEvaluation EvaluateCompleteTail(
         string authorizationPath,
-        byte[] authorization)
+        byte[] authorization,
+        string? recordedSha256 = null,
+        RawChangeSet? changes = null)
     {
         var source = Encoding.UTF8.GetBytes("# GICT\n\n**定理 1.1(Test)**。claim。\n");
         var atom = Assert.Single(GictAtomizer.Atomize(source, DigestionTestSupport.Rules).Claims);
@@ -549,7 +551,7 @@ public sealed partial class DigestionLedgerTests
             new DigestionScribeReceipt(gid, definitionHash, emissionHash),
             tailAuthorization: new DigestionExternalReceipt(
                 authorizationPath,
-                DigestionFingerprint.Compute(authorization).RawSha256));
+                recordedSha256 ?? DigestionFingerprint.Compute(authorization).RawSha256));
         var attestation = ScribeEmissionAttestation.Write(
         [
             new ScribeEmissionRecord(
@@ -584,7 +586,8 @@ public sealed partial class DigestionLedgerTests
             ledger,
             snapshot,
             AcceptedLean((targetPath, report)),
-            verifiedEmissions).Entries);
+            verifiedEmissions,
+            changes: changes).Entries);
     }
 
     private static BackfillInventoryDocument Ledger(

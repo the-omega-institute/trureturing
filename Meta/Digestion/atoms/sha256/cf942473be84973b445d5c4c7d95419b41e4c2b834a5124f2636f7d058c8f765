@@ -1,0 +1,13 @@
+[
+\boxed{
+\mathsf{Rev}_{P,d}(A)
+=====================
+
+\operatorname{argmin}_{x\in P}d(x,A).
+}
+]
+
+它可能为空、非唯一或依赖距离。
+
+---
+

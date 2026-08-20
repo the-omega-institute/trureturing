@@ -1,0 +1,27 @@
+## 定理 198.1（实验识别判据）
+
+以下等价：
+
+[
+E_T\preceq E_S,
+]
+
+[
+\bigcap_{u\in S}\ker E_u
+\subseteq
+\ker T,
+]
+
+[
+\forall x,y,\quad
+\left[
+\forall u\in S,\ E_u(x)=E_u(y)
+\right]
+\Longrightarrow
+T(x)=T(y).
+]
+
+所以一个实验族足够，当且仅当所有在实验上不可区分的状态，在目标上也不可区分。
+
+---
+

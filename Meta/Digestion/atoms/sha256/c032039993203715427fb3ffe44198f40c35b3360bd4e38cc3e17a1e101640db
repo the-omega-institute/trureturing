@@ -1,0 +1,10 @@
+# 226. 理论 revision 一般不交换
+
+设当前允许世界集合为：
+
+[
+A\subseteq X.
+]
+
+定义一个简单 revision 算子：
+

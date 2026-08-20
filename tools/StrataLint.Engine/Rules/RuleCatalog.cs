@@ -97,6 +97,8 @@ public sealed class RuleCatalog
             var deferred = ImmutableArray.CreateBuilder<DeferredRule>();
             var executed = ImmutableArray.CreateBuilder<RuleId>();
             var skipped = ImmutableArray.CreateBuilder<RuleId>();
+            var ruleImplementationChanged = context.Changes.Paths.Any(static path =>
+                StrataLintEngineBuildInputs.ContainsRuleImplementation(path.Value));
             foreach (var registration in registrations)
             {
                 var descriptor = registration.Descriptor;
@@ -111,7 +113,7 @@ public sealed class RuleCatalog
                     continue;
                 }
 
-                if (!registration.Rule.IsAffectedBy(context))
+                if (!ruleImplementationChanged && !registration.Rule.IsAffectedBy(context))
                 {
                     skipped.Add(descriptor.Id);
                     continue;

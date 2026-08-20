@@ -1,0 +1,10 @@
+ast_path: section/405-声誉迁移需要身份连续性证明
+fingerprints:
+  raw_sha256: sha256:61d9a5732c143451cb520e1d4e2489336ff0aadd9cb4a6601bab36a3accee432
+  normalized_sha256: sha256:61d9a5732c143451cb520e1d4e2489336ff0aadd9cb4a6601bab36a3accee432
+cas_ref: sha256:61d9a5732c143451cb520e1d4e2489336ff0aadd9cb4a6601bab36a3accee432
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

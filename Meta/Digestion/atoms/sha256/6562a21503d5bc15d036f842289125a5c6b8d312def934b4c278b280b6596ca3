@@ -1,0 +1,31 @@
+## 定理 305.1（终点状态不足以决定抢先原因）
+
+如果：
+
+[
+E(\gamma)=E(\gamma'),
+]
+
+但：
+
+[
+\operatorname{ActiveCause}(\gamma)
+\neq
+\operatorname{ActiveCause}(\gamma'),
+]
+
+则实际原因不能通过终点概念 (E) 因子化。
+
+因此：
+
+[
+\boxed{
+\text{抢先、替代、延迟触发和中断因果
+需要事件顺序与机制 provenance。}
+}
+]
+
+只看最终变量值会删除哪条因果路径真正到达结果的区别。
+
+---
+

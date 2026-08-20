@@ -1,0 +1,20 @@
+[
+\boxed{
+\rho(C;T)
+=========
+
+\inf
+\left{
+d(x,y)
+\mid
+Cx=Cy,\ T(x)\neq T(y)
+\right}.
+}
+]
+
+若无缺陷，设：
+
+[
+\rho=+\infty.
+]
+

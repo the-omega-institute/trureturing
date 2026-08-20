@@ -1,0 +1,24 @@
+## 定理 510.1
+
+若存在宏观干预：
+
+[
+G_u
+]
+
+使：
+
+[
+CF_u=G_uC,
+]
+
+则：
+
+[
+\operatorname{ICarry}_u(C)=\varnothing.
+]
+
+反之，在有限有效像模型中，如果 (\operatorname{ICarry}_u(C)) 为空，则存在唯一有效像上的宏观干预 (G_u)。
+
+所以：
+

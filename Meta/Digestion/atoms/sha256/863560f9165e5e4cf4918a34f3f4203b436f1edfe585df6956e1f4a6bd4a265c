@@ -1,0 +1,18 @@
+# 131. 解释必须保留证明来源
+
+定义：
+
+\[
+\operatorname{Reason}_C(T)
+=\sum_{\overline T:B_C\to Y}\prod_x(Tx=\overline T(q_Cx)).
+\]
+
+若 \(q_C\) 满射，因子映射外延唯一；但不同程序、机制、因果链、前提与复杂度仍可实现相同函数。因此真正解释应是 proof-relevant：
+
+\[
+\operatorname{Explains}_C(T)
+=\sum_{r:\operatorname{Reason}_C(T)}\operatorname{Provenance}(r).
+\]
+
+---
+

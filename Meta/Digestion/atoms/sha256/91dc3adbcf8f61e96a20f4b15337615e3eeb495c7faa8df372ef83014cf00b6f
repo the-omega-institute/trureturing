@@ -1,0 +1,49 @@
+## 定理 431.1（连续翻译的损失单调）
+
+若：
+
+[
+X\xrightarrow{h}Y\xrightarrow{g}W,
+]
+
+则：
+
+[
+\boxed{
+\Delta(h;T)
+\subseteq
+\Delta(g\circ h;T).
+}
+]
+
+因为：
+
+[
+h(x)=h(x')
+\Longrightarrow
+g(hx)=g(hx').
+]
+
+所以后续粗化不能修复前一层已经删除的区别。
+
+概率意义下，由数据处理：
+
+[
+\boxed{
+H(T\mid g(h(X)))
+\ge
+H(T\mid h(X)).
+}
+]
+
+因此：
+
+[
+\boxed{
+\text{翻译链可以重新命名信息，
+但不能无外部输入恢复上游已经删除的目标差异。}
+}
+]
+
+---
+

@@ -69,6 +69,28 @@ public sealed class EmitFormalizationReceiptTests
     }
 
     [Fact]
+    public void CandidateFormalizationReceiptWriteGateRejectsNoncanonicalJson()
+    {
+        const string path = "Meta/Digestion/formalizations/candidate.v1.json";
+        var canonical = DigestionFormalizationReceipt.Write(new DigestionFormalizationReceipt(
+            "candidate",
+            "D5/S0/Carrier/Probe.probe",
+            new DigestionFormalizationSignature("probe", "theorem", "True"),
+            "sha256:" + new string('a', 64),
+            "sha256:" + new string('a', 64)));
+        var noncanonical = Encoding.UTF8.GetString(canonical.AsSpan()).Replace(
+            "\": ",
+            "\":",
+            StringComparison.Ordinal);
+        var snapshot = DigestionTestSupport.Snapshot((path, Encoding.UTF8.GetBytes(noncanonical)));
+
+        var exception = Assert.Throws<FormatException>(() =>
+            DigestionFormalizationReceipt.Load(snapshot, path));
+
+        Assert.Contains("not canonical JSON", exception.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
     public void EmitExtendsAnExistingReceiptWithARecomputedSecondarySignature()
     {
         const string secondaryModule = "D5/S3/Observer/WindowRegisterCRT";

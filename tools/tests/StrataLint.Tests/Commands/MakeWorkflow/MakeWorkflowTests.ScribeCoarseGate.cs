@@ -20,7 +20,6 @@ public sealed partial class MakeWorkflowTests
         Assert.Equal(0, result.ExitCode);
         Assert.Equal(
             [
-                $"{fixture.ScribeDll} projections --check --report {fixture.Report}",
                 $"{fixture.ScribeDll} describe-report --check",
             ],
             fixture.Invocations());
@@ -40,7 +39,6 @@ public sealed partial class MakeWorkflowTests
         Assert.Equal(0, result.ExitCode);
         Assert.Equal(
             [
-                $"{fixture.ScribeDll} projections --check --report {fixture.Report}",
                 $"{fixture.ScribeDll} describe-report --check",
             ],
             fixture.Invocations());
@@ -59,7 +57,6 @@ public sealed partial class MakeWorkflowTests
         Assert.Equal(0, result.ExitCode);
         Assert.Equal(
             [
-                $"{fixture.ScribeDll} projections --check --report {fixture.Report}",
                 $"{fixture.ScribeDll} describe-report --check",
             ],
             fixture.Invocations());
