@@ -110,6 +110,15 @@ internal static class DagLedgerSyncWriter
     /// flag existed (issue #2474). The value is passed through verbatim -- this parser never
     /// resolves or defaults it to a remote ref; only the caller decides what revision REV names
     /// (CLAUDE.md 第Ⅵ节 git reference discipline).
+    ///
+    /// A value that itself looks like a flag (starts with '-') is rejected rather than consumed:
+    /// without this, `--base --cached` would feed the literal string "--cached" to
+    /// GitRepositoryGateway.ReadChanges, which passes it straight through to `git diff ...
+    /// <changeBase> --`. There "--cached" is not a revision but a recognized git diff flag (compare
+    /// against the index), so the command would exit 0 with an empty change set -- fail-open,
+    /// silently reproducing the #2474 symptom under a different cause instead of failing loudly.
+    /// Rejecting any flag-shaped value here, for both flags, closes that off before it ever reaches
+    /// git.
     private static bool TryParseArguments(
         IReadOnlyList<string> arguments,
         out string candidateLeanReport,
@@ -124,7 +133,8 @@ internal static class DagLedgerSyncWriter
         {
             if (arguments[index] == "--candidate-lean-report"
                 && report is null
-                && index + 1 < arguments.Count)
+                && index + 1 < arguments.Count
+                && !IsFlagShaped(arguments[index + 1]))
             {
                 report = arguments[index + 1];
                 index += 2;
@@ -133,7 +143,8 @@ internal static class DagLedgerSyncWriter
 
             if (arguments[index] == "--base"
                 && @base is null
-                && index + 1 < arguments.Count)
+                && index + 1 < arguments.Count
+                && !IsFlagShaped(arguments[index + 1]))
             {
                 @base = arguments[index + 1];
                 index += 2;
@@ -152,5 +163,7 @@ internal static class DagLedgerSyncWriter
         baseRevision = @base;
         return true;
     }
+
+    private static bool IsFlagShaped(string value) => value.StartsWith('-');
 
 }

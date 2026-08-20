@@ -103,6 +103,112 @@ public sealed class LedgerSyncCommandTests
     }
 
     [Fact]
+    public void ProductionCommandRejectsFlagShapedValueForBaseFlag()
+    {
+        // Review finding (1): git diff treats "--cached" as a flag (compare against the index),
+        // not a revision. Without a guard, `--base --cached` would consume "--cached" as REV,
+        // reach GitRepositoryGateway.ReadChanges("--cached"), and exit 0 with an empty change set
+        // -- fail-open, silently reproducing the #2474 symptom under a different cause instead of
+        // failing loudly. TryParseArguments must reject a flag-shaped value before it ever reaches
+        // git, for both flags (this test covers --base; the next covers --candidate-lean-report).
+        using var fixture = new LedgerSyncFixture(blobChanged: false, addClosedModule: false);
+
+        var (exitCode, console) = RunArgs(
+            fixture, "ledger-sync", "--candidate-lean-report", fixture.ReportPath, "--base", "--cached");
+
+        Assert.Equal(2, exitCode);
+        Assert.Contains("USAGE", console.Error, StringComparison.Ordinal);
+        Assert.Empty(fixture.Gateway.ReadChangesCalls);
+    }
+
+    [Fact]
+    public void ProductionCommandRejectsFlagShapedValueForCandidateLeanReportFlag()
+    {
+        // Review finding (3): without the same guard on --candidate-lean-report, the sequence
+        // `--candidate-lean-report --base` would swallow "--base" as the report *path* and fail
+        // with a file-read error instead of a usage error. Fixed by the same IsFlagShaped check
+        // used for --base, applied symmetrically to both flags.
+        using var fixture = new LedgerSyncFixture(blobChanged: false, addClosedModule: false);
+
+        var (exitCode, console) = RunArgs(fixture, "ledger-sync", "--candidate-lean-report", "--base");
+
+        Assert.Equal(2, exitCode);
+        Assert.Contains("USAGE", console.Error, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void ProductionCommandRejectsDuplicateBaseFlag()
+    {
+        // Review finding (2): the "@base is null" uniqueness guard already rejected a repeated
+        // --base before this PR, but nothing tested it -- a later refactor could silently drop the
+        // guard (e.g. "last one wins") and every pre-existing test would stay green. This test
+        // exists purely to lock the guard down.
+        using var fixture = new LedgerSyncFixture(blobChanged: false, addClosedModule: false);
+
+        var (exitCode, console) = RunArgs(
+            fixture,
+            "ledger-sync",
+            "--candidate-lean-report", fixture.ReportPath,
+            "--base", "rev-one",
+            "--base", "rev-two");
+
+        Assert.Equal(2, exitCode);
+        Assert.Contains("USAGE", console.Error, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void ProductionCommandRejectsDuplicateCandidateLeanReportFlag()
+    {
+        // Symmetric to the --base duplicate guard: "each flag at most once" applies to both.
+        using var fixture = new LedgerSyncFixture(blobChanged: false, addClosedModule: false);
+
+        var (exitCode, console) = RunArgs(
+            fixture,
+            "ledger-sync",
+            "--candidate-lean-report", fixture.ReportPath,
+            "--candidate-lean-report", fixture.ReportPath);
+
+        Assert.Equal(2, exitCode);
+        Assert.Contains("USAGE", console.Error, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void ProductionCommandRejectsBaseFlagMissingItsValueAtEndOfArguments()
+    {
+        // Pre-existing behaviour (the index+1 < arguments.Count bound), locked down with a named
+        // test as the review requested rather than left to rely on nobody breaking it.
+        using var fixture = new LedgerSyncFixture(blobChanged: false, addClosedModule: false);
+
+        var (exitCode, console) = RunArgs(
+            fixture, "ledger-sync", "--candidate-lean-report", fixture.ReportPath, "--base");
+
+        Assert.Equal(2, exitCode);
+        Assert.Contains("USAGE", console.Error, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void ProductionCommandAcceptsBaseFlagBeforeCandidateLeanReportFlag()
+    {
+        // Reversed flag order is pre-existing accepted behaviour; locked down with a test so a
+        // future parser rewrite that only tries one order doesn't regress it silently.
+        using var fixture = new LedgerSyncFixture(
+            blobChanged: true,
+            addClosedModule: false,
+            currentChangesEmpty: true);
+
+        var (exitCode, console) = RunArgs(
+            fixture,
+            "ledger-sync",
+            "--base", "committed-base-rev",
+            "--candidate-lean-report", fixture.ReportPath);
+
+        Assert.Equal(0, exitCode);
+        Assert.Equal(string.Empty, console.Error);
+        Assert.Contains("appended_reattests=1", console.Output, StringComparison.Ordinal);
+        Assert.Equal(new[] { "committed-base-rev" }, fixture.Gateway.ReadChangesCalls);
+    }
+
+    [Fact]
     public void ProductionCommandRejectsStatementChangesWithoutWriting()
     {
         using var fixture = new LedgerSyncFixture(
@@ -298,6 +404,18 @@ public sealed class LedgerSyncCommandTests
         var arguments = baseRevision is null
             ? new[] { command, "--candidate-lean-report", fixture.ReportPath }
             : new[] { command, "--candidate-lean-report", fixture.ReportPath, "--base", baseRevision };
+        var exitCode = CliApplication.Run(arguments, fixture.Environment, console);
+        return (exitCode, console);
+    }
+
+    /// Same as Run, but the caller supplies the full argument list verbatim (including the
+    /// leading command name) instead of the fixed `--candidate-lean-report FILE [--base REV]`
+    /// shape -- for exercising TryParseArguments' malformed-input paths directly.
+    private static (int ExitCode, BufferedConsole Console) RunArgs(
+        LedgerSyncFixture fixture,
+        params string[] arguments)
+    {
+        var console = new BufferedConsole();
         var exitCode = CliApplication.Run(arguments, fixture.Environment, console);
         return (exitCode, console);
     }
