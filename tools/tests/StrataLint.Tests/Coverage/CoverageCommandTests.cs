@@ -43,6 +43,42 @@ public sealed class CoverageCommandTests
     }
 
     [Fact]
+    public void CoverageCommandTrustsAcceptedEventHashWithoutReplayingIt()
+    {
+        using var directory = new TemporaryDirectory();
+        var recordedHash = "sha256:" + new string('e', 64);
+        var gateway = new FakeRepositoryGateway(
+            RawChangeSet.Create([]),
+            Snapshot(recordedHash),
+            null);
+        var source = new FakeLeanReportSource(LeanAxiomReport.Create(
+            ImmutableDictionary<string, LeanFileReport>.Empty));
+        var environment = new ProductionCliEnvironment(directory.Path, gateway, source);
+        var console = new BufferedConsole();
+
+        var exit = CliApplication.Run(["coverage"], environment, console);
+
+        Assert.True(exit == 0, console.Error);
+        Assert.StartsWith("HARNESS_COVERAGE schema=1\n", console.Output, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void AcceptedEventWriteGateRejectsMismatchedCandidateEventHash()
+    {
+        var recordedHash = "sha256:" + new string('e', 64);
+        var snapshot = Assert.IsType<SnapshotDecodeOutcome.Decoded>(
+            SnapshotDecoder.Decode(Snapshot(recordedHash))).Snapshot;
+        var accepted = Assert.Single(
+            snapshot.Files.Values,
+            file => FrozenLedgerChangeClassifier.IsAcceptedEventPath(file.Path.Value));
+
+        var outcome = FrozenAcceptedEventLoader.LoadFiles([accepted]);
+
+        var invalid = Assert.IsType<DagLedgerFilesLoadOutcome.Invalid>(outcome);
+        Assert.Contains("event_hash", invalid.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
     public void TopLevelUsageNamesCoverage()
     {
         var console = new BufferedConsole();
@@ -59,7 +95,7 @@ public sealed class CoverageCommandTests
             StringComparison.Ordinal);
     }
 
-    private static RawRepositorySnapshot Snapshot()
+    private static RawRepositorySnapshot Snapshot(string? recordedHash = null)
     {
         var genesis = FrozenLedgerCanonicalWriter.WriteDagEvent(
             "Genesis",
@@ -71,6 +107,11 @@ public sealed class CoverageCommandTests
                 protocol_version = 1,
                 rule_catalog_root = "sha256:" + new string('d', 64),
             }));
+        var eventHash = recordedHash ?? genesis.Hash;
+        var eventBytes = Encoding.UTF8.GetString(genesis.Bytes.AsSpan()).Replace(
+            genesis.Hash,
+            eventHash,
+            StringComparison.Ordinal);
         var files = new Dictionary<string, string>(StringComparer.Ordinal)
         {
             [RuleFixture.WorkflowPath] = """
@@ -81,10 +122,10 @@ public sealed class CoverageCommandTests
             ["Meta/domains.yaml"] = TestRegistry.Domains,
             ["Meta/registry.yaml"] = TestRegistry.Canonical,
             [FrozenLedgerChangeClassifier.AcceptedRoot
-                + "/" + genesis.Hash[7..] + ".json"] = Encoding.UTF8.GetString(genesis.Bytes.AsSpan()),
+                + "/" + eventHash[7..] + ".json"] = eventBytes,
             [RuleFixture.TowerManifestPath] = TowerYaml.Replace(
                 "sha256:fc2ee6be0dd3cabb9b6a9118592671c9d5a81f691b7b4ad07674d9c3037ce262",
-                genesis.Hash,
+                eventHash,
                 StringComparison.Ordinal),
         };
         return RawRepositorySnapshot.Create(

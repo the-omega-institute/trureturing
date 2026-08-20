@@ -133,14 +133,7 @@ internal static partial class DigestionLedgerAligner
     }
 
     internal static bool IsAtomizerImplementationPath(string path) =>
-        path.StartsWith("tools/StrataLint.Engine/Digestion/Atomizers/", StringComparison.Ordinal)
-        || path.StartsWith("tools/StrataLint.Engine/Digestion/Wm/", StringComparison.Ordinal)
-        || path is "Directory.Packages.props"
-            or "tools/StrataLint.Engine/StrataLint.Engine.csproj"
-            or "tools/StrataLint.Engine/Digestion/AtomizerRegistry.cs"
-            or "tools/StrataLint.Engine/Digestion/ObserverAtomizer.cs"
-            or "tools/StrataLint.Engine/Digestion/TheoryAtomizers.cs"
-            or "tools/StrataLint.Engine/Digestion/Configuration/TheoryAtomizerDataLoader.cs";
+        StrataLintEngineBuildInputs.Contains(path);
 
     private static bool FileBytesEqual(
         RepositorySnapshot candidateSnapshot,

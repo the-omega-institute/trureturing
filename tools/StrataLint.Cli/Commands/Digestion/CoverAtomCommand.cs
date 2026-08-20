@@ -219,7 +219,7 @@ internal static partial class CoverAtomCommand
                     lean);
             }
 
-            var receipt = DigestionFormalizationReceipt.Load(baseline, options.EnvelopePath);
+            var receipt = DigestionFormalizationReceipt.LoadTrusted(baseline, options.EnvelopePath);
             RequireEnvelopeBinding(receipt, options, target);
             RequireSignatureMatch(
                 receipt,
