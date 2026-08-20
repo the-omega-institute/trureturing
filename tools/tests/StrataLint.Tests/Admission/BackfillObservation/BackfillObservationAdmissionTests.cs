@@ -68,7 +68,18 @@ public sealed partial class ProductionEnvironmentTests
             RuleFixture.FixtureDigestionSourcePath,
             GenreRegistryCheck.Collected([]));
         DirectoryLedgerTestSupport.ReplaceWithProjection(fixture.Baseline, emptyBaseline);
-        fixture.Baseline.Remove(DigestionCasStore.Capture(atom.RawBytes.AsSpan()).RelativePath);
+        // Drop the atom's CAS object from the baseline by prefix rather than by
+        // reconstructing its content address. Capture(...).RelativePath would embed a
+        // runtime-computed hash in the path, which ScribeTestMapDeriver cannot resolve
+        // statically; that makes the method a conservative unknown and SL-003 blocks any
+        // such method introduced after the fork point. Matching on the store root keeps
+        // every path this test touches a string literal.
+        foreach (var casPath in fixture.Baseline.Keys
+            .Where(static path => path.StartsWith("Meta/Digestion/atoms/sha256/", StringComparison.Ordinal))
+            .ToArray())
+        {
+            fixture.Baseline.Remove(casPath);
+        }
         using var temporary = new TemporaryDirectory();
         WriteDirectoryLedger(temporary.Path, fixture.Files);
         var current = Snapshot(fixture.Files);
