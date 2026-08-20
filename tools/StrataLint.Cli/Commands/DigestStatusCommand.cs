@@ -267,7 +267,9 @@ internal static class DigestStatusCommand
         }
 
         var kind = entry.AstPath[..separator];
-        if (kind is not ("theorem" or "proposition" or "lemma" or "corollary"))
+        if (kind is not (
+            "theorem" or "proposition" or "lemma" or "corollary"
+            or "定理" or "命题" or "引理" or "推论"))
         {
             return null;
         }
