@@ -5692,7 +5692,7 @@ X_b={x\mid C(x)=b},
 
 [
 X_{b,t}
-=======
+=
 
 {x\mid C(x)=b,\ T(x)=t},
 ]
@@ -5903,7 +5903,7 @@ o_Cp_D=o_C,
 [
 \boxed{
 J_{C;D}
-=======
+=
 
 J_{D;C}^{\mathrm{swap}}.
 }
@@ -6423,7 +6423,7 @@ M_n:X\to B_n.
 [
 \boxed{
 C_{n+1}
-=======
+=
 
 C_n\vee M_n.
 }
@@ -9888,7 +9888,7 @@ G:
 
 [
 C_{n+1}
-=======
+=
 
 C_n
 \vee
@@ -24027,7 +24027,7 @@ E_T\preceq_r C.
 [
 \boxed{
 C^{+,r}
-=======
+=
 
 C
 \vee
@@ -24141,7 +24141,7 @@ O(F_mx)=O(F_my).
 [
 \boxed{
 Z_\beta
-=======
+=
 
 \operatorname{Reach}*M(a)/{\sim*\beta}.
 }
@@ -27811,7 +27811,7 @@ D(x)\neq D(y),
 
 [
 C_{n+1}
-=======
+=
 
 C_n\vee D_n.
 ]
@@ -30563,7 +30563,7 @@ h:B_C\to\mathbb R,
 \left[
 (T-\widehat T_C)Z
 \right]
-=======
+=
 
 0.
 
@@ -32766,7 +32766,7 @@ J
 [
 \boxed{
 \Phi(A)
-=======
+=
 
 I_0\cup\operatorname{sp}_R(A).
 }
@@ -32989,7 +32989,7 @@ Knaster–Tarski 定理给出：
 [
 \boxed{
 \mu\Phi
-=======
+=
 
 \text{满足生成规则的最小闭合集}.
 }
@@ -33012,7 +33012,7 @@ Knaster–Tarski 定理给出：
 [
 \boxed{
 \nu\Phi
-=======
+=
 
 \text{满足一致性规则的最大闭合集}.
 }
@@ -33120,7 +33120,7 @@ S=\Phi(S)
 [
 \boxed{
 \mu\Phi
-=======
+=
 
 \bigvee_{n<\omega}\Phi^n(\bot).
 }
@@ -34041,7 +34041,7 @@ W_0=G,
 [
 \boxed{
 W_{n+1}
-=======
+=
 
 W_n\cup\operatorname{CPre}(W_n).
 }
@@ -34117,7 +34117,7 @@ K_0=S,
 [
 \boxed{
 K_{n+1}
-=======
+=
 
 S\cap\operatorname{CPre}(K_n).
 }
@@ -34408,7 +34408,7 @@ K:X\to\Delta(Y)
 
 [
 K(x)(y)
-=======
+=
 
 \Pr(Y=y\mid X=x).
 ]
