@@ -24,7 +24,13 @@ internal sealed record TheoryCandidate(
     string SourceRef,
     string ContentSha256,
     string DownstreamLane,
-    string? ProblemText);
+    string? ProblemText,
+    // The type-only statement address a V2 Frontier contract copies into
+    // exact_statement.statement_sha256; issued only for declaration-ready
+    // candidates, where the elaborated type exists.
+    [property: System.Text.Json.Serialization.JsonIgnore(
+        Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull)]
+    string? StatementTypeSha256 = null);
 
 internal sealed record OwnerOverrideInput(
     ImmutableArray<byte> RawBytes,
@@ -232,7 +238,9 @@ internal static class TheoryCandidatesCommand
                     declarationGid,
                     statementId,
                     "prover",
-                    null);
+                    null,
+                    CanonicalStatementWriter.StatementTypeAddress(
+                        declaration.TypeRepresentation));
             })
             .OrderBy(static candidate => candidate.CandidateId, StringComparer.Ordinal)
             .ToArray();

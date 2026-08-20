@@ -139,6 +139,18 @@ public sealed class TheoryCandidatesTests
             candidates["D5/X_Frontier/Hearts.o6WeilPositivityStatement"]
                 .GetProperty("content_sha256").GetString());
 
+        // The V2 contract's exact_statement.statement_sha256 is the type-only
+        // address; the producer issues it so the theorize seat copies rather than
+        // hand-hashes. Fixed literals derived independently with openssl over
+        // "trureturing:statement:v1" NUL + the fixture's .type bytes.
+        Assert.Equal(
+            "sha256:23d46af0b4d3e7843f042c1fd5dedc8b9fa6f670ad588c2218152d135e08ef75",
+            candidates["D5/X_Frontier/Hearts.o5_independence"]
+                .GetProperty("statement_type_sha256").GetString());
+        Assert.Equal(
+            "sha256:33bff61cf92a4581cc99dbc5e78e3032b32dbff52827d906a5bb629f511efd63",
+            candidates["D5/X_Frontier/Hearts.o6WeilPositivityStatement"]
+                .GetProperty("statement_type_sha256").GetString());
     }
 
     [Fact]
