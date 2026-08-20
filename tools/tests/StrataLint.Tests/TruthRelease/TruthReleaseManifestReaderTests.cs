@@ -115,4 +115,16 @@ public sealed class TruthReleaseManifestReaderTests
             StringComparison.Ordinal);
         Assert.Throws<FormatException>(() => TruthReleaseManifestReader.Read(bad));
     }
+
+    [Fact]
+    public void RejectsADuplicateJsonProperty()
+    {
+        // JsonDocument keeps both occurrences and TryGetProperty would silently pick one; a schema-exact
+        // reader must reject the ambiguity instead.
+        var bad = ValidManifest.Replace(
+            "\"read_only\": true",
+            "\"read_only\": true, \"read_only\": false",
+            StringComparison.Ordinal);
+        Assert.Throws<FormatException>(() => TruthReleaseManifestReader.Read(bad));
+    }
 }

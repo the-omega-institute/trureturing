@@ -272,7 +272,12 @@ public static class TruthReleaseManifestReader
         var present = new HashSet<string>(StringComparer.Ordinal);
         foreach (var property in element.EnumerateObject())
         {
-            present.Add(property.Name);
+            // JsonDocument keeps duplicate property names; a fail-closed reader must reject the
+            // ambiguity rather than silently collapse to whichever occurrence TryGetProperty returns.
+            if (!present.Add(property.Name))
+            {
+                throw new FormatException($"release-manifest '{label}' has a duplicate '{property.Name}' field.");
+            }
         }
 
         foreach (var key in required)
