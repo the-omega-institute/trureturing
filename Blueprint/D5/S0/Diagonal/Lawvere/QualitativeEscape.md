@@ -64,4 +64,3 @@ One conjunction carrying the fragment: the diagonal construction is pointwise th
 - Truth anchor: `D5/S0/Diagonal/Lawvere/QualitativeEscape.exists_captured_listing_of_fixedPoint`
 - Truth anchor: `D5/S0/Diagonal/Lawvere/QualitativeEscape.not_escaped_isEscaped_witness`
 - Truth anchor: `D5/S0/Diagonal/Lawvere/QualitativeEscape.self_application_fragment_package`
-- Dependency: [D5/S0/Diagonal/EscapeCount](../EscapeCount.md)
