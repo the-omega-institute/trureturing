@@ -20,6 +20,16 @@ internal static class DigestionBackfillValidation
                 lean,
                 verifiedScribeEmissions),
             document);
+        return RenderOrThrow(findings);
+    }
+
+    /// Split out from RequireValidBackfill so the two behaviours a review round found
+    /// unpinned can be tested directly: that Block still throws, and that the observation
+    /// order matches CliApplication's OBSERVED output. Driving those through a command
+    /// fixture needs a Block-producing ledger and two observations on one run; both are
+    /// reachable here with three lines of setup.
+    internal static string RenderOrThrow(IEnumerable<RuleFinding> findings)
+    {
         var ruleId = RuleId.CreateKnown(16);
         var descriptor = RuleCatalog.Default.Descriptors.Single(item => item.Id == ruleId);
         var diagnostics = findings.Select(finding =>
