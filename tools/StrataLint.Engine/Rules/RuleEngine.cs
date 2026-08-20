@@ -114,6 +114,8 @@ internal sealed class RuleEvaluationContext
         Policy = policy;
         Lean = lean;
         Changes = changes;
+        RuleImplementationChanged = changes.Paths.Any(static path =>
+            StrataLintEngineBuildInputs.ContainsRuleImplementation(path.Value));
         MetaEvaluation = metaEvaluation;
         VerifiedScribeEmissions = verifiedScribeEmissions;
     }
@@ -136,6 +138,14 @@ internal sealed class RuleEvaluationContext
     internal AcceptedLeanClosure Lean { get; }
 
     internal RawChangeSet Changes { get; }
+
+    internal bool RuleImplementationChanged { get; }
+
+    // A base fact is re-evaluated when it is in the candidate delta or when the
+    // implementation closure changed and the new implementation must recheck stored facts.
+    internal bool IsBaseFactAffected(string path) =>
+        RuleImplementationChanged
+        || Changes.Paths.Any(change => string.Equals(change.Value, path, StringComparison.Ordinal));
 
     internal MetaEvaluationProfile MetaEvaluation { get; }
 

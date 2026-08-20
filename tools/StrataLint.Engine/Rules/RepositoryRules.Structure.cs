@@ -273,6 +273,11 @@ internal static partial class RepositoryRules
                 continue;
             }
 
+            if (!MirrorPairAffected(context, path.Value, header))
+            {
+                continue;
+            }
+
             ValidateMirror(path.Value, "mirror-B", header.MirrorB, "D5/B/", context.Current, findings);
             ValidateMirror(path.Value, "mirror-E", header.MirrorE, "D5/E/", context.Current, findings);
         }
@@ -298,7 +303,7 @@ internal static partial class RepositoryRules
     {
         try
         {
-            if (Changed(context, static path => path == HeartsAuthorizationLedger.Path)
+            if (context.IsBaseFactAffected(HeartsAuthorizationLedger.Path)
                 && context.Current.TryGetFile(
                     HeartsAuthorizationLedger.Path,
                     out var authorizationFile))

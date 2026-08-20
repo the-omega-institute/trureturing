@@ -17,7 +17,8 @@ internal static partial class RepositoryRules
         foreach (var (path, file) in context.Current.Files)
         {
             var governed = IsGovernedStructured(path, context.Policy);
-            if (governed)
+            var pathAffected = context.IsBaseFactAffected(path.Value);
+            if (governed && pathAffected)
             {
                 if (file.HasBom)
                 {
@@ -46,7 +47,8 @@ internal static partial class RepositoryRules
 
             if (path.Value == TowerManifestPath)
             {
-                if (TowerManifestParser.Parse(file.RawBytes.AsSpan())
+                if (pathAffected
+                    && TowerManifestParser.Parse(file.RawBytes.AsSpan())
                     is TowerManifestParseOutcome.Invalid invalid)
                 {
                     findings.Add(new RuleFinding(path.Value, $"invalid TOWER schema: {invalid.Message}"));
@@ -67,11 +69,11 @@ internal static partial class RepositoryRules
                         tasks,
                         findings,
                         scanStrings: governed,
-                        enforceKeyOrder: governed);
+                        enforceKeyOrder: governed && pathAffected);
                 }
                 catch (JsonException)
                 {
-                    if (governed)
+                    if (governed && pathAffected)
                     {
                         findings.Add(new RuleFinding(path.Value, "structured anomaly scan cannot parse JSON"));
                     }
@@ -80,11 +82,11 @@ internal static partial class RepositoryRules
             else if (path.Value.EndsWith((".yaml"), StringComparison.Ordinal)
                 || path.Value.EndsWith((".yml"), StringComparison.Ordinal))
             {
-                ScanYaml(path.Value, file.Text, tasks, findings, governed);
+                ScanYaml(path.Value, file.Text, tasks, findings, governed && pathAffected, pathAffected);
             }
             else if (path.Value.StartsWith("Chronicle/", StringComparison.Ordinal))
             {
-                ScanLedgerBlocks(path.Value, file.Text, tasks, findings);
+                ScanLedgerBlocks(path.Value, file.Text, tasks, findings, pathAffected);
             }
         }
 
