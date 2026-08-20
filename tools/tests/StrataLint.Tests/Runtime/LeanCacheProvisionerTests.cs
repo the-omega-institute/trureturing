@@ -11,9 +11,12 @@ public sealed class LeanCacheProvisionerTests
     [Fact]
     public void DefaultBudgetIsTheDeclaredOneHourPolicyOverride()
     {
-        // Pinned to the policy-override declared on
-        // LeanCacheProvisioner.DefaultProvisionBudgetSeconds. Changing this number
-        // means retiring or revising that declaration, not editing a literal.
+        // The expected value is written out rather than read from
+        // LeanCacheProvisioner.DefaultProvisionBudgetSeconds on purpose: referencing the
+        // constant would let a future change to the policy value pass silently, whereas a
+        // literal forces whoever changes it to come here and to the declaration beside
+        // that constant. The cost is that this literal and this test's name must be
+        // maintained together with the declaration; that is the intended trade.
         AssertCacheGetBudget(null, 3600);
     }
 

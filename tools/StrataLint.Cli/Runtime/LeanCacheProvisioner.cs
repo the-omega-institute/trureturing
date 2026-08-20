@@ -55,26 +55,38 @@ internal static class LeanCacheProvisioner
     /// and not `relation-derived`; it is not a function of vCPU, memory, or any other
     /// machine capacity, and it must not be presented as one.
     ///
-    /// Domain: the wall clock allowed for one `lake build` invocation while provisioning
-    /// a Lean cache. Out of domain: the `dotnet restore` timeout in WorktreeCommand,
-    /// which is a different knob that merely happened to carry the same literal.
+    /// Domain: every process this budget is passed to, which is more than the build.
+    /// It bounds `cp -R` of the donor cache (:322), `lake exe cache get` (:523),
+    /// `lake exe cache clean` (:543), the `lake build` that follows a fetch, and — via
+    /// `CommandBudget` — the command `LeanCacheEnsureCommand` runs (:138) and the
+    /// arbitrary command of `worktree with-cache-writer`. A number chosen against the
+    /// build alone therefore also lengthens how long a hung `cp` or a stalled cache
+    /// fetch is tolerated; that is accepted here as the cost of the triage.
+    /// Out of domain: the `dotnet restore` timeout at WorktreeCommand.cs:137, which is a
+    /// separate knob that merely happened to carry the same literal and is not touched.
     ///
-    /// Positive readings (ElonSG, 2026-08-20): building the single most expensive
-    /// subgraph — `S0/Tower/TribonacciPeriodicElevenDistinct/{PartB..PartF}` together
-    /// with `S0/Tower/NodupAssembly/PeriodEleven` — measured `LAKE_RC=0` at 1656s on the
-    /// main checkout and `LAKE_RC=0` at 1212s on a lane. Those modules landed 2026-08-18,
-    /// so this ceiling first became reachable two days before this override.
+    /// Positive readings — ElonSG only, 2026-08-20; ANOTHER MACHINE MUST REMEASURE, and
+    /// none of these numbers is reproducible from this repository, so they are this
+    /// author's reported measurements rather than committed evidence. Building the
+    /// single most expensive subgraph — `S0/Tower/TribonacciPeriodicElevenDistinct/
+    /// {PartB..PartF}` with `S0/Tower/NodupAssembly/PeriodEleven` — took 1656s on the
+    /// main checkout and 1212s on a lane, both `LAKE_RC=0`. Those modules landed
+    /// 2026-08-18, so this ceiling first became reachable two days before this override.
     ///
-    /// Negative readings (same day, same machine): `make lean-report` returned `EXIT=2`
-    /// with `lake timed out after 1800 seconds` twice in a row. The second failure needed
-    /// only three remaining modules, which shows the wall is struck by individual
-    /// expensive subgraphs rather than by module count. Margin was 1656/1800 = 8%, and
-    /// concurrent load from other drivers on this machine was measured driving CPU idle
-    /// to 0% for over 25 minutes, which consumes that margin outright.
+    /// Negative readings — same machine, same day, same caveat. `make lean-report`
+    /// returned `EXIT=2` with `lake timed out after 1800 seconds` twice in a row. The
+    /// second failure needed only three remaining modules, which is the load-bearing
+    /// observation: the wall is struck by individual expensive subgraphs, not by module
+    /// count. The slack left under the old ceiling was (1800 - 1656) / 1800 = 8%, and
+    /// concurrent load from other drivers on this machine was observed holding CPU idle
+    /// at 0% for over 25 minutes, which consumes that slack outright.
     ///
-    /// Value: 3600s is 2.17x the measured worst subgraph and half of the ceiling this
-    /// knob's existing environment escape hatch already sanctions (`Math.Clamp(..., 300,
-    /// 7200)` below), so it widens no bound that was not already permitted.
+    /// Value: 3600s is a chosen round hour, NOT a derivation. It has to clear the
+    /// measured 1656s with room for the contention above, and it is half the ceiling
+    /// this knob's existing escape hatch already sanctions (`Math.Clamp(..., 300, 7200)`
+    /// below), so it widens no bound that was not already permitted. Any ratio one can
+    /// compute against 1656 is arithmetic after the fact, not a rule that produced this
+    /// number; do not read one into it.
     ///
     /// Case: https://github.com/the-omega-institute/trureturing/issues/2535
     /// Owner: repository owner (directed 2026-08-20 as triage while the durable cache
