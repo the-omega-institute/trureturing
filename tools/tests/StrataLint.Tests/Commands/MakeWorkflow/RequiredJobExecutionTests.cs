@@ -1,4 +1,4 @@
-using System.Text.RegularExpressions;
+using System.Text;
 using YamlDotNet.RepresentationModel;
 
 namespace StrataLint.Tests;
@@ -72,6 +72,120 @@ public sealed class RequiredJobExecutionTests
         Assert.Equal(RequiredCheckNames.Length, RequiredJobs().Count);
     }
 
+    [Fact]
+    public void OutcomeConsumerRejectsCommentOnlyReference()
+    {
+        var job = JobFromYaml(
+            "job:\n"
+            + "  steps:\n"
+            + "    - id: x\n"
+            + "      continue-on-error: true\n"
+            + "      run: exit 1\n"
+            + "    # steps.x.outcome != 'success'\n"
+            + "    - run: true\n");
+
+        Assert.False(HasEffectiveOutcomeConsumer(job, "x"));
+    }
+
+    [Fact]
+    public void OutcomeConsumerRejectsReferenceEchoedByAFalseStep()
+    {
+        var job = JobFromYaml(
+            "job:\n"
+            + "  steps:\n"
+            + "    - id: x\n"
+            + "      continue-on-error: true\n"
+            + "      run: exit 1\n"
+            + "    - if: false\n"
+            + "      run: echo steps.x.outcome\n");
+
+        Assert.False(HasEffectiveOutcomeConsumer(job, "x"));
+    }
+
+    [Fact]
+    public void OutcomeConsumerRejectsFalseAndReference()
+    {
+        AssertOutcomeConsumerRejected("false && steps.x.outcome != 'success'");
+    }
+
+    [Fact]
+    public void OutcomeConsumerRejectsTrueOrReference()
+    {
+        AssertOutcomeConsumerRejected("true || steps.x.outcome != 'success'");
+    }
+
+    [Fact]
+    public void OutcomeConsumerRejectsAlwaysOrReference()
+    {
+        AssertOutcomeConsumerRejected("always() || steps.x.outcome != 'success'");
+    }
+
+    [Fact]
+    public void OutcomeConsumerRejectsSelfComparison()
+    {
+        AssertOutcomeConsumerRejected("steps.x.outcome != steps.x.outcome");
+    }
+
+    [Fact]
+    public void OutcomeConsumerRejectsConstantFromJsonReference()
+    {
+        AssertOutcomeConsumerRejected("fromJSON('false') && steps.x.outcome != 'success'");
+    }
+
+    [Fact]
+    public void OutcomeConsumerRejectsOutOfDomainLiteral()
+    {
+        AssertOutcomeConsumerRejected("steps.x.outcome != 'not-a-real-outcome'");
+    }
+
+    [Fact]
+    public void OutcomeConsumerRejectsUnknownExpressionComponent()
+    {
+        AssertOutcomeConsumerRejected("github.ref == 'refs/heads/dev' && steps.x.outcome != 'success'");
+    }
+
+    [Theory]
+    [InlineData("steps.x.outcome == 'success'")]
+    [InlineData("steps.x.outcome == 'failure'")]
+    [InlineData("steps.x.outcome == 'cancelled'")]
+    [InlineData("steps.x.outcome == 'skipped'")]
+    [InlineData("always() && steps.x.outcome != 'success'")]
+    [InlineData("false || steps.x.outcome == 'failure'")]
+    public void OutcomeConsumerAcceptsAConditionThatVariesOverTheOutcomeDomain(string condition)
+    {
+        var job = JobWithStepCondition(condition);
+
+        Assert.True(HasEffectiveOutcomeConsumer(job, "x"));
+    }
+
+    private static void AssertOutcomeConsumerRejected(string condition)
+    {
+        var job = JobWithStepCondition(condition);
+
+        Assert.False(HasEffectiveOutcomeConsumer(job, "x"));
+    }
+
+    private static YamlMappingNode JobWithStepCondition(string condition)
+    {
+        return JobFromYaml(
+            "job:\n"
+            + "  steps:\n"
+            + "    - id: x\n"
+            + "      continue-on-error: true\n"
+            + "      run: exit 1\n"
+            + "    - id: consumer\n"
+            + "      if: " + condition + "\n"
+            + "      run: true\n");
+    }
+
+    private static YamlMappingNode JobFromYaml(string yaml)
+    {
+        var stream = new YamlStream();
+        stream.Load(new StringReader(yaml));
+        var root = (YamlMappingNode)stream.Documents.Single().RootNode;
+        return (YamlMappingNode)((YamlMappingNode)root.Children[new YamlScalarNode("job")])!;
+    }
+
     private static IReadOnlyList<KeyValuePair<string, YamlMappingNode>> RequiredJobs()
     {
         var stream = new YamlStream();
@@ -108,52 +222,294 @@ public sealed class RequiredJobExecutionTests
             && condition.Contains("steps." + id + ".outcome", StringComparison.Ordinal)
             && IsEffectiveComparison(condition, id));
 
-    // 判据经三轮才写到点上:
+    // 判据经四轮才写到点上:
     //   八轮 文本包含        → 注释 / if:false 里 echo / `false &&` 全过
     //   九轮 黑名单禁恒假     → `true ||`、`always() ||` 恒真同样让引用失效
     //   十轮 黑名单禁 || 与常量 → `steps.x.outcome != steps.x.outcome` 自比较恒假,仍过
-    // 三次都是在列举**禁止的形态**,而形态列不完。
-    //
-    // 白名单的正确写法:该引用必须**与字符串字面量比较**——那才直接表达「这个 outcome
-    // 真的在被判断」。自比较、与另一引用比较、裸引用(非空字符串恒真)一律不算。
-    // 另保留 `||`/常量/always 的排除,因为它们能让整个合取失效而与右操作数无关。
-    private static bool IsEffectiveComparison(string condition, string id)
+    // 十一轮 白名单字符串比较 → fromJSON('false') 恒假 / 域外字面量恒真仍过。
+    // 四次都是在列举形态；有效性的正面定义只能是语义的：在 outcome 的完整值域
+    // { success, failure, cancelled, skipped } 上，条件求值必须同时出现 true 与 false。
+    // 求值器只接受封闭、可静态求值的子语言；任何未知上下文或函数均 fail-closed。
+    private static bool IsEffectiveComparison(string condition, string id) =>
+        OutcomeConditionEvaluator.TryEvaluate(condition, id, out var values)
+        && values.Contains(true)
+        && values.Contains(false);
+
+    private sealed class OutcomeConditionEvaluator
     {
-        var normalized = condition.Replace("${{", " ", StringComparison.Ordinal)
-            .Replace("}}", " ", StringComparison.Ordinal);
-        if (normalized.Contains("||", StringComparison.Ordinal)
-            || ContainsConstantToken(normalized, "false")
-            || ContainsConstantToken(normalized, "true")
-            || normalized.Contains("always(", StringComparison.Ordinal))
+        private static readonly string[] OutcomeDomain =
+        [
+            "success",
+            "failure",
+            "cancelled",
+            "skipped",
+        ];
+
+        private readonly string text;
+        private readonly string outcomeReference;
+        private int position;
+
+        private OutcomeConditionEvaluator(string condition, string id)
         {
+            var normalized = condition.Trim();
+            if (normalized.StartsWith("${{", StringComparison.Ordinal)
+                && normalized.EndsWith("}}", StringComparison.Ordinal))
+            {
+                normalized = normalized[3..^2].Trim();
+            }
+
+            text = normalized;
+            outcomeReference = "steps." + id + ".outcome";
+        }
+
+        internal static bool TryEvaluate(string condition, string id, out bool[] values)
+        {
+            var parser = new OutcomeConditionEvaluator(condition, id);
+            var parsed = parser.ParseOr();
+            parser.SkipWhitespace();
+            if (parsed is not { Booleans: not null } result
+                || parser.position != parser.text.Length)
+            {
+                values = [];
+                return false;
+            }
+
+            values = result.Booleans;
+            return true;
+        }
+
+        private EvaluationValue? ParseOr()
+        {
+            var left = ParseAnd();
+            while (TryConsume("||"))
+            {
+                var right = ParseAnd();
+                left = CombineBooleans(left, right, static (a, b) => a || b);
+            }
+
+            return left;
+        }
+
+        private EvaluationValue? ParseAnd()
+        {
+            var left = ParseEquality();
+            while (TryConsume("&&"))
+            {
+                var right = ParseEquality();
+                left = CombineBooleans(left, right, static (a, b) => a && b);
+            }
+
+            return left;
+        }
+
+        private EvaluationValue? ParseEquality()
+        {
+            var left = ParseUnary();
+            if (TryConsume("=="))
+            {
+                return Compare(left, ParseUnary(), equal: true);
+            }
+
+            if (TryConsume("!="))
+            {
+                return Compare(left, ParseUnary(), equal: false);
+            }
+
+            return left;
+        }
+
+        private EvaluationValue? ParseUnary()
+        {
+            if (!TryConsume("!"))
+            {
+                return ParsePrimary();
+            }
+
+            var value = ParseUnary();
+            return value is { Booleans: not null } boolean
+                ? EvaluationValue.FromBooleans(boolean.Booleans.Select(static item => !item).ToArray())
+                : null;
+        }
+
+        private EvaluationValue? ParsePrimary()
+        {
+            if (TryConsume("("))
+            {
+                var nested = ParseOr();
+                return TryConsume(")") ? nested : null;
+            }
+
+            if (Peek() == '\'')
+            {
+                return TryReadString(out var literal)
+                    ? EvaluationValue.FromStrings(Repeat(literal))
+                    : null;
+            }
+
+            var identifier = ReadIdentifier();
+            if (identifier.Length == 0)
+            {
+                return null;
+            }
+
+            if (string.Equals(identifier, "true", StringComparison.Ordinal))
+            {
+                return EvaluationValue.FromBooleans(Repeat(true));
+            }
+
+            if (string.Equals(identifier, "false", StringComparison.Ordinal))
+            {
+                return EvaluationValue.FromBooleans(Repeat(false));
+            }
+
+            if (string.Equals(identifier, outcomeReference, StringComparison.Ordinal))
+            {
+                return EvaluationValue.FromStrings(OutcomeDomain.ToArray());
+            }
+
+            if (!TryConsume("("))
+            {
+                return null;
+            }
+
+            if (string.Equals(identifier, "always", StringComparison.Ordinal)
+                && TryConsume(")"))
+            {
+                return EvaluationValue.FromBooleans(Repeat(true));
+            }
+
+            if (string.Equals(identifier, "fromJSON", StringComparison.Ordinal)
+                && TryReadString(out var json)
+                && TryConsume(")"))
+            {
+                return json switch
+                {
+                    "true" => EvaluationValue.FromBooleans(Repeat(true)),
+                    "false" => EvaluationValue.FromBooleans(Repeat(false)),
+                    _ => null,
+                };
+            }
+
+            return null;
+        }
+
+        private static EvaluationValue? CombineBooleans(
+            EvaluationValue? left,
+            EvaluationValue? right,
+            Func<bool, bool, bool> combine) =>
+            left is { Booleans: not null } leftBoolean
+            && right is { Booleans: not null } rightBoolean
+                ? EvaluationValue.FromBooleans(leftBoolean.Booleans
+                    .Zip(rightBoolean.Booleans, combine)
+                    .ToArray())
+                : null;
+
+        private static EvaluationValue? Compare(
+            EvaluationValue? left,
+            EvaluationValue? right,
+            bool equal)
+        {
+            if (left is { Strings: not null } leftString
+                && right is { Strings: not null } rightString)
+            {
+                return EvaluationValue.FromBooleans(leftString.Strings
+                    .Zip(rightString.Strings, (a, b) => equal == string.Equals(a, b, StringComparison.Ordinal))
+                    .ToArray());
+            }
+
+            if (left is { Booleans: not null } leftBoolean
+                && right is { Booleans: not null } rightBoolean)
+            {
+                return EvaluationValue.FromBooleans(leftBoolean.Booleans
+                    .Zip(rightBoolean.Booleans, (a, b) => equal == (a == b))
+                    .ToArray());
+            }
+
+            return null;
+        }
+
+        private string ReadIdentifier()
+        {
+            SkipWhitespace();
+            var start = position;
+            while (position < text.Length
+                && (char.IsLetterOrDigit(text[position])
+                    || text[position] is '_' or '-' or '.'))
+            {
+                position++;
+            }
+
+            return text[start..position];
+        }
+
+        private bool TryReadString(out string value)
+        {
+            SkipWhitespace();
+            value = string.Empty;
+            if (Peek() != '\'')
+            {
+                return false;
+            }
+
+            position++;
+            var result = new StringBuilder();
+            while (position < text.Length)
+            {
+                if (text[position] != '\'')
+                {
+                    result.Append(text[position++]);
+                    continue;
+                }
+
+                position++;
+                if (position < text.Length && text[position] == '\'')
+                {
+                    result.Append('\'');
+                    position++;
+                    continue;
+                }
+
+                value = result.ToString();
+                return true;
+            }
+
             return false;
         }
 
-        return OutcomeLiteralComparison(id).IsMatch(normalized);
-    }
-
-    // steps.<id>.outcome 之后必须紧跟 == 或 != 与一个带引号的字面量。
-    private static Regex OutcomeLiteralComparison(string id) => new(
-        @"steps\." + Regex.Escape(id) + @"\.outcome\s*(==|!=)\s*'[^']*'",
-        RegexOptions.CultureInvariant);
-
-    // 只认独立成词的常量,避免误伤 `== 'true'` 这类字符串比较。
-    private static bool ContainsConstantToken(string text, string token)
-    {
-        for (var i = text.IndexOf(token, StringComparison.Ordinal); i >= 0;
-             i = text.IndexOf(token, i + 1, StringComparison.Ordinal))
+        private bool TryConsume(string token)
         {
-            var before = i == 0 ? ' ' : text[i - 1];
-            var afterIndex = i + token.Length;
-            var after = afterIndex >= text.Length ? ' ' : text[afterIndex];
-            if (!char.IsLetterOrDigit(before) && before != '\'' && before != '_'
-                && !char.IsLetterOrDigit(after) && after != '\'' && after != '_')
+            SkipWhitespace();
+            if (!text.AsSpan(position).StartsWith(token, StringComparison.Ordinal))
             {
-                return true;
+                return false;
+            }
+
+            position += token.Length;
+            return true;
+        }
+
+        private char? Peek()
+        {
+            SkipWhitespace();
+            return position < text.Length ? text[position] : null;
+        }
+
+        private void SkipWhitespace()
+        {
+            while (position < text.Length && char.IsWhiteSpace(text[position]))
+            {
+                position++;
             }
         }
 
-        return false;
+        private static T[] Repeat<T>(T value) => Enumerable.Repeat(value, OutcomeDomain.Length).ToArray();
+
+        private sealed record EvaluationValue(bool[]? Booleans, string[]? Strings)
+        {
+            internal static EvaluationValue FromBooleans(bool[] values) => new(values, null);
+
+            internal static EvaluationValue FromStrings(string[] values) => new(null, values);
+        }
     }
 
     private static string AdmissionWorkflowText() =>

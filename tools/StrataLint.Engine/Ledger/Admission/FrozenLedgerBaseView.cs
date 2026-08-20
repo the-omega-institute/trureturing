@@ -215,12 +215,6 @@ internal static class FrozenLedgerAttestationChain
                 return RequiredString(current.Payload, "frozen_node_id");
             }
 
-            if (current.EventType == "Reattest"
-                && current.Payload.TryGetProperty("semantic_receipt", out _))
-            {
-                return RequiredString(current.Payload, "semantic_receipt");
-            }
-
             if (current.EventType == "Reattest")
             {
                 var previousHash = RequiredString(
