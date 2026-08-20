@@ -305,14 +305,16 @@ public static partial class FrozenLedger
                             report is not null
                                 && snapshot is not null
                                 && preparation.ProtectedBaseSnapshot is not null
+                                && LeanImportClosure.ProtectedEnvironmentMatchesEntry(
+                                    active[FrozenLedgerAttestationChain.RequiredString(
+                                        item.Payload,
+                                        "case_id")],
+                                    preparation.ProtectedBaseSnapshot)
                                 && LeanImportClosure.RelevantSemanticPinsChanged(
                                     report,
                                     active[FrozenLedgerAttestationChain.RequiredString(
                                         item.Payload,
                                         "case_id")].Material.RepoPath,
-                                    active[FrozenLedgerAttestationChain.RequiredString(
-                                        item.Payload,
-                                        "case_id")],
                                     preparation.ProtectedBaseSnapshot,
                                     snapshot),
                             report is not null
