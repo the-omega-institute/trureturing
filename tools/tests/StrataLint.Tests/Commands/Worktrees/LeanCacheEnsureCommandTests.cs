@@ -16,12 +16,8 @@ public sealed partial class LeanCacheEnsureCommandTests
         WriteCache(repository.Path, "already warm\n", mathlibComplete: false);
         var runner = new RecordingWorktreeProcessRunner();
 
-        Assert.False(Directory.Exists(Path.Combine(
-            repository.Path,
-            ".lake",
-            "packages",
-            "mathlib",
-            "Mathlib")));
+        Assert.False(Directory.Exists(
+            Path.Combine(repository.Path, ".lake", "packages", "mathlib", "Mathlib")));
 
         var result = WorktreeCommand.Run(repository.Path, ["ensure-cache"], runner);
 
@@ -42,9 +38,8 @@ public sealed partial class LeanCacheEnsureCommandTests
             receipt.RootElement.GetProperty("reason").GetString()!,
             StringComparison.OrdinalIgnoreCase);
         Assert.Empty(runner.Invocations);
-        Assert.Equal(
-            "already warm\n",
-            File.ReadAllText(Path.Combine(repository.Path, ".lake", "build", "cache.bin")));
+        Assert.Equal("already warm\n", File.ReadAllText(
+            Path.Combine(repository.Path, ".lake", "build", "cache.bin")));
     }
 
     [Fact]
@@ -229,30 +224,36 @@ public sealed partial class LeanCacheEnsureCommandTests
     }
 
     [Fact]
-    public void MissingLakeIsSeededFromMatchingMainRepository()
+    public void ClonefileRetryReceiptSerializesErrnoHistoryAttemptsAndCleanup()
     {
         using var repository = new TemporaryDirectory();
         InitializeRepository(repository.Path);
         WriteCache(repository.Path, "main repository cache\n");
         var target = AddWorktree(repository.Path, "matching-target");
+        var scripted = new Queue<DirectoryCloneResult>(
+            [new(false, true, 5, 1, "clonefile(2) failed: EIO"), new(true, false, null, 1, null)]);
+        var cloner = new RecordingDirectoryCloner
+        {
+            Results = scripted,
+            AfterClone = (_, path) => { if (scripted.Count > 0) Directory.CreateDirectory(path); },
+        };
         var runner = new RecordingWorktreeProcessRunner();
-
-        var result = WorktreeCommand.Run(
-            repository.Path,
-            ["ensure-cache", "--path", target],
-            runner);
-
-        Assert.True(result.Success);
+        var result = WorktreeCommand.Run(repository.Path, ["ensure-cache", "--path", target], runner, cloner);
+        Assert.True(result.Success, result.Error);
         Assert.Empty(result.Error);
-        Assert.Contains("seeded", result.Output, StringComparison.Ordinal);
-        Assert.Contains(repository.Path, result.Output, StringComparison.Ordinal);
-        Assert.Contains("method", result.Output, StringComparison.Ordinal);
-        Assert.Equal(
-            "main repository cache\n",
-            File.ReadAllText(Path.Combine(target, ".lake", "build", "cache.bin")));
-        Assert.DoesNotContain(
-            runner.Invocations,
-            static call => call.FileName == "lake");
+        Assert.Equal(2, cloner.Invocations.Count);
+        using var receipt = ParseReceipt(result.Output);
+        var root = receipt.RootElement;
+        Assert.Equal("seeded", root.GetProperty("status").GetString());
+        Assert.Equal(LeanCacheGuard.PhysicalPath(repository.Path), root.GetProperty("donor").GetString());
+        Assert.Equal("clonefile", root.GetProperty("method").GetString());
+        Assert.Equal(5, root.GetProperty("clonefile_errno").GetInt32());
+        Assert.Equal([5], root.GetProperty("clonefile_errnos").EnumerateArray().Select(item => item.GetInt32()).ToArray());
+        Assert.Equal(2, root.GetProperty("clonefile_attempts").GetInt32());
+        Assert.Equal(JsonValueKind.Null, root.GetProperty("clonefile_cleanup_error").ValueKind);
+        Assert.Equal("main repository cache\n", LeanCacheFixtureFile.ReadText(Path.Combine(target, ".lake", "build", "cache.bin")));
+        Assert.DoesNotContain(runner.Invocations, static call => call.FileName == "lake");
+        Assert.True(LeanCacheStamp.Matches(Path.Combine(target, ".lake"), ReadPins(target), out _));
     }
 
     [Fact]

@@ -37,45 +37,7 @@ public sealed partial class MakeWorkflowTests
             $"The canonical make target '{target}' must keep its dotnet test command unfiltered; commit 5743d114 filtered Script tests and CI then had no replacement lane.");
     }
 
-    [Fact]
-    public void EveryLeanCommandEnsuresCacheExactlyOnce()
-    {
-        var root = TestRepositoryLayout.FindRoot();
-        var makefile = File.ReadAllText(Path.Combine(root, "Makefile"));
-        var inspector = File.ReadAllText(Path.Combine(root, "tools", "lean-inspector", "inspect.sh"));
-
-        int EnsureDependency(string target)
-        {
-            var header = Assert.Single(
-                makefile.Split('\n'),
-                line => line.StartsWith(target + ":", StringComparison.Ordinal));
-            return header[(target.Length + 1)..]
-                .Split(' ', StringSplitOptions.RemoveEmptyEntries)
-                .Count(static prerequisite => prerequisite == "lean-cache-ensure");
-        }
-
-        var leanCommands = Regex.Matches(
-            Recipe(makefile, "lean"),
-            Regex.Escape(LeanCacheRunScriptPath),
-            RegexOptions.CultureInvariant).Count;
-        var reportCommands = Regex.Matches(
-            inspector,
-            "(?m)^(?!\\[\\[).*\\\"\\$CACHE_RUN\\\"",
-            RegexOptions.CultureInvariant).Count;
-        var leanEnsures = EnsureDependency("lean") + leanCommands;
-        var reportEnsures = EnsureDependency("lean-report") + reportCommands;
-        var testEnsures = EnsureDependency("test") + leanEnsures + reportEnsures;
-        var buildEnsures = EnsureDependency("build") + leanEnsures;
-
-        Assert.Equal(1, leanCommands);
-        Assert.Equal(2, reportCommands);
-        Assert.Equal(1, leanEnsures);
-        Assert.Equal(2, reportEnsures);
-        Assert.Equal(3, testEnsures);
-        Assert.Equal(1, buildEnsures);
-    }
-
-    [Fact]
+    [Fact(DisplayName = "Makefile and inspector dispatch counts are pinned in the thin dispatch table")]
     public void MakefileIsAThinCompleteDispatchTable()
     {
         var root = TestRepositoryLayout.FindRoot();
@@ -122,6 +84,37 @@ public sealed partial class MakeWorkflowTests
         Assert.Contains(LeanCacheRunScriptPath, inspector, StringComparison.Ordinal);
         Assert.Contains("run_phase build \"$CACHE_RUN\" \"$LAKE\" build", inspector, StringComparison.Ordinal);
         Assert.Contains("\"$CACHE_RUN\" \"$LAKE\" env lean", inspector, StringComparison.Ordinal);
+
+        int EnsureDependency(string target)
+        {
+            var header = Assert.Single(
+                makefile.Split('\n'),
+                line => line.StartsWith(target + ":", StringComparison.Ordinal));
+            return header[(target.Length + 1)..]
+                .Split(' ', StringSplitOptions.RemoveEmptyEntries)
+                .Count(static prerequisite => prerequisite == "lean-cache-ensure");
+        }
+
+        var leanCommands = Regex.Matches(
+            Recipe(makefile, "lean"),
+            Regex.Escape(LeanCacheRunScriptPath),
+            RegexOptions.CultureInvariant).Count;
+        var reportCommands = Regex.Matches(
+            inspector,
+            "(?m)^(?!\\[\\[).*\\\"\\$CACHE_RUN\\\"",
+            RegexOptions.CultureInvariant).Count;
+        // lean-report needs both wrapper calls: inspect.sh:107 builds and inspect.sh:130 inspects.
+        var leanEnsures = EnsureDependency("lean") + leanCommands;
+        var reportEnsures = EnsureDependency("lean-report") + reportCommands;
+        var testEnsures = EnsureDependency("test") + leanEnsures + reportEnsures;
+        var buildEnsures = EnsureDependency("build") + leanEnsures;
+
+        Assert.Equal(1, leanCommands);
+        Assert.Equal(2, reportCommands);
+        Assert.Equal(1, leanEnsures);
+        Assert.Equal(2, reportEnsures);
+        Assert.Equal(3, testEnsures);
+        Assert.Equal(1, buildEnsures);
         var cacheEnsure = File.ReadAllText(Path.Combine(root, LeanCacheEnsureScriptPath));
         Assert.DoesNotContain("[[ -L", cacheEnsure, StringComparison.Ordinal);
         Assert.DoesNotContain("[[ -d", cacheEnsure, StringComparison.Ordinal);
