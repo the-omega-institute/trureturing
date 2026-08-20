@@ -86,6 +86,23 @@ public sealed class TheoryCandidatesTests
                 "frontier/D5/X_Frontier/Hearts.o6WeilPositivityStatement",
             ],
             candidates.Select(static candidate => candidate.GetProperty("candidate_id").GetString()));
+        Assert.True(
+            candidates.Count(candidate => candidate.GetProperty("source_ref").GetString() is
+                "D5/X_Frontier/GovernanceTicket" or "D5/S0/Carrier/UnfinishedFact" or "partial-atom") == 0,
+            "Expected no candidate with source_ref in "
+                + "{D5/X_Frontier/GovernanceTicket, D5/S0/Carrier/UnfinishedFact, partial-atom}; "
+                + "matched forbidden source_ref(s): "
+                + string.Join(
+                    ", ",
+                    candidates
+                        .Where(candidate => candidate.GetProperty("source_ref").GetString() is
+                            "D5/X_Frontier/GovernanceTicket"
+                            or "D5/S0/Carrier/UnfinishedFact"
+                            or "partial-atom")
+                        .Select(static candidate => candidate.GetProperty("source_ref").GetString())
+                        .Order(StringComparer.Ordinal))
+                + "; actual candidates: "
+                + CandidateInventory(candidates));
         Assert.DoesNotContain(candidates, candidate =>
             candidate.GetProperty("source_ref").GetString() is
                 "D5/X_Frontier/GovernanceTicket" or "D5/S0/Carrier/UnfinishedFact" or "partial-atom");
@@ -93,8 +110,17 @@ public sealed class TheoryCandidatesTests
             ["codex-formalize", "theorist", "prover", "prover"],
             candidates.Select(static candidate => candidate.GetProperty("downstream_lane").GetString()));
         Assert.All(candidates, static candidate =>
-            Assert.Equal(1, candidate.EnumerateObject().Count(static property =>
-                property.NameEquals("downstream_lane"))));
+        {
+            var downstreamLaneCount = candidate.EnumerateObject().Count(static property =>
+                property.NameEquals("downstream_lane"));
+            Assert.True(
+                downstreamLaneCount == 1,
+                $"Expected exactly one downstream_lane field for candidate "
+                + $"source_ref={candidate.GetProperty("source_ref").GetString()}|"
+                + $"source_kind={candidate.GetProperty("source_kind").GetString()}; "
+                + $"actual downstream_lane field count={downstreamLaneCount}");
+            Assert.Equal(1, downstreamLaneCount);
+        });
     }
 
     [Fact]
@@ -221,12 +247,28 @@ public sealed class TheoryCandidatesTests
 
         Assert.True(result.Success, result.Error);
         using var json = JsonDocument.Parse(result.Output);
+        Assert.True(
+            json.RootElement.GetProperty("candidates").EnumerateArray().Count(static item =>
+                item.GetProperty("source_ref").GetString()
+                    == "D5/X_Frontier/FrontierMathematicalOpen") == 1,
+            "Expected exactly one candidate with source_ref="
+                + "D5/X_Frontier/FrontierMathematicalOpen; actual candidates "
+                + "(source_ref|source_kind|downstream_lane): "
+                + CandidateInventory(json.RootElement.GetProperty("candidates").EnumerateArray()));
         var candidate = Assert.Single(
             json.RootElement.GetProperty("candidates").EnumerateArray(),
             static item => item.GetProperty("source_ref").GetString()
                 == "D5/X_Frontier/FrontierMathematicalOpen");
         Assert.Equal("frontier_problem", candidate.GetProperty("source_kind").GetString());
         Assert.Equal("theorist", candidate.GetProperty("downstream_lane").GetString());
+        Assert.True(
+            json.RootElement.GetProperty("candidates").EnumerateArray().Count(static item =>
+                item.GetProperty("source_ref").GetString()
+                    == "D5/X_Frontier/FrontierMathematicalOpen.generated_open") == 0,
+            "Expected no candidate with source_ref="
+                + "D5/X_Frontier/FrontierMathematicalOpen.generated_open; actual candidates "
+                + "(source_ref|source_kind|downstream_lane): "
+                + CandidateInventory(json.RootElement.GetProperty("candidates").EnumerateArray()));
         Assert.DoesNotContain(
             json.RootElement.GetProperty("candidates").EnumerateArray(),
             static item => item.GetProperty("source_ref").GetString()
@@ -297,6 +339,12 @@ public sealed class TheoryCandidatesTests
         using var json = JsonDocument.Parse(first.Output);
         var root = json.RootElement;
         var receipt = root.GetProperty("selection_receipt");
+        Assert.True(
+            root.GetProperty("candidates").EnumerateArray().Count(static candidate =>
+                candidate.GetProperty("source_kind").GetString() == "owner_override") == 1,
+            "Expected exactly one candidate with source_kind=owner_override; actual candidates "
+                + "(source_ref|source_kind|downstream_lane): "
+                + CandidateInventory(root.GetProperty("candidates").EnumerateArray()));
         var owner = Assert.Single(root.GetProperty("candidates").EnumerateArray(), static candidate =>
             candidate.GetProperty("source_kind").GetString() == "owner_override");
         var problemSha256 = "sha256:" + Convert.ToHexStringLower(
@@ -556,6 +604,21 @@ public sealed class TheoryCandidatesTests
     }
 
     private static LeanFileReport EmptyReport() => new([], []);
+
+    private static string CandidateInventory(IEnumerable<JsonElement> candidates) =>
+        string.Join(
+            ", ",
+            candidates
+                .Select(static candidate => (
+                    SourceRef: candidate.GetProperty("source_ref").GetString() ?? "<null>",
+                    SourceKind: candidate.GetProperty("source_kind").GetString() ?? "<null>",
+                    DownstreamLane: candidate.GetProperty("downstream_lane").GetString() ?? "<null>"))
+                .OrderBy(static candidate => candidate.SourceRef, StringComparer.Ordinal)
+                .ThenBy(static candidate => candidate.SourceKind, StringComparer.Ordinal)
+                .ThenBy(static candidate => candidate.DownstreamLane, StringComparer.Ordinal)
+                .Select(static candidate =>
+                    $"[source_ref={candidate.SourceRef}; source_kind={candidate.SourceKind}; "
+                    + $"downstream_lane={candidate.DownstreamLane}]"));
 
     private static string CandidateSetSha256(JsonElement candidates)
     {

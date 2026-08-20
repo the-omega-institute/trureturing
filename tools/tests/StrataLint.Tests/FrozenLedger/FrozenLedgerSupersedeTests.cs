@@ -100,7 +100,10 @@ public sealed partial class FrozenLedgerTests
         FrozenLedger.ValidateSupersedeStrength(
             SupersedePayload(fixture),
             Assert.Single(fixture.Baseline.ActiveEntries).Value,
-            repositoryImportClosureUnchanged: true);
+            repositoryImportClosureUnchanged: true,
+            externalImportsCoveredByNamedPins: true,
+            relevantSemanticPinsChanged: true,
+            candidateStatementsAvoidTrivialTruth: true);
     }
 
     [Fact]
@@ -153,7 +156,10 @@ public sealed partial class FrozenLedgerTests
             FrozenLedger.ValidateSupersedeStrength(
                 payload,
                 unchangedPinsEntry,
-                repositoryImportClosureUnchanged: true));
+                repositoryImportClosureUnchanged: true,
+                externalImportsCoveredByNamedPins: true,
+                relevantSemanticPinsChanged: true,
+                candidateStatementsAvoidTrivialTruth: true));
 
         Assert.Contains("environment pins did not change", exception.Message, StringComparison.OrdinalIgnoreCase);
     }
@@ -179,7 +185,10 @@ public sealed partial class FrozenLedgerTests
             FrozenLedger.ValidateSupersedeStrength(
                 payload,
                 legacyEntry,
-                repositoryImportClosureUnchanged: true));
+                repositoryImportClosureUnchanged: true,
+                externalImportsCoveredByNamedPins: true,
+                relevantSemanticPinsChanged: true,
+                candidateStatementsAvoidTrivialTruth: true));
 
         Assert.Contains("environment pins did not change", exception.Message, StringComparison.OrdinalIgnoreCase);
     }
@@ -196,7 +205,10 @@ public sealed partial class FrozenLedgerTests
         FrozenLedger.ValidateSupersedeStrength(
             payload,
             legacyEntry,
-            repositoryImportClosureUnchanged: true);
+            repositoryImportClosureUnchanged: true,
+            externalImportsCoveredByNamedPins: true,
+            relevantSemanticPinsChanged: true,
+            candidateStatementsAvoidTrivialTruth: true);
     }
 
     [Fact]
@@ -294,6 +306,25 @@ public sealed partial class FrozenLedgerTests
             report,
             RepoPathFor("A"),
             snapshot));
+    }
+
+    [Fact]
+    public void BranchBRejectsCanonicalTrivialTruthStatementMaterial()
+    {
+        var report = LeanAxiomReport.Create(new Dictionary<string, LeanFileReport>(StringComparer.Ordinal)
+        {
+            [PathFor("A")] = new LeanFileReport(
+                [],
+                [new LeanDeclaration(
+                    "a",
+                    "theorem",
+                    "statement-v1(uparams=[],type=ec(ns(n0,4:True),[]))",
+                    [])]),
+        });
+
+        Assert.False(LeanImportClosure.CandidateStatementsAvoidTrivialTruth(
+            report,
+            RepoPathFor("A")));
     }
 
     [Fact]

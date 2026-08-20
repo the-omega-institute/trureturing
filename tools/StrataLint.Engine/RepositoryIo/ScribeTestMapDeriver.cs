@@ -59,9 +59,8 @@ internal static class ScribeTestMapDeriver
             "tools/tests/CompileFailProof/CompileFailProof.csproj",
         };
 
-    // This is the read surface used by the engineering path-filter guard. Entries are either
-    // exact files or directory roots; adding a new repository read requires updating
-    // this declaration and its review-visible guard.
+    // This list governs the declared-path debt check. Entries are either exact files or directory
+    // roots; engineering scope is derived from consumers and does not use this declaration.
     internal static readonly IReadOnlyList<string> DeclaredPathWhitelist =
     [
         // 消化退出 CI 后,ci.yml 是仓内唯一的 workflow;守卫「无 workflow 代跑消化」
@@ -362,11 +361,36 @@ internal static class ScribeTestMapDeriver
             && literal.IsKind(SyntaxKind.StringLiteralExpression))
         {
             paths.Add(literal.Token.ValueText.Replace('\\', '/'));
+            return;
         }
-        else
+
+        if (argument is InvocationExpressionSyntax
+            {
+                Expression: MemberAccessExpressionSyntax
+                {
+                    Expression: IdentifierNameSyntax { Identifier.ValueText: "Path" },
+                    Name.Identifier.ValueText: "Combine",
+                },
+            } combine
+            && combine.ArgumentList.Arguments is { Count: >= 2 } arguments
+            && arguments[0].Expression is InvocationExpressionSyntax
+            {
+                Expression: MemberAccessExpressionSyntax
+                {
+                    Name.Identifier.ValueText: "FindRoot",
+                } findRoot,
+            }
+            && findRoot.Expression.ToString().EndsWith("RepositoryLayout", StringComparison.Ordinal)
+            && arguments.Skip(1).All(static item => item.Expression is LiteralExpressionSyntax
+                { RawKind: (int)SyntaxKind.StringLiteralExpression }))
         {
-            reasons.Add(TestMapUnknownReason.VariablePath);
+            paths.Add(string.Join(
+                '/',
+                arguments.Skip(1).Select(static item => ((LiteralExpressionSyntax)item.Expression).Token.ValueText)));
+            return;
         }
+
+        reasons.Add(TestMapUnknownReason.VariablePath);
     }
 
     private static void AddDiscoveryPaths(
