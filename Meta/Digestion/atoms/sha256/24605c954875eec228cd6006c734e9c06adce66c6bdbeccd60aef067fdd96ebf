@@ -1,0 +1,29 @@
+## 定理 497.1（关系伴随）
+
+[
+\boxed{
+\operatorname{sp}_R(P)\subseteq Q
+\iff
+P\subseteq\operatorname{wp}^{\forall}_R(Q).
+}
+]
+
+所以在非确定世界中必须分开：
+
+[
+\boxed{
+\begin{aligned}
+\text{可能做到}
+&=\operatorname{pre}^{\exists};\
+\text{保证做到}
+&=\operatorname{wp}^{\forall}.
+\end{aligned}
+}
+]
+
+这一区别在自由、能力、权利和责任中极其重要。
+
+主体存在一条成功路径，不等于主体拥有能够保证成功的策略。
+
+---
+

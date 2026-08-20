@@ -1,0 +1,30 @@
+## 定义 461.1（目标相对防篡改）
+
+若：
+
+[
+\boxed{
+H(\gamma)=H(U\gamma)
+\Longrightarrow
+T(\gamma)=T(U\gamma),
+}
+]
+
+则 (H) 能检测一切会改变目标 (T) 的未授权编辑。
+
+若存在：
+
+[
+H(\gamma)=H(U\gamma),
+]
+
+但：
+
+[
+T(\gamma)\neq T(U\gamma),
+]
+
+则出现不可检测篡改见证。
+
+---
+

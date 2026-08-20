@@ -1,0 +1,14 @@
+## 定理 506.1（知识沿一致 refinement 单调）
+
+若：
+
+[
+S'\subseteq S,
+]
+
+[
+S'\neq\varnothing,
+]
+
+且 (S) 知道 (T)，则 (S') 也知道同一个目标值。
+

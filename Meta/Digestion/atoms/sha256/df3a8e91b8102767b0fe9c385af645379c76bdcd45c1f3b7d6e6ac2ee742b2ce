@@ -1,0 +1,13 @@
+[
+\boxed{
+\operatorname{Safe}_\alpha(\mathcal M)
+======================================
+
+\left{
+u
+;\middle|;
+\sup_{m\in\mathcal M}r_m(u)\le\alpha
+\right}.
+}
+]
+

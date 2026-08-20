@@ -1,0 +1,117 @@
+# 262. 第六层统一：形式哲学成为界面治理科学
+
+经过 §238–§261，可以进一步看到，沟通、欺骗、同意、自治、责任和制度并不是彼此分离的哲学领域。
+
+它们都围绕四种操作展开：
+
+[
+\boxed{
+\begin{aligned}
+\textbf{Reveal}
+&:\text{向他人开放更多概念区别};\
+\textbf{Hide}
+&:\text{通过消息粗化删除区别};\
+\textbf{Authorize}
+&:\text{允许某些过程作用于主体或世界};\
+\textbf{Govern}
+&:\text{根据已知区别选择不同政策}.
+\end{aligned}
+}
+]
+
+由此得到四个承重定理。
+
+第一，**真实沟通仍可能不足**：
+
+[
+\boxed{
+\text{字面真理}
+\not\Rightarrow
+\text{目标充分}.
+}
+]
+
+第二，**充分同意要求相关后果可由披露恢复**：
+
+[
+\boxed{
+E_K\preceq D.
+}
+]
+
+第三，**自治和正当性依赖过程 provenance，而非结果本身**：
+
+[
+\boxed{
+\text{同一行动或结果}
+\not\Rightarrow
+\text{同一授权地位}.
+}
+]
+
+第四，**任何信息 refinement 都同时扩大可知和可治理空间**：
+
+[
+\boxed{
+C\preceq D
+\Longrightarrow
+\begin{cases}
+\operatorname{Ans}(C)\subseteq\operatorname{Ans}(D),\
+\Pi(C)\subseteq\Pi(D),\
+\operatorname{Leak}_S(C)\preceq\operatorname{Leak}_S(D).
+\end{cases}
+}
+]
+
+所以整套理论可以继续压缩为：
+
+[
+\boxed{
+\begin{aligned}
+\textbf{Formal Concept Dynamics}
+={}&
+\textbf{a theory of communication sufficiency}\
+&+
+\textbf{a theory of epistemic manipulation}\
+&+
+\textbf{a typed theory of consent}\
+&+
+\textbf{a reflective theory of autonomy}\
+&+
+\textbf{a provenance theory of accountability}\
+&+
+\textbf{an order theory of informational power}.
+\end{aligned}
+}
+]
+
+最深层的新结论是：
+
+[
+\boxed{
+\text{知识与权力并不是两个后来才发生联系的领域。
+它们从一开始就是同一个概念精化序的两个方向：
+一个方向问“现在能回答什么”，
+另一个方向问“现在能对谁实施什么区别”。}
+}
+]
+
+因此，形式哲学不能只研究：
+
+[
+\text{什么是真的},
+]
+
+还必须同时研究：
+
+[
+\boxed{
+\text{谁拥有区分真假的界面，
+谁能够决定哪些区别被披露，
+谁被允许根据这些区别行动，
+以及这些行动如何被追溯和撤回。}
+]
+以下从 **§263** 继续。仍然只进行纸面推理，不处理 GitHub，也不把新增命题标记为已经获得 Lean proof term 的 `Closed` 结论。
+
+---
+

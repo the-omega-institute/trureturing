@@ -1,0 +1,9 @@
+[
+\boxed{
+W_{n+1}
+=
+
+W_n\cup\operatorname{CPre}(W_n).
+}
+]
+

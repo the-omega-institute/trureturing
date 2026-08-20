@@ -1,0 +1,23 @@
+[
+\boxed{
+\operatorname{Leak}_{\mathrm{auth}}
+===================================
+
+(L\vee D)\wedge H.
+}
+]
+
+安全要求：
+
+[
+\boxed{
+\operatorname{Leak}*{\mathrm{actual}}
+\preceq
+\operatorname{Leak}*{\mathrm{auth}}.
+}
+]
+
+否则公开输出泄漏了超出授权 declassification 的秘密区别。
+
+---
+

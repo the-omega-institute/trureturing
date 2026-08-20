@@ -1,0 +1,20 @@
+## 定理 67.1（普遍充分性）
+
+以下等价：
+
+\[
+E_T\preceq C
+\]
+
+与存在：
+
+\[
+\overline T:B_C\to\operatorname{Im}T,
+\qquad
+T=\overline T\circ q_C.
+\]
+
+因此证据充分、预测充分、责任充分、公平相关性充分与解释充分都可视为目标沿概念的因子化。
+
+---
+

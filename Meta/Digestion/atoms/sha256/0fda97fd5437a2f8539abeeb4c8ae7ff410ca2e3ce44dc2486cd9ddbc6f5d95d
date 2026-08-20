@@ -1,0 +1,16 @@
+## 定理 473.2（精化误差分解）
+
+[
+\boxed{
+\begin{aligned}
+\mathbb E[(T-P_C T)^2]
+={}&
+\mathbb E[(T-P_D T)^2]\
+&+
+\mathbb E[(P_D T-P_C T)^2].
+\end{aligned}
+}
+]
+
+所以：
+

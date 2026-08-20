@@ -1,0 +1,24 @@
+## 定义 245.1（关于 (K) 的精确知情）
+
+[
+\boxed{
+\operatorname{Informed}_K(D)
+\iff
+E_K\preceq D.
+}
+]
+
+也就是存在：
+
+[
+\overline K:B_D\to Y
+]
+
+使：
+
+[
+K=\overline K\circ D.
+]
+
+---
+

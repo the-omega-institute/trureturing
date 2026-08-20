@@ -1,0 +1,15 @@
+# \Pr(s)\Pr(\omega\mid s)
+
+\Pr(\omega,s).
+]
+
+对 (s) 求和得到：
+
+[
+\Pr(\omega)=\mu(\omega).
+]
+
+(\square)
+
+---
+

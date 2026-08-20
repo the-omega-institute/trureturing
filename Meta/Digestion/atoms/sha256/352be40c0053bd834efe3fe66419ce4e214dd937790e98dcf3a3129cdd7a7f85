@@ -1,0 +1,31 @@
+# 204. provenance 构成一个证明来源代数
+
+设基础来源为：
+
+[
+s_1,\ldots,s_n.
+]
+
+对每个结论 (c)，不只记录它是否成立，还记录它依赖哪些来源。
+
+用单调布尔表达式：
+
+[
+\varphi_c(s_1,\ldots,s_n)
+]
+
+表示来源条件。
+
+解释规则：
+
+[
+\begin{aligned}
+s_i
+&=\text{直接来源 }i;\
+\varphi\land\psi
+&=\text{两个来源条件都需要};\
+\varphi\lor\psi
+&=\text{存在任一替代证明路径即可}.
+\end{aligned}
+]
+

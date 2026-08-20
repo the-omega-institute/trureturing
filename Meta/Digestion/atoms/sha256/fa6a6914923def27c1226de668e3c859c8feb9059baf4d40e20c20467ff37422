@@ -1,0 +1,26 @@
+## 定理 454.2（覆盖最大性）
+
+设任意回答器：
+
+[
+g:B_C\to Y\sqcup{\bot_{\mathrm{ans}}}
+]
+
+满足零错误条件：
+
+[
+g(C(x))\in Y
+\Longrightarrow
+g(C(x))=T(x)
+]
+
+对全部合法 (x) 成立。
+
+则：
+
+[
+g(b)\in Y
+\Longrightarrow
+\widehat T_C(b)\in Y.
+]
+

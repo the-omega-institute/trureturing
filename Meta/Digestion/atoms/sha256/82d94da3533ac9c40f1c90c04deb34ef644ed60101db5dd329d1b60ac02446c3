@@ -1,0 +1,15 @@
+[
+\boxed{
+\operatorname{Gain}(E;C,T)
+==========================
+
+\Delta(C;T)
+\setminus
+\Delta(C\vee E;T).
+}
+]
+
+它包含：
+
+> 原本被 (C) 错误合并，但经实验 (E) 后被分开的目标相关状态对。
+

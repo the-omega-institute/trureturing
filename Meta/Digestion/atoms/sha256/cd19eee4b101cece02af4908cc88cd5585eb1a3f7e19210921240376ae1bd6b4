@@ -1,0 +1,40 @@
+### 证明
+
+对 (n) 归纳。
+
+初始情形由终端价值因子化。
+
+假设：
+
+[
+V_n=\overline V_nC.
+]
+
+则：
+
+[
+\begin{aligned}
+V_{n+1}(x)
+&=
+\max_u
+\left[
+\overline r(Cx,u)
++
+\overline V_n(CF_ux)
+\right]\
+&=
+\max_u
+\left[
+\overline r(Cx,u)
++
+\overline V_n(G_uCx)
+\right]\
+&=
+\overline V_{n+1}(Cx).
+\end{aligned}
+]
+
+(\square)
+
+---
+

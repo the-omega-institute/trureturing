@@ -1,0 +1,22 @@
+## 定理 252.1（对称责任均分）
+
+由于：
+
+[
+\sigma z=z
+]
+
+对全部 (\sigma\in S_n)，有：
+
+[
+b(z)=\sigma b(z).
+]
+
+因此：
+
+[
+\boxed{
+b_1=\cdots=b_n=\frac1n.
+}
+]
+

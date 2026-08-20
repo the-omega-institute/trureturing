@@ -1,0 +1,18 @@
+## 定理 528.2（精化降低杂质）
+
+若：
+
+[
+C\preceq D,
+]
+
+则：
+
+[
+\boxed{
+\operatorname{Imp}*\mu(D;T)
+\le
+\operatorname{Imp}*\mu(C;T).
+}
+]
+

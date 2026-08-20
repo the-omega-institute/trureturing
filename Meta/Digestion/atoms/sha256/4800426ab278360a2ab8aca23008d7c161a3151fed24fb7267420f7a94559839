@@ -1,0 +1,14 @@
+## 定理 224.1（旧问题保守性）
+
+[
+\boxed{
+C\preceq D
+\Longrightarrow
+\operatorname{Ans}(C)
+\subseteq
+\operatorname{Ans}(D),
+}
+]
+
+其中：
+

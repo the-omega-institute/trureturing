@@ -1,0 +1,8 @@
+### 单调性
+
+[
+P\subseteq Q
+\Longrightarrow
+K_\tau(P)\subseteq K_\tau(Q).
+]
+

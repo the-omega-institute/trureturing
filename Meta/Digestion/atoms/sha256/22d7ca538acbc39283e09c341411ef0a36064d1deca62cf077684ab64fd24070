@@ -1,0 +1,24 @@
+## 定理 402.1（凭证计数不足）
+
+如果所有者映射 (o) 不在公共接口中，则“一人一票”目标不能由凭证票 transcript 因子化。
+
+所以：
+
+[
+\boxed{
+\text{one credential one vote}
+\neq
+\text{one person one vote}.
+}
+]
+
+身份唯一性需要一个能约束：
+
+[
+K\to P
+]
+
+多重性的额外证明或准入机制。
+
+---
+

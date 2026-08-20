@@ -1,0 +1,41 @@
+[
+C F_{\mathrm{pass}}
+===================
+
+\operatorname{id} C.
+]
+
+现在加入干预 (u)：
+
+[
+F_u(a)=a,
+]
+
+[
+F_u(b)=c,
+]
+
+[
+F_u(c)=c.
+]
+
+则：
+
+[
+C(a)=C(b)=0,
+]
+
+但：
+
+[
+C(F_ua)=0,
+\qquad
+C(F_ub)=1.
+]
+
+所以：
+
+[
+\operatorname{ICarry}_u(C)\neq\varnothing.
+]
+

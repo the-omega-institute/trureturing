@@ -1,0 +1,14 @@
+### 证明
+
+固定无信息最优行动 (u^*)。
+
+对每个观察值：
+
+[
+\max_u\mathbb E[V(X,u)\mid E]
+\ge
+\mathbb E[V(X,u^*)\mid E].
+]
+
+取期望：
+

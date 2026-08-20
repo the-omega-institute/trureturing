@@ -1,0 +1,36 @@
+## 定理 295.1（单调选择权价值）
+
+若未来价值函数：
+
+[
+W:\mathcal P(Z)\to L
+]
+
+对集合包含单调：
+
+[
+A\subseteq B
+\Longrightarrow
+W(A)\preceq W(B),
+]
+
+则：
+
+[
+\mathcal O_v(x)\subseteq\mathcal O_u(x)
+]
+
+推出：
+
+[
+\boxed{
+W(\mathcal O_v(x))
+\preceq
+W(\mathcal O_u(x)).
+}
+]
+
+因此，在其他相关条件相同且未来价值对选择权单调时，保留更多可行未来不会更差。
+
+---
+

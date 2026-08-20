@@ -1,0 +1,18 @@
+## 定理 467.1（连续下降）
+
+存在唯一连续映射：
+
+[
+\boxed{
+\overline T:B\to Y
+}
+]
+
+满足：
+
+[
+\boxed{
+T=\overline T\circ q.
+}
+]
+

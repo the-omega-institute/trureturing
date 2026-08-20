@@ -1,0 +1,17 @@
+[
+\boxed{
+\operatorname{cl}(S)
+====================
+
+\left{
+i\in I
+;\middle|;
+C_i
+\preceq
+\bigvee_{j\in S}C_j
+\right}.
+}
+]
+
+它表示可由 (S) 中信息源恢复的全部来源。
+

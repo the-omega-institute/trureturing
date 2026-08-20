@@ -1,0 +1,14 @@
+## 定义 376.1（资源等价）
+
+[
+\boxed{
+C\simeq_r D
+\iff
+C\preceq_rD
+\land
+D\preceq_rC.
+}
+]
+
+---
+
