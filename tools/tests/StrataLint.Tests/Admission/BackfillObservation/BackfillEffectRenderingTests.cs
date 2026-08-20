@@ -31,8 +31,12 @@ public sealed class BackfillEffectRenderingTests
             ]));
     }
 
+    // Deliberately not named "...LikeCliApplication": this pins the order produced here
+    // and never invokes CliApplication, so a name claiming cross-implementation agreement
+    // would assert something the test does not check. The two renderers were confirmed
+    // identical by reading both, which is a reviewer's finding, not this test's.
     [Fact]
-    public void ObservationsAreOrderedByPathThenMessageLikeCliApplication()
+    public void ObservationsAreOrderedByPathThenMessage()
     {
         var rendered = DigestionBackfillValidation.RenderOrThrow(
         [
