@@ -1,0 +1,19 @@
+### 定义 40.19（实现完成）
+
+\[
+\boxed{
+\widehat X_{\mathrm{real}}
+=
+\sum_{x:\widehat X_{\mathrm{form}}}
+\operatorname{Realizable}(x).
+}
+\]
+
+定义本身不保证：
+
+\[
+\widehat X_{\mathrm{real}}\neq\varnothing.
+\]
+
+---
+

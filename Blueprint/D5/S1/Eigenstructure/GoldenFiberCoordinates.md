@@ -23,4 +23,3 @@ This deposit closes only theorem 6.48-prime, clause 2. It does not claim the fib
 ## References
 
 - Truth anchor: `D5/S1/Eigenstructure/GoldenFiberCoordinates.golden_fiber_coordinates`
-- Dependency: [D5/S1/Deficit/ZeckendorfDisplacementReading](../Deficit/ZeckendorfDisplacementReading.md)

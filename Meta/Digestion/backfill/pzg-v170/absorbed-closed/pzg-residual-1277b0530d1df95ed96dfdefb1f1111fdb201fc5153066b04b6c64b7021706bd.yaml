@@ -1,0 +1,17 @@
+ast_path: theorem/6.23
+fingerprints:
+  raw_sha256: sha256:1277b0530d1df95ed96dfdefb1f1111fdb201fc5153066b04b6c64b7021706bd
+  normalized_sha256: sha256:1277b0530d1df95ed96dfdefb1f1111fdb201fc5153066b04b6c64b7021706bd
+cas_ref: sha256:1277b0530d1df95ed96dfdefb1f1111fdb201fc5153066b04b6c64b7021706bd
+coverage_gids:
+  - D5/S1/Recurrence/CarryCancellation.recurrence_carry_preserves_weight
+receipts:
+  coverage:
+    - gid: D5/S1/Recurrence/CarryCancellation.recurrence_carry_preserves_weight
+      source_sha256: sha256:1277b0530d1df95ed96dfdefb1f1111fdb201fc5153066b04b6c64b7021706bd
+      target_sha256: sha256:400db53a7b39383102c796ea06a1095b0c38fab45bde41e1b2d28ff60fa8bf88
+  scribe:
+    - gid: D5/S1/Recurrence/CarryCancellation.recurrence_carry_preserves_weight
+      definition_sha256: sha256:e8e1587f52d86fd1e36877379ac9809f7763f54fe177237ebe301a3fe1231470
+      emission_sha256: sha256:6647146cfbdc3cf60a05e9aaabfdf0c1ffc9f141249643f24edd861be696ddbf
+  unresolved_subitems: []

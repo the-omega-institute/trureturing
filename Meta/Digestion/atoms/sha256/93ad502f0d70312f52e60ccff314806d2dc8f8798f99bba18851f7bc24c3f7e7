@@ -1,0 +1,10 @@
+### 定义 41.8（可见差异）
+
+\[
+\boxed{
+\operatorname{Visible}_q(x,y)
+\iff
+q(x)\neq q(y).
+}
+\]
+

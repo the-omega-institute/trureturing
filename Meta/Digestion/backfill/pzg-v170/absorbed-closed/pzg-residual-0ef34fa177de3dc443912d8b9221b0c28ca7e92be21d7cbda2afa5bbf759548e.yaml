@@ -1,0 +1,17 @@
+ast_path: theorem/27.2
+fingerprints:
+  raw_sha256: sha256:0ef34fa177de3dc443912d8b9221b0c28ca7e92be21d7cbda2afa5bbf759548e
+  normalized_sha256: sha256:0ef34fa177de3dc443912d8b9221b0c28ca7e92be21d7cbda2afa5bbf759548e
+cas_ref: sha256:0ef34fa177de3dc443912d8b9221b0c28ca7e92be21d7cbda2afa5bbf759548e
+coverage_gids:
+  - D5/S3/AnalyticClosure/CofinalTailDiscipline.cofinal_windows_and_vanishing_budget_close
+receipts:
+  coverage:
+    - gid: D5/S3/AnalyticClosure/CofinalTailDiscipline.cofinal_windows_and_vanishing_budget_close
+      source_sha256: sha256:0ef34fa177de3dc443912d8b9221b0c28ca7e92be21d7cbda2afa5bbf759548e
+      target_sha256: sha256:bab7873eb8f037905e9d578e4522af2e43beb244848a7df84cd836cbc5cc103b
+  scribe:
+    - gid: D5/S3/AnalyticClosure/CofinalTailDiscipline.cofinal_windows_and_vanishing_budget_close
+      definition_sha256: sha256:646a4dfa173c4abadad3327426894f2c84f3d6ae8326de9266174a5488e846a7
+      emission_sha256: sha256:12c7e4beacb7a4c77ff1e85a64aaba20a52634ebb3d6c2e3f7053402d4f3e58e
+  unresolved_subitems: []

@@ -1,0 +1,17 @@
+ast_path: remark/27.152
+fingerprints:
+  raw_sha256: sha256:badae06d389041c05c56b9bf56eff22fe33e952a338b2da730bf87accd04d749
+  normalized_sha256: sha256:badae06d389041c05c56b9bf56eff22fe33e952a338b2da730bf87accd04d749
+cas_ref: sha256:badae06d389041c05c56b9bf56eff22fe33e952a338b2da730bf87accd04d749
+coverage_gids:
+  - D5/S3/Constants/Transcription/PhiSecondTranscription.phi_second_transcription_exact
+receipts:
+  coverage:
+    - gid: D5/S3/Constants/Transcription/PhiSecondTranscription.phi_second_transcription_exact
+      source_sha256: sha256:badae06d389041c05c56b9bf56eff22fe33e952a338b2da730bf87accd04d749
+      target_sha256: sha256:44c287367e46b17d41564a3159a8b5bdbe16a090832fd885f97ba35b4d5d5841
+  scribe:
+    - gid: D5/S3/Constants/Transcription/PhiSecondTranscription.phi_second_transcription_exact
+      definition_sha256: sha256:35649af2a9ebde3173765790c78bc324054d8c1c30b168a63af7f64cb732bcf6
+      emission_sha256: sha256:2227042bcf5a12a25b4963f6009327108c656b4178260199cde2fb72afa9ef24
+  unresolved_subitems: []

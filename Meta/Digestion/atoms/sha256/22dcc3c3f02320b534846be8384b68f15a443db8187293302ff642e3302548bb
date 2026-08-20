@@ -1,0 +1,10 @@
+### 定理 41.15
+
+\[
+\boxed{
+\kappa(a,b)+\kappa(a+b,c)
+=
+\kappa(b,c)+\kappa(a,b+c).
+}
+\]
+

@@ -1,0 +1,19 @@
+\[
+\boxed{
+C\vee D
+=
+(B_C\times B_D,
+ x\mapsto(q_Cx,q_Dx)).
+}
+\]
+
+于是：
+
+\[
+x\sim_{C\vee D}y
+\iff
+x\sim_Cy
+\land
+x\sim_Dy.
+\]
+

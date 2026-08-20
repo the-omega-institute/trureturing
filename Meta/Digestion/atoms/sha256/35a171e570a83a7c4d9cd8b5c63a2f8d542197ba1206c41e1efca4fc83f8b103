@@ -1,0 +1,12 @@
+### 定理 41.14
+
+\[
+\boxed{
+I(P;Y\mid C)
+=
+I(C';Y\mid C)
++
+I(P;Y\mid C').
+}
+\]
+

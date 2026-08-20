@@ -1,0 +1,26 @@
+### 定理 41.8（近似下降链式界）
+
+设：
+
+\[
+F:X\to Y,\qquad
+G:Y\to Z,
+\]
+
+分别由 \(\bar F,\bar G\) 近似下降，误差不超过：
+
+\[
+\varepsilon_F,\qquad
+\varepsilon_G.
+\]
+
+若 \(\bar G\) 为 \(L\)-Lipschitz，则：
+
+\[
+\boxed{
+\varepsilon_{GF}
+\le
+\varepsilon_G+L\varepsilon_F.
+}
+\]
+

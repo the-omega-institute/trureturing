@@ -1,0 +1,9 @@
+## 定义 22.1（局部怀疑）
+
+\[
+\exists x,
+\operatorname{Adm}(x)
+\land E(x)=E(a)
+\land\neg P(x).
+\]
+

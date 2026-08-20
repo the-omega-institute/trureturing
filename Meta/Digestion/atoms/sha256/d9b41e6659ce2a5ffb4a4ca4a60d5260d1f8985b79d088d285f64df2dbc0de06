@@ -1,0 +1,21 @@
+## 定理 16.2（完成算子律）
+
+对固定 \(K\)，在概念等价意义下：
+
+\[
+\begin{aligned}
+C&\preceq\operatorname{Comp}_K(C),\\
+C\preceq D
+&\Longrightarrow
+\operatorname{Comp}_K(C)\preceq\operatorname{Comp}_K(D),\\
+\operatorname{Comp}_K(
+\operatorname{Comp}_K(C))
+&\simeq_{\mathrm{con}}
+\operatorname{Comp}_K(C).
+\end{aligned}
+\]
+
+因此相对完成是概念预序上的闭包算子。
+
+---
+

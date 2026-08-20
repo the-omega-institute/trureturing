@@ -634,15 +634,16 @@ internal static partial class DigestionLedgerAligner
             AlignSource(source);
         }
 
-        if (mode == DigestionAlignmentMode.Admission)
-        {
-            foreach (var item in residual)
-            {
-                findings.Add(
-                    $"source {item.SourceId} has unregistered residual-open atom "
-                    + $"{item.Atom.AstPath} ({item.SuggestedAtomId})");
-            }
-        }
+        // 「已入库、尚未消化」不再是阻断判词。它是账本四态里的 `open`:内容层、
+        // 完全可逆、随时可由 producer(`make ingest`)重新检出,归 CLAUDE.md 第 20 条
+        // 「允许犯错 + 事后检测 + 快速勘正」,不归事前硬门。
+        //
+        // 为何不做「只豁免本 PR 自己改的理论卷」:那种窄豁免会在合入后毒化 dev——
+        // 同一批未闭合原子对**后续每个** PR 都不再豁免,全仓变红(仓内先例:
+        // SL-003 曾锁死七个在飞 PR)。一律非阻断则谁也堵不住,不可能毒化。
+        //
+        // 残余本身已在 DigestionLedgerAlignment.Residual 上暴露,消费者据此发出
+        // AdmissionEffect.Observe 的观察项,不经字符串匹配区分效力。
 
         return new DigestionLedgerAlignment(
             alignments.ToImmutable(),

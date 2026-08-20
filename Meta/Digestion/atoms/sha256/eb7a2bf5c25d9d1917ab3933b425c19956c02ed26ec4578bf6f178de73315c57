@@ -1,0 +1,12 @@
+## 定理 17.1（预测充分性）
+
+过程 \(F\) 下降为：
+
+\[
+\overline F_q:Z_q\to Z_q,
+\qquad
+\overline F_q([x])=[Fx].
+\]
+
+读出也下降到 \(Z_q\)。
+

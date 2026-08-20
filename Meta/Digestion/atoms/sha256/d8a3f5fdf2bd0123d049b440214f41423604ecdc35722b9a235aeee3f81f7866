@@ -1,0 +1,16 @@
+## 39.1 后果论
+
+评价附着于结果：
+
+\[
+V:Y\to L,
+\]
+
+\[
+\operatorname{Permitted}(x,u)
+\iff
+V(F(x,u))\succeq\theta
+\]
+
+或选择极大值行动。
+

@@ -71,6 +71,36 @@ public sealed class CliOutcomeTests
         Assert.Empty(console.Error);
     }
 
+    // 判词产出却不可见即浮账(CLAUDE.md 第 20 条红线:允许 open,不允许浮账)。
+    // admitted 路径此前把 Observe 判词全部丢掉——Observe 罕见时不显眼,而理论卷
+    // 「尚未消化」改判 Observe 后,它就成了承重缺口:一个没人看得见的 open,与没有
+    // 检测无异。本测试钉住「准入仍为 0,但观察项照样打印」。
+    [Fact]
+    public void AdmittedOutputCarriesNonBlockingObservationsInsteadOfDroppingThem()
+    {
+        var console = new BufferedConsole();
+        var admitted = Assert.IsType<AdmissionOutcome.Admitted>(Admitted());
+        var observation = new Diagnostic(
+            RuleId.CreateKnown(16),
+            "Backfill inventory",
+            DisplaySeverity.Warning,
+            AdmissionEffect.Observe,
+            "Meta/BACKFILL.yaml",
+            "theory document 'docs/develop/theory/PROBE.md' has no digestion source: run make ingest");
+        var environment = new StubCliEnvironment(
+            new AdmissionOutcome.Admitted(admitted.Certificate, [observation]));
+
+        var exitCode = CliApplication.Run(["check"], environment, console);
+
+        // 不阻断:退出码仍是 0。
+        Assert.Equal(0, exitCode);
+        Assert.Contains("ADMITTED", console.Output, StringComparison.Ordinal);
+        // 但看得见:判词与其补救命令都在输出里。
+        Assert.Contains("OBSERVED", console.Output, StringComparison.Ordinal);
+        Assert.Contains("has no digestion source", console.Output, StringComparison.Ordinal);
+        Assert.Contains("run make ingest", console.Output, StringComparison.Ordinal);
+    }
+
     private static AdmissionOutcome Outcome(string fixture) => fixture switch
     {
         "admitted" => Admitted(),

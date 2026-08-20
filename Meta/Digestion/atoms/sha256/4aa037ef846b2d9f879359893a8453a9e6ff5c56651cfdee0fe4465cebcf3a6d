@@ -1,0 +1,39 @@
+# 3. 六层存在纪律
+
+对类型 \(X\)、谓词 \(A:X\to\mathsf{Prop}\) 和概念 \(C:X\to B\)，必须区分：
+
+\[
+\begin{aligned}
+E_0(X)
+&:\quad X\text{ 可形成};\\
+E_1(X)
+&:\quad \|X\|;\\
+E_2(X,A)
+&:\quad \left\|\sum_{x:X}A(x)\right\|;\\
+E_3(X,A)
+&:\quad a:\sum_{x:X}A(x);\\
+E_4(C,b,A)
+&:\quad \left\|\sum_{x:X}A(x)\times(Cx=b)\right\|;\\
+E_5(F,a,A)
+&:\quad \forall n,\ A(F^na).
+\end{aligned}
+\]
+
+它们分别表示：
+
+\[
+\text{可定义、非空、合法可实现、实际锚定、可显现、持续存在}.
+\]
+
+一般没有无条件蕴涵：
+
+\[
+E_0\Rightarrow E_1,
+\qquad
+E_1\Rightarrow E_2,
+\qquad
+E_2\Rightarrow E_3.
+\]
+
+命题截断中的非空性也不自动给出可计算见证。
+

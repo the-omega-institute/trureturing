@@ -1,0 +1,19 @@
+### 例 40.1
+
+不同模型中的 ADMIT 可以是：
+
+\[
+\begin{aligned}
+A(x)&:\iff x\ge0,\\
+A(\rho)&:\iff \rho\succeq0\wedge\operatorname{Tr}\rho=1,\\
+A(f)&:\iff f\text{ 可积},\\
+A(u)&:\iff E(u)<\infty,\\
+A(M)&:\iff M\text{ 可计算},\\
+A(g)&:\iff \Omega(g^*g)\ge0.
+\end{aligned}
+\]
+
+这些是不同谓词，不应被词语“合法”掩盖差异。
+
+---
+

@@ -1,0 +1,23 @@
+## 定义 46.1（语义解释）
+
+\[
+\boxed{
+\llbracket-\rrbracket:
+K\to L\to\operatorname{Concept}(X).
+}
+\]
+
+一个词的意义包括：
+
+\[
+\begin{aligned}
+\text{内涵}
+&=\llbracket t\rrbracket_k,\\
+\text{实际读出}
+&=q_{\llbracket t\rrbracket_k}(a),\\
+\text{实际余量}
+&=R_{\llbracket t\rrbracket_k}
+(q_{\llbracket t\rrbracket_k}(a)).
+\end{aligned}
+\]
+

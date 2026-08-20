@@ -215,13 +215,35 @@ internal sealed class BackfillInventoryDocument
                     $"entry {atomId} quarantine reentry_condition is required");
             }
 
+            // `ExactKeys` 要求键集**恰好相等**(不是白名单),故按 blocker_class 是否出现
+            // 分别给出期望键集——否则既有的两键条目会被判「keys are not exactly …」而全部拒载。
             ExactKeys(
                 rawQuarantine,
-                ["justification", "reentry_condition"],
+                rawQuarantine.ContainsKey("blocker_class")
+                    ? ["justification", "reentry_condition", "blocker_class"]
+                    : ["justification", "reentry_condition"],
                 $"entry {atomId} quarantine");
+            string? blockerClass = null;
+            if (rawQuarantine.ContainsKey("blocker_class"))
+            {
+                blockerClass = Scalar(
+                    rawQuarantine,
+                    "blocker_class",
+                    $"entry {atomId} quarantine blocker_class");
+                // 封闭字母表,未知取值 fail-closed:分类的价值全在于它可被机器统计与比较,
+                // 放行任意字符串等于退回自由文本(#2137 要治的正是那个)。
+                if (!DigestionQuarantine.BlockerClasses.Contains(blockerClass, StringComparer.Ordinal))
+                {
+                    throw new FormatException(
+                        $"entry {atomId} quarantine blocker_class '{blockerClass}' is not one of "
+                        + string.Join(", ", DigestionQuarantine.BlockerClasses));
+                }
+            }
+
             quarantine = new DigestionQuarantine(
                 Scalar(rawQuarantine, "justification", $"entry {atomId} quarantine justification"),
-                Scalar(rawQuarantine, "reentry_condition", $"entry {atomId} quarantine reentry_condition"));
+                Scalar(rawQuarantine, "reentry_condition", $"entry {atomId} quarantine reentry_condition"),
+                blockerClass);
         }
 
         return new DigestionReceipts(

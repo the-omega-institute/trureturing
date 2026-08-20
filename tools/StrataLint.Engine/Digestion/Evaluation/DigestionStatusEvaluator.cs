@@ -127,7 +127,13 @@ internal static partial class DigestionStatusEvaluator
             alignment.VerifiedClausePlanParents,
             findings);
 
-        return CompleteEvaluation(work, snapshot, findings, validateProjectedStatus);
+        var observations = alignment.Residual
+            .Select(static item =>
+                $"source {item.SourceId} has unregistered residual-open atom "
+                + $"{item.Atom.AstPath} ({item.SuggestedAtomId}); run make ingest to close it")
+            .Order(StringComparer.Ordinal)
+            .ToImmutableArray();
+        return CompleteEvaluation(work, snapshot, findings, validateProjectedStatus, observations);
     }
 
     private static void RequireDecompositionBeforeNewAbsorption(
@@ -167,7 +173,10 @@ internal static partial class DigestionStatusEvaluator
         IReadOnlyList<EntryWork> work,
         RepositorySnapshot snapshot,
         ImmutableArray<string>.Builder findings,
-        bool validateProjectedStatus)
+        bool validateProjectedStatus,
+        // 非阻断的观察项(「已入库、尚未消化」)。两条评估路径共用本方法,
+        // 只有 admission 路径会传入;projection 路径不产观察项。
+        ImmutableArray<string> observations = default)
     {
         var evaluations = ImmutableArray.CreateBuilder<DigestionEntryEvaluation>(work.Count);
         foreach (var item in work)
@@ -204,7 +213,8 @@ internal static partial class DigestionStatusEvaluator
 
         return new DigestionLedgerEvaluation(
             evaluations.MoveToImmutable(),
-            findings.Order(StringComparer.Ordinal).ToImmutableArray());
+            findings.Order(StringComparer.Ordinal).ToImmutableArray(),
+            observations.IsDefault ? [] : observations);
     }
 
     private static EntryWork Inspect(

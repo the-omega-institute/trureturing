@@ -1,0 +1,38 @@
+### 定义 41.10（表示性 refinement）
+
+称 \(q'\) 比 \(q\) 更细，记：
+
+\[
+q'\succeq q,
+\]
+
+若存在：
+
+\[
+p:B'\to B
+\]
+
+使：
+
+\[
+\boxed{
+q=p\circ q'.
+}
+\]
+
+完整数据为：
+
+\[
+\boxed{
+\operatorname{Refines}(q',q)
+=
+\sum_{p:B'\to B}
+\prod_{x:X}
+q(x)=p(q'(x)).
+}
+\]
+
+\(p\) 是遗忘或粗化 FLOW。
+
+---
+

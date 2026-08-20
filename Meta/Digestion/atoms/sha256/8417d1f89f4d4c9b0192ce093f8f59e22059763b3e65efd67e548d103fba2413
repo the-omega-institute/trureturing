@@ -1,0 +1,12 @@
+### 定义 41.1（CUT）
+
+对 \(X:\mathsf{Type}_u\)，一个 CUT 是：
+
+\[
+\boxed{
+q:X\to B
+}
+\]
+
+连同可见坐标类型 \(B:\mathsf{Type}_v\)。
+

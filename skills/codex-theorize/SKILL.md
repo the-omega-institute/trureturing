@@ -98,6 +98,7 @@ candidate_content_sha256
 selection_mode
 selection_receipt
 address_refresh_receipts
+prerequisite_transitions
 problem_echo
 motivation_gids
 target_gid
@@ -272,17 +273,46 @@ explicit.
 ### 5. State exactly one open Lean declaration
 
 For `source_kind="frontier_problem"`, the only natural owner is the P1
-`source_ref`; edit that existing module and no other. For
+`source_ref`; after the P1 receipt below, edit that existing module and no
+other. For
 `source_kind="owner_override"`, the content address is not a Frontier owner:
 construct the strict manifest for the intended D5 `X_Frontier` module and run
 the repository's canonical route command. Proceed only when canonical route
-returns one `D5/X_Frontier/<Target>` GID and path; a route rejection, capacity
-finding, or non-Frontier result ends `open` without inventing an address.
+returns one `D5/X_Frontier/<Target>` GID and path. A route rejection or
+non-Frontier result ends `open` without inventing an address.
 
-Create or transform only that machine-returned natural owner. Add or update the
-same module's `docs/MISSION.md.frontier_eligibility` entry to
-`declaration-ready-mathematical-open`; never infer eligibility from TASK text,
-path, name, or `sorry`. The module must elaborate and contain exactly one
+If route reports the typed capacity diagnostic `bucket at capacity ... split
+only`, enter the `frontier-capacity-split` prerequisite transition instead of
+classifying capacity as an epistemic gap. Preserve the diagnostic and do not
+guess an address. In a separate worktree and PR, use the existing P1/P2
+specification and harness owners to perform the required Frontier split; do not
+weaken SL-003 or add a hand-written exception. Observe that prerequisite PR
+with the bounded REST protocol from Step 8 and record its branch, head SHA,
+REST payload, and merge commit under `prerequisite_transitions`. A failed,
+closed-unmerged, or unobservable prerequisite is an evidence-complete `open`
+with that machine diagnostic. Only a REST-confirmed `MERGED` prerequisite may
+advance. Fetch the resulting `dev`, discard the pre-split selection/address
+attempt as an authority, and start a fresh isolated `codex-theorize` run from
+the new protected baseline with the same owner-override bytes. Never invent a
+pre-split address or weaken the capacity rule; a split is priced work, not a
+stopping condition.
+
+Before creating or transforming any module, require a machine-issued P1
+owner-transition/route receipt. It must name the canonical target GID and
+path, the typed owner kind, and the content address, and it must be issued by
+the P1 owner rather than by this skill or its theorist seat. The receipt must
+also show that the corresponding `docs/MISSION.md.frontier_eligibility` entry
+is owned by that P1 transition; this skill consumes the entry and never writes,
+classifies, or edits `MISSION.md`. The current P1 surface does not issue such a
+receipt for a theorist-created transition: when it is absent, record the named
+handoff `P1 StrataLint theory-candidates/MISSION owner-transition producer`,
+the exact target and required receipt, and end `open` without changing the
+module or `MISSION.md`. Do not create a local substitute; extending this
+receipt producer or its schema is a separate priced P1/spec PR. This is an
+honest machine-owned handoff, not a human approval gate.
+
+After that receipt is present, create or transform only the receipt's natural
+owner. The module must elaborate and contain exactly one
 `include_in_statement=true` declaration whose compiled axiom closure contains
 `sorryAx`. Use `by sorry`; never use an `axiom` or a self-reported status.
 
@@ -298,8 +328,8 @@ receipt to be regenerated, end `open`. Name the owner-to-receipt coupling and
 the machine diagnostic; do not expand this lane's write authority to make the
 candidate pass.
 
-After the declaration and MISSION owner are ready, run the bounded address
-handshake. Store its outputs as
+After the declaration and P1-owned MISSION entry are ready, run the bounded
+address handshake. Store its outputs as
 `address_refresh_receipts[handshake][projection]`, where each handshake has two
 projections. The Step 1 `selection_receipt` remains the sole selection authority;
 no projection may rescore, reroute, or replace the selected `candidate_id`:
@@ -384,22 +414,33 @@ artifacts. It must label every repository-state or execution claim
 `ASSUMED-UNVERIFIED`; such a claim cannot discharge a repository check until a
 codex-cli seat or machine owner supplies evidence.
 
-Treat every seat as an untrusted adviser: its only allowed routing result is
-`candidate` or `open`, and no seat creates truth, approval, proof, or a human
-gate. Consolidate every first-stage finding before editing. If no correction is
-required, that stage must converge on `candidate`. Otherwise apply all accepted
-corrections once, rerun every affected prior step, and rerun Step 5 completely
-because any source or contract edit invalidates its operative address pair.
+Treat every seat as an untrusted adviser: its runner envelope must retain the
+runner's normative `conclusion.verdict` vocabulary, exactly `approve`,
+`comment`, or `reject`. Keep the theory-domain routing state separate in a
+`conclusion.routing_result` field whose only values are `candidate` or `open`.
+Map `approve` to `candidate` and `comment`, `reject`, runner failure, or an
+unavailable stage to `open`; never rewrite or hand-normalize
+`conclusion.verdict`. No seat creates truth, approval, proof, or a human gate.
+The configured sshx runner/meta-judge is the sole machine owner of the accepted
+correction set and its deterministic contradiction rule; the caller only
+transports that result. Consolidate every first-stage finding before editing.
+If no correction is required, the final stage must carry runner verdict
+`approve` plus domain `routing_result=candidate`. Otherwise apply that one
+machine-issued correction set once, rerun every affected prior step, and rerun
+Step 5 completely because any source or contract edit invalidates its operative
+address pair.
 At most one complete Step 5 address handshake replay is allowed after the first
 review. Store it as `address_refresh_receipts[1][0]` and `[1][1]`, retain the
 invalidated initial pair, and run exactly one second full review stage. Any new
 or unresolved finding, attempted further edit, unavailable stage, missing
-heterogeneous seat, or final result other than `candidate` ends `open`.
+heterogeneous seat, or a final result other than runner `approve` plus domain
+`routing_result=candidate` ends `open`.
 
 Postcondition: one or two full three-seat results and all evidence references
 are recorded; capability assignments and heterogeneous review are evidenced;
 all findings are resolved; the final operative address pair is replay-stable;
-and the final review result is `candidate`.
+and the final review envelope is runner-valid with
+`conclusion.verdict=approve` and `conclusion.routing_result=candidate`.
 
 ### 7. Run the complete machine admission chain
 
@@ -515,6 +556,9 @@ owner is the `prover` lane through `deliver-check`, never `deposit` or
 
 - Candidate enumeration, ordering, owner override, and lane routing are owned
   by P1 `StrataLint theory-candidates` and `docs/MISSION.md`.
+- Typed owner transitions and their machine receipts are also P1-owned. This
+  skill may consume a receipt, but it never authors or classifies
+  `frontier_eligibility`.
 - Frontier contract syntax, address binding, GID resolution, and open-state
   derivation are owned by P2 and its SL-002 validator.
 - Worth measurement receipts and complete argmax are not implemented by this

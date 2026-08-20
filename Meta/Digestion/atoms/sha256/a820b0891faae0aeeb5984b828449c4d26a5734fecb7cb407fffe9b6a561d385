@@ -1,0 +1,10 @@
+## 定理 14.1（组合链式律）
+
+对：
+
+\[
+X\xrightarrow{F}Y\xrightarrow{G}Z
+\]
+
+及候选宏观映射 \(\overline F,\overline G\)：
+

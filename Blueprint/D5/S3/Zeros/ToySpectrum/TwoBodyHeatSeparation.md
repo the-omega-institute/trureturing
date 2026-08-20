@@ -23,4 +23,3 @@ This closes only the post-collision real-root and squared-separation clause of t
 ## References
 
 - Truth anchor: `D5/S3/Zeros/ToySpectrum/TwoBodyHeatSeparation.two_body_heat_real_root_separation`
-- Dependency: [D5/S3/Zeros/ToySpectrum/QuadraticCollisionModel](QuadraticCollisionModel.md)
