@@ -8,6 +8,57 @@ namespace StrataLint.Tests;
 public sealed partial class ProductionEnvironmentTests
 {
     [Fact]
+    public void WriterSemanticPinComparisonDoesNotReplayEntryEnvironmentBinding()
+    {
+        var fixture = CreatePinBumpFixture([], []);
+        AddSupersedeEvents(fixture);
+        var baseView = FrozenLedgerBaseViewReader.Read(Decode(Snapshot(fixture.Baseline)));
+        var entry = baseView.ActiveByPath[RepoPath.CreateKnown(RuleFixture.RingPath)];
+        var protectedSnapshot = Assert.IsType<SnapshotDecodeOutcome.Decoded>(
+            SnapshotDecoder.Decode(
+                SnapshotWithBaseOid(
+                    fixture.Baseline,
+                    "lean-toolchain",
+                    FrozenLedgerTestData.GitOid('f')))).Snapshot;
+        var candidateSnapshot = Assert.IsType<SnapshotDecodeOutcome.Decoded>(
+            SnapshotDecoder.Decode(SnapshotWithoutGitBlobOids(fixture.Files))).Snapshot;
+        var report = LeanAxiomReport.Create(fixture.Reports);
+
+        Assert.True(
+            LeanImportClosure.RelevantSemanticPinsChanged(
+                report,
+                RepoPath.CreateKnown(RuleFixture.RingPath),
+                protectedSnapshot,
+                candidateSnapshot));
+    }
+
+    [Fact]
+    public void SemanticPinEdgeIsOwnedByAdmissionAndNotWriter()
+    {
+        var closure = TestRepositoryLayout.ReadAllText(
+            RepositoryRelativePath.Create("tools/StrataLint.Engine/Anchors/LeanImportClosure.cs"));
+        var admission = TestRepositoryLayout.ReadAllText(
+            RepositoryRelativePath.Create("tools/StrataLint.Engine/Ledger/Admission/FrozenLedgerAdmission.cs"));
+        var writer = TestRepositoryLayout.ReadAllText(
+            RepositoryRelativePath.Create("tools/StrataLint.Cli/Commands/DagLedgerSupersedeWriter.cs"));
+
+        Assert.Contains("ProtectedEnvironmentMatchesEntry(", admission, StringComparison.Ordinal);
+        Assert.DoesNotContain("ProtectedEnvironmentMatchesEntry(", writer, StringComparison.Ordinal);
+        var predicateStart = closure.IndexOf(
+            "internal static bool RelevantSemanticPinsChanged(",
+            StringComparison.Ordinal);
+        var predicateEnd = closure.IndexOf(
+            "    internal static bool CandidateStatementsAvoidTrivialTruth(",
+            predicateStart,
+            StringComparison.Ordinal);
+        Assert.True(predicateStart >= 0 && predicateEnd > predicateStart);
+        Assert.DoesNotContain(
+            "ProtectedEnvironmentMatchesEntry(",
+            closure[predicateStart..predicateEnd],
+            StringComparison.Ordinal);
+    }
+
+    [Fact]
     public void RelevantSemanticPinsGuardTrueAcceptsStatementDriftWithTrustedBaseOids()
     {
         using var temporary = new TemporaryDirectory();
