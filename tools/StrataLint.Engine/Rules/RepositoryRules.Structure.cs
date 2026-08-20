@@ -298,7 +298,10 @@ internal static partial class RepositoryRules
     {
         try
         {
-            if (context.Current.TryGetFile(HeartsAuthorizationLedger.Path, out var authorizationFile))
+            if (Changed(context, static path => path == HeartsAuthorizationLedger.Path)
+                && context.Current.TryGetFile(
+                    HeartsAuthorizationLedger.Path,
+                    out var authorizationFile))
             {
                 _ = HeartsAuthorizationLedger.Read(authorizationFile.Text);
             }

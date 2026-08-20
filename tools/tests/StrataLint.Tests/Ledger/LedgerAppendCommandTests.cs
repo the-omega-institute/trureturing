@@ -523,7 +523,10 @@ public sealed class LedgerAppendCommandTests
             var raw = RawRepositorySnapshot.Create(
                 files.Select(static item => RawRepositoryEntry.FromText(item.Key, item.Value)));
             var baselineRaw = RawRepositorySnapshot.Create(
-                baselineFiles.Select(static item => RawRepositoryEntry.FromText(item.Key, item.Value)));
+                baselineFiles.Select(static item => new RawRepositoryEntry(
+                    item.Key,
+                    ImmutableArray.CreateRange(Encoding.UTF8.GetBytes(item.Value)),
+                    FrozenLedgerTestData.GitBlobOid(item.Value))));
             var snapshot = Assert.IsType<SnapshotDecodeOutcome.Decoded>(
                 SnapshotDecoder.Decode(raw)).Snapshot;
             var reports = new Dictionary<string, LeanFileReport>(StringComparer.Ordinal)

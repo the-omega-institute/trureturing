@@ -86,7 +86,8 @@ internal static partial class DigestionStatusEvaluator
             baselineDocument,
             DigestionAlignmentMode.Admission,
             baselineSnapshot: baselineSnapshot,
-            casEvaluation: casEvaluation);
+            casEvaluation: casEvaluation,
+            changes: changes);
         findings.AddRange(alignment.Findings);
         var baselineEntries = (baselineDocument?.RequireDigestionEntries()
                 ?? ImmutableArray<DigestionLedgerEntry>.Empty)
