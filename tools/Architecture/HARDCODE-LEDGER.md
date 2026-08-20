@@ -758,7 +758,7 @@ the same round and carry the same round-2 obligation.
 
 | Surface | Reading | Confirmed gaps |
 |---|---|---|
-| Makefile targets | every target reachable; `lean-cache-ensure` is a prerequisite of `test`/`lean`/`lean-report`/`build` | 0 |
+| Makefile targets | every target reachable; dependency graph changed so `test`/`lean`/`lean-report`/`build` no longer depend on `lean-cache-ensure`: the canonical `lean-cache-run.sh` wrapper owns the ensure for each Lean process, while `lean-cache-ensure` remains an optional explicit prewarm | 0 |
 | `Meta/domains.yaml` | 50 domains, every one has objects under `D5/` or `Blueprint/` | 0 |
 | `Golden/Projection` | 2 files, 3 consumers each | 0 |
 | `Evidence/D5` | 1 file, 11 consumers | 0 |
@@ -777,4 +777,3 @@ not inherit this round's classification, returning zero for this front's own def
 Three of those zeros come from a criterion rather than from finding nothing. Between a
 zero-reference reading and a deletion sit three questions: is it a reserved coordinate, is it
 a planned component, is it a correct negative claim. Each of the three saved something here.
-

@@ -19,14 +19,16 @@ internal static class LeanCacheEnsureCommand
             arguments,
             runner,
             cloner,
-            LeanCacheProvisioner.CountLtarFiles);
+            LeanCacheProvisioner.CountLtarFiles,
+            removePartial: null);
 
     internal static CommandResult Run(
         string repositoryRoot,
         IReadOnlyList<string> arguments,
         IWorktreeProcessRunner runner,
         IDirectoryCloner cloner,
-        Func<string, int> countLtarFiles)
+        Func<string, int> countLtarFiles,
+        Action<string>? removePartial = null)
     {
         ArgumentNullException.ThrowIfNull(arguments);
         ArgumentNullException.ThrowIfNull(runner);
@@ -80,7 +82,8 @@ internal static class LeanCacheEnsureCommand
             runner,
             cloner,
             guard,
-            countLtarFiles);
+            countLtarFiles,
+            removePartial);
     }
 
     internal static CommandResult RunWithWriter(
@@ -126,7 +129,8 @@ internal static class LeanCacheEnsureCommand
             runner,
             cloner,
             guard,
-            LeanCacheProvisioner.CountLtarFiles);
+            LeanCacheProvisioner.CountLtarFiles,
+            removePartial: null);
         if (!ensured.Success) return ensured;
 
         try
@@ -154,7 +158,8 @@ internal static class LeanCacheEnsureCommand
         IWorktreeProcessRunner runner,
         IDirectoryCloner cloner,
         LeanCacheWriterGuard writerGuard,
-        Func<string, int> countLtarFiles)
+        Func<string, int> countLtarFiles,
+        Action<string>? removePartial)
     {
         var lake = Path.Combine(root, ".lake");
         writerGuard.RequireOwnershipOf(lake);
@@ -287,14 +292,24 @@ internal static class LeanCacheEnsureCommand
             using var selection = GitWorktreeInventory.SelectDonor(root, pins, runner);
             try
             {
-                var provisioned = LeanCacheProvisioner.Provision(
-                    selection,
-                    root,
-                    pins,
-                    lakeExecutable,
-                    runner,
-                    writerGuard,
-                    cloner);
+                var provisioned = removePartial is null
+                    ? LeanCacheProvisioner.Provision(
+                        selection,
+                        root,
+                        pins,
+                        lakeExecutable,
+                        runner,
+                        writerGuard,
+                        cloner)
+                    : LeanCacheProvisioner.Provision(
+                        selection,
+                        root,
+                        pins,
+                        lakeExecutable,
+                        runner,
+                        writerGuard,
+                        cloner,
+                        removePartial);
                 return SuccessReceipt(
                     provisioned.Strategy == "cloned" ? "seeded" : "fetched",
                     root,

@@ -37,7 +37,7 @@ public sealed partial class MakeWorkflowTests
             $"The canonical make target '{target}' must keep its dotnet test command unfiltered; commit 5743d114 filtered Script tests and CI then had no replacement lane.");
     }
 
-    [Fact]
+    [Fact(DisplayName = "Makefile and inspector dispatch counts are pinned in the thin dispatch table")]
     public void MakefileIsAThinCompleteDispatchTable()
     {
         var root = TestRepositoryLayout.FindRoot();
@@ -54,7 +54,7 @@ public sealed partial class MakeWorkflowTests
             Assert.InRange(RecipeCount(makefile, target), 0, 1);
         }
 
-        Assert.Contains("build: lean-cache-ensure lean", makefile, StringComparison.Ordinal);
+        Assert.Contains("build: lean", makefile, StringComparison.Ordinal);
         Assert.Equal(0, RecipeCount(makefile, "build"));
         // make test 是薄委托;数学门链条的唯一真源在 math-gate.sh 里,断言脚本本体。
         var mathematicalTestRecipe = Recipe(makefile, "test");
@@ -74,11 +74,9 @@ public sealed partial class MakeWorkflowTests
         Assert.Equal(
             $"\t@/bin/bash {LeanCacheEnsureScriptPath}",
             Recipe(makefile, "lean-cache-ensure"));
-        Assert.Contains("lean: lean-cache-ensure", makefile, StringComparison.Ordinal);
         var leanRecipe = Recipe(makefile, "lean");
         Assert.Contains(LeanCacheRunScriptPath, leanRecipe, StringComparison.Ordinal);
         Assert.Contains("lake build", leanRecipe, StringComparison.Ordinal);
-        Assert.Contains("lean-report: lean-cache-ensure", makefile, StringComparison.Ordinal);
         Assert.Contains(LeanReportScriptPath, Recipe(makefile, "lean-report"), StringComparison.Ordinal);
         var inspector = File.ReadAllText(Path.Combine(root, "tools", "lean-inspector", "inspect.sh"));
         Assert.DoesNotContain("run_phase cache-get", inspector, StringComparison.Ordinal);
@@ -86,6 +84,37 @@ public sealed partial class MakeWorkflowTests
         Assert.Contains(LeanCacheRunScriptPath, inspector, StringComparison.Ordinal);
         Assert.Contains("run_phase build \"$CACHE_RUN\" \"$LAKE\" build", inspector, StringComparison.Ordinal);
         Assert.Contains("\"$CACHE_RUN\" \"$LAKE\" env lean", inspector, StringComparison.Ordinal);
+
+        int EnsureDependency(string target)
+        {
+            var header = Assert.Single(
+                makefile.Split('\n'),
+                line => line.StartsWith(target + ":", StringComparison.Ordinal));
+            return header[(target.Length + 1)..]
+                .Split(' ', StringSplitOptions.RemoveEmptyEntries)
+                .Count(static prerequisite => prerequisite == "lean-cache-ensure");
+        }
+
+        var leanCommands = Regex.Matches(
+            Recipe(makefile, "lean"),
+            Regex.Escape(LeanCacheRunScriptPath),
+            RegexOptions.CultureInvariant).Count;
+        var reportCommands = Regex.Matches(
+            inspector,
+            "(?m)^(?!\\[\\[).*\\\"\\$CACHE_RUN\\\"",
+            RegexOptions.CultureInvariant).Count;
+        // lean-report needs both wrapper calls: inspect.sh:107 builds and inspect.sh:130 inspects.
+        var leanEnsures = EnsureDependency("lean") + leanCommands;
+        var reportEnsures = EnsureDependency("lean-report") + reportCommands;
+        var testEnsures = EnsureDependency("test") + leanEnsures + reportEnsures;
+        var buildEnsures = EnsureDependency("build") + leanEnsures;
+
+        Assert.Equal(1, leanCommands);
+        Assert.Equal(2, reportCommands);
+        Assert.Equal(1, leanEnsures);
+        Assert.Equal(2, reportEnsures);
+        Assert.Equal(3, testEnsures);
+        Assert.Equal(1, buildEnsures);
         var cacheEnsure = File.ReadAllText(Path.Combine(root, LeanCacheEnsureScriptPath));
         Assert.DoesNotContain("[[ -L", cacheEnsure, StringComparison.Ordinal);
         Assert.DoesNotContain("[[ -d", cacheEnsure, StringComparison.Ordinal);
