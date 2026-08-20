@@ -3,7 +3,7 @@ using StrataLint.Engine;
 using StrataLint.Tests;
 using Xunit;
 
-namespace StrataLint.ArchitectureTests.CanonicalSources.RepositoryEnumeration;
+namespace StrataLint.ArchitectureTests;
 
 public sealed class BaseFactScopeProbeRatchetTests
 {
