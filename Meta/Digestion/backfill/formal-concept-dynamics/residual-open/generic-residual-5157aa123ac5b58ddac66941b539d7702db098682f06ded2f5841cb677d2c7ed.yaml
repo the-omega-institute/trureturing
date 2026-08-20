@@ -1,0 +1,10 @@
+ast_path: section/449-信息披露与规范让步是两种不同协商操作
+fingerprints:
+  raw_sha256: sha256:5157aa123ac5b58ddac66941b539d7702db098682f06ded2f5841cb677d2c7ed
+  normalized_sha256: sha256:5157aa123ac5b58ddac66941b539d7702db098682f06ded2f5841cb677d2c7ed
+cas_ref: sha256:5157aa123ac5b58ddac66941b539d7702db098682f06ded2f5841cb677d2c7ed
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

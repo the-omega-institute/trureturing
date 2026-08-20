@@ -1,0 +1,29 @@
+[
+\boxed{
+\operatorname{CPre}(S)
+======================
+
+\left{
+x
+;\middle|;
+\exists u\in U(x),
+\quad
+R_u(x)\subseteq S
+\right}.
+}
+]
+
+它表示：
+
+> 主体存在一个行动，能够保证下一步进入 (S)。
+
+这不是普通存在可达：
+
+[
+\exists u,\exists y\in R_u(x)\cap S.
+]
+
+而是控制意义上的保证。
+
+---
+

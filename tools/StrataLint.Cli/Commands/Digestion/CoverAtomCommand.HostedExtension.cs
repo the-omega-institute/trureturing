@@ -49,7 +49,7 @@ internal static partial class CoverAtomCommand
         var receiptPath = EmitFormalizationReceiptCommand.DefaultOutputPrefix
             + conflict.AtomId
             + ".v1.json";
-        var receipt = DigestionFormalizationReceipt.Load(baseline, receiptPath);
+        var receipt = DigestionFormalizationReceipt.LoadTrusted(baseline, receiptPath);
         RequireExistingReceiptBinding(receipt, baselineConflict);
         if (!conflict.CoverageGids.Contains(receipt.PrimaryGid, StringComparer.Ordinal))
         {

@@ -1,0 +1,62 @@
+# 530. 当前最深层的新结论
+
+本轮最承重的结论可以压缩为九条。
+
+第一，**一个行动是否能达到目标，必须通过最弱前置条件审计，而不是只展示一个成功后继。**
+
+第二，**可能成功与保证成功属于存在量词和全称量词两种不同过程逻辑。**
+
+第三，**安全与到达分别是最大固定点和最小固定点问题；它们不是同一种“可行性”。**
+
+第四，**自一致方程不产生唯一意义；递归概念必须声明最小、最大或其他固定点选择 doctrine。**
+
+第五，**宏观模型是否真实因果，取决于干预方格是否交换，而不只取决于被动时间序列是否可预测。**
+
+第六，**动态完成是当前概念在全部允许干预下的最小因果闭包。**
+
+第七，**行动补救不是一个更好结果的比较状态，而是一条具有准入、控制和保证证明的可执行路径。**
+
+第八，**随机世界中的预测本质是条件分布；正确决策所需概念可能远粗于完整分布概念。**
+
+第九，也是最重要的一条：
+
+[
+\boxed{
+\text{一个理论真正能够指导行动，
+不仅要求目标在概念上可表达；
+还要求目标前件可计算、过程可控、干预抽象正确、
+安全不变量存在，并且随机余量已被明确地保留在条件分布中。}
+}
+]
+
+因此，整套理论可以进一步写成：
+
+[
+\boxed{
+\begin{aligned}
+\textbf{Formal Concept Dynamics}
+={}&
+\textbf{a weakest-precondition logic of action}\
+&+
+\textbf{an inductive–coinductive semantics of recursive concepts}\
+&+
+\textbf{an intervention-commuting theory of causal abstraction}\
+&+
+\textbf{a fixed-point theory of reachability and safety}\
+&+
+\textbf{a stochastic theory of predictive and decision sufficiency}\
+&+
+\textbf{a quantitative theory of residual fiber impurity}.
+\end{aligned}
+}
+]
+
+最凝练的一句是：
+
+[
+\boxed{
+\text{知道世界怎样分类，只解决了“它是什么”；
+知道最弱前件、控制固定点和干预交换，才开始解决
+“从这里能够保证做到什么、永远避免什么，
+以及这些行动结论在随机和跨尺度世界中是否仍然真实”。}
+]

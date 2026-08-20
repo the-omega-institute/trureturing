@@ -1,0 +1,11 @@
+## 定义 418.1（课程充分）
+
+[
+\boxed{
+\forall j\in J,\quad
+E_{T_j}
+\preceq
+\bigvee_{i\in S}C_i.
+}
+]
+

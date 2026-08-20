@@ -48,7 +48,7 @@ internal sealed class CommonStateEntropyBoundDocument : IScribeDocumentDefinitio
         Formula pxy = Seq(F.Id("p"), Open, x, Comma, Sp, y, Close);
         return Disp(Seq(
             Begin, Grp(F.Id("gathered")),
-            Forall, Sp, F.Id("X"), Comma, Sp, F.Id("Y"), Comma, Sp, F.Id("C"), Comma, RowBreak,
+            Forall, Sp, F.Id("X"), Comma, Sp, F.Id("Y"), Comma, Sp, F.Id("C"), Comma, RowBreak, Grp(),
             OpenBracket, Operatorname, Grp(F.Id("Fintype")), Open, F.Id("X"), Close,
             CloseBracket, Sp,
             OpenBracket, Operatorname, Grp(F.Id("Fintype")), Open, F.Id("Y"), Close,

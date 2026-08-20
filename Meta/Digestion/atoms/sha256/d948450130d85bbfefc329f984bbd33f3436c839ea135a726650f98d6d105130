@@ -1,0 +1,22 @@
+## 定理 266.1（申诉判据）
+
+存在最终裁决器：
+
+[
+j_1:B_C\times B_A\to Y
+]
+
+使：
+
+[
+T=j_1\circ(C\vee A)
+]
+
+当且仅当：
+
+[
+\Delta(C\vee A;T)=\varnothing.
+]
+
+---
+

@@ -1,0 +1,39 @@
+# 357. 未来主体没有当前投票权，不等于其目标不存在
+
+当前政治表达概念：
+
+[
+C_{\mathrm{vote}}
+]
+
+只包含当前主体。
+
+未来价值目标：
+
+[
+V_{\mathrm{future}}.
+]
+
+如果：
+
+[
+E_{V_{\mathrm{future}}}
+\not\preceq C_{\mathrm{vote}},
+]
+
+则当前投票界面无法完整表达未来主体利益。
+
+所以：
+
+[
+\boxed{
+\text{“没有被当前程序表达”}
+\not\Rightarrow
+\text{“不存在规范相关性”.}
+}
+]
+
+这只是一个 representation deficiency。
+
+---
+

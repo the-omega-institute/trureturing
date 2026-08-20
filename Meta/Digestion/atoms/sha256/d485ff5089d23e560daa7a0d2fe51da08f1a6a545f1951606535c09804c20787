@@ -1,0 +1,22 @@
+[
+\boxed{
+F^#_{\mathrm{best}}
+===================
+
+\alpha\circ\mathcal F\circ\gamma.
+}
+]
+
+则：
+
+1. (F^#_{\mathrm{best}}) 安全；
+2. 对任意其他安全抽象 (G^#)：
+
+[
+\boxed{
+F^#_{\mathrm{best}}(a)
+\sqsubseteq
+G^#(a).
+}
+]
+

@@ -1,0 +1,18 @@
+## 定义 204.1（来源组合）
+
+若一个推理规则需要全部前件：
+
+[
+c_1,\ldots,c_k,
+]
+
+则该推理路径的 provenance 为：
+
+[
+\varphi_{c_1}\land\cdots\land\varphi_{c_k}.
+]
+
+若结论有多个不同推理路径，则总 provenance 为这些路径的析取。
+
+---
+

@@ -6,7 +6,7 @@ A finite state determined by either coordinate has entropy bounded by their mutu
 
 **Theorem 1.1 (A commonly determined state is controlled by mutual information).**
 
-$$\begin{gathered}\forall X, Y, C,\\[\operatorname{Fintype}(X)] [\operatorname{Fintype}(Y)] [\operatorname{Fintype}(C)],\\p: X\times Y\to \mathbb{R},\\a: X\to C, b: Y\to C,\\((\forall x, y, 0\leq p(x, y)) \land \sum_{x,y}p(x, y)=1),\\(\forall x, y, p(x, y)\neq0 \Rightarrow a(x)=b(y)) \Rightarrow\\H(a_{*}p_{X}) \leq I_{p}(X;Y).\end{gathered}$$
+$$\begin{gathered}\forall X, Y, C,\\{}[\operatorname{Fintype}(X)] [\operatorname{Fintype}(Y)] [\operatorname{Fintype}(C)],\\p: X\times Y\to \mathbb{R},\\a: X\to C, b: Y\to C,\\((\forall x, y, 0\leq p(x, y)) \land \sum_{x,y}p(x, y)=1),\\(\forall x, y, p(x, y)\neq0 \Rightarrow a(x)=b(y)) \Rightarrow\\H(a_{*}p_{X}) \leq I_{p}(X;Y).\end{gathered}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Entropy/Submodularity/CommonStateEntropyBound.common_state_entropy_le_mutual_information` (`✓ std3`). ∎
 

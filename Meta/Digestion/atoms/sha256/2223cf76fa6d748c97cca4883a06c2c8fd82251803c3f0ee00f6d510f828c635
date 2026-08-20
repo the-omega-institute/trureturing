@@ -1,0 +1,31 @@
+# 258. 正确性与正当程序彼此独立
+
+设决策路径类型为：
+
+[
+\Gamma.
+]
+
+结果正确性：
+
+[
+C:\Gamma\to\mathsf{Prop}.
+]
+
+程序正当性：
+
+[
+L:\Gamma\to\mathsf{Prop}.
+]
+
+两者可以形成四种状态：
+
+[
+\begin{array}{c|c|c}
+&L&\neg L\
+\hline
+C&\text{正当且正确}&\text{不正当但正确}\
+\neg C&\text{正当但错误}&\text{不正当且错误}
+\end{array}
+]
+

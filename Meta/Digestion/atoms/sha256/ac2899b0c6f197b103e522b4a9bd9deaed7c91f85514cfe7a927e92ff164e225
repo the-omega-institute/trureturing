@@ -1,0 +1,14 @@
+[
+\boxed{
+\theta\sim_{\mathcal P}\theta'
+\iff
+\forall\pi\in\mathcal P,\quad
+\mathsf{Out}_{\pi}(\theta)
+==========================
+
+\mathsf{Out}_{\pi}(\theta').
+}
+]
+
+经验模型商：
+

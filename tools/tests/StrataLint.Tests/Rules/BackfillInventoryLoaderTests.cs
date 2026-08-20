@@ -479,6 +479,51 @@ public sealed partial class BackfillInventoryLoaderTests
     }
 
     [Fact]
+    public void CandidateDeltaUsesTrustedBaselineForUnchangedNoncanonicalMetadata()
+    {
+        var source = Source("delta-v0.1", "docs/delta.md", "none");
+        var baseline = Snapshot(
+            source,
+            Atom("delta-v0.1", "residual-open", "delta-atom", "theorem/delta"));
+        var candidate = Snapshot(
+            (source.Path, source.Text.Replace(
+                "unregistered_genres = []\n",
+                "unregistered_genres = []\n\n",
+                StringComparison.Ordinal)),
+            Atom("delta-v0.1", "residual-open", "delta-atom", "theorem/delta"));
+
+        var loaded = BackfillInventoryLoader.LoadCandidateDelta(
+            candidate,
+            baseline,
+            RawChangeSet.Create(["D5/S3/Probe/Unrelated.lean"]));
+
+        Assert.Equal("delta-v0.1", Assert.Single(loaded.RequireDigestionSources()).SourceId);
+    }
+
+    [Fact]
+    public void CandidateDeltaStillRejectsNoncanonicalMetadataWhenMetadataIsInDelta()
+    {
+        var source = Source("delta-v0.1", "docs/delta.md", "none");
+        var baseline = Snapshot(
+            source,
+            Atom("delta-v0.1", "residual-open", "delta-atom", "theorem/delta"));
+        var candidate = Snapshot(
+            (source.Path, source.Text.Replace(
+                "unregistered_genres = []\n",
+                "unregistered_genres = []\n\n",
+                StringComparison.Ordinal)),
+            Atom("delta-v0.1", "residual-open", "delta-atom", "theorem/delta"));
+
+        var exception = Assert.Throws<FormatException>(() =>
+            BackfillInventoryLoader.LoadCandidateDelta(
+                candidate,
+                baseline,
+                RawChangeSet.Create([source.Path])));
+
+        Assert.Contains("not canonically encoded", exception.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
     public void SourceMetadataPreservesAcknowledgedStaleArray()
     {
         var sourcePath = $"{BackfillInventoryLoader.RootPath}delta-v0.1/source.toml";
@@ -502,14 +547,14 @@ public sealed partial class BackfillInventoryLoaderTests
     }
 
     [Fact]
-    public void HistoricalBaselineRejectsNoncanonicalEmptyAcknowledgedStaleArray()
+    public void HistoricalBaselineTrustsNoncanonicalEmptyAcknowledgedStaleArray()
     {
         var sourcePath = $"{BackfillInventoryLoader.RootPath}delta-v0.1/source.toml";
-        var exception = Assert.Throws<FormatException>(() => BackfillInventoryLoader.LoadBaseline(Snapshot(
+        var document = BackfillInventoryLoader.LoadBaseline(Snapshot(
             (sourcePath, "source_id = \"delta-v0.1\"\npath = \"docs/delta.md\"\natomizer = \"none\"\nacknowledged_stale = []\n"),
-            Atom("delta-v0.1", "residual-open", "delta-atom", "theorem/delta"))));
+            Atom("delta-v0.1", "residual-open", "delta-atom", "theorem/delta")));
 
-        Assert.Equal($"source metadata is not canonically encoded: {sourcePath}", exception.Message);
+        Assert.Empty(Assert.Single(document.RequireDigestionSources()).AcknowledgedStale);
     }
 
     [Theory]

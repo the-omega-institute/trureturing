@@ -1,0 +1,36 @@
+## 定义 374.1（资源充分性）
+
+称 (C) 在资源 (r) 下足以计算 (T)，当存在：
+
+[
+f\in\mathcal A_r(B_C,Y)
+]
+
+使：
+
+[
+\boxed{
+T=f\circ C.
+}
+]
+
+记作：
+
+[
+\boxed{
+E_T\preceq_r C.
+}
+]
+
+显然：
+
+[
+E_T\preceq_r C
+\Longrightarrow
+E_T\preceq C.
+]
+
+反向一般不成立。
+
+---
+

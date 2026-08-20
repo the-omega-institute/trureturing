@@ -1,0 +1,43 @@
+# 527. 信息瓶颈是压缩与目标余量之间的 doctrine
+
+设状态随机变量 (X)、目标 (Y)、设计概念 (C)。
+
+概念压缩成本：
+
+[
+I(X;C).
+]
+
+剩余预测余量：
+
+[
+I(Y;X\mid C).
+]
+
+一种设计问题是：
+
+[
+\boxed{
+\min_C I(X;C)
+\quad
+\text{s.t.}
+\quad
+I(Y;X\mid C)\le\varepsilon.
+}
+]
+
+或者：
+
+[
+\boxed{
+\min_C
+\left[
+I(X;C)
++
+\beta I(Y;X\mid C)
+\right].
+}
+]
+
+---
+

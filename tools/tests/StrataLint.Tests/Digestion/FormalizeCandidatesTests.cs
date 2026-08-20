@@ -77,6 +77,50 @@ public sealed class FormalizeCandidatesTests
                 .Order(StringComparer.Ordinal));
     }
 
+    [Theory]
+    [InlineData("定理", "16.8", true)]
+    [InlineData("命题", "16.9", true)]
+    [InlineData("引理", "16.10", true)]
+    [InlineData("推论", "16.11", true)]
+    [InlineData("theorem", "16.12", true)]
+    [InlineData("proposition", "16.13", true)]
+    [InlineData("lemma", "16.14", true)]
+    [InlineData("corollary", "16.15", true)]
+    [InlineData("section", "16.16", false)]
+    [InlineData("定义", "16.17", false)]
+    [InlineData("row", "16.18", false)]
+    [InlineData("item", "16.19", false)]
+    public void FormalizeCandidatesKindAlphabetIsClosed(
+        string kind,
+        string number,
+        bool expectedCandidate)
+    {
+        var entry = Entry(
+            "source",
+            "kind-alphabet-" + number.Replace('.', '-'),
+            kind,
+            number,
+            atomizer: AtomizerRegistry.GenericId);
+        var expectedAstPath = $"{kind}/{number}";
+
+        var result = Run([entry], atomizer: AtomizerRegistry.GenericId);
+
+        Assert.Equal(expectedAstPath, entry.Atom.AstPath);
+        Assert.True(result.Success, result.Error);
+        using var json = JsonDocument.Parse(result.Output);
+        var candidates = json.RootElement.GetProperty("candidates").EnumerateArray().ToArray();
+        if (expectedCandidate)
+        {
+            Assert.Equal(
+                expectedAstPath,
+                Assert.Single(candidates).GetProperty("ast_path").GetString());
+        }
+        else
+        {
+            Assert.Empty(candidates);
+        }
+    }
+
     [Fact]
     public void FormalizeCandidatesIncludesOnlyDerivedOpenEntriesWithEmptyCoverage()
     {
@@ -512,7 +556,8 @@ public sealed class FormalizeCandidatesTests
         bool driftCas = false,
         BackfillInventoryDocument? ledger = null,
         byte[]? formalizationReceipt = null,
-        LeanAxiomReport? leanReport = null)
+        LeanAxiomReport? leanReport = null,
+        string atomizer = AtomizerRegistry.PzgId)
     {
         var sources = entries
             .GroupBy(static entry => entry.SourceId, StringComparer.Ordinal)
@@ -520,7 +565,10 @@ public sealed class FormalizeCandidatesTests
             {
                 var bytes = ImmutableArray.CreateRange(
                     group.SelectMany(static entry => entry.Atom.RawBytes));
-                var atoms = PzgAtomizer.Atomize(bytes.AsSpan(), DigestionTestSupport.Rules).Claims;
+                var rules = string.Equals(atomizer, AtomizerRegistry.GenericId, StringComparison.Ordinal)
+                    ? TheoryAtomizerRules.None
+                    : DigestionTestSupport.Rules;
+                var atoms = AtomizerRegistry.Atomize(atomizer, bytes.AsSpan(), rules).Claims;
                 var fixtures = group.ToArray();
                 Assert.Equal(fixtures.Length, atoms.Length);
                 return new SourceFixture(
@@ -530,7 +578,7 @@ public sealed class FormalizeCandidatesTests
             })
             .ToArray();
         entries = sources.SelectMany(static source => source.Entries).ToArray();
-        ledger ??= Ledger(entries);
+        ledger ??= Ledger(entries, atomizer);
         var files = new List<RawRepositoryEntry>
         {
             new(
@@ -609,13 +657,17 @@ public sealed class FormalizeCandidatesTests
         string[]? coverageGids = null,
         string migration = "residual",
         string truth = "open",
-        string status = "")
+        string status = "",
+        string atomizer = AtomizerRegistry.PzgId)
     {
         var source = Encoding.UTF8.GetBytes(
             status is UnterminatedPlainClosedMarker or UnterminatedClosedMarker
             ? $"# Synthetic\n\n**{kind} {number}**{status}"
             : $"# Synthetic\n\n**{kind} {number}**{status}。{body}\n");
-        var atom = Assert.Single(PzgAtomizer.Atomize(source, DigestionTestSupport.Rules).Claims);
+        var rules = string.Equals(atomizer, AtomizerRegistry.GenericId, StringComparison.Ordinal)
+            ? TheoryAtomizerRules.None
+            : DigestionTestSupport.Rules;
+        var atom = Assert.Single(AtomizerRegistry.Atomize(atomizer, source, rules).Claims);
         return new EntryFixture(
             sourceId,
             atomId,
@@ -625,7 +677,9 @@ public sealed class FormalizeCandidatesTests
             truth);
     }
 
-    private static BackfillInventoryDocument Ledger(IReadOnlyList<EntryFixture> entries)
+    private static BackfillInventoryDocument Ledger(
+        IReadOnlyList<EntryFixture> entries,
+        string atomizer = AtomizerRegistry.PzgId)
     {
         return BackfillInventoryDocument.Create(
             entries
@@ -633,13 +687,13 @@ public sealed class FormalizeCandidatesTests
                 .Select(source => new DigestionLedgerSource(
                     source.Key,
                     $"synthetic/{source.Key}.md",
-                    AtomizerRegistry.PzgId,
+                    atomizer,
                     [],
                     GenreRegistryProjection.Available(GenreRegistryCheck.Collected([])),
-                    source.Select(static entry => new DigestionLedgerEntry(
+                    source.Select(entry => new DigestionLedgerEntry(
                         entry.SourceId,
                         $"synthetic/{entry.SourceId}.md",
-                        AtomizerRegistry.PzgId,
+                        atomizer,
                         entry.AtomId,
                         entry.Atom.AstPath,
                         null,

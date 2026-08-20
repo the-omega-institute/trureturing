@@ -588,6 +588,21 @@ internal static class FrozenLedgerCanonicalWriter
         JsonElement value,
         out string identity,
         out string eventHash,
+        out string message) =>
+        ReadDagEvent(value, validateRecordedHash: true, out identity, out eventHash, out message);
+
+    internal static bool ReadTrustedDagEvent(
+        JsonElement value,
+        out string identity,
+        out string eventHash,
+        out string message) =>
+        ReadDagEvent(value, validateRecordedHash: false, out identity, out eventHash, out message);
+
+    private static bool ReadDagEvent(
+        JsonElement value,
+        bool validateRecordedHash,
+        out string identity,
+        out string eventHash,
         out string message)
     {
         identity = string.Empty;
@@ -619,9 +634,12 @@ internal static class FrozenLedgerCanonicalWriter
             return false;
         }
 
-        var encoded = WriteDagEvent(eventType.GetString()!, payload, version);
         eventHash = claimedHash.GetString()!;
-        if (!string.Equals(encoded.Hash, eventHash, StringComparison.Ordinal))
+        if (validateRecordedHash
+            && !string.Equals(
+                WriteDagEvent(eventType.GetString()!, payload, version).Hash,
+                eventHash,
+                StringComparison.Ordinal))
         {
             message = "event_hash does not match canonical content.";
             return false;

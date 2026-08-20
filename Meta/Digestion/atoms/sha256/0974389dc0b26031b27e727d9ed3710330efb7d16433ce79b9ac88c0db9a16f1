@@ -1,0 +1,23 @@
+[
+\boxed{
+c(r)
+====
+
+\left(
+c_{\mathrm{info}},
+c_{\mathrm{privacy}},
+c_{\mathrm{power}},
+c_{\mathrm{complexity}},
+c_{\mathrm{norm}}
+\right).
+}
+]
+
+其中分别表示：
+
+* 新增信息收集；
+* 隐私泄漏；
+* 制度能力扩张；
+* 实现复杂度；
+* 规范目标损失。
+

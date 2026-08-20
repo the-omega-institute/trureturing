@@ -1,0 +1,18 @@
+[
+\boxed{
+\mathcal O(b)
+=============
+
+\left{
+y
+;\middle|;
+\exists x,\
+\operatorname{Adm}(x)
+\land
+C_{\mathrm{law}}(x)=b
+\land
+\operatorname{Permitted}(x,y)
+\right}.
+}
+]
+

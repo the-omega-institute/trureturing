@@ -1,0 +1,18 @@
+# 135. 缺陷生成器与哲学终结
+
+令批判生成器：
+
+\[
+\operatorname{Crit}:\operatorname{Con}(X)\to\operatorname{Target}(X),
+\]
+
+并定义：
+
+\[
+\Phi(C)=C\vee E_{\operatorname{Crit}(C)}.
+\]
+
+若每次批判都产生严格新区别，则有限 \(X\) 上不可能无限进行。长期开放发展至少要求批判停止、遗忘旧区别、本体扩张、准入改变、语言升阶或进入更高表示层。
+
+---
+

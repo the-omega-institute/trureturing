@@ -45,14 +45,17 @@ internal static class TailAuthorizationArtifact
     internal static bool Verify(
         DigestionLedgerEntry entry,
         IReadOnlyCollection<string> tailGids,
-        RepositorySnapshot snapshot)
+        RepositorySnapshot snapshot,
+        bool validateStoredArtifact)
     {
         var receipt = entry.Receipts.TailAuthorization;
         if (receipt is null
             || receipt.Path != PathFor(entry.AtomId)
-            || !DigestionFingerprint.IsCanonicalSha256(receipt.Sha256)
             || !snapshot.TryGetFile(receipt.Path, out var authorization)
-            || receipt.Sha256 != DigestionFingerprint.Compute(authorization.RawBytes.AsSpan()).RawSha256)
+            || validateStoredArtifact
+                && (!DigestionFingerprint.IsCanonicalSha256(receipt.Sha256)
+                    || receipt.Sha256
+                        != DigestionFingerprint.Compute(authorization.RawBytes.AsSpan()).RawSha256))
         {
             return false;
         }
@@ -61,9 +64,10 @@ internal static class TailAuthorizationArtifact
         {
             using var document = JsonDocument.Parse(authorization.Text);
             var root = document.RootElement;
-            if (!StructuredCanonicalWriter.WriteJson(root).AsSpan()
-                    .SequenceEqual(authorization.RawBytes.AsSpan())
-                || root.ValueKind != JsonValueKind.Object)
+            if (root.ValueKind != JsonValueKind.Object
+                || validateStoredArtifact
+                    && !StructuredCanonicalWriter.WriteJson(root).AsSpan()
+                        .SequenceEqual(authorization.RawBytes.AsSpan()))
             {
                 return false;
             }

@@ -1,0 +1,24 @@
+[
+\ker T
+======
+
+\bigcap_i\ker T_i.
+]
+
+所以：
+
+[
+\begin{aligned}
+\Delta(C;T)
+&=
+\ker C\setminus\bigcap_i\ker T_i\
+&=
+\bigcup_i
+\left(
+\ker C\setminus\ker T_i
+\right).
+\end{aligned}
+]
+
+即：
+

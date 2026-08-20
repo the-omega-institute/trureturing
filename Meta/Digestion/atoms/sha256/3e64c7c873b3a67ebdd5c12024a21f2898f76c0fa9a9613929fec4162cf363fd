@@ -1,0 +1,22 @@
+## 291.3 模型不确定性
+
+存在多个模型：
+
+[
+m,m'\in\mathcal M
+]
+
+都与当前证据相容，却对某个目标给出不同预测：
+
+[
+\boxed{
+\operatorname{Pred}*m(T\mid C)
+\neq
+\operatorname{Pred}*{m'}(T\mid C).
+}
+]
+
+这里不确定的是规律、参数、因果结构或模型族，而不只是当前状态。
+
+---
+

@@ -1,0 +1,33 @@
+# 80. 缺陷关系演算
+
+定义：
+
+\[
+\boxed{
+\Delta(C;T)=\ker C\setminus\ker T.
+}
+\]
+
+在集合模型或有效 quotient 条件下：
+
+\[
+\boxed{
+T\text{ 通过 }C\text{ 因子化}
+\iff
+\ker C\subseteq\ker T
+\iff
+\Delta(C;T)=\varnothing.
+}
+\]
+
+完成的核公式为：
+
+\[
+\boxed{
+\ker\operatorname{Comp}_T(C)
+=\ker C\cap\ker T.
+}
+\]
+
+---
+

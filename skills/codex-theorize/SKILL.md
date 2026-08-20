@@ -345,18 +345,22 @@ commands must exit 0. Capture the unmodified P1 stdout as
 `address_refresh_receipts[0][0]`, locate the target's declaration-ready candidate
 by its canonical declaration GID, and require `source_kind` to be
 `frontier_declaration_ready` and `downstream_lane` to be `prover`. Its
-`content_sha256` is the `CanonicalStatementWriter` statement address. Do not
-pass the Step 1 owner-override file here: the routed Frontier module is now the
-machine owner.
+`content_sha256` is the `CanonicalStatementWriter` declaration statement id
+(it hashes module path, name, and kind in, and stays the refresh-identity key
+below). The candidate also carries `statement_type_sha256`, the type-only
+address; **that** is the value the V2 contract's
+`exact_statement.statement_sha256` must carry — copy it verbatim, never derive
+either hash by hand. Do not pass the Step 1 owner-override file here: the
+routed Frontier module is now the machine owner.
 
 Only after P1 issues that address, embed exactly one current P2 contract block
 in the source, or replace the single existing block during the Step 6 correction
 handshake. Copy its fields and delimiters from section 11.20.2, not memory:
 
 ```lean
-/- THEORIST_FRONTIER_CONTRACT_V1
+/- THEORIST_FRONTIER_CONTRACT_V2
 {
-  "schema": "trureturing-theorist-frontier-v1",
+  "schema": "trureturing-theorist-frontier-v2",
   "exact_statement": {
     "gid": "D5/X_Frontier/<Target>.<declaration>",
     "statement_sha256": "sha256:<64 lowercase hex>"

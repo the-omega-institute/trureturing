@@ -26,6 +26,11 @@ internal interface IRepositoryGateway
 
     RawChangeSet ReadCurrentChanges();
 
+    /// Reads the working-tree delta against an explicit revision, in the caller-supplied
+    /// changeBase's own words -- no remote-ref resolution happens here (CLAUDE.md 第Ⅵ节 git
+    /// reference discipline: only the caller may name a revision; this gateway just diffs it).
+    RawChangeSet ReadChanges(string changeBase);
+
     TrustedFrozenGitReferences ValidateFrozenReferences(FrozenLedgerReferenceSet references);
 }
 

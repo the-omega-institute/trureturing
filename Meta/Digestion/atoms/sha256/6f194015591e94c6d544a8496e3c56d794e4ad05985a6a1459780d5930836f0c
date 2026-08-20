@@ -1,0 +1,18 @@
+[
+\boxed{
+V_{n+1}(x)
+==========
+
+\max_{u\in U}
+\left[
+r(x,u)+V_n(F_ux)
+\right].
+}
+]
+
+定义宏观价值：
+
+[
+\overline V_0(z)=\overline q(z),
+]
+

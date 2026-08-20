@@ -379,6 +379,49 @@ internal static partial class BackfillInventoryLoader
     internal static BackfillInventoryDocument LoadBaseline(RepositorySnapshot snapshot) =>
         LoadSnapshot(snapshot, LoadBaselineDirectorySnapshot);
 
+    internal static BackfillInventoryDocument LoadCandidateDelta(
+        RepositorySnapshot candidate,
+        RepositorySnapshot baseline,
+        RawChangeSet changes)
+    {
+        ArgumentNullException.ThrowIfNull(candidate);
+        ArgumentNullException.ThrowIfNull(baseline);
+        ArgumentNullException.ThrowIfNull(changes);
+
+        var changed = changes.Paths
+            .Select(static path => path.Value)
+            .ToHashSet(StringComparer.Ordinal);
+        var entries = new Dictionary<string, RawRepositoryEntry>(StringComparer.Ordinal);
+        foreach (var (path, file) in candidate.Files)
+        {
+            entries[path.Value] = new RawRepositoryEntry(
+                path.Value,
+                file.RawBytes,
+                file.GitBlobOid);
+        }
+
+        // Candidate-side parsing is authoritative only for the declared delta. For every
+        // unchanged backfill record, feed the trusted baseline bytes to the strict loader.
+        // This keeps historical projection quirks out of the candidate comparison while
+        // retaining the current tree for all query inputs (Lean, targets, and source files).
+        foreach (var (path, file) in baseline.Files
+                     .Where(static pair => IsCanonicalPath(pair.Key.Value))
+                     .Where(pair => !changed.Contains(pair.Key.Value)))
+        {
+            entries[path.Value] = new RawRepositoryEntry(
+                path.Value,
+                file.RawBytes,
+                file.GitBlobOid);
+        }
+
+        var decoded = SnapshotDecoder.Decode(RawRepositorySnapshot.Create(entries.Values));
+        return decoded switch
+        {
+            SnapshotDecodeOutcome.Decoded decodedSnapshot => Load(decodedSnapshot.Snapshot),
+            SnapshotDecodeOutcome.InfrastructureFailure failure => throw new FormatException(failure.Message),
+        };
+    }
+
     private static BackfillInventoryDocument LoadSnapshot(
         RepositorySnapshot snapshot,
         Func<RepositorySnapshot, BackfillInventoryDocument> loadDirectory)

@@ -1,0 +1,22 @@
+## 定义 197.1（可回答性）
+
+问题 (Q) 能由概念 (C) 回答，当：
+
+[
+\boxed{
+E_Q\preceq C.
+}
+]
+
+也就是存在：
+
+[
+\overline Q:B_C\to A_Q
+]
+
+使：
+
+[
+Q=\overline Q\circ q_C.
+]
+

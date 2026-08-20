@@ -126,7 +126,13 @@ public sealed class RuleEngineTests
             red.AddBackfillTargets();
         }
         red.Apply(mutation);
-        var redContext = number == 20 ? red.BuildForRuleCompatibility() : red.Build();
+        var redContext = number switch
+        {
+            15 => red.Build(RawChangeSet.Create(
+                ["Evidence/D5/S0/Carrier/Formula.check.json"])),
+            20 => red.BuildForRuleCompatibility(),
+            _ => red.Build(),
+        };
         var redResult = RuleCatalog.Default.EvaluateSingle(RuleId.CreateKnown(number), redContext);
 
         Assert.NotEmpty(redResult.Diagnostics);
@@ -503,12 +509,17 @@ public sealed class RuleEngineTests
         Assert.True(BackfillInventoryRule.IsAffectedBy(context));
     }
 
-    [Fact]
-    public void AtomizerImplementationChangeWakesSl016BecauseItsProjectionCanDrift()
+    [Theory]
+    [InlineData("tools/StrataLint.Engine/Digestion/Atomizers/PzgAtomizer.cs")]
+    [InlineData("tools/StrataLint.Engine/StrataLint.Engine.csproj")]
+    [InlineData("Directory.Build.props")]
+    [InlineData("Directory.Build.targets")]
+    [InlineData("Directory.Packages.props")]
+    [InlineData("global.json")]
+    public void EveryAtomizerBuildInputWakesSl016BecauseItsProjectionCanDrift(string changedPath)
     {
         var fixture = new RuleFixture();
-        var context = fixture.Build(RawChangeSet.Create(
-            ["tools/StrataLint.Engine/Digestion/Atomizers/PzgAtomizer.cs"]));
+        var context = fixture.Build(RawChangeSet.Create([changedPath]));
 
         Assert.True(BackfillInventoryRule.IsAffectedBy(context));
     }

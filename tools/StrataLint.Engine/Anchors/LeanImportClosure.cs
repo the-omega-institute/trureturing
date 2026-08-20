@@ -137,15 +137,74 @@ internal static class LeanImportClosure
             return true;
         }
 
-        var packages = PinnedGitPackages(snapshot);
+        var packages = PinnedGitPackageRevisions(snapshot);
         return external.All(import =>
         {
             var separator = import.IndexOf('.');
             var root = separator < 0 ? import : import[..separator];
             return ToolchainModuleRoots.Contains(root)
                 || PinnedPackageByModuleRoot.TryGetValue(root, out var package)
-                    && packages.Contains(package);
+                    && packages.ContainsKey(package);
         });
+    }
+
+    internal static bool RelevantSemanticPinsChanged(
+        LeanAxiomReport report,
+        RepoPath startPath,
+        FrozenActiveEntry protectedBaseEntry,
+        RepositorySnapshot protectedBaseSnapshot,
+        RepositorySnapshot candidateSnapshot)
+    {
+        ArgumentNullException.ThrowIfNull(report);
+        ArgumentNullException.ThrowIfNull(protectedBaseEntry);
+        ArgumentNullException.ThrowIfNull(protectedBaseSnapshot);
+        ArgumentNullException.ThrowIfNull(candidateSnapshot);
+        if (!TryGetPinnedEnvironmentFiles(protectedBaseSnapshot, out var protectedToolchain, out _)
+            || !TryGetPinnedEnvironmentFiles(candidateSnapshot, out var candidateToolchain, out _)
+            || !ProtectedEnvironmentMatchesEntry(protectedBaseEntry, protectedBaseSnapshot))
+        {
+            return false;
+        }
+
+        var toolchainChanged = !protectedToolchain.RawBytes.AsSpan()
+            .SequenceEqual(candidateToolchain.RawBytes.AsSpan());
+        var protectedPackages = PinnedGitPackageRevisions(protectedBaseSnapshot);
+        var candidatePackages = PinnedGitPackageRevisions(candidateSnapshot);
+        var changed = false;
+        foreach (var import in ExternalImports(report, startPath))
+        {
+            var separator = import.IndexOf('.');
+            var root = separator < 0 ? import : import[..separator];
+            if (ToolchainModuleRoots.Contains(root))
+            {
+                continue;
+            }
+
+            if (!PinnedPackageByModuleRoot.TryGetValue(root, out var package)
+                || !protectedPackages.TryGetValue(package, out var protectedRevision)
+                || !candidatePackages.TryGetValue(package, out var candidateRevision))
+            {
+                return false;
+            }
+
+            changed |= !string.Equals(
+                protectedRevision,
+                candidateRevision,
+                StringComparison.Ordinal);
+        }
+
+        return toolchainChanged || changed;
+    }
+
+    internal static bool CandidateStatementsAvoidTrivialTruth(
+        LeanAxiomReport report,
+        RepoPath path)
+    {
+        ArgumentNullException.ThrowIfNull(report);
+        return report.Files.TryGetValue(path, out var file)
+            && file.Declarations
+                .Where(static declaration => declaration.IncludeInStatement)
+                .All(static declaration => !IsTrivialTruth(declaration.TypeRepresentation));
     }
 
     private static ImmutableHashSet<string> ExternalImports(
@@ -189,9 +248,11 @@ internal static class LeanImportClosure
         return external.ToImmutable();
     }
 
-    private static ImmutableHashSet<string> PinnedGitPackages(RepositorySnapshot snapshot)
+    private static ImmutableDictionary<string, string> PinnedGitPackageRevisions(
+        RepositorySnapshot snapshot)
     {
-        var packages = ImmutableHashSet.CreateBuilder<string>(StringComparer.OrdinalIgnoreCase);
+        var packages = ImmutableDictionary.CreateBuilder<string, string>(
+            StringComparer.OrdinalIgnoreCase);
         if (!snapshot.TryGetFile("lake-manifest.json", out var manifest))
         {
             return packages.ToImmutable();
@@ -222,15 +283,63 @@ internal static class LeanImportClosure
                     continue;
                 }
 
-                packages.Add(name.GetString()!);
+                if (!packages.TryAdd(name.GetString()!, revision.GetString()!))
+                {
+                    return ImmutableDictionary<string, string>.Empty.WithComparers(
+                        StringComparer.OrdinalIgnoreCase);
+                }
             }
         }
         catch (JsonException)
         {
-            return ImmutableHashSet<string>.Empty.WithComparer(StringComparer.OrdinalIgnoreCase);
+            return ImmutableDictionary<string, string>.Empty.WithComparers(
+                StringComparer.OrdinalIgnoreCase);
         }
 
         return packages.ToImmutable();
+    }
+
+    private static bool ProtectedEnvironmentMatchesEntry(
+        FrozenActiveEntry entry,
+        RepositorySnapshot snapshot)
+    {
+        if (!TryGetPinnedEnvironmentFiles(snapshot, out var toolchain, out var manifest))
+        {
+            return false;
+        }
+
+        if (toolchain.GitBlobOid is not { } toolchainOid
+            || manifest.GitBlobOid is not { } manifestOid)
+        {
+            return false;
+        }
+
+        return entry.Environment is { } environment
+            ? environment.LeanToolchainBlobOid == toolchainOid
+                && environment.LakeManifestBlobOid == manifestOid
+            : entry.Payload.Input.SupportingBlobOids.Contains(toolchainOid, StringComparer.Ordinal)
+                && entry.Payload.Input.SupportingBlobOids.Contains(manifestOid, StringComparer.Ordinal);
+    }
+
+    private static bool TryGetPinnedEnvironmentFiles(
+        RepositorySnapshot snapshot,
+        out RepositoryFile toolchain,
+        out RepositoryFile manifest)
+    {
+        var hasToolchain = snapshot.TryGetFile("lean-toolchain", out var resolvedToolchain);
+        var hasManifest = snapshot.TryGetFile("lake-manifest.json", out var resolvedManifest);
+        toolchain = resolvedToolchain!;
+        manifest = resolvedManifest!;
+        return hasToolchain && hasManifest;
+    }
+
+    private static bool IsTrivialTruth(string statement)
+    {
+        const string encodedType =
+            "statement-v1(uparams=[],type=ec(ns(n0,4:True),[])";
+        return statement == "True"
+            || statement == encodedType + ")"
+            || statement.StartsWith(encodedType + ",value=", StringComparison.Ordinal);
     }
 
     internal static string ModuleName(RepoPath path)

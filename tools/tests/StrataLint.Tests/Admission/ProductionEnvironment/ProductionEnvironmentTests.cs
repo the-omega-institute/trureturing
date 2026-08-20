@@ -507,11 +507,12 @@ public sealed partial class ProductionEnvironmentTests
                 .OrderBy(static item => item.Value, StringComparer.Ordinal));
     }
 
-    private static FrozenLedgerConsistent AddFrozenLedger(RuleFixture fixture)
+    private static FrozenLedgerConsistent AddFrozenLedger(
+        RuleFixture fixture,
+        string manifest = "{}\n")
     {
         const string toolchain = "leanprover/lean4:v4.24.0\n";
         const string lakefile = "name = \"Fixture\"\n";
-        const string manifest = "{}\n";
         fixture.Files["lean-toolchain"] = toolchain;
         fixture.Baseline["lean-toolchain"] = toolchain;
         fixture.Files["lakefile.toml"] = lakefile;
@@ -571,10 +572,13 @@ internal sealed class FakeRepositoryGateway(
     RawRepositorySnapshot? current,
     RawRepositorySnapshot? baseline,
     Func<FrozenLedgerReferenceSet, TrustedFrozenGitReferences>? frozenReferenceValidator = null,
-    Func<FrozenRevisionIdentity>? currentRevisionResolver = null)
+    Func<FrozenRevisionIdentity>? currentRevisionResolver = null,
+    Func<string, RawChangeSet>? changesForBase = null)
     : IRepositoryGateway
 {
     internal int ReadCount { get; private set; }
+
+    internal List<string> ReadChangesCalls { get; } = [];
 
     internal List<FrozenLedgerReferenceSet> FrozenReferenceValidations { get; } = [];
 
@@ -618,6 +622,14 @@ internal sealed class FakeRepositoryGateway(
     }
 
     public RawChangeSet ReadCurrentChanges() => changes;
+
+    public RawChangeSet ReadChanges(string changeBase)
+    {
+        ReadChangesCalls.Add(changeBase);
+        return changesForBase?.Invoke(changeBase)
+            ?? throw new InvalidOperationException(
+                "ReadChanges(base) should not be called without a configured changesForBase");
+    }
 
     public TrustedFrozenGitReferences ValidateFrozenReferences(FrozenLedgerReferenceSet references)
     {

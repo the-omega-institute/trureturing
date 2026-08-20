@@ -1,0 +1,92 @@
+# 425. 当前最深层的新结论
+
+本轮最重要的结论可以压缩为九条。
+
+第一，**信息已经决定目标，不表示主体能够在现实资源内得到目标**：
+
+[
+\boxed{
+\text{semantic knowledge}
+\neq
+\text{bounded knowledge}.
+}
+]
+
+第二，**概念语义等价不表示两种表示具有相同的计算可访问性**：
+
+[
+\boxed{
+C\simeq_{\mathrm{con}}D
+\not\Rightarrow
+C\simeq_rD.
+}
+]
+
+第三，**相对于锚点和行动集，规范操作本体是可达域的行为商**：
+
+[
+\boxed{
+\operatorname{Reach}(a)/{\sim_{\mathrm{behavior}}}.
+}
+]
+
+第四，**模块化验证的真正边界是接口是否足以决定全局目标**。
+
+第五，**个体理性与社会理性的分离，可以来自私人边际收益对公共目标的系统性遗漏**。
+
+第六，**身份凭证、权限和责任是三个不同的因子化目标；把它们合成一个“账号”会隐藏关键结构。**
+
+第七，**科学复现的价值不由研究数量决定，而由来源独立性和跨语境自然性决定。**
+
+第八，**理解比记忆多出的结构，不只是覆盖更多题目，而是解法能否在语境变换下自然运输。**
+
+第九，也是最承重的一条：
+
+[
+\boxed{
+\text{一个接口的质量必须同时从四个方向评价：
+它保留了多少目标信息，
+这些信息是否可计算，
+接口是否能在真实过程里被使用，
+以及它在被优化、组合或迁移后是否仍然有效。}
+}
+]
+
+整套理论因此进一步发展为：
+
+[
+\boxed{
+\begin{aligned}
+\textbf{Formal Concept Dynamics}
+={}&
+\textbf{a resource-sensitive semantics}\
+&+
+\textbf{a minimal-realization theory of operational ontology}\
+&+
+\textbf{an interface theory of modular composition}\
+&+
+\textbf{a factorization theory of collective-action failure}\
+&+
+\textbf{a typed theory of identity and reputation}\
+&+
+\textbf{a provenance theory of scientific evidence}\
+&+
+\textbf{a naturality theory of understanding and transfer}.
+\end{aligned}
+}
+]
+
+最凝练的一句是：
+
+[
+\boxed{
+\text{真正的理解，不只是世界的答案已被某个表示隐含决定；
+而是这个表示能够在有限资源内被解码，
+能够在行动和新语境中稳定使用，
+能够与其他接口无隐藏耦合地组合，
+并能够说明每一个结论从何而来。}
+]
+以下从 **§426** 继续。仍然只进行纸面推理，不处理 GitHub，也不把新增定义与定理标记为已经获得 Lean proof term 的 `Closed` 结论。
+
+---
+

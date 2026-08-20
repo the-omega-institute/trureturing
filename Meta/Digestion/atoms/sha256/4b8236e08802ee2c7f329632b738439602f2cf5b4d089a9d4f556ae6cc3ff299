@@ -1,0 +1,25 @@
+# 269. 程序正义是一种 proof-carrying decision
+
+设决策事件类型为 (Z)。
+
+定义：
+
+[
+\begin{aligned}
+F&:Z\to B_F
+&&\text{公开案件事实};\
+R&:Z\to B_R
+&&\text{适用规则};\
+A&:Z\to B_A
+&&\text{授权主体};\
+H&:Z\to B_H
+&&\text{听证／回应记录};\
+P&:Z\to B_P
+&&\text{provenance};\
+J&:Z\to Y
+&&\text{最终决定};\
+L&:Z\to B_L
+&&\text{审计日志}.
+\end{aligned}
+]
+

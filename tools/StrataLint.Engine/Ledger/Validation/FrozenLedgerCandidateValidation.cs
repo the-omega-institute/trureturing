@@ -154,7 +154,10 @@ public static partial class FrozenLedger
                         active,
                         trustedReferences,
                         catalog,
-                        repositoryImportClosureUnchanged: false);
+                        repositoryImportClosureUnchanged: false,
+                        externalImportsCoveredByNamedPins: true,
+                        relevantSemanticPinsChanged: false,
+                        candidateStatementsAvoidTrivialTruth: true);
                     if (!baseline.ActiveEntries.TryGetValue(supersede.CaseId, out var baseEntry)
                         || !supersededBaseCases.Add(supersede.CaseId))
                     {
@@ -289,17 +292,11 @@ public static partial class FrozenLedger
         var currentShape = HasExactObjectFields(
             payload,
             FrozenLedgerReferenceProjection.LegacyReattestPayloadFieldsV4);
-        if (!active.TryGetValue(caseId, out var prior))
+        if (!active.ContainsKey(caseId))
         {
             throw new FormatException("Reattest targets an inactive or unknown case.");
         }
 
-        var inputFingerprint = currentShape
-            ? prior.Payload.WitnessId.Value
-            : RequiredString(payload, "input_fingerprint");
-        var semanticReceipt = currentShape
-            ? prior.Payload.FrozenNodeId.Value
-            : RequiredString(payload, "semantic_receipt");
         var result = new FrozenReattestPayload(
             caseId,
             ParseInput(payload.GetProperty("input")),
@@ -313,8 +310,9 @@ public static partial class FrozenLedger
         }
         if (!active.TryGetValue(result.CaseId, out var entry)
             || result.PreviousAttestationEventHash != entry.LastAttestationEventHash
-            || inputFingerprint != entry.Payload.WitnessId.Value
-            || semanticReceipt != entry.Payload.FrozenNodeId.Value)
+            || !currentShape
+                && (RequiredString(payload, "input_fingerprint") != entry.Payload.WitnessId.Value
+                    || RequiredString(payload, "semantic_receipt") != entry.Payload.FrozenNodeId.Value))
         {
             throw new FormatException(
                 "Reattest targets an inactive/unknown case or changes semantic identity.");
@@ -349,8 +347,6 @@ public static partial class FrozenLedger
         var currentShape = HasExactObjectFields(
             payload,
             FrozenLedgerReferenceProjection.ExtendedReattestPayloadFieldsV4);
-        var inputFingerprint = currentShape ? witnessText : RequiredString(payload, "input_fingerprint");
-        var semanticReceipt = currentShape ? frozenText : RequiredString(payload, "semantic_receipt");
         var result = new FrozenReattestPayload(
             RequiredString(payload, "case_id"),
             ParseDeclarationStatementIds(payload),
@@ -383,8 +379,9 @@ public static partial class FrozenLedger
                 "Reattest targets an inactive/unknown case or changes statement identity.");
         }
 
-        if (inputFingerprint != witnessId.Value
-            || semanticReceipt != frozenNodeId.Value
+        if (!currentShape
+                && (RequiredString(payload, "input_fingerprint") != witnessId.Value
+                    || RequiredString(payload, "semantic_receipt") != frozenNodeId.Value)
             || result.Input.DescriptorSelector != entry.Payload.Input.DescriptorSelector
             || result.Input.Materializer != entry.Payload.Input.Materializer
             || !result.Input.SupportingBlobOids.SequenceEqual(entry.Payload.Input.SupportingBlobOids))

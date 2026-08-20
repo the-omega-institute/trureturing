@@ -1,0 +1,79 @@
+# 162. 当前最深层总命题
+
+形式哲学中的一个系统，不能只接受“是否内部一致”的单项审计。
+
+它至少必须回答：
+
+[
+\boxed{
+\begin{aligned}
+&\text{依赖是否可由因子映射组合？}\
+&\text{局部规律能否跨语境自然运输？}\
+&\text{零反例是否只是通过删除领域得到？}\
+&\text{观察是否改变了被观察对象？}\
+&\text{修复顺序是否产生概念曲率？}\
+&\text{干预是否具有非交换相互作用？}\
+&\text{规范评价是否依赖历史路径？}\
+&\text{证据纤维是空、真、假还是未决定？}\
+&\text{共识是否来自独立信息？}\
+&\text{新颖性究竟是表达、认识、本体还是规范层的？}\
+&\text{主体的被动未来与可控制未来是否相同？}\
+&\text{宏观解释提高的是绝对信息还是表示效率？}\
+&\text{当前变化是条件化、世界演化还是理论修订？}\
+&\text{公平主张是观察性的还是反事实的？}\
+&\text{规范不确定性是否偷偷加入了跨理论标度？}
+\end{aligned}
+}
+]
+
+由此，总公式进一步发展为：
+
+[
+\boxed{
+\begin{aligned}
+\textbf{Formal Concept Dynamics}
+={}&
+\textbf{dependency calculus}\
+&+
+\textbf{natural laws}\
+&+
+\textbf{instrument backaction}\
+&+
+\textbf{conceptual curvature}\
+&+
+\textbf{control quotients}\
+&+
+\textbf{path-sensitive normativity}\
+&+
+\textbf{collective epistemic closure}\
+&+
+\textbf{typed novelty}.
+\end{aligned}
+}
+]
+
+其最凝练的哲学结论是：
+
+[
+\boxed{
+\text{世界并不因被正确分类而停止变化；
+分类也不因内部闭合而成为规律；
+规律不因预测成功而成为因果；
+因果不因可控制而自动成为正当；
+正当不因多数同意而获得唯一尺度；
+创新也不因表达新颖而自动成为新知识。}
+]
+
+因此，完整的形式哲学不应追求一个把所有问题压成单一真值的终极概念，而应建立一套能够区分：
+
+[
+\boxed{
+\text{信息、规律、过程、行动、规范、历史和创新}
+}
+]
+
+各自闭合条件与失败见证的多层审计系统。
+以下从 **§163** 继续。仍然只做纸面推理，不处理 GitHub，也不把新增结论视为已经通过 Lean kernel 的 `Closed` 定理。
+
+---
+

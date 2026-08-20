@@ -1,0 +1,16 @@
+[
+\boxed{
+\widehat T_C(b)
+===============
+
+\begin{cases}
+y,&Y_b={y};\
+\bot_{\mathrm{ans}},&\text{其他情况}.
+\end{cases}
+}
+]
+
+若纤维为空，也拒答，以避免空纤维上的虚假全知。
+
+---
+
