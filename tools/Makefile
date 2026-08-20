@@ -3,10 +3,10 @@ SHELL := /bin/bash
 
 HERE := $(patsubst %/,%,$(dir $(abspath $(lastword $(MAKEFILE_LIST)))))
 BASE ?= origin/dev
-.PHONY: help dotnet test selftest update-renderer-contract perf-report clean-lanes
+.PHONY: help dotnet test selftest update-renderer-contract perf-report clean-lanes codex-official-skills
 
 help:
-	@printf '%s\n' 'make -C tools help                         Show this target list' 'make -C tools dotnet                       Restore and build .NET with warnings as errors' 'make -C tools test                         Run the .NET harness test suite' 'make -C tools selftest                     Run deterministic StrataLint selftest' 'make -C tools update-renderer-contract     Update the fixed synthetic renderer contract' 'make -C tools perf-report [RECENT=10]      Summarize the external performance ledger' 'make -C tools clean-lanes [BASE=origin/dev] [FORCE=1]  List reclaimable lanes (dry-run); FORCE=1 removes them'
+	@printf '%s\n' 'make -C tools help                         Show this target list' 'make -C tools dotnet                       Restore and build .NET with warnings as errors' 'make -C tools test                         Run the .NET harness test suite' 'make -C tools selftest                     Run deterministic StrataLint selftest' 'make -C tools update-renderer-contract     Update the fixed synthetic renderer contract' 'make -C tools perf-report [RECENT=10]      Summarize the external performance ledger' 'make -C tools clean-lanes [BASE=origin/dev] [FORCE=1]  List reclaimable lanes (dry-run); FORCE=1 removes them' 'make -C tools codex-official-skills       Sync official OpenAI skills and link ~/.agents/skills'
 
 dotnet:
 	@/bin/bash $(HERE)/scripts/dotnet-build.sh
@@ -25,3 +25,6 @@ perf-report:
 
 clean-lanes:
 	@/bin/bash $(HERE)/scripts/clean-lanes.sh --base "$(BASE)" $(if $(filter 1,$(FORCE)),--force,)
+
+codex-official-skills:
+	@/bin/bash $(HERE)/scripts/codex-official-skills.sh
