@@ -3,8 +3,7 @@
    mirror-B: none(waiver:negative-base-phi-frontier)
    mirror-E: D5/E/S1/Words/BasePhiNegativePrefixTrident.result--json
    anchors: []
-   digest: Classify admissible negative base-phi prefix occurrence sets by
-     Lucas-gap trident families. -/
+   digest: Classify admissible negative base-phi prefix occurrence sets by Lucas-gap trident families. -/
 
 import D5.S1.Words.Expansions.BasePhiNegative
 
