@@ -25,6 +25,7 @@ public static class LatexWriter
         ArgumentException.ThrowIfNullOrWhiteSpace(source);
         var builder = new StringBuilder();
         WriteFormula(builder, formula, 0, source);
+        ValidateRowBreakContinuations(builder, source);
         return builder.ToString();
     }
 
@@ -355,6 +356,33 @@ public static class LatexWriter
             $"Formula emission rejected at {source}: control word '{controlWord}' is immediately "
             + $"followed by identifier '{successor}'; emitted bytes would form invalid LaTeX "
             + $"macro '{mergedMacro}'. Insert FormulaDsl.Sp to state the intended boundary.");
+    }
+
+    private static void ValidateRowBreakContinuations(StringBuilder builder, string source)
+    {
+        for (var index = 2; index < builder.Length; index++)
+        {
+            if (builder[index] != '['
+                || builder[index - 1] != '\\'
+                || builder[index - 2] != '\\')
+            {
+                continue;
+            }
+
+            var excerptStart = Math.Max(0, index - 16);
+            var excerptEnd = Math.Min(builder.Length, index + 17);
+            var excerpt = builder
+                .ToString(excerptStart, excerptEnd - excerptStart)
+                .Replace("\r", "\\r", StringComparison.Ordinal)
+                .Replace("\n", "\\n", StringComparison.Ordinal);
+            var byteOffset = StrictUtf8.GetByteCount(builder.ToString(0, index));
+            throw new InvalidOperationException(
+                $"Formula emission rejected at {source}: '[' at byte offset {byteOffset} "
+                + $"immediately follows a '\\\\' row separator (excerpt '{excerpt}'). "
+                + "The bracket would be consumed as the optional row-spacing argument; "
+                + "insert FormulaDsl.Grp() between the row separator and '[' to state the "
+                + "intended boundary.");
+        }
     }
 
     private static bool IsAsciiLetter(char value) =>
