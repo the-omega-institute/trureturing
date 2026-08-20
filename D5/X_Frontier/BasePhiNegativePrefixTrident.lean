@@ -18,20 +18,63 @@ expansion. The regular `BasePhiNegative` module owns the integer-pair value
 equation, non-adjacent digits, and the paper's `F`, `G`, and `H` gap families.
 The finite scan is evidence for this classification, not its proof.
 
-## Attack plan
+## Existing interface status
 
-1. Prove the one-digit formulas: `.0` is the union of three `F` components
-   with gaps `(2, 1)`, while `.1` is the `F` component with gaps `(3, 1)`.
-   This requires a formal two-sided base-phi uniqueness/construction theorem.
-2. Build the finite carry transducer from Zeckendorf digits to a fixed negative
-   prefix, and prove that each state has an `F`, `G`, or `H` return itinerary.
-3. Induct on prefix extensions, transporting Lucas parameters through the
-   transducer; prove the union-of-three case from its three accepting states.
+The supporting declarations in `BasePhiNegative` are retained with their exact
+scope. `admissible_negative_prefix_iff_occurrence_set_nonempty` is an `rfl`
+interface between two definitions. The three `vF_succ`/`vG_succ`/`vH_succ`
+lemmas are definitional recurrence interfaces. The two `single_digit_*` lemmas
+are only the depth-one Bool partition and disjointness theorem; they do not
+identify either occurrence set with an `F`, `G`, or `H` formula. None of these
+interfaces is a substantive classification milestone.
 
-The current difficulty is the first bridge: Mathlib's `Nat.zeckendorf` only
-normalizes nonnegative Fibonacci weights, while `BasePhiNegativeExpansion`
-uses finite support over all integer powers of phi. Existing return-word
-theorems apply only after that bridge identifies a negative-prefix cylinder.
+## Executable obstruction targets
+
+1. Construct the canonical two-sided expansion and prove uniqueness. Finite
+   support is carried by `Int →₀ Nat`; the statement exposes the binary,
+   non-adjacency, and exact-value invariants rather than hiding them in a choice:
+
+```lean
+theorem canonical_base_phi_digits_exists_unique :
+    ∀ N : Nat, ∃! digits : Int →₀ Nat,
+      (∀ i : Int, digits i ≤ 1) ∧
+      (∀ i : Int, digits i = 1 → digits (i + 1) = 0) ∧
+      basePhiValue digits = (N : D5.S0.Carrier.GoldenInt)
+```
+
+2. Identify every nonnegative base-phi position with mathlib's occupied
+   Fibonacci indices. `Finset.range N` counts exactly the earlier `d₋₁ = 1`
+   events, and `k + 2` is the invariant alignment with mathlib's Fibonacci
+   indices (`W_k = Nat.fib (k + 2)`):
+
+```lean
+theorem nonnegative_digit_iff_mem_zeckendorf_after_negative_one_skips
+    (expansion : BasePhiNegativeExpansion) :
+    ∀ N k : Nat,
+      expansion.digit N (k : Int) = 1 ↔
+        k + 2 ∈ Nat.zeckendorf
+          (N + ((Finset.range N).filter
+            (fun j => negativeDigit expansion j 0 = true)).card)
+```
+
+3. Characterize the first negative digit by the generalized Beatty sequence.
+   The witness is quantified in Lean's zero-based `Nat`, so `n + 1` preserves
+   the paper's one-based sequence index and excludes the spurious `N = 1` term:
+
+```lean
+theorem negative_one_digit_iff_generalized_beatty
+    (expansion : BasePhiNegativeExpansion) :
+    ∀ N : Nat,
+      negativeDigit expansion N 0 = true ↔
+        ∃ n : Nat,
+          (N : Int) =
+            3 * ⌊(((n + 1 : Nat) : ℝ) * Real.goldenRatio)⌋ +
+              ((n + 1 : Nat) : Int) + 1
+```
+
+The second and third targets together provide the first exact cylinder formula;
+only after them may a carry transducer transport longer prefixes into the
+existing return-word layer. They are lemma signatures, not proved milestones.
 -/
 
 /- THEORIST_FRONTIER_CONTRACT_V2
@@ -54,7 +97,7 @@ theorems apply only after that bridge identifies a negative-prefix cylinder.
     "D5/S1/Words/ZeckendorfBeattyBridge",
     "D5/S1/Words/ZeckendorfOrder"
   ],
-  "falsifier": "An admissible prefix outside every allowed Lucas-gap family or three-family union.",
+  "falsifier": "An admissible negative prefix w whose exact occurrence set is neither one Lucas-gap F/G/H sequence range nor a union of three such ranges sharing one Lucas pair.",
   "search_receipt_gids": ["D5/L/Words/dekking2023structure"],
   "computation_receipt_gids": ["D5/E/S1/Words/BasePhiNegativePrefixTrident.result--json"],
   "triage_class": "theorem"
