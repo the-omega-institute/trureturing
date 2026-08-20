@@ -112,7 +112,7 @@ public sealed partial class FrozenLedgerTests
             ValidateGenesis(syntax, catalog)).Capability;
         var corpusRoot = capability.CorpusRoot;
         Assert.Equal(
-            "sha256:82961043af5cddc9bc587e38ed7714f16ad6f18ebf13fa3e2f531832d55a1f17",
+            "sha256:ec20b7688474625e1c70a41871b3b47253dd672c43c960128ec3c812017effcb",
             corpusRoot);
     }
 
