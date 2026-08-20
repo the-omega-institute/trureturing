@@ -49,15 +49,23 @@ internal static class LeanCacheProvisioner
         PreExisting,
     }
 
-    internal const int DefaultProvisionBudgetSeconds = 1800;
+    /// The value and its policy-override declaration live in
+    /// <see cref="LeanCacheBudgetPolicy"/>. Keeping the declaration beside the constant
+    /// pushed this file past the 800-line limit once dev added to it, and shortening the
+    /// declaration to fit would trade an audited statement for a line count.
+    internal const int DefaultProvisionBudgetSeconds =
+        LeanCacheBudgetPolicy.DefaultProvisionBudgetSeconds;
     private const int MissingOleanSampleLimit = 5;
     private static readonly TimeSpan[] CloneRetryBackoffs =
         [TimeSpan.FromMilliseconds(250), TimeSpan.FromMilliseconds(500),
          TimeSpan.FromMilliseconds(1000), TimeSpan.FromMilliseconds(2000)];
     private static readonly UTF8Encoding StrictUtf8 = new(false, true);
 
-    // Cold provisioning spans package clones plus olean download and extraction. Five minutes
-    // permits useful fail-fast runs; two hours gives that path 4x headroom without an unbounded hang.
+    // Cold provisioning spans package clones plus olean download and extraction. The five
+    // minute floor permits useful fail-fast runs; the two hour ceiling leaves twice the
+    // declared default above without an unbounded hang. (That ratio read 4x while the
+    // default was 1800s; the policy-override above moved the default and this sentence
+    // had to move with it.)
     private static TimeSpan ProvisionBudget
     {
         get
