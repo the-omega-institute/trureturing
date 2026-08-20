@@ -12,9 +12,9 @@ internal sealed class AxisTraceDefinitionsDocument : IScribeDocumentDefinition
         var weight = Equal(
             Call("t", K),
             Call("exp",
-                Add(Multiply(new Formula.Negate(Id("x")),
-                        new Formula.Power(Id("phi"), Add(K, Num(1)))),
-                    Multiply(Id("y"), new Formula.Power(Id("psi"), Add(K, Num(1)))))));
+                Subtract(
+                    Multiply(Id("y"), new Formula.Power(Id("psi"), Add(K, Num(1)))),
+                    Multiply(Id("x"), new Formula.Power(Id("phi"), Add(K, Num(1)))))));
 
         var sum = Equal(
             Call("W", K),
