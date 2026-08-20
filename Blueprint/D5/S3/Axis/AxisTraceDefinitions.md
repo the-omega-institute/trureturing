@@ -10,7 +10,7 @@ The implementation sums over an initial segment of the naturals rather than over
 
 **Theorem 1.1 (The two objects and the depth bridge).**
 
-$$\operatorname{t}\left(K\right) = \operatorname{exp}\left(-x \cdot \mathit{phi}^{K + 1} + y \cdot \mathit{psi}^{K + 1}\right) \land \left(\operatorname{W}\left(K\right) = \operatorname{sum}\left(\operatorname{range}\left(\operatorname{fib}\left(K + 1\right)\right), \operatorname{wordWeight}\left(n\right)\right) \land \left(\operatorname{greatestFib}\left(n\right) \le K \Leftrightarrow n < \operatorname{fib}\left(K + 1\right)\right)\right)$$
+$$\operatorname{t}\left(K\right) = \operatorname{exp}\left(y \cdot \mathit{psi}^{K + 1} - x \cdot \mathit{phi}^{K + 1}\right) \land \left(\operatorname{W}\left(K\right) = \operatorname{sum}\left(\operatorname{range}\left(\operatorname{fib}\left(K + 1\right)\right), \operatorname{wordWeight}\left(n\right)\right) \land \left(\operatorname{greatestFib}\left(n\right) \le K \Leftrightarrow n < \operatorname{fib}\left(K + 1\right)\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Axis/AxisTraceDefinitions.axis_trace_definitions` (`✓ std3`). ∎
 
