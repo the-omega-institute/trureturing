@@ -1,0 +1,10 @@
+ast_path: section/399-集体行动可能具有多个稳定均衡
+fingerprints:
+  raw_sha256: sha256:5cbf368e12e916bae1d4d745b8fa96fd1767eae4df8e96698dc1afb664e7c007
+  normalized_sha256: sha256:5cbf368e12e916bae1d4d745b8fa96fd1767eae4df8e96698dc1afb664e7c007
+cas_ref: sha256:5cbf368e12e916bae1d4d745b8fa96fd1767eae4df8e96698dc1afb664e7c007
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

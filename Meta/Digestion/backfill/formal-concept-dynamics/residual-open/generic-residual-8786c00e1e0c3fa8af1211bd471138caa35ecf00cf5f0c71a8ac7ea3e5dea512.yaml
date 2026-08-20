@@ -1,0 +1,10 @@
+ast_path: section/368-哲学中的-传统反例-可以视为-adversarial-test
+fingerprints:
+  raw_sha256: sha256:8786c00e1e0c3fa8af1211bd471138caa35ecf00cf5f0c71a8ac7ea3e5dea512
+  normalized_sha256: sha256:8786c00e1e0c3fa8af1211bd471138caa35ecf00cf5f0c71a8ac7ea3e5dea512
+cas_ref: sha256:8786c00e1e0c3fa8af1211bd471138caa35ecf00cf5f0c71a8ac7ea3e5dea512
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

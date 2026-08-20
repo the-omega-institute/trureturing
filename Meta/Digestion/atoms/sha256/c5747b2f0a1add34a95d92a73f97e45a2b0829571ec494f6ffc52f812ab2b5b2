@@ -1,0 +1,20 @@
+\sum_\omega
+\mu(\omega)\kappa(s\mid\omega)
+==============================
+
+\lambda_s.
+]
+
+Bayes 公式恢复 (\mu_s)。(\square)
+
+所以：
+
+[
+\boxed{
+\text{真实信息设计能够重排后验，
+但其概率加权平均必须保持原先验。}
+}
+]
+
+---
+

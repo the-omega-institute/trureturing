@@ -1,0 +1,20 @@
+## 定义 336.1（公共理由）
+
+[
+\boxed{
+R\text{ public}
+\iff
+E_R\preceq C_{\mathrm{common}}.
+}
+]
+
+因此公共理由不是“大家碰巧同意”，而是：
+
+[
+\boxed{
+\text{理由可由每个合法视角独立恢复}.
+}
+]
+
+---
+

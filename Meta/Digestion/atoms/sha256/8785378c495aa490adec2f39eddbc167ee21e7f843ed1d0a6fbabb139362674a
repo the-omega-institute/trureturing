@@ -1,0 +1,18 @@
+# 498. 过程复合的反向推理律
+
+设关系：
+
+[
+R:X\rightsquigarrow Y,
+\qquad
+S:Y\rightsquigarrow Z.
+]
+
+复合关系：
+
+[
+(S\circ R)(x,z)
+\iff
+\exists y,\quad xRy\land ySz.
+]
+

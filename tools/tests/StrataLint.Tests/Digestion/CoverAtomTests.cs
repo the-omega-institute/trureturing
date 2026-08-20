@@ -502,7 +502,7 @@ internal sealed record CoverSpec
     internal DigestionFormalizationSignature? BaselinePrecommittedSignature { get; init; }
 
     internal bool MalformedEnvelope { get; init; }
-
+    internal bool NoncanonicalBaselineEnvelope { get; init; }
     internal string? EnvelopeAtomId { get; init; }
 
     internal string? EnvelopePrimaryGid { get; init; }
@@ -717,6 +717,11 @@ internal static partial class CoverWorld
         {
             baseline[envelopePath] = Encoding.UTF8.GetString(
                 Envelope(spec with { PrecommittedSignature = spec.BaselinePrecommittedSignature }, atom).AsSpan());
+        }
+
+        if (spec.IncludeEnvelope && spec.EnvelopeInBaseline && spec.NoncanonicalBaselineEnvelope)
+        {
+            baseline[envelopePath] = baseline[envelopePath].Replace("\": ", "\":", StringComparison.Ordinal);
         }
 
         var declarations = spec.ReportDeclarations

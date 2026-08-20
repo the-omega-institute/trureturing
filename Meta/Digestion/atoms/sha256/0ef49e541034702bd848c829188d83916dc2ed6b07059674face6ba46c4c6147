@@ -1,0 +1,10 @@
+# 434. 安全抽象可以产生伪可能性
+
+即使 (F^#) 安全，也可能：
+
+[
+\gamma(F^#a)
+\supsetneq
+\mathcal F(\gamma(a)).
+]
+

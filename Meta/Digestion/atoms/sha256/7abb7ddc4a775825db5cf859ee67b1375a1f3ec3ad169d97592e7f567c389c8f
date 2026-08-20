@@ -1,0 +1,16 @@
+## 定理 271.1（最优接受阈值）
+
+接受主张当且仅当：
+
+[
+\boxed{
+p
+\ge
+\frac{
+c_{\mathrm{FP}}
+}{
+c_{\mathrm{FP}}+c_{\mathrm{FN}}
+}.
+}
+]
+

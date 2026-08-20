@@ -1,0 +1,12 @@
+## 定理 474.1（最优选择）
+
+[
+\boxed{
+\begin{cases}
+\text{回答 }0,&p\le\lambda;[1mm]
+\text{拒答},&\lambda<p<1-\lambda;[1mm]
+\text{回答 }1,&p\ge1-\lambda.
+\end{cases}
+}
+]
+

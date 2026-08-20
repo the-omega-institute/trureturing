@@ -1,0 +1,36 @@
+# 477. Bayesian 博弈中的概念化策略
+
+设世界状态：
+
+[
+x\in X
+]
+
+具有共同先验 (\mu)。
+
+主体 (i) 只能观察：
+
+[
+C_i:X\to B_i.
+]
+
+行动集合为：
+
+[
+A_i.
+]
+
+策略为：
+
+[
+\boxed{
+\pi_i:B_i\to A_i.
+}
+]
+
+效用：
+
+[
+u_i:X\times\prod_jA_j\to\mathbb R.
+]
+

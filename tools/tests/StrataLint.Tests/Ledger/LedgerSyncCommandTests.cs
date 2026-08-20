@@ -41,6 +41,228 @@ public sealed class LedgerSyncCommandTests
     }
 
     [Fact]
+    public void ProductionCommandWithoutBaseFlagNeverCallsReadChanges()
+    {
+        // Requirement 1 (加性、默认行为完全不变): omitting --base must keep using
+        // repository.ReadCurrentChanges() exactly as before this flag existed. Asserting
+        // ReadChangesCalls is empty proves the new code path is not on the default route, not
+        // merely that the output happens to match.
+        using var fixture = new LedgerSyncFixture(blobChanged: true, addClosedModule: true);
+
+        var (exitCode, console) = Run(fixture, "ledger-sync");
+
+        Assert.Equal(0, exitCode);
+        Assert.Equal(string.Empty, console.Error);
+        Assert.Contains("appended_reattests=1", console.Output, StringComparison.Ordinal);
+        Assert.Contains("appended_freezes=1", console.Output, StringComparison.Ordinal);
+        Assert.Empty(fixture.Gateway.ReadChangesCalls);
+    }
+
+    [Fact]
+    public void ProductionCommandWithoutBaseFlagReportsNoChangesWhenTheDeltaIsAlreadyCommitted()
+    {
+        // Reproduces issue #2474: a comment-only edit to an *already-frozen* module is a
+        // Reattest, and Reattest selection requires the path to appear in changedPaths (see
+        // DagLedgerCommandPreparation.BuildWriterCatalog). A change that is already committed
+        // (so ReadCurrentChanges(), the uncommitted-only working-tree diff, is empty) makes that
+        // module invisible to ledger-sync without --base, even though the same delta is real
+        // against a committed base revision. addClosedModule stays false here: a brand-new
+        // module would be selected unconditionally (it is absent from baseView.ActiveByPath
+        // regardless of changedPaths) and would not exercise the bug.
+        using var fixture = new LedgerSyncFixture(
+            blobChanged: true,
+            addClosedModule: false,
+            currentChangesEmpty: true);
+
+        var (exitCode, console) = Run(fixture, "ledger-sync");
+
+        Assert.Equal(0, exitCode);
+        Assert.Equal(string.Empty, console.Error);
+        Assert.Contains("no ledger changes", console.Output, StringComparison.Ordinal);
+        Assert.Empty(fixture.Gateway.ReadChangesCalls);
+    }
+
+    [Fact]
+    public void ProductionCommandWithBaseFlagReadsChangesFromThatRevisionAndUnblocksTheSameFixture()
+    {
+        // Requirement 2, and the fix for #2474 on the exact fixture that reproduces it above:
+        // --base REV switches the change set to repository.ReadChanges(REV) -- the committed
+        // delta against REV -- instead of the (here, empty) uncommitted delta.
+        using var fixture = new LedgerSyncFixture(
+            blobChanged: true,
+            addClosedModule: false,
+            currentChangesEmpty: true);
+
+        var (exitCode, console) = Run(fixture, "ledger-sync", baseRevision: "committed-base-rev");
+
+        Assert.Equal(0, exitCode);
+        Assert.Equal(string.Empty, console.Error);
+        Assert.Contains("appended_reattests=1", console.Output, StringComparison.Ordinal);
+        Assert.Contains("appended_freezes=0", console.Output, StringComparison.Ordinal);
+        Assert.Equal(new[] { "committed-base-rev" }, fixture.Gateway.ReadChangesCalls);
+    }
+
+    [Fact]
+    public void ProductionCommandWithBaseFlagIsIdempotentAcrossAccumulatedRepeatedRuns()
+    {
+        // Governance finding (nyxid-oracle, 2026-08-20): a fixed --base REV makes
+        // GitRepositoryGateway.ReadChanges(REV) an *accumulated* diff -- unlike
+        // ReadCurrentChanges(), it never empties out once the edit is committed. So a second
+        // `ledger-sync --base REV` run still selects module A via clause (c) (changedPaths still
+        // contains its path), even though the on-disk ledger already carries the Reattest the
+        // first run wrote. If the writer only asked "was this path selected" and not "does the
+        // ledger already match this candidate's material", the second run would append a
+        // duplicate Reattest into the append-only ledger -- which cannot be rolled back.
+        //
+        // This locks down that FrozenLedgerCanonicalWriter's per-path convergence check
+        // (materialUnchanged && entry.AxiomClosureKnown -> skip; see
+        // FrozenLedgerCanonicalWriter.cs:201-206) is what makes the second run a no-op, not
+        // selection. Selection only decides candidacy; convergence decides whether anything is
+        // actually appended.
+        using var fixture = new LedgerSyncFixture(
+            blobChanged: true,
+            addClosedModule: false,
+            currentChangesEmpty: true);
+
+        var (firstExitCode, firstConsole) = Run(fixture, "ledger-sync", baseRevision: "committed-base-rev");
+
+        Assert.Equal(0, firstExitCode);
+        Assert.Equal(string.Empty, firstConsole.Error);
+        Assert.Contains("appended_reattests=1", firstConsole.Output, StringComparison.Ordinal);
+        var ledgerAfterFirstRun = FrozenLedgerTestData.ReadLedgerDirectory(fixture.LedgerPath);
+
+        var (secondExitCode, secondConsole) = Run(fixture, "ledger-sync", baseRevision: "committed-base-rev");
+
+        Assert.Equal(0, secondExitCode);
+        Assert.Equal(string.Empty, secondConsole.Error);
+        Assert.Contains("no ledger changes", secondConsole.Output, StringComparison.Ordinal);
+        Assert.DoesNotContain("REATTESTED", secondConsole.Output, StringComparison.Ordinal);
+        Assert.Equal(ledgerAfterFirstRun, FrozenLedgerTestData.ReadLedgerDirectory(fixture.LedgerPath));
+        Assert.Equal(
+            new[] { "committed-base-rev", "committed-base-rev" },
+            fixture.Gateway.ReadChangesCalls);
+    }
+
+    [Fact]
+    public void ProductionCommandRejectsFlagShapedValueForBaseFlag()
+    {
+        // Review finding (1): git diff treats "--cached" as a flag (compare against the index),
+        // not a revision. Without a guard, `--base --cached` would consume "--cached" as REV,
+        // reach GitRepositoryGateway.ReadChanges("--cached"), and exit 0 with an empty change set
+        // -- fail-open, silently reproducing the #2474 symptom under a different cause instead of
+        // failing loudly. TryParseArguments must reject a flag-shaped value before it ever reaches
+        // git, for both flags (this test covers --base; the next covers --candidate-lean-report).
+        using var fixture = new LedgerSyncFixture(blobChanged: false, addClosedModule: false);
+
+        var (exitCode, console) = RunArgs(
+            fixture, "ledger-sync", "--candidate-lean-report", fixture.ReportPath, "--base", "--cached");
+
+        Assert.Equal(2, exitCode);
+        Assert.Contains("USAGE", console.Error, StringComparison.Ordinal);
+        Assert.Empty(fixture.Gateway.ReadChangesCalls);
+    }
+
+    [Fact]
+    public void ProductionCommandRejectsFlagShapedValueForCandidateLeanReportFlag()
+    {
+        // Review finding (3): without the same guard on --candidate-lean-report, the sequence
+        // `--candidate-lean-report --base` would swallow "--base" as the report *path* and fail
+        // with a file-read error instead of a usage error. Fixed by the same IsFlagShaped check
+        // used for --base, applied symmetrically to both flags.
+        using var fixture = new LedgerSyncFixture(blobChanged: false, addClosedModule: false);
+
+        var (exitCode, console) = RunArgs(fixture, "ledger-sync", "--candidate-lean-report", "--base");
+
+        Assert.Equal(2, exitCode);
+        Assert.Contains("USAGE", console.Error, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void ProductionCommandRejectsEmptyBaseValueAsUsage()
+    {
+        using var fixture = new LedgerSyncFixture(blobChanged: false, addClosedModule: false);
+
+        var (exitCode, console) = RunArgs(
+            fixture, "ledger-sync", "--candidate-lean-report", fixture.ReportPath, "--base", string.Empty);
+
+        Assert.Equal(2, exitCode);
+        Assert.Contains("USAGE", console.Error, StringComparison.Ordinal);
+        Assert.Empty(fixture.Gateway.ReadChangesCalls);
+    }
+
+    [Fact]
+    public void ProductionCommandRejectsDuplicateBaseFlag()
+    {
+        // Review finding (2): the "@base is null" uniqueness guard already rejected a repeated
+        // --base before this PR, but nothing tested it -- a later refactor could silently drop the
+        // guard (e.g. "last one wins") and every pre-existing test would stay green. This test
+        // exists purely to lock the guard down.
+        using var fixture = new LedgerSyncFixture(blobChanged: false, addClosedModule: false);
+
+        var (exitCode, console) = RunArgs(
+            fixture,
+            "ledger-sync",
+            "--candidate-lean-report", fixture.ReportPath,
+            "--base", "rev-one",
+            "--base", "rev-two");
+
+        Assert.Equal(2, exitCode);
+        Assert.Contains("USAGE", console.Error, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void ProductionCommandRejectsDuplicateCandidateLeanReportFlag()
+    {
+        // Symmetric to the --base duplicate guard: "each flag at most once" applies to both.
+        using var fixture = new LedgerSyncFixture(blobChanged: false, addClosedModule: false);
+
+        var (exitCode, console) = RunArgs(
+            fixture,
+            "ledger-sync",
+            "--candidate-lean-report", fixture.ReportPath,
+            "--candidate-lean-report", fixture.ReportPath);
+
+        Assert.Equal(2, exitCode);
+        Assert.Contains("USAGE", console.Error, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void ProductionCommandRejectsBaseFlagMissingItsValueAtEndOfArguments()
+    {
+        // Pre-existing behaviour (the index+1 < arguments.Count bound), locked down with a named
+        // test as the review requested rather than left to rely on nobody breaking it.
+        using var fixture = new LedgerSyncFixture(blobChanged: false, addClosedModule: false);
+
+        var (exitCode, console) = RunArgs(
+            fixture, "ledger-sync", "--candidate-lean-report", fixture.ReportPath, "--base");
+
+        Assert.Equal(2, exitCode);
+        Assert.Contains("USAGE", console.Error, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void ProductionCommandAcceptsBaseFlagBeforeCandidateLeanReportFlag()
+    {
+        // Reversed flag order is pre-existing accepted behaviour; locked down with a test so a
+        // future parser rewrite that only tries one order doesn't regress it silently.
+        using var fixture = new LedgerSyncFixture(
+            blobChanged: true,
+            addClosedModule: false,
+            currentChangesEmpty: true);
+
+        var (exitCode, console) = RunArgs(
+            fixture,
+            "ledger-sync",
+            "--base", "committed-base-rev",
+            "--candidate-lean-report", fixture.ReportPath);
+
+        Assert.Equal(0, exitCode);
+        Assert.Equal(string.Empty, console.Error);
+        Assert.Contains("appended_reattests=1", console.Output, StringComparison.Ordinal);
+        Assert.Equal(new[] { "committed-base-rev" }, fixture.Gateway.ReadChangesCalls);
+    }
+
+    [Fact]
     public void ProductionCommandRejectsStatementChangesWithoutWriting()
     {
         using var fixture = new LedgerSyncFixture(
@@ -229,13 +451,26 @@ public sealed class LedgerSyncCommandTests
 
     private static (int ExitCode, BufferedConsole Console) Run(
         LedgerSyncFixture fixture,
-        string command)
+        string command,
+        string? baseRevision = null)
     {
         var console = new BufferedConsole();
-        var exitCode = CliApplication.Run(
-            new[] { command, "--candidate-lean-report", fixture.ReportPath },
-            fixture.Environment,
-            console);
+        var arguments = baseRevision is null
+            ? new[] { command, "--candidate-lean-report", fixture.ReportPath }
+            : new[] { command, "--candidate-lean-report", fixture.ReportPath, "--base", baseRevision };
+        var exitCode = CliApplication.Run(arguments, fixture.Environment, console);
+        return (exitCode, console);
+    }
+
+    /// Same as Run, but the caller supplies the full argument list verbatim (including the
+    /// leading command name) instead of the fixed `--candidate-lean-report FILE [--base REV]`
+    /// shape -- for exercising TryParseArguments' malformed-input paths directly.
+    private static (int ExitCode, BufferedConsole Console) RunArgs(
+        LedgerSyncFixture fixture,
+        params string[] arguments)
+    {
+        var console = new BufferedConsole();
+        var exitCode = CliApplication.Run(arguments, fixture.Environment, console);
         return (exitCode, console);
     }
 
@@ -249,7 +484,8 @@ public sealed class LedgerSyncCommandTests
             string candidateStatement = "True",
             int existingModuleCount = 1,
             int historicalReattestCount = 0,
-            int? changedModuleCount = null)
+            int? changedModuleCount = null,
+            bool currentChangesEmpty = false)
         {
             if (historicalReattestCount < 0 || historicalReattestCount > existingModuleCount)
             {
@@ -365,8 +601,16 @@ public sealed class LedgerSyncCommandTests
             File.WriteAllBytes(ReportPath, RawLeanReportArtifact.Write(snapshot, report).AsSpan());
             var changedPaths = candidates
                 .Take(candidateChangeCount)
-                .Select(static module => FrozenLedgerTestData.PathFor(module.Name));
-            Gateway = new FakeRepositoryGateway(RawChangeSet.Create(changedPaths), raw, null);
+                .Select(static module => FrozenLedgerTestData.PathFor(module.Name))
+                .ToArray();
+            var currentChanges = currentChangesEmpty
+                ? RawChangeSet.Create(Array.Empty<string>())
+                : RawChangeSet.Create(changedPaths);
+            Gateway = new FakeRepositoryGateway(
+                currentChanges,
+                raw,
+                null,
+                changesForBase: _ => RawChangeSet.Create(changedPaths));
             Environment = new ProductionCliEnvironment(
                 temporary.Path,
                 Gateway,

@@ -1,0 +1,22 @@
+## 操作完成
+
+目标不仅可计算，而且相关状态：
+
+* 从锚点可达；
+* 可由允许行动区分；
+* 能被实际过程使用。
+
+因此：
+
+[
+\boxed{
+\text{semantic sufficiency}
+\neq
+\text{computational accessibility}
+\neq
+\text{operational realizability}.
+}
+]
+
+---
+

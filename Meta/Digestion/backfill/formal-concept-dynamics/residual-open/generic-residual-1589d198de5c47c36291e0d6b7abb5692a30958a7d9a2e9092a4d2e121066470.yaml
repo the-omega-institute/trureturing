@@ -1,0 +1,10 @@
+ast_path: section/435-抽象反例可能只是界面过粗
+fingerprints:
+  raw_sha256: sha256:1589d198de5c47c36291e0d6b7abb5692a30958a7d9a2e9092a4d2e121066470
+  normalized_sha256: sha256:1589d198de5c47c36291e0d6b7abb5692a30958a7d9a2e9092a4d2e121066470
+cas_ref: sha256:1589d198de5c47c36291e0d6b7abb5692a30958a7d9a2e9092a4d2e121066470
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

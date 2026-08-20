@@ -1,0 +1,16 @@
+### 增广
+
+[
+A\Rightarrow B
+]
+
+推出：
+
+[
+\boxed{
+A\vee C
+\Rightarrow
+B\vee C.
+}
+]
+

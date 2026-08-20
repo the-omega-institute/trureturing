@@ -6,7 +6,7 @@ Every vector has a unique orthogonal decomposition across a closed convex cone a
 
 **Theorem 1.1 (Closed convex cones admit a unique Moreau decomposition).**
 
-$$\begin{gathered}\forall E: \operatorname{Type},\\[\operatorname{NormedAddCommGroup}(E)],\\[\operatorname{InnerProductSpace}(\mathbb{R}, E)],\\[\operatorname{CompleteSpace}(E)],\\C: \operatorname{ProperCone}(\mathbb{R}, E), x: E,\\\exists! p, r: E,\\p \in C \land -r \in \operatorname{InnerDual}(C) \land \\\langle p, r \rangle = 0 \land x = p + r.\end{gathered}$$
+$$\begin{gathered}\forall E: \operatorname{Type},\\{}[\operatorname{NormedAddCommGroup}(E)],\\{}[\operatorname{InnerProductSpace}(\mathbb{R}, E)],\\{}[\operatorname{CompleteSpace}(E)],\\C: \operatorname{ProperCone}(\mathbb{R}, E), x: E,\\\exists! p, r: E,\\p \in C \land -r \in \operatorname{InnerDual}(C) \land \\\langle p, r \rangle = 0 \land x = p + r.\end{gathered}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Observer/Separation/MoreauDecomposition.moreau_decomposition` (`✓ std3`). ∎
 

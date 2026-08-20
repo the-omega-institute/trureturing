@@ -1,0 +1,18 @@
+## 谨慎单调性
+
+若：
+
+[
+A\sim_\kappa P,
+\qquad
+A\sim_\kappa Q,
+]
+
+则：
+
+[
+\boxed{
+A\cap P\sim_\kappa Q.
+}
+]
+

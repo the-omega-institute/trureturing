@@ -1,0 +1,24 @@
+## 定义 319.1（(t)-重构阈值）
+
+若：
+
+[
+|K|\ge t
+\Longrightarrow
+E_S\preceq C_K,
+]
+
+则任何至少 (t) 人的联盟都能恢复秘密。
+
+若：
+
+[
+|K|<t
+\Longrightarrow
+E_S\not\preceq C_K,
+]
+
+则不足 (t) 人不能完整恢复秘密。
+
+---
+

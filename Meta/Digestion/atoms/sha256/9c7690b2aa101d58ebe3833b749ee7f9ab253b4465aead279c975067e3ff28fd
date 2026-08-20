@@ -1,0 +1,24 @@
+### 证明
+
+如果：
+
+[
+E_I\preceq P,
+]
+
+则 (E_I) 是 (P) 与 (E_I) 的共同下界，所以：
+
+[
+E_I\preceq P\wedge E_I.
+]
+
+若：
+
+[
+P\wedge E_I\simeq\bot,
+]
+
+便推出 (E_I) 平凡，矛盾。 (\square)
+
+---
+

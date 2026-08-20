@@ -1,0 +1,18 @@
+## 定理 297.1（模型不确定性扩大使安全集缩小）
+
+若：
+
+[
+\mathcal M\subseteq\mathcal M',
+]
+
+则：
+
+[
+\boxed{
+\operatorname{Safe}*\alpha(\mathcal M')
+\subseteq
+\operatorname{Safe}*\alpha(\mathcal M).
+}
+]
+

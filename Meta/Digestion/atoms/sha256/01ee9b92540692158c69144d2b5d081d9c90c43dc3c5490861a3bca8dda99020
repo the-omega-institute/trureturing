@@ -1,0 +1,10 @@
+## 协同／冗余
+
+\[
+\operatorname{syn}
+=\text{最少需要多少来源},
+\qquad
+\kappa
+=\text{最少删除多少来源才失败}.
+\]
+

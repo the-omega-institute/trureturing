@@ -1,0 +1,22 @@
+## 定义 483.1（默认后果）
+
+[
+\boxed{
+A\mathrel{\sim_\kappa}P
+\iff
+\operatorname{Min}_\kappa(A)\subseteq P.
+}
+]
+
+含义是：
+
+> 在满足 (A) 的最正常世界中，(P) 成立。
+
+这不是普通全模型蕴涵：
+
+[
+A\models P.
+]
+
+---
+

@@ -397,4 +397,124 @@ public sealed partial class DigestionAlignmentTests
             StringComparison.Ordinal));
     }
 
+    [Fact]
+    public void AdmissionDoesNotRecheckInheritedClauseChainForUnrelatedDelta()
+    {
+        var (sourceBytes, _, malformedCandidate, parentCapture, childCapture) =
+            MalformedPzgClauseSubset();
+        var baseline = malformedCandidate;
+        var candidate = malformedCandidate;
+        var calls = 0;
+        var changes = RawChangeSet.Create(["D5/S3/Probe/Unrelated.lean"]);
+
+        var result = DigestionLedgerAligner.Evaluate(
+            candidate,
+            Snapshot(sourceBytes, [parentCapture, childCapture]),
+            baseline,
+            DigestionAlignmentMode.Admission,
+            _ => (_, _) =>
+            {
+                calls++;
+                return PzgAtomizer.Atomize(sourceBytes, DigestionTestSupport.Rules);
+            },
+            baselineSnapshot: Snapshot(sourceBytes, [parentCapture, childCapture]),
+            changes: changes);
+
+        Assert.Empty(result.Findings);
+        Assert.Equal(0, calls);
+        Assert.Equal(DigestionReceiptAlignment.Seen, result.AlignmentFor("parent"));
+        Assert.Equal(
+            DigestionReceiptAlignment.Seen,
+            result.AlignmentFor("pzg-residual-" + childCapture.Reference["sha256:".Length..]));
+        Assert.Empty(result.VerifiedClausePlanParents);
+        Assert.Equal(
+            0,
+            DigestionCasStore.Evaluate(
+                candidate,
+                Snapshot(sourceBytes, [parentCapture, childCapture]),
+                changes).RehashedObjectCount);
+    }
+
+    [Fact]
+    public void AdmissionRechecksClauseChainWhenReceiptIsInDelta()
+    {
+        var (sourceBytes, _, malformedCandidate, parentCapture, childCapture) =
+            MalformedPzgClauseSubset();
+        var baseline = malformedCandidate;
+        var candidate = malformedCandidate;
+        var calls = 0;
+        var parentPath = "Meta/Digestion/backfill/source/residual-open/parent.yaml";
+
+        var result = DigestionLedgerAligner.Evaluate(
+            candidate,
+            Snapshot(sourceBytes, [parentCapture, childCapture]),
+            baseline,
+            DigestionAlignmentMode.Admission,
+            _ => (_, _) =>
+            {
+                calls++;
+                return PzgAtomizer.Atomize(sourceBytes, DigestionTestSupport.Rules);
+            },
+            baselineSnapshot: Snapshot(sourceBytes, [parentCapture, childCapture]),
+            changes: RawChangeSet.Create([parentPath]));
+
+        Assert.True(calls > 0);
+        Assert.Contains(result.Findings, finding => finding.Contains(
+            "chain cardinality",
+            StringComparison.Ordinal));
+    }
+
+    [Theory]
+    [InlineData("docs/source.md")]
+    [InlineData("Meta/Digestion/atomizers.toml")]
+    [InlineData("tools/StrataLint.Engine/Digestion/Atomizers/PzgAtomizer.cs")]
+    public void AdmissionRechecksAllClauseChainsWhenAtomizerInputIsInDelta(string changedPath)
+    {
+        var (sourceBytes, _, candidate, parentCapture, childCapture) =
+            MalformedPzgClauseSubset();
+        var calls = 0;
+        var result = DigestionLedgerAligner.Evaluate(
+            candidate,
+            Snapshot(sourceBytes, [parentCapture, childCapture]),
+            candidate,
+            DigestionAlignmentMode.Admission,
+            _ => (_, _) =>
+            {
+                calls++;
+                return PzgAtomizer.Atomize(sourceBytes, DigestionTestSupport.Rules);
+            },
+            baselineSnapshot: Snapshot(sourceBytes, [parentCapture, childCapture]),
+            changes: RawChangeSet.Create([changedPath]));
+
+        Assert.True(calls > 0);
+        Assert.Contains(result.Findings, finding => finding.Contains(
+            "chain cardinality",
+            StringComparison.Ordinal));
+    }
+
+    [Fact]
+    public void AdmissionRechecksClauseChainWhenParentCasIsInDelta()
+    {
+        var (sourceBytes, _, candidate, parentCapture, childCapture) =
+            MalformedPzgClauseSubset();
+        var calls = 0;
+        var result = DigestionLedgerAligner.Evaluate(
+            candidate,
+            Snapshot(sourceBytes, [parentCapture, childCapture]),
+            candidate,
+            DigestionAlignmentMode.Admission,
+            _ => (_, _) =>
+            {
+                calls++;
+                return PzgAtomizer.Atomize(sourceBytes, DigestionTestSupport.Rules);
+            },
+            baselineSnapshot: Snapshot(sourceBytes, [parentCapture, childCapture]),
+            changes: RawChangeSet.Create([parentCapture.RelativePath]));
+
+        Assert.True(calls > 0);
+        Assert.Contains(result.Findings, finding => finding.Contains(
+            "chain cardinality",
+            StringComparison.Ordinal));
+    }
+
 }

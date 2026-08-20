@@ -6,7 +6,7 @@ A uniform semiconjugacy defect controls finite-time orbit error by geometric sum
 
 **Theorem 1.1 (Approximate semiconjugacy error).**
 
-$$\begin{gathered}\forall Y, Z: Type,\\[\operatorname{PseudoMetricSpace} Z],\\\forall \tau: Y\to Y, \sigma: Z\to Z, \pi: Y\to Z,\\\forall L, \Delta: \operatorname{NNReal},\\(\operatorname{LipschitzWith}(L, \sigma) \land \forall y \in Y, d_{Z}(\pi(\tau(y)), \sigma(\pi(y))) \leq \Delta) \Rightarrow\\(\forall k \in \mathbb{N}, \forall y \in Y,\ d_{Z}(\pi(\tau^{k}(y)), \sigma^{k}(\pi(y))) \leq \Delta \sum_{j=0}^{k-1} L^j) \land \\(L < 1 \Rightarrow \forall k \in \mathbb{N}, \forall y \in Y,\ d_{Z}(\pi(\tau^{k}(y)), \sigma^{k}(\pi(y))) \leq \frac{\Delta}{1-L}) \land \\(L = 1 \Rightarrow \forall k \in \mathbb{N}, \forall y \in Y,\ d_{Z}(\pi(\tau^{k}(y)), \sigma^{k}(\pi(y))) \leq k \Delta).\end{gathered}$$
+$$\begin{gathered}\forall Y, Z: Type,\\{}[\operatorname{PseudoMetricSpace} Z],\\\forall \tau: Y\to Y, \sigma: Z\to Z, \pi: Y\to Z,\\\forall L, \Delta: \operatorname{NNReal},\\(\operatorname{LipschitzWith}(L, \sigma) \land \forall y \in Y, d_{Z}(\pi(\tau(y)), \sigma(\pi(y))) \leq \Delta) \Rightarrow\\(\forall k \in \mathbb{N}, \forall y \in Y,\ d_{Z}(\pi(\tau^{k}(y)), \sigma^{k}(\pi(y))) \leq \Delta \sum_{j=0}^{k-1} L^j) \land \\(L < 1 \Rightarrow \forall k \in \mathbb{N}, \forall y \in Y,\ d_{Z}(\pi(\tau^{k}(y)), \sigma^{k}(\pi(y))) \leq \frac{\Delta}{1-L}) \land \\(L = 1 \Rightarrow \forall k \in \mathbb{N}, \forall y \in Y,\ d_{Z}(\pi(\tau^{k}(y)), \sigma^{k}(\pi(y))) \leq k \Delta).\end{gathered}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Observer/Naturality/ApproximateSemiconjugacyError.approximate_semiconjugacy_error` (`✓ std3`). ∎
 

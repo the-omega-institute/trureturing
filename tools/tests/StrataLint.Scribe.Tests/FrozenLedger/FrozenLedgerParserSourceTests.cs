@@ -3,16 +3,19 @@ namespace StrataLint.Scribe.Tests;
 public sealed class FrozenLedgerParserSourceTests
 {
     [Fact]
-    public void CurrentFreezeParsersDoNotSynthesizeRetiredProjectionAliases()
+    public void CurrentLedgerParsersDoNotSynthesizeRetiredProjectionAliases()
     {
         var repository = RepositoryAccessor.Discover(RepositoryRootCriterion.ClaudeDirectoryNotFound);
         var primitives = repository.ReadAllText(RepositoryRelativePath.Create(
             "tools/StrataLint.Engine/Ledger/Validation/FrozenLedgerValidationPrimitives.cs"));
         var history = repository.ReadAllText(RepositoryRelativePath.Create(
             "tools/StrataLint.Engine/Ledger/Validation/FrozenLedgerHistoryValidation.cs"));
+        var candidate = repository.ReadAllText(RepositoryRelativePath.Create(
+            "tools/StrataLint.Engine/Ledger/Validation/FrozenLedgerCandidateValidation.cs"));
 
         AssertRetiredProjectionAliasesAbsent(primitives);
         AssertRetiredProjectionAliasesAbsent(history);
+        AssertRetiredProjectionAliasesAbsent(candidate);
     }
 
     private static void AssertRetiredProjectionAliasesAbsent(string source)

@@ -1,0 +1,24 @@
+## 定理 440.1（攻击面单调）
+
+[
+\boxed{
+P\subseteq Q
+\Longrightarrow
+\operatorname{Reach}*{P}(a)
+\subseteq
+\operatorname{Reach}*{Q}(a).
+}
+]
+
+因此，对坏状态集合 (B)：
+
+[
+\operatorname{Reach}*{P}(a)\cap B
+\subseteq
+\operatorname{Reach}*{Q}(a)\cap B.
+]
+
+更多权限不会减少系统理论上可被带入的坏状态集合。
+
+---
+

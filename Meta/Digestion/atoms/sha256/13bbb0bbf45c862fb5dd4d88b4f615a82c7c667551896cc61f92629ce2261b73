@@ -1,0 +1,10 @@
+## 定理 68.2（固定点—充分性等价）
+
+\[
+\boxed{
+\operatorname{cl}_T(C)\simeq C
+\iff
+E_T\preceq C.
+}
+\]
+

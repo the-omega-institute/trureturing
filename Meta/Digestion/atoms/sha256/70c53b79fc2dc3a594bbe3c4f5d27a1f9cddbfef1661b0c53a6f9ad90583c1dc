@@ -1,0 +1,40 @@
+# 439. 最小权限不一定存在唯一解
+
+设权限原子集合为：
+
+[
+K.
+]
+
+权限包为：
+
+[
+P\subseteq K.
+]
+
+授权工作流族为：
+
+[
+\mathcal W.
+]
+
+定义：
+
+[
+\operatorname{Sufficient}(P)
+]
+
+表示 (P) 足以执行全部授权工作流。
+
+通常具有向上闭性：
+
+[
+P\subseteq Q
+\land
+\operatorname{Sufficient}(P)
+\Longrightarrow
+\operatorname{Sufficient}(Q).
+]
+
+---
+

@@ -1,0 +1,10 @@
+ast_path: 推论/514.2
+fingerprints:
+  raw_sha256: sha256:5159b75557982a626321377e7edac3ca8fd0949aec299c30fff3ea577f3a4ca0
+  normalized_sha256: sha256:5159b75557982a626321377e7edac3ca8fd0949aec299c30fff3ea577f3a4ca0
+cas_ref: sha256:5159b75557982a626321377e7edac3ca8fd0949aec299c30fff3ea577f3a4ca0
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

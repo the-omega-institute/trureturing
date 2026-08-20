@@ -84,31 +84,22 @@ jobs:
           fi
           exit 1
 
+      - name: Install pinned SDK for scope derivation
+        uses: actions/setup-dotnet@v4
+        with:
+          global-json-file: candidate/global.json
       - name: Decide candidate engineering scope
         id: scope
         shell: bash
         run: |
           set -euo pipefail
-          engineering_triggers=(
-            "tools"
-            "Makefile"
-            ".github"
-            "global.json"
-            "Directory.Build.props"
-            "Directory.Packages.props"
-            "lean-toolchain"
-            "lakefile.toml"
-            "lake-manifest.json"
-            "Golden/Projection"
-            "Meta/FILEMAP.toml"
-          )
           run="true"
           reason="dev push always runs the union engineering check"
           base_sha="not-applicable"
           changed_count="0"
           matched_count="0"
           if [[ "$GITHUB_EVENT_NAME" == "push" ]]; then
-            run="true"
+            :
           elif [[ "$GITHUB_EVENT_NAME" == "pull_request_target" ]]; then
             base_sha="$(git -C candidate rev-parse HEAD^1)"
             candidate_sha="$(git -C candidate rev-parse HEAD)"
@@ -116,29 +107,78 @@ jobs:
               printf '%s\n' "pull request merge result has no content-addressable dev parent or candidate SHA" >&2
               exit 1
             fi
-            mapfile -d '' -t changed_paths < <(
-              git -C candidate diff --name-only -z --no-renames --diff-filter=ACDMRTUXB "$base_sha" "$candidate_sha"
-            )
+            changed_file="$RUNNER_TEMP/engineering-changed-paths"
+            derived_result="$RUNNER_TEMP/engineering-scope-result"
+            derived_log="$RUNNER_TEMP/engineering-scope.log"
+            git -C candidate diff --name-only -z --no-renames --diff-filter=ACDMRTUXB "$base_sha" "$candidate_sha" -- > "$changed_file"
+            mapfile -d '' -t changed_paths < "$changed_file"
             changed_count="${#changed_paths[@]}"
-            matched_paths=()
+            mapfile -d '' -t solution_paths < <(
+              git -C candidate ls-tree -r --name-only -z "$base_sha" -- '*.sln'
+            )
+            engineering_root=""
+            if [[ "${#solution_paths[@]}" -eq 1 ]]; then
+              engineering_root="$(dirname -- "${solution_paths[0]}")"
+            else
+              reason="engineering solution root is not uniquely derivable; scope fails closed to the full check"
+            fi
             quoted_path=""
             for path in "${changed_paths[@]}"; do
               printf -v quoted_path '%q' "$path"
               printf 'ENGINEERING_SCOPE_CHANGED %s\n' "$quoted_path"
-              for trigger in "${engineering_triggers[@]}"; do
-                if [[ "$path" == "$trigger" || "$path" == "$trigger/"* ]]; then
-                  printf 'ENGINEERING_SCOPE_MATCHED %s -> %s\n' "$quoted_path" "$trigger"
-                  matched_paths+=("$path")
-                fi
-              done
+              structural_reason=""
+              if [[ "$path" != */* ]]; then
+                structural_reason="repository-root input"
+              elif [[ -n "$engineering_root" && ( "$engineering_root" == "." ||
+                "$path" == "$engineering_root" || "$path" == "$engineering_root/"* ) ]]; then
+                structural_reason="derived engineering project root $engineering_root"
+              fi
+              if [[ -n "$structural_reason" ]]; then
+                printf 'ENGINEERING_SCOPE_MATCHED %s -> %s\n' "$quoted_path" "$structural_reason"
+                ((matched_count += 1))
+              fi
             done
-            matched_count="${#matched_paths[@]}"
-            if [[ "$matched_count" -gt 0 ]]; then
+            if [[ -z "$engineering_root" ]]; then
               run="true"
-              reason="post-merge delta intersects the harness trigger set"
+            elif [[ "$matched_count" -gt 0 ]]; then
+              run="true"
+              reason="post-merge delta intersects the mechanically derived engineering project surface"
             else
-              run="false"
-              reason="post-merge delta does not intersect the harness trigger set"
+              rm -f "$derived_result"
+              set +e
+              {
+                dotnet restore candidate/tools/StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj --locked-mode &&
+                  dotnet run --project candidate/tools/StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj \
+                    --configuration Release --no-launch-profile --no-restore -- --repository candidate \
+                    --changes-file "$changed_file" \
+                    --result-file "$derived_result"
+              } > "$derived_log" 2>&1
+              derived_status=$?
+              set -e
+              cat "$derived_log"
+              if [[ "$derived_status" -ne 0 || ! -s "$derived_result" ]]; then
+                run="true"
+                reason="consumer input derivation failed; scope fails closed to the full check"
+              else
+                derived_run="$(sed -n 's/^run=//p' "$derived_result")"
+                derived_matched="$(sed -n 's/^matched_count=//p' "$derived_result")"
+                derived_reason="$(sed -n 's/^reason=//p' "$derived_result")"
+                if [[ ! "$derived_run" =~ ^(true|false)$ || ! "$derived_matched" =~ ^[0-9]+$ ||
+                      ! "$derived_reason" =~ ^(consumer-derived-input|proven-disjoint|incomplete-derivation)$ ]]; then
+                  run="true"
+                  reason="consumer input derivation returned an invalid result; scope fails closed to the full check"
+                else
+                  run="$derived_run"
+                  matched_count="$derived_matched"
+                  if [[ "$derived_reason" == "proven-disjoint" ]]; then
+                    reason="post-merge delta is proven disjoint from the consumer-derived engineering input closure"
+                  elif [[ "$derived_reason" == "incomplete-derivation" ]]; then
+                    reason="consumer input derivation is incomplete; scope fails closed to the full check"
+                  else
+                    reason="post-merge delta intersects the consumer-derived engineering input closure"
+                  fi
+                fi
+              fi
             fi
           else
             run="true"
@@ -197,12 +237,6 @@ jobs:
             exit 1
           fi
           "$GITHUB_WORKSPACE/candidate/tools/scripts/workflow/install-lean-toolchain.sh" "$LEAN_TOOLCHAIN_FILE" --github-path "$GITHUB_PATH"
-
-      - name: Install pinned SDK
-        if: steps.scope.outputs.run == 'true'
-        uses: actions/setup-dotnet@v4
-        with:
-          global-json-file: candidate/global.json
 
       - name: Restore candidate locked dependencies
         if: steps.scope.outputs.run == 'true'

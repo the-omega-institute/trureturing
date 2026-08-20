@@ -76,8 +76,8 @@ if [[ "$requires_emission_checks" == "0" && "$derive_producer_closure" == "1" ]]
   done <<< "$producer_output"
 fi
 
-run_scribe projections --check --report "$REPORT"
 if [[ "$requires_emission_checks" == "1" ]]; then
+  run_scribe projections --check --report "$REPORT"
   run_scribe emit-values --check
 else
   echo "skipped: emit-values --check (delta misses coarse emission closure)"

@@ -1,0 +1,18 @@
+## 合取
+
+若：
+
+[
+A\sim_\kappa P,
+\qquad
+A\sim_\kappa Q,
+]
+
+则：
+
+[
+\boxed{
+A\sim_\kappa(P\cap Q).
+}
+]
+

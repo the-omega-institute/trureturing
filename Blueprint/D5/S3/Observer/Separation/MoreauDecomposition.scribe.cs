@@ -58,11 +58,11 @@ internal sealed class MoreauDecompositionDocument : IScribeDocumentDefinition
 
         return Disp(Seq(
             Begin, Grp(F.Id("gathered")),
-            Forall, Sp, space, Colon, Sp, Operatorname, Grp(F.Id("Type")), Comma, RowBreak,
+            Forall, Sp, space, Colon, Sp, Operatorname, Grp(F.Id("Type")), Comma, RowBreak, Grp(),
             OpenBracket, Operatorname, Grp(F.Id("NormedAddCommGroup")), Open,
-            space, Close, CloseBracket, Comma, RowBreak,
+            space, Close, CloseBracket, Comma, RowBreak, Grp(),
             OpenBracket, Operatorname, Grp(F.Id("InnerProductSpace")), Open,
-            real, Comma, Sp, space, Close, CloseBracket, Comma, RowBreak,
+            real, Comma, Sp, space, Close, CloseBracket, Comma, RowBreak, Grp(),
             OpenBracket, Operatorname, Grp(F.Id("CompleteSpace")), Open,
             space, Close, CloseBracket, Comma, RowBreak,
             cone, Colon, Sp, Operatorname, Grp(F.Id("ProperCone")), Open,

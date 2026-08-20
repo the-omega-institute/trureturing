@@ -1,0 +1,10 @@
+[
+a^S_i
+=====
+
+\begin{cases}
+a_i,&i\in S,\
+a_i^0,&i\notin S.
+\end{cases}
+]
+

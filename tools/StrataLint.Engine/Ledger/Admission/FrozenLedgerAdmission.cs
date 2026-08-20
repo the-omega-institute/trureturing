@@ -8,7 +8,8 @@ internal sealed record FrozenLedgerAdmissionPreparation(
     ImmutableHashSet<string> LeanReportProducerPaths,
     TrustedFrozenGitReferences TrustedDeltaReferences,
     FrozenLedgerConsistent? RevocationBaseline = null,
-    TrustedRevocationReceiptStore? TrustedRevocationReceipts = null);
+    TrustedRevocationReceiptStore? TrustedRevocationReceipts = null,
+    RepositorySnapshot? ProtectedBaseSnapshot = null);
 
 internal sealed record FrozenLedgerAdmissionFailure(
     ImmutableArray<RepoPath> AffectedPaths,
@@ -300,7 +301,26 @@ public static partial class FrozenLedger
                                     active[FrozenLedgerAttestationChain.RequiredString(
                                         item.Payload,
                                         "case_id")].Material.RepoPath,
-                                    snapshot));
+                                    snapshot),
+                            report is not null
+                                && snapshot is not null
+                                && preparation.ProtectedBaseSnapshot is not null
+                                && LeanImportClosure.RelevantSemanticPinsChanged(
+                                    report,
+                                    active[FrozenLedgerAttestationChain.RequiredString(
+                                        item.Payload,
+                                        "case_id")].Material.RepoPath,
+                                    active[FrozenLedgerAttestationChain.RequiredString(
+                                        item.Payload,
+                                        "case_id")],
+                                    preparation.ProtectedBaseSnapshot,
+                                    snapshot),
+                            report is not null
+                                && LeanImportClosure.CandidateStatementsAvoidTrivialTruth(
+                                    report,
+                                    active[FrozenLedgerAttestationChain.RequiredString(
+                                        item.Payload,
+                                        "case_id")].Material.RepoPath));
                         if (!preparation.BaseView.ActiveByCase.ContainsKey(supersede.CaseId)
                             || !supersededBaseCases.Add(supersede.CaseId))
                         {

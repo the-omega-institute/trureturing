@@ -1,0 +1,24 @@
+# 305. 抢先因果需要事件 provenance
+
+设两条事件历史：
+
+[
+\gamma,\gamma'
+]
+
+具有相同最终变量赋值：
+
+[
+E(\gamma)=E(\gamma').
+]
+
+例如两个潜在原因都处于“发生”状态，结果也相同。
+
+但实际激活路径不同：
+
+[
+\operatorname{ActiveCause}(\gamma)
+\neq
+\operatorname{ActiveCause}(\gamma').
+]
+

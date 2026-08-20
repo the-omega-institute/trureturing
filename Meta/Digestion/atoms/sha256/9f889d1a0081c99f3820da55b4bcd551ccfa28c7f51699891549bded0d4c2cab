@@ -1,0 +1,24 @@
+[
+\boxed{
+\textbf{Philosophy}
+===================
+
+\textbf{a self-auditing process that generates targets,
+constructs factorization proofs,
+locates defects,
+repairs interfaces,
+and tracks the provenance and cost of every repair.}
+}
+]
+
+这时“哲学是什么”已经可以得到一个很严格的回答：
+
+[
+\boxed{
+\textbf{哲学不是答案的集合，而是关于“什么能从什么推出、什么不能，以及缺了什么”的形式科学。}
+}
+]
+以下从 **§197** 继续。仍然只进行纸面推理，不处理 GitHub，也不把新增命题标记为已经获得 Lean proof term 的 `Closed` 结论。
+
+---
+

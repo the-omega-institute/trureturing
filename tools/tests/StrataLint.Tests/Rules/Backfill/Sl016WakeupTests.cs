@@ -47,4 +47,81 @@ public sealed class Sl016WakeupTests
         Assert.True(BackfillInventoryRule.IsAffectedBy(fixture.Build(RawChangeSet.Create([path]))));
     }
 
+    [Fact]
+    public void UnchangedBaseEntryDuplicateCoverageIsNotRepublishedForUnrelatedDelta()
+    {
+        var fixture = new RuleFixture();
+        fixture.UseValidDirectoryBackfill();
+        const string atomPath =
+            "Meta/Digestion/backfill/delta-v0.1/partial-closed/delta-atom.yaml";
+        foreach (var files in new[] { fixture.Files, fixture.Baseline, fixture.ForkPoint })
+        {
+            files[atomPath] = files[atomPath].Replace(
+                "coverage_gids:\n  - D5/S0/Carrier/BackfillTarget",
+                "coverage_gids:\n  - D5/S0/Carrier/BackfillTarget\n  - D5/S0/Carrier/BackfillTarget",
+                StringComparison.Ordinal);
+        }
+
+        var findings = BackfillInventoryRule.EvaluateCandidateDelta(
+            fixture.Build(RawChangeSet.Create(["D5/S3/Probe/Unrelated.lean"])));
+
+        Assert.DoesNotContain(findings, finding => finding.Message.Contains(
+            "duplicate coverage GIDs",
+            StringComparison.Ordinal));
+    }
+
+    [Fact]
+    public void ChangedEntryDuplicateCoverageStillProducesFinding()
+    {
+        var fixture = new RuleFixture();
+        fixture.UseValidDirectoryBackfill();
+        const string atomPath =
+            "Meta/Digestion/backfill/delta-v0.1/partial-closed/delta-atom.yaml";
+        fixture.Files[atomPath] = fixture.Files[atomPath].Replace(
+            "coverage_gids:\n  - D5/S0/Carrier/BackfillTarget",
+            "coverage_gids:\n  - D5/S0/Carrier/BackfillTarget\n  - D5/S0/Carrier/BackfillTarget",
+            StringComparison.Ordinal);
+
+        var findings = BackfillInventoryRule.EvaluateCandidateDelta(
+            fixture.Build(RawChangeSet.Create([atomPath])));
+
+        Assert.Contains(findings, finding => finding.Message.Contains(
+            "duplicate coverage GIDs",
+            StringComparison.Ordinal));
+    }
+
+    [Fact]
+    public void UnchangedBaseSourceMetadataIsNotStrictlyReparsedForUnrelatedDelta()
+    {
+        var fixture = new RuleFixture();
+        fixture.UseValidDirectoryBackfill();
+        const string sourcePath =
+            "Meta/Digestion/backfill/delta-v0.1/source.toml";
+        fixture.Files[sourcePath] += "\n";
+
+        var findings = BackfillInventoryRule.EvaluateCandidateDelta(
+            fixture.Build(RawChangeSet.Create(["D5/S3/Probe/Unrelated.lean"])));
+
+        Assert.DoesNotContain(findings, finding => finding.Message.Contains(
+            "source metadata",
+            StringComparison.Ordinal));
+    }
+
+    [Fact]
+    public void ChangedSourceMetadataStillUsesStrictCanonicalEncoding()
+    {
+        var fixture = new RuleFixture();
+        fixture.UseValidDirectoryBackfill();
+        const string sourcePath =
+            "Meta/Digestion/backfill/delta-v0.1/source.toml";
+        fixture.Files[sourcePath] += "\n";
+
+        var findings = BackfillInventoryRule.EvaluateCandidateDelta(
+            fixture.Build(RawChangeSet.Create([sourcePath])));
+
+        Assert.Contains(findings, finding => finding.Message.Contains(
+            "source metadata",
+            StringComparison.Ordinal));
+    }
+
 }

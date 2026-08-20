@@ -1,0 +1,60 @@
+# 188. 两个理论的比较需要共同目标语言
+
+设理论：
+
+[
+C_1:X\to B_1,
+\qquad
+C_2:X\to B_2.
+]
+
+如果没有目标族：
+
+[
+\mathcal T,
+]
+
+说“(C_1) 比 (C_2) 好”没有充分定义。
+
+相对于目标族定义支配：
+
+[
+\boxed{
+C_1\succeq_{\mathcal T}C_2
+}
+]
+
+当对每个 (T\in\mathcal T)：
+
+[
+\Delta(C_1;T)
+\subseteq
+\Delta(C_2;T).
+]
+
+如果还考虑成本：
+
+[
+K(C),
+]
+
+则只有 Pareto 比较：
+
+[
+\boxed{
+\text{缺陷更少}
+\quad\text{且}\quad
+\text{成本不更高}.
+}
+]
+
+所以：
+
+[
+\boxed{
+\text{理论比较永远隐含一个目标集合与资源模型}.
+}
+]
+
+---
+

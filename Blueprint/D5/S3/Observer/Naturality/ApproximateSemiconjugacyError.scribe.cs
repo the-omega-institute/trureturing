@@ -84,7 +84,7 @@ internal sealed class ApproximateSemiconjugacyErrorDocument : IScribeDocumentDef
         return Disp(Seq(
             Begin, Grp(F.Id("gathered")),
             Forall, Sp, F.Id("Y"), Comma, Sp, F.Id("Z"), Colon, Sp,
-            F.Id("Type"), Comma, RowBreak,
+            F.Id("Type"), Comma, RowBreak, Grp(),
             OpenBracket, Operatorname, Grp(F.Id("PseudoMetricSpace")), Sp,
             F.Id("Z"), CloseBracket, Comma, RowBreak,
             Forall, Sp, Tau, Colon, Sp, F.Id("Y"), To, Sp, F.Id("Y"), Comma, Sp,
