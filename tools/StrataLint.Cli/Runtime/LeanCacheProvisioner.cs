@@ -103,6 +103,28 @@ internal static class LeanCacheProvisioner
         IWorktreeProcessRunner runner,
         LeanCacheWriterGuard writerGuard,
         IDirectoryCloner cloner,
+        Action<string> removePartial,
+        Action<TimeSpan>? wait = null) =>
+        Provision(
+            selection,
+            worktreeRoot,
+            pins,
+            lakeExecutable,
+            runner,
+            writerGuard,
+            cloner,
+            LeanCachePublisher.Instance,
+            removePartial,
+            wait);
+
+    internal static LeanCacheProvisionResult Provision(
+        LeanCacheDonorSelection selection,
+        string worktreeRoot,
+        LeanPinSet pins,
+        string lakeExecutable,
+        IWorktreeProcessRunner runner,
+        LeanCacheWriterGuard writerGuard,
+        IDirectoryCloner cloner,
         ILeanCachePublisher publisher) =>
         Provision(
             selection,
