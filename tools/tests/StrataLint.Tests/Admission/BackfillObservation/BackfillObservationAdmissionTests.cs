@@ -96,7 +96,12 @@ public sealed partial class ProductionEnvironmentTests
                 Snapshot(fixture.Baseline)),
             new MutatingLeanReportSource(
                 LeanAxiomReport.Create(fixture.Reports),
-                () => changedSourceBytes.CopyTo(mutableSourceBytes, 0)),
+                // Array.Copy rather than changedSourceBytes.CopyTo(...): ScribeTestMapDeriver
+                // matches file-reading APIs by method name alone, so an array CopyTo is taken
+                // for a file copy, its first argument fails the literal-path test, and the
+                // whole method becomes a conservative unknown that SL-003 blocks. Same bytes,
+                // same semantics, no false positive.
+                () => Array.Copy(changedSourceBytes, mutableSourceBytes, changedSourceBytes.Length)),
             new FakeScribeEmissionVerifier(VerifiedScribeEmissions.Empty));
         var console = new BufferedConsole();
 
