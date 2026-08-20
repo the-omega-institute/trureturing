@@ -1,0 +1,9 @@
+theory: D5
+plane: F
+domain: Quantum
+subdomain: Completion
+module: RelativeQuotientDecomposition
+generality: G
+selector: ""
+artifact: lean
+tag: ""
