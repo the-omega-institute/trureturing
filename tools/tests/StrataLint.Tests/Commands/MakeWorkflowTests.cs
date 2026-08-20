@@ -45,6 +45,8 @@ public sealed partial class MakeWorkflowTests
         "help",
         "test",
         "lean-cache-ensure",
+        "lean-cache-publish",
+        "lean-cache-fetch",
         "lean",
         "lean-report",
         "build",
