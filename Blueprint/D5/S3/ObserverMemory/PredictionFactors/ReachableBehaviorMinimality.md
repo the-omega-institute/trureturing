@@ -6,7 +6,7 @@ The reachable future-behavior quotient is the canonical smallest finite realizat
 
 **Theorem 1.1 (The reachable behavior quotient is canonically minimal).**
 
-$$\begin{gathered}\forall M, X, Xprime, B,\\[\operatorname{Monoid}(M)], [\operatorname{MulAction}(M, X)], [\operatorname{MulAction}(M, Xprime)],\\[\operatorname{Finite}(X)], [\operatorname{Finite}(Xprime)],\\a: X, ap: Xprime, O: X \to B, Op: Xprime \to B,\\Zbeta = \{m \cdot a \mid m \in M\} / (\forall k, O(k \cdot x) = O(k \cdot y)),\\(\forall xp, \exists m, m \cdot ap = xp) \land (\forall m, Op(m \cdot ap) = O(m \cdot a))\\\Rightarrow \operatorname{card}(Zbeta) \leq \operatorname{card}(Xprime) \land\\\exists! h: Xprime \to Zbeta, \operatorname{Surjective}\left(h\right) \land (\forall m, h(m \cdot ap) = [m \cdot a]).\end{gathered}$$
+$$\begin{gathered}\forall M, X, Xprime, B,\\{}[\operatorname{Monoid}(M)], [\operatorname{MulAction}(M, X)], [\operatorname{MulAction}(M, Xprime)],\\{}[\operatorname{Finite}(X)], [\operatorname{Finite}(Xprime)],\\a: X, ap: Xprime, O: X \to B, Op: Xprime \to B,\\Zbeta = \{m \cdot a \mid m \in M\} / (\forall k, O(k \cdot x) = O(k \cdot y)),\\(\forall xp, \exists m, m \cdot ap = xp) \land (\forall m, Op(m \cdot ap) = O(m \cdot a))\\\Rightarrow \operatorname{card}(Zbeta) \leq \operatorname{card}(Xprime) \land\\\exists! h: Xprime \to Zbeta, \operatorname{Surjective}\left(h\right) \land (\forall m, h(m \cdot ap) = [m \cdot a]).\end{gathered}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/ObserverMemory/PredictionFactors/ReachableBehaviorMinimality.finite_state_minimality` (`✓ std3`). ∎
 
