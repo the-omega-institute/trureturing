@@ -50,7 +50,12 @@ internal static partial class DigestionStatusEvaluator
                 findings))
             .ToArray();
         DeriveMigration(work);
-        return CompleteEvaluation(work, snapshot, findings, validateProjectedStatus: true);
+        return CompleteEvaluation(
+            work,
+            snapshot,
+            findings,
+            validateProjectedStatus: true,
+            changes: null);
     }
 
     internal static DigestionLedgerEvaluation Evaluate(
@@ -133,7 +138,13 @@ internal static partial class DigestionStatusEvaluator
                 + $"{item.Atom.AstPath} ({item.SuggestedAtomId}); run make ingest to close it")
             .Order(StringComparer.Ordinal)
             .ToImmutableArray();
-        return CompleteEvaluation(work, snapshot, findings, validateProjectedStatus, observations);
+        return CompleteEvaluation(
+            work,
+            snapshot,
+            findings,
+            validateProjectedStatus,
+            changes,
+            observations);
     }
 
     private static void RequireDecompositionBeforeNewAbsorption(
@@ -174,6 +185,7 @@ internal static partial class DigestionStatusEvaluator
         RepositorySnapshot snapshot,
         ImmutableArray<string>.Builder findings,
         bool validateProjectedStatus,
+        RawChangeSet? changes,
         // 非阻断的观察项(「已入库、尚未消化」)。两条评估路径共用本方法,
         // 只有 admission 路径会传入;projection 路径不产观察项。
         ImmutableArray<string> observations = default)
@@ -182,7 +194,7 @@ internal static partial class DigestionStatusEvaluator
         foreach (var item in work)
         {
             CompleteChainGaps(item, work);
-            var truth = DeriveTruth(item, snapshot);
+            var truth = DeriveTruth(item, snapshot, changes);
             var status = new DigestionStatus(item.Migration, truth);
             if (validateProjectedStatus
                 && item.StatusAuthorityChanged
@@ -472,7 +484,10 @@ internal static partial class DigestionStatusEvaluator
         }
     }
 
-    private static DigestionTruthState DeriveTruth(EntryWork item, RepositorySnapshot snapshot)
+    private static DigestionTruthState DeriveTruth(
+        EntryWork item,
+        RepositorySnapshot snapshot,
+        RawChangeSet? changes)
     {
         if (item.TargetStates.Count == 0
             || item.TargetStates.Any(static target => target.State is TruthState.Open or TruthState.Semantic))
@@ -501,7 +516,14 @@ internal static partial class DigestionStatusEvaluator
                 return DigestionTruthState.Open;
             }
 
-            if (!TailAuthorizationArtifact.Verify(item.Entry, tailGids, snapshot))
+            var validateStoredArtifact = changes is not null
+                && (DigestionCasStore.EntryChanged(item.Entry, changes)
+                    || changes.Paths.Any(path => path.Value == item.Entry.Receipts.TailAuthorization.Path));
+            if (!TailAuthorizationArtifact.Verify(
+                    item.Entry,
+                    tailGids,
+                    snapshot,
+                    validateStoredArtifact))
             {
                 item.Gaps.Add(new DigestionGap(
                     "tail-authorization-invalid",

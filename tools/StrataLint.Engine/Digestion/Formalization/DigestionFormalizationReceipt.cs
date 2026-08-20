@@ -135,6 +135,17 @@ internal sealed record DigestionFormalizationReceipt(
     // that does not select a declaration, or a non-canonical fingerprint all throw
     // FormatException. Modeled on ScribeEmissionAttestation.Load.
     internal static DigestionFormalizationReceipt Load(RepositorySnapshot snapshot, string relativePath)
+        => Load(snapshot, relativePath, validateCanonicalBytes: true);
+
+    internal static DigestionFormalizationReceipt LoadTrusted(
+        RepositorySnapshot snapshot,
+        string relativePath) =>
+        Load(snapshot, relativePath, validateCanonicalBytes: false);
+
+    private static DigestionFormalizationReceipt Load(
+        RepositorySnapshot snapshot,
+        string relativePath,
+        bool validateCanonicalBytes)
     {
         ArgumentNullException.ThrowIfNull(snapshot);
         ArgumentException.ThrowIfNullOrWhiteSpace(relativePath);
@@ -144,7 +155,8 @@ internal sealed record DigestionFormalizationReceipt(
         }
 
         using var document = JsonDocument.Parse(file.Text);
-        if (!StructuredCanonicalWriter.WriteJson(document.RootElement).AsSpan()
+        if (validateCanonicalBytes
+            && !StructuredCanonicalWriter.WriteJson(document.RootElement).AsSpan()
                 .SequenceEqual(file.RawBytes.AsSpan()))
         {
             throw new FormatException($"{relativePath} is not canonical JSON");

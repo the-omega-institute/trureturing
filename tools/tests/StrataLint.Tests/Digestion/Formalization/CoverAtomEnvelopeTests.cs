@@ -461,6 +461,20 @@ public sealed partial class CoverAtomTests
     }
 
     [Fact]
+    public void TrustedBaselineFormalizationReceiptCanonicalityIsNotReplayed()
+    {
+        var execution = Execute(new CoverSpec
+        {
+            BaselineTargetIdentical = true,
+            NoncanonicalBaselineEnvelope = true,
+        });
+        var (result, after, before) = execution;
+
+        Assert.True(result.Success, result.Error);
+        Assert.NotEqual(before, after);
+    }
+
+    [Fact]
     public void CoverRejectsMissingEnvelopeReceipt()
     {
         // Fail-closed: without the pre-committed formalization receipt, cover cannot

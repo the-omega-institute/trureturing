@@ -502,14 +502,14 @@ public sealed partial class BackfillInventoryLoaderTests
     }
 
     [Fact]
-    public void HistoricalBaselineRejectsNoncanonicalEmptyAcknowledgedStaleArray()
+    public void HistoricalBaselineTrustsNoncanonicalEmptyAcknowledgedStaleArray()
     {
         var sourcePath = $"{BackfillInventoryLoader.RootPath}delta-v0.1/source.toml";
-        var exception = Assert.Throws<FormatException>(() => BackfillInventoryLoader.LoadBaseline(Snapshot(
+        var document = BackfillInventoryLoader.LoadBaseline(Snapshot(
             (sourcePath, "source_id = \"delta-v0.1\"\npath = \"docs/delta.md\"\natomizer = \"none\"\nacknowledged_stale = []\n"),
-            Atom("delta-v0.1", "residual-open", "delta-atom", "theorem/delta"))));
+            Atom("delta-v0.1", "residual-open", "delta-atom", "theorem/delta")));
 
-        Assert.Equal($"source metadata is not canonically encoded: {sourcePath}", exception.Message);
+        Assert.Empty(Assert.Single(document.RequireDigestionSources()).AcknowledgedStale);
     }
 
     [Theory]

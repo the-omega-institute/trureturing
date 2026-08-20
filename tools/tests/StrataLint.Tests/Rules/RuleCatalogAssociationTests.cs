@@ -159,6 +159,38 @@ public sealed class RuleCatalogAssociationTests
             skipped);
     }
 
+    [Theory]
+    [InlineData("tools/StrataLint.Engine/Rules/RepositoryRules.cs")]
+    [InlineData("tools/StrataLint.Engine/Rules/FutureSharedRule.cs")]
+    [InlineData("tools/StrataLint.Engine/StrataLint.Engine.csproj")]
+    [InlineData("Directory.Build.targets")]
+    public void EveryActiveRuleWakesWhenSharedRuleImplementationChanges(string changedPath)
+    {
+        var context = new RuleFixture().Build(RawChangeSet.Create([changedPath]));
+
+        var outcome = RuleCatalog.Default.Execute(context);
+
+        var completed = Assert.IsType<RuleExecutionOutcome.Completed>(outcome).Capability;
+        var active = RuleCatalog.Default.Descriptors
+            .Where(static descriptor => descriptor.Lifecycle == RuleLifecycle.Active)
+            .Select(static descriptor => descriptor.Id);
+        Assert.Equal(active, completed.ExecutedRules);
+        Assert.Empty(completed.SkippedRules);
+    }
+
+    [Fact]
+    public void NonRuleEngineSourceChangeRetainsPerRuleScoping()
+    {
+        var context = new RuleFixture().Build(RawChangeSet.Create(
+            ["tools/StrataLint.Engine/Snapshot/CanonicalSnapshot.cs"]));
+
+        var outcome = RuleCatalog.Default.Execute(context);
+
+        var completed = Assert.IsType<RuleExecutionOutcome.Completed>(outcome).Capability;
+        Assert.NotEmpty(completed.ExecutedRules);
+        Assert.NotEmpty(completed.SkippedRules);
+    }
+
     [Fact]
     public void ApplicableToPreservesPairAssociationsAndCatalogOrder()
     {
