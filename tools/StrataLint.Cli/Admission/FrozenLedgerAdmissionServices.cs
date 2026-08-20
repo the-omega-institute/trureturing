@@ -61,7 +61,8 @@ internal sealed class ProductionFrozenLedgerAdmissionServices : IFrozenLedgerAdm
                 baseView,
                 ImmutableArray<DagLedgerFileEvent>.Empty,
                 producerPaths.Value,
-                TrustedFrozenGitReferences.CreateForTrustedAdapter([], []));
+                TrustedFrozenGitReferences.CreateForTrustedAdapter([], []),
+                ProtectedBaseSnapshot: protectedBase);
         }
 
         var deltaFiles = deltaPaths.Select(path => current.TryGetFile(path.Value, out var file)
@@ -186,7 +187,8 @@ internal sealed class ProductionFrozenLedgerAdmissionServices : IFrozenLedgerAdm
             producerPaths.Value,
             trusted,
             revocationBaseline,
-            revocationReceipts);
+            revocationReceipts,
+            protectedBase);
     }
 
     private static void RejectClosurelessAddedFreezes(

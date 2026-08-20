@@ -154,7 +154,10 @@ public static partial class FrozenLedger
                         active,
                         trustedReferences,
                         catalog,
-                        repositoryImportClosureUnchanged: false);
+                        repositoryImportClosureUnchanged: false,
+                        externalImportsCoveredByNamedPins: true,
+                        relevantSemanticPinsChanged: false,
+                        candidateStatementsAvoidTrivialTruth: true);
                     if (!baseline.ActiveEntries.TryGetValue(supersede.CaseId, out var baseEntry)
                         || !supersededBaseCases.Add(supersede.CaseId))
                     {
