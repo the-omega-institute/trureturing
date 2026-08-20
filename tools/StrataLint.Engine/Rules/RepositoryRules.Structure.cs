@@ -18,11 +18,13 @@ internal static partial class RepositoryRules
             foreach (var module in report.Imports.Where(static item => item.StartsWith("D5.", StringComparison.Ordinal)))
             {
                 var target = module.Replace('.', '/') + ".lean";
-                if (!context.Current.TryGetFile(target, out _))
+                var findingAffected = IsLeanClosureFactAffected(context, path)
+                    || context.IsBaseFactAffected(target);
+                if (!context.Current.TryGetFile(target, out _) && findingAffected)
                 {
                     findings.Add(new RuleFinding(path.Value, $"managed import {target} does not exist"));
                 }
-                else if (!ImportAllowed(path.Value, target))
+                else if (!ImportAllowed(path.Value, target) && findingAffected)
                 {
                     findings.Add(new RuleFinding(path.Value, $"stratum closure may not import {target}"));
                 }
@@ -42,7 +44,9 @@ internal static partial class RepositoryRules
                 .Select(static item => item.Name)
                 .Order(StringComparer.Ordinal)
                 .ToArray();
-            if (declarations.Length > 0 && !path.Value.Contains("/X_Frontier/", StringComparison.Ordinal))
+            if (declarations.Length > 0
+                && !path.Value.Contains("/X_Frontier/", StringComparison.Ordinal)
+                && IsLeanClosureFactAffected(context, path))
             {
                 findings.Add(new RuleFinding(
                     path.Value,
@@ -369,7 +373,8 @@ internal static partial class RepositoryRules
             foreach (var target in ImportClosure(source, imports))
             {
                 if (headers.TryGetValue(target, out var imported)
-                    && imported?.Generality is "I" or "E")
+                    && imported?.Generality is "I" or "E"
+                    && IsLeanClosureFactAffected(context, RepoPath.CreateKnown(source)))
                 {
                     findings.Add(new RuleFinding(
                         source,
@@ -413,6 +418,13 @@ internal static partial class RepositoryRules
 
             var stratum = parts[stratumIndex];
             var domain = parts[stratumIndex + 1];
+            if (!context.IsBaseFactAffected(path.Value)
+                && !context.IsBaseFactAffected("Meta/domains.yaml")
+                && !context.IsBaseFactAffected("Meta/registry.yaml"))
+            {
+                continue;
+            }
+
             var policyDomain = context.Policy.Domains.FirstOrDefault(
                 item => string.Equals(item.Key.Value, domain, StringComparison.Ordinal));
             if (policyDomain.Key is null)

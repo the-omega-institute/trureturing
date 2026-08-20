@@ -6,8 +6,9 @@ internal static partial class RepositoryRules
 {
     private static ImmutableArray<RuleFinding> ScribeLegacyConstructorBudget(RuleEvaluationContext context)
     {
-        var paths = context.Changes.Paths
+        var paths = context.Current.Files.Keys
             .Where(static path => IsBlueprintPath(path.Value, ".scribe.cs"))
+            .Where(path => context.IsBaseFactAffected(path.Value))
             .ToImmutableArray();
         var findings = ImmutableArray.CreateBuilder<RuleFinding>();
 
