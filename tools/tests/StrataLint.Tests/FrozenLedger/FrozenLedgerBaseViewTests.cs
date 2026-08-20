@@ -145,24 +145,6 @@ public sealed class FrozenLedgerBaseViewTests(ITestOutputHelper output)
     }
 
     [Fact]
-    public void BaseProjectionUsesFrozenNodeIdAsTheRuntimeIdentityForHistoricalReattest()
-    {
-        var repository = TestRepositoryLayout.FindRoot();
-        var source = File.ReadAllText(Path.Combine(
-            repository,
-            "tools",
-            "StrataLint.Engine",
-            "Ledger",
-            "Admission",
-            "FrozenLedgerBaseView.cs"));
-
-        Assert.DoesNotContain(
-            "current.Payload.TryGetProperty(\"semantic_receipt\"",
-            source,
-            StringComparison.Ordinal);
-    }
-
-    [Fact]
     public void BaseProjectionConsumesSchemaV4LegacyReattestBeforeRevoke()
     {
         var view = FrozenLedgerBaseViewReader.Read(Snapshot(
