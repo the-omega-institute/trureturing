@@ -1,0 +1,10 @@
+## 定义 19.2（模型有效性）
+
+\[
+\boxed{
+\mathfrak M\models P
+\iff
+\forall x,\operatorname{Adm}(x)\to P(x).
+}
+\]
+

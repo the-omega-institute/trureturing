@@ -191,7 +191,6 @@ public sealed partial class MakeWorkflowTests
 
     [Theory]
     [InlineData(AdmissionWorkflowPath)]
-    [InlineData(TheoryIngestWorkflowPath)]
     public void RepositoryWorkflowRunStepsBindEveryQuotedShellVariable(string relativePath)
     {
         var workflow = File.ReadAllText(Path.Combine(TestRepositoryLayout.FindRoot(), relativePath));

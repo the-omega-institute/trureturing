@@ -1,0 +1,21 @@
+## 定义 28.2（个体本质属性）
+
+\[
+\boxed{
+\operatorname{Essential}_K(P,a)
+\iff
+P(a)
+\land
+\forall x,
+\operatorname{Adm}(x)
+\land Kx=Ka
+\to P(x).
+}
+\]
+
+在保持指定本质行为不变的全部合法实现中，属性 \(P\) 均保持。
+
+化学本质、法律本质、生物功能本质、人格本质和程序行为本质可以对应不同目标 \(K\)，不必被压成一个绝对本质。
+
+---
+

@@ -1,0 +1,13 @@
+### 定理 41.9（未来轨迹严格下降）
+
+\[
+\boxed{
+\operatorname{Tr}_{q,F}(Fx)
+=
+\operatorname{shift}
+\bigl(
+\operatorname{Tr}_{q,F}(x)
+\bigr).
+}
+\]
+

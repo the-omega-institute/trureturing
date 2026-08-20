@@ -1,0 +1,16 @@
+## 定义 31.1（局部干预因果见证）
+
+\[
+\boxed{
+\begin{aligned}
+\operatorname{Cause}_{C\to D}(a;u,v)
+\iff{}&
+q_B(I_ua)=q_B(I_va)\\
+&\land q_C(I_ua)\ne q_C(I_va)\\
+&\land q_D(F(I_ua))\ne q_D(F(I_va)).
+\end{aligned}
+}
+\]
+
+它要求背景保持，原因变量被改变，结果随之改变。
+

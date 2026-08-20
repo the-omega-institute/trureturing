@@ -21,4 +21,3 @@ This closes only the sentence Q(zeta_5)^+ = Q(sqrt(5)) from clause 2, using its 
 ## References
 
 - Truth anchor: `D5/S3/Constants/Cyclotomy/RealSubfield.real_cyclotomic_generator_adjoin_eq_sqrt_five`
-- Dependency: [D5/S3/Constants/PentagonCosines](../PentagonCosines.md)

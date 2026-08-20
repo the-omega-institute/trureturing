@@ -23,4 +23,3 @@ This declaration asserts only the three matrix equalities. It does not assert li
 ## References
 
 - Truth anchor: `D5/S1/Eigenstructure/FibonacciMatrixDiscriminant.fibonacci_substitution_trace_det_discriminant`
-- Dependency: [D5/S1/Scale/FibonacciEigen](../Scale/FibonacciEigen.md)

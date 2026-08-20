@@ -1,0 +1,11 @@
+\[
+\boxed{
+\operatorname{Obs}(\mathbf X)
+=
+\sum_{x:\prod_iX_i}
+\prod_{j\succeq i}p_{ji}(x_j)=x_i.
+}
+\]
+
+它是逆极限 cone 的项类型。
+

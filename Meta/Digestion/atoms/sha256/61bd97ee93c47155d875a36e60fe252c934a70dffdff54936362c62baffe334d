@@ -1,0 +1,26 @@
+### 定理 41.13
+
+\[
+\boxed{
+H_\mu(X)
+=
+H_{\mu_B}(B)
++
+\sum_b
+\mu_B(b)\,
+H_\mu(X\mid q=b).
+}
+\]
+
+亦即：
+
+\[
+\boxed{
+H(X)
+=
+H(q(X))
++
+H(X\mid q(X)).
+}
+\]
+

@@ -1,0 +1,14 @@
+## 定理 2.1（定义性保守性）
+
+对任何旧语言命题 \(\varphi\in\mathcal L_0\)，若：
+
+\[
+T_{\Phi}\vdash\varphi,
+\]
+
+且 \(T_{\Phi}\) 仅为定义扩张，则：
+
+\[
+T_0\vdash\varphi.
+\]
+

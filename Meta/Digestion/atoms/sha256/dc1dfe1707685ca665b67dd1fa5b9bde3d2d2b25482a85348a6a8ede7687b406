@@ -1,0 +1,10 @@
+## 定义 8.3（共同粗化）
+
+在具有有效 quotient 的基础中，令：
+
+\[
+\ker C=\{(x,y)\mid x\sim_Cy\}.
+\]
+
+\(C,D\) 的最细共同粗化对应于包含 \(\ker C\cup\ker D\) 的最小等价关系，即其等价闭包。取相应 quotient 得到 \(C\wedge D\)。
+

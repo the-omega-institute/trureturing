@@ -35,7 +35,13 @@
     },
     {
       "source_ref": "D5/X_Frontier/GoldenUnitsUFD",
-      "kind": "mathematical-not-yet-stated"
+      "kind": "retired",
+      "delivery_gids": [
+        "D5/S0/Carrier/PrincipalIdeal.golden_int_is_pid",
+        "D5/S0/Carrier/PrincipalIdeal.golden_int_is_ufd",
+        "D5/S1/Scale/CarrierFoundations.golden_carrier_foundations",
+        "D5/S1/Scale/Units.golden_units_eq_signed_phi_pow"
+      ]
     },
     {
       "source_ref": "D5/X_Frontier/GovernanceDeferrals",
@@ -68,6 +74,13 @@
     {
       "source_ref": "D5/X_Frontier/ValuesProducer",
       "kind": "mathematical-not-yet-stated"
+    },
+    {
+      "source_ref": "D5/X_Frontier/ZeckendorfNormSign",
+      "kind": "retired",
+      "delivery_gids": [
+        "D5/S1/Deficit/Displacement/ZeckendorfNormSign.betaGolden_norm_sign_of_least_zeckendorf_index"
+      ]
     }
   ],
   "selection": {

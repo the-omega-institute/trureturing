@@ -98,6 +98,39 @@ public sealed class TypeModelTests
         Assert.Equal(expected, RepositoryPathPolicy.IsEchoResidualShardPath(value));
     }
 
+    [Fact]
+    public void ProblemPoolCandidateIsClosedWorldRegisteredButNotASemanticTarget()
+    {
+        var path = RepoPath.CreateKnown("Problems/wall-sun-sun-golden-unit-lift.md");
+
+        Assert.Null(RepositoryPathPolicy.Validate(path, Policy()));
+        Assert.False(RepositoryPathPolicy.TryResolve(path, out _));
+    }
+
+    // The one-problem-one-file partition of spec 11.20.3 has no guard of its own:
+    // a nested path, a non-Markdown payload and an uppercase stem are rejected only
+    // because the canonical path predicate does not match them, so the SL-000
+    // direction is pinned here rather than left to the committed files.
+    [Theory]
+    [InlineData("Problems/sub/x.md")]
+    [InlineData("Problems/index.json")]
+    [InlineData("Problems/Foo.md")]
+    [InlineData("Problems/wall-sun-sun.md.bak")]
+    [InlineData("Problems/.md")]
+    [InlineData("ProblemsX/a.md")]
+    public void ProblemPoolPathGrammarRejectsNoncanonicalNeighbors(string value)
+    {
+        var path = RepoPath.CreateKnown(value);
+
+        var issue = Assert.IsType<RepositoryPathIssue>(
+            RepositoryPathPolicy.Validate(path, Policy()));
+
+        Assert.Equal("SL-000", issue.RuleId.Value);
+        Assert.Equal(value, issue.Path);
+        Assert.Equal("unknown top-level artifact", issue.Message);
+        Assert.False(RepositoryPathPolicy.TryResolve(path, out _));
+    }
+
     private const string PaperRecipePath = "Papers/recipes/D5-P001.yaml";
 
     [Fact]
@@ -146,6 +179,8 @@ public sealed class TypeModelTests
         Assert.True(RuleId.TryCreate("SL-023", out _));
         Assert.False(RuleId.TryCreate("SL-024", out _));
         Assert.True(RuleId.TryCreate("SL-025", out _));
+        Assert.True(RuleId.TryCreate("SL-027", out _));
+        Assert.True(RuleId.TryCreate("SL-028", out _));
         Assert.True(CaseId.TryCreate("D5-T0016", out _));
     }
 
@@ -154,7 +189,9 @@ public sealed class TypeModelTests
     [InlineData(24, false)]
     [InlineData(25, true)]
     [InlineData(26, true)]
-    [InlineData(27, false)]
+    [InlineData(27, true)]
+    [InlineData(28, true)]
+    [InlineData(29, false)]
     public void RuleIdKnownDomainPreservesTheIntentionalGapAndUpperBoundary(
         int number,
         bool expected)

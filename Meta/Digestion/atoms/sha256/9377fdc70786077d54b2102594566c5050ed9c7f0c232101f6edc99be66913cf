@@ -1,0 +1,18 @@
+### 定义 41.18（形式逆极限）
+
+\[
+\boxed{
+\varprojlim_nX_n
+=
+\sum_{x:\prod_nX_n}
+\prod_n
+\bigl(
+p_n(x_{n+1})=x_n
+\bigr).
+}
+\]
+
+该类型可定义，但可能为空。
+
+---
+

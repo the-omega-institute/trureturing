@@ -1,0 +1,12 @@
+\[
+C_{n+1}
+=
+\operatorname{Comp}_{K_n}(C_n).
+\]
+
+则：
+
+\[
+C_0\preceq C_1\preceq C_2\preceq\cdots.
+\]
+

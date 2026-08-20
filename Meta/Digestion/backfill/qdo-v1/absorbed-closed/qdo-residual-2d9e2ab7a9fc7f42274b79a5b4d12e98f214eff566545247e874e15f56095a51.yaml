@@ -1,0 +1,17 @@
+ast_path: theorem/37.21
+fingerprints:
+  raw_sha256: sha256:2d9e2ab7a9fc7f42274b79a5b4d12e98f214eff566545247e874e15f56095a51
+  normalized_sha256: sha256:2d9e2ab7a9fc7f42274b79a5b4d12e98f214eff566545247e874e15f56095a51
+cas_ref: sha256:2d9e2ab7a9fc7f42274b79a5b4d12e98f214eff566545247e874e15f56095a51
+coverage_gids:
+  - D5/S3/Observer/Separation/MoreauDecomposition.moreau_decomposition
+receipts:
+  coverage:
+    - gid: D5/S3/Observer/Separation/MoreauDecomposition.moreau_decomposition
+      source_sha256: sha256:2d9e2ab7a9fc7f42274b79a5b4d12e98f214eff566545247e874e15f56095a51
+      target_sha256: sha256:7b7e65b2627de0fa89d450bb6fbf139a991f23a32d28352f0201d3e76bba0c2f
+  scribe:
+    - gid: D5/S3/Observer/Separation/MoreauDecomposition.moreau_decomposition
+      definition_sha256: sha256:c04adbfc6e12d36c1cc14fe78d5c5959cf4fbae01c46dadbee212edceade383f
+      emission_sha256: sha256:5ff065b976026d2f772f3a8ac56af60f74b5935cc68d4df93e1f922103dcc4b2
+  unresolved_subitems: []

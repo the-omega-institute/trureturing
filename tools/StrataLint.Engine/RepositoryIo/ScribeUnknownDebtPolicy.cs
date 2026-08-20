@@ -132,6 +132,14 @@ internal static class ScribeUnknownDebtPolicy
         ScribeTestMap map,
         ImmutableArray<ScribeUnknownDebtFinding>.Builder findings)
     {
+        foreach (var finding in map.CompileQueryFindings)
+        {
+            findings.Add(new ScribeUnknownDebtFinding(
+                finding.Path,
+                finding.Message,
+                AdmissionEffect.Block));
+        }
+
         foreach (var path in map.UnclassifiedManagedProjectPaths)
         {
             findings.Add(new ScribeUnknownDebtFinding(
@@ -145,7 +153,7 @@ internal static class ScribeUnknownDebtPolicy
         {
             findings.Add(new ScribeUnknownDebtFinding(
                 path,
-                "managed test source has no tracked project under tools/tests",
+                "managed source is absent from every tracked project's MSBuild Compile items",
                 AdmissionEffect.Block));
         }
 

@@ -1,0 +1,33 @@
+### 定义 41.4（ANCHOR）
+
+一个 anchor 是：
+
+\[
+\boxed{
+a:\operatorname{Real}(X,A).
+}
+\]
+
+所以：
+
+\[
+a=(x,h),
+\qquad
+h:A(x).
+\]
+
+四者不是四种本体物质，而是同一种态射语言的四种角色：
+
+\[
+\boxed{
+\begin{aligned}
+\mathsf{CUT}&=\text{规定当前可见性},\\
+\mathsf{FLOW}&=\text{规定过程与运输},\\
+\mathsf{ADMIT}&=\text{规定可实现性},\\
+\mathsf{ANCHOR}&=\text{给出一个实际见证}.
+\end{aligned}
+}
+\]
+
+---
+

@@ -1,0 +1,26 @@
+### 定义 41.24（未来轨迹）
+
+\[
+\boxed{
+\operatorname{Tr}_{q,F}:X\to B^{\mathbb N}
+}
+\]
+
+由：
+
+\[
+\operatorname{Tr}_{q,F}(x)(n)
+=
+q(F^n x)
+\]
+
+定义。
+
+定义 shift：
+
+\[
+\operatorname{shift}(u)(n)=u(n+1).
+\]
+
+---
+

@@ -15,6 +15,19 @@ public sealed partial class MissionFileLoaderTests
 
         """;
 
+    private const string RetiredFrontierEligibilityJson = """
+          "frontier_eligibility": [
+            {
+              "source_ref": "D5/X_Frontier/GovernanceDeferrals",
+              "kind": "retired",
+              "delivery_gids": [
+                "D5/X_Frontier/GovernanceDeferrals.fixture_delivery"
+              ]
+            }
+          ],
+
+        """;
+
     [Fact]
     public void BaselineMissionWithoutFrontierEligibilityRemainsLoadable()
     {
@@ -45,6 +58,74 @@ public sealed partial class MissionFileLoaderTests
                 .GetProperty("frontier_eligibility")[0]
                 .GetProperty("kind")
                 .GetString());
+    }
+
+    [Fact]
+    public void RetiredFrontierEligibilityCarriesCanonicalDeliveryEvidence()
+    {
+        var mission = ValidMission.Replace(
+            FrontierEligibilityJson,
+            RetiredFrontierEligibilityJson,
+            StringComparison.Ordinal);
+
+        var loaded = Assert.IsType<MissionLoadOutcome.Loaded>(
+            MissionFileLoader.Load(Snapshot(mission)));
+        var entry = Assert.Single(loaded.Policy.FrontierEligibility);
+
+        Assert.Equal(FrontierEligibilityKind.Retired, entry.Kind);
+        Assert.Single(entry.DeliveryGids);
+        Assert.Equal(
+            "D5/X_Frontier/GovernanceDeferrals.fixture_delivery",
+            entry.DeliveryGids[0]);
+        using var canonical = JsonDocument.Parse(MissionFileLoader.CanonicalBytes(loaded.Policy));
+        Assert.Equal(
+            "D5/X_Frontier/GovernanceDeferrals.fixture_delivery",
+            canonical.RootElement
+                .GetProperty("frontier_eligibility")[0]
+                .GetProperty("delivery_gids")[0]
+                .GetString());
+    }
+
+    [Fact]
+    public void RetiredFrontierEligibilityRejectsEmptyDeliveryEvidence()
+    {
+        var mission = ValidMission.Replace(
+            FrontierEligibilityJson,
+            RetiredFrontierEligibilityJson.Replace(
+                "\"D5/X_Frontier/GovernanceDeferrals.fixture_delivery\"",
+                string.Empty,
+                StringComparison.Ordinal),
+            StringComparison.Ordinal);
+
+        var invalid = Assert.IsType<MissionLoadOutcome.Invalid>(
+            MissionFileLoader.Load(Snapshot(mission)));
+
+        Assert.Equal(MissionLoadErrorCode.InvalidSchema, invalid.Error.Code);
+        Assert.Contains(
+            "must contain canonical formal declaration GIDs",
+            invalid.Error.Message,
+            StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void RetiredFrontierEligibilityRejectsDanglingDeliveryEvidence()
+    {
+        var mission = ValidMission.Replace(
+            FrontierEligibilityJson,
+            RetiredFrontierEligibilityJson.Replace(
+                "D5/X_Frontier/GovernanceDeferrals.fixture_delivery",
+                "D5/S0/Carrier/Ring.missing_delivery",
+                StringComparison.Ordinal),
+            StringComparison.Ordinal);
+
+        var invalid = Assert.IsType<MissionLoadOutcome.Invalid>(
+            MissionFileLoader.Load(Snapshot(mission)));
+
+        Assert.Equal(MissionLoadErrorCode.InvalidSchema, invalid.Error.Code);
+        Assert.Contains(
+            "delivery target is missing or noncanonical",
+            invalid.Error.Message,
+            StringComparison.Ordinal);
     }
 
     [Fact]

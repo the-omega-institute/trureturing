@@ -1,0 +1,22 @@
+## 定义 9.2（概念决定）
+
+命题 \(P\) 可由概念 \(C\) 决定，当：
+
+\[
+\boxed{
+P\preceq C,
+}
+\]
+
+即存在：
+
+\[
+\overline P:B_C\to\mathsf{Prop}
+\]
+
+使：
+
+\[
+P=\overline P\circ q_C.
+\]
+

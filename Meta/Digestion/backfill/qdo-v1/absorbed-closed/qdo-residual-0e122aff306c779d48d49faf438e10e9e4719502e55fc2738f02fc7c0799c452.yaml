@@ -1,0 +1,17 @@
+ast_path: theorem/25.8
+fingerprints:
+  raw_sha256: sha256:0e122aff306c779d48d49faf438e10e9e4719502e55fc2738f02fc7c0799c452
+  normalized_sha256: sha256:0e122aff306c779d48d49faf438e10e9e4719502e55fc2738f02fc7c0799c452
+cas_ref: sha256:0e122aff306c779d48d49faf438e10e9e4719502e55fc2738f02fc7c0799c452
+coverage_gids:
+  - D5/S3/ObserverMemory/Dynamics/InterventionNaturalityMinimality.intervention_naturality_minimality
+receipts:
+  coverage:
+    - gid: D5/S3/ObserverMemory/Dynamics/InterventionNaturalityMinimality.intervention_naturality_minimality
+      source_sha256: sha256:0e122aff306c779d48d49faf438e10e9e4719502e55fc2738f02fc7c0799c452
+      target_sha256: sha256:f1b653e350b1bca9d3a4672fd1ca177a2f6a86ee5047aee139bc4cafc88359cd
+  scribe:
+    - gid: D5/S3/ObserverMemory/Dynamics/InterventionNaturalityMinimality.intervention_naturality_minimality
+      definition_sha256: sha256:0d54c8049ce9d7aaf721d3bafb6d5618159732c90917b115a3618d80ac5e2580
+      emission_sha256: sha256:e174e4757e6fe6f0bd4175d9f3bc98367c0ae55d22ebba91947c6afb894d6f02
+  unresolved_subitems: []

@@ -1,0 +1,8 @@
+## 定义 27.2（领域可能）
+
+\[
+\Diamond_{\operatorname{Adm}}P
+\iff
+\exists x,\operatorname{Adm}(x)\land P(x).
+\]
+

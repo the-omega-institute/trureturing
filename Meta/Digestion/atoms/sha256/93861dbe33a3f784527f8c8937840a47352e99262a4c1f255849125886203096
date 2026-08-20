@@ -1,0 +1,12 @@
+## 定义 26.2（偶性变化）
+
+\[
+\boxed{
+\operatorname{AccidentalChange}_{S,A,F}(x)
+\iff
+S(Fx)=S(x)
+\land
+A(Fx)\ne A(x).
+}
+\]
+

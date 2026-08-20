@@ -1,0 +1,20 @@
+### 定义 41.3（ADMIT）
+
+一个 ADMIT 是谓词：
+
+\[
+\boxed{
+A:X\to\mathsf{Prop}.
+}
+\]
+
+其合法子类型为：
+
+\[
+\boxed{
+\operatorname{Real}(X,A)
+=
+\sum_{x:X}A(x).
+}
+\]
+

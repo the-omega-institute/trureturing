@@ -1,0 +1,28 @@
+### 定义 41.14（carry 见证）
+
+\[
+\boxed{
+\operatorname{CarryWitness}(F;q_X,q_Y)
+}
+\]
+
+定义为：
+
+\[
+\sum_{x,y:X}
+\bigl(q_X(x)=q_X(y)\bigr)
+\times
+\bigl(q_Y(Fx)\neq q_Y(Fy)\bigr).
+\]
+
+含义是：
+
+\[
+\boxed{
+\text{当前界面商掉的差异，
+在 FLOW 后重新成为未来可见差异。}
+}
+\]
+
+---
+

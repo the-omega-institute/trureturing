@@ -1,0 +1,17 @@
+## 定义 15.2（加法 carry cocycle）
+
+在扩张：
+
+\[
+0\to R\to X\xrightarrow qB\to0
+\]
+
+及截面 \(s\) 下：
+
+\[
+\kappa_s(a,b)
+=s(a)+s(b)-s(a+b).
+\]
+
+结合律蕴含：
+

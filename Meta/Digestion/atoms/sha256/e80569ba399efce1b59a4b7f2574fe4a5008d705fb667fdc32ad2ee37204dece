@@ -1,0 +1,43 @@
+### 定义 41.20（合法观察者）
+
+若每层有 ADMIT：
+
+\[
+A_n:X_n\to\mathsf{Prop},
+\]
+
+则：
+
+\[
+\boxed{
+\operatorname{PhysObs}(\mathbf X)
+=
+\sum_{x:\operatorname{Obs}(\mathbf X)}
+\prod_n A_n(x_n).
+}
+\]
+
+若还有能量或复杂度：
+
+\[
+E_n:X_n\to\mathbb R_{\ge0},
+\]
+
+可进一步要求：
+
+\[
+\sup_nE_n(x_n)<\infty.
+\]
+
+因此：
+
+\[
+\boxed{
+\text{观察者}
+=
+\text{贯穿全部 refinement 层的合法相容锚点历史}.
+}
+\]
+
+---
+

@@ -1,0 +1,20 @@
+\[
+\boxed{
+\operatorname{Carry}(F;C,D)
+=
+\sum_{x,y:X}
+(q_Cx=q_Cy)
+\times
+(q_DFx\ne q_DFy).
+}
+\]
+
+它表达：
+
+\[
+\boxed{
+\text{当前概念删除的差异，
+经过过程后成为未来概念可见的差异。}
+}
+\]
+

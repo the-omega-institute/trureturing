@@ -1,0 +1,20 @@
+# 21. 信念、辩护与 Gettier 缺陷
+
+定义信念策略：
+
+\[
+\beta:B_E\to\mathcal P(\operatorname{Prop}(X)).
+\]
+
+\[
+\operatorname{Bel}_E(P,a)
+\iff
+P\in\beta(E(a)).
+\]
+
+另给辩护关系：
+
+\[
+\operatorname{Just}(E(a),P).
+\]
+

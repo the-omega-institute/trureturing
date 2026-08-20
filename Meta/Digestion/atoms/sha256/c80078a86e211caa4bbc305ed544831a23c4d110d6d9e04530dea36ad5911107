@@ -1,0 +1,26 @@
+## 定义 12.2（精确下降）
+
+给定概念：
+
+\[
+C=(B_C,q_C)\text{ on }X,
+\qquad
+D=(B_D,q_D)\text{ on }Y,
+\]
+
+过程 \(F\) 从 \(C\) 下降到 \(D\)，当存在：
+
+\[
+\overline F:B_C\to B_D
+\]
+
+使：
+
+\[
+\boxed{
+q_DF=\overline Fq_C.
+}
+\]
+
+这表示宏观未来完全由当前概念值决定。
+

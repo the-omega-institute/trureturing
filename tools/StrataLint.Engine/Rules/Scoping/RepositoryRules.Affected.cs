@@ -14,6 +14,13 @@ internal static partial class RepositoryRules
             || FrozenLedgerChangeClassifier.IsAcceptedEventPath(path))
         || TheoristReceiptReferenceChanged(context);
 
+    private static bool DeliveryStatementIdentityAffected(RuleEvaluationContext context) =>
+        context.Changes.Paths.Any(path =>
+            path.Value.StartsWith("D5/X_Frontier/", StringComparison.Ordinal)
+            && path.Value.EndsWith(".lean", StringComparison.Ordinal)
+            && context.Baseline.TryGetFile(path.Value, out _)
+            && !context.Current.TryGetFile(path.Value, out _));
+
     private static bool CapacityAffected(RuleEvaluationContext context) =>
         Changed(context, static path =>
             !IsCapacityExcluded(path)

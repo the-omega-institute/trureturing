@@ -37,9 +37,13 @@ internal sealed record ScribeTestMap(
     IReadOnlyList<ScribeTestMethod> Methods,
     IReadOnlyList<string> UnclassifiedManagedProjectPaths,
     IReadOnlyList<string> OrphanManagedSourcePaths,
-    IReadOnlyList<string> DanglingCompileFailProofProjectExemptionPaths);
+    IReadOnlyList<string> DanglingCompileFailProofProjectExemptionPaths,
+    IReadOnlyDictionary<string, string> CompileProjectBySourcePath,
+    IReadOnlyList<MsBuildCompileFinding> CompileQueryFindings);
 
-internal sealed record ScribeTestProjectPartition(string Key, string Prefix);
+internal sealed record ScribeTestProjectPartition(string Key, string ProjectPath);
+
+internal sealed record ScribeTrackedSource(string Path, string Content);
 
 internal static class ScribeTestMapDeriver
 {
@@ -59,8 +63,9 @@ internal static class ScribeTestMapDeriver
     // roots; engineering scope is derived from consumers and does not use this declaration.
     internal static readonly IReadOnlyList<string> DeclaredPathWhitelist =
     [
+        // 消化退出 CI 后,ci.yml 是仓内唯一的 workflow;守卫「无 workflow 代跑消化」
+        // 与 lake 缓存契约都声明式读它(此前二者读的是已删除的 theory-ingest.yml)。
         ".github/workflows/ci.yml",
-        ".github/workflows/theory-ingest.yml",
         "Blueprint",
         "CLAUDE.md",
         "D5",
@@ -87,93 +92,67 @@ internal static class ScribeTestMapDeriver
         DeclaredPathWhitelist.Any(allowed => path == allowed
             || path.StartsWith(allowed + "/", StringComparison.Ordinal));
 
-    internal static ScribeTestMap DeriveRepository(string repositoryRoot)
+    internal static ScribeTestMap DeriveRepository(
+        string repositoryRoot,
+        string? dotnetExecutable = null,
+        TimeSpan? timeout = null)
     {
         var files = GitIndexRepositoryFiles.Enumerate(repositoryRoot);
-        var projectFiles = files
-            .Where(static file => file.RelativePath.EndsWith(".csproj", StringComparison.Ordinal))
-            .Select(file => (Path: file.RelativePath, Content: File.ReadAllText(file.FullPath)))
-            .ToArray();
-        var partitions = DeriveProjectPartitions(projectFiles);
-        var unclassifiedProjects = FindUnclassifiedManagedProjects(projectFiles);
-        var sourceFiles = files
-            .Where(static file => file.RelativePath.EndsWith(".cs", StringComparison.Ordinal))
-            .ToArray();
-        var orphanManagedSources = FindOrphanManagedSources(
-            projectFiles.Select(static project => project.Path),
-            sourceFiles.Select(static source => source.RelativePath));
-        var danglingExemptions = FindDanglingCompileFailProofProjectExemptions(
-            projectFiles.Select(static project => project.Path));
-        var sources = sourceFiles
-            .Where(file => TryPartition(file.RelativePath, partitions, out _))
-            .Select(file => new TestMapSource(
-                file.RelativePath,
-                File.ReadAllText(file.FullPath),
-                PartitionFor(file.RelativePath, partitions).Key))
-            .ToArray();
-        var productionSources = files
-            .Where(static file => IsProductionSource(file.RelativePath))
-            .Select(file => new RepositoryReadSource(
-                ProjectName(file.RelativePath),
+        var tracked = files
+            .Where(static file => file.RelativePath.EndsWith(".cs", StringComparison.Ordinal)
+                || file.RelativePath.EndsWith(".csproj", StringComparison.Ordinal))
+            .Select(file => new ScribeTrackedSource(
                 file.RelativePath,
                 File.ReadAllText(file.FullPath)))
             .ToArray();
-        var indirectSites = ProductionRepositoryReadDeriver.InspectTests(productionSources, sources)
-            .Select(static site => (site.Path, site.Line))
-            .ToArray();
-        return DeriveSources(
-            sources,
-            indirectSites,
-            unclassifiedManagedProjectPaths: unclassifiedProjects,
-            orphanManagedSourcePaths: orphanManagedSources,
-            danglingCompileFailProofProjectExemptionPaths: danglingExemptions);
+        var projectPaths = tracked
+            .Where(static file => file.Path.EndsWith(".csproj", StringComparison.Ordinal))
+            .Select(static file => file.Path);
+        return DeriveTracked(
+            tracked,
+            MsBuildCompileOracle.Query(repositoryRoot, projectPaths, dotnetExecutable, timeout));
     }
 
     internal static ScribeTestMap DeriveSnapshot(RepositorySnapshot snapshot)
     {
-        var projectFiles = snapshot.Files.Values
-            .Where(static file => file.Path.Value.EndsWith(".csproj", StringComparison.Ordinal))
-            .Select(static file => (Path: file.Path.Value, Content: file.Text))
+        var tracked = snapshot.Files.Values
+            .Where(static file => file.Path.Value.EndsWith(".cs", StringComparison.Ordinal)
+                || file.Path.Value.EndsWith(".csproj", StringComparison.Ordinal))
+            .Select(static file => new ScribeTrackedSource(file.Path.Value, file.Text))
             .ToArray();
-        var partitions = DeriveProjectPartitions(projectFiles);
-        var unclassifiedProjects = FindUnclassifiedManagedProjects(projectFiles);
-        var sourceFiles = snapshot.Files.Values
-            .Where(static file => file.Path.Value.EndsWith(".cs", StringComparison.Ordinal))
+        var projects = tracked
+            .Where(static file => file.Path.EndsWith(".csproj", StringComparison.Ordinal))
+            .Select(static file => file.Path)
             .ToArray();
-        var orphanManagedSources = FindOrphanManagedSources(
-            projectFiles.Select(static project => project.Path),
-            sourceFiles.Select(static source => source.Path.Value));
-        var danglingExemptions = FindDanglingCompileFailProofProjectExemptions(
-            projectFiles.Select(static project => project.Path));
-        var sources = sourceFiles
-            .Where(file => TryPartition(file.Path.Value, partitions, out _))
-            .Select(file => new TestMapSource(
-                file.Path.Value,
-                file.Text,
-                PartitionFor(file.Path.Value, partitions).Key))
-            .ToArray();
-        var productionSources = snapshot.Files.Values
-            .Where(static file => IsProductionSource(file.Path.Value))
-            .Select(static file => new RepositoryReadSource(
-                ProjectName(file.Path.Value),
-                file.Path.Value,
-                file.Text))
-            .ToArray();
-        var indirectSites = ProductionRepositoryReadDeriver.InspectTests(productionSources, sources)
-            .Select(static site => (site.Path, site.Line))
-            .ToArray();
-        return DeriveSources(
-            sources,
-            indirectSites,
-            unclassifiedManagedProjectPaths: unclassifiedProjects,
-            orphanManagedSourcePaths: orphanManagedSources,
-            danglingCompileFailProofProjectExemptionPaths: danglingExemptions);
+        if (projects.Length == 0)
+        {
+            return DeriveTracked(tracked, new MsBuildCompileMap(
+                new Dictionary<string, string>(StringComparer.Ordinal),
+                []));
+        }
+
+        try
+        {
+            using var checkout = MsBuildCompileOracle.Materialize(snapshot);
+            return DeriveTracked(tracked, MsBuildCompileOracle.Query(checkout.Root, projects));
+        }
+        catch (Exception exception) when (exception is IOException or UnauthorizedAccessException)
+        {
+            return DeriveTracked(tracked, new MsBuildCompileMap(
+                new Dictionary<string, string>(StringComparer.Ordinal),
+                projects.Select(project => new MsBuildCompileFinding(
+                    project,
+                    $"MSBuild snapshot materialization failed closed: {exception.Message}"))
+                    .ToArray()));
+        }
     }
 
     internal static IReadOnlyList<ScribeTestProjectPartition> DeriveProjectPartitions(
         IEnumerable<(string Path, string Content)> projectFiles) => projectFiles
         .Where(static project => IsXunitProject(project.Content))
-        .Select(static project => ProjectPartition(project.Path))
+        .Select(static project => new ScribeTestProjectPartition(
+            ProjectDirectory(project.Path),
+            project.Path))
         .OrderBy(static partition => partition.Key, StringComparer.Ordinal)
         .ToArray();
 
@@ -187,19 +166,11 @@ internal static class ScribeTestMapDeriver
         .ToArray();
 
     internal static IReadOnlyList<string> FindOrphanManagedSources(
-        IEnumerable<string> projectPaths,
-        IEnumerable<string> sourcePaths)
-    {
-        var managedProjectPartitions = projectPaths
-            .Where(static path => path.StartsWith(ManagedTestProjectPrefix, StringComparison.Ordinal))
-            .Select(ProjectPartition)
-            .ToArray();
-        return sourcePaths
-            .Where(static path => path.StartsWith(ManagedTestProjectPrefix, StringComparison.Ordinal))
-            .Where(path => !TryPartition(path, managedProjectPartitions, out _))
-            .Order(StringComparer.Ordinal)
-            .ToArray();
-    }
+        IEnumerable<string> sourcePaths,
+        IReadOnlyDictionary<string, string> projectBySourcePath) => sourcePaths
+        .Where(path => !projectBySourcePath.ContainsKey(path))
+        .Order(StringComparer.Ordinal)
+        .ToArray();
 
     internal static IReadOnlyList<string> FindDanglingCompileFailProofProjectExemptions(
         IEnumerable<string> projectPaths)
@@ -211,11 +182,51 @@ internal static class ScribeTestMapDeriver
             .ToArray();
     }
 
-    private static ScribeTestProjectPartition ProjectPartition(string projectPath)
+    private static string ProjectDirectory(string projectPath) =>
+        projectPath.LastIndexOf('/') is var slash && slash >= 0 ? projectPath[..slash] : ".";
+
+    private static ScribeTestMap DeriveTracked(
+        IReadOnlyList<ScribeTrackedSource> tracked,
+        MsBuildCompileMap compileMap)
     {
-        var slash = projectPath.LastIndexOf('/');
-        var key = slash < 0 ? "." : projectPath[..slash];
-        return new ScribeTestProjectPartition(key, key + "/");
+        var projectFiles = tracked
+            .Where(static file => file.Path.EndsWith(".csproj", StringComparison.Ordinal))
+            .Select(static file => (file.Path, file.Content))
+            .ToArray();
+        var sources = tracked
+            .Where(static file => file.Path.EndsWith(".cs", StringComparison.Ordinal))
+            .ToArray();
+        var testProjects = DeriveProjectPartitions(projectFiles)
+            .ToDictionary(static project => project.ProjectPath, StringComparer.Ordinal);
+        var testSources = sources
+            .Where(source => compileMap.ProjectBySourcePath.TryGetValue(source.Path, out var project)
+                && testProjects.ContainsKey(project))
+            .Select(source => new TestMapSource(
+                source.Path,
+                source.Content,
+                testProjects[compileMap.ProjectBySourcePath[source.Path]].Key))
+            .ToArray();
+        var productionSources = sources
+            .Where(source => compileMap.ProjectBySourcePath.TryGetValue(source.Path, out var project)
+                && !testProjects.ContainsKey(project))
+            .Select(source => new RepositoryReadSource(
+                Path.GetFileNameWithoutExtension(compileMap.ProjectBySourcePath[source.Path]),
+                source.Path,
+                source.Content))
+            .ToArray();
+        var indirectSites = ProductionRepositoryReadDeriver.InspectTests(productionSources, testSources)
+            .Select(static site => (site.Path, site.Line));
+        return DeriveSources(
+            testSources,
+            indirectSites,
+            FindUnclassifiedManagedProjects(projectFiles),
+            FindOrphanManagedSources(
+                sources.Select(static source => source.Path),
+                compileMap.ProjectBySourcePath),
+            FindDanglingCompileFailProofProjectExemptions(
+                projectFiles.Select(static project => project.Path)),
+            compileMap.ProjectBySourcePath,
+            compileMap.Findings);
     }
 
     internal static ScribeTestMap DeriveSources(
@@ -223,7 +234,9 @@ internal static class ScribeTestMapDeriver
         IEnumerable<(string Path, int Line)> indirectProductionSites,
         IReadOnlyList<string>? unclassifiedManagedProjectPaths = null,
         IReadOnlyList<string>? orphanManagedSourcePaths = null,
-        IReadOnlyList<string>? danglingCompileFailProofProjectExemptionPaths = null)
+        IReadOnlyList<string>? danglingCompileFailProofProjectExemptionPaths = null,
+        IReadOnlyDictionary<string, string>? compileProjectBySourcePath = null,
+        IReadOnlyList<MsBuildCompileFinding>? compileQueryFindings = null)
     {
         var parsed = sourceFiles.Select(Parse).ToArray();
         var discoveryPaths = ExtractDiscoveryPaths(parsed);
@@ -285,7 +298,9 @@ internal static class ScribeTestMapDeriver
                 .ToArray(),
             unclassifiedManagedProjectPaths ?? [],
             orphanManagedSourcePaths ?? [],
-            danglingCompileFailProofProjectExemptionPaths ?? []);
+            danglingCompileFailProofProjectExemptionPaths ?? [],
+            compileProjectBySourcePath ?? new Dictionary<string, string>(StringComparer.Ordinal),
+            compileQueryFindings ?? []);
     }
 
     private static bool IsXunitProject(string content)
@@ -297,36 +312,6 @@ internal static class ScribeTestMapDeriver
                 (string?)element.Attribute("Include"),
                 "xunit",
                 StringComparison.OrdinalIgnoreCase));
-    }
-
-    private static bool TryPartition(
-        string path,
-        IReadOnlyList<ScribeTestProjectPartition> partitions,
-        out ScribeTestProjectPartition? partition)
-    {
-        partition = partitions
-            .Where(item => path.StartsWith(item.Prefix, StringComparison.Ordinal))
-            .OrderByDescending(static item => item.Prefix.Length)
-            .FirstOrDefault();
-        return partition is not null;
-    }
-
-    private static ScribeTestProjectPartition PartitionFor(
-        string path,
-        IReadOnlyList<ScribeTestProjectPartition> partitions) =>
-        TryPartition(path, partitions, out var partition)
-            ? partition!
-            : throw new InvalidOperationException($"test source {path} has no xUnit project partition");
-
-    private static bool IsProductionSource(string path) =>
-        path.StartsWith("tools/StrataLint.", StringComparison.Ordinal)
-        && path.EndsWith(".cs", StringComparison.Ordinal)
-        && !path.Contains(".Tests/", StringComparison.Ordinal);
-
-    private static string ProjectName(string path)
-    {
-        var slash = path.IndexOf('/', "tools/".Length);
-        return path["tools/".Length..slash];
     }
 
     private static void InspectMethod(

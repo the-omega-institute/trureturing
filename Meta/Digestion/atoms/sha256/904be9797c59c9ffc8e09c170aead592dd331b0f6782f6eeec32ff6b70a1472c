@@ -1,0 +1,23 @@
+### 定义 41.23（实现完备性）
+
+\[
+\boxed{
+\operatorname{Complete}(\eta)
+\iff
+\forall s:\varprojlim_nB_n,\quad
+\sum_{x:X}\eta(x)=s.
+}
+\]
+
+若二者同时成立，则：
+
+\[
+\boxed{
+X\simeq\varprojlim_nB_n.
+}
+\]
+
+该等价是实现定理，不是逆极限定义本身。
+
+---
+

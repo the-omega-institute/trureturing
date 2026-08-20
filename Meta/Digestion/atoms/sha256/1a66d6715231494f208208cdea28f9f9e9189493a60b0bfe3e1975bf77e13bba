@@ -1,0 +1,11 @@
+## 定义 56.3（目标盲度）
+
+对目标 \(K\)：
+
+\[
+\boxed{
+\operatorname{Blind}_\mu(C;K)
+=H(K(X)\mid q_C(X)).
+}
+\]
+
