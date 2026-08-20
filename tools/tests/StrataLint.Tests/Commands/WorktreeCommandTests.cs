@@ -743,4 +743,43 @@ public sealed partial class LeanCacheEnsureCommandTests
         Assert.True(File.Exists(Path.Combine(target, ".lake", "cache-get.marker")));
         Assert.False(File.GetAttributes(Path.Combine(target, ".lake")).HasFlag(FileAttributes.ReparsePoint));
     }
+
+    [Fact]
+    public void ClonefileCleanupFailureReceiptSerializesInjectedError()
+    {
+        using var repository = new TemporaryDirectory();
+        InitializeRepository(repository.Path);
+        WriteCache(repository.Path, "cleanup failure donor cache\n");
+        var target = AddWorktree(repository.Path, "cleanup-failure-target");
+        var cloner = new RecordingDirectoryCloner
+        {
+            Results = new Queue<DirectoryCloneResult>(
+                [new(false, true, 5, 1, "clonefile(2) failed: EIO")]),
+            AfterClone = (_, path) => Directory.CreateDirectory(path),
+        };
+        var cleanupCalls = 0;
+        void Cleanup(string path)
+        {
+            cleanupCalls++;
+            if (cleanupCalls == 1) throw new IOException("injected clone retry cleanup failure");
+            if (Directory.Exists(path)) Directory.Delete(path, recursive: true);
+        }
+        var runner = new RecordingWorktreeProcessRunner();
+
+        var result = LeanCacheEnsureCommand.Run(
+            repository.Path,
+            ["--path", target],
+            runner,
+            cloner,
+            LeanCacheProvisioner.CountLtarFiles,
+            Cleanup);
+
+        Assert.True(result.Success, result.Error);
+        Assert.Empty(result.Error);
+        Assert.Equal(2, cleanupCalls);
+        using var receipt = ParseReceipt(result.Output);
+        Assert.Equal(
+            "injected clone retry cleanup failure",
+            receipt.RootElement.GetProperty("clonefile_cleanup_error").GetString());
+    }
 }
