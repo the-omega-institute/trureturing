@@ -60,7 +60,7 @@ public sealed class R13ScopeNarrowingTests
     }
 
     [Fact]
-    public void Sl015RetainsGlobalDuplicateGidQueryWhenLocalFindingIsScoped()
+    public void Sl015SuppressesHistoricalDuplicateGidFindingForUnrelatedDelta()
     {
         var fixture = new RuleFixture();
         fixture.Files[RuleFixture.BlueprintPath] = fixture.Files[RuleFixture.RingPath];
@@ -69,7 +69,7 @@ public sealed class R13ScopeNarrowingTests
 
         var result = Execute(fixture, UnrelatedDelta);
 
-        Assert.Contains(
+        Assert.DoesNotContain(
             result.Diagnostics,
             diagnostic => diagnostic.RuleId == RuleId.CreateKnown(15)
                 && diagnostic.Message.Contains("duplicate GID", StringComparison.Ordinal));
