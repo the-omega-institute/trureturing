@@ -9,9 +9,12 @@ public sealed class LeanCacheProvisionerTests
     private const string BudgetVariable = "STRATALINT_LEAN_CACHE_TIMEOUT_SECONDS";
 
     [Fact]
-    public void DefaultBudgetRemainsThirtyMinutes()
+    public void DefaultBudgetIsTheDeclaredOneHourPolicyOverride()
     {
-        AssertCacheGetBudget(null, 1800);
+        // Pinned to the policy-override declared on
+        // LeanCacheProvisioner.DefaultProvisionBudgetSeconds. Changing this number
+        // means retiring or revising that declaration, not editing a literal.
+        AssertCacheGetBudget(null, 3600);
     }
 
     [Fact]
@@ -56,7 +59,7 @@ public sealed class LeanCacheProvisionerTests
     }
 
     [Theory]
-    [InlineData("invalid", 1800)]
+    [InlineData("invalid", 3600)]
     [InlineData("1", 300)]
     [InlineData("9000", 7200)]
     public void ConfiguredBudgetUsesInvariantParsingAndClamps(string raw, int expectedSeconds)

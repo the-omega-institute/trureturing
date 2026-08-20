@@ -49,7 +49,43 @@ internal static class LeanCacheProvisioner
         PreExisting,
     }
 
-    internal const int DefaultProvisionBudgetSeconds = 1800;
+    /// policy-override (CLAUDE.md 第Ⅵ节「量腹而食」第三型) — 2026-08-20.
+    ///
+    /// THIS IS NOT A DERIVED VALUE. It is a declared override, not `capacity-derived`
+    /// and not `relation-derived`; it is not a function of vCPU, memory, or any other
+    /// machine capacity, and it must not be presented as one.
+    ///
+    /// Domain: the wall clock allowed for one `lake build` invocation while provisioning
+    /// a Lean cache. Out of domain: the `dotnet restore` timeout in WorktreeCommand,
+    /// which is a different knob that merely happened to carry the same literal.
+    ///
+    /// Positive readings (ElonSG, 2026-08-20): building the single most expensive
+    /// subgraph — `S0/Tower/TribonacciPeriodicElevenDistinct/{PartB..PartF}` together
+    /// with `S0/Tower/NodupAssembly/PeriodEleven` — measured `LAKE_RC=0` at 1656s on the
+    /// main checkout and `LAKE_RC=0` at 1212s on a lane. Those modules landed 2026-08-18,
+    /// so this ceiling first became reachable two days before this override.
+    ///
+    /// Negative readings (same day, same machine): `make lean-report` returned `EXIT=2`
+    /// with `lake timed out after 1800 seconds` twice in a row. The second failure needed
+    /// only three remaining modules, which shows the wall is struck by individual
+    /// expensive subgraphs rather than by module count. Margin was 1656/1800 = 8%, and
+    /// concurrent load from other drivers on this machine was measured driving CPU idle
+    /// to 0% for over 25 minutes, which consumes that margin outright.
+    ///
+    /// Value: 3600s is 2.17x the measured worst subgraph and half of the ceiling this
+    /// knob's existing environment escape hatch already sanctions (`Math.Clamp(..., 300,
+    /// 7200)` below), so it widens no bound that was not already permitted.
+    ///
+    /// Case: https://github.com/the-omega-institute/trureturing/issues/2535
+    /// Owner: repository owner (directed 2026-08-20 as triage while the durable cache
+    /// fix proceeds separately on macstudio-4).
+    /// NOT PERMANENT. Exit condition: retire this override once the machine-level D5
+    /// build cache lands, because a lane that clones a complete cache never pays this
+    /// build at all; or replace it with a genuine derivation whose independent variable
+    /// includes the cost of the most expensive single subgraph, not machine capacity
+    /// alone — a capacity-derived value that ignores that term is struck by one module
+    /// no matter how wide it is.
+    internal const int DefaultProvisionBudgetSeconds = 3600;
     private const int MissingOleanSampleLimit = 5;
     private static readonly TimeSpan[] CloneRetryBackoffs =
         [TimeSpan.FromMilliseconds(250), TimeSpan.FromMilliseconds(500),
