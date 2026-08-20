@@ -272,7 +272,8 @@ public sealed class RuleEngineTests
         fixture.Files[path] = "print('split')\n";
 
         var completed = Assert.IsType<RuleExecutionOutcome.Completed>(
-            RuleCatalog.Default.Execute(fixture.BuildForRuleCompatibility()));
+            RuleCatalog.Default.Execute(
+                fixture.Build(RawChangeSet.Create([path]))));
 
         Assert.DoesNotContain(
             completed.Capability.Diagnostics,
@@ -787,7 +788,7 @@ public sealed class RuleEngineTests
 
         var evaluation = RuleCatalog.Default.EvaluateSingle(
             RuleId.CreateKnown(19),
-            fixture.Build());
+            fixture.Build(RawChangeSet.Create([RuleFixture.TowerManifestPath])));
 
         var diagnostic = Assert.Single(evaluation.Diagnostics);
         Assert.Contains(
