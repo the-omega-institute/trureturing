@@ -64,6 +64,11 @@ internal static partial class RepositoryRules
                     gidPaths.Add(path.Value);
                 }
 
+                if (!context.IsBaseFactAffected(path.Value))
+                {
+                    continue;
+                }
+
                 foreach (var anchor in header.Anchors)
                 {
                     if (!Anchor.IsExternalFamily(anchor)
@@ -77,7 +82,9 @@ internal static partial class RepositoryRules
             }
         }
 
-        foreach (var duplicate in seenGids.Where(static item => item.Value.Count > 1))
+        foreach (var duplicate in seenGids.Where(item =>
+                     item.Value.Count > 1
+                     && item.Value.Any(context.IsBaseFactAffected)))
         {
             var locations = string.Join(", ", duplicate.Value.Order(StringComparer.Ordinal));
             foreach (var path in duplicate.Value)
@@ -88,7 +95,9 @@ internal static partial class RepositoryRules
             }
         }
 
-        foreach (var collision in evidence.Where(static item => item.Value.Count > 1))
+        foreach (var collision in evidence.Where(item =>
+                     item.Value.Count > 1
+                     && item.Value.Any(context.IsBaseFactAffected)))
         {
             foreach (var path in collision.Value)
             {
