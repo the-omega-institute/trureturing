@@ -79,6 +79,13 @@ public sealed class R15ScopeNarrowingTests
             "domain 'Unknown' is not controlled",
             historicalPath,
             RuleImplementationPath);
+
+        var policyDelta = DomainHistory();
+        AssertFinding(
+            Execute(policyDelta, "Meta/domains.yaml"),
+            11,
+            "domain 'Unknown' is not controlled",
+            historicalPath);
     }
 
     [Fact]
