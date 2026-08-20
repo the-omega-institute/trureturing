@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StrataLint.Scribe.Tests", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StrataLint.ArchitectureTests", "tests/StrataLint.ArchitectureTests/StrataLint.ArchitectureTests.csproj", "{1597A91E-2EAD-4E6E-BA67-1EAFA7182300}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StrataLint.EngineeringScope", "StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj", "{2055AE1E-5F31-4AB4-91ED-369E4D248596}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,5 +47,9 @@ Global
 		{1597A91E-2EAD-4E6E-BA67-1EAFA7182300}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1597A91E-2EAD-4E6E-BA67-1EAFA7182300}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1597A91E-2EAD-4E6E-BA67-1EAFA7182300}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2055AE1E-5F31-4AB4-91ED-369E4D248596}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2055AE1E-5F31-4AB4-91ED-369E4D248596}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2055AE1E-5F31-4AB4-91ED-369E4D248596}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2055AE1E-5F31-4AB4-91ED-369E4D248596}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
