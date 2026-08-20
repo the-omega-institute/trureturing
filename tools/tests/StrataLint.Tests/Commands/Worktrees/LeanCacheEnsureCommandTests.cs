@@ -6,7 +6,7 @@ using StrataLint.Engine;
 namespace StrataLint.Tests;
 
 [Collection("Lean cache environment")]
-public sealed class LeanCacheEnsureCommandTests
+public sealed partial class LeanCacheEnsureCommandTests
 {
     [Fact]
     public void MatchingPinStampStillRequiresLiveMathlibOleanCompleteness()
