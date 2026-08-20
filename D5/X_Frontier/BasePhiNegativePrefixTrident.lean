@@ -3,111 +3,44 @@
    mirror-B: none(waiver:negative-base-phi-frontier)
    mirror-E: D5/E/S1/Words/BasePhiNegativePrefixTrident.result--json
    anchors: []
-   digest: Classify admissible negative base-phi prefix occurrence sets by Lucas-gap trident families. -/
+   digest: Classify admissible negative base-phi prefix occurrence sets by
+     Lucas-gap trident families. -/
 
-import D5.S0.Carrier.Units
-import D5.S0.Conventions.WDigits
-import D5.S1.Scale.Lucas
-import Mathlib.NumberTheory.Real.GoldenRatio
+import D5.S1.Words.Expansions.BasePhiNegative
 
 namespace D5.X_Frontier.BasePhiNegativePrefixTrident
 
-open D5.S1.Scale
-open scoped BigOperators
+open D5.S1.Words.Expansions.BasePhiNegative
 
 /-!
 The source question asks for an exact classification of occurrence sequences
 for finite negative-position prefix cylinders in the two-sided base-phi
-expansion.  The definitions below keep the integer-pair value equation and
-the non-adjacent digit condition explicit.  `vF`, `vG`, and `vH` have the
-paper's first-difference words `x_F`, `x_G = b x_F`, and `x_H = a x_F` on a
-Lucas-number gap pair.  The finite scan is evidence for this classification,
-not its proof.
+expansion. The regular `BasePhiNegative` module owns the integer-pair value
+equation, non-adjacent digits, and the paper's `F`, `G`, and `H` gap families.
+The finite scan is evidence for this classification, not its proof.
+
+## Attack plan
+
+1. Prove the one-digit formulas: `.0` is the union of three `F` components
+   with gaps `(2, 1)`, while `.1` is the `F` component with gaps `(3, 1)`.
+   This requires a formal two-sided base-phi uniqueness/construction theorem.
+2. Build the finite carry transducer from Zeckendorf digits to a fixed negative
+   prefix, and prove that each state has an `F`, `G`, or `H` return itinerary.
+3. Induct on prefix extensions, transporting Lucas parameters through the
+   transducer; prove the union-of-three case from its three accepting states.
+
+The current difficulty is the first bridge: Mathlib's `Nat.zeckendorf` only
+normalizes nonnegative Fibonacci weights, while `BasePhiNegativeExpansion`
+uses finite support over all integer powers of phi. Existing return-word
+theorems apply only after that bridge identifies a negative-prefix cylinder.
 -/
-
-noncomputable def basePhiValue (digits : Int →₀ Nat) : D5.S0.Carrier.GoldenInt :=
-  Finset.sum digits.support (fun i =>
-    (digits i : D5.S0.Carrier.GoldenInt) *
-      (((D5.S0.Carrier.phiUnit ^ i : D5.S0.Carrier.GoldenIntˣ) :
-        D5.S0.Carrier.GoldenInt)))
-
-structure BasePhiNegativeExpansion where
-  digit : Nat → Int →₀ Nat
-  binary : ∀ N i, digit N i ≤ 1
-  canonical : ∀ N i, digit N i = 1 → digit N (i + 1) = 0
-  value_equation : ∀ N, basePhiValue (digit N) = (N : D5.S0.Carrier.GoldenInt)
-
-def negativeDigit (expansion : BasePhiNegativeExpansion) (N i : Nat) : Bool :=
-  decide (expansion.digit N (-((i + 1 : Nat) : Int)) = 1)
-
-def reachesNegativeDepth (expansion : BasePhiNegativeExpansion)
-    (N depth : Nat) : Prop :=
-  0 < depth ∧
-    ∃ i ∈ (expansion.digit N).support, i ≤ -((depth : Nat) : Int)
-
-def NegativePrefixOccurs (expansion : BasePhiNegativeExpansion)
-    (w : List Bool) (N : Nat) : Prop :=
-  reachesNegativeDepth expansion N w.length ∧
-    ∀ i : Fin w.length, negativeDigit expansion N i.1 = w.get i
-
-def AdmissibleNegativePrefix (expansion : BasePhiNegativeExpansion)
-    (w : List Bool) : Prop :=
-  ∃ N, 0 < N ∧ NegativePrefixOccurs expansion w N
-
-def occurrenceSet (expansion : BasePhiNegativeExpansion) (w : List Bool) : Set Nat :=
-  {N | 0 < N ∧ NegativePrefixOccurs expansion w N}
-
-def lucasParameter (value : Int) : Prop :=
-  ∃ k : Nat, value = goldenLucas k
-
-inductive GapFamily where
-  | F
-  | G
-  | H
-  deriving DecidableEq
-
-noncomputable def fibonacciGapLetter (n : Nat) : Bool :=
-  decide
-    ((⌊((n + 2 : Nat) : ℝ) * Real.goldenRatio⌋ : Int) -
-        (⌊((n + 1 : Nat) : ℝ) * Real.goldenRatio⌋ : Int) = 2)
-
-noncomputable def familyLetter : GapFamily → Nat → Bool
-  | .F, n => fibonacciGapLetter n
-  | .G, 0 => false
-  | .G, Nat.succ n => fibonacciGapLetter n
-  | .H, 0 => true
-  | .H, Nat.succ n => fibonacciGapLetter n
-
-noncomputable def gapSequence (family : GapFamily) (a b first : Int) : Nat → Int
-  | 0 => first
-  | Nat.succ n =>
-      gapSequence family a b first n + if familyLetter family n then a else b
-
-noncomputable def vF (a b first : Int) (n : Nat) : Int :=
-  gapSequence .F a b first n
-
-noncomputable def vG (a b first : Int) (n : Nat) : Int :=
-  gapSequence .G a b first n
-
-noncomputable def vH (a b first : Int) (n : Nat) : Int :=
-  gapSequence .H a b first n
-
-noncomputable def vForFamily (family : GapFamily)
-    (a b first : Int) (n : Nat) : Int :=
-  match family with
-  | .F => vF a b first n
-  | .G => vG a b first n
-  | .H => vH a b first n
-
-def sequenceRange (sequence : Nat → Int) : Set Nat :=
-  {N | ∃ n, (N : Int) = sequence n}
 
 /- THEORIST_FRONTIER_CONTRACT_V2
 {
   "schema": "trureturing-theorist-frontier-v2",
   "exact_statement": {
     "gid": "D5/X_Frontier/BasePhiNegativePrefixTrident.negative_prefix_trident_classification",
-    "statement_sha256": "sha256:8a4c05efb74115fbd34bad4a1ed67d2718252ea2f831a3091a63d82e7bb4f2a1"
+    "statement_sha256": "sha256:25ddd0972fd7b97c88f87ea47bb9843e5c014cdad5344c37451293f18cb4a0d9"
   },
   "motivation_gids": [
     "D5/S0/Conventions/WDigits",
@@ -122,7 +55,7 @@ def sequenceRange (sequence : Nat → Int) : Set Nat :=
     "D5/S1/Words/ZeckendorfBeattyBridge",
     "D5/S1/Words/ZeckendorfOrder"
   ],
-  "falsifier": "An admissible negative prefix w whose exact occurrence set is neither one Lucas-gap F/G/H sequence range nor a union of three such ranges sharing one Lucas pair.",
+  "falsifier": "An admissible prefix outside every allowed Lucas-gap family or three-family union.",
   "search_receipt_gids": ["D5/L/Words/dekking2023structure"],
   "computation_receipt_gids": ["D5/E/S1/Words/BasePhiNegativePrefixTrident.result--json"],
   "triage_class": "theorem"
