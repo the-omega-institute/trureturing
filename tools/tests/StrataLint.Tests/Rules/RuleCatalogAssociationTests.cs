@@ -162,6 +162,8 @@ public sealed class RuleCatalogAssociationTests
     [Theory]
     [InlineData("tools/StrataLint.Engine/Rules/RepositoryRules.cs")]
     [InlineData("tools/StrataLint.Engine/Rules/FutureSharedRule.cs")]
+    [InlineData("tools/StrataLint.Engine/Ledger/FrozenAcceptedEventLoader.cs")]
+    [InlineData("tools/StrataLint.Engine/Revocation/TrustedRevocationReceipts.cs")]
     [InlineData("tools/StrataLint.Engine/StrataLint.Engine.csproj")]
     [InlineData("Directory.Build.targets")]
     public void EveryActiveRuleWakesWhenSharedRuleImplementationChanges(string changedPath)

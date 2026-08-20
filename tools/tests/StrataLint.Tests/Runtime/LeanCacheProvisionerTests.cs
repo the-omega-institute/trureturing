@@ -9,9 +9,15 @@ public sealed class LeanCacheProvisionerTests
     private const string BudgetVariable = "STRATALINT_LEAN_CACHE_TIMEOUT_SECONDS";
 
     [Fact]
-    public void DefaultBudgetRemainsThirtyMinutes()
+    public void DefaultBudgetIsTheDeclaredOneHourPolicyOverride()
     {
-        AssertCacheGetBudget(null, 1800);
+        // The expected value is written out rather than read from
+        // LeanCacheProvisioner.DefaultProvisionBudgetSeconds on purpose: referencing the
+        // constant would let a future change to the policy value pass silently, whereas a
+        // literal forces whoever changes it to come here and to the declaration beside
+        // that constant. The cost is that this literal and this test's name must be
+        // maintained together with the declaration; that is the intended trade.
+        AssertCacheGetBudget(null, 3600);
     }
 
     [Fact]
@@ -56,7 +62,7 @@ public sealed class LeanCacheProvisionerTests
     }
 
     [Theory]
-    [InlineData("invalid", 1800)]
+    [InlineData("invalid", 3600)]
     [InlineData("1", 300)]
     [InlineData("9000", 7200)]
     public void ConfiguredBudgetUsesInvariantParsingAndClamps(string raw, int expectedSeconds)
