@@ -226,7 +226,8 @@ internal static partial class RepositoryRules
         string text,
         IReadOnlySet<string> tasks,
         ImmutableArray<RuleFinding>.Builder findings,
-        bool enforceKeyOrder)
+        bool enforceKeyOrder,
+        bool reportParseErrors)
     {
         try
         {
@@ -243,7 +244,10 @@ internal static partial class RepositoryRules
         }
         catch (FormatException exception)
         {
-            findings.Add(new RuleFinding(path, $"structured anomaly scan cannot parse YAML: {exception.Message}"));
+            if (reportParseErrors)
+            {
+                findings.Add(new RuleFinding(path, $"structured anomaly scan cannot parse YAML: {exception.Message}"));
+            }
         }
     }
 
@@ -251,7 +255,8 @@ internal static partial class RepositoryRules
         string path,
         string text,
         IReadOnlySet<string> tasks,
-        ImmutableArray<RuleFinding>.Builder findings)
+        ImmutableArray<RuleFinding>.Builder findings,
+        bool reportParseErrors)
     {
         var matches = Regex.Matches(text, "(?s)<!-- STRATALINT-LEDGER\\n(?<body>.*?)\\n-->");
         var index = 0;
@@ -272,7 +277,10 @@ internal static partial class RepositoryRules
             }
             catch (JsonException)
             {
-                findings.Add(new RuleFinding(path, $"invalid structured ledger block {index}"));
+                if (reportParseErrors)
+                {
+                    findings.Add(new RuleFinding(path, $"invalid structured ledger block {index}"));
+                }
             }
         }
     }

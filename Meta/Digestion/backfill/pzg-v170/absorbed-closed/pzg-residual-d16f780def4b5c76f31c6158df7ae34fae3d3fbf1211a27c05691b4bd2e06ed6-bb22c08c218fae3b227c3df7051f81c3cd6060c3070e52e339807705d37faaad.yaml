@@ -1,0 +1,17 @@
+ast_path: theorem/6.35/clause/3
+fingerprints:
+  raw_sha256: sha256:d16f780def4b5c76f31c6158df7ae34fae3d3fbf1211a27c05691b4bd2e06ed6
+  normalized_sha256: sha256:d16f780def4b5c76f31c6158df7ae34fae3d3fbf1211a27c05691b4bd2e06ed6
+cas_ref: sha256:d16f780def4b5c76f31c6158df7ae34fae3d3fbf1211a27c05691b4bd2e06ed6
+coverage_gids:
+  - D5/S3/Axis/AxisTraceMapForm.axis_trace_map_form_package
+receipts:
+  coverage:
+    - gid: D5/S3/Axis/AxisTraceMapForm.axis_trace_map_form_package
+      source_sha256: sha256:d16f780def4b5c76f31c6158df7ae34fae3d3fbf1211a27c05691b4bd2e06ed6
+      target_sha256: sha256:486f35d14dcc629c658ab32a8da199488eea5f005cde59721d26b1f0f31e50b0
+  scribe:
+    - gid: D5/S3/Axis/AxisTraceMapForm.axis_trace_map_form_package
+      definition_sha256: sha256:65307761bda0f904950ca1e2680741c3d39642e61aeb32e31bcf0fa7b6b4a5fd
+      emission_sha256: sha256:8d0cb368b6f58e3d951ad5a5273326817e79a9e4f88c8e91af4c4c6df3e609e0
+  unresolved_subitems: []

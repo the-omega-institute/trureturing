@@ -6,7 +6,7 @@ A countable perfect metric space has a negligible image in its completion.
 
 **Theorem 1.1 (The canonical completion image has residual full-measure complement).**
 
-$$\forall N, \mu,\\[\operatorname{MetricSpace}(N)], [\operatorname{Countable}(N)], [\operatorname{PerfectSpace}(N)],\\[\operatorname{NoAtoms}(\mu)], [\operatorname{IsProbabilityMeasure}(\mu)],\\\operatorname{DenseRange}(coe_{N}) \land\\\operatorname{PerfectSpace}(\operatorname{Completion}(N)) \land\\\operatorname{IsMeagre}(\operatorname{range}(coe_{N})) \land\\\mu(\operatorname{Completion}(N) \setminus \operatorname{range}(coe_{N}))=1.$$
+$$\forall N, \mu,\\{}[\operatorname{MetricSpace}(N)], [\operatorname{Countable}(N)], [\operatorname{PerfectSpace}(N)],\\{}[\operatorname{NoAtoms}(\mu)], [\operatorname{IsProbabilityMeasure}(\mu)],\\\operatorname{DenseRange}(coe_{N}) \land\\\operatorname{PerfectSpace}(\operatorname{Completion}(N)) \land\\\operatorname{IsMeagre}(\operatorname{range}(coe_{N})) \land\\\mu(\operatorname{Completion}(N) \setminus \operatorname{range}(coe_{N}))=1.$$
 
 *Proof.* Machine-checked in Lean as `D5/S0/Naming/Conservation/CompletionEmbeddingResidual.completion_embedding_residual_full_measure` (`✓ std3`). ∎
 

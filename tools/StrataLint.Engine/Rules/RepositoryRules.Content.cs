@@ -40,14 +40,16 @@ internal static partial class RepositoryRules
                 }
             }
 
-            if (path.Value.EndsWith(".json", StringComparison.Ordinal))
+            if (path.Value.EndsWith(".json", StringComparison.Ordinal)
+                && context.IsBaseFactAffected(path.Value))
             {
                 ValidateFormulas(path.Value, file.Text, findings);
             }
 
             if (TryHeader(file.Text, out var header))
             {
-                if (!SafeFieldPattern.IsMatch(header.Gid))
+                if (!SafeFieldPattern.IsMatch(header.Gid)
+                    && context.IsBaseFactAffected(path.Value))
                 {
                     findings.Add(new RuleFinding(path.Value, "GID violates the machine-field character set"));
                 }

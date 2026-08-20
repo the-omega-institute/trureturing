@@ -69,7 +69,7 @@ internal sealed class PetzClassicalCorollaryDocument : IScribeDocumentDefinition
             F.Open, F.Forall, F.Sp, x, F.Colon, F.Sp, F.Id("X"), F.Comma, F.Sp,
             F.Sum, F.Underscore, F.Grp(y), w, F.Open, x, F.Comma, F.Sp, y, F.Close,
             F.Sp, F.Eq, F.Sp, F.D(1), F.Close, F.Close,
-            F.Sp, F.Rightarrow, F.RowBreak,
+            F.Sp, F.Rightarrow, F.RowBreak, F.Grp(),
             F.OpenBracket,
             F.Open, Defect(w), F.Sp, F.Eq, F.Sp, F.D(0), F.Sp, F.Leftrightarrow,
             F.Sp, F.Forall, F.Sp, y, F.Comma, F.Sp, wpAtY, F.Sp, F.Eq, F.Sp,

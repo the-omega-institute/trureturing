@@ -12,6 +12,6 @@ receipts:
       target_sha256: sha256:e151d5dd6d0e86246406db5810c99ade0cb7c21516c64196158e1ab0de771fb0
   scribe:
     - gid: D5/S3/ObserverMemory/Prediction/ControlledBehaviorUniversality.controlled_behavior_universal_property
-      definition_sha256: sha256:c27308bb588e96d9315b88e6745264fb7c2144d487a8af9f56dc6fa6609d2826
-      emission_sha256: sha256:d37fd2ac0d4afc5524f3017fe9f6b189ccb92276e0dc6edc8fede34d41006a64
+      definition_sha256: sha256:84e9d6253ea89ed7e70205fb1eb6e7e559835088b6effc88766bb3cd949eb798
+      emission_sha256: sha256:0071642ad09e291311406c551fd03fb0f6792a8f2f0b3ca08356b412e76ed2ee
   unresolved_subitems: []

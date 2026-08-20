@@ -12,6 +12,6 @@ receipts:
       target_sha256: sha256:bb912a89de7a8daec274eb58b0173c9b1de95f4f199a6cc46c24367fe3dd8a8b
   scribe:
     - gid: D5/S3/Entropy/Submodularity/CommonStateEntropyBound.common_state_entropy_le_mutual_information
-      definition_sha256: sha256:1682f9dd250250f90450032442654b005bce53a3432cde5780303f8159e54852
-      emission_sha256: sha256:0f447538ced4240470a624501a32976c9909ec2a1648bab75f176690dd789938
+      definition_sha256: sha256:1f916c7c21294df5a67e7cc8c33ab3bae3813afa9dc5c7bc8e7d220c9f95830a
+      emission_sha256: sha256:fb3b586c6e66aab99938387132d7e7102cc9bdd4d122d423b5586385de7586e4
   unresolved_subitems: []

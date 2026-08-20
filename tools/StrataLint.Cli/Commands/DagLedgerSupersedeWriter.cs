@@ -166,7 +166,6 @@ internal static class DagLedgerSupersedeWriter
                     || LeanImportClosure.RelevantSemanticPinsChanged(
                         report,
                         entry.Material.RepoPath,
-                        entry,
                         protectedSnapshot(entry),
                         snapshot),
                 LeanImportClosure.CandidateStatementsAvoidTrivialTruth(
@@ -226,7 +225,6 @@ internal static class DagLedgerSupersedeWriter
                         || LeanImportClosure.RelevantSemanticPinsChanged(
                             report,
                             active[item.Payload.CaseId].Material.RepoPath,
-                            active[item.Payload.CaseId],
                             protectedSnapshot(active[item.Payload.CaseId]),
                             snapshot),
                     LeanImportClosure.CandidateStatementsAvoidTrivialTruth(
