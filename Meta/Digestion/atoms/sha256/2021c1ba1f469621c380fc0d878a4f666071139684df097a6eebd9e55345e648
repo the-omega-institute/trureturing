@@ -1,0 +1,22 @@
+## 定理 429.1（旧语言有效性保守）
+
+对任意旧命题：
+
+[
+P:X\to\mathsf{Prop},
+]
+
+有：
+
+[
+\boxed{
+\mathfrak M\models P
+\iff
+\mathfrak M'\models P\circ p.
+}
+]
+
+证明由 §427 的保持与反射直接得到。
+
+---
+

@@ -1,0 +1,35 @@
+## 定理 227.1（公开因果活性判据）
+
+若存在行动 (m)：
+
+[
+P(F_mx)\neq P(F_my),
+]
+
+则 (x,y) 不在同一公共动态完成类中。
+
+所以任何能够在允许干预后改变公共结果的私人差异，都会被：
+
+[
+\operatorname{Dyn}_M(P)
+]
+
+捕获。
+
+由此区分：
+
+[
+\boxed{
+\begin{aligned}
+\text{现象差异}
+&=\Phi(x)\neq\Phi(y);\
+\text{公开因果活性}
+&=\exists m,\ P(F_mx)\neq P(F_my);\
+\text{公开表象惰性}
+&=\forall m,\ P(F_mx)=P(F_my).
+\end{aligned}
+}
+]
+
+---
+

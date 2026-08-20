@@ -1,0 +1,18 @@
+## 定理 197.1（可回答性判据）
+
+以下等价：
+
+[
+E_Q\preceq C,
+]
+
+[
+q_C(x)=q_C(y)\Longrightarrow Q(x)=Q(y),
+]
+
+[
+\Delta(C;Q)=\varnothing.
+]
+
+所以：
+

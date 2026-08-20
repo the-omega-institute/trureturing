@@ -1,0 +1,10 @@
+ast_path: section/408-复现的价值取决于-provenance-独立性
+fingerprints:
+  raw_sha256: sha256:3702ead2500797f330878d8e2f95202740b131dfc1adbaa4eccb56e139b0d293
+  normalized_sha256: sha256:3702ead2500797f330878d8e2f95202740b131dfc1adbaa4eccb56e139b0d293
+cas_ref: sha256:3702ead2500797f330878d8e2f95202740b131dfc1adbaa4eccb56e139b0d293
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

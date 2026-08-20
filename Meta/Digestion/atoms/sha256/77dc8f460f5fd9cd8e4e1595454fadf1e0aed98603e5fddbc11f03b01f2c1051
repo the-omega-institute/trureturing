@@ -1,0 +1,32 @@
+## 定理 155.1（最大控制相容评价）
+
+(J_{\mathrm{fair}}) 满足：
+
+[
+J_{\mathrm{fair}}\preceq E_J,
+]
+
+[
+J_{\mathrm{fair}}\preceq C_{\mathrm{ctl}}.
+]
+
+若评价概念 (K) 同时满足：
+
+[
+K\preceq E_J,
+\qquad
+K\preceq C_{\mathrm{ctl}},
+]
+
+则：
+
+[
+\boxed{
+K\preceq J_{\mathrm{fair}}.
+}
+]
+
+所以 (J_{\mathrm{fair}}) 是完整评价中可由主体控制条件合法保留的最精细部分。
+
+---
+

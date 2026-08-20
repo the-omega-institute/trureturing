@@ -1,0 +1,46 @@
+# 343. 双重出售是 provenance 冲突，而不只是两个相同标签
+
+设两个转让事件：
+
+[
+\gamma_1,\gamma_2
+]
+
+都声称转让同一不可复制权利束 (B)。
+
+若两者最终分别给出：
+
+[
+B\subseteq\mathcal R_j,
+]
+
+[
+B\subseteq\mathcal R_k,
+]
+
+且制度 doctrine 要求该束不可同时属于两者，则出现：
+
+[
+\boxed{
+\mathcal R_j\cap B\neq\varnothing,
+\qquad
+\mathcal R_k\cap B\neq\varnothing
+}
+]
+
+与唯一性约束冲突。
+
+因此需要事件顺序、签名和来源账本决定哪个转让先消耗了原权利。
+
+所以：
+
+[
+\boxed{
+\text{产权唯一性}
+}
+]
+
+本质上依赖 provenance 与不可重复消费的历史结构。
+
+---
+

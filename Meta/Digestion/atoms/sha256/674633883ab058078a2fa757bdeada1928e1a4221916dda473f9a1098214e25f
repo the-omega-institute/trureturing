@@ -1,0 +1,32 @@
+## 定义 477.1（Bayesian 最优响应）
+
+(\pi_i) 是对 (\pi_{-i}) 的最优响应，当对每个具有正概率的信号值 (b_i)：
+
+[
+\boxed{
+\pi_i(b_i)
+\in
+\operatorname{argmax}*{a_i}
+\mathbb E
+\left[
+u_i(x,a_i,\pi*{-i}(C_{-i}(x)))
+\mid
+C_i(x)=b_i
+\right].
+}
+]
+
+Bayesian Nash equilibrium 是联合策略固定点：
+
+[
+\boxed{
+\pi_i\in\operatorname{BR}*i(\pi*{-i})
+\quad
+\forall i.
+}
+]
+
+因此战略理性本身也是一个固定点问题。
+
+---
+

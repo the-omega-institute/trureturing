@@ -1,0 +1,12 @@
+## 定理 458.1（可回答历史目标单调增长）
+
+[
+\operatorname{Ans}(L_n)
+\subseteq
+\operatorname{Ans}(L_{n+1}).
+]
+
+追加记录不会破坏旧历史目标的可回答性。
+
+---
+

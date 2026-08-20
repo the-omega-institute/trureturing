@@ -1,0 +1,20 @@
+# 465. 纤维知识是拓扑知识的分区特例
+
+对离散概念：
+
+[
+C:X\to B_C,
+]
+
+令 (\tau_C) 为所有 (C)-纤维并的拓扑。
+
+即 (U\subseteq X) 开，当且仅当：
+
+[
+C(x)=C(y)
+\land
+x\in U
+\Longrightarrow
+y\in U.
+]
+

@@ -1,0 +1,22 @@
+[
+\boxed{
+K_{\mathrm{ctl}}(x)(m)
+======================
+
+q(F_mx).
+}
+]
+
+定义控制等价：
+
+[
+\boxed{
+x\sim_{\mathrm{ctl}}y
+\iff
+\forall m\in M,\quad
+q(F_mx)=q(F_my).
+}
+]
+
+控制商：
+

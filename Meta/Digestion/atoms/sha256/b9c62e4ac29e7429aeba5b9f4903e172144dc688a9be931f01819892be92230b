@@ -1,0 +1,22 @@
+# 116. 稳健知识半径
+
+在度量概念空间定义：
+
+\[
+K_C^\varepsilon(P,a)
+\iff
+\forall x,
+\operatorname{Adm}(x)\land d(Cx,Ca)\le\varepsilon
+\to P(x).
+\]
+
+反例距离：
+
+\[
+m_C(P,a)=\inf\{d(Ca,Cx)\mid\operatorname{Adm}(x)\land\neg P(x)\}.
+\]
+
+若 \(\varepsilon<m_C(P,a)\)，则 \(\varepsilon\)-知识成立。该量给出知识对观测扰动的稳健半径。
+
+---
+

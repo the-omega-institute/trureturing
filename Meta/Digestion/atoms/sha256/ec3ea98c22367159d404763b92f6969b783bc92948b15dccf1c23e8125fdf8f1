@@ -1,0 +1,14 @@
+[
+\boxed{
+k^*(T)
+======
+
+\min
+\left{
+k
+\mid
+E_T\preceq C_k
+\right}.
+}
+]
+

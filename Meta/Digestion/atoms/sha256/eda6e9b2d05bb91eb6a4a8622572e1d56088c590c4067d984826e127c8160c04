@@ -1,0 +1,26 @@
+[
+\operatorname{Cov}_{\mathrm{safe}}(C;T)
+=======================================
+
+\Pr
+\left[
+\widehat T_C(C(X))
+\neq
+\bot_{\mathrm{ans}}
+\right].
+]
+
+则：
+
+[
+C\preceq D
+\Longrightarrow
+\boxed{
+\operatorname{Cov}*{\mathrm{safe}}(C;T)
+\le
+\operatorname{Cov}*{\mathrm{safe}}(D;T).
+}
+]
+
+---
+

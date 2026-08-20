@@ -1,0 +1,10 @@
+ast_path: section/329-合理分歧可以在内部一致而外部不可比较
+fingerprints:
+  raw_sha256: sha256:6047bd0d17e9dceb46aeafdd2e2aa17c245d61da6f5f824bad0244c23f728475
+  normalized_sha256: sha256:6047bd0d17e9dceb46aeafdd2e2aa17c245d61da6f5f824bad0244c23f728475
+cas_ref: sha256:6047bd0d17e9dceb46aeafdd2e2aa17c245d61da6f5f824bad0244c23f728475
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

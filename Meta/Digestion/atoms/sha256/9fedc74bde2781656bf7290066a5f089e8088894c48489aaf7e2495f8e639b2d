@@ -1,0 +1,21 @@
+# 118. 概念格与可观察函数代数
+
+有限模型中定义：
+
+\[
+\mathcal A_C
+=\{f:X\to\mathbb R\mid Cx=Cy\Rightarrow f(x)=f(y)\}.
+\]
+
+则：
+
+\[
+C\preceq D
+\iff
+\mathcal A_C\subseteq\mathcal A_D.
+\]
+
+联合概念对应由两个可观察代数生成的代数，共同粗化对应代数交。目标完成在代数侧就是加入目标生成元后取闭包。
+
+---
+

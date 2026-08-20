@@ -1,0 +1,10 @@
+\[
+\operatorname{cl}_T(\operatorname{Dyn}_M(C))
+=
+\operatorname{Dyn}_M(C)\vee E_T.
+\]
+
+前者通常更精细。当前知道目标值不等于知道目标在全部未来行动后如何演化。两者的差异可由“时间泄漏见证”显式审计。
+
+---
+

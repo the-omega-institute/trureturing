@@ -1,0 +1,25 @@
+[
+C_{\mathrm{private}}(x)
+=======================
+
+C_{\mathrm{private}}(y),
+]
+
+但：
+
+[
+T_{\mathrm{public}}(x)
+\neq
+T_{\mathrm{public}}(y).
+]
+
+这就是外部性的一种结构定义：
+
+[
+\boxed{
+\text{private transaction interface hides distinctions relevant to public outcome}.
+}
+]
+
+---
+

@@ -1,0 +1,36 @@
+## 推论 167.2
+
+如果某测试族只覆盖：
+
+[
+\Delta_0
+\subsetneq
+\Delta(C;T),
+]
+
+那么全部测试通过最多说明：
+
+[
+\Delta_0
+]
+
+被排除，而不能推出：
+
+[
+\Delta(C;T)=\varnothing.
+]
+
+因此：
+
+[
+\boxed{
+\text{测试全部通过}
+\not\Rightarrow
+\text{理论没有缺陷},
+}
+]
+
+除非测试族本身具有 completeness certificate。
+
+---
+

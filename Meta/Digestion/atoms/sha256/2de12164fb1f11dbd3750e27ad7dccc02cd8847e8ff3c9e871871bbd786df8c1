@@ -1,0 +1,15 @@
+[
+\boxed{
+A^*(x)
+======
+
+\operatorname{argmax}_{u\in U}V(x,u).
+}
+]
+
+将其视为目标概念：
+
+[
+E_{A^*}.
+]
+

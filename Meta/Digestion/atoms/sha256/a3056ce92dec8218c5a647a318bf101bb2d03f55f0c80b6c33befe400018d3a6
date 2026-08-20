@@ -1,0 +1,54 @@
+# 363. 分布漂移是准入域变化，不一定是规律变化
+
+训练分布：
+
+[
+\mu_0.
+]
+
+部署分布：
+
+[
+\mu_1.
+]
+
+若结构函数：
+
+[
+T:X\to Y
+]
+
+未变，只是：
+
+[
+\operatorname{supp}\mu_0
+\neq
+\operatorname{supp}\mu_1,
+]
+
+则属于域漂移。
+
+如果原概念 (C) 只在：
+
+[
+\operatorname{supp}\mu_0
+]
+
+上充分，而在新支持上出现：
+
+[
+\Delta(C;T)\neq\varnothing,
+]
+
+部署性能会下降。
+
+因此：
+
+[
+\boxed{
+\text{训练成功可能只是局部 ADMIT 充分，而非全域充分。}
+}
+]
+
+---
+

@@ -1,0 +1,16 @@
+### 合并
+
+[
+A\Rightarrow B,
+\qquad
+A\Rightarrow C
+]
+
+推出：
+
+[
+\boxed{
+A\Rightarrow B\vee C.
+}
+]
+
