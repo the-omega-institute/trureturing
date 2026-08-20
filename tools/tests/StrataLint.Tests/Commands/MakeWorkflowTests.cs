@@ -326,14 +326,7 @@ public sealed partial class MakeWorkflowTests
     {
         var workflow = File.ReadAllText(Path.Combine(TestRepositoryLayout.FindRoot(), AdmissionWorkflowPath));
 
-        // 守的是「只检出候选树，base 只以 SHA 参与」——第 19 条禁 strict 与 admission 信任拓扑的机器形。
-        // 计数是它的载体而非目的：下面三条断言才是那个不变量本身
-        // （没有 baseline 检出路径、没有 baseline 检出步骤、base 以 SHA 在 job 间传递）。
-        //
-        // 四次检出 = 三个 required job + publish-lean-cache。第四次检出的是**已经推送的那个 dev 提交**
-        // 本身，不检出 baseline、不进任何 required check，且该 job 只在 dev push 后运行；
-        // 它对信任拓扑无影响。
-        Assert.Equal(4, Regex.Matches(workflow, "uses: actions/checkout@v4").Count);
+        Assert.Equal(3, Regex.Matches(workflow, "uses: actions/checkout@v4").Count);
         Assert.DoesNotContain("path: baseline", workflow, StringComparison.Ordinal);
         Assert.DoesNotContain("Check out content-addressed dev baseline", workflow, StringComparison.Ordinal);
         Assert.Contains("baseline_sha: ${{ steps.base.outputs.sha }}", workflow, StringComparison.Ordinal);
