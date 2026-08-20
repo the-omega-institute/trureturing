@@ -36,4 +36,3 @@ This is an honest partial closure of clause (i) only. The later constant evaluat
 
 - Truth anchor: `D5/S1/Words/Mechanical/GoldenFiberPrefixCount.goldenFiberLetter`
 - Truth anchor: `D5/S1/Words/Mechanical/GoldenFiberPrefixCount.golden_fiber_prefix_count`
-- Dependency: [D5/S1/Words/Mechanical/MechanicalGoldenBridge](MechanicalGoldenBridge.md)
