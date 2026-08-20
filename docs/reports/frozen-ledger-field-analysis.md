@@ -21,10 +21,26 @@
 `input.descriptor_selector`、`input.materializer`。
 加工产物:`statement_id`、`witness_id`、`frozen_node_id`、`prerequisite_frozen_node_ids`、
 各 `input.*_oid`、`declaration_statement_ids[].statement_id`。
-**纯投影(已于 #2216 退役)**:`semantic_receipt`≡`frozen_node_id`(1094/1094 逐字相同)、
-`input_fingerprint`≡`witness_id`(1094/1094)、`node_path`≡`input.descriptor_selector`(939/939)、
-以及常量-only 家族 `case_class`/`evaluation`/`expected.*`/`truth_state`
-(939/939 取值恒定,其嵌套诊断字段**无任何可达的合法取值**)。
+**纯投影(已于 #2216 退役)**:`input_fingerprint`≡`witness_id`、
+`node_path`≡`input.descriptor_selector`、以及常量-only 家族
+`case_class`/`evaluation`/`expected.*`/`truth_state`(取值恒定,其嵌套诊断字段**无任何可达的合法取值**)。
+
+**`semantic_receipt` 的分层勘误(2026-08-20 实测,钉 `65a18869e`)**:初稿把它记为 Freeze 的纯投影
+「≡`frozen_node_id`,1094/1094 逐字相同」。三处不准:
+- **范围**:今日全语料 **1985** 个事件带该字段;**同一 payload 内**与 `frozen_node_id` 相等者
+  **1112**(Freeze v2 873 + Freeze v3 84 + **Reattest v2 155**)。故该等式跨 Freeze 与 Reattest 两类,
+  写在 Freeze 名下是范围标错;Freeze 自身为 **957**。
+- **陈旧**:1112 与初稿 1094 差 18,即三日新增。**对 append-only 语料钉计数,按构造必然陈旧**;
+  本节所有计数一律是快照,须连同 SHA 读,不得当作不变量(同理适用于本节其余未重测的计数)。
+- **实质遗漏(要害)**:**873 个 schema v3 Reattest 带该字段却没有同 payload 的 `frozen_node_id`**。
+  那里的相等对象是**前驱链上首个 id**(873/873),是**既有语料的观测规律,不是被执法的不变量**。
+  初稿把它平铺成 event-local 的重复字段,恰好抹掉了这条缝——运行时投影若拿它当当前身份,
+  一条伪造别名即可改变后续 Revoke 的判决。该缝已由本 PR 关闭:运行时身份权威回到 `frozen_node_id`,
+  别名仅作历史 v2/v3 字节的解析回退;行为钉子见
+  `FrozenLedgerBaseViewTests.BaseProjectionConsumesHistoricalLegacyReattestBeforeRevoke`
+  与 `CoverageLedgerIndexTests.LegacyReattestSemanticReceiptAliasDoesNotReplaceTheActiveIdentity`。
+- **教训**:`case_id` 已因同一形态被纠正过一次(见下段)——**「两个字段取值恒相等」不蕴含
+  「后者可由前者 event-local 重导」**;须先问那个相等是同 payload 的,还是沿链的、且谁在执法。
 
 **`case_id` 不是纯投影**(纠正第六轮 F2 的分类):实测 955 个 case、多事件 case 873 个,
 其 `frozen_node_id` **全同者 0/873**;`case_id` 后缀恰等于**首次 Freeze** 的 id(匹配数 955 = case 数)。
