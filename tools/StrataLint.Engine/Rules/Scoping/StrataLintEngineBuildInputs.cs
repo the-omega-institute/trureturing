@@ -5,6 +5,8 @@ internal static class StrataLintEngineBuildInputs
     private const string ProjectDirectory = "tools/StrataLint.Engine";
     private const string ProjectPath = ProjectDirectory + "/StrataLint.Engine.csproj";
     private const string RulesDirectory = ProjectDirectory + "/Rules";
+    private const string HeartsAuthorizationLedgerPath =
+        ProjectDirectory + "/Authorization/HeartsAuthorizationLedger.cs";
 
     internal static bool Contains(string path)
     {
@@ -23,6 +25,11 @@ internal static class StrataLintEngineBuildInputs
         if (path == ProjectPath
             || path.StartsWith(RulesDirectory + "/", StringComparison.Ordinal)
                 && path.EndsWith(".cs", StringComparison.Ordinal))
+        {
+            return true;
+        }
+
+        if (path == HeartsAuthorizationLedgerPath)
         {
             return true;
         }

@@ -270,7 +270,7 @@ public sealed partial class ReviewRegressionTests
     {
         var fixture = new RuleFixture();
         fixture.Files[path] = "{}\n";
-        var context = fixture.BuildForRuleCompatibility();
+        var context = fixture.Build(RawChangeSet.Create([path]));
 
         var completed = Assert.IsType<RuleExecutionOutcome.Completed>(RuleCatalog.Default.Execute(context));
         var diagnostic = Assert.Single(completed.Capability.Diagnostics, item => item.Path == path);
@@ -414,7 +414,8 @@ public sealed partial class ReviewRegressionTests
         fixture.Files["rogue.txt"] = "unknown\n";
 
         var completed = Assert.IsType<RuleExecutionOutcome.Completed>(
-            RuleCatalog.Default.Execute(fixture.BuildForRuleCompatibility()));
+            RuleCatalog.Default.Execute(
+                fixture.Build(RawChangeSet.Create(["rogue.txt"]))));
 
         var diagnostic = Assert.Single(completed.Capability.Diagnostics, item => item.Path == "rogue.txt");
         Assert.Equal(sl000, diagnostic.RuleId);
@@ -433,7 +434,8 @@ public sealed partial class ReviewRegressionTests
         fixture.Files["Meta/Digestion/formalizations/BAD.v1.json"] = "{}\n";
 
         var completed = Assert.IsType<RuleExecutionOutcome.Completed>(
-            RuleCatalog.Default.Execute(fixture.BuildForRuleCompatibility()));
+            RuleCatalog.Default.Execute(
+                fixture.Build(RawChangeSet.Create(["Meta/Digestion/formalizations/BAD.v1.json"]))));
 
         Assert.DoesNotContain(
             completed.Capability.Diagnostics,

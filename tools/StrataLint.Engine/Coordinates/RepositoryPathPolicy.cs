@@ -13,11 +13,14 @@ internal static partial class RepositoryPathPolicy
     internal static ImmutableArray<Diagnostic> Evaluate(
         RepositorySnapshot snapshot,
         ValidatedPolicy policy,
-        RuleDescriptor sl015)
+        RuleDescriptor sl015,
+        Func<string, bool>? shouldEvaluatePath = null)
     {
         var diagnostics = snapshot.Files.Keys
             .OrderBy(static path => path.Value, StringComparer.Ordinal)
-            .Select(path => Validate(path, policy))
+            .Select(path => shouldEvaluatePath is null || shouldEvaluatePath(path.Value)
+                ? Validate(path, policy)
+                : null)
             .OfType<RepositoryPathIssue>()
             .Select(issue => issue is { RuleId.Value: "SL-000" }
                 ? new Diagnostic(
