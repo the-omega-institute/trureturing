@@ -23,4 +23,3 @@ The sum recurrence follows from splitting a legal word on its highest digit, whi
 ## References
 
 - Truth anchor: `D5/S3/Axis/AxisRecurrencePair.axis_recurrence_pair`
-- Dependency: [D5/S3/Axis/AxisPartialSum](AxisPartialSum.md)
