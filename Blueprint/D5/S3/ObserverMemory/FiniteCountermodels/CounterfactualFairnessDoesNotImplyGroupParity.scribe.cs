@@ -41,7 +41,7 @@ internal sealed class CounterfactualFairnessDoesNotImplyGroupParityDocument : IS
         Seq(Open, left, Comma, Sp, right, Close);
 
     private static Formula Sub(Formula value, Formula index) =>
-        new Formula.Subscript(value, index);
+        Seq(value, Underscore, Grp(index));
 
     private static Formula TheoremFormula()
     {

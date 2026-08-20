@@ -41,7 +41,7 @@ internal sealed class MinimalGeneratingSetCounterexampleDocument : IScribeDocume
         Seq(function, Open, Seq(arguments), Close);
 
     private static Formula Sub(Formula value, Formula index) =>
-        new Formula.Subscript(value, index);
+        Seq(value, Underscore, Grp(index));
 
     private static Formula Set(params Formula[] values) => new Formula.SetLiteral([.. values]);
 
