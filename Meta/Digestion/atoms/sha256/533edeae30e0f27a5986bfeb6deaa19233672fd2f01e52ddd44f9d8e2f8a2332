@@ -1,0 +1,18 @@
+## 边界
+
+若某些状态先验概率为零，条件独立只给出几乎处处因子化。
+
+结构充分性还要求零概率状态也满足同一条件分布。
+
+因此仍需区分：
+
+[
+\boxed{
+\text{almost-sure sufficiency}
+\neq
+\text{full-domain structural sufficiency}.
+}
+]
+
+---
+

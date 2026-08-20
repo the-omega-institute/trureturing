@@ -1,0 +1,32 @@
+# 417. 迁移能力是跨语境自然性
+
+设学习语境形成范畴 (\mathcal K)。
+
+每个语境 (k) 有：
+
+[
+X_k,
+\qquad
+Y_k,
+\qquad
+C_k:X_k\to B_k,
+\qquad
+f_k:B_k\to Y_k.
+]
+
+对于语境变换：
+
+[
+u:k\to k',
+]
+
+给出题目、表示和答案 transport：
+
+[
+X_u,
+\qquad
+B_u,
+\qquad
+Y_u.
+]
+

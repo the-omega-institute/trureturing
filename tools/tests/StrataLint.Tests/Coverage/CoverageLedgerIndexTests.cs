@@ -114,18 +114,17 @@ public sealed class CoverageLedgerIndexTests
         + "\",\"node_path\":\"" + path + "\"}}\n";
 
     // Reattest 会改 frozen_node_id(witness 含 source blob,重新 attest 即变):实测 971 个
-    // lineage 中 107 个记录过多于一个 frozen_node_id。该消费者原先对 Reattest 直接 break,
-    // 于是后续 Revoke 指向 Reattest 之后的 active id 时,active 表里没有它 ⟹ 被拒。
+    // lineage 中 107 个记录过多于一个 frozen_node_id。v2/v3 legacy 的 semantic_receipt
+    // 只作为历史字节回读别名；运行时 active identity 仍由前驱 frozen_node_id 负责。
     // v4 的 legacy 形 Reattest 两个 node-id 字段都没有:正名 frozen_node_id 从来只属 extended 形,
     // 别名 semantic_receipt 随 schema v4 退役。它只在 materialUnchanged 时产生,故此时 id 未变,
     // 正确行为是**保持当前 active 不动**,而不是拒。
     // 我先前据「id 恒等于前驱」判定「丢失无害」而结案——那只证明了信息不丢失,
     // 没检查消费者能不能拿到它:消费者不看前驱,只看当前事件。等值不蕴含可用。
-    // v2/v3 的 legacy 形以别名 semantic_receipt 记 node id,且**会改身份**(v2 extended 155 条即此类)。
-    // 该回退分支原先无任何测试覆盖:第九轮实测删掉它 9/9 全过、零具名红。
-    // 钉住它——否则读 append-only 历史的能力可以被悄悄删掉而无人发现。
+    // v2/v3 语料中的别名值等于前驱 frozen_node_id；若把它当新的运行时身份，
+    // 读到一条伪造别名就会改变后续 Revoke 的判决。
     [Fact]
-    public void LegacyReattestWithSemanticReceiptAliasReplacesTheActiveIdentity()
+    public void LegacyReattestSemanticReceiptAliasDoesNotReplaceTheActiveIdentity()
     {
         const string frozen = "sha256:1111111111111111111111111111111111111111111111111111111111111111";
         const string reattested = "sha256:2222222222222222222222222222222222222222222222222222222222222222";
@@ -136,13 +135,13 @@ public sealed class CoverageLedgerIndexTests
             + "\",\"input\":{\"descriptor_selector\":\"" + path + "\"}}}\n"
             + "{\"event_type\":\"Reattest\",\"payload\":{\"semantic_receipt\":\"" + reattested
             + "\",\"input\":{\"descriptor_selector\":\"" + path + "\"}}}\n"
-            + "{\"event_type\":\"Revoke\",\"payload\":{\"affected_frozen_node_ids\":[\"" + reattested + "\"]}}\n");
+            + "{\"event_type\":\"Revoke\",\"payload\":{\"affected_frozen_node_ids\":[\"" + frozen + "\"]}}\n");
         var syntax = Assert.IsType<DagLedgerLoadOutcome.Loaded>(DagLedgerLoader.Load(bytes)).Syntax;
 
         var loaded = Assert.IsType<FrozenCoverageLoadOutcome.Loaded>(
             FrozenCoverageLedger.Load(syntax));
 
-        // Revoke 指向的是 Reattest 之后的 id;回退分支若被删,该 id 不在 active 表里 ⟹ 路径仍残留。
+        // Revoke 必须继续指向 canonical frozen_node_id；semantic_receipt 不是新的身份。
         Assert.Empty(loaded.ActiveFrozenPaths);
     }
 

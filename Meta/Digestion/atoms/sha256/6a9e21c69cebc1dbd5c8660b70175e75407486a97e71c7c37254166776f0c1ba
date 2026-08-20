@@ -1,0 +1,28 @@
+## 定理 202.1（实验精化的收益单调性）
+
+若：
+
+[
+E\preceq E',
+]
+
+即 (E') 更精细，则：
+
+[
+\boxed{
+\operatorname{Gain}(E;C,T)
+\subseteq
+\operatorname{Gain}(E';C,T).
+}
+]
+
+因为：
+
+[
+C\vee E\preceq C\vee E',
+]
+
+所以更精细实验不会重新引入已经删除的目标缺陷。
+
+---
+

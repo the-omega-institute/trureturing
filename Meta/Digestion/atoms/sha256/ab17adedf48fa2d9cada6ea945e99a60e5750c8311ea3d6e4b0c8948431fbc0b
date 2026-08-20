@@ -1,0 +1,45 @@
+## 定义 332.2（制度合法）
+
+给定合法性判据：
+
+[
+L:B_A\times B_P\to\mathsf{Prop},
+]
+
+定义：
+
+[
+\boxed{
+\operatorname{Legit}(x)
+\iff
+L(A(x),P(x)).
+}
+]
+
+于是可以同时出现：
+
+[
+\begin{array}{c|c}
+J=T & \operatorname{Legit}\
+\hline
+\text{正确} & \text{合法}\
+\text{正确} & \text{不合法}\
+\text{错误} & \text{合法}\
+\text{错误} & \text{不合法}
+\end{array}
+]
+
+因此：
+
+[
+\boxed{
+\text{合法性}
+\neq
+\text{正确性}.
+}
+]
+
+一个未经授权的 oracle 可以给出正确结果；一个完全合法的制度也可能因为事实概念过粗而错误。
+
+---
+

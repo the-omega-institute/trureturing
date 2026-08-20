@@ -1,0 +1,42 @@
+# 367. 一个哲学体系也有“训练域”
+
+设理论：
+
+[
+\mathcal T.
+]
+
+它实际被验证过的模型域：
+
+[
+A_{\mathrm{tested}}.
+]
+
+理论声称的适用域：
+
+[
+A_{\mathrm{claimed}}.
+]
+
+如果：
+
+[
+A_{\mathrm{tested}}
+\subsetneq
+A_{\mathrm{claimed}},
+]
+
+则测试成功不能直接推出全域有效。
+
+因此应显式记录：
+
+[
+\boxed{
+\text{tested domain}
+\quad\text{vs}\quad
+\text{claimed domain}.
+}
+]
+
+---
+

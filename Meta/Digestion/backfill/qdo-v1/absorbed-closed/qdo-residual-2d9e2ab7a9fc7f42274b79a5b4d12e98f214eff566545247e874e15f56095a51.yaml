@@ -12,6 +12,6 @@ receipts:
       target_sha256: sha256:7b7e65b2627de0fa89d450bb6fbf139a991f23a32d28352f0201d3e76bba0c2f
   scribe:
     - gid: D5/S3/Observer/Separation/MoreauDecomposition.moreau_decomposition
-      definition_sha256: sha256:c04adbfc6e12d36c1cc14fe78d5c5959cf4fbae01c46dadbee212edceade383f
-      emission_sha256: sha256:5ff065b976026d2f772f3a8ac56af60f74b5935cc68d4df93e1f922103dcc4b2
+      definition_sha256: sha256:4a7f8710cb45527996f133a5ea0b83209cd6acca14ea5c9d25210182948fb4cc
+      emission_sha256: sha256:41c47044ce8d33e3c5f5bc9a0fbbfb960837caa0d6a53a8090559707ad68ec71
   unresolved_subitems: []

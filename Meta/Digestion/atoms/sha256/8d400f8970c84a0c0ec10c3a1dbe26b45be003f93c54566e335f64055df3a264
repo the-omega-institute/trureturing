@@ -1,0 +1,14 @@
+## 定义 277.1（严格纠错）
+
+若：
+
+[
+\boxed{
+\mathcal D(R(M,d))
+\subsetneq
+\mathcal D(M),
+}
+]
+
+则修复严格减少已知缺陷。
+

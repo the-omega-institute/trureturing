@@ -1,0 +1,30 @@
+## 定理 248.1（行动结果不能识别自愿性）
+
+若自由选择路径 (\gamma) 与强迫路径 (\gamma') 产生同一行动：
+
+[
+A(\gamma)=A(\gamma'),
+]
+
+但规范自愿性评价不同：
+
+[
+V(\gamma)\neq V(\gamma'),
+]
+
+则自愿性不能通过行动结果 (A) 因子化。
+
+所以：
+
+[
+\boxed{
+\text{同一行动}
+\not\Rightarrow
+\text{同一授权地位}.
+}
+]
+
+自愿性是 path-sensitive provenance 性质。
+
+---
+

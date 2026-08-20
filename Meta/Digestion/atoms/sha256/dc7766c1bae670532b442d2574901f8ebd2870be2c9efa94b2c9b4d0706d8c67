@@ -1,0 +1,11 @@
+\left{
+w\in A
+\mid
+\kappa(w)
+=========
+
+\min_{v\in A}\kappa(v)
+\right}.
+}
+]
+

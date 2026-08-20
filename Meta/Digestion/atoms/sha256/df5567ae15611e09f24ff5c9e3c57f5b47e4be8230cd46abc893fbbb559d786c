@@ -1,0 +1,19 @@
+[
+\boxed{
+Y_b
+===
+
+\left{
+T(x)
+;\middle|;
+A(x)\land C(x)=b
+\right}.
+}
+]
+
+引入拒答符号：
+
+[
+\bot_{\mathrm{ans}}\notin Y.
+]
+

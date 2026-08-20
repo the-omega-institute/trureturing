@@ -77,10 +77,10 @@ public static partial class FrozenLedger
         bool relevantSemanticPinsChanged,
         bool candidateStatementsAvoidTrivialTruth)
     {
-        if (!protectedBaseEntry.AxiomClosureKnown)
+        if (payload.AxiomClosure.IsDefault)
         {
             throw new FormatException(
-                $"Supersede target {protectedBaseEntry.Material.RepoPath.Value} recorded axiom closure is unknown.");
+                $"Supersede target {protectedBaseEntry.Material.RepoPath.Value} candidate axiom closure is missing.");
         }
 
         var declarationKeys = payload.DeclarationStatementIds
@@ -140,11 +140,11 @@ public static partial class FrozenLedger
         }
 
         if (payload.AxiomClosure.Except(
-                protectedBaseEntry.Material.AxiomClosure,
+                LeanAxiomFacts.StandardAxioms,
                 StringComparer.Ordinal).Any())
         {
             throw new FormatException(
-                $"Supersede target {protectedBaseEntry.Material.RepoPath.Value} axiom closure is not a subset of the protected-base closure.");
+                $"Supersede target {protectedBaseEntry.Material.RepoPath.Value} axiom closure is not a subset of LeanAxiomFacts.StandardAxioms.");
         }
     }
 

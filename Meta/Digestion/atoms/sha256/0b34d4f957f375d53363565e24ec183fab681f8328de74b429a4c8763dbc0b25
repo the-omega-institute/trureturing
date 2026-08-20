@@ -1,0 +1,26 @@
+# 86. 反事实需要跨世界 transport
+
+不同干预可具有不同状态类型 \(X_u\)。要表达“同一个人在另一干预下”，必须给出共同身份基底与 transport：
+
+\[
+I_u:X_u\to B,
+\qquad
+\tau_{v,u}:X_u\to X_v,
+\]
+
+满足：
+
+\[
+I_v\tau_{v,u}=I_u.
+\]
+
+路径独立要求：
+
+\[
+\tau_{w,v}\tau_{v,u}=\tau_{w,u}.
+\]
+
+闭路 transport 非恒等时出现反事实身份 holonomy。
+
+---
+

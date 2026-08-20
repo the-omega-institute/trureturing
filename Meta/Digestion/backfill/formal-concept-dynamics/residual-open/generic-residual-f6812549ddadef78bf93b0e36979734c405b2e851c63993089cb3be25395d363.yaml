@@ -1,0 +1,10 @@
+ast_path: 定义/239.1
+fingerprints:
+  raw_sha256: sha256:f6812549ddadef78bf93b0e36979734c405b2e851c63993089cb3be25395d363
+  normalized_sha256: sha256:f6812549ddadef78bf93b0e36979734c405b2e851c63993089cb3be25395d363
+cas_ref: sha256:f6812549ddadef78bf93b0e36979734c405b2e851c63993089cb3be25395d363
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

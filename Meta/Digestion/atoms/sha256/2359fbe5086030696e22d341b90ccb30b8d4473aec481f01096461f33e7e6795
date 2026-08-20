@@ -1,0 +1,14 @@
+[
+\boxed{
+\overline V_{n+1}(z)
+====================
+
+\max_{u\in U}
+\left[
+\overline r(z,u)
++
+\overline V_n(G_uz)
+\right].
+}
+]
+

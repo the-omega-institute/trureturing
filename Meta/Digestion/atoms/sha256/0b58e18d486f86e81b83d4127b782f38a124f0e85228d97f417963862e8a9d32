@@ -1,0 +1,24 @@
+### 证明
+
+对任意 (x:X_e)：
+
+[
+\begin{aligned}
+Y_uf_e(C_ex)
+&=
+Y_uT_e(x)\
+&=
+T_{e'}(X_ux)\
+&=
+f_{e'}C_{e'}(X_ux)\
+&=
+f_{e'}B_u(C_ex).
+\end{aligned}
+]
+
+(\square)
+
+若 (C_e) 满射，则自然性在整个 (B_e) 上成立。
+
+---
+

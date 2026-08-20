@@ -1,0 +1,20 @@
+## 定理 500.2（安全与反例的二分）
+
+若：
+
+[
+\operatorname{Reach}(I_0)\subseteq S,
+]
+
+则系统安全。
+
+若：
+
+[
+\operatorname{Reach}(I_0)\cap(X\setminus S)\neq\varnothing,
+]
+
+则存在有限路径到达坏状态。
+
+所以：
+

@@ -1,0 +1,15 @@
+## 定义 443.2（ratio decidendi）
+
+(R^*\in\mathcal E) 是 ratio，当：
+
+1. (E_J\preceq R^*)；
+2. 对任意 (R\in\mathcal E)，若 (E_J\preceq R)，则：
+
+[
+R^*\preceq R.
+]
+
+即 (R^*) 是允许理由 doctrine 中最粗的充分概念。
+
+---
+

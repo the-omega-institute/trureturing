@@ -1,0 +1,21 @@
+## 定理 524.1
+
+[
+\operatorname{StochComp}_Y(C)
+]
+
+对 (Y) 随机预测充分。
+
+并且任何同时精化 (C)、又对 (Y) 充分的概念 (D)，都满足：
+
+[
+\boxed{
+\operatorname{StochComp}_Y(C)
+\preceq D.
+}
+]
+
+因此它是随机目标的最小保守完成。
+
+---
+

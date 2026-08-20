@@ -1,0 +1,28 @@
+# 88. 分布式知识与共同知识
+
+对观察者族：
+
+\[
+C_{\mathrm{joint}}=\bigvee_iC_i,
+\qquad
+C_{\mathrm{common}}=\bigwedge_iC_i.
+\]
+
+定义：
+
+\[
+D_IP=K_{C_{\mathrm{joint}}}P,
+\qquad
+C_IP=K_{C_{\mathrm{common}}}P.
+\]
+
+“每个人都知道”记为 \(E_IP=\bigwedge_iK_{C_i}P\)。一般：
+
+\[
+\boxed{C_IP\Longrightarrow E_IP\Longrightarrow D_IP,}
+\]
+
+反向均可失败。集体融合能够知道无人单独知道的事实；人人知道也不自动形成无限层相互知道。
+
+---
+

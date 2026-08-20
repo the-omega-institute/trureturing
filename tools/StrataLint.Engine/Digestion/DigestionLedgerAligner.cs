@@ -81,7 +81,8 @@ internal static partial class DigestionLedgerAligner
         DigestionAlignmentMode mode,
         Func<string, TheoryAtomizer>? atomizerResolver = null,
         RepositorySnapshot? baselineSnapshot = null,
-        DigestionCasEvaluation? casEvaluation = null)
+        DigestionCasEvaluation? casEvaluation = null,
+        RawChangeSet? changes = null)
     {
         ArgumentNullException.ThrowIfNull(document);
         ArgumentNullException.ThrowIfNull(snapshot);
@@ -239,6 +240,8 @@ internal static partial class DigestionLedgerAligner
                 var hasClausePlanChains = registeredAtomizer
                     && AtomizerRegistry.EmitsClausePlans(source.Atomizer)
                     && source.Entries.Any(static entry => entry.Receipts.ChainAtoms.Length > 0);
+                var chainInputsChanged = hasClausePlanChains
+                    && ClausePlanInputsChanged(source, changes);
                 var coarseReplacementObligations =
                     coarseReplacementObligationsBySource.GetValueOrDefault(source.SourceId, []);
                 var unprovenCasEntries = source.Entries.Where(entry =>
@@ -260,7 +263,7 @@ internal static partial class DigestionLedgerAligner
 
                 if (((mode == DigestionAlignmentMode.Admission
                         && unprovenCasEntries.Length == 0
-                        && !hasClausePlanChains)
+                        && !chainInputsChanged)
                         || !registeredAtomizer)
                     && coarseReplacementObligations.Length == 0)
                 {
@@ -313,7 +316,7 @@ internal static partial class DigestionLedgerAligner
                 if (mode == DigestionAlignmentMode.Admission
                     && coarseReplacementObligations.Length == 0
                     && unprovenCasEntries.All(entry => matchedAtoms.ContainsKey(entry.AtomId))
-                    && !hasClausePlanChains)
+                    && !chainInputsChanged)
                 {
                     return;
                 }

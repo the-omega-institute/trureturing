@@ -1,0 +1,28 @@
+## 鲁棒性
+
+[
+\boxed{
+J(gx)=T(gx)
+}
+]
+
+对：
+
+[
+x\in A,\quad g\in\mathcal G.
+]
+
+一个系统可以训练域准确，却扰动后失败。
+
+所以：
+
+[
+\boxed{
+\text{accuracy}
+\neq
+\text{robustness}.
+}
+]
+
+---
+

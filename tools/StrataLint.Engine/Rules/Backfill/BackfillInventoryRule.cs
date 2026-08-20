@@ -67,7 +67,12 @@ internal static class BackfillInventoryRule
         BackfillInventoryDocument document;
         try
         {
-            document = BackfillInventoryLoader.Load(context.Current);
+            document = changes is null
+                ? BackfillInventoryLoader.Load(context.Current)
+                : BackfillInventoryLoader.LoadCandidateDelta(
+                    context.Current,
+                    context.Baseline,
+                    changes);
         }
         catch (FormatException exception)
         {
@@ -180,20 +185,34 @@ internal static class BackfillInventoryRule
         }
 
         var seenSourceIds = new HashSet<string>(StringComparer.Ordinal);
+        var changedSourceIds = new HashSet<string>(StringComparer.Ordinal);
         var seenPaths = new Dictionary<string, string>(StringComparer.Ordinal);
+        var changedPaths = new HashSet<string>(StringComparer.Ordinal);
+        var validateAllRecords = RequiresFullBackfillValidation(context.Changes);
         foreach (var source in sources)
         {
-            if (!seenSourceIds.Add(source.SourceId))
+            var sourceMetadataChanged = validateAllRecords
+                || SourceMetadataChanged(source, context.Changes);
+            if (sourceMetadataChanged)
             {
-                findings.Add(new RuleFinding(BackfillPath, $"duplicate source_id: {source.SourceId}"));
+                changedSourceIds.Add(source.SourceId);
+                changedPaths.Add(source.SourcePath);
             }
 
-            if (!SourceIdPattern.IsMatch(source.SourceId))
+            if (!seenSourceIds.Add(source.SourceId))
+            {
+                if (sourceMetadataChanged || changedSourceIds.Contains(source.SourceId))
+                {
+                    findings.Add(new RuleFinding(BackfillPath, $"duplicate source_id: {source.SourceId}"));
+                }
+            }
+
+            if (sourceMetadataChanged && !SourceIdPattern.IsMatch(source.SourceId))
             {
                 findings.Add(new RuleFinding(BackfillPath, $"invalid source_id: {source.SourceId}"));
             }
 
-            if (source.Entries.Length == 0)
+            if (sourceMetadataChanged && source.Entries.Length == 0)
             {
                 findings.Add(new RuleFinding(
                     BackfillPath,
@@ -203,9 +222,10 @@ internal static class BackfillInventoryRule
             // 理论卷按**规则**治理(路径在理论根下),不再逐个枚举进 registry.yaml:
             // 否则第三方 PR 加一个 markdown 就被迫改 harness,而它的名字无法预先枚举
             // (与 docs/reports/ 同性质;CLAUDE.md 商余结构)。其余治理文档仍按清单。
-            if (!RepoPath.TryCreate(source.SourcePath, out var sourcePath)
+            if (sourceMetadataChanged
+                && (!RepoPath.TryCreate(source.SourcePath, out var sourcePath)
                 || !(context.Policy.GovernanceDocuments.Contains(sourcePath)
-                    || DigestionOpaquePathPolicy.IsTheoryDocument(sourcePath)))
+                    || DigestionOpaquePathPolicy.IsTheoryDocument(sourcePath))))
             {
                 // First thing a new volume hits, so the verdict carries its own remedy
                 // rather than leaving the reader to find which registry field is meant.
@@ -215,7 +235,7 @@ internal static class BackfillInventoryRule
                     + $"'{source.SourcePath}': add it to governance_documents in "
                     + "Meta/registry.yaml"));
             }
-            else
+            else if (sourceMetadataChanged)
             {
                 if (source.Atomizer == AtomizerRegistry.NoAtomizerId
                     && !context.Current.TryGetFile(source.SourcePath, out _))
@@ -231,7 +251,8 @@ internal static class BackfillInventoryRule
                 }
             }
 
-            if (source.Atomizer != AtomizerRegistry.NoAtomizerId
+            if (sourceMetadataChanged
+                && source.Atomizer != AtomizerRegistry.NoAtomizerId
                 && !AtomizerRegistry.IsRegistered(source.Atomizer))
             {
                 findings.Add(new RuleFinding(
@@ -244,9 +265,12 @@ internal static class BackfillInventoryRule
 
             if (seenPaths.TryGetValue(source.SourcePath, out var priorSource))
             {
-                findings.Add(new RuleFinding(
-                    BackfillPath,
-                    $"duplicate source path: {source.SourcePath} ({priorSource}, {source.SourceId})"));
+                if (sourceMetadataChanged || changedPaths.Contains(source.SourcePath))
+                {
+                    findings.Add(new RuleFinding(
+                        BackfillPath,
+                        $"duplicate source path: {source.SourcePath} ({priorSource}, {source.SourceId})"));
+                }
             }
             else
             {
@@ -262,19 +286,33 @@ internal static class BackfillInventoryRule
         }
 
         var seenAtomIds = new HashSet<string>(StringComparer.Ordinal);
+        var changedAtomIds = new HashSet<string>(StringComparer.Ordinal);
         foreach (var entry in entries)
         {
-            if (!seenAtomIds.Add(entry.AtomId))
+            var entryChanged = validateAllRecords
+                || changedSourceIds.Contains(entry.SourceId)
+                || context.Changes is not null
+                    && DigestionCasStore.EntryChanged(entry, context.Changes);
+            if (entryChanged)
             {
-                findings.Add(new RuleFinding(BackfillPath, $"duplicate atom_id: {entry.AtomId}"));
+                changedAtomIds.Add(entry.AtomId);
             }
 
-            if (!AtomIdPattern.IsMatch(entry.AtomId))
+            if (!seenAtomIds.Add(entry.AtomId))
+            {
+                if (entryChanged || changedAtomIds.Contains(entry.AtomId))
+                {
+                    findings.Add(new RuleFinding(BackfillPath, $"duplicate atom_id: {entry.AtomId}"));
+                }
+            }
+
+            if (entryChanged && !AtomIdPattern.IsMatch(entry.AtomId))
             {
                 findings.Add(new RuleFinding(BackfillPath, $"invalid atom_id: {entry.AtomId}"));
             }
 
-            if (entry.CoverageGids.Distinct(StringComparer.Ordinal).Count() != entry.CoverageGids.Length)
+            if (entryChanged
+                && entry.CoverageGids.Distinct(StringComparer.Ordinal).Count() != entry.CoverageGids.Length)
             {
                 findings.Add(new RuleFinding(
                     BackfillPath,
@@ -285,11 +323,14 @@ internal static class BackfillInventoryRule
             {
                 if (!Gid.TryParse(gidText, out var gid))
                 {
-                    findings.Add(new RuleFinding(
-                        BackfillPath,
-                        $"entry {entry.AtomId} has invalid coverage GID {gidText}"));
+                    if (entryChanged)
+                    {
+                        findings.Add(new RuleFinding(
+                            BackfillPath,
+                            $"entry {entry.AtomId} has invalid coverage GID {gidText}"));
+                    }
                 }
-                else if (!context.Current.TryGetFile(gid.Path.Value, out _))
+                else if (entryChanged && !context.Current.TryGetFile(gid.Path.Value, out _))
                 {
                     findings.Add(new RuleFinding(
                         BackfillPath,
@@ -357,5 +398,20 @@ internal static class BackfillInventoryRule
             throw new FormatException("baseline digestion ledger is missing");
         }
     }
+
+    private static bool RequiresFullBackfillValidation(RawChangeSet? changes) =>
+        changes is null || changes.Paths.Any(static path =>
+            path.Value == "tools/StrataLint.Engine/StrataLint.Engine.csproj"
+            || path.Value.StartsWith(
+                "tools/StrataLint.Engine/Rules/Backfill/",
+                StringComparison.Ordinal)
+                && path.Value.EndsWith(".cs", StringComparison.Ordinal));
+
+    private static bool SourceMetadataChanged(
+        DigestionLedgerSource source,
+        RawChangeSet? changes) =>
+        changes is null
+        || changes.Paths.Any(path => path.Value ==
+            $"{BackfillInventoryLoader.RootPath}{source.SourceId}/source.toml");
 
 }

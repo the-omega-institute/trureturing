@@ -1,0 +1,20 @@
+## 定理 68.1（闭包三律）
+
+在概念等价意义下：
+
+\[
+C\preceq\operatorname{cl}_T(C),
+\]
+
+\[
+C\preceq D
+\Longrightarrow
+\operatorname{cl}_T(C)\preceq\operatorname{cl}_T(D),
+\]
+
+\[
+\operatorname{cl}_T(\operatorname{cl}_T(C))
+\simeq_{\mathrm{con}}
+\operatorname{cl}_T(C).
+\]
+

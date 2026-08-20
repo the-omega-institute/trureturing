@@ -79,7 +79,7 @@ internal sealed class ControlledBehaviorUniversalityDocument : IScribeDocumentDe
         return Disp(Seq(
             Begin, Grp(F.Id("gathered")),
             Forall, Sp, yType, Comma, Sp, inputType, Comma, Sp, outputType,
-            Comma, Sp, realizedType, Comma, RowBreak,
+            Comma, Sp, realizedType, Comma, RowBreak, Grp(),
             Typeclass("Fintype", yType), Comma, Sp,
             Typeclass("Fintype", realizedType), Comma, RowBreak,
             Typed("F", new Formula.TypeArrow(inputType,

@@ -1,0 +1,14 @@
+## 定理 383.1（规范最小实现）
+
+存在唯一的满射系统同态：
+
+[
+\boxed{
+h:\operatorname{Reach}*M(a')
+\twoheadrightarrow
+Z*\beta
+}
+]
+
+使：
+

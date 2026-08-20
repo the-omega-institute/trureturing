@@ -126,7 +126,13 @@ public sealed class RuleEngineTests
             red.AddBackfillTargets();
         }
         red.Apply(mutation);
-        var redContext = number == 20 ? red.BuildForRuleCompatibility() : red.Build();
+        var redContext = number switch
+        {
+            15 => red.Build(RawChangeSet.Create(
+                ["Evidence/D5/S0/Carrier/Formula.check.json"])),
+            20 => red.BuildForRuleCompatibility(),
+            _ => red.Build(),
+        };
         var redResult = RuleCatalog.Default.EvaluateSingle(RuleId.CreateKnown(number), redContext);
 
         Assert.NotEmpty(redResult.Diagnostics);
@@ -266,7 +272,8 @@ public sealed class RuleEngineTests
         fixture.Files[path] = "print('split')\n";
 
         var completed = Assert.IsType<RuleExecutionOutcome.Completed>(
-            RuleCatalog.Default.Execute(fixture.BuildForRuleCompatibility()));
+            RuleCatalog.Default.Execute(
+                fixture.Build(RawChangeSet.Create([path]))));
 
         Assert.DoesNotContain(
             completed.Capability.Diagnostics,
@@ -781,7 +788,7 @@ public sealed class RuleEngineTests
 
         var evaluation = RuleCatalog.Default.EvaluateSingle(
             RuleId.CreateKnown(19),
-            fixture.Build());
+            fixture.Build(RawChangeSet.Create([RuleFixture.TowerManifestPath])));
 
         var diagnostic = Assert.Single(evaluation.Diagnostics);
         Assert.Contains(

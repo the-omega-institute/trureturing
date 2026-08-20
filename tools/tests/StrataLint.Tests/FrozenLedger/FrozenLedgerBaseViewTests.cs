@@ -251,9 +251,9 @@ public sealed class FrozenLedgerBaseViewTests(ITestOutputHelper output)
             shape is ReattestShape.HistoricalLegacy ? 3 : 4);
         files[FrozenLedgerChangeClassifier.AcceptedPath(reattest.Hash)] =
             Encoding.UTF8.GetString(reattest.Bytes.AsSpan());
-        var revokedNodeId = shape is ReattestShape.SchemaV4Legacy
-            ? frozen.Material.FrozenNodeId.Value
-            : freshNodeId;
+        var revokedNodeId = shape is ReattestShape.SchemaV4Extended
+            ? freshNodeId
+            : frozen.Material.FrozenNodeId.Value;
         var revoke = FrozenLedgerCanonicalWriter.WriteDagEvent(
             "Revoke",
             JsonSerializer.SerializeToElement(new

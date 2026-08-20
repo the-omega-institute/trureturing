@@ -32,15 +32,38 @@ public sealed class HeartsAuthorizationLedgerTests
     public void Sl008RejectsMalformedCandidateAuthorizationLedger()
     {
         var fixture = new RuleFixture();
+        fixture.Baseline[HeartsAuthorizationLedger.Path] = HeartsAuthorizationLedger.Header;
+        fixture.ForkPoint[HeartsAuthorizationLedger.Path] = HeartsAuthorizationLedger.Header;
         fixture.Files[HeartsAuthorizationLedger.Path] =
             HeartsAuthorizationLedger.Header + "not a ledger row\n";
 
         var evaluation = RuleCatalog.Default.EvaluateSingle(
             RuleId.CreateKnown(8),
-            fixture.Build());
+            fixture.Build(RawChangeSet.CreateWithKinds(
+                [(HeartsAuthorizationLedger.Path, RawChangeKind.Modified)])));
 
         Assert.Contains(evaluation.Diagnostics, diagnostic =>
             diagnostic.Path == HeartsAuthorizationLedger.Path
             && diagnostic.Message.Contains("exactly four columns", StringComparison.Ordinal));
+    }
+
+    [Fact]
+    public void Sl008DoesNotRevalidateMalformedAuthorizationLedgerForAddedAcceptedEvent()
+    {
+        var fixture = new RuleFixture();
+        var malformed = HeartsAuthorizationLedger.Header + "not a ledger row\n";
+        fixture.Files[HeartsAuthorizationLedger.Path] = malformed;
+        fixture.Baseline[HeartsAuthorizationLedger.Path] = malformed;
+        fixture.ForkPoint[HeartsAuthorizationLedger.Path] = malformed;
+        var acceptedPath = FrozenLedgerChangeClassifier.AcceptedPath(
+            "sha256:" + new string('a', 64));
+        fixture.Files[acceptedPath] = "candidate accepted event\n";
+
+        var evaluation = RuleCatalog.Default.EvaluateSingle(
+            RuleId.CreateKnown(8),
+            fixture.Build(RawChangeSet.CreateWithKinds(
+                [(acceptedPath, RawChangeKind.Added)])));
+
+        Assert.Empty(evaluation.Diagnostics);
     }
 }

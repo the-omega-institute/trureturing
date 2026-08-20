@@ -12,6 +12,6 @@ receipts:
       target_sha256: sha256:59f335f953bf5db57edff009fc969d539043f1e5830622ca2a645836b52f2096
   scribe:
     - gid: D5/S3/Observer/Separation/FiniteFutureCongruence.finite_future_maximal_congruence
-      definition_sha256: sha256:99cee876265bea9e65c448f92f85872d160bba4f6afb9f4b0a262e3664662229
-      emission_sha256: sha256:b1c9b3d79622af4671e554b07aba7dc219c90862c5452a05f31297e02c00223b
+      definition_sha256: sha256:bd6f1da9fa5143d05e42a012e8f6f89d51dd8b6b801e011d4dcb401186431eab
+      emission_sha256: sha256:a208360e883655ab2e20b3ca79f373672ab6bba090f6f29874645efc8f750ee8
   unresolved_subitems: []

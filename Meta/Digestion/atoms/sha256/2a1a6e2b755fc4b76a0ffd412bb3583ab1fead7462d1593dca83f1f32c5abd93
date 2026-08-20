@@ -1,0 +1,16 @@
+[
+\delta
+======
+
+\min_{\substack{y\neq z\A_y,A_z\neq\varnothing}}
+\operatorname{dist}(A_y,A_z).
+]
+
+则：
+
+[
+\boxed{
+\delta>0.
+}
+]
+

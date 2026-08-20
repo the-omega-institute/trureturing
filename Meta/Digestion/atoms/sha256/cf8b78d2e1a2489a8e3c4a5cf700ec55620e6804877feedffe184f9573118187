@@ -1,0 +1,23 @@
+[
+\boxed{
+D_{\mathcal L}(x)
+=================
+
+\left(
+\mathbb E_{K(x)}[\ell_j(a,Y)]
+\right)_{j,a}.
+}
+]
+
+其规范决策本质为：
+
+[
+\boxed{
+E_{D_{\mathcal L}}.
+}
+]
+
+目标损失族越丰富，该概念通常越精细。
+
+---
+

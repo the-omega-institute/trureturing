@@ -1,0 +1,18 @@
+## 定义 501.1（排名函数）
+
+[
+\boxed{
+\rho:X\to W
+}
+]
+
+满足：
+
+[
+xR_Gy
+\Longrightarrow
+\rho(y)\prec\rho(x).
+]
+
+---
+

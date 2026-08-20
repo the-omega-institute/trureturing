@@ -1,0 +1,20 @@
+# 75. 共同概念与联合概念
+
+对观察者族 \((C_o)\)，定义：
+
+\[
+C_{\mathrm{common}}=\bigwedge_oC_o,
+\qquad
+C_{\mathrm{joint}}=\bigvee_oC_o.
+\]
+
+有：
+
+\[
+C_{\mathrm{common}}\preceq C_o\preceq C_{\mathrm{joint}}.
+\]
+
+共同概念表示每个观察者单独都能恢复的最精细内容；联合概念表示信息融合后的总分辨能力。客观共同因子、集体认识能力与共同实现兼容像是三个不同结构。
+
+---
+

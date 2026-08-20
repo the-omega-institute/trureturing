@@ -1,0 +1,26 @@
+[
+\boxed{
+\operatorname{Claim}(P)
+=======================
+
+\sum_{A:\mathcal M\to\mathsf{Prop}}
+\left[
+\left(
+\forall m,\ A(m)\to P(m)
+\right)
+\times
+\operatorname{Provenance}(A,P)
+\right].
+}
+]
+
+因此一个定理不仅包含结论，还包含：
+
+* 有效域；
+* 假设；
+* proof term；
+* 依赖来源；
+* 使用的逻辑原则。
+
+---
+

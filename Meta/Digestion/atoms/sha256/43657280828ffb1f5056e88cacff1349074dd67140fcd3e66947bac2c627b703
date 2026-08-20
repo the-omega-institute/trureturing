@@ -1,0 +1,21 @@
+# 127. 多行动动态完成
+
+若幺半群 \(M\) 作用于 \(X\)，定义：
+
+\[
+\operatorname{Dyn}_M(C)
+=\bigvee_{m\in M}F_m^*C.
+\]
+
+其同一关系为：
+
+\[
+x\sim y
+\iff
+\forall m,\ C(F_mx)=C(F_my).
+\]
+
+所有允许行动都在 \(\operatorname{Dyn}_M(C)\) 上下降；它是保留当前概念并使全部行动闭合的最小概念。
+
+---
+

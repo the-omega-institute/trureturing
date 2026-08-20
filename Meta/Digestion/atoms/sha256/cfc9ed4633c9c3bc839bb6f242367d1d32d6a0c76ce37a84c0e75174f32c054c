@@ -1,0 +1,14 @@
+# 117. 随机概念与信息降级序
+
+把确定概念推广为 Markov kernel \(K:X\rightsquigarrow B\)。定义：
+
+\[
+K\preceq_{\mathrm{garble}}L
+\iff
+\exists G,\ K=G\circ L.
+\]
+
+后处理不能提高任意决策问题中的能力。确定性 refinement 是该信息序的特殊情况。
+
+---
+

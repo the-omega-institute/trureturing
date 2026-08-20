@@ -151,17 +151,14 @@ internal static class LeanImportClosure
     internal static bool RelevantSemanticPinsChanged(
         LeanAxiomReport report,
         RepoPath startPath,
-        FrozenActiveEntry protectedBaseEntry,
         RepositorySnapshot protectedBaseSnapshot,
         RepositorySnapshot candidateSnapshot)
     {
         ArgumentNullException.ThrowIfNull(report);
-        ArgumentNullException.ThrowIfNull(protectedBaseEntry);
         ArgumentNullException.ThrowIfNull(protectedBaseSnapshot);
         ArgumentNullException.ThrowIfNull(candidateSnapshot);
         if (!TryGetPinnedEnvironmentFiles(protectedBaseSnapshot, out var protectedToolchain, out _)
-            || !TryGetPinnedEnvironmentFiles(candidateSnapshot, out var candidateToolchain, out _)
-            || !ProtectedEnvironmentMatchesEntry(protectedBaseEntry, protectedBaseSnapshot))
+            || !TryGetPinnedEnvironmentFiles(candidateSnapshot, out var candidateToolchain, out _))
         {
             return false;
         }
@@ -299,7 +296,7 @@ internal static class LeanImportClosure
         return packages.ToImmutable();
     }
 
-    private static bool ProtectedEnvironmentMatchesEntry(
+    internal static bool ProtectedEnvironmentMatchesEntry(
         FrozenActiveEntry entry,
         RepositorySnapshot snapshot)
     {
@@ -308,17 +305,12 @@ internal static class LeanImportClosure
             return false;
         }
 
-        var algorithm = entry.Payload.Input.BaseCommitOid.StartsWith(
-            "git-sha256:",
-            StringComparison.Ordinal)
-            ? System.Security.Cryptography.HashAlgorithmName.SHA256
-            : System.Security.Cryptography.HashAlgorithmName.SHA1;
-        var toolchainOid = FrozenContentAddress.ComputeGitBlobOid(
-            toolchain.RawBytes.AsSpan(),
-            algorithm);
-        var manifestOid = FrozenContentAddress.ComputeGitBlobOid(
-            manifest.RawBytes.AsSpan(),
-            algorithm);
+        if (toolchain.GitBlobOid is not { } toolchainOid
+            || manifest.GitBlobOid is not { } manifestOid)
+        {
+            return false;
+        }
+
         return entry.Environment is { } environment
             ? environment.LeanToolchainBlobOid == toolchainOid
                 && environment.LakeManifestBlobOid == manifestOid

@@ -1,0 +1,25 @@
+## 定义 466.1（拓扑不可区分）
+
+[
+\boxed{
+x\sim_\tau y
+\iff
+\forall U\in\tau,\quad
+x\in U\leftrightarrow y\in U.
+}
+]
+
+即 (x,y) 属于完全相同的可观察开集。
+
+定义商：
+
+[
+\boxed{
+X_0=X/{\sim_\tau}.
+}
+]
+
+并赋予 quotient topology。
+
+---
+

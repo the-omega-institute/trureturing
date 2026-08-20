@@ -1,0 +1,16 @@
+### 伪传递
+
+[
+A\Rightarrow B,
+\qquad
+B\vee C\Rightarrow D
+]
+
+推出：
+
+[
+\boxed{
+A\vee C\Rightarrow D.
+}
+]
+

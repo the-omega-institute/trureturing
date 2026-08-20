@@ -1,0 +1,44 @@
+## 定义 505.1（信息序）
+
+[
+\boxed{
+S\sqsubseteq T
+\iff
+T\subseteq S.
+}
+]
+
+读作：
+
+[
+T
+]
+
+至少和 (S) 一样有信息。
+
+于是：
+
+[
+\bot_{\mathrm{info}}=X
+]
+
+表示完全无区分信息。
+
+空集：
+
+[
+\top_{\mathrm{info}}=\varnothing
+]
+
+表示不一致信息状态。
+
+单点：
+
+[
+{x}
+]
+
+表示精确世界。
+
+---
+

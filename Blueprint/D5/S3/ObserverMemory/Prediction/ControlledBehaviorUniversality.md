@@ -6,7 +6,7 @@ Every finite controlled realization maps uniquely onto the complete behavior quo
 
 **Theorem 1.1 (Controlled behavior has a universal minimal realization).**
 
-$$\begin{gathered}\forall Y, U, O, W,\\[\operatorname{Fintype}(Y)], [\operatorname{Fintype}(W)],\\F: U \to \left(Y \to Y\right), q: Y \to O,\\r: Y \to W, G: U \to \left(W \to W\right), o: W \to O,\\\operatorname{Surjective}\left(r\right) \Rightarrow (\forall u\in U, r \circ F(u) = G(u) \circ r) \Rightarrow q = o \circ r \Rightarrow\\(\exists! h: W \to Z, \operatorname{Surjective}\left(h\right) \land \pi = h \circ r \land\\(\forall u\in U, h \circ G(u) = \overline{F}(u) \circ h) \land\\\overline{q} \circ h = o) \land \operatorname{card}(Z) \leq \operatorname{card}(W).\end{gathered}$$
+$$\begin{gathered}\forall Y, U, O, W,\\{}[\operatorname{Fintype}(Y)], [\operatorname{Fintype}(W)],\\F: U \to \left(Y \to Y\right), q: Y \to O,\\r: Y \to W, G: U \to \left(W \to W\right), o: W \to O,\\\operatorname{Surjective}\left(r\right) \Rightarrow (\forall u\in U, r \circ F(u) = G(u) \circ r) \Rightarrow q = o \circ r \Rightarrow\\(\exists! h: W \to Z, \operatorname{Surjective}\left(h\right) \land \pi = h \circ r \land\\(\forall u\in U, h \circ G(u) = \overline{F}(u) \circ h) \land\\\overline{q} \circ h = o) \land \operatorname{card}(Z) \leq \operatorname{card}(W).\end{gathered}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/ObserverMemory/Prediction/ControlledBehaviorUniversality.controlled_behavior_universal_property` (`✓ std3`). ∎
 

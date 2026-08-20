@@ -1,0 +1,15 @@
+[
+\boxed{
+\operatorname{ICarry}_u(C)
+==========================
+
+\left{
+(x,y)
+;\middle|;
+C(x)=C(y),
+\quad
+C(F_ux)\neq C(F_uy)
+\right}.
+}
+]
+
