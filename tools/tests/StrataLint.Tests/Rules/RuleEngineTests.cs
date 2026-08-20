@@ -126,7 +126,13 @@ public sealed class RuleEngineTests
             red.AddBackfillTargets();
         }
         red.Apply(mutation);
-        var redContext = number == 20 ? red.BuildForRuleCompatibility() : red.Build();
+        var redContext = number switch
+        {
+            15 => red.Build(RawChangeSet.Create(
+                ["Evidence/D5/S0/Carrier/Formula.check.json"])),
+            20 => red.BuildForRuleCompatibility(),
+            _ => red.Build(),
+        };
         var redResult = RuleCatalog.Default.EvaluateSingle(RuleId.CreateKnown(number), redContext);
 
         Assert.NotEmpty(redResult.Diagnostics);

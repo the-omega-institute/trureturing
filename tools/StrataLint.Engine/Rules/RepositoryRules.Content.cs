@@ -12,6 +12,7 @@ internal static partial class RepositoryRules
         var findings = ImmutableArray.CreateBuilder<RuleFinding>();
         var evidence = new Dictionary<(string Coordinates, string Selector), List<string>>();
         var seenGids = new Dictionary<string, List<string>>(StringComparer.Ordinal);
+        var changedPaths = context.Changes.Paths.ToHashSet();
         foreach (var (path, file) in context.Current.Files.OrderBy(item => item.Key.Value, StringComparer.Ordinal))
         {
             if (RepositoryPathPolicy.Validate(path, context.Policy) is not null)
@@ -40,7 +41,8 @@ internal static partial class RepositoryRules
                 }
             }
 
-            if (path.Value.EndsWith(".json", StringComparison.Ordinal))
+            if (path.Value.EndsWith(".json", StringComparison.Ordinal)
+                && changedPaths.Contains(path))
             {
                 ValidateFormulas(path.Value, file.Text, findings);
             }

@@ -105,7 +105,7 @@ internal sealed class FiniteFutureCongruenceDocument : IScribeDocumentDefinition
 
         return Disp(Seq(
             Begin, Grp(F.Id("gathered")),
-            Forall, Sp, state, Comma, Sp, output, Comma, RowBreak,
+            Forall, Sp, state, Comma, Sp, output, Comma, RowBreak, Grp(),
             OpenBracket, Operatorname, Grp(F.Id("Fintype")),
             Open, state, Close, CloseBracket, Comma, Sp,
             Tau, Colon, Sp, state, Sp, To, Sp, state, Comma, Sp,
