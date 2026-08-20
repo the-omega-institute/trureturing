@@ -26,6 +26,9 @@ domains:
   Computability:
     stratum: S0
     definition: Partial recursive codes with universal evaluation and the recursion-theoretic fixed points of computable code transformations.
+  ConceptDynamics:
+    stratum: S3
+    definition: Abstract concept readouts, dependent fibers, refinements, joins, and descent uniqueness.
   Constants:
     stratum: S3
     definition: Canonical real constants and registered reference centers used by audited projections.
