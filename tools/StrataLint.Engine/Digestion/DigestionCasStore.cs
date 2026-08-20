@@ -90,7 +90,8 @@ internal static class DigestionCasStore
     internal static DigestionCasEvaluation Evaluate(
         BackfillInventoryDocument document,
         RepositorySnapshot snapshot,
-        RawChangeSet? changes)
+        RawChangeSet? changes,
+        Func<string, bool>? isBaseFactAffected = null)
     {
         ArgumentNullException.ThrowIfNull(document);
         ArgumentNullException.ThrowIfNull(snapshot);
@@ -101,7 +102,9 @@ internal static class DigestionCasStore
         foreach (var entry in document.RequireDigestionEntries())
         {
             var reference = entry.CasRef;
-            var entryChanged = changes is null || EntryChanged(entry, changes);
+            var entryChanged = changes is null
+                || EntryChanged(entry, changes)
+                || isBaseFactAffected?.Invoke(entry.SourcePath) == true;
             if (!DigestionFingerprint.IsCanonicalSha256(reference))
             {
                 if (entryChanged)
@@ -122,7 +125,9 @@ internal static class DigestionCasStore
 
             var path = RootPath + reference["sha256:".Length..];
             referencedPaths.Add(path);
-            var blobChanged = changes is null || changes.Paths.Any(changed => changed.Value == path);
+            var blobChanged = changes is null
+                || (isBaseFactAffected?.Invoke(path)
+                    ?? changes.Paths.Any(changed => changed.Value == path));
             if (!entryChanged && !blobChanged)
             {
                 validAtomIds.Add(entry.AtomId);

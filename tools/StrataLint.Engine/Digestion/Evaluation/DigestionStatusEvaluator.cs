@@ -47,6 +47,7 @@ internal static partial class DigestionStatusEvaluator
                 verifiedScribeEmissions: null,
                 genreChecks[entry.SourceId],
                 changes: null,
+                isBaseFactAffected: null,
                 findings))
             .ToArray();
         DeriveMigration(work);
@@ -67,7 +68,8 @@ internal static partial class DigestionStatusEvaluator
         bool validateProjectedStatus = true,
         RepositorySnapshot? baselineSnapshot = null,
         DigestionCasEvaluation? casEvaluation = null,
-        RawChangeSet? changes = null)
+        RawChangeSet? changes = null,
+        Func<string, bool>? isBaseFactAffected = null)
     {
         ArgumentNullException.ThrowIfNull(document);
         ArgumentNullException.ThrowIfNull(snapshot);
@@ -123,6 +125,7 @@ internal static partial class DigestionStatusEvaluator
                 verifiedScribeEmissions,
                 genreChecks[entry.SourceId],
                 changes,
+                isBaseFactAffected,
                 findings);
         }).ToArray();
         DeriveMigration(work);
@@ -241,6 +244,7 @@ internal static partial class DigestionStatusEvaluator
         VerifiedScribeEmissions? verifiedScribeEmissions,
         GenreRegistryCheck genreRegistryCheck,
         RawChangeSet? changes,
+        Func<string, bool>? isBaseFactAffected,
         ImmutableArray<string>.Builder findings)
     {
         var gaps = new List<DigestionGap>();
@@ -311,7 +315,8 @@ internal static partial class DigestionStatusEvaluator
         // a fresh verdict; otherwise the baseline keeps this entry locally incomplete.
         var baselineKeepsLocalIncomplete = baselineMigration == DigestionMigrationState.Partial
             && changes is not null
-            && !DigestionCasStore.EntryChanged(entry, changes);
+            && !DigestionCasStore.EntryChanged(entry, changes)
+            && isBaseFactAffected?.Invoke(entry.SourcePath) != true;
         var localComplete = !baselineKeepsLocalIncomplete
             && boundary
             && existingTargets.Count == entry.CoverageGids.Distinct(StringComparer.Ordinal).Count()
@@ -330,24 +335,32 @@ internal static partial class DigestionStatusEvaluator
             targetStates,
             localComplete,
             hasProgress,
-            StatusAuthorityClosureChanged(entry, baselineMigration, changes));
+            StatusAuthorityClosureChanged(
+                entry,
+                baselineMigration,
+                changes,
+                isBaseFactAffected));
     }
 
     private static bool StatusAuthorityClosureChanged(
         DigestionLedgerEntry entry,
         DigestionMigrationState? baselineMigration,
-        RawChangeSet? changes)
+        RawChangeSet? changes,
+        Func<string, bool>? isBaseFactAffected)
     {
-        if (baselineMigration is null || changes is null || DigestionCasStore.EntryChanged(entry, changes))
+        if (changes is null || baselineMigration is null && isBaseFactAffected is null
+            || DigestionCasStore.EntryChanged(entry, changes))
         {
             return true;
         }
 
-        if (PathChanged(changes, entry.SourcePath)
-            || PathChanged(changes, TheoryAtomizerDataLoader.DataPath)
+        bool Affected(string path) => isBaseFactAffected?.Invoke(path) ?? PathChanged(changes, path);
+
+        if (Affected(entry.SourcePath)
+            || Affected(TheoryAtomizerDataLoader.DataPath)
             || DigestionFingerprint.IsCanonicalSha256(entry.CasRef)
-                && PathChanged(changes, DigestionCasStore.RootPath + entry.CasRef["sha256:".Length..])
-            || entry.Receipts.TailAuthorization is { } tail && PathChanged(changes, tail.Path))
+                && Affected(DigestionCasStore.RootPath + entry.CasRef["sha256:".Length..])
+            || entry.Receipts.TailAuthorization is { } tail && Affected(tail.Path))
         {
             return true;
         }
@@ -360,9 +373,9 @@ internal static partial class DigestionStatusEvaluator
             }
 
             var documentGid = ScribeEmissionAttestation.DocumentGid(gidText);
-            if (PathChanged(changes, gid.Path.Value)
-                || PathChanged(changes, ScribeEmissionAttestation.DefinitionPath(documentGid))
-                || PathChanged(changes, ScribeEmissionAttestation.EmissionPath(documentGid)))
+            if (Affected(gid.Path.Value)
+                || Affected(ScribeEmissionAttestation.DefinitionPath(documentGid))
+                || Affected(ScribeEmissionAttestation.EmissionPath(documentGid)))
             {
                 return true;
             }

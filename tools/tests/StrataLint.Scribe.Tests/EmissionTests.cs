@@ -80,7 +80,7 @@ public sealed class EmissionTests
     }
 
     [Fact]
-    public void EmitWritesCanonicalFilesAndCheckDetectsDriftWithoutOverwriting()
+    public void EmitWritesCanonicalFilesAndCheckIgnoresReaderSnapshotFreshness()
     {
         var root = Path.Combine(
             Path.GetTempPath(),
@@ -167,9 +167,9 @@ public sealed class EmissionTests
 
             var checkExit = ScribeEmitter.Emit(root, check: true, output, error, report);
 
-            Assert.Equal(1, checkExit);
+            Assert.Equal(0, checkExit);
             Assert.Equal("drift\n", TemporaryFileSystem.File.ReadAllText(driftedPath));
-            Assert.Contains("out of date", error.ToString(), StringComparison.Ordinal);
+            Assert.Empty(error.ToString());
 
             TemporaryFileSystem.File.WriteAllBytes(
                 driftedPath,
@@ -198,8 +198,8 @@ public sealed class EmissionTests
                 error,
                 report);
 
-            Assert.Equal(1, attestationCheckExit);
-            Assert.Contains(ScribeEmitter.AttestationRelativePath, error.ToString(), StringComparison.Ordinal);
+            Assert.Equal(0, attestationCheckExit);
+            Assert.Empty(error.ToString());
         }
         finally
         {
@@ -307,7 +307,7 @@ public sealed class EmissionTests
                 out var verified));
             Assert.Equal(Sha256(originalEmission), verified.EmissionSha256);
             Assert.NotEqual(Sha256(forgedEmission), verified.EmissionSha256);
-            Assert.Contains("out of date", error.ToString(), StringComparison.Ordinal);
+            Assert.Empty(error.ToString());
         }
         finally
         {
@@ -447,7 +447,6 @@ public sealed class EmissionTests
             attestation = InjectCandidateOnlyAttestationEntry(attestation);
             TemporaryFileSystem.File.WriteAllText(attestationPath, attestation, new UTF8Encoding(false));
 
-            var targetPath = DocumentDefinitions.All[0].RelativePath.Value;
             var emitError = new StringWriter();
             var exit = ScribeEmitter.Emit(
                 root,
@@ -458,26 +457,15 @@ public sealed class EmissionTests
             var verifyError = new StringWriter();
             var verification = ScribeEmitter.Verify(root, verifyError, report);
 
-            Assert.Equal(1, exit);
+            Assert.Equal(0, exit);
             Assert.NotNull(verification);
             Assert.True(verification!.TryGet(
                 DocumentDefinitions.All[0].Document.Header.Gid.Value,
                 out var verified));
             Assert.Equal(Sha256(originalEmission), verified.EmissionSha256);
             Assert.NotEqual(Sha256(forgedEmission), verified.EmissionSha256);
-            foreach (var diagnostic in new[] { emitError.ToString(), verifyError.ToString() })
-            {
-                Assert.Contains(
-                    $"out of date: {targetPath}: reader snapshot differs from current renderer output",
-                    diagnostic,
-                    StringComparison.Ordinal);
-                Assert.Contains("run make emit", diagnostic, StringComparison.Ordinal);
-                Assert.Contains($"commit {targetPath}", diagnostic, StringComparison.Ordinal);
-                Assert.DoesNotContain(
-                    "reader snapshot missing",
-                    diagnostic,
-                    StringComparison.Ordinal);
-            }
+            Assert.Empty(emitError.ToString());
+            Assert.Empty(verifyError.ToString());
         }
         finally
         {
@@ -546,8 +534,8 @@ public sealed class EmissionTests
                 DocumentDefinitions.All.Select(static definition => definition.Document));
             PrepareEmittedRepository(root, report);
 
-            // A missing tracked .md remains reportable in check mode, but the producer has enough source
-            // to render and verify the document, so snapshot absence cannot void the current capability.
+            // A missing tracked .md is irrelevant to check mode: the producer has enough source
+            // to render and verify the document without consulting the reader snapshot.
             var target = DocumentDefinitions.All[0];
             var targetPath = target.RelativePath.Value;
             var canonicalEmission = TemporaryFileSystem.File.ReadAllBytes(Path.Combine(root, targetPath));
@@ -563,23 +551,12 @@ public sealed class EmissionTests
             var verifyError = new StringWriter();
             var verification = ScribeEmitter.Verify(root, verifyError, report);
 
-            Assert.Equal(1, exit);
+            Assert.Equal(0, exit);
             Assert.NotNull(verification);
             Assert.True(verification!.TryGet(target.Document.Header.Gid.Value, out var verified));
             Assert.Equal(Sha256(canonicalEmission), verified.EmissionSha256);
-            foreach (var diagnostic in new[] { emitError.ToString(), verifyError.ToString() })
-            {
-                Assert.Contains(
-                    $"out of date: {targetPath}: reader snapshot missing",
-                    diagnostic,
-                    StringComparison.Ordinal);
-                Assert.Contains("run make emit", diagnostic, StringComparison.Ordinal);
-                Assert.Contains($"commit {targetPath}", diagnostic, StringComparison.Ordinal);
-                Assert.DoesNotContain(
-                    "reader snapshot differs from current renderer output",
-                    diagnostic,
-                    StringComparison.Ordinal);
-            }
+            Assert.Empty(emitError.ToString());
+            Assert.Empty(verifyError.ToString());
         }
         finally
         {
