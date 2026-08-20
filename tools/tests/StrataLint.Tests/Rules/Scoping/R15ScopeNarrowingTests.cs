@@ -27,6 +27,13 @@ public sealed class R15ScopeNarrowingTests
             1,
             "stratum closure may not import",
             RuleFixture.RingPath);
+
+        var bothDelta = ImportHistory();
+        AssertFinding(
+            Execute(bothDelta, RuleFixture.RingPath, targetPath),
+            1,
+            "stratum closure may not import",
+            RuleFixture.RingPath);
     }
 
     [Fact]
@@ -47,6 +54,13 @@ public sealed class R15ScopeNarrowingTests
             2,
             "sorryAx occurs in declaration closure",
             RuleFixture.RingPath);
+
+        var bothDelta = SorryHistory(dependencyPath);
+        AssertFinding(
+            Execute(bothDelta, RuleFixture.RingPath, dependencyPath),
+            2,
+            "sorryAx occurs in declaration closure",
+            RuleFixture.RingPath);
     }
 
     [Fact]
@@ -63,6 +77,13 @@ public sealed class R15ScopeNarrowingTests
         var targetDelta = GeneralityHistory();
         AssertFinding(
             Execute(targetDelta, RuleFixture.NotationPath),
+            10,
+            "G artifact imports I fact",
+            RuleFixture.RingPath);
+
+        var bothDelta = GeneralityHistory();
+        AssertFinding(
+            Execute(bothDelta, RuleFixture.RingPath, RuleFixture.NotationPath),
             10,
             "G artifact imports I fact",
             RuleFixture.RingPath);
@@ -86,6 +107,13 @@ public sealed class R15ScopeNarrowingTests
             11,
             "domain 'Unknown' is not controlled",
             historicalPath);
+
+        var bothDelta = DomainHistory();
+        AssertFinding(
+            Execute(bothDelta, historicalPath, "Meta/domains.yaml"),
+            11,
+            "domain 'Unknown' is not controlled",
+            historicalPath);
     }
 
     [Fact]
@@ -103,6 +131,13 @@ public sealed class R15ScopeNarrowingTests
         var dependencyDelta = AnchorHistory(dependencyPath);
         AssertFinding(
             Execute(dependencyDelta, dependencyPath),
+            17,
+            "is not reachable through this file's repository import closure",
+            RuleFixture.RingPath);
+
+        var bothDelta = AnchorHistory(dependencyPath);
+        AssertFinding(
+            Execute(bothDelta, RuleFixture.RingPath, dependencyPath),
             17,
             "is not reachable through this file's repository import closure",
             RuleFixture.RingPath);
@@ -154,6 +189,20 @@ public sealed class R15ScopeNarrowingTests
             19,
             message,
             historicalPath);
+
+        var taskSetDelta = AnomalyHistory(historicalPath);
+        AssertFinding(
+            Execute(taskSetDelta, RuleFixture.ValuesBindingPath),
+            19,
+            message,
+            historicalPath);
+
+        var bothDelta = AnomalyHistory(historicalPath);
+        AssertFinding(
+            Execute(bothDelta, historicalPath, RuleFixture.ValuesBindingPath),
+            19,
+            message,
+            historicalPath);
     }
 
     [Fact]
@@ -171,6 +220,13 @@ public sealed class R15ScopeNarrowingTests
         var dependencyDelta = AxiomHistory(dependencyPath);
         AssertFinding(
             Execute(dependencyDelta, dependencyPath),
+            20,
+            "unregistered transitive axiom closure",
+            RuleFixture.RingPath);
+
+        var bothDelta = AxiomHistory(dependencyPath);
+        AssertFinding(
+            Execute(bothDelta, RuleFixture.RingPath, dependencyPath),
             20,
             "unregistered transitive axiom closure",
             RuleFixture.RingPath);
@@ -316,9 +372,9 @@ public sealed class R15ScopeNarrowingTests
         fixture.ForkPoint[path] = text;
     }
 
-    private static CompletedRuleSet Execute(RuleFixture fixture, string changedPath) =>
+    private static CompletedRuleSet Execute(RuleFixture fixture, params string[] changedPaths) =>
         Assert.IsType<RuleExecutionOutcome.Completed>(
-            RuleCatalog.Default.Execute(fixture.Build(RawChangeSet.Create([changedPath])))).Capability;
+            RuleCatalog.Default.Execute(fixture.Build(RawChangeSet.Create(changedPaths)))).Capability;
 
     private static void AssertFinding(
         CompletedRuleSet completed,
