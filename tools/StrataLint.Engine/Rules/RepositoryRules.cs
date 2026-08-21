@@ -129,7 +129,11 @@ internal static partial class RepositoryRules
         Register(
             23,
             "Describe LaTeX statement",
-            new RepositoryRule(ScribeDefinitionScoped, DescribeLatex, DescribeLatexAffected),
+            new RepositoryRule(
+                ScribeDefinitionScoped,
+                DescribeLatex,
+                DescribeLatexAffected,
+                DescribeLatexCandidateDelta),
             AdmissionEffect.Observe),
         Register(
             25,
@@ -186,6 +190,20 @@ internal static partial class RepositoryRules
                     $"theorem-class Describe {item.NodeId} is projectable and its formula must be Lean-derived",
                     AdmissionEffect.Block))
                 .ToImmutableArray();
+
+    private static ImmutableArray<RuleFinding> DescribeLatexCandidateDelta(
+        RuleEvaluationContext context) =>
+        DescribeLatex(context)
+            .Where(finding => DescribeLatexFactAffected(context, finding.Path))
+            .ToImmutableArray();
+
+    private static bool DescribeLatexFactAffected(
+        RuleEvaluationContext context,
+        string definitionPath) =>
+        context.IsBaseFactAffected(definitionPath)
+        || context.Changes.Paths.Any(path =>
+            path.Value.StartsWith("tools/StrataLint.Scribe/", StringComparison.Ordinal)
+            || RepositoryPathPolicy.IsBlueprintContentCompositionBuildFile(path.Value));
 
     private static ImmutableArray<RuleFinding> NoFindings(RuleEvaluationContext context) =>
         ImmutableArray<RuleFinding>.Empty;

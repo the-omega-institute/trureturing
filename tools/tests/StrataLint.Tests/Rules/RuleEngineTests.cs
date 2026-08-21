@@ -126,12 +126,13 @@ public sealed class RuleEngineTests
             red.AddBackfillTargets();
         }
         red.Apply(mutation);
+        var changedPath = RuleFixture.ChangedPathForMutation(mutation);
+        red.Changes.Clear();
+        red.Changes.Add(changedPath);
         var redContext = number switch
         {
-            15 => red.Build(RawChangeSet.Create(
-                ["Evidence/D5/S0/Carrier/Formula.check.json"])),
             20 => red.BuildForRuleCompatibility(),
-            _ => red.Build(),
+            _ => red.Build(RawChangeSet.Create([changedPath])),
         };
         var redResult = RuleCatalog.Default.EvaluateSingle(RuleId.CreateKnown(number), redContext);
 
@@ -154,25 +155,7 @@ public sealed class RuleEngineTests
             fixture.AddBackfillTargets();
         }
         fixture.Apply(mutation);
-        var changedPath = mutation switch
-        {
-            "upward-import" or "sorry" or "file-capacity" or "generality" or "header" or "axiom" =>
-                RuleFixture.RingPath,
-            "mirror" or "badge" => RuleFixture.BlueprintPath,
-            "chronicle" => "Chronicle/2026/07/10-old.md",
-            "heart" => RuleFixture.HeartsPath,
-            "domain" => "D5/S0/Unknown/Bad.lean",
-            "formula" => "Evidence/D5/S0/Carrier/Formula.check.json",
-            "backfill" => RuleFixture.FixtureBackfillSourcePath,
-            "query" => "Library/queries.yaml",
-            "values" => "Evidence/D5/values.result.json",
-            "anomaly" => "Evidence/D5/S0/Carrier/Result.run.json",
-            "future" => "D8/S0/Carrier/Ring.lean",
-            "blueprint-skeleton" or "legacy-scribe" => RuleFixture.BlueprintSourcePath,
-            "delivery-statement-identity" =>
-                "D5/X_Frontier/PrimeNormIrreducibility.lean",
-            _ => throw new ArgumentOutOfRangeException(nameof(mutation)),
-        };
+        var changedPath = RuleFixture.ChangedPathForMutation(mutation);
         fixture.Changes.Clear();
         fixture.Changes.Add(changedPath);
         var context = number == 20
@@ -631,7 +614,9 @@ public sealed class RuleEngineTests
         var forbidden = new RuleFixture();
         forbidden.AddAssumptionImportingStratum();
         var diagnostic = Assert.Single(
-            RuleCatalog.Default.EvaluateSingle(RuleId.CreateKnown(1), forbidden.Build()).Diagnostics);
+            RuleCatalog.Default.EvaluateSingle(
+                RuleId.CreateKnown(1),
+                forbidden.Build(RawChangeSet.Create([RuleFixture.AssumptionDebtPath]))).Diagnostics);
         Assert.Equal(RuleId.CreateKnown(1), diagnostic.RuleId);
         Assert.Equal(RuleFixture.AssumptionDebtPath, diagnostic.Path);
         Assert.Contains("may not import", diagnostic.Message, StringComparison.Ordinal);
@@ -645,7 +630,9 @@ public sealed class RuleEngineTests
             "{\"D5/sample\": {\"status\": \"verified\", \"value\": 123}}\n";
 
         var diagnostic = Assert.Single(
-            RuleCatalog.Default.EvaluateSingle(RuleId.CreateKnown(18), fixture.Build()).Diagnostics);
+            RuleCatalog.Default.EvaluateSingle(
+                RuleId.CreateKnown(18),
+                fixture.Build(RawChangeSet.Create(["Evidence/D5/values.result.json"]))).Diagnostics);
 
         Assert.Equal("canonical values projection must be Evidence/D5/values.json", diagnostic.Message);
     }
