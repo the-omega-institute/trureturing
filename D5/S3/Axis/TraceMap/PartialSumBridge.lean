@@ -22,14 +22,22 @@ open D5.S3.Axis.AxisPartialSum (axisPartialSum wordWeight axisPartialSum_succ_su
      weighted by the product of `axisWeight` over its Zeckendorf indices, which start at two.
 
    They are not interchangeable as written: the depths differ by one and so do the weight
-   indices. This module proves the exact relation, so that a statement about one is a statement
-   about the other. Both underlying modules are frozen and untouched.
+   indices. Both underlying modules are frozen and untouched.
+
+   Scope, stated because an earlier draft of this comment overstated it. The theorem below
+   relates `wordSum` at weight index `j + 2` to `axisPartialSum` at depth `K + 1`. It does not
+   mention `tracePartial`, which is `wordSum` at weight index `i + 1`; the two `axisWeight`
+   constants agree at equal indices, so unfolding them leaves that one-step mismatch in place.
+   Relating the two named partial sums would need a further reparameterization theorem that does
+   not exist here. A review seat established this by grepping for a theorem mentioning both, and
+   finding none.
 
    The proof does not build the Zeckendorf bijection. Both sides already carry the same two
    step recursion as public theorems, and the two base values agree, so induction closes it. -/
 
-/-- Reindexing the weight by one turns the admissible-word sum into the Zeckendorf-range sum
-one depth up. -/
+/-- The admissible-word sum taken at weight index `j + 2` equals the Zeckendorf-range sum one
+depth up. Note the weight index: `tracePartial` uses `i + 1`, so this is not a statement about
+`tracePartial`. -/
 theorem wordSum_eq_axisPartialSum (x y : ℝ) :
     ∀ K : ℕ,
       wordSum (fun j => D5.S3.Axis.AxisTraceRecurrence.axisWeight x y (j + 2)) K =
@@ -44,12 +52,9 @@ theorem wordSum_eq_axisPartialSum (x y : ℝ) :
     | 1 =>
       have hg : Nat.greatestFib 1 = 2 := by decide
       have hf : Nat.fib 3 = 2 := by norm_num [Nat.fib]
-      have hz1 : Nat.zeckendorf 1 = [2] := by
-        rw [Nat.zeckendorf_of_pos Nat.one_pos, hg]
-        norm_num [Nat.fib]
       have hset : (({0} : Finset ℕ).powerset.filter
           fun s => ∀ i ∈ s, i + 1 ∉ s) = {∅, {0}} := by decide
-      simp [wordSum, admissibleWords, axisPartialSum, wordWeight, hf, hz1, hg,
+      simp [wordSum, admissibleWords, axisPartialSum, wordWeight, hf, hg,
         Nat.zeckendorf_zero, Finset.sum_range_succ, hset]
     | (n + 2) =>
       have h0 : n < n + 2 := by omega
