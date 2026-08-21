@@ -93,6 +93,8 @@ jobs:
             .lake/.stratalint-lean-cache-stamp.json
             ~/.cache/mathlib
           key: ${{ runner.os }}-${{ runner.arch }}-lake-deps-v1-${{ steps.addr.outputs.config_sha256 }}
+          restore-keys: |
+            ${{ runner.os }}-${{ runner.arch }}-lake-deps-v1-${{ steps.addr.outputs.config_sha256 }}
 
       - name: Restore the Lean build layer
         id: build
@@ -100,9 +102,36 @@ jobs:
         with:
           path: .lake/build
           key: ${{ runner.os }}-${{ runner.arch }}-lake-build-v1-${{ steps.addr.outputs.config_sha256 }}-${{ steps.addr.outputs.sources_sha256 }}
+          # ci.yml 的对应步骤带同样的前缀回退：config 未变时，同一 config 下的任一 build 层
+          # 都是可用的增量起点。首个真实运行漏了这两行，于是 exact key 未命中即判无可发布。
+          restore-keys: |
+            ${{ runner.os }}-${{ runner.arch }}-lake-build-v1-${{ steps.addr.outputs.config_sha256 }}-
+
+      # 前缀回退可能取到**同一 config 但不同 sources** 的 build 层。直接发布会把内容不符的
+      # 归档挂到当前内容地址下 —— 那是这条链路最危险的失败模式，因为消费者按地址取，
+      # 拿到的字节却不是那个地址该有的。
+      #
+      # 故发布前用 lake 自己判：把归档喂给 `lake build`，**零编译**才说明它与当前源码相符。
+      # 判据只认 `Built`/`Building`/`Compiling` 计数为 0；有任何一项非零即内容不符，不发布。
+      - name: Verify the restored build matches this commit
+        id: verify
+        if: steps.build.outputs.cache-hit == 'true' || steps.build.outputs.cache-matched-key != ''
+        shell: bash
+        env:
+          BUILD_LOG: ${{ runner.temp }}/verify-build.txt
+        run: |
+          set -euo pipefail
+          lake build 2>&1 | tee "${BUILD_LOG}"
+          compiled="$(grep -cE '(Built|Building|Compiling) ' "${BUILD_LOG}" || true)"
+          printf 'compiled_targets=%s\n' "${compiled}"
+          if [[ "${compiled}" -eq 0 ]]; then
+            echo "matches=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "matches=false" >> "$GITHUB_OUTPUT"
+          fi
 
       - name: Publish the build cache under its content address
-        if: steps.build.outputs.cache-hit == 'true'
+        if: steps.verify.outputs.matches == 'true'
         shell: bash
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -123,7 +152,7 @@ jobs:
           } >> "$GITHUB_STEP_SUMMARY"
 
       - name: Record that no build artifacts were available to publish
-        if: steps.build.outputs.cache-hit != 'true'
+        if: steps.verify.outputs.matches != 'true'
         shell: bash
         run: |
           set -euo pipefail
