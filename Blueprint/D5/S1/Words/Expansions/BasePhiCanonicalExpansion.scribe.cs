@@ -1,4 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S1.Words.Expansions;
 
@@ -13,7 +15,12 @@ internal sealed class BasePhiCanonicalExpansionDocument : IScribeDocumentDefinit
                 DeclarationHandle.Create(
                     "D5/S1/Words/Expansions/BasePhiCanonicalExpansion.canonical_two_sided_digits_unique"),
                 H("Canonical two-sided digits exist uniquely"),
-                StatementSource.WithoutFormula(),
+                StatementSource.FromAuthor(Disp(Seq(
+                    Forall, Sp, F.Id("N"), InMacro, Mathbb, Grp(F.Id("N")), Comma, Esc,
+                    Exists, Sp, Bang, Sp, F.Id("digits"), Comma, Esc,
+                    Operatorname, Grp(F.Id("Canonical")), Open, F.Id("digits"), Close,
+                    Sp, Land, Sp, Operatorname, Grp(F.Id("basePhiValue")),
+                    Open, F.Id("digits"), Close, Eq, F.Id("N")))),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "For every natural number N there is exactly one finitely supported "

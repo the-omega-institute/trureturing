@@ -6,7 +6,7 @@ Natural numbers have a unique finite two-sided canonical base-phi expansion.
 
 **Theorem 1.1 (Canonical two-sided digits exist uniquely).**
 
-Lean statement: `D5/S1/Words/Expansions/BasePhiCanonicalExpansion.canonical_two_sided_digits_unique`
+$$\forall N\in\mathbb{N},\ \exists ! digits,\ \operatorname{Canonical}(digits) \land \operatorname{basePhiValue}(digits)=N$$
 
 *Proof.* Machine-checked in Lean as `D5/S1/Words/Expansions/BasePhiCanonicalExpansion.canonical_two_sided_digits_unique` (`✓ std3`). ∎
 
