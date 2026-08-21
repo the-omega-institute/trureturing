@@ -57,6 +57,23 @@ theorem selectCarrier_is_unique_minimum (eligible : Eligibility) (tried : Finset
   · exact otherMinimal _ (selectCarrier_mem eligible tried available)
   · exact selectCarrier_minimal eligible tried other otherAvailable
 
+theorem selectCarrier_eq_abstain_iff (eligible : Eligibility) (tried : Finset Carrier) :
+    selectCarrier eligible tried = .abstain <-> eligibleUntried eligible tried = {} := by
+  constructor
+  · intro selected
+    by_contra nonempty
+    have available : (eligibleUntried eligible tried).Nonempty :=
+      Finset.nonempty_iff_ne_empty.mpr nonempty
+    have member : (eligibleUntried eligible tried).min' available ∈
+        eligibleUntried eligible tried := Finset.min'_mem _ _
+    have workerCarrier : (eligibleUntried eligible tried).min' available ≠ .abstain := by
+      intro abstain
+      rw [abstain] at member
+      simp [eligibleUntried] at member
+    exact workerCarrier (by simpa [selectCarrier, available] using selected)
+  · intro empty
+    simp [selectCarrier, empty]
+
 theorem design_router_rejects_single_perspective :
     designRouter .singlePerspective = .rejectFakeConsensus := by decide
 
@@ -79,6 +96,7 @@ structure ProtocolConfig where
   eligible : Stage -> SeatRole -> Eligibility
   retryBudget : Stage -> SeatRole -> Carrier -> Nat
   dispatchPlan : DispatchPlan
+  initialPlanCompatible : InitialPlanCompatible eligible dispatchPlan
   goalArtifact : GoalArtifact
   sharedPassBudget : Nat
   ownerAuthorizedAboveDefault : Bool
@@ -152,6 +170,39 @@ def FallbackAssigned (config : ProtocolConfig) (state : ProtocolState)
 def CarrierAssigned (config : ProtocolConfig) (state : ProtocolState)
     (role : SeatRole) (carrier : Carrier) : Prop :=
   InitiallyAssigned config state role carrier \/ FallbackAssigned config state role carrier
+
+theorem initial_plan_ineligible_is_rejected
+    {eligible : Stage -> SeatRole -> Eligibility} {plan : DispatchPlan}
+    {stage : Stage} {role : SeatRole} {carrier : Carrier}
+    (planned : plan.carrierAt stage role = some carrier)
+    (ineligible : eligible stage role carrier = false) :
+    Not (InitialPlanCompatible eligible plan) := by
+  intro compatible
+  have eligibleCarrier := (compatible stage role carrier planned).2
+  simp_all
+
+private theorem DispatchPlan.carrierAt_exists_of_legal (plan : DispatchPlan)
+    (stage : Stage) (role : SeatRole) (legal : role.LegalAt stage) :
+    exists carrier, plan.carrierAt stage role = some carrier := by
+  cases stage <;> cases role <;>
+    simp_all [SeatRole.LegalAt, SeatRole.IsThinking, SeatRole.IsReview,
+      SeatRole.IsTermination, DispatchPlan.carrierAt]
+
+theorem legal_worker_stage_initially_progresses_or_abstains
+    (config : ProtocolConfig) (state : ProtocolState) (role : SeatRole)
+    (legal : role.LegalAt state.stage)
+    (untried : triedAt state state.stage role = {}) :
+    (exists carrier,
+      InitiallyAssigned config state role carrier /\
+        CarrierLegalAt state.stage role carrier /\
+        config.eligible state.stage role carrier = true) \/
+      selectCarrier (config.eligible state.stage role)
+        (triedAt state state.stage role) = .abstain := by
+  left
+  obtain ⟨carrier, planned⟩ :=
+    config.dispatchPlan.carrierAt_exists_of_legal state.stage role legal
+  have compatible := config.initialPlanCompatible state.stage role carrier planned
+  exact ⟨carrier, ⟨planned, untried⟩, compatible⟩
 
 structure AuthorizedReport (config : ProtocolConfig) (state : ProtocolState)
     (role : SeatRole) {Verdict : Type} (report : WorkerReport Verdict) : Prop where
@@ -464,7 +515,7 @@ def inlineConsensusModel : InlineConsensusModel :=
     fallbackSelector := selectCarrier
     dispatchShape := fun plan =>
       MultiSeatLayout plan.thinking /\ MultiSeatLayout plan.review /\
-        MultiSeatLayout plan.termination
+        MultiSeatLayout plan.termination /\ plan.implementation != .abstain
     completionPredicate := Complete
     designRoute := designRouter
     reviewRoute := reviewRouter
@@ -486,10 +537,24 @@ def RuleLE (left right : Rule) : Prop :=
 
 def Greatest (rule : Rule) : Prop := IsGreatest {candidate | Sound candidate} rule
 
+def StrictBelow (left right : Rule) : Prop :=
+  RuleLE left right /\ exists observation, right observation = true /\ left observation = false
+
 def terminationAdmits : Rule :=
   fun observation => decide (terminationRouter observation = .permitClaim)
 
 def optimalTerminationRule : Rule :=
   fun observation => decide (inlineConsensusModel.terminationRoute observation = .permitClaim)
+
+def alwaysAbstain : Rule := fun _ => false
+
+def majorityAdmit : Rule := fun observation =>
+  exactRosterBool observation.roster &&
+    (((observation.result .criterionEvidence).isSatisfiedBool &&
+        (observation.result .residualGap).isSatisfiedBool) ||
+      ((observation.result .criterionEvidence).isSatisfiedBool &&
+        (observation.result .claimIntegrity).isSatisfiedBool) ||
+      ((observation.result .residualGap).isSatisfiedBool &&
+        (observation.result .claimIntegrity).isSatisfiedBool))
 
 end D5.S0.History.Consensus.InlineConsensusOptimality

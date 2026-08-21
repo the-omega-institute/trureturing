@@ -145,18 +145,102 @@ private theorem rule_le_iff_le (left right : Rule) :
     RuleLE left right <-> left <= right := by
   simp [RuleLE, Pi.le_def, Bool.le_iff_imp]
 
+private def terminationWitnessArtifact : GoalArtifact :=
+  { rawUserInput := some .digestA
+    normalizedGoal := some .digestA
+    constraints := some .digestA
+    successCriteria := some .digestA
+    iterationQuestion := some .digestA
+    harness := some .digestA
+    revisions := some .digestA }
+
+private def terminationWitnessResult (seat : TerminationSeat)
+    (verdict : TerminationVerdict) : TerminationSeatResult seat :=
+  .completed
+    { view :=
+        { goalArtifact := ⟨terminationWitnessArtifact, Finset.univ⟩
+          role := seat.role
+          exposure := .repoPriorExposed
+          sameRoundPeerOutputs := {} }
+      carrier := .codexCli
+      completionObservation := .codex true true true true true
+      verdict }
+    rfl
+
+private def exactTerminationWitnessRoster : TerminationRoster
+  | 0 => some .criterionEvidence
+  | 1 => some .residualGap
+  | _ => some .claimIntegrity
+
+def safeAdmittedObservation : TerminationObservation :=
+  { roster := exactTerminationWitnessRoster
+    result := fun seat => terminationWitnessResult seat .satisfied }
+
+def hazardousMajorityObservation : TerminationObservation :=
+  { roster := exactTerminationWitnessRoster
+    result := fun
+      | .criterionEvidence => terminationWitnessResult .criterionEvidence .satisfied
+      | .residualGap => terminationWitnessResult .residualGap .unsatisfied
+      | .claimIntegrity => terminationWitnessResult .claimIntegrity .satisfied }
+
+private theorem always_abstain_sound : Sound alwaysAbstain := by
+  intro observation admitted
+  simp [alwaysAbstain] at admitted
+
+private theorem always_abstain_strictly_below_optimal :
+    StrictBelow alwaysAbstain optimalTerminationRule := by
+  constructor
+  · intro observation admitted
+    simp [alwaysAbstain] at admitted
+  · exact ⟨safeAdmittedObservation, by decide, rfl⟩
+
+private theorem optimal_strictly_below_majority :
+    StrictBelow optimalTerminationRule majorityAdmit := by
+  constructor
+  · intro observation admitted
+    change terminationAdmits observation = true at admitted
+    have safe := (termination_admits_iff observation).mp admitted
+    have roster : exactRosterBool observation.roster = true :=
+      (exact_roster_bool_iff observation.roster).mpr safe.1
+    have criterion := safe.2 .criterionEvidence
+    have residual := safe.2 .residualGap
+    have claim := safe.2 .claimIntegrity
+    simp [majorityAdmit, roster, criterion, residual, claim]
+  · exact ⟨hazardousMajorityObservation, by decide, by decide⟩
+
+private theorem majority_admit_is_not_sound : Not (Sound majorityAdmit) := by
+  intro sound
+  have admitted : majorityAdmit hazardousMajorityObservation = true := by decide
+  have safe := sound hazardousMajorityObservation admitted
+  apply safe
+  right
+  exact ⟨.residualGap, by decide⟩
+
 theorem termination_router_sound_maximal_unique :
     Sound optimalTerminationRule /\
       (forall rule, Sound rule -> RuleLE rule optimalTerminationRule) /\
-      (forall rule, Greatest rule -> rule = optimalTerminationRule) := by
+      (forall rule, Greatest rule -> rule = optimalTerminationRule) /\
+      Sound alwaysAbstain /\
+      StrictBelow alwaysAbstain optimalTerminationRule /\
+      StrictBelow optimalTerminationRule majorityAdmit /\
+      Not (Sound majorityAdmit) := by
   change Sound terminationAdmits /\
     (forall rule, Sound rule -> RuleLE rule terminationAdmits) /\
-    (forall rule, Greatest rule -> rule = terminationAdmits)
-  refine ⟨termination_admits_sound, ?_, ?_⟩
+    (forall rule, Greatest rule -> rule = terminationAdmits) /\
+    Sound alwaysAbstain /\ StrictBelow alwaysAbstain terminationAdmits /\
+    StrictBelow terminationAdmits majorityAdmit /\ Not (Sound majorityAdmit)
+  refine ⟨termination_admits_sound, ?_, ?_, always_abstain_sound,
+    always_abstain_strictly_below_optimal, optimal_strictly_below_majority,
+    majority_admit_is_not_sound⟩
   · intro rule sound
     exact (rule_le_iff_le rule terminationAdmits).mpr (termination_admits_greatest.2 sound)
   · intro rule greatest
     exact IsGreatest.unique greatest termination_admits_greatest
+
+theorem nonpermitting_observation_cannot_admit (observation : TerminationObservation)
+    (withheld : terminationRouter observation ≠ .permitClaim) :
+    optimalTerminationRule observation = false := by
+  simp [optimalTerminationRule, inlineConsensusModel, withheld]
 
 theorem review_router_reject_precedence (observation : ReviewObservation)
     (rejects : exists index, observation index = .reject) :
@@ -210,6 +294,22 @@ theorem termination_unsatisfied_precedence (observation : TerminationObservation
   have seatNotSatisfied := unsatisfied_is_not_satisfied (observation.result seat) seatUnsatisfied
   fin_cases seat <;>
     simp_all [terminationRouter, allSatisfiedBool, anyUnsatisfiedBool]
+
+theorem termination_evidence_gap_precedence (observation : TerminationObservation)
+    (roster : ExactRoster observation.roster)
+    (notSatisfied : Not (allSatisfied observation))
+    (noUnsatisfied : forall seat,
+      (observation.result seat).isUnsatisfiedBool = false) :
+    terminationRouter observation = .escalateEvidenceGap := by
+  have rosterBool : exactRosterBool observation.roster = true :=
+    (exact_roster_bool_iff observation.roster).mpr roster
+  have satisfiedBool : allSatisfiedBool observation = false := by
+    cases value : allSatisfiedBool observation
+    · rfl
+    · exact False.elim (notSatisfied ((all_satisfied_bool_iff observation).mp value))
+  have unsatisfiedBool : anyUnsatisfiedBool observation = false := by
+    simp [anyUnsatisfiedBool, noUnsatisfied]
+  simp [terminationRouter, rosterBool, satisfiedBool, unsatisfiedBool]
 
 inductive Execution (model : InlineConsensusModel) (config : ProtocolConfig) :
     ProtocolState -> List Event -> ProtocolState -> Prop
@@ -327,6 +427,14 @@ theorem every_execution_uses_prelaunch_retry_commitment {config : ProtocolConfig
     WithinRetryBudgets config events :=
   execution_within_retry_budgets execution
 
+theorem every_execution_uses_authorized_shared_budget {config : ProtocolConfig}
+    {start final : ProtocolState} {events : List Event}
+    (execution : Execution inlineConsensusModel config start events final) :
+    PassBudgetAuthorized config := by
+  induction execution with
+  | nil state budgetAuthorized => exact budgetAuthorized
+  | cons step rest ih => exact ih
+
 theorem abstained_state_has_no_successor {config : ProtocolConfig}
     {state final : ProtocolState} {event : Event}
     (abstained : state.phase = .abstained) :
@@ -334,6 +442,14 @@ theorem abstained_state_has_no_successor {config : ProtocolConfig}
   intro step
   rcases step with ⟨wellFormed, raw, action, rfl⟩
   cases action <;> simp_all [FinishPrecondition]
+
+theorem abstain_event_enters_absorbing_state {config : ProtocolConfig}
+    {state final : ProtocolState} {stage : Stage}
+    (step : ProtocolStep config state (.abstain stage) final) :
+    final.phase = .abstained := by
+  rcases step with ⟨wellFormed, raw, action, rfl⟩
+  cases action
+  all_goals simp_all [recordEvent]
 
 theorem unavailable_isolation_allows_only_abstain {config : ProtocolConfig}
     {state final : ProtocolState} {event : Event}
@@ -483,6 +599,11 @@ theorem every_maximal_run_is_bounded (config : ProtocolConfig)
       omega
     rw [initialPotential] at bounded
     omega
+
+theorem every_maximal_run_never_reopens_carrier (config : ProtocolConfig)
+    (run : MaximalRun inlineConsensusModel config) :
+    NoCarrierReopened run.events :=
+  (every_maximal_run_is_bounded config run).2.1
 
 def designEvent : DesignExit -> Event
   | .implement => .advance .metaJudge .implementationWorker

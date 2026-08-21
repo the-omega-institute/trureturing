@@ -27,6 +27,7 @@ def protocolTerminationDispatch : TerminationSeat -> Carrier
 
 def protocolDispatchPlan : DispatchPlan :=
   { thinking := protocolThinkingDispatch
+    implementation := .codexCli
     review := protocolReviewDispatch
     termination := protocolTerminationDispatch
     thinkingLayout := by decide
@@ -35,14 +36,80 @@ def protocolDispatchPlan : DispatchPlan :=
 
 def allCodexThinkingDispatch : ThinkingSeat -> Carrier := fun _ => .codexCli
 
+def protocolEligibility : Stage -> SeatRole -> Eligibility :=
+  fun _ _ carrier => carrier != .abstain
+
+def mismatchedImplementationEligibility : Stage -> SeatRole -> Eligibility :=
+  fun stage role carrier =>
+    if stage == .implementationWorker && role == .implementation then
+      carrier == .nyxidOracle
+    else
+      protocolEligibility stage role carrier
+
 def protocolGoalArtifact : GoalArtifact :=
-  { rawUserInput := true
-    normalizedGoal := true
-    constraints := true
-    successCriteria := true
-    iterationQuestion := true
-    harness := true
-    revisions := true }
+  { rawUserInput := some .digestA
+    normalizedGoal := some .digestA
+    constraints := some .digestA
+    successCriteria := some .digestA
+    iterationQuestion := some .digestA
+    harness := some .digestA
+    revisions := some .digestA }
+
+def protocolAlternateGoalArtifact : GoalArtifact :=
+  { protocolGoalArtifact with rawUserInput := some .digestB }
+
+theorem protocol_initial_plan_is_compatible :
+    InitialPlanCompatible protocolEligibility protocolDispatchPlan := by
+  intro stage role carrier planned
+  cases stage <;> cases role <;> cases carrier <;>
+    simp_all [DispatchPlan.carrierAt, protocolDispatchPlan, protocolThinkingDispatch,
+      protocolReviewDispatch, protocolTerminationDispatch, protocolEligibility,
+      CarrierLegalAt, SeatRole.LegalAt, SeatRole.IsThinking, SeatRole.IsReview,
+      SeatRole.IsTermination]
+
+theorem mismatched_initial_plan_is_rejected :
+    mismatchedImplementationEligibility .implementationWorker .implementation .codexCli =
+        false /\
+      mismatchedImplementationEligibility .implementationWorker .implementation
+        .nyxidOracle = true /\
+      Not (InitialPlanCompatible mismatchedImplementationEligibility protocolDispatchPlan) := by
+  refine ⟨by decide, by decide, ?_⟩
+  exact initial_plan_ineligible_is_rejected
+    (eligible := mismatchedImplementationEligibility) (plan := protocolDispatchPlan)
+    (stage := .implementationWorker) (role := .implementation) (carrier := .codexCli)
+    rfl rfl
+
+theorem two_distinct_complete_goal_artifacts_exist :
+    exists first second : GoalArtifact,
+      first.Complete /\ second.Complete /\ first ≠ second := by
+  refine ⟨protocolGoalArtifact, protocolAlternateGoalArtifact, ?_, ?_, ?_⟩
+  · simp [GoalArtifact.Complete, protocolGoalArtifact]
+  · simp [GoalArtifact.Complete, protocolAlternateGoalArtifact, protocolGoalArtifact]
+  · intro same
+    have rawInput := congrArg GoalArtifact.rawUserInput same
+    simp [protocolAlternateGoalArtifact, protocolGoalArtifact] at rawInput
+
+theorem complete_goal_snapshot_is_accepted :
+    GoalArtifactSnapshot.ContainsComplete protocolGoalArtifact
+      (⟨protocolGoalArtifact, Finset.univ⟩ : GoalArtifactSnapshot) := by
+  exact ⟨by simp [GoalArtifact.Complete, protocolGoalArtifact], rfl, rfl⟩
+
+theorem full_snapshot_with_wrong_artifact_is_rejected :
+    Not (GoalArtifactSnapshot.ContainsComplete protocolGoalArtifact
+      (⟨protocolAlternateGoalArtifact, Finset.univ⟩ : GoalArtifactSnapshot)) := by
+  intro contains
+  have rawInput := congrArg GoalArtifact.rawUserInput contains.2.1
+  simp [protocolAlternateGoalArtifact, protocolGoalArtifact] at rawInput
+
+theorem empty_visible_fields_are_rejected :
+    Not (GoalArtifactSnapshot.ContainsComplete protocolGoalArtifact
+      (⟨protocolGoalArtifact, {}⟩ : GoalArtifactSnapshot)) := by
+  intro contains
+  have fields : ({} : Finset GoalArtifactField) = Finset.univ := contains.2.2
+  have visible : GoalArtifactField.rawUserInput ∈ ({} : Finset GoalArtifactField) := by
+    rw [fields]
+    simp
+  simp at visible
 
 def SuccessfulFixConsumesImplementationCarrier : Prop :=
   forall config state raw,
@@ -70,27 +137,63 @@ def ClauseObject : ClauseId -> Prop
       Stage.next .metaJudge = some .implementationWorker /\
       Stage.next .implementationWorker = some .reviewTripletWorkers /\
       Stage.next .reviewTripletWorkers = some .fixOrDone /\
-      Stage.next .fixOrDone = none
+      Stage.next .fixOrDone = none /\
+      (forall (source first second : Stage), source.Successor first ->
+        source.Successor second -> first = second)
   | .s2 =>
       (Carrier.priorityRank .codexCli = 0 /\ Carrier.priorityRank .nyxidOracle = 1 /\
         Carrier.priorityRank .isolatedTokenSubagent = 2 /\
         Carrier.priorityRank .abstain = 3) /\
+      (forall eligible tried, (eligibleUntried eligible tried).Nonempty ->
+        selectCarrier eligible tried ∈ eligibleUntried eligible tried) /\
+      (forall eligible tried carrier, carrier ∈ eligibleUntried eligible tried ->
+        Carrier.priorityRank (selectCarrier eligible tried) <= Carrier.priorityRank carrier) /\
+      (forall eligible tried, (eligibleUntried eligible tried).Nonempty ->
+        selectCarrier eligible tried ∈ eligibleUntried eligible tried /\
+          forall other, other ∈ eligibleUntried eligible tried ->
+            (forall carrier, carrier ∈ eligibleUntried eligible tried ->
+              Carrier.priorityRank other <= Carrier.priorityRank carrier) ->
+            other = selectCarrier eligible tried) /\
+      (forall eligible tried,
+        selectCarrier eligible tried = .abstain <-> eligibleUntried eligible tried = {}) /\
       MultiSeatLayout protocolThinkingDispatch /\
       MultiSeatLayout protocolReviewDispatch /\
       MultiSeatLayout protocolTerminationDispatch /\
       Not (MultiSeatLayout allCodexThinkingDispatch) /\
+      protocolDispatchPlan.implementation = .codexCli /\
+      InitialPlanCompatible protocolEligibility protocolDispatchPlan /\
+      (forall (eligible : Stage -> SeatRole -> Eligibility) (plan : DispatchPlan)
+          (stage : Stage) (role : SeatRole) (carrier : Carrier),
+        plan.carrierAt stage role = some carrier ->
+        eligible stage role carrier = false ->
+        Not (InitialPlanCompatible eligible plan)) /\
+      (mismatchedImplementationEligibility .implementationWorker .implementation .codexCli =
+          false /\
+        mismatchedImplementationEligibility .implementationWorker .implementation
+          .nyxidOracle = true /\
+        Not (InitialPlanCompatible mismatchedImplementationEligibility protocolDispatchPlan)) /\
       (forall config state role carrier, FallbackAssigned config state role carrier ->
         (triedAt state state.stage role).Nonempty /\
         selectCarrier (config.eligible state.stage role)
           (triedAt state state.stage role) = carrier) /\
-      SuccessfulFixConsumesImplementationCarrier
+      (forall config state role carrier, FallbackAssigned config state role carrier ->
+        exists failedCarrier,
+          flightKey state.stage role failedCarrier ∈ state.exhaustedFlights) /\
+      SuccessfulFixConsumesImplementationCarrier /\
+      (forall config (run : MaximalRun inlineConsensusModel config),
+        NoCarrierReopened run.events) /\
+      (forall config state role, role.LegalAt state.stage ->
+        triedAt state state.stage role = {} ->
+          (exists carrier,
+            InitiallyAssigned config state role carrier /\
+              CarrierLegalAt state.stage role carrier /\
+              config.eligible state.stage role carrier = true) \/
+          selectCarrier (config.eligible state.stage role)
+            (triedAt state state.stage role) = .abstain)
   | .s3 =>
       (forall config state final role carrier attempts,
         ProtocolStep config state (.flightFailure state.stage role carrier attempts) final ->
           0 < attempts /\ attempts = config.retryBudget state.stage role carrier) /\
-      (forall config state role carrier, FallbackAssigned config state role carrier ->
-        exists failedCarrier,
-          flightKey state.stage role failedCarrier ∈ state.exhaustedFlights) /\
       (forall config start events final,
         Execution inlineConsensusModel config start events final ->
           WithinRetryBudgets config events)
@@ -108,6 +211,8 @@ def ClauseObject : ClauseId -> Prop
       (forall proxy carrier, carrier ≠ .abstain ->
         Not (Complete carrier (evidenceFromProxyOnly carrier proxy)))
   | .s5 =>
+      (forall config state final stage,
+        ProtocolStep config state (.abstain stage) final -> final.phase = .abstained) /\
       (forall config state final event, state.phase = .abstained ->
         Not (ProtocolStep config state event final))
   | .s6 =>
@@ -116,8 +221,12 @@ def ClauseObject : ClauseId -> Prop
           report.view.IsolatedComplete config.goalArtifact) /\
       (forall config state final event, state.isolation = .unavailable ->
         ProtocolStep config state event final -> exists stage, event = .abstain stage) /\
+      (exists first second : GoalArtifact,
+        first.Complete /\ second.Complete /\ first ≠ second) /\
       GoalArtifactSnapshot.ContainsComplete protocolGoalArtifact
         (⟨protocolGoalArtifact, Finset.univ⟩ : GoalArtifactSnapshot) /\
+      Not (GoalArtifactSnapshot.ContainsComplete protocolGoalArtifact
+        (⟨protocolAlternateGoalArtifact, Finset.univ⟩ : GoalArtifactSnapshot)) /\
       Not (GoalArtifactSnapshot.ContainsComplete protocolGoalArtifact
         (⟨protocolGoalArtifact, {}⟩ : GoalArtifactSnapshot))
   | .s7 =>
@@ -130,27 +239,60 @@ def ClauseObject : ClauseId -> Prop
         correlatedConclusion .nyxidOracle latent
   | .s8 =>
       RouterTransitionsExhaustive /\
+      designRouter .unanimousActionable = .implement /\
+      designRouter .compatiblePlans = .metaLayerConvergence /\
+      designRouter .boundedStall = .abstainEscalate /\
+      designRouter .singlePerspective = .rejectFakeConsensus /\
       (forall observation, (exists index, observation index = .reject) ->
         reviewRouter observation = .fix) /\
+      (forall observation, (forall index, observation index != .reject) ->
+        (exists index, observation index = .approve) -> reviewRouter observation = .done) /\
+      (forall observation, (forall index, observation index = .comment) ->
+        reviewRouter observation = .userDecisionOrBoundedPass) /\
+      (forall roster, exactRosterBool roster = true <-> ExactRoster roster) /\
+      (forall observation, terminationRouter observation = .permitClaim <->
+        ExactRoster observation.roster /\ allSatisfied observation) /\
       (forall observation, Not (ExactRoster observation.roster) ->
         terminationRouter observation = .rejectFakeConsensus) /\
       (forall observation, ExactRoster observation.roster ->
         (exists seat, (observation.result seat).isUnsatisfiedBool = true) ->
         terminationRouter observation = .continueAgainstGap) /\
+      (forall observation, ExactRoster observation.roster ->
+        Not (allSatisfied observation) ->
+        (forall seat, (observation.result seat).isUnsatisfiedBool = false) ->
+        terminationRouter observation = .escalateEvidenceGap)
+  | .s9 =>
+      Fintype.card TerminationSeat = 3 /\
+      (forall observation, terminationAdmits observation = true <->
+        ExactRoster observation.roster /\ allSatisfied observation) /\
+      Sound optimalTerminationRule /\
+      (forall rule, Sound rule -> RuleLE rule optimalTerminationRule) /\
+      (forall rule, Greatest rule -> rule = optimalTerminationRule) /\
+      Sound alwaysAbstain /\
+      StrictBelow alwaysAbstain optimalTerminationRule /\
+      StrictBelow optimalTerminationRule majorityAdmit /\
+      Not (Sound majorityAdmit) /\
+      (forall observation, terminationRouter observation ≠ .permitClaim ->
+        optimalTerminationRule observation = false) /\
+      (forall config start final event, ProtocolStep config start event final ->
+        final.eventEpoch = start.eventEpoch + 1) /\
+      (forall config state final,
+        ProtocolStep config state (.boundedPass state.stage .terminationGate) final ->
+          state.reviewExit = some .done /\
+          state.reviewEpoch = some state.artifactEpoch) /\
       (forall config start final event,
         start.terminationExit = some .permitClaim ->
         ProtocolStep config start event final -> Not (FinishPrecondition final)) /\
       NoStaleTerminationPermitAfterFix /\
       ImplementationAdvancePreservesPermitPayload
-  | .s9 =>
-      Fintype.card TerminationSeat = 3 /\
-      Sound optimalTerminationRule /\
-      (forall rule, Sound rule -> RuleLE rule optimalTerminationRule) /\
-      (forall rule, Greatest rule -> rule = optimalTerminationRule) /\
-      (forall observation, terminationRouter observation ≠ .permitClaim ->
-        optimalTerminationRule observation = false)
   | .s10 =>
       defaultSharedPassBudget = 5 /\
+      (forall config, PassBudgetAuthorized config <->
+        config.sharedPassBudget <= defaultSharedPassBudget \/
+          config.ownerAuthorizedAboveDefault = true) /\
+      (forall config start events final,
+        Execution inlineConsensusModel config start events final ->
+          PassBudgetAuthorized config) /\
       BoundedPassKind.LegalAt .metaLayerConvergence .metaJudge /\
       BoundedPassKind.LegalAt .repeatedReview .fixOrDone /\
       BoundedPassKind.LegalAt .fixPass .fixOrDone /\
@@ -183,17 +325,27 @@ theorem required_fixture_suite_is_pinned : RequiredFixtureSuite := by
     exact ⟨rfl, rfl⟩
   intro clause
   cases clause with
-  | s1 => exact stage_order_is_the_protocol_order
+  | s1 =>
+      rcases stage_order_is_the_protocol_order with ⟨h1, h2, h3, h4, h5, h6, h7⟩
+      exact ⟨h1, h2, h3, h4, h5, h6, h7, stage_successor_is_unique⟩
   | s2 =>
       exact ⟨carrier_priority_is_the_protocol_priority,
+        selectCarrier_mem, selectCarrier_minimal, selectCarrier_is_unique_minimum,
+        selectCarrier_eq_abstain_iff,
         legal_preassigned_layout.1, legal_preassigned_layout.2.1,
         legal_preassigned_layout.2.2, illegal_all_codex_layout_is_rejected,
+        rfl, protocol_initial_plan_is_compatible,
+        (fun _ _ _ _ _ planned ineligible =>
+          initial_plan_ineligible_is_rejected planned ineligible),
+        mismatched_initial_plan_is_rejected,
         (fun _ _ _ _ fallback => fallback_selection_requires_a_tried_origin fallback),
-        successful_fix_consumes_implementation_carrier⟩
+        (fun _ _ _ _ fallback => fallback_selection_requires_exhausted_origin fallback),
+        successful_fix_consumes_implementation_carrier,
+        every_maximal_run_never_reopens_carrier,
+        legal_worker_stage_initially_progresses_or_abstains⟩
   | s3 =>
       exact ⟨fun _ _ _ _ _ _ step =>
         flight_failure_occurs_only_after_precommitted_budget_exhaustion step,
-        fun _ _ _ _ fallback => fallback_selection_requires_exhausted_origin fallback,
         fun _ _ _ _ execution =>
           every_execution_uses_prelaunch_retry_commitment execution⟩
   | s4 =>
@@ -201,41 +353,42 @@ theorem required_fixture_suite_is_pinned : RequiredFixtureSuite := by
       intro proxy carrier workerCarrier
       cases proxy <;> cases carrier <;> simp_all [Complete, evidenceFromProxyOnly]
   | s5 =>
-      intro config state final event abstained
-      exact abstained_state_has_no_successor abstained
+      exact ⟨(fun _ _ _ _ step => abstain_event_enters_absorbing_state step),
+        fun _ _ _ _ abstained => abstained_state_has_no_successor abstained⟩
   | s6 =>
-      refine ⟨?_, ?_, ?_, ?_⟩
+      refine ⟨?_, ?_, two_distinct_complete_goal_artifacts_exist,
+        complete_goal_snapshot_is_accepted,
+        full_snapshot_with_wrong_artifact_is_rejected,
+        empty_visible_fields_are_rejected⟩
       · intro config state role Verdict report authorized
         exact authorized.isolatedView
       · intro config state final event unavailable step
         exact unavailable_isolation_allows_only_abstain unavailable step
-      · simp [GoalArtifactSnapshot.ContainsComplete, GoalArtifact.Complete,
-          protocolGoalArtifact]
-      · intro contains
-        have fields : ({} : Finset GoalArtifactField) = Finset.univ :=
-          contains.2.2
-        have visible : GoalArtifactField.rawUserInput ∈
-            ({} : Finset GoalArtifactField) := by
-          rw [fields]
-          simp
-        simp at visible
   | s7 => exact ⟨by decide, by decide, by decide⟩
   | s8 =>
       exact ⟨design_and_review_router_exits_have_executable_transitions,
-        review_router_reject_precedence, termination_fake_roster_precedence,
-        termination_unsatisfied_precedence,
-        fun _ _ _ _ carried step =>
-          every_protocol_event_invalidates_carried_permit carried step,
+        by decide, by decide, by decide, design_router_rejects_single_perspective,
+        review_router_reject_precedence, review_router_approve_without_reject,
+        review_router_all_comment, exact_roster_bool_iff, termination_router_permit_iff,
+        termination_fake_roster_precedence, termination_unsatisfied_precedence,
+        termination_evidence_gap_precedence⟩
+  | s9 =>
+      rcases termination_router_sound_maximal_unique with
+        ⟨sound, greatest, unique, abstainSound, abstainStrict, majorityStrict,
+          majorityUnsound⟩
+      exact ⟨by decide, termination_admits_iff, sound, greatest, unique,
+        abstainSound, abstainStrict,
+        majorityStrict, majorityUnsound, nonpermitting_observation_cannot_admit,
+        (fun _ _ _ _ step => every_protocol_event_increments_epoch step),
+        (fun _ _ _ step => termination_gate_requires_current_done_review step),
+        (fun _ _ _ _ carried step =>
+          every_protocol_event_invalidates_carried_permit carried step),
         no_stale_termination_permit_after_fix,
         implementation_branch_preserves_permit_payload⟩
-  | s9 =>
-      refine ⟨by decide, termination_router_sound_maximal_unique.1,
-        termination_router_sound_maximal_unique.2.1,
-        termination_router_sound_maximal_unique.2.2, ?_⟩
-      intro observation withheld
-      simp [optimalTerminationRule, inlineConsensusModel, withheld]
   | s10 =>
-      refine ⟨rfl, trivial, trivial, trivial, trivial, ?_⟩
+      refine ⟨rfl, (fun _ => Iff.rfl),
+        (fun _ _ _ _ execution => every_execution_uses_authorized_shared_budget execution),
+        trivial, trivial, trivial, trivial, ?_⟩
       intro config run
       exact ⟨(every_maximal_run_is_bounded config run).2.2.1,
         (every_maximal_run_is_bounded config run).2.2.2⟩

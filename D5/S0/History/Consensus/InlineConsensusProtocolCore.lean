@@ -98,14 +98,18 @@ inductive GoalArtifactField
   | harness | revisions
   deriving DecidableEq, Fintype, Repr
 
+inductive GoalArtifactDigest
+  | digestA | digestB
+  deriving DecidableEq, Fintype, Repr
+
 structure GoalArtifact where
-  rawUserInput : Bool
-  normalizedGoal : Bool
-  constraints : Bool
-  successCriteria : Bool
-  iterationQuestion : Bool
-  harness : Bool
-  revisions : Bool
+  rawUserInput : Option GoalArtifactDigest
+  normalizedGoal : Option GoalArtifactDigest
+  constraints : Option GoalArtifactDigest
+  successCriteria : Option GoalArtifactDigest
+  iterationQuestion : Option GoalArtifactDigest
+  harness : Option GoalArtifactDigest
+  revisions : Option GoalArtifactDigest
   deriving DecidableEq, Repr
 
 structure GoalArtifactSnapshot where
@@ -114,10 +118,10 @@ structure GoalArtifactSnapshot where
   deriving DecidableEq
 
 def GoalArtifact.Complete (artifact : GoalArtifact) : Prop :=
-  artifact.rawUserInput = true /\ artifact.normalizedGoal = true /\
-    artifact.constraints = true /\ artifact.successCriteria = true /\
-    artifact.iterationQuestion = true /\ artifact.harness = true /\
-    artifact.revisions = true
+  artifact.rawUserInput.isSome = true /\ artifact.normalizedGoal.isSome = true /\
+    artifact.constraints.isSome = true /\ artifact.successCriteria.isSome = true /\
+    artifact.iterationQuestion.isSome = true /\ artifact.harness.isSome = true /\
+    artifact.revisions.isSome = true
 
 def GoalArtifactSnapshot.ContainsComplete
     (shared : GoalArtifact) (snapshot : GoalArtifactSnapshot) : Prop :=
@@ -223,6 +227,7 @@ instance {Seat : Type} [Fintype Seat] [DecidableEq Seat]
 
 structure DispatchPlan where
   thinking : ThinkingSeat -> Carrier
+  implementation : Carrier
   review : ReviewSeat -> Carrier
   termination : TerminationSeat -> Carrier
   thinkingLayout : MultiSeatLayout thinking
@@ -239,7 +244,8 @@ def DispatchPlan.carrierAt (plan : DispatchPlan) (stage : Stage)
   | .thinkingPanelWorkers, .proportionalContainment =>
       some (plan.thinking .proportionalContainment)
   | .thinkingPanelWorkers, .worth => some (plan.thinking .worth)
-  | .implementationWorker, .implementation | .fixOrDone, .implementation => some .codexCli
+  | .implementationWorker, .implementation | .fixOrDone, .implementation =>
+      some plan.implementation
   | .reviewTripletWorkers, .architectureReview | .fixOrDone, .architectureReview =>
       some (plan.review .architecture)
   | .reviewTripletWorkers, .qualityReview | .fixOrDone, .qualityReview =>
@@ -250,6 +256,11 @@ def DispatchPlan.carrierAt (plan : DispatchPlan) (stage : Stage)
   | .fixOrDone, .residualGap => some (plan.termination .residualGap)
   | .fixOrDone, .claimIntegrity => some (plan.termination .claimIntegrity)
   | _, _ => none
+
+def InitialPlanCompatible
+    (eligible : Stage -> SeatRole -> Eligibility) (plan : DispatchPlan) : Prop :=
+  forall stage role carrier, plan.carrierAt stage role = some carrier ->
+    CarrierLegalAt stage role carrier /\ eligible stage role carrier = true
 
 inductive ThinkingVerdict
   | propose | revise | reject | abstain
