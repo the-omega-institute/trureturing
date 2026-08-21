@@ -158,6 +158,7 @@ internal sealed partial class GitRepositoryGateway : IRepositoryGateway
                 "--"))
             .Concat(ParseNulStrings(GitBytes("ls-files", "--others", "--exclude-standard", "-z"))
                 .Select(static path => (Path: path, Kind: RawChangeKind.Added)))
+            .Where(static change => !RepositoryPathPolicy.IsUngovernedAgentConfig(change.Path))
             .GroupBy(static change => change.Path, StringComparer.Ordinal)
             .Select(static group => group
                 .OrderBy(static change => ChangeKindPriority(change.Kind))

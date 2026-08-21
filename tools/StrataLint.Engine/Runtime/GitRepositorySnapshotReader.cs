@@ -24,6 +24,11 @@ internal static class GitRepositorySnapshotReader
         var entries = ImmutableArray.CreateBuilder<RawRepositoryEntry>();
         foreach (var path in paths)
         {
+            if (RepositoryPathPolicy.IsUngovernedAgentConfig(path))
+            {
+                continue;
+            }
+
             if (!RepoPath.TryCreate(path, out _))
             {
                 throw new InvalidOperationException($"git emitted an invalid repository path: {path}");
