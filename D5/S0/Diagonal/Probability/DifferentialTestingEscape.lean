@@ -45,8 +45,7 @@ theorem directoryEscapes_iff_isEscaped (f : Y → Y) (g : A → A → Y) :
     directoryEscapes f g ↔ IsEscaped f g := by
   rfl
 
-/- TASK D5-T0048
-   The source's reference directory is finite and sampled uniformly. The
+/- The source's reference directory is finite and sampled uniformly. The
    existing EscapeCount theorem counts exactly the same self-application
    directories, so this bridge exposes the source notation without reproving
    the finite diagonal count. -/
