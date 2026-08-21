@@ -1,0 +1,44 @@
+name: integration-truth-release
+
+# End-to-end publish -> consume test for the truth-release stack. Packs Trureturing.Truth as a NuGet
+# package (the upstream read-only publish) and then restores + runs a standalone downstream consumer
+# that verifies a release bundle and reads the typed truth graph and frozen export back through the
+# package's logical accessors. It deliberately does NOT build the full harness or the Lean environment;
+# it only exercises the package boundary that pages/paper/formalize depend on.
+on:
+  push:
+    branches:
+      - integration-truth-release
+      - 'integration-*'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  publish-consume:
+    name: pack Trureturing.Truth then consume it via NuGet
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up .NET (pinned by global.json)
+        uses: actions/setup-dotnet@v4
+        with:
+          global-json-file: global.json
+
+      - name: Pack Trureturing.Truth (upstream read-only publish)
+        run: >
+          dotnet pack tools/Trureturing.Truth/Trureturing.Truth.csproj
+          -c Release
+          -p:Version=0.1.0-integration
+          -p:RepositoryCommit=${{ github.sha }}
+          -o "${{ github.workspace }}/localfeed"
+
+      - name: List the produced package
+        run: ls -l "${{ github.workspace }}/localfeed"
+
+      - name: Consume the packed package (downstream)
+        working-directory: integration/Consumer
+        run: dotnet run -c Release

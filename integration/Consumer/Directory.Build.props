@@ -1,0 +1,5 @@
+<!-- Empty on purpose: shadows the repository-root Directory.Build.props so this standalone consumer
+     (which references Trureturing.Truth only as a published NuGet package) does not inherit the harness
+     build props, banned-symbol analyzers, or central package management. -->
+<Project>
+</Project>
