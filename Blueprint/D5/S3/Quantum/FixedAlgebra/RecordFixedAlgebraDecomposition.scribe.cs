@@ -40,7 +40,7 @@ internal sealed class RecordFixedAlgebraDecompositionDocument : IScribeDocumentD
 
     private static Formula RecordFixedAlgebraFormula()
     {
-        Formula index = Seq(F.Id("I"), Underscore, F.Id("alpha"));
+        Formula index = Seq(F.Id("I"), Underscore, Grp(F.Id("alpha")));
         Formula matrix = Seq(
             Operatorname, Grp(F.Id("M")),
             Underscore, Grp(index),
@@ -54,11 +54,11 @@ internal sealed class RecordFixedAlgebraDecompositionDocument : IScribeDocumentD
             Forall, Sp, Lambda, Comma, Sp, F.Id("I"), Comma, Esc,
             OpenBracket, Forall, Sp, F.Id("alpha"), Comma, Sp,
             Operatorname, Grp(F.Id("Fintype")), Open,
-            F.Id("I"), Underscore, F.Id("alpha"), Close,
+            F.Id("I"), Underscore, Grp(F.Id("alpha")), Close,
             CloseBracket, Comma, Esc,
             OpenBracket, Forall, Sp, F.Id("alpha"), Comma, Sp,
             Operatorname, Grp(F.Id("DecidableEq")), Open,
-            F.Id("I"), Underscore, F.Id("alpha"), Close,
+            F.Id("I"), Underscore, Grp(F.Id("alpha")), Close,
             CloseBracket, Comma, Esc,
             Operatorname, Grp(F.Id("AlgEquiv")), Open,
             fixedAlgebra, Comma, Sp, product, Close, Dot));

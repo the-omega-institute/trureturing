@@ -400,6 +400,135 @@ public sealed class FormulaTests
             Id("x")));
     }
 
+    [Fact]
+    public void ScriptSymbolRejectsAMultiTokenArgument()
+    {
+        // `^` takes exactly one token, so `^\operatorname{card}(A)` leaves \operatorname
+        // without its argument and KaTeX refuses the whole formula.
+        Assert.Throws<ArgumentException>(() => new Formula.LatexSequence(
+        [
+            FormulaDsl.Id("x"),
+            FormulaDsl.Caret,
+            FormulaDsl.Seq(
+                FormulaDsl.Operatorname,
+                FormulaDsl.Grp(FormulaDsl.Id("card")),
+                FormulaDsl.Open,
+                FormulaDsl.Id("A"),
+                FormulaDsl.Close),
+        ]));
+
+        // The same defect inside a group is the same defect.
+        Assert.Throws<ArgumentException>(() => new Formula.LatexGroup(
+        [
+            FormulaDsl.Id("x"),
+            FormulaDsl.Underscore,
+            FormulaDsl.Seq(FormulaDsl.Id("a"), FormulaDsl.Id("b")),
+        ]));
+    }
+
+    [Fact]
+    public void ScriptSymbolRejectsAMultiCharacterOrDanglingArgument()
+    {
+        // `_alpha` renders as `_{a}lpha`: KaTeX accepts it and the reader is silently misled.
+        Assert.Throws<ArgumentException>(() => new Formula.LatexSequence(
+            [FormulaDsl.Id("I"), FormulaDsl.Underscore, FormulaDsl.Id("alpha")]));
+        Assert.Throws<ArgumentException>(() => new Formula.LatexSequence(
+            [FormulaDsl.Id("x"), FormulaDsl.Caret, FormulaDsl.D(1, 2)]));
+
+        // A script with nothing to attach to, and a script attached to another script.
+        Assert.Throws<ArgumentException>(() => new Formula.LatexSequence(
+            [FormulaDsl.Id("x"), FormulaDsl.Caret]));
+        Assert.Throws<ArgumentException>(() => new Formula.LatexSequence(
+            [FormulaDsl.Id("x"), FormulaDsl.Caret, FormulaDsl.Underscore, FormulaDsl.Id("a")]));
+    }
+
+    [Fact]
+    public void ScriptSymbolAcceptsASingleTokenArgument()
+    {
+        var accepted = new[]
+        {
+            FormulaDsl.Grp(FormulaDsl.Operatorname, FormulaDsl.Grp(FormulaDsl.Id("card"))),
+            FormulaDsl.Id("a"),
+            FormulaDsl.D(2),
+            FormulaDsl.Minus,
+            FormulaDsl.Alpha,
+            FormulaDsl.Perp,
+            FormulaDsl.Frac,
+            new Formula.Number(7),
+            new Formula.Phi(),
+            new Formula.Integers(),
+        };
+
+        foreach (var argument in accepted)
+        {
+            _ = new Formula.LatexSequence([FormulaDsl.Id("x"), FormulaDsl.Caret, argument]);
+            _ = new Formula.LatexSequence([FormulaDsl.Id("x"), FormulaDsl.Underscore, argument]);
+        }
+
+        // TeX skips whitespace between the script mark and its single-token argument.
+        _ = new Formula.LatexSequence(
+            [FormulaDsl.Id("x"), FormulaDsl.Caret, FormulaDsl.Sp, FormulaDsl.Grp(FormulaDsl.Id("a"))]);
+    }
+
+    [Fact]
+    public void MacrosRefusedAsAScriptArgumentAreExactlyTheMeasuredKatexSet()
+    {
+        // Measured against katex 0.16 by rendering `x^<macro><minimal legal argument>`:
+        // every member below raises "Got function ... with no arguments as superscript",
+        // and every non-member renders. Grouping the argument fixes all of them.
+        string[] refused =
+        [
+            "Begin", "End", "Exp", "Gcd", "Iff", "Implies", "Ker", "Left", "Lim", "Log",
+            "Max", "Middle", "Min", "NegativeThinSpace", "Operatorname", "Overline", "Prod",
+            "Qquad", "Quad", "Right", "RowBreak", "SemicolonSpace", "Sin", "Sqrt", "Sum",
+            "ThinSpace", "Widehat", "Widetilde",
+        ];
+
+        var observed = new List<string>();
+        foreach (var macro in Enum.GetValues<FormulaLatexMacro>())
+        {
+            try
+            {
+                _ = new Formula.LatexSequence(
+                    [FormulaDsl.Id("x"), FormulaDsl.Caret, new Formula.LatexMacro(macro)]);
+            }
+            catch (ArgumentException)
+            {
+                observed.Add(macro.ToString());
+            }
+        }
+
+        Assert.Equal(refused.Order(StringComparer.Ordinal), observed.Order(StringComparer.Ordinal));
+    }
+
+    [Fact]
+    public void EverySymbolAndMacroIsExplicitlyClassifiedAsAScriptArgument()
+    {
+        // No enum member may fall through to a default: a new macro must state its class.
+        foreach (var macro in Enum.GetValues<FormulaLatexMacro>())
+        {
+            var caught = Record.Exception(() => new Formula.LatexSequence(
+                [FormulaDsl.Id("x"), FormulaDsl.Caret, new Formula.LatexMacro(macro)]));
+            Assert.True(
+                caught is null or ArgumentException,
+                $"{macro} is unclassified: {caught?.GetType().Name}");
+        }
+
+        string[] refusedSymbols = ["Ampersand", "Apostrophe", "Caret", "Underscore"];
+        var observed = new List<string>();
+        foreach (var symbol in Enum.GetValues<FormulaLatexSymbol>())
+        {
+            var caught = Record.Exception(() => new Formula.LatexSequence(
+                [FormulaDsl.Id("x"), FormulaDsl.Caret, new Formula.LatexSymbol(symbol)]));
+            Assert.True(
+                caught is null or ArgumentException,
+                $"{symbol} is unclassified: {caught?.GetType().Name}");
+            if (caught is not null) observed.Add(symbol.ToString());
+        }
+
+        Assert.Equal(refusedSymbols.Order(StringComparer.Ordinal), observed.Order(StringComparer.Ordinal));
+    }
+
     private static Formula Id(string value) =>
         new Formula.Symbol(FormulaIdentifier.Create(value));
 
