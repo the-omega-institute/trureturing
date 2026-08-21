@@ -7,30 +7,28 @@ namespace StrataLint.Scribe.Blueprint.D5.S0.History.Consensus;
 internal sealed class InlineConsensusProtocolFixturesDocument : IScribeDocumentDefinition
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Named fixtures exercise the fail-closed protocol and are consumed by one aggregate theorem.",
+        "Named protocol executions witness every design, review, and termination router exit.",
         H("Inline Consensus Protocol Fixtures"),
         Blocks(
             Describe.Lean(
-                DescribeId.Create("required-inline-consensus-fixtures-are-aggregate-pinned"),
+                DescribeId.Create("router-transitions-are-exhaustive"),
                 DeclarationHandle.Create(
                     "D5/S0/History/Consensus/InlineConsensusProtocolFixtures."
-                    + "required_fixture_suite_is_pinned"),
-                H("Required fixtures are aggregate-pinned"),
-                StatementSource.FromAuthor(Disp(F.Id("RequiredFixtureSuite"))),
+                    + "router_transitions_are_exhaustive"),
+                H("Router transitions are exhaustive"),
+                StatementSource.FromAuthor(Disp(F.Id("RouterTransitionsExhaustive"))),
                 AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
-                        "RequiredFixtureSuite consumes every public fixture theorem in both Lean modules "
-                        + "by name: core stage, priority, disclosure, wiring, Boolean correspondence, "
-                        + "optimality, and bounded-run theorems; carrier selection, carrier-indexed "
-                        + "completion, termination competitors and rows, "
-                        + "all four design rows, review routing, shared budgets, thinking abstention, "
-                        + "unavailable-isolation negatives, termination evaluation cost, unauthorized "
-                        + "budget rejection, and all-reject review retention.")),
+                        "RouterTransitionsExhaustive is the conjunction of three propositions: every "
+                        + "DesignExit has a nonempty DesignRouteTransition, every ReviewExit has a "
+                        + "nonempty ReviewRouteTransition, and every TerminationExit has a nonempty "
+                        + "TerminationRouteTransition.")),
                     Paragraph(Text(
-                        "ClauseObject is a total ten-case index from model clause identifiers to those "
-                        + "named internal objects. It does not prove that the objects correspond to the "
-                        + "external sshx prose; that relationship remains only the digest-pinned snapshot "
-                        + "claim in Inline Consensus Optimality."))),
+                        "The proof assembles named ProtocolStep fixtures for implementation, successful "
+                        + "and exhausted convergence, stalled and fake-consensus design exits, repair, "
+                        + "termination candidacy, user decision and repeated review, and all four "
+                        + "termination exits. It proves transition-level inhabitation, not that every "
+                        + "arbitrary protocol state can take every route."))),
                 DescribeRole.Theorem))));
 }

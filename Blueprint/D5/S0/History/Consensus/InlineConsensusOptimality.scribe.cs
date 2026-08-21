@@ -7,117 +7,62 @@ namespace StrataLint.Scribe.Blueprint.D5.S0.History.Consensus;
 internal sealed class InlineConsensusOptimalityDocument : IScribeDocumentDefinition
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "A finite fail-closed consensus router is the unique greatest sound rule, and every maximal protocol run consumes a finite shared resource potential.",
+        "Carrier selection is the unique available priority minimum, and the design router rejects single-perspective consensus.",
         H("Inline Consensus Optimality"),
         Blocks(
             Describe.Lean(
-                DescribeId.Create("termination-router-is-the-unique-greatest-sound-rule"),
+                DescribeId.Create("carrier-selection-is-the-unique-available-priority-minimum"),
                 DeclarationHandle.Create(
                     "D5/S0/History/Consensus/InlineConsensusOptimality."
-                    + "termination_router_sound_maximal_unique"),
-                H("The termination router is sound, maximal, and unique"),
+                    + "selectCarrier_is_unique_minimum"),
+                H("Carrier selection is the unique available priority minimum"),
                 StatementSource.FromAuthor(Disp(Seq(
-                    Operatorname, Grp(F.Id("Sound")), Open, F.Id("r"), Star, Close,
-                    Sp, Land, Sp,
-                    Forall, Sp, F.Id("p"), Comma, Sp,
-                    Operatorname, Grp(F.Id("Sound")), Open, F.Id("p"), Close,
-                    Sp, Rightarrow, Sp, F.Id("p"), Sp, Le, Sp, F.Id("r"), Star,
-                    Sp, Land, Sp,
-                    Operatorname, Grp(F.Id("unique")), Open, F.Id("r"), Star, Close))),
+                    Forall, Sp, F.Id("eligible"), Comma, Sp, F.Id("tried"), Comma, Esc,
+                    Call("Nonempty", EligibleUntried()), Sp, Rightarrow, Sp,
+                    Call("selectCarrier", F.Id("eligible"), F.Id("tried")), Sp,
+                    InMacro, Sp, EligibleUntried(),
+                    RowBreak, Sp, Land, Sp,
+                    Forall, Sp, F.Id("other"), Comma, Esc,
+                    F.Id("other"), Sp, InMacro, Sp, EligibleUntried(), Sp,
+                    Rightarrow, Sp,
+                    Open, Forall, Sp, F.Id("carrier"), Comma, Esc,
+                    F.Id("carrier"), Sp, InMacro, Sp, EligibleUntried(), Sp,
+                    Rightarrow, Sp,
+                    Call("priorityRank", F.Id("other")), Sp, Le, Sp,
+                    Call("priorityRank", F.Id("carrier")), Close,
+                    Sp, Rightarrow, Sp,
+                    F.Id("other"), Sp, Eq, Sp,
+                    Call("selectCarrier", F.Id("eligible"), F.Id("tried"))))),
                 AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
-                        "The observation contract contains exactly three named termination seats and "
-                        + "a three-slot roster; its dependent result function cannot contain a "
-                        + "meta-judge verdict. A completed seat result carries the exact peer-free "
-                        + "seat view, a non-abstain carrier with matching prior disclosure, and a "
-                        + "carrier-indexed completion proof. Codex requires process exit, result "
-                        + "artifact, valid envelope, allowed verdict, and sentinel; Nyxid requires "
-                        + "structured terminal completion, valid envelope, and allowed verdict; the "
-                        + "isolated subagent requires the valid envelope and allowed verdict. Evidence "
-                        + "in one carrier's shape cannot complete another. Invalid and missing inputs remain "
-                        + "fail-closed rows, but cannot masquerade as completed seats. Hazard is "
-                        + "stated independently as a fake roster or a named seat that is not a valid "
-                        + "satisfied result; it is not the Boolean complement of the router.")),
+                        "Whenever the eligible carriers not yet tried form a nonempty finite set, "
+                        + "selectCarrier belongs to that set. Any other available carrier whose "
+                        + "priority rank is no greater than every available carrier's rank must equal "
+                        + "the selected carrier.")),
                     Paragraph(Text(
-                        "The proof exhausts the finite router rows to identify hazard-free "
-                        + "observations with exact-roster all-satisfied observations. Soundness and "
-                        + "pointwise maximality follow from that equivalence. Uniqueness applies "
-                        + "Mathlib's IsGreatest.unique rather than reproving greatest-element "
-                        + "antisymmetry.")),
-                    Paragraph(Text(
-                        "Two concrete competitors show that both halves do work. Always-abstain is "
-                        + "sound but strictly below the router at the exact all-satisfied fixture. "
-                        + "Majority-admit is strictly more permissive, but the two-satisfied and "
-                        + "one-unsatisfied fixture proves that it is not sound. Lean checks the three "
-                        + "review-router rows as a truth-table fixture; it defines no review hazard, "
-                        + "soundness, or maximality theorem. The design table derives its four rows from "
-                        + "plan identities, a compatibility relation, and an explicit single-perspective "
-                        + "consensus presentation, but supplies no independent binary hazard predicate, "
-                        + "so no design maximality claim is made.")),
-                    Paragraph(Text(
-                        "Snapshot note: the abstract model was compared with the beta.32 sshx "
-                        + "SKILL.md whose SHA-256 is "
-                        + "ab688e34f2b183291958f78b2d9ff6905d7330f3844668c5103026790d8b4cbf "
-                        + "and CODEX_WORKER_SPEC.md whose SHA-256 is "
-                        + "700237b1a1389002215272874e8c9cd7b17a130f0d0eaf7bb20cf9b39f49829d. "
-                        + "This is prose snapshot correspondence only. A later plugin version may "
-                        + "falsify it without falsifying the Lean theorems; no current or future "
-                        + "plugin version is claimed."))),
+                        "The result is conditional on a nonempty eligible-untried set. It does not say "
+                        + "that a worker carrier is always available, and the separate exhaustion row "
+                        + "selects abstain when that set is empty."))),
                 DescribeRole.Theorem),
             Describe.Lean(
-                DescribeId.Create("every-maximal-protocol-run-is-explicitly-bounded"),
+                DescribeId.Create("single-perspective-consensus-is-rejected"),
                 DeclarationHandle.Create(
                     "D5/S0/History/Consensus/InlineConsensusOptimality."
-                    + "every_maximal_run_is_bounded"),
-                H("Every maximal protocol run is explicitly bounded"),
+                    + "design_router_rejects_single_perspective"),
+                H("Single-perspective consensus is rejected"),
                 StatementSource.FromAuthor(Disp(Seq(
-                    Forall, Sp, F.Id("run"), Comma, Sp,
-                    F.Id("length"), Open, F.Id("run"), Close,
-                    Sp, Le, Sp,
-                    Operatorname, Grp(F.Id("explicitRunBound")), Open, F.Id("config"), Close))),
+                    Call("designRouter", F.Id("singlePerspective")), Sp, Eq, Sp,
+                    F.Id("rejectFakeConsensus")))),
                 AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
-                        "InlineConsensusModel records the stage relation, carrier selector, completion "
-                        + "predicate, seat view, role-indexed thinking and review result types, prior "
-                        + "disclosure, three routers, roster contract, pass-locus predicate, and guarded "
-                        + "transition relation. The internal-wiring theorem checks only those record "
-                        + "projections; it does not prove correspondence to external prose. Named "
-                        + "semantic fixtures pin executable rows and invariants. Correspondence to the "
-                        + "sshx source remains only the digest-pinned snapshot claim stated above.")),
-                    Paragraph(Text(
-                        "Every non-abstain protocol step requires available input isolation. Such a "
-                        + "step either erases one previously available stage-role-carrier "
-                        + "key within its fixed retry budget; follows the unique stage successor only "
-                        + "with isolation and stage-specific evidence; derives and retains the design "
-                        + "or review outcome from fixed role-indexed verdict records; consumes one "
-                        + "shared bounded-pass unit at that pass kind's legal locus; evaluates the "
-                        + "termination roster while consuming and recording exactly one shared pass; "
-                        + "or abstains only on "
-                        + "carrier exhaustion, isolation unavailability, or a router abstain exit. A "
-                        + "rejected review can change only through a bounded fix-and-review step, and "
-                        + "finish requires retained review done, available isolation, and permission "
-                        + "recorded by that prior evaluation. Every transition and execution also requires the single config "
-                        + "budget to satisfy the at-most-five-unless-owner-authorized policy. "
-                        + "The potential is the sum of "
-                        + "remaining flight keys, remaining stage edges, remaining shared passes, "
-                        + "and one live-state credit. Mathlib's card_erase_lt_of_mem proves that a "
-                        + "flight failure strictly decreases the first component; the other "
-                        + "constructors decrease their named component.")),
-                    Paragraph(Text(
-                        "Induction over the guarded operational execution proves retry-budget "
-                        + "compliance, non-reopening of carrier keys, the shared-pass bound, and the "
-                        + "explicit length bound for every maximal run. Universal abstention was "
-                        + "removed: without a separate liveness premise a guarded live state may be "
-                        + "deadlocked, so no terminal-reachability conclusion is claimed. The named "
-                        + "selector fixtures pin codex-first, highest-priority-untried fallback, and "
-                        + "exhaustion; the thinking-exhaustion fixture has no dependent-stage event. "
-                        + "Additional named negative fixtures block flight retry, bounded pass, "
-                        + "fix-and-review, and finish under unavailable isolation; reject an unauthorized "
-                        + "budget of six; block roster evaluation at the shared-budget ceiling; and "
-                        + "prevent an all-reject review from finishing without a fix-and-review step. "
-                        + "A ten-case index maps model clause identifiers to named internal objects "
-                        + "without claiming correspondence to external prose."))),
+                        "The design router maps exactly the singlePerspective situation to the "
+                        + "rejectFakeConsensus exit. This equation states one router row; it does not "
+                        + "supply an independent design hazard predicate or a design-router maximality "
+                        + "theorem."))),
                 DescribeRole.Theorem))));
+
+    private static Formula EligibleUntried() =>
+        Call("eligibleUntried", F.Id("eligible"), F.Id("tried"));
 }

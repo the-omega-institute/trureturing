@@ -2,21 +2,23 @@
 
 ## Abstract
 
-Named fixtures exercise the fail-closed inline-consensus protocol and are consumed by one aggregate theorem.
+Named protocol executions witness every design, review, and termination router exit.
 
-**Theorem 1.1 (Required fixtures are aggregate-pinned).**
+**Theorem 1.1 (Router transitions are exhaustive).**
 
-$$\left(\begin{aligned}\operatorname{terminationRouter}\left(permittedObservation\right) = permitClaim\\\land \operatorname{terminationAdmits}\left(permittedObservation\right) = true\\\land \operatorname{terminationAdmits}\left(fakeRosterObservation\right) = false\\\land \operatorname{terminationAdmits}\left(unsatisfiedObservation\right) = false\\\land \operatorname{terminationAdmits}\left(abstainObservation\right) = false\\\land \operatorname{terminationAdmits}\left(invalidObservation\right) = false\\\land \operatorname{terminationAdmits}\left(missingObservation\right) = false\\\land \operatorname{StrictBelow}\left(alwaysAbstain, terminationAdmits\right)\\\land \operatorname{Sound}\left(alwaysAbstain\right)\\\land \operatorname{StrictBelow}\left(terminationAdmits, majorityAdmit\right)\\\land \neg \operatorname{Sound}\left(majorityAdmit\right)\\\land \operatorname{Complete}\left(completeObservation\right)\\\land \neg \operatorname{Complete}\left(\operatorname{missingCompletionConjunct}\left(carrierExit\right)\right)\\\land \neg \operatorname{Complete}\left(\operatorname{missingCompletionConjunct}\left(resultArtifact\right)\right)\\\land \neg \operatorname{Complete}\left(\operatorname{missingCompletionConjunct}\left(envelope\right)\right)\\\land \neg \operatorname{Complete}\left(\operatorname{missingCompletionConjunct}\left(verdict\right)\right)\\\land \neg \operatorname{Complete}\left(\operatorname{missingCompletionConjunct}\left(sentinel\right)\right)\\\land \forall proxy, \neg \operatorname{Complete}\left(\operatorname{evidenceFromProxyOnly}\left(proxy\right)\right)\\\land \left(\operatorname{priorExposure}\left(codexCli\right) \neq \operatorname{priorExposure}\left(nyxidOracle\right) \land \forall latent, \operatorname{correlatedConclusion}\left(codexCli, latent\right) = \operatorname{correlatedConclusion}\left(nyxidOracle, latent\right)\right)\\\land \operatorname{selectCarrier}\left(allEligible, \emptyset\right) = codexCli\\\land \operatorname{selectCarrier}\left(allEligible, \{codexCli\}\right) = nyxidOracle\\\land \operatorname{selectCarrier}\left(\left(\lambda carrier, false\right), \emptyset\right) = abstain\\\land \left(\begin{aligned}\operatorname{reviewRouter}\left(\left(\lambda seat, reject\right)\right) = fix\\\land \operatorname{reviewRouter}\left(\left(\lambda seat, approve\right)\right) = done\\\land \operatorname{reviewRouter}\left(\left(\lambda seat, comment\right)\right) = userDecisionOrBoundedPass\end{aligned}\right)\\\land \operatorname{card}\left(ThinkingSeat\right) = 6\\\land \operatorname{card}\left(ReviewSeat\right) = 3\\\land \operatorname{thinkingSituation}\left(allProposeThinkingResults\right) = unanimousActionable\\\land \operatorname{reviewRouter}\left(\operatorname{reviewObservation}\left(allRejectReviewResults\right)\right) = fix\\\land allRejectReviewFinal.reviewExit = \operatorname{some}\left(fix\right)\\\land \neg \left(\exists final, \operatorname{ProtocolStep}\left(fixtureConfig, allRejectReviewFinal, finish, final\right)\right)\\\land \neg \operatorname{PassBudgetAuthorized}\left(unauthorizedOverBudgetConfig\right)\\\land \forall start, events, final, \neg \operatorname{Execution}\left(inlineConsensusModel, unauthorizedOverBudgetConfig, start, events, final\right)\\\land \operatorname{Execution}\left(inlineConsensusModel, unavailableIsolationConfig, \operatorname{initialState}\left(unavailableIsolationConfig\right), [\operatorname{abstain}\left(intake\right)], unavailableIsolationFinal\right)\\\land \forall state, state.isolation = unavailable \Rightarrow \forall final, \neg \operatorname{ProtocolStep}\left(fixtureConfig, state, finish, final\right)\end{aligned}\right).$$
+$$RouterTransitionsExhaustive$$
 
-*Proof.* Machine-checked in Lean as `D5/S0/History/Consensus/InlineConsensusProtocolFixtures.required_fixture_suite_is_pinned` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S0/History/Consensus/InlineConsensusProtocolFixtures.router_transitions_are_exhaustive` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
 *Commentary.*
 
-The conjunction consumes the termination rows, both competitor witnesses, all five completion failures, forbidden-proxy rejection, the correlated-prior countermodel, carrier-selection rows, the review truth table, fixed role-cardinality checks, all-reject review routing, unauthorized-budget rejection, and the unavailable-isolation execution and finish prohibition. It pins internal model behavior only; correspondence to the external sshx prose remains the digest-pinned snapshot claim in Inline Consensus Optimality.
+RouterTransitionsExhaustive is the conjunction of three propositions: every DesignExit has a nonempty DesignRouteTransition, every ReviewExit has a nonempty ReviewRouteTransition, and every TerminationExit has a nonempty TerminationRouteTransition.
+
+The proof assembles named ProtocolStep fixtures for implementation, successful and exhausted convergence, stalled and fake-consensus design exits, repair, termination candidacy, user decision and repeated review, and all four termination exits. It proves transition-level inhabitation, not that every arbitrary protocol state can take every route.
 
 ## References
 
-- Truth anchor: `D5/S0/History/Consensus/InlineConsensusProtocolFixtures.required_fixture_suite_is_pinned`
-- Dependency: [D5/S0/History/Consensus/InlineConsensusOptimality](InlineConsensusOptimality.md)
+- Truth anchor: `D5/S0/History/Consensus/InlineConsensusProtocolFixtures.router_transitions_are_exhaustive`
+- Dependency: [D5/S0/History/Consensus/InlineConsensusExecution](InlineConsensusExecution.md)
