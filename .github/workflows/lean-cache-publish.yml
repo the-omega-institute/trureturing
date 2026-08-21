@@ -4,6 +4,17 @@
 # 它的存在永不能让任何判词从红变绿，它的失败也永不该让 dev 的门变红。
 #
 # 为什么是独立文件而不是 ci.yml 里的一个 job：
+# 【2026-08-21 实测勘正】本 workflow 原本设计为「不新增构建」：读取 admission 流水线
+# 刚写进 Actions cache 的两级缓存，直接打包发布。**该前提已被实测推翻** ——
+# `workflow_run` 触发的运行**读不到 `push` 事件写入的 cache**：前缀逐字符匹配、
+# cache 就在 `refs/heads/dev`（dev 即 default branch）、写入早于读取一小时以上，
+# 三次运行一致报 `Cache not found`（32453224135 / 32457210655 / 32461241477）。
+# GitHub 文档称 workflow_run 可读 default branch 作用域的 cache，与实测不符；此处以实测为准。
+#
+# 故改为：cache 命中就用（快速路径，若日后作用域问题消失即自动生效），
+# **未命中则自己构建** —— `lake exe cache get` 取 mathlib 走外部 CDN，不受 Actions cache
+# 作用域限制。代价是这个 job 会花十几分钟自行构建；它不在任何 required check 内，慢不阻塞任何人。
+#
 #   1. `lean-report-input.sh:135-140` 把 ci.yml 中 `lean-inspect:` 到 `baseline-admission:`
 #      的**切片文本**折进 Lean 报告的输入闭包，并解析其中的脚本引用。发布脚本若出现在那段里，
 #      改它一行就会让每一份 canonical Lean 报告作废、本地与 CI 全量重算。
@@ -107,12 +118,28 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-${{ runner.arch }}-lake-build-v1-${{ steps.addr.outputs.config_sha256 }}-
 
+      # 缓存未命中时自己构建。`lake exe cache get` 取 mathlib 的 olean 走外部 CDN，
+      # 与 Actions cache 的作用域无关，所以这条路在 workflow_run 下也走得通。
+      - name: Build when no cache layer was available
+        id: selfbuild
+        if: steps.build.outputs.cache-hit != 'true' && steps.build.outputs.cache-matched-key == ''
+        shell: bash
+        run: |
+          set -euo pipefail
+          lake exe cache get || printf '%s\n' "mathlib cache get returned nonzero; lake build will fill the gaps"
+          lake build
+          printf 'olean=%s\n' "$(find .lake/build -name '*.olean' | wc -l | tr -d ' ')"
+          echo "built=true" >> "$GITHUB_OUTPUT"
+
       # 前缀回退可能取到**同一 config 但不同 sources** 的 build 层。直接发布会把内容不符的
       # 归档挂到当前内容地址下 —— 那是这条链路最危险的失败模式，因为消费者按地址取，
       # 拿到的字节却不是那个地址该有的。
       #
       # 故发布前用 lake 自己判：把归档喂给 `lake build`，**零编译**才说明它与当前源码相符。
       # 判据只认 `Built`/`Building`/`Compiling` 计数为 0；有任何一项非零即内容不符，不发布。
+      #
+      # 这一步**只守缓存恢复那条路径**：自建路径刚构建完，零编译是恒真的，
+      # 拿恒真的量当判据等于没判（本仓「恒值判据」之诫），故自建时跳过它、直接发布。
       - name: Verify the restored build matches this commit
         id: verify
         if: steps.build.outputs.cache-hit == 'true' || steps.build.outputs.cache-matched-key != ''
@@ -131,7 +158,7 @@ jobs:
           fi
 
       - name: Publish the build cache under its content address
-        if: steps.verify.outputs.matches == 'true'
+        if: steps.verify.outputs.matches == 'true' || steps.selfbuild.outputs.built == 'true'
         shell: bash
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -152,7 +179,7 @@ jobs:
           } >> "$GITHUB_STEP_SUMMARY"
 
       - name: Record that no build artifacts were available to publish
-        if: steps.verify.outputs.matches != 'true'
+        if: steps.verify.outputs.matches != 'true' && steps.selfbuild.outputs.built != 'true'
         shell: bash
         run: |
           set -euo pipefail
