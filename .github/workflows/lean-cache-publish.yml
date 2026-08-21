@@ -84,9 +84,6 @@ jobs:
     #   `gh cache list` 显示 entry 确实存在（1424 MiB，refs/heads/dev，每几分钟一份）。
     #   方向是单向的：admission 无法搬到仓根，只能由本 workflow 对齐它，
     #   且 path 列表必须**逐字节相同**（含 `~/.cache/mathlib` 一项）。
-    defaults:
-      run:
-        working-directory: candidate
     steps:
       - name: Check out the commit that was published
         id: checkout-publish
@@ -103,7 +100,7 @@ jobs:
         if: steps.checkout-publish.outcome == 'success'
         shell: bash
         env:
-          CHECKOUT_PATH: .
+          CHECKOUT_PATH: candidate
         run: |
           set -euo pipefail
           git -C "$CHECKOUT_PATH" remote remove origin
@@ -123,7 +120,7 @@ jobs:
       - name: Install the pinned Lean toolchain
         shell: bash
         env:
-          TOOLCHAIN_FILE: ${{ github.workspace }}/lean-toolchain
+          TOOLCHAIN_FILE: ${{ github.workspace }}/candidate/lean-toolchain
         run: |
           set -euo pipefail
           "$GITHUB_WORKSPACE/candidate/tools/scripts/workflow/install-lean-toolchain.sh" \
@@ -172,6 +169,7 @@ jobs:
         id: selfbuild
         if: steps.build.outputs.cache-hit != 'true' && steps.build.outputs.cache-matched-key == ''
         shell: bash
+        working-directory: candidate
         run: |
           set -euo pipefail
           lake exe cache get || printf '%s\n' "mathlib cache get returned nonzero; lake build will fill the gaps"
@@ -194,6 +192,7 @@ jobs:
         shell: bash
         env:
           BUILD_LOG: ${{ runner.temp }}/verify-build.txt
+        working-directory: candidate
         run: |
           set -euo pipefail
           lake build 2>&1 | tee "${BUILD_LOG}"
