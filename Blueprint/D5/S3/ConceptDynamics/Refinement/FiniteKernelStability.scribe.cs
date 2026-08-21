@@ -46,10 +46,10 @@ internal sealed class FiniteKernelStabilityDocument : IScribeDocumentDefinition
         Seq(function, Open, argument, Close);
 
     private static Formula RelationAt(Formula index) =>
-        new Formula.Subscript(F.Id("E"), index);
+        Apply(F.Id("E"), index);
 
     private static Formula CountAt(Formula index) =>
-        new Formula.Subscript(F.Id("c"), index);
+        Apply(F.Id("c"), index);
 
     private static Formula Cardinality(Formula value) =>
         Seq(Lvert, Sp, value, Sp, Rvert);

@@ -6,7 +6,7 @@ Finite predictive kernel chains stabilize within their class-count budget.
 
 **Theorem 1.1 (Finite predictive kernels stabilize).**
 
-$$\begin{gathered}\forall X, O, F: X \to X, q: X \to O,\\(\forall m, E_{m+1} \subseteq E_{m}) \land\\(\forall r, E_{N+r} = E_{N}) \land\\(\forall m < N, E_{m+1} \neq E_{m}) \land\\c_{0} = \lvert O \rvert \land\\N \leq c_{N} - c_{0} \leq \lvert X \rvert - c_{0} \land\\(x, y) \in E_{N} \iff (\forall k, q(F^{k}(x)) = q(F^{k}(y))).\end{gathered}$$
+$$\begin{gathered}\forall X, O, F: X \to X, q: X \to O,\\(\forall m, E(m+1) \subseteq E(m)) \land\\(\forall r, E(N+r) = E(N)) \land\\(\forall m < N, E(m+1) \neq E(m)) \land\\c(0) = \lvert O \rvert \land\\N \leq c(N) - c(0) \leq \lvert X \rvert - c(0) \land\\(x, y) \in E(N) \iff (\forall k, q(F^{k}(x)) = q(F^{k}(y))).\end{gathered}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Refinement/FiniteKernelStability.finite_kernel_chain_stability` (`✓ std3`). ∎
 
