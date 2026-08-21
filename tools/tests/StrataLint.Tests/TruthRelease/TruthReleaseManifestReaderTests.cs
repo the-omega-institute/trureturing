@@ -32,7 +32,7 @@ public sealed class TruthReleaseManifestReaderTests
             "source_snapshot":    { "file": "source-snapshot.v1.json", "sha256": "sha256:1111111111111111111111111111111111111111111111111111111111111111" },
             "truth_graph":        { "file": "truth-graph.v1.json",     "sha256": "sha256:2222222222222222222222222222222222222222222222222222222222222222" },
             "raw_lean_report":    { "file": "raw-lean-report.json",    "sha256": "sha256:3333333333333333333333333333333333333333333333333333333333333333" },
-            "declarations":       { "file": "declarations.v1.json",    "sha256": "sha256:4444444444444444444444444444444444444444444444444444444444444444" },
+            "truth_export":       { "file": "truth-export.v1.json",    "sha256": "sha256:4444444444444444444444444444444444444444444444444444444444444444" },
             "blueprint_index":    { "file": "blueprint-index.v1.json", "sha256": "sha256:5555555555555555555555555555555555555555555555555555555555555555" },
             "frozen_ledger_head": { "file": "frozen-ledger-head.json", "sha256": "sha256:6666666666666666666666666666666666666666666666666666666666666666" },
             "residual_frontier":  { "file": "echo-residual-summary.md","sha256": "sha256:7777777777777777777777777777777777777777777777777777777777777777" }
@@ -54,10 +54,10 @@ public sealed class TruthReleaseManifestReaderTests
         Assert.Equal("Canonical Lean report production", m.Trust.RequiredChecks[1].Name);
         Assert.Equal("loning", m.Trust.BlessedBy);
         Assert.True(m.Producer.ReadOnly);
-        Assert.Equal("declarations.v1.json", m.Artifacts.Declarations.File);
+        Assert.Equal("truth-export.v1.json", m.Artifacts.TruthExport.File);
         Assert.Equal(
             "sha256:4444444444444444444444444444444444444444444444444444444444444444",
-            m.Artifacts.Declarations.Sha256);
+            m.Artifacts.TruthExport.Sha256);
         Assert.Equal(
             "sha256:8888888888888888888888888888888888888888888888888888888888888888",
             m.Sha256SumsDigest);
@@ -74,8 +74,8 @@ public sealed class TruthReleaseManifestReaderTests
     [Fact]
     public void RejectsAMissingRequiredArtifact()
     {
-        // Rename the required "declarations" artifact key → it is now absent.
-        var bad = ValidManifest.Replace("\"declarations\":", "\"declarationz\":", StringComparison.Ordinal);
+        // Rename the required "truth_export" artifact key → it is now absent.
+        var bad = ValidManifest.Replace("\"truth_export\":", "\"truth_exportz\":", StringComparison.Ordinal);
         Assert.Throws<FormatException>(() => TruthReleaseManifestReader.Read(bad));
     }
 

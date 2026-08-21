@@ -102,7 +102,7 @@ public static class TruthReleaseVerification
             artifacts.SourceSnapshot,
             artifacts.TruthGraph,
             artifacts.RawLeanReport,
-            artifacts.Declarations,
+            artifacts.TruthExport,
             artifacts.BlueprintIndex,
             artifacts.FrozenLedgerHead,
             artifacts.ResidualFrontier,

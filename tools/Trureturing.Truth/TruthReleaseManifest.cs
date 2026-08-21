@@ -32,7 +32,7 @@ public sealed record TruthReleaseArtifacts(
     TruthReleaseArtifact SourceSnapshot,
     TruthReleaseArtifact TruthGraph,
     TruthReleaseArtifact RawLeanReport,
-    TruthReleaseArtifact Declarations,
+    TruthReleaseArtifact TruthExport,
     TruthReleaseArtifact BlueprintIndex,
     TruthReleaseArtifact FrozenLedgerHead,
     TruthReleaseArtifact ResidualFrontier);
@@ -79,7 +79,7 @@ public static class TruthReleaseManifestReader
     private static readonly ImmutableArray<string> ArtifactObjectKeys = ImmutableArray.Create("file", "sha256");
 
     private static readonly ImmutableArray<string> ArtifactKeys = ImmutableArray.Create(
-        "source_snapshot", "truth_graph", "raw_lean_report", "declarations",
+        "source_snapshot", "truth_graph", "raw_lean_report", "truth_export",
         "blueprint_index", "frozen_ledger_head", "residual_frontier");
 
     private static readonly ImmutableArray<string> RequiredCheckNames = ImmutableArray.Create(
@@ -142,7 +142,7 @@ public static class TruthReleaseManifestReader
                 ReadArtifact(artifactsElement, "source_snapshot"),
                 ReadArtifact(artifactsElement, "truth_graph"),
                 ReadArtifact(artifactsElement, "raw_lean_report"),
-                ReadArtifact(artifactsElement, "declarations"),
+                ReadArtifact(artifactsElement, "truth_export"),
                 ReadArtifact(artifactsElement, "blueprint_index"),
                 ReadArtifact(artifactsElement, "frozen_ledger_head"),
                 ReadArtifact(artifactsElement, "residual_frontier"));
