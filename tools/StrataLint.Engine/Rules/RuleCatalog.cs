@@ -1,4 +1,5 @@
 using System.Collections.Immutable;
+using System.Reflection;
 using System.Text.Json;
 
 namespace StrataLint.Engine;
@@ -48,6 +49,22 @@ public sealed class RuleCatalog
     public ImmutableArray<RuleDescriptor> Descriptors { get; }
 
     public string RootSha256 { get; }
+
+    internal ImmutableArray<RegisteredFindingEdge> FindingEdges =>
+        registrations
+            .SelectMany(registration => registration.Rule.FindingEdges.Select(edge =>
+                new RegisteredFindingEdge(registration.Descriptor.Id, edge)))
+            .Concat(
+                typeof(RuleCatalog).Assembly
+                    .GetTypes()
+                    .Select(type =>
+                        (type, provider: type.GetCustomAttributes<FindingEdgeProviderAttribute>().SingleOrDefault()))
+                    .Where(static item => item.provider is not null)
+                    .SelectMany(static item => FindingEdgeDescriptor.Discover(item.type)
+                        .Select(edge => new RegisteredFindingEdge(
+                            RuleId.CreateKnown(item.provider!.RuleNumber),
+                            edge))))
+            .ToImmutableArray();
 
     internal static RuleCatalog CreateForTesting(ImmutableArray<RuleRegistration> registrations) =>
         new(registrations);

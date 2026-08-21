@@ -10,7 +10,19 @@ public sealed class R13ScopeNarrowingTests
     private const string OldMirrorSource = RuleFixture.RingPath;
 
     [Fact]
-    public void Sl015ScopesLocalGidCharsetFindingToDeltaAndImplementationClosure()
+    [BaseFactScopeProbe(
+        15,
+        typeof(RepositoryPathPolicy),
+        nameof(RepositoryPathPolicy.EvaluatePathFindings))]
+    public void Sl015EvaluatePathFindingsScopesHistoricalPathFinding() =>
+        Sl015AdditionalEdgeScopeTests.RunEvaluatePathFindingsScopeProbe();
+
+    [Fact]
+    [BaseFactScopeProbe(
+        15,
+        typeof(RepositoryRules),
+        nameof(RepositoryRules.GidCharacterSet))]
+    public void Sl015GidCharacterSetScopesLocalFindingToDeltaAndImplementationClosure()
     {
         var unrelated = FixtureWithInvalidOldGid();
         var unrelatedResult = Execute(unrelated, UnrelatedDelta);
@@ -31,7 +43,7 @@ public sealed class R13ScopeNarrowingTests
         var implementation = FixtureWithInvalidOldGid();
         var implementationResult = Execute(
             implementation,
-            "tools/StrataLint.Engine/Rules/RepositoryRules.Formulas.cs");
+            "tools/StrataLint.Engine/Rules/RepositoryRules.Content.cs");
         Assert.Contains(
             implementationResult.Diagnostics,
             diagnostic => diagnostic.RuleId == RuleId.CreateKnown(15)
