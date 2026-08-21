@@ -67,7 +67,7 @@ internal sealed class NaiveRefinementComplexityDocument : IScribeDocumentDefinit
         Formula index = F.Id("i");
         Formula states = new Formula.Subscript(F.Id("Y"), index);
         Formula outputs = new Formula.Subscript(F.Id("O"), index);
-        Formula update = new Formula.Subscript(Tau, index);
+        Formula update = new Formula.Subscript(F.Id("tau"), index);
         Formula readout = new Formula.Subscript(F.Id("q"), index);
         Formula stateCount = new Formula.Subscript(F.Id("n"), index);
         Formula outputCount = Seq(Lvert, Sp, outputs, Sp, Rvert);
