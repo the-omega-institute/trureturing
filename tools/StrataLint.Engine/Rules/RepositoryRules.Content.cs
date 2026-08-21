@@ -7,81 +7,98 @@ namespace StrataLint.Engine;
 
 internal static partial class RepositoryRules
 {
-    private static ImmutableArray<RuleFinding> AddressesAndFormulas(RuleEvaluationContext context)
+    [FindingEdge(FindingEdgeKind.Local)]
+    internal static ImmutableArray<RuleFinding> FormulaValidation(RuleEvaluationContext context)
     {
         var findings = ImmutableArray.CreateBuilder<RuleFinding>();
-        var evidence = new Dictionary<(string Coordinates, string Selector), List<string>>();
-        var seenGids = new Dictionary<string, List<string>>(StringComparer.Ordinal);
         foreach (var (path, file) in context.Current.Files.OrderBy(item => item.Key.Value, StringComparer.Ordinal))
         {
-            if (RepositoryPathPolicy.Validate(path, context.Policy) is not null)
+            if (RepositoryPathPolicy.Validate(path, context.Policy) is not null
+                || !path.Value.EndsWith(".json", StringComparison.Ordinal)
+                || !context.IsBaseFactAffected(path.Value))
             {
                 continue;
             }
 
-            if (RepositoryPathPolicy.TryResolve(path, context.Policy, out var gid) && gid is not null)
-            {
-                var gidText = gid.Value;
-                if (gidText.Contains("/E/", StringComparison.Ordinal))
-                {
-                    var separator = gidText.LastIndexOf("--", StringComparison.Ordinal);
-                    var dot = separator < 0 ? -1 : gidText.LastIndexOf('.', separator);
-                    if (dot > 0)
-                    {
-                        var key = (gidText[..dot], gidText[(dot + 1)..separator]);
-                        if (!evidence.TryGetValue(key, out var paths))
-                        {
-                            paths = new List<string>();
-                            evidence.Add(key, paths);
-                        }
+            ValidateFormulas(path.Value, file.Text, findings);
+        }
 
-                        paths.Add(path.Value);
-                    }
-                }
+        return findings.ToImmutable();
+    }
+
+    [FindingEdge(FindingEdgeKind.Local)]
+    internal static ImmutableArray<RuleFinding> GidCharacterSet(RuleEvaluationContext context)
+    {
+        var findings = ImmutableArray.CreateBuilder<RuleFinding>();
+        foreach (var (path, file) in context.Current.Files.OrderBy(item => item.Key.Value, StringComparer.Ordinal))
+        {
+            if (RepositoryPathPolicy.Validate(path, context.Policy) is not null
+                || !context.IsBaseFactAffected(path.Value)
+                || !TryHeader(file.Text, out var header))
+            {
+                continue;
             }
 
-            if (path.Value.EndsWith(".json", StringComparison.Ordinal)
-                && context.IsBaseFactAffected(path.Value))
+            if (!SafeFieldPattern.IsMatch(header.Gid))
             {
-                ValidateFormulas(path.Value, file.Text, findings);
+                findings.Add(new RuleFinding(path.Value, "GID violates the machine-field character set"));
+            }
+        }
+
+        return findings.ToImmutable();
+    }
+
+    [FindingEdge(FindingEdgeKind.Local)]
+    internal static ImmutableArray<RuleFinding> HeaderAnchorCanonicality(RuleEvaluationContext context)
+    {
+        var findings = ImmutableArray.CreateBuilder<RuleFinding>();
+        foreach (var (path, file) in context.Current.Files.OrderBy(item => item.Key.Value, StringComparer.Ordinal))
+        {
+            if (RepositoryPathPolicy.Validate(path, context.Policy) is not null
+                || !context.IsBaseFactAffected(path.Value)
+                || !TryHeader(file.Text, out var header))
+            {
+                continue;
             }
 
-            if (TryHeader(file.Text, out var header))
+            foreach (var anchor in header.Anchors)
             {
-                if (!SafeFieldPattern.IsMatch(header.Gid)
-                    && context.IsBaseFactAffected(path.Value))
+                if (!Anchor.IsExternalFamily(anchor)
+                    || Anchor.TryParseCanonical(anchor) is AnchorParseResult.Invalid)
                 {
-                    findings.Add(new RuleFinding(path.Value, "GID violates the machine-field character set"));
-                }
-                else
-                {
-                    if (!seenGids.TryGetValue(header.Gid, out var gidPaths))
-                    {
-                        gidPaths = new List<string>();
-                        seenGids.Add(header.Gid, gidPaths);
-                    }
-
-                    gidPaths.Add(path.Value);
-                }
-
-                if (!context.IsBaseFactAffected(path.Value))
-                {
-                    continue;
-                }
-
-                foreach (var anchor in header.Anchors)
-                {
-                    if (!Anchor.IsExternalFamily(anchor)
-                        || Anchor.TryParseCanonical(anchor) is AnchorParseResult.Invalid)
-                    {
-                        findings.Add(new RuleFinding(
-                            path.Value,
-                            $"anchor '{anchor}' is not a canonical external anchor"));
-                    }
+                    findings.Add(new RuleFinding(
+                        path.Value,
+                        $"anchor '{anchor}' is not a canonical external anchor"));
                 }
             }
         }
 
+        return findings.ToImmutable();
+    }
+
+    [FindingEdge(FindingEdgeKind.Interaction)]
+    internal static ImmutableArray<RuleFinding> DuplicateGidCollisions(RuleEvaluationContext context)
+    {
+        var seenGids = new Dictionary<string, List<string>>(StringComparer.Ordinal);
+        foreach (var (path, file) in context.Current.Files.OrderBy(item => item.Key.Value, StringComparer.Ordinal))
+        {
+            if (RepositoryPathPolicy.Validate(path, context.Policy) is not null
+                || !TryHeader(file.Text, out var header)
+                || !SafeFieldPattern.IsMatch(header.Gid))
+            {
+                continue;
+            }
+
+            if (!seenGids.TryGetValue(header.Gid, out var paths))
+            {
+                paths = new List<string>();
+                seenGids.Add(header.Gid, paths);
+            }
+
+            paths.Add(path.Value);
+        }
+
+        var findings = ImmutableArray.CreateBuilder<RuleFinding>();
         foreach (var duplicate in seenGids.Where(item =>
                      item.Value.Count > 1
                      && item.Value.Any(context.IsBaseFactAffected)))
@@ -89,12 +106,46 @@ internal static partial class RepositoryRules
             var locations = string.Join(", ", duplicate.Value.Order(StringComparer.Ordinal));
             foreach (var path in duplicate.Value)
             {
-                findings.Add(new RuleFinding(
-                    path,
-                    $"duplicate GID {duplicate.Key} at {locations}"));
+                findings.Add(new RuleFinding(path, $"duplicate GID {duplicate.Key} at {locations}"));
             }
         }
 
+        return findings.ToImmutable();
+    }
+
+    [FindingEdge(FindingEdgeKind.Interaction)]
+    internal static ImmutableArray<RuleFinding> EvidenceSelectorCollisions(RuleEvaluationContext context)
+    {
+        var evidence = new Dictionary<(string Coordinates, string Selector), List<string>>();
+        foreach (var (path, _) in context.Current.Files.OrderBy(item => item.Key.Value, StringComparer.Ordinal))
+        {
+            if (RepositoryPathPolicy.Validate(path, context.Policy) is not null
+                || !RepositoryPathPolicy.TryResolve(path, context.Policy, out var gid)
+                || gid is null
+                || !gid.Value.Contains("/E/", StringComparison.Ordinal))
+            {
+                continue;
+            }
+
+            var gidText = gid.Value;
+            var separator = gidText.LastIndexOf("--", StringComparison.Ordinal);
+            var dot = separator < 0 ? -1 : gidText.LastIndexOf('.', separator);
+            if (dot <= 0)
+            {
+                continue;
+            }
+
+            var key = (gidText[..dot], gidText[(dot + 1)..separator]);
+            if (!evidence.TryGetValue(key, out var paths))
+            {
+                paths = new List<string>();
+                evidence.Add(key, paths);
+            }
+
+            paths.Add(path.Value);
+        }
+
+        var findings = ImmutableArray.CreateBuilder<RuleFinding>();
         foreach (var collision in evidence.Where(item =>
                      item.Value.Count > 1
                      && item.Value.Any(context.IsBaseFactAffected)))

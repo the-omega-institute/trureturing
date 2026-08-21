@@ -94,7 +94,10 @@ internal static partial class RepositoryRules
         Register(
             15,
             "Machine field and GID grammar",
-            new RepositoryRule(AllArtifacts, AddressesAndFormulas, RepositoryShapeAffected)),
+            RepositoryRule.FromDiscoveredEdges(
+                typeof(RepositoryRules),
+                AllArtifacts,
+                RepositoryShapeAffected)),
         Register(
             16,
             "Digestion ledger",

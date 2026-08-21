@@ -32,6 +32,7 @@ public sealed class BaseFactScopeProbeRatchetTests
                 .Select(attribute => new
                 {
                     Rule = $"SL-{attribute.RuleNumber:000}",
+                    Attribute = attribute,
                     Method = method,
                 }))
             .ToArray();
@@ -59,14 +60,79 @@ public sealed class BaseFactScopeProbeRatchetTests
                 $"{probe.Rule} probe {probe.Method.DeclaringType?.FullName}.{probe.Method.Name} is not an executable xUnit test");
         }
 
-        var duplicate = probes.GroupBy(static probe => probe.Rule, StringComparer.Ordinal)
+        var registeredEdges = RuleCatalog.Default.FindingEdges
+            .Where(edge => active.Contains(edge.RuleId.Value))
+            .Where(edge => !exempt.Contains(edge.RuleId.Value))
+            .ToArray();
+
+        var resolved = probes
+            .Select(probe =>
+            {
+                var candidates = registeredEdges
+                    .Where(edge => edge.RuleId.Value == probe.Rule)
+                    .ToArray();
+                if (probe.Attribute.EdgeOwnerType is null)
+                {
+                    return new
+                    {
+                        Probe = probe,
+                        Edge = candidates.Length == 1 ? candidates[0] : null,
+                        Error = candidates.Length == 1
+                            ? null
+                            : $"{probe.Rule} has {candidates.Length} registered finding edges; the probe must bind one explicitly",
+                    };
+                }
+
+                var expected = FindingEdgeId.For(
+                    probe.Attribute.EdgeOwnerType,
+                    probe.Attribute.EdgeMemberName!);
+                var match = candidates.SingleOrDefault(edge => edge.Edge.Id == expected);
+                return new
+                {
+                    Probe = probe,
+                    Edge = match,
+                    Error = match is null
+                        ? $"{probe.Rule} probe binds unregistered finding edge {expected}"
+                        : null,
+                };
+            })
+            .ToArray();
+
+        var unnamed = resolved
+            .Where(static item => item.Edge is not null
+                && item.Probe.Attribute.EdgeOwnerType is not null
+                && !item.Probe.Method.Name.Contains(
+                    item.Edge!.Edge.MemberName,
+                    StringComparison.OrdinalIgnoreCase))
+            .Select(static item =>
+                $"{item.Probe.Rule} probe {item.Probe.Method.Name} does not name edge {item.Edge!.Edge.MemberName}")
+            .Order(StringComparer.Ordinal)
+            .ToArray();
+        Assert.True(
+            unnamed.Length == 0,
+            "explicit edge probes must name their bound finding edge: "
+                + string.Join("; ", unnamed));
+
+        var bindingErrors = resolved
+            .Where(static item => item.Error is not null)
+            .Select(static item => item.Error!)
+            .Order(StringComparer.Ordinal)
+            .ToArray();
+        Assert.True(
+            bindingErrors.Length == 0,
+            "scope probes have invalid finding-edge bindings: " + string.Join("; ", bindingErrors));
+
+        var duplicate = resolved
+            .Where(static item => item.Edge is not null)
+            .GroupBy(static item => item.Edge!, EqualityComparer<RegisteredFindingEdge>.Default)
             .Where(static group => group.Count() != 1)
-            .Select(static group => group.Key)
+            .Select(static group => group.Key.DisplayName)
             .Order(StringComparer.Ordinal)
             .ToArray();
         Assert.True(
             duplicate.Length == 0,
-            "active rules must have exactly one canonical scope probe: " + string.Join(", ", duplicate));
+            "registered finding edges must have exactly one canonical scope probe: "
+                + string.Join(", ", duplicate));
 
         var probeAndExemption = probes.Select(static probe => probe.Rule)
             .Where(exempt.Contains)
@@ -78,13 +144,18 @@ public sealed class BaseFactScopeProbeRatchetTests
             "active rules cannot have both a scope probe and an exemption: "
                 + string.Join(", ", probeAndExemption));
 
-        var covered = probes.Select(static probe => probe.Rule)
-            .Concat(exempt)
-            .ToHashSet(StringComparer.Ordinal);
-        var missing = active.Except(covered, StringComparer.Ordinal).Order(StringComparer.Ordinal).ToArray();
+        var coveredEdges = resolved
+            .Where(static item => item.Edge is not null)
+            .Select(static item => item.Edge!)
+            .ToHashSet();
+        var missing = registeredEdges
+            .Where(edge => !coveredEdges.Contains(edge))
+            .Select(static edge => edge.DisplayName)
+            .Order(StringComparer.Ordinal)
+            .ToArray();
         Assert.True(
             missing.Length == 0,
-            "active rules missing a named differential base-fact scope probe: "
+            "registered finding edges missing a named differential base-fact scope probe: "
                 + string.Join(", ", missing));
     }
 
@@ -98,6 +169,21 @@ public sealed class BaseFactScopeProbeRatchetTests
                     "Capacity pressure is a repository-wide aggregate; its finding is the global bucket size, not a historical object fact."),
             ],
             Exemptions);
+    }
+
+    [Fact]
+    public void RegisteredFindingEdgeIdsAreDerivedFromTheirDeclaringSink()
+    {
+        var edges = RuleCatalog.Default.FindingEdges;
+        Assert.Equal(
+            edges.Length,
+            edges.Select(edge => $"{edge.RuleId.Value}:{edge.Edge.Id}")
+                .Distinct(StringComparer.Ordinal)
+                .Count());
+        Assert.All(edges, edge =>
+            Assert.Equal(
+                FindingEdgeId.For(edge.Edge.OwnerType, edge.Edge.MemberName),
+                edge.Edge.Id));
     }
 
     private static IEnumerable<MethodInfo> ProbeMethods() =>
