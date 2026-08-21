@@ -57,6 +57,27 @@ public static class ScribeEmitter
             tolerateAbsentDocuments: false).ExitCode;
     }
 
+    internal static int Emit(
+        string repositoryRoot,
+        bool check,
+        TextWriter output,
+        TextWriter error,
+        LeanAxiomReport leanReport,
+        IReadOnlyList<DocumentDefinition> definitions)
+    {
+        ArgumentNullException.ThrowIfNull(leanReport);
+        ArgumentNullException.ThrowIfNull(definitions);
+        return Run(
+            repositoryRoot,
+            check,
+            output,
+            error,
+            _ => leanReport,
+            validateRepository: false,
+            tolerateAbsentDocuments: false,
+            suppliedDefinitions: definitions).ExitCode;
+    }
+
     internal static VerifiedScribeEmissions? Verify(
         string repositoryRoot,
         TextWriter error,
@@ -80,7 +101,8 @@ public static class ScribeEmitter
         TextWriter error,
         Func<string, LeanAxiomReport> loadLeanReport,
         bool validateRepository,
-        bool tolerateAbsentDocuments)
+        bool tolerateAbsentDocuments,
+        IReadOnlyList<DocumentDefinition>? suppliedDefinitions = null)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(repositoryRoot);
         ArgumentNullException.ThrowIfNull(output);
@@ -104,7 +126,7 @@ public static class ScribeEmitter
             // attested, or counted, which would make the candidate block a tree the baseline admits.
             // A document whose source IS present stays in scope. The capability is issued from the
             // current validated render and never from tracked reader-snapshot bytes.
-            var repositoryDefinitions = DocumentDefinitions.Discover(
+            var repositoryDefinitions = suppliedDefinitions ?? DocumentDefinitions.Discover(
                 typeof(DocumentDefinitions).Assembly,
                 repositoryRoot);
             if (check && !tolerateAbsentDocuments)
@@ -138,7 +160,7 @@ public static class ScribeEmitter
             definitions = definitions
                 .Select(definition => definition.ResolveDeclarations(declarationCatalog))
                 .ToArray();
-            if (tolerateAbsentDocuments && definitions.Length == 0 && !repositoryDefinitions.IsEmpty)
+            if (tolerateAbsentDocuments && definitions.Length == 0 && repositoryDefinitions.Count != 0)
             {
                 // A tree owning zero of this binary's documents is not an older world of this
                 // repository at all (wrong root, gutted checkout): verifying it vacuously would
