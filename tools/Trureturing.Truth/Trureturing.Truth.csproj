@@ -4,8 +4,23 @@
     <AssemblyName>Trureturing.Truth</AssemblyName>
     <IsPackable>true</IsPackable>
     <PackageId>Trureturing.Truth</PackageId>
-    <Version>0.1.0</Version>
-    <Description>Authoritative, self-contained truth-graph read/write/verify API for the trureturing golden ledger. Sits at the bottom of the dependency graph and depends only on the .NET base class library.</Description>
+
+    <!-- Distribution coordinate. Downstream (pages, paper, formalize) pins the EXACT package version and
+         the repository commit that produced these bytes, then restores locked so packages.lock.json binds
+         the NuGet contentHash. This pins the truth CODE version; the truth DATA release (truth-release
+         digest + source commit) is pinned SEPARATELY by consumers. CI publishes only when
+         tools/Trureturing.Truth/** changes, supplying a full version of the form
+         0.1.0-ci.<sequence>.g<short-commit> plus the full RepositoryCommit; a local build defaults to the
+         base prefix. -->
+    <VersionPrefix>0.1.0</VersionPrefix>
+    <RepositoryUrl>https://github.com/the-omega-institute/trureturing.git</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+
+    <Description>Authoritative, self-contained truth-graph and truth-export read/write/verify API for the trureturing golden ledger. Owns the shared wire records, canonical read/write, release integrity, and logical collection access; sits at the bottom of the dependency graph and depends only on the .NET base class library.</Description>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.CodeAnalysis.BannedApiAnalyzers" PrivateAssets="all" />
