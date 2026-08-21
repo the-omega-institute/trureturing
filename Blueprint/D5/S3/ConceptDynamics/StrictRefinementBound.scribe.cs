@@ -34,7 +34,7 @@ internal sealed class StrictRefinementBoundDocument : IScribeDocumentDefinition
                 DescribeRole.Theorem))));
 
     private static Formula Card(Formula value) =>
-        Seq(Lvert, value, Rvert);
+        Seq(Lvert, Sp, value, Rvert);
 
     private static Formula Subscript(Formula value, Formula index) =>
         Seq(value, Underscore, Grp(index));
