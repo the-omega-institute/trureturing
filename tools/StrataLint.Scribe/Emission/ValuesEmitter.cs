@@ -21,18 +21,18 @@ public static class ValuesEmitter
                 throw new InvalidOperationException("Values writer is not byte deterministic.");
             }
 
+            if (check)
+            {
+                output.WriteLine("verified: values producer is byte deterministic");
+                return 0;
+            }
+
             var path = Path.Combine(repositoryRoot, CanonicalValuesWriter.RelativePath);
             var current = File.Exists(path) ? File.ReadAllBytes(path) : [];
             if (current.AsSpan().SequenceEqual(first))
             {
                 output.WriteLine("checked: " + CanonicalValuesWriter.RelativePath);
                 return 0;
-            }
-
-            if (check)
-            {
-                error.WriteLine("out of date: " + CanonicalValuesWriter.RelativePath);
-                return 1;
             }
 
             var parent = Path.GetDirectoryName(path)

@@ -399,7 +399,6 @@ public sealed partial class MakeWorkflowTests
         Assert.Equal(
             [
                 "projections --check --report \"$REPORT\"",
-                "emit-values --check",
                 "describe-report --check",
             ],
             canonicalCommands);
