@@ -5,6 +5,7 @@ on:
   push:
     branches:
       - agent/transport/formal-prime-observer-abstraction-v1.6-20260822
+      - agent/theory/formal-prime-observer-causal-v1.5
     paths:
       - '.github/workflows/prime-observer-abstraction-v1.6-transport.yml'
       - '.github/prime-observer-abstraction-v1.6/**'
