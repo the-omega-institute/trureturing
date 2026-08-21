@@ -332,8 +332,9 @@ private theorem positiveIndex_eq_start_of_first_negative_one
 
 /-- Complete negative tails of positive natural base-phi expansions are exactly
 singletons when `d_-1 = 1`, and exactly three consecutive inputs when
-`d_-1 = 0`. This is the cropped singleton/trident consequence of Dekking's
-recursive structure theorem. -/
+`d_-1 = 0`. This is the singleton/trident fiber shape located by Dekking
+(Section 7.1/Theorem 7.5), proved here directly via Beatty floor coordinate
+arguments; the paper's recursion is not formalized or claimed. -/
 theorem negative_tail_fiber_shape
     (expansion : BasePhiNegativeExpansion) (N : Nat)
     (hpositive : 0 < N)

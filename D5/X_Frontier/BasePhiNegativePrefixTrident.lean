@@ -259,9 +259,10 @@ def CoreLucasWitness (w : List Bool) : Prop :=
     LucasPair a b ∧ 0 < r ∧
       Core w = sequenceRange (vForFamily family a b r)
 
-/- This is the frontier-facing signature of the singleton/trident consequence
-of Dekking's Recursive Structure Theorem 7.5. The theorem immediately below
-supplies its proof from the cropped S1 formalization. -/
+/- This is the frontier-facing signature of the singleton/trident fiber
+shape. The paper (Dekking, Section 7.1/Theorem 7.5) locates the phenomenon;
+the S1 proof below establishes it directly via Beatty floor coordinates and
+does not formalize the paper's recursion. -/
 def negative_tail_fiber_shape {w : List Bool} (hw : w ≠ [])
     (hadmissible : AdmissibleNegativePrefix canonicalExpansion w) : Prop :=
   ∀ N ∈ occurrenceSet canonicalExpansion w,
@@ -532,7 +533,7 @@ silently replace the values consumed by later nodes.
 
 1. `negative_tail_fiber_shape`: takes the nonempty prefix and admissibility
    hypotheses and records the singleton/three-point fiber consequence of
-   Dekking Recursive Structure Theorem 7.5.
+   the singleton/trident fiber shape (paper: Dekking 7.1/7.5; proved here directly).
 2. `core_occurrence_unique_lift`: consumes the fiber-shape conclusion.
 3. `prefix_phase_machine_total`: exposes a unique phase certificate generated
    by the ten-rule prefix machine.
@@ -587,10 +588,11 @@ of `successor_strict`. `v_translate_initial_value_proved` is an independent
 routine induction. `classification_chain_signatures_consistent` is chain
 plumbing: kernel-checked type compatibility, not semantic closure.
 
-The first node remains explicitly dependent on Dekking 7.5, which is not yet
-formalized in this import closure. That missing theorem is recorded, not
-bypassed. No new non-`X_Frontier` `sorry` was introduced; the final theorem
-below remains the sole frontier placeholder.
+The first node's fiber-shape dependency is now discharged by
+`D5.S1.Words.Expansions.BasePhiTailFiber.negative_tail_fiber_shape`, proved
+directly via Beatty floor coordinates (the paper's Theorem 7.5 recursion
+itself remains unformalized and unclaimed). No new non-`X_Frontier` `sorry`
+was introduced; the final theorem below remains the sole frontier placeholder.
 
 ## Closed supporting interfaces
 

@@ -29,8 +29,13 @@ positive side.
 This note is the literature anchor for the problem candidate
 `Problems/base-phi-negative-prefix-trident.md`.
 
-The proved recursive input used by the formalization is Theorem 7.5, not the
-later complete prefix-family conjecture. On PDF page 16, Theorem 7.5 gives the
+The paper locates the phenomenon the formalization needs: Section 7.1 defines
+the singleton/trident dichotomy of equal complete negative tails, and
+Theorem 7.5 states the recursion the paper uses to prove it. The repository
+formalization does **not** derive Theorem 7.5's recursion; it proves the
+singleton/trident fiber shape directly with repo-native Beatty floor
+coordinate arguments. The paper reference is provenance for the statement,
+not for the proof route. On PDF page 16, Theorem 7.5 gives the
 `gamma^-` recursion: its odd branches append `10`, `0010`, and `00` in
 Equations (15a-c), while its even branches append `00`, `01`, and `01` in
 Equations (16a-c). Section 7.1 defines equal complete negative tails as either
