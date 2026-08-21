@@ -64,6 +64,37 @@ public sealed class DigestionEvaluationScopeTests
     }
 
     [Fact]
+    public void ExplicitFullScanStillValidatesCasIntegrity()
+    {
+        var changes = RawChangeSet.Create(
+            ["tools/StrataLint.Engine/Digestion/Evaluation/DigestionStatusEvaluator.cs"]);
+        var scope = DigestionEvaluationScopes.ForChanges(
+            changes,
+            "tools/StrataLint.Cli/Commands/DigestStatusCommand.cs");
+        var sourceBytes = Encoding.UTF8.GetBytes("manual full scan CAS\n");
+        var atom = Atom("manual/full-scan-cas", sourceBytes);
+        var document = Ledger(
+            atom,
+            DigestionMigrationState.Absorbed,
+            DigestionTruthState.Closed,
+            includeCoverageGid: false);
+        var casPath = CasFile(atom).Path;
+        var evaluation = DigestionStatusEvaluator.Evaluate(
+            scope,
+            document,
+            Snapshot(
+                ("docs/source.md", sourceBytes),
+                (casPath, Encoding.UTF8.GetBytes("tampered committed CAS\n"))),
+            AcceptedLean(Array.Empty<string>()),
+            changes: changes);
+
+        Assert.Equal(DigestionEvaluationScope.FullScan, scope);
+        Assert.Contains(
+            evaluation.Findings,
+            finding => finding.Contains("CAS blob hash mismatch", StringComparison.Ordinal));
+    }
+
+    [Fact]
     public void ChangedCoverageTargetStillValidatesHistoricalCoverageReceipt()
     {
         var evaluation = EvaluateMismatchedCoverageReceipt(
