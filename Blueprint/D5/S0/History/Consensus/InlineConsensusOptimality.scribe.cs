@@ -45,11 +45,11 @@ internal sealed class InlineConsensusOptimalityDocument : IScribeDocumentDefinit
                         "Two concrete competitors show that both halves do work. Always-abstain is "
                         + "sound but strictly below the router at the exact all-satisfied fixture. "
                         + "Majority-admit is strictly more permissive, but the two-satisfied and "
-                        + "one-unsatisfied fixture proves that it is not sound. The review table also "
-                        + "has the hazard-complement form and its soundness and maximality are checked "
-                        + "in Lean. The design table does not: it has convergence and bounded-stall "
-                        + "exits and supplies no independent binary hazard predicate, so no design "
-                        + "maximality claim is forced.")),
+                        + "one-unsatisfied fixture proves that it is not sound. Lean checks the three "
+                        + "review-router rows as a truth-table fixture; it defines no review hazard, "
+                        + "soundness, or maximality theorem. The design table likewise has convergence "
+                        + "and bounded-stall exits and supplies no independent binary hazard predicate, "
+                        + "so no design maximality claim is made.")),
                     Paragraph(Text(
                         "Snapshot note: the abstract model was compared with the beta.32 sshx "
                         + "SKILL.md whose SHA-256 is "
@@ -74,20 +74,24 @@ internal sealed class InlineConsensusOptimalityDocument : IScribeDocumentDefinit
                 AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
-                        "InlineConsensusModel is the canonical load-bearing record: its fields are "
-                        + "the actual stage relation, carrier selector, completion predicate, seat "
-                        + "view type, prior disclosure, three routers, roster contract, pass-locus "
-                        + "predicate, guarded transition relation, and shared default budget. The "
-                        + "coverage theorem equates every field with the executable object, while "
-                        + "named semantic pins fix the exact stage chain, carrier and prior orders, "
-                        + "seat-view information content, router rows, and default budget.")),
+                        "InlineConsensusModel records the stage relation, carrier selector, completion "
+                        + "predicate, seat view, role-indexed thinking and review result types, prior "
+                        + "disclosure, three routers, roster contract, pass-locus predicate, and guarded "
+                        + "transition relation. The internal-wiring theorem checks only those record "
+                        + "projections; it does not prove correspondence to external prose. Named "
+                        + "semantic fixtures pin executable rows and invariants. Correspondence to the "
+                        + "sshx source remains only the digest-pinned snapshot claim stated above.")),
                     Paragraph(Text(
                         "A protocol step either erases one previously available stage-role-carrier "
                         + "key within its fixed retry budget; follows the unique stage successor only "
-                        + "with isolation and stage-specific completion or router authorization; "
-                        + "consumes one shared bounded-pass unit at that pass kind's legal locus; "
-                        + "finishes only on termination-router permission; or abstains only on "
-                        + "carrier exhaustion, isolation unavailability, or a router abstain exit. "
+                        + "with isolation and stage-specific evidence; derives and retains the design "
+                        + "or review outcome from fixed role-indexed verdict records; consumes one "
+                        + "shared bounded-pass unit at that pass kind's legal locus; or abstains only on "
+                        + "carrier exhaustion, isolation unavailability, or a router abstain exit. A "
+                        + "rejected review can change only through a bounded fix-and-review step, and "
+                        + "finish requires retained review done, available isolation, and termination "
+                        + "permission. Every transition and execution also requires the single config "
+                        + "budget to satisfy the at-most-five-unless-owner-authorized policy. "
                         + "The potential is the sum of "
                         + "remaining flight keys, remaining stage edges, remaining shared passes, "
                         + "and one live-state credit. Mathlib's card_erase_lt_of_mem proves that a "
@@ -100,6 +104,9 @@ internal sealed class InlineConsensusOptimalityDocument : IScribeDocumentDefinit
                         + "removed: without a separate liveness premise a guarded live state may be "
                         + "deadlocked, so no terminal-reachability conclusion is claimed. The named "
                         + "selector fixtures pin codex-first, highest-priority-untried fallback, and "
-                        + "exhaustion; the thinking-exhaustion fixture has no dependent-stage event."))),
+                        + "exhaustion; the thinking-exhaustion fixture has no dependent-stage event. "
+                        + "Additional negative fixtures exercise unavailable isolation, reject an "
+                        + "unauthorized budget of six, and prevent an all-reject review from finishing "
+                        + "without a fix-and-review step."))),
                 DescribeRole.Theorem))));
 }

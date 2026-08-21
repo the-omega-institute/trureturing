@@ -14,11 +14,11 @@ $$\operatorname{Sound}(r*) \land \forall p, \operatorname{Sound}(p) \Rightarrow 
 
 *Commentary.*
 
-The observation alphabet contains exactly three named termination seats, five possible seat results, and a three-slot roster. The result function cannot contain a meta-judge verdict. Hazard is stated independently as a fake roster or a named seat that is not satisfied; it is not defined as the Boolean complement of the router.
+The observation contract contains exactly three named termination seats and a three-slot roster; its dependent result function cannot contain a meta-judge verdict. A completed seat result carries the exact peer-free seat view, a non-abstain carrier with matching prior disclosure, and a proof of all five completion conjuncts. Invalid and missing inputs remain fail-closed rows, but cannot masquerade as completed seats. Hazard is stated independently as a fake roster or a named seat that is not a valid satisfied result; it is not the Boolean complement of the router.
 
 The proof exhausts the finite router rows to identify hazard-free observations with exact-roster all-satisfied observations. Soundness and pointwise maximality follow from that equivalence. Uniqueness applies Mathlib's IsGreatest.unique rather than reproving greatest-element antisymmetry.
 
-Two concrete competitors show that both halves do work. Always-abstain is sound but strictly below the router at the exact all-satisfied fixture. Majority-admit is strictly more permissive, but the two-satisfied and one-unsatisfied fixture proves that it is not sound. The review table also has the hazard-complement form and its soundness and maximality are checked in Lean. The design table does not: it has convergence and bounded-stall exits and supplies no independent binary hazard predicate, so no design maximality claim is forced.
+Two concrete competitors show that both halves do work. Always-abstain is sound but strictly below the router at the exact all-satisfied fixture. Majority-admit is strictly more permissive, but the two-satisfied and one-unsatisfied fixture proves that it is not sound. Lean checks the three review-router rows as a truth-table fixture; it defines no review hazard, soundness, or maximality theorem. The design table likewise has convergence and bounded-stall exits and supplies no independent binary hazard predicate, so no design maximality claim is made.
 
 Snapshot note: the abstract model was compared with the beta.32 sshx SKILL.md whose SHA-256 is ab688e34f2b183291958f78b2d9ff6905d7330f3844668c5103026790d8b4cbf and CODEX_WORKER_SPEC.md whose SHA-256 is 700237b1a1389002215272874e8c9cd7b17a130f0d0eaf7bb20cf9b39f49829d. This is prose snapshot correspondence only. A later plugin version may falsify it without falsifying the Lean theorems; no current or future plugin version is claimed.
 
@@ -26,19 +26,19 @@ Snapshot note: the abstract model was compared with the beta.32 sshx SKILL.md wh
 
 $$\forall run, length(run) \le \operatorname{explicitRunBound}(config)$$
 
-*Proof.* Machine-checked in Lean as `D5/S0/History/Consensus/InlineConsensusOptimality.every_reachable_run_is_bounded` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S0/History/Consensus/InlineConsensusOptimality.every_maximal_run_is_bounded` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
 *Commentary.*
 
-ClauseId and clauseTrace name the formal object for every load-bearing clause S1 through S10: seven stages and unique successors; carrier priority and eligible-untried fallback; immutable retry budgets; the five completion conjuncts and forbidden proxies; terminal abstention; peer-output-free seat views; disclosed prior exposure and a perfectly correlated heterogeneous countermodel; all three routing tables; a termination roster without meta-judge results; and one shared pass counter.
+InlineConsensusModel records the stage relation, carrier selector, completion predicate, seat view, role-indexed thinking and review result types, prior disclosure, three routers, roster contract, pass-locus predicate, and guarded transition relation. The internal-wiring theorem checks only those record projections; it does not prove correspondence to external prose. Named semantic fixtures pin executable rows and invariants. Correspondence to the sshx source remains only the digest-pinned snapshot claim stated above.
 
-A protocol step either erases one previously available stage-role-carrier key, follows the unique stage successor, consumes one shared bounded-pass unit, or enters terminal or abstained. The potential is the sum of remaining flight keys, remaining stage edges, remaining shared passes, and one live-state credit. Mathlib's card_erase_lt_of_mem proves that a flight failure strictly decreases the first component; the other constructors decrease their named component.
+A protocol step either erases one previously available stage-role-carrier key within its fixed retry budget; follows the unique stage successor only with isolation and stage-specific evidence; derives and retains the design or review outcome from fixed role-indexed verdict records; consumes one shared bounded-pass unit at that pass kind's legal locus; or abstains only on carrier exhaustion, isolation unavailability, or a router abstain exit. A rejected review can change only through a bounded fix-and-review step, and finish requires retained review done, available isolation, and termination permission. Every transition and execution also requires the single config budget to satisfy the at-most-five-unless-owner-authorized policy. The potential is the sum of remaining flight keys, remaining stage edges, remaining shared passes, and one live-state credit. Mathlib's card_erase_lt_of_mem proves that a flight failure strictly decreases the first component; the other constructors decrease their named component.
 
-Induction over the operational execution proves stage order, retry-budget compliance, non-reopening of carrier keys, and the shared-pass bound. A maximal live state is impossible because abstain is always an available transition. The concrete fallback fixture selects codex first, then nyxid after codex is erased, and lies below the same explicit bound; the thinking-abstain fixture contains no dependent-stage event.
+Induction over the guarded operational execution proves retry-budget compliance, non-reopening of carrier keys, the shared-pass bound, and the explicit length bound for every maximal run. Universal abstention was removed: without a separate liveness premise a guarded live state may be deadlocked, so no terminal-reachability conclusion is claimed. The named selector fixtures pin codex-first, highest-priority-untried fallback, and exhaustion; the thinking-exhaustion fixture has no dependent-stage event. Additional negative fixtures exercise unavailable isolation, reject an unauthorized budget of six, and prevent an all-reject review from finishing without a fix-and-review step.
 
 ## References
 
-- Truth anchor: `D5/S0/History/Consensus/InlineConsensusOptimality.every_reachable_run_is_bounded`
+- Truth anchor: `D5/S0/History/Consensus/InlineConsensusOptimality.every_maximal_run_is_bounded`
 - Truth anchor: `D5/S0/History/Consensus/InlineConsensusOptimality.termination_router_sound_maximal_unique`
