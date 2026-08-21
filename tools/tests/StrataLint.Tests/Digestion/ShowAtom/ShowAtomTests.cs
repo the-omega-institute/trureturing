@@ -5,7 +5,7 @@ using StrataLint.Engine;
 
 namespace StrataLint.Tests;
 
-public sealed class ShowAtomTests
+public sealed partial class ShowAtomTests
 {
     private const string BoundaryAtomId = "boundary-atom";
     private const string AdapterAtomId = "adapter-atom";

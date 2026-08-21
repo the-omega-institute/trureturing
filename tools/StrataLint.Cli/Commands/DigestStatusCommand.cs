@@ -390,9 +390,7 @@ internal static class DigestStatusCommand
         RepositorySnapshot snapshot,
         LeanAxiomReport leanReport)
     {
-        var path = DigestionFormalizationReceipt.RootPath
-            + entry.AtomId
-            + DigestionFormalizationReceipt.PathSuffix;
+        var path = DigestionFormalizationReceipt.PathForAtom(entry.AtomId);
         if (!DigestionFormalizationReceipt.IsCanonicalPath(path))
         {
             return null;
