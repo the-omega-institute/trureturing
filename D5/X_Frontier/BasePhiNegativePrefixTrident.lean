@@ -12,6 +12,7 @@ namespace D5.X_Frontier.BasePhiNegativePrefixTrident
 
 open D5.S1.Words.Expansions.BasePhiNegative
 open D5.S1.Words.Expansions.BasePhiCanonicalExpansion
+open D5.S1.Scale
 
 noncomputable section
 
@@ -115,6 +116,118 @@ theorem trident_classification_reduces_to_canonical (expansion : BasePhiNegative
     exact (trident_witness_iff_canonical expansion w).mpr
       (h w ((admissible_negative_prefix_iff_canonical expansion w).mp hw))
 
+def SameNegativeTail (M N : Nat) : Prop :=
+  ∀ i : Nat, negativeDigit canonicalExpansion M i = negativeDigit canonicalExpansion N i
+
+def negativeTailFiber (N : Nat) : Set Nat :=
+  {M | 0 < M ∧ SameNegativeTail M N}
+
+def fiberStart (q : Nat) : Prop :=
+  q ∈ negativeTailFiber q ∧ ∀ M ∈ negativeTailFiber q, q ≤ M
+
+def Core (w : List Bool) : Set Nat :=
+  {q | fiberStart q ∧ NegativePrefixOccurs canonicalExpansion w q}
+
+def prefixMultiplicity (w : List Bool) : Nat :=
+  if w.head? = some true then 1 else 3
+
+def LucasPair (a b : Int) : Prop :=
+  ∃ k : Nat, 2 ≤ k ∧ a = goldenLucas (k + 1) ∧ b = goldenLucas k
+
+def CoreLucasWitness (w : List Bool) : Prop :=
+  ∃ (family : GapFamily) (a b r : Int),
+    LucasPair a b ∧ 0 < r ∧
+      Core w = sequenceRange (vForFamily family a b r)
+
+inductive FrontierPhase where
+  | F0o
+  | F1o
+  | F0e
+  | G1e
+  | G0o
+  | H0e
+  deriving DecidableEq
+
+def frontierFamily : FrontierPhase → GapFamily
+  | .F0o | .F1o | .F0e => .F
+  | .G1e | .G0o => .G
+  | .H0e => .H
+
+structure FrontierReturnWord where
+  phase : FrontierPhase
+  a : Int
+  b : Int
+  first : Int
+  enumerate : Nat → Nat
+  gap : Nat → Int
+
+def FrontierReturnWordFor (w : List Bool) (certificate : FrontierReturnWord) : Prop :=
+  Set.range certificate.enumerate = Core w ∧
+    (∀ n : Nat,
+      (certificate.enumerate (n + 1) : Int) =
+        certificate.enumerate n + certificate.gap n)
+
+def FrontierGapPhase (certificate : FrontierReturnWord) : Prop :=
+  ∀ n : Nat,
+    certificate.gap n =
+      if familyLetter (frontierFamily certificate.phase) n then
+        certificate.a
+      else
+        certificate.b
+
+def negative_tail_fiber_shape (N : Nat) (hN : 0 < N) : Prop :=
+    (negativeDigit canonicalExpansion N 0 = true →
+      negativeTailFiber N = ({N} : Set Nat)) ∧
+    (negativeDigit canonicalExpansion N 0 = false →
+      ∃! q : Nat, q ≤ N ∧ N ≤ q + 2 ∧
+        negativeTailFiber N = {M | M = q ∨ M = q + 1 ∨ M = q + 2})
+
+def core_occurrence_unique_lift {w : List Bool} (hw : w ≠ []) : Prop :=
+    ∀ N ∈ occurrenceSet canonicalExpansion w,
+      ∃! qj : Nat × Nat,
+        qj.1 ∈ Core w ∧ qj.2 < prefixMultiplicity w ∧ N = qj.1 + qj.2
+
+def prefix_cylinder_to_frontier_return_word {w : List Bool} (hw : w ≠ [])
+    (hadmissible : AdmissibleNegativePrefix canonicalExpansion w) :
+    Prop :=
+  ∃ certificate : FrontierReturnWord,
+    FrontierReturnWordFor w certificate
+
+def frontier_return_word_lucas_phase {w : List Bool}
+    {certificate : FrontierReturnWord}
+    (hcertificate : FrontierReturnWordFor w certificate) :
+    Prop :=
+  LucasPair certificate.a certificate.b ∧
+    0 < certificate.first ∧ FrontierGapPhase certificate
+
+def frontier_return_word_to_core_lucas_family {w : List Bool}
+    {certificate : FrontierReturnWord}
+    (hcertificate : FrontierReturnWordFor w certificate)
+    (hphase : LucasPair certificate.a certificate.b ∧
+      0 < certificate.first ∧ FrontierGapPhase certificate) :
+    Prop :=
+    Core w = sequenceRange
+      (vForFamily (frontierFamily certificate.phase)
+        certificate.a certificate.b certificate.first)
+
+def canonical_prefix_frontier_classification {w : List Bool} (hw : w ≠ [])
+    (hadmissible : AdmissibleNegativePrefix canonicalExpansion w) :
+    Prop :=
+  CoreLucasWitness w
+
+def occurrenceSet_lucas_gap_classification {w : List Bool} (hw : w ≠ [])
+    (hadmissible : AdmissibleNegativePrefix canonicalExpansion w) :
+    Prop :=
+  ∃ (family : GapFamily) (a b r : Int),
+      LucasPair a b ∧ 0 < r ∧
+      if w.head? = some true then
+        occurrenceSet canonicalExpansion w =
+          sequenceRange (vForFamily family a b r)
+      else
+        occurrenceSet canonicalExpansion w =
+          ⋃ j : Fin 3,
+            sequenceRange (vForFamily family a b (r + (j.1 : Int)))
+
 /-!
 The source question asks for an exact classification of occurrence sequences
 for finite negative-position prefix cylinders in the two-sided base-phi
@@ -148,61 +261,69 @@ the canonical carry orbit to those three families.
    non-adjacency, and exact-value invariants rather than hiding them in a choice:
 
 ```lean
-theorem canonical_base_phi_digits_exists_unique :
+theorem basePhiExpansion_existsUnique :
     ∀ N : Nat, ∃! digits : Int →₀ Nat,
       (∀ i : Int, digits i ≤ 1) ∧
       (∀ i : Int, digits i = 1 → digits (i + 1) = 0) ∧
       basePhiValue digits = (N : D5.S0.Carrier.GoldenInt)
 ```
 
-2. Identify every nonnegative base-phi position with mathlib's occupied
-   Fibonacci indices. **Open semantic target.**
-   Fibonacci indices. The proved `CarrySkipState` transition is deterministic,
-   terminating, and preserves `CarrySkipInvariant`; its remaining semantic
-   obligation is the exact successor value recurrence below. `Finset.range N`
-   counts the earlier `d₋₁ = 1` events, and `k + 2` is the invariant alignment
-   with mathlib's Fibonacci indices (`W_k = Nat.fib (k + 2)`):
+2. Classify a complete negative-tail fiber as either a singleton or three
+   consecutive positive inputs. **Open semantic target, executable as
+   `negative_tail_fiber_shape`.** This is a carry/skip boundary-state theorem;
+   it does not require a Beatty formula for the first negative digit.
 
 ```lean
-theorem nonnegative_raw_value_succ
-    (expansion : BasePhiNegativeExpansion) :
-    ∀ N : Nat,
-      rawValue (nonnegativeDigits expansion (N + 1)) =
-        rawValue (nonnegativeDigits expansion N) + 1 +
-          negativeOneEvent expansion N
+theorem negative_tail_fiber_shape (N : Nat) (hN : 0 < N) :
+    (negativeDigit canonicalExpansion N 0 = true →
+      negativeTailFiber N = ({N} : Set Nat)) ∧
+    (negativeDigit canonicalExpansion N 0 = false →
+      ∃! q : Nat, q ≤ N ∧ N ≤ q + 2 ∧
+        negativeTailFiber N = {M | M = q ∨ M = q + 1 ∨ M = q + 2})
 ```
 
-3. Characterize the first negative digit by the generalized Beatty sequence.
-   **Open arithmetic target.**
-   The witness is quantified in Lean's zero-based `Nat`, so `n + 1` preserves
-   the paper's one-based sequence index and excludes the spurious `N = 1` term:
+3. Enumerate the starts of those fibers by the finite frontier quotient and
+   classify its gap stream by one shared adjacent Lucas pair. **Open connector,
+   split into `prefix_cylinder_to_frontier_return_word`,
+   `frontier_return_word_lucas_phase`, and
+   `frontier_return_word_to_core_lucas_family`.** The explicit
+   `FrontierReturnWord` certificate targets `Core w`, not target-integer
+   successor arithmetic.
 
 ```lean
-theorem negative_one_digit_iff_generalized_beatty
-    (expansion : BasePhiNegativeExpansion) :
-    ∀ N : Nat,
-      negativeDigit expansion N 0 = true ↔
-        ∃ n : Nat,
-          (N : Int) =
-            3 * ⌊(((n + 1 : Nat) : ℝ) * Real.goldenRatio)⌋ +
-              ((n + 1 : Nat) : Int) + 1
+theorem prefix_cylinder_to_frontier_return_word {w : List Bool} (hw : w ≠ [])
+    (hadmissible : AdmissibleNegativePrefix canonicalExpansion w) :
+    ∃ certificate : FrontierReturnWord,
+      FrontierReturnWordFor w certificate
+
+theorem frontier_return_word_lucas_phase {w : List Bool}
+    {certificate : FrontierReturnWord}
+    (hcertificate : FrontierReturnWordFor w certificate) :
+    LucasPair certificate.a certificate.b ∧
+      0 < certificate.first ∧ FrontierGapPhase certificate
+
+theorem frontier_return_word_to_core_lucas_family {w : List Bool}
+    {certificate : FrontierReturnWord}
+    (hcertificate : FrontierReturnWordFor w certificate)
+    (hphase : LucasPair certificate.a certificate.b ∧
+      0 < certificate.first ∧ FrontierGapPhase certificate) :
+    Core w = sequenceRange
+      (vForFamily (frontierFamily certificate.phase)
+        certificate.a certificate.b certificate.first)
 ```
 
-`nonnegative_raw_value_initial` is proved by positivity of the real embedding,
-and `carry_skip_realization_iff_value_recurrence` proves that this successor
-signature is equivalent to the full realization theorem. Once it is closed,
-`nonnegative_digit_iff_mem_zeckendorf_of_realizes` provides the displayed
-digitwise `k + 2` identification. The second and third targets together then
-provide the first exact cylinder formula; only after them may a carry transducer
-transport longer prefixes into the existing return-word layer. They are lemma
-signatures, not proved milestones.
+4. Lift the unique core representative back to one arm or three disjoint
+   translates sharing the same family and Lucas pair. **Open end-to-end target,
+   executable as `core_occurrence_unique_lift` and
+   `occurrenceSet_lucas_gap_classification`.** These declarations make the full
+   route to `TridentWitness` type-checkable; none is reported as proved here.
 
 Assault checkpoint (2026-08-21): the canonical two-sided
 existence/uniqueness bridge and the carry transducer's structural lemmas are
-closed. `nonnegative_raw_value_succ` (equivalently complete carry realization),
-the exact first-negative-digit Beatty characterization, and the frontier
-trident classification remain open. The finite scan is still evidence only;
-no theorem claim is promoted by this checkpoint.
+closed. The complete-fiber shape, core frontier classification, unique lift,
+and final shared-family classification now have executable Lean signatures and
+remain open. The finite scan is still evidence only; no theorem claim is
+promoted by this checkpoint.
 -/
 
 /- THEORIST_FRONTIER_CONTRACT_V2
