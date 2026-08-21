@@ -14,28 +14,6 @@ internal static partial class RepositoryPathPolicy
         ".github/workflows/lean-cache-publish.yml";
     internal const string HarnessGatePath = ".github/scripts/harness-gate.sh";
 
-    // harness 不治理的 agent 运行时配置目录。内容属于本地 agent 运行时（Claude Code / codex CLI）：
-    // 工具自己的配置，以及指向仓库内目录的链接。快照是 (路径 -> 字节) 的映射，symlink 在其中没有
-    // 表示形式——读链接本身会把一个路径串当作内容，跟随链接则要么让同一份字节在两个路径下出现，
-    // 要么走出仓库。这些目录整体退出快照、索引枚举与 changed-path 判词，harness 不看它们。
-    // 具名而非按 "." 前缀通配：.github 同为点目录，却承载 required check 定义、CODEOWNERS 与
-    // harness gate 脚本，必须留在治理面。新增 agent 运行时须在此具名登记。
-    private static readonly ImmutableArray<string> UngovernedAgentConfigRoots =
-        [".claude/", ".codex/"];
-
-    internal static bool IsUngovernedAgentConfig(string value)
-    {
-        foreach (var root in UngovernedAgentConfigRoots)
-        {
-            if (value.StartsWith(root, StringComparison.Ordinal))
-            {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
     internal static ImmutableArray<Diagnostic> Evaluate(
         RepositorySnapshot snapshot,
         ValidatedPolicy policy,
