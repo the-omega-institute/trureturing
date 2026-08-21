@@ -5,7 +5,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S0.History.Consensus;
 internal sealed class InlineConsensusProtocolCoreDocument : IScribeDocumentDefinition
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Finite protocol observations, dispatch plans, and fail-closed routers.",
+        "Finite protocol observations, digest-valued goal artifacts, implementation-aware dispatch plans, and fail-closed routers.",
         H("Inline Consensus Protocol Core"),
         Blocks(
             Describe.Lean(
@@ -23,6 +23,25 @@ internal sealed class InlineConsensusProtocolCoreDocument : IScribeDocumentDefin
                         + "verdict; and subagent records Boolean envelope and verdict fields."))),
                 DescribeRole.Definition),
             Describe.Lean(
+                DescribeId.Create("goal-artifacts-carry-seven-optional-digests"),
+                DeclarationHandle.Create(
+                    "D5/S0/History/Consensus/InlineConsensusProtocolCore.GoalArtifact"),
+                H("Goal artifacts carry seven optional digests"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text(
+                        "GoalArtifact has seven fields: rawUserInput, normalizedGoal, constraints, "
+                        + "successCriteria, iterationQuestion, harness, and revisions. Each field "
+                        + "has type Option GoalArtifactDigest, and GoalArtifactDigest has the two "
+                        + "distinct constructors digestA and digestB; these fields are not Booleans.")),
+                    Paragraph(Text(
+                        "GoalArtifact.Complete checks that all seven options are present. "
+                        + "GoalArtifactSnapshot.ContainsComplete additionally requires the snapshot's "
+                        + "artifact to equal the shared artifact and its visibleFields to equal "
+                        + "Finset.univ."))),
+                DescribeRole.Definition),
+            Describe.Lean(
                 DescribeId.Create("dispatch-plans-carry-layout-proofs"),
                 DeclarationHandle.Create(
                     "D5/S0/History/Consensus/InlineConsensusProtocolCore.DispatchPlan"),
@@ -31,10 +50,12 @@ internal sealed class InlineConsensusProtocolCoreDocument : IScribeDocumentDefin
                 AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
-                        "A DispatchPlan stores assignments for the thinking, review, and termination "
-                        + "seats together with a MultiSeatLayout proof for each assignment. That "
-                        + "layout gives isolatedTokenSubagent and nyxidOracle exactly one seat each "
-                        + "and gives abstain no seat."))),
+                        "A DispatchPlan stores a thinking-seat assignment, one implementation "
+                        + "carrier, a review-seat assignment, and a termination-seat assignment. "
+                        + "It carries a MultiSeatLayout proof for each of the three multi-seat "
+                        + "assignments, not for the single implementation carrier. Each layout "
+                        + "gives isolatedTokenSubagent and nyxidOracle exactly one seat and gives "
+                        + "abstain no seat."))),
                 DescribeRole.Definition),
             Describe.Lean(
                 DescribeId.Create("thinking-results-are-classified-fail-closed"),

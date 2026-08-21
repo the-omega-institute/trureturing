@@ -2,7 +2,7 @@
 
 ## Abstract
 
-Executions preserve retry uniqueness and consume finite protocol resources.
+Executions preserve retry uniqueness and finite budgets, while the optimal termination rule is uniquely greatest and strictly bracketed by concrete competitors.
 
 **Theorem 1.1 (A fix prevents the repaired state from being finish-ready).**
 
@@ -28,9 +28,9 @@ $$\forall config, state, final,\ \operatorname{ProtocolStep}\left(config, state,
 
 A termination-gate transition can be taken only when its source state records a done review whose epoch equals that state's artifact epoch. The conclusion constrains the source state; it does not by itself state which termination exit the resulting state records.
 
-**Theorem 1.3 (The termination router is sound, maximal, and unique).**
+**Theorem 1.3 (The termination router is sound, maximal, unique, and strictly bracketed).**
 
-$$\operatorname{Sound}\left(optimalTerminationRule\right)\\ \land (\forall rule,\ \operatorname{Sound}\left(rule\right) \Rightarrow \operatorname{RuleLE}\left(rule, optimalTerminationRule\right))\\ \land (\forall rule,\ \operatorname{Greatest}\left(rule\right) \Rightarrow rule = optimalTerminationRule)$$
+$$\operatorname{Sound}\left(optimalTerminationRule\right)\\ \land (\forall rule,\ \operatorname{Sound}\left(rule\right) \Rightarrow \operatorname{RuleLE}\left(rule, optimalTerminationRule\right))\\ \land (\forall rule,\ \operatorname{Greatest}\left(rule\right) \Rightarrow rule = optimalTerminationRule)\\ \land \operatorname{Sound}\left(alwaysAbstain\right)\\ \land \operatorname{StrictBelow}\left(alwaysAbstain, optimalTerminationRule\right)\\ \land \operatorname{StrictBelow}\left(optimalTerminationRule, majorityAdmit\right)\\ \land \neg\operatorname{Sound}\left(majorityAdmit\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S0/History/Consensus/InlineConsensusExecution.termination_router_sound_maximal_unique` (`✓ std3`). ∎
 
@@ -39,6 +39,8 @@ $$\operatorname{Sound}\left(optimalTerminationRule\right)\\ \land (\forall rule,
 *Commentary.*
 
 Soundness means that every admitted observation is free of the Lean TerminationHazard. The second conjunct says every sound rule is pointwise below optimalTerminationRule. The third says any Greatest sound rule equals optimalTerminationRule; it does not assert uniqueness for a weaker or differently defined ordering.
+
+The remaining four conjuncts make both comparisons substantive. alwaysAbstain is sound and lies strictly below optimalTerminationRule, with safeAdmittedObservation witnessing strictness. majorityAdmit is strictly more permissive than optimalTerminationRule but is not sound; hazardousMajorityObservation witnesses both the strict comparison and the soundness failure.
 
 The proof identifies permit observations with an exact roster whose three named results are all satisfied, then uses Mathlib's IsGreatest.unique for the final equality. The proposition is internal to the Lean model and makes no claim about a current or future external plugin version.
 

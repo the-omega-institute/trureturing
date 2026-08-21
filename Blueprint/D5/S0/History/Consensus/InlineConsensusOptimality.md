@@ -2,7 +2,7 @@
 
 ## Abstract
 
-Carrier selection is available and every available priority minimum equals it, while the design router rejects single-perspective consensus.
+Carrier selection identifies every available priority minimum, configurations certify their initial dispatch plans, and legal untried roles have an eligible assignment or abstain.
 
 **Theorem 1.1 (Carrier selection is available and identifies every priority minimum).**
 
@@ -30,8 +30,36 @@ $$\operatorname{designRouter}\left(singlePerspective\right) = rejectFakeConsensu
 
 The singlePerspective row of designRouter returns rejectFakeConsensus. This equation states one router row; it does not supply an independent design hazard predicate or a design-router maximality theorem.
 
+**Definition 1.3 (Protocol configurations certify their initial plans).**
+
+Lean statement: `D5/S0/History/Consensus/InlineConsensusOptimality.ProtocolConfig`
+
+*Formalization.* `D5/S0/History/Consensus/InlineConsensusOptimality.ProtocolConfig` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+ProtocolConfig stores eligibility and retry-budget functions, a DispatchPlan, a GoalArtifact, the shared-pass budget and its owner-authorization flag, and the initial isolation status. Its initialPlanCompatible field is a proof of InitialPlanCompatible eligible dispatchPlan, so plan compatibility is part of every configuration value.
+
+**Theorem 1.4 (A legal untried role has an eligible planned carrier or selects abstain).**
+
+$$\forall config, state, role,\ \operatorname{LegalAt}\left(role, state.stage\right) \Rightarrow \operatorname{triedAt}\left(state, state.stage, role\right) = \varnothing \Rightarrow ((\exists carrier,\ \operatorname{InitiallyAssigned}\left(config, state, role, carrier\right) \land \operatorname{CarrierLegalAt}\left(state.stage, role, carrier\right) \land config.eligible(state.stage, role, carrier) = true) \lor \operatorname{selectCarrier}\left(config.eligible(state.stage, role), \operatorname{triedAt}\left(state, state.stage, role\right)\right) = abstain)$$
+
+*Proof.* Machine-checked in Lean as `D5/S0/History/Consensus/InlineConsensusOptimality.legal_worker_stage_initially_progresses_or_abstains` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For a role legal at the state's stage, if no carrier has yet been tried for that role, the conclusion is a disjunction: either some carrier is the initially assigned, stage-legal, eligible carrier, or selectCarrier on the same eligibility and tried set returns abstain.
+
+The proof uses DispatchPlan.carrierAt for the legal role and the configuration's initialPlanCompatible proof to establish the existential left disjunct. It does not claim progress for a role that is illegal at the current stage.
+
 ## References
 
+- Truth anchor: `D5/S0/History/Consensus/InlineConsensusOptimality.ProtocolConfig`
 - Truth anchor: `D5/S0/History/Consensus/InlineConsensusOptimality.design_router_rejects_single_perspective`
+- Truth anchor: `D5/S0/History/Consensus/InlineConsensusOptimality.legal_worker_stage_initially_progresses_or_abstains`
 - Truth anchor: `D5/S0/History/Consensus/InlineConsensusOptimality.selectCarrier_is_unique_minimum`
 - Dependency: [D5/S0/History/Consensus/InlineConsensusProtocolCore](InlineConsensusProtocolCore.md)

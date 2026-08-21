@@ -7,7 +7,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S0.History.Consensus;
 internal sealed class InlineConsensusExecutionDocument : IScribeDocumentDefinition
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Executions preserve retry uniqueness and consume finite protocol resources.",
+        "Executions preserve retry uniqueness and finite budgets, while the optimal termination rule is uniquely greatest and strictly bracketed by concrete competitors.",
         H("Inline Consensus Execution"),
         Blocks(
             Describe.Lean(
@@ -64,7 +64,7 @@ internal sealed class InlineConsensusExecutionDocument : IScribeDocumentDefiniti
                 DeclarationHandle.Create(
                     "D5/S0/History/Consensus/InlineConsensusExecution."
                     + "termination_router_sound_maximal_unique"),
-                H("The termination router is sound, maximal, and unique"),
+                H("The termination router is sound, maximal, unique, and strictly bracketed"),
                 StatementSource.FromAuthor(Disp(Seq(
                     Call("Sound", F.Id("optimalTerminationRule")),
                     RowBreak, Sp, Land, Sp,
@@ -74,7 +74,17 @@ internal sealed class InlineConsensusExecutionDocument : IScribeDocumentDefiniti
                     RowBreak, Sp, Land, Sp,
                     Open, Forall, Sp, F.Id("rule"), Comma, Esc,
                     Call("Greatest", F.Id("rule")), Sp, Rightarrow, Sp,
-                    F.Id("rule"), Sp, Eq, Sp, F.Id("optimalTerminationRule"), Close))),
+                    F.Id("rule"), Sp, Eq, Sp, F.Id("optimalTerminationRule"), Close,
+                    RowBreak, Sp, Land, Sp,
+                    Call("Sound", F.Id("alwaysAbstain")),
+                    RowBreak, Sp, Land, Sp,
+                    Call("StrictBelow", F.Id("alwaysAbstain"),
+                        F.Id("optimalTerminationRule")),
+                    RowBreak, Sp, Land, Sp,
+                    Call("StrictBelow", F.Id("optimalTerminationRule"),
+                        F.Id("majorityAdmit")),
+                    RowBreak, Sp, Land, Sp, Neg,
+                    Call("Sound", F.Id("majorityAdmit"))))),
                 AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
@@ -83,6 +93,13 @@ internal sealed class InlineConsensusExecutionDocument : IScribeDocumentDefiniti
                         + "below optimalTerminationRule. The third says any Greatest sound rule "
                         + "equals optimalTerminationRule; it does not assert uniqueness for a weaker "
                         + "or differently defined ordering.")),
+                    Paragraph(Text(
+                        "The remaining four conjuncts make both comparisons substantive. "
+                        + "alwaysAbstain is sound and lies strictly below optimalTerminationRule, "
+                        + "with safeAdmittedObservation witnessing strictness. majorityAdmit is "
+                        + "strictly more permissive than optimalTerminationRule but is not sound; "
+                        + "hazardousMajorityObservation witnesses both the strict comparison and "
+                        + "the soundness failure.")),
                     Paragraph(Text(
                         "The proof identifies permit observations with an exact roster whose three "
                         + "named results are all satisfied, then uses Mathlib's IsGreatest.unique for "

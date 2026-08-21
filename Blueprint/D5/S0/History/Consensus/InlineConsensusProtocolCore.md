@@ -2,7 +2,7 @@
 
 ## Abstract
 
-Finite protocol observations, dispatch plans, and fail-closed routers.
+Finite protocol observations, digest-valued goal artifacts, implementation-aware dispatch plans, and fail-closed routers.
 
 **Definition 1.1 (Carrier completion observations).**
 
@@ -16,7 +16,21 @@ Lean statement: `D5/S0/History/Consensus/InlineConsensusProtocolCore.CompletionO
 
 CompletionObservation has three constructors: codex records five Boolean fields for carrier exit, result artifact, envelope, verdict, and sentinel; nyxid records three Boolean fields for terminal status, envelope, and verdict; and subagent records Boolean envelope and verdict fields.
 
-**Definition 1.2 (Dispatch plans carry layout proofs).**
+**Definition 1.2 (Goal artifacts carry seven optional digests).**
+
+Lean statement: `D5/S0/History/Consensus/InlineConsensusProtocolCore.GoalArtifact`
+
+*Formalization.* `D5/S0/History/Consensus/InlineConsensusProtocolCore.GoalArtifact` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+GoalArtifact has seven fields: rawUserInput, normalizedGoal, constraints, successCriteria, iterationQuestion, harness, and revisions. Each field has type Option GoalArtifactDigest, and GoalArtifactDigest has the two distinct constructors digestA and digestB; these fields are not Booleans.
+
+GoalArtifact.Complete checks that all seven options are present. GoalArtifactSnapshot.ContainsComplete additionally requires the snapshot's artifact to equal the shared artifact and its visibleFields to equal Finset.univ.
+
+**Definition 1.3 (Dispatch plans carry layout proofs).**
 
 Lean statement: `D5/S0/History/Consensus/InlineConsensusProtocolCore.DispatchPlan`
 
@@ -26,9 +40,9 @@ Lean statement: `D5/S0/History/Consensus/InlineConsensusProtocolCore.DispatchPla
 
 *Commentary.*
 
-A DispatchPlan stores assignments for the thinking, review, and termination seats together with a MultiSeatLayout proof for each assignment. That layout gives isolatedTokenSubagent and nyxidOracle exactly one seat each and gives abstain no seat.
+A DispatchPlan stores a thinking-seat assignment, one implementation carrier, a review-seat assignment, and a termination-seat assignment. It carries a MultiSeatLayout proof for each of the three multi-seat assignments, not for the single implementation carrier. Each layout gives isolatedTokenSubagent and nyxidOracle exactly one seat and gives abstain no seat.
 
-**Definition 1.3 (Thinking results are classified fail closed).**
+**Definition 1.4 (Thinking results are classified fail closed).**
 
 Lean statement: `D5/S0/History/Consensus/InlineConsensusProtocolCore.thinkingSituation`
 
@@ -40,7 +54,7 @@ Lean statement: `D5/S0/History/Consensus/InlineConsensusProtocolCore.thinkingSit
 
 thinkingSituation returns singlePerspective if any report is presented as consensus. Otherwise it returns unanimousActionable only when all six verdicts propose the same recorded plan, and compatiblePlans only when all six plans are present, pairwise compatible, not all equal, and no verdict rejects or abstains. Every remaining input returns boundedStall.
 
-**Definition 1.4 (Review routing has reject precedence).**
+**Definition 1.5 (Review routing has reject precedence).**
 
 Lean statement: `D5/S0/History/Consensus/InlineConsensusProtocolCore.reviewRouter`
 
@@ -52,7 +66,7 @@ Lean statement: `D5/S0/History/Consensus/InlineConsensusProtocolCore.reviewRoute
 
 reviewRouter returns fix when any of the three review verdicts is reject. With no reject it returns done when any verdict is approve, and otherwise returns userDecisionOrBoundedPass.
 
-**Definition 1.5 (Termination routing requires an exact roster).**
+**Definition 1.6 (Termination routing requires an exact roster).**
 
 Lean statement: `D5/S0/History/Consensus/InlineConsensusProtocolCore.terminationRouter`
 
@@ -68,6 +82,7 @@ terminationRouter rejects a non-exact roster as rejectFakeConsensus. For an exac
 
 - Truth anchor: `D5/S0/History/Consensus/InlineConsensusProtocolCore.CompletionObservation`
 - Truth anchor: `D5/S0/History/Consensus/InlineConsensusProtocolCore.DispatchPlan`
+- Truth anchor: `D5/S0/History/Consensus/InlineConsensusProtocolCore.GoalArtifact`
 - Truth anchor: `D5/S0/History/Consensus/InlineConsensusProtocolCore.reviewRouter`
 - Truth anchor: `D5/S0/History/Consensus/InlineConsensusProtocolCore.terminationRouter`
 - Truth anchor: `D5/S0/History/Consensus/InlineConsensusProtocolCore.thinkingSituation`
