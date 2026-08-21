@@ -13,7 +13,7 @@ internal sealed class EvidenceFourPhaseLawDocument : IScribeDocumentDefinition
             Describe.Lean(
                 DescribeId.Create("finite-evidence-fibers-have-exactly-one-phase"),
                 DeclarationHandle.Create(
-                    "D5/S3/ConceptDynamics/EvidenceFourPhaseLaw."
+                    "D5/S3/ConceptDynamics/Evidence/EvidenceFourPhaseLaw."
                         + "finite_classical_four_phase_law"),
                 H("A finite evidence fiber has exactly one phase"),
                 StatementSource.FromAuthor(FourPhaseFormula()),

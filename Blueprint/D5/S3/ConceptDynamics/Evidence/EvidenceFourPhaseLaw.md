@@ -8,7 +8,7 @@ Every finite evidence fiber with a decidable proposition has exactly one of four
 
 $$\forall X: \operatorname{Type}, R: \operatorname{Finset}\left(X\right), P: X \to \operatorname{Prop},\ [\operatorname{DecidableEq}\left(X\right)], [\operatorname{DecidablePred}\left(P\right)],\ \exists! phase: \operatorname{EvidencePhase}, \operatorname{PhaseHolds}\left(R, P, phase\right).$$
 
-*Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/EvidenceFourPhaseLaw.finite_classical_four_phase_law` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Evidence/EvidenceFourPhaseLaw.finite_classical_four_phase_law` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -24,5 +24,5 @@ Repository searches found no existing four-phase evidence theorem. Pinned Mathli
 
 ## References
 
-- Truth anchor: `D5/S3/ConceptDynamics/EvidenceFourPhaseLaw.finite_classical_four_phase_law`
-- Dependency: [D5/S3/ConceptDynamics/ConceptFiberDecomposition](ConceptFiberDecomposition.md)
+- Truth anchor: `D5/S3/ConceptDynamics/Evidence/EvidenceFourPhaseLaw.finite_classical_four_phase_law`
+- Dependency: [D5/S3/ConceptDynamics/ConceptFiberDecomposition](../ConceptFiberDecomposition.md)

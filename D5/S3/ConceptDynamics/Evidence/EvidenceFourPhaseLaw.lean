@@ -1,6 +1,6 @@
-/- GID: D5/S3/ConceptDynamics/EvidenceFourPhaseLaw
+/- GID: D5/S3/ConceptDynamics/Evidence/EvidenceFourPhaseLaw
    generality: G
-   mirror-B: D5/B/S3/ConceptDynamics/EvidenceFourPhaseLaw
+   mirror-B: D5/B/S3/ConceptDynamics/Evidence/EvidenceFourPhaseLaw
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    digest: Every finite evidence fiber with a decidable predicate lies in exactly one of the impossible, stably true, stably false, and undecided phases. -/
@@ -21,7 +21,7 @@ import Mathlib.Data.Finset.Basic
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
-namespace D5.S3.ConceptDynamics.EvidenceFourPhaseLaw
+namespace D5.S3.ConceptDynamics.Evidence.EvidenceFourPhaseLaw
 
 /-- The four epistemic phases of a finite evidence fiber. -/
 inductive EvidencePhase where
@@ -136,4 +136,4 @@ example : PhaseHolds ({false, true} : Finset Bool) (fun value => value = true)
 
 #print axioms finite_classical_four_phase_law
 
-end D5.S3.ConceptDynamics.EvidenceFourPhaseLaw
+end D5.S3.ConceptDynamics.Evidence.EvidenceFourPhaseLaw
