@@ -81,6 +81,12 @@ digitwise `k + 2` identification. The second and third targets together then
 provide the first exact cylinder formula; only after them may a carry transducer
 transport longer prefixes into the existing return-word layer. They are lemma
 signatures, not proved milestones.
+
+Assault checkpoint (2026-08-21): `nonnegative_raw_value_succ`, the
+`betaGolden_even_shift`/canonical-digit signatures, and the frontier trident
+classification remain open. The executable obstruction is the missing
+canonical two-sided expansion/uniqueness and its semantic realization bridge;
+no theorem claim is promoted by this checkpoint.
 -/
 
 /- THEORIST_FRONTIER_CONTRACT_V2
