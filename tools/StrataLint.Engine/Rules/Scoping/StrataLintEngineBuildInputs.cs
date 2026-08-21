@@ -11,6 +11,10 @@ internal static class StrataLintEngineBuildInputs
         ProjectDirectory + "/Ledger/FrozenAcceptedEventLoader.cs";
     private const string TrustedRevocationReceiptsPath =
         ProjectDirectory + "/Revocation/TrustedRevocationReceipts.cs";
+    private const string RepositoryPathPolicyPath =
+        ProjectDirectory + "/Coordinates/RepositoryPathPolicy.cs";
+    private const string RepositoryPathPolicyPathsPath =
+        ProjectDirectory + "/Coordinates/RepositoryPathPolicy.Paths.cs";
 
     internal static bool Contains(string path)
     {
@@ -33,7 +37,9 @@ internal static class StrataLintEngineBuildInputs
 
         if (path == HeartsAuthorizationLedgerPath
             || path == FrozenAcceptedEventLoaderPath
-            || path == TrustedRevocationReceiptsPath)
+            || path == TrustedRevocationReceiptsPath
+            || path == RepositoryPathPolicyPath
+            || path == RepositoryPathPolicyPathsPath)
         {
             return true;
         }

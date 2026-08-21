@@ -12,8 +12,19 @@ public sealed class R14ScopeNarrowingTests
         "evidence selector has multiple artifact kinds";
 
     [Fact]
-    [BaseFactScopeProbe(15)]
-    public void Sl015DuplicateGidSuppressesHistoricalCollisionButKeepsImplementationRecheck()
+    [BaseFactScopeProbe(
+        15,
+        typeof(RepositoryPathPolicy),
+        nameof(RepositoryPathPolicy.EvaluateCompositionFindings))]
+    public void Sl015EvaluateCompositionFindingsScopesCompositionParticipants() =>
+        Sl015AdditionalEdgeScopeTests.RunEvaluateCompositionFindingsScopeProbe();
+
+    [Fact]
+    [BaseFactScopeProbe(
+        15,
+        typeof(RepositoryRules),
+        nameof(RepositoryRules.DuplicateGidCollisions))]
+    public void Sl015DuplicateGidCollisionsSuppressesHistoricalCollisionButKeepsImplementationRecheck()
     {
         var unrelated = DuplicateGidHistory();
         SetDelta(unrelated, UnrelatedPath, "base\n", "candidate\n");
@@ -23,6 +34,21 @@ public sealed class R14ScopeNarrowingTests
         Assert.Equal(
             2,
             CountFindings(Execute(implementation, RuleImplementationPath), 15, DuplicateMessage));
+
+        var baselineCollision = new RuleFixture();
+        baselineCollision.Files[RuleFixture.BlueprintPath] = baselineCollision.Files[RuleFixture.RingPath];
+        Assert.Equal(
+            2,
+            CountFindings(Execute(baselineCollision, RuleFixture.BlueprintPath), 15, DuplicateMessage));
+
+        const string firstPath = "Blueprint/D5/S0/Carrier/First.md";
+        const string secondPath = "Blueprint/D5/S0/Carrier/Second.md";
+        var deltaCollision = new RuleFixture();
+        deltaCollision.Files[firstPath] = Header("D5/B/S0/Carrier/DeltaCollision");
+        deltaCollision.Files[secondPath] = Header("D5/B/S0/Carrier/DeltaCollision");
+        Assert.Equal(
+            2,
+            CountFindings(Execute(deltaCollision, firstPath, secondPath), 15, DuplicateMessage));
     }
 
     [Fact]
@@ -51,7 +77,11 @@ public sealed class R14ScopeNarrowingTests
     }
 
     [Fact]
-    public void Sl015EvidenceCollisionSuppressesHistoryButKeepsImplementationRecheck()
+    [BaseFactScopeProbe(
+        15,
+        typeof(RepositoryRules),
+        nameof(RepositoryRules.EvidenceSelectorCollisions))]
+    public void Sl015EvidenceSelectorCollisionsSuppressesHistoryButKeepsImplementationRecheck()
     {
         var unrelated = EvidenceCollisionHistory();
         SetDelta(unrelated, UnrelatedPath, "base\n", "candidate\n");
@@ -66,6 +96,22 @@ public sealed class R14ScopeNarrowingTests
                 Execute(implementation, RuleImplementationPath),
                 15,
                 EvidenceCollisionMessage));
+
+        const string jsonPath = "Evidence/D5/S0/Carrier/Probe.result.json";
+        const string yamlPath = "Evidence/D5/S0/Carrier/Probe.result.yaml";
+        var baselineCollision = new RuleFixture();
+        SetHistorical(baselineCollision, yamlPath, "value: baseline\n");
+        baselineCollision.Files[jsonPath] = "{}\n";
+        Assert.Equal(
+            2,
+            CountFindings(Execute(baselineCollision, jsonPath), 15, EvidenceCollisionMessage));
+
+        var deltaCollision = new RuleFixture();
+        deltaCollision.Files[jsonPath] = "{}\n";
+        deltaCollision.Files[yamlPath] = "value: candidate\n";
+        Assert.Equal(
+            2,
+            CountFindings(Execute(deltaCollision, jsonPath, yamlPath), 15, EvidenceCollisionMessage));
     }
 
     [Fact]
@@ -97,7 +143,11 @@ public sealed class R14ScopeNarrowingTests
     }
 
     [Fact]
-    public void Sl015AnchorCanonicalityScopesHistoryAndKeepsDeltaAndImplementationRechecks()
+    [BaseFactScopeProbe(
+        15,
+        typeof(RepositoryRules),
+        nameof(RepositoryRules.HeaderAnchorCanonicality))]
+    public void Sl015HeaderAnchorCanonicalityScopesHistoryAndKeepsDeltaAndImplementationRechecks()
     {
         const string path = "Blueprint/D5/S0/Carrier/AnchorProbe.md";
         const string message = "is not a canonical external anchor";

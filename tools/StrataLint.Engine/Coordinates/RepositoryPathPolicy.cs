@@ -4,6 +4,7 @@ namespace StrataLint.Engine;
 
 internal sealed record RepositoryPathIssue(RuleId RuleId, string Path, string Message);
 
+[FindingEdgeProvider(15)]
 internal static partial class RepositoryPathPolicy
 {
     internal const string AssumptionRegistryPath = "D5/X_Assumptions/REGISTRY.md";
@@ -14,6 +15,15 @@ internal static partial class RepositoryPathPolicy
     internal const string HarnessGatePath = ".github/scripts/harness-gate.sh";
 
     internal static ImmutableArray<Diagnostic> Evaluate(
+        RepositorySnapshot snapshot,
+        ValidatedPolicy policy,
+        RuleDescriptor sl015,
+        Func<string, bool>? shouldEvaluatePath = null)
+        => EvaluatePathFindings(snapshot, policy, sl015, shouldEvaluatePath)
+            .AddRange(EvaluateCompositionFindings(snapshot, sl015, shouldEvaluatePath));
+
+    [FindingEdge(FindingEdgeKind.Local)]
+    internal static ImmutableArray<Diagnostic> EvaluatePathFindings(
         RepositorySnapshot snapshot,
         ValidatedPolicy policy,
         RuleDescriptor sl015,
@@ -42,24 +52,35 @@ internal static partial class RepositoryPathPolicy
                     issue.Message))
             .ToImmutableArray();
 
+        return diagnostics;
+    }
+
+    [FindingEdge(FindingEdgeKind.Interaction)]
+    internal static ImmutableArray<Diagnostic> EvaluateCompositionFindings(
+        RepositorySnapshot snapshot,
+        RuleDescriptor sl015,
+        Func<string, bool>? shouldEvaluatePath = null)
+    {
         var compositionProjects = snapshot.Files.Keys
             .Where(static path => IsBlueprintContentCompositionBuildFile(path.Value)
                 && path.Value.EndsWith(".csproj", StringComparison.Ordinal))
             .OrderBy(static path => path.Value, StringComparer.Ordinal)
             .ToArray();
-        if (compositionProjects.Length > 1)
+        if (compositionProjects.Length > 1
+            && compositionProjects.Any(path =>
+                shouldEvaluatePath is null || shouldEvaluatePath(path.Value)))
         {
-            diagnostics = diagnostics.AddRange(
-                compositionProjects.Skip(1).Select(path => new Diagnostic(
+            return compositionProjects.Skip(1).Select(path => new Diagnostic(
                     sl015.Id,
                     sl015.Title,
                     sl015.DisplaySeverity,
                     sl015.AdmissionEffect,
                     path.Value,
-                    "Blueprint composition root allows at most one direct .csproj")));
+                    "Blueprint composition root allows at most one direct .csproj"))
+                .ToImmutableArray();
         }
 
-        return diagnostics;
+        return [];
     }
 
     internal static RepositoryPathIssue? Validate(RepoPath path, ValidatedPolicy policy)
