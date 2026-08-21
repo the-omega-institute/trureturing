@@ -242,6 +242,83 @@ public sealed partial class ProductionEnvironmentTests
         Assert.DoesNotContain("scribe-emission-mismatch", status.Error, StringComparison.Ordinal);
     }
 
+    [Theory]
+    [InlineData("coverage-receipt-mismatch")]
+    [InlineData("scribe-definition-mismatch")]
+    [InlineData("scribe-emission-mismatch")]
+    public void DigestStatusRejectsEachReceiptIntegrityMismatchIndependently(string mismatchCode)
+    {
+        var inputs = DirectoryInputs(CoverWorld.Materialize(CoverWorld.StaleReceiptSpec()));
+        using var temporary = new TemporaryDirectory();
+        DirectoryLedgerTestSupport.Write(temporary.Path, inputs.Files);
+        var initialEnvironment = CoverWorld.Environment(temporary.Path, inputs, inputs.Files);
+
+        var aligned = initialEnvironment.AlignScribeReceipt(CoverWorld.AlignArgs(inputs));
+
+        Assert.True(aligned.Success, aligned.Error);
+        var alignedFiles = FilesWithLedgerFromRoot(inputs.Files, temporary.Path);
+        var verification = inputs.VerifiedEmissions
+            ?? throw new InvalidOperationException("cover fixture omitted Scribe verification");
+        if (mismatchCode == "coverage-receipt-mismatch")
+        {
+            var driftedDocument = MapOnlyEntry(
+                BackfillInventoryLoader.LoadRoot(temporary.Path),
+                entry => entry with
+                {
+                    Receipts = entry.Receipts with
+                    {
+                        Coverage = entry.Receipts.Coverage.Select(receipt => receipt with
+                        {
+                            TargetSha256 = "sha256:" + new string('c', 64),
+                        }).ToImmutableArray(),
+                    },
+                });
+            DirectoryLedgerTestSupport.ReplaceWithProjection(alignedFiles, driftedDocument);
+        }
+        else
+        {
+            var documentGid = inputs.Gid[..inputs.Gid.LastIndexOf('.')];
+            Assert.True(verification.TryGet(documentGid, out var record));
+            var changedContent = Encoding.UTF8.GetBytes($"independent {mismatchCode}\n");
+            var changedHash = DigestionFingerprint.Compute(changedContent).RawSha256;
+            if (mismatchCode == "scribe-definition-mismatch")
+            {
+                alignedFiles[record.DefinitionPath] = Encoding.UTF8.GetString(changedContent);
+                record = record with { DefinitionSha256 = changedHash };
+            }
+            else
+            {
+                alignedFiles[record.EmissionPath] = Encoding.UTF8.GetString(changedContent);
+                record = record with { EmissionSha256 = changedHash };
+            }
+
+            verification = VerifiedScribeEmissions.Create([record], [inputs.Gid]);
+        }
+
+        var environment = new ProductionCliEnvironment(
+            temporary.Path,
+            new FakeRepositoryGateway(
+                RawChangeSet.Create(Array.Empty<string>()),
+                CoverWorld.Raw(alignedFiles),
+                CoverWorld.Raw(inputs.Baseline)),
+            new FakeLeanReportSource(inputs.Report),
+            new FakeScribeEmissionVerifier(verification));
+
+        var result = environment.DigestStatus(Array.Empty<string>());
+
+        Assert.False(result.Success);
+        Assert.Contains(mismatchCode, result.Error, StringComparison.Ordinal);
+        foreach (var otherCode in new[]
+                 {
+                     "coverage-receipt-mismatch",
+                     "scribe-definition-mismatch",
+                     "scribe-emission-mismatch",
+                 }.Where(code => code != mismatchCode))
+        {
+            Assert.DoesNotContain(otherCode, result.Error, StringComparison.Ordinal);
+        }
+    }
+
     [Fact]
     public void AlignFailsClosedWhenTargetScribeMismatchRemainsAfterAlignment()
     {
