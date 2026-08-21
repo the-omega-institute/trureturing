@@ -58,8 +58,7 @@ internal static partial class RepositoryRules
         !context.Changes.Paths.IsEmpty;
 
     private static bool AnchorsAffected(RuleEvaluationContext context) =>
-        LeanReportAffected(context)
-        || Changed(context, static path => path == "Library/queries.yaml")
+        Changed(context, static path => path == "Library/queries.yaml")
         || LiteratureReferenceChanged(context);
 
     private static bool LedgerAffected(RuleEvaluationContext context) =>

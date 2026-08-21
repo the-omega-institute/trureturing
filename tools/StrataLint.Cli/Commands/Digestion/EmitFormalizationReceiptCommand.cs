@@ -21,8 +21,6 @@ namespace StrataLint.Cli;
 // bytes via DigestionFormalizationReceipt.Write and never mutates BACKFILL.
 internal static class EmitFormalizationReceiptCommand
 {
-    internal const string DefaultOutputPrefix = "Meta/Digestion/formalizations/";
-
     internal static CommandResult Run(
         string repositoryRoot,
         IRepositoryGateway repository,
@@ -72,7 +70,7 @@ internal static class EmitFormalizationReceiptCommand
             var report = leanReportSource.Load(current);
             var signature = DigestionFormalizationReceipt.ResolveSignature(primaryGid, report);
             var extensions = new Dictionary<string, DigestionFormalizationExtension>(StringComparer.Ordinal);
-            var canonicalReceiptPath = DefaultOutputPrefix + options.AtomId + ".v1.json";
+            var canonicalReceiptPath = DigestionFormalizationReceipt.PathForAtom(options.AtomId);
             if (current.TryGetFile(canonicalReceiptPath, out _))
             {
                 var existing = DigestionFormalizationReceipt.Load(current, canonicalReceiptPath);
@@ -120,7 +118,7 @@ internal static class EmitFormalizationReceiptCommand
                 extensions.Values.OrderBy(static extension => extension.Gid, StringComparer.Ordinal).ToImmutableArray());
             var bytes = DigestionFormalizationReceipt.Write(receipt);
 
-            var relativeOut = options.OutPath ?? DefaultOutputPrefix + options.AtomId + ".v1.json";
+            var relativeOut = options.OutPath ?? DigestionFormalizationReceipt.PathForAtom(options.AtomId);
             var outputPath = Path.Combine(
                 Path.GetFullPath(repositoryRoot),
                 relativeOut.Replace('/', Path.DirectorySeparatorChar));

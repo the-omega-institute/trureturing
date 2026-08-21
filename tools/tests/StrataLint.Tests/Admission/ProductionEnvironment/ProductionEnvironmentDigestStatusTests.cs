@@ -8,6 +8,43 @@ namespace StrataLint.Tests;
 public sealed partial class ProductionEnvironmentTests
 {
     [Fact]
+    public void DigestStatusUnrelatedDeltaDoesNotReplayHistoricalCoverageReceipt()
+    {
+        var environment = DigestStatusHistoricalCoverageEnvironment(
+            RawChangeSet.Create(["notes/r16-unrelated.txt"]));
+
+        var result = environment.DigestStatus(["--json", "--base", "baseline"]);
+
+        Assert.True(result.Success, result.Error);
+        Assert.DoesNotContain("coverage-receipt-mismatch", result.Output, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void DigestStatusChangedTargetStillValidatesHistoricalCoverageReceipt()
+    {
+        var environment = DigestStatusHistoricalCoverageEnvironment(
+            RawChangeSet.Create(["D5/S0/Carrier/BackfillTarget.lean"]));
+
+        var result = environment.DigestStatus(["--json", "--base", "baseline"]);
+
+        Assert.False(result.Success);
+        Assert.Contains("coverage-receipt-mismatch", result.Error, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void DigestStatusImplementationChangeStillValidatesHistoricalCoverageReceipt()
+    {
+        var environment = DigestStatusHistoricalCoverageEnvironment(
+            RawChangeSet.Create(
+            ["tools/StrataLint.Engine/Digestion/Evaluation/DigestionStatusEvaluator.cs"]));
+
+        var result = environment.DigestStatus(["--json", "--base", "baseline"]);
+
+        Assert.False(result.Success);
+        Assert.Contains("coverage-receipt-mismatch", result.Error, StringComparison.Ordinal);
+    }
+
+    [Fact]
     public void DigestStatusReportsCasSeenAcrossNormalizedSourceRewrite()
     {
         var fixture = new RuleFixture();
@@ -312,6 +349,67 @@ public sealed partial class ProductionEnvironmentTests
             Snapshot(fixture.Baseline)),
         new FakeLeanReportSource(LeanAxiomReport.Create(fixture.Reports)),
         new FakeScribeEmissionVerifier(VerifiedScribeEmissions.Empty));
+
+    private static ProductionCliEnvironment DigestStatusHistoricalCoverageEnvironment(
+        RawChangeSet changes)
+    {
+        const string gid = "D5/S0/Carrier/BackfillTarget";
+        const string targetPath = gid + ".lean";
+        const string absorbedPath =
+            "Meta/Digestion/backfill/fixture-source/absorbed-closed/fixture-atom.yaml";
+        var fixture = new RuleFixture();
+        fixture.AddBackfillTargets();
+        fixture.Baseline[targetPath] = fixture.Files[targetPath];
+        fixture.ForkPoint[targetPath] = fixture.Files[targetPath];
+        var definitionPath = ScribeEmissionAttestation.DefinitionPath(gid);
+        var emissionPath = ScribeEmissionAttestation.EmissionPath(gid);
+        const string definition = "fixture definition\n";
+        const string emission = "# Fixture emission\n";
+        var definitionSha256 = DigestionFingerprint.Compute(
+            Encoding.UTF8.GetBytes(definition)).RawSha256;
+        var emissionSha256 = DigestionFingerprint.Compute(
+            Encoding.UTF8.GetBytes(emission)).RawSha256;
+        var atom = fixture.Files[RuleFixture.FixtureBackfillAtomPath]
+            .Replace(
+                "coverage: []",
+                "coverage:\n"
+                + $"    - gid: {gid}\n"
+                + $"      source_sha256: {RuleFixture.FixtureCasReference}\n"
+                + "      target_sha256: sha256:0000000000000000000000000000000000000000000000000000000000000000",
+                StringComparison.Ordinal)
+            .Replace(
+                "scribe: []",
+                "scribe:\n"
+                + $"    - gid: {gid}\n"
+                + $"      definition_sha256: {definitionSha256}\n"
+                + $"      emission_sha256: {emissionSha256}",
+                StringComparison.Ordinal);
+        foreach (var files in new[] { fixture.Files, fixture.Baseline, fixture.ForkPoint })
+        {
+            files.Remove(RuleFixture.FixtureBackfillAtomPath);
+            files[absorbedPath] = atom;
+            files[definitionPath] = definition;
+            files[emissionPath] = emission;
+        }
+
+        var verified = VerifiedScribeEmissions.Create(
+        [
+            new ScribeEmissionRecord(
+                gid,
+                definitionPath,
+                definitionSha256,
+                emissionPath,
+                emissionSha256),
+        ]);
+        return new ProductionCliEnvironment(
+            "/repo",
+            new FakeRepositoryGateway(
+                changes,
+                Snapshot(fixture.Files),
+                Snapshot(fixture.Baseline)),
+            new FakeLeanReportSource(LeanAxiomReport.Create(fixture.Reports)),
+            new FakeScribeEmissionVerifier(verified));
+    }
 
     private static CommandResult RunDigestStatus(RuleFixture fixture, RawChangeSet changes) =>
         new ProductionCliEnvironment(

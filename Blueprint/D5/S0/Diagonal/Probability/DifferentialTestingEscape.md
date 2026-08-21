@@ -6,7 +6,7 @@ Uniform reference directories have the exact diagonal-mutation escape probabilit
 
 **Theorem 1.1 (Exact escape probability for diagonal mutants).**
 
-$$\forall A, Y, [\operatorname{Fintype} A] [\operatorname{Fintype} Y] [\operatorname{Nonempty} Y], \forall f: Y \to Y, \operatorname{directoryEscapeProbability}(f) = (1 - \frac{\operatorname{card}(\operatorname{Fix}(f))}{\operatorname{card}(Y)^{\operatorname{card}(A)}})^\operatorname{card}(A).$$
+$$\forall A, Y, [\operatorname{Fintype} A] [\operatorname{Fintype} Y] [\operatorname{Nonempty} Y], \forall f: Y \to Y, \operatorname{directoryEscapeProbability}(f) = (1 - \frac{\operatorname{card}(\operatorname{Fix}(f))}{\operatorname{card}(Y)^{\operatorname{card}(A)}})^{\operatorname{card}(A)}.$$
 
 *Proof.* Machine-checked in Lean as `D5/S0/Diagonal/Probability/DifferentialTestingEscape.directory_escape_probability_exact` (`✓ std3`). ∎
 
