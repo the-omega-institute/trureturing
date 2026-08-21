@@ -106,6 +106,7 @@ public sealed class TrustTopologyTests
 
     [Theory]
     [MemberData(nameof(ProtectedPaths))]
+    [BaseFactScopeProbe(22)]
     public void Sl022RequiresBaseOwnedVerificationForEveryProtectedSurface(string path)
     {
         var changes = RawChangeSet.Create(new[] { path });
