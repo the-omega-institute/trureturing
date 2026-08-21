@@ -32,7 +32,7 @@ internal sealed class DifferentialTestingEscapeDocument : IScribeDocumentDefinit
                     Frac,
                     Grp(Call("card", Call("Fix", F.Id("f")))),
                     Grp(Call("card", F.Id("Y")), Caret, Grp(Call("card", F.Id("A")))),
-                    Close, Caret, Call("card", F.Id("A")), Dot))),
+                    Close, Caret, Grp(Call("card", F.Id("A"))), Dot))),
                 AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
