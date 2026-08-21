@@ -8,6 +8,9 @@ internal static partial class RepositoryPathPolicy
 {
     internal const string AssumptionRegistryPath = "D5/X_Assumptions/REGISTRY.md";
     internal const string WorkflowPath = ".github/workflows/ci.yml";
+    // 缓存发布 workflow（#2542）。`.github` 下是白名单而非通配，新增控制工件必须在此具名登记。
+    internal const string CachePublicationWorkflowPath =
+        ".github/workflows/lean-cache-publish.yml";
     internal const string HarnessGatePath = ".github/scripts/harness-gate.sh";
 
     internal static ImmutableArray<Diagnostic> Evaluate(
@@ -79,6 +82,7 @@ internal static partial class RepositoryPathPolicy
             or "tools/tests/StrataLint.Tests/Fixtures/fixture-registry.yaml"
             or "Golden/values-kernels.toml"
             or WorkflowPath
+            or CachePublicationWorkflowPath
             or ".github/CODEOWNERS"
             or HarnessGatePath
             || value.StartsWith("tools/", StringComparison.Ordinal)
