@@ -190,7 +190,7 @@ internal static partial class CoverAtomCommand
                 baselineDocument,
                 baselineSnapshot: baseline);
             RequireNoFindings(evaluation);
-            RequireValidBackfill(
+            var backfillObservations = DigestionBackfillValidation.RequireValidBackfill(
                 finalDocument,
                 finalSnapshot,
                 baseline,
@@ -271,6 +271,7 @@ internal static partial class CoverAtomCommand
                 true,
                 $"COVER atom_id={options.AtomId} gid={string.Join(',', options.Gids)} "
                 + $"ledger_changed={changed.ToString().ToLowerInvariant()}\n"
+                + backfillObservations
                 + DigestStatusCommand.RenderText(evaluation),
                 string.Empty);
         }
@@ -550,30 +551,6 @@ internal static partial class CoverAtomCommand
         {
             throw new InvalidOperationException(
                 "digest status is invalid: " + string.Join("; ", evaluation.Findings));
-        }
-    }
-
-    private static void RequireValidBackfill(
-        BackfillInventoryDocument document,
-        RepositorySnapshot current,
-        RepositorySnapshot baseline,
-        ValidatedPolicy policy,
-        AcceptedLeanClosure lean,
-        VerifiedScribeEmissions verifiedScribeEmissions)
-    {
-        var findings = BackfillInventoryRule.EvaluateDocument(
-            new BackfillInventoryValidationContext(
-                current,
-                baseline,
-                policy,
-                lean,
-                verifiedScribeEmissions),
-            document);
-        if (findings.Length > 0)
-        {
-            throw new InvalidOperationException(
-                "SL-016 final ledger is invalid: "
-                + string.Join("; ", findings.Select(static finding => finding.Message)));
         }
     }
 

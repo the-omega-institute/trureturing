@@ -37,7 +37,7 @@ public sealed class AddressesAndFormulasScopingTests
     }
 
     [Fact]
-    public void Sl015KeepsGlobalDuplicateGidQueryForUnrelatedCandidateDelta()
+    public void Sl015SuppressesHistoricalDuplicateGidForUnrelatedCandidateDelta()
     {
         var fixture = new RuleFixture();
         SetOldSnapshotFile(fixture, RuleFixture.BlueprintPath, fixture.Files[RuleFixture.RingPath]);
@@ -45,13 +45,13 @@ public sealed class AddressesAndFormulasScopingTests
 
         var completed = Execute(fixture, UnrelatedPath);
 
-        Assert.Contains(completed.Diagnostics, diagnostic =>
+        Assert.DoesNotContain(completed.Diagnostics, diagnostic =>
             diagnostic.RuleId == RuleId.CreateKnown(15)
             && diagnostic.Message.Contains("duplicate GID", StringComparison.Ordinal));
     }
 
     [Fact]
-    public void Sl015KeepsGlobalEvidenceSelectorQueryForUnrelatedCandidateDelta()
+    public void Sl015SuppressesHistoricalEvidenceSelectorCollisionForUnrelatedCandidateDelta()
     {
         const string jsonPath = "Evidence/D5/S0/Carrier/Probe.result.json";
         const string yamlPath = "Evidence/D5/S0/Carrier/Probe.result.yaml";
@@ -62,13 +62,11 @@ public sealed class AddressesAndFormulasScopingTests
 
         var completed = Execute(fixture, UnrelatedPath);
 
-        Assert.Equal(
-            2,
-            completed.Diagnostics.Count(diagnostic =>
-                diagnostic.RuleId == RuleId.CreateKnown(15)
-                && diagnostic.Message.Contains(
-                    "evidence selector has multiple artifact kinds",
-                    StringComparison.Ordinal)));
+        Assert.DoesNotContain(completed.Diagnostics, diagnostic =>
+            diagnostic.RuleId == RuleId.CreateKnown(15)
+            && diagnostic.Message.Contains(
+                "evidence selector has multiple artifact kinds",
+                StringComparison.Ordinal));
     }
 
     private static CompletedRuleSet Execute(RuleFixture fixture, string changedPath) =>
