@@ -1,0 +1,166 @@
+# Lean 构建缓存的发布(#2542 步骤 C 的 producer 侧)。
+#
+# 它**不是** required check，也不属于 admission：归档是加速器，永不进信任链，
+# 它的存在永不能让任何判词从红变绿，它的失败也永不该让 dev 的门变红。
+#
+# 为什么是独立文件而不是 ci.yml 里的一个 job：
+#   1. `lean-report-input.sh:135-140` 把 ci.yml 中 `lean-inspect:` 到 `baseline-admission:`
+#      的**切片文本**折进 Lean 报告的输入闭包，并解析其中的脚本引用。发布脚本若出现在那段里，
+#      改它一行就会让每一份 canonical Lean 报告作废、本地与 CI 全量重算。
+#   2. `Cf10WorkflowSeparatesLeanInspectionFromDotnetAdmission` 禁止 `baseline-admission:`
+#      到文件末尾的切片出现 `.lake` / `elan` / `lake build`。
+#   两段切片首尾相接，覆盖了 ci.yml 中 lean-inspect 之后的全部文本。
+#   3. 加进 ci.yml 会把它推到 922 行，越过 SL-003 的 800 行硬线；第 8 条要的是裂桶，不是抬阈值。
+# 三条一致指向同一个结论：发布是独立关注点，就该住在自己的文件里。
+name: Lean build cache publication
+
+on:
+  workflow_run:
+    workflows: ["admission"]
+    types: [completed]
+    branches: [dev]
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    name: Publish the Lean build cache
+    # 只在 admission 那条流水线整体成功后发布：失败的 dev 推送不该留下缓存产物。
+    if: github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 45
+    steps:
+      - name: Check out the commit that was published
+        id: checkout-publish
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.workflow_run.head_sha }}
+          # 剥夺步骤要对 HEAD^1 做烟测，而这里检出的是一个已合入的普通提交，
+          # 不是 merge ref；默认的 fetch-depth: 1 只取一个提交，父提交不可达。
+          fetch-depth: 2
+
+      - name: Strip checkout remote state
+        if: steps.checkout-publish.outcome == 'success'
+        shell: bash
+        env:
+          CHECKOUT_PATH: .
+        run: |
+          set -euo pipefail
+          git -C "$CHECKOUT_PATH" remote remove origin
+          git -C "$CHECKOUT_PATH" for-each-ref --format='delete %(refname)' refs/remotes/ |
+            git -C "$CHECKOUT_PATH" update-ref --stdin
+          remote_count="$(git -C "$CHECKOUT_PATH" remote | wc -l)"
+          remote_ref_count="$(git -C "$CHECKOUT_PATH" for-each-ref --format='%(refname)' refs/remotes/ | wc -l)"
+          if [[ "$remote_count" -ne 0 || "$remote_ref_count" -ne 0 ]]; then
+            printf '%s\n' "checkout still exposes remotes or remote-tracking refs" >&2
+            exit 1
+          fi
+          head_sha="$(git -C "$CHECKOUT_PATH" rev-parse HEAD)"
+          base_sha="$(git -C "$CHECKOUT_PATH" rev-parse HEAD^1)"
+          test -n "$head_sha"
+          test -n "$base_sha"
+
+      - name: Install the pinned Lean toolchain
+        shell: bash
+        env:
+          TOOLCHAIN_FILE: ${{ github.workspace }}/lean-toolchain
+        run: |
+          set -euo pipefail
+          "$GITHUB_WORKSPACE/tools/scripts/workflow/install-lean-toolchain.sh" \
+            "${TOOLCHAIN_FILE}" --github-path "$GITHUB_PATH"
+
+      - name: Resolve this commit's Lean input addresses
+        id: addr
+        shell: bash
+        run: |
+          set -euo pipefail
+          helper="$GITHUB_WORKSPACE/tools/scripts/report/lean-report-input.sh"
+          test -x "${helper}"
+          read -r address producer_sha256 sources_sha256 config_sha256 \
+            < <("${helper}" address --repository "$GITHUB_WORKSPACE")
+          echo "config_sha256=${config_sha256}" >> "$GITHUB_OUTPUT"
+          echo "sources_sha256=${sources_sha256}" >> "$GITHUB_OUTPUT"
+
+      # 复用 admission 流水线刚写进去的两级缓存。命中即无需重建；未命中说明这个地址
+      # 还没有构建产物，此时无可发布，下一步安静记录而不失败。
+      - name: Restore the Lean dependency layer
+        uses: actions/cache/restore@v4
+        with:
+          path: |
+            .lake/packages
+            .lake/config
+            .lake/.stratalint-lean-cache-stamp.json
+            ~/.cache/mathlib
+          key: ${{ runner.os }}-${{ runner.arch }}-lake-deps-v1-${{ steps.addr.outputs.config_sha256 }}
+          restore-keys: |
+            ${{ runner.os }}-${{ runner.arch }}-lake-deps-v1-${{ steps.addr.outputs.config_sha256 }}
+
+      - name: Restore the Lean build layer
+        id: build
+        uses: actions/cache/restore@v4
+        with:
+          path: .lake/build
+          key: ${{ runner.os }}-${{ runner.arch }}-lake-build-v1-${{ steps.addr.outputs.config_sha256 }}-${{ steps.addr.outputs.sources_sha256 }}
+          # ci.yml 的对应步骤带同样的前缀回退：config 未变时，同一 config 下的任一 build 层
+          # 都是可用的增量起点。首个真实运行漏了这两行，于是 exact key 未命中即判无可发布。
+          restore-keys: |
+            ${{ runner.os }}-${{ runner.arch }}-lake-build-v1-${{ steps.addr.outputs.config_sha256 }}-
+
+      # 前缀回退可能取到**同一 config 但不同 sources** 的 build 层。直接发布会把内容不符的
+      # 归档挂到当前内容地址下 —— 那是这条链路最危险的失败模式，因为消费者按地址取，
+      # 拿到的字节却不是那个地址该有的。
+      #
+      # 故发布前用 lake 自己判：把归档喂给 `lake build`，**零编译**才说明它与当前源码相符。
+      # 判据只认 `Built`/`Building`/`Compiling` 计数为 0；有任何一项非零即内容不符，不发布。
+      - name: Verify the restored build matches this commit
+        id: verify
+        if: steps.build.outputs.cache-hit == 'true' || steps.build.outputs.cache-matched-key != ''
+        shell: bash
+        env:
+          BUILD_LOG: ${{ runner.temp }}/verify-build.txt
+        run: |
+          set -euo pipefail
+          lake build 2>&1 | tee "${BUILD_LOG}"
+          compiled="$(grep -cE '(Built|Building|Compiling) ' "${BUILD_LOG}" || true)"
+          printf 'compiled_targets=%s\n' "${compiled}"
+          if [[ "${compiled}" -eq 0 ]]; then
+            echo "matches=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "matches=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Publish the build cache under its content address
+        if: steps.verify.outputs.matches == 'true'
+        shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PUBLISH_LOG: ${{ runner.temp }}/publish.txt
+        run: |
+          set -euo pipefail
+          publisher="$GITHUB_WORKSPACE/tools/scripts/worktree/lean-cache-publish.sh"
+          test -x "${publisher}"
+          date -u '+publish_started_at=%Y-%m-%dT%H:%M:%SZ' | tee "${PUBLISH_LOG}"
+          "${publisher}" publish --repository "$GITHUB_WORKSPACE" | tee -a "${PUBLISH_LOG}"
+          date -u '+publish_finished_at=%Y-%m-%dT%H:%M:%SZ' | tee -a "${PUBLISH_LOG}"
+          {
+            echo '## Lean build cache'
+            echo
+            echo '```'
+            cat "${PUBLISH_LOG}"
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Record that no build artifacts were available to publish
+        if: steps.verify.outputs.matches != 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+          {
+            echo '## Lean build cache: no archive for this address'
+            echo
+            echo 'The build layer for this exact content address is absent from the cache,'
+            echo 'so this run has nothing to republish. Consumers resolve their cache from'
+            echo 'a donor worktree or a local build, as they do for any address that has'
+            echo 'not been published.'
+          } >> "$GITHUB_STEP_SUMMARY"
