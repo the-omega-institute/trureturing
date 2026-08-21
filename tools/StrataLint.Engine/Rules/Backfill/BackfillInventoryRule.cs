@@ -9,7 +9,8 @@ internal sealed record BackfillInventoryValidationContext(
     ValidatedPolicy Policy,
     AcceptedLeanClosure Lean,
     VerifiedScribeEmissions? VerifiedScribeEmissions,
-    RawChangeSet? Changes = null);
+    RawChangeSet? Changes = null,
+    Func<string, bool>? IsBaseFactAffected = null);
 
 internal static class BackfillInventoryRule
 {
@@ -86,7 +87,8 @@ internal static class BackfillInventoryRule
                 context.Policy,
                 context.Lean,
                 context.VerifiedScribeEmissions,
-                changes),
+                changes,
+                changes is null ? null : context.IsBaseFactAffected),
             document);
     }
 
@@ -346,7 +348,8 @@ internal static class BackfillInventoryRule
         var casEvaluation = DigestionCasStore.Evaluate(
             document,
             context.Current,
-            context.Changes);
+            context.Changes,
+            context.IsBaseFactAffected);
         foreach (var finding in casEvaluation.Findings)
         {
             findings.Add(new RuleFinding(BackfillPath, finding));
@@ -370,7 +373,8 @@ internal static class BackfillInventoryRule
                 LoadBaselineDocument(context.Baseline),
                 baselineSnapshot: context.Baseline,
                 casEvaluation: casEvaluation,
-                changes: context.Changes);
+                changes: context.Changes,
+                isBaseFactAffected: context.IsBaseFactAffected);
             foreach (var finding in evaluation.Findings)
             {
                 findings.Add(new RuleFinding(BackfillPath, finding));

@@ -185,6 +185,9 @@ public sealed partial class ProductionEnvironmentTests
 
 internal sealed class ProjectionReconciliationFailureVerifier : IScribeEmissionVerifier
 {
-    public VerifiedScribeEmissions Verify(RepositorySnapshot snapshot, LeanAxiomReport report) =>
+    public VerifiedScribeEmissions Verify(
+        RepositorySnapshot snapshot,
+        LeanAxiomReport report,
+        RawChangeSet? changes = null) =>
         throw new InvalidDataException("projection fixture/live-report disagreement");
 }

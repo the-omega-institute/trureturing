@@ -34,6 +34,19 @@ on:
 permissions:
   contents: write
 
+# 【并发形态由实测决定，不可凭直觉】2026-08-21 读数：
+#   发布触发间隔   5–11 分钟（dev 每小时约 16 个提交）
+#   自建耗时       40 分钟以上（cache 读不到时从零编 D5）
+#
+# 触发比完成快得多。故 **cancel-in-progress 是错的**：那会让每个 run 都在编到一半时
+# 被下一次推送杀掉，**永远发布不出任何东西**（实测三个 run 连续 cancelled 即此形态）。
+#
+# 正确形态是让先到的跑完、后来的排队：同一内容地址只需发布一次，而 `publish` 动词幂等，
+# 排在后面的 run 若发现该地址已存在即 no-op 退出，代价只是一次空跑。
+concurrency:
+  group: lean-cache-publication
+  cancel-in-progress: false
+
 jobs:
   publish:
     name: Publish the Lean build cache

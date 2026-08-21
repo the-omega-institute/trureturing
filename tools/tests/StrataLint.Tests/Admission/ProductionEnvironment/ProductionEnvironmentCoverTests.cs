@@ -1,5 +1,6 @@
 using System.Collections.Immutable;
 using System.Text;
+using System.Text.Json;
 using StrataLint.Cli;
 using StrataLint.Engine;
 
@@ -386,24 +387,63 @@ public sealed partial class ProductionEnvironmentTests
     {
         string? materializedRoot = null;
         string? observed = null;
+        string? observedProjectionFixture = null;
         var verification = VerifiedScribeEmissions.Empty;
         var callback = new Func<string, LeanAxiomReport, VerifiedScribeEmissions>((root, _) =>
         {
             materializedRoot = root;
             observed = File.ReadAllText(Path.Combine(root, "captured", "probe.txt"), Encoding.UTF8);
+            observedProjectionFixture = File.ReadAllText(
+                Path.Combine(root, "Golden", "Projection", "statement-projection-pilot-v1.json"),
+                Encoding.UTF8);
             return verification;
         });
         var verifier = new ProductionScribeEmissionVerifier(callback);
+        var repositoryRoot = TestRepositoryLayout.FindRoot();
+        var fixtureFiles = new[]
+        {
+            "statement-projection-pilot-v1.json",
+            "statement-projection-expansion-v1.json",
+        }.Select(name =>
+        {
+            var path = $"Golden/Projection/{name}";
+            return (Path: path, Content: File.ReadAllText(
+                Path.Combine(repositoryRoot, path.Replace('/', Path.DirectorySeparatorChar)),
+                Encoding.UTF8));
+        }).ToArray();
+        var declarations = ImmutableArray.CreateBuilder<LeanDeclaration>();
+        foreach (var fixture in fixtureFiles)
+        {
+            using var document = JsonDocument.Parse(fixture.Content);
+            foreach (var declaration in document.RootElement
+                         .GetProperty("declarations")
+                         .EnumerateArray())
+            {
+                declarations.Add(new LeanDeclaration(
+                    declaration.GetProperty("name").GetString()!,
+                    declaration.GetProperty("kind").GetString()!,
+                    declaration.GetProperty("type").GetString()!,
+                    []));
+            }
+        }
+        var snapshotEntries = new List<RawRepositoryEntry>
+        {
+            RawRepositoryEntry.FromText("captured/probe.txt", "captured bytes\n"),
+        };
+        snapshotEntries.AddRange(fixtureFiles.Select(static fixture =>
+            RawRepositoryEntry.FromText(fixture.Path, fixture.Content)));
         var snapshot = Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(
-            RawRepositorySnapshot.Create([
-                RawRepositoryEntry.FromText("captured/probe.txt", "captured bytes\n"),
-            ]))).Snapshot;
+            RawRepositorySnapshot.Create(snapshotEntries))).Snapshot;
 
         var actual = verifier.Verify(snapshot, LeanAxiomReport.Create(
-            new Dictionary<string, LeanFileReport>()));
+            new Dictionary<string, LeanFileReport>
+            {
+                ["D5/ProjectionFixture.lean"] = new([], declarations.ToImmutable()),
+            }));
 
         Assert.Same(verification, actual);
         Assert.Equal("captured bytes\n", observed);
+        Assert.Equal(fixtureFiles[0].Content, observedProjectionFixture);
         Assert.NotNull(materializedRoot);
         Assert.False(Directory.Exists(materializedRoot));
     }

@@ -32,12 +32,10 @@ internal static class DigestStatusCommand
         {
             var options = ParseArguments(arguments);
             var snapshot = Decode(repository.ReadCurrent());
-            RawChangeSet? changes = options.BaselineRevision is null
-                ? null
+            var changes = options.BaselineRevision is null
+                ? repository.ReadCurrentChanges()
                 : repository.ReadChanges(options.BaselineRevision);
-            var scope = changes is null
-                ? DigestionEvaluationScope.FullScan
-                : DigestionEvaluationScopes.ForChanges(changes, ImplementationPath);
+            var scope = DigestionEvaluationScopes.ForChanges(changes, ImplementationPath);
 
             if (options.FormalizeCandidates)
             {
@@ -73,7 +71,7 @@ internal static class DigestStatusCommand
 
             var leanReport = leanReportSource.Load(snapshot);
             var lean = ValidateLean(snapshot, leanReport);
-            var verifiedScribeEmissions = scribeEmissionVerifier.Verify(snapshot, leanReport);
+            var verifiedScribeEmissions = scribeEmissionVerifier.Verify(snapshot, leanReport, changes);
             var document = BackfillInventoryLoader.Load(snapshot);
             BackfillInventoryDocument? baselineDocument = null;
             RepositorySnapshot? baselineSnapshot = null;
@@ -83,6 +81,14 @@ internal static class DigestStatusCommand
                 baselineDocument = BackfillInventoryLoader.LoadBaseline(baselineSnapshot);
             }
 
+            var ruleImplementationChanged = BaseFactImpact.RuleImplementationChanged(changes);
+            bool IsBaseFactAffected(string path) =>
+                BaseFactImpact.IsAffected(changes, ruleImplementationChanged, path);
+            var casEvaluation = DigestionCasStore.Evaluate(
+                document,
+                snapshot,
+                changes,
+                IsBaseFactAffected);
             var evaluation = DigestionStatusEvaluator.Evaluate(
                 scope,
                 document,
@@ -91,8 +97,11 @@ internal static class DigestStatusCommand
                 verifiedScribeEmissions,
                 baselineDocument,
                 baselineSnapshot: baselineSnapshot,
-                changes: changes);
-            if (evaluation.Findings.Length > 0)
+                casEvaluation: casEvaluation,
+                changes: changes,
+                isBaseFactAffected: IsBaseFactAffected,
+                projectedStatusChanges: changes);
+            if (HasReceiptIntegrityFailure(evaluation))
             {
                 return InvalidEvaluation(evaluation);
             }
@@ -126,16 +135,27 @@ internal static class DigestStatusCommand
         var baseline = Decode(repository.ReadRevision(baselineRevision));
         var changes = repository.ReadChanges(baselineRevision);
         var leanReport = leanReportSource.Load(snapshot);
+        var ruleImplementationChanged = BaseFactImpact.RuleImplementationChanged(changes);
+        bool IsBaseFactAffected(string path) =>
+            BaseFactImpact.IsAffected(changes, ruleImplementationChanged, path);
+        var document = BackfillInventoryLoader.Load(snapshot);
         var evaluation = DigestionStatusEvaluator.Evaluate(
             DigestionEvaluationScopes.ForChanges(changes, ImplementationPath),
-            BackfillInventoryLoader.Load(snapshot),
+            document,
             snapshot,
             ValidateLean(snapshot, leanReport),
-            scribeEmissionVerifier.Verify(snapshot, leanReport),
+            scribeEmissionVerifier.Verify(snapshot, leanReport, changes),
             BackfillInventoryLoader.LoadBaseline(baseline),
             baselineSnapshot: baseline,
-            changes: changes);
-        if (evaluation.Findings.Length > 0)
+            casEvaluation: DigestionCasStore.Evaluate(
+                document,
+                snapshot,
+                changes,
+                IsBaseFactAffected),
+            changes: changes,
+            isBaseFactAffected: IsBaseFactAffected,
+            projectedStatusChanges: changes);
+        if (HasReceiptIntegrityFailure(evaluation))
         {
             throw new InvalidOperationException(InvalidEvaluation(evaluation).Error.TrimEnd());
         }
@@ -428,13 +448,21 @@ internal static class DigestStatusCommand
 
     private static CommandResult InvalidEvaluation(DigestionLedgerEvaluation evaluation)
     {
-        var error = "DIGEST_STATUS_INVALID count=" + evaluation.Findings.Length + "\n"
+        var gapCount = evaluation.Entries.Sum(static entry => entry.Gaps.Length);
+        var error = "DIGEST_STATUS_INVALID count=" + (evaluation.Findings.Length + gapCount) + "\n"
             + string.Concat(evaluation.Findings.Select(static finding => $"FINDING {finding}\n"))
             + string.Concat(evaluation.Entries.SelectMany(static entry => entry.Gaps.Select(gap =>
                 $"GAP atom={entry.Entry.AtomId} code={gap.Code} "
                 + $"detail={JsonSerializer.Serialize(gap.Detail)}\n")));
         return new CommandResult(false, string.Empty, error);
     }
+
+    private static bool HasReceiptIntegrityFailure(DigestionLedgerEvaluation evaluation) =>
+        evaluation.Findings.Length > 0
+        || evaluation.Entries.Any(static entry => entry.Gaps.Any(static gap => gap.Code is
+            "coverage-receipt-mismatch"
+            or "scribe-definition-mismatch"
+            or "scribe-emission-mismatch"));
 
     private static RepositorySnapshot Decode(RawRepositorySnapshot raw) =>
         SnapshotDecoder.Decode(raw) switch

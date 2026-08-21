@@ -277,26 +277,48 @@ public sealed partial class ProductionEnvironmentTests
     }
 
     [Fact]
-    public void DigestStatusFailsClosedWhenProjectedStatusWasHandwrittenIncorrectly()
+    public void R15DigestStatusScopesCommittedProjectedStatusReplayToDeltaAndImplementation()
     {
         var fixture = new RuleFixture();
         fixture.AddBackfillTargets();
         var atom = fixture.Files[RuleFixture.FixtureBackfillAtomPath];
         fixture.Files.Remove(RuleFixture.FixtureBackfillAtomPath);
-        fixture.Files[$"{BackfillInventoryLoader.RootPath}fixture-source/absorbed-closed/fixture-atom.yaml"] = atom;
-        var environment = new ProductionCliEnvironment(
-            "/repo",
-            new FakeRepositoryGateway(
-                RawChangeSet.Create(Array.Empty<string>()),
-                Snapshot(fixture.Files),
-                null),
-            new FakeLeanReportSource(LeanAxiomReport.Create(fixture.Reports)),
-            new FakeScribeEmissionVerifier(VerifiedScribeEmissions.Empty));
+        var statusPath = $"{BackfillInventoryLoader.RootPath}fixture-source/absorbed-closed/fixture-atom.yaml";
+        fixture.Files[statusPath] = atom;
 
-        var result = environment.DigestStatus(Array.Empty<string>());
+        var unrelated = RunDigestStatus(fixture, RawChangeSet.Create(["notes/r15-unrelated.txt"]));
+        var candidate = RunDigestStatus(fixture, RawChangeSet.Create([statusPath]));
+        var implementation = RunDigestStatus(
+            fixture,
+            RawChangeSet.Create(["tools/StrataLint.Engine/Rules/RuleEngine.cs"]));
 
-        Assert.False(result.Success);
-        Assert.Contains("handwritten status", result.Error, StringComparison.Ordinal);
+        Assert.True(unrelated.Success, unrelated.Error);
+        Assert.False(candidate.Success);
+        Assert.Contains("handwritten status", candidate.Error, StringComparison.Ordinal);
+        Assert.False(implementation.Success);
+        Assert.Contains("handwritten status", implementation.Error, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void R15DigestStatusScopesCommittedCasRehashToDeltaAndImplementation()
+    {
+        var fixture = new RuleFixture();
+        fixture.AddBackfillTargets();
+        fixture.Files[RuleFixture.FixtureCasPath] = "tampered committed bytes";
+
+        var unrelated = RunDigestStatus(fixture, RawChangeSet.Create(["notes/r15-unrelated.txt"]));
+        var candidate = RunDigestStatus(
+            fixture,
+            RawChangeSet.Create([RuleFixture.FixtureCasPath]));
+        var implementation = RunDigestStatus(
+            fixture,
+            RawChangeSet.Create(["tools/StrataLint.Engine/Rules/RuleEngine.cs"]));
+
+        Assert.True(unrelated.Success, unrelated.Error);
+        Assert.False(candidate.Success);
+        Assert.Contains("CAS blob hash mismatch", candidate.Error, StringComparison.Ordinal);
+        Assert.False(implementation.Success);
+        Assert.Contains("CAS blob hash mismatch", implementation.Error, StringComparison.Ordinal);
     }
 
     [Fact]
@@ -388,6 +410,14 @@ public sealed partial class ProductionEnvironmentTests
             new FakeLeanReportSource(LeanAxiomReport.Create(fixture.Reports)),
             new FakeScribeEmissionVerifier(verified));
     }
+
+    private static CommandResult RunDigestStatus(RuleFixture fixture, RawChangeSet changes) =>
+        new ProductionCliEnvironment(
+            "/repo",
+            new FakeRepositoryGateway(changes, Snapshot(fixture.Files), null),
+            new FakeLeanReportSource(LeanAxiomReport.Create(fixture.Reports)),
+            new FakeScribeEmissionVerifier(VerifiedScribeEmissions.Empty))
+        .DigestStatus(Array.Empty<string>());
 
     private static void DowngradeBaselineGenreMarkerSchema(RuleFixture fixture)
     {

@@ -5,7 +5,10 @@ namespace StrataLint.Cli;
 
 internal interface IScribeEmissionVerifier
 {
-    VerifiedScribeEmissions Verify(RepositorySnapshot snapshot, LeanAxiomReport report);
+    VerifiedScribeEmissions Verify(
+        RepositorySnapshot snapshot,
+        LeanAxiomReport report,
+        RawChangeSet? changes = null);
 }
 
 internal sealed class ProductionScribeEmissionVerifier : IScribeEmissionVerifier
@@ -22,11 +25,20 @@ internal sealed class ProductionScribeEmissionVerifier : IScribeEmissionVerifier
         this.verifyMaterialized = verifyMaterialized
             ?? throw new ArgumentNullException(nameof(verifyMaterialized));
 
-    public VerifiedScribeEmissions Verify(RepositorySnapshot snapshot, LeanAxiomReport report)
+    public VerifiedScribeEmissions Verify(
+        RepositorySnapshot snapshot,
+        LeanAxiomReport report,
+        RawChangeSet? changes = null)
     {
         ArgumentNullException.ThrowIfNull(snapshot);
         ArgumentNullException.ThrowIfNull(report);
         using var materialized = MaterializedRepositorySnapshot.Create(snapshot);
+        if (StatementProjectionReconciliation.IsAffectedBy(changes))
+        {
+            StatementProjectionReconciliation.Verify(
+                materialized.Root,
+                DeclarationCatalog.Create(report));
+        }
         return verifyMaterialized(materialized.Root, report);
     }
 
@@ -34,7 +46,6 @@ internal sealed class ProductionScribeEmissionVerifier : IScribeEmissionVerifier
         string repositoryRoot,
         LeanAxiomReport report)
     {
-        StatementProjectionReconciliation.Verify(repositoryRoot, DeclarationCatalog.Create(report));
         var error = new StringWriter(System.Globalization.CultureInfo.InvariantCulture);
         return ScribeEmitter.Verify(repositoryRoot, error, report)
             ?? throw new InvalidOperationException(
