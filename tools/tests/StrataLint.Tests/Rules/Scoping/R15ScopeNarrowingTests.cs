@@ -118,29 +118,40 @@ public sealed class R15ScopeNarrowingTests
 
     [Fact]
     [BaseFactScopeProbe(17)]
-    public void Sl017HistoricalAnchorFindingSurvivesUnrelatedLeanDelta()
+    public void Sl017LiteratureFindingSurvivesUnrelatedLeanDelta()
     {
-        AssertThreeFaces(
-            () => AnchorHistory(),
-            17,
-            "is not reachable through this file's repository import closure",
-            RuleFixture.RingPath,
-            "tools/StrataLint.Engine/Rules/Anchors/AnchorReferenceRule.cs");
+        const string invalidQueries = """
+            schema_version: 1
+            queries:
+              - id: bad-query
+                target_gid: D5/S0/Carrier/Ring
+            """;
+        RuleFixture Fixture() {
+            var fixture = AnchorHistory();
+            SetHistorical(fixture, "Library/queries.yaml", invalidQueries);
+            return fixture;
+        }
 
-        const string dependencyPath = "D5/S0/Carrier/AnchorDependency.lean";
-        var dependencyDelta = AnchorHistory(dependencyPath);
-        AssertFinding(
-            Execute(dependencyDelta, dependencyPath),
+        var unrelated = Fixture();
+        AssertNoFinding(
+            Execute(unrelated, UnrelatedLeanPath),
             17,
-            "is not reachable through this file's repository import closure",
-            RuleFixture.RingPath);
+            "invalid or duplicate query id",
+            "Library/queries.yaml");
 
-        var bothDelta = AnchorHistory(dependencyPath);
+        var changed = Fixture();
         AssertFinding(
-            Execute(bothDelta, RuleFixture.RingPath, dependencyPath),
+            Execute(changed, "Library/queries.yaml"),
             17,
-            "is not reachable through this file's repository import closure",
-            RuleFixture.RingPath);
+            "invalid or duplicate query id",
+            "Library/queries.yaml");
+
+        var implementation = Fixture();
+        AssertFinding(
+            Execute(implementation, "tools/StrataLint.Engine/Rules/Anchors/AnchorReferenceRule.cs"),
+            17,
+            "invalid or duplicate query id",
+            "Library/queries.yaml");
     }
 
     [Fact]

@@ -50,6 +50,7 @@ public sealed partial class DigestionLedgerTests
         var lean = AcceptedLean("D5/S0/Carrier/Probe.lean");
 
         var evaluation = DigestionStatusEvaluator.Evaluate(
+            DigestionEvaluationScope.FullScan,
             ledger,
             snapshot,
             lean);
@@ -91,6 +92,7 @@ public sealed partial class DigestionLedgerTests
             ("Blueprint/D5/S0/Carrier/Probe.md", emission));
 
         var status = Assert.Single(DigestionStatusEvaluator.Evaluate(
+            DigestionEvaluationScope.FullScan,
             ledger,
             snapshot,
             AcceptedLean("D5/S0/Carrier/Probe.lean")).Entries);
@@ -186,6 +188,7 @@ public sealed partial class DigestionLedgerTests
             (record.EmissionPath, emission));
 
         var evaluation = DigestionStatusEvaluator.Evaluate(
+            DigestionEvaluationScope.FullScan,
             document,
             snapshot,
             AcceptedLean(targetPath),
@@ -220,6 +223,7 @@ public sealed partial class DigestionLedgerTests
             "D5/X_Assumptions/Probe");
 
         var status = Assert.Single(DigestionStatusEvaluator.Evaluate(
+            DigestionEvaluationScope.FullScan,
             ledger,
             snapshot,
             lean).Entries);
@@ -370,6 +374,7 @@ public sealed partial class DigestionLedgerTests
             ("D5/X_Frontier/Probe.lean", Encoding.UTF8.GetBytes(Lean("D5/X_Frontier/Probe"))));
 
         var evaluation = DigestionStatusEvaluator.Evaluate(
+            DigestionEvaluationScope.FullScan,
             ledger,
             snapshot,
             AcceptedLean("D5/X_Frontier/Probe.lean"));

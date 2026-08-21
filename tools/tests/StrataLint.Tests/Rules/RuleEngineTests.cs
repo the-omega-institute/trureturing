@@ -471,12 +471,14 @@ public sealed class RuleEngineTests
         var context = fixture.Build(changes);
         var document = BackfillInventoryLoader.Load(context.Current);
         var evaluation = DigestionStatusEvaluator.Evaluate(
+            DigestionEvaluationScope.ChangedSet,
             document,
             context.Current,
             context.Lean,
             baselineDocument: BackfillInventoryLoader.Load(context.ForkPoint),
             baselineSnapshot: context.ForkPoint,
-            casEvaluation: DigestionCasStore.Evaluate(document, context.Current, changes));
+            casEvaluation: DigestionCasStore.Evaluate(document, context.Current, changes),
+            changes: changes);
 
         Assert.True(BackfillInventoryRule.IsAffectedBy(context));
         Assert.Contains(
@@ -511,11 +513,9 @@ public sealed class RuleEngineTests
     [Fact]
     public void Sl016DerivedStatusIsTheSameWhetherOrNotTheEntryIsInTheCandidateDelta()
     {
-        // A gap that is a property of the tree must be reported no matter which paths this
-        // particular candidate happens to touch. Scoping verification to the delta once made
-        // an unchanged entry report success instead of the verdict its base actually had,
-        // which flipped its derived migration from partial to absorbed and rejected every
-        // pull request that did not happen to touch it (2026-08-17, 34 entries, dev blocked).
+        // Skipping historical receipt replay must reuse the base verdict rather than turn a
+        // partial entry into absorbed. The stale receipt itself is reported only when its
+        // authority input is in the candidate delta.
         const string evidenceGid = "D5/E/values--json";
         var fixture = new RuleFixture();
         fixture.AddValuesProjection();
@@ -542,17 +542,18 @@ public sealed class RuleEngineTests
         // The committed target drifted from the receipt it is hashed against.
         fixture.Files[RuleFixture.ValuesProjectionPath] = baselineTarget + " ";
 
-        var touched = EvidenceDriftGaps(
+        var touched = EvidenceDriftEvaluation(
             fixture,
             RawChangeSet.Create([RuleFixture.ValuesProjectionPath]));
-        var untouched = EvidenceDriftGaps(
+        var untouched = EvidenceDriftEvaluation(
             fixture,
             RawChangeSet.Create(["notes/unrelated.txt"]));
 
-        Assert.Contains("coverage-receipt-mismatch:" + evidenceGid, touched);
-        Assert.Equal(
-            string.Join(" | ", touched),
-            string.Join(" | ", untouched));
+        Assert.Contains(touched.Gaps, gap =>
+            gap.Code == "coverage-receipt-mismatch" && gap.Detail == evidenceGid);
+        Assert.DoesNotContain(untouched.Gaps, static gap => gap.Code == "coverage-receipt-mismatch");
+        Assert.Equal(DigestionMigrationState.Partial, untouched.DerivedStatus.Migration);
+        Assert.Equal(touched.DerivedStatus, untouched.DerivedStatus);
     }
 
     [Fact]
@@ -581,25 +582,22 @@ public sealed class RuleEngineTests
             diagnostic.Message.Contains("handwritten status", StringComparison.Ordinal));
     }
 
-    private static ImmutableArray<string> EvidenceDriftGaps(
+    private static DigestionEntryEvaluation EvidenceDriftEvaluation(
         RuleFixture fixture,
         RawChangeSet changes)
     {
         var context = fixture.Build(changes);
         var document = BackfillInventoryLoader.Load(context.Current);
         var evaluation = DigestionStatusEvaluator.Evaluate(
+            DigestionEvaluationScope.ChangedSet,
             document,
             context.Current,
             context.Lean,
             baselineDocument: BackfillInventoryLoader.Load(context.ForkPoint),
             baselineSnapshot: context.ForkPoint,
-            casEvaluation: DigestionCasStore.Evaluate(document, context.Current, changes));
-        return
-        [
-            .. Assert.Single(evaluation.Entries).Gaps
-                .Select(static gap => gap.Code + ":" + gap.Detail)
-                .Order(StringComparer.Ordinal),
-        ];
+            casEvaluation: DigestionCasStore.Evaluate(document, context.Current, changes),
+            changes: changes);
+        return Assert.Single(evaluation.Entries);
     }
 
     [Fact]

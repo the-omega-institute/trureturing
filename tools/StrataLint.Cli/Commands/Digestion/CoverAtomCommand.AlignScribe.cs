@@ -83,6 +83,7 @@ internal static partial class CoverAtomCommand
         };
         var planned = ReplaceEntry(document, options.AtomId, alignedEntry);
         var derived = DigestionStatusEvaluator.Evaluate(
+            DigestionEvaluationScope.FullScan,
             planned,
             current,
             lean,
@@ -98,6 +99,7 @@ internal static partial class CoverAtomCommand
         var finalSnapshot = Decode(finalRaw);
         var finalDocument = LoadDocument(finalSnapshot);
         var finalEvaluation = DigestionStatusEvaluator.Evaluate(
+            DigestionEvaluationScope.FullScan,
             finalDocument,
             finalSnapshot,
             lean,

@@ -363,6 +363,9 @@ internal static class BackfillInventoryRule
         try
         {
             var evaluation = DigestionStatusEvaluator.Evaluate(
+                context.Changes is null
+                    ? DigestionEvaluationScope.FullScan
+                    : DigestionEvaluationScope.ChangedSet,
                 document,
                 context.Current,
                 context.Lean,

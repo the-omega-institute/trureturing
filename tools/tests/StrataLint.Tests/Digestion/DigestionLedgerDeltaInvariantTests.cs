@@ -55,6 +55,7 @@ public sealed partial class DigestionLedgerTests
 
         DigestionEntryEvaluation Evaluate(RawChangeSet changes) => Assert.Single(
             DigestionStatusEvaluator.Evaluate(
+                DigestionEvaluationScope.ChangedSet,
                 document,
                 snapshot,
                 AcceptedLean(targetPath),

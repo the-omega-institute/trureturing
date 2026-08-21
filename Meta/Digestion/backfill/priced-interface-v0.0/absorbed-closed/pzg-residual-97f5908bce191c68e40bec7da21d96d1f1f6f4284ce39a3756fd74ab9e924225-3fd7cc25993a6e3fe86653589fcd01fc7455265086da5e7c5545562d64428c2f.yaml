@@ -12,6 +12,6 @@ receipts:
       target_sha256: sha256:000b29827f21520ce98652ae578469523703aa76cf6712ebaac7dcce4ca56481
   scribe:
     - gid: D5/S0/Diagonal/Probability/DifferentialTestingEscape.directory_escape_probability_exact
-      definition_sha256: sha256:577ac2e2c3bc7a273ba7ee2912ecb0ce0444fc6606d48d1b095541e844178cd8
-      emission_sha256: sha256:3daebe8e3bf5b8c3d6277a1b47162cd04e9237d6410017f1d314a65a3c3be5a6
+      definition_sha256: sha256:6242562aef49bd54f97d59f555540de4d3161107c48e0df0bde8ef24caf4915e
+      emission_sha256: sha256:0e5b9af6d88a1535c805fac12c134e64ce8dc5f56156b4e610ac697f4f338619
   unresolved_subitems: []
