@@ -1,6 +1,6 @@
-/- GID: D5/S3/ConceptDynamics/StrictRefinementBound
+/- GID: D5/S3/ConceptDynamics/Refinement/StrictRefinementBound
    generality: G
-   mirror-B: D5/B/S3/ConceptDynamics/StrictRefinementBound
+   mirror-B: D5/B/S3/ConceptDynamics/Refinement/StrictRefinementBound
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    digest: Finite states permit at most their cardinal deficit many strict refinements. -/
@@ -22,7 +22,7 @@ import Mathlib.SetTheory.Cardinal.NatCard
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
-namespace D5.S3.ConceptDynamics.StrictRefinementBound
+namespace D5.S3.ConceptDynamics.Refinement.StrictRefinementBound
 
 open D5.S3.ConceptDynamics.ConceptFiberDecomposition
 
@@ -131,4 +131,4 @@ example :
 
 #print axioms strict_refinement_steps_le_card_sub_initial_image
 
-end D5.S3.ConceptDynamics.StrictRefinementBound
+end D5.S3.ConceptDynamics.Refinement.StrictRefinementBound

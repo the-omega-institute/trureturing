@@ -8,7 +8,7 @@ A finite state space bounds the number of strict concept refinements.
 
 $$\forall X, B: \operatorname{Type}, [\operatorname{Finite} X],\ s\in \mathbb{N}, C: \operatorname{Fin}(s+1) \to (X \to B),\\(\forall i: \operatorname{Fin}(s), \operatorname{StrictlyRefines}\left(C_{i}, C_{i+1}\right)) \Rightarrow\\s \leq \lvert X\rvert - \lvert \operatorname{range}(C_{0})\rvert.$$
 
-*Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/StrictRefinementBound.strict_refinement_steps_le_card_sub_initial_image` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Refinement/StrictRefinementBound.strict_refinement_steps_le_card_sub_initial_image` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -22,5 +22,5 @@ Combining growth over all steps with the final image bound gives exactly the num
 
 ## References
 
-- Truth anchor: `D5/S3/ConceptDynamics/StrictRefinementBound.strict_refinement_steps_le_card_sub_initial_image`
-- Dependency: [D5/S3/ConceptDynamics/ConceptFiberDecomposition](ConceptFiberDecomposition.md)
+- Truth anchor: `D5/S3/ConceptDynamics/Refinement/StrictRefinementBound.strict_refinement_steps_le_card_sub_initial_image`
+- Dependency: [D5/S3/ConceptDynamics/ConceptFiberDecomposition](../ConceptFiberDecomposition.md)

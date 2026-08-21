@@ -13,7 +13,7 @@ internal sealed class StrictRefinementBoundDocument : IScribeDocumentDefinition
             Describe.Lean(
                 DescribeId.Create("strict-refinement-steps-le-card-sub-initial-image"),
                 DeclarationHandle.Create(
-                    "D5/S3/ConceptDynamics/StrictRefinementBound."
+                    "D5/S3/ConceptDynamics/Refinement/StrictRefinementBound."
                         + "strict_refinement_steps_le_card_sub_initial_image"),
                 H("Strict refinements terminate within the cardinality deficit"),
                 StatementSource.FromAuthor(BoundFormula()),
