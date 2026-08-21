@@ -55,7 +55,17 @@ jobs:
     # 只在 admission 那条流水线整体成功后发布：失败的 dev 推送不该留下缓存产物。
     if: github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-24.04-arm
-    timeout-minutes: 45
+    # 【超时形态：2026-08-21 读实际日志后勘正】
+    #   此前两个 run 的 `conclusion: cancelled` 被我误读为「并发组取消」，据此连打三四个
+    #   补丁改 `concurrency`，取消照旧。真因是**这个数字**：GitHub 对 `timeout-minutes`
+    #   到点的 conclusion 就是 `cancelled`，与并发取消在该字段上无法区分。
+    #   读数：32479993734 跑 45分19秒、32480023451 跑 45分17秒，两者都被杀在同一步
+    #   `Build when no cache layer was available`；从零 `lake build` 实测 40 分钟以上，
+    #   加 checkout/toolchain/address/cache-restore 的前置开销即越过 45 分。
+    #   取 120：为上述自建实测留约 3 倍余量（GitHub 该字段上限 360）。
+    #   这是**为取得第一份端到端读数**而放宽，不是终态：真正的修法是让上游 job 把已构建
+    #   的产物交给本 workflow（artifact 跨 run 可读），从而根本不必自建。
+    timeout-minutes: 120
     steps:
       - name: Check out the commit that was published
         id: checkout-publish
