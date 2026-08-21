@@ -48,6 +48,7 @@ internal static partial class DigestionStatusEvaluator
                 genreChecks[entry.SourceId],
                 changes: null,
                 isBaseFactAffected: null,
+                projectedStatusChanges: null,
                 findings))
             .ToArray();
         DeriveMigration(work);
@@ -69,7 +70,8 @@ internal static partial class DigestionStatusEvaluator
         RepositorySnapshot? baselineSnapshot = null,
         DigestionCasEvaluation? casEvaluation = null,
         RawChangeSet? changes = null,
-        Func<string, bool>? isBaseFactAffected = null)
+        Func<string, bool>? isBaseFactAffected = null,
+        RawChangeSet? projectedStatusChanges = null)
     {
         ArgumentNullException.ThrowIfNull(document);
         ArgumentNullException.ThrowIfNull(snapshot);
@@ -126,6 +128,7 @@ internal static partial class DigestionStatusEvaluator
                 genreChecks[entry.SourceId],
                 changes,
                 isBaseFactAffected,
+                projectedStatusChanges ?? changes,
                 findings);
         }).ToArray();
         DeriveMigration(work);
@@ -245,6 +248,7 @@ internal static partial class DigestionStatusEvaluator
         GenreRegistryCheck genreRegistryCheck,
         RawChangeSet? changes,
         Func<string, bool>? isBaseFactAffected,
+        RawChangeSet? projectedStatusChanges,
         ImmutableArray<string>.Builder findings)
     {
         var gaps = new List<DigestionGap>();
@@ -338,7 +342,7 @@ internal static partial class DigestionStatusEvaluator
             StatusAuthorityClosureChanged(
                 entry,
                 baselineMigration,
-                changes,
+                projectedStatusChanges,
                 isBaseFactAffected));
     }
 

@@ -91,9 +91,10 @@ internal static class DigestStatusCommand
                 baselineDocument,
                 baselineSnapshot: baselineSnapshot,
                 casEvaluation: casEvaluation,
-                changes: changes,
-                isBaseFactAffected: IsBaseFactAffected);
-            if (evaluation.Findings.Length > 0)
+                changes: null,
+                isBaseFactAffected: IsBaseFactAffected,
+                projectedStatusChanges: changes);
+            if (HasReceiptIntegrityFailure(evaluation))
             {
                 return InvalidEvaluation(evaluation);
             }
@@ -143,9 +144,10 @@ internal static class DigestStatusCommand
                 snapshot,
                 changes,
                 IsBaseFactAffected),
-            changes: changes,
-            isBaseFactAffected: IsBaseFactAffected);
-        if (evaluation.Findings.Length > 0)
+            changes: null,
+            isBaseFactAffected: IsBaseFactAffected,
+            projectedStatusChanges: changes);
+        if (HasReceiptIntegrityFailure(evaluation))
         {
             throw new InvalidOperationException(InvalidEvaluation(evaluation).Error.TrimEnd());
         }
@@ -438,13 +440,21 @@ internal static class DigestStatusCommand
 
     private static CommandResult InvalidEvaluation(DigestionLedgerEvaluation evaluation)
     {
-        var error = "DIGEST_STATUS_INVALID count=" + evaluation.Findings.Length + "\n"
+        var gapCount = evaluation.Entries.Sum(static entry => entry.Gaps.Length);
+        var error = "DIGEST_STATUS_INVALID count=" + (evaluation.Findings.Length + gapCount) + "\n"
             + string.Concat(evaluation.Findings.Select(static finding => $"FINDING {finding}\n"))
             + string.Concat(evaluation.Entries.SelectMany(static entry => entry.Gaps.Select(gap =>
                 $"GAP atom={entry.Entry.AtomId} code={gap.Code} "
                 + $"detail={JsonSerializer.Serialize(gap.Detail)}\n")));
         return new CommandResult(false, string.Empty, error);
     }
+
+    private static bool HasReceiptIntegrityFailure(DigestionLedgerEvaluation evaluation) =>
+        evaluation.Findings.Length > 0
+        || evaluation.Entries.Any(static entry => entry.Gaps.Any(static gap => gap.Code is
+            "coverage-receipt-mismatch"
+            or "scribe-definition-mismatch"
+            or "scribe-emission-mismatch"));
 
     private static RepositorySnapshot Decode(RawRepositorySnapshot raw) =>
         SnapshotDecoder.Decode(raw) switch
