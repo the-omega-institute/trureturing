@@ -174,3 +174,53 @@ def goldenUnitsPrincipalIdealDelivery : Unit := ()
     papergen 已退役(`D5-T0006`)、`glossary` 在 `tools/` 零命中,三项声称皆不成立。
     本仓确为双语,译名漂移是真风险,但至今无一例被记录的漂移事故。
     关闭条件:要么建立术语表与其漂移检测并给出首例事故依据,要么裁定不建立并从本卷删去该段。 -/
+
+/- TASK D5-T0045
+    容器 `theorem/6.35` 蓄意维持 `residual-open`,不是待办。
+    其 08-11 的 formalization receipt 指向 `D5/S1/Recurrence/TraceMap.trace_map_recursion`,
+    而该定理只陈述源文三条子句中的第二条(递推对);源文另含 W_K/t_K 的定义与四维映射
+    `F(W₁,W₀,t₁,t₀)` 之轨道极限。以该 primary 覆盖整个容器即覆盖强度冒领(第 4 条)。
+    #2602 的六席思考阶段(5×codex-cli + 1×nyxid-oracle)一致判不结。
+    双方形式化已由 `D5/S3/Axis/TraceMap/AxisWeightCompatibility.axisWeight_eq` 与
+    `D5/S3/Axis/TraceMap/PartialSumBridge.wordSum_eq_axisPartialSum` 在权与和两层各自桥接,
+    但两桥的重指标分别为 i+1 与 j+2,故合不成 `tracePartial = axisPartialSum` 的裸等式,本仓不断言它。
+    关闭条件:出现一条忠实覆盖源文全部三条子句(含四维映射;收敛双指数靠数值证书,可显式除外)
+    的 Lean 定理,且其与既有 receipt 的关系按 `D5-T0048` 的类定义处置。 -/
+
+/- TASK D5-T0048
+    「一个覆盖是否忠实覆盖了原子的全部主张」在当前手段下不可机器判,故本类的核心谓词标 open。
+    `cover-atom` 的代码注释本就明说 semantic fidelity 是独立未闭合层,与此一致。
+    曾试过并失败:2026-08-21:自述型 regex(作者 docstring 写「不认领某部分」)——
+    25 个自述模块中仅 1 个被用作 `absorbed-closed` 覆盖,按定义抓不到静默省略型
+    (`theorem/6.35/clause/2` 即是,其覆盖定理无任何自述文本),且放进 CI 会奖励作者不写免责声明。
+    2026-08-21:分划完备性(covered ∪ unresolved = atom manifest)——承重前提不存在,
+    `claim_unit`/`atom_manifest` 全仓零命中,atom 字段全集为
+    ast_path|fingerprints|cas_ref|coverage_gids|receipts;造该层即造 authored data layer,
+    而「散文里有哪些 claim」是同一不可判问题推迟一层。
+    2026-08-21:句中切开(原文不以终止标点收尾)——5475 个可读 CAS 中 1842 条命中(34%),
+    其中 `absorbed-closed` 123 条而真阳性约 1,精度 1/123;命中样本收尾为 ∎、**、\] 、| 等,
+    皆良构原子。该信号绝不得授权 mutation。
+    已闭合的可判部分(#2647 三席评审收敛):按权威对象三分——
+    (A) atomization-supersession:原子不具独立命题闭包,不原地改,产新 CAS 并 append-only supersede;
+    (B) coverage-relation-correction:原子良构而绑定只覆盖真子集,保留有效 GID、写 unresolved,状态由 evaluator 派生;
+    (C) receipt-envelope-correction:覆盖正确而收据窄,追加引用旧 hash 的校正,旧 primary 与签名不改;
+    正交的 (D) proof-revocation 走现有 frozen-DAG revoke,不是第四个 digestion 动词。
+    最小实现面:不新增顶层 CLI 名,在自然 owner 处扩类型化 mode + 一条 tagged correction event。
+    已知存量:`theorem/6.35/clause/2`、`clause/3` 属 (B);`clause/1` 属 (A)。
+    关闭条件:出现一个不依赖 authored claim-unit 层、且经实测精度可用的判据,或
+    owner 裁定接受 authored claim-unit 层并承担其自身的忠实性问题。 -/
+
+/- TASK D5-T0047
+    不付这次 SL-008 Revoke(物理消除 `axisWeight` 双定义),默认处置已生效,选项留在案。
+    `axisWeight` 于 2026-08-11 与 2026-08-19 被定义两次(`D5/S1/Recurrence/TraceMap` 与
+    `D5/S3/Axis/AxisTraceRecurrence`),仅负号位置不同,命题相等。
+    该重复的危害曾是「两个常量、关系未知」;`AxisWeightCompatibility.axisWeight_eq` 落地后
+    该危害已被定理消解,余下仅为简约债。
+    物理去重需撤销 8 个 active 冻结节点,而 `Golden/Frozen/accepted/` 计 Freeze 1278、
+    Reattest 1028、Genesis 1、Revoke 0——`ledger-revoke` 动词存在
+    (`DagLedgerRevokeWriter` 调 `FrozenLedgerGenerator.AppendRevocation`)但从未被使用。
+    判据:为一处已被定理消解危害的简约债,让一台从未验证过的通道首航吃 8 个节点,不值。
+    反方(#2602 的 worth 与 teleology 两席)认为只加桥不算彻底;其前提「实例层目标含消除双定义」
+    出自 orchestrator 的 GoalArtifact 措辞,已记于该单。
+    关闭条件:若判定仍需物理去重,先在一个低风险单节点上验证 `ledger-revoke` 通道,再处置这 8 个;
+    不得以这 8 个作首航。 -/
