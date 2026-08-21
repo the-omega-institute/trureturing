@@ -75,11 +75,21 @@ jobs:
     #   这是**为取得第一份端到端读数**而放宽，不是终态：真正的修法是让上游 job 把已构建
     #   的产物交给本 workflow（artifact 跨 run 可读），从而根本不必自建。
     timeout-minutes: 120
+    # 【为什么检出到 `candidate/` 这个看似多余的子目录】
+    #   `actions/cache` 的缓存标识是 **(key, version)**，version 由 `path` 派生。
+    #   写入侧（admission）必须把候选检出在 `candidate/`（它要同时持有 base 与 candidate
+    #   两棵树），故它存的是 `candidate/.lake/build`；本 workflow 原先在仓根检出、
+    #   读 `.lake/build` —— **key 一字不差，version 不同，两者根本不是同一个 entry**。
+    #   实测佐证：restore-keys 前缀 fallback 也未命中，排除了「只是 sources 漂移」；
+    #   `gh cache list` 显示 entry 确实存在（1424 MiB，refs/heads/dev，每几分钟一份）。
+    #   方向是单向的：admission 无法搬到仓根，只能由本 workflow 对齐它，
+    #   且 path 列表必须**逐字节相同**（含 `~/.cache/mathlib` 一项）。
     steps:
       - name: Check out the commit that was published
         id: checkout-publish
         uses: actions/checkout@v4
         with:
+          path: candidate
           # 定时触发下检出默认分支 HEAD（即 dev 当前 tip）；
           # `github.event.workflow_run.head_sha` 在此事件下为空，留着会检出错误的树。
           # 剥夺步骤要对 HEAD^1 做烟测，而这里检出的是一个已合入的普通提交，
@@ -90,7 +100,7 @@ jobs:
         if: steps.checkout-publish.outcome == 'success'
         shell: bash
         env:
-          CHECKOUT_PATH: .
+          CHECKOUT_PATH: candidate
         run: |
           set -euo pipefail
           git -C "$CHECKOUT_PATH" remote remove origin
@@ -110,10 +120,10 @@ jobs:
       - name: Install the pinned Lean toolchain
         shell: bash
         env:
-          TOOLCHAIN_FILE: ${{ github.workspace }}/lean-toolchain
+          TOOLCHAIN_FILE: ${{ github.workspace }}/candidate/lean-toolchain
         run: |
           set -euo pipefail
-          "$GITHUB_WORKSPACE/tools/scripts/workflow/install-lean-toolchain.sh" \
+          "$GITHUB_WORKSPACE/candidate/tools/scripts/workflow/install-lean-toolchain.sh" \
             "${TOOLCHAIN_FILE}" --github-path "$GITHUB_PATH"
 
       - name: Resolve this commit's Lean input addresses
@@ -121,10 +131,10 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          helper="$GITHUB_WORKSPACE/tools/scripts/report/lean-report-input.sh"
+          helper="$GITHUB_WORKSPACE/candidate/tools/scripts/report/lean-report-input.sh"
           test -x "${helper}"
           read -r address producer_sha256 sources_sha256 config_sha256 \
-            < <("${helper}" address --repository "$GITHUB_WORKSPACE")
+            < <("${helper}" address --repository "$GITHUB_WORKSPACE/candidate")
           echo "config_sha256=${config_sha256}" >> "$GITHUB_OUTPUT"
           echo "sources_sha256=${sources_sha256}" >> "$GITHUB_OUTPUT"
 
@@ -134,9 +144,9 @@ jobs:
         uses: actions/cache/restore@v4
         with:
           path: |
-            .lake/packages
-            .lake/config
-            .lake/.stratalint-lean-cache-stamp.json
+            candidate/.lake/packages
+            candidate/.lake/config
+            candidate/.lake/.stratalint-lean-cache-stamp.json
             ~/.cache/mathlib
           key: ${{ runner.os }}-${{ runner.arch }}-lake-deps-v1-${{ steps.addr.outputs.config_sha256 }}
           restore-keys: |
@@ -146,7 +156,7 @@ jobs:
         id: build
         uses: actions/cache/restore@v4
         with:
-          path: .lake/build
+          path: candidate/.lake/build
           key: ${{ runner.os }}-${{ runner.arch }}-lake-build-v1-${{ steps.addr.outputs.config_sha256 }}-${{ steps.addr.outputs.sources_sha256 }}
           # ci.yml 的对应步骤带同样的前缀回退：config 未变时，同一 config 下的任一 build 层
           # 都是可用的增量起点。首个真实运行漏了这两行，于是 exact key 未命中即判无可发布。
@@ -159,6 +169,7 @@ jobs:
         id: selfbuild
         if: steps.build.outputs.cache-hit != 'true' && steps.build.outputs.cache-matched-key == ''
         shell: bash
+        working-directory: candidate
         run: |
           set -euo pipefail
           lake exe cache get || printf '%s\n' "mathlib cache get returned nonzero; lake build will fill the gaps"
@@ -181,6 +192,7 @@ jobs:
         shell: bash
         env:
           BUILD_LOG: ${{ runner.temp }}/verify-build.txt
+        working-directory: candidate
         run: |
           set -euo pipefail
           lake build 2>&1 | tee "${BUILD_LOG}"
@@ -200,10 +212,10 @@ jobs:
           PUBLISH_LOG: ${{ runner.temp }}/publish.txt
         run: |
           set -euo pipefail
-          publisher="$GITHUB_WORKSPACE/tools/scripts/worktree/lean-cache-publish.sh"
+          publisher="$GITHUB_WORKSPACE/candidate/tools/scripts/worktree/lean-cache-publish.sh"
           test -x "${publisher}"
           date -u '+publish_started_at=%Y-%m-%dT%H:%M:%SZ' | tee "${PUBLISH_LOG}"
-          "${publisher}" publish --repository "$GITHUB_WORKSPACE" | tee -a "${PUBLISH_LOG}"
+          "${publisher}" publish --repository "$GITHUB_WORKSPACE/candidate" | tee -a "${PUBLISH_LOG}"
           date -u '+publish_finished_at=%Y-%m-%dT%H:%M:%SZ' | tee -a "${PUBLISH_LOG}"
           {
             echo '## Lean build cache'
