@@ -488,10 +488,21 @@ internal static class ScribeTestMapDeriver
     private static bool IsAccessorCall(InvocationExpressionSyntax invocation, params string[] names) =>
         invocation.Expression is MemberAccessExpressionSyntax member
         && names.Contains(member.Name.Identifier.ValueText, StringComparer.Ordinal)
+        && !IsTemporaryFileSystemRoot(member.Expression)
         && (member.Expression.ToString().Contains("RepositoryAccessor", StringComparison.Ordinal)
             || member.Expression is IdentifierNameSyntax
             || member.Expression is MemberAccessExpressionSyntax
             || member.Expression is InvocationExpressionSyntax);
+
+    private static bool IsTemporaryFileSystemRoot(ExpressionSyntax receiver)
+    {
+        while (receiver is MemberAccessExpressionSyntax member)
+        {
+            receiver = member.Expression;
+        }
+
+        return receiver is IdentifierNameSyntax { Identifier.ValueText: "TemporaryFileSystem" };
+    }
 
     private static IEnumerable<string> LocalCalls(MethodDeclarationSyntax method) =>
         method.DescendantNodes().OfType<InvocationExpressionSyntax>()
