@@ -12,6 +12,7 @@ namespace D5.X_Frontier.BasePhiNegativePrefixTrident
 
 open D5.S1.Words.Expansions.BasePhiNegative
 open D5.S1.Words.Expansions.BasePhiCanonicalExpansion
+open D5.S1.Words.Expansions.BasePhiCarryTransducer
 open D5.S1.Scale
 
 noncomputable section
@@ -134,11 +135,6 @@ def prefixMultiplicity (w : List Bool) : Nat :=
 def LucasPair (a b : Int) : Prop :=
   ∃ k : Nat, 2 ≤ k ∧ a = goldenLucas (k + 1) ∧ b = goldenLucas k
 
-def CoreLucasWitness (w : List Bool) : Prop :=
-  ∃ (family : GapFamily) (a b r : Int),
-    LucasPair a b ∧ 0 < r ∧
-      Core w = sequenceRange (vForFamily family a b r)
-
 inductive FrontierPhase where
   | F0o
   | F1o
@@ -153,19 +149,90 @@ def frontierFamily : FrontierPhase → GapFamily
   | .G1e | .G0o => .G
   | .H0e => .H
 
-structure FrontierReturnWord where
+def grow0 (a b : Int) : Int × Int :=
+  (a + b, a)
+
+def grow1 (a b : Int) : Int × Int :=
+  (2 * a + b, a + b)
+
+structure FrontierPhaseCertificate where
   phase : FrontierPhase
   a : Int
   b : Int
-  first : Int
-  enumerate : Nat → Nat
-  gap : Nat → Int
 
-def FrontierReturnWordFor (w : List Bool) (certificate : FrontierReturnWord) : Prop :=
-  Set.range certificate.enumerate = Core w ∧
-    (∀ n : Nat,
-      (certificate.enumerate (n + 1) : Int) =
-        certificate.enumerate n + certificate.gap n)
+/-- The ten transitions from the six-state frontier proposal.  This is the
+prefix-extension machine; it is deliberately separate from the input-by-input
+carry machine below. -/
+inductive FrontierPhaseTransition :
+    FrontierPhaseCertificate → Bool → FrontierPhaseCertificate → Prop where
+  | F0o_zero (a b : Int) :
+      FrontierPhaseTransition ⟨.F0o, a, b⟩ false ⟨.F0e, a + b, a⟩
+  | F0o_one (a b : Int) :
+      FrontierPhaseTransition ⟨.F0o, a, b⟩ true ⟨.G1e, 2 * a + b, a + b⟩
+  | F1o_zero (a b : Int) :
+      FrontierPhaseTransition ⟨.F1o, a, b⟩ false ⟨.F0e, a, b⟩
+  | F0e_zero (a b : Int) :
+      FrontierPhaseTransition ⟨.F0e, a, b⟩ false ⟨.F0o, a + b, a⟩
+  | F0e_one (a b : Int) :
+      FrontierPhaseTransition ⟨.F0e, a, b⟩ true ⟨.F1o, 2 * a + b, a + b⟩
+  | G1e_zero (a b : Int) :
+      FrontierPhaseTransition ⟨.G1e, a, b⟩ false ⟨.G0o, a, b⟩
+  | G0o_zero (a b : Int) :
+      FrontierPhaseTransition ⟨.G0o, a, b⟩ false ⟨.H0e, a + b, a⟩
+  | G0o_one (a b : Int) :
+      FrontierPhaseTransition ⟨.G0o, a, b⟩ true ⟨.G1e, 2 * a + b, a + b⟩
+  | H0e_zero (a b : Int) :
+      FrontierPhaseTransition ⟨.H0e, a, b⟩ false ⟨.G0o, a + b, a⟩
+  | H0e_one (a b : Int) :
+      FrontierPhaseTransition ⟨.H0e, a, b⟩ true ⟨.F1o, 2 * a + b, a + b⟩
+
+/-- A phase certificate is generated from one of the two checked base cases by
+the prefix-extension table.  In particular, its Lucas parameters cannot be
+changed independently of its phase history. -/
+inductive PrefixPhaseMachineFor : List Bool → FrontierPhaseCertificate → Prop where
+  | zero : PrefixPhaseMachineFor [false] ⟨.F0o, 4, 3⟩
+  | one : PrefixPhaseMachineFor [true] ⟨.F1o, 7, 4⟩
+  | step {w : List Bool} {before after : FrontierPhaseCertificate} {bit : Bool}
+      (hprefix : PrefixPhaseMachineFor w before)
+      (transition : FrontierPhaseTransition before bit after) :
+      PrefixPhaseMachineFor (w ++ [bit]) after
+
+structure FrontierReturnWord where
+  phaseCertificate : FrontierPhaseCertificate
+  boundary : CarrySkipState
+  enumerate : Nat → Nat
+
+def FrontierReturnWord.phase (certificate : FrontierReturnWord) : FrontierPhase :=
+  certificate.phaseCertificate.phase
+
+def FrontierReturnWord.a (certificate : FrontierReturnWord) : Int :=
+  certificate.phaseCertificate.a
+
+def FrontierReturnWord.b (certificate : FrontierReturnWord) : Int :=
+  certificate.phaseCertificate.b
+
+/-- The first term is derived from the enumerator, rather than stored as an
+independent field. -/
+def FrontierReturnWord.first (certificate : FrontierReturnWord) : Int :=
+  certificate.enumerate 0
+
+/-- Gaps are differences of consecutive enumerated inputs, rather than an
+independent stream. -/
+def FrontierReturnWord.gap (certificate : FrontierReturnWord) (n : Nat) : Int :=
+  (certificate.enumerate (n + 1) : Int) - certificate.enumerate n
+
+/-- Every frontier point is interpreted at the actual terminal state of the
+frozen carry/skip run. -/
+noncomputable def frontierState (certificate : FrontierReturnWord) (n : Nat) :
+    CarrySkipState :=
+  carrySkipRun canonicalExpansion (certificate.enumerate n)
+
+/-- Moving between consecutive frontier points is a finite chain of the actual
+`CarrySkipTransition`; one step therefore uses `nextState`, whose positive
+component is `carrySkipStep`. -/
+def FrontierRunStep (certificate : FrontierReturnWord) (n : Nat) : Prop :=
+  Relation.ReflTransGen (CarrySkipTransition canonicalExpansion)
+    (frontierState certificate n) (frontierState certificate (n + 1))
 
 def FrontierGapPhase (certificate : FrontierReturnWord) : Prop :=
   ∀ n : Nat,
@@ -175,49 +242,198 @@ def FrontierGapPhase (certificate : FrontierReturnWord) : Prop :=
       else
         certificate.b
 
-def negative_tail_fiber_shape (N : Nat) (hN : 0 < N) : Prop :=
+/-- The return-word predicate binds every field to either the prefix machine or
+the frozen carry machine. -/
+structure FrontierReturnWordFor (w : List Bool)
+    (certificate : FrontierReturnWord) : Prop where
+  phase_machine : PrefixPhaseMachineFor w certificate.phaseCertificate
+  boundary_eq : certificate.boundary = frontierState certificate 0
+  range_eq : Set.range certificate.enumerate = Core w
+  successor_strict : ∀ n : Nat,
+    certificate.enumerate n < certificate.enumerate (n + 1)
+  run_step : ∀ n : Nat, FrontierRunStep certificate n
+
+def CoreLucasWitness (w : List Bool) : Prop :=
+  ∃ (family : GapFamily) (a b r : Int),
+    LucasPair a b ∧ 0 < r ∧
+      Core w = sequenceRange (vForFamily family a b r)
+
+/- The first signature depends on Dekking's Recursive Structure Theorem 7.5.
+That theorem is not formalized in the current import closure; this proposition
+records the required consequence without claiming the missing proof. -/
+def negative_tail_fiber_shape {w : List Bool} (hw : w ≠ [])
+    (hadmissible : AdmissibleNegativePrefix canonicalExpansion w) : Prop :=
+  ∀ N ∈ occurrenceSet canonicalExpansion w,
     (negativeDigit canonicalExpansion N 0 = true →
       negativeTailFiber N = ({N} : Set Nat)) ∧
     (negativeDigit canonicalExpansion N 0 = false →
       ∃! q : Nat, q ≤ N ∧ N ≤ q + 2 ∧
         negativeTailFiber N = {M | M = q ∨ M = q + 1 ∨ M = q + 2})
 
-def core_occurrence_unique_lift {w : List Bool} (hw : w ≠ []) : Prop :=
-    ∀ N ∈ occurrenceSet canonicalExpansion w,
-      ∃! qj : Nat × Nat,
-        qj.1 ∈ Core w ∧ qj.2 < prefixMultiplicity w ∧ N = qj.1 + qj.2
+def core_occurrence_unique_lift {w : List Bool} (hw : w ≠ [])
+    (hadmissible : AdmissibleNegativePrefix canonicalExpansion w)
+    (hfibers : negative_tail_fiber_shape hw hadmissible) : Prop :=
+  ∀ N ∈ occurrenceSet canonicalExpansion w,
+    ∃! qj : Nat × Nat,
+      qj.1 ∈ Core w ∧ qj.2 < prefixMultiplicity w ∧ N = qj.1 + qj.2
 
-def prefix_cylinder_to_frontier_return_word {w : List Bool} (hw : w ≠ [])
-    (hadmissible : AdmissibleNegativePrefix canonicalExpansion w) :
-    Prop :=
-  ∃ certificate : FrontierReturnWord,
-    FrontierReturnWordFor w certificate
+def prefix_phase_machine_total {w : List Bool} (hw : w ≠ [])
+    (hadmissible : AdmissibleNegativePrefix canonicalExpansion w) : Prop :=
+  ∃! certificate : FrontierPhaseCertificate, PrefixPhaseMachineFor w certificate
 
-def frontier_return_word_lucas_phase {w : List Bool}
+def frontier_step_semantics {w : List Bool} (hw : w ≠ [])
+    (hadmissible : AdmissibleNegativePrefix canonicalExpansion w)
+    (hfibers : negative_tail_fiber_shape hw hadmissible)
+    (hlift : core_occurrence_unique_lift hw hadmissible hfibers)
+    (hphase : prefix_phase_machine_total hw hadmissible) : Prop :=
+  ∃ certificate : FrontierReturnWord, FrontierReturnWordFor w certificate
+
+def lucas_pair_closed_under_growth {w : List Bool}
+    {certificate : FrontierReturnWord}
+    (hcertificate : FrontierReturnWordFor w certificate) : Prop :=
+  LucasPair certificate.a certificate.b ∧ 3 ≤ certificate.b
+
+def coreEnum (certificate : FrontierReturnWord) (n : Nat) : Int :=
+  certificate.enumerate n
+
+theorem core_enum_from_frontier {w : List Bool}
     {certificate : FrontierReturnWord}
     (hcertificate : FrontierReturnWordFor w certificate) :
-    Prop :=
-  LucasPair certificate.a certificate.b ∧
-    0 < certificate.first ∧ FrontierGapPhase certificate
+    (∀ n : Nat,
+      CarrySkipInvariant canonicalExpansion (frontierState certificate n)) ∧
+      ∀ n : Nat, 0 < certificate.enumerate n := by
+  constructor
+  · intro n
+    exact carrySkipRun_invariant canonicalExpansion (certificate.enumerate n)
+  · intro n
+    have hcore : certificate.enumerate n ∈ Core w := by
+      rw [← hcertificate.range_eq]
+      exact ⟨n, rfl⟩
+    exact hcore.1.1.1
 
-def frontier_return_word_to_core_lucas_family {w : List Bool}
+theorem core_enum_sound_complete {w : List Bool}
+    {certificate : FrontierReturnWord}
+    (hcertificate : FrontierReturnWordFor w certificate) :
+    Set.range certificate.enumerate = Core w ∧
+      Function.Injective certificate.enumerate :=
+  ⟨hcertificate.range_eq,
+    (strictMono_nat_of_lt_succ hcertificate.successor_strict).injective⟩
+
+def source_index_successor_delta {w : List Bool}
     {certificate : FrontierReturnWord}
     (hcertificate : FrontierReturnWordFor w certificate)
-    (hphase : LucasPair certificate.a certificate.b ∧
-      0 < certificate.first ∧ FrontierGapPhase certificate) :
-    Prop :=
-    Core w = sequenceRange
-      (vForFamily (frontierFamily certificate.phase)
-        certificate.a certificate.b certificate.first)
+    (hraw : (∀ n : Nat,
+      CarrySkipInvariant canonicalExpansion (frontierState certificate n)) ∧
+      ∀ n : Nat, 0 < certificate.enumerate n) : Prop :=
+  ∀ n : Nat,
+    (certificate.gap n = certificate.a ∨ certificate.gap n = certificate.b) ∧
+      FrontierRunStep certificate n
 
-def canonical_prefix_frontier_classification {w : List Bool} (hw : w ≠ [])
-    (hadmissible : AdmissibleNegativePrefix canonicalExpansion w) :
-    Prop :=
-  CoreLucasWitness w
+def six_phase_gap_stream {w : List Bool}
+    {certificate : FrontierReturnWord}
+    (hcertificate : FrontierReturnWordFor w certificate)
+    (hdelta : source_index_successor_delta hcertificate
+      (core_enum_from_frontier hcertificate)) : Prop :=
+  FrontierGapPhase certificate
+
+theorem core_enum_strictMono {w : List Bool}
+    {certificate : FrontierReturnWord}
+    (hcertificate : FrontierReturnWordFor w certificate) :
+    StrictMono certificate.enumerate :=
+  strictMono_nat_of_lt_succ hcertificate.successor_strict
+
+theorem sequence_eq_v_of_head_and_gaps {w : List Bool}
+    {certificate : FrontierReturnWord}
+    (hcertificate : FrontierReturnWordFor w certificate)
+    (hdelta : source_index_successor_delta hcertificate
+      (core_enum_from_frontier hcertificate))
+    (hstream : six_phase_gap_stream hcertificate hdelta) :
+    coreEnum certificate =
+      vForFamily (frontierFamily certificate.phase)
+        certificate.a certificate.b certificate.first := by
+  funext n
+  induction n with
+  | zero =>
+      cases frontierFamily certificate.phase <;>
+        rfl
+  | succ n ih =>
+      have hgap := hstream n
+      change coreEnum certificate (n + 1) - coreEnum certificate n =
+        (if familyLetter (frontierFamily certificate.phase) n then
+          certificate.a else certificate.b) at hgap
+      cases family : frontierFamily certificate.phase <;>
+        simp only [family, vForFamily, vF, vG, vH, gapSequence] at ih hgap ⊢ <;>
+        rw [← ih] <;>
+        omega
+
+theorem core_lucas_gap_classification {w : List Bool}
+    {certificate : FrontierReturnWord}
+    (hcertificate : FrontierReturnWordFor w certificate)
+    (hlucas : lucas_pair_closed_under_growth hcertificate)
+    (hraw : (∀ n : Nat,
+      CarrySkipInvariant canonicalExpansion (frontierState certificate n)) ∧
+      ∀ n : Nat, 0 < certificate.enumerate n)
+    (hsound : Set.range certificate.enumerate = Core w ∧
+      Function.Injective certificate.enumerate)
+    (hsequence : coreEnum certificate =
+      vForFamily (frontierFamily certificate.phase)
+        certificate.a certificate.b certificate.first) :
+    CoreLucasWitness w := by
+  refine ⟨frontierFamily certificate.phase, certificate.a, certificate.b,
+    certificate.first, hlucas.1, ?_, ?_⟩
+  · change (0 : Int) < (certificate.enumerate 0 : Int)
+    exact_mod_cast hraw.2 0
+  · rw [← hsound.1]
+    ext N
+    constructor
+    · rintro ⟨n, rfl⟩
+      exact ⟨n, congrFun hsequence n⟩
+    · rintro ⟨n, hn⟩
+      refine ⟨n, ?_⟩
+      have hcast : (certificate.enumerate n : Int) = (N : Int) :=
+        (congrFun hsequence n).trans hn.symm
+      exact_mod_cast hcast
+
+def v_translate_initial_value (family : GapFamily) (a b r : Int) : Prop :=
+  ∀ j : Nat,
+    (fun n => vForFamily family a b r n + (j : Int)) =
+      vForFamily family a b (r + (j : Int))
+
+theorem v_translate_initial_value_proved (family : GapFamily) (a b r : Int) :
+    v_translate_initial_value family a b r := by
+  intro j
+  funext n
+  cases family <;> induction n with
+  | zero => rfl
+  | succ n ih =>
+      simp only [vForFamily, vF, vG, vH, gapSequence] at ih ⊢
+      rw [← ih]
+      ring
+
+def three_arms_pairwise_disjoint {w : List Bool} (hw : w ≠ [])
+    (hadmissible : AdmissibleNegativePrefix canonicalExpansion w)
+    (hfibers : negative_tail_fiber_shape hw hadmissible)
+    (hlift : core_occurrence_unique_lift hw hadmissible hfibers)
+    {family : GapFamily} {a b r : Int}
+    (hcore : LucasPair a b ∧ 0 < r ∧
+      Core w = sequenceRange (vForFamily family a b r))
+    (htranslate : v_translate_initial_value family a b r) : Prop :=
+  w.head? = some false →
+    ∀ i j : Fin 3, i ≠ j →
+      Disjoint
+        (sequenceRange (vForFamily family a b (r + (i.1 : Int))))
+        (sequenceRange (vForFamily family a b (r + (j.1 : Int))))
 
 def occurrenceSet_lucas_gap_classification {w : List Bool} (hw : w ≠ [])
-    (hadmissible : AdmissibleNegativePrefix canonicalExpansion w) :
-    Prop :=
+    (hadmissible : AdmissibleNegativePrefix canonicalExpansion w)
+    (hfibers : negative_tail_fiber_shape hw hadmissible)
+    (hlift : core_occurrence_unique_lift hw hadmissible hfibers)
+    {family : GapFamily} {a b r : Int}
+    (hcore : LucasPair a b ∧ 0 < r ∧
+      Core w = sequenceRange (vForFamily family a b r))
+    (htranslate : v_translate_initial_value family a b r)
+    (hdisjoint : three_arms_pairwise_disjoint hw hadmissible hfibers hlift
+      hcore htranslate) : Prop :=
   ∃ (family : GapFamily) (a b r : Int),
       LucasPair a b ∧ 0 < r ∧
       if w.head? = some true then
@@ -228,137 +444,140 @@ def occurrenceSet_lucas_gap_classification {w : List Bool} (hw : w ≠ [])
           ⋃ j : Fin 3,
             sequenceRange (vForFamily family a b (r + (j.1 : Int)))
 
-/-- The current return-word existence and phase signatures cannot both be
-proved: `FrontierReturnWordFor` does not constrain the parameter fields. -/
-theorem prefix_and_phase_signatures_inconsistent
+/-- Whole-chain elaboration check.  Each open provider consumes only frozen
+interfaces or conclusions produced earlier in the fifteen-node chain. -/
+theorem classification_chain_signatures_consistent
     {w : List Bool} (hw : w ≠ [])
     (hadmissible : AdmissibleNegativePrefix canonicalExpansion w)
-    (hprefix : prefix_cylinder_to_frontier_return_word hw hadmissible)
-    (hphase : ∀ {certificate : FrontierReturnWord},
+    (hfibers : negative_tail_fiber_shape hw hadmissible)
+    (hlift : core_occurrence_unique_lift hw hadmissible hfibers)
+    (hphase : prefix_phase_machine_total hw hadmissible)
+    (hfrontier : frontier_step_semantics hw hadmissible hfibers hlift hphase)
+    (hlucas : ∀ {certificate : FrontierReturnWord},
       (hcertificate : FrontierReturnWordFor w certificate) →
-        frontier_return_word_lucas_phase hcertificate) :
-    False := by
-  rcases hprefix with ⟨certificate, hcertificate⟩
-  let bad : FrontierReturnWord :=
-    { phase := certificate.phase
-      a := 0
-      b := 0
-      first := 0
-      enumerate := certificate.enumerate
-      gap := certificate.gap }
-  have hbad : FrontierReturnWordFor w bad := hcertificate
-  have hforced := hphase hbad
-  change LucasPair 0 0 ∧ 0 < (0 : Int) ∧ FrontierGapPhase bad at hforced
-  omega
+        lucas_pair_closed_under_growth hcertificate)
+    (hdelta : ∀ {certificate : FrontierReturnWord},
+      (hcertificate : FrontierReturnWordFor w certificate) →
+      source_index_successor_delta hcertificate
+        (core_enum_from_frontier hcertificate))
+    (hstream : ∀ {certificate : FrontierReturnWord},
+      (hcertificate : FrontierReturnWordFor w certificate) →
+      (delta : source_index_successor_delta hcertificate
+        (core_enum_from_frontier hcertificate)) →
+      six_phase_gap_stream hcertificate delta)
+    (harms : ∀ {family : GapFamily} {a b r : Int},
+      (hcore : LucasPair a b ∧ 0 < r ∧
+        Core w = sequenceRange (vForFamily family a b r)) →
+      (htranslate : v_translate_initial_value family a b r) →
+      three_arms_pairwise_disjoint hw hadmissible hfibers hlift hcore htranslate)
+    (hfinal : ∀ {family : GapFamily} {a b r : Int},
+      (hcore : LucasPair a b ∧ 0 < r ∧
+        Core w = sequenceRange (vForFamily family a b r)) →
+      (htranslate : v_translate_initial_value family a b r) →
+      (hdisjoint : three_arms_pairwise_disjoint hw hadmissible hfibers hlift
+        hcore htranslate) →
+      occurrenceSet_lucas_gap_classification hw hadmissible hfibers hlift
+        hcore htranslate hdisjoint) :
+    ∃ (family : GapFamily) (a b r : Int),
+      LucasPair a b ∧ 0 < r ∧
+      if w.head? = some true then
+        occurrenceSet canonicalExpansion w =
+          sequenceRange (vForFamily family a b r)
+      else
+        occurrenceSet canonicalExpansion w =
+          ⋃ j : Fin 3,
+            sequenceRange (vForFamily family a b (r + (j.1 : Int))) := by
+  rcases hfrontier with ⟨certificate, hcertificate⟩
+  have hraw := core_enum_from_frontier hcertificate
+  have hsound := core_enum_sound_complete hcertificate
+  have hdelta' := hdelta hcertificate
+  have hstream' := hstream hcertificate hdelta'
+  have hsequence := sequence_eq_v_of_head_and_gaps hcertificate hdelta' hstream'
+  have hcoreWitness := core_lucas_gap_classification hcertificate
+    (hlucas hcertificate) hraw hsound hsequence
+  rcases hcoreWitness with ⟨family, a, b, r, hpair, hpositive, hcore⟩
+  have htranslate := v_translate_initial_value_proved family a b r
+  have hcoreData : LucasPair a b ∧ 0 < r ∧
+      Core w = sequenceRange (vForFamily family a b r) :=
+    ⟨hpair, hpositive, hcore⟩
+  have hdisjoint := harms hcoreData htranslate
+  have hclassified := hfinal hcoreData htranslate hdisjoint
+  simpa [occurrenceSet_lucas_gap_classification] using hclassified
 
 /-!
 The source question asks for an exact classification of occurrence sequences
 for finite negative-position prefix cylinders in the two-sided base-phi
-expansion. The regular `BasePhiNegative` module owns the integer-pair value
-equation, non-adjacent digits, and the paper's `F`, `G`, and `H` gap families.
-The finite scan is evidence for this classification, not its proof.
+expansion. The finite scan is evidence only; it is not a proof of this
+classification.
 
-## Signature consistency obstruction
+## Interface correction record (2026-08-21)
 
-`FrontierReturnWordFor` constrains only `enumerate` and `gap`.  Replacing the
-same certificate's `a`, `b`, and `first` fields by zero therefore preserves
-that predicate.  The next target quantifies over every such certificate and
-would force `0 < first`.  The kernel-checked theorem
-`prefix_and_phase_signatures_inconsistent` records that the return-word
-existence and phase targets, as currently typed, imply `False`.  The chain
-cannot be completed without correcting that interface; strengthening the
-predicate or weakening the theorem here would not be a proof of the recorded
-signatures.
+The fifteen chain signatures below were corrected one by one. Return words now
+derive `first` and `gap` from the enumerator, bind their phase certificate to
+`PrefixPhaseMachineFor`, bind the boundary to `carrySkipRun`, and require the
+actual `CarrySkipTransition` paths. Thus the phase/return-word interface cannot
+silently replace the values consumed by later nodes.
 
-## Existing interface status
+1. `negative_tail_fiber_shape`: takes the nonempty prefix and admissibility
+   hypotheses and records the singleton/three-point fiber consequence of
+   Dekking Recursive Structure Theorem 7.5.
+2. `core_occurrence_unique_lift`: consumes the fiber-shape conclusion.
+3. `prefix_phase_machine_total`: exposes a unique phase certificate generated
+   by the ten-rule prefix machine.
+4. `frontier_step_semantics`: consumes the preceding fiber, lift, and phase
+   interfaces and produces a bound `FrontierReturnWord`.
+5. `lucas_pair_closed_under_growth`: consumes the bound return word and states
+   the Lucas-pair/growth invariant.
+6. `core_enum_from_frontier`: derives carry invariants and positivity from the
+   actual enumerator; this node is directly proved.
+7. `core_enum_sound_complete`: derives range equality and injectivity; directly
+   proved from the return-word fields.
+8. `source_index_successor_delta`: requires each enumerator gap to be one of
+   the certificate pair and each successor to follow the frozen carry path.
+9. `six_phase_gap_stream`: derives the phase gap stream from that delta.
+10. `core_enum_strictMono`: derives global strict monotonicity from the return
+    word's successor-step order; directly proved.
+11. `sequence_eq_v_of_head_and_gaps`: reconstructs the family sequence from
+    the derived head and gaps; directly proved.
+12. `core_lucas_gap_classification`: translates that sequence and Lucas data to
+    `CoreLucasWitness`; directly proved.
+13. `v_translate_initial_value`: is directly proved by induction for all three
+    families (`v_translate_initial_value_proved`).
+14. `three_arms_pairwise_disjoint`: consumes the corrected lift and translation
+    interfaces.
+15. `occurrenceSet_lucas_gap_classification`: consumes the three-arm result and
+    states the final one-arm/three-arm classification.
 
-The canonical module now closes the two-sided existence/uniqueness bridge, and
-the carry module closes the deterministic carry/skip, raw-value, and
-Zeckendorf membership interfaces. This file exposes the resulting reduction:
-every `BasePhiNegativeExpansion` has the same digit function as the chosen
-canonical expansion, so its occurrence sets can be compared without carrying a
-choice of representation through the classification proof.
+Two additional inconsistencies were found while aligning the record. First, the
+old file exposed only seven compressed `Prop` obligations even though the
+surrounding reconnaissance prose described fifteen typed chain nodes. Second,
+`carrySkipStep` and its state machine are not in `BasePhiNegativeBridge.lean`;
+the frozen definitions are in `BasePhiCarryTransducer.lean`, which is now the
+import and source used by this file.
 
-The declarations in `BasePhiNegative` retain their exact scope.
-`admissible_negative_prefix_iff_occurrence_set_nonempty` is an `rfl` interface
-between two definitions. The three `vF_succ`/`vG_succ`/`vH_succ` lemmas are
-definitional recurrence interfaces. The two `single_digit_*` lemmas are only
-the depth-one Bool partition and disjointness theorem; they do not identify an
-occurrence set with an `F`, `G`, or `H` formula. The remaining classification
-obligation is the missing return-word/first-negative-digit theorem connecting
-the canonical carry orbit to those three families.
+The first node remains explicitly dependent on Dekking 7.5, which is not yet
+formalized in this import closure. That missing theorem is recorded, not
+bypassed. No new non-`X_Frontier` `sorry` was introduced; the final theorem
+below remains the sole frontier placeholder.
 
-## Executable obstruction targets
+## Closed supporting interfaces
 
-1. Construct the canonical two-sided expansion and prove uniqueness. **Closed
-   in `BasePhiCanonicalExpansion`.** Finite
-   support is carried by `Int →₀ Nat`; the statement exposes the binary,
-   non-adjacency, and exact-value invariants rather than hiding them in a choice:
+`BasePhiCanonicalExpansion` supplies the unique two-sided digit/value bridge.
+`BasePhiCarryTransducer` supplies the deterministic carry/skip state machine
+used by `frontierState` and `FrontierRunStep`. The `BasePhiNegative` definitions
+retain their original scope; this file only binds the open chain to those
+frozen interfaces.
 
-```lean
-theorem basePhiExpansion_existsUnique :
-    ∀ N : Nat, ∃! digits : Int →₀ Nat,
-      (∀ i : Int, digits i ≤ 1) ∧
-      (∀ i : Int, digits i = 1 → digits (i + 1) = 0) ∧
-      basePhiValue digits = (N : D5.S0.Carrier.GoldenInt)
-```
+## Status of open providers
 
-2. Classify a complete negative-tail fiber as either a singleton or three
-   consecutive positive inputs. **Open semantic target, executable as
-   `negative_tail_fiber_shape`.** This is a carry/skip boundary-state theorem;
-   it does not require a Beatty formula for the first negative digit.
+The semantic providers remain open at their declared types. In particular,
+`negative_tail_fiber_shape` is the carry/skip boundary theorem and retains its
+explicit Dekking 7.5 dependency; no missing theorem is replaced by a weaker
+claim or a hidden assumption.
 
-```lean
-theorem negative_tail_fiber_shape (N : Nat) (hN : 0 < N) :
-    (negativeDigit canonicalExpansion N 0 = true →
-      negativeTailFiber N = ({N} : Set Nat)) ∧
-    (negativeDigit canonicalExpansion N 0 = false →
-      ∃! q : Nat, q ≤ N ∧ N ≤ q + 2 ∧
-        negativeTailFiber N = {M | M = q ∨ M = q + 1 ∨ M = q + 2})
-```
-
-3. Enumerate the starts of those fibers by the finite frontier quotient and
-   classify its gap stream by one shared adjacent Lucas pair. **Open connector,
-   split into `prefix_cylinder_to_frontier_return_word`,
-   `frontier_return_word_lucas_phase`, and
-   `frontier_return_word_to_core_lucas_family`.** The explicit
-   `FrontierReturnWord` certificate targets `Core w`, not target-integer
-   successor arithmetic.
-
-```lean
-theorem prefix_cylinder_to_frontier_return_word {w : List Bool} (hw : w ≠ [])
-    (hadmissible : AdmissibleNegativePrefix canonicalExpansion w) :
-    ∃ certificate : FrontierReturnWord,
-      FrontierReturnWordFor w certificate
-
-theorem frontier_return_word_lucas_phase {w : List Bool}
-    {certificate : FrontierReturnWord}
-    (hcertificate : FrontierReturnWordFor w certificate) :
-    LucasPair certificate.a certificate.b ∧
-      0 < certificate.first ∧ FrontierGapPhase certificate
-
-theorem frontier_return_word_to_core_lucas_family {w : List Bool}
-    {certificate : FrontierReturnWord}
-    (hcertificate : FrontierReturnWordFor w certificate)
-    (hphase : LucasPair certificate.a certificate.b ∧
-      0 < certificate.first ∧ FrontierGapPhase certificate) :
-    Core w = sequenceRange
-      (vForFamily (frontierFamily certificate.phase)
-        certificate.a certificate.b certificate.first)
-```
-
-4. Lift the unique core representative back to one arm or three disjoint
-   translates sharing the same family and Lucas pair. **Open end-to-end target,
-   executable as `core_occurrence_unique_lift` and
-   `occurrenceSet_lucas_gap_classification`.** These declarations make the full
-   route to `TridentWitness` type-checkable; none is reported as proved here.
-
-Assault checkpoint (2026-08-21): the canonical two-sided
-existence/uniqueness bridge and the carry transducer's structural lemmas are
-closed. The complete-fiber shape, core frontier classification, unique lift,
-and final shared-family classification now have executable Lean signatures and
-remain open. The finite scan is still evidence only; no theorem claim is
-promoted by this checkpoint.
+The full theorem still has its `sorry` placeholder below, inside `X_Frontier`.
+All other declarations above are signature checks or direct proofs; the
+frontier semantic providers are intentionally not claimed closed.
 -/
 
 /- THEORIST_FRONTIER_CONTRACT_V2
