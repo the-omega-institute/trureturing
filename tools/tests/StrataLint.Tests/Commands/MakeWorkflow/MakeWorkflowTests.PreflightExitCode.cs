@@ -104,15 +104,14 @@ public sealed partial class MakeWorkflowTests
     }
 
     [Fact]
-    public void PreflightRejectsStaleValues()
+    public void R15PreflightIgnoresStaleValuesProjection()
     {
         if (OperatingSystem.IsWindows()) return;
 
         var result = RunPreflightScenario("stale-values", TestRepositoryLayout.FindRoot());
 
-        // The stale-values shim exits 44 from `emit-values --check`; scribe-content-checks.sh
-        // runs under `set -e`, so preflight must surface exactly that code.
-        Assert.Equal(44, result.ExitCode);
+        // The shim still exits 44 if the deleted freshness ritual is invoked.
+        Assert.Equal(0, result.ExitCode);
     }
 
     [System.Runtime.Versioning.UnsupportedOSPlatform("windows")]

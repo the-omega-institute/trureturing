@@ -333,6 +333,21 @@ public sealed class StatementProjectionPilotTests
             StatementProjectionReconciliation.Verify(repository.Path, repository.Catalog()));
     }
 
+    [Theory]
+    [InlineData("notes/r15-unrelated.txt", false)]
+    [InlineData("Blueprint/D5/Probe.md", false)]
+    [InlineData("D5/S0/Carrier/Probe.lean", false)]
+    [InlineData("Golden/Projection/statement-projection-pilot-v1.json", true)]
+    [InlineData("tools/StrataLint.Scribe/Projection/StatementProjectionReconciliation.cs", true)]
+    public void R15StatementProjectionReplayRunsOnlyForFixtureOrImplementationDelta(
+        string changedPath,
+        bool expected)
+    {
+        Assert.Equal(
+            expected,
+            StatementProjectionReconciliation.IsAffectedBy(RawChangeSet.Create([changedPath])));
+    }
+
     [Fact]
     public void ProjectionsCheckReturnsZeroForMatchingPinnedFixtures()
     {
