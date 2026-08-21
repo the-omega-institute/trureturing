@@ -36,6 +36,9 @@ jobs:
         uses: actions/checkout@v4
         with:
           ref: ${{ github.event.workflow_run.head_sha }}
+          # 剥夺步骤要对 HEAD^1 做烟测，而这里检出的是一个已合入的普通提交，
+          # 不是 merge ref；默认的 fetch-depth: 1 只取一个提交，父提交不可达。
+          fetch-depth: 2
 
       - name: Strip checkout remote state
         if: steps.checkout-publish.outcome == 'success'
