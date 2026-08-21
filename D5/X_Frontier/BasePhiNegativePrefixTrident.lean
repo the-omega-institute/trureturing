@@ -228,12 +228,47 @@ def occurrenceSet_lucas_gap_classification {w : List Bool} (hw : w ≠ [])
           ⋃ j : Fin 3,
             sequenceRange (vForFamily family a b (r + (j.1 : Int)))
 
+/-- The current return-word existence and phase signatures cannot both be
+proved: `FrontierReturnWordFor` does not constrain the parameter fields. -/
+theorem prefix_and_phase_signatures_inconsistent
+    {w : List Bool} (hw : w ≠ [])
+    (hadmissible : AdmissibleNegativePrefix canonicalExpansion w)
+    (hprefix : prefix_cylinder_to_frontier_return_word hw hadmissible)
+    (hphase : ∀ {certificate : FrontierReturnWord},
+      (hcertificate : FrontierReturnWordFor w certificate) →
+        frontier_return_word_lucas_phase hcertificate) :
+    False := by
+  rcases hprefix with ⟨certificate, hcertificate⟩
+  let bad : FrontierReturnWord :=
+    { phase := certificate.phase
+      a := 0
+      b := 0
+      first := 0
+      enumerate := certificate.enumerate
+      gap := certificate.gap }
+  have hbad : FrontierReturnWordFor w bad := hcertificate
+  have hforced := hphase hbad
+  change LucasPair 0 0 ∧ 0 < (0 : Int) ∧ FrontierGapPhase bad at hforced
+  omega
+
 /-!
 The source question asks for an exact classification of occurrence sequences
 for finite negative-position prefix cylinders in the two-sided base-phi
 expansion. The regular `BasePhiNegative` module owns the integer-pair value
 equation, non-adjacent digits, and the paper's `F`, `G`, and `H` gap families.
 The finite scan is evidence for this classification, not its proof.
+
+## Signature consistency obstruction
+
+`FrontierReturnWordFor` constrains only `enumerate` and `gap`.  Replacing the
+same certificate's `a`, `b`, and `first` fields by zero therefore preserves
+that predicate.  The next target quantifies over every such certificate and
+would force `0 < first`.  The kernel-checked theorem
+`prefix_and_phase_signatures_inconsistent` records that the return-word
+existence and phase targets, as currently typed, imply `False`.  The chain
+cannot be completed without correcting that interface; strengthening the
+predicate or weakening the theorem here would not be a proof of the recorded
+signatures.
 
 ## Existing interface status
 
