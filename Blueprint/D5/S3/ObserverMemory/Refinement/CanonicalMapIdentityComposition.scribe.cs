@@ -43,9 +43,6 @@ internal sealed class CanonicalMapIdentityCompositionDocument : IScribeDocumentD
     private static Formula Kappa(Formula left, Formula right) =>
         Subscript(F.Id("kappa"), Seq(left, Comma, Sp, right));
 
-    private static Formula Apply(Formula function, Formula argument) =>
-        Seq(function, Open, argument, Close);
-
     private static Formula CanonicalMapFormula()
     {
         Formula q = F.Id("q");
@@ -62,7 +59,7 @@ internal sealed class CanonicalMapIdentityCompositionDocument : IScribeDocumentD
             Call("Refines", q, r), Sp, Land, Sp, Call("Refines", r, s),
             Sp, Rightarrow, Sp,
             Kappa(q, s), Sp, Eq, Sp,
-            Apply(Kappa(r, s), Apply(Kappa(q, r), F.Id("x"))),
+            Kappa(r, s), Sp, Circ, Sp, Kappa(q, r),
             Close, Dot));
     }
 }
