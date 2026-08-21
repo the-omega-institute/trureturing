@@ -125,9 +125,10 @@ jobs:
         run: |
           set -euo pipefail
           {
-            echo '## Lean build cache: nothing to publish'
+            echo '## Lean build cache: no archive for this address'
             echo
-            echo 'No build-layer cache exists for this exact address, so this commit has'
-            echo 'no artifacts to republish. The archive is an accelerator, never admission'
-            echo 'evidence, so an absent publication is not a failure.'
+            echo 'The build layer for this exact content address is absent from the cache,'
+            echo 'so this run has nothing to republish. Consumers resolve their cache from'
+            echo 'a donor worktree or a local build, as they do for any address that has'
+            echo 'not been published.'
           } >> "$GITHUB_STEP_SUMMARY"
