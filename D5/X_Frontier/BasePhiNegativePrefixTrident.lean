@@ -7,6 +7,7 @@
 
 import D5.S1.Words.Expansions.BasePhiCarryTransducer
 import D5.S1.Words.Expansions.BasePhiCanonicalExpansion
+import D5.S1.Words.Expansions.BasePhiTailFiber
 
 namespace D5.X_Frontier.BasePhiNegativePrefixTrident
 
@@ -258,9 +259,9 @@ def CoreLucasWitness (w : List Bool) : Prop :=
     LucasPair a b ∧ 0 < r ∧
       Core w = sequenceRange (vForFamily family a b r)
 
-/- The first signature depends on Dekking's Recursive Structure Theorem 7.5.
-That theorem is not formalized in the current import closure; this proposition
-records the required consequence without claiming the missing proof. -/
+/- This is the frontier-facing signature of the singleton/trident consequence
+of Dekking's Recursive Structure Theorem 7.5. The theorem immediately below
+supplies its proof from the cropped S1 formalization. -/
 def negative_tail_fiber_shape {w : List Bool} (hw : w ≠ [])
     (hadmissible : AdmissibleNegativePrefix canonicalExpansion w) : Prop :=
   ∀ N ∈ occurrenceSet canonicalExpansion w,
@@ -269,6 +270,17 @@ def negative_tail_fiber_shape {w : List Bool} (hw : w ≠ [])
     (negativeDigit canonicalExpansion N 0 = false →
       ∃! q : Nat, q ≤ N ∧ N ≤ q + 2 ∧
         negativeTailFiber N = {M | M = q ∨ M = q + 1 ∨ M = q + 2})
+
+theorem negative_tail_fiber_shape_proved {w : List Bool} (hw : w ≠ [])
+    (hadmissible : AdmissibleNegativePrefix canonicalExpansion w) :
+    negative_tail_fiber_shape hw hadmissible := by
+  intro N hN
+  have hshape :=
+    D5.S1.Words.Expansions.BasePhiTailFiber.negative_tail_fiber_shape
+      canonicalExpansion N hN.1 ⟨w.length, hN.2.1⟩
+  simpa [negativeTailFiber, SameNegativeTail,
+    D5.S1.Words.Expansions.BasePhiRecursiveStructure.negativeTailFiber,
+    D5.S1.Words.Expansions.BasePhiRecursiveStructure.SameNegativeTail] using hshape
 
 def core_occurrence_unique_lift {w : List Bool} (hw : w ≠ [])
     (hadmissible : AdmissibleNegativePrefix canonicalExpansion w)

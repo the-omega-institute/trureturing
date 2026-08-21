@@ -29,6 +29,26 @@ positive side.
 This note is the literature anchor for the problem candidate
 `Problems/base-phi-negative-prefix-trident.md`.
 
+The proved recursive input used by the formalization is Theorem 7.5, not the
+later complete prefix-family conjecture. On PDF page 16, Theorem 7.5 gives the
+`gamma^-` recursion: its odd branches append `10`, `0010`, and `00` in
+Equations (15a-c), while its even branches append `00`, `01`, and `01` in
+Equations (16a-c). Section 7.1 defines equal complete negative tails as either
+singletons or three consecutive inputs ("tridents"); Lemma 7.1 proves the
+boundary trident splitting by induction from Theorem 3.3. Section 7.2 then
+starts the conjectural classification of arbitrary finite negative prefixes,
+which is strictly stronger and is not claimed by the present formalization.
+
+The Lean proof takes only the cropped algebraic consequence needed by the
+frontier: split a canonical expansion at exponent zero, identify its
+nonnegative GoldenInt coordinate through the pinned Zeckendorf/Beatty bridge,
+bound the nonempty negative tail on the two sides of `phi^-1`, classify the
+corresponding floor fiber, and use the canonical seam digit to reduce the
+upper-side two-coordinate fiber to a singleton. On the lower side, canonical
+tail gluing realizes all three consecutive coordinates. This is equivalent to
+the singleton/trident consequence of the recursive append structure; it does
+not formalize the paper's full interval recursion or prefix-family panorama.
+
 ## Search log
 
 - 2026-08-18: Queried the arXiv Atom API for `id_list=2305.08349`. HTTP 200 with
@@ -38,6 +58,11 @@ This note is the literature anchor for the problem candidate
   `arxiv:doi` and no `arxiv:journal_ref`, so the arXiv-assigned DOI is used.
 - 2026-08-18: Issued `HEAD https://doi.org/10.48550/arXiv.2305.08349`, which
   returned HTTP 302 redirecting to `https://arxiv.org/abs/2305.08349`.
+- 2026-08-22: Searched arXiv for `2305.08349`, fetched
+  `https://arxiv.org/pdf/2305.08349v1`, and extracted the theorem text. The
+  PDF fetch and arXiv API query both returned HTTP 200. Located Theorem 7.5 on
+  PDF page 16, Lemma 7.1 on page 15, and the conjectural finite-prefix program
+  at the start of Section 7.2 on page 20.
 
 No literature search for a later resolution of the conjecture was performed; the
 open status recorded in the problem candidate is the status stated in this
