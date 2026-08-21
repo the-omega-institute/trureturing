@@ -52,6 +52,7 @@ internal static class GitIndexRepositoryFiles
         }
 
         return paths
+            .Where(static pair => !RepositoryPathPolicy.IsUngovernedAgentConfig(pair.Key))
             .OrderBy(static pair => pair.Key, StringComparer.Ordinal)
             .Select(static pair => (RelativePath: pair.Key, Mode: pair.Value))
             .ToArray();
