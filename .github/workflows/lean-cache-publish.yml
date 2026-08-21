@@ -50,10 +50,13 @@ jobs:
           remote_count="$(git -C "$CHECKOUT_PATH" remote | wc -l)"
           remote_ref_count="$(git -C "$CHECKOUT_PATH" for-each-ref --format='%(refname)' refs/remotes/ | wc -l)"
           if [[ "$remote_count" -ne 0 || "$remote_ref_count" -ne 0 ]]; then
-            echo "::error title=remote state survived stripping::remotes=$remote_count refs=$remote_ref_count"
+            printf '%s\n' "checkout still exposes remotes or remote-tracking refs" >&2
             exit 1
           fi
-          git -C "$CHECKOUT_PATH" rev-parse HEAD > /dev/null
+          head_sha="$(git -C "$CHECKOUT_PATH" rev-parse HEAD)"
+          base_sha="$(git -C "$CHECKOUT_PATH" rev-parse HEAD^1)"
+          test -n "$head_sha"
+          test -n "$base_sha"
 
       - name: Install the pinned Lean toolchain
         shell: bash
