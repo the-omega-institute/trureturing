@@ -6,7 +6,7 @@ Canonical predictive-completion maps satisfy identity and composition.
 
 **Theorem 1.1 (Canonical maps compose and have identities).**
 
-$$\forall q, kappa_{q, q} = id \land\ \forall q, r, s,\ \operatorname{Refines}\left(q, r\right) \land \operatorname{Refines}\left(r, s\right) \Rightarrow kappa_{q, s} = kappa_{r, s}(kappa_{q, r}(x)).$$
+$$(\forall q, kappa_{q, q} = id) \land\ (\forall q, r, s,\ \operatorname{Refines}\left(q, r\right) \land \operatorname{Refines}\left(r, s\right) \Rightarrow kappa_{q, s} = kappa_{r, s}(kappa_{q, r}(x))).$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/ObserverMemory/Refinement/CanonicalMapIdentityComposition.canonical_map_identity_and_composition` (`✓ std3`). ∎
 

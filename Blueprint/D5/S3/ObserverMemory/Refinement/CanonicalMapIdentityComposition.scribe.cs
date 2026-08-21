@@ -54,12 +54,15 @@ internal sealed class CanonicalMapIdentityCompositionDocument : IScribeDocumentD
         Formula identity = F.Id("id");
 
         return Disp(Seq(
+            Open,
             Forall, Sp, q, Comma, Sp,
-            Kappa(q, q), Sp, Eq, Sp, identity, Sp, Land, Esc,
+            Kappa(q, q), Sp, Eq, Sp, identity,
+            Close, Sp, Land, Esc, Open,
             Forall, Sp, q, Comma, Sp, r, Comma, Sp, s, Comma, Esc,
             Call("Refines", q, r), Sp, Land, Sp, Call("Refines", r, s),
             Sp, Rightarrow, Sp,
             Kappa(q, s), Sp, Eq, Sp,
-            Apply(Kappa(r, s), Apply(Kappa(q, r), F.Id("x"))), Dot));
+            Apply(Kappa(r, s), Apply(Kappa(q, r), F.Id("x"))),
+            Close, Dot));
     }
 }
