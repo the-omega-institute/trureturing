@@ -5,7 +5,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S0.History.Consensus;
 internal sealed class InlineConsensusProtocolCoreDocument : IScribeDocumentDefinition
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Finite protocol observations, digest-valued goal artifacts, implementation-aware dispatch plans, and fail-closed routers.",
+        "Finite protocol observations, a uniform independence test, and the unique governing algebra for dispatch and routing.",
         H("Inline Consensus Protocol Core"),
         Blocks(
             Describe.Lean(
@@ -98,5 +98,38 @@ internal sealed class InlineConsensusProtocolCoreDocument : IScribeDocumentDefin
                         + "exact roster it returns permitClaim when all three results are satisfied, "
                         + "continueAgainstGap when some result is unsatisfied but not all are "
                         + "satisfied, and escalateEvidenceGap otherwise."))),
+                DescribeRole.Definition),
+            Describe.Lean(
+                DescribeId.Create("uniform-independence-is-a-two-world-counting-equation"),
+                DeclarationHandle.Create(
+                    "D5/S0/History/Consensus/InlineConsensusProtocolCore.UniformIndependent"),
+                H("Uniform independence is a two-world counting equation"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text(
+                        "UniformIndependent first second states that jointTrueWorldCount first second "
+                        + "times Fintype.card Bool equals trueWorldCount first times trueWorldCount "
+                        + "second. The counts range over the two Boolean worlds, so this is an actual "
+                        + "independence predicate rather than a comparison of carrier labels."))),
+                DescribeRole.Definition),
+            Describe.Lean(
+                DescribeId.Create("the-inline-consensus-model-is-the-governing-algebra"),
+                DeclarationHandle.Create(
+                    "D5/S0/History/Consensus/InlineConsensusProtocolCore.InlineConsensusModel"),
+                H("The inline-consensus model is the governing algebra"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text(
+                        "InlineConsensusModel is the single record consumed by the protocol semantics. "
+                        + "It stores stageRelation, fallbackSelector, dispatchShape, completionPredicate, "
+                        + "designRoute, reviewRoute, terminationRoute, and rosterContract. The concrete "
+                        + "inlineConsensusModel fills those eight projections.")),
+                    Paragraph(Text(
+                        "Transition is not a parallel primitive field of this record. The later "
+                        + "InlineConsensusModel.transition definition derives it as ProtocolStep model, "
+                        + "and actions, authorization predicates, hazards, and route-transition witnesses "
+                        + "are parameterized by the same model projections."))),
                 DescribeRole.Definition))));
 }

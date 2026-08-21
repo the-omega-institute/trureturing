@@ -2,7 +2,7 @@
 
 ## Abstract
 
-Finite protocol observations, digest-valued goal artifacts, implementation-aware dispatch plans, and fail-closed routers.
+Finite protocol observations, a uniform independence test, and the unique governing algebra for dispatch and routing.
 
 **Definition 1.1 (Carrier completion observations).**
 
@@ -78,11 +78,39 @@ Lean statement: `D5/S0/History/Consensus/InlineConsensusProtocolCore.termination
 
 terminationRouter rejects a non-exact roster as rejectFakeConsensus. For an exact roster it returns permitClaim when all three results are satisfied, continueAgainstGap when some result is unsatisfied but not all are satisfied, and escalateEvidenceGap otherwise.
 
+**Definition 1.7 (Uniform independence is a two-world counting equation).**
+
+Lean statement: `D5/S0/History/Consensus/InlineConsensusProtocolCore.UniformIndependent`
+
+*Formalization.* `D5/S0/History/Consensus/InlineConsensusProtocolCore.UniformIndependent` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+UniformIndependent first second states that jointTrueWorldCount first second times Fintype.card Bool equals trueWorldCount first times trueWorldCount second. The counts range over the two Boolean worlds, so this is an actual independence predicate rather than a comparison of carrier labels.
+
+**Definition 1.8 (The inline-consensus model is the governing algebra).**
+
+Lean statement: `D5/S0/History/Consensus/InlineConsensusProtocolCore.InlineConsensusModel`
+
+*Formalization.* `D5/S0/History/Consensus/InlineConsensusProtocolCore.InlineConsensusModel` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+InlineConsensusModel is the single record consumed by the protocol semantics. It stores stageRelation, fallbackSelector, dispatchShape, completionPredicate, designRoute, reviewRoute, terminationRoute, and rosterContract. The concrete inlineConsensusModel fills those eight projections.
+
+Transition is not a parallel primitive field of this record. The later InlineConsensusModel.transition definition derives it as ProtocolStep model, and actions, authorization predicates, hazards, and route-transition witnesses are parameterized by the same model projections.
+
 ## References
 
 - Truth anchor: `D5/S0/History/Consensus/InlineConsensusProtocolCore.CompletionObservation`
 - Truth anchor: `D5/S0/History/Consensus/InlineConsensusProtocolCore.DispatchPlan`
 - Truth anchor: `D5/S0/History/Consensus/InlineConsensusProtocolCore.GoalArtifact`
+- Truth anchor: `D5/S0/History/Consensus/InlineConsensusProtocolCore.InlineConsensusModel`
+- Truth anchor: `D5/S0/History/Consensus/InlineConsensusProtocolCore.UniformIndependent`
 - Truth anchor: `D5/S0/History/Consensus/InlineConsensusProtocolCore.reviewRouter`
 - Truth anchor: `D5/S0/History/Consensus/InlineConsensusProtocolCore.terminationRouter`
 - Truth anchor: `D5/S0/History/Consensus/InlineConsensusProtocolCore.thinkingSituation`

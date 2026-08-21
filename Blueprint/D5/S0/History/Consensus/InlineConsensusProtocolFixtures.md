@@ -2,11 +2,11 @@
 
 ## Abstract
 
-Router-ready design, review, and termination states admit routed protocol transitions.
+Router-ready states admit route-transition witnesses governed by inlineConsensusModel.
 
 **Theorem 1.1 (Router-ready states admit routed transitions).**
 
-$$(\forall config, state, situation,\ \operatorname{DesignRouterReady}\left(config, state, situation\right) \Rightarrow \operatorname{Nonempty}\left(\operatorname{DesignRouteTransition}\left(config, state, situation\right)\right))\\ \land (\forall config, state, results,\ \operatorname{ReviewRouterReady}\left(config, state, results\right) \Rightarrow \operatorname{Nonempty}\left(\operatorname{ReviewRouteTransition}\left(config, state, results\right)\right))\\ \land (\forall config, state, observation,\ \operatorname{TerminationRouterReady}\left(config, state, observation\right) \Rightarrow \operatorname{Nonempty}\left(\operatorname{TerminationRouteTransition}\left(config, state, observation\right)\right))$$
+$$\operatorname{RouterTransitionsExhaustive}\left(inlineConsensusModel\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S0/History/Consensus/InlineConsensusProtocolFixtures.router_transitions_are_exhaustive` (`✓ std3`). ∎
 
@@ -14,9 +14,9 @@ $$(\forall config, state, situation,\ \operatorname{DesignRouterReady}\left(conf
 
 *Commentary.*
 
-The three conjuncts are conditional on DesignRouterReady, ReviewRouterReady, and TerminationRouterReady respectively. Under those hypotheses the theorem constructs a nonempty DesignRouteTransition, ReviewRouteTransition, or TerminationRouteTransition for the supplied situation, results, or observation.
+RouterTransitionsExhaustive inlineConsensusModel expands to three universally quantified implications. DesignRouterReady, ReviewRouterReady, and TerminationRouterReady are each parameterized by inlineConsensusModel; under the corresponding readiness hypothesis, the theorem constructs a nonempty DesignRouteTransition, ReviewRouteTransition, or TerminationRouteTransition with that same model.
 
-Each transition contains a ProtocolStep, and the review and termination transitions record an output equal to the corresponding router result. The proposition makes no transition claim for an arbitrary state that does not satisfy the relevant readiness structure.
+Each witness contains an inlineConsensusModel.transition step. The design event is selected by the model's designRoute, while the review and termination witnesses record an output equal to the corresponding model router result. The proposition makes no transition claim for an arbitrary state that does not satisfy the relevant readiness structure, and it does not quantify over arbitrary models.
 
 ## References
 
