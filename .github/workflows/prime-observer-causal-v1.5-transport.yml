@@ -1,0 +1,100 @@
+name: Prime observer causal v1.5 transport
+
+on:
+  push:
+    branches:
+      - agent/transport/formal-prime-observer-abstraction-v1.6-20260822
+    paths:
+      - .github/prime-observer-abstraction-v1.6/trigger
+
+permissions:
+  contents: write
+
+jobs:
+  append-and-publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout transport payload
+        uses: actions/checkout@v4
+        with:
+          ref: agent/transport/formal-prime-observer-abstraction-v1.6-20260822
+          path: transport
+
+      - name: Checkout target theory branch
+        uses: actions/checkout@v4
+        with:
+          ref: agent/theory/formal-prime-observer-causal-v1.5
+          fetch-depth: 0
+          path: target
+
+      - name: Reassemble and validate append
+        shell: bash
+        run: |
+          set -euo pipefail
+          cat transport/.github/prime-observer-abstraction-v1.6/chunk-* \
+            | base64 --decode \
+            | gzip --decompress \
+            > /tmp/v1.6-append.md
+
+          test "$(wc -c < /tmp/v1.6-append.md | tr -d ' ')" = "69575"
+          test "$(wc -l < /tmp/v1.6-append.md | tr -d ' ')" = "3729"
+          test "$(sha256sum /tmp/v1.6-append.md | awk '{print $1}')" = "189f36947b481ebab2d19016e1ae0a628aed59ec542b219ce02850efb6f61fe5"
+
+          old_blob="$(git -C target hash-object docs/develop/theory/FORMAL_PRIME_OBSERVER_DYNAMICS.md)"
+          test "$old_blob" = "7d6df0fa5916f513a813bd3ca822610333a7bf35"
+
+          if grep -nE '[[:blank:]]+$' /tmp/v1.6-append.md; then
+            echo "trailing whitespace found" >&2
+            exit 1
+          fi
+
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          p = Path("/tmp/v1.6-append.md")
+          text = p.read_text(encoding="utf-8")
+          nums = [int(m.group(1)) for m in re.finditer(r"^# (\d+)\.", text, flags=re.M)]
+          assert nums == list(range(302, 352)), nums
+          assert text.count(r"\[") == text.count(r"\]")
+          assert text.count(r"\(") == text.count(r"\)")
+          assert text.count("```") % 2 == 0
+          assert not any(ord(ch) < 32 and ch not in "\n\r\t" for ch in text)
+          assert "# Part XXXVIII" in text
+          assert "# 351." in text
+          assert "# Appendix T" in text
+          PY
+
+      - name: Append the single theory file
+        shell: bash
+        run: |
+          set -euo pipefail
+          cat /tmp/v1.6-append.md >> target/docs/develop/theory/FORMAL_PRIME_OBSERVER_DYNAMICS.md
+
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          p = Path("target/docs/develop/theory/FORMAL_PRIME_OBSERVER_DYNAMICS.md")
+          text = p.read_text(encoding="utf-8")
+          nums = [int(m.group(1)) for m in re.finditer(r"^# (\d+)\.", text, flags=re.M)]
+          assert nums == list(range(1, 352)), (nums[:5], nums[-5:], len(nums))
+          assert text.count(r"\[") == text.count(r"\]")
+          assert text.count(r"\(") == text.count(r"\)")
+          assert text.count("```") % 2 == 0
+          assert not any(ord(ch) < 32 and ch not in "\n\r\t" for ch in text)
+          PY
+
+          git -C target diff --check
+          test "$(git -C target diff --name-only | wc -l | tr -d ' ')" = "1"
+          test "$(git -C target diff --name-only)" = "docs/develop/theory/FORMAL_PRIME_OBSERVER_DYNAMICS.md"
+
+      - name: Commit and push target branch
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd target
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -- docs/develop/theory/FORMAL_PRIME_OBSERVER_DYNAMICS.md
+          test "$(git diff --cached --name-only | wc -l | tr -d ' ')" = "1"
+          git commit -m "docs(theory): append causal abstraction and multiscale completion"
+          git push origin HEAD:agent/theory/formal-prime-observer-causal-v1.5
