@@ -17,14 +17,6 @@ open D5.S1.Digit
 open D5.S1.Scale
 open Real
 
-/-- The `phi`-coordinate of raw canonical digits is their Fibonacci value. -/
-theorem betaDigits_b (r : RawDigits) : (betaDigits r).b = (rawValue r : ℤ) :=
-  D5.S1.Deficit.DoubleFaceLength.betaDigits_b r
-
-/-- The `phi`-coordinate of the canonical Zeckendorf model-set value is its input. -/
-theorem betaGolden_b (v : ℕ) : (betaGolden v).b = (v : ℤ) :=
-  D5.S1.Deficit.DoubleFaceLength.betaGolden_b v
-
 /-! ### Elementary golden-conjugate facts -/
 
 private theorem goldenConj_nonpos : goldenConj ≤ 0 := goldenConj_neg.le

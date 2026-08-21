@@ -5,7 +5,7 @@
    anchors: []
    digest: Classify admissible negative base-phi prefix occurrence sets by Lucas-gap trident families. -/
 
-import D5.S1.Words.Expansions.BasePhiNegative
+import D5.S1.Words.Expansions.BasePhiCarryTransducer
 
 namespace D5.X_Frontier.BasePhiNegativePrefixTrident
 
@@ -43,18 +43,19 @@ theorem canonical_base_phi_digits_exists_unique :
 ```
 
 2. Identify every nonnegative base-phi position with mathlib's occupied
-   Fibonacci indices. `Finset.range N` counts exactly the earlier `d₋₁ = 1`
-   events, and `k + 2` is the invariant alignment with mathlib's Fibonacci
-   indices (`W_k = Nat.fib (k + 2)`):
+   Fibonacci indices. The proved `CarrySkipState` transition is deterministic,
+   terminating, and preserves `CarrySkipInvariant`; its remaining semantic
+   obligation is the exact successor value recurrence below. `Finset.range N`
+   counts the earlier `d₋₁ = 1` events, and `k + 2` is the invariant alignment
+   with mathlib's Fibonacci indices (`W_k = Nat.fib (k + 2)`):
 
 ```lean
-theorem nonnegative_digit_iff_mem_zeckendorf_after_negative_one_skips
+theorem nonnegative_raw_value_succ
     (expansion : BasePhiNegativeExpansion) :
-    ∀ N k : Nat,
-      expansion.digit N (k : Int) = 1 ↔
-        k + 2 ∈ Nat.zeckendorf
-          (N + ((Finset.range N).filter
-            (fun j => negativeDigit expansion j 0 = true)).card)
+    ∀ N : Nat,
+      rawValue (nonnegativeDigits expansion (N + 1)) =
+        rawValue (nonnegativeDigits expansion N) + 1 +
+          negativeOneEvent expansion N
 ```
 
 3. Characterize the first negative digit by the generalized Beatty sequence.
@@ -72,9 +73,14 @@ theorem negative_one_digit_iff_generalized_beatty
               ((n + 1 : Nat) : Int) + 1
 ```
 
-The second and third targets together provide the first exact cylinder formula;
-only after them may a carry transducer transport longer prefixes into the
-existing return-word layer. They are lemma signatures, not proved milestones.
+`nonnegative_raw_value_initial` is proved by positivity of the real embedding,
+and `carry_skip_realization_iff_value_recurrence` proves that this successor
+signature is equivalent to the full realization theorem. Once it is closed,
+`nonnegative_digit_iff_mem_zeckendorf_of_realizes` provides the displayed
+digitwise `k + 2` identification. The second and third targets together then
+provide the first exact cylinder formula; only after them may a carry transducer
+transport longer prefixes into the existing return-word layer. They are lemma
+signatures, not proved milestones.
 -/
 
 /- THEORIST_FRONTIER_CONTRACT_V2
