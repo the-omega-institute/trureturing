@@ -568,8 +568,3 @@ public sealed partial class LeanCacheEnsureCommandTests
     private static string Git(string root, params string[] arguments) =>
         ReviewRegressionTests.RunGit(root, arguments);
 }
-
-[Collection("Lean cache environment")]
-public sealed class LeanCacheEnsureScriptTests
-{
-}

@@ -5,10 +5,10 @@ using StrataLint.Engine;
 
 namespace StrataLint.Tests;
 
-[Collection("Lean cache environment")]
-public sealed partial class LeanCacheEnsureDelegationTests
-{
 
+[Collection("Lean cache environment")]
+public sealed class LeanCacheEnsureScriptTests
+{
     [Fact]
     public void MissingLakeDelegatesToCanonicalWorktreeEnsureCacheCommand()
     {
