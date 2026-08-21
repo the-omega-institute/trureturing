@@ -18,7 +18,7 @@ ResourceRefines is the source factorization relation with a public natural-value
 
 **Theorem 1.2 (Resource refinement composes).**
 
-$$\forall cost, \forall combine, \forall qC, \forall qD, \forall qE, \forall r, \forall s, compositionBound \land combineMono \land \operatorname{ResourceRefines}\left(cost, r, qC, qD\right) \land \operatorname{ResourceRefines}\left(cost, s, qD, qE\right) \Rightarrow {\operatorname{ResourceRefines}\left(cost, \operatorname{combine}\left(r, s\right), qC, qE\right) \land (\operatorname{combine}\left(r, s\right) = r+s) \Rightarrow \operatorname{ResourceRefines}\left(cost, r+s, qC, qE\right)}.$$
+$$\forall cost, \forall combine, \forall qC, \forall qD, \forall qE, \forall r, \forall s, compositionBound \land combineMono \land \operatorname{ResourceRefines}\left(cost, r, qC, qD\right) \land \operatorname{ResourceRefines}\left(cost, s, qD, qE\right) \Rightarrow (\operatorname{ResourceRefines}\left(cost, \operatorname{combine}\left(r, s\right), qC, qE\right) \land (\operatorname{combine}\left(r, s\right) = r+s \Rightarrow \operatorname{ResourceRefines}\left(cost, r+s, qC, qE\right))).$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Refinement/ResourceRefinementComposition.resource_refinement_compose` (`✓ std3`). ∎
 

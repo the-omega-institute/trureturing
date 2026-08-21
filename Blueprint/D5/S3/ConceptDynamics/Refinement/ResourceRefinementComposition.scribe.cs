@@ -65,9 +65,9 @@ internal sealed class ResourceRefinementCompositionDocument : IScribeDocumentDef
         Formula composed = Apply("ResourceRefines", cost,
             Apply("combine", r, s), qC, qE);
         Formula additive = Seq(
-            Open, Apply("combine", r, s), Sp, Eq, Sp, r, Plus, s, Close,
+            Open, Apply("combine", r, s), Sp, Eq, Sp, r, Plus, s,
             Sp, Rightarrow, Sp,
-            Apply("ResourceRefines", cost, Seq(r, Plus, s), qC, qE));
+            Apply("ResourceRefines", cost, Seq(r, Plus, s), qC, qE), Close);
         Formula hypotheses = Seq(
             compositionBound, Sp, Land, Sp, combineMono, Sp, Land, Sp,
             hCD, Sp, Land, Sp, hDE);
@@ -81,6 +81,6 @@ internal sealed class ResourceRefinementCompositionDocument : IScribeDocumentDef
             Forall, Sp, r, Comma, Sp,
             Forall, Sp, s, Comma, Sp,
             hypotheses, Sp, Rightarrow, Sp,
-            Grp(Seq(composed, Sp, Land, Sp, additive)), Dot));
+            Open, composed, Sp, Land, Sp, additive, Close, Dot));
     }
 }
