@@ -39,23 +39,55 @@ theorem stage_successor_is_unique (source first second : Stage) (hFirst : source
   exact Option.some.inj (hFirst.symm.trans hSecond)
 inductive Carrier
   | codexCli | nyxidOracle | isolatedTokenSubagent | abstain
-  deriving DecidableEq, Fintype, Repr
+  deriving Fintype, Repr
 def Carrier.priorityRank : Carrier -> Nat
   | .codexCli => 0
   | .nyxidOracle => 1
   | .isolatedTokenSubagent => 2
   | .abstain => 3
+private theorem Carrier.priorityRank_injective : Function.Injective Carrier.priorityRank := by
+  intro first second
+  cases first <;> cases second <;> simp_all [Carrier.priorityRank]
+instance : LinearOrder Carrier :=
+  LinearOrder.lift' Carrier.priorityRank Carrier.priorityRank_injective
 theorem carrier_priority_is_the_protocol_priority :
     Carrier.priorityRank .codexCli = 0 /\ Carrier.priorityRank .nyxidOracle = 1 /\
       Carrier.priorityRank .isolatedTokenSubagent = 2 /\ Carrier.priorityRank .abstain = 3 := by
   decide
 abbrev Eligibility := Carrier -> Bool
+def eligibleUntried (eligible : Eligibility) (tried : Finset Carrier) : Finset Carrier :=
+  Finset.univ.filter fun carrier =>
+    carrier ≠ .abstain /\ eligible carrier = true /\ carrier ∉ tried
 def selectCarrier (eligible : Eligibility) (tried : Finset Carrier) : Carrier :=
-  if eligible .codexCli && .codexCli ∉ tried then .codexCli
-  else if eligible .nyxidOracle && .nyxidOracle ∉ tried then .nyxidOracle
-  else if eligible .isolatedTokenSubagent && .isolatedTokenSubagent ∉ tried then
-    .isolatedTokenSubagent
+  if available : (eligibleUntried eligible tried).Nonempty then
+    (eligibleUntried eligible tried).min' available
   else .abstain
+theorem selectCarrier_mem (eligible : Eligibility) (tried : Finset Carrier)
+    (available : (eligibleUntried eligible tried).Nonempty) :
+    selectCarrier eligible tried ∈ eligibleUntried eligible tried := by
+  simp only [selectCarrier, dif_pos available]
+  exact Finset.min'_mem _ _
+theorem selectCarrier_minimal (eligible : Eligibility) (tried : Finset Carrier)
+    (carrier : Carrier) (available : carrier ∈ eligibleUntried eligible tried) :
+    Carrier.priorityRank (selectCarrier eligible tried) <= Carrier.priorityRank carrier := by
+  have nonempty : (eligibleUntried eligible tried).Nonempty := ⟨carrier, available⟩
+  have ordered : selectCarrier eligible tried ≤ carrier := by
+    simp only [selectCarrier, dif_pos nonempty]
+    exact Finset.min'_le _ _ available
+  exact ordered
+theorem selectCarrier_is_unique_minimum (eligible : Eligibility) (tried : Finset Carrier)
+    (available : (eligibleUntried eligible tried).Nonempty) :
+    selectCarrier eligible tried ∈ eligibleUntried eligible tried /\
+      forall other, other ∈ eligibleUntried eligible tried ->
+        (forall carrier, carrier ∈ eligibleUntried eligible tried ->
+          Carrier.priorityRank other <= Carrier.priorityRank carrier) ->
+        other = selectCarrier eligible tried := by
+  refine ⟨selectCarrier_mem eligible tried available, ?_⟩
+  intro other otherAvailable otherMinimal
+  apply Carrier.priorityRank_injective
+  apply le_antisymm
+  · exact otherMinimal _ (selectCarrier_mem eligible tried available)
+  · exact selectCarrier_minimal eligible tried other otherAvailable
 inductive CompletionObservation
   | codex
       (carrierExitedZero resultArtifactExists envelopeValid verdictAllowed sentinelExists : Bool)
@@ -88,6 +120,23 @@ inductive SeatRole
   | architectureReview | qualityReview | testsReview
   | criterionEvidence | residualGap | claimIntegrity
   deriving DecidableEq, Fintype, Repr
+def SeatRole.IsThinking (role : SeatRole) : Prop :=
+  role = .teleology \/ role = .parsimony \/ role = .fidelity \/
+    role = .naturalOwnership \/ role = .proportionalContainment \/ role = .worth
+def SeatRole.IsReview (role : SeatRole) : Prop :=
+  role = .architectureReview \/ role = .qualityReview \/ role = .testsReview
+def SeatRole.IsTermination (role : SeatRole) : Prop :=
+  role = .criterionEvidence \/ role = .residualGap \/ role = .claimIntegrity
+def SeatRole.LegalAt (role : SeatRole) : Stage -> Prop
+  | .chooseWorkerMode | .thinkingPanelWorkers => role.IsThinking
+  | .implementationWorker => role = .implementation
+  | .reviewTripletWorkers => role.IsReview
+  | .fixOrDone => role = .implementation \/ role.IsReview \/ role.IsTermination
+  | .intake | .metaJudge => False
+def CarrierLegalAt (stage : Stage) (role : SeatRole) (carrier : Carrier) : Prop :=
+  role.LegalAt stage /\ carrier ≠ .abstain
+theorem CarrierLegalAt.workerCarrier {stage : Stage} {role : SeatRole} {carrier : Carrier}
+    (legal : CarrierLegalAt stage role carrier) : carrier ≠ .abstain := legal.2
 inductive PriorExposure
   | repoPriorExposed | externalPriorExposed | callerPriorExposed | noCarrier
   deriving DecidableEq, Fintype, Repr
@@ -112,6 +161,10 @@ def seat_view_information_content :
   invFun data := { goalArtifact := data.1, role := data.2.1, exposure := data.2.2 }
   left_inv view := by cases view; rfl
   right_inv data := by rcases data with ⟨goal, role, exposure⟩; rfl
+theorem seat_view_contains_complete_goal (view : SeatView) :
+    view.goalArtifact = .complete := by
+  cases view.goalArtifact
+  rfl
 structure CompletedSeatResult where
   view : SeatView
   carrier : Carrier
@@ -149,12 +202,23 @@ def ThinkingSeatResult.plan {seat : ThinkingSeat} : ThinkingSeatResult seat -> O
 def ThinkingSeatResult.presentedAsConsensus {seat : ThinkingSeat} :
     ThinkingSeatResult seat -> Bool
   | .completed _ _ _ _ presented => presented
+def ThinkingSeatResult.evidence {seat : ThinkingSeat} :
+    ThinkingSeatResult seat -> CompletedSeatResult
+  | .completed evidence _ _ _ _ => evidence
 inductive DesignSituation
   | unanimousActionable | compatiblePlans | boundedStall | singlePerspective
   deriving DecidableEq, Fintype, Repr
 inductive DesignExit
   | implement | metaLayerConvergence | abstainEscalate | rejectFakeConsensus
   deriving DecidableEq, Fintype, Repr
+inductive ConvergenceResult
+  | implementable (plan : PlanIdentity) | exhausted
+  deriving DecidableEq, Fintype, Repr
+inductive DesignAction : DesignExit -> Type
+  | advance : DesignAction .implement
+  | converge (result : ConvergenceResult) : DesignAction .metaLayerConvergence
+  | abstainEscalate : DesignAction .abstainEscalate
+  | rejectFakeConsensus : DesignAction .rejectFakeConsensus
 def designRouter : DesignSituation -> DesignExit
   | .unanimousActionable => .implement
   | .compatiblePlans => .metaLayerConvergence
@@ -222,6 +286,8 @@ inductive ReviewSeatResult (seat : ReviewSeat)
 abbrev ReviewResults := (seat : ReviewSeat) -> ReviewSeatResult seat
 def ReviewSeatResult.verdict {seat : ReviewSeat} : ReviewSeatResult seat -> ReviewVerdict
   | .completed _ _ verdict => verdict
+def ReviewSeatResult.evidence {seat : ReviewSeat} : ReviewSeatResult seat -> CompletedSeatResult
+  | .completed evidence _ _ => evidence
 abbrev ReviewObservation := Fin 3 -> ReviewVerdict
 def reviewObservation (results : ReviewResults) : ReviewObservation
   | 0 => (results .architecture).verdict
@@ -230,6 +296,11 @@ def reviewObservation (results : ReviewResults) : ReviewObservation
 inductive ReviewExit
   | fix | done | userDecisionOrBoundedPass
   deriving DecidableEq, Fintype, Repr
+inductive ReviewAction : ReviewExit -> Type
+  | repair : ReviewAction .fix
+  | terminationCandidate : ReviewAction .done
+  | requestUserDecision : ReviewAction .userDecisionOrBoundedPass
+  | anotherBoundedPass : ReviewAction .userDecisionOrBoundedPass
 def reviewHasBool (observation : ReviewObservation) (verdict : ReviewVerdict) : Bool :=
   observation 0 == verdict || observation 1 == verdict || observation 2 == verdict
 def reviewRouter (observation : ReviewObservation) : ReviewExit :=
@@ -282,39 +353,25 @@ def anyUnsatisfiedBool (observation : TerminationObservation) : Bool :=
 inductive TerminationExit
   | rejectFakeConsensus | permitClaim | continueAgainstGap | escalateEvidenceGap
   deriving DecidableEq, Fintype, Repr
+inductive TerminationGapOwner
+  | engineering | caller | maintainer | unresolved
+  deriving DecidableEq, Fintype, Repr
+inductive TerminationAction : TerminationExit -> Type
+  | rejectFakeConsensus : TerminationAction .rejectFakeConsensus
+  | permitClaim : TerminationAction .permitClaim
+  | continueAgainstGap (owner : TerminationGapOwner) : TerminationAction .continueAgainstGap
+  | escalateEvidenceGap : TerminationAction .escalateEvidenceGap
 def terminationRouter (observation : TerminationObservation) : TerminationExit :=
   if exactRosterBool observation.roster then
     if allSatisfiedBool observation then .permitClaim
     else if anyUnsatisfiedBool observation then .continueAgainstGap
     else .escalateEvidenceGap
   else .rejectFakeConsensus
-def TerminationHazard (observation : TerminationObservation) : Prop :=
-  Not (ExactRoster observation.roster) \/
-    exists seat, Not ((observation.result seat).IsSatisfied)
-abbrev Rule := TerminationObservation -> Bool
-def Sound (rule : Rule) : Prop :=
-  forall observation, rule observation = true -> Not (TerminationHazard observation)
-def RuleLE (left right : Rule) : Prop :=
-  forall observation, left observation = true -> right observation = true
-def Greatest (rule : Rule) : Prop := IsGreatest {candidate | Sound candidate} rule
-def StrictBelow (left right : Rule) : Prop :=
-  RuleLE left right /\ exists observation, right observation = true /\ left observation = false
-def terminationAdmits : Rule :=
-  fun observation => decide (terminationRouter observation = .permitClaim)
-def alwaysAbstain : Rule := fun _ => false
-def majorityAdmit : Rule :=
-  fun observation => exactRosterBool observation.roster &&
-    (((observation.result .criterionEvidence).isSatisfiedBool &&
-        (observation.result .residualGap).isSatisfiedBool) ||
-      ((observation.result .criterionEvidence).isSatisfiedBool &&
-        (observation.result .claimIntegrity).isSatisfiedBool) ||
-      ((observation.result .residualGap).isSatisfiedBool &&
-        (observation.result .claimIntegrity).isSatisfiedBool))
 inductive BoundedPassKind
   | metaLayerConvergence | repeatedReview | fixPass | terminationGate
   deriving DecidableEq, Fintype, Repr
 def BoundedPassKind.LegalAt : BoundedPassKind -> Stage -> Prop
-  | .metaLayerConvergence, .metaJudge | .repeatedReview, .reviewTripletWorkers
+  | .metaLayerConvergence, .metaJudge | .repeatedReview, .fixOrDone
   | .fixPass, .fixOrDone | .terminationGate, .fixOrDone => True
   | _, _ => False
 inductive IsolationStatus | available | unavailable
@@ -347,6 +404,10 @@ structure ProtocolState where
   designSituation : Option DesignSituation
   reviewExit : Option ReviewExit
   terminationExit : Option TerminationExit
+  attemptedFlights : Finset FlightKey := {}
+  artifactEpoch : Nat := 0
+  reviewEpoch : Option Nat := none
+  terminationEpoch : Option Nat := none
 def initialState (config : ProtocolConfig) : ProtocolState :=
   { stage := .intake
     phase := .live
@@ -355,35 +416,95 @@ def initialState (config : ProtocolConfig) : ProtocolState :=
     isolation := config.initialIsolation
     designSituation := none
     reviewExit := none
-    terminationExit := none }
+    terminationExit := none
+    attemptedFlights := {}
+    artifactEpoch := 0
+    reviewEpoch := none
+    terminationEpoch := none }
 def triedAt (state : ProtocolState) (stage : Stage) (role : SeatRole) : Finset Carrier :=
   Finset.univ.filter fun carrier =>
-    flightKey stage role carrier ∉ state.remainingFlights
+    flightKey stage role carrier ∈ state.attemptedFlights
+structure SelectedWorkerEvidence (config : ProtocolConfig) (state : ProtocolState)
+    (role : SeatRole) (result : CompletedSeatResult) : Prop where
+  legal : CarrierLegalAt state.stage role result.carrier
+  roleMatches : result.view.role = role
+  eligible : config.eligible state.stage role result.carrier = true
+  untried : result.carrier ∉ triedAt state state.stage role
+  selected : selectCarrier (config.eligible state.stage role)
+    (triedAt state state.stage role) = result.carrier
+  complete : Complete result.carrier result.completionObservation
+def ThinkingResults.DispatchAuthorized (config : ProtocolConfig) (state : ProtocolState)
+    (results : ThinkingResults) : Prop :=
+  forall seat, SelectedWorkerEvidence config state seat.role (results seat).evidence
+def ReviewResults.DispatchAuthorized (config : ProtocolConfig) (state : ProtocolState)
+    (results : ReviewResults) : Prop :=
+  forall seat, SelectedWorkerEvidence config state seat.role (results seat).evidence
+def TerminationSeatResult.DispatchAuthorized (config : ProtocolConfig) (state : ProtocolState)
+    {seat : TerminationSeat} : TerminationSeatResult seat -> Prop
+  | .completed evidence _ _ => SelectedWorkerEvidence config state seat.role evidence
+  | .invalid | .missing => True
+def TerminationObservation.DispatchAuthorized (config : ProtocolConfig) (state : ProtocolState)
+    (observation : TerminationObservation) : Prop :=
+  forall seat, (observation.result seat).DispatchAuthorized config state
+def ThinkingResults.attemptKeys (state : ProtocolState)
+    (results : ThinkingResults) : Finset FlightKey :=
+  Finset.univ.biUnion fun seat => {flightKey state.stage seat.role (results seat).evidence.carrier}
+def ReviewResults.attemptKeys (state : ProtocolState)
+    (results : ReviewResults) : Finset FlightKey :=
+  Finset.univ.biUnion fun seat => {flightKey state.stage seat.role (results seat).evidence.carrier}
+def TerminationSeatResult.attemptKeys (state : ProtocolState) {seat : TerminationSeat} :
+    TerminationSeatResult seat -> Finset FlightKey
+  | .completed evidence _ _ => {flightKey state.stage seat.role evidence.carrier}
+  | .invalid | .missing => {}
+def TerminationObservation.attemptKeys (state : ProtocolState)
+    (observation : TerminationObservation) : Finset FlightKey :=
+  Finset.univ.biUnion fun seat => (observation.result seat).attemptKeys state
 inductive AdvanceCondition (config : ProtocolConfig) (state : ProtocolState) : Type
   | intake (atStage : state.stage = .intake)
   | workerMode (atStage : state.stage = .chooseWorkerMode) (role : SeatRole) (carrier : Carrier)
+      (legal : CarrierLegalAt state.stage role carrier)
+      (eligible : config.eligible state.stage role carrier = true)
+      (untried : carrier ∉ triedAt state state.stage role)
       (selected : selectCarrier (config.eligible state.stage role)
-        (triedAt state state.stage role) = carrier) (workerCarrier : carrier ≠ .abstain)
+        (triedAt state state.stage role) = carrier)
   | thinking (atStage : state.stage = .thinkingPanelWorkers)
       (compatible : PlanCompatibility) (completedSeats : ThinkingResults)
+      (authorized : completedSeats.DispatchAuthorized config state)
   | metaJudge (atStage : state.stage = .metaJudge) (situation : DesignSituation)
       (recorded : state.designSituation = some situation)
       (routed : designRouter situation = .implement)
+      (action : DesignAction .implement)
   | implementation (atStage : state.stage = .implementationWorker)
-      (result : CompletedSeatResult) (roleMatches : result.view.role = .implementation)
+      (result : CompletedSeatResult)
+      (authorized : SelectedWorkerEvidence config state .implementation result)
   | review (atStage : state.stage = .reviewTripletWorkers)
-      (completedSeats : ReviewResults)
+      (completedSeats : ReviewResults) (authorized : completedSeats.DispatchAuthorized config state)
 def AdvanceCondition.nextState {config : ProtocolConfig} {state : ProtocolState}
     (condition : AdvanceCondition config state) (target : Stage) : ProtocolState :=
   match condition with
-  | .thinking _ compatible completedSeats =>
+  | .thinking _ compatible completedSeats _ =>
       { state with
         stage := target
+        attemptedFlights := state.attemptedFlights ∪ completedSeats.attemptKeys state
         designSituation := some (thinkingSituation compatible completedSeats) }
-  | .review _ completedSeats =>
+  | .implementation _ result _ =>
       { state with
         stage := target
-        reviewExit := some (reviewRouter (reviewObservation completedSeats)) }
+        attemptedFlights := insert (flightKey state.stage .implementation result.carrier)
+          state.attemptedFlights
+        artifactEpoch := state.artifactEpoch + 1
+        reviewExit := none
+        reviewEpoch := none
+        terminationExit := none
+        terminationEpoch := none }
+  | .review _ completedSeats _ =>
+      { state with
+        stage := target
+        attemptedFlights := state.attemptedFlights ∪ completedSeats.attemptKeys state
+        reviewExit := some (reviewRouter (reviewObservation completedSeats))
+        reviewEpoch := some state.artifactEpoch
+        terminationExit := none
+        terminationEpoch := none }
   | _ => { state with stage := target }
 @[simp] theorem AdvanceCondition.nextState_stage {config : ProtocolConfig} {state : ProtocolState}
     (condition : AdvanceCondition config state) (target : Stage) :
@@ -406,13 +527,21 @@ def AdvanceCondition.nextState {config : ProtocolConfig} {state : ProtocolState}
 inductive StageAbstainEvidence : ProtocolState -> Prop
   | designStall (state : ProtocolState) (atStage : state.stage = .metaJudge)
       (situation : DesignSituation) (recorded : state.designSituation = some situation)
-      (routed : designRouter situation = .abstainEscalate) :
+      (routed : designRouter situation = .abstainEscalate)
+      (action : DesignAction .abstainEscalate) :
       StageAbstainEvidence state
-  | terminationEvidenceGap (state : ProtocolState) (atStage : state.stage = .fixOrDone)
-      (recorded : state.terminationExit = some .escalateEvidenceGap) :
+  | designFakeConsensus (state : ProtocolState) (atStage : state.stage = .metaJudge)
+      (situation : DesignSituation) (recorded : state.designSituation = some situation)
+      (routed : designRouter situation = .rejectFakeConsensus)
+      (action : DesignAction .rejectFakeConsensus) :
+      StageAbstainEvidence state
+  | reviewUserDecision (state : ProtocolState) (atStage : state.stage = .fixOrDone)
+      (recorded : state.reviewExit = some .userDecisionOrBoundedPass)
+      (action : ReviewAction .userDecisionOrBoundedPass) :
       StageAbstainEvidence state
 inductive AbstainCondition (config : ProtocolConfig) (state : ProtocolState) : Prop
   | carrierExhausted (role : SeatRole)
+      (legalRole : exists carrier, CarrierLegalAt state.stage role carrier)
       (exhausted : selectCarrier (config.eligible state.stage role)
         (triedAt state state.stage role) = .abstain)
   | isolationUnavailable (unavailable : state.isolation = .unavailable)
@@ -428,54 +557,204 @@ inductive ProtocolStep (config : ProtocolConfig) : ProtocolState -> Event -> Pro
   | flightFailure (state : ProtocolState) (role : SeatRole) (carrier : Carrier) (attempts : Nat)
       (budgetAuthorized : PassBudgetAuthorized config)
       (live : state.phase = .live) (isolated : state.isolation = .available)
+      (legal : CarrierLegalAt state.stage role carrier)
+      (eligible : config.eligible state.stage role carrier = true)
+      (untried : carrier ∉ triedAt state state.stage role)
       (selected : selectCarrier (config.eligible state.stage role)
         (triedAt state state.stage role) = carrier)
-      (workerCarrier : carrier ≠ .abstain)
       (available : flightKey state.stage role carrier ∈
         state.remainingFlights)
       (positive : 0 < attempts)
       (withinBudget : attempts <= config.retryBudget state.stage role carrier) :
       ProtocolStep config state (.flightFailure state.stage role carrier attempts)
-        { state with remainingFlights :=
-            Finset.erase state.remainingFlights (flightKey state.stage role carrier) }
+        { state with
+          remainingFlights := Finset.erase state.remainingFlights
+            (flightKey state.stage role carrier)
+          attemptedFlights := insert (flightKey state.stage role carrier) state.attemptedFlights }
   | advance (state : ProtocolState) (target : Stage)
       (budgetAuthorized : PassBudgetAuthorized config) (live : state.phase = .live)
       (isolated : state.isolation = .available) (authorized : AdvanceCondition config state)
       (successor : state.stage.Successor target) :
       ProtocolStep config state (.advance state.stage target) (authorized.nextState target)
-  | boundedPass (state : ProtocolState) (kind : BoundedPassKind)
+  | designConvergence (state : ProtocolState) (plan : PlanIdentity)
       (budgetAuthorized : PassBudgetAuthorized config)
       (live : state.phase = .live) (isolated : state.isolation = .available)
-      (legal : kind.LegalAt state.stage) (notFix : kind ≠ .fixPass)
-      (notTermination : kind ≠ .terminationGate)
+      (atMeta : state.stage = .metaJudge)
+      (recorded : state.designSituation = some .compatiblePlans)
+      (routed : designRouter .compatiblePlans = .metaLayerConvergence)
+      (action : DesignAction .metaLayerConvergence)
+      (actionShape : action = DesignAction.converge (.implementable plan))
       (withinBudget : state.passesUsed < config.sharedPassBudget) :
-      ProtocolStep config state (.boundedPass state.stage kind)
-        { state with passesUsed := state.passesUsed + 1 }
+      ProtocolStep config state (.boundedPass state.stage .metaLayerConvergence) { state with
+        passesUsed := state.passesUsed + 1
+        designSituation := some .unanimousActionable }
+  | designConvergenceExhausted (state : ProtocolState)
+      (budgetAuthorized : PassBudgetAuthorized config)
+      (live : state.phase = .live) (isolated : state.isolation = .available)
+      (atMeta : state.stage = .metaJudge)
+      (recorded : state.designSituation = some .compatiblePlans)
+      (routed : designRouter .compatiblePlans = .metaLayerConvergence)
+      (action : DesignAction .metaLayerConvergence)
+      (actionShape : action = DesignAction.converge .exhausted)
+      (withinBudget : state.passesUsed < config.sharedPassBudget) :
+      ProtocolStep config state (.boundedPass state.stage .metaLayerConvergence) { state with
+        passesUsed := state.passesUsed + 1
+        phase := .abstained }
+  | repeatedReview (state : ProtocolState)
+      (budgetAuthorized : PassBudgetAuthorized config)
+      (live : state.phase = .live) (isolated : state.isolation = .available)
+      (atEnd : state.stage = .fixOrDone)
+      (needsPass : state.reviewExit = some .userDecisionOrBoundedPass)
+      (action : ReviewAction .userDecisionOrBoundedPass)
+      (actionShape : action = ReviewAction.anotherBoundedPass)
+      (completedSeats : ReviewResults)
+      (authorized : completedSeats.DispatchAuthorized config state)
+      (withinBudget : state.passesUsed < config.sharedPassBudget) :
+      ProtocolStep config state (.boundedPass state.stage .repeatedReview) { state with
+        passesUsed := state.passesUsed + 1
+        attemptedFlights := state.attemptedFlights ∪ completedSeats.attemptKeys state
+        reviewExit := some (reviewRouter (reviewObservation completedSeats))
+        reviewEpoch := some state.artifactEpoch
+        terminationExit := none
+        terminationEpoch := none }
   | fixAndReview (state : ProtocolState)
       (budgetAuthorized : PassBudgetAuthorized config)
       (live : state.phase = .live) (isolated : state.isolation = .available)
       (atEnd : state.stage = .fixOrDone)
       (needsFix : state.reviewExit = some .fix)
+      (action : ReviewAction .fix) (actionShape : action = ReviewAction.repair)
       (implementation : CompletedSeatResult)
-      (roleMatches : implementation.view.role = .implementation)
+      (implementationAuthorized :
+        SelectedWorkerEvidence config state .implementation implementation)
       (completedSeats : ReviewResults)
+      (reviewAuthorized : completedSeats.DispatchAuthorized config state)
       (withinBudget : state.passesUsed < config.sharedPassBudget) :
       ProtocolStep config state (.boundedPass state.stage .fixPass) { state with
         passesUsed := state.passesUsed + 1
-        reviewExit := some (reviewRouter (reviewObservation completedSeats)) }
+        attemptedFlights := insert (flightKey state.stage .implementation implementation.carrier)
+          (state.attemptedFlights ∪ completedSeats.attemptKeys state)
+        artifactEpoch := state.artifactEpoch + 1
+        reviewExit := some (reviewRouter (reviewObservation completedSeats))
+        reviewEpoch := some (state.artifactEpoch + 1)
+        terminationExit := none
+        terminationEpoch := none }
   | terminationGate (state : ProtocolState)
       (budgetAuthorized : PassBudgetAuthorized config)
       (live : state.phase = .live) (isolated : state.isolation = .available)
-      (atEnd : state.stage = .fixOrDone) (observation : TerminationObservation)
+      (atEnd : state.stage = .fixOrDone)
+      (reviewDone : state.reviewExit = some .done)
+      (reviewCurrent : state.reviewEpoch = some state.artifactEpoch)
+      (reviewAction : ReviewAction .done)
+      (reviewActionShape : reviewAction = ReviewAction.terminationCandidate)
+      (observation : TerminationObservation)
+      (authorized : observation.DispatchAuthorized config state)
+      (routed : terminationRouter observation = .permitClaim)
+      (action : TerminationAction .permitClaim)
+      (actionShape : action = TerminationAction.permitClaim)
       (withinBudget : state.passesUsed < config.sharedPassBudget) :
       ProtocolStep config state (.boundedPass state.stage .terminationGate) { state with
         passesUsed := state.passesUsed + 1
-        terminationExit := some (terminationRouter observation) }
+        attemptedFlights := state.attemptedFlights ∪ observation.attemptKeys state
+        terminationExit := some .permitClaim
+        terminationEpoch := some state.artifactEpoch }
+  | terminationGapEngineering (state : ProtocolState)
+      (budgetAuthorized : PassBudgetAuthorized config)
+      (live : state.phase = .live) (isolated : state.isolation = .available)
+      (atEnd : state.stage = .fixOrDone)
+      (reviewDone : state.reviewExit = some .done)
+      (reviewCurrent : state.reviewEpoch = some state.artifactEpoch)
+      (observation : TerminationObservation)
+      (authorized : observation.DispatchAuthorized config state)
+      (routed : terminationRouter observation = .continueAgainstGap)
+      (action : TerminationAction .continueAgainstGap)
+      (actionShape : action = TerminationAction.continueAgainstGap .engineering)
+      (withinBudget : state.passesUsed < config.sharedPassBudget) :
+      ProtocolStep config state (.boundedPass state.stage .terminationGate) { state with
+        passesUsed := state.passesUsed + 1
+        attemptedFlights := state.attemptedFlights ∪ observation.attemptKeys state
+        reviewExit := some .fix
+        reviewEpoch := none
+        terminationExit := some .continueAgainstGap
+        terminationEpoch := none }
+  | terminationGapCaller (state : ProtocolState)
+      (budgetAuthorized : PassBudgetAuthorized config)
+      (live : state.phase = .live) (isolated : state.isolation = .available)
+      (atEnd : state.stage = .fixOrDone)
+      (reviewDone : state.reviewExit = some .done)
+      (reviewCurrent : state.reviewEpoch = some state.artifactEpoch)
+      (observation : TerminationObservation)
+      (authorized : observation.DispatchAuthorized config state)
+      (routed : terminationRouter observation = .continueAgainstGap)
+      (action : TerminationAction .continueAgainstGap)
+      (actionShape : action = TerminationAction.continueAgainstGap .caller)
+      (withinBudget : state.passesUsed < config.sharedPassBudget) :
+      ProtocolStep config state (.boundedPass state.stage .terminationGate) { state with
+        passesUsed := state.passesUsed + 1
+        attemptedFlights := state.attemptedFlights ∪ observation.attemptKeys state
+        terminationExit := some .continueAgainstGap
+        terminationEpoch := none }
+  | terminationGapEscalate (state : ProtocolState) (owner : TerminationGapOwner)
+      (budgetAuthorized : PassBudgetAuthorized config)
+      (live : state.phase = .live) (isolated : state.isolation = .available)
+      (atEnd : state.stage = .fixOrDone)
+      (reviewDone : state.reviewExit = some .done)
+      (reviewCurrent : state.reviewEpoch = some state.artifactEpoch)
+      (observation : TerminationObservation)
+      (authorized : observation.DispatchAuthorized config state)
+      (routed : terminationRouter observation = .continueAgainstGap)
+      (action : TerminationAction .continueAgainstGap)
+      (actionShape : action = TerminationAction.continueAgainstGap owner)
+      (escalating : owner = .maintainer \/ owner = .unresolved)
+      (withinBudget : state.passesUsed < config.sharedPassBudget) :
+      ProtocolStep config state (.boundedPass state.stage .terminationGate) { state with
+        passesUsed := state.passesUsed + 1
+        attemptedFlights := state.attemptedFlights ∪ observation.attemptKeys state
+        phase := .abstained
+        terminationExit := some .continueAgainstGap
+        terminationEpoch := none }
+  | terminationFakeConsensus (state : ProtocolState)
+      (budgetAuthorized : PassBudgetAuthorized config)
+      (live : state.phase = .live) (isolated : state.isolation = .available)
+      (atEnd : state.stage = .fixOrDone)
+      (reviewDone : state.reviewExit = some .done)
+      (reviewCurrent : state.reviewEpoch = some state.artifactEpoch)
+      (observation : TerminationObservation)
+      (authorized : observation.DispatchAuthorized config state)
+      (routed : terminationRouter observation = .rejectFakeConsensus)
+      (action : TerminationAction .rejectFakeConsensus)
+      (actionShape : action = TerminationAction.rejectFakeConsensus)
+      (withinBudget : state.passesUsed < config.sharedPassBudget) :
+      ProtocolStep config state (.boundedPass state.stage .terminationGate) { state with
+        passesUsed := state.passesUsed + 1
+        attemptedFlights := state.attemptedFlights ∪ observation.attemptKeys state
+        phase := .abstained
+        terminationExit := some .rejectFakeConsensus
+        terminationEpoch := none }
+  | terminationEvidenceGap (state : ProtocolState)
+      (budgetAuthorized : PassBudgetAuthorized config)
+      (live : state.phase = .live) (isolated : state.isolation = .available)
+      (atEnd : state.stage = .fixOrDone)
+      (reviewDone : state.reviewExit = some .done)
+      (reviewCurrent : state.reviewEpoch = some state.artifactEpoch)
+      (observation : TerminationObservation)
+      (authorized : observation.DispatchAuthorized config state)
+      (routed : terminationRouter observation = .escalateEvidenceGap)
+      (action : TerminationAction .escalateEvidenceGap)
+      (actionShape : action = TerminationAction.escalateEvidenceGap)
+      (withinBudget : state.passesUsed < config.sharedPassBudget) :
+      ProtocolStep config state (.boundedPass state.stage .terminationGate) { state with
+        passesUsed := state.passesUsed + 1
+        attemptedFlights := state.attemptedFlights ∪ observation.attemptKeys state
+        phase := .abstained
+        terminationExit := some .escalateEvidenceGap
+        terminationEpoch := none }
   | finish (state : ProtocolState)
       (budgetAuthorized : PassBudgetAuthorized config)
       (live : state.phase = .live) (atEnd : state.stage = .fixOrDone)
       (isolated : state.isolation = .available) (reviewDone : state.reviewExit = some .done)
-      (permitted : state.terminationExit = some .permitClaim) :
+      (reviewCurrent : state.reviewEpoch = some state.artifactEpoch)
+      (permitted : state.terminationExit = some .permitClaim)
+      (permitCurrent : state.terminationEpoch = some state.artifactEpoch) :
       ProtocolStep config state .finish { state with phase := .terminal }
   | abstain (state : ProtocolState) (budgetAuthorized : PassBudgetAuthorized config)
       (live : state.phase = .live)
@@ -484,6 +763,7 @@ inductive ProtocolStep (config : ProtocolConfig) : ProtocolState -> Event -> Pro
 structure InlineConsensusModel where
   stageRelation : Stage -> Stage -> Prop
   carrierSelector : Eligibility -> Finset Carrier -> Carrier
+  carrierLegalAt : Stage -> SeatRole -> Carrier -> Prop
   completionPredicate : Carrier -> CompletionObservation -> Prop
   seatView : Type
   thinkingResults : Type
@@ -498,6 +778,7 @@ structure InlineConsensusModel where
   transition : ProtocolConfig -> ProtocolState -> Event -> ProtocolState -> Prop
 def inlineConsensusModel : InlineConsensusModel :=
   { stageRelation := Stage.Successor, carrierSelector := selectCarrier
+    carrierLegalAt := CarrierLegalAt
     completionPredicate := Complete, seatView := SeatView
     thinkingResults := ThinkingResults, thinkingSituationFrom := thinkingSituation
     reviewResults := ReviewResults
@@ -505,293 +786,4 @@ def inlineConsensusModel : InlineConsensusModel :=
     designRoute := designRouter, reviewRoute := reviewRouter, terminationRoute := terminationRouter
     rosterContract := ExactRoster, passLegalAt := BoundedPassKind.LegalAt
     transition := ProtocolStep }
-/-- This theorem checks only the model record's internal wiring. Correspondence between these
-objects and the external sshx prose is a digest-pinned snapshot claim, not a Lean theorem. -/
-theorem inline_consensus_model_internal_wiring :
-    inlineConsensusModel.stageRelation = Stage.Successor /\
-      inlineConsensusModel.carrierSelector = selectCarrier /\
-      inlineConsensusModel.completionPredicate = Complete /\
-      inlineConsensusModel.seatView = SeatView /\
-      inlineConsensusModel.thinkingResults = ThinkingResults /\
-      inlineConsensusModel.thinkingSituationFrom = thinkingSituation /\
-      inlineConsensusModel.reviewResults = ReviewResults /\
-      inlineConsensusModel.priorDisclosure = priorExposure /\
-      inlineConsensusModel.designRoute = designRouter /\
-      inlineConsensusModel.reviewRoute = reviewRouter /\
-      inlineConsensusModel.terminationRoute = terminationRouter /\
-      inlineConsensusModel.rosterContract = ExactRoster /\
-      inlineConsensusModel.passLegalAt = BoundedPassKind.LegalAt /\
-      inlineConsensusModel.transition = ProtocolStep := by
-  simp [inlineConsensusModel]
-def optimalTerminationRule : Rule := fun observation =>
-  decide (inlineConsensusModel.terminationRoute observation = .permitClaim)
-inductive Execution (model : InlineConsensusModel) (config : ProtocolConfig) :
-    ProtocolState -> List Event -> ProtocolState -> Prop
-  | nil (state : ProtocolState) (budgetAuthorized : PassBudgetAuthorized config) :
-      Execution model config state [] state
-  | cons {start middle final : ProtocolState} {event : Event} {events : List Event}
-      (step : model.transition config start event middle)
-      (rest : Execution model config middle events final) :
-      Execution model config start (event :: events) final
-def stageRemaining (stage : Stage) : Nat := 6 - stage.rank
-def liveCredit : RunPhase -> Nat
-  | .live => 1
-  | .terminal | .abstained => 0
-def potential (config : ProtocolConfig) (state : ProtocolState) : Nat :=
-  state.remainingFlights.card + stageRemaining state.stage +
-    (config.sharedPassBudget - state.passesUsed) + liveCredit state.phase
-def explicitRunBound (config : ProtocolConfig) : Nat :=
-  Fintype.card FlightKey + 7 + config.sharedPassBudget
-def WithinRetryBudgets (config : ProtocolConfig) (events : List Event) : Prop :=
-  forall event, event ∈ events -> match event with
-    | .flightFailure stage role carrier attempts =>
-        0 < attempts /\ attempts <= config.retryBudget stage role carrier
-    | _ => True
-def flightKeys : List Event -> List FlightKey
-  | [] => []
-  | .flightFailure stage role carrier _ :: events =>
-      flightKey stage role carrier :: flightKeys events
-  | _ :: events => flightKeys events
-def NoCarrierReopened (events : List Event) : Prop := (flightKeys events).Nodup
-def sharedPassCount : List Event -> Nat
-  | [] => 0
-  | .boundedPass _ _ :: events => sharedPassCount events + 1
-  | _ :: events => sharedPassCount events
-structure MaximalRun (model : InlineConsensusModel) (config : ProtocolConfig) where
-  events : List Event
-  finalState : ProtocolState
-  execution : Execution model config (initialState config) events finalState
-  maximal : forall event state, Not (model.transition config finalState event state)
-theorem exact_roster_bool_iff (roster : TerminationRoster) :
-    exactRosterBool roster = true <-> ExactRoster roster := by
-  simp only [exactRosterBool, ExactRoster, Bool.and_eq_true, bne_iff_ne]
-  tauto
-theorem seat_result_satisfied_bool_iff {seat : TerminationSeat}
-    (result : TerminationSeatResult seat) :
-    result.isSatisfiedBool = true <-> result.IsSatisfied := by
-  cases result with
-  | completed evidence roleMatches verdict =>
-      cases verdict <;> simp [TerminationSeatResult.isSatisfiedBool,
-        TerminationSeatResult.IsSatisfied]
-  | invalid => simp [TerminationSeatResult.isSatisfiedBool, TerminationSeatResult.IsSatisfied]
-  | missing => simp [TerminationSeatResult.isSatisfiedBool, TerminationSeatResult.IsSatisfied]
-private theorem all_satisfied_bool_iff (observation : TerminationObservation) :
-    allSatisfiedBool observation = true <-> allSatisfied observation := by
-  simp only [allSatisfiedBool, Bool.and_eq_true]
-  rw [seat_result_satisfied_bool_iff, seat_result_satisfied_bool_iff,
-    seat_result_satisfied_bool_iff]
-  constructor
-  · rintro ⟨⟨criterion, residual⟩, claim⟩ seat
-    cases seat <;> assumption
-  · intro satisfied
-    exact ⟨⟨satisfied .criterionEvidence, satisfied .residualGap⟩,
-      satisfied .claimIntegrity⟩
-private theorem termination_router_permit_iff (observation : TerminationObservation) :
-    terminationRouter observation = .permitClaim <->
-      ExactRoster observation.roster /\ allSatisfied observation := by
-  rw [← exact_roster_bool_iff, ← all_satisfied_bool_iff]
-  cases roster : exactRosterBool observation.roster <;>
-    cases satisfied : allSatisfiedBool observation <;>
-    cases unsatisfied : anyUnsatisfiedBool observation <;>
-    simp [terminationRouter, roster, satisfied, unsatisfied]
-theorem termination_admits_iff (observation : TerminationObservation) :
-    terminationAdmits observation = true <->
-      ExactRoster observation.roster /\ allSatisfied observation := by
-  simp [terminationAdmits, termination_router_permit_iff]
-private theorem hazard_free_iff (observation : TerminationObservation) :
-    Not (TerminationHazard observation) <->
-      ExactRoster observation.roster /\ allSatisfied observation := by
-  constructor
-  · intro safe
-    constructor
-    · by_contra fake
-      exact safe (Or.inl fake)
-    · intro seat
-      by_contra notSatisfied
-      exact safe (Or.inr ⟨seat, notSatisfied⟩)
-  · rintro ⟨roster, satisfied⟩ hazard
-    rcases hazard with fake | danger
-    · exact fake roster
-    · obtain ⟨seat, notSatisfied⟩ := danger
-      exact notSatisfied (satisfied seat)
-private theorem termination_admits_sound : Sound terminationAdmits := by
-  intro observation admitted
-  exact (hazard_free_iff observation).mpr ((termination_admits_iff observation).mp admitted)
-private theorem termination_admits_greatest : Greatest terminationAdmits := by
-  constructor
-  · exact termination_admits_sound
-  · intro rule sound
-    rw [Pi.le_def]
-    intro observation
-    rw [Bool.le_iff_imp]
-    intro admitted
-    apply (termination_admits_iff observation).mpr
-    apply (hazard_free_iff observation).mp
-    exact sound observation admitted
-private theorem rule_le_iff_le (left right : Rule) : RuleLE left right <-> left <= right := by
-  simp [RuleLE, Pi.le_def, Bool.le_iff_imp]
-private theorem termination_admits_sound_maximal_unique :
-    Sound terminationAdmits /\
-      (forall rule, Sound rule -> RuleLE rule terminationAdmits) /\
-      (forall rule, Greatest rule -> rule = terminationAdmits) := by
-  refine ⟨termination_admits_sound, ?_, ?_⟩
-  · intro rule sound
-    exact (rule_le_iff_le rule terminationAdmits).mpr (termination_admits_greatest.2 sound)
-  · intro rule greatest
-    exact IsGreatest.unique greatest termination_admits_greatest
-theorem termination_router_sound_maximal_unique :
-    Sound optimalTerminationRule /\
-      (forall rule, Sound rule -> RuleLE rule optimalTerminationRule) /\
-      (forall rule, Greatest rule -> rule = optimalTerminationRule) := by
-  change Sound terminationAdmits /\
-    (forall rule, Sound rule -> RuleLE rule terminationAdmits) /\
-    (forall rule, Greatest rule -> rule = terminationAdmits)
-  exact termination_admits_sound_maximal_unique
-private theorem step_potential_lt {config : ProtocolConfig} {start final : ProtocolState}
-    {event : Event} (step : ProtocolStep config start event final) :
-    potential config final < potential config start := by
-  cases step with
-  | flightFailure role carrier attempts budget live isolated selected worker available positive
-      within =>
-      have smaller := Finset.card_erase_lt_of_mem available
-      simp only [potential] at smaller ⊢
-      omega
-  | advance target budget live isolated authorized successor =>
-      have stageDecrease : stageRemaining target < stageRemaining start.stage := by
-        cases source : start.stage <;>
-          simp [Stage.Successor, Stage.next, source] at successor <;>
-          subst target <;> simp [stageRemaining, Stage.rank]
-      simp only [potential, AdvanceCondition.nextState_remainingFlights,
-        AdvanceCondition.nextState_stage, AdvanceCondition.nextState_passesUsed,
-        AdvanceCondition.nextState_phase]
-      omega
-  | boundedPass kind budget live isolated legal notFix notTermination within =>
-      simp [potential]
-      omega
-  | fixAndReview budget live isolated atEnd needsFix implementation roleMatches completedSeats
-      within =>
-      simp [potential]
-      omega
-  | terminationGate budget live isolated atEnd observation within =>
-      simp [potential]
-      omega
-  | finish budget live atEnd isolated reviewDone permitted =>
-      simp [potential, liveCredit, live]
-  | abstain budget live reason => simp [potential, liveCredit, live]
-private theorem execution_length_add_potential_le {config : ProtocolConfig}
-    {start final : ProtocolState} {events : List Event}
-    (execution : Execution inlineConsensusModel config start events final) :
-    events.length + potential config final <= potential config start := by
-  induction execution with
-  | nil => simp
-  | cons step rest ih =>
-      simp only [List.length_cons]
-      have decreases := step_potential_lt step
-      omega
-private theorem execution_within_retry_budgets {config : ProtocolConfig}
-    {start final : ProtocolState} {events : List Event}
-    (execution : Execution inlineConsensusModel config start events final) :
-    WithinRetryBudgets config events := by
-  induction execution with
-  | nil => simp [WithinRetryBudgets]
-  | cons step rest ih =>
-      intro queried member
-      rcases List.mem_cons.mp member with head | tail
-      · subst queried
-        cases step <;> simp_all
-      · exact ih queried tail
-private theorem execution_keys_mem_start {config : ProtocolConfig}
-    {start final : ProtocolState} {events : List Event}
-    (execution : Execution inlineConsensusModel config start events final) :
-    forall key, key ∈ flightKeys events -> key ∈ start.remainingFlights := by
-  induction execution with
-  | nil =>
-      intro key member
-      simp [flightKeys] at member
-  | cons step rest ih =>
-      cases step with
-      | flightFailure role carrier attempts budget live isolated selected worker available positive
-          within =>
-          intro key member
-          simp only [flightKeys, List.mem_cons] at member
-          rcases member with rfl | member
-          · exact available
-          · exact Finset.mem_of_mem_erase (ih key member)
-      | advance target budget live isolated authorized successor => simpa [flightKeys] using ih
-      | boundedPass kind budget live isolated legal notFix notTermination within =>
-          simpa [flightKeys] using ih
-      | fixAndReview budget live isolated atEnd needsFix implementation roleMatches completedSeats
-          within =>
-          simpa [flightKeys] using ih
-      | terminationGate budget live isolated atEnd observation within => simpa [flightKeys] using ih
-      | finish budget live atEnd isolated reviewDone permitted =>
-          simpa [flightKeys] using ih
-      | abstain budget live reason => simpa [flightKeys] using ih
-private theorem execution_no_carrier_reopened {config : ProtocolConfig}
-    {start final : ProtocolState} {events : List Event}
-    (execution : Execution inlineConsensusModel config start events final) :
-    NoCarrierReopened events := by
-  induction execution with
-  | nil => simp [NoCarrierReopened, flightKeys]
-  | cons step rest ih =>
-      cases step with
-      | flightFailure role carrier attempts budget live isolated selected worker available positive
-          within =>
-          simp only [NoCarrierReopened, flightKeys, List.nodup_cons]
-          constructor
-          · intro reopened
-            have remaining := execution_keys_mem_start rest _ reopened
-            exact (Finset.mem_erase.mp remaining).1 rfl
-          · exact ih
-      | advance target budget live isolated authorized successor =>
-          simpa [NoCarrierReopened, flightKeys] using ih
-      | boundedPass kind budget live isolated legal notFix notTermination within =>
-          simpa [NoCarrierReopened, flightKeys] using ih
-      | fixAndReview budget live isolated atEnd needsFix implementation roleMatches completedSeats
-          within =>
-          simpa [NoCarrierReopened, flightKeys] using ih
-      | terminationGate budget live isolated atEnd observation within =>
-          simpa [NoCarrierReopened, flightKeys] using ih
-      | finish budget live atEnd isolated reviewDone permitted =>
-          simpa [NoCarrierReopened, flightKeys] using ih
-      | abstain budget live reason => simpa [NoCarrierReopened, flightKeys] using ih
-private theorem execution_pass_count_eq {config : ProtocolConfig}
-    {start final : ProtocolState} {events : List Event}
-    (execution : Execution inlineConsensusModel config start events final) :
-    start.passesUsed + sharedPassCount events = final.passesUsed := by
-  induction execution with
-  | nil => simp [sharedPassCount]
-  | cons step rest ih =>
-      cases step <;> simp [sharedPassCount] at ih ⊢ <;> omega
-private theorem execution_passes_within_budget {config : ProtocolConfig}
-    {start final : ProtocolState} {events : List Event}
-    (execution : Execution inlineConsensusModel config start events final)
-    (startWithin : start.passesUsed <= config.sharedPassBudget) :
-    final.passesUsed <= config.sharedPassBudget := by
-  induction execution with
-  | nil => exact startWithin
-  | cons step rest ih =>
-      apply ih
-      cases step <;> simp_all
-theorem every_maximal_run_is_bounded (config : ProtocolConfig)
-    (run : MaximalRun inlineConsensusModel config) :
-    WithinRetryBudgets config run.events /\
-      NoCarrierReopened run.events /\
-      sharedPassCount run.events <= config.sharedPassBudget /\
-      run.events.length <= explicitRunBound config := by
-  refine ⟨execution_within_retry_budgets run.execution,
-    execution_no_carrier_reopened run.execution, ?_, ?_⟩
-  · have countEq : sharedPassCount run.events = run.finalState.passesUsed := by
-      simpa [initialState] using execution_pass_count_eq run.execution
-    rw [countEq]
-    exact execution_passes_within_budget run.execution (Nat.zero_le _)
-  · have bound := execution_length_add_potential_le run.execution
-    have initialPotential : potential config (initialState config) = explicitRunBound config := by
-      simp [potential, initialState, explicitRunBound, stageRemaining, Stage.rank, liveCredit,
-        Finset.card_univ]
-      omega
-    rw [initialPotential] at bound
-    omega
-#print axioms termination_router_sound_maximal_unique
-#print axioms every_maximal_run_is_bounded
 end D5.S0.History.Consensus.InlineConsensusOptimality
