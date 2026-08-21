@@ -103,6 +103,7 @@ public sealed class R13ScopeNarrowingTests
     }
 
     [Fact]
+    [BaseFactScopeProbe(4)]
     public void Sl004ScopesUnchangedMirrorPairButKeepsDeltaAndImplementationPairs()
     {
         var unrelated = new RuleFixture();

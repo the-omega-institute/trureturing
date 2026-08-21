@@ -27,7 +27,7 @@ internal static class BackfillInventoryRule
         => Evaluate(context, changes: null);
 
     internal static ImmutableArray<RuleFinding> EvaluateCandidateDelta(RuleEvaluationContext context)
-        => Evaluate(context, context.Changes);
+        => Evaluate(context, context.RuleImplementationChanged ? null : context.Changes);
 
     internal static bool IsAffectedBy(RuleEvaluationContext context)
     {
