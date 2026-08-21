@@ -429,4 +429,47 @@ def terminationRouter (observation : TerminationObservation) : TerminationExit :
 
 def correlatedConclusion (_ : Carrier) (latent : Bool) : Bool := latent
 
+def trueWorldCount (conclusion : Bool -> Bool) : Nat :=
+  (Finset.univ.filter fun world => conclusion world = true).card
+
+def jointTrueWorldCount (first second : Bool -> Bool) : Nat :=
+  (Finset.univ.filter fun world => first world = true && second world = true).card
+
+/-- Independence under the uniform law on the two-element latent space. -/
+def UniformIndependent (first second : Bool -> Bool) : Prop :=
+  jointTrueWorldCount first second * Fintype.card Bool =
+    trueWorldCount first * trueWorldCount second
+
+instance (first second : Bool -> Bool) : Decidable (UniformIndependent first second) := by
+  unfold UniformIndependent
+  infer_instance
+
+def ConstantConclusionsAreIndependent : Prop :=
+  forall first second : Bool,
+    UniformIndependent (fun _ => first) (fun _ => second)
+
+/-- The unique primitive algebra.  Transition semantics are derived from these
+    projections in `InlineConsensusOptimality`, never stored independently. -/
+structure InlineConsensusModel where
+  stageRelation : Stage -> Stage -> Prop
+  fallbackSelector : Eligibility -> Finset Carrier -> Carrier
+  dispatchShape : DispatchPlan -> Prop
+  completionPredicate : Carrier -> CompletionObservation -> Prop
+  designRoute : DesignSituation -> DesignExit
+  reviewRoute : ReviewObservation -> ReviewExit
+  terminationRoute : TerminationObservation -> TerminationExit
+  rosterContract : TerminationRoster -> Prop
+
+def inlineConsensusModel : InlineConsensusModel :=
+  { stageRelation := Stage.Successor
+    fallbackSelector := selectCarrier
+    dispatchShape := fun plan =>
+      MultiSeatLayout plan.thinking /\ MultiSeatLayout plan.review /\
+        MultiSeatLayout plan.termination /\ plan.implementation != .abstain
+    completionPredicate := Complete
+    designRoute := designRouter
+    reviewRoute := reviewRouter
+    terminationRoute := terminationRouter
+    rosterContract := ExactRoster }
+
 end D5.S0.History.Consensus.InlineConsensusOptimality
