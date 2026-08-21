@@ -54,7 +54,16 @@ toolchain="$(tr -d '[:space:]' < "$repository/lean-toolchain")"
 os="$(uname -s | tr '[:upper:]' '[:lower:]')"
 arch="$(uname -m)"
 slug="${toolchain//[^A-Za-z0-9]/-}"
-tag="lean-cache-v1-${slug}-${os}-${arch}-${config_sha256:0:16}-${sources_sha256:0:16}"
+# tag 里不含平台维度。两条独立读数支持这一点：
+# ① mathlib 的缓存键（Cache/Hashing.lean:149）是 rootHash::pathHash::内容哈希::import 哈希，
+#    其下载 URL（Cache/Requests.lean:293）是 "{URL}/f/{repo}/{fileName}" —— 全无平台/架构；
+#    最大的 Lean 项目对所有平台发同一份 olean 缓存。
+# ② 本仓 .lake/build 实测不含任何平台相关二进制：*.o/*.so/*.dylib/*.a/*.dll 计数皆为 0，
+#    只有 olean/ilean/c/trace/hash/json，且 olean 的 file(1) 类型是 "data" 而非 Mach-O/ELF。
+# slug（toolchain）必须保留：不同 Lean 版本的 olean 确实不兼容。
+# 加上平台维度的后果是把主检出（darwin-arm64）挡在 CI 产物（linux-aarch64）之外，
+# 而 owner 的目标恰恰是「主 checkout 不用从 0 开始 build 热缓存」。
+tag="lean-cache-v1-${slug}-${config_sha256:0:16}-${sources_sha256:0:16}"
 asset="lean-build.tgz"
 
 emit_address() {
