@@ -5,6 +5,13 @@ namespace StrataLint.Tests;
 /// 缺的是「选中之后没人保证它是新的」——实测停在七天前，于是 ensure 成功却仍要
 /// 补七天差量(57 分钟)。这里钉住刷新那一步的四条承重契约。
 /// </summary>
+/// <remarks>
+/// 关于 <c>LeanCacheEnsureCommandTests</c> 里那两条 lake 断言为何限于**目标树**:
+/// 那两个测试守的是「staging 不完整时不得在目标树上做昂贵操作」。货源刷新在 donor
+/// 上跑 lake，与目标树的完整性无关，原断言不区分工作目录才会把它一并判红。
+/// 删掉断言能让它们变绿，但会把契约一起丢掉，故只限定范围。变异证明:让生产代码
+/// 在目标树内跑 lake（契约明禁之事），两条断言仍红。
+/// </remarks>
 public sealed class LeanDonorRefreshTests
 {
     private static string Refresh() => TestRepositoryLayout.ReadAllText(
@@ -74,3 +81,18 @@ public sealed class LeanDonorRefreshTests
         Assert.Contains("internal static string TryRefresh(", refresh, StringComparison.Ordinal);
     }
 }
+
+/// <summary>
+/// `LeanCacheEnsureCommandTests` 那两条 lake 断言限于**目标树**的判据。
+/// 那两个测试守的是「staging 不完整时不得在目标树上做昂贵操作」;货源刷新在 donor 上
+/// 跑 lake，与目标树完整性无关，原断言不区分工作目录才会把它一并判红。删掉断言能让它们
+/// 变绿却会把契约一起丢掉，故只限定范围。变异证明:让生产代码在目标树内跑 lake
+/// (契约明禁之事)，两条断言仍红。
+/// </summary>
+internal static class LeanCachePredicates
+{
+    internal static bool IsLakeInTarget(WorktreeProcessInvocation call, string target) =>
+        call.FileName == "lake"
+            && call.WorkingDirectory.StartsWith(target, StringComparison.Ordinal);
+}
+
