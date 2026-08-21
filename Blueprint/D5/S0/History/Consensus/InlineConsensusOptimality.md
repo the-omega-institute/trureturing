@@ -2,9 +2,9 @@
 
 ## Abstract
 
-Carrier selection is the unique available priority minimum, and the design router rejects single-perspective consensus.
+Carrier selection is available and every available priority minimum equals it, while the design router rejects single-perspective consensus.
 
-**Theorem 1.1 (Carrier selection is the unique available priority minimum).**
+**Theorem 1.1 (Carrier selection is available and identifies every priority minimum).**
 
 $$\forall eligible, tried,\ \operatorname{Nonempty}\left(\operatorname{eligibleUntried}\left(eligible, tried\right)\right) \Rightarrow \operatorname{selectCarrier}\left(eligible, tried\right) \in \operatorname{eligibleUntried}\left(eligible, tried\right)\\ \land \forall other,\ other \in \operatorname{eligibleUntried}\left(eligible, tried\right) \Rightarrow (\forall carrier,\ carrier \in \operatorname{eligibleUntried}\left(eligible, tried\right) \Rightarrow \operatorname{priorityRank}\left(other\right) \le \operatorname{priorityRank}\left(carrier\right)) \Rightarrow other = \operatorname{selectCarrier}\left(eligible, tried\right)$$
 
@@ -28,9 +28,10 @@ $$\operatorname{designRouter}\left(singlePerspective\right) = rejectFakeConsensu
 
 *Commentary.*
 
-The design router maps exactly the singlePerspective situation to the rejectFakeConsensus exit. This equation states one router row; it does not supply an independent design hazard predicate or a design-router maximality theorem.
+The singlePerspective row of designRouter returns rejectFakeConsensus. This equation states one router row; it does not supply an independent design hazard predicate or a design-router maximality theorem.
 
 ## References
 
 - Truth anchor: `D5/S0/History/Consensus/InlineConsensusOptimality.design_router_rejects_single_perspective`
 - Truth anchor: `D5/S0/History/Consensus/InlineConsensusOptimality.selectCarrier_is_unique_minimum`
+- Dependency: [D5/S0/History/Consensus/InlineConsensusProtocolCore](InlineConsensusProtocolCore.md)

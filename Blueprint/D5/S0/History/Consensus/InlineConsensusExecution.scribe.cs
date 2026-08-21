@@ -11,33 +11,27 @@ internal sealed class InlineConsensusExecutionDocument : IScribeDocumentDefiniti
         H("Inline Consensus Execution"),
         Blocks(
             Describe.Lean(
-                DescribeId.Create("a-fix-invalidates-any-stale-termination-permit"),
+                DescribeId.Create("a-fix-prevents-the-repaired-state-from-being-finish-ready"),
                 DeclarationHandle.Create(
                     "D5/S0/History/Consensus/InlineConsensusExecution."
                     + "no_stale_termination_permit_after_fix"),
-                H("A fix invalidates any stale termination permit"),
+                H("A fix prevents the repaired state from being finish-ready"),
                 StatementSource.FromAuthor(Disp(Seq(
                     Forall, Sp, F.Id("config"), Comma, Sp, F.Id("start"), Comma, Sp,
                     F.Id("repaired"), Comma, Esc,
                     Call("ProtocolStep", F.Id("config"), F.Id("start"),
                         Call("boundedPass", Field("start", "stage"), F.Id("fixPass")),
                         F.Id("repaired")),
-                    Sp, Rightarrow, Sp,
-                    Field("repaired", "terminationExit"), Sp, Eq, Sp, F.Id("none"),
-                    Sp, Land, Sp,
-                    Field("repaired", "terminationEpoch"), Sp, Eq, Sp, F.Id("none"),
-                    RowBreak, Sp, Land, Sp,
-                    Forall, Sp, F.Id("final"), Comma, Esc, Neg,
-                    Call("ProtocolStep", F.Id("config"), F.Id("repaired"),
-                        F.Id("finish"), F.Id("final"))))),
+                    Sp, Rightarrow, Sp, Neg,
+                    Call("FinishPrecondition", F.Id("repaired"))))),
                 AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
-                        "For every bounded fix pass, the repaired state has neither a recorded "
-                        + "termination exit nor a termination epoch, and no finish transition can "
-                        + "start from that repaired state. The theorem concerns only the state "
-                        + "produced by the given fix transition; it does not assert that every later "
-                        + "state is unable to finish."))),
+                        "For every fix-pass ProtocolStep, the repaired state does not satisfy "
+                        + "FinishPrecondition. This is the negation of the complete finish-readiness "
+                        + "conjunction; it does not assert that either termination field is none, "
+                        + "and it does not assert that the repaired state has no outgoing finish "
+                        + "transition."))),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("termination-evaluation-requires-a-current-done-review"),

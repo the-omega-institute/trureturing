@@ -7,15 +7,15 @@ namespace StrataLint.Scribe.Blueprint.D5.S0.History.Consensus;
 internal sealed class InlineConsensusOptimalityDocument : IScribeDocumentDefinition
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Carrier selection is the unique available priority minimum, and the design router rejects single-perspective consensus.",
+        "Carrier selection is available and every available priority minimum equals it, while the design router rejects single-perspective consensus.",
         H("Inline Consensus Optimality"),
         Blocks(
             Describe.Lean(
-                DescribeId.Create("carrier-selection-is-the-unique-available-priority-minimum"),
+                DescribeId.Create("carrier-selection-is-available-and-identifies-every-priority-minimum"),
                 DeclarationHandle.Create(
                     "D5/S0/History/Consensus/InlineConsensusOptimality."
                     + "selectCarrier_is_unique_minimum"),
-                H("Carrier selection is the unique available priority minimum"),
+                H("Carrier selection is available and identifies every priority minimum"),
                 StatementSource.FromAuthor(Disp(Seq(
                     Forall, Sp, F.Id("eligible"), Comma, Sp, F.Id("tried"), Comma, Esc,
                     Call("Nonempty", EligibleUntried()), Sp, Rightarrow, Sp,
@@ -57,8 +57,8 @@ internal sealed class InlineConsensusOptimalityDocument : IScribeDocumentDefinit
                 AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
-                        "The design router maps exactly the singlePerspective situation to the "
-                        + "rejectFakeConsensus exit. This equation states one router row; it does not "
+                        "The singlePerspective row of designRouter returns rejectFakeConsensus. "
+                        + "This equation states one router row; it does not "
                         + "supply an independent design hazard predicate or a design-router maximality "
                         + "theorem."))),
                 DescribeRole.Theorem))));

@@ -4,9 +4,9 @@
 
 Executions preserve retry uniqueness and consume finite protocol resources.
 
-**Theorem 1.1 (A fix invalidates any stale termination permit).**
+**Theorem 1.1 (A fix prevents the repaired state from being finish-ready).**
 
-$$\forall config, start, repaired,\ \operatorname{ProtocolStep}\left(config, start, \operatorname{boundedPass}\left(start.stage, fixPass\right), repaired\right) \Rightarrow repaired.terminationExit = none \land repaired.terminationEpoch = none\\ \land \forall final,\ \neg\operatorname{ProtocolStep}\left(config, repaired, finish, final\right)$$
+$$\forall config, start, repaired,\ \operatorname{ProtocolStep}\left(config, start, \operatorname{boundedPass}\left(start.stage, fixPass\right), repaired\right) \Rightarrow \neg\operatorname{FinishPrecondition}\left(repaired\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S0/History/Consensus/InlineConsensusExecution.no_stale_termination_permit_after_fix` (`✓ std3`). ∎
 
@@ -14,7 +14,7 @@ $$\forall config, start, repaired,\ \operatorname{ProtocolStep}\left(config, sta
 
 *Commentary.*
 
-For every bounded fix pass, the repaired state has neither a recorded termination exit nor a termination epoch, and no finish transition can start from that repaired state. The theorem concerns only the state produced by the given fix transition; it does not assert that every later state is unable to finish.
+For every fix-pass ProtocolStep, the repaired state does not satisfy FinishPrecondition. This is the negation of the complete finish-readiness conjunction; it does not assert that either termination field is none, and it does not assert that the repaired state has no outgoing finish transition.
 
 **Theorem 1.2 (Termination evaluation requires a current done review).**
 

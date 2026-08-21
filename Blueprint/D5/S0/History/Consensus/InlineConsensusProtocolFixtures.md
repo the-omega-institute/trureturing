@@ -2,11 +2,11 @@
 
 ## Abstract
 
-Named protocol executions witness every design, review, and termination router exit.
+Router-ready design, review, and termination states admit routed protocol transitions.
 
-**Theorem 1.1 (Router transitions are exhaustive).**
+**Theorem 1.1 (Router-ready states admit routed transitions).**
 
-$$RouterTransitionsExhaustive$$
+$$(\forall config, state, situation,\ \operatorname{DesignRouterReady}\left(config, state, situation\right) \Rightarrow \operatorname{Nonempty}\left(\operatorname{DesignRouteTransition}\left(config, state, situation\right)\right))\\ \land (\forall config, state, results,\ \operatorname{ReviewRouterReady}\left(config, state, results\right) \Rightarrow \operatorname{Nonempty}\left(\operatorname{ReviewRouteTransition}\left(config, state, results\right)\right))\\ \land (\forall config, state, observation,\ \operatorname{TerminationRouterReady}\left(config, state, observation\right) \Rightarrow \operatorname{Nonempty}\left(\operatorname{TerminationRouteTransition}\left(config, state, observation\right)\right))$$
 
 *Proof.* Machine-checked in Lean as `D5/S0/History/Consensus/InlineConsensusProtocolFixtures.router_transitions_are_exhaustive` (`✓ std3`). ∎
 
@@ -14,9 +14,9 @@ $$RouterTransitionsExhaustive$$
 
 *Commentary.*
 
-RouterTransitionsExhaustive is the conjunction of three propositions: every DesignExit has a nonempty DesignRouteTransition, every ReviewExit has a nonempty ReviewRouteTransition, and every TerminationExit has a nonempty TerminationRouteTransition.
+The three conjuncts are conditional on DesignRouterReady, ReviewRouterReady, and TerminationRouterReady respectively. Under those hypotheses the theorem constructs a nonempty DesignRouteTransition, ReviewRouteTransition, or TerminationRouteTransition for the supplied situation, results, or observation.
 
-The proof assembles named ProtocolStep fixtures for implementation, successful and exhausted convergence, stalled and fake-consensus design exits, repair, termination candidacy, user decision and repeated review, and all four termination exits. It proves transition-level inhabitation, not that every arbitrary protocol state can take every route.
+Each transition contains a ProtocolStep, and the review and termination transitions record an output equal to the corresponding router result. The proposition makes no transition claim for an arbitrary state that does not satisfy the relevant readiness structure.
 
 ## References
 

@@ -7,7 +7,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S0.History.Consensus;
 internal sealed class InlineConsensusProtocolFixturesDocument : IScribeDocumentDefinition
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Named protocol executions witness every design, review, and termination router exit.",
+        "Router-ready design, review, and termination states admit routed protocol transitions.",
         H("Inline Consensus Protocol Fixtures"),
         Blocks(
             Describe.Lean(
@@ -15,20 +15,43 @@ internal sealed class InlineConsensusProtocolFixturesDocument : IScribeDocumentD
                 DeclarationHandle.Create(
                     "D5/S0/History/Consensus/InlineConsensusProtocolFixtures."
                     + "router_transitions_are_exhaustive"),
-                H("Router transitions are exhaustive"),
-                StatementSource.FromAuthor(Disp(F.Id("RouterTransitionsExhaustive"))),
+                H("Router-ready states admit routed transitions"),
+                StatementSource.FromAuthor(Disp(Seq(
+                    Open, Forall, Sp, F.Id("config"), Comma, Sp, F.Id("state"), Comma, Sp,
+                    F.Id("situation"), Comma, Esc,
+                    Call("DesignRouterReady", F.Id("config"), F.Id("state"), F.Id("situation")),
+                    Sp, Rightarrow, Sp,
+                    Call("Nonempty",
+                        Call("DesignRouteTransition", F.Id("config"), F.Id("state"),
+                            F.Id("situation"))), Close,
+                    RowBreak, Sp, Land, Sp,
+                    Open, Forall, Sp, F.Id("config"), Comma, Sp, F.Id("state"), Comma, Sp,
+                    F.Id("results"), Comma, Esc,
+                    Call("ReviewRouterReady", F.Id("config"), F.Id("state"), F.Id("results")),
+                    Sp, Rightarrow, Sp,
+                    Call("Nonempty",
+                        Call("ReviewRouteTransition", F.Id("config"), F.Id("state"),
+                            F.Id("results"))), Close,
+                    RowBreak, Sp, Land, Sp,
+                    Open, Forall, Sp, F.Id("config"), Comma, Sp, F.Id("state"), Comma, Sp,
+                    F.Id("observation"), Comma, Esc,
+                    Call("TerminationRouterReady", F.Id("config"), F.Id("state"),
+                        F.Id("observation")), Sp, Rightarrow, Sp,
+                    Call("Nonempty",
+                        Call("TerminationRouteTransition", F.Id("config"), F.Id("state"),
+                            F.Id("observation"))), Close))),
                 AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
-                        "RouterTransitionsExhaustive is the conjunction of three propositions: every "
-                        + "DesignExit has a nonempty DesignRouteTransition, every ReviewExit has a "
-                        + "nonempty ReviewRouteTransition, and every TerminationExit has a nonempty "
-                        + "TerminationRouteTransition.")),
+                        "The three conjuncts are conditional on DesignRouterReady, ReviewRouterReady, "
+                        + "and TerminationRouterReady respectively. Under those hypotheses the theorem "
+                        + "constructs a nonempty DesignRouteTransition, ReviewRouteTransition, or "
+                        + "TerminationRouteTransition for the supplied situation, results, or "
+                        + "observation.")),
                     Paragraph(Text(
-                        "The proof assembles named ProtocolStep fixtures for implementation, successful "
-                        + "and exhausted convergence, stalled and fake-consensus design exits, repair, "
-                        + "termination candidacy, user decision and repeated review, and all four "
-                        + "termination exits. It proves transition-level inhabitation, not that every "
-                        + "arbitrary protocol state can take every route."))),
+                        "Each transition contains a ProtocolStep, and the review and termination "
+                        + "transitions record an output equal to the corresponding router result. "
+                        + "The proposition makes no transition claim for an arbitrary state that does "
+                        + "not satisfy the relevant readiness structure."))),
                 DescribeRole.Theorem))));
 }
