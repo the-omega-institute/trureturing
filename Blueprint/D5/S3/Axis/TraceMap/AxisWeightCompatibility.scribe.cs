@@ -1,6 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Axis;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Axis.TraceMap;
 
 internal sealed class AxisWeightCompatibilityDocument : IScribeDocumentDefinition
 {
@@ -18,7 +18,7 @@ internal sealed class AxisWeightCompatibilityDocument : IScribeDocumentDefinitio
             Call("t", Add(K, Num(2))),
             Multiply(Call("t", Add(K, Num(1))), Call("t", K)));
 
-        const string declarationPrefix = "D5/S3/Axis/AxisWeightCompatibility.";
+        const string declarationPrefix = "D5/S3/Axis/TraceMap/AxisWeightCompatibility.";
 
         return DocumentDefinition.Create(ScribeNode.Create(
             "The two axis weights introduced in this repository denote the same function.",
@@ -38,11 +38,13 @@ internal sealed class AxisWeightCompatibilityDocument : IScribeDocumentDefinitio
                         + "only at deposit, after eight modules had been written and frozen.")),
                 Paragraph(Text(
                     "What is identified here is the weight and nothing else. The two partial "
-                        + "sums built on it are not equal: one indexes its words from one, the "
-                        + "other runs over Zeckendorf indices starting at two. They range over "
-                        + "the same combinatorial family under a shift of the index base, and "
-                        + "the source pins no smallest index, so both readings are faithful. No "
-                        + "equality between the two sums is asserted anywhere.")),
+                        + "sums are not equal as written: one indexes its words from one, the "
+                        + "other runs over Zeckendorf indices starting at two. Their exact "
+                        + "relation is a separate result, already proved alongside this one, "
+                        + "and it carries two shifts rather than one: it reindexes the weight "
+                        + "and also raises the depth. Because the first sum uses the smaller "
+                        + "reindexing, the two results still do not compose into a bare "
+                        + "equality between the sums, and none is asserted.")),
                 Describe.Lean(
                     DescribeId.Create("the-two-axis-weights-are-one-function"),
                     DeclarationHandle.Create(declarationPrefix + "axisWeight_eq"),
