@@ -15,6 +15,8 @@ internal static class AnchorReferenceRule
                 continue;
             }
 
+            var findingAffected = RepositoryRules.IsLeanClosureFactAffected(context, path);
+
             foreach (var anchor in header.Anchors)
             {
                 // Anchor syntax is another rule's finding; an unparsable value is not this rule's business.
@@ -32,7 +34,7 @@ internal static class AnchorReferenceRule
                     MathlibAnchor { TargetKind: MathlibTargetKind.Module } mathlib => mathlib.Name,
                     _ => null,
                 };
-                if (moduleName is null)
+                if (moduleName is null && findingAffected)
                 {
                     findings.Add(new RuleFinding(
                         path.Value,
@@ -41,10 +43,12 @@ internal static class AnchorReferenceRule
                     continue;
                 }
 
-                if (!LeanImportClosure.ImportsExternalModule(
+                if (moduleName is not null
+                    && !LeanImportClosure.ImportsExternalModule(
                     context.Lean.Report,
                     LeanImportClosure.ModuleName(path),
-                    moduleName.Value))
+                    moduleName.Value)
+                    && findingAffected)
                 {
                     findings.Add(new RuleFinding(
                         path.Value,
