@@ -3,8 +3,7 @@
    mirror-B: D5/B/S3/Entropy/Forgetting/DeterministicEntropyStep
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: A deterministic finite update loses conditional entropy, with support equality exactly at recovery.
--/
+   digest: A deterministic finite update loses conditional entropy, with support equality exactly at recovery. -/
 
 /- Library-search audit trail (2026-08-21):
    * Exact repository hits `deterministic_trajectory_entropy_telescoping`,
