@@ -39,11 +39,7 @@ internal static class ShowAtomCommand
                 || source.Entries
                     .Skip(entryIndex + 1)
                     .Any(candidate => candidate.AstPath == entry.AstPath);
-            var selfFormalization = FormalizationPointer(
-                entry,
-                snapshot,
-                "self-without-receipt",
-                "self-receipt-unavailable");
+            var selfFormalization = FormalizationPointer(entry, snapshot);
             var parentFormalizations = document.RequireDigestionEntries()
                 .Where(parent => parent.Receipts.ChainAtoms.Contains(entry.AtomId, StringComparer.Ordinal))
                 .OrderBy(static parent => parent.AtomId, StringComparer.Ordinal)
@@ -128,20 +124,25 @@ internal static class ShowAtomCommand
             + $"normalized_sha256={entry.Fingerprints.NormalizedSha256} "
             + $"cas_ref={entry.CasRef} source=ledger");
         writer.WriteLine("FORMALIZATION_POINTERS");
-        if (selfFormalization.PrimaryGid is not null)
+        writer.WriteLine(selfFormalization switch
         {
-            writer.WriteLine(
-                $"SELF_FORMALIZATION_POINTER status=available "
-                + $"primary_gid={selfFormalization.PrimaryGid} "
-                + $"receipt_path={selfFormalization.ReceiptPath}");
-        }
-
-        if (selfFormalization.PrimaryGid is null)
-        {
-            writer.WriteLine(
-                $"SELF_FORMALIZATION_POINTER status={selfFormalization.Status} "
-                + $"receipt_path={selfFormalization.ReceiptPath}");
-        }
+            FormalizationReceiptPointer.Available available =>
+                "SELF_FORMALIZATION_POINTER status=available "
+                + $"primary_gid={available.PrimaryGid} "
+                + $"receipt_path={available.ReceiptPath}",
+            FormalizationReceiptPointer.Unavailable unavailable => unavailable.Reason switch
+            {
+                FormalizationReceiptUnavailability.MissingReceipt =>
+                    "SELF_FORMALIZATION_POINTER status=self-without-receipt "
+                    + $"receipt_path={unavailable.ReceiptPath}",
+                FormalizationReceiptUnavailability.UnusableReceipt =>
+                    "SELF_FORMALIZATION_POINTER status=self-receipt-unavailable "
+                    + $"receipt_path={unavailable.ReceiptPath}",
+                _ => throw new InvalidOperationException(
+                    "unknown self formalization receipt unavailability"),
+            },
+            _ => throw new InvalidOperationException("unknown self formalization pointer"),
+        });
 
         if (parentFormalizations.IsEmpty)
         {
@@ -150,16 +151,28 @@ internal static class ShowAtomCommand
 
         foreach (var parent in parentFormalizations)
         {
-            if (parent.PrimaryGid is not null)
+            writer.WriteLine(parent switch
             {
-                writer.WriteLine(
-                    $"PARENT_FORMALIZATION_POINTER parent_atom_id={parent.AtomId} status=available "
-                    + $"primary_gid={parent.PrimaryGid} receipt_path={parent.ReceiptPath}");
-                continue;
-            }
-
-            writer.WriteLine($"PARENT_FORMALIZATION_POINTER parent_atom_id={parent.AtomId} "
-                + $"status={parent.Status} receipt_path={parent.ReceiptPath}");
+                FormalizationReceiptPointer.Available available =>
+                    $"PARENT_FORMALIZATION_POINTER parent_atom_id={available.AtomId} "
+                    + "status=available "
+                    + $"primary_gid={available.PrimaryGid} "
+                    + $"receipt_path={available.ReceiptPath}",
+                FormalizationReceiptPointer.Unavailable unavailable => unavailable.Reason switch
+                {
+                    FormalizationReceiptUnavailability.MissingReceipt =>
+                        $"PARENT_FORMALIZATION_POINTER parent_atom_id={unavailable.AtomId} "
+                        + "status=parent-without-receipt "
+                        + $"receipt_path={unavailable.ReceiptPath}",
+                    FormalizationReceiptUnavailability.UnusableReceipt =>
+                        $"PARENT_FORMALIZATION_POINTER parent_atom_id={unavailable.AtomId} "
+                        + "status=parent-receipt-unavailable "
+                        + $"receipt_path={unavailable.ReceiptPath}",
+                    _ => throw new InvalidOperationException(
+                        "unknown parent formalization receipt unavailability"),
+                },
+                _ => throw new InvalidOperationException("unknown parent formalization pointer"),
+            });
         }
 
         WriteText(writer, "RAW", rawText);
@@ -180,23 +193,30 @@ internal static class ShowAtomCommand
 
     private static FormalizationReceiptPointer FormalizationPointer(
         DigestionLedgerEntry entry,
-        RepositorySnapshot snapshot,
-        string withoutReceiptStatus,
-        string unavailableStatus)
+        RepositorySnapshot snapshot)
     {
         var path = DigestionFormalizationReceipt.PathForAtom(entry.AtomId);
         if (!snapshot.TryGetFile(path, out _))
         {
-            return new(entry.AtomId, withoutReceiptStatus, null, path);
+            return new FormalizationReceiptPointer.Unavailable(
+                entry.AtomId,
+                FormalizationReceiptUnavailability.MissingReceipt,
+                path);
         }
 
         var receipt = BoundFormalizationReceipt(entry, snapshot, path);
         if (receipt is not null)
         {
-            return new(entry.AtomId, "available", receipt.PrimaryGid, path);
+            return new FormalizationReceiptPointer.Available(
+                entry.AtomId,
+                receipt.PrimaryGid,
+                path);
         }
 
-        return new(entry.AtomId, unavailableStatus, null, path);
+        return new FormalizationReceiptPointer.Unavailable(
+            entry.AtomId,
+            FormalizationReceiptUnavailability.UnusableReceipt,
+            path);
     }
 
     private static DigestionFormalizationReceipt? BoundFormalizationReceipt(
@@ -248,11 +268,7 @@ internal static class ShowAtomCommand
 
     private static FormalizationReceiptPointer ParentFormalization(
         DigestionLedgerEntry parent,
-        RepositorySnapshot snapshot) => FormalizationPointer(
-            parent,
-            snapshot,
-            "parent-without-receipt",
-            "parent-receipt-unavailable");
+        RepositorySnapshot snapshot) => FormalizationPointer(parent, snapshot);
 
     private static RepositorySnapshot Decode(RawRepositorySnapshot raw) =>
         SnapshotDecoder.Decode(raw) switch
@@ -262,9 +278,22 @@ internal static class ShowAtomCommand
                 throw new InvalidOperationException(failure.Message),
         };
 
-    private sealed record FormalizationReceiptPointer(
-        string AtomId,
-        string Status,
-        string? PrimaryGid,
-        string ReceiptPath);
+    private enum FormalizationReceiptUnavailability
+    {
+        MissingReceipt,
+        UnusableReceipt,
+    }
+
+    private abstract record FormalizationReceiptPointer(string AtomId, string ReceiptPath)
+    {
+        internal sealed record Available(
+            string AtomId,
+            string PrimaryGid,
+            string ReceiptPath) : FormalizationReceiptPointer(AtomId, ReceiptPath);
+
+        internal sealed record Unavailable(
+            string AtomId,
+            FormalizationReceiptUnavailability Reason,
+            string ReceiptPath) : FormalizationReceiptPointer(AtomId, ReceiptPath);
+    }
 }

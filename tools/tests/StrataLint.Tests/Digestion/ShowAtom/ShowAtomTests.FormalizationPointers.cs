@@ -29,6 +29,37 @@ public sealed partial class ShowAtomTests
     }
 
     [Fact]
+    public void ShowAtomSelfFormalizationStatusesAreMutuallyExclusive()
+    {
+        var available = RunFormalizationPointers(SelfAtomId);
+        var withoutReceipt = RunFormalizationPointers(BoundaryAtomId);
+        var unavailable = RunFormalizationPointers(
+            SelfAtomId,
+            receipts => receipts.Files[SelfAtomId] = RawRepositoryEntry.FromText(
+                ReceiptPath(SelfAtomId),
+                "{\n"));
+
+        AssertSinglePointerStatus(
+            available,
+            "SELF_FORMALIZATION_POINTER ",
+            "available",
+            "self-without-receipt",
+            "self-receipt-unavailable");
+        AssertSinglePointerStatus(
+            withoutReceipt,
+            "SELF_FORMALIZATION_POINTER ",
+            "self-without-receipt",
+            "available",
+            "self-receipt-unavailable");
+        AssertSinglePointerStatus(
+            unavailable,
+            "SELF_FORMALIZATION_POINTER ",
+            "self-receipt-unavailable",
+            "available",
+            "self-without-receipt");
+    }
+
+    [Fact]
     public void ShowAtomDistinguishesMissingSelfReceiptWithoutBlockingAuthoritativeText()
     {
         var output = RunFormalizationPointers(BoundaryAtomId);
@@ -138,6 +169,31 @@ public sealed partial class ShowAtomTests
     }
 
     [Fact]
+    public void ShowAtomParentFormalizationStatusesAreMutuallyExclusive()
+    {
+        var output = RunFormalizationPointers(BoundaryAtomId);
+
+        AssertSinglePointerStatus(
+            output,
+            $"PARENT_FORMALIZATION_POINTER parent_atom_id={DirectParentId} ",
+            "available",
+            "parent-without-receipt",
+            "parent-receipt-unavailable");
+        AssertSinglePointerStatus(
+            output,
+            "PARENT_FORMALIZATION_POINTER parent_atom_id=missing-parent ",
+            "parent-without-receipt",
+            "available",
+            "parent-receipt-unavailable");
+        AssertSinglePointerStatus(
+            output,
+            "PARENT_FORMALIZATION_POINTER parent_atom_id=invalid-parent ",
+            "parent-receipt-unavailable",
+            "available",
+            "parent-without-receipt");
+    }
+
+    [Fact]
     public void ShowAtomDoesNotPropagateGrandparentReceipt()
     {
         Assert.DoesNotContain(
@@ -209,6 +265,22 @@ public sealed partial class ShowAtomTests
             output,
             StringComparison.Ordinal);
         Assert.DoesNotContain(PrimaryGid(SelfAtomId), output, StringComparison.Ordinal);
+    }
+
+    private static void AssertSinglePointerStatus(
+        string output,
+        string linePrefix,
+        string expectedStatus,
+        params string[] excludedStatuses)
+    {
+        var line = Assert.Single(
+            output.Split('\n'),
+            candidate => candidate.StartsWith(linePrefix, StringComparison.Ordinal));
+        Assert.Contains($"status={expectedStatus} ", line, StringComparison.Ordinal);
+        foreach (var excludedStatus in excludedStatuses)
+        {
+            Assert.DoesNotContain($"status={excludedStatus} ", line, StringComparison.Ordinal);
+        }
     }
 
     private static string RunFormalizationPointers(
