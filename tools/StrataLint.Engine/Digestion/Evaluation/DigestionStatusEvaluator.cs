@@ -6,12 +6,15 @@ namespace StrataLint.Engine;
 internal static partial class DigestionStatusEvaluator
 {
     internal static DigestionLedgerEvaluation EvaluateUncovered(
+        DigestionEvaluationScope scope,
         BackfillInventoryDocument document,
         RepositorySnapshot snapshot,
-        BackfillInventoryDocument? baselineDocument = null)
+        BackfillInventoryDocument? baselineDocument = null,
+        RawChangeSet? changes = null)
     {
         ArgumentNullException.ThrowIfNull(document);
         ArgumentNullException.ThrowIfNull(snapshot);
+        changes = ResolveChanges(scope, changes);
         var entries = document.RequireDigestionEntries();
         var findings = ImmutableArray.CreateBuilder<string>();
         if (FindDuplicateAtomId(entries) is { } duplicateAtomId)
@@ -46,7 +49,7 @@ internal static partial class DigestionStatusEvaluator
                 emptyTruthNodes,
                 verifiedScribeEmissions: null,
                 genreChecks[entry.SourceId],
-                changes: null,
+                changes,
                 findings))
             .ToArray();
         DeriveMigration(work);
@@ -55,10 +58,11 @@ internal static partial class DigestionStatusEvaluator
             snapshot,
             findings,
             validateProjectedStatus: true,
-            changes: null);
+            changes);
     }
 
     internal static DigestionLedgerEvaluation Evaluate(
+        DigestionEvaluationScope scope,
         BackfillInventoryDocument document,
         RepositorySnapshot snapshot,
         AcceptedLeanClosure lean,
@@ -72,6 +76,7 @@ internal static partial class DigestionStatusEvaluator
         ArgumentNullException.ThrowIfNull(document);
         ArgumentNullException.ThrowIfNull(snapshot);
         ArgumentNullException.ThrowIfNull(lean);
+        changes = ResolveChanges(scope, changes);
         var entries = document.RequireDigestionEntries();
         var findings = ImmutableArray.CreateBuilder<string>();
         if (FindDuplicateAtomId(entries) is { } duplicateAtomId)
@@ -180,6 +185,18 @@ internal static partial class DigestionStatusEvaluator
             .GroupBy(static entry => entry.AtomId, StringComparer.Ordinal)
             .FirstOrDefault(static group => group.Count() > 1)
             ?.Key;
+
+    private static RawChangeSet? ResolveChanges(
+        DigestionEvaluationScope scope,
+        RawChangeSet? changes) => scope switch
+        {
+            DigestionEvaluationScope.FullScan => null,
+            DigestionEvaluationScope.ChangedSet when changes is not null => changes,
+            DigestionEvaluationScope.ChangedSet => throw new ArgumentException(
+                "ChangedSet requires an explicit change set.",
+                nameof(changes)),
+            _ => throw new ArgumentOutOfRangeException(nameof(scope)),
+        };
 
     private static DigestionLedgerEvaluation CompleteEvaluation(
         IReadOnlyList<EntryWork> work,
@@ -338,9 +355,17 @@ internal static partial class DigestionStatusEvaluator
         DigestionMigrationState? baselineMigration,
         RawChangeSet? changes)
     {
-        if (baselineMigration is null || changes is null || DigestionCasStore.EntryChanged(entry, changes))
+        if (changes is null || DigestionCasStore.EntryChanged(entry, changes))
         {
             return true;
+        }
+
+        // A changed-set caller without a baseline (theory-candidates) still has an explicit
+        // scope. An entry absent from that baseline is not automatically affected merely because
+        // the caller cannot compare its historical migration marker.
+        if (baselineMigration is null)
+        {
+            return false;
         }
 
         if (PathChanged(changes, entry.SourcePath)

@@ -40,6 +40,8 @@ internal sealed record OwnerOverrideInput(
 internal static class TheoryCandidatesCommand
 {
     private const string FrontierPrefix = "D5/X_Frontier/";
+    private const string ImplementationPath =
+        "tools/StrataLint.Cli/Commands/TheoryGeneration/TheoryCandidatesCommand.cs";
     private static readonly UTF8Encoding StrictUtf8 = new(false, true);
 
     internal static CommandResult Run(
@@ -56,6 +58,7 @@ internal static class TheoryCandidatesCommand
         {
             var ownerOverride = ParseArguments(arguments);
             var truth = DagLedgerCommandPreparation.BuildTruth(repository, leanReportSource);
+            var changes = repository.ReadCurrentChanges();
             var mission = MissionFileLoader.Load(truth.Snapshot) switch
             {
                 MissionLoadOutcome.Loaded loaded => loaded.Policy,
@@ -97,10 +100,12 @@ internal static class TheoryCandidatesCommand
                 .ToArray();
 
             var digestion = DigestionStatusEvaluator.Evaluate(
+                DigestionEvaluationScopes.ForChanges(changes, ImplementationPath),
                 BackfillInventoryLoader.Load(truth.Snapshot),
                 truth.Snapshot,
                 truth.Lean,
-                scribeEmissionVerifier.Verify(truth.Snapshot, truth.Report));
+                scribeEmissionVerifier.Verify(truth.Snapshot, truth.Report),
+                changes: changes);
             if (digestion.Findings.Length > 0)
             {
                 throw new InvalidOperationException(

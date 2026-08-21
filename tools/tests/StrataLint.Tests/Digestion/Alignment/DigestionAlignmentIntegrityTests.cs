@@ -547,6 +547,7 @@ public sealed partial class DigestionAlignmentTests
             (record.EmissionPath, emission));
 
         var evaluation = DigestionStatusEvaluator.Evaluate(
+            DigestionEvaluationScope.FullScan,
             candidate,
             snapshot,
             DigestionTestSupport.AcceptedLean(targetPath),

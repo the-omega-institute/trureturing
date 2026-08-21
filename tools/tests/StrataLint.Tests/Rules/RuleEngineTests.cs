@@ -471,12 +471,14 @@ public sealed class RuleEngineTests
         var context = fixture.Build(changes);
         var document = BackfillInventoryLoader.Load(context.Current);
         var evaluation = DigestionStatusEvaluator.Evaluate(
+            DigestionEvaluationScope.ChangedSet,
             document,
             context.Current,
             context.Lean,
             baselineDocument: BackfillInventoryLoader.Load(context.ForkPoint),
             baselineSnapshot: context.ForkPoint,
-            casEvaluation: DigestionCasStore.Evaluate(document, context.Current, changes));
+            casEvaluation: DigestionCasStore.Evaluate(document, context.Current, changes),
+            changes: changes);
 
         Assert.True(BackfillInventoryRule.IsAffectedBy(context));
         Assert.Contains(
@@ -588,12 +590,14 @@ public sealed class RuleEngineTests
         var context = fixture.Build(changes);
         var document = BackfillInventoryLoader.Load(context.Current);
         var evaluation = DigestionStatusEvaluator.Evaluate(
+            DigestionEvaluationScope.ChangedSet,
             document,
             context.Current,
             context.Lean,
             baselineDocument: BackfillInventoryLoader.Load(context.ForkPoint),
             baselineSnapshot: context.ForkPoint,
-            casEvaluation: DigestionCasStore.Evaluate(document, context.Current, changes));
+            casEvaluation: DigestionCasStore.Evaluate(document, context.Current, changes),
+            changes: changes);
         return
         [
             .. Assert.Single(evaluation.Entries).Gaps
