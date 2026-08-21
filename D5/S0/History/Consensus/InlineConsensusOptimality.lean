@@ -56,30 +56,30 @@ def selectCarrier (eligible : Eligibility) (tried : Finset Carrier) : Carrier :=
   else if eligible .isolatedTokenSubagent && .isolatedTokenSubagent ∉ tried then
     .isolatedTokenSubagent
   else .abstain
-structure CompletionObservation where
-  carrierExitedZero : Bool
-  resultArtifactExists : Bool
-  envelopeValid : Bool
-  verdictAllowed : Bool
-  sentinelExists : Bool
+inductive CompletionObservation
+  | codex
+      (carrierExitedZero resultArtifactExists envelopeValid verdictAllowed sentinelExists : Bool)
+  | nyxid (terminalStatusCompleted envelopeValid verdictAllowed : Bool)
+  | subagent (envelopeValid verdictAllowed : Bool)
   deriving DecidableEq, Fintype, Repr
-def Complete (observation : CompletionObservation) : Prop :=
-  observation.carrierExitedZero = true /\
-    observation.resultArtifactExists = true /\
-    observation.envelopeValid = true /\
-    observation.verdictAllowed = true /\
-    observation.sentinelExists = true
+def Complete : Carrier -> CompletionObservation -> Prop
+  | .codexCli, .codex exited artifact envelope verdict sentinel =>
+      exited = true /\ artifact = true /\ envelope = true /\ verdict = true /\ sentinel = true
+  | .nyxidOracle, .nyxid terminal envelope verdict =>
+      terminal = true /\ envelope = true /\ verdict = true
+  | .isolatedTokenSubagent, .subagent envelope verdict => envelope = true /\ verdict = true
+  | _, _ => False
 inductive CompletionConjunct | carrierExit | resultArtifact | envelope | verdict | sentinel
   deriving DecidableEq, Fintype, Repr
 inductive ForbiddenCompletionProxy
   | processSnapshot | logText | stdoutMarker | emptyGitStatus
   deriving DecidableEq, Fintype, Repr
-def evidenceFromProxyOnly (_ : ForbiddenCompletionProxy) : CompletionObservation :=
-  { carrierExitedZero := false
-    resultArtifactExists := false
-    envelopeValid := false
-    verdictAllowed := false
-    sentinelExists := false }
+def evidenceFromProxyOnly (carrier : Carrier)
+    (_ : ForbiddenCompletionProxy) : CompletionObservation :=
+  match carrier with
+  | .codexCli | .abstain => .codex false false false false false
+  | .nyxidOracle => .nyxid false false false
+  | .isolatedTokenSubagent => .subagent false false
 inductive GoalArtifactSnapshot | complete
   deriving DecidableEq, Fintype, Repr
 inductive SeatRole
@@ -106,7 +106,8 @@ structure SeatView where
   role : SeatRole
   exposure : PriorExposure
   deriving DecidableEq, Fintype, Repr
-def seat_view_information_content : SeatView ≃ GoalArtifactSnapshot × SeatRole × PriorExposure where
+def seat_view_information_content :
+    SeatView ≃ GoalArtifactSnapshot × SeatRole × PriorExposure where
   toFun view := (view.goalArtifact, view.role, view.exposure)
   invFun data := { goalArtifact := data.1, role := data.2.1, exposure := data.2.2 }
   left_inv view := by cases view; rfl
@@ -116,7 +117,7 @@ structure CompletedSeatResult where
   carrier : Carrier
   workerCarrier : carrier ≠ .abstain
   completionObservation : CompletionObservation
-  complete : Complete completionObservation
+  complete : Complete carrier completionObservation
   exposureMatches : view.exposure = priorExposure carrier
 def correlatedConclusion (_ : Carrier) (latent : Bool) : Bool := latent
 inductive ThinkingSeat
@@ -132,12 +133,22 @@ def ThinkingSeat.role : ThinkingSeat -> SeatRole
 inductive ThinkingVerdict
   | propose | revise | reject | abstain
   deriving DecidableEq, Fintype, Repr
+inductive PlanIdentity
+  | planA | planB | planC
+  deriving DecidableEq, Fintype, Repr
+abbrev PlanCompatibility := PlanIdentity -> PlanIdentity -> Bool
 inductive ThinkingSeatResult (seat : ThinkingSeat)
   | completed (evidence : CompletedSeatResult)
       (roleMatches : evidence.view.role = seat.role) (verdict : ThinkingVerdict)
+      (plan : Option PlanIdentity) (presentedAsConsensus : Bool)
 abbrev ThinkingResults := (seat : ThinkingSeat) -> ThinkingSeatResult seat
 def ThinkingSeatResult.verdict {seat : ThinkingSeat} : ThinkingSeatResult seat -> ThinkingVerdict
-  | .completed _ _ verdict => verdict
+  | .completed _ _ verdict _ _ => verdict
+def ThinkingSeatResult.plan {seat : ThinkingSeat} : ThinkingSeatResult seat -> Option PlanIdentity
+  | .completed _ _ _ plan _ => plan
+def ThinkingSeatResult.presentedAsConsensus {seat : ThinkingSeat} :
+    ThinkingSeatResult seat -> Bool
+  | .completed _ _ _ _ presented => presented
 inductive DesignSituation
   | unanimousActionable | compatiblePlans | boundedStall | singlePerspective
   deriving DecidableEq, Fintype, Repr
@@ -165,11 +176,36 @@ def anyThinkingVerdictIs (results : ThinkingResults) (verdict : ThinkingVerdict)
     (results .naturalOwnership).verdict == verdict ||
     (results .proportionalContainment).verdict == verdict ||
     (results .worth).verdict == verdict
-def thinkingSituation (results : ThinkingResults) : DesignSituation :=
-  if allThinkingVerdictsAre results .propose then .unanimousActionable
-  else if anyThinkingVerdictIs results .abstain || anyThinkingVerdictIs results .reject then
-    .boundedStall
-  else .compatiblePlans
+def allThinkingPlansAre (results : ThinkingResults) (plan : PlanIdentity) : Bool :=
+  (results .teleology).plan == some plan && (results .parsimony).plan == some plan &&
+    (results .fidelity).plan == some plan && (results .naturalOwnership).plan == some plan &&
+    (results .proportionalContainment).plan == some plan && (results .worth).plan == some plan
+def thinkingPlans (results : ThinkingResults) : List PlanIdentity :=
+  [(results .teleology).plan, (results .parsimony).plan, (results .fidelity).plan,
+    (results .naturalOwnership).plan, (results .proportionalContainment).plan,
+    (results .worth).plan].filterMap id
+def plansPairwiseCompatible (compatible : PlanCompatibility) (plans : List PlanIdentity) : Bool :=
+  plans.all fun first => plans.all fun second => compatible first second
+def allThinkingPlansAgree (results : ThinkingResults) : Bool :=
+  match (results .teleology).plan with
+  | some plan => allThinkingPlansAre results plan
+  | none => false
+def anyThinkingResultPresentedAsConsensus (results : ThinkingResults) : Bool :=
+  (results .teleology).presentedAsConsensus || (results .parsimony).presentedAsConsensus ||
+    (results .fidelity).presentedAsConsensus ||
+    (results .naturalOwnership).presentedAsConsensus ||
+    (results .proportionalContainment).presentedAsConsensus ||
+    (results .worth).presentedAsConsensus
+def thinkingSituation (compatible : PlanCompatibility)
+    (results : ThinkingResults) : DesignSituation :=
+  if anyThinkingResultPresentedAsConsensus results then .singlePerspective
+  else if allThinkingVerdictsAre results .propose && allThinkingPlansAgree results then
+    .unanimousActionable
+  else if !(anyThinkingVerdictIs results .abstain || anyThinkingVerdictIs results .reject) &&
+      (thinkingPlans results).length == 6 &&
+      plansPairwiseCompatible compatible (thinkingPlans results) &&
+      !allThinkingPlansAgree results then .compatiblePlans
+  else .boundedStall
 inductive ReviewVerdict
   | approve | comment | reject
   deriving DecidableEq, Fintype, Repr
@@ -310,6 +346,7 @@ structure ProtocolState where
   isolation : IsolationStatus
   designSituation : Option DesignSituation
   reviewExit : Option ReviewExit
+  terminationExit : Option TerminationExit
 def initialState (config : ProtocolConfig) : ProtocolState :=
   { stage := .intake
     phase := .live
@@ -317,7 +354,8 @@ def initialState (config : ProtocolConfig) : ProtocolState :=
     passesUsed := 0
     isolation := config.initialIsolation
     designSituation := none
-    reviewExit := none }
+    reviewExit := none
+    terminationExit := none }
 def triedAt (state : ProtocolState) (stage : Stage) (role : SeatRole) : Finset Carrier :=
   Finset.univ.filter fun carrier =>
     flightKey stage role carrier ∉ state.remainingFlights
@@ -327,7 +365,7 @@ inductive AdvanceCondition (config : ProtocolConfig) (state : ProtocolState) : T
       (selected : selectCarrier (config.eligible state.stage role)
         (triedAt state state.stage role) = carrier) (workerCarrier : carrier ≠ .abstain)
   | thinking (atStage : state.stage = .thinkingPanelWorkers)
-      (completedSeats : ThinkingResults)
+      (compatible : PlanCompatibility) (completedSeats : ThinkingResults)
   | metaJudge (atStage : state.stage = .metaJudge) (situation : DesignSituation)
       (recorded : state.designSituation = some situation)
       (routed : designRouter situation = .implement)
@@ -338,10 +376,10 @@ inductive AdvanceCondition (config : ProtocolConfig) (state : ProtocolState) : T
 def AdvanceCondition.nextState {config : ProtocolConfig} {state : ProtocolState}
     (condition : AdvanceCondition config state) (target : Stage) : ProtocolState :=
   match condition with
-  | .thinking _ completedSeats =>
+  | .thinking _ compatible completedSeats =>
       { state with
         stage := target
-        designSituation := some (thinkingSituation completedSeats) }
+        designSituation := some (thinkingSituation compatible completedSeats) }
   | .review _ completedSeats =>
       { state with
         stage := target
@@ -371,8 +409,7 @@ inductive StageAbstainEvidence : ProtocolState -> Prop
       (routed : designRouter situation = .abstainEscalate) :
       StageAbstainEvidence state
   | terminationEvidenceGap (state : ProtocolState) (atStage : state.stage = .fixOrDone)
-      (observation : TerminationObservation)
-      (routed : terminationRouter observation = .escalateEvidenceGap) :
+      (recorded : state.terminationExit = some .escalateEvidenceGap) :
       StageAbstainEvidence state
 inductive AbstainCondition (config : ProtocolConfig) (state : ProtocolState) : Prop
   | carrierExhausted (role : SeatRole)
@@ -390,7 +427,7 @@ inductive Event
 inductive ProtocolStep (config : ProtocolConfig) : ProtocolState -> Event -> ProtocolState -> Prop
   | flightFailure (state : ProtocolState) (role : SeatRole) (carrier : Carrier) (attempts : Nat)
       (budgetAuthorized : PassBudgetAuthorized config)
-      (live : state.phase = .live)
+      (live : state.phase = .live) (isolated : state.isolation = .available)
       (selected : selectCarrier (config.eligible state.stage role)
         (triedAt state state.stage role) = carrier)
       (workerCarrier : carrier ≠ .abstain)
@@ -408,13 +445,16 @@ inductive ProtocolStep (config : ProtocolConfig) : ProtocolState -> Event -> Pro
       ProtocolStep config state (.advance state.stage target) (authorized.nextState target)
   | boundedPass (state : ProtocolState) (kind : BoundedPassKind)
       (budgetAuthorized : PassBudgetAuthorized config)
-      (live : state.phase = .live) (legal : kind.LegalAt state.stage) (notFix : kind ≠ .fixPass)
+      (live : state.phase = .live) (isolated : state.isolation = .available)
+      (legal : kind.LegalAt state.stage) (notFix : kind ≠ .fixPass)
+      (notTermination : kind ≠ .terminationGate)
       (withinBudget : state.passesUsed < config.sharedPassBudget) :
       ProtocolStep config state (.boundedPass state.stage kind)
         { state with passesUsed := state.passesUsed + 1 }
   | fixAndReview (state : ProtocolState)
       (budgetAuthorized : PassBudgetAuthorized config)
-      (live : state.phase = .live) (atEnd : state.stage = .fixOrDone)
+      (live : state.phase = .live) (isolated : state.isolation = .available)
+      (atEnd : state.stage = .fixOrDone)
       (needsFix : state.reviewExit = some .fix)
       (implementation : CompletedSeatResult)
       (roleMatches : implementation.view.role = .implementation)
@@ -423,11 +463,19 @@ inductive ProtocolStep (config : ProtocolConfig) : ProtocolState -> Event -> Pro
       ProtocolStep config state (.boundedPass state.stage .fixPass) { state with
         passesUsed := state.passesUsed + 1
         reviewExit := some (reviewRouter (reviewObservation completedSeats)) }
+  | terminationGate (state : ProtocolState)
+      (budgetAuthorized : PassBudgetAuthorized config)
+      (live : state.phase = .live) (isolated : state.isolation = .available)
+      (atEnd : state.stage = .fixOrDone) (observation : TerminationObservation)
+      (withinBudget : state.passesUsed < config.sharedPassBudget) :
+      ProtocolStep config state (.boundedPass state.stage .terminationGate) { state with
+        passesUsed := state.passesUsed + 1
+        terminationExit := some (terminationRouter observation) }
   | finish (state : ProtocolState)
       (budgetAuthorized : PassBudgetAuthorized config)
       (live : state.phase = .live) (atEnd : state.stage = .fixOrDone)
       (isolated : state.isolation = .available) (reviewDone : state.reviewExit = some .done)
-      (observation : TerminationObservation) (permitted : terminationRouter observation = .permitClaim) :
+      (permitted : state.terminationExit = some .permitClaim) :
       ProtocolStep config state .finish { state with phase := .terminal }
   | abstain (state : ProtocolState) (budgetAuthorized : PassBudgetAuthorized config)
       (live : state.phase = .live)
@@ -436,9 +484,10 @@ inductive ProtocolStep (config : ProtocolConfig) : ProtocolState -> Event -> Pro
 structure InlineConsensusModel where
   stageRelation : Stage -> Stage -> Prop
   carrierSelector : Eligibility -> Finset Carrier -> Carrier
-  completionPredicate : CompletionObservation -> Prop
+  completionPredicate : Carrier -> CompletionObservation -> Prop
   seatView : Type
   thinkingResults : Type
+  thinkingSituationFrom : PlanCompatibility -> ThinkingResults -> DesignSituation
   reviewResults : Type
   priorDisclosure : Carrier -> PriorExposure
   designRoute : DesignSituation -> DesignExit
@@ -450,7 +499,8 @@ structure InlineConsensusModel where
 def inlineConsensusModel : InlineConsensusModel :=
   { stageRelation := Stage.Successor, carrierSelector := selectCarrier
     completionPredicate := Complete, seatView := SeatView
-    thinkingResults := ThinkingResults, reviewResults := ReviewResults
+    thinkingResults := ThinkingResults, thinkingSituationFrom := thinkingSituation
+    reviewResults := ReviewResults
     priorDisclosure := priorExposure
     designRoute := designRouter, reviewRoute := reviewRouter, terminationRoute := terminationRouter
     rosterContract := ExactRoster, passLegalAt := BoundedPassKind.LegalAt
@@ -460,10 +510,13 @@ objects and the external sshx prose is a digest-pinned snapshot claim, not a Lea
 theorem inline_consensus_model_internal_wiring :
     inlineConsensusModel.stageRelation = Stage.Successor /\
       inlineConsensusModel.carrierSelector = selectCarrier /\
-      inlineConsensusModel.completionPredicate = Complete /\ inlineConsensusModel.seatView = SeatView /\
+      inlineConsensusModel.completionPredicate = Complete /\
+      inlineConsensusModel.seatView = SeatView /\
       inlineConsensusModel.thinkingResults = ThinkingResults /\
+      inlineConsensusModel.thinkingSituationFrom = thinkingSituation /\
       inlineConsensusModel.reviewResults = ReviewResults /\
-      inlineConsensusModel.priorDisclosure = priorExposure /\ inlineConsensusModel.designRoute = designRouter /\
+      inlineConsensusModel.priorDisclosure = priorExposure /\
+      inlineConsensusModel.designRoute = designRouter /\
       inlineConsensusModel.reviewRoute = reviewRouter /\
       inlineConsensusModel.terminationRoute = terminationRouter /\
       inlineConsensusModel.rosterContract = ExactRoster /\
@@ -517,8 +570,9 @@ theorem seat_result_satisfied_bool_iff {seat : TerminationSeat}
     (result : TerminationSeatResult seat) :
     result.isSatisfiedBool = true <-> result.IsSatisfied := by
   cases result with
-  | completed evidence roleMatches verdict => cases verdict <;> simp [TerminationSeatResult.isSatisfiedBool,
-      TerminationSeatResult.IsSatisfied]
+  | completed evidence roleMatches verdict =>
+      cases verdict <;> simp [TerminationSeatResult.isSatisfiedBool,
+        TerminationSeatResult.IsSatisfied]
   | invalid => simp [TerminationSeatResult.isSatisfiedBool, TerminationSeatResult.IsSatisfied]
   | missing => simp [TerminationSeatResult.isSatisfiedBool, TerminationSeatResult.IsSatisfied]
 private theorem all_satisfied_bool_iff (observation : TerminationObservation) :
@@ -597,7 +651,8 @@ private theorem step_potential_lt {config : ProtocolConfig} {start final : Proto
     {event : Event} (step : ProtocolStep config start event final) :
     potential config final < potential config start := by
   cases step with
-  | flightFailure role carrier attempts budget live selected worker available positive within =>
+  | flightFailure role carrier attempts budget live isolated selected worker available positive
+      within =>
       have smaller := Finset.card_erase_lt_of_mem available
       simp only [potential] at smaller ⊢
       omega
@@ -610,13 +665,17 @@ private theorem step_potential_lt {config : ProtocolConfig} {start final : Proto
         AdvanceCondition.nextState_stage, AdvanceCondition.nextState_passesUsed,
         AdvanceCondition.nextState_phase]
       omega
-  | boundedPass kind budget live legal notFix within =>
+  | boundedPass kind budget live isolated legal notFix notTermination within =>
       simp [potential]
       omega
-  | fixAndReview budget live atEnd needsFix implementation roleMatches completedSeats within =>
+  | fixAndReview budget live isolated atEnd needsFix implementation roleMatches completedSeats
+      within =>
       simp [potential]
       omega
-  | finish budget live atEnd isolated reviewDone observation permitted =>
+  | terminationGate budget live isolated atEnd observation within =>
+      simp [potential]
+      omega
+  | finish budget live atEnd isolated reviewDone permitted =>
       simp [potential, liveCredit, live]
   | abstain budget live reason => simp [potential, liveCredit, live]
 private theorem execution_length_add_potential_le {config : ProtocolConfig}
@@ -651,27 +710,33 @@ private theorem execution_keys_mem_start {config : ProtocolConfig}
       simp [flightKeys] at member
   | cons step rest ih =>
       cases step with
-      | flightFailure role carrier attempts budget live selected worker available positive within =>
+      | flightFailure role carrier attempts budget live isolated selected worker available positive
+          within =>
           intro key member
           simp only [flightKeys, List.mem_cons] at member
           rcases member with rfl | member
           · exact available
           · exact Finset.mem_of_mem_erase (ih key member)
       | advance target budget live isolated authorized successor => simpa [flightKeys] using ih
-      | boundedPass kind budget live legal notFix within => simpa [flightKeys] using ih
-      | fixAndReview budget live atEnd needsFix implementation roleMatches completedSeats within =>
+      | boundedPass kind budget live isolated legal notFix notTermination within =>
           simpa [flightKeys] using ih
-      | finish budget live atEnd isolated reviewDone observation permitted =>
+      | fixAndReview budget live isolated atEnd needsFix implementation roleMatches completedSeats
+          within =>
+          simpa [flightKeys] using ih
+      | terminationGate budget live isolated atEnd observation within => simpa [flightKeys] using ih
+      | finish budget live atEnd isolated reviewDone permitted =>
           simpa [flightKeys] using ih
       | abstain budget live reason => simpa [flightKeys] using ih
 private theorem execution_no_carrier_reopened {config : ProtocolConfig}
     {start final : ProtocolState} {events : List Event}
-    (execution : Execution inlineConsensusModel config start events final) : NoCarrierReopened events := by
+    (execution : Execution inlineConsensusModel config start events final) :
+    NoCarrierReopened events := by
   induction execution with
   | nil => simp [NoCarrierReopened, flightKeys]
   | cons step rest ih =>
       cases step with
-      | flightFailure role carrier attempts budget live selected worker available positive within =>
+      | flightFailure role carrier attempts budget live isolated selected worker available positive
+          within =>
           simp only [NoCarrierReopened, flightKeys, List.nodup_cons]
           constructor
           · intro reopened
@@ -680,11 +745,14 @@ private theorem execution_no_carrier_reopened {config : ProtocolConfig}
           · exact ih
       | advance target budget live isolated authorized successor =>
           simpa [NoCarrierReopened, flightKeys] using ih
-      | boundedPass kind budget live legal notFix within =>
+      | boundedPass kind budget live isolated legal notFix notTermination within =>
           simpa [NoCarrierReopened, flightKeys] using ih
-      | fixAndReview budget live atEnd needsFix implementation roleMatches completedSeats within =>
+      | fixAndReview budget live isolated atEnd needsFix implementation roleMatches completedSeats
+          within =>
           simpa [NoCarrierReopened, flightKeys] using ih
-      | finish budget live atEnd isolated reviewDone observation permitted =>
+      | terminationGate budget live isolated atEnd observation within =>
+          simpa [NoCarrierReopened, flightKeys] using ih
+      | finish budget live atEnd isolated reviewDone permitted =>
           simpa [NoCarrierReopened, flightKeys] using ih
       | abstain budget live reason => simpa [NoCarrierReopened, flightKeys] using ih
 private theorem execution_pass_count_eq {config : ProtocolConfig}

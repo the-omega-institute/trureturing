@@ -31,7 +31,11 @@ internal sealed class InlineConsensusOptimalityDocument : IScribeDocumentDefinit
                         + "a three-slot roster; its dependent result function cannot contain a "
                         + "meta-judge verdict. A completed seat result carries the exact peer-free "
                         + "seat view, a non-abstain carrier with matching prior disclosure, and a "
-                        + "proof of all five completion conjuncts. Invalid and missing inputs remain "
+                        + "carrier-indexed completion proof. Codex requires process exit, result "
+                        + "artifact, valid envelope, allowed verdict, and sentinel; Nyxid requires "
+                        + "structured terminal completion, valid envelope, and allowed verdict; the "
+                        + "isolated subagent requires the valid envelope and allowed verdict. Evidence "
+                        + "in one carrier's shape cannot complete another. Invalid and missing inputs remain "
                         + "fail-closed rows, but cannot masquerade as completed seats. Hazard is "
                         + "stated independently as a fake roster or a named seat that is not a valid "
                         + "satisfied result; it is not the Boolean complement of the router.")),
@@ -47,8 +51,9 @@ internal sealed class InlineConsensusOptimalityDocument : IScribeDocumentDefinit
                         + "Majority-admit is strictly more permissive, but the two-satisfied and "
                         + "one-unsatisfied fixture proves that it is not sound. Lean checks the three "
                         + "review-router rows as a truth-table fixture; it defines no review hazard, "
-                        + "soundness, or maximality theorem. The design table likewise has convergence "
-                        + "and bounded-stall exits and supplies no independent binary hazard predicate, "
+                        + "soundness, or maximality theorem. The design table derives its four rows from "
+                        + "plan identities, a compatibility relation, and an explicit single-perspective "
+                        + "consensus presentation, but supplies no independent binary hazard predicate, "
                         + "so no design maximality claim is made.")),
                     Paragraph(Text(
                         "Snapshot note: the abstract model was compared with the beta.32 sshx "
@@ -82,15 +87,18 @@ internal sealed class InlineConsensusOptimalityDocument : IScribeDocumentDefinit
                         + "semantic fixtures pin executable rows and invariants. Correspondence to the "
                         + "sshx source remains only the digest-pinned snapshot claim stated above.")),
                     Paragraph(Text(
-                        "A protocol step either erases one previously available stage-role-carrier "
+                        "Every non-abstain protocol step requires available input isolation. Such a "
+                        + "step either erases one previously available stage-role-carrier "
                         + "key within its fixed retry budget; follows the unique stage successor only "
                         + "with isolation and stage-specific evidence; derives and retains the design "
                         + "or review outcome from fixed role-indexed verdict records; consumes one "
-                        + "shared bounded-pass unit at that pass kind's legal locus; or abstains only on "
+                        + "shared bounded-pass unit at that pass kind's legal locus; evaluates the "
+                        + "termination roster while consuming and recording exactly one shared pass; "
+                        + "or abstains only on "
                         + "carrier exhaustion, isolation unavailability, or a router abstain exit. A "
                         + "rejected review can change only through a bounded fix-and-review step, and "
-                        + "finish requires retained review done, available isolation, and termination "
-                        + "permission. Every transition and execution also requires the single config "
+                        + "finish requires retained review done, available isolation, and permission "
+                        + "recorded by that prior evaluation. Every transition and execution also requires the single config "
                         + "budget to satisfy the at-most-five-unless-owner-authorized policy. "
                         + "The potential is the sum of "
                         + "remaining flight keys, remaining stage edges, remaining shared passes, "
@@ -105,8 +113,11 @@ internal sealed class InlineConsensusOptimalityDocument : IScribeDocumentDefinit
                         + "deadlocked, so no terminal-reachability conclusion is claimed. The named "
                         + "selector fixtures pin codex-first, highest-priority-untried fallback, and "
                         + "exhaustion; the thinking-exhaustion fixture has no dependent-stage event. "
-                        + "Additional negative fixtures exercise unavailable isolation, reject an "
-                        + "unauthorized budget of six, and prevent an all-reject review from finishing "
-                        + "without a fix-and-review step."))),
+                        + "Additional named negative fixtures block flight retry, bounded pass, "
+                        + "fix-and-review, and finish under unavailable isolation; reject an unauthorized "
+                        + "budget of six; block roster evaluation at the shared-budget ceiling; and "
+                        + "prevent an all-reject review from finishing without a fix-and-review step. "
+                        + "A ten-case index maps model clause identifiers to named internal objects "
+                        + "without claiming correspondence to external prose."))),
                 DescribeRole.Theorem))));
 }
