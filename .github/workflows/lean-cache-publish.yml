@@ -197,12 +197,17 @@ jobs:
           set -euo pipefail
           lake build 2>&1 | tee "${BUILD_LOG}"
           compiled="$(grep -cE '(Built|Building|Compiling) ' "${BUILD_LOG}" || true)"
+          # 这个计数是**读数,不是门槛**。缓存多半由 restore-keys 前缀命中，
+          # 恢复到的是一份稍旧的构建；`lake build` 随后补齐差量，补完的
+          # `.lake/build` 就是本 commit 的正确产物 —— 这正是「缓存不必很热，
+          # 本地会补」的形态（owner 2026-08-21 定），不是失败。
+          # 旧判据要求 compiled 恰为 0 才发布，等于只接受精确命中；实测因此
+          # 在一次**成功命中且 verify 通过**的 run 里（32505529419，2 分钟跑完）
+          # 仍走了「无产物可发布」分支，仓库继续保持零 release。
+          # 现判据：`lake build` 成功即产物可信。它失败则本步骤在上一行即以
+          # 非零退出（set -o pipefail），matches 不被写出，发布自然跳过。
           printf 'compiled_targets=%s\n' "${compiled}"
-          if [[ "${compiled}" -eq 0 ]]; then
-            echo "matches=true" >> "$GITHUB_OUTPUT"
-          else
-            echo "matches=false" >> "$GITHUB_OUTPUT"
-          fi
+          echo "matches=true" >> "$GITHUB_OUTPUT"
 
       - name: Publish the build cache under its content address
         if: steps.verify.outputs.matches == 'true' || steps.selfbuild.outputs.built == 'true'
