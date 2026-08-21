@@ -34,18 +34,20 @@ on:
 permissions:
   contents: write
 
-# 【并发形态由实测决定，不可凭直觉】2026-08-21 读数：
-#   发布触发间隔   5–11 分钟（dev 每小时约 16 个提交）
-#   自建耗时       40 分钟以上（cache 读不到时从零编 D5）
+# 【并发形态：两次实测之后取消 concurrency 组】
 #
-# 触发比完成快得多。故 **cancel-in-progress 是错的**：那会让每个 run 都在编到一半时
-# 被下一次推送杀掉，**永远发布不出任何东西**（实测三个 run 连续 cancelled 即此形态）。
+# 读数一：触发间隔 5–11 分钟（dev 约 16 提交/小时），自建耗时 40 分钟以上。
+#   触发远快于完成，所以 `cancel-in-progress: true` 会让每个 run 都死在构建中途，
+#   永远走不到发布 —— 那不是「慢」，是「永远不可用」。
 #
-# 正确形态是让先到的跑完、后来的排队：同一内容地址只需发布一次，而 `publish` 动词幂等，
-# 排在后面的 run 若发现该地址已存在即 no-op 退出，代价只是一次空跑。
-concurrency:
-  group: lean-cache-publication
-  cancel-in-progress: false
+# 读数二：改成 `cancel-in-progress: false` 后**取消仍在发生**。
+#   32474040022 于 10:55:39 被取消，而同组下一个 run 在 10:55:38 启动 —— 相差 1 秒；
+#   两个 commit（fa5c767a、411860b0）上的文件都确实是 `false`。
+#   即 `concurrency` 组在 `workflow_run` 语境下不按文档行为
+#   （与本仓已实测的 cache 作用域问题同类：文档与实测不符时以实测为准）。
+#
+# 故**不设 concurrency 组**：让每个 run 独立跑完。重复由 `publish` 动词的幂等性吸收 ——
+# 同一内容地址已发布时它 no-op 退出，代价是一次空跑，而空跑远比「永远发不出去」便宜。
 
 jobs:
   publish:
