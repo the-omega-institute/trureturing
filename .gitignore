@@ -5,10 +5,7 @@
 *.py[cod]
 .DS_Store
 .caller-review-prompt.md
-.claude/*
-!.claude/skills
-.codex/*
-!.codex/skills
+.claude/
 .echo-review.md
 .sshx-*
 /.lake/
