@@ -4,6 +4,20 @@ using Dunet;
 
 namespace StrataLint.Engine;
 
+internal static class BaseFactImpact
+{
+    internal static bool RuleImplementationChanged(RawChangeSet changes) =>
+        changes.Paths.Any(static path =>
+            StrataLintEngineBuildInputs.ContainsRuleImplementation(path.Value));
+
+    internal static bool IsAffected(
+        RawChangeSet changes,
+        bool ruleImplementationChanged,
+        string path) =>
+        ruleImplementationChanged
+        || changes.Paths.Any(change => string.Equals(change.Value, path, StringComparison.Ordinal));
+}
+
 public sealed record Diagnostic(
     RuleId RuleId,
     string Title,
@@ -189,8 +203,7 @@ internal sealed class RuleEvaluationContext
         Policy = policy;
         Lean = lean;
         Changes = changes;
-        RuleImplementationChanged = changes.Paths.Any(static path =>
-            StrataLintEngineBuildInputs.ContainsRuleImplementation(path.Value));
+        RuleImplementationChanged = BaseFactImpact.RuleImplementationChanged(changes);
         MetaEvaluation = metaEvaluation;
         VerifiedScribeEmissions = verifiedScribeEmissions;
     }
@@ -219,8 +232,7 @@ internal sealed class RuleEvaluationContext
     // A base fact is re-evaluated when it is in the candidate delta or when the
     // implementation closure changed and the new implementation must recheck stored facts.
     internal bool IsBaseFactAffected(string path) =>
-        RuleImplementationChanged
-        || Changes.Paths.Any(change => string.Equals(change.Value, path, StringComparison.Ordinal));
+        BaseFactImpact.IsAffected(Changes, RuleImplementationChanged, path);
 
     internal MetaEvaluationProfile MetaEvaluation { get; }
 

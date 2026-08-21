@@ -34,6 +34,21 @@ on:
 permissions:
   contents: write
 
+# 【并发形态：两次实测之后取消 concurrency 组】
+#
+# 读数一：触发间隔 5–11 分钟（dev 约 16 提交/小时），自建耗时 40 分钟以上。
+#   触发远快于完成，所以 `cancel-in-progress: true` 会让每个 run 都死在构建中途，
+#   永远走不到发布 —— 那不是「慢」，是「永远不可用」。
+#
+# 读数二：改成 `cancel-in-progress: false` 后**取消仍在发生**。
+#   32474040022 于 10:55:39 被取消，而同组下一个 run 在 10:55:38 启动 —— 相差 1 秒；
+#   两个 commit（fa5c767a、411860b0）上的文件都确实是 `false`。
+#   即 `concurrency` 组在 `workflow_run` 语境下不按文档行为
+#   （与本仓已实测的 cache 作用域问题同类：文档与实测不符时以实测为准）。
+#
+# 故**不设 concurrency 组**：让每个 run 独立跑完。重复由 `publish` 动词的幂等性吸收 ——
+# 同一内容地址已发布时它 no-op 退出，代价是一次空跑，而空跑远比「永远发不出去」便宜。
+
 jobs:
   publish:
     name: Publish the Lean build cache
