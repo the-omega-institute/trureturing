@@ -1,0 +1,83 @@
+name: Append prime-observer abstraction v1.6
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - agent/transport/formal-prime-observer-abstraction-v1.6-20260822
+    paths:
+      - '.github/workflows/prime-observer-abstraction-v1.6-transport.yml'
+      - '.github/prime-observer-abstraction-v1.6/**'
+
+permissions:
+  contents: write
+
+jobs:
+  append:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Decode and validate append payload
+        shell: bash
+        run: |
+          set -euo pipefail
+          cat .github/prime-observer-abstraction-v1.6/chunk-* \
+            | base64 --decode \
+            | gzip -dc > /tmp/prime-observer-v1.6.md
+          test "$(wc -c < /tmp/prime-observer-v1.6.md | tr -d ' ')" = "69575"
+          test "$(wc -l < /tmp/prime-observer-v1.6.md | tr -d ' ')" = "3729"
+          test "$(sha256sum /tmp/prime-observer-v1.6.md | cut -d' ' -f1)" = "189f36947b481ebab2d19016e1ae0a628aed59ec542b219ce02850efb6f61fe5"
+          grep -q '^# Part XXXVIII：追加式第七阶段' /tmp/prime-observer-v1.6.md
+          grep -q '^# 302\.' /tmp/prime-observer-v1.6.md
+          grep -q '^# 351\.' /tmp/prime-observer-v1.6.md
+          grep -q '^# Appendix T：v1.6 Lean 形式化路线' /tmp/prime-observer-v1.6.md
+
+      - name: Append to the single theory file
+        shell: bash
+        env:
+          TARGET_BRANCH: agent/theory/formal-prime-observer-causal-v1.5
+          TARGET_FILE: docs/develop/theory/FORMAL_PRIME_OBSERVER_DYNAMICS.md
+        run: |
+          set -euo pipefail
+          cp /tmp/prime-observer-v1.6.md /tmp/prime-observer-v1.6.copy.md
+          git fetch origin "$TARGET_BRANCH"
+          git checkout -B "$TARGET_BRANCH" "origin/$TARGET_BRANCH"
+
+          if grep -q '^# Part XXXVIII：追加式第七阶段' "$TARGET_FILE"; then
+            echo "v1.6 already appended"
+            exit 0
+          fi
+
+          grep -q '^# 301\.' "$TARGET_FILE"
+          cat /tmp/prime-observer-v1.6.copy.md >> "$TARGET_FILE"
+
+          python3 - "$TARGET_FILE" <<'PY'
+          import re
+          import sys
+          from pathlib import Path
+
+          path = Path(sys.argv[1])
+          text = path.read_text(encoding="utf-8")
+          nums = [int(m.group(1)) for m in re.finditer(r"^# (\d+)\.", text, re.M)]
+          assert nums == list(range(1, 352)), (len(nums), nums[:5], nums[-5:])
+          assert text.count(r"\[") == text.count(r"\]")
+          assert text.count(r"\(") == text.count(r"\)")
+          assert text.count("```") % 2 == 0
+          assert not any(line.rstrip() != line for line in text.splitlines())
+          assert "\t" not in text and "\r" not in text and "\x00" not in text
+          assert text.count("# Part XXXVIII：追加式第七阶段") == 1
+          PY
+
+          git diff --check
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -- "$TARGET_FILE"
+          if git diff --cached --quiet; then
+            echo "No change to commit"
+            exit 0
+          fi
+          git commit -m "docs(theory): append causal abstraction and multiscale completion"
+          git push origin "HEAD:$TARGET_BRANCH"
