@@ -87,7 +87,7 @@ internal sealed class InterpretationFixedPointDocument : IScribeDocumentDefiniti
         Formula context = Kappa;
         Formula current = new Formula.Subscript(F.Id("C"), F.Id("n"));
         Formula next = new Formula.Subscript(
-            F.Id("C"), Grp(F.Id("n"), Plus, D(1)));
+            F.Id("C"), Seq(F.Id("n"), Plus, D(1)));
         Formula interpretation = new Formula.Subscript(F.Id("I"), context);
 
         return Disp(Seq(
@@ -99,10 +99,10 @@ internal sealed class InterpretationFixedPointDocument : IScribeDocumentDefiniti
 
     private static Formula ContextDependenceFormula()
     {
-        Formula baseline = new Formula.Subscript(Kappa, D(0));
-        Formula alternate = new Formula.Subscript(Kappa, D(1));
-        Formula baselineMeaning = new Formula.Subscript(F.Id("m"), D(0));
-        Formula alternateMeaning = new Formula.Subscript(F.Id("m"), D(1));
+        Formula baseline = new Formula.Subscript(Kappa, Seq(D(0)));
+        Formula alternate = new Formula.Subscript(Kappa, Seq(D(1)));
+        Formula baselineMeaning = new Formula.Subscript(F.Id("m"), Seq(D(0)));
+        Formula alternateMeaning = new Formula.Subscript(F.Id("m"), Seq(D(1)));
 
         return Disp(Seq(
             Call("sameTextAndRule", baseline, alternate), Sp, Land, Sp,

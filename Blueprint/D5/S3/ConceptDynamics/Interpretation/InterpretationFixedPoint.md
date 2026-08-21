@@ -6,7 +6,7 @@ Interpretation fixed points are relative to context; context variation can chang
 
 **Theorem 1.1 (Conceptual equivalence and stable interpretation reach a fixed point).**
 
-$$\operatorname{ConceptEquivalent}(C_{{n+1}}, C_{n}) \land I_{\kappa}(C_{{n+1}}) = I_{\kappa}(C_{n}) \Rightarrow \operatorname{RelativeFixedPoint}(\kappa, n).$$
+$$\operatorname{ConceptEquivalent}(C_{n+1}, C_{n}) \land I_{\kappa}(C_{n+1}) = I_{\kappa}(C_{n}) \Rightarrow \operatorname{RelativeFixedPoint}(\kappa, n).$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Interpretation/InterpretationFixedPoint.conceptual_equivalence_and_stability_reach_fixed_point` (`✓ std3`). ∎
 
