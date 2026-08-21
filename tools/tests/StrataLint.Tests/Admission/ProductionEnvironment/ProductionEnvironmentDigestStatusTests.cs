@@ -45,6 +45,43 @@ public sealed partial class ProductionEnvironmentTests
     }
 
     [Fact]
+    public void DigestStatusWithoutBaseUnrelatedDeltaDoesNotReplayHistoricalCoverageReceipt()
+    {
+        var environment = DigestStatusHistoricalCoverageEnvironment(
+            RawChangeSet.Create(["notes/r17-unrelated-coverage.txt"]));
+
+        var result = environment.DigestStatus(["--json"]);
+
+        Assert.True(result.Success, result.Error);
+        Assert.DoesNotContain("coverage-receipt-mismatch", result.Output, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void DigestStatusWithoutBaseChangedTargetStillValidatesHistoricalCoverageReceipt()
+    {
+        var environment = DigestStatusHistoricalCoverageEnvironment(
+            RawChangeSet.Create(["D5/S0/Carrier/BackfillTarget.lean"]));
+
+        var result = environment.DigestStatus(["--json"]);
+
+        Assert.False(result.Success);
+        Assert.Contains("coverage-receipt-mismatch", result.Error, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void DigestStatusWithoutBaseImplementationChangeStillValidatesHistoricalCoverageReceipt()
+    {
+        var environment = DigestStatusHistoricalCoverageEnvironment(
+            RawChangeSet.Create(
+            ["tools/StrataLint.Engine/Digestion/Evaluation/DigestionStatusEvaluator.cs"]));
+
+        var result = environment.DigestStatus(["--json"]);
+
+        Assert.False(result.Success);
+        Assert.Contains("coverage-receipt-mismatch", result.Error, StringComparison.Ordinal);
+    }
+
+    [Fact]
     public void DigestStatusReportsCasSeenAcrossNormalizedSourceRewrite()
     {
         var fixture = new RuleFixture();
@@ -244,6 +281,55 @@ public sealed partial class ProductionEnvironmentTests
     }
 
     [Fact]
+    public void DigestStatusUnrelatedDeltaDoesNotValidateDiscardedBaselineGenreProjection()
+    {
+        var fixture = new RuleFixture();
+        fixture.AddBackfillTargets();
+        fixture.Baseline[RuleFixture.FixtureBackfillSourcePath] = fixture.Baseline[
+                RuleFixture.FixtureBackfillSourcePath]
+            .Replace(
+                "genre_registry_check = \"no-registry\"",
+                "genre_registry_check = \"invalid-historical-value\"",
+                StringComparison.Ordinal);
+        var environment = DigestStatusEnvironment(
+            fixture,
+            RawChangeSet.Create(["notes/r17-unrelated-genre.txt"]));
+
+        var result = environment.DigestStatus(["--json", "--base", "baseline"]);
+
+        Assert.True(result.Success, result.Error);
+    }
+
+    [Fact]
+    public void DigestStatusChangedSourceMetadataStillValidatesCandidateGenreProjection()
+    {
+        var fixture = CandidateFixtureWithInvalidGenreProjection();
+        var environment = DigestStatusEnvironment(
+            fixture,
+            RawChangeSet.Create([RuleFixture.FixtureBackfillSourcePath]));
+
+        var result = environment.DigestStatus(["--json", "--base", "baseline"]);
+
+        Assert.False(result.Success);
+        Assert.Contains("invalid genre_registry_check", result.Error, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void DigestStatusImplementationChangeStillValidatesCandidateGenreProjection()
+    {
+        var fixture = CandidateFixtureWithInvalidGenreProjection();
+        var environment = DigestStatusEnvironment(
+            fixture,
+            RawChangeSet.Create(
+            ["tools/StrataLint.Engine/Rules/Backfill/BackfillInventoryLoader.Parsing.cs"]));
+
+        var result = environment.DigestStatus(["--json", "--base", "baseline"]);
+
+        Assert.False(result.Success);
+        Assert.Contains("invalid genre_registry_check", result.Error, StringComparison.Ordinal);
+    }
+
+    [Fact]
     public void FormalizeCandidatesDiffDoesNotRequireBaselineGenreProjection()
     {
         var fixture = new RuleFixture();
@@ -341,10 +427,12 @@ public sealed partial class ProductionEnvironmentTests
         Assert.Contains("Scribe emission verification failed", result.Error, StringComparison.Ordinal);
     }
 
-    private static ProductionCliEnvironment DigestStatusEnvironment(RuleFixture fixture) => new(
+    private static ProductionCliEnvironment DigestStatusEnvironment(
+        RuleFixture fixture,
+        RawChangeSet? changes = null) => new(
         "/repo",
         new FakeRepositoryGateway(
-            RawChangeSet.Create(Array.Empty<string>()),
+            changes ?? RawChangeSet.Create(Array.Empty<string>()),
             Snapshot(fixture.Files),
             Snapshot(fixture.Baseline)),
         new FakeLeanReportSource(LeanAxiomReport.Create(fixture.Reports)),
@@ -425,5 +513,18 @@ public sealed partial class ProductionEnvironmentTests
                 RuleFixture.FixtureBackfillSourcePath]
             .Replace("genre_registry_check = \"no-registry\"\n", string.Empty, StringComparison.Ordinal)
             .Replace("unregistered_genres = []\n", string.Empty, StringComparison.Ordinal);
+    }
+
+    private static RuleFixture CandidateFixtureWithInvalidGenreProjection()
+    {
+        var fixture = new RuleFixture();
+        fixture.AddBackfillTargets();
+        fixture.Files[RuleFixture.FixtureBackfillSourcePath] = fixture.Files[
+                RuleFixture.FixtureBackfillSourcePath]
+            .Replace(
+                "genre_registry_check = \"no-registry\"",
+                "genre_registry_check = \"invalid-candidate-value\"",
+                StringComparison.Ordinal);
+        return fixture;
     }
 }

@@ -146,7 +146,14 @@ internal static partial class DigestionLedgerAligner
             snapshot,
             sources.SelectMany(static source => source.Entries)
                 .Select(static entry => entry.AtomId));
-        var cas = casEvaluation ?? DigestionCasStore.Evaluate(document, snapshot);
+        if (casEvaluation is not null && !casEvaluation.Matches(changes))
+        {
+            throw new ArgumentException(
+                "CAS evaluation scope does not match the alignment change set.",
+                nameof(casEvaluation));
+        }
+
+        var cas = casEvaluation ?? DigestionCasStore.Evaluate(document, snapshot, changes);
         findings.AddRange(cas.Findings);
         var inheritedEntries = InheritedEntries(baselineDocument);
         foreach (var entry in document.RequireDigestionEntries()

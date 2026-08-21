@@ -11,16 +11,22 @@ internal static partial class BackfillInventoryLoader
 
     private static ParsedSourceMetadata ParseCandidateSourceMetadata(
         string text,
-        string path)
+        string path,
+        RawChangeSet? canonicalEncodingChanges = null)
     {
         var fields = ParseSourceMetadataFields(text, path);
         RequireCandidateSourceMetadataKeys(fields, path);
         RequireSourceIdentity(fields, path);
         var check = ParseGenreRegistryCheck(fields, path);
-        RequireCanonicalSourceMetadata(
-            text,
-            path,
-            BackfillInventoryWriter.WriteSourceMetadata(Source(fields, GenreRegistryProjection.Available(check))));
+        if (canonicalEncodingChanges is null
+            || SourceMetadataWriterInputChanged(fields, path, canonicalEncodingChanges))
+        {
+            RequireCanonicalSourceMetadata(
+                text,
+                path,
+                BackfillInventoryWriter.WriteSourceMetadata(Source(fields, GenreRegistryProjection.Available(check))));
+        }
+
         return new ParsedSourceMetadata(fields, GenreRegistryProjection.Available(check));
     }
 
@@ -38,12 +44,21 @@ internal static partial class BackfillInventoryLoader
         }
 
         RequireSourceIdentity(fields, path);
-        if (keys.SetEquals(currentKeys))
-        {
-            _ = ParseGenreRegistryCheck(fields, path);
-        }
-
         return new ParsedSourceMetadata(fields, GenreRegistryProjection.Unavailable);
+    }
+
+    private static bool SourceMetadataWriterInputChanged(
+        IReadOnlyDictionary<string, List<string>> fields,
+        string metadataPath,
+        RawChangeSet changes)
+    {
+        var sourceRoot = metadataPath[..^"source.toml".Length];
+        var sourcePath = fields["path"].Single();
+        return changes.Paths.Any(path =>
+            path.Value == metadataPath
+            || path.Value == sourcePath
+            || path.Value == TheoryAtomizerDataLoader.DataPath
+            || path.Value.StartsWith(sourceRoot, StringComparison.Ordinal));
     }
 
     private static Dictionary<string, List<string>> ParseSourceMetadataFields(
