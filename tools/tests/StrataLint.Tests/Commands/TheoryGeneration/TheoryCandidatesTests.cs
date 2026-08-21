@@ -108,6 +108,102 @@ public sealed class TheoryCandidatesTests
     }
 
     [Fact]
+    public void UnrelatedChangeDoesNotReplayCommittedCasIntegrity()
+    {
+        var fixture = CandidateFixture();
+        fixture.Files[RuleFixture.FixtureCasPath] = "tampered committed CAS bytes";
+
+        var result = RunCore(
+            fixture,
+            changes: RawChangeSet.Create(["notes/r17-unrelated-cas.txt"]));
+
+        Assert.True(result.Success, result.Error);
+        Assert.DoesNotContain("CAS blob hash mismatch", result.Error, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void ChangedCasStillValidatesCommittedCasIntegrity()
+    {
+        var fixture = CandidateFixture();
+        fixture.Files[RuleFixture.FixtureCasPath] = "tampered changed CAS bytes";
+
+        var result = RunCore(
+            fixture,
+            changes: RawChangeSet.Create([RuleFixture.FixtureCasPath]));
+
+        Assert.False(result.Success);
+        Assert.Contains("CAS blob hash mismatch", result.Error, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void DigestionImplementationChangeStillReplaysCommittedCasIntegrity()
+    {
+        var fixture = CandidateFixture();
+        fixture.Files[RuleFixture.FixtureCasPath] = "tampered committed CAS bytes";
+
+        var result = RunCore(
+            fixture,
+            changes: RawChangeSet.Create(
+            ["tools/StrataLint.Engine/Digestion/Evaluation/DigestionStatusEvaluator.cs"]));
+
+        Assert.False(result.Success);
+        Assert.Contains("CAS blob hash mismatch", result.Error, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void UnrelatedChangeDoesNotReplayCommittedSourceMetadataCanonicalEncoding()
+    {
+        var fixture = CandidateFixtureWithNoncanonicalSourceMetadata();
+
+        var result = RunCore(
+            fixture,
+            changes: RawChangeSet.Create(["notes/r17-unrelated-source-metadata.txt"]));
+
+        Assert.True(result.Success, result.Error);
+        Assert.DoesNotContain("source metadata is not canonically encoded", result.Error, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void ChangedSourceMetadataStillValidatesCanonicalEncoding()
+    {
+        var fixture = CandidateFixtureWithNoncanonicalSourceMetadata();
+
+        var result = RunCore(
+            fixture,
+            changes: RawChangeSet.Create([RuleFixture.FixtureBackfillSourcePath]));
+
+        Assert.False(result.Success);
+        Assert.Contains("source metadata is not canonically encoded", result.Error, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void ChangedSourceMetadataWriterInputStillValidatesCanonicalEncoding()
+    {
+        var fixture = CandidateFixtureWithNoncanonicalSourceMetadata();
+
+        var result = RunCore(
+            fixture,
+            changes: RawChangeSet.Create([RuleFixture.FixtureDigestionSourcePath]));
+
+        Assert.False(result.Success);
+        Assert.Contains("source metadata is not canonically encoded", result.Error, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void DigestionImplementationChangeStillReplaysSourceMetadataCanonicalEncoding()
+    {
+        var fixture = CandidateFixtureWithNoncanonicalSourceMetadata();
+
+        var result = RunCore(
+            fixture,
+            changes: RawChangeSet.Create(
+            ["tools/StrataLint.Engine/Rules/Backfill/BackfillInventoryWriter.cs"]));
+
+        Assert.False(result.Success);
+        Assert.Contains("source metadata is not canonically encoded", result.Error, StringComparison.Ordinal);
+    }
+
+    [Fact]
     public void EnumeratesOnlyMathematicalOpenFrontierAndDerivedResidualOpenAtoms()
     {
         var fixture = CandidateFixture();
@@ -651,6 +747,13 @@ public sealed class TheoryCandidatesTests
         var atom = fixture.Files[ResidualAtomPath];
         fixture.Files.Remove(ResidualAtomPath);
         fixture.Files[mismatchedPath] = atom;
+        return fixture;
+    }
+
+    private static RuleFixture CandidateFixtureWithNoncanonicalSourceMetadata()
+    {
+        var fixture = CandidateFixture();
+        fixture.Files[RuleFixture.FixtureBackfillSourcePath] += "\n";
         return fixture;
     }
 

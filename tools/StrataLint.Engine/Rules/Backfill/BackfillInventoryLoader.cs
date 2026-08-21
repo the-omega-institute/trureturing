@@ -375,6 +375,18 @@ internal static partial class BackfillInventoryLoader
     internal static BackfillInventoryDocument Load(RepositorySnapshot snapshot) =>
         LoadSnapshot(snapshot, LoadCandidateDirectorySnapshot);
 
+    internal static BackfillInventoryDocument Load(
+        RepositorySnapshot snapshot,
+        DigestionEvaluationScope scope,
+        RawChangeSet changes)
+    {
+        ArgumentNullException.ThrowIfNull(changes);
+        var canonicalEncodingChanges = DigestionEvaluationScopes.ResolveChanges(scope, changes);
+        return LoadSnapshot(
+            snapshot,
+            candidate => LoadCandidateDirectorySnapshot(candidate, canonicalEncodingChanges));
+    }
+
     internal static BackfillInventoryDocument LoadBaseline(RepositorySnapshot snapshot) =>
         LoadSnapshot(snapshot, LoadBaselineDirectorySnapshot);
 
@@ -509,7 +521,16 @@ internal static partial class BackfillInventoryLoader
 
     private static BackfillInventoryDocument LoadCandidateDirectorySnapshot(
         RepositorySnapshot snapshot) =>
-        LoadDirectorySnapshot(snapshot, ParseCandidateSourceMetadata);
+        LoadDirectorySnapshot(
+            snapshot,
+            static (text, path) => ParseCandidateSourceMetadata(text, path));
+
+    private static BackfillInventoryDocument LoadCandidateDirectorySnapshot(
+        RepositorySnapshot snapshot,
+        RawChangeSet? canonicalEncodingChanges) =>
+        LoadDirectorySnapshot(
+            snapshot,
+            (text, path) => ParseCandidateSourceMetadata(text, path, canonicalEncodingChanges));
 
     private static BackfillInventoryDocument LoadBaselineDirectorySnapshot(
         RepositorySnapshot snapshot) =>
