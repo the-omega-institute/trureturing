@@ -40,7 +40,7 @@ internal static class DigestStatusCommand
             if (options.FormalizeCandidates)
             {
                 var formalizeLeanReport = leanReportSource.Load(snapshot);
-                var formalizeDocument = BackfillInventoryLoader.Load(snapshot);
+                var formalizeDocument = BackfillInventoryLoader.Load(snapshot, scope, changes);
                 BackfillInventoryDocument? formalizeBaselineDocument = null;
                 if (options.BaselineRevision is not null)
                 {
@@ -72,7 +72,7 @@ internal static class DigestStatusCommand
             var leanReport = leanReportSource.Load(snapshot);
             var lean = ValidateLean(snapshot, leanReport);
             var verifiedScribeEmissions = scribeEmissionVerifier.Verify(snapshot, leanReport, changes);
-            var document = BackfillInventoryLoader.Load(snapshot);
+            var document = BackfillInventoryLoader.Load(snapshot, scope, changes);
             BackfillInventoryDocument? baselineDocument = null;
             RepositorySnapshot? baselineSnapshot = null;
             if (options.BaselineRevision is not null)
@@ -87,7 +87,7 @@ internal static class DigestStatusCommand
             var casEvaluation = DigestionCasStore.Evaluate(
                 document,
                 snapshot,
-                changes,
+                DigestionEvaluationScopes.ResolveChanges(scope, changes),
                 IsBaseFactAffected);
             var evaluation = DigestionStatusEvaluator.Evaluate(
                 scope,
@@ -138,9 +138,10 @@ internal static class DigestStatusCommand
         var ruleImplementationChanged = BaseFactImpact.RuleImplementationChanged(changes);
         bool IsBaseFactAffected(string path) =>
             BaseFactImpact.IsAffected(changes, ruleImplementationChanged, path);
-        var document = BackfillInventoryLoader.Load(snapshot);
+        var scope = DigestionEvaluationScopes.ForChanges(changes, ImplementationPath);
+        var document = BackfillInventoryLoader.Load(snapshot, scope, changes);
         var evaluation = DigestionStatusEvaluator.Evaluate(
-            DigestionEvaluationScopes.ForChanges(changes, ImplementationPath),
+            scope,
             document,
             snapshot,
             ValidateLean(snapshot, leanReport),
@@ -150,7 +151,7 @@ internal static class DigestStatusCommand
             casEvaluation: DigestionCasStore.Evaluate(
                 document,
                 snapshot,
-                changes,
+                DigestionEvaluationScopes.ResolveChanges(scope, changes),
                 IsBaseFactAffected),
             changes: changes,
             isBaseFactAffected: IsBaseFactAffected,

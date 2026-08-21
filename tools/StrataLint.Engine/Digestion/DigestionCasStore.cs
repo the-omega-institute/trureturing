@@ -11,7 +11,15 @@ internal sealed record DigestionCasObject(
 internal sealed record DigestionCasEvaluation(
     ImmutableArray<string> Findings,
     ImmutableHashSet<string> ValidAtomIds,
-    int RehashedObjectCount);
+    int RehashedObjectCount,
+    ImmutableArray<RawChange>? EvaluatedChanges)
+{
+    internal bool Matches(RawChangeSet? changes) =>
+        changes is null
+            ? EvaluatedChanges is null
+            : EvaluatedChanges is { } evaluated
+                && evaluated.SequenceEqual(changes.Entries);
+}
 
 internal static class DigestionCasStore
 {
@@ -179,7 +187,8 @@ internal static class DigestionCasStore
         return new DigestionCasEvaluation(
             findings.Order(StringComparer.Ordinal).ToImmutableArray(),
             validAtomIds.ToImmutable(),
-            rehashedObjectCount);
+            rehashedObjectCount,
+            changes?.Entries);
     }
 
     internal static bool EntryChanged(DigestionLedgerEntry entry, RawChangeSet changes)

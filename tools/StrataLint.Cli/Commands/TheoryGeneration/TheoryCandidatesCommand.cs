@@ -59,6 +59,7 @@ internal static class TheoryCandidatesCommand
             var ownerOverride = ParseArguments(arguments);
             var truth = DagLedgerCommandPreparation.BuildTruth(repository, leanReportSource);
             var changes = repository.ReadCurrentChanges();
+            var scope = DigestionEvaluationScopes.ForChanges(changes, ImplementationPath);
             var mission = MissionFileLoader.Load(truth.Snapshot) switch
             {
                 MissionLoadOutcome.Loaded loaded => loaded.Policy,
@@ -99,13 +100,23 @@ internal static class TheoryCandidatesCommand
                     truth.Report))
                 .ToArray();
 
+            var document = BackfillInventoryLoader.Load(truth.Snapshot, scope, changes);
+            var ruleImplementationChanged = BaseFactImpact.RuleImplementationChanged(changes);
+            bool IsBaseFactAffected(string path) =>
+                BaseFactImpact.IsAffected(changes, ruleImplementationChanged, path);
             var digestion = DigestionStatusEvaluator.Evaluate(
-                DigestionEvaluationScopes.ForChanges(changes, ImplementationPath),
-                BackfillInventoryLoader.Load(truth.Snapshot),
+                scope,
+                document,
                 truth.Snapshot,
                 truth.Lean,
                 scribeEmissionVerifier.Verify(truth.Snapshot, truth.Report),
-                changes: changes);
+                casEvaluation: DigestionCasStore.Evaluate(
+                    document,
+                    truth.Snapshot,
+                    DigestionEvaluationScopes.ResolveChanges(scope, changes),
+                    IsBaseFactAffected),
+                changes: changes,
+                isBaseFactAffected: IsBaseFactAffected);
             if (digestion.Findings.Length > 0)
             {
                 throw new InvalidOperationException(

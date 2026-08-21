@@ -17,10 +17,23 @@ internal static class DigestionEvaluationScopes
     {
         ArgumentNullException.ThrowIfNull(changes);
         ArgumentException.ThrowIfNullOrWhiteSpace(callerImplementationPath);
-        return changes.Paths.Any(path =>
+        return !changes.Paths.Any()
+            || changes.Paths.Any(path =>
                 StrataLintEngineBuildInputs.Contains(path.Value)
                 || string.Equals(path.Value, callerImplementationPath, StringComparison.Ordinal))
             ? DigestionEvaluationScope.FullScan
             : DigestionEvaluationScope.ChangedSet;
     }
+
+    internal static RawChangeSet? ResolveChanges(
+        DigestionEvaluationScope scope,
+        RawChangeSet? changes) => scope switch
+        {
+            DigestionEvaluationScope.FullScan => null,
+            DigestionEvaluationScope.ChangedSet when changes is not null => changes,
+            DigestionEvaluationScope.ChangedSet => throw new ArgumentException(
+                "ChangedSet requires an explicit change set.",
+                nameof(changes)),
+            _ => throw new ArgumentOutOfRangeException(nameof(scope)),
+        };
 }

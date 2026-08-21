@@ -14,7 +14,7 @@ internal static partial class DigestionStatusEvaluator
     {
         ArgumentNullException.ThrowIfNull(document);
         ArgumentNullException.ThrowIfNull(snapshot);
-        changes = ResolveChanges(scope, changes);
+        changes = DigestionEvaluationScopes.ResolveChanges(scope, changes);
         var entries = document.RequireDigestionEntries();
         var findings = ImmutableArray.CreateBuilder<string>();
         if (FindDuplicateAtomId(entries) is { } duplicateAtomId)
@@ -27,7 +27,9 @@ internal static partial class DigestionStatusEvaluator
             document,
             snapshot,
             baselineDocument,
-            DigestionAlignmentMode.Projection);
+            DigestionAlignmentMode.Projection,
+            casEvaluation: DigestionCasStore.Evaluate(document, snapshot, changes),
+            changes: changes);
         findings.AddRange(alignment.Findings);
         var emptyLeanReport = LeanAxiomReport.Create(
             new Dictionary<string, LeanFileReport>(StringComparer.Ordinal));
@@ -80,7 +82,7 @@ internal static partial class DigestionStatusEvaluator
         ArgumentNullException.ThrowIfNull(document);
         ArgumentNullException.ThrowIfNull(snapshot);
         ArgumentNullException.ThrowIfNull(lean);
-        changes = ResolveChanges(scope, changes);
+        changes = DigestionEvaluationScopes.ResolveChanges(scope, changes);
         var entries = document.RequireDigestionEntries();
         var findings = ImmutableArray.CreateBuilder<string>();
         if (FindDuplicateAtomId(entries) is { } duplicateAtomId)
@@ -89,6 +91,18 @@ internal static partial class DigestionStatusEvaluator
             return new DigestionLedgerEvaluation([], findings.ToImmutable());
         }
 
+        if (casEvaluation is not null && !casEvaluation.Matches(changes))
+        {
+            throw new ArgumentException(
+                "CAS evaluation scope does not match the digestion evaluation scope.",
+                nameof(casEvaluation));
+        }
+
+        casEvaluation ??= DigestionCasStore.Evaluate(
+            document,
+            snapshot,
+            changes,
+            isBaseFactAffected);
         var alignment = DigestionLedgerAligner.Evaluate(
             document,
             snapshot,
@@ -192,18 +206,6 @@ internal static partial class DigestionStatusEvaluator
             .FirstOrDefault(static group => group.Count() > 1)
             ?.Key;
 
-    private static RawChangeSet? ResolveChanges(
-        DigestionEvaluationScope scope,
-        RawChangeSet? changes) => scope switch
-        {
-            DigestionEvaluationScope.FullScan => null,
-            DigestionEvaluationScope.ChangedSet when changes is not null => changes,
-            DigestionEvaluationScope.ChangedSet => throw new ArgumentException(
-                "ChangedSet requires an explicit change set.",
-                nameof(changes)),
-            _ => throw new ArgumentOutOfRangeException(nameof(scope)),
-        };
-
     private static DigestionLedgerEvaluation CompleteEvaluation(
         IReadOnlyList<EntryWork> work,
         RepositorySnapshot snapshot,
@@ -269,9 +271,17 @@ internal static partial class DigestionStatusEvaluator
         ImmutableArray<string>.Builder findings)
     {
         var gaps = new List<DigestionGap>();
-        // A new entry has no baseline verdict to reuse, so it must be checked in full even
-        // if a malformed change set omits its ledger path.
+        // Boundary and Scribe retain their existing baseline-only full check. Coverage can
+        // trust a committed receipt outside a nonempty, authoritative git delta even when the
+        // query omitted --base; an empty delta retains the explicit whole-tree diagnostic.
         var verificationChanges = baselineMigration is null ? null : changes;
+        var canReuseCoverageWithoutBaseline = changes is not null
+            && changes.Paths.Any()
+            && !DigestionCasStore.EntryChanged(entry, changes);
+        var coverageVerificationChanges = baselineMigration is null
+            && canReuseCoverageWithoutBaseline
+                ? changes
+                : verificationChanges;
         var boundary = entry.Atomizer == AtomizerRegistry.NoAtomizerId
             && entry.Boundary is not null
                 ? VerifyBoundary(entry, snapshot, verificationChanges, gaps, findings)
@@ -306,7 +316,7 @@ internal static partial class DigestionStatusEvaluator
         var coverage = VerifyCoverageReceipts(
             entry,
             existingTargets,
-            verificationChanges,
+            coverageVerificationChanges,
             gaps,
             findings);
         var scribe = VerifyScribeReceipts(
