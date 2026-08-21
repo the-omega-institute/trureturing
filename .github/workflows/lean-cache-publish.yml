@@ -25,35 +25,44 @@
 # 三条一致指向同一个结论：发布是独立关注点，就该住在自己的文件里。
 name: Lean build cache publication
 
+# 【触发形态：2026-08-21 owner 定「做成定时的就行」】
+#   理由（owner 原话）：「反正缓存没那么热，人家本地也更新」——
+#   消费侧本就会用 `lake build` 补差量，故发布不必跟住每一次 dev 推进。
+#   这同时解掉两个此前无解的读数：
+#     ① 触发间隔 5–11 分钟（dev 约 16 提交/小时）< 单次 run 60 分钟 ⇒ 追不平，且会
+#        持续堆积 6–12 个并发 run 挤占 runner 额度；定时后二者都不复存在。
+#     ② `workflow_run` 读不到 `push` 写的 cache（见文件头实测）；`schedule` 跑在
+#        默认分支上，作用域**可能**正常 —— 未测，改完看首个 run 的 cache-hit 即知。
+#   `0 */6 * * *` 是 policy-override（非派生值）：owner=仓库 τ=0 owner，
+#   依据=本次裁决，退出条件=命中率实测数据齐备后重定，案号见 #2634。
+#   `workflow_dispatch` 用于不等 6 小时立刻验证。
 on:
-  workflow_run:
-    workflows: ["admission"]
-    types: [completed]
-    branches: [dev]
+  schedule:
+    - cron: '0 */6 * * *'
+  workflow_dispatch:
 
 permissions:
   contents: write
 
-# 【并发形态：两次实测之后取消 concurrency 组】
+# 【并发形态：定时之后不需要 concurrency 组】
 #
-# 读数一：触发间隔 5–11 分钟（dev 约 16 提交/小时），自建耗时 40 分钟以上。
-#   触发远快于完成，所以 `cancel-in-progress: true` 会让每个 run 都死在构建中途，
-#   永远走不到发布 —— 那不是「慢」，是「永远不可用」。
+# 此前这里有一段基于误诊的历史：两个 run 的 `conclusion: cancelled` 被当成并发组取消，
+# 据此连改三轮（`cancel-in-progress: false` → 整体移除 concurrency），取消照旧。
+# 真因是 `timeout-minutes: 45`（GitHub 对超时的 conclusion 也是 `cancelled`，
+# 该字段不区分两者）：32479993734 跑 45m19s、32480023451 跑 45m17s，
+# 都被杀在 `Build when no cache layer was available`。
 #
-# 读数二：改成 `cancel-in-progress: false` 后**取消仍在发生**。
-#   32474040022 于 10:55:39 被取消，而同组下一个 run 在 10:55:38 启动 —— 相差 1 秒；
-#   两个 commit（fa5c767a、411860b0）上的文件都确实是 `false`。
-#   即 `concurrency` 组在 `workflow_run` 语境下不按文档行为
-#   （与本仓已实测的 cache 作用域问题同类：文档与实测不符时以实测为准）。
-#
-# 故**不设 concurrency 组**：让每个 run 独立跑完。重复由 `publish` 动词的幂等性吸收 ——
-# 同一内容地址已发布时它 no-op 退出，代价是一次空跑，而空跑远比「永远发不出去」便宜。
+# 改定时之后，堆积的前提本身消失了：每 6 小时一次，单次 run 远短于该间隔，
+# 不会出现此前「触发 5–11 分钟 / run 60 分钟 ⇒ 常驻 6–12 个并发」的局面。
+# 故此处**不设** concurrency 组；万一手动触发撞车，由 `publish` 动词的幂等性吸收
+# —— 同一内容地址已发布时它 no-op 退出。
 
 jobs:
   publish:
     name: Publish the Lean build cache
-    # 只在 admission 那条流水线整体成功后发布：失败的 dev 推送不该留下缓存产物。
-    if: github.event.workflow_run.conclusion == 'success'
+    # 定时触发下没有 `github.event.workflow_run` 上下文；留着该条件会让 job 永远被跳过。
+    # 「不给失败的推送留缓存」由内容地址本身保证：地址取自这一刻 dev 的实际输入，
+    # 发布的产物与该地址绑定，消费侧按地址取，取不到就本地补 —— 不存在“发布了坏缓存”。
     runs-on: ubuntu-24.04-arm
     # 【超时形态：2026-08-21 读实际日志后勘正】
     #   此前两个 run 的 `conclusion: cancelled` 被我误读为「并发组取消」，据此连打三四个
@@ -71,7 +80,8 @@ jobs:
         id: checkout-publish
         uses: actions/checkout@v4
         with:
-          ref: ${{ github.event.workflow_run.head_sha }}
+          # 定时触发下检出默认分支 HEAD（即 dev 当前 tip）；
+          # `github.event.workflow_run.head_sha` 在此事件下为空，留着会检出错误的树。
           # 剥夺步骤要对 HEAD^1 做烟测，而这里检出的是一个已合入的普通提交，
           # 不是 merge ref；默认的 fetch-depth: 1 只取一个提交，父提交不可达。
           fetch-depth: 2
