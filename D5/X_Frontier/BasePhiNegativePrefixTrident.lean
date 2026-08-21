@@ -548,12 +548,32 @@ silently replace the values consumed by later nodes.
 15. `occurrenceSet_lucas_gap_classification`: consumes the three-arm result and
     states the final one-arm/three-arm classification.
 
-Two additional inconsistencies were found while aligning the record. First, the
-old file exposed only seven compressed `Prop` obligations even though the
-surrounding reconnaissance prose described fifteen typed chain nodes. Second,
-`carrySkipStep` and its state machine are not in `BasePhiNegativeBridge.lean`;
-the frozen definitions are in `BasePhiCarryTransducer.lean`, which is now the
-import and source used by this file.
+Five inconsistencies were found and repaired while aligning the record.
+First, the old file exposed only seven compressed `Prop` obligations even
+though the surrounding reconnaissance prose described fifteen typed chain
+nodes; the chain is now fifteen separately typed, composable interfaces.
+Second, `carrySkipStep` and its state machine are not in
+`BasePhiNegativeBridge.lean`; the frozen definitions are in
+`BasePhiCarryTransducer.lean`, which is now the import and source used by this
+file. Third, a constructor binder used a reserved Lean syntax prefix and is
+renamed to `hprefix`. Fourth, the derived first value did not elaborate
+directly through `exact_mod_cast`; an explicit target change precedes it now.
+Fifth, SL-028 reported `FrontierReturnWordFor.strictMono` as a duplicate of
+`core_enum_strictMono`; the proof now stores the successor-step strict order
+and derives the global `StrictMono` via `strictMono_nat_of_lt_succ`, and the
+final admission carries no SL-028 observation.
+
+Per-theorem quality account of the seven discharged nodes (review-graded, not
+flattened): `core_enum_from_frontier` and `sequence_eq_v_of_head_and_gaps` are
+interface-alignment gains (the former ties `frontierState` to `carrySkipRun`
+through `carrySkipRun_invariant`; the latter derives `first`/`gap` from
+`enumerate`, repairing the independent-field mismatch and enabling the closing
+induction). `core_lucas_gap_classification` is an alignment-dependent
+set/range transport, not a new semantic classification.
+`core_enum_sound_complete` and `core_enum_strictMono` are trivial projections
+of `successor_strict`. `v_translate_initial_value_proved` is an independent
+routine induction. `classification_chain_signatures_consistent` is chain
+plumbing: kernel-checked type compatibility, not semantic closure.
 
 The first node remains explicitly dependent on Dekking 7.5, which is not yet
 formalized in this import closure. That missing theorem is recorded, not
