@@ -11,7 +11,7 @@ public sealed class LeanCachePublishTests
         RepositoryRelativePath.Create("tools/scripts/worktree/lean-cache-publish.sh"));
 
     /// <summary>
-    /// tag 必须把身份五元组全部绑进去。少任何一个，两棵语义不同的树就会共用一个 tag，
+    /// tag 必须把身份三元组（toolchain、config、sources）全部绑进去。少任何一个，两棵语义不同的树就会共用一个 tag，
     /// 而它们的归档互相覆盖时没有任何东西会红。
     /// </summary>
     [Fact]
@@ -23,8 +23,11 @@ public sealed class LeanCachePublishTests
             static line => line.TrimStart().StartsWith("tag=", StringComparison.Ordinal));
 
         Assert.Contains("${slug}", tag, StringComparison.Ordinal);
-        Assert.Contains("${os}", tag, StringComparison.Ordinal);
-        Assert.Contains("${arch}", tag, StringComparison.Ordinal);
+        // 反向钉住：tag 不得重新引入平台维度。加回去会把主检出（darwin-arm64）
+        // 挡在 CI 产物（linux-aarch64）之外，而 olean 实测不含平台相关二进制
+        // （*.o/*.so/*.dylib/*.a/*.dll 全为 0），mathlib 亦对所有平台发同一份缓存。
+        Assert.DoesNotContain("${os}", tag, StringComparison.Ordinal);
+        Assert.DoesNotContain("${arch}", tag, StringComparison.Ordinal);
         Assert.Contains("${config_sha256:", tag, StringComparison.Ordinal);
         Assert.Contains("${sources_sha256:", tag, StringComparison.Ordinal);
     }

@@ -1,0 +1,17 @@
+ast_path: 定理/510.1
+fingerprints:
+  raw_sha256: sha256:11d26e8120ab721779698193df66228d9ce5276b1c732982aaeee841a3f83ee2
+  normalized_sha256: sha256:11d26e8120ab721779698193df66228d9ce5276b1c732982aaeee841a3f83ee2
+cas_ref: sha256:11d26e8120ab721779698193df66228d9ce5276b1c732982aaeee841a3f83ee2
+coverage_gids:
+  - D5/S3/ConceptDynamics/Transport/MacroInterventionCriterion.macro_intervention_carry_criterion
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/Transport/MacroInterventionCriterion.macro_intervention_carry_criterion
+      source_sha256: sha256:11d26e8120ab721779698193df66228d9ce5276b1c732982aaeee841a3f83ee2
+      target_sha256: sha256:c49cfc5eb1ef9cc337b349f1aea1c131bc8d368009659f131456910348a577b5
+  scribe:
+    - gid: D5/S3/ConceptDynamics/Transport/MacroInterventionCriterion.macro_intervention_carry_criterion
+      definition_sha256: sha256:b0cb349d6c848fe3fede41f28b0e851b6ff785929c3f07eb5a8a5a93703a8f11
+      emission_sha256: sha256:d39d51352cf204d77c6430b63feb98b6579eaa20bbde6f631447297662d68b00
+  unresolved_subitems: []
