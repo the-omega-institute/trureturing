@@ -67,7 +67,7 @@ internal sealed class BackwardChainLayerPeriodicityDocument : IScribeDocumentDef
         Formula layer = Apply(F.Id("PredecessorLayer"), update, point, depth);
         Formula nonemptyLayer = Apply(Seq(Operatorname, Grp(F.Id("Nonempty"))), layer);
         Formula allLayers = Seq(
-            Forall, Sp, depth, InMacro, Sp, naturals, Comma, Esc, nonemptyLayer);
+            Open, Forall, Sp, depth, InMacro, Sp, naturals, Comma, Esc, nonemptyLayer, Close);
 
         return Disp(Seq(
             Forall, Sp, carrier, Comma, Sp, finite, Comma, Esc,
