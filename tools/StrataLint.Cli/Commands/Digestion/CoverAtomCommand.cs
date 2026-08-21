@@ -97,6 +97,7 @@ internal static partial class CoverAtomCommand
             var lean = ValidateLean(current, report);
             var verifiedScribeEmissions = scribeEmissionVerifier.Verify(current, report);
             var beforeEvaluation = DigestionStatusEvaluator.Evaluate(
+                DigestionEvaluationScope.FullScan,
                 document,
                 current,
                 lean,
@@ -150,6 +151,7 @@ internal static partial class CoverAtomCommand
             var plannedDocument = ReplaceEntry(document, options.AtomId, covered);
 
             var derived = DigestionStatusEvaluator.Evaluate(
+                DigestionEvaluationScope.FullScan,
                 plannedDocument,
                 current,
                 lean,
@@ -183,6 +185,7 @@ internal static partial class CoverAtomCommand
             var finalSnapshot = Decode(finalRaw);
             var finalDocument = LoadDocument(finalSnapshot);
             var evaluation = DigestionStatusEvaluator.Evaluate(
+                DigestionEvaluationScope.FullScan,
                 finalDocument,
                 finalSnapshot,
                 lean,

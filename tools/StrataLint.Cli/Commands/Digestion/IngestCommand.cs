@@ -45,6 +45,7 @@ internal static partial class IngestCommand
             var lean = ValidateLean(plannedSnapshot, report);
             var verifiedScribeEmissions = scribeEmissionVerifier.Verify(plannedSnapshot, report);
             var derived = DigestionStatusEvaluator.Evaluate(
+                DigestionEvaluationScope.FullScan,
                 plannedDocument,
                 plannedSnapshot,
                 lean,
@@ -76,6 +77,7 @@ internal static partial class IngestCommand
             var finalSnapshot = Decode(finalRaw);
             var finalDocument = LoadDocument(finalSnapshot);
             var evaluation = DigestionStatusEvaluator.Evaluate(
+                DigestionEvaluationScope.FullScan,
                 finalDocument,
                 finalSnapshot,
                 lean,

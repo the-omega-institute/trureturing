@@ -626,9 +626,7 @@ internal sealed class FakeRepositoryGateway(
     public RawChangeSet ReadChanges(string changeBase)
     {
         ReadChangesCalls.Add(changeBase);
-        return changesForBase?.Invoke(changeBase)
-            ?? throw new InvalidOperationException(
-                "ReadChanges(base) should not be called without a configured changesForBase");
+        return changesForBase?.Invoke(changeBase) ?? changes;
     }
 
     public TrustedFrozenGitReferences ValidateFrozenReferences(FrozenLedgerReferenceSet references)

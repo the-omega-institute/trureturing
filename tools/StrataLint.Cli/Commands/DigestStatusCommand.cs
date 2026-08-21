@@ -8,6 +8,7 @@ namespace StrataLint.Cli;
 
 internal static class DigestStatusCommand
 {
+    private const string ImplementationPath = "tools/StrataLint.Cli/Commands/DigestStatusCommand.cs";
     private static readonly UTF8Encoding StrictUtf8 = new(false, true);
 
     private static readonly JsonSerializerOptions JsonOptions = new()
@@ -31,7 +32,10 @@ internal static class DigestStatusCommand
         {
             var options = ParseArguments(arguments);
             var snapshot = Decode(repository.ReadCurrent());
-            var changes = repository.ReadCurrentChanges();
+            var changes = options.BaselineRevision is null
+                ? repository.ReadCurrentChanges()
+                : repository.ReadChanges(options.BaselineRevision);
+            var scope = DigestionEvaluationScopes.ForChanges(changes, ImplementationPath);
 
             if (options.FormalizeCandidates)
             {
@@ -45,9 +49,11 @@ internal static class DigestStatusCommand
                 }
 
                 var formalizeEvaluation = DigestionStatusEvaluator.EvaluateUncovered(
+                    scope,
                     formalizeDocument,
                     snapshot,
-                    formalizeBaselineDocument);
+                    formalizeBaselineDocument,
+                    changes: changes);
                 if (formalizeEvaluation.Findings.Length > 0)
                 {
                     return InvalidEvaluation(formalizeEvaluation);
@@ -84,6 +90,7 @@ internal static class DigestStatusCommand
                 changes,
                 IsBaseFactAffected);
             var evaluation = DigestionStatusEvaluator.Evaluate(
+                scope,
                 document,
                 snapshot,
                 lean,
@@ -91,7 +98,7 @@ internal static class DigestStatusCommand
                 baselineDocument,
                 baselineSnapshot: baselineSnapshot,
                 casEvaluation: casEvaluation,
-                changes: null,
+                changes: changes,
                 isBaseFactAffected: IsBaseFactAffected,
                 projectedStatusChanges: changes);
             if (HasReceiptIntegrityFailure(evaluation))
@@ -126,13 +133,14 @@ internal static class DigestStatusCommand
     {
         var snapshot = Decode(repository.ReadCurrent());
         var baseline = Decode(repository.ReadRevision(baselineRevision));
-        var changes = repository.ReadCurrentChanges();
+        var changes = repository.ReadChanges(baselineRevision);
         var leanReport = leanReportSource.Load(snapshot);
         var ruleImplementationChanged = BaseFactImpact.RuleImplementationChanged(changes);
         bool IsBaseFactAffected(string path) =>
             BaseFactImpact.IsAffected(changes, ruleImplementationChanged, path);
         var document = BackfillInventoryLoader.Load(snapshot);
         var evaluation = DigestionStatusEvaluator.Evaluate(
+            DigestionEvaluationScopes.ForChanges(changes, ImplementationPath),
             document,
             snapshot,
             ValidateLean(snapshot, leanReport),
@@ -144,7 +152,7 @@ internal static class DigestStatusCommand
                 snapshot,
                 changes,
                 IsBaseFactAffected),
-            changes: null,
+            changes: changes,
             isBaseFactAffected: IsBaseFactAffected,
             projectedStatusChanges: changes);
         if (HasReceiptIntegrityFailure(evaluation))

@@ -69,6 +69,45 @@ public sealed class TheoryCandidatesTests
         """ + "\n";
 
     [Fact]
+    public void UnrelatedChangeDoesNotReplayCommittedProjectedStatus()
+    {
+        var result = RunCore(
+            CandidateFixtureWithMismatchedProjectedStatus(),
+            changes: RawChangeSet.Create(["notes/r16-unrelated.txt"]));
+
+        Assert.True(result.Success, result.Error);
+        using var json = JsonDocument.Parse(result.Output);
+        Assert.Contains(
+            json.RootElement.GetProperty("candidates").EnumerateArray(),
+            static candidate => candidate.GetProperty("candidate_id").GetString() == "atom/fixture-atom");
+    }
+
+    [Fact]
+    public void ChangedDigestionEntryStillValidatesProjectedStatus()
+    {
+        var fixture = CandidateFixtureWithMismatchedProjectedStatus();
+        const string changedPath =
+            "Meta/Digestion/backfill/fixture-source/absorbed-closed/fixture-atom.yaml";
+
+        var result = RunCore(fixture, changes: RawChangeSet.Create([changedPath]));
+
+        Assert.False(result.Success);
+        Assert.Contains("handwritten status", result.Error, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void DigestionImplementationChangeStillReplaysCommittedProjectedStatus()
+    {
+        var result = RunCore(
+            CandidateFixtureWithMismatchedProjectedStatus(),
+            changes: RawChangeSet.Create(
+            ["tools/StrataLint.Engine/Digestion/Evaluation/DigestionStatusEvaluator.cs"]));
+
+        Assert.False(result.Success);
+        Assert.Contains("handwritten status", result.Error, StringComparison.Ordinal);
+    }
+
+    [Fact]
     public void EnumeratesOnlyMathematicalOpenFrontierAndDerivedResidualOpenAtoms()
     {
         var fixture = CandidateFixture();
@@ -517,7 +556,8 @@ public sealed class TheoryCandidatesTests
         RuleFixture fixture,
         IReadOnlyList<string>? arguments = null,
         bool reverseSnapshotEntries = false,
-        string repositoryRoot = "/repo")
+        string repositoryRoot = "/repo",
+        RawChangeSet? changes = null)
     {
         var entries = reverseSnapshotEntries
             ? fixture.Files.Reverse().Select(static pair => RawRepositoryEntry.FromText(pair.Key, pair.Value))
@@ -525,7 +565,7 @@ public sealed class TheoryCandidatesTests
         var environment = new ProductionCliEnvironment(
             repositoryRoot,
             new FakeRepositoryGateway(
-                RawChangeSet.Create([]),
+                changes ?? RawChangeSet.Create([]),
                 RawRepositorySnapshot.Create(entries),
                 null),
             new FakeLeanReportSource(LeanAxiomReport.Create(fixture.Reports)),
@@ -600,6 +640,17 @@ public sealed class TheoryCandidatesTests
         fixture.Reports[NonFrontierOpenPath] = new LeanFileReport(
             [],
             [new LeanDeclaration("unfinishedFact", "theorem", "True", ["sorryAx"])]);
+        return fixture;
+    }
+
+    private static RuleFixture CandidateFixtureWithMismatchedProjectedStatus()
+    {
+        const string mismatchedPath =
+            "Meta/Digestion/backfill/fixture-source/absorbed-closed/fixture-atom.yaml";
+        var fixture = CandidateFixture();
+        var atom = fixture.Files[ResidualAtomPath];
+        fixture.Files.Remove(ResidualAtomPath);
+        fixture.Files[mismatchedPath] = atom;
         return fixture;
     }
 
