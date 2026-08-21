@@ -43,7 +43,8 @@ public sealed partial class MakeWorkflowTests
             #!/usr/bin/env bash
             if [[ "${1:-}" == -C ]]; then shift 2; fi
             case "$*" in
-              "cat-file -e {{baseRevision}}^{commit}"|"diff --name-only --no-renames -z {{baseRevision}} --"|"ls-files --others --exclude-standard -z") exit 0 ;;
+              "cat-file -e {{baseRevision}}^{commit}"|"ls-files --others --exclude-standard -z") exit 0 ;;
+              "diff --name-only --no-renames -z {{baseRevision}} --") printf 'Blueprint/D5/Probe.scribe.cs\0' ;;
               *) echo "unexpected git invocation: $*" >&2; exit 90 ;;
             esac
             """);
