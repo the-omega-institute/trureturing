@@ -252,7 +252,13 @@ public sealed partial class LeanCacheEnsureCommandTests
         Assert.Equal(2, root.GetProperty("clonefile_attempts").GetInt32());
         Assert.Equal(JsonValueKind.Null, root.GetProperty("clonefile_cleanup_error").ValueKind);
         Assert.Equal("main repository cache\n", LeanCacheFixtureFile.ReadText(Path.Combine(target, ".lake", "build", "cache.bin")));
-        Assert.DoesNotContain(runner.Invocations, static call => call.FileName == "lake");
+        // 收窄到**目标树**:本测试守的是「staging 不完整时不得在目标树上做昂贵操作」。
+        // 货源刷新(见 LeanDonorRefresh)在 donor 上跑 lake，与目标树的完整性无关，
+        // 原断言不区分工作目录才把它一并判红。删掉断言会连原契约一起丢，故只收窄。
+        Assert.DoesNotContain(
+            runner.Invocations,
+            call => call.FileName == "lake"
+                && call.WorkingDirectory.StartsWith(target, StringComparison.Ordinal));
         Assert.True(LeanCacheStamp.Matches(Path.Combine(target, ".lake"), ReadPins(target), out _));
     }
 
@@ -302,7 +308,13 @@ public sealed partial class LeanCacheEnsureCommandTests
             clone.Target,
             StringComparison.Ordinal);
         Assert.DoesNotContain(runner.Invocations, static call => call.FileName == "cp");
-        Assert.DoesNotContain(runner.Invocations, static call => call.FileName == "lake");
+        // 收窄到**目标树**:本测试守的是「staging 不完整时不得在目标树上做昂贵操作」。
+        // 货源刷新(见 LeanDonorRefresh)在 donor 上跑 lake，与目标树的完整性无关，
+        // 原断言不区分工作目录才把它一并判红。删掉断言会连原契约一起丢，故只收窄。
+        Assert.DoesNotContain(
+            runner.Invocations,
+            call => call.FileName == "lake"
+                && call.WorkingDirectory.StartsWith(target, StringComparison.Ordinal));
         using var receipt = ParseReceipt(result.Error);
         Assert.Equal(
             MathlibProjectionFixture.ModuleCount,
