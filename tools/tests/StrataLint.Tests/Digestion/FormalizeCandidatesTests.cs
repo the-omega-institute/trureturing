@@ -6,7 +6,7 @@ using StrataLint.Engine;
 
 namespace StrataLint.Tests;
 
-public sealed partial class FormalizeCandidatesTests
+public sealed class FormalizeCandidatesTests
 {
     // Byte-faithful canonical status-marker forms used by theory atoms.
     private const string PlainClosedMarker = "〔closed〕";
@@ -192,7 +192,7 @@ public sealed partial class FormalizeCandidatesTests
 
         Assert.True(result.Success, result.Error);
         using var json = JsonDocument.Parse(result.Output);
-        Assert.Equal("stratalint-formalize-candidates-v4", json.RootElement.GetProperty("schema").GetString());
+        Assert.Equal("stratalint-formalize-candidates-v3", json.RootElement.GetProperty("schema").GetString());
         Assert.Empty(json.RootElement.GetProperty("candidates").EnumerateArray());
         Assert.Empty(json.RootElement.GetProperty("recorded_formalizations").EnumerateArray());
         Assert.Empty(json.RootElement.GetProperty("withheld").EnumerateArray());
@@ -260,7 +260,7 @@ public sealed partial class FormalizeCandidatesTests
 
         Assert.True(result.Success, result.Error);
         using var json = JsonDocument.Parse(result.Output);
-        Assert.Equal("stratalint-formalize-candidates-v4", json.RootElement.GetProperty("schema").GetString());
+        Assert.Equal("stratalint-formalize-candidates-v3", json.RootElement.GetProperty("schema").GetString());
         Assert.Empty(json.RootElement.GetProperty("candidates").EnumerateArray());
         Assert.Empty(json.RootElement.GetProperty("withheld").EnumerateArray());
         var recorded = Assert.Single(
@@ -502,7 +502,7 @@ public sealed partial class FormalizeCandidatesTests
 
         Assert.True(result.Success, result.Error);
         using var json = JsonDocument.Parse(result.Output);
-        Assert.Equal("stratalint-formalize-candidates-v4", json.RootElement.GetProperty("schema").GetString());
+        Assert.Equal("stratalint-formalize-candidates-v3", json.RootElement.GetProperty("schema").GetString());
         Assert.Equal(
             ["plain-closed", "proved-closed"],
             json.RootElement.GetProperty("candidates")
@@ -556,7 +556,6 @@ public sealed partial class FormalizeCandidatesTests
         bool driftCas = false,
         BackfillInventoryDocument? ledger = null,
         byte[]? formalizationReceipt = null,
-        IReadOnlyDictionary<string, byte[]>? formalizationReceipts = null,
         LeanAxiomReport? leanReport = null,
         string atomizer = AtomizerRegistry.PzgId)
     {
@@ -615,18 +614,6 @@ public sealed partial class FormalizeCandidatesTests
                 ImmutableArray.CreateRange(formalizationReceipt)));
         }
 
-        if (formalizationReceipts is not null)
-        {
-            foreach (var (atomId, receipt) in formalizationReceipts)
-            {
-                files.Add(new RawRepositoryEntry(
-                    DigestionFormalizationReceipt.RootPath
-                        + atomId
-                        + DigestionFormalizationReceipt.PathSuffix,
-                    ImmutableArray.CreateRange(receipt)));
-            }
-        }
-
         var environment = new ProductionCliEnvironment(
                 "/repo",
                 new FakeRepositoryGateway(
@@ -671,8 +658,7 @@ public sealed partial class FormalizeCandidatesTests
         string migration = "residual",
         string truth = "open",
         string status = "",
-        string atomizer = AtomizerRegistry.PzgId,
-        string[]? chainAtoms = null)
+        string atomizer = AtomizerRegistry.PzgId)
     {
         var source = Encoding.UTF8.GetBytes(
             status is UnterminatedPlainClosedMarker or UnterminatedClosedMarker
@@ -688,8 +674,7 @@ public sealed partial class FormalizeCandidatesTests
             atom,
             coverageGids ?? [],
             migration,
-            truth,
-            chainAtoms ?? []);
+            truth);
     }
 
     private static BackfillInventoryDocument Ledger(
@@ -714,12 +699,7 @@ public sealed partial class FormalizeCandidatesTests
                         null,
                         entry.Atom.Fingerprints,
                         ImmutableArray.CreateRange(entry.CoverageGids),
-                        new DigestionReceipts(
-                            [],
-                            [],
-                            [],
-                            ImmutableArray.CreateRange(entry.ChainAtoms),
-                            null),
+                        new DigestionReceipts([], [], [], [], null),
                         new DigestionStatus(
                             Migration(entry.Migration),
                             Truth(entry.Truth)),
@@ -773,8 +753,7 @@ public sealed partial class FormalizeCandidatesTests
         DigestionAtom Atom,
         string[] CoverageGids,
         string Migration,
-        string Truth,
-        string[] ChainAtoms);
+        string Truth);
 
     private sealed record SourceFixture(
         string SourceId,

@@ -231,7 +231,7 @@ internal static class DigestStatusCommand
                 && item.DerivedStatus.Migration == DigestionMigrationState.Residual
                 && item.DerivedStatus.Truth == DigestionTruthState.Open
                 && item.Entry.CoverageGids.Length == 0)
-            .Select(item => Projection(item, snapshot, ledger, leanReport))
+            .Select(item => Projection(item, snapshot, leanReport))
             .Where(static item => item is not null)
             .OrderBy(static item => item!.SourceId, StringComparer.Ordinal)
             .ThenBy(static item => item!.AtomId, StringComparer.Ordinal)
@@ -239,7 +239,7 @@ internal static class DigestStatusCommand
             .ToArray();
         var material = new
         {
-            schema = "stratalint-formalize-candidates-v4",
+            schema = "stratalint-formalize-candidates-v3",
             ledger_sha256 = DigestionLedgerPreimage.ComputeSha256(ledger),
             candidates = projections
                 .Where(static item => item.Candidate is not null)
@@ -257,7 +257,6 @@ internal static class DigestStatusCommand
     private static FormalizeProjection? Projection(
         DigestionEntryEvaluation evaluation,
         RepositorySnapshot snapshot,
-        BackfillInventoryDocument ledger,
         LeanAxiomReport leanReport)
     {
         var entry = evaluation.Entry;
@@ -347,30 +346,10 @@ internal static class DigestStatusCommand
                 kind,
                 entry.CasRef,
                 entry.Fingerprints.RawSha256,
-                atomText,
-                ParentFormalizationReceipts(entry.AtomId, ledger, snapshot, leanReport)),
+                atomText),
             null,
             null);
     }
-
-    private static ImmutableArray<ParentFormalizationReceipt> ParentFormalizationReceipts(
-        string childAtomId,
-        BackfillInventoryDocument ledger,
-        RepositorySnapshot snapshot,
-        LeanAxiomReport leanReport) =>
-        ledger.RequireDigestionSources()
-            .SelectMany(static source => source.Entries)
-            .Where(parent => parent.Receipts.ChainAtoms.Contains(
-                childAtomId,
-                StringComparer.Ordinal))
-            .Select(parent => CurrentFormalizationReceipt(parent, snapshot, leanReport))
-            .Where(static receipt => receipt is not null)
-            .Select(static receipt => new ParentFormalizationReceipt(
-                receipt!.AtomId,
-                receipt.PrimaryGid,
-                receipt.ReceiptPath))
-            .OrderBy(static receipt => receipt.ParentAtomId, StringComparer.Ordinal)
-            .ToImmutableArray();
 
     private static RecordedFormalization? CurrentFormalizationReceipt(
         DigestionLedgerEntry entry,
@@ -474,13 +453,7 @@ internal static class DigestStatusCommand
         string Kind,
         string CasRef,
         string RawSha256,
-        string AtomText,
-        ImmutableArray<ParentFormalizationReceipt> ParentReceipts);
-
-    private sealed record ParentFormalizationReceipt(
-        string ParentAtomId,
-        string PrimaryGid,
-        string ReceiptPath);
+        string AtomText);
 
     private sealed record WithheldFormalizeCandidate(
         string AtomId,
