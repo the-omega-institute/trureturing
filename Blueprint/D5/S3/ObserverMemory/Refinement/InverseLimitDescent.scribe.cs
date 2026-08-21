@@ -2,7 +2,7 @@ using static StrataLint.Scribe.DefinitionDsl;
 using static StrataLint.Scribe.FormulaDsl;
 using F = StrataLint.Scribe.FormulaDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.ObserverMemory.InverseLimits;
+namespace StrataLint.Scribe.Blueprint.D5.S3.ObserverMemory.Refinement;
 
 internal sealed class InverseLimitDescentDocument : IScribeDocumentDefinition
 {
@@ -13,7 +13,7 @@ internal sealed class InverseLimitDescentDocument : IScribeDocumentDefinition
             Describe.Lean(
                 DescribeId.Create("inverse-limit-descent-and-reverse"),
                 DeclarationHandle.Create(
-                    "D5/S3/ObserverMemory/InverseLimits/InverseLimitDescent."
+                    "D5/S3/ObserverMemory/Refinement/InverseLimitDescent."
                         + "inverse_limit_descent_and_reverse"),
                 H("Inverse-limit maps descend uniquely and reflect finite naturality"),
                 StatementSource.FromAuthor(DescentFormula()),

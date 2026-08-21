@@ -1,13 +1,13 @@
-/- GID: D5/S3/ObserverMemory/InverseLimits/InverseLimitDescent
+/- GID: D5/S3/ObserverMemory/Refinement/InverseLimitDescent
    generality: G
-   mirror-B: D5/B/S3/ObserverMemory/InverseLimits/InverseLimitDescent
+   mirror-B: D5/B/S3/ObserverMemory/Refinement/InverseLimitDescent
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    digest: Construct the unique map between compatible inverse-limit families and recover finite naturality from surjective coordinates. -/
 
 import D5.S3.ObserverMemory.InverseLimits.CompletionIsomorphismCriterion
 
-namespace D5.S3.ObserverMemory.InverseLimits.InverseLimitDescent
+namespace D5.S3.ObserverMemory.Refinement.InverseLimitDescent
 
 open D5.S3.ObserverMemory.InverseLimits.CompletionIsomorphismCriterion
 
@@ -60,4 +60,4 @@ theorem inverse_limit_descent_and_reverse {I : Type*} [Preorder I]
           _ = delta i (source.restrict h x) :=
             congrArg (delta i) (congrArg (source.restrict h) hfamily)
 
-end D5.S3.ObserverMemory.InverseLimits.InverseLimitDescent
+end D5.S3.ObserverMemory.Refinement.InverseLimitDescent

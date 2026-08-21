@@ -8,7 +8,7 @@ Compatible finite-stage maps induce a unique map on inverse-limit families, and 
 
 $$\forall I, S, T, delta, \operatorname{Compatible}(S, T, delta) \Rightarrow (\exists! D: \operatorname{CompatibleStageFamily}(S) \Rightarrow \operatorname{CompatibleStageFamily}(T), \forall a, i, Delta(a)_{i} = delta_{i}(a_{i}) \land \forall D: \operatorname{CompatibleStageFamily}(S) \Rightarrow \operatorname{CompatibleStageFamily}(T), (\forall a, i, Delta(a)_{i} = delta_{i}(a_{i})) \Rightarrow (\forall i, \operatorname{Surjective}(a_{i})) \Rightarrow \forall h, x, \operatorname{restrict}(T, h, delta_{j}(x)) = delta_{i}(\operatorname{restrict}(S, h, x))).$$
 
-*Proof.* Machine-checked in Lean as `D5/S3/ObserverMemory/InverseLimits/InverseLimitDescent.inverse_limit_descent_and_reverse` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/ObserverMemory/Refinement/InverseLimitDescent.inverse_limit_descent_and_reverse` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -24,5 +24,5 @@ The proof reuses the canonical InverseStageSystem and CompatibleStageFamily type
 
 ## References
 
-- Truth anchor: `D5/S3/ObserverMemory/InverseLimits/InverseLimitDescent.inverse_limit_descent_and_reverse`
-- Dependency: [D5/S3/ObserverMemory/InverseLimits/CompletionIsomorphismCriterion](CompletionIsomorphismCriterion.md)
+- Truth anchor: `D5/S3/ObserverMemory/Refinement/InverseLimitDescent.inverse_limit_descent_and_reverse`
+- Dependency: [D5/S3/ObserverMemory/InverseLimits/CompletionIsomorphismCriterion](../InverseLimits/CompletionIsomorphismCriterion.md)
