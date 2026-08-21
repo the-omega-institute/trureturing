@@ -8,7 +8,7 @@ An infinite compatible backward chain exists exactly at a periodic point.
 
 $$\forall Y, [\operatorname{Finite} Y],\ tau: Y \to Y, y: Y,\ InfiniteBackwardChain(tau, y) \Leftrightarrow y \in \operatorname{periodicPts}(tau).$$
 
-*Proof.* Machine-checked in Lean as `D5/S3/ObserverMemory/InverseLimits/BackwardChainPeriodicity.infinite_backward_chain_iff_periodic` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/ObserverMemory/BackwardChains/BackwardChainPeriodicity.infinite_backward_chain_iff_periodic` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -22,5 +22,5 @@ Repository search found the exact declaration BackwardOrbitCore.backward_orbit_e
 
 ## References
 
-- Truth anchor: `D5/S3/ObserverMemory/InverseLimits/BackwardChainPeriodicity.infinite_backward_chain_iff_periodic`
-- Dependency: [D5/S3/ObserverMemory/InverseLimits/BackwardOrbitCore](BackwardOrbitCore.md)
+- Truth anchor: `D5/S3/ObserverMemory/BackwardChains/BackwardChainPeriodicity.infinite_backward_chain_iff_periodic`
+- Dependency: [D5/S3/ObserverMemory/InverseLimits/BackwardOrbitCore](../InverseLimits/BackwardOrbitCore.md)

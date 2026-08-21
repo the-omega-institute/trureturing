@@ -1,6 +1,6 @@
-/- GID: D5/S3/ObserverMemory/InverseLimits/BackwardChainPeriodicity
+/- GID: D5/S3/ObserverMemory/BackwardChains/BackwardChainPeriodicity
    generality: G
-   mirror-B: D5/B/S3/ObserverMemory/InverseLimits/BackwardChainPeriodicity
+   mirror-B: D5/B/S3/ObserverMemory/BackwardChains/BackwardChainPeriodicity
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    digest: An infinite compatible backward chain exists exactly at a periodic point. -/
@@ -10,7 +10,7 @@ import D5.S3.ObserverMemory.InverseLimits.BackwardOrbitCore
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
-namespace D5.S3.ObserverMemory.InverseLimits.BackwardChainPeriodicity
+namespace D5.S3.ObserverMemory.BackwardChains.BackwardChainPeriodicity
 
 open D5.S3.ObserverMemory.InverseLimits.BackwardOrbitCore
 
@@ -34,4 +34,4 @@ theorem infinite_backward_chain_iff_periodic
 
 #print axioms infinite_backward_chain_iff_periodic
 
-end D5.S3.ObserverMemory.InverseLimits.BackwardChainPeriodicity
+end D5.S3.ObserverMemory.BackwardChains.BackwardChainPeriodicity

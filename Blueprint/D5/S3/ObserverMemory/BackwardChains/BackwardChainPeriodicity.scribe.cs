@@ -2,7 +2,7 @@ using static StrataLint.Scribe.DefinitionDsl;
 using static StrataLint.Scribe.FormulaDsl;
 using F = StrataLint.Scribe.FormulaDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.ObserverMemory.InverseLimits;
+namespace StrataLint.Scribe.Blueprint.D5.S3.ObserverMemory.BackwardChains;
 
 internal sealed class BackwardChainPeriodicityDocument : IScribeDocumentDefinition
 {
@@ -13,7 +13,7 @@ internal sealed class BackwardChainPeriodicityDocument : IScribeDocumentDefiniti
             Describe.Lean(
                 DescribeId.Create("infinite-backward-chain-iff-periodic"),
                 DeclarationHandle.Create(
-                    "D5/S3/ObserverMemory/InverseLimits/BackwardChainPeriodicity."
+                    "D5/S3/ObserverMemory/BackwardChains/BackwardChainPeriodicity."
                         + "infinite_backward_chain_iff_periodic"),
                 H("Infinite backward chains are exactly periodic points"),
                 StatementSource.FromAuthor(Formula()),
