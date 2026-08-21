@@ -93,7 +93,30 @@ public static class TruthReleaseVerification
             }
         }
 
-        return VerifiedTruthRelease.Create(manifest, expectedReleaseDigest);
+        return VerifiedTruthRelease.Create(manifest, expectedReleaseDigest, bundleDirectory);
+    }
+
+    /// <summary>
+    /// Rereads a verified artifact's bytes from the bundle and re-checks them against the digest the
+    /// manifest records, so a consumer parses exactly the bytes verification bound. This closes the
+    /// verify/use TOCTOU: a file changed after <see cref="Verify"/> fails closed here. It re-applies the
+    /// same containment guards as verification (safe bundle-relative name, no symlink).
+    /// </summary>
+    internal static byte[] ReadVerifiedArtifactBytes(string bundleDirectory, TruthReleaseArtifact artifact)
+    {
+        ArgumentNullException.ThrowIfNull(bundleDirectory);
+        ArgumentNullException.ThrowIfNull(artifact);
+
+        RequireSafeBundleName(artifact.File);
+        var bytes = ReadContainedBytes(bundleDirectory, artifact.File);
+        var expectedHex = StripDigestPrefix(artifact.Sha256);
+        if (!string.Equals(Sha256Sums.HashHex(bytes), expectedHex, StringComparison.Ordinal))
+        {
+            throw new FormatException(
+                $"artifact '{artifact.File}' changed after verification; its bytes no longer match the verified digest.");
+        }
+
+        return bytes;
     }
 
     private static IReadOnlyList<TruthReleaseArtifact> ListArtifacts(TruthReleaseArtifacts artifacts) =>
