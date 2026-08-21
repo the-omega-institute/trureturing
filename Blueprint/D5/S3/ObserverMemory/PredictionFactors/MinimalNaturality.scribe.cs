@@ -95,8 +95,8 @@ internal sealed class MinimalNaturalityDocument : IScribeDocumentDefinition
         Formula projection = Apply(F.Id("completionProjection"), tau, q);
         Formula qPush = new Formula.Subscript(F.Id("Q"), r);
         Formula pPush = new Formula.Subscript(F.Id("P"), r);
-        Formula deltaTau = new Formula.Subscript(Delta, tau);
-        Formula deltaSigma = new Formula.Subscript(Delta, sigma);
+        Formula deltaTau = new Formula.Subscript(Delta, Seq(tau));
+        Formula deltaSigma = new Formula.Subscript(Delta, Seq(sigma));
         Formula naturality = new Formula.Bind(
             FormulaQuantifier.ForAll,
             FormulaIdentifier.Create("A"),

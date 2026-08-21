@@ -75,8 +75,8 @@ internal sealed class NaiveRefinementComplexityDocument : IScribeDocumentDefinit
         Formula sortingRound = new Formula.Subscript(F.Id("s"), index);
         Formula hashingRound = new Formula.Subscript(F.Id("h"), index);
         Formula workspaceRecord = new Formula.Subscript(F.Id("w"), index);
-        Formula roundFactor = Grp(
-            stateCount, Sp, Minus, Sp, outputCount, Sp, Plus, Sp, D(1));
+        Formula roundFactor = Seq(
+            Open, stateCount, Sp, Minus, Sp, outputCount, Sp, Plus, Sp, D(1), Close);
         Formula sortingTarget = Seq(
             stateCount, Sp, Times, Sp, roundFactor, Sp, Times, Sp,
             Log, Sp, stateCount);
