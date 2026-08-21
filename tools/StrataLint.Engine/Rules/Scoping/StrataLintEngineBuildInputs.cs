@@ -26,9 +26,7 @@ internal static class StrataLintEngineBuildInputs
 
     internal static bool ContainsRuleImplementation(string path)
     {
-        if (path == ProjectPath
-            || path.StartsWith(RulesDirectory + "/", StringComparison.Ordinal)
-                && path.EndsWith(".cs", StringComparison.Ordinal))
+        if (ContainsRuleSource(path))
         {
             return true;
         }
@@ -42,6 +40,11 @@ internal static class StrataLintEngineBuildInputs
 
         return IsInheritedBuildInput(path);
     }
+
+    internal static bool ContainsRuleSource(string path) =>
+        path == ProjectPath
+        || path.StartsWith(RulesDirectory + "/", StringComparison.Ordinal)
+            && path.EndsWith(".cs", StringComparison.Ordinal);
 
     private static bool IsInheritedBuildInput(string path)
     {

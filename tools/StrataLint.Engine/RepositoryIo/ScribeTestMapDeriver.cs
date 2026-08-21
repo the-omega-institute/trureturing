@@ -86,6 +86,8 @@ internal static class ScribeTestMapDeriver
         "tools/tests/StrataLint.Scribe.Tests",
         "tools/tests/StrataLint.Tests",
         "tools/tests/StrataLint.Tests/Fixtures/fixture-registry.yaml",
+        // 派发契约测试按 Makefile 的字面内容判断目标与前置，故它是一个声明的读取路径。
+        "Makefile",
     ];
 
     internal static bool IsDeclaredPathAllowed(string path) =>

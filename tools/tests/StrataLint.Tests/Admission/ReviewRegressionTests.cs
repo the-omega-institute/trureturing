@@ -289,7 +289,9 @@ public sealed partial class ReviewRegressionTests
         const string path = "Evidence/D5/S0/Carrier/Mixed.run.json";
         fixture.Files[path] = "{\"payload\": \"prefix {\\\"note\\\":\\\"ok\\\"} anomaly tail\"}\n";
 
-        var evaluation = RuleCatalog.Default.EvaluateSingle(RuleId.CreateKnown(19), fixture.Build());
+        var evaluation = RuleCatalog.Default.EvaluateSingle(
+            RuleId.CreateKnown(19),
+            fixture.Build(RawChangeSet.Create([path])));
 
         var diagnostic = Assert.Single(evaluation.Diagnostics, item => item.Path == path);
         Assert.Contains("unknown anomaly-bearing schema at $.payload", diagnostic.Message, StringComparison.Ordinal);
@@ -306,7 +308,9 @@ public sealed partial class ReviewRegressionTests
         const string path = "Evidence/D5/S0/Carrier/Locator.run.json";
         fixture.Files[path] = "{\"ast_path\":\"" + value + "\"}\n";
 
-        var evaluation = RuleCatalog.Default.EvaluateSingle(RuleId.CreateKnown(19), fixture.Build());
+        var evaluation = RuleCatalog.Default.EvaluateSingle(
+            RuleId.CreateKnown(19),
+            fixture.Build(RawChangeSet.Create([path])));
 
         Assert.Equal(
             expectsDiagnostic,

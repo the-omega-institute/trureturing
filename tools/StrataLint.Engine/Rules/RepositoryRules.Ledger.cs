@@ -18,6 +18,8 @@ internal static partial class RepositoryRules
         {
             var governed = IsGovernedStructured(path, context.Policy);
             var pathAffected = context.IsBaseFactAffected(path.Value);
+            var anomalyAffected = pathAffected || context.Changes.Paths.Any(change =>
+                IsManagedLeanPath(change.Value));
             if (governed && pathAffected)
             {
                 if (file.HasBom)
@@ -68,7 +70,8 @@ internal static partial class RepositoryRules
                         "$",
                         tasks,
                         findings,
-                        scanStrings: governed,
+                        scanAnomalies: anomalyAffected,
+                        scanStrings: governed && anomalyAffected,
                         enforceKeyOrder: governed && pathAffected);
                 }
                 catch (JsonException)
@@ -82,11 +85,24 @@ internal static partial class RepositoryRules
             else if (path.Value.EndsWith((".yaml"), StringComparison.Ordinal)
                 || path.Value.EndsWith((".yml"), StringComparison.Ordinal))
             {
-                ScanYaml(path.Value, file.Text, tasks, findings, governed && pathAffected, pathAffected);
+                ScanYaml(
+                    path.Value,
+                    file.Text,
+                    tasks,
+                    findings,
+                    scanAnomalies: anomalyAffected,
+                    enforceKeyOrder: governed && pathAffected,
+                    reportParseErrors: pathAffected);
             }
             else if (path.Value.StartsWith("Chronicle/", StringComparison.Ordinal))
             {
-                ScanLedgerBlocks(path.Value, file.Text, tasks, findings, pathAffected);
+                ScanLedgerBlocks(
+                    path.Value,
+                    file.Text,
+                    tasks,
+                    findings,
+                    scanAnomalies: anomalyAffected,
+                    reportParseErrors: pathAffected);
             }
         }
 

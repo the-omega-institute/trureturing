@@ -264,19 +264,21 @@ internal static partial class RepositoryRules
             .Where(static path =>
                 path.Value.StartsWith("Evidence/D5/values.", StringComparison.Ordinal)
                 && path.Value != RepositoryPathPolicy.ValuesProjectionPath)
+            .Where(path => ValuesPathFactAffected(context, path.Value))
             .OrderBy(static path => path.Value, StringComparer.Ordinal)
             .Select(static path => new RuleFinding(
                 path.Value,
                 "canonical values projection must be Evidence/D5/values.json"))
             .ToImmutableArray()
             .ToBuilder();
-        if (!context.Current.TryGetFile(ValuesKernelBindingValidator.RelativePath, out var values))
+        if (!context.Current.TryGetFile(ValuesKernelBindingValidator.RelativePath, out var values)
+            && context.IsBaseFactAffected(ValuesKernelBindingValidator.RelativePath))
         {
             findings.Add(new RuleFinding(
                 ValuesKernelBindingValidator.RelativePath,
                 "required values kernel binding data is missing"));
         }
-        else
+        else if (values is not null)
         {
             findings.AddRange(ValuesKernelBindingValidator.Validate(
                 values.Text,
@@ -286,4 +288,13 @@ internal static partial class RepositoryRules
 
         return findings.ToImmutable();
     }
+
+    private static bool ValuesPathFactAffected(RuleEvaluationContext context, string path) =>
+        context.Changes.Paths.Any(change => string.Equals(
+            change.Value,
+            path,
+            StringComparison.Ordinal))
+        || context.IsBaseFactAffected(path)
+            && context.Changes.Paths.Any(change =>
+                StrataLintEngineBuildInputs.ContainsRuleSource(change.Value));
 }

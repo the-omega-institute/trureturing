@@ -12,6 +12,7 @@ public sealed class R14ScopeNarrowingTests
         "evidence selector has multiple artifact kinds";
 
     [Fact]
+    [BaseFactScopeProbe(15)]
     public void Sl015DuplicateGidSuppressesHistoricalCollisionButKeepsImplementationRecheck()
     {
         var unrelated = DuplicateGidHistory();
@@ -123,6 +124,7 @@ public sealed class R14ScopeNarrowingTests
     }
 
     [Fact]
+    [BaseFactScopeProbe(6)]
     public void Sl006BadgeScopesHistoryAndKeepsDeltaAndImplementationRechecks()
     {
         const string badgePath = "Library/historical-status.md";
@@ -144,6 +146,7 @@ public sealed class R14ScopeNarrowingTests
     }
 
     [Fact]
+    [BaseFactScopeProbe(12)]
     public void Sl012LeanHeaderScopesHistoryAndKeepsDeltaAndImplementationRechecks()
     {
         const string malformed = "def goldenRing : Nat := 0\n";
@@ -168,6 +171,7 @@ public sealed class R14ScopeNarrowingTests
     }
 
     [Fact]
+    [BaseFactScopeProbe(25)]
     public void Sl025BlueprintStemScopesHistoryAndKeepsImplementationRecheck()
     {
         const string orphanPath = "Blueprint/D5/S0/Carrier/HistoricalOrphan.md";
@@ -214,6 +218,7 @@ public sealed class R14ScopeNarrowingTests
     }
 
     [Fact]
+    [BaseFactScopeProbe(5)]
     public void Sl005ChronicleScopesHistoryAndKeepsDeltaAndImplementationRechecks()
     {
         const string historicalPath = "Chronicle/2026/07/10-historical.md";

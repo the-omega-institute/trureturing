@@ -22,9 +22,11 @@ internal static partial class RepositoryRules
         }
 
         var findings = ImmutableArray.CreateBuilder<RuleFinding>();
+        var debtAffected = context.IsBaseFactAffected(debtPath);
         foreach (var (path, report) in context.Lean.Report.Files)
         {
-            if (!string.IsNullOrEmpty(report.Error))
+            var closureAffected = IsLeanClosureFactAffected(context, path);
+            if (!string.IsNullOrEmpty(report.Error) && closureAffected)
             {
                 findings.Add(new RuleFinding(path.Value, $"Lean environment inspection failed: {report.Error}"));
                 continue;
@@ -34,7 +36,7 @@ internal static partial class RepositoryRules
                 .Where(static declaration => declaration.Kind == "axiom")
                 .Select(static declaration => declaration.Name)
                 .ToImmutableHashSet(StringComparer.Ordinal);
-            if (path.Value != debtPath && direct.Count > 0)
+            if (path.Value != debtPath && direct.Count > 0 && closureAffected)
             {
                 findings.Add(new RuleFinding(
                     path.Value,
@@ -51,7 +53,7 @@ internal static partial class RepositoryRules
                 .Distinct(StringComparer.Ordinal)
                 .Order(StringComparer.Ordinal)
                 .ToArray();
-            if (extra.Length > 0)
+            if (extra.Length > 0 && (closureAffected || debtAffected))
             {
                 findings.Add(new RuleFinding(
                     path.Value,
@@ -65,7 +67,8 @@ internal static partial class RepositoryRules
     private static ImmutableArray<RuleFinding> Instantiation(RuleEvaluationContext context)
     {
         var findings = ImmutableArray.CreateBuilder<RuleFinding>();
-        foreach (var path in context.Current.Files.Keys)
+        foreach (var path in context.Current.Files.Keys
+                     .Where(path => context.IsBaseFactAffected(path.Value)))
         {
             var parts = path.Value.Split('/');
             var theory = parts.Length > 1 && (parts[0] is "Blueprint" or "Evidence")

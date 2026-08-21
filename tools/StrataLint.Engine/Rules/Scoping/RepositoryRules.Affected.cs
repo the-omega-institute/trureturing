@@ -122,6 +122,14 @@ internal static partial class RepositoryRules
         || FrozenLedgerDeltaPredicate.IsEnvironmentInput(path)
         || FrozenLedgerDeltaPredicate.IsDeltaDefinitionInput(path);
 
+    internal static bool IsLeanClosureFactAffected(
+        RuleEvaluationContext context,
+        RepoPath source) =>
+        LeanImportClosure.RepositoryPaths(context.Lean.Report, source)
+            .Any(path => context.IsBaseFactAffected(path.Value))
+        || context.Changes.Paths.Any(path =>
+            IsLeanReportInput(path.Value) && !IsManagedLeanPath(path.Value));
+
     private static bool TheoristReceiptReferenceChanged(RuleEvaluationContext context)
     {
         var changed = context.Changes.Paths
