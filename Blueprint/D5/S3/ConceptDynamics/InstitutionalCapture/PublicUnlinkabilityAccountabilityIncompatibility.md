@@ -23,4 +23,3 @@ The displayed conclusion publicly negates the conjunction of these two clauses. 
 ## References
 
 - Truth anchor: `D5/S3/ConceptDynamics/InstitutionalCapture/PublicUnlinkabilityAccountabilityIncompatibility.public_unlinkability_accountability_incompatible`
-- Dependency: [D5/S3/ConceptDynamics/Interventions/CommonCoreForgettingObstruction](../Interventions/CommonCoreForgettingObstruction.md)
