@@ -20,7 +20,8 @@ public sealed class TruthExportJsonTests
         string repoPath,
         string frozenId,
         string[] axioms,
-        (string NameKey, string Kind, string StatementId)[] declarations) =>
+        (string NameKey, string Kind, string StatementId)[] declarations,
+        string[] prerequisites) =>
         new(
             repoPath,
             frozenId,
@@ -28,7 +29,8 @@ public sealed class TruthExportJsonTests
             declarations
                 .Select(static declaration => new TruthExportDeclaration(
                     declaration.NameKey, declaration.Kind, declaration.StatementId))
-                .ToImmutableArray());
+                .ToImmutableArray(),
+            prerequisites.ToImmutableArray());
 
     [Fact]
     public void CreateCanonicalizesAndWriteIsDeterministicUtf8()
@@ -37,7 +39,8 @@ public sealed class TruthExportJsonTests
             Node(
                 "D5/S0/Carrier/Beta.lean", "sha256:fb",
                 axioms: new[] { "propext", "Classical.choice" },
-                declarations: new[] { ("nk-beta", "theorem", "sha256:beta1") }),
+                declarations: new[] { ("nk-beta", "theorem", "sha256:beta1") },
+                prerequisites: Array.Empty<string>()),
             Node(
                 "D5/S0/Carrier/Alpha.lean", "sha256:fa",
                 axioms: new[] { "Quot.sound" },
@@ -45,7 +48,8 @@ public sealed class TruthExportJsonTests
                 {
                     ("nk-two", "theorem", "sha256:a2"),
                     ("nk-one", "definition", "sha256:a1"),
-                }));
+                },
+                prerequisites: Array.Empty<string>()));
         var model = TruthExportModel.Create(nodes, Commit, Tree);
 
         var first = TruthExportJsonWriter.Write(model);
@@ -84,7 +88,8 @@ public sealed class TruthExportJsonTests
             .Select(index => Node(
                 $"D5/S0/Carrier/M{index}.lean", $"sha256:f{index}",
                 axioms: new[] { $"axiom{index}", "propext" },
-                declarations: new[] { ($"nk-{index}", "theorem", $"sha256:{index}") }))
+                declarations: new[] { ($"nk-{index}", "theorem", $"sha256:{index}") },
+                prerequisites: Array.Empty<string>()))
             .ToArray();
         var outputs = new HashSet<string>(StringComparer.Ordinal);
         for (var seed = 0; seed < 20; seed++)
@@ -102,8 +107,12 @@ public sealed class TruthExportJsonTests
     public void StrictReaderRoundTripsEveryField()
     {
         var nodes = ImmutableArray.Create(
-            Node("D5/S0/Carrier/A.lean", "sha256:fa", new[] { "propext" }, new[] { ("nk-a", "theorem", "sha256:a") }),
-            Node("D5/S0/Carrier/B.lean", "sha256:fb", Array.Empty<string>(), new[] { ("nk-b", "definition", "sha256:b") }));
+            Node(
+                "D5/S0/Carrier/A.lean", "sha256:fa", new[] { "propext" },
+                new[] { ("nk-a", "theorem", "sha256:a") }, Array.Empty<string>()),
+            Node(
+                "D5/S0/Carrier/B.lean", "sha256:fb", Array.Empty<string>(),
+                new[] { ("nk-b", "definition", "sha256:b") }, Array.Empty<string>()));
         var expected = TruthExportModel.Create(nodes, Commit, Tree);
 
         var bytes = TruthExportJsonWriter.Write(expected);
@@ -122,9 +131,31 @@ public sealed class TruthExportJsonTests
             Assert.Equal(expected.Nodes[index].FrozenNodeId, actual.Nodes[index].FrozenNodeId);
             Assert.True(expected.Nodes[index].NodeAxiomClosure.SequenceEqual(actual.Nodes[index].NodeAxiomClosure));
             Assert.True(expected.Nodes[index].Declarations.SequenceEqual(actual.Nodes[index].Declarations));
+            Assert.True(expected.Nodes[index].PrerequisiteFrozenNodeIds.SequenceEqual(
+                actual.Nodes[index].PrerequisiteFrozenNodeIds));
         }
 
         Assert.True(TruthExportJsonWriter.Write(actual).AsSpan().SequenceEqual(bytes.AsSpan()));
+    }
+
+    [Fact]
+    public void PrerequisitesRoundTripThroughWriteAndRead()
+    {
+        var model = TruthExportModel.Create(
+            ImmutableArray.Create(Node(
+                "D5/S0/Carrier/A.lean",
+                "sha256:fa",
+                new[] { "propext" },
+                new[] { ("nk-a", "theorem", "sha256:a") },
+                new[] { "sha256:prerequisite-b", "sha256:prerequisite-a" })),
+            Commit,
+            Tree);
+
+        var actual = TruthExportJsonReader.Read(TruthExportJsonWriter.Write(model).AsSpan());
+
+        Assert.Equal(
+            new[] { "sha256:prerequisite-a", "sha256:prerequisite-b" },
+            Assert.Single(actual.Nodes).PrerequisiteFrozenNodeIds);
     }
 
     [Fact]
@@ -143,8 +174,8 @@ public sealed class TruthExportJsonTests
         // so only the reader's strict-order guard catches it.
         var descending =
             "{\"dialect\":\"stratalint.truth-export.v1\",\"nodes\":["
-            + "{\"declarations\":[{\"declaration_name_key\":\"nk-b\",\"kind\":\"theorem\",\"statement_id\":\"sha256:b\"}],\"frozen_node_id\":\"sha256:fb\",\"node_axiom_closure\":[],\"repo_path\":\"D5/S0/Carrier/B.lean\"},"
-            + "{\"declarations\":[{\"declaration_name_key\":\"nk-a\",\"kind\":\"theorem\",\"statement_id\":\"sha256:a\"}],\"frozen_node_id\":\"sha256:fa\",\"node_axiom_closure\":[],\"repo_path\":\"D5/S0/Carrier/A.lean\"}"
+            + "{\"declarations\":[{\"declaration_name_key\":\"nk-b\",\"kind\":\"theorem\",\"statement_id\":\"sha256:b\"}],\"frozen_node_id\":\"sha256:fb\",\"node_axiom_closure\":[],\"prerequisite_frozen_node_ids\":[],\"repo_path\":\"D5/S0/Carrier/B.lean\"},"
+            + "{\"declarations\":[{\"declaration_name_key\":\"nk-a\",\"kind\":\"theorem\",\"statement_id\":\"sha256:a\"}],\"frozen_node_id\":\"sha256:fa\",\"node_axiom_closure\":[],\"prerequisite_frozen_node_ids\":[],\"repo_path\":\"D5/S0/Carrier/A.lean\"}"
             + "],\"producer\":\"TruthExportCommand\",\"schema\":\"stratalint.truth-export\",\"schema_version\":1,"
             + "\"source_commit\":\"" + Commit + "\",\"source_tree\":\"" + Tree + "\"}\n";
 
@@ -158,11 +189,24 @@ public sealed class TruthExportJsonTests
         // empty declaration array is malformed even though its shape is otherwise valid.
         var noDeclarations =
             "{\"dialect\":\"stratalint.truth-export.v1\",\"nodes\":["
-            + "{\"declarations\":[],\"frozen_node_id\":\"sha256:fa\",\"node_axiom_closure\":[],\"repo_path\":\"D5/S0/Carrier/A.lean\"}"
+            + "{\"declarations\":[],\"frozen_node_id\":\"sha256:fa\",\"node_axiom_closure\":[],\"prerequisite_frozen_node_ids\":[],\"repo_path\":\"D5/S0/Carrier/A.lean\"}"
             + "],\"producer\":\"TruthExportCommand\",\"schema\":\"stratalint.truth-export\",\"schema_version\":1,"
             + "\"source_commit\":\"" + Commit + "\",\"source_tree\":\"" + Tree + "\"}\n";
 
         Assert.Throws<FormatException>(() => TruthExportJsonReader.Read(Encoding.UTF8.GetBytes(noDeclarations)));
+    }
+
+    [Fact]
+    public void StrictReaderRejectsUnsortedPrerequisiteFrozenNodeIds()
+    {
+        var unsortedPrerequisites =
+            "{\"dialect\":\"stratalint.truth-export.v1\",\"nodes\":["
+            + "{\"declarations\":[{\"declaration_name_key\":\"nk-a\",\"kind\":\"theorem\",\"statement_id\":\"sha256:a\"}],\"frozen_node_id\":\"sha256:fa\",\"node_axiom_closure\":[],\"prerequisite_frozen_node_ids\":[\"sha256:b\",\"sha256:a\"],\"repo_path\":\"D5/S0/Carrier/A.lean\"}"
+            + "],\"producer\":\"TruthExportCommand\",\"schema\":\"stratalint.truth-export\",\"schema_version\":1,"
+            + "\"source_commit\":\"" + Commit + "\",\"source_tree\":\"" + Tree + "\"}\n";
+
+        Assert.Throws<FormatException>(() =>
+            TruthExportJsonReader.Read(Encoding.UTF8.GetBytes(unsortedPrerequisites)));
     }
 
     [Theory]

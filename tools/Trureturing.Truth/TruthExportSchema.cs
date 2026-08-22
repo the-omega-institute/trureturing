@@ -15,14 +15,16 @@ public sealed record TruthExportNode(
     string RepoPath,
     string FrozenNodeId,
     ImmutableArray<string> NodeAxiomClosure,
-    ImmutableArray<TruthExportDeclaration> Declarations);
+    ImmutableArray<TruthExportDeclaration> Declarations,
+    ImmutableArray<string> PrerequisiteFrozenNodeIds);
 
 /// <summary>
 /// The plain, Engine-free wire model for the base's canonical truth-export. This package owns the shared
 /// wire records plus the canonical reader/writer; the Engine-dependent projection from FrozenNodeMaterial
 /// to these plain records stays in Scribe/base. <see cref="Create"/> canonicalises: it sorts the node set
-/// by (repo_path, frozen_node_id), each node's axiom closure, and each node's declarations by
-/// (name_key, statement_id), so byte output is a deterministic function of the frozen content alone.
+/// by (repo_path, frozen_node_id), each node's axiom closure and prerequisite frozen-node ids, and each
+/// node's declarations by (name_key, statement_id), so byte output is a deterministic function of the
+/// frozen content alone.
 /// </summary>
 public sealed record TruthExportModel(
     string Schema,
@@ -54,6 +56,9 @@ public sealed record TruthExportModel(
             {
                 NodeAxiomClosure = node.NodeAxiomClosure
                     .OrderBy(static axiom => axiom, StringComparer.Ordinal)
+                    .ToImmutableArray(),
+                PrerequisiteFrozenNodeIds = node.PrerequisiteFrozenNodeIds
+                    .OrderBy(static id => id, StringComparer.Ordinal)
                     .ToImmutableArray(),
                 Declarations = node.Declarations
                     .OrderBy(static declaration => declaration.DeclarationNameKey, StringComparer.Ordinal)

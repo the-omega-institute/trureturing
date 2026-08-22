@@ -47,7 +47,8 @@ public sealed class TruthReleaseAccessorTests
                 "D5/S0/A.lean",
                 "sha256:fa",
                 ImmutableArray.Create("propext"),
-                ImmutableArray.Create(new TruthExportDeclaration("nk-a", "theorem", "sha256:a")))),
+                ImmutableArray.Create(new TruthExportDeclaration("nk-a", "theorem", "sha256:a")),
+                ImmutableArray<string>.Empty)),
             Commit,
             Tree)).ToArray();
 

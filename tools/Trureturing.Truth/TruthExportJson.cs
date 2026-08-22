@@ -22,6 +22,7 @@ public static class TruthExportJsonWriter
                 repo_path = node.RepoPath,
                 frozen_node_id = node.FrozenNodeId,
                 node_axiom_closure = node.NodeAxiomClosure,
+                prerequisite_frozen_node_ids = node.PrerequisiteFrozenNodeIds,
                 declarations = node.Declarations.Select(static declaration => new
                 {
                     declaration_name_key = declaration.DeclarationNameKey,
@@ -36,9 +37,10 @@ public static class TruthExportJsonWriter
 
 /// <summary>
 /// Fail-closed reader for <c>truth-export.v1.json</c>. It enforces the exact field set, the schema /
-/// version / dialect / producer identity, strict ascending order of nodes, axioms, and declarations, and
-/// that every node carries at least one declaration. It ends by re-serialising the parsed model and
-/// requiring the bytes to match the input exactly, so only canonical bytes are accepted.
+/// version / dialect / producer identity, strict ascending order of nodes, axioms, prerequisite frozen
+/// node ids, and declarations, and that every node carries at least one declaration. It ends by
+/// re-serialising the parsed model and requiring the bytes to match the input exactly, so only canonical
+/// bytes are accepted.
 /// </summary>
 public static class TruthExportJsonReader
 {
@@ -100,13 +102,25 @@ public static class TruthExportJsonReader
     {
         RequireProperties(
             element,
-            ["declarations", "frozen_node_id", "node_axiom_closure", "repo_path"],
+            [
+                "declarations",
+                "frozen_node_id",
+                "node_axiom_closure",
+                "prerequisite_frozen_node_ids",
+                "repo_path",
+            ],
             "truth export node");
         var axioms = Array(element, "node_axiom_closure")
             .EnumerateArray()
             .Select(static item => item.ValueKind == JsonValueKind.String
                 ? item.GetString() ?? throw new FormatException("Axiom closure entry is null.")
                 : throw new FormatException("Axiom closure entry must be a string."))
+            .ToImmutableArray();
+        var prerequisites = Array(element, "prerequisite_frozen_node_ids")
+            .EnumerateArray()
+            .Select(static item => item.ValueKind == JsonValueKind.String
+                ? item.GetString() ?? throw new FormatException("Prerequisite frozen node id entry is null.")
+                : throw new FormatException("Prerequisite frozen node id entry must be a string."))
             .ToImmutableArray();
         var declarations = Array(element, "declarations")
             .EnumerateArray()
@@ -116,7 +130,8 @@ public static class TruthExportJsonReader
             String(element, "repo_path"),
             String(element, "frozen_node_id"),
             axioms,
-            declarations);
+            declarations,
+            prerequisites);
     }
 
     private static TruthExportDeclaration ReadDeclaration(JsonElement element)
@@ -139,6 +154,7 @@ public static class TruthExportJsonReader
         foreach (var node in model.Nodes)
         {
             RequireStrictOrder(node.NodeAxiomClosure, "node axiom closure");
+            RequireStrictOrder(node.PrerequisiteFrozenNodeIds, "prerequisite frozen node ids");
             RequireStrictOrder(
                 node.Declarations.Select(static declaration =>
                     declaration.DeclarationNameKey + "\0" + declaration.StatementId),
