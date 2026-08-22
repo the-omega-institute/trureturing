@@ -13,5 +13,5 @@ receipts:
   scribe:
     - gid: D5/S3/ConceptDynamics/Discussion/FiniteDiscussionStability.finite_discussion_stability
       definition_sha256: sha256:5e8b0a86fc02c12699f05d1c81d29c3c339c8db13c4517ae2cfef212c26ce23f
-      emission_sha256: sha256:9f565a111f4941c837a47fadacbdd96f72a727b59079bdbf3b01962257315120
+      emission_sha256: sha256:b32ac9cbb25f70881edf378f312f9f5d6899bf6c9ba62681eb9109143e4f6472
   unresolved_subitems: []

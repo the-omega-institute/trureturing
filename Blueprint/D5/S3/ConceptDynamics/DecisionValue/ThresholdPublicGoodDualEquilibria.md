@@ -62,3 +62,4 @@ The two equilibrium conclusions are separate public conjuncts over the same util
 - Truth anchor: `D5/S3/ConceptDynamics/DecisionValue/ThresholdPublicGoodDualEquilibria.nashStable`
 - Truth anchor: `D5/S3/ConceptDynamics/DecisionValue/ThresholdPublicGoodDualEquilibria.thresholdUtility`
 - Truth anchor: `D5/S3/ConceptDynamics/DecisionValue/ThresholdPublicGoodDualEquilibria.threshold_public_good_dual_equilibria`
+- Dependency: [D5/S3/ConceptDynamics/DecisionValue/ContributionIncentiveThreshold](ContributionIncentiveThreshold.md)

@@ -23,3 +23,4 @@ Both optimal-action sets equal {a}, so the first target factors through the cons
 ## References
 
 - Truth anchor: `D5/S3/ConceptDynamics/DecisionValue/DecisionWithoutFullPrediction.decision_sufficiency_without_full_prediction`
+- Dependency: [D5/S3/ConceptDynamics/ConceptJoinUniversal](../ConceptJoinUniversal.md)

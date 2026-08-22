@@ -21,3 +21,4 @@ Pinned Mathlib was searched before implementation. It provides Equiv.swap for th
 ## References
 
 - Truth anchor: `D5/S0/Computability/SemanticLayerShift.semantic_layer_shift_bijective`
+- Dependency: [D5/S0/History/ResidualLedger](../History/ResidualLedger.md)

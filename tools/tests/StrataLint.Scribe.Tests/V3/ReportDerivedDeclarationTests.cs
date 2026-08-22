@@ -321,9 +321,7 @@ public sealed class ReportDerivedDeclarationTests
         };
         var graph = DocumentGraphAssembler.Assemble(
             documents,
-            catalog,
-            documents.Select(static document => document.Header.Gid.Value)
-                .ToHashSet(StringComparer.Ordinal));
+            catalog);
 
         var actual = CanonicalMarkdownWriter.Write(
             migrated, catalog, graph: graph).ToArray();

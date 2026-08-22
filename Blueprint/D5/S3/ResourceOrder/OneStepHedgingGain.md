@@ -25,3 +25,4 @@ This closes qdo-v1 theorem/34.5, atom qdo-residual-97fbc85483c01bc3d120362dee090
 ## References
 
 - Truth anchor: `D5/S3/ResourceOrder/OneStepHedgingGain.one_step_hedging_gain`
+- Dependency: [D5/S3/Observer/Tomography/InnovationEnergyRecurrence](../Observer/Tomography/InnovationEnergyRecurrence.md)

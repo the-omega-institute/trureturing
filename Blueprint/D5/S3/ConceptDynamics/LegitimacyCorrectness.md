@@ -23,3 +23,4 @@ Repository searches found no exact separation theorem; the proof is the direct c
 ## References
 
 - Truth anchor: `D5/S3/ConceptDynamics/LegitimacyCorrectness.authorized_process_can_fail_factually`
+- Dependency: [D5/S3/ConceptDynamics/ConceptFiberDecomposition](ConceptFiberDecomposition.md)

@@ -60,3 +60,4 @@ The forward direction selects a supported state in each positive fiber and uses 
 - Truth anchor: `D5/S3/ConceptDynamics/Information/ConditionalLogicalImpurity.conditionalLogicalImpurity`
 - Truth anchor: `D5/S3/ConceptDynamics/Information/ConditionalLogicalImpurity.pairDisagreementMass`
 - Truth anchor: `D5/S3/ConceptDynamics/Information/ConditionalLogicalImpurity.zero_impurity_iff_fiber_ae_constant`
+- Dependency: [D5/S3/ConceptDynamics/ConceptFiberDecomposition](../ConceptFiberDecomposition.md)

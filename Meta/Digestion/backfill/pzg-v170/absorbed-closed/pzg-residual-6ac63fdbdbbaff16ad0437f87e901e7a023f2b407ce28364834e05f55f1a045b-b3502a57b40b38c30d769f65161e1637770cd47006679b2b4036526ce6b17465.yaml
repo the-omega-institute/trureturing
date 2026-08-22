@@ -13,5 +13,5 @@ receipts:
   scribe:
     - gid: D5/S1/Eigenstructure/FibonacciMatrixDiscriminant.fibonacci_substitution_trace_det_discriminant
       definition_sha256: sha256:62e13a02e5b7c9010278c7f9d5813b37ce6feb9191d57671ffec6b7c4423d3bc
-      emission_sha256: sha256:462f97ecd303228a64c5e888ba1f62479d8fcf0b86b9ec546bdb62f2d7a82400
+      emission_sha256: sha256:3567f80dfed7b390f5f2b6de9c62c5044f67efaefb9d060a28b8faf2b7ad92d8
   unresolved_subitems: []

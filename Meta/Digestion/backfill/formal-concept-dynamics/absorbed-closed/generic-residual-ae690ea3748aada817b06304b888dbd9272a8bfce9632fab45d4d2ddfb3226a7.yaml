@@ -13,5 +13,5 @@ receipts:
   scribe:
     - gid: D5/S3/ConceptDynamics/LegitimacyCorrectness.authorized_process_can_fail_factually
       definition_sha256: sha256:c43520fd6f0fb4e532fbd4a1375a8f37bcd7de83471e063e42940df596b0cc53
-      emission_sha256: sha256:3cff7ec39453f67728c420087070e449ad5126862df37f8b2caae29a00a34d6f
+      emission_sha256: sha256:61fe7b0f16e6179b6a07d0a1f65ce5569c403aa740225043331931be686a3650
   unresolved_subitems: []

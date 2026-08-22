@@ -13,5 +13,5 @@ receipts:
   scribe:
     - gid: D5/S1/Dynamics/ProfiniteCharacter.continuous_character_factors_through_residue
       definition_sha256: sha256:8cbda9877ff6b8d9318da1e720eb4047022ab2da55f3a33500bccef4420342d4
-      emission_sha256: sha256:4d9e287ee62f932c326d7bff1e8537295f991a93223aab71d4b566f614daee9c
+      emission_sha256: sha256:4e84c595cc4b1c262d26f028a3b8f2e2028783660148eb2bfeef6572ed78c9c6
   unresolved_subitems: []

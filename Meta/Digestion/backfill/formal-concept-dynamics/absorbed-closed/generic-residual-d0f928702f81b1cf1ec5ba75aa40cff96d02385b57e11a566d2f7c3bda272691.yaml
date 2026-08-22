@@ -13,5 +13,5 @@ receipts:
   scribe:
     - gid: D5/S3/ConceptDynamics/Coding/FiberBinaryIdentification.arbitrary_binary_questions_identify_target
       definition_sha256: sha256:5385a6eeb0f62ee8778033e31a0385cd92fba1aad411c337c605d0bd0bf24374
-      emission_sha256: sha256:c8d57c31952a0262cf168bd5e627a7077e1bb4b6b3e1b4e1da86cf319224bfcb
+      emission_sha256: sha256:2b0993c9ec227c14af077b1984776751eed0f5bba481ca8da3dacf4b17664385
   unresolved_subitems: []

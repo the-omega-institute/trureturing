@@ -129,7 +129,7 @@ public sealed class DocumentGraphTests
     }
 
     [Fact]
-    public void ReceiptFreeDocumentsProjectDirectLeanImportsAsDependencies()
+    public void AllDocumentsProjectDirectLeanImportsAsDependencies()
     {
         var source = Document("D5/S0/Test/Source");
         var target = Document("D5/S0/Test/Target");
@@ -141,11 +141,7 @@ public sealed class DocumentGraphTests
 
         var graph = DocumentGraphAssembler.Assemble(
             [source, target],
-            DeclarationCatalog.Create(report),
-            autoWireDocumentGids: new HashSet<string>(StringComparer.Ordinal)
-            {
-                source.Header.Gid.Value,
-            });
+            DeclarationCatalog.Create(report));
 
         Assert.Empty(graph.Findings);
         var dependency = Assert.Single(graph.For(source).OfType<DocumentEdge.Dependency>());
@@ -160,7 +156,7 @@ public sealed class DocumentGraphTests
     }
 
     [Fact]
-    public void ReceiptBoundDocumentsStillCarryImplicitDescribeTruthAnchors()
+    public void DocumentsCarryImplicitDescribeTruthAnchors()
     {
         var source = DocumentWithLeanAnchor(
             "D5/S0/Test/Source",
@@ -169,8 +165,7 @@ public sealed class DocumentGraphTests
 
         var graph = DocumentGraphAssembler.Assemble(
             [source],
-            DeclarationCatalog.Create(report),
-            autoWireDocumentGids: new HashSet<string>(StringComparer.Ordinal));
+            DeclarationCatalog.Create(report));
 
         var anchor = Assert.Single(graph.For(source).OfType<DocumentEdge.TruthAnchor>());
         Assert.Equal("anchor", anchor.DescribeId?.Value);
@@ -201,7 +196,7 @@ public sealed class DocumentGraphTests
     }
 
     [Fact]
-    public void ReceiptBoundDocumentsFilterSelfNarrativeReferences()
+    public void DocumentsFilterSelfNarrativeReferences()
     {
         var source = Document(
             "D5/S0/Test/Source",
@@ -209,29 +204,13 @@ public sealed class DocumentGraphTests
 
         var graph = DocumentGraphAssembler.Assemble(
             [source],
-            EmptyCatalog(),
-            autoWireDocumentGids: new HashSet<string>(StringComparer.Ordinal));
+            EmptyCatalog());
 
         Assert.Empty(graph.For(source).OfType<DocumentEdge.NarrativeReference>());
     }
 
     [Fact]
-    public void DefaultAssemblyFiltersSelfNarrativeReferences()
-    {
-        var source = Document(
-            "D5/S0/Test/Source",
-            [DocumentEdge.NarrativeReference.ToDocument(GidRef.Create("D5/S0/Test/Source"))]);
-
-        var graph = DocumentGraphAssembler.Assemble(
-            [source],
-            EmptyCatalog(),
-            autoWireDocumentGids: null);
-
-        Assert.Empty(graph.For(source).OfType<DocumentEdge.NarrativeReference>());
-    }
-
-    [Fact]
-    public void ReceiptBoundDocumentsPreserveNarrativeReferencesToOtherDocuments()
+    public void DocumentsPreserveNarrativeReferencesToOtherDocuments()
     {
         var source = Document(
             "D5/S0/Test/Source",
@@ -240,8 +219,7 @@ public sealed class DocumentGraphTests
 
         var graph = DocumentGraphAssembler.Assemble(
             [source, target],
-            EmptyCatalog(),
-            autoWireDocumentGids: new HashSet<string>(StringComparer.Ordinal));
+            EmptyCatalog());
 
         var narrative = Assert.Single(graph.For(source).OfType<DocumentEdge.NarrativeReference>());
         var documentTarget = Assert.IsType<NarrativeTarget.Document>(narrative.Target);
@@ -249,7 +227,7 @@ public sealed class DocumentGraphTests
     }
 
     [Fact]
-    public void ReceiptBoundDocumentsPreserveSelfDescribeNarrativeReferences()
+    public void DocumentsPreserveSelfDescribeNarrativeReferences()
     {
         var source = Document(
             "D5/S0/Test/Source",
@@ -259,8 +237,7 @@ public sealed class DocumentGraphTests
 
         var graph = DocumentGraphAssembler.Assemble(
             [source],
-            EmptyCatalog(),
-            autoWireDocumentGids: new HashSet<string>(StringComparer.Ordinal));
+            EmptyCatalog());
 
         var narrative = Assert.Single(graph.For(source).OfType<DocumentEdge.NarrativeReference>());
         var describeTarget = Assert.IsType<NarrativeTarget.Describe>(narrative.Target);

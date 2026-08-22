@@ -13,5 +13,5 @@ receipts:
   scribe:
     - gid: D5/S3/QuantumStates/GNSStateCone.state_cone_sections
       definition_sha256: sha256:b421cfd2427194239fe2cd52303ad02ecf9215571063108a69b8585fe6ba1a3d
-      emission_sha256: sha256:73413a297a4fee734cb9f11d3d1b0247c876df35b636565570daae4941ba53be
+      emission_sha256: sha256:028244a26188b81546edc4cd73da884be2b20f4e7eb1ad0e7c35d3a085f3ca11
   unresolved_subitems: []

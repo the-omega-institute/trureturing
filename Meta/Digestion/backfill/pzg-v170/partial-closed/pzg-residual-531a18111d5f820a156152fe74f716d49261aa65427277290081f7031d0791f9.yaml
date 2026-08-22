@@ -12,6 +12,6 @@ receipts:
       target_sha256: sha256:30ccb203247941c3c194f3637d4b2ae7411c3028de52b9c42ecfad7ed26dcd7e
   scribe:
     - gid: D5/S0/Conventions/GeometricWeights.no_geometric_weights_match_zeckendorf_singletons
-      definition_sha256: sha256:7c003cd900c3619c7105cbd58c702de8047a0063cd6c9b886d99e5970e292f2a
-      emission_sha256: sha256:9b4ade532c86e1a3f6fa5bbcc6694d39dcb549dd3c958fd2e8521ecbf60f9f17
+      definition_sha256: sha256:2dfe651a3675845ad03a1ee62361941a4b7375a01178ce403c699354fc185599
+      emission_sha256: sha256:b7b97860430a5d333b705d5ed15cc8a694e391a0843233193b8dcc8bb810d097
   unresolved_subitems: []

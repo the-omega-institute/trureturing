@@ -25,3 +25,4 @@ Repository, pinned-Mathlib, and GitHub Lean-code searches found no equal or stro
 ## References
 
 - Truth anchor: `D5/S3/ObserverMemory/InverseLimits/FunctionGraphLinearSimilarity.transition_matrices_linearly_similar`
+- Dependency: [D5/S3/ObserverMemory/InverseLimits/FunctionGraphSpectrumCollision](FunctionGraphSpectrumCollision.md)

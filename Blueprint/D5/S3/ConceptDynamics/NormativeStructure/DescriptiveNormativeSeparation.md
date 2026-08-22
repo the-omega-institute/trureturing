@@ -27,3 +27,4 @@ Repository and pinned-library searches found no exact theorem or canonical norma
 ## References
 
 - Truth anchor: `D5/S3/ConceptDynamics/NormativeStructure/DescriptiveNormativeSeparation.descriptive_structure_does_not_uniquely_determine_norms`
+- Dependency: [D5/S3/ConceptDynamics/ConceptFiberDecomposition](../ConceptFiberDecomposition.md)

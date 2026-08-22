@@ -23,3 +23,4 @@ The separating pair is obtained from strictness and effective readouts; the two 
 ## References
 
 - Truth anchor: `D5/S3/ConceptDynamics/StrictRefinementCapability.strict_refinement_capability`
+- Dependency: [D5/S3/ConceptDynamics/ConceptJoinUniversal](ConceptJoinUniversal.md)

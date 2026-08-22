@@ -13,5 +13,5 @@ receipts:
   scribe:
     - gid: D5/S3/ConceptDynamics/Appeal/MinimalAppealLabelCount.minimal_appeal_label_count
       definition_sha256: sha256:c06faf7561a7e3f0ead6e137e529a8ea427329893b00ac214ec4bf9e4c048524
-      emission_sha256: sha256:ba28bf9b27223a23d79e5137b62ba0b48145ee0b785049b2ab6728ca82973dc2
+      emission_sha256: sha256:40f10445317884942e267ae1e1c0001a0778dfc6bd481c64894687ade892ef18
   unresolved_subitems: []

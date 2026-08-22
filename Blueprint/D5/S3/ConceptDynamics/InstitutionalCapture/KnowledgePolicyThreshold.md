@@ -36,3 +36,4 @@ Consequently the two sets of attainable coalition cardinalities are equal, and t
 
 - Truth anchor: `D5/S3/ConceptDynamics/InstitutionalCapture/KnowledgePolicyThreshold.coalitionReadout`
 - Truth anchor: `D5/S3/ConceptDynamics/InstitutionalCapture/KnowledgePolicyThreshold.knowledge_policy_threshold_consistent`
+- Dependency: [D5/S3/ConceptDynamics/ConceptJoinUniversal](../ConceptJoinUniversal.md)

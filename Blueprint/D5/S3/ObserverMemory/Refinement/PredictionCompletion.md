@@ -23,3 +23,5 @@ Pinned Mathlib supplies Setoid.map_of_le, Setoid.lift_unique, Quotient.map, and 
 ## References
 
 - Truth anchor: `D5/S3/ObserverMemory/Refinement/PredictionCompletion.observation_refinement_completion`
+- Dependency: [D5/S0/Rewriting/Quotients/RelativeIdentityRefinement](../../../S0/Rewriting/Quotients/RelativeIdentityRefinement.md)
+- Dependency: [D5/S3/ObserverMemory/Prediction/ItineraryCompletion](../Prediction/ItineraryCompletion.md)

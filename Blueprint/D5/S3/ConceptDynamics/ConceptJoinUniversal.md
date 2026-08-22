@@ -21,3 +21,4 @@ If both component readouts factor through q_E, pairing their factor maps gives t
 ## References
 
 - Truth anchor: `D5/S3/ConceptDynamics/ConceptJoinUniversal.concept_join_universal`
+- Dependency: [D5/S3/ConceptDynamics/ConceptFiberDecomposition](ConceptFiberDecomposition.md)

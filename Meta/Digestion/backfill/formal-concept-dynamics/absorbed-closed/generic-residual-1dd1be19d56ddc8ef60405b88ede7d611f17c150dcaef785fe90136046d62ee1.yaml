@@ -13,5 +13,5 @@ receipts:
   scribe:
     - gid: D5/S3/ConceptDynamics/MoralLuck/MoralLuckDescent.moral_luck_descent_iff
       definition_sha256: sha256:c7a8bfb46e740e6473d7b97d8919fb57955bd2dc717db528c6ec3879bdc59c5f
-      emission_sha256: sha256:20198beaff3270b5f4fd3e205004fec9ebd5d6e3794436fef1faaa44123d3501
+      emission_sha256: sha256:3f647ec9ddd9959f6fd76362f745f3eb350d0da25ccd61d2a87e00ba0f98188f
   unresolved_subitems: []

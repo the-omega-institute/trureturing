@@ -13,5 +13,5 @@ receipts:
   scribe:
     - gid: D5/S3/ConceptDynamics/DecisionValue/ThresholdPublicGoodDualEquilibria.threshold_public_good_dual_equilibria
       definition_sha256: sha256:69875d78d0293c867ea643c4e8f3051ee08c937c6c37ca674b05af3ff7046b81
-      emission_sha256: sha256:b9beaa13bda506b274a2cd7d7dc28c7f75704477c0464d9706cda3d85ea7f218
+      emission_sha256: sha256:ec0fbcd5011a266578cb46045ece5243709b682aa76e385ad2a8a1969b208d98
   unresolved_subitems: []

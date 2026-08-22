@@ -13,5 +13,5 @@ receipts:
   scribe:
     - gid: D5/S3/ConceptDynamics/Transport/MacroInterventionCriterion.macro_intervention_carry_criterion
       definition_sha256: sha256:b0cb349d6c848fe3fede41f28b0e851b6ff785929c3f07eb5a8a5a93703a8f11
-      emission_sha256: sha256:d39d51352cf204d77c6430b63feb98b6579eaa20bbde6f631447297662d68b00
+      emission_sha256: sha256:e24210f0818f82c6b5c4c4481b15182b904f9bc37f9e25c50d9263de93f97f6b
   unresolved_subitems: []

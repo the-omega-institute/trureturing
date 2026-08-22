@@ -13,5 +13,5 @@ receipts:
   scribe:
     - gid: D5/S3/ConceptDynamics/Information/ConditionalLogicalImpurity.zero_impurity_iff_fiber_ae_constant
       definition_sha256: sha256:688ec80caa44fa61cb7c72e544b4327e8e706451226580f19a2f41e9422b7ae4
-      emission_sha256: sha256:08d4eba806db7b395bb4bdc9b426b3b897fdc881718004e38cf0f9a3339bc8b4
+      emission_sha256: sha256:cb813c9ee6f5dc927d8441ffa794c49295bf9b7f3e9065b05fbf96f7a96aa865
   unresolved_subitems: []

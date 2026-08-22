@@ -23,3 +23,4 @@ The Lean declaration is a direct wrapper around the existing frozen theorem `Pri
 ## References
 
 - Truth anchor: `D5/S3/ConceptDynamics/DecisionValue/IncomparableRepairCosts.incomparable_repairs_no_unique_choice`
+- Dependency: [D5/S3/ResourceOrder/PriceFaceOrder](../../ResourceOrder/PriceFaceOrder.md)

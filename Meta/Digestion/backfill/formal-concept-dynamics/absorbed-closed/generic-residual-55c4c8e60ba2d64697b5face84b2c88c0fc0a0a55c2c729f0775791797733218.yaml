@@ -13,5 +13,5 @@ receipts:
   scribe:
     - gid: D5/S3/ConceptDynamics/CommonRuleInformationConvergence.common_rule_information_convergence
       definition_sha256: sha256:aec4c2afc3c837f53db6c12e2ead7496906d3f9e90792d3b31ffef1f5de3de5d
-      emission_sha256: sha256:f1acd8ff2beadd56b901e367130ce0f4b41f4c1f00d46bcb54c6c238389e8c7a
+      emission_sha256: sha256:b12f396f9cc367b8db10107d7cfb170616449dfc7183956ac0e85d95173e2e37
   unresolved_subitems: []

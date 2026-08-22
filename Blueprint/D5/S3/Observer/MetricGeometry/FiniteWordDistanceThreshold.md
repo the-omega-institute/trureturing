@@ -23,3 +23,5 @@ Loogle found no declaration named for this prediction distance, and the full-sha
 ## References
 
 - Truth anchor: `D5/S3/Observer/MetricGeometry/FiniteWordDistanceThreshold.finite_word_equivalent_iff_prediction_distance_le`
+- Dependency: [D5/S3/Observer/MetricGeometry/DiscretePredictionUltrametric](DiscretePredictionUltrametric.md)
+- Dependency: [D5/S3/Observer/MetricGeometry/FiniteWordFiberDiameter](FiniteWordFiberDiameter.md)

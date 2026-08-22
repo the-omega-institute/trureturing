@@ -25,3 +25,4 @@ Pinned Mathlib and Loogle supply the exact kernel-range equivalence Setoid.quoti
 ## References
 
 - Truth anchor: `D5/S3/ObserverMemory/Prediction/ItineraryCompletion.itinerary_completion`
+- Dependency: [D5/S3/ObserverMemory/Prediction/ConditionalEntropyStability](ConditionalEntropyStability.md)

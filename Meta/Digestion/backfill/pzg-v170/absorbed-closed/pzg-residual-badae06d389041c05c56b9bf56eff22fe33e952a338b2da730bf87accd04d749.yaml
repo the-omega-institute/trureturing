@@ -13,5 +13,5 @@ receipts:
   scribe:
     - gid: D5/S3/Constants/Transcription/PhiSecondTranscription.phi_second_transcription_exact
       definition_sha256: sha256:35649af2a9ebde3173765790c78bc324054d8c1c30b168a63af7f64cb732bcf6
-      emission_sha256: sha256:2227042bcf5a12a25b4963f6009327108c656b4178260199cde2fb72afa9ef24
+      emission_sha256: sha256:342832d4b10260e01e3dc5a732f398751980bfe82dfc4fc55c554dbf59919651
   unresolved_subitems: []

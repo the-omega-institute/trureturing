@@ -13,5 +13,5 @@ receipts:
   scribe:
     - gid: D5/S0/Tower/GoldenClauseTwo/ErrataPackage.golden_clause_two_errata_package
       definition_sha256: sha256:895735039be69677ad0fbcbcf1b8d571cac6ed28b61abf8f1228d3d4b2de9921
-      emission_sha256: sha256:edecbf91198946f51bbd5c9bee2e773f512db84c8663f2c797342580ca059ca5
+      emission_sha256: sha256:1b63ec4662156c26e140146ddacf131b128323add3e8adee9b7f4911fb898896
   unresolved_subitems: []

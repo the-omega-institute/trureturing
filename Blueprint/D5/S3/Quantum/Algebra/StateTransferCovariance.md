@@ -23,3 +23,4 @@ Loogle and LeanSearch found the pushforward and its fiber-sum theorem, but no fu
 ## References
 
 - Truth anchor: `D5/S3/Quantum/Algebra/StateTransferCovariance.diagonal_state_transfer_covariance`
+- Dependency: [D5/S3/Quantum/ObserverAlgebra](../ObserverAlgebra.md)

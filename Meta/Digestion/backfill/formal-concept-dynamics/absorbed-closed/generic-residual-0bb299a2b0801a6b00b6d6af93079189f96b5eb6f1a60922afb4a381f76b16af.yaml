@@ -13,5 +13,5 @@ receipts:
   scribe:
     - gid: D5/S3/ConceptDynamics/PolicyCapabilityMonotonicity.policy_capability_monotone
       definition_sha256: sha256:09b72844878bea98c8295dbcd815008ba2dd1dc8c063b66003926dd2005746c5
-      emission_sha256: sha256:409936a8e04762e57fb8184b813eaf1c9d000f281725c9313f3d772829bc4aee
+      emission_sha256: sha256:e72fbf65c216a5dda602efefb97ef1c80c94e7a8d61686c4b1a48ce0a9c54eeb
   unresolved_subitems: []
