@@ -70,9 +70,9 @@ Kernel outcomes attach only to exact `P` or its exact negation, never to the ori
 
 Postcondition: every eligible record has an owner-shaped exact echo whose clause mapping is complete, while ambiguous and not-formalizable records remain explicitly non-kernel branches.
 
-### 4. Adjudicate only a miss
+### 4. Construct a report-owned run-local declaration
 
-Only after the owner-ordered search completed with no exact hit, and only with measured Lean capability, use a disposable isolated lane to establish `P` or its negation. Select the current build and report doors from `make help`; Lean builds and the canonical report go through those doors. Never use a cold bare `lake build`.
+After the owner-ordered search, and only with measured Lean capability, use a disposable isolated lane on exactly two occasions: (1) for an exact library hit, create the thinnest honest wrapper that imports and applies the hit to declare exact `P` or its negation; this is reuse, not reproof, and a wrapper that restates or reproves the upstream result instead of applying it is forbidden; (2) for a genuine miss, create a local proof declaration for exact `P` or its negation. Both forms give the canonical report a run-local managed declaration it can own and issue a declaration receipt for. Select the current build and report doors from `make help`; never use a cold bare `lake build`.
 
 This step is run-local: never deposit, freeze, cover, or edit a receipt. Retain the exact commands, exit codes, diagnostics, pins, and canonical report address. A failed attempt is evidence of failure to prove, never evidence that `P` is false.
 
@@ -80,15 +80,15 @@ Postcondition: owner output contains an exact declaration for `P` or its negatio
 
 ### 5. Derive outcomes from owner facts
 
-Project outcomes mechanically; never author, select, or downgrade an evidence label.
+Project outcomes mechanically; never author, select, or downgrade a label. Before applying the ordered rules, discard any purported kernel evidence unless it matches the exact statement and carries either an active Frozen receipt or a successful current `make` door receipt with its exit code, plus the owner-issued declaration receipt and inspector-owned closure contained in the owner-defined standard axiom set; `sorryAx`, any non-standard axiom, a failed command, or a statement mismatch makes that evidence ineligible. Apply the first matching rule:
 
-- `proved`: owner facts match exact `P` and carry either an active Frozen event or a successful current `make` door with its exit code, the owner-issued declaration receipt, and the inspector-owned closure contained in the owner-defined standard axiom set.
-- `refuted`: the same facts match the exact negation of `P`; keep `P` unchanged.
-- `conditional`: an owner-issued exact conditional theorem or certificate matches the clause, while its named empirical premise remains explicit rather than being presented as discharged.
-- `open`: no owner-issued fact establishes `P` or its negation, the record is ambiguous, or a required capability transition is open.
-- `not-formalized`: the record was classified `not-formalizable` and has no Lean statement.
+1. `not-formalized` when the record is `not-formalizable` and has no Lean statement.
+2. `conditional` when the record is `conditional-empirical`, exact `P` is conditional with its named empirical premise undischarged, and eligible owner evidence establishes exact `P`.
+3. `proved` when eligible owner evidence establishes exact `P` for any other record.
+4. `refuted` when eligible owner evidence establishes the exact negation of `P`; keep `P` unchanged.
+5. `open` otherwise, including an ambiguous record, an unavailable required capability, or no eligible evidence for `P` or its negation.
 
-An active Frozen event remains reusable without current Lean; cite its persisted receipt instead of inventing a current build. `sorryAx`, any non-standard axiom, a failed command, or a statement mismatch can never produce `proved` or `refuted`. Never infer falsity from failure to prove. When owner facts meet a terminal rule, that terminal cannot be downgraded to an informal sink.
+`conditional` is for kernel-established conditional-empirical `P`, while `proved` is for kernel-established exact `P` outside that branch. Thus, when exact `P` is itself conditional and the kernel establishes it, the single outcome is `conditional`, not `proved`, and the reply must render the undischarged empirical premise. An active Frozen receipt remains reusable without current Lean. Never infer falsity from failure to prove or downgrade a terminal to an informal sink.
 
 Postcondition: every assertion has exactly one mechanically projected outcome, and every formalizable assertion is graded `proved`, `refuted`, `conditional`, or `open`.
 
@@ -108,21 +108,23 @@ Postcondition: the answer has been delivered, its persistence scope is explicit,
 
 ## Acceptance matrix
 
-Before Step 4, run this decision table as the executable echo of the outcome contract and record each case pass or fail. A failed row is a defect to correct before replying, not a human-review state.
+Before Step 4, run this decision table as the executable echo of the outcome contract. For every row, record pass or fail and the specific address of every owner fact listed in that row so another party can recompute it. A failed row is a defect, not a human-review state. This matrix is **SOFT** invoking-agent acceptance evidence on the existing `repository-policy` surface, not a hard gate or a per-skill content test.
 
 | Case | Owner facts | Required result |
 | --- | --- | --- |
-| Positive `P` | Exact `P`, successful door receipt, standard closure | `proved`; it cannot be downgraded |
-| Symmetric negative | Exact negation of `P`, successful door receipt, standard closure | `refuted`; do not alter `P` |
-| Sorry despite exit 0 | Exact `P` report contains `sorryAx` | Never `proved` |
-| Extra axiom despite exit 0 | Exact `P` closure contains a non-standard axiom | Never `proved` |
-| Informal sink | A `formalizable` clause is ungraded or merely called informal | Defect; grade it from owner facts |
-| Honest boundary | Ambiguous input; not-formalizable input | `open` with bounded candidates; `not-formalized`; no Lean for either |
-| Ordering and capability | Local proof lacks prior D5 or pinned-mathlib trace; a search stage is unavailable | Invalid trace; typed `wait-for-capability` open, never search-complete |
-| Frozen reuse without Lean | Exact active Frozen hit; local Lean unavailable | Reuse the frozen terminal with no local Lean |
-| Third-party boundary | Exact third-party hit but no admitted in-repo fact | Provenance only and `open`; no reproof or local admission |
-
-This matrix is soft, invoking-agent acceptance evidence. `skills/**` has the same `repository-policy` verification surface as the three existing skills and no per-skill content test. A PR changing this skill must state plainly that it adds no machine test and must not present this matrix as a hard gate.
+| Positive `P` | `formalizable`; exact `P`; current `make` door receipt with exit code 0; owner-issued declaration receipt for `P`; inspector closure within the standard set | `proved` |
+| Symmetric negative | `formalizable`; exact negation of `P`; current `make` door receipt with exit code 0; owner-issued declaration receipt for that negation; inspector closure within the standard set; no eligible receipt for `P` | `refuted` |
+| Conditional empirical | `conditional-empirical`; exact conditional `P` with named premise undischarged; current `make` door receipt with exit code 0; owner-issued declaration receipt for `P`; inspector closure within the standard set | `conditional` |
+| Sorry despite exit 0 | `formalizable`; exact `P`; door exit code 0; only candidate declaration receipt for `P` has `sorryAx`; no eligible receipt for `P` or its exact negation | `open` |
+| Extra axiom despite exit 0 | `formalizable`; exact `P`; door exit code 0; only candidate declaration receipt for `P` has a non-standard axiom; no eligible receipt for `P` or its exact negation | `open` |
+| Failed proof | `formalizable`; exact `P`; attempted proof door has a nonzero exit code; no eligible receipt for `P` or its exact negation | `open` |
+| Statement mismatch | `formalizable`; exact `P`; door exit code 0; candidate declaration receipt and standard closure are for a statement other than `P` or its exact negation; no eligible matching receipt | `open` |
+| Informal sink | `formalizable`; exact `P`; current `make` door receipt with exit code 0; owner-issued declaration receipt for `P`; inspector closure within the standard set | `proved` |
+| Ambiguous boundary | `ambiguous` with addressed bounded candidates and no exact `P` | `open` |
+| Not-formalizable boundary | `not-formalizable` with no Lean statement | `not-formalized` |
+| Ordering and capability | `formalizable`; exact `P`; search trace lacks a required owner stage or that capability is unavailable; no reusable eligible receipt for `P` or its exact negation | `open` |
+| Frozen reuse without Lean | `formalizable`; exact `P`; active Frozen receipt containing the owner-issued declaration receipt and inspector closure within the standard set; current Lean unavailable | `proved` |
+| Third-party boundary | Exact third-party hit; no available legal import-and-application reuse, active Frozen receipt, or current owner declaration receipt for `P` or its exact negation | `open` |
 
 ## Earned hard gates
 
