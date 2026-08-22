@@ -145,6 +145,14 @@ public sealed partial class MakeWorkflowTests
         var worktreeRecipe = Recipe(makefile, "worktree");
         Assert.Contains(WorktreeInitScriptPath, worktreeRecipe, StringComparison.Ordinal);
         Assert.Contains("\"$(WORKTREE_DEST)\"", worktreeRecipe, StringComparison.Ordinal);
+        // 回收开关一路透到 CLI:门(Makefile)→ 器(脚本)→ 动词(--no-clean-lanes)。
+        // 断链的开关比没有开关更糟——它看起来关掉了,实际什么也没关。
+        Assert.Contains("\"$(CLEAN)\"", worktreeRecipe, StringComparison.Ordinal);
+        Assert.Contains("[CLEAN=0]", makefile, StringComparison.Ordinal);
+        Assert.Contains(
+            "--no-clean-lanes",
+            File.ReadAllText(Path.Combine(root, WorktreeInitScriptPath)),
+            StringComparison.Ordinal);
         Assert.Contains("WORKTREE_DEST = $(if $(DEST)", makefile, StringComparison.Ordinal);
         Assert.DoesNotContain("$(origin PATH)", makefile, StringComparison.Ordinal);
         Assert.DoesNotContain("$(PATH)", makefile, StringComparison.Ordinal);

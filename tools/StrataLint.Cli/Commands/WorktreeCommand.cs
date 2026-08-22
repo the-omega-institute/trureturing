@@ -9,7 +9,8 @@ internal sealed record WorktreeOptions(
     string Path,
     string Base,
     string Source,
-    bool SkipRestore);
+    bool SkipRestore,
+    bool ReclaimLanes);
 
 internal static class WorktreeCommand
 {
@@ -18,7 +19,7 @@ internal static class WorktreeCommand
         "USAGE: StrataLint worktree ensure-cache [--path DIR] | "
         + "StrataLint worktree with-cache-writer [--path DIR] -- COMMAND [ARG ...] | "
         + "StrataLint worktree --branch NAME --path DIR "
-        + "[--base REV] [--source REPO_ROOT] [--skip-restore]. "
+        + "[--base REV] [--source REPO_ROOT] [--skip-restore] [--no-clean-lanes]. "
         + "The .lake cache is materialized by the first Lean command; symlink sharing is forbidden.";
 
     private static readonly string[] ReviewScaffoldIgnorePatterns =
@@ -79,6 +80,7 @@ internal static class WorktreeCommand
 
         WorktreeOptions? options = null;
         var worktreeCreated = false;
+        var reclaim = LaneReclaim.Disabled;
         var stopwatch = System.Diagnostics.Stopwatch.StartNew();
         try
         {
@@ -86,6 +88,11 @@ internal static class WorktreeCommand
             ValidatePreflight(options, runner);
             GitWorktreeInventory.FetchRemoteBase(options.Source, options.Base, runner);
             VerifyBase(options, runner);
+            if (options.ReclaimLanes)
+            {
+                reclaim = ReclaimMergedLanes(options, runner);
+            }
+
             var pins = LeanPinSet.ReadBase(options.Source, options.Base, runner);
             var donor = ProbeDonor(options, pins, runner);
 
@@ -121,9 +128,13 @@ internal static class WorktreeCommand
                 donor_behind_base = donor.BehindBase,
                 donor_cache_pin = donor.CachePin,
                 dotnet_restore = options.SkipRestore ? "skipped" : "restored",
+                lane_reclaim = reclaim.Receipt(),
                 elapsed_ms = stopwatch.ElapsedMilliseconds,
             }) + "\n";
-            return new CommandResult(true, summary, RenderDonorWarning(options, donor));
+            return new CommandResult(
+                true,
+                summary,
+                reclaim.Warning() + RenderDonorWarning(options, donor));
         }
         catch (Exception exception)
         {
@@ -140,6 +151,7 @@ internal static class WorktreeCommand
                 base_revision = options?.Base,
                 reason = exception.Message,
                 cleanup_error = cleanup.Length == 0 ? null : cleanup.TrimStart(';', ' '),
+                lane_reclaim = reclaim.Receipt(),
                 elapsed_ms = stopwatch.ElapsedMilliseconds,
             });
             return new CommandResult(
@@ -233,6 +245,85 @@ internal static class WorktreeCommand
             + $"        To warm the donor:  cd {options.Source} && git pull --ff-only && make lean\n";
     }
 
+    /// <summary>
+    /// 建新树时,顺手回收已经结束的旧 lane。
+    ///
+    /// CLAUDE.md 第 16 条早写着「PR 合并即回收该 worktree」,可那条规则此前不挂在任何
+    /// **必然经过**的步骤上,于是只能靠自觉,而自觉留下了一批躺着的旧树。建新树是开新工
+    /// 必经的一步——挂在这里,规则才第一次有了执行点。
+    ///
+    /// 与已删除的 `LeanDonorRefresh` 的区别在于**动谁**:那个去 pull + build 别人**正在
+    /// 用**的树;这里回收的是一棵按仓库政策**已经结束**的树。判据一条不自创,整套走
+    /// clean-lanes 的同一个 `Inspect`(已合入 base ∧ 无未提交改动 ∧ 不是当前树,移除前
+    /// 再复核一次身份与干净度)——两条路径共用判词,就不可能各自漂移。
+    ///
+    /// 失败**不阻断建树**:回收是附带动作,不是门,让它把建树拖红就是器坏挡路。但也绝不
+    /// 静默——状态、原因、以及**中途抛异常前已经发生的移除**全部进收据。
+    /// </summary>
+    private static LaneReclaim ReclaimMergedLanes(
+        WorktreeOptions options,
+        IWorktreeProcessRunner runner)
+    {
+        var events = new List<CleanLanesCommand.CleanLaneEvent>();
+        try
+        {
+            CleanLanesCommand.Inspect(
+                options.Source,
+                options.Base,
+                force: true,
+                new CleanLanesCommand.CleanLaneScope.RegisteredLanes(),
+                runner,
+                events);
+            return new LaneReclaim("completed", events, null);
+        }
+        catch (Exception exception) when (exception is not OutOfMemoryException)
+        {
+            return new LaneReclaim("failed", events, exception.Message);
+        }
+    }
+
+    private sealed record LaneReclaim(
+        string Status,
+        IReadOnlyList<CleanLanesCommand.CleanLaneEvent> Events,
+        string? Error)
+    {
+        internal static LaneReclaim Disabled { get; } = new("disabled", [], null);
+
+        internal object Receipt() => new
+        {
+            status = Status,
+            removed_count = Events.Count(static item => item.Action == "removed"),
+            removed = Events
+                .Where(static item => item.Action == "removed")
+                .Select(static item => new
+                {
+                    kind = item.Kind,
+                    path = item.Path,
+                    branch = item.Branch,
+                })
+                .ToArray(),
+            skipped = Events
+                .Where(static item => item.Action == "skipped")
+                .Select(static item => new
+                {
+                    kind = item.Kind,
+                    path = item.Path,
+                    branch = item.Branch,
+                    reason = item.Reason,
+                })
+                .ToArray(),
+            error = Error,
+        };
+
+        /// <summary>给命令,不给结论——读者不必同意这个判断,只需要能照着查。</summary>
+        internal string Warning() =>
+            Error is null
+                ? string.Empty
+                : $"WARNING lane reclaim failed: {Error}\n"
+                    + "        The new worktree is unaffected; finished lanes were left in place.\n"
+                    + "        To inspect them:  make -C tools clean-lanes\n";
+    }
+
     private static void EnsureReviewScaffoldIgnores(string worktreeRoot)
     {
         var ignorePath = System.IO.Path.Combine(worktreeRoot, ".gitignore");
@@ -282,6 +373,7 @@ internal static class WorktreeCommand
         var baseRevision = "origin/dev";
         var source = repositoryRoot;
         var skipRestore = false;
+        var keepLanes = false;
 
         for (var index = 0; index < arguments.Count; index++)
         {
@@ -289,6 +381,9 @@ internal static class WorktreeCommand
             {
                 case "--skip-restore" when !skipRestore:
                     skipRestore = true;
+                    break;
+                case "--no-clean-lanes" when !keepLanes:
+                    keepLanes = true;
                     break;
                 case "--branch" when branch is null:
                     branch = ReadValue(arguments, ref index);
@@ -318,7 +413,8 @@ internal static class WorktreeCommand
             System.IO.Path.GetFullPath(path),
             baseRevision,
             System.IO.Path.GetFullPath(source),
-            skipRestore);
+            skipRestore,
+            !keepLanes);
     }
 
     private static string ReadValue(IReadOnlyList<string> arguments, ref int index)

@@ -33,41 +33,15 @@ internal static class CleanLanesCommand
         ArgumentNullException.ThrowIfNull(tempRoots);
         try
         {
-            var root = Path.GetFullPath(repositoryRoot);
             var options = ParseArguments(arguments);
-            var baseCommit = ResolveCommit(root, options.Base, runner);
-            var commonGitDirectory = ResolveCommonGitDirectory(root, runner);
-            var currentGitDirectory = ResolveGitDirectory(root, runner);
-            var inventory = ReadWorktrees(root, runner);
             var events = new List<CleanLaneEvent>();
-            var activeBranches = inventory
-                .Where(static item => item.Branch is not null)
-                .Select(static item => item.Branch!)
-                .ToHashSet(StringComparer.Ordinal);
-
-            InspectRegisteredLanes(
-                root,
-                currentGitDirectory,
-                baseCommit,
+            var baseCommit = Inspect(
+                repositoryRoot,
+                options.Base,
                 options.Force,
-                inventory,
-                events,
-                runner);
-            InspectOrphanBranches(
-                root,
-                baseCommit,
-                options.Force,
-                activeBranches,
-                events,
-                runner);
-            InspectTempJudges(
-                root,
-                commonGitDirectory,
-                options.Force,
-                inventory,
-                tempRoots,
-                events,
-                runner);
+                new CleanLaneScope.Full(tempRoots),
+                runner,
+                events);
 
             var output = new StringBuilder();
             foreach (var item in events
@@ -109,6 +83,81 @@ internal static class CleanLanesCommand
                 string.Empty,
                 $"CLEAN_LANES_FAILED {exception.Message}\n");
         }
+    }
+
+    /// <summary>
+    /// 回收的作用面。**这是一个类型,不是一个布尔**:`RegisteredLanes` 根本没有地方能放
+    /// tempRoots,于是「建树时顺带回收」在结构上够不到 `/tmp` 里的判官树——那些树可能
+    /// 正被席位用着,而它们的判据(未注册 / 无 .git 的快照)恰恰**区分不了「跑完了」和
+    /// 「正在跑」**。孤儿分支同理:它不占一棵树,删它是纯分支操作,不属于「建树顺手回收
+    /// 旧树」这件事。两者都留给显式的 `clean-lanes`——那是人按下的,不是顺带发生的。
+    /// </summary>
+    internal abstract record CleanLaneScope
+    {
+        private CleanLaneScope()
+        {
+        }
+
+        /// <summary>只回收已注册的 lane worktree(连同它自己的分支)。</summary>
+        internal sealed record RegisteredLanes : CleanLaneScope;
+
+        /// <summary>注册 lane + 孤儿分支 + `tempRoots` 下的判官树。</summary>
+        internal sealed record Full(IReadOnlyList<string> TempRoots) : CleanLaneScope;
+    }
+
+    /// <summary>
+    /// 判词的唯一真源:`clean-lanes` 与建树时的顺带回收共用它,故两者的判据不可能漂移。
+    /// 事件写进调用方给的集合而不是返回一个新列表——中途抛异常时,**已经发生的移除仍然
+    /// 留在账上**,调用方据此如实报告,不至于把「删了三个然后炸了」报成「什么都没发生」。
+    /// </summary>
+    internal static string Inspect(
+        string repositoryRoot,
+        string baseRevision,
+        bool force,
+        CleanLaneScope scope,
+        IWorktreeProcessRunner runner,
+        ICollection<CleanLaneEvent> events)
+    {
+        ArgumentException.ThrowIfNullOrWhiteSpace(repositoryRoot);
+        ArgumentException.ThrowIfNullOrWhiteSpace(baseRevision);
+        ArgumentNullException.ThrowIfNull(scope);
+        ArgumentNullException.ThrowIfNull(runner);
+        ArgumentNullException.ThrowIfNull(events);
+        var root = Path.GetFullPath(repositoryRoot);
+        var baseCommit = ResolveCommit(root, baseRevision, runner);
+        var currentGitDirectory = ResolveGitDirectory(root, runner);
+        var inventory = ReadWorktrees(root, runner);
+        InspectRegisteredLanes(
+            root,
+            currentGitDirectory,
+            baseCommit,
+            force,
+            inventory,
+            events,
+            runner);
+        if (scope is CleanLaneScope.Full full)
+        {
+            InspectOrphanBranches(
+                root,
+                baseCommit,
+                force,
+                inventory
+                    .Where(static item => item.Branch is not null)
+                    .Select(static item => item.Branch!)
+                    .ToHashSet(StringComparer.Ordinal),
+                events,
+                runner);
+            InspectTempJudges(
+                root,
+                ResolveCommonGitDirectory(root, runner),
+                force,
+                inventory,
+                full.TempRoots,
+                events,
+                runner);
+        }
+
+        return baseCommit;
     }
 
     internal static CleanLanesOptions ParseArguments(IReadOnlyList<string> arguments)
@@ -644,7 +693,7 @@ internal static class CleanLanesCommand
         string? Branch,
         string? GitDirectory);
 
-    private sealed record CleanLaneEvent(
+    internal sealed record CleanLaneEvent(
         string Kind,
         string? Path,
         string? Branch,
