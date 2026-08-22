@@ -88,8 +88,8 @@ internal sealed class RefinementMonotoneAnswerDomainDocument : IScribeDocumentDe
         Formula fineType = F.Id("D");
         Formula targetType = F.Id("Y");
         Formula admission = F.Id("A");
-        Formula coarse = new Formula.Subscript(F.Id("q"), coarseType);
-        Formula fine = new Formula.Subscript(F.Id("q"), fineType);
+        Formula coarse = F.Id("qC");
+        Formula fine = F.Id("qD");
         Formula target = F.Id("T");
         Formula state = F.Id("x");
         Formula value = F.Id("y");
@@ -128,8 +128,8 @@ internal sealed class RefinementMonotoneAnswerDomainDocument : IScribeDocumentDe
         Formula fineType = F.Id("D");
         Formula targetType = F.Id("Y");
         Formula admission = F.Id("A");
-        Formula coarse = new Formula.Subscript(F.Id("q"), coarseType);
-        Formula fine = new Formula.Subscript(F.Id("q"), fineType);
+        Formula coarse = F.Id("qC");
+        Formula fine = F.Id("qD");
         Formula target = F.Id("T");
         Formula inclusion = new Formula.Relation(
             AnswerDomain(admission, coarse, target),
