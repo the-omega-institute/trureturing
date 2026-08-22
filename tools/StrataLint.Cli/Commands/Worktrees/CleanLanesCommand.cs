@@ -4,11 +4,12 @@ using StrataLint.Engine;
 
 namespace StrataLint.Cli;
 
-internal sealed record CleanLanesOptions(string Base, bool Force);
+internal sealed record CleanLanesOptions(string Base, bool Force, bool LanesOnly);
 
 internal static class CleanLanesCommand
 {
-    internal const string Usage = "USAGE: StrataLint clean-lanes [--base REV] [--force]";
+    internal const string Usage =
+        "USAGE: StrataLint clean-lanes [--base REV] [--force] [--lanes-only]";
 
     private static readonly UTF8Encoding StrictUtf8 = new(false, true);
 
@@ -53,21 +54,27 @@ internal static class CleanLanesCommand
                 inventory,
                 events,
                 runner);
-            InspectOrphanBranches(
-                root,
-                baseCommit,
-                options.Force,
-                activeBranches,
-                events,
-                runner);
-            InspectTempJudges(
-                root,
-                commonGitDirectory,
-                options.Force,
-                inventory,
-                tempRoots,
-                events,
-                runner);
+            if (!options.LanesOnly)
+            {
+                // 建树时的回收够不到这两类:判官树的判据(未注册 / 无 .git 的快照)
+                // 区分不了「跑完了」和「正在跑」,而建树常发生在派席前后;孤儿分支
+                // 不占一棵树,删它是纯分支操作,不属于「顺手回收旧树」。
+                InspectOrphanBranches(
+                    root,
+                    baseCommit,
+                    options.Force,
+                    activeBranches,
+                    events,
+                    runner);
+                InspectTempJudges(
+                    root,
+                    commonGitDirectory,
+                    options.Force,
+                    inventory,
+                    tempRoots,
+                    events,
+                    runner);
+            }
 
             var output = new StringBuilder();
             foreach (var item in events
@@ -92,6 +99,7 @@ internal static class CleanLanesCommand
             {
                 @event = "clean_lanes_summary",
                 mode = options.Force ? "force" : "dry_run",
+                scope = options.LanesOnly ? "lanes_only" : "full",
                 base_revision = options.Base,
                 base_commit = baseCommit,
                 item_count = events.Count,
@@ -117,12 +125,16 @@ internal static class CleanLanesCommand
         var baseRevision = "origin/dev";
         var baseSeen = false;
         var force = false;
+        var lanesOnly = false;
         for (var index = 0; index < arguments.Count; index++)
         {
             switch (arguments[index])
             {
                 case "--force" when !force:
                     force = true;
+                    break;
+                case "--lanes-only" when !lanesOnly:
+                    lanesOnly = true;
                     break;
                 case "--base" when !baseSeen:
                     if (++index >= arguments.Count || arguments[index].Length == 0)
@@ -138,7 +150,7 @@ internal static class CleanLanesCommand
             }
         }
 
-        return new CleanLanesOptions(baseRevision, force);
+        return new CleanLanesOptions(baseRevision, force, lanesOnly);
     }
 
     private static void InspectRegisteredLanes(

@@ -9,8 +9,6 @@ public sealed class TruthExportProjectionTests
 {
     private const string Commit = "1111111111111111111111111111111111111111";
     private const string Tree = "2222222222222222222222222222222222222222";
-    private const string LeanReportDigest =
-        "sha256:3333333333333333333333333333333333333333333333333333333333333333";
 
     [Fact]
     public void ProjectMapsFrozenMaterialAndCanonicalizesPrerequisites()
@@ -25,7 +23,7 @@ public sealed class TruthExportProjectionTests
                 new FrozenDeclarationStatement(
                     "nk-two", "theorem", StatementId.Create(Sha("statement:two"))),
                 new FrozenDeclarationStatement(
-                    "nk-one", "definition", StatementId.Create(Sha("statement:one")))),
+                    "nk-one", "def", StatementId.Create(Sha("statement:one")))),
             StatementId.Create(Sha("statement:" + repoPath)),
             WitnessId.Create(Sha("witness:" + repoPath)),
             FrozenNodeId.Create(frozenNodeId),
@@ -38,26 +36,47 @@ public sealed class TruthExportProjectionTests
                 "git-sha1:" + new string('a', 40)));
 
         var model = TruthExportProjection.Project(
-            ImmutableArray.Create(material),
+            ImmutableArray.Create(
+                material,
+                LeafMaterial("D5/S0/Carrier/PrerequisiteB.lean", prerequisiteB, 'b'),
+                LeafMaterial("D5/S0/Carrier/PrerequisiteA.lean", prerequisiteA, 'c')),
             Commit,
-            Tree,
-            LeanReportDigest);
+            Tree);
 
         Assert.Equal(Commit, model.SourceCommit);
         Assert.Equal(Tree, model.SourceTree);
-        Assert.Equal(LeanReportDigest, model.LeanReportDigest);
-        var node = Assert.Single(model.Nodes);
+        Assert.Equal(3, model.Nodes.Length);
+        var node = model.Nodes.Single(candidate => candidate.FrozenNodeId == frozenNodeId);
         Assert.Equal(repoPath, node.RepoPath);
         Assert.Equal(frozenNodeId, node.FrozenNodeId);
         Assert.Equal(new[] { "Classical.choice", "propext" }, node.NodeAxiomClosure);
         Assert.Equal(new[] { prerequisiteA, prerequisiteB }, node.PrerequisiteFrozenNodeIds);
         Assert.Equal(new[] { "nk-one", "nk-two" },
             node.Declarations.Select(static declaration => declaration.DeclarationNameKey));
-        Assert.Equal("definition", node.Declarations[0].Kind);
+        Assert.Equal("def", node.Declarations[0].Kind);
         Assert.Equal(Sha("statement:one"), node.Declarations[0].StatementId);
         Assert.Equal("theorem", node.Declarations[1].Kind);
         Assert.Equal(Sha("statement:two"), node.Declarations[1].StatementId);
     }
+
+    private static FrozenNodeMaterial LeafMaterial(
+        string repoPath,
+        string frozenNodeId,
+        char blobDigit) =>
+        new(
+            RepoPath.CreateKnown(repoPath),
+            ImmutableArray.Create(new FrozenDeclarationStatement(
+                "nk-leaf",
+                "theorem",
+                StatementId.Create(Sha("statement:" + repoPath)))),
+            StatementId.Create(Sha("module-statement:" + repoPath)),
+            WitnessId.Create(Sha("witness:" + repoPath)),
+            FrozenNodeId.Create(frozenNodeId),
+            ImmutableArray<FrozenNodeId>.Empty,
+            ImmutableArray<string>.Empty,
+            new FrozenModuleAttestation(
+                RepoPath.CreateKnown(repoPath),
+                "git-sha1:" + new string(blobDigit, 40)));
 
     private static string Sha(string text) =>
         "sha256:" + Convert.ToHexStringLower(SHA256.HashData(Encoding.UTF8.GetBytes(text)));

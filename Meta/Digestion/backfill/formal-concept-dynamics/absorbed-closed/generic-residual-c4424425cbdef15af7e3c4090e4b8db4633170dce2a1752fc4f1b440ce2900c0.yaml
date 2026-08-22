@@ -1,0 +1,17 @@
+ast_path: 定理/258.1
+fingerprints:
+  raw_sha256: sha256:c4424425cbdef15af7e3c4090e4b8db4633170dce2a1752fc4f1b440ce2900c0
+  normalized_sha256: sha256:c4424425cbdef15af7e3c4090e4b8db4633170dce2a1752fc4f1b440ce2900c0
+cas_ref: sha256:c4424425cbdef15af7e3c4090e4b8db4633170dce2a1752fc4f1b440ce2900c0
+coverage_gids:
+  - D5/S3/ConceptDynamics/Audits/CorrectnessLegitimacySeparation.correct_result_does_not_determine_legitimacy
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/Audits/CorrectnessLegitimacySeparation.correct_result_does_not_determine_legitimacy
+      source_sha256: sha256:c4424425cbdef15af7e3c4090e4b8db4633170dce2a1752fc4f1b440ce2900c0
+      target_sha256: sha256:949638afcc1addb944c1d848b02089b33a3721bb81aed0f0be12932e5d0c3f6f
+  scribe:
+    - gid: D5/S3/ConceptDynamics/Audits/CorrectnessLegitimacySeparation.correct_result_does_not_determine_legitimacy
+      definition_sha256: sha256:6498ec36d42db03d58dd3c802a766aa2540cfb50878901993ddd2c3cb8c84ee4
+      emission_sha256: sha256:a5890760742adf46028a650b0bcc5e0f4032c183a070aeeab22e81f1ed5a6c78
+  unresolved_subitems: []

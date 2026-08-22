@@ -7,8 +7,8 @@ using Trureturing.Truth;
 namespace StrataLint.Cli;
 
 /// Exports the strict active frozen truth from one immutable Git revision and one explicit Lean report.
-/// The report's source bindings are checked against the resolved revision, and its exact byte digest is
-/// recorded alongside the immutable commit and tree identities.
+/// The report's source bindings are checked against the resolved revision; the truth-export wire carries
+/// only the immutable commit and tree identities.
 internal static class TruthExportCommand
 {
     private const string FileName = "truth-export.v1.json";
@@ -30,7 +30,6 @@ internal static class TruthExportCommand
             var snapshot = Decode(DagLedgerCommandPreparation.Ask(
                 () => repository.ReadRevision(identity.Revision)));
             var reportBytes = File.ReadAllBytes(options.CandidateLeanReport);
-            var leanReportDigest = RawLeanReportArtifact.ContentAddress(reportBytes);
             var outcome = ValidateStrictHistory(repository, snapshot, identity, reportBytes);
             if (outcome is FrozenLedgerValidationOutcome.Rejected rejected)
             {
@@ -44,8 +43,7 @@ internal static class TruthExportCommand
             var model = TruthExportProjection.Project(
                 accepted.Capability.ActiveFrozenNodes,
                 identity.Revision,
-                Bare(identity.TreeOid),
-                leanReportDigest);
+                Bare(identity.TreeOid));
             var finalPath = WriteAtomically(options.OutDirectory, model);
             return new ExplicitCommandResult(
                 0,

@@ -25,4 +25,3 @@ The module directly reuses the repository's `controlledBehavior` semantics and p
 ## References
 
 - Truth anchor: `D5/S3/ObserverMemory/PredictionFactors/BeliefSetSufficiency.belief_set_sufficiency`
-- Dependency: [D5/S3/ObserverMemory/Prediction/ControlledBehaviorUniversality](../Prediction/ControlledBehaviorUniversality.md)

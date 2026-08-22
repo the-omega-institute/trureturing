@@ -4,7 +4,7 @@ using StrataLint.Engine;
 namespace StrataLint.Tests;
 
 [Collection("Lean cache environment")]
-public sealed class WorktreeCommandTests
+public sealed partial class WorktreeCommandTests
 {
     [Fact]
     public void RootUsageListsWorktreeCommand()

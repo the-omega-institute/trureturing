@@ -9,8 +9,7 @@ public static class TruthExportProjection
     public static TruthExportModel Project(
         ImmutableArray<FrozenNodeMaterial> activeNodes,
         string sourceCommit,
-        string sourceTree,
-        string leanReportDigest)
+        string sourceTree)
     {
         var nodes = activeNodes
             .Select(static node => new TruthExportNode(
@@ -28,6 +27,6 @@ public static class TruthExportProjection
                     .ToImmutableArray()))
             .ToImmutableArray();
 
-        return TruthExportModel.Create(nodes, sourceCommit, sourceTree, leanReportDigest);
+        return TruthExportModel.Create(nodes, sourceCommit, sourceTree);
     }
 }

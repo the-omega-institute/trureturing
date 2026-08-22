@@ -26,11 +26,13 @@ public sealed class TruthExportCommandTests
         Assert.Equal(string.Empty, console.Error);
         var exportPath = Path.Combine(output.Path, "truth-export.v1.json");
         Assert.True(File.Exists(exportPath));
+        using (var document = JsonDocument.Parse(File.ReadAllBytes(exportPath)))
+        {
+            Assert.False(document.RootElement.TryGetProperty("lean_report_digest", out _));
+        }
+
         var model = ParseExport(exportPath);
         Assert.Equal("TruthExportCommand", model.Producer);
-        Assert.Equal(
-            "sha256:" + Convert.ToHexStringLower(SHA256.HashData(fixture.ReportBytes.AsSpan())),
-            model.LeanReportDigest);
 
         var expected = Assert.IsType<FrozenLedgerValidationOutcome.Accepted>(
             ValidateHistory(Load(fixture.LedgerBytes), fixture.FinalCatalog)).Capability.ActiveFrozenNodes;
@@ -325,7 +327,6 @@ public sealed class TruthExportCommandTests
         return new ParsedExport(
             root.GetProperty("source_commit").GetString()!,
             root.GetProperty("source_tree").GetString()!,
-            root.GetProperty("lean_report_digest").GetString()!,
             root.GetProperty("producer").GetString()!,
             nodes);
     }
@@ -333,7 +334,6 @@ public sealed class TruthExportCommandTests
     private sealed record ParsedExport(
         string SourceCommit,
         string SourceTree,
-        string LeanReportDigest,
         string Producer,
         ParsedExportNode[] Nodes);
 

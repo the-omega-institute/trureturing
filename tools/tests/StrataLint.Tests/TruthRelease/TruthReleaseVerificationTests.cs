@@ -1,6 +1,8 @@
 using System;
+using System.Collections.Immutable;
 using System.IO;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using Trureturing.Truth;
 using Xunit;
@@ -9,90 +11,172 @@ namespace StrataLint.Tests;
 
 public sealed class TruthReleaseVerificationTests
 {
-    // Independent golden: the release digest was computed by `shasum -a 256` over the SHA256SUMS
-    // text below — NOT by the code under test — so a shared canonicalization mistake cannot make a
-    // producer and this verifier agree on the same wrong value.
-    private const string GoldenReleaseDigest =
-        "sha256:80c40867fbd43a264a9e06c0bc6f53c02f438f6bc6a6ecbfaccaf0f7b4b52801";
+    private static readonly UTF8Encoding Utf8 = new(false, true);
+    private const string Commit = "1111111111111111111111111111111111111111";
+    private const string OtherCommit = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
+    private const string Tree = "2222222222222222222222222222222222222222";
+    private const string OtherTree = "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb";
 
-    // (bundle filename, artifact content, independent sha256 hex of that content).
-    private static readonly (string File, string Content, string Hex)[] Artifacts =
+    private static string Digest(byte[] bytes) =>
+        "sha256:" + Convert.ToHexStringLower(SHA256.HashData(bytes));
+
+    private static byte[] MinimalTruthGraphBytes(string contentDigest = "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") =>
+        TruthGraphJsonWriter.Write(new TruthGraphExportModel(
+            TruthGraphExportModel.Dialect,
+            1,
+            new TruthGraphProvenance(
+                contentDigest,
+                "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb")
+            {
+                TruthRootSha256 = "sha256:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+                DependencyGranularity = "module-import",
+            },
+            new TruthGraphSection(
+                ImmutableArray<TruthGraphNode>.Empty,
+                ImmutableArray<TruthGraphEdge>.Empty,
+                ImmutableArray<TruthGraphOpenBlocker>.Empty,
+                new TruthGraphStateCounts(0, 0, 0, 0)),
+            new DocumentGraphSection(
+                ImmutableArray<DocumentGraphNode>.Empty,
+                ImmutableArray<DescribeGraphNode>.Empty,
+                ImmutableArray<DocumentDependencyEdge>.Empty,
+                ImmutableArray<DocumentNarrativeReferenceEdge>.Empty),
+            new TruthGraphJoinsSection(ImmutableArray<TruthAnchorJoin>.Empty),
+            ImmutableArray.Create("digestion"))).ToArray();
+
+    private static byte[] TruthExportBytes(string commit, string tree) =>
+        TruthExportJsonWriter.Write(TruthExportModel.Create(
+            ImmutableArray.Create(new TruthExportNode(
+                "D5/S0/A.lean",
+                "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                ImmutableArray.Create("propext"),
+                ImmutableArray.Create(new TruthExportDeclaration(
+                    "nk-a",
+                    "theorem",
+                    "sha256:1111111111111111111111111111111111111111111111111111111111111111")),
+                ImmutableArray<string>.Empty)),
+            commit,
+            tree)).ToArray();
+
+    private static byte[] SourceSnapshotBytes(
+        string commit,
+        string tree,
+        string truthGraphDigest,
+        string rawLeanReportDigest,
+        string residualFrontierDigest,
+        string declarationsDigest,
+        string frozenLedgerHeadDigest) =>
+        Utf8.GetBytes($$"""
+            {
+              "schema": "source-snapshot.v1",
+              "source_repo": "the-omega-institute/trureturing",
+              "source_commit": "{{commit}}",
+              "source_tree": "{{tree}}",
+              "lean_toolchain": "leanprover/lean4:v4.24.0",
+              "mathlib_rev": "3333333333333333333333333333333333333333",
+              "producer_package_commit": "4444444444444444444444444444444444444444",
+              "truth_graph_sha256": "{{truthGraphDigest}}",
+              "raw_lean_report_sha256": "{{rawLeanReportDigest}}",
+              "dag_md_sha256": "sha256:6666666666666666666666666666666666666666666666666666666666666666",
+              "residual_frontier_sha256": "{{residualFrontierDigest}}",
+              "declarations_sha256": "{{declarationsDigest}}",
+              "frozen_ledger_head_hash": "{{frozenLedgerHeadDigest}}",
+              "frozen_ledger_sequence": 42
+            }
+            """);
+
+    private static (string Directory, string Digest) BuildBundle(
+        string snapshotCommit = Commit,
+        string exportCommit = Commit,
+        string manifestCommit = Commit,
+        string snapshotTree = Tree,
+        string exportTree = Tree,
+        string manifestTree = Tree,
+        string? snapshotTruthGraphDigest = null,
+        byte[]? truthGraph = null,
+        byte[]? truthExport = null)
     {
-        ("source-snapshot.v1.json", "source_snapshot",    "4c33b02e4e1cbbcb5b7ab7eaea55954bbb059fa83a441a5cea33ec2d6f3187f8"),
-        ("truth-graph.v1.json",     "truth_graph",        "ea6a5d67f81cc7ed11e48fa3c8ffb5dcaf91ac43caf2f04a87d6202e3d2b6eb2"),
-        ("raw-lean-report.json",    "raw_lean_report",    "dbff08d567cca96ed64661be9ca200a24a837be72509afb4afddf43feea8b485"),
-        ("truth-export.v1.json",    "truth_export",       "4ce24fb9b65427638bab27c6e4c544907c805f5c31e9cd48a0c66be75a7be917"),
-        ("blueprint-index.v1.json", "blueprint_index",    "fc28f2016b02fc70c246a5a90ea6c024c9771a16473f3e7e11725c786bb6d4e0"),
-        ("frozen-ledger-head.json", "frozen_ledger_head", "a1093bc930cafe23695d760be1409c0ababffa6c04c3b233a8ac35d370309c3b"),
-        ("echo-residual-summary.md","residual_frontier",  "3d4fb60a2574585db90a38194fb19d065b8a5952d3591b68e616f4fbe1477f63"),
-    };
-
-    // SHA256SUMS text built by hand here (sorted by name, "<hex>  <name>", trailing "\n") — independent
-    // of Trureturing.Truth.Sha256Sums, which the verifier never invokes (it reads this file's bytes).
-    private static string Sha256SumsText() =>
-        string.Concat(Artifacts
-            .OrderBy(static a => a.File, StringComparer.Ordinal)
-            .Select(static a => a.Hex + "  " + a.File + "\n"));
-
-    private const string ManifestJson = """
+        truthGraph ??= MinimalTruthGraphBytes();
+        truthExport ??= TruthExportBytes(exportCommit, exportTree);
+        var rawLeanReport = Utf8.GetBytes("raw_lean_report");
+        var residualFrontier = Utf8.GetBytes("residual_frontier");
+        var frozenLedgerHead = Utf8.GetBytes("frozen_ledger_head");
+        var sourceSnapshot = SourceSnapshotBytes(
+            snapshotCommit,
+            snapshotTree,
+            snapshotTruthGraphDigest ?? Digest(truthGraph),
+            Digest(rawLeanReport),
+            Digest(residualFrontier),
+            Digest(truthExport),
+            Digest(frozenLedgerHead));
+        var artifacts = new (string Key, string File, byte[] Bytes)[]
         {
-          "schema": "truth-release.v1",
-          "source": {
-            "source_repo": "the-omega-institute/trureturing",
-            "source_commit": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-            "source_tree": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
-          },
-          "trust": {
-            "commit_on_protected_dev": true,
-            "required_checks": [
-              { "name": "Candidate harness engineering checks", "conclusion": "success" },
-              { "name": "Canonical Lean report production", "conclusion": "success" },
-              { "name": "Content-addressed dev baseline admission", "conclusion": "success" }
-            ]
-          },
-          "producer": {
-            "package_repo": "the-omega-institute/trureturing-fkst-packages",
-            "package_commit": "cccccccccccccccccccccccccccccccccccccccc",
-            "read_only": true
-          },
-          "artifacts": {
-            "source_snapshot":    { "file": "source-snapshot.v1.json", "sha256": "sha256:4c33b02e4e1cbbcb5b7ab7eaea55954bbb059fa83a441a5cea33ec2d6f3187f8" },
-            "truth_graph":        { "file": "truth-graph.v1.json",     "sha256": "sha256:ea6a5d67f81cc7ed11e48fa3c8ffb5dcaf91ac43caf2f04a87d6202e3d2b6eb2" },
-            "raw_lean_report":    { "file": "raw-lean-report.json",    "sha256": "sha256:dbff08d567cca96ed64661be9ca200a24a837be72509afb4afddf43feea8b485" },
-            "truth_export":       { "file": "truth-export.v1.json",    "sha256": "sha256:4ce24fb9b65427638bab27c6e4c544907c805f5c31e9cd48a0c66be75a7be917" },
-            "blueprint_index":    { "file": "blueprint-index.v1.json", "sha256": "sha256:fc28f2016b02fc70c246a5a90ea6c024c9771a16473f3e7e11725c786bb6d4e0" },
-            "frozen_ledger_head": { "file": "frozen-ledger-head.json", "sha256": "sha256:a1093bc930cafe23695d760be1409c0ababffa6c04c3b233a8ac35d370309c3b" },
-            "residual_frontier":  { "file": "echo-residual-summary.md","sha256": "sha256:3d4fb60a2574585db90a38194fb19d065b8a5952d3591b68e616f4fbe1477f63" }
-          },
-          "sha256sums_digest": "sha256:80c40867fbd43a264a9e06c0bc6f53c02f438f6bc6a6ecbfaccaf0f7b4b52801",
-          "produced_at": "2026-08-20T00:00:00Z"
-        }
-        """;
+            ("source_snapshot", "source-snapshot.v1.json", sourceSnapshot),
+            ("truth_graph", "truth-graph.v1.json", truthGraph),
+            ("raw_lean_report", "raw-lean-report.json", rawLeanReport),
+            ("truth_export", "truth-export.v1.json", truthExport),
+            ("blueprint_index", "blueprint-index.v1.json", Utf8.GetBytes("blueprint_index")),
+            ("frozen_ledger_head", "frozen-ledger-head.json", frozenLedgerHead),
+            ("residual_frontier", "echo-residual-summary.md", residualFrontier),
+        };
 
-    private static string BuildBundle()
-    {
+        var sums = string.Concat(artifacts
+            .OrderBy(static artifact => artifact.File, StringComparer.Ordinal)
+            .Select(artifact => Digest(artifact.Bytes)["sha256:".Length..] + "  " + artifact.File + "\n"));
+        var releaseDigest = Digest(Utf8.GetBytes(sums));
+        var artifactJson = string.Join(",\n", artifacts.Select(artifact =>
+            $"    \"{artifact.Key}\": {{ \"file\": \"{artifact.File}\", \"sha256\": \"{Digest(artifact.Bytes)}\" }}"));
+        var manifest = $$"""
+            {
+              "schema": "truth-release.v1",
+              "source": {
+                "source_repo": "the-omega-institute/trureturing",
+                "source_commit": "{{manifestCommit}}",
+                "source_tree": "{{manifestTree}}"
+              },
+              "trust": {
+                "commit_on_protected_dev": true,
+                "required_checks": [
+                  { "name": "Candidate harness engineering checks", "conclusion": "success" },
+                  { "name": "Canonical Lean report production", "conclusion": "success" },
+                  { "name": "Content-addressed dev baseline admission", "conclusion": "success" }
+                ]
+              },
+              "producer": {
+                "package_repo": "the-omega-institute/trureturing-fkst-packages",
+                "package_commit": "4444444444444444444444444444444444444444",
+                "read_only": true
+              },
+              "artifacts": {
+            {{artifactJson}}
+              },
+              "sha256sums_digest": "{{releaseDigest}}",
+              "produced_at": "2026-08-22T00:00:00Z"
+            }
+            """;
+
         var directory = Directory.CreateTempSubdirectory("truthverify").FullName;
-        foreach (var artifact in Artifacts)
+        foreach (var artifact in artifacts)
         {
-            File.WriteAllText(Path.Combine(directory, artifact.File), artifact.Content, new UTF8Encoding(false));
+            File.WriteAllBytes(Path.Combine(directory, artifact.File), artifact.Bytes);
         }
 
-        File.WriteAllText(Path.Combine(directory, "SHA256SUMS"), Sha256SumsText(), new UTF8Encoding(false));
-        File.WriteAllText(Path.Combine(directory, "release-manifest.v1.json"), ManifestJson, new UTF8Encoding(false));
-        return directory;
+        File.WriteAllText(Path.Combine(directory, "SHA256SUMS"), sums, Utf8);
+        File.WriteAllText(Path.Combine(directory, "release-manifest.v1.json"), manifest, Utf8);
+        return (directory, releaseDigest);
     }
 
     [Fact]
-    public void VerifiesAWellFormedBundle()
+    public void VerifiesACoherentBundle()
     {
-        var directory = BuildBundle();
+        var (directory, digest) = BuildBundle();
         try
         {
-            var verified = TruthReleaseVerification.Verify(directory, GoldenReleaseDigest);
+            var verified = TruthReleaseVerification.Verify(directory, digest);
 
-            Assert.Equal(GoldenReleaseDigest, verified.ReleaseDigest);
+            Assert.Equal(digest, verified.ReleaseDigest);
             Assert.Equal("truth-export.v1.json", verified.Manifest.Artifacts.TruthExport.File);
-            Assert.Equal("the-omega-institute/trureturing", verified.Manifest.Source.SourceRepo);
+            Assert.Equal(Commit, verified.Manifest.Source.SourceCommit);
         }
         finally
         {
@@ -101,9 +185,51 @@ public sealed class TruthReleaseVerificationTests
     }
 
     [Fact]
+    public void RejectsSnapshotCommitFromAnotherRevision() =>
+        AssertCompositionRejected(() => BuildBundle(snapshotCommit: OtherCommit));
+
+    [Fact]
+    public void RejectsTruthExportCommitFromAnotherRevision() =>
+        AssertCompositionRejected(() => BuildBundle(exportCommit: OtherCommit));
+
+    [Fact]
+    public void RejectsManifestCommitFromAnotherRevision() =>
+        AssertCompositionRejected(() => BuildBundle(manifestCommit: OtherCommit));
+
+    [Fact]
+    public void RejectsSnapshotTreeFromAnotherRevision() =>
+        AssertCompositionRejected(() => BuildBundle(snapshotTree: OtherTree));
+
+    [Fact]
+    public void RejectsTruthExportTreeFromAnotherRevision() =>
+        AssertCompositionRejected(() => BuildBundle(exportTree: OtherTree));
+
+    [Fact]
+    public void RejectsManifestTreeFromAnotherRevision() =>
+        AssertCompositionRejected(() => BuildBundle(manifestTree: OtherTree));
+
+    [Fact]
+    public void RejectsSnapshotDigestNamingADifferentValidTruthGraph()
+    {
+        var otherGraph = MinimalTruthGraphBytes(
+            "sha256:dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd");
+        Assert.Equal(TruthGraphExportModel.Dialect, TruthGraphJsonReader.Read(otherGraph).Schema);
+
+        AssertCompositionRejected(() => BuildBundle(snapshotTruthGraphDigest: Digest(otherGraph)));
+    }
+
+    [Fact]
+    public void RejectsACorrectlyHashedMalformedTruthGraph() =>
+        AssertCompositionRejected(() => BuildBundle(truthGraph: Utf8.GetBytes("{}")));
+
+    [Fact]
+    public void RejectsACorrectlyHashedMalformedTruthExport() =>
+        AssertCompositionRejected(() => BuildBundle(truthExport: Utf8.GetBytes("{}")));
+
+    [Fact]
     public void RejectsAnExpectedDigestThatDoesNotMatchTheBundle()
     {
-        var directory = BuildBundle();
+        var (directory, _) = BuildBundle();
         try
         {
             var wrong = "sha256:" + new string('0', 64);
@@ -118,12 +244,11 @@ public sealed class TruthReleaseVerificationTests
     [Fact]
     public void RejectsATamperedArtifact()
     {
-        var directory = BuildBundle();
+        var (directory, digest) = BuildBundle();
         try
         {
-            // Flip one artifact's bytes; SHA256SUMS and the manifest still claim the old hash.
-            File.WriteAllText(Path.Combine(directory, "truth-export.v1.json"), "tampered", new UTF8Encoding(false));
-            Assert.Throws<FormatException>(() => TruthReleaseVerification.Verify(directory, GoldenReleaseDigest));
+            File.WriteAllText(Path.Combine(directory, "truth-export.v1.json"), "tampered", Utf8);
+            Assert.Throws<FormatException>(() => TruthReleaseVerification.Verify(directory, digest));
         }
         finally
         {
@@ -134,11 +259,11 @@ public sealed class TruthReleaseVerificationTests
     [Fact]
     public void RejectsAMissingArtifactFile()
     {
-        var directory = BuildBundle();
+        var (directory, digest) = BuildBundle();
         try
         {
             File.Delete(Path.Combine(directory, "truth-export.v1.json"));
-            Assert.Throws<FormatException>(() => TruthReleaseVerification.Verify(directory, GoldenReleaseDigest));
+            Assert.Throws<FormatException>(() => TruthReleaseVerification.Verify(directory, digest));
         }
         finally
         {
@@ -149,13 +274,14 @@ public sealed class TruthReleaseVerificationTests
     [Fact]
     public void RejectsATraversalFilenameInTheManifest()
     {
-        var directory = BuildBundle();
+        var (directory, digest) = BuildBundle();
         try
         {
-            // Point an artifact at a path outside the bundle. Verify must refuse before reading it.
-            var evil = ManifestJson.Replace("\"truth-export.v1.json\"", "\"../escape.json\"", StringComparison.Ordinal);
-            File.WriteAllText(Path.Combine(directory, "release-manifest.v1.json"), evil, new UTF8Encoding(false));
-            Assert.Throws<FormatException>(() => TruthReleaseVerification.Verify(directory, GoldenReleaseDigest));
+            var manifestPath = Path.Combine(directory, "release-manifest.v1.json");
+            var evil = File.ReadAllText(manifestPath, Utf8)
+                .Replace("\"truth-export.v1.json\"", "\"../escape.json\"", StringComparison.Ordinal);
+            File.WriteAllText(manifestPath, evil, Utf8);
+            Assert.Throws<FormatException>(() => TruthReleaseVerification.Verify(directory, digest));
         }
         finally
         {
@@ -166,14 +292,14 @@ public sealed class TruthReleaseVerificationTests
     [Fact]
     public void RejectsADuplicateArtifactFilename()
     {
-        var directory = BuildBundle();
+        var (directory, digest) = BuildBundle();
         try
         {
-            // Point two artifact slots at the same file. A mere count-of-seven check would pass, but the
-            // seven required artifacts no longer map to seven distinct, individually-bound files.
-            var dup = ManifestJson.Replace("\"truth-graph.v1.json\"", "\"truth-export.v1.json\"", StringComparison.Ordinal);
-            File.WriteAllText(Path.Combine(directory, "release-manifest.v1.json"), dup, new UTF8Encoding(false));
-            Assert.Throws<FormatException>(() => TruthReleaseVerification.Verify(directory, GoldenReleaseDigest));
+            var manifestPath = Path.Combine(directory, "release-manifest.v1.json");
+            var duplicate = File.ReadAllText(manifestPath, Utf8)
+                .Replace("\"truth-graph.v1.json\"", "\"truth-export.v1.json\"", StringComparison.Ordinal);
+            File.WriteAllText(manifestPath, duplicate, Utf8);
+            Assert.Throws<FormatException>(() => TruthReleaseVerification.Verify(directory, digest));
         }
         finally
         {
@@ -184,23 +310,34 @@ public sealed class TruthReleaseVerificationTests
     [Fact]
     public void RejectsASymlinkedArtifact()
     {
-        var directory = BuildBundle();
+        var (directory, digest) = BuildBundle();
         var externalDirectory = Directory.CreateTempSubdirectory("truthverify-ext").FullName;
         try
         {
-            // A symlink whose target's bytes match the recorded hash would pass a lexical path check and
-            // byte comparison, yet the file is not contained in the bundle. Verify must refuse the symlink.
             var external = Path.Combine(externalDirectory, "external.txt");
-            File.WriteAllText(external, "truth_export", new UTF8Encoding(false));
+            File.WriteAllBytes(external, TruthExportBytes(Commit, Tree));
             var artifact = Path.Combine(directory, "truth-export.v1.json");
             File.Delete(artifact);
             File.CreateSymbolicLink(artifact, external);
-            Assert.Throws<FormatException>(() => TruthReleaseVerification.Verify(directory, GoldenReleaseDigest));
+            Assert.Throws<FormatException>(() => TruthReleaseVerification.Verify(directory, digest));
         }
         finally
         {
             Directory.Delete(directory, recursive: true);
             Directory.Delete(externalDirectory, recursive: true);
+        }
+    }
+
+    private static void AssertCompositionRejected(Func<(string Directory, string Digest)> build)
+    {
+        var (directory, digest) = build();
+        try
+        {
+            Assert.Throws<FormatException>(() => TruthReleaseVerification.Verify(directory, digest));
+        }
+        finally
+        {
+            Directory.Delete(directory, recursive: true);
         }
     }
 }

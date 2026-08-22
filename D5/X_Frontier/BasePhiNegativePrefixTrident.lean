@@ -5,7 +5,7 @@
    anchors: []
    digest: Classify admissible negative base-phi prefix occurrence sets by Lucas-gap trident families. -/
 
-import D5.S1.Words.Expansions.BasePhiNegativePrefixTridentSupport
+import D5.S1.Words.Expansions.BasePhiNegativePrefixTridentPhaseObstruction
 
 namespace D5.X_Frontier.BasePhiNegativePrefixTrident
 
@@ -87,6 +87,16 @@ theorem frontier_step_semantics_iff_core_infinite
       (Core w).Infinite :=
   ⟨core_infinite_of_frontier_step_semantics,
     frontier_step_semantics_of_core_infinite hw hadmissible hfibers hlift hphase⟩
+
+theorem frontier_step_semantics_proved
+    {w : List Bool} (hw : w ≠ [])
+    (hadmissible : AdmissibleNegativePrefix canonicalExpansion w)
+    (hfibers : negative_tail_fiber_shape hw hadmissible)
+    (hlift : core_occurrence_unique_lift hw hadmissible hfibers)
+    (hphase : prefix_phase_machine_total hw hadmissible) :
+    frontier_step_semantics hw hadmissible hfibers hlift hphase :=
+  frontier_step_semantics_of_core_infinite hw hadmissible hfibers hlift hphase
+    (core_infinite_proved hw hadmissible hfibers hlift)
 
 def coreEnum (certificate : FrontierReturnWord) (n : Nat) : Int :=
   certificate.enumerate n
@@ -180,12 +190,31 @@ theorem source_index_successor_delta_iff_additive
   ⟨source_index_successor_additive_of_delta hcertificate hraw,
     source_index_successor_delta_of_additive hcertificate hraw⟩
 
+theorem source_index_successor_delta_of_phase_enriched_trace
+    {w : List Bool} {certificate : FrontierReturnWord}
+    (hcertificate : FrontierReturnWordFor w certificate)
+    (htrace : PhaseEnrichedCoreTrace w certificate) :
+    source_index_successor_delta hcertificate
+      (core_enum_from_frontier hcertificate) := by
+  apply source_index_successor_delta_of_additive hcertificate
+    (core_enum_from_frontier hcertificate)
+  exact phase_enriched_core_trace_two_gap_additive hcertificate htrace
+
 def six_phase_gap_stream {w : List Bool}
     {certificate : FrontierReturnWord}
     (hcertificate : FrontierReturnWordFor w certificate)
     (hdelta : source_index_successor_delta hcertificate
       (core_enum_from_frontier hcertificate)) : Prop :=
   FrontierGapPhase certificate
+
+theorem six_phase_gap_stream_of_phase_enriched_trace
+    {w : List Bool} {certificate : FrontierReturnWord}
+    (hcertificate : FrontierReturnWordFor w certificate)
+    (htrace : PhaseEnrichedCoreTrace w certificate) :
+    six_phase_gap_stream hcertificate
+      (source_index_successor_delta_of_phase_enriched_trace
+        hcertificate htrace) :=
+  phase_enriched_core_trace_gap_phase hcertificate htrace
 
 /- The existing target gap word is not periodic modulo six.  Consequently a
 fixed `n % 6` phase table cannot supply `FrontierGapPhase`; any finite-state
@@ -633,41 +662,51 @@ used by `frontierState` and `FrontierRunStep`. The `BasePhiNegative` definitions
 retain their original scope; this file only binds the open chain to those
 frozen interfaces.
 
-## Status of open providers
+## Status of semantic providers
 
-The fiber shape, unique lift, phase totality, Lucas growth, pairwise-disjoint
-arms, and final set transport now have kernel-checked proofs. The three central
-semantic providers remain open for three distinct executable reasons.
+The fiber shape, unique lift, phase totality, frontier existence, Lucas growth,
+pairwise-disjoint arms, and final set transport now have kernel-checked proofs.
+The additive successor provider remains open. The proposed phase provider is
+not merely open: the kernel-checked `010` obstruction imported above refutes it
+under the current frozen definitions.
 
-1. `frontier_step_semantics`: `canonicalCoreEnum w` is now defined directly as
-   `Nat.nth (fun q => q ∈ Core w)`, so its source cannot depend on the desired
-   gap stream. `frontier_step_semantics_iff_core_infinite` proves that the exact
-   remaining obligation for the current return-word signature is
-   `(Core w).Infinite`. Neither admissibility nor the proved singleton/triple
-   lift currently supplies that unboundedness theorem. Separately, the proposed
-   local-edge route cannot yet be stated: `prefix_phase_machine_total` labels
-   one prefix-extension certificate, while the current types contain no
-   per-core phase carrier or adjacent-core labeled-edge relation. Choice is not
-   used to invent either field.
+1. `frontier_step_semantics`: closed. `core_infinite_proved` constructs
+   arbitrarily large occurrences by adjoining a sufficiently remote even
+   Lucas pair of canonical digits, then uses the unique lift and the bound
+   `prefixMultiplicity w ≤ 3` to prove `(Core w).Infinite`.
+   `frontier_step_semantics_proved` therefore enumerates the actual core via
+   `Nat.nth`; its source does not depend on the desired gap stream.
 2. `source_index_successor_delta`: the compiled residual proposition is
    `sourceIndexSuccessorAdditive certificate`;
    `source_index_successor_delta_iff_additive` proves the exact equivalence
-   before any integer gap is unfolded. Producing those equations from the carry
-   lane still requires the commented residual
-   `nonnegative_raw_value_succ` in `BasePhiCarryTransducer` and a theorem ruling
-   out an intervening core point after a realized candidate. Neither theorem is
-   a declaration in the current S1 interface.
-3. `six_phase_gap_stream`: `FrontierRunStep` is only reflexive-transitive
-   reachability between two carry states; it has no next-phase, gap-letter, or
-   growth-tag output on which a functionality theorem could quantify.
-   Moreover, `fibonacci_gap_letter_not_six_periodic` proves the concrete
-   counterexample at residues zero and six. Hence a fixed `n % 6` orbit is
-   incompatible with the existing `FrontierGapPhase`; a correct labeled
-   finite-state refinement must retain the aperiodic Fibonacci input letter.
+   before any integer gap is unfolded. `adjacent_core_point_right_unique` and
+   `adjacent_core_point_eq_frontier_successor` now prove uniqueness and the
+   strict-enumeration squeeze for every genuine adjacent-core candidate. What
+   remains is existence: the phase-selected Lucas candidate must belong to
+   `Core w` and exclude an intervening point. The singleton/triple theorem only
+   compares inputs sharing one complete negative tail and cannot prove that.
+3. `six_phase_gap_stream`: refuted for the current frozen selector.
+   `PhaseLabeledReachability` enriches every frozen
+   carry path with the six-state prefix label and the aperiodic Fibonacci input
+   letter; `phase_labeled_reachability_phase_preserved` proves phase
+   preservation. `PhaseEnrichedCoreEdge` then binds that label to an actual
+   adjacent Lucas candidate, and its target and labels are unique. The exact
+   proposed existence proposition is `PhaseEnrichedCoreTrace w certificate`.
+   `phase_enriched_core_trace_iff_gap_phase` proves that it is equivalent to
+   `FrontierGapPhase`. For formal prefix `010`, every valid certificate has
+   phase certificate `⟨G0o, 11, 7⟩`, while the canonical core starts `9, 20`.
+   At index zero `familyLetter G 0 = false`, so the selector requires gap `7`
+   although the actual gap is `11`. This is proved by
+   `frontierGapPhase_not_of_prefix010`; consequently
+   `phaseEnrichedCoreTrace_not_of_prefix010` refutes the enriched trace as
+   well. A cocycle proof cannot telescope to a false boundary equation.
+   `fibonacci_gap_letter_not_six_periodic` still independently excludes a
+   fixed `n % 6` replacement for the retained input letter.
 
 Thus the current S1 interfaces do not identify the complete F/G/H gap
-itinerary of a negative-tail prefix cylinder. No missing theorem is replaced
-by a weaker claim or a hidden assumption.
+itinerary of a negative-tail prefix cylinder, and the frozen phase selector
+disagrees with an explicit canonical frontier edge. No false theorem is
+replaced by a weaker claim or a hidden assumption.
 
 The full theorem still has its `sorry` placeholder below, inside `X_Frontier`.
 All other declarations above are signature checks or direct proofs; the

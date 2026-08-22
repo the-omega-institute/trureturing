@@ -12,8 +12,8 @@ public sealed class TruthExportJsonTests
     private static readonly UTF8Encoding StrictUtf8 = new(false, true);
     private const string Commit = "1111111111111111111111111111111111111111";
     private const string Tree = "2222222222222222222222222222222222222222";
-    private const string LeanReportDigest =
-        "sha256:3333333333333333333333333333333333333333333333333333333333333333";
+
+    private static string Id(char value) => "sha256:" + new string(value, 64);
 
     // Build a plain wire node directly. Trureturing.Truth owns the plain model + canonical reader/writer;
     // the Engine-dependent FrozenNodeMaterial -> plain projection stays in Scribe/base, so these tests
@@ -23,7 +23,7 @@ public sealed class TruthExportJsonTests
         string frozenId,
         string[] axioms,
         (string NameKey, string Kind, string StatementId)[] declarations,
-        string[] prerequisites) =>
+        string[]? prerequisites = null) =>
         new(
             repoPath,
             frozenId,
@@ -32,27 +32,25 @@ public sealed class TruthExportJsonTests
                 .Select(static declaration => new TruthExportDeclaration(
                     declaration.NameKey, declaration.Kind, declaration.StatementId))
                 .ToImmutableArray(),
-            prerequisites.ToImmutableArray());
+            (prerequisites ?? Array.Empty<string>()).ToImmutableArray());
 
     [Fact]
     public void CreateCanonicalizesAndWriteIsDeterministicUtf8()
     {
         var nodes = ImmutableArray.Create(
             Node(
-                "D5/S0/Carrier/Beta.lean", "sha256:fb",
+                "D5/S0/Carrier/Beta.lean", Id('b'),
                 axioms: new[] { "propext", "Classical.choice" },
-                declarations: new[] { ("nk-beta", "theorem", "sha256:beta1") },
-                prerequisites: Array.Empty<string>()),
+                declarations: new[] { ("nk-beta", "theorem", Id('c')) }),
             Node(
-                "D5/S0/Carrier/Alpha.lean", "sha256:fa",
+                "D5/S0/Carrier/Alpha.lean", Id('a'),
                 axioms: new[] { "Quot.sound" },
                 declarations: new[]
                 {
-                    ("nk-two", "theorem", "sha256:a2"),
-                    ("nk-one", "definition", "sha256:a1"),
-                },
-                prerequisites: Array.Empty<string>()));
-        var model = TruthExportModel.Create(nodes, Commit, Tree, LeanReportDigest);
+                    ("nk-two", "theorem", Id('2')),
+                    ("nk-one", "def", Id('1')),
+                }));
+        var model = TruthExportModel.Create(nodes, Commit, Tree);
 
         var first = TruthExportJsonWriter.Write(model);
         var second = TruthExportJsonWriter.Write(model);
@@ -68,7 +66,6 @@ public sealed class TruthExportJsonTests
         Assert.Equal("TruthExportCommand", model.Producer);
         Assert.Equal(Commit, model.SourceCommit);
         Assert.Equal(Tree, model.SourceTree);
-        Assert.Equal(LeanReportDigest, model.LeanReportDigest);
 
         // Nodes sort by (repo_path, frozen_node_id); Alpha precedes Beta.
         Assert.Equal(
@@ -80,8 +77,8 @@ public sealed class TruthExportJsonTests
         Assert.Equal(
             new[] { "nk-one", "nk-two" },
             model.Nodes[0].Declarations.Select(static declaration => declaration.DeclarationNameKey));
-        Assert.Equal("sha256:a1", model.Nodes[0].Declarations[0].StatementId);
-        Assert.Equal("definition", model.Nodes[0].Declarations[0].Kind);
+        Assert.Equal(Id('1'), model.Nodes[0].Declarations[0].StatementId);
+        Assert.Equal("def", model.Nodes[0].Declarations[0].Kind);
     }
 
     [Fact]
@@ -89,10 +86,9 @@ public sealed class TruthExportJsonTests
     {
         var nodes = Enumerable.Range(0, 8)
             .Select(index => Node(
-                $"D5/S0/Carrier/M{index}.lean", $"sha256:f{index}",
+                $"D5/S0/Carrier/M{index}.lean", Id((char)('0' + index)),
                 axioms: new[] { $"axiom{index}", "propext" },
-                declarations: new[] { ($"nk-{index}", "theorem", $"sha256:{index}") },
-                prerequisites: Array.Empty<string>()))
+                declarations: new[] { ($"nk-{index}", "theorem", Id((char)('0' + index))) }))
             .ToArray();
         var outputs = new HashSet<string>(StringComparer.Ordinal);
         for (var seed = 0; seed < 20; seed++)
@@ -100,8 +96,7 @@ public sealed class TruthExportJsonTests
             var random = new Random(seed);
             var shuffled = nodes.OrderBy(_ => random.Next()).ToImmutableArray();
             outputs.Add(Convert.ToBase64String(
-                TruthExportJsonWriter.Write(
-                    TruthExportModel.Create(shuffled, Commit, Tree, LeanReportDigest)).AsSpan()));
+                TruthExportJsonWriter.Write(TruthExportModel.Create(shuffled, Commit, Tree)).AsSpan()));
         }
 
         Assert.Single(outputs);
@@ -111,13 +106,9 @@ public sealed class TruthExportJsonTests
     public void StrictReaderRoundTripsEveryField()
     {
         var nodes = ImmutableArray.Create(
-            Node(
-                "D5/S0/Carrier/A.lean", "sha256:fa", new[] { "propext" },
-                new[] { ("nk-a", "theorem", "sha256:a") }, Array.Empty<string>()),
-            Node(
-                "D5/S0/Carrier/B.lean", "sha256:fb", Array.Empty<string>(),
-                new[] { ("nk-b", "definition", "sha256:b") }, Array.Empty<string>()));
-        var expected = TruthExportModel.Create(nodes, Commit, Tree, LeanReportDigest);
+            Node("D5/S0/Carrier/A.lean", Id('a'), new[] { "propext" }, new[] { ("nk-a", "theorem", Id('1')) }),
+            Node("D5/S0/Carrier/B.lean", Id('b'), Array.Empty<string>(), new[] { ("nk-b", "def", Id('2')) }, new[] { Id('a') }));
+        var expected = TruthExportModel.Create(nodes, Commit, Tree);
 
         var bytes = TruthExportJsonWriter.Write(expected);
         var actual = TruthExportJsonReader.Read(bytes.AsSpan());
@@ -127,7 +118,6 @@ public sealed class TruthExportJsonTests
         Assert.Equal(expected.Dialect, actual.Dialect);
         Assert.Equal(expected.SourceCommit, actual.SourceCommit);
         Assert.Equal(expected.SourceTree, actual.SourceTree);
-        Assert.Equal(expected.LeanReportDigest, actual.LeanReportDigest);
         Assert.Equal(expected.Producer, actual.Producer);
         Assert.Equal(expected.Nodes.Length, actual.Nodes.Length);
         for (var index = 0; index < expected.Nodes.Length; index++)
@@ -144,34 +134,9 @@ public sealed class TruthExportJsonTests
     }
 
     [Fact]
-    public void PrerequisitesRoundTripThroughWriteAndRead()
-    {
-        var model = TruthExportModel.Create(
-            ImmutableArray.Create(Node(
-                "D5/S0/Carrier/A.lean",
-                "sha256:fa",
-                new[] { "propext" },
-                new[] { ("nk-a", "theorem", "sha256:a") },
-                new[] { "sha256:prerequisite-b", "sha256:prerequisite-a" })),
-            Commit,
-            Tree,
-            LeanReportDigest);
-
-        var actual = TruthExportJsonReader.Read(TruthExportJsonWriter.Write(model).AsSpan());
-
-        Assert.Equal(
-            new[] { "sha256:prerequisite-a", "sha256:prerequisite-b" },
-            Assert.Single(actual.Nodes).PrerequisiteFrozenNodeIds);
-    }
-
-    [Fact]
     public void EmptyNodeSetRoundTrips()
     {
-        var model = TruthExportModel.Create(
-            ImmutableArray<TruthExportNode>.Empty,
-            Commit,
-            Tree,
-            LeanReportDigest);
+        var model = TruthExportModel.Create(ImmutableArray<TruthExportNode>.Empty, Commit, Tree);
         var bytes = TruthExportJsonWriter.Write(model);
 
         Assert.Empty(TruthExportJsonReader.Read(bytes.AsSpan()).Nodes);
@@ -183,9 +148,9 @@ public sealed class TruthExportJsonTests
         // Hand-craft bytes whose nodes descend by repo_path; the writer would never emit this order,
         // so only the reader's strict-order guard catches it.
         var descending =
-            "{\"dialect\":\"stratalint.truth-export.v1\",\"lean_report_digest\":\"" + LeanReportDigest + "\",\"nodes\":["
-            + "{\"declarations\":[{\"declaration_name_key\":\"nk-b\",\"kind\":\"theorem\",\"statement_id\":\"sha256:b\"}],\"frozen_node_id\":\"sha256:fb\",\"node_axiom_closure\":[],\"prerequisite_frozen_node_ids\":[],\"repo_path\":\"D5/S0/Carrier/B.lean\"},"
-            + "{\"declarations\":[{\"declaration_name_key\":\"nk-a\",\"kind\":\"theorem\",\"statement_id\":\"sha256:a\"}],\"frozen_node_id\":\"sha256:fa\",\"node_axiom_closure\":[],\"prerequisite_frozen_node_ids\":[],\"repo_path\":\"D5/S0/Carrier/A.lean\"}"
+            "{\"dialect\":\"stratalint.truth-export.v1\",\"nodes\":["
+            + "{\"declarations\":[{\"declaration_name_key\":\"nk-b\",\"kind\":\"theorem\",\"statement_id\":\"" + Id('2') + "\"}],\"frozen_node_id\":\"" + Id('b') + "\",\"node_axiom_closure\":[],\"prerequisite_frozen_node_ids\":[],\"repo_path\":\"D5/S0/Carrier/B.lean\"},"
+            + "{\"declarations\":[{\"declaration_name_key\":\"nk-a\",\"kind\":\"theorem\",\"statement_id\":\"" + Id('1') + "\"}],\"frozen_node_id\":\"" + Id('a') + "\",\"node_axiom_closure\":[],\"prerequisite_frozen_node_ids\":[],\"repo_path\":\"D5/S0/Carrier/A.lean\"}"
             + "],\"producer\":\"TruthExportCommand\",\"schema\":\"stratalint.truth-export\",\"schema_version\":1,"
             + "\"source_commit\":\"" + Commit + "\",\"source_tree\":\"" + Tree + "\"}\n";
 
@@ -198,57 +163,20 @@ public sealed class TruthExportJsonTests
         // Every exported node is invariantly Closed and carries at least one declaration; a node with an
         // empty declaration array is malformed even though its shape is otherwise valid.
         var noDeclarations =
-            "{\"dialect\":\"stratalint.truth-export.v1\",\"lean_report_digest\":\"" + LeanReportDigest + "\",\"nodes\":["
-            + "{\"declarations\":[],\"frozen_node_id\":\"sha256:fa\",\"node_axiom_closure\":[],\"prerequisite_frozen_node_ids\":[],\"repo_path\":\"D5/S0/Carrier/A.lean\"}"
+            "{\"dialect\":\"stratalint.truth-export.v1\",\"nodes\":["
+            + "{\"declarations\":[],\"frozen_node_id\":\"" + Id('a') + "\",\"node_axiom_closure\":[],\"prerequisite_frozen_node_ids\":[],\"repo_path\":\"D5/S0/Carrier/A.lean\"}"
             + "],\"producer\":\"TruthExportCommand\",\"schema\":\"stratalint.truth-export\",\"schema_version\":1,"
             + "\"source_commit\":\"" + Commit + "\",\"source_tree\":\"" + Tree + "\"}\n";
 
         Assert.Throws<FormatException>(() => TruthExportJsonReader.Read(Encoding.UTF8.GetBytes(noDeclarations)));
     }
 
-    [Fact]
-    public void StrictReaderRejectsUnsortedPrerequisiteFrozenNodeIds()
-    {
-        var unsortedPrerequisites =
-            "{\"dialect\":\"stratalint.truth-export.v1\",\"lean_report_digest\":\"" + LeanReportDigest + "\",\"nodes\":["
-            + "{\"declarations\":[{\"declaration_name_key\":\"nk-a\",\"kind\":\"theorem\",\"statement_id\":\"sha256:a\"}],\"frozen_node_id\":\"sha256:fa\",\"node_axiom_closure\":[],\"prerequisite_frozen_node_ids\":[\"sha256:b\",\"sha256:a\"],\"repo_path\":\"D5/S0/Carrier/A.lean\"}"
-            + "],\"producer\":\"TruthExportCommand\",\"schema\":\"stratalint.truth-export\",\"schema_version\":1,"
-            + "\"source_commit\":\"" + Commit + "\",\"source_tree\":\"" + Tree + "\"}\n";
-
-        Assert.Throws<FormatException>(() =>
-            TruthExportJsonReader.Read(Encoding.UTF8.GetBytes(unsortedPrerequisites)));
-    }
-
-    [Fact]
-    public void StrictReaderRejectsMalformedLeanReportDigest()
-    {
-        var malformed =
-            "{\"dialect\":\"stratalint.truth-export.v1\",\"lean_report_digest\":\"sha256:ABC\","
-            + "\"nodes\":[],\"producer\":\"TruthExportCommand\","
-            + "\"schema\":\"stratalint.truth-export\",\"schema_version\":1,"
-            + "\"source_commit\":\"" + Commit + "\",\"source_tree\":\"" + Tree + "\"}\n";
-
-        Assert.Throws<FormatException>(() =>
-            TruthExportJsonReader.Read(Encoding.UTF8.GetBytes(malformed)));
-    }
-
-    [Theory]
-    [InlineData("")]
-    [InlineData("sha256:ABC")]
-    [InlineData("sha256:333333333333333333333333333333333333333333333333333333333333333G")]
-    public void CreateRejectsMalformedLeanReportDigest(string digest) =>
-        Assert.Throws<ArgumentException>(() => TruthExportModel.Create(
-            ImmutableArray<TruthExportNode>.Empty,
-            Commit,
-            Tree,
-            digest));
-
     [Theory]
     [InlineData("{}\n")]
-    [InlineData("{\"schema\":\"stratalint.truth-export\",\"schema_version\":1,\"dialect\":\"stratalint.truth-export.v1\",\"source_commit\":\"c\",\"source_tree\":\"t\",\"lean_report_digest\":\"sha256:3333333333333333333333333333333333333333333333333333333333333333\",\"producer\":\"TruthExportCommand\",\"nodes\":[],\"extra\":true}\n")]
-    [InlineData("{\"schema\":\"wrong\",\"schema_version\":1,\"dialect\":\"stratalint.truth-export.v1\",\"source_commit\":\"c\",\"source_tree\":\"t\",\"lean_report_digest\":\"sha256:3333333333333333333333333333333333333333333333333333333333333333\",\"producer\":\"TruthExportCommand\",\"nodes\":[]}\n")]
-    [InlineData("{\"schema\":\"stratalint.truth-export\",\"schema_version\":1,\"dialect\":\"stratalint.truth-export.v2\",\"source_commit\":\"c\",\"source_tree\":\"t\",\"lean_report_digest\":\"sha256:3333333333333333333333333333333333333333333333333333333333333333\",\"producer\":\"TruthExportCommand\",\"nodes\":[]}\n")]
-    [InlineData("{\"schema\":\"stratalint.truth-export\",\"schema_version\":1,\"dialect\":\"stratalint.truth-export.v1\",\"source_commit\":\"c\",\"source_tree\":\"t\",\"lean_report_digest\":\"sha256:3333333333333333333333333333333333333333333333333333333333333333\",\"producer\":\"Impostor\",\"nodes\":[]}\n")]
+    [InlineData("{\"schema\":\"stratalint.truth-export\",\"schema_version\":1,\"dialect\":\"stratalint.truth-export.v1\",\"source_commit\":\"c\",\"source_tree\":\"t\",\"producer\":\"TruthExportCommand\",\"nodes\":[],\"extra\":true}\n")]
+    [InlineData("{\"schema\":\"wrong\",\"schema_version\":1,\"dialect\":\"stratalint.truth-export.v1\",\"source_commit\":\"c\",\"source_tree\":\"t\",\"producer\":\"TruthExportCommand\",\"nodes\":[]}\n")]
+    [InlineData("{\"schema\":\"stratalint.truth-export\",\"schema_version\":1,\"dialect\":\"stratalint.truth-export.v2\",\"source_commit\":\"c\",\"source_tree\":\"t\",\"producer\":\"TruthExportCommand\",\"nodes\":[]}\n")]
+    [InlineData("{\"schema\":\"stratalint.truth-export\",\"schema_version\":1,\"dialect\":\"stratalint.truth-export.v1\",\"source_commit\":\"c\",\"source_tree\":\"t\",\"producer\":\"Impostor\",\"nodes\":[]}\n")]
     public void StrictReaderRejectsMalformedOrUnknownFields(string json) =>
         Assert.Throws<FormatException>(() => TruthExportJsonReader.Read(Encoding.UTF8.GetBytes(json)));
 }

@@ -23,4 +23,3 @@ For any simultaneously sufficient candidate, choosing its component factor maps 
 ## References
 
 - Truth anchor: `D5/S3/ConceptDynamics/Refinement/MultiTargetMinimalSufficiency.multi_target_minimal_sufficiency`
-- Dependency: [D5/S3/ConceptDynamics/ConceptJoinUniversal](../ConceptJoinUniversal.md)

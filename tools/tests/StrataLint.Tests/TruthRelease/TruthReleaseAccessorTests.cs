@@ -17,6 +17,30 @@ public sealed class TruthReleaseAccessorTests
 
     private static string Hex(byte[] bytes) => Convert.ToHexStringLower(SHA256.HashData(bytes));
 
+    private static byte[] SourceSnapshotBytes(
+        byte[] truthGraph,
+        byte[] rawLeanReport,
+        byte[] residualFrontier,
+        byte[] truthExport,
+        byte[] frozenLedgerHead) => Utf8.GetBytes($$"""
+        {
+          "schema": "source-snapshot.v1",
+          "source_repo": "the-omega-institute/trureturing",
+          "source_commit": "{{Commit}}",
+          "source_tree": "{{Tree}}",
+          "lean_toolchain": "leanprover/lean4:v4.24.0",
+          "mathlib_rev": "3333333333333333333333333333333333333333",
+          "producer_package_commit": "4444444444444444444444444444444444444444",
+          "truth_graph_sha256": "sha256:{{Hex(truthGraph)}}",
+          "raw_lean_report_sha256": "sha256:{{Hex(rawLeanReport)}}",
+          "dag_md_sha256": "sha256:6666666666666666666666666666666666666666666666666666666666666666",
+          "residual_frontier_sha256": "sha256:{{Hex(residualFrontier)}}",
+          "declarations_sha256": "sha256:{{Hex(truthExport)}}",
+          "frozen_ledger_head_hash": "sha256:{{Hex(frozenLedgerHead)}}",
+          "frozen_ledger_sequence": 42
+        }
+        """);
+
     // A minimal but strictly valid truth graph (empty sets + the one required deferred layer). Written
     // through the canonical writer so the reader's round-trip byte check accepts it.
     private static byte[] MinimalTruthGraphBytes() =>
@@ -45,26 +69,36 @@ public sealed class TruthReleaseAccessorTests
         TruthExportJsonWriter.Write(TruthExportModel.Create(
             ImmutableArray.Create(new TruthExportNode(
                 "D5/S0/A.lean",
-                "sha256:fa",
+                "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
                 ImmutableArray.Create("propext"),
-                ImmutableArray.Create(new TruthExportDeclaration("nk-a", "theorem", "sha256:a")),
+                ImmutableArray.Create(new TruthExportDeclaration(
+                    "nk-a",
+                    "theorem",
+                    "sha256:1111111111111111111111111111111111111111111111111111111111111111")),
                 ImmutableArray<string>.Empty)),
             Commit,
-            Tree,
-            "sha256:3333333333333333333333333333333333333333333333333333333333333333")).ToArray();
+            Tree)).ToArray();
 
     // Assemble a self-consistent bundle from real content and return its directory + release digest.
     private static (string Directory, string Digest) BuildBundle(byte[] truthGraph, byte[] truthExport)
     {
+        var rawLeanReport = Utf8.GetBytes("raw_lean_report");
+        var residualFrontier = Utf8.GetBytes("residual_frontier");
+        var frozenLedgerHead = Utf8.GetBytes("frozen_ledger_head");
         var artifacts = new (string Key, string File, byte[] Bytes)[]
         {
-            ("source_snapshot", "source-snapshot.v1.json", Utf8.GetBytes("source_snapshot")),
+            ("source_snapshot", "source-snapshot.v1.json", SourceSnapshotBytes(
+                truthGraph,
+                rawLeanReport,
+                residualFrontier,
+                truthExport,
+                frozenLedgerHead)),
             ("truth_graph", "truth-graph.v1.json", truthGraph),
-            ("raw_lean_report", "raw-lean-report.json", Utf8.GetBytes("raw_lean_report")),
+            ("raw_lean_report", "raw-lean-report.json", rawLeanReport),
             ("truth_export", "truth-export.v1.json", truthExport),
             ("blueprint_index", "blueprint-index.v1.json", Utf8.GetBytes("blueprint_index")),
-            ("frozen_ledger_head", "frozen-ledger-head.json", Utf8.GetBytes("frozen_ledger_head")),
-            ("residual_frontier", "echo-residual-summary.md", Utf8.GetBytes("residual_frontier")),
+            ("frozen_ledger_head", "frozen-ledger-head.json", frozenLedgerHead),
+            ("residual_frontier", "echo-residual-summary.md", residualFrontier),
         };
 
         var sums = string.Concat(artifacts
