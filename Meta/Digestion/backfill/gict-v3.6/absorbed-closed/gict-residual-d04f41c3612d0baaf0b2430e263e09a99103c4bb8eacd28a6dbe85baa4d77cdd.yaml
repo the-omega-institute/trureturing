@@ -1,0 +1,17 @@
+ast_path: theorem/6.9
+fingerprints:
+  raw_sha256: sha256:d04f41c3612d0baaf0b2430e263e09a99103c4bb8eacd28a6dbe85baa4d77cdd
+  normalized_sha256: sha256:d04f41c3612d0baaf0b2430e263e09a99103c4bb8eacd28a6dbe85baa4d77cdd
+cas_ref: sha256:d04f41c3612d0baaf0b2430e263e09a99103c4bb8eacd28a6dbe85baa4d77cdd
+coverage_gids:
+  - D5/S3/Zeros/ToySpectrum/FourPointPowerDefect.four_point_power_defect_eq
+receipts:
+  coverage:
+    - gid: D5/S3/Zeros/ToySpectrum/FourPointPowerDefect.four_point_power_defect_eq
+      source_sha256: sha256:d04f41c3612d0baaf0b2430e263e09a99103c4bb8eacd28a6dbe85baa4d77cdd
+      target_sha256: sha256:0c3157145cb40f7f5bea7e836080cba9650ad14ae37ca96bc3a5add15b357b3d
+  scribe:
+    - gid: D5/S3/Zeros/ToySpectrum/FourPointPowerDefect.four_point_power_defect_eq
+      definition_sha256: sha256:04b2af2b34d4c21b9a7e05214e28b0457840b74a24b30570a492b670e320afec
+      emission_sha256: sha256:39f634b665e8aecb79fcbf588ad67ff027853bd1c03dfc8491402a736f219b4b
+  unresolved_subitems: []
