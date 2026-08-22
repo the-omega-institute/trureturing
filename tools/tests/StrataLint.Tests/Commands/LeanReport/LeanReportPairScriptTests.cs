@@ -120,7 +120,7 @@ public sealed class LeanReportPairScriptTests
 
         Assert.NotEqual(0, result.ExitCode);
         Assert.Contains(
-            $"lean-report-pair: cache ensure is absent or not executable: {fixture.CanonicalCacheEnsurePath}\n",
+            $"lean-report-pair: cache ensure is absent or not a readable regular file: {fixture.CanonicalCacheEnsurePath}\n",
             Encoding.UTF8.GetString(result.StandardError),
             StringComparison.Ordinal);
         Assert.Equal(0, fixture.ProducerInvocationCount);
@@ -184,7 +184,7 @@ public sealed class LeanReportPairScriptTests
             File.WriteAllText(CacheEnsurePath, FakeCacheEnsure, new UTF8Encoding(false));
             var chmod = BoundedProcessRunner.Run(
                 "chmod",
-                ["+x", producer, CacheEnsurePath],
+                ["+x", producer],
                 temporary.Path,
                 TimeSpan.FromSeconds(30),
                 4096);

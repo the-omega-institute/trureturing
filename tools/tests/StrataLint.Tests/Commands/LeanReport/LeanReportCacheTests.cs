@@ -281,7 +281,7 @@ public sealed class LeanReportCacheTests
             WriteExecutable(
                 Path.Combine(reportDir, "report-supervisor.sh"),
                 StubSupervisor);
-            WriteExecutable(
+            File.WriteAllText(
                 Path.Combine(worktreeDir, "lean-cache-ensure.sh"),
                 StubCacheEnsure);
             CopyWrapper = Path.Combine(bin, "cp");

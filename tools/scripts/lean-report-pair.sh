@@ -372,9 +372,9 @@ prepare_bundle() {
   local repository_sha256="$8"
 
   local cache_ensure="${root}/tools/scripts/worktree/lean-cache-ensure.sh"
-  [[ -x "$cache_ensure" ]] \
-    || { echo "lean-report-pair: cache ensure is absent or not executable: $cache_ensure" >&2; return 2; }
-  "$cache_ensure"
+  [[ -f "$cache_ensure" && -r "$cache_ensure" ]] \
+    || { echo "lean-report-pair: cache ensure is absent or not a readable regular file: $cache_ensure" >&2; return 2; }
+  "$BASH" "$cache_ensure"
 
   create_staging_output "$live_output"
   local staged_output="$LAST_STAGING_OUTPUT"
