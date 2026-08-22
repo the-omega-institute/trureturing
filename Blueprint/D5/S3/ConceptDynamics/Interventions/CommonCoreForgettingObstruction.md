@@ -42,3 +42,4 @@ Repository search found no exact obstruction theorem. The proof directly imports
 
 - Truth anchor: `D5/S3/ConceptDynamics/Interventions/CommonCoreForgettingObstruction.commonCoreRelation`
 - Truth anchor: `D5/S3/ConceptDynamics/Interventions/CommonCoreForgettingObstruction.common_core_obstructs_complete_forgetting`
+- Dependency: [D5/S3/ConceptDynamics/ConceptJoinUniversal](../ConceptJoinUniversal.md)
