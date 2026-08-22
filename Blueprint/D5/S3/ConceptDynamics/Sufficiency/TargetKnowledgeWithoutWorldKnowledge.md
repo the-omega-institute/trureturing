@@ -20,7 +20,7 @@ The concept is not equivalent to complete world knowledge. It identifies the wor
 
 **Theorem 1.2 (Target knowledge does not require world knowledge).**
 
-$$\begin{gathered}\exists X, Target, Coordinate: \operatorname{Type},\\{}T: X \to Target, C: X \to Coordinate,\\{}\operatorname{Refines}(\operatorname{canonicalTargetReadout}(T), C) \land \neg \operatorname{ConceptEquivalent}(C, \operatorname{id}_{X}).\end{gathered}$$
+$$\begin{gathered}\exists X, Target, Coordinate: \operatorname{Type},\\{}T: X \to Target, C: X \to Coordinate,\\{}\operatorname{Refines}(\operatorname{canonicalTargetReadout}(T), C) \land \neg \operatorname{ConceptEquivalent}(C, id_{X}).\end{gathered}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Sufficiency/TargetKnowledgeWithoutWorldKnowledge.target_knowledge_without_world_knowledge` (`✓ std3`). ∎
 

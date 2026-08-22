@@ -64,18 +64,18 @@ internal sealed class TargetKnowledgeWithoutWorldKnowledgeDocument
         return Seq([.. items]);
     }
 
-    private static Formula Named(string name) =>
-        Seq(Operatorname, Grp(F.Id(name)));
+    private static Formula Named(Formula id) =>
+        Seq(Operatorname, Grp(id));
 
     private static Formula ConcreteWitnessFormula()
     {
-        Formula boolType = Named("Bool");
+        Formula boolType = Named(F.Id("Bool"));
         Formula state = F.Id("X");
         Formula target = F.Id("T");
         Formula concept = F.Id("C");
         Formula world = F.Id("W");
-        Formula first = Named("fst");
-        Formula identity = Named("id");
+        Formula first = Named(F.Id("fst"));
+        Formula identity = Named(F.Id("id"));
 
         return Disp(Seq(
             Begin, Grp(F.Id("gathered")),
@@ -94,8 +94,8 @@ internal sealed class TargetKnowledgeWithoutWorldKnowledgeDocument
         Formula coordinateType = F.Id("Coordinate");
         Formula target = F.Id("T");
         Formula concept = F.Id("C");
-        Formula type = Named("Type");
-        Formula identity = new Formula.Subscript(Named("id"), state);
+        Formula type = Named(F.Id("Type"));
+        Formula identity = new Formula.Subscript(F.Id("id"), state);
 
         return Disp(Seq(
             Begin, Grp(F.Id("gathered")),
