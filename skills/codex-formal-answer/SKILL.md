@@ -15,7 +15,7 @@ This skill is a thin adapter for one invocation, from a user's natural-language 
 
 A reply is a proof-carrying projection over existing truth, not a new truth plane or an automatic frozen node. A request for a durable contribution is a separate task routed to the existing Frontier, formalization, or admission workflow; answering never deposits or freezes by itself.
 
-This file is Codex-specific packaging of repository obligations; it has no authority of its own. `docs/develop/spec/golden-ledger-repo-spec.md` is the sole normative specification, `CLAUDE.md` is the invariant frame, and live owner output decides facts about the current tree. If this file disagrees with an owner, the owner wins and this file is the bug.
+This file is Codex-specific packaging of repository obligations; it has no authority over owner facts. `docs/develop/spec/golden-ledger-repo-spec.md` is the sole normative specification, `CLAUDE.md` is the invariant frame, and live owner output decides facts about the current tree. Any current-state summary below is a non-load-bearing reading: it creates no rule independent of its owner, and if the owner disagrees, follow the owner and treat the summary here as void.
 
 ## Read first
 
@@ -33,11 +33,11 @@ Follow these steps in order. Do not pass a step until its postcondition holds.
 
 ### 0. Measure capabilities
 
-Measure, rather than assume, whether the current Lean `make` door and third-party search are usable. Record each probe, its location, its result, and its exit code when it is a command. After owner facts exist, use the runtime decision table below at Step 5.
+Measure, rather than assume, whether the current Lean `make` door and third-party search are usable. Record each probe, its location, its result, and its exit code when it is a command. After owner facts exist, apply Step 5's ordered rules.
 
-Under the current text of `CLAUDE.md` item 11, a missing capability blocks only the transition that uses it, active-frozen facts remain reusable without local Lean, and a blocked transition takes the named `wait-for-capability` open rather than becoming a search-complete claim or whole-run failure.
+Use the capability owner's typed result for each transition. A capability failure is never negative evidence about `P`.
 
-Postcondition: every relevant capability has measured evidence, and each unavailable transition has the owner-defined typed open while independent assertions continue.
+Postcondition: every relevant capability has measured evidence, and each unavailable transition has an addressed owner-issued capability fact while independent assertions continue.
 
 ### 1. Inventory raw clauses
 
@@ -45,8 +45,8 @@ Split the input into assertion records while preserving each clause verbatim. Fo
 
 - `formalizable`: it can be stated exactly as a proposition; this says nothing about decidability or provability.
 - `conditional-empirical`: its force depends on an explicit empirical condition that must remain visible.
-- `ambiguous`: retain a bounded set of materially distinct candidate formalizations and keep the assertion open. Never claim the set is exhaustive without a finiteness proof, and never ask the user to choose.
-- `not-formalizable`: return `not-formalized` and create no ornamental Lean.
+- `ambiguous`: retain a bounded set of materially distinct candidate formalizations without choosing one. Never claim the set is exhaustive without a finiteness proof, and never ask the user to choose.
+- `not-formalizable`: no exact proposition can be stated; create no ornamental Lean.
 
 Separate explanatory prose from assertions. Explanations need no grade; every assertion does.
 
@@ -56,11 +56,11 @@ Postcondition: every assertion and every material clause is present exactly once
 
 Execute CLAUDE.md item 11's current owner-defined ordered search before fixing the typed echo. At every stage search both the pending proposition and the shape of its negation or counterexample. Record the verbatim query, where it ran, hit or miss, and the address of every hit. A textual hit discharges nothing until it is exactly reused or applied.
 
-On the current text of specification A17.2 (`docs/develop/spec/golden-ledger-repo-spec.md:163`), exact third-party Lean reuse has only dependency or port admission, reproof is forbidden, and all three admission predicates remain `open`. This invocation performs no admission, so an exact third-party hit is provenance only and never this reply's kernel basis.
+Third-party reuse and admission are owned by specification A17.2. This invocation performs no admission: record an exact third-party hit as provenance, and let Step 5 accept it as kernel basis only if an owner separately issues eligible in-repository evidence.
 
-On the current text of specification 11.20.4 (`docs/develop/spec/golden-ledger-repo-spec.md:523` and `:533`), do not use SL-028 output to find renamed D5 duplicates: it is an `Observe` advisory that the admit path does not render, with visibility still `open`.
+Invoke specification 11.20.4 for the current SL-028 semantics. This file neither defines its admission effect nor assumes its output is visible; record only output actually received.
 
-Postcondition: each searchable record has the owner-ordered trace for the proposition and its negation shape, or the exact blocked stage is a `wait-for-capability` open; every hit has an address and an explicit reuse disposition.
+Postcondition: each searchable record has the owner-ordered trace for the proposition and its negation shape, or the exact blocked stage has an addressed owner-issued `wait-for-capability` fact; every hit has an address and an explicit reuse disposition.
 
 ### 3. Fix the exact statement echo
 
@@ -76,7 +76,7 @@ After the owner-ordered search, and only with measured Lean capability, follow t
 
 This step is run-local: never deposit, freeze, cover, or edit a receipt. Retain the exact commands, exit codes, diagnostics, pins, and canonical report address. A failed attempt is evidence of failure to prove, never evidence that `P` is false.
 
-Postcondition: owner output contains an exact declaration for `P` or its negation, or the record is `open` with the failed attempts and machine diagnostics; the repository has no new mutation from this skill.
+Postcondition: owner output contains an exact declaration for `P` or its negation, or retains the failed attempts and machine diagnostics as facts for Step 5; the repository has no new mutation from this skill.
 
 ### 5. Derive outcomes from owner facts
 
@@ -84,11 +84,13 @@ Project outcomes mechanically; never author, select, or downgrade a label. Befor
 
 1. `not-formalized` when the record is `not-formalizable` and has no Lean statement.
 2. `conditional` when the record is `conditional-empirical`, exact `P` is conditional with its named empirical premise undischarged, and eligible owner evidence establishes exact `P`.
-3. `proved` when eligible owner evidence establishes exact `P` for any other record.
-4. `refuted` when eligible owner evidence establishes the exact negation of `P`; keep `P` unchanged.
-5. `open` otherwise, including an ambiguous record, an unavailable required capability, or no eligible evidence for `P` or its negation.
+3. `proved` when eligible owner evidence establishes exact `P` for any record not matched above.
+4. `refuted` when eligible owner evidence establishes the exact negation of `P` for any record not matched above; keep `P` unchanged.
+5. `open` otherwise, including an ambiguous record, an unavailable required capability, a provenance-only third-party hit, or no eligible evidence for `P` or its negation.
 
-`conditional` is for kernel-established conditional-empirical `P`, while `proved` is for kernel-established exact `P` outside that branch. Thus, when exact `P` is itself conditional and the kernel establishes it, the single outcome is `conditional`, not `proved`, and the reply must render the undischarged empirical premise. An active Frozen receipt remains reusable without current Lean. Never infer falsity from failure to prove or downgrade a terminal to an informal sink.
+These rules are a total function over reachable owner-fact states: rule 1 handles the reachable not-formalizable/no-statement state; rules 2-4 handle eligible positive or negative evidence in order; and rule 5 catches every remainder, including ambiguity, unavailable capability, and ineligible evidence. First-match evaluation stops at one rule, so the projected domains are mutually exclusive by construction and exactly one outcome results. In particular, a `conditional-empirical` record whose named empirical premise is discharged cannot match rule 2; eligible evidence for exact `P` matches rule 3 exactly once, yielding `proved`.
+
+`conditional` applies only while the named empirical premise is undischarged. An active Frozen receipt remains reusable without current Lean. Never infer falsity from failure to prove or downgrade a terminal to an informal sink.
 
 Postcondition: every assertion has exactly one mechanically projected outcome, and every formalizable assertion is graded `proved`, `refuted`, `conditional`, or `open`.
 
@@ -106,39 +108,29 @@ Compare the repository change set with the pre-run state and leave it unchanged.
 
 Postcondition: the answer has been delivered, its persistence scope is explicit, and this invocation has made zero repository changes.
 
-## Decision table and acceptance obligation
+## Acceptance obligation
 
-At runtime, after owner facts exist, Step 5 projects each assertion through exactly one row of this decision table. Its record carries the specific address of each owner fact that assertion actually has for that row; it never fabricates addresses for other rows.
+At runtime, Step 5's ordered rules are the sole outcome authority. Each assertion record carries the specific address of every owner fact it actually relied on; it never fabricates unused owner addresses.
 
-At skill-change time, before changing this file, the editor must verify that the table is exhaustive and mutually exclusive against Step 5's ordered rules, and a pull request changing this file carries that verification as the executable echo required by `CLAUDE.md` item 11. A failed verification is a defect, not a human-review state. Under the current `skills/**` classification at `Meta/FILEMAP.toml:414-420`, this is **SOFT** acceptance evidence on the existing `repository-policy` surface, not a hard gate or a per-skill machine test.
-
-| Case | Owner facts | Required result |
-| --- | --- | --- |
-| Not-formalized boundary | `not-formalizable`; no Lean statement | `not-formalized` |
-| Conditional empirical | `conditional-empirical`; exact conditional `P` with named premise undischarged; eligible evidence for `P` | `conditional` |
-| Positive `P`, including Frozen reuse; no informal sink | `formalizable`; exact `P`; eligible evidence for `P`, whether current or active-frozen | `proved` |
-| Symmetric negative | `formalizable` or `conditional-empirical`; exact `P`; no eligible evidence for `P`; eligible evidence for its exact negation | `refuted` |
-| Open boundary | Every remaining record, including addressed ambiguity; missing required search or capability; no eligible evidence because the only candidate has `sorryAx`, a non-standard axiom, a failed door, or a statement mismatch; or exact third-party provenance under the current A17.2 with no active Frozen or current owner declaration receipt for `P` or its exact negation | `open` |
+At skill-change time, before changing this file, the editor must verify that the ordered rules remain a total function: exhaustive over reachable owner-fact states and single-valued by first-match evaluation. A pull request changing this file carries that verification as the executable echo required by `CLAUDE.md` item 11. Failed verification is a defect, not a human-review state. This is a **SOFT** acceptance obligation and adds no per-skill machine test; the FILEMAP owner remains authoritative for repository-policy classification.
 
 ## Earned hard gates
 
 These are the only hard gates added by this adapter; each names an occurred failure.
 
-- **Reuse exact hits; never reprove them.** This is the current reading of `CLAUDE.md` item 11's Knaster-Tarski and golden-ratio precedents and specification A17.2 (`docs/develop/spec/golden-ledger-repo-spec.md:163`), whose incident is the third-party path collapsing into forbidden reproof.
-- **Reject a tautological or thin mapping.** This is the current reading of `skills/codex-formalize/SKILL.md`, "Mathematical content" and "Deposit substance," which record seven definitional-tautology cases and the landed thin-deposit case.
-- **Never use a cold bare `lake build`.** This is the current reading of `CLAUDE.md` tool law 3, which records issue #2762's multi-hour cold-lane failure and PR #2764's repair.
-- **Invoke volatile owners; do not copy their contracts.** This is the current reading of specification revision v7.16 R20 at `docs/develop/spec/golden-ledger-repo-spec.md:877`, which records a stale `skills/` copy after a reference-closure sweep missed that directory.
-- **Never claim a command result without its exit code.** This is the current reading of `skills/codex-formalize/SKILL.md`, "Process honesty," which records the seat that reported a failed Lean build as green.
+- **Honor the owner-issued reuse disposition; never invent a reproof path.** Invoke `CLAUDE.md` item 11 and specification A17.2 (`docs/develop/spec/golden-ledger-repo-spec.md:163`). The occurred incident is the third-party path collapsing into forbidden reproof.
+- **Reject a tautological or thin mapping.** Invoke `skills/codex-formalize/SKILL.md`, "Mathematical content" and "Deposit substance," which record seven definitional-tautology cases and the landed thin-deposit case.
+- **Never use a cold bare `lake build`.** Invoke `CLAUDE.md` tool law 3, which records issue #2762's multi-hour cold-lane failure and PR #2764's repair.
+- **Treat owner summaries here as non-load-bearing.** Invoke the owner before use; any summary is void on disagreement and may not create an independent rule. Specification revision v7.16 R20 at `docs/develop/spec/golden-ledger-repo-spec.md:877` records the stale `skills/` copy left when a reference-closure sweep missed that directory.
+- **Never claim a command result without its exit code.** Invoke `skills/codex-formalize/SKILL.md`, "Process honesty," which records the seat that reported a failed Lean build as green.
 
 ## Prohibitions
 
 - No deposit, freeze, coverage edit, or receipt edit; the `make` deposit and cover doors and the existing formalize, theorize, and ingest skills own them.
 - No second axiom parser, search engine, ledger, or receipt service; `tools/lean-inspector/Inspector.lean` via `make lean-report`, CLAUDE.md item 11, and the frozen ledger own those facts.
-- Under the current `CLAUDE.md` tool law 3 and `make help`, no cold bare `lake build`; the current `make` doors own Lean builds.
-- Under the current `CLAUDE.md` item 22, no `requires human review`, `awaiting human`, or equivalent branch.
-- Under the current `CLAUDE.md` section VI, no hedging word in place of a measurement; use its typed alternatives.
-- Under the current specification 11.20.4 (`docs/develop/spec/golden-ledger-repo-spec.md:523` and `:533`), no reliance on SL-028 as a consumable duplicate signal while its `Observe` output remains unrendered.
-- Under the current specification A17.2 (`docs/develop/spec/golden-ledger-repo-spec.md:163`), no third-party kernel basis, reproof, dependency, or port in this run; its admission belongs to another workflow.
+- No `requires human review`, `awaiting human`, or equivalent branch; `CLAUDE.md` item 22 owns that prohibition.
+- No hedging word in place of a measurement; `CLAUDE.md` section VI owns its typed alternatives.
+- No third-party admission in this run; specification A17.2 owns that separate workflow.
 - No automatic conversion of a reply into a repository node; the F-plane admission and freezing workflows own durable truth.
 
 ## What this skill does not own
@@ -151,4 +143,4 @@ These are the only hard gates added by this adapter; each names an occurred fail
 - Freezing, receipts, and coverage: the deposit and cover doors and their existing skills.
 - PR mechanics: `make pr-open`.
 
-This skill names each owner without reproducing its thresholds, grammars, or protocols. The owners and their live machine output always win.
+This skill names each owner and states only the minimum non-load-bearing reading needed to run the workflow. Owners and their live machine output always win; a conflicting local sentence is void.
