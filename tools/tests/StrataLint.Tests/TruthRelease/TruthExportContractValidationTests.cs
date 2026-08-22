@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Immutable;
+using System.Globalization;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using Trureturing.Truth;
 using Xunit;
 
@@ -17,9 +19,73 @@ public sealed class TruthExportContractValidationTests
     [Fact]
     public void DeclarationKindsAreExactlyTheProducerAndContractLiterals()
     {
+        // tools/lean-inspector/Inspector.lean kindOf is the producer source for every literal:
+        // axiomInfo -> axiom, defnInfo -> def, thmInfo -> theorem, opaqueInfo -> opaque,
+        // quotInfo -> quotient, ctorInfo -> constructor, recInfo -> recursor, and
+        // inductInfo -> inductive. CanonicalStatementWriter and the historical Engine-to-wire
+        // TruthExportModel.Create projection copy that value unchanged; "definition" is not emitted.
         Assert.Equal(
-            new[] { "constructor", "def", "definition", "inductive", "opaque", "recursor", "theorem" },
+            new[] { "axiom", "constructor", "def", "inductive", "opaque", "quotient", "recursor", "theorem" },
             TruthExportValidation.DeclarationKinds.OrderBy(static value => value, StringComparer.Ordinal));
+    }
+
+    [Fact]
+    public void WriterRejectsInvalidModelPassedDirectlyWithoutCreate()
+    {
+        var invalid = Model(
+            Node("A.lean", 'a'),
+            Node("B.lean", 'a'));
+
+        Assert.Throws<FormatException>(() => TruthExportJsonWriter.Write(invalid));
+    }
+
+    [Fact]
+    public void WriterRejectsUnsupportedRootIdentityFields()
+    {
+        var model = Model();
+
+        Assert.Throws<FormatException>(() => TruthExportJsonWriter.Write(model with { Schema = "wrong" }));
+        Assert.Throws<FormatException>(() => TruthExportJsonWriter.Write(model with { SchemaVersion = 2 }));
+        Assert.Throws<FormatException>(() => TruthExportJsonWriter.Write(model with { Dialect = "wrong" }));
+        Assert.Throws<FormatException>(() => TruthExportJsonWriter.Write(model with { Producer = "Impostor" }));
+    }
+
+    [Fact]
+    public void WriterRejectsNullAxiomClosureEntry()
+    {
+        var node = Node("A.lean", 'a') with
+        {
+            NodeAxiomClosure = ImmutableArray.CreateRange(new string[] { null! }),
+        };
+
+        Assert.Throws<FormatException>(() => TruthExportJsonWriter.Write(Model(node)));
+    }
+
+    [Fact]
+    public void WriterRejectsNullDeclarationNameKey()
+    {
+        var node = Node("A.lean", 'a') with
+        {
+            Declarations = ImmutableArray.Create(new TruthExportDeclaration(null!, "theorem", Id('1'))),
+        };
+
+        Assert.Throws<FormatException>(() => TruthExportJsonWriter.Write(Model(node)));
+    }
+
+    [Fact]
+    public void CreateComparesDeclarationOrderByNameKeyThenStatementId()
+    {
+        var node = Node("A.lean", 'a') with
+        {
+            Declarations = ImmutableArray.Create(
+                new TruthExportDeclaration("a\0", "theorem", Id('2')),
+                new TruthExportDeclaration("a", "theorem", Id('1'))),
+        };
+
+        var model = TruthExportModel.Create(ImmutableArray.Create(node), Commit40, Tree40);
+
+        Assert.Equal(new[] { "a", "a\0" },
+            model.Nodes[0].Declarations.Select(static declaration => declaration.DeclarationNameKey));
     }
 
     [Theory]
@@ -242,5 +308,35 @@ public sealed class TruthExportContractValidationTests
         TruthExportJsonReader.Read(TruthExportJsonWriter.Write(model).AsSpan());
 
     private static void Reject(TruthExportModel model) =>
-        Assert.Throws<FormatException>(() => Read(model));
+        Assert.Throws<FormatException>(() =>
+            TruthExportJsonReader.Read(Encoding.UTF8.GetBytes(UncheckedJson(model))));
+
+    private static string UncheckedJson(TruthExportModel model) =>
+        "{"
+        + "\"schema\":" + JsonString(model.Schema)
+        + ",\"schema_version\":" + model.SchemaVersion.ToString(CultureInfo.InvariantCulture)
+        + ",\"dialect\":" + JsonString(model.Dialect)
+        + ",\"source_commit\":" + JsonString(model.SourceCommit)
+        + ",\"source_tree\":" + JsonString(model.SourceTree)
+        + ",\"producer\":" + JsonString(model.Producer)
+        + ",\"nodes\":[" + string.Join(',', model.Nodes.Select(UncheckedNodeJson)) + "]}"
+        + "\n";
+
+    private static string UncheckedNodeJson(TruthExportNode node) =>
+        "{"
+        + "\"repo_path\":" + JsonString(node.RepoPath)
+        + ",\"frozen_node_id\":" + JsonString(node.FrozenNodeId)
+        + ",\"node_axiom_closure\":["
+        + string.Join(',', node.NodeAxiomClosure.Select(JsonString)) + "]"
+        + ",\"declarations\":[" + string.Join(',', node.Declarations.Select(UncheckedDeclarationJson)) + "]"
+        + ",\"prerequisite_frozen_node_ids\":["
+        + string.Join(',', node.PrerequisiteFrozenNodeIds.Select(JsonString)) + "]}";
+
+    private static string UncheckedDeclarationJson(TruthExportDeclaration declaration) =>
+        "{"
+        + "\"declaration_name_key\":" + JsonString(declaration.DeclarationNameKey)
+        + ",\"kind\":" + JsonString(declaration.Kind)
+        + ",\"statement_id\":" + JsonString(declaration.StatementId) + "}";
+
+    private static string JsonString(string? value) => JsonSerializer.Serialize(value);
 }

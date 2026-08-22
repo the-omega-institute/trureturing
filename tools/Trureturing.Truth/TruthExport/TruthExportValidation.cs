@@ -4,14 +4,17 @@ namespace Trureturing.Truth;
 
 public static class TruthExportValidation
 {
+    // Exact output alphabet of tools/lean-inspector/Inspector.lean kindOf. The Engine's
+    // CanonicalStatementWriter and the Engine-to-wire projection copy these values unchanged.
     public static readonly ImmutableHashSet<string> DeclarationKinds =
         ImmutableHashSet.Create(
             StringComparer.Ordinal,
+            "axiom",
             "constructor",
             "def",
-            "definition",
             "inductive",
             "opaque",
+            "quotient",
             "recursor",
             "theorem");
 
@@ -80,6 +83,14 @@ public static class TruthExportValidation
     internal static void RequireValidModel(TruthExportModel model)
     {
         ArgumentNullException.ThrowIfNull(model);
+        if (model.Schema != TruthExportModel.SchemaName
+            || model.SchemaVersion != 1
+            || model.Dialect != TruthExportModel.CanonicalDialect
+            || model.Producer != TruthExportModel.ProducerName)
+        {
+            throw new FormatException("Truth export schema, version, dialect, or producer is unsupported.");
+        }
+
         RequireGitObjectId(model.SourceCommit, "source_commit");
         RequireGitObjectId(model.SourceTree, "source_tree");
         RequireSameGitObjectFormat(model.SourceCommit, model.SourceTree);
@@ -101,19 +112,33 @@ public static class TruthExportValidation
             }
 
             RequireStrictOrder(node.NodeAxiomClosure, "node axiom closure");
-            RequireStrictOrder(
-                node.Declarations.Select(static declaration =>
-                    declaration.DeclarationNameKey + "\0" + declaration.StatementId),
-                "declarations");
             if (node.Declarations.IsEmpty)
             {
                 throw new FormatException("Truth export node has no declarations.");
             }
 
+            TruthExportDeclaration? previousDeclaration = null;
             foreach (var declaration in node.Declarations)
             {
+                if (declaration is null)
+                {
+                    throw new FormatException("Truth export declarations must not contain null entries.");
+                }
+
+                if (declaration.DeclarationNameKey is null)
+                {
+                    throw new FormatException("Truth export declaration_name_key must not be null.");
+                }
+
                 RequireSha256Id(declaration.StatementId, "statement_id");
                 RequireKind(declaration.Kind);
+                if (previousDeclaration is not null
+                    && CompareDeclarations(previousDeclaration, declaration) >= 0)
+                {
+                    throw new FormatException("Truth export declarations must be sorted and unique.");
+                }
+
+                previousDeclaration = declaration;
             }
 
             foreach (var prerequisite in node.PrerequisiteFrozenNodeIds)
@@ -186,15 +211,32 @@ public static class TruthExportValidation
     private static void RequireStrictOrder(IEnumerable<string> values, string name)
     {
         string? previous = null;
+        var hasPrevious = false;
         foreach (var value in values)
         {
-            if (previous is not null && string.CompareOrdinal(previous, value) >= 0)
+            if (value is null)
+            {
+                throw new FormatException($"Truth export {name} must not contain null entries.");
+            }
+
+            if (hasPrevious && string.CompareOrdinal(previous, value) >= 0)
             {
                 throw new FormatException($"Truth export {name} must be sorted and unique.");
             }
 
             previous = value;
+            hasPrevious = true;
         }
+    }
+
+    private static int CompareDeclarations(
+        TruthExportDeclaration left,
+        TruthExportDeclaration right)
+    {
+        var nameComparison = string.CompareOrdinal(left.DeclarationNameKey, right.DeclarationNameKey);
+        return nameComparison != 0
+            ? nameComparison
+            : string.CompareOrdinal(left.StatementId, right.StatementId);
     }
 
     private static bool IsLowerHex(ReadOnlySpan<char> value)

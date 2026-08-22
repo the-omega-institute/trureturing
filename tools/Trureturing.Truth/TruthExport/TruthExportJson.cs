@@ -8,7 +8,7 @@ public static class TruthExportJsonWriter
 {
     public static ImmutableArray<byte> Write(TruthExportModel model)
     {
-        ArgumentNullException.ThrowIfNull(model);
+        TruthExportValidation.RequireValidModel(model);
         var element = JsonSerializer.SerializeToElement(new
         {
             schema = model.Schema,

@@ -48,7 +48,7 @@ public sealed class TruthExportJsonTests
                 declarations: new[]
                 {
                     ("nk-two", "theorem", Id('2')),
-                    ("nk-one", "definition", Id('1')),
+                    ("nk-one", "def", Id('1')),
                 }));
         var model = TruthExportModel.Create(nodes, Commit, Tree);
 
@@ -78,7 +78,7 @@ public sealed class TruthExportJsonTests
             new[] { "nk-one", "nk-two" },
             model.Nodes[0].Declarations.Select(static declaration => declaration.DeclarationNameKey));
         Assert.Equal(Id('1'), model.Nodes[0].Declarations[0].StatementId);
-        Assert.Equal("definition", model.Nodes[0].Declarations[0].Kind);
+        Assert.Equal("def", model.Nodes[0].Declarations[0].Kind);
     }
 
     [Fact]
@@ -107,7 +107,7 @@ public sealed class TruthExportJsonTests
     {
         var nodes = ImmutableArray.Create(
             Node("D5/S0/Carrier/A.lean", Id('a'), new[] { "propext" }, new[] { ("nk-a", "theorem", Id('1')) }),
-            Node("D5/S0/Carrier/B.lean", Id('b'), Array.Empty<string>(), new[] { ("nk-b", "definition", Id('2')) }, new[] { Id('a') }));
+            Node("D5/S0/Carrier/B.lean", Id('b'), Array.Empty<string>(), new[] { ("nk-b", "def", Id('2')) }, new[] { Id('a') }));
         var expected = TruthExportModel.Create(nodes, Commit, Tree);
 
         var bytes = TruthExportJsonWriter.Write(expected);
