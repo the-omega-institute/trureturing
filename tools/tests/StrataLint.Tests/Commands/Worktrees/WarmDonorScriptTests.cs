@@ -21,9 +21,9 @@ public sealed class WarmDonorScriptTests
 
         Assert.Equal(0, run.Process.ExitCode);
         AssertReceipt(run.Process, "skipped", "precondition", reason);
-        Assert.Equal(expectedCalls, File.ReadAllLines(run.Calls).Length);
-        Assert.DoesNotContain("pull", File.ReadAllText(run.Calls), StringComparison.Ordinal);
-        Assert.DoesNotContain("make ", File.ReadAllText(run.Calls), StringComparison.Ordinal);
+        Assert.Equal(expectedCalls, run.CallLines.Length);
+        Assert.DoesNotContain("pull", run.CallsText, StringComparison.Ordinal);
+        Assert.DoesNotContain("make ", run.CallsText, StringComparison.Ordinal);
     }
 
     [Theory]
@@ -127,6 +127,10 @@ public sealed class WarmDonorScriptTests
         string Calls,
         ProcessOutput Process) : IDisposable
     {
+        internal string[] CallLines => File.ReadAllLines(Calls);
+
+        internal string CallsText => File.ReadAllText(Calls);
+
         public void Dispose() => Fixture.Dispose();
     }
 }

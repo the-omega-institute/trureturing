@@ -13,11 +13,8 @@ public sealed class LeanCacheEnsureScriptTests
 
         using var fixture = new TemporaryDirectory();
         var installed = InstallScript(fixture.Path);
-        var bin = Path.Combine(fixture.Path, "bin");
-        var arguments = Path.Combine(fixture.Path, "dotnet-arguments");
-        var dotnetCwd = Path.Combine(fixture.Path, "dotnet-cwd");
-        Directory.CreateDirectory(bin);
-        var dotnet = Path.Combine(bin, "dotnet");
+        Directory.CreateDirectory(installed.Bin);
+        var dotnet = Path.Combine(installed.Bin, "dotnet");
         File.WriteAllText(
             dotnet,
             "#!/usr/bin/env bash\nprintf '%s\\n' \"$@\" > \"$DOTNET_ARGUMENTS\"\nprintf '%s\\n' \"$PWD\" > \"$DOTNET_CWD\"\nprintf 'delegated\\n'\n");
@@ -31,9 +28,9 @@ public sealed class LeanCacheEnsureScriptTests
                 "-c",
                 "PATH=\"$1:$PATH\" DOTNET_ARGUMENTS=\"$2\" DOTNET_CWD=\"$3\" exec /bin/bash \"$4\"",
                 "lean-cache-test",
-                bin,
-                arguments,
-                dotnetCwd,
+                installed.Bin,
+                installed.ArgumentsPath,
+                installed.DotnetCwdPath,
                 installed.Script,
             ],
             installed.Caller,
@@ -66,8 +63,8 @@ public sealed class LeanCacheEnsureScriptTests
                 "--",
                 "worktree",
                 "ensure-cache") + "\n",
-            File.ReadAllText(arguments));
-        Assert.Equal(canonicalRepository + "\n", File.ReadAllText(dotnetCwd));
+            installed.ArgumentsText);
+        Assert.Equal(canonicalRepository + "\n", installed.DotnetCwdText);
     }
 
     [Fact]
@@ -123,7 +120,7 @@ public sealed class LeanCacheEnsureScriptTests
         File.Copy(
             Path.Combine(TestRepositoryLayout.FindRoot(), LeanCacheEnsureScriptPath),
             script);
-        return new InstalledScript(repository, caller, script);
+        return new InstalledScript(fixtureRoot, repository, caller, script);
     }
 
     private static ProcessOutput RunWithFailingDotnet(
@@ -151,5 +148,20 @@ public sealed class LeanCacheEnsureScriptTests
             64 * 1024);
     }
 
-    private sealed record InstalledScript(string Repository, string Caller, string Script);
+    private sealed record InstalledScript(
+        string FixtureRoot,
+        string Repository,
+        string Caller,
+        string Script)
+    {
+        internal string Bin => Path.Combine(FixtureRoot, "bin");
+
+        internal string ArgumentsPath => Path.Combine(FixtureRoot, "dotnet-arguments");
+
+        internal string DotnetCwdPath => Path.Combine(FixtureRoot, "dotnet-cwd");
+
+        internal string ArgumentsText => File.ReadAllText(ArgumentsPath);
+
+        internal string DotnetCwdText => File.ReadAllText(DotnetCwdPath);
+    }
 }

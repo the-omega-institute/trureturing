@@ -470,7 +470,8 @@ internal static class LeanCacheProvisioner
             throw new LeanCacheProvisionException(
                 Join(warning, $"cache fallback failed ({exception.Message})"),
                 exception,
-                cloneReceipt);
+                cloneReceipt,
+                exception.SafeToContinueToBuild);
         }
         catch (Exception exception)
         {
@@ -500,7 +501,8 @@ internal static class LeanCacheProvisioner
             if (result.ExitCode != 0)
             {
                 throw new LeanCacheProvisionException(
-                    $"lake exe cache get failed: {Error(result, "unknown error")}");
+                    $"lake exe cache get failed: {Error(result, "unknown error")}",
+                    safeToContinueToBuild: true);
             }
 
             VerifyPrivateDirectory(lake);

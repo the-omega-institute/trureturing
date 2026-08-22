@@ -79,7 +79,8 @@ internal static class LeanCacheEnsureCommand
             runner,
             cloner,
             guard,
-            removePartial);
+            removePartial,
+            continueOnCacheGetFailure: false);
     }
 
     internal static CommandResult RunWithWriter(
@@ -125,7 +126,8 @@ internal static class LeanCacheEnsureCommand
             runner,
             cloner,
             guard,
-            removePartial: null);
+            removePartial: null,
+            continueOnCacheGetFailure: true);
         if (!ensured.Success) return ensured;
 
         try
@@ -153,7 +155,8 @@ internal static class LeanCacheEnsureCommand
         IWorktreeProcessRunner runner,
         IDirectoryCloner cloner,
         LeanCacheWriterGuard writerGuard,
-        Action<string>? removePartial)
+        Action<string>? removePartial,
+        bool continueOnCacheGetFailure)
     {
         var lake = Path.Combine(root, ".lake");
         writerGuard.RequireOwnershipOf(lake);
@@ -209,6 +212,20 @@ internal static class LeanCacheEnsureCommand
                     catch (LeanCacheProvisionException exception)
                     {
                         if (IsSymlink(lake)) return RefusedSymlink(root, pins.Sha256);
+                        if (continueOnCacheGetFailure
+                            && exception.SafeToContinueToBuild
+                            && !File.Exists(lake))
+                        {
+                            return SuccessReceipt(
+                                "degraded",
+                                root,
+                                donor: null,
+                                method: "cache-get",
+                                pins.Sha256,
+                                JoinReasons(missReason, exception.Message),
+                                LeanCacheProvisioner.InspectMathlibOleans(lake),
+                                stampMiss);
+                        }
                         return FailureReceipt(
                             "failed",
                             root,
@@ -282,6 +299,21 @@ internal static class LeanCacheEnsureCommand
             catch (LeanCacheProvisionException exception)
             {
                 if (IsSymlink(lake)) return RefusedSymlink(root, pins.Sha256);
+                if (continueOnCacheGetFailure
+                    && exception.SafeToContinueToBuild
+                    && !File.Exists(lake))
+                {
+                    return SuccessReceipt(
+                        "degraded",
+                        root,
+                        selection.Donor,
+                        method: "cache-get",
+                        pins.Sha256,
+                        JoinReasons(missReason, JoinReasons(selection.Notice, exception.Message)),
+                        LeanCacheProvisioner.InspectMathlibOleans(lake),
+                        stampMiss,
+                        exception.Clonefile);
+                }
                 return FailureReceipt(
                     "failed",
                     root,

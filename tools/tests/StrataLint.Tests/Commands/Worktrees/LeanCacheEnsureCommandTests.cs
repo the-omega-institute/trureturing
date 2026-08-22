@@ -16,8 +16,7 @@ public sealed partial class LeanCacheEnsureCommandTests
         WriteCache(repository.Path, "already warm\n", mathlibComplete: false);
         var runner = new RecordingWorktreeProcessRunner();
 
-        Assert.False(Directory.Exists(
-            Path.Combine(repository.Path, ".lake", "packages", "mathlib", "Mathlib")));
+        Assert.False(LeanCacheFixtureFile.MathlibProjectionExists(repository.Path));
 
         var result = WorktreeCommand.Run(repository.Path, ["ensure-cache"], runner);
 
@@ -35,8 +34,7 @@ public sealed partial class LeanCacheEnsureCommandTests
         Assert.Equal(JsonValueKind.Null, receipt.RootElement.GetProperty("mathlib_missing_olean_files").ValueKind);
         Assert.Equal(JsonValueKind.Null, receipt.RootElement.GetProperty("reason").ValueKind);
         Assert.Empty(runner.Invocations);
-        Assert.Equal("already warm\n", File.ReadAllText(
-            Path.Combine(repository.Path, ".lake", "build", "cache.bin")));
+        Assert.Equal("already warm\n", LeanCacheFixtureFile.ReadCacheText(repository.Path));
     }
 
     [Fact]
@@ -650,6 +648,17 @@ public sealed class LeanCacheRunScriptTests
 
 internal static class LeanCacheFixtureFile
 {
+    internal static bool MathlibProjectionExists(string repositoryRoot) =>
+        Directory.Exists(Path.Combine(
+            repositoryRoot,
+            ".lake",
+            "packages",
+            "mathlib",
+            "Mathlib"));
+
+    internal static string ReadCacheText(string repositoryRoot) =>
+        File.ReadAllText(Path.Combine(repositoryRoot, ".lake", "build", "cache.bin"));
+
     internal static JsonDocument ParseJson(string path) =>
         JsonDocument.Parse(File.ReadAllText(path));
 

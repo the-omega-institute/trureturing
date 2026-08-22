@@ -5,13 +5,17 @@ internal class LeanCacheProvisionException : InvalidOperationException
     internal LeanCacheProvisionException(
         string message,
         Exception? innerException = null,
-        ClonefileReceipt? clonefile = null)
+        ClonefileReceipt? clonefile = null,
+        bool safeToContinueToBuild = false)
         : base(message, innerException)
     {
         Clonefile = clonefile ?? ClonefileReceipt.NotRun;
+        SafeToContinueToBuild = safeToContinueToBuild;
     }
 
     internal ClonefileReceipt Clonefile { get; }
+
+    internal bool SafeToContinueToBuild { get; }
 }
 
 /// <summary>
