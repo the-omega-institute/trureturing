@@ -5,7 +5,7 @@
    anchors: []
    digest: Complete canonical negative tails classify every nonempty admissible prefix Core. -/
 
-import D5.S1.Words.NegativeExpansions.BasePhiNegativePrefixTridentCore
+import D5.S1.Words.NegativeExpansions.BasePhiNegativePrefixTridentPreservation
 
 namespace D5.X_Frontier.BasePhiNegativePrefixTrident
 
@@ -574,3 +574,56 @@ theorem core_lucas_witness_of_admissible {w : List Bool}
 end
 
 end D5.X_Frontier.BasePhiNegativePrefixTrident
+
+namespace D5.S1.Words.NegativeExpansions.BasePhiNegativePrefixTridentClassification
+
+open D5.S1.Words.Expansions.BasePhiNegative
+open D5.X_Frontier.BasePhiNegativePrefixTrident
+
+noncomputable section
+
+theorem negative_prefix_trident_classification
+    (expansion : BasePhiNegativeExpansion) :
+    ∀ w : List Bool,
+      AdmissibleNegativePrefix expansion w →
+        (∃ a b r, 0 < r ∧ lucasParameter a ∧ lucasParameter b ∧
+          occurrenceSet expansion w = sequenceRange (vF a b r)) ∨
+        (∃ a b r, 0 < r ∧ lucasParameter a ∧ lucasParameter b ∧
+          occurrenceSet expansion w = sequenceRange (vG a b r)) ∨
+        (∃ a b r, 0 < r ∧ lucasParameter a ∧ lucasParameter b ∧
+          occurrenceSet expansion w = sequenceRange (vH a b r)) ∨
+        (∃ (a b : Int) (families : Fin 3 → GapFamily) (first : Fin 3 → Int),
+          lucasParameter a ∧ lucasParameter b ∧ (∀ i, 0 < first i) ∧
+          occurrenceSet expansion w =
+            ⋃ i, sequenceRange (vForFamily (families i) a b (first i))) := by
+  apply (trident_classification_reduces_to_canonical expansion).mpr
+  intro w hw
+  have hn : w ≠ [] := by
+    rintro rfl
+    simp [AdmissibleNegativePrefix, NegativePrefixOccurs, reachesNegativeDepth] at hw
+  have hf := negative_tail_fiber_shape_proved hn hw
+  have hl := core_occurrence_unique_lift_proved hn hw hf
+  obtain ⟨family, a, b, r, hp, hr, hc⟩ := core_lucas_witness_of_admissible hw
+  have ht := v_translate_initial_value_proved family a b r
+  have hd := three_arms_pairwise_disjoint_proved hn hw hf hl ⟨hp, hr, hc⟩ ht
+  obtain ⟨fo, ao, bo, ro, hpo, hro, hs⟩ :=
+    occurrenceSet_lucas_gap_classification_proved hn hw hf hl ⟨hp, hr, hc⟩ ht hd
+  have hparams := hpo.parameters
+  by_cases hh : w.head? = some true
+  · rw [if_pos hh] at hs
+    cases fo
+    · exact Or.inl ⟨ao, bo, ro, hro, hparams.1, hparams.2, hs⟩
+    · exact Or.inr <| Or.inl ⟨ao, bo, ro, hro, hparams.1, hparams.2, hs⟩
+    · exact Or.inr <| Or.inr <| Or.inl ⟨ao, bo, ro, hro, hparams.1, hparams.2, hs⟩
+  · rw [if_neg hh] at hs
+    refine Or.inr <| Or.inr <| Or.inr ⟨ao, bo, fun _ => fo,
+      fun i => ro + i.1, hparams.1, hparams.2, ?_, ?_⟩
+    · intro i
+      have : (0 : Int) ≤ (i.1 : Int) := by positivity
+      change 0 < ro + (i.1 : Int)
+      omega
+    · exact hs
+
+end
+
+end D5.S1.Words.NegativeExpansions.BasePhiNegativePrefixTridentClassification
