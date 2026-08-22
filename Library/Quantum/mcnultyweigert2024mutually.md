@@ -4,7 +4,7 @@ authors: Daniel McNulty, Stefan Weigert
 year: 2024
 title: Mutually Unbiased Bases in Composite Dimensions -- A Review
 doi: 10.48550/arXiv.2410.23997
-claim: The review records the open existence problem for four mutually unbiased bases in dimension six and presents fourteen mathematically equivalent formulations of the existence problem.
+claim: Problem 10.2 states the nonexistence question for four mutually unbiased bases in dimension six; separately, the review's fourteen equivalent formulations concern complete MUB sets (Fin 7 in dimension six), not the Fin 4 problem.
 strata_touched:
   - D5/S3/Quantum/Tomography/RankOneContextCommutator
   - D5/S3/Quantum/Tomography/CompleteContextTomography
@@ -17,14 +17,16 @@ triage: anchor
 # Mutually Unbiased Bases in Composite Dimensions -- A Review
 
 McNulty and Weigert review the construction and nonexistence questions for
-mutually unbiased bases in composite dimensions. For dimension six they keep
-two conjectures separate. Conjecture 1.1 concerns a complete family, which
-would contain seven bases, while Conjecture 2.1 is Zauner's `k = 4` affine
-quantum-design formulation of the fourth-basis problem. The latter is the
-source anchor for `Problems/mub-six-fourth-basis.md`.
+mutually unbiased bases in composite dimensions. Problem 10.2 directly asks to
+show that no set of four MU bases exists when `d = 6`; it is the main source
+anchor for `Problems/mub-six-fourth-basis.md`. Problem 10.1 is the complete-set
+comparison, asking for nonexistence of seven MU bases in dimension six.
+Conjecture 2.1 is retained as Zauner's original `k = 4` affine quantum-design
+formulation of the fourth-basis problem.
 
 The review's abstract also reports fourteen mathematically equivalent
-formulations of the existence problem. This note does not transfer those
+formulations of the complete-set existence problem. In dimension six those
+formulations concern `Fin 7`, not `Fin 4`. This note does not transfer those
 equivalences into the repository and does not treat any numerical obstruction
 as a proof of nonexistence.
 
@@ -40,10 +42,13 @@ as a proof of nonexistence.
   `HEAD https://doi.org/10.48550/arXiv.2410.23997`. It returned HTTP 302 to
   `https://arxiv.org/abs/2410.23997`; negative control
   `10.48550/arXiv.9999.99999` returned HTTP 404.
-- 2026-08-22: The orchestrator read the arXiv HTML for version 2 and located
-  Conjecture 1.1 and Conjecture 2.1, with `k = 4` in the latter. A proposed
-  alternative numbered locator was absent, so only these verified conjecture
-  labels are used.
+- 2026-08-22: The orchestrator fetched the raw arXiv HTML for version 2 with
+  `curl -sL https://arxiv.org/html/2410.23997v2`; the response was HTTP 200 and
+  2,461,445 bytes. `grep -oE 'Problem 10\.[0-9]+'` found all fifteen labels from
+  Problem 10.1 through Problem 10.15. The source reads: "Problem 10.1. Show that
+  no complete set of seven MU bases exists when d = 6." and "Problem 10.2. Show
+  that no set of four MU bases exists when d = 6." In the same fetch,
+  `Conjecture 1.1` occurred four times and `Conjecture 2.1` once.
 - 2026-08-22: The orchestrator's full-tree fixed-string search found zero D5
   hits for `MutuallyUnbiased`, `mutually_unbiased`,
   `MutuallyUnbiasedBases`, `ComplexHadamard`, `complexHadamard`, and
