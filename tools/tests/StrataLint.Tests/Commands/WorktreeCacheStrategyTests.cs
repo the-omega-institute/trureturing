@@ -221,6 +221,12 @@ internal sealed class RecordingWorktreeProcessRunner : IWorktreeProcessRunner
 
     internal bool FailLake { get; init; }
 
+    internal bool ThrowCacheGetTimeout { get; init; }
+
+    internal bool FailWrappedLake { get; init; }
+
+    internal Action<string>? DuringWrappedLake { get; init; }
+
     internal bool FailClean { get; init; }
 
     internal bool ThrowClean { get; init; }
@@ -288,6 +294,7 @@ internal sealed class RecordingWorktreeProcessRunner : IWorktreeProcessRunner
                     Path.Combine(workingDirectory, ".lake", "build", "cache.bin"));
                 CacheGetSawExistingProjection |= sawExistingProjection;
                 CacheGetExistingProjectionObservations.Add(sawExistingProjection);
+                if (ThrowCacheGetTimeout) throw new TimeoutException("cache get timed out");
                 if (FailLake) return Failure("cache get failed");
                 var lake = Path.Combine(workingDirectory, ".lake");
                 Directory.CreateDirectory(lake);
@@ -313,6 +320,8 @@ internal sealed class RecordingWorktreeProcessRunner : IWorktreeProcessRunner
                 return Success();
             }
 
+            DuringWrappedLake?.Invoke(workingDirectory);
+            if (FailWrappedLake) return Failure("wrapped lake command failed");
             return Success();
         }
 

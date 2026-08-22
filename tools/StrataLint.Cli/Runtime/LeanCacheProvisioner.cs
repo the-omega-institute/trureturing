@@ -493,11 +493,22 @@ internal static class LeanCacheProvisioner
         var lake = Path.Combine(worktreeRoot, ".lake");
         try
         {
-            var result = runner.Run(
-                lakeExecutable,
-                ["exe", "cache", "get"],
-                worktreeRoot,
-                ProvisionBudget);
+            ProcessOutput result;
+            try
+            {
+                result = runner.Run(
+                    lakeExecutable,
+                    ["exe", "cache", "get"],
+                    worktreeRoot,
+                    ProvisionBudget);
+            }
+            catch (Exception exception)
+            {
+                throw new LeanCacheProvisionException(
+                    $"lake exe cache get failed: {exception.Message}",
+                    exception,
+                    safeToContinueToBuild: true);
+            }
             if (result.ExitCode != 0)
             {
                 throw new LeanCacheProvisionException(
