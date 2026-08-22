@@ -1,0 +1,17 @@
+ast_path: appendix/E.148
+fingerprints:
+  raw_sha256: sha256:15d2887147007c1900fb67aa375bddd665eae2582a1a1596971d28aaa93c5137
+  normalized_sha256: sha256:15d2887147007c1900fb67aa375bddd665eae2582a1a1596971d28aaa93c5137
+cas_ref: sha256:15d2887147007c1900fb67aa375bddd665eae2582a1a1596971d28aaa93c5137
+coverage_gids:
+  - D5/S3/Factorization/PrimePowers/PrimePowerCriterion.prime_power_iff_unique_prime_divisor
+receipts:
+  coverage:
+    - gid: D5/S3/Factorization/PrimePowers/PrimePowerCriterion.prime_power_iff_unique_prime_divisor
+      source_sha256: sha256:15d2887147007c1900fb67aa375bddd665eae2582a1a1596971d28aaa93c5137
+      target_sha256: sha256:36044ee4ece41439c2a4c515cabf1c2bd709ddff7fa514767013c5da2862a991
+  scribe:
+    - gid: D5/S3/Factorization/PrimePowers/PrimePowerCriterion.prime_power_iff_unique_prime_divisor
+      definition_sha256: sha256:c4e5409387dc87f38306fe124ff54b6f699d6a3a89269a6a6e52671afce34902
+      emission_sha256: sha256:7c713ce73cf4e9487c26b97af3dc7d929d5a48cc3d05299318256d42114ada44
+  unresolved_subitems: []
