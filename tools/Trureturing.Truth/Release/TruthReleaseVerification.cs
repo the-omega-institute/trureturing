@@ -12,10 +12,10 @@ namespace Trureturing.Truth;
 /// independently by re-querying the commit's required checks and re-deriving the bundle.
 /// <para>
 /// The bytes that SHA256SUMS covers (the seven artifacts) are fully bound. The manifest's own bytes are
-/// NOT bound (it cannot list its own SHA256SUMS digest and be inside SHA256SUMS), so a verified
-/// <see cref="VerifiedTruthRelease"/> vouches only for the artifact set and the release digest — the
-/// manifest's source / trust / producer / produced_at remain producer self-assertions to be checked
-/// against the bound source-snapshot and GitHub during the independent provenance step.
+/// NOT bound (it cannot list its own SHA256SUMS digest and be inside SHA256SUMS), so its trust / producer /
+/// produced_at remain producer self-assertions. Its source identity is composition-checked against the
+/// SHA-covered source snapshot and truth export, but authenticity still requires independently checking
+/// GitHub and reproducing the bundle during the provenance step.
 /// </para>
 /// </summary>
 public static class TruthReleaseVerification
@@ -92,6 +92,22 @@ public static class TruthReleaseVerification
                 throw new FormatException($"artifact '{artifact.File}' content does not match its recorded sha256.");
             }
         }
+
+        // 6. Only after every artifact has passed byte-integrity verification, parse the three
+        //    composition-bearing artifacts and require them to describe one source revision. The graph
+        //    digest is computed from the exact verified graph bytes, never accepted from a producer field.
+        var sourceSnapshotBytes = ReadVerifiedArtifactBytes(bundleDirectory, manifest.Artifacts.SourceSnapshot);
+        var truthExportBytes = ReadVerifiedArtifactBytes(bundleDirectory, manifest.Artifacts.TruthExport);
+        var truthGraphBytes = ReadVerifiedArtifactBytes(bundleDirectory, manifest.Artifacts.TruthGraph);
+        var sourceSnapshot = SourceSnapshotJsonReader.Read(sourceSnapshotBytes);
+        var truthExport = TruthExportJsonReader.Read(truthExportBytes);
+        _ = TruthGraphJsonReader.Read(truthGraphBytes);
+        var computedTruthGraphDigest = "sha256:" + Sha256Sums.HashHex(truthGraphBytes);
+        TruthReleaseCompositionValidator.Validate(
+            sourceSnapshot,
+            truthExport,
+            manifest,
+            computedTruthGraphDigest);
 
         return VerifiedTruthRelease.Create(manifest, expectedReleaseDigest, bundleDirectory);
     }

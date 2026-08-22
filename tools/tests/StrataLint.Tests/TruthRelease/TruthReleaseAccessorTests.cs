@@ -17,6 +17,25 @@ public sealed class TruthReleaseAccessorTests
 
     private static string Hex(byte[] bytes) => Convert.ToHexStringLower(SHA256.HashData(bytes));
 
+    private static byte[] SourceSnapshotBytes(byte[] truthGraph) => Utf8.GetBytes($$"""
+        {
+          "schema": "source-snapshot.v1",
+          "source_repo": "the-omega-institute/trureturing",
+          "source_commit": "{{Commit}}",
+          "source_tree": "{{Tree}}",
+          "lean_toolchain": "leanprover/lean4:v4.24.0",
+          "mathlib_rev": "3333333333333333333333333333333333333333",
+          "producer_package_commit": "4444444444444444444444444444444444444444",
+          "truth_graph_sha256": "sha256:{{Hex(truthGraph)}}",
+          "raw_lean_report_sha256": "sha256:5555555555555555555555555555555555555555555555555555555555555555",
+          "dag_md_sha256": "sha256:6666666666666666666666666666666666666666666666666666666666666666",
+          "residual_frontier_sha256": "sha256:7777777777777777777777777777777777777777777777777777777777777777",
+          "declarations_sha256": "sha256:8888888888888888888888888888888888888888888888888888888888888888",
+          "frozen_ledger_head_hash": "sha256:9999999999999999999999999999999999999999999999999999999999999999",
+          "frozen_ledger_sequence": 42
+        }
+        """);
+
     // A minimal but strictly valid truth graph (empty sets + the one required deferred layer). Written
     // through the canonical writer so the reader's round-trip byte check accepts it.
     private static byte[] MinimalTruthGraphBytes() =>
@@ -60,7 +79,7 @@ public sealed class TruthReleaseAccessorTests
     {
         var artifacts = new (string Key, string File, byte[] Bytes)[]
         {
-            ("source_snapshot", "source-snapshot.v1.json", Utf8.GetBytes("source_snapshot")),
+            ("source_snapshot", "source-snapshot.v1.json", SourceSnapshotBytes(truthGraph)),
             ("truth_graph", "truth-graph.v1.json", truthGraph),
             ("raw_lean_report", "raw-lean-report.json", Utf8.GetBytes("raw_lean_report")),
             ("truth_export", "truth-export.v1.json", truthExport),

@@ -3,8 +3,9 @@ namespace Trureturing.Truth;
 /// <summary>
 /// A truth-release bundle that has passed <see cref="TruthReleaseVerification.Verify"/> against an
 /// out-of-band expected release digest: every artifact's bytes hash to the value SHA256SUMS records,
-/// and the SHA256SUMS bytes hash to the expected digest. Holding an instance is evidence the bundle's
-/// bytes are internally consistent with that digest.
+/// the SHA256SUMS bytes hash to the expected digest, and the source snapshot, truth export, manifest,
+/// and exact verified truth-graph bytes compose one source revision. Holding an instance is evidence of
+/// both digest integrity and cross-artifact composition.
 /// <para>
 /// Read bundle contents ONLY through the logical accessors (<see cref="ReadTruthGraph"/>,
 /// <see cref="ReadTruthExport"/>). Each rereads its artifact by the manifest-recorded digest, rehashes the
