@@ -1,0 +1,17 @@
+ast_path: 定理/199.3
+fingerprints:
+  raw_sha256: sha256:d0f928702f81b1cf1ec5ba75aa40cff96d02385b57e11a566d2f7c3bda272691
+  normalized_sha256: sha256:d0f928702f81b1cf1ec5ba75aa40cff96d02385b57e11a566d2f7c3bda272691
+cas_ref: sha256:d0f928702f81b1cf1ec5ba75aa40cff96d02385b57e11a566d2f7c3bda272691
+coverage_gids:
+  - D5/S3/ConceptDynamics/Coding/FiberBinaryIdentification.arbitrary_binary_questions_identify_target
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/Coding/FiberBinaryIdentification.arbitrary_binary_questions_identify_target
+      source_sha256: sha256:d0f928702f81b1cf1ec5ba75aa40cff96d02385b57e11a566d2f7c3bda272691
+      target_sha256: sha256:6f09bcfdab2dbf6e316a7e276d9d2a9bc84e375cb47b0a1ea4c23a772e3891fc
+  scribe:
+    - gid: D5/S3/ConceptDynamics/Coding/FiberBinaryIdentification.arbitrary_binary_questions_identify_target
+      definition_sha256: sha256:5385a6eeb0f62ee8778033e31a0385cd92fba1aad411c337c605d0bd0bf24374
+      emission_sha256: sha256:c8d57c31952a0262cf168bd5e627a7077e1bb4b6b3e1b4e1da86cf319224bfcb
+  unresolved_subitems: []
