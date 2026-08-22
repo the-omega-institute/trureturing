@@ -28,6 +28,7 @@ public static class TruthExportJsonWriter
                     kind = declaration.Kind,
                     statement_id = declaration.StatementId,
                 }),
+                prerequisite_frozen_node_ids = node.PrerequisiteFrozenNodeIds,
             }),
         });
         return StructuredCanonicalWriter.WriteJson(element);
@@ -36,9 +37,9 @@ public static class TruthExportJsonWriter
 
 /// <summary>
 /// Fail-closed reader for <c>truth-export.v1.json</c>. It enforces the exact field set, the schema /
-/// version / dialect / producer identity, strict ascending order of nodes, axioms, and declarations, and
-/// that every node carries at least one declaration. It ends by re-serialising the parsed model and
-/// requiring the bytes to match the input exactly, so only canonical bytes are accepted.
+/// version / dialect / producer identity, source and content-address syntax, strict ascending order,
+/// globally unique node identities, and a closed acyclic prerequisite graph. It ends by re-serialising
+/// the parsed model and requiring the bytes to match the input exactly, so only canonical bytes are accepted.
 /// </summary>
 public static class TruthExportJsonReader
 {
@@ -81,7 +82,7 @@ public static class TruthExportJsonReader
                 String(root, "source_tree"),
                 producer,
                 nodes);
-            Validate(model);
+            TruthExportValidation.RequireValidModel(model);
             if (!TruthExportJsonWriter.Write(model).AsSpan().SequenceEqual(bytes))
             {
                 throw new FormatException("Truth export JSON bytes are not canonical.");
@@ -100,14 +101,9 @@ public static class TruthExportJsonReader
     {
         RequireProperties(
             element,
-            ["declarations", "frozen_node_id", "node_axiom_closure", "repo_path"],
+            ["declarations", "frozen_node_id", "node_axiom_closure", "prerequisite_frozen_node_ids", "repo_path"],
             "truth export node");
-        var axioms = Array(element, "node_axiom_closure")
-            .EnumerateArray()
-            .Select(static item => item.ValueKind == JsonValueKind.String
-                ? item.GetString() ?? throw new FormatException("Axiom closure entry is null.")
-                : throw new FormatException("Axiom closure entry must be a string."))
-            .ToImmutableArray();
+        var axioms = ReadStringArray(element, "node_axiom_closure");
         var declarations = Array(element, "declarations")
             .EnumerateArray()
             .Select(ReadDeclaration)
@@ -116,7 +112,8 @@ public static class TruthExportJsonReader
             String(element, "repo_path"),
             String(element, "frozen_node_id"),
             axioms,
-            declarations);
+            declarations,
+            ReadStringArray(element, "prerequisite_frozen_node_ids"));
     }
 
     private static TruthExportDeclaration ReadDeclaration(JsonElement element)
@@ -131,38 +128,13 @@ public static class TruthExportJsonReader
             String(element, "statement_id"));
     }
 
-    private static void Validate(TruthExportModel model)
-    {
-        RequireStrictOrder(
-            model.Nodes.Select(static node => node.RepoPath + "\0" + node.FrozenNodeId),
-            "nodes");
-        foreach (var node in model.Nodes)
-        {
-            RequireStrictOrder(node.NodeAxiomClosure, "node axiom closure");
-            RequireStrictOrder(
-                node.Declarations.Select(static declaration =>
-                    declaration.DeclarationNameKey + "\0" + declaration.StatementId),
-                "declarations");
-            if (node.Declarations.IsEmpty)
-            {
-                throw new FormatException("Truth export node has no declarations.");
-            }
-        }
-    }
-
-    private static void RequireStrictOrder(IEnumerable<string> values, string name)
-    {
-        string? previous = null;
-        foreach (var value in values)
-        {
-            if (previous is not null && string.CompareOrdinal(previous, value) >= 0)
-            {
-                throw new FormatException($"Truth export {name} must be sorted and unique.");
-            }
-
-            previous = value;
-        }
-    }
+    private static ImmutableArray<string> ReadStringArray(JsonElement parent, string name) =>
+        Array(parent, name)
+            .EnumerateArray()
+            .Select(item => item.ValueKind == JsonValueKind.String
+                ? item.GetString() ?? throw new FormatException($"Truth export {name} entry is null.")
+                : throw new FormatException($"Truth export {name} entry must be a string."))
+            .ToImmutableArray();
 
     private static JsonElement Array(JsonElement parent, string name) =>
         parent.TryGetProperty(name, out var value) && value.ValueKind == JsonValueKind.Array

@@ -112,10 +112,13 @@ public static class TruthReleaseManifestReader
 
             var sourceElement = RequireObject(RequireProperty(root, "source"), "source");
             RequireKeys(sourceElement, SourceKeys, ImmutableArray<string>.Empty, "source");
+            var sourceCommit = RequireGitObjectId(sourceElement, "source_commit");
+            var sourceTree = RequireGitObjectId(sourceElement, "source_tree");
+            TruthExportValidation.RequireSameGitObjectFormat(sourceCommit, sourceTree);
             var source = new TruthReleaseSource(
                 RequireString(sourceElement, "source_repo"),
-                RequireHex(sourceElement, "source_commit", 40),
-                RequireHex(sourceElement, "source_tree", 40));
+                sourceCommit,
+                sourceTree);
 
             var trustElement = RequireObject(RequireProperty(root, "trust"), "trust");
             RequireKeys(trustElement, TrustRequiredKeys, TrustOptionalKeys, "trust");
@@ -133,7 +136,7 @@ public static class TruthReleaseManifestReader
 
             var producer = new TruthReleaseProducer(
                 RequireString(producerElement, "package_repo"),
-                RequireHex(producerElement, "package_commit", 40),
+                RequireGitObjectId(producerElement, "package_commit"),
                 ReadOnly: true);
 
             var artifactsElement = RequireObject(RequireProperty(root, "artifacts"), "artifacts");
@@ -246,12 +249,11 @@ public static class TruthReleaseManifestReader
             : throw new FormatException($"release-manifest field '{name}' is not an array.");
     }
 
-    private static string RequireHex(JsonElement parent, string name, int length)
+    private static string RequireGitObjectId(JsonElement parent, string name)
     {
         var value = RequireString(parent, name);
-        return IsHex(value, length)
-            ? value
-            : throw new FormatException($"release-manifest field '{name}' is not {length} lowercase hex chars.");
+        TruthExportValidation.RequireGitObjectId(value, name);
+        return value;
     }
 
     private static string RequireDigest(JsonElement parent, string name)

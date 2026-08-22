@@ -45,9 +45,13 @@ public sealed class TruthReleaseAccessorTests
         TruthExportJsonWriter.Write(TruthExportModel.Create(
             ImmutableArray.Create(new TruthExportNode(
                 "D5/S0/A.lean",
-                "sha256:fa",
+                "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
                 ImmutableArray.Create("propext"),
-                ImmutableArray.Create(new TruthExportDeclaration("nk-a", "theorem", "sha256:a")))),
+                ImmutableArray.Create(new TruthExportDeclaration(
+                    "nk-a",
+                    "theorem",
+                    "sha256:1111111111111111111111111111111111111111111111111111111111111111")),
+                ImmutableArray<string>.Empty)),
             Commit,
             Tree)).ToArray();
 
