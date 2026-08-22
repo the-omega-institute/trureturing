@@ -5,7 +5,7 @@ using StrataLint.Engine;
 
 namespace StrataLint.Tests;
 
-public sealed class CleanLanesCommandTests
+public sealed partial class CleanLanesCommandTests
 {
     [Fact]
     public void RootUsageListsCleanLanesCommand()
@@ -57,7 +57,7 @@ public sealed class CleanLanesCommandTests
     public void DryRunListsEligibleItemsWithoutMutation()
     {
         using var fixture = new CleanLanesFixture();
-        var lane = fixture.AddMergedLane("harness/merged");
+        var lane = fixture.AddLandedLane("harness/merged");
         fixture.AddOrphan("harness/orphan", merged: true);
         var judge = fixture.AddDetachedJudge("trureturing-gate-judge");
 
@@ -78,7 +78,7 @@ public sealed class CleanLanesCommandTests
     public void LanesOnlyScopeSpareOrphanBranchesAndJudgeTreesButStillReclaimsLanes()
     {
         using var fixture = new CleanLanesFixture();
-        var lane = fixture.AddMergedLane("harness/merged");
+        var lane = fixture.AddLandedLane("harness/merged");
         fixture.AddOrphan("harness/orphan", merged: true);
         var judge = fixture.AddDetachedJudge("trureturing-gate-judge");
 
@@ -110,8 +110,8 @@ public sealed class CleanLanesCommandTests
     public void UnreadableRegisteredLaneIsSkippedWithoutHidingHealthyLanes()
     {
         using var fixture = new CleanLanesFixture();
-        var unreadable = fixture.AddMergedLane("harness/unreadable");
-        var healthy = fixture.AddMergedLane("harness/healthy");
+        var unreadable = fixture.AddLandedLane("harness/unreadable");
+        var healthy = fixture.AddLandedLane("harness/healthy");
         File.Delete(Path.Combine(unreadable, ".git"));
 
         Assert.True(Directory.Exists(unreadable));
@@ -128,25 +128,19 @@ public sealed class CleanLanesCommandTests
     }
 
     [Fact]
-    public void AncestryInspectionFailureSkipsOnlyAffectedLane()
+    public void UnavailablePrProbeRefusesWithoutHidingHealthyLanes()
     {
         using var fixture = new CleanLanesFixture();
-        var unreadable = fixture.AddMergedLane("harness/ancestry-unreadable");
-        var unreadableHead = fixture.Head(unreadable);
-        fixture.AdvanceDev();
-        var healthy = fixture.AddMergedLane("harness/ancestry-healthy");
-        var runner = new SelectiveFailureRunner(
-            arguments => arguments.Count > 2
-                && arguments[0] == "merge-base"
-                && arguments[2] == unreadableHead,
-            "synthetic ancestry inspection failure");
+        var unavailable = fixture.AddLandedLane("harness/pr-unavailable");
+        var healthy = fixture.AddLandedLane("harness/pr-healthy");
+        fixture.FailPrProbe("harness/pr-unavailable");
 
-        var result = fixture.RunWith(runner);
+        var result = fixture.Run();
 
         Assert.True(result.Success, result.Error);
         var items = ReadItems(result.Output);
         Assert.Contains(items, item =>
-            ItemMatches(item, unreadable, "skipped", "unreadable"));
+            ItemMatches(item, unavailable, "skipped", "pr_unknown"));
         Assert.Contains(items, item =>
             ItemMatches(item, healthy, "would_remove", "merged_clean"));
     }
@@ -189,10 +183,10 @@ public sealed class CleanLanesCommandTests
     public void BlockedWorktreesRetainEstablishedReasons()
     {
         using var fixture = new CleanLanesFixture();
-        fixture.SwitchToManagedBranch("harness/current");
-        var missing = fixture.AddMergedLane("harness/missing");
-        var dirty = fixture.AddMergedLane("harness/dirty", dirty: true);
+        var missing = fixture.AddLandedLane("harness/missing");
+        var dirty = fixture.AddLandedLane("harness/dirty", dirty: true);
         var unmerged = fixture.AddUnmergedLane("harness/unmerged");
+        fixture.SwitchToManagedBranch("harness/current");
         Directory.Delete(missing, recursive: true);
 
         var result = fixture.Run();
@@ -206,15 +200,15 @@ public sealed class CleanLanesCommandTests
         Assert.Contains(items, item =>
             ItemMatches(item, dirty, "skipped", "dirty"));
         Assert.Contains(items, item =>
-            ItemMatches(item, unmerged, "skipped", "unmerged"));
+            ItemMatches(item, unmerged, "skipped", "pr_not_merged"));
     }
 
     [Fact]
     public void ForceRemovesEligibleItemsAndProtectsEveryIneligibleClass()
     {
         using var fixture = new CleanLanesFixture();
-        var removable = fixture.AddMergedLane("harness/merged");
-        var dirty = fixture.AddMergedLane("harness/dirty", dirty: true);
+        var removable = fixture.AddLandedLane("harness/merged");
+        var dirty = fixture.AddLandedLane("harness/dirty", dirty: true);
         var unmerged = fixture.AddUnmergedLane("harness/unmerged");
         fixture.AddOrphan("harness/orphan", merged: true);
         fixture.AddOrphan("harness/orphan-unmerged", merged: false);
@@ -237,7 +231,7 @@ public sealed class CleanLanesCommandTests
         Assert.True(fixture.BranchExists("harness/orphan-unmerged"));
         Assert.True(fixture.BranchExists("agent/prover/not-an-init-branch"));
         Assert.Contains("\"reason\":\"dirty\"", result.Output, StringComparison.Ordinal);
-        Assert.Contains("\"reason\":\"unmerged\"", result.Output, StringComparison.Ordinal);
+        Assert.Contains("\"reason\":\"pr_not_merged\"", result.Output, StringComparison.Ordinal);
         Assert.Contains("\"reason\":\"foreign_git_directory\"", result.Output, StringComparison.Ordinal);
         Assert.Contains("\"reason\":\"attached_branch\"", result.Output, StringComparison.Ordinal);
         Assert.DoesNotContain(
@@ -280,7 +274,7 @@ public sealed class CleanLanesCommandTests
     public void ForceRemovalFailureRemainsFailClosed()
     {
         using var fixture = new CleanLanesFixture();
-        var lane = fixture.AddMergedLane("harness/remove-failure");
+        var lane = fixture.AddLandedLane("harness/remove-failure");
         var runner = new SelectiveFailureRunner(
             arguments => arguments.Count > 1
                 && arguments[0] == "worktree"
@@ -294,6 +288,330 @@ public sealed class CleanLanesCommandTests
         Assert.Equal("CLEAN_LANES_FAILED synthetic worktree removal failure\n", result.Error);
         Assert.True(Directory.Exists(lane));
         Assert.True(fixture.BranchExists("harness/remove-failure"));
+    }
+
+    [Fact]
+    public void FreshZeroCommitLaneIsRefusedWhileLandedLaneIsReclaimed()
+    {
+        using var fixture = new CleanLanesFixture();
+        var fresh = fixture.AddMergedLane("harness/fresh-zero");
+        var landed = fixture.AddLandedLane("harness/landed");
+
+        var result = fixture.Run("--force");
+
+        Assert.True(result.Success, result.Error);
+        Assert.True(Directory.Exists(fresh));
+        Assert.False(Directory.Exists(landed));
+        Assert.Equal("never_worked", ReasonFor(result.Output, fresh));
+        Assert.Equal("merged_clean", ReasonFor(result.Output, landed));
+    }
+
+    [Fact]
+    public void LaneUnderTwentyFourHoursIsTooYoungWhileTwentyFourHourLaneIsReclaimed()
+    {
+        using var youngFixture = new CleanLanesFixture();
+        var young = youngFixture.AddLandedLane("harness/young");
+        var youngResult = youngFixture.RunAt(
+            youngFixture.CreationTime(young).AddHours(23));
+
+        using var oldFixture = new CleanLanesFixture();
+        var old = oldFixture.AddLandedLane("harness/old");
+        var oldResult = oldFixture.RunAt(
+            oldFixture.CreationTime(old).AddHours(25),
+            "--force");
+
+        Assert.True(youngResult.Success, youngResult.Error);
+        Assert.Equal("too_young", ReasonFor(youngResult.Output, young));
+        Assert.True(oldResult.Success, oldResult.Error);
+        Assert.False(Directory.Exists(old));
+        Assert.Equal("merged_clean", ReasonFor(oldResult.Output, old));
+    }
+
+    [Fact]
+    public void AgeBoundaryIsExactAtTwentyFourHours()
+    {
+        using var youngFixture = new CleanLanesFixture();
+        var young = youngFixture.AddLandedLane("harness/boundary-young");
+        var youngResult = youngFixture.RunAt(
+            youngFixture.CreationTime(young).AddHours(24).AddSeconds(-1));
+
+        using var boundaryFixture = new CleanLanesFixture();
+        var boundary = boundaryFixture.AddLandedLane("harness/boundary-exact");
+        var boundaryResult = boundaryFixture.RunAt(
+            boundaryFixture.CreationTime(boundary).AddHours(24),
+            "--force");
+
+        Assert.True(youngResult.Success, youngResult.Error);
+        Assert.Equal("too_young", ReasonFor(youngResult.Output, young));
+        Assert.True(boundaryResult.Success, boundaryResult.Error);
+        Assert.False(Directory.Exists(boundary));
+        Assert.Equal("merged_clean", ReasonFor(boundaryResult.Output, boundary));
+    }
+
+    [Theory]
+    [InlineData("missing")]
+    [InlineData("empty")]
+    [InlineData("non_creation")]
+    public void MissingEmptyOrNonCreationShapedReflogIsRefused(string shape)
+    {
+        using var fixture = new CleanLanesFixture();
+        var lane = fixture.AddLandedLane($"harness/reflog-{shape}");
+        switch (shape)
+        {
+            case "missing":
+                fixture.DeleteCreationLog(lane);
+                break;
+            case "empty":
+                fixture.EmptyCreationLog(lane);
+                break;
+            case "non_creation":
+                fixture.MakeFirstRecordNonCreation(lane);
+                break;
+            default:
+                throw new InvalidOperationException(shape);
+        }
+
+        var result = fixture.Run();
+
+        Assert.True(result.Success, result.Error);
+        Assert.Equal("creation_unknown", ReasonFor(result.Output, lane));
+    }
+
+    [Fact]
+    public void ReflogEarlierThanGitdirBirthtimeIsRefused()
+    {
+        using var fixture = new CleanLanesFixture();
+        var forged = TimeProvider.System.GetUtcNow().AddDays(-3);
+        var lane = fixture.AddLandedLane("harness/forged-old", creationTime: forged);
+
+        var result = fixture.RunAt(forged.AddDays(4));
+
+        Assert.True(result.Success, result.Error);
+        Assert.Equal("age_inconsistent", ReasonFor(result.Output, lane));
+    }
+
+    [Fact]
+    public void LockedLaneIsRefusedWhileUnlockedControlIsReclaimed()
+    {
+        using var fixture = new CleanLanesFixture();
+        var locked = fixture.AddLandedLane("harness/locked");
+        var unlocked = fixture.AddLandedLane("harness/unlocked");
+        fixture.LockLane(locked);
+
+        var result = fixture.Run("--force");
+
+        Assert.True(result.Success, result.Error);
+        Assert.True(Directory.Exists(locked));
+        Assert.False(Directory.Exists(unlocked));
+        Assert.Equal("locked", ReasonFor(result.Output, locked));
+        Assert.Equal("merged_clean", ReasonFor(result.Output, unlocked));
+    }
+
+    [Fact]
+    public void ClosedPrWhoseWorkLandedElsewhereIsRefused()
+    {
+        using var fixture = new CleanLanesFixture();
+        const string branch = "harness/closed-landed-elsewhere";
+        var lane = fixture.AddLandedLane(branch);
+        fixture.RegisterClosedPr(branch, fixture.Head(lane));
+
+        var result = fixture.Run("--force");
+
+        Assert.True(result.Success, result.Error);
+        Assert.True(Directory.Exists(lane));
+        Assert.Equal("pr_not_merged", ReasonFor(result.Output, lane));
+    }
+
+    [Fact]
+    public void MergedPrMustMatchObservedHeadOid()
+    {
+        using var fixture = new CleanLanesFixture();
+        const string branch = "harness/pr-head-mismatch";
+        var lane = fixture.AddLandedLane(branch);
+        fixture.RegisterMergedPr(branch, new string('a', 40), fixture.Head(lane));
+
+        var result = fixture.Run("--force");
+
+        Assert.True(result.Success, result.Error);
+        Assert.True(Directory.Exists(lane));
+        Assert.Equal("pr_not_merged", ReasonFor(result.Output, lane));
+    }
+
+    [Fact]
+    public void LiveProcessRefusesLaneWhileIdleControlIsReclaimed()
+    {
+        using var fixture = new CleanLanesFixture();
+        var active = fixture.AddLandedLane("harness/active");
+        var idle = fixture.AddLandedLane("harness/idle");
+        fixture.MarkLaneInUse(active);
+
+        var result = fixture.Run("--force");
+
+        Assert.True(result.Success, result.Error);
+        Assert.True(Directory.Exists(active));
+        Assert.False(Directory.Exists(idle));
+        Assert.Equal("in_use", ReasonFor(result.Output, active));
+        Assert.Equal("merged_clean", ReasonFor(result.Output, idle));
+    }
+
+    [Fact]
+    public void ProcessProbeFailureRefusesLane()
+    {
+        using var fixture = new CleanLanesFixture();
+        var lane = fixture.AddLandedLane("harness/process-unknown");
+        fixture.FailProcessProbe(lane);
+
+        var result = fixture.Run("--force");
+
+        Assert.True(result.Success, result.Error);
+        Assert.True(Directory.Exists(lane));
+        Assert.Equal("in_use_unknown", ReasonFor(result.Output, lane));
+    }
+
+    [Fact]
+    public void NewTermsDoNotChangeOrphanBranchOrTempJudgePaths()
+    {
+        using var fixture = new CleanLanesFixture();
+        var lane = fixture.AddLandedLane("harness/probe-refused");
+        fixture.AddOrphan("harness/isolation-orphan", merged: true);
+        var judge = fixture.AddDetachedJudge("trureturing-isolation-judge");
+
+        var result = fixture.RunWithProbes(
+            static (_, _, _) => new PullRequestProbeOutcome(false, []),
+            static (_, _) => new LaneProcessProbeOutcome(false, false),
+            "--force");
+
+        Assert.True(result.Success, result.Error);
+        Assert.True(Directory.Exists(lane));
+        Assert.False(fixture.BranchExists("harness/isolation-orphan"));
+        Assert.False(Directory.Exists(judge));
+        Assert.Equal("pr_unknown", ReasonFor(result.Output, lane));
+        Assert.Contains("\"kind\":\"orphan_branch\"", result.Output, StringComparison.Ordinal);
+        Assert.Contains("\"kind\":\"temp_judge\"", result.Output, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void DryRunAndForceAgreeOnEveryReason()
+    {
+        foreach (var reason in NewSkipReasons)
+        {
+            using var fixture = new CleanLanesFixture();
+            var scenario = ArrangeReason(fixture, reason);
+
+            var dryRun = fixture.RunAt(scenario.Now);
+            var force = fixture.RunAt(scenario.Now, "--force");
+
+            Assert.True(dryRun.Success, dryRun.Error);
+            Assert.True(force.Success, force.Error);
+            Assert.Equal(reason, ReasonFor(dryRun.Output, scenario.Path));
+            Assert.Equal(reason, ReasonFor(force.Output, scenario.Path));
+        }
+    }
+
+    [Theory]
+    [InlineData("locked")]
+    [InlineData("creation_unknown")]
+    [InlineData("age_inconsistent")]
+    [InlineData("too_young")]
+    [InlineData("age_unverifiable")]
+    [InlineData("never_worked")]
+    [InlineData("pr_not_merged")]
+    [InlineData("pr_unknown")]
+    [InlineData("in_use")]
+    [InlineData("in_use_unknown")]
+    public void EveryNewSkipReasonStringIsPinned(string reason)
+    {
+        using var fixture = new CleanLanesFixture();
+        var scenario = ArrangeReason(fixture, reason);
+
+        var result = fixture.RunAt(scenario.Now);
+
+        Assert.True(result.Success, result.Error);
+        Assert.Equal(reason, ReasonFor(result.Output, scenario.Path));
+    }
+
+    private static readonly string[] NewSkipReasons =
+    [
+        "locked",
+        "creation_unknown",
+        "age_inconsistent",
+        "too_young",
+        "age_unverifiable",
+        "never_worked",
+        "pr_not_merged",
+        "pr_unknown",
+        "in_use",
+        "in_use_unknown",
+    ];
+
+    private static (string Path, DateTimeOffset Now) ArrangeReason(
+        CleanLanesFixture fixture,
+        string reason)
+    {
+        var branch = $"harness/reason-{reason.Replace('_', '-')}";
+        switch (reason)
+        {
+            case "locked":
+            {
+                var path = fixture.AddLandedLane(branch);
+                fixture.LockLane(path);
+                return (path, fixture.CreationTime(path).AddHours(48));
+            }
+            case "creation_unknown":
+            {
+                var path = fixture.AddLandedLane(branch);
+                var now = fixture.CreationTime(path).AddHours(48);
+                fixture.DeleteCreationLog(path);
+                return (path, now);
+            }
+            case "age_inconsistent":
+            {
+                var forged = TimeProvider.System.GetUtcNow().AddDays(-3);
+                var path = fixture.AddLandedLane(branch, creationTime: forged);
+                return (path, forged.AddDays(4));
+            }
+            case "too_young":
+            {
+                var path = fixture.AddLandedLane(branch);
+                return (path, fixture.CreationTime(path).AddHours(23));
+            }
+            case "age_unverifiable":
+            {
+                var path = fixture.AddLandedLane(branch);
+                return (path, fixture.CreationTime(path).AddSeconds(-1));
+            }
+            case "never_worked":
+            {
+                var path = fixture.AddMergedLane(branch);
+                return (path, fixture.CreationTime(path).AddHours(48));
+            }
+            case "pr_not_merged":
+            {
+                var path = fixture.AddLandedLane(branch);
+                fixture.RegisterClosedPr(branch, fixture.Head(path));
+                return (path, fixture.CreationTime(path).AddHours(48));
+            }
+            case "pr_unknown":
+            {
+                var path = fixture.AddLandedLane(branch);
+                fixture.FailPrProbe(branch);
+                return (path, fixture.CreationTime(path).AddHours(48));
+            }
+            case "in_use":
+            {
+                var path = fixture.AddLandedLane(branch);
+                fixture.MarkLaneInUse(path);
+                return (path, fixture.CreationTime(path).AddHours(48));
+            }
+            case "in_use_unknown":
+            {
+                var path = fixture.AddLandedLane(branch);
+                fixture.FailProcessProbe(path);
+                return (path, fixture.CreationTime(path).AddHours(48));
+            }
+            default:
+                throw new InvalidOperationException(reason);
+        }
     }
 
     private static int Count(string value, string needle) =>
@@ -323,147 +641,16 @@ public sealed class CleanLanesCommandTests
         && item.GetProperty("action").GetString() == action
         && item.GetProperty("reason").GetString() == reason;
 
+    private static string ReasonFor(string output, string path) =>
+        ReadItems(output)
+            .Single(item => item.GetProperty("path").GetString() == path)
+            .GetProperty("reason")
+            .GetString()!;
+
     private static string Escape(string value) => value.Replace("\\", "\\\\", StringComparison.Ordinal);
 
-    private sealed class CleanLanesFixture : IDisposable
+    private sealed partial class CleanLanesFixture : IDisposable
     {
-        private readonly TemporaryDirectory repository = new();
-        private readonly TemporaryDirectory worktrees = new();
-        private readonly TemporaryDirectory temp = new();
-
-        internal CleanLanesFixture()
-        {
-            Git(repository.Path, "init", "--initial-branch=dev");
-            Git(repository.Path, "config", "user.email", "stratalint@example.invalid");
-            Git(repository.Path, "config", "user.name", "StrataLint Tests");
-            File.WriteAllText(
-                Path.Combine(repository.Path, "README.md"),
-                "# clean lanes fixture\n",
-                new UTF8Encoding(false));
-            Git(repository.Path, "add", "README.md");
-            Git(repository.Path, "commit", "-m", "fixture baseline");
-        }
-
-        internal string RepositoryRoot =>
-            Git(repository.Path, "rev-parse", "--show-toplevel").Trim();
-
-        internal string AddMergedLane(string branch, bool dirty = false)
-        {
-            var path = WorktreePath(branch);
-            Git(repository.Path, "worktree", "add", "-b", branch, path, "dev");
-            if (dirty)
-            {
-                File.WriteAllText(
-                    Path.Combine(path, "dirty.txt"),
-                    "untracked\n",
-                    new UTF8Encoding(false));
-            }
-
-            return Git(path, "rev-parse", "--show-toplevel").Trim();
-        }
-
-        internal string AddUnmergedLane(string branch)
-        {
-            var path = AddMergedLane(branch);
-            File.WriteAllText(
-                Path.Combine(path, "unmerged.txt"),
-                "branch-only\n",
-                new UTF8Encoding(false));
-            Git(path, "add", "unmerged.txt");
-            Git(path, "commit", "-m", "unmerged branch commit");
-            return path;
-        }
-
-        internal void AdvanceDev()
-        {
-            File.AppendAllText(
-                Path.Combine(repository.Path, "README.md"),
-                "advance\n",
-                new UTF8Encoding(false));
-            Git(repository.Path, "add", "README.md");
-            Git(repository.Path, "commit", "-m", "advance dev");
-        }
-
-        internal string Head(string path) => Git(path, "rev-parse", "HEAD").Trim();
-
-        internal void SwitchToManagedBranch(string branch) =>
-            Git(repository.Path, "switch", "-c", branch);
-
-        internal void AddOrphan(string branch, bool merged)
-        {
-            if (merged)
-            {
-                Git(repository.Path, "branch", branch, "dev");
-                return;
-            }
-
-            var path = AddUnmergedLane(branch);
-            Git(repository.Path, "worktree", "remove", path);
-        }
-
-        internal string AddDetachedJudge(string name)
-        {
-            var path = Path.Combine(temp.Path, name);
-            Git(repository.Path, "worktree", "add", "--detach", path, "dev");
-            return path;
-        }
-
-        internal string AddForeignTempDirectory(string name)
-        {
-            var path = Path.Combine(temp.Path, name);
-            Directory.CreateDirectory(path);
-            Git(path, "init", "--initial-branch=dev");
-            return path;
-        }
-
-        internal string AddAttachedTempDirectory(string name)
-        {
-            var path = Path.Combine(temp.Path, name);
-            Git(repository.Path, "worktree", "add", "-b", "scratch/attached", path, "dev");
-            return path;
-        }
-
-        internal string AddGitlessJudgeSnapshot(string name)
-        {
-            var path = Path.Combine(temp.Path, name);
-            Directory.CreateDirectory(Path.Combine(path, "D5"));
-            Directory.CreateDirectory(Path.Combine(path, "tools"));
-            Directory.CreateDirectory(Path.Combine(path, ".github", "scripts"));
-            File.WriteAllText(Path.Combine(path, "CLAUDE.md"), "fixture\n", new UTF8Encoding(false));
-            File.WriteAllText(Path.Combine(path, "AGENTS.md"), "fixture\n", new UTF8Encoding(false));
-            File.WriteAllText(Path.Combine(path, "Trureturing.lean"), "fixture\n", new UTF8Encoding(false));
-            File.WriteAllText(Path.Combine(path, "lean-toolchain"), "fixture\n", new UTF8Encoding(false));
-            File.WriteAllText(
-                Path.Combine(path, ".github", "scripts", "harness-gate.sh"),
-                "fixture\n",
-                new UTF8Encoding(false));
-            return path;
-        }
-
-        internal string AddReportDirectory(string name)
-        {
-            var path = Path.Combine(temp.Path, name);
-            Directory.CreateDirectory(path);
-            File.WriteAllText(Path.Combine(path, "candidate.json"), "{}\n", new UTF8Encoding(false));
-            return path;
-        }
-
-        internal CommandResult Run(params string[] arguments)
-            => RunWith(new ProductionWorktreeProcessRunner(), arguments);
-
-        internal CommandResult RunWith(
-            IWorktreeProcessRunner runner,
-            params string[] arguments)
-        {
-            var allArguments = new List<string> { "--base", "dev" };
-            allArguments.AddRange(arguments);
-            return CleanLanesCommand.Run(
-                repository.Path,
-                allArguments,
-                runner,
-                [temp.Path]);
-        }
-
         internal bool BranchExists(string branch)
         {
             var result = BoundedProcessRunner.Run(
@@ -510,6 +697,61 @@ public sealed class CleanLanesCommandTests
 
         private string WorktreePath(string branch) =>
             Path.Combine(worktrees.Path, branch.Replace('/', '-'));
+
+        private PullRequestProbeOutcome ProbePullRequests(
+            string repositoryRoot,
+            string branch,
+            IWorktreeProcessRunner runner) =>
+            pullRequests.TryGetValue(branch, out var outcome)
+                ? outcome
+                : new PullRequestProbeOutcome(true, []);
+
+        private LaneProcessProbeOutcome ProbeLaneProcesses(
+            string canonicalLanePath,
+            IWorktreeProcessRunner runner) =>
+            laneProcesses.TryGetValue(canonicalLanePath, out var outcome)
+                ? outcome
+                : new LaneProcessProbeOutcome(true, false);
+
+        private string CreationLogPath(string path) =>
+            Path.Combine(
+                Git(path, "rev-parse", "--absolute-git-dir").Trim(),
+                "logs",
+                "HEAD");
+
+        private void AddWorktree(
+            string branch,
+            string path,
+            DateTimeOffset? creationTime)
+        {
+            if (creationTime is null)
+            {
+                Git(repository.Path, "worktree", "add", "-b", branch, path, "dev");
+                return;
+            }
+
+            var arguments = new List<string>
+            {
+                $"GIT_COMMITTER_DATE=@{creationTime.Value.ToUnixTimeSeconds()} +0000",
+                "git",
+                "worktree",
+                "add",
+                "-b",
+                branch,
+                path,
+                "dev",
+            };
+            var result = BoundedProcessRunner.Run(
+                "env",
+                arguments,
+                repository.Path,
+                TimeSpan.FromSeconds(30),
+                1024 * 1024);
+            if (result.ExitCode != 0)
+            {
+                throw new InvalidOperationException(Encoding.UTF8.GetString(result.StandardError));
+            }
+        }
 
         private static string Git(string root, params string[] arguments) =>
             ReviewRegressionTests.RunGit(root, arguments);
