@@ -27,4 +27,3 @@ Repository search found no theorem packaging all four public clauses. The proof 
 ## References
 
 - Truth anchor: `D5/S3/ConceptDynamics/Interventions/RedundantAppealDefectPersistence.redundant_appeal_cannot_repair_structural_defect`
-- Dependency: [D5/S3/ConceptDynamics/TargetRisk/RefinementRiskCostTradeoff](../TargetRisk/RefinementRiskCostTradeoff.md)
