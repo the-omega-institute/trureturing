@@ -8,62 +8,6 @@ namespace StrataLint.Tests;
 public sealed partial class CleanLanesCommandTests
 {
     [Theory]
-    [InlineData("empty")]
-    [InlineData("malformed")]
-    [InlineData("zero")]
-    [InlineData("nonzero")]
-    public void UnavailableProductionBirthtimeProbeRetainsLane(string outcome)
-    {
-        using var fixture = new CleanLanesFixture();
-        var lane = fixture.AddLandedLane($"harness/birthtime-{outcome}");
-        var runner = fixture.CreateRunner((fileName, _, _) =>
-        {
-            if (fileName != "stat") return null;
-            return outcome switch
-            {
-                "empty" => new ProcessOutput(0, [], []),
-                "malformed" => new ProcessOutput(0, Encoding.UTF8.GetBytes("-\n"), []),
-                "zero" => new ProcessOutput(0, Encoding.UTF8.GetBytes("0\n"), []),
-                "nonzero" => new ProcessOutput(1, [], Encoding.UTF8.GetBytes("stat failed\n")),
-                _ => throw new InvalidOperationException(outcome),
-            };
-        });
-
-        var result = fixture.RunWithRaw(runner);
-
-        Assert.True(result.Success, result.Error);
-        Assert.True(Directory.Exists(lane));
-        Assert.Equal("birthtime_unknown", ReasonFor(result.Output, lane));
-        Assert.Contains(runner.Invocations, invocation => invocation.FileName == "stat");
-        Assert.Contains("\"removable_count\":0", result.Output, StringComparison.Ordinal);
-    }
-
-    [Fact]
-    public void ProductionBirthtimeAdapterAcceptsTrustedPositiveTimestamp()
-    {
-        using var fixture = new CleanLanesFixture();
-        var lane = fixture.AddLandedLane("harness/birthtime-trusted");
-        var runner = fixture.CreateRunner();
-
-        var result = fixture.RunWithRaw(runner);
-
-        Assert.True(result.Success, result.Error);
-        Assert.Equal("merged_clean", ReasonFor(result.Output, lane));
-        var invocation = Assert.Single(
-            runner.Invocations,
-            candidate => candidate.FileName == "stat");
-        if (OperatingSystem.IsMacOS())
-        {
-            Assert.Equal(["-f", "%B"], invocation.Arguments.Take(2).ToArray());
-        }
-        else
-        {
-            Assert.True(OperatingSystem.IsLinux());
-            Assert.Equal(["-c", "%W"], invocation.Arguments.Take(2).ToArray());
-        }
-    }
-
-    [Theory]
     [InlineData("success", "merged_clean")]
     [InlineData("empty", "pr_unknown")]
     [InlineData("malformed", "pr_unknown")]
@@ -157,7 +101,6 @@ public sealed partial class CleanLanesCommandTests
 
         Assert.True(result.Success, result.Error);
         Assert.Equal("merged_clean", ReasonFor(result.Output, lane));
-        Assert.Contains(runner.Invocations, invocation => invocation.FileName == "stat");
         Assert.Contains(runner.Invocations, invocation => invocation.FileName == "gh");
         Assert.Contains(runner.Invocations, invocation => invocation.FileName == "lsof");
     }
@@ -205,6 +148,64 @@ public sealed partial class CleanLanesCommandTests
         Assert.True(Directory.Exists(lane));
         Assert.Equal("in_use", ReasonFor(result.Output, lane));
         Assert.Equal(2, probeCalls);
+    }
+
+    [Fact]
+    public void ForceRechecksProcessAndRetainsLaneWhenProbeBecomesUnknown()
+    {
+        using var fixture = new CleanLanesFixture();
+        var lane = fixture.AddLandedLane("harness/unknown-before-remove");
+        var probeCalls = 0;
+
+        var result = fixture.RunWithLaneProcessProbe(
+            (canonicalLanePath, _) =>
+            {
+                Assert.Equal(lane, canonicalLanePath);
+                probeCalls++;
+                return new LaneProcessProbeOutcome(probeCalls == 1, false);
+            },
+            "--force");
+
+        Assert.True(result.Success, result.Error);
+        Assert.Equal(2, probeCalls);
+        Assert.True(Directory.Exists(lane));
+        Assert.Equal("in_use_unknown", ReasonFor(result.Output, lane));
+        Assert.Contains("\"removable_count\":0", result.Output, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void ForceRetainsLaneAndContinuesWhenLockRefreshFails()
+    {
+        using var fixture = new CleanLanesFixture();
+        var retained = fixture.AddLandedLane("harness/refresh-a-failure");
+        var removed = fixture.AddLandedLane("harness/refresh-z-control");
+        var inventoryCalls = 0;
+        var runner = fixture.CreateRunner((fileName, arguments, _) =>
+        {
+            if (fileName != "git"
+                || !arguments.Take(2).SequenceEqual(["worktree", "list"]))
+            {
+                return null;
+            }
+
+            inventoryCalls++;
+            return inventoryCalls == 2
+                ? new ProcessOutput(
+                    1,
+                    [],
+                    Encoding.UTF8.GetBytes("refresh failed\n"))
+                : null;
+        });
+
+        var result = fixture.RunWithRaw(runner, "--force");
+
+        Assert.True(result.Success, result.Error);
+        Assert.Equal(3, inventoryCalls);
+        Assert.True(Directory.Exists(retained));
+        Assert.False(Directory.Exists(removed));
+        Assert.Equal("unreadable", ReasonFor(result.Output, retained));
+        Assert.Equal("merged_clean", ReasonFor(result.Output, removed));
+        Assert.Contains("\"removable_count\":1", result.Output, StringComparison.Ordinal);
     }
 
     private static ProcessOutput SuccessfulPrOutput(string branch, string head) =>

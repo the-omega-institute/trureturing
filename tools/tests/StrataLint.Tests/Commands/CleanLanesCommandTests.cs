@@ -378,19 +378,6 @@ public sealed partial class CleanLanesCommandTests
     }
 
     [Fact]
-    public void ReflogEarlierThanGitdirBirthtimeIsRefused()
-    {
-        using var fixture = new CleanLanesFixture();
-        var forged = TimeProvider.System.GetUtcNow().AddDays(-3);
-        var lane = fixture.AddLandedLane("harness/forged-old", creationTime: forged);
-
-        var result = fixture.RunAt(forged.AddDays(4));
-
-        Assert.True(result.Success, result.Error);
-        Assert.Equal("age_inconsistent", ReasonFor(result.Output, lane));
-    }
-
-    [Fact]
     public void LockedLaneIsRefusedWhileUnlockedControlIsReclaimed()
     {
         using var fixture = new CleanLanesFixture();
@@ -511,8 +498,6 @@ public sealed partial class CleanLanesCommandTests
     [Theory]
     [InlineData("locked")]
     [InlineData("creation_unknown")]
-    [InlineData("birthtime_unknown")]
-    [InlineData("age_inconsistent")]
     [InlineData("too_young")]
     [InlineData("age_unverifiable")]
     [InlineData("never_worked")]
@@ -535,8 +520,6 @@ public sealed partial class CleanLanesCommandTests
     [
         "locked",
         "creation_unknown",
-        "birthtime_unknown",
-        "age_inconsistent",
         "too_young",
         "age_unverifiable",
         "never_worked",
@@ -565,19 +548,6 @@ public sealed partial class CleanLanesCommandTests
                 var now = fixture.CreationTime(path).AddHours(48);
                 fixture.DeleteCreationLog(path);
                 return (path, now);
-            }
-            case "birthtime_unknown":
-            {
-                var path = fixture.AddLandedLane(branch);
-                var now = fixture.CreationTime(path).AddHours(48);
-                fixture.MakeBirthtimeUnavailable(path);
-                return (path, now);
-            }
-            case "age_inconsistent":
-            {
-                var forged = TimeProvider.System.GetUtcNow().AddDays(-3);
-                var path = fixture.AddLandedLane(branch, creationTime: forged);
-                return (path, forged.AddDays(4));
             }
             case "too_young":
             {
@@ -728,39 +698,8 @@ public sealed partial class CleanLanesCommandTests
                 "logs",
                 "HEAD");
 
-        private void AddWorktree(
-            string branch,
-            string path,
-            DateTimeOffset? creationTime)
-        {
-            if (creationTime is null)
-            {
-                Git(repository.Path, "worktree", "add", "-b", branch, path, "dev");
-                return;
-            }
-
-            var arguments = new List<string>
-            {
-                $"GIT_COMMITTER_DATE=@{creationTime.Value.ToUnixTimeSeconds()} +0000",
-                "git",
-                "worktree",
-                "add",
-                "-b",
-                branch,
-                path,
-                "dev",
-            };
-            var result = BoundedProcessRunner.Run(
-                "env",
-                arguments,
-                repository.Path,
-                TimeSpan.FromSeconds(30),
-                1024 * 1024);
-            if (result.ExitCode != 0)
-            {
-                throw new InvalidOperationException(Encoding.UTF8.GetString(result.StandardError));
-            }
-        }
+        private void AddWorktree(string branch, string path) =>
+            Git(repository.Path, "worktree", "add", "-b", branch, path, "dev");
 
         private static string Git(string root, params string[] arguments) =>
             ReviewRegressionTests.RunGit(root, arguments);

@@ -275,20 +275,7 @@ internal static partial class CleanLanesCommand
                 continue;
             }
 
-            var gitDirectoryBirthtime = TryReadBirthtime(item.GitDirectory, runner);
-            if (gitDirectoryBirthtime is null)
-            {
-                events.Add(BlockedWorktree(item, "birthtime_unknown"));
-                continue;
-            }
-
-            if (creation.Timestamp.ToUnixTimeSeconds()
-                < gitDirectoryBirthtime.Value.ToUnixTimeSeconds())
-            {
-                events.Add(BlockedWorktree(item, "age_inconsistent"));
-                continue;
-            }
-
+            // The age term trusts the local Git clock and the worktree's own creation reflog.
             var creationSeconds = creation.Timestamp.ToUnixTimeSeconds();
             var nowSeconds = now.ToUnixTimeSeconds();
             if (creationSeconds > nowSeconds)

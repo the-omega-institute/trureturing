@@ -36,15 +36,21 @@ internal static partial class CleanLanesCommand
             throw new InvalidOperationException($"lane became dirty during cleanup: {item.Path}");
         }
 
-        var refreshed = ReadWorktrees(repositoryRoot, runner)
-            .SingleOrDefault(candidate => string.Equals(
-                candidate.Path,
-                item.Path,
-                StringComparison.Ordinal));
-        if (refreshed is null)
+        RegisteredWorktree? refreshed;
+        try
         {
-            throw new InvalidOperationException($"lane identity changed during cleanup: {item.Path}");
+            refreshed = ReadWorktrees(repositoryRoot, runner)
+                .SingleOrDefault(candidate => string.Equals(
+                    candidate.Path,
+                    item.Path,
+                    StringComparison.Ordinal));
         }
+        catch (Exception exception) when (exception is not OutOfMemoryException)
+        {
+            return "unreadable";
+        }
+
+        if (refreshed is null) return "unreadable";
 
         if (refreshed.Locked) return "locked";
 

@@ -89,52 +89,6 @@ internal static partial class CleanLanesCommand
         }
     }
 
-    private static DateTimeOffset? TryReadBirthtime(
-        string gitDirectory,
-        IWorktreeProcessRunner runner)
-    {
-        try
-        {
-            IReadOnlyList<string> arguments;
-            if (OperatingSystem.IsMacOS())
-            {
-                arguments = ["-f", "%B", gitDirectory];
-            }
-            else if (OperatingSystem.IsLinux())
-            {
-                arguments = ["-c", "%W", gitDirectory];
-            }
-            else
-            {
-                return null;
-            }
-
-            var result = runner.Run(
-                "stat",
-                arguments,
-                gitDirectory,
-                TimeSpan.FromSeconds(30));
-            if (result.ExitCode != 0
-                || result.StandardOutput.Length == 0
-                || result.StandardError.Length != 0
-                || !long.TryParse(
-                    Decode(result.StandardOutput).Trim(),
-                    NumberStyles.None,
-                    CultureInfo.InvariantCulture,
-                    out var timestamp)
-                || timestamp <= 0)
-            {
-                return null;
-            }
-
-            return DateTimeOffset.FromUnixTimeSeconds(timestamp);
-        }
-        catch (Exception exception) when (exception is not OutOfMemoryException)
-        {
-            return null;
-        }
-    }
-
     private static PullRequestProbeOutcome ProbePullRequests(
         string repositoryRoot,
         string branch,

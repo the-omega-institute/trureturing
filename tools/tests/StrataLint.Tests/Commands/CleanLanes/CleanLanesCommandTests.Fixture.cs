@@ -15,8 +15,6 @@ public sealed partial class CleanLanesCommandTests
             new(StringComparer.Ordinal);
         private readonly Dictionary<string, LaneProcessProbeOutcome> laneProcesses =
             new(StringComparer.Ordinal);
-        private readonly Dictionary<string, long> gitDirectoryBirthtimes =
-            new(StringComparer.Ordinal);
         private DateTimeOffset now;
 
         internal CleanLanesFixture()
@@ -86,10 +84,6 @@ public sealed partial class CleanLanesCommandTests
         internal void FailProcessProbe(string path) =>
             laneProcesses[path] = new LaneProcessProbeOutcome(false, false);
 
-        internal void MakeBirthtimeUnavailable(string path) =>
-            gitDirectoryBirthtimes.Remove(
-                Git(path, "rev-parse", "--absolute-git-dir").Trim());
-
         internal void SwitchToManagedBranch(string branch) =>
             Git(repository.Path, "switch", "-c", branch);
 
@@ -152,18 +146,11 @@ public sealed partial class CleanLanesCommandTests
             return path;
         }
 
-        internal string AddMergedLane(
-            string branch,
-            bool dirty = false,
-            DateTimeOffset? creationTime = null)
+        internal string AddMergedLane(string branch, bool dirty = false)
         {
             var path = WorktreePath(branch);
-            AddWorktree(branch, path, creationTime);
+            AddWorktree(branch, path);
             var canonicalPath = Git(path, "rev-parse", "--show-toplevel").Trim();
-            var gitDirectory = Git(canonicalPath, "rev-parse", "--absolute-git-dir").Trim();
-            gitDirectoryBirthtimes[gitDirectory] = creationTime is null
-                ? CreationTime(canonicalPath).ToUnixTimeSeconds()
-                : TimeProvider.System.GetUtcNow().ToUnixTimeSeconds();
             RegisterMergedPr(branch, Head(canonicalPath), Head(canonicalPath));
             if (dirty)
             {
@@ -176,12 +163,9 @@ public sealed partial class CleanLanesCommandTests
             return canonicalPath;
         }
 
-        internal string AddLandedLane(
-            string branch,
-            bool dirty = false,
-            DateTimeOffset? creationTime = null)
+        internal string AddLandedLane(string branch, bool dirty = false)
         {
-            var path = AddMergedLane(branch, creationTime: creationTime);
+            var path = AddMergedLane(branch);
             var artifact = branch.Replace('/', '-') + ".txt";
             File.WriteAllText(
                 Path.Combine(path, artifact),
@@ -284,20 +268,7 @@ public sealed partial class CleanLanesCommandTests
             ProcessScript? script = null) =>
             new(
                 inner,
-                (fileName, arguments, workingDirectory) =>
-                {
-                    var scripted = script?.Invoke(fileName, arguments, workingDirectory);
-                    if (scripted is not null) return scripted;
-                    if (fileName != "stat") return null;
-                    var gitDirectory = arguments.LastOrDefault();
-                    return gitDirectory is not null
-                        && gitDirectoryBirthtimes.TryGetValue(gitDirectory, out var birthtime)
-                            ? new ProcessOutput(
-                                0,
-                                Encoding.UTF8.GetBytes($"{birthtime}\n"),
-                                [])
-                            : new ProcessOutput(1, [], Encoding.UTF8.GetBytes("unknown gitdir\n"));
-                });
+                script ?? (static (_, _, _) => null));
 
         private CommandResult RunCore(
             IWorktreeProcessRunner runner,
