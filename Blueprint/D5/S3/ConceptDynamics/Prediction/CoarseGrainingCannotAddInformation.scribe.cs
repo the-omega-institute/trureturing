@@ -113,7 +113,7 @@ internal sealed class CoarseGrainingCannotAddInformationDocument
         return Disp(Seq(
             Begin, Grp(F.Id("gathered")),
             Forall, Sp, typeA, Comma, Sp, typeB, Comma, Sp, typeD,
-            Colon, Sp, TypeUniverse(), Comma, RowBreak,
+            Colon, Sp, TypeUniverse(), Comma, RowBreak, Grp(),
             FintypeInstance(typeA), Sp, FintypeInstance(typeB), Sp,
             FintypeInstance(typeD), Comma, RowBreak,
             law, Colon, Sp, Arrow(Product(typeA, typeB), RealNumbers()), Comma, Sp,
@@ -134,7 +134,7 @@ internal sealed class CoarseGrainingCannotAddInformationDocument
         return Disp(Seq(
             Begin, Grp(F.Id("gathered")),
             Forall, Sp, typeA, Comma, Sp, typeB, Comma, Sp, typeD,
-            Colon, Sp, TypeUniverse(), Comma, RowBreak,
+            Colon, Sp, TypeUniverse(), Comma, RowBreak, Grp(),
             FintypeInstance(typeA), Sp, FintypeInstance(typeB), Sp,
             FintypeInstance(typeD), Comma, RowBreak,
             law, Colon, Sp, Arrow(Product(typeA, typeB), RealNumbers()), Comma, Sp,
@@ -155,7 +155,7 @@ internal sealed class CoarseGrainingCannotAddInformationDocument
         return Disp(Seq(
             Begin, Grp(F.Id("gathered")),
             Forall, Sp, microscopic, Comma, Sp, coarse,
-            Colon, Sp, TypeUniverse(), Comma, RowBreak,
+            Colon, Sp, TypeUniverse(), Comma, RowBreak, Grp(),
             FintypeInstance(microscopic), Sp, FintypeInstance(coarse), Comma, RowBreak,
             law, Colon, Sp,
             Arrow(Product(microscopic, microscopic), RealNumbers()), Comma, Sp,
