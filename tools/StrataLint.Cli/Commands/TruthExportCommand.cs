@@ -30,8 +30,8 @@ internal static class TruthExportCommand
             var snapshot = Decode(DagLedgerCommandPreparation.Ask(
                 () => repository.ReadRevision(identity.Revision)));
             var reportBytes = File.ReadAllBytes(options.CandidateLeanReport);
-            var outcome = ValidateStrictHistory(repository, snapshot, identity, reportBytes);
-            if (outcome is FrozenLedgerValidationOutcome.Rejected rejected)
+            var preparation = PrepareStrictHistory(repository, snapshot, identity, reportBytes);
+            if (preparation.Outcome is FrozenLedgerValidationOutcome.Rejected rejected)
             {
                 return new ExplicitCommandResult(
                     2,
@@ -39,7 +39,7 @@ internal static class TruthExportCommand
                     $"TRUTH_EXPORT_REJECTED {rejected.Message}\n");
             }
 
-            var accepted = (FrozenLedgerValidationOutcome.Accepted)outcome;
+            var accepted = (FrozenLedgerValidationOutcome.Accepted)preparation.Outcome;
             var model = TruthExportProjection.Project(
                 accepted.Capability.ActiveFrozenNodes,
                 identity.Revision,
@@ -67,7 +67,7 @@ internal static class TruthExportCommand
         }
     }
 
-    private static FrozenLedgerValidationOutcome ValidateStrictHistory(
+    internal static StrictTruthHistoryPreparation PrepareStrictHistory(
         IRepositoryGateway repository,
         RepositorySnapshot snapshot,
         FrozenRevisionIdentity identity,
@@ -87,10 +87,11 @@ internal static class TruthExportCommand
         var syntax = DagLedgerCommandPreparation.LoadLedgerFiles(
             ledgerFiles,
             "frozen ledger");
-        return FrozenLedger.ValidateHistory(
+        var outcome = FrozenLedger.ValidateHistory(
             syntax,
             catalog,
             TrustReferences(repository, syntax));
+        return new StrictTruthHistoryPreparation(truth, baseView, outcome);
     }
 
     private static ImmutableArray<RepositoryFile> LedgerFiles(RepositorySnapshot snapshot)
@@ -224,3 +225,8 @@ internal static class TruthExportCommand
         string OutDirectory,
         string CandidateLeanReport);
 }
+
+internal sealed record StrictTruthHistoryPreparation(
+    TruthContext Truth,
+    FrozenLedgerBaseView BaseView,
+    FrozenLedgerValidationOutcome Outcome);

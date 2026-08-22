@@ -237,6 +237,9 @@ internal sealed class StubCliEnvironment(
     public ExplicitCommandResult TruthExport(IReadOnlyList<string> arguments) =>
         new(2, string.Empty, "truth export is not configured in this fixture");
 
+    public ExplicitCommandResult TruthRelease(IReadOnlyList<string> arguments) =>
+        new(2, string.Empty, "truth release is not configured in this fixture");
+
     public CommandResult CleanLanes(IReadOnlyList<string> arguments) =>
         new(false, string.Empty, "clean lanes is not configured in this fixture");
 
