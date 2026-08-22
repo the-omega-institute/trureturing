@@ -1,0 +1,17 @@
+ast_path: 定理/245.1
+fingerprints:
+  raw_sha256: sha256:04ab77c2f9b2908a81a6c27fffa46aceb29d33926c8d966095e81988d08f6dde
+  normalized_sha256: sha256:04ab77c2f9b2908a81a6c27fffa46aceb29d33926c8d966095e81988d08f6dde
+cas_ref: sha256:04ab77c2f9b2908a81a6c27fffa46aceb29d33926c8d966095e81988d08f6dde
+coverage_gids:
+  - D5/S0/Rewriting/Quotients/InformedDisclosureDefect.informed_disclosure_defect
+receipts:
+  coverage:
+    - gid: D5/S0/Rewriting/Quotients/InformedDisclosureDefect.informed_disclosure_defect
+      source_sha256: sha256:04ab77c2f9b2908a81a6c27fffa46aceb29d33926c8d966095e81988d08f6dde
+      target_sha256: sha256:8b28774628a35ddff0fda8f3a7bd7693813384adf582347d33b591c72c8cc0dd
+  scribe:
+    - gid: D5/S0/Rewriting/Quotients/InformedDisclosureDefect.informed_disclosure_defect
+      definition_sha256: sha256:f9789c99e9efd65276bbaa5073c90969837ae0b456491e12598b5e331ab89dcf
+      emission_sha256: sha256:36d4270ef93c4776eb2800eb968e51dbeb66dcf21713b52edbea82ce39941486
+  unresolved_subitems: []
