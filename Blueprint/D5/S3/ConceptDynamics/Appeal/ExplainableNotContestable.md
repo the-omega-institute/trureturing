@@ -25,5 +25,3 @@ This finite witness separates publication of the governing rule from contestabil
 ## References
 
 - Truth anchor: `D5/S3/ConceptDynamics/Appeal/ExplainableNotContestable.explainable_not_contestable`
-- Dependency: [D5/S3/ConceptDynamics/Interventions/RedundantAppealDefectPersistence](../Interventions/RedundantAppealDefectPersistence.md)
-- Dependency: [D5/S3/ConceptDynamics/Sufficiency/UniversalSufficiencyFactorization](../Sufficiency/UniversalSufficiencyFactorization.md)
