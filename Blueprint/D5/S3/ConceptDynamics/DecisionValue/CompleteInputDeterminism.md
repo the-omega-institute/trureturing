@@ -25,4 +25,3 @@ The qualitative remark about ease of resolving disagreement has no source predic
 ## References
 
 - Truth anchor: `D5/S3/ConceptDynamics/DecisionValue/CompleteInputDeterminism.complete_input_agreement_excludes_deterministic_disagreement`
-- Dependency: [D5/S3/ConceptDynamics/ConceptFiberDecomposition](../ConceptFiberDecomposition.md)
