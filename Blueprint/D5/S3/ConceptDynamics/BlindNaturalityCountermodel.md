@@ -23,4 +23,3 @@ Canonical Concept and Refines definitions are imported from the existing Concept
 ## References
 
 - Truth anchor: `D5/S3/ConceptDynamics/BlindNaturalityCountermodel.blind_naturality_counterexample`
-- Dependency: [D5/S3/ConceptDynamics/ConceptJoinUniversal](ConceptJoinUniversal.md)
