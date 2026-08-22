@@ -33,5 +33,30 @@ internal static class TruthReleaseCompositionValidator
             throw new FormatException(
                 "Truth release truth_graph digest disagrees across source_snapshot, verified bytes, and manifest.");
         }
+
+        // Artifact verification already proved that each manifest digest names the verified file bytes,
+        // so these comparisons bind the snapshot's self-asserted digests to the actual bundle artifacts.
+        if (!string.Equals(
+                sourceSnapshot.RawLeanReportSha256,
+                manifest.Artifacts.RawLeanReport.Sha256,
+                StringComparison.Ordinal))
+        {
+            throw new FormatException(
+                "Truth release raw_lean_report digest disagrees between source_snapshot and verified artifact bytes.");
+        }
+
+        if (!string.Equals(
+                sourceSnapshot.ResidualFrontierSha256,
+                manifest.Artifacts.ResidualFrontier.Sha256,
+                StringComparison.Ordinal))
+        {
+            throw new FormatException(
+                "Truth release residual_frontier digest disagrees between source_snapshot and verified artifact bytes.");
+        }
+
+        // Phase 2 deliberately leaves three fields unbound: FrozenLedgerHeadHash may be a content hash,
+        // not the frozen-ledger-head.json file digest; DagMdSha256 has no bundle artifact because DAG.md
+        // is an external derived document; and DeclarationsSha256 has no declarations artifact, so its
+        // relationship to truth_export must first be pinned by the Phase 2 producer.
     }
 }

@@ -102,6 +102,73 @@ public sealed class TruthReleaseBundleWriterTests
     }
 
     [Fact]
+    public void VerifierRejectsSourceSnapshotRawLeanReportDigestThatDoesNotNameVerifiedArtifact()
+    {
+        var fixture = CreateBundleFixture();
+        var input = fixture.Input with
+        {
+            SourceSnapshot = fixture.Input.SourceSnapshot with
+            {
+                RawLeanReportSha256 = "sha256:ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+            },
+        };
+        var directory = Directory.CreateTempSubdirectory("truthbundle-raw-report-composition").FullName;
+        try
+        {
+            var releaseDigest = TruthReleaseBundleWriter.WriteBundle(directory, input);
+
+            Assert.Throws<FormatException>(() => TruthReleaseVerification.Verify(directory, releaseDigest));
+        }
+        finally
+        {
+            Directory.Delete(directory, recursive: true);
+        }
+    }
+
+    [Fact]
+    public void VerifierRejectsSourceSnapshotResidualFrontierDigestThatDoesNotNameVerifiedArtifact()
+    {
+        var fixture = CreateBundleFixture();
+        var input = fixture.Input with
+        {
+            SourceSnapshot = fixture.Input.SourceSnapshot with
+            {
+                ResidualFrontierSha256 = "sha256:ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+            },
+        };
+        var directory = Directory.CreateTempSubdirectory("truthbundle-residual-composition").FullName;
+        try
+        {
+            var releaseDigest = TruthReleaseBundleWriter.WriteBundle(directory, input);
+
+            Assert.Throws<FormatException>(() => TruthReleaseVerification.Verify(directory, releaseDigest));
+        }
+        finally
+        {
+            Directory.Delete(directory, recursive: true);
+        }
+    }
+
+    [Fact]
+    public void VerifierAcceptsFullyCoherentBundle()
+    {
+        var fixture = CreateBundleFixture();
+        var directory = Directory.CreateTempSubdirectory("truthbundle-coherent-composition").FullName;
+        try
+        {
+            var releaseDigest = TruthReleaseBundleWriter.WriteBundle(directory, fixture.Input);
+
+            var verified = TruthReleaseVerification.Verify(directory, releaseDigest);
+
+            Assert.Equal(releaseDigest, verified.ReleaseDigest);
+        }
+        finally
+        {
+            Directory.Delete(directory, recursive: true);
+        }
+    }
+
+    [Fact]
     public void VerifierRejectsAnArtifactCorruptedAfterWriting()
     {
         var fixture = CreateBundleFixture();
