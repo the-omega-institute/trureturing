@@ -1,0 +1,17 @@
+ast_path: appendix/E.226
+fingerprints:
+  raw_sha256: sha256:66912752d8fadf16299b00e7f4d7300e26349c53630444c5b60d4a2a5f7baa7a
+  normalized_sha256: sha256:66912752d8fadf16299b00e7f4d7300e26349c53630444c5b60d4a2a5f7baa7a
+cas_ref: sha256:66912752d8fadf16299b00e7f4d7300e26349c53630444c5b60d4a2a5f7baa7a
+coverage_gids:
+  - D5/S3/Constants/Radicals/SqrtThreeThreshold.three_lt_two_mul_sqrt_three
+receipts:
+  coverage:
+    - gid: D5/S3/Constants/Radicals/SqrtThreeThreshold.three_lt_two_mul_sqrt_three
+      source_sha256: sha256:66912752d8fadf16299b00e7f4d7300e26349c53630444c5b60d4a2a5f7baa7a
+      target_sha256: sha256:915c0aa0972349bc867a2333a9791adfdecfdb0eec57e869ca86d942d4481bb6
+  scribe:
+    - gid: D5/S3/Constants/Radicals/SqrtThreeThreshold.three_lt_two_mul_sqrt_three
+      definition_sha256: sha256:98094b535cdc63e16c6beba946f33f01d9ca2379b5cca9355e76061c1191166a
+      emission_sha256: sha256:996e5292e47f0b838cab753398478a4f60ddad6bb803b32959fac3826b70620a
+  unresolved_subitems: []
