@@ -5,7 +5,7 @@
    anchors: []
    digest: Classify admissible negative base-phi prefix occurrence sets by Lucas-gap trident families. -/
 
-import D5.S1.Words.Expansions.BasePhiNegativePrefixTridentEdge
+import D5.S1.Words.Expansions.BasePhiNegativePrefixTridentPhaseObstruction
 
 namespace D5.X_Frontier.BasePhiNegativePrefixTrident
 
@@ -662,11 +662,13 @@ used by `frontierState` and `FrontierRunStep`. The `BasePhiNegative` definitions
 retain their original scope; this file only binds the open chain to those
 frozen interfaces.
 
-## Status of open providers
+## Status of semantic providers
 
 The fiber shape, unique lift, phase totality, frontier existence, Lucas growth,
 pairwise-disjoint arms, and final set transport now have kernel-checked proofs.
-Two semantic providers remain open, with one shared mathematical core.
+The additive successor provider remains open. The proposed phase provider is
+not merely open: the kernel-checked `010` obstruction imported above refutes it
+under the current frozen definitions.
 
 1. `frontier_step_semantics`: closed. `core_infinite_proved` constructs
    arbitrarily large occurrences by adjoining a sufficiently remote even
@@ -683,20 +685,28 @@ Two semantic providers remain open, with one shared mathematical core.
    remains is existence: the phase-selected Lucas candidate must belong to
    `Core w` and exclude an intervening point. The singleton/triple theorem only
    compares inputs sharing one complete negative tail and cannot prove that.
-3. `six_phase_gap_stream`: `PhaseLabeledReachability` enriches every frozen
+3. `six_phase_gap_stream`: refuted for the current frozen selector.
+   `PhaseLabeledReachability` enriches every frozen
    carry path with the six-state prefix label and the aperiodic Fibonacci input
    letter; `phase_labeled_reachability_phase_preserved` proves phase
    preservation. `PhaseEnrichedCoreEdge` then binds that label to an actual
    adjacent Lucas candidate, and its target and labels are unique. The exact
-   remaining existence proposition is `PhaseEnrichedCoreTrace w certificate`.
+   proposed existence proposition is `PhaseEnrichedCoreTrace w certificate`.
    `phase_enriched_core_trace_iff_gap_phase` proves that it is equivalent to
-   `FrontierGapPhase`, so mere phase labeling does not manufacture the missing
-   semantic edge. `fibonacci_gap_letter_not_six_periodic` still excludes a
+   `FrontierGapPhase`. For formal prefix `010`, every valid certificate has
+   phase certificate `⟨G0o, 11, 7⟩`, while the canonical core starts `9, 20`.
+   At index zero `familyLetter G 0 = false`, so the selector requires gap `7`
+   although the actual gap is `11`. This is proved by
+   `frontierGapPhase_not_of_prefix010`; consequently
+   `phaseEnrichedCoreTrace_not_of_prefix010` refutes the enriched trace as
+   well. A cocycle proof cannot telescope to a false boundary equation.
+   `fibonacci_gap_letter_not_six_periodic` still independently excludes a
    fixed `n % 6` replacement for the retained input letter.
 
 Thus the current S1 interfaces do not identify the complete F/G/H gap
-itinerary of a negative-tail prefix cylinder. No missing theorem is replaced
-by a weaker claim or a hidden assumption.
+itinerary of a negative-tail prefix cylinder, and the frozen phase selector
+disagrees with an explicit canonical frontier edge. No false theorem is
+replaced by a weaker claim or a hidden assumption.
 
 The full theorem still has its `sorry` placeholder below, inside `X_Frontier`.
 All other declarations above are signature checks or direct proofs; the
