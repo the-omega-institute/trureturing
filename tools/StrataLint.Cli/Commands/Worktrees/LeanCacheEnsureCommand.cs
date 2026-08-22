@@ -75,11 +75,6 @@ internal static class LeanCacheEnsureCommand
                 "canonical cache writer guard is busy");
         }
 
-        // 显式预热这条路径同样从 donor clone，故同样先刷新货源。
-        // 只覆盖 `make lean` 那条会让 `make lean-cache-ensure` 照旧取到陈旧缓存——
-        // 这一条是被测试的红逼出来的:判据原本只看文件里第一个 clone 点。
-        _ = LeanDonorRefresh.TryRefresh(repositoryRoot, root, runner);
-
         return EnsureLocked(
             root,
             pins,
@@ -126,13 +121,6 @@ internal static class LeanCacheEnsureCommand
                 pins.Sha256,
                 "canonical cache writer guard is busy");
         }
-
-        // 先把货源刷到当前 dev，再从它 clone。`SelectDonor` 优先选主检出，
-        // 但从不保证它是新的——实测停在七天前，于是 ensure 成功却仍要补七天差量。
-        // 刷新走既有锁协议的排他端，与随后的共享端 clone 严格串行:
-        // 刷新期间的 `lake build` 会让 `LeanCacheBusyProbe` 判 donor 忙，交错即互相拒绝。
-        // 尽力而为:失败或抢不到锁都只是少一次加速，绝不挡住本次构建。
-        var refreshed = LeanDonorRefresh.TryRefresh(repositoryRoot, root, runner);
 
         var ensured = EnsureLocked(
             root,
