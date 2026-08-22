@@ -23,4 +23,3 @@ The common source supplies a capturing singleton, while any zero-cardinal candid
 ## References
 
 - Truth anchor: `D5/S3/ConceptDynamics/InstitutionalCapture/CommonSourceCaptureCollapse.common_source_capture_number_eq_one`
-- Dependency: [D5/S3/ConceptDynamics/ConceptFiberDecomposition](../ConceptFiberDecomposition.md)
