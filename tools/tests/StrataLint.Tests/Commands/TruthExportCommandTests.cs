@@ -1,0 +1,416 @@
+using System.Collections.Immutable;
+using System.Text;
+using System.Text.Json;
+using StrataLint.Cli;
+using StrataLint.Engine;
+using static StrataLint.Tests.FrozenLedgerTestData;
+
+namespace StrataLint.Tests;
+
+public sealed class TruthExportCommandTests
+{
+    private const string Toolchain = "leanprover/lean4:v4.24.0\n";
+    private const string Lakefile = "[package]\nname = \"fixture\"\n";
+    private const string Manifest = "{}\n";
+
+    [Fact]
+    public void ExportEqualsStrictActiveSetDroppingRevokedAndKeepingReattested()
+    {
+        using var fixture = DivergentLedgerFixture();
+        using var output = new TemporaryDirectory();
+
+        var (exitCode, console) = Run(fixture, output.Path);
+
+        Assert.Equal(0, exitCode);
+        Assert.Equal(string.Empty, console.Error);
+        var exportPath = Path.Combine(output.Path, "truth-export.v1.json");
+        Assert.True(File.Exists(exportPath));
+        var model = ParseExport(exportPath);
+        Assert.Equal("TruthExportCommand", model.Producer);
+
+        var expected = Assert.IsType<FrozenLedgerValidationOutcome.Accepted>(
+            ValidateHistory(Load(fixture.LedgerBytes), fixture.FinalCatalog)).Capability.ActiveFrozenNodes;
+
+        Assert.Equal(
+            expected.Select(static node => node.RepoPath.Value).Order(StringComparer.Ordinal),
+            model.Nodes.Select(static node => node.RepoPath));
+        Assert.DoesNotContain(model.Nodes, node => node.RepoPath == PathFor("B"));
+        Assert.Contains(model.Nodes, node => node.RepoPath == PathFor("A"));
+        Assert.Contains(model.Nodes, node => node.RepoPath == PathFor("C"));
+
+        var exportedA = model.Nodes.Single(node => node.RepoPath == PathFor("A"));
+        Assert.Equal(fixture.ChangedAFrozenNodeId, exportedA.FrozenNodeId);
+        Assert.NotEqual(fixture.OriginalAFrozenNodeId, exportedA.FrozenNodeId);
+
+        foreach (var node in expected)
+        {
+            var exportedNode = model.Nodes.Single(item => item.FrozenNodeId == node.FrozenNodeId.Value);
+            Assert.Equal(node.RepoPath.Value, exportedNode.RepoPath);
+            Assert.Equal(node.AxiomClosure, exportedNode.AxiomClosure);
+            Assert.Equal(
+                node.DeclarationStatementIds.Select(static declaration => declaration.StatementId.Value),
+                exportedNode.DeclarationStatementIds);
+            Assert.Equal(
+                node.PrerequisiteFrozenNodeIds.Select(static id => id.Value),
+                exportedNode.PrerequisiteFrozenNodeIds);
+        }
+    }
+
+    [Fact]
+    public void PendingReattestationDriftFailsClosedWithNoOutput()
+    {
+        var original = Module("A", source: "theorem a : True := by trivial\n");
+        var changed = Module("A", source: "-- drifted\ntheorem a : True := by trivial\n");
+        var genesisCatalog = BuildCatalog(original);
+        var ledgerBytes = FrozenLedgerGenerator.GenerateGenesis(
+            genesisCatalog,
+            new FrozenGenesisDescriptor(GitOid('e'), Sha256("historical-rule-catalog")));
+        using var fixture = FixtureFromLedger(ledgerBytes, [changed]);
+        using var output = new TemporaryDirectory();
+
+        var (exitCode, console) = Run(fixture, output.Path);
+
+        Assert.Equal(2, exitCode);
+        Assert.Contains("TRUTH_EXPORT_REJECTED", console.Error, StringComparison.Ordinal);
+        Assert.False(File.Exists(Path.Combine(output.Path, "truth-export.v1.json")));
+        Assert.Empty(Directory.EnumerateFiles(output.Path));
+    }
+
+    [Fact]
+    public void ClosedModuleWithoutAFreezeFailsClosedWithNoOutput()
+    {
+        var genesisCatalog = BuildCatalog(Module("A"));
+        var ledgerBytes = FrozenLedgerGenerator.GenerateGenesis(
+            genesisCatalog,
+            new FrozenGenesisDescriptor(GitOid('e'), Sha256("historical-rule-catalog")));
+        using var fixture = FixtureFromLedger(ledgerBytes, [Module("A"), Module("B")]);
+        using var output = new TemporaryDirectory();
+
+        var (exitCode, console) = Run(fixture, output.Path);
+
+        Assert.Equal(2, exitCode);
+        Assert.Contains("TRUTH_EXPORT_REJECTED", console.Error, StringComparison.Ordinal);
+        Assert.False(File.Exists(Path.Combine(output.Path, "truth-export.v1.json")));
+    }
+
+    [Fact]
+    public void MissingRevisionLeanReportFailsClosedWithNoOutput()
+    {
+        var genesisCatalog = BuildCatalog(Module("A"));
+        var ledgerBytes = FrozenLedgerGenerator.GenerateGenesis(
+            genesisCatalog,
+            new FrozenGenesisDescriptor(GitOid('e'), Sha256("historical-rule-catalog")));
+        using var fixture = FixtureFromLedger(ledgerBytes, [Module("A")], supplyRevisionLeanReport: false);
+        using var output = new TemporaryDirectory();
+
+        var (exitCode, console) = Run(fixture, output.Path);
+
+        Assert.Equal(2, exitCode);
+        Assert.Contains("TRUTH_EXPORT_INVALID", console.Error, StringComparison.Ordinal);
+        Assert.False(File.Exists(Path.Combine(output.Path, "truth-export.v1.json")));
+    }
+
+    [Fact]
+    public void ExportReadsAllSemanticBytesFromExactlyOneResolvedRevision()
+    {
+        var identity = new FrozenRevisionIdentity(
+            new string('c', 40),
+            "git-sha1:" + new string('c', 40),
+            "git-sha1:" + new string('d', 40));
+        var committed = Module("A", source: "theorem a : True := by trivial\n");
+        var working = Module("A", source: "-- mutable working bytes\ntheorem a : True := by trivial\n");
+        var catalog = BuildCatalog(committed);
+        var ledgerBytes = FrozenLedgerGenerator.GenerateGenesis(
+            catalog,
+            new FrozenGenesisDescriptor(GitOid('e'), Sha256("historical-rule-catalog")));
+        using var fixture = FixtureFromLedger(
+            ledgerBytes,
+            [committed],
+            identity,
+            workingModules: [working]);
+        using var output = new TemporaryDirectory();
+
+        var (exitCode, console) = Run(fixture, output.Path);
+
+        Assert.Equal(0, exitCode);
+        Assert.Equal(string.Empty, console.Error);
+        var model = ParseExport(Path.Combine(output.Path, "truth-export.v1.json"));
+        Assert.Equal(new string('c', 40), model.SourceCommit);
+        Assert.Equal(new string('d', 40), model.SourceTree);
+        Assert.Equal(1, fixture.Gateway.CurrentRevisionResolutionCount);
+        Assert.Equal(0, fixture.Gateway.ReadCurrentCount);
+        Assert.Equal([identity.Revision], fixture.Gateway.ReadRevisionCalls);
+        Assert.Equal(0, fixture.MutableLeanReportSource.CallCount);
+        Assert.Equal(
+            catalog.ClosedNodes.Single().FrozenNodeId.Value,
+            Assert.Single(model.Nodes).FrozenNodeId);
+    }
+
+    [Fact]
+    public void TwoRunsOnTheSameRevisionAreByteIdentical()
+    {
+        using var fixture = DivergentLedgerFixture();
+        using var first = new TemporaryDirectory();
+        using var second = new TemporaryDirectory();
+
+        Assert.Equal(0, Run(fixture, first.Path).ExitCode);
+        Assert.Equal(0, Run(fixture, second.Path).ExitCode);
+
+        Assert.Equal(
+            File.ReadAllBytes(Path.Combine(first.Path, "truth-export.v1.json")),
+            File.ReadAllBytes(Path.Combine(second.Path, "truth-export.v1.json")));
+    }
+
+    [Theory]
+    [InlineData("truth-export")]
+    [InlineData("truth-export", "--out")]
+    [InlineData("truth-export", "--wrong", "dir")]
+    public void UsageErrorsExitOneAndWriteNothing(params string[] arguments)
+    {
+        using var fixture = DivergentLedgerFixture();
+        var console = new BufferedConsole();
+
+        var exitCode = CliApplication.Run(arguments, fixture.Environment, console);
+
+        Assert.Equal(1, exitCode);
+        Assert.Contains("USAGE", console.Error, StringComparison.Ordinal);
+    }
+
+    private static (int ExitCode, BufferedConsole Console) Run(TruthExportFixture fixture, string outDirectory)
+    {
+        var console = new BufferedConsole();
+        var exitCode = CliApplication.Run(
+            ["truth-export", "--out", outDirectory],
+            fixture.Environment,
+            console);
+        return (exitCode, console);
+    }
+
+    private static TruthExportFixture DivergentLedgerFixture()
+    {
+        var originalA = Module("A", source: "theorem a : True := by trivial\n");
+        var changedA = Module("A", source: "-- reattested\ntheorem a : True := by trivial\n");
+        var moduleB = Module("B");
+        var moduleC = Module("C");
+
+        var genesisCatalog = BuildCatalog(originalA, moduleB, moduleC);
+        var genesis = Baseline(FrozenLedgerGenerator.GenerateGenesis(
+            genesisCatalog,
+            new FrozenGenesisDescriptor(GitOid('e'), Sha256("historical-rule-catalog"))), genesisCatalog);
+
+        var reattestCatalog = BuildCatalog(changedA, moduleB, moduleC);
+        var reattestBytes = FrozenLedgerGenerator.AppendReattestation(genesis, reattestCatalog);
+        var reattested = Baseline(reattestBytes, reattestCatalog);
+
+        var bNode = reattested.ActiveFrozenNodes.Single(node => node.RepoPath.Value == PathFor("B"));
+        var (evidence, store) = ReceiptStore(reattested, KernelFailure(bNode));
+        var validated = Assert.IsType<RevocationEvidenceValidationOutcome.Accepted>(
+            RevocationEvidenceValidator.Validate(evidence[0], reattested, store)).Capability;
+        var plan = Assert.IsType<RevocationPlanOutcome.Accepted>(
+            RevocationPlanner.Plan(reattested, [validated])).Capability;
+        var ledgerBytes = FrozenLedgerGenerator.AppendRevocation(reattested, plan);
+
+        var finalCatalog = BuildCatalog(changedA, moduleC);
+        var fixture = FixtureFromLedger(ledgerBytes, [changedA, moduleC]);
+        fixture.LedgerBytes = ledgerBytes;
+        fixture.FinalCatalog = finalCatalog;
+        fixture.OriginalAFrozenNodeId = genesisCatalog.ClosedNodes
+            .Single(node => node.RepoPath.Value == PathFor("A")).FrozenNodeId.Value;
+        fixture.ChangedAFrozenNodeId = finalCatalog.ClosedNodes
+            .Single(node => node.RepoPath.Value == PathFor("A")).FrozenNodeId.Value;
+        return fixture;
+    }
+
+    private static TruthExportFixture FixtureFromLedger(
+        ImmutableArray<byte> ledgerBytes,
+        ModuleSpec[] revisionModules,
+        FrozenRevisionIdentity? identity = null,
+        bool supplyRevisionLeanReport = true,
+        ModuleSpec[]? workingModules = null)
+    {
+        var temporary = new TemporaryDirectory();
+        var revisionFiles = RepositoryFiles(revisionModules);
+        AddLedgerFiles(revisionFiles, ledgerBytes);
+        var revisionReports = Reports(revisionModules);
+        if (supplyRevisionLeanReport)
+        {
+            AddRawLeanReport(revisionFiles, revisionReports);
+        }
+
+        var immutableRevision = RawSnapshot(revisionFiles);
+        var mutableModules = workingModules ?? revisionModules;
+        var mutableFiles = RepositoryFiles(mutableModules);
+        AddLedgerFiles(mutableFiles, ledgerBytes);
+        var mutableReports = Reports(mutableModules);
+        AddRawLeanReport(mutableFiles, mutableReports);
+        var mutableWorkingTree = RawSnapshot(mutableFiles);
+        var mutableLeanReportSource = new FakeLeanReportSource(LeanAxiomReport.Create(mutableReports));
+        var gateway = new FakeRepositoryGateway(
+            RawChangeSet.Create([]),
+            mutableWorkingTree,
+            immutableRevision,
+            currentRevisionResolver: identity is null ? null : () => identity);
+        var environment = new ProductionCliEnvironment(
+            temporary.Path,
+            gateway,
+            mutableLeanReportSource);
+        return new TruthExportFixture(temporary, environment, gateway, mutableLeanReportSource);
+    }
+
+    private static Dictionary<string, string> RepositoryFiles(IEnumerable<ModuleSpec> modules)
+    {
+        var files = new Dictionary<string, string>(StringComparer.Ordinal)
+        {
+            ["lean-toolchain"] = Toolchain,
+            ["lakefile.toml"] = Lakefile,
+            ["lake-manifest.json"] = Manifest,
+        };
+        foreach (var module in modules)
+        {
+            files[PathFor(module.Name)] = module.Source;
+        }
+
+        return files;
+    }
+
+    private static Dictionary<string, LeanFileReport> Reports(IEnumerable<ModuleSpec> modules) =>
+        modules.ToDictionary(
+            static module => PathFor(module.Name),
+            ReportFor,
+            StringComparer.Ordinal);
+
+    private static void AddRawLeanReport(
+        IDictionary<string, string> files,
+        IReadOnlyDictionary<string, LeanFileReport> reports)
+    {
+        var snapshot = Assert.IsType<SnapshotDecodeOutcome.Decoded>(
+            SnapshotDecoder.Decode(RawSnapshot(files))).Snapshot;
+        files[RawLeanReportArtifact.DefaultRelativePath] = Encoding.UTF8.GetString(
+            RawLeanReportArtifact.Write(snapshot, LeanAxiomReport.Create(reports)).AsSpan());
+    }
+
+    private static RawRepositorySnapshot RawSnapshot(IEnumerable<KeyValuePair<string, string>> files) =>
+        RawRepositorySnapshot.Create(
+            files.Select(static pair => RawRepositoryEntry.FromText(pair.Key, pair.Value)));
+
+    private static FrozenLedgerConsistent Baseline(ImmutableArray<byte> bytes, FrozenMaterialCatalog catalog) =>
+        Assert.IsType<FrozenLedgerValidationOutcome.Accepted>(
+            ValidateHistory(Load(bytes), catalog)).Capability;
+
+    private static FrozenLedgerSyntax Load(ImmutableArray<byte> bytes) =>
+        Assert.IsType<DagLedgerLoadOutcome.Loaded>(DagLedgerLoader.Load(bytes.AsSpan())).Syntax;
+
+    private static ParsedExport ParseExport(string path)
+    {
+        using var document = JsonDocument.Parse(File.ReadAllBytes(path));
+        var root = document.RootElement;
+        var nodes = root.GetProperty("nodes").EnumerateArray()
+            .Select(static node => new ParsedExportNode(
+                node.GetProperty("repo_path").GetString()!,
+                node.GetProperty("frozen_node_id").GetString()!,
+                node.GetProperty("node_axiom_closure").EnumerateArray()
+                    .Select(static axiom => axiom.GetString()!).ToArray(),
+                node.GetProperty("declarations").EnumerateArray()
+                    .Select(static declaration => declaration.GetProperty("statement_id").GetString()!)
+                    .ToArray(),
+                node.GetProperty("prerequisite_frozen_node_ids").EnumerateArray()
+                    .Select(static id => id.GetString()!).ToArray()))
+            .ToArray();
+        return new ParsedExport(
+            root.GetProperty("source_commit").GetString()!,
+            root.GetProperty("source_tree").GetString()!,
+            root.GetProperty("producer").GetString()!,
+            nodes);
+    }
+
+    private sealed record ParsedExport(
+        string SourceCommit,
+        string SourceTree,
+        string Producer,
+        ParsedExportNode[] Nodes);
+
+    private sealed record ParsedExportNode(
+        string RepoPath,
+        string FrozenNodeId,
+        string[] AxiomClosure,
+        string[] DeclarationStatementIds,
+        string[] PrerequisiteFrozenNodeIds);
+
+    private static LeanFileReport ReportFor(ModuleSpec module)
+    {
+        var declaration = module.Name.ToLowerInvariant();
+        return new LeanFileReport(
+            module.Imports.Select(static import => $"D5.S0.Carrier.{import}").ToImmutableArray(),
+            ImmutableArray.Create(new LeanDeclaration(
+                declaration,
+                module.Kind,
+                module.StatementMaterial,
+                module.Axioms)
+            {
+                NameKey = $"ns(n0,{declaration.Length}:{declaration})",
+                IncludeInStatement = true,
+            }));
+    }
+
+    private static (ImmutableArray<RevocationEvidence> Evidence, TrustedRevocationReceiptStore Store) ReceiptStore(
+        FrozenLedgerConsistent ledger,
+        params RevocationEvidence[] provisional)
+    {
+        var evidence = ImmutableArray.CreateBuilder<RevocationEvidence>();
+        var entries = ImmutableArray.CreateBuilder<RawRepositoryEntry>();
+        var oids = ImmutableArray.CreateBuilder<string>();
+        foreach (var (item, index) in provisional.Select(static (item, index) => (item, index)))
+        {
+            var bytes = RevocationReceiptWriter.Write(ledger, item);
+            var text = Encoding.UTF8.GetString(bytes.AsSpan());
+            var oid = GitBlobOid(text);
+            entries.Add(new RawRepositoryEntry($"Evidence/D5/revocation-{index}.json", bytes, oid));
+            oids.Add(oid);
+            evidence.Add(item switch
+            {
+                RevocationEvidence.KernelWitnessFailure failure => failure with
+                {
+                    ReceiptBlobOid = oid,
+                    ReceiptSha256 = Sha256(text),
+                },
+                _ => throw new InvalidOperationException("unexpected evidence variant"),
+            });
+        }
+
+        var snapshot = Assert.IsType<SnapshotDecodeOutcome.Decoded>(
+            SnapshotDecoder.Decode(RawRepositorySnapshot.Create(entries))).Snapshot;
+        var store = Assert.IsType<RevocationReceiptStoreOutcome.Accepted>(
+            TrustedRevocationReceiptStore.Materialize(ledger, snapshot, oids)).Capability;
+        return (evidence.ToImmutable(), store);
+    }
+
+    private static RevocationEvidence KernelFailure(FrozenNodeMaterial node) =>
+        new RevocationEvidence.KernelWitnessFailure(
+            node.FrozenNodeId,
+            node.WitnessId,
+            string.Empty,
+            string.Empty);
+
+    private sealed class TruthExportFixture(
+        TemporaryDirectory temporary,
+        ProductionCliEnvironment environment,
+        FakeRepositoryGateway gateway,
+        FakeLeanReportSource mutableLeanReportSource) : IDisposable
+    {
+        internal ProductionCliEnvironment Environment { get; } = environment;
+
+        internal FakeRepositoryGateway Gateway { get; } = gateway;
+
+        internal FakeLeanReportSource MutableLeanReportSource { get; } = mutableLeanReportSource;
+
+        internal ImmutableArray<byte> LedgerBytes { get; set; }
+
+        internal FrozenMaterialCatalog FinalCatalog { get; set; } = null!;
+
+        internal string OriginalAFrozenNodeId { get; set; } = string.Empty;
+
+        internal string ChangedAFrozenNodeId { get; set; } = string.Empty;
+
+        public void Dispose() => temporary.Dispose();
+    }
+}

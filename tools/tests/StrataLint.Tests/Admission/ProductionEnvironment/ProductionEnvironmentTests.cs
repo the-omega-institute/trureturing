@@ -578,6 +578,10 @@ internal sealed class FakeRepositoryGateway(
 {
     internal int ReadCount { get; private set; }
 
+    internal int ReadCurrentCount { get; private set; }
+
+    internal List<string> ReadRevisionCalls { get; } = [];
+
     internal List<string> ReadChangesCalls { get; } = [];
 
     internal List<FrozenLedgerReferenceSet> FrozenReferenceValidations { get; } = [];
@@ -610,6 +614,7 @@ internal sealed class FakeRepositoryGateway(
     public RawRepositorySnapshot ReadCurrent()
     {
         ReadCount++;
+        ReadCurrentCount++;
         return WithAtomizerData(
             current ?? throw new InvalidOperationException("current snapshot should not be read"));
     }
@@ -617,6 +622,7 @@ internal sealed class FakeRepositoryGateway(
     public RawRepositorySnapshot ReadRevision(string revision)
     {
         ReadCount++;
+        ReadRevisionCalls.Add(revision);
         return WithAtomizerData(
             baseline ?? throw new InvalidOperationException("baseline snapshot should not be read"));
     }

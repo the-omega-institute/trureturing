@@ -548,6 +548,9 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
     public CommandResult SyncLedger(IReadOnlyList<string> arguments) =>
         DagLedgerSyncWriter.Sync(repositoryRoot, repository, arguments);
 
+    public ExplicitCommandResult TruthExport(IReadOnlyList<string> arguments) =>
+        TruthExportCommand.Run(repository, arguments);
+
     public CommandResult CleanLanes(IReadOnlyList<string> arguments) =>
         CleanLanesCommand.Run(repositoryRoot, arguments);
 
