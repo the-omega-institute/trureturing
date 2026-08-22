@@ -25,4 +25,3 @@ Repository and pinned-library searches found no exact theorem combining equal co
 ## References
 
 - Truth anchor: `D5/S3/ConceptDynamics/Audits/CorrectnessLegitimacySeparation.correct_result_does_not_determine_legitimacy`
-- Dependency: [D5/S3/ConceptDynamics/LegitimacyCorrectness](../LegitimacyCorrectness.md)

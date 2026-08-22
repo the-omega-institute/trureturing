@@ -38,4 +38,3 @@ The repository proof reuses the pinned library's factor-through criterion and ex
 
 - Truth anchor: `D5/S3/ConceptDynamics/Sufficiency/UniversalSufficiencyFactorization.targetFactor_apply`
 - Truth anchor: `D5/S3/ConceptDynamics/Sufficiency/UniversalSufficiencyFactorization.universal_sufficiency_factorization`
-- Dependency: [D5/S3/ConceptDynamics/ConceptJoinUniversal](../ConceptJoinUniversal.md)

@@ -28,12 +28,23 @@ public sealed class CleanLanesCommandTests
 
         Assert.Equal("origin/dev", options.Base);
         Assert.False(options.Force);
+        Assert.False(options.LanesOnly);
+    }
+
+    [Fact]
+    public void ParseAcceptsLanesOnlyScope()
+    {
+        var options = CleanLanesCommand.ParseArguments(["--lanes-only", "--force"]);
+
+        Assert.True(options.LanesOnly);
+        Assert.True(options.Force);
     }
 
     [Theory]
     [InlineData("--unknown")]
     [InlineData("--base")]
     [InlineData("--force", "--force")]
+    [InlineData("--lanes-only", "--lanes-only")]
     public void ParseRejectsUnknownMissingOrDuplicateArguments(params string[] arguments)
     {
         var exception = Assert.Throws<InvalidOperationException>(() =>
@@ -61,6 +72,38 @@ public sealed class CleanLanesCommandTests
         Assert.Contains("\"kind\":\"orphan_branch\"", result.Output, StringComparison.Ordinal);
         Assert.Contains("\"kind\":\"temp_judge\"", result.Output, StringComparison.Ordinal);
         Assert.Equal(3, Count(result.Output, "\"action\":\"would_remove\""));
+    }
+
+    [Fact]
+    public void LanesOnlyScopeSpareOrphanBranchesAndJudgeTreesButStillReclaimsLanes()
+    {
+        using var fixture = new CleanLanesFixture();
+        var lane = fixture.AddMergedLane("harness/merged");
+        fixture.AddOrphan("harness/orphan", merged: true);
+        var judge = fixture.AddDetachedJudge("trureturing-gate-judge");
+
+        // 阳性对照:同一夹具在全作用面下,三类确实都够得着——否则「没看见」
+        // 只证明输入本来就不合判据,不证明作用面收窄起了作用。
+        var full = fixture.Run();
+        Assert.True(full.Success, full.Error);
+        Assert.Contains("\"kind\":\"orphan_branch\"", full.Output, StringComparison.Ordinal);
+        Assert.Contains("\"kind\":\"temp_judge\"", full.Output, StringComparison.Ordinal);
+        Assert.Equal(3, Count(full.Output, "\"action\":\"would_remove\""));
+
+        var scoped = fixture.Run("--lanes-only", "--force");
+
+        Assert.True(scoped.Success, scoped.Error);
+        Assert.DoesNotContain("\"kind\":\"orphan_branch\"", scoped.Output, StringComparison.Ordinal);
+        Assert.DoesNotContain("\"kind\":\"temp_judge\"", scoped.Output, StringComparison.Ordinal);
+        Assert.True(fixture.BranchExists("harness/orphan"));
+        Assert.True(Directory.Exists(judge));
+
+        // 收窄作用面不等于把功能关死:合格 lane 仍然被回收。
+        Assert.False(Directory.Exists(lane));
+        Assert.Contains("\"kind\":\"merged_worktree\"", scoped.Output, StringComparison.Ordinal);
+        Assert.Equal(1, Count(scoped.Output, "\"action\":\"removed\""));
+        Assert.Contains("\"scope\":\"lanes_only\"", scoped.Output, StringComparison.Ordinal);
+        Assert.Contains("\"scope\":\"full\"", full.Output, StringComparison.Ordinal);
     }
 
     [Fact]

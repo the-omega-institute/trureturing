@@ -1,0 +1,17 @@
+ast_path: 定理/266.3
+fingerprints:
+  raw_sha256: sha256:5731c87829e1d38549730a4e4d678079cccf8ddc408fd56ec10b0bc1e5e0fa18
+  normalized_sha256: sha256:5731c87829e1d38549730a4e4d678079cccf8ddc408fd56ec10b0bc1e5e0fa18
+cas_ref: sha256:5731c87829e1d38549730a4e4d678079cccf8ddc408fd56ec10b0bc1e5e0fa18
+coverage_gids:
+  - D5/S3/ConceptDynamics/Appeal/MinimalAppealLabelCount.minimal_appeal_label_count
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/Appeal/MinimalAppealLabelCount.minimal_appeal_label_count
+      source_sha256: sha256:5731c87829e1d38549730a4e4d678079cccf8ddc408fd56ec10b0bc1e5e0fa18
+      target_sha256: sha256:3bd84c805a89dace8775ef04b41c88fce098f1b67bc1f753ca89d77abe97cb83
+  scribe:
+    - gid: D5/S3/ConceptDynamics/Appeal/MinimalAppealLabelCount.minimal_appeal_label_count
+      definition_sha256: sha256:c06faf7561a7e3f0ead6e137e529a8ea427329893b00ac214ec4bf9e4c048524
+      emission_sha256: sha256:ba28bf9b27223a23d79e5137b62ba0b48145ee0b785049b2ab6728ca82973dc2
+  unresolved_subitems: []

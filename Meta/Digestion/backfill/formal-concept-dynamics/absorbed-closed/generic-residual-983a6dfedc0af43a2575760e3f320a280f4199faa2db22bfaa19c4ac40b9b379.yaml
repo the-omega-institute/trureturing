@@ -1,0 +1,17 @@
+ast_path: 定理/240.2
+fingerprints:
+  raw_sha256: sha256:983a6dfedc0af43a2575760e3f320a280f4199faa2db22bfaa19c4ac40b9b379
+  normalized_sha256: sha256:983a6dfedc0af43a2575760e3f320a280f4199faa2db22bfaa19c4ac40b9b379
+cas_ref: sha256:983a6dfedc0af43a2575760e3f320a280f4199faa2db22bfaa19c4ac40b9b379
+coverage_gids:
+  - D5/S3/ConceptDynamics/Communication/HeterogeneousFiberMisclassification.heterogeneous_fiber_forces_misclassification
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/Communication/HeterogeneousFiberMisclassification.heterogeneous_fiber_forces_misclassification
+      source_sha256: sha256:983a6dfedc0af43a2575760e3f320a280f4199faa2db22bfaa19c4ac40b9b379
+      target_sha256: sha256:a9d2a1f5dbafe1a6e47b1aca337cbcf2103ec7f5e134f4d8064d5a1e6f2748a4
+  scribe:
+    - gid: D5/S3/ConceptDynamics/Communication/HeterogeneousFiberMisclassification.heterogeneous_fiber_forces_misclassification
+      definition_sha256: sha256:a1d1d2abbecf051b2e46be73cfb3958aa593aba6b4081c58112e2b96be1e6f04
+      emission_sha256: sha256:149f478c6494e4a51db375f8160344fe0752a2bdf61a78e4579e1cc5bdc6adc9
+  unresolved_subitems: []

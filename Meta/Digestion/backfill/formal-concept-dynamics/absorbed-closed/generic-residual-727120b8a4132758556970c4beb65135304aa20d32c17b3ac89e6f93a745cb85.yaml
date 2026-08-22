@@ -1,0 +1,17 @@
+ast_path: 推论/465.2
+fingerprints:
+  raw_sha256: sha256:727120b8a4132758556970c4beb65135304aa20d32c17b3ac89e6f93a745cb85
+  normalized_sha256: sha256:727120b8a4132758556970c4beb65135304aa20d32c17b3ac89e6f93a745cb85
+cas_ref: sha256:727120b8a4132758556970c4beb65135304aa20d32c17b3ac89e6f93a745cb85
+coverage_gids:
+  - D5/S3/ConceptDynamics/Epistemic/PartitionAndGeneralNegativeIntrospectionContrast.partition_and_general_negative_introspection_contrast
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/Epistemic/PartitionAndGeneralNegativeIntrospectionContrast.partition_and_general_negative_introspection_contrast
+      source_sha256: sha256:727120b8a4132758556970c4beb65135304aa20d32c17b3ac89e6f93a745cb85
+      target_sha256: sha256:813df18c44a25b1b68ce2966b880535f36be92321219b4283b14fc3002c79c72
+  scribe:
+    - gid: D5/S3/ConceptDynamics/Epistemic/PartitionAndGeneralNegativeIntrospectionContrast.partition_and_general_negative_introspection_contrast
+      definition_sha256: sha256:3862e959cbdec84b8afcbfb9059146b3d5316e5f317705764c07dbdb2a87b9b7
+      emission_sha256: sha256:0129ec48106699048b69b95b995e12ca578ef23a966195bc97ba30c6d03603f8
+  unresolved_subitems: []

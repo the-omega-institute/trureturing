@@ -1,0 +1,17 @@
+ast_path: 定理/202.1
+fingerprints:
+  raw_sha256: sha256:6a9e21c69cebc1dbd5c8660b70175e75407486a97e71c7c37254166776f0c1ba
+  normalized_sha256: sha256:6a9e21c69cebc1dbd5c8660b70175e75407486a97e71c7c37254166776f0c1ba
+cas_ref: sha256:6a9e21c69cebc1dbd5c8660b70175e75407486a97e71c7c37254166776f0c1ba
+coverage_gids:
+  - D5/S3/ConceptDynamics/Experiments/ExperimentRefinementGainMonotone.experiment_refinement_gain_monotone
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/Experiments/ExperimentRefinementGainMonotone.experiment_refinement_gain_monotone
+      source_sha256: sha256:6a9e21c69cebc1dbd5c8660b70175e75407486a97e71c7c37254166776f0c1ba
+      target_sha256: sha256:47591c4bc7fb3eb17d4961cdff4b92534a2ce5b27f3eec95e230798912eff8c4
+  scribe:
+    - gid: D5/S3/ConceptDynamics/Experiments/ExperimentRefinementGainMonotone.experiment_refinement_gain_monotone
+      definition_sha256: sha256:3e601e41504fddabe36736d271ef86bbb83cf0d7be7b4ef9133f3e3f4de2f2f7
+      emission_sha256: sha256:1867e88c510188cb36471ffd61182838c39fd5dd1455eb1c2a365dfae931ec45
+  unresolved_subitems: []

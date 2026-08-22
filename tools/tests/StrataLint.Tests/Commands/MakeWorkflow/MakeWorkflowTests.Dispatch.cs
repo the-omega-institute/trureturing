@@ -173,6 +173,15 @@ public sealed partial class MakeWorkflowTests
         var worktreeRecipe = Recipe(makefile, "worktree");
         Assert.Contains(WorktreeInitScriptPath, worktreeRecipe, StringComparison.Ordinal);
         Assert.Contains("\"$(WORKTREE_DEST)\"", worktreeRecipe, StringComparison.Ordinal);
+        // 开工前先回收旧 lane(CLAUDE.md 第 16 条)。依赖形式,不是第二行配方——
+        // 每个目标至多一行配方,且依赖让回收在建树之前必然执行。
+        Assert.Contains("worktree: worktree-clean", makefile, StringComparison.Ordinal);
+        var worktreeCleanRecipe = Recipe(makefile, "worktree-clean");
+        Assert.Contains(CleanLanesScriptPath, worktreeCleanRecipe, StringComparison.Ordinal);
+        // 作用面必须限定在已注册 lane:判官树的判据区分不了「跑完了」和「正在跑」,
+        // 而建树常发生在派席前后;孤儿分支不占一棵树,也不属于「顺手回收旧树」。
+        Assert.Contains("--lanes-only", worktreeCleanRecipe, StringComparison.Ordinal);
+        Assert.Contains("--force", worktreeCleanRecipe, StringComparison.Ordinal);
         Assert.Contains("WORKTREE_DEST = $(if $(DEST)", makefile, StringComparison.Ordinal);
         Assert.DoesNotContain("$(origin PATH)", makefile, StringComparison.Ordinal);
         Assert.DoesNotContain("$(PATH)", makefile, StringComparison.Ordinal);

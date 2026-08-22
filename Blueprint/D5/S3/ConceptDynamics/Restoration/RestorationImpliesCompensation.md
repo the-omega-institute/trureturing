@@ -21,4 +21,3 @@ The refinement premise supplies a map from identity values to value values. Appl
 ## References
 
 - Truth anchor: `D5/S3/ConceptDynamics/Restoration/RestorationImpliesCompensation.identity_restoration_implies_value_compensation`
-- Dependency: [D5/S3/ConceptDynamics/ConceptJoinUniversal](../ConceptJoinUniversal.md)
