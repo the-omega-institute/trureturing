@@ -69,16 +69,14 @@ public sealed partial class WorktreeCommandTests
 
                 Assert.True(result.Success, result.Error);
                 using var receipt = ParseReceipt(result.Output);
-                Assert.Equal(
-                    System.Text.Json.JsonValueKind.Null,
-                    receipt.RootElement.GetProperty("mathlib_missing_olean_files").ValueKind);
+                Assert.Equal(0, receipt.RootElement.GetProperty("mathlib_missing_olean_files").GetInt32());
             });
 
         Assert.Equal(
-            [lake, lake, lake],
+            [lake, lake],
             runner.Invocations.Select(static invocation => invocation.FileName).ToArray());
         Assert.Equal(
-            ["get", "clean", "build"],
+            ["get", "build"],
             runner.Invocations.Select(static invocation => invocation.Arguments.Last()).ToArray());
         Assert.True(LeanCacheStamp.Matches(
             Path.Combine(repository.Path, ".lake"),
@@ -87,7 +85,7 @@ public sealed partial class WorktreeCommandTests
     }
 
     [Fact]
-    public void WriterEntryRejectsExitZeroCacheGetWhenMathlibOleansAreMissing()
+    public void WriterEntryReportsMissingMathlibOleansAndContinuesToLakeBuild()
     {
         using var repository = new TemporaryDirectory();
         using var sharedCache = new MathlibCacheFixture();
@@ -99,14 +97,13 @@ public sealed partial class WorktreeCommandTests
             ["with-cache-writer", "--", "lake", "build"],
             runner);
 
-        Assert.False(result.Success);
-        Assert.Empty(result.Output);
-        Assert.DoesNotContain(
+        Assert.True(result.Success, result.Error);
+        Assert.Contains(
             runner.Invocations,
             static call => call.FileName == "lake" && call.Arguments.SequenceEqual(["build"]));
-        Assert.False(Directory.Exists(Path.Combine(repository.Path, ".lake")));
-        Assert.False(File.Exists(LeanCacheStamp.PathFor(Path.Combine(repository.Path, ".lake"))));
-        using var receipt = ParseReceipt(result.Error);
+        Assert.True(Directory.Exists(Path.Combine(repository.Path, ".lake")));
+        Assert.True(File.Exists(LeanCacheStamp.PathFor(Path.Combine(repository.Path, ".lake"))));
+        using var receipt = ParseReceipt(result.Output);
         Assert.Equal(
             MathlibProjectionFixture.ModuleCount,
             receipt.RootElement.GetProperty("mathlib_missing_olean_files").GetInt32());
@@ -116,7 +113,7 @@ public sealed partial class WorktreeCommandTests
     }
 
     [Fact]
-    public void WriterEntryRejectsStampedCacheThatLostAnOleanBeforeStartingCommand()
+    public void WriterEntryReportsStampedCacheMissingOleansAndStartsCommand()
     {
         using var repository = new TemporaryDirectory();
         InitializeRepository(repository.Path);
@@ -129,11 +126,11 @@ public sealed partial class WorktreeCommandTests
             ["with-cache-writer", "--", "lake", "build"],
             runner);
 
-        Assert.False(result.Success);
-        Assert.DoesNotContain(
+        Assert.True(result.Success, result.Error);
+        Assert.Contains(
             runner.Invocations,
             static call => call.FileName == "lake" && call.Arguments.SequenceEqual(["build"]));
-        using var receipt = ParseReceipt(result.Error);
+        using var receipt = ParseReceipt(result.Output);
         Assert.Equal(
             MathlibProjectionFixture.ModuleCount,
             receipt.RootElement.GetProperty("mathlib_missing_olean_files").GetInt32());
@@ -771,7 +768,6 @@ public sealed partial class LeanCacheEnsureCommandTests
             ["--path", target],
             runner,
             cloner,
-            LeanCacheProvisioner.CountLtarFiles,
             Cleanup);
 
         Assert.True(result.Success, result.Error);

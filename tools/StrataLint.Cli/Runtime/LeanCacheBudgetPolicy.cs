@@ -9,8 +9,8 @@ internal static class LeanCacheBudgetPolicy
     /// machine capacity, and it must not be presented as one.
     ///
     /// Domain: every process this budget is passed to, which is more than the build.
-    /// It bounds the `cp -R` that clones the donor cache, `lake exe cache get`,
-    /// `lake exe cache clean`, and — through `CommandBudget` — the one arbitrary command
+    /// It bounds the `cp -R` that clones the donor cache, `lake exe cache get`, and —
+    /// through `CommandBudget` — the one arbitrary command
     /// `LeanCacheEnsureCommand` runs for `worktree with-cache-writer`, which in this
     /// repository is `lake build` from the Makefile and both the `lake build` and the
     /// `lake env lean --run Inspector.lean` that `tools/lean-inspector/inspect.sh`

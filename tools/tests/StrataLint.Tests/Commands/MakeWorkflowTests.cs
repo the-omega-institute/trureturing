@@ -23,6 +23,8 @@ public sealed partial class MakeWorkflowTests
         "tools/scripts/worktree/lean-cache-ensure.sh";
     private const string LeanCacheRunScriptPath =
         "tools/scripts/worktree/lean-cache-run.sh";
+    private const string WarmDonorScriptPath =
+        "tools/scripts/worktree/warm-donor.sh";
     private const string IngestScriptPath = "tools/scripts/ingest.sh";
     private const string EchoResidualSummaryScriptPath =
         "tools/scripts/report/echo-residual-summary.sh";
@@ -47,6 +49,7 @@ public sealed partial class MakeWorkflowTests
         "lean-cache-ensure",
         "lean-cache-to-github-without-mathlib",
         "lean-cache-from-github-without-mathlib",
+        "warm-donor",
         "lean",
         "lean-report",
         "build",

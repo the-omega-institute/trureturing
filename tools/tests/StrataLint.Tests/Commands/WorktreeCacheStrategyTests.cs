@@ -231,7 +231,7 @@ internal sealed class RecordingWorktreeProcessRunner : IWorktreeProcessRunner
 
     internal bool FailWorktreeAdd { get; init; }
 
-    internal bool BlockStampAfterClean { get; init; }
+    internal bool BlockStampAfterCacheGet { get; init; }
 
     internal Action<string>? AfterWorktreeAdd { get; init; }
 
@@ -295,6 +295,10 @@ internal sealed class RecordingWorktreeProcessRunner : IWorktreeProcessRunner
                 MathlibProjectionFixture.Write(lake, includeOleans: !OmitMathlibOleans);
                 Directory.CreateDirectory(MathlibCacheFixture.CurrentPath);
                 File.WriteAllText(Path.Combine(MathlibCacheFixture.CurrentPath, "current.ltar"), "current\n");
+                if (BlockStampAfterCacheGet)
+                {
+                    Directory.CreateDirectory(LeanCacheStamp.PathFor(lake));
+                }
                 return Success();
             }
 
@@ -305,10 +309,6 @@ internal sealed class RecordingWorktreeProcessRunner : IWorktreeProcessRunner
                 foreach (var path in Directory.EnumerateFiles(MathlibCacheFixture.CurrentPath, "*.ltar"))
                 {
                     if (Path.GetFileName(path) != "current.ltar") File.Delete(path);
-                }
-                if (BlockStampAfterClean)
-                {
-                    Directory.CreateDirectory(LeanCacheStamp.PathFor(Path.Combine(workingDirectory, ".lake")));
                 }
                 return Success();
             }
