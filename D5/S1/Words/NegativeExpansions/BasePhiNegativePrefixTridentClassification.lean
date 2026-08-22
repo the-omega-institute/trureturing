@@ -586,18 +586,25 @@ theorem negative_prefix_trident_classification
     (expansion : BasePhiNegativeExpansion) :
     ∀ w : List Bool,
       AdmissibleNegativePrefix expansion w →
-        (∃ a b r, 0 < r ∧ lucasParameter a ∧ lucasParameter b ∧
+        (∃ a b r, 0 < r ∧ LucasPair a b ∧
           occurrenceSet expansion w = sequenceRange (vF a b r)) ∨
-        (∃ a b r, 0 < r ∧ lucasParameter a ∧ lucasParameter b ∧
+        (∃ a b r, 0 < r ∧ LucasPair a b ∧
           occurrenceSet expansion w = sequenceRange (vG a b r)) ∨
-        (∃ a b r, 0 < r ∧ lucasParameter a ∧ lucasParameter b ∧
+        (∃ a b r, 0 < r ∧ LucasPair a b ∧
           occurrenceSet expansion w = sequenceRange (vH a b r)) ∨
-        (∃ (a b : Int) (families : Fin 3 → GapFamily) (first : Fin 3 → Int),
-          lucasParameter a ∧ lucasParameter b ∧ (∀ i, 0 < first i) ∧
+        (∃ (family : GapFamily) (a b r : Int),
+          LucasPair a b ∧
+          (∀ i : Fin 3, 0 < r + (i.1 : Int)) ∧
+          (∀ i j : Fin 3, i ≠ j →
+            Disjoint
+              (sequenceRange (vForFamily family a b (r + (i.1 : Int))))
+              (sequenceRange (vForFamily family a b (r + (j.1 : Int))))) ∧
           occurrenceSet expansion w =
-            ⋃ i, sequenceRange (vForFamily (families i) a b (first i))) := by
-  apply (trident_classification_reduces_to_canonical expansion).mpr
-  intro w hw
+            ⋃ i : Fin 3,
+              sequenceRange (vForFamily family a b (r + (i.1 : Int)))) := by
+  intro w hadmissible
+  rw [occurrenceSet_eq_canonical expansion w]
+  have hw := (admissible_negative_prefix_iff_canonical expansion w).mp hadmissible
   have hn : w ≠ [] := by
     rintro rfl
     simp [AdmissibleNegativePrefix, NegativePrefixOccurs, reachesNegativeDepth] at hw
@@ -606,23 +613,27 @@ theorem negative_prefix_trident_classification
   obtain ⟨family, a, b, r, hp, hr, hc⟩ := core_lucas_witness_of_admissible hw
   have ht := v_translate_initial_value_proved family a b r
   have hd := three_arms_pairwise_disjoint_proved hn hw hf hl ⟨hp, hr, hc⟩ ht
-  obtain ⟨fo, ao, bo, ro, hpo, hro, hs⟩ :=
-    occurrenceSet_lucas_gap_classification_proved hn hw hf hl ⟨hp, hr, hc⟩ ht hd
-  have hparams := hpo.parameters
+  have hs := occurrenceSet_lucas_gap_classification_exact_proved hn hw hf hl
+    ⟨hp, hr, hc⟩ ht hd
+  unfold occurrenceSet_lucas_gap_classification_exact at hs
   by_cases hh : w.head? = some true
   · rw [if_pos hh] at hs
-    cases fo
-    · exact Or.inl ⟨ao, bo, ro, hro, hparams.1, hparams.2, hs⟩
-    · exact Or.inr <| Or.inl ⟨ao, bo, ro, hro, hparams.1, hparams.2, hs⟩
-    · exact Or.inr <| Or.inr <| Or.inl ⟨ao, bo, ro, hro, hparams.1, hparams.2, hs⟩
+    cases family
+    · exact Or.inl ⟨a, b, r, hr, hp, hs⟩
+    · exact Or.inr <| Or.inl ⟨a, b, r, hr, hp, hs⟩
+    · exact Or.inr <| Or.inr <| Or.inl ⟨a, b, r, hr, hp, hs⟩
   · rw [if_neg hh] at hs
-    refine Or.inr <| Or.inr <| Or.inr ⟨ao, bo, fun _ => fo,
-      fun i => ro + i.1, hparams.1, hparams.2, ?_, ?_⟩
+    have hheadFalse : w.head? = some false := by
+      cases w with
+      | nil => contradiction
+      | cons bit tail =>
+          cases bit <;> simp_all
+    refine Or.inr <| Or.inr <| Or.inr ⟨family, a, b, r, hp, ?_, ?_, hs⟩
     · intro i
       have : (0 : Int) ≤ (i.1 : Int) := by positivity
-      change 0 < ro + (i.1 : Int)
+      change 0 < r + (i.1 : Int)
       omega
-    · exact hs
+    · exact hd hheadFalse
 
 end
 

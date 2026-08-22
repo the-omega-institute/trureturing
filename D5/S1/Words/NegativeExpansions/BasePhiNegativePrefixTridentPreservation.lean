@@ -66,6 +66,24 @@ def occurrenceSet_lucas_gap_classification {w : List Bool} (hw : w ≠ [])
           ⋃ j : Fin 3,
             sequenceRange (vForFamily family a b (r + (j.1 : Int)))
 
+def occurrenceSet_lucas_gap_classification_exact {w : List Bool} (hw : w ≠ [])
+    (hadmissible : AdmissibleNegativePrefix canonicalExpansion w)
+    (hfibers : negative_tail_fiber_shape hw hadmissible)
+    (hlift : core_occurrence_unique_lift hw hadmissible hfibers)
+    {family : GapFamily} {a b r : Int}
+    (hcore : LucasPair a b ∧ 0 < r ∧
+      Core w = sequenceRange (vForFamily family a b r))
+    (htranslate : v_translate_initial_value family a b r)
+    (hdisjoint : three_arms_pairwise_disjoint hw hadmissible hfibers hlift
+      hcore htranslate) : Prop :=
+  if w.head? = some true then
+    occurrenceSet canonicalExpansion w =
+      sequenceRange (vForFamily family a b r)
+  else
+    occurrenceSet canonicalExpansion w =
+      ⋃ j : Fin 3,
+        sequenceRange (vForFamily family a b (r + (j.1 : Int)))
+
 theorem LucasPair.parameters {a b : Int} (h : LucasPair a b) :
     lucasParameter a ∧ lucasParameter b := by
   obtain ⟨k, _, ha, hb⟩ := h
@@ -175,7 +193,7 @@ theorem three_arms_pairwise_disjoint_proved {w : List Bool} (hw : w ≠ [])
   apply Fin.ext
   exact congrArg Prod.snd (hiEq.trans hjEq.symm)
 
-theorem occurrenceSet_lucas_gap_classification_proved {w : List Bool}
+theorem occurrenceSet_lucas_gap_classification_exact_proved {w : List Bool}
     (hw : w ≠ [])
     (hadmissible : AdmissibleNegativePrefix canonicalExpansion w)
     (hfibers : negative_tail_fiber_shape hw hadmissible)
@@ -186,10 +204,10 @@ theorem occurrenceSet_lucas_gap_classification_proved {w : List Bool}
     (htranslate : v_translate_initial_value family a b r)
     (hdisjoint : three_arms_pairwise_disjoint hw hadmissible hfibers hlift
       hcore htranslate) :
-    occurrenceSet_lucas_gap_classification hw hadmissible hfibers hlift
+    occurrenceSet_lucas_gap_classification_exact hw hadmissible hfibers hlift
       hcore htranslate hdisjoint := by
   classical
-  refine ⟨family, a, b, r, hcore.1, hcore.2.1, ?_⟩
+  unfold occurrenceSet_lucas_gap_classification_exact
   split_ifs with hhead
   · ext N
     constructor
@@ -230,6 +248,23 @@ theorem occurrenceSet_lucas_gap_classification_proved {w : List Bool}
       rcases shifted_sequence_lift hw hadmissible hfibers hcore htranslate
         hheadFalse hNj with ⟨q, hqCore, hNq, hNOccurrence⟩
       exact hNOccurrence
+
+theorem occurrenceSet_lucas_gap_classification_proved {w : List Bool}
+    (hw : w ≠ [])
+    (hadmissible : AdmissibleNegativePrefix canonicalExpansion w)
+    (hfibers : negative_tail_fiber_shape hw hadmissible)
+    (hlift : core_occurrence_unique_lift hw hadmissible hfibers)
+    {family : GapFamily} {a b r : Int}
+    (hcore : LucasPair a b ∧ 0 < r ∧
+      Core w = sequenceRange (vForFamily family a b r))
+    (htranslate : v_translate_initial_value family a b r)
+    (hdisjoint : three_arms_pairwise_disjoint hw hadmissible hfibers hlift
+      hcore htranslate) :
+    occurrenceSet_lucas_gap_classification hw hadmissible hfibers hlift
+      hcore htranslate hdisjoint := by
+  refine ⟨family, a, b, r, hcore.1, hcore.2.1, ?_⟩
+  exact occurrenceSet_lucas_gap_classification_exact_proved hw hadmissible
+    hfibers hlift hcore htranslate hdisjoint
 
 end
 

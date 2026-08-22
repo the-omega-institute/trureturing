@@ -507,7 +507,7 @@ governance retirement; the older carry-stream providers remain documented.
   "schema": "trureturing-theorist-frontier-v2",
   "exact_statement": {
     "gid": "D5/X_Frontier/BasePhiNegativePrefixTrident.negative_prefix_trident_classification",
-    "statement_sha256": "sha256:25ddd0972fd7b97c88f87ea47bb9843e5c014cdad5344c37451293f18cb4a0d9"
+    "statement_sha256": "sha256:bdf56d9e3c62055cdc54c37b31a22f654e7e2939b1b756a840a4cd509cc7c49c"
   },
   "motivation_gids": [
     "D5/S0/Conventions/WDigits",
@@ -522,7 +522,7 @@ governance retirement; the older carry-stream providers remain documented.
     "D5/S1/Words/ZeckendorfBeattyBridge",
     "D5/S1/Words/ZeckendorfOrder"
   ],
-  "falsifier": "An admissible negative prefix w whose exact occurrence set is neither one Lucas-gap F/G/H sequence range nor a union of three such ranges sharing one Lucas pair.",
+  "falsifier": "An admissible negative prefix w whose exact occurrence set is neither one F/G/H range on a LucasPair nor a pairwise-disjoint union of three common-family ranges sharing that pair and consecutive initial offsets.",
   "search_receipt_gids": ["D5/L/Words/dekking2023structure"],
   "computation_receipt_gids": ["D5/E/S1/Words/BasePhiNegativePrefixTrident.result--json"],
   "triage_class": "theorem"
@@ -541,16 +541,22 @@ theorem negative_prefix_trident_classification
     (expansion : BasePhiNegativeExpansion) :
     ∀ w : List Bool,
       AdmissibleNegativePrefix expansion w →
-        (∃ a b r, 0 < r ∧ lucasParameter a ∧ lucasParameter b ∧
+        (∃ a b r, 0 < r ∧ LucasPair a b ∧
           occurrenceSet expansion w = sequenceRange (vF a b r)) ∨
-        (∃ a b r, 0 < r ∧ lucasParameter a ∧ lucasParameter b ∧
+        (∃ a b r, 0 < r ∧ LucasPair a b ∧
           occurrenceSet expansion w = sequenceRange (vG a b r)) ∨
-        (∃ a b r, 0 < r ∧ lucasParameter a ∧ lucasParameter b ∧
+        (∃ a b r, 0 < r ∧ LucasPair a b ∧
           occurrenceSet expansion w = sequenceRange (vH a b r)) ∨
-        (∃ (a b : Int) (families : Fin 3 → GapFamily) (first : Fin 3 → Int),
-          lucasParameter a ∧ lucasParameter b ∧ (∀ i, 0 < first i) ∧
+        (∃ (family : GapFamily) (a b r : Int),
+          LucasPair a b ∧
+          (∀ i : Fin 3, 0 < r + (i.1 : Int)) ∧
+          (∀ i j : Fin 3, i ≠ j →
+            Disjoint
+              (sequenceRange (vForFamily family a b (r + (i.1 : Int))))
+              (sequenceRange (vForFamily family a b (r + (j.1 : Int))))) ∧
           occurrenceSet expansion w =
-            ⋃ i, sequenceRange (vForFamily (families i) a b (first i))) := by
+            ⋃ i : Fin 3,
+              sequenceRange (vForFamily family a b (r + (i.1 : Int)))) := by
   sorry
 
 end
