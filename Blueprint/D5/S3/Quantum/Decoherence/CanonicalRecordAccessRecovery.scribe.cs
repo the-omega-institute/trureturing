@@ -49,7 +49,8 @@ internal sealed class CanonicalRecordAccessRecoveryDocument : IScribeDocumentDef
         Formula sigma = SigmaLower;
         Formula i = F.Id("i");
         Formula j = F.Id("j");
-        Formula unitary = F.Id("U");
+        Formula unitary = Seq(Operatorname,
+            Grp(F.Id("ReducedRecordAccessDefect"), Dot, F.Id("copyUnitary")));
         Formula matrixType = Seq(Operatorname, Grp(F.Id("QubitMatrix")));
         Formula jointType = Seq(Operatorname, Grp(F.Id("JointQubitEnvironmentMatrix")));
         Formula recordRho = Call("canonicalRecord", rho);

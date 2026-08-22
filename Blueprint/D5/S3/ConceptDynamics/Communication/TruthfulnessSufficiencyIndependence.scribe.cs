@@ -52,10 +52,12 @@ internal sealed class TruthfulnessSufficiencyIndependenceDocument : IScribeDocum
 
     private static Formula TheoremFormula()
     {
-        Formula state = F.Id("X"), message = F.Id("M"), targetType = F.Id("Y");
+        Formula state = F.Id("State"), message = F.Id("Message"),
+            targetType = F.Id("Target");
         Formula target = F.Id("T"), decoder = OverlineTarget();
         Formula sent = Sub(F.Id("R"), F.Id("send"));
         Formula truthful = Sub(F.Id("R"), F.Id("true"));
+        Formula type = Seq(Operatorname, Grp(F.Id("Type")), Caret, Grp(Star));
         Formula honest = Seq(sent, Sp, Eq, Sp, truthful);
         Formula sufficient = Seq(target, Sp, Eq, Sp, Composition(decoder, truthful));
         Formula sentSufficient = Seq(target, Sp, Eq, Sp, Composition(decoder, sent));
@@ -66,7 +68,8 @@ internal sealed class TruthfulnessSufficiencyIndependenceDocument : IScribeDocum
 
         return Disp(Seq(
             Begin, Grp(F.Id("gathered")),
-            Forall, Sp, state, Comma, Sp, message, Comma, Sp, targetType, Comma, Sp,
+            Forall, Sp, state, Comma, Sp, message, Comma, Sp, targetType,
+            Colon, Sp, type, Comma, RowBreak, Grp(),
             target, Colon, Sp, state, Sp, To, Sp, targetType, Comma, Sp,
             truthful, Comma, Sp, sent, Colon, Sp, state, Sp, To, Sp, message, Comma, Sp,
             decoder, Colon, Sp, message, Sp, To, Sp, targetType, Comma, RowBreak, Grp(),

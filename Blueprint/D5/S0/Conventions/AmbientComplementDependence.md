@@ -6,7 +6,7 @@ Subtraction complement is defined only relative to an explicit ambient total.
 
 **Theorem 1.1 (Absolute complement requires an ambient total).**
 
-$$\begin{gathered}\forall G, u, v, e\in G,\\{}(c_u(e) = c_v(e) \iff u = v) \land\\{}(c_u = c_v \iff u = v),\\{}c_u(x) := u - x.\end{gathered}$$
+$$\begin{gathered}\forall G: \operatorname{Type}^{*}, [\operatorname{AddCommGroup}(G)],\\{}u, v, e\in G,\\{}(c_u(e) = c_v(e) \iff u = v) \land\\{}(c_u = c_v \iff u = v),\\{}c_u(x) := u - x.\end{gathered}$$
 
 *Proof.* Machine-checked in Lean as `D5/S0/Conventions/AmbientComplementDependence.absolute_complement_requires_ambient_total` (`✓ std3`). ∎
 
