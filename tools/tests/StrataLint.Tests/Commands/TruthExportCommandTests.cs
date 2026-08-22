@@ -1,4 +1,5 @@
 using System.Collections.Immutable;
+using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
 using StrataLint.Cli;
@@ -27,6 +28,9 @@ public sealed class TruthExportCommandTests
         Assert.True(File.Exists(exportPath));
         var model = ParseExport(exportPath);
         Assert.Equal("TruthExportCommand", model.Producer);
+        Assert.Equal(
+            "sha256:" + Convert.ToHexStringLower(SHA256.HashData(fixture.ReportBytes.AsSpan())),
+            model.LeanReportDigest);
 
         var expected = Assert.IsType<FrozenLedgerValidationOutcome.Accepted>(
             ValidateHistory(Load(fixture.LedgerBytes), fixture.FinalCatalog)).Capability.ActiveFrozenNodes;
@@ -94,14 +98,15 @@ public sealed class TruthExportCommandTests
     }
 
     [Fact]
-    public void MissingRevisionLeanReportFailsClosedWithNoOutput()
+    public void MissingCandidateLeanReportFileFailsClosedWithNoOutput()
     {
         var genesisCatalog = BuildCatalog(Module("A"));
         var ledgerBytes = FrozenLedgerGenerator.GenerateGenesis(
             genesisCatalog,
             new FrozenGenesisDescriptor(GitOid('e'), Sha256("historical-rule-catalog")));
-        using var fixture = FixtureFromLedger(ledgerBytes, [Module("A")], supplyRevisionLeanReport: false);
+        using var fixture = FixtureFromLedger(ledgerBytes, [Module("A")]);
         using var output = new TemporaryDirectory();
+        File.Delete(fixture.ReportPath);
 
         var (exitCode, console) = Run(fixture, output.Path);
 
@@ -164,6 +169,7 @@ public sealed class TruthExportCommandTests
     [Theory]
     [InlineData("truth-export")]
     [InlineData("truth-export", "--out")]
+    [InlineData("truth-export", "--out", "dir")]
     [InlineData("truth-export", "--wrong", "dir")]
     public void UsageErrorsExitOneAndWriteNothing(params string[] arguments)
     {
@@ -180,7 +186,11 @@ public sealed class TruthExportCommandTests
     {
         var console = new BufferedConsole();
         var exitCode = CliApplication.Run(
-            ["truth-export", "--out", outDirectory],
+            [
+                "truth-export",
+                "--out", outDirectory,
+                "--candidate-lean-report", fixture.ReportPath,
+            ],
             fixture.Environment,
             console);
         return (exitCode, console);
@@ -225,24 +235,24 @@ public sealed class TruthExportCommandTests
         ImmutableArray<byte> ledgerBytes,
         ModuleSpec[] revisionModules,
         FrozenRevisionIdentity? identity = null,
-        bool supplyRevisionLeanReport = true,
         ModuleSpec[]? workingModules = null)
     {
         var temporary = new TemporaryDirectory();
         var revisionFiles = RepositoryFiles(revisionModules);
         AddLedgerFiles(revisionFiles, ledgerBytes);
         var revisionReports = Reports(revisionModules);
-        if (supplyRevisionLeanReport)
-        {
-            AddRawLeanReport(revisionFiles, revisionReports);
-        }
-
         var immutableRevision = RawSnapshot(revisionFiles);
+        var revisionSnapshot = Assert.IsType<SnapshotDecodeOutcome.Decoded>(
+            SnapshotDecoder.Decode(immutableRevision)).Snapshot;
+        var reportBytes = RawLeanReportArtifact.Write(
+            revisionSnapshot,
+            LeanAxiomReport.Create(revisionReports));
+        var reportPath = Path.Combine(temporary.Path, "candidate-lean-report.json");
+        File.WriteAllBytes(reportPath, reportBytes.AsSpan());
         var mutableModules = workingModules ?? revisionModules;
         var mutableFiles = RepositoryFiles(mutableModules);
         AddLedgerFiles(mutableFiles, ledgerBytes);
         var mutableReports = Reports(mutableModules);
-        AddRawLeanReport(mutableFiles, mutableReports);
         var mutableWorkingTree = RawSnapshot(mutableFiles);
         var mutableLeanReportSource = new FakeLeanReportSource(LeanAxiomReport.Create(mutableReports));
         var gateway = new FakeRepositoryGateway(
@@ -254,7 +264,13 @@ public sealed class TruthExportCommandTests
             temporary.Path,
             gateway,
             mutableLeanReportSource);
-        return new TruthExportFixture(temporary, environment, gateway, mutableLeanReportSource);
+        return new TruthExportFixture(
+            temporary,
+            environment,
+            gateway,
+            mutableLeanReportSource,
+            reportPath,
+            reportBytes);
     }
 
     private static Dictionary<string, string> RepositoryFiles(IEnumerable<ModuleSpec> modules)
@@ -278,16 +294,6 @@ public sealed class TruthExportCommandTests
             static module => PathFor(module.Name),
             ReportFor,
             StringComparer.Ordinal);
-
-    private static void AddRawLeanReport(
-        IDictionary<string, string> files,
-        IReadOnlyDictionary<string, LeanFileReport> reports)
-    {
-        var snapshot = Assert.IsType<SnapshotDecodeOutcome.Decoded>(
-            SnapshotDecoder.Decode(RawSnapshot(files))).Snapshot;
-        files[RawLeanReportArtifact.DefaultRelativePath] = Encoding.UTF8.GetString(
-            RawLeanReportArtifact.Write(snapshot, LeanAxiomReport.Create(reports)).AsSpan());
-    }
 
     private static RawRepositorySnapshot RawSnapshot(IEnumerable<KeyValuePair<string, string>> files) =>
         RawRepositorySnapshot.Create(
@@ -319,6 +325,7 @@ public sealed class TruthExportCommandTests
         return new ParsedExport(
             root.GetProperty("source_commit").GetString()!,
             root.GetProperty("source_tree").GetString()!,
+            root.GetProperty("lean_report_digest").GetString()!,
             root.GetProperty("producer").GetString()!,
             nodes);
     }
@@ -326,6 +333,7 @@ public sealed class TruthExportCommandTests
     private sealed record ParsedExport(
         string SourceCommit,
         string SourceTree,
+        string LeanReportDigest,
         string Producer,
         ParsedExportNode[] Nodes);
 
@@ -395,13 +403,19 @@ public sealed class TruthExportCommandTests
         TemporaryDirectory temporary,
         ProductionCliEnvironment environment,
         FakeRepositoryGateway gateway,
-        FakeLeanReportSource mutableLeanReportSource) : IDisposable
+        FakeLeanReportSource mutableLeanReportSource,
+        string reportPath,
+        ImmutableArray<byte> reportBytes) : IDisposable
     {
         internal ProductionCliEnvironment Environment { get; } = environment;
 
         internal FakeRepositoryGateway Gateway { get; } = gateway;
 
         internal FakeLeanReportSource MutableLeanReportSource { get; } = mutableLeanReportSource;
+
+        internal string ReportPath { get; } = reportPath;
+
+        internal ImmutableArray<byte> ReportBytes { get; } = reportBytes;
 
         internal ImmutableArray<byte> LedgerBytes { get; set; }
 

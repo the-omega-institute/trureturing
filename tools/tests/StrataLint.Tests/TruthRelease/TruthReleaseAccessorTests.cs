@@ -50,7 +50,8 @@ public sealed class TruthReleaseAccessorTests
                 ImmutableArray.Create(new TruthExportDeclaration("nk-a", "theorem", "sha256:a")),
                 ImmutableArray<string>.Empty)),
             Commit,
-            Tree)).ToArray();
+            Tree,
+            "sha256:3333333333333333333333333333333333333333333333333333333333333333")).ToArray();
 
     // Assemble a self-consistent bundle from real content and return its directory + release digest.
     private static (string Directory, string Digest) BuildBundle(byte[] truthGraph, byte[] truthExport)

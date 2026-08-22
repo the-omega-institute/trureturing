@@ -24,7 +24,7 @@ public sealed record TruthExportNode(
 /// to these plain records stays in Scribe/base. <see cref="Create"/> canonicalises: it sorts the node set
 /// by (repo_path, frozen_node_id), each node's axiom closure and prerequisite frozen-node ids, and each
 /// node's declarations by (name_key, statement_id), so byte output is a deterministic function of the
-/// frozen content alone.
+/// input provenance and frozen content.
 /// </summary>
 public sealed record TruthExportModel(
     string Schema,
@@ -32,6 +32,7 @@ public sealed record TruthExportModel(
     string Dialect,
     string SourceCommit,
     string SourceTree,
+    string LeanReportDigest,
     string Producer,
     ImmutableArray<TruthExportNode> Nodes)
 {
@@ -47,10 +48,18 @@ public sealed record TruthExportModel(
     public static TruthExportModel Create(
         ImmutableArray<TruthExportNode> nodes,
         string sourceCommit,
-        string sourceTree)
+        string sourceTree,
+        string leanReportDigest)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(sourceCommit);
         ArgumentException.ThrowIfNullOrWhiteSpace(sourceTree);
+        if (!IsDigest(leanReportDigest))
+        {
+            throw new ArgumentException(
+                "Lean report digest must be a 'sha256:<64 lowercase hex>' value.",
+                nameof(leanReportDigest));
+        }
+
         var canonical = nodes
             .Select(static node => node with
             {
@@ -74,7 +83,29 @@ public sealed record TruthExportModel(
             CanonicalDialect,
             sourceCommit,
             sourceTree,
+            leanReportDigest,
             ProducerName,
             canonical);
+    }
+
+    private static bool IsDigest(string? value)
+    {
+        const string prefix = "sha256:";
+        if (value is null
+            || !value.StartsWith(prefix, StringComparison.Ordinal)
+            || value.Length != prefix.Length + 64)
+        {
+            return false;
+        }
+
+        foreach (var character in value.AsSpan(prefix.Length))
+        {
+            if (character is not ((>= '0' and <= '9') or (>= 'a' and <= 'f')))
+            {
+                return false;
+            }
+        }
+
+        return true;
     }
 }

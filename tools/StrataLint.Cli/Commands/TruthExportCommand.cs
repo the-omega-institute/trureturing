@@ -6,9 +6,9 @@ using Trureturing.Truth;
 
 namespace StrataLint.Cli;
 
-/// Exports the strict active frozen truth from one immutable Git revision. The revision identity is
-/// resolved before any semantic read; its repository, ledger, and raw Lean report bytes all come
-/// from the single snapshot returned by ReadRevision.
+/// Exports the strict active frozen truth from one immutable Git revision and one explicit Lean report.
+/// The report's source bindings are checked against the resolved revision, and its exact byte digest is
+/// recorded alongside the immutable commit and tree identities.
 internal static class TruthExportCommand
 {
     private const string FileName = "truth-export.v1.json";
@@ -19,7 +19,7 @@ internal static class TruthExportCommand
     {
         ArgumentNullException.ThrowIfNull(repository);
         ArgumentNullException.ThrowIfNull(arguments);
-        if (arguments.Count != 2 || arguments[0] != "--out" || string.IsNullOrWhiteSpace(arguments[1]))
+        if (!TryParseArguments(arguments, out var options))
         {
             return Usage();
         }
@@ -29,7 +29,9 @@ internal static class TruthExportCommand
             var identity = DagLedgerCommandPreparation.Ask(repository.ResolveCurrentRevision);
             var snapshot = Decode(DagLedgerCommandPreparation.Ask(
                 () => repository.ReadRevision(identity.Revision)));
-            var outcome = ValidateStrictHistory(repository, snapshot, identity);
+            var reportBytes = File.ReadAllBytes(options.CandidateLeanReport);
+            var leanReportDigest = RawLeanReportArtifact.ContentAddress(reportBytes);
+            var outcome = ValidateStrictHistory(repository, snapshot, identity, reportBytes);
             if (outcome is FrozenLedgerValidationOutcome.Rejected rejected)
             {
                 return new ExplicitCommandResult(
@@ -42,8 +44,9 @@ internal static class TruthExportCommand
             var model = TruthExportProjection.Project(
                 accepted.Capability.ActiveFrozenNodes,
                 identity.Revision,
-                Bare(identity.TreeOid));
-            var finalPath = WriteAtomically(arguments[1], model);
+                Bare(identity.TreeOid),
+                leanReportDigest);
+            var finalPath = WriteAtomically(options.OutDirectory, model);
             return new ExplicitCommandResult(
                 0,
                 $"TRUTH_EXPORT nodes={model.Nodes.Length} "
@@ -69,12 +72,13 @@ internal static class TruthExportCommand
     private static FrozenLedgerValidationOutcome ValidateStrictHistory(
         IRepositoryGateway repository,
         RepositorySnapshot snapshot,
-        FrozenRevisionIdentity identity)
+        FrozenRevisionIdentity identity,
+        ReadOnlySpan<byte> reportBytes)
     {
         var ledgerFiles = LedgerFiles(snapshot);
         var baseView = FrozenLedgerBaseViewReader.Read(RepositorySnapshot.Create(
             ledgerFiles.ToImmutableDictionary(static file => file.Path)));
-        var report = ReadLeanReport(snapshot);
+        var report = RawLeanReportArtifact.Read(reportBytes, snapshot);
         var truth = DagLedgerCommandPreparation.BuildTruth(snapshot, report);
         var catalog = DagLedgerCommandPreparation.BuildCompleteCatalog(
             truth.Snapshot,
@@ -104,18 +108,6 @@ internal static class TruthExportCommand
             ? throw new InvalidOperationException(
                 $"immutable revision contains no frozen ledger files under {FrozenLedgerChangeClassifier.AcceptedRoot}")
             : files;
-    }
-
-    private static LeanAxiomReport ReadLeanReport(RepositorySnapshot snapshot)
-    {
-        if (!snapshot.TryGetFile(RawLeanReportArtifact.DefaultRelativePath, out var report))
-        {
-            throw new InvalidOperationException(
-                "immutable revision does not contain its canonical raw Lean report at "
-                + RawLeanReportArtifact.DefaultRelativePath);
-        }
-
-        return RawLeanReportArtifact.Read(report.RawBytes.AsSpan(), snapshot);
     }
 
     private static TrustedFrozenGitReferences TrustReferences(
@@ -183,8 +175,54 @@ internal static class TruthExportCommand
         return separator < 0 ? taggedOid : taggedOid[(separator + 1)..];
     }
 
+    private static bool TryParseArguments(
+        IReadOnlyList<string> arguments,
+        out TruthExportArguments options)
+    {
+        options = default;
+        if (arguments.Count != 4)
+        {
+            return false;
+        }
+
+        string? outDirectory = null;
+        string? candidateLeanReport = null;
+        for (var index = 0; index < arguments.Count; index += 2)
+        {
+            var value = arguments[index + 1];
+            if (string.IsNullOrWhiteSpace(value))
+            {
+                return false;
+            }
+
+            switch (arguments[index])
+            {
+                case "--out" when outDirectory is null:
+                    outDirectory = value;
+                    break;
+                case "--candidate-lean-report" when candidateLeanReport is null:
+                    candidateLeanReport = value;
+                    break;
+                default:
+                    return false;
+            }
+        }
+
+        if (outDirectory is null || candidateLeanReport is null)
+        {
+            return false;
+        }
+
+        options = new TruthExportArguments(outDirectory, candidateLeanReport);
+        return true;
+    }
+
     private static ExplicitCommandResult Usage() => new(
         1,
         string.Empty,
-        "USAGE: StrataLint truth-export --out DIR\n");
+        "USAGE: StrataLint truth-export --out DIR --candidate-lean-report FILE\n");
+
+    private readonly record struct TruthExportArguments(
+        string OutDirectory,
+        string CandidateLeanReport);
 }

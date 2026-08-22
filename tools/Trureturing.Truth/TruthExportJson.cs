@@ -16,6 +16,7 @@ public static class TruthExportJsonWriter
             dialect = model.Dialect,
             source_commit = model.SourceCommit,
             source_tree = model.SourceTree,
+            lean_report_digest = model.LeanReportDigest,
             producer = model.Producer,
             nodes = model.Nodes.Select(static node => new
             {
@@ -55,7 +56,16 @@ public static class TruthExportJsonReader
             var root = document.RootElement;
             RequireProperties(
                 root,
-                ["dialect", "nodes", "producer", "schema", "schema_version", "source_commit", "source_tree"],
+                [
+                    "dialect",
+                    "lean_report_digest",
+                    "nodes",
+                    "producer",
+                    "schema",
+                    "schema_version",
+                    "source_commit",
+                    "source_tree",
+                ],
                 "truth export");
             var schema = String(root, "schema");
             var version = Integer(root, "schema_version");
@@ -81,6 +91,7 @@ public static class TruthExportJsonReader
                 dialect,
                 String(root, "source_commit"),
                 String(root, "source_tree"),
+                RequireDigest(root, "lean_report_digest"),
                 producer,
                 nodes);
             Validate(model);
@@ -189,6 +200,35 @@ public static class TruthExportJsonReader
         parent.TryGetProperty(name, out var value) && value.ValueKind == JsonValueKind.String
             ? value.GetString() ?? throw new FormatException($"Truth export {name} is null.")
             : throw new FormatException($"Truth export {name} must be a string.");
+
+    private static string RequireDigest(JsonElement parent, string name)
+    {
+        var value = String(parent, name);
+        const string prefix = "sha256:";
+        return value.StartsWith(prefix, StringComparison.Ordinal)
+            && IsHex(value.AsSpan(prefix.Length), 64)
+                ? value
+                : throw new FormatException(
+                    $"Truth export {name} is not a 'sha256:<64hex>' digest.");
+    }
+
+    private static bool IsHex(ReadOnlySpan<char> value, int length)
+    {
+        if (value.Length != length)
+        {
+            return false;
+        }
+
+        foreach (var character in value)
+        {
+            if (character is not ((>= '0' and <= '9') or (>= 'a' and <= 'f')))
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
 
     private static int Integer(JsonElement parent, string name) =>
         parent.TryGetProperty(name, out var value) && value.TryGetInt32(out var result) && result >= 0

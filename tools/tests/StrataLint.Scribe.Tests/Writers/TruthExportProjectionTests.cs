@@ -9,6 +9,8 @@ public sealed class TruthExportProjectionTests
 {
     private const string Commit = "1111111111111111111111111111111111111111";
     private const string Tree = "2222222222222222222222222222222222222222";
+    private const string LeanReportDigest =
+        "sha256:3333333333333333333333333333333333333333333333333333333333333333";
 
     [Fact]
     public void ProjectMapsFrozenMaterialAndCanonicalizesPrerequisites()
@@ -35,10 +37,15 @@ public sealed class TruthExportProjectionTests
                 RepoPath.CreateKnown(repoPath),
                 "git-sha1:" + new string('a', 40)));
 
-        var model = TruthExportProjection.Project(ImmutableArray.Create(material), Commit, Tree);
+        var model = TruthExportProjection.Project(
+            ImmutableArray.Create(material),
+            Commit,
+            Tree,
+            LeanReportDigest);
 
         Assert.Equal(Commit, model.SourceCommit);
         Assert.Equal(Tree, model.SourceTree);
+        Assert.Equal(LeanReportDigest, model.LeanReportDigest);
         var node = Assert.Single(model.Nodes);
         Assert.Equal(repoPath, node.RepoPath);
         Assert.Equal(frozenNodeId, node.FrozenNodeId);
