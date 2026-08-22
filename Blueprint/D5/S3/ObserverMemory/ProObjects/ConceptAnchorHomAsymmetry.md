@@ -6,7 +6,7 @@ Constant-object morphisms in a presented pro-object compute as a stage colimit a
 
 **Theorem 1.1 (The two constant-object Hom formulas).**
 
-$$\forall C, J, X: J^{op} \to C, A, D: C, \operatorname{Hom}_{\operatorname{Pro}(C)}(X, c(D)) \equiv \operatorname{colim}_{j} \operatorname{Hom}_{C}(X_{j}, D) \land \operatorname{Hom}_{\operatorname{Pro}(C)}(c(A), X) \equiv \operatorname{lim}_{j} \operatorname{Hom}_{C}(A, X_{j}).$$
+$$\forall C, J: \operatorname{Type},\ [\operatorname{Category}(C)],\ [\operatorname{SmallCategory}(J)],\ [\operatorname{IsFiltered}(J)],\ X: J^{op} \to C, A, D: C, \operatorname{Bijective}((f: \operatorname{Hom}_{\operatorname{ProObjectCategory}(C)}(\operatorname{presentedObject}(X), \operatorname{constantObject}(D)) \mapsto \operatorname{presentedToConstantEquiv}(X, D)(f))) \land \operatorname{Bijective}((f: \operatorname{Hom}_{\operatorname{ProObjectCategory}(C)}(\operatorname{constantObject}(A), \operatorname{presentedObject}(X)) \mapsto \operatorname{constantToPresentedEquiv}(A, X)(f))).$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/ObserverMemory/ProObjects/ConceptAnchorHomAsymmetry.concept_anchor_hom_asymmetry` (`✓ std3`). ∎
 
