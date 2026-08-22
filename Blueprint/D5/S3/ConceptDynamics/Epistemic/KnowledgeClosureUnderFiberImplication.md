@@ -47,3 +47,5 @@ Take Boolean states with only true admissible, constant Unit evidence, P always 
 - Truth anchor: `D5/S3/ConceptDynamics/Epistemic/KnowledgeClosureUnderFiberImplication.fiber_implication_not_global_counterexample`
 - Truth anchor: `D5/S3/ConceptDynamics/Epistemic/KnowledgeClosureUnderFiberImplication.knowledge_closure_under_fiber_implication`
 - Truth anchor: `D5/S3/ConceptDynamics/Epistemic/KnowledgeClosureUnderFiberImplication.structural_knowledge_implies_robust_knowledge`
+- Dependency: [D5/S3/ConceptDynamics/BoundedKnowledge/ResourceMonotoneBoundedKnowledge](../BoundedKnowledge/ResourceMonotoneBoundedKnowledge.md)
+- Dependency: [D5/S3/ConceptDynamics/Epistemic/RobustKnowledgeConjunction](RobustKnowledgeConjunction.md)
