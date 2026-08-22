@@ -17,13 +17,15 @@ internal static class LeanMissingBuildProvisioner
         LeanCacheWriterGuard writerGuard,
         IDirectoryCloner cloner,
         ILeanCacheStateProbe stateProbe,
-        Action<TimeSpan>? wait = null)
+        Action<TimeSpan>? wait = null,
+        Action<string, LeanPinSet>? writeStamp = null)
     {
         ArgumentNullException.ThrowIfNull(cloner);
         ArgumentNullException.ThrowIfNull(stateProbe);
         ArgumentNullException.ThrowIfNull(writerGuard);
         writerGuard.RequireOwnershipOf(Path.Combine(worktreeRoot, ".lake"));
         wait ??= Thread.Sleep;
+        writeStamp ??= LeanCacheStamp.WriteNew;
         if (selection.Donor is null)
         {
             return new LeanBuildProvisionAttempt(null, selection.Notice, ClonefileReceipt.NotRun);
@@ -33,14 +35,6 @@ internal static class LeanMissingBuildProvisioner
         LeanCacheProvisioner.VerifyPrivateDirectory(lake);
         var source = Path.Combine(selection.Donor, ".lake", "build");
         var target = Path.Combine(lake, "build");
-        if (PathEntryExists(target))
-        {
-            return new LeanBuildProvisionAttempt(
-                null,
-                "target .lake/build already exists; non-overwriting publication requires an absent destination",
-                ClonefileReceipt.NotRun);
-        }
-
         var staged = Path.Combine(lake, "build.stage-" + Path.GetRandomFileName());
         using var guard = selection.TakeGuard()
             ?? LeanCacheGuard.TryAcquireShared(Path.Combine(selection.Donor, ".lake"));
@@ -97,17 +91,25 @@ internal static class LeanMissingBuildProvisioner
             cloneReceipt = exit.Receipt;
         }
 
+        var publishedBuild = false;
         try
         {
             LeanCacheProvisioner.VerifyPrivateDirectory(staged);
-            var verifiedPins = LeanPinSet.TryReadWorktree(selection.Donor, out var pinReason);
+            var donorLake = Path.Combine(selection.Donor, ".lake");
+            var donorIsPrivate = TryVerifyPrivateDirectory(donorLake, out var donorDirectoryReason);
+            string? pinReason = null;
+            var verifiedPins = donorIsPrivate
+                ? LeanPinSet.TryReadWorktree(selection.Donor, out pinReason)
+                : null;
             string? stampReason = null;
-            var donorProject = stateProbe.ProbeOleans(
-                Path.Combine(selection.Donor, ".lake", "build", "lib", "lean"));
-            if (verifiedPins is null
+            var donorProject = donorIsPrivate
+                ? stateProbe.ProbeOleans(Path.Combine(donorLake, "build", "lib", "lean"))
+                : new OleanWarmthInspection(OleanWarmth.ProbeFailed, donorDirectoryReason);
+            if (!donorIsPrivate
+                || verifiedPins is null
                 || !pins.HasSameBytes(verifiedPins)
                 || !LeanCacheStamp.Matches(
-                    Path.Combine(selection.Donor, ".lake"),
+                    donorLake,
                     pins,
                     out stampReason)
                 || LeanCacheBusyProbe.IsBusy(selection.Donor, runner)
@@ -118,7 +120,8 @@ internal static class LeanMissingBuildProvisioner
                     null,
                     LeanCacheProvisioner.Join(
                         warning,
-                        pinReason
+                        donorDirectoryReason
+                            ?? pinReason
                             ?? stampReason
                             ?? donorProject.Error
                             ?? "donor changed or became busy after staging; discarded staging build"),
@@ -128,12 +131,33 @@ internal static class LeanMissingBuildProvisioner
             LeanCacheProvisioner.VerifyPrivateDirectory(lake);
             if (PathEntryExists(target))
             {
+                var beforeRemoval = stateProbe.InspectContentRoot(target);
+                string? removalReason = null;
+                if (!beforeRemoval.Clear
+                    || !TryRemoveEmptyDirectoryTree(target, out removalReason))
+                {
+                    LeanCacheProvisioner.RemovePartial(staged);
+                    return new LeanBuildProvisionAttempt(
+                        null,
+                        LeanCacheProvisioner.Join(
+                            warning,
+                            beforeRemoval.Error
+                                ?? removalReason
+                                ?? "target .lake/build changed before empty-directory removal; discarded staging build"),
+                        cloneReceipt);
+                }
+            }
+
+            var beforeRename = stateProbe.InspectContentRoot(target);
+            if (!beforeRename.Clear || PathEntryExists(target))
+            {
                 LeanCacheProvisioner.RemovePartial(staged);
                 return new LeanBuildProvisionAttempt(
                     null,
                     LeanCacheProvisioner.Join(
                         warning,
-                        "target .lake/build changed during staging; discarded staging build"),
+                        beforeRename.Error
+                            ?? "target .lake/build changed before publication; discarded staging build"),
                     cloneReceipt);
             }
             if (PathEntryExists(LeanCacheStamp.PathFor(lake)))
@@ -143,7 +167,9 @@ internal static class LeanMissingBuildProvisioner
             }
 
             Directory.Move(staged, target);
-            LeanCacheStamp.WriteNew(lake, pins);
+            publishedBuild = true;
+            writeStamp(lake, pins);
+            publishedBuild = false;
             return new LeanBuildProvisionAttempt(
                 new LeanCacheProvisionResult(
                     "cloned",
@@ -157,8 +183,82 @@ internal static class LeanMissingBuildProvisioner
         catch (Exception exception)
         {
             var exit = new CloneReceiptExit(cloneReceipt, warning);
+            if (publishedBuild)
+            {
+                exit.TryCleanup(
+                    target,
+                    LeanCacheProvisioner.RemovePartial,
+                    "published build rollback");
+            }
             exit.TryCleanup(staged, LeanCacheProvisioner.RemovePartial, "staging cleanup");
             throw exit.Wrap(exception);
+        }
+    }
+
+    private static bool TryVerifyPrivateDirectory(string path, out string? reason)
+    {
+        try
+        {
+            if (!Directory.Exists(path))
+            {
+                reason = "donor .lake disappeared after staging";
+                return false;
+            }
+            if (File.GetAttributes(path).HasFlag(FileAttributes.ReparsePoint))
+            {
+                reason = "donor .lake became a symlink after staging";
+                return false;
+            }
+            reason = null;
+            return true;
+        }
+        catch (Exception exception) when (exception is IOException
+            or UnauthorizedAccessException
+            or System.Security.SecurityException)
+        {
+            reason = $"donor .lake could not be revalidated after staging: {exception.Message}";
+            return false;
+        }
+    }
+
+    private static bool TryRemoveEmptyDirectoryTree(string root, out string? reason)
+    {
+        try
+        {
+            var pending = new Stack<string>();
+            var directories = new List<string>();
+            pending.Push(root);
+            while (pending.Count > 0)
+            {
+                var directory = pending.Pop();
+                directories.Add(directory);
+                foreach (var entry in Directory.EnumerateFileSystemEntries(directory))
+                {
+                    var attributes = File.GetAttributes(entry);
+                    if (!attributes.HasFlag(FileAttributes.Directory)
+                        || attributes.HasFlag(FileAttributes.ReparsePoint))
+                    {
+                        reason = $"target .lake/build contains an existing entry: {entry}";
+                        return false;
+                    }
+                    pending.Push(entry);
+                }
+            }
+
+            foreach (var directory in directories.OrderByDescending(static path => path.Length))
+            {
+                Directory.Delete(directory, recursive: false);
+            }
+            reason = null;
+            return true;
+        }
+        catch (Exception exception) when (exception is IOException
+            or UnauthorizedAccessException
+            or InvalidOperationException
+            or System.Security.SecurityException)
+        {
+            reason = $"target .lake/build empty-directory removal failed closed: {exception.Message}";
+            return false;
         }
     }
 

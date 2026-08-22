@@ -7,13 +7,27 @@ namespace StrataLint.Cli;
 internal static class LeanCacheEnsureCommand
 {
     private const string ColdBuildConsentVariable = "STRATALINT_ACCEPT_COLD_BUILD";
-    private const string CacheFetchCommand = "make lean-cache-ensure";
 
     private sealed record CacheState(
         OleanWarmthInspection Mathlib,
         OleanWarmthInspection Project)
     {
         internal bool AllCold => !Mathlib.IsWarm && !Project.IsWarm;
+
+        internal bool HasProbeFailure => Mathlib.State == OleanWarmth.ProbeFailed
+            || Project.State == OleanWarmth.ProbeFailed;
+
+        internal string ProbeFailureDescription => string.Join(
+            "; ",
+            new[]
+            {
+                Mathlib.State == OleanWarmth.ProbeFailed
+                    ? $"mathlib: {Mathlib.Error ?? "unknown probe failure"}"
+                    : null,
+                Project.State == OleanWarmth.ProbeFailed
+                    ? $"project: {Project.Error ?? "unknown probe failure"}"
+                    : null,
+            }.Where(static detail => detail is not null));
     }
 
     internal const string Usage = "USAGE: StrataLint worktree ensure-cache [--path DIR]";
@@ -194,12 +208,18 @@ internal static class LeanCacheEnsureCommand
                 StringComparison.Ordinal);
             if (!consent)
             {
+                var refusal = cacheState.HasProbeFailure
+                    ? "COLD_BUILD_REFUSED cache warmth probe failed and was treated as cold (fail-closed): "
+                        + cacheState.ProbeFailureDescription
+                    : "COLD_BUILD_REFUSED mathlib and project olean caches are both cold.";
+                var target = ShellQuote(root);
                 return new CommandResult(
                     false,
                     receipt,
-                    "COLD_BUILD_REFUSED mathlib and project olean caches are both cold.\n"
-                    + $"Fetch caches with: {CacheFetchCommand}\n"
-                    + $"To accept this cold build once, run: {ColdBuildConsentVariable}=1 make lean\n");
+                    refusal + "\n"
+                    + $"Fetch caches with: make -C {target} lean-cache-ensure\n"
+                    + "To accept this cold build once, run: "
+                    + $"{ColdBuildConsentVariable}=1 make -C {target} lean\n");
             }
             receipt = RecordColdBuildConsent(receipt);
         }
@@ -238,6 +258,7 @@ internal static class LeanCacheEnsureCommand
         var lake = Path.Combine(root, ".lake");
         writerGuard.RequireOwnershipOf(lake);
         string? stampMiss = null;
+        var missingDonorClonefile = ClonefileReceipt.NotRun;
         try
         {
             if (IsSymlink(lake)) return RefusedSymlink(root, pins.Sha256);
@@ -311,6 +332,7 @@ internal static class LeanCacheEnsureCommand
                                             writerGuard,
                                             cloner,
                                             stateProbe);
+                                        missingDonorClonefile = attempt.Clonefile;
                                         missReason = JoinReasons(missReason, attempt.Warning);
                                         if (attempt.Result is { } seeded)
                                         {
@@ -359,7 +381,8 @@ internal static class LeanCacheEnsureCommand
                             pins.Sha256,
                             JoinReasons(missReason, reproduced.Warning),
                             reproduced.MathlibOleans,
-                            stampMiss),
+                            stampMiss,
+                            missingDonorClonefile),
                             root,
                             projectWarmth,
                             stateProbe,
@@ -381,7 +404,8 @@ internal static class LeanCacheEnsureCommand
                                 pins.Sha256,
                                 JoinReasons(missReason, exception.Message),
                                 LeanCacheProvisioner.InspectMathlibOleans(lake),
-                                stampMiss),
+                                stampMiss,
+                                missingDonorClonefile),
                                 root,
                                 projectWarmth,
                                 stateProbe,
@@ -395,7 +419,8 @@ internal static class LeanCacheEnsureCommand
                             pins.Sha256,
                             JoinReasons(missReason, exception.Message)
                                 ?? "unknown in-place producer failure",
-                            stampMiss: stampMiss);
+                            stampMiss: stampMiss,
+                            clonefile: missingDonorClonefile);
                     }
                     catch (Exception exception)
                     {
@@ -408,7 +433,8 @@ internal static class LeanCacheEnsureCommand
                             pins.Sha256,
                             JoinReasons(missReason, exception.Message)
                                 ?? "unknown in-place producer failure",
-                            stampMiss: stampMiss);
+                            stampMiss: stampMiss,
+                            clonefile: missingDonorClonefile);
                     }
                 }
             }
@@ -522,7 +548,10 @@ internal static class LeanCacheEnsureCommand
                 method: "none",
                 pins.Sha256,
                 exception.Message,
-                stampMiss: stampMiss);
+                stampMiss: stampMiss,
+                clonefile: exception is LeanCacheProvisionException provisionException
+                    ? provisionException.Clonefile
+                    : missingDonorClonefile);
         }
     }
 
@@ -536,7 +565,7 @@ internal static class LeanCacheEnsureCommand
         cacheState = new CacheState(
             stateProbe.ProbeOleans(MathlibOleanRoot(Path.Combine(root, ".lake"))),
             projectWarmth);
-        return result;
+        return result with { Output = RecordCacheState(result.Output, cacheState) };
     }
 
     private static CommandResult SuccessReceipt(
@@ -657,6 +686,32 @@ internal static class LeanCacheEnsureCommand
         payload["cold_build_consent"] = true;
         return prefix + payload.ToJsonString() + "\n";
     }
+
+    private static string RecordCacheState(string receipt, CacheState cacheState)
+    {
+        const string prefix = "LEAN_CACHE ";
+        if (!receipt.StartsWith(prefix, StringComparison.Ordinal))
+        {
+            throw new InvalidOperationException("Lean cache receipt has an unexpected prefix");
+        }
+        var payload = JsonNode.Parse(receipt[prefix.Length..]) as JsonObject
+            ?? throw new InvalidOperationException("Lean cache receipt is not a JSON object");
+        payload["mathlib_olean_state"] = ReceiptWarmth(cacheState.Mathlib.State);
+        payload["mathlib_olean_probe_error"] = cacheState.Mathlib.Error;
+        payload["project_olean_state"] = ReceiptWarmth(cacheState.Project.State);
+        payload["project_olean_probe_error"] = cacheState.Project.Error;
+        return prefix + payload.ToJsonString() + "\n";
+    }
+
+    private static string ReceiptWarmth(OleanWarmth warmth) => warmth switch
+    {
+        OleanWarmth.Cold => "cold",
+        OleanWarmth.Warm => "warm",
+        OleanWarmth.ProbeFailed => "probe_failed",
+        _ => throw new ArgumentOutOfRangeException(nameof(warmth), warmth, null),
+    };
+
+    private static string ShellQuote(string value) => "'" + value.Replace("'", "'\"'\"'") + "'";
 
     private static string ProjectOleanRoot(string lake) =>
         Path.Combine(lake, "build", "lib", "lean");
