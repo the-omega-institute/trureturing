@@ -23,4 +23,3 @@ The repository already proves the exactness, surjectivity, and kernel classifica
 ## References
 
 - Truth anchor: `D5/S3/Factorization/Solenoid/AllPrimeRegisterExactSequence.all_prime_register_short_exact`
-- Dependency: [D5/S3/Factorization/SolenoidProfiniteKernel](../SolenoidProfiniteKernel.md)
