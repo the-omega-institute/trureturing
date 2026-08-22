@@ -5,7 +5,10 @@
 # tag 绑定 (toolchain, os, arch, config_sha256, sources_sha256) 五元组；同一元组只发一次。
 #
 # 这个归档**不是权威**：它是一个加速器，永远不进 admission 信任链，
-# 它的存在也永远不能让任何判词从红变绿。消费侧 (`fetch`) 对任何不匹配一律 fail-closed。
+# 它的存在也永远不能让任何判词从红变绿。消费侧 (`fetch`) 对**依赖层身份**
+# (`toolchain`/`config_sha256`)、归档完整性与摘要一律 fail-closed;唯独 `sources_sha256`
+# 允许回退到同 config 的最近一份,差量交给 `lake build` 补——那是加速器该有的形状,
+# 不是把关。
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../../.." && pwd -P)"
@@ -108,8 +111,25 @@ case "$VERB" in
   fetch)
     staged="$(mktemp -d)"
     trap 'rm -rf "$staged"' EXIT
-    gh release download "$tag" --repo "$REPO" --dir "$staged" --pattern "$asset" --pattern 'manifest.txt' >/dev/null 2>&1 \
-      || { printf 'LEAN_CACHE_FETCH {"status":"miss","tag":"%s","reason":"no release for this exact address"}\n' "$tag"; exit 1; }
+    # 精确地址优先；取不到就按 config 前缀回退到最近一份。
+    # 为什么必须回退:dev 约 16 提交/小时,而发布一轮 6.5 分钟起——`sources_sha256`
+    # **结构性地**追不上。实测:新建 worktree 到 fetch 之间 dev 就前进了,
+    # 本机要 …-02ab04b1 而当时最新的 release 是 …-6b2da53f,精确匹配当场 miss。
+    # 回退是安全的:`toolchain` 与 `config_sha256` 仍严格相等(依赖层不容将就),
+    # 只放宽 `sources_sha256`,差量由 `lake build` 补齐——lake 按 depHash 判 stale,
+    # 旧基底里过期的模块会被重编译。这正是 mathlib `lake exe cache get` 的模型。
+    resolved="$tag"
+    mode="exact"
+    if ! gh release download "$tag" --repo "$REPO" --dir "$staged" --pattern "$asset" --pattern 'manifest.txt' >/dev/null 2>&1; then
+      prefix="lean-cache-v1-${slug}-${config_sha256:0:16}-"
+      resolved="$(gh release list --repo "$REPO" --limit 100 --json tagName --jq '.[].tagName' 2>/dev/null \
+                    | grep "^${prefix}" | head -1)"
+      [[ -n "$resolved" ]] \
+        || { printf 'LEAN_CACHE_FETCH {"status":"miss","tag":"%s","reason":"no release for this address nor its config prefix"}\n' "$tag"; exit 1; }
+      mode="prefix"
+      gh release download "$resolved" --repo "$REPO" --dir "$staged" --pattern "$asset" --pattern 'manifest.txt' >/dev/null 2>&1 \
+        || { printf 'LEAN_CACHE_FETCH {"status":"miss","tag":"%s","reason":"prefix candidate %s could not be downloaded"}\n' "$tag" "$resolved"; exit 1; }
+    fi
     [[ -f "$staged/$asset" && -f "$staged/manifest.txt" ]] \
       || { printf 'LEAN_CACHE_FETCH {"status":"miss","tag":"%s","reason":"release is missing the archive or its manifest"}\n' "$tag"; exit 1; }
     # 声明的摘要必须与取到的字节相符；不符即丢弃，绝不静默使用。
@@ -119,15 +139,19 @@ case "$VERB" in
       || { printf 'LEAN_CACHE_FETCH {"status":"miss","tag":"%s","reason":"manifest declares no digest"}\n' "$tag"; exit 1; }
     [[ "$declared" == "$actual" ]] \
       || { printf 'LEAN_CACHE_FETCH {"status":"miss","tag":"%s","reason":"digest mismatch"}\n' "$tag"; exit 1; }
-    # manifest 的五元组必须逐字段等于本地重算的那一份。
-    for field in toolchain os arch config_sha256 sources_sha256; do
+    # 严格相等的只有依赖层身份。`os`/`arch` 不承重(olean 无平台相关二进制,
+    # mathlib 亦对所有平台发同一份);`sources_sha256` 在前缀回退下必然不同,
+    # 那正是回退的用途,由 lake 补差量兜底。
+    for field in toolchain config_sha256; do
       want="$(emit_address | sed -n "s/^${field}=//p")"
       got="$(sed -n "s/^${field}=//p" "$staged/manifest.txt")"
       [[ "$want" == "$got" ]] \
         || { printf 'LEAN_CACHE_FETCH {"status":"miss","tag":"%s","reason":"%s mismatch"}\n' "$tag" "$field"; exit 1; }
     done
     ( cd "$repository" && lake unpack "$staged/$asset" >/dev/null )
-    printf 'LEAN_CACHE_FETCH {"status":"unpacked","tag":"%s","sha256":"%s"}\n' "$tag" "$actual"
+    got_sources="$(sed -n 's/^sources_sha256=//p' "$staged/manifest.txt")"
+    printf 'LEAN_CACHE_FETCH {"status":"unpacked","mode":"%s","tag":"%s","resolved":"%s","fetched_sources_sha256":"%s","sha256":"%s"}\n' \
+      "$mode" "$tag" "$resolved" "$got_sources" "$actual"
     ;;
 
   *) usage ;;
