@@ -36,3 +36,4 @@ Pinned Mathlib supplies the exact bounded-intersection inclusion lemma; the Lean
 
 - Truth anchor: `D5/S3/ConceptDynamics/OperationalOntology/ActionExpansionIndistinguishability.actionIndistinguishability`
 - Truth anchor: `D5/S3/ConceptDynamics/OperationalOntology/ActionExpansionIndistinguishability.action_expansion_shrinks_indistinguishability`
+- Dependency: [D5/S3/ConceptDynamics/ConceptFiberDecomposition](../ConceptFiberDecomposition.md)

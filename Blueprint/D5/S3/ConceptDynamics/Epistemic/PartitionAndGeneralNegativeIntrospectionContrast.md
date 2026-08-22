@@ -23,3 +23,4 @@ The second public conjunct is an explicit countermodel for unrestricted topologi
 ## References
 
 - Truth anchor: `D5/S3/ConceptDynamics/Epistemic/PartitionAndGeneralNegativeIntrospectionContrast.partition_and_general_negative_introspection_contrast`
+- Dependency: [D5/S3/ConceptDynamics/Epistemic/PartitionKnowledgeNegativeIntrospection](PartitionKnowledgeNegativeIntrospection.md)

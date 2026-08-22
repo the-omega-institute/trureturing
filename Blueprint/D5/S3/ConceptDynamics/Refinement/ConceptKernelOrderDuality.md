@@ -25,3 +25,4 @@ The proof directly applies the pinned antisymmetrization and setoid lattice cons
 ## References
 
 - Truth anchor: `D5/S3/ConceptDynamics/Refinement/ConceptKernelOrderDuality.concept_kernel_order_duality`
+- Dependency: [D5/S3/ConceptDynamics/ConceptJoinUniversal](../ConceptJoinUniversal.md)

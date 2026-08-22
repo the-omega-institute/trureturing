@@ -13,5 +13,5 @@ receipts:
   scribe:
     - gid: D5/S3/ConceptDynamics/ConceptJoinUniversal.concept_join_universal
       definition_sha256: sha256:e98a240be20c04485b0a8c24c382c16634158e82c9facf5c10add16cf607b437
-      emission_sha256: sha256:70ab234bb652817e094deffe11ced95bbde6753b13d160d4f47044ee7922ef04
+      emission_sha256: sha256:fd5d2d21f29920a13049700ea1efa9150dbef608a308ddcf66fa998488414611
   unresolved_subitems: []

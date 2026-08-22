@@ -13,5 +13,5 @@ receipts:
   scribe:
     - gid: D5/S3/ConceptDynamics/InstitutionalCapture/KnowledgePolicyThreshold.knowledge_policy_threshold_consistent
       definition_sha256: sha256:267bede864e146a51c0f31501fe2d2ede7589c1032b9cb52917fa3a0d456704d
-      emission_sha256: sha256:5e2310464957ad757281d7b24dad7bd08e9468d4de497772b17ffad004e5315a
+      emission_sha256: sha256:1a9a1407944b592e7170d61f7a90f8dda910fc9d4078a8cfeea69608c892079a
   unresolved_subitems: []

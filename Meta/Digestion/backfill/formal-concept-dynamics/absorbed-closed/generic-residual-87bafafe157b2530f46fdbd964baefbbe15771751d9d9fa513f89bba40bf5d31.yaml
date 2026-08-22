@@ -13,5 +13,5 @@ receipts:
   scribe:
     - gid: D5/S3/ConceptDynamics/Evidence/EvidenceFourPhaseLaw.finite_classical_four_phase_law
       definition_sha256: sha256:b7584728cddff65cbd0b4f596c6dd97049e719b9b5cc08b4fb0199b077367cd1
-      emission_sha256: sha256:b82a1e1d744a42f778dd5e7d8b39cf0a111ae6a69e129e0e83f0179ae166f0e3
+      emission_sha256: sha256:63e69d40441aaf98690df16091cc016f7f9a923e8f3c65b0cb5cc8b37928b633
   unresolved_subitems: []

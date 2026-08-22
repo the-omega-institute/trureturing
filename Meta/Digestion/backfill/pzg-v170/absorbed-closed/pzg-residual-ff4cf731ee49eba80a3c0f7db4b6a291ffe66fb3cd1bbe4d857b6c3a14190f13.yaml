@@ -13,5 +13,5 @@ receipts:
   scribe:
     - gid: D5/S1/Words/Mechanical/GoldenFiberPrefixCount.golden_fiber_prefix_count
       definition_sha256: sha256:0ab57541ec9faa9f33cb4a4043772088edcff0f8012fec7fa437a086cbb77bb8
-      emission_sha256: sha256:d05257fccdaafe8e40a921eaf04a5f91427c8811b901b8e13a834646cdf2437d
+      emission_sha256: sha256:a5fc0334870f62b7d063adad95cdfd377d4a2394bd82b1b6c3e432efe4362d64
   unresolved_subitems: []

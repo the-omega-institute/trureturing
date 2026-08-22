@@ -23,3 +23,4 @@ Equal messages force equal inferred values. If both inferences were correct, equ
 ## References
 
 - Truth anchor: `D5/S3/ConceptDynamics/Communication/HeterogeneousFiberMisclassification.heterogeneous_fiber_forces_misclassification`
+- Dependency: [D5/S3/ConceptDynamics/ConceptFiberDecomposition](../ConceptFiberDecomposition.md)

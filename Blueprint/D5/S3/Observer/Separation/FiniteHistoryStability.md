@@ -25,3 +25,5 @@ The source's qualitative remark that the depth may depend on the whole system ha
 ## References
 
 - Truth anchor: `D5/S3/Observer/Separation/FiniteHistoryStability.finite_history_stability`
+- Dependency: [D5/S3/Observer/Separation/FiniteFutureCongruence](FiniteFutureCongruence.md)
+- Dependency: [D5/S3/Observer/Separation/FiniteObservationRefinementBound](FiniteObservationRefinementBound.md)

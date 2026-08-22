@@ -23,3 +23,4 @@ The cross value is the same multiplicity-weighted real cross term used by the ne
 ## References
 
 - Truth anchor: `D5/S3/Weil/ZetaBridge/TwoDimensionalEvaluationNegativeDirection.two_dimensional_evaluation_has_negative_direction`
+- Dependency: [D5/S3/Weil/ZetaBridge/ConvolutionSquareOrbitBounds](ConvolutionSquareOrbitBounds.md)

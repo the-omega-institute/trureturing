@@ -13,5 +13,5 @@ receipts:
   scribe:
     - gid: D5/S3/Factorization/PositiveRationalGroup.signed_prime_ledger_equiv_positive_rationals
       definition_sha256: sha256:91e5005118d7eb6beae11984528bee710725d3b07c9b46d31d06b125fffaa6b1
-      emission_sha256: sha256:2bc9d0403f32729c41aca172495f45e5c0ce3321a0162d30010d00912e9b94b2
+      emission_sha256: sha256:38ecb15fa4e4e6efa6635c4cb85abcbfe0eaf0d5a05803718ad885a7c0e25717
   unresolved_subitems: []

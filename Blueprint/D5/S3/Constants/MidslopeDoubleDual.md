@@ -23,3 +23,4 @@ This is casewise partial closure of the source corollary. It covers the arithmet
 ## References
 
 - Truth anchor: `D5/S3/Constants/MidslopeDoubleDual.arithmetic_geometric_double_dual`
+- Dependency: [D5/S3/Constants/MidslopeCurvatureValues](MidslopeCurvatureValues.md)

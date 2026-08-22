@@ -21,3 +21,4 @@ The proof is a thin wrapper over the cofinality field of the window family and t
 ## References
 
 - Truth anchor: `D5/S3/AnalyticClosure/CofinalTailDiscipline.cofinal_windows_and_vanishing_budget_close`
+- Dependency: [D5/S3/Analytic/TailClosure](../Analytic/TailClosure.md)

@@ -13,5 +13,5 @@ receipts:
   scribe:
     - gid: D5/S3/ConceptDynamics/Interventions/ExperimentalQuotientUniversality.experimental_quotient_universality
       definition_sha256: sha256:770cbe78edbc76df4a066438469895e1d92878a06669dc030e139bb01dd25664
-      emission_sha256: sha256:17b36ffe722bc937f7a0317e7542c2796283cb2a7b73e11f1c91acfde0fb4d2e
+      emission_sha256: sha256:a0a93632fa79093840f02a5fd2b99afb5dcb4f14dd4dab5b889305479a708aed
   unresolved_subitems: []

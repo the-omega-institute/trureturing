@@ -13,5 +13,5 @@ receipts:
   scribe:
     - gid: D5/S3/DivergenceSupport/Equality/PetzClassicalCorollary.zero_defect_equivalences_and_permutation_channel
       definition_sha256: sha256:55db187947c8133c36c53f56dd7e7ac0dec09df1139f6427f0e0a27eb62f6a2b
-      emission_sha256: sha256:669399a467acde7ebd8c0cb6c52af10a1a75870039d6eff43ea693179d4307d4
+      emission_sha256: sha256:dc49dc6a11dfb4af970dc1f93ef6dd705dee863c245db02f5e6eb53867c9acce
   unresolved_subitems: []

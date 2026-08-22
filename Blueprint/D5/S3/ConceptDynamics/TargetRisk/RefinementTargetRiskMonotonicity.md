@@ -21,3 +21,4 @@ The proof directly applies the risk-inclusion projection of the frozen refinemen
 ## References
 
 - Truth anchor: `D5/S3/ConceptDynamics/TargetRisk/RefinementTargetRiskMonotonicity.refinement_monotone_target_risk`
+- Dependency: [D5/S3/ConceptDynamics/TargetRisk/RefinementRiskCostTradeoff](RefinementRiskCostTradeoff.md)

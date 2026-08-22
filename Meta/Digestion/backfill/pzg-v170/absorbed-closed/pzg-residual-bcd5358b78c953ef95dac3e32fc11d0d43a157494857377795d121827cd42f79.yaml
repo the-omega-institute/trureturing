@@ -13,5 +13,5 @@ receipts:
   scribe:
     - gid: D5/S3/Zeros/ToySpectrum/TwoBodyHeatSeparation.two_body_heat_real_root_separation
       definition_sha256: sha256:29aef44ae090a101e7857b515ed8ff955e4408e9edf9a1dd12078c7666bf1906
-      emission_sha256: sha256:0c8cb772a58230c8f2cb05de8d9dd3b51f3aea4bfcbc85cf7d9e22bc868ccb59
+      emission_sha256: sha256:b3dfffcdf9c5a337009c60c7c5916e63fa96a4e7e6a473917fb3149e6df1fcf3
   unresolved_subitems: []

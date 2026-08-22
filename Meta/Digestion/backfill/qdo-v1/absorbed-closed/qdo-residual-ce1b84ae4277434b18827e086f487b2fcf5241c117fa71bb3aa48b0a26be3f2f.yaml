@@ -13,5 +13,5 @@ receipts:
   scribe:
     - gid: D5/S3/Quantum/Algebra/StateTransferCovariance.diagonal_state_transfer_covariance
       definition_sha256: sha256:8c46806ae018eb34dd3e8fe038540e4d5e7d0e3dd6f6a8b4cb795fb5f958d394
-      emission_sha256: sha256:e3e9e1b2685528b256e30038006a46357980eab62e5a82b74b8c47a10d7e3003
+      emission_sha256: sha256:365ca8c2377b20f8d1d3b5ce5d6b3e3f72a2470c45ea3b1a606af950c7d6fc5f
   unresolved_subitems: []

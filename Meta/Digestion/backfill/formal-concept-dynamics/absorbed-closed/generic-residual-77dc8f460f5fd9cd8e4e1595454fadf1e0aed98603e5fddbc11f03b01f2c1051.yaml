@@ -13,5 +13,5 @@ receipts:
   scribe:
     - gid: D5/S3/ConceptDynamics/MoralLuck/EffectiveMaximalControlCompatibleEvaluation.maximal_control_compatible_evaluation
       definition_sha256: sha256:b61292ad4a85bc63105886293002ae78cd3587e9a69748ef3deac7c4462e3b62
-      emission_sha256: sha256:374e3e673c52d228113152d4e259a52c4e16f96533b5dfc6e005a26b084bc448
+      emission_sha256: sha256:1a59c1bcbb085de9838fd3a89bcd7dbe0dd523fb42a8597c2bc7eb770ddcd5ad
   unresolved_subitems: []

@@ -13,5 +13,5 @@ receipts:
   scribe:
     - gid: D5/S3/ConceptDynamics/Transport/EffectiveImageNaturality.effective_image_naturality
       definition_sha256: sha256:1655130f38bb8f2cb4c26e0b8fc399b2458fc02fb8258c09bb6cd3d5033c6b94
-      emission_sha256: sha256:8c6c6c338a9409964de67f04be4e238f6aa0d3368b921610dcee43ad70bd6710
+      emission_sha256: sha256:4da0a0124dc3ce9265abb92b9e996440996e3cbef8c4efeb38ffdceebaf61ba1
   unresolved_subitems: []

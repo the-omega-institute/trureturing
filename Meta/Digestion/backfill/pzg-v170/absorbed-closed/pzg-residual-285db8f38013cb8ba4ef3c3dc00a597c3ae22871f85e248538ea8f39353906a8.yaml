@@ -13,5 +13,5 @@ receipts:
   scribe:
     - gid: D5/S3/Midline/AutomaticMidlineDecomposition.half_density_unitarity_iff_self_resonance
       definition_sha256: sha256:98c41809d6d984c90fd09711d3a7f86bc7663ec258a9c1d4eaab8b1d4c6546aa
-      emission_sha256: sha256:f1c2ba0397654b411b5d85914762fb79aa5d3e69a27df5cdef72c824dda98852
+      emission_sha256: sha256:5e9b9756e22dda58076d876faa93b77be68c4934078d1fdaf3de58a80aea6157
   unresolved_subitems: []

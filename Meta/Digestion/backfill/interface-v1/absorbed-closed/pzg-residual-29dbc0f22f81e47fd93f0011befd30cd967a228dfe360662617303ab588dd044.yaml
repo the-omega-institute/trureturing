@@ -13,5 +13,5 @@ receipts:
   scribe:
     - gid: D5/S3/Quantum/CloningMachine.machine_entropy_closed_form
       definition_sha256: sha256:9b146243d29cdd36e7417252024bc4ae9aa98c31e12b4cd38112b63643e6784b
-      emission_sha256: sha256:d3c48f934c8be0076d920547c198a32f269ea666345454b99a34d73b6e5b5b1b
+      emission_sha256: sha256:4ac99b15d45b454b24e2a5fa833712f6b009c26273eb0c07972964600eff9d59
   unresolved_subitems: []

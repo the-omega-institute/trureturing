@@ -23,3 +23,4 @@ Loogle returned named finite-supremum support declarations. LeanSearch returned 
 ## References
 
 - Truth anchor: `D5/S3/Observer/MetricGeometry/FinitePredictionTruncation.finite_prediction_truncation_formula_and_error`
+- Dependency: [D5/S3/Observer/MetricGeometry/BellmanMaxEquation](BellmanMaxEquation.md)

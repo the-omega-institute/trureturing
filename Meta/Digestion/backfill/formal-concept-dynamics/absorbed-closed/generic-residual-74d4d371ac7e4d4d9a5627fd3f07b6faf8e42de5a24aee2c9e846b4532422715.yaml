@@ -13,5 +13,5 @@ receipts:
   scribe:
     - gid: D5/S3/ConceptDynamics/OperationalOntology/ActionExpansionIndistinguishability.action_expansion_shrinks_indistinguishability
       definition_sha256: sha256:b505deed5b231624dff69fbfcec8298e1412b202dfbb5bbde77d4e27e2d395b0
-      emission_sha256: sha256:4f5ea18e457f4ac20741e195daf3a91a394c6d778850cc523e7bb6584b66e56b
+      emission_sha256: sha256:d81a9aef362653c817be6ae64cc122f31de1474fb9018d93c26521a94ee1e0d4
   unresolved_subitems: []

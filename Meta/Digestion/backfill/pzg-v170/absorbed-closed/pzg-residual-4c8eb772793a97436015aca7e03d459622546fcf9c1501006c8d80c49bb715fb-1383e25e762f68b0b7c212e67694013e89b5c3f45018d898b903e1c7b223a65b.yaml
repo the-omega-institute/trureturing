@@ -13,5 +13,5 @@ receipts:
   scribe:
     - gid: D5/S3/Axis/MultiplicativeDigitInvariant.lambda_minus_is_a_multiplicative_digit_invariant
       definition_sha256: sha256:a07cde402baabb468ed7d683accba2d2a14d43b453716f7e635888f19203f3de
-      emission_sha256: sha256:bf930c110cb5be641438e91039da0b91afe773f10c34998c8e7a5efaf03537f6
+      emission_sha256: sha256:a5ad741c10d172e411a415ac7d898da3618c0c602894f5d7532f06f086939fd3
   unresolved_subitems: []

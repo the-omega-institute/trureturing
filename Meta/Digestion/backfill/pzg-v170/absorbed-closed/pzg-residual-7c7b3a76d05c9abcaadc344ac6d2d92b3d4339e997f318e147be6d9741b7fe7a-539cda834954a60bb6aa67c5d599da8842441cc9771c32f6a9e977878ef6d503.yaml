@@ -13,5 +13,5 @@ receipts:
   scribe:
     - gid: D5/S3/Axis/AxisTraceDefinitions.axis_trace_definitions
       definition_sha256: sha256:f243c8bae6590b32428bb7b14d02e8b233830e30f774547d315bee0df6ff9ab4
-      emission_sha256: sha256:26cb7d82617fc57377790e8102866e42d47e726f17c5cd2fa30dcf6a6faab4d7
+      emission_sha256: sha256:08a8d3bcdf0d3006e4361dcea2021f13b2466e2ecb74217ef6453974fb0337b6
   unresolved_subitems: []

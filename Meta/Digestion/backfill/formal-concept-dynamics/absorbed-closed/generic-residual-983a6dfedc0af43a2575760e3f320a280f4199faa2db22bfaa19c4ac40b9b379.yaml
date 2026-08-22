@@ -13,5 +13,5 @@ receipts:
   scribe:
     - gid: D5/S3/ConceptDynamics/Communication/HeterogeneousFiberMisclassification.heterogeneous_fiber_forces_misclassification
       definition_sha256: sha256:a1d1d2abbecf051b2e46be73cfb3958aa593aba6b4081c58112e2b96be1e6f04
-      emission_sha256: sha256:149f478c6494e4a51db375f8160344fe0752a2bdf61a78e4579e1cc5bdc6adc9
+      emission_sha256: sha256:f70113ce69dc1133b8475d4973e38cfb7cfa584d787789fcf948fe45f68b8c8c
   unresolved_subitems: []
