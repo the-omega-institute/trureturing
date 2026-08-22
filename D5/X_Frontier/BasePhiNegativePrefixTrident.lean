@@ -5,7 +5,7 @@
    anchors: []
    digest: Classify admissible negative base-phi prefix occurrence sets by Lucas-gap trident families. -/
 
-import D5.X_Frontier.BasePhiNegativePrefixTridentCore
+import D5.S1.Words.Expansions.BasePhiNegativePrefixTridentCore
 
 namespace D5.X_Frontier.BasePhiNegativePrefixTrident
 

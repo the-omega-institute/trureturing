@@ -1,4 +1,4 @@
-/- GID: D5/X_Frontier/BasePhiNegativePrefixTridentCore
+/- GID: D5/S1/Words/Expansions/BasePhiNegativePrefixTridentCore
    generality: I
    mirror-B: none(waiver:negative-base-phi-frontier)
    mirror-E: none(waiver:frontier-support-companion)
