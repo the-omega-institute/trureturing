@@ -194,8 +194,7 @@ public static class ScribeEmitter
                 tolerateAbsentDocuments);
             var graph = DocumentGraphAssembler.Assemble(
                 documents,
-                declarationCatalog,
-                census.ReceiptFreeDocumentGids);
+                declarationCatalog);
             var wired = documents.Count(document => graph.For(document).Length > 0);
             var graphEdges = documents.SelectMany(document => graph.For(document)).ToArray();
             output.WriteLine(

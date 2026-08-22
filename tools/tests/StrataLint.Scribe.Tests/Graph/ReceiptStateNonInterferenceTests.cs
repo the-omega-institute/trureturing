@@ -28,6 +28,8 @@ public sealed class ReceiptStateNonInterferenceTests
             var receiptFree = Capture(receiptFreeRoot, definitions, report);
             var receiptBound = Capture(receiptBoundRoot, definitions, report);
 
+            Assert.Equal([TargetGid], receiptFree.Dependencies);
+            Assert.Equal([TargetGid], receiptBound.Dependencies);
             Assert.Equal(receiptFree.Dependencies, receiptBound.Dependencies);
             Assert.Equal(receiptFree.Markdown, receiptBound.Markdown);
             Assert.True(receiptFree.Projection.Documents.DescribeNodes.SequenceEqual(
@@ -65,8 +67,7 @@ public sealed class ReceiptStateNonInterferenceTests
         var census = ReceiptFreeDocumentCatalog.Load(repositoryRoot, documents);
         var graph = DocumentGraphAssembler.Assemble(
             documents,
-            catalog,
-            census.ReceiptFreeDocumentGids);
+            catalog);
         Assert.Empty(graph.Findings);
 
         var projection = DocumentGraphExportProjection.Create(
