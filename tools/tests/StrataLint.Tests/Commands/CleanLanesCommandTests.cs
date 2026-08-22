@@ -271,23 +271,34 @@ public sealed partial class CleanLanesCommandTests
     }
 
     [Fact]
-    public void ForceRemovalFailureRemainsFailClosed()
+    public void ForceSkipsWorktreeRemovalFailureAndReclaimsHealthyLane()
     {
         using var fixture = new CleanLanesFixture();
-        var lane = fixture.AddLandedLane("harness/remove-failure");
+        const string retainedBranch = "harness/remove-failure-a-retained";
+        const string removedBranch = "harness/remove-failure-z-control";
+        var retained = fixture.AddLandedLane(retainedBranch);
+        var removed = fixture.AddLandedLane(removedBranch);
         var runner = new SelectiveFailureRunner(
             arguments => arguments.Count > 1
                 && arguments[0] == "worktree"
-                && arguments[1] == "remove",
+                && arguments[1] == "remove"
+                && arguments.Contains(retained, StringComparer.Ordinal),
             "synthetic worktree removal failure");
 
-        var result = fixture.RunWith(runner, "--force");
+        var result = fixture.RunWith(runner, "--force", "--lanes-only");
 
-        Assert.False(result.Success);
-        Assert.Empty(result.Output);
-        Assert.Equal("CLEAN_LANES_FAILED synthetic worktree removal failure\n", result.Error);
-        Assert.True(Directory.Exists(lane));
-        Assert.True(fixture.BranchExists("harness/remove-failure"));
+        Assert.True(result.Success, result.Error);
+        Assert.Empty(result.Error);
+        Assert.True(Directory.Exists(retained));
+        Assert.True(fixture.BranchExists(retainedBranch));
+        Assert.False(Directory.Exists(removed));
+        Assert.False(fixture.BranchExists(removedBranch));
+        Assert.Contains(ReadItems(result.Output), item =>
+            ItemMatches(item, retained, "skipped", "worktree_remove_failed"));
+        Assert.Contains(ReadItems(result.Output), item =>
+            ItemMatches(item, removed, "removed", "merged_clean"));
+        Assert.Contains("\"event\":\"clean_lanes_summary\"", result.Output, StringComparison.Ordinal);
+        Assert.Contains("\"removed_count\":1", result.Output, StringComparison.Ordinal);
     }
 
     [Fact]

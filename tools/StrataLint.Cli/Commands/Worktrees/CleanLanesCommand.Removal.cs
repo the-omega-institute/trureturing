@@ -4,7 +4,7 @@ namespace StrataLint.Cli;
 
 internal static partial class CleanLanesCommand
 {
-    private static string? RemoveLane(
+    private static LaneRemovalResult RemoveLane(
         string repositoryRoot,
         RegisteredWorktree item,
         IWorktreeProcessRunner runner,
@@ -21,7 +21,7 @@ internal static partial class CleanLanesCommand
         }
         catch (Exception exception) when (exception is not OutOfMemoryException)
         {
-            return "unreadable";
+            return Refused("unreadable");
         }
 
         string actualBranch;
@@ -35,13 +35,13 @@ internal static partial class CleanLanesCommand
         }
         catch (Exception exception) when (exception is not OutOfMemoryException)
         {
-            return "unreadable";
+            return Refused("unreadable");
         }
 
         if (!string.Equals(actualHead, item.Head, StringComparison.Ordinal)
             || !string.Equals(actualBranch, item.Branch, StringComparison.Ordinal))
         {
-            return "unreadable";
+            return Refused("unreadable");
         }
 
         ProcessOutput finalStatus;
@@ -55,12 +55,12 @@ internal static partial class CleanLanesCommand
         }
         catch (Exception exception) when (exception is not OutOfMemoryException)
         {
-            return "unreadable";
+            return Refused("unreadable");
         }
 
         if (finalStatus.StandardOutput.Length != 0)
         {
-            return "dirty";
+            return Refused("dirty");
         }
 
         RegisteredWorktree? refreshed;
@@ -74,18 +74,18 @@ internal static partial class CleanLanesCommand
         }
         catch (Exception exception) when (exception is not OutOfMemoryException)
         {
-            return "unreadable";
+            return Refused("unreadable");
         }
 
-        if (refreshed is null) return "unreadable";
+        if (refreshed is null) return Refused("unreadable");
 
         if (!string.Equals(refreshed.Head, item.Head, StringComparison.Ordinal)
             || !string.Equals(refreshed.Branch, item.Branch, StringComparison.Ordinal))
         {
-            return "unreadable";
+            return Refused("unreadable");
         }
 
-        if (refreshed.Locked) return "locked";
+        if (refreshed.Locked) return Refused("locked");
 
         LaneProcessProbeOutcome processProbe;
         try
@@ -94,18 +94,67 @@ internal static partial class CleanLanesCommand
         }
         catch (Exception exception) when (exception is not OutOfMemoryException)
         {
-            return "in_use_unknown";
+            return Refused("in_use_unknown");
         }
 
-        if (!processProbe.Success) return "in_use_unknown";
-        if (processProbe.InUse) return "in_use";
+        if (!processProbe.Success) return Refused("in_use_unknown");
+        if (processProbe.InUse) return Refused("in_use");
 
-        RunGit(
-            repositoryRoot,
-            ["worktree", "remove", item.Path],
-            runner,
-            "could not remove merged lane worktree");
-        DeleteObservedRef(repositoryRoot, item.Branch!, item.Head, runner);
-        return null;
+        try
+        {
+            RunGit(
+                repositoryRoot,
+                ["worktree", "remove", item.Path],
+                runner,
+                "could not remove merged lane worktree");
+        }
+        catch (Exception exception) when (exception is not OutOfMemoryException)
+        {
+            return new(LaneRemovalOutcome.WorktreeRemoveFailed, "worktree_remove_failed");
+        }
+
+        try
+        {
+            DeleteObservedRef(repositoryRoot, item.Branch!, item.Head, runner);
+        }
+        catch (Exception exception) when (exception is not OutOfMemoryException)
+        {
+            return new(LaneRemovalOutcome.BranchRefRetained, "branch_ref_retained");
+        }
+
+        return new(LaneRemovalOutcome.Removed, "merged_clean");
     }
+
+    private static LaneRemovalResult Refused(string reason) =>
+        new(LaneRemovalOutcome.Refused, reason);
+
+    private static CleanLaneEvent RemovalEvent(
+        RegisteredWorktree item,
+        LaneRemovalResult result) =>
+        result.Outcome switch
+        {
+            LaneRemovalOutcome.Refused or LaneRemovalOutcome.WorktreeRemoveFailed =>
+                BlockedWorktree(item, result.Reason),
+            LaneRemovalOutcome.Removed =>
+                new("merged_worktree", item.Path, item.Branch, item.Head, "removed", result.Reason),
+            LaneRemovalOutcome.BranchRefRetained =>
+                new(
+                    "merged_worktree",
+                    item.Path,
+                    item.Branch,
+                    item.Head,
+                    "partially_removed",
+                    result.Reason),
+            _ => throw new InvalidOperationException($"unknown lane removal outcome: {result.Outcome}"),
+        };
+
+    private enum LaneRemovalOutcome
+    {
+        Refused,
+        Removed,
+        WorktreeRemoveFailed,
+        BranchRefRetained,
+    }
+
+    private sealed record LaneRemovalResult(LaneRemovalOutcome Outcome, string Reason);
 }

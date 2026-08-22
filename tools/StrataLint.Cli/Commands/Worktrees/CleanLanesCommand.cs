@@ -124,6 +124,7 @@ internal static partial class CleanLanesCommand
                     runner);
             }
 
+            var partialCount = events.Count(static item => item.Action == "partially_removed");
             var output = new StringBuilder();
             foreach (var item in events
                 .OrderBy(static item => item.Kind, StringComparer.Ordinal)
@@ -154,9 +155,15 @@ internal static partial class CleanLanesCommand
                 removable_count = events.Count(static item =>
                     item.Action is "would_remove" or "removed"),
                 removed_count = events.Count(static item => item.Action == "removed"),
+                partial_count = partialCount,
             }));
             output.Append('\n');
-            return new CommandResult(true, output.ToString(), string.Empty);
+            return new CommandResult(
+                partialCount == 0,
+                output.ToString(),
+                partialCount == 0
+                    ? string.Empty
+                    : $"CLEAN_LANES_PARTIAL_FAILURE count={partialCount}\n");
         }
         catch (Exception exception) when (exception is not OutOfMemoryException)
         {
@@ -392,16 +399,12 @@ internal static partial class CleanLanesCommand
 
             if (force)
             {
-                var removalBlock = RemoveLane(
+                events.Add(RemovalEvent(item, RemoveLane(
                     repositoryRoot,
                     item,
                     runner,
-                    laneProcessProbe);
-                if (removalBlock is not null)
-                {
-                    events.Add(BlockedWorktree(item, removalBlock));
-                    continue;
-                }
+                    laneProcessProbe)));
+                continue;
             }
 
             events.Add(new CleanLaneEvent(
@@ -409,7 +412,7 @@ internal static partial class CleanLanesCommand
                 item.Path,
                 item.Branch,
                 item.Head,
-                force ? "removed" : "would_remove",
+                "would_remove",
                 "merged_clean"));
         }
     }

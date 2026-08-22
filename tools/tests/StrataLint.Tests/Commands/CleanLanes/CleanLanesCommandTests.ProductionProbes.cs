@@ -182,6 +182,31 @@ public sealed partial class CleanLanesCommandTests
     }
 
     [Fact]
+    public void ForceRetainsLaneAndContinuesWhenBranchDriftsBeforeFinalStatus()
+    {
+        using var fixture = new CleanLanesFixture();
+        var retained = fixture.AddLandedLane("harness/branch-drift-a-failure");
+        var removed = fixture.AddLandedLane("harness/branch-drift-z-control");
+        var runner = fixture.CreateRunner((fileName, arguments, workingDirectory) =>
+            IsLaneGit(
+                fileName,
+                arguments,
+                workingDirectory,
+                retained,
+                "branch",
+                "--show-current")
+                ? new ProcessOutput(
+                    0,
+                    Encoding.UTF8.GetBytes("harness/replacement-branch\n"),
+                    [])
+                : null);
+
+        var result = fixture.RunWithRaw(runner, "--force");
+
+        AssertRetainedAndControlReclaimed(result, retained, removed, "unreadable");
+    }
+
+    [Fact]
     public void ForceRetainsLaneAndContinuesWhenFinalStatusRereadFails()
     {
         using var fixture = new CleanLanesFixture();
@@ -292,6 +317,87 @@ public sealed partial class CleanLanesCommandTests
 
         Assert.Equal(3, inventoryCalls);
         AssertRetainedAndControlReclaimed(result, retained, removed, "unreadable");
+    }
+
+    [Fact]
+    public void ForceRetainsLaneAndContinuesWhenRefreshedBranchChanges()
+    {
+        using var fixture = new CleanLanesFixture();
+        const string retainedBranch = "harness/refresh-branch-a-failure";
+        var retained = fixture.AddLandedLane(retainedBranch);
+        var removed = fixture.AddLandedLane("harness/refresh-branch-z-control");
+        var retainedHead = fixture.Head(retained);
+        var inventoryCalls = 0;
+        var production = new ProductionWorktreeProcessRunner();
+        var runner = fixture.CreateRunner((fileName, arguments, workingDirectory) =>
+        {
+            if (fileName != "git"
+                || !arguments.SequenceEqual(["worktree", "list", "--porcelain", "-z"]))
+            {
+                return null;
+            }
+
+            inventoryCalls++;
+            if (inventoryCalls != 2) return null;
+
+            var output = production.Run(
+                fileName,
+                arguments,
+                workingDirectory,
+                TimeSpan.FromSeconds(30));
+            var inventory = Encoding.UTF8.GetString(output.StandardOutput);
+            var observedRecord = $"worktree {retained}\0HEAD {retainedHead}\0"
+                + $"branch refs/heads/{retainedBranch}\0";
+            var changedRecord = $"worktree {retained}\0HEAD {retainedHead}\0"
+                + "branch refs/heads/harness/replacement-branch\0";
+            return new ProcessOutput(
+                output.ExitCode,
+                Encoding.UTF8.GetBytes(inventory.Replace(
+                    observedRecord,
+                    changedRecord,
+                    StringComparison.Ordinal)),
+                output.StandardError);
+        });
+
+        var result = fixture.RunWithRaw(runner, "--force");
+
+        Assert.Equal(3, inventoryCalls);
+        AssertRetainedAndControlReclaimed(result, retained, removed, "unreadable");
+    }
+
+    [Fact]
+    public void ForceReportsPartialRemovalAndReclaimsHealthyLaneWhenBranchDeletionFails()
+    {
+        using var fixture = new CleanLanesFixture();
+        const string retainedBranch = "harness/ref-delete-a-partial";
+        const string removedBranch = "harness/ref-delete-z-control";
+        var partial = fixture.AddLandedLane(retainedBranch);
+        var removed = fixture.AddLandedLane(removedBranch);
+        var runner = fixture.CreateRunner((fileName, arguments, _) =>
+            fileName == "git"
+            && arguments.Count > 2
+            && arguments[0] == "update-ref"
+            && arguments[1] == "-d"
+            && arguments[2] == $"refs/heads/{retainedBranch}"
+                ? GitFailure("synthetic branch deletion failure")
+                : null);
+
+        var result = fixture.RunWithRaw(runner, "--force", "--lanes-only");
+
+        Assert.False(result.Success);
+        Assert.Equal("CLEAN_LANES_PARTIAL_FAILURE count=1\n", result.Error);
+        Assert.False(Directory.Exists(partial));
+        Assert.True(fixture.BranchExists(retainedBranch));
+        Assert.False(Directory.Exists(removed));
+        Assert.False(fixture.BranchExists(removedBranch));
+        var items = ReadItems(result.Output);
+        Assert.Contains(items, item =>
+            ItemMatches(item, partial, "partially_removed", "branch_ref_retained"));
+        Assert.Contains(items, item =>
+            ItemMatches(item, removed, "removed", "merged_clean"));
+        Assert.Contains("\"event\":\"clean_lanes_summary\"", result.Output, StringComparison.Ordinal);
+        Assert.Contains("\"partial_count\":1", result.Output, StringComparison.Ordinal);
+        Assert.Contains("\"removed_count\":1", result.Output, StringComparison.Ordinal);
     }
 
     [Fact]
