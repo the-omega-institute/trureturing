@@ -17,6 +17,7 @@ public sealed partial class MakeWorkflowTests
     private const string InstallLeanToolchainScriptPath =
         "tools/scripts/workflow/install-lean-toolchain.sh";
     private const string WorktreeInitScriptPath = "tools/scripts/worktree-init.sh";
+    private const string CleanLanesScriptPath = "tools/scripts/clean-lanes.sh";
     private const string LeanReportScriptPath =
         "tools/scripts/report/lean-report.sh";
     private const string LeanCacheEnsureScriptPath =
@@ -60,6 +61,7 @@ public sealed partial class MakeWorkflowTests
         "deposit",
         "cover",
         "worktree",
+        "worktree-clean",
         "pr-open",
         "preflight",
         "gate",
@@ -393,6 +395,21 @@ public sealed partial class MakeWorkflowTests
         Assert.DoesNotContain("export PATH=", script, StringComparison.Ordinal);
         Assert.True(dirnameIndex >= 0, "worktree adapter must resolve its repository root");
         Assert.True(dotnetIndex > dirnameIndex, "repository root resolution must precede the CLI invocation");
+    }
+
+    [Fact]
+    public void CleanLanesAdapterForwardsTheScopeFlagToTheCli()
+    {
+        var root = TestRepositoryLayout.FindRoot();
+        var script = File.ReadAllText(Path.Combine(root, CleanLanesScriptPath));
+
+        // 开关必须一路透到 CLI:断链的开关比没有开关更糟——它看起来限定了作用面,
+        // 实际什么也没限定,而这里限定的是「会不会删掉正在跑的判官树」。
+        Assert.Contains("--lanes-only", script, StringComparison.Ordinal);
+        var parseIndex = script.IndexOf("--lanes-only", StringComparison.Ordinal);
+        var execIndex = script.IndexOf("exec dotnet run", StringComparison.Ordinal);
+        Assert.True(parseIndex >= 0, "clean-lanes adapter must accept the scope flag");
+        Assert.True(execIndex > parseIndex, "flag parsing must precede the CLI invocation");
     }
 
     [Fact]
