@@ -74,10 +74,16 @@ public sealed partial class WorktreeCommandTests
 
         Assert.Equal(
             [lake, lake],
-            runner.Invocations.Select(static invocation => invocation.FileName).ToArray());
+            runner.Invocations
+                .Where(invocation => invocation.FileName == lake)
+                .Select(static invocation => invocation.FileName)
+                .ToArray());
         Assert.Equal(
             ["get", "build"],
-            runner.Invocations.Select(static invocation => invocation.Arguments.Last()).ToArray());
+            runner.Invocations
+                .Where(invocation => invocation.FileName == lake)
+                .Select(static invocation => invocation.Arguments.Last())
+                .ToArray());
         Assert.True(LeanCacheStamp.Matches(
             Path.Combine(repository.Path, ".lake"),
             ReadPins(repository.Path),
@@ -85,11 +91,12 @@ public sealed partial class WorktreeCommandTests
     }
 
     [Fact]
-    public void WriterEntryReportsMissingMathlibOleansAndContinuesToLakeBuild()
+    public void WriterEntryReportsMissingMathlibOleansAndContinuesWhenProjectIsWarm()
     {
         using var repository = new TemporaryDirectory();
         using var sharedCache = new MathlibCacheFixture();
         InitializeRepository(repository.Path);
+        _ = ProjectOleanFixture.Write(repository.Path, "ExistingProject");
         var runner = new RecordingWorktreeProcessRunner { OmitMathlibOleans = true };
 
         var result = WorktreeCommand.Run(
@@ -119,6 +126,7 @@ public sealed partial class WorktreeCommandTests
         InitializeRepository(repository.Path);
         StampCache(repository.Path);
         MathlibProjectionFixture.RemoveAllOleans(Path.Combine(repository.Path, ".lake"));
+        _ = ProjectOleanFixture.Write(repository.Path, "ExistingProject");
         var runner = new RecordingWorktreeProcessRunner();
 
         var result = WorktreeCommand.Run(
@@ -142,6 +150,7 @@ public sealed partial class WorktreeCommandTests
         using var repository = new TemporaryDirectory();
         using var sharedCache = new MathlibCacheFixture();
         InitializeRepository(repository.Path);
+        _ = ProjectOleanFixture.Write(repository.Path, "ExistingProject");
         var runner = new RecordingWorktreeProcessRunner { FailLake = true };
 
         var result = WorktreeCommand.Run(

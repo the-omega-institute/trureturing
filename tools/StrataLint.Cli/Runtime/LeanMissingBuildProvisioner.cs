@@ -1,0 +1,178 @@
+using StrataLint.Engine;
+
+namespace StrataLint.Cli;
+
+internal sealed record LeanBuildProvisionAttempt(
+    LeanCacheProvisionResult? Result,
+    string? Warning,
+    ClonefileReceipt Clonefile);
+
+internal static class LeanMissingBuildProvisioner
+{
+    internal static LeanBuildProvisionAttempt TryProvision(
+        LeanCacheDonorSelection selection,
+        string worktreeRoot,
+        LeanPinSet pins,
+        IWorktreeProcessRunner runner,
+        LeanCacheWriterGuard writerGuard,
+        IDirectoryCloner cloner,
+        ILeanCacheStateProbe stateProbe,
+        Action<TimeSpan>? wait = null)
+    {
+        ArgumentNullException.ThrowIfNull(cloner);
+        ArgumentNullException.ThrowIfNull(stateProbe);
+        ArgumentNullException.ThrowIfNull(writerGuard);
+        writerGuard.RequireOwnershipOf(Path.Combine(worktreeRoot, ".lake"));
+        wait ??= Thread.Sleep;
+        if (selection.Donor is null)
+        {
+            return new LeanBuildProvisionAttempt(null, selection.Notice, ClonefileReceipt.NotRun);
+        }
+
+        var lake = Path.Combine(worktreeRoot, ".lake");
+        LeanCacheProvisioner.VerifyPrivateDirectory(lake);
+        var source = Path.Combine(selection.Donor, ".lake", "build");
+        var target = Path.Combine(lake, "build");
+        if (PathEntryExists(target))
+        {
+            return new LeanBuildProvisionAttempt(
+                null,
+                "target .lake/build already exists; non-overwriting publication requires an absent destination",
+                ClonefileReceipt.NotRun);
+        }
+
+        var staged = Path.Combine(lake, "build.stage-" + Path.GetRandomFileName());
+        using var guard = selection.TakeGuard()
+            ?? LeanCacheGuard.TryAcquireShared(Path.Combine(selection.Donor, ".lake"));
+        if (guard is null)
+        {
+            return new LeanBuildProvisionAttempt(
+                null,
+                "donor cache guard is busy",
+                ClonefileReceipt.NotRun);
+        }
+
+        var clone = LeanCacheProvisioner.CloneWithRetry(
+            source,
+            staged,
+            cloner,
+            LeanCacheProvisioner.RemovePartial,
+            wait,
+            out var cloneReceipt);
+        var method = "clonefile";
+        string? warning = null;
+        if (!clone.Succeeded)
+        {
+            var exit = new CloneReceiptExit(cloneReceipt, $"clonefile failed ({clone.Message})");
+            if (!exit.TryCleanup(staged, LeanCacheProvisioner.RemovePartial, "staging cleanup"))
+            {
+                return new LeanBuildProvisionAttempt(null, exit.Warning, exit.Receipt);
+            }
+
+            ProcessOutput copy;
+            try
+            {
+                copy = runner.Run(
+                    "cp",
+                    ["-R", source, staged],
+                    worktreeRoot,
+                    LeanCacheProvisioner.CommandBudget);
+            }
+            catch (Exception exception)
+            {
+                exit.AppendWarning($"ordinary copy failed ({exception.Message})");
+                exit.TryCleanup(staged, LeanCacheProvisioner.RemovePartial, "staging cleanup");
+                return new LeanBuildProvisionAttempt(null, exit.Warning, exit.Receipt);
+            }
+
+            if (copy.ExitCode != 0)
+            {
+                exit.AppendWarning(
+                    $"ordinary copy failed ({LeanCacheProvisioner.Error(copy, "cp -R failed")})");
+                exit.TryCleanup(staged, LeanCacheProvisioner.RemovePartial, "staging cleanup");
+                return new LeanBuildProvisionAttempt(null, exit.Warning, exit.Receipt);
+            }
+            method = "copy";
+            warning = LeanCacheProvisioner.Join(exit.Warning, "used slow ordinary copy");
+            cloneReceipt = exit.Receipt;
+        }
+
+        try
+        {
+            LeanCacheProvisioner.VerifyPrivateDirectory(staged);
+            var verifiedPins = LeanPinSet.TryReadWorktree(selection.Donor, out var pinReason);
+            string? stampReason = null;
+            var donorProject = stateProbe.ProbeOleans(
+                Path.Combine(selection.Donor, ".lake", "build", "lib", "lean"));
+            if (verifiedPins is null
+                || !pins.HasSameBytes(verifiedPins)
+                || !LeanCacheStamp.Matches(
+                    Path.Combine(selection.Donor, ".lake"),
+                    pins,
+                    out stampReason)
+                || LeanCacheBusyProbe.IsBusy(selection.Donor, runner)
+                || !donorProject.IsWarm)
+            {
+                LeanCacheProvisioner.RemovePartial(staged);
+                return new LeanBuildProvisionAttempt(
+                    null,
+                    LeanCacheProvisioner.Join(
+                        warning,
+                        pinReason
+                            ?? stampReason
+                            ?? donorProject.Error
+                            ?? "donor changed or became busy after staging; discarded staging build"),
+                    cloneReceipt);
+            }
+
+            LeanCacheProvisioner.VerifyPrivateDirectory(lake);
+            if (PathEntryExists(target))
+            {
+                LeanCacheProvisioner.RemovePartial(staged);
+                return new LeanBuildProvisionAttempt(
+                    null,
+                    LeanCacheProvisioner.Join(
+                        warning,
+                        "target .lake/build changed during staging; discarded staging build"),
+                    cloneReceipt);
+            }
+            if (PathEntryExists(LeanCacheStamp.PathFor(lake)))
+            {
+                throw new InvalidOperationException(
+                    "target cache stamp changed during staging; refusing to replace it");
+            }
+
+            Directory.Move(staged, target);
+            LeanCacheStamp.WriteNew(lake, pins);
+            return new LeanBuildProvisionAttempt(
+                new LeanCacheProvisionResult(
+                    "cloned",
+                    method,
+                    warning,
+                    LeanCacheProvisioner.InspectMathlibOleans(lake),
+                    cloneReceipt),
+                warning,
+                cloneReceipt);
+        }
+        catch (Exception exception)
+        {
+            var exit = new CloneReceiptExit(cloneReceipt, warning);
+            exit.TryCleanup(staged, LeanCacheProvisioner.RemovePartial, "staging cleanup");
+            throw exit.Wrap(exception);
+        }
+    }
+
+    private static bool PathEntryExists(string path)
+    {
+        try
+        {
+            _ = File.GetAttributes(path);
+            return true;
+        }
+        catch (Exception exception) when (exception is FileNotFoundException
+            or DirectoryNotFoundException)
+        {
+            return false;
+        }
+    }
+}

@@ -345,7 +345,7 @@ internal static class LeanCacheProvisioner
         return null;
     }
 
-    private static DirectoryCloneResult CloneWithRetry(
+    internal static DirectoryCloneResult CloneWithRetry(
         string source,
         string staged,
         IDirectoryCloner cloner,
@@ -568,7 +568,7 @@ internal static class LeanCacheProvisioner
         }
     }
 
-    private static void VerifyPrivateDirectory(string target)
+    internal static void VerifyPrivateDirectory(string target)
     {
         if (!Directory.Exists(target))
         {
@@ -637,19 +637,19 @@ internal static class LeanCacheProvisioner
         }
     }
 
-    private static void RemovePartial(string target)
+    internal static void RemovePartial(string target)
     {
         if (Directory.Exists(target)) Directory.Delete(target, recursive: true);
         else if (File.Exists(target)) File.Delete(target);
     }
 
-    private static string Error(ProcessOutput output, string fallback)
+    internal static string Error(ProcessOutput output, string fallback)
     {
         var error = StrictUtf8.GetString(output.StandardError).Trim();
         return error.Length == 0 ? fallback : error;
     }
 
-    private static string Join(string? first, string? second)
+    internal static string Join(string? first, string? second)
     {
         if (string.IsNullOrWhiteSpace(first)) return second ?? string.Empty;
         if (string.IsNullOrWhiteSpace(second)) return first;

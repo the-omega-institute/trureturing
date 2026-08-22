@@ -10,6 +10,7 @@ public sealed partial class WorktreeCommandTests
         using var repository = new TemporaryDirectory();
         using var sharedCache = new MathlibCacheFixture();
         InitializeRepository(repository.Path);
+        _ = ProjectOleanFixture.Write(repository.Path, "ExistingProject");
         var runner = new RecordingWorktreeProcessRunner { ThrowCacheGetTimeout = true };
 
         var result = WorktreeCommand.Run(
