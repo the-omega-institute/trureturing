@@ -25,4 +25,3 @@ Repository searches found no existing four-phase evidence theorem. Pinned Mathli
 ## References
 
 - Truth anchor: `D5/S3/ConceptDynamics/Evidence/EvidenceFourPhaseLaw.finite_classical_four_phase_law`
-- Dependency: [D5/S3/ConceptDynamics/ConceptFiberDecomposition](../ConceptFiberDecomposition.md)
