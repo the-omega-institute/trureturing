@@ -173,13 +173,20 @@ public sealed partial class MakeWorkflowTests
         var worktreeRecipe = Recipe(makefile, "worktree");
         Assert.Contains(WorktreeInitScriptPath, worktreeRecipe, StringComparison.Ordinal);
         Assert.Contains("\"$(WORKTREE_DEST)\"", worktreeRecipe, StringComparison.Ordinal);
-        // 开工前先回收旧 lane(CLAUDE.md 第 16 条)。依赖形式,不是第二行配方——
-        // 每个目标至多一行配方,且依赖让回收在建树之前必然执行。
-        Assert.Contains("worktree: worktree-clean", makefile, StringComparison.Ordinal);
+        // 回收**不得**是建树的前置(#2769)。此前它是依赖形式,于是每次 `make worktree`
+        // 都无条件回收所有「已合并且干净」的 lane —— 而那正是一条刚建好、worker 尚未落笔
+        // 的 lane 的默认状态。实测后果:另一会话建树时删掉了本会话正在使用的 lane、其分支
+        // 与约 15G 热缓存,一条实施席因此 blocked。
+        //
+        // 原断言的注释里已写明「判官树的判据区分不了『跑完了』和『正在跑』」,并以
+        // `--lanes-only` 缓解;但那限定的是「哪些东西算 lane」,**不是「谁的 lane」**,
+        // 对跨会话误删不构成防护。
+        //
+        // 反转而非删除:删掉断言就没有东西拦住同一个直觉(「开工前先扫干净」)把依赖加回来。
+        Assert.DoesNotContain("worktree: worktree-clean", makefile, StringComparison.Ordinal);
+        // `worktree-clean` 保留为**显式**目标:回收本身没错,错的是让建树隐含回收。
         var worktreeCleanRecipe = Recipe(makefile, "worktree-clean");
         Assert.Contains(CleanLanesScriptPath, worktreeCleanRecipe, StringComparison.Ordinal);
-        // 作用面必须限定在已注册 lane:判官树的判据区分不了「跑完了」和「正在跑」,
-        // 而建树常发生在派席前后;孤儿分支不占一棵树,也不属于「顺手回收旧树」。
         Assert.Contains("--lanes-only", worktreeCleanRecipe, StringComparison.Ordinal);
         Assert.Contains("--force", worktreeCleanRecipe, StringComparison.Ordinal);
         Assert.Contains("WORKTREE_DEST = $(if $(DEST)", makefile, StringComparison.Ordinal);
