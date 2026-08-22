@@ -102,7 +102,7 @@ public sealed class LeanReportPairScriptTests
         Assert.Equal(0, result.ExitCode);
         Assert.Contains(
             "LEAN_CACHE {\"status\":\"seeded\",\"method\":\"fake\"}",
-            Encoding.UTF8.GetString(result.StandardError),
+            Encoding.UTF8.GetString(result.StandardOutput),
             StringComparison.Ordinal);
         Assert.DoesNotContain(
             "LEAN_CACHE ",
@@ -312,7 +312,7 @@ public sealed class LeanReportPairScriptTests
             state=absent
             [[ ! -e "$root/.lake" ]] || state=present
             printf '%s\n' "$state" >> "$STUB_LEAN_CACHE_ENSURE_LOG"
-            printf '%s\n' 'LEAN_CACHE {"status":"seeded","method":"fake"}' >&2
+            printf '%s\n' 'LEAN_CACHE {"status":"seeded","method":"fake"}'
             exit "$STUB_LEAN_CACHE_ENSURE_EXIT_CODE"
             """;
 
