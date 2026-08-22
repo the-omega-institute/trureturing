@@ -23,4 +23,3 @@ Repository and pinned-Mathlib searches found no theorem combining fiber separati
 ## References
 
 - Truth anchor: `D5/S3/ConceptDynamics/ContextRefinementConflictSeparation.context_refinement_separates_conflict`
-- Dependency: [D5/S3/ConceptDynamics/ConceptJoinUniversal](ConceptJoinUniversal.md)
