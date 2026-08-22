@@ -252,7 +252,7 @@ public sealed partial class LeanCacheEnsureCommandTests
         Assert.Equal(2, root.GetProperty("clonefile_attempts").GetInt32());
         Assert.Equal(JsonValueKind.Null, root.GetProperty("clonefile_cleanup_error").ValueKind);
         Assert.Equal("main repository cache\n", LeanCacheFixtureFile.ReadText(Path.Combine(target, ".lake", "build", "cache.bin")));
-        Assert.DoesNotContain(runner.Invocations, static call => call.FileName == "lake");
+        Assert.DoesNotContain(runner.Invocations, call => LeanCachePredicates.IsLakeInTarget(call, target));
         Assert.True(LeanCacheStamp.Matches(Path.Combine(target, ".lake"), ReadPins(target), out _));
     }
 
@@ -302,7 +302,7 @@ public sealed partial class LeanCacheEnsureCommandTests
             clone.Target,
             StringComparison.Ordinal);
         Assert.DoesNotContain(runner.Invocations, static call => call.FileName == "cp");
-        Assert.DoesNotContain(runner.Invocations, static call => call.FileName == "lake");
+        Assert.DoesNotContain(runner.Invocations, call => LeanCachePredicates.IsLakeInTarget(call, target));
         using var receipt = ParseReceipt(result.Error);
         Assert.Equal(
             MathlibProjectionFixture.ModuleCount,
