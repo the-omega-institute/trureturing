@@ -73,3 +73,4 @@ After constructing the maximal future readout predictable from a current concept
 - Truth anchor: `D5/S3/ConceptDynamics/Adjunction/ProcessConceptAdjunction.pullback_concept_monotone`
 - Truth anchor: `D5/S3/ConceptDynamics/Adjunction/ProcessConceptAdjunction.pullback_pushforward_refines`
 - Truth anchor: `D5/S3/ConceptDynamics/Adjunction/ProcessConceptAdjunction.pushforward_concept_monotone`
+- Dependency: [D5/S3/ConceptDynamics/ConceptJoinUniversal](../ConceptJoinUniversal.md)

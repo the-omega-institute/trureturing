@@ -21,3 +21,5 @@ The graph of f defines a zero-one channel with nonnegative entries and unit row 
 ## References
 
 - Truth anchor: `D5/S3/DivergenceSupport/Garbling/DeterministicGarbling.deterministic_forgetting_kl_loss_nonnegative`
+- Dependency: [D5/S3/DivergenceSupport/ZeroSupportDefect](../ZeroSupportDefect.md)
+- Dependency: [D5/S3/Entropy/Forgetting/CapacityMonotone](../../Entropy/Forgetting/CapacityMonotone.md)
