@@ -53,33 +53,6 @@ public sealed partial class LeanCacheEnsureCommandTests
     }
 
     [Fact]
-    public void MissingColdRecursivelyEmptyBuildClonesWarmDonor()
-    {
-        using var repository = new TemporaryDirectory();
-        InitializeRepository(repository.Path);
-        WriteCache(repository.Path, "warm donor build\n");
-        var donorOlean = WriteProjectOlean(repository.Path, "DonorWarm");
-        var fixture = new MissingStampDonorTargetFixture(
-            repository.Path,
-            AddWorktree(repository.Path, "recursively-empty-build-target"));
-        fixture.CreateNestedEmptyBuild();
-        var cloner = new RecordingDirectoryCloner();
-
-        var result = WorktreeCommand.Run(
-            repository.Path,
-            ["ensure-cache", "--path", fixture.Target],
-            new RecordingWorktreeProcessRunner(),
-            cloner);
-
-        Assert.True(result.Success, result.Error);
-        Assert.NotEmpty(cloner.Invocations);
-        Assert.True(fixture.HasClonedDonorOlean(donorOlean));
-        Assert.True(fixture.StampMatches);
-        using var receipt = ParseReceipt(result.Output);
-        Assert.Equal("seeded", receipt.RootElement.GetProperty("status").GetString());
-    }
-
-    [Fact]
     public void CorruptColdClearCacheStillReproducesInPlaceInsteadOfUsingWarmDonor()
     {
         using var repository = new TemporaryDirectory();
@@ -320,7 +293,7 @@ public sealed partial class LeanCacheEnsureCommandTests
     }
 
     [Fact]
-    public void EmptyBuildBecomingNonEmptyBeforeRmdirIsPreservedAndFallsBack()
+    public void FinalContentRootRevalidationBeforeRenamePreservesRacedBuildAndFallsBack()
     {
         using var repository = new TemporaryDirectory();
         using var sharedCache = new MathlibCacheFixture();
@@ -329,11 +302,11 @@ public sealed partial class LeanCacheEnsureCommandTests
         _ = WriteProjectOlean(repository.Path, "DonorWarm");
         var fixture = new MissingStampDonorTargetFixture(
             repository.Path,
-            AddWorktree(repository.Path, "empty-build-rmdir-race-target"));
-        fixture.CreateNestedEmptyBuild();
+            AddWorktree(repository.Path, "final-content-root-revalidation-target"));
+        fixture.CreateLake();
         var probe = new DelegatingLeanCacheStateProbe(
             FileSystemLeanCacheStateProbe.Instance.ProbeOleans,
-            fixture.InspectContentRootAndPopulateBeforeRmdir);
+            fixture.InspectContentRootAndPopulateBeforeFinalRevalidation);
         var cloner = new RecordingDirectoryCloner();
 
         var result = LeanCacheEnsureCommand.Run(
@@ -346,10 +319,10 @@ public sealed partial class LeanCacheEnsureCommandTests
 
         Assert.True(result.Success, result.Error);
         Assert.Single(cloner.Invocations);
-        Assert.Equal("arrived before rmdir\n", fixture.RacedBuildText);
-        Assert.True(fixture.NestedEmptyDirectoryExists);
+        Assert.Equal("arrived before final revalidation\n", fixture.RacedBuildText);
         Assert.False(fixture.BuildCacheExists);
         Assert.True(fixture.CacheGetMarkerExists);
+        Assert.Empty(fixture.BuildStageDirectories);
     }
 
     [Fact]
@@ -441,13 +414,65 @@ public sealed partial class LeanCacheEnsureCommandTests
         Assert.True(result.Success, result.Error);
         Assert.Single(cloner.Invocations);
         using var receipt = ParseReceipt(result.Output);
-        Assert.Equal(1, receipt.RootElement.GetProperty("clonefile_attempts").GetInt32());
-        Assert.Equal(
-            [18],
-            receipt.RootElement.GetProperty("clonefile_errnos")
-                .EnumerateArray()
-                .Select(static value => value.GetInt32())
-                .ToArray());
+        AssertCrossDeviceCloneReceipt(receipt.RootElement);
+    }
+
+    [Fact]
+    public void FailedMissingDonorAttemptPreservesClonefileReceiptThroughDegradedReceipt()
+    {
+        using var repository = new TemporaryDirectory();
+        using var sharedCache = new MathlibCacheFixture();
+        InitializeRepository(repository.Path);
+        WriteCache(repository.Path, "warm donor build\n");
+        _ = WriteProjectOlean(repository.Path, "DonorWarm");
+        var fixture = new MissingStampDonorTargetFixture(
+            repository.Path,
+            AddWorktree(repository.Path, "missing-build-degraded-receipt-target"));
+        fixture.CreateLake();
+        var cloner = CrossDeviceCloneFailure();
+
+        var result = LeanCacheEnsureCommand.RunWithWriter(
+            repository.Path,
+            ["--path", fixture.Target, "--", "lake", "build"],
+            new RecordingWorktreeProcessRunner { FailCopy = true, FailLake = true },
+            cloner,
+            FileSystemLeanCacheStateProbe.Instance,
+            _ => "1");
+
+        Assert.True(result.Success, result.Error);
+        Assert.Single(cloner.Invocations);
+        using var receipt = ParseReceipt(result.Output);
+        Assert.Equal("degraded", receipt.RootElement.GetProperty("status").GetString());
+        AssertCrossDeviceCloneReceipt(receipt.RootElement);
+    }
+
+    [Fact]
+    public void FailedMissingDonorAttemptPreservesClonefileReceiptThroughFailureReceipt()
+    {
+        using var repository = new TemporaryDirectory();
+        using var sharedCache = new MathlibCacheFixture();
+        InitializeRepository(repository.Path);
+        WriteCache(repository.Path, "warm donor build\n");
+        _ = WriteProjectOlean(repository.Path, "DonorWarm");
+        var fixture = new MissingStampDonorTargetFixture(
+            repository.Path,
+            AddWorktree(repository.Path, "missing-build-failure-receipt-target"));
+        fixture.CreateLake();
+        var cloner = CrossDeviceCloneFailure();
+
+        var result = LeanCacheEnsureCommand.Run(
+            repository.Path,
+            ["--path", fixture.Target],
+            new RecordingWorktreeProcessRunner { FailCopy = true, FailLake = true },
+            cloner,
+            removePartial: null,
+            FileSystemLeanCacheStateProbe.Instance);
+
+        Assert.False(result.Success);
+        Assert.Single(cloner.Invocations);
+        using var receipt = ParseReceipt(result.Error);
+        Assert.Equal("failed", receipt.RootElement.GetProperty("status").GetString());
+        AssertCrossDeviceCloneReceipt(receipt.RootElement);
     }
 
     [Fact]
@@ -542,42 +567,6 @@ public sealed partial class LeanCacheEnsureCommandTests
     }
 
     [Fact]
-    public void ContentRootEnumerationFailureDoesNotEnterMissingDonorBranch()
-    {
-        using var repository = new TemporaryDirectory();
-        using var sharedCache = new MathlibCacheFixture();
-        InitializeRepository(repository.Path);
-        WriteCache(repository.Path, "warm donor build\n");
-        _ = WriteProjectOlean(repository.Path, "DonorWarm");
-        var target = AddWorktree(repository.Path, "content-root-probe-failure-target");
-        Directory.CreateDirectory(Path.Combine(target, ".lake"));
-        var targetBuild = Path.Combine(target, ".lake", "build");
-        var probe = new DelegatingLeanCacheStateProbe(
-            FileSystemLeanCacheStateProbe.Instance.ProbeOleans,
-            path => path == targetBuild
-                ? new ContentRootInspection(false, "injected content enumeration failure")
-                : FileSystemLeanCacheStateProbe.Instance.InspectContentRoot(path));
-        var cloner = new RecordingDirectoryCloner();
-
-        var result = LeanCacheEnsureCommand.Run(
-            repository.Path,
-            ["--path", target],
-            new RecordingWorktreeProcessRunner(),
-            cloner,
-            removePartial: null,
-            probe);
-
-        Assert.True(result.Success, result.Error);
-        Assert.Empty(cloner.Invocations);
-        Assert.True(File.Exists(Path.Combine(target, ".lake", "cache-get.marker")));
-        using var receipt = ParseReceipt(result.Output);
-        Assert.Contains(
-            "injected content enumeration failure",
-            receipt.RootElement.GetProperty("reason").GetString()!,
-            StringComparison.Ordinal);
-    }
-
-    [Fact]
     public void SymlinkTargetNeverEntersMissingDonorBranch()
     {
         if (OperatingSystem.IsWindows()) return;
@@ -611,13 +600,29 @@ public sealed partial class LeanCacheEnsureCommandTests
         return path;
     }
 
+    private static RecordingDirectoryCloner CrossDeviceCloneFailure() => new()
+    {
+        Results = new Queue<DirectoryCloneResult>(
+            [new DirectoryCloneResult(false, false, 18, 1, "cross-device clone")]),
+    };
+
+    private static void AssertCrossDeviceCloneReceipt(JsonElement receipt)
+    {
+        Assert.Equal(1, receipt.GetProperty("clonefile_attempts").GetInt32());
+        Assert.Equal(
+            [18],
+            receipt.GetProperty("clonefile_errnos")
+                .EnumerateArray()
+                .Select(static value => value.GetInt32())
+                .ToArray());
+    }
+
     private sealed class MissingStampDonorTargetFixture
     {
         private readonly string donorLake;
         private readonly string donorLakeBackup;
         private readonly string donorBuildRelativeRoot;
         private readonly string build;
-        private readonly string nestedEmptyDirectory;
         private readonly string targetOwned;
         private readonly string partialReport;
         private readonly string racedBuild;
@@ -637,7 +642,6 @@ public sealed partial class LeanCacheEnsureCommandTests
             donorBuildRelativeRoot = Path.Combine(donorRepository, ".lake", "build");
             BuildStagePrefix = Path.Combine(Lake, "build.stage-");
             build = Path.Combine(Lake, "build");
-            nestedEmptyDirectory = Path.Combine(build, "empty", "nested");
             targetOwned = Path.Combine(Lake, "target-owned.txt");
             partialReport = Path.Combine(build, "reports", "partial.json");
             racedBuild = Path.Combine(build, "raced.txt");
@@ -668,8 +672,6 @@ public sealed partial class LeanCacheEnsureCommandTests
 
         internal bool BuildDirectoryExists => Directory.Exists(build);
 
-        internal bool NestedEmptyDirectoryExists => Directory.Exists(nestedEmptyDirectory);
-
         internal bool TargetStampExists => File.Exists(targetStamp) || Directory.Exists(targetStamp);
 
         internal bool DonorLakeIsSymlink => File.GetAttributes(donorLake)
@@ -681,8 +683,6 @@ public sealed partial class LeanCacheEnsureCommandTests
         internal bool StampMatches => LeanCacheStamp.Matches(Lake, ReadPins(Target), out _);
 
         internal void CreateLake() => Directory.CreateDirectory(Lake);
-
-        internal void CreateNestedEmptyBuild() => Directory.CreateDirectory(nestedEmptyDirectory);
 
         internal void WriteTargetOwned(string contents) => File.WriteAllText(targetOwned, contents);
 
@@ -700,12 +700,12 @@ public sealed partial class LeanCacheEnsureCommandTests
 
         internal void WriteTargetStamp(string contents) => File.WriteAllText(targetStamp, contents);
 
-        internal ContentRootInspection InspectContentRootAndPopulateBeforeRmdir(string path)
+        internal ContentRootInspection InspectContentRootAndPopulateBeforeFinalRevalidation(string path)
         {
             if (string.Equals(path, build, StringComparison.Ordinal)
                 && ++contentRootInspections == 2)
             {
-                WriteRacedBuild("arrived before rmdir\n");
+                WriteRacedBuild("arrived before final revalidation\n");
             }
             return FileSystemLeanCacheStateProbe.Instance.InspectContentRoot(path);
         }

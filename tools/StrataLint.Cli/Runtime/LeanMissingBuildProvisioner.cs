@@ -129,27 +129,8 @@ internal static class LeanMissingBuildProvisioner
             }
 
             LeanCacheProvisioner.VerifyPrivateDirectory(lake);
-            if (PathEntryExists(target))
-            {
-                var beforeRemoval = stateProbe.InspectContentRoot(target);
-                string? removalReason = null;
-                if (!beforeRemoval.Clear
-                    || !TryRemoveEmptyDirectoryTree(target, out removalReason))
-                {
-                    LeanCacheProvisioner.RemovePartial(staged);
-                    return new LeanBuildProvisionAttempt(
-                        null,
-                        LeanCacheProvisioner.Join(
-                            warning,
-                            beforeRemoval.Error
-                                ?? removalReason
-                                ?? "target .lake/build changed before empty-directory removal; discarded staging build"),
-                        cloneReceipt);
-                }
-            }
-
             var beforeRename = stateProbe.InspectContentRoot(target);
-            if (!beforeRename.Clear || PathEntryExists(target))
+            if (!beforeRename.Clear)
             {
                 LeanCacheProvisioner.RemovePartial(staged);
                 return new LeanBuildProvisionAttempt(
@@ -166,6 +147,12 @@ internal static class LeanMissingBuildProvisioner
                     "target cache stamp changed during staging; refusing to replace it");
             }
 
+            // Known and accepted check-then-act window: .NET 10.0.11 on Unix LStats the
+            // destination before rename(2), so a compatible entry created between those calls
+            // can be replaced. This path holds the target .lake writer guard throughout, so a
+            // competitor must bypass the lock protocol; this repository has zero such incidents
+            // (CLAUDE.md section 20''). Closing it needs a platform-specific no-replace operation
+            // such as renameatx_np(RENAME_EXCL), whose cost is disproportionate to that history.
             Directory.Move(staged, target);
             publishedBuild = true;
             writeStamp(lake, pins);
@@ -217,47 +204,6 @@ internal static class LeanMissingBuildProvisioner
             or System.Security.SecurityException)
         {
             reason = $"donor .lake could not be revalidated after staging: {exception.Message}";
-            return false;
-        }
-    }
-
-    private static bool TryRemoveEmptyDirectoryTree(string root, out string? reason)
-    {
-        try
-        {
-            var pending = new Stack<string>();
-            var directories = new List<string>();
-            pending.Push(root);
-            while (pending.Count > 0)
-            {
-                var directory = pending.Pop();
-                directories.Add(directory);
-                foreach (var entry in Directory.EnumerateFileSystemEntries(directory))
-                {
-                    var attributes = File.GetAttributes(entry);
-                    if (!attributes.HasFlag(FileAttributes.Directory)
-                        || attributes.HasFlag(FileAttributes.ReparsePoint))
-                    {
-                        reason = $"target .lake/build contains an existing entry: {entry}";
-                        return false;
-                    }
-                    pending.Push(entry);
-                }
-            }
-
-            foreach (var directory in directories.OrderByDescending(static path => path.Length))
-            {
-                Directory.Delete(directory, recursive: false);
-            }
-            reason = null;
-            return true;
-        }
-        catch (Exception exception) when (exception is IOException
-            or UnauthorizedAccessException
-            or InvalidOperationException
-            or System.Security.SecurityException)
-        {
-            reason = $"target .lake/build empty-directory removal failed closed: {exception.Message}";
             return false;
         }
     }

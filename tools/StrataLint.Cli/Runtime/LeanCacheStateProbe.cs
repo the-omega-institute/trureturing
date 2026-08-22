@@ -75,37 +75,15 @@ internal sealed class FileSystemLeanCacheStateProbe : ILeanCacheStateProbe
     {
         try
         {
-            var rootState = InspectPath(root);
-            if (rootState == PathState.Absent) return new ContentRootInspection(true, null);
-            if (rootState != PathState.Directory)
-            {
-                return new ContentRootInspection(false, "content root is not a private directory");
-            }
-
-            var pending = new Stack<string>();
-            pending.Push(root);
-            while (pending.Count > 0)
-            {
-                foreach (var entry in Directory.EnumerateFileSystemEntries(pending.Pop()))
-                {
-                    if (InspectPath(entry) is PathState.Directory)
-                    {
-                        pending.Push(entry);
-                        continue;
-                    }
-                    return new ContentRootInspection(
-                        false,
-                        $"content root contains an existing entry: {entry}");
-                }
-            }
-
-            return new ContentRootInspection(true, null);
+            return InspectPath(root) == PathState.Absent
+                ? new ContentRootInspection(true, null)
+                : new ContentRootInspection(false, "content root already exists");
         }
         catch (Exception exception) when (IsEnumerationFailure(exception))
         {
             return new ContentRootInspection(
                 false,
-                $"content root enumeration failed: {exception.Message}");
+                $"content root inspection failed: {exception.Message}");
         }
     }
 
