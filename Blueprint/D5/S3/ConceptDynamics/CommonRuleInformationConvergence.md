@@ -23,4 +23,3 @@ Repository searches found no theorem containing both clauses. The existing discl
 ## References
 
 - Truth anchor: `D5/S3/ConceptDynamics/CommonRuleInformationConvergence.common_rule_information_convergence`
-- Dependency: [D5/S3/ConceptDynamics/ConceptFiberDecomposition](ConceptFiberDecomposition.md)
