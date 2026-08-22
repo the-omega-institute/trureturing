@@ -1,0 +1,17 @@
+ast_path: 定理/165.1
+fingerprints:
+  raw_sha256: sha256:84b9d9bd073eb4b6f750116f0aa4ea6d14dafdce1523dd37b4dbfece1bcc76bf
+  normalized_sha256: sha256:84b9d9bd073eb4b6f750116f0aa4ea6d14dafdce1523dd37b4dbfece1bcc76bf
+cas_ref: sha256:84b9d9bd073eb4b6f750116f0aa4ea6d14dafdce1523dd37b4dbfece1bcc76bf
+coverage_gids:
+  - D5/S3/ConceptDynamics/ProvenanceAdmissionCountermodel.equal_content_does_not_determine_admission
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/ProvenanceAdmissionCountermodel.equal_content_does_not_determine_admission
+      source_sha256: sha256:84b9d9bd073eb4b6f750116f0aa4ea6d14dafdce1523dd37b4dbfece1bcc76bf
+      target_sha256: sha256:d979972c8e224a84f22e46be8be0cfedcf2014a0833f230e315fa5b09a3de540
+  scribe:
+    - gid: D5/S3/ConceptDynamics/ProvenanceAdmissionCountermodel.equal_content_does_not_determine_admission
+      definition_sha256: sha256:c2a4b8e654d8e1b8fc1ee8b324175ec726e7714d779115ddcad1908e39674ac3
+      emission_sha256: sha256:23a12bae4e2636f9c70b443e9839e163d83c1d977660698135f3bf927f530737
+  unresolved_subitems: []
