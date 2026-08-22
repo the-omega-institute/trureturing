@@ -271,7 +271,7 @@ public sealed partial class CleanLanesCommandTests
     }
 
     [Fact]
-    public void ForceSkipsWorktreeRemovalFailureAndReclaimsHealthyLane()
+    public void ForceReportsWorktreeRemovalFailureAndReclaimsHealthyLane()
     {
         using var fixture = new CleanLanesFixture();
         const string retainedBranch = "harness/remove-failure-a-retained";
@@ -287,17 +287,23 @@ public sealed partial class CleanLanesCommandTests
 
         var result = fixture.RunWith(runner, "--force", "--lanes-only");
 
-        Assert.True(result.Success, result.Error);
-        Assert.Empty(result.Error);
+        Assert.False(result.Success);
+        Assert.Equal("CLEAN_LANES_PARTIAL_FAILURE count=1\n", result.Error);
         Assert.True(Directory.Exists(retained));
         Assert.True(fixture.BranchExists(retainedBranch));
         Assert.False(Directory.Exists(removed));
         Assert.False(fixture.BranchExists(removedBranch));
         Assert.Contains(ReadItems(result.Output), item =>
-            ItemMatches(item, retained, "skipped", "worktree_remove_failed"));
+            ItemMatches(
+                item,
+                retained,
+                "partially_removed",
+                "worktree_remove_failed_state_indeterminate"));
         Assert.Contains(ReadItems(result.Output), item =>
             ItemMatches(item, removed, "removed", "merged_clean"));
         Assert.Contains("\"event\":\"clean_lanes_summary\"", result.Output, StringComparison.Ordinal);
+        Assert.Contains("\"partial_count\":1", result.Output, StringComparison.Ordinal);
+        Assert.Contains("\"removable_count\":1", result.Output, StringComparison.Ordinal);
         Assert.Contains("\"removed_count\":1", result.Output, StringComparison.Ordinal);
     }
 

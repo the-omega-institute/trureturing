@@ -366,6 +366,69 @@ public sealed partial class CleanLanesCommandTests
     }
 
     [Fact]
+    public void ForceReportsIndeterminatePartialWhenGitFailsAfterDestructiveSideEffects()
+    {
+        using var fixture = new CleanLanesFixture();
+        const string damagedBranch = "harness/remove-destructive-a-partial";
+        const string removedBranch = "harness/remove-destructive-z-control";
+        var damaged = fixture.AddLandedLane(damagedBranch);
+        var removed = fixture.AddLandedLane(removedBranch);
+        var retainedTrackedFile = Path.Combine(damaged, "README.md");
+        var deletedTrackedFile = Path.Combine(
+            damaged,
+            damagedBranch.Replace('/', '-') + ".txt");
+        var production = new ProductionWorktreeProcessRunner();
+        var runner = fixture.CreateRunner((fileName, arguments, workingDirectory) =>
+        {
+            if (fileName != "git"
+                || !arguments.SequenceEqual(["worktree", "remove", damaged]))
+            {
+                return null;
+            }
+
+            var removal = production.Run(
+                fileName,
+                arguments,
+                workingDirectory,
+                TimeSpan.FromSeconds(30));
+            Assert.Equal(0, removal.ExitCode);
+            Assert.False(fixture.WorktreeRegistered(damaged));
+            Directory.CreateDirectory(damaged);
+            File.WriteAllText(
+                retainedTrackedFile,
+                "# clean lanes fixture\n",
+                new UTF8Encoding(false));
+            return new ProcessOutput(
+                255,
+                removal.StandardOutput,
+                Encoding.UTF8.GetBytes("synthetic failure after destructive removal\n"));
+        });
+
+        var result = fixture.RunWithRaw(runner, "--force", "--lanes-only");
+
+        Assert.False(result.Success);
+        Assert.Equal("CLEAN_LANES_PARTIAL_FAILURE count=1\n", result.Error);
+        Assert.False(fixture.WorktreeRegistered(damaged));
+        Assert.True(Directory.Exists(damaged));
+        Assert.True(File.Exists(retainedTrackedFile));
+        Assert.False(File.Exists(deletedTrackedFile));
+        Assert.True(fixture.BranchExists(damagedBranch));
+        Assert.False(Directory.Exists(removed));
+        Assert.False(fixture.BranchExists(removedBranch));
+        var items = ReadItems(result.Output);
+        Assert.Contains(items, item => ItemMatches(
+            item,
+            damaged,
+            "partially_removed",
+            "worktree_remove_failed_state_indeterminate"));
+        Assert.Contains(items, item =>
+            ItemMatches(item, removed, "removed", "merged_clean"));
+        Assert.Contains("\"partial_count\":1", result.Output, StringComparison.Ordinal);
+        Assert.Contains("\"removable_count\":1", result.Output, StringComparison.Ordinal);
+        Assert.Contains("\"removed_count\":1", result.Output, StringComparison.Ordinal);
+    }
+
+    [Fact]
     public void ForceReportsPartialRemovalAndReclaimsHealthyLaneWhenBranchDeletionFails()
     {
         using var fixture = new CleanLanesFixture();
@@ -397,6 +460,48 @@ public sealed partial class CleanLanesCommandTests
             ItemMatches(item, removed, "removed", "merged_clean"));
         Assert.Contains("\"event\":\"clean_lanes_summary\"", result.Output, StringComparison.Ordinal);
         Assert.Contains("\"partial_count\":1", result.Output, StringComparison.Ordinal);
+        Assert.Contains("\"removable_count\":1", result.Output, StringComparison.Ordinal);
+        Assert.Contains("\"removed_count\":1", result.Output, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void ForceReportsExactCountForTwoRetainedBranchRefsAndReclaimsHealthyControl()
+    {
+        using var fixture = new CleanLanesFixture();
+        string[] partialBranches =
+        [
+            "harness/ref-delete-a-partial",
+            "harness/ref-delete-b-partial",
+        ];
+        var partials = partialBranches.Select(branch => fixture.AddLandedLane(branch)).ToArray();
+        const string removedBranch = "harness/ref-delete-z-control";
+        var removed = fixture.AddLandedLane(removedBranch);
+        var runner = fixture.CreateRunner((fileName, arguments, _) =>
+            fileName == "git"
+            && arguments.Count > 2
+            && arguments[0] == "update-ref"
+            && arguments[1] == "-d"
+            && partialBranches.Contains(
+                arguments[2]["refs/heads/".Length..],
+                StringComparer.Ordinal)
+                ? GitFailure("synthetic branch deletion failure")
+                : null);
+
+        var result = fixture.RunWithRaw(runner, "--force", "--lanes-only");
+
+        Assert.False(result.Success);
+        Assert.Equal("CLEAN_LANES_PARTIAL_FAILURE count=2\n", result.Error);
+        Assert.All(partials, path => Assert.False(Directory.Exists(path)));
+        Assert.All(partialBranches, branch => Assert.True(fixture.BranchExists(branch)));
+        Assert.False(Directory.Exists(removed));
+        Assert.False(fixture.BranchExists(removedBranch));
+        var items = ReadItems(result.Output);
+        Assert.All(partials, path => Assert.Contains(items, item =>
+            ItemMatches(item, path, "partially_removed", "branch_ref_retained")));
+        Assert.Contains(items, item =>
+            ItemMatches(item, removed, "removed", "merged_clean"));
+        Assert.Contains("\"partial_count\":2", result.Output, StringComparison.Ordinal);
+        Assert.Contains("\"removable_count\":1", result.Output, StringComparison.Ordinal);
         Assert.Contains("\"removed_count\":1", result.Output, StringComparison.Ordinal);
     }
 

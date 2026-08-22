@@ -110,7 +110,9 @@ internal static partial class CleanLanesCommand
         }
         catch (Exception exception) when (exception is not OutOfMemoryException)
         {
-            return new(LaneRemovalOutcome.WorktreeRemoveFailed, "worktree_remove_failed");
+            return new(
+                LaneRemovalOutcome.WorktreeRemoveFailed,
+                "worktree_remove_failed_state_indeterminate");
         }
 
         try
@@ -133,11 +135,11 @@ internal static partial class CleanLanesCommand
         LaneRemovalResult result) =>
         result.Outcome switch
         {
-            LaneRemovalOutcome.Refused or LaneRemovalOutcome.WorktreeRemoveFailed =>
+            LaneRemovalOutcome.Refused =>
                 BlockedWorktree(item, result.Reason),
             LaneRemovalOutcome.Removed =>
                 new("merged_worktree", item.Path, item.Branch, item.Head, "removed", result.Reason),
-            LaneRemovalOutcome.BranchRefRetained =>
+            LaneRemovalOutcome.WorktreeRemoveFailed or LaneRemovalOutcome.BranchRefRetained =>
                 new(
                     "merged_worktree",
                     item.Path,

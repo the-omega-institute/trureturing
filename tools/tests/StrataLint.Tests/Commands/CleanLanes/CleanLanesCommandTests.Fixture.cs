@@ -36,6 +36,11 @@ public sealed partial class CleanLanesCommandTests
 
         internal string Head(string path) => Git(path, "rev-parse", "HEAD").Trim();
 
+        internal bool WorktreeRegistered(string path) =>
+            Git(repository.Path, "worktree", "list", "--porcelain")
+                .Split('\n', StringSplitOptions.RemoveEmptyEntries)
+                .Contains($"worktree {path}", StringComparer.Ordinal);
+
         internal DateTimeOffset CreationTime(string path)
         {
             var firstLine = File.ReadLines(CreationLogPath(path), Encoding.UTF8).First();
