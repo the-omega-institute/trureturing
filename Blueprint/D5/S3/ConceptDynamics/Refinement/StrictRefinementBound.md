@@ -23,4 +23,3 @@ Combining growth over all steps with the final image bound gives exactly the num
 ## References
 
 - Truth anchor: `D5/S3/ConceptDynamics/Refinement/StrictRefinementBound.strict_refinement_steps_le_card_sub_initial_image`
-- Dependency: [D5/S3/ConceptDynamics/ConceptFiberDecomposition](../ConceptFiberDecomposition.md)
