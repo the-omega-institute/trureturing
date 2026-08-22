@@ -79,8 +79,9 @@ between orthonormal bases and rank-one contexts, and no internal formalization
 of order-six complex Hadamard matrices. The external classification landscape
 has changed: arXiv:2608.18053, published 2026-08-18, claims a complete and exact
 finite-incidence classification of order-six complex Hadamard matrices. That
-four-day-old preprint is neither peer reviewed nor independently verified here,
-so its classification is evidence rather than a theorem used by this dossier.
+preprint was submitted to arXiv on 2026-08-18 at 17:46:58 UTC and was not
+independently verified here; its peer-review status was not measured for this
+dossier. Its classification is evidence, not a theorem used by this dossier.
 The remaining gap is a joint compatibility or exclusion argument over the
 claimed classified atlas, together with the basis-context bridge, that rules
 out a `Fin 4` family. The existing tomography theorems assume complementary
@@ -163,9 +164,9 @@ Tindall, was published 2026-08-18. Its abstract says that the order-six
 classification had remained open for decades, claims a complete and exact
 finite-incidence classification up to standard equivalence, reports a proof of
 Szöllősi's conjecture, and names applications to balanced six-mode
-interferometers and mutually unbiased bases. This is a recent preprint: its
-mathematical claims have not been peer reviewed or independently checked for
-this dossier and are not used as established theorems.
+interferometers and mutually unbiased bases. Its mathematical claims were not
+independently checked for this dossier and are not used as established
+theorems; its peer-review status was not measured.
 
 ## Triage
 
