@@ -511,6 +511,7 @@ public sealed partial class CleanLanesCommandTests
     [Theory]
     [InlineData("locked")]
     [InlineData("creation_unknown")]
+    [InlineData("birthtime_unknown")]
     [InlineData("age_inconsistent")]
     [InlineData("too_young")]
     [InlineData("age_unverifiable")]
@@ -534,6 +535,7 @@ public sealed partial class CleanLanesCommandTests
     [
         "locked",
         "creation_unknown",
+        "birthtime_unknown",
         "age_inconsistent",
         "too_young",
         "age_unverifiable",
@@ -562,6 +564,13 @@ public sealed partial class CleanLanesCommandTests
                 var path = fixture.AddLandedLane(branch);
                 var now = fixture.CreationTime(path).AddHours(48);
                 fixture.DeleteCreationLog(path);
+                return (path, now);
+            }
+            case "birthtime_unknown":
+            {
+                var path = fixture.AddLandedLane(branch);
+                var now = fixture.CreationTime(path).AddHours(48);
+                fixture.MakeBirthtimeUnavailable(path);
                 return (path, now);
             }
             case "age_inconsistent":

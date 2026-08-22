@@ -15,6 +15,8 @@ public sealed partial class CleanLanesCommandTests
             new(StringComparer.Ordinal);
         private readonly Dictionary<string, LaneProcessProbeOutcome> laneProcesses =
             new(StringComparer.Ordinal);
+        private readonly Dictionary<string, long> gitDirectoryBirthtimes =
+            new(StringComparer.Ordinal);
         private DateTimeOffset now;
 
         internal CleanLanesFixture()
@@ -83,6 +85,10 @@ public sealed partial class CleanLanesCommandTests
 
         internal void FailProcessProbe(string path) =>
             laneProcesses[path] = new LaneProcessProbeOutcome(false, false);
+
+        internal void MakeBirthtimeUnavailable(string path) =>
+            gitDirectoryBirthtimes.Remove(
+                Git(path, "rev-parse", "--absolute-git-dir").Trim());
 
         internal void SwitchToManagedBranch(string branch) =>
             Git(repository.Path, "switch", "-c", branch);
@@ -154,6 +160,10 @@ public sealed partial class CleanLanesCommandTests
             var path = WorktreePath(branch);
             AddWorktree(branch, path, creationTime);
             var canonicalPath = Git(path, "rev-parse", "--show-toplevel").Trim();
+            var gitDirectory = Git(canonicalPath, "rev-parse", "--absolute-git-dir").Trim();
+            gitDirectoryBirthtimes[gitDirectory] = creationTime is null
+                ? CreationTime(canonicalPath).ToUnixTimeSeconds()
+                : TimeProvider.System.GetUtcNow().ToUnixTimeSeconds();
             RegisterMergedPr(branch, Head(canonicalPath), Head(canonicalPath));
             if (dirty)
             {
@@ -206,11 +216,16 @@ public sealed partial class CleanLanesCommandTests
         }
 
         internal CommandResult Run(params string[] arguments) =>
-            RunWith(new ProductionWorktreeProcessRunner(), arguments);
+            RunCore(
+                CreateRunner(),
+                now,
+                ProbePullRequests,
+                ProbeLaneProcesses,
+                arguments);
 
         internal CommandResult RunAt(DateTimeOffset injectedNow, params string[] arguments) =>
             RunCore(
-                new ProductionWorktreeProcessRunner(),
+                CreateRunner(),
                 injectedNow,
                 ProbePullRequests,
                 ProbeLaneProcesses,
@@ -221,16 +236,68 @@ public sealed partial class CleanLanesCommandTests
             LaneProcessProbe laneProcessProbe,
             params string[] arguments) =>
             RunCore(
-                new ProductionWorktreeProcessRunner(),
+                CreateRunner(),
                 now,
                 pullRequestProbe,
+                laneProcessProbe,
+                arguments);
+
+        internal CommandResult RunWithLaneProcessProbe(
+            LaneProcessProbe laneProcessProbe,
+            params string[] arguments) =>
+            RunCore(
+                CreateRunner(),
+                now,
+                ProbePullRequests,
                 laneProcessProbe,
                 arguments);
 
         internal CommandResult RunWith(
             IWorktreeProcessRunner runner,
             params string[] arguments) =>
+            RunCore(CreateRunner(runner), now, ProbePullRequests, ProbeLaneProcesses, arguments);
+
+        internal ScriptedWorktreeProcessRunner CreateRunner(ProcessScript? script = null) =>
+            CreateRunner(new ProductionWorktreeProcessRunner(), script);
+
+        internal CommandResult RunWithRaw(
+            IWorktreeProcessRunner runner,
+            params string[] arguments) =>
             RunCore(runner, now, ProbePullRequests, ProbeLaneProcesses, arguments);
+
+        internal CommandResult RunWithProductionProbes(
+            IWorktreeProcessRunner runner,
+            params string[] arguments)
+        {
+            var allArguments = new List<string> { "--base", "dev" };
+            allArguments.AddRange(arguments);
+            return CleanLanesCommand.Run(
+                repository.Path,
+                allArguments,
+                runner,
+                [temp.Path],
+                now);
+        }
+
+        private ScriptedWorktreeProcessRunner CreateRunner(
+            IWorktreeProcessRunner inner,
+            ProcessScript? script = null) =>
+            new(
+                inner,
+                (fileName, arguments, workingDirectory) =>
+                {
+                    var scripted = script?.Invoke(fileName, arguments, workingDirectory);
+                    if (scripted is not null) return scripted;
+                    if (fileName != "stat") return null;
+                    var gitDirectory = arguments.LastOrDefault();
+                    return gitDirectory is not null
+                        && gitDirectoryBirthtimes.TryGetValue(gitDirectory, out var birthtime)
+                            ? new ProcessOutput(
+                                0,
+                                Encoding.UTF8.GetBytes($"{birthtime}\n"),
+                                [])
+                            : new ProcessOutput(1, [], Encoding.UTF8.GetBytes("unknown gitdir\n"));
+                });
 
         private CommandResult RunCore(
             IWorktreeProcessRunner runner,
@@ -250,5 +317,32 @@ public sealed partial class CleanLanesCommandTests
                 pullRequestProbe,
                 laneProcessProbe);
         }
+    }
+}
+
+internal delegate ProcessOutput? ProcessScript(
+    string fileName,
+    IReadOnlyList<string> arguments,
+    string workingDirectory);
+
+internal sealed class ScriptedWorktreeProcessRunner(
+    IWorktreeProcessRunner inner,
+    ProcessScript script) : IWorktreeProcessRunner
+{
+    internal List<WorktreeProcessInvocation> Invocations { get; } = [];
+
+    public ProcessOutput Run(
+        string fileName,
+        IReadOnlyList<string> arguments,
+        string workingDirectory,
+        TimeSpan timeout)
+    {
+        Invocations.Add(new WorktreeProcessInvocation(
+            fileName,
+            arguments.ToArray(),
+            workingDirectory,
+            timeout));
+        return script(fileName, arguments, workingDirectory)
+            ?? inner.Run(fileName, arguments, workingDirectory, timeout);
     }
 }

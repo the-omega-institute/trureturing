@@ -32,6 +32,8 @@ internal static partial class CleanLanesCommand
     internal const string Usage =
         "USAGE: StrataLint clean-lanes [--base REV] [--force] [--lanes-only]";
 
+    private const long MinimumReclaimableLaneAgeSeconds = 24L * 60 * 60; // #2769 safety grace bound.
+
     private static readonly UTF8Encoding StrictUtf8 = new(false, true);
 
     internal static CommandResult Run(
@@ -43,6 +45,19 @@ internal static partial class CleanLanesCommand
             arguments,
             new ProductionWorktreeProcessRunner(),
             DefaultTempRoots(),
+            now);
+
+    internal static CommandResult Run(
+        string repositoryRoot,
+        IReadOnlyList<string> arguments,
+        IWorktreeProcessRunner runner,
+        IReadOnlyList<string> tempRoots,
+        DateTimeOffset now) =>
+        Run(
+            repositoryRoot,
+            arguments,
+            runner,
+            tempRoots,
             now,
             ProbePullRequests,
             ProbeLaneProcesses);
@@ -260,10 +275,15 @@ internal static partial class CleanLanesCommand
                 continue;
             }
 
-            var gitDirectoryBirthtime = TryReadBirthtime(item.GitDirectory);
-            if (gitDirectoryBirthtime is not null
-                && creation.Timestamp.ToUnixTimeSeconds()
-                    < gitDirectoryBirthtime.Value.ToUnixTimeSeconds())
+            var gitDirectoryBirthtime = TryReadBirthtime(item.GitDirectory, runner);
+            if (gitDirectoryBirthtime is null)
+            {
+                events.Add(BlockedWorktree(item, "birthtime_unknown"));
+                continue;
+            }
+
+            if (creation.Timestamp.ToUnixTimeSeconds()
+                < gitDirectoryBirthtime.Value.ToUnixTimeSeconds())
             {
                 events.Add(BlockedWorktree(item, "age_inconsistent"));
                 continue;
@@ -277,7 +297,7 @@ internal static partial class CleanLanesCommand
                 continue;
             }
 
-            if (nowSeconds - creationSeconds < 24 * 60 * 60)
+            if (nowSeconds - creationSeconds < MinimumReclaimableLaneAgeSeconds)
             {
                 events.Add(BlockedWorktree(item, "too_young"));
                 continue;
@@ -385,7 +405,16 @@ internal static partial class CleanLanesCommand
 
             if (force)
             {
-                RemoveLane(repositoryRoot, item, runner);
+                var removalBlock = RemoveLane(
+                    repositoryRoot,
+                    item,
+                    runner,
+                    laneProcessProbe);
+                if (removalBlock is not null)
+                {
+                    events.Add(BlockedWorktree(item, removalBlock));
+                    continue;
+                }
             }
 
             events.Add(new CleanLaneEvent(
@@ -575,45 +604,6 @@ internal static partial class CleanLanesCommand
                 force ? "removed" : "would_remove",
                 "unregistered_same_repository"));
         }
-    }
-
-    private static void RemoveLane(
-        string repositoryRoot,
-        RegisteredWorktree item,
-        IWorktreeProcessRunner runner)
-    {
-        var actualHead = Decode(RunGit(
-            item.Path,
-            ["rev-parse", "--verify", "HEAD^{commit}"],
-            runner,
-            "could not re-read lane head").StandardOutput).Trim();
-        var actualBranch = Decode(RunGit(
-            item.Path,
-            ["branch", "--show-current"],
-            runner,
-            "could not re-read lane branch").StandardOutput).Trim();
-        if (!string.Equals(actualHead, item.Head, StringComparison.Ordinal)
-            || !string.Equals(actualBranch, item.Branch, StringComparison.Ordinal))
-        {
-            throw new InvalidOperationException($"lane identity changed during cleanup: {item.Path}");
-        }
-
-        var finalStatus = RunGit(
-            item.Path,
-            ["status", "--porcelain=v1", "-z", "--untracked-files=all"],
-            runner,
-            "could not re-read lane status");
-        if (finalStatus.StandardOutput.Length != 0)
-        {
-            throw new InvalidOperationException($"lane became dirty during cleanup: {item.Path}");
-        }
-
-        RunGit(
-            repositoryRoot,
-            ["worktree", "remove", item.Path],
-            runner,
-            "could not remove merged lane worktree");
-        DeleteObservedRef(repositoryRoot, item.Branch!, item.Head, runner);
     }
 
     private static void DeleteObservedRef(
