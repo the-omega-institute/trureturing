@@ -21,4 +21,3 @@ A refinement factor recovers the coarse value from the fine value. Precomposing 
 ## References
 
 - Truth anchor: `D5/S3/ConceptDynamics/PolicyCapabilityMonotonicity.policy_capability_monotone`
-- Dependency: [D5/S3/ConceptDynamics/ConceptJoinUniversal](ConceptJoinUniversal.md)
