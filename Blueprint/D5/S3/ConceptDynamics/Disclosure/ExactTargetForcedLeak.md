@@ -47,5 +47,3 @@ On pairs of Booleans, take the public readout to be the first coordinate and the
 - Truth anchor: `D5/S3/ConceptDynamics/Disclosure/ExactTargetForcedLeak.exact_target_forced_leak`
 - Truth anchor: `D5/S3/ConceptDynamics/Disclosure/ExactTargetForcedLeak.exact_target_forced_leak_nontrivial_witness`
 - Truth anchor: `D5/S3/ConceptDynamics/Disclosure/ExactTargetForcedLeak.forced_leak_preexists_of_structurally_no_new_leak`
-- Dependency: [D5/S3/ConceptDynamics/Interventions/RedundantAppealDefectPersistence](../Interventions/RedundantAppealDefectPersistence.md)
-- Dependency: [D5/S3/ConceptDynamics/Refinement/RefinementTransitivity](../Refinement/RefinementTransitivity.md)
