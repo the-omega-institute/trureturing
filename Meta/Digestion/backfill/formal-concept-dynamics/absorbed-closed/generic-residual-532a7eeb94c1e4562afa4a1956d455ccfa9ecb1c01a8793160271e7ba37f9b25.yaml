@@ -1,0 +1,17 @@
+ast_path: 定理/321.1
+fingerprints:
+  raw_sha256: sha256:532a7eeb94c1e4562afa4a1956d455ccfa9ecb1c01a8793160271e7ba37f9b25
+  normalized_sha256: sha256:532a7eeb94c1e4562afa4a1956d455ccfa9ecb1c01a8793160271e7ba37f9b25
+cas_ref: sha256:532a7eeb94c1e4562afa4a1956d455ccfa9ecb1c01a8793160271e7ba37f9b25
+coverage_gids:
+  - D5/S3/ConceptDynamics/InstitutionalCapture/KnowledgePolicyThreshold.knowledge_policy_threshold_consistent
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/InstitutionalCapture/KnowledgePolicyThreshold.knowledge_policy_threshold_consistent
+      source_sha256: sha256:532a7eeb94c1e4562afa4a1956d455ccfa9ecb1c01a8793160271e7ba37f9b25
+      target_sha256: sha256:c9d64e6c48457ebee2eb5f553c993fa39f3f885392f20ce05d2baf4adf53fa31
+  scribe:
+    - gid: D5/S3/ConceptDynamics/InstitutionalCapture/KnowledgePolicyThreshold.knowledge_policy_threshold_consistent
+      definition_sha256: sha256:267bede864e146a51c0f31501fe2d2ede7589c1032b9cb52917fa3a0d456704d
+      emission_sha256: sha256:5e2310464957ad757281d7b24dad7bd08e9468d4de497772b17ffad004e5315a
+  unresolved_subitems: []

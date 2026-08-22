@@ -1,0 +1,17 @@
+ast_path: 定理/276.1
+fingerprints:
+  raw_sha256: sha256:31e64c94766a9f7610d1e017a88f4e0d80f018300aab182662a86cc4e9378854
+  normalized_sha256: sha256:31e64c94766a9f7610d1e017a88f4e0d80f018300aab182662a86cc4e9378854
+cas_ref: sha256:31e64c94766a9f7610d1e017a88f4e0d80f018300aab182662a86cc4e9378854
+coverage_gids:
+  - D5/S3/ConceptDynamics/InstitutionalCapture/CommonSourceCaptureCollapse.common_source_capture_number_eq_one
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/InstitutionalCapture/CommonSourceCaptureCollapse.common_source_capture_number_eq_one
+      source_sha256: sha256:31e64c94766a9f7610d1e017a88f4e0d80f018300aab182662a86cc4e9378854
+      target_sha256: sha256:6e13975d7aaa549e9b5b316b16d702fbee83c4f1a67b02afc51d01bfc59fa928
+  scribe:
+    - gid: D5/S3/ConceptDynamics/InstitutionalCapture/CommonSourceCaptureCollapse.common_source_capture_number_eq_one
+      definition_sha256: sha256:4f44fcd25a460d477907b72f0f1e59986a38a364d38934daa227b97cc2bd13e4
+      emission_sha256: sha256:f08eccc42e2c4c6e670097b53a02d27d4c2a527a15863c1df88b5cfc3e0193d4
+  unresolved_subitems: []

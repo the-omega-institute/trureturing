@@ -1,0 +1,17 @@
+ast_path: 定理/155.1
+fingerprints:
+  raw_sha256: sha256:77dc8f460f5fd9cd8e4e1595454fadf1e0aed98603e5fddbc11f03b01f2c1051
+  normalized_sha256: sha256:77dc8f460f5fd9cd8e4e1595454fadf1e0aed98603e5fddbc11f03b01f2c1051
+cas_ref: sha256:77dc8f460f5fd9cd8e4e1595454fadf1e0aed98603e5fddbc11f03b01f2c1051
+coverage_gids:
+  - D5/S3/ConceptDynamics/MoralLuck/EffectiveMaximalControlCompatibleEvaluation.maximal_control_compatible_evaluation
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/MoralLuck/EffectiveMaximalControlCompatibleEvaluation.maximal_control_compatible_evaluation
+      source_sha256: sha256:77dc8f460f5fd9cd8e4e1595454fadf1e0aed98603e5fddbc11f03b01f2c1051
+      target_sha256: sha256:9a0e164e047a81ebcaa858bd576c5e3d7b8353d50d4150adf100ec6de7a62bd3
+  scribe:
+    - gid: D5/S3/ConceptDynamics/MoralLuck/EffectiveMaximalControlCompatibleEvaluation.maximal_control_compatible_evaluation
+      definition_sha256: sha256:b61292ad4a85bc63105886293002ae78cd3587e9a69748ef3deac7c4462e3b62
+      emission_sha256: sha256:374e3e673c52d228113152d4e259a52c4e16f96533b5dfc6e005a26b084bc448
+  unresolved_subitems: []

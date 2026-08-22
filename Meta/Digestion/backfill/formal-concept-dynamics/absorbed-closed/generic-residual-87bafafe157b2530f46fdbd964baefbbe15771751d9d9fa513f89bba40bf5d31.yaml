@@ -1,0 +1,17 @@
+ast_path: 定理/148.1
+fingerprints:
+  raw_sha256: sha256:87bafafe157b2530f46fdbd964baefbbe15771751d9d9fa513f89bba40bf5d31
+  normalized_sha256: sha256:87bafafe157b2530f46fdbd964baefbbe15771751d9d9fa513f89bba40bf5d31
+cas_ref: sha256:87bafafe157b2530f46fdbd964baefbbe15771751d9d9fa513f89bba40bf5d31
+coverage_gids:
+  - D5/S3/ConceptDynamics/Evidence/EvidenceFourPhaseLaw.finite_classical_four_phase_law
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/Evidence/EvidenceFourPhaseLaw.finite_classical_four_phase_law
+      source_sha256: sha256:87bafafe157b2530f46fdbd964baefbbe15771751d9d9fa513f89bba40bf5d31
+      target_sha256: sha256:73bc93231c5ff5127cac48ec3bad9ac57f838699f2c03c373ac10d4fa921f456
+  scribe:
+    - gid: D5/S3/ConceptDynamics/Evidence/EvidenceFourPhaseLaw.finite_classical_four_phase_law
+      definition_sha256: sha256:b7584728cddff65cbd0b4f596c6dd97049e719b9b5cc08b4fb0199b077367cd1
+      emission_sha256: sha256:b82a1e1d744a42f778dd5e7d8b39cf0a111ae6a69e129e0e83f0179ae166f0e3
+  unresolved_subitems: []

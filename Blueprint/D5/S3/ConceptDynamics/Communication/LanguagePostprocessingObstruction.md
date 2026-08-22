@@ -23,4 +23,3 @@ Thus longer text, richer rhetoric, or recursive interpretation cannot recover th
 ## References
 
 - Truth anchor: `D5/S3/ConceptDynamics/Communication/LanguagePostprocessingObstruction.language_postprocessing_preserves_missing_distinction`
-- Dependency: [D5/S3/ConceptDynamics/ConceptFiberDecomposition](../ConceptFiberDecomposition.md)

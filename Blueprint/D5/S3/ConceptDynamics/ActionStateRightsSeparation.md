@@ -23,4 +23,3 @@ The four public conjuncts expose the negative-right clause, positive failure, re
 ## References
 
 - Truth anchor: `D5/S3/ConceptDynamics/ActionStateRightsSeparation.no_action_state_separates_rights`
-- Dependency: [D5/S3/ConceptDynamics/ConceptFiberDecomposition](ConceptFiberDecomposition.md)

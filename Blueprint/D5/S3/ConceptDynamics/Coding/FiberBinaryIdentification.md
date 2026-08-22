@@ -25,4 +25,3 @@ The construction assigns an injective fixed-length bit vector to every target va
 ## References
 
 - Truth anchor: `D5/S3/ConceptDynamics/Coding/FiberBinaryIdentification.arbitrary_binary_questions_identify_target`
-- Dependency: [D5/S3/ConceptDynamics/ConceptFiberDecomposition](../ConceptFiberDecomposition.md)

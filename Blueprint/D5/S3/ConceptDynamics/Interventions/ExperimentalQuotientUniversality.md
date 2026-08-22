@@ -25,4 +25,3 @@ Both clauses apply the existing unique-descent theorem directly. The converse co
 ## References
 
 - Truth anchor: `D5/S3/ConceptDynamics/Interventions/ExperimentalQuotientUniversality.experimental_quotient_universality`
-- Dependency: [D5/S3/ConceptDynamics/EmpiricalIdentifiability](../EmpiricalIdentifiability.md)

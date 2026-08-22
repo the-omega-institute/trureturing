@@ -23,4 +23,3 @@ The canonical Concept carrier is imported from the existing family. Repository a
 ## References
 
 - Truth anchor: `D5/S3/ConceptDynamics/Transport/EffectiveImageNaturality.effective_image_naturality`
-- Dependency: [D5/S3/ConceptDynamics/ConceptFiberDecomposition](../ConceptFiberDecomposition.md)
