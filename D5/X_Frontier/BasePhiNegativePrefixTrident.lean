@@ -7,6 +7,7 @@
 
 import D5.S1.Words.Expansions.BasePhiNegativePrefixTridentPhaseObstruction
 import D5.S1.Words.Expansions.BasePhiNegativePrefixTridentDataPhase
+import D5.S1.Words.NegativeExpansions.BasePhiNegativePrefixTridentClassification
 
 namespace D5.X_Frontier.BasePhiNegativePrefixTrident
 
@@ -653,8 +654,8 @@ plumbing: kernel-checked type compatibility, not semantic closure.
 The first node's fiber-shape dependency is now discharged by
 `D5.S1.Words.Expansions.BasePhiTailFiber.negative_tail_fiber_shape`, proved
 directly via Beatty floor coordinates (the paper's Theorem 7.5 recursion
-itself remains unformalized and unclaimed). No new non-`X_Frontier` `sorry`
-was introduced; the final theorem below remains the sole frontier placeholder.
+   itself remains unformalized and unclaimed). The finite-word reconstruction
+   below closes the final theorem without adding an axiom or placeholder.
 
 ## Closed supporting interfaces
 
@@ -710,9 +711,9 @@ current S1 interfaces still do not prove the complete F/G itinerary of an
 arbitrary negative-tail prefix cylinder. No finite scan is used as a proof,
 and no false theorem is replaced by a weaker claim or a hidden assumption.
 
-The full theorem still has its `sorry` placeholder below, inside `X_Frontier`.
-All other declarations above are signature checks or direct proofs; the
-frontier semantic providers are intentionally not claimed closed.
+The full theorem is closed below by the canonical finite-tail classification.
+The older carry-stream providers remain documented above but are not needed by
+the final proof.
 -/
 
 /- THEORIST_FRONTIER_CONTRACT_V2
@@ -764,7 +765,33 @@ theorem negative_prefix_trident_classification
           lucasParameter a ∧ lucasParameter b ∧ (∀ i, 0 < first i) ∧
           occurrenceSet expansion w =
             ⋃ i, sequenceRange (vForFamily (families i) a b (first i))) := by
-  sorry
+  apply (trident_classification_reduces_to_canonical expansion).mpr
+  intro w hw
+  have hn : w ≠ [] := by
+    rintro rfl
+    simp [AdmissibleNegativePrefix, NegativePrefixOccurs, reachesNegativeDepth] at hw
+  have hf := negative_tail_fiber_shape_proved hn hw
+  have hl := core_occurrence_unique_lift_proved hn hw hf
+  obtain ⟨family, a, b, r, hp, hr, hc⟩ := core_lucas_witness_of_admissible hw
+  have ht := v_translate_initial_value_proved family a b r
+  have hd := three_arms_pairwise_disjoint_proved hn hw hf hl ⟨hp, hr, hc⟩ ht
+  obtain ⟨fo, ao, bo, ro, hpo, hro, hs⟩ :=
+    occurrenceSet_lucas_gap_classification_proved hn hw hf hl ⟨hp, hr, hc⟩ ht hd
+  have hparams := hpo.parameters
+  by_cases hh : w.head? = some true
+  · rw [if_pos hh] at hs
+    cases fo
+    · exact Or.inl ⟨ao, bo, ro, hro, hparams.1, hparams.2, hs⟩
+    · exact Or.inr <| Or.inl ⟨ao, bo, ro, hro, hparams.1, hparams.2, hs⟩
+    · exact Or.inr <| Or.inr <| Or.inl ⟨ao, bo, ro, hro, hparams.1, hparams.2, hs⟩
+  · rw [if_neg hh] at hs
+    refine Or.inr <| Or.inr <| Or.inr ⟨ao, bo, fun _ => fo,
+      fun i => ro + i.1, hparams.1, hparams.2, ?_, ?_⟩
+    · intro i
+      have : (0 : Int) ≤ (i.1 : Int) := by positivity
+      change 0 < ro + (i.1 : Int)
+      omega
+    · exact hs
 
 end
 
