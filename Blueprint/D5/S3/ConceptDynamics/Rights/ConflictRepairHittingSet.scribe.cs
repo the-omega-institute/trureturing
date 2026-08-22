@@ -1,7 +1,7 @@
 using static StrataLint.Scribe.DefinitionDsl;
 using F = StrataLint.Scribe.FormulaDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.ConceptDynamics.D5.S3.ConceptDynamics.Rights.ConflictRepairHittingSet;
+namespace StrataLint.Scribe.Blueprint.D5.S3.ConceptDynamics.Rights;
 
 internal sealed class ConflictRepairHittingSetDocument : IScribeDocumentDefinition
 {
