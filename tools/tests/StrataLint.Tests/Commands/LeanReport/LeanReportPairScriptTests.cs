@@ -80,16 +80,51 @@ public sealed class LeanReportPairScriptTests
     }
 
     [Fact]
-    public void FailedCacheEnsureStopsBeforeProducerOrStaging()
+    public void FailedCacheEnsurePreservesExitCodeBeforeProducerOrStaging()
     {
         using var fixture = new LeanReportPairFixture();
 
         var result = fixture.Run(cacheEnsureExitCode: 73);
 
-        Assert.NotEqual(0, result.ExitCode);
+        Assert.Equal(73, result.ExitCode);
         Assert.Equal(["absent"], fixture.CacheEnsureLakeStates);
         Assert.Equal(0, fixture.ProducerInvocationCount);
         Assert.False(fixture.CandidateLakeExists);
+    }
+
+    [Fact]
+    public void FailedCacheEnsureReceiptReachesCallerOnStandardError()
+    {
+        using var fixture = new LeanReportPairFixture();
+
+        var result = fixture.Run(cacheEnsureExitCode: 73);
+
+        Assert.Equal(73, result.ExitCode);
+        Assert.Contains(
+            "LEAN_CACHE {\"status\":\"failed\",\"method\":\"fake\"}",
+            Encoding.UTF8.GetString(result.StandardError),
+            StringComparison.Ordinal);
+        Assert.DoesNotContain(
+            "LEAN_CACHE ",
+            Encoding.UTF8.GetString(result.StandardOutput),
+            StringComparison.Ordinal);
+        Assert.False(fixture.CandidateLogExists);
+    }
+
+    [Fact]
+    public void TermAfterCacheEnsureReceiptPreservesSignalExitCode()
+    {
+        using var fixture = new LeanReportPairFixture();
+
+        var result = fixture.Run(signalPairAfterReceipt: true);
+
+        Assert.Equal(143, result.ExitCode);
+        Assert.Contains(
+            "LEAN_CACHE {\"status\":\"seeded\",\"method\":\"fake\"}",
+            Encoding.UTF8.GetString(result.StandardOutput),
+            StringComparison.Ordinal);
+        Assert.Equal(0, fixture.ProducerInvocationCount);
+        Assert.False(fixture.CandidateLogExists);
     }
 
     [Fact]
@@ -208,7 +243,12 @@ public sealed class LeanReportPairScriptTests
         internal bool CandidateLakeExists =>
             Directory.Exists(Path.Combine(candidateRoot, ".lake"));
 
-        internal ProcessOutput Run(int cacheEnsureExitCode = 0)
+        internal bool CandidateLogExists =>
+            Directory.Exists(candidateReport + ".logs");
+
+        internal ProcessOutput Run(
+            int cacheEnsureExitCode = 0,
+            bool signalPairAfterReceipt = false)
         {
             var script = Path.Combine(TestRepositoryLayout.FindRoot(), "tools", "scripts", "lean-report-pair.sh");
             return BoundedProcessRunner.Run(
@@ -218,6 +258,7 @@ public sealed class LeanReportPairScriptTests
                     $"STRATALINT_SUPERVISOR_ROOT={Path.Combine(temporary.Path, "supervisor")}",
                     $"STUB_LEAN_CACHE_ENSURE_LOG={cacheEnsureLog}",
                     $"STUB_LEAN_CACHE_ENSURE_EXIT_CODE={cacheEnsureExitCode}",
+                    $"STUB_LEAN_CACHE_ENSURE_SIGNAL_PARENT={(signalPairAfterReceipt ? 1 : 0)}",
                     "bash",
                     script,
                     "--producer", producer,
@@ -312,7 +353,14 @@ public sealed class LeanReportPairScriptTests
             state=absent
             [[ ! -e "$root/.lake" ]] || state=present
             printf '%s\n' "$state" >> "$STUB_LEAN_CACHE_ENSURE_LOG"
-            printf '%s\n' 'LEAN_CACHE {"status":"seeded","method":"fake"}'
+            if [[ "$STUB_LEAN_CACHE_ENSURE_EXIT_CODE" -eq 0 ]]; then
+              printf '%s\n' 'LEAN_CACHE {"status":"seeded","method":"fake"}'
+            else
+              printf '%s\n' 'LEAN_CACHE {"status":"failed","method":"fake"}' >&2
+            fi
+            if [[ "$STUB_LEAN_CACHE_ENSURE_SIGNAL_PARENT" -eq 1 ]]; then
+              kill -TERM "$PPID"
+            fi
             exit "$STUB_LEAN_CACHE_ENSURE_EXIT_CODE"
             """;
 

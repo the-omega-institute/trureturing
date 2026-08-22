@@ -47,7 +47,9 @@ TMP_ROOT="$(mktemp -d)"
 STAGING_DIRS=()
 cleanup() {
   local directory
-  for directory in "${STAGING_DIRS[@]}"; do rm -rf -- "$directory"; done
+  if [[ ${#STAGING_DIRS[@]} -gt 0 ]]; then
+    for directory in "${STAGING_DIRS[@]}"; do rm -rf -- "$directory"; done
+  fi
   rm -rf -- "$TMP_ROOT"
 }
 trap cleanup EXIT
