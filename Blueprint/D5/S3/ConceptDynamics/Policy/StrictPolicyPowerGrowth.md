@@ -23,3 +23,4 @@ The result needs neither surjectivity nor a global strict-refinement hypothesis:
 ## References
 
 - Truth anchor: `D5/S3/ConceptDynamics/Policy/StrictPolicyPowerGrowth.strict_policy_power_growth`
+- Dependency: [D5/S3/ConceptDynamics/PolicyCapabilityMonotonicity](../PolicyCapabilityMonotonicity.md)

@@ -23,3 +23,4 @@ Repository search found no equivalent D5 declaration. Pinned-mathlib and Loogle 
 ## References
 
 - Truth anchor: `D5/S3/PrimeForms/Crossing/ThirdOrderIntegrality.k_conjugate_integral_iff`
+- Dependency: [D5/S3/PrimeForms/Crossing/ThirdOrderReciprocity](ThirdOrderReciprocity.md)
