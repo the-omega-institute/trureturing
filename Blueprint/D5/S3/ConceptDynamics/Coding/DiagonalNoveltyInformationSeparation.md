@@ -27,5 +27,3 @@ Neither the expression semantics nor the current concept is defined from the non
 ## References
 
 - Truth anchor: `D5/S3/ConceptDynamics/Coding/DiagonalNoveltyInformationSeparation.diagonal_novelty_need_not_add_world_information`
-- Dependency: [D5/S0/Diagonal/Lawvere/QualitativeEscape](../../../S0/Diagonal/Lawvere/QualitativeEscape.md)
-- Dependency: [D5/S3/ConceptDynamics/StrictRefinementCapability](../StrictRefinementCapability.md)

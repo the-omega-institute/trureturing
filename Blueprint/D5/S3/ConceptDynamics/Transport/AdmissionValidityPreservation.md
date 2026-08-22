@@ -23,4 +23,3 @@ For an admissible source state x, admission preservation supplies target admissi
 ## References
 
 - Truth anchor: `D5/S3/ConceptDynamics/Transport/AdmissionValidityPreservation.validity_preserved_by_admission_map`
-- Dependency: [D5/S3/ConceptDynamics/ConceptFiberDecomposition](../ConceptFiberDecomposition.md)

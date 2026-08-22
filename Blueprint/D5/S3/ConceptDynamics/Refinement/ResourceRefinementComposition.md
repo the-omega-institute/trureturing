@@ -36,4 +36,3 @@ The canonical Concept and factorization vocabulary is imported from the existing
 
 - Truth anchor: `D5/S3/ConceptDynamics/Refinement/ResourceRefinementComposition.ResourceRefines`
 - Truth anchor: `D5/S3/ConceptDynamics/Refinement/ResourceRefinementComposition.resource_refinement_compose`
-- Dependency: [D5/S3/ConceptDynamics/ConceptJoinUniversal](../ConceptJoinUniversal.md)
