@@ -97,12 +97,201 @@ public sealed partial class CleanLanesCommandTests
             _ => null,
         });
 
-        var result = fixture.RunWithProductionProbes(runner);
+        var result = fixture.RunWithProductionProbes(runner, "--force");
 
         Assert.True(result.Success, result.Error);
         Assert.Equal("merged_clean", ReasonFor(result.Output, lane));
         Assert.Contains(runner.Invocations, invocation => invocation.FileName == "gh");
-        Assert.Contains(runner.Invocations, invocation => invocation.FileName == "lsof");
+        var processProbes = runner.Invocations
+            .Where(static invocation => invocation.FileName == "lsof")
+            .ToArray();
+        Assert.Equal(2, processProbes.Length);
+        Assert.All(processProbes, static invocation =>
+            Assert.Equal(TimeSpan.FromSeconds(30), invocation.Timeout));
+    }
+
+    [Fact]
+    public void ForceRetainsLaneAndContinuesWhenHeadRereadFails()
+    {
+        using var fixture = new CleanLanesFixture();
+        var retained = fixture.AddLandedLane("harness/head-reread-a-failure");
+        var removed = fixture.AddLandedLane("harness/head-reread-z-control");
+        var runner = fixture.CreateRunner((fileName, arguments, workingDirectory) =>
+            IsLaneGit(
+                fileName,
+                arguments,
+                workingDirectory,
+                retained,
+                "rev-parse",
+                "--verify",
+                "HEAD^{commit}")
+                ? GitFailure("head reread failed")
+                : null);
+
+        var result = fixture.RunWithRaw(runner, "--force");
+
+        AssertRetainedAndControlReclaimed(result, retained, removed, "unreadable");
+    }
+
+    [Fact]
+    public void ForceRetainsLaneAndContinuesWhenBranchRereadFails()
+    {
+        using var fixture = new CleanLanesFixture();
+        var retained = fixture.AddLandedLane("harness/branch-reread-a-failure");
+        var removed = fixture.AddLandedLane("harness/branch-reread-z-control");
+        var runner = fixture.CreateRunner((fileName, arguments, workingDirectory) =>
+            IsLaneGit(
+                fileName,
+                arguments,
+                workingDirectory,
+                retained,
+                "branch",
+                "--show-current")
+                ? GitFailure("branch reread failed")
+                : null);
+
+        var result = fixture.RunWithRaw(runner, "--force");
+
+        AssertRetainedAndControlReclaimed(result, retained, removed, "unreadable");
+    }
+
+    [Fact]
+    public void ForceRetainsLaneAndContinuesWhenIdentityDriftsBeforeFinalStatus()
+    {
+        using var fixture = new CleanLanesFixture();
+        var retained = fixture.AddLandedLane("harness/identity-drift-a-failure");
+        var removed = fixture.AddLandedLane("harness/identity-drift-z-control");
+        var runner = fixture.CreateRunner((fileName, arguments, workingDirectory) =>
+            IsLaneGit(
+                fileName,
+                arguments,
+                workingDirectory,
+                retained,
+                "rev-parse",
+                "--verify",
+                "HEAD^{commit}")
+                ? new ProcessOutput(
+                    0,
+                    Encoding.UTF8.GetBytes(new string('0', 40) + "\n"),
+                    [])
+                : null);
+
+        var result = fixture.RunWithRaw(runner, "--force");
+
+        AssertRetainedAndControlReclaimed(result, retained, removed, "unreadable");
+    }
+
+    [Fact]
+    public void ForceRetainsLaneAndContinuesWhenFinalStatusRereadFails()
+    {
+        using var fixture = new CleanLanesFixture();
+        var retained = fixture.AddLandedLane("harness/status-reread-a-failure");
+        var removed = fixture.AddLandedLane("harness/status-reread-z-control");
+        var statusCalls = 0;
+        var runner = fixture.CreateRunner((fileName, arguments, workingDirectory) =>
+        {
+            if (!IsLaneGit(
+                    fileName,
+                    arguments,
+                    workingDirectory,
+                    retained,
+                    "status",
+                    "--porcelain=v1",
+                    "-z",
+                    "--untracked-files=all"))
+            {
+                return null;
+            }
+
+            statusCalls++;
+            return statusCalls == 2 ? GitFailure("status reread failed") : null;
+        });
+
+        var result = fixture.RunWithRaw(runner, "--force");
+
+        Assert.Equal(2, statusCalls);
+        AssertRetainedAndControlReclaimed(result, retained, removed, "unreadable");
+    }
+
+    [Fact]
+    public void ForceRetainsLaneAndContinuesWhenLaneBecomesDirtyBeforeRemoval()
+    {
+        using var fixture = new CleanLanesFixture();
+        var retained = fixture.AddLandedLane("harness/dirty-drift-a-failure");
+        var removed = fixture.AddLandedLane("harness/dirty-drift-z-control");
+        var statusCalls = 0;
+        var runner = fixture.CreateRunner((fileName, arguments, workingDirectory) =>
+        {
+            if (!IsLaneGit(
+                    fileName,
+                    arguments,
+                    workingDirectory,
+                    retained,
+                    "status",
+                    "--porcelain=v1",
+                    "-z",
+                    "--untracked-files=all"))
+            {
+                return null;
+            }
+
+            statusCalls++;
+            return statusCalls == 2
+                ? new ProcessOutput(
+                    0,
+                    Encoding.UTF8.GetBytes("?? late-dirty.txt\0"),
+                    [])
+                : null;
+        });
+
+        var result = fixture.RunWithRaw(runner, "--force");
+
+        Assert.Equal(2, statusCalls);
+        AssertRetainedAndControlReclaimed(result, retained, removed, "dirty");
+    }
+
+    [Fact]
+    public void ForceRetainsLaneAndContinuesWhenRefreshedIdentityChanges()
+    {
+        using var fixture = new CleanLanesFixture();
+        var retained = fixture.AddLandedLane("harness/refresh-identity-a-failure");
+        var removed = fixture.AddLandedLane("harness/refresh-identity-z-control");
+        var retainedHead = fixture.Head(retained);
+        var replacementHead = fixture.Head(removed);
+        var inventoryCalls = 0;
+        var production = new ProductionWorktreeProcessRunner();
+        var runner = fixture.CreateRunner((fileName, arguments, workingDirectory) =>
+        {
+            if (fileName != "git"
+                || !arguments.SequenceEqual(["worktree", "list", "--porcelain", "-z"]))
+            {
+                return null;
+            }
+
+            inventoryCalls++;
+            if (inventoryCalls != 2) return null;
+
+            var output = production.Run(
+                fileName,
+                arguments,
+                workingDirectory,
+                TimeSpan.FromSeconds(30));
+            var inventory = Encoding.UTF8.GetString(output.StandardOutput);
+            var observedRecord = $"worktree {retained}\0HEAD {retainedHead}\0";
+            var changedRecord = $"worktree {retained}\0HEAD {replacementHead}\0";
+            return new ProcessOutput(
+                output.ExitCode,
+                Encoding.UTF8.GetBytes(inventory.Replace(
+                    observedRecord,
+                    changedRecord,
+                    StringComparison.Ordinal)),
+                output.StandardError);
+        });
+
+        var result = fixture.RunWithRaw(runner, "--force");
+
+        Assert.Equal(3, inventoryCalls);
+        AssertRetainedAndControlReclaimed(result, retained, removed, "unreadable");
     }
 
     [Fact]
@@ -206,6 +395,38 @@ public sealed partial class CleanLanesCommandTests
         Assert.Equal("unreadable", ReasonFor(result.Output, retained));
         Assert.Equal("merged_clean", ReasonFor(result.Output, removed));
         Assert.Contains("\"removable_count\":1", result.Output, StringComparison.Ordinal);
+    }
+
+    private static bool IsLaneGit(
+        string fileName,
+        IReadOnlyList<string> arguments,
+        string workingDirectory,
+        string lane,
+        params string[] expectedArguments) =>
+        fileName == "git"
+        && string.Equals(workingDirectory, lane, StringComparison.Ordinal)
+        && arguments.SequenceEqual(expectedArguments);
+
+    private static ProcessOutput GitFailure(string message) =>
+        new(128, [], Encoding.UTF8.GetBytes(message + "\n"));
+
+    private static void AssertRetainedAndControlReclaimed(
+        CommandResult result,
+        string retained,
+        string removed,
+        string retainedReason)
+    {
+        Assert.True(result.Success, result.Error);
+        Assert.Empty(result.Error);
+        Assert.True(Directory.Exists(retained));
+        Assert.False(Directory.Exists(removed));
+        var items = ReadItems(result.Output);
+        Assert.Contains(items, item =>
+            ItemMatches(item, retained, "skipped", retainedReason));
+        Assert.Contains(items, item =>
+            ItemMatches(item, removed, "removed", "merged_clean"));
+        Assert.Contains("\"removable_count\":1", result.Output, StringComparison.Ordinal);
+        Assert.Contains("\"removed_count\":1", result.Output, StringComparison.Ordinal);
     }
 
     private static ProcessOutput SuccessfulPrOutput(string branch, string head) =>

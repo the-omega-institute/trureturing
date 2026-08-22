@@ -10,30 +10,57 @@ internal static partial class CleanLanesCommand
         IWorktreeProcessRunner runner,
         LaneProcessProbe laneProcessProbe)
     {
-        var actualHead = Decode(RunGit(
-            item.Path,
-            ["rev-parse", "--verify", "HEAD^{commit}"],
-            runner,
-            "could not re-read lane head").StandardOutput).Trim();
-        var actualBranch = Decode(RunGit(
-            item.Path,
-            ["branch", "--show-current"],
-            runner,
-            "could not re-read lane branch").StandardOutput).Trim();
+        string actualHead;
+        try
+        {
+            actualHead = Decode(RunGit(
+                item.Path,
+                ["rev-parse", "--verify", "HEAD^{commit}"],
+                runner,
+                "could not re-read lane head").StandardOutput).Trim();
+        }
+        catch (Exception exception) when (exception is not OutOfMemoryException)
+        {
+            return "unreadable";
+        }
+
+        string actualBranch;
+        try
+        {
+            actualBranch = Decode(RunGit(
+                item.Path,
+                ["branch", "--show-current"],
+                runner,
+                "could not re-read lane branch").StandardOutput).Trim();
+        }
+        catch (Exception exception) when (exception is not OutOfMemoryException)
+        {
+            return "unreadable";
+        }
+
         if (!string.Equals(actualHead, item.Head, StringComparison.Ordinal)
             || !string.Equals(actualBranch, item.Branch, StringComparison.Ordinal))
         {
-            throw new InvalidOperationException($"lane identity changed during cleanup: {item.Path}");
+            return "unreadable";
         }
 
-        var finalStatus = RunGit(
-            item.Path,
-            ["status", "--porcelain=v1", "-z", "--untracked-files=all"],
-            runner,
-            "could not re-read lane status");
+        ProcessOutput finalStatus;
+        try
+        {
+            finalStatus = RunGit(
+                item.Path,
+                ["status", "--porcelain=v1", "-z", "--untracked-files=all"],
+                runner,
+                "could not re-read lane status");
+        }
+        catch (Exception exception) when (exception is not OutOfMemoryException)
+        {
+            return "unreadable";
+        }
+
         if (finalStatus.StandardOutput.Length != 0)
         {
-            throw new InvalidOperationException($"lane became dirty during cleanup: {item.Path}");
+            return "dirty";
         }
 
         RegisteredWorktree? refreshed;
@@ -51,6 +78,12 @@ internal static partial class CleanLanesCommand
         }
 
         if (refreshed is null) return "unreadable";
+
+        if (!string.Equals(refreshed.Head, item.Head, StringComparison.Ordinal)
+            || !string.Equals(refreshed.Branch, item.Branch, StringComparison.Ordinal))
+        {
+            return "unreadable";
+        }
 
         if (refreshed.Locked) return "locked";
 
