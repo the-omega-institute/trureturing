@@ -5,7 +5,7 @@
    anchors: []
    digest: Classify admissible negative base-phi prefix occurrence sets by Lucas-gap trident families. -/
 
-import D5.S1.Words.Expansions.BasePhiNegativePrefixTridentCore
+import D5.S1.Words.Expansions.BasePhiNegativePrefixTridentEdge
 
 namespace D5.X_Frontier.BasePhiNegativePrefixTrident
 
@@ -190,12 +190,31 @@ theorem source_index_successor_delta_iff_additive
   ⟨source_index_successor_additive_of_delta hcertificate hraw,
     source_index_successor_delta_of_additive hcertificate hraw⟩
 
+theorem source_index_successor_delta_of_phase_enriched_trace
+    {w : List Bool} {certificate : FrontierReturnWord}
+    (hcertificate : FrontierReturnWordFor w certificate)
+    (htrace : PhaseEnrichedCoreTrace w certificate) :
+    source_index_successor_delta hcertificate
+      (core_enum_from_frontier hcertificate) := by
+  apply source_index_successor_delta_of_additive hcertificate
+    (core_enum_from_frontier hcertificate)
+  exact phase_enriched_core_trace_two_gap_additive hcertificate htrace
+
 def six_phase_gap_stream {w : List Bool}
     {certificate : FrontierReturnWord}
     (hcertificate : FrontierReturnWordFor w certificate)
     (hdelta : source_index_successor_delta hcertificate
       (core_enum_from_frontier hcertificate)) : Prop :=
   FrontierGapPhase certificate
+
+theorem six_phase_gap_stream_of_phase_enriched_trace
+    {w : List Bool} {certificate : FrontierReturnWord}
+    (hcertificate : FrontierReturnWordFor w certificate)
+    (htrace : PhaseEnrichedCoreTrace w certificate) :
+    six_phase_gap_stream hcertificate
+      (source_index_successor_delta_of_phase_enriched_trace
+        hcertificate htrace) :=
+  phase_enriched_core_trace_gap_phase hcertificate htrace
 
 /- The existing target gap word is not periodic modulo six.  Consequently a
 fixed `n % 6` phase table cannot supply `FrontierGapPhase`; any finite-state
@@ -658,20 +677,22 @@ Two semantic providers remain open, with one shared mathematical core.
 2. `source_index_successor_delta`: the compiled residual proposition is
    `sourceIndexSuccessorAdditive certificate`;
    `source_index_successor_delta_iff_additive` proves the exact equivalence
-   before any integer gap is unfolded. Producing those equations requires a
-   theorem that the phase-selected Lucas candidate is a core point and that no
-   other core point lies strictly between it and the current point. The proved
-   singleton/triple theorem classifies inputs sharing one complete negative
-   tail; it does not compare two different tails or exclude an intervening core.
-3. `six_phase_gap_stream`: `FrontierRunStep` is only reflexive-transitive
-   reachability between two carry states; it has no next-phase, gap-letter, or
-   growth-tag output on which a functionality theorem could quantify. The
-   compiled theorem `frontierRunStep_phase_blind` makes this exact: equal
-   enumerators give equivalent run steps regardless of the phase certificate.
-   Moreover, `fibonacci_gap_letter_not_six_periodic` proves the concrete
-   counterexample at residues zero and six. Hence a fixed `n % 6` orbit is
-   incompatible with the existing `FrontierGapPhase`; a correct labeled
-   finite-state refinement must retain the aperiodic Fibonacci input letter.
+   before any integer gap is unfolded. `adjacent_core_point_right_unique` and
+   `adjacent_core_point_eq_frontier_successor` now prove uniqueness and the
+   strict-enumeration squeeze for every genuine adjacent-core candidate. What
+   remains is existence: the phase-selected Lucas candidate must belong to
+   `Core w` and exclude an intervening point. The singleton/triple theorem only
+   compares inputs sharing one complete negative tail and cannot prove that.
+3. `six_phase_gap_stream`: `PhaseLabeledReachability` enriches every frozen
+   carry path with the six-state prefix label and the aperiodic Fibonacci input
+   letter; `phase_labeled_reachability_phase_preserved` proves phase
+   preservation. `PhaseEnrichedCoreEdge` then binds that label to an actual
+   adjacent Lucas candidate, and its target and labels are unique. The exact
+   remaining existence proposition is `PhaseEnrichedCoreTrace w certificate`.
+   `phase_enriched_core_trace_iff_gap_phase` proves that it is equivalent to
+   `FrontierGapPhase`, so mere phase labeling does not manufacture the missing
+   semantic edge. `fibonacci_gap_letter_not_six_periodic` still excludes a
+   fixed `n % 6` replacement for the retained input letter.
 
 Thus the current S1 interfaces do not identify the complete F/G/H gap
 itinerary of a negative-tail prefix cylinder. No missing theorem is replaced
