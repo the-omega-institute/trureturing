@@ -60,11 +60,14 @@ public sealed class LeanCachePublishTests
     }
 
     /// <summary>
-    /// 取回路径的每一种不匹配都必须走向 `miss` 且退出非零。
+    /// 取回路径的每一种**不匹配**都必须走向 `miss` 且退出非零。
     /// 「安静地用一份旧的或不匹配的归档」是这条路径唯一真正危险的失败模式。
+    /// 「精确地址不存在」已不在此列:dev 约 16 提交/小时而发布一轮 6.5 分钟起,
+    /// `sources_sha256` **结构性**追不上(实测:建 worktree 到 fetch 之间 dev 就前进了)。
+    /// 那时回退到同 `config` 的最近一份,差量交给 `lake build` —— 且**并不安静**:
+    /// 输出 `"mode":"prefix"` 与实际取到的 `resolved` tag。见 ConsumerFallsBackWithinTheSameConfig。
     /// </summary>
     [Theory]
-    [InlineData("no release for this exact address")]
     [InlineData("release is missing the archive or its manifest")]
     [InlineData("manifest declares no digest")]
     [InlineData("digest mismatch")]
@@ -81,8 +84,32 @@ public sealed class LeanCachePublishTests
     }
 
     /// <summary>
-    /// 五元组里的每一个字段都必须被逐字段比对。只验摘要是不够的：
-    /// 一份**完好无损**但产自另一个 toolchain 或另一个平台的归档，其摘要照样对得上。
+    /// 精确地址取不到时必须回退到**同 config** 的最近一份,而不是放弃。
+    /// 这一条与上面那条 fail-closed 清单是配对的:从清单里移走「无精确地址」
+    /// 只有在这里补上「那时它必须回退」才不留缺口 —— 否则删掉一条断言就等于
+    /// 把契约一起丢掉,而没有任何东西会红。
+    /// </summary>
+    [Fact]
+    public void ConsumerFallsBackWithinTheSameConfig()
+    {
+        var script = Script();
+        // 回退的检索键必须绑 toolchain 与 config，且只放宽 sources。
+        Assert.Contains("prefix=\"lean-cache-v1-${slug}-${config_sha256:0:16}-\"",
+            script, StringComparison.Ordinal);
+        // 回退必须可辨识:不得安静地用一份旧归档。
+        Assert.Contains("\"mode\":\"%s\"", script, StringComparison.Ordinal);
+        Assert.Contains("\"resolved\":\"%s\"", script, StringComparison.Ordinal);
+        // 连前缀都无命中时仍 fail-closed。
+        Assert.Contains("no release for this address nor its config prefix",
+            script, StringComparison.Ordinal);
+    }
+
+    /// <summary>
+    /// **依赖层身份**必须逐字段比对。只验摘要不够:一份**完好无损**但产自另一个
+    /// toolchain 的归档，其摘要照样对得上。
+    /// 身份 = `toolchain` + `config_sha256`。`os`/`arch` 不在其中(olean 无平台相关
+    /// 二进制:`*.o/*.so/*.dylib/*.a/*.dll` 皆 0;mathlib 亦对所有平台发同一份);
+    /// `sources_sha256` 是**新旧**不是身份,由前缀回退处理。
     /// </summary>
     [Fact]
     public void ConsumerComparesEveryIdentityFieldNotJustTheDigest()
@@ -92,10 +119,23 @@ public sealed class LeanCachePublishTests
             script.Split('\n'),
             static line => line.Contains("for field in", StringComparison.Ordinal));
 
-        foreach (var field in new[] { "toolchain", "os", "arch", "config_sha256", "sources_sha256" })
+        foreach (var field in new[] { "toolchain", "config_sha256" })
         {
             Assert.Contains(field, loop, StringComparison.Ordinal);
         }
+
+        // 反向钉住:不得把不承重的维度加回这道门。
+        // `os`/`arch` —— olean 里没有平台相关二进制(`*.o/*.so/*.dylib/*.a/*.dll` 皆 0,
+        //   `file(1)` 判 olean 为 data),mathlib 亦对所有平台发同一份缓存;
+        //   加回去会把主检出(darwin-arm64)挡在 CI 产物(linux-aarch64)之外,
+        //   而端到端实测正是跨平台消费成功:replayed=680 built=0。
+        // `sources_sha256` —— 它是新旧不是身份;要求它相等即要求精确命中,
+        //   而 dev 约 16 提交/小时,精确命中结构性不可达。
+        foreach (var field in new[] { "os", "arch", "sources_sha256" })
+        {
+            Assert.DoesNotContain(field, loop, StringComparison.Ordinal);
+        }
+
         Assert.Contains("mismatch", script, StringComparison.Ordinal);
     }
 
