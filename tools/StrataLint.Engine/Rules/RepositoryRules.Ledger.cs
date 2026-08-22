@@ -68,6 +68,7 @@ internal static partial class RepositoryRules
                         path.Value,
                         document.RootElement,
                         "$",
+                        AddressSlot.Entry,
                         tasks,
                         findings,
                         scanAnomalies: anomalyAffected,
