@@ -25,4 +25,3 @@ The proof directly applies the concept-family reverse-kernel criterion, the cano
 ## References
 
 - Truth anchor: `D5/S3/ConceptDynamics/MoralLuck/EffectiveMaximalControlCompatibleEvaluation.maximal_control_compatible_evaluation`
-- Dependency: [D5/S3/ConceptDynamics/Refinement/ConceptKernelOrderDuality](../Refinement/ConceptKernelOrderDuality.md)
