@@ -5,7 +5,7 @@ using Markdig.Extensions.Tables;
 using Markdig.Syntax;
 using Markdig.Syntax.Inlines;
 
-namespace StrataLint.ArchitectureTests.Skills;
+namespace StrataLint.ArchitectureTests;
 
 public sealed class CodexFormalAnswerSkillTests
 {
@@ -108,14 +108,18 @@ public sealed class CodexFormalAnswerSkillTests
     [Fact]
     public void CodexFormalAnswerOutcomeAuthorityIsSingleAndStructurallyTotal()
     {
-        var path = Path.Combine(
+        Assert.True(
+            File.Exists(Path.Combine(
+                RepositoryLayout.FindRoot(),
+                "skills",
+                "codex-formal-answer",
+                "SKILL.md")),
+            "Required skill file is missing: skills/codex-formal-answer/SKILL.md");
+        Assert.True(DefinesSingleStructurallyTotalAuthority(Parse(File.ReadAllText(Path.Combine(
             RepositoryLayout.FindRoot(),
             "skills",
             "codex-formal-answer",
-            "SKILL.md");
-
-        Assert.True(File.Exists(path), $"Required skill file is missing: {path}");
-        Assert.True(DefinesSingleStructurallyTotalAuthority(Parse(File.ReadAllText(path))));
+            "SKILL.md")))));
     }
 
     private static bool DefinesSingleStructurallyTotalAuthority(MarkdownDocument document)
