@@ -74,6 +74,34 @@ public sealed partial class MakeWorkflowTests
         Assert.Equal(
             $"\t@/bin/bash {LeanCacheEnsureScriptPath}",
             Recipe(makefile, "lean-cache-ensure"));
+        Assert.Equal(
+            $"\t@/bin/bash {WarmDonorScriptPath}",
+            Recipe(makefile, "warm-donor"));
+        var warmDonor = File.ReadAllText(Path.Combine(root, WarmDonorScriptPath));
+        Assert.Contains("git pull --ff-only origin dev", warmDonor, StringComparison.Ordinal);
+        Assert.Contains("make -C \"$ROOT\" lean", warmDonor, StringComparison.Ordinal);
+        Assert.DoesNotContain("lsof", warmDonor, StringComparison.Ordinal);
+        Assert.DoesNotContain("LeanCacheBusyProbe", warmDonor, StringComparison.Ordinal);
+        foreach (var excludedCaller in new[]
+        {
+            WorktreeInitScriptPath,
+            LeanCacheEnsureScriptPath,
+            AdmissionWorkflowPath,
+            PreflightScriptPath,
+            "tools/scripts/workflow/math-gate.sh",
+            LocalHarnessGateScriptPath,
+        })
+        {
+            var excludedText = File.ReadAllText(Path.Combine(root, excludedCaller));
+            Assert.DoesNotContain(
+                WarmDonorScriptPath,
+                excludedText,
+                StringComparison.Ordinal);
+            Assert.DoesNotContain(
+                "warm-donor",
+                excludedText,
+                StringComparison.Ordinal);
+        }
         var leanRecipe = Recipe(makefile, "lean");
         Assert.Contains(LeanCacheRunScriptPath, leanRecipe, StringComparison.Ordinal);
         Assert.Contains("lake build", leanRecipe, StringComparison.Ordinal);
