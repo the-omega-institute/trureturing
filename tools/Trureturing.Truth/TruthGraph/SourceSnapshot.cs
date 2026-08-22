@@ -1,3 +1,4 @@
+using System.Collections.Immutable;
 using System.Text;
 using System.Text.Json;
 
@@ -19,6 +20,43 @@ public sealed record SourceSnapshotModel(
     string DeclarationsSha256,
     string FrozenLedgerHeadHash,
     int FrozenLedgerSequence);
+
+/// <summary>
+/// Canonical writer for <c>source-snapshot.v1.json</c>. The reader remains the schema authority: every
+/// emitted model is read back before its bytes are returned, so the owned read and write shapes cannot
+/// silently diverge.
+/// </summary>
+public static class SourceSnapshotJsonWriter
+{
+    public static ImmutableArray<byte> Write(SourceSnapshotModel model)
+    {
+        ArgumentNullException.ThrowIfNull(model);
+        var element = JsonSerializer.SerializeToElement(new
+        {
+            schema = model.Schema,
+            source_repo = model.SourceRepo,
+            source_commit = model.SourceCommit,
+            source_tree = model.SourceTree,
+            lean_toolchain = model.LeanToolchain,
+            mathlib_rev = model.MathlibRev,
+            producer_package_commit = model.ProducerPackageCommit,
+            truth_graph_sha256 = model.TruthGraphSha256,
+            raw_lean_report_sha256 = model.RawLeanReportSha256,
+            dag_md_sha256 = model.DagMdSha256,
+            residual_frontier_sha256 = model.ResidualFrontierSha256,
+            declarations_sha256 = model.DeclarationsSha256,
+            frozen_ledger_head_hash = model.FrozenLedgerHeadHash,
+            frozen_ledger_sequence = model.FrozenLedgerSequence,
+        });
+        var bytes = StructuredCanonicalWriter.WriteJson(element);
+        if (SourceSnapshotJsonReader.Read(bytes.AsSpan()) != model)
+        {
+            throw new FormatException("Source snapshot writer did not preserve its input model.");
+        }
+
+        return bytes;
+    }
+}
 
 /// <summary>
 /// Fail-closed reader for <c>source-snapshot.v1.json</c>. It requires the exact v1 field set,
