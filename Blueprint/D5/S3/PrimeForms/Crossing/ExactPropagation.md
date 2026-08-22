@@ -25,3 +25,4 @@ Local searches in D5 and pinned Mathlib found no ready-made Rademacher phase or 
 ## References
 
 - Truth anchor: `D5/S3/PrimeForms/Crossing/ExactPropagation.exact_propagation_positive_cone`
+- Dependency: [D5/S1/Phase/Interference/DedekindReciprocity](../../../S1/Phase/Interference/DedekindReciprocity.md)
