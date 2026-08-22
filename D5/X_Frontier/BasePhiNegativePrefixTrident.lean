@@ -5,7 +5,7 @@
    anchors: []
    digest: Classify admissible negative base-phi prefix occurrence sets by Lucas-gap trident families. -/
 
-import D5.S1.Words.Expansions.BasePhiNegativePrefixTridentSupport
+import D5.S1.Words.Expansions.BasePhiNegativePrefixTridentCore
 
 namespace D5.X_Frontier.BasePhiNegativePrefixTrident
 
@@ -87,6 +87,16 @@ theorem frontier_step_semantics_iff_core_infinite
       (Core w).Infinite :=
   ⟨core_infinite_of_frontier_step_semantics,
     frontier_step_semantics_of_core_infinite hw hadmissible hfibers hlift hphase⟩
+
+theorem frontier_step_semantics_proved
+    {w : List Bool} (hw : w ≠ [])
+    (hadmissible : AdmissibleNegativePrefix canonicalExpansion w)
+    (hfibers : negative_tail_fiber_shape hw hadmissible)
+    (hlift : core_occurrence_unique_lift hw hadmissible hfibers)
+    (hphase : prefix_phase_machine_total hw hadmissible) :
+    frontier_step_semantics hw hadmissible hfibers hlift hphase :=
+  frontier_step_semantics_of_core_infinite hw hadmissible hfibers hlift hphase
+    (core_infinite_proved hw hadmissible hfibers hlift)
 
 def coreEnum (certificate : FrontierReturnWord) (n : Nat) : Int :=
   certificate.enumerate n
@@ -635,31 +645,29 @@ frozen interfaces.
 
 ## Status of open providers
 
-The fiber shape, unique lift, phase totality, Lucas growth, pairwise-disjoint
-arms, and final set transport now have kernel-checked proofs. The three central
-semantic providers remain open for three distinct executable reasons.
+The fiber shape, unique lift, phase totality, frontier existence, Lucas growth,
+pairwise-disjoint arms, and final set transport now have kernel-checked proofs.
+Two semantic providers remain open, with one shared mathematical core.
 
-1. `frontier_step_semantics`: `canonicalCoreEnum w` is now defined directly as
-   `Nat.nth (fun q => q ∈ Core w)`, so its source cannot depend on the desired
-   gap stream. `frontier_step_semantics_iff_core_infinite` proves that the exact
-   remaining obligation for the current return-word signature is
-   `(Core w).Infinite`. Neither admissibility nor the proved singleton/triple
-   lift currently supplies that unboundedness theorem. Separately, the proposed
-   local-edge route cannot yet be stated: `prefix_phase_machine_total` labels
-   one prefix-extension certificate, while the current types contain no
-   per-core phase carrier or adjacent-core labeled-edge relation. Choice is not
-   used to invent either field.
+1. `frontier_step_semantics`: closed. `core_infinite_proved` constructs
+   arbitrarily large occurrences by adjoining a sufficiently remote even
+   Lucas pair of canonical digits, then uses the unique lift and the bound
+   `prefixMultiplicity w ≤ 3` to prove `(Core w).Infinite`.
+   `frontier_step_semantics_proved` therefore enumerates the actual core via
+   `Nat.nth`; its source does not depend on the desired gap stream.
 2. `source_index_successor_delta`: the compiled residual proposition is
    `sourceIndexSuccessorAdditive certificate`;
    `source_index_successor_delta_iff_additive` proves the exact equivalence
-   before any integer gap is unfolded. Producing those equations from the carry
-   lane still requires the commented residual
-   `nonnegative_raw_value_succ` in `BasePhiCarryTransducer` and a theorem ruling
-   out an intervening core point after a realized candidate. Neither theorem is
-   a declaration in the current S1 interface.
+   before any integer gap is unfolded. Producing those equations requires a
+   theorem that the phase-selected Lucas candidate is a core point and that no
+   other core point lies strictly between it and the current point. The proved
+   singleton/triple theorem classifies inputs sharing one complete negative
+   tail; it does not compare two different tails or exclude an intervening core.
 3. `six_phase_gap_stream`: `FrontierRunStep` is only reflexive-transitive
    reachability between two carry states; it has no next-phase, gap-letter, or
-   growth-tag output on which a functionality theorem could quantify.
+   growth-tag output on which a functionality theorem could quantify. The
+   compiled theorem `frontierRunStep_phase_blind` makes this exact: equal
+   enumerators give equivalent run steps regardless of the phase certificate.
    Moreover, `fibonacci_gap_letter_not_six_periodic` proves the concrete
    counterexample at residues zero and six. Hence a fixed `n % 6` orbit is
    incompatible with the existing `FrontierGapPhase`; a correct labeled
