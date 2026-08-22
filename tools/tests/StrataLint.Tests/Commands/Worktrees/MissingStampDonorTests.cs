@@ -476,40 +476,6 @@ public sealed partial class LeanCacheEnsureCommandTests
     }
 
     [Fact]
-    public void StampWriteFailureRollsBackPublishedBuildAndNextEnsureCanCloneDonor()
-    {
-        using var repository = new TemporaryDirectory();
-        InitializeRepository(repository.Path);
-        WriteCache(repository.Path, "warm donor build\n");
-        _ = WriteProjectOlean(repository.Path, "DonorWarm");
-        var fixture = new MissingStampDonorTargetFixture(
-            repository.Path,
-            AddWorktree(repository.Path, "missing-build-stamp-write-failure"));
-        fixture.CreateLake();
-
-        var exception = Assert.Throws<LeanCacheProvisionException>(
-            () => fixture.ProvisionWithFailingStampWrite(
-                new RecordingWorktreeProcessRunner(),
-                new RecordingDirectoryCloner()));
-
-        Assert.Contains("injected stamp write failure", exception.Message, StringComparison.Ordinal);
-        Assert.False(fixture.BuildDirectoryExists);
-        Assert.False(fixture.TargetStampExists);
-
-        var retryCloner = new RecordingDirectoryCloner();
-        var retry = WorktreeCommand.Run(
-            repository.Path,
-            ["ensure-cache", "--path", fixture.Target],
-            new RecordingWorktreeProcessRunner(),
-            retryCloner);
-
-        Assert.True(retry.Success, retry.Error);
-        Assert.Single(retryCloner.Invocations);
-        Assert.True(fixture.BuildCacheExists);
-        Assert.True(fixture.StampMatches);
-    }
-
-    [Fact]
     public void DonorBecomingBusyAfterMissingBuildStagingFallsBackWithoutPublishing()
     {
         using var repository = new TemporaryDirectory();
@@ -683,6 +649,8 @@ public sealed partial class LeanCacheEnsureCommandTests
         internal bool StampMatches => LeanCacheStamp.Matches(Lake, ReadPins(Target), out _);
 
         internal void CreateLake() => Directory.CreateDirectory(Lake);
+
+        internal void CreateEmptyBuildRoot() => Directory.CreateDirectory(build);
 
         internal void WriteTargetOwned(string contents) => File.WriteAllText(targetOwned, contents);
 

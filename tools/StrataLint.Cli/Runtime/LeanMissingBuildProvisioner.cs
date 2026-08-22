@@ -91,7 +91,6 @@ internal static class LeanMissingBuildProvisioner
             cloneReceipt = exit.Receipt;
         }
 
-        var publishedBuild = false;
         try
         {
             LeanCacheProvisioner.VerifyPrivateDirectory(staged);
@@ -154,9 +153,7 @@ internal static class LeanMissingBuildProvisioner
             // (CLAUDE.md section 20''). Closing it needs a platform-specific no-replace operation
             // such as renameatx_np(RENAME_EXCL), whose cost is disproportionate to that history.
             Directory.Move(staged, target);
-            publishedBuild = true;
             writeStamp(lake, pins);
-            publishedBuild = false;
             return new LeanBuildProvisionAttempt(
                 new LeanCacheProvisionResult(
                     "cloned",
@@ -169,14 +166,14 @@ internal static class LeanMissingBuildProvisioner
         }
         catch (Exception exception)
         {
+            // Cleanup is confined to this call's own sibling staging directory. A build
+            // already renamed into place is never removed here: this provisioner must not be
+            // able to delete the target build root, and a published-but-unstamped build is
+            // self-healing rather than broken. The next ensure sees a non-clear content root,
+            // so it cannot re-enter this donor path, and falls through to ReproduceExisting,
+            // which runs the producer with CacheTreeOwnership.PreExisting and publishes the
+            // stamp in place without removing any pre-existing tree.
             var exit = new CloneReceiptExit(cloneReceipt, warning);
-            if (publishedBuild)
-            {
-                exit.TryCleanup(
-                    target,
-                    LeanCacheProvisioner.RemovePartial,
-                    "published build rollback");
-            }
             exit.TryCleanup(staged, LeanCacheProvisioner.RemovePartial, "staging cleanup");
             throw exit.Wrap(exception);
         }
