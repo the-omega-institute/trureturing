@@ -27,3 +27,4 @@ No result function, endpoint, or evaluation is defined from the theorem's nonexi
 ## References
 
 - Truth anchor: `D5/S3/ConceptDynamics/NormativeStructure/HistorySensitiveOutcomeReductionObstruction.history_sensitive_evaluation_not_outcome_reducible`
+- Dependency: [D5/S3/ConceptDynamics/ConceptFiberDecomposition](../ConceptFiberDecomposition.md)
