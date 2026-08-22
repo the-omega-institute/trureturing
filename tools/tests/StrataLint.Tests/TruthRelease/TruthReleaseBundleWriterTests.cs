@@ -150,6 +150,54 @@ public sealed class TruthReleaseBundleWriterTests
     }
 
     [Fact]
+    public void VerifierRejectsSourceSnapshotDeclarationsDigestThatDoesNotNameVerifiedArtifact()
+    {
+        var fixture = CreateBundleFixture();
+        var input = fixture.Input with
+        {
+            SourceSnapshot = fixture.Input.SourceSnapshot with
+            {
+                DeclarationsSha256 = "sha256:ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+            },
+        };
+        var directory = Directory.CreateTempSubdirectory("truthbundle-declarations-composition").FullName;
+        try
+        {
+            var releaseDigest = TruthReleaseBundleWriter.WriteBundle(directory, input);
+
+            Assert.Throws<FormatException>(() => TruthReleaseVerification.Verify(directory, releaseDigest));
+        }
+        finally
+        {
+            Directory.Delete(directory, recursive: true);
+        }
+    }
+
+    [Fact]
+    public void VerifierRejectsSourceSnapshotFrozenLedgerHeadHashThatDoesNotNameVerifiedArtifact()
+    {
+        var fixture = CreateBundleFixture();
+        var input = fixture.Input with
+        {
+            SourceSnapshot = fixture.Input.SourceSnapshot with
+            {
+                FrozenLedgerHeadHash = "sha256:ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+            },
+        };
+        var directory = Directory.CreateTempSubdirectory("truthbundle-frozen-ledger-head-composition").FullName;
+        try
+        {
+            var releaseDigest = TruthReleaseBundleWriter.WriteBundle(directory, input);
+
+            Assert.Throws<FormatException>(() => TruthReleaseVerification.Verify(directory, releaseDigest));
+        }
+        finally
+        {
+            Directory.Delete(directory, recursive: true);
+        }
+    }
+
+    [Fact]
     public void VerifierAcceptsFullyCoherentBundle()
     {
         var fixture = CreateBundleFixture();

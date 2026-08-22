@@ -63,7 +63,9 @@ public sealed class TruthReleaseVerificationTests
         string tree,
         string truthGraphDigest,
         string rawLeanReportDigest,
-        string residualFrontierDigest) =>
+        string residualFrontierDigest,
+        string declarationsDigest,
+        string frozenLedgerHeadDigest) =>
         Utf8.GetBytes($$"""
             {
               "schema": "source-snapshot.v1",
@@ -77,8 +79,8 @@ public sealed class TruthReleaseVerificationTests
               "raw_lean_report_sha256": "{{rawLeanReportDigest}}",
               "dag_md_sha256": "sha256:6666666666666666666666666666666666666666666666666666666666666666",
               "residual_frontier_sha256": "{{residualFrontierDigest}}",
-              "declarations_sha256": "sha256:8888888888888888888888888888888888888888888888888888888888888888",
-              "frozen_ledger_head_hash": "sha256:9999999999999999999999999999999999999999999999999999999999999999",
+              "declarations_sha256": "{{declarationsDigest}}",
+              "frozen_ledger_head_hash": "{{frozenLedgerHeadDigest}}",
               "frozen_ledger_sequence": 42
             }
             """);
@@ -98,12 +100,15 @@ public sealed class TruthReleaseVerificationTests
         truthExport ??= TruthExportBytes(exportCommit, exportTree);
         var rawLeanReport = Utf8.GetBytes("raw_lean_report");
         var residualFrontier = Utf8.GetBytes("residual_frontier");
+        var frozenLedgerHead = Utf8.GetBytes("frozen_ledger_head");
         var sourceSnapshot = SourceSnapshotBytes(
             snapshotCommit,
             snapshotTree,
             snapshotTruthGraphDigest ?? Digest(truthGraph),
             Digest(rawLeanReport),
-            Digest(residualFrontier));
+            Digest(residualFrontier),
+            Digest(truthExport),
+            Digest(frozenLedgerHead));
         var artifacts = new (string Key, string File, byte[] Bytes)[]
         {
             ("source_snapshot", "source-snapshot.v1.json", sourceSnapshot),
@@ -111,7 +116,7 @@ public sealed class TruthReleaseVerificationTests
             ("raw_lean_report", "raw-lean-report.json", rawLeanReport),
             ("truth_export", "truth-export.v1.json", truthExport),
             ("blueprint_index", "blueprint-index.v1.json", Utf8.GetBytes("blueprint_index")),
-            ("frozen_ledger_head", "frozen-ledger-head.json", Utf8.GetBytes("frozen_ledger_head")),
+            ("frozen_ledger_head", "frozen-ledger-head.json", frozenLedgerHead),
             ("residual_frontier", "echo-residual-summary.md", residualFrontier),
         };
 

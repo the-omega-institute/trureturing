@@ -20,7 +20,9 @@ public sealed class TruthReleaseAccessorTests
     private static byte[] SourceSnapshotBytes(
         byte[] truthGraph,
         byte[] rawLeanReport,
-        byte[] residualFrontier) => Utf8.GetBytes($$"""
+        byte[] residualFrontier,
+        byte[] truthExport,
+        byte[] frozenLedgerHead) => Utf8.GetBytes($$"""
         {
           "schema": "source-snapshot.v1",
           "source_repo": "the-omega-institute/trureturing",
@@ -33,8 +35,8 @@ public sealed class TruthReleaseAccessorTests
           "raw_lean_report_sha256": "sha256:{{Hex(rawLeanReport)}}",
           "dag_md_sha256": "sha256:6666666666666666666666666666666666666666666666666666666666666666",
           "residual_frontier_sha256": "sha256:{{Hex(residualFrontier)}}",
-          "declarations_sha256": "sha256:8888888888888888888888888888888888888888888888888888888888888888",
-          "frozen_ledger_head_hash": "sha256:9999999999999999999999999999999999999999999999999999999999999999",
+          "declarations_sha256": "sha256:{{Hex(truthExport)}}",
+          "frozen_ledger_head_hash": "sha256:{{Hex(frozenLedgerHead)}}",
           "frozen_ledger_sequence": 42
         }
         """);
@@ -82,17 +84,20 @@ public sealed class TruthReleaseAccessorTests
     {
         var rawLeanReport = Utf8.GetBytes("raw_lean_report");
         var residualFrontier = Utf8.GetBytes("residual_frontier");
+        var frozenLedgerHead = Utf8.GetBytes("frozen_ledger_head");
         var artifacts = new (string Key, string File, byte[] Bytes)[]
         {
             ("source_snapshot", "source-snapshot.v1.json", SourceSnapshotBytes(
                 truthGraph,
                 rawLeanReport,
-                residualFrontier)),
+                residualFrontier,
+                truthExport,
+                frozenLedgerHead)),
             ("truth_graph", "truth-graph.v1.json", truthGraph),
             ("raw_lean_report", "raw-lean-report.json", rawLeanReport),
             ("truth_export", "truth-export.v1.json", truthExport),
             ("blueprint_index", "blueprint-index.v1.json", Utf8.GetBytes("blueprint_index")),
-            ("frozen_ledger_head", "frozen-ledger-head.json", Utf8.GetBytes("frozen_ledger_head")),
+            ("frozen_ledger_head", "frozen-ledger-head.json", frozenLedgerHead),
             ("residual_frontier", "echo-residual-summary.md", residualFrontier),
         };
 

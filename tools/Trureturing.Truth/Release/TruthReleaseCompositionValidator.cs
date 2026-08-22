@@ -54,9 +54,25 @@ internal static class TruthReleaseCompositionValidator
                 "Truth release residual_frontier digest disagrees between source_snapshot and verified artifact bytes.");
         }
 
-        // Phase 2 deliberately leaves three fields unbound: FrozenLedgerHeadHash may be a content hash,
-        // not the frozen-ledger-head.json file digest; DagMdSha256 has no bundle artifact because DAG.md
-        // is an external derived document; and DeclarationsSha256 has no declarations artifact, so its
-        // relationship to truth_export must first be pinned by the Phase 2 producer.
+        if (!string.Equals(
+                sourceSnapshot.DeclarationsSha256,
+                manifest.Artifacts.TruthExport.Sha256,
+                StringComparison.Ordinal))
+        {
+            throw new FormatException(
+                "Truth release declarations digest disagrees between source_snapshot and verified artifact bytes.");
+        }
+
+        if (!string.Equals(
+                sourceSnapshot.FrozenLedgerHeadHash,
+                manifest.Artifacts.FrozenLedgerHead.Sha256,
+                StringComparison.Ordinal))
+        {
+            throw new FormatException(
+                "Truth release frozen_ledger_head digest disagrees between source_snapshot and verified artifact bytes.");
+        }
+
+        // DagMdSha256 remains unbound because the bundle has no dag_md artifact. DAG.md is an external
+        // derived document, so this field is self-asserted external provenance, not a bundle-coherence claim.
     }
 }
