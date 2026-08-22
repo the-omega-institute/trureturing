@@ -1,0 +1,17 @@
+ast_path: 定理/276.2
+fingerprints:
+  raw_sha256: sha256:d82e09bc3ffad12412200b6f5fcec02c874ef98e7c30b9d915d93d562bec1a5e
+  normalized_sha256: sha256:d82e09bc3ffad12412200b6f5fcec02c874ef98e7c30b9d915d93d562bec1a5e
+cas_ref: sha256:d82e09bc3ffad12412200b6f5fcec02c874ef98e7c30b9d915d93d562bec1a5e
+coverage_gids:
+  - D5/S3/ConceptDynamics/InstitutionalCapture/IndependentSourceCaptureLowerBound.independent_source_capture_lower_bound
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/InstitutionalCapture/IndependentSourceCaptureLowerBound.independent_source_capture_lower_bound
+      source_sha256: sha256:d82e09bc3ffad12412200b6f5fcec02c874ef98e7c30b9d915d93d562bec1a5e
+      target_sha256: sha256:ea0a62d77fbe2748a0bf93018a58410fc9aa88e212116b62f1ef2b7fcfe4c85e
+  scribe:
+    - gid: D5/S3/ConceptDynamics/InstitutionalCapture/IndependentSourceCaptureLowerBound.independent_source_capture_lower_bound
+      definition_sha256: sha256:9e243d1b4e0e62ff9a70056b650ba1fe619b2f7e9a3b31716ce6df02e353132c
+      emission_sha256: sha256:057b77ca1a402dab3bdab4f7b521cb8454a1ec348396e35b7079669ab672f35d
+  unresolved_subitems: []
