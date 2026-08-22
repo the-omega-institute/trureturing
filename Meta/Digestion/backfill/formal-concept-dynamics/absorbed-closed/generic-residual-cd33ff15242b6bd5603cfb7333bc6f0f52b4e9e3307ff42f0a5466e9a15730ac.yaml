@@ -1,0 +1,17 @@
+ast_path: 定理/56.1
+fingerprints:
+  raw_sha256: sha256:cd33ff15242b6bd5603cfb7333bc6f0f52b4e9e3307ff42f0a5466e9a15730ac
+  normalized_sha256: sha256:cd33ff15242b6bd5603cfb7333bc6f0f52b4e9e3307ff42f0a5466e9a15730ac
+cas_ref: sha256:cd33ff15242b6bd5603cfb7333bc6f0f52b4e9e3307ff42f0a5466e9a15730ac
+coverage_gids:
+  - D5/S3/ConceptDynamics/Information/RefinementEntropyMonotonicity.refinement_information_residual_monotone
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/Information/RefinementEntropyMonotonicity.refinement_information_residual_monotone
+      source_sha256: sha256:cd33ff15242b6bd5603cfb7333bc6f0f52b4e9e3307ff42f0a5466e9a15730ac
+      target_sha256: sha256:c3cf0890dc77743bac994bda01f059e85d75bf95d96bca3deb3852e214b5ed64
+  scribe:
+    - gid: D5/S3/ConceptDynamics/Information/RefinementEntropyMonotonicity.refinement_information_residual_monotone
+      definition_sha256: sha256:01b6d824ecb15b288e83c33dbe5e5e78ef8ac71ecb0c1cf2d06bbde6b716f273
+      emission_sha256: sha256:8a51d39cec757ab86e943fd1e4e2e3440407e4fb36b4c91a9340182ff4fbd359
+  unresolved_subitems: []

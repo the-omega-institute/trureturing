@@ -23,5 +23,3 @@ The displayed information and residual inequalities are separate public conjunct
 ## References
 
 - Truth anchor: `D5/S3/ConceptDynamics/Information/RefinementEntropyMonotonicity.refinement_information_residual_monotone`
-- Dependency: [D5/S3/ConceptDynamics/ConceptJoinUniversal](../ConceptJoinUniversal.md)
-- Dependency: [D5/S3/Entropy/Forgetting/DeterministicEntropyEquality](../../Entropy/Forgetting/DeterministicEntropyEquality.md)
