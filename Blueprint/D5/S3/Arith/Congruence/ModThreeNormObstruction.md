@@ -23,4 +23,3 @@ This node closes only the explicit claim in appendix E.52 that an integer in the
 ## References
 
 - Truth anchor: `D5/S3/Arith/Congruence/ModThreeNormObstruction.three_mul_sub_one_not_quadratic_norm`
-- Dependency: [D5/S1/Phase/ZeroOrbitCongruence](../../../S1/Phase/ZeroOrbitCongruence.md)
