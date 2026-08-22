@@ -15307,3 +15307,3551 @@ proof status
 \[
 \text{arbitrary measurable infinite theorem}.
 \]
+
+---
+
+# Part XXXIII：追加式第六阶段——因果素数观察、干预商与反事实余量
+
+> **追加说明。** 以下各节构成 v1.5 的追加式第六阶段，从第 252 节开始连续编号。它们不改写此前的确定性读出、概率胶合、统计 law quotient、无限 Hellinger 完成或 belief Bellman 结论，而是处理更高一层的断裂：观测一个系统、主动改变一个系统、以及询问同一单位在未发生世界中的结果，是三种不同的查询语言。
+>
+> **核心纪律。** 本阶段严格区分：
+>
+> \[
+> \boxed{
+> \text{observational law}
+> \neq
+> \text{interventional law}
+> \neq
+> \text{counterfactual coupling}.
+> }
+> \]
+>
+> **素数角色。** “素数干预”仍只表示由素数、素数幂或 place 索引的类型化局部实验；素数标签本身不提供因果方向、机制独立、无混杂、可运输性或反事实同一性。
+>
+> **证明状态。** 有限函数因子化、law quotient、mutual information、data processing、Bayes risk、动态行为商与 causal-state factorization 可由仓库现有结果锚定；do-calculus、interventional Markov equivalence、transportability、g-formula 与完整 counterfactual identification 仍按“经典外部定理、本文纸面专门化、未来 Lean 桥”分级。
+
+# 252. 三层因果观察语言
+
+令 \(\mathfrak M\) 为结构因果模型的候选类型。对模型 \(M\in\mathfrak M\)，定义三类画像。
+
+## 定义 252.1（观测画像）
+
+\[
+\boxed{
+\operatorname{Obs}(M)
+=
+\mathcal L_M(V),
+}
+\]
+
+即在不主动修改机制时，全部可见变量 \(V\) 的联合 law。
+
+## 定义 252.2（干预画像）
+
+给定允许干预族 \(\mathcal A\)，定义：
+
+\[
+\boxed{
+\operatorname{Int}_{\mathcal A}(M)
+=
+\bigl(
+\mathcal L_M(V\mid\operatorname{do}(a))
+\bigr)_{a\in\mathcal A}.
+}
+\]
+
+空干预 \(a=\varnothing\) 若被包含，则其分量正是观测画像。
+
+## 定义 252.3（反事实画像）
+
+给定反事实查询族 \(\mathcal Q\)，定义：
+
+\[
+\boxed{
+\operatorname{CF}_{\mathcal Q}(M)
+=
+\bigl(
+\mathcal L_M(Q)
+\bigr)_{Q\in\mathcal Q},
+}
+\]
+
+其中 \(Q\) 可以同时包含多个互相冲突的潜在结果，如：
+
+\[
+(Y_0,Y_1),
+\qquad
+Y_{x,M_{x'}},
+\qquad
+(Y_x\mid X=x',Y=y').
+\]
+
+## 定义 252.4（三层等价关系）
+
+\[
+M\sim_{\mathrm{obs}}N
+\iff
+\operatorname{Obs}(M)=\operatorname{Obs}(N),
+\]
+
+\[
+M\sim_{\mathrm{int},\mathcal A}N
+\iff
+\operatorname{Int}_{\mathcal A}(M)
+=
+\operatorname{Int}_{\mathcal A}(N),
+\]
+
+\[
+M\sim_{\mathrm{cf},\mathcal Q}N
+\iff
+\operatorname{CF}_{\mathcal Q}(M)
+=
+\operatorname{CF}_{\mathcal Q}(N).
+\]
+
+## 原理 252.1（层级方向）
+
+若 \(\mathcal A\) 包含空干预，且 \(\mathcal Q\) 包含每个 \(a\in\mathcal A\) 的单世界结果，则：
+
+\[
+\boxed{
+\ker(\operatorname{CF}_{\mathcal Q})
+\subseteq
+\ker(\operatorname{Int}_{\mathcal A})
+\subseteq
+\ker(\operatorname{Obs}).
+}
+\]
+
+后续两个显式反模型将证明两次包含都可严格。
+
+---
+
+# 253. 有限结构因果模型
+
+取有限有向无环图：
+
+\[
+G=(V,E).
+\]
+
+每个节点 \(v\in V\) 有：
+
+\[
+X_v\in\mathcal X_v,
+\qquad
+U_v\in\mathcal U_v.
+\]
+
+## 定义 253.1（有限 SCM）
+
+\[
+\boxed{
+M=
+\left(
+G,
+(\mathcal U_v)_v,
+P_U,
+(f_v)_v
+\right),
+}
+\]
+
+其中：
+
+\[
+f_v:
+\mathcal X_{\operatorname{pa}(v)}
+\times
+\mathcal U_v
+\to
+\mathcal X_v.
+\]
+
+结构方程为：
+
+\[
+X_v
+=
+f_v(X_{\operatorname{pa}(v)},U_v).
+\]
+
+DAG 的拓扑顺序保证给定 \(u\) 后，全部内生变量唯一求值。
+
+## 定义 253.2（Markovian 与混杂）
+
+若：
+
+\[
+P_U=\bigotimes_{v\in V}P_{U_v},
+\]
+
+则称模型在该表示下具有独立外生噪声。若外生变量相关，或多个结构方程共享同一外生源，则可以产生未观测混杂。
+
+## 原理 253.1（图与模型分离）
+
+同一个 DAG 可以承载许多不同机制和噪声 law；同一个观测 law 也可以由不同 DAG 或不同 SCM 产生。因此：
+
+\[
+\boxed{
+\text{graph}
+\neq
+\text{mechanism family}
+\neq
+\text{observational distribution}.
+}
+\]
+
+## 原理 253.2（表示 gauge）
+
+不同外生变量参数化可能诱导完全相同的内生观测、干预与反事实查询。恢复某个特定 \(U\) 的名字或坐标通常不是因果目标；真正应审计的是查询画像的 kernel，而不是外生表示的字面同一。
+
+---
+
+# 254. 完美干预与截断机制
+
+对节点集合 \(I\subseteq V\) 和取值 \(x_I\)，完美干预：
+
+\[
+\operatorname{do}(X_I=x_I)
+\]
+
+删除被干预节点原有的生成机制，并用常值机制替代。
+
+## 定义 254.1（干预后 SCM）
+
+\[
+M^{\operatorname{do}(I=x_I)}
+\]
+
+保留：
+
+\[
+f_v
+\quad(v\notin I),
+\]
+
+并替换：
+
+\[
+f_i^{\operatorname{do}}
+\equiv x_i
+\quad(i\in I).
+\]
+
+## 定理 254.1（结构求值语义）
+
+对每个外生状态 \(u\)，干预后系统仍沿 DAG 拓扑顺序唯一求值；所得变量记为：
+
+\[
+X_v^{I=x_I}(u).
+\]
+
+## 经典定理 254.2（截断因子化，Markovian 有限情形）
+
+若观测 law 按 DAG 因子化：
+
+\[
+P(x_V)
+=
+\prod_{v\in V}
+P(x_v\mid x_{\operatorname{pa}(v)}),
+\]
+
+并且干预是模块化的完美干预，则：
+
+\[
+\boxed{
+P(x_{V\setminus I}\mid\operatorname{do}(x_I))
+=
+\prod_{v\notin I}
+P(x_v\mid x_{\operatorname{pa}(v)})
+}
+\]
+
+在把 \(x_I\) 固定代入父坐标后成立。
+
+## 边界 254.1
+
+截断公式不是任意 joint law 的代数恒等式。它依赖：
+
+- 已指定的因果图；
+- 机制模块性；
+- 相应 Markov／无未表示混杂前件；
+- 干预确实替换机制，而不是仅条件化于事件 \(X_I=x_I\)。
+
+---
+
+# 255. 观测 law quotient
+
+定义 law map：
+
+\[
+\Lambda_{\mathrm{obs}}:
+\mathfrak M
+\to
+\mathcal P(\mathcal X_V),
+\qquad
+M\mapsto\operatorname{Obs}(M).
+\]
+
+## 定义 255.1（观测有效状态）
+
+\[
+\boxed{
+Z_{\mathrm{obs}}
+=
+\operatorname{Im}(\Lambda_{\mathrm{obs}}).
+}
+\]
+
+## 定义 255.2（观测余量）
+
+\[
+\operatorname{ObsRes}
+=
+\sum_{M,N:\mathfrak M}
+(M\neq N)
+\times
+\bigl(
+\operatorname{Obs}(M)=\operatorname{Obs}(N)
+\bigr).
+\]
+
+## 定理 255.1（观测商普适性质）
+
+若目标：
+
+\[
+T:\mathfrak M\to Y
+\]
+
+在每个观测 law 纤维上为常值，则存在唯一作用在有效像上的函数：
+
+\[
+\bar T:
+Z_{\mathrm{obs}}\to Y
+\]
+
+使：
+
+\[
+\boxed{
+T
+=
+\bar T\circ\Lambda_{\mathrm{obs}}.
+}
+\]
+
+### 证明
+
+这是函数对其 range 的 kernel-factorization。若两个模型具有同一观测 law，纤维常值性保证 \(\bar T(P)=T(M)\) 与代表选择无关；range surjectivity 给出唯一性。 \(\square\)
+
+## 原理 255.1
+
+观测数据能够识别的最细对象不是 SCM 本身，而是其观测 law 类。任何不在该商上稳定的因果目标，都不能仅由更多同分布被动样本恢复。
+
+---
+
+# 256. 干预画像与因果等价
+
+给定允许干预族 \(\mathcal A\)，定义：
+
+\[
+\Lambda_{\mathcal A}^{\mathrm{int}}:
+\mathfrak M
+\to
+\prod_{a\in\mathcal A}
+\mathcal P(\mathcal X_V),
+\]
+
+\[
+\Lambda_{\mathcal A}^{\mathrm{int}}(M)
+=
+\operatorname{Int}_{\mathcal A}(M).
+\]
+
+## 定义 256.1（\(\mathcal A\)-因果商）
+
+\[
+\boxed{
+Z_{\mathcal A}^{\mathrm{causal}}
+=
+\operatorname{Im}
+\left(
+\Lambda_{\mathcal A}^{\mathrm{int}}
+\right).
+}
+\]
+
+## 定义 256.2（允许干预相对因果等价）
+
+\[
+M\sim_{\mathcal A}^{\mathrm{causal}}N
+\iff
+\forall a\in\mathcal A,
+\quad
+P_M^a=P_N^a.
+\]
+
+## 定理 256.1（干预目标因子化）
+
+目标 \(T:\mathfrak M\to Y\) 可由允许干预的完整 law 画像决定，当且仅当：
+
+\[
+\ker
+\left(
+\Lambda_{\mathcal A}^{\mathrm{int}}
+\right)
+\subseteq
+\ker T.
+\]
+
+此时 \(T\) 唯一因子化通过：
+
+\[
+Z_{\mathcal A}^{\mathrm{causal}}.
+\]
+
+## 原理 256.1（因果身份是干预语言相对的）
+
+两个模型可以对一组干预完全等价，却被另一种未允许干预区分。因此“因果模型已经识别”必须写成：
+
+\[
+\operatorname{Identified}
+(
+\mathcal A,
+T,
+\mathfrak M
+).
+\]
+
+---
+
+# 257. 因果商的最小充分性
+
+## 定义 257.1（干预充分接口）
+
+读出：
+
+\[
+q:\mathfrak M\to O
+\]
+
+对干预族 \(\mathcal A\) 充分，若存在：
+
+\[
+g:
+O
+\to
+\prod_{a\in\mathcal A}\mathcal P(\mathcal X_V)
+\]
+
+使：
+
+\[
+\Lambda_{\mathcal A}^{\mathrm{int}}
+=
+g\circ q.
+\]
+
+## 定理 257.1（因果状态因子化）
+
+若 \(q\) 对 \(\mathcal A\) 充分，则存在唯一映射：
+
+\[
+\bar g:
+\operatorname{Im}(q)
+\to
+Z_{\mathcal A}^{\mathrm{causal}}
+\]
+
+满足：
+
+\[
+\operatorname{rangeFactorization}
+\left(
+\Lambda_{\mathcal A}^{\mathrm{int}}
+\right)
+=
+\bar g
+\circ
+\operatorname{rangeFactorization}(q).
+\]
+
+并且：
+
+\[
+\Lambda_{\mathcal A}^{\mathrm{int}}(M)
+\neq
+\Lambda_{\mathcal A}^{\mathrm{int}}(N)
+\Longrightarrow
+q(M)\neq q(N).
+\]
+
+## 仓库桥 257.1
+
+这正是仓库 `CausalStateFactorization.lean` 的模式：任何预测／law 接口若足够充分，就唯一映射到规范 law image。这里把 `futureLaw` 专门化为完整允许干预画像。
+
+## 原理 257.1
+
+最小因果状态不是“最短参数向量”，而是：
+
+\[
+\boxed{
+\text{所有允许干预下具有同一 law 的模型类。}
+}
+\]
+
+---
+
+# 258. 观测等价不推出干预等价
+
+取二元变量：
+
+\[
+X,Y\in\{0,1\},
+\qquad
+U\sim\operatorname{Bernoulli}(1/2).
+\]
+
+构造两个 SCM。
+
+## 模型 258.A（\(X\to Y\)）
+
+\[
+X=U,
+\qquad
+Y=X.
+\]
+
+## 模型 258.B（\(Y\to X\)）
+
+\[
+Y=U,
+\qquad
+X=Y.
+\]
+
+## 定理 258.1（观测 law 完全相同）
+
+两模型都满足：
+
+\[
+P(X=0,Y=0)
+=
+P(X=1,Y=1)
+=
+\frac12,
+\]
+
+其余状态概率为零。因此：
+
+\[
+M_A\sim_{\mathrm{obs}}M_B.
+\]
+
+## 定理 258.2（干预 law 不同）
+
+在模型 \(A\) 中：
+
+\[
+P_A(Y=x\mid\operatorname{do}(X=x))
+=
+1.
+\]
+
+在模型 \(B\) 中，干预 \(X\) 不改变 \(Y\) 的生成机制，所以：
+
+\[
+P_B(Y=1\mid\operatorname{do}(X=x))
+=
+\frac12.
+\]
+
+因此：
+
+\[
+\boxed{
+M_A
+\not\sim_{\{do(X=0),do(X=1)\}}^{\mathrm{causal}}
+M_B.
+}
+\]
+
+## 推论 258.1（第一层严格性）
+
+\[
+\boxed{
+\ker(\operatorname{Int})
+\subsetneq
+\ker(\operatorname{Obs})
+}
+\]
+
+在有限二元 SCM 类中已经严格。
+
+## 原理 258.1
+
+无限多被动样本只能把观测 joint law 估计得更精确；它不能在同一观测 law 纤维内部决定箭头方向。
+
+---
+
+# 259. 干预族精化与同族饱和
+
+若：
+
+\[
+\mathcal A\subseteq\mathcal B,
+\]
+
+则限制投影满足：
+
+\[
+\Lambda_{\mathcal A}^{\mathrm{int}}
+=
+\pi_{\mathcal B,\mathcal A}
+\circ
+\Lambda_{\mathcal B}^{\mathrm{int}}.
+\]
+
+## 定理 259.1（干预精化单调性）
+
+\[
+\boxed{
+\ker
+\left(
+\Lambda_{\mathcal B}^{\mathrm{int}}
+\right)
+\subseteq
+\ker
+\left(
+\Lambda_{\mathcal A}^{\mathrm{int}}
+\right).
+}
+\]
+
+所以允许更多干预只能缩小或保持因果余量。
+
+## 定义 259.1（干预语言饱和）
+
+若目标 \(T\) 不在完整允许族 \(\mathcal A\) 的画像上因子化，则称 \(\mathcal A\) 对 \(T\) 已饱和但不充分。
+
+## 定理 259.2（重复同族干预不能跨越 kernel）
+
+若存在 \(M,N\) 满足：
+
+\[
+\forall a\in\mathcal A,
+\quad
+P_M^a=P_N^a,
+\]
+
+但：
+
+\[
+T(M)\neq T(N),
+\]
+
+则任意重复次数、样本量、随机后处理或自适应重排，只要每一步仍只调用 \(\mathcal A\)，都不能精确决定 \(T\)。
+
+### 证明
+
+每次 transcript kernel 都只依赖同一族 \(P_M^a=P_N^a\)。由统计 law kernel 的函子性，完整 transcript laws 在 \(M,N\) 下相同。 \(\square\)
+
+## 原理 259.1
+
+\[
+\boxed{
+\text{更多样本}
+\neq
+\text{更多干预类型}.
+}
+\]
+
+前者降低估计误差；后者才可能缩小语义 kernel。
+
+---
+
+# 260. 目标相对因果余量
+
+给定目标：
+
+\[
+T:\mathfrak M\to Y,
+\]
+
+例如：
+
+\[
+T(M)
+=
+P_M(Y=1\mid do(X=1))
+-
+P_M(Y=1\mid do(X=0)).
+\]
+
+## 定义 260.1（因果目标余量）
+
+\[
+\boxed{
+\operatorname{CausalTargetRes}
+(\mathcal A,T)
+=
+\sum_{M,N:\mathfrak M}
+\left(
+\forall a\in\mathcal A,
+P_M^a=P_N^a
+\right)
+\times
+\bigl(
+T(M)\neq T(N)
+\bigr).
+}
+\]
+
+## 定理 260.1（目标可识别判据）
+
+\[
+\boxed{
+\operatorname{CausalTargetRes}
+(\mathcal A,T)
+=
+\varnothing
+}
+\]
+
+当且仅当 \(T\) 因子化通过：
+
+\[
+Z_{\mathcal A}^{\mathrm{causal}}.
+\]
+
+## 定义 260.2（完全模型识别与目标识别）
+
+完全模型识别要求：
+
+\[
+\Lambda_{\mathcal A}^{\mathrm{int}}
+\quad\text{单射}.
+\]
+
+目标识别只要求：
+
+\[
+\ker
+\left(
+\Lambda_{\mathcal A}^{\mathrm{int}}
+\right)
+\subseteq
+\ker T.
+\]
+
+## 原理 260.1
+
+\[
+\boxed{
+\text{恢复全部 SCM}
+\quad\text{通常严格强于}\quad
+\text{恢复一个指定因果效应}.
+}
+\]
+
+实验设计应优先覆盖目标差异，而不是无条件恢复全部机制细节。
+
+---
+
+# 261. 有限模型类的干预层析与集合覆盖
+
+设候选模型类 \(\mathfrak M_0\subseteq\mathfrak M\) 有限，目标为 \(T\)。
+
+定义需区分的模型对：
+
+\[
+\mathcal U_T
+=
+\left\{
+\{M,N\}:
+T(M)\neq T(N)
+\right\}.
+\]
+
+对每个干预 \(a\)，定义其分离集：
+
+\[
+D_a
+=
+\left\{
+\{M,N\}\in\mathcal U_T:
+P_M^a\neq P_N^a
+\right\}.
+\]
+
+## 定理 261.1（干预覆盖等价）
+
+有限干预族 \(J\) 对目标 \(T\) 充分，当且仅当：
+
+\[
+\boxed{
+\bigcup_{a\in J}D_a
+=
+\mathcal U_T.
+}
+\]
+
+### 证明
+
+若覆盖成立，则任意目标值不同的模型对都被至少一个干预 law 区分，所以相同 \(J\)-画像必有相同目标。反之，若有未覆盖模型对，则其全部 \(J\)-laws 相同而目标不同。 \(\square\)
+
+## 推论 261.1（最小成本因果实验设计）
+
+给每个干预成本 \(c_a\ge0\)，最小目标充分设计为：
+
+\[
+\boxed{
+\min_{J}
+\sum_{a\in J}c_a
+\quad
+\text{s.t.}
+\quad
+\bigcup_{a\in J}D_a
+=
+\mathcal U_T.
+}
+\]
+
+这是 target-relative weighted set cover。
+
+## 定理 261.2（有限干预抽取）
+
+若全部允许干预族能区分有限模型类中的全部目标差异，则存在有限子族已经足够。证明只需为有限多个目标差异对各选一个见证干预。
+
+---
+
+# Part XXXIV：随机化、调整、混杂与机制模块性
+
+# 262. 随机化把条件 law 提升为干预 law
+
+取处理 \(X\)、结果 \(Y\) 与潜在结果 \(Y_x\)。
+
+## 假设 262.1（随机分配）
+
+\[
+X
+\perp
+(Y_x)_{x\in\mathcal X}.
+\]
+
+## 假设 262.2（一致性）
+
+\[
+X=x
+\Longrightarrow
+Y=Y_x.
+\]
+
+## 假设 262.3（正概率）
+
+\[
+P(X=x)>0.
+\]
+
+## 定理 262.1（随机化桥）
+
+在上述前件下：
+
+\[
+\boxed{
+P(Y=y\mid X=x)
+=
+P(Y_x=y)
+=
+P(Y=y\mid do(X=x)).
+}
+\]
+
+### 证明
+
+由一致性：
+
+\[
+P(Y=y\mid X=x)
+=
+P(Y_x=y\mid X=x).
+\]
+
+由随机分配：
+
+\[
+P(Y_x=y\mid X=x)
+=
+P(Y_x=y).
+\]
+
+SCM 干预语义把 \(Y_x\) 的 law 识别为 \(do(X=x)\) law。 \(\square\)
+
+## 原理 262.1
+
+随机化不是“相关性变成因果性”的语言魔法；它通过切断处理分配与潜在结果之间的共同来源，使条件化与干预在指定目标上相等。
+
+---
+
+# 263. Back-door 调整作为局部胶合
+
+设 \(Z\) 是处理前协变量，满足标准 back-door 条件，并假设离散有限状态与 positivity。
+
+## 经典定理 263.1（调整公式）
+
+\[
+\boxed{
+P(y\mid do(x))
+=
+\sum_z
+P(y\mid x,z)P(z).
+}
+\]
+
+## 观察者解释
+
+每个 \(z\)-层给出局部条件效应：
+
+\[
+P(y\mid x,z).
+\]
+
+全局干预 law 不是简单平均于观测处理组的 \(P(z\mid x)\)，而是按干预前总体层权重：
+
+\[
+P(z)
+\]
+
+重新胶合。
+
+## 定义 263.1（调整胶合缺陷）
+
+若候选模型在所有可观测条件 laws：
+
+\[
+P(y\mid x,z),
+\qquad
+P(z)
+\]
+
+上相同，却给出不同 \(P(y\mid do(x))\)，则标准 back-door 前件至少有一项未满足或未被模型类编码。
+
+## 原理 263.1
+
+\[
+\boxed{
+\text{分层观察值}
++
+\text{正确胶合权重}
++
+\text{图形阻断前件}
+\Rightarrow
+\text{干预 law}.
+}
+\]
+
+缺少其中任一项，局部条件统计不能被静默升级为因果效应。
+
+---
+
+# 264. Positivity 是因果 image 条件
+
+调整公式中的条件项只有在相应处理值出现在该层时才由数据约束。
+
+## 定义 264.1（positivity）
+
+对所有 \(P(Z=z)>0\) 的层，要求：
+
+\[
+P(X=x\mid Z=z)>0
+\]
+
+对目标干预值 \(x\) 成立。
+
+## 反模型 264.1（零支持盲区）
+
+令观测分配恒为：
+
+\[
+X=0.
+\]
+
+考虑两个模型：
+
+\[
+M_0:
+\quad
+Y=0,
+\]
+
+\[
+M_1:
+\quad
+Y=X.
+\]
+
+在观测 regime 下二者都满足：
+
+\[
+P(X=0,Y=0)=1.
+\]
+
+但在：
+
+\[
+do(X=1)
+\]
+
+下：
+
+\[
+P_{M_0}(Y=1)=0,
+\qquad
+P_{M_1}(Y=1)=1.
+\]
+
+## 定理 264.1（支持外机制不可由支持内数据识别）
+
+如果行为／观测 regime 从不访问某个父配置，则结构机制在该配置上的值可以改变而不改变观测 law。
+
+## 原理 264.1
+
+positivity 不只是数值估计的技术条件，而是：
+
+\[
+\boxed{
+\text{目标干预画像是否落在已观察机制 image 内}
+}
+\]
+
+的可实现性条件。
+
+---
+
+# 265. 隐混杂使条件化与干预分离
+
+令：
+
+\[
+U\sim\operatorname{Bernoulli}(1/2),
+\]
+
+并定义：
+
+\[
+X=U,
+\qquad
+Y=U.
+\]
+
+## 定理 265.1（完美观测相关）
+
+\[
+P(Y=1\mid X=1)=1,
+\qquad
+P(Y=1\mid X=0)=0.
+\]
+
+## 定理 265.2（零因果效应）
+
+干预 \(X\) 不修改 \(Y=U\) 的机制，所以：
+
+\[
+P(Y=1\mid do(X=1))
+=
+P(Y=1\mid do(X=0))
+=
+\frac12.
+\]
+
+因此平均因果效应为零。
+
+## 定义 265.1（混杂余量）
+
+\[
+\operatorname{ConfRes}(X,Y)
+=
+P(Y\mid X)
+-
+P(Y\mid do(X)),
+\]
+
+这里的减号表示两个 kernel 的差异，而不是默认其有单一标量范数。
+
+## 原理 265.1
+
+\[
+\boxed{
+\text{conditioning selects units;}
+\qquad
+\text{intervention replaces a mechanism.}
+}
+\]
+
+两者只有在额外可交换前件下才相同。
+
+---
+
+# 266. 模块机制与因子替换
+
+在 Markovian DAG 模型中，观测 law 写作：
+
+\[
+P(x_V)
+=
+\prod_{v\in V}
+K_v(x_v\mid x_{\operatorname{pa}(v)}).
+\]
+
+## 定义 266.1（机制模块）
+
+每个：
+
+\[
+K_v:
+\mathcal X_{\operatorname{pa}(v)}
+\rightsquigarrow
+\mathcal X_v
+\]
+
+是一个局部生成机制。
+
+## 定义 266.2（软干预）
+
+软干预不把 \(X_i\) 固定为常值，而是将：
+
+\[
+K_i
+\]
+
+替换为另一个 kernel：
+
+\[
+\widetilde K_i.
+\]
+
+其他机制保持不变。
+
+## 定理 266.1（局部替换公式）
+
+若干预确实只替换 \(I\) 中机制，则新 joint law 为：
+
+\[
+\boxed{
+P^{\widetilde K_I}(x_V)
+=
+\prod_{i\in I}
+\widetilde K_i(x_i\mid x_{\operatorname{pa}(i)})
+\prod_{v\notin I}
+K_v(x_v\mid x_{\operatorname{pa}(v)}).
+}
+\]
+
+## 原理 266.1（模块性是承重前件）
+
+干预分析依赖“未被干预机制保持不变”。若一个装置改变 \(X_i\) 的同时也改变其他机制、测量装置或外生分布，则不能继续使用同一截断模型而不记录该联动。
+
+---
+
+# 267. 干预自然性与因果 carry
+
+设微观模型状态为 \(M\)，粗接口为：
+
+\[
+q:\mathfrak M\to O.
+\]
+
+干预操作为：
+
+\[
+I_a:\mathfrak M\to\mathfrak M.
+\]
+
+## 定义 267.1（干预自然性）
+
+若存在：
+
+\[
+\bar I_a:O\to O
+\]
+
+使：
+
+\[
+\boxed{
+q\circ I_a
+=
+\bar I_a\circ q,
+}
+\]
+
+则称干预 \(a\) 在粗接口 \(q\) 上下降。
+
+## 定义 267.2（因果 carry）
+
+\[
+\boxed{
+\operatorname{CausalCarry}(I_a,q)
+=
+\sum_{M,N}
+(q(M)=q(N))
+\times
+(q(I_aM)\neq q(I_aN)).
+}
+\]
+
+## 定理 267.1（carry 空当且仅当有效像上可下降）
+
+在有效像上：
+
+\[
+\operatorname{CausalCarry}(I_a,q)=\varnothing
+\]
+
+当且仅当存在唯一：
+
+\[
+\bar I_a:\operatorname{Im}(q)\to\operatorname{Im}(q)
+\]
+
+使交换图成立。
+
+## 原理 267.1
+
+一个观测商可以对被动预测充分，却对主动干预不封闭。要获得因果状态，必须把所有允许干预后的响应一并纳入完成。
+
+---
+
+# 268. 素数索引的机制族
+
+令变量或模块由素数索引：
+
+\[
+(X_p)_{p\in\mathbb P}.
+\]
+
+每个局部机制写作：
+
+\[
+K_p:
+X_{\operatorname{pa}(p)}
+\rightsquigarrow
+X_p.
+\]
+
+## 定义 268.1（素数机制干预）
+
+\[
+do_p(\widetilde K_p)
+\]
+
+只替换第 \(p\) 个机制，前提是模型已明确给出这种模块边界。
+
+## 定义 268.2（素数因果画像）
+
+\[
+\operatorname{PCausal}(M)
+=
+\left(
+P_M^{do_p(\widetilde K)}
+\right)_{p,\widetilde K}.
+\]
+
+## 原理 268.1（索引不制造模块性）
+
+\[
+\boxed{
+p\neq q
+\not\Rightarrow
+K_p\text{ 与 }K_q\text{ 因果独立}.
+}
+\]
+
+不同素数模块仍可能：
+
+- 共享外生噪声；
+- 存在有向边；
+- 受同一环境变量影响；
+- 被同一实验装置同时扰动；
+- 只是在地址上不同而机制上耦合。
+
+## 原理 268.2
+
+prime-indexing 的价值在于提供清晰的实验目录与局部坐标；因果分解仍需由图、外生独立、模块替换和验证交换图证明。
+
+---
+
+# 269. 独立乘积 SCM 的干预分解
+
+设状态分成有限个块：
+
+\[
+V
+=
+\bigsqcup_{i\in I}V_i.
+\]
+
+假设：
+
+1. 不存在跨块有向边；
+2. 外生变量按块独立；
+3. 干预逐块替换机制；
+4. 准入条件不含跨块约束。
+
+## 定理 269.1（观测 law 乘积分解）
+
+\[
+\boxed{
+P_M(X_V)
+=
+\bigotimes_{i\in I}
+P_{M_i}(X_{V_i}).
+}
+\]
+
+## 定理 269.2（干预 law 乘积分解）
+
+对逐块干预 \(a=(a_i)_i\)：
+
+\[
+\boxed{
+P_M^a
+=
+\bigotimes_{i\in I}
+P_{M_i}^{a_i}.
+}
+\]
+
+## 定理 269.3（因果等价逐块化）
+
+若允许干预族本身为块乘积，则：
+
+\[
+M\sim_{\mathrm{int}}N
+\iff
+\forall i,
+\quad
+M_i\sim_{\mathrm{int}}N_i.
+\]
+
+因此因果商在这些前件下分解为局部因果商的有限乘积。
+
+## 边界 269.1
+
+任何共享外生变量、跨块边、全局守恒约束或联合干预副作用都会破坏上述自由乘积结论。
+
+---
+
+# 270. 跨素数混杂破坏乘积
+
+取两个不同索引 \(p\neq q\)，令：
+
+\[
+U\sim\operatorname{Bernoulli}(1/2),
+\]
+
+\[
+X_p=U,
+\qquad
+X_q=U.
+\]
+
+图中可以没有 \(X_p\to X_q\) 或 \(X_q\to X_p\) 的有向边，但二者共享外生源。
+
+## 定理 270.1（观测不独立）
+
+\[
+P(X_p=X_q)=1,
+\]
+
+而：
+
+\[
+P(X_p=1)P(X_q=1)=\frac14
+\neq
+P(X_p=1,X_q=1)=\frac12.
+\]
+
+## 定理 270.2（局部干预暴露共享来源）
+
+在：
+
+\[
+do(X_p=x)
+\]
+
+下：
+
+\[
+X_q=U
+\]
+
+仍为均匀 Bernoulli，并不跟随被固定的 \(X_p\)。
+
+## 原理 270.1
+
+\[
+\boxed{
+\text{没有直接边}
+\neq
+\text{独立};
+\qquad
+\text{地址互素}
+\neq
+\text{外生来源互素}.
+}
+\]
+
+CRT 或张量地址分解不能消除共享噪声造成的因果相关。
+
+---
+
+# 271. 环境索引与机制不变量
+
+令环境为：
+
+\[
+e\in\mathcal E.
+\]
+
+每个环境有 joint law：
+
+\[
+P_e(x_V)
+=
+\prod_{v\in V}
+K_{v,e}(x_v\mid x_{\operatorname{pa}(v)}).
+\]
+
+## 定义 271.1（稳定机制集）
+
+\[
+S
+=
+\left\{
+v:
+K_{v,e}=K_{v,e'}
+\quad
+\forall e,e'
+\right\}.
+\]
+
+## 定义 271.2（环境画像）
+
+\[
+\operatorname{EnvProf}(M)
+=
+\bigl(
+P_{M,e}^{a}
+\bigr)_{e,a}.
+\]
+
+## 定义 271.3（机制变化余量）
+
+\[
+\operatorname{ShiftRes}(e,e')
+=
+\left\{
+v:
+K_{v,e}\neq K_{v,e'}
+\right\}.
+\]
+
+## 原理 271.1（不变量是机制层命题）
+
+某个条件分布在有限样本中看似稳定，不等于其结构机制真正不变；反之，机制不变也可能因父变量分布变化而导致边缘 law 改变。
+
+## 原理 271.2
+
+跨环境科学推理应区分：
+
+\[
+\boxed{
+\text{mechanism invariance}
+\neq
+\text{marginal invariance}
+\neq
+\text{target-effect invariance}.
+}
+\]
+
+---
+
+# 272. Transportability 是跨环境目标因子化
+
+设源环境为 \(s\)，目标环境为 \(t\)。可用证据包括：
+
+\[
+E(M)
+=
+\left(
+P_{M,s}^{a}
+\right)_{a\in\mathcal A_s}
+\times
+P_{M,t}^{\mathrm{obs}}.
+\]
+
+目标为：
+
+\[
+T(M)
+=
+P_{M,t}(Y\mid do(X=x)).
+\]
+
+## 定义 272.1（可运输性余量）
+
+\[
+\boxed{
+\operatorname{TransRes}(E,T)
+=
+\sum_{M,N}
+(E(M)=E(N))
+\times
+(T(M)\neq T(N)).
+}
+\]
+
+## 定理 272.1（模型类相对可运输判据）
+
+目标效应可由全部可用源实验和目标观测唯一计算，当且仅当：
+
+\[
+\operatorname{TransRes}(E,T)=\varnothing.
+\]
+
+等价地：
+
+\[
+\ker E\subseteq\ker T.
+\]
+
+## 经典桥 272.1
+
+selection diagrams、do-calculus 与 transportability algorithms 提供图形条件和构造公式，用于判定上述 kernel 包含何时由结构假设保证。
+
+## 原理 272.1
+
+\[
+\boxed{
+\text{源环境中已识别}
+\not\Rightarrow
+\text{目标环境中可运输}.
+}
+\]
+
+还必须说明哪些机制保持、哪些机制变化，以及目标 law 如何由可用证据因子化。
+
+---
+
+# Part XXXV：因果发现、干预编码与主动实验设计
+
+# 273. 观测 Markov 等价是方向盲区
+
+对 DAG \(G\)，观测条件独立结构由 d-separation 约束。
+
+## 经典定理 273.1（观测 Markov 等价刻画）
+
+在标准 DAG 语境中，两个 DAG 具有相同的 d-separation 关系，当且仅当它们具有相同 skeleton 与相同 unshielded colliders。
+
+## 定义 273.1（观测等价类）
+
+\[
+[G]_{\mathrm{obs}}
+=
+\left\{
+H:
+H\text{ 与 }G\text{ Markov equivalent}
+\right\}.
+\]
+
+## 原理 273.1（faithfulness 边界）
+
+从观测 law 恢复条件独立结构通常还需 faithfulness 或类似排除精确参数抵消的假设。没有该假设，law 可以具有比图结构蕴含更多的偶然独立。
+
+## 实例 273.1
+
+二节点图：
+
+\[
+X\to Y
+\qquad\text{与}\qquad
+X\leftarrow Y
+\]
+
+没有可由纯观测条件独立区分的方向差异；第 258 节给出同一 joint law 的显式 SCM 实现。
+
+---
+
+# 274. 干预 Markov 等价严格精化观测类
+
+给定 intervention target family：
+
+\[
+\mathcal I
+=
+\{I_1,\ldots,I_m\}.
+\]
+
+## 定义 274.1（干预 Markov 等价）
+
+两个 DAG 在观测与全部指定 intervention regimes 下诱导同一 Markov 结构时，称其 \(\mathcal I\)-Markov equivalent。
+
+## 经典定理 274.1（精化）
+
+在标准 perfect-intervention 前件下：
+
+\[
+\boxed{
+[G]_{\mathcal I}
+\subseteq
+[G]_{\mathrm{obs}}.
+}
+\]
+
+额外干预一般把观测 equivalence class 切分为更细的 interventional equivalence classes。
+
+## 原理 274.1
+
+干预之所以能够定向，不是因为它产生了“更多相关性”，而是因为它选择性删除或替换入边机制，使不同方向模型在 post-intervention law 上失去观测等价。
+
+## 边界 274.1
+
+若干预 target 未知、干预不完美、多个机制被联动改变、隐藏变量结构未建模，标准 interventional essential graph 结论不能直接套用。
+
+---
+
+# 275. 最小干预完成仍是覆盖问题
+
+令有限候选 DAG／SCM 类为：
+
+\[
+\mathcal M
+=
+\{M_1,\ldots,M_N\}.
+\]
+
+对每个候选干预 \(a\)，定义：
+
+\[
+D_a
+=
+\left\{
+\{i,j\}:
+P_{M_i}^a\neq P_{M_j}^a
+\right\}.
+\]
+
+## 定理 275.1（完整模型识别覆盖）
+
+干预集合 \(J\) 使模型画像单射，当且仅当：
+
+\[
+\boxed{
+\bigcup_{a\in J}D_a
+=
+\binom{[N]}2.
+}
+\]
+
+## 推论 275.1（目标相对版本）
+
+若只需识别目标 \(T(M)\)，则 universe 缩小为：
+
+\[
+\left\{
+\{i,j\}:
+T(M_i)\neq T(M_j)
+\right\}.
+\]
+
+## 原理 275.1（graph orientation 与 effect identification 可分离）
+
+一个实验可能不能完全恢复 DAG，却已经足够识别目标效应；另一个实验可能显著缩小图类，却只区分与当前目标无关的边。
+
+---
+
+# 276. 干预画像码与错误距离
+
+在理想 law oracle 下，对有限干预集：
+
+\[
+J=\{a_1,\ldots,a_m\},
+\]
+
+定义模型码字：
+
+\[
+C_J(M)
+=
+\bigl(
+P_M^{a_1},
+\ldots,
+P_M^{a_m}
+\bigr).
+\]
+
+定义 law-coordinate Hamming 距离：
+
+\[
+d_J(M,N)
+=
+\left|
+\left\{
+r:
+P_M^{a_r}\neq P_N^{a_r}
+\right\}
+\right|.
+\]
+
+## 定义 276.1（最小干预距离）
+
+\[
+\boxed{
+d_{\min}(J)
+=
+\min_{M\neq N}
+d_J(M,N).
+}
+\]
+
+## 定理 276.1（oracle 错误检测）
+
+若至多 \(e\) 个干预 law 坐标被任意伪造，且：
+
+\[
+2e<d_{\min}(J),
+\]
+
+则真实模型码字仍是唯一 Hamming 距离不超过 \(e\) 的候选。
+
+## 边界 276.1
+
+真实实验只提供有限样本，不提供精确 law 坐标。此时必须把 Hamming oracle 模型替换为 TV、Hellinger、KL、置信集或复合检验；不能把 sampling error 当作一个离散坐标翻转。
+
+## 原理 276.1
+
+语义秩和实验冗余再次分离：
+
+\[
+\boxed{
+\text{缩小模型 kernel}
+\neq
+\text{提高报告错误距离}.
+}
+\]
+
+---
+
+# 277. 三模型因果自适应反模型
+
+考虑三个抽象因果模型：
+
+\[
+M_0:\text{无 }X\leftrightarrow Y\text{ 作用},
+\]
+
+\[
+M_{XY}:X\to Y,
+\]
+
+\[
+M_{YX}:Y\to X.
+\]
+
+定义两个理想变化检测实验：
+
+\[
+E_X
+=
+\text{“干预 }X\text{ 是否改变 }Y\text{ law”},
+\]
+
+\[
+E_Y
+=
+\text{“干预 }Y\text{ 是否改变 }X\text{ law”}.
+\]
+
+其确定签名为：
+
+\[
+\begin{array}{c|cc}
+M&E_X&E_Y\\
+\hline
+M_0&0&0\\
+M_{XY}&1&0\\
+M_{YX}&0&1
+\end{array}
+\]
+
+## 定理 277.1（静态精确设计）
+
+任意单个实验都合并两个模型，因此静态零错误识别必须读取：
+
+\[
+\{E_X,E_Y\}.
+\]
+
+## 定理 277.2（自适应提前停止）
+
+先执行 \(E_X\)：
+
+- 若输出 \(1\)，立即判定 \(M_{XY}\)；
+- 若输出 \(0\)，再执行 \(E_Y\)，区分 \(M_0,M_{YX}\)。
+
+若先验：
+
+\[
+P(M_{XY})=1-\varepsilon,
+\]
+
+则期望实验数为：
+
+\[
+\boxed{
+1+\varepsilon<2.
+}
+\]
+
+## 原理 277.1
+
+主动因果发现的平均优势来自根据干预响应提前终止；它不改变 worst-case 深度，也不凭空增加单个实验的分辨率。
+
+---
+
+# 278. 因果模型 belief 是主动发现的状态
+
+令候选 SCM 集有限：
+
+\[
+\mathcal M.
+\]
+
+历史包含已执行干预与输出：
+
+\[
+h_t=(a_0,y_0,\ldots,a_{t-1},y_{t-1}).
+\]
+
+## 定义 278.1（因果 belief）
+
+\[
+\boxed{
+\pi_t(M)
+=
+P(M\mid h_t).
+}
+\]
+
+## 定理 278.1（posterior sufficiency）
+
+若未来实验输出只通过真实模型 \(M\) 和所选干预决定，则给定 \(\pi_t\) 后，历史的其余细节对全部未来实验预测和 Bayes 决策无额外作用。
+
+## 定义 278.2（目标 posterior）
+
+若只关心目标 \(T(M)\)，可推前：
+
+\[
+\tau_t
+=
+T_*\pi_t.
+\]
+
+## 边界 278.1
+
+\(\tau_t\) 未必足以规划未来实验，因为不同模型即使当前目标相同，也可能对未来干预产生不同 law，从而影响后续学习价值。规划状态一般需要保留完整未来实验预测所需的 causal belief quotient。
+
+---
+
+# 279. 因果干预 Bellman 方程
+
+在 belief \(\pi\) 上，停止并输出行动的 Bayes 风险为：
+
+\[
+G(\pi).
+\]
+
+执行干预 \(a\) 的成本为：
+
+\[
+c_a.
+\]
+
+预测输出 law：
+
+\[
+M_a^\pi(dy)
+=
+\sum_{M\in\mathcal M}
+\pi(M)P_M^a(dy).
+\]
+
+后验更新为：
+
+\[
+\mathsf B_a(\pi,y).
+\]
+
+## 定义 279.1（因果实验 Bellman operator）
+
+\[
+\boxed{
+(\mathcal TV)(\pi)
+=
+\min
+\left\{
+G(\pi),
+\inf_a
+\left[
+c_a
++
+\gamma
+\int
+V(\mathsf B_a(\pi,y))
+M_a^\pi(dy)
+\right]
+\right\}.
+}
+\]
+
+## 定理 279.1（折扣收缩）
+
+对有界 \(V,W\)：
+
+\[
+\boxed{
+\|\mathcal TV-\mathcal TW\|_\infty
+\le
+\gamma
+\|V-W\|_\infty.
+}
+\]
+
+所以 \(0<\gamma<1\) 时存在唯一固定点。
+
+## 仓库桥 279.1
+
+这复用 v1.4 belief Bellman 的同一收缩结构；新增之处只是隐藏状态由普通状态提升为 SCM／因果类，动作由一般观察实验专门化为机制干预。
+
+---
+
+# 280. 模型信息不等于目标因果价值
+
+令实验输出为 \(Y_a\)，模型为 \(M\)，目标为：
+
+\[
+\Theta=T(M).
+\]
+
+数据处理给出：
+
+\[
+\boxed{
+I(\Theta;Y_a)
+\le
+I(M;Y_a).
+}
+\]
+
+## 定义 280.1（模型信息增益）
+
+\[
+\operatorname{MIG}(a)
+=
+I(M;Y_a).
+\]
+
+## 定义 280.2（目标信息增益）
+
+\[
+\operatorname{TIG}(a)
+=
+I(T(M);Y_a).
+\]
+
+## 反模型机制 280.1
+
+若实验只区分两个目标值相同的机制细节，则：
+
+\[
+\operatorname{MIG}(a)>0,
+\qquad
+\operatorname{TIG}(a)=0.
+\]
+
+## 原理 280.1
+
+最大化模型互信息可能把预算用于无关结构发现。目标相对因果设计应优化：
+
+\[
+\operatorname{VoI}_T(a)
+\]
+
+或目标 Bayes risk reduction，而不是默认完整模型 entropy reduction。
+
+---
+
+# 281. Identifiability、estimability 与 computation 三分
+
+## 定义 281.1（可识别）
+
+目标 \(T\) 对证据接口 \(E\) 可识别，若：
+
+\[
+\ker E\subseteq\ker T.
+\]
+
+这是无限精确 law 层的语义命题。
+
+## 定义 281.2（可估计）
+
+存在基于有限样本的估计量：
+
+\[
+\widehat T_n
+\]
+
+在指定统计模型和损失下具有一致性、有限风险或置信保证。
+
+## 定义 281.3（可计算）
+
+识别公式或估计器可在可接受资源中求值。
+
+## 原理 281.1
+
+\[
+\boxed{
+\text{identifiable}
+\not\Rightarrow
+\text{finite-sample accurate}
+\not\Rightarrow
+\text{computationally tractable}.
+}
+\]
+
+反向也不成立：一个算法可以对某个参数化子类工作，却不证明非参数模型类中的目标可识别。
+
+## 原理 281.2
+
+形式化路线应分别登记：
+
+```text
+semantic kernel theorem
+identification formula
+sampling theorem
+algorithm
+complexity bound
+```
+
+不得用其中任一层替代其他层。
+
+---
+
+# 282. 干预 image 与模型可证伪性
+
+给定模型类 \(\mathfrak M_0\) 和干预族 \(\mathcal A\)，其可实现画像为：
+
+\[
+\operatorname{Im}
+\left(
+\Lambda_{\mathcal A}^{\mathrm{int}}
+\mid_{\mathfrak M_0}
+\right).
+\]
+
+## 定义 282.1（干预 image defect）
+
+观测到的 law family \(L=(L_a)_a\) 的缺陷为：
+
+\[
+\boxed{
+\operatorname{ImageDefect}(L)
+=
+\left[
+L
+\notin
+\operatorname{Im}
+\left(
+\Lambda_{\mathcal A}^{\mathrm{int}}
+\mid_{\mathfrak M_0}
+\right)
+\right].
+}
+\]
+
+## 定理 282.1（精确 law 层的证伪）
+
+若 `ImageDefect` 成立，则不存在 \(\mathfrak M_0\) 中任何模型同时解释全部干预 regimes。
+
+## 边界 282.1
+
+有限样本下无法直接观察精确 law 是否在 image 中；需要 goodness-of-fit、置信区域、容差 metric 或 Bayesian posterior predictive checking。
+
+## 原理 282.1
+
+因果推理不仅有 kernel 问题：
+
+\[
+\text{哪些模型无法区分},
+\]
+
+还有 image 问题：
+
+\[
+\text{哪些跨干预 law 族根本不由该模型类实现}.
+\]
+
+---
+
+# Part XXXVI：反事实 coupling、个体效应与跨世界余量
+
+# 283. 反事实使用同一外生状态
+
+在 SCM \(M\) 中，给定同一外生状态：
+
+\[
+u,
+\]
+
+对不同干预分别求值：
+
+\[
+Y_x(u),
+\qquad
+Y_{x'}(u).
+\]
+
+## 定义 283.1（潜在结果向量）
+
+\[
+\boxed{
+\mathbf Y(u)
+=
+(Y_x(u))_{x\in\mathcal X}.
+}
+\]
+
+## 定义 283.2（反事实 law）
+
+\[
+\mathcal L_M(\mathbf Y)
+\]
+
+是由同一个 \(U\sim P_U\) 推前得到的联合 law。
+
+## 原理 283.1（同单位 ledger）
+
+反事实的承重结构不是各 \(Y_x\) 的边缘 law，而是它们通过同一个外生 \(u\) 的耦合。
+
+\[
+\boxed{
+\left(
+\mathcal L(Y_x)
+\right)_x
+\quad
+\text{不决定}
+\quad
+\mathcal L((Y_x)_x).
+}
+\]
+
+## 原理 283.2
+
+对不同单位分别执行不同处理，可以估计潜在结果边缘；但同一单位不能同时显现互相冲突的处理结果。跨世界联合需要结构假设、界或额外设计，而不是更多独立单位自动给出。
+
+---
+
+# 284. Cross-world coupling 是新的余量层
+
+给定干预边缘族：
+
+\[
+\mu_x
+=
+\mathcal L(Y_x).
+\]
+
+定义所有具有这些边缘的 coupling 集：
+
+\[
+\boxed{
+\Gamma((\mu_x)_x)
+=
+\left\{
+\gamma:
+\operatorname{marg}_x\gamma=\mu_x
+\quad\forall x
+\right\}.
+}
+\]
+
+## 定义 284.1（cross-world residual）
+
+\[
+\operatorname{CWRes}
+((\mu_x)_x,Q)
+=
+\left\{
+\gamma,\gamma'\in\Gamma:
+Q(\gamma)\neq Q(\gamma')
+\right\}.
+\]
+
+## 定理 284.1（反事实可识别判据）
+
+反事实目标 \(Q\) 可由全部单世界干预边缘决定，当且仅当 \(Q\) 在 coupling fiber：
+
+\[
+\Gamma((\mu_x)_x)
+\]
+
+上为常值。
+
+## 原理 284.1
+
+这是因果 hierarchy 的 image-fiber 版本：
+
+\[
+\boxed{
+\text{interventional marginals}
+\to
+\text{coupling fiber}
+\to
+\text{counterfactual target}.
+}
+\]
+
+干预层已经完全识别时，反事实层仍可能留下非平凡 fiber。
+
+---
+
+# 285. 全部单世界干预仍不决定反事实联合
+
+令：
+
+\[
+X\sim\operatorname{Bernoulli}(1/2),
+\qquad
+U\sim\operatorname{Bernoulli}(1/2),
+\qquad
+X\perp U.
+\]
+
+构造两个 SCM。
+
+## 模型 285.S（稳定耦合）
+
+\[
+Y=U.
+\]
+
+所以：
+
+\[
+Y_0=U,
+\qquad
+Y_1=U.
+\]
+
+## 模型 285.F（翻转耦合）
+
+\[
+Y=U\oplus X.
+\]
+
+所以：
+
+\[
+Y_0=U,
+\qquad
+Y_1=1-U.
+\]
+
+## 定理 285.1（观测 law 相同）
+
+在两个模型中，\(X,Y\) 都是相互独立的均匀 Bernoulli，因此：
+
+\[
+P(X=x,Y=y)=\frac14
+\]
+
+对全部 \(x,y\) 成立。
+
+## 定理 285.2（全部单世界 \(X\)-干预 law 相同）
+
+对任意 \(x\in\{0,1\}\)：
+
+\[
+Y_x
+\sim
+\operatorname{Bernoulli}(1/2)
+\]
+
+在两个模型中都成立。
+
+对 \(Y\) 的完美干预也只固定 \(Y\)，而 \(X\) 保持均匀，故两模型在所有单世界完美干预下具有同一内生 joint law。
+
+## 定理 285.3（反事实联合相反）
+
+稳定模型：
+
+\[
+P(Y_0=Y_1)=1.
+\]
+
+翻转模型：
+
+\[
+P(Y_0\neq Y_1)=1.
+\]
+
+因此：
+
+\[
+\boxed{
+M_S
+\sim_{\mathrm{int}}
+M_F,
+\qquad
+M_S
+\not\sim_{\mathrm{cf}}
+M_F.
+}
+\]
+
+## 推论 285.1（第二层严格性）
+
+\[
+\boxed{
+\ker(\operatorname{CF})
+\subsetneq
+\ker(\operatorname{Int})
+}
+\]
+
+在二元无混杂、已知处理随机化的模型中已经严格。
+
+---
+
+# 286. 因果层级严格性定理
+
+结合第 258 节与第 285 节，得到两个显式 witness pair。
+
+## 定理 286.1（观测层严格弱于干预层）
+
+存在 \(M,N\) 使：
+
+\[
+\operatorname{Obs}(M)=\operatorname{Obs}(N),
+\]
+
+但：
+
+\[
+\operatorname{Int}(M)\neq\operatorname{Int}(N).
+\]
+
+## 定理 286.2（干预层严格弱于反事实层）
+
+存在 \(M,N\) 使：
+
+\[
+\operatorname{Int}(M)=\operatorname{Int}(N),
+\]
+
+但：
+
+\[
+\operatorname{CF}(M)\neq\operatorname{CF}(N).
+\]
+
+## 推论 286.1（严格层级）
+
+在包含上述模型的有限 SCM 类中：
+
+\[
+\boxed{
+Z_{\mathrm{obs}}
+\prec
+Z_{\mathrm{int}}
+\prec
+Z_{\mathrm{cf}}.
+}
+\]
+
+这里 \(\prec\) 表示后者严格精化前者的有效查询商，不表示三种原始表示类型之间存在未经 transport 的集合包含。
+
+## 最深解释 286.1
+
+\[
+\boxed{
+\text{看见更多同一世界}
+\text{不能替代做；}
+\qquad
+\text{做更多单世界实验}
+\text{不能替代跨世界 coupling。}
+}
+\]
+
+---
+
+# 287. 平均效应可识别而个体效应 law 不可识别
+
+对二元处理与二元结果，定义：
+
+\[
+p_0=P(Y_0=1),
+\qquad
+p_1=P(Y_1=1).
+\]
+
+随机实验可以识别 \(p_0,p_1\)。
+
+## 定义 287.1（平均处理效应）
+
+\[
+\boxed{
+\operatorname{ATE}
+=
+E[Y_1-Y_0]
+=
+p_1-p_0.
+}
+\]
+
+## 定义 287.2（个体效应）
+
+\[
+\Delta
+=
+Y_1-Y_0
+\in\{-1,0,1\}.
+\]
+
+## 定理 287.1（ATE 只依赖边缘）
+
+\[
+E[Y_1-Y_0]
+=
+E[Y_1]-E[Y_0]
+\]
+
+不需要知道 \((Y_0,Y_1)\) 的 coupling。
+
+## 定理 287.2（个体效应分布依赖 coupling）
+
+\[
+P(\Delta=1)
+=
+P(Y_0=0,Y_1=1),
+\]
+
+\[
+P(\Delta=-1)
+=
+P(Y_0=1,Y_1=0).
+\]
+
+二者不由 \(p_0,p_1\) 单独决定。
+
+## 实例 287.1
+
+第 285 节中两个模型都有：
+
+\[
+p_0=p_1=\frac12,
+\qquad
+ATE=0.
+\]
+
+但稳定模型中：
+
+\[
+P(\Delta=0)=1,
+\]
+
+翻转模型中：
+
+\[
+P(\Delta=1)=P(\Delta=-1)=\frac12.
+\]
+
+---
+
+# 288. 受益与受损概率的尖锐 Fréchet 界
+
+定义：
+
+\[
+b
+=
+P(Y_0=0,Y_1=1),
+\]
+
+\[
+h
+=
+P(Y_0=1,Y_1=0).
+\]
+
+## 定理 288.1（受益概率界）
+
+\[
+\boxed{
+\max\{0,p_1-p_0\}
+\le
+b
+\le
+\min\{p_1,1-p_0\}.
+}
+\]
+
+## 定理 288.2（受损概率界）
+
+\[
+\boxed{
+\max\{0,p_0-p_1\}
+\le
+h
+\le
+\min\{p_0,1-p_1\}.
+}
+\]
+
+## 定理 288.3（净效应恒等式）
+
+\[
+\boxed{
+b-h
+=
+p_1-p_0
+=
+ATE.
+}
+\]
+
+### 证明
+
+令：
+
+\[
+r=P(Y_0=1,Y_1=1).
+\]
+
+则：
+
+\[
+b=p_1-r,
+\qquad
+h=p_0-r.
+\]
+
+合法 joint table 要求：
+
+\[
+\max\{0,p_0+p_1-1\}
+\le r\le
+\min\{p_0,p_1\}.
+\]
+
+代入即得全部界；取端点 coupling 可达到界，因此尖锐。 \(\square\)
+
+## 原理 288.1
+
+部分识别不是证明失败，而是对 cross-world fiber 的完整几何描述：目标在该 fiber 上的最小值和最大值就是可证的全部信息。
+
+---
+
+# 289. Monotonicity 关闭一个 cross-world 方向
+
+## 假设 289.1（无伤害单调性）
+
+\[
+Y_1\ge Y_0
+\quad\text{a.s.}
+\]
+
+等价于：
+
+\[
+h=P(Y_0=1,Y_1=0)=0.
+\]
+
+## 定理 289.1（受益概率点识别）
+
+在 monotonicity 下：
+
+\[
+\boxed{
+b
+=
+p_1-p_0.
+}
+\]
+
+## 定理 289.2（principal strata）
+
+四个潜在类型缩减为三个：
+
+\[
+\begin{array}{c|c|c}
+\text{类型}&Y_0&Y_1\\
+\hline
+\text{never}&0&0\\
+\text{benefit}&0&1\\
+\text{always}&1&1
+\end{array}
+\]
+
+其概率分别为：
+
+\[
+1-p_1,
+\qquad
+p_1-p_0,
+\qquad
+p_0.
+\]
+
+## 原理 289.1
+
+monotonicity 不是由随机化自动产生的统计事实；它是删除一类 coupling 的结构假设。它的作用应记录为：
+
+\[
+\boxed{
+\text{缩小 counterfactual image fiber}.
+}
+\]
+
+---
+
+# 290. 归因概率属于反事实层
+
+## 定义 290.1（必要且充分概率）
+
+\[
+\boxed{
+PNS
+=
+P(Y_1=1,Y_0=0).
+}
+\]
+
+它正是第 288 节的 \(b\)。
+
+## 定义 290.2（必要性概率）
+
+在一致性与适当可定义前件下：
+
+\[
+PN
+=
+P(Y_0=0\mid X=1,Y=1).
+\]
+
+## 定义 290.3（充分性概率）
+
+\[
+PS
+=
+P(Y_1=1\mid X=0,Y=0).
+\]
+
+## 原理 290.1（群体效应与个案归因分离）
+
+\[
+P(Y=1\mid do(X=1))
+-
+P(Y=1\mid do(X=0))
+\]
+
+是群体边缘差；\(PN,PS,PNS\) 询问同一单位在未发生处理下会怎样，属于 cross-world 查询。
+
+## 原理 290.2
+
+即使随机实验完全识别所有单处理 interventional marginals，归因概率通常仍只有界；额外观测数据、monotonicity、结构图或机制限制可以缩小这些界，但必须显式登记。
+
+---
+
+# 291. 反事实目标商
+
+给定反事实查询族：
+
+\[
+\mathcal Q
+=
+\{Q_j\}_{j\in J}.
+\]
+
+定义：
+
+\[
+\Lambda_{\mathcal Q}^{\mathrm{cf}}:
+\mathfrak M
+\to
+\prod_{j\in J}
+\mathcal P(\operatorname{Val}(Q_j)).
+\]
+
+## 定义 291.1（反事实商）
+
+\[
+\boxed{
+Z_{\mathcal Q}^{\mathrm{cf}}
+=
+\operatorname{Im}
+\left(
+\Lambda_{\mathcal Q}^{\mathrm{cf}}
+\right).
+}
+\]
+
+## 定理 291.1（目标最小充分性）
+
+任意目标族 \(T_k\) 若均在 \(\mathcal Q\)-画像纤维上常值，则它们共同唯一因子化通过：
+
+\[
+Z_{\mathcal Q}^{\mathrm{cf}}.
+\]
+
+## 定义 291.2（反事实身份余量）
+
+\[
+\operatorname{CFRes}(\mathcal Q)
+=
+\sum_{M,N}
+(M\neq N)
+\times
+\left(
+\Lambda_{\mathcal Q}^{\mathrm{cf}}(M)
+=
+\Lambda_{\mathcal Q}^{\mathrm{cf}}(N)
+\right).
+\]
+
+## 原理 291.1
+
+即使进入反事实层，也必须指定查询族。知道 \((Y_0,Y_1)\) 的 joint law 不一定恢复全部中介嵌套反事实、外生参数化或其他变量的 cross-world joint。
+
+---
+
+# 292. Abduction–action–prediction 三步
+
+对事实证据：
+
+\[
+E=e,
+\]
+
+反事实查询：
+
+\[
+Y_x,
+\]
+
+SCM 语义分三步。
+
+## 第一步：abduction
+
+由观测证据更新外生状态：
+
+\[
+P_U
+\longmapsto
+P_U(\cdot\mid E=e).
+\]
+
+## 第二步：action
+
+把结构方程修改为：
+
+\[
+do(X=x).
+\]
+
+## 第三步：prediction
+
+在更新后的同一外生 posterior 下求值：
+
+\[
+Y_x(U).
+\]
+
+## 公式 292.1
+
+\[
+\boxed{
+P(Y_x=y\mid E=e)
+=
+\int
+\mathbf 1\{Y_x(u)=y\}
+\,P_U(du\mid E=e).
+}
+\]
+
+## 原理 292.1（事实证据作用在外生 ledger）
+
+事实证据不是在干预后世界重新采样一个独立 \(U'\)；它约束的是生成事实世界的同一个外生状态，然后该状态被带入修改后的方程。
+
+## 原理 292.2
+
+若模型只指定每个 intervention world 的边缘 law，却未指定共享外生 coupling，则 abduction 后的个体反事实一般无定义或不唯一。
+
+---
+
+# 293. Consistency、effectiveness 与 composition
+
+SCM 反事实满足一组结构恒等式。
+
+## 定理 293.1（effectiveness）
+
+在干预：
+
+\[
+do(X=x)
+\]
+
+下：
+
+\[
+\boxed{
+X_x=x.
+}
+\]
+
+## 定理 293.2（consistency）
+
+若事实世界中：
+
+\[
+X=x,
+\]
+
+则：
+
+\[
+\boxed{
+Y=Y_x.
+}
+\]
+
+## 定理 293.3（composition）
+
+若：
+
+\[
+W_x=w,
+\]
+
+则在标准 recursive SCM 中：
+
+\[
+\boxed{
+Y_{x,w}=Y_x.
+}
+\]
+
+## 原理 293.1（结构恒等式不是数据检验的普通相关关系）
+
+这些等式来自“同一机制被替换后如何求值”的定义。它们约束可实现 counterfactual image，但不由任意潜在变量 joint law 自动满足。
+
+## 边界 293.1
+
+不同反事实形式体系对 consistency、composition、cross-world independence 的公理化强度可能不同。形式化时必须选择明确 SCM 语义，而不能混用相互不等价的潜在结果公理包。
+
+---
+
+# 294. 嵌套反事实要求更高层 coupling
+
+中介 \(M\) 下的自然直接效应涉及：
+
+\[
+Y_{x,M_{x'}}.
+\]
+
+该表达同时调用：
+
+- \(x'\) 世界中的中介；
+- \(x\) 世界中的结果机制；
+- 两个世界共享的外生状态。
+
+## 定义 294.1（嵌套查询）
+
+\[
+Q_{\mathrm{NDE}}
+=
+Y_{x,M_{x'}}.
+\]
+
+## 原理 294.1（单世界实验不足）
+
+知道所有：
+
+\[
+P(Y,M\mid do(X=x))
+\]
+
+并不无条件决定：
+
+\[
+P(Y_{x,M_{x'}}).
+\]
+
+还需图形结构、跨世界独立或可由完整 counterfactual identification 算法验证的条件。
+
+## 经典桥 294.1
+
+完整 causal hierarchy identification 理论区分：
+
+\[
+\text{observational identification},
+\quad
+\text{interventional identification},
+\quad
+\text{counterfactual identification},
+\]
+
+并给出某些查询从较低层可计算的图形条件与算法。
+
+## 严格边界 294.1
+
+本文不把自然直接／间接效应的任何常用公式无条件安装为定理；每个公式必须携带其 cross-world、sequential ignorability 或 graphical identification 前件。
+
+---
+
+# 295. 反事实运输需要 coupling 不变量
+
+源环境与目标环境可能具有相同 interventional marginals：
+
+\[
+P_s(Y_x)
+=
+P_t(Y_x)
+\quad\forall x,
+\]
+
+但具有不同 cross-world coupling：
+
+\[
+P_s(Y_0,Y_1)
+\neq
+P_t(Y_0,Y_1).
+\]
+
+## 定义 295.1（反事实 transport residual）
+
+\[
+\operatorname{CFTransRes}
+=
+\sum_{M_s,M_t,N_s,N_t}
+\left[
+E(M_s,M_t)=E(N_s,N_t)
+\right]
+\times
+\left[
+Q(M_t)\neq Q(N_t)
+\right],
+\]
+
+其中证据 \(E\) 可以包含源／目标观测和单世界实验，\(Q\) 是目标环境反事实查询。
+
+## 定理 295.1（边缘运输不推出 coupling 运输）
+
+第 285 节稳定／翻转模型可分别放置于两个环境，使全部单世界边缘相同而：
+
+\[
+P(Y_0=Y_1)
+\]
+
+不同。
+
+## 原理 295.1
+
+\[
+\boxed{
+\text{transporting every treatment arm marginal}
+\not\Rightarrow
+\text{transporting individual response type}.
+}
+\]
+
+反事实运输必须说明外生 coupling、机制同一或足以识别该 coupling 的额外结构为何跨环境保持。
+
+---
+
+# Part XXXVII：时间化因果系统、政策干预与支持边界
+
+# 296. 纵向结构因果模型
+
+令时间为：
+
+\[
+t=0,\ldots,T.
+\]
+
+在每个时刻观测协变量 \(L_t\)，选择行动 \(A_t\)，得到后续状态。
+
+结构可写作：
+
+\[
+L_{t+1}
+=
+f_t(L_{\le t},A_{\le t},U_{t+1}).
+\]
+
+## 定义 296.1（动态政策）
+
+\[
+\pi_t:
+H_t
+\rightsquigarrow
+A_t,
+\]
+
+其中历史：
+
+\[
+H_t=(L_0,A_0,\ldots,L_t).
+\]
+
+## 定义 296.2（政策干预）
+
+\[
+do(A_t\sim\pi_t(\cdot\mid H_t))
+\]
+
+替换原行为分配机制，而保留状态转移机制。
+
+## 定义 296.3（政策结果）
+
+\[
+Y^\pi
+\]
+
+表示整个行动序列由 \(\pi\) 生成时的最终结果。
+
+## 原理 296.1
+
+一次静态 \(do(X=x)\) 只是动态政策的长度一特例。长期因果效应需要同时记录反馈：过去行动改变未来协变量，而未来行动又依赖这些协变量。
+
+---
+
+# 297. Sequential g-formula
+
+在离散有限情形，假设：
+
+1. consistency；
+2. sequential exchangeability；
+3. positivity；
+4. 正确记录全部影响行为与未来结果的历史。
+
+## 经典定理 297.1（随机政策 g-formula）
+
+政策 \(\pi\) 下的轨迹 law 为：
+
+\[
+\boxed{
+P^\pi(l_{0:T},a_{0:T-1})
+=
+P(l_0)
+\prod_{t=0}^{T-1}
+\pi_t(a_t\mid h_t)
+P(l_{t+1}\mid h_t,a_t).
+}
+\]
+
+最终目标由该 joint law 边缘化得到：
+
+\[
+P(Y^\pi).
+\]
+
+## 原理 297.1（时间胶合）
+
+每个转移条件 law：
+
+\[
+P(l_{t+1}\mid h_t,a_t)
+\]
+
+是局部时间接口；g-formula 在政策替换后沿历史树胶合这些接口。
+
+## 边界 297.1
+
+若存在未记录的 time-varying confounder、测量误差、干预副作用或 positivity 失败，则该乘积不是目标 policy law 的无条件表达式。
+
+---
+
+# 298. Policy positivity 是路径 image 条件
+
+行为政策记为：
+
+\[
+\mu_t(a\mid h).
+\]
+
+目标政策为：
+
+\[
+\pi_t(a\mid h).
+\]
+
+## 定义 298.1（路径 positivity）
+
+对所有在目标政策下可达且具有正概率的历史—行动对，要求：
+
+\[
+\boxed{
+\pi_t(a\mid h)>0
+\Longrightarrow
+\mu_t(a\mid h)>0.
+}
+\]
+
+## 定理 298.1（支持缺失盲区）
+
+若存在目标可达 \((h,a)\) 满足：
+
+\[
+\mu_t(a\mid h)=0,
+\]
+
+则行为数据不约束该分支后的转移机制。可构造两个模型在全部行为支持上相同，却对 \(Y^\pi\) 给出不同 law。
+
+## 原理 298.1
+
+动态 positivity 不是每个单时刻边缘都有处理样本就足够；它要求目标政策访问的整条历史路径落在行为数据支持内。
+
+---
+
+# 299. Off-policy 因果余量
+
+给定行为数据接口：
+
+\[
+E_\mu(M)
+=
+\mathcal L_M(H_T\text{ under }\mu),
+\]
+
+目标：
+
+\[
+T_\pi(M)
+=
+\mathcal L_M(Y^\pi).
+\]
+
+## 定义 299.1（off-policy residual）
+
+\[
+\boxed{
+\operatorname{OPRes}(\mu,\pi)
+=
+\sum_{M,N}
+(E_\mu(M)=E_\mu(N))
+\times
+(T_\pi(M)\neq T_\pi(N)).
+}
+\]
+
+## 定理 299.1（可评估判据）
+
+目标政策可由行为 law 在模型类中识别，当且仅当：
+
+\[
+\operatorname{OPRes}(\mu,\pi)=\varnothing.
+\]
+
+## 原理 299.1
+
+importance weighting、direct modeling、doubly robust estimation等算法都建立在某个识别桥上。若 off-policy residual 非空，改变估计器不能创造行为支持之外的反事实转移。
+
+## 原理 299.2
+
+\[
+\boxed{
+\text{低方差估计器}
+\neq
+\text{已识别目标};
+\qquad
+\text{已识别目标}
+\neq
+\text{稳定有限样本估计}.
+}
+\]
+
+---
+
+# 300. 因果完成的 kernel–image–coupling 四联
+
+对因果模型到查询画像的映射，应同时审计四类对象。
+
+## 300.1 Kernel residual
+
+\[
+M\neq N,
+\qquad
+E(M)=E(N).
+\]
+
+不同模型被现有观测／干预语言合并。
+
+## 300.2 Image defect
+
+形式 law family \(L\) 是否真正来自某个 SCM：
+
+\[
+L\in\operatorname{Im}(E)?
+\]
+
+## 300.3 Coupling residual
+
+单世界边缘已确定，但 cross-world joint 仍有多个 coupling：
+
+\[
+\Gamma((\mu_x)_x).
+\]
+
+## 300.4 Gauge residual
+
+不同外生参数化或机制坐标产生同一全部目标查询；这种表示差异不应冒充可观察因果差异。
+
+## 统一原理 300.1
+
+\[
+\boxed{
+\begin{aligned}
+\text{kernel}
+&:\quad
+\text{多个模型映为同一证据};\\
+\text{image}
+&:\quad
+\text{哪些证据族可由模型实现};\\
+\text{coupling}
+&:\quad
+\text{单世界边缘如何组成同单位多世界};\\
+\text{gauge}
+&:\quad
+\text{同一查询对象的非规范表示}.
+\end{aligned}
+}
+\]
+
+## 原理 300.2（修复必须对症）
+
+- kernel 非空：加入能横切该 kernel 的新干预；
+- image 失败：扩大或修正模型类，而不是继续拟合同一模型；
+- coupling 非唯一：加入 cross-world 假设、界或结构；
+- gauge 非唯一：取商或选择规范，不把它误报为经验不确定性。
+
+---
+
+# 301. 第六阶段最终命题：因果知识是分层查询商而非单一分布
+
+## 最终层级 301.1
+
+\[
+\boxed{
+\begin{aligned}
+\text{SCM}
+&\xrightarrow{\operatorname{Obs}}
+Z_{\mathrm{obs}}\\
+&\xrightarrow{\text{new interventions}}
+Z_{\mathrm{int}}\\
+&\xrightarrow{\text{shared exogenous coupling}}
+Z_{\mathrm{cf}}\\
+&\xrightarrow{\text{task quotient}}
+Z_T.
+\end{aligned}
+}
+\]
+
+箭头表示需要额外结构才能从较粗层获得较细层，而不是旧层自动包含新层的全部信息。
+
+## 最终严格性 301.2
+
+第 258 节证明：
+
+\[
+\boxed{
+\text{同观测 law}
+\not\Rightarrow
+\text{同干预 law}.
+}
+\]
+
+第 285 节证明：
+
+\[
+\boxed{
+\text{同全部单世界干预 law}
+\not\Rightarrow
+\text{同反事实 joint law}.
+}
+\]
+
+## 最终设计原则 301.3
+
+\[
+\boxed{
+\text{只有能缩小目标 kernel、填补合法 image、}
+\text{约束 cross-world coupling 或关闭 causal carry 的接口，}
+\text{才构成真正的因果观察升级。}
+}
+\]
+
+## 最深结论 301.4
+
+\[
+\boxed{
+\text{观察告诉我们世界怎样共现；}
+\quad
+\text{干预告诉我们机制被替换后怎样响应；}
+\quad
+\text{反事实告诉我们同一外生历史在未发生世界中怎样展开。}
+}
+\]
+
+三者共享概率语言，却不共享同一个信息层。把它们压成“更多数据”会隐藏真正的 residual；把它们写成逐层 kernel、image 与 coupling，才允许精确回答下一步究竟缺观测、缺干预、缺支持，还是缺跨世界结构。
+
+---
+
+# Appendix O：v1.5 版本记录与仓库锚点
+
+## O.1 版本记录
+
+- **v1.5 — 2026-08-22**：追加观测／干预／反事实三层查询商、有限 SCM 与完美干预语义、观测等价但干预不等价的二元反模型、干预族精化与目标余量、有限模型干预 set cover、随机化桥、back-door 调整、positivity image 条件、隐藏混杂、机制模块替换、因果 carry、prime-indexed 机制边界、独立乘积 SCM 与跨素数混杂、环境机制不变量、transportability residual、interventional Markov equivalence、干预码距离、主动因果发现、SCM belief Bellman、目标相对实验价值、identifiability／estimability／computation 三分、反事实 coupling fiber、同全部单世界干预但不同 counterfactual joint 的显式模型、ATE 与个体效应分离、Fréchet 尖锐界、monotonicity completion、概率归因、abduction–action–prediction、嵌套反事实、纵向政策、g-formula、off-policy residual 及 kernel–image–coupling–gauge 四联。
+
+## O.2 本阶段仓库真值锚点
+
+1. `D5/S3/ObserverMemory/PredictionFactors/CausalStateFactorization.lean`：充分接口唯一因子化到规范 future-law image，并由 law 差异推出接口差异。
+2. `D5/S3/ConceptDynamics/Refinement/InductiveSufficiency.lean`：纤维常值与有效像因子化。
+3. `D5/S3/ObserverMemory/Prediction/ControlledBehaviorUniversality.lean`：受控行为商的规范最小实现。
+4. `D5/S3/Observer/Separation/CongruenceKernel.lean`：过程闭合的最大前向 congruence。
+5. `D5/S3/Divergence/ClassicalDPI.lean` 及相关 data-processing 文件：有限随机通道下 divergence 单调桥。
+6. `D5/S3/Entropy/MutualInformation.lean`：有限 mutual information 定义与非负性。
+7. `D5/S3/Entropy/MutualInformationIndependence.lean`：有限 joint law 中 mutual information 为零当且仅当等于自身边缘乘积。
+8. `D5/S3/Entropy/Submodularity/ConditionalMutualInformation.lean` 与 `MutualInformationChainRule.lean`：条件互信息和链式分解接口。
+9. `D5/S3/Estimation/DecisionRisk/FixedSuiteBayesRiskFloor.lean`：固定实验套件的 Bayes 风险下界。
+10. `D5/S3/Observer/DynamicProgramming/BellmanContraction.lean`：折扣 Bellman operator 的 contraction 与唯一固定点。
+11. `D5/S3/TotalVariation/HellingerDataProcessing.lean`：随机后处理不增加有限 Hellinger 区分。
+12. `D5/S3/Divergence/ProductAdditivity.lean`：有限正概率 law 的 KL 乘积可加性。
+
+## O.3 锚点边界
+
+上述 Lean 文件不定义完整 SCM、do-operator、DAG d-separation、back-door、do-calculus、potential outcomes、transportability 或 g-formula。本文仅把其已闭合的 kernel-factorization、随机通道、信息与 Bellman 部件作为未来因果模块的底层依赖；不得由文件名中的 `CausalState` 推断 Pearl 式 causal hierarchy 已经形式化。
+
+---
+
+# Appendix P：第六阶段外部经典基础
+
+以下来源只支撑标记为经典的标准背景，不替代未来仓库 proof term：
+
+1. I. Shpitser and J. Pearl, “Complete Identification Methods for the Causal Hierarchy,” *Journal of Machine Learning Research* **9** (2008), 1941–1979：association、intervention、counterfactual 三层及完整识别方法。
+2. I. Shpitser and J. Pearl, “Identification of Joint Interventional Distributions in Recursive Semi-Markovian Causal Models,” *AAAI* (2006), 1219–1226：joint interventional identification 与 do-calculus completeness。
+3. A. Hauser and P. Bühlmann, “Characterization and Greedy Learning of Interventional Markov Equivalence Classes of Directed Acyclic Graphs,” *JMLR* **13** (2012), 2409–2464：干预 Markov 等价与 interventional essential graph。
+4. J. Pearl and E. Bareinboim, “Transportability of Causal and Statistical Relations: A Formal Approach,” *AAAI* (2011), 247–254, DOI `10.1609/AAAI.V25I1.7861`。
+5. E. Bareinboim and J. Pearl, “Transportability of Causal Effects: Completeness Results,” *AAAI* (2012), 698–704, DOI `10.1609/AAAI.V26I1.8232`。
+6. J. Tian and J. Pearl, “Probabilities of Causation: Bounds and Identification,” *Annals of Mathematics and Artificial Intelligence* **28** (2000), 287–313, DOI `10.1023/A:1018912507879`。
+7. J. M. Robins 的 g-computation／纵向因果推断工作：sequential exchangeability、动态处理 regime 与 g-formula 的经典来源。
+8. J. Pearl, *Causality: Models, Reasoning, and Inference*, 2nd ed.：SCM、do-operator、back-door、counterfactual semantics 与 causal hierarchy 背景。
+9. J. Pearl and D. Mackenzie, *The Book of Why*：seeing／doing／imagining 的非技术层级表述；本文数学陈述以 SCM 与识别文献为准。
+10. J. Tian 及后续 discrete-SCM 工作：从观测和实验 law 对 counterfactual distributions 做 sharp／partial identification 的有限多项式方法。
+
+---
+
+# Appendix Q：v1.5 Lean 形式化路线、证明矩阵与有限证书
+
+## Q.1 建议模块树
+
+```text
+D5/S3/Observer/Causal/
+  Foundation/
+    FiniteSCM.lean
+    AcyclicEvaluation.lean
+    PerfectIntervention.lean
+    SoftIntervention.lean
+    ObservationalProfile.lean
+    InterventionalProfile.lean
+    CausalLawQuotient.lean
+    TargetCausalResidual.lean
+  Countermodels/
+    DirectionReversal.lean
+    HiddenConfounding.lean
+    PositivityFailure.lean
+    InterventionalCounterfactualGap.lean
+    CrossPrimeConfounder.lean
+  Design/
+    InterventionCover.lean
+    InterventionCodeDistance.lean
+    AdaptiveOrientation.lean
+    CausalBelief.lean
+    CausalBellman.lean
+    TargetInformationValue.lean
+  Adjustment/
+    RandomizationBridge.lean
+    FiniteBackdoor.lean
+    Positivity.lean
+    TruncatedFactorization.lean
+  Product/
+    IndependentSCMProduct.lean
+    ProductInterventionFactorization.lean
+    CausalCarry.lean
+  Counterfactual/
+    PotentialOutcomeVector.lean
+    CouplingResidual.lean
+    FrechetBenefitBounds.lean
+    MonotonicityCompletion.lean
+    AbductionActionPrediction.lean
+    CounterfactualQuotient.lean
+  Longitudinal/
+    DynamicPolicy.lean
+    SequentialGFormula.lean
+    PolicyPositivity.lean
+    OffPolicyResidual.lean
+  Transport/
+    EnvironmentProfile.lean
+    MechanismInvariance.lean
+    TransportResidual.lean
+```
+
+## Q.2 第一优先：纯有限函数与反模型链
+
+1. 定义有限 SCM 的拓扑顺序求值；
+2. 定义 perfect intervention 为结构方程替换；
+3. `observationalProfile` 与 `interventionalProfile`；
+4. `interventional_target_factors_iff`；
+5. 第 258 节 direction-reversal 反模型；
+6. 第 264 节 positivity 反模型；
+7. 第 265 节 hidden-confounding 反模型；
+8. 第 285 节 interventional/counterfactual gap 反模型；
+9. 第 288 节 \(2\times2\) coupling table 的 Fréchet 尖锐界。
+
+这批只需有限类型、函数、PMF／有限 mass function 与直接枚举，不需要先建设完整图形 do-calculus。
+
+## Q.3 第二优先：商与实验设计链
+
+```lean
+theorem interventionalProfile_mono
+theorem causalTargetResidual_empty_iff
+theorem finite_intervention_cover_iff
+theorem finite_intervention_subfamily
+theorem causalCarry_empty_iff_descends
+theorem adaptive_orientation_expected_cost
+```
+
+`InterventionCover` 应复用既有 concept join／sensor cover 模式，但 universe 改为目标值不同的模型对，coordinate equality 改为 interventional law equality。
+
+## Q.4 第三优先：counterfactual coupling 链
+
+先使用显式 response-function 表示：
+
+```lean
+structure BinaryResponseType where
+  y0 : Bool
+  y1 : Bool
+```
+
+在其有限概率单纯形上证明：
+
+```lean
+theorem ate_eq_p1_sub_p0
+theorem benefit_frechet_lower
+theorem benefit_frechet_upper
+theorem harm_frechet_lower
+theorem harm_frechet_upper
+theorem benefit_bounds_sharp
+theorem monotone_benefit_eq_ate
+```
+
+这避免在第一步依赖一般 measurable SCM 的 cross-world API。
+
+## Q.5 第四优先：图形与纵向桥
+
+- DAG、d-separation 与 Markov equivalence 可能需要独立图论基础；
+- back-door 与 do-calculus 不得以 axiom 安装；
+- finite back-door 可先在显式 factorization algebra 上证明；
+- longitudinal g-formula 可先对有限 horizon、有限 histories 与显式 kernel product 证明；
+- transportability 与 nested counterfactual identification 应等底层 causal graph API 稳定后再接入。
+
+## Q.6 定理状态矩阵
+
+| 结论 | 当前状态 | 主要依赖 |
+|---|---|---|
+| 观测／干预／反事实 kernel 层级 | Paper definition + explicit witnesses | finite SCM |
+| 观测等价但干预不等价 | Finite paper certificate | two binary models |
+| 全单世界干预等价但反事实不同 | Finite paper certificate | shared-\(U\) coupling |
+| 因果 law quotient 普适性质 | Paper / direct specialization | `CausalStateFactorization` |
+| 干预族单调精化 | Paper direct | coordinate restriction |
+| 目标因果余量空 iff 可识别 | Paper direct | range factorization |
+| 有限干预 set cover 等价 | Paper direct | finite pair cover |
+| 随机化桥 | Classical/Paper | independence + consistency |
+| back-door 调整 | Classical, not Lean-closed here | DAG blocking + positivity |
+| positivity failure | Finite paper certificate | off-support mechanism |
+| hidden confounding gap | Finite paper certificate | shared Bernoulli source |
+| product SCM intervention factorization | Paper | independent exogenous blocks |
+| cross-prime confounding反例 | Finite paper certificate | shared source |
+| interventional Markov equivalence refinement | Classical | Hauser–Bühlmann |
+| transport residual criterion | Paper direct | kernel inclusion |
+| transport formula completeness | Classical | selection diagrams / do-calculus |
+| ATE depends only on marginals | Paper direct | linearity |
+| benefit/harm Fréchet bounds | Paper finite proof | \(2\times2\) table |
+| monotonicity point identification | Paper direct | remove harm cell |
+| nested counterfactual identification | Classical/Open Lean bridge | causal hierarchy algorithms |
+| causal belief sufficiency | Classical finite target | Bayes kernels |
+| causal Bellman contraction | Paper specialization | existing Bellman anchor |
+| sequential g-formula | Classical/Open Lean bridge | longitudinal exchangeability |
+| off-policy residual criterion | Paper direct | target factorization |
+
+## Q.7 必要有限测试
+
+1. 第 258 节两个模型的 observational table 都为 \((1/2,0,0,1/2)\)；
+2. `do(X=0)` 与 `do(X=1)` 下方向反转模型的 \(Y\)-law 不同；
+3. 第 285 节两个模型的 observational table 都为四点均匀；
+4. 两模型每个单世界 \(Y_x\) 均为 Bernoulli \(1/2\)；
+5. 稳定模型满足 \(P(Y_0=Y_1)=1\)，翻转模型为零；
+6. 对随机 \(p_0,p_1\in[0,1]\) 与所有合法 \(2\times2\) coupling，枚举验证 Fréchet 界；
+7. monotonicity 约束下验证 \(b=p_1-p_0\)；
+8. hidden-confounding 模型中 conditional effect 为一而 interventional effect 为零；
+9. positivity 反模型在观测支持上 law 相同、支持外干预不同；
+10. 三模型主动方向实验的静态调用数为二、期望调用数为 \(1+\varepsilon\)；
+11. 独立块 SCM 的 finite joint law 等于局部 law 乘积；
+12. shared-source countermodel 的 mutual information 非零；
+13. causal carry 为空时 quotient intervention 良定义；
+14. off-policy residual witness 的 behavior trajectory laws 相同而 target-policy laws 不同。
+
+## Q.8 机器可审计字段
+
+每个 causal observer theorem 应登记：
+
+```text
+model class
+endogenous variables
+exogenous variables
+graph / parent relation
+exogenous dependence
+observational regime
+allowed interventions
+intervention semantics
+target query layer
+positivity / support
+consistency assumptions
+exchangeability assumptions
+mechanism invariance
+environment
+law kernel
+image condition
+cross-world coupling
+gauge quotient
+sampling theorem
+algorithmic status
+proof status
+```
+
+该字段表防止把“同一 joint law 上的有限代数事实”静默扩大为任意隐藏变量、任意环境、任意 nested counterfactual 或任意纵向政策的全局因果定理。
