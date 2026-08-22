@@ -45,7 +45,11 @@ internal sealed class AmbientComplementDependenceDocument : IScribeDocumentDefin
 
         return Disp(Seq(
             Begin, Grp(F.Id("gathered")),
-            Forall, Sp, group, Comma, Sp, u, Comma, Sp, v, Comma, Sp, e,
+            Forall, Sp, group, Colon, Sp,
+                Operatorname, Grp(F.Id("Type")), Caret, Grp(Star), Comma, Sp,
+            OpenBracket, Operatorname, Grp(F.Id("AddCommGroup")), Open, group, Close,
+                CloseBracket, Comma, RowBreak, Grp(),
+            u, Comma, Sp, v, Comma, Sp, e,
                 InMacro, Sp, group, Comma, RowBreak, Grp(),
             Open, Complement(u, e), Sp, Eq, Sp, Complement(v, e), Sp, Iff, Sp,
                 u, Sp, Eq, Sp, v, Close, Sp, Land, RowBreak, Grp(),
