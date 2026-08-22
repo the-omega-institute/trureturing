@@ -35,23 +35,56 @@ internal sealed class QuantumRelativeEntropyDefectCompositionDocument : IScribeD
 
     private static Formula TheoremFormula()
     {
-        Formula sourceState = Seq(Rho, Comma, Sp, SigmaLower, Sp, InMacro, Sp,
-            Operatorname, Grp(F.Id("DensityState")), Open, F.Id("a"), Close);
-        Formula firstChannel = Seq(Phi, Sp, InMacro, Sp,
+        Formula a = F.Id("a");
+        Formula b = F.Id("b");
+        Formula c = F.Id("c");
+        Formula carrier = Seq(Operatorname, Grp(F.Id("Type")));
+        Formula stateA = Seq(
+            Operatorname, Grp(F.Id("DensityState")), Open, a, Close);
+        Formula channelAB = Seq(
             Operatorname, Grp(F.Id("QuantumChannel")), Open,
-            F.Id("a"), Comma, Sp, F.Id("b"), Close);
-        Formula secondChannel = Seq(Psi, Sp, InMacro, Sp,
+            a, Comma, Sp, b, Close);
+        Formula channelBC = Seq(
             Operatorname, Grp(F.Id("QuantumChannel")), Open,
-            F.Id("b"), Comma, Sp, F.Id("c"), Close);
+            b, Comma, Sp, c, Close);
+        Formula composition = Seq(
+            Operatorname, Grp(F.Id("comp")), Open,
+            Psi, Comma, Sp, Phi, Close);
+        Formula mappedRho = Seq(
+            Operatorname, Grp(F.Id("mapState")), Open,
+            Phi, Comma, Sp, Rho, Close);
+        Formula mappedSigma = Seq(
+            Operatorname, Grp(F.Id("mapState")), Open,
+            Phi, Comma, Sp, SigmaLower, Close);
+        Formula compositeDefect = Seq(
+            Operatorname, Grp(F.Id("relativeEntropyDefect")), Open,
+            composition, Comma, Sp, Rho, Comma, Sp, SigmaLower, Close);
+        Formula firstDefect = Seq(
+            Operatorname, Grp(F.Id("relativeEntropyDefect")), Open,
+            Phi, Comma, Sp, Rho, Comma, Sp, SigmaLower, Close);
+        Formula secondDefect = Seq(
+            Operatorname, Grp(F.Id("relativeEntropyDefect")), Open,
+            Psi, Comma, Sp, mappedRho, Comma, Sp, mappedSigma, Close);
 
         return Disp(Seq(
-            Forall, Sp, sourceState, Comma, Sp, firstChannel, Comma, Sp,
-            secondChannel, Comma, Sp,
-            DeltaLower, Underscore, Grp(Psi, Circ, Phi),
-            Open, Rho, Comma, Sp, SigmaLower, Close, Sp, Eq, Sp,
-            DeltaLower, Underscore, Grp(Phi),
-            Open, Rho, Comma, Sp, SigmaLower, Close, Sp, Plus, Sp,
-            DeltaLower, Underscore, Grp(Psi), Open,
-            Phi, Rho, Comma, Sp, Phi, SigmaLower, Close, Dot));
+            Forall, Sp, a, Comma, Sp, b, Comma, Sp, c, Colon, Sp, carrier,
+            Comma, Esc,
+            OpenBracket, Operatorname, Grp(F.Id("Fintype")), Open, a, Close,
+            CloseBracket, Comma, Sp,
+            OpenBracket, Operatorname, Grp(F.Id("DecidableEq")), Open, a, Close,
+            CloseBracket, Comma, Esc,
+            OpenBracket, Operatorname, Grp(F.Id("Fintype")), Open, b, Close,
+            CloseBracket, Comma, Sp,
+            OpenBracket, Operatorname, Grp(F.Id("DecidableEq")), Open, b, Close,
+            CloseBracket, Comma, Esc,
+            OpenBracket, Operatorname, Grp(F.Id("Fintype")), Open, c, Close,
+            CloseBracket, Comma, Sp,
+            OpenBracket, Operatorname, Grp(F.Id("DecidableEq")), Open, c, Close,
+            CloseBracket, Comma, Esc,
+            Phi, Colon, Sp, channelAB, Comma, Sp,
+            Psi, Colon, Sp, channelBC, Comma, Esc,
+            Rho, Comma, Sp, SigmaLower, Colon, Sp, stateA, Comma, Esc,
+            compositeDefect, Sp, Eq, Sp,
+            firstDefect, Sp, Plus, Sp, secondDefect, Dot));
     }
 }
