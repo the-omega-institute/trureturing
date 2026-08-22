@@ -270,7 +270,7 @@ public sealed partial class ReviewRegressionTests
     {
         var fixture = new RuleFixture();
         fixture.Files[path] = "{}\n";
-        var context = fixture.BuildForRuleCompatibility();
+        var context = fixture.Build(RawChangeSet.Create([path]));
 
         var completed = Assert.IsType<RuleExecutionOutcome.Completed>(RuleCatalog.Default.Execute(context));
         var diagnostic = Assert.Single(completed.Capability.Diagnostics, item => item.Path == path);
@@ -289,7 +289,9 @@ public sealed partial class ReviewRegressionTests
         const string path = "Evidence/D5/S0/Carrier/Mixed.run.json";
         fixture.Files[path] = "{\"payload\": \"prefix {\\\"note\\\":\\\"ok\\\"} anomaly tail\"}\n";
 
-        var evaluation = RuleCatalog.Default.EvaluateSingle(RuleId.CreateKnown(19), fixture.Build());
+        var evaluation = RuleCatalog.Default.EvaluateSingle(
+            RuleId.CreateKnown(19),
+            fixture.Build(RawChangeSet.Create([path])));
 
         var diagnostic = Assert.Single(evaluation.Diagnostics, item => item.Path == path);
         Assert.Contains("unknown anomaly-bearing schema at $.payload", diagnostic.Message, StringComparison.Ordinal);
@@ -306,7 +308,9 @@ public sealed partial class ReviewRegressionTests
         const string path = "Evidence/D5/S0/Carrier/Locator.run.json";
         fixture.Files[path] = "{\"ast_path\":\"" + value + "\"}\n";
 
-        var evaluation = RuleCatalog.Default.EvaluateSingle(RuleId.CreateKnown(19), fixture.Build());
+        var evaluation = RuleCatalog.Default.EvaluateSingle(
+            RuleId.CreateKnown(19),
+            fixture.Build(RawChangeSet.Create([path])));
 
         Assert.Equal(
             expectsDiagnostic,
@@ -414,7 +418,8 @@ public sealed partial class ReviewRegressionTests
         fixture.Files["rogue.txt"] = "unknown\n";
 
         var completed = Assert.IsType<RuleExecutionOutcome.Completed>(
-            RuleCatalog.Default.Execute(fixture.BuildForRuleCompatibility()));
+            RuleCatalog.Default.Execute(
+                fixture.Build(RawChangeSet.Create(["rogue.txt"]))));
 
         var diagnostic = Assert.Single(completed.Capability.Diagnostics, item => item.Path == "rogue.txt");
         Assert.Equal(sl000, diagnostic.RuleId);
@@ -433,7 +438,8 @@ public sealed partial class ReviewRegressionTests
         fixture.Files["Meta/Digestion/formalizations/BAD.v1.json"] = "{}\n";
 
         var completed = Assert.IsType<RuleExecutionOutcome.Completed>(
-            RuleCatalog.Default.Execute(fixture.BuildForRuleCompatibility()));
+            RuleCatalog.Default.Execute(
+                fixture.Build(RawChangeSet.Create(["Meta/Digestion/formalizations/BAD.v1.json"]))));
 
         Assert.DoesNotContain(
             completed.Capability.Diagnostics,

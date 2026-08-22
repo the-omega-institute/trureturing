@@ -31,9 +31,7 @@ internal static partial class BackfillInventoryLoader
             return;
         }
 
-        var markerPath = DigestionFormalizationReceipt.RootPath
-            + entry.AtomId
-            + DigestionFormalizationReceipt.PathSuffix;
+        var markerPath = DigestionFormalizationReceipt.PathForAtom(entry.AtomId);
         if (!snapshot.TryGetFile(markerPath, out _))
         {
             return;

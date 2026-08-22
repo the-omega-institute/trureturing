@@ -34,7 +34,8 @@ public sealed class DeliveryStatementIdentityAffectednessTests
     }
 
     [Fact]
-    public void DeliveryStatementIdentityExecutesWhenABaselineFrontierSourceIsDeleted()
+    [BaseFactScopeProbe(27)]
+    public void Sl027DeliveryStatementIdentityExecutesWhenABaselineFrontierSourceIsDeleted()
     {
         const string path = "D5/X_Frontier/PrimeNormIrreducibility.lean";
         var fixture = new RuleFixture();

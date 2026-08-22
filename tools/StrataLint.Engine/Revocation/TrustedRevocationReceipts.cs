@@ -76,6 +76,12 @@ public sealed class TrustedRevocationReceiptStore
 {
     private readonly ImmutableDictionary<string, TrustedReceipt> byOid;
 
+    private enum ValidationMode
+    {
+        Candidate,
+        TrustedBase,
+    }
+
     private TrustedRevocationReceiptStore(
         string baselineHeadHash,
         string baselineGraphRoot,
@@ -145,7 +151,7 @@ public sealed class TrustedRevocationReceiptStore
                 }
 
                 var bytes = file.RawBytes;
-                var evidence = ParseTrustedReceipt(bytes);
+                var evidence = ParseReceipt(bytes, ValidationMode.TrustedBase);
                 var sha = "sha256:" + Convert.ToHexStringLower(SHA256.HashData(bytes.AsSpan()));
                 receipts.Add(oid, new TrustedReceipt(bytes, sha, WithReceiptAddress(evidence, oid, sha)));
             }
@@ -216,9 +222,14 @@ public sealed class TrustedRevocationReceiptStore
         ImmutableArray<byte> bytes) =>
         _ = ParseAndValidateReceipt(baseline, bytes);
 
-    private static RevocationEvidence ParseTrustedReceipt(ImmutableArray<byte> bytes)
+    private static RevocationEvidence ParseReceipt(
+        ImmutableArray<byte> bytes,
+        ValidationMode validationMode)
     {
-        if (bytes.Length == 0 || bytes[^1] != (byte)'\n' || bytes.AsSpan().Contains((byte)'\r'))
+        if (validationMode is ValidationMode.Candidate
+            && (bytes.Length == 0
+                || bytes[^1] != (byte)'\n'
+                || bytes.AsSpan().Contains((byte)'\r')))
         {
             throw new FormatException("Revocation receipt must be one LF-terminated JSON object.");
         }
@@ -248,7 +259,7 @@ public sealed class TrustedRevocationReceiptStore
         FrozenLedgerConsistent baseline,
         ImmutableArray<byte> bytes)
     {
-        var evidence = ParseTrustedReceipt(bytes);
+        var evidence = ParseReceipt(bytes, ValidationMode.Candidate);
         using var document = JsonDocument.Parse(bytes.AsMemory());
         var root = document.RootElement;
 

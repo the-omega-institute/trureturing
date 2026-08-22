@@ -27,15 +27,21 @@ public static class FrozenAcceptedEventLoader
 {
     private static readonly UTF8Encoding StrictUtf8 = new(false, true);
 
+    private enum ValidationMode
+    {
+        Candidate,
+        Trusted,
+    }
+
     public static DagLedgerFilesLoadOutcome LoadFiles(IEnumerable<RepositoryFile> files)
-        => LoadFiles(files, validateRecordedHash: true);
+        => LoadFiles(files, ValidationMode.Candidate);
 
     internal static DagLedgerFilesLoadOutcome LoadTrustedFiles(IEnumerable<RepositoryFile> files)
-        => LoadFiles(files, validateRecordedHash: false);
+        => LoadFiles(files, ValidationMode.Trusted);
 
     private static DagLedgerFilesLoadOutcome LoadFiles(
         IEnumerable<RepositoryFile> files,
-        bool validateRecordedHash)
+        ValidationMode validationMode)
     {
         ArgumentNullException.ThrowIfNull(files);
         try
@@ -46,18 +52,22 @@ public static class FrozenAcceptedEventLoader
             foreach (var file in files.OrderBy(static file => file.Path.Value, StringComparer.Ordinal))
             {
                 var bytes = file.RawBytes.AsSpan();
-                _ = StrictUtf8.GetString(bytes);
-                if (bytes.Length < 2
-                    || bytes[^1] != (byte)'\n'
-                    || bytes[..^1].Contains((byte)'\n')
-                    || bytes.Contains((byte)'\r'))
+                if (validationMode is ValidationMode.Candidate)
                 {
-                    throw new FormatException(
-                        "Content-addressed frozen event file must contain exactly one LF-terminated JSON object.");
+                    _ = StrictUtf8.GetString(bytes);
+                    if (bytes.Length < 2
+                        || bytes[^1] != (byte)'\n'
+                        || bytes[..^1].Contains((byte)'\n')
+                        || bytes.Contains((byte)'\r'))
+                    {
+                        throw new FormatException(
+                            "Content-addressed frozen event file must contain exactly one LF-terminated JSON object.");
+                    }
                 }
 
-                using var document = JsonDocument.Parse(bytes[..^1].ToArray());
-                var valid = validateRecordedHash
+                var jsonBytes = validationMode is ValidationMode.Candidate ? bytes[..^1] : bytes;
+                using var document = JsonDocument.Parse(jsonBytes.ToArray());
+                var valid = validationMode is ValidationMode.Candidate
                     ? FrozenLedgerCanonicalWriter.ValidateDagEvent(
                         document.RootElement,
                         out var identity,
@@ -73,21 +83,22 @@ public static class FrozenAcceptedEventLoader
                     throw new FormatException(validationMessage);
                 }
 
-                if (!hashes.Add(eventHash))
+                if (validationMode is ValidationMode.Candidate && !hashes.Add(eventHash))
                 {
                     throw new FormatException("Content-addressed frozen event event_hash is duplicated.");
                 }
 
-                if (!identities.Add(identity))
+                if (validationMode is ValidationMode.Candidate && !identities.Add(identity))
                 {
                     throw new FormatException("Content-addressed frozen event identity is duplicated.");
                 }
 
                 var fileName = file.Path.Value[(file.Path.Value.LastIndexOf('/') + 1)..];
-                if (!string.Equals(
-                    fileName,
-                    FrozenLedgerChangeClassifier.AcceptedFileName(identity),
-                    StringComparison.Ordinal))
+                if (validationMode is ValidationMode.Candidate
+                    && !string.Equals(
+                        fileName,
+                        FrozenLedgerChangeClassifier.AcceptedFileName(identity),
+                        StringComparison.Ordinal))
                 {
                     throw new FormatException(
                         "Content-addressed frozen event file name does not match event identity.");

@@ -45,6 +45,7 @@ internal static partial class IngestCommand
             var lean = ValidateLean(plannedSnapshot, report);
             var verifiedScribeEmissions = scribeEmissionVerifier.Verify(plannedSnapshot, report);
             var derived = DigestionStatusEvaluator.Evaluate(
+                DigestionEvaluationScope.FullScan,
                 plannedDocument,
                 plannedSnapshot,
                 lean,
@@ -76,6 +77,7 @@ internal static partial class IngestCommand
             var finalSnapshot = Decode(finalRaw);
             var finalDocument = LoadDocument(finalSnapshot);
             var evaluation = DigestionStatusEvaluator.Evaluate(
+                DigestionEvaluationScope.FullScan,
                 finalDocument,
                 finalSnapshot,
                 lean,
@@ -83,7 +85,7 @@ internal static partial class IngestCommand
                 baselineDocument,
                 baselineSnapshot: baseline);
             RequireNoFindings(evaluation);
-            RequireValidBackfill(
+            var backfillObservations = DigestionBackfillValidation.RequireValidBackfill(
                 finalDocument,
                 finalSnapshot,
                 baseline,
@@ -127,6 +129,7 @@ internal static partial class IngestCommand
                     $"WARNING silent-zero-extraction source={warning.SourceId} "
                     + $"path={warning.SourcePath}\n"))
                 + crossVolumeClearanceGaps
+                + backfillObservations
                 + DigestStatusCommand.RenderText(evaluation)
                 // A coarse fallback registers the volume without atomising it, which is a
                 // legitimate outcome but not the one the caller asked for. The per-source
@@ -686,30 +689,6 @@ internal static partial class IngestCommand
         {
             throw new InvalidOperationException(
                 "digest status is invalid: " + string.Join("; ", evaluation.Findings));
-        }
-    }
-
-    private static void RequireValidBackfill(
-        BackfillInventoryDocument document,
-        RepositorySnapshot current,
-        RepositorySnapshot baseline,
-        ValidatedPolicy policy,
-        AcceptedLeanClosure lean,
-        VerifiedScribeEmissions verifiedScribeEmissions)
-    {
-        var findings = BackfillInventoryRule.EvaluateDocument(
-            new BackfillInventoryValidationContext(
-                current,
-                baseline,
-                policy,
-                lean,
-                verifiedScribeEmissions),
-            document);
-        if (findings.Length > 0)
-        {
-            throw new InvalidOperationException(
-                "SL-016 final ledger is invalid: "
-                + string.Join("; ", findings.Select(static finding => finding.Message)));
         }
     }
 

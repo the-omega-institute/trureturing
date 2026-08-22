@@ -80,100 +80,67 @@ public sealed class EmissionTests
     }
 
     [Fact]
-    public void EmitWritesCanonicalFilesAndCheckDetectsDriftWithoutOverwriting()
+    public void EmitWritesCanonicalFilesAndCheckIgnoresReaderSnapshotFreshness()
     {
         var root = Path.Combine(
             Path.GetTempPath(),
             "stratalint-scribe-" + Guid.NewGuid().ToString("N"));
         TemporaryFileSystem.Directory.CreateDirectory(root);
-        CopyProjectionFixtures(root);
 
         try
         {
+            var definition = SyntheticDefinition();
+            DocumentDefinition[] definitions = [definition];
+            WriteSyntheticScribeInputs(root, definition);
             var output = new StringWriter();
             var error = new StringWriter();
-            var report = LeanReportFixture.ForDocuments(
-                DocumentDefinitions.All.Select(static definition => definition.Document));
-            foreach (var definition in DocumentDefinitions.All)
-            {
-                var relativeSource = definition.RelativePath.Value[..^3] + ".scribe.cs";
-                var destination = Path.Combine(root, relativeSource);
-                TemporaryFileSystem.Directory.CreateDirectory(Path.GetDirectoryName(destination)!);
-                // Deterministic CI builds map [CallerFilePath] to the /_/ source root,
-                // so fixture copies must resolve through the runtime repository root.
-                RepositoryAccessor.Discover(RepositoryRootCriterion.GlobalJsonAndBlueprintInvalidOperation).CopyTo(
-                    RepositoryRelativePath.Create(relativeSource), destination);
-            }
-            CopyRepositoryLibrary(root);
+            var report = LeanReportFixture.ForDocuments([definition.Document]);
 
-            var emitExit = ScribeEmitter.Emit(root, check: false, output, error, report);
+            var emitExit = ScribeEmitter.Emit(
+                root, check: false, output, error, report, definitions);
 
             Assert.Equal(0, emitExit);
             Assert.Empty(error.ToString());
             Assert.True(TemporaryFileSystem.File.Exists(Path.Combine(
                 root,
                 ScribeEmitter.AttestationRelativePath)));
-            var firstEmission = new Dictionary<string, byte[]>(StringComparer.Ordinal);
+            var emissionPath = Path.Combine(root, definition.RelativePath.Value);
+            var firstEmission = TemporaryFileSystem.File.ReadAllBytes(emissionPath);
             var citations = LibraryNoteCatalog.Load(root).Citations;
-            var documents = DocumentDefinitions.All
-                .Select(static definition => definition.Document)
-                .ToArray();
+            ScribeDocument[] documents = [definition.Document];
             var census = ReceiptFreeDocumentCatalog.Load(root, documents);
             var graph = DocumentGraphAssembler.Assemble(
                 documents,
                 DeclarationCatalog.Create(report),
                 census.ReceiptFreeDocumentGids);
-            foreach (var definition in DocumentDefinitions.All)
-            {
-                var path = Path.Combine(root, definition.RelativePath.Value);
-                firstEmission.Add(definition.RelativePath.Value, TemporaryFileSystem.File.ReadAllBytes(path));
-                Assert.Equal(
-                    CanonicalMarkdownWriter.Write(
-                        definition.Document,
-                        DeclarationCatalog.Create(report),
-                        citations,
-                        graph).ToArray(),
-                    TemporaryFileSystem.File.ReadAllBytes(path));
-            }
+            Assert.Equal(
+                CanonicalMarkdownWriter.Write(
+                    definition.Document,
+                    DeclarationCatalog.Create(report),
+                    citations,
+                    graph).ToArray(),
+                firstEmission);
 
             output.GetStringBuilder().Clear();
-            var secondEmitExit = ScribeEmitter.Emit(root, check: false, output, error, report);
+            var secondEmitExit = ScribeEmitter.Emit(
+                root, check: false, output, error, report, definitions);
 
             Assert.Equal(0, secondEmitExit);
             Assert.Contains("emitted: 0 changed blueprint(s)", output.ToString(), StringComparison.Ordinal);
-            foreach (var definition in DocumentDefinitions.All)
-            {
-                Assert.Equal(
-                    firstEmission[definition.RelativePath.Value],
-                    TemporaryFileSystem.File.ReadAllBytes(Path.Combine(root, definition.RelativePath.Value)));
-            }
+            Assert.Equal(firstEmission, TemporaryFileSystem.File.ReadAllBytes(emissionPath));
 
-            TemporaryFileSystem.File.WriteAllText(
-                Path.Combine(root, "global.json"),
-                "{}\n",
-                new UTF8Encoding(false, true));
-            var nestedDirectory = Path.Combine(root, "tools", "StrataLint.Scribe");
-            TemporaryFileSystem.Directory.CreateDirectory(nestedDirectory);
-            var cliCheckExit = ScribeCli.Run(
-                ["emit", "--check"],
-                nestedDirectory,
-                output,
-                error,
-                report);
-            Assert.Equal(0, cliCheckExit);
+            output.GetStringBuilder().Clear();
+            TemporaryFileSystem.File.WriteAllText(emissionPath, "drift\n", new UTF8Encoding(false, true));
 
-            var driftedPath = Path.Combine(root, DocumentDefinitions.All[0].RelativePath.Value);
-            TemporaryFileSystem.File.WriteAllText(driftedPath, "drift\n", new UTF8Encoding(false, true));
+            var checkExit = ScribeEmitter.Emit(
+                root, check: true, output, error, report, definitions);
 
-            var checkExit = ScribeEmitter.Emit(root, check: true, output, error, report);
+            Assert.Equal(0, checkExit);
+            Assert.Contains("verified: 1 current blueprint render(s)", output.ToString(), StringComparison.Ordinal);
+            Assert.Equal("drift\n", TemporaryFileSystem.File.ReadAllText(emissionPath));
+            Assert.Empty(error.ToString());
 
-            Assert.Equal(1, checkExit);
-            Assert.Equal("drift\n", TemporaryFileSystem.File.ReadAllText(driftedPath));
-            Assert.Contains("out of date", error.ToString(), StringComparison.Ordinal);
-
-            TemporaryFileSystem.File.WriteAllBytes(
-                driftedPath,
-                firstEmission[DocumentDefinitions.All[0].RelativePath.Value]);
+            TemporaryFileSystem.File.WriteAllBytes(emissionPath, firstEmission);
             var attestationPath = Path.Combine(root, ScribeEmitter.AttestationRelativePath);
             TemporaryFileSystem.File.Delete(attestationPath);
             error.GetStringBuilder().Clear();
@@ -183,7 +150,8 @@ public sealed class EmissionTests
                 check: true,
                 TextWriter.Null,
                 error,
-                report);
+                report,
+                definitions);
 
             Assert.Equal(0, cleanCheckoutExit);
             Assert.Empty(error.ToString());
@@ -196,10 +164,11 @@ public sealed class EmissionTests
                 check: true,
                 TextWriter.Null,
                 error,
-                report);
+                report,
+                definitions);
 
-            Assert.Equal(1, attestationCheckExit);
-            Assert.Contains(ScribeEmitter.AttestationRelativePath, error.ToString(), StringComparison.Ordinal);
+            Assert.Equal(0, attestationCheckExit);
+            Assert.Empty(error.ToString());
         }
         finally
         {
@@ -307,7 +276,7 @@ public sealed class EmissionTests
                 out var verified));
             Assert.Equal(Sha256(originalEmission), verified.EmissionSha256);
             Assert.NotEqual(Sha256(forgedEmission), verified.EmissionSha256);
-            Assert.Contains("out of date", error.ToString(), StringComparison.Ordinal);
+            Assert.Empty(error.ToString());
         }
         finally
         {
@@ -447,7 +416,6 @@ public sealed class EmissionTests
             attestation = InjectCandidateOnlyAttestationEntry(attestation);
             TemporaryFileSystem.File.WriteAllText(attestationPath, attestation, new UTF8Encoding(false));
 
-            var targetPath = DocumentDefinitions.All[0].RelativePath.Value;
             var emitError = new StringWriter();
             var exit = ScribeEmitter.Emit(
                 root,
@@ -458,26 +426,15 @@ public sealed class EmissionTests
             var verifyError = new StringWriter();
             var verification = ScribeEmitter.Verify(root, verifyError, report);
 
-            Assert.Equal(1, exit);
+            Assert.Equal(0, exit);
             Assert.NotNull(verification);
             Assert.True(verification!.TryGet(
                 DocumentDefinitions.All[0].Document.Header.Gid.Value,
                 out var verified));
             Assert.Equal(Sha256(originalEmission), verified.EmissionSha256);
             Assert.NotEqual(Sha256(forgedEmission), verified.EmissionSha256);
-            foreach (var diagnostic in new[] { emitError.ToString(), verifyError.ToString() })
-            {
-                Assert.Contains(
-                    $"out of date: {targetPath}: reader snapshot differs from current renderer output",
-                    diagnostic,
-                    StringComparison.Ordinal);
-                Assert.Contains("run make emit", diagnostic, StringComparison.Ordinal);
-                Assert.Contains($"commit {targetPath}", diagnostic, StringComparison.Ordinal);
-                Assert.DoesNotContain(
-                    "reader snapshot missing",
-                    diagnostic,
-                    StringComparison.Ordinal);
-            }
+            Assert.Empty(emitError.ToString());
+            Assert.Empty(verifyError.ToString());
         }
         finally
         {
@@ -546,8 +503,8 @@ public sealed class EmissionTests
                 DocumentDefinitions.All.Select(static definition => definition.Document));
             PrepareEmittedRepository(root, report);
 
-            // A missing tracked .md remains reportable in check mode, but the producer has enough source
-            // to render and verify the document, so snapshot absence cannot void the current capability.
+            // A missing tracked .md is irrelevant to check mode: the producer has enough source
+            // to render and verify the document without consulting the reader snapshot.
             var target = DocumentDefinitions.All[0];
             var targetPath = target.RelativePath.Value;
             var canonicalEmission = TemporaryFileSystem.File.ReadAllBytes(Path.Combine(root, targetPath));
@@ -563,23 +520,12 @@ public sealed class EmissionTests
             var verifyError = new StringWriter();
             var verification = ScribeEmitter.Verify(root, verifyError, report);
 
-            Assert.Equal(1, exit);
+            Assert.Equal(0, exit);
             Assert.NotNull(verification);
             Assert.True(verification!.TryGet(target.Document.Header.Gid.Value, out var verified));
             Assert.Equal(Sha256(canonicalEmission), verified.EmissionSha256);
-            foreach (var diagnostic in new[] { emitError.ToString(), verifyError.ToString() })
-            {
-                Assert.Contains(
-                    $"out of date: {targetPath}: reader snapshot missing",
-                    diagnostic,
-                    StringComparison.Ordinal);
-                Assert.Contains("run make emit", diagnostic, StringComparison.Ordinal);
-                Assert.Contains($"commit {targetPath}", diagnostic, StringComparison.Ordinal);
-                Assert.DoesNotContain(
-                    "reader snapshot differs from current renderer output",
-                    diagnostic,
-                    StringComparison.Ordinal);
-            }
+            Assert.Empty(emitError.ToString());
+            Assert.Empty(verifyError.ToString());
         }
         finally
         {
@@ -606,6 +552,49 @@ public sealed class EmissionTests
 
     private static string Sha256(byte[] bytes) =>
         "sha256:" + Convert.ToHexStringLower(SHA256.HashData(bytes));
+
+    private static DocumentDefinition SyntheticDefinition()
+    {
+        var document = ScribeDocument.Create(
+            DefinitionDsl.Header(
+                "D5/S0/Synthetic/CheckMode",
+                "Synthetic check-mode fixture."),
+            DefinitionDsl.H("Synthetic check mode"),
+            DefinitionDsl.Blocks(
+                DefinitionDsl.Paragraph(DefinitionDsl.Text("Synthetic body."))));
+        return DocumentDefinition.Create(
+            document,
+            "Blueprint/D5/S0/Synthetic/CheckMode.scribe.cs");
+    }
+
+    private static void WriteSyntheticScribeInputs(
+        string root,
+        DocumentDefinition definition)
+    {
+        var definitionPath = Path.Combine(
+            root,
+            ScribeEmissionAttestation.DefinitionPath(definition.Document.Header.Gid.Value));
+        TemporaryFileSystem.Directory.CreateDirectory(Path.GetDirectoryName(definitionPath)!);
+        TemporaryFileSystem.File.WriteAllText(
+            definitionPath,
+            "// synthetic Scribe source\n",
+            new UTF8Encoding(false, true));
+
+        var sourceMetadata = Path.Combine(
+            root,
+            "Meta", "Digestion", "backfill", "synthetic-source", "source.toml");
+        TemporaryFileSystem.Directory.CreateDirectory(Path.GetDirectoryName(sourceMetadata)!);
+        TemporaryFileSystem.File.WriteAllText(
+            sourceMetadata,
+            """
+            source_id = "synthetic-source"
+            path = "docs/synthetic.md"
+            atomizer = "synthetic-v1"
+            genre_registry_check = "collected"
+            unregistered_genres = []
+            """ + "\n",
+            new UTF8Encoding(false, true));
+    }
 
     private static void PrepareEmittedRepository(string root, LeanAxiomReport report)
     {

@@ -6,12 +6,15 @@ namespace StrataLint.Engine;
 internal static partial class DigestionStatusEvaluator
 {
     internal static DigestionLedgerEvaluation EvaluateUncovered(
+        DigestionEvaluationScope scope,
         BackfillInventoryDocument document,
         RepositorySnapshot snapshot,
-        BackfillInventoryDocument? baselineDocument = null)
+        BackfillInventoryDocument? baselineDocument = null,
+        RawChangeSet? changes = null)
     {
         ArgumentNullException.ThrowIfNull(document);
         ArgumentNullException.ThrowIfNull(snapshot);
+        changes = DigestionEvaluationScopes.ResolveChanges(scope, changes);
         var entries = document.RequireDigestionEntries();
         var findings = ImmutableArray.CreateBuilder<string>();
         if (FindDuplicateAtomId(entries) is { } duplicateAtomId)
@@ -24,7 +27,9 @@ internal static partial class DigestionStatusEvaluator
             document,
             snapshot,
             baselineDocument,
-            DigestionAlignmentMode.Projection);
+            DigestionAlignmentMode.Projection,
+            casEvaluation: DigestionCasStore.Evaluate(document, snapshot, changes),
+            changes: changes);
         findings.AddRange(alignment.Findings);
         var emptyLeanReport = LeanAxiomReport.Create(
             new Dictionary<string, LeanFileReport>(StringComparer.Ordinal));
@@ -46,7 +51,9 @@ internal static partial class DigestionStatusEvaluator
                 emptyTruthNodes,
                 verifiedScribeEmissions: null,
                 genreChecks[entry.SourceId],
-                changes: null,
+                changes,
+                isBaseFactAffected: null,
+                projectedStatusChanges: changes,
                 findings))
             .ToArray();
         DeriveMigration(work);
@@ -55,10 +62,11 @@ internal static partial class DigestionStatusEvaluator
             snapshot,
             findings,
             validateProjectedStatus: true,
-            changes: null);
+            changes);
     }
 
     internal static DigestionLedgerEvaluation Evaluate(
+        DigestionEvaluationScope scope,
         BackfillInventoryDocument document,
         RepositorySnapshot snapshot,
         AcceptedLeanClosure lean,
@@ -67,11 +75,14 @@ internal static partial class DigestionStatusEvaluator
         bool validateProjectedStatus = true,
         RepositorySnapshot? baselineSnapshot = null,
         DigestionCasEvaluation? casEvaluation = null,
-        RawChangeSet? changes = null)
+        RawChangeSet? changes = null,
+        Func<string, bool>? isBaseFactAffected = null,
+        RawChangeSet? projectedStatusChanges = null)
     {
         ArgumentNullException.ThrowIfNull(document);
         ArgumentNullException.ThrowIfNull(snapshot);
         ArgumentNullException.ThrowIfNull(lean);
+        changes = DigestionEvaluationScopes.ResolveChanges(scope, changes);
         var entries = document.RequireDigestionEntries();
         var findings = ImmutableArray.CreateBuilder<string>();
         if (FindDuplicateAtomId(entries) is { } duplicateAtomId)
@@ -80,6 +91,18 @@ internal static partial class DigestionStatusEvaluator
             return new DigestionLedgerEvaluation([], findings.ToImmutable());
         }
 
+        if (casEvaluation is not null && !casEvaluation.Matches(changes))
+        {
+            throw new ArgumentException(
+                "CAS evaluation scope does not match the digestion evaluation scope.",
+                nameof(casEvaluation));
+        }
+
+        casEvaluation ??= DigestionCasStore.Evaluate(
+            document,
+            snapshot,
+            changes,
+            isBaseFactAffected);
         var alignment = DigestionLedgerAligner.Evaluate(
             document,
             snapshot,
@@ -123,6 +146,8 @@ internal static partial class DigestionStatusEvaluator
                 verifiedScribeEmissions,
                 genreChecks[entry.SourceId],
                 changes,
+                isBaseFactAffected,
+                projectedStatusChanges ?? changes,
                 findings);
         }).ToArray();
         DeriveMigration(work);
@@ -241,12 +266,22 @@ internal static partial class DigestionStatusEvaluator
         VerifiedScribeEmissions? verifiedScribeEmissions,
         GenreRegistryCheck genreRegistryCheck,
         RawChangeSet? changes,
+        Func<string, bool>? isBaseFactAffected,
+        RawChangeSet? projectedStatusChanges,
         ImmutableArray<string>.Builder findings)
     {
         var gaps = new List<DigestionGap>();
-        // A new entry has no baseline verdict to reuse, so it must be checked in full even
-        // if a malformed change set omits its ledger path.
+        // Boundary and Scribe retain their existing baseline-only full check. Coverage can
+        // trust a committed receipt outside a nonempty, authoritative git delta even when the
+        // query omitted --base; an empty delta retains the explicit whole-tree diagnostic.
         var verificationChanges = baselineMigration is null ? null : changes;
+        var canReuseCoverageWithoutBaseline = changes is not null
+            && changes.Paths.Any()
+            && !DigestionCasStore.EntryChanged(entry, changes);
+        var coverageVerificationChanges = baselineMigration is null
+            && canReuseCoverageWithoutBaseline
+                ? changes
+                : verificationChanges;
         var boundary = entry.Atomizer == AtomizerRegistry.NoAtomizerId
             && entry.Boundary is not null
                 ? VerifyBoundary(entry, snapshot, verificationChanges, gaps, findings)
@@ -281,7 +316,7 @@ internal static partial class DigestionStatusEvaluator
         var coverage = VerifyCoverageReceipts(
             entry,
             existingTargets,
-            verificationChanges,
+            coverageVerificationChanges,
             gaps,
             findings);
         var scribe = VerifyScribeReceipts(
@@ -311,7 +346,8 @@ internal static partial class DigestionStatusEvaluator
         // a fresh verdict; otherwise the baseline keeps this entry locally incomplete.
         var baselineKeepsLocalIncomplete = baselineMigration == DigestionMigrationState.Partial
             && changes is not null
-            && !DigestionCasStore.EntryChanged(entry, changes);
+            && !DigestionCasStore.EntryChanged(entry, changes)
+            && isBaseFactAffected?.Invoke(entry.SourcePath) != true;
         var localComplete = !baselineKeepsLocalIncomplete
             && boundary
             && existingTargets.Count == entry.CoverageGids.Distinct(StringComparer.Ordinal).Count()
@@ -330,24 +366,40 @@ internal static partial class DigestionStatusEvaluator
             targetStates,
             localComplete,
             hasProgress,
-            StatusAuthorityClosureChanged(entry, baselineMigration, changes));
+            StatusAuthorityClosureChanged(
+                entry,
+                baselineMigration,
+                projectedStatusChanges,
+                isBaseFactAffected));
     }
 
     private static bool StatusAuthorityClosureChanged(
         DigestionLedgerEntry entry,
         DigestionMigrationState? baselineMigration,
-        RawChangeSet? changes)
+        RawChangeSet? changes,
+        Func<string, bool>? isBaseFactAffected)
     {
-        if (baselineMigration is null || changes is null || DigestionCasStore.EntryChanged(entry, changes))
+        if (changes is null || DigestionCasStore.EntryChanged(entry, changes))
         {
             return true;
         }
 
-        if (PathChanged(changes, entry.SourcePath)
-            || PathChanged(changes, TheoryAtomizerDataLoader.DataPath)
+        // A changed-set caller without a baseline (theory-candidates) still has an explicit
+        // scope. Without a base-fact resolver, a missing historical migration marker alone does
+        // not make every entry affected. Production callers provide the resolver and continue
+        // through the full authority-closure check below.
+        if (baselineMigration is null && isBaseFactAffected is null)
+        {
+            return false;
+        }
+
+        bool Affected(string path) => isBaseFactAffected?.Invoke(path) ?? PathChanged(changes, path);
+
+        if (Affected(entry.SourcePath)
+            || Affected(TheoryAtomizerDataLoader.DataPath)
             || DigestionFingerprint.IsCanonicalSha256(entry.CasRef)
-                && PathChanged(changes, DigestionCasStore.RootPath + entry.CasRef["sha256:".Length..])
-            || entry.Receipts.TailAuthorization is { } tail && PathChanged(changes, tail.Path))
+                && Affected(DigestionCasStore.RootPath + entry.CasRef["sha256:".Length..])
+            || entry.Receipts.TailAuthorization is { } tail && Affected(tail.Path))
         {
             return true;
         }
@@ -360,9 +412,9 @@ internal static partial class DigestionStatusEvaluator
             }
 
             var documentGid = ScribeEmissionAttestation.DocumentGid(gidText);
-            if (PathChanged(changes, gid.Path.Value)
-                || PathChanged(changes, ScribeEmissionAttestation.DefinitionPath(documentGid))
-                || PathChanged(changes, ScribeEmissionAttestation.EmissionPath(documentGid)))
+            if (Affected(gid.Path.Value)
+                || Affected(ScribeEmissionAttestation.DefinitionPath(documentGid))
+                || Affected(ScribeEmissionAttestation.EmissionPath(documentGid)))
             {
                 return true;
             }

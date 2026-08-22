@@ -626,9 +626,7 @@ internal sealed class FakeRepositoryGateway(
     public RawChangeSet ReadChanges(string changeBase)
     {
         ReadChangesCalls.Add(changeBase);
-        return changesForBase?.Invoke(changeBase)
-            ?? throw new InvalidOperationException(
-                "ReadChanges(base) should not be called without a configured changesForBase");
+        return changesForBase?.Invoke(changeBase) ?? changes;
     }
 
     public TrustedFrozenGitReferences ValidateFrozenReferences(FrozenLedgerReferenceSet references)
@@ -662,6 +660,9 @@ internal sealed class FakeLeanReportSource(LeanAxiomReport? report) : ILeanRepor
 internal sealed class FakeScribeEmissionVerifier(VerifiedScribeEmissions? verification)
     : IScribeEmissionVerifier
 {
-    public VerifiedScribeEmissions Verify(RepositorySnapshot snapshot, LeanAxiomReport report) =>
+    public VerifiedScribeEmissions Verify(
+        RepositorySnapshot snapshot,
+        LeanAxiomReport report,
+        RawChangeSet? changes = null) =>
         verification ?? throw new InvalidOperationException("Scribe emission verification failed: synthetic");
 }

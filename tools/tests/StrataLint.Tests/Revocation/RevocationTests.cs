@@ -157,6 +157,36 @@ public sealed partial class RevocationTests
     }
 
     [Fact]
+    public void ProtectedBaseReceiptShapeIsTrustedWhileTypedEvidenceIsStillMaterialized()
+    {
+        var ledger = Genesis(BuildCatalog(Module("A")));
+        var receipt = WithoutFinalLf(RevocationReceiptWriter.Write(
+            ledger,
+            KernelFailure(Assert.Single(ledger.ActiveFrozenNodes))));
+        var text = Encoding.UTF8.GetString(receipt.AsSpan());
+        var oid = GitBlobOid(text);
+        var snapshot = Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(
+            RawRepositorySnapshot.Create(
+            [
+                new RawRepositoryEntry(
+                    "Evidence/D5/revocation-receipt.json",
+                    receipt,
+                    oid),
+            ]))).Snapshot;
+
+        var outcome = TrustedRevocationReceiptStore.Materialize(
+            ledger,
+            snapshot,
+            [oid]);
+
+        var store = Assert.IsType<RevocationReceiptStoreOutcome.Accepted>(outcome).Capability;
+        var evidence = Assert.IsType<RevocationEvidence.KernelWitnessFailure>(
+            Assert.Single(store.Evidence));
+        Assert.Equal(oid, evidence.ReceiptBlobOid);
+        Assert.Equal(Sha256(text), evidence.ReceiptSha256);
+    }
+
+    [Fact]
     public void CandidateReceiptWriteGateRejectsAnIncorrectLedgerBinding()
     {
         var catalog = BuildCatalog(Module("A"));
@@ -225,6 +255,68 @@ public sealed partial class RevocationTests
         Assert.Contains(evaluation.Diagnostics, diagnostic =>
             diagnostic.Path == path
             && diagnostic.Message.Contains("noncanonical", StringComparison.OrdinalIgnoreCase));
+    }
+
+    [Fact]
+    public void CandidateReceiptWriteGateRejectsShapeViolation()
+    {
+        var ledger = Genesis(BuildCatalog(Module("A")));
+        var fixture = ReceiptAdmissionFixture(ledger);
+        var receiptBaseline = ReceiptBaseline(fixture);
+        var receipt = WithoutFinalLf(RevocationReceiptWriter.Write(
+            receiptBaseline,
+            KernelFailure(Assert.Single(receiptBaseline.ActiveFrozenNodes))));
+        const string path = "Evidence/D5/S0/Carrier/Revocation.run.json";
+        fixture.Files[path] = Encoding.UTF8.GetString(receipt.AsSpan());
+
+        var evaluation = RuleCatalog.Default.EvaluateSingle(
+            RuleId.CreateKnown(19),
+            fixture.Build(RawChangeSet.Create([path])));
+
+        Assert.Contains(evaluation.Diagnostics, diagnostic =>
+            diagnostic.Path == path
+            && diagnostic.Message.Contains("revocation receipt write gate", StringComparison.OrdinalIgnoreCase)
+            && diagnostic.Message.Contains("LF-terminated", StringComparison.Ordinal));
+    }
+
+    [Fact]
+    public void CandidateReceiptParserRejectsShapeViolation()
+    {
+        var ledger = Genesis(BuildCatalog(Module("A")));
+        var receipt = WithoutFinalLf(RevocationReceiptWriter.Write(
+            ledger,
+            KernelFailure(Assert.Single(ledger.ActiveFrozenNodes))));
+
+        var exception = Assert.Throws<FormatException>(() =>
+            TrustedRevocationReceiptStore.ValidateCandidateReceipt(ledger, receipt));
+
+        Assert.Contains("LF-terminated", exception.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void ReceiptImplementationChangeRevalidatesStoredCandidateShape()
+    {
+        var ledger = Genesis(BuildCatalog(Module("A")));
+        var fixture = ReceiptAdmissionFixture(ledger);
+        var receiptBaseline = ReceiptBaseline(fixture);
+        var receipt = WithoutFinalLf(RevocationReceiptWriter.Write(
+            receiptBaseline,
+            KernelFailure(Assert.Single(receiptBaseline.ActiveFrozenNodes))));
+        const string path = "Evidence/D5/S0/Carrier/Revocation.run.json";
+        var text = Encoding.UTF8.GetString(receipt.AsSpan());
+        fixture.Files[path] = text;
+        fixture.Baseline[path] = text;
+        fixture.ForkPoint[path] = text;
+
+        var evaluation = RuleCatalog.Default.EvaluateSingle(
+            RuleId.CreateKnown(19),
+            fixture.Build(RawChangeSet.Create(
+                ["tools/StrataLint.Engine/Revocation/TrustedRevocationReceipts.cs"])));
+
+        Assert.Contains(evaluation.Diagnostics, diagnostic =>
+            diagnostic.Path == path
+            && diagnostic.Message.Contains("revocation receipt write gate", StringComparison.OrdinalIgnoreCase)
+            && diagnostic.Message.Contains("LF-terminated", StringComparison.Ordinal));
     }
 
     [Fact]
@@ -426,6 +518,9 @@ public sealed partial class RevocationTests
         var array = bytes.ToArray();
         return Assert.IsType<DagLedgerLoadOutcome.Loaded>(DagLedgerLoader.Load(array)).Syntax;
     }
+
+    private static ImmutableArray<byte> WithoutFinalLf(ImmutableArray<byte> bytes) =>
+        ImmutableArray.CreateRange(bytes.AsSpan()[..^1].ToArray());
 
     private static (ImmutableArray<RevocationEvidence> Evidence, TrustedRevocationReceiptStore Store) ReceiptStore(
         FrozenLedgerConsistent ledger,

@@ -1,5 +1,6 @@
 using System.Collections.Immutable;
 using System.Text;
+using System.Text.Json;
 using StrataLint.Cli;
 using StrataLint.Engine;
 
@@ -241,6 +242,83 @@ public sealed partial class ProductionEnvironmentTests
         Assert.DoesNotContain("scribe-emission-mismatch", status.Error, StringComparison.Ordinal);
     }
 
+    [Theory]
+    [InlineData("coverage-receipt-mismatch")]
+    [InlineData("scribe-definition-mismatch")]
+    [InlineData("scribe-emission-mismatch")]
+    public void DigestStatusRejectsEachReceiptIntegrityMismatchIndependently(string mismatchCode)
+    {
+        var inputs = DirectoryInputs(CoverWorld.Materialize(CoverWorld.StaleReceiptSpec()));
+        using var temporary = new TemporaryDirectory();
+        DirectoryLedgerTestSupport.Write(temporary.Path, inputs.Files);
+        var initialEnvironment = CoverWorld.Environment(temporary.Path, inputs, inputs.Files);
+
+        var aligned = initialEnvironment.AlignScribeReceipt(CoverWorld.AlignArgs(inputs));
+
+        Assert.True(aligned.Success, aligned.Error);
+        var alignedFiles = FilesWithLedgerFromRoot(inputs.Files, temporary.Path);
+        var verification = inputs.VerifiedEmissions
+            ?? throw new InvalidOperationException("cover fixture omitted Scribe verification");
+        if (mismatchCode == "coverage-receipt-mismatch")
+        {
+            var driftedDocument = MapOnlyEntry(
+                BackfillInventoryLoader.LoadRoot(temporary.Path),
+                entry => entry with
+                {
+                    Receipts = entry.Receipts with
+                    {
+                        Coverage = entry.Receipts.Coverage.Select(receipt => receipt with
+                        {
+                            TargetSha256 = "sha256:" + new string('c', 64),
+                        }).ToImmutableArray(),
+                    },
+                });
+            DirectoryLedgerTestSupport.ReplaceWithProjection(alignedFiles, driftedDocument);
+        }
+        else
+        {
+            var documentGid = inputs.Gid[..inputs.Gid.LastIndexOf('.')];
+            Assert.True(verification.TryGet(documentGid, out var record));
+            var changedContent = Encoding.UTF8.GetBytes($"independent {mismatchCode}\n");
+            var changedHash = DigestionFingerprint.Compute(changedContent).RawSha256;
+            if (mismatchCode == "scribe-definition-mismatch")
+            {
+                alignedFiles[record.DefinitionPath] = Encoding.UTF8.GetString(changedContent);
+                record = record with { DefinitionSha256 = changedHash };
+            }
+            else
+            {
+                alignedFiles[record.EmissionPath] = Encoding.UTF8.GetString(changedContent);
+                record = record with { EmissionSha256 = changedHash };
+            }
+
+            verification = VerifiedScribeEmissions.Create([record], [inputs.Gid]);
+        }
+
+        var environment = new ProductionCliEnvironment(
+            temporary.Path,
+            new FakeRepositoryGateway(
+                RawChangeSet.Create(Array.Empty<string>()),
+                CoverWorld.Raw(alignedFiles),
+                CoverWorld.Raw(inputs.Baseline)),
+            new FakeLeanReportSource(inputs.Report),
+            new FakeScribeEmissionVerifier(verification));
+
+        var result = environment.DigestStatus(Array.Empty<string>());
+
+        Assert.False(result.Success);
+        Assert.Contains(mismatchCode, result.Error, StringComparison.Ordinal);
+        foreach (var otherCode in new[]
+                 {
+                     "coverage-receipt-mismatch",
+                     "scribe-definition-mismatch",
+                     "scribe-emission-mismatch",
+                 }.Where(code => code != mismatchCode))
+        {
+            Assert.DoesNotContain(otherCode, result.Error, StringComparison.Ordinal);
+        }
+    }
+
     [Fact]
     public void AlignFailsClosedWhenTargetScribeMismatchRemainsAfterAlignment()
     {
@@ -386,24 +464,63 @@ public sealed partial class ProductionEnvironmentTests
     {
         string? materializedRoot = null;
         string? observed = null;
+        string? observedProjectionFixture = null;
         var verification = VerifiedScribeEmissions.Empty;
         var callback = new Func<string, LeanAxiomReport, VerifiedScribeEmissions>((root, _) =>
         {
             materializedRoot = root;
             observed = File.ReadAllText(Path.Combine(root, "captured", "probe.txt"), Encoding.UTF8);
+            observedProjectionFixture = File.ReadAllText(
+                Path.Combine(root, "Golden", "Projection", "statement-projection-pilot-v1.json"),
+                Encoding.UTF8);
             return verification;
         });
         var verifier = new ProductionScribeEmissionVerifier(callback);
+        var repositoryRoot = TestRepositoryLayout.FindRoot();
+        var fixtureFiles = new[]
+        {
+            "statement-projection-pilot-v1.json",
+            "statement-projection-expansion-v1.json",
+        }.Select(name =>
+        {
+            var path = $"Golden/Projection/{name}";
+            return (Path: path, Content: File.ReadAllText(
+                Path.Combine(repositoryRoot, path.Replace('/', Path.DirectorySeparatorChar)),
+                Encoding.UTF8));
+        }).ToArray();
+        var declarations = ImmutableArray.CreateBuilder<LeanDeclaration>();
+        foreach (var fixture in fixtureFiles)
+        {
+            using var document = JsonDocument.Parse(fixture.Content);
+            foreach (var declaration in document.RootElement
+                         .GetProperty("declarations")
+                         .EnumerateArray())
+            {
+                declarations.Add(new LeanDeclaration(
+                    declaration.GetProperty("name").GetString()!,
+                    declaration.GetProperty("kind").GetString()!,
+                    declaration.GetProperty("type").GetString()!,
+                    []));
+            }
+        }
+        var snapshotEntries = new List<RawRepositoryEntry>
+        {
+            RawRepositoryEntry.FromText("captured/probe.txt", "captured bytes\n"),
+        };
+        snapshotEntries.AddRange(fixtureFiles.Select(static fixture =>
+            RawRepositoryEntry.FromText(fixture.Path, fixture.Content)));
         var snapshot = Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(
-            RawRepositorySnapshot.Create([
-                RawRepositoryEntry.FromText("captured/probe.txt", "captured bytes\n"),
-            ]))).Snapshot;
+            RawRepositorySnapshot.Create(snapshotEntries))).Snapshot;
 
         var actual = verifier.Verify(snapshot, LeanAxiomReport.Create(
-            new Dictionary<string, LeanFileReport>()));
+            new Dictionary<string, LeanFileReport>
+            {
+                ["D5/ProjectionFixture.lean"] = new([], declarations.ToImmutable()),
+            }));
 
         Assert.Same(verification, actual);
         Assert.Equal("captured bytes\n", observed);
+        Assert.Equal(fixtureFiles[0].Content, observedProjectionFixture);
         Assert.NotNull(materializedRoot);
         Assert.False(Directory.Exists(materializedRoot));
     }

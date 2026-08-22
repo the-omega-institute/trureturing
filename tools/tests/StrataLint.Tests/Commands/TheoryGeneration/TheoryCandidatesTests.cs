@@ -70,6 +70,141 @@ public sealed class TheoryCandidatesTests
         """ + "\n";
 
     [Fact]
+    public void UnrelatedChangeDoesNotReplayCommittedProjectedStatus()
+    {
+        var result = RunCore(
+            CandidateFixtureWithMismatchedProjectedStatus(),
+            changes: RawChangeSet.Create(["notes/r16-unrelated.txt"]));
+
+        Assert.True(result.Success, result.Error);
+        using var json = JsonDocument.Parse(result.Output);
+        Assert.Contains(
+            json.RootElement.GetProperty("candidates").EnumerateArray(),
+            static candidate => candidate.GetProperty("candidate_id").GetString() == "atom/fixture-atom");
+    }
+
+    [Fact]
+    public void ChangedDigestionEntryStillValidatesProjectedStatus()
+    {
+        var fixture = CandidateFixtureWithMismatchedProjectedStatus();
+        const string changedPath =
+            "Meta/Digestion/backfill/fixture-source/absorbed-closed/fixture-atom.yaml";
+
+        var result = RunCore(fixture, changes: RawChangeSet.Create([changedPath]));
+
+        Assert.False(result.Success);
+        Assert.Contains("handwritten status", result.Error, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void DigestionImplementationChangeStillReplaysCommittedProjectedStatus()
+    {
+        var result = RunCore(
+            CandidateFixtureWithMismatchedProjectedStatus(),
+            changes: RawChangeSet.Create(
+            ["tools/StrataLint.Engine/Digestion/Evaluation/DigestionStatusEvaluator.cs"]));
+
+        Assert.False(result.Success);
+        Assert.Contains("handwritten status", result.Error, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void UnrelatedChangeDoesNotReplayCommittedCasIntegrity()
+    {
+        var fixture = CandidateFixture();
+        fixture.Files[RuleFixture.FixtureCasPath] = "tampered committed CAS bytes";
+
+        var result = RunCore(
+            fixture,
+            changes: RawChangeSet.Create(["notes/r17-unrelated-cas.txt"]));
+
+        Assert.True(result.Success, result.Error);
+        Assert.DoesNotContain("CAS blob hash mismatch", result.Error, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void ChangedCasStillValidatesCommittedCasIntegrity()
+    {
+        var fixture = CandidateFixture();
+        fixture.Files[RuleFixture.FixtureCasPath] = "tampered changed CAS bytes";
+
+        var result = RunCore(
+            fixture,
+            changes: RawChangeSet.Create([RuleFixture.FixtureCasPath]));
+
+        Assert.False(result.Success);
+        Assert.Contains("CAS blob hash mismatch", result.Error, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void DigestionImplementationChangeStillReplaysCommittedCasIntegrity()
+    {
+        var fixture = CandidateFixture();
+        fixture.Files[RuleFixture.FixtureCasPath] = "tampered committed CAS bytes";
+
+        var result = RunCore(
+            fixture,
+            changes: RawChangeSet.Create(
+            ["tools/StrataLint.Engine/Digestion/Evaluation/DigestionStatusEvaluator.cs"]));
+
+        Assert.False(result.Success);
+        Assert.Contains("CAS blob hash mismatch", result.Error, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void UnrelatedChangeDoesNotReplayCommittedSourceMetadataCanonicalEncoding()
+    {
+        var fixture = CandidateFixtureWithNoncanonicalSourceMetadata();
+
+        var result = RunCore(
+            fixture,
+            changes: RawChangeSet.Create(["notes/r17-unrelated-source-metadata.txt"]));
+
+        Assert.True(result.Success, result.Error);
+        Assert.DoesNotContain("source metadata is not canonically encoded", result.Error, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void ChangedSourceMetadataStillValidatesCanonicalEncoding()
+    {
+        var fixture = CandidateFixtureWithNoncanonicalSourceMetadata();
+
+        var result = RunCore(
+            fixture,
+            changes: RawChangeSet.Create([RuleFixture.FixtureBackfillSourcePath]));
+
+        Assert.False(result.Success);
+        Assert.Contains("source metadata is not canonically encoded", result.Error, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void ChangedSourceMetadataWriterInputStillValidatesCanonicalEncoding()
+    {
+        var fixture = CandidateFixtureWithNoncanonicalSourceMetadata();
+
+        var result = RunCore(
+            fixture,
+            changes: RawChangeSet.Create([RuleFixture.FixtureDigestionSourcePath]));
+
+        Assert.False(result.Success);
+        Assert.Contains("source metadata is not canonically encoded", result.Error, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void DigestionImplementationChangeStillReplaysSourceMetadataCanonicalEncoding()
+    {
+        var fixture = CandidateFixtureWithNoncanonicalSourceMetadata();
+
+        var result = RunCore(
+            fixture,
+            changes: RawChangeSet.Create(
+            ["tools/StrataLint.Engine/Rules/Backfill/BackfillInventoryWriter.cs"]));
+
+        Assert.False(result.Success);
+        Assert.Contains("source metadata is not canonically encoded", result.Error, StringComparison.Ordinal);
+    }
+
+    [Fact]
     public void EnumeratesOnlyMathematicalOpenFrontierAndDerivedResidualOpenAtoms()
     {
         var fixture = CandidateFixture();
@@ -518,7 +653,8 @@ public sealed class TheoryCandidatesTests
         RuleFixture fixture,
         IReadOnlyList<string>? arguments = null,
         bool reverseSnapshotEntries = false,
-        string repositoryRoot = "/repo")
+        string repositoryRoot = "/repo",
+        RawChangeSet? changes = null)
     {
         var entries = reverseSnapshotEntries
             ? fixture.Files.Reverse().Select(static pair => RawRepositoryEntry.FromText(pair.Key, pair.Value))
@@ -526,7 +662,7 @@ public sealed class TheoryCandidatesTests
         var environment = new ProductionCliEnvironment(
             repositoryRoot,
             new FakeRepositoryGateway(
-                RawChangeSet.Create([]),
+                changes ?? RawChangeSet.Create([]),
                 RawRepositorySnapshot.Create(entries),
                 null),
             new FakeLeanReportSource(LeanAxiomReport.Create(fixture.Reports)),
@@ -601,6 +737,24 @@ public sealed class TheoryCandidatesTests
         fixture.Reports[NonFrontierOpenPath] = new LeanFileReport(
             [],
             [new LeanDeclaration("unfinishedFact", "theorem", "True", ["sorryAx"])]);
+        return fixture;
+    }
+
+    private static RuleFixture CandidateFixtureWithMismatchedProjectedStatus()
+    {
+        const string mismatchedPath =
+            "Meta/Digestion/backfill/fixture-source/absorbed-closed/fixture-atom.yaml";
+        var fixture = CandidateFixture();
+        var atom = fixture.Files[ResidualAtomPath];
+        fixture.Files.Remove(ResidualAtomPath);
+        fixture.Files[mismatchedPath] = atom;
+        return fixture;
+    }
+
+    private static RuleFixture CandidateFixtureWithNoncanonicalSourceMetadata()
+    {
+        var fixture = CandidateFixture();
+        fixture.Files[RuleFixture.FixtureBackfillSourcePath] += "\n";
         return fixture;
     }
 

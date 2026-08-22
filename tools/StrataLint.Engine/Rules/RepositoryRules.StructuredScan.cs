@@ -22,6 +22,7 @@ internal static partial class RepositoryRules
         string location,
         IReadOnlySet<string> tasks,
         ImmutableArray<RuleFinding>.Builder findings,
+        bool scanAnomalies,
         bool scanStrings,
         bool enforceKeyOrder)
     {
@@ -35,7 +36,7 @@ internal static partial class RepositoryRules
                 return;
             }
 
-            var classification = ClassifyAnomaly(element);
+            var classification = scanAnomalies ? ClassifyAnomaly(element) : null;
             if (classification is "unknown")
             {
                 findings.Add(new RuleFinding(path, $"unknown anomaly-bearing schema at {location}"));
@@ -66,6 +67,7 @@ internal static partial class RepositoryRules
                     $"{location}.{property.Name}",
                     tasks,
                     findings,
+                    scanAnomalies,
                     scanStrings,
                     enforceKeyOrder);
             }
@@ -81,6 +83,7 @@ internal static partial class RepositoryRules
                     $"{location}[{index++}]",
                     tasks,
                     findings,
+                    scanAnomalies,
                     scanStrings,
                     enforceKeyOrder);
             }
@@ -171,6 +174,7 @@ internal static partial class RepositoryRules
                     location,
                     tasks,
                     findings,
+                    scanAnomalies: true,
                     scanStrings: true,
                     enforceKeyOrder: false);
             }
@@ -227,7 +231,9 @@ internal static partial class RepositoryRules
         string text,
         IReadOnlySet<string> tasks,
         ImmutableArray<RuleFinding>.Builder findings,
-        bool enforceKeyOrder)
+        bool scanAnomalies,
+        bool enforceKeyOrder,
+        bool reportParseErrors)
     {
         try
         {
@@ -239,12 +245,16 @@ internal static partial class RepositoryRules
                 "$",
                 tasks,
                 findings,
-                scanStrings: true,
+                scanAnomalies,
+                scanStrings: scanAnomalies,
                 enforceKeyOrder: enforceKeyOrder);
         }
         catch (FormatException exception)
         {
-            findings.Add(new RuleFinding(path, $"structured anomaly scan cannot parse YAML: {exception.Message}"));
+            if (reportParseErrors)
+            {
+                findings.Add(new RuleFinding(path, $"structured anomaly scan cannot parse YAML: {exception.Message}"));
+            }
         }
     }
 
@@ -252,7 +262,9 @@ internal static partial class RepositoryRules
         string path,
         string text,
         IReadOnlySet<string> tasks,
-        ImmutableArray<RuleFinding>.Builder findings)
+        ImmutableArray<RuleFinding>.Builder findings,
+        bool scanAnomalies,
+        bool reportParseErrors)
     {
         var matches = Regex.Matches(text, "(?s)<!-- STRATALINT-LEDGER\\n(?<body>.*?)\\n-->");
         var index = 0;
@@ -268,12 +280,16 @@ internal static partial class RepositoryRules
                     $"ledger block {index}:$",
                     tasks,
                     findings,
-                    scanStrings: true,
+                    scanAnomalies,
+                    scanStrings: scanAnomalies,
                     enforceKeyOrder: false);
             }
             catch (JsonException)
             {
-                findings.Add(new RuleFinding(path, $"invalid structured ledger block {index}"));
+                if (reportParseErrors)
+                {
+                    findings.Add(new RuleFinding(path, $"invalid structured ledger block {index}"));
+                }
             }
         }
     }

@@ -1,6 +1,6 @@
 ---
 name: codex-theorize
-description: Use when researching an open mathematical question with repository knowledge and producing an honest, machine-admissible theorem candidate in D5/X_Frontier.
+description: Use when researching a nontrivial open mathematical question with repository knowledge, toward kernel-certified resolution; produces the honest, machine-admissible theorem candidate in D5/X_Frontier that the prover campaign then attacks.
 ---
 
 # Codex Theory Generation Workflow
@@ -211,6 +211,37 @@ a declaration.
 Postcondition: the statement echo is clause-complete; the falsifier and triage
 class are explicit; and every proposed motivation GID has an active frozen
 anchor.
+
+### 2b. Non-triviality and resolution gate
+
+The campaign this run serves is judged by **resolution**: a kernel-certified
+proof or a kernel-certified refutation, frozen through the ordinary admission
+chain. The `D5/X_Frontier/` declaration this skill produces is a handoff to the
+prover lane, never the campaign deliverable; do not present collection alone as
+success anywhere.
+
+Three obligations, each with a receipt in the run-local log:
+
+- **Openness provenance.** The question must trace to a literature-sourced open
+  problem (a `Problems/` dossier or a Library note whose claim names the
+  question as open) or to a named derivation gap in repository theory. Record
+  the provenance reference. A question with neither ends `open` as not
+  resolution-worthy; restating a known or frozen result is selection failure,
+  not material for a candidate.
+- **Cheap-closure probe.** After the exact statement first elaborates (Step 5
+  build), attempt to close it in a run-local scratch file — never the tracked
+  module — with each of `decide`, `simp`, `omega`, and `norm_num` under a short
+  per-tactic timeout. Record every probe command, output, and exit code. If any
+  tactic closes the statement, the target is trivial: end `open` naming the
+  closing tactic. Strengthening or reselecting is a fresh run, never a Step 6
+  handshake.
+- **Attack plan.** The module's docstring must carry an `Attack plan` section
+  naming at least two candidate intermediate lemmas or proof techniques and an
+  honest difficulty assessment, written for the prover that inherits the
+  handoff. A bare `sorry` with no plan is an incomplete artifact.
+
+Postcondition: provenance reference recorded; probe receipts show every cheap
+tactic failing; the attack plan section exists and names its steps.
 
 ### 3. Search before generating
 
@@ -549,6 +580,10 @@ owner is the `prover` lane through `deliver-check`, never `deposit` or
 - Do not turn natural-language questions into vacuous predicates, definitional
   synonyms, renamed existing theorems, weaker statements, or hard-coded answer
   tables.
+- Do not retain a target whose exact statement closes under the Step 2b
+  cheap-closure probe, skip the probe, or run it against anything other than
+  the elaborated statement; do not present collection alone as campaign
+  success.
 - Do not use TASK numbers, theory numbers, filenames, or prose as semantic
   owners. Typed MISSION data and live machine output own routing.
 - Do not bypass, weaken, reimplement, or hand-normalize P1 selection, the P2

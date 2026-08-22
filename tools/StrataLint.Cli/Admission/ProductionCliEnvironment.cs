@@ -161,7 +161,8 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
             var verifiedScribeEmissions = VerifyScribeForAdmission(
                 scribeEmissionVerifier,
                 current,
-                candidateLeanReport);
+                candidateLeanReport,
+                prepared.Changes);
             var evaluation = SnapshotAdmissionCore.Evaluate(
                 current,
                 baseline,
@@ -518,14 +519,15 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
     internal static VerifiedScribeEmissions? VerifyScribeForAdmission(
         IScribeEmissionVerifier? verifier,
         RepositorySnapshot snapshot,
-        LeanAxiomReport report)
+        LeanAxiomReport report,
+        RawChangeSet? changes = null)
     {
         if (verifier is null)
         {
             return null;
         }
 
-        return verifier.Verify(snapshot, report);
+        return verifier.Verify(snapshot, report, changes);
     }
 
     public CommandResult RenderDag(IReadOnlyList<string> arguments) =>

@@ -8,7 +8,11 @@ public sealed class AddressesAndFormulasScopingTests
     private const string UnrelatedPath = "notes/unrelated.txt";
 
     [Fact]
-    public void Sl015DoesNotRevalidateMalformedFormulaOutsideCandidateDelta()
+    [BaseFactScopeProbe(
+        15,
+        typeof(RepositoryRules),
+        nameof(RepositoryRules.FormulaValidation))]
+    public void Sl015FormulaValidationDoesNotRevalidateMalformedFormulaOutsideCandidateDelta()
     {
         var fixture = new RuleFixture();
         SetOldSnapshotFile(fixture, FormulaPath, "{\"formula\":\"sqrt@5\",\"refs\":{}}\n");
@@ -18,6 +22,23 @@ public sealed class AddressesAndFormulasScopingTests
 
         Assert.Contains(RuleId.CreateKnown(15), completed.ExecutedRules);
         Assert.DoesNotContain(completed.Diagnostics, diagnostic => diagnostic.Path == FormulaPath);
+
+        var changed = new RuleFixture();
+        changed.Baseline[FormulaPath] = "{\"formula\":\"5\",\"refs\":{}}\n";
+        changed.ForkPoint[FormulaPath] = changed.Baseline[FormulaPath];
+        changed.Files[FormulaPath] = "{\"formula\":\"sqrt@5\",\"refs\":{}}\n";
+        Assert.Contains(Execute(changed, FormulaPath).Diagnostics, diagnostic =>
+            diagnostic.RuleId == RuleId.CreateKnown(15)
+            && diagnostic.Path == FormulaPath
+            && diagnostic.Message.Contains("illegal formula character", StringComparison.Ordinal));
+
+        var implementation = new RuleFixture();
+        SetOldSnapshotFile(implementation, FormulaPath, "{\"formula\":\"sqrt@5\",\"refs\":{}}\n");
+        Assert.Contains(
+            Execute(implementation, "tools/StrataLint.Engine/Rules/RepositoryRules.Formulas.cs").Diagnostics,
+            diagnostic => diagnostic.RuleId == RuleId.CreateKnown(15)
+                && diagnostic.Path == FormulaPath
+                && diagnostic.Message.Contains("illegal formula character", StringComparison.Ordinal));
     }
 
     [Fact]
@@ -37,7 +58,7 @@ public sealed class AddressesAndFormulasScopingTests
     }
 
     [Fact]
-    public void Sl015KeepsGlobalDuplicateGidQueryForUnrelatedCandidateDelta()
+    public void Sl015SuppressesHistoricalDuplicateGidForUnrelatedCandidateDelta()
     {
         var fixture = new RuleFixture();
         SetOldSnapshotFile(fixture, RuleFixture.BlueprintPath, fixture.Files[RuleFixture.RingPath]);
@@ -45,13 +66,13 @@ public sealed class AddressesAndFormulasScopingTests
 
         var completed = Execute(fixture, UnrelatedPath);
 
-        Assert.Contains(completed.Diagnostics, diagnostic =>
+        Assert.DoesNotContain(completed.Diagnostics, diagnostic =>
             diagnostic.RuleId == RuleId.CreateKnown(15)
             && diagnostic.Message.Contains("duplicate GID", StringComparison.Ordinal));
     }
 
     [Fact]
-    public void Sl015KeepsGlobalEvidenceSelectorQueryForUnrelatedCandidateDelta()
+    public void Sl015SuppressesHistoricalEvidenceSelectorCollisionForUnrelatedCandidateDelta()
     {
         const string jsonPath = "Evidence/D5/S0/Carrier/Probe.result.json";
         const string yamlPath = "Evidence/D5/S0/Carrier/Probe.result.yaml";
@@ -62,13 +83,11 @@ public sealed class AddressesAndFormulasScopingTests
 
         var completed = Execute(fixture, UnrelatedPath);
 
-        Assert.Equal(
-            2,
-            completed.Diagnostics.Count(diagnostic =>
-                diagnostic.RuleId == RuleId.CreateKnown(15)
-                && diagnostic.Message.Contains(
-                    "evidence selector has multiple artifact kinds",
-                    StringComparison.Ordinal)));
+        Assert.DoesNotContain(completed.Diagnostics, diagnostic =>
+            diagnostic.RuleId == RuleId.CreateKnown(15)
+            && diagnostic.Message.Contains(
+                "evidence selector has multiple artifact kinds",
+                StringComparison.Ordinal));
     }
 
     private static CompletedRuleSet Execute(RuleFixture fixture, string changedPath) =>

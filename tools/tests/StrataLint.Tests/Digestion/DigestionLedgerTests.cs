@@ -20,6 +20,7 @@ public sealed partial class DigestionLedgerTests
         var snapshot = Snapshot((captured.RelativePath, captured.Bytes.ToArray()));
 
         var status = Assert.Single(DigestionStatusEvaluator.Evaluate(
+            DigestionEvaluationScope.FullScan,
             document,
             snapshot,
             AcceptedLean(Array.Empty<string>()),
@@ -50,6 +51,7 @@ public sealed partial class DigestionLedgerTests
         var snapshot = Snapshot((captured.RelativePath, captured.Bytes.ToArray()));
 
         var status = Assert.Single(DigestionStatusEvaluator.Evaluate(
+            DigestionEvaluationScope.FullScan,
             document,
             snapshot,
             AcceptedLean(Array.Empty<string>()),
@@ -187,6 +189,7 @@ public sealed partial class DigestionLedgerTests
         ]);
 
         var status = Assert.Single(DigestionStatusEvaluator.Evaluate(
+            DigestionEvaluationScope.FullScan,
             document,
             Snapshot(("docs/source.md", sourceBytes), CasFile(atom)),
             AcceptedLean(Array.Empty<string>()),
@@ -266,6 +269,7 @@ public sealed partial class DigestionLedgerTests
             SnapshotDecoder.Decode(rawSnapshot)).Snapshot;
 
         var evaluation = DigestionStatusEvaluator.Evaluate(
+            DigestionEvaluationScope.FullScan,
             chained,
             snapshot,
             AcceptedLean(targetPath),
@@ -341,6 +345,7 @@ public sealed partial class DigestionLedgerTests
             DigestionTruthState.Closed);
 
         var evaluation = DigestionStatusEvaluator.Evaluate(
+            DigestionEvaluationScope.FullScan,
             ledger,
             snapshot,
             lean);
@@ -366,6 +371,7 @@ public sealed partial class DigestionLedgerTests
             includeCoverageGid: false);
 
         var status = Assert.Single(DigestionStatusEvaluator.Evaluate(
+            DigestionEvaluationScope.FullScan,
             ledger,
             Snapshot(("docs/source.md", source), CasFile(atom)),
             AcceptedLean(Array.Empty<string>())).Entries);
@@ -421,6 +427,7 @@ public sealed partial class DigestionLedgerTests
             (record.EmissionPath, emission));
 
         var status = Assert.Single(DigestionStatusEvaluator.Evaluate(
+            DigestionEvaluationScope.FullScan,
             document,
             snapshot,
             AcceptedLean(targetPath),
@@ -443,6 +450,7 @@ public sealed partial class DigestionLedgerTests
         var document = StructuralLedger(atom);
 
         var status = Assert.Single(DigestionStatusEvaluator.Evaluate(
+            DigestionEvaluationScope.FullScan,
             document,
             Snapshot(("docs/source.md", source), CasFile(atom)),
             AcceptedLean(Array.Empty<string>()),
@@ -464,6 +472,7 @@ public sealed partial class DigestionLedgerTests
         var document = StructuralLedger(atom);
 
         var status = Assert.Single(DigestionStatusEvaluator.Evaluate(
+            DigestionEvaluationScope.FullScan,
             document,
             Snapshot(("docs/source.md", currentBytes), CasFile(atom)),
             AcceptedLean(Array.Empty<string>()),
@@ -518,6 +527,7 @@ public sealed partial class DigestionLedgerTests
         var snapshot = Snapshot([.. snapshotFiles]);
 
         return Assert.Single(DigestionStatusEvaluator.Evaluate(
+            DigestionEvaluationScope.FullScan,
             ledger,
             snapshot,
             AcceptedLean(targetPath),
@@ -583,6 +593,9 @@ public sealed partial class DigestionLedgerTests
                 emissionHash),
         ]);
         return Assert.Single(DigestionStatusEvaluator.Evaluate(
+            changes is null
+                ? DigestionEvaluationScope.FullScan
+                : DigestionEvaluationScope.ChangedSet,
             ledger,
             snapshot,
             AcceptedLean((targetPath, report)),

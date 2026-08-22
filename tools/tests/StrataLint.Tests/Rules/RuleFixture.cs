@@ -257,12 +257,20 @@ internal sealed partial class RuleFixture
             case "sorry": SetRingDeclaration("unfinished", "theorem", "sorryAx"); break;
             case "file-capacity": Files[RingPath] += string.Concat(Enumerable.Repeat("-- pad\n", 801)); break;
             case "mirror": Files.Remove(BlueprintPath); break;
-            case "chronicle": RewriteChronicle(); break;
+            case "chronicle":
+                RewriteChronicle();
+                Changes.Clear();
+                Changes.Add("Chronicle/2026/07/10-old.md");
+                break;
             case "badge": Files[BlueprintPath] = "status: proven\n"; break;
             case "heart": ChangeHeartSignature(); break;
             case "generality": AddInstanceImport(); break;
             case "domain": AddUnknownDomain(); break;
-            case "header": Files[RingPath] = "def noHeader : Nat := 0\n"; break;
+            case "header":
+                Files[RingPath] = "def noHeader : Nat := 0\n";
+                Changes.Clear();
+                Changes.Add(RingPath);
+                break;
             case "formula": AddIllegalFormula(); break;
             case "backfill": Files[FixtureBackfillSourcePath] = Files[FixtureBackfillSourcePath].Replace("source_id = \"fixture-source\"", "source_id = [\"fixture-source\"]", StringComparison.Ordinal); break;
             case "query": Files["Library/queries.yaml"] = "schema_version: 1\nqueries:\n  - id: D5-Q0099\n    target_gid: D5/S0/Carrier/Ring\n"; break;
@@ -288,6 +296,24 @@ internal sealed partial class RuleFixture
             default: throw new ArgumentOutOfRangeException(nameof(mutation));
         }
     }
+
+    internal static string ChangedPathForMutation(string mutation) => mutation switch
+    {
+        "upward-import" or "sorry" or "file-capacity" or "generality" or "header" or "axiom" => RingPath,
+        "mirror" or "badge" => BlueprintPath,
+        "chronicle" => "Chronicle/2026/07/10-old.md",
+        "heart" => HeartsPath,
+        "domain" => "D5/S0/Unknown/Bad.lean",
+        "formula" => "Evidence/D5/S0/Carrier/Formula.check.json",
+        "backfill" => FixtureBackfillSourcePath,
+        "query" => "Library/queries.yaml",
+        "values" => "Evidence/D5/values.result.json",
+        "anomaly" => "Evidence/D5/S0/Carrier/Result.run.json",
+        "future" => "D8/S0/Carrier/Ring.lean",
+        "blueprint-skeleton" or "legacy-scribe" => BlueprintSourcePath,
+        "delivery-statement-identity" => "D5/X_Frontier/PrimeNormIrreducibility.lean",
+        _ => throw new ArgumentOutOfRangeException(nameof(mutation)),
+    };
 
     internal RuleEvaluationContext Build(
         ValidatedPolicy? suppliedPolicy = null,
