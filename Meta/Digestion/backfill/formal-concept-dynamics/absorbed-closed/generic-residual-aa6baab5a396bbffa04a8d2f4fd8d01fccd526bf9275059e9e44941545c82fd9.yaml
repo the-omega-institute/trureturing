@@ -1,0 +1,17 @@
+ast_path: 定理/158.1
+fingerprints:
+  raw_sha256: sha256:aa6baab5a396bbffa04a8d2f4fd8d01fccd526bf9275059e9e44941545c82fd9
+  normalized_sha256: sha256:aa6baab5a396bbffa04a8d2f4fd8d01fccd526bf9275059e9e44941545c82fd9
+cas_ref: sha256:aa6baab5a396bbffa04a8d2f4fd8d01fccd526bf9275059e9e44941545c82fd9
+coverage_gids:
+  - D5/S3/ObserverMemory/FiniteCountermodels/ObservationalVsCounterfactualFairness.observational_fairness_does_not_imply_counterfactual_fairness
+receipts:
+  coverage:
+    - gid: D5/S3/ObserverMemory/FiniteCountermodels/ObservationalVsCounterfactualFairness.observational_fairness_does_not_imply_counterfactual_fairness
+      source_sha256: sha256:aa6baab5a396bbffa04a8d2f4fd8d01fccd526bf9275059e9e44941545c82fd9
+      target_sha256: sha256:292a85ae0848563adb8e62707558f07690a78dfd052486a77dd448f7e9040cdc
+  scribe:
+    - gid: D5/S3/ObserverMemory/FiniteCountermodels/ObservationalVsCounterfactualFairness.observational_fairness_does_not_imply_counterfactual_fairness
+      definition_sha256: sha256:d1537a2e01ad89f24571ea5b6b7e16eb804287fcc206689d8d93e747d991320a
+      emission_sha256: sha256:57a939ad10cd98507877af75eba2d421bd3bacc2aa5de2aef1e79728f62c75fc
+  unresolved_subitems: []

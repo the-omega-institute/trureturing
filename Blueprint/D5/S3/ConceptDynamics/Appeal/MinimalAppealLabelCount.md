@@ -23,4 +23,3 @@ Conversely, any exact label with m possible values is injective on one represent
 ## References
 
 - Truth anchor: `D5/S3/ConceptDynamics/Appeal/MinimalAppealLabelCount.minimal_appeal_label_count`
-- Dependency: [D5/S3/ConceptDynamics/Coding/FiberBinaryIdentification](../Coding/FiberBinaryIdentification.md)

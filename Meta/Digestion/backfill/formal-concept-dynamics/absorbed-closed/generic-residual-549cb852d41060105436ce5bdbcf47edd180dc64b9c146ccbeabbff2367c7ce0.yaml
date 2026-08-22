@@ -1,0 +1,17 @@
+ast_path: 定理/6.1
+fingerprints:
+  raw_sha256: sha256:549cb852d41060105436ce5bdbcf47edd180dc64b9c146ccbeabbff2367c7ce0
+  normalized_sha256: sha256:549cb852d41060105436ce5bdbcf47edd180dc64b9c146ccbeabbff2367c7ce0
+cas_ref: sha256:549cb852d41060105436ce5bdbcf47edd180dc64b9c146ccbeabbff2367c7ce0
+coverage_gids:
+  - D5/S3/ConceptDynamics/ConceptFiberDecomposition.concept_fiber_decomposition
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/ConceptFiberDecomposition.concept_fiber_decomposition
+      source_sha256: sha256:549cb852d41060105436ce5bdbcf47edd180dc64b9c146ccbeabbff2367c7ce0
+      target_sha256: sha256:fae16f27f293bded585a0a1b6cad2b8ac6b96c203d5a837158d7e5c863ef5b7f
+  scribe:
+    - gid: D5/S3/ConceptDynamics/ConceptFiberDecomposition.concept_fiber_decomposition
+      definition_sha256: sha256:4133e79ea1123561c62562f3a8669f6d586ffdaba8bda1a160e2c853a5860d50
+      emission_sha256: sha256:6696172bee44626d184dfc7efad1eeb8cbf6b95941c87a09c07d385770c4d472
+  unresolved_subitems: []
