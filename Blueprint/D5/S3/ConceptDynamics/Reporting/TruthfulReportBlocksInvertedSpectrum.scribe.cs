@@ -39,7 +39,7 @@ internal sealed class TruthfulReportBlocksInvertedSpectrumDocument
                 DeclarationHandle.Create(
                     DeclarationPrefix + "inverted_spectrum_requires_premise_failure"),
                 H("An inverted pair forces premise failure"),
-                StatementSource.FromAuthor(InvertedSpectrumFormula()),
+                StatementSource.FromLean(),
                 AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
@@ -97,42 +97,5 @@ internal sealed class TruthfulReportBlocksInvertedSpectrumDocument
             ImpliesFormula(
                 Call("TruthfulPublicReport", phenomenal, publicReadout),
                 ImpliesFormula(samePublicValue, samePhenomenalValue))));
-    }
-
-    private static Formula InvertedSpectrumFormula()
-    {
-        Formula stateType = F.Id("State");
-        Formula phenomenalType = F.Id("Phenomenal");
-        Formula publicType = F.Id("Public");
-        Formula phenomenal = F.Id("p");
-        Formula publicReadout = F.Id("q");
-        Formula left = F.Id("x");
-        Formula right = F.Id("y");
-        Formula fiberConstancy = new Formula.BindMany(
-            FormulaQuantifier.ForAll,
-            [
-                Bound("a", stateType),
-                Bound("b", stateType),
-            ],
-            ImpliesFormula(
-                Equal(Apply(publicReadout, F.Id("a")), Apply(publicReadout, F.Id("b"))),
-                Equal(Apply(phenomenal, F.Id("a")), Apply(phenomenal, F.Id("b")))));
-
-        return Disp(new Formula.BindMany(
-            FormulaQuantifier.ForAll,
-            [
-                Bound("State", TypeUniverse()),
-                Bound("Phenomenal", TypeUniverse()),
-                Bound("Public", TypeUniverse()),
-                Bound("p", Arrow(stateType, phenomenalType)),
-                Bound("q", Arrow(stateType, publicType)),
-                Bound("x", stateType),
-                Bound("y", stateType),
-            ],
-            ImpliesFormula(
-                NotEqual(Apply(phenomenal, left), Apply(phenomenal, right)),
-                ImpliesFormula(
-                    Equal(Apply(publicReadout, left), Apply(publicReadout, right)),
-                    new Formula.Not(fiberConstancy)))));
     }
 }
