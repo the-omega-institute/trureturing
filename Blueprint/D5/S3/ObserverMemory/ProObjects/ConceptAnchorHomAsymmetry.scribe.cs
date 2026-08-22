@@ -39,36 +39,48 @@ internal sealed class ConceptAnchorHomAsymmetryDocument : IScribeDocumentDefinit
         Seq(Operatorname, Grp(F.Id("Hom")), Underscore, Grp(category),
             Open, source, Comma, Sp, target, Close);
 
-    private static Formula IndexedOperator(string name, Formula index, Formula body) =>
-        Seq(Operatorname, Grp(F.Id(name)), Underscore, Grp(index), Sp, body);
-
     private static Formula TheoremFormula()
     {
         Formula category = F.Id("C");
         Formula index = F.Id("J");
-        Formula stage = F.Id("j");
         Formula stages = F.Id("X");
         Formula source = F.Id("A");
         Formula target = F.Id("D");
+        Formula morphism = F.Id("f");
         Formula oppositeIndex = Seq(index, Caret, Grp(F.Id("op")));
-        Formula proCategory = Seq(Operatorname, Grp(F.Id("Pro")), Open, category, Close);
-        Formula constantSource = Seq(F.Id("c"), Open, source, Close);
-        Formula constantTarget = Seq(F.Id("c"), Open, target, Close);
-        Formula stageObject = new Formula.Subscript(stages, stage);
+        Formula proCategory = Seq(
+            Operatorname, Grp(F.Id("ProObjectCategory")), Open, category, Close);
+        Formula presented = Seq(
+            Operatorname, Grp(F.Id("presentedObject")), Open, stages, Close);
+        Formula constantSource = Seq(
+            Operatorname, Grp(F.Id("constantObject")), Open, source, Close);
+        Formula constantTarget = Seq(
+            Operatorname, Grp(F.Id("constantObject")), Open, target, Close);
 
-        Formula outgoing = Seq(
-            Hom(proCategory, stages, constantTarget), Sp, Equiv, Sp,
-            IndexedOperator("colim", stage,
-                Hom(category, stageObject, target)));
-        Formula incoming = Seq(
-            Hom(proCategory, constantSource, stages), Sp, Equiv, Sp,
-            IndexedOperator("lim", stage,
-                Hom(category, source, stageObject)));
+        Formula outgoingMap = Seq(
+            Open, morphism, Colon, Sp,
+            Hom(proCategory, presented, constantTarget), Sp, Mapsto, Sp,
+            Operatorname, Grp(F.Id("presentedToConstantEquiv")),
+            Open, stages, Comma, Sp, target, Close, Open, morphism, Close, Close);
+        Formula incomingMap = Seq(
+            Open, morphism, Colon, Sp,
+            Hom(proCategory, constantSource, presented), Sp, Mapsto, Sp,
+            Operatorname, Grp(F.Id("constantToPresentedEquiv")),
+            Open, source, Comma, Sp, stages, Close, Open, morphism, Close, Close);
 
         return Disp(Seq(
-            Forall, Sp, category, Comma, Sp, index, Comma, Sp,
+            Forall, Sp, category, Comma, Sp, index, Colon, Sp,
+            Operatorname, Grp(F.Id("Type")), Comma, Esc,
+            OpenBracket, Operatorname, Grp(F.Id("Category")),
+            Open, category, Close, CloseBracket, Comma, Esc,
+            OpenBracket, Operatorname, Grp(F.Id("SmallCategory")),
+            Open, index, Close, CloseBracket, Comma, Esc,
+            OpenBracket, Operatorname, Grp(F.Id("IsFiltered")),
+            Open, index, Close, CloseBracket, Comma, Esc,
             stages, Colon, Sp, oppositeIndex, Sp, To, Sp, category, Comma, Sp,
             source, Comma, Sp, target, Colon, Sp, category, Comma, Sp,
-            outgoing, Sp, Land, Sp, incoming, Dot));
+            Operatorname, Grp(F.Id("Bijective")), Open, outgoingMap, Close,
+            Sp, Land, Sp,
+            Operatorname, Grp(F.Id("Bijective")), Open, incomingMap, Close, Dot));
     }
 }
