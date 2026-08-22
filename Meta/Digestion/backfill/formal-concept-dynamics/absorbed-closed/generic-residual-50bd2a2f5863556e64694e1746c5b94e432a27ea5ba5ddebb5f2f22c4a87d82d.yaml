@@ -1,0 +1,17 @@
+ast_path: 定理/403.1
+fingerprints:
+  raw_sha256: sha256:50bd2a2f5863556e64694e1746c5b94e432a27ea5ba5ddebb5f2f22c4a87d82d
+  normalized_sha256: sha256:50bd2a2f5863556e64694e1746c5b94e432a27ea5ba5ddebb5f2f22c4a87d82d
+cas_ref: sha256:50bd2a2f5863556e64694e1746c5b94e432a27ea5ba5ddebb5f2f22c4a87d82d
+coverage_gids:
+  - D5/S3/ConceptDynamics/InstitutionalCapture/PublicUnlinkabilityAccountabilityIncompatibility.public_unlinkability_accountability_incompatible
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/InstitutionalCapture/PublicUnlinkabilityAccountabilityIncompatibility.public_unlinkability_accountability_incompatible
+      source_sha256: sha256:50bd2a2f5863556e64694e1746c5b94e432a27ea5ba5ddebb5f2f22c4a87d82d
+      target_sha256: sha256:d8dd148d19e5eb22957799c5fadfeff2485c4cc86aad98d66c594204dc8ee8ce
+  scribe:
+    - gid: D5/S3/ConceptDynamics/InstitutionalCapture/PublicUnlinkabilityAccountabilityIncompatibility.public_unlinkability_accountability_incompatible
+      definition_sha256: sha256:98bf2eae5dfe3740e3f8e0a49ee08dde5a5353e1e86a298a46d127505c08d573
+      emission_sha256: sha256:46b6db9a34ec5080c6d95d15f242d6221dd2a402897a7987b20a190ca710161e
+  unresolved_subitems: []

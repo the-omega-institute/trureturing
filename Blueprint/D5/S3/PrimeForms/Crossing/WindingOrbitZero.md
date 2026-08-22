@@ -40,4 +40,3 @@ Repository search found and reused the exact one-step Rademacher phase laws in E
 
 - Truth anchor: `D5/S3/PrimeForms/Crossing/WindingOrbitZero.crossingSandwich`
 - Truth anchor: `D5/S3/PrimeForms/Crossing/WindingOrbitZero.sandwich_orbit_has_unique_winding_zero`
-- Dependency: [D5/S3/PrimeForms/Crossing/ExactPropagation](ExactPropagation.md)

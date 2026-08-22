@@ -23,4 +23,3 @@ The assigned-source range itself captures every branch, so admissible finite cap
 ## References
 
 - Truth anchor: `D5/S3/ConceptDynamics/InstitutionalCapture/IndependentSourceCaptureLowerBound.independent_source_capture_lower_bound`
-- Dependency: [D5/S3/ConceptDynamics/InstitutionalCapture/CommonSourceCaptureCollapse](CommonSourceCaptureCollapse.md)

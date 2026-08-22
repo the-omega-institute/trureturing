@@ -1,0 +1,17 @@
+ast_path: theorem/2.3
+fingerprints:
+  raw_sha256: sha256:af99ceb28deef2731809442e66334f866649e1d6510f977290f9b1ee40db18de
+  normalized_sha256: sha256:af99ceb28deef2731809442e66334f866649e1d6510f977290f9b1ee40db18de
+cas_ref: sha256:af99ceb28deef2731809442e66334f866649e1d6510f977290f9b1ee40db18de
+coverage_gids:
+  - D5/S3/Factorization/BasicDiscriminantMinimum.basic_discriminant_minimum
+receipts:
+  coverage:
+    - gid: D5/S3/Factorization/BasicDiscriminantMinimum.basic_discriminant_minimum
+      source_sha256: sha256:af99ceb28deef2731809442e66334f866649e1d6510f977290f9b1ee40db18de
+      target_sha256: sha256:101d58bcfc56bda7263f5002cc9b37888916bbdfead8fc36894330f68781fae6
+  scribe:
+    - gid: D5/S3/Factorization/BasicDiscriminantMinimum.basic_discriminant_minimum
+      definition_sha256: sha256:c643c49201afe10fe67acbd6b932f3a05fe912c885f428831e22aa836557aee4
+      emission_sha256: sha256:9ec9fd0c22e469e88c172b6d14e43c6316a9cca157f1cca602c11d3955557b1d
+  unresolved_subitems: []
