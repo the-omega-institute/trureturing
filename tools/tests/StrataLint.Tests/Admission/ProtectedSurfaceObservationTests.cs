@@ -26,7 +26,7 @@ public sealed class ProtectedSurfaceObservationTests
     }
 
     [Fact]
-    public void ProtectedSurfaceChangeRendersDeferredThenObservedLikeAdmitted()
+    public void ProtectedSurfaceChangeRendersSl022ThenDeferredThenObservedLikeAdmitted()
     {
         var protectedChange = Assert.IsType<AdmissionOutcome.ProtectedSurfaceChange>(
             DecideProtectedSurfaceChange());
@@ -44,6 +44,14 @@ public sealed class ProtectedSurfaceObservationTests
         Assert.Equal(admittedDispositions, protectedDispositions);
         Assert.StartsWith("DEFERRED ", protectedDispositions[0], StringComparison.Ordinal);
         Assert.StartsWith("OBSERVED ", protectedDispositions[^1], StringComparison.Ordinal);
+        var sl022Offset = protectedRendering.Output.IndexOf("SL-022", StringComparison.Ordinal);
+        var deferredOffset = protectedRendering.Output.IndexOf("DEFERRED ", StringComparison.Ordinal);
+        var observedOffset = protectedRendering.Output.IndexOf("OBSERVED SL-028", StringComparison.Ordinal);
+        Assert.True(
+            sl022Offset >= 0
+            && sl022Offset < deferredOffset
+            && deferredOffset < observedOffset,
+            $"Expected SL-022 -> DEFERRED -> OBSERVED, got:{Environment.NewLine}{protectedRendering.Output}");
     }
 
     [Fact]
