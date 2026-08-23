@@ -117,6 +117,20 @@ public sealed class ProtectedSurfaceObservationTests
                     AdmissionEffect.Observe,
                     "alpha/path.md",
                     "path pair message"),
+                new Diagnostic(
+                    RuleId.CreateKnown(3),
+                    "path pair",
+                    DisplaySeverity.Warning,
+                    AdmissionEffect.Observe,
+                    "Alpha/path.md",
+                    "path pair message"),
+                new Diagnostic(
+                    RuleId.CreateKnown(3),
+                    "message pair",
+                    DisplaySeverity.Warning,
+                    AdmissionEffect.Observe,
+                    "message/path.md",
+                    "A message"),
             ]);
 
         var observationLines = Render(protectedChange).Output
@@ -126,7 +140,9 @@ public sealed class ProtectedSurfaceObservationTests
 
         Assert.Equal(
             [
+                "OBSERVED SL-003 Alpha/path.md: path pair message",
                 "OBSERVED SL-003 alpha/path.md: path pair message",
+                "OBSERVED SL-003 message/path.md: A message",
                 "OBSERVED SL-003 message/path.md: a message",
                 "OBSERVED SL-003 message/path.md: z message",
                 "OBSERVED SL-003 same/rule.md: same rule message",
