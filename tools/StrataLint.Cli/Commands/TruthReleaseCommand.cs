@@ -9,7 +9,7 @@ namespace StrataLint.Cli;
 internal static class TruthReleaseCommand
 {
     private const string SourceRepository = "the-omega-institute/trureturing";
-    private const string ProducerRepository = "the-omega-institute/trureturing-producer";
+    private const string ProducerRepository = "the-omega-institute/trureturing";
 
     internal static ExplicitCommandResult Run(
         IRepositoryGateway repository,
@@ -88,7 +88,7 @@ internal static class TruthReleaseCommand
                     frozenLedgerHeadBytes,
                     residualFrontierBytes,
                     source,
-                    Trust(),
+                    options.Trust,
                     new TruthReleaseProducer(
                         ProducerRepository,
                         options.ProducerPackageCommit,
@@ -170,20 +170,6 @@ internal static class TruthReleaseCommand
             TruthGraphModelBuilder.Create(truth.Dag, provenance, projection));
     }
 
-    private static TruthReleaseTrust Trust() => new(
-        CommitOnProtectedDev: true,
-        ImmutableArray.Create(
-            new TruthReleaseRequiredCheck(
-                "Candidate harness engineering checks",
-                "success"),
-            new TruthReleaseRequiredCheck(
-                "Canonical Lean report production",
-                "success"),
-            new TruthReleaseRequiredCheck(
-                "Content-addressed dev baseline admission",
-                "success")),
-        BlessedBy: null);
-
     private static RepositorySnapshot Decode(RawRepositorySnapshot raw) =>
         SnapshotDecoder.Decode(raw) switch
         {
@@ -203,7 +189,7 @@ internal static class TruthReleaseCommand
         out TruthReleaseArguments options)
     {
         options = default;
-        if (arguments.Count != 8)
+        if (arguments.Count != 16)
         {
             return false;
         }
@@ -212,6 +198,8 @@ internal static class TruthReleaseCommand
         string? candidateLeanReport = null;
         string? producerPackageCommit = null;
         string? producedAt = null;
+        bool? commitOnProtectedDev = null;
+        var requiredChecks = ImmutableArray.CreateBuilder<TruthReleaseRequiredCheck>();
         for (var index = 0; index < arguments.Count; index += 2)
         {
             var value = arguments[index + 1];
@@ -234,6 +222,13 @@ internal static class TruthReleaseCommand
                 case "--produced-at" when producedAt is null:
                     producedAt = value;
                     break;
+                case "--commit-on-protected-dev" when commitOnProtectedDev is null
+                    && bool.TryParse(value, out var parsedCommitOnProtectedDev):
+                    commitOnProtectedDev = parsedCommitOnProtectedDev;
+                    break;
+                case "--required-check" when TryParseRequiredCheck(value, out var requiredCheck):
+                    requiredChecks.Add(requiredCheck);
+                    break;
                 default:
                     return false;
             }
@@ -242,7 +237,9 @@ internal static class TruthReleaseCommand
         if (outDirectory is null
             || candidateLeanReport is null
             || producerPackageCommit is null
-            || producedAt is null)
+            || producedAt is null
+            || commitOnProtectedDev is null
+            || requiredChecks.Count != 3)
         {
             return false;
         }
@@ -251,7 +248,28 @@ internal static class TruthReleaseCommand
             outDirectory,
             candidateLeanReport,
             producerPackageCommit,
-            producedAt);
+            producedAt,
+            new TruthReleaseTrust(
+                commitOnProtectedDev.Value,
+                requiredChecks.ToImmutable(),
+                BlessedBy: null));
+        return true;
+    }
+
+    private static bool TryParseRequiredCheck(
+        string value,
+        out TruthReleaseRequiredCheck requiredCheck)
+    {
+        requiredCheck = null!;
+        var separator = value.IndexOf('=', StringComparison.Ordinal);
+        if (separator <= 0 || separator == value.Length - 1)
+        {
+            return false;
+        }
+
+        requiredCheck = new TruthReleaseRequiredCheck(
+            value[..separator],
+            value[(separator + 1)..]);
         return true;
     }
 
@@ -259,13 +277,16 @@ internal static class TruthReleaseCommand
         1,
         string.Empty,
         "USAGE: StrataLint truth-release --out DIR --candidate-lean-report FILE "
-            + "--producer-package-commit COMMIT --produced-at TIMESTAMP\n");
+            + "--producer-package-commit COMMIT --produced-at TIMESTAMP "
+            + "--commit-on-protected-dev true|false "
+            + "--required-check NAME=CONCLUSION (exactly three)\n");
 
     private readonly record struct TruthReleaseArguments(
         string OutDirectory,
         string CandidateLeanReport,
         string ProducerPackageCommit,
-        string ProducedAt);
+        string ProducedAt,
+        TruthReleaseTrust Trust);
 
     private sealed class MaterializedSnapshot : IDisposable
     {

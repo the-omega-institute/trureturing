@@ -11,6 +11,7 @@ namespace StrataLint.Tests;
 public sealed class TruthReleaseCommandTests
 {
     private const string ProducerCommit = "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee";
+    private const string ProducerRepository = "the-omega-institute/trureturing";
     private const string BlueprintGid = "D5/S3/Midline/GoldenSpectralMarker";
     private const string Toolchain = "leanprover/lean4:v4.24.0\n";
     private const string Manifest =
@@ -21,7 +22,7 @@ public sealed class TruthReleaseCommandTests
     {
         using var fixture = CreateFixture();
         using var output = new TemporaryDirectory();
-        var (exitCode, console) = Run(fixture, output.Path);
+        var (exitCode, console) = Run(fixture, output.Path, GreenTrustArguments());
 
         Assert.True(exitCode == 0, console.Error);
         Assert.Equal(string.Empty, console.Error);
@@ -38,6 +39,7 @@ public sealed class TruthReleaseCommandTests
         Assert.Equal(2, export.Nodes.Length);
         Assert.Equal(fixture.SourceCommit, export.SourceCommit);
         Assert.Equal(fixture.SourceTree, export.SourceTree);
+        Assert.Equal(ProducerRepository, verified.Manifest.Producer.PackageRepo);
         Assert.Equal(fixture.ReportBytes.ToArray(), File.ReadAllBytes(
             Path.Combine(output.Path, TruthReleaseBundleWriter.RawLeanReportFileName)));
         Assert.Equal(7, verified.Manifest.Artifacts.GetType().GetProperties().Length);
@@ -69,28 +71,56 @@ public sealed class TruthReleaseCommandTests
         using var output = new TemporaryDirectory();
         File.Delete(fixture.ReportPath);
 
-        var (exitCode, console) = Run(fixture, output.Path);
+        var (exitCode, console) = Run(fixture, output.Path, GreenTrustArguments());
 
         Assert.Equal(2, exitCode);
         Assert.Contains("TRUTH_RELEASE_INVALID", console.Error, StringComparison.Ordinal);
         Assert.Empty(Directory.EnumerateFiles(output.Path));
     }
 
-    private static (int ExitCode, BufferedConsole Console) Run(Fixture fixture, string outputDirectory)
+    [Fact]
+    public void MissingTrustInputFailsClosedWithoutWritingABundle()
+    {
+        using var fixture = CreateFixture();
+        using var output = new TemporaryDirectory();
+
+        var (exitCode, console) = Run(fixture, output.Path, []);
+
+        Assert.Equal(1, exitCode);
+        Assert.Contains("--commit-on-protected-dev true|false", console.Error, StringComparison.Ordinal);
+        Assert.Contains("--required-check NAME=CONCLUSION", console.Error, StringComparison.Ordinal);
+        Assert.Empty(Directory.EnumerateFiles(output.Path));
+    }
+
+    private static (int ExitCode, BufferedConsole Console) Run(
+        Fixture fixture,
+        string outputDirectory,
+        IReadOnlyList<string> trustArguments)
     {
         var console = new BufferedConsole();
+        var arguments = new List<string>
+        {
+            "truth-release",
+            "--out", outputDirectory,
+            "--candidate-lean-report", fixture.ReportPath,
+            "--producer-package-commit", ProducerCommit,
+            "--produced-at", "2026-08-23T00:00:00Z",
+        };
+        arguments.AddRange(trustArguments);
         var exitCode = CliApplication.Run(
-            [
-                "truth-release",
-                "--out", outputDirectory,
-                "--candidate-lean-report", fixture.ReportPath,
-                "--producer-package-commit", ProducerCommit,
-                "--produced-at", "2026-08-23T00:00:00Z",
-            ],
+            arguments,
             fixture.Environment,
             console);
         return (exitCode, console);
     }
+
+    private static string[] GreenTrustArguments() =>
+    [
+        "--commit-on-protected-dev", "true",
+        "--required-check", "Candidate harness engineering checks=success",
+        "--required-check", "Canonical Lean report production=success",
+        "--required-check", "Content-addressed dev baseline admission=success",
+    ];
 
     private static Fixture CreateFixture()
     {
