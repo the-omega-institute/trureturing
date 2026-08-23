@@ -42,7 +42,10 @@
     },
     {
       "source_ref": "D5/X_Frontier/GoldenRatioBase4DfaoMinimality",
-      "kind": "declaration-ready-mathematical-open"
+      "kind": "retired",
+      "delivery_gids": [
+        "D5/S1/Words/Automata/GoldenRatioBase4DfaoMinimality.paper_base4_golden_ratio_dfao_is_not_minimal"
+      ]
     },
     {
       "source_ref": "D5/X_Frontier/GoldenUnitsUFD",
