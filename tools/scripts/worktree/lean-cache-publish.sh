@@ -169,8 +169,41 @@ case "$VERB" in
       --title "Lean build cache ${config_sha256:0:8}/${sources_sha256:0:8} (${os}-${arch})" \
       --notes "Lean build cache produced from ${toolchain} on ${os}-${arch} at ${producer_commit_sha} by run ${workflow_run_id}. An accelerator, not independent admission evidence." \
       "$staged/$asset" "$staged/manifest.txt" >/dev/null
-    printf 'LEAN_CACHE_PUBLISH {"status":"published","tag":"%s","bytes":%s,"sha256":"%s"}\n' \
-      "$tag" "$bytes" "$digest"
+    # 剪枝：稳态只留一份。fetch 的前缀回落是 `grep "^${prefix}" | head -1`，只取最新的
+    # 一份，故同 config 的旧份边际收益为零；而 GitHub Releases **没有** Actions Cache 那样
+    # 的 LRU 兜底，不剪就是无上界累积（案号 #2896：实测 9 份 13.1 GiB、5.8 GiB/日）。
+    #
+    # 顺序不可换：先确认**新份真的在**，再删旧份。反序时若 create 半成功，会同时失去新旧
+    # 两份，把一次浪费变成一次断供。
+    #
+    # 失败一律 fail-open 为「不删」：列举失败、view 失败、任一 delete 失败，都只记进收据，
+    # 不阻断发布。剪枝是清理，不是发布的正确性条件——为清理失败而判发布失败，是把
+    # 一个可自愈的存量问题升级成供给中断。
+    pruned=0
+    prune_error=""
+    if gh release view "$tag" --repo "$REPO" --json tagName --jq .tagName >/dev/null 2>&1; then
+      prefix="lean-cache-v1-${slug}-${config_sha256:0:16}-"
+      if superseded="$(gh release list --repo "$REPO" --limit 100 --json tagName --jq '.[].tagName' 2>/dev/null)"; then
+        while IFS= read -r old_tag; do
+          [[ -n "$old_tag" ]] || continue
+          [[ "$old_tag" == "$prefix"* ]] || continue
+          [[ "$old_tag" != "$tag" ]] || continue
+          if gh release delete "$old_tag" --repo "$REPO" --yes --cleanup-tag >/dev/null 2>&1; then
+            pruned=$((pruned + 1))
+          else
+            prune_error="delete failed for ${old_tag}"
+            break
+          fi
+        done <<< "$superseded"
+      else
+        prune_error="could not list releases"
+      fi
+    else
+      prune_error="new release is not readable back; pruned nothing"
+    fi
+    printf 'LEAN_CACHE_PUBLISH {"status":"published","tag":"%s","bytes":%s,"sha256":"%s","pruned":%s,"prune_error":%s}\n' \
+      "$tag" "$bytes" "$digest" "$pruned" \
+      "$(if [[ -n "$prune_error" ]]; then printf '"%s"' "$prune_error"; else printf 'null'; fi)"
     ;;
 
   fetch)
