@@ -3,10 +3,7 @@
    mirror-B: D5/B/S1/Deficit/Beatty/FiberCoordinateBeattyForms
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: The floor and displacement forms of both golden fiber coordinates agree, yielding the
-   fiber equation and the counterexample to the proposed ceiling start; the real interval and
-   parity description, capacity pair, corrected first-index identification, monotonicity of b,
-   and interval support are not covered. -/
+   digest: The floor and displacement forms of both golden fiber coordinates agree, yielding the fiber equation and the counterexample to the proposed ceiling start; the real interval and parity description, capacity pair, corrected first-index identification, monotonicity of b, and interval support are not covered. -/
 
 import D5.S1.Deficit.ZeckendorfDisplacementReading
 import D5.S1.Words.GoldenFiberCoordinates
