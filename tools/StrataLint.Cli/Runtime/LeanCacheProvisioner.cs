@@ -161,7 +161,21 @@ internal static class LeanCacheProvisioner
         ArgumentNullException.ThrowIfNull(removePartial);
         wait ??= Thread.Sleep;
         ArgumentNullException.ThrowIfNull(writerGuard);
-        writerGuard.RequireOwnershipOf(Path.Combine(worktreeRoot, ".lake"));
+        var target = Path.Combine(worktreeRoot, ".lake");
+        writerGuard.RequireOwnershipOf(target);
+
+        // Provision 是**新建树**的 API:目标必须在此刻不存在。这一条此前只写在 donor
+        // 分支里(clone 之前),于是「无 donor」那条路进来时目标是否存在无人过问。
+        //
+        // 把它上移到公共支配点,是为了让下游那句「这棵 .lake 是本次调用造的」成为
+        // **机器强制的契约**,而不是靠读控制流推出来的结论。推出来的结论会随重构失效:
+        // ensure 在 stamp Mismatch 时会先删掉整个 .lake 再落到这里(`RemoveProjection`),
+        // 所以「到达这里 ⟹ 调用入口时 .lake 不存在」**是假的**;真正成立的是
+        // 「到达这里 ⟹ **在这个边界上** .lake 不存在」—— 而那要由这一行来保证。
+        //
+        // 现有树的路径是 `ReproduceExisting`(它传 `CacheTreeOwnership.PreExisting`),
+        // 不经过这里。两条路各有各的 API,不共用。
+        EnsureAbsent(target);
         if (selection.Donor is null)
         {
             var notice = Join(
@@ -178,8 +192,6 @@ internal static class LeanCacheProvisioner
         }
 
         var source = Path.Combine(selection.Donor, ".lake");
-        var target = Path.Combine(worktreeRoot, ".lake");
-        EnsureAbsent(target);
         var staged = target + ".stage-" + Path.GetRandomFileName();
         string? cloneWarning;
         ClonefileReceipt cloneReceipt;
