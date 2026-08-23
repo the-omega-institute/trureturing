@@ -75,7 +75,7 @@ internal sealed class StableDepthCardinalityBoundsDocument : IScribeDocumentDefi
         Formula tokenState = Seq(alphabet, Caret, Grp(length));
         Formula tokenUpdate = F.Id("F"), tokenReadout = F.Id("r");
         Formula depth = new Formula.Subscript(F.Id("m"), Star);
-        Formula infiniteRelation = new Formula.Subscript(Equiv, Infty);
+        Formula infiniteRelation = Seq(Equiv, Underscore, Grp(Infty));
         Formula completionCount = Cardinality(Seq(state, Slash, infiniteRelation));
         Formula outputCount = Cardinality(output);
         Formula stateCount = Cardinality(state);
