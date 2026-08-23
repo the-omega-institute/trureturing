@@ -11,8 +11,8 @@ internal sealed class LocalMarginalCorrelationBlindSpotDocument : IScribeDocumen
         Formula m = F.Id("m");
         Formula n = F.Id("n");
         Formula two = D(2);
-        Formula mSquared = new Formula.Power(Grp(m), Grp(two));
-        Formula nSquared = new Formula.Power(Grp(n), Grp(two));
+        Formula mSquared = new Formula.Power(m, two);
+        Formula nSquared = new Formula.Power(n, two);
         Formula localA = Call("localASector", m, n);
         Formula localB = Call("localBSector", m, n);
         Formula local = Call("Sup", localA, localB);
@@ -25,9 +25,8 @@ internal sealed class LocalMarginalCorrelationBlindSpotDocument : IScribeDocumen
         Formula totalRank = Seq(
             Grp(mSquared), Sp, Grp(nSquared), Sp, Minus, Sp, D(1));
         Formula bell = Seq(Operatorname, Grp(F.Id("bellDensity")));
-        Formula classical = Seq(
-            Operatorname, Grp(F.Id("classicalCorrelatedDensity")));
-        Formula classicalSquared = new Formula.Power(Grp(classical), Grp(two));
+        Formula classical = F.Id("classicalCorrelatedDensity");
+        Formula classicalSquared = new Formula.Power(classical, two);
         Formula statement = Disp(Seq(
             Begin, Grp(F.Id("gathered")),
             Forall, Sp, m, Comma, Sp, n, Comma, Sp,
