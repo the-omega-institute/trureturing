@@ -63,8 +63,7 @@
 
 \[
 \boxed{
-\text{定义发现不是枚举定义，
-而是识别、切割并低成本回收逃逸残差。}
+\text{定义发现不是枚举定义，n而是识别、切割并低成本回收逃逸残差。}
 }
 \]
 
@@ -139,7 +138,7 @@ q\preceq p
 \ker p\subseteq\ker q.
 \]
 
-它表示 \(p\) 至少保留了 \(q\) 的全部区分。若使用实现像作为值域，则该关系等价于 \(q\) 通过 \(p\) 因子化。
+它表示 \(p\) 至少保留了 \(q\) 能看见的全部差异。若使用实现像作为值域，则该关系等价于 \(q\) 通过 \(p\) 因子化。
 
 仓库中的
 
@@ -681,8 +680,7 @@ P_\Gamma(d\mid q,T)>0
 
 \[
 \boxed{
-\text{不在目录中，不等于不在语言闭包中；
-不在语言闭包中，也不自动等于对目标有用。}
+\text{不在目录中，不等于不在语言闭包中；n不在语言闭包中，也不自动等于对目标有用。}
 }
 \]
 
@@ -1242,8 +1240,7 @@ S_{\varepsilon,t}S_{\varepsilon,s}(m)
 
 \[
 \boxed{
-\text{微观动力学不必严格保持准备流形；
-只需在目标预测度量中渐近保持。}
+\text{微观动力学不必严格保持准备流形；n只需在目标预测度量中渐近保持。}
 }
 \]
 
@@ -1359,9 +1356,7 @@ R_\varepsilon U_{\Delta t}x,
 
 \[
 \boxed{
-\text{不是先删除高阶关联，
-而是先定义高阶关联的连通历史，
-再证明其目标影响可压缩。}
+\text{不是先删除高阶关联，n而是先定义高阶关联的连通历史，n再证明其目标影响可压缩。}
 }
 \]
 
@@ -1421,8 +1416,7 @@ m_*(\varepsilon,\eta)
 
 \[
 \boxed{
-\text{定义深度随分辨率增长，
-但增长率本身受到证明控制。}
+\text{定义深度随分辨率增长，n但增长率本身受到证明控制。}
 }
 \]
 
@@ -1445,8 +1439,7 @@ m_*(\varepsilon,\eta)
 
 \[
 \boxed{
-\text{新定义是证明的编译器：
-它把不可计算的全局展开编译成可认证的局部预算。}
+\text{新定义是证明的编译器：n它把不可计算的全局展开编译成可认证的局部预算。}
 }
 \]
 
@@ -2019,8 +2012,7 @@ DECT 对这四项给出定义创造版本：
 
 \[
 \boxed{
-\text{固定语言中的证明搜索，
-只在该语言已经能够分离全部目标逃逸对时才原则上足够。}
+\text{固定语言中的证明搜索，n只在该语言已经能够分离全部目标逃逸对时才原则上足够。}
 }
 \]
 
@@ -2030,8 +2022,7 @@ DECT 对这四项给出定义创造版本：
 
 \[
 \boxed{
-\text{定义不是答案的别名；
-定义是把答案所需的区分结构变成可推理对象的最小接口。}
+\text{定义不是答案的别名；n定义是把答案所需的区分结构变成可推理对象的最小接口。}
 }
 \]
 
@@ -2039,9 +2030,7 @@ DECT 对这四项给出定义创造版本：
 
 \[
 \boxed{
-\text{最强的新定义往往不是立即忘掉复杂性，
-而是先完整保存复杂性从何而来，
-再证明其中只有一个低维、低影响、可认证的部分能够逃向未来。}
+\text{最强的新定义往往不是立即忘掉复杂性，n而是先完整保存复杂性从何而来，n再证明其中只有一个低维、低影响、可认证的部分能够逃向未来。}
 }
 \]
 
@@ -3525,10 +3514,7 @@ D5/S3/DefinitionEscape/RecursiveScience/
 
 \[
 \boxed{
-\text{科学定义对象如何被区分，
-定义残差如何被记录，
-定义下一项定义如何生成，
-并把这一生成规则在下一版本中再次定义为对象。}
+\text{科学定义对象如何被区分，n定义残差如何被记录，n定义下一项定义如何生成，n并把这一生成规则在下一版本中再次定义为对象。}
 }
 \]
 
@@ -3561,10 +3547,7 @@ DECT 因而从“如何发明一个定义”扩展到“一个知识系统如何
 
 \[
 \boxed{
-\text{科学在外延上可以是一项定义；
-在结构上是一张定义图；
-在时间上是一条定义修订轨道；
-在哲学上是这条轨道把自身的生成规则再次变成对象。}
+\text{科学在外延上可以是一项定义；n在结构上是一张定义图；n在时间上是一条定义修订轨道；n在哲学上是这条轨道把自身的生成规则再次变成对象。}
 }
 \]
 
@@ -3601,5 +3584,2546 @@ DECT 因而从“如何发明一个定义”扩展到“一个知识系统如何
 - 局部完成、预算停止与开放世界重新打开；
 - 扩张观察族下科学对象的逆极限定义；
 - 纯定义 Lean 接口草案。
+
+后续增订继续严格追加于本节之后。
+
+---
+
+# 第四十八部　双核科学与区分流增订
+## Dual-Kernel Science and Distinction Flow
+
+> **增订状态**：v1.2，2026-08-23。  
+> **写入方式**：本增订严格追加于 v1.1 之后，不修改前文任何字句。  
+> **构造纪律**：仍不增加公理；只定义目标族、定义族、不可区分核、区分集、更新算子、测度账本、生成器、交换缺陷、轨迹和极限对象。以下等式均由集合运算或函数核的定义展开得到；涉及成本、距离和极限的部分明确保留相应参数。
+
+v1.0 研究单个目标相对于当前定义的逃逸；v1.1 把科学扩展为可反射的动态定义图。v1.2 再加入此前尚未显式分离的对偶：
+
+\[
+\boxed{
+\text{科学不仅产生定义，也产生问题。}
+}
+\]
+
+定义决定当前理论**能够区分什么**；问题、实验和目标决定当前科学**需要区分什么**。因此科学状态不是单个残差，而是两套等价关系、或其补集所形成的两条区分流之间的耦合状态。
+
+---
+
+## 48.1 对象对空间
+
+给定对象类型 \(X\)，定义对角：
+
+\[
+\Delta_X:=\{(x,x):x\in X\}.
+\]
+
+定义非平凡对象对空间：
+
+\[
+\boxed{
+\Omega_X:=X^2\setminus\Delta_X.
+}
+\]
+
+后文所有“区分集”均视为 \(\Omega_X\) 的子集；若保留有序对，则 \((x,y)\) 与 \((y,x)\) 可分别出现；若只关心无序区别，可再对交换作用取商。
+
+---
+
+## 48.2 定义族核
+
+给定定义族
+
+\[
+\Gamma=\{d_i:X\to D_i\}_{i\in I},
+\]
+
+定义联合读数：
+
+\[
+q_\Gamma(x):=(d_i(x))_{i\in I}.
+\]
+
+定义当前不可区分核：
+
+\[
+\boxed{
+R_\Gamma
+:=
+\ker q_\Gamma
+=
+\bigcap_{d\in\Gamma}\ker d.
+}
+\]
+
+其含义是：
+
+\[
+(x,y)\in R_\Gamma
+\iff
+\forall d\in\Gamma,\quad d(x)=d(y).
+\]
+
+---
+
+## 48.3 目标族核
+
+给定目标族
+
+\[
+\mathcal T=\{T_j:X\to Y_j\}_{j\in J},
+\]
+
+定义联合目标：
+
+\[
+Q_{\mathcal T}(x):=(T_j(x))_{j\in J}.
+\]
+
+定义目标共同核：
+
+\[
+\boxed{
+K_{\mathcal T}
+:=
+\ker Q_{\mathcal T}
+=
+\bigcap_{T\in\mathcal T}\ker T.
+}
+\]
+
+其含义是：
+
+\[
+(x,y)\in K_{\mathcal T}
+\iff
+\forall T\in\mathcal T,\quad T(x)=T(y).
+\]
+
+因此 \(K_{\mathcal T}\) 记录当前问题族不要求区分的对象对。
+
+---
+
+## 48.4 双核科学状态
+
+定义双核科学状态：
+
+\[
+\boxed{
+\Sigma_{\ker}
+:=
+(X,\Gamma,\mathcal T,R_\Gamma,K_{\mathcal T}).
+}
+\]
+
+其中：
+
+\[
+R_\Gamma=\text{当前定义仍然合并的对象对},
+\]
+
+\[
+K_{\mathcal T}=\text{当前目标允许合并的对象对}.
+\]
+
+定义核对齐：
+
+\[
+\boxed{
+\operatorname{KernelAligned}(\Gamma,\mathcal T)
+\quad\Longleftrightarrow\quad
+R_\Gamma=K_{\mathcal T}.
+}
+\]
+
+它表示当前定义的对象划分与当前问题族所需的对象划分完全一致。
+
+---
+
+# 第四十九部　目标族与规范目标对象
+
+## 49.1 目标相对对象空间
+
+定义规范目标对象空间：
+
+\[
+\boxed{
+\mathcal O_{\mathcal T}
+:=
+X/K_{\mathcal T}.
+}
+\]
+
+定义规范投影：
+
+\[
+\pi_{\mathcal T}:X\to\mathcal O_{\mathcal T}.
+\]
+
+两个完整对象在 \(\mathcal O_{\mathcal T}\) 中相同，当且仅当当前全部目标对它们给出相同结果。
+
+因此对象同一性可显式依赖问题族：
+
+\[
+\mathcal T_1\subseteq\mathcal T_2
+\Longrightarrow
+K_{\mathcal T_2}\subseteq K_{\mathcal T_1},
+\]
+
+从而更丰富的问题族产生更细的规范对象空间。
+
+---
+
+## 49.2 目标族充分性
+
+定义 \(q:X\to Q\) 对目标族 \(\mathcal T\) 充分：
+
+\[
+\boxed{
+\operatorname{Sufficient}(q;\mathcal T)
+\quad\Longleftrightarrow\quad
+\ker q\subseteq K_{\mathcal T}.
+}
+\]
+
+等价地，对每个 \(T\in\mathcal T\)，存在定义在 \(\operatorname{range}(q)\) 上的后处理 \(h_T\)，使：
+
+\[
+T=h_T\circ q.
+\]
+
+---
+
+## 49.3 规范对象的因子化位置
+
+若 \(q\) 对 \(\mathcal T\) 充分，则存在唯一的像上因子：
+
+\[
+h_q:\operatorname{range}(q)\to\mathcal O_{\mathcal T}
+\]
+
+满足：
+
+\[
+\boxed{
+\pi_{\mathcal T}=h_q\circ q.
+}
+\]
+
+因此 \(\mathcal O_{\mathcal T}\) 是所有目标充分读数中的最粗对象空间；任何充分读数都至少包含规范目标对象所需的区别。
+
+---
+
+## 49.4 全问题族与无压缩边界
+
+定义目标族 \(\mathcal T\) 分离 \(X\)：
+
+\[
+\operatorname{Separates}(\mathcal T,X)
+\quad\Longleftrightarrow\quad
+\forall x\neq y,\ \exists T\in\mathcal T,\ T(x)\neq T(y).
+\]
+
+此时：
+
+\[
+K_{\mathcal T}=\Delta_X.
+\]
+
+若 \(q\) 对这样的目标族充分，则：
+
+\[
+\ker q\subseteq\Delta_X.
+\]
+
+而任意函数核包含 \(\Delta_X\)，故：
+
+\[
+\ker q=\Delta_X.
+\]
+
+于是 \(q\) 为单射。由定义展开得到：
+
+\[
+\boxed{
+\text{若要求回答一个分离全部对象的目标族，n则不存在非平凡的目标保持压缩。}
+}
+\]
+
+因此理论压缩总是相对于问题族，而不是无条件地压缩“所有可能问题”。
+
+---
+
+# 第五十部　定义不足与定义过度
+
+以下记：
+
+\[
+R:=R_\Gamma,
+\qquad
+K:=K_{\mathcal T}.
+\]
+
+## 50.1 定义不足
+
+定义：
+
+\[
+\boxed{
+U(R,K):=R\setminus K.
+}
+\]
+
+其中的对象对被当前定义合并，却被当前目标族区分。它与单目标 DECT 残差一致：
+
+\[
+U(\ker q,\ker T)=\mathcal E(q;T).
+\]
+
+---
+
+## 50.2 定义过度
+
+定义：
+
+\[
+\boxed{
+O(R,K):=K\setminus R.
+}
+\]
+
+其中的对象对被当前目标族视为等价，却被当前定义系统分开。
+
+---
+
+## 50.3 正确合并与正确区分
+
+定义正确合并：
+
+\[
+N(R,K):=R\cap K.
+\]
+
+定义正确区分：
+
+\[
+C(R,K):=\Omega_X\setminus(R\cup K).
+\]
+
+于是在 \(\Omega_X\) 上得到四分解：
+
+\[
+\boxed{
+\Omega_X
+=
+N(R,K)
+\sqcup
+U(R,K)
+\sqcup
+O(R,K)
+\sqcup
+C(R,K).
+}
+\]
+
+---
+
+## 50.4 对齐条件
+
+由集合差定义：
+
+\[
+U(R,K)=\varnothing
+\iff
+R\subseteq K,
+\]
+
+\[
+O(R,K)=\varnothing
+\iff
+K\subseteq R.
+\]
+
+所以：
+
+\[
+\boxed{
+U(R,K)=O(R,K)=\varnothing
+\iff
+R=K.
+}
+\]
+
+单独清空定义不足只保证当前理论足以回答目标；它仍可能保存大量目标无关区分。双核对齐同时要求充分性与最粗性。
+
+---
+
+# 第五十一部　新定义的捕获—断裂双账
+
+给定候选定义：
+
+\[
+d:X\to D,
+\qquad
+D_d:=\ker d.
+\]
+
+加入定义后的核：
+
+\[
+R':=R\cap D_d.
+\]
+
+## 51.1 捕获
+
+定义新定义捕获的不足残差：
+
+\[
+\boxed{
+\operatorname{Capture}(d;R,K)
+:=
+(R\setminus K)\cap D_d^c.
+}
+\]
+
+这些对象对原来属于定义不足，而新定义将其分开。
+
+---
+
+## 51.2 断裂
+
+定义新定义制造的目标内断裂：
+
+\[
+\boxed{
+\operatorname{Fracture}(d;R,K)
+:=
+(R\cap K)\cap D_d^c.
+}
+\]
+
+这些对象对原来被定义和目标同时合并，新定义却将其额外分开。
+
+---
+
+## 51.3 不足更新恒等式
+
+直接展开：
+
+\[
+\begin{aligned}
+U(R',K)
+&=(R\cap D_d)\setminus K\\
+&=(R\setminus K)\cap D_d.
+\end{aligned}
+\]
+
+所以：
+
+\[
+\boxed{
+U(R',K)
+=
+U(R,K)\setminus\operatorname{Capture}(d;R,K).
+}
+\]
+
+---
+
+## 51.4 过度更新恒等式
+
+同样：
+
+\[
+\begin{aligned}
+O(R',K)
+&=K\setminus(R\cap D_d)\\
+&=(K\setminus R)
+\cup
+(K\cap R\cap D_d^c).
+\end{aligned}
+\]
+
+两部分不交，故：
+
+\[
+\boxed{
+O(R',K)
+=
+O(R,K)
+\sqcup
+\operatorname{Fracture}(d;R,K).
+}
+\]
+
+---
+
+## 51.5 新定义的完整结构账
+
+因此一项新定义同时具有两项作用：
+
+\[
+\boxed{
+\text{新增区分}
+=
+\text{捕获必要区别}
+\sqcup
+\text{制造目标外区别}.
+}
+\]
+
+只统计捕获会把身份编码误判为理想定义；加入断裂账后，完整身份映射虽能捕获全部不足，也会分开全部尚未区分的目标等价对。
+
+---
+
+# 第五十二部　捕获精确率、召回率与净增益
+
+设 \(\mu\) 为 \(\Omega_X\) 上的有限权重。
+
+## 52.1 捕获召回率
+
+若 \(\mu(U(R,K))>0\)，定义：
+
+\[
+\boxed{
+\operatorname{Recall}(d;R,K)
+:=
+\frac{
+\mu(\operatorname{Capture}(d;R,K))
+}{
+\mu(U(R,K))
+}.
+}
+\]
+
+---
+
+## 52.2 切割精确率
+
+若捕获与断裂总质量非零，定义：
+
+\[
+\boxed{
+\operatorname{Precision}(d;R,K)
+:=
+\frac{
+\mu(\operatorname{Capture}(d;R,K))
+}{
+\mu(\operatorname{Capture}(d;R,K))
++
+\mu(\operatorname{Fracture}(d;R,K))
+}.
+}
+\]
+
+---
+
+## 52.3 加权失配
+
+给定 \(\lambda\ge0\)，定义：
+
+\[
+\boxed{
+\mathscr L_\lambda(R,K)
+:=
+\mu(R\setminus K)
++
+\lambda\,\mu(K\setminus R).
+}
+\]
+
+加入 \(d\) 后，由上一部两个不交分解：
+
+\[
+\boxed{
+\mathscr L_\lambda(R',K)
+=
+\mathscr L_\lambda(R,K)
+-
+\mu(\operatorname{Capture})
++
+\lambda\mu(\operatorname{Fracture}).
+}
+\]
+
+---
+
+## 52.4 净结构增益
+
+定义：
+
+\[
+\boxed{
+G_\lambda(d;R,K)
+:=
+\mu(\operatorname{Capture}(d;R,K))
+-
+\lambda\mu(\operatorname{Fracture}(d;R,K)).
+}
+\]
+
+若再加入定义成本 \(c(d)\) 与权重 \(\alpha\ge0\)，定义：
+
+\[
+\boxed{
+G_{\lambda,\alpha}(d;R,K)
+:=
+G_\lambda(d;R,K)-\alpha c(d).
+}
+\]
+
+这使定义选择从“尽量多地区分”改写为“以较低成本，尽量只分开目标真正要求分开的对象”。
+
+---
+
+## 52.5 两类平凡极端
+
+直接取 \(d=T\) 时，外延上捕获完全、断裂为零；其问题由 v1.0/v1.1 的依赖账本判定为目标泄漏。
+
+取 \(d=\operatorname{id}_X\) 时，捕获全部不足，同时断裂：
+
+\[
+(R\cap K)\setminus\Delta_X.
+\]
+
+所以身份定义可由断裂与成本同时惩罚，而无需把“信息越多越好”当作默认评价。
+
+---
+
+# 第五十三部　新问题的显影—正当化双账
+
+给定新目标：
+
+\[
+T_*:X\to Y_*,
+\qquad
+H_*:=\ker T_*.
+\]
+
+加入目标后的共同核：
+
+\[
+K':=K\cap H_*.
+\]
+
+## 53.1 问题显影
+
+定义：
+
+\[
+\boxed{
+\operatorname{Exposure}(T_*;R,K)
+:=
+(R\cap K)\cap H_*^c.
+}
+\]
+
+这些对象对原来被定义和旧目标同时合并，新问题第一次要求将其分开。
+
+---
+
+## 53.2 区分正当化
+
+定义：
+
+\[
+\boxed{
+\operatorname{Justification}(T_*;R,K)
+:=
+(K\setminus R)\cap H_*^c.
+}
+\]
+
+这些对象对已被当前定义区分，但旧目标不要求区分；新问题使这种旧区分获得目标意义。
+
+---
+
+## 53.3 不足更新恒等式
+
+展开：
+
+\[
+\begin{aligned}
+U(R,K')
+&=R\setminus(K\cap H_*)\\
+&=(R\setminus K)
+\cup
+(R\cap K\cap H_*^c).
+\end{aligned}
+\]
+
+两部分不交，所以：
+
+\[
+\boxed{
+U(R,K')
+=
+U(R,K)
+\sqcup
+\operatorname{Exposure}(T_*;R,K).
+}
+\]
+
+---
+
+## 53.4 过度更新恒等式
+
+展开：
+
+\[
+\begin{aligned}
+O(R,K')
+&=(K\cap H_*)\setminus R\\
+&=(K\setminus R)\cap H_*.
+\end{aligned}
+\]
+
+所以：
+
+\[
+\boxed{
+O(R,K')
+=
+O(R,K)
+\setminus
+\operatorname{Justification}(T_*;R,K).
+}
+\]
+
+---
+
+## 53.5 问题创造的完整结构账
+
+于是新问题的作用是：
+
+\[
+\boxed{
+\text{新增目标区别}
+=
+\text{暴露新欠账}
+\sqcup
+\text{正当化旧区分}.
+}
+\]
+
+问题创造与定义创造形成严格对偶：
+
+\[
+\begin{array}{c|c}
+\text{定义加入} & \text{目标加入}\\
+\hline
+\text{捕获不足} & \text{显影不足}\\
+\text{制造断裂} & \text{正当化过度}
+\end{array}
+\]
+
+---
+
+# 第五十四部　区分集表示
+
+核表示适合因子化；其补集表示适合动力学。
+
+## 54.1 单项区分集
+
+对 \(f:X\to Y\)，定义：
+
+\[
+\boxed{
+\operatorname{Dist}(f)
+:=
+\{(x,y)\in\Omega_X:f(x)\neq f(y)\}.
+}
+\]
+
+于是：
+
+\[
+\operatorname{Dist}(f)=\Omega_X\setminus\ker f.
+\]
+
+---
+
+## 54.2 当前表达区分
+
+定义：
+
+\[
+\boxed{
+A_\Gamma
+:=
+\bigcup_{d\in\Gamma}\operatorname{Dist}(d)
+=
+\Omega_X\setminus R_\Gamma.
+}
+\]
+
+---
+
+## 54.3 当前所需区分
+
+定义：
+
+\[
+\boxed{
+B_{\mathcal T}
+:=
+\bigcup_{T\in\mathcal T}\operatorname{Dist}(T)
+=
+\Omega_X\setminus K_{\mathcal T}.
+}
+\]
+
+---
+
+## 54.4 区分状态
+
+定义：
+
+\[
+\boxed{
+\Sigma_{\mathrm{dist}}
+:=
+(X,A_\Gamma,B_{\mathcal T}).
+}
+\]
+
+其中：
+
+\[
+A_\Gamma=\text{当前能够表达的区别},
+\]
+
+\[
+B_{\mathcal T}=\text{当前问题要求的区别}.
+\]
+
+---
+
+## 54.5 双表示字典
+
+由补集运算：
+
+\[
+\boxed{
+U(R,K)=B\setminus A,
+}
+\]
+
+\[
+\boxed{
+O(R,K)=A\setminus B.
+}
+\]
+
+并且：
+
+\[
+R=K
+\iff
+A=B.
+\]
+
+---
+
+## 54.6 联合变为并集
+
+对定义：
+
+\[
+\operatorname{Dist}(d_1\vee d_2)
+=
+\operatorname{Dist}(d_1)
+\cup
+\operatorname{Dist}(d_2).
+\]
+
+所以定义加入：
+
+\[
+A\mapsto A\cup D,
+\qquad
+D:=\operatorname{Dist}(d).
+\]
+
+目标加入：
+
+\[
+B\mapsto B\cup Q,
+\qquad
+Q:=\operatorname{Dist}(T).
+\]
+
+科学演化在区分表示中是两条单调增长的集合流。
+
+---
+
+# 第五十五部　四种区分流
+
+在状态 \((A,B)\) 上，给定新问题区分 \(Q\) 和新定义区分 \(D\)。
+
+## 55.1 问题新增部分
+
+定义：
+
+\[
+Q_{\mathrm{new}}:=Q\setminus B.
+\]
+
+定义显影流：
+
+\[
+\boxed{
+\mathsf{EXPOSE}
+:=
+Q_{\mathrm{new}}\setminus A.
+}
+\]
+
+定义正当化流：
+
+\[
+\boxed{
+\mathsf{JUSTIFY}
+:=
+Q_{\mathrm{new}}\cap A.
+}
+\]
+
+于是：
+
+\[
+Q_{\mathrm{new}}
+=
+\mathsf{EXPOSE}
+\sqcup
+\mathsf{JUSTIFY}.
+\]
+
+---
+
+## 55.2 定义新增部分
+
+问题加入后记：
+
+\[
+\widetilde B:=B\cup Q.
+\]
+
+定义：
+
+\[
+D_{\mathrm{new}}:=D\setminus A.
+\]
+
+定义捕获流：
+
+\[
+\boxed{
+\mathsf{CAPTURE}
+:=
+D_{\mathrm{new}}\cap\widetilde B.
+}
+\]
+
+定义断裂流：
+
+\[
+\boxed{
+\mathsf{FRACTURE}
+:=
+D_{\mathrm{new}}\setminus\widetilde B.
+}
+\]
+
+于是：
+
+\[
+D_{\mathrm{new}}
+=
+\mathsf{CAPTURE}
+\sqcup
+\mathsf{FRACTURE}.
+\]
+
+---
+
+## 55.3 四流统一
+
+\[
+\boxed{
+\begin{aligned}
+\mathsf{EXPOSE}
+&=\text{新问题暴露但当前定义没有表达的区别},\\
+\mathsf{JUSTIFY}
+&=\text{新问题赋予旧区分的目标意义},\\
+\mathsf{CAPTURE}
+&=\text{新定义回收当前问题所需区别},\\
+\mathsf{FRACTURE}
+&=\text{新定义新增但当前问题不需要的区别}.
+\end{aligned}
+}
+\]
+
+---
+
+# 第五十六部　双账余额恒等式
+
+设状态序列：
+
+\[
+(A_n,B_n).
+\]
+
+一轮先加入问题区分 \(Q_n\)，再加入定义区分 \(D_n\)：
+
+\[
+\widetilde B_n:=B_n\cup Q_n,
+\]
+
+\[
+A_{n+1}:=A_n\cup D_n,
+\qquad
+B_{n+1}:=\widetilde B_n.
+\]
+
+定义欠账质量：
+
+\[
+u_n:=\mu(B_n\setminus A_n).
+\]
+
+定义盈余质量：
+
+\[
+o_n:=\mu(A_n\setminus B_n).
+\]
+
+定义四种流量：
+
+\[
+e_n:=\mu((Q_n\setminus B_n)\setminus A_n),
+\]
+
+\[
+j_n:=\mu((Q_n\setminus B_n)\cap A_n),
+\]
+
+\[
+c_n:=\mu((\widetilde B_n\setminus A_n)\cap D_n),
+\]
+
+\[
+f_n:=\mu((D_n\setminus A_n)\setminus\widetilde B_n).
+\]
+
+由不交分解直接得到：
+
+\[
+\boxed{
+u_{n+1}=u_n+e_n-c_n.
+}
+\]
+
+\[
+\boxed{
+o_{n+1}=o_n+f_n-j_n.
+}
+\]
+
+令总失配：
+
+\[
+m_n:=u_n+o_n.
+\]
+
+则：
+
+\[
+\boxed{
+m_{n+1}
+=
+m_n+e_n+f_n-c_n-j_n.
+}
+\]
+
+这三式构成区分流的最小账本：
+
+\[
+\boxed{
+\begin{aligned}
+\Delta\mathsf{UNDER}
+&=\mathsf{EXPOSE}-\mathsf{CAPTURE},\\
+\Delta\mathsf{OVER}
+&=\mathsf{FRACTURE}-\mathsf{JUSTIFY}.
+\end{aligned}
+}
+\]
+
+---
+
+# 第五十七部　范围—失配—成本几何
+
+仅令 \(A=B=\varnothing\) 即可使失配为零，所以失配本身不能衡量科学内容。
+
+## 57.1 问题范围
+
+定义：
+
+\[
+\boxed{
+\operatorname{Scope}(B):=\mu(B).
+}
+\]
+
+---
+
+## 57.2 对称失配
+
+定义：
+
+\[
+\boxed{
+\operatorname{Mismatch}(A,B)
+:=
+\mu(A\triangle B)
+=
+u+o.
+}
+\]
+
+---
+
+## 57.3 定义成本
+
+给定义图 \(\mathcal G_\Gamma\)，定义：
+
+\[
+\operatorname{DefCost}(\Gamma)
+:=
+\operatorname{CodeCost}
++
+\operatorname{DependencyCost}
++
+\operatorname{CertificateCost}.
+\]
+
+---
+
+## 57.4 科学状态坐标
+
+定义三元坐标：
+
+\[
+\boxed{
+\mathcal V(A,B,\Gamma)
+:=
+\bigl(
+\operatorname{Scope}(B),
+\operatorname{Mismatch}(A,B),
+\operatorname{DefCost}(\Gamma)
+\bigr).
+}
+\]
+
+不同科学状态应按 Pareto 关系比较，而不是强制压为单一标量。
+
+---
+
+## 57.5 三种闭合
+
+定义空洞闭合：
+
+\[
+A=B=\varnothing.
+\]
+
+定义身份饱和：
+
+\[
+A=\Omega_X.
+\]
+
+定义压缩闭合：
+
+\[
+A=B
+\quad\text{且}\quad
+\operatorname{DefCost}(\Gamma)
+\text{ 位于指定候选类的低成本前沿}.
+\]
+
+压缩闭合才同时表达范围、对齐和成本。
+
+---
+
+## 57.6 可持续扩张
+
+对状态序列，定义相对失配：
+
+\[
+\eta_n
+:=
+\frac{
+\mu(A_n\triangle B_n)
+}{
+1+\mu(B_n)
+}.
+\]
+
+定义可持续扩张：
+
+\[
+\boxed{
+\mu(B_n)\ \text{增长},
+\qquad
+\eta_n\to0,
+}
+\]
+
+并另行记录成本增长率。其含义是问题范围扩张时，定义系统仍能以相对较低失配跟随。
+
+---
+
+# 第五十八部　要求—回答对偶
+
+设允许目标宇宙为 \(\mathscr Q(X)\)。
+
+## 58.1 要求算子
+
+对目标族 \(\mathcal T\subseteq\mathscr Q(X)\)，定义：
+
+\[
+\boxed{
+\operatorname{Req}(\mathcal T)
+:=
+\bigcup_{T\in\mathcal T}\operatorname{Dist}(T).
+}
+\]
+
+---
+
+## 58.2 回答算子
+
+对区分集 \(A\subseteq\Omega_X\)，定义：
+
+\[
+\boxed{
+\operatorname{Ans}(A)
+:=
+\{T\in\mathscr Q(X):
+\operatorname{Dist}(T)\subseteq A\}.
+}
+\]
+
+---
+
+## 58.3 基本对偶
+
+由两个定义直接得到：
+
+\[
+\boxed{
+\operatorname{Req}(\mathcal T)\subseteq A
+\quad\Longleftrightarrow\quad
+\mathcal T\subseteq\operatorname{Ans}(A).
+}
+\]
+
+左侧表示当前定义区分覆盖目标族要求；右侧表示当前区分能够回答目标族全部问题。
+
+---
+
+## 58.4 问题闭包
+
+定义：
+
+\[
+\boxed{
+\operatorname{QCl}(\mathcal T)
+:=
+\operatorname{Ans}(\operatorname{Req}(\mathcal T)).
+}
+\]
+
+它包含所有不需要比 \(\mathcal T\) 更多区分的目标。
+
+由定义可展开其广延、单调和幂等性质。
+
+---
+
+## 58.5 可检验区分核
+
+定义：
+
+\[
+\boxed{
+\operatorname{TestCore}(A)
+:=
+\operatorname{Req}(\operatorname{Ans}(A)).
+}
+\]
+
+直接有：
+
+\[
+\operatorname{TestCore}(A)\subseteq A.
+\]
+
+定义闲置区分：
+
+\[
+\boxed{
+\operatorname{Idle}(A)
+:=
+A\setminus\operatorname{TestCore}(A).
+}
+\]
+
+它表示当前允许问题语法中没有任何问题能询问的已表达区别。
+
+是否把闲置区分视为冗余、潜在预测储备或不可检验内部坐标，由来源、成本和后续问题轨迹进一步区分。
+
+---
+
+# 第五十九部　问题生成器与定义生成器
+
+## 59.1 问题生成器
+
+定义：
+
+\[
+\boxed{
+M_Q:
+\operatorname{SciState}(X)
+\to
+\operatorname{IntTarget}(X).
+}
+\]
+
+其输出包含目标代码、操作计划、成本、适用域和记录接口。
+
+---
+
+## 59.2 定义生成器
+
+定义：
+
+\[
+\boxed{
+M_D:
+\operatorname{SciState}(X)
+\to
+\operatorname{IntDef}(X).
+}
+\]
+
+---
+
+## 59.3 完整科学方法
+
+定义：
+
+\[
+\boxed{
+M:=(M_Q,M_D).
+}
+\]
+
+因此科学方法同时定义：
+
+- 接下来要求世界显露什么区别；
+- 面对这些区别，接下来构造什么定义。
+
+---
+
+## 59.4 问题效率
+
+给候选目标 \(T\)，定义：
+
+\[
+\operatorname{ExposeMass}(T)
+:=
+\mu\bigl(
+\operatorname{Dist}(T)\setminus(A\cup B)
+\bigr).
+\]
+
+定义：
+
+\[
+\operatorname{JustifyMass}(T)
+:=
+\mu\bigl(
+(\operatorname{Dist}(T)\setminus B)\cap A
+\bigr).
+\]
+
+可定义候选评分：
+
+\[
+\operatorname{QuestionScore}(T)
+:=
+\frac{
+\operatorname{ExposeMass}(T)
++
+\beta\operatorname{JustifyMass}(T)
+}{
+1+\operatorname{Cost}(T)
+}.
+\]
+
+这只是问题生成器的一种参数化定义，不声明其为唯一评分。
+
+---
+
+# 第六十部　发现曲率
+
+固定区分 \(Q,D\) 的两种更新：
+
+\[
+\mathsf Q_Q(A,B):=(A,B\cup Q),
+\]
+
+\[
+\mathsf D_D(A,B):=(A\cup D,B).
+\]
+
+它们严格交换：
+
+\[
+\mathsf D_D\mathsf Q_Q
+=
+\mathsf Q_Q\mathsf D_D.
+\]
+
+非交换来自自适应生成器，而不是固定集合并本身。
+
+## 60.1 先问后定义
+
+给状态 \(\Sigma\)，定义：
+
+\[
+T_Q:=M_Q(\Sigma),
+\qquad
+\Sigma^Q:=\mathsf Q_{\operatorname{Dist}(T_Q)}(\Sigma),
+\]
+
+\[
+d_{QD}:=M_D(\Sigma^Q),
+\qquad
+\Sigma_{QD}:=
+\mathsf D_{\operatorname{Dist}(d_{QD})}(\Sigma^Q).
+\]
+
+---
+
+## 60.2 先定义后问
+
+定义：
+
+\[
+d_D:=M_D(\Sigma),
+\qquad
+\Sigma^D:=\mathsf D_{\operatorname{Dist}(d_D)}(\Sigma),
+\]
+
+\[
+T_{DQ}:=M_Q(\Sigma^D),
+\qquad
+\Sigma_{DQ}:=
+\mathsf Q_{\operatorname{Dist}(T_{DQ})}(\Sigma^D).
+\]
+
+---
+
+## 60.3 外延发现曲率
+
+给状态距离：
+
+\[
+d_\Sigma((A_1,B_1),(A_2,B_2))
+:=
+\mu(A_1\triangle A_2)
++
+\mu(B_1\triangle B_2).
+\]
+
+定义：
+
+\[
+\boxed{
+\Omega_M^{\mathrm{ext}}(\Sigma)
+:=
+d_\Sigma(\Sigma_{QD},\Sigma_{DQ}).
+}
+\]
+
+---
+
+## 60.4 内涵发现曲率
+
+若状态还包含定义图、来源图和问题图，定义：
+
+\[
+\boxed{
+\Omega_M^{\mathrm{int}}(\Sigma)
+:=
+d_{\mathrm{graph}}
+(\mathcal G_{QD},\mathcal G_{DQ}).
+}
+\]
+
+可能有：
+
+\[
+\Omega_M^{\mathrm{ext}}=0
+\]
+
+而：
+
+\[
+\Omega_M^{\mathrm{int}}>0.
+\]
+
+即最终区分相同，但发现路径、依赖和未来修订能力不同。
+
+---
+
+## 60.5 曲率解释
+
+定义曲率为零表示本轮“先问还是先定义”不改变结果。
+
+定义曲率非零表示：
+
+- 新问题改变了可被发明的定义；
+- 新定义改变了可被提出的问题；
+- 对象语言和问题语言相互生成。
+
+深层发现由此可以定位于两个自适应生成器的不交换处。
+
+---
+
+# 第六十一部　方法轨迹与哲学目标
+
+设环境或记录流类型为 \(\Omega\)。
+
+给方法 \(M\) 和环境 \(\omega\)，定义科学状态轨迹：
+
+\[
+\operatorname{Trace}(M,\omega)
+:=
+(\Sigma_n^{M,\omega})_{n\ge0}.
+\]
+
+定义方法行为：
+
+\[
+\boxed{
+\operatorname{Beh}(M)
+:=
+\bigl(
+\operatorname{Trace}(M,\omega)
+\bigr)_{\omega\in\Omega}.
+}
+\]
+
+给当前哲学读数：
+
+\[
+q_{\mathrm{phil}}:\operatorname{Method}(X)\to Q_{\mathrm{phil}},
+\]
+
+定义哲学目标：
+
+\[
+T_{\mathrm{phil}}:=\operatorname{Beh}.
+\]
+
+定义哲学残差：
+
+\[
+\boxed{
+\mathcal E_{\mathrm{phil}}
+:=
+\ker q_{\mathrm{phil}}
+\setminus
+\ker\operatorname{Beh}.
+}
+\]
+
+它记录当前哲学认为相同、但在某些环境中产生不同科学轨迹的方法对。
+
+哲学完备化因此不是只对方法贴标签，而是寻找足以预测方法长期行为的低成本定义。
+
+---
+
+# 第六十二部　反射曲率
+
+设科学系统状态类型为 \(S\)，内部自我模型空间为 \(\widehat S\)。
+
+定义自我表示：
+
+\[
+r:S\to\widehat S.
+\]
+
+给证据、问题或记录 \(a\)，定义实际更新：
+
+\[
+U_a:S\to S.
+\]
+
+定义内部预测更新：
+
+\[
+\widehat U_a:\widehat S\to\widehat S.
+\]
+
+## 62.1 反射交换图
+
+比较：
+
+\[
+r\circ U_a
+\]
+
+与：
+
+\[
+\widehat U_a\circ r.
+\]
+
+---
+
+## 62.2 反射缺陷
+
+定义：
+
+\[
+\boxed{
+\operatorname{RefDefect}_a(s)
+:=
+\bigl(
+r(U_a(s)),
+\widehat U_a(r(s))
+\bigr).
+}
+\]
+
+若 \(\widehat S\) 带距离，定义反射曲率：
+
+\[
+\boxed{
+\kappa_a(s)
+:=
+d_{\widehat S}
+\left(
+r(U_a(s)),
+\widehat U_a(r(s))
+\right).
+}
+\]
+
+---
+
+## 62.3 两类误差
+
+定义对象误差为理论预测与外部记录的差异。
+
+定义反射误差为系统对自身修订的预测与实际修订的差异。
+
+因此科学系统可能正确描述当前对象，却错误描述自己面对未来反例时会如何改变。
+
+---
+
+## 62.4 反射闭合
+
+相对于证据族 \(\mathcal A\)，定义：
+
+\[
+\boxed{
+\operatorname{ReflectClosed}(s;\mathcal A)
+\quad\Longleftrightarrow\quad
+\forall a\in\mathcal A,\ \kappa_a(s)=0.
+}
+\]
+
+该闭合仍依赖自我表示空间、距离和证据族。
+
+---
+
+# 第六十三部　定义 holonomy 与路径依赖
+
+给版本状态 \(S\) 的外延投影：
+
+\[
+\operatorname{ext}:S\to\operatorname{ExtState}.
+\]
+
+给更新序列：
+
+\[
+\alpha=(a_1,\ldots,a_n),
+\]
+
+定义复合更新：
+
+\[
+H_\alpha
+:=
+U_{a_n}\circ\cdots\circ U_{a_1}.
+\]
+
+## 63.1 外延闭环
+
+定义 \(\alpha\) 在 \(s\) 上形成外延闭环：
+
+\[
+\operatorname{ext}(H_\alpha(s))
+=
+\operatorname{ext}(s).
+\]
+
+---
+
+## 63.2 非平凡 holonomy
+
+定义：
+
+\[
+\boxed{
+\operatorname{Holonomy}_\alpha(s)
+\quad\Longleftrightarrow\quad
+\operatorname{ext}(H_\alpha(s))
+=
+\operatorname{ext}(s)
+\ \wedge\
+H_\alpha(s)\neq s.
+}
+\]
+
+它表示最终区分或预测回到原点，但定义图、来源、证明路径或未来修订倾向没有回到原点。
+
+---
+
+## 63.3 科学历史的剩余作用
+
+holonomy 非平凡时，当前外延理论不能唯一恢复形成它的历史。两个理论可以当前预测等价，却因来源图不同而对下一次问题表现不同。
+
+因此科学历史在方法层可能是状态变量，而不只是可以全部消去的叙述。
+
+---
+
+# 第六十四部　理论等价的层级
+
+定义外延等价：
+
+\[
+S_1\simeq_{\mathrm{ext}}S_2
+\iff
+\operatorname{ext}(S_1)=\operatorname{ext}(S_2).
+\]
+
+定义预测等价，相对于操作族 \(I\)：
+
+\[
+S_1\simeq_{\mathrm{pred},I}S_2
+\iff
+\forall i\in I,\ P(S_1,i)=P(S_2,i).
+\]
+
+定义方法等价，相对于环境族 \(\Omega\)：
+
+\[
+S_1\simeq_{\mathrm{method},\Omega}S_2
+\iff
+\forall\omega\in\Omega,\ 
+\operatorname{Trace}(S_1,\omega)
+=
+\operatorname{Trace}(S_2,\omega).
+\]
+
+定义反射等价，相对于证据族 \(\mathcal A\)：
+
+\[
+S_1\simeq_{\mathrm{reflect},\mathcal A}S_2
+\]
+
+当且仅当两者的自我表示、实际更新、预测更新及反射缺陷在指定翻译下相容。
+
+这些等价关系不自动相同；比较理论时必须声明采用哪一层。
+
+---
+
+# 第六十五部　自封闭与开放问题能力
+
+给状态 \((A,B)\)，当前可回答问题类：
+
+\[
+\operatorname{Ans}(A).
+\]
+
+设方法允许提出的目标类为：
+
+\[
+\mathscr Q_M(\Sigma).
+\]
+
+## 65.1 自封闭
+
+定义：
+
+\[
+\boxed{
+\operatorname{QuestionSealed}(M,\Sigma)
+\quad\Longleftrightarrow\quad
+\mathscr Q_M(\Sigma)
+\subseteq
+\operatorname{Ans}(A).
+}
+\]
+
+此时所有允许新问题都已由当前区分回答，所以问题显影恒为空。
+
+低残差因此可能来自问题空间被限制，而不是定义系统具有强开放能力。
+
+---
+
+## 65.2 开放暴露能力
+
+定义：
+
+\[
+\boxed{
+\operatorname{OpenCap}_M(\Sigma)
+:=
+\sup_{T\in\mathscr Q_M(\Sigma)}
+\frac{
+\mu(
+\operatorname{Dist}(T)\setminus(A\cup B)
+)
+}{
+1+\operatorname{Cost}(T)
+}.
+}
+\]
+
+若为零，当前问题生成器不能暴露定义与旧问题共同忽略的新区别。
+
+若为正，则系统保留打开当前局部闭合的能力。
+
+---
+
+# 第六十六部　开放固定点
+
+给定定义候选类 \(\mathscr D\)、问题候选类 \(\mathscr Q\)、环境类 \(\Omega\) 和证据类 \(\mathcal A\)。
+
+定义相对对齐：
+
+\[
+A=B.
+\]
+
+定义定义停驻：
+
+\[
+\sup_{d\in\mathscr D}
+G_{\lambda,\alpha}(d;R,K)\le0.
+\]
+
+定义问题停驻：
+
+\[
+\sup_{T\in\mathscr Q}
+\operatorname{QuestionScore}(T)\le0.
+\]
+
+定义反射停驻：
+
+\[
+\sup_{a\in\mathcal A}\kappa_a(s)=0.
+\]
+
+定义相对固定点为同时满足上述条件的状态。
+
+定义开放固定点为：
+
+1. 相对于当前四个候选域为固定点；
+2. 保存向扩张候选域的版本迁移；
+3. 扩张后允许重新出现显影、捕获或反射残差。
+
+它不是不可再打开的终局，而是带扩张接口的局部稳定状态。
+
+---
+
+# 第六十七部　涌现作为语法相对压缩
+
+给低层定义语言 \(\Gamma_{\mathrm{low}}\) 和高层目标 \(T_{\mathrm{high}}\)。
+
+定义低层最小成本：
+
+\[
+C_{\mathrm{low}}
+:=
+\operatorname{DefDim}_{\Gamma_{\mathrm{low}}}
+(T_{\mathrm{high}}).
+\]
+
+加入高层定义 \(d_{\mathrm{high}}\) 后：
+
+\[
+C_{\mathrm{with}}
+:=
+c(d_{\mathrm{high}})
++
+\operatorname{DefDim}_{\Gamma_{\mathrm{low}}\cup\{d_{\mathrm{high}}\}}
+(T_{\mathrm{high}}).
+\]
+
+定义涌现增益：
+
+\[
+\boxed{
+\operatorname{EmergenceGain}
+:=
+C_{\mathrm{low}}-C_{\mathrm{with}}.
+}
+\]
+
+若完整低层语言共同核满足：
+
+\[
+K_{\Gamma_{\mathrm{low}}}
+\subseteq
+\ker d_{\mathrm{high}},
+\]
+
+则 \(d_{\mathrm{high}}\) 原则上由低层完整区分决定，定义为坐标涌现。
+
+若：
+
+\[
+K_{\Gamma_{\mathrm{low}}}
+\nsubseteq
+\ker d_{\mathrm{high}},
+\]
+
+则其提供低层定义语言没有的区分方向，定义为原语涌现。
+
+涌现因而总是相对于语言、目标和成本函数。
+
+---
+
+# 第六十八部　科学统一作为共享压缩
+
+给领域 \(i=1,\ldots,n\) 的所需区分：
+
+\[
+B_i.
+\]
+
+定义独立最小成本：
+
+\[
+C_i^*
+:=
+\inf\{
+C(\Gamma_i):B_i\subseteq A_{\Gamma_i}
+\}.
+\]
+
+定义联合需求：
+
+\[
+B_{\mathrm{joint}}
+:=
+\bigcup_i B_i.
+\]
+
+定义联合最小成本：
+
+\[
+C_{\mathrm{joint}}^*
+:=
+\inf\{
+C(\Gamma):B_{\mathrm{joint}}\subseteq A_\Gamma
+\}.
+\]
+
+定义统一增益：
+
+\[
+\boxed{
+\operatorname{UnificationGain}
+:=
+\sum_i C_i^*
+-
+C_{\mathrm{joint}}^*.
+}
+\]
+
+统一增益为正表示共享定义结构比各领域独立定义更短；仅把多个理论并列而不降低联合成本，不构成此意义的统一。
+
+---
+
+# 第六十九部　科学革命作为欠账塌缩
+
+给语法扩张：
+
+\[
+\Gamma\subsetneq\Gamma'.
+\]
+
+定义扩张前后欠账：
+
+\[
+u_{\mathrm{before}}
+=
+\mu(B\setminus A_\Gamma),
+\]
+
+\[
+u_{\mathrm{after}}
+=
+\mu(B\setminus A_{\Gamma'}).
+\]
+
+定义过度增加：
+
+\[
+\Delta o_+
+:=
+\max\{
+0,
+\mu(A_{\Gamma'}\setminus B)
+-
+\mu(A_\Gamma\setminus B)
+\}.
+\]
+
+定义新增成本：
+
+\[
+\Delta C
+:=
+C(\Gamma')-C(\Gamma).
+\]
+
+给 \(\lambda\ge0\)，定义革命指数：
+
+\[
+\boxed{
+\operatorname{Rev}_\lambda
+:=
+\frac{
+u_{\mathrm{before}}
+-
+u_{\mathrm{after}}
+-
+\lambda\Delta o_+
+}{
+1+\Delta C
+}.
+}
+\]
+
+该量记录定义语法扩张是否以较低新增成本造成广域欠账下降，同时避免同量级过度区分增长。
+
+它是结构账本定义，不自动等同于历史学意义上的“革命”。
+
+---
+
+# 第七十部　科学阶段的流量定义
+
+给时间区间 \(I\)。
+
+定义探索占优：
+
+\[
+\sum_{n\in I}e_n
+>
+\sum_{n\in I}c_n.
+\]
+
+定义整理占优：
+
+\[
+\sum_{n\in I}c_n
+>
+\sum_{n\in I}e_n.
+\]
+
+定义推测占优：
+
+\[
+\sum_{n\in I}f_n
+>
+\sum_{n\in I}j_n.
+\]
+
+定义验证占优：
+
+\[
+\sum_{n\in I}j_n
+>
+\sum_{n\in I}f_n.
+\]
+
+定义欠账危机：
+
+\[
+u_n
+\]
+
+在区间上持续增长。
+
+定义区分膨胀：
+
+\[
+o_n
+\]
+
+在区间上持续增长。
+
+这些阶段由四流相对大小定义，而不预设固定科学史顺序。
+
+---
+
+# 第七十一部　Yu Deng 方法的捕获—断裂解释
+
+在 kinetic、Boltzmann 与临界 SPDE 问题中，完整微观身份读数可以区分几乎所有历史，但其定义成本和目标外断裂极高。
+
+低阶边缘读数成本低，却存在未来预测不足。
+
+在本增订语言中，可把结构任务定义为：
+
+\[
+\boxed{
+\text{寻找高捕获、低断裂、低成本且可求和的中间定义。}
+}
+\]
+
+累积量区别连通关联与可因子化部分，避免把全部高阶矩细节直接身份编码。
+
+collision-history molecule 把影响未来低阶读数的碰撞历史归为组合类型。
+
+cancellation class 把必须共同求和的图放入同一结构坐标。
+
+cutting forest 把全局对象分解成有局部预算的块。
+
+prepared state 与 restart rule 把长时间问题改写成可重复生成的低成本状态。
+
+adaptive depth 使定义深度随尺度增长，而不是在所有分辨率上固定。
+
+因此可定义 Deng 型结构效率：
+
+\[
+\operatorname{DengEfficiency}(d)
+:=
+\frac{
+\operatorname{PredictiveCapture}(d)
+-
+\lambda\operatorname{PredictiveFracture}(d)
+}{
+1+
+\operatorname{DescriptionCost}(d)
++
+\operatorname{SummationCost}(d)
+}.
+\]
+
+此定义不替代具体解析定理；它只把为何 cumulant、molecule、cutting 和 Hepp tree 比完整历史身份编码更有证明价值，写成捕获—断裂—成本三账。
+
+---
+
+# 第七十二部　形式化路线：双核与区分流
+
+建议新增：
+
+```text
+D5/S3/DefinitionEscape/TargetFamilies/
+  TargetFamilyKernel.lean
+  CanonicalTargetOntology.lean
+  SeparatingTargetsInjectivity.lean
+
+D5/S3/DefinitionEscape/Alignment/
+  Underdefinition.lean
+  Overdefinition.lean
+  CaptureFractureLaw.lean
+  AlignmentLoss.lean
+  DistinctionPrecisionRecall.lean
+
+D5/S3/DefinitionEscape/QuestionDynamics/
+  QuestionExposure.lean
+  DistinctionJustification.lean
+  CoupledKernelUpdate.lean
+  DistinctionFlowBalance.lean
+
+D5/S3/DefinitionEscape/QuestionAnswer/
+  RequirementAnswerAdjunction.lean
+  QuestionClosure.lean
+  TestableCore.lean
+
+D5/S3/DefinitionEscape/Methods/
+  QuestionDefinitionGenerator.lean
+  MethodTrace.lean
+  PhilosophyBehaviorResidual.lean
+  DiscoveryCurvature.lean
+
+D5/S3/DefinitionEscape/Reflection/
+  SelfDescriptionDefect.lean
+  ReflectionCurvature.lean
+  IntensionalHolonomy.lean
+  OpenFixedPoint.lean
+
+D5/S3/DefinitionEscape/Emergence/
+  GrammarRelativeEmergence.lean
+  SharedCompressionUnification.lean
+  DefinitionRevolutionIndex.lean
+```
+
+---
+
+## 72.1 Lean 结构草案
+
+```lean
+universe u v w
+
+namespace D5.S3.DefinitionEscape.DualKernel
+
+def Distinguishes {X Y : Type*} (f : X → Y) (x y : X) : Prop :=
+  f x ≠ f y
+
+def FamilyKernel {X : Type u} {I : Type v}
+    (Y : I → Type w) (F : (i : I) → X → Y i) : Set (X × X) :=
+  {p | ∀ i, F i p.1 = F i p.2}
+
+def Underdefined {X : Type*}
+    (R K : Set (X × X)) : Set (X × X) :=
+  R \ K
+
+def Overdefined {X : Type*}
+    (R K : Set (X × X)) : Set (X × X) :=
+  K \ R
+
+def Capture {X D : Type*}
+    (R K : Set (X × X)) (d : X → D) : Set (X × X) :=
+  (R \ K) ∩ {p | d p.1 ≠ d p.2}
+
+def Fracture {X D : Type*}
+    (R K : Set (X × X)) (d : X → D) : Set (X × X) :=
+  (R ∩ K) ∩ {p | d p.1 ≠ d p.2}
+
+def Exposure {X Y : Type*}
+    (R K : Set (X × X)) (T : X → Y) : Set (X × X) :=
+  (R ∩ K) ∩ {p | T p.1 ≠ T p.2}
+
+def Justification {X Y : Type*}
+    (R K : Set (X × X)) (T : X → Y) : Set (X × X) :=
+  (K \ R) ∩ {p | T p.1 ≠ T p.2}
+```
+
+---
+
+## 72.2 首批精确恒等式
+
+优先形式化：
+
+```lean
+theorem under_after_definition :
+  Underdefined (R ∩ SetoidKernel d) K =
+    Underdefined R K \ Capture R K d
+
+theorem over_after_definition :
+  Overdefined (R ∩ SetoidKernel d) K =
+    Overdefined R K ∪ Fracture R K d
+
+theorem under_after_target :
+  Underdefined R (K ∩ SetoidKernel T) =
+    Underdefined R K ∪ Exposure R K T
+
+theorem over_after_target :
+  Overdefined R (K ∩ SetoidKernel T) =
+    Overdefined R K \ Justification R K T
+```
+
+还应同时证明所用并集为不交并集的条件，从而导出有限计数或测度余额公式。
+
+---
+
+## 72.3 要求—回答结构
+
+```lean
+def Requires (targets : Set (ExtDef X)) : Set (X × X) :=
+  {p | ∃ T ∈ targets, T.read p.1 ≠ T.read p.2}
+
+def Answers (A : Set (X × X)) : Set (ExtDef X) :=
+  {T | ∀ p, T.read p.1 ≠ T.read p.2 → p ∈ A}
+```
+
+形式化：
+
+```lean
+theorem requires_subset_iff_targets_subset_answers :
+  Requires targets ⊆ A ↔ targets ⊆ Answers A
+```
+
+再由复合定义得到问题闭包和可检验核的闭包/内核三律。
+
+---
+
+## 72.4 发现曲率接口
+
+```lean
+structure DistinctionState (X : Type u) where
+  expressed : Set (X × X)
+  required : Set (X × X)
+
+abbrev QuestionGenerator (X : Type u) :=
+  DistinctionState X → ExtDef X
+
+abbrev DefinitionGenerator (X : Type u) :=
+  DistinctionState X → ExtDef X
+
+def questionThenDefinition ...
+def definitionThenQuestion ...
+
+def DiscoveryCurvature
+    [PseudoMetricSpace (DistinctionState X)]
+    (MQ : QuestionGenerator X)
+    (MD : DefinitionGenerator X)
+    (S : DistinctionState X) : ℝ≥0 :=
+  nndist (questionThenDefinition MQ MD S)
+    (definitionThenQuestion MQ MD S)
+```
+
+---
+
+# 第七十三部　双核统一式
+
+\[
+\boxed{
+R_\Gamma
+=
+\bigcap_{d\in\Gamma}\ker d
+=
+\text{当前定义允许合并的对象对}.
+}
+\]
+
+\[
+\boxed{
+K_{\mathcal T}
+=
+\bigcap_{T\in\mathcal T}\ker T
+=
+\text{当前问题允许合并的对象对}.
+}
+\]
+
+\[
+\boxed{
+\mathsf{UNDER}
+=
+R_\Gamma\setminus K_{\mathcal T}.
+}
+\]
+
+\[
+\boxed{
+\mathsf{OVER}
+=
+K_{\mathcal T}\setminus R_\Gamma.
+}
+\]
+
+\[
+\boxed{
+\mathsf{ALIGN}
+\iff
+R_\Gamma=K_{\mathcal T}.
+}
+\]
+
+区分表示：
+
+\[
+\boxed{
+A_\Gamma
+=
+\Omega_X\setminus R_\Gamma,
+\qquad
+B_{\mathcal T}
+=
+\Omega_X\setminus K_{\mathcal T}.
+}
+\]
+
+\[
+\boxed{
+\mathsf{UNDER}=B_{\mathcal T}\setminus A_\Gamma,
+\qquad
+\mathsf{OVER}=A_\Gamma\setminus B_{\mathcal T}.
+}
+\]
+
+流量表示：
+
+\[
+\boxed{
+\begin{aligned}
+u_{n+1}&=u_n+e_n-c_n,\\
+o_{n+1}&=o_n+f_n-j_n.
+\end{aligned}
+}
+\]
+
+方法表示：
+
+\[
+\boxed{
+\mathsf{METHOD}
+=
+(\mathsf{QUESTION\ GENERATOR},
+\mathsf{DEFINITION\ GENERATOR}).
+}
+\]
+
+发现曲率：
+
+\[
+\boxed{
+\Omega_M
+=
+d(
+\mathsf{QUESTION\ THEN\ DEFINITION},
+\mathsf{DEFINITION\ THEN\ QUESTION}
+).
+}
+\]
+
+反射曲率：
+
+\[
+\boxed{
+\kappa_a(s)
+=
+d(
+r(U_a(s)),
+\widehat U_a(r(s))
+).
+}
+\]
+
+---
+
+# 第七十四部　v1.2 最终结算
+
+v1.0 的中心是：
+
+\[
+\ker q\setminus\ker T.
+\]
+
+v1.1 的中心是：
+
+\[
+\text{定义—残差—修订—反射的版本化定义图}.
+\]
+
+v1.2 把单向残差扩展为两套区分标准之间的动态对齐：
+
+\[
+\boxed{
+\text{科学是“需要区分什么”与“能够表达什么”之间的双核动力学。}
+}
+\]
+
+新问题缩小目标核、扩张所需区分；新定义缩小定义核、扩张已表达区分。
+
+问题显影制造新欠账；定义捕获偿还欠账。
+
+定义断裂制造区分盈余；问题正当化消化盈余。
+
+于是科学变化被分解为：
+
+\[
+\boxed{
+\mathsf{EXPOSE}
++
+\mathsf{JUSTIFY}
++
+\mathsf{CAPTURE}
++
+\mathsf{FRACTURE}.
+}
+\]
+
+固定问题与固定定义的加入相互交换；真正的创造性路径依赖来自问题生成器和定义生成器根据当前状态自适应选择下一项对象。其不交换量被定义为发现曲率。
+
+科学哲学进一步把方法的完整环境轨迹作为目标；自反科学再比较系统实际如何修订与它认为自己会如何修订，形成反射曲率。
+
+因此目前最短总式为：
+
+\[
+\boxed{
+\mathsf{SCIENCE}
+=
+\mathsf{DISTINCTION\ REQUIREMENT\ FLOW}
+\bowtie
+\mathsf{DISTINCTION\ EXPRESSION\ FLOW}
+\bowtie
+\mathsf{DISCOVERY\ CURVATURE}
+\bowtie
+\mathsf{REFLECTION\ CURVATURE}.
+}
+\]
+
+中文结算：
+
+\[
+\boxed{
+\text{科学通过新问题要求更多区别，n通过新定义压缩这些区别，n通过发现曲率记录问题与定义的相互生成，n并通过反射曲率审计自己是否理解了自身的修订方式。}
+}
+\]
+
+更短地：
+
+\[
+\boxed{
+\text{科学的基本失配，n是应当区分的差异与当前能够低成本表达的差异之间的不一致。}
+}
+\]
+
+---
+
+# 追加账本增订
+
+## v1.2 — 2026-08-23
+
+追加存入：
+
+- 定义族核 \(R_\Gamma\) 与目标族核 \(K_{\mathcal T}\)；
+- 目标相对规范对象空间 \(X/K_{\mathcal T}\)；
+- 分离目标族下充分表示必为单射的无压缩边界；
+- 定义不足 \(R\setminus K\) 与定义过度 \(K\setminus R\)；
+- 新定义的捕获—断裂双账及精确更新恒等式；
+- 捕获召回率、切割精确率、加权对齐损失和净结构增益；
+- 新问题的显影—正当化双账及精确更新恒等式；
+- 核表示与区分集表示的补集字典；
+- EXPOSE/JUSTIFY/CAPTURE/FRACTURE 四种区分流；
+- 欠账、盈余和总失配的余额方程；
+- 范围—失配—成本三维科学状态；
+- 要求—回答对偶、问题闭包、可检验区分核和闲置区分；
+- 问题生成器与定义生成器构成的完整科学方法；
+- 先问后定义与先定义后问之间的发现曲率；
+- 方法环境轨迹与哲学行为残差；
+- 系统实际修订与自我预测修订之间的反射曲率；
+- 外延闭环上的内涵 holonomy；
+- 外延、预测、方法与反射等价的分层；
+- 问题自封闭与开放暴露能力；
+- 相对候选域的开放固定点；
+- 坐标涌现、原语涌现、共享压缩统一和欠账塌缩革命指数；
+- 以四种流量定义探索、整理、推测、验证、危机与区分膨胀阶段；
+- Yu Deng 方法的高捕获、低断裂、低成本解释；
+- 双核、区分流、要求—回答与曲率结构的 Lean 路线。
 
 后续增订继续严格追加于本节之后。
