@@ -1,0 +1,10 @@
+\[
+\boxed{
+\mathcal A_{n+1}
+=
+\operatorname{Alg}\bigl(\mathcal A_0\cup F^*\mathcal A_n\bigr).
+}
+\]
+
+这里右侧是在 \(\mathbb K^X\) 中生成的最小含幺函数代数。
+

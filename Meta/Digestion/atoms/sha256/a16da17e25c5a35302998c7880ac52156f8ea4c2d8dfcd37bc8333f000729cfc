@@ -1,0 +1,18 @@
+## 25.1 第一阶段：纯集合核
+
+```text
+D5/S3/Observer/Interfaces/
+  EffectiveImageDescent.lean
+  CarryEquivalence.lean
+  FutureWordKernel.lean
+  MinimalPredictiveCongruence.lean
+```
+
+优先闭合：
+
+1. 有效像下降的双向等价；
+2. \(K_{n+1}=K_q\cap F^{-1}K_n\)；
+3. 稳定即前向不变；
+4. \(K_\infty\) 最大不变子关系；
+5. 有限稳定类数界。
+

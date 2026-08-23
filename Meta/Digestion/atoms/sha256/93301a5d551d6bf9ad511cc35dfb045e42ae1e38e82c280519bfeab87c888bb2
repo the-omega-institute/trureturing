@@ -1,0 +1,10 @@
+## 结论 26.8
+
+当前 negative-base-\(\varphi\) 前沿已经不再缺“相邻边是否存在、是否唯一”；最后核心是证明真实 gap 沿 phase-enriched interface 因子化。换言之，剩余难点已经精确 collapse 为：
+
+\[
+\boxed{
+\text{one finite-state interface must carry the exact aperiodic gap law}.
+}
+\]
+

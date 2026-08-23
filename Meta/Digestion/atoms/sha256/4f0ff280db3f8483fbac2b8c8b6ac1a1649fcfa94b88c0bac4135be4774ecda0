@@ -1,0 +1,12 @@
+## 定理 2.1（动力接口基本等价定理）
+
+以下等价：
+
+1. \(F\) 沿 \(q\) 精确下降；
+2. \(K_q\) 对 \(F\) 前向不变：
+   \[
+   (x,y)\in K_q\Longrightarrow(Fx,Fy)\in K_q;
+   \]
+3. \(\operatorname{Carry}(q,F)=\varnothing\)；
+4. 下一步读数 \(q\circ F\) 沿 \(q\) 因子化。
+

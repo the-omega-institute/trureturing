@@ -1,0 +1,16 @@
+## 定义 15.1（未解决目标 pair）
+
+\[
+\mathcal P_T
+:=
+\{\{M,N\}:E_0(M)=E_0(N),\ T(M)\neq T(N)\}.
+\]
+
+每个实验 \(e\in\mathcal E\) 覆盖的 pair 集为
+
+\[
+S_e
+:=
+\{\{M,N\}\in\mathcal P_T:Q_e(M)\neq Q_e(N)\}.
+\]
+

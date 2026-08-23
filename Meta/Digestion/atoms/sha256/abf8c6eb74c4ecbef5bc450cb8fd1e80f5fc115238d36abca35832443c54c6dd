@@ -1,0 +1,10 @@
+\[
+\|X\|_{HS}^2
+=
+\|\mathcal D(X)\|_{HS}^2
++
+\|(I-\mathcal D)(X)\|_{HS}^2.
+\]
+
+因此 \(\mathcal D\) 不是“像投影”，而是在 Hilbert–Schmidt 算子空间中真正的正交投影。
+

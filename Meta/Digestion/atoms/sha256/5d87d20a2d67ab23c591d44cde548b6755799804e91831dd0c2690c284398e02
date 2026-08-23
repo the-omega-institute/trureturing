@@ -1,0 +1,12 @@
+\[
+\operatorname{ran}\mathcal D
+=
+\{X:\forall i\neq j,\ P_iXP_j=0\},
+\]
+
+以及
+
+\[
+X=\mathcal D(X)+(I-\mathcal D)(X),
+\]
+

@@ -1,0 +1,16 @@
+# 5. 线性接口：carry 变成交叉块
+
+令 \(H\) 为 Hilbert 空间，\(P:H\to H\) 为正交投影，
+
+\[
+Q:=I-P,
+\qquad
+H=V\oplus R,
+\quad
+V=\operatorname{ran}P,
+\quad
+R=\operatorname{ran}Q.
+\]
+
+令 \(T:H\to H\) 为有界线性算子。
+

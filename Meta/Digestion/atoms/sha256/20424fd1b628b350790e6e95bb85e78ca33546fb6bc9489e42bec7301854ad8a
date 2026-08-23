@@ -1,0 +1,10 @@
+\[
+\rho_{SE}\neq\sigma_{SE},
+\qquad
+\operatorname{Tr}_E\rho_{SE}
+=
+\operatorname{Tr}_E\sigma_{SE}.
+\]
+
+因此任意只通过 \(\operatorname{Tr}_E\) 的恢复器都必须在这两个输入上给出同一输出。
+

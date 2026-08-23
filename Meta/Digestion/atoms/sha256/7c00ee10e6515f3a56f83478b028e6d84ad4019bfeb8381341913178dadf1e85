@@ -1,0 +1,10 @@
+# 8. 随机动力学：强 lumpability 与定量 carry
+
+令 \(K(x,\cdot)\) 为 \(X\) 上 Markov kernel，\(q:X\to B\)。记
+
+\[
+q_*K_x
+\]
+
+为从状态 \(x\) 出发一步后观察到的 \(B\)-分布。
+

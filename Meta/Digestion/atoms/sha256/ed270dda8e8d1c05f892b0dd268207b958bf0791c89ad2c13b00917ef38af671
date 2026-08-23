@@ -1,0 +1,10 @@
+## Lean 锚点 11.1
+
+仓库定理
+
+`D5/S3/Entropy/Fusion/QuotientFiberDecomposition.quotient_fiber_entropy_decomposition`
+
+机器证明有限 law 的 quotient–fiber 熵分解。本文的动态链把该静态余量沿未来词塔逐层展开。
+
+---
+

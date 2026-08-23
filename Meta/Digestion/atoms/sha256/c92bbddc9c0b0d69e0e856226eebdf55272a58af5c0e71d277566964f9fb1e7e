@@ -1,0 +1,8 @@
+## Lean 锚点 2.1
+
+仓库定理
+
+`D5/S3/ConceptDynamics/Dialectics/ExactDescentNoCarry.exact_descent_has_no_carry`
+
+已经机器证明“精确交换方块排除 carry witness”的方向。本文定理 2.1 补齐其有效像上的反向构造，并把它提升为统一核判据。
+

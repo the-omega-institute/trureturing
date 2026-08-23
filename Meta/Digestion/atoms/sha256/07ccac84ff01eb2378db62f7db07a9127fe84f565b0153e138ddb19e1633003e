@@ -1,0 +1,17 @@
+## 定义 8.2（TV carry 缺陷）
+
+\[
+\delta_q(K)
+:=
+\sup_{q(x)=q(y)}
+\operatorname{TV}(q_*K_x,q_*K_y).
+\]
+
+于是
+
+\[
+\delta_q(K)=0
+\iff
+K\text{ 对 }q\text{ 强 lumpable}.
+\]
+

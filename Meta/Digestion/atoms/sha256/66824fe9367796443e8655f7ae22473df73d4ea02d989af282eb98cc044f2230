@@ -1,0 +1,14 @@
+## 推论 4.1（最小不变代数）
+
+\[
+\mathcal A_\infty
+:=
+\bigcup_n\mathcal A_n
+\]
+
+在有限系统中稳定为包含 \(\mathcal A_q\) 的最小 \(F^*\)-不变含幺代数，并与最小预测商满足
+
+\[
+\mathcal A_\infty\cong\mathbb K^{Z_q}.
+\]
+

@@ -1,0 +1,18 @@
+## 定义 4.1（接口代数）
+
+\[
+\mathcal A_q
+:=
+\{f\circ q:f:B_q\to\mathbb K\}
+\subseteq
+\mathbb K^X.
+\]
+
+它恰由所有在 \(K_q\)-类上常值的函数组成。
+
+定义 Koopman 拉回：
+
+\[
+F^*g:=g\circ F.
+\]
+

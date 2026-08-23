@@ -1,0 +1,8 @@
+## Lean 锚点 18.1
+
+仓库定理
+
+`D5/S3/Quantum/Completion/TransfiniteBasisResidualTower.transfinite_basis_residual_tower`
+
+已经机器证明初始良序 Hilbert 基的后继分裂、极限交、每个真初始段的同基数尾部，以及终端残余为零。
+

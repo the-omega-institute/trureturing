@@ -1,0 +1,10 @@
+### 证明
+
+\[
+PT-TP
+=PT(P+Q)-(P+Q)TP
+=PTQ-QTP.
+\]
+
+两项的定义域和值域互换，故同时为零恰为 reducing。\(\square\)
+

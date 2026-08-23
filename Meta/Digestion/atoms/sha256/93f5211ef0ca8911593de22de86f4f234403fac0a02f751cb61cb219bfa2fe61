@@ -1,0 +1,26 @@
+## 0.2 基本符号
+
+给定集合或类型 \(X,B\)：
+
+\[
+q:X\to B
+\]
+
+称为接口。其核关系为
+
+\[
+x\sim_q y
+\iff
+q(x)=q(y).
+\]
+
+为避免非满射接口在像外产生任意延拓，定义有效像：
+
+\[
+B_q:=\operatorname{Im}(q),
+\qquad
+\widehat q:X\twoheadrightarrow B_q.
+\]
+
+后文所有“唯一下降”均指向有效像上的唯一性。
+

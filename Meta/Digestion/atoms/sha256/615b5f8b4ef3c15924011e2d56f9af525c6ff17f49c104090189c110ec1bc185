@@ -1,0 +1,10 @@
+### 16.1.1 Kernel residual
+
+\[
+x\neq y,
+\qquad
+q(x)=q(y).
+\]
+
+它记录接口合并了哪些对象。
+

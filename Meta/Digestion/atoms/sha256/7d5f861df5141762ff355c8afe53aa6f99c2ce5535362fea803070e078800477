@@ -1,0 +1,22 @@
+## 最深解释 5.1
+
+集合论 carry 与线性交换子不是比喻关系，而是以下精确对应：
+
+\[
+\boxed{
+\begin{aligned}
+q(x)=q(y),\ q(Tx)\neq q(Ty)
+&\longleftrightarrow
+PTQ\neq0,\\
+\text{可见方向泄入余量}
+&\longleftrightarrow
+QTP\neq0,\\
+\text{双向接口完全闭合}
+&\longleftrightarrow
+[P,T]=0.
+\end{aligned}
+}
+\]
+
+---
+

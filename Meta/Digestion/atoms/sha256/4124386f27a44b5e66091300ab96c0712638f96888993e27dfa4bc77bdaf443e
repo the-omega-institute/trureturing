@@ -1,0 +1,4 @@
+## 推论 22.4（因果实验价值是定向 kernel transversal）
+
+一个实验的价值不是其 mutual information 的无条件大小，而是它是否横切当前目标 residual。若实验只区分 \(T\) 相同的模型，它可有高信息量而对目标识别无价值。
+

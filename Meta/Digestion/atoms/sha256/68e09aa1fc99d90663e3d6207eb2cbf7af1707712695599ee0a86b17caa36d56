@@ -1,0 +1,12 @@
+### 证明
+
+对同一 fiber 中任意 \(x,y\)，三角不等式给出
+
+\[
+\operatorname{TV}(q_*K_x,q_*K_y)
+\le
+e_x+e_y,
+\]
+
+故至少一个误差不小于该 pair 距离的一半。取上确界与下确界得到下界。上界取每个 fiber 的代表分布作为 \(\overline K\)。\(\square\)
+

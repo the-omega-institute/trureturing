@@ -1,0 +1,18 @@
+\[
+\gamma(s)
+=
+\begin{cases}
+a,&\text{selected letter}=1,\\
+b,&\text{selected letter}=0,
+\end{cases}
+\]
+
+使
+
+\[
+\boxed{
+g=\gamma\circ s.}
+\]
+
+换言之，实际相邻 gap 必须沿“六态相位 + aperiodic Fibonacci 输入位”接口下降。
+

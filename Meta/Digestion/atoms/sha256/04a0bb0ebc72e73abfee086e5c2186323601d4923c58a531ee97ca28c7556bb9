@@ -1,0 +1,28 @@
+## 最终统一式
+
+\[
+\boxed{
+\begin{aligned}
+\text{state distinction}
+&\xrightarrow{q}
+\text{observable quotient},\\
+\text{future incompatibility}
+&\xrightarrow{\operatorname{Carry}}
+\text{predictive refinement},\\
+\text{linearized incompatibility}
+&\xrightarrow{PTQ,QTP}
+\text{commutator defect},\\
+\text{random incompatibility}
+&\xrightarrow{\delta_{TV}}
+\text{lumpability defect},\\
+\text{causal incompatibility}
+&\xrightarrow{K_\mathcal Q\not\subseteq K_T}
+\text{identification residual},\\
+\text{completion}
+&=
+\text{the least refinement on which the dynamics descends}.
+\end{aligned}
+}
+\]
+
+这条链给出一个统一但不混同层级的答案：所谓观察者缺失的信息，不是一个无类型的“隐藏量”；它是目标、动力学与接口共同决定的余量。只有把 kernel、carry、image、coupling、gauge 与 completion topology 分账，才能精确知道下一步究竟应增加读数、增加记忆、改变实验、约束动力学、补 gluing，还是承认目标在当前接口上根本不可识别。

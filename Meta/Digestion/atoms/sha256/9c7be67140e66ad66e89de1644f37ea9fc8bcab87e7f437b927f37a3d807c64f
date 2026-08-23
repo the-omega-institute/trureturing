@@ -1,0 +1,23 @@
+\[
+(c(n+1):\mathbb Z)
+=
+c(n)+
+\begin{cases}
+a,&\ell_n=1,\\b,&\ell_n=0.
+\end{cases}
+\]
+
+一旦该式成立：
+
+\[
+\text{PhaseEnrichedCoreTrace}
+\Longrightarrow
+\text{source-index delta}
+\Longrightarrow
+\text{six-phase gap stream}
+\Longrightarrow
+\text{F/G/H sequence reconstruction}.
+\]
+
+因此当前主线已经从十五节点链压缩为一个**相位接口下降桥**。
+

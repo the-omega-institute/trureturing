@@ -1,0 +1,24 @@
+## 定理 5.3（不变、余不变与 reducing）
+
+\[
+T(V)\subseteq V
+\iff
+QTP=0,
+\]
+
+\[
+T(R)\subseteq R
+\iff
+PTQ=0,
+\]
+
+而
+
+\[
+V\text{ reducing for }T
+\iff
+PTQ=QTP=0.
+\]
+
+注意：**一步可见下降只要求 \(PTQ=0\)**；它不要求可见方向永不泄漏到隐藏方向。若泄漏随后反馈回来，多步预测仍可能失败，这正是未来词塔继续精化的原因。
+

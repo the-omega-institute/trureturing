@@ -1,0 +1,14 @@
+## 定义 1.2（目标充分性）
+
+对目标 \(T:X\to Y\)，称 \(q\) 对 \(T\) 充分，若存在
+
+\[
+\overline T:B_q\to\operatorname{Im}(T)
+\]
+
+满足
+
+\[
+T=\overline T\circ\widehat q.
+\]
+

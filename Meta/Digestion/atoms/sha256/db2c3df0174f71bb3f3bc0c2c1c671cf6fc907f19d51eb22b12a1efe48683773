@@ -1,0 +1,11 @@
+## 25.2 第二阶段：函数代数对偶
+
+```text
+D5/S3/Observer/ObservableAlgebras/
+  KernelFunctionAlgebra.lean
+  PullbackDescentEquivalence.lean
+  FutureWordAlgebraClosure.lean
+```
+
+目标是把 partition refinement 与现有 least invariant observable algebra 接成同一 theorem family。
+

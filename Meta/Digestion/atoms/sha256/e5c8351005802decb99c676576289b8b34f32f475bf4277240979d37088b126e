@@ -1,0 +1,19 @@
+## 定义 19.1（gap 目标）
+
+对 frontier certificate \(c\)，定义
+
+\[
+g(n):=c(n+1)-c(n).
+\]
+
+定义相位接口
+
+\[
+s(n)
+:=
+\bigl(
+\operatorname{phase}(c),
+\operatorname{familyLetter}(c,n)
+\bigr).
+\]
+

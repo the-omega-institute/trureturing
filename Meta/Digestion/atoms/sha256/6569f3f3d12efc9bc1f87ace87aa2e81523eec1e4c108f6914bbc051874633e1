@@ -1,0 +1,18 @@
+## 定义 6.1（通道级 carry）
+
+对线性演化生成元或一步超算子 \(\mathcal L\)，定义
+
+\[
+\mathcal C_{\mathrm{in}}
+:=
+\mathcal D\mathcal L(I-\mathcal D),
+\]
+
+\[
+\mathcal C_{\mathrm{out}}
+:=
+(I-\mathcal D)\mathcal L\mathcal D.
+\]
+
+前者是未读相干余量对下一步可见块的影响，后者是可见块向相干余量的生成。
+
