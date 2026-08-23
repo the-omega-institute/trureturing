@@ -28,8 +28,12 @@ jobs:
           dotnet pack tools/Trureturing.Truth/Trureturing.Truth.csproj
           -c Release
           -p:Version=0.1.0-integration.v2
+          -p:SourceRevisionId=e09f292abf7bf54aa0d37fb085da5f180be2979c
           -p:RepositoryCommit=e09f292abf7bf54aa0d37fb085da5f180be2979c
           -p:RepositoryBranch=refs/heads/integration-truth-release-v2
+          -p:DebugType=None
+          -p:DebugSymbols=false
+          -p:IncludeSymbols=false
           -o "$RUNNER_TEMP/feed"
 
       # dotnet pack gives the OPC container current timestamps and random relationship ids. Normalize
