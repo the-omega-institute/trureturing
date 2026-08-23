@@ -27,15 +27,15 @@ internal sealed class BlindKernelReductionMeasureDocument : IScribeDocumentDefin
                             + "no second residual or kernel.")),
                     Paragraph(Text(
                         "The public hypotheses require the abstract real-valued set weight to be "
-                            + "nonnegative and to be positive exactly on nonempty sets. Both "
-                            + "requirements occur in the theorem type. The conclusion packages "
-                            + "the defining equality, nonnegativity, and the equivalence between "
-                            + "positive reduction weight and a blind residual pair separated by d.")),
+                            + "nonnegative and to vanish on the empty set. The conclusion packages "
+                            + "the defining equality, nonnegativity, and the one-way implication "
+                            + "from positive reduction weight to a blind residual pair separated "
+                            + "by d. It does not assume that every nonempty set has positive weight.")),
                     Paragraph(Text(
                         "Finite counting weight on Boolean state pairs supplies the positive "
-                            + "example. A constant definition supplies the reverse example, and a "
-                            + "zero weight shows that nonnegativity without strict nonempty-set "
-                            + "detection is insufficient.")),
+                            + "example. A constant definition supplies the reverse example. A "
+                            + "normalized Dirac-style weight supplies a nonempty separated set of "
+                            + "weight zero, demonstrating why no converse is claimed.")),
                     Paragraph(Text(
                         "The closing catalog, language-closure, and target-usefulness maxim is not "
                             + "asserted as a Lean proposition: the source supplies no formal "
@@ -68,14 +68,12 @@ internal sealed class BlindKernelReductionMeasureDocument : IScribeDocumentDefin
         Formula weightPremises = Seq(
             Open, Forall, Sp, set, Comma, Esc,
             D(0), Sp, Leq, Sp, Apply(Nu, set), Close, Sp, Land, Sp,
-            Open, Forall, Sp, set, Comma, Esc,
-            D(0), Sp, Lt, Sp, Apply(Nu, set), Sp, Iff, Sp,
-            Call("Nonempty", set), Close);
+            Apply(Nu, Emptyset), Sp, Eq, Sp, D(0));
 
         return Disp(Seq(
             weightPremises, Sp, Rightarrow, RowBreak, Grp(),
             Open, reduction, Sp, Eq, Sp, Apply(Nu, removed), Close, Sp, Land, Sp,
             Open, D(0), Sp, Leq, Sp, reduction, Close, Sp, Land, RowBreak, Grp(),
-            Open, D(0), Sp, Lt, Sp, reduction, Sp, Iff, Sp, separated, Close, Dot));
+            Open, D(0), Sp, Lt, Sp, reduction, Sp, Rightarrow, Sp, separated, Close, Dot));
     }
 }
