@@ -1,0 +1,4 @@
+## J.2 separation-density bridge
+
+建立从有限 Galois 群中共轭类计数到 prime separation density 的 paper-to-Lean 依赖图；在 Chebotarev 尚未进入 pinned Mathlib 完整接口前，不把密度结论标记为 Lean-closed。
+

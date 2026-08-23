@@ -1,0 +1,14 @@
+# 285. 全部单世界干预仍不决定反事实联合
+
+令：
+
+\[
+X\sim\operatorname{Bernoulli}(1/2),
+\qquad
+U\sim\operatorname{Bernoulli}(1/2),
+\qquad
+X\perp U.
+\]
+
+构造两个 SCM。
+

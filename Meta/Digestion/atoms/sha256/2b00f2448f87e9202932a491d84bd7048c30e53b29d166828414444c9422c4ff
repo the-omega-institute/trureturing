@@ -1,0 +1,18 @@
+\[
+\widehat G
+=
+\varprojlim_{N}G/N.
+\]
+
+存在规范映射：
+
+\[
+\iota_G:G\to\widehat G,
+\]
+
+且：
+
+\[
+\ker(\iota_G)=R_{\mathrm{fin}}(G).
+\]
+

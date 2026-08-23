@@ -1,0 +1,36 @@
+## 推论 158.1（prime-power 完成可完全删除非幂零身份）
+
+\[
+R_p(A_5)=A_5
+\]
+
+对每个 \(p\) 成立，因此：
+
+\[
+R_{\mathrm{pp}}(A_5)=A_5.
+\]
+
+全部 pro-\(p\) 观察把 \(A_5\) 压成单点；但完整有限商语言包含恒等商：
+
+\[
+A_5\to A_5,
+\]
+
+所以：
+
+\[
+R_{\mathrm{fin}}(A_5)=\{1\}.
+\]
+
+这给出严格分离：
+
+\[
+\boxed{
+\text{all prime-power observations}
+\ll
+\text{all finite-quotient observations}.
+}
+\]
+
+---
+

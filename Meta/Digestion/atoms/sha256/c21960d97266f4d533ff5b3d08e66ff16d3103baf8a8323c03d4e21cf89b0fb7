@@ -1,0 +1,16 @@
+## 定义 229.1（联合可测识别器）
+
+需要的是单个可测映射：
+
+\[
+\Phi:\Omega\to\Theta
+\]
+
+满足：
+
+\[
+\mathbf P_\theta[\Phi=\theta]=1
+\qquad
+\forall\theta.
+\]
+

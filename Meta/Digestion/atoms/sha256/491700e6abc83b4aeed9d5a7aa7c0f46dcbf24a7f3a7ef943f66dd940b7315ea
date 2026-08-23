@@ -1,0 +1,16 @@
+## 原理 283.1（同单位 ledger）
+
+反事实的承重结构不是各 \(Y_x\) 的边缘 law，而是它们通过同一个外生 \(u\) 的耦合。
+
+\[
+\boxed{
+\left(
+\mathcal L(Y_x)
+\right)_x
+\quad
+\text{不决定}
+\quad
+\mathcal L((Y_x)_x).
+}
+\]
+

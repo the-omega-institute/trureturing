@@ -1,0 +1,22 @@
+### 证明纲要
+
+由第 230 节：
+
+\[
+H_p^2\asymp\delta_p^2.
+\]
+
+Kakutani 判据把 product singularity 等价为：
+
+\[
+\sum_pH_p^2=\infty.
+\]
+
+素数 Dirichlet 级数：
+
+\[
+\sum_pp^{-s}
+\]
+
+在 \(s>1\) 收敛，在 \(s\le1\) 发散，代入 \(s=2\alpha\)。 \(\square\)
+

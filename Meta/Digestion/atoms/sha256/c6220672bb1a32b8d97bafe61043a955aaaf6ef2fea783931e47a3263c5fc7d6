@@ -1,0 +1,17 @@
+\[
+\boxed{
+P^\pi(l_{0:T},a_{0:T-1})
+=
+P(l_0)
+\prod_{t=0}^{T-1}
+\pi_t(a_t\mid h_t)
+P(l_{t+1}\mid h_t,a_t).
+}
+\]
+
+最终目标由该 joint law 边缘化得到：
+
+\[
+P(Y^\pi).
+\]
+

@@ -1,0 +1,20 @@
+\[
+O
+=
+\prod_{i:\mathcal I}O_i,
+\]
+
+全局读出为：
+
+\[
+q_{\mathrm{all}}:X\to O,
+\]
+
+并在 \(O\) 上给定局部模型生成的概率测度 \(\nu\)。假设：
+
+\[
+\operatorname{Im}(q_{\mathrm{all}})
+\]
+
+为可测集。
+

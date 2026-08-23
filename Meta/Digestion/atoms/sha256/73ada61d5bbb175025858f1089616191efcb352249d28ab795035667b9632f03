@@ -1,0 +1,11 @@
+## 147.3 可数乘积与阈值链
+
+1. 构造 \(\Gamma_s\)；
+2. 枚举素数并定义激活事件；
+3. 第一 Borel–Cantelli 得到 \(s>1\) 的有限支撑；
+4. `Nat.Primes.not_summable_one_div` 与第二 Borel–Cantelli得到 \(0<s\le1\) 的无限支撑；
+5. 沿唯一分解画像推前并识别 zeta law；
+6. 证明全局可实现的 iff 与唯一性。
+
+Mathlib 已提供第一、第二 Borel–Cantelli 所需主定理；仓库已提供素数倒数边界发散。
+

@@ -1,0 +1,8 @@
+\[
+\Gamma_s
+\{e:\forall p\in S,e_p=k_p\}
+=
+\prod_{p\in S}
+(1-p^{-s})p^{-sk_p}.
+\]
+

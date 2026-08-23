@@ -1,0 +1,12 @@
+## 定义 298.1（路径 positivity）
+
+对所有在目标政策下可达且具有正概率的历史—行动对，要求：
+
+\[
+\boxed{
+\pi_t(a\mid h)>0
+\Longrightarrow
+\mu_t(a\mid h)>0.
+}
+\]
+

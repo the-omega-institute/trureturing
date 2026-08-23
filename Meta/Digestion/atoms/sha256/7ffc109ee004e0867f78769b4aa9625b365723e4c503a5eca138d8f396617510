@@ -1,0 +1,14 @@
+\[
+\operatorname{Blind}(n,m)
+=
+\{p:e_p(n,m)=0\}.
+\]
+
+它包括两种机制：
+
+1. 算术碰撞：
+   \[
+   n\equiv m\pmod p;
+   \]
+2. 通道碰撞：不同 residue 经 \(W_p\) 后产生同一 law。
+

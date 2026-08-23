@@ -1,0 +1,12 @@
+\[
+\boxed{
+\operatorname{Int}_{\mathcal A}(M)
+=
+\bigl(
+\mathcal L_M(V\mid\operatorname{do}(a))
+\bigr)_{a\in\mathcal A}.
+}
+\]
+
+空干预 \(a=\varnothing\) 若被包含，则其分量正是观测画像。
+

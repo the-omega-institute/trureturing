@@ -1,0 +1,10 @@
+\[
+\mathbb P_s(n_1,\ldots,n_m)
+=
+\zeta(s)^{-m}
+\exp
+\left(
+-s\sum_{j=1}^m\log n_j
+\right).
+\]
+

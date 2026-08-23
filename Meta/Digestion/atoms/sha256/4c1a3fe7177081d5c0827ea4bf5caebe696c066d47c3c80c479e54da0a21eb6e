@@ -1,0 +1,16 @@
+# 292. Abduction–action–prediction 三步
+
+对事实证据：
+
+\[
+E=e,
+\]
+
+反事实查询：
+
+\[
+Y_x,
+\]
+
+SCM 语义分三步。
+

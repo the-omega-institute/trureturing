@@ -1,0 +1,12 @@
+## 定理 152.1（可观察事件代数表示）
+
+存在规范 Boolean 代数同构：
+
+\[
+\boxed{
+\operatorname{ObsAlg}(q)
+\cong
+\mathcal P(O_{\mathrm{eff}}).
+}
+\]
+

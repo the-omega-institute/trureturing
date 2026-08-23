@@ -1,0 +1,11 @@
+\[
+\operatorname{ObsRes}
+=
+\sum_{M,N:\mathfrak M}
+(M\neq N)
+\times
+\bigl(
+\operatorname{Obs}(M)=\operatorname{Obs}(N)
+\bigr).
+\]
+

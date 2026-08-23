@@ -1,0 +1,51 @@
+# 146. v1.2 建议新增模块
+
+```text
+D5/S3/PrimeObservers/
+  Probability/
+    ObservationSigma.lean
+    ConditionalRisk.lean
+    ProbabilisticGluing.lean
+    SameLanguageRepetition.lean
+    BlackwellRefinement.lean
+  Zeta/
+    GeometricPrimeProfile.lean
+    FiniteSupportThreshold.lean
+    ZetaGlobalRealizability.lean
+    FinitePrimePosterior.lean
+    PrimeSupportStatistics.lean
+  Information/
+    PrimeGeometricEntropy.lean
+    ZetaEntropyPrimeSum.lean
+    PrimeSurprisalCode.lean
+    TruncatedExponentEntropy.lean
+    PrecisionResidualContraction.lean
+    OptimalPrecisionAllocation.lean
+    RadicalMultiplicityResidual.lean
+    ZetaKLPrimeSum.lean
+    ZetaHellingerAffinity.lean
+    ZetaFisherPrimeSum.lean
+    ZetaSufficientStatistic.lean
+  Quantum/
+    ArithmeticFockBasis.lean
+    PrimeNumberOperators.lean
+    ZetaGibbsDensity.lean
+    FinitePrimePinching.lean
+    DiagonalSaturationCountermodel.lean
+```
+
+建议复用而不复制：
+
+```text
+D5/S3/Analytic/ZetaGibbs
+D5/S3/Analytic/Zeta/PrimeExponentLaw
+D5/S3/Analytic/Zeta/ZetaPrimeIndependence
+D5/S3/Analytic/Zeta/ZetaEntropy
+D5/S3/AnalyticClosure/PrimeSpectrumBoundaryDivergent
+D5/S3/Quantum/Conditioning
+D5/S3/ObserverMemory/Prediction/ItineraryCompletion
+D5/S3/ConceptDynamics/TargetRisk
+```
+
+---
+

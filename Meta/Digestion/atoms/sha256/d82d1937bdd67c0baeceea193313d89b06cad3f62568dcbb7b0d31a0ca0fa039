@@ -1,0 +1,11 @@
+\[
+\boxed{
+D(\gamma_{p,s}\Vert\gamma_{p,t})
+=
+\log
+\frac{1-p^{-s}}{1-p^{-t}}
++
+\frac{(t-s)\log p}{p^s-1}.
+}
+\]
+

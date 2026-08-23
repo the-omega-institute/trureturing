@@ -1,0 +1,26 @@
+# 221. 无有限精确见证的无限完成
+
+假设每个坐标上：
+
+\[
+P_n\sim Q_n.
+\]
+
+则对任意有限 \(m\)：
+
+\[
+P_1\otimes\cdots\otimes P_m
+\sim
+Q_1\otimes\cdots\otimes Q_m.
+\]
+
+所以没有有限前缀事件能以零错误区分两个状态。
+
+但若：
+
+\[
+\prod_n\rho_n=0,
+\]
+
+无限乘积 law 却互奇。
+

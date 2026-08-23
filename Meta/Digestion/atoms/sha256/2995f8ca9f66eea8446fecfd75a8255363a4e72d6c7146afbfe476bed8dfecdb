@@ -1,0 +1,10 @@
+# 2. 定义扩张与证明状态
+
+设基础语言为 \(\mathcal L_0\)，仓库中已核验理论为 \(T_0\)。加入素数观察者术语后的语言记为：
+
+\[
+\mathcal L_{\mathbb P\mathrm O}
+\supseteq
+\mathcal L_0.
+\]
+

@@ -1,0 +1,10 @@
+\[
+\boxed{
+\operatorname{StatRes}(x,y)
+=
+\frac{
+1-\operatorname{TV}(\mathbf P_x,\mathbf P_y)
+}{2}.
+}
+\]
+

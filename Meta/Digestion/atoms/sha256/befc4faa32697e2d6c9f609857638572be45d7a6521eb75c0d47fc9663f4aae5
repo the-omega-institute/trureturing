@@ -1,0 +1,15 @@
+## O.2 本阶段仓库真值锚点
+
+1. `D5/S3/ObserverMemory/PredictionFactors/CausalStateFactorization.lean`：充分接口唯一因子化到规范 future-law image，并由 law 差异推出接口差异。
+2. `D5/S3/ConceptDynamics/Refinement/InductiveSufficiency.lean`：纤维常值与有效像因子化。
+3. `D5/S3/ObserverMemory/Prediction/ControlledBehaviorUniversality.lean`：受控行为商的规范最小实现。
+4. `D5/S3/Observer/Separation/CongruenceKernel.lean`：过程闭合的最大前向 congruence。
+5. `D5/S3/Divergence/ClassicalDPI.lean` 及相关 data-processing 文件：有限随机通道下 divergence 单调桥。
+6. `D5/S3/Entropy/MutualInformation.lean`：有限 mutual information 定义与非负性。
+7. `D5/S3/Entropy/MutualInformationIndependence.lean`：有限 joint law 中 mutual information 为零当且仅当等于自身边缘乘积。
+8. `D5/S3/Entropy/Submodularity/ConditionalMutualInformation.lean` 与 `MutualInformationChainRule.lean`：条件互信息和链式分解接口。
+9. `D5/S3/Estimation/DecisionRisk/FixedSuiteBayesRiskFloor.lean`：固定实验套件的 Bayes 风险下界。
+10. `D5/S3/Observer/DynamicProgramming/BellmanContraction.lean`：折扣 Bellman operator 的 contraction 与唯一固定点。
+11. `D5/S3/TotalVariation/HellingerDataProcessing.lean`：随机后处理不增加有限 Hellinger 区分。
+12. `D5/S3/Divergence/ProductAdditivity.lean`：有限正概率 law 的 KL 乘积可加性。
+

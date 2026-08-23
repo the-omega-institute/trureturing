@@ -1,0 +1,14 @@
+## 实例 273.1
+
+二节点图：
+
+\[
+X\to Y
+\qquad\text{与}\qquad
+X\leftarrow Y
+\]
+
+没有可由纯观测条件独立区分的方向差异；第 258 节给出同一 joint law 的显式 SCM 实现。
+
+---
+

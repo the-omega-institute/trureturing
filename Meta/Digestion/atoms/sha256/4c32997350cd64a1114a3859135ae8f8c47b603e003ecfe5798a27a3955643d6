@@ -1,0 +1,53 @@
+## Q.1 建议模块树
+
+```text
+D5/S3/Observer/Causal/
+  Foundation/
+    FiniteSCM.lean
+    AcyclicEvaluation.lean
+    PerfectIntervention.lean
+    SoftIntervention.lean
+    ObservationalProfile.lean
+    InterventionalProfile.lean
+    CausalLawQuotient.lean
+    TargetCausalResidual.lean
+  Countermodels/
+    DirectionReversal.lean
+    HiddenConfounding.lean
+    PositivityFailure.lean
+    InterventionalCounterfactualGap.lean
+    CrossPrimeConfounder.lean
+  Design/
+    InterventionCover.lean
+    InterventionCodeDistance.lean
+    AdaptiveOrientation.lean
+    CausalBelief.lean
+    CausalBellman.lean
+    TargetInformationValue.lean
+  Adjustment/
+    RandomizationBridge.lean
+    FiniteBackdoor.lean
+    Positivity.lean
+    TruncatedFactorization.lean
+  Product/
+    IndependentSCMProduct.lean
+    ProductInterventionFactorization.lean
+    CausalCarry.lean
+  Counterfactual/
+    PotentialOutcomeVector.lean
+    CouplingResidual.lean
+    FrechetBenefitBounds.lean
+    MonotonicityCompletion.lean
+    AbductionActionPrediction.lean
+    CounterfactualQuotient.lean
+  Longitudinal/
+    DynamicPolicy.lean
+    SequentialGFormula.lean
+    PolicyPositivity.lean
+    OffPolicyResidual.lean
+  Transport/
+    EnvironmentProfile.lean
+    MechanismInvariance.lean
+    TransportResidual.lean
+```
+

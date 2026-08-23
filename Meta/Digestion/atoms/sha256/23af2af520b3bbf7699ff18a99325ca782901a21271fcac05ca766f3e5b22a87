@@ -1,0 +1,11 @@
+\[
+\boxed{
+(\mathcal TV)(\pi)
+=
+\min\left\{
+G(\pi),
+\inf_{i\in\mathcal I}Q_iV(\pi)
+\right\}.
+}
+\]
+

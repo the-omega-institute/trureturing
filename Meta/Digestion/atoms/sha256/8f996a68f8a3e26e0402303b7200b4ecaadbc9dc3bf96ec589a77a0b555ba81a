@@ -1,0 +1,4 @@
+## 仓库锚点 222.1
+
+`D5/S3/TotalVariation/Countable/HellingerCountableComparison.lean` 已证明绝对差级数可和推出平方根差级数可和，并给出逆命题失败的显式见证。该文件提供 countable Hellinger series 的比较基础，但不等同于 Kakutani product-measure theorem 已经形式化。
+

@@ -1,0 +1,17 @@
+\[
+\boxed{
+\operatorname{CausalTargetRes}
+(\mathcal A,T)
+=
+\sum_{M,N:\mathfrak M}
+\left(
+\forall a\in\mathcal A,
+P_M^a=P_N^a
+\right)
+\times
+\bigl(
+T(M)\neq T(N)
+\bigr).
+}
+\]
+

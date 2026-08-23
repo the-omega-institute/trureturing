@@ -1,0 +1,16 @@
+\[
+P_B(Y=1\mid\operatorname{do}(X=x))
+=
+\frac12.
+\]
+
+因此：
+
+\[
+\boxed{
+M_A
+\not\sim_{\{do(X=0),do(X=1)\}}^{\mathrm{causal}}
+M_B.
+}
+\]
+

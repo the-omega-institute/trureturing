@@ -1,0 +1,15 @@
+# 228. 可数状态族的支配测度构造
+
+设：
+
+\[
+X=\{x_0,x_1,x_2,\ldots\},
+\]
+
+且：
+
+\[
+\mathbf P_n\perp\mathbf P_m
+\qquad(n\neq m).
+\]
+

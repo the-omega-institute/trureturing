@@ -1,0 +1,17 @@
+# 268. 素数索引的机制族
+
+令变量或模块由素数索引：
+
+\[
+(X_p)_{p\in\mathbb P}.
+\]
+
+每个局部机制写作：
+
+\[
+K_p:
+X_{\operatorname{pa}(p)}
+\rightsquigarrow
+X_p.
+\]
+

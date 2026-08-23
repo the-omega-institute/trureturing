@@ -1,0 +1,20 @@
+## 定理 155.1（全部有限商观察的 kernel）
+
+全部有限商联合读出的 kernel 恰为：
+
+\[
+R_{\mathrm{fin}}(G).
+\]
+
+因此：
+
+\[
+\boxed{
+G\text{ residually finite}
+\iff
+R_{\mathrm{fin}}(G)=\{1\}
+\iff
+\text{全部有限商观察联合忠实}.
+}
+\]
+

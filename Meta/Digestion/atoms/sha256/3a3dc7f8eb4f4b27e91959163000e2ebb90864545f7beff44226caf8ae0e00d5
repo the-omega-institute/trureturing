@@ -1,0 +1,21 @@
+## 证明骨架
+
+次模性推出当前最优集合剩余元素的总边际增益至少覆盖当前 gap：
+
+\[
+\sum_{e\in S^*\setminus S_t}
+\Delta(e\mid S_t)
+\ge
+F(S^*)-F(S_t).
+\]
+
+其中最多有 \(k\) 项，故 greedy 单步至少缩小 \(1/k\) 的剩余 gap。迭代得到：
+
+\[
+F(S^*)-F(S_k)
+\le
+\left(1-\frac1k\right)^kF(S^*)
+\le
+e^{-1}F(S^*).
+\]
+

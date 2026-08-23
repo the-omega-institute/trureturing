@@ -1,0 +1,16 @@
+## 推论 286.1（严格层级）
+
+在包含上述模型的有限 SCM 类中：
+
+\[
+\boxed{
+Z_{\mathrm{obs}}
+\prec
+Z_{\mathrm{int}}
+\prec
+Z_{\mathrm{cf}}.
+}
+\]
+
+这里 \(\prec\) 表示后者严格精化前者的有效查询商，不表示三种原始表示类型之间存在未经 transport 的集合包含。
+

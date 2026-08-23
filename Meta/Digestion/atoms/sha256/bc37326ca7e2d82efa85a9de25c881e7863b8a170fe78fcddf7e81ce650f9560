@@ -1,0 +1,18 @@
+# 185. 全部幂迹仍不能恢复矩阵相似类
+
+取：
+
+\[
+A=
+\begin{pmatrix}
+0&0\\
+0&0
+\end{pmatrix},
+\qquad
+N=
+\begin{pmatrix}
+0&1\\
+0&0
+\end{pmatrix}.
+\]
+

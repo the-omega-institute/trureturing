@@ -1,0 +1,13 @@
+## 1.2 观察者、记忆与预测锚点
+
+- `D5/S3/ConceptDynamics/ConceptFiberDecomposition.lean`：概念读出的纤维分解；
+- `D5/S3/ConceptDynamics/ConceptJoinUniversal.lean`：联合概念的普适性质；
+- `D5/S3/Observer/Separation/CongruenceKernel.lean`：全迭代拉回给出最大前向 congruence；
+- `D5/S3/ObserverMemory/Prediction/ItineraryCompletion.lean`：有限系统的未来 itinerary、逆极限与有限稳定深度；
+- `D5/S3/ObserverMemory/Prediction/ControlledBehaviorUniversality.lean`：受控行为商的规范最小实现；
+- `D5/S3/ObserverMemory/Fusion/LeastCommonRefinement.lean`：多个观察商的最小共同精化；
+- `D5/S3/Observer/Tomography/FiniteTimeTomography.lean`：有限维渐进观察塔的有限时间完备性；
+- `D5/S3/Observer/MetricGeometry/DiscretePredictionUltrametric.lean`：离散未来读出距离的强三角不等式；
+- `D5/S3/ConceptDynamics/PolicyCapabilityMonotonicity.lean`：读出精化扩大可实现策略集合；
+- `D5/S3/ConceptDynamics/TargetRisk/RefinementRiskCostTradeoff.lean`：精化降低目标风险并提高坐标成本。
+

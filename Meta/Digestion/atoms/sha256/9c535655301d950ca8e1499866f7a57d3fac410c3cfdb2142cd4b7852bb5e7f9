@@ -1,0 +1,9 @@
+\[
+\sigma_{-4}(p)
+=
+\begin{cases}
+\mathrm S,&p\equiv1\pmod4,\\
+\mathrm I,&p\equiv3\pmod4.
+\end{cases}
+\]
+

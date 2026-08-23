@@ -1,0 +1,9 @@
+## 定义 154.1（目标族等价）
+
+\[
+x\sim_{\mathcal K}y
+\iff
+\forall t:T,
+K_t(x)=K_t(y).
+\]
+

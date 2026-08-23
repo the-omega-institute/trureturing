@@ -1,0 +1,9 @@
+\[
+d_p(x,y)
+=
+\begin{cases}
+0,&x=y,\\
+p^{1-\kappa_p(x,y)},&x\neq y.
+\end{cases}
+\]
+

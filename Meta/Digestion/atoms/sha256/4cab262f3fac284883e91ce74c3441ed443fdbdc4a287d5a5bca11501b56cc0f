@@ -1,0 +1,35 @@
+## N.1 建议模块树
+
+```text
+D5/S3/Observer/Statistical/
+  ExperimentKernel.lean
+  LawQuotient.lean
+  TargetSufficiency.lean
+  BlackwellOrder.lean
+  Deficiency.lean
+  PairwiseEvidence.lean
+  FiniteSuiteTesting.lean
+
+D5/S3/Observer/Statistical/Product/
+  AffinityFiniteProduct.lean
+  HellingerEnergy.lean
+  KakutaniCriterion.lean
+  ProductSingularity.lean
+  CountableClassifier.lean
+  BernoulliPrimeThreshold.lean
+  NoisyResidueEvidence.lean
+
+D5/S3/Observer/Active/
+  BeliefState.lean
+  BayesUpdate.lean
+  BeliefSufficiency.lean
+  AdaptivePolicy.lean
+  BeliefBellman.lean
+  InformationGain.lean
+  StaticSubmodularity.lean
+  AdaptiveSubmodularity.lean
+  AdaptiveFailureWitness.lean
+  PosteriorStopping.lean
+  RobustObservation.lean
+```
+

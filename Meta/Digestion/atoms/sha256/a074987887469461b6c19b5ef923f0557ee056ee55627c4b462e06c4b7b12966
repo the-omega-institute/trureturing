@@ -1,0 +1,27 @@
+# 79. 同一性：局部同一、行为同一与全局同一
+
+\[
+\begin{aligned}
+x\sim_Jy
+&:\quad \text{当前局部同一};\\
+x\sim_J^\infty y
+&:\quad \text{未来行为同一};\\
+x=y
+&:\quad \text{全局状态同一}.
+\end{aligned}
+\]
+
+一般只有：
+
+\[
+x=y
+\Rightarrow
+x\sim_J^\infty y
+\Rightarrow
+x\sim_Jy.
+\]
+
+反向均可能失败。
+
+---
+

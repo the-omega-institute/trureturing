@@ -1,0 +1,24 @@
+## 原理 109.1（形式因子表不等于解析函数）
+
+仅给出全部符号局部因子，不证明：
+
+- 乘积收敛；
+- 局部一致收敛；
+- 极限非零；
+- 可微或全纯；
+- 存在更大域上的延拓。
+
+因此：
+
+\[
+\boxed{
+\text{Euler data}
++
+\text{convergence admission}
+\Rightarrow
+\text{absolute-domain function}.
+}
+\]
+
+---
+

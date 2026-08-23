@@ -1,0 +1,69 @@
+# 201. 第四阶段最终命题
+
+v1.0 建立了：
+
+\[
+\text{prime-indexed local readout}.
+\]
+
+v1.1 建立了：
+
+\[
+\text{observation-language saturation}.
+\]
+
+v1.3 进一步证明，所谓“全部素数信息”并不是单一概念。它至少依赖所允许的目标范畴：
+
+\[
+\boxed{
+\begin{aligned}
+\text{全部 residues}
+&\neq
+\text{全部 characters};\\
+\text{全部 }p\text{-群商}
+&\neq
+\text{全部有限群商};\\
+\text{全部有限 valuations}
+&\neq
+\text{全局元素};\\
+\text{全部 traces}
+&\neq
+\text{完整表示};\\
+\text{全部 Euler factors}
+&\neq
+\text{解析完成对象}.
+\end{aligned}
+}
+\]
+
+因此“素数观察者是否完备”必须写成带类型的问题：
+
+\[
+\boxed{
+\operatorname{Complete}
+(
+\text{state type},
+\text{observer language},
+\text{target family},
+\text{compatibility doctrine},
+\text{dynamics}
+).
+}
+\]
+
+最深的第四阶段结论是：
+
+\[
+\boxed{
+\text{prime-primary 分解不是世界的无条件语法；}
+\text{它是一个必须由分离、胶合、幂零性、}
+\text{单位、类群、扩张类与解析准入共同审计的定理。}
+}
+\]
+
+换言之：
+
+> 素数可以提供极强的局部坐标；但“所有素数坐标”究竟恢复对象、恢复商、恢复主理想、恢复半单化，还是只恢复一个形式 Euler 表，取决于接口类型。真正承重的工作不是不断增加素数，而是证明这些局部坐标的 kernel、image、cokernel、错误距离与动态自然性。
+
+---
+

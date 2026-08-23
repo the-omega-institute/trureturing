@@ -1,0 +1,4 @@
+## 边界 282.1
+
+有限样本下无法直接观察精确 law 是否在 image 中；需要 goodness-of-fit、置信区域、容差 metric 或 Bayesian posterior predictive checking。
+

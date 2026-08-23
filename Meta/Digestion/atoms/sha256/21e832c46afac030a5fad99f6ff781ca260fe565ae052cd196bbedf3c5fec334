@@ -1,0 +1,11 @@
+\[
+\operatorname{PrimeScale}
+=
+\sum_{p:\mathbb N}
+\operatorname{Prime}(p)
+\times
+\mathbb N_{>0}.
+\]
+
+元素写作 \(i=(p,k)\)。
+

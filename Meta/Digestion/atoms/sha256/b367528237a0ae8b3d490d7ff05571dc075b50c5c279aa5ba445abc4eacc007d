@@ -1,0 +1,37 @@
+# 251. 第五阶段最终命题：观察完成是证据能量、belief 动力学与决策成本的共同固定点
+
+此前四阶段分别建立了：
+
+\[
+\begin{aligned}
+\text{确定性完成}
+&:\quad
+\text{局部坐标是否分离状态};\\
+\text{概率可实现完成}
+&:\quad
+\text{乘积 law 是否集中在合法全局画像};\\
+\text{prime-primary 完成}
+&:\quad
+\text{观察语言是否覆盖所需商类型};\\
+\text{谱／算子完成}
+&:\quad
+\text{交换不变量是否遗漏相位或扩张余量}.
+\end{aligned}
+\]
+
+第五阶段加入：
+
+\[
+\text{统计决策完成}
+:\quad
+\text{不同状态的 transcript laws 是否互奇，}
+\]
+
+以及：
+
+\[
+\text{主动完成}
+:\quad
+\text{policy 是否以可接受成本积累足够证据并在正确 belief 区域停止}.
+\]
+

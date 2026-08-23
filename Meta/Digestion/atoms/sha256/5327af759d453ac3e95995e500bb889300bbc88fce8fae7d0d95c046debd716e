@@ -1,0 +1,13 @@
+# 255. 观测 law quotient
+
+定义 law map：
+
+\[
+\Lambda_{\mathrm{obs}}:
+\mathfrak M
+\to
+\mathcal P(\mathcal X_V),
+\qquad
+M\mapsto\operatorname{Obs}(M).
+\]
+

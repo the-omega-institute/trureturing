@@ -1,0 +1,10 @@
+\[
+\boxed{
+\operatorname{Obs}(M)
+=
+\mathcal L_M(V),
+}
+\]
+
+即在不主动修改机制时，全部可见变量 \(V\) 的联合 law。
+

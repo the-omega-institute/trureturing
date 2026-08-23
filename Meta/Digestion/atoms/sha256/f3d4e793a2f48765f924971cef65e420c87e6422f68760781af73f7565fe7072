@@ -1,0 +1,8 @@
+\[
+M\sim_{\mathrm{int},\mathcal A}N
+\iff
+\operatorname{Int}_{\mathcal A}(M)
+=
+\operatorname{Int}_{\mathcal A}(N),
+\]
+

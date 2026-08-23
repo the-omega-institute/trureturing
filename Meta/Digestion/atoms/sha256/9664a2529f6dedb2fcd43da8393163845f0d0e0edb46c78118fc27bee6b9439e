@@ -1,0 +1,18 @@
+## 定理 11.1（有限识别容量下界）
+
+若 \(X\) 有限且 \(q_J\) 单射，则：
+
+\[
+\boxed{|X|\le\operatorname{Cap}(J),}
+\]
+
+等价地：
+
+\[
+\boxed{
+\log_2|X|
+\le
+\operatorname{Cost}(J).
+}
+\]
+

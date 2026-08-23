@@ -1,0 +1,11 @@
+\[
+\operatorname{DynLGRes}(J)
+=
+\sum_{x,y:X}
+(x\neq y)
+\times
+(x\sim_J^\infty y).
+\]
+
+---
+

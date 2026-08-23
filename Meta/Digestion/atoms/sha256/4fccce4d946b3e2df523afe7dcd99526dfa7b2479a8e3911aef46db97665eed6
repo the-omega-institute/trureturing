@@ -1,0 +1,22 @@
+## 推论 161.1（盲素数数量上界）
+
+若 \(\omega(d)\) 是 \(|d|\) 的不同素因子数，则：
+
+\[
+2^{\omega(d)}
+\le
+\prod_{p\mid d}p
+\le
+|d|.
+\]
+
+因此：
+
+\[
+\boxed{
+\omega(d)
+\le
+\lfloor\log_2|d|\rfloor.
+}
+\]
+

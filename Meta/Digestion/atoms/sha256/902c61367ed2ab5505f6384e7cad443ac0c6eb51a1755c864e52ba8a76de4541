@@ -1,0 +1,18 @@
+\[
+W_{i,m}(x_i)
+=
+\left(
+q_i(x_i),q_i(F_ix_i),\ldots,q_i(F_i^m x_i)
+\right).
+\]
+
+若存在最小 \(m_i\) 使：
+
+\[
+W_{i,m_i}(x_i)=W_{i,m_i}(y_i)
+\Longrightarrow
+x_i\sim_{q_i,F_i}^{\infty}y_i,
+\]
+
+称 \(m_i\) 为局部完成深度。
+

@@ -1,0 +1,4 @@
+### 证明
+
+每次 transcript kernel 都只依赖同一族 \(P_M^a=P_N^a\)。由统计 law kernel 的函子性，完整 transcript laws 在 \(M,N\) 下相同。 \(\square\)
+

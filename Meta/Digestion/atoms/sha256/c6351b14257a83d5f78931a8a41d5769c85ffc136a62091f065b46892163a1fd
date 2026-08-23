@@ -1,0 +1,13 @@
+\[
+\mathscr R:
+\mathbb P\times\mathcal D
+\to
+\{-1,0,1\},
+\qquad
+\mathscr R(p,\Delta)
+=
+\left(\frac{\Delta}{p}\right).
+\]
+
+值分别解释为 split、inert、ramified。固定行得到“素数观察判别式”，固定列得到“判别式观察素数”。
+

@@ -1,0 +1,16 @@
+# 232. \(s=1\) 与 \(\alpha=\frac12\) 是两种不同的临界机制
+
+第三阶段得到 zeta 素指数模型的 realizability 阈值：
+
+\[
+s=1.
+\]
+
+本阶段得到弱 Bernoulli 区分的 statistical-completion 阈值：
+
+\[
+\alpha=\frac12.
+\]
+
+二者数值不同，但结构来源可以统一。
+

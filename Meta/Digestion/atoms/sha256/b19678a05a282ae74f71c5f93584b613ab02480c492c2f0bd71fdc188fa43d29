@@ -1,0 +1,18 @@
+# 218. Kakutani 素数观察二分
+
+固定两个状态 \(x,y\)。记：
+
+\[
+P_n=K_{p_n}(x,\cdot),
+\qquad
+Q_n=K_{p_n}(y,\cdot).
+\]
+
+假设每个坐标上：
+
+\[
+P_n\sim Q_n
+\]
+
+相互绝对连续。定义 Hellinger affinity：
+

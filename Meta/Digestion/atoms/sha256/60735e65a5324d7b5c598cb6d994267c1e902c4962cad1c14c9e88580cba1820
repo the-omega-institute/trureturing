@@ -1,0 +1,18 @@
+## 定理 259.1（干预精化单调性）
+
+\[
+\boxed{
+\ker
+\left(
+\Lambda_{\mathcal B}^{\mathrm{int}}
+\right)
+\subseteq
+\ker
+\left(
+\Lambda_{\mathcal A}^{\mathrm{int}}
+\right).
+}
+\]
+
+所以允许更多干预只能缩小或保持因果余量。
+

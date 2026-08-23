@@ -1,0 +1,11 @@
+\[
+\boxed{
+\lim_{n\to\infty}
+-\frac1n\log P_e^*(n)
+=
+C(P,Q).
+}
+\]
+
+其中：
+

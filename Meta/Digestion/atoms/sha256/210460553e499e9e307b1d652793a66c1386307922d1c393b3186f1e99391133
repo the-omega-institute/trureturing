@@ -1,0 +1,12 @@
+## 原理 246.1（期望 diminishing returns 不等于路径 diminishing returns）
+
+静态：
+
+\[
+\mathbb E_\psi[\Delta(i\mid\psi)]
+\]
+
+可能随集合变小；但某个罕见输出可以使后验进入一个新区域，让另一个实验突然更有价值。因此 static submodularity 不自动推出 adaptive submodularity。
+
+---
+

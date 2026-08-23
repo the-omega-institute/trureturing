@@ -1,0 +1,8 @@
+\bigoplus_{p\in\mathbb P}\mathbb N_0
+=
+\left\{
+(e_p)_p:
+|\{p:e_p\ne0\}|<\infty
+\right\}.
+\]
+

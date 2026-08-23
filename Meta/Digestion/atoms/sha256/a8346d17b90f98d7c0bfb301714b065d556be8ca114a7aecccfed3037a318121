@@ -1,0 +1,12 @@
+# Appendix G：第二阶段外部基础来源
+
+以下来源仅为尚未在本仓库闭合部分的标准数学依据，不替代未来 Lean 证明：
+
+1. J. S. Milne, *Fields and Galois Theory*, v5.10, 2022：有限 Galois 理论、复合域与交域。
+2. J. S. Milne, *Algebraic Number Theory*, v3.08, 2020：Dedekind 域、理想分解、赋值与类群背景。
+3. J. S. Milne, *Class Field Theory*, v4.03, 2020：局部／全局类域论、Hilbert 互反与 Frobenius 结构。
+4. The Stacks Project, Tags `034W`, `034X` 及相关章节：Dedekind 域、局部 DVR 与因子分解。
+5. Mathlib documentation：`Mathlib.RingTheory.ClassGroup.Basic`、`Mathlib.RingTheory.Frobenius` 与 Dedekind／FractionalIdeal 模块。
+
+---
+

@@ -1,0 +1,16 @@
+\[
+K_Y(\cdot\mid x)
+=
+\overline K_Y(\cdot\mid q(x)),
+\]
+
+则：
+
+\[
+q(x)=q(y)
+\Rightarrow
+K_Y(\cdot\mid x)=K_Y(\cdot\mid y).
+\]
+
+因此若目标 \(T\) 在某个 \(q\)-纤维内变化，即使重复采集任意多次条件独立或相关噪声样本，只要整个 transcript 仍通过 \(q\) 因子化，就不可能精确决定 \(T\)。
+

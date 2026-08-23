@@ -1,0 +1,6 @@
+\[
+d_J(x,y)
+=
+\max_{i\in J}w_i\delta_i(x,y).
+\]
+

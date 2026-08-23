@@ -1,0 +1,4 @@
+### 证明
+
+若 \(x\sim_J^\infty y\)，则 \(Fx\sim_J^\infty Fy\)，故 \([x]\mapsto[Fx]\) 良定义。\(\square\)
+

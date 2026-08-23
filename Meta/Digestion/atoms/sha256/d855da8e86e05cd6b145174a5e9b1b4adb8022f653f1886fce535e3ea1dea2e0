@@ -1,0 +1,4 @@
+## 原理 214.1（下界与精确指数分级）
+
+仓库 `BhattacharyyaExponent.lean` 在 \(\lambda=\frac12\) 处给出可机器检查的乘法 affinity 与误差 floor；Chernoff 定理进一步对全部 \(\lambda\) 优化并识别精确渐近指数。不得把前者自动标记成后者已经 Lean-closed。
+

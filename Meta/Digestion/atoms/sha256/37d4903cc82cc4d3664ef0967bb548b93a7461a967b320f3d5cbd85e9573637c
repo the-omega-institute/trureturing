@@ -1,0 +1,13 @@
+## 定理 257.1（因果状态因子化）
+
+若 \(q\) 对 \(\mathcal A\) 充分，则存在唯一映射：
+
+\[
+\bar g:
+\operatorname{Im}(q)
+\to
+Z_{\mathcal A}^{\mathrm{causal}}
+\]
+
+满足：
+

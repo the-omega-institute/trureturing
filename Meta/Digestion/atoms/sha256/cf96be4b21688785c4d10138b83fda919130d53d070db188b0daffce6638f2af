@@ -1,0 +1,18 @@
+## 定理 8.1（有限 CRT 联合）
+
+令：
+
+\[
+M=\prod_{p\in S}p^{\kappa(p)}.
+\]
+
+则：
+
+\[
+\boxed{
+\mathbb Z/M\mathbb Z
+\simeq
+\prod_{p\in S}\mathbb Z/p^{\kappa(p)}\mathbb Z.
+}
+\]
+

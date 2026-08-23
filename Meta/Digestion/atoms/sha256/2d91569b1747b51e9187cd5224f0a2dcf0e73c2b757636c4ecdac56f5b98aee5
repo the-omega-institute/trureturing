@@ -1,0 +1,10 @@
+# 211. 独立乘积实验的精确分解
+
+设：
+
+\[
+P=P_1\otimes\cdots\otimes P_m,
+\qquad
+Q=Q_1\otimes\cdots\otimes Q_m.
+\]
+

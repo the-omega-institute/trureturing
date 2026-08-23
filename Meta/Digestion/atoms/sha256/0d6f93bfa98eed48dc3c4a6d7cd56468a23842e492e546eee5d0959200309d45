@@ -1,0 +1,55 @@
+# 85. 核心定理链
+
+\[
+\boxed{
+\begin{aligned}
+&\text{局部读出族 }(q_{p,k})\\
+&\Downarrow\\
+&\ker(q_J)=\bigcap_{i\in J}\ker(q_i)\\
+&\Downarrow\\
+&\text{不同素数 CRT 联合；同素数精度过滤}\\
+&\Downarrow\\
+&\operatorname{LGRes}(q)
+=\text{全部局部接口仍看不见的全局差异}\\
+&\Downarrow\\
+&\sim_J^\infty=C_F(\sim_J)\\
+&\Downarrow\\
+&Z_J^\infty=\text{规范预测商}\\
+&\Downarrow\\
+&\text{有限系统有有限素数—时间证书}\\
+&\Downarrow\\
+&\text{目标相对最小充分画像、成本与策略能力}.
+\end{aligned}
+}
+\]
+
+算术实例链：
+
+\[
+\boxed{
+\text{判别式 character}
+\to
+\text{三环分裂画像}
+\to
+\text{模 }60\text{ 的二元纤维}
+\to
+\text{定向位完成}
+\to
+\text{同判别式全局类余量}.
+}
+\]
+
+动态 crossing 链：
+
+\[
+\boxed{
+\Psi(SA)=\Psi(A)-2
+\Rightarrow
+T(p^k)=\frac{p^k}{\gcd(p^k,2)}
+\Rightarrow
+T(m)=\operatorname{lcm}_{p^k\parallel m}T(p^k).
+}
+\]
+
+---
+

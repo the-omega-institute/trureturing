@@ -1,0 +1,15 @@
+## 原理 229.1（成对证书不自动给出不可数分割）
+
+不可数个 pairwise separating sets 不能无条件通过不可数交并组成可测分割。还必须控制：
+
+\[
+\boxed{
+\begin{aligned}
+&\Theta\text{ 的可测结构};\\
+&\theta\mapsto\mathbf P_\theta\text{ 的 kernel 可测性};\\
+&\text{共同支配性或可测选择};\\
+&\text{所需结论是逐点、几乎处处还是先验几乎处处}.
+\end{aligned}
+}
+\]
+

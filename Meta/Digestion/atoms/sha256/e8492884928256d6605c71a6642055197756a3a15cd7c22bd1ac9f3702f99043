@@ -1,0 +1,15 @@
+## 原理 8.1（横向与纵向二分）
+
+\[
+\boxed{
+\begin{aligned}
+\text{不同 }p &: \text{CRT 乘积／张量因子};\\
+\text{同一 }p\text{ 的不同 }k &: \text{逆系统／精度过滤}.
+\end{aligned}
+}
+\]
+
+这是素数观察者理论的第一结构定律。
+
+---
+

@@ -1,0 +1,33 @@
+## 定理 103.3（每个局部观察都报告主理想）
+
+对任意非零素理想 \(\mathfrak p\)：
+
+\[
+I_{\mathfrak p}
+\]
+
+是 DVR \(A_{\mathfrak p}\) 上的非零分式理想，故为主理想。
+
+于是：
+
+\[
+\boxed{
+\forall\mathfrak p,
+\ I_{\mathfrak p}\text{ principal},
+\qquad
+I\text{ not principal}.
+}
+\]
+
+这给出第 44 节 Hasse 正缺陷的显式见证：
+
+\[
+I
+\in
+\operatorname{HasseDefect}^{+}
+\left(
+\operatorname{Principal},
+(\operatorname{LocallyPrincipal}_{\mathfrak p})_{\mathfrak p}
+\right).
+\]
+

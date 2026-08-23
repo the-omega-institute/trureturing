@@ -1,0 +1,26 @@
+\[
+\boxed{
+\mathfrak P_{\mathrm{raw}}
+=
+(X,\operatorname{Adm},a,U,F,\mathcal I,O,q,\mathcal T).
+}
+\]
+
+其中：
+
+\[
+\begin{aligned}
+X&:\mathsf{Type} &&\text{全局状态类型},\\
+\operatorname{Adm}&:X\to\mathsf{Prop} &&\text{准入谓词},\\
+a&:\sum_{x:X}\operatorname{Adm}(x) &&\text{实际锚点},\\
+U&:\mathsf{Type} &&\text{输入／干预类型},\\
+F&:U\to X\to X &&\text{受控更新族},\\
+\mathcal I&:\mathsf{Type} &&\text{局部观察索引},\\
+O&:\mathcal I\to\mathsf{Type} &&\text{依赖输出族},\\
+q&:\prod_{i:\mathcal I}(X\to O_i) &&\text{局部读出族},\\
+\mathcal T&:\mathsf{Type} &&\text{目标或任务索引}.
+\end{aligned}
+\]
+
+标准素数模型取 \(\mathcal I=\operatorname{PrimeScale}\)。
+

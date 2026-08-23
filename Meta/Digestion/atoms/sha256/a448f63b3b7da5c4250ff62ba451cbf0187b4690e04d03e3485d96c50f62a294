@@ -1,0 +1,10 @@
+### 证明
+
+所有关于隐藏状态的条件期望都只依赖 conditional law：
+
+\[
+\mathcal L(X\mid h)=\pi_h.
+\]
+
+实验的未来输出 law 又由 \(\pi_h\) 与 kernel family 决定，因此递归 continuation value 相同。 \(\square\)
+

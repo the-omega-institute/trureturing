@@ -1,0 +1,16 @@
+# Appendix M：第五阶段外部经典基础
+
+以下来源只支撑标准背景和 paper-level bridge，不替代仓库中的未来 Lean 证明：
+
+1. S. Kakutani, “On Equivalence of Infinite Product Measures,” *Annals of Mathematics* 49 (1948), 214–224, DOI `10.2307/1969123`。
+2. H. Chernoff, “A Measure of Asymptotic Efficiency for Tests of a Hypothesis Based on the Sum of Observations,” *Annals of Mathematical Statistics* 23 (1952), 493–507, DOI `10.1214/aoms/1177729330`。
+3. D. Blackwell, “Equivalent Comparisons of Experiments,” *Annals of Mathematical Statistics* 24 (1953), 265–272, DOI `10.1214/aoms/1177729032`。
+4. L. Le Cam, *Asymptotic Methods in Statistical Decision Theory*：experiment comparison、deficiency 与 asymptotic equivalence 背景。
+5. T. Cover and J. Thomas, *Elements of Information Theory*, 2nd ed.：KL、mutual information、Chernoff information 与 hypothesis testing 背景。
+6. G. L. Nemhauser, L. A. Wolsey and M. L. Fisher, “An Analysis of Approximations for Maximizing Submodular Set Functions—I,” *Mathematical Programming* 14 (1978), 265–294, DOI `10.1007/BF01588971`。
+7. D. Golovin and A. Krause, “Adaptive Submodularity: Theory and Applications in Active Learning and Stochastic Optimization,” *Journal of Artificial Intelligence Research* 42 (2011), 427–486, DOI `10.1613/JAIR.3278`。
+8. O. Kallenberg, *Foundations of Modern Probability*, 3rd ed.：product measures、Radon–Nikodym、martingales、regular conditional distributions 与 measurable kernels。
+9. A. Wald, *Sequential Analysis*：sequential probability ratio、stopping 与 sample-cost tradeoff 背景。
+
+---
+

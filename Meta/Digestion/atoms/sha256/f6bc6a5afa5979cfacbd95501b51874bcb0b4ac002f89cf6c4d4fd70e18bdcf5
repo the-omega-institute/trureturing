@@ -1,0 +1,12 @@
+\[
+\boxed{
+\mathcal A(s,t)
+=
+\frac{
+\zeta\left(\frac{s+t}{2}\right)
+}{
+\sqrt{\zeta(s)\zeta(t)}
+}.
+}
+\]
+

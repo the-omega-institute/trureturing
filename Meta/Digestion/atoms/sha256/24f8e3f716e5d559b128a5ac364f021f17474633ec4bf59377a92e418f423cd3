@@ -1,0 +1,10 @@
+# 203. law 相等才是统计观察同一性
+
+对单个实验 \(K:X\rightsquigarrow O\)，定义 law map：
+
+\[
+\Lambda_K:X\to\mathcal P(O),
+\qquad
+\Lambda_K(x)=K(x,\cdot).
+\]
+

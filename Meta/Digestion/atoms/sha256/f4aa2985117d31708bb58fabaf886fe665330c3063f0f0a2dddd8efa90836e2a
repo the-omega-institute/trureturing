@@ -1,0 +1,23 @@
+\[
+\operatorname{LGRes}_T(q)
+=
+\sum_{x,y:X}
+R_q(x,y)
+\times
+(Tx\ne Ty).
+\]
+
+则：
+
+\[
+\boxed{
+\operatorname{LGRes}_T(q)=\varnothing
+\iff
+T\in\operatorname{Expr}_Y(q).
+}
+\]
+
+这比“完整读出是否单射”更适合任务相对研究：即使 \(R_q\) 非平凡，某个特定目标仍可能完全可表达。
+
+---
+

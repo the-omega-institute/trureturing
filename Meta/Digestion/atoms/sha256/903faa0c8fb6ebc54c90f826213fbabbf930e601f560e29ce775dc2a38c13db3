@@ -1,0 +1,8 @@
+## 定义 18.2（表示读出）
+
+\[
+\operatorname{Rep}_n(Q)
+\iff
+\exists x,y\in\mathbb Z,\ Q(x,y)=n.
+\]
+

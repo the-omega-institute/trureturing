@@ -1,0 +1,16 @@
+## 定理 267.1（carry 空当且仅当有效像上可下降）
+
+在有效像上：
+
+\[
+\operatorname{CausalCarry}(I_a,q)=\varnothing
+\]
+
+当且仅当存在唯一：
+
+\[
+\bar I_a:\operatorname{Im}(q)\to\operatorname{Im}(q)
+\]
+
+使交换图成立。
+

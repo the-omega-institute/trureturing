@@ -1,0 +1,8 @@
+## 定义 10.1（局部坐标区分一对状态）
+
+\[
+\operatorname{Dist}_i(x,y)
+\iff
+q_i(x)\neq q_i(y).
+\]
+

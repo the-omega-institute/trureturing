@@ -1,0 +1,15 @@
+## 定理 279.1（折扣收缩）
+
+对有界 \(V,W\)：
+
+\[
+\boxed{
+\|\mathcal TV-\mathcal TW\|_\infty
+\le
+\gamma
+\|V-W\|_\infty.
+}
+\]
+
+所以 \(0<\gamma<1\) 时存在唯一固定点。
+

@@ -1,0 +1,12 @@
+# 122. 仓库中新闭合的概率锚点
+
+本阶段直接复用以下机器检查结果：
+
+- `D5/S3/Analytic/ZetaGibbs.lean`：在 \(s>1\) 时构造正整数上的 zeta Gibbs 概率；
+- `D5/S3/Analytic/Zeta/PrimeExponentLaw.lean`：证明每个素指数具有几何尾分布和点质量；
+- `D5/S3/Analytic/Zeta/ZetaPrimeIndependence.lean`：证明全部素数索引的指数坐标构成 `iIndepFun`，不是只证明有限或两两独立；
+- `D5/S3/Analytic/Zeta/ZetaEntropy.lean`：证明 zeta 熵有限、Gibbs 熵恒等式及固定对数矩下的最大熵性质；
+- `D5/S3/AnalyticClosure/PrimeSpectrumBoundaryDivergent.lean`：把素数倒数级数的边界发散接入一般线性素谱热迹。
+
+以下公式以：
+

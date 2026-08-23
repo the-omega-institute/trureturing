@@ -1,0 +1,18 @@
+\[
+\widehat G_p
+=
+\varprojlim_{[G:N]=p^k}G/N.
+\]
+
+规范映射：
+
+\[
+\iota_{G,p}:G\to\widehat G_p
+\]
+
+满足：
+
+\[
+\ker(\iota_{G,p})=R_p(G).
+\]
+

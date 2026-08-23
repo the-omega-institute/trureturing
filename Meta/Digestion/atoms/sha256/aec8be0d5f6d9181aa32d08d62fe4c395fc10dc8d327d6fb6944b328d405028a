@@ -1,0 +1,4 @@
+## J.5 trace-language saturation
+
+在不依赖完整 Jordan normal form API 的前提下，先关闭二维 nilpotent／unipotent 反模型；随后再研究 kernel-dimension sequence 与 Jordan partition 的组合桥。
+

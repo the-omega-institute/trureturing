@@ -1,0 +1,11 @@
+\[
+\boxed{
+\operatorname{CausalCarry}(I_a,q)
+=
+\sum_{M,N}
+(q(M)=q(N))
+\times
+(q(I_aM)\neq q(I_aN)).
+}
+\]
+

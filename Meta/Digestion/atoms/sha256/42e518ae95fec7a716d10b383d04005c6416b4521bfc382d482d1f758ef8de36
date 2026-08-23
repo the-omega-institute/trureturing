@@ -1,0 +1,23 @@
+## 定理 227.1（有限族 pairwise singular 即 simultaneous completion）
+
+对有限状态族，以下条件等价：
+
+\[
+\boxed{
+\forall i\neq j,
+\quad
+\mathbf P_i\perp\mathbf P_j
+}
+\]
+
+与：
+
+\[
+\boxed{
+\exists\Phi,
+\quad
+\mathbf P_i[\Phi=x_i]=1
+\quad\forall i.
+}
+\]
+

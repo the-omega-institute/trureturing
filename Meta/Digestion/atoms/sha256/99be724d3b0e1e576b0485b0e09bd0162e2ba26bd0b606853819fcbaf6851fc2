@@ -1,0 +1,4 @@
+## 边界 276.1
+
+真实实验只提供有限样本，不提供精确 law 坐标。此时必须把 Hamming oracle 模型替换为 TV、Hellinger、KL、置信集或复合检验；不能把 sampling error 当作一个离散坐标翻转。
+

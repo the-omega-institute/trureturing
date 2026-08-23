@@ -1,0 +1,16 @@
+# 159. 有限商语言的残余层级
+
+定义三类有限目标群：
+
+\[
+\mathcal F_{\mathrm{all}},
+\qquad
+\mathcal F_{\mathrm{sol}},
+\qquad
+\mathcal F_{\mathrm{nil}},
+\]
+
+分别为全部有限群、有限可解群和有限幂零群。
+
+对任意群 \(G\)，定义：
+

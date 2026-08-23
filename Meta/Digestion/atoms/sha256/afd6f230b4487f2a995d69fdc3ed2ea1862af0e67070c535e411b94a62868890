@@ -1,0 +1,6 @@
+## O.3 锚点边界
+
+上述 Lean 文件不定义完整 SCM、do-operator、DAG d-separation、back-door、do-calculus、potential outcomes、transportability 或 g-formula。本文仅把其已闭合的 kernel-factorization、随机通道、信息与 Bellman 部件作为未来因果模块的底层依赖；不得由文件名中的 `CausalState` 推断 Pearl 式 causal hierarchy 已经形式化。
+
+---
+

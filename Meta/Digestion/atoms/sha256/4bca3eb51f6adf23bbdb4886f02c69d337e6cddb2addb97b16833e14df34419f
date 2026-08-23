@@ -1,0 +1,16 @@
+# 265. 隐混杂使条件化与干预分离
+
+令：
+
+\[
+U\sim\operatorname{Bernoulli}(1/2),
+\]
+
+并定义：
+
+\[
+X=U,
+\qquad
+Y=U.
+\]
+

@@ -1,0 +1,10 @@
+# 99. Sheaf 等化子：兼容局部族何时必有唯一全局来源
+
+令 \(\mathcal F\) 是某个 site 上的 presheaf，\(\{U_i\to U\}\) 为覆盖。存在两条限制映射：
+
+\[
+\prod_i\mathcal F(U_i)
+\rightrightarrows
+\prod_{i,j}\mathcal F(U_i\times_UU_j).
+\]
+

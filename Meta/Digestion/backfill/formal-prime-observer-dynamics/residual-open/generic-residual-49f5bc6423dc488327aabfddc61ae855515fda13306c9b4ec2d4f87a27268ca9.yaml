@@ -1,0 +1,10 @@
+ast_path: section/83-与量子观察的有限接口
+fingerprints:
+  raw_sha256: sha256:49f5bc6423dc488327aabfddc61ae855515fda13306c9b4ec2d4f87a27268ca9
+  normalized_sha256: sha256:49f5bc6423dc488327aabfddc61ae855515fda13306c9b4ec2d4f87a27268ca9
+cas_ref: sha256:49f5bc6423dc488327aabfddc61ae855515fda13306c9b4ec2d4f87a27268ca9
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

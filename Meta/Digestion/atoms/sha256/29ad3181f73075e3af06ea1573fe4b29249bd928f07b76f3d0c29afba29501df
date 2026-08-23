@@ -1,0 +1,12 @@
+## 195.3 有理数赋值画像
+
+证明有限支持等价：
+
+```lean
+theorem rat_mulEquiv_sign_directSum_valuation :
+  ℚˣ ≃* Multiplicative (ZMod 2) ×
+    Multiplicative (DirectSum ℕ fun p => ℤ)
+```
+
+正式实现可改用 `Associates`、`FreeAbelianMonoid` 或只陈述逐元素重建，避免不必要的类型工程。
+

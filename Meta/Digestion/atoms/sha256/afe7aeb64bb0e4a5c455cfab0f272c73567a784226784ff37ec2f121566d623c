@@ -1,0 +1,7 @@
+\[
+\mathbb E[z^{\Omega(N)}]
+=
+\prod_p
+\frac{1-p^{-s}}{1-zp^{-s}}.
+\]
+

@@ -1,0 +1,20 @@
+## 定理 90.1（角色秩—画像基数定理）
+
+在有限群对偶性下：
+
+\[
+\boxed{
+\begin{aligned}
+\ker\Phi_{\chi}
+&=
+\bigcap_{j=1}^{m}\ker\chi_j,\\
+|\operatorname{Im}\Phi_{\chi}|
+&=2^r,\\
+|\Phi_{\chi}^{-1}(b)|
+&=\frac{|G|}{2^r}
+\quad
+\text{对每个已实现画像 }b.
+\end{aligned}
+}
+\]
+

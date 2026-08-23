@@ -1,0 +1,24 @@
+\[
+K_i^{M_0}(x,\cdot)
+=
+K_i^{M_0}(y,\cdot),
+\]
+
+则对任意自适应 policy 和任意最终分类器：
+
+\[
+\boxed{
+\max\{
+\mathbb P_x^{M_0}(\widehat X\neq x),
+\mathbb P_y^{M_0}(\widehat X\neq y)
+\}
+\ge\frac12.
+}
+\]
+
+若采用在 \(x,y\) 上权重分别为 \(a,1-a\) 的 Bayes 风险，则下界为：
+
+\[
+\min\{a,1-a\}.
+\]
+

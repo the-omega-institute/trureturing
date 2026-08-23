@@ -1,0 +1,16 @@
+\[
+\ker(q_{p,k},q_{p,k+1})
+=
+\ker(q_{p,k+1}).
+\]
+
+\[
+\boxed{
+\text{横向 }p\neq q\text{ 用乘积；}
+\quad
+\text{纵向 }k\to k+1\text{ 用精化。}
+}
+\]
+
+---
+

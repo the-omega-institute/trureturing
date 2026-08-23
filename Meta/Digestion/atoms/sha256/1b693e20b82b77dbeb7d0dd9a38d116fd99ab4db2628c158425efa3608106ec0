@@ -1,0 +1,15 @@
+\[
+\boxed{
+\min_{J}
+\sum_{a\in J}c_a
+\quad
+\text{s.t.}
+\quad
+\bigcup_{a\in J}D_a
+=
+\mathcal U_T.
+}
+\]
+
+这是 target-relative weighted set cover。
+

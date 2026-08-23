@@ -1,0 +1,14 @@
+\[
+\operatorname{Blind}_q(x,y)
+=
+\{p:p\mid d\}.
+\]
+
+是有限集，而：
+
+\[
+\operatorname{Sep}_q(x,y)
+\]
+
+为余有限集，具有自然密度与 Dirichlet 密度一。
+

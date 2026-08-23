@@ -1,0 +1,12 @@
+\[
+\mathbb E_{\mathbf Q}[L_{m+1}\mid\mathcal F_m]
+=
+L_m.
+\]
+
+所以 \((L_m)\) 是非负鞅，因而几乎处处收敛到某个：
+
+\[
+L_\infty\in[0,\infty).
+\]
+

@@ -1,0 +1,9 @@
+\[
+\operatorname{ClassResidual}(R)
+=
+\sum_{Q,Q'}
+R(Q,Q')
+\times
+\neg(Q\simeq_{\mathbb Z}Q').
+\]
+

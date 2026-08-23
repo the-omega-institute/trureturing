@@ -1,0 +1,22 @@
+## 最深结论 251.1
+
+\[
+\boxed{
+\text{无限局部观察之所以能够产生精确全局知识，}
+\text{不是因为“无限”本身，}
+\text{而是因为局部 law 差异的乘积几何}
+\text{把有限软证据累积成互奇的全局 measure class。}
+}
+\]
+
+进一步：
+
+\[
+\boxed{
+\text{主动观察的真实状态不是 transcript，}
+\text{而是 posterior belief；}
+\text{其最优行为不是固定传感器列表，}
+\text{而是 belief 空间 Bellman 方程的 policy。}
+}
+\]
+

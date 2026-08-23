@@ -1,0 +1,15 @@
+\prod_j\chi_j(g)^{a_j}
+=
+(-1)^{\langle a,b_\chi(g)\rangle},
+\]
+
+故每个可实现画像与每个关系向量正交。又：
+
+\[
+\dim\mathcal C_\chi=r,
+\qquad
+\dim\mathcal R_\chi=m-r,
+\]
+
+维数相加为 \(m\)，所以包含关系为等号。\(\square\)
+

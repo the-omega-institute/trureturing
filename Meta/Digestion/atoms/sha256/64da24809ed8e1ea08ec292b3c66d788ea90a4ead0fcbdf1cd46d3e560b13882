@@ -1,0 +1,8 @@
+\[
+A_n
+=
+S_n\setminus\bigcup_{m<n}S_m.
+\]
+
+则 \(A_n\) 两两不交，且从 \(S_n\) 中只删除 \(\mathbf P_n\)-零测集，故 \(\mathbf P_n(A_n)=1\)。 \(\square\)
+

@@ -1,0 +1,10 @@
+## 定理 6.1（精化等价于核包含）
+
+在有效像上：
+
+\[
+q\preceq r
+\iff
+\ker(r)\subseteq\ker(q).
+\]
+

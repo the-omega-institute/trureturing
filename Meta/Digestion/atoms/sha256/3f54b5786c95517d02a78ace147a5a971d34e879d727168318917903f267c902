@@ -1,0 +1,8 @@
+## 定理 299.1（可评估判据）
+
+目标政策可由行为 law 在模型类中识别，当且仅当：
+
+\[
+\operatorname{OPRes}(\mu,\pi)=\varnothing.
+\]
+

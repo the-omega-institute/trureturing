@@ -1,0 +1,6 @@
+## 原理 292.2
+
+若模型只指定每个 intervention world 的边缘 law，却未指定共享外生 coupling，则 abduction 后的个体反事实一般无定义或不唯一。
+
+---
+

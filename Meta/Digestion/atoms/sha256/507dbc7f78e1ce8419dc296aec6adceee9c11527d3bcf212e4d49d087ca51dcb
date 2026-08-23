@@ -1,0 +1,11 @@
+\[
+\boxed{
+\operatorname{TransRes}(E,T)
+=
+\sum_{M,N}
+(E(M)=E(N))
+\times
+(T(M)\neq T(N)).
+}
+\]
+

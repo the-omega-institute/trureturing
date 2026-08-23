@@ -1,0 +1,14 @@
+# 220. product-singular 区域
+
+若：
+
+\[
+\mathcal B_\infty(x,y)=\infty,
+\]
+
+则：
+
+\[
+\mathbf P_x\perp\mathbf P_y.
+\]
+

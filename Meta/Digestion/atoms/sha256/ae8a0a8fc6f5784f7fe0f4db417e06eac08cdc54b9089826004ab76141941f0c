@@ -1,0 +1,10 @@
+\[
+\boxed{
+P(Y_x=y\mid E=e)
+=
+\int
+\mathbf 1\{Y_x(u)=y\}
+\,P_U(du\mid E=e).
+}
+\]
+

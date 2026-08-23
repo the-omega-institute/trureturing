@@ -1,0 +1,10 @@
+## 定义 4.4（有限观察预算）
+
+\[
+J\subset_{\mathrm{fin}}\mathcal I,
+\qquad
+O_J=\prod_{i\in J}O_i,
+\qquad
+q_J(x)=(q_i(x))_{i\in J}.
+\]
+

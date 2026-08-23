@@ -1,0 +1,9 @@
+## 定义 26.2（受控行为等价）
+
+\[
+x\approx_Jy
+\iff
+\forall w\in U^*,\forall i\in J,
+q_i(F_wx)=q_i(F_wy).
+\]
+

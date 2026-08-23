@@ -1,0 +1,9 @@
+\[
+T(p^k)
+=
+\begin{cases}
+p^k,&p\text{ 为奇素数},\\
+2^{k-1},&p=2.
+\end{cases}
+\]
+

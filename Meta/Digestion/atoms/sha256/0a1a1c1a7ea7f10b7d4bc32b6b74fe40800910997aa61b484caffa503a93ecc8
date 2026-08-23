@@ -1,0 +1,12 @@
+## 定义 108.2（规范完成）
+
+在对象已经确定后，选择一个代表、基、生成元、截面或 gauge：
+
+\[
+s:\operatorname{Im}(q)\to X
+\quad\text{或}\quad
+\alpha\text{ generating }I.
+\]
+
+它可能受 torsor 或 cocycle 障碍影响。
+

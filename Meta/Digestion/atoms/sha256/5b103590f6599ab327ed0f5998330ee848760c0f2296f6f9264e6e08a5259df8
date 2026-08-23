@@ -1,0 +1,26 @@
+## 原理 188.1（整数恢复与结构恢复分离）
+
+即使全部整数幂迹都被精确恢复，仍只得到谱语言能够表达的对象；第 185 节的 Jordan 余量仍然存在。
+
+所以完整过程分两层：
+
+\[
+\boxed{
+\begin{aligned}
+\text{局部 residues}
+&\xrightarrow{\text{CRT+高度界}}
+\text{全局整数迹};\\
+\text{全局整数迹}
+&\xrightarrow{\text{Newton}}
+\text{特征多项式};\\
+\text{特征多项式}
+&\not\Rightarrow
+\text{矩阵相似类}.
+\end{aligned}
+}
+\]
+
+每层都有不同前件与不同 residual。
+
+---
+

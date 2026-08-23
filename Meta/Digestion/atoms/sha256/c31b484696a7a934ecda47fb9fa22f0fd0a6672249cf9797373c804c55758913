@@ -1,0 +1,10 @@
+## 定义 256.2（允许干预相对因果等价）
+
+\[
+M\sim_{\mathcal A}^{\mathrm{causal}}N
+\iff
+\forall a\in\mathcal A,
+\quad
+P_M^a=P_N^a.
+\]
+

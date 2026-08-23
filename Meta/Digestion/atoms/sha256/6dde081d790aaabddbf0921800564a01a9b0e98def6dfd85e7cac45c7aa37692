@@ -1,0 +1,20 @@
+\[
+\operatorname{GlueRes}^0(\mathcal F,U)
+=
+\frac{
+\operatorname{Eq}
+\left(
+\prod_i\mathcal F(U_i)
+\rightrightarrows
+\prod_{i,j}\mathcal F(U_i\times_UU_j)
+\right)
+}{
+\operatorname{Im}
+\left(
+\mathcal F(U)\to\prod_i\mathcal F(U_i)
+\right)
+}.
+\]
+
+这里的商是结构记号；在集合语境可以直接使用“兼容但不来自全局 section”的见证类型。
+

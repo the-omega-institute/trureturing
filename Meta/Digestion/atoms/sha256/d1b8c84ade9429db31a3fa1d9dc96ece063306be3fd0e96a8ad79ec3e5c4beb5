@@ -1,0 +1,25 @@
+## 统一原理 232.1（临界指数由被累积量的阶数决定）
+
+\[
+\boxed{
+\begin{aligned}
+\text{finite-support realizability}
+&:\quad
+\sum_p\text{activation probability};\\
+\text{infinite statistical separation}
+&:\quad
+\sum_p\text{quadratic local evidence}.
+\end{aligned}
+}
+\]
+
+所以：
+
+\[
+1
+\quad\text{与}\quad
+\frac12
+\]
+
+不是同一相变的两种写法，而是两种不同 local-to-global functor 对同一素数谱的响应。
+

@@ -1,0 +1,14 @@
+## 仓库锚点 210.1
+
+`D5/S3/TotalVariation/Hellinger.lean` 已在有限归一化非负质量函数上证明：
+
+\[
+\boxed{
+\frac{H^2(P,Q)}2
+\le
+\operatorname{TV}(P,Q),
+}
+\]
+
+以及：
+

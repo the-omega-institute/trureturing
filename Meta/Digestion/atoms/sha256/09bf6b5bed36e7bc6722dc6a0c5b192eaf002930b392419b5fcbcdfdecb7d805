@@ -1,0 +1,4 @@
+## 仓库桥 257.1
+
+这正是仓库 `CausalStateFactorization.lean` 的模式：任何预测／law 接口若足够充分，就唯一映射到规范 law image。这里把 `futureLaw` 专门化为完整允许干预画像。
+

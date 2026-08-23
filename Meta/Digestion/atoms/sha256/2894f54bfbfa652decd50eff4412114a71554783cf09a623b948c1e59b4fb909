@@ -1,0 +1,29 @@
+# 67. 三环模六十观察者形式化
+
+```lean
+inductive SplitType
+  | split
+  | inert
+  | ramified
+```
+
+目标：
+
+```lean
+theorem threeRingProfile_fiber_card_two :
+  ∀ b, Fintype.card
+    {r : (ZMod 60)ˣ // threeRingProfile r = b} = 2
+```
+
+以及：
+
+```lean
+theorem threeRingProfile_with_orientation_bijective :
+  Function.Bijective fun r =>
+    (threeRingProfile r, modFiveOrientation r)
+```
+
+必须保留 \(p=2,3,5\) 的边界和 ramified 分支。
+
+---
+

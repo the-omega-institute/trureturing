@@ -1,0 +1,4 @@
+## 仓库桥 241.1
+
+仓库已有有限状态 discounted prediction Bellman operator 的 contraction 与 unique fixed point。主动观察版本需要把固定 update 提升为 belief kernel 与动作极小化，但核心 max/min 的 Lipschitz 机制相同。
+

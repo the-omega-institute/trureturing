@@ -1,0 +1,12 @@
+## 定理 220.1（几乎处处零错误分类）
+
+存在可测事件 \(A_{x,y}\) 使：
+
+\[
+\mathbf P_x(A_{x,y})=1,
+\qquad
+\mathbf P_y(A_{x,y})=0.
+\]
+
+因此完整无限 transcript 在 measure-one 意义下精确区分 \(x,y\)。
+

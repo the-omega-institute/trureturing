@@ -1,0 +1,16 @@
+\[
+\boxed{
+L_m
+=
+\prod_{n=1}^m\ell_n(Y_n).
+}
+\]
+
+在 \(\mathbf Q=\bigotimes Q_n\) 下：
+
+\[
+\mathbb E_{\mathbf Q}[L_m]=1,
+\]
+
+且：
+

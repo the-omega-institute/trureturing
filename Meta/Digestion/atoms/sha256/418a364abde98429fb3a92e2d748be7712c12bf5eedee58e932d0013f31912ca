@@ -1,0 +1,21 @@
+\[
+\operatorname{rangeFactorization}
+\left(
+\Lambda_{\mathcal A}^{\mathrm{int}}
+\right)
+=
+\bar g
+\circ
+\operatorname{rangeFactorization}(q).
+\]
+
+并且：
+
+\[
+\Lambda_{\mathcal A}^{\mathrm{int}}(M)
+\neq
+\Lambda_{\mathcal A}^{\mathrm{int}}(N)
+\Longrightarrow
+q(M)\neq q(N).
+\]
+

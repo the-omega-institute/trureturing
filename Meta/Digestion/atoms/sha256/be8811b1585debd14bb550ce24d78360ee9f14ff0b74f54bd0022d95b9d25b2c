@@ -1,0 +1,18 @@
+## 116.4 规范余量
+
+全局对象与性质均已确定，但没有规范代表；所有代表形成某个 gauge 群的 torsor。
+
+因此：
+
+\[
+\boxed{
+\text{local–global failure}
+\ne
+\text{identity blindness only}.
+}
+\]
+
+它可能发生在对象识别、目标决定、局部胶合或规范选择的不同层。
+
+---
+

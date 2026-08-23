@@ -1,0 +1,4 @@
+## 定理 10.1（有限局部完备抽取）
+
+设 \(X\) 有限。若 \(q_{\mathrm{all}}\) 单射，则存在有限 \(J\subset_{\mathrm{fin}}\mathcal I\) 使 \(q_J\) 单射。
+

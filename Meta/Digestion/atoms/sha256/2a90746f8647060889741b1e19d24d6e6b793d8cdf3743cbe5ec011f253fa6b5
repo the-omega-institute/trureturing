@@ -1,0 +1,26 @@
+# 68. 二次型分裂盲区形式化
+
+```lean
+structure BinaryQuadraticForm where
+  A B C : ℤ
+
+def disc (Q : BinaryQuadraticForm) : ℤ :=
+  Q.B^2 - 4 * Q.A * Q.C
+
+def Q1 : BinaryQuadraticForm := ⟨1, 0, 5⟩
+def Q2 : BinaryQuadraticForm := ⟨2, 2, 3⟩
+```
+
+证明：
+
+```lean
+Q1.disc = -20
+Q2.disc = -20
+represents Q1 1
+¬ represents Q2 1
+```
+
+最后导出全部 splitting readout 相同但 representation profile 不同。
+
+---
+

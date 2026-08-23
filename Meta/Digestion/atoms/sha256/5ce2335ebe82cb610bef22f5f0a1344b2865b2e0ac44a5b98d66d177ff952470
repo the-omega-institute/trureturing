@@ -1,0 +1,16 @@
+## 定理 19.1（本文已经承诺的关系方向）
+
+在全局整等价保持判别式、且分裂读出只依赖判别式的设定中：
+
+\[
+\boxed{
+R_{\mathrm{global}}
+\subseteq
+R_{\mathrm{disc}}
+\subseteq
+R_{\mathrm{split}}.
+}
+\]
+
+关于 \(R_{\mathrm{loc}}\)、genus、spinor genus 与 class group 的精确包含、商结构和有限反例均列为形式化目标。本文不由“同判别式”推出“全部局部等价”。
+

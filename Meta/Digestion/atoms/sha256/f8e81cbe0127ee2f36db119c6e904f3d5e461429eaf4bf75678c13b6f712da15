@@ -1,0 +1,15 @@
+\[
+\operatorname{CFTransRes}
+=
+\sum_{M_s,M_t,N_s,N_t}
+\left[
+E(M_s,M_t)=E(N_s,N_t)
+\right]
+\times
+\left[
+Q(M_t)\neq Q(N_t)
+\right],
+\]
+
+其中证据 \(E\) 可以包含源／目标观测和单世界实验，\(Q\) 是目标环境反事实查询。
+

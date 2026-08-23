@@ -1,0 +1,32 @@
+# 143. 观察代数精化与条件期望统一
+
+有限素数集合 \(S\) 生成交换子代数：
+
+\[
+\mathcal D_S.
+\]
+
+若：
+
+\[
+S\subseteq T,
+\]
+
+则：
+
+\[
+\mathcal D_S
+\subseteq
+\mathcal D_T.
+\]
+
+对应 pinching：
+
+\[
+\mathcal E_S,
+\qquad
+\mathcal E_T
+\]
+
+是到这些可见代数的条件期望。
+

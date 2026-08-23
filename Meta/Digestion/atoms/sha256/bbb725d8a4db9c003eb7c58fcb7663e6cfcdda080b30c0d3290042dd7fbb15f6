@@ -1,0 +1,10 @@
+## 定理 13.1（预算增加降低目标风险）
+
+若 \(J\subseteq K\)，则：
+
+\[
+\operatorname{Defect}(q_K,t)
+\subseteq
+\operatorname{Defect}(q_J,t).
+\]
+

@@ -1,0 +1,14 @@
+\[
+H
+=
+\langle\chi_1,\ldots,\chi_m\rangle
+\le
+\operatorname{Hom}(G,\mu_2).
+\]
+
+因为每个元素阶至多为二，\(H\) 是一个 \(\mathbb F_2\)-向量空间。记：
+
+\[
+r=\dim_{\mathbb F_2}H.
+\]
+

@@ -1,0 +1,19 @@
+# 66. CRT 与信息容量形式化
+
+目标声明：
+
+```lean
+theorem bounded_integer_joint_residue_injective_iff
+    (N : ℕ)
+    (mods : Finset ℕ)
+    (hcoprime : mods.toSet.Pairwise Nat.Coprime) :
+    Function.Injective (boundedJointResidue N mods)
+      ↔ N ≤ ∏ m in mods, m
+```
+
+必须处理非零模数、bounded subtype、CRT 等价、\(M<N\) 时反例 \((0,M)\) 及输出积基数。
+
+集合覆盖等价应使用规范无序状态对，避免重复方向。
+
+---
+

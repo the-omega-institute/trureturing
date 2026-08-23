@@ -1,0 +1,18 @@
+## 定义 109.1（绝对乘积准入）
+
+写：
+
+\[
+L_p(s)=1+u_p(s).
+\]
+
+若对每个紧集 \(K\Subset D\)：
+
+\[
+\sum_p
+\sup_{s\in K}|u_p(s)|
+<\infty,
+\]
+
+则称局部因子族在 \(D\) 上 normal-convergent。
+

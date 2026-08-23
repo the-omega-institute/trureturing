@@ -1,0 +1,42 @@
+# 112. 建议新增模块
+
+在第 64 节目录之上追加：
+
+```text
+D5/S3/PrimeObservers/
+  Expressivity/
+    FullFamilyFactorization.lean
+    HorizontalSaturation.lean
+    SemanticCompletion.lean
+  Characters/
+    FiniteBinaryCharacterProfile.lean
+    QuadraticObserverCeiling.lean
+    CharacterRelationCode.lean
+    MinimumWeightCharacterBasis.lean
+    ModSixtyQuadraticKernel.lean
+  Galois/
+    FrobeniusObserver.lean
+    CompositumCompatibility.lean
+    QuadraticCompositumRank.lean
+  Reciprocity/
+    HilbertParityInterface.lean
+  LocalGlobal/
+    SheafEqualizer.lean
+    TrivializationCocycle.lean
+    ClassGroupPrincipalization.lean
+    SqrtNegFiveCountermodel.lean
+  Dynamics/
+    ProductTraceFactorization.lean
+    ProductBehaviorQuotient.lean
+    CompletionDepthMaximum.lean
+    CompatibleSubdirectBehavior.lean
+  Analytic/
+    EulerFactorProfile.lean
+    NormalProductCompletion.lean
+    MeromorphicContinuationUniqueness.lean
+```
+
+其中 Hilbert 互反、sheaf cohomology 与完整 Galois compositum桥可能需要较重 Mathlib 基础，应先存放纸面接口与准确依赖审计，不得以 axiom 预装结论。
+
+---
+

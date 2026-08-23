@@ -1,0 +1,9 @@
+\[
+P_a^S
+=
+\sum_{n:\,(v_p(n))_{p\in S}=a}
+|n\rangle\langle n|.
+\]
+
+这些投影完备且两两正交。
+

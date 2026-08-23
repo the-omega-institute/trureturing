@@ -1,0 +1,4 @@
+### 证明
+
+若 \(q(x)=q(y)\)，每个 \(K_t\) 都由 \(q\) 计算，所以 \(K_t(x)=K_t(y)\)。故 \(x\sim_{\mathcal K}y\)。联合目标读出自身显然决定每个分量，因此其 kernel quotient 满足普适最小性。\(\square\)
+

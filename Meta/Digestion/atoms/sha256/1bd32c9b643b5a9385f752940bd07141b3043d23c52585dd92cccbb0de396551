@@ -1,0 +1,12 @@
+## 定理 9.2（单素数无限精度可分离整数）
+
+固定任意素数 \(p\)。映射：
+
+\[
+\mathbb Z\to\prod_{k\ge1}\mathbb Z/p^k\mathbb Z,
+\qquad
+x\mapsto(x\bmod p^k)_k
+\]
+
+是单射。
+

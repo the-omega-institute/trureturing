@@ -1,0 +1,15 @@
+\[
+P_s(Y_x)
+=
+P_t(Y_x)
+\quad\forall x,
+\]
+
+但具有不同 cross-world coupling：
+
+\[
+P_s(Y_0,Y_1)
+\neq
+P_t(Y_0,Y_1).
+\]
+

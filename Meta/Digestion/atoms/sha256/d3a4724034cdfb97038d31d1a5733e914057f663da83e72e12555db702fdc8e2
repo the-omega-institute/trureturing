@@ -1,0 +1,14 @@
+\[
+\boxed{
+H^2(P,Q)
+=
+2\left(
+1-
+\prod_{j=1}^m
+\left(1-\frac{H_j^2}{2}\right)
+\right).
+}
+\]
+
+所以 Hellinger 平方一般不逐坐标相加；真正可加的是：
+

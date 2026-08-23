@@ -1,0 +1,13 @@
+\[
+M_a^\pi(dy)
+=
+\sum_{M\in\mathcal M}
+\pi(M)P_M^a(dy).
+\]
+
+后验更新为：
+
+\[
+\mathsf B_a(\pi,y).
+\]
+

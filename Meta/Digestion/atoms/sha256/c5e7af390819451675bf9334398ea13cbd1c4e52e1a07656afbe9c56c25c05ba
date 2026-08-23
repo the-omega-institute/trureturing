@@ -1,0 +1,21 @@
+\mathcal R_2(r;T)
++
+\mathbb E
+\left[
+\left(
+\mathbb E[T\mid\mathcal G_r]
+-
+\mathbb E[T\mid\mathcal G_q]
+\right)^2
+\right].
+}
+\]
+
+故：
+
+\[
+\mathcal R_2(r;T)
+\le
+\mathcal R_2(q;T).
+\]
+

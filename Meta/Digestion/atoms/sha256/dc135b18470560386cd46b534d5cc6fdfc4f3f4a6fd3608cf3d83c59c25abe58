@@ -1,0 +1,13 @@
+## Q.3 第二优先：商与实验设计链
+
+```lean
+theorem interventionalProfile_mono
+theorem causalTargetResidual_empty_iff
+theorem finite_intervention_cover_iff
+theorem finite_intervention_subfamily
+theorem causalCarry_empty_iff_descends
+theorem adaptive_orientation_expected_cost
+```
+
+`InterventionCover` 应复用既有 concept join／sensor cover 模式，但 universe 改为目标值不同的模型对，coordinate equality 改为 interventional law equality。
+

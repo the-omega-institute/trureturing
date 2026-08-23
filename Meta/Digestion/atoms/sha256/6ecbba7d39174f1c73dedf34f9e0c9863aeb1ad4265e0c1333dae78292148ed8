@@ -1,0 +1,11 @@
+\[
+\boxed{
+\mathbf P_x
+=
+\bigotimes_{n\ge1}
+K_{p_n}(x,\cdot).
+}
+\]
+
+在标准可测空间和通常乘积测度前件下，该 law 由所有有限柱事件唯一确定。
+

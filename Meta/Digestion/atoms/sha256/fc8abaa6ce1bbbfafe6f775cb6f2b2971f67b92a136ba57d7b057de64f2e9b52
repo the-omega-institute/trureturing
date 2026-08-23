@@ -1,0 +1,8 @@
+## 定义 5.2（完整局部等价）
+
+\[
+x\sim_{\mathrm{loc}}y
+\iff
+\forall i:\mathcal I,\ q_i(x)=q_i(y).
+\]
+

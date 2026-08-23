@@ -1,0 +1,14 @@
+## 推论 208.1（格式升级不等于观察升级）
+
+把相同数据重新编码、摘要、可视化或交给更复杂模型：
+
+\[
+\boxed{
+\text{post-processing complexity}
+\not\Rightarrow
+\text{new experimental information}.
+}
+\]
+
+---
+

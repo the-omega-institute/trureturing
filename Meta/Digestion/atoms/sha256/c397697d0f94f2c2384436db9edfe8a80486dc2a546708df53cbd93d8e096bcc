@@ -1,0 +1,16 @@
+\[
+\operatorname{StatRes}(x,y)
+=
+\inf_{\varphi}
+\frac12
+\left(
+\mathbf P_x[\varphi=y]
++
+\mathbf P_y[\varphi=x]
+\right),
+\]
+
+其中 \(\varphi\) 遍历无限 transcript 上可测分类器。
+
+由 Le Cam 公式：
+

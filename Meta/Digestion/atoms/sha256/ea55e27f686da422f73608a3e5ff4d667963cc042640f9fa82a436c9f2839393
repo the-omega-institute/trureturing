@@ -1,0 +1,12 @@
+# 258. 观测等价不推出干预等价
+
+取二元变量：
+
+\[
+X,Y\in\{0,1\},
+\qquad
+U\sim\operatorname{Bernoulli}(1/2).
+\]
+
+构造两个 SCM。
+

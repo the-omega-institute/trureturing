@@ -1,0 +1,14 @@
+\[
+\operatorname{PTC}(X,F,q)
+=
+\min
+\left\{
+\operatorname{Cost}(J)+\lambda m:
+W_{J,m}\text{ 单射}
+\right\}.
+\]
+
+它量化“测哪些素数、测多精、等多久”的联合成本。
+
+---
+

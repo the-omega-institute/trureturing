@@ -1,0 +1,16 @@
+\[
+\mathcal I_{\mathrm{fin}}
+=
+\sum_{p:\mathbb P}\mathbb N_{>0},
+\qquad
+i=(p,k),
+\]
+
+其中 \(p\) 是素数，\(k\) 是 \(p\)-进精度。每个局部接口为：
+
+\[
+q_{p,k}:X\to O_{p,k}.
+\]
+
+有限观察预算 \(J\subset_{\mathrm{fin}}\mathcal I\) 的联合读出为：
+

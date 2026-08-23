@@ -1,0 +1,10 @@
+\[
+\boxed{
+\operatorname{SemComp}_T(q)
+=
+\left(x\mapsto(q_{\mathcal I}(x),T(x))\right).
+}
+\]
+
+它是保留完整既有画像并使 \(T\) 可表达的最小共同精化。
+

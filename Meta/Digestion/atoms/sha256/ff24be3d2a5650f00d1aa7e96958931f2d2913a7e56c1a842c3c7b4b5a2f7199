@@ -1,0 +1,4 @@
+## 定义 274.1（干预 Markov 等价）
+
+两个 DAG 在观测与全部指定 intervention regimes 下诱导同一 Markov 结构时，称其 \(\mathcal I\)-Markov equivalent。
+

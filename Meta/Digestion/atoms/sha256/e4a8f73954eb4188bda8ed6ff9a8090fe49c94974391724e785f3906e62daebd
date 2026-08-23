@@ -1,0 +1,6 @@
+\[
+\kappa_p(x,y)
+=
+\min\{k\ge1:q_{p,k}(x)\neq q_{p,k}(y)\}.
+\]
+

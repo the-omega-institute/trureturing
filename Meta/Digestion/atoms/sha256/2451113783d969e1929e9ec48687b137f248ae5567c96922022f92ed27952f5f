@@ -1,0 +1,11 @@
+\[
+2\sqrt{
+\left(\frac12+\delta\right)
+\left(\frac12-\delta\right)
+}
+=
+\sqrt{1-4\delta^2}.
+\]
+
+其余公式随即得到。 \(\square\)
+

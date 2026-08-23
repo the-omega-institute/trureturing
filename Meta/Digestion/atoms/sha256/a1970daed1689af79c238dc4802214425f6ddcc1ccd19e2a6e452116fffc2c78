@@ -1,0 +1,26 @@
+\[
+\boxed{
+\mathcal B_\infty(x,y)
+=
+\sum_{n\ge1}
+-\log\rho_n
+\in[0,\infty].
+}
+\]
+
+于是：
+
+\[
+\mathbf P_x\sim\mathbf P_y
+\iff
+\mathcal B_\infty(x,y)<\infty,
+\]
+
+\[
+\mathbf P_x\perp\mathbf P_y
+\iff
+\mathcal B_\infty(x,y)=\infty.
+\]
+
+---
+

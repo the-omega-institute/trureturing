@@ -1,0 +1,21 @@
+## 统一原理 300.1
+
+\[
+\boxed{
+\begin{aligned}
+\text{kernel}
+&:\quad
+\text{多个模型映为同一证据};\\
+\text{image}
+&:\quad
+\text{哪些证据族可由模型实现};\\
+\text{coupling}
+&:\quad
+\text{单世界边缘如何组成同单位多世界};\\
+\text{gauge}
+&:\quad
+\text{同一查询对象的非规范表示}.
+\end{aligned}
+}
+\]
+

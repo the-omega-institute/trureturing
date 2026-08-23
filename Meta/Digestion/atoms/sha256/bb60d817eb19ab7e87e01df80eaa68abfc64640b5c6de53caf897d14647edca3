@@ -1,0 +1,21 @@
+## 定义 95.1（Galois 素数观察者）
+
+\[
+\boxed{
+\mathcal O_L:
+\mathfrak p
+\longmapsto
+\operatorname{Frob}_{\mathfrak p}(L/K)
+}
+\]
+
+连同 ramified / unramified 标签，称为由扩张 \(L/K\) 给出的素数观察者。
+
+二次扩张时：
+
+\[
+\operatorname{Gal}(L/K)\simeq C_2,
+\]
+
+其 Frobenius 读出正是 split / inert 的二元角色；分歧素数属于单独边界分支。
+

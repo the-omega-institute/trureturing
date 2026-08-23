@@ -1,0 +1,6 @@
+## 边界 297.1
+
+若存在未记录的 time-varying confounder、测量误差、干预副作用或 positivity 失败，则该乘积不是目标 policy law 的无条件表达式。
+
+---
+

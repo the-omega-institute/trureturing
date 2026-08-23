@@ -1,0 +1,10 @@
+### 禁令 3：禁止把同判别式当作同一二次型类
+
+\[
+\boxed{
+\operatorname{disc}(Q)=\operatorname{disc}(Q')
+\not\Rightarrow
+Q\simeq_{\mathrm{GL}_2(\mathbb Z)}Q'.
+}
+\]
+

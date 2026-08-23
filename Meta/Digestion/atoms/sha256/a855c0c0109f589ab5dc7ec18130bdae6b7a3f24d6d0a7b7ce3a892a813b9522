@@ -1,0 +1,10 @@
+## 191.2 image 问题
+
+哪些形式局部画像实际来自全局对象？
+
+\[
+\ell\in L,
+\qquad
+\ell\in\operatorname{Im}(q)?
+\]
+

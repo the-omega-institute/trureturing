@@ -1,0 +1,18 @@
+\[
+q_J(x)
+=
+\bigl(q_i(x)\bigr)_{i\in J},
+\]
+
+并规定相对同一性：
+
+\[
+x\sim_J y
+\iff
+q_J(x)=q_J(y)
+\iff
+\forall i\in J,\ q_i(x)=q_i(y).
+\]
+
+其余量纤维为：
+

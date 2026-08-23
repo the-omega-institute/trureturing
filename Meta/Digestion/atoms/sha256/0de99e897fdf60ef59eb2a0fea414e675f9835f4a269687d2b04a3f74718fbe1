@@ -1,0 +1,16 @@
+\[
+\boxed{
+I_\pi(X;Y_i)
+=
+\mathbb E_{Y_i\sim M_i^\pi}
+\left[
+D_{\mathrm{KL}}
+\bigl(
+\mathsf B_i(\pi,Y_i)
+\Vert
+\pi
+\bigr)
+\right].
+}
+\]
+

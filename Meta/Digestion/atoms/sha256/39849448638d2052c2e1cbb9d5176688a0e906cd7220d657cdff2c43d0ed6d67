@@ -1,0 +1,7 @@
+\[
+P_e(x_V)
+=
+\prod_{v\in V}
+K_{v,e}(x_v\mid x_{\operatorname{pa}(v)}).
+\]
+

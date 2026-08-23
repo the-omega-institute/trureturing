@@ -1,0 +1,36 @@
+## 定理 231.1（弱素数信号完成阈值）
+
+由于每个坐标两 law 严格正，Kakutani 前件成立。于是：
+
+\[
+\boxed{
+\bigotimes_pP_{\delta_p}
+\perp
+\bigotimes_pQ_{\delta_p}
+\iff
+\sum_p\delta_p^2=\infty.
+}
+\]
+
+而：
+
+\[
+\sum_p\delta_p^2
+=c^2\sum_pp^{-2\alpha}.
+\]
+
+故：
+
+\[
+\boxed{
+\begin{aligned}
+\alpha\le\frac12
+&\Rightarrow
+\text{无限 transcript 零错误完成};\\
+\alpha>\frac12
+&\Rightarrow
+\text{两 product laws 等价，保留正 Bayes 余量}.
+\end{aligned}
+}
+\]
+

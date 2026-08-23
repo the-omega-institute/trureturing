@@ -1,0 +1,13 @@
+## 定理 16.1（三环画像通过模六十因子化）
+
+存在唯一函数：
+
+\[
+\bar\Sigma_3:
+(\mathbb Z/60\mathbb Z)^\times
+\to
+\{\mathrm S,\mathrm I\}^3
+\]
+
+使：
+

@@ -1,0 +1,22 @@
+## 定理 22.2（最大前向闭合）
+
+\(\sim_J^\infty\) 是包含于 \(\sim_J\) 的最大 \(F\)-前向 congruence：
+
+\[
+\sim_J^\infty\subseteq\sim_J,
+\]
+
+\[
+x\sim_J^\infty y
+\Rightarrow
+Fx\sim_J^\infty Fy,
+\]
+
+且任意前向 congruence \(S\subseteq\sim_J\) 满足：
+
+\[
+S\subseteq\sim_J^\infty.
+\]
+
+这是仓库 `CongruenceKernel` 的直接实例。
+

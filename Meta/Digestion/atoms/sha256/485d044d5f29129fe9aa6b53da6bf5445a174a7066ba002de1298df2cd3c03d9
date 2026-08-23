@@ -1,0 +1,8 @@
+\[
+C_K(x)
+=
+(x\bmod m_1,\ldots,x\bmod m_n).
+\]
+
+在输出积上使用 Hamming 距离：
+

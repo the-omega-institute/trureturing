@@ -1,0 +1,22 @@
+## 定义 206.1（Blackwell 精化）
+
+若存在后处理 kernel：
+
+\[
+M:O\rightsquigarrow R
+\]
+
+使：
+
+\[
+L=M\circ K,
+\]
+
+则记：
+
+\[
+L\preceq_{\mathrm B}K.
+\]
+
+即 \(L\) 可由 \(K\) 的输出随机后处理得到。
+

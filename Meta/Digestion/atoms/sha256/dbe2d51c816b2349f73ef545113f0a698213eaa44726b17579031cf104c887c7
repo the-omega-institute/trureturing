@@ -1,0 +1,18 @@
+## 原理 284.1
+
+这是因果 hierarchy 的 image-fiber 版本：
+
+\[
+\boxed{
+\text{interventional marginals}
+\to
+\text{coupling fiber}
+\to
+\text{counterfactual target}.
+}
+\]
+
+干预层已经完全识别时，反事实层仍可能留下非平凡 fiber。
+
+---
+

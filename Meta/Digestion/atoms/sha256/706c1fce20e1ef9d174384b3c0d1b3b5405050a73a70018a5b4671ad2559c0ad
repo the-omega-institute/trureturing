@@ -1,0 +1,12 @@
+# 138. zeta family 的任务相对充分统计量
+
+取独立样本：
+
+\[
+N_1,\ldots,N_m
+\overset{\mathrm{iid}}{\sim}
+\mathbb P_s.
+\]
+
+联合似然：
+

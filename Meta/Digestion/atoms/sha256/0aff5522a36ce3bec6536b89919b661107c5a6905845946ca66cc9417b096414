@@ -1,0 +1,14 @@
+## 149.6 有限数值检查
+
+对截断素数集 \(p\le P\) 与指数深度 \(k\le K\)，检查：
+
+- 几何质量归一化；
+- joint mass product；
+- 熵增量 \(q^kh_2(q)\)；
+- residual \(q^kH_p\)；
+- KL 与 Hellinger 局部／全局有限乘积一致；
+- posterior complement law；
+- finite pinching 的 trace-preserving 与 idempotent。
+
+---
+

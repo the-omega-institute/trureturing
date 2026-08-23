@@ -1,0 +1,15 @@
+## 定理 123.1（唯一分解画像双射）
+
+\[
+\boxed{
+\nu:
+\mathbb N_{>0}
+\overset{\sim}{\longrightarrow}
+\mathcal E_{\mathrm{fin}},
+\qquad
+\nu(n)=(v_p(n))_p.
+}
+\]
+
+逆映射为：
+

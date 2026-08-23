@@ -1,0 +1,15 @@
+对每个 \(x\neq y\)：
+   \[
+   \mathcal H_\infty^{x,y}
+   =
+   \infty.
+   \]
+
+则各状态的无限 transcript laws 成对互奇；因此存在共同零错误分类器。对任意全支撑先验，在通常 posterior consistency 版本下：
+
+\[
+\pi_t(x_{\mathrm{true}})
+\to1
+\quad\text{a.s.}
+\]
+

@@ -1,0 +1,106 @@
+# 200. 第四阶段统一定理图
+
+静态逻辑链：
+
+\[
+\boxed{
+q:X\to O
+\Longrightarrow
+\operatorname{ObsAlg}(q)
+\cong
+\mathcal P(\operatorname{Im}q)
+\Longrightarrow
+q\preceq r
+\iff
+\operatorname{ObsAlg}(q)
+\subseteq
+\operatorname{ObsAlg}(r).
+}
+\]
+
+有限商链：
+
+\[
+\boxed{
+G
+\to
+\widehat G
+\to
+\prod_p\widehat G_p,
+\qquad
+R_{\mathrm{fin}}(G)
+\subseteq
+R_{\mathrm{pp}}(G),
+}
+\]
+
+且对有限群：
+
+\[
+\boxed{
+R_{\mathrm{pp}}(G)=1
+\iff
+G\text{ 幂零}.
+}
+\]
+
+分离频率链：
+
+\[
+\boxed{
+\text{kernel 分离}
+\to
+\text{分离谱}
+\to
+\text{素数密度}
+\to
+\text{随机实验成功率}.
+}
+\]
+
+纠错链：
+
+\[
+\boxed{
+\text{CRT 动态范围 }K
+\to
+\text{最大一致坐标数 }t(K)
+\to
+ d_{\min}=n-t(K)
+\to
+\text{error/erasure 能力}.
+}
+\]
+
+赋值链：
+
+\[
+\boxed{
+1
+\to
+\mathcal O_K^\times
+\to
+K^\times
+\to
+\operatorname{Div}_f(K)
+\to
+\operatorname{Cl}(K)
+\to
+0.
+}
+\]
+
+谱链：
+
+\[
+\boxed{
+\text{power traces}
+\to
+\text{characteristic polynomial}
+\not\to
+\text{Jordan / extension identity}.
+}
+\]
+
+---
+

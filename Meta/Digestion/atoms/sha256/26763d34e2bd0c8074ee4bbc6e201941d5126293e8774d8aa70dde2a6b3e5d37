@@ -1,0 +1,14 @@
+## 196.4 unipotent extension residual
+
+对 \(\mathbb Z\) 的二维表示，只需证明：
+
+\[
+U^m=I+mN,
+\qquad
+N^2=0,
+\]
+
+即可关闭 character 相同而 minimal polynomial 不同的有限代数证书。
+
+---
+

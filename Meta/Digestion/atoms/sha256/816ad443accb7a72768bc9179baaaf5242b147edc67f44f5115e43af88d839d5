@@ -1,0 +1,13 @@
+\[
+\rho_n
+=
+\int
+\sqrt{
+\frac{dP_n}{d\nu_n}
+\frac{dQ_n}{d\nu_n}
+}
+\,d\nu_n,
+\]
+
+其中 \(\nu_n\) 可取 \(P_n+Q_n\)。
+

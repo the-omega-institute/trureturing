@@ -1,0 +1,10 @@
+\[
+D_{\mathrm{ad}}(X,q)
+=
+\min_{\Pi}
+\max_{x\in X}
+\operatorname{depth}_{\Pi}(x),
+\]
+
+其中 \(\Pi\) 遍历精确识别协议。
+

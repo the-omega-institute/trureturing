@@ -1,0 +1,20 @@
+### 证明
+
+\[
+\begin{aligned}
+H(V_p)
+&=-\sum_{k\ge0}(1-q)q^k
+\bigl(\log(1-q)+k\log q\bigr)\\
+&=-\log(1-q)
+-\frac{q}{1-q}\log q.
+\end{aligned}
+\]
+
+代入：
+
+\[
+-\log q=s\log p.
+\]
+
+\(\square\)
+

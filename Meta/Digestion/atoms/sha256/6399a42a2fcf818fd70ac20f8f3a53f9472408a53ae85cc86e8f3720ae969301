@@ -1,0 +1,10 @@
+\[
+\boxed{
+\rho_{p,s}
+=
+(1-p^{-s})
+\sum_{k\ge0}
+p^{-sk}|k\rangle\langle k|.
+}
+\]
+

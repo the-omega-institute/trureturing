@@ -1,0 +1,18 @@
+## 定义 2.2（五级证明状态）
+
+\[
+\mathsf{Def}
+<
+\mathsf{Paper}
+<
+\mathsf{Lean}
+<
+\mathsf{Admitted}
+<
+\mathsf{Frozen}.
+\]
+
+分别表示：只完成定义、纸面证明、kernel proof term、仓库准入、内容寻址冻结。不得把较低状态包装成较高状态。
+
+---
+

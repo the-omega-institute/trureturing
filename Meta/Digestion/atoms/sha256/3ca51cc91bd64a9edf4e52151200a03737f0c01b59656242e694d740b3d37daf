@@ -1,0 +1,19 @@
+## 定义 257.1（干预充分接口）
+
+读出：
+
+\[
+q:\mathfrak M\to O
+\]
+
+对干预族 \(\mathcal A\) 充分，若存在：
+
+\[
+g:
+O
+\to
+\prod_{a\in\mathcal A}\mathcal P(\mathcal X_V)
+\]
+
+使：
+

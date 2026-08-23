@@ -1,0 +1,10 @@
+## 定理 4.2（商—可达画像等价）
+
+\[
+Z_J
+\simeq
+\operatorname{range}(q_J).
+\]
+
+这是任意函数的 kernel quotient 与 range 的规范等价。
+

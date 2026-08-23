@@ -1,0 +1,10 @@
+# 109. Euler 因子观察者
+
+设 \(D\subseteq\mathbb C\) 为域。对每个素数 \(p\)，给局部因子：
+
+\[
+L_p:D\to\mathbb C.
+\]
+
+定义 Euler 局部画像：
+

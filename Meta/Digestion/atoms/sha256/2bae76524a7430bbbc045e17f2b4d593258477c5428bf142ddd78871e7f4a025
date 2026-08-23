@@ -1,0 +1,12 @@
+## 149.5 全 prime-diagonal 量子盲区
+
+使用：
+
+\[
+|\psi_+\rangle,
+\qquad
+|\psi_-\rangle
+\]
+
+验证全部对角 prime 统计相同而 \(X_{23}\) 期望相反。
+

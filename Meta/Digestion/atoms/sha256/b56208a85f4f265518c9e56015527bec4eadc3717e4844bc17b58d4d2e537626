@@ -1,0 +1,11 @@
+\[
+\delta_{\min}(q)
+=
+\inf_{x\neq y}
+\delta\bigl(\operatorname{Sep}_q(x,y)\bigr).
+\]
+
+\(\delta_{\min}>0\) 表示任意两种全局状态都被正比例的素数实验区分；单射本身不提供这一保证。
+
+---
+

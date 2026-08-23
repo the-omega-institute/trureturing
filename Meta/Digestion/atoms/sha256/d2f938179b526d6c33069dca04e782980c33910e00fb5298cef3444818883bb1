@@ -1,0 +1,10 @@
+\[
+\mathcal H_\infty^{x,y}
+=
+\sum_{t=0}^{\infty}
+H^2\bigl(
+K_{i_t}(x,\cdot),
+K_{i_t}(y,\cdot)
+\bigr).
+\]
+

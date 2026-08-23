@@ -1,0 +1,14 @@
+# 219. product-equivalent 区域
+
+若：
+
+\[
+\mathcal B_\infty(x,y)<\infty,
+\]
+
+则：
+
+\[
+\mathbf P_x\sim\mathbf P_y.
+\]
+

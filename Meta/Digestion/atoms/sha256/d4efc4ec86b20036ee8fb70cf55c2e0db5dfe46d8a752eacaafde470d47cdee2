@@ -1,0 +1,9 @@
+\[
+\boxed{
+A_n^{x,y}
+=
+\sum_{t<n}
+-\log\rho_t^{x,y}(H_t).
+}
+\]
+

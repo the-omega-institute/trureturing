@@ -1,0 +1,16 @@
+# 93. 算术观察码：角色关系就是奇偶校验
+
+把：
+
+\[
+\mu_2\simeq\mathbb F_2,
+\qquad
+(-1)^b\leftrightarrow b
+\]
+
+作为编码。联合角色画像变成线性映射：
+
+\[
+b_\chi:G\to\mathbb F_2^m.
+\]
+

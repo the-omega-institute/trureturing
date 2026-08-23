@@ -1,0 +1,14 @@
+## 定理 18.2（分裂画像不恢复全局表示类）
+
+\[
+\boxed{
+\text{all-prime splitting profile}
+\not\Rightarrow
+\text{global form identity}.
+}
+\]
+
+该结论不声称 \(Q_1,Q_2\) 在所有 \(\mathbb Z_p\) 上局部等价；它只证明分裂型接口过于粗糙。
+
+---
+

@@ -1,0 +1,21 @@
+## 定义 229.2（先验几乎处处完成）
+
+给定先验 \(\pi\)，若：
+
+\[
+\int_\Theta
+\mathbf P_\theta[\Phi=\theta]\,
+\pi(d\theta)
+=1,
+\]
+
+则称 \(\Phi\) 对 \(\pi\) 几乎处处完成。
+
+它弱于：
+
+\[
+\forall\theta,
+\quad
+\mathbf P_\theta[\Phi=\theta]=1.
+\]
+

@@ -1,0 +1,17 @@
+# Appendix P：第六阶段外部经典基础
+
+以下来源只支撑标记为经典的标准背景，不替代未来仓库 proof term：
+
+1. I. Shpitser and J. Pearl, “Complete Identification Methods for the Causal Hierarchy,” *Journal of Machine Learning Research* **9** (2008), 1941–1979：association、intervention、counterfactual 三层及完整识别方法。
+2. I. Shpitser and J. Pearl, “Identification of Joint Interventional Distributions in Recursive Semi-Markovian Causal Models,” *AAAI* (2006), 1219–1226：joint interventional identification 与 do-calculus completeness。
+3. A. Hauser and P. Bühlmann, “Characterization and Greedy Learning of Interventional Markov Equivalence Classes of Directed Acyclic Graphs,” *JMLR* **13** (2012), 2409–2464：干预 Markov 等价与 interventional essential graph。
+4. J. Pearl and E. Bareinboim, “Transportability of Causal and Statistical Relations: A Formal Approach,” *AAAI* (2011), 247–254, DOI `10.1609/AAAI.V25I1.7861`。
+5. E. Bareinboim and J. Pearl, “Transportability of Causal Effects: Completeness Results,” *AAAI* (2012), 698–704, DOI `10.1609/AAAI.V26I1.8232`。
+6. J. Tian and J. Pearl, “Probabilities of Causation: Bounds and Identification,” *Annals of Mathematics and Artificial Intelligence* **28** (2000), 287–313, DOI `10.1023/A:1018912507879`。
+7. J. M. Robins 的 g-computation／纵向因果推断工作：sequential exchangeability、动态处理 regime 与 g-formula 的经典来源。
+8. J. Pearl, *Causality: Models, Reasoning, and Inference*, 2nd ed.：SCM、do-operator、back-door、counterfactual semantics 与 causal hierarchy 背景。
+9. J. Pearl and D. Mackenzie, *The Book of Why*：seeing／doing／imagining 的非技术层级表述；本文数学陈述以 SCM 与识别文献为准。
+10. J. Tian 及后续 discrete-SCM 工作：从观测和实验 law 对 counterfactual distributions 做 sharp／partial identification 的有限多项式方法。
+
+---
+

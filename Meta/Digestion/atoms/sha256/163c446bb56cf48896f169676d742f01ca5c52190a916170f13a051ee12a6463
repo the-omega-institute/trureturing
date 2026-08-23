@@ -1,0 +1,10 @@
+\[
+H(N)
+=
+s\,\mathbb E_s[\log N]
++
+\log\zeta(s).
+\]
+
+素指数独立与：
+

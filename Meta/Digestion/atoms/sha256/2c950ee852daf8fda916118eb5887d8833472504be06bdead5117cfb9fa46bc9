@@ -1,0 +1,8 @@
+## 定义 252.4（三层等价关系）
+
+\[
+M\sim_{\mathrm{obs}}N
+\iff
+\operatorname{Obs}(M)=\operatorname{Obs}(N),
+\]
+

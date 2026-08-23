@@ -1,0 +1,14 @@
+## J.4 unit-gauge completion
+
+连接：
+
+\[
+K^\times
+\to
+\operatorname{FractionalIdeal}(\mathcal O_K)
+\to
+\operatorname{ClassGroup}(\mathcal O_K),
+\]
+
+并把 kernel 明确识别为 \(\mathcal O_K^\times\)。
+

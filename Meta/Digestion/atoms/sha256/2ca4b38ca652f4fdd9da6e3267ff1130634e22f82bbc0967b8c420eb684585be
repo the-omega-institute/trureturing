@@ -1,0 +1,10 @@
+## 定义 250.3（自适应 conditional affinity process）
+
+对共同历史 \(h_t\)，policy 选择：
+
+\[
+i_t=\Pi(h_t).
+\]
+
+定义该历史下状态对 \(x,y\) 的下一步 conditional affinity：
+

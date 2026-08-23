@@ -1,0 +1,20 @@
+## 最终层级 301.1
+
+\[
+\boxed{
+\begin{aligned}
+\text{SCM}
+&\xrightarrow{\operatorname{Obs}}
+Z_{\mathrm{obs}}\\
+&\xrightarrow{\text{new interventions}}
+Z_{\mathrm{int}}\\
+&\xrightarrow{\text{shared exogenous coupling}}
+Z_{\mathrm{cf}}\\
+&\xrightarrow{\text{task quotient}}
+Z_T.
+\end{aligned}
+}
+\]
+
+箭头表示需要额外结构才能从较粗层获得较细层，而不是旧层自动包含新层的全部信息。
+

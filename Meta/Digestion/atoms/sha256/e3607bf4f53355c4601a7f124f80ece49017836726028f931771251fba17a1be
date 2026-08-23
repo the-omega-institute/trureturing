@@ -1,0 +1,18 @@
+## 定理 221.1（有限前缀／无限完成严格分离）
+
+存在统计观察系统满足：
+
+\[
+\forall m<\infty,
+\quad
+P_{x,\le m}\sim P_{y,\le m},
+\]
+
+同时：
+
+\[
+\mathbf P_x\perp\mathbf P_y.
+\]
+
+Bernoulli 弱信号模型将在第 230—231 节给出显式族。
+

@@ -1,0 +1,17 @@
+\[
+\operatorname{PTr}(x)(i,n)
+=
+q_i(F^n x),
+\]
+
+以及动态不可区分关系：
+
+\[
+x\sim_J^{\infty}y
+\iff
+\forall n\in\mathbb N,\forall i\in J,
+q_i(F^n x)=q_i(F^n y).
+\]
+
+它正是静态关系 \(\sim_J\) 的全迭代 congruence kernel。其商：
+

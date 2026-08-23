@@ -1,0 +1,16 @@
+\[
+\boxed{
+\delta(K,L)
+=
+\inf_M
+\sup_{x\in X}
+\operatorname{TV}
+\bigl(
+L(x,\cdot),
+(M\circ K)(x,\cdot)
+\bigr),
+}
+\]
+
+其中下确界遍历所有后处理 kernel \(M\)。
+

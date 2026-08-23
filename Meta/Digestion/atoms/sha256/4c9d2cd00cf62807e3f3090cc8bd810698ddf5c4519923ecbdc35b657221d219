@@ -1,0 +1,8 @@
+## Q.5 第四优先：图形与纵向桥
+
+- DAG、d-separation 与 Markov equivalence 可能需要独立图论基础；
+- back-door 与 do-calculus 不得以 axiom 安装；
+- finite back-door 可先在显式 factorization algebra 上证明；
+- longitudinal g-formula 可先对有限 horizon、有限 histories 与显式 kernel product 证明；
+- transportability 与 nested counterfactual identification 应等底层 causal graph API 稳定后再接入。
+

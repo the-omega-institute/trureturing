@@ -1,0 +1,10 @@
+## 最终设计原则 301.3
+
+\[
+\boxed{
+\text{只有能缩小目标 kernel、填补合法 image、}
+\text{约束 cross-world coupling 或关闭 causal carry 的接口，}
+\text{才构成真正的因果观察升级。}
+}
+\]
+

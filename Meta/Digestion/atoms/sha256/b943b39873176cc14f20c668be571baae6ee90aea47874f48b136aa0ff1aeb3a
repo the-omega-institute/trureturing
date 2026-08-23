@@ -1,0 +1,11 @@
+\[
+(v_{\mathfrak p}(x))_{\mathfrak p}
+=
+(v_{\mathfrak p}(y))_{\mathfrak p}
+
+\iff
+x/y\in\mathcal O_K^\times.
+\]
+
+所以 finite-place 观察的 kernel 是单位群：
+

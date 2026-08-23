@@ -1,0 +1,12 @@
+## 推论 96.1（观察者融合像不是任意直积）
+
+两个 Galois 观察者的联合输出一般位于：
+
+\[
+\operatorname{Gal}(L_1/K)
+\times_{\operatorname{Gal}(E/K)}
+\operatorname{Gal}(L_2/K),
+\]
+
+而不是完整直积。共同交域 \(E\) 精确承载它们的共享约束。
+

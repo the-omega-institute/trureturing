@@ -1,0 +1,16 @@
+## 原理 120.1（有限边缘相容不等于全局可实现）
+
+Kolmogorov 型扩张只保证相容有限维分布产生乘积路径空间上的测度；它不保证该测度集中在某个具体全局对象类型的画像：
+
+\[
+\boxed{
+\text{finite-dimensional consistency}
+\not\Rightarrow
+\nu(\operatorname{Im}q)=1.
+}
+\]
+
+以下 zeta 素指数模型将给出一个精确阈值实例。
+
+---
+

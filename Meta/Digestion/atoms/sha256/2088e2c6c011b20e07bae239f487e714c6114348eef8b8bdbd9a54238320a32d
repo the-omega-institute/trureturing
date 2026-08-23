@@ -1,0 +1,11 @@
+\[
+\boxed{
+P^{\widetilde K_I}(x_V)
+=
+\prod_{i\in I}
+\widetilde K_i(x_i\mid x_{\operatorname{pa}(i)})
+\prod_{v\notin I}
+K_v(x_v\mid x_{\operatorname{pa}(v)}).
+}
+\]
+

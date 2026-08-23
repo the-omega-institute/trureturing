@@ -1,0 +1,24 @@
+## 定理 204.1（规范性）
+
+若某个表示 \(r:X\to R\) 足以决定完整输出 law，即存在：
+
+\[
+\Phi:R\to\mathcal P(O)
+\]
+
+使：
+
+\[
+\Lambda_K=\Phi\circ r,
+\]
+
+则：
+
+\[
+r(x)=r(y)
+\Longrightarrow
+x\sim_K^{\mathrm{law}}y.
+\]
+
+因此 \(Z_K\) 是该统计实验真正看到的最细状态，不包含任何实验无法改变其输出 law 的额外身份。
+

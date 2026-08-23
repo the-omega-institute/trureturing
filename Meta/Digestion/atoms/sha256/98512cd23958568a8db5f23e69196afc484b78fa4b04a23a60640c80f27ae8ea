@@ -1,0 +1,18 @@
+# 88. 观察语言与可表达目标
+
+固定状态类型 \(X\)、索引类型 \(\mathcal I\) 与局部读出族：
+
+\[
+q_i:X\to O_i.
+\]
+
+定义完整联合读出到有效像：
+
+\[
+q_{\mathcal I}^{\operatorname{eff}}:
+X\to
+\operatorname{Im}(q_{\mathcal I}),
+\qquad
+q_{\mathcal I}(x)=(q_i(x))_{i:\mathcal I}.
+\]
+

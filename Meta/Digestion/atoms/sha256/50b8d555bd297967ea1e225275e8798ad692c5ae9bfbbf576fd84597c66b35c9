@@ -1,0 +1,12 @@
+## 严格边界 229.1
+
+本文不把：
+
+\[
+\text{pairwise product singularity}
+\]
+
+直接升级为任意不可数模型的全参数 measurable tomography。该升级需要独立的标准 Borel、domination、identifiability 或 measurable-selection 定理。
+
+---
+

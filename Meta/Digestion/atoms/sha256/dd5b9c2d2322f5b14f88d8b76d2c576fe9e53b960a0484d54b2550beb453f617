@@ -1,0 +1,16 @@
+## 原理 233.1（CRT 单射被 evidence series 替代）
+
+无噪声时，单个不整除 \(n-m\) 的素数即可区分两整数。带噪后，每个素数可能只提供有限软证据；全局完成问题变成：
+
+\[
+\boxed{
+\text{arithmetically different coordinates}
+\to
+\text{channel-distorted local energies}
+\to
+\text{divergence or convergence of their sum}.
+}
+\]
+
+---
+

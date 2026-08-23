@@ -1,0 +1,4 @@
+## 116.3 胶合余量
+
+局部数据逐处存在且兼容，但没有全局来源，或局部 trivializations 的 cocycle 非 coboundary。
+

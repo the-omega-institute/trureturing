@@ -1,0 +1,19 @@
+## 定理 256.1（干预目标因子化）
+
+目标 \(T:\mathfrak M\to Y\) 可由允许干预的完整 law 画像决定，当且仅当：
+
+\[
+\ker
+\left(
+\Lambda_{\mathcal A}^{\mathrm{int}}
+\right)
+\subseteq
+\ker T.
+\]
+
+此时 \(T\) 唯一因子化通过：
+
+\[
+Z_{\mathcal A}^{\mathrm{causal}}.
+\]
+

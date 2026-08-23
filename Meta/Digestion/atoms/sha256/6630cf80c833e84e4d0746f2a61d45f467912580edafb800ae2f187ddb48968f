@@ -1,0 +1,14 @@
+## 原理 265.1
+
+\[
+\boxed{
+\text{conditioning selects units;}
+\qquad
+\text{intervention replaces a mechanism.}
+}
+\]
+
+两者只有在额外可交换前件下才相同。
+
+---
+

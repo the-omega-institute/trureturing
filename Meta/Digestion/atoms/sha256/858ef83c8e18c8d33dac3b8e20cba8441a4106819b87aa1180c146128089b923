@@ -1,0 +1,12 @@
+\[
+\boxed{
+\mathcal G_q
+=
+q^{-1}(\Sigma_O)
+\subseteq
+\Sigma_X.
+}
+\]
+
+\(\mathcal G_q\) 是观察者能够由输出事件生成的全部可判定事件。集合论纤维描述“哪些点被合并”；\(\sigma\)-代数描述“哪些事件仍可表达”。
+

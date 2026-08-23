@@ -1,0 +1,14 @@
+## 195.2 代数整数约化分离
+
+复用 Dedekind 域非零理想的有限素因子分解，证明：
+
+```lean
+theorem reduction_separates_away_from_finite_support
+    {α β : 𝓞 K} (h : α ≠ β) :
+    Set.Finite {P : HeightOneSpectrum (𝓞 K) |
+      algebraMap _ (ResidueField P) α =
+      algebraMap _ (ResidueField P) β}
+```
+
+具体 API 应按 pinned Mathlib 的 prime spectrum／maximal ideal 接口校正。
+

@@ -1,0 +1,9 @@
+## 194.3 CRT code 链
+
+1. 一致坐标集乘积整除差值；
+2. `crt_minDistance_eq_card_sub_maxAgreement`；
+3. 排序模数的闭式；
+4. error／erasure 唯一性；
+5. 动态范围—距离尖锐边界；
+6. \((3,5,7,11,13),K=100\) 的 `native_decide` 有限证书。
+

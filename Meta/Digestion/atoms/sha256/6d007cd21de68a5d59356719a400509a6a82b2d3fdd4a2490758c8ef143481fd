@@ -1,0 +1,21 @@
+R_{\mathrm{stop}}^\ell(\pi)
+-
+\mathbb E
+\left[
+R_{\mathrm{stop}}^\ell
+\bigl(\mathsf B_i(\pi,Y_i)\bigr)
+\right].
+\]
+
+所以：
+
+\[
+\boxed{
+\text{maximum mutual information}
+\neq
+\text{universally optimal experiment}.
+}
+\]
+
+---
+

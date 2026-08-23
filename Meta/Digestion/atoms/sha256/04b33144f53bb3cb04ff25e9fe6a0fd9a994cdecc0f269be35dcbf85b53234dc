@@ -1,0 +1,18 @@
+## 原理 252.1（层级方向）
+
+若 \(\mathcal A\) 包含空干预，且 \(\mathcal Q\) 包含每个 \(a\in\mathcal A\) 的单世界结果，则：
+
+\[
+\boxed{
+\ker(\operatorname{CF}_{\mathcal Q})
+\subseteq
+\ker(\operatorname{Int}_{\mathcal A})
+\subseteq
+\ker(\operatorname{Obs}).
+}
+\]
+
+后续两个显式反模型将证明两次包含都可严格。
+
+---
+

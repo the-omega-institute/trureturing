@@ -1,0 +1,15 @@
+# Appendix J：第四阶段外部基础来源
+
+以下来源仅支持本文标记为经典或标准、且尚未在本仓库新模块中关闭的基础；它们不替代未来 Lean proof term：
+
+1. J. S. Milne, *Algebraic Number Theory*, v3.08：Dedekind 分解、赋值、单位定理、global fields 与 Chebotarev 背景。
+2. J. S. Milne, *Class Field Theory*, v4.03：Frobenius、局部—全局互反与 place 结构。
+3. Mathlib documentation, `Mathlib.GroupTheory.FiniteIndexNormalSubgroup`：有限指数正规子群及 profinite completion 的索引基础。
+4. Mathlib documentation, `Mathlib.Topology.Algebra.Category.ProfiniteGrp.Limits`：profinite 群作为有限商逆极限。
+5. Mathlib documentation, `Mathlib.GroupTheory.Nilpotent`：有限幂零群、Sylow 正规性与 Sylow 直积刻画。
+6. Mathlib documentation, `Mathlib.GroupTheory.FiniteAbelian.Basic`：有限 Abelian 群的素数幂分解。
+7. Mathlib documentation, `Mathlib.NumberTheory.NumberField.ProductFormula`：数域规范绝对值的乘积公式。
+8. Jeremy J. Stone, “Multiple-Burst Error Correction with the Chinese Remainder Theorem,” *Journal of the Society for Industrial and Applied Mathematics* 11 (1963), 74–81：CRT 编码与纠错的早期来源。本文的有界整数精确距离公式在当前文稿中另给自包含证明。
+
+---
+

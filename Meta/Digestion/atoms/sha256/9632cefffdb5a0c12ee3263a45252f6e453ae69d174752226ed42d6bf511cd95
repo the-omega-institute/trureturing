@@ -1,0 +1,12 @@
+# 229. 不可数状态的可测统一不能由 pairwise singular 偷渡
+
+当参数空间 \(\Theta\) 不可数时，成对结论：
+
+\[
+\mathbf P_\theta\perp\mathbf P_{\theta'}
+\qquad
+(\theta\neq\theta')
+\]
+
+仍然只是每一对 measure 的陈述。
+

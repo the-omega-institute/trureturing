@@ -1,0 +1,10 @@
+## J.3 CRT observation code library
+
+把 `boundedJointResidue` 从单射判据扩展为：
+
+- Hamming distance；
+- exact agreement support；
+- error／erasure decoder uniqueness；
+- weighted reliability；
+- adaptive query trees。
+

@@ -1,0 +1,10 @@
+\[
+\boxed{
+\operatorname{Tr}(\rho A)
+=
+\operatorname{Tr}(\mathcal E_{\mathcal D}(\rho)A).
+}
+\]
+
+因此全部 prime-diagonal 统计都无法区分 \(\rho\) 与其去相干版本。
+

@@ -1,0 +1,16 @@
+\[
+\mathcal Q
+=
+\{Q_j\}_{j\in J}.
+\]
+
+定义：
+
+\[
+\Lambda_{\mathcal Q}^{\mathrm{cf}}:
+\mathfrak M
+\to
+\prod_{j\in J}
+\mathcal P(\operatorname{Val}(Q_j)).
+\]
+

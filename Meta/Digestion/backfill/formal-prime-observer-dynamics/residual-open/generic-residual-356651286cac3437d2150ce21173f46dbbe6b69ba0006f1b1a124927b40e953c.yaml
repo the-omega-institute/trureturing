@@ -1,0 +1,10 @@
+ast_path: section/294-嵌套反事实要求更高层-coupling
+fingerprints:
+  raw_sha256: sha256:356651286cac3437d2150ce21173f46dbbe6b69ba0006f1b1a124927b40e953c
+  normalized_sha256: sha256:356651286cac3437d2150ce21173f46dbbe6b69ba0006f1b1a124927b40e953c
+cas_ref: sha256:356651286cac3437d2150ce21173f46dbbe6b69ba0006f1b1a124927b40e953c
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

@@ -1,0 +1,14 @@
+## 经典桥 294.1
+
+完整 causal hierarchy identification 理论区分：
+
+\[
+\text{observational identification},
+\quad
+\text{interventional identification},
+\quad
+\text{counterfactual identification},
+\]
+
+并给出某些查询从较低层可计算的图形条件与算法。
+

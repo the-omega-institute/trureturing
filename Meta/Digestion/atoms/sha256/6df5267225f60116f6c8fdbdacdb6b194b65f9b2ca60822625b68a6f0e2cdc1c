@@ -1,0 +1,18 @@
+## 原理 107.1（Galois 纤维积与行为 subdirect 的统一）
+
+- 在 Galois 融合中，交域强制局部自同构在重叠上相同；
+- 在一般行为系统中，准入谓词强制局部状态满足跨因子约束；
+- 在两者中，联合像都是直积中的兼容子对象，而非自由组合。
+
+因此：
+
+\[
+\boxed{
+\text{local factorization}
+\ne
+\text{realization independence}.
+}
+\]
+
+---
+

@@ -1,0 +1,26 @@
+## 经典定理 218.1（Kakutani 二分）
+
+\[
+\boxed{
+\mathbf P_x
+\sim
+\mathbf P_y
+\iff
+\prod_{n\ge1}\rho_n>0,
+}
+\]
+
+而：
+
+\[
+\boxed{
+\mathbf P_x
+\perp
+\mathbf P_y
+\iff
+\prod_{n\ge1}\rho_n=0.
+}
+\]
+
+因此不存在第三种介于等价与互奇之间的 product-law 关系，前提是所有坐标 law 两两等价。
+

@@ -1,0 +1,8 @@
+## 定理 5.1（余量空当且仅当局部完备）
+
+\[
+\operatorname{LGRes}(q)=\varnothing
+\iff
+\operatorname{Injective}(q_{\mathrm{all}}).
+\]
+

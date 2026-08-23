@@ -1,0 +1,11 @@
+\[
+\boxed{
+P(x_{V\setminus I}\mid\operatorname{do}(x_I))
+=
+\prod_{v\notin I}
+P(x_v\mid x_{\operatorname{pa}(v)})
+}
+\]
+
+在把 \(x_I\) 固定代入父坐标后成立。
+

@@ -1,0 +1,8 @@
+## 定理 135.1（支撑位是独立 Bernoulli）
+
+\[
+B_p\sim\operatorname{Bernoulli}(p^{-s}),
+\]
+
+且不同素数的 \(B_p\) 相互独立。
+

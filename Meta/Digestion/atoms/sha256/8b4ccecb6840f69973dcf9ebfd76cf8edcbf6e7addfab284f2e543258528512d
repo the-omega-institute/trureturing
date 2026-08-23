@@ -1,0 +1,14 @@
+## 定理 41.2（知识随精化单调）
+
+若 \(J\subseteq K\)，则：
+
+\[
+\operatorname{Knows}_J(P)
+\Rightarrow
+\operatorname{Knows}_K(P).
+\]
+
+粗化可能把 \(P\) 值不同的状态合并，故反向一般失败。
+
+---
+

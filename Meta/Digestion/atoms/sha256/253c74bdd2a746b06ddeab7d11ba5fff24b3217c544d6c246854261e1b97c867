@@ -1,0 +1,14 @@
+## N.2 优先依赖顺序
+
+1. finite kernel law equality 与 law quotient；
+2. finite output affinity／Hellinger／TV 的统一 API；
+3. finite product affinity multiplicativity；
+4. finite prefix evidence sums；
+5. countable product measure 与 Kakutani bridge；
+6. Bernoulli closed forms 与 prime-series threshold；
+7. finite belief update 与 posterior sufficiency；
+8. finite belief Bellman contraction；
+9. mutual-information set function 与 conditional-independence submodularity；
+10. explicit adaptive countermodel；
+11. robust and stopping extensions。
+

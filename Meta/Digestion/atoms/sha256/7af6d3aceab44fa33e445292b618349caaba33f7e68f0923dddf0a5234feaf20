@@ -1,0 +1,22 @@
+# 81. 数学哲学：局部—全局问题是观察完备性问题
+
+许多数论问题可重述为：
+
+\[
+X
+\xrightarrow{q_{\mathrm{loc}}}
+\prod_vX_v
+\]
+
+是否：
+
+- 单射；
+- 满射到兼容族；
+- 对指定性质充分；
+- 具有有限证书；
+- 存在有效重建算法。
+
+单射问题、Hasse 问题、class problem 和 effective witness problem 是不同层次。
+
+---
+

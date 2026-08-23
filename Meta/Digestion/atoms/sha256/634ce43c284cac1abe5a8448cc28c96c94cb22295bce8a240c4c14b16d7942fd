@@ -1,0 +1,9 @@
+# 297. Sequential g-formula
+
+在离散有限情形，假设：
+
+1. consistency；
+2. sequential exchangeability；
+3. positivity；
+4. 正确记录全部影响行为与未来结果的历史。
+

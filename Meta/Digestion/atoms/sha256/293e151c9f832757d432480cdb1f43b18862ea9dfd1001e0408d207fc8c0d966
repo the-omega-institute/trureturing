@@ -1,0 +1,22 @@
+# 144. \(s=1\) 是全局可实现性的共同边界
+
+对 \(s>0\)，以下条件等价：
+
+\[
+\boxed{
+\begin{aligned}
+1.&\quad s>1;\\
+2.&\quad \zeta(s)<\infty;\\
+3.&\quad \sum_pp^{-s}<\infty;\\
+4.&\quad \prod_p(1-p^{-s})>0;\\
+5.&\quad \Gamma_s(\mathcal E_{\mathrm{fin}})=1;\\
+6.&\quad \mathbb E_{\Gamma_s}[\omega]<\infty;\\
+7.&\quad \text{独立几何素指数可由正整数随机变量全局实现};\\
+8.&\quad \sum_pH_p(s)<\infty;\\
+9.&\quad \sum_p(\log p)^2\frac{p^{-s}}{(1-p^{-s})^2}<\infty.
+\end{aligned}
+}
+\]
+
+其中第 8、9 项由与 \(p^{-s}\)、\((\log p)^2p^{-s}\) 的比较得到。
+

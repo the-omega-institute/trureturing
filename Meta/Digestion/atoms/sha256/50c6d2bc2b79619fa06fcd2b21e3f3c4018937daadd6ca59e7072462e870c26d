@@ -1,0 +1,17 @@
+\[
+\operatorname{Div}_f(K)
+=
+\bigoplus_{\mathfrak p}\mathbb Z[\mathfrak p]
+\]
+
+为有限素理想上的 divisor 群。定义主除子映射：
+
+\[
+\operatorname{div}:K^\times
+\to
+\operatorname{Div}_f(K),
+\qquad
+x\mapsto
+\sum_{\mathfrak p}v_{\mathfrak p}(x)[\mathfrak p].
+\]
+

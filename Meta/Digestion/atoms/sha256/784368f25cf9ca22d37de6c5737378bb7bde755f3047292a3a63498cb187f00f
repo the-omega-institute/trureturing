@@ -1,0 +1,8 @@
+\[
+\operatorname{Cost}(J)
+=
+\sum_{i\in J}\log_2|O_i|.
+\]
+
+若 \(O_{p,k}=\mathbb Z/p^k\mathbb Z\)，则：
+

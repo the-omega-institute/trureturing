@@ -1,0 +1,12 @@
+\[
+\boxed{
+t(K)
+=
+\max
+\left\{
+r:
+\prod_{i=1}^{r}m_i<K
+\right\}.
+}
+\]
+

@@ -1,0 +1,22 @@
+## 推论 231.1（临界点没有有限奇异坐标）
+
+在：
+
+\[
+\alpha=\frac12
+\]
+
+时，每个有限素数前缀的两 law 都互相绝对连续，但无限乘积互奇。
+
+这给出一个最干净的例子：
+
+\[
+\boxed{
+\text{every finite stage is noisy-overlapping,}
+\quad
+\text{the infinite stage is exact}.
+}
+\]
+
+---
+

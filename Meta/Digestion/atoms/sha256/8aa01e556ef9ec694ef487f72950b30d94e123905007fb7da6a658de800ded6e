@@ -1,0 +1,11 @@
+\[
+\boxed{
+\operatorname{OPRes}(\mu,\pi)
+=
+\sum_{M,N}
+(E_\mu(M)=E_\mu(N))
+\times
+(T_\pi(M)\neq T_\pi(N)).
+}
+\]
+

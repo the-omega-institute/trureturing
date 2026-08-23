@@ -1,0 +1,29 @@
+## Q.8 机器可审计字段
+
+每个 causal observer theorem 应登记：
+
+```text
+model class
+endogenous variables
+exogenous variables
+graph / parent relation
+exogenous dependence
+observational regime
+allowed interventions
+intervention semantics
+target query layer
+positivity / support
+consistency assumptions
+exchangeability assumptions
+mechanism invariance
+environment
+law kernel
+image condition
+cross-world coupling
+gauge quotient
+sampling theorem
+algorithmic status
+proof status
+```
+
+该字段表防止把“同一 joint law 上的有限代数事实”静默扩大为任意隐藏变量、任意环境、任意 nested counterfactual 或任意纵向政策的全局因果定理。

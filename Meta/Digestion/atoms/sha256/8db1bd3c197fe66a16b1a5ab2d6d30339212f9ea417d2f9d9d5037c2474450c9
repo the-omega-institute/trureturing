@@ -1,0 +1,24 @@
+## 定理 289.2（principal strata）
+
+四个潜在类型缩减为三个：
+
+\[
+\begin{array}{c|c|c}
+\text{类型}&Y_0&Y_1\\
+\hline
+\text{never}&0&0\\
+\text{benefit}&0&1\\
+\text{always}&1&1
+\end{array}
+\]
+
+其概率分别为：
+
+\[
+1-p_1,
+\qquad
+p_1-p_0,
+\qquad
+p_0.
+\]
+

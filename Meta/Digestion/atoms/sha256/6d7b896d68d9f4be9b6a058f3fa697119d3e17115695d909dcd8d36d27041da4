@@ -1,0 +1,4 @@
+### 证明纲要
+
+\(T-\mathbb E[T\mid\mathcal G_r]\) 与所有 \(\mathcal G_r\)-可测平方可积函数正交，而两个条件期望之差属于 \(L^2(\mathcal G_r)\)。展开平方并消去交叉项。\(\square\)
+

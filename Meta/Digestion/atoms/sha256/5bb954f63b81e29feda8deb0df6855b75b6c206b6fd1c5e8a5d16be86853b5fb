@@ -1,0 +1,8 @@
+## 198.1 有限群测试
+
+1. \(C_{12}\)：prime-power 商联合忠实；
+2. \(C_2\times C_3\)：Sylow 投影恢复；
+3. \(S_3\)：全部 \(p\)-群商至少留下 \(A_3\) residual；
+4. \(A_5\)：全部 \(p\)-群商平凡；
+5. 验证“有限 prime-power faithful iff nilpotent”的小群枚举不产生反例。
+
