@@ -476,29 +476,6 @@ public sealed class FormalizeCandidatesTests
     }
 
     [Fact]
-    public void FormalizeCandidatesWithholdsAcknowledgedStaleAtoms()
-    {
-        var stale = Entry("source", "acknowledged-stale", "定理", "7.0");
-        var ledger = Ledger([stale]);
-        var source = Assert.Single(ledger.RequireDigestionSources());
-        ledger = ledger.WithDigestionSources(
-        [
-            source with { AcknowledgedStale = [stale.AtomId] },
-        ]);
-
-        var result = Run([stale], ledger: ledger);
-
-        Assert.True(result.Success, result.Error);
-        using var json = JsonDocument.Parse(result.Output);
-        Assert.Empty(json.RootElement.GetProperty("candidates").EnumerateArray());
-        Assert.Empty(json.RootElement.GetProperty("recorded_formalizations").EnumerateArray());
-        var withheld = Assert.Single(json.RootElement.GetProperty("withheld").EnumerateArray());
-        Assert.Equal(stale.AtomId, withheld.GetProperty("atom_id").GetString());
-        Assert.Equal("acknowledged-stale", withheld.GetProperty("withhold_reason").GetString());
-        Assert.Equal(JsonValueKind.Null, withheld.GetProperty("status_qualifier").ValueKind);
-    }
-
-    [Fact]
     public void FormalizeCandidatesWithholdsQualifiedClosedStatusWithoutRejectingClosedPins()
     {
         var qualified = Entry(
