@@ -1,0 +1,17 @@
+ast_path: 定理/220.2
+fingerprints:
+  raw_sha256: sha256:bae8bea10b1a9b88fd3680f93b6647f23cad212ccbbde2409e8b9ff8a2b9b366
+  normalized_sha256: sha256:bae8bea10b1a9b88fd3680f93b6647f23cad212ccbbde2409e8b9ff8a2b9b366
+cas_ref: sha256:bae8bea10b1a9b88fd3680f93b6647f23cad212ccbbde2409e8b9ff8a2b9b366
+coverage_gids:
+  - D5/S3/ConceptDynamics/Policy/StrictPolicyPowerGrowth.strict_policy_power_growth
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/Policy/StrictPolicyPowerGrowth.strict_policy_power_growth
+      source_sha256: sha256:bae8bea10b1a9b88fd3680f93b6647f23cad212ccbbde2409e8b9ff8a2b9b366
+      target_sha256: sha256:cee4f0bfb0354ae237a1dcbd0d61e0a94fd355ea9a062c0e4357368333914dce
+  scribe:
+    - gid: D5/S3/ConceptDynamics/Policy/StrictPolicyPowerGrowth.strict_policy_power_growth
+      definition_sha256: sha256:ecf5ff1ad3502be0e4e14148f535f4c2412795817120cd5b8dd39a03f44f4cea
+      emission_sha256: sha256:cd02cb5a23046faa09528981ccde3530370a699def0c6bfff95e94fa87faffce
+  unresolved_subitems: []

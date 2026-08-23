@@ -13,5 +13,5 @@ receipts:
   scribe:
     - gid: D5/S3/ConceptDynamics/BlindNaturalityCountermodel.blind_naturality_counterexample
       definition_sha256: sha256:066ccd315cbda8f215273a9bbfa3229b147cdc1e506c2be901a78632572bfcd0
-      emission_sha256: sha256:a0b84a30f2bcde83318bfccc33224809cb7e7da39cf4f49112b7dce2def4100c
+      emission_sha256: sha256:bfe83da2dceb6f8412ffb698f9cc5d90fdaa1cdc9f2ea72a3b64c6f9441a6f89
   unresolved_subitems: []

@@ -23,3 +23,4 @@ Repository search supplied the quantitative finite-orbit theorem finite_orbit_an
 ## References
 
 - Truth anchor: `D5/S3/ObserverMemory/Dynamics/FiniteNoFixedPointOrbit.finite_no_fixed_point_orbit_eventually_periodic`
+- Dependency: [D5/S3/ObserverMemory/Prediction/FiniteOrbitPeriodBound](../Prediction/FiniteOrbitPeriodBound.md)

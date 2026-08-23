@@ -23,3 +23,4 @@ This is an honest partial closure of only the norm-minus-one balance sentence in
 ## References
 
 - Truth anchor: `D5/S1/Eigenstructure/ReciprocalBalance.metallic_reciprocal_symmetry_forces_balance`
+- Dependency: [D5/S0/Asymptotics/MetallicFamily](../../S0/Asymptotics/MetallicFamily.md)

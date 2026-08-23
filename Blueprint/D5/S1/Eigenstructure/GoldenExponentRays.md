@@ -25,3 +25,4 @@ This node closes only the ray-classification sentence in observation 6.167, in i
 ## References
 
 - Truth anchor: `D5/S1/Eigenstructure/GoldenExponentRays.golden_exponent_rational_ray_iff`
+- Dependency: [D5/S1/Eigenstructure/GoldenPowerCoordinates](GoldenPowerCoordinates.md)

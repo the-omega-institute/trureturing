@@ -13,5 +13,5 @@ receipts:
   scribe:
     - gid: D5/S0/Diagonal/CaptureCount.capture_independent
       definition_sha256: sha256:e31ff87abd356547a8bda2d79052f07b16f2b9627009f08a25f527ed34856dce
-      emission_sha256: sha256:688c17c5d03ac2485f86add399312c2783803dfd5946edf320f936fd73c02f1f
+      emission_sha256: sha256:1e4fe178ab8706cfd5d632332f5abb57dcf60a31ff8a3792456297ff007f7fbf
   unresolved_subitems: []

@@ -202,7 +202,7 @@ public sealed class TruthGraphJsonTests
         var catalog = DeclarationCatalog.Create(report);
         var projection = DocumentGraphExportProjection.Create(
             [new DocumentGraphDocument("Blueprint/D5/S0/Carrier/Target.md", document, "receipt-bound")],
-            DocumentGraphAssembler.Assemble([document], catalog, new HashSet<string>(StringComparer.Ordinal)),
+            DocumentGraphAssembler.Assemble([document], catalog),
             catalog,
             new HashSet<string>(["D5/S0/Carrier/Target.lean"], StringComparer.Ordinal));
         var model = TruthGraphExportModel.Create(Build(

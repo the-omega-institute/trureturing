@@ -58,3 +58,4 @@ When every address is its own orbit and each stabilizer-orbit block has the full
 - Truth anchor: `D5/S0/Diagonal/EquivariantEscape.equivariant_escaped_card`
 - Truth anchor: `D5/S0/Diagonal/EquivariantEscape.transitive_equivariant_escaped_card`
 - Truth anchor: `D5/S0/Diagonal/EquivariantEscape.trivial_action_recovers_escaped_listing_card`
+- Dependency: [D5/S0/Diagonal/EscapeCount](EscapeCount.md)

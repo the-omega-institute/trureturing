@@ -23,3 +23,7 @@ This is an honest partial closure of proposition 6.28(ii). It does not formalize
 ## References
 
 - Truth anchor: `D5/S1/Deficit/FixedModulusNoncongruence.deficit_not_determined_by_fixed_modulus`
+- Dependency: [D5/S1/Deficit/DeficitInteger](DeficitInteger.md)
+- Dependency: [D5/S1/Deficit/DoubleFaceLength](DoubleFaceLength.md)
+- Dependency: [D5/S1/Deficit/GoldenPhaseDeficit](GoldenPhaseDeficit.md)
+- Dependency: [D5/S1/Deficit/ZeckendorfDisplacementReading](ZeckendorfDisplacementReading.md)

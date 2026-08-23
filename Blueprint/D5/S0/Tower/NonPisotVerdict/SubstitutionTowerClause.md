@@ -25,4 +25,10 @@ The displayed conjunct is the refutation, shown because it is the one that contr
 ## References
 
 - Truth anchor: `D5/S0/Tower/NonPisotVerdict/SubstitutionTowerClause.substitution_tower_clause`
+- Dependency: [D5/S0/Tower/DBonacci/Substitution](../DBonacci/Substitution.md)
+- Dependency: [D5/S0/Tower/DBonacciGeneral/ChampionLimit](../DBonacciGeneral/ChampionLimit.md)
+- Dependency: [D5/S0/Tower/ErgodicBridge/General](../ErgodicBridge/General.md)
+- Dependency: [D5/S0/Tower/NonPisot/GapCounts](../NonPisot/GapCounts.md)
 - Dependency: [D5/S0/Tower/NonPisotVerdict/NotEventuallyPeriodic](NotEventuallyPeriodic.md)
+- Dependency: [D5/S0/Tower/TribonacciPeriodicEleven/EnumerationElevenAggregate](../TribonacciPeriodicEleven/EnumerationElevenAggregate.md)
+- Dependency: [D5/S0/Tower/TribonacciSurvivors/StrictFiniteDepth](../TribonacciSurvivors/StrictFiniteDepth.md)

@@ -13,5 +13,5 @@ receipts:
   scribe:
     - gid: D5/S3/Axis/LambdaMinusDirichletSeries.lambda_minus_dirichlet_series
       definition_sha256: sha256:ca6c7ef5623d619b4729df4ebbfbbde1933f4f4dd5cae7ffecbd7b5590a25d2c
-      emission_sha256: sha256:5abe2e02f0dff4cf3a6a85453e10001930e714617225e01eb921742f001de103
+      emission_sha256: sha256:b17103d242916f4c8a040b7d402355fe7ee5b23fd02ea570615c203ba200c8e3
   unresolved_subitems: []

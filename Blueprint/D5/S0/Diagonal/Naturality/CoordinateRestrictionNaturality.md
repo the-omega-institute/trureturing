@@ -23,3 +23,4 @@ Loogle and LeanSearch found Function.semiconj_iff_comp_eq for the exact intertwi
 ## References
 
 - Truth anchor: `D5/S0/Diagonal/Naturality/CoordinateRestrictionNaturality.coordinate_restriction_naturality`
+- Dependency: [D5/S0/Diagonal/EscapeCount](../EscapeCount.md)

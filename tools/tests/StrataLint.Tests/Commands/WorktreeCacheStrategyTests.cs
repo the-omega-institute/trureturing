@@ -221,6 +221,12 @@ internal sealed class RecordingWorktreeProcessRunner : IWorktreeProcessRunner
 
     internal bool FailLake { get; init; }
 
+    internal bool ThrowCacheGetTimeout { get; init; }
+
+    internal bool FailWrappedLake { get; init; }
+
+    internal Action<string>? DuringWrappedLake { get; init; }
+
     internal bool FailClean { get; init; }
 
     internal bool ThrowClean { get; init; }
@@ -231,7 +237,7 @@ internal sealed class RecordingWorktreeProcessRunner : IWorktreeProcessRunner
 
     internal bool FailWorktreeAdd { get; init; }
 
-    internal bool BlockStampAfterClean { get; init; }
+    internal bool BlockStampAfterCacheGet { get; init; }
 
     internal Action<string>? AfterWorktreeAdd { get; init; }
 
@@ -288,6 +294,7 @@ internal sealed class RecordingWorktreeProcessRunner : IWorktreeProcessRunner
                     Path.Combine(workingDirectory, ".lake", "build", "cache.bin"));
                 CacheGetSawExistingProjection |= sawExistingProjection;
                 CacheGetExistingProjectionObservations.Add(sawExistingProjection);
+                if (ThrowCacheGetTimeout) throw new TimeoutException("cache get timed out");
                 if (FailLake) return Failure("cache get failed");
                 var lake = Path.Combine(workingDirectory, ".lake");
                 Directory.CreateDirectory(lake);
@@ -295,6 +302,10 @@ internal sealed class RecordingWorktreeProcessRunner : IWorktreeProcessRunner
                 MathlibProjectionFixture.Write(lake, includeOleans: !OmitMathlibOleans);
                 Directory.CreateDirectory(MathlibCacheFixture.CurrentPath);
                 File.WriteAllText(Path.Combine(MathlibCacheFixture.CurrentPath, "current.ltar"), "current\n");
+                if (BlockStampAfterCacheGet)
+                {
+                    Directory.CreateDirectory(LeanCacheStamp.PathFor(lake));
+                }
                 return Success();
             }
 
@@ -306,13 +317,11 @@ internal sealed class RecordingWorktreeProcessRunner : IWorktreeProcessRunner
                 {
                     if (Path.GetFileName(path) != "current.ltar") File.Delete(path);
                 }
-                if (BlockStampAfterClean)
-                {
-                    Directory.CreateDirectory(LeanCacheStamp.PathFor(Path.Combine(workingDirectory, ".lake")));
-                }
                 return Success();
             }
 
+            DuringWrappedLake?.Invoke(workingDirectory);
+            if (FailWrappedLake) return Failure("wrapped lake command failed");
             return Success();
         }
 

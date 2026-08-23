@@ -13,5 +13,5 @@ receipts:
   scribe:
     - gid: D5/S0/Diagonal/Naturality/RelativeDiagonalEscape.relative_diagonal_escape
       definition_sha256: sha256:4cdd28863078b1f045bedd309fb3157e2e27a30a7c9c2cea939b2926e4fee21d
-      emission_sha256: sha256:42a143ad79dcc519f07b4472728f869dbb5308ba6eded9bd71b5eb6241908c7c
+      emission_sha256: sha256:5e03cbb1ccd0a75754a83ac75e13be26670e2e62390af1a46c7785628de07b91
   unresolved_subitems: []

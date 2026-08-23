@@ -1,0 +1,17 @@
+ast_path: appendix/E.78
+fingerprints:
+  raw_sha256: sha256:06db236ae186a55acdd69b073d0e17a36f5e681310029b7c2932f3aed36e27d6
+  normalized_sha256: sha256:06db236ae186a55acdd69b073d0e17a36f5e681310029b7c2932f3aed36e27d6
+cas_ref: sha256:06db236ae186a55acdd69b073d0e17a36f5e681310029b7c2932f3aed36e27d6
+coverage_gids:
+  - D5/S3/Zeros/Symmetry/TwelveOrbitMultiplicity.twelve_orbit_multiplicity
+receipts:
+  coverage:
+    - gid: D5/S3/Zeros/Symmetry/TwelveOrbitMultiplicity.twelve_orbit_multiplicity
+      source_sha256: sha256:06db236ae186a55acdd69b073d0e17a36f5e681310029b7c2932f3aed36e27d6
+      target_sha256: sha256:5ddc296615d4a61651ca0e30f9f91d9b66b03e376fe546beccb828b1c6d25cac
+  scribe:
+    - gid: D5/S3/Zeros/Symmetry/TwelveOrbitMultiplicity.twelve_orbit_multiplicity
+      definition_sha256: sha256:00993f76e26c0641c20522fd17f91624d1d20e8529fef0ec13a4cb780341931f
+      emission_sha256: sha256:1cda619e0d92d0884f9b0b179efc51ed151705f80da32d3627e7e2d1757b3627
+  unresolved_subitems: []

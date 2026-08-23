@@ -13,5 +13,5 @@ receipts:
   scribe:
     - gid: D5/S3/Observer/MetricGeometry/BellmanMaxEquation.discounted_prediction_distance_bellman
       definition_sha256: sha256:d12657fd9b98d001f3a8d6e82a9e3cba4c9c792dd2eb278b68532c31b40644de
-      emission_sha256: sha256:ac8cd4928eb37f432357c82eaedfe856d2690d4ab8f5024143df0be0f964f279
+      emission_sha256: sha256:7afffd0f980230a7e54d47872760a956747602564138eec2bd1388332cc9208a
   unresolved_subitems: []

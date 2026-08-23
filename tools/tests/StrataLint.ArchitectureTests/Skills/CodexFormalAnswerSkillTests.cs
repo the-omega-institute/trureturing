@@ -1,0 +1,270 @@
+using System.Text;
+using System.Text.RegularExpressions;
+using Markdig;
+using Markdig.Extensions.Tables;
+using Markdig.Syntax;
+using Markdig.Syntax.Inlines;
+
+namespace StrataLint.ArchitectureTests;
+
+public sealed class CodexFormalAnswerSkillTests
+{
+    private const string AuthorityHeading = "5. Derive outcomes from owner facts";
+
+    private static readonly MarkdownPipeline Pipeline = new MarkdownPipelineBuilder()
+        .UsePipeTables()
+        .Build();
+
+    private static readonly Regex FirstMatchPattern = new(
+        @"\bfirst(?:\s+|-)match(?:ing)?\b",
+        RegexOptions.IgnoreCase | RegexOptions.CultureInvariant);
+
+    private static readonly Regex CatchAllPattern = new(
+        @"\botherwise\b",
+        RegexOptions.IgnoreCase | RegexOptions.CultureInvariant);
+
+    [Fact]
+    public void RulesOutsideAnOrderedListAreRejected()
+    {
+        var document = Parse(
+            """
+            ### 5. Derive outcomes from owner facts
+
+            Apply the first matching rule:
+
+            - alpha
+            - beta otherwise
+
+            ## Acceptance
+
+            alpha
+            """);
+
+        Assert.False(DefinesSingleStructurallyTotalAuthority(document));
+    }
+
+    [Fact]
+    public void OrderedListWithoutTerminalCatchAllIsRejected()
+    {
+        var document = Parse(
+            """
+            ### 5. Derive outcomes from owner facts
+
+            Apply the first matching rule:
+
+            1. alpha
+            2. beta
+
+            ## Acceptance
+
+            alpha
+            """);
+
+        Assert.False(DefinesSingleStructurallyTotalAuthority(document));
+    }
+
+    [Fact]
+    public void ParallelAcceptanceTableIsRejected()
+    {
+        var document = Parse(
+            """
+            ### 5. Derive outcomes from owner facts
+
+            Apply the first matching rule:
+
+            1. alpha
+            2. beta otherwise
+
+            ## Acceptance
+
+            | Check |
+            | --- |
+            | alpha |
+            """);
+
+        Assert.False(DefinesSingleStructurallyTotalAuthority(document));
+    }
+
+    [Fact]
+    public void OrderedFirstMatchWithTerminalCatchAllAndNoParallelTableIsAccepted()
+    {
+        var document = Parse(
+            """
+            ### 5. Derive outcomes from owner facts
+
+            Apply the first matching rule:
+
+            1. alpha
+            2. beta otherwise
+
+            ## Acceptance
+
+            alpha
+            """);
+
+        Assert.True(DefinesSingleStructurallyTotalAuthority(document));
+    }
+
+    [Fact]
+    public void CodexFormalAnswerOutcomeAuthorityIsSingleAndStructurallyTotal()
+    {
+        Assert.True(
+            File.Exists(Path.Combine(
+                RepositoryLayout.FindRoot(),
+                "skills",
+                "codex-formal-answer",
+                "SKILL.md")),
+            "Required skill file is missing: skills/codex-formal-answer/SKILL.md");
+        Assert.True(DefinesSingleStructurallyTotalAuthority(Parse(File.ReadAllText(Path.Combine(
+            RepositoryLayout.FindRoot(),
+            "skills",
+            "codex-formal-answer",
+            "SKILL.md")))));
+    }
+
+    private static bool DefinesSingleStructurallyTotalAuthority(MarkdownDocument document)
+    {
+        var authoritySection = FindSection(document, AuthorityHeading);
+        var orderedAuthority = FindOrderedFirstMatchList(authoritySection);
+        var terminalItemIsCatchAll = orderedAuthority is null
+            || IsCatchAll(orderedAuthority.OfType<ListItemBlock>().LastOrDefault());
+        var acceptanceAndDecisionSectionsHaveNoTables = document
+            .OfType<HeadingBlock>()
+            .Where(IsAcceptanceOrDecisionHeading)
+            .SelectMany(heading => SectionBlocks(document, heading))
+            .SelectMany(SelfAndDescendants)
+            .All(block => block is not Table);
+
+        return orderedAuthority is not null
+            && terminalItemIsCatchAll
+            && acceptanceAndDecisionSectionsHaveNoTables;
+    }
+
+    private static ListBlock? FindOrderedFirstMatchList(IReadOnlyList<Block> section)
+    {
+        var orderedLists = section
+            .SelectMany(SelfAndDescendants)
+            .OfType<ListBlock>()
+            .Where(list => list.IsOrdered)
+            .ToArray();
+
+        if (orderedLists.Length != 1)
+        {
+            return null;
+        }
+
+        var orderedList = orderedLists[0];
+        var isIntroducedAsFirstMatch = section
+            .SelectMany(SelfAndDescendants)
+            .OfType<ParagraphBlock>()
+            .Where(paragraph => paragraph.Span.End < orderedList.Span.Start)
+            .Any(paragraph => FirstMatchPattern.IsMatch(PlainText(paragraph)));
+
+        return isIntroducedAsFirstMatch ? orderedList : null;
+    }
+
+    private static bool IsCatchAll(ListItemBlock? item) =>
+        item is not null
+        && CatchAllPattern.IsMatch(string.Join(
+            " ",
+            item.SelectMany(SelfAndDescendants).OfType<LeafBlock>().Select(PlainText)));
+
+    private static IReadOnlyList<Block> FindSection(
+        MarkdownDocument document,
+        string headingText)
+    {
+        var headings = document
+            .OfType<HeadingBlock>()
+            .Where(heading => PlainText(heading).Equals(headingText, StringComparison.Ordinal))
+            .ToArray();
+
+        return headings.Length == 1 ? SectionBlocks(document, headings[0]) : [];
+    }
+
+    private static IReadOnlyList<Block> SectionBlocks(
+        MarkdownDocument document,
+        HeadingBlock heading)
+    {
+        var section = new List<Block>();
+        var inside = false;
+
+        foreach (var block in document)
+        {
+            if (ReferenceEquals(block, heading))
+            {
+                inside = true;
+                continue;
+            }
+
+            if (!inside)
+            {
+                continue;
+            }
+
+            if (block is HeadingBlock nextHeading && nextHeading.Level <= heading.Level)
+            {
+                break;
+            }
+
+            section.Add(block);
+        }
+
+        return section;
+    }
+
+    private static IEnumerable<Block> SelfAndDescendants(Block block)
+    {
+        yield return block;
+
+        if (block is not ContainerBlock container)
+        {
+            yield break;
+        }
+
+        foreach (var child in container)
+        {
+            foreach (var descendant in SelfAndDescendants(child))
+            {
+                yield return descendant;
+            }
+        }
+    }
+
+    private static string PlainText(LeafBlock block)
+    {
+        var text = new StringBuilder();
+        AppendInlineText(block.Inline?.FirstChild, text);
+        return text.ToString();
+    }
+
+    private static void AppendInlineText(Inline? inline, StringBuilder text)
+    {
+        for (var current = inline; current is not null; current = current.NextSibling)
+        {
+            switch (current)
+            {
+                case LiteralInline literal:
+                    text.Append(literal.Content);
+                    break;
+                case CodeInline code:
+                    text.Append(code.Content);
+                    break;
+                case ContainerInline container:
+                    AppendInlineText(container.FirstChild, text);
+                    break;
+            }
+        }
+    }
+
+    private static bool IsAcceptanceOrDecisionHeading(HeadingBlock heading)
+    {
+        var text = PlainText(heading);
+        return StartsWithWord(text, "Acceptance") || StartsWithWord(text, "Decision");
+    }
+
+    private static bool StartsWithWord(string text, string word) =>
+        text.Equals(word, StringComparison.OrdinalIgnoreCase)
+        || text.StartsWith(word + " ", StringComparison.OrdinalIgnoreCase);
+
+    private static MarkdownDocument Parse(string markdown) => Markdown.Parse(markdown, Pipeline);
+}

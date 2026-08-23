@@ -108,11 +108,9 @@ public sealed class EmissionTests
             var firstEmission = TemporaryFileSystem.File.ReadAllBytes(emissionPath);
             var citations = LibraryNoteCatalog.Load(root).Citations;
             ScribeDocument[] documents = [definition.Document];
-            var census = ReceiptFreeDocumentCatalog.Load(root, documents);
             var graph = DocumentGraphAssembler.Assemble(
                 documents,
-                DeclarationCatalog.Create(report),
-                census.ReceiptFreeDocumentGids);
+                DeclarationCatalog.Create(report));
             Assert.Equal(
                 CanonicalMarkdownWriter.Write(
                     definition.Document,

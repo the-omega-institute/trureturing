@@ -13,5 +13,5 @@ receipts:
   scribe:
     - gid: D5/S1/Deficit/FixedModulusNoncongruence.deficit_not_determined_by_fixed_modulus
       definition_sha256: sha256:cbd655f48036859af7591c36292c74fb4f790881e52474b8e3d97a2baf049613
-      emission_sha256: sha256:cbdfbaa3082f9a55f77ad65d39cb7f8c0ec7e21b72e1b6e154ae844ae33916d9
+      emission_sha256: sha256:8e9239ed41bdf41e76fd0276b433a877c4eb6a70f12b3e4b750acc0fde48b93b
   unresolved_subitems: []

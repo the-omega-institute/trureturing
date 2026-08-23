@@ -4,6 +4,7 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd -P)"
 BASE_REF="origin/dev"
 FORCE=0
+LANES_ONLY=0
 
 while [[ $# -gt 0 ]]; do
   case "$1" in
@@ -17,6 +18,11 @@ while [[ $# -gt 0 ]]; do
       FORCE=1
       shift
       ;;
+    --lanes-only)
+      [[ "$LANES_ONLY" == "0" ]] || { echo "clean-lanes.sh: duplicate --lanes-only" >&2; exit 2; }
+      LANES_ONLY=1
+      shift
+      ;;
     *)
       echo "clean-lanes.sh: unknown argument '$1'" >&2
       exit 2
@@ -26,6 +32,7 @@ done
 
 arguments=(clean-lanes --base "$BASE_REF")
 if [[ "$FORCE" == "1" ]]; then arguments+=(--force); fi
+if [[ "$LANES_ONLY" == "1" ]]; then arguments+=(--lanes-only); fi
 
 exec dotnet run \
   --project "$ROOT/tools/StrataLint.Cli/StrataLint.Cli.csproj" \

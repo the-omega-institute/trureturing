@@ -23,3 +23,5 @@ The proof extends the joint law by the deterministic Y-to-C channel and applies 
 ## References
 
 - Truth anchor: `D5/S3/Entropy/Submodularity/CommonStateEntropyBound.common_state_entropy_le_mutual_information`
+- Dependency: [D5/S3/Entropy/Forgetting/CapacityMonotone](../Forgetting/CapacityMonotone.md)
+- Dependency: [D5/S3/Entropy/Submodularity/MarkovDataProcessing](MarkovDataProcessing.md)

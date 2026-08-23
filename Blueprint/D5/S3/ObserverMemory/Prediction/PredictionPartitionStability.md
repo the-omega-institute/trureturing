@@ -25,3 +25,4 @@ The theorem is general in both types and does not require finiteness. A constant
 ## References
 
 - Truth anchor: `D5/S3/ObserverMemory/Prediction/PredictionPartitionStability.prediction_partition_stable_forever`
+- Dependency: [D5/S3/ObserverMemory/Prediction/ConditionalEntropyStability](ConditionalEntropyStability.md)

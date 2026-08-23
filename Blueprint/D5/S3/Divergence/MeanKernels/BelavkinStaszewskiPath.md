@@ -23,3 +23,4 @@ The hypotheses are satisfiable: taking rho = sigma to be any strictly positive t
 ## References
 
 - Truth anchor: `D5/S3/Divergence/MeanKernels/BelavkinStaszewskiPath.belavkin_staszewski_path`
+- Dependency: [D5/S3/Quantum/MatrixInversion](../../Quantum/MatrixInversion.md)

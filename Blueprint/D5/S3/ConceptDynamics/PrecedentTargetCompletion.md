@@ -25,3 +25,4 @@ The formal-completion clause directly applies the repository theorem `concept_jo
 ## References
 
 - Truth anchor: `D5/S3/ConceptDynamics/PrecedentTargetCompletion.target_completion_formal_distinction_not_noncircular`
+- Dependency: [D5/S3/ConceptDynamics/ConceptJoinUniversal](ConceptJoinUniversal.md)

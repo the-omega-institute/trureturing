@@ -1,0 +1,17 @@
+ast_path: 定理/328.1
+fingerprints:
+  raw_sha256: sha256:3ac6f54f82ba144564aa8bf385abb4701f25df94c16d53d26f20f4b1c550a7bf
+  normalized_sha256: sha256:3ac6f54f82ba144564aa8bf385abb4701f25df94c16d53d26f20f4b1c550a7bf
+cas_ref: sha256:3ac6f54f82ba144564aa8bf385abb4701f25df94c16d53d26f20f4b1c550a7bf
+coverage_gids:
+  - D5/S3/ConceptDynamics/DecisionValue/CompleteInputDeterminism.complete_input_agreement_excludes_deterministic_disagreement
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/DecisionValue/CompleteInputDeterminism.complete_input_agreement_excludes_deterministic_disagreement
+      source_sha256: sha256:3ac6f54f82ba144564aa8bf385abb4701f25df94c16d53d26f20f4b1c550a7bf
+      target_sha256: sha256:ab9ee283504f05363555152f571c8931392334ea1c46abf5065548f10459e206
+  scribe:
+    - gid: D5/S3/ConceptDynamics/DecisionValue/CompleteInputDeterminism.complete_input_agreement_excludes_deterministic_disagreement
+      definition_sha256: sha256:306a00eeaf993967708eca31861b8727cb24c4f21203933b418615a9e6dad62e
+      emission_sha256: sha256:61807d9a024590872a66030a8d0051835a2a63e06c5740cc43ce487078655d36
+  unresolved_subitems: []

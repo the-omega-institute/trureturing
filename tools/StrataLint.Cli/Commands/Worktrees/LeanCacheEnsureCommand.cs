@@ -1,10 +1,35 @@
 using System.Text;
 using System.Text.Json;
+using System.Text.Json.Nodes;
 
 namespace StrataLint.Cli;
 
 internal static class LeanCacheEnsureCommand
 {
+    private const string ColdBuildConsentVariable = "STRATALINT_ACCEPT_COLD_BUILD";
+
+    private sealed record CacheState(
+        OleanWarmthInspection Mathlib,
+        OleanWarmthInspection Project)
+    {
+        internal bool AllCold => !Mathlib.IsWarm && !Project.IsWarm;
+
+        internal bool HasProbeFailure => Mathlib.State == OleanWarmth.ProbeFailed
+            || Project.State == OleanWarmth.ProbeFailed;
+
+        internal string ProbeFailureDescription => string.Join(
+            "; ",
+            new[]
+            {
+                Mathlib.State == OleanWarmth.ProbeFailed
+                    ? $"mathlib: {Mathlib.Error ?? "unknown probe failure"}"
+                    : null,
+                Project.State == OleanWarmth.ProbeFailed
+                    ? $"project: {Project.Error ?? "unknown probe failure"}"
+                    : null,
+            }.Where(static detail => detail is not null));
+    }
+
     internal const string Usage = "USAGE: StrataLint worktree ensure-cache [--path DIR]";
     internal const string WriterUsage =
         "USAGE: StrataLint worktree with-cache-writer [--path DIR] -- COMMAND [ARG ...]";
@@ -19,7 +44,6 @@ internal static class LeanCacheEnsureCommand
             arguments,
             runner,
             cloner,
-            LeanCacheProvisioner.CountLtarFiles,
             removePartial: null);
 
     internal static CommandResult Run(
@@ -27,13 +51,27 @@ internal static class LeanCacheEnsureCommand
         IReadOnlyList<string> arguments,
         IWorktreeProcessRunner runner,
         IDirectoryCloner cloner,
-        Func<string, int> countLtarFiles,
-        Action<string>? removePartial = null)
+        Action<string>? removePartial) =>
+        Run(
+            repositoryRoot,
+            arguments,
+            runner,
+            cloner,
+            removePartial,
+            FileSystemLeanCacheStateProbe.Instance);
+
+    internal static CommandResult Run(
+        string repositoryRoot,
+        IReadOnlyList<string> arguments,
+        IWorktreeProcessRunner runner,
+        IDirectoryCloner cloner,
+        Action<string>? removePartial,
+        ILeanCacheStateProbe stateProbe)
     {
         ArgumentNullException.ThrowIfNull(arguments);
         ArgumentNullException.ThrowIfNull(runner);
         ArgumentNullException.ThrowIfNull(cloner);
-        ArgumentNullException.ThrowIfNull(countLtarFiles);
+        ArgumentNullException.ThrowIfNull(stateProbe);
         if (!TryParseWorktreeRoot(repositoryRoot, arguments, out var root))
         {
             return new CommandResult(false, string.Empty, Usage + "\n");
@@ -82,17 +120,36 @@ internal static class LeanCacheEnsureCommand
             runner,
             cloner,
             guard,
-            countLtarFiles,
-            removePartial);
+            removePartial,
+            continueOnCacheGetFailure: false,
+            stateProbe,
+            out _);
     }
 
     internal static CommandResult RunWithWriter(
         string repositoryRoot,
         IReadOnlyList<string> arguments,
         IWorktreeProcessRunner runner,
-        IDirectoryCloner cloner)
+        IDirectoryCloner cloner) =>
+        RunWithWriter(
+            repositoryRoot,
+            arguments,
+            runner,
+            cloner,
+            FileSystemLeanCacheStateProbe.Instance,
+            Environment.GetEnvironmentVariable);
+
+    internal static CommandResult RunWithWriter(
+        string repositoryRoot,
+        IReadOnlyList<string> arguments,
+        IWorktreeProcessRunner runner,
+        IDirectoryCloner cloner,
+        ILeanCacheStateProbe stateProbe,
+        Func<string, string?> readEnvironment)
     {
         ArgumentNullException.ThrowIfNull(cloner);
+        ArgumentNullException.ThrowIfNull(stateProbe);
+        ArgumentNullException.ThrowIfNull(readEnvironment);
         if (!TryParseWriter(repositoryRoot, arguments, out var root, out var command))
         {
             return new CommandResult(false, string.Empty, WriterUsage + "\n");
@@ -129,9 +186,43 @@ internal static class LeanCacheEnsureCommand
             runner,
             cloner,
             guard,
-            LeanCacheProvisioner.CountLtarFiles,
-            removePartial: null);
+            removePartial: null,
+            continueOnCacheGetFailure: true,
+            stateProbe,
+            out var cacheState);
         if (!ensured.Success) return ensured;
+
+        var receipt = ensured.Output;
+        if (cacheState is null)
+        {
+            return new CommandResult(
+                false,
+                receipt,
+                "cold-build guard did not receive a cache state from ensure\n");
+        }
+        if (cacheState.AllCold)
+        {
+            var consent = string.Equals(
+                readEnvironment(ColdBuildConsentVariable),
+                "1",
+                StringComparison.Ordinal);
+            if (!consent)
+            {
+                var refusal = cacheState.HasProbeFailure
+                    ? "COLD_BUILD_REFUSED cache warmth probe failed and was treated as cold (fail-closed): "
+                        + cacheState.ProbeFailureDescription
+                    : "COLD_BUILD_REFUSED mathlib and project olean caches are both cold.";
+                var target = ShellQuote(root);
+                return new CommandResult(
+                    false,
+                    receipt,
+                    refusal + "\n"
+                    + $"Fetch caches with: make -C {target} lean-cache-ensure\n"
+                    + "To accept this cold build once, run: "
+                    + $"{ColdBuildConsentVariable}=1 make -C {target} lean\n");
+            }
+            receipt = RecordColdBuildConsent(receipt);
+        }
 
         try
         {
@@ -142,12 +233,12 @@ internal static class LeanCacheEnsureCommand
                 LeanCacheProvisioner.CommandBudget);
             return new CommandResult(
                 invoked.ExitCode == 0,
-                ensured.Output + Encoding.UTF8.GetString(invoked.StandardOutput),
+                receipt + Encoding.UTF8.GetString(invoked.StandardOutput),
                 Encoding.UTF8.GetString(invoked.StandardError));
         }
         catch (Exception exception)
         {
-            return new CommandResult(false, ensured.Output, exception.Message + "\n");
+            return new CommandResult(false, receipt, exception.Message + "\n");
         }
     }
 
@@ -158,15 +249,20 @@ internal static class LeanCacheEnsureCommand
         IWorktreeProcessRunner runner,
         IDirectoryCloner cloner,
         LeanCacheWriterGuard writerGuard,
-        Func<string, int> countLtarFiles,
-        Action<string>? removePartial)
+        Action<string>? removePartial,
+        bool continueOnCacheGetFailure,
+        ILeanCacheStateProbe stateProbe,
+        out CacheState? cacheState)
     {
+        cacheState = null;
         var lake = Path.Combine(root, ".lake");
         writerGuard.RequireOwnershipOf(lake);
         string? stampMiss = null;
+        var missingDonorClonefile = ClonefileReceipt.NotRun;
         try
         {
             if (IsSymlink(lake)) return RefusedSymlink(root, pins.Sha256);
+            var projectWarmth = stateProbe.ProbeOleans(ProjectOleanRoot(lake));
 
             string? missReason = null;
             if (Directory.Exists(lake))
@@ -176,42 +272,98 @@ internal static class LeanCacheEnsureCommand
                 stampMiss = ReceiptStampMiss(stamp.State);
                 if (stamp.State == LeanCacheStampState.Match)
                 {
-                    try
-                    {
-                        LeanCacheProvisioner.VerifyMathlibOleans(lake);
-                    }
-                    catch (MathlibOleanCompletenessException exception)
-                    {
-                        return FailureReceipt(
-                            "failed",
-                            root,
-                            donor: null,
-                            method: "none",
-                            pins.Sha256,
-                            exception.Message,
-                            exception.MissingOleanFiles,
-                            exception.MissingOleanSamples,
-                            pruneOutcome: exception.PruneOutcome);
-                    }
-                    return SuccessReceipt(
+                    return SuccessWithState(
+                        SuccessReceipt(
                         "present",
                         root,
                         donor: null,
                         method: "none",
                         pins.Sha256,
                         reason: null,
-                        MathlibCachePruneOutcome.NotRun);
+                        LeanCacheProvisioner.InspectMathlibOleans(lake)),
+                        root,
+                        projectWarmth,
+                        stateProbe,
+                        out cacheState);
                 }
 
                 if (stamp.State == LeanCacheStampState.Mismatch)
                 {
                     RemoveProjection(lake);
+                    projectWarmth = new OleanWarmthInspection(OleanWarmth.Cold, null);
                 }
                 else
                 {
+                    if (stamp.State == LeanCacheStampState.Missing
+                        && projectWarmth.State == OleanWarmth.Cold)
+                    {
+                        var contentRoot = stateProbe.InspectContentRoot(Path.Combine(lake, "build"));
+                        if (contentRoot.Clear)
+                        {
+                            LeanCacheDonorSelection? buildDonor = null;
+                            try
+                            {
+                                buildDonor = GitWorktreeInventory.SelectDonor(
+                                    root,
+                                    pins,
+                                    runner,
+                                    stateProbe,
+                                    requireProjectWarm: true);
+                            }
+                            catch (Exception exception)
+                            {
+                                missReason = JoinReasons(
+                                    missReason,
+                                    $"donor enumeration failed closed: {exception.Message}");
+                            }
+
+                            if (buildDonor is not null)
+                            {
+                                using (buildDonor)
+                                {
+                                    missReason = JoinReasons(missReason, buildDonor.Notice);
+                                    if (buildDonor.Donor is not null)
+                                    {
+                                        var attempt = LeanMissingBuildProvisioner.TryProvision(
+                                            buildDonor,
+                                            root,
+                                            pins,
+                                            runner,
+                                            writerGuard,
+                                            cloner,
+                                            stateProbe);
+                                        missingDonorClonefile = attempt.Clonefile;
+                                        missReason = JoinReasons(missReason, attempt.Warning);
+                                        if (attempt.Result is { } seeded)
+                                        {
+                                            return SuccessWithState(
+                                                SuccessReceipt(
+                                                    "seeded",
+                                                    root,
+                                                    buildDonor.Donor,
+                                                    seeded.Method,
+                                                    pins.Sha256,
+                                                    missReason,
+                                                    seeded.MathlibOleans,
+                                                    stampMiss,
+                                                    seeded.Clonefile),
+                                                root,
+                                                new OleanWarmthInspection(OleanWarmth.Warm, null),
+                                                stateProbe,
+                                                out cacheState);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        else
+                        {
+                            missReason = JoinReasons(missReason, contentRoot.Error);
+                        }
+                    }
+
                     // Missing or corrupt pin identity does not prove staleness. Re-run the current-pin
-                    // producer and verify completeness in place. The new stamp records only pin
-                    // identity; live completeness remains mandatory on every later admission.
+                    // producer in place; Lake owns any missing dependency rebuilds.
                     try
                     {
                         var reproduced = LeanCacheProvisioner.ReproduceExisting(
@@ -219,37 +371,46 @@ internal static class LeanCacheEnsureCommand
                             pins,
                             lakeExecutable,
                             runner,
-                            writerGuard,
-                            countLtarFiles);
-                        return SuccessReceipt(
+                            writerGuard);
+                        return SuccessWithState(
+                            SuccessReceipt(
                             "fetched",
                             root,
                             donor: null,
                             reproduced.Method,
                             pins.Sha256,
                             JoinReasons(missReason, reproduced.Warning),
-                            reproduced.PruneOutcome,
-                            stampMiss);
-                    }
-                    catch (MathlibOleanCompletenessException exception)
-                    {
-                        if (IsSymlink(lake)) return RefusedSymlink(root, pins.Sha256);
-                        return FailureReceipt(
-                            "failed",
-                            root,
-                            donor: null,
-                            method: "cache-get",
-                            pins.Sha256,
-                            JoinReasons(missReason, exception.Message)
-                                ?? "unknown in-place producer failure",
-                            exception.MissingOleanFiles,
-                            exception.MissingOleanSamples,
+                            reproduced.MathlibOleans,
                             stampMiss,
-                            exception.PruneOutcome);
+                            missingDonorClonefile),
+                            root,
+                            projectWarmth,
+                            stateProbe,
+                            out cacheState);
                     }
                     catch (LeanCacheProvisionException exception)
                     {
                         if (IsSymlink(lake)) return RefusedSymlink(root, pins.Sha256);
+                        if (continueOnCacheGetFailure
+                            && exception.SafeToContinueToBuild
+                            && !File.Exists(lake))
+                        {
+                            return SuccessWithState(
+                                SuccessReceipt(
+                                "degraded",
+                                root,
+                                donor: null,
+                                method: "cache-get",
+                                pins.Sha256,
+                                JoinReasons(missReason, exception.Message),
+                                LeanCacheProvisioner.InspectMathlibOleans(lake),
+                                stampMiss,
+                                missingDonorClonefile),
+                                root,
+                                projectWarmth,
+                                stateProbe,
+                                out cacheState);
+                        }
                         return FailureReceipt(
                             "failed",
                             root,
@@ -259,7 +420,7 @@ internal static class LeanCacheEnsureCommand
                             JoinReasons(missReason, exception.Message)
                                 ?? "unknown in-place producer failure",
                             stampMiss: stampMiss,
-                            pruneOutcome: exception.PruneOutcome);
+                            clonefile: missingDonorClonefile);
                     }
                     catch (Exception exception)
                     {
@@ -272,7 +433,8 @@ internal static class LeanCacheEnsureCommand
                             pins.Sha256,
                             JoinReasons(missReason, exception.Message)
                                 ?? "unknown in-place producer failure",
-                            stampMiss: stampMiss);
+                            stampMiss: stampMiss,
+                            clonefile: missingDonorClonefile);
                     }
                 }
             }
@@ -310,37 +472,48 @@ internal static class LeanCacheEnsureCommand
                         writerGuard,
                         cloner,
                         removePartial);
-                return SuccessReceipt(
+                var finalProjectWarmth = provisioned.Strategy == "cloned"
+                    ? selection.ProjectWarmth ?? projectWarmth
+                    : projectWarmth;
+                return SuccessWithState(
+                    SuccessReceipt(
                     provisioned.Strategy == "cloned" ? "seeded" : "fetched",
                     root,
                     selection.Donor,
                     provisioned.Method,
                     pins.Sha256,
                     JoinReasons(missReason, JoinReasons(selection.Notice, provisioned.Warning)),
-                    provisioned.PruneOutcome,
+                    provisioned.MathlibOleans,
                     stampMiss,
-                    provisioned.Clonefile);
-            }
-            catch (MathlibOleanCompletenessException exception)
-            {
-                if (IsSymlink(lake)) return RefusedSymlink(root, pins.Sha256);
-                return FailureReceipt(
-                    "failed",
+                    provisioned.Clonefile),
                     root,
-                    selection.Donor,
-                    "none",
-                    pins.Sha256,
-                    JoinReasons(missReason, JoinReasons(selection.Notice, exception.Message))
-                        ?? "unknown provisioning failure",
-                    exception.MissingOleanFiles,
-                    exception.MissingOleanSamples,
-                    stampMiss,
-                    exception.PruneOutcome,
-                    exception.Clonefile);
+                    finalProjectWarmth,
+                    stateProbe,
+                    out cacheState);
             }
             catch (LeanCacheProvisionException exception)
             {
                 if (IsSymlink(lake)) return RefusedSymlink(root, pins.Sha256);
+                if (continueOnCacheGetFailure
+                    && exception.SafeToContinueToBuild
+                    && !File.Exists(lake))
+                {
+                    return SuccessWithState(
+                        SuccessReceipt(
+                        "degraded",
+                        root,
+                        selection.Donor,
+                        method: "cache-get",
+                        pins.Sha256,
+                        JoinReasons(missReason, JoinReasons(selection.Notice, exception.Message)),
+                        LeanCacheProvisioner.InspectMathlibOleans(lake),
+                        stampMiss,
+                        exception.Clonefile),
+                        root,
+                        projectWarmth,
+                        stateProbe,
+                        out cacheState);
+                }
                 return FailureReceipt(
                     "failed",
                     root,
@@ -350,7 +523,6 @@ internal static class LeanCacheEnsureCommand
                     JoinReasons(missReason, JoinReasons(selection.Notice, exception.Message))
                         ?? "unknown provisioning failure",
                     stampMiss: stampMiss,
-                    pruneOutcome: exception.PruneOutcome,
                     clonefile: exception.Clonefile);
             }
             catch (Exception exception)
@@ -376,8 +548,24 @@ internal static class LeanCacheEnsureCommand
                 method: "none",
                 pins.Sha256,
                 exception.Message,
-                stampMiss: stampMiss);
+                stampMiss: stampMiss,
+                clonefile: exception is LeanCacheProvisionException provisionException
+                    ? provisionException.Clonefile
+                    : missingDonorClonefile);
         }
+    }
+
+    private static CommandResult SuccessWithState(
+        CommandResult result,
+        string root,
+        OleanWarmthInspection projectWarmth,
+        ILeanCacheStateProbe stateProbe,
+        out CacheState? cacheState)
+    {
+        cacheState = new CacheState(
+            stateProbe.ProbeOleans(MathlibOleanRoot(Path.Combine(root, ".lake"))),
+            projectWarmth);
+        return result with { Output = RecordCacheState(result.Output, cacheState) };
     }
 
     private static CommandResult SuccessReceipt(
@@ -387,7 +575,7 @@ internal static class LeanCacheEnsureCommand
         string method,
         string? pinSha256,
         string? reason,
-        MathlibCachePruneOutcome pruneOutcome,
+        MathlibOleanInventory mathlibOleans,
         string? stampMiss = null,
         ClonefileReceipt? clonefile = null) =>
         new(
@@ -399,9 +587,7 @@ internal static class LeanCacheEnsureCommand
                 method,
                 pinSha256,
                 reason,
-                pruneOutcome,
-                mathlibMissingOleanFiles: null,
-                mathlibMissingOleanSamples: null,
+                mathlibOleans,
                 stampMiss,
                 clonefile),
             string.Empty);
@@ -413,10 +599,7 @@ internal static class LeanCacheEnsureCommand
         string method,
         string? pinSha256,
         string reason,
-        int? mathlibMissingOleanFiles = null,
-        IReadOnlyList<string>? mathlibMissingOleanSamples = null,
         string? stampMiss = null,
-        MathlibCachePruneOutcome? pruneOutcome = null,
         ClonefileReceipt? clonefile = null) =>
         new(
             false,
@@ -428,9 +611,7 @@ internal static class LeanCacheEnsureCommand
                 method,
                 pinSha256,
                 reason,
-                pruneOutcome ?? MathlibCachePruneOutcome.NotRun,
-                mathlibMissingOleanFiles,
-                mathlibMissingOleanSamples,
+                MathlibOleanInventory.Unknown,
                 stampMiss,
                 clonefile));
 
@@ -473,9 +654,7 @@ internal static class LeanCacheEnsureCommand
         string method,
         string? pinSha256,
         string? reason,
-        MathlibCachePruneOutcome pruneOutcome,
-        int? mathlibMissingOleanFiles,
-        IReadOnlyList<string>? mathlibMissingOleanSamples,
+        MathlibOleanInventory mathlibOleans,
         string? stampMiss,
         ClonefileReceipt? clonefile = null) =>
         "LEAN_CACHE " + JsonSerializer.Serialize(new
@@ -491,12 +670,54 @@ internal static class LeanCacheEnsureCommand
             clonefile_errnos = (clonefile ?? ClonefileReceipt.NotRun).Errnos,
             clonefile_attempts = (clonefile ?? ClonefileReceipt.NotRun).Attempts,
             clonefile_cleanup_error = (clonefile ?? ClonefileReceipt.NotRun).CleanupError,
-            shared_cache_scope = pruneOutcome.Scope,
-            mathlib_cache_pruned_files = pruneOutcome.DeletedFiles,
-            mathlib_cache_clean_status = pruneOutcome.CleanStatus,
-            mathlib_missing_olean_files = mathlibMissingOleanFiles,
-            mathlib_missing_olean_samples = mathlibMissingOleanSamples,
+            mathlib_missing_olean_files = mathlibOleans.MissingFiles,
+            mathlib_missing_olean_samples = mathlibOleans.MissingSamples,
         }) + "\n";
+
+    private static string RecordColdBuildConsent(string receipt)
+    {
+        const string prefix = "LEAN_CACHE ";
+        if (!receipt.StartsWith(prefix, StringComparison.Ordinal))
+        {
+            throw new InvalidOperationException("Lean cache receipt has an unexpected prefix");
+        }
+        var payload = JsonNode.Parse(receipt[prefix.Length..]) as JsonObject
+            ?? throw new InvalidOperationException("Lean cache receipt is not a JSON object");
+        payload["cold_build_consent"] = true;
+        return prefix + payload.ToJsonString() + "\n";
+    }
+
+    private static string RecordCacheState(string receipt, CacheState cacheState)
+    {
+        const string prefix = "LEAN_CACHE ";
+        if (!receipt.StartsWith(prefix, StringComparison.Ordinal))
+        {
+            throw new InvalidOperationException("Lean cache receipt has an unexpected prefix");
+        }
+        var payload = JsonNode.Parse(receipt[prefix.Length..]) as JsonObject
+            ?? throw new InvalidOperationException("Lean cache receipt is not a JSON object");
+        payload["mathlib_olean_state"] = ReceiptWarmth(cacheState.Mathlib.State);
+        payload["mathlib_olean_probe_error"] = cacheState.Mathlib.Error;
+        payload["project_olean_state"] = ReceiptWarmth(cacheState.Project.State);
+        payload["project_olean_probe_error"] = cacheState.Project.Error;
+        return prefix + payload.ToJsonString() + "\n";
+    }
+
+    private static string ReceiptWarmth(OleanWarmth warmth) => warmth switch
+    {
+        OleanWarmth.Cold => "cold",
+        OleanWarmth.Warm => "warm",
+        OleanWarmth.ProbeFailed => "probe_failed",
+        _ => throw new ArgumentOutOfRangeException(nameof(warmth), warmth, null),
+    };
+
+    private static string ShellQuote(string value) => "'" + value.Replace("'", "'\"'\"'") + "'";
+
+    private static string ProjectOleanRoot(string lake) =>
+        Path.Combine(lake, "build", "lib", "lean");
+
+    private static string MathlibOleanRoot(string lake) =>
+        Path.Combine(lake, "packages", "mathlib", ".lake", "build", "lib", "lean");
 
     private static bool TryParseWriter(
         string repositoryRoot,

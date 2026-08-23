@@ -13,5 +13,5 @@ receipts:
   scribe:
     - gid: D5/S3/ConceptDynamics/Information/RefinementEntropyMonotonicity.refinement_information_residual_monotone
       definition_sha256: sha256:01b6d824ecb15b288e83c33dbe5e5e78ef8ac71ecb0c1cf2d06bbde6b716f273
-      emission_sha256: sha256:8a51d39cec757ab86e943fd1e4e2e3440407e4fb36b4c91a9340182ff4fbd359
+      emission_sha256: sha256:f8f6203a8b7b30989ec2680470afd1bd6f22528658d92a41ac6c81abec79a766
   unresolved_subitems: []

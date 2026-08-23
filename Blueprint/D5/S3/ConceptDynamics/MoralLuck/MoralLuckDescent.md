@@ -23,3 +23,4 @@ This formalizes the finite combinatorial kernel of theorem/40.1. The normative c
 ## References
 
 - Truth anchor: `D5/S3/ConceptDynamics/MoralLuck/MoralLuckDescent.moral_luck_descent_iff`
+- Dependency: [D5/S0/Rewriting/Quotients/AnswerabilityCriterion](../../../S0/Rewriting/Quotients/AnswerabilityCriterion.md)

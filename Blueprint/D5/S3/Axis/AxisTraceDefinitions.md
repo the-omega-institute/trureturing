@@ -23,3 +23,4 @@ The first two conjuncts hold by definition and pin it: changing the exponent or 
 ## References
 
 - Truth anchor: `D5/S3/Axis/AxisTraceDefinitions.axis_trace_definitions`
+- Dependency: [D5/S3/Axis/AxisPartialSum](AxisPartialSum.md)
