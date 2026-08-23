@@ -1,0 +1,14 @@
+## 结论 26.3
+
+在线性空间中：
+
+\[
+\boxed{
+\text{one-step carry}=PTQ,
+\qquad
+\text{outward leakage}=QTP,
+\qquad
+\text{two-way defect}=[P,T].
+}
+\]
+

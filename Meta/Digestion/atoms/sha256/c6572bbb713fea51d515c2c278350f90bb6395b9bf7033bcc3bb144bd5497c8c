@@ -1,0 +1,11 @@
+## 定理 8.1（随机下降定理）
+
+以下等价：
+
+1. 存在有效像上的 Markov kernel \(\overline K\) 满足
+   \[
+   q_*K_x=\overline K_{q(x)};
+   \]
+2. \(K\) 对 \(q\) 强 lumpable；
+3. 一步观察 law 只依赖当前观察值。
+

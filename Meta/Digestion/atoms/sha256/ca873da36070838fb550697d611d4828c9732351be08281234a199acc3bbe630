@@ -1,0 +1,10 @@
+## Lean 锚点 20.1
+
+仓库定理
+
+`D5/S3/ConceptDynamics/Contracts/FutureObligationIncompleteness.nonfaithful_interface_future_incomplete`
+
+已经机器证明非单射接口必遗漏一个显式 Boolean collision obligation。本文补充：当接口已单射时，再谈 diagonal escape 必须明确发生了类型或表示宇宙扩张。
+
+---
+

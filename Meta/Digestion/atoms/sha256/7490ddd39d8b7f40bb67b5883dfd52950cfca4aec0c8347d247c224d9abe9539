@@ -1,0 +1,12 @@
+## 25.6 第六阶段：三叉戟最后桥
+
+不再增加平行 provider 名称；直接围绕
+
+```text
+PhaseEnrichedCoreTrace
+```
+
+构造每一步实际相邻边的 additive witness。成功后沿已有链自动推出 delta、gap stream 与 sequence reconstruction。
+
+---
+

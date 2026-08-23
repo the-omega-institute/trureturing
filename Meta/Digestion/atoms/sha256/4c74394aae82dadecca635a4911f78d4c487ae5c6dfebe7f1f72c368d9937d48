@@ -1,0 +1,20 @@
+## 定理 18.2（强完成）
+
+若
+
+\[
+\overline{\bigcup_\alpha V_\alpha}=H,
+\]
+
+则对每个固定 \(x\in H\)，
+
+\[
+P_\alpha x\to x.
+\]
+
+等价地，
+
+\[
+\|(I-P_\alpha)x\|\to0.
+\]
+

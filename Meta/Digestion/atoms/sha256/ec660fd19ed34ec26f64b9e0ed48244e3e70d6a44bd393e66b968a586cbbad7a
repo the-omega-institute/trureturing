@@ -1,0 +1,10 @@
+## 23.5 决策充分但完整预测不充分
+
+仓库
+
+`D5/S3/ConceptDynamics/DecisionValue/DecisionWithoutFullPrediction.decision_sufficiency_without_full_prediction`
+
+给出常值概念决定最优动作、却不能决定完整 payoff profile 的机器验证反模型。
+
+---
+

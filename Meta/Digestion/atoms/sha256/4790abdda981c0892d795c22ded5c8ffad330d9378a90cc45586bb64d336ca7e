@@ -1,0 +1,22 @@
+# 17. Prime-indexed 接口：局部观察、乘积与 gluing
+
+令每个素数 \(p\) 给出局部接口
+
+\[
+q_p:X\to B_p.
+\]
+
+对有限素数集 \(S\)，定义
+
+\[
+q_S=(q_p)_{p\in S},
+\qquad
+K_S=\bigcap_{p\in S}K_{q_p}.
+\]
+
+若 \(S\subseteq T\)，则
+
+\[
+K_T\subseteq K_S.
+\]
+

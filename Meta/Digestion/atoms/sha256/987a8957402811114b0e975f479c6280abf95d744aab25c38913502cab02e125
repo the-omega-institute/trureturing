@@ -1,0 +1,14 @@
+## Lean 锚点 7.1
+
+仓库定理
+
+`D5/S3/Quantum/Dynamics/ProjectionProbabilityFlow.projection_probability_flow`
+
+已经机器证明：
+
+\[
+p_P(t):=\operatorname{Tr}(\rho_tP)
+\]
+
+满足
+

@@ -1,0 +1,16 @@
+## 定理 1.1（核判据）
+
+以下等价：
+
+\[
+T\text{ 沿 }q\text{ 因子化};
+\]
+
+\[
+K_q\subseteq K_T;
+\]
+
+\[
+q(x)=q(y)\Longrightarrow T(x)=T(y).
+\]
+

@@ -1,0 +1,29 @@
+\[
+\boxed{
+[\mathcal D,\mathcal L]
+=
+\mathcal C_{\mathrm{in}}-
+\mathcal C_{\mathrm{out}}.
+}
+\]
+
+并且：
+
+\[
+\mathcal L\text{ 沿 }\mathcal D\text{ 一步下降}
+\iff
+\mathcal C_{\mathrm{in}}=0;
+\]
+
+\[
+\operatorname{ran}\mathcal D\text{ 对 }\mathcal L\text{ 不变}
+\iff
+\mathcal C_{\mathrm{out}}=0;
+\]
+
+\[
+[\mathcal D,\mathcal L]=0
+\iff
+\text{可见块与相干余量均被分别保持}.
+\]
+

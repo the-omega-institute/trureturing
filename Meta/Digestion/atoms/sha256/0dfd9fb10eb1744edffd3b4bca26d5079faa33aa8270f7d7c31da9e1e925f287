@@ -1,0 +1,22 @@
+## 统一原理 21.1
+
+\[
+\boxed{
+\begin{array}{c|c}
+\text{表示语言}&\text{同一结构障碍}\\
+\hline
+\text{集合商}&K_q\text{ 不被 }F\text{ 保持}\\
+\text{确定性动力学}&\operatorname{Carry}(q,F)\neq\varnothing\\
+\text{函数代数}&F^*\mathcal A_q\not\subseteq\mathcal A_q\\
+\text{线性分解}&PTQ\neq0\\
+\text{双向 reducing}&[P,T]\neq0\\
+\text{随机过程}&\delta_q(K)>0\\
+\text{因果查询}&K_\mathcal Q\not\subseteq K_T
+\end{array}
+}
+\]
+
+这些不是把不同学科强行改名，而是同一个因子化／自然性问题在不同范畴中的具体实现。
+
+---
+

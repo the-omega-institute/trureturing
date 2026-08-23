@@ -1,0 +1,6 @@
+## 警告 8.1（source coarsening 没有单调律）
+
+把 source 接口从 \(q\) 改为 \(r\circ q\) 会同时扩大待比较 fiber、又压缩目标分布，两个效应方向相反。因此总体缺陷可能增大、减小或被完全掩盖。不得把数据处理不等式误用于 source coarsening。
+
+---
+

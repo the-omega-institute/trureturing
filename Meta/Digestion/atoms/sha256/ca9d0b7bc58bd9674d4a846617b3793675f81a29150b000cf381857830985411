@@ -1,0 +1,14 @@
+\[
+K_n
+:=
+K_{q^{[n]}}
+=
+\bigcap_{j=0}^{n}(F^j\times F^j)^{-1}K_q.
+\]
+
+于是
+
+\[
+K_{n+1}\subseteq K_n.
+\]
+

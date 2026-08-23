@@ -1,0 +1,14 @@
+## 原理 17.1（prime-time carry）
+
+若动力学更新在每个有限 \(S\) 上可下降，但不存在与所有投影兼容的全局下降，则障碍位于下降映射族的 gluing，而不是任一局部 carry。需要分别审计：
+
+\[
+\text{local descent},
+\qquad
+\text{transition compatibility},
+\qquad
+\text{global realization}.
+\]
+
+---
+

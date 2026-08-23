@@ -1,0 +1,16 @@
+## 原理 14.1
+
+\[
+\boxed{
+\text{association}
+\neq
+\text{intervention}
+\neq
+\text{counterfactual coupling}.
+}
+\]
+
+它们可以使用同一种概率记号，但对应不同查询族与不同 kernel。
+
+---
+

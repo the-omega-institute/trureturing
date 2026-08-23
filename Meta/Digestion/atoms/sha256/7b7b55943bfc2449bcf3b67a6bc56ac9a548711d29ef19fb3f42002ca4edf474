@@ -1,0 +1,19 @@
+\[
+\boxed{
+\frac{d}{dt}p_P(t)
+=
+\operatorname{Re}\!\left(
+ i\operatorname{Tr}(\rho_t(HP-PH))
+\right).
+}
+\]
+
+并且
+
+\[
+[H,P]=0
+\Longrightarrow
+p_P(t)=p_P(0)
+\quad\forall t\in\mathbb R.
+\]
+

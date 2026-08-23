@@ -1,0 +1,10 @@
+### 16.1.2 Carry residual
+
+\[
+q(x)=q(y),
+\qquad
+q(Fx)\neq q(Fy).
+\]
+
+它记录当前 kernel 不是动力学 congruence。
+

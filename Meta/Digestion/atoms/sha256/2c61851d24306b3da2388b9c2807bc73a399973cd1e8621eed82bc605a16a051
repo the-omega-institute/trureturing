@@ -1,0 +1,11 @@
+## 25.4 第四阶段：随机 lumpability
+
+```text
+D5/S3/Observer/Stochastic/
+  StrongLumpabilityDescent.lean
+  TotalVariationCarry.lean
+  ApproximateDescentBounds.lean
+```
+
+有限 PMF 版本足以先闭合 \(\delta/2\) 下界与代表元上界。
+

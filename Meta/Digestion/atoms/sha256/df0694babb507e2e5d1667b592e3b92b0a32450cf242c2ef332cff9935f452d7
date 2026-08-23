@@ -1,0 +1,12 @@
+## 25.5 第五阶段：因果查询商
+
+```text
+D5/S3/Observer/Causal/Queries/
+  QueryKernel.lean
+  TargetIdentifiability.lean
+  FiniteInterventionCover.lean
+  CounterfactualCouplingResidual.lean
+```
+
+先做纯有限函数与显式反模型，不必一开始引入完整 DAG／do-calculus。
+

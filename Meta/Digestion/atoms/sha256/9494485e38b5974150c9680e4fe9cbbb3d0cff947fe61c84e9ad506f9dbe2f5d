@@ -1,0 +1,16 @@
+## 定义 14.2（目标因果 residual）
+
+\[
+\operatorname{CRes}(\mathcal Q,T)
+:=
+\{(M,N):E_\mathcal Q(M)=E_\mathcal Q(N),\ T(M)\neq T(N)\}.
+\]
+
+于是
+
+\[
+T\text{ 可识别}
+\iff
+\operatorname{CRes}(\mathcal Q,T)=\varnothing.
+\]
+

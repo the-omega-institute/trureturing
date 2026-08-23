@@ -1,0 +1,10 @@
+### 证明
+
+若 \(PT=\overline TP\)，右乘 \(Q\) 得 \(PTQ=\overline TPQ=0\)。反向由
+
+\[
+PT=PT(P+Q)=PTP
+\]
+
+并取 \(\overline T=PT|_V\)。\(\square\)
+

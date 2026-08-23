@@ -1,0 +1,16 @@
+## 定理 7.1（无穷小 reducing 判据）
+
+在有限维中，以下等价：
+
+\[
+[H,P]=0;
+\]
+
+\[
+[U_t,P]=0\quad\forall t;
+\]
+
+\[
+P\text{ 与 }Q=I-P\text{ 的两块在整个 Hamiltonian 流下分别不变}.
+\]
+

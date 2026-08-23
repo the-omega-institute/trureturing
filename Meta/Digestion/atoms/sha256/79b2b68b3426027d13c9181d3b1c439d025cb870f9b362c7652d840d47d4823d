@@ -1,0 +1,4 @@
+## 推论 22.5（局部闭合与全局闭合之间还有 gluing 层）
+
+每个有限 prime 窗口、每个有限时间窗或每个局部图表都可下降，不推出存在一个兼容全局下降。局部定理闭合后仍需检查 transition maps、逆极限 image 与 cocycle obstruction。
+

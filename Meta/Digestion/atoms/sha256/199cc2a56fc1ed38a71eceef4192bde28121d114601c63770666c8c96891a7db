@@ -1,0 +1,22 @@
+\[
+\mathbb C^{(Y)}
+=
+\ker T_\tau^N
+\oplus
+\operatorname{ran}T_\tau^N,
+\]
+
+其中
+
+\[
+T_\tau|_{\ker T_\tau^N}
+\]
+
+幂零，而
+
+\[
+T_\tau|_{\operatorname{ran}T_\tau^N}
+\]
+
+双射，并在周期点基上表现为置换。
+

@@ -1,0 +1,14 @@
+## Lean 锚点 13.1
+
+仓库定理
+
+`D5/S3/Quantum/Decoherence/ReducedRecordAccessDefect.reduced_irreversibility_is_access_defect`
+
+构造了一个显式 unitary record coupling，满足：
+
+1. 两个输入具有相同对角读数、不同相干项；
+2. 写入环境记录后的两个联合状态不同；
+3. 对环境取 partial trace 后，两个约化系统状态相同；
+4. 不存在只依赖约化状态的恢复函数同时恢复两个联合记录；
+5. 对联合系统施加逆 unitary 可精确恢复两个输入。
+

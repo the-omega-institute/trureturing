@@ -1,0 +1,14 @@
+# 14. 因果层级：查询商而不是“更多数据”
+
+令 \(\mathcal M\) 为模型类。给定查询族
+
+\[
+\mathcal Q=(Q_i:\mathcal M\to Y_i)_{i\in I},
+\]
+
+定义查询画像
+
+\[
+E_\mathcal Q(M):=(Q_i(M))_{i\in I}.
+\]
+

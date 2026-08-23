@@ -1,0 +1,11 @@
+## 25.3 第三阶段：线性方向性缺陷
+
+```text
+D5/S3/Observer/Residuals/
+  ProjectionDescentBlocks.lean
+  ProjectionCommutatorBlocks.lean
+  HilbertSchmidtCarryIdentity.lean
+```
+
+必须分别命名 \(PTQ\) 与 \(QTP\)，避免只报一个无方向交换子范数。
+

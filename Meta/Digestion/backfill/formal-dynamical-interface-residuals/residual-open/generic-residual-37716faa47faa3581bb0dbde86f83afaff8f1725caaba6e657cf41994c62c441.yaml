@@ -1,0 +1,10 @@
+ast_path: section/19-当前-negative-base-varphi-前沿的重新定位
+fingerprints:
+  raw_sha256: sha256:37716faa47faa3581bb0dbde86f83afaff8f1725caaba6e657cf41994c62c441
+  normalized_sha256: sha256:37716faa47faa3581bb0dbde86f83afaff8f1725caaba6e657cf41994c62c441
+cas_ref: sha256:37716faa47faa3581bb0dbde86f83afaff8f1725caaba6e657cf41994c62c441
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

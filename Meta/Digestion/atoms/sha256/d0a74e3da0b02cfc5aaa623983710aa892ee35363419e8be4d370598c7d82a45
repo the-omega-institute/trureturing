@@ -1,0 +1,10 @@
+## 定义 2.2（carry witness）
+
+\[
+\operatorname{Carry}(q,F)
+:=
+\{(x,y):q(x)=q(y),\ q(Fx)\neq q(Fy)\}.
+\]
+
+它表示当前接口把 \(x,y\) 合并，但下一步又要求区分它们。
+
