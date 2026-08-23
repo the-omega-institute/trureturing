@@ -412,6 +412,7 @@ public sealed partial class ProductionEnvironmentTests
         Assert.False(result.Success);
         Assert.Contains("digest status is invalid", result.Error, StringComparison.Ordinal);
         Assert.Contains(mismatchCode, result.Error, StringComparison.Ordinal);
+        Assert.DoesNotContain("coverage-gid-missing", result.Error, StringComparison.Ordinal);
         Assert.Equal(before, DirectoryLedgerImage(temporary.Path));
     }
 

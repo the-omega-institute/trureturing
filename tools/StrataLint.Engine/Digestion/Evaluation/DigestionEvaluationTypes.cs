@@ -53,10 +53,18 @@ internal sealed record DigestionLedgerEvaluation(
 
     internal int DeletableCount => Entries.Count(static entry => entry.Deletable);
 
+    internal IEnumerable<(DigestionLedgerEntry Entry, DigestionGap Gap)> ReceiptIntegrityGaps =>
+        Entries.SelectMany(static entry => entry.Gaps
+            .Where(static gap => gap.Severity == DigestionGapSeverity.ReceiptIntegrityFailure)
+            .Select(gap => (entry.Entry, gap)));
+
+    internal IEnumerable<string> ReceiptIntegrityFailureReasons =>
+        Findings.Concat(ReceiptIntegrityGaps.Select(static item =>
+            $"{item.Entry.AtomId}:{item.Gap.Code}:{item.Gap.Detail}"));
+
     internal bool HasReceiptIntegrityFailure =>
         Findings.Length > 0
-        || Entries.Any(static entry => entry.Gaps.Any(static gap =>
-            gap.Severity == DigestionGapSeverity.ReceiptIntegrityFailure));
+        || ReceiptIntegrityGaps.Any();
 }
 
 internal static class DigestionStatusNames

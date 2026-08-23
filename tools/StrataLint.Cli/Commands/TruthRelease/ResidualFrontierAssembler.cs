@@ -29,11 +29,7 @@ internal static class ResidualFrontierAssembler
         {
             throw new InvalidOperationException(
                 "residual frontier evaluation failed: "
-                + string.Join("; ", evaluation.Findings
-                    .Concat(evaluation.Entries.SelectMany(static entry => entry.Gaps
-                        .Where(static gap =>
-                            gap.Severity == DigestionGapSeverity.ReceiptIntegrityFailure)
-                        .Select(gap => $"{entry.Entry.AtomId}:{gap.Code}:{gap.Detail}")))));
+                + string.Join("; ", evaluation.ReceiptIntegrityFailureReasons));
         }
 
         var summary = DigestResidualSummary.Render(evaluation);

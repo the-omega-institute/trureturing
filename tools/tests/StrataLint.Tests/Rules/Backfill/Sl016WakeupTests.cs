@@ -1,3 +1,4 @@
+using System.Text;
 using StrataLint.Engine;
 
 namespace StrataLint.Tests;
@@ -123,5 +124,169 @@ public sealed class Sl016WakeupTests
             "source metadata",
             StringComparison.Ordinal));
     }
+
+    [Theory]
+    [InlineData("coverage-receipt-mismatch")]
+    [InlineData("scribe-definition-mismatch")]
+    [InlineData("scribe-emission-mismatch")]
+    public void ExistingReceiptIntegrityGapDoesNotBlockSl016FullScan(string mismatchCode)
+    {
+        var (context, evaluation) = EvaluateReceiptIntegrityGap(
+            mismatchCode,
+            gapExistsInBaseline: true);
+
+        var diagnostic = Assert.Single(evaluation.Diagnostics, item => item.Message.Contains(
+            mismatchCode,
+            StringComparison.Ordinal));
+        Assert.True(context.RuleImplementationChanged);
+        Assert.Equal(AdmissionEffect.Observe, diagnostic.AdmissionEffect);
+        Assert.DoesNotContain(evaluation.Diagnostics, item =>
+            item.AdmissionEffect == AdmissionEffect.Block
+            && item.Message.Contains(mismatchCode, StringComparison.Ordinal));
+    }
+
+    [Fact]
+    public void NewReceiptIntegrityGapIsBlockingAtSl016Admission()
+    {
+        var (_, evaluation) = EvaluateReceiptIntegrityGap(
+            "coverage-receipt-mismatch",
+            gapExistsInBaseline: false);
+
+        var diagnostic = Assert.Single(evaluation.Diagnostics, item => item.Message.Contains(
+            "coverage-receipt-mismatch",
+            StringComparison.Ordinal));
+        Assert.Equal(AdmissionEffect.Block, diagnostic.AdmissionEffect);
+    }
+
+    [Theory]
+    [InlineData("scribe-definition-mismatch")]
+    [InlineData("scribe-emission-mismatch")]
+    public void NewScribeReceiptIntegrityGapIsBlockingAtSl016Admission(string mismatchCode)
+    {
+        var (_, evaluation) = EvaluateReceiptIntegrityGap(
+            mismatchCode,
+            gapExistsInBaseline: false);
+
+        var diagnostic = Assert.Single(evaluation.Diagnostics, item => item.Message.Contains(
+            mismatchCode,
+            StringComparison.Ordinal));
+        Assert.Equal(AdmissionEffect.Block, diagnostic.AdmissionEffect);
+    }
+
+    [Fact]
+    public void CandidateScribeVerificationCannotMakeNewGapLookHistorical()
+    {
+        var (_, evaluation) = EvaluateReceiptIntegrityGap(
+            mismatchCode: null,
+            gapExistsInBaseline: false,
+            candidateScribeInputsChanged: true);
+
+        foreach (var mismatchCode in new[]
+                 {
+                     "scribe-definition-mismatch",
+                     "scribe-emission-mismatch",
+                 })
+        {
+            var diagnostic = Assert.Single(evaluation.Diagnostics, item => item.Message.Contains(
+                mismatchCode,
+                StringComparison.Ordinal));
+            Assert.Equal(AdmissionEffect.Block, diagnostic.AdmissionEffect);
+        }
+    }
+
+    private static (RuleEvaluationContext Context, SingleRuleEvaluation Evaluation)
+        EvaluateReceiptIntegrityGap(
+            string? mismatchCode,
+            bool gapExistsInBaseline,
+            bool candidateScribeInputsChanged = false)
+    {
+        const string atomPath =
+            "Meta/Digestion/backfill/delta-v0.1/partial-closed/delta-atom.yaml";
+        const string coverageGid = "D5/S0/Carrier/BackfillTarget";
+        const string targetPath = coverageGid + ".lean";
+        const string baselineDefinition = "fixture Scribe definition\n";
+        const string baselineEmission = "# Fixture Scribe emission\n";
+        var candidateDefinition = candidateScribeInputsChanged
+            ? "changed fixture Scribe definition\n"
+            : baselineDefinition;
+        var candidateEmission = candidateScribeInputsChanged
+            ? "# Changed fixture Scribe emission\n"
+            : baselineEmission;
+        var fixture = new RuleFixture();
+        fixture.AddBackfillTargets();
+        fixture.UseValidDirectoryBackfill();
+
+        var definitionPath = ScribeEmissionAttestation.DefinitionPath(coverageGid);
+        var emissionPath = ScribeEmissionAttestation.EmissionPath(coverageGid);
+        var baselineDefinitionSha256 = DigestionFingerprint.Compute(
+            Encoding.UTF8.GetBytes(baselineDefinition)).RawSha256;
+        var baselineEmissionSha256 = DigestionFingerprint.Compute(
+            Encoding.UTF8.GetBytes(baselineEmission)).RawSha256;
+        var candidateDefinitionSha256 = DigestionFingerprint.Compute(
+            Encoding.UTF8.GetBytes(candidateDefinition)).RawSha256;
+        var candidateEmissionSha256 = DigestionFingerprint.Compute(
+            Encoding.UTF8.GetBytes(candidateEmission)).RawSha256;
+        var targetSha256 = DigestionFingerprint.Compute(
+            Encoding.UTF8.GetBytes(fixture.Files[targetPath])).RawSha256;
+        var mismatchSha256 = "sha256:" + new string('0', 64);
+        foreach (var files in new[] { fixture.Baseline, fixture.ForkPoint })
+        {
+            files[targetPath] = fixture.Files[targetPath];
+            files[definitionPath] = baselineDefinition;
+            files[emissionPath] = baselineEmission;
+        }
+        fixture.Files[definitionPath] = candidateDefinition;
+        fixture.Files[emissionPath] = candidateEmission;
+
+        var receiptProjection = "coverage:\n"
+            + $"    - gid: {coverageGid}\n"
+            + $"      source_sha256: {RuleFixture.FixtureCasReference}\n"
+            + $"      target_sha256: {(mismatchCode == "coverage-receipt-mismatch" ? mismatchSha256 : targetSha256)}\n"
+            + "  scribe:\n"
+            + $"    - gid: {coverageGid}\n"
+            + $"      definition_sha256: {(mismatchCode == "scribe-definition-mismatch" ? mismatchSha256 : baselineDefinitionSha256)}\n"
+            + $"      emission_sha256: {(mismatchCode == "scribe-emission-mismatch" ? mismatchSha256 : baselineEmissionSha256)}";
+        fixture.Files[atomPath] = AddReceipts(fixture.Files[atomPath], receiptProjection);
+        if (gapExistsInBaseline || candidateScribeInputsChanged)
+        {
+            fixture.Baseline[atomPath] = AddReceipts(fixture.Baseline[atomPath], receiptProjection);
+            fixture.ForkPoint[atomPath] = AddReceipts(fixture.ForkPoint[atomPath], receiptProjection);
+        }
+
+        var verifiedScribeEmissions = VerifiedScribeEmissions.Create(
+        [
+            new ScribeEmissionRecord(
+                coverageGid,
+                definitionPath,
+                candidateDefinitionSha256,
+                emissionPath,
+                candidateEmissionSha256),
+        ]);
+        var changedPaths = gapExistsInBaseline
+            ? new[] { "tools/StrataLint.Engine/Rules/Backfill/BackfillInventoryRule.cs" }
+            : candidateScribeInputsChanged
+                ? new[]
+                {
+                    "tools/StrataLint.Engine/Rules/Backfill/BackfillInventoryRule.cs",
+                    definitionPath,
+                    emissionPath,
+                }
+            : new[]
+            {
+                "tools/StrataLint.Engine/Rules/Backfill/BackfillInventoryRule.cs",
+                atomPath,
+            };
+        var context = fixture.Build(
+            RawChangeSet.Create(changedPaths),
+            verifiedScribeEmissions: verifiedScribeEmissions);
+        return (
+            context,
+            RuleCatalog.Default.EvaluateSingle(RuleId.CreateKnown(16), context));
+    }
+
+    private static string AddReceipts(string atom, string receiptProjection) => atom.Replace(
+        "coverage: []\n  scribe: []",
+        receiptProjection,
+        StringComparison.Ordinal);
 
 }
