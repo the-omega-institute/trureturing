@@ -1,5 +1,4 @@
 using StrataLint.Engine;
-using Trureturing.Truth;
 
 namespace StrataLint.Scribe;
 
@@ -31,7 +30,7 @@ public static class DagEmitter
 
         try
         {
-            var model = TruthGraphModelBuilder.Create(dag, provenance, documentProjection);
+            var model = TruthGraphExportModel.Create(dag, provenance, documentProjection);
             var markdown = CanonicalDagWriter.Write(dag);
             var markdownAgain = CanonicalDagWriter.Write(dag);
             var json = TruthGraphJsonWriter.Write(model);

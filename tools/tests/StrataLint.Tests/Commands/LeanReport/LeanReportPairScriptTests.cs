@@ -9,7 +9,7 @@ public sealed class LeanReportPairScriptTests
 {
     private const string InputHelperPath = "tools/scripts/report/lean-report-input.sh";
     private const string RawReportPath = "tools/StrataLint.Engine/Snapshot/RawLeanReportArtifact.cs";
-    private const string CanonicalWriterPath = "tools/Trureturing.Truth/StructuredCanonicalWriter.cs";
+    private const string CanonicalWriterPath = "tools/StrataLint.Engine/Snapshot/StructuredCanonicalWriter.cs";
     private const string ScribeProgramPath = "tools/StrataLint.Scribe/ScribeProgram.cs";
     private static readonly string CliProjectPath = string.Join(
         '/', "tools", "StrataLint.Cli", "StrataLint.Cli.csproj");

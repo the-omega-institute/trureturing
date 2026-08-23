@@ -7,7 +7,6 @@
   <ItemGroup>
     <Compile Include="../../Blueprint/**/*.scribe.cs" LinkBase="Definitions" />
     <ProjectReference Include="../StrataLint.Engine/StrataLint.Engine.csproj" />
-    <ProjectReference Include="../Trureturing.Truth/Trureturing.Truth.csproj" />
     <PackageReference Include="Microsoft.CodeAnalysis.BannedApiAnalyzers" PrivateAssets="all" />
     <PackageReference Include="QuestPDF" />
     <PackageReference Include="Tomlyn" />

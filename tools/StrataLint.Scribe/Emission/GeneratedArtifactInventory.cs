@@ -1,5 +1,4 @@
 using System.Collections.Immutable;
-using Trureturing.Truth;
 
 namespace StrataLint.Scribe;
 
@@ -32,10 +31,6 @@ internal static class GeneratedArtifactInventory
                     DagEmitter.TruthGraphRelativePath,
                     nameof(DagEmitter),
                     "A-TRUTH"),
-                new GeneratedArtifactIdentity(
-                    "Generated/truth-export.v1.json",
-                    TruthExportModel.ProducerName,
-                    "A-TRUTHEXPORT"),
                 new GeneratedArtifactIdentity(
                     FileMapEmitter.RelativePath,
                     nameof(FileMapEmitter),

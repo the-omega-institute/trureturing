@@ -39,12 +39,8 @@
           "Dunet": "[1.16.2, )",
           "Markdig": "[1.3.2, )",
           "Microsoft.CodeAnalysis.CSharp": "[5.0.0, )",
-          "Pidgin": "[3.5.1, )",
-          "Trureturing.Truth": "[0.1.0, )"
+          "Pidgin": "[3.5.1, )"
         }
-      },
-      "trureturing.truth": {
-        "type": "Project"
       },
       "Dunet": {
         "type": "CentralTransitive",

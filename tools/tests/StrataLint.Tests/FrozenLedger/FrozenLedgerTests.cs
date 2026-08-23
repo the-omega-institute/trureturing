@@ -4,7 +4,6 @@ using System.Text;
 using System.Text.Json;
 using StrataLint.Cli;
 using StrataLint.Engine;
-using Trureturing.Truth;
 using static StrataLint.Tests.FrozenLedgerTestData;
 
 namespace StrataLint.Tests;

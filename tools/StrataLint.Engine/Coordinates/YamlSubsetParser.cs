@@ -1,10 +1,10 @@
 using System.Globalization;
 
-namespace Trureturing.Truth;
+namespace StrataLint.Engine;
 
-public static class YamlSubsetParser
+internal static class YamlSubsetParser
 {
-    public static object Parse(string text)
+    internal static object Parse(string text)
     {
         var lines = text.Split('\n')
             .Select((raw, index) => new Line(

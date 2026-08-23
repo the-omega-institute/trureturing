@@ -76,7 +76,6 @@ producer_declared_paths() {
   for relative in \
     tools/StrataLint.Cli/StrataLint.Cli.csproj \
     tools/StrataLint.Engine/StrataLint.Engine.csproj \
-    tools/Trureturing.Truth/Trureturing.Truth.csproj \
     Directory.Build.props \
     Directory.Build.targets \
     Directory.Packages.props \
@@ -86,7 +85,6 @@ producer_declared_paths() {
     tools/scripts/lean-report-pair.sh \
     tools/StrataLint.Engine/packages.lock.json \
     tools/StrataLint.Cli/packages.lock.json \
-    tools/Trureturing.Truth/packages.lock.json \
     global.json; do
     if [[ -f "$REPOSITORY/$relative" \
       || ( "$relative" == "tools/lean-inspector/inspect.sh" && -n "$PRODUCER_OVERRIDE" ) \
@@ -197,13 +195,11 @@ producer_compile_paths() {
   if [[ "$scope" == "lean-report" ]]; then
     projects=(
       tools/StrataLint.Cli/StrataLint.Cli.csproj
-      tools/StrataLint.Engine/StrataLint.Engine.csproj
-      tools/Trureturing.Truth/Trureturing.Truth.csproj)
+      tools/StrataLint.Engine/StrataLint.Engine.csproj)
   elif [[ "$scope" == "scribe-content" ]]; then
     projects=(
       tools/StrataLint.Scribe/StrataLint.Scribe.csproj
-      tools/StrataLint.Engine/StrataLint.Engine.csproj
-      tools/Trureturing.Truth/Trureturing.Truth.csproj)
+      tools/StrataLint.Engine/StrataLint.Engine.csproj)
   else
     return 1
   fi

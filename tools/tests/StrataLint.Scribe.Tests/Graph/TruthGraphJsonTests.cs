@@ -2,7 +2,6 @@ using System.Collections.Immutable;
 using System.Diagnostics;
 using System.Text;
 using StrataLint.Engine;
-using Trureturing.Truth;
 
 namespace StrataLint.Scribe.Tests;
 
@@ -37,9 +36,9 @@ public sealed class TruthGraphJsonTests
             (ScribeEmitter.AttestationRelativePath, "old attestation\n"));
 
         Assert.Equal(
-            SnapshotContentDigest.Compute(first),
-            SnapshotContentDigest.Compute(projectionsChanged));
-        Assert.NotEqual(SnapshotContentDigest.Compute(first), SnapshotContentDigest.Compute(sourceChanged));
+            TruthGraphSnapshotIdentity.Compute(first),
+            TruthGraphSnapshotIdentity.Compute(projectionsChanged));
+        Assert.NotEqual(TruthGraphSnapshotIdentity.Compute(first), TruthGraphSnapshotIdentity.Compute(sourceChanged));
     }
 
     [Fact]
@@ -59,7 +58,7 @@ public sealed class TruthGraphJsonTests
                 ["D5/X_Frontier/Openly.lean"] = Report("D5.S0.Carrier.Closed"),
                 ["D5/X_Assumptions/Tailed.lean"] = Report("D5.S0.Carrier.Closed"),
             });
-        var model = TruthGraphModelBuilder.Create(dag, Provenance);
+        var model = TruthGraphExportModel.Create(dag, Provenance);
 
         var stopwatch = Stopwatch.StartNew();
         var first = TruthGraphJsonWriter.Write(model);
@@ -118,7 +117,7 @@ public sealed class TruthGraphJsonTests
             var random = new Random(seed);
             var shuffled = modules.OrderBy(_ => random.Next()).ToArray();
             var dag = Build(shuffled, reports);
-            outputs.Add(Convert.ToBase64String(TruthGraphJsonWriter.Write(TruthGraphModelBuilder.Create(dag, Provenance)).AsSpan()));
+            outputs.Add(Convert.ToBase64String(TruthGraphJsonWriter.Write(TruthGraphExportModel.Create(dag, Provenance)).AsSpan()));
         }
 
         Assert.Single(outputs);
@@ -153,7 +152,7 @@ public sealed class TruthGraphJsonTests
             graph,
             catalog,
             new HashSet<string>(["D5/S0/Carrier/Target.lean"], StringComparer.Ordinal));
-        var model = TruthGraphModelBuilder.Create(Build(
+        var model = TruthGraphExportModel.Create(Build(
             new Dictionary<string, string> { ["D5/S0/Carrier/Target.lean"] = "theorem anchor : True := True.intro\n" },
             reportFiles), Provenance, documents);
         var reorderedDocuments = DocumentGraphExportProjection.Create(
@@ -164,7 +163,7 @@ public sealed class TruthGraphJsonTests
             DocumentGraphAssembler.Assemble([source, target], catalog),
             catalog,
             new HashSet<string>(["D5/S0/Carrier/Target.lean"], StringComparer.Ordinal));
-        var reorderedModel = TruthGraphModelBuilder.Create(Build(
+        var reorderedModel = TruthGraphExportModel.Create(Build(
             new Dictionary<string, string> { ["D5/S0/Carrier/Target.lean"] = "theorem anchor : True := True.intro\n" },
             reportFiles), Provenance, reorderedDocuments);
         Assert.True(TruthGraphJsonWriter.Write(model).AsSpan()
@@ -206,7 +205,7 @@ public sealed class TruthGraphJsonTests
             DocumentGraphAssembler.Assemble([document], catalog),
             catalog,
             new HashSet<string>(["D5/S0/Carrier/Target.lean"], StringComparer.Ordinal));
-        var model = TruthGraphModelBuilder.Create(Build(
+        var model = TruthGraphExportModel.Create(Build(
             new Dictionary<string, string> { ["D5/S0/Carrier/Target.lean"] = "theorem anchor : True := True.intro\n" },
             reportFiles), Provenance, projection);
 
@@ -309,7 +308,7 @@ public sealed class TruthGraphJsonTests
                 ["D5/S0/Carrier/Delta.lean"] = Report(),
                 ["D5/S0/Carrier/Epsilon.lean"] = Report("D5.S0.Carrier.Delta", "D5.S0.Carrier.Absent"),
             });
-        var expected = TruthGraphModelBuilder.Create(dag, Provenance);
+        var expected = TruthGraphExportModel.Create(dag, Provenance);
 
         var actual = TruthGraphJsonReader.Read(TruthGraphJsonWriter.Write(expected).AsSpan());
 
@@ -330,8 +329,8 @@ public sealed class TruthGraphJsonTests
             [new KeyValuePair<string, string>("Meta/only.txt", "one\n")],
             new Dictionary<string, LeanFileReport>(StringComparer.Ordinal));
 
-        Assert.Empty(TruthGraphJsonReader.Read(TruthGraphJsonWriter.Write(TruthGraphModelBuilder.Create(empty, Provenance)).AsSpan()).Truth.Nodes);
-        var node = Assert.Single(TruthGraphJsonReader.Read(TruthGraphJsonWriter.Write(TruthGraphModelBuilder.Create(single, Provenance)).AsSpan()).Truth.Nodes);
+        Assert.Empty(TruthGraphJsonReader.Read(TruthGraphJsonWriter.Write(TruthGraphExportModel.Create(empty, Provenance)).AsSpan()).Truth.Nodes);
+        var node = Assert.Single(TruthGraphJsonReader.Read(TruthGraphJsonWriter.Write(TruthGraphExportModel.Create(single, Provenance)).AsSpan()).Truth.Nodes);
         Assert.Null(node.ModuleName);
         Assert.Equal("semantic", node.State);
         Assert.Equal(0, node.Depth);

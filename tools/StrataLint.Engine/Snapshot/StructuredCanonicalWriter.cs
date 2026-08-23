@@ -4,9 +4,9 @@ using System.Text;
 using System.Text.Encodings.Web;
 using System.Text.Json;
 
-namespace Trureturing.Truth;
+namespace StrataLint.Engine;
 
-public static class StructuredCanonicalWriter
+internal static class StructuredCanonicalWriter
 {
     private static readonly UTF8Encoding StrictUtf8 = new(false, true);
 
@@ -15,13 +15,13 @@ public static class StructuredCanonicalWriter
         Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
     };
 
-    public static ImmutableArray<byte> WriteJson(string text)
+    internal static ImmutableArray<byte> WriteJson(string text)
     {
         using var document = JsonDocument.Parse(text);
         return WriteJson(document.RootElement);
     }
 
-    public static ImmutableArray<byte> WriteJson(JsonElement element)
+    internal static ImmutableArray<byte> WriteJson(JsonElement element)
     {
         var builder = new StringBuilder();
         WriteJsonValue(builder, element);
@@ -29,7 +29,7 @@ public static class StructuredCanonicalWriter
         return ImmutableArray.CreateRange(StrictUtf8.GetBytes(builder.ToString()));
     }
 
-    public static ImmutableArray<byte> WriteYaml(string text)
+    internal static ImmutableArray<byte> WriteYaml(string text)
     {
         var value = YamlSubsetParser.Parse(text);
         var builder = new StringBuilder();
@@ -37,14 +37,14 @@ public static class StructuredCanonicalWriter
         return ImmutableArray.CreateRange(StrictUtf8.GetBytes(builder.ToString()));
     }
 
-    public static bool JsonSemanticallyEqual(string left, string right)
+    internal static bool JsonSemanticallyEqual(string left, string right)
     {
         using var leftDocument = JsonDocument.Parse(left);
         using var rightDocument = JsonDocument.Parse(right);
         return JsonElement.DeepEquals(leftDocument.RootElement, rightDocument.RootElement);
     }
 
-    public static bool YamlSemanticallyEqual(string left, string right)
+    internal static bool YamlSemanticallyEqual(string left, string right)
     {
         var leftElement = JsonSerializer.SerializeToElement(YamlSubsetParser.Parse(left));
         var rightElement = JsonSerializer.SerializeToElement(YamlSubsetParser.Parse(right));

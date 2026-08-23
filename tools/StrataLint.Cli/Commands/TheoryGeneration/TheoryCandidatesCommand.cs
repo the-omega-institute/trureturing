@@ -4,7 +4,6 @@ using System.Text;
 using System.Text.Json;
 using StrataLint.Engine;
 using StrataLint.Scribe;
-using Trureturing.Truth;
 
 namespace StrataLint.Cli;
 
@@ -137,7 +136,7 @@ internal static class TheoryCandidatesCommand
                     "codex-formalize",
                     null));
             var output = TheoryCandidateProjection.Render(
-                SnapshotContentDigest.Compute(truth.Snapshot),
+                TruthGraphSnapshotIdentity.Compute(truth.Snapshot),
                 RawLeanReportArtifact.ContentAddress(
                     RawLeanReportArtifact.Write(truth.Snapshot, truth.Report).AsSpan()),
                 mission,
