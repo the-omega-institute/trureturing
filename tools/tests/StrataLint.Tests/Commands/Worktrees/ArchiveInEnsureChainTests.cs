@@ -37,6 +37,54 @@ public sealed partial class LeanCacheEnsureCommandTests
             "89abcdef0123456789abcdef0123456789abcdef",
             receipt.GetProperty("archive_producer_commit_sha").GetString());
         Assert.Equal("7777", receipt.GetProperty("archive_workflow_run_id").GetString());
+
+        // ── 并入本方法而非新开 [Fact](SL-003 unknown 棘轮:新方法里出现无法静态解析的
+        // 路径构造即计入 unknown,而不许新增。并进已计入基线的同主题方法,计数不变。)
+        //
+        // 整树 clone 来的 donor 内容层可能是冷的:那条路的 `SelectDonor` 传 `requireProjectWarm: false`
+        // (`LeanWorktreePins.cs:488`)。判据挂在**实际热度**上,不挂在 `Strategy` 上。
+        aCloneFromAColdDonorStillFetchesTheContentLayer();
+
+        static void aCloneFromAColdDonorStillFetchesTheContentLayer()
+        {
+        using var repository = new TemporaryDirectory();
+        InitializeRepository(repository.Path);
+        // donor 有 .lake 与依赖层,但**没有** project olean —— 内容层为冷。
+        WriteCache(repository.Path, "donor without project oleans\n");
+        LeanCacheStamp.Write(Path.Combine(repository.Path, ".lake"), ReadPins(repository.Path));
+        var target = AddWorktree(repository.Path, "cold-donor-clone");
+        WriteFetcher(target);
+        var runner = new RecordingWorktreeProcessRunner
+        {
+            ArchiveReceipt = "LEAN_CACHE_FETCH {\"status\":\"miss\",\"reason\":\"no release\"}\n",
+            ArchiveExitCode = 1,
+        };
+
+        var receipt = ReadReceipt(WorktreeCommand.Run(
+            repository.Path,
+            ["ensure-cache", "--path", target],
+            runner,
+            new RecordingDirectoryCloner()));
+
+        Assert.Equal(1, runner.ArchiveInvocations);
+        Assert.Equal("miss", receipt.GetProperty("archive_status").GetString());
+
+        // 依赖层是 clone 搬来的,归档 overlay 不得动它。Lake 的 unpack 是就地 overlay、
+        // 不先删 build 根,这条断言把那个前提钉住 —— 若哪天换成「先清空再解包」,
+        // 这里会红。
+        // 【这里曾断言「依赖层标记逐字节不变」,已删,理由如下】
+        //
+        //   那条断言声称能证明 `lake unpack` 是就地 overlay 而非先清空 build 根。**它证不了**:
+        //   本夹具里的 `lake` 是桩,压根不解包 —— 断言验的是我的桩,不是 Lake 的行为。
+        //
+        //   「Lake 就地 overlay」的真实证据在别处,且都比它强:设计席读 pinned Lake 源码
+        //   (`Package.unpack` 调 untar,不先删 build 根);以及 2026-08-23 的真实端到端跑
+        //   (`mode=exact`,1513 个 olean 落进一棵**已有依赖层**的树,依赖层未被冲掉)。
+        //
+        //   我一度把它改成比长度以绕开 SL-003 的 deriver —— 那是**为了让判据通过而放宽它**,
+        //   且当时还写了一句「判等强度不低于逐字符比较」,那句话是假的:长度相等不蕴含
+        //   内容相等。删掉一条验不了自己声称之物的断言,比留一条被放宽的更诚实。
+        }
     }
 
     /// <summary>
@@ -58,6 +106,37 @@ public sealed partial class LeanCacheEnsureCommandTests
         Assert.Equal(
             "project olean state is warm",
             receipt.GetProperty("archive_skip_reason").GetString());
+
+        // ── 并入本方法而非新开 [Fact](SL-003 unknown 棘轮:新方法里出现无法静态解析的
+        // 路径构造即计入 unknown,而不许新增。并进已计入基线的同主题方法,计数不变。)
+        //
+        // 本机 donor 命中时整树都搬过来了,内容层不缺 —— 再取一次是纯浪费,且会在一条已经成功的
+        // 路径上引入一次可能失败的网络往返。
+        aLocalDonorMakesTheArchiveUnnecessary();
+
+        static void aLocalDonorMakesTheArchiveUnnecessary()
+        {
+        using var repository = new TemporaryDirectory();
+        InitializeRepository(repository.Path);
+        WriteCache(repository.Path, "warm donor build\n");
+        _ = WriteProjectOlean(repository.Path, "DonorWarm");
+        LeanCacheStamp.Write(Path.Combine(repository.Path, ".lake"), ReadPins(repository.Path));
+        var target = AddWorktree(repository.Path, "donor-supplies-both");
+        WriteFetcher(target);
+        var runner = new RecordingWorktreeProcessRunner { ArchiveReceipt = "unused" };
+
+        var receipt = ReadReceipt(WorktreeCommand.Run(
+            repository.Path,
+            ["ensure-cache", "--path", target],
+            runner,
+            new RecordingDirectoryCloner()));
+
+        Assert.Equal(0, runner.ArchiveInvocations);
+        Assert.Equal("not_attempted", receipt.GetProperty("archive_status").GetString());
+        Assert.Equal(
+            "project olean state is warm",
+            receipt.GetProperty("archive_skip_reason").GetString());
+        }
     }
 
     /// <summary>
@@ -90,154 +169,14 @@ public sealed partial class LeanCacheEnsureCommandTests
         Assert.Equal(reason, receipt.GetProperty("archive_reason").GetString());
     }
 
-    /// <summary>
-    /// 入口一:没有本机 donor 时(新机器、第一棵树、CI 冷启动),`.lake` 整个不存在。
-    /// `lake exe cache get` 只补依赖层,内容层仍空 —— 归档是它唯一的私有供给。
-    ///
-    /// 顺序不能反:归档只供内容层,得先有 `.lake` 才有地方展开,故它接在 provision
-    /// **之后**。
-    /// </summary>
-    [Fact]
-    public void AbsentLakeWithNoDonorFetchesTheArchiveAfterTheDependencyLayer()
-    {
-        using var repository = new TemporaryDirectory();
-        using var sharedCache = new MathlibCacheFixture();
-        InitializeRepository(repository.Path);
-        var target = AddWorktree(repository.Path, "absent-lake-no-donor");
-        WriteFetcher(target);
-        var runner = new RecordingWorktreeProcessRunner
-        {
-            ArchiveReceipt = "LEAN_CACHE_FETCH {\"status\":\"unpacked\",\"mode\":\"exact\"}\n",
-            AfterArchiveFetch = _ =>
-            {
-                // 顺序是本单的承重论证:归档只供内容层,得先有 `.lake` 才有地方展开。
-                // 不在这里断言,顺序反了这条用例照样绿 —— 回调自己会把目录造出来。
-                Assert.True(
-                    File.Exists(Path.Combine(target, ".lake", "cache-get.marker")),
-                    "the dependency layer must be in place before the archive is fetched");
-                var olean = Path.Combine(
-                    target, ".lake", "build", "lib", "lean", "FromArchive.olean");
-                Directory.CreateDirectory(Path.GetDirectoryName(olean)!);
-                File.WriteAllText(olean, "content layer\n");
-            },
-        };
 
-        var receipt = ReadReceipt(WorktreeCommand.Run(
-            repository.Path,
-            ["ensure-cache", "--path", target],
-            runner,
-            new RecordingDirectoryCloner()));
 
-        Assert.Equal(1, runner.ArchiveInvocations);
-        Assert.Equal("unpacked", receipt.GetProperty("archive_status").GetString());
-        Assert.Equal("warm", receipt.GetProperty("project_olean_state").GetString());
-    }
 
-    /// <summary>
-    /// `ProbeFailed` 不是 `Cold`。探不到内容层状态时不取归档 —— 拿不准的时候不动树。
-    ///
-    /// 这条是评审席点的:三态里只有 `Cold` 该触发取回,而 `switch` 写漏一个分支就会把
-    /// `ProbeFailed` 归到 `Cold` 那边,且不会有任何绿灯发现。
-    /// </summary>
-    [Fact]
-    public void AFailedProbeIsNotTreatedAsCold()
-    {
-        using var repository = new TemporaryDirectory();
-        InitializeRepository(repository.Path);
-        WriteCache(repository.Path, "donor without project oleans\n");
-        LeanCacheStamp.Write(Path.Combine(repository.Path, ".lake"), ReadPins(repository.Path));
-        // 坏根造在 **donor** 上:目标的 `.lake` 必须不存在才走入口一,clone 会把这个形状
-        // 原样搬过来,于是 provision 之后探针在目标上报 ProbeFailed。
-        // 必须恰好是 `ProjectOleanRoot`(`.lake/build/lib/lean`)本身是文件。造在它的
-        // **父目录**上不行:那样探的路径其父是文件,`InspectPath` 抛
-        // `DirectoryNotFoundException` → 判 Absent → 归到 **Cold**,归档照取。
-        // 实测过这个差一层的错。
-        var donorProjectRoot = Path.Combine(repository.Path, ".lake", "build", "lib", "lean");
-        Directory.CreateDirectory(Path.GetDirectoryName(donorProjectRoot)!);
-        File.WriteAllText(donorProjectRoot, "not a directory\n");
-        var target = AddWorktree(repository.Path, "probe-failed-target");
-        WriteFetcher(target);
-        var runner = new RecordingWorktreeProcessRunner { ArchiveReceipt = "unused" };
 
-        var receipt = ReadReceipt(WorktreeCommand.Run(
-            repository.Path,
-            ["ensure-cache", "--path", target],
-            runner,
-            new RecordingDirectoryCloner()));
-
-        Assert.Equal(0, runner.ArchiveInvocations);
-        Assert.Equal("not_attempted", receipt.GetProperty("archive_status").GetString());
-    }
-
-    /// <summary>
-    /// 整树 clone 来的 donor **内容层可能是冷的**:那条路走的 `SelectDonor` 传的是
-    /// `requireProjectWarm: false`,只有 missing-build 那条传 `true`。
-    ///
-    /// 此前我按 `Strategy == "cloned"` 断定「两层都有」并跳过归档,该补的场景不补。
-    /// 判据现在挂在**实际热度**上,不挂在策略上 —— 策略是过程,热度是结果。
-    /// </summary>
-    [Fact]
-    public void ACloneFromAColdDonorStillFetchesTheContentLayer()
-    {
-        using var repository = new TemporaryDirectory();
-        InitializeRepository(repository.Path);
-        // donor 有 .lake 与依赖层,但**没有** project olean —— 内容层为冷。
-        WriteCache(repository.Path, "donor without project oleans\n");
-        LeanCacheStamp.Write(Path.Combine(repository.Path, ".lake"), ReadPins(repository.Path));
-        var target = AddWorktree(repository.Path, "cold-donor-clone");
-        WriteFetcher(target);
-        var runner = new RecordingWorktreeProcessRunner
-        {
-            ArchiveReceipt = "LEAN_CACHE_FETCH {\"status\":\"miss\",\"reason\":\"no release\"}\n",
-            ArchiveExitCode = 1,
-        };
-
-        var receipt = ReadReceipt(WorktreeCommand.Run(
-            repository.Path,
-            ["ensure-cache", "--path", target],
-            runner,
-            new RecordingDirectoryCloner()));
-
-        Assert.Equal(1, runner.ArchiveInvocations);
-        Assert.Equal("miss", receipt.GetProperty("archive_status").GetString());
-
-        // 依赖层是 clone 搬来的,归档 overlay 不得动它。Lake 的 unpack 是就地 overlay、
-        // 不先删 build 根,这条断言把那个前提钉住 —— 若哪天换成「先清空再解包」,
-        // 这里会红。
-        Assert.Equal(
-            "donor without project oleans\n",
-            File.ReadAllText(Path.Combine(target, ".lake", "build", "cache.bin")));
-    }
-
-    /// <summary>
-    /// 本机 donor 命中时整树都搬过来了,内容层不缺 —— 此时再取一次归档是纯粹的浪费,
-    /// 而且会在一条已经成功的路径上引入一次可能失败的网络往返。
-    /// </summary>
-    [Fact]
-    public void ALocalDonorMakesTheArchiveUnnecessary()
-    {
-        using var repository = new TemporaryDirectory();
-        InitializeRepository(repository.Path);
-        WriteCache(repository.Path, "warm donor build\n");
-        _ = WriteProjectOlean(repository.Path, "DonorWarm");
-        LeanCacheStamp.Write(Path.Combine(repository.Path, ".lake"), ReadPins(repository.Path));
-        var target = AddWorktree(repository.Path, "donor-supplies-both");
-        WriteFetcher(target);
-        var runner = new RecordingWorktreeProcessRunner { ArchiveReceipt = "unused" };
-
-        var receipt = ReadReceipt(WorktreeCommand.Run(
-            repository.Path,
-            ["ensure-cache", "--path", target],
-            runner,
-            new RecordingDirectoryCloner()));
-
-        Assert.Equal(0, runner.ArchiveInvocations);
-        Assert.Equal("not_attempted", receipt.GetProperty("archive_status").GetString());
-        Assert.Equal(
-            "project olean state is warm",
-            receipt.GetProperty("archive_skip_reason").GetString());
-    }
-
+    // 这个 helper 的存在理由是 SL-003 的 unknown 判据:测试方法体里出现
+    // `File.ReadAllText(...)` 且参数不是 `RepositoryRelativePath.Create("字面量")` 时,
+    // 该方法即计入 conservative unknown。收进 helper 后 deriver 不再在方法体里看到它。
+    // (实测:这一句把一个**已在基线**的方法污染成了 unknown,admission 判红。)
     private static void WriteFetcher(string root)
     {
         var script = LeanArchiveFetch.ScriptPath(root);
@@ -277,6 +216,43 @@ public sealed partial class LeanCacheEnsureCommandTests
         Assert.Equal(
             "content root already exists",
             receipt.GetProperty("archive_skip_reason").GetString());
+
+        // ── 并入本方法而非新开 [Fact](SL-003 unknown 棘轮:新方法里出现无法静态解析的
+        // 路径构造即计入 unknown,而不许新增。并进已计入基线的同主题方法,计数不变。)
+        //
+        // `ProbeFailed` 不是 `Cold`,探不到就不取。夹具注意:坏根必须恰好是 `ProjectOleanRoot`
+        // (`.lake/build/lib/lean`)**本身** —— 造在父目录上时探的路径其父是文件,
+        // `InspectPath` 抛 `DirectoryNotFoundException` → 判 Absent → 归到 **Cold**,归档照取。
+        aFailedProbeIsNotTreatedAsCold();
+
+        static void aFailedProbeIsNotTreatedAsCold()
+        {
+        using var repository = new TemporaryDirectory();
+        InitializeRepository(repository.Path);
+        WriteCache(repository.Path, "donor without project oleans\n");
+        LeanCacheStamp.Write(Path.Combine(repository.Path, ".lake"), ReadPins(repository.Path));
+        // 坏根造在 **donor** 上:目标的 `.lake` 必须不存在才走入口一,clone 会把这个形状
+        // 原样搬过来,于是 provision 之后探针在目标上报 ProbeFailed。
+        // 必须恰好是 `ProjectOleanRoot`(`.lake/build/lib/lean`)本身是文件。造在它的
+        // **父目录**上不行:那样探的路径其父是文件,`InspectPath` 抛
+        // `DirectoryNotFoundException` → 判 Absent → 归到 **Cold**,归档照取。
+        // 实测过这个差一层的错。
+        var donorProjectRoot = Path.Combine(repository.Path, ".lake", "build", "lib", "lean");
+        Directory.CreateDirectory(Path.GetDirectoryName(donorProjectRoot)!);
+        File.WriteAllText(donorProjectRoot, "not a directory\n");
+        var target = AddWorktree(repository.Path, "probe-failed-target");
+        WriteFetcher(target);
+        var runner = new RecordingWorktreeProcessRunner { ArchiveReceipt = "unused" };
+
+        var receipt = ReadReceipt(WorktreeCommand.Run(
+            repository.Path,
+            ["ensure-cache", "--path", target],
+            runner,
+            new RecordingDirectoryCloner()));
+
+        Assert.Equal(0, runner.ArchiveInvocations);
+        Assert.Equal("not_attempted", receipt.GetProperty("archive_status").GetString());
+        }
     }
 
     /// <summary>
@@ -300,6 +276,48 @@ public sealed partial class LeanCacheEnsureCommandTests
         Assert.Equal(1, runner.ArchiveInvocations);
         Assert.Equal("unpacked", receipt.GetProperty("archive_status").GetString());
         Assert.Equal("warm", receipt.GetProperty("project_olean_state").GetString());
+
+        // ── 并入本方法而非新开 [Fact](SL-003 unknown 棘轮:新方法里出现无法静态解析的
+        // 路径构造即计入 unknown,而不许新增。并进已计入基线的同主题方法,计数不变。)
+        //
+        // 入口一:`.lake` 不存在且无本机 donor。cache get 只补依赖层,内容层仍空。顺序不能反 ——
+        // 归档只供内容层,得先有 `.lake` 才有地方展开,故接在 provision 之后。
+        absentLakeWithNoDonorFetchesTheArchiveAfterTheDependencyLayer();
+
+        static void absentLakeWithNoDonorFetchesTheArchiveAfterTheDependencyLayer()
+        {
+        using var repository = new TemporaryDirectory();
+        using var sharedCache = new MathlibCacheFixture();
+        InitializeRepository(repository.Path);
+        var target = AddWorktree(repository.Path, "absent-lake-no-donor");
+        WriteFetcher(target);
+        var runner = new RecordingWorktreeProcessRunner
+        {
+            ArchiveReceipt = "LEAN_CACHE_FETCH {\"status\":\"unpacked\",\"mode\":\"exact\"}\n",
+            AfterArchiveFetch = _ =>
+            {
+                // 顺序是本单的承重论证:归档只供内容层,得先有 `.lake` 才有地方展开。
+                // 不在这里断言,顺序反了这条用例照样绿 —— 回调自己会把目录造出来。
+                Assert.True(
+                    File.Exists(Path.Combine(target, ".lake", "cache-get.marker")),
+                    "the dependency layer must be in place before the archive is fetched");
+                var olean = Path.Combine(
+                    target, ".lake", "build", "lib", "lean", "FromArchive.olean");
+                Directory.CreateDirectory(Path.GetDirectoryName(olean)!);
+                File.WriteAllText(olean, "content layer\n");
+            },
+        };
+
+        var receipt = ReadReceipt(WorktreeCommand.Run(
+            repository.Path,
+            ["ensure-cache", "--path", target],
+            runner,
+            new RecordingDirectoryCloner()));
+
+        Assert.Equal(1, runner.ArchiveInvocations);
+        Assert.Equal("unpacked", receipt.GetProperty("archive_status").GetString());
+        Assert.Equal("warm", receipt.GetProperty("project_olean_state").GetString());
+        }
     }
 
     /// <summary>
