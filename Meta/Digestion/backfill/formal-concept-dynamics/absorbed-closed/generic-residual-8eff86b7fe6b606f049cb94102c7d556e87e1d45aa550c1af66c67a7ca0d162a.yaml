@@ -13,5 +13,5 @@ receipts:
   scribe:
     - gid: D5/S3/ConceptDynamics/Coding/DiagonalNoveltyInformationSeparation.diagonal_novelty_need_not_add_world_information
       definition_sha256: sha256:568bcf6d8892544d5059896aaf81e32ce6a884d28c0837de9e1c5cff53293d9e
-      emission_sha256: sha256:9215c73f19d0353bc3c80fd72716240a0f436d50a8f3c15ffd356b732a1a89be
+      emission_sha256: sha256:ef71023ada4a8782e24dc7a4d4bb6718dad865271f1bf22153d2c2fbdb80a636
   unresolved_subitems: []

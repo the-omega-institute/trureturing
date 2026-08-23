@@ -13,5 +13,5 @@ receipts:
   scribe:
     - gid: D5/S3/DivergenceSupport/Garbling/DeterministicGarbling.deterministic_forgetting_kl_loss_nonnegative
       definition_sha256: sha256:17a25ee59a60df2ec861b50cdaf3f46a9fa8a19dc827d739df74b7e40e0ee517
-      emission_sha256: sha256:392737433ee57491ada985e249628ce162e0e64fb0adf03dc62e1ab4d7a434dc
+      emission_sha256: sha256:834cf43ba203b07e59eb4d85e7d8fd4f589159296a9a9009f889027feb176c00
   unresolved_subitems: []

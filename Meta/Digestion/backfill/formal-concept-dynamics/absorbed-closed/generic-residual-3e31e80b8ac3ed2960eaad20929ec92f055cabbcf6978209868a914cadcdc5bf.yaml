@@ -13,5 +13,5 @@ receipts:
   scribe:
     - gid: D5/S3/ConceptDynamics/Refinement/StrictRefinementBound.strict_refinement_steps_le_card_sub_initial_image
       definition_sha256: sha256:b74973a1850ccf0ebc11bc84c62739ed7aff0ba2c5ff6c2ca7870085ef8c52bb
-      emission_sha256: sha256:3512ee2f128f79de0be95b093c01dbc2d2537d13169ab32b505ec3230c5eed9e
+      emission_sha256: sha256:fe7b2640ae9f3b09fdceb699dba638b1cb6dfc9a28d868f88d4b1b33a2705891
   unresolved_subitems: []
