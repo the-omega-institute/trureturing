@@ -2,7 +2,7 @@ using static StrataLint.Scribe.DefinitionDsl;
 using static StrataLint.Scribe.FormulaDsl;
 using F = StrataLint.Scribe.FormulaDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S1.Deficit;
+namespace StrataLint.Scribe.Blueprint.D5.S1.Deficit.Beatty;
 
 internal sealed class BetaBeattyClosedFormsDocument : IScribeDocumentDefinition
 {
@@ -13,7 +13,7 @@ internal sealed class BetaBeattyClosedFormsDocument : IScribeDocumentDefinition
             Describe.Lean(
                 DescribeId.Create("expanding-beta-beatty-closed-form"),
                 DeclarationHandle.Create(
-                    "D5/S1/Deficit/BetaBeattyClosedForms.betaReal_eq_displacement_sub_goldenConj"),
+                    "D5/S1/Deficit/Beatty/BetaBeattyClosedForms.betaReal_eq_displacement_sub_goldenConj"),
                 H("The expanding beta reading has a golden-conjugate closed form"),
                 StatementSource.FromAuthor(Disp(Seq(
                     Forall, Sp, F.Id("v"), Sp, InMacro, Sp, Mathbb, Grp(F.Id("N")),
@@ -38,7 +38,7 @@ internal sealed class BetaBeattyClosedFormsDocument : IScribeDocumentDefinition
             Describe.Lean(
                 DescribeId.Create("contracting-beta-beatty-closed-form"),
                 DeclarationHandle.Create(
-                    "D5/S1/Deficit/BetaBeattyClosedForms.betaContraction_eq_displacement_sub_goldenRatio"),
+                    "D5/S1/Deficit/Beatty/BetaBeattyClosedForms.betaContraction_eq_displacement_sub_goldenRatio"),
                 H("The contracting beta reading has a golden-ratio closed form"),
                 StatementSource.FromAuthor(Disp(Seq(
                     Forall, Sp, F.Id("v"), Sp, InMacro, Sp, Mathbb, Grp(F.Id("N")),

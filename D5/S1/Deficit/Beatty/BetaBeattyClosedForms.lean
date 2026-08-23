@@ -1,6 +1,6 @@
-/- GID: D5/S1/Deficit/BetaBeattyClosedForms
-   generality: G
-   mirror-B: D5/B/S1/Deficit/BetaBeattyClosedForms
+/- GID: D5/S1/Deficit/Beatty/BetaBeattyClosedForms
+   generality: I
+   mirror-B: D5/B/S1/Deficit/Beatty/BetaBeattyClosedForms
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    digest: First publicly states two closed forms previously private across frozen modules. -/
