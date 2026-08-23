@@ -11,28 +11,31 @@ public sealed class DependencyDirectionTests
     /// harness admits. Markdig parses the block AST behind the default atomizer; it is
     /// BSD-2-Clause, pure managed code, and has no package dependencies of its own on this
     /// target framework, so adopting it adds exactly one name here and nothing beneath it.
+    /// Trureturing.Truth is the packable truth-graph read/write/verify library at the bottom
+    /// of the graph; it references nothing StrataLint and only the BCL, so linking the engine
+    /// against it adds exactly one name here and nothing beneath it.
     /// </summary>
     [Fact]
-    public void EngineReferencesExactlyBclDunetMarkdigPidginAndRoslyn()
+    public void EngineReferencesExactlyBclDunetMarkdigPidginRoslynAndTruth()
     {
         Assert.Equal(
-            ["Dunet", "Markdig", "Microsoft.CodeAnalysis", "Microsoft.CodeAnalysis.CSharp", "Pidgin"],
+            ["Dunet", "Markdig", "Microsoft.CodeAnalysis", "Microsoft.CodeAnalysis.CSharp", "Pidgin", "Trureturing.Truth"],
             AssemblyReferencePolicy.NonPlatformReferences(typeof(AdmissionPipeline).Assembly));
     }
 
     [Fact]
-    public void CliReferencesExactlyEngineScribeTomlynAndYamlDotNet()
+    public void CliReferencesExactlyEngineScribeTomlynTruthAndYamlDotNet()
     {
         Assert.Equal(
-            ["StrataLint.Engine", "StrataLint.Scribe", "Tomlyn", "YamlDotNet"],
+            ["StrataLint.Engine", "StrataLint.Scribe", "Tomlyn", "Trureturing.Truth", "YamlDotNet"],
             AssemblyReferencePolicy.NonPlatformReferences(typeof(StrataLint.Cli.Program).Assembly));
     }
 
     [Fact]
-    public void ScribeReferencesExactlyEngineQuestPdfAndTomlyn()
+    public void ScribeReferencesExactlyEngineQuestPdfTomlynAndTruth()
     {
         Assert.Equal(
-            ["QuestPDF", "StrataLint.Engine", "Tomlyn"],
+            ["QuestPDF", "StrataLint.Engine", "Tomlyn", "Trureturing.Truth"],
             AssemblyReferencePolicy.NonPlatformReferences(typeof(ScribeEmitter).Assembly));
     }
 

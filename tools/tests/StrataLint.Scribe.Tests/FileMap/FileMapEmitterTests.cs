@@ -113,6 +113,7 @@ public sealed class FileMapEmitterTests
                 CanonicalValuesWriter.RelativePath,
                 DagEmitter.RelativePath,
                 DagEmitter.TruthGraphRelativePath,
+                "Generated/truth-export.v1.json",
                 FileMapEmitter.RelativePath,
                 ScribeEmitter.AttestationRelativePath,
             ])

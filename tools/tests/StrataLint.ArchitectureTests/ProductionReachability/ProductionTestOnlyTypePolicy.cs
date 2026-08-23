@@ -29,7 +29,7 @@ internal static class ProductionTestOnlyTypePolicy
             // Validation fixture: the reader verifies writer round trips and strict schema
             // boundaries. Those decoding and information-preservation checks are orthogonal
             // to DagEmitter's double-write check, which establishes determinism only.
-            ["StrataLint.Scribe.TruthGraphJsonReader"] =
+            ["Trureturing.Truth.TruthGraphJsonReader"] =
                 "round-trip and strict-schema validation is orthogonal to emitter determinism",
 
             // Declared producer: spec A17 (line 142) records QuestPDF as active and imposes
@@ -93,7 +93,12 @@ internal static class ProductionTestOnlyTypePolicy
                 .Select(declaration => model.GetDeclaredSymbol(declaration))
                 .Concat(root.DescendantNodes().OfType<DelegateDeclarationSyntax>()
                     .Select(declaration => model.GetDeclaredSymbol(declaration)))
-                .OfType<INamedTypeSymbol>();
+                .OfType<INamedTypeSymbol>()
+                // A C# 14 extension(Receiver) { } block declares a synthesized extension
+                // grouping type. It is a compiler implementation detail of the enclosing static
+                // class, not a user production type that could be independently dead; its
+                // members' reachability is attributed to that enclosing class in CollectReferences.
+                .Where(static symbol => !symbol.IsExtension);
 
             foreach (var declaration in declarations)
             {
@@ -145,6 +150,21 @@ internal static class ProductionTestOnlyTypePolicy
                 // Extension containers are used through member syntax, so their class name need
                 // not appear at the call site. Attribute the bound extension call to its class.
                 AddReference(candidates, extension?.ContainingType, source.Path);
+
+                // C# 14 static extension members (extension(Receiver) { static Member }) are
+                // invoked as Receiver.Member(...) and never reduce, so ReducedFrom/IsExtensionMethod
+                // above miss them. The member's containing type is the synthesized extension
+                // grouping, whose own containing type is the user-visible static class. Attribute
+                // the call to that class so it is not misread as a test-only production type — but
+                // only for EXTERNAL incoming edges: a member calling a sibling member of the same
+                // enclosing class is an internal edge and must not keep an otherwise-dead container
+                // alive, exactly as an ordinary type's internal self-calls do not.
+                var container = method?.ContainingType;
+                if (container?.IsExtension is true
+                    && !EnclosedBy(model.GetEnclosingSymbol(invocation.SpanStart), container.ContainingType))
+                {
+                    AddReference(candidates, container.ContainingType, source.Path);
+                }
             }
         }
 
@@ -170,6 +190,31 @@ internal static class ProductionTestOnlyTypePolicy
         {
             candidate.ReferencePaths.Add(path);
         }
+    }
+
+    // True when the call-site symbol is lexically inside container (walking out through any
+    // synthesized C# 14 extension grouping). Used to reject internal self-edges when crediting an
+    // extension member invocation to its user-visible enclosing class.
+    private static bool EnclosedBy(ISymbol? callSite, INamedTypeSymbol? container)
+    {
+        if (container is null)
+        {
+            return false;
+        }
+
+        for (var type = callSite as INamedTypeSymbol ?? callSite?.ContainingType;
+            type is not null;
+            type = type.ContainingType)
+        {
+            if (SymbolEqualityComparer.Default.Equals(
+                type.OriginalDefinition,
+                container.OriginalDefinition))
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     private static IEnumerable<MetadataReference> PlatformReferences()
