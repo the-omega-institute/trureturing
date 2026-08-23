@@ -70,7 +70,7 @@ internal sealed class DistributionIndependentClosureDocument
         Formula initial = Mu;
         Formula statePoint = F.Id("y");
         Formula outputPoint = F.Id("o");
-        Formula depth = new Formula.Subscript(F.Id("m"), Star);
+        Formula type = Seq(Operatorname, Grp(F.Id("Type")));
         Formula pmf = Seq(Operatorname, Grp(F.Id("PMF")));
         Formula pmfState = Apply(pmf, state);
         Formula pmfOutput = Apply(pmf, output);
@@ -80,32 +80,45 @@ internal sealed class DistributionIndependentClosureDocument
         Formula pushUpdate = Seq(update, Underscore, Grp(Star));
         Formula pushReadout = Seq(readout, Underscore, Grp(Star));
         Formula pushKernel = Seq(kernel, Underscore, Grp(Star));
+        Formula stabilityDepth = Apply(
+            Seq(Operatorname, Grp(F.Id("observationStabilityDepth"))), update, readout);
+        Formula effectiveDefinition = Seq(
+            Open, Forall, Sp, kernel, Colon, Sp, kernelType, Comma, Sp,
+            effective, Sp, Iff, Sp,
+            Open, Forall, Sp, initial, Colon, Sp, pmfState, Comma, Sp,
+            Apply(pushReadout, Apply(pushUpdate, initial)), Sp, Eq, Sp,
+            Apply(pushKernel, Apply(pushReadout, initial)), Close, Close);
+        Formula factorDefinition = Seq(
+            Open, Forall, Sp, factorUpdate, Colon, Sp, Arrow(output, output), Comma, Sp,
+            factor, Sp, Iff, Sp,
+            Open, Forall, Sp, statePoint, Colon, Sp, state, Comma, Sp,
+            Apply(readout, Apply(update, statePoint)), Sp, Eq, Sp,
+            Apply(factorUpdate, Apply(readout, statePoint)), Close, Close);
         Formula existsKernel = Seq(Exists, Sp, kernel, Colon, Sp, kernelType,
             Comma, Sp, effective);
         Formula existsFactor = Seq(Exists, Sp, factorUpdate, Colon, Sp,
             Arrow(output, output), Comma, Sp, factor);
         Formula deterministicRow = Seq(
-            Forall, Sp, outputPoint, Comma, Sp,
+            Forall, Sp, outputPoint, Colon, Sp, output, Comma, Sp,
             Apply(kernel, outputPoint), Sp, Eq, Sp,
             new Formula.Subscript(DeltaLower, Apply(factorUpdate, outputPoint)));
 
         return Disp(Seq(
             Begin, Grp(F.Id("gathered")),
+            Forall, Sp, state, Colon, Sp, type, Comma, Sp,
+            output, Colon, Sp, type, Comma, RowBreak, Grp(),
+            OpenBracket, Operatorname, Grp(F.Id("Finite")), Sp, state,
+            CloseBracket, Comma, Sp,
+            OpenBracket, Operatorname, Grp(F.Id("Nonempty")), Sp, state,
+            CloseBracket, Comma, RowBreak, Grp(),
             update, Colon, Sp, Arrow(state, state), Comma, Sp,
             readout, Colon, Sp, Arrow(state, output), Comma, Sp,
             Operatorname, Grp(F.Id("Surjective")), Open, readout, Close,
             Comma, RowBreak, Grp(),
-            effective, Sp, Iff, Sp,
-            Open, Forall, Sp, initial, Colon, Sp, pmfState, Comma, Sp,
-            Apply(pushReadout, Apply(pushUpdate, initial)), Sp, Eq, Sp,
-            Apply(pushKernel, Apply(pushReadout, initial)), Close,
-            Comma, RowBreak, Grp(),
-            factor, Sp, Iff, Sp,
-            Open, Forall, Sp, statePoint, Comma, Sp,
-            Apply(readout, Apply(update, statePoint)), Sp, Eq, Sp,
-            Apply(factorUpdate, Apply(readout, statePoint)), Close, Comma, RowBreak, Grp(),
+            effectiveDefinition, Comma, RowBreak, Grp(),
+            factorDefinition, Comma, RowBreak, Grp(),
             Open, existsKernel, Sp, Iff, Sp, existsFactor, Close, Sp, Land, RowBreak, Grp(),
-            Open, existsFactor, Sp, Iff, Sp, depth, Sp, Eq, Sp, D(0), Close,
+            Open, existsFactor, Sp, Iff, Sp, stabilityDepth, Sp, Eq, Sp, D(0), Close,
             Sp, Land, RowBreak, Grp(),
             Open, Forall, Sp, kernel, Colon, Sp, kernelType, Comma, Sp,
             effective, Sp, Rightarrow, Sp,
