@@ -18,7 +18,10 @@ public sealed partial class TheoristFrontierContractTests
     public void RetiredBaselineWithMalformedRevisionIsRejectedByStatementIdentityRule()
     {
         var fixture = BaselineContractCarrier();
-        fixture.AddRevisionToRetiredBaseline("strengthening", note: " ");
+        fixture.AddRevisionToRetiredBaseline(
+            "strengthening",
+            caseId: "D5-T2803",
+            note: " ");
         fixture.RetireTheoristTarget();
 
         var diagnostic = Assert.Single(EvaluateDeliveryIdentity(fixture));
@@ -41,19 +44,20 @@ public sealed partial class TheoristFrontierContractTests
             completed.Diagnostics.Where(static item => item.RuleId == RuleId.CreateKnown(27)));
 
         Assert.Contains(
-            "changed exact_statement.statement_sha256 requires a revision declaration",
+            "changed Frontier module blob requires a revision declaration",
             diagnostic.Message,
             StringComparison.Ordinal);
     }
 
     [Fact]
-    public void RevisionPredecessorThatDoesNotEqualBaselineStatementIsRejectedByFullActiveCatalog()
+    public void RevisionPredecessorBlobThatDoesNotEqualBaselineCarrierIsRejectedByFullActiveCatalog()
     {
         var fixture = ExistingContractCarrier();
         fixture.ReviseTheoristStatementWithRevision(
             "strengthening",
-            predecessorSha256:
-                "sha256:0000000000000000000000000000000000000000000000000000000000000000");
+            predecessorBlobOid:
+                "git-sha1:0000000000000000000000000000000000000000",
+            caseId: "D5-T2803");
 
         var completed = Assert.IsType<RuleExecutionOutcome.Completed>(
             RuleCatalog.Default.Execute(fixture.Build())).Capability;
@@ -61,7 +65,25 @@ public sealed partial class TheoristFrontierContractTests
             completed.Diagnostics.Where(static item => item.RuleId == RuleId.CreateKnown(27)));
 
         Assert.Contains(
-            "revision.predecessor_sha256 must equal the baseline exact_statement.statement_sha256",
+            "revision.predecessor_blob_oid must equal the baseline Frontier module Git blob OID",
+            diagnostic.Message,
+            StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void RevisionPredecessorStatementThatDoesNotEqualBaselineStatementIsRejected()
+    {
+        var fixture = ExistingContractCarrier();
+        fixture.ReviseTheoristStatementWithRevision(
+            "strengthening",
+            predecessorStatementSha256:
+                "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+            caseId: "D5-T2803");
+
+        var diagnostic = Assert.Single(EvaluateDeliveryIdentity(fixture));
+
+        Assert.Contains(
+            "revision.predecessor_statement_sha256 must equal the baseline exact_statement.statement_sha256",
             diagnostic.Message,
             StringComparison.Ordinal);
     }
@@ -70,7 +92,9 @@ public sealed partial class TheoristFrontierContractTests
     public void RevisionKindOutsideTheClosedVocabularyIsRejectedByFullActiveCatalog()
     {
         var fixture = ExistingContractCarrier();
-        fixture.ReviseTheoristStatementWithRevision("reinterpretation");
+        fixture.ReviseTheoristStatementWithRevision(
+            "reinterpretation",
+            caseId: "D5-T2803");
 
         var completed = Assert.IsType<RuleExecutionOutcome.Completed>(
             RuleCatalog.Default.Execute(fixture.Build())).Capability;
@@ -80,11 +104,11 @@ public sealed partial class TheoristFrontierContractTests
             completed.Diagnostics.Where(static item => item.RuleId == RuleId.CreateKnown(2)));
 
         Assert.Contains(
-            "revision.kind must be one of equivalent-restatement, strengthening, weakening",
+            "revision.kind must be one of definition-refactor, equivalent-restatement, strengthening, weakening",
             diagnostic.Message,
             StringComparison.Ordinal);
         Assert.Contains(
-            "revision.kind must be one of equivalent-restatement, strengthening, weakening",
+            "revision.kind must be one of definition-refactor, equivalent-restatement, strengthening, weakening",
             contractDiagnostic.Message,
             StringComparison.Ordinal);
     }
@@ -107,8 +131,8 @@ public sealed partial class TheoristFrontierContractTests
     }
 
     [Theory]
-    [InlineData("equivalent-restatement", null)]
-    [InlineData("strengthening", null)]
+    [InlineData("equivalent-restatement", "D5-T2803")]
+    [InlineData("strengthening", "D5-T2803")]
     [InlineData("weakening", "D5-T2803")]
     public void LegalRevisionDeclarationIsAcceptedByFullActiveCatalog(
         string kind,
@@ -118,6 +142,58 @@ public sealed partial class TheoristFrontierContractTests
         fixture.ReviseTheoristStatementWithRevision(kind, caseId: caseId);
 
         AssertFullActiveCatalogAccepts(fixture);
+    }
+
+    [Fact]
+    public void DefinitionRefactorWithUnchangedStatementIsAcceptedByFullActiveCatalog()
+    {
+        var fixture = ExistingContractCarrier();
+        fixture.RefactorTheoristDefinitionWithRevision();
+
+        AssertFullActiveCatalogAccepts(fixture);
+    }
+
+    [Fact]
+    public void DefinitionRefactorCannotDescribeAChangedStatement()
+    {
+        var fixture = ExistingContractCarrier();
+        fixture.ReviseTheoristStatementWithRevision("definition-refactor");
+
+        var diagnostic = Assert.Single(EvaluateDeliveryIdentity(fixture));
+
+        Assert.Contains(
+            "definition-refactor requires an unchanged exact_statement.statement_sha256",
+            diagnostic.Message,
+            StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void UnchangedStatementBlobChangeMustUseDefinitionRefactor()
+    {
+        var fixture = ExistingContractCarrier();
+        fixture.RefactorTheoristDefinitionWithRevision(
+            "strengthening",
+            caseId: "D5-T2803");
+
+        var diagnostic = Assert.Single(EvaluateDeliveryIdentity(fixture));
+
+        Assert.Contains(
+            "unchanged exact_statement.statement_sha256 requires revision.kind definition-refactor",
+            diagnostic.Message,
+            StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void UnverifiedStrengtheningWithoutCanonicalCaseIdIsRejected()
+    {
+        var fixture = ExistingContractCarrier();
+        fixture.ReviseTheoristStatementWithRevision("strengthening");
+
+        var diagnostics = Evaluate(fixture);
+
+        Assert.Contains(diagnostics, diagnostic => diagnostic.Message.Contains(
+            "strengthening revision.case_id must be a canonical case id",
+            StringComparison.Ordinal));
     }
 
     [Fact]
@@ -141,7 +217,10 @@ public sealed partial class TheoristFrontierContractTests
     public void RevisionWithBlankNoteIsRejected()
     {
         var fixture = ExistingContractCarrier();
-        fixture.ReviseTheoristStatementWithRevision("strengthening", note: " ");
+        fixture.ReviseTheoristStatementWithRevision(
+            "strengthening",
+            caseId: "D5-T2803",
+            note: " ");
 
         var diagnostic = Assert.Single(Evaluate(fixture));
 
@@ -152,7 +231,9 @@ public sealed partial class TheoristFrontierContractTests
     public void RevisionWithUnexpectedFieldIsRejected()
     {
         var fixture = ExistingContractCarrier();
-        fixture.ReviseTheoristStatementWithRevision("strengthening");
+        fixture.ReviseTheoristStatementWithRevision(
+            "strengthening",
+            caseId: "D5-T2803");
         fixture.AddUnexpectedRevisionField();
 
         var diagnostic = Assert.Single(Evaluate(fixture));
@@ -161,17 +242,35 @@ public sealed partial class TheoristFrontierContractTests
     }
 
     [Fact]
-    public void RevisionWithNonCanonicalPredecessorShaIsRejected()
+    public void RevisionWithNonCanonicalPredecessorBlobOidIsRejected()
     {
         var fixture = ExistingContractCarrier();
         fixture.ReviseTheoristStatementWithRevision(
             "strengthening",
-            predecessorSha256: "sha256:ABC");
+            predecessorBlobOid: "git-sha1:ABC",
+            caseId: "D5-T2803");
 
         var diagnostic = Assert.Single(Evaluate(fixture));
 
         Assert.Contains(
-            "revision.predecessor_sha256 must be a canonical sha256 address",
+            "revision.predecessor_blob_oid must be a canonical Git blob OID",
+            diagnostic.Message,
+            StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void RevisionWithNonCanonicalPredecessorStatementShaIsRejected()
+    {
+        var fixture = ExistingContractCarrier();
+        fixture.ReviseTheoristStatementWithRevision(
+            "strengthening",
+            predecessorStatementSha256: "sha256:ABC",
+            caseId: "D5-T2803");
+
+        var diagnostic = Assert.Single(Evaluate(fixture));
+
+        Assert.Contains(
+            "revision.predecessor_statement_sha256 must be a canonical sha256 address",
             diagnostic.Message,
             StringComparison.Ordinal);
     }

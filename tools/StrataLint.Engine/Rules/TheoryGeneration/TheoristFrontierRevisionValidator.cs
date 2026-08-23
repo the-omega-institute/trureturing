@@ -8,6 +8,14 @@ internal static partial class TheoristFrontierContractValidator
     private static readonly ImmutableHashSet<string> RevisionKinds =
         ImmutableHashSet.Create(
             StringComparer.Ordinal,
+            "definition-refactor",
+            "equivalent-restatement",
+            "strengthening",
+            "weakening");
+
+    private static readonly ImmutableHashSet<string> UnverifiedDirectionKinds =
+        ImmutableHashSet.Create(
+            StringComparer.Ordinal,
             "equivalent-restatement",
             "strengthening",
             "weakening");
@@ -23,12 +31,9 @@ internal static partial class TheoristFrontierContractValidator
             .ToArray();
         var revisedPaths = context.Changes.Paths
             .Where(path => IsFrontier(path)
-                && TryReadStatementSha(context.Baseline, path, out var baselineStatement)
-                && TryReadStatementSha(context.Current, path, out var currentStatement)
-                && !string.Equals(
-                    baselineStatement,
-                    currentStatement,
-                    StringComparison.Ordinal))
+                && TryReadStatementSha(context.Baseline, path, out _)
+                && TryReadStatementSha(context.Current, path, out _)
+                && FrontierCarrierBytesDiffer(context, path))
             .OrderBy(static path => path.Value, StringComparer.Ordinal)
             .ToArray();
         if (retiredPaths.Length == 0 && revisedPaths.Length == 0)
@@ -44,7 +49,7 @@ internal static partial class TheoristFrontierContractValidator
             {
                 findings.Add(new RuleFinding(
                     revisedPath.Value,
-                    "changed exact_statement.statement_sha256 requires a revision declaration"));
+                    "changed Frontier module blob requires a revision declaration"));
                 continue;
             }
 
@@ -52,14 +57,38 @@ internal static partial class TheoristFrontierContractValidator
                 context.Baseline,
                 revisedPath,
                 out var baselineStatement);
+            _ = TryReadStatementSha(
+                context.Current,
+                revisedPath,
+                out var currentStatement);
+            _ = context.Baseline.TryGetFile(revisedPath.Value, out var baselineCarrier);
             var revision = root.GetProperty("revision");
             if (revision.ValueKind is not JsonValueKind.Object
-                || !TryString(revision, "predecessor_sha256", out var predecessor)
-                || !string.Equals(predecessor, baselineStatement, StringComparison.Ordinal))
+                || !TryString(revision, "predecessor_blob_oid", out var predecessorBlob)
+                || baselineCarrier?.GitBlobOid is null
+                || !string.Equals(
+                    predecessorBlob,
+                    baselineCarrier.GitBlobOid,
+                    StringComparison.Ordinal))
             {
                 findings.Add(new RuleFinding(
                     revisedPath.Value,
-                    "revision.predecessor_sha256 must equal the baseline exact_statement.statement_sha256"));
+                    "revision.predecessor_blob_oid must equal the baseline Frontier module Git blob OID"));
+            }
+
+            if (revision.ValueKind is not JsonValueKind.Object
+                || !TryString(
+                    revision,
+                    "predecessor_statement_sha256",
+                    out var predecessorStatement)
+                || !string.Equals(
+                    predecessorStatement,
+                    baselineStatement,
+                    StringComparison.Ordinal))
+            {
+                findings.Add(new RuleFinding(
+                    revisedPath.Value,
+                    "revision.predecessor_statement_sha256 must equal the baseline exact_statement.statement_sha256"));
             }
 
             if (revision.ValueKind is JsonValueKind.Object
@@ -68,19 +97,41 @@ internal static partial class TheoristFrontierContractValidator
             {
                 findings.Add(new RuleFinding(
                     revisedPath.Value,
-                    "revision.kind must be one of equivalent-restatement, strengthening, weakening"));
+                    "revision.kind must be one of definition-refactor, equivalent-restatement, strengthening, weakening"));
             }
 
             if (revision.ValueKind is JsonValueKind.Object
                 && TryString(revision, "kind", out var declaredKind)
-                && declaredKind == "weakening"
+                && UnverifiedDirectionKinds.Contains(declaredKind)
                 && (!TryString(revision, "case_id", out var caseId)
                     || !CaseId.TryCreate(caseId, out _)))
             {
                 findings.Add(new RuleFinding(
                     revisedPath.Value,
-                    "weakening revision.case_id must be a canonical case id"));
+                    $"{declaredKind} revision.case_id must be a canonical case id"));
             }
+
+            if (revision.ValueKind is JsonValueKind.Object
+                && TryString(revision, "kind", out var directionKind))
+            {
+                var statementChanged = !string.Equals(
+                    baselineStatement,
+                    currentStatement,
+                    StringComparison.Ordinal);
+                if (directionKind == "definition-refactor" && statementChanged)
+                {
+                    findings.Add(new RuleFinding(
+                        revisedPath.Value,
+                        "definition-refactor requires an unchanged exact_statement.statement_sha256"));
+                }
+                else if (UnverifiedDirectionKinds.Contains(directionKind) && !statementChanged)
+                {
+                    findings.Add(new RuleFinding(
+                        revisedPath.Value,
+                        "unchanged exact_statement.statement_sha256 requires revision.kind definition-refactor"));
+                }
+            }
+
         }
 
         if (retiredPaths.Length == 0)
@@ -135,37 +186,64 @@ internal static partial class TheoristFrontierContractValidator
             IsFrontier(path)
             && context.Baseline.TryGetFile(path.Value, out _)
             && (!context.Current.TryGetFile(path.Value, out _)
-                || TryReadStatementSha(context.Baseline, path, out var baselineStatement)
-                    && TryReadStatementSha(context.Current, path, out var currentStatement)
-                    && !string.Equals(
-                        baselineStatement,
-                        currentStatement,
-                        StringComparison.Ordinal)));
+                || TryReadStatementSha(context.Baseline, path, out _)
+                    && TryReadStatementSha(context.Current, path, out _)
+                    && FrontierCarrierBytesDiffer(context, path)));
     }
+
+    private static bool FrontierCarrierBytesDiffer(
+        RuleEvaluationContext context,
+        RepoPath path) =>
+        context.Baseline.TryGetFile(path.Value, out var baseline)
+        && context.Current.TryGetFile(path.Value, out var current)
+        && !baseline.RawBytes.AsSpan().SequenceEqual(current.RawBytes.AsSpan());
 
     private static void ValidateRevision(
         RepoPath path,
         JsonElement revision,
         ImmutableArray<RuleFinding>.Builder findings)
     {
-        var isWeakening = revision.ValueKind is JsonValueKind.Object
+        var isDefinitionRefactor = revision.ValueKind is JsonValueKind.Object
             && TryString(revision, "kind", out var kind)
-            && kind == "weakening";
-        var hasCanonicalKeys = isWeakening
-            ? HasExactKeys(revision, "predecessor_sha256", "kind", "note", "case_id")
-            : HasExactKeys(revision, "predecessor_sha256", "kind", "note");
+            && kind == "definition-refactor";
+        var hasCanonicalKeys = isDefinitionRefactor
+            ? HasExactKeys(
+                revision,
+                "predecessor_blob_oid",
+                "predecessor_statement_sha256",
+                "kind",
+                "note")
+            : HasExactKeys(
+                revision,
+                "predecessor_blob_oid",
+                "predecessor_statement_sha256",
+                "kind",
+                "note",
+                "case_id");
         if (!hasCanonicalKeys)
         {
             findings.Add(new RuleFinding(path.Value, "revision keys are not canonical"));
         }
 
         if (revision.ValueKind is not JsonValueKind.Object
-            || !TryString(revision, "predecessor_sha256", out var predecessor)
-            || !FrozenHashSyntax.IsSha256(predecessor))
+            || !TryString(revision, "predecessor_blob_oid", out var predecessorBlob)
+            || !FrozenHashSyntax.IsGitOid(predecessorBlob))
         {
             findings.Add(new RuleFinding(
                 path.Value,
-                "revision.predecessor_sha256 must be a canonical sha256 address"));
+                "revision.predecessor_blob_oid must be a canonical Git blob OID"));
+        }
+
+        if (revision.ValueKind is not JsonValueKind.Object
+            || !TryString(
+                revision,
+                "predecessor_statement_sha256",
+                out var predecessorStatement)
+            || !FrozenHashSyntax.IsSha256(predecessorStatement))
+        {
+            findings.Add(new RuleFinding(
+                path.Value,
+                "revision.predecessor_statement_sha256 must be a canonical sha256 address"));
         }
 
         if (revision.ValueKind is not JsonValueKind.Object
@@ -174,7 +252,7 @@ internal static partial class TheoristFrontierContractValidator
         {
             findings.Add(new RuleFinding(
                 path.Value,
-                "revision.kind must be one of equivalent-restatement, strengthening, weakening"));
+                "revision.kind must be one of definition-refactor, equivalent-restatement, strengthening, weakening"));
         }
 
         if (revision.ValueKind is not JsonValueKind.Object
@@ -184,13 +262,16 @@ internal static partial class TheoristFrontierContractValidator
             findings.Add(new RuleFinding(path.Value, "revision.note must be non-empty"));
         }
 
-        if (isWeakening
+        if (!isDefinitionRefactor
+            && revision.ValueKind is JsonValueKind.Object
+            && TryString(revision, "kind", out var unverifiedKind)
+            && UnverifiedDirectionKinds.Contains(unverifiedKind)
             && (!TryString(revision, "case_id", out var caseId)
                 || !CaseId.TryCreate(caseId, out _)))
         {
             findings.Add(new RuleFinding(
                 path.Value,
-                "weakening revision.case_id must be a canonical case id"));
+                $"{unverifiedKind} revision.case_id must be a canonical case id"));
         }
     }
 

@@ -1,4 +1,6 @@
 using System.Text.Json.Nodes;
+using System.Security.Cryptography;
+using System.Text;
 using StrataLint.Engine;
 
 namespace StrataLint.Tests;
@@ -23,19 +25,62 @@ internal sealed partial class RuleFixture
 
     internal void ReviseTheoristStatementWithRevision(
         string kind,
-        string? predecessorSha256 = null,
+        string? predecessorBlobOid = null,
+        string? predecessorStatementSha256 = null,
         string? caseId = null,
         string note = "fixture revision declaration")
     {
         var baselineDeclaration = Assert.Single(BaselineReports[currentTheoristPath].Declarations);
-        predecessorSha256 ??=
+        predecessorBlobOid ??= FrozenContentAddress.ComputeGitBlobOid(
+            Encoding.UTF8.GetBytes(Baseline[currentTheoristPath]),
+            HashAlgorithmName.SHA1);
+        predecessorStatementSha256 ??=
             CanonicalStatementWriter.StatementTypeAddress(baselineDeclaration.TypeRepresentation);
         ReviseTheoristStatementWithoutRevision();
+        AddRevision(
+            kind,
+            predecessorBlobOid,
+            predecessorStatementSha256,
+            caseId,
+            note);
+    }
+
+    internal void RefactorTheoristDefinitionWithoutRevision() =>
+        Files[currentTheoristPath] += "\n-- definition refactor fixture\n";
+
+    internal void RefactorTheoristDefinitionWithRevision(
+        string kind = "definition-refactor",
+        string? caseId = null,
+        string note = "fixture definition refactor")
+    {
+        var baselineDeclaration = Assert.Single(BaselineReports[currentTheoristPath].Declarations);
+        var predecessorBlobOid = FrozenContentAddress.ComputeGitBlobOid(
+            Encoding.UTF8.GetBytes(Baseline[currentTheoristPath]),
+            HashAlgorithmName.SHA1);
+        var predecessorStatementSha256 =
+            CanonicalStatementWriter.StatementTypeAddress(baselineDeclaration.TypeRepresentation);
+        RefactorTheoristDefinitionWithoutRevision();
+        AddRevision(
+            kind,
+            predecessorBlobOid,
+            predecessorStatementSha256,
+            caseId,
+            note);
+    }
+
+    private void AddRevision(
+        string kind,
+        string predecessorBlobOid,
+        string predecessorStatementSha256,
+        string? caseId,
+        string note)
+    {
         RewriteCurrentContract(root =>
         {
             var revision = new JsonObject
             {
-                ["predecessor_sha256"] = predecessorSha256,
+                ["predecessor_blob_oid"] = predecessorBlobOid,
+                ["predecessor_statement_sha256"] = predecessorStatementSha256,
                 ["kind"] = kind,
                 ["note"] = note,
             };
@@ -61,7 +106,9 @@ internal sealed partial class RuleFixture
         {
             var revision = new JsonObject
             {
-                ["predecessor_sha256"] =
+                ["predecessor_blob_oid"] =
+                    "git-sha1:0000000000000000000000000000000000000000",
+                ["predecessor_statement_sha256"] =
                     "sha256:0000000000000000000000000000000000000000000000000000000000000000",
                 ["kind"] = kind,
                 ["note"] = note,
