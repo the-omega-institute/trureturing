@@ -1,0 +1,34 @@
+## 定理 185.1（幂迹完全盲反模型）
+
+对每个 \(k\ge1\)：
+
+\[
+\operatorname{tr}(A^k)=0,
+\qquad
+\operatorname{tr}(N^k)=0.
+\]
+
+并且：
+
+\[
+\chi_A(t)=\chi_N(t)=t^2.
+\]
+
+但 \(A,N\) 不相似，因为：
+
+\[
+\operatorname{rank}(A)=0,
+\qquad
+\operatorname{rank}(N)=1.
+\]
+
+因此：
+
+\[
+\boxed{
+\text{全部幂迹}
+\not\Rightarrow
+\text{矩阵相似类}.
+}
+\]
+

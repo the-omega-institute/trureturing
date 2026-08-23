@@ -1,0 +1,22 @@
+## 定理 153.1（精化—事件代数对偶）
+
+在有效像上，以下等价：
+
+\[
+q\preceq r,
+\]
+
+\[
+\ker(r)\subseteq\ker(q),
+\]
+
+以及：
+
+\[
+\boxed{
+\operatorname{ObsAlg}(q)
+\subseteq
+\operatorname{ObsAlg}(r).
+}
+\]
+

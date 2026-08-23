@@ -1,0 +1,45 @@
+\left\lfloor
+k\log\log k
+\right\rfloor,
+\qquad
+S
+=
+\{p_{n_k}:k\ge k_0\}.
+\]
+
+由素数定理：
+
+\[
+p_n\sim n\log n.
+\]
+
+因此：
+
+\[
+p_{n_k}
+\asymp
+k\log k\log\log k,
+\]
+
+从而：
+
+\[
+\sum_{p\in S}\frac1p
+\asymp
+\sum_{k\ge k_0}
+\frac1{
+k\log k\log\log k
+}
+=\infty.
+\]
+
+另一方面：
+
+\[
+\#\{k:n_k\le N\}
+\asymp
+\frac{N}{\log\log N},
+\]
+
+故 \(S\) 在全部素数索引中的相对密度为零。
+

@@ -1,0 +1,7 @@
+\[
+\mathcal A(s,t)
+=
+\sum_{n\ge1}
+\sqrt{\mathbb P_s(n)\mathbb P_t(n)}.
+\]
+

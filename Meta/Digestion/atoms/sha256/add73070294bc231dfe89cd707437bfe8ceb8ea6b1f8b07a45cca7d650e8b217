@@ -1,0 +1,12 @@
+## 推论 258.1（第一层严格性）
+
+\[
+\boxed{
+\ker(\operatorname{Int})
+\subsetneq
+\ker(\operatorname{Obs})
+}
+\]
+
+在有限二元 SCM 类中已经严格。
+

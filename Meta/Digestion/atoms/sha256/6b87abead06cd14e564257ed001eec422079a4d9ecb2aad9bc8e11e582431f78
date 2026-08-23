@@ -1,0 +1,10 @@
+## 190.3 类群胶合失败
+
+任意 divisor 画像未必是 principal divisor，障碍位于：
+
+\[
+\operatorname{Cl}(K).
+\]
+
+失败位于 cokernel。
+

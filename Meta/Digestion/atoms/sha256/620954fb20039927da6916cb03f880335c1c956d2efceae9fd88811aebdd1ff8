@@ -1,0 +1,15 @@
+\prod_{p\in S}p^{k_p},
+\qquad
+P_S
+=
+\prod_{p\in S}p.
+\]
+
+则：
+
+\[
+N=a_SM,
+\qquad
+\gcd(M,P_S)=1.
+\]
+

@@ -1,0 +1,15 @@
+\[
+\boxed{
+\operatorname{CausalTargetRes}
+(\mathcal A,T)
+=
+\varnothing
+}
+\]
+
+当且仅当 \(T\) 因子化通过：
+
+\[
+Z_{\mathcal A}^{\mathrm{causal}}.
+\]
+

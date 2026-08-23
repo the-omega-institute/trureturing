@@ -1,0 +1,14 @@
+# 101. Dedekind 域的素理想赋值画像完整恢复理想
+
+令 \(A\) 为 Dedekind 域，\(K\) 为其分式域。非零分式理想形成阿贝尔群：
+
+\[
+\operatorname{FracId}(A).
+\]
+
+对每个非零素理想 \(\mathfrak p\)，定义指数读出：
+
+\[
+v_{\mathfrak p}(I)\in\mathbb Z.
+\]
+

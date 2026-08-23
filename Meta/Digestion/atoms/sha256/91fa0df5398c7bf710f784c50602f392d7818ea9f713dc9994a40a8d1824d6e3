@@ -1,0 +1,9 @@
+\[
+\operatorname{HasseDefect}^{-}(P,L)
+=
+\sum_{x:X}
+P(x)
+\times
+\neg\prod_iL_i(x).
+\]
+

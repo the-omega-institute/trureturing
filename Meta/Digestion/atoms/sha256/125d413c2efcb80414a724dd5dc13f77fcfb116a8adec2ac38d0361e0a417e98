@@ -1,0 +1,4 @@
+# 295. 反事实运输需要 coupling 不变量
+
+源环境与目标环境可能具有相同 interventional marginals：
+

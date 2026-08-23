@@ -1,0 +1,34 @@
+## 推论 96.2（结构独立判据）
+
+若：
+
+\[
+L_1\cap L_2=K,
+\]
+
+则：
+
+\[
+\operatorname{Gal}(L_1L_2/K)
+\simeq
+\operatorname{Gal}(L_1/K)
+\times
+\operatorname{Gal}(L_2/K).
+\]
+
+对有限 Galois 扩张，这等价于线性无交。故：
+
+\[
+\boxed{
+\text{不同扩张名称}
+\not\Rightarrow
+\text{观察来源独立};
+\quad
+\text{交域平凡}
+\Rightarrow
+\text{结构直积分解}.
+}
+\]
+
+这给第 50 节“来源相关”提供一个精确算术模型：共享子扩张就是共同来源。
+

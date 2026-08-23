@@ -1,0 +1,14 @@
+## 推论 285.1（第二层严格性）
+
+\[
+\boxed{
+\ker(\operatorname{CF})
+\subsetneq
+\ker(\operatorname{Int})
+}
+\]
+
+在二元无混杂、已知处理随机化的模型中已经严格。
+
+---
+

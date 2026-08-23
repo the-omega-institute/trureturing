@@ -1,0 +1,10 @@
+\[
+\log\frac{\mathbb P_s(n)}{\mathbb P_t(n)}
+=
+\log\frac{\zeta(t)}{\zeta(s)}
++
+(t-s)\log n.
+\]
+
+对 \(\mathbb P_s\) 取期望。\(\square\)
+

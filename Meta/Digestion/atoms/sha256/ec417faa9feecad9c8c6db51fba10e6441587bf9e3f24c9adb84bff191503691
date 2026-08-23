@@ -1,0 +1,22 @@
+## 定义 246.3（adaptive submodularity）
+
+若对所有：
+
+\[
+\psi\subseteq\psi',
+\qquad
+i\notin\operatorname{dom}(\psi'),
+\]
+
+都有：
+
+\[
+\boxed{
+\Delta(i\mid\psi)
+\ge
+\Delta(i\mid\psi'),
+}
+\]
+
+则称效用自适应次模。
+

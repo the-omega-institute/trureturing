@@ -1,0 +1,10 @@
+# 110. 解析延拓是额外的全局完成
+
+设 \(D\subseteq\Omega\) 且 \(\Omega\) 连通。若 \(L\) 在 \(D\) 上由 Euler 乘积定义，并存在亚纯函数：
+
+\[
+\widetilde L:\Omega\to\widehat{\mathbb C}
+\]
+
+使其限制等于 \(L\)，则称 \(\widetilde L\) 为解析完成。
+

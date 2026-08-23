@@ -1,0 +1,12 @@
+\[
+\boxed{
+\operatorname{TV}(P,Q)^2
+\le
+H^2(P,Q)-\frac{H^4(P,Q)}4
+=
+1-\rho(P,Q)^2.
+}
+\]
+
+`D5/S3/Estimation/LeCamTight.lean` 给出达到总变差检验 floor 的显式 likelihood 比较事件。
+

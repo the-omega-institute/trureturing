@@ -1,0 +1,8 @@
+## 定理 37.1（全部素数坐标分离隐藏身份）
+
+\[
+\forall p,\pi_p(x)=\pi_p(y)
+\Rightarrow
+x=y.
+\]
+

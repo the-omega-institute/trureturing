@@ -1,0 +1,16 @@
+# 270. 跨素数混杂破坏乘积
+
+取两个不同索引 \(p\neq q\)，令：
+
+\[
+U\sim\operatorname{Bernoulli}(1/2),
+\]
+
+\[
+X_p=U,
+\qquad
+X_q=U.
+\]
+
+图中可以没有 \(X_p\to X_q\) 或 \(X_q\to X_p\) 的有向边，但二者共享外生源。
+

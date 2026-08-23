@@ -1,0 +1,12 @@
+## 应用 244.1（静态素数套件）
+
+在条件独立的有限 prime experiment family 中，最大化：
+
+\[
+I(X;Y_S)
+\]
+
+且每个接口等成本时，greedy prime selection 具有上述保证。
+
+---
+

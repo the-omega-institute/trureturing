@@ -1,0 +1,14 @@
+## 定理 96.1（Galois 兼容纤维积）
+
+\[
+\boxed{
+\operatorname{Gal}(L_1L_2/K)
+\simeq
+\operatorname{Gal}(L_1/K)
+\times_{\operatorname{Gal}(E/K)}
+\operatorname{Gal}(L_2/K).
+}
+\]
+
+右侧由满足以下兼容性的成对自同构组成：
+

@@ -1,0 +1,8 @@
+## 定理 7.1（精度单调性）
+
+\[
+q_{p,k}\preceq q_{p,k+1},
+\qquad
+\ker(q_{p,k+1})\subseteq\ker(q_{p,k}).
+\]
+

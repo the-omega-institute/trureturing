@@ -1,0 +1,4 @@
+## 定理 142.1（对角观察饱和）
+
+设 \(\mathcal D\) 为由所有 \(\widehat N_p\) 的有界函数生成的对角代数，\(\mathcal E_{\mathcal D}\) 为完整对角 pinching。则对任意态 \(\rho\) 与任意 \(A\in\mathcal D\)：
+

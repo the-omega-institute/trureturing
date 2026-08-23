@@ -1,0 +1,10 @@
+## 定理 250.1（Bayes 错误保证）
+
+若在 \(\tau_\varepsilon\) 输出 MAP 状态，则：
+
+\[
+\mathbb P[\widehat X\neq X]
+\le
+\varepsilon.
+\]
+

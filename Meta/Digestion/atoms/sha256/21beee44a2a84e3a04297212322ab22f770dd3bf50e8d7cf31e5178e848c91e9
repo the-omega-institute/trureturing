@@ -1,0 +1,12 @@
+## 原理 280.1
+
+最大化模型互信息可能把预算用于无关结构发现。目标相对因果设计应优化：
+
+\[
+\operatorname{VoI}_T(a)
+\]
+
+或目标 Bayes risk reduction，而不是默认完整模型 entropy reduction。
+
+---
+

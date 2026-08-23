@@ -1,0 +1,2 @@
+**v1.5 — 2026-08-22**：追加观测／干预／反事实三层查询商、有限 SCM 与完美干预语义、观测等价但干预不等价的二元反模型、干预族精化与目标余量、有限模型干预 set cover、随机化桥、back-door 调整、positivity image 条件、隐藏混杂、机制模块替换、因果 carry、prime-indexed 机制边界、独立乘积 SCM 与跨素数混杂、环境机制不变量、transportability residual、interventional Markov equivalence、干预码距离、主动因果发现、SCM belief Bellman、目标相对实验价值、identifiability／estimability／computation 三分、反事实 coupling fiber、同全部单世界干预但不同 counterfactual joint 的显式模型、ATE 与个体效应分离、Fréchet 尖锐界、monotonicity completion、概率归因、abduction–action–prediction、嵌套反事实、纵向政策、g-formula、off-policy residual 及 kernel–image–coupling–gauge 四联。
+

@@ -1,0 +1,12 @@
+# 189. prime-primary 分解不是普遍本体公理
+
+v1.0 的 CRT 和 prime-power tensor tower 展示了强分解：
+
+\[
+\text{global object}
+\simeq
+\prod_p\text{prime-primary factor}.
+\]
+
+v1.3 的反模型说明，该公式只有在目标范畴、对象和过程满足相应分解条件时才成立。
+

@@ -1,0 +1,24 @@
+## Q.4 第三优先：counterfactual coupling 链
+
+先使用显式 response-function 表示：
+
+```lean
+structure BinaryResponseType where
+  y0 : Bool
+  y1 : Bool
+```
+
+在其有限概率单纯形上证明：
+
+```lean
+theorem ate_eq_p1_sub_p0
+theorem benefit_frechet_lower
+theorem benefit_frechet_upper
+theorem harm_frechet_lower
+theorem harm_frechet_upper
+theorem benefit_bounds_sharp
+theorem monotone_benefit_eq_ate
+```
+
+这避免在第一步依赖一般 measurable SCM 的 cross-world API。
+

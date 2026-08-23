@@ -1,0 +1,11 @@
+\[
+\boxed{
+\mathcal R_2(q;T)
+=
+\mathbb E_\mu
+\left[
+\left(T-\mathbb E[T\mid\mathcal G_q]\right)^2
+\right].
+}
+\]
+

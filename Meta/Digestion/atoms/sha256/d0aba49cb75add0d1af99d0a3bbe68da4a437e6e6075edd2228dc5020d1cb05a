@@ -1,0 +1,11 @@
+## 定义 88.2（观察语言核）
+
+\[
+\boxed{
+R_q(x,y)
+\iff
+\forall i:\mathcal I,
+\ q_i(x)=q_i(y).
+}
+\]
+

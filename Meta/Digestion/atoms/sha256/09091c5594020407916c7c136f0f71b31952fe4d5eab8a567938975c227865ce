@@ -1,0 +1,16 @@
+\[
+q_{\mathfrak p}(\alpha)
+=
+q_{\mathfrak p}(\beta)
+\iff
+\mathfrak p\mid(\alpha-\beta).
+\]
+
+非零主理想：
+
+\[
+(\alpha-\beta)
+\]
+
+只有有限多个素理想因子。因此除有限多个 \(\mathfrak p\) 外，约化观察都能区分 \(\alpha,\beta\)。
+

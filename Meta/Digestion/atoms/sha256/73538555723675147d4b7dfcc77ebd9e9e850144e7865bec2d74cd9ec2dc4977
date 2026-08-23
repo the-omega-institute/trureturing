@@ -1,0 +1,14 @@
+## 定理 286.2（干预层严格弱于反事实层）
+
+存在 \(M,N\) 使：
+
+\[
+\operatorname{Int}(M)=\operatorname{Int}(N),
+\]
+
+但：
+
+\[
+\operatorname{CF}(M)\neq\operatorname{CF}(N).
+\]
+

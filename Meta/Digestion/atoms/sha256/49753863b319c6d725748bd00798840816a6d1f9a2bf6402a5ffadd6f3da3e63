@@ -1,0 +1,8 @@
+## 194.2 有限群链
+
+1. 有限 \(p\)-群商观察定义；
+2. 幂零群 Sylow 乘积给出 joint injectivity；
+3. 嵌入有限 \(p\)-群乘积推出幂零；
+4. `finite_prime_power_observers_faithful_iff_nilpotent`；
+5. \(A_5\) 对任意 \(p\)-群同态平凡的显式证明。
+

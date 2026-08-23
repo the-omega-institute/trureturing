@@ -1,0 +1,24 @@
+\[
+\widehat{\mathbb Z}
+=
+\varprojlim_M\mathbb Z/M\mathbb Z.
+\]
+
+整数嵌入：
+
+\[
+\mathbb Z\hookrightarrow\widehat{\mathbb Z}
+\]
+
+通常不是满射。一个兼容全模画像可以是合法 profinite 元素，却不来自普通整数。
+
+\[
+\boxed{
+\text{所有有限读出兼容}
+\ne
+\text{存在原始全局整数产生这些读出}.
+}
+\]
+
+---
+

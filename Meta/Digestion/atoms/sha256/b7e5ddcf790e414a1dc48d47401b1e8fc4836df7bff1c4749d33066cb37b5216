@@ -1,0 +1,24 @@
+## 原理 250.1（主动完成要求 pathwise persistent excitation）
+
+正确条件不是：
+
+\[
+\text{policy 运行无限久},
+\]
+
+也不是：
+
+\[
+\text{每个 prime 曾被调用一次},
+\]
+
+而是：
+
+\[
+\boxed{
+\text{对每个仍可混淆的状态对，}
+\quad
+\text{沿实际决策树持续积累发散的 conditional evidence}.
+}
+\]
+

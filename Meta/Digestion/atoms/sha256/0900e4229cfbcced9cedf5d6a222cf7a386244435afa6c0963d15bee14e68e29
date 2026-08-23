@@ -1,0 +1,20 @@
+# Part XXXIII：追加式第六阶段——因果素数观察、干预商与反事实余量
+
+> **追加说明。** 以下各节构成 v1.5 的追加式第六阶段，从第 252 节开始连续编号。它们不改写此前的确定性读出、概率胶合、统计 law quotient、无限 Hellinger 完成或 belief Bellman 结论，而是处理更高一层的断裂：观测一个系统、主动改变一个系统、以及询问同一单位在未发生世界中的结果，是三种不同的查询语言。
+>
+> **核心纪律。** 本阶段严格区分：
+>
+> \[
+> \boxed{
+> \text{observational law}
+> \neq
+> \text{interventional law}
+> \neq
+> \text{counterfactual coupling}.
+> }
+> \]
+>
+> **素数角色。** “素数干预”仍只表示由素数、素数幂或 place 索引的类型化局部实验；素数标签本身不提供因果方向、机制独立、无混杂、可运输性或反事实同一性。
+>
+> **证明状态。** 有限函数因子化、law quotient、mutual information、data processing、Bayes risk、动态行为商与 causal-state factorization 可由仓库现有结果锚定；do-calculus、interventional Markov equivalence、transportability、g-formula 与完整 counterfactual identification 仍按“经典外部定理、本文纸面专门化、未来 Lean 桥”分级。
+

@@ -1,0 +1,28 @@
+\[
+q_{\widehat{\mathbb Z}}(x)
+=
+(x\bmod n)_{n\ge1}
+\]
+
+可按素数组织为：
+
+\[
+(x_p)_{p\in\mathbb P}
+\in
+\prod_p\mathbb Z_p.
+\]
+
+仓库证明短正合序列：
+
+\[
+0
+\to
+\operatorname{CongruenceData}
+\to
+\operatorname{UniversalSolenoid}
+\to
+\mathbb T
+\to
+0.
+\]
+

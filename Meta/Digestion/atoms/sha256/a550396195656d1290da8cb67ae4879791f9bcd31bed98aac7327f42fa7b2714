@@ -1,0 +1,15 @@
+## 推论 104.1（动态不可区分逐坐标化）
+
+\[
+\boxed{
+ x\sim_{q,F}^{\infty}y
+\iff
+\forall i,
+\ x_i\sim_{q_i,F_i}^{\infty}y_i.
+}
+\]
+
+这是 prime-power 独立因子上完整行为的精确局部—全局原理。
+
+---
+

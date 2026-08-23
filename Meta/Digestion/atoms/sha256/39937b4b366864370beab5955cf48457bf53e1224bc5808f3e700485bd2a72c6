@@ -1,0 +1,10 @@
+## 反模型机制 280.1
+
+若实验只区分两个目标值相同的机制细节，则：
+
+\[
+\operatorname{MIG}(a)>0,
+\qquad
+\operatorname{TIG}(a)=0.
+\]
+

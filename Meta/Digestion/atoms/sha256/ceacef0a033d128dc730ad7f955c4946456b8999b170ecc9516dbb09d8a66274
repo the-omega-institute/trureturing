@@ -1,0 +1,11 @@
+\[
+\boxed{
+-\log\mathbb P_s(N=n)
+=
+\sum_p
+\ell_{p,s}(v_p(n)).
+}
+\]
+
+且：
+

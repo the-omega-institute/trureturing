@@ -1,0 +1,6 @@
+\[
+\operatorname{PolicyCap}(q_J,A)
+=
+\{\pi:X\to A:\exists h:O_J\to A,\ \pi=h\circ q_J\}.
+\]
+

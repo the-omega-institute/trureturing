@@ -1,0 +1,10 @@
+\[
+\boxed{
+D(\mathbb P_s\Vert\mathbb P_t)
+=
+\log\zeta(t)-\log\zeta(s)
++
+(t-s)\mathbb E_s[\log N].
+}
+\]
+

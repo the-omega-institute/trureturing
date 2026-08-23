@@ -1,0 +1,14 @@
+## 定理 286.1（观测层严格弱于干预层）
+
+存在 \(M,N\) 使：
+
+\[
+\operatorname{Obs}(M)=\operatorname{Obs}(N),
+\]
+
+但：
+
+\[
+\operatorname{Int}(M)\neq\operatorname{Int}(N).
+\]
+

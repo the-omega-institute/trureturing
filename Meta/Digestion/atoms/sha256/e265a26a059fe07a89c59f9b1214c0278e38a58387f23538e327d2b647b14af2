@@ -1,0 +1,14 @@
+## 定理 212.1（有限套件误差夹逼）
+
+\[
+\boxed{
+\frac{
+1-\sqrt{1-e^{-2\mathcal B_J(x,y)}}
+}{2}
+\le
+P_{e,J}^*(x,y)
+\le
+\frac12e^{-\mathcal B_J(x,y)}.
+}
+\]
+

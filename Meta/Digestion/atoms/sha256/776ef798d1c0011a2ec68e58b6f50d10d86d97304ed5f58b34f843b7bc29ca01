@@ -1,0 +1,16 @@
+\[
+\sum_p\Gamma_s(A_p)
+=
+\sum_pp^{-s}<\infty.
+\]
+
+第一 Borel–Cantelli 引理推出几乎必然只有有限多个 \(A_p\) 发生。
+
+若 \(0<s\le1\)，则：
+
+\[
+\sum_pp^{-s}=\infty.
+\]
+
+因 \(A_p\) 独立，第二 Borel–Cantelli 引理推出几乎必然有无穷多个 \(A_p\) 发生。\(\square\)
+

@@ -1,0 +1,14 @@
+## 定理 272.1（模型类相对可运输判据）
+
+目标效应可由全部可用源实验和目标观测唯一计算，当且仅当：
+
+\[
+\operatorname{TransRes}(E,T)=\varnothing.
+\]
+
+等价地：
+
+\[
+\ker E\subseteq\ker T.
+\]
+

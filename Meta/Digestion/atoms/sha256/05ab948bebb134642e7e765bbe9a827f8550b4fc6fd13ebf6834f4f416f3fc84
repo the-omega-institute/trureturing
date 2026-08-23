@@ -1,0 +1,14 @@
+## 定理 178.1（有理数由赋值画像与符号唯一恢复）
+
+\[
+\boxed{
+\mathbb Q^\times
+\cong
+\{\pm1\}
+\times
+\bigoplus_p\mathbb Z.
+}
+\]
+
+显式恢复为：
+

@@ -1,0 +1,6 @@
+## 113.4 Galois 链
+
+Mathlib 已有 Frobenius 基础，但复合域的完整 fiber-product 形式可能需要先建设限制映射和交域 API。应先证明纯 Galois 群兼容定理，再把 Frobenius 自然性作为推论，而不是在第一步混合理想分解、ramification 与共轭类技术。
+
+---
+

@@ -1,0 +1,20 @@
+# 49. 多主体素数预算
+
+设主体类型为 \(Agt\)，每个主体 \(a\) 拥有预算：
+
+\[
+J_a\subset_{\mathrm{fin}}\mathcal I.
+\]
+
+联盟 \(C\subseteq Agt\) 的联合预算为：
+
+\[
+J_C=\bigcup_{a\in C}J_a.
+\]
+
+若 \(C\subseteq D\)，则：
+
+\[
+q_{J_C}\preceq q_{J_D}.
+\]
+

@@ -1,0 +1,11 @@
+\[
+\boxed{
+\Gamma_s(\mathcal E_{\mathrm{fin}})
+=
+\begin{cases}
+1,&s>1,\\
+0,&0<s\le1.
+\end{cases}
+}
+\]
+

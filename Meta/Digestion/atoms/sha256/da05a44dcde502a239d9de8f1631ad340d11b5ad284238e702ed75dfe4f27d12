@@ -1,0 +1,21 @@
+# 25. 有限稳定深度
+
+定义：
+
+\[
+R_m^J(x,y)
+\iff
+x\sim_{J,m}y.
+\]
+
+有下降链：
+
+\[
+R_0^J
+\supseteq
+R_1^J
+\supseteq\cdots
+\supseteq
+R_\infty^J.
+\]
+

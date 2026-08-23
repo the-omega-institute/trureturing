@@ -1,0 +1,10 @@
+\[
+\boxed{
+\mathcal I(s)
+=
+\sum_p
+(\log p)^2
+\frac{p^{-s}}{(1-p^{-s})^2}.
+}
+\]
+

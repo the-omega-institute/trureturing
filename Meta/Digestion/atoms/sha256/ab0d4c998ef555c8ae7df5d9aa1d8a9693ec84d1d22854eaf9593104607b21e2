@@ -1,0 +1,16 @@
+## 定理 293.3（composition）
+
+若：
+
+\[
+W_x=w,
+\]
+
+则在标准 recursive SCM 中：
+
+\[
+\boxed{
+Y_{x,w}=Y_x.
+}
+\]
+

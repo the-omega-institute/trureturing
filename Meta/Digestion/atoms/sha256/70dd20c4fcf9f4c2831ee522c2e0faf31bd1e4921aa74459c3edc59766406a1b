@@ -1,0 +1,10 @@
+### 禁令 2：禁止局部到全局偷渡
+
+\[
+\boxed{
+(\forall p,\exists x_p)
+\not\Rightarrow
+\exists x,\forall p.
+}
+\]
+

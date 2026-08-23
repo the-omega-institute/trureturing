@@ -1,0 +1,14 @@
+## H.3 外部经典基础
+
+以下文献只支撑尚未在本仓库闭合的标准数学背景，不替代未来 Lean proof term：
+
+1. D. Blackwell, “Equivalent Comparisons of Experiments,” *Annals of Mathematical Statistics* 24 (1953), 265–272, DOI `10.1214/aoms/1177729032`。
+2. S. Kullback and R. A. Leibler, “On Information and Sufficiency,” *Annals of Mathematical Statistics* 22 (1951), 79–86, DOI `10.1214/aoms/1177729694`。
+3. Mathlib, `Mathlib/Probability/BorelCantelli.lean`：第一／第二 Borel–Cantelli 接口。
+4. Mathlib, `Mathlib/NumberTheory/SumPrimeReciprocals.lean`：素数倒数级数发散。
+5. O. Kallenberg, *Foundations of Modern Probability*, 3rd ed.：可数乘积测度、条件期望与零一律背景。
+6. T. Cover and J. Thomas, *Elements of Information Theory*, 2nd ed.：熵、KL、充分性与数据处理背景。
+7. B. L. Julia, “Statistical Theory of Numbers,” in *Number Theory and Physics*, Springer Proceedings in Physics 47 (1990), 276–293：Riemann gas／zeta 配分函数解释。
+8. J.-B. Bost and A. Connes, “Hecke Algebras, Type III Factors and Phase Transitions with Spontaneous Symmetry Breaking in Number Theory,” *Selecta Mathematica* 1 (1995), 411–457, DOI `10.1007/BF01589495`。
+---
+

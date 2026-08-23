@@ -1,0 +1,9 @@
+\[
+\delta_i(x,y)
+=
+\begin{cases}
+0,&q_i(x)=q_i(y),\\
+1,&q_i(x)\neq q_i(y).
+\end{cases}
+\]
+

@@ -1,0 +1,18 @@
+## 纸面目标 250.3（顺序 Kakutani／Hellinger 判据）
+
+在有限 transcript laws 互相绝对连续、regular conditional kernels 存在，并满足相应顺序 Hellinger-process 二分定理的前件下：
+
+\[
+A_n^{x,y}\to\infty
+\]
+
+在两状态 path laws 下几乎处处，足以推出：
+
+\[
+\mathbf P_x^\Pi
+\perp
+\mathbf P_y^\Pi.
+\]
+
+该结论不是固定 product Kakutani 定理的字面实例，因为自适应 action 依赖随机历史；未来 Lean 形式化必须通过 likelihood-ratio martingale 或 sequential Hellinger process 单独证明。
+

@@ -1,0 +1,17 @@
+## 原理 181.1（kernel 与 cokernel 是两种不同盲区）
+
+\[
+\boxed{
+\begin{aligned}
+\ker(\operatorname{div})
+&=\text{多个全局元素给出同一局部画像};\\
+\operatorname{coker}(\operatorname{div})
+&=\text{合法局部画像没有全局元素来源}.
+\end{aligned}
+}
+\]
+
+前者是身份／gauge 余量，后者是胶合余量。它们不能由同一个“局部—全局失败”词覆盖。
+
+---
+

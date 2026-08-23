@@ -1,0 +1,17 @@
+\frac{|2\rangle+|3\rangle}{\sqrt2},
+\qquad
+|\psi_-\rangle
+=
+\frac{|2\rangle-|3\rangle}{\sqrt2}.
+\]
+
+则两个纯态在全部素指数联合测量下具有完全相同分布：
+
+\[
+\frac12\delta_{\nu(2)}
++
+\frac12\delta_{\nu(3)}.
+\]
+
+但非对角 observable：
+

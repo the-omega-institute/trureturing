@@ -1,0 +1,16 @@
+## 经典定理 182.1（单位群结构）
+
+\[
+\boxed{
+\mathcal O_K^\times
+\cong
+\mu_K
+\times
+\mathbb Z^{r_1+r_2-1},
+}
+\]
+
+其中 \(\mu_K\) 是 \(K\) 中的有限根单位群。
+
+定义 logarithmic embedding：
+

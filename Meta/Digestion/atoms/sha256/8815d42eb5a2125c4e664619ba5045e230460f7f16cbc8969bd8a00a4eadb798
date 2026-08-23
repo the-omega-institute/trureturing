@@ -1,0 +1,9 @@
+\[
+r(N)
+=
+\min
+\left\{
+r:\prod_{j=1}^{r}p_j\ge N
+\right\}.
+\]
+

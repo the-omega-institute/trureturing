@@ -1,0 +1,26 @@
+# 56. 模型 B：三环分裂画像的二元纤维
+
+状态空间：
+
+\[
+X=(\mathbb Z/60\mathbb Z)^\times.
+\]
+
+读出：
+
+\[
+q=\bar\Sigma_3:X\to\{\mathrm S,\mathrm I\}^3.
+\]
+
+有：
+
+\[
+|X|=16,
+\qquad
+|\operatorname{range}(q)|=8,
+\]
+
+每个纤维大小为二。加入 \(\omega_5\) 后得到双射。
+
+---
+

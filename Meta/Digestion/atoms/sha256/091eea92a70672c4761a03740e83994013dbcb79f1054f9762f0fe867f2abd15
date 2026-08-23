@@ -1,0 +1,14 @@
+## 147.4 无限信息与 Fock 链
+
+在前述可积性闭合后：
+
+1. `zeta_entropy_eq_prime_sum`；
+2. `zeta_KL_eq_prime_sum`；
+3. `zeta_fisher_eq_prime_sum`；
+4. `arithmetic_fock_basis_equiv`；
+5. `zeta_partition_trace`；
+6. finite truncation 上的 `prime_diagonal_saturation`；
+7. 再决定是否进入 restricted infinite tensor product。
+
+---
+

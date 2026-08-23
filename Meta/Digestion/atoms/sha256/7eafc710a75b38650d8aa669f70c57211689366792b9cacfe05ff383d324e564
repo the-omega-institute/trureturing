@@ -1,0 +1,16 @@
+\[
+A_i
+=
+\bigcap_{j>i}B_{ij}
+\cap
+\bigcap_{j<i}B_{ji}^{\mathrm c}.
+\]
+
+则：
+
+\[
+\mathbf P_i(A_i)=1,
+\]
+
+且各 \(A_i\) 两两不交。把 \(A_i\) 上的输出定义为 \(x_i\)，其余零测区域任意赋值，即得 \(\Phi\)。 \(\square\)
+

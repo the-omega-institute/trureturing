@@ -1,0 +1,13 @@
+## 定义 266.1（机制模块）
+
+每个：
+
+\[
+K_v:
+\mathcal X_{\operatorname{pa}(v)}
+\rightsquigarrow
+\mathcal X_v
+\]
+
+是一个局部生成机制。
+

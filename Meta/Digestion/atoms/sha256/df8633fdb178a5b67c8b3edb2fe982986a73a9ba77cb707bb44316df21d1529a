@@ -1,0 +1,52 @@
+# 193. 建议新增模块
+
+在既有建议目录 `D5/S3/PrimeObservers/` 下追加：
+
+```text
+PrimeObservers/
+  Logic/
+    ObservableEventAlgebra.lean
+    RefinementObservableAlgebra.lean
+    TargetFamilyQuotient.lean
+  Quotients/
+    FiniteQuotientObserver.lean
+    ProPObserver.lean
+    PrimePowerResidual.lean
+    FiniteNilpotentCompleteness.lean
+    A5PrimePowerBlindness.lean
+  Density/
+    SeparationSpectrum.lean
+    IntegerBlindPrimes.lean
+    AlgebraicIntegerReductionSeparation.lean
+    QuadraticCharacterSeparationDensity.lean
+  Codes/
+    CRTObservationCode.lean
+    CRTMinimumDistance.lean
+    CRTErrorErasureCorrection.lean
+    CRTRangeDistanceFrontier.lean
+  Adaptive/
+    PrimeDecisionTree.lean
+    AdaptiveCRTExample.lean
+    PrimorialWitnessDepth.lean
+    PrimeTimeAdaptiveProtocol.lean
+  Valuations/
+    RationalValuationProfile.lean
+    PrincipalDivisorObservation.lean
+    ProductFormulaChecksum.lean
+    UnitGaugeResidual.lean
+  Spectral/
+    PowerTraceObserver.lean
+    NewtonTraceCompletion.lean
+    NilpotentTraceBlindness.lean
+    NilpotentKernelTower.lean
+    UnipotentExtensionResidual.lean
+```
+
+对应 Blueprint 建议保持同构目录：
+
+```text
+Blueprint/D5/S3/PrimeObservers/...
+```
+
+---
+

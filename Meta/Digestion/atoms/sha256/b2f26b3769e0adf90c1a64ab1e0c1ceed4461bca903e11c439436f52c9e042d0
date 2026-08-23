@@ -1,0 +1,59 @@
+# 64. 建议目录
+
+```text
+D5/S3/PrimeObservers/
+  Foundation/
+    LocalReadout.lean
+    JointReadout.lean
+    LocalGlobalResidual.lean
+    Refinement.lean
+  CRT/
+    FiniteJoin.lean
+    BoundedIntegerTomography.lean
+    InformationCapacity.lean
+    PrimePowerGrid.lean
+  Arithmetic/
+    QuadraticCharacterObserver.lean
+    ThreeRingSplittingObserver.lean
+    OrientedModFiveCompletion.lean
+    DiscriminantBlindFormCountermodel.lean
+    CrossingRangeGauge.lean
+  Dynamics/
+    PrimeTrace.lean
+    PrimeCongruenceKernel.lean
+    FinitePrimeTimeTomography.lean
+    ControlledPrimeBehavior.lean
+    CrossingPhaseLocalPeriods.lean
+  Geometry/
+    PadicFirstDisagreement.lean
+    PrimePredictionUltrametric.lean
+    CylinderTopology.lean
+  LocalGlobal/
+    LocalSolvability.lean
+    GluingDefect.lean
+    HasseInterface.lean
+    FormClassResidual.lean
+  Agents/
+    SensorCover.lean
+    Redundancy.lean
+    PolicyCapability.lean
+  Countermodels/
+    FiniteBudgetUnboundedIntegers.lean
+    SamePrimeRedundancy.lean
+    SplittingBlindness.lean
+```
+
+对应 Blueprint 放在：
+
+```text
+Blueprint/D5/S3/PrimeObservers/...
+```
+
+总论放在：
+
+```text
+docs/develop/theory/FORMAL_PRIME_OBSERVER_DYNAMICS.md
+```
+
+---
+

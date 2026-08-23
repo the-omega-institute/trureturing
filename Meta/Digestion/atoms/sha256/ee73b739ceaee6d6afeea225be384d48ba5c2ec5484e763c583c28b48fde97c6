@@ -1,0 +1,8 @@
+## 定义 5.1（完整局部读出）
+
+\[
+q_{\mathrm{all}}:X\to\prod_{i:\mathcal I}O_i,
+\qquad
+q_{\mathrm{all}}(x)=(q_i(x))_i.
+\]
+

@@ -1,0 +1,15 @@
+## 定义 239.1（自适应 policy）
+
+一个 policy \(\Pi\) 在每个 belief \(\pi\) 选择：
+
+1. 停止并输出行动；或
+2. 调用某个实验 \(i\in\mathcal I\)。
+
+随机 policy 可写为：
+
+\[
+\Pi:\mathcal P(X)
+\rightsquigarrow
+A\sqcup\mathcal I.
+\]
+

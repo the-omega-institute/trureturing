@@ -1,0 +1,15 @@
+# 36. 素数幂窗口代数的水平张量分解
+
+仓库 `PrimePowerTensorTower` 已证明：
+
+\[
+\boxed{
+M_M(\mathbb C)
+\simeq_{\mathbb C}
+\bigotimes_{p^e\parallel M}
+M_{p^e}(\mathbb C).
+}
+\]
+
+这不仅是地址重标号，而是矩阵单位基、乘法与复代数结构共同分解。
+

@@ -1,0 +1,10 @@
+\[
+\boxed{
+\mathcal B_J(x,y)
+=
+-\sum_{p\in J}\log\rho_p(x,y).
+}
+\]
+
+于是：
+

@@ -1,0 +1,29 @@
+\[
+\mathbb P(b\mid A\neq a)
+=
+\mathbb P(c\mid A\neq a)
+=\frac12.
+\]
+
+此时实验 \(B\) 完全区分 \(b,c\)，故：
+
+\[
+I(X;B\mid A\neq a)=\log2.
+\]
+
+当 \(\varepsilon\neq1/2\) 时：
+
+\[
+h_2(\varepsilon)<\log2.
+\]
+
+于是：
+
+\[
+\boxed{
+\Delta(B\mid\varnothing)
+<
+\Delta(B\mid A=\text{not-}a).
+}
+\]
+

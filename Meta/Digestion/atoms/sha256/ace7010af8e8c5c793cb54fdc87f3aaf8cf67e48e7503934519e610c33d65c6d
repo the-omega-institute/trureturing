@@ -1,0 +1,8 @@
+## 定义 236.1（belief state）
+
+主动观察系统的状态不是未知的真实 \(x\)，也不是原始 transcript 字符串，而是：
+
+\[
+\pi_t\in\mathcal P(X).
+\]
+

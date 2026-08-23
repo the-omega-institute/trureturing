@@ -1,0 +1,12 @@
+## 195.4 数域 product formula 接口
+
+优先复用仓库依赖中已经存在的：
+
+```text
+Mathlib.NumberTheory.NumberField.ProductFormula
+```
+
+把其定理包装为 prime-observer checksum，而不复制数域 product formula 的证明。
+
+---
+

@@ -1,0 +1,8 @@
+\[
+\boxed{
+\tau_\varepsilon
+=
+\inf\{t:r(\pi_t)\le\varepsilon\}.
+}
+\]
+

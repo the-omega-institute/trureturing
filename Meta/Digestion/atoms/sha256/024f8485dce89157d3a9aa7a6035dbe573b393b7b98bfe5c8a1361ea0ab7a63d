@@ -1,0 +1,14 @@
+## 原理 253.1（图与模型分离）
+
+同一个 DAG 可以承载许多不同机制和噪声 law；同一个观测 law 也可以由不同 DAG 或不同 SCM 产生。因此：
+
+\[
+\boxed{
+\text{graph}
+\neq
+\text{mechanism family}
+\neq
+\text{observational distribution}.
+}
+\]
+

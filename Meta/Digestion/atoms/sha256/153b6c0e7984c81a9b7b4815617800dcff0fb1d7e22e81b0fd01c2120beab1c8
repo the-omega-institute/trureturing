@@ -1,0 +1,6 @@
+## 证明边界
+
+仓库的 `ZetaEntropy.lean` 已闭合全局熵恒等式，但明确把无限素数坐标的熵求和交换留给后续 projective finite-marginal 与可积性发展。本节因此标记为 `Paper + anchored marginals`，不得写成现有 Lean 定理。
+
+---
+

@@ -1,0 +1,33 @@
+## N.4 必要有限测试
+
+对每次形式化实现至少检查：
+
+1. Bernoulli closed forms：
+   \[
+   \rho=\sqrt{1-4\delta^2},
+   \quad
+   \operatorname{TV}=2|\delta|;
+   \]
+2. 小 \(\delta\) 数值比率：
+   \[
+   H^2/\delta^2\to4,
+   \quad
+   -\log\rho/\delta^2\to2;
+   \]
+3. finite product affinity 等于局部 affinity 乘积；
+4. local Hellinger energy 增加时 Bayes lower bound 单调下降；
+5. 三状态 adaptive countermodel 中：
+   \[
+   I(X;B)=h_2(\varepsilon),
+   \quad
+   I(X;B\mid A\neq a)=\log2;
+   \]
+6. 静态精确 suite 调用数为 \(2\)；
+7. 自适应精确 policy 期望调用数为：
+   \[
+   1+2\varepsilon;
+   \]
+8. belief update 后质量归一化；
+9. Bellman operator 的 sup-norm Lipschitz 常数不超过 \(\gamma\)；
+10. common-law kernel 中任何 transcript classifier 的输出 law 相同。
+

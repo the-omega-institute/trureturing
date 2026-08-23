@@ -1,0 +1,12 @@
+# 256. 干预画像与因果等价
+
+给定允许干预族 \(\mathcal A\)，定义：
+
+\[
+\Lambda_{\mathcal A}^{\mathrm{int}}:
+\mathfrak M
+\to
+\prod_{a\in\mathcal A}
+\mathcal P(\mathcal X_V),
+\]
+

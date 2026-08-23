@@ -1,0 +1,16 @@
+\[
+\lambda
+=
+\sum_{n=0}^{\infty}a_n\mathbf P_n.
+\]
+
+则：
+
+\[
+\mathbf P_n\ll\lambda
+\qquad
+\forall n.
+\]
+
+令 Radon–Nikodym 密度为：
+

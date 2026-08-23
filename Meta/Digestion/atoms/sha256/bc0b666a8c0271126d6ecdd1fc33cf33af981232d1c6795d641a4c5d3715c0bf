@@ -1,0 +1,6 @@
+\[
+\operatorname{Cost}(J)
+=
+\sum_{(p,k)\in J}k\log_2p.
+\]
+

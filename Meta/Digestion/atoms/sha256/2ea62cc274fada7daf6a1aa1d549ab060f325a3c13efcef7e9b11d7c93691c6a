@@ -1,0 +1,16 @@
+## 推论 186.1（rank／kernel 塔对 nilpotent 相似类忠实）
+
+序列：
+
+\[
+(a_1,a_2,\ldots,a_n)
+\]
+
+唯一决定每种 block 大小的数量，因为大小恰为 \(k\) 的 block 数是：
+
+\[
+(b_k-b_{k+1}).
+\]
+
+所以 nilpotent 矩阵的相似类可由有限 kernel 塔恢复。
+

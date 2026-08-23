@@ -1,0 +1,14 @@
+## 原理 295.1
+
+\[
+\boxed{
+\text{transporting every treatment arm marginal}
+\not\Rightarrow
+\text{transporting individual response type}.
+}
+\]
+
+反事实运输必须说明外生 coupling、机制同一或足以识别该 coupling 的额外结构为何跨环境保持。
+
+---
+

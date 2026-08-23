@@ -1,0 +1,21 @@
+## 定义 254.1（干预后 SCM）
+
+\[
+M^{\operatorname{do}(I=x_I)}
+\]
+
+保留：
+
+\[
+f_v
+\quad(v\notin I),
+\]
+
+并替换：
+
+\[
+f_i^{\operatorname{do}}
+\equiv x_i
+\quad(i\in I).
+\]
+

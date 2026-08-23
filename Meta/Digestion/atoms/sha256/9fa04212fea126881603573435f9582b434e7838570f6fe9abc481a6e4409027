@@ -1,0 +1,11 @@
+\[
+\boxed{
+\operatorname{LGRes}(q)
+=
+\sum_{x,y:X}
+(x\neq y)
+\times
+(x\sim_{\mathrm{loc}}y).
+}
+\]
+

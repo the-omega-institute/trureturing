@@ -1,0 +1,16 @@
+## 原理 236.1（主动观察的最小动态商）
+
+所有产生同一后验的 histories 对未来决策等价：
+
+\[
+\boxed{
+h\sim_{\mathrm{belief}}h'
+\iff
+\pi_h=\pi_{h'}.
+}
+\]
+
+这是统计版 predictive quotient。
+
+---
+

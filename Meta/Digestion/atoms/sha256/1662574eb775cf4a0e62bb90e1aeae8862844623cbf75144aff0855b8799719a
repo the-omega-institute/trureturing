@@ -1,0 +1,8 @@
+## 定义 42.1（逐处局部可解）
+
+\[
+\operatorname{LocSolvable}
+\iff
+\forall i,\exists x_i:X_i,\ P_i(x_i).
+\]
+

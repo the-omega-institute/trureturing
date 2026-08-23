@@ -1,0 +1,24 @@
+\[
+\boxed{
+\mathcal A(q)
+=
+\bigl(
+\operatorname{Ker}(q),
+\delta_{\min}(q),
+\operatorname{Cost}(q),
+\operatorname{Dist}(q),
+\operatorname{Depth}(q),
+\operatorname{Defect}(q)
+\bigr).
+}
+\]
+
+其中分别表示：
+
+1. **语义 kernel**：哪些状态仍被合并；
+2. **最坏分离密度**：随机素数实验多常见地给出见证；
+3. **观察成本**：读取、存储、验证与胶合代价；
+4. **编码距离**：能检测或纠正多少错误；
+5. **动态完成深度**：需要观察多久；
+6. **自然性缺陷**：局部读出是否尊重过程。
+

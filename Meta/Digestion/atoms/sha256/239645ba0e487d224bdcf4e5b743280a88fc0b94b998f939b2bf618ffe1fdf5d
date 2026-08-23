@@ -1,0 +1,12 @@
+## 定理 33.1（预测强三角不等式）
+
+\[
+d_{J,\gamma}^{F}(x,z)
+\le
+\max
+\left\{
+d_{J,\gamma}^{F}(x,y),
+d_{J,\gamma}^{F}(y,z)
+\right\}.
+\]
+

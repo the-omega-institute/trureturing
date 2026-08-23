@@ -1,0 +1,5 @@
+source_id = "formal-prime-observer-dynamics"
+path = "docs/develop/theory/FORMAL_PRIME_OBSERVER_DYNAMICS.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

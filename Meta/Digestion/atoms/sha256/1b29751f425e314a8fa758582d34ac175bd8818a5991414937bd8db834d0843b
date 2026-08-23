@@ -1,0 +1,13 @@
+\[
+\boxed{
+H(N)
+=
+\sum_p
+\left[
+-\log(1-p^{-s})
++
+\frac{s\log p}{p^s-1}
+\right].
+}
+\]
+

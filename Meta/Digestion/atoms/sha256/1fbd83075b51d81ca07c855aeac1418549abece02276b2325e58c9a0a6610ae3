@@ -1,0 +1,22 @@
+\[
+\mathcal H_{\mathbb N}
+=
+\ell^2(\mathbb N_{>0}),
+\]
+
+正交基写作：
+
+\[
+|n\rangle.
+\]
+
+唯一分解画像给出 Hilbert 基等价：
+
+\[
+\boxed{
+\ell^2(\mathbb N_{>0})
+\simeq
+\ell^2(\mathcal E_{\mathrm{fin}}).
+}
+\]
+

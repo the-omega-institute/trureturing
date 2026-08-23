@@ -1,0 +1,9 @@
+## 定义 41.1（预算知识）
+
+\[
+\operatorname{Knows}_J(P)
+\iff
+\exists\bar P:O_J\to B,\ 
+P=\bar P\circ q_J.
+\]
+

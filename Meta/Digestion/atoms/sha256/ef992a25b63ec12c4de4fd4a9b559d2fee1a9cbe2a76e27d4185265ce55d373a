@@ -1,0 +1,16 @@
+## 原理 204.1（统计状态是 law，不是样本）
+
+\[
+\boxed{
+\text{sample}
+\in O,
+\qquad
+\text{statistical state}
+\in\mathcal P(O).
+}
+\]
+
+把二者混同，会把偶然输出误当成本体坐标。
+
+---
+

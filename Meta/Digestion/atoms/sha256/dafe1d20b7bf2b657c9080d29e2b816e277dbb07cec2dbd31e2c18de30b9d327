@@ -1,0 +1,27 @@
+## 定义 253.1（有限 SCM）
+
+\[
+\boxed{
+M=
+\left(
+G,
+(\mathcal U_v)_v,
+P_U,
+(f_v)_v
+\right),
+}
+\]
+
+其中：
+
+\[
+f_v:
+\mathcal X_{\operatorname{pa}(v)}
+\times
+\mathcal U_v
+\to
+\mathcal X_v.
+\]
+
+结构方程为：
+

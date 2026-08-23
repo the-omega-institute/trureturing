@@ -1,0 +1,8 @@
+## 1.3 CRT、素数幂张量与 solenoid 锚点
+
+- `D5/S3/ObserverMemory/WindowRegisterCRT.lean`：互素窗口 clock / shift 的 CRT Kronecker 分解；
+- `D5/S3/ObserverMemory/PrimePowerTensorTower.lean`：有限窗口全矩阵代数的全部素数幂张量分解；
+- `D5/S1/Solenoid/ExactSequence.lean`：兼容同余数据恰为可见相位投影的隐藏核；
+- `D5/S1/Solenoid/HiddenMotionRigidity.lean`：从连通区间到 \(\prod_p\mathbb Z_p\) 的连续路径必为常值；
+- `D5/S1/Solenoid/StreamlineDecomposition.lean` 与相关路径分解文件：可见实流与固定隐藏余量的路径结构。
+

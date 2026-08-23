@@ -1,0 +1,13 @@
+## 195.1 整数分离谱
+
+目标声明：
+
+```lean
+theorem blindPrimes_eq_primeDivisors_sub
+    {x y : ℤ} (hxy : x ≠ y) :
+    {p : ℕ | Nat.Prime p ∧ x ≡ y [ZMOD p]} =
+      {p : ℕ | Nat.Prime p ∧ (p : ℤ) ∣ x - y}
+```
+
+随后证明有限性、不同素因子数的 \(\log_2\) 上界与 primorial witness。
+

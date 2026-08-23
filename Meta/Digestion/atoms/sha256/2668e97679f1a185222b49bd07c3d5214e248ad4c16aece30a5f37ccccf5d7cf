@@ -1,0 +1,13 @@
+## J.1 finite group prime-language classifier
+
+形式化有限群 \(G\) 的以下等价：
+
+\[
+G\text{ nilpotent}
+\iff
+G\hookrightarrow\prod_iP_i,
+\quad P_i\text{ finite }p_i\text{-groups}.
+\]
+
+并计算小群的 prime-power residual。
+

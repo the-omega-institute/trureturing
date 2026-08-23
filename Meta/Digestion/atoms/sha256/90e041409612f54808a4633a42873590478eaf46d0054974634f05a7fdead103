@@ -1,0 +1,13 @@
+## 196.1 Newton trace completion
+
+复用 symmetric polynomial／characteristic polynomial API，证明：
+
+```lean
+theorem powerTraces_determine_charpoly
+    (A B : Matrix (Fin n) (Fin n) K)
+    (h : ∀ k : Fin n,
+      Matrix.trace (A ^ (k.1 + 1)) =
+      Matrix.trace (B ^ (k.1 + 1))) :
+    Matrix.charpoly A = Matrix.charpoly B
+```
+

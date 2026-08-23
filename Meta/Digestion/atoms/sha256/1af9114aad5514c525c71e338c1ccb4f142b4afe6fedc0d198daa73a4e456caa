@@ -1,0 +1,24 @@
+## 定理 159.1（观察语言包含与 residual 反序）
+
+因为：
+
+\[
+\mathcal F_{\mathrm{nil}}
+\subseteq
+\mathcal F_{\mathrm{sol}}
+\subseteq
+\mathcal F_{\mathrm{all}},
+\]
+
+所以：
+
+\[
+\boxed{
+R_{\mathrm{fin}}(G)
+\subseteq
+R_{\mathrm{sol}}(G)
+\subseteq
+R_{\mathrm{nil}}(G).
+}
+\]
+

@@ -1,0 +1,8 @@
+## 定义 22.3（全迭代 congruence kernel）
+
+\[
+C_F(R)(x,y)
+\iff
+\forall n,\ R(F^nx,F^ny).
+\]
+

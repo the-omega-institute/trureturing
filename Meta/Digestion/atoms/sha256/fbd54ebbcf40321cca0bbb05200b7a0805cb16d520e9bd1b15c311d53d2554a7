@@ -1,0 +1,15 @@
+\[
+\boxed{
+\operatorname{Expr}_Y(q)
+=
+\left\{
+T:X\to Y
+\ \middle|\
+\exists\bar T:\operatorname{Im}(q_{\mathcal I})\to Y,
+\ T=\bar T\circ q_{\mathcal I}^{\operatorname{eff}}
+\right\}.
+}
+\]
+
+它不是语法字符串集合，而是全部在完整联合观察纤维上常值的目标。
+

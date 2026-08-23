@@ -1,0 +1,18 @@
+## 定理 13.2（策略能力单调性）
+
+若 \(J\subseteq K\)，则：
+
+\[
+\operatorname{PolicyCap}(q_J,A)
+\subseteq
+\operatorname{PolicyCap}(q_K,A).
+\]
+
+\[
+\boxed{
+\text{精化增加能力，降低某些风险，}
+\text{但不自动降低观察成本。}
+\]
+
+---
+

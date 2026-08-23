@@ -1,0 +1,10 @@
+# 206. Blackwell 序与决策风险
+
+设两个实验：
+
+\[
+K:X\rightsquigarrow O,
+\qquad
+L:X\rightsquigarrow R.
+\]
+

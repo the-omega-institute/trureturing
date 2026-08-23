@@ -1,0 +1,19 @@
+\[
+\boxed{
+C(P_{x,J},P_{y,J})
+=
+\sup_{\lambda\in[0,1]}
+E_{\lambda,J}(x,y).
+}
+\]
+
+注意：
+
+\[
+\sup_\lambda\sum_pE_{\lambda,p}
+\le
+\sum_p\sup_\lambda E_{\lambda,p}.
+\]
+
+右侧逐坐标分别选取最优 \(\lambda\)，一般不是一个合法联合检验指数。
+

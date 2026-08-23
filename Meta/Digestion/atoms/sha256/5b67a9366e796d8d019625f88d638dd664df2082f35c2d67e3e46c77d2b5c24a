@@ -1,0 +1,20 @@
+## 定义 260.2（完全模型识别与目标识别）
+
+完全模型识别要求：
+
+\[
+\Lambda_{\mathcal A}^{\mathrm{int}}
+\quad\text{单射}.
+\]
+
+目标识别只要求：
+
+\[
+\ker
+\left(
+\Lambda_{\mathcal A}^{\mathrm{int}}
+\right)
+\subseteq
+\ker T.
+\]
+

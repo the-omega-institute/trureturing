@@ -1,0 +1,9 @@
+\[
+P(x_V)
+=
+\prod_{v\in V}
+P(x_v\mid x_{\operatorname{pa}(v)}),
+\]
+
+并且干预是模块化的完美干预，则：
+

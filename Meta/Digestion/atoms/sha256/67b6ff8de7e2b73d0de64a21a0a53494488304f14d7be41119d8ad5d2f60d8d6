@@ -1,0 +1,18 @@
+## 定理 89.2（语义完成的普适最小性）
+
+若读出 \(e:X\to E\) 同时满足：
+
+\[
+q_{\mathcal I}\preceq e,
+\qquad
+T\preceq e,
+\]
+
+则：
+
+\[
+\operatorname{SemComp}_T(q)\preceq e.
+\]
+
+该定理是形式概念动力学完成算子在素数观察者语言上的直接专门化。
+

@@ -1,0 +1,11 @@
+### 证明
+
+给定停止历史，MAP 条件错误恰为：
+
+\[
+1-\max_x\pi_{\tau_\varepsilon}(x)
+\le\varepsilon.
+\]
+
+再取全期望。 \(\square\)
+

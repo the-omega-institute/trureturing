@@ -1,0 +1,4 @@
+### 证明
+
+任何 transcript law 都由 \(K(x,\cdot)\) 经乘积、条件抽样或 Markov 后处理得到。输入 measure 相等时，所有这些函子性构造保持相等。 \(\square\)
+

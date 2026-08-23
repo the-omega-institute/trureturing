@@ -1,0 +1,8 @@
+\[
+C(P,Q)
+=
+-\log
+\inf_{0\le\lambda\le1}
+\sum_oP(o)^\lambda Q(o)^{1-\lambda}.
+\]
+

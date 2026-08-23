@@ -1,0 +1,36 @@
+# 53. 可审计局部证据
+
+一个证据包包括：
+
+\[
+(i,o,\rho,\pi),
+\]
+
+其中：
+
+- \(i=(p,k)\)：观察坐标；
+- \(o\)：输出；
+- \(\rho\)：来源、版本与时间戳；
+- \(\pi\)：可验证计算或证明证书。
+
+联合证据一致要求：
+
+- 同素数不同精度经降尺度相容；
+- 不同模数在重叠同余上相容；
+- 来源与准入规则通过；
+- 若声称来自全局状态，则有胶合见证或证明。
+
+必须把：
+
+\[
+\operatorname{ArithmeticConsistent},
+\quad
+\operatorname{ProvenanceValid},
+\quad
+\operatorname{RealityFaithful}
+\]
+
+作为不同谓词。
+
+---
+

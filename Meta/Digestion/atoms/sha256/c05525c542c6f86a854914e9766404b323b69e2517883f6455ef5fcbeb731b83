@@ -1,0 +1,14 @@
+## Q.2 第一优先：纯有限函数与反模型链
+
+1. 定义有限 SCM 的拓扑顺序求值；
+2. 定义 perfect intervention 为结构方程替换；
+3. `observationalProfile` 与 `interventionalProfile`；
+4. `interventional_target_factors_iff`；
+5. 第 258 节 direction-reversal 反模型；
+6. 第 264 节 positivity 反模型；
+7. 第 265 节 hidden-confounding 反模型；
+8. 第 285 节 interventional/counterfactual gap 反模型；
+9. 第 288 节 \(2\times2\) coupling table 的 Fréchet 尖锐界。
+
+这批只需有限类型、函数、PMF／有限 mass function 与直接枚举，不需要先建设完整图形 do-calculus。
+

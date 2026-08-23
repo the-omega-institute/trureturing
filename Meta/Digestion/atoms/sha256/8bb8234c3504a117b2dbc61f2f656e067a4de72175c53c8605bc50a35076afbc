@@ -1,0 +1,44 @@
+# Appendix C：核心 Lean 风格接口草案
+
+```lean
+namespace D5.S3.PrimeObservers
+
+structure PrimeScale where
+  p : ℕ
+  hp : Nat.Prime p
+  k : ℕ
+  hk : 0 < k
+
+structure Model where
+  X : Type u
+  Admissible : X → Prop
+  anchor : {x // Admissible x}
+  U : Type v
+  step : U → X → X
+  Output : PrimeScale → Type w
+  readout : (i : PrimeScale) → X → Output i
+
+variable (M : Model)
+
+def StaticEq (J : Finset PrimeScale) (x y : M.X) : Prop :=
+  ∀ i, i ∈ J → M.readout i x = M.readout i y
+
+def FullLocalEq (x y : M.X) : Prop :=
+  ∀ i, M.readout i x = M.readout i y
+
+def LocalGlobalResidual : Type _ :=
+  {xy : M.X × M.X //
+    xy.1 ≠ xy.2 ∧ M.FullLocalEq xy.1 xy.2}
+
+def DynamicEq
+    (F : M.X → M.X)
+    (J : Finset PrimeScale)
+    (x y : M.X) : Prop :=
+  ∀ n i, i ∈ J →
+    M.readout i (F^[n] x) = M.readout i (F^[n] y)
+
+end D5.S3.PrimeObservers
+```
+
+---
+

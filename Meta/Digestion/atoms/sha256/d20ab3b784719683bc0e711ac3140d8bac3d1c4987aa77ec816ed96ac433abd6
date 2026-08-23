@@ -1,0 +1,19 @@
+\[
+J_\Pi(\pi)
+=
+\mathbb E_\pi^\Pi
+\left[
+\sum_{t<\tau}\gamma^tc_{I_t}
++
+\gamma^\tau\ell(X,A_\tau)
+\right].
+\]
+
+对不折扣的 sequential testing，也可使用：
+
+\[
+\mathbb E[\text{sample cost}]
++
+\lambda\,\mathbb P[\text{decision error}].
+\]
+

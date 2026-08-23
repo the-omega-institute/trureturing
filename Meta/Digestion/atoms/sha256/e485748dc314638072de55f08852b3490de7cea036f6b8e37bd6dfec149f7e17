@@ -1,0 +1,22 @@
+## 第五阶段严格非主张
+
+本文不声称：
+
+1. 任意无限重复都能消除噪声；
+2. 每个坐标 law 不同就必然 product-singular；
+3. pairwise singularity 无条件给出不可数参数的联合可测分类器；
+4. Hellinger 能量发散意味着有限样本零错误；
+5. product equivalence 意味着两状态本体相同；
+6. posterior collapse 只由样本量决定而与 policy 无关；
+7. 最大互信息实验对任意损失都最优；
+8. 静态次模性自动推出自适应次模性；
+9. unit-cost greedy 保证自动适用于任意成本；
+10. nominal Bayes 最优自动等于 minimax 鲁棒最优；
+11. \(\alpha=1/2\) 阈值构成 RH、量子测量或物理相变的证明；
+12. 本阶段 Kakutani、Chernoff、posterior consistency、adaptive-submodular 与 belief-MDP 综合定理已经全部通过 Lean kernel；
+13. 统计可识别自动等于计算上可高效识别；
+14. 零 Bayes error 自动给出有限期望停止时间；
+15. 单一 scalar divergence 能完全替代 typed kernel、image、gauge 与 task 信息。
+
+---
+

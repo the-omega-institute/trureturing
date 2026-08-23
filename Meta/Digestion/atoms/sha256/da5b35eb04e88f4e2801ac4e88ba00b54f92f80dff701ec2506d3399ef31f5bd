@@ -1,0 +1,12 @@
+# 282. 干预 image 与模型可证伪性
+
+给定模型类 \(\mathfrak M_0\) 和干预族 \(\mathcal A\)，其可实现画像为：
+
+\[
+\operatorname{Im}
+\left(
+\Lambda_{\mathcal A}^{\mathrm{int}}
+\mid_{\mathfrak M_0}
+\right).
+\]
+

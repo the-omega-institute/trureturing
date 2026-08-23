@@ -1,0 +1,36 @@
+## N.5 机器可审计字段
+
+每个 statistical observer theorem 应登记：
+
+```text
+hidden state type
+parameter / target type
+prior
+experiment kernel
+output measurable space
+sampling dependence assumption
+law-equivalence kernel
+finite evidence metric
+infinite product criterion
+decision loss
+observation cost
+policy class
+stopping rule
+measurability assumptions
+proof status
+```
+
+这防止把：
+
+\[
+\text{finite discrete formula}
+\]
+
+静默外推为：
+
+\[
+\text{arbitrary measurable infinite theorem}.
+\]
+
+---
+

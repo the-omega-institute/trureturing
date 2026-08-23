@@ -1,0 +1,14 @@
+## 原理 281.1
+
+\[
+\boxed{
+\text{identifiable}
+\not\Rightarrow
+\text{finite-sample accurate}
+\not\Rightarrow
+\text{computationally tractable}.
+}
+\]
+
+反向也不成立：一个算法可以对某个参数化子类工作，却不证明非参数模型类中的目标可识别。
+

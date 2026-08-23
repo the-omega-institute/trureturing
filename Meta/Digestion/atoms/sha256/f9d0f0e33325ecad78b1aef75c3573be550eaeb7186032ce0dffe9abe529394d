@@ -1,0 +1,22 @@
+# 191. 观察完成的 kernel—image—cokernel 三联
+
+给定结构保持映射：
+
+\[
+q:X\to L.
+\]
+
+必须同时审计：
+
+\[
+\boxed{
+\ker(q),
+\qquad
+\operatorname{Im}(q),
+\qquad
+\operatorname{Coker}(q)
+}
+\]
+
+或其非加性对应物。
+

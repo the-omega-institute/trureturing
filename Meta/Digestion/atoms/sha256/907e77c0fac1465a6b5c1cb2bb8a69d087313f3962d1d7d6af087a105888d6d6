@@ -1,0 +1,8 @@
+\[
+P(Y_x=y\mid X=x)
+=
+P(Y_x=y).
+\]
+
+SCM 干预语义把 \(Y_x\) 的 law 识别为 \(do(X=x)\) law。 \(\square\)
+

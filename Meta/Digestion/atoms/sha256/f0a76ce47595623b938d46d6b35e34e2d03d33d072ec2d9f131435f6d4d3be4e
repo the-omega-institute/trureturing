@@ -1,0 +1,6 @@
+## 原理 275.1（graph orientation 与 effect identification 可分离）
+
+一个实验可能不能完全恢复 DAG，却已经足够识别目标效应；另一个实验可能显著缩小图类，却只区分与当前目标无关的边。
+
+---
+

@@ -1,0 +1,10 @@
+\[
+\boxed{
+\mathbb P(M=m\mid V_p=k_p,\ p\in S)
+=
+\frac{m^{-s}}{Z_{S^c}(s)},
+}
+\]
+
+其中：
+

@@ -1,0 +1,10 @@
+\[
+\Delta(i\mid\psi)
+=
+\mathbb E
+\left[
+U(\psi\cup\{(i,Y_i)\})-U(\psi)
+\mid\psi
+\right].
+\]
+

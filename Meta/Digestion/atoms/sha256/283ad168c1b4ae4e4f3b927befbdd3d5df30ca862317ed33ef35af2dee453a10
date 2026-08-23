@@ -1,0 +1,10 @@
+\[
+R_{\mathcal C}(G)
+=
+\bigcap_{
+\varphi:G\to H,
+H\in\mathcal C
+}
+\ker\varphi.
+\]
+

@@ -1,0 +1,4 @@
+## 经典定理 273.1（观测 Markov 等价刻画）
+
+在标准 DAG 语境中，两个 DAG 具有相同的 d-separation 关系，当且仅当它们具有相同 skeleton 与相同 unshielded colliders。
+

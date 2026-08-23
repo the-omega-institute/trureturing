@@ -1,0 +1,14 @@
+## 原理 237.1（观察不是读出一个值，而是移动一个 measure）
+
+\[
+\boxed{
+\pi
+\xrightarrow{\text{choose }i}
+Y\sim M_i^\pi
+\xrightarrow{\text{Bayes}}
+\mathsf B_i(\pi,Y).
+}
+\]
+
+---
+

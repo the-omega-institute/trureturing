@@ -1,0 +1,28 @@
+# 165. Chebotarev 把 Galois 观察频率变成群计数
+
+设：
+
+\[
+L/K
+\]
+
+为有限 Galois 扩张，群为：
+
+\[
+G=\operatorname{Gal}(L/K).
+\]
+
+令：
+
+\[
+f,g:G\to S
+\]
+
+为共轭不变函数。对未分歧素理想 \(\mathfrak p\)，读取：
+
+\[
+f(\operatorname{Frob}_{\mathfrak p}),
+\qquad
+g(\operatorname{Frob}_{\mathfrak p}).
+\]
+

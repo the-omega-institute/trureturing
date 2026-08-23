@@ -1,0 +1,9 @@
+\bigotimes_{p\in J}K_p(x,\cdot),
+\qquad
+P_{y,J}
+=
+\bigotimes_{p\in J}K_p(y,\cdot).
+\]
+
+定义局部 affinity：
+

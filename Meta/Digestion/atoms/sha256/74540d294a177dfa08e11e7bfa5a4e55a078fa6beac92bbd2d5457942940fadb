@@ -1,0 +1,24 @@
+## 推论 180.1（理想身份、主性与生成元三层）
+
+必须区分：
+
+\[
+\boxed{
+\begin{aligned}
+\text{全部理想赋值}
+&\Rightarrow
+\text{恢复分式理想};\\
+\text{类群为零}
+&\Rightarrow
+\text{判断该理想是否可取全局生成元};\\
+\text{单位坐标}
+&\Rightarrow
+\text{在全部生成元中恢复具体元素}.
+\end{aligned}
+}
+\]
+
+v1.1 的 class-group residual 处理“理想是否主”；本节的 unit-gauge residual 处理“主理想的哪个生成元”。
+
+---
+

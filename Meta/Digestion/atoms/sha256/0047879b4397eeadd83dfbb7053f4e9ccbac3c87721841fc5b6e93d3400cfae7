@@ -1,0 +1,7 @@
+\[
+R_{\mathrm{stop}}(\pi)
+=
+\inf_{a\in A}
+\int_X\ell(x,a)\pi(dx).
+\]
+

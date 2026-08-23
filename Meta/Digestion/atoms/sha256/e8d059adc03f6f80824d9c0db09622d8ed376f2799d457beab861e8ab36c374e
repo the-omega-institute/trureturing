@@ -1,0 +1,14 @@
+## 纸面定理 140.1（restricted tensor product factorization）
+
+在以全零占据为参考真空的适当 restricted tensor／Fock 实现中：
+
+\[
+\boxed{
+\rho_s
+\simeq
+\bigotimes_p\rho_{p,s}.
+}
+\]
+
+其对角联合 law 正是仓库已经机器检查的全部素指数独立性。
+

@@ -1,0 +1,20 @@
+\[
+\boxed{
+\operatorname{BayesRes}_\infty(x,y)
+=
+\frac{
+1-\operatorname{TV}(\mathbf P_x,\mathbf P_y)
+}{2}.
+}
+\]
+
+在等价区域：
+
+\[
+\operatorname{BayesRes}_\infty(x,y)>0.
+\]
+
+无限多坐标可以显著降低错误，却不必把错误压到零。
+
+---
+

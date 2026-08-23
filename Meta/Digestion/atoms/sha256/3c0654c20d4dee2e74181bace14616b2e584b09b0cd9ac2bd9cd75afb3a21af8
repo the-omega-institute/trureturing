@@ -1,0 +1,23 @@
+## 定义 4.8（C-IRPT 的素数化解释层）
+
+在不把下列词声明为逻辑原语的前提下，可作结构对应：
+
+\[
+\begin{aligned}
+\operatorname{CUT}_{p,k}
+&:=q_{p,k},\\
+\operatorname{FLOW}_u
+&:=F_u,\\
+\operatorname{ADMIT}
+&:=\operatorname{Compatible}\land\operatorname{Adm},\\
+\operatorname{ANCHOR}
+&:=a,\\
+\operatorname{REMAINDER}
+&:=R_J\text{ 或 }\operatorname{LGRes}(q).
+\end{aligned}
+\]
+
+该对应仅用于统一界面—余量语言，不增加存在、公理或现实实现。
+
+---
+

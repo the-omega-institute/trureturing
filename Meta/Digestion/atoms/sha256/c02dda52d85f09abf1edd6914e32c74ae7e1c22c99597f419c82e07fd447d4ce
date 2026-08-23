@@ -1,0 +1,28 @@
+\[
+\boxed{
+\bigcap_{\chi:G\to\mu_n}\ker\chi
+=
+G^n.
+}
+\]
+
+所以阶除以 \(n\) 的角色共同看到最大指数整除 \(n\) 的商：
+
+\[
+G/G^n.
+\]
+
+这给出角色阶精化塔：
+
+\[
+\text{quadratic}
+\preceq
+\text{quartic}
+\preceq
+\cdots
+\preceq
+\text{full character profile}.
+\]
+
+---
+

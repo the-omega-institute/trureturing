@@ -1,0 +1,27 @@
+## 原理 159.1（观察语言类型决定可见结构层）
+
+不同目标范畴产生不同“完成”：
+
+\[
+\boxed{
+\begin{aligned}
+\text{有限群商}
+&\Rightarrow
+\text{profinite 可见性};\\
+\text{有限可解群商}
+&\Rightarrow
+\text{prosolvable 可见性};\\
+\text{有限幂零／}p\text{-群商}
+&\Rightarrow
+\text{pronilpotent 可见性};\\
+\text{有限 Abelian 商}
+&\Rightarrow
+\text{pro-Abelian 可见性}.
+\end{aligned}
+}
+\]
+
+不能把其中任何一层称为“全部有限信息”，除非已经证明目标对象在该商语言中 residual。
+
+---
+

@@ -1,0 +1,22 @@
+\[
+\boxed{
+\mathfrak E
+=
+\bigl(
+X,\Theta,\pi,\mathcal I,
+(O_i,\Sigma_i)_{i\in\mathcal I},
+(K_i)_{i\in\mathcal I},
+T,c
+\bigr),
+}
+\]
+
+其中：
+
+- \(X\) 是真实状态空间；
+- \(\Theta\) 是需要决策或估计的目标空间；
+- \(\pi\) 是先验；
+- \(K_i\) 是第 \(i\) 个观察实验；
+- \(T:X\to\Theta\) 是任务目标；
+- \(c_i\ge0\) 是调用接口的成本。
+

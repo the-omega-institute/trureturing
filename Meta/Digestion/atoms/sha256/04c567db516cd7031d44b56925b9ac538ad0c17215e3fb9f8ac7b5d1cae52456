@@ -1,0 +1,25 @@
+# 233. 带噪剩余观察的局部证据坐标
+
+令隐藏整数状态为：
+
+\[
+n\in X\subseteq\mathbb Z.
+\]
+
+确定性剩余接口为：
+
+\[
+r_p(n)=n\bmod p.
+\]
+
+加入素数相关噪声通道：
+
+\[
+W_p:
+\mathbb Z/p\mathbb Z
+\rightsquigarrow
+O_p.
+\]
+
+于是实际观察 law 为：
+

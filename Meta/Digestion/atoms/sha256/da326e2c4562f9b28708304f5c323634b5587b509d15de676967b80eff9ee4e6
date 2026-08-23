@@ -1,0 +1,11 @@
+## H.2 本阶段仓库真值锚点
+
+1. `D5/S3/Analytic/ZetaGibbs.lean`。
+2. `D5/S3/Analytic/Zeta/PrimeExponentLaw.lean`。
+3. `D5/S3/Analytic/Zeta/ZetaPrimeIndependence.lean`。
+4. `D5/S3/Analytic/Zeta/ZetaEntropy.lean`。
+5. `D5/S3/AnalyticClosure/PrimeSpectrumBoundaryDivergent.lean`。
+6. `D5/S3/Quantum/Conditioning.lean` 及相关正交投影／pinching 文件。
+7. `D5/S3/ObserverMemory/Prediction/ItineraryCompletion.lean`。
+8. `D5/S3/ConceptDynamics/TargetRisk/RefinementRiskCostTradeoff.lean`。
+

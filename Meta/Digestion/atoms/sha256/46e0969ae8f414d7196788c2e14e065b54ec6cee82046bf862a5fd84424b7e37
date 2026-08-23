@@ -1,0 +1,13 @@
+## 推论 101.1（全部素理想赋值观察忠实）
+
+\[
+\left(
+\forall\mathfrak p,
+ v_{\mathfrak p}(I)=v_{\mathfrak p}(J)
+\right)
+\Longrightarrow
+I=J.
+\]
+
+所以全部 prime-valuation observers 可以完整恢复理想对象身份。
+

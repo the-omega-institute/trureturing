@@ -1,0 +1,10 @@
+# 97. 二次扩张族的秩就是独立观察 bit 数
+
+设 \(\operatorname{char}K\ne2\)，取：
+
+\[
+d_1,\ldots,d_m\in K^\times.
+\]
+
+定义复合二次扩张：
+

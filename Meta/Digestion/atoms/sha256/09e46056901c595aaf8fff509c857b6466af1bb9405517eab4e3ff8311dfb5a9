@@ -1,0 +1,14 @@
+# 47. 因果 carry 与素数观察缺陷
+
+给定：
+
+\[
+F:X\to Y,
+\qquad
+q:X\to O,
+\qquad
+r:Y\to P.
+\]
+
+定义：
+

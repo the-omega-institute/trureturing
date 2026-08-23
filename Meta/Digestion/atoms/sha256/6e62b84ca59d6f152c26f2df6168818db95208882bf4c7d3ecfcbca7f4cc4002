@@ -1,0 +1,8 @@
+## 定理 41.1（知识的纤维稳定刻画）
+
+\[
+\operatorname{Knows}_J(P)
+\iff
+\forall x,y,\ q_J(x)=q_J(y)\Rightarrow P(x)=P(y).
+\]
+

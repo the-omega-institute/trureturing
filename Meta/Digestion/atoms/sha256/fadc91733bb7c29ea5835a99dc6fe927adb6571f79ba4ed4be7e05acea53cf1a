@@ -1,0 +1,21 @@
+# 96. 复合域是多 Galois 观察者的兼容融合
+
+令 \(L_1/K,L_2/K\) 为有限 Galois 扩张，定义：
+
+\[
+L=L_1L_2,
+\qquad
+E=L_1\cap L_2.
+\]
+
+限制映射给出：
+
+\[
+\operatorname{res}:
+\operatorname{Gal}(L/K)
+\to
+\operatorname{Gal}(L_1/K)
+\times
+\operatorname{Gal}(L_2/K).
+\]
+

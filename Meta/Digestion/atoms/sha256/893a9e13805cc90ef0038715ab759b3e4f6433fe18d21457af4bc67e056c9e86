@@ -1,0 +1,10 @@
+\[
+e_{n+1}
+=
+\pi(o_0,\ldots,o_n).
+\]
+
+这形成自适应决策树。未来可把素数传感器 set cover、自适应决策树、Bellman contraction、目标风险与观察成本接入 `Observer/DynamicProgramming` 与 `ConceptDynamics/DecisionValue`。
+
+---
+

@@ -1,0 +1,18 @@
+# 202. 从确定性读出到统计实验
+
+此前的接口：
+
+\[
+q_i:X\to O_i
+\]
+
+把状态 \(x\) 映为一个确定输出。带噪接口应改写为 Markov kernel：
+
+\[
+K_i:X\rightsquigarrow O_i,
+\qquad
+x\longmapsto K_i(x,\cdot).
+\]
+
+其中 \(i\) 可以是素数 \(p\)、素数幂 \((p,k)\)、place、字符、谱坐标或任意类型化局部接口。
+

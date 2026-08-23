@@ -1,0 +1,16 @@
+## 原理 100.1（类不变量记录不可消除接缝）
+
+局部基可以任意改变，但 cocycle 的上同调类不随 gauge 改变。故：
+
+\[
+\boxed{
+\text{局部都平凡}
+\not\Rightarrow
+\text{存在全局规范平凡化}.
+}
+\]
+
+这把 Appendix D.9 的“local–global residual cohomology”从开放口号推进为具体路线：余量不只是一对状态见证，也可以是一个 cocycle class。
+
+---
+

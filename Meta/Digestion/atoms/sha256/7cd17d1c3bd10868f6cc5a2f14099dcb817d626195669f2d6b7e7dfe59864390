@@ -1,0 +1,6 @@
+\prod_{p\notin S}(1-p^{-s})^{-1}
+=
+\zeta(s)
+\prod_{p\in S}(1-p^{-s}).
+\]
+

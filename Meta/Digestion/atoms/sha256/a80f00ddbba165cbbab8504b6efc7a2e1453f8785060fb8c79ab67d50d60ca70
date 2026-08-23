@@ -1,0 +1,12 @@
+## 原理 289.1
+
+monotonicity 不是由随机化自动产生的统计事实；它是删除一类 coupling 的结构假设。它的作用应记录为：
+
+\[
+\boxed{
+\text{缩小 counterfactual image fiber}.
+}
+\]
+
+---
+

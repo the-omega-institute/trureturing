@@ -1,0 +1,14 @@
+\[
+\boxed{
+\mathcal R_\chi
+=
+\left\{
+a\in\mathbb F_2^m
+\ \middle|\
+\prod_{j=1}^{m}\chi_j^{a_j}=1
+\right\}.
+}
+\]
+
+它记录已有角色之间的全部乘法依赖。
+

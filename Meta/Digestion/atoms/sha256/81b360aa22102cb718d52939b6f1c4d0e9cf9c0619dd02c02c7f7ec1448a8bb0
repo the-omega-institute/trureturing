@@ -1,0 +1,16 @@
+## 定义 121.1（Blackwell 精化）
+
+若存在后处理 kernel：
+
+\[
+L:O_D\rightsquigarrow O_C
+\]
+
+使：
+
+\[
+K_C=L\circ K_D,
+\]
+
+则称 \(D\) Blackwell-精化 \(C\)。粗观察只是细观察的随机后处理。
+

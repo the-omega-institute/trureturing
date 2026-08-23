@@ -1,0 +1,6 @@
+\[
+q_{p,k,j}(A)
+=
+\operatorname{tr}(A^j)\bmod p^k.
+\]
+

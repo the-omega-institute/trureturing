@@ -1,0 +1,12 @@
+## 定理 102.1（主理想判据）
+
+\[
+\boxed{
+I\text{ principal}
+\iff
+[I]=1.
+}
+\]
+
+Mathlib 已在 `Mathlib.RingTheory.ClassGroup.Basic` 中实现相应商群，并提供 `ClassGroup.mk_eq_one_iff` 等接口。因此这一方向具有直接形式化入口，而无需从零建设类群。
+

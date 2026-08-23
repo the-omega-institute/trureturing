@@ -1,0 +1,8 @@
+\[
+U_{f,g}
+=
+\{\sigma\in G:f(\sigma)\neq g(\sigma)\}.
+\]
+
+由于 \(f,g\) 共轭不变，\(U_{f,g}\) 是共轭类之并。Chebotarev 密度定理给出：
+

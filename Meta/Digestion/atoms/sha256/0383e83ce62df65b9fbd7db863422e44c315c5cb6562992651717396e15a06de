@@ -1,0 +1,22 @@
+# 230. 对称 Bernoulli 素数信号
+
+考虑单个局部接口在两个候选状态下给出：
+
+\[
+P_\delta(1)=\frac12+\delta,
+\qquad
+P_\delta(0)=\frac12-\delta,
+\]
+
+\[
+Q_\delta(1)=\frac12-\delta,
+\qquad
+Q_\delta(0)=\frac12+\delta,
+\]
+
+其中：
+
+\[
+|\delta|<\frac12.
+\]
+

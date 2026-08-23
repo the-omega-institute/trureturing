@@ -1,0 +1,19 @@
+## 定理 99.1（sheaf 胶合等化子）
+
+若 \(\mathcal F\) 为 sheaf，则：
+
+\[
+\boxed{
+\mathcal F(U)
+\simeq
+\operatorname{Eq}
+\left(
+\prod_i\mathcal F(U_i)
+\rightrightarrows
+\prod_{i,j}\mathcal F(U_i\times_UU_j)
+\right).
+}
+\]
+
+所以兼容局部 sections 存在唯一全局胶合。
+

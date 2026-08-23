@@ -1,0 +1,10 @@
+## 推论 12.1（最小完备素数观察者是集合覆盖问题）
+
+\[
+\min_J\sum_{i\in J}c_i
+\quad
+\text{s.t.}
+\quad
+\bigcup_{i\in J}D_i=\mathcal U_X.
+\]
+

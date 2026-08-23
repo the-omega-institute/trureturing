@@ -1,0 +1,14 @@
+## 经典定理 274.1（精化）
+
+在标准 perfect-intervention 前件下：
+
+\[
+\boxed{
+[G]_{\mathcal I}
+\subseteq
+[G]_{\mathrm{obs}}.
+}
+\]
+
+额外干预一般把观测 equivalence class 切分为更细的 interventional equivalence classes。
+

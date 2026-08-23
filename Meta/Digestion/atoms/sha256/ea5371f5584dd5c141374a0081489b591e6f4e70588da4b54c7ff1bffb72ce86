@@ -1,0 +1,16 @@
+# 253. 有限结构因果模型
+
+取有限有向无环图：
+
+\[
+G=(V,E).
+\]
+
+每个节点 \(v\in V\) 有：
+
+\[
+X_v\in\mathcal X_v,
+\qquad
+U_v\in\mathcal U_v.
+\]
+

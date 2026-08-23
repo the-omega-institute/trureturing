@@ -1,0 +1,6 @@
+# Part XVII：追加式第三阶段——概率素数观察、几乎处处胶合与软完成
+
+> **追加说明。** 以下各节构成 v1.2 的追加式扩展，不改写 v1.0 与 v1.1 的既有定义、定理和边界。本阶段把此前的集合值观察商提升到概率空间、条件期望、随机通道与信息几何；再利用仓库中新闭合的 `PrimeExponentLaw`、`ZetaPrimeIndependence`、`ZetaEntropy` 与 `PrimeSpectrumBoundaryDivergent`，建立素指数画像的乘积概率、全局可实现阈值、精度熵收缩及算术 Fock 观察桥。
+>
+> **状态约束。** 本阶段明确区分：仓库中已经机器检查的 zeta 边缘律、独立性、熵恒等式和边界发散；本文从这些锚点推出的纸面定理；以及需要 product measure、Borel–Cantelli、条件期望、无限张量或算子代数基础的后续 Lean 目标。
+

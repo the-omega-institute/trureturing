@@ -1,0 +1,8 @@
+\[
+\rho_s
+=
+\sum_{n\ge1}
+\frac{n^{-s}}{\zeta(s)}
+|n\rangle\langle n|.
+\]
+

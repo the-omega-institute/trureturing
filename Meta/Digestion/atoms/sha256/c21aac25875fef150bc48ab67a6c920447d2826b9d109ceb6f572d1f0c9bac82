@@ -1,0 +1,16 @@
+## 原理 153.1（信息增长就是事件代数增长）
+
+概念精化不仅增加输出标签，还严格扩大主体可判定事件的 Boolean 代数：
+
+\[
+q\preceq r
+\Longrightarrow
+\operatorname{ObsAlg}(q)
+\subseteq
+\operatorname{ObsAlg}(r).
+\]
+
+若加入一个新接口后事件代数不变，则它没有增加语义区分能力；它最多增加计算便利、冗余校验或来源审计。
+
+---
+

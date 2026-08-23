@@ -1,0 +1,21 @@
+## 原理 182.1（archimedean 完成的两层）
+
+有限赋值画像恢复 \((x)\) 后，要恢复 \(x\) 还需：
+
+1. logarithmic archimedean 坐标，用于定位自由单位格中的点；
+2. 相位／符号或根单位坐标，用于恢复 \(\mu_K\) torsion。
+
+有理数情形：
+
+\[
+r_1=1,
+\qquad
+r_2=0,
+\qquad
+\mathcal O_{\mathbb Q}^\times=\{\pm1\},
+\]
+
+因此退化为第 178 节的单一符号位。
+
+---
+

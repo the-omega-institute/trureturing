@@ -1,0 +1,9 @@
+# 223. 坐标绝对连续前件不能省略
+
+Kakutani 二分的整洁形式假设：
+
+\[
+P_n\sim Q_n
+\quad\forall n.
+\]
+

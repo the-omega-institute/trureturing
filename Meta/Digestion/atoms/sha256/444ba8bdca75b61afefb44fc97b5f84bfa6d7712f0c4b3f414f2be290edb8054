@@ -1,0 +1,16 @@
+## J.6 typed observer escalation
+
+为每个理论对象登记：
+
+```text
+state type
+observer family
+target family
+kernel residual
+image condition
+cokernel / obstruction
+gauge group
+dynamic descent
+proof status
+```
+

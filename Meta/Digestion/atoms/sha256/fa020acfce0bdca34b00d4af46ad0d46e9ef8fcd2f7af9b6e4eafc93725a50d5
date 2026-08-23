@@ -1,0 +1,35 @@
+# 192. 观察者升级的类型化阶梯
+
+当某层观察语言饱和后，升级不能只写作“加入更多信息”，而应指明新信息的类型。
+
+\[
+\boxed{
+\begin{array}{ccl}
+\text{residue value}
+&\longrightarrow&
+\text{higher precision / new prime};\\
+\text{quadratic character}
+&\longrightarrow&
+\text{higher-order character};\\
+\text{prime-power quotient}
+&\longrightarrow&
+\text{general finite quotient};\\
+\text{local ideal generator}
+&\longrightarrow&
+\text{ideal class};\\
+\text{finite valuations}
+&\longrightarrow&
+\text{unit / archimedean coordinate};\\
+\text{power traces}
+&\longrightarrow&
+\text{Jordan / extension invariant};\\
+\text{finite trajectory}
+&\longrightarrow&
+\text{behavior quotient};\\
+\text{Euler factors}
+&\longrightarrow&
+\text{analytic completion and positivity}.
+\end{array}
+}
+\]
+

@@ -1,0 +1,11 @@
+\[
+\boxed{
+\mathsf B_i(\pi,y)(dx)
+=
+\frac{k_i(y\mid x)\pi(dx)}
+{\int_Xk_i(y\mid z)\pi(dz)}.
+}
+\]
+
+分母为零的输出位于当前 predictive law 的零测区域，可在其上任意定义版本。
+

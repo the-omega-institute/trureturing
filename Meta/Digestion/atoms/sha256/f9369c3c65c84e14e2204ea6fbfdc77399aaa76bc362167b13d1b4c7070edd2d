@@ -1,0 +1,10 @@
+## 定义 156.3（全 prime-primary 观察）
+
+\[
+\iota_{G,\mathrm{pp}}:
+G\to
+\prod_p\widehat G_p.
+\]
+
+其 kernel 为：
+

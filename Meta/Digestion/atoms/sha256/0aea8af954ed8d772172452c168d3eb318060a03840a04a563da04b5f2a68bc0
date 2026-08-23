@@ -1,0 +1,14 @@
+# 70. \(p\)-进观察距离形式化
+
+目标：
+
+```lean
+theorem first_disagreement_eq_valuation_add_one
+theorem observerDistance_eq_padicDistance
+theorem residueFiber_eq_closedBall
+```
+
+随后把 `DiscretePredictionUltrametric` 泛化到依赖素数坐标与时间坐标的双重上确界。
+
+---
+

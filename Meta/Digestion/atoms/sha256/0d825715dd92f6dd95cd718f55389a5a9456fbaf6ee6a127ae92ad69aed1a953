@@ -1,0 +1,14 @@
+## 最终原理 235.1（观察资源的本体量是总证据，不是接口数）
+
+\[
+\boxed{
+\text{number of sensors}
+\neq
+\text{total distinguishability}.
+}
+\]
+
+一个无限但快速衰减的传感器族可能弱于一个零密度但临界发散的传感器族。
+
+---
+

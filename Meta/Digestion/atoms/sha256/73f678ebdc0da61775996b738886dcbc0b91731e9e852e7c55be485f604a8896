@@ -1,0 +1,10 @@
+## D.4 Adelic behavior completion
+
+统一有限素数、\(p\)-进精度、无穷位与时间：
+
+\[
+\operatorname{Trace}:
+X\to
+\prod_{v\in\mathcal V_{\mathbb Q},n\in\mathbb N}O_{v,n}.
+\]
+

@@ -1,0 +1,38 @@
+# 71. 依赖图
+
+```text
+ConceptFiberDecomposition
+        │
+        ▼
+PrimeObservers.Foundation.LocalReadout
+        │
+        ├────────► JointReadout ─────► Refinement ─────► SensorCover
+        │                 │
+        │                 ▼
+        │          LocalGlobalResidual
+        │
+        ├────────► CRT.FiniteJoin ───► BoundedIntegerTomography
+        │                 │
+        │                 └──────────► PrimePowerGrid
+        │
+        ├────────► Arithmetic.QuadraticCharacterObserver
+        │                 ├──────────► ThreeRingSplittingObserver
+        │                 │                    ▼
+        │                 │          OrientedModFiveCompletion
+        │                 └──────────► DiscriminantBlindFormCountermodel
+        │
+        ├────────► Dynamics.PrimeTrace
+        │                 │
+CongruenceKernel ─────────┤
+        │                 ▼
+        │        FinitePrimeTimeTomography
+ItineraryCompletion ──────┤
+        │                 ▼
+ControlledBehaviorUniversality ─► ControlledPrimeBehavior
+        │
+        ├────────► CrossingPhaseLocalPeriods
+        └────────► Geometry.PrimePredictionUltrametric
+```
+
+---
+

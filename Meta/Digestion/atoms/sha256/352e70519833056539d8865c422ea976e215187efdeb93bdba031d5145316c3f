@@ -1,0 +1,23 @@
+# 244. 基数预算下的 greedy 近似
+
+设：
+
+\[
+F(\varnothing)=0,
+\]
+
+且 \(F\) 单调次模。给定最多选择 \(k\) 个实验的预算，greedy 递归选择最大边际增益：
+
+\[
+e_t
+\in
+\operatorname*{argmax}_{e\notin S_t}
+\left(
+F(S_t\cup\{e\})-F(S_t)
+\right),
+\]
+
+\[
+S_{t+1}=S_t\cup\{e_t\}.
+\]
+

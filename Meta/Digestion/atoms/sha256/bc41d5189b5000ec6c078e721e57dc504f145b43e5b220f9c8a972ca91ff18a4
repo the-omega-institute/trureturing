@@ -1,0 +1,8 @@
+\[
+\operatorname{profile}_i(a)=q_i(a.1),
+\qquad
+\operatorname{profile}_{\mathrm{all}}(a)
+=
+(i\mapsto q_i(a.1)).
+\]
+

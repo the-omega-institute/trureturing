@@ -1,0 +1,11 @@
+## 原理 225.1
+
+\[
+\boxed{
+\text{posterior collapse}
+\]
+
+不是“观察次数趋于无限”单独保证的，而由 product-law 互奇性保证。
+
+---
+

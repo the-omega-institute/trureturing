@@ -1,0 +1,14 @@
+\[
+Q_t(P,Q)
+=
+P^2-(2t+1)PQ+(t^2+t+1)Q^2
+\]
+
+通过显式 unimodular 换元化为 Eisenstein 范数：
+
+\[
+Q_t(P,Q)=x^2+xy+y^2,
+\qquad
+x=P-(t+1)Q,\ y=Q.
+\]
+

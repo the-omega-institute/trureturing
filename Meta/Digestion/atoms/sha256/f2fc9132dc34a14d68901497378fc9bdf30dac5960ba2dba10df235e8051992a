@@ -1,0 +1,10 @@
+## 定义 4.5（静态相对同一性）
+
+\[
+x\sim_J y
+\iff
+q_J(x)=q_J(y)
+\iff
+\forall i\in J,\ q_i(x)=q_i(y).
+\]
+

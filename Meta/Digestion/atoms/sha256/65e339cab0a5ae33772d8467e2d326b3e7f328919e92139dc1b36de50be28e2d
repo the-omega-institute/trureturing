@@ -1,0 +1,13 @@
+## 定义 2.1（定义展开）
+
+存在递归翻译：
+
+\[
+(-)^\flat:
+\mathcal L_{\mathbb P\mathrm O}
+\to
+\mathcal L_0
+\]
+
+将 `PrimeObserver`、`JointReadout`、`LocalGlobalResidual`、`PrimeTrace` 等新符号展开为类型、函数、等式、乘积与商。
+

@@ -1,0 +1,17 @@
+## Q.7 必要有限测试
+
+1. 第 258 节两个模型的 observational table 都为 \((1/2,0,0,1/2)\)；
+2. `do(X=0)` 与 `do(X=1)` 下方向反转模型的 \(Y\)-law 不同；
+3. 第 285 节两个模型的 observational table 都为四点均匀；
+4. 两模型每个单世界 \(Y_x\) 均为 Bernoulli \(1/2\)；
+5. 稳定模型满足 \(P(Y_0=Y_1)=1\)，翻转模型为零；
+6. 对随机 \(p_0,p_1\in[0,1]\) 与所有合法 \(2\times2\) coupling，枚举验证 Fréchet 界；
+7. monotonicity 约束下验证 \(b=p_1-p_0\)；
+8. hidden-confounding 模型中 conditional effect 为一而 interventional effect 为零；
+9. positivity 反模型在观测支持上 law 相同、支持外干预不同；
+10. 三模型主动方向实验的静态调用数为二、期望调用数为 \(1+\varepsilon\)；
+11. 独立块 SCM 的 finite joint law 等于局部 law 乘积；
+12. shared-source countermodel 的 mutual information 非零；
+13. causal carry 为空时 quotient intervention 良定义；
+14. off-policy residual witness 的 behavior trajectory laws 相同而 target-policy laws 不同。
+

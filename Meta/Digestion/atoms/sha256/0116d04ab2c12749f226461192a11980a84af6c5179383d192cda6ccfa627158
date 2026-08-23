@@ -1,0 +1,34 @@
+# 92. 模六十的三环画像其实已经穷尽全部二次角色
+
+取：
+
+\[
+G=(\mathbb Z/60\mathbb Z)^\times.
+\]
+
+由 CRT：
+
+\[
+G
+\simeq
+(\mathbb Z/4\mathbb Z)^\times
+\times
+(\mathbb Z/3\mathbb Z)^\times
+\times
+(\mathbb Z/5\mathbb Z)^\times
+\simeq
+C_2\times C_2\times C_4.
+\]
+
+因此：
+
+\[
+G/G^2\simeq C_2^3.
+\]
+
+Gaussian、Eisenstein、Golden 三个 split/inert 角色分别给出三个独立二元角色。其画像已经达到八个可能值，所以它们张成：
+
+\[
+\operatorname{Hom}(G,\mu_2).
+\]
+

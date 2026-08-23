@@ -1,0 +1,12 @@
+## 定理 233.1（带噪剩余的无限完成判据）
+
+假设各坐标条件独立，且对每个 \(p\)，两局部 laws 互相绝对连续，则：
+
+\[
+\boxed{
+\mathbf P_n\perp\mathbf P_m
+\iff
+\sum_pe_p(n,m)=\infty.
+}
+\]
+

@@ -1,0 +1,12 @@
+# 241. 折扣收缩给出唯一主动观察值
+
+设 \(V,W\) 为 belief 空间上的有界函数。由于停止项相同，而每个 continuation 只把未来值乘以 \(\gamma\)，有：
+
+\[
+\boxed{
+\|\mathcal TV-\mathcal TW\|_\infty
+\le
+\gamma\|V-W\|_\infty.
+}
+\]
+

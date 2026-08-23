@@ -1,0 +1,9 @@
+\[
+\omega_5(r)
+=
+\begin{cases}
+0,&r\bmod5\in\{1,2\},\\
+1,&r\bmod5\in\{3,4\}.
+\end{cases}
+\]
+

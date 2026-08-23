@@ -1,0 +1,8 @@
+## 定义 24.1（全素数—全时间可分离）
+
+\[
+\forall x\neq y,
+\exists i:\mathcal I,\exists n:\mathbb N,
+q_i(F^nx)\neq q_i(F^ny).
+\]
+

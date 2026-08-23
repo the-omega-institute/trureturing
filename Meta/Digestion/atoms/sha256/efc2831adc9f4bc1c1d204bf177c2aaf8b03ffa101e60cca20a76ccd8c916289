@@ -1,0 +1,8 @@
+## 194.1 可观察代数链
+
+1. 饱和事件定义与逆像闭包；
+2. `observableEventAlgebra_equiv_powerset_range`；
+3. `refines_iff_observableAlgebra_le`；
+4. 有限纤维等于 Boolean 原子；
+5. 目标族商的最小充分普适性质。
+

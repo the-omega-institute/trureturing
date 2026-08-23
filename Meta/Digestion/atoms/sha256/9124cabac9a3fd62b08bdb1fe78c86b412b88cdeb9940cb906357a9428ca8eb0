@@ -1,0 +1,22 @@
+## 定理 225.1（互奇区后验完成，经典推论）
+
+若：
+
+\[
+\mathbf P_x\perp\mathbf P_y,
+\]
+
+则：
+
+\[
+\pi_m(x)\to1
+\quad
+\mathbf P_x\text{-a.s.},
+\]
+
+\[
+\pi_m(x)\to0
+\quad
+\mathbf P_y\text{-a.s.}
+\]
+

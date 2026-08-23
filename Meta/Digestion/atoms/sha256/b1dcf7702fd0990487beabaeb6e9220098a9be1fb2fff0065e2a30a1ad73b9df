@@ -1,0 +1,14 @@
+# 298. Policy positivity 是路径 image 条件
+
+行为政策记为：
+
+\[
+\mu_t(a\mid h).
+\]
+
+目标政策为：
+
+\[
+\pi_t(a\mid h).
+\]
+

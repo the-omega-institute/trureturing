@@ -1,0 +1,25 @@
+## 定理 230.2（弱信号二阶展开）
+
+当 \(\delta\to0\) 时：
+
+\[
+\boxed{
+H^2(P_\delta,Q_\delta)
+=4\delta^2+O(\delta^4),
+}
+\]
+
+\[
+\boxed{
+-\log\rho(P_\delta,Q_\delta)
+=2\delta^2+O(\delta^4),
+}
+\]
+
+\[
+\boxed{
+D_{\mathrm{KL}}(P_\delta\Vert Q_\delta)
+=8\delta^2+O(\delta^4).
+}
+\]
+

@@ -1,0 +1,16 @@
+\[
+C(P,Q)
+=
+\sup_\lambda\sum_jE_{\lambda,j}
+\]
+
+一般不等于：
+
+\[
+\sum_j\sup_\lambda E_{\lambda,j},
+\]
+
+因为异质坐标必须共享同一个 \(\lambda\)。
+
+---
+

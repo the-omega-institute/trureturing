@@ -1,0 +1,41 @@
+## 定理 145.2（带类型的语言层级）
+
+同一个“素数观察”词至少包含四种严格不同的语言：
+
+\[
+\boxed{
+\begin{aligned}
+\mathcal L_{\mathrm{split}}
+&:\quad\text{以素数／判别式为状态的分裂与角色画像};\\
+\mathcal L_{\mathrm{support}}
+&:\quad\text{以正整数为状态的素因子出现画像};\\
+\mathcal L_{\mathrm{valuation}}
+&:\quad\text{以正整数为状态的完整素指数};\\
+\mathcal L_{\mathrm{operator}}
+&:\quad\text{以密度算子为状态的非交换 observable 语言}.
+\end{aligned}
+}
+\]
+
+这些语言一般位于不同状态类型上，因而不能无 transport 地写成一条全局偏序。本文已经得到的严格关系是：
+
+\[
+\boxed{
+\mathcal L_{\mathrm{support}}
+\prec_{\mathbb N_{>0}}
+\mathcal L_{\mathrm{valuation}},
+}
+\]
+
+因为相同 radical 可以具有不同重数；以及：
+
+\[
+\boxed{
+\mathcal L_{\mathrm{prime\text{-}diagonal}}
+\prec_{\operatorname{State}(\mathcal H)}
+\mathcal L_{\mathrm{operator}},
+}
+\]
+
+因为全部对角 prime observables 仍不能读取相对相位。分裂／角色语言则属于 prime-as-state 或 form-as-state 范畴，必须通过显式编码映射后才能与整数支撑语言比较。
+

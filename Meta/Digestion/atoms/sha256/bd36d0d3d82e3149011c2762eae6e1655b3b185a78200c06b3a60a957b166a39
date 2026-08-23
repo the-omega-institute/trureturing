@@ -1,0 +1,11 @@
+\[
+\operatorname{Carry}(F;q,r)
+=
+\sum_{x,y:X}
+(q(x)=q(y))
+\times
+(r(Fx)\neq r(Fy)).
+\]
+
+若存在 \(\bar F:O\to P\) 使：
+

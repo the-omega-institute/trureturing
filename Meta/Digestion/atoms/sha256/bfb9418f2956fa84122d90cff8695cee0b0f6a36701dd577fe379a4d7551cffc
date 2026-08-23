@@ -1,0 +1,9 @@
+\[
+\mathbb E[z^{\omega(N)}]
+=
+\prod_p
+\left(1-(1-z)p^{-s}\right).
+\]
+
+在收敛允许的 \(z\) 区域：
+

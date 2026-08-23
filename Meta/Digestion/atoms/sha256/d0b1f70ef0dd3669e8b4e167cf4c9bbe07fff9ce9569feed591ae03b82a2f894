@@ -1,0 +1,10 @@
+\[
+\mathcal B_{t+1}
+=
+\left\{
+\mathsf B_i^M(\pi,y):
+\pi\in\mathcal B_t,
+M\in\mathfrak M
+\right\}.
+\]
+

@@ -1,0 +1,11 @@
+\[
+\rho_t^{x,y}(h_t)
+=
+\rho\bigl(
+K_{i_t}(x,\cdot),
+K_{i_t}(y,\cdot)
+\bigr),
+\]
+
+以及 predictable evidence process：
+

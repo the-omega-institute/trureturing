@@ -1,0 +1,20 @@
+## 113.3 乘积行为链
+
+这条链应只依赖仓库已有：
+
+- `ItineraryCompletion`；
+- `ControlledBehaviorUniversality`；
+- quotient / product setoid 基础。
+
+优先证明：
+
+```lean
+theorem product_trace_eq
+
+theorem product_behavior_relation_iff
+
+theorem product_behavior_quotient_equiv
+
+theorem product_completion_depth_eq_max
+```
+

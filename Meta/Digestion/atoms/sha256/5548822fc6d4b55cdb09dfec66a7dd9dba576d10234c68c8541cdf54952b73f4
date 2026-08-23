@@ -1,0 +1,10 @@
+### 禁令 4：禁止把 CRT 地址分解解释成任意物理独立性
+
+\[
+\mathbb Z/M\mathbb Z
+\simeq
+\prod_{p^e\parallel M}\mathbb Z/p^e\mathbb Z
+\]
+
+是算术等价；只有在已经证明相应代数或动力学映射也分解时，才能进一步谈算子、通道或策略的独立因子。
+

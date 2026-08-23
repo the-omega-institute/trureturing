@@ -1,0 +1,10 @@
+\[
+\boxed{
+\mathbb E_s[\Omega(N)]
+=
+\sum_p\frac{1}{p^s-1}.
+}
+\]
+
+因为：
+

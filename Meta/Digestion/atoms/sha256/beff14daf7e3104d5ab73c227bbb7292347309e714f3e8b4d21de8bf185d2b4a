@@ -1,0 +1,20 @@
+# 38. 隐运动刚性与连续时间扇区
+
+仓库 `HiddenMotionRigidity` 已证明：
+
+\[
+\gamma:I\to\prod_p\mathbb Z_p,
+\qquad
+\operatorname{Continuous}(\gamma)
+\]
+
+推出：
+
+\[
+\forall s,t\in I,\gamma(s)=\gamma(t).
+\]
+
+在该拓扑模型中，纯素数隐画像沿连通时间常值。该定理不排除离散跳变、非连续映射、改变拓扑后的运动或完整 solenoid 中的可见实流。
+
+---
+

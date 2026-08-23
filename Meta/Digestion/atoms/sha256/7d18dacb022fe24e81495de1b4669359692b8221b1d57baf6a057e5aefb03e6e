@@ -1,0 +1,17 @@
+## 推论 96.3（阿贝尔 Frobenius 融合）
+
+若 \(L_1,L_2/K\) 阿贝尔，且 \(\mathfrak p\) 在复合域中不分歧，则：
+
+\[
+\operatorname{Frob}_{\mathfrak p}(L/K)
+\mapsto
+\left(
+\operatorname{Frob}_{\mathfrak p}(L_1/K),
+\operatorname{Frob}_{\mathfrak p}(L_2/K)
+\right),
+\]
+
+并且该对自动满足交域兼容性。
+
+---
+

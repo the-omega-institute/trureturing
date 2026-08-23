@@ -1,0 +1,10 @@
+\[
+\rho(K_x^{\otimes n},K_y^{\otimes n})
+=
+\rho(K_x,K_y)^n.
+\]
+
+`D5/S3/Estimation/BhattacharyyaExponent.lean` 已对仓库有限 i.i.d. 编码证明 affinity 的 \(n\) 次幂及相应检验错误下界和样本复杂度反演。
+
+---
+

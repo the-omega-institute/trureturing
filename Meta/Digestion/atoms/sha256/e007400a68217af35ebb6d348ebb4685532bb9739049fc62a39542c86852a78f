@@ -1,0 +1,15 @@
+\[
+\boxed{
+\mathcal O_{\mathbb P}
+=
+\bigl(
+(q_{p,k})_{p,k},
+\text{降精度图},
+\text{CRT 联合图},
+\text{动态更新},
+\text{目标族},
+\text{成本与准入}
+\bigr).
+}
+\]
+

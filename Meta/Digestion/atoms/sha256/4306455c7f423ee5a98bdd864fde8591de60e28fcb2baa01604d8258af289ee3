@@ -1,0 +1,11 @@
+## 196.2 nilpotent 反模型
+
+```lean
+def zero₂ : Matrix (Fin 2) (Fin 2) K := 0
+
+def jordanNilpotent₂ : Matrix (Fin 2) (Fin 2) K :=
+  !![0, 1; 0, 0]
+```
+
+证明全部正幂迹相同、charpoly 相同、rank 不同。
+

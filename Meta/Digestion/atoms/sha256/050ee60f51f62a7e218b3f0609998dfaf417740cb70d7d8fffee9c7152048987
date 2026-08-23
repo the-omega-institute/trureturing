@@ -1,0 +1,10 @@
+## 第一步：abduction
+
+由观测证据更新外生状态：
+
+\[
+P_U
+\longmapsto
+P_U(\cdot\mid E=e).
+\]
+

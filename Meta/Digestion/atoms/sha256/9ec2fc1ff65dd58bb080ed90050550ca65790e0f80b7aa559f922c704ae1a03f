@@ -1,0 +1,22 @@
+## 原理 42.1（三次量词分离）
+
+\[
+\forall i,\exists x_i
+\]
+
+只给逐处见证；
+
+\[
+\exists(x_i)_i,\operatorname{Compatible}(x_i)
+\]
+
+给兼容局部对象；
+
+\[
+\exists x,\forall i,\ell_i(x)=x_i
+\]
+
+才给全局来源。
+
+---
+

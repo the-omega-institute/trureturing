@@ -1,0 +1,10 @@
+## 定义 249.2（distributionally robust belief）
+
+若当前知识不是单一后验，而是一组可能后验：
+
+\[
+\mathcal B_t\subseteq\mathcal P(X),
+\]
+
+则实验更新作用于集合：
+

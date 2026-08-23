@@ -1,0 +1,20 @@
+\[
+\boxed{
+(\mathcal TV)(\pi)
+=
+\min
+\left\{
+G(\pi),
+\inf_a
+\left[
+c_a
++
+\gamma
+\int
+V(\mathsf B_a(\pi,y))
+M_a^\pi(dy)
+\right]
+\right\}.
+}
+\]
+

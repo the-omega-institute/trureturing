@@ -1,0 +1,8 @@
+\[
+\pi_{t+1}
+=
+\mathsf B_i(\pi,Y_t).
+\]
+
+因此主动观察在 belief 空间上成为完全可见 Markov 决策过程。
+

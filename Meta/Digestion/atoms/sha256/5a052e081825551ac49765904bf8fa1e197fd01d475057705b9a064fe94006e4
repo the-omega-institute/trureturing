@@ -1,0 +1,49 @@
+# 65. 最小形式化内核
+
+```lean
+structure LocalObserver (X : Type u) where
+  Output : Type v
+  readout : X → Output
+
+structure PrimeScale where
+  p : ℕ
+  hp : Nat.Prime p
+  k : ℕ
+  hk : 0 < k
+```
+
+```lean
+def JointEq
+    (q : (i : ι) → X → O i)
+    (J : Finset ι)
+    (x y : X) : Prop :=
+  ∀ i, i ∈ J → q i x = q i y
+```
+
+```lean
+def LocalGlobalResidual
+    (q : (i : ι) → X → O i) : Type _ :=
+  {xy : X × X // xy.1 ≠ xy.2 ∧ ∀ i, q i xy.1 = q i xy.2}
+```
+
+```lean
+def PrimeTraceEq
+    (F : X → X)
+    (q : (i : ι) → X → O i)
+    (J : Finset ι)
+    (x y : X) : Prop :=
+  ∀ n i, i ∈ J → q i (F^[n] x) = q i (F^[n] y)
+```
+
+第一阶段必须证明：
+
+1. `jointEq_union`;
+2. `jointEq_mono`;
+3. `localGlobalResidual_empty_iff`;
+4. `finite_separating_subfamily`;
+5. `primeTraceEq_eq_congruenceKernel`;
+6. `primeTraceEq_forward`;
+7. `finite_prime_time_tomography`.
+
+---
+

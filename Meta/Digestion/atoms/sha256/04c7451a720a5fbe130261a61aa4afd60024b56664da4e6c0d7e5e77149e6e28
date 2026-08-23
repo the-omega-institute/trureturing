@@ -1,0 +1,19 @@
+\[
+q_{\mathfrak p}^{\operatorname{loc-prin}}(I)
+=
+\text{“}I_{\mathfrak p}\text{ principal”}
+\]
+
+对所有 \(I\) 恒为真。
+
+因此：
+
+\[
+\boxed{
+\text{全部局部主理想观察者}
+\text{不能决定全局主理想性；}
+\operatorname{Cl}(A)
+\text{是承重完成。}
+}
+\]
+

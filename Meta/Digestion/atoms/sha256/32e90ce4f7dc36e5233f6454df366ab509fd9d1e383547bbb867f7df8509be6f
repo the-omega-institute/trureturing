@@ -1,0 +1,8 @@
+\[
+\boxed{
+D(P_1\otimes P_2\|Q_1\otimes Q_2)
+=
+D(P_1\|Q_1)+D(P_2\|Q_2).
+}
+\]
+

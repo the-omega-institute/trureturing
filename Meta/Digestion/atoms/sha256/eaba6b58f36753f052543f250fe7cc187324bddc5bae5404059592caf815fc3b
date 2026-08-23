@@ -1,0 +1,22 @@
+## 定理 5.2（目标充分性）
+
+以下等价：
+
+\[
+\operatorname{TargetRes}(q,t)=\varnothing,
+\]
+
+\[
+\forall x,y,\ x\sim_{\mathrm{loc}}y\Rightarrow t(x)=t(y),
+\]
+
+以及在适当选择原则下存在 \(\bar t\) 使：
+
+\[
+t=\bar t\circ q_{\mathrm{all}}.
+\]
+
+完整身份不必被恢复；只要目标在局部纤维上稳定，局部观察已经对该任务充分。
+
+---
+

@@ -1,0 +1,36 @@
+# 247. 自适应次模性的三状态反模型
+
+取隐藏状态：
+
+\[
+X\in\{a,b,c\},
+\]
+
+先验：
+
+\[
+\mathbb P(a)=1-2\varepsilon,
+\qquad
+\mathbb P(b)=\mathbb P(c)=\varepsilon,
+\]
+
+其中：
+
+\[
+0<\varepsilon<\frac12.
+\]
+
+定义两个无噪声实验：
+
+\[
+A:
+\quad
+a\text{ vs }\{b,c\},
+\]
+
+\[
+B:
+\quad
+c\text{ vs }\{a,b\}.
+\]
+

@@ -1,0 +1,18 @@
+## 定义 203.1（统计不可区分关系）
+
+\[
+\boxed{
+x\sim_K^{\mathrm{law}}y
+\iff
+K(x,\cdot)=K(y,\cdot).
+}
+\]
+
+这不是说两次实验恰好产生同一个样本，而是说所有输出事件的概率都相同：
+
+\[
+\forall A\in\Sigma_O,
+\quad
+K(x,A)=K(y,A).
+\]
+

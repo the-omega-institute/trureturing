@@ -1,0 +1,6 @@
+\[
+D(P\|Q)
+=
+\sum_oP(o)\log\frac{P(o)}{Q(o)}.
+\]
+

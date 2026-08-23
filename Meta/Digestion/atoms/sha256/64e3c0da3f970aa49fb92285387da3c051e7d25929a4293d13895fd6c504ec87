@@ -1,0 +1,20 @@
+## 定理 243.2（次模性）
+
+对：
+
+\[
+S\subseteq T,
+\qquad
+e\notin T,
+\]
+
+有：
+
+\[
+\boxed{
+F(S\cup\{e\})-F(S)
+\ge
+F(T\cup\{e\})-F(T).
+}
+\]
+

@@ -1,0 +1,14 @@
+# 267. 干预自然性与因果 carry
+
+设微观模型状态为 \(M\)，粗接口为：
+
+\[
+q:\mathfrak M\to O.
+\]
+
+干预操作为：
+
+\[
+I_a:\mathfrak M\to\mathfrak M.
+\]
+

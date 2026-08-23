@@ -1,0 +1,9 @@
+\[
+\operatorname{TargetRes}(q,t)
+=
+\sum_{x,y:X}
+(x\sim_{\mathrm{loc}}y)
+\times
+(t(x)\neq t(y)).
+\]
+

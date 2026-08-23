@@ -1,0 +1,12 @@
+## 原理 240.1（停止与精化竞争）
+
+每一步都比较：
+
+\[
+\boxed{
+\text{current irreducible decision risk}
+\quad\text{vs}\quad
+\text{price of one more refinement + future risk}.
+}
+\]
+

@@ -1,0 +1,10 @@
+## 定理 97.1（二次复合域秩定理）
+
+\[
+\boxed{
+[L:K]=2^r,
+\qquad
+\operatorname{Gal}(L/K)\simeq C_2^r.
+}
+\]
+

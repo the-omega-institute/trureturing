@@ -1,0 +1,13 @@
+\[
+\boxed{
+\mathcal A(s,t)
+=
+\prod_p
+\frac{
+\sqrt{(1-p^{-s})(1-p^{-t})}
+}{
+1-p^{-(s+t)/2}
+}.
+}
+\]
+

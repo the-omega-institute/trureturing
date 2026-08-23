@@ -1,0 +1,9 @@
+## 定义 37.1（素数坐标观察者）
+
+\[
+\pi_p:
+\prod_q\mathbb Z_q
+\to
+\mathbb Z_p.
+\]
+

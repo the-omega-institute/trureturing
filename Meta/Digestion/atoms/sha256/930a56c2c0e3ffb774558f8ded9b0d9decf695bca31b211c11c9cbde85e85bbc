@@ -1,0 +1,4 @@
+## 仓库锚点 206.1
+
+`D5/S3/Estimation/DecisionRisk/FixedSuiteBayesRiskFloor.lean` 已把 Mathlib 的 `bayesRisk_le_avgRisk` 接到固定观察套件：任何只使用同一套件的学习器，其平均风险不低于该套件的 Bayes floor。
+

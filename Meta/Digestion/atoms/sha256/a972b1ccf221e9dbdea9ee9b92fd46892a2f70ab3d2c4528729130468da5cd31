@@ -1,0 +1,14 @@
+## 原理 187.1（trace saturation 与 extension residual）
+
+\[
+\boxed{
+\text{在 Brauer--Nesbitt 型适用前件下，完整 character}
+\text{可以决定半单化，}
+\text{却可能看不见非平凡扩张类。}
+}
+\]
+
+在 Galois 表示语境中，Frobenius 迹观察若要升级为完整表示身份，必须显式加入 semisimplicity 或读取 extension／cohomology 数据；不得仅凭“几乎所有素数迹相同”无条件宣布原表示同构。
+
+---
+

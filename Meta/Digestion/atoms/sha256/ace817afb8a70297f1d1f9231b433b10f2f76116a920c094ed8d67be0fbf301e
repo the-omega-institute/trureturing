@@ -1,0 +1,4 @@
+## 推论 238.1（task-independent dynamic quotient）
+
+belief quotient 不是只对某个单独目标充分，而是对全部 Bayes decision problems 同时充分。
+

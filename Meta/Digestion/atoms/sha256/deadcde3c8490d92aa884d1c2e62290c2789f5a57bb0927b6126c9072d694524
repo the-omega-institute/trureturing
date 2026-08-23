@@ -1,0 +1,4 @@
+### 证明
+
+这是函数对其 range 的 kernel-factorization。若两个模型具有同一观测 law，纤维常值性保证 \(\bar T(P)=T(M)\) 与代表选择无关；range surjectivity 给出唯一性。 \(\square\)
+

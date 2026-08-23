@@ -1,0 +1,10 @@
+\[
+\boxed{
+d_{J,\gamma}^{F}(x,y)
+=
+\sup_{i\in J,\ n\ge0}
+w_i\gamma^n
+\delta_i(F^nx,F^ny).
+}
+\]
+

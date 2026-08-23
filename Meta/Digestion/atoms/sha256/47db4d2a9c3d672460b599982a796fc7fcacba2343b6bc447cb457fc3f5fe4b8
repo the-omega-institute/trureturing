@@ -1,0 +1,17 @@
+\[
+\sigma_{5}(p)
+=
+\begin{cases}
+\mathrm S,&p\equiv1,4\pmod5,\\
+\mathrm I,&p\equiv2,3\pmod5.
+\end{cases}
+\]
+
+且：
+
+\[
+5=(-1+2\varphi)^2
+\]
+
+给出分歧素数五。
+

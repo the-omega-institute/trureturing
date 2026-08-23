@@ -1,0 +1,12 @@
+# 102. 类群是全局主理想性的最小群值完成
+
+主分式理想组成子群：
+
+\[
+\operatorname{Prin}(A)
+\le
+\operatorname{FracId}(A).
+\]
+
+定义理想类群：
+

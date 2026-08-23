@@ -1,0 +1,8 @@
+# 121. 随机通道、Blackwell 精化与同语言重复极限
+
+确定性读出 \(q:X\to O\) 可视为 Dirac Markov kernel。更一般地，随机观察者为：
+
+\[
+K:X\rightsquigarrow O.
+\]
+

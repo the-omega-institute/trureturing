@@ -1,0 +1,11 @@
+## 定义 22.2（动态素数等价）
+
+\[
+\boxed{
+x\sim_J^{\infty}y
+\iff
+\forall i\in J,\forall n\in\mathbb N,
+q_i(F^n x)=q_i(F^n y).
+}
+\]
+

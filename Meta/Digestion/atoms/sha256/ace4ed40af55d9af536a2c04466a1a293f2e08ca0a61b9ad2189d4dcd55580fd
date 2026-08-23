@@ -1,0 +1,33 @@
+## 最终统一式 251.1
+
+\[
+\boxed{
+\begin{aligned}
+\text{typed state}
+&\to
+\text{experiment kernel};\\
+\text{experiment kernel}
+&\to
+\text{law quotient};\\
+\text{finite suite}
+&\to
+\text{TV/Hellinger/KL/Chernoff evidence};\\
+\text{infinite suite}
+&\to
+\text{product measure class};\\
+\text{history}
+&\to
+\text{posterior belief};\\
+\text{belief}
+&\to
+\text{Bellman continuation};\\
+\text{policy}
+&\to
+\text{pathwise evidence accumulation};\\
+\text{stopping}
+&\to
+\text{task-relative completion}.
+\end{aligned}
+}
+\]
+

@@ -1,0 +1,11 @@
+\[
+\boxed{
+R_{\mathrm{fin}}(G)
+=
+\bigcap_{
+N\trianglelefteq G,
+[G:N]<\infty
+}N.
+}
+\]
+

@@ -1,0 +1,12 @@
+\[
+\boxed{
+\operatorname{Sep}^{\mathrm{TV}}_\varepsilon(x,y)
+=
+\left\{
+p:
+\operatorname{TV}(K_p(x),K_p(y))
+\ge\varepsilon
+\right\}.
+}
+\]
+

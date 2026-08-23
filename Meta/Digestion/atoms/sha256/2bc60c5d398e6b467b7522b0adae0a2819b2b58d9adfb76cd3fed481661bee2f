@@ -1,0 +1,8 @@
+\[
+E_\lambda(P,Q)
+=
+-\log C_\lambda(P,Q).
+\]
+
+Chernoff 信息为：
+

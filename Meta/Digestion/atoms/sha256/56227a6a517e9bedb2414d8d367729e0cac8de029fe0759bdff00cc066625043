@@ -1,0 +1,12 @@
+## 1.1 素数、二次型与 crossing 锚点
+
+- `D5/S3/PrimeForms/GoldenPrimeClassification.lean`：判别式五轴上的 split / inert / ramified 分类；
+- `D5/S3/PrimeForms/Splitting/EisensteinCriterion.lean`：判别式负三轴的剩余判据；
+- `D5/S3/PrimeForms/SumTwoSquaresClassification.lean`：两平方表示分类；
+- `D5/S3/PrimeForms/ThreeModFourDescent.lean`：三模四素数的下降引擎；
+- `D5/S3/PrimeForms/Crossing/CrossingNormForm.lean`：crossing 型与 Eisenstein 范数值域的显式统一；
+- `D5/S3/PrimeForms/Crossing/ExactPropagation.lean`：正锥 sandwich 的精确 winding-phase 传播；
+- `D5/S3/PrimeForms/Crossing/WindingOrbitZero.lean`：偶非负相位轨道的唯一零点；
+- `D5/S3/PrimeForms/CrossingPeriodicity/SandwichPhasePeriod.lean`：模十二的最小六步周期；
+- `D5/S3/PrimeForms/PellFamilies/*.lean` 与 `BronzeLadderLeg.lean`：Pell 轨道与二次范数不变量。
+

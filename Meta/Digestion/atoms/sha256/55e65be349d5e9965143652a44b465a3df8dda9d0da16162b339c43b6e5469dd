@@ -1,0 +1,14 @@
+## 仓库锚点 208.1
+
+`D5/S3/TotalVariation/HellingerDataProcessing.lean` 已在有限归一化质量函数上证明：
+
+\[
+H^2(P',Q')
+\le
+H^2(P,Q),
+\]
+
+等价地 Bhattacharyya affinity 不减。
+
+`D5/S3/TotalVariation/DataProcessing.lean` 与 `D5/S3/Divergence/ClassicalDPI.lean` 分别提供总变差与经典 KL 的数据处理方向。
+

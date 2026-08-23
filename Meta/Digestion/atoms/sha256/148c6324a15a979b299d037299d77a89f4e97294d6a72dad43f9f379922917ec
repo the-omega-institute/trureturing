@@ -1,0 +1,12 @@
+## 定义 249.1（minimax policy）
+
+\[
+\boxed{
+\Pi_{\mathrm{rob}}
+\in
+\operatorname*{argmin}_\Pi
+\sup_{M\in\mathfrak M}
+J_M(\Pi).
+}
+\]
+

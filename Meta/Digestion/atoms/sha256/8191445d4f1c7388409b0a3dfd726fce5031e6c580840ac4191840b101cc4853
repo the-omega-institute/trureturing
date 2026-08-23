@@ -1,0 +1,10 @@
+# 186. nilpotent rank 塔完整恢复 Jordan 分块
+
+设 \(N\in M_n(K)\) 为 nilpotent。定义：
+
+\[
+a_k(N)=\dim\ker(N^k),
+\qquad
+a_0=0.
+\]
+

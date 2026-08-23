@@ -1,0 +1,26 @@
+## 定义 205.1（结构性目标可识别）
+
+称 \(K\) 对 \(T\) 结构性可识别，当：
+
+\[
+\boxed{
+K(x,\cdot)=K(y,\cdot)
+\Longrightarrow
+T(x)=T(y).
+}
+\]
+
+等价地，存在唯一映射：
+
+\[
+\overline T:Z_K\to\Theta
+\]
+
+使：
+
+\[
+T=\overline T\circ\eta_K.
+\]
+
+这只是说明不同目标值对应不同 law；它不保证一个有限样本即可无误恢复目标。
+

@@ -1,0 +1,4 @@
+## 原理 299.1
+
+importance weighting、direct modeling、doubly robust estimation等算法都建立在某个识别桥上。若 off-policy residual 非空，改变估计器不能创造行为支持之外的反事实转移。
+

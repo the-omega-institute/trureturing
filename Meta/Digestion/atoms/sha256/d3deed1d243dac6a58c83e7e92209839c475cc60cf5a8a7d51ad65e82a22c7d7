@@ -1,0 +1,4 @@
+## 196.3 kernel 塔恢复 nilpotent partition
+
+可先在显式 Jordan block multiset 模型中证明组合定理，再连接一般 nilpotent matrix 的 Jordan normal form。不要把尚未在 Mathlib 完备的 Jordan API 暗装为公理。
+

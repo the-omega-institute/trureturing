@@ -1,0 +1,37 @@
+## 原理 111.1（零点桥梁纪律）
+
+以下推理无效：
+
+\[
+\text{每个局部因子非零}
+\Longrightarrow
+\text{解析延拓在所有点非零}.
+\]
+
+也不能从每个局部系数的同号缩放、单位模相位或局部范数界，直接推出延拓后全局零点位置。
+
+合法路线必须包含：
+
+1. 局部因子到绝对域函数的收敛证明；
+2. 绝对域函数到更大域解析完成的存在证明；
+3. 控制零点的全局正性、谱性或函数方程桥；
+4. 对边界项、极点与正则化的独立审计。
+
+这把 Appendix D.10 精化为三层：
+
+\[
+\boxed{
+\text{local Euler profile}
+\to
+\text{convergent global function}
+\to
+\text{analytic completion}
+\to
+\text{zero geometry}.
+}
+\]
+
+任何缺失箭头都不能由“素数观察者统一”本身代替。
+
+---
+

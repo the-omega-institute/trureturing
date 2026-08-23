@@ -1,0 +1,20 @@
+# 83. 与量子观察的有限接口
+
+仓库已证明：
+
+\[
+M_M(\mathbb C)
+\simeq
+\bigotimes_{p^e\parallel M}M_{p^e}(\mathbb C).
+\]
+
+本文不主张：
+
+- 量子基本粒子就是素数；
+- 波函数真实生活在 \(\prod_p\mathbb Z_p\)；
+- prime-power tensor factors 必为物理 subsystem；
+- 观察者意识由 CRT 产生；
+- Born 规则由素数分解推出。
+
+---
+

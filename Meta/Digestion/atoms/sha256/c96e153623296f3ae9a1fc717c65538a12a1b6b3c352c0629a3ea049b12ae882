@@ -1,0 +1,16 @@
+## 定理 25.1（一次稳定永久稳定）
+
+若：
+
+\[
+R_m^J=R_{m+1}^J,
+\]
+
+则：
+
+\[
+\forall r,\ R_{m+r}^J=R_m^J.
+\]
+
+这是仓库 `PredictionPartitionStability` 的预算实例。
+

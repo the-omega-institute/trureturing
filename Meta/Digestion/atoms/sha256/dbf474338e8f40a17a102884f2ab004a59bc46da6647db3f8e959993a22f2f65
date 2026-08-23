@@ -1,0 +1,11 @@
+\[
+\mathcal I(s)
+=
+\mathbb E_s
+\left[
+\left(
+\partial_s\log\mathbb P_s(N)
+\right)^2
+\right].
+\]
+

@@ -1,0 +1,15 @@
+## L.2 本阶段仓库真值锚点
+
+1. `D5/S3/TotalVariation/Hellinger.lean`：有限 squared Hellinger 定义及与 total variation 的双边桥。
+2. `D5/S3/TotalVariation/HellingerDataProcessing.lean`：随机通道下 affinity 增长与 Hellinger contraction。
+3. `D5/S3/TotalVariation/Countable/HellingerCountableComparison.lean`：可数 Hellinger series 与 absolute-difference series 的单向比较及 converse failure witness。
+4. `D5/S3/TotalVariation/ProductSubadditive.lean`：product total variation 次可加与严格性实例。
+5. `D5/S3/Divergence/ProductAdditivity.lean`：有限正概率 law 的 KL product additivity。
+6. `D5/S3/Entropy/MutualInformation.lean`：有限 mutual information 定义与非负性。
+7. `D5/S3/Entropy/MutualInformationProduct.lean`：product law 的 mutual information 为零。
+8. `D5/S3/Estimation/LeCam.lean` 与 `LeCamTight.lean`：二点测试 total-error floor 与显式达到者。
+9. `D5/S3/Estimation/BhattacharyyaExponent.lean`：i.i.d. affinity 乘法、测试下界与 sample-complexity inversion。
+10. `D5/S3/Estimation/DecisionRisk/FixedSuiteBayesRiskFloor.lean`：固定观察 suite 的 Bayes risk floor。
+11. `D5/S3/Observer/DynamicProgramming/BellmanContraction.lean`：折扣 prediction Bellman operator 的 contraction 与 unique fixed point。
+12. `D5/S3/Observer/MetricGeometry/FinitePredictionTruncation.lean` 及相关预测距离文件：有限截断与未来余量的度量控制。
+

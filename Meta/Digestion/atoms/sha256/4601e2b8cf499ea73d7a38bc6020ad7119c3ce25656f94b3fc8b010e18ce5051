@@ -1,0 +1,9 @@
+\[
+\boxed{
+P(y\mid do(x))
+=
+\sum_z
+P(y\mid x,z)P(z).
+}
+\]
+

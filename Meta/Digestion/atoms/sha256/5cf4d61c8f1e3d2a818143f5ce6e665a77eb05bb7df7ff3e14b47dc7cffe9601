@@ -1,0 +1,18 @@
+\[
+E_Y
+=
+\text{“干预 }Y\text{ 是否改变 }X\text{ law”}.
+\]
+
+其确定签名为：
+
+\[
+\begin{array}{c|cc}
+M&E_X&E_Y\\
+\hline
+M_0&0&0\\
+M_{XY}&1&0\\
+M_{YX}&0&1
+\end{array}
+\]
+
