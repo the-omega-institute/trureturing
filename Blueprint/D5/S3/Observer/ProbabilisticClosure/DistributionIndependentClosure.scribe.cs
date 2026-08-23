@@ -71,14 +71,15 @@ internal sealed class DistributionIndependentClosureDocument
         Formula statePoint = F.Id("y");
         Formula outputPoint = F.Id("o");
         Formula depth = new Formula.Subscript(F.Id("m"), Star);
-        Formula pmfState = Apply(Operator("PMF"), state);
-        Formula pmfOutput = Apply(Operator("PMF"), output);
+        Formula pmf = Seq(Operatorname, Grp(F.Id("PMF")));
+        Formula pmfState = Apply(pmf, state);
+        Formula pmfOutput = Apply(pmf, output);
         Formula kernelType = Arrow(output, pmfOutput);
-        Formula effective = Apply(Operator("Eff"), kernel);
-        Formula factor = Apply(Operator("Fac"), factorUpdate);
-        Formula pushUpdate = new Formula.Subscript(update, Seq(Star));
-        Formula pushReadout = new Formula.Subscript(readout, Seq(Star));
-        Formula pushKernel = new Formula.Subscript(kernel, Seq(Star));
+        Formula effective = Apply(Seq(Operatorname, Grp(F.Id("Eff"))), kernel);
+        Formula factor = Apply(Seq(Operatorname, Grp(F.Id("Fac"))), factorUpdate);
+        Formula pushUpdate = Seq(update, Underscore, Grp(Star));
+        Formula pushReadout = Seq(readout, Underscore, Grp(Star));
+        Formula pushKernel = Seq(kernel, Underscore, Grp(Star));
         Formula existsKernel = Seq(Exists, Sp, kernel, Colon, Sp, kernelType,
             Comma, Sp, effective);
         Formula existsFactor = Seq(Exists, Sp, factorUpdate, Colon, Sp,
@@ -92,7 +93,8 @@ internal sealed class DistributionIndependentClosureDocument
             Begin, Grp(F.Id("gathered")),
             update, Colon, Sp, Arrow(state, state), Comma, Sp,
             readout, Colon, Sp, Arrow(state, output), Comma, Sp,
-            Operator("Surjective"), Open, readout, Close, Comma, RowBreak, Grp(),
+            Operatorname, Grp(F.Id("Surjective")), Open, readout, Close,
+            Comma, RowBreak, Grp(),
             effective, Sp, Iff, Sp,
             Open, Forall, Sp, initial, Colon, Sp, pmfState, Comma, Sp,
             Apply(pushReadout, Apply(pushUpdate, initial)), Sp, Eq, Sp,
@@ -115,7 +117,4 @@ internal sealed class DistributionIndependentClosureDocument
             effective, Close, Dot,
             End, Grp(F.Id("gathered"))));
     }
-
-    private static Formula Operator(string name) =>
-        Seq(Operatorname, Grp(F.Id(name)));
 }
