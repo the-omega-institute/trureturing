@@ -1,3 +1,4 @@
+using System.Text.Json;
 using StrataLint.Cli;
 using StrataLint.Engine;
 
@@ -37,5 +38,37 @@ public sealed partial class CleanLanesCommandTests
         Assert.Equal(2, exitCode);
         Assert.Equal(partialItem + completedItem + summary, console.Output);
         Assert.Equal(error, console.Error);
+        Assert.Equal(["--force", "--lanes-only"], environment.CleanLanesArguments);
+    }
+
+    [Fact]
+    public void CliReturnsExitZeroAndPreservesSuccessfulCleanLanesStreams()
+    {
+        const string output = "CLEAN_LANES_OK\n";
+        const string error = "CLEAN_LANES_WARNING\n";
+        var console = new BufferedConsole();
+        var environment = new StubCliEnvironment(
+            new AdmissionOutcome.InfrastructureFailure("unused"),
+            cleanLanes: new CommandResult(true, output, error));
+
+        var exitCode = CliApplication.Run(["clean-lanes"], environment, console);
+
+        Assert.Equal(0, exitCode);
+        Assert.Equal(output, console.Output);
+        Assert.Equal(error, console.Error);
+    }
+
+    private static JsonElement ReadSummary(string output)
+    {
+        foreach (var line in output.Split('\n', StringSplitOptions.RemoveEmptyEntries))
+        {
+            using var document = JsonDocument.Parse(line);
+            if (document.RootElement.GetProperty("event").GetString() == "clean_lanes_summary")
+            {
+                return document.RootElement.Clone();
+            }
+        }
+
+        throw new InvalidOperationException("clean-lanes output did not contain a summary");
     }
 }

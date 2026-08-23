@@ -173,6 +173,8 @@ internal sealed class StubCliEnvironment(
     CommandResult? theoryCandidates = null,
     CommandResult? cleanLanes = null) : ICliEnvironment
 {
+    internal IReadOnlyList<string> CleanLanesArguments { get; private set; } = [];
+
     public AdmissionOutcome Check(IReadOnlyList<string> arguments) => outcome;
 
     public AdmissionTopologyOutcome Topology(IReadOnlyList<string> arguments) =>
@@ -235,8 +237,11 @@ internal sealed class StubCliEnvironment(
     public CommandResult SyncLedger(IReadOnlyList<string> arguments) =>
         new(false, string.Empty, "ledger sync is not configured in this fixture");
 
-    public CommandResult CleanLanes(IReadOnlyList<string> arguments) =>
-        cleanLanes ?? new(false, string.Empty, "clean lanes is not configured in this fixture");
+    public CommandResult CleanLanes(IReadOnlyList<string> arguments)
+    {
+        CleanLanesArguments = arguments.ToArray();
+        return cleanLanes ?? new(false, string.Empty, "clean lanes is not configured in this fixture");
+    }
 
     public CommandResult AppendPerf(IReadOnlyList<string> arguments) =>
         new(false, string.Empty, "perf append is not configured in this fixture");

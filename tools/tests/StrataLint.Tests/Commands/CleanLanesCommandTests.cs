@@ -68,9 +68,10 @@ public sealed partial class CleanLanesCommandTests
         Assert.True(Directory.Exists(judge));
         Assert.True(fixture.BranchExists("harness/merged"));
         Assert.True(fixture.BranchExists("harness/orphan"));
-        Assert.Contains("\"kind\":\"merged_worktree\"", result.Output, StringComparison.Ordinal);
-        Assert.Contains("\"kind\":\"orphan_branch\"", result.Output, StringComparison.Ordinal);
-        Assert.Contains("\"kind\":\"temp_judge\"", result.Output, StringComparison.Ordinal);
+        var items = ReadItems(result.Output);
+        AssertItemProperty(items, "path", lane, "kind", "merged_worktree");
+        AssertItemProperty(items, "branch", "harness/orphan", "kind", "orphan_branch");
+        AssertItemProperty(items, "path", judge, "kind", "temp_judge");
         Assert.Equal(3, Count(result.Output, "\"action\":\"would_remove\""));
     }
 
@@ -86,8 +87,9 @@ public sealed partial class CleanLanesCommandTests
         // 只证明输入本来就不合判据,不证明作用面收窄起了作用。
         var full = fixture.Run();
         Assert.True(full.Success, full.Error);
-        Assert.Contains("\"kind\":\"orphan_branch\"", full.Output, StringComparison.Ordinal);
-        Assert.Contains("\"kind\":\"temp_judge\"", full.Output, StringComparison.Ordinal);
+        var fullItems = ReadItems(full.Output);
+        AssertItemProperty(fullItems, "branch", "harness/orphan", "kind", "orphan_branch");
+        AssertItemProperty(fullItems, "path", judge, "kind", "temp_judge");
         Assert.Equal(3, Count(full.Output, "\"action\":\"would_remove\""));
 
         var scoped = fixture.Run("--lanes-only", "--force");
@@ -100,8 +102,9 @@ public sealed partial class CleanLanesCommandTests
 
         // 收窄作用面不等于把功能关死:合格 lane 仍然被回收。
         Assert.False(Directory.Exists(lane));
-        Assert.Contains("\"kind\":\"merged_worktree\"", scoped.Output, StringComparison.Ordinal);
-        Assert.Equal(1, Count(scoped.Output, "\"action\":\"removed\""));
+        var scopedItems = ReadItems(scoped.Output);
+        AssertItemProperty(scopedItems, "path", lane, "kind", "merged_worktree");
+        AssertItemProperty(scopedItems, "path", lane, "action", "removed");
         Assert.Contains("\"scope\":\"lanes_only\"", scoped.Output, StringComparison.Ordinal);
         Assert.Contains("\"scope\":\"full\"", full.Output, StringComparison.Ordinal);
     }
@@ -230,10 +233,11 @@ public sealed partial class CleanLanesCommandTests
         Assert.True(fixture.BranchExists("harness/unmerged"));
         Assert.True(fixture.BranchExists("harness/orphan-unmerged"));
         Assert.True(fixture.BranchExists("agent/prover/not-an-init-branch"));
-        Assert.Contains("\"reason\":\"dirty\"", result.Output, StringComparison.Ordinal);
-        Assert.Contains("\"reason\":\"pr_not_merged\"", result.Output, StringComparison.Ordinal);
-        Assert.Contains("\"reason\":\"foreign_git_directory\"", result.Output, StringComparison.Ordinal);
-        Assert.Contains("\"reason\":\"attached_branch\"", result.Output, StringComparison.Ordinal);
+        var items = ReadItems(result.Output);
+        AssertItemProperty(items, "path", dirty, "reason", "dirty");
+        AssertItemProperty(items, "path", unmerged, "reason", "pr_not_merged");
+        AssertItemProperty(items, "path", foreign, "reason", "foreign_git_directory");
+        AssertItemProperty(items, "path", attached, "reason", "attached_branch");
         Assert.DoesNotContain(
             $"\"path\":\"{Escape(fixture.RepositoryRoot)}\",\"action\":\"removed\"",
             result.Output,
@@ -250,8 +254,9 @@ public sealed partial class CleanLanesCommandTests
 
         Assert.True(result.Success, result.Error);
         Assert.False(Directory.Exists(judge));
-        Assert.Contains("\"kind\":\"temp_judge\"", result.Output, StringComparison.Ordinal);
-        Assert.Contains("\"action\":\"removed\"", result.Output, StringComparison.Ordinal);
+        var items = ReadItems(result.Output);
+        AssertItemProperty(items, "path", judge, "kind", "temp_judge");
+        AssertItemProperty(items, "path", judge, "action", "removed");
     }
 
     [Fact]
@@ -266,8 +271,9 @@ public sealed partial class CleanLanesCommandTests
         Assert.True(result.Success, result.Error);
         Assert.False(Directory.Exists(judge));
         Assert.True(Directory.Exists(reports));
-        Assert.Contains("\"reason\":\"gitless_judge_snapshot\"", result.Output, StringComparison.Ordinal);
-        Assert.Contains("\"reason\":\"not_judge_tree\"", result.Output, StringComparison.Ordinal);
+        var items = ReadItems(result.Output);
+        AssertItemProperty(items, "path", judge, "reason", "gitless_judge_snapshot");
+        AssertItemProperty(items, "path", reports, "reason", "not_judge_tree");
     }
 
     [Fact]
@@ -302,9 +308,10 @@ public sealed partial class CleanLanesCommandTests
         Assert.Contains(ReadItems(result.Output), item =>
             ItemMatches(item, removed, "removed", "merged_clean"));
         Assert.Contains("\"event\":\"clean_lanes_summary\"", result.Output, StringComparison.Ordinal);
-        Assert.Contains("\"partial_count\":1", result.Output, StringComparison.Ordinal);
-        Assert.Contains("\"removable_count\":1", result.Output, StringComparison.Ordinal);
-        Assert.Contains("\"removed_count\":1", result.Output, StringComparison.Ordinal);
+        var summary = ReadSummary(result.Output);
+        Assert.Equal(1, summary.GetProperty("partial_count").GetInt32());
+        Assert.Equal(1, summary.GetProperty("removable_count").GetInt32());
+        Assert.Equal(1, summary.GetProperty("removed_count").GetInt32());
     }
 
     [Fact]
@@ -490,8 +497,9 @@ public sealed partial class CleanLanesCommandTests
         Assert.False(fixture.BranchExists("harness/isolation-orphan"));
         Assert.False(Directory.Exists(judge));
         Assert.Equal("pr_unknown", ReasonFor(result.Output, lane));
-        Assert.Contains("\"kind\":\"orphan_branch\"", result.Output, StringComparison.Ordinal);
-        Assert.Contains("\"kind\":\"temp_judge\"", result.Output, StringComparison.Ordinal);
+        var items = ReadItems(result.Output);
+        AssertItemProperty(items, "branch", "harness/isolation-orphan", "kind", "orphan_branch");
+        AssertItemProperty(items, "path", judge, "kind", "temp_judge");
     }
 
     [Fact]
@@ -626,6 +634,18 @@ public sealed partial class CleanLanesCommandTests
         }
 
         return items;
+    }
+
+    private static void AssertItemProperty(
+        IReadOnlyList<JsonElement> items,
+        string selectorProperty,
+        string selectorValue,
+        string property,
+        string expected)
+    {
+        var item = items.Single(candidate =>
+            candidate.GetProperty(selectorProperty).GetString() == selectorValue);
+        Assert.Equal(expected, item.GetProperty(property).GetString());
     }
 
     private static bool ItemMatches(
