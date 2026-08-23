@@ -74,6 +74,12 @@ permissions:
 jobs:
   publish:
     name: Publish the Lean build cache
+    # 触发集合已收窄为只有 schedule（见文件头），而 schedule 只在默认分支上跑，
+    # 故这一条在当前形态下恒真。留着它不是因为它现在拦得住谁，而是因为它把
+    # 「本 job 只在 dev 上发布」写成了一条可读可判的条件：若日后有人加回别的触发器，
+    # 这里会先拒绝执行。它是**第二道**，不是边界本身 —— 边界是触发集合，由
+    # ContentsWriteWorkflowClosureTests 钉住（#2729 判决第 2 条）。
+    if: github.ref == 'refs/heads/dev'
     # 定时触发下没有 `github.event.workflow_run` 上下文；留着该条件会让 job 永远被跳过。
     # 「不给失败的推送留缓存」由内容地址本身保证：地址取自这一刻 dev 的实际输入，
     # 发布的产物与该地址绑定，消费侧按地址取，取不到就本地补 —— 不存在“发布了坏缓存”。
@@ -104,7 +110,12 @@ jobs:
         uses: actions/checkout@v4
         with:
           path: candidate
-          # 定时触发下检出默认分支 HEAD（即 dev 当前 tip）；
+          # 钉在触发本次运行的那个不可变 commit 上。不写 `ref` 时 checkout 取的是
+          # 分支名，而分支在 job 跑到这里之前还会前进 —— 那样 manifest 里记的
+          # producer_commit_sha 与实际打包的树就可能不是同一个。consumer 要据此
+          # 核验产地，这两者必须是同一个 commit（#2729 判决第 2 条）。
+          ref: ${{ github.sha }}
+          # 定时触发下 github.sha 即默认分支 HEAD（dev 当前 tip）；
           # `github.event.workflow_run.head_sha` 在此事件下为空，留着会检出错误的树。
           # 剥夺步骤要对 HEAD^1 做烟测，而这里检出的是一个已合入的普通提交，
           # 不是 merge ref；默认的 fetch-depth: 1 只取一个提交，父提交不可达。

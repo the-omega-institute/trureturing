@@ -1,3 +1,6 @@
+using System.Text;
+using StrataLint.Engine;
+
 namespace StrataLint.Tests;
 
 /// <summary>
@@ -14,6 +17,66 @@ public sealed class LeanCachePublishTests
 {
     private static string Script() => TestRepositoryLayout.ReadAllText(
         RepositoryRelativePath.Create("tools/scripts/worktree/lean-cache-publish.sh"));
+
+    /// <summary>
+    /// 发布者身份。归档的触发集合自 #2818 起只有 `schedule`，即唯一合法发布者是 dev 上的
+    /// 定时 CI producer；consumer 侧要靠这两个值把资产绑回那次运行。缺失即拒绝发布——
+    /// 发不出资产，好过发一个事后无法归属的资产。这里真跑脚本，不只读文本：一条断言
+    /// 只证明字符串在，不证明它会执行。
+    /// </summary>
+    [Fact]
+    public void PublishRefusesWithoutAnAttributableProducerIdentity()
+    {
+        var script = ScriptPath();
+
+        var missing = RunPublish(script, sha: null, runId: null);
+        Assert.NotEqual(0, missing.ExitCode);
+        Assert.Contains(
+            "refusing to publish an unattributable archive",
+            missing.Text,
+            StringComparison.Ordinal);
+
+        var malformed = RunPublish(script, sha: "nothex", runId: "42");
+        Assert.NotEqual(0, malformed.ExitCode);
+        Assert.Contains(
+            "refusing to publish an unattributable archive",
+            malformed.Text,
+            StringComparison.Ordinal);
+
+        var noRunId = RunPublish(script, sha: new string('a', 40), runId: null);
+        Assert.NotEqual(0, noRunId.ExitCode);
+        Assert.Contains("GITHUB_RUN_ID", noRunId.Text, StringComparison.Ordinal);
+    }
+
+    /// <summary>
+    /// 放行侧的阳性对照。上一条只钉拒绝；一个「什么都拒绝」的坏门也能通过它。身份齐备时
+    /// 必须**越过**这道检查，在别处失败，且失败原因不是身份。
+    /// </summary>
+    [Fact]
+    public void PublishWithAnAttributableIdentityPassesTheIdentityCheck()
+    {
+        var accepted = RunPublish(ScriptPath(), sha: new string('a', 40), runId: "42");
+
+        Assert.DoesNotContain(
+            "unattributable archive",
+            accepted.Text,
+            StringComparison.Ordinal);
+    }
+
+    /// <summary>
+    /// tag 必须钉在产出它的那个 commit 上。缺省的 `target_commitish` 跟着默认分支走，
+    /// 即 tag 指向的东西**事后还会变**；consumer 要据此核验产地，锚就不能是活动的。
+    /// manifest 同样必须带上这两个值，否则消费侧无从核起。
+    /// </summary>
+    [Fact]
+    public void ReleaseTagIsAnchoredToTheProducerCommitAndTheManifestCarriesIt()
+    {
+        var script = Script();
+
+        Assert.Contains("--target \"$producer_commit_sha\"", script, StringComparison.Ordinal);
+        Assert.Contains("producer_commit_sha=%s", script, StringComparison.Ordinal);
+        Assert.Contains("workflow_run_id=%s", script, StringComparison.Ordinal);
+    }
 
     /// <summary>
     /// tag 必须把身份三元组（toolchain、config、sources）全部绑进去。少任何一个，两棵语义不同的树就会共用一个 tag，
@@ -186,4 +249,39 @@ public sealed class LeanCachePublishTests
             Assert.StartsWith("\t", recipe, StringComparison.Ordinal);
         }
     }
+
+    private static string ScriptPath() => Path.Combine(
+        TestRepositoryLayout.FindRoot(),
+        "tools",
+        "scripts",
+        "worktree",
+        "lean-cache-publish.sh");
+
+    private static PublishAttempt RunPublish(string script, string? sha, string? runId)
+    {
+        // `env` 既能设也能删：删掉才测得到「变量根本不存在」那一支，设成空串是另一回事。
+        // 所有 `-u` 必须排在赋值之前 —— env 一旦读到 NAME=VALUE，后面的参数就按命令解析，
+        // 于是 `-u` 会被当成可执行文件名（实测 "env: -u: No such file or directory"）。
+        var unset = new List<string>();
+        var assign = new List<string>();
+        if (sha is null) unset.AddRange(["-u", "GITHUB_SHA"]);
+        else assign.Add($"GITHUB_SHA={sha}");
+        if (runId is null) unset.AddRange(["-u", "GITHUB_RUN_ID"]);
+        else assign.Add($"GITHUB_RUN_ID={runId}");
+        var environment = new List<string>([.. unset, .. assign]);
+
+        var result = BoundedProcessRunner.Run(
+            "/usr/bin/env",
+            [.. environment, "/bin/bash", script, "publish"],
+            Path.GetDirectoryName(script)!,
+            TimeSpan.FromSeconds(60),
+            256 * 1024);
+
+        return new PublishAttempt(
+            result.ExitCode,
+            Encoding.UTF8.GetString(result.StandardOutput)
+                + Encoding.UTF8.GetString(result.StandardError));
+    }
+
+    private sealed record PublishAttempt(int ExitCode, string Text);
 }
