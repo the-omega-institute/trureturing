@@ -32,10 +32,9 @@
 #   该分支上的 workflow 版本，故 job 内检查 ref 不构成机器边界），已于 PR #2818 移除，
 #   并由 `ContentsWriteWorkflowClosureTests` 钉住。
 #
-#   已落地（#2729 判决第 2、3 条）：checkout 钉不可变 github.sha 且 job 要求
-#   github.ref==refs/heads/dev；release tag 用 --target producer_commit_sha（不再是
-#   会跟着默认分支走的 target_commitish）；manifest 记 producer_commit_sha 与
-#   workflow_run_id；缺这两个值时 publish 直接拒绝。
+#   已落地（#2729 判决第 2、3 条）：release tag 用 --target producer_commit_sha；
+#   manifest 记 producer_commit_sha 与 workflow_run_id；缺这两个值时 publish 直接拒绝；
+#   workflow 侧显式写出 checkout 取的事件 SHA。
 #
 #   仍未落地（B 步）：**consumer 侧没有任何 provenance 核验** —— 上面这些字段现在
 #   写得出来，但没有人去核它们。**在 consumer 核验落地之前，ensure 不得自动 fetch
@@ -147,9 +146,18 @@ case "$VERB" in
       printf 'producer_commit_sha=%s\n' "$producer_commit_sha"
       printf 'workflow_run_id=%s\n' "$workflow_run_id"
     } >> "$staged/manifest.txt"
-    # `--target` 把 tag 钉在产出它的那个 commit 上。缺省的 target_commitish 会跟着
-    # 默认分支走，即 tag 指向的东西**事后还会变**；consumer 要据此核验产地，就不能
-    # 让这个锚是活动的。
+    # `--target` 把 tag 建在产出它的那个 commit 上。
+    #
+    # 【这里曾写「缺省 target_commitish 会跟着默认分支走，tag 指向的东西事后还会变」，
+    #   那句话是假的】gh 的 --target 是「Target branch or full commit SHA (default
+    #   [main branch])」，作用于 **automatic tag creation**；tag 一旦建成即不可变，
+    #   事后不漂移。
+    #
+    #   真正的不变量在**创建时刻**：不带 --target 时，tag 建在 gh 执行那一刻默认分支的
+    #   tip 上，而那**未必是被打包的那棵树**（dev 每小时前进约 16 个提交，打包与发布之间
+    #   隔着一次 lake pack）。于是 manifest 里记的 producer_commit_sha 会与 tag 实际指向的
+    #   commit 不是同一个，consumer 拿哪一个都对不上。--target 消除的是这个错配，
+    #   不是一个并不存在的事后漂移。
     gh release create "$tag" --repo "$REPO" \
       --target "$producer_commit_sha" \
       --title "Lean build cache ${config_sha256:0:8}/${sources_sha256:0:8} (${os}-${arch})" \

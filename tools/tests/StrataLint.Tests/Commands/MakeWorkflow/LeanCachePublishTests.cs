@@ -49,24 +49,39 @@ public sealed class LeanCachePublishTests
     }
 
     /// <summary>
-    /// 放行侧的阳性对照。上一条只钉拒绝；一个「什么都拒绝」的坏门也能通过它。身份齐备时
-    /// 必须**越过**这道检查，在别处失败，且失败原因不是身份。
+    /// 放行侧的阳性对照，端到端。**只断言「输出里没有拒绝消息」是不够的** —— 一个
+    /// 校验完身份就什么都不做的脚本同样能通过那种断言。这里用假的 `gh`/`lake` 走完整条
+    /// 发布路径，然后检查 `gh release create` **实际收到了什么**：tag 必须建在本次的
+    /// producer commit 上，manifest 必须带上产地两项。
     /// </summary>
     [Fact]
-    public void PublishWithAnAttributableIdentityPassesTheIdentityCheck()
+    public void PublishAnchorsTheTagToTheProducerCommitAndRecordsItInTheManifest()
     {
-        var accepted = RunPublish(ScriptPath(), sha: new string('a', 40), runId: "42");
+        const string Sha = "0123456789abcdef0123456789abcdef01234567";
+        using var fixture = new PublishFixture();
 
-        Assert.DoesNotContain(
-            "unattributable archive",
-            accepted.Text,
-            StringComparison.Ordinal);
+        var result = fixture.RunPublish(ScriptPath(), Sha, "4242");
+
+        Assert.Equal(0, result.ExitCode);
+
+        // gh 实际收到的参数：tag 的锚必须是本次 producer commit，而不是 gh 执行那一刻
+        // 默认分支的 tip。
+        var arguments = fixture.RecordedGhArguments();
+        var target = Array.IndexOf(arguments, "--target");
+        Assert.True(target >= 0, $"gh release create carried no --target: {string.Join(' ', arguments)}");
+        Assert.Equal(Sha, arguments[target + 1]);
+
+        // manifest 是 consumer 侧唯一能据以核验产地的东西；写不出这两项，后续核验无从谈起。
+        var manifest = fixture.CapturedManifest();
+        Assert.Contains($"producer_commit_sha={Sha}", manifest, StringComparison.Ordinal);
+        Assert.Contains("workflow_run_id=4242", manifest, StringComparison.Ordinal);
     }
 
     /// <summary>
-    /// tag 必须钉在产出它的那个 commit 上。缺省的 `target_commitish` 跟着默认分支走，
-    /// 即 tag 指向的东西**事后还会变**；consumer 要据此核验产地，锚就不能是活动的。
-    /// manifest 同样必须带上这两个值，否则消费侧无从核起。
+    /// tag 必须建在产出它的那个 commit 上。不带 `--target` 时，tag 建在 gh **执行那一刻**
+    /// 默认分支的 tip 上，而那未必是被打包的那棵树；manifest 记的 producer_commit_sha 就会
+    /// 与 tag 指向的 commit 不是同一个，consumer 拿哪一个都对不上。(tag 建成后不可变，
+    /// 此处不存在事后漂移——那是本注释先前的一个错误说法。)
     /// </summary>
     [Fact]
     public void ReleaseTagIsAnchoredToTheProducerCommitAndTheManifestCarriesIt()
@@ -284,4 +299,112 @@ public sealed class LeanCachePublishTests
     }
 
     private sealed record PublishAttempt(int ExitCode, string Text);
+
+    /// <summary>
+    /// 一棵最小的可发布树，外加 PATH 上的假 `gh`/`lake`。夹具存在的理由是上面那条断言：
+    /// 要判「发布确实按 producer commit 锚定」，就得看 gh **实际收到**的参数，而不是脚本
+    /// 里有没有那个字符串。
+    /// </summary>
+    private sealed class PublishFixture : IDisposable
+    {
+        private readonly TemporaryDirectory root = new();
+
+        internal PublishFixture()
+        {
+            Repository = Path.Combine(root.Path, "repo");
+            Bin = Path.Combine(root.Path, "bin");
+            GhArgumentsPath = Path.Combine(root.Path, "gh-arguments.txt");
+            ManifestPath = Path.Combine(root.Path, "captured-manifest.txt");
+
+            Directory.CreateDirectory(Path.Combine(Repository, ".lake", "build"));
+            File.WriteAllText(
+                Path.Combine(Repository, ".lake", "build", "placeholder"),
+                "content layer\n");
+            File.WriteAllText(
+                Path.Combine(Repository, "lean-toolchain"),
+                "leanprover/lean4:v4.31.0\n");
+
+            var helper = Path.Combine(Repository, "tools", "scripts", "report", "lean-report-input.sh");
+            Directory.CreateDirectory(Path.GetDirectoryName(helper)!);
+            WriteExecutable(
+                helper,
+                "#!/usr/bin/env bash\nprintf 'addr producer %s %s\\n' "
+                    + $"\"{new string('1', 64)}\" \"{new string('2', 64)}\"\n");
+
+            Directory.CreateDirectory(Bin);
+            // release view 报「不存在」，脚本才会走到创建；create 把参数与 manifest 留证。
+            WriteExecutable(
+                Path.Combine(Bin, "gh"),
+                "#!/usr/bin/env bash\n"
+                    + "if [[ \"$1\" == 'release' && \"$2\" == 'view' ]]; then exit 1; fi\n"
+                    + "if [[ \"$1\" == 'release' && \"$2\" == 'create' ]]; then\n"
+                    + $"  printf '%s\\n' \"$@\" > '{GhArgumentsPath}'\n"
+                    + "  for argument in \"$@\"; do\n"
+                    + $"    case \"$argument\" in *manifest.txt) cp \"$argument\" '{ManifestPath}' ;; esac\n"
+                    + "  done\n"
+                    + "  exit 0\n"
+                    + "fi\n"
+                    + "exit 0\n");
+            WriteExecutable(
+                Path.Combine(Bin, "lake"),
+                "#!/usr/bin/env bash\n"
+                    + "if [[ \"$1\" == 'pack' ]]; then printf 'archive\\n' > \"$2\"; fi\n"
+                    + "exit 0\n");
+        }
+
+        private string Repository { get; }
+
+        private string Bin { get; }
+
+        private string GhArgumentsPath { get; }
+
+        private string ManifestPath { get; }
+
+        internal PublishAttempt RunPublish(string script, string sha, string runId)
+        {
+            var result = BoundedProcessRunner.Run(
+                "/usr/bin/env",
+                [
+                    $"PATH={Bin}:{Environment.GetEnvironmentVariable("PATH")}",
+                    $"GITHUB_SHA={sha}",
+                    $"GITHUB_RUN_ID={runId}",
+                    "/bin/bash",
+                    script,
+                    "publish",
+                    "--repository",
+                    Repository,
+                ],
+                Repository,
+                TimeSpan.FromSeconds(60),
+                256 * 1024);
+
+            return new PublishAttempt(
+                result.ExitCode,
+                Encoding.UTF8.GetString(result.StandardOutput)
+                    + Encoding.UTF8.GetString(result.StandardError));
+        }
+
+        internal string[] RecordedGhArguments() => File.Exists(GhArgumentsPath)
+            ? File.ReadAllLines(GhArgumentsPath)
+            : [];
+
+        internal string CapturedManifest() =>
+            File.Exists(ManifestPath) ? File.ReadAllText(ManifestPath) : string.Empty;
+
+        public void Dispose() => root.Dispose();
+
+        private static void WriteExecutable(string path, string contents)
+        {
+            File.WriteAllText(path, contents);
+            // 走 chmod 而不是 File.SetUnixFileMode：后者带 CA1416（Windows 不支持），
+            // 在 warnaserror 下即编译失败。ReportSupervisorFixture 已是这个写法。
+            var chmod = BoundedProcessRunner.Run(
+                "chmod",
+                ["+x", path],
+                Path.GetDirectoryName(path)!,
+                TimeSpan.FromSeconds(30),
+                4096);
+            Assert.Equal(0, chmod.ExitCode);
+        }
+    }
 }
