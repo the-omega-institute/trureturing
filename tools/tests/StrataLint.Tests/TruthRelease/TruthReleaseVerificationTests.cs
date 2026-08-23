@@ -16,6 +16,8 @@ public sealed class TruthReleaseVerificationTests
     private const string OtherCommit = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
     private const string Tree = "2222222222222222222222222222222222222222";
     private const string OtherTree = "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb";
+    private const string Repo = "the-omega-institute/trureturing";
+    private const string OtherRepo = "the-omega-institute/some-other-repo";
 
     private static string Digest(byte[] bytes) =>
         "sha256:" + Convert.ToHexStringLower(SHA256.HashData(bytes));
@@ -92,6 +94,7 @@ public sealed class TruthReleaseVerificationTests
         string snapshotTree = Tree,
         string exportTree = Tree,
         string manifestTree = Tree,
+        string manifestRepo = Repo,
         string? snapshotTruthGraphDigest = null,
         byte[]? truthGraph = null,
         byte[]? truthExport = null)
@@ -130,7 +133,7 @@ public sealed class TruthReleaseVerificationTests
             {
               "schema": "truth-release.v1",
               "source": {
-                "source_repo": "the-omega-institute/trureturing",
+                "source_repo": "{{manifestRepo}}",
                 "source_commit": "{{manifestCommit}}",
                 "source_tree": "{{manifestTree}}"
               },
@@ -207,6 +210,13 @@ public sealed class TruthReleaseVerificationTests
     [Fact]
     public void RejectsManifestTreeFromAnotherRevision() =>
         AssertCompositionRejected(() => BuildBundle(manifestTree: OtherTree));
+
+    [Fact]
+    public void RejectsManifestRepoFromAnotherRepository() =>
+        // The manifest bytes are not SHA256SUMS-covered, so rewriting only the manifest's source_repo
+        // leaves every artifact hash and the release digest intact. Composition must still reject it by
+        // binding the manifest repo to the SHA-covered source_snapshot.
+        AssertCompositionRejected(() => BuildBundle(manifestRepo: OtherRepo));
 
     [Fact]
     public void RejectsSnapshotDigestNamingADifferentValidTruthGraph()
