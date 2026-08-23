@@ -1,0 +1,137 @@
+name: truth-release-publish
+
+# Branch-CI proof of the upstream->downstream publish seam. One job publishes the Trureturing.Truth
+# NuGet package AND a truth-release.v1 bundle (the DAG, truth-graph.v1.json, plus the other six
+# artifacts, SHA256SUMS, and the manifest) as CI artifacts. A second, independent job downloads ONLY
+# those published artifacts, restores the package under a CI-generated lock (no floating deps), and
+# runs a downstream consumer that verifies and reads the bundle through the package's public surface
+# with no checkout of this repository's package source.
+#
+# This proves the whole publish->consume path on a branch, with no dependency on merging to dev: a
+# downstream paper/pages project could consume an upstream release exactly this way without cloning
+# or recompiling this repo. The bundle here is a coherent representative bundle written through the
+# package's public writer; the authoritative daily publish (the real frozen DAG produced from dev by
+# the truth-release command, pushed to the org GitHub Packages feed) is a separate, org-admin-gated
+# step and is not attempted here. This workflow never merges into dev.
+
+on:
+  push:
+    branches:
+      - harness/truth-release-publish
+      - 'publish-*'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  publish:
+    name: publish the DAG bundle and the NuGet package
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up .NET from global.json
+        uses: actions/setup-dotnet@v4
+        with:
+          global-json-file: global.json
+
+      - name: Pack Trureturing.Truth to a runner-local feed
+        run: >
+          dotnet pack tools/Trureturing.Truth/Trureturing.Truth.csproj
+          -c Release
+          -p:Version=0.1.0-integration.v2
+          -o "$RUNNER_TEMP/feed"
+
+      - name: Point the publisher at the runner-local feed
+        working-directory: integration/Publisher
+        run: |
+          cat > nuget.config <<EOF
+          <?xml version="1.0" encoding="utf-8"?>
+          <configuration>
+            <packageSources>
+              <clear />
+              <add key="runner-local-truth-feed" value="$RUNNER_TEMP/feed" />
+              <add key="nuget.org" value="https://api.nuget.org/v3/index.json" />
+            </packageSources>
+          </configuration>
+          EOF
+
+      - name: Produce the truth-release bundle (the DAG plus the seven artifacts)
+        working-directory: integration/Publisher
+        run: |
+          dotnet restore --packages "$RUNNER_TEMP/pub-packages"
+          dotnet run -c Release --no-restore -- "$RUNNER_TEMP/bundle"
+
+      - name: Show what was published
+        run: ls -l "$RUNNER_TEMP/bundle" && cat "$RUNNER_TEMP/bundle/RELEASE_DIGEST"
+
+      - name: Upload the published NuGet package
+        uses: actions/upload-artifact@v4
+        with:
+          name: truth-nupkg
+          path: ${{ runner.temp }}/feed/*.nupkg
+          if-no-files-found: error
+
+      - name: Upload the published truth-release bundle (DAG plus artifacts)
+        uses: actions/upload-artifact@v4
+        with:
+          name: truth-release-bundle
+          path: ${{ runner.temp }}/bundle
+          if-no-files-found: error
+
+  consume:
+    name: downstream consumes only the published artifacts
+    needs: publish
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up .NET from global.json
+        uses: actions/setup-dotnet@v4
+        with:
+          global-json-file: global.json
+
+      - name: Download the published NuGet package
+        uses: actions/download-artifact@v4
+        with:
+          name: truth-nupkg
+          path: ${{ runner.temp }}/feed
+
+      - name: Download the published truth-release bundle
+        uses: actions/download-artifact@v4
+        with:
+          name: truth-release-bundle
+          path: ${{ runner.temp }}/bundle
+
+      - name: Point the consumer at ONLY the downloaded package feed
+        working-directory: integration/Consumer
+        run: |
+          cat > nuget.config <<EOF
+          <?xml version="1.0" encoding="utf-8"?>
+          <configuration>
+            <packageSources>
+              <clear />
+              <add key="downloaded-truth-feed" value="$RUNNER_TEMP/feed" />
+              <add key="nuget.org" value="https://api.nuget.org/v3/index.json" />
+            </packageSources>
+          </configuration>
+          EOF
+
+      - name: Restore the consumer and generate the lock in CI
+        working-directory: integration/Consumer
+        run: dotnet restore --packages "$RUNNER_TEMP/packages"
+
+      - name: Prove no floating deps against the CI-generated lock
+        working-directory: integration/Consumer
+        run: dotnet restore --locked-mode --packages "$RUNNER_TEMP/packages"
+
+      - name: Assert the lock records the shared package
+        working-directory: integration/Consumer
+        run: grep -Fq '"Trureturing.Truth"' packages.lock.json
+
+      - name: Consume the published bundle (verify and read the DAG), no repo package source
+        working-directory: integration/Consumer
+        run: dotnet run -c Release --no-restore -- "$RUNNER_TEMP/bundle"

@@ -1,0 +1,3 @@
+<!-- Keep this standalone package consumer independent of repository-wide build policy. -->
+<Project>
+</Project>
