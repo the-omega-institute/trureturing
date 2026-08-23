@@ -76,9 +76,9 @@ internal sealed class DistributionIndependentClosureDocument
         Formula kernelType = Arrow(output, pmfOutput);
         Formula effective = Apply(Operator("Eff"), kernel);
         Formula factor = Apply(Operator("Fac"), factorUpdate);
-        Formula pushUpdate = new Formula.Subscript(update, Star);
-        Formula pushReadout = new Formula.Subscript(readout, Star);
-        Formula pushKernel = new Formula.Subscript(kernel, Star);
+        Formula pushUpdate = new Formula.Subscript(update, Seq(Star));
+        Formula pushReadout = new Formula.Subscript(readout, Seq(Star));
+        Formula pushKernel = new Formula.Subscript(kernel, Seq(Star));
         Formula existsKernel = Seq(Exists, Sp, kernel, Colon, Sp, kernelType,
             Comma, Sp, effective);
         Formula existsFactor = Seq(Exists, Sp, factorUpdate, Colon, Sp,
