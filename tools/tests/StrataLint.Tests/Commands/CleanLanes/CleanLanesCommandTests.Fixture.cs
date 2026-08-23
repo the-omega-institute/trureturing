@@ -229,6 +229,15 @@ public sealed partial class CleanLanesCommandTests
                 ProbeLaneProcesses,
                 arguments);
 
+        internal CommandResult RunWithBase(string baseRevision, params string[] arguments) =>
+            RunCore(
+                CreateRunner(),
+                now,
+                ProbePullRequests,
+                ProbeLaneProcesses,
+                arguments,
+                baseRevision);
+
         internal CommandResult RunWithProbes(
             PullRequestProbe pullRequestProbe,
             LaneProcessProbe laneProcessProbe,
@@ -289,9 +298,10 @@ public sealed partial class CleanLanesCommandTests
             DateTimeOffset injectedNow,
             PullRequestProbe pullRequestProbe,
             LaneProcessProbe laneProcessProbe,
-            IReadOnlyList<string> arguments)
+            IReadOnlyList<string> arguments,
+            string baseRevision = "dev")
         {
-            var allArguments = new List<string> { "--base", "dev" };
+            var allArguments = new List<string> { "--base", baseRevision };
             allArguments.AddRange(arguments);
             return CleanLanesCommand.Run(
                 repository.Path,
