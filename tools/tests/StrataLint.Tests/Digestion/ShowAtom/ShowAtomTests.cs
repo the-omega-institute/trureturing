@@ -256,7 +256,41 @@ public sealed partial class ShowAtomTests
     }
 
     [Fact]
-    public void SupersededGenerationReadsCommittedHistoricalCasAndMarksItStale()
+    public void AcknowledgedSupersededGenerationReadsCommittedHistoricalCasAndMarksItStale()
+    {
+        const string sourcePath = "fixtures/show-atom/adapter.md";
+        var oldBytes = Encoding.UTF8.GetBytes(
+            "## 1. Synthetic section\n\nOld synthetic content.\n");
+        var currentBytes = Encoding.UTF8.GetBytes(
+            "## 1. Synthetic section\n\nCurrent synthetic content.\n");
+        var oldFingerprints = DigestionFingerprint.Compute(oldBytes);
+        var currentFingerprints = DigestionFingerprint.Compute(currentBytes);
+        var ledger = AdapterGenerationLedger(sourcePath, oldFingerprints, currentFingerprints);
+        var ledgerSource = Assert.Single(ledger.RequireDigestionSources());
+        ledger = ledger.WithDigestionSources(
+        [
+            ledgerSource with { AcknowledgedStale = [AdapterAtomId] },
+        ]);
+        var files = AdapterGenerationFixtureFiles(
+            ledger,
+            sourcePath,
+            currentBytes,
+            (oldFingerprints.RawSha256, oldBytes),
+            (currentFingerprints.RawSha256, currentBytes));
+
+        var result = Environment("/repo", files).ShowAtom(["--atom-id", AdapterAtomId]);
+
+        Assert.True(result.Success, result.Error);
+        Assert.Contains("STALE_READ status=stale source=cas\n", result.Output, StringComparison.Ordinal);
+        Assert.Contains(
+            "BEGIN_RAW_TEXT\n## 1. Synthetic section\n\nOld synthetic content.\nEND_RAW_TEXT\n",
+            result.Output,
+            StringComparison.Ordinal);
+        Assert.DoesNotContain("Current synthetic content", result.Output, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void SameAstPathGenerationIsNotMarkedStaleWithoutAcknowledgment()
     {
         const string sourcePath = "fixtures/show-atom/adapter.md";
         var oldBytes = Encoding.UTF8.GetBytes(
@@ -275,11 +309,8 @@ public sealed partial class ShowAtomTests
         var result = Environment("/repo", files).ShowAtom(["--atom-id", AdapterAtomId]);
 
         Assert.True(result.Success, result.Error);
-        Assert.Contains("STALE_READ status=stale source=cas\n", result.Output, StringComparison.Ordinal);
-        Assert.Contains(
-            "BEGIN_RAW_TEXT\n## 1. Synthetic section\n\nOld synthetic content.\nEND_RAW_TEXT\n",
-            result.Output,
-            StringComparison.Ordinal);
+        Assert.DoesNotContain("STALE_READ", result.Output, StringComparison.Ordinal);
+        Assert.Contains("Old synthetic content", result.Output, StringComparison.Ordinal);
         Assert.DoesNotContain("Current synthetic content", result.Output, StringComparison.Ordinal);
     }
 

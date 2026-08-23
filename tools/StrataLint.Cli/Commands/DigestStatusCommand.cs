@@ -2,6 +2,7 @@ using System.Collections.Immutable;
 using System.Text;
 using System.Text.Encodings.Web;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using StrataLint.Engine;
 
 namespace StrataLint.Cli;
@@ -260,13 +261,20 @@ internal static class DigestStatusCommand
         BackfillInventoryDocument ledger,
         LeanAxiomReport leanReport)
     {
+        var acknowledgedStale = ledger.RequireDigestionSources()
+            .SelectMany(source => source.AcknowledgedStale.Select(atomId => (source.SourceId, atomId)))
+            .ToHashSet();
         var projections = evaluation.Entries
             .Where(static item =>
                 item.Alignment == DigestionReceiptAlignment.Seen
                 && item.DerivedStatus.Migration == DigestionMigrationState.Residual
                 && item.DerivedStatus.Truth == DigestionTruthState.Open
                 && item.Entry.CoverageGids.Length == 0)
-            .Select(item => Projection(item, snapshot, leanReport))
+            .Select(item => Projection(
+                item,
+                snapshot,
+                leanReport,
+                acknowledgedStale.Contains((item.Entry.SourceId, item.Entry.AtomId))))
             .Where(static item => item is not null)
             .OrderBy(static item => item!.SourceId, StringComparer.Ordinal)
             .ThenBy(static item => item!.AtomId, StringComparer.Ordinal)
@@ -292,7 +300,8 @@ internal static class DigestStatusCommand
     private static FormalizeProjection? Projection(
         DigestionEntryEvaluation evaluation,
         RepositorySnapshot snapshot,
-        LeanAxiomReport leanReport)
+        LeanAxiomReport leanReport,
+        bool acknowledgedStale)
     {
         var entry = evaluation.Entry;
         var separator = entry.AstPath.IndexOf('/', StringComparison.Ordinal);
@@ -318,6 +327,19 @@ internal static class DigestStatusCommand
                 null,
                 recordedFormalization,
                 null);
+        }
+
+        if (acknowledgedStale)
+        {
+            return new FormalizeProjection(
+                entry.SourceId,
+                entry.AtomId,
+                null,
+                null,
+                new WithheldFormalizeCandidate(
+                    entry.AtomId,
+                    FormalizeWithholdReason.AcknowledgedStale,
+                    null));
         }
 
         var casPath = DigestionCasStore.RootPath + entry.CasRef["sha256:".Length..];
@@ -349,7 +371,7 @@ internal static class DigestStatusCommand
                 null,
                 new WithheldFormalizeCandidate(
                     entry.AtomId,
-                    "malformed-status-marker",
+                    FormalizeWithholdReason.MalformedStatusMarker,
                     status.Qualifier));
         }
 
@@ -367,7 +389,7 @@ internal static class DigestStatusCommand
                 null,
                 new WithheldFormalizeCandidate(
                     entry.AtomId,
-                    "qualified-closed-status",
+                    FormalizeWithholdReason.QualifiedClosedStatus,
                     status.Qualifier));
         }
 
@@ -496,10 +518,27 @@ internal static class DigestStatusCommand
         string RawSha256,
         string AtomText);
 
+    private enum FormalizeWithholdReason
+    {
+        AcknowledgedStale,
+        MalformedStatusMarker,
+        QualifiedClosedStatus,
+    }
+
     private sealed record WithheldFormalizeCandidate(
         string AtomId,
-        string WithholdReason,
-        string? StatusQualifier);
+        [property: JsonIgnore] FormalizeWithholdReason Reason,
+        string? StatusQualifier)
+    {
+        [JsonPropertyName("withhold_reason")]
+        public string WithholdReason => Reason switch
+        {
+            FormalizeWithholdReason.AcknowledgedStale => "acknowledged-stale",
+            FormalizeWithholdReason.MalformedStatusMarker => "malformed-status-marker",
+            FormalizeWithholdReason.QualifiedClosedStatus => "qualified-closed-status",
+            _ => throw new InvalidOperationException("unknown formalize withhold reason"),
+        };
+    }
 
     private sealed record FormalizeProjection(
         string SourceId,

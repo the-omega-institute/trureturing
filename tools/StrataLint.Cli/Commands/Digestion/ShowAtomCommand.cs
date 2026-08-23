@@ -34,11 +34,7 @@ internal static class ShowAtomCommand
             var source = document.RequireDigestionSources()
                 .Single(item => item.SourceId == entry.SourceId);
             var casBytes = ReadCommittedCas(snapshot, entry);
-            var entryIndex = source.Entries.IndexOf(entry);
-            var stale = source.AcknowledgedStale.Contains(entry.AtomId, StringComparer.Ordinal)
-                || source.Entries
-                    .Skip(entryIndex + 1)
-                    .Any(candidate => candidate.AstPath == entry.AstPath);
+            var stale = source.AcknowledgedStale.Contains(entry.AtomId, StringComparer.Ordinal);
             var selfFormalization = FormalizationPointer(entry, snapshot);
             var parentFormalizations = document.RequireDigestionEntries()
                 .Where(parent => parent.Receipts.ChainAtoms.Contains(entry.AtomId, StringComparer.Ordinal))
