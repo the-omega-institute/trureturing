@@ -88,10 +88,10 @@ internal sealed class MultipleTestingFalsePositiveDocument
                 m, Sp, Le, Sp, n, Sp, Rightarrow, Sp,
                 SearchRate(alpha, m), Sp, Le, Sp, SearchRate(alpha, n)),
             Sp, Land, Sp, RowBreak, Grp(),
-            Grp(Num(2), Sp, Le, Sp, attempts, Sp, Land, Sp,
+            Open, Grp(Num(2), Sp, Le, Sp, attempts, Sp, Land, Sp,
                 Num(0), Sp, Lt, Sp, alpha, Sp, Land, Sp,
                 alpha, Sp, Lt, Sp, Num(1)),
-            Sp, Rightarrow, Sp, alpha, Sp, Lt, Sp, anyProbability);
+            Sp, Rightarrow, Sp, alpha, Sp, Lt, Sp, anyProbability, Close);
         Formula premises = Seq(
             Call("IsProbabilityMeasure", measure), Sp, Land, Sp,
             Grp(Forall, Sp, index, Colon, Sp, Call("Fin", attempts), Comma, Sp,
