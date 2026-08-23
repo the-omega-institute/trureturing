@@ -17,8 +17,7 @@ name: truth-release-publish
 on:
   push:
     branches:
-      - harness/truth-release-publish
-      - 'publish-*'
+      - 'integration-*'
   workflow_dispatch:
 
 permissions:
