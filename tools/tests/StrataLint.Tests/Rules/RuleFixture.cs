@@ -1,4 +1,5 @@
 using System.Collections.Immutable;
+using System.Security.Cryptography;
 using System.Text;
 using StrataLint.Cli;
 using StrataLint.Engine;
@@ -608,7 +609,14 @@ internal sealed partial class RuleFixture
 
     private static RepositorySnapshot Decode(IReadOnlyDictionary<string, string> files)
     {
-        var raw = RawRepositorySnapshot.Create(files.Select(pair => RawRepositoryEntry.FromText(pair.Key, pair.Value)));
+        var raw = RawRepositorySnapshot.Create(files.Select(pair =>
+        {
+            var bytes = ImmutableArray.CreateRange(Encoding.UTF8.GetBytes(pair.Value));
+            return new RawRepositoryEntry(
+                pair.Key,
+                bytes,
+                FrozenContentAddress.ComputeGitBlobOid(bytes.AsSpan(), HashAlgorithmName.SHA1));
+        }));
         return Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(raw)).Snapshot;
     }
 

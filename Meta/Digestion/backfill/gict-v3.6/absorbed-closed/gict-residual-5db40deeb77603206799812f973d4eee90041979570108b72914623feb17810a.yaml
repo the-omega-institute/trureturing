@@ -13,5 +13,5 @@ receipts:
   scribe:
     - gid: D5/S3/Factorization/Solenoid/AllPrimeRegisterExactSequence.all_prime_register_short_exact
       definition_sha256: sha256:de70a7a47a2dae570ead87e4955599ba13155592a84a8c4ed4dad53651d96e59
-      emission_sha256: sha256:22ec5ed1a708cd7718ffa35b6959aa89f4fc66241b8d20fdf8e91a41a6240254
+      emission_sha256: sha256:b80e0f124675ecd95c99c1f228aa4b8d7591b046d07153351f2b3985ab443405
   unresolved_subitems: []
