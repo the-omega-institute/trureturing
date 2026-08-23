@@ -285,6 +285,47 @@ public sealed class LeanCachePublishTests
     private sealed record PublishAttempt(int ExitCode, string Text);
 
     /// <summary>
+    /// 解包必须只有一个入口，且它在产地核验之后。
+    ///
+    /// 逐条枚举控制流会漏 —— 漏掉的那条恰恰是将来新加的那条。这里改成**结构断言**：
+    /// 脚本中 `lake unpack` 恰好出现一次，且落在 `consume_verified_archive` 函数体内，
+    /// 而该函数的定义位置在核验段之后。任何绕开核验去解包的新分支都会先让这条红。
+    /// </summary>
+    [Fact]
+    public void VerifiedConsumptionHasASingleEntryPoint()
+    {
+        var script = Script();
+        var lines = script.Split('\n');
+
+        // 只数真正的命令行。注释里提到 `lake unpack`（包括解释这条断言本身的那段）
+        // 不是调用点；把注释算进来会让判据把自己也数一遍 —— 实测第一版正是如此，
+        // 数出 2 处，其中一处是本测试的说明文字。
+        var unpackLines = lines
+            .Select(static (text, index) => (text, index))
+            .Where(static line => line.text.Contains("lake unpack", StringComparison.Ordinal)
+                && !line.text.TrimStart().StartsWith('#'))
+            .ToArray();
+        var unpack = Assert.Single(unpackLines);
+
+        var definition = Array.FindIndex(
+            lines,
+            static line => line.TrimStart().StartsWith("consume_verified_archive()", StringComparison.Ordinal));
+        Assert.True(definition >= 0, "consume_verified_archive is not defined");
+
+        var provenanceGate = Array.FindIndex(
+            lines,
+            static line => line.Contains("fail_provenance()", StringComparison.Ordinal));
+        Assert.True(provenanceGate >= 0, "the provenance gate is not defined");
+
+        Assert.True(
+            provenanceGate < definition,
+            "the unpack entry point must be defined after the provenance gate");
+        Assert.True(
+            unpack.index > definition,
+            "the only lake unpack must sit inside consume_verified_archive");
+    }
+
+    /// <summary>
     /// 消费侧产地核验的 fail-closed 矩阵。摘要与依赖层身份只证明「字节没坏、层对得上」，
     /// 不证明**是谁产的** —— manifest 与 payload 同处一个发布面，有写权者可一并替换而保持
     /// 自洽。故每一项产地不符都必须判 rejected 且**不解包**。
@@ -303,6 +344,8 @@ public sealed class LeanCachePublishTests
     [InlineData("wrong-branch", "head_branch is")]
     [InlineData("wrong-head-sha", "head_sha is")]
     [InlineData("failed-run", "conclusion is")]
+    [InlineData("wrong-archive-digest", "do not match the digest GitHub recorded")]
+    [InlineData("extra-asset", "assets, expected exactly 2")]
     public void FetchRejectsEveryProvenanceDeviation(string deviation, string expected)
     {
         using var fixture = new FetchFixture(deviation);
@@ -492,30 +535,58 @@ public sealed class LeanCachePublishTests
                     + $"sources_sha256={new string('3', 64)}\narchive_sha256={digest}\n"
                     + $"archive_bytes=14\n{producer}{runId}");
 
+            var archiveDigest = deviation == "wrong-archive-digest"
+                ? new string('c', 64)
+                : digest;
+
             Directory.CreateDirectory(Bin);
+            // 严格夹具：只认下面这三个端点的**完整**形状，其余一律非零退出。
+            // 宽匹配（`*/releases/tags/*` 一类）会让脚本调错端点也照样绿，那样测的
+            // 就不是脚本的行为，而是夹具的宽容度。
             WriteExecutable(
                 Path.Combine(Bin, "gh"),
                 "#!/usr/bin/env bash\n"
                     + "if [[ \"$1\" == 'release' && \"$2\" == 'download' ]]; then\n"
-                    // --dir 的位置不固定，按名字取它后面那个参数，别数位置。
                     + "  destination=''\n"
+                    + "  saw_repo=0; saw_archive=0; saw_manifest=0\n"
                     + "  while [[ $# -gt 0 ]]; do\n"
-                    + "    if [[ \"$1\" == '--dir' ]]; then destination=\"$2\"; fi\n"
+                    + "    case \"$1\" in\n"
+                    + "      --dir) destination=\"$2\" ;;\n"
+                    + "      --repo) saw_repo=1 ;;\n"
+                    + "      lean-build.tgz) saw_archive=1 ;;\n"
+                    + "      manifest.txt) saw_manifest=1 ;;\n"
+                    + "    esac\n"
                     + "    shift\n"
                     + "  done\n"
-                    + "  [[ -n \"$destination\" ]] || exit 1\n"
+                    + "  [[ -n \"$destination\" && $saw_repo == 1 && $saw_archive == 1 && $saw_manifest == 1 ]] || exit 1\n"
                     + $"  cp '{payload}'/* \"$destination\"\n"
                     + "  exit 0\n"
                     + "fi\n"
                     + "if [[ \"$1\" == 'api' ]]; then\n"
                     + "  case \"$2\" in\n"
-                    + $"    */releases/tags/*) printf '{{\"author\":{{\"login\":\"{author}\"}},\"target_commitish\":\"{target}\",\"assets\":[{{\"uploader\":{{\"login\":\"{uploader}\"}}}}]}}\\n' ;;\n"
-                    + $"    */actions/workflows/*) printf '42\\n' ;;\n"
-                    + $"    */actions/runs/*) printf '{{\"workflow_id\":{workflowId},\"event\":\"{runEvent}\",\"head_branch\":\"{branch}\",\"head_sha\":\"{headSha}\",\"conclusion\":\"{conclusion}\"}}\\n' ;;\n"
+                    + "    repos/*/releases/tags/*)\n"
+                    + $"      printf '{{\"author\":{{\"login\":\"{author}\"}},\"target_commitish\":\"{target}\",\"assets\":["
+                    + $"{{\"name\":\"lean-build.tgz\",\"digest\":\"sha256:{archiveDigest}\",\"uploader\":{{\"login\":\"github-actions[bot]\"}}}},"
+                    // 错误 uploader 刻意放在**第二个**资产上：第一个保持正确，才抓得住
+                    // 「只查第一个就返回」这类实现。放在第一个的话，那种实现照样红，
+                    // 用例就分辨不出两者。
+                    + $"{{\"name\":\"manifest.txt\",\"digest\":\"sha256:{new string('e', 64)}\",\"uploader\":{{\"login\":\"{uploader}\"}}}}"
+                    + (deviation == "extra-asset"
+                        ? ",{\"name\":\"notes.txt\",\"digest\":\"sha256:"
+                            + new string('f', 64)
+                            + "\",\"uploader\":{\"login\":\"github-actions[bot]\"}}"
+                        : string.Empty)
+                    + "]}\\n' ;;\n"
+                    + "    repos/*/actions/workflows/lean-cache-publish.yml)\n"
+                    + "      [[ \"$3\" == '--jq' && \"$4\" == '.id' ]] || exit 1\n"
+                    + "      printf '42\\n' ;;\n"
+                    + "    repos/*/actions/runs/7777)\n"
+                    + $"      printf '{{\"workflow_id\":{workflowId},\"event\":\"{runEvent}\",\"head_branch\":\"{branch}\",\"head_sha\":\"{headSha}\",\"conclusion\":\"{conclusion}\"}}\\n' ;;\n"
+                    + "    *) exit 1 ;;\n"
                     + "  esac\n"
                     + "  exit 0\n"
                     + "fi\n"
-                    + "exit 0\n");
+                    + "exit 1\n");
             WriteExecutable(
                 Path.Combine(Bin, "lake"),
                 "#!/usr/bin/env bash\n"

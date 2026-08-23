@@ -235,6 +235,8 @@ case "$VERB" in
 
     # 一次 REST 调用拿齐三样：author、target_commitish、每个 asset 的 uploader。
     # `gh release view --json` 的 asset 字段里**没有** uploader，故走 api。
+    command -v jq >/dev/null 2>&1 \
+      || fail_provenance "jq is required to read release provenance and is absent"
     release_json="$(gh api "repos/${REPO}/releases/tags/${resolved}" 2>/dev/null)" \
       || fail_provenance "release metadata is unreadable"
     release_author="$(printf '%s' "$release_json" | jq -r '.author.login // ""')"
@@ -243,19 +245,51 @@ case "$VERB" in
       || fail_provenance "release author is ${release_author:-<absent>}, not the CI publisher"
     [[ "$release_target" == "$producer_commit_sha" ]] \
       || fail_provenance "release target ${release_target:-<absent>} does not match the declared producer commit"
+
+    # 资产必须**恰好**是这两份。多一份就意味着有人往这个 release 里加过东西，而
+    # 「所有 uploader 都对」在多资产下并不排除那种情形。
+    for expected in "$asset" manifest.txt; do
+      count="$(printf '%s' "$release_json" | jq --arg n "$expected" '[.assets[]? | select(.name == $n)] | length')"
+      [[ "$count" == "1" ]] \
+        || fail_provenance "release carries ${count:-<absent>} assets named ${expected}, expected exactly 1"
+    done
+    total_assets="$(printf '%s' "$release_json" | jq '[.assets[]?] | length')"
+    [[ "$total_assets" == "2" ]] \
+      || fail_provenance "release carries ${total_assets:-<absent>} assets, expected exactly 2"
+    # 进程替换里的失败不会被 `set -e` 捕获，故先把结果取进变量并查状态：解析失败
+    # 与「没有 uploader」是两回事，前者必须 fail-closed，不能当成空列表走过去。
+    uploaders="$(printf '%s' "$release_json" | jq -r '[.assets[]?.uploader.login // ""] | .[]')" \
+      || fail_provenance "release asset metadata could not be parsed"
+    uploader_count="$(printf '%s\n' "$uploaders" | grep -c . || true)"
+    [[ "$uploader_count" == "2" ]] \
+      || fail_provenance "release declares ${uploader_count} asset uploaders, expected 2"
     while IFS= read -r uploader; do
       [[ "$uploader" == "github-actions[bot]" ]] \
         || fail_provenance "an asset was uploaded by ${uploader:-<absent>}, not the CI publisher"
-    done < <(printf '%s' "$release_json" | jq -r '.assets[].uploader.login // ""')
+    done <<< "$uploaders"
+
+    # 把**手里的字节**绑到**被验产地的那个资产**上。此前只比 manifest 声明的摘要，而
+    # manifest 与 payload 同处一个发布面；GitHub 自己记的 asset digest 是独立的第二侧。
+    github_digest="$(printf '%s' "$release_json" \
+      | jq -r --arg n "$asset" '.assets[]? | select(.name == $n) | .digest // ""')"
+    [[ "$github_digest" == "sha256:${actual}" ]] \
+      || fail_provenance "archive bytes do not match the digest GitHub recorded for ${asset} (${github_digest:-<absent>})"
 
     # 发布器的 workflow id **由路径解析**，不写死：写死即第二真源，且换仓或重建
-    # workflow 后失效。
+    # workflow 后失效。两侧都必须先验形状 —— 若两侧同为空串，`==` 会恒真，
+    # 那就是一个空比较冒充判据。
     publisher_id="$(gh api "repos/${REPO}/actions/workflows/lean-cache-publish.yml" --jq '.id' 2>/dev/null)" \
       || fail_provenance "publisher workflow is unreadable"
+    [[ "$publisher_id" =~ ^[0-9]+$ ]] \
+      || fail_provenance "publisher workflow id is ${publisher_id:-<absent>}, not numeric"
     run_json="$(gh api "repos/${REPO}/actions/runs/${archive_run_id}" 2>/dev/null)" \
       || fail_provenance "declared workflow run ${archive_run_id} is unreadable"
+    run_workflow_id="$(printf '%s' "$run_json" | jq -r '.workflow_id // ""')"
+    [[ "$run_workflow_id" =~ ^[0-9]+$ ]] \
+      || fail_provenance "run ${archive_run_id} declares workflow id ${run_workflow_id:-<absent>}, not numeric"
+    [[ "$run_workflow_id" == "$publisher_id" ]] \
+      || fail_provenance "run ${archive_run_id} workflow_id is ${run_workflow_id}, expected ${publisher_id}"
     for pair in \
-      "workflow_id:${publisher_id}" \
       "event:schedule" \
       "head_branch:dev" \
       "head_sha:${producer_commit_sha}" \
@@ -263,15 +297,23 @@ case "$VERB" in
     do
       field="${pair%%:*}"; want="${pair#*:}"
       got="$(printf '%s' "$run_json" | jq -r ".${field} // \"\"")"
+      [[ -n "$got" ]] \
+        || fail_provenance "run ${archive_run_id} declares no ${field}"
       [[ "$got" == "$want" ]] \
-        || fail_provenance "run ${archive_run_id} ${field} is ${got:-<absent>}, expected ${want}"
+        || fail_provenance "run ${archive_run_id} ${field} is ${got}, expected ${want}"
     done
     # `head_branch=dev` + `event=schedule` + 该 run 成功，合起来说明该 commit 当时
     # 就是默认分支的 tip。**残余**：dev 若被 force-push，历史上的 tip 可能已不在
     # 当前历史里。此处不另做祖先查询——那要么依赖本机 fetch 状态（会随上次 fetch
     # 何时发生而变），要么再加一次 API 往返。记为已知残余，不冒充已排除。
 
-    ( cd "$repository" && lake unpack "$staged/$asset" >/dev/null )
+    # 解包只有这一个入口，且它在**产地核验之后**。做成具名函数不是修辞：
+    # `VerifiedConsumptionHasASingleEntryPoint` 钉住脚本里 `lake unpack` 恰好出现一次
+    # 且落在此函数体内，故将来任何新分支想解包都必须走这里，不能各写各的。
+    consume_verified_archive() {
+      ( cd "$repository" && lake unpack "$staged/$asset" >/dev/null )
+    }
+    consume_verified_archive
     got_sources="$(sed -n 's/^sources_sha256=//p' "$staged/manifest.txt")"
     printf 'LEAN_CACHE_FETCH {"status":"unpacked","mode":"%s","tag":"%s","resolved":"%s","fetched_sources_sha256":"%s","sha256":"%s","producer_commit_sha":"%s","workflow_run_id":"%s"}\n' \
       "$mode" "$tag" "$resolved" "$got_sources" "$actual" "$producer_commit_sha" "$archive_run_id"
