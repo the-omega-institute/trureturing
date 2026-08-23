@@ -1,6 +1,6 @@
-/- GID: D5/S3/ConceptDynamics/Experiment/ExperimentIdentifiability.identifiable_tfae
+/- GID: D5/S3/ConceptDynamics/Experiment/ExperimentIdentifiability
    generality: G
-   mirror-B: D5/B/S3/ConceptDynamics/Experiment/ExperimentIdentifiability.identifiable_tfae
+   mirror-B: D5/B/S3/ConceptDynamics/Experiment/ExperimentIdentifiability
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    digest: Experimental identifiability is target factorization through the joint readout. -/
