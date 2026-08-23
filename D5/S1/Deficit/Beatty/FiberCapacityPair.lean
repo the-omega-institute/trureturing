@@ -11,11 +11,13 @@ import Mathlib.Data.Int.Interval
 import Mathlib.Order.Interval.Set.OrdConnected
 
 /- Library-search audit trail (2026-08-23):
-   * `rg -n -F 'golden_fiber_capacity_pair' D5 Golden/Frozen/accepted` returned no matches.
-   * Searches for `capacity`, `fiber.*card`, `goldenFiber`, `fiberA`, and `fiberB` found
-     `D5.S1.Eigenstructure.GoldenFiberCapacityPairs.golden_fiber_capacity_pairs`, which only
-     evaluates the floor/ceiling pairs of the second and third golden powers; it neither counts
-     coordinate fibers nor supplies a fiber witness, so it is not a public cover.
+   * `rg -n -F 'golden_fiber_capacity_pair' D5 Golden/Frozen/accepted` found the public theorem
+     `D5.S1.Eigenstructure.GoldenFiberCapacityPairs.golden_fiber_capacity_pairs` and its frozen
+     receipt. That theorem only evaluates the floor/ceiling pairs of the second and third golden
+     powers; it neither counts coordinate fibers nor supplies a fiber witness, so it is not a
+     public cover.
+   * Searches for `capacity`, `fiber.*card`, `goldenFiber`, `fiberA`, and `fiberB` found no relevant
+     private declaration; the private fiber-cardinality hits concern unrelated finite maps.
    * `FiberCoordinateBeattyForms.mem_goldenFiber_iff` publicly supplies the displacement equation
      for the a-fiber. No public or private declaration found by the searches states an actual
      golden fiber cardinality or interval-support theorem.
