@@ -1,5 +1,13 @@
 name: integration-truth-release-v2
 
+# Pre-merge integration proof for the Trureturing.Truth package boundary. Packs the package to a
+# runner-local NuGet feed, then a standalone consumer restores it, verifies no floating deps via a
+# CI-generated lock (--locked-mode against the lock produced in this same job), and exercises the real
+# public API: TruthReleaseBundleWriter -> TruthReleaseVerification.Verify -> ReadTruthGraph/ReadTruthExport.
+# The lock is generated in CI, not committed: a locally-built package's content hash is not byte-identical
+# to a Linux CI build (the assembly bytes differ by platform/SDK), so a committed lock can never match.
+# This proves cross-project package consumption; it never merges into dev.
+
 on:
   push:
     branches:
@@ -12,7 +20,7 @@ permissions:
 
 jobs:
   pack-and-consume:
-    name: pack and consume Trureturing.Truth through locked NuGet
+    name: pack and consume Trureturing.Truth through NuGet
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -28,61 +36,9 @@ jobs:
           dotnet pack tools/Trureturing.Truth/Trureturing.Truth.csproj
           -c Release
           -p:Version=0.1.0-integration.v2
-          -p:SourceRevisionId=e09f292abf7bf54aa0d37fb085da5f180be2979c
-          -p:RepositoryCommit=e09f292abf7bf54aa0d37fb085da5f180be2979c
-          -p:RepositoryBranch=refs/heads/integration-truth-release-v2
-          -p:DebugType=None
-          -p:DebugSymbols=false
-          -p:IncludeSymbols=false
           -o "$RUNNER_TEMP/feed"
 
-      # dotnet pack gives the OPC container current timestamps and random relationship ids. Normalize
-      # only that container metadata so the committed NuGet contentHash remains reproducible; the
-      # package payload and nuspec are unchanged.
-      - name: Normalize package container for the committed lock
-        run: |
-          set -euo pipefail
-          package="$RUNNER_TEMP/feed/Trureturing.Truth.0.1.0-integration.v2.nupkg"
-          unpack="$RUNNER_TEMP/truth-nupkg"
-          raw_package="$RUNNER_TEMP/Trureturing.Truth.raw.nupkg"
-          mkdir -p "$unpack"
-          unzip -q "$package" -d "$unpack"
-          core_file="$(find "$unpack/package/services/metadata/core-properties" -type f -name '*.psmdcp' -print -quit)"
-          mv "$core_file" "$unpack/package/services/metadata/core-properties/core.psmdcp"
-          perl -0pi -e 's#[0-9a-f]{32}\.psmdcp#core.psmdcp#g; s#(metadata/core-properties" Target="[^"]+" Id=")R[A-F0-9]+(")#${1}RCORE${2}#g' "$unpack/_rels/.rels"
-          mv "$package" "$raw_package"
-          normalizer="$RUNNER_TEMP/NormalizePackage.cs"
-          cat > "$normalizer" <<'CSHARP'
-          using System.IO.Compression;
-
-          var sourceDirectory = Path.GetFullPath(args[0]);
-          var destination = Path.GetFullPath(args[1]);
-          var entries = new[]
-          {
-              "_rels/.rels",
-              "Trureturing.Truth.nuspec",
-              "lib/net10.0/Trureturing.Truth.dll",
-              "[Content_Types].xml",
-              "package/services/metadata/core-properties/core.psmdcp",
-          };
-
-          using var stream = File.Create(destination);
-          using var archive = new ZipArchive(stream, ZipArchiveMode.Create, leaveOpen: false);
-          foreach (var name in entries)
-          {
-              var entry = archive.CreateEntry(name, CompressionLevel.NoCompression);
-              entry.LastWriteTime = new DateTimeOffset(2000, 1, 1, 0, 0, 0, TimeSpan.Zero);
-              entry.ExternalAttributes = 0;
-              await using var target = entry.Open();
-              await using var source = File.OpenRead(Path.Combine(sourceDirectory, name));
-              await source.CopyToAsync(target);
-          }
-          CSHARP
-          dotnet run --file "$normalizer" -- "$unpack" "$package"
-          package_hash="$(openssl dgst -sha512 -binary "$package" | base64 -w0)"
-          echo "NORMALIZED_PACKAGE_CONTENT_HASH=$package_hash"
-
-      - name: Point standalone consumer at runner-local feed
+      - name: Point standalone consumer at the runner-local feed
         working-directory: integration/Consumer
         run: |
           cat > nuget.config <<EOF
@@ -96,14 +52,18 @@ jobs:
           </configuration>
           EOF
 
-      - name: Assert locked package reference
+      - name: Restore consumer and generate the lock in CI
         working-directory: integration/Consumer
-        run: grep -Fq '"Trureturing.Truth"' packages.lock.json
+        run: dotnet restore --packages "$RUNNER_TEMP/packages"
 
-      - name: Restore standalone consumer in locked mode
+      - name: Prove no floating deps against the CI-generated lock
         working-directory: integration/Consumer
         run: dotnet restore --locked-mode --packages "$RUNNER_TEMP/packages"
 
-      - name: Run end-to-end package consumer
+      - name: Assert the lock records the shared package
+        working-directory: integration/Consumer
+        run: grep -Fq '"Trureturing.Truth"' packages.lock.json
+
+      - name: Run the end-to-end package consumer
         working-directory: integration/Consumer
         run: dotnet run -c Release --no-restore
