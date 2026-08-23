@@ -40,7 +40,7 @@ public sealed partial class ProductionEnvironmentTests
         var admission = TestRepositoryLayout.ReadAllText(
             RepositoryRelativePath.Create("tools/StrataLint.Engine/Ledger/Admission/FrozenLedgerAdmission.cs"));
         var writer = TestRepositoryLayout.ReadAllText(
-            RepositoryRelativePath.Create("tools/StrataLint.Cli/Commands/DagLedgerSupersedeWriter.cs"));
+            RepositoryRelativePath.Create("tools/StrataLint.Cli/Commands/Ledger/DagLedgerSupersedeWriter.cs"));
 
         Assert.Contains("ProtectedEnvironmentMatchesEntry(", admission, StringComparison.Ordinal);
         Assert.DoesNotContain("ProtectedEnvironmentMatchesEntry(", writer, StringComparison.Ordinal);
