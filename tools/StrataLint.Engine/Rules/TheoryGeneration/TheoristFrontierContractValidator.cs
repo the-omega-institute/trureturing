@@ -3,7 +3,7 @@ using System.Text.Json;
 
 namespace StrataLint.Engine;
 
-internal static class TheoristFrontierContractValidator
+internal static partial class TheoristFrontierContractValidator
 {
     internal const string Marker = "/- THEORIST_FRONTIER_CONTRACT_V2\n";
 
@@ -13,7 +13,6 @@ internal static class TheoristFrontierContractValidator
     private const string FrontierPrefix = "D5/X_Frontier/";
     private static readonly ImmutableHashSet<string> TriageClasses =
         ImmutableHashSet.Create(StringComparer.Ordinal, "theorem", "window", "wall");
-
 
     internal static ImmutableArray<RuleFinding> Evaluate(RuleEvaluationContext context)
     {
@@ -166,61 +165,6 @@ internal static class TheoristFrontierContractValidator
         return findings.ToImmutable();
     }
 
-    internal static ImmutableArray<RuleFinding> EvaluateDeliveryIdentity(
-        RuleEvaluationContext context)
-    {
-        ArgumentNullException.ThrowIfNull(context);
-        var retiredPaths = context.Baseline.Files.Keys
-            .Where(path => IsFrontier(path)
-                && !context.Current.TryGetFile(path.Value, out _))
-            .OrderBy(static path => path.Value, StringComparer.Ordinal)
-            .ToArray();
-        if (retiredPaths.Length == 0)
-        {
-            return [];
-        }
-
-        var findings = ImmutableArray.CreateBuilder<RuleFinding>();
-        var baselineMission = LoadMission(context.Baseline);
-        if (baselineMission.UnreadableReason is { } baselineReason)
-        {
-            foreach (var retiredPath in retiredPaths)
-            {
-                findings.Add(new RuleFinding(
-                    retiredPath.Value,
-                    Undecidable("baseline Frontier ownership", baselineReason)));
-            }
-
-            return findings.ToImmutable();
-        }
-
-        var currentMission = LoadMission(context.Current);
-        FrozenLedgerBaseView? frozen = null;
-        foreach (var retiredPath in retiredPaths)
-        {
-            if (baselineMission.Entries.TryGetValue(retiredPath, out var baselineOwner)
-                && baselineOwner is FrontierEligibilityKind.Governance)
-            {
-                continue;
-            }
-
-            if (!currentMission.Retirements.TryGetValue(retiredPath, out var deliveryGids))
-            {
-                continue;
-            }
-
-            frozen ??= FrozenLedgerBaseViewReader.Read(context.Current);
-            findings.AddRange(ValidateDeliveryIdentity(
-                retiredPath,
-                deliveryGids,
-                context.Lean.Report,
-                context.Baseline,
-                frozen));
-        }
-
-        return findings.ToImmutable();
-    }
-
     private static ImmutableArray<RuleFinding> Validate(
         RepoPath path,
         string source,
@@ -265,15 +209,7 @@ internal static class TheoristFrontierContractValidator
             return [new RuleFinding(path.Value, $"theorist contract is not valid JSON: {exception.Message}")];
         }
 
-        if (!HasExactKeys(
-                root,
-                "schema",
-                "exact_statement",
-                "motivation_gids",
-                "falsifier",
-                "search_receipt_gids",
-                "computation_receipt_gids",
-                "triage_class"))
+        if (!HasCanonicalContractKeys(root))
         {
             return [new RuleFinding(path.Value, "theorist contract keys are not canonical")];
         }
@@ -295,6 +231,11 @@ internal static class TheoristFrontierContractValidator
             findings.Add(new RuleFinding(
                 path.Value,
                 "triage_class must be one of theorem, window, wall"));
+        }
+
+        if (root.TryGetProperty("revision", out var revision))
+        {
+            ValidateRevision(path, revision, findings);
         }
 
         ValidateExactStatement(path, root.GetProperty("exact_statement"), report, findings);
@@ -600,15 +541,7 @@ internal static class TheoristFrontierContractValidator
             return null;
         }
 
-        if (!HasExactKeys(
-                root,
-                "schema",
-                "exact_statement",
-                "motivation_gids",
-                "falsifier",
-                "search_receipt_gids",
-                "computation_receipt_gids",
-                "triage_class")
+        if (!HasCanonicalContractKeys(root)
             || !TryString(root, "schema", out var schema)
             || schema != Schema
             || !root.TryGetProperty("exact_statement", out var exact)
@@ -620,6 +553,23 @@ internal static class TheoristFrontierContractValidator
                 retiredPath.Value,
                 "baseline Frontier exact_statement is not canonical"));
             return null;
+        }
+
+        if (root.TryGetProperty("revision", out var revision))
+        {
+            var revisionFindings = ImmutableArray.CreateBuilder<RuleFinding>();
+            ValidateRevision(retiredPath, revision, revisionFindings);
+            foreach (var revisionFinding in revisionFindings)
+            {
+                findings.Add(new RuleFinding(
+                    retiredPath.Value,
+                    $"baseline Frontier {revisionFinding.Message}"));
+            }
+
+            if (revisionFindings.Count > 0)
+            {
+                return null;
+            }
         }
 
         return statement;
