@@ -373,6 +373,7 @@ public sealed partial class CleanLanesCommandTests
         const string removedBranch = "harness/remove-destructive-z-control";
         var damaged = fixture.AddLandedLane(damagedBranch);
         var removed = fixture.AddLandedLane(removedBranch);
+        var damagedHead = fixture.Head(damaged);
         var retainedTrackedFile = Path.Combine(damaged, "README.md");
         var deletedTrackedFile = Path.Combine(
             damaged,
@@ -416,11 +417,12 @@ public sealed partial class CleanLanesCommandTests
         Assert.False(Directory.Exists(removed));
         Assert.False(fixture.BranchExists(removedBranch));
         var items = ReadItems(result.Output);
-        Assert.Contains(items, item => ItemMatches(
-            item,
+        AssertPartialItem(
+            items,
             damaged,
-            "partially_removed",
-            "worktree_remove_failed_state_indeterminate"));
+            damagedBranch,
+            damagedHead,
+            "worktree_remove_failed_state_indeterminate");
         Assert.Contains(items, item =>
             ItemMatches(item, removed, "removed", "merged_clean"));
         Assert.Contains("\"partial_count\":1", result.Output, StringComparison.Ordinal);
@@ -436,6 +438,7 @@ public sealed partial class CleanLanesCommandTests
         const string removedBranch = "harness/ref-delete-z-control";
         var partial = fixture.AddLandedLane(retainedBranch);
         var removed = fixture.AddLandedLane(removedBranch);
+        var retainedHead = fixture.Head(partial);
         var runner = fixture.CreateRunner((fileName, arguments, _) =>
             fileName == "git"
             && arguments.Count > 2
@@ -454,8 +457,7 @@ public sealed partial class CleanLanesCommandTests
         Assert.False(Directory.Exists(removed));
         Assert.False(fixture.BranchExists(removedBranch));
         var items = ReadItems(result.Output);
-        Assert.Contains(items, item =>
-            ItemMatches(item, partial, "partially_removed", "branch_ref_retained"));
+        AssertPartialItem(items, partial, retainedBranch, retainedHead, "branch_ref_retained");
         Assert.Contains(items, item =>
             ItemMatches(item, removed, "removed", "merged_clean"));
         Assert.Contains("\"event\":\"clean_lanes_summary\"", result.Output, StringComparison.Ordinal);
@@ -500,6 +502,69 @@ public sealed partial class CleanLanesCommandTests
             ItemMatches(item, path, "partially_removed", "branch_ref_retained")));
         Assert.Contains(items, item =>
             ItemMatches(item, removed, "removed", "merged_clean"));
+        Assert.Contains("\"partial_count\":2", result.Output, StringComparison.Ordinal);
+        Assert.Contains("\"removable_count\":1", result.Output, StringComparison.Ordinal);
+        Assert.Contains("\"removed_count\":1", result.Output, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void ForceReportsExactCountForTwoIndeterminateWorktreeRemovalsAndReclaimsHealthyControl()
+    {
+        using var fixture = new CleanLanesFixture();
+        string[] partialBranches =
+        [
+            "harness/remove-destructive-a-partial",
+            "harness/remove-destructive-b-partial",
+        ];
+        var partials = partialBranches.Select(branch => fixture.AddLandedLane(branch)).ToArray();
+        var partialHeads = partials.Select(fixture.Head).ToArray();
+        const string removedBranch = "harness/remove-destructive-z-control";
+        var removed = fixture.AddLandedLane(removedBranch);
+        var production = new ProductionWorktreeProcessRunner();
+        var runner = fixture.CreateRunner((fileName, arguments, workingDirectory) =>
+        {
+            if (fileName != "git"
+                || arguments.Count != 3
+                || arguments[0] != "worktree"
+                || arguments[1] != "remove"
+                || !partials.Contains(arguments[2], StringComparer.Ordinal))
+            {
+                return null;
+            }
+
+            var removal = production.Run(
+                fileName,
+                arguments,
+                workingDirectory,
+                TimeSpan.FromSeconds(30));
+            Assert.Equal(0, removal.ExitCode);
+            Assert.False(fixture.WorktreeRegistered(arguments[2]));
+            return new ProcessOutput(
+                255,
+                removal.StandardOutput,
+                Encoding.UTF8.GetBytes("synthetic failure after destructive removal\n"));
+        });
+
+        var result = fixture.RunWithRaw(runner, "--force", "--lanes-only");
+
+        Assert.False(result.Success);
+        Assert.Equal("CLEAN_LANES_PARTIAL_FAILURE count=2\n", result.Error);
+        Assert.All(partials, path => Assert.False(Directory.Exists(path)));
+        Assert.All(partialBranches, branch => Assert.True(fixture.BranchExists(branch)));
+        Assert.False(Directory.Exists(removed));
+        Assert.False(fixture.BranchExists(removedBranch));
+        var items = ReadItems(result.Output);
+        for (var index = 0; index < partials.Length; index++)
+        {
+            AssertPartialItem(
+                items,
+                partials[index],
+                partialBranches[index],
+                partialHeads[index],
+                "worktree_remove_failed_state_indeterminate");
+        }
+
+        Assert.Contains(items, item => ItemMatches(item, removed, "removed", "merged_clean"));
         Assert.Contains("\"partial_count\":2", result.Output, StringComparison.Ordinal);
         Assert.Contains("\"removable_count\":1", result.Output, StringComparison.Ordinal);
         Assert.Contains("\"removed_count\":1", result.Output, StringComparison.Ordinal);
@@ -639,6 +704,20 @@ public sealed partial class CleanLanesCommandTests
         Assert.Contains("\"removable_count\":1", result.Output, StringComparison.Ordinal);
         Assert.Contains("\"removed_count\":1", result.Output, StringComparison.Ordinal);
     }
+
+    private static void AssertPartialItem(
+        IReadOnlyList<JsonElement> items,
+        string path,
+        string branch,
+        string head,
+        string reason) =>
+        Assert.Contains(items, item =>
+            item.GetProperty("kind").GetString() == "merged_worktree"
+            && item.GetProperty("path").GetString() == path
+            && item.GetProperty("branch").GetString() == branch
+            && item.GetProperty("head").GetString() == head
+            && item.GetProperty("action").GetString() == "partially_removed"
+            && item.GetProperty("reason").GetString() == reason);
 
     private static ProcessOutput SuccessfulPrOutput(string branch, string head) =>
         new(
