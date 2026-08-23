@@ -2,7 +2,9 @@ SHELL := /bin/bash
 .DEFAULT_GOAL := help
 
 BASE ?= origin/dev
+WORKTREE_DEST_INPUT = $(if $(DEST),$(DEST),../trureturing-$(NAME))
 WORKTREE_DEST = $(if $(DEST),$(abspath $(DEST)),$(abspath ../trureturing-$(NAME)))
+WORKTREE_DEST_GUARD = case "$(WORKTREE_DEST_INPUT)" in *[[:space:]]*) printf '%s\n' 'WORKTREE_DEST_WHITESPACE: worktree destination must not contain whitespace' >&2; exit 2;; esac;
 .PHONY: help test lean-cache-ensure lean-cache-to-github-without-mathlib lean-cache-from-github-without-mathlib warm-donor lean lean-report build emit ingest echo-residual-summary show-atom theory-candidates deliver-check receipts-stage deposit cover worktree worktree-hold worktree-release worktree-clean pr-open preflight gate
 
 help:
@@ -59,13 +61,13 @@ cover:
 	@/bin/bash tools/scripts/workflow/playbook-workflows.sh cover "$(BASE)" "$(ATOM_ID)" "$(GID)"
 
 worktree:
-	@/bin/bash tools/scripts/worktree-init.sh "$(NAME)" "$(WORKTREE_DEST)" "$(BASE)"
+	@$(WORKTREE_DEST_GUARD) /bin/bash tools/scripts/worktree-init.sh "$(NAME)" "$(WORKTREE_DEST)" "$(BASE)"
 
 worktree-hold:
-	@dotnet run --project tools/StrataLint.Cli/StrataLint.Cli.csproj --configuration Release -- worktree hold --path "$(WORKTREE_DEST)" $(if $(strip $(REASON)),--reason "$(REASON)",)
+	@$(WORKTREE_DEST_GUARD) dotnet run --project tools/StrataLint.Cli/StrataLint.Cli.csproj --configuration Release -- worktree hold --path "$(WORKTREE_DEST)" $(if $(strip $(REASON)),--reason "$(REASON)",)
 
 worktree-release:
-	@dotnet run --project tools/StrataLint.Cli/StrataLint.Cli.csproj --configuration Release -- worktree release --path "$(WORKTREE_DEST)"
+	@$(WORKTREE_DEST_GUARD) dotnet run --project tools/StrataLint.Cli/StrataLint.Cli.csproj --configuration Release -- worktree release --path "$(WORKTREE_DEST)"
 
 worktree-clean:
 	@/bin/bash tools/scripts/clean-lanes.sh --base "$(BASE)" --lanes-only --force

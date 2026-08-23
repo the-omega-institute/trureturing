@@ -186,7 +186,18 @@ internal static class WorktreeHoldCommand
                 ProcessError(result, "git worktree lock failed"));
         }
 
-        return Succeeded(options, lane, "held", effectiveReason);
+        var observedLane = ReadLaneAfterSuccessfulMutation(repositoryRoot, lane, runner);
+        if (!SameLaneIdentity(lane, observedLane))
+        {
+            return MutationStateIndeterminate(
+                options,
+                lane,
+                observedLane,
+                "lock",
+                effectiveReason);
+        }
+
+        return Succeeded(options, observedLane!, "held", effectiveReason);
     }
 
     private static CommandResult Release(
@@ -237,7 +248,85 @@ internal static class WorktreeHoldCommand
                 ProcessError(result, "git worktree unlock failed"));
         }
 
-        return Succeeded(options, lane, "released", lane.LockReason);
+        var observedLane = ReadLaneAfterSuccessfulMutation(repositoryRoot, lane, runner);
+        if (!SameLaneIdentity(lane, observedLane))
+        {
+            return MutationStateIndeterminate(
+                options,
+                lane,
+                observedLane,
+                "unlock",
+                lane.LockReason);
+        }
+
+        return Succeeded(options, observedLane!, "released", lane.LockReason);
+    }
+
+    private static HeldWorktree? ReadLaneAfterSuccessfulMutation(
+        string repositoryRoot,
+        HeldWorktree originalLane,
+        IWorktreeProcessRunner runner)
+    {
+        ProcessOutput inventoryOutput;
+        try
+        {
+            inventoryOutput = runner.Run(
+                "git",
+                ["worktree", "list", "--porcelain", "-z"],
+                repositoryRoot,
+                GitTimeout);
+        }
+        catch (Exception)
+        {
+            return null;
+        }
+
+        if (inventoryOutput.ExitCode != 0) return null;
+
+        try
+        {
+            return ParseInventory(inventoryOutput.StandardOutput).SingleOrDefault(item =>
+                string.Equals(item.Path, originalLane.Path, StringComparison.Ordinal));
+        }
+        catch (Exception)
+        {
+            return null;
+        }
+    }
+
+    private static bool SameLaneIdentity(HeldWorktree expected, HeldWorktree? observed) =>
+        observed is not null
+        && string.Equals(observed.Path, expected.Path, StringComparison.Ordinal)
+        && string.Equals(observed.Branch, expected.Branch, StringComparison.Ordinal);
+
+    private static CommandResult MutationStateIndeterminate(
+        WorktreeHoldOptions options,
+        HeldWorktree expectedLane,
+        HeldWorktree? observedLane,
+        string gitMutation,
+        string? effectiveReason)
+    {
+        var observedBranch = observedLane?.Branch;
+        var observedDescription = observedBranch ?? "<missing or unreadable>";
+        var detail = $"git worktree {gitMutation} returned success, but the post-mutation inventory "
+                + "did not verify the expected lane identity; mutation may have applied to a "
+                + $"different lane (expected branch: {expectedLane.Branch}, "
+                + $"observed branch: {observedDescription}); no undo was attempted because "
+                + "the same identity uncertainty makes compensation unsafe";
+        var line = JsonSerializer.Serialize(new
+        {
+            @event = "worktree_hold_state",
+            path = options.Path,
+            branch = expectedLane.Branch,
+            expected_branch = expectedLane.Branch,
+            observed_branch = observedBranch,
+            operation = OperationName(options.Operation),
+            action = "refused",
+            effective_reason = effectiveReason,
+            error = "worktree_mutation_state_indeterminate",
+            detail,
+        }) + "\n";
+        return new CommandResult(false, string.Empty, line);
     }
 
     private static HeldWorktree? ReadLaneAfterFailedMutation(

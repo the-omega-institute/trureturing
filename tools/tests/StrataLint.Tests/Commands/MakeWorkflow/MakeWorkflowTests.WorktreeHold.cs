@@ -113,6 +113,56 @@ public sealed partial class MakeWorkflowTests
         AssertCliArguments(operation, destination, reason, ReadArguments(failureArguments));
     }
 
+    [Theory]
+    [InlineData("worktree")]
+    [InlineData("worktree-hold")]
+    [InlineData("worktree-release")]
+    public void WorktreeTargetsRejectDestinationsContainingWhitespace(string target)
+    {
+        if (OperatingSystem.IsWindows()) return;
+
+        var root = TestRepositoryLayout.FindRoot();
+        using var fixture = new TemporaryDirectory();
+        var binDirectory = Path.Combine(fixture.Path, "bin");
+        var cliDirectory = Path.Combine(fixture.Path, "tools", "StrataLint.Cli");
+        var scriptsDirectory = Path.Combine(fixture.Path, "tools", "scripts");
+        var marker = Path.Combine(fixture.Path, "mutation.marker");
+        Directory.CreateDirectory(binDirectory);
+        Directory.CreateDirectory(cliDirectory);
+        Directory.CreateDirectory(scriptsDirectory);
+        File.Copy(Path.Combine(root, "Makefile"), Path.Combine(fixture.Path, "Makefile"));
+        WriteExecutable(
+            Path.Combine(binDirectory, "dotnet"),
+            "#!/usr/bin/env bash\ntouch \"$MUTATION_MARKER\"\n");
+        WriteExecutable(
+            Path.Combine(scriptsDirectory, "worktree-init.sh"),
+            "#!/usr/bin/env bash\ntouch \"$MUTATION_MARKER\"\n");
+
+        var result = BoundedProcessRunner.Run(
+            "/bin/bash",
+            [
+                "-c",
+                "PATH=\"$1:$PATH\" MUTATION_MARKER=\"$2\" exec make --no-print-directory \"$3\" "
+                    + "NAME=controlled DEST=\"$4\"",
+                "worktree-spaced-dest",
+                binDirectory,
+                marker,
+                target,
+                Path.Combine(fixture.Path, "lane with spaces"),
+            ],
+            fixture.Path,
+            TimeSpan.FromSeconds(30),
+            64 * 1024);
+
+        Assert.Equal(2, result.ExitCode);
+        Assert.Empty(result.StandardOutput);
+        Assert.Contains(
+            "WORKTREE_DEST_WHITESPACE",
+            Encoding.UTF8.GetString(result.StandardError),
+            StringComparison.Ordinal);
+        Assert.False(File.Exists(marker));
+    }
+
     private static ProcessOutput RunTarget(
         string workingDirectory,
         string binDirectory,
@@ -169,9 +219,12 @@ public sealed partial class MakeWorkflowTests
         return arguments.ToArray();
     }
 
-    private static string[] ReadArguments(string path) =>
-        Encoding.UTF8.GetString(File.ReadAllBytes(path))
-            .Split('\0', StringSplitOptions.RemoveEmptyEntries);
+    private static string[] ReadArguments(string path)
+    {
+        var arguments = Encoding.UTF8.GetString(File.ReadAllBytes(path)).Split('\0');
+        Assert.Equal(string.Empty, arguments[^1]);
+        return arguments[..^1];
+    }
 
     private static void AssertCliArguments(
         string operation,

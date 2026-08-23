@@ -281,6 +281,196 @@ public sealed partial class CleanLanesCommandTests
         Assert.Equal(2, runner.Invocations.Count(IsWorktreeInventory));
     }
 
+    [Theory]
+    [InlineData("hold", "lock")]
+    [InlineData("release", "unlock")]
+    public void SuccessfulGitMutationRefusesIndeterminateReceiptWhenPathNowNamesDifferentBranch(
+        string operation,
+        string gitMutation)
+    {
+        using var fixture = new CleanLanesFixture();
+        var originalBranch = $"harness/{operation}-success-original";
+        var replacementBranch = $"harness/{operation}-success-replacement";
+        var lane = fixture.AddLandedLane(originalBranch);
+        if (operation == "release") fixture.LockLane(lane);
+        var mutationObserved = false;
+        var runner = fixture.CreateRunner((fileName, arguments, _) =>
+        {
+            if (mutationObserved || !IsGitMutation(fileName, arguments, gitMutation))
+            {
+                return null;
+            }
+
+            mutationObserved = true;
+            fixture.ReplaceLane(lane, replacementBranch, operation == "release");
+            return null;
+        });
+
+        var result = WorktreeCommand.Run(
+            fixture.RepositoryWorkingDirectory,
+            [operation, "--path", lane],
+            runner);
+
+        Assert.False(result.Success);
+        var receipt = ReadHoldReceipt(result);
+        Assert.Equal("worktree_mutation_state_indeterminate", receipt.GetProperty("error").GetString());
+        Assert.Equal(originalBranch, receipt.GetProperty("branch").GetString());
+        Assert.Equal(originalBranch, receipt.GetProperty("expected_branch").GetString());
+        Assert.Equal(replacementBranch, receipt.GetProperty("observed_branch").GetString());
+        Assert.Contains(
+            "mutation may have applied to a different lane",
+            receipt.GetProperty("detail").GetString(),
+            StringComparison.Ordinal);
+        Assert.Contains(
+            "no undo was attempted",
+            receipt.GetProperty("detail").GetString(),
+            StringComparison.Ordinal);
+        Assert.Equal(2, runner.Invocations.Count(IsWorktreeInventory));
+        Assert.Single(runner.Invocations, invocation => IsGitMutation(invocation, gitMutation));
+        Assert.Contains(
+            $"branch refs/heads/{replacementBranch}",
+            fixture.WorktreeBlock(lane),
+            StringComparison.Ordinal);
+        Assert.Equal(
+            operation == "hold",
+            fixture.WorktreeBlock(lane).Contains("locked", StringComparison.Ordinal));
+    }
+
+    [Theory]
+    [InlineData("hold", "lock")]
+    [InlineData("release", "unlock")]
+    public void FailedGitMutationDoesNotReconcileAgainstReplacementBranch(
+        string operation,
+        string gitMutation)
+    {
+        using var fixture = new CleanLanesFixture();
+        var lane = fixture.AddLandedLane($"harness/{operation}-failure-original");
+        if (operation == "release") fixture.LockLane(lane);
+        var mutationObserved = false;
+        var runner = fixture.CreateRunner((fileName, arguments, _) =>
+        {
+            if (mutationObserved || !IsGitMutation(fileName, arguments, gitMutation))
+            {
+                return null;
+            }
+
+            mutationObserved = true;
+            fixture.ReplaceLane(
+                lane,
+                $"harness/{operation}-failure-replacement",
+                operation == "hold");
+            return FailedGit($"injected {gitMutation} failure after replacement");
+        });
+
+        var result = WorktreeCommand.Run(
+            fixture.RepositoryWorkingDirectory,
+            [operation, "--path", lane],
+            runner);
+
+        Assert.False(result.Success);
+        Assert.Equal(
+            operation == "hold" ? "lock_failed" : "unlock_failed",
+            ReadHoldReceipt(result).GetProperty("error").GetString());
+        Assert.Equal(2, runner.Invocations.Count(IsWorktreeInventory));
+        Assert.Single(runner.Invocations, invocation => IsGitMutation(invocation, gitMutation));
+    }
+
+    [Theory]
+    [InlineData("hold", "lock")]
+    [InlineData("release", "unlock")]
+    public void SuccessfulGitMutationReportsIndeterminateWhenInventoryRefreshFails(
+        string operation,
+        string gitMutation)
+    {
+        AssertSuccessfulMutationRefreshIsIndeterminate(
+            operation,
+            gitMutation,
+            static (_, _) => FailedGit("injected successful-mutation refresh failure"));
+    }
+
+    [Theory]
+    [InlineData("hold", "lock")]
+    [InlineData("release", "unlock")]
+    public void SuccessfulGitMutationReportsIndeterminateWhenRefreshedInventoryIsMalformed(
+        string operation,
+        string gitMutation)
+    {
+        AssertSuccessfulMutationRefreshIsIndeterminate(
+            operation,
+            gitMutation,
+            static (_, lane) => new ProcessOutput(
+                0,
+                System.Text.Encoding.UTF8.GetBytes(
+                    $"worktree {lane}\0worktree {lane}\0\0"),
+                []));
+    }
+
+    [Theory]
+    [InlineData("hold", "lock")]
+    [InlineData("release", "unlock")]
+    public void SuccessfulGitMutationReportsIndeterminateWhenLaneIsMissingFromRefreshedInventory(
+        string operation,
+        string gitMutation)
+    {
+        AssertSuccessfulMutationRefreshIsIndeterminate(
+            operation,
+            gitMutation,
+            static (fixture, _) => new ProcessOutput(
+                0,
+                System.Text.Encoding.UTF8.GetBytes(
+                    $"worktree {fixture.RepositoryWorkingDirectory}\0"
+                    + "branch refs/heads/dev\0\0"),
+                []));
+    }
+
+    [Theory]
+    [InlineData("hold", "lock")]
+    [InlineData("release", "unlock")]
+    public void FailedGitMutationFailsClosedWhenInventoryRefreshFails(
+        string operation,
+        string gitMutation)
+    {
+        AssertFailedMutationRefreshIsNotReconciled(
+            operation,
+            gitMutation,
+            static (_, _) => FailedGit("injected refresh failure"));
+    }
+
+    [Theory]
+    [InlineData("hold", "lock")]
+    [InlineData("release", "unlock")]
+    public void FailedGitMutationFailsClosedWhenRefreshedInventoryIsMalformed(
+        string operation,
+        string gitMutation)
+    {
+        AssertFailedMutationRefreshIsNotReconciled(
+            operation,
+            gitMutation,
+            static (fixture, lane) => new ProcessOutput(
+                0,
+                System.Text.Encoding.UTF8.GetBytes(
+                    $"worktree {lane}\0worktree {lane}\0\0"),
+                []));
+    }
+
+    [Theory]
+    [InlineData("hold", "lock")]
+    [InlineData("release", "unlock")]
+    public void FailedGitMutationFailsClosedWhenLaneIsMissingFromRefreshedInventory(
+        string operation,
+        string gitMutation)
+    {
+        AssertFailedMutationRefreshIsNotReconciled(
+            operation,
+            gitMutation,
+            static (fixture, _) => new ProcessOutput(
+                0,
+                System.Text.Encoding.UTF8.GetBytes(
+                    $"worktree {fixture.RepositoryWorkingDirectory}\0"
+                    + "branch refs/heads/dev\0\0"),
+                []));
+    }
+
     [Fact]
     public void HeldReclaimableLaneIsSkippedLockedThenReleasedLaneIsReclaimed()
     {
@@ -343,17 +533,107 @@ public sealed partial class CleanLanesCommandTests
     private static ProcessOutput FailedGit(string message) =>
         new(128, [], System.Text.Encoding.UTF8.GetBytes(message + "\n"));
 
+    private static void AssertFailedMutationRefreshIsNotReconciled(
+        string operation,
+        string gitMutation,
+        Func<CleanLanesFixture, string, ProcessOutput> refreshedInventory)
+    {
+        using var fixture = new CleanLanesFixture();
+        var lane = fixture.AddLandedLane($"harness/{operation}-refresh-fail-closed");
+        if (operation == "release") fixture.LockLane(lane);
+        var mutationObserved = false;
+        var runner = fixture.CreateRunner((fileName, arguments, _) =>
+        {
+            if (IsGitMutation(fileName, arguments, gitMutation))
+            {
+                mutationObserved = true;
+                return FailedGit($"injected {gitMutation} failure");
+            }
+
+            return mutationObserved && IsWorktreeInventory(fileName, arguments)
+                ? refreshedInventory(fixture, lane)
+                : null;
+        });
+
+        var result = WorktreeCommand.Run(
+            fixture.RepositoryWorkingDirectory,
+            [operation, "--path", lane],
+            runner);
+
+        Assert.False(result.Success);
+        Assert.Equal(
+            operation == "hold" ? "lock_failed" : "unlock_failed",
+            ReadHoldReceipt(result).GetProperty("error").GetString());
+        Assert.Equal(2, runner.Invocations.Count(IsWorktreeInventory));
+        Assert.Single(runner.Invocations, invocation => IsGitMutation(invocation, gitMutation));
+    }
+
+    private static void AssertSuccessfulMutationRefreshIsIndeterminate(
+        string operation,
+        string gitMutation,
+        Func<CleanLanesFixture, string, ProcessOutput> refreshedInventory)
+    {
+        using var fixture = new CleanLanesFixture();
+        var branch = $"harness/{operation}-success-refresh-fail-closed";
+        var lane = fixture.AddLandedLane(branch);
+        if (operation == "release") fixture.LockLane(lane);
+        var mutationObserved = false;
+        var runner = fixture.CreateRunner((fileName, arguments, _) =>
+        {
+            if (IsGitMutation(fileName, arguments, gitMutation))
+            {
+                mutationObserved = true;
+                return null;
+            }
+
+            return mutationObserved && IsWorktreeInventory(fileName, arguments)
+                ? refreshedInventory(fixture, lane)
+                : null;
+        });
+
+        var result = WorktreeCommand.Run(
+            fixture.RepositoryWorkingDirectory,
+            [operation, "--path", lane],
+            runner);
+
+        Assert.False(result.Success);
+        var receipt = ReadHoldReceipt(result);
+        Assert.Equal("worktree_mutation_state_indeterminate", receipt.GetProperty("error").GetString());
+        Assert.Equal(branch, receipt.GetProperty("expected_branch").GetString());
+        Assert.Equal(JsonValueKind.Null, receipt.GetProperty("observed_branch").ValueKind);
+        Assert.Contains(
+            "no undo was attempted",
+            receipt.GetProperty("detail").GetString(),
+            StringComparison.Ordinal);
+        Assert.Equal(2, runner.Invocations.Count(IsWorktreeInventory));
+        Assert.Single(runner.Invocations, invocation => IsGitMutation(invocation, gitMutation));
+        Assert.Equal(
+            operation == "hold",
+            fixture.WorktreeBlock(lane).Contains("locked", StringComparison.Ordinal));
+    }
+
     private static bool IsWorktreeInventory(WorktreeProcessInvocation invocation) =>
-        invocation.FileName == "git"
-        && invocation.Arguments.SequenceEqual(["worktree", "list", "--porcelain", "-z"]);
+        IsWorktreeInventory(invocation.FileName, invocation.Arguments);
+
+    private static bool IsWorktreeInventory(
+        string fileName,
+        IReadOnlyList<string> arguments) =>
+        fileName == "git"
+        && arguments.SequenceEqual(["worktree", "list", "--porcelain", "-z"]);
 
     private static bool IsGitMutation(
         WorktreeProcessInvocation invocation,
         string mutation) =>
-        invocation.FileName == "git"
-        && invocation.Arguments.Count >= 2
-        && invocation.Arguments[0] == "worktree"
-        && invocation.Arguments[1] == mutation;
+        IsGitMutation(invocation.FileName, invocation.Arguments, mutation);
+
+    private static bool IsGitMutation(
+        string fileName,
+        IReadOnlyList<string> arguments,
+        string mutation) =>
+        fileName == "git"
+        && arguments.Count >= 2
+        && arguments[0] == "worktree"
+        && arguments[1] == mutation;
 
     private sealed partial class CleanLanesFixture
     {
@@ -369,6 +649,15 @@ public sealed partial class CleanLanesCommandTests
 
         internal void UnlockLane(string path) =>
             Git(repository.Path, "worktree", "unlock", path);
+
+        internal void ReplaceLane(string path, string replacementBranch, bool locked)
+        {
+            var block = WorktreeBlock(path);
+            if (block.Contains("locked", StringComparison.Ordinal)) UnlockLane(path);
+            Git(repository.Path, "worktree", "remove", "--force", path);
+            AddWorktree(replacementBranch, path);
+            if (locked) LockLane(path);
+        }
 
         internal string WorktreeBlock(string path) =>
             WorktreeInventory()
