@@ -4,11 +4,38 @@
 # 命名空间与 spec A14 的 `E<n>` 发布 tag 严格分开：这些 tag 是构建缓存，不是版本发布。
 # tag 绑定 (toolchain, os, arch, config_sha256, sources_sha256) 五元组；同一元组只发一次。
 #
-# 这个归档**不是权威**：它是一个加速器，永远不进 admission 信任链，
-# 它的存在也永远不能让任何判词从红变绿。消费侧 (`fetch`) 对**依赖层身份**
-# (`toolchain`/`config_sha256`)、归档完整性与摘要一律 fail-closed;唯独 `sources_sha256`
-# 允许回退到同 config 的最近一份,差量交给 `lake build` 补——那是加速器该有的形状,
-# 不是把关。
+# 这个归档**不是权威**：它是一个加速器，不构成独立的 admission 证据。消费侧 (`fetch`)
+# 对**依赖层身份** (`toolchain`/`config_sha256`)、归档完整性与摘要一律 fail-closed;
+# 唯独 `sources_sha256` 允许回退到同 config 的最近一份,差量交给 `lake build` 补——
+# 那是加速器该有的形状,不是把关。
+#
+# 【勘误：这里曾写「永远不进 admission 信任链」，那句话是假的】
+#
+#   三席独立评审（#2729）一致判定它按字面不成立。归档发布的 .olean 会被 consumer 侧的
+#   Lake 当作构建输入复用，canonical Lean 报告又从那个 olean 环境读声明 —— 发布者
+#   **确实位于 admission 下方**。两条本以为能兜底的机制都兜不住：
+#
+#   ① Lake 的增量判定兜不住。`Build/Common.lean:213-223` 只在 depTrace.hash 等于
+#      saved depHash 且输出存在时判 up-to-date；`Build/Module.lean:742-755` **只检查
+#      输出文件是否存在，不比对内容**。故可以留一个与当前 depHash 自洽的 trace，
+#      或在 trace 生成后改 olean 字节，Lake 会直接采用已存在的输出。
+#   ② kernel 复核补不上 source binding。`Inspector.lean:284-292` 以 trustLevel := 0
+#      调 importModules，但 pinned `Environment.lean:2242-2350` 的 import 路径直接把
+#      反序列化的 ModuleData.constants 放进 Kernel.Environment，未调 replay；而且
+#      **无论 trust-0 如何**，一个 kernel-valid 但来自不同源码的 olean 照样通过类型
+#      检查。`inspect.sh:116-131` 又把磁盘上的 source_sha256 当独立 CLI 参数写进报告，
+#      没有证明该 hash 是那份 olean 的原像。
+#
+#   可成立的替代不变量是：**归档不构成独立 admission 证据，且它不引入比现有 dev
+#   cache / report producer 更宽的 writer 集合。** 后半句是有条件的，不是天然成立：
+#   `workflow_dispatch` 曾是那条更宽的 writer 路径（`gh workflow run --ref` 取的是
+#   该分支上的 workflow 版本，故 job 内检查 ref 不构成机器边界），已于 PR #2818 移除，
+#   并由 `ContentsWriteWorkflowClosureTests` 钉住。
+#
+#   仍未落地的部分（#2729 判决第 2、3 条与 B 步）：checkout 未钉不可变 github.sha；
+#   release tag 仍用可移动的 target_commitish=dev；manifest 未记 producer_commit_sha /
+#   workflow_run_id；consumer 侧没有 provenance 核验。**在这些落地之前，ensure 不得
+#   自动 fetch 本归档** —— 当前也确实没有，手工 target 只作诊断。
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../../.." && pwd -P)"

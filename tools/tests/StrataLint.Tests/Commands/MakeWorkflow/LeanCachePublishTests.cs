@@ -2,8 +2,13 @@ namespace StrataLint.Tests;
 
 /// <summary>
 /// `lean-cache-publish.sh` 发布并取回 Lean 构建缓存。那个归档是**加速器**，不是权威：
-/// 它永远不进 admission 信任链，它的存在也永远不能让任何判词从红变绿。
-/// 这里钉住的正是那条边界，以及消费侧对每一种不匹配都 fail-closed。
+/// 它不构成独立的 admission 证据。这里钉住的是身份绑定，以及消费侧对每一种不匹配都
+/// fail-closed。
+///
+/// 此处曾写「它永远不进 admission 信任链」，那句话是假的：归档的 .olean 会被 Lake 当作
+/// 构建输入复用，canonical 报告又从那个环境读声明，故发布者位于 admission 下方。理由与
+/// 替代不变量见脚本头的勘误段（#2729 三席判决）。**这些断言本身不受影响**——它们钉的是
+/// tag 身份与 fail-closed，从来不是那句信任链声明。
 /// </summary>
 public sealed class LeanCachePublishTests
 {
