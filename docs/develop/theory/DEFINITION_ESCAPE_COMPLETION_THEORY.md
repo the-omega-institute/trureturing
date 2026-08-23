@@ -3652,7 +3652,18 @@ DECT 因而从“如何发明一个定义”扩展到“一个知识系统如何
 \mathcal L_{\mathrm{role}} := (e_1,\ldots,e_N), \qquad \operatorname{EventId}(e_i)\neq\operatorname{EventId}(e_j)\ (i\neq j).
 \]
 
-令 \(d_n\) 与 \(\tau_n\) 分别为第 \(n\) 轮裁决事件号与裁决时间，且冻结事件号 \(t_n\le d_n\)。定义裁决快照
+令 \(d_n\) 与 \(\tau_n\) 分别为第 \(n\) 轮裁决事件号与裁决时间，且冻结事件号 \(t_n\le d_n\)。对角色账本与该裁决快照，先定义全日志有效性
+
+\[
+\operatorname{ValidTrace}(\mathcal L_{\mathrm{role}},K_n)
+\Longleftrightarrow
+\forall e\in\mathcal L_{\mathrm{role}},\
+e.\operatorname{evidence}\in\mathcal F_{\operatorname{EventId}(e)}.
+\]
+
+这是角色账本与裁决快照的全日志有效性不变量。只有给出该证明，裁决消费者才可读取角色事件；任一已记录事件与同事件号处的 filtration 错配时，整份快照即被拒绝。
+
+在此有效性前提下，定义裁决前缀
 
 \[
 \begin{aligned}
@@ -3660,10 +3671,11 @@ DECT 因而从“如何发明一个定义”扩展到“一个知识系统如何
 :=\{e\in\mathcal L_{\mathrm{role}}:\;&
 \operatorname{EventId}(e)\le d_n,\ e.n\le n,
 \\
-&e.\operatorname{Time}\le\tau_n,\
-e.\operatorname{evidence}\in\mathcal F_{\operatorname{EventId}(e)}\}.
+&e.\operatorname{Time}\le\tau_n\}.
 \end{aligned}
 \]
+
+该前缀只施加事件号、轮次与时间约束，不再逐事件过滤可见性。账本一致性是裁决前提，错配即拒绝整个快照，不能静默抹去事件后继续裁决。
 
 同内容的重复使用因事件号不同而不被折叠。对同一记录同一轮，角色不是单值函数，而是由该裁决快照导出的集合谓词
 
@@ -4330,10 +4342,11 @@ I_n(a)\ge I_n(b),\ R_n(a)\ge R_n(b),\ T_n(a)\ge T_n(b),\ C_n(a)\le C_n(b),\ Q_n(
 \[
 \operatorname{NoDominatingCandidate}(K_n,a_0)
 \Longleftrightarrow
-\nexists a\in\operatorname{Candidates}(K_n),\ a\succ_{K_n}a_0.
+a_0\in\operatorname{Candidates}(K_n)
+\ \wedge\ \nexists a\in\operatorname{Candidates}(K_n),\ a\succ_{K_n}a_0.
 \]
 
-它只说明 \(a_0\) 位于当前候选前沿；不可比候选仍可能满足承诺并带来更高收益，故该谓词不构成停止的充分条件。
+它要求 \(a_0\) 本身属于当前候选集，并只说明它位于当前候选前沿；不可比候选仍可能满足承诺并带来更高收益，故该谓词不构成停止的充分条件。
 
 没有来源权重时，不把五维账压成单标量。若确需
 
@@ -4379,7 +4392,7 @@ U_w(\mathbf G)= w_I\Delta I+w_R\Delta R+w_T\Delta T-w_C\Delta C-w_Q\Delta Q,
 
 ## 52.5 适应性复用、VOI 与 Goodhart 边界
 
-令 \(\mathcal L_{\mathrm{role},\preceq d_n}\) 为第 48 部绑定 \(K_n\) 裁决点的事件前缀。对同一证据在承诺闭包上的反复适应性使用，定义复用深度
+令 \(\mathcal L_{\mathrm{role},\preceq d_n}\) 为第 48 部绑定 \(K_n\) 裁决点的事件前缀，并要求 \(\operatorname{ValidTrace}(\mathcal L_{\mathrm{role}},K_n)\) 的证明。对同一证据在承诺闭包上的反复适应性使用，定义复用深度
 
 \[
 \operatorname{ReuseDepth}(r,K_n)
@@ -4692,16 +4705,24 @@ def AppendOnlyExtension
   ∃ tail, new.events = old.events ++ tail ∧
     ∀ e, e ∈ tail → K.decisionEvent < e.eventId
 
+def ValidTrace
+    {EventId Evidence Round Artifact Protocol Time : Type u}
+    [LinearOrder EventId] [Preorder Round] [Preorder Time]
+    {n : Round}
+    (L : RoleLedger EventId Evidence Round Artifact Protocol Time)
+    (K : AdjudicationSnapshot EventId Evidence Round Artifact Time n) : Prop :=
+  ∀ e, e ∈ L.events → e.evidence ∈ K.filtration.seen e.eventId
+
 def InAdjudicationPrefix
     {EventId Evidence Round Artifact Protocol Time : Type u}
     [LinearOrder EventId] [Preorder Round] [Preorder Time]
     {n : Round}
     (L : RoleLedger EventId Evidence Round Artifact Protocol Time)
     (K : AdjudicationSnapshot EventId Evidence Round Artifact Time n)
+    (_validTrace : ValidTrace L K)
     (e : UseEvent EventId Evidence Round Artifact Protocol Time) : Prop :=
   e ∈ RolePrefixAtEvent L K.decisionEvent ∧
-    e ∈ RolePrefixAtRound L n ∧ e ∈ RolePrefixAtTime L K.decidedAt ∧
-    e.evidence ∈ K.filtration.seen e.eventId
+    e ∈ RolePrefixAtRound L n ∧ e ∈ RolePrefixAtTime L K.decidedAt
 
 def RolesAt
     {EventId Evidence Round Artifact Protocol Time : Type u}
@@ -4709,8 +4730,9 @@ def RolesAt
     {n : Round}
     (L : RoleLedger EventId Evidence Round Artifact Protocol Time)
     (K : AdjudicationSnapshot EventId Evidence Round Artifact Time n)
+    (validTrace : ValidTrace L K)
     (r : Evidence) : Set EvidenceRole :=
-  {ρ | ∃ e, InAdjudicationPrefix L K e ∧ e.evidence = r ∧
+  {ρ | ∃ e, InAdjudicationPrefix L K validTrace e ∧ e.evidence = r ∧
     e.round = n ∧ e.role = ρ}
 
 def AdaptiveUseInClosure
@@ -4719,8 +4741,9 @@ def AdaptiveUseInClosure
     {n : Round}
     (L : RoleLedger EventId Evidence Round Artifact Protocol Time)
     (K : AdjudicationSnapshot EventId Evidence Round Artifact Time n)
+    (validTrace : ValidTrace L K)
     (r : Evidence) : Prop :=
-  ∃ e, InAdjudicationPrefix L K e ∧ e.evidence = r ∧
+  ∃ e, InAdjudicationPrefix L K validTrace e ∧ e.evidence = r ∧
     (e.role = .generate ∨ e.role = .tune ∨ e.role = .select) ∧
     Set.Nonempty (e.dependencies ∩ K.dependencyClosure)
 
@@ -4730,10 +4753,12 @@ def AdmissibleJudge
     {n : Round}
     (L : RoleLedger EventId Evidence Round Artifact Protocol Time)
     (K : AdjudicationSnapshot EventId Evidence Round Artifact Time n)
+    (validTrace : ValidTrace L K)
     (r : Evidence) : Prop :=
-  .adjudicate ∈ RolesAt L K r ∧
+  .adjudicate ∈ RolesAt L K validTrace r ∧
     r ∉ K.filtration.seen K.freezeEvent ∧
-    r ∉ K.evidenceDependencies ∧ ¬ AdaptiveUseInClosure L K r
+    r ∉ K.evidenceDependencies ∧
+      ¬ AdaptiveUseInClosure L K validTrace r
 
 noncomputable def ReuseDepth
     {EventId Evidence Round Artifact Protocol Time : Type u}
@@ -4741,10 +4766,11 @@ noncomputable def ReuseDepth
     {n : Round}
     (L : RoleLedger EventId Evidence Round Artifact Protocol Time)
     (K : AdjudicationSnapshot EventId Evidence Round Artifact Time n)
+    (validTrace : ValidTrace L K)
     (r : Evidence) : Nat := by
   classical
   exact (L.events.filter fun e =>
-    InAdjudicationPrefix L K e ∧ e.evidence = r ∧
+    InAdjudicationPrefix L K validTrace e ∧ e.evidence = r ∧
       (e.role = .generate ∨ e.role = .tune ∨ e.role = .select) ∧
       Set.Nonempty (e.dependencies ∩ K.dependencyClosure)).length
 
@@ -5018,6 +5044,7 @@ def NoDominatingCandidate
     (value : Action → GainVector Information Residual Transfer Cost Risk)
     (D : DecisionSet Action) : Prop :=
   ∃ current, D.current = some current ∧
+    current ∈ D.candidates ∧
     ¬ ∃ a, a ∈ D.candidates ∧ ParetoStrict value a current
 
 def OrientedStopOnDecisionSet
@@ -5064,7 +5091,7 @@ PostdictiveFit 直接由 \(\operatorname{Improves}\wedge\neg\operatorname{NonAnt
 
 首先应证明或检查：
 
-1. AppendOnlyExtension 绑定旧 K 的 decisionEvent，并要求尾部事件号均大于该点；InAdjudicationPrefix 还把每个角色事件绑定到自身事件号处的 filtration，故 RolePrefixAtEvent、RolesAt、AdaptiveUseInClosure 与 AdmissibleJudge 在旧轮逐项不变；
+1. ValidTrace 把每个已记录角色事件绑定到自身事件号处的 filtration，且所有消费者要求该证明，故错配账本不能靠静默过滤事件而通过；AppendOnlyExtension 绑定旧 K 的 decisionEvent，并要求尾部事件号均大于该点，故 InAdjudicationPrefix 的事件号、轮次和时间前缀及其消费者在旧轮逐项不变；
 2. 依赖闭包污染下裁决准入反单调，ReuseDepth 只计裁决前缀内触及闭包的 Generate/Tune/Select；
 3. NonAnticipating 同时要求裁决点已见、冻结点未见且无依赖污染，故从未观察的 Z 不能取得 ScientificGain；查表复制器零回顾损失与非预见失败可同时成立；
 4. CommitInterface 的输出 Seal 以整个 K、冻结事件号与依赖闭包为摘要输入并逐项保存，且 committedArtifacts 是输入 CandidateBundle 的有限子集并进入依赖闭包；
@@ -5131,7 +5158,7 @@ DECT v1.0 回答定义如何切开目标残差；v1.1 回答科学如何成为�
 
 - 版本化证据滤过与首次可达时刻；
 - Generate/Tune/Select/Adjudicate/Replicate 五类证据角色；
-- 带唯一事件号的有限有序角色日志、绑定滤过的事件/轮次/时间前缀、日志导出角色集合、适应性复用深度、污染闭包与裁决准入；
+- 带唯一事件号的有限有序角色日志、全日志 ValidTrace、事件/轮次/时间前缀、日志导出角色集合、适应性复用深度、污染闭包与裁决准入；
 - 前视承诺 \(K_n\) 的目标来源链、范围、比较器、检验计划、基线、权重规范与被承诺对象；
 - 冻结、非预见性与 PostdictiveFit；
 - 带零自损失、无罚项与保零聚合前件的事后复制骨架；
