@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "dependencies": {
+    "net10.0": {
+      "Trureturing.Truth": {
+        "type": "Direct",
+        "requested": "[0.1.0-integration.v2, 0.1.0-integration.v2]",
+        "resolved": "0.1.0-integration.v2",
+        "contentHash": "Ef7TyJqUUavZRAwQR+OKIcMfcfd/FTXstmhIsBDgHgCI/CWUGSup3JVVUOfL/ANmZ1cccCz//dh7apcuLZBniA=="
+      }
+    }
+  }
+}

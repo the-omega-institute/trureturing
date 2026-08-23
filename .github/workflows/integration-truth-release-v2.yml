@@ -1,0 +1,84 @@
+name: integration-truth-release-v2
+
+on:
+  push:
+    branches:
+      - integration-truth-release-v2
+      - 'integration-*'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  pack-and-consume:
+    name: pack and consume Trureturing.Truth through locked NuGet
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up .NET from global.json
+        uses: actions/setup-dotnet@v4
+        with:
+          global-json-file: global.json
+
+      - name: Pack Trureturing.Truth to runner-local feed
+        run: >
+          dotnet pack tools/Trureturing.Truth/Trureturing.Truth.csproj
+          -c Release
+          -p:Version=0.1.0-integration.v2
+          -p:RepositoryCommit=e09f292abf7bf54aa0d37fb085da5f180be2979c
+          -p:RepositoryBranch=refs/heads/integration-truth-release-v2
+          -o "$RUNNER_TEMP/feed"
+
+      # dotnet pack gives the OPC container current timestamps and random relationship ids. Normalize
+      # only that container metadata so the committed NuGet contentHash remains reproducible; the
+      # package payload and nuspec are unchanged.
+      - name: Normalize package container for the committed lock
+        run: |
+          set -euo pipefail
+          package="$RUNNER_TEMP/feed/Trureturing.Truth.0.1.0-integration.v2.nupkg"
+          unpack="$RUNNER_TEMP/truth-nupkg"
+          raw_package="$RUNNER_TEMP/Trureturing.Truth.raw.nupkg"
+          mkdir -p "$unpack"
+          unzip -q "$package" -d "$unpack"
+          core_file="$(find "$unpack/package/services/metadata/core-properties" -type f -name '*.psmdcp' -print -quit)"
+          mv "$core_file" "$unpack/package/services/metadata/core-properties/core.psmdcp"
+          perl -0pi -e 's#[0-9a-f]{32}\.psmdcp#core.psmdcp#g; s#(metadata/core-properties" Target="[^"]+" Id=")R[A-F0-9]+(")#${1}RCORE${2}#g' "$unpack/_rels/.rels"
+          find "$unpack" -type f -exec chmod 0644 {} +
+          TZ=UTC find "$unpack" -type f -exec touch -t 200001010000 {} +
+          mv "$package" "$raw_package"
+          cd "$unpack"
+          TZ=UTC zip -q -X -0 "$package" \
+            _rels/.rels \
+            Trureturing.Truth.nuspec \
+            lib/net10.0/Trureturing.Truth.dll \
+            '[Content_Types].xml' \
+            package/services/metadata/core-properties/core.psmdcp
+
+      - name: Point standalone consumer at runner-local feed
+        working-directory: integration/Consumer
+        run: |
+          cat > nuget.config <<EOF
+          <?xml version="1.0" encoding="utf-8"?>
+          <configuration>
+            <packageSources>
+              <clear />
+              <add key="runner-local-truth-feed" value="$RUNNER_TEMP/feed" />
+              <add key="nuget.org" value="https://api.nuget.org/v3/index.json" />
+            </packageSources>
+          </configuration>
+          EOF
+
+      - name: Assert locked package reference
+        working-directory: integration/Consumer
+        run: grep -Fq '"Trureturing.Truth"' packages.lock.json
+
+      - name: Restore standalone consumer in locked mode
+        working-directory: integration/Consumer
+        run: dotnet restore --locked-mode --packages "$RUNNER_TEMP/packages"
+
+      - name: Run end-to-end package consumer
+        working-directory: integration/Consumer
+        run: dotnet run -c Release --no-restore
