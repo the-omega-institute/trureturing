@@ -2126,3 +2126,1480 @@ D5/S3/ObserverMemory/PredictionCertificates/LocalCertificateMinimality.lean
 - Lean 形式化路线。
 
 后续增订必须从本节之后继续追加。
+
+---
+
+# 第二十一部　递归定义科学论：纯定义增订
+## Recursive Definition Science（RDS）
+
+> **增订状态**：v1.1，2026-08-23。  
+> **写入方式**：本增订只追加于 v1.0 之后，不修改前文任何字句。  
+> **构造纪律**：本增订不设置额外起始断言，只引入类型、映射、关系、纤维、图、更新算子、反射算子与极限对象；等式来自定义展开，其他结论均保留所需条件。
+
+本增订研究一个高阶问题：科学是否也能被表示为定义活动，以及“定义定义定义”如何避免退化为同义循环。
+
+外延上，科学对象、定律、实验、模型、证明、评价和修订都可以编码为不同载体上的映射或谓词，一个有限科学流程因此可以压成一个复合定义。内涵上，单一复合函数无法保存来源、依赖、适用域、证书、失败条件与修订路径。故更准确的形式是：
+
+\[
+\boxed{
+\mathsf{Science}
+=
+\text{能够把自身的定义生成与修订规则再次变成对象的动态有类型定义图。}
+}
+\]
+
+科学定义对象；科学方法定义如何产生与修订对象定义；科学哲学在方法空间上继续执行定义逃逸完备化；元哲学再把哲学方法变成对象。该递归采用版本化、有类型、受守卫的反射塔，而不是同层无类型自包含。
+
+---
+
+## 21.1 定义宇宙
+
+给定类型 \(X\)，定义
+
+\[
+\boxed{
+\operatorname{Def}(X)
+:=
+\sum_{D:\mathcal U}(X\to D).
+}
+\]
+
+元素写作 \(\mathbf d=(D,d)\)，其中 \(d:X\to D\)。它同时覆盖命名、分类、性质、坐标、统计量、不变量、规范代表和未来轨迹。
+
+定义核：
+
+\[
+\ker\mathbf d
+:=
+\{(x,y):d(x)=d(y)\}.
+\]
+
+定义实现像：
+
+\[
+\operatorname{Im}(\mathbf d)
+:=
+\{z:D\mid\exists x,\ d(x)=z\}.
+\]
+
+定义概念等价：
+
+\[
+\mathbf d\simeq_X\mathbf e
+\quad\Longleftrightarrow\quad
+\ker\mathbf d=\ker\mathbf e.
+\]
+
+定义细化：
+
+\[
+\mathbf d\preceq_X\mathbf e
+\quad\Longleftrightarrow\quad
+\ker\mathbf e\subseteq\ker\mathbf d.
+\]
+
+定义元定义宇宙：
+
+\[
+\operatorname{MetaDef}(X)
+:=
+\operatorname{Def}(\operatorname{Def}(X)).
+\]
+
+定义生成器：
+
+\[
+\operatorname{Generator}(X;S)
+:=
+S\to\operatorname{Def}(X).
+\]
+
+定义变换器：
+
+\[
+\operatorname{Transformer}(X,Y)
+:=
+\operatorname{Def}(X)\to\operatorname{Def}(Y).
+\]
+
+给定定义状态与残差状态，定义研究方法：
+
+\[
+\boxed{
+\operatorname{Method}(X)
+:=
+\operatorname{DState}(X)
+\times
+\operatorname{Residual}(X)
+\to
+\operatorname{Def}(X).
+}
+\]
+
+所以“方法”不是对象层的另一个性质，而是定义下一项定义的高阶映射。
+
+---
+
+# 第二十二部　外延定义与内涵定义
+
+## 22.1 外延定义
+
+定义
+
+\[
+\operatorname{ExtDef}(X)
+:=
+\sum_D(X\to D).
+\]
+
+它只保留定义函数。
+
+## 22.2 定义代码与解释
+
+定义语法类型 \(\operatorname{Code}(X)\) 和解释器：
+
+\[
+\llbracket\cdot\rrbracket_X:
+\operatorname{Code}(X)	o\operatorname{ExtDef}(X).
+\]
+
+## 22.3 来源、依赖与作用域
+
+定义来源标签类型：
+
+\[
+\operatorname{Origin}
+:=
+\{\mathsf{Notation},\mathsf{Construction},\mathsf{Deduction},
+\mathsf{Measurement},\mathsf{Calibration},\mathsf{ModelChoice},
+\mathsf{Approximation},\mathsf{Convention},\mathsf{Intervention},
+\mathsf{Imported}\}.
+\]
+
+对代码 \(c\)，定义直接依赖 \(\operatorname{dep}(c)\)、传递闭包 \(\operatorname{Dep}^*(c)\)、适用域 \(\operatorname{Scope}(c)\subseteq X\)、成本 \(\operatorname{Cost}(c)\) 与证书 \(\operatorname{Certificate}(c)\)。
+
+## 22.4 内涵定义
+
+定义
+
+\[
+\boxed{
+\operatorname{IntDef}(X)
+:=
+\sum_{c:\operatorname{Code}(X)}
+(\operatorname{Origin}(c),
+\operatorname{Dep}^*(c),
+\operatorname{Scope}(c),
+\llbracket c\rrbracket_X,
+\operatorname{Cost}(c),
+\operatorname{Certificate}(c)).
+}
+\]
+
+定义外延投影：
+
+\[
+\operatorname{ext}:
+\operatorname{IntDef}(X)	o\operatorname{ExtDef}(X).
+\]
+
+若存在 \(c_1\neq c_2\) 而 \(\llbracket c_1\rrbracket_X=\llbracket c_2\rrbracket_X\)，则外延投影在该对上非单射。由此，直接复制目标与独立构造出同一函数，不能只靠函数图区分；科学审计必须保留定义来源图。
+
+---
+
+# 第二十三部　科学状态作为定义图
+
+## 23.1 有类型定义图
+
+定义
+
+\[
+\boxed{
+\mathcal G=(V,E,\tau,\sigma,\omega).
+}
+\]
+
+其中 \(V\) 为节点，\(E\subseteq V\times V\) 为依赖边，\(\tau(v)\) 为节点类型，\(\sigma(v)\) 为内涵定义，\(\omega(v)\) 为版本与状态账本。
+
+对目标节点集 \(A\subseteq V\)，定义依赖切片：
+
+\[
+\operatorname{Slice}_{\mathcal G}(A)
+:=
+\{u:\exists v\in A,\ u\leadsto v\}.
+\]
+
+对共同输入 \(X\) 的节点集 \(U\)，定义联合读数：
+
+\[
+q_U(x):=(\sigma(u)(x))_{u\in U},
+\qquad
+R_U:=\ker q_U=\bigcap_{u\in U}\ker\sigma(u).
+\]
+
+定义科学状态：
+
+\[
+\boxed{
+\operatorname{SciState}(X)
+:=
+(\mathcal G,U,R_U,\mathcal L,\mathcal R),
+}
+\]
+
+其中 \(\mathcal L\) 是来源与版本账本，\(\mathcal R\) 是未决残差账本。
+
+科学状态由此不是一袋最终句子，而是一张正在演化的区分网络及其尚未闭合的纤维。
+
+---
+
+# 第二十四部　科学构件的不同载体定义
+
+给定世界过程类型 \(W\)，定义对象读数 \(q:W\to Q\)，相对于 \(q\) 的对象为纤维类
+
+\[
+[w]_q:=\{w':q(w')=q(w)\}.
+\]
+
+定义状态提取 \(s:W\times T\to X\)，轨迹类型 \(\operatorname{Traj}(X,T):=T\to X\)。
+
+定义定律代码为轨迹谓词：
+
+\[
+L:\operatorname{Traj}(X,T)\to\mathrm{Prop},
+\]
+
+以及允许轨迹子类型：
+
+\[
+\operatorname{LawTraj}(L)
+:=
+\{\gamma:\operatorname{Traj}(X,T)\mid L(\gamma)\}.
+\]
+
+“定律可编码为定义”的精确含义只是：它定义模型内哪些轨迹可被准入；它并不通过这一编码自动给出现实过程与该子类型的相符证书。
+
+定义操作类型 \(I\)、记录接口
+
+\[
+A:W\times I\to R,
+\]
+
+模型参数类型 \(\Theta\) 与预测接口
+
+\[
+P:\Theta\times I\to R,
+\]
+
+比较器
+
+\[
+C:R\times R\to\Delta.
+\]
+
+定义实验：
+
+\[
+\mathsf{Experiment}:=(I,R,A,\pi),
+\]
+
+其中 \(\pi\) 是采样或干预计划。
+
+观察结果 \(r\) 定义模型纤维：
+
+\[
+\Theta_r:=\{\theta:C(P(\theta,i),r)=0\}.
+\]
+
+定义假设为模型谓词 \(H:\Theta\to\mathrm{Prop}\)，定义证明对象为命题类型的项，定义计算证书为可重放轨迹与检查器的依赖和，定义论文为局部定义图、主张、证据、依赖与作用域的五元组。
+
+由此，对象、定律、模型、仪器、实验、证明和论文都可被编码成定义，但它们作用在不同输入类型，并携带不同来源标签，不应被压平为同一种认识论事件。
+
+---
+
+# 第二十五部　有限科学流程的压平与信息丢失
+
+定义一个有限可执行流程：
+
+\[
+\mathcal W=(X_0\xrightarrow{f_1}X_1\xrightarrow{f_2}\cdots\xrightarrow{f_n}X_n).
+\]
+
+定义复合：
+
+\[
+\operatorname{Comp}(\mathcal W):=f_n\circ\cdots\circ f_1.
+\]
+
+对共同输入上的有限定义节点，定义乘积压平：
+
+\[
+\operatorname{Flat}_{\times}(\mathcal G)(x)
+:=(\sigma(v)(x))_{v\in V_X}.
+\]
+
+于是
+
+\[
+\ker\operatorname{Flat}_{\times}(\mathcal G)
+=
+\bigcap_{v\in V_X}\ker\sigma(v).
+\]
+
+若后续类型依赖前序值，则定义依赖和压平：
+
+\[
+\operatorname{Flat}_{\Sigma}(\mathcal G)
+:=
+\sum_{z_1:D_1}\sum_{z_2:D_2(z_1)}\cdots
+\sum_{z_n:D_n(z_{<n})}\operatorname{Compat}(z_1,\ldots,z_n).
+\]
+
+因此有限科学工作流在外延上可以压成一个复合或依赖定义。
+
+定义遗忘映射：
+
+\[
+\operatorname{ForgetGraph}:
+\operatorname{SciGraph}\to\operatorname{ExtDef}.
+\]
+
+若两张不同图有相同遗忘像，它们的最终区分相同，但来源、依赖、次序、成本与修订路径仍可不同。故：
+
+\[
+\boxed{
+\begin{aligned}
+\text{有限科学结果的外延}&=\text{一个复合定义};\\
+\text{科学研究的内涵结构}&=\text{不能由复合定义唯一恢复的动态定义图}.
+\end{aligned}
+}
+\]
+
+---
+
+# 第二十六部　对象层、方法层与哲学层残差
+
+给定当前联合读数 \(q_U:X\to Q_U\) 和目标 \(T:X\to Y\)，定义科学问题残差：
+
+\[
+\mathcal E_U(T):=\{(x,y):q_U(x)=q_U(y),\ T(x)\neq T(y)\}.
+\]
+
+若 \(X=\Theta\) 是模型空间，目标是未来预测，则它记录当前模型表示相同、但未来不同的模型对。
+
+若 \(X=\operatorname{Method}(Z)\)，定义方法残差：
+
+\[
+\boxed{
+\mathcal E_{\mathrm{method}}(q;T)
+:=
+\{(M_1,M_2):q(M_1)=q(M_2),\ T(M_1)\neq T(M_2)\}.
+}
+\]
+
+若 \(X\) 是哲学方法空间，同一公式定义哲学系统把哪些实际表现不同的方法误归为同类。对象科学、科学方法论、科学哲学与元哲学因而共享同一残差构造，只改变输入类型。
+
+---
+
+# 第二十七部　研究方法作为定义生成器
+
+定义状态：
+
+\[
+\operatorname{DState}(X):=(\Gamma,\mathcal G,q_\Gamma,\mathcal L).
+\]
+
+定义残差状态：
+
+\[
+\operatorname{RState}(X,T)
+:=(\mathcal E_\Gamma(T),\nu,\operatorname{Classes},\operatorname{Witnesses}).
+\]
+
+定义方法：
+
+\[
+\boxed{
+M_X:
+\operatorname{DState}(X)
+\times
+\operatorname{RState}(X,T)
+\to
+\operatorname{IntDef}(X).
+}
+\]
+
+其输出是带来源、依赖、适用域和证书的新定义节点。定义更新：
+
+\[
+\Gamma_{n+1}:=\Gamma_n\cup\{d_n\},
+\qquad
+d_n:=M_X(S_n,E_n),
+\]
+
+\[
+\mathcal G_{n+1}:=\operatorname{Insert}(\mathcal G_n,d_n),
+\qquad
+E_{n+1}=E_n\cap\ker d_n.
+\]
+
+定义方法轨道：
+
+\[
+\operatorname{Orbit}(M,S_0):=(S_0,S_1,S_2,\ldots).
+\]
+
+科学研究过程由此成为定义状态在残差驱动生成器下的轨道。
+
+---
+
+# 第二十八部　哲学作为方法空间上的 DECT
+
+定义方法空间
+
+\[
+\mathfrak M_X:=\operatorname{Method}(X).
+\]
+
+定义当前哲学读数 \(q_{\mathfrak M}:\mathfrak M_X\to Q_{\mathfrak M}\) 与方法目标 \(T_{\mathfrak M}:\mathfrak M_X\to Y_{\mathfrak M}\)。
+
+定义哲学残差：
+
+\[
+\boxed{
+\mathcal E_{\mathfrak M}
+:=
+\ker q_{\mathfrak M}\setminus\ker T_{\mathfrak M}.
+}
+\]
+
+一个哲学定义是
+
+\[
+d_{\mathfrak M}:\mathfrak M_X\to D.
+\]
+
+加入后：
+
+\[
+\mathcal E'_{\mathfrak M}
+=
+\mathcal E_{\mathfrak M}\cap\ker d_{\mathfrak M}.
+\]
+
+定义哲学方法：
+
+\[
+M_{\mathfrak M}:
+\operatorname{DState}(\mathfrak M_X)
+\times
+\operatorname{RState}(\mathfrak M_X,T_{\mathfrak M})
+\to
+\operatorname{IntDef}(\mathfrak M_X).
+\]
+
+于是哲学不是在对象科学之外增加另一种逻辑，而是在研究方法空间上重复相同的定义逃逸完备化过程。
+
+---
+
+# 第二十九部　元哲学与层级
+
+定义反射载体算子：
+
+\[
+\boxed{
+\mathfrak R(X):=\operatorname{Method}(X).
+}
+\]
+
+从对象层 \(X_0\) 开始，递归定义：
+
+\[
+X_{n+1}:=\mathfrak R(X_n).
+\]
+
+每层定义
+
+\[
+q_n:X_n\to Q_n,
+\qquad
+T_n:X_n\to Y_n,
+\qquad
+E_n:=\ker q_n\setminus\ker T_n,
+\]
+
+以及
+
+\[
+M_n:
+\operatorname{DState}(X_n)
+\times
+\operatorname{RState}(X_n,T_n)
+\to
+\operatorname{IntDef}(X_n).
+\]
+
+\(X_0\) 是对象空间，\(X_1\) 是研究对象的方法空间，\(X_2\) 是研究方法的方法空间。元哲学被定义为 \(X_2\) 上的 DECT，更高有限层同理。构造中没有指定最高层。
+
+---
+
+# 第三十部　守卫自反
+
+对版本 \(S_n\)，定义代码 \(\ulcorner S_n\urcorner:\operatorname{CodeSys}\)。定义反射更新：
+
+\[
+\boxed{
+S_{n+1}:=\Phi(\ulcorner S_n\urcorner,E_n).
+}
+\]
+
+定义版本先后关系 \(\prec\)。一个自反定义为守卫的，当所有自引用边满足
+
+\[
+S_i\text{ 引用 }S_j\Longrightarrow j<i.
+\]
+
+定义守卫反射塔：
+
+\[
+S_0\xrightarrow{\Phi}S_1\xrightarrow{\Phi}S_2\xrightarrow{\Phi}\cdots.
+\]
+
+该结构与同层无类型表达 \(S=S(S)\) 不同：新版本只把已完成旧版本的代码、记录与残差纳入对象。
+
+定义反射深度：
+
+\[
+\operatorname{RefDepth}(S)
+:=
+\sup\{n:S\text{ 能编码并评价前 }n\text{ 层定义过程}\}.
+\]
+
+定义旧版本节点集合 \(N(S_n)\) 与下一版本描述 \(\operatorname{Desc}_{n+1}\)。未覆盖节点为
+
+\[
+\operatorname{Undesc}_{n+1}
+:=N(S_n)\setminus\operatorname{Dom}(\operatorname{Desc}_{n+1}).
+\]
+
+有限情况下定义自描述覆盖率：
+
+\[
+\operatorname{SelfCov}_{n+1}
+:=1-
+\frac{|\operatorname{Undesc}_{n+1}|}{|N(S_n)|}.
+\]
+
+---
+
+# 第三十一部　开放反射完成
+
+定义保持映射 \(i_n:S_n\to S_{n+1}\) 及其相容性。定义开放反射完成：
+
+\[
+\boxed{
+S_\omega:=\varinjlim_{n<\omega}S_n.
+}
+\]
+
+元素由某个有限层对象及其以后层的相容像表示。
+
+定义有限可反射性：任意有限定义子图最终来自某个 \(S_n\)。
+
+定义稳定层：
+
+\[
+\operatorname{StableAt}(N)
+\quad\Longleftrightarrow\quad
+S_{N+1}\simeq S_N.
+\]
+
+定义局部自反、全局封闭与开放反射：
+
+- 局部自反：每个有限子图最终被高层编码；
+- 全局封闭：存在单层同时编码全部层及其编码操作；
+- 开放反射：局部自反成立，而构造不指定全局封闭层。
+
+RDS 以开放反射塔为对象，因此不需要一次性定义一个“最终知道自己全部定义”的有限系统。
+
+---
+
+# 第三十二部　反射残差与元盲核
+
+对版本 \(S_n\)，定义元目标
+
+\[
+T_n^{\mathrm{meta}}:N(S_n)\to Y_n^{\mathrm{meta}},
+\]
+
+以及下一版本对旧节点的自描述读数
+
+\[
+q_{n+1}^{\mathrm{self}}:N(S_n)\to Q_{n+1}^{\mathrm{self}}.
+\]
+
+定义反射残差：
+
+\[
+\boxed{
+E_{n+1}^{\mathrm{reflect}}
+:=
+\ker q_{n+1}^{\mathrm{self}}
+\setminus
+\ker T_n^{\mathrm{meta}}.
+}
+\]
+
+给定元定义语言 \(\Gamma_{n+1}^{\mathrm{meta}}\)，定义反射盲核：
+
+\[
+B_{n+1}^{\mathrm{reflect}}
+:=
+E_{n+1}^{\mathrm{reflect}}
+\cap
+\bigcap_{d\in\Gamma_{n+1}^{\mathrm{meta}}}\ker d.
+\]
+
+定义预算反射逃逸率：
+
+\[
+\rho_{n+1}^{\mathrm{reflect}}(L)
+:=
+\inf_{C(A)\le L}
+\frac{\nu_n(E_{n+1}^{\mathrm{reflect}}\cap\bigcap_{d\in A}\ker d)}
+{\nu_n(E_{n+1}^{\mathrm{reflect}})}.
+\]
+
+“系统对自己了解多少”因而被表示为预算依赖的元逃逸谱，而不是二元自知宣言。
+
+---
+
+# 第三十三部　记录接口与现实阻力
+
+本节只定义知识系统与输入过程之间的接口。
+
+定义输入类型 \(W\)、操作类型 \(I\)、记录类型 \(R\)，记录接口
+
+\[
+A:W\times I\to R,
+\]
+
+理论预测接口
+
+\[
+P:S\times I\to R,
+\]
+
+比较器
+
+\[
+d_R:R\times R\to\Delta.
+\]
+
+定义记录残差：
+
+\[
+\delta(S,w,i):=d_R(P(S,i),A(w,i)).
+\]
+
+定义从 \(S\) 出发的允许重定义族 \(\operatorname{Redef}(S)\)。它可以要求保持历史记录、来源账本、既有输出或指定操作接口。
+
+定义持久操作残差：
+
+\[
+\operatorname{PersistentOps}(S,w)
+:=
+\{i:\forall S'\in\operatorname{Redef}(S),\ \delta(S',w,i)\neq0\}.
+\]
+
+定义现实阻力：
+
+\[
+\boxed{
+\operatorname{Resistance}(S,w)
+:=
+\operatorname{PersistentOps}(S,w).
+}
+\]
+
+这不是把某个形而上断言写入系统，而是把“在指定允许重定义族下仍不能消去的记录不匹配”命名为阻力。改变操作、记录接口、比较器或允许重定义族，阻力也随之改变；该相对性被写入参数。
+
+---
+
+# 第三十四部　事实与客观性
+
+定义观察协议索引范畴 \(\mathcal O\)。每个对象 \(o\) 有读数 \(q_o:X\to Q_o\)，每个态射 \(f:o\to o'\) 有翻译
+
+\[
+Q(f):Q_o\to Q_{o'}.
+\]
+
+定义相容读数条件：
+
+\[
+Q(f)\circ q_o=q_{o'}.
+\]
+
+定义相容记录族 \(r=(r_o)\) 为满足
+
+\[
+Q(f)(r_o)=r_{o'}
+\]
+
+的族。定义相对于协议系统的事实：
+
+\[
+\boxed{
+\operatorname{Fact}_{\mathcal O}
+:=
+\varprojlim_{o\in\mathcal O}Q_o.
+}
+\]
+
+给定性质读数 \(P_o:Q_o\to Z\)，定义客观性为自然性：
+
+\[
+\boxed{
+\operatorname{Objective}_{\mathcal O}(P)
+\quad\Longleftrightarrow\quad
+P_{o'}\circ Q(f)=P_o
+\text{ 对所有 }f.
+}
+\]
+
+若只近似交换，定义客观性缺陷为所有协议翻译上的最大交换缺陷。客观性由此不是定义缺席，而是跨合法定义翻译的相容性。
+
+---
+
+# 第三十五部　真理记录作为范围化交换
+
+定义测试操作域 \(J\subseteq I\)。对系统状态 \(S\) 与输入 \(w\)，定义精确相符：
+
+\[
+\boxed{
+S\models_J w
+\quad\Longleftrightarrow\quad
+\forall i\in J,\ P(S,i)=A(w,i).
+}
+\]
+
+若记录空间带距离，定义近似相符：
+
+\[
+S\models_{J,\varepsilon}w
+\quad\Longleftrightarrow\quad
+\sup_{i\in J}d_R(P(S,i),A(w,i))\le\varepsilon.
+\]
+
+定义声明范围
+
+\[
+\operatorname{Scope}(S):=(J,\varepsilon,\mathcal C),
+\]
+
+其中 \(\mathcal C\) 是条件集合。定义真理记录：
+
+\[
+\operatorname{TruthRecord}(S,w)
+:=
+(J,\varepsilon,\mathcal C,\operatorname{Fit},
+\operatorname{Version},\operatorname{Evidence}).
+\]
+
+该定义记录理论预测通道与记录通道在什么操作域、条件、误差与版本下交换。
+
+---
+
+# 第三十六部　因果作为干预逃逸
+
+定义观测接口 \(O:X\to R_O\)，干预索引 \(A\)，干预映射
+
+\[
+\operatorname{do}:A\times X\to X.
+\]
+
+定义干预响应目标：
+
+\[
+T^{\operatorname{do}}(x)
+:=(T(\operatorname{do}(a,x)))_{a\in A}.
+\]
+
+定义因果逃逸：
+
+\[
+\boxed{
+\mathcal E_{\mathrm{causal}}(O;T,\operatorname{do})
+:=
+\{(x,y):O(x)=O(y),\ T^{\operatorname{do}}(x)\neq T^{\operatorname{do}}(y)\}.
+}
+\]
+
+候选因果变量 \(c:X\to C\) 加入后满足普通残差交公式：
+
+\[
+\mathcal E_{\mathrm{causal}}(O\vee c;T,\operatorname{do})
+=
+\mathcal E_{\mathrm{causal}}(O;T,\operatorname{do})\cap\ker c.
+\]
+
+定义因果定义维数：
+
+\[
+\operatorname{CausalDefDim}(T\mid O,\operatorname{do})
+:=
+\inf\{C(S):\mathcal E_{\mathrm{causal}}(O\vee S;T,\operatorname{do})=\varnothing\}.
+\]
+
+---
+
+# 第三十七部　解释作为多目标压缩
+
+给定目标族 \(\mathcal T=\{T_j\}_{j\in J}\)，定义共同残差：
+
+\[
+\mathcal E(q;\mathcal T)
+:=
+\bigcup_{j\in J}\mathcal E(q;T_j).
+\]
+
+定义解释记录：
+
+\[
+\operatorname{Explain}(d)
+:=
+(\operatorname{Capture},\operatorname{Compression},
+\operatorname{Transfer},\operatorname{Counterfactual},
+\operatorname{MechanismGraph}).
+\]
+
+定义多目标捕获：
+
+\[
+\operatorname{ExplCapture}(d)
+:=
+\sum_jw_j\nu_j(\mathcal E(q;T_j)\cap(\ker d)^c).
+\]
+
+定义解释压缩：
+
+\[
+\operatorname{ExplCompression}(d)
+:=
+\operatorname{DescriptionCost}(\mathcal T\mid q)
+-
+\left[C(d)+\operatorname{DescriptionCost}(\mathcal T\mid q\vee d)\right].
+\]
+
+给定干预族，反事实闭合由
+
+\[
+\ker(q\vee d)\subseteq\ker T^{\operatorname{do}}
+\]
+
+定义。一个定义不因重新命名结果就自动成为解释；它的解释记录还需说明多目标捕获、压缩、迁移与干预覆盖。
+
+---
+
+# 第三十八部　自封闭与开放修订
+
+定义修订算子
+
+\[
+U:S\times E\to S.
+\]
+
+定义系统对残差 \(e\) 静默，当
+
+\[
+U(S,e)\simeq S.
+\]
+
+定义生产性修订，当更新后原目标残差质量下降。
+
+定义表面消残：只修改比较器、命名或作用域，使新记号下残差为零，而原预测—记录差异未缩小。
+
+定义真正解决：更新后原比较接口下的残差缩小，且历史记录未被删除。
+
+定义自封闭：
+
+\[
+\operatorname{SelfSealed}(S)
+\quad\Longleftrightarrow\quad
+\forall e,\ U(S,e)\simeq S
+\ \vee\ 
+\operatorname{RelabelErase}(S,e).
+\]
+
+定义开放修订：
+
+\[
+\operatorname{RevisionOpen}(S)
+\quad\Longleftrightarrow\quad
+\exists e,\ U(S,e)\not\simeq S
+\ \wedge\ 
+\operatorname{Resolve}(S,e).
+\]
+
+定义科学定义系统结构：
+
+\[
+\operatorname{SciDefSys}(S)
+:=
+(\operatorname{ProvenanceComplete},
+\operatorname{RecordPreserving},
+\operatorname{RevisionOpen},
+\operatorname{CertificateCarrying}).
+\]
+
+这只是一个结构类型；具体制度是否具有这些字段，需要提供对应数据和证书。
+
+---
+
+# 第三十九部　科学的递归定义动力学
+
+定义科学系统：
+
+\[
+\boxed{
+\mathsf{Science}(W)
+:=
+(\mathsf{Define},\mathsf{Observe},\mathsf{Predict},
+\mathsf{Compare},\mathsf{Revise},\mathsf{Reflect}).
+}
+\]
+
+其中：
+
+\[
+\mathsf{Define}:
+\operatorname{DState}(W)\times\operatorname{RState}(W,T)
+\to\operatorname{IntDef}(W),
+\]
+
+\[
+\mathsf{Observe}:W\times I\to R,
+\quad
+\mathsf{Predict}:S\times I\to R,
+\]
+
+\[
+\mathsf{Compare}:R\times R\to\Delta,
+\quad
+\mathsf{Revise}:S\times E\to S,
+\quad
+\mathsf{Reflect}:S_n\to S_{n+1}.
+\]
+
+定义单步更新：
+
+\[
+\boxed{
+S_{n+1}
+:=
+\mathsf{Reflect}
+\left(
+\mathsf{Revise}
+\left(S_n,
+\mathsf{Compare}
+(\mathsf{Predict}(S_n,-),\mathsf{Observe}(w,-))
+\right)
+\right).
+}
+\]
+
+定义六种变化分量：
+
+\[
+\begin{aligned}
+\Delta\mathsf{CUT}&=\text{对象和变量定义变化},\\
+\Delta\mathsf{ADMIT}&=\text{模型或轨迹准入变化},\\
+\Delta\mathsf{FLOW}&=\text{动力学定义变化},\\
+\Delta\mathsf{ANCHOR}&=\text{操作、仪器和记录接口变化},\\
+\Delta\mathsf{CERTIFY}&=\text{证明与误差证书变化},\\
+\Delta\mathsf{REFLECT}&=\text{方法和元方法定义变化}.
+\end{aligned}
+\]
+
+定义科学哲学：
+
+\[
+\mathsf{Philosophy}(S)
+:=
+\mathsf{Reflect}
+(\mathsf{Define},\mathsf{Observe},\mathsf{Predict},
+\mathsf{Compare},\mathsf{Revise}).
+\]
+
+定义元哲学：
+
+\[
+\mathsf{MetaPhilosophy}(S)
+:=
+\mathsf{Reflect}(\mathsf{Philosophy}(S)).
+\]
+
+---
+
+# 第四十部　多层定义创造
+
+对象层定义 \(d_0:X_0\to D_0\) 的生产性由对象残差捕获衡量。方法层定义
+
+\[
+d_1:X_1=\operatorname{Method}(X_0)\to D_1
+\]
+
+区分当前哲学误归为同类、但实际表现不同的方法。第 \(n\) 层定义
+
+\[
+d_n:X_n\to D_n
+\]
+
+的生产性为
+
+\[
+P_n(d_n)
+:=
+\nu_n(B_{\Gamma_n}(q_n;T_n)\cap(\ker d_n)^c).
+\]
+
+定义跨层定义族 \(\mathbf d=(d_0,\ldots,d_n)\)。给定层间运输 \(F_i:X_i\to X_{i+1}\) 与值域运输 \(G_i\)，定义自然性缺陷：
+
+\[
+\operatorname{NatDefect}(\mathbf d)
+:=
+\sum_i d_{D_{i+1}}(d_{i+1}F_i,G_id_i).
+\]
+
+定义局部修订、类型扩展、方法扩展和反射扩展。一个“科学革命”可被记录为：不能由当前概念等价下的有限重命名、冗余节点插入或局部因子重排得到的类型或生成器扩展。
+
+---
+
+# 第四十一部　Yu Deng 方法作为元定义生成器
+
+定义证明病理类型：
+
+\[
+\operatorname{Pathology}
+:=
+(\mathsf{FactorizationFailure},
+\mathsf{HistoryEntanglement},
+\mathsf{CombinatorialExplosion},
+\mathsf{CancellationHidden},
+\mathsf{ScaleDivergence},
+\mathsf{LongTimeAccumulation}).
+\]
+
+定义结构类型：
+
+\[
+\operatorname{StructureDef}
+:=
+(\mathsf{Cumulant},\mathsf{ConnectedGraph},\mathsf{Molecule},
+\mathsf{CancellationClass},\mathsf{CuttingForest},\mathsf{HeppTree},
+\mathsf{PreparedState},\mathsf{AdaptiveDepth}).
+\]
+
+定义 Deng 型方法映射：
+
+\[
+\boxed{
+M_{\mathrm{Deng}}:
+\operatorname{Pathology}
+\times\operatorname{ScaleData}
+\times\operatorname{TargetObserver}
+\to\operatorname{StructureDef}.
+}
+\]
+
+典型对应为：因子化失败映向 cumulant，历史纠缠映向 molecule，组合爆炸映向 cutting forest，隐藏抵消映向 cancellation class，尺度发散映向 Hepp tree 与 adaptive depth，长时间累积映向 prepared state 与 restart rule。
+
+这不是唯一性声明，而是把 Yu Deng 系列工作的共同创造模式提升成可研究的方法空间。对该方法自身应用 DECT，可继续询问：哪些证明病理尚未被现有结构字典区分，哪些新图对象只是旧对象的坐标压缩，哪些是方法语言的原语扩展，哪些能跨 kinetic、PDE、SPDE 与组合证明迁移。
+
+---
+
+# 第四十二部　定义包与方法包的双层盲核
+
+固定定义候选 \(\Gamma\) 后，定义选择是残差覆盖。固定方法候选集 \(\mathcal M\) 后，定义每个方法的生产域：
+
+\[
+C_M:=\{p:M\text{ 在问题 }p\text{ 上生成生产性定义}\}.
+\]
+
+定义方法共同核：
+
+\[
+K_{\mathcal M}:=\bigcap_{M\in\mathcal M}\ker M.
+\]
+
+若两个残差状态落在 \(K_{\mathcal M}\) 中，却需要不同新定义才能解决，则现有方法搜索也无法区分它们。
+
+定义方法原语创造：新方法 \(M'\) 满足
+
+\[
+K_{\mathcal M}\nsubseteq\ker M'
+\]
+
+且切开方法目标盲残差。
+
+由此形成两重边界：
+
+\[
+\boxed{
+\begin{aligned}
+\text{定义包搜索}&:\Gamma\text{ 是否已有所需切割};\\
+\text{方法包搜索}&:\mathcal M\text{ 是否已有产生该切割的生成器}.
+\end{aligned}
+}
+\]
+
+若第二层盲核非空，需要发明新的定义发现方法，而不仅是新的对象定义。
+
+---
+
+# 第四十三部　停止、继续与重新打开
+
+定义目标闭合：
+
+\[
+\operatorname{Closed}(S,T)
+\Longleftrightarrow
+\mathcal E_S(T)=\varnothing.
+\]
+
+定义近似闭合：
+
+\[
+\operatorname{Closed}_\varepsilon(S,T)
+\Longleftrightarrow
+\Delta(q_S;T)\le\varepsilon.
+\]
+
+定义预算停止：
+
+\[
+\operatorname{Stop}_{L}(S)
+\Longleftrightarrow
+\sup_{c(d)\le L}
+\frac{\operatorname{Gain}(d)}{c(d)}\le\lambda.
+\]
+
+定义方法停止：\(M(S,E_S)=\mathsf{NoProposal}\)。
+
+若对象域、目标、精度、操作族或定义语言改变并产生新残差，定义系统重新打开。定义局部完成是固定 \((X,T,I,\varepsilon)\) 下闭合；定义开放世界序列为这些参数中至少一个持续变化的序列。一个系统可以在每个固定阶段完成，却在扩张序列中反复重新打开。
+
+---
+
+# 第四十四部　稳定对象的逆极限定义
+
+定义扩张操作族：
+
+\[
+\mathcal A_0\subseteq\mathcal A_1\subseteq\cdots.
+\]
+
+定义操作等价：
+
+\[
+x\sim_ny
+\Longleftrightarrow
+\forall a\in\mathcal A_n,\ O(a,x)=O(a,y).
+\]
+
+于是 \(\sim_{n+1}\subseteq\sim_n\)。定义阶段对象
+
+\[
+X_n^{\mathrm{obs}}:=X/\!\sim_n
+\]
+
+及限制映射 \(r_{n+1,n}:X_{n+1}^{\mathrm{obs}}\to X_n^{\mathrm{obs}}\)。定义稳定科学对象空间：
+
+\[
+\boxed{
+X_\infty^{\mathrm{obs}}
+:=
+\varprojlim_nX_n^{\mathrm{obs}}.
+}
+\]
+
+元素是在不断增强的合法观察定义下保持相容的对象族。科学对象因此不被绑定于单个观察切割，而被定义为一条相容逆极限轨迹。
+
+---
+
+# 第四十五部　形式化接口草案
+
+```lean
+universe u v w
+
+namespace D5.S3.DefinitionEscape.RecursiveScience
+
+structure ExtDef (X : Type u) where
+  Codomain : Type v
+  read : X → Codomain
+
+def ExtDef.Kernel {X : Type u} (d : ExtDef X) : Setoid X :=
+  Setoid.ker d.read
+
+inductive Origin where
+  | notation | construction | deduction | measurement
+  | calibration | modelChoice | approximation
+  | convention | intervention | imported
+
+structure IntDef (X : Type u) where
+  Code : Type v
+  semantics : Code → ExtDef X
+  origin : Code → Origin
+  dependencies : Code → Set Code
+  scope : Code → Set X
+  cost : Code → ℝ≥0∞
+
+structure DefinitionGraph where
+  Node : Type u
+  Edge : Node → Node → Prop
+  carrier : Node → Type v
+  definition : (n : Node) → ExtDef (carrier n)
+
+structure DefinitionState (X : Type u) where
+  graph : DefinitionGraph
+  observation : ExtDef X
+
+structure ResidualState (X : Type u) (T : ExtDef X) where
+  current : DefinitionState X
+  pair : X → X → Prop := fun x y =>
+    current.observation.read x = current.observation.read y ∧
+    T.read x ≠ T.read y
+
+abbrev DefinitionMethod (X : Type u) (T : ExtDef X) :=
+  DefinitionState X → ResidualState X T → IntDef X
+
+structure RecordInterface (W : Type u) where
+  Query : Type v
+  Record : Type w
+  observe : W → Query → Record
+
+structure ScientificSystem (W : Type u) where
+  State : Type v
+  interface : RecordInterface W
+  predict : State → interface.Query → interface.Record
+  compare : interface.Record → interface.Record → Type w
+  revise : State → Type w → State
+  encode : State → Type w
+  reflect : State → State
+
+end D5.S3.DefinitionEscape.RecursiveScience
+```
+
+建议路径：
+
+```text
+D5/S3/DefinitionEscape/RecursiveScience/
+  ExtensionalDefinition.lean
+  IntensionalDefinition.lean
+  TypedDefinitionGraph.lean
+  WorkflowFlattening.lean
+  DefinitionMethod.lean
+  MethodResidual.lean
+  GuardedReflection.lean
+  ReflectionTower.lean
+  ReflectionEscapeRate.lean
+  RecordResistance.lean
+  ObjectiveNaturality.lean
+  InterventionResidual.lean
+  ScientificSystem.lean
+```
+
+优先形式化的定义展开包括：联合定义核等于核交；有限定义图乘积压平的核等于节点核交；外延投影非单射的显式双代码见证；方法层残差交公式；守卫引用无同层回边；反射塔有限前缀嵌入；观察协议相容族的逆极限；因果逃逸作为干预轨迹目标的普通残差特例；自封闭与开放修订的有限模型；持久残差关于允许重定义族扩大的反单调性。
+
+---
+
+# 第四十六部　纯定义统一式
+
+\[
+\mathsf{OBJECT}:=X/\ker q.
+\]
+
+\[
+\mathsf{PROBLEM}:=\ker q\setminus\ker T.
+\]
+
+\[
+\mathsf{DISCOVERY}(d)
+:=
+\mathsf{PROBLEM}\cap(\ker d)^c.
+\]
+
+\[
+\mathsf{METHOD}
+:=
+(\mathsf{STATE},\mathsf{PROBLEM})	o\mathsf{DEFINITION}.
+\]
+
+\[
+\mathsf{THEORY}
+:=
+(\mathsf{OBJECT},\mathsf{LAW},\mathsf{PREDICTION},\mathsf{SCOPE}).
+\]
+
+\[
+\mathsf{EXPERIMENT}
+:=
+(\mathsf{QUERY},\mathsf{RECORD},\mathsf{OBSERVE},\mathsf{PLAN}).
+\]
+
+\[
+\mathsf{SCIENCE\ STATE}
+:=
+(\mathsf{DEFINITION\ GRAPH},
+\mathsf{RECORD\ INTERFACE},
+\mathsf{RESIDUAL\ LEDGER},
+\mathsf{REVISION\ OPERATOR}).
+\]
+
+\[
+\mathsf{PHILOSOPHY}
+:=
+\mathsf{DECT}(\mathsf{METHOD\ SPACE}).
+\]
+
+\[
+\mathsf{REFLECTION}_{n+1}
+:=
+\operatorname{Define}
+(\ulcorner\mathsf{SCIENCE}_n\urcorner,
+\mathsf{META\ RESIDUAL}_n).
+\]
+
+\[
+\mathsf{SCIENCE}_\omega
+:=
+\varinjlim_n\mathsf{SCIENCE}_n.
+\]
+
+\[
+\mathsf{OBJECTIVITY}
+:=
+\operatorname{Naturality}
+(\mathsf{PROPERTY},\mathsf{OBSERVER\ TRANSLATION}).
+\]
+
+\[
+\mathsf{TRUTH\ RECORD}
+:=
+\operatorname{Commute}
+(\mathsf{PREDICT},\mathsf{OBSERVE};
+\mathsf{SCOPE},\varepsilon,\mathsf{VERSION}).
+\]
+
+\[
+\mathsf{RESISTANCE}
+:=
+\bigcap_{S'\in\operatorname{Redef}(S)}
+\mathsf{RECORD\ RESIDUAL}(S').
+\]
+
+最终定义：
+
+\[
+\boxed{
+\mathsf{SCIENCE}
+:=
+\operatorname{RecursiveDynamics}
+(\mathsf{DEFINE},\mathsf{OBSERVE},\mathsf{PREDICT},
+\mathsf{COMPARE},\mathsf{REVISE},\mathsf{REFLECT}).
+}
+\]
+
+---
+
+# 第四十七部　最终结算
+
+“科学也是定义”现在具有三个强度不同的含义。
+
+第一，有限外延意义：有限科学流程可以通过乘积、依赖和与复合压成一个定义。
+
+第二，内涵结构意义：科学不是裸函数，而是保存来源、依赖、作用域、证书和修订规则的动态定义图。
+
+第三，递归自反意义：科学方法定义如何产生定义；哲学定义如何区分和修订科学方法；更高层继续把前层定义机制变成对象。
+
+所以最终形式不是“科学用定义证明自己的定义正确”，而是：
+
+\[
+\boxed{
+\text{科学定义对象如何被区分，
+定义残差如何被记录，
+定义下一项定义如何生成，
+并把这一生成规则在下一版本中再次定义为对象。}
+}
+\]
+
+自反的版本化形式为
+
+\[
+\boxed{
+S_{n+1}=\Phi(\ulcorner S_n\urcorner,E_n),
+\qquad
+S_\omega=\varinjlim_nS_n.
+}
+\]
+
+DECT 因而从“如何发明一个定义”扩展到“一个知识系统如何递归定义自己的定义活动”：
+
+\[
+\boxed{
+\begin{aligned}
+\mathsf{DEFINITION}&=\text{建立区分};\\
+\mathsf{PROBLEM}&=\text{目标逃出当前区分};\\
+\mathsf{METHOD}&=\text{由逃逸生成下一项定义};\\
+\mathsf{PHILOSOPHY}&=\text{在方法空间上重复同一过程};\\
+\mathsf{REFLECTION}&=\text{把定义生成规则提升为下一层对象};\\
+\mathsf{SCIENCE}&=\text{定义—残差—修订—反射过程的版本化动力学}.
+\end{aligned}
+}
+\]
+
+最终一句：
+
+\[
+\boxed{
+\text{科学在外延上可以是一项定义；
+在结构上是一张定义图；
+在时间上是一条定义修订轨道；
+在哲学上是这条轨道把自身的生成规则再次变成对象。}
+}
+\]
+
+---
+
+# 追加账本增订
+
+## v1.1 — 2026-08-23
+
+追加存入：
+
+- 定义宇宙 \(\operatorname{Def}(X)\)、元定义、生成器与变换器；
+- 外延定义与内涵定义二分；
+- 来源标签、依赖闭包、作用域和定义证书；
+- 科学状态作为动态有类型定义图；
+- 对象、定律、动力学、仪器、实验、假设、证明和论文的统一编码；
+- 有限科学流程的乘积压平与依赖和压平；
+- 压平结果不能恢复来源和依赖的非单射结构；
+- 研究方法作为由残差产生下一项定义的高阶定义；
+- 哲学作为方法空间上的 DECT；
+- 元哲学与任意有限反射层；
+- 守卫、版本化的自反更新；
+- 开放反射塔及直接极限 \(S_\omega\)；
+- 反射残差、反射盲核和反射逃逸率；
+- 记录接口、允许重定义族、持久残差与现实阻力；
+- 事实作为相容记录族，客观性作为自然性；
+- 真理记录作为范围化预测—观察交换条件；
+- 因果变量作为干预逃逸残差的切割；
+- 解释作为多目标捕获、压缩、迁移和反事实闭包；
+- 自封闭、表面消残、真正解决与开放修订的行为定义；
+-科学系统的 Define/Observe/Predict/Compare/Revise/Reflect 六元结构；
+- Yu Deng 方法作为从证明病理到结构定义的元生成器；
+- 定义包搜索与方法包搜索的双层盲核；
+- 局部完成、预算停止与开放世界重新打开；
+- 扩张观察族下科学对象的逆极限定义；
+- 纯定义 Lean 接口草案。
+
+后续增订继续严格追加于本节之后。
