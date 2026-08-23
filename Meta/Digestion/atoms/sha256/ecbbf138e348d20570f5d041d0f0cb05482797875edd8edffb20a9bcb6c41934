@@ -1,0 +1,34 @@
+## 12.2 求和感知证书
+
+提出证书结构
+
+\[
+\mathcal C=
+(
+G,
+\operatorname{Class}(G),
+\operatorname{Cut}(G),
+T_G,
+\operatorname{Excess}(G),
+\operatorname{Count},
+\operatorname{Cancellation},
+\operatorname{Remainder}
+).
+\]
+
+目标不是逐图证明，而是证明
+
+\[
+\left|
+\sum_{G\in\mathfrak D}A_G
+\right|
+\le
+\sum_C w(C)
+\le
+\delta_\varepsilon,
+\qquad
+\delta_\varepsilon\to0.
+\]
+
+这里 \(C\) 是抵消类或切割后类型。该 \(\delta_\varepsilon\) 随后作为单步观察者缺陷进入仓库现有的迭代误差模块。
+

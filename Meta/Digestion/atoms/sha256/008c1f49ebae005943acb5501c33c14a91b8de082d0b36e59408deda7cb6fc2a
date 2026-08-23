@@ -1,0 +1,26 @@
+\[
+\boxed{
+\mathcal E(q\vee S;T)
+=
+\mathcal E(q;T)
+\cap
+\bigcap_{\gamma\in S}\ker d_\gamma.
+}
+\]
+
+因此
+
+\[
+\mathcal E(q\vee S;T)=\varnothing
+\]
+
+当且仅当
+
+\[
+\mathcal E(q;T)
+\subseteq
+\bigcup_{\gamma\in S}(\ker d_\gamma)^c.
+\]
+
+即每一个逃逸对至少被一个定义切开。
+

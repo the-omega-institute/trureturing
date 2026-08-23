@@ -1,0 +1,30 @@
+## 11.6 Hilbert 第六问题：近似级联
+
+`Hilbert's sixth problem: derivation of fluid equations via Boltzmann's kinetic theory`（arXiv:2503.01800）把硬球到 Boltzmann 的推导与 Boltzmann 到可压缩 Euler、不可压缩 Navier–Stokes–Fourier 的流体极限组合起来。其主张边界按论文原文应理解为：解决经由 Boltzmann 动理学从 Newton 定律导出这些流体方程的特定气体动力学程序，而不是自动覆盖“物理公理化”的所有可能解释。
+
+抽象地，若
+
+\[
+E_{\mathrm{Newton}\to\mathrm{Boltzmann}}\le\delta_{\varepsilon,\alpha},
+\]
+
+且
+
+\[
+E_{\mathrm{Boltzmann}\to\mathrm{Fluid}}\le\eta_\alpha,
+\]
+
+中间降维映射 Lipschitz 常数为 \(L_\alpha\)，则
+
+\[
+\boxed{
+E_{\mathrm{Newton}\to\mathrm{Fluid}}
+\le
+L_\alpha\delta_{\varepsilon,\alpha}
++
+\eta_\alpha.
+}
+\]
+
+双参数逐次极限不能无条件替换为任意联合极限；严谨做法是选择对角路径 \((\varepsilon_n,\alpha_n)\)，使两项同时趋零。
+

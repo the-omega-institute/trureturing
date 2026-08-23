@@ -1,0 +1,27 @@
+## 5.2 盲核不可能性定理
+
+若
+
+\[
+\mathcal B_\Gamma(q;T)\neq\varnothing,
+\]
+
+则任意有限或任意点态联合的 \(\Gamma\)-定义都不能使目标因子化。
+
+证明：取盲残差对 \((x,y)\)。所有定义在二者上相等，所以任意联合读数也相等；但目标值不同。
+
+因此：
+
+\[
+\boxed{
+\begin{aligned}
+\mathcal B_\Gamma(q;T)=\varnothing
+&\Rightarrow
+\text{语言点态足够，剩余问题是选择或紧致化；}\\
+\mathcal B_\Gamma(q;T)\neq\varnothing
+&\Rightarrow
+\text{再强的包内搜索也不会成功。}
+\end{aligned}
+}
+\]
+

@@ -1,0 +1,24 @@
+## 12.3 证书链
+
+完整证明链应写成
+
+\[
+\boxed{
+\begin{array}{c}
+\text{diagram classification}\\
+\downarrow\\
+\text{cancellation/cutting certificate}\\
+\downarrow\\
+\text{one-block predictive defect}\\
+\downarrow\\
+\text{iterated defect accumulation}\\
+\downarrow\\
+\text{lifespan-uniform asymptotic closure}.
+\end{array}
+}
+\]
+
+这使“数学创造”不再止于提出名字；定义必须最终产出可组合误差证书。
+
+---
+

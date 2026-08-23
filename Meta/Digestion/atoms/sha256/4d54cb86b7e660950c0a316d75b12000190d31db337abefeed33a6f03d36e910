@@ -1,0 +1,20 @@
+\[
+F(S)
+=
+\nu\left(
+\mathcal E(q;T)
+\cap
+\bigcup_{d\in S}(\ker d)^c
+\right).
+\]
+
+这是加权覆盖函数，故单调且次模。若 \(A\subseteq B\) 且 \(d\notin B\)，则
+
+\[
+F(A\cup\{d\})-F(A)
+\ge
+F(B\cup\{d\})-F(B).
+\]
+
+定义的边际收益随已有定义增加而递减。由此得到自然贪心规则：
+

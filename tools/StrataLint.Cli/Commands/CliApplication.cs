@@ -51,6 +51,10 @@ internal interface ICliEnvironment
 
     CommandResult SyncLedger(IReadOnlyList<string> arguments);
 
+    ExplicitCommandResult TruthExport(IReadOnlyList<string> arguments);
+
+    ExplicitCommandResult TruthRelease(IReadOnlyList<string> arguments);
+
     CommandResult CleanLanes(IReadOnlyList<string> arguments);
 
     CommandResult AppendPerf(IReadOnlyList<string> arguments);
@@ -131,6 +135,10 @@ internal static class CliApplication
                 RenderCommand(environment.ShowAtom(tail), console),
             ["topology"] = static (environment, tail, console) =>
                 RenderTopology(environment.Topology(tail), console),
+            ["truth-export"] = static (environment, tail, console) =>
+                RenderExplicit(environment.TruthExport(tail), console),
+            ["truth-release"] = static (environment, tail, console) =>
+                RenderExplicit(environment.TruthRelease(tail), console),
             ["theory-candidates"] = static (environment, tail, console) =>
                 RenderCommand(environment.TheoryCandidates(tail), console),
             ["worktree"] = static (environment, tail, console) =>

@@ -1,0 +1,26 @@
+## 10.2 规范准备截面
+
+设
+
+\[
+\pi_\varepsilon:X_\varepsilon\to Z
+\]
+
+为宏观读数，选择规范准备映射
+
+\[
+s_\varepsilon:Z\to X_\varepsilon,
+\qquad
+\pi_\varepsilon s_\varepsilon=\operatorname{id}_Z.
+\]
+
+定义回缩
+
+\[
+R_\varepsilon=s_\varepsilon\pi_\varepsilon,
+\qquad
+R_\varepsilon^2=R_\varepsilon.
+\]
+
+候选有效动力学为
+

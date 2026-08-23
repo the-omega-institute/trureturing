@@ -1,0 +1,20 @@
+## 1.4 联合概念
+
+定义
+
+\[
+q\vee d:X\to Q\times D,
+\qquad
+(q\vee d)(x)=(q(x),d(x)).
+\]
+
+立即有
+
+\[
+\boxed{
+\ker(q\vee d)=\ker q\cap\ker d.
+}
+\]
+
+对有限定义集 \(S\subseteq\Gamma\)，记
+

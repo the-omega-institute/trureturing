@@ -1,0 +1,18 @@
+\[
+\operatorname{ExplCompression}(d)
+:=
+\operatorname{DescriptionCost}(\mathcal T\mid q)
+-
+\left[C(d)+\operatorname{DescriptionCost}(\mathcal T\mid q\vee d)\right].
+\]
+
+给定干预族，反事实闭合由
+
+\[
+\ker(q\vee d)\subseteq\ker T^{\operatorname{do}}
+\]
+
+定义。一个定义不因重新命名结果就自动成为解释；它的解释记录还需说明多目标捕获、压缩、迁移与干预覆盖。
+
+---
+

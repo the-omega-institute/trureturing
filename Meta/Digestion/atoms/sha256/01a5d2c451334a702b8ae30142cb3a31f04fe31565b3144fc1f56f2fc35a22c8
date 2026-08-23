@@ -1,0 +1,18 @@
+\[
+\boxed{
+\mathcal E_N(q,\tau)
+=
+\mathcal E(q;T_N).
+}
+\]
+
+它记录当前读数相同、但在未来 \(N\) 步内会出现不同读数的状态对。
+
+显然
+
+\[
+\mathcal E_N(q,\tau)
+\subseteq
+\mathcal E_{N+1}(q,\tau).
+\]
+

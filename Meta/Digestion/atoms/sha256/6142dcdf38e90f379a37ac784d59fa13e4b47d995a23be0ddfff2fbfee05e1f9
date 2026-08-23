@@ -1,0 +1,16 @@
+\[
+\mathcal E_{\mathrm{causal}}(O\vee c;T,\operatorname{do})
+=
+\mathcal E_{\mathrm{causal}}(O;T,\operatorname{do})\cap\ker c.
+\]
+
+定义因果定义维数：
+
+\[
+\operatorname{CausalDefDim}(T\mid O,\operatorname{do})
+:=
+\inf\{C(S):\mathcal E_{\mathrm{causal}}(O\vee S;T,\operatorname{do})=\varnothing\}.
+\]
+
+---
+

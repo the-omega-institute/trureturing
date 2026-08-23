@@ -1,0 +1,17 @@
+## 10.4 半群缺陷恒等式
+
+若 \(U_{\varepsilon,t}\) 是流或半群，则
+
+\[
+\begin{aligned}
+S_{\varepsilon,t+s}(m)
+&=\pi_\varepsilon U_{\varepsilon,t}
+U_{\varepsilon,s}s_\varepsilon(m),\\
+S_{\varepsilon,t}S_{\varepsilon,s}(m)
+&=\pi_\varepsilon U_{\varepsilon,t}
+R_\varepsilon U_{\varepsilon,s}s_\varepsilon(m).
+\end{aligned}
+\]
+
+因此
+

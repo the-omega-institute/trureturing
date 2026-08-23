@@ -1,0 +1,8 @@
+### 生成闭包逃逸
+
+\[
+d\notin\operatorname{Closure}(\Gamma).
+\]
+
+表示不能由允许组合操作生成。
+

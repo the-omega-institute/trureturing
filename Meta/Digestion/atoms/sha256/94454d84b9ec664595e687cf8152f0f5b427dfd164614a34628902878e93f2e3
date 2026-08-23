@@ -1,0 +1,8 @@
+\[
+\operatorname{PredDefDim}_\infty(q,\tau)
+=
+\inf\{C(S):\mathcal E_\infty(q\vee S,\tau)=\varnothing\}.
+\]
+
+它度量为了使观察过程 Markov 化或预测闭合，至少需要多少附加定义复杂度。
+

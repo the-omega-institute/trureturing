@@ -1,6 +1,7 @@
 using System.Collections.Immutable;
 using System.Text;
 using StrataLint.Engine;
+using Trureturing.Truth;
 
 namespace StrataLint.Scribe.Tests;
 
@@ -25,7 +26,7 @@ public sealed class DagEmitterTests
             Assert.True(written.AsSpan().SequenceEqual(CanonicalDagWriter.Write(dag).AsSpan()));
             var truthGraph = TemporaryFileSystem.File.ReadAllBytes(Path.Combine(root, DagEmitter.TruthGraphRelativePath));
             Assert.True(truthGraph.AsSpan().SequenceEqual(
-                TruthGraphJsonWriter.Write(TruthGraphExportModel.Create(dag, Provenance)).AsSpan()));
+                TruthGraphJsonWriter.Write(TruthGraphModelBuilder.Create(dag, Provenance)).AsSpan()));
             Assert.Contains(DagEmitter.RelativePath, output.ToString(), StringComparison.Ordinal);
         });
     }

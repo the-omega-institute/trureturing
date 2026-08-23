@@ -1,0 +1,26 @@
+## 11.4 长时间：可重启闭包
+
+`Long time justification of wave turbulence theory`（arXiv:2311.10082）把短时推导扩展到 WKE 解的整个寿命。抽象结构不是一次性展开全部历史，而是在时间块之间反复重启：
+
+\[
+\text{展开}
+\to
+\text{提取主项}
+\to
+\text{压缩未决历史}
+\to
+\text{重新准备}
+\to
+\text{下一时间块}.
+\]
+
+在 DECT 中，这对应沿真实轨道反复比较
+
+\[
+U_{\Delta t}x
+\quad\text{与}\quad
+R_\varepsilon U_{\Delta t}x,
+\]
+
+并把每个时间块产生的定义逃逸缺陷交给 Lipschitz 加权累积定理。
+
