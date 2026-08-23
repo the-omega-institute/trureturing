@@ -27,6 +27,17 @@ internal static class TruthReleaseCompositionValidator
                 "Truth release source_tree disagrees across source_snapshot, truth_export, and manifest.");
         }
 
+        // The manifest's bytes are not SHA256SUMS-covered, so manifest.Source.SourceRepo is not digest-bound.
+        // Bind it here to the SHA-covered source_snapshot, which is the trustworthy repository-identity anchor;
+        // truth_export carries no source_repo, so this is a two-way snapshot<->manifest check. Without it a
+        // valid bundle could have only its manifest source_repo rewritten to another repository and still
+        // verify, misdirecting downstream provenance.
+        if (!string.Equals(sourceSnapshot.SourceRepo, manifest.Source.SourceRepo, StringComparison.Ordinal))
+        {
+            throw new FormatException(
+                "Truth release source_repo disagrees between source_snapshot and manifest.");
+        }
+
         if (!string.Equals(sourceSnapshot.TruthGraphSha256, computedTruthGraphDigest, StringComparison.Ordinal)
             || !string.Equals(computedTruthGraphDigest, manifest.Artifacts.TruthGraph.Sha256, StringComparison.Ordinal))
         {
