@@ -44,7 +44,7 @@ finish_preflight() {
     perf_capture_event \
       "$PERF_EVENT_SPOOL" "$ROOT" "$STRATALINT_PERF_RUN_ID" "preflight" "$PERF_BASE" \
       total "$status" "$(( finished_at - PREFLIGHT_STARTED ))" || true
-    perf_flush_events "$ROOT" "$PERF_EVENT_SPOOL" >/dev/null 2>&1 || true
+    perf_flush_events "$ROOT" "$PERF_EVENT_SPOOL" preflight 2>/dev/null || true
   fi
   if [[ -n "$PERF_TMP" ]]; then rm -rf -- "$PERF_TMP"; fi
   exit "$rc"

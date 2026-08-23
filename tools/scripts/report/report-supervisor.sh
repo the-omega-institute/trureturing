@@ -635,15 +635,33 @@ append_metrics() {
   local rc="$1"
   local elapsed_ms="$2"
   local event_tmp=""
-  acquire_metrics_lock || return 2
-  event_tmp="$(mktemp "$TMP_ROOT/event.XXXXXXXX")" || return 2
+  local metrics_rc=0
+  acquire_metrics_lock || {
+    metrics_rc=$?
+    perf_emit_commit_failure report-supervisor lock-unavailable "$metrics_rc"
+    return "$metrics_rc"
+  }
+  event_tmp="$(mktemp "$TMP_ROOT/event.XXXXXXXX")" || {
+    metrics_rc=$?
+    perf_emit_commit_failure report-supervisor event-temp-unavailable "$metrics_rc"
+    return "$metrics_rc"
+  }
   performance_event "$rc" "$elapsed_ms" > "$event_tmp" \
-    || { rm -f -- "$event_tmp"; return 2; }
+    || {
+      metrics_rc=$?
+      rm -f -- "$event_tmp"
+      perf_emit_commit_failure report-supervisor event-serialization-failed "$metrics_rc"
+      return "$metrics_rc"
+    }
   ( trap '' XFSZ
     STRATALINT_PERF_LEDGER="$METRICS_LOG" \
-      perf_flush_events "$REPOSITORY_ROOT" "$event_tmp" >/dev/null 2>&1
+      perf_flush_events "$REPOSITORY_ROOT" "$event_tmp" report-supervisor 2>/dev/null
   ) \
-    || { rm -f -- "$event_tmp"; return 2; }
+    || {
+      metrics_rc=$?
+      rm -f -- "$event_tmp"
+      return "$metrics_rc"
+    }
   rm -f -- "$event_tmp"
   rm -rf -- "$METRICS_LOCK_DIR"
   METRICS_LOCK_DIR=""
@@ -665,7 +683,7 @@ finish() {
   if [[ -n "$STDERR_RELAY_PID" ]]; then wait_for_relay "$STDERR_RELAY_PID"; fi
   finished_ms="$(now_ms)"
   if [[ -n "$CHILD_PID" && "$STARTED_MS" -gt 0 ]]; then
-    append_metrics "$rc" "$((finished_ms - STARTED_MS))" >/dev/null 2>&1 || true
+    append_metrics "$rc" "$((finished_ms - STARTED_MS))" 2>/dev/null || true
   fi
   if [[ -n "$METRICS_LOCK_DIR" ]]; then rm -rf -- "$METRICS_LOCK_DIR"; fi
   if [[ -n "$SLOT_DIR" ]]; then rm -rf -- "$SLOT_DIR"; fi
