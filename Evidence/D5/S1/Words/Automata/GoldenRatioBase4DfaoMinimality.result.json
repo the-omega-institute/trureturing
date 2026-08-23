@@ -1,1 +1,87 @@
-{"checker": {"availability": "run-local-not-retained", "checker_source_sha256": "sha256:1b6366198466d4508135582d2413e2a60a65d0f095b497ef3e27c958e42847d7", "environment": {"os": "Darwin 24.1.0 arm64", "python": "3.13.2"}, "exact_power_samples_verified": 2000, "mapping_verified": true, "missing_transitions_to_removed_state": [[1, 1], [4, 1], [6, 1], [9, 1], [12, 1], [16, 1], [20, 1]], "new_live_states": 21, "old_states": 22, "removed_old_state": 3, "removed_state_output": 0, "removed_state_transitions": {"0": 3, "1": 3}}, "claim_status": "refuted", "claim_under_test": "The paper's 22-state base-4 golden-ratio DFAO is minimal on Zeckendorf encodings of powers of four.", "command": "python3 check_dfao_tables.py Walnut-v5/Word Automata Library/FD4.txt Walnut/Session/2026_08_23_18_22_57/Result/FD4.txt --samples 2000", "generator_commands": ["reg shift {0,1} {0,1} \"([0,0]|[0,1][1,1]*[1,0])*\";", "def phin \"?msd_fib (s=0 & n=0) | Ex $shift(n-1,x) & s=x+1\";", "def phid4a \"?msd_fib Ex,y $phin(4*n,x) & $phin(n,y) & x=4*y+1\";", "def phid4b \"?msd_fib Ex,y $phin(4*n,x) & $phin(n,y) & x=4*y+2\";", "def phid4c \"?msd_fib Ex,y $phin(4*n,x) & $phin(n,y) & x=4*y+3\";", "combine FD4 phid4a=1 phid4b=2 phid4c=3;"], "input_tables": {"walnut_5": {"commit": "3cb9cb2703462ececd8c338dcc4e826d4dcf5ed9", "generated_path": "Word Automata Library/FD4.txt", "output": [0, 2, 0, 0, 3, 1, 0, 2, 1, 3, 2, 0, 3, 1, 0, 1, 3, 2, 0, 1, 3, 3], "repository": "https://github.com/firetto/Walnut.git", "sha256": "sha256:5b344601ab83fd5e923b215d4f9d2e527f11628c61c2fd9ed74678ce1ee061b1", "step_0": [0, 2, 4, 3, 6, 8, 9, 11, 12, 14, 15, 16, 18, 19, 9, 12, 6, 8, 16, 20, 11, 11], "step_1": [1, 3, 5, 3, 7, 3, 10, 3, 13, 1, 3, 17, 7, 3, 1, 5, 1, 3, 10, 13, 21, 3], "version": "5"}, "walnut_6_2_and_8": {"generated_path": "Session/<run-id>/Result/FD4.txt", "output": [0, 2, 0, 3, 1, 0, 2, 1, 3, 2, 0, 3, 1, 0, 1, 3, 2, 0, 1, 3, 3], "repository": "https://github.com/Walnut-Theorem-Prover/Walnut.git", "sha256": "sha256:5d08fbfe20d38d10527a64a5ce723b3c3dd12e51f8d33fb58385809b98a32347", "step_0": [0, 2, 3, 5, 7, 8, 10, 11, 13, 14, 15, 17, 18, 8, 11, 5, 7, 15, 19, 10, 10], "step_1_partial": [1, null, 4, 6, null, 9, null, 12, 1, null, 16, 6, null, 1, 4, 1, null, 9, 12, 20, null], "versions": {"6.2": {"commit": "a4fe84e71b5a11cceb318305cac96d262fda0ee7", "tag": "v6.2.0"}, "8": {"commit": "f308bc1a1c703be770fb08bf87ae006cfec6b26f", "version": "8.0-alpha"}}}}, "interpretation": "Old state 3 is a zero-output self-looping dead state. The modern 21-state partial table deletes exactly the seven transitions which would read a second consecutive one. Totalizing those forbidden transitions arbitrarily therefore preserves the output on every valid Zeckendorf word; the Lean certificate checks this finite relation and proves the all-word statement by induction.", "lift_new_to_old": [0, 1, 2, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21], "method": "literal Walnut table comparison plus exact integer generation of base-4 golden-ratio digits", "normalized_inputs": "The transition and output arrays below are the retained computation inputs; raw Walnut sessions and the checker remain run-local by campaign policy.", "paper_source": {"doi": "10.48550/arXiv.2405.02727", "role": "Defines the base-4 golden-ratio DFAO construction and states the unresolved 22-state minimality question."}, "subject_gid": "D5/X_Frontier/GoldenRatioBase4DfaoMinimality.paper_base4_golden_ratio_dfao_is_not_minimal", "subject_status": "proved"}
+{
+  "checker": {
+    "availability": "run-local-not-retained",
+    "checker_source_sha256": "sha256:1b6366198466d4508135582d2413e2a60a65d0f095b497ef3e27c958e42847d7",
+    "environment": {
+      "os": "Darwin 24.1.0 arm64",
+      "python": "3.13.2"
+    },
+    "exact_power_samples_verified": 2000,
+    "mapping_verified": true,
+    "missing_transitions_to_virtual_dead": [[1, 1], [4, 1], [6, 1], [9, 1], [12, 1], [16, 1], [20, 1]],
+    "new_live_states": 21,
+    "old_table_states": 22,
+    "old_explicit_dead_state": 3,
+    "old_explicit_dead_state_output": 0,
+    "old_explicit_dead_state_transitions": {"0": 3, "1": 3}
+  },
+  "claim_status": "refuted",
+  "claim_under_test": "The paper's 22-state base-4 golden-ratio DFAO is minimal among machines correct on Zeckendorf encodings of powers of four, invariant under leading zeroes, and obeying the Zeckendorf/Ostrowski rules.",
+  "command": "python3 check_dfao_tables.py Walnut-v5/Word Automata Library/FD4.txt Walnut/Session/2026_08_23_18_22_57/Result/FD4.txt --samples 2000",
+  "formal_domain": {
+    "candidate_type": "PartialDFAO with Option-valued transitions; only live states are counted",
+    "conventions": [
+      "Inputs are most-significant-digit-first Boolean Zeckendorf words.",
+      "An encoding is admissible exactly when it has no adjacent one digits; arbitrary leading zeroes remain admissible.",
+      "Equivalence means output agreement with the paper table on every admissible encoding, not agreement on invalid words or a finite prefix.",
+      "The candidate must remain live throughout every admissible encoding.",
+      "The initial state is state zero and leading zeroes do not affect evaluation.",
+      "The Ostrowski dead state is virtual and is excluded from the live-state count.",
+      "Every zero transition from a live state is defined.",
+      "No live state has a self-loop on input one.",
+      "After every defined one transition, a second one transition is absent and enters the virtual dead state."
+    ],
+    "kernel_certificates": [
+      "output_compatibility_certificate",
+      "legal_transition_certificate",
+      "reduced_run_is_lift_compatible",
+      "reduced_agrees_on_admissible_encodings",
+      "reduced_ignores_leading_zeroes",
+      "reduced_obeys_zeckendorf_ostrowski_rules"
+    ],
+    "stronger_than_sparse_requirement": "Agreement on every admissible encoding includes every Zeckendorf encoding of 4^i."
+  },
+  "generator_commands": [
+    "reg shift {0,1} {0,1} \"([0,0]|[0,1][1,1]*[1,0])*\";",
+    "def phin \"?msd_fib (s=0 & n=0) | Ex $shift(n-1,x) & s=x+1\";",
+    "def phid4a \"?msd_fib Ex,y $phin(4*n,x) & $phin(n,y) & x=4*y+1\";",
+    "def phid4b \"?msd_fib Ex,y $phin(4*n,x) & $phin(n,y) & x=4*y+2\";",
+    "def phid4c \"?msd_fib Ex,y $phin(4*n,x) & $phin(n,y) & x=4*y+3\";",
+    "combine FD4 phid4a=1 phid4b=2 phid4c=3;"
+  ],
+  "input_tables": {
+    "walnut_5": {
+      "commit": "3cb9cb2703462ececd8c338dcc4e826d4dcf5ed9",
+      "generated_path": "Word Automata Library/FD4.txt",
+      "output": [0, 2, 0, 0, 3, 1, 0, 2, 1, 3, 2, 0, 3, 1, 0, 1, 3, 2, 0, 1, 3, 3],
+      "repository": "https://github.com/firetto/Walnut.git",
+      "sha256": "sha256:5b344601ab83fd5e923b215d4f9d2e527f11628c61c2fd9ed74678ce1ee061b1",
+      "step_0": [0, 2, 4, 3, 6, 8, 9, 11, 12, 14, 15, 16, 18, 19, 9, 12, 6, 8, 16, 20, 11, 11],
+      "step_1": [1, 3, 5, 3, 7, 3, 10, 3, 13, 1, 3, 17, 7, 3, 1, 5, 1, 3, 10, 13, 21, 3],
+      "version": "5"
+    },
+    "walnut_6_2_and_8": {
+      "generated_path": "Session/<run-id>/Result/FD4.txt",
+      "output": [0, 2, 0, 3, 1, 0, 2, 1, 3, 2, 0, 3, 1, 0, 1, 3, 2, 0, 1, 3, 3],
+      "repository": "https://github.com/Walnut-Theorem-Prover/Walnut.git",
+      "sha256": "sha256:5d08fbfe20d38d10527a64a5ce723b3c3dd12e51f8d33fb58385809b98a32347",
+      "step_0": [0, 2, 3, 5, 7, 8, 10, 11, 13, 14, 15, 17, 18, 8, 11, 5, 7, 15, 19, 10, 10],
+      "step_1_partial": [1, null, 4, 6, null, 9, null, 12, 1, null, 16, 6, null, 1, 4, 1, null, 9, 12, 20, null],
+      "versions": {
+        "6.2": {"commit": "a4fe84e71b5a11cceb318305cac96d262fda0ee7", "tag": "v6.2.0"},
+        "8": {"commit": "f308bc1a1c703be770fb08bf87ae006cfec6b26f", "version": "8.0-alpha"}
+      }
+    }
+  },
+  "interpretation": "The old 22-row Walnut table includes explicit zero-output dead state 3. In the paper's SAT convention that state is virtual and is represented by an absent illegal transition, so it is not a counted live state. The modern table has 21 live states and exactly seven absent second-one transitions. The Lean proof checks the finite output, legal-transition, leading-zero, and Ostrowski certificates, then proves agreement on every admissible word by structural induction.",
+  "lift_new_to_old": [0, 1, 2, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21],
+  "method": "Walnut table comparison, exact integer generation of base-4 golden-ratio digits, finite Lean certificates, and structural induction over admissible encodings",
+  "normalized_inputs": "The transition and output arrays below are the retained computation inputs. Raw Walnut sessions and the checker remain run-local, so literal byte identity with those unretained outputs is ASSUMED-UNVERIFIED.",
+  "paper_source": {
+    "doi": "10.48550/arXiv.2405.02727",
+    "role": "Defines the base-4 golden-ratio DFAO construction, the sparse-power question, leading-zero invariance, and the implicit-dead-state Ostrowski constraints."
+  },
+  "ruling": "still-reducible",
+  "subject_gid": "D5/S1/Words/Automata/GoldenRatioBase4DfaoMinimality.paper_base4_golden_ratio_dfao_is_not_minimal",
+  "subject_status": "proved"
+}

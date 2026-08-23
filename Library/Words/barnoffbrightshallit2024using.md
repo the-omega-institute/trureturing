@@ -23,14 +23,18 @@ data. For the golden ratio in base 4 the required 22-state bound was not
 reached; the authors report a single UNSAT determination at 13 states taking
 over 25 hours.
 
-The delivered module kernel-checks that a 21-state total DFAO agrees on every
-valid Zeckendorf word with the literal 22-state table recorded in the Evidence
-receipt, while ignoring leading zeroes. The receipt binds those normalized
-tables to hashed Walnut 5 and Walnut 6.2/8 outputs and records the generating
-commands and exact commits. Together with the paper's correctness claim for
-its constructed DFAO, this refutes the concrete base-4 22-state minimality
-claim. The paper's broader general minimality and uniqueness questions are not
-resolved by this fixed-instance counterexample.
+The paper's SAT convention treats the dead state as implicit: an illegal input
+is represented by an absent outgoing transition, and the virtual dead state is
+not counted among the live states. The delivered module therefore uses a
+21-live-state partial DFAO, rather than totalizing the seven transitions which
+read a second consecutive `1`. Lean kernel-checks that every zero transition is
+defined, no live state has a `1` self-loop, a defined `1` transition makes the
+next `1` transition absent, and leading zeroes do not affect evaluation. Finite
+table certificates plus structural induction prove agreement with the paper's
+22-row table on every admissible Zeckendorf encoding, which is stronger than
+agreement only on encodings of `4^i`. This admissible 21-live-state witness
+refutes the concrete base-4 minimality claim. The broader general minimality and
+uniqueness questions remain unresolved.
 
 ## Search log
 
@@ -56,9 +60,11 @@ resolved by this fixed-instance counterexample.
   specific base-4 reduction from 22 states to 21.
 
 The 2024 source's open status is therefore superseded for this fixed base-4
-instance by the repository's kernel-checked table equivalence and its external
-source receipts. Whether the 2026 journal article independently reports the
-same reduction is `ASSUMED-UNVERIFIED` because its full text was not available
+instance by the repository's kernel-checked partial-machine witness. Literal
+byte identity with the unretained raw Walnut outputs remains
+`ASSUMED-UNVERIFIED`; the normalized tables are retained in the Evidence
+receipt. Whether the 2026 journal article independently reports the same
+reduction is also `ASSUMED-UNVERIFIED` because its full text was not available
 in this search.
 
 ## Verified locator
