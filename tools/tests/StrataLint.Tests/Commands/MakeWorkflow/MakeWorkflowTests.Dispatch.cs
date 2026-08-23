@@ -205,6 +205,30 @@ public sealed partial class MakeWorkflowTests
     }
 
     [Fact]
+    public void RootMakefileExposesOnlyThinPrOpenAndPrWatchDispatch()
+    {
+        var makefile = File.ReadAllText(Path.Combine(TestRepositoryLayout.FindRoot(), "Makefile"));
+        var openRecipe = Recipe(makefile, "pr-open");
+        var watchRecipe = Recipe(makefile, "pr-watch");
+
+        Assert.Contains("make pr-open HEAD=branch TITLE=t [BODY=file]  Create, arm auto-merge, and wait for required-CI verdict", makefile, StringComparison.Ordinal);
+        Assert.Contains("make pr-watch PR=n                Wait for required-CI verdict on an existing PR", makefile, StringComparison.Ordinal);
+        Assert.Single(Regex.Matches(openRecipe, Regex.Escape(PrOpenScriptPath)));
+        Assert.Single(Regex.Matches(watchRecipe, Regex.Escape(PrWatchScriptPath)));
+        Assert.Contains("--timeout-seconds \"$(WATCH_TIMEOUT_SECONDS)\"", openRecipe, StringComparison.Ordinal);
+        Assert.Contains("--interval-seconds \"$(WATCH_INTERVAL_SECONDS)\"", openRecipe, StringComparison.Ordinal);
+        Assert.Contains("--pr \"$(PR)\"", watchRecipe, StringComparison.Ordinal);
+        Assert.Contains("--timeout-seconds \"$(WATCH_TIMEOUT_SECONDS)\"", watchRecipe, StringComparison.Ordinal);
+        Assert.Contains("--interval-seconds \"$(WATCH_INTERVAL_SECONDS)\"", watchRecipe, StringComparison.Ordinal);
+        foreach (var recipe in new[] { openRecipe, watchRecipe })
+        {
+            Assert.DoesNotContain("gh ", recipe, StringComparison.Ordinal);
+            Assert.DoesNotContain("while", recipe, StringComparison.Ordinal);
+            Assert.DoesNotContain("sleep", recipe, StringComparison.Ordinal);
+        }
+    }
+
+    [Fact]
     public void ToolsMakefileIsAThinCompleteDispatchTable()
     {
         var root = TestRepositoryLayout.FindRoot();
