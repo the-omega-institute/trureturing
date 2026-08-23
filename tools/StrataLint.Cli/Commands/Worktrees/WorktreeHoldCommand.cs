@@ -187,7 +187,7 @@ internal static class WorktreeHoldCommand
         }
 
         var observedLane = ReadLaneAfterSuccessfulMutation(repositoryRoot, lane, runner);
-        if (!SameLaneIdentity(lane, observedLane))
+        if (!SameLaneIdentity(lane, observedLane) || observedLane!.Locked != true)
         {
             return MutationStateIndeterminate(
                 options,
@@ -249,7 +249,7 @@ internal static class WorktreeHoldCommand
         }
 
         var observedLane = ReadLaneAfterSuccessfulMutation(repositoryRoot, lane, runner);
-        if (!SameLaneIdentity(lane, observedLane))
+        if (!SameLaneIdentity(lane, observedLane) || observedLane!.Locked != false)
         {
             return MutationStateIndeterminate(
                 options,
@@ -307,12 +307,16 @@ internal static class WorktreeHoldCommand
         string? effectiveReason)
     {
         var observedBranch = observedLane?.Branch;
+        var expectedLocked = options.Operation == WorktreeHoldOperation.Hold;
+        var observedLocked = observedLane?.Locked;
         var observedDescription = observedBranch ?? "<missing or unreadable>";
+        var observedStateDescription = observedLocked?.ToString() ?? "<missing or unreadable>";
         var detail = $"git worktree {gitMutation} returned success, but the post-mutation inventory "
-                + "did not verify the expected lane identity; mutation may have applied to a "
+                + "did not verify the expected lane identity and lock state; mutation may have applied to a "
                 + $"different lane (expected branch: {expectedLane.Branch}, "
-                + $"observed branch: {observedDescription}); no undo was attempted because "
-                + "the same identity uncertainty makes compensation unsafe";
+                + $"observed branch: {observedDescription}, expected locked: {expectedLocked}, "
+                + $"observed locked: {observedStateDescription}); no undo was attempted because "
+                + "the post-mutation uncertainty makes compensation unsafe";
         var line = JsonSerializer.Serialize(new
         {
             @event = "worktree_hold_state",
@@ -320,6 +324,8 @@ internal static class WorktreeHoldCommand
             branch = expectedLane.Branch,
             expected_branch = expectedLane.Branch,
             observed_branch = observedBranch,
+            expected_locked = expectedLocked,
+            observed_locked = observedLocked,
             operation = OperationName(options.Operation),
             action = "refused",
             effective_reason = effectiveReason,

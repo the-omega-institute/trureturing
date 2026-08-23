@@ -2,9 +2,8 @@ SHELL := /bin/bash
 .DEFAULT_GOAL := help
 
 BASE ?= origin/dev
-WORKTREE_DEST_INPUT = $(if $(DEST),$(DEST),../trureturing-$(NAME))
 WORKTREE_DEST = $(if $(DEST),$(abspath $(DEST)),$(abspath ../trureturing-$(NAME)))
-WORKTREE_DEST_GUARD = case "$(WORKTREE_DEST_INPUT)" in *[[:space:]]*) printf '%s\n' 'WORKTREE_DEST_WHITESPACE: worktree destination must not contain whitespace' >&2; exit 2;; esac;
+WORKTREE_DEST_GUARD = /bin/bash tools/scripts/worktree/worktree-destination-guard.sh "$$PPID" &&
 .PHONY: help test lean-cache-ensure lean-cache-to-github-without-mathlib lean-cache-from-github-without-mathlib warm-donor lean lean-report build emit ingest echo-residual-summary show-atom theory-candidates deliver-check receipts-stage deposit cover worktree worktree-hold worktree-release worktree-clean pr-open preflight gate
 
 help:

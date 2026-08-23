@@ -57,6 +57,7 @@ public sealed partial class MakeWorkflowTests
         Directory.CreateDirectory(binDirectory);
         Directory.CreateDirectory(cliDirectory);
         File.Copy(Path.Combine(root, "Makefile"), Path.Combine(fixture.Path, "Makefile"));
+        CopyWorktreeDestinationGuard(root, fixture.Path);
         File.WriteAllText(
             dotnetPath,
             """
@@ -86,7 +87,10 @@ public sealed partial class MakeWorkflowTests
             destination,
             reason);
 
-        Assert.Equal(0, success.ExitCode);
+        Assert.True(
+            success.ExitCode == 0,
+            $"expected exit 0, got {success.ExitCode}; stderr: "
+                + Encoding.UTF8.GetString(success.StandardError));
         Assert.Empty(success.StandardError);
         AssertCliReceipt(success.StandardOutput, operation);
         AssertCliArguments(operation, destination, reason, ReadArguments(successArguments));
@@ -113,11 +117,36 @@ public sealed partial class MakeWorkflowTests
         AssertCliArguments(operation, destination, reason, ReadArguments(failureArguments));
     }
 
+    public static IEnumerable<object[]> RawWorktreeWhitespaceCases()
+    {
+        string[] targets = ["worktree", "worktree-hold", "worktree-release"];
+        object[][] inputs =
+        [
+            ["leading-destination", " leading", "controlled", true],
+            ["trailing-destination", "trailing ", "controlled", true],
+            ["whitespace-only-destination", " ", "controlled", true],
+            ["embedded-tab-destination", "embed\tded", "controlled", true],
+            ["tab-only-destination", "\t", "controlled", true],
+            ["omitted-destination-name-fallback", null!, " leading-name", false],
+        ];
+
+        foreach (var target in targets)
+        {
+            foreach (var input in inputs)
+            {
+                yield return [target, .. input];
+            }
+        }
+    }
+
     [Theory]
-    [InlineData("worktree")]
-    [InlineData("worktree-hold")]
-    [InlineData("worktree-release")]
-    public void WorktreeTargetsRejectDestinationsContainingWhitespace(string target)
+    [MemberData(nameof(RawWorktreeWhitespaceCases))]
+    public void WorktreeTargetsRejectRawWhitespaceBeforeMakeCanNormalizeIt(
+        string target,
+        string shape,
+        string? destination,
+        string name,
+        bool includeDestination)
     {
         if (OperatingSystem.IsWindows()) return;
 
@@ -131,6 +160,7 @@ public sealed partial class MakeWorkflowTests
         Directory.CreateDirectory(cliDirectory);
         Directory.CreateDirectory(scriptsDirectory);
         File.Copy(Path.Combine(root, "Makefile"), Path.Combine(fixture.Path, "Makefile"));
+        CopyWorktreeDestinationGuard(root, fixture.Path);
         WriteExecutable(
             Path.Combine(binDirectory, "dotnet"),
             "#!/usr/bin/env bash\ntouch \"$MUTATION_MARKER\"\n");
@@ -142,19 +172,26 @@ public sealed partial class MakeWorkflowTests
             "/bin/bash",
             [
                 "-c",
-                "PATH=\"$1:$PATH\" MUTATION_MARKER=\"$2\" exec make --no-print-directory \"$3\" "
-                    + "NAME=controlled DEST=\"$4\"",
-                "worktree-spaced-dest",
+                "export PATH=\"$1:$PATH\" MUTATION_MARKER=\"$2\"; "
+                    + "args=(\"$3\" \"NAME=$5\"); "
+                    + "if [[ \"$6\" == 1 ]]; then args+=(\"DEST=$4\"); fi; "
+                    + "exec make --no-print-directory \"${args[@]}\"",
+                "worktree-raw-whitespace",
                 binDirectory,
                 marker,
                 target,
-                Path.Combine(fixture.Path, "lane with spaces"),
+                destination ?? string.Empty,
+                name,
+                includeDestination ? "1" : "0",
             ],
             fixture.Path,
             TimeSpan.FromSeconds(30),
             64 * 1024);
 
-        Assert.Equal(2, result.ExitCode);
+        Assert.True(
+            result.ExitCode == 2,
+            $"{shape}: expected exit 2, got {result.ExitCode}; stderr: "
+                + Encoding.UTF8.GetString(result.StandardError));
         Assert.Empty(result.StandardOutput);
         Assert.Contains(
             "WORKTREE_DEST_WHITESPACE",
@@ -246,5 +283,13 @@ public sealed partial class MakeWorkflowTests
         using var document = JsonDocument.Parse(output);
         Assert.Equal("worktree_hold_state", document.RootElement.GetProperty("event").GetString());
         Assert.Equal(operation, document.RootElement.GetProperty("operation").GetString());
+    }
+
+    private static void CopyWorktreeDestinationGuard(string sourceRoot, string destinationRoot)
+    {
+        const string relativePath = "tools/scripts/worktree/worktree-destination-guard.sh";
+        var destination = Path.Combine(destinationRoot, relativePath);
+        Directory.CreateDirectory(Path.GetDirectoryName(destination)!);
+        File.Copy(Path.Combine(sourceRoot, relativePath), destination);
     }
 }

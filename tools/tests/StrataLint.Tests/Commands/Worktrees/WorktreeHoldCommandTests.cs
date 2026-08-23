@@ -336,6 +336,24 @@ public sealed partial class CleanLanesCommandTests
             fixture.WorktreeBlock(lane).Contains("locked", StringComparison.Ordinal));
     }
 
+    [Fact]
+    public void SuccessfulHoldRefusesWhenObservedSameLaneIdentityIsUnlocked()
+    {
+        AssertSuccessfulMutationRefusesObservedOppositeLockState(
+            "hold",
+            "lock",
+            observedLocked: false);
+    }
+
+    [Fact]
+    public void SuccessfulReleaseRefusesWhenObservedSameLaneIdentityIsLocked()
+    {
+        AssertSuccessfulMutationRefusesObservedOppositeLockState(
+            "release",
+            "unlock",
+            observedLocked: true);
+    }
+
     [Theory]
     [InlineData("hold", "lock")]
     [InlineData("release", "unlock")]
@@ -386,6 +404,24 @@ public sealed partial class CleanLanesCommandTests
             operation,
             gitMutation,
             static (_, _) => FailedGit("injected successful-mutation refresh failure"));
+    }
+
+    [Fact]
+    public void SuccessfulHoldReportsIndeterminateWhenInventoryRefreshThrows()
+    {
+        AssertSuccessfulMutationRefreshIsIndeterminate(
+            "hold",
+            "lock",
+            static (_, _) => throw new IOException("injected hold refresh exception"));
+    }
+
+    [Fact]
+    public void SuccessfulReleaseReportsIndeterminateWhenInventoryRefreshThrows()
+    {
+        AssertSuccessfulMutationRefreshIsIndeterminate(
+            "release",
+            "unlock",
+            static (_, _) => throw new IOException("injected release refresh exception"));
     }
 
     [Theory]
@@ -612,6 +648,66 @@ public sealed partial class CleanLanesCommandTests
             fixture.WorktreeBlock(lane).Contains("locked", StringComparison.Ordinal));
     }
 
+    private static void AssertSuccessfulMutationRefusesObservedOppositeLockState(
+        string operation,
+        string gitMutation,
+        bool observedLocked)
+    {
+        using var fixture = new CleanLanesFixture();
+        var originalBranch = $"harness/{operation}-same-identity-original";
+        var replacementBranch = $"harness/{operation}-same-identity-replacement";
+        var lane = fixture.AddLandedLane(originalBranch);
+        if (operation == "release") fixture.LockLane(lane);
+        var mutationObserved = false;
+        var originalOccupantRestored = false;
+        var runner = fixture.CreateRunner((fileName, arguments, _) =>
+        {
+            if (!mutationObserved && IsGitMutation(fileName, arguments, gitMutation))
+            {
+                mutationObserved = true;
+                fixture.ReplaceLane(lane, replacementBranch, locked: operation == "release");
+                return null;
+            }
+
+            if (mutationObserved
+                && !originalOccupantRestored
+                && IsWorktreeInventory(fileName, arguments))
+            {
+                originalOccupantRestored = true;
+                fixture.RestoreLane(lane, originalBranch, observedLocked);
+            }
+
+            return null;
+        });
+
+        var result = WorktreeCommand.Run(
+            fixture.RepositoryWorkingDirectory,
+            [operation, "--path", lane],
+            runner);
+
+        Assert.False(result.Success);
+        var receipt = ReadHoldReceipt(result);
+        Assert.Equal("worktree_mutation_state_indeterminate", receipt.GetProperty("error").GetString());
+        Assert.Equal(originalBranch, receipt.GetProperty("branch").GetString());
+        Assert.Equal(originalBranch, receipt.GetProperty("expected_branch").GetString());
+        Assert.Equal(originalBranch, receipt.GetProperty("observed_branch").GetString());
+        Assert.Equal(operation == "hold", receipt.GetProperty("expected_locked").GetBoolean());
+        Assert.Equal(observedLocked, receipt.GetProperty("observed_locked").GetBoolean());
+        Assert.Contains(
+            "did not verify the expected lane identity and lock state",
+            receipt.GetProperty("detail").GetString(),
+            StringComparison.Ordinal);
+        Assert.Contains(
+            "no undo was attempted",
+            receipt.GetProperty("detail").GetString(),
+            StringComparison.Ordinal);
+        Assert.Equal(2, runner.Invocations.Count(IsWorktreeInventory));
+        Assert.Single(runner.Invocations, invocation => IsGitMutation(invocation, gitMutation));
+        Assert.Equal(
+            observedLocked,
+            fixture.WorktreeBlock(lane).Contains("locked", StringComparison.Ordinal));
+    }
+
     private static bool IsWorktreeInventory(WorktreeProcessInvocation invocation) =>
         IsWorktreeInventory(invocation.FileName, invocation.Arguments);
 
@@ -656,6 +752,15 @@ public sealed partial class CleanLanesCommandTests
             if (block.Contains("locked", StringComparison.Ordinal)) UnlockLane(path);
             Git(repository.Path, "worktree", "remove", "--force", path);
             AddWorktree(replacementBranch, path);
+            if (locked) LockLane(path);
+        }
+
+        internal void RestoreLane(string path, string originalBranch, bool locked)
+        {
+            var block = WorktreeBlock(path);
+            if (block.Contains("locked", StringComparison.Ordinal)) UnlockLane(path);
+            Git(repository.Path, "worktree", "remove", "--force", path);
+            Git(repository.Path, "worktree", "add", path, originalBranch);
             if (locked) LockLane(path);
         }
 
