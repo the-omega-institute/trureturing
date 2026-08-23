@@ -41,12 +41,12 @@ domains:
   Deficit:
     stratum: S1
     definition: Normalized beta deficits and signed carry accounting of golden addition.
-  Descent:
-    stratum: S1
-    definition: Descending refinement chains of finite self-maps, their stabilization, and conjugacy classification.
   Depth:
     stratum: S1
     definition: Finite-resolution depth combining logarithmic scale, Zeckendorf support size, and quantized phase.
+  Descent:
+    stratum: S1
+    definition: Descending refinement chains of finite self-maps, their stabilization, and conjugacy classification.
   Diagonal:
     stratum: S0
     definition: Diagonal constructions on finite listings, their exact distance-profile and escape counts, and their asymptotic escape rates.
