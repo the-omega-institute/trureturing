@@ -38,7 +38,8 @@ public sealed partial class CleanLanesCommandTests
 
         Assert.True(result.Success, result.Error);
         Assert.Equal(expectedReason, ReasonFor(result.Output, lane));
-        Assert.Contains(runner.Invocations, invocation => invocation.FileName == "gh");
+        AssertGhInvocation(runner.Invocations, branch, fixture.RepositoryWorkingDirectory);
+        AssertLsofInvocations(runner.Invocations, outcome == "success" ? 1 : 0);
     }
 
     [Theory]
@@ -80,7 +81,8 @@ public sealed partial class CleanLanesCommandTests
 
         Assert.True(result.Success, result.Error);
         Assert.Equal(expectedReason, ReasonFor(result.Output, lane));
-        Assert.Contains(runner.Invocations, invocation => invocation.FileName == "lsof");
+        AssertGhInvocation(runner.Invocations, branch, fixture.RepositoryWorkingDirectory);
+        AssertLsofInvocations(runner.Invocations, 1);
     }
 
     [Fact]
@@ -101,13 +103,8 @@ public sealed partial class CleanLanesCommandTests
 
         Assert.True(result.Success, result.Error);
         Assert.Equal("merged_clean", ReasonFor(result.Output, lane));
-        Assert.Contains(runner.Invocations, invocation => invocation.FileName == "gh");
-        var processProbes = runner.Invocations
-            .Where(static invocation => invocation.FileName == "lsof")
-            .ToArray();
-        Assert.Equal(2, processProbes.Length);
-        Assert.All(processProbes, static invocation =>
-            Assert.Equal(TimeSpan.FromSeconds(30), invocation.Timeout));
+        AssertGhInvocation(runner.Invocations, branch, fixture.RepositoryWorkingDirectory);
+        AssertLsofInvocations(runner.Invocations, 2);
     }
 
     [Fact]

@@ -37,6 +37,52 @@ public sealed partial class CleanLanesCommandTests
         Assert.Equal(expected, item.GetProperty(property).GetString());
     }
 
+    private static void AssertGhInvocation(
+        IReadOnlyList<WorktreeProcessInvocation> invocations,
+        string branch,
+        string workingDirectory)
+    {
+        var invocation = Assert.Single(
+            invocations,
+            static candidate => candidate.FileName == "gh");
+        AssertProbeInvocation(
+            invocation,
+            "gh",
+            [
+                "pr", "list", "--state", "all", "--head", branch,
+                "--json", "state,headRefName,headRefOid,mergeCommit", "--limit", "100",
+            ],
+            workingDirectory);
+    }
+
+    private static void AssertLsofInvocations(
+        IReadOnlyList<WorktreeProcessInvocation> invocations,
+        int expectedCount)
+    {
+        var probes = invocations
+            .Where(static candidate => candidate.FileName == "lsof")
+            .ToArray();
+        Assert.Equal(expectedCount, probes.Length);
+        Assert.All(probes, static invocation =>
+            AssertProbeInvocation(
+                invocation,
+                "lsof",
+                ["-nP", "-F0pfn"],
+                Path.GetTempPath()));
+    }
+
+    private static void AssertProbeInvocation(
+        WorktreeProcessInvocation invocation,
+        string fileName,
+        string[] expectedArguments,
+        string workingDirectory)
+    {
+        Assert.Equal(fileName, invocation.FileName);
+        Assert.Equal(expectedArguments, invocation.Arguments.ToArray());
+        Assert.Equal(workingDirectory, invocation.WorkingDirectory);
+        Assert.Equal(TimeSpan.FromSeconds(30), invocation.Timeout);
+    }
+
     private static bool ItemMatches(
         JsonElement item,
         string path,

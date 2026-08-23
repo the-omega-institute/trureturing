@@ -34,6 +34,8 @@ public sealed partial class CleanLanesCommandTests
         internal string RepositoryRoot =>
             Git(repository.Path, "rev-parse", "--show-toplevel").Trim();
 
+        internal string RepositoryWorkingDirectory => repository.Path;
+
         internal string Head(string path) => Git(path, "rev-parse", "HEAD").Trim();
 
         internal bool WorktreeRegistered(string path) =>
