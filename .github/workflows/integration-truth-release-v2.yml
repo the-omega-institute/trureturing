@@ -46,16 +46,37 @@ jobs:
           core_file="$(find "$unpack/package/services/metadata/core-properties" -type f -name '*.psmdcp' -print -quit)"
           mv "$core_file" "$unpack/package/services/metadata/core-properties/core.psmdcp"
           perl -0pi -e 's#[0-9a-f]{32}\.psmdcp#core.psmdcp#g; s#(metadata/core-properties" Target="[^"]+" Id=")R[A-F0-9]+(")#${1}RCORE${2}#g' "$unpack/_rels/.rels"
-          find "$unpack" -type f -exec chmod 0644 {} +
-          TZ=UTC find "$unpack" -type f -exec touch -t 200001010000 {} +
           mv "$package" "$raw_package"
-          cd "$unpack"
-          TZ=UTC zip -q -X -0 "$package" \
-            _rels/.rels \
-            Trureturing.Truth.nuspec \
-            lib/net10.0/Trureturing.Truth.dll \
-            '[Content_Types].xml' \
-            package/services/metadata/core-properties/core.psmdcp
+          normalizer="$RUNNER_TEMP/NormalizePackage.cs"
+          cat > "$normalizer" <<'CSHARP'
+          using System.IO.Compression;
+
+          var sourceDirectory = Path.GetFullPath(args[0]);
+          var destination = Path.GetFullPath(args[1]);
+          var entries = new[]
+          {
+              "_rels/.rels",
+              "Trureturing.Truth.nuspec",
+              "lib/net10.0/Trureturing.Truth.dll",
+              "[Content_Types].xml",
+              "package/services/metadata/core-properties/core.psmdcp",
+          };
+
+          using var stream = File.Create(destination);
+          using var archive = new ZipArchive(stream, ZipArchiveMode.Create, leaveOpen: false);
+          foreach (var name in entries)
+          {
+              var entry = archive.CreateEntry(name, CompressionLevel.NoCompression);
+              entry.LastWriteTime = new DateTimeOffset(2000, 1, 1, 0, 0, 0, TimeSpan.Zero);
+              entry.ExternalAttributes = 0;
+              await using var target = entry.Open();
+              await using var source = File.OpenRead(Path.Combine(sourceDirectory, name));
+              await source.CopyToAsync(target);
+          }
+          CSHARP
+          dotnet run --file "$normalizer" -- "$unpack" "$package"
+          package_hash="$(openssl dgst -sha512 -binary "$package" | base64 -w0)"
+          echo "NORMALIZED_PACKAGE_CONTENT_HASH=$package_hash"
 
       - name: Point standalone consumer at runner-local feed
         working-directory: integration/Consumer
