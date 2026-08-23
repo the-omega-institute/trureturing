@@ -6,6 +6,8 @@
    digest: Classify admissible negative base-phi prefix occurrence sets by Lucas-gap trident families. -/
 
 import D5.S1.Words.Expansions.BasePhiNegativePrefixTridentPhaseObstruction
+import D5.S1.Words.Expansions.BasePhiNegativePrefixTridentDataPhase
+import D5.S1.Words.NegativeExpansions.BasePhiNegativePrefixTridentClassification
 
 namespace D5.X_Frontier.BasePhiNegativePrefixTrident
 
@@ -190,31 +192,31 @@ theorem source_index_successor_delta_iff_additive
   ⟨source_index_successor_additive_of_delta hcertificate hraw,
     source_index_successor_delta_of_additive hcertificate hraw⟩
 
-theorem source_index_successor_delta_of_phase_enriched_trace
+theorem source_index_successor_delta_of_data_phase_enriched_trace
     {w : List Bool} {certificate : FrontierReturnWord}
     (hcertificate : FrontierReturnWordFor w certificate)
-    (htrace : PhaseEnrichedCoreTrace w certificate) :
+    (htrace : DataPhaseEnrichedCoreTrace w certificate) :
     source_index_successor_delta hcertificate
       (core_enum_from_frontier hcertificate) := by
   apply source_index_successor_delta_of_additive hcertificate
     (core_enum_from_frontier hcertificate)
-  exact phase_enriched_core_trace_two_gap_additive hcertificate htrace
+  exact data_phase_enriched_core_trace_two_gap_additive hcertificate htrace
 
-def six_phase_gap_stream {w : List Bool}
+def data_phase_gap_stream {w : List Bool}
     {certificate : FrontierReturnWord}
     (hcertificate : FrontierReturnWordFor w certificate)
     (hdelta : source_index_successor_delta hcertificate
       (core_enum_from_frontier hcertificate)) : Prop :=
-  FrontierGapPhase certificate
+  DataFrontierGapPhase certificate
 
-theorem six_phase_gap_stream_of_phase_enriched_trace
+theorem data_phase_gap_stream_of_enriched_trace
     {w : List Bool} {certificate : FrontierReturnWord}
     (hcertificate : FrontierReturnWordFor w certificate)
-    (htrace : PhaseEnrichedCoreTrace w certificate) :
-    six_phase_gap_stream hcertificate
-      (source_index_successor_delta_of_phase_enriched_trace
+    (htrace : DataPhaseEnrichedCoreTrace w certificate) :
+    data_phase_gap_stream hcertificate
+      (source_index_successor_delta_of_data_phase_enriched_trace
         hcertificate htrace) :=
-  phase_enriched_core_trace_gap_phase hcertificate htrace
+  data_phase_enriched_core_trace_gap_phase hcertificate htrace
 
 /- The existing target gap word is not periodic modulo six.  Consequently a
 fixed `n % 6` phase table cannot supply `FrontierGapPhase`; any finite-state
@@ -255,21 +257,21 @@ theorem sequence_eq_v_of_head_and_gaps {w : List Bool}
     (hcertificate : FrontierReturnWordFor w certificate)
     (hdelta : source_index_successor_delta hcertificate
       (core_enum_from_frontier hcertificate))
-    (hstream : six_phase_gap_stream hcertificate hdelta) :
+    (hstream : data_phase_gap_stream hcertificate hdelta) :
     coreEnum certificate =
-      vForFamily (frontierFamily certificate.phase)
+      vForFamily (dataFrontierFamily certificate.phase)
         certificate.a certificate.b certificate.first := by
   funext n
   induction n with
   | zero =>
-      cases frontierFamily certificate.phase <;>
+      cases dataFrontierFamily certificate.phase <;>
         rfl
   | succ n ih =>
       have hgap := hstream n
       change coreEnum certificate (n + 1) - coreEnum certificate n =
-        (if familyLetter (frontierFamily certificate.phase) n then
-          certificate.a else certificate.b) at hgap
-      cases family : frontierFamily certificate.phase <;>
+        dataFrontierGapSelector certificate n at hgap
+      simp only [dataFrontierGapSelector] at hgap
+      cases family : dataFrontierFamily certificate.phase <;>
         simp only [family, vForFamily, vF, vG, vH, gapSequence] at ih hgap ⊢ <;>
         rw [← ih] <;>
         omega
@@ -284,10 +286,10 @@ theorem core_lucas_gap_classification {w : List Bool}
     (hsound : Set.range certificate.enumerate = Core w ∧
       Function.Injective certificate.enumerate)
     (hsequence : coreEnum certificate =
-      vForFamily (frontierFamily certificate.phase)
+      vForFamily (dataFrontierFamily certificate.phase)
         certificate.a certificate.b certificate.first) :
     CoreLucasWitness w := by
-  refine ⟨frontierFamily certificate.phase, certificate.a, certificate.b,
+  refine ⟨dataFrontierFamily certificate.phase, certificate.a, certificate.b,
     certificate.first, hlucas.1, ?_, ?_⟩
   · change (0 : Int) < (certificate.enumerate 0 : Int)
     exact_mod_cast hraw.2 0
@@ -301,221 +303,6 @@ theorem core_lucas_gap_classification {w : List Bool}
       have hcast : (certificate.enumerate n : Int) = (N : Int) :=
         (congrFun hsequence n).trans hn.symm
       exact_mod_cast hcast
-
-def v_translate_initial_value (family : GapFamily) (a b r : Int) : Prop :=
-  ∀ j : Nat,
-    (fun n => vForFamily family a b r n + (j : Int)) =
-      vForFamily family a b (r + (j : Int))
-
-theorem v_translate_initial_value_proved (family : GapFamily) (a b r : Int) :
-    v_translate_initial_value family a b r := by
-  intro j
-  funext n
-  cases family <;> induction n with
-  | zero => rfl
-  | succ n ih =>
-      simp only [vForFamily, vF, vG, vH, gapSequence] at ih ⊢
-      rw [← ih]
-      ring
-
-def three_arms_pairwise_disjoint {w : List Bool} (hw : w ≠ [])
-    (hadmissible : AdmissibleNegativePrefix canonicalExpansion w)
-    (hfibers : negative_tail_fiber_shape hw hadmissible)
-    (hlift : core_occurrence_unique_lift hw hadmissible hfibers)
-    {family : GapFamily} {a b r : Int}
-    (hcore : LucasPair a b ∧ 0 < r ∧
-      Core w = sequenceRange (vForFamily family a b r))
-    (htranslate : v_translate_initial_value family a b r) : Prop :=
-  w.head? = some false →
-    ∀ i j : Fin 3, i ≠ j →
-      Disjoint
-        (sequenceRange (vForFamily family a b (r + (i.1 : Int))))
-        (sequenceRange (vForFamily family a b (r + (j.1 : Int))))
-
-def occurrenceSet_lucas_gap_classification {w : List Bool} (hw : w ≠ [])
-    (hadmissible : AdmissibleNegativePrefix canonicalExpansion w)
-    (hfibers : negative_tail_fiber_shape hw hadmissible)
-    (hlift : core_occurrence_unique_lift hw hadmissible hfibers)
-    {family : GapFamily} {a b r : Int}
-    (hcore : LucasPair a b ∧ 0 < r ∧
-      Core w = sequenceRange (vForFamily family a b r))
-    (htranslate : v_translate_initial_value family a b r)
-    (hdisjoint : three_arms_pairwise_disjoint hw hadmissible hfibers hlift
-      hcore htranslate) : Prop :=
-  ∃ (family : GapFamily) (a b r : Int),
-      LucasPair a b ∧ 0 < r ∧
-      if w.head? = some true then
-        occurrenceSet canonicalExpansion w =
-          sequenceRange (vForFamily family a b r)
-      else
-        occurrenceSet canonicalExpansion w =
-          ⋃ j : Fin 3,
-            sequenceRange (vForFamily family a b (r + (j.1 : Int)))
-
-private theorem LucasPair.parameters {a b : Int} (h : LucasPair a b) :
-    lucasParameter a ∧ lucasParameter b := by
-  obtain ⟨k, _, ha, hb⟩ := h
-  exact ⟨⟨k + 1, ha⟩, ⟨k, hb⟩⟩
-
-private theorem vForFamily_pos {family : GapFamily} {a b r : Int}
-    (hpair : LucasPair a b) (hr : 0 < r) (n : Nat) :
-    0 < vForFamily family a b r n := by
-  have hparameters := hpair.parameters
-  have ha := lucas_parameter_pos hparameters.1
-  have hb := lucas_parameter_pos hparameters.2
-  have hmono : StrictMono (vForFamily family a b r) := by
-    cases family <;> exact gap_sequence_strict_mono _ ha hb
-  cases n with
-  | zero => cases family <;> exact hr
-  | succ n =>
-      have hfirst := hmono (Nat.zero_lt_succ n)
-      cases family <;> simpa [vForFamily, vF, vG, vH, gapSequence] using
-        lt_trans hr hfirst
-
-private theorem prefix_head_false {w : List Bool} (hw : w ≠ [])
-    (hhead : w.head? = some false) {q : Nat}
-    (hq : q ∈ Core w) :
-    negativeDigit canonicalExpansion q 0 = false := by
-  cases w with
-  | nil => contradiction
-  | cons bit tail =>
-      have hzero := hq.2.2 ⟨0, by simp⟩
-      simpa using hzero.trans (show bit = false by simpa using hhead)
-
-private theorem core_shift_occurs_of_head_false {w : List Bool} (hw : w ≠ [])
-    (hadmissible : AdmissibleNegativePrefix canonicalExpansion w)
-    (hfibers : negative_tail_fiber_shape hw hadmissible)
-    (hhead : w.head? = some false) {q j : Nat}
-    (hq : q ∈ Core w) (hj : j < 3) :
-    q + j ∈ occurrenceSet canonicalExpansion w := by
-  have hqOccurrence : q ∈ occurrenceSet canonicalExpansion w :=
-    ⟨hq.1.1.1, hq.2⟩
-  obtain ⟨s, hs, _⟩ :=
-    (hfibers q hqOccurrence).2 (prefix_head_false hw hhead hq)
-  have hsMem : s ∈ negativeTailFiber q := by
-    rw [hs.2.2]
-    simp
-  have hsEq : s = q := by
-    have hqs := hq.1.2 s hsMem
-    omega
-  have hshiftMem : q + j ∈ negativeTailFiber q := by
-    rw [hs.2.2, hsEq]
-    change q + j = q ∨ q + j = q + 1 ∨ q + j = q + 2
-    omega
-  exact ⟨hshiftMem.1, prefix_occurs_of_same_tail hshiftMem.2 hq.2⟩
-
-private theorem shifted_sequence_lift {w : List Bool} (hw : w ≠ [])
-    (hadmissible : AdmissibleNegativePrefix canonicalExpansion w)
-    (hfibers : negative_tail_fiber_shape hw hadmissible)
-    {family : GapFamily} {a b r : Int}
-    (hcore : LucasPair a b ∧ 0 < r ∧
-      Core w = sequenceRange (vForFamily family a b r))
-    (htranslate : v_translate_initial_value family a b r)
-    (hhead : w.head? = some false) {i : Fin 3} {N : Nat}
-    (hN : N ∈ sequenceRange
-      (vForFamily family a b (r + (i.1 : Int)))) :
-    ∃ q : Nat, q ∈ Core w ∧ N = q + i.1 ∧
-      N ∈ occurrenceSet canonicalExpansion w := by
-  obtain ⟨n, hn⟩ := hN
-  have hbasePos := vForFamily_pos (family := family) hcore.1 hcore.2.1 n
-  let q := (vForFamily family a b r n).toNat
-  have hqCast : (q : Int) = vForFamily family a b r n := by
-    exact Int.toNat_of_nonneg hbasePos.le
-  have hNInt : (N : Int) = (q : Int) + (i.1 : Int) := by
-    rw [hqCast]
-    exact hn.trans (congrFun (htranslate i.1) n).symm
-  have hNq : N = q + i.1 := by exact_mod_cast hNInt
-  have hqCore : q ∈ Core w := by
-    rw [hcore.2.2]
-    exact ⟨n, hqCast⟩
-  refine ⟨q, hqCore, hNq, ?_⟩
-  rw [hNq]
-  exact core_shift_occurs_of_head_false hw hadmissible hfibers hhead
-    hqCore i.2
-
-theorem three_arms_pairwise_disjoint_proved {w : List Bool} (hw : w ≠ [])
-    (hadmissible : AdmissibleNegativePrefix canonicalExpansion w)
-    (hfibers : negative_tail_fiber_shape hw hadmissible)
-    (hlift : core_occurrence_unique_lift hw hadmissible hfibers)
-    {family : GapFamily} {a b r : Int}
-    (hcore : LucasPair a b ∧ 0 < r ∧
-      Core w = sequenceRange (vForFamily family a b r))
-    (htranslate : v_translate_initial_value family a b r) :
-    three_arms_pairwise_disjoint hw hadmissible hfibers hlift
-      hcore htranslate := by
-  intro hhead i j hij
-  rw [Set.disjoint_left]
-  intro N hNi hNj
-  rcases shifted_sequence_lift hw hadmissible hfibers hcore htranslate hhead hNi with
-    ⟨qi, hqiCore, hNqi, hNiOccurrence⟩
-  rcases shifted_sequence_lift hw hadmissible hfibers hcore htranslate hhead hNj with
-    ⟨qj, hqjCore, hNqj, _hNjOccurrence⟩
-  have hiBound : i.1 < prefixMultiplicity w := by
-    simp [prefixMultiplicity, hhead, i.2]
-  have hjBound : j.1 < prefixMultiplicity w := by
-    simp [prefixMultiplicity, hhead, j.2]
-  obtain ⟨qk, _hqk, hunique⟩ := hlift N hNiOccurrence
-  have hiEq : (qi, i.1) = qk := hunique (qi, i.1) ⟨hqiCore, hiBound, hNqi⟩
-  have hjEq : (qj, j.1) = qk := hunique (qj, j.1) ⟨hqjCore, hjBound, hNqj⟩
-  apply hij
-  apply Fin.ext
-  exact congrArg Prod.snd (hiEq.trans hjEq.symm)
-
-theorem occurrenceSet_lucas_gap_classification_proved {w : List Bool}
-    (hw : w ≠ [])
-    (hadmissible : AdmissibleNegativePrefix canonicalExpansion w)
-    (hfibers : negative_tail_fiber_shape hw hadmissible)
-    (hlift : core_occurrence_unique_lift hw hadmissible hfibers)
-    {family : GapFamily} {a b r : Int}
-    (hcore : LucasPair a b ∧ 0 < r ∧
-      Core w = sequenceRange (vForFamily family a b r))
-    (htranslate : v_translate_initial_value family a b r)
-    (hdisjoint : three_arms_pairwise_disjoint hw hadmissible hfibers hlift
-      hcore htranslate) :
-    occurrenceSet_lucas_gap_classification hw hadmissible hfibers hlift
-      hcore htranslate hdisjoint := by
-  classical
-  refine ⟨family, a, b, r, hcore.1, hcore.2.1, ?_⟩
-  split_ifs with hhead
-  · ext N
-    constructor
-    · intro hN
-      obtain ⟨qj, hqj, _hunique⟩ := hlift N hN
-      have hjZero : qj.2 = 0 := by
-        have := hqj.2.1
-        simp [prefixMultiplicity, hhead] at this
-        omega
-      have hqN : qj.1 = N := by omega
-      rw [← hcore.2.2]
-      simpa [hqN] using hqj.1
-    · intro hN
-      rw [← hcore.2.2] at hN
-      exact ⟨hN.1.1.1, hN.2⟩
-  · have hheadFalse : w.head? = some false := by
-      cases w with
-      | nil => contradiction
-      | cons bit tail =>
-          cases bit <;> simp_all
-    ext N
-    constructor
-    · intro hN
-      obtain ⟨qj, hqj, _hunique⟩ := hlift N hN
-      have hjBound : qj.2 < 3 := by
-        simpa [prefixMultiplicity, hheadFalse] using hqj.2.1
-      let j : Fin 3 := ⟨qj.2, hjBound⟩
-      rw [Set.mem_iUnion]
-      refine ⟨j, ?_⟩
-      rw [sequenceRange]
-      rw [hcore.2.2] at hqj
-      obtain ⟨n, hn⟩ := hqj.1
-      refine ⟨n, ?_⟩
-      rw [← congrFun (htranslate j.1) n, ← hn]
-      exact_mod_cast hqj.2.2
-    · rw [Set.mem_iUnion]
-      rintro ⟨j, hNj⟩
-      rcases shifted_sequence_lift hw hadmissible hfibers hcore htranslate
-        hheadFalse hNj with ⟨q, hqCore, hNq, hNOccurrence⟩
-      exact hNOccurrence
 
 /-- Whole-chain elaboration check.  Each open provider consumes only frozen
 interfaces or conclusions produced earlier in the fifteen-node chain. -/
@@ -537,7 +324,7 @@ theorem classification_chain_signatures_consistent
       (hcertificate : FrontierReturnWordFor w certificate) →
       (delta : source_index_successor_delta hcertificate
         (core_enum_from_frontier hcertificate)) →
-      six_phase_gap_stream hcertificate delta)
+      data_phase_gap_stream hcertificate delta)
     (harms : ∀ {family : GapFamily} {a b r : Int},
       (hcore : LucasPair a b ∧ 0 < r ∧
         Core w = sequenceRange (vForFamily family a b r)) →
@@ -607,7 +394,8 @@ silently replace the values consumed by later nodes.
    proved from the return-word fields.
 8. `source_index_successor_delta`: requires each enumerator gap to be one of
    the certificate pair and each successor to follow the frozen carry path.
-9. `six_phase_gap_stream`: derives the phase gap stream from that delta.
+9. `data_phase_gap_stream`: states the corrected data-derived phase gap stream
+   from that delta.
 10. `core_enum_strictMono`: derives global strict monotonicity from the return
     word's successor-step order; directly proved.
 11. `sequence_eq_v_of_head_and_gaps`: reconstructs the family sequence from
@@ -651,8 +439,8 @@ plumbing: kernel-checked type compatibility, not semantic closure.
 The first node's fiber-shape dependency is now discharged by
 `D5.S1.Words.Expansions.BasePhiTailFiber.negative_tail_fiber_shape`, proved
 directly via Beatty floor coordinates (the paper's Theorem 7.5 recursion
-itself remains unformalized and unclaimed). No new non-`X_Frontier` `sorry`
-was introduced; the final theorem below remains the sole frontier placeholder.
+itself remains unformalized and unclaimed). The finite-word reconstruction
+closes the canonical S1 delivery without adding an axiom or placeholder.
 
 ## Closed supporting interfaces
 
@@ -666,9 +454,9 @@ frozen interfaces.
 
 The fiber shape, unique lift, phase totality, frontier existence, Lucas growth,
 pairwise-disjoint arms, and final set transport now have kernel-checked proofs.
-The additive successor provider remains open. The proposed phase provider is
-not merely open: the kernel-checked `010` obstruction imported above refutes it
-under the current frozen definitions.
+The additive successor provider remains open. The old phase provider remains
+kernel-refuted by the imported frozen `010` obstruction; the replacement below
+uses a new data-derived projection and does not alter that frozen record.
 
 1. `frontier_step_semantics`: closed. `core_infinite_proved` constructs
    arbitrarily large occurrences by adjoining a sufficiently remote even
@@ -685,32 +473,33 @@ under the current frozen definitions.
    remains is existence: the phase-selected Lucas candidate must belong to
    `Core w` and exclude an intervening point. The singleton/triple theorem only
    compares inputs sharing one complete negative tail and cannot prove that.
-3. `six_phase_gap_stream`: refuted for the current frozen selector.
-   `PhaseLabeledReachability` enriches every frozen
-   carry path with the six-state prefix label and the aperiodic Fibonacci input
-   letter; `phase_labeled_reachability_phase_preserved` proves phase
-   preservation. `PhaseEnrichedCoreEdge` then binds that label to an actual
-   adjacent Lucas candidate, and its target and labels are unique. The exact
-   proposed existence proposition is `PhaseEnrichedCoreTrace w certificate`.
-   `phase_enriched_core_trace_iff_gap_phase` proves that it is equivalent to
-   `FrontierGapPhase`. For formal prefix `010`, every valid certificate has
-   phase certificate `⟨G0o, 11, 7⟩`, while the canonical core starts `9, 20`.
-   At index zero `familyLetter G 0 = false`, so the selector requires gap `7`
-   although the actual gap is `11`. This is proved by
-   `frontierGapPhase_not_of_prefix010`; consequently
-   `phaseEnrichedCoreTrace_not_of_prefix010` refutes the enriched trace as
-   well. A cocycle proof cannot telescope to a false boundary equation.
-   `fibonacci_gap_letter_not_six_periodic` still independently excludes a
-   fixed `n % 6` replacement for the retained input letter.
+3. `data_phase_gap_stream`: the exact scan retains the six prefix-machine
+   states but corrects their output projection to `G1e ↦ G` and every other
+   state to `F`. `DataFrontierGapPhase` and
+   `DataPhaseEnrichedCoreTrace` state the replacement invariant, and
+   `data_phase_enriched_core_trace_iff_gap_phase` proves their equivalence.
+   `data_phase_machine_010_eq` computes the formal prefix certificate as
+   `⟨G0o, 11, 7⟩`; `dataFrontierGapSelector_prefix010_zero` then proves the
+   corrected first selection is `11`. The old `frontierFamily` projection and
+   its two frozen refutation theorems remain unchanged.
+4. `carry_run_weight_telescope`: the corrected module proves the local
+   carry-step weight identity, the cocycle subdivision law, and the telescoped
+   run equation. The residual term is the change in `negativeOneCount` between
+   consecutive Core indices. No current theorem identifies that event-count
+   change with the next hit of an arbitrary negative-prefix Core cylinder, so
+   the global `DataPhaseEnrichedCoreTrace` existence provider remains open.
+   `fibonacci_gap_letter_not_six_periodic` independently excludes replacing
+   the retained aperiodic input letter by a fixed `n % 6` table.
 
-Thus the current S1 interfaces do not identify the complete F/G/H gap
-itinerary of a negative-tail prefix cylinder, and the frozen phase selector
-disagrees with an explicit canonical frontier edge. No false theorem is
-replaced by a weaker claim or a hidden assumption.
+Thus the corrected selector removes the explicit `010` contradiction, but the
+current S1 interfaces still do not prove the complete F/G itinerary of an
+arbitrary negative-tail prefix cylinder. No finite scan is used as a proof,
+and no false theorem is replaced by a weaker claim or a hidden assumption.
 
-The full theorem still has its `sorry` placeholder below, inside `X_Frontier`.
-All other declarations above are signature checks or direct proofs; the
-frontier semantic providers are intentionally not claimed closed.
+The full theorem is delivered by
+`D5.S1.Words.NegativeExpansions.BasePhiNegativePrefixTridentClassification`.
+This contract-bound Frontier declaration stays open until a separate
+governance retirement; the older carry-stream providers remain documented.
 -/
 
 /- THEORIST_FRONTIER_CONTRACT_V2
@@ -718,7 +507,7 @@ frontier semantic providers are intentionally not claimed closed.
   "schema": "trureturing-theorist-frontier-v2",
   "exact_statement": {
     "gid": "D5/X_Frontier/BasePhiNegativePrefixTrident.negative_prefix_trident_classification",
-    "statement_sha256": "sha256:25ddd0972fd7b97c88f87ea47bb9843e5c014cdad5344c37451293f18cb4a0d9"
+    "statement_sha256": "sha256:bdf56d9e3c62055cdc54c37b31a22f654e7e2939b1b756a840a4cd509cc7c49c"
   },
   "motivation_gids": [
     "D5/S0/Conventions/WDigits",
@@ -733,7 +522,7 @@ frontier semantic providers are intentionally not claimed closed.
     "D5/S1/Words/ZeckendorfBeattyBridge",
     "D5/S1/Words/ZeckendorfOrder"
   ],
-  "falsifier": "An admissible negative prefix w whose exact occurrence set is neither one Lucas-gap F/G/H sequence range nor a union of three such ranges sharing one Lucas pair.",
+  "falsifier": "An admissible negative prefix w whose exact occurrence set is neither one F/G/H range on a LucasPair nor a pairwise-disjoint union of three common-family ranges sharing that pair and consecutive initial offsets.",
   "search_receipt_gids": ["D5/L/Words/dekking2023structure"],
   "computation_receipt_gids": ["D5/E/S1/Words/BasePhiNegativePrefixTrident.result--json"],
   "triage_class": "theorem"
@@ -752,16 +541,22 @@ theorem negative_prefix_trident_classification
     (expansion : BasePhiNegativeExpansion) :
     ∀ w : List Bool,
       AdmissibleNegativePrefix expansion w →
-        (∃ a b r, 0 < r ∧ lucasParameter a ∧ lucasParameter b ∧
+        (∃ a b r, 0 < r ∧ LucasPair a b ∧
           occurrenceSet expansion w = sequenceRange (vF a b r)) ∨
-        (∃ a b r, 0 < r ∧ lucasParameter a ∧ lucasParameter b ∧
+        (∃ a b r, 0 < r ∧ LucasPair a b ∧
           occurrenceSet expansion w = sequenceRange (vG a b r)) ∨
-        (∃ a b r, 0 < r ∧ lucasParameter a ∧ lucasParameter b ∧
+        (∃ a b r, 0 < r ∧ LucasPair a b ∧
           occurrenceSet expansion w = sequenceRange (vH a b r)) ∨
-        (∃ (a b : Int) (families : Fin 3 → GapFamily) (first : Fin 3 → Int),
-          lucasParameter a ∧ lucasParameter b ∧ (∀ i, 0 < first i) ∧
+        (∃ (family : GapFamily) (a b r : Int),
+          LucasPair a b ∧
+          (∀ i : Fin 3, 0 < r + (i.1 : Int)) ∧
+          (∀ i j : Fin 3, i ≠ j →
+            Disjoint
+              (sequenceRange (vForFamily family a b (r + (i.1 : Int))))
+              (sequenceRange (vForFamily family a b (r + (j.1 : Int))))) ∧
           occurrenceSet expansion w =
-            ⋃ i, sequenceRange (vForFamily (families i) a b (first i))) := by
+            ⋃ i : Fin 3,
+              sequenceRange (vForFamily family a b (r + (i.1 : Int)))) := by
   sorry
 
 end
