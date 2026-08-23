@@ -33,25 +33,7 @@ internal sealed class TruthfulReportBlocksInvertedSpectrumDocument
                             + "same phenomenal value. The conclusion concerns every pair of "
                             + "states, not only values in a chosen or observed part of the "
                             + "public image."))),
-                DescribeRole.Theorem),
-            Describe.Lean(
-                DescribeId.Create("inverted-spectrum-requires-premise-failure"),
-                DeclarationHandle.Create(
-                    DeclarationPrefix + "inverted_spectrum_requires_premise_failure"),
-                H("An inverted pair forces premise failure"),
-                StatementSource.FromLean(),
-                AssessedProvenance.FromRepo(),
-                Blocks(
-                    Paragraph(Text(
-                        "Suppose two states have the same public value but different phenomenal "
-                            + "values. Substituting this pair into a claimed constancy law for "
-                            + "all public fibers produces an immediate contradiction.")),
-                    Paragraph(Text(
-                        "The result therefore denies the single fiber-constancy premise needed "
-                            + "by exact truthful recovery. It establishes that some explanation "
-                            + "of premise failure is unavoidable without selecting one particular "
-                            + "failure mode."))),
-                DescribeRole.Lemma))));
+                DescribeRole.Theorem))));
 
     private static Formula Apply(Formula function, params Formula[] arguments) =>
         new Formula.Apply(function, [.. arguments]);
