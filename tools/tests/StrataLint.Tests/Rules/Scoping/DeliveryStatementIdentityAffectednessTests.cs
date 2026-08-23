@@ -18,7 +18,7 @@ public sealed class DeliveryStatementIdentityAffectednessTests
     }
 
     [Fact]
-    public void DeliveryStatementIdentitySkipsAModifiedFrontierSourceThatWasNotDeleted()
+    public void DeliveryStatementIdentitySkipsAModifiedFrontierSourceWhoseStatementShaDidNotChange()
     {
         const string path = "D5/X_Frontier/PrimeNormIrreducibility.lean";
         var fixture = new RuleFixture();
@@ -35,6 +35,36 @@ public sealed class DeliveryStatementIdentityAffectednessTests
 
     [Fact]
     [BaseFactScopeProbe(27)]
+    public void Sl027DeliveryStatementIdentityExecutesWhenAnExistingFrontierStatementShaChanges()
+    {
+        const string path = "D5/X_Frontier/PrimeNormIrreducibility.lean";
+        var fixture = new RuleFixture();
+        fixture.AddHistoricalTheoristTarget(
+            "prime-norm-irreducibility",
+            baselineOwnerKind: "declaration-ready-mathematical-open",
+            baselineIncludeContract: true);
+        fixture.ReviseTheoristStatementWithoutRevision();
+
+        var completed = Assert.IsType<RuleExecutionOutcome.Completed>(
+            RuleCatalog.Default.Execute(fixture.Build(RawChangeSet.Create([path])))).Capability;
+
+        Assert.Contains(RuleId.CreateKnown(27), completed.ExecutedRules);
+    }
+
+    [Fact]
+    public void DeliveryStatementIdentitySkipsANewFrontierContract()
+    {
+        const string path = "D5/X_Frontier/PrimeNormIrreducibility.lean";
+        var fixture = new RuleFixture();
+        fixture.AddHistoricalTheoristTarget("prime-norm-irreducibility");
+
+        var completed = Assert.IsType<RuleExecutionOutcome.Completed>(
+            RuleCatalog.Default.Execute(fixture.Build(RawChangeSet.Create([path])))).Capability;
+
+        Assert.DoesNotContain(RuleId.CreateKnown(27), completed.ExecutedRules);
+    }
+
+    [Fact]
     public void Sl027DeliveryStatementIdentityExecutesWhenABaselineFrontierSourceIsDeleted()
     {
         const string path = "D5/X_Frontier/PrimeNormIrreducibility.lean";
