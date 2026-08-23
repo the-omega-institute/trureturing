@@ -682,6 +682,8 @@ finish() {
   if [[ -n "$STDOUT_RELAY_PID" ]]; then wait_for_relay "$STDOUT_RELAY_PID"; fi
   if [[ -n "$STDERR_RELAY_PID" ]]; then wait_for_relay "$STDERR_RELAY_PID"; fi
   finished_ms="$(now_ms)"
+  # Stdout is multiplexed: worker bytes are relayed first, then a supervisor
+  # note is appended only when the performance-event commit fails.
   if [[ -n "$CHILD_PID" && "$STARTED_MS" -gt 0 ]]; then
     append_metrics "$rc" "$((finished_ms - STARTED_MS))" 2>/dev/null || true
   fi
