@@ -36,6 +36,7 @@ public sealed partial class MakeWorkflowTests
         Assert.Contains("--reason \"$(REASON)\"", holdRecipe, StringComparison.Ordinal);
         Assert.Contains("-- worktree release", releaseRecipe, StringComparison.Ordinal);
         Assert.DoesNotContain("git worktree", holdRecipe + releaseRecipe, StringComparison.Ordinal);
+        Assert.DoesNotContain("worktree-destination-guard", makefile, StringComparison.Ordinal);
     }
 
     [Theory]
@@ -57,7 +58,6 @@ public sealed partial class MakeWorkflowTests
         Directory.CreateDirectory(binDirectory);
         Directory.CreateDirectory(cliDirectory);
         File.Copy(Path.Combine(root, "Makefile"), Path.Combine(fixture.Path, "Makefile"));
-        CopyWorktreeDestinationGuard(root, fixture.Path);
         File.WriteAllText(
             dotnetPath,
             """
@@ -117,17 +117,23 @@ public sealed partial class MakeWorkflowTests
         AssertCliArguments(operation, destination, reason, ReadArguments(failureArguments));
     }
 
-    public static IEnumerable<object[]> RawWorktreeWhitespaceCases()
+    public static IEnumerable<object[]> EffectiveWorktreeWhitespaceCases()
     {
         string[] targets = ["worktree", "worktree-hold", "worktree-release"];
         object[][] inputs =
         [
-            ["leading-destination", " leading", "controlled", true],
-            ["trailing-destination", "trailing ", "controlled", true],
-            ["whitespace-only-destination", " ", "controlled", true],
-            ["embedded-tab-destination", "embed\tded", "controlled", true],
-            ["tab-only-destination", "\t", "controlled", true],
-            ["omitted-destination-name-fallback", null!, " leading-name", false],
+            ["trailing-destination", "trailing ", "controlled", true, 2],
+            ["leading-and-trailing-destination", " leading ", "controlled", true, 2],
+            ["embedded-space-destination", "embed ded", "controlled", true, 2],
+            ["embedded-tab-destination", "embed\tded", "controlled", true, 2],
+            ["trailing-name-fallback", null!, "trailing-name ", false, 2],
+            ["embedded-tab-name-fallback", null!, "embedded\tname", false, 2],
+            ["clean-destination", "controlled", "fallback", true, 0],
+            ["leading-destination", " leading", "fallback", true, 0],
+            ["whitespace-only-destination", " ", "controlled", true, 0],
+            ["tab-only-destination", "\t", "controlled", true, 0],
+            ["leading-name-fallback", null!, " leading-name", false, 0],
+            ["whitespace-only-name-fallback", null!, " ", false, 0],
         ];
 
         foreach (var target in targets)
@@ -140,27 +146,25 @@ public sealed partial class MakeWorkflowTests
     }
 
     [Theory]
-    [MemberData(nameof(RawWorktreeWhitespaceCases))]
-    public void WorktreeTargetsRejectRawWhitespaceBeforeMakeCanNormalizeIt(
+    [MemberData(nameof(EffectiveWorktreeWhitespaceCases))]
+    public void WorktreeTargetsValidateOnlyWhitespaceVisibleInTheEffectiveMakeValue(
         string target,
         string shape,
         string? destination,
         string name,
-        bool includeDestination)
+        bool includeDestination,
+        int expectedExitCode)
     {
         if (OperatingSystem.IsWindows()) return;
 
         var root = TestRepositoryLayout.FindRoot();
         using var fixture = new TemporaryDirectory();
         var binDirectory = Path.Combine(fixture.Path, "bin");
-        var cliDirectory = Path.Combine(fixture.Path, "tools", "StrataLint.Cli");
         var scriptsDirectory = Path.Combine(fixture.Path, "tools", "scripts");
         var marker = Path.Combine(fixture.Path, "mutation.marker");
         Directory.CreateDirectory(binDirectory);
-        Directory.CreateDirectory(cliDirectory);
         Directory.CreateDirectory(scriptsDirectory);
         File.Copy(Path.Combine(root, "Makefile"), Path.Combine(fixture.Path, "Makefile"));
-        CopyWorktreeDestinationGuard(root, fixture.Path);
         WriteExecutable(
             Path.Combine(binDirectory, "dotnet"),
             "#!/usr/bin/env bash\ntouch \"$MUTATION_MARKER\"\n");
@@ -176,7 +180,7 @@ public sealed partial class MakeWorkflowTests
                     + "args=(\"$3\" \"NAME=$5\"); "
                     + "if [[ \"$6\" == 1 ]]; then args+=(\"DEST=$4\"); fi; "
                     + "exec make --no-print-directory \"${args[@]}\"",
-                "worktree-raw-whitespace",
+                "worktree-effective-whitespace",
                 binDirectory,
                 marker,
                 target,
@@ -189,15 +193,40 @@ public sealed partial class MakeWorkflowTests
             64 * 1024);
 
         Assert.True(
-            result.ExitCode == 2,
-            $"{shape}: expected exit 2, got {result.ExitCode}; stderr: "
+            result.ExitCode == expectedExitCode,
+            $"{shape}: expected exit {expectedExitCode}, got {result.ExitCode}; stderr: "
                 + Encoding.UTF8.GetString(result.StandardError));
         Assert.Empty(result.StandardOutput);
+        if (expectedExitCode == 2)
+        {
+            Assert.Contains(
+                "WORKTREE_DEST_WHITESPACE",
+                Encoding.UTF8.GetString(result.StandardError),
+                StringComparison.Ordinal);
+            Assert.False(File.Exists(marker));
+            return;
+        }
+        Assert.Empty(result.StandardError);
+        Assert.True(File.Exists(marker), $"{shape}: target did not reach its mutation command");
+    }
+
+    [Fact]
+    public void WorktreeHelpDisclosesMakeWhitespaceNormalizationResidual()
+    {
+        var root = TestRepositoryLayout.FindRoot();
+        var result = BoundedProcessRunner.Run(
+            "make",
+            ["--no-print-directory", "help"],
+            root,
+            TimeSpan.FromSeconds(30),
+            64 * 1024);
+
+        Assert.Equal(0, result.ExitCode);
         Assert.Contains(
-            "WORKTREE_DEST_WHITESPACE",
-            Encoding.UTF8.GetString(result.StandardError),
+            "Worktree destination validation rejects embedded/trailing whitespace; Make removes "
+                + "leading/whitespace-only DEST or fallback NAME before recipes can inspect it",
+            Encoding.UTF8.GetString(result.StandardOutput),
             StringComparison.Ordinal);
-        Assert.False(File.Exists(marker));
     }
 
     private static ProcessOutput RunTarget(
@@ -285,11 +314,4 @@ public sealed partial class MakeWorkflowTests
         Assert.Equal(operation, document.RootElement.GetProperty("operation").GetString());
     }
 
-    private static void CopyWorktreeDestinationGuard(string sourceRoot, string destinationRoot)
-    {
-        const string relativePath = "tools/scripts/worktree/worktree-destination-guard.sh";
-        var destination = Path.Combine(destinationRoot, relativePath);
-        Directory.CreateDirectory(Path.GetDirectoryName(destination)!);
-        File.Copy(Path.Combine(sourceRoot, relativePath), destination);
-    }
 }

@@ -69,8 +69,8 @@ public sealed partial class CleanLanesCommandTests
                 new UTF8Encoding(false));
         }
 
-        internal void LockLane(string path) =>
-            Git(repository.Path, "worktree", "lock", "--reason", "fixture session", path);
+        internal void LockLane(string path, string reason = "fixture session") =>
+            Git(repository.Path, "worktree", "lock", "--reason", reason, path);
 
         internal void RegisterMergedPr(string branch, string headOid, string mergeCommitOid) =>
             pullRequests[branch] = new PullRequestProbeOutcome(

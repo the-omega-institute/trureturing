@@ -187,7 +187,9 @@ internal static class WorktreeHoldCommand
         }
 
         var observedLane = ReadLaneAfterSuccessfulMutation(repositoryRoot, lane, runner);
-        if (!SameLaneIdentity(lane, observedLane) || observedLane!.Locked != true)
+        if (!SameLaneIdentity(lane, observedLane)
+            || observedLane!.Locked != true
+            || !string.Equals(observedLane.LockReason, effectiveReason, StringComparison.Ordinal))
         {
             return MutationStateIndeterminate(
                 options,
@@ -197,7 +199,7 @@ internal static class WorktreeHoldCommand
                 effectiveReason);
         }
 
-        return Succeeded(options, observedLane!, "held", effectiveReason);
+        return Succeeded(options, observedLane!, "held", observedLane.LockReason);
     }
 
     private static CommandResult Release(
@@ -309,13 +311,17 @@ internal static class WorktreeHoldCommand
         var observedBranch = observedLane?.Branch;
         var expectedLocked = options.Operation == WorktreeHoldOperation.Hold;
         var observedLocked = observedLane?.Locked;
+        var observedReason = observedLane?.LockReason;
         var observedDescription = observedBranch ?? "<missing or unreadable>";
         var observedStateDescription = observedLocked?.ToString() ?? "<missing or unreadable>";
+        var expectedReasonDescription = effectiveReason ?? "<none>";
+        var observedReasonDescription = observedReason ?? "<missing or unreadable>";
         var detail = $"git worktree {gitMutation} returned success, but the post-mutation inventory "
-                + "did not verify the expected lane identity and lock state; mutation may have applied to a "
+                + "did not verify the expected lane identity and lock state, including the lock reason; mutation may have applied to a "
                 + $"different lane (expected branch: {expectedLane.Branch}, "
                 + $"observed branch: {observedDescription}, expected locked: {expectedLocked}, "
-                + $"observed locked: {observedStateDescription}); no undo was attempted because "
+                + $"observed locked: {observedStateDescription}, expected reason: {expectedReasonDescription}, "
+                + $"observed reason: {observedReasonDescription}); no undo was attempted because "
                 + "the post-mutation uncertainty makes compensation unsafe";
         var line = JsonSerializer.Serialize(new
         {
@@ -326,6 +332,8 @@ internal static class WorktreeHoldCommand
             observed_branch = observedBranch,
             expected_locked = expectedLocked,
             observed_locked = observedLocked,
+            expected_reason = effectiveReason,
+            observed_reason = observedReason,
             operation = OperationName(options.Operation),
             action = "refused",
             effective_reason = effectiveReason,
