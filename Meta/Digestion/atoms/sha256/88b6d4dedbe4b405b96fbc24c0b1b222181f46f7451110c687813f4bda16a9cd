@@ -1,0 +1,12 @@
+## 最深结构
+
+$$
+最大不变 state kernel
+⇔
+最小不变 effect algebra.
+$$
+
+这不是两个相似结论，而是同一 completion 的反对偶描述。
+
+---
+

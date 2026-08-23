@@ -1,0 +1,67 @@
+# 27. 建议 Lean 模块树
+
+```text
+D5/S3/Observer/Completion/
+  InterfaceOrder.lean
+  StableInterface.lean
+  BehaviorCompletion.lean
+  CompletionClosureOperator.lean
+  CompletionReflection.lean
+  GreatestInvariantKernel.lean
+  ControlledBehaviorCompletion.lean
+  CommutingCompletion.lean
+  FreeWordCompletion.lean
+
+D5/S3/Observer/Duality/
+  PartitionAlgebraDuality.lean
+  StateEffectCompletion.lean
+
+D5/S3/Observer/Linear/
+  ObservableKrylovTower.lean
+  UnobservableInvariantSubspace.lean
+  MemoryQuotient.lean
+  DiscountedObservabilityGramian.lean
+  ObservabilityLyapunov.lean
+  ApproximateDescentDuhamel.lean
+
+D5/S3/Quantum/ObserverCompletion/
+  EffectKrylovTower.lean
+  HamiltonianCommutatorClosure.lean
+  RecordDynamicReturn.lean
+  MultiContextFreeWordClosure.lean
+
+D5/S3/Observer/CausalDesign/
+  TargetPairCover.lean
+  InterventionKernelTransversal.lean
+
+D5/S3/Observer/CompletionLimits/
+  CommonFixedPointIteration.lean
+  TransfiniteClosure.lean
+```
+
+建议优先形式化：
+
+```text
+interfaceRefines_iff_kernel_inclusion
+behaviorCompletion_kernel
+behaviorCompletion_stable
+behaviorCompletion_least_stable_refinement
+behaviorCompletion_monotone
+behaviorCompletion_idempotent
+behaviorCompletion_reflection
+controlledCompletion_kernel
+commutingCompletions_eq
+partitionAlgebra_antiEquiv
+stateEffect_completion_duality
+unobservable_eq_observable_orthogonal
+unobservable_maximal_invariant
+memoryQuotient_zero_iff_descends
+observabilityGramian_inner
+observabilityGramian_kernel
+observabilityGramian_lyapunov
+approximateDescent_iterate_identity
+finite_target_experiment_cover_iff
+```
+
+---
+

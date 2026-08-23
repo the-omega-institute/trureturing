@@ -1,0 +1,5 @@
+source_id = "formal-observer-completion-reflection"
+path = "docs/develop/theory/FORMAL_OBSERVER_COMPLETION_REFLECTION.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

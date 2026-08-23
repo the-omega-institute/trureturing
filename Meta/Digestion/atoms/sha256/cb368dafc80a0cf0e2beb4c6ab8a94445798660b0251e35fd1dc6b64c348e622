@@ -1,0 +1,6 @@
+## 推论 22.1
+
+C 不只是对象级 closure operator，也是保持合法 semiconjugacy 的函子。observer completion 可以在系统翻译之间自然运输。
+
+---
+

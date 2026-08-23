@@ -1,0 +1,14 @@
+## 解释
+
+局部每一块闭合，不等于全局一次拼接就闭合。剩余障碍可能位于：
+
+- closure 次序；
+- transition compatibility；
+- limit-stage image；
+- realizability；
+- 非平凡 holonomy。
+
+这为 prime-window、observer atlas 与 transfinite residual tower 提供同一组织语言。
+
+---
+
