@@ -62,7 +62,7 @@ internal sealed class MultipleTestingFalsePositiveDocument
 
     private static Formula SearchRate(Formula alpha, Formula attempts) =>
         Seq(Num(1), Sp, Minus, Sp,
-            new Formula.Power(Grp(Num(1), Sp, Minus, Sp, alpha), attempts));
+            Seq(Grp(Num(1), Sp, Minus, Sp, alpha), Caret, Grp(attempts)));
 
     private static Formula TheoremFormula()
     {
@@ -79,7 +79,7 @@ internal sealed class MultipleTestingFalsePositiveDocument
         Formula anyProbability = Probability(measure, anyError);
         Formula exactClauses = Seq(
             Probability(measure, noError), Sp, Eq, Sp,
-            new Formula.Power(Grp(Num(1), Sp, Minus, Sp, alpha), attempts),
+            Seq(Grp(Num(1), Sp, Minus, Sp, alpha), Caret, Grp(attempts)),
             Sp, Land, Sp, RowBreak, Grp(),
             anyProbability, Sp, Eq, Sp, SearchRate(alpha, attempts),
             Sp, Land, Sp, RowBreak, Grp(),
