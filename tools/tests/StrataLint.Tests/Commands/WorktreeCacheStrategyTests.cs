@@ -253,6 +253,10 @@ internal sealed class RecordingWorktreeProcessRunner : IWorktreeProcessRunner
 
     internal int ArchiveInvocations { get; private set; }
 
+    internal int ArchiveExitCode { get; init; }
+
+    internal Action<string>? AfterArchiveFetch { get; init; }
+
     internal bool CacheGetSawExistingProjection { get; private set; }
 
     internal List<bool> CacheGetExistingProjectionObservations { get; } = [];
@@ -291,9 +295,12 @@ internal sealed class RecordingWorktreeProcessRunner : IWorktreeProcessRunner
             && arguments[1] == "fetch")
         {
             ArchiveInvocations++;
+            // 成功的桩必须**真的落下产物**：只回一句 unpacked 而不造 olean，会让
+            // 「成功后重探热度」这段代码删掉也不红 —— 那样它就只是生产代码，不是契约。
+            AfterArchiveFetch?.Invoke(workingDirectory);
             return ArchiveReceipt is null
                 ? Failure("archive fetcher is not stubbed for this test")
-                : new ProcessOutput(0, Encoding.UTF8.GetBytes(ArchiveReceipt), []);
+                : new ProcessOutput(ArchiveExitCode, Encoding.UTF8.GetBytes(ArchiveReceipt), []);
         }
 
         if (fileName == "lsof")

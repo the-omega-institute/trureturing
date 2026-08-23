@@ -76,7 +76,11 @@ internal static class LeanArchiveFetch
             or TimeoutException)
         {
             // 网络与外部工具的失败在这里都是**可降级**的：内容层拿不到就退回重编，
-            // 这是慢，不是错。真正不可降级的是产地不符 —— 那由脚本判 rejected。
+            // 这是慢，不是错。
+            //
+            // 产地不符（脚本判 rejected）是**不可消费**，不是不可降级 —— 那份归档一个
+            // 字节都不能用，但调用方仍可降级到从可信源码重编。安全门与可用性策略是
+            // 两件事，别混：门决定「能不能吃」，策略决定「吃不上怎么办」。
             return new LeanArchiveAttempt(
                 LeanArchiveOutcome.Failed,
                 null,
@@ -115,6 +119,21 @@ internal static class LeanArchiveFetch
             using var document = JsonDocument.Parse(
                 line.TrimStart()[ReceiptPrefix.Length..]);
             var root = document.RootElement;
+            if (root.ValueKind != JsonValueKind.Object)
+            {
+                // 语法合法但结构不对的判词照样得降级。`[]` 是合法 JSON，而在数组上
+                // 取属性抛的是 InvalidOperationException 而非 JsonException（实测），
+                // 只接后者会让异常逃出本 helper、把整个 ensure 打挂 —— 那正是本类型
+                // 声称要避免的「失败可降级」的反面。
+                return new LeanArchiveAttempt(
+                    LeanArchiveOutcome.Failed,
+                    null,
+                    null,
+                    null,
+                    $"archive receipt is not an object ({root.ValueKind})",
+                    null);
+            }
+
             var status = Text(root, "status");
             var outcome = status switch
             {
@@ -130,6 +149,26 @@ internal static class LeanArchiveFetch
                 reason = stage is null ? reason : $"{stage}: {reason}";
             }
 
+            // 判词与退出码必须自洽。脚本的约定是 unpacked → 0、miss/rejected → 非零；
+            // 两者矛盾时说明判词与实际发生的事对不上，此时**不采信判词**，判 Failed。
+            // 这不是不信退出码，也不是只信退出码 —— 是要求两个独立信号一致。
+            var consistent = outcome switch
+            {
+                LeanArchiveOutcome.Unpacked => output.ExitCode == 0,
+                LeanArchiveOutcome.Miss or LeanArchiveOutcome.Rejected => output.ExitCode != 0,
+                _ => true,
+            };
+            if (!consistent)
+            {
+                return new LeanArchiveAttempt(
+                    LeanArchiveOutcome.Failed,
+                    null,
+                    null,
+                    null,
+                    $"archive receipt says {status} but the fetcher exited {output.ExitCode}",
+                    null);
+            }
+
             return new LeanArchiveAttempt(
                 outcome,
                 Text(root, "mode"),
@@ -138,7 +177,8 @@ internal static class LeanArchiveFetch
                 outcome == LeanArchiveOutcome.Unpacked ? null : reason ?? status,
                 null);
         }
-        catch (JsonException exception)
+        catch (Exception exception) when (exception is JsonException
+            or InvalidOperationException)
         {
             return new LeanArchiveAttempt(
                 LeanArchiveOutcome.Failed,
