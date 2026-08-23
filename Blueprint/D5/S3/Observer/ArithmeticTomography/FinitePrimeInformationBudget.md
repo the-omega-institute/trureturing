@@ -6,7 +6,7 @@ A complete finite prime-power readout meets the exact base-two information budge
 
 **Theorem 1.1 (The prime-power precision sum bounds the window information).**
 
-$$\forall S: \operatorname{Finset}(\operatorname{NatPrimes}), \kappa: \operatorname{NatPrimes} \to \operatorname{PNat}, N\in \mathbb{N},\\{}0 < N \land N \leq \prod_{p\in S} {p}^{{\kappa(p)}} \Rightarrow \\{}\operatorname{logb}(2, N) \leq \sum_{p\in S} \kappa(p) \operatorname{logb}(2, p).$$
+$$\forall S: \operatorname{Finset}(\operatorname{NatPrimes}), \kappa: \operatorname{NatPrimes} \to \operatorname{PNat}, N\in \mathbb{N},\\{}0 < N \land N \leq \prod_{p\in S} p^{\kappa(p)} \Rightarrow \\{}\operatorname{logb}(2, N) \leq \sum_{p\in S} \kappa(p) \operatorname{logb}(2, p).$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Observer/ArithmeticTomography/FinitePrimeInformationBudget.finite_prime_information_budget` (`✓ std3`). ∎
 

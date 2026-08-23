@@ -11,13 +11,13 @@ internal sealed class FinitePrimeInformationBudgetDocument : IScribeDocumentDefi
         Formula primeSet = F.Id("S");
         Formula precision = Kappa;
         Formula window = F.Id("N");
-        Formula prime = F.Id("p");
+        Formula prime = Seq(F.Id("p"));
         Formula primes = Seq(Operatorname, Grp(F.Id("NatPrimes")));
         Formula positiveNaturals = Seq(Operatorname, Grp(F.Id("PNat")));
         Formula finitePrimeSet = Seq(
             Operatorname, Grp(F.Id("Finset")), Open, primes, Close);
         Formula precisionAtPrime = Seq(precision, Open, prime, Close);
-        Formula primePower = new Formula.Power(Grp(prime), Grp(precisionAtPrime));
+        Formula primePower = new Formula.Power(prime, precisionAtPrime);
         Formula product = Seq(
             Prod, Underscore, Grp(prime, InMacro, Sp, primeSet), Sp, primePower);
         Formula logWindow = Seq(
