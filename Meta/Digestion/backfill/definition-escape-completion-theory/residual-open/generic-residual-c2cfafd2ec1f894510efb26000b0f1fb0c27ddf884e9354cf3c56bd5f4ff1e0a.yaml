@@ -1,0 +1,10 @@
+ast_path: section/14-5-稳定性与自然性
+fingerprints:
+  raw_sha256: sha256:c2cfafd2ec1f894510efb26000b0f1fb0c27ddf884e9354cf3c56bd5f4ff1e0a
+  normalized_sha256: sha256:c2cfafd2ec1f894510efb26000b0f1fb0c27ddf884e9354cf3c56bd5f4ff1e0a
+cas_ref: sha256:c2cfafd2ec1f894510efb26000b0f1fb0c27ddf884e9354cf3c56bd5f4ff1e0a
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

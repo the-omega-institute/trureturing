@@ -1,0 +1,21 @@
+\[
+\mathcal E'_{\mathfrak M}
+=
+\mathcal E_{\mathfrak M}\cap\ker d_{\mathfrak M}.
+\]
+
+定义哲学方法：
+
+\[
+M_{\mathfrak M}:
+\operatorname{DState}(\mathfrak M_X)
+\times
+\operatorname{RState}(\mathfrak M_X,T_{\mathfrak M})
+\to
+\operatorname{IntDef}(\mathfrak M_X).
+\]
+
+于是哲学不是在对象科学之外增加另一种逻辑，而是在研究方法空间上重复相同的定义逃逸完备化过程。
+
+---
+

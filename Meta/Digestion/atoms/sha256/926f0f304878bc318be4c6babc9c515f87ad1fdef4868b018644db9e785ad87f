@@ -1,0 +1,27 @@
+# 第三十六部　因果作为干预逃逸
+
+定义观测接口 \(O:X\to R_O\)，干预索引 \(A\)，干预映射
+
+\[
+\operatorname{do}:A\times X\to X.
+\]
+
+定义干预响应目标：
+
+\[
+T^{\operatorname{do}}(x)
+:=(T(\operatorname{do}(a,x)))_{a\in A}.
+\]
+
+定义因果逃逸：
+
+\[
+\boxed{
+\mathcal E_{\mathrm{causal}}(O;T,\operatorname{do})
+:=
+\{(x,y):O(x)=O(y),\ T^{\operatorname{do}}(x)\neq T^{\operatorname{do}}(y)\}.
+}
+\]
+
+候选因果变量 \(c:X\to C\) 加入后满足普通残差交公式：
+

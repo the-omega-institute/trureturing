@@ -1,0 +1,23 @@
+# 第二十五部　有限科学流程的压平与信息丢失
+
+定义一个有限可执行流程：
+
+\[
+\mathcal W=(X_0\xrightarrow{f_1}X_1\xrightarrow{f_2}\cdots\xrightarrow{f_n}X_n).
+\]
+
+定义复合：
+
+\[
+\operatorname{Comp}(\mathcal W):=f_n\circ\cdots\circ f_1.
+\]
+
+对共同输入上的有限定义节点，定义乘积压平：
+
+\[
+\operatorname{Flat}_{\times}(\mathcal G)(x)
+:=(\sigma(v)(x))_{v\in V_X}.
+\]
+
+于是
+

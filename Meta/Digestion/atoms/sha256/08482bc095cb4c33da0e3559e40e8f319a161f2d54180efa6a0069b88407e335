@@ -1,0 +1,86 @@
+# 第四十五部　形式化接口草案
+
+```lean
+universe u v w
+
+namespace D5.S3.DefinitionEscape.RecursiveScience
+
+structure ExtDef (X : Type u) where
+  Codomain : Type v
+  read : X → Codomain
+
+def ExtDef.Kernel {X : Type u} (d : ExtDef X) : Setoid X :=
+  Setoid.ker d.read
+
+inductive Origin where
+  | notation | construction | deduction | measurement
+  | calibration | modelChoice | approximation
+  | convention | intervention | imported
+
+structure IntDef (X : Type u) where
+  Code : Type v
+  semantics : Code → ExtDef X
+  origin : Code → Origin
+  dependencies : Code → Set Code
+  scope : Code → Set X
+  cost : Code → ℝ≥0∞
+
+structure DefinitionGraph where
+  Node : Type u
+  Edge : Node → Node → Prop
+  carrier : Node → Type v
+  definition : (n : Node) → ExtDef (carrier n)
+
+structure DefinitionState (X : Type u) where
+  graph : DefinitionGraph
+  observation : ExtDef X
+
+structure ResidualState (X : Type u) (T : ExtDef X) where
+  current : DefinitionState X
+  pair : X → X → Prop := fun x y =>
+    current.observation.read x = current.observation.read y ∧
+    T.read x ≠ T.read y
+
+abbrev DefinitionMethod (X : Type u) (T : ExtDef X) :=
+  DefinitionState X → ResidualState X T → IntDef X
+
+structure RecordInterface (W : Type u) where
+  Query : Type v
+  Record : Type w
+  observe : W → Query → Record
+
+structure ScientificSystem (W : Type u) where
+  State : Type v
+  interface : RecordInterface W
+  predict : State → interface.Query → interface.Record
+  compare : interface.Record → interface.Record → Type w
+  revise : State → Type w → State
+  encode : State → Type w
+  reflect : State → State
+
+end D5.S3.DefinitionEscape.RecursiveScience
+```
+
+建议路径：
+
+```text
+D5/S3/DefinitionEscape/RecursiveScience/
+  ExtensionalDefinition.lean
+  IntensionalDefinition.lean
+  TypedDefinitionGraph.lean
+  WorkflowFlattening.lean
+  DefinitionMethod.lean
+  MethodResidual.lean
+  GuardedReflection.lean
+  ReflectionTower.lean
+  ReflectionEscapeRate.lean
+  RecordResistance.lean
+  ObjectiveNaturality.lean
+  InterventionResidual.lean
+  ScientificSystem.lean
+```
+
+优先形式化的定义展开包括：联合定义核等于核交；有限定义图乘积压平的核等于节点核交；外延投影非单射的显式双代码见证；方法层残差交公式；守卫引用无同层回边；反射塔有限前缀嵌入；观察协议相容族的逆极限；因果逃逸作为干预轨迹目标的普通残差特例；自封闭与开放修订的有限模型；持久残差关于允许重定义族扩大的反单调性。
+
+---
+

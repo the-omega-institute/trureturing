@@ -1,0 +1,29 @@
+## 22.4 内涵定义
+
+定义
+
+\[
+\boxed{
+\operatorname{IntDef}(X)
+:=
+\sum_{c:\operatorname{Code}(X)}
+(\operatorname{Origin}(c),
+\operatorname{Dep}^*(c),
+\operatorname{Scope}(c),
+\llbracket c\rrbracket_X,
+\operatorname{Cost}(c),
+\operatorname{Certificate}(c)).
+}
+\]
+
+定义外延投影：
+
+\[
+\operatorname{ext}:
+\operatorname{IntDef}(X)	o\operatorname{ExtDef}(X).
+\]
+
+若存在 \(c_1\neq c_2\) 而 \(\llbracket c_1\rrbracket_X=\llbracket c_2\rrbracket_X\)，则外延投影在该对上非单射。由此，直接复制目标与独立构造出同一函数，不能只靠函数图区分；科学审计必须保留定义来源图。
+
+---
+

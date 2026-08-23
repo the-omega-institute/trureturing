@@ -1,0 +1,28 @@
+# 第二十八部　哲学作为方法空间上的 DECT
+
+定义方法空间
+
+\[
+\mathfrak M_X:=\operatorname{Method}(X).
+\]
+
+定义当前哲学读数 \(q_{\mathfrak M}:\mathfrak M_X\to Q_{\mathfrak M}\) 与方法目标 \(T_{\mathfrak M}:\mathfrak M_X\to Y_{\mathfrak M}\)。
+
+定义哲学残差：
+
+\[
+\boxed{
+\mathcal E_{\mathfrak M}
+:=
+\ker q_{\mathfrak M}\setminus\ker T_{\mathfrak M}.
+}
+\]
+
+一个哲学定义是
+
+\[
+d_{\mathfrak M}:\mathfrak M_X\to D.
+\]
+
+加入后：
+

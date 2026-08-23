@@ -1,0 +1,14 @@
+## 11.2 传播混沌：渐近乘积而非精确乘积
+
+`Propagation of chaos and the higher order statistics in the wave kinetic theory`（arXiv:2110.04565）研究高阶统计并证明适当初始独立模式在动力学极限中保持渐近独立。
+
+这不意味着有限尺度系统严格为乘积，而意味着固定阶观察在极限中因子化。用 DECT 语言：
+
+\[
+\boxed{
+\text{观察者融合在极限中渐近保持 monoidal 结构。}
+}
+\]
+
+仓库的 `IndependentProductCompletion.lean` 给出精确独立系统的乘积完成；Yu Deng 路线要求的是带缺陷的渐近版本。
+

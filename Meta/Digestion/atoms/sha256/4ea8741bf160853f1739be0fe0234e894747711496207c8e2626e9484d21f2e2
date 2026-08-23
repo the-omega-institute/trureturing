@@ -1,0 +1,99 @@
+# 第四十六部　纯定义统一式
+
+\[
+\mathsf{OBJECT}:=X/\ker q.
+\]
+
+\[
+\mathsf{PROBLEM}:=\ker q\setminus\ker T.
+\]
+
+\[
+\mathsf{DISCOVERY}(d)
+:=
+\mathsf{PROBLEM}\cap(\ker d)^c.
+\]
+
+\[
+\mathsf{METHOD}
+:=
+(\mathsf{STATE},\mathsf{PROBLEM})	o\mathsf{DEFINITION}.
+\]
+
+\[
+\mathsf{THEORY}
+:=
+(\mathsf{OBJECT},\mathsf{LAW},\mathsf{PREDICTION},\mathsf{SCOPE}).
+\]
+
+\[
+\mathsf{EXPERIMENT}
+:=
+(\mathsf{QUERY},\mathsf{RECORD},\mathsf{OBSERVE},\mathsf{PLAN}).
+\]
+
+\[
+\mathsf{SCIENCE\ STATE}
+:=
+(\mathsf{DEFINITION\ GRAPH},
+\mathsf{RECORD\ INTERFACE},
+\mathsf{RESIDUAL\ LEDGER},
+\mathsf{REVISION\ OPERATOR}).
+\]
+
+\[
+\mathsf{PHILOSOPHY}
+:=
+\mathsf{DECT}(\mathsf{METHOD\ SPACE}).
+\]
+
+\[
+\mathsf{REFLECTION}_{n+1}
+:=
+\operatorname{Define}
+(\ulcorner\mathsf{SCIENCE}_n\urcorner,
+\mathsf{META\ RESIDUAL}_n).
+\]
+
+\[
+\mathsf{SCIENCE}_\omega
+:=
+\varinjlim_n\mathsf{SCIENCE}_n.
+\]
+
+\[
+\mathsf{OBJECTIVITY}
+:=
+\operatorname{Naturality}
+(\mathsf{PROPERTY},\mathsf{OBSERVER\ TRANSLATION}).
+\]
+
+\[
+\mathsf{TRUTH\ RECORD}
+:=
+\operatorname{Commute}
+(\mathsf{PREDICT},\mathsf{OBSERVE};
+\mathsf{SCOPE},\varepsilon,\mathsf{VERSION}).
+\]
+
+\[
+\mathsf{RESISTANCE}
+:=
+\bigcap_{S'\in\operatorname{Redef}(S)}
+\mathsf{RECORD\ RESIDUAL}(S').
+\]
+
+最终定义：
+
+\[
+\boxed{
+\mathsf{SCIENCE}
+:=
+\operatorname{RecursiveDynamics}
+(\mathsf{DEFINE},\mathsf{OBSERVE},\mathsf{PREDICT},
+\mathsf{COMPARE},\mathsf{REVISE},\mathsf{REFLECT}).
+}
+\]
+
+---
+

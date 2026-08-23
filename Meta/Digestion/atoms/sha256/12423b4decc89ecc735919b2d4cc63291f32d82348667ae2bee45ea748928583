@@ -1,0 +1,13 @@
+\[
+\boxed{
+ d_Z\left(
+\pi_\varepsilon U_{\varepsilon,t}x,
+S_{\varepsilon,t}(\pi_\varepsilon x)
+\right)
+=
+\delta_{\varepsilon,t}(x).
+}
+\]
+
+所以闭包问题被压缩为：真实状态与其规范准备代表在预测影响伪距离中是否渐近不可区分。
+

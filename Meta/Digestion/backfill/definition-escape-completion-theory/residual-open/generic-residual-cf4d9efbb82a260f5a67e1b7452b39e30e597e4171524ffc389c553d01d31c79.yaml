@@ -1,0 +1,10 @@
+ast_path: section/5-2-盲核不可能性定理
+fingerprints:
+  raw_sha256: sha256:cf4d9efbb82a260f5a67e1b7452b39e30e597e4171524ffc389c553d01d31c79
+  normalized_sha256: sha256:cf4d9efbb82a260f5a67e1b7452b39e30e597e4171524ffc389c553d01d31c79
+cas_ref: sha256:cf4d9efbb82a260f5a67e1b7452b39e30e597e4171524ffc389c553d01d31c79
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

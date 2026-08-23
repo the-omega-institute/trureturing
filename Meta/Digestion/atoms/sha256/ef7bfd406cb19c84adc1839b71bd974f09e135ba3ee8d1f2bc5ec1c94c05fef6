@@ -1,0 +1,20 @@
+\[
+\boxed{
+\mathcal E(q;T)
+=
+\ker q\setminus\ker T.
+}
+\]
+
+亦即
+
+\[
+(x,y)\in\mathcal E(q;T)
+\iff
+q(x)=q(y)
+\ \wedge\ 
+T(x)\neq T(y).
+\]
+
+它是当前问题尚未闭合的精确位置：不是整个对象空间，不是全部未证明命题，而是当前概念纤维内部的目标异质部分。
+

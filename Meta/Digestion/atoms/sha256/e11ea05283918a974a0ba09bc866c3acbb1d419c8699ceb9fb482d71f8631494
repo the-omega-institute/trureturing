@@ -1,0 +1,15 @@
+\[
+\boxed{
+\operatorname{DefDim}_\Gamma(T\mid q)
+=
+\inf
+\left\{
+C(S):
+S\subseteq_{\mathrm{fin}}\Gamma,
+\ \mathcal E(q\vee S;T)=\varnothing
+\right\}.
+}
+\]
+
+单位成本下，它是最少需要多少个定义；一般成本下，它是从当前表示到目标充分表示的最小描述预算。
+

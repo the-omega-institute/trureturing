@@ -1,0 +1,8 @@
+\[
+\pi_\varepsilon U_{\varepsilon,t}
+=
+S_t\pi_\varepsilon.
+\]
+
+把 Boltzmann–Grad 极限简单称为“舍掉高阶关联后的普通商”，会抹去证明的核心：高阶关联不是先验删除，而是被完整追踪后证明其预测影响在目标尺度下变小。
+

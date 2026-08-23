@@ -1,0 +1,36 @@
+# 第四十四部　稳定对象的逆极限定义
+
+定义扩张操作族：
+
+\[
+\mathcal A_0\subseteq\mathcal A_1\subseteq\cdots.
+\]
+
+定义操作等价：
+
+\[
+x\sim_ny
+\Longleftrightarrow
+\forall a\in\mathcal A_n,\ O(a,x)=O(a,y).
+\]
+
+于是 \(\sim_{n+1}\subseteq\sim_n\)。定义阶段对象
+
+\[
+X_n^{\mathrm{obs}}:=X/\!\sim_n
+\]
+
+及限制映射 \(r_{n+1,n}:X_{n+1}^{\mathrm{obs}}\to X_n^{\mathrm{obs}}\)。定义稳定科学对象空间：
+
+\[
+\boxed{
+X_\infty^{\mathrm{obs}}
+:=
+\varprojlim_nX_n^{\mathrm{obs}}.
+}
+\]
+
+元素是在不断增强的合法观察定义下保持相容的对象族。科学对象因此不被绑定于单个观察切割，而被定义为一条相容逆极限轨迹。
+
+---
+

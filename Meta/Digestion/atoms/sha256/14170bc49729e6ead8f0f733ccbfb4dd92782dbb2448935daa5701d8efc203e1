@@ -1,0 +1,24 @@
+## 2.2 充分性—逃逸等价定理
+
+以下命题等价：
+
+1. \(\mathcal E(q;T)=\varnothing\)；
+2. \(\ker q\subseteq\ker T\)；
+3. \(T\) 在每个 \(q\)-纤维上为常值；
+4. 存在
+   \[
+   \overline T:\operatorname{range}(q)\to Y
+   \]
+   使
+   \[
+   T=\overline T\circ\operatorname{rangeFactorization}(q).
+   \]
+
+证明只需在 \(q\) 的实现像上按纤维常值定义 \(\overline T\)。
+
+仓库中的
+
+`D5/S3/ConceptDynamics/Refinement/InductiveSufficiency.lean`
+
+已形式化这一逻辑骨架：预测不能通过历史因子化，当且仅当存在两个历史相同而预测不同的状态。DECT 把该反例对提升为一整套残差几何。
+

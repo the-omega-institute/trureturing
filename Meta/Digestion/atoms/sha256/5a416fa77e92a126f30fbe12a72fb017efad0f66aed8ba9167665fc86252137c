@@ -1,0 +1,27 @@
+## 8.3 无限预测完成
+
+定义
+
+\[
+x\sim_\infty y
+\iff
+\forall n\ge0,
+\quad q(\tau^n x)=q(\tau^n y).
+\]
+
+仓库中的
+
+`D5/S3/ObserverMemory/Refinement/PredictionCompletion.lean`
+
+正是按这一关系构造完成态，并证明读数细化诱导完成态之间唯一的满射因子。
+
+DECT 的动态问题是：寻找低成本记忆定义 \(d\)，使
+
+\[
+\ker(q\vee d)
+\subseteq
+\sim_\infty.
+\]
+
+也就是说，当前读数加上定义出的记忆坐标，足以决定全部未来读数。
+

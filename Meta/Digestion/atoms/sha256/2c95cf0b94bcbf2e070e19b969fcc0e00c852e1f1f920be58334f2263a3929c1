@@ -1,0 +1,39 @@
+# 第三十五部　真理记录作为范围化交换
+
+定义测试操作域 \(J\subseteq I\)。对系统状态 \(S\) 与输入 \(w\)，定义精确相符：
+
+\[
+\boxed{
+S\models_J w
+\quad\Longleftrightarrow\quad
+\forall i\in J,\ P(S,i)=A(w,i).
+}
+\]
+
+若记录空间带距离，定义近似相符：
+
+\[
+S\models_{J,\varepsilon}w
+\quad\Longleftrightarrow\quad
+\sup_{i\in J}d_R(P(S,i),A(w,i))\le\varepsilon.
+\]
+
+定义声明范围
+
+\[
+\operatorname{Scope}(S):=(J,\varepsilon,\mathcal C),
+\]
+
+其中 \(\mathcal C\) 是条件集合。定义真理记录：
+
+\[
+\operatorname{TruthRecord}(S,w)
+:=
+(J,\varepsilon,\mathcal C,\operatorname{Fit},
+\operatorname{Version},\operatorname{Evidence}).
+\]
+
+该定义记录理论预测通道与记录通道在什么操作域、条件、误差与版本下交换。
+
+---
+

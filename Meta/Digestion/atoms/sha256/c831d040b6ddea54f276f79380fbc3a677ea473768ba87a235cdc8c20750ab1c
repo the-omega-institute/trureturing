@@ -1,0 +1,14 @@
+## 16.6 第六层：图证书
+
+```text
+D5/S3/DefinitionEscape/Diagrammatics/
+  CancellationClass.lean
+  CuttingCertificate.lean
+  ExcessBudget.lean
+  SummationAwareCertificate.lean
+```
+
+优先形式化纯组合骨架：切割终止、森林生成、预算可加、类型计数。具体积分估计作为明示前件或外部解析锚接入。
+
+---
+

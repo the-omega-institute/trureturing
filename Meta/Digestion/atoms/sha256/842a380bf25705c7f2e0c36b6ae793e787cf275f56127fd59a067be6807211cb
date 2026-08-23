@@ -1,0 +1,22 @@
+# 附录 C　仓库锚点
+
+本文直接承接或计划对接的仓库模块：
+
+```text
+D5/S0/Diagonal/EscapeCount.lean
+D5/S0/Diagonal/Naturality/RelativeDiagonalEscape.lean
+D5/S0/Diagonal/Equivariance/TransitiveEscapeRate.lean
+D5/S3/ObserverMemory/DiagonalEscape/DiagonalCompletionEscape.lean
+D5/S3/ConceptDynamics/ConceptJoinUniversal.lean
+D5/S3/ConceptDynamics/Refinement/InductiveSufficiency.lean
+D5/S3/ConceptDynamics/Completion/TargetClosureOperator.lean
+D5/S3/ObserverMemory/Refinement/PredictionCompletion.lean
+D5/S3/ObserverMemory/Refinement/CascadeCompletion.lean
+D5/S3/ObserverMemory/Fusion/IndependentProductCompletion.lean
+D5/S3/Observer/Naturality/ApproximateSemiconjugacyError.lean
+D5/S3/Observer/Naturality/IteratedDefectAccumulation.lean
+D5/S3/ObserverMemory/PredictionCertificates/LocalCertificateMinimality.lean
+```
+
+---
+
