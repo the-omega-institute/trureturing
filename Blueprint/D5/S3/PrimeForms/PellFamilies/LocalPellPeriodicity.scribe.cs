@@ -14,9 +14,9 @@ internal sealed class LocalPellPeriodicityDocument : IScribeDocumentDefinition
         Formula unitSeed = F.Id("s");
         Formula recurrenceSeed = F.Id("t");
         Formula recurrence = F.Id("G");
-        Formula prime = F.Id("p");
-        Formula exponent = F.Id("k");
-        Formula n = F.Id("n");
+        Formula prime = DefinitionDsl.Id("p");
+        Formula exponent = DefinitionDsl.Id("k");
+        Formula n = DefinitionDsl.Id("n");
         Formula period = F.Id("T");
         Formula index = F.Id("i");
         Formula matrixVariable = F.Id("M");
@@ -33,7 +33,7 @@ internal sealed class LocalPellPeriodicityDocument : IScribeDocumentDefinition
         Formula integerVector = Seq(finTwo, Sp, To, Sp, integers);
         Formula integerMatrix = Call("Matrix", finTwo, finTwo, integers);
         Formula modulusDefinition =
-            new Formula.Power(Grp(prime), Grp(exponent));
+            new Formula.Power(prime, exponent);
         Formula matrixReductionDefinition = Seq(
             Open, matrixVariable, Sp, Mapsto, Sp,
             Call("mod", matrixVariable, modulus), Close);
@@ -55,21 +55,21 @@ internal sealed class LocalPellPeriodicityDocument : IScribeDocumentDefinition
             recurrenceOrbit, Underscore, Grp(n, Plus, period));
         Formula pellOrbitDefinition = Seq(
             Open, n, Sp, Mapsto, Sp,
-            new Formula.Power(Grp(reducedPellMatrix), Grp(n)), Sp,
+            new Formula.Power(reducedPellMatrix, n), Sp,
             reducedUnitSeed, Close);
         Formula recurrenceOrbitDefinition = Seq(
             Open, n, Sp, Mapsto, Sp,
-            new Formula.Power(Grp(reducedRecurrence), Grp(n)), Sp,
+            new Formula.Power(reducedRecurrence, n), Sp,
             reducedRecurrenceSeed, Close);
         Formula pellUnitCondition = Seq(
             Open,
-            new Formula.Power(Grp(unitX), Grp(D(2))),
+            new Formula.Power(unitX, D(2)),
             Sp, Minus, Sp, discriminant, Sp,
-            new Formula.Power(Grp(unitY), Grp(D(2))),
+            new Formula.Power(unitY, D(2)),
             Sp, Eq, Sp, D(1), Sp, Lor, Sp,
-            new Formula.Power(Grp(unitX), Grp(D(2))),
+            new Formula.Power(unitX, D(2)),
             Sp, Minus, Sp, discriminant, Sp,
-            new Formula.Power(Grp(unitY), Grp(D(2))),
+            new Formula.Power(unitY, D(2)),
             Sp, Eq, Sp, Minus, D(1), Close);
         Formula unimodularCondition = Seq(
             Open, Call("det", recurrence), Sp, Eq, Sp, D(1), Sp, Lor, Sp,
