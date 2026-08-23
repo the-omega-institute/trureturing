@@ -256,6 +256,7 @@ public sealed class LeanReportPairScriptTests
                 [
                     $"STRATALINT_REPORT_METRICS_LOG={metricsLog}",
                     $"STRATALINT_SUPERVISOR_ROOT={Path.Combine(temporary.Path, "supervisor")}",
+                    $"STRATALINT_PERF_CONFIGURATION={ReportSupervisorFixture.FindPerformanceConfiguration()}",
                     $"STUB_LEAN_CACHE_ENSURE_LOG={cacheEnsureLog}",
                     $"STUB_LEAN_CACHE_ENSURE_EXIT_CODE={cacheEnsureExitCode}",
                     $"STUB_LEAN_CACHE_ENSURE_SIGNAL_PARENT={(signalPairAfterReceipt ? 1 : 0)}",
