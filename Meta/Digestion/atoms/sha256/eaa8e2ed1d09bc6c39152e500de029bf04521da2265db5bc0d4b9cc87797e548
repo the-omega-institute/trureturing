@@ -1,0 +1,8 @@
+## 推论 21.1
+
+有限目标实验设计是 set-cover／hitting-set 问题。mutual information 可以作为统计代价，但不能替代 target-pair cover 的结构判据。
+
+高信息量实验可能只区分目标相同的模型；它增加知识，却不增加该目标的可识别性。
+
+---
+

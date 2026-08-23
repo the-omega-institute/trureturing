@@ -1,0 +1,14 @@
+# 19. Hamiltonian 嵌套交换子塔
+
+对 Hamiltonian H，Heisenberg 流为
+
+$$
+α_t(E)=e^{itH}Ee^{-itH}.
+$$
+
+其导数为
+
+$$
+(d/dt)α_t(E)=i[H,α_t(E)].
+$$
+

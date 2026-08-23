@@ -1,0 +1,24 @@
+## 解释
+
+- ker(W_β)=0：exact identifiability；
+- λ_min^+ 很小：理论可识别但噪声下脆弱；
+- κ_β 大：不同可观测方向被极不均匀地看到。
+
+因此 observer completion 至少分为三层：
+
+$$
+exact closure,
+$$
+
+$$
+conditioned closure,
+$$
+
+$$
+realizable closure.
+$$
+
+布尔 kernel 只解决第一层；Gram 几何解决第二层；PSD、CP、admission 等约束决定第三层。
+
+---
+

@@ -1,0 +1,14 @@
+# 21. 因果实验是 target-kernel transversal
+
+设有限模型类为 M，当前证据接口为
+
+$$
+E:M→Evidence,
+$$
+
+目标为
+
+$$
+T:M→Target.
+$$
+
