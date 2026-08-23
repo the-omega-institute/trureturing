@@ -7,6 +7,9 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.ConceptDynamics.Interventions.Hierar
 internal sealed class InterventionCounterfactualSeparationDocument
     : IScribeDocumentDefinition
 {
+    private const string DeclarationPrefix =
+        "D5/S3/ConceptDynamics/Interventions/Hierarchy/InterventionCounterfactualSeparation.";
+
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Two Boolean causal models can agree on every interventional marginal while "
             + "disagreeing on a unit-level counterfactual.",
@@ -14,10 +17,8 @@ internal sealed class InterventionCounterfactualSeparationDocument
         Blocks(
             Describe.Lean(
                 DescribeId.Create("interventional-marginals-do-not-determine-counterfactuals"),
-                DeclarationHandle.Create(
-                    "D5/S3/ConceptDynamics/Interventions/Hierarchy/"
-                        + "InterventionCounterfactualSeparation."
-                        + "intervention_strictly_weaker_than_counterfactual"),
+                DeclarationHandle.Create(DeclarationPrefix +
+                    "intervention_strictly_weaker_than_counterfactual"),
                 H("Interventional marginals do not determine counterfactuals"),
                 StatementSource.FromAuthor(TheoremFormula()),
                 AssessedProvenance.FromRepo(),
