@@ -1,7 +1,12 @@
 # Lean 构建缓存的发布(#2542 步骤 C 的 producer 侧)。
 #
-# 它**不是** required check，也不属于 admission：归档是加速器，永不进信任链，
-# 它的存在永不能让任何判词从红变绿，它的失败也永不该让 dev 的门变红。
+# 它**不是** required check：归档是加速器，**不构成独立的 admission 证据**，它的失败
+# 也永不该让 dev 的门变红。
+#
+# 【这里曾写「永不进信任链、永不能让任何判词从红变绿」，那句话是假的】三席独立评审
+# （#2729）判定它按字面不成立：归档发布的 .olean 会被 consumer 侧的 Lake 当作构建输入
+# 复用，canonical 报告又从那个 olean 环境读声明，故**发布者位于 admission 下方**。
+# 详见 tools/scripts/worktree/lean-cache-publish.sh 头部的勘误段。
 #
 # 为什么是独立文件而不是 ci.yml 里的一个 job：
 # 【2026-08-21 实测勘正】本 workflow 原本设计为「不新增构建」：读取 admission 流水线
@@ -74,6 +79,20 @@ permissions:
 jobs:
   publish:
     name: Publish the Lean build cache
+    # 这一条防的是**仓库配置漂移**，不是分支选择的 workflow 代码。
+    #
+    #   schedule 跑在「当时的默认分支」上，而默认分支是仓库设置，可以被改。改掉之后
+    #   这个 job 会在一棵不是 dev 的树上发布缓存，而 tag 与 manifest 会把那次产出写成
+    #   正常产物。此条件在那一刻取到 false，job 不执行。
+    #
+    #   **它不是边界。** 边界是触发集合本身（只有 schedule），由
+    #   ContentsWriteWorkflowClosureTests 钉住 —— 一个由分支选出的 workflow 版本可以
+    #   删掉自己的这行条件，故它挡不住那类改动，别把它当防线读。
+    #
+    #   〔本条曾被删过一次：我判「schedule-only ⟹ github.ref 恒为 refs/heads/dev，
+    #     恒真的量不构成判据」。那个「恒」是错的 —— 我把仓库配置排除在状态空间之外了。
+    #     评审席指出后恢复。〕
+    if: github.ref == 'refs/heads/dev'
     # 定时触发下没有 `github.event.workflow_run` 上下文；留着该条件会让 job 永远被跳过。
     # 「不给失败的推送留缓存」由内容地址本身保证：地址取自这一刻 dev 的实际输入，
     # 发布的产物与该地址绑定，消费侧按地址取，取不到就本地补 —— 不存在“发布了坏缓存”。
@@ -104,7 +123,13 @@ jobs:
         uses: actions/checkout@v4
         with:
           path: candidate
-          # 定时触发下检出默认分支 HEAD（即 dev 当前 tip）；
+          # 显式写出本次运行的事件 SHA。**这不是修复，是把已有行为写明**：
+          # actions/checkout 在缺省下取的就是触发事件的 ref/SHA，schedule 事件下即
+          # github.sha，所以不写 `ref` 也不会检出「更晚的分支 tip」。写出来的理由是
+          # 下游的 producer_commit_sha 直接取自 GITHUB_SHA，让这条绑定在文件里可读、
+          # 可审计，而不必靠读者知道 checkout 的缺省语义（#2729 判决第 2 条）。
+          ref: ${{ github.sha }}
+          # 定时触发下 github.sha 即默认分支 HEAD（dev 当前 tip）；
           # `github.event.workflow_run.head_sha` 在此事件下为空，留着会检出错误的树。
           # 剥夺步骤要对 HEAD^1 做烟测，而这里检出的是一个已合入的普通提交，
           # 不是 merge ref；默认的 fetch-depth: 1 只取一个提交，父提交不可达。

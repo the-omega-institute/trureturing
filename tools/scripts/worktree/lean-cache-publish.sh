@@ -32,10 +32,13 @@
 #   该分支上的 workflow 版本，故 job 内检查 ref 不构成机器边界），已于 PR #2818 移除，
 #   并由 `ContentsWriteWorkflowClosureTests` 钉住。
 #
-#   仍未落地的部分（#2729 判决第 2、3 条与 B 步）：checkout 未钉不可变 github.sha；
-#   release tag 仍用可移动的 target_commitish=dev；manifest 未记 producer_commit_sha /
-#   workflow_run_id；consumer 侧没有 provenance 核验。**在这些落地之前，ensure 不得
-#   自动 fetch 本归档** —— 当前也确实没有，手工 target 只作诊断。
+#   已落地（#2729 判决第 2、3 条）：release tag 用 --target producer_commit_sha；
+#   manifest 记 producer_commit_sha 与 workflow_run_id；缺这两个值时 publish 直接拒绝；
+#   workflow 侧显式写出 checkout 取的事件 SHA。
+#
+#   仍未落地（B 步）：**consumer 侧没有任何 provenance 核验** —— 上面这些字段现在
+#   写得出来，但没有人去核它们。**在 consumer 核验落地之前，ensure 不得自动 fetch
+#   本归档** —— 当前也确实没有，手工 target 只作诊断。
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../../.." && pwd -P)"
@@ -65,6 +68,20 @@ while [[ $# -gt 0 ]]; do
 done
 
 [[ -n "$VERB" ]] || usage
+
+# ── 发布者身份 ────────────────────────────────────────────────────────────────
+# 自 PR #2818 起本归档的触发集合只有 `schedule`，即唯一合法发布者是 dev 上的定时
+# CI producer。consumer 侧的 provenance 核验要靠这两个值把资产绑回那次运行，故它们
+# 缺失或形状不对时**拒绝发布**：发不出资产，好过发一个事后无法归属的资产。
+# 这一段刻意早于 address 计算 —— 身份不成立就不必再算别的。
+if [[ "$VERB" == "publish" ]]; then
+  producer_commit_sha="${GITHUB_SHA:-}"
+  workflow_run_id="${GITHUB_RUN_ID:-}"
+  [[ "$producer_commit_sha" =~ ^[0-9a-f]{40}$ ]] \
+    || die "publish needs GITHUB_SHA as a 40-hex producer commit; refusing to publish an unattributable archive"
+  [[ "$workflow_run_id" =~ ^[0-9]+$ ]] \
+    || die "publish needs GITHUB_RUN_ID; refusing to publish an unattributable archive"
+fi
 
 # ── 身份 ──────────────────────────────────────────────────────────────────────
 # 两个哈希来自本仓既有的唯一真源，不另算一套。
@@ -126,10 +143,31 @@ case "$VERB" in
     {
       printf 'archive_sha256=%s\n' "$digest"
       printf 'archive_bytes=%s\n' "$bytes"
+      printf 'producer_commit_sha=%s\n' "$producer_commit_sha"
+      printf 'workflow_run_id=%s\n' "$workflow_run_id"
     } >> "$staged/manifest.txt"
+    # `--target` 把 tag 建在产出它的那个 commit 上。
+    #
+    # 【这里曾写「缺省 target_commitish 会跟着默认分支走，tag 指向的东西事后还会变」，
+    #   那句话是假的】gh 的 --target 是「Target branch or full commit SHA (default
+    #   [main branch])」，作用于 **automatic tag creation**：已建成的 tag **不会**因
+    #   默认分支之后前进而自动移动。
+    #
+    #   注意别把这条说过头：tag 本身并非无条件不可变。`gh release create --help` 写
+    #   「When release immutability is **enabled** for a repository, Git tags associated
+    #   with a release cannot be modified or deleted」—— 那是个仓库开关，而本仓实测
+    #   release 的 `immutable=false`（#2729 cost 席读数）。此处需要的只是「不会自动
+    #   移动」这条窄命题，它够用，且经核验。
+    #
+    #   真正的不变量在**创建时刻**：不带 --target 时，tag 建在 gh 执行那一刻默认分支的
+    #   tip 上，而那**未必是被打包的那棵树**（dev 每小时前进约 16 个提交，打包与发布之间
+    #   隔着一次 lake pack）。于是 manifest 里记的 producer_commit_sha 会与 tag 实际指向的
+    #   commit 不是同一个，consumer 拿哪一个都对不上。--target 消除的是这个错配，
+    #   不是一个并不存在的事后漂移。
     gh release create "$tag" --repo "$REPO" \
+      --target "$producer_commit_sha" \
       --title "Lean build cache ${config_sha256:0:8}/${sources_sha256:0:8} (${os}-${arch})" \
-      --notes "Immutable Lean build cache. Not authoritative: an accelerator only, never admission evidence. Produced from ${toolchain} on ${os}-${arch}." \
+      --notes "Lean build cache produced from ${toolchain} on ${os}-${arch} at ${producer_commit_sha} by run ${workflow_run_id}. An accelerator, not independent admission evidence." \
       "$staged/$asset" "$staged/manifest.txt" >/dev/null
     printf 'LEAN_CACHE_PUBLISH {"status":"published","tag":"%s","bytes":%s,"sha256":"%s"}\n' \
       "$tag" "$bytes" "$digest"
