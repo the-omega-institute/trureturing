@@ -213,10 +213,68 @@ case "$VERB" in
       [[ "$want" == "$got" ]] \
         || { printf 'LEAN_CACHE_FETCH {"status":"miss","tag":"%s","reason":"%s mismatch"}\n' "$tag" "$field"; exit 1; }
     done
+    # ── 产地核验 ────────────────────────────────────────────────────────────
+    # 这段是 #2729 判决的 B 步前半。摘要与依赖层身份只证明「字节没坏、层对得上」，
+    # 不证明**是谁产的**：manifest 与 payload 同处一个发布面，有写权者可一起替换而
+    # 保持自洽（`cost` 席实测 release `immutable=false`）。
+    #
+    # 归档的 .olean 会被 Lake 当构建输入复用、canonical 报告从那个环境读声明，故
+    # 发布者位于 admission 下方。三席一致：**任一 provenance 检查不过即判 miss，
+    # 不消费其 olean**。
+    fail_provenance() {
+      printf 'LEAN_CACHE_FETCH {"status":"rejected","tag":"%s","resolved":"%s","stage":"provenance","reason":"%s"}\n' \
+        "$tag" "$resolved" "$1"
+      exit 1
+    }
+    producer_commit_sha="$(sed -n 's/^producer_commit_sha=//p' "$staged/manifest.txt")"
+    archive_run_id="$(sed -n 's/^workflow_run_id=//p' "$staged/manifest.txt")"
+    [[ "$producer_commit_sha" =~ ^[0-9a-f]{40}$ ]] \
+      || fail_provenance "manifest carries no producer commit; archives published before #2833 are not attributable and are refused"
+    [[ "$archive_run_id" =~ ^[0-9]+$ ]] \
+      || fail_provenance "manifest carries no workflow run id"
+
+    # 一次 REST 调用拿齐三样：author、target_commitish、每个 asset 的 uploader。
+    # `gh release view --json` 的 asset 字段里**没有** uploader，故走 api。
+    release_json="$(gh api "repos/${REPO}/releases/tags/${resolved}" 2>/dev/null)" \
+      || fail_provenance "release metadata is unreadable"
+    release_author="$(printf '%s' "$release_json" | jq -r '.author.login // ""')"
+    release_target="$(printf '%s' "$release_json" | jq -r '.target_commitish // ""')"
+    [[ "$release_author" == "github-actions[bot]" ]] \
+      || fail_provenance "release author is ${release_author:-<absent>}, not the CI publisher"
+    [[ "$release_target" == "$producer_commit_sha" ]] \
+      || fail_provenance "release target ${release_target:-<absent>} does not match the declared producer commit"
+    while IFS= read -r uploader; do
+      [[ "$uploader" == "github-actions[bot]" ]] \
+        || fail_provenance "an asset was uploaded by ${uploader:-<absent>}, not the CI publisher"
+    done < <(printf '%s' "$release_json" | jq -r '.assets[].uploader.login // ""')
+
+    # 发布器的 workflow id **由路径解析**，不写死：写死即第二真源，且换仓或重建
+    # workflow 后失效。
+    publisher_id="$(gh api "repos/${REPO}/actions/workflows/lean-cache-publish.yml" --jq '.id' 2>/dev/null)" \
+      || fail_provenance "publisher workflow is unreadable"
+    run_json="$(gh api "repos/${REPO}/actions/runs/${archive_run_id}" 2>/dev/null)" \
+      || fail_provenance "declared workflow run ${archive_run_id} is unreadable"
+    for pair in \
+      "workflow_id:${publisher_id}" \
+      "event:schedule" \
+      "head_branch:dev" \
+      "head_sha:${producer_commit_sha}" \
+      "conclusion:success"
+    do
+      field="${pair%%:*}"; want="${pair#*:}"
+      got="$(printf '%s' "$run_json" | jq -r ".${field} // \"\"")"
+      [[ "$got" == "$want" ]] \
+        || fail_provenance "run ${archive_run_id} ${field} is ${got:-<absent>}, expected ${want}"
+    done
+    # `head_branch=dev` + `event=schedule` + 该 run 成功，合起来说明该 commit 当时
+    # 就是默认分支的 tip。**残余**：dev 若被 force-push，历史上的 tip 可能已不在
+    # 当前历史里。此处不另做祖先查询——那要么依赖本机 fetch 状态（会随上次 fetch
+    # 何时发生而变），要么再加一次 API 往返。记为已知残余，不冒充已排除。
+
     ( cd "$repository" && lake unpack "$staged/$asset" >/dev/null )
     got_sources="$(sed -n 's/^sources_sha256=//p' "$staged/manifest.txt")"
-    printf 'LEAN_CACHE_FETCH {"status":"unpacked","mode":"%s","tag":"%s","resolved":"%s","fetched_sources_sha256":"%s","sha256":"%s"}\n' \
-      "$mode" "$tag" "$resolved" "$got_sources" "$actual"
+    printf 'LEAN_CACHE_FETCH {"status":"unpacked","mode":"%s","tag":"%s","resolved":"%s","fetched_sources_sha256":"%s","sha256":"%s","producer_commit_sha":"%s","workflow_run_id":"%s"}\n' \
+      "$mode" "$tag" "$resolved" "$got_sources" "$actual" "$producer_commit_sha" "$archive_run_id"
     ;;
 
   *) usage ;;

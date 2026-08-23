@@ -285,6 +285,56 @@ public sealed class LeanCachePublishTests
     private sealed record PublishAttempt(int ExitCode, string Text);
 
     /// <summary>
+    /// 消费侧产地核验的 fail-closed 矩阵。摘要与依赖层身份只证明「字节没坏、层对得上」，
+    /// 不证明**是谁产的** —— manifest 与 payload 同处一个发布面，有写权者可一并替换而保持
+    /// 自洽。故每一项产地不符都必须判 rejected 且**不解包**。
+    ///
+    /// 每一行都是一个**单点偏离**：其余全部合规，只坏一处。这样红了才说明是那一处被检出，
+    /// 而不是被别的检查顺带拦下。
+    /// </summary>
+    [Theory]
+    [InlineData("no-producer", "manifest carries no producer commit")]
+    [InlineData("no-run-id", "manifest carries no workflow run id")]
+    [InlineData("wrong-author", "release author is")]
+    [InlineData("wrong-target", "does not match the declared producer commit")]
+    [InlineData("wrong-uploader", "an asset was uploaded by")]
+    [InlineData("wrong-workflow", "workflow_id is")]
+    [InlineData("wrong-event", "event is")]
+    [InlineData("wrong-branch", "head_branch is")]
+    [InlineData("wrong-head-sha", "head_sha is")]
+    [InlineData("failed-run", "conclusion is")]
+    public void FetchRejectsEveryProvenanceDeviation(string deviation, string expected)
+    {
+        using var fixture = new FetchFixture(deviation);
+
+        var result = fixture.RunFetch(ScriptPath());
+
+        Assert.NotEqual(0, result.ExitCode);
+        Assert.Contains("\"status\":\"rejected\"", result.Text, StringComparison.Ordinal);
+        Assert.Contains("\"stage\":\"provenance\"", result.Text, StringComparison.Ordinal);
+        Assert.Contains(expected, result.Text, StringComparison.Ordinal);
+        Assert.False(fixture.Unpacked, "a rejected archive must never be unpacked");
+    }
+
+    /// <summary>
+    /// 放行侧。上面十行只钉拒绝；一个「什么都拒绝」的核验同样能通过它们。产地齐备时必须
+    /// **解包**，并把产地写进收据 —— 收据是下游唯一能据以复算的东西。
+    /// </summary>
+    [Fact]
+    public void FetchAcceptsAndRecordsAFullyAttributedArchive()
+    {
+        using var fixture = new FetchFixture(deviation: null);
+
+        var result = fixture.RunFetch(ScriptPath());
+
+        Assert.Equal(0, result.ExitCode);
+        Assert.True(fixture.Unpacked, "a fully attributed archive must be unpacked");
+        Assert.Contains("\"status\":\"unpacked\"", result.Text, StringComparison.Ordinal);
+        Assert.Contains($"\"producer_commit_sha\":\"{FetchFixture.ProducerSha}\"", result.Text, StringComparison.Ordinal);
+        Assert.Contains("\"workflow_run_id\":\"7777\"", result.Text, StringComparison.Ordinal);
+    }
+
+    /// <summary>
     /// 一棵最小的可发布树，外加 PATH 上的假 `gh`/`lake`。夹具存在的理由是上面那条断言：
     /// 要判「发布确实按 producer commit 锚定」，就得看 gh **实际收到**的参数，而不是脚本
     /// 里有没有那个字符串。
@@ -382,6 +432,132 @@ public sealed class LeanCachePublishTests
             File.WriteAllText(path, contents);
             // 走 chmod 而不是 File.SetUnixFileMode：后者带 CA1416（Windows 不支持），
             // 在 warnaserror 下即编译失败。ReportSupervisorFixture 已是这个写法。
+            var chmod = BoundedProcessRunner.Run(
+                "chmod",
+                ["+x", path],
+                Path.GetDirectoryName(path)!,
+                TimeSpan.FromSeconds(30),
+                4096);
+            Assert.Equal(0, chmod.ExitCode);
+        }
+    }
+
+    /// <summary>
+    /// 一棵最小的可消费树，外加 PATH 上的假 `gh`/`lake`/`jq`(用真 jq)。构造参数 `deviation`
+    /// 恰好改一处,其余保持合规 —— 判据要能指认是哪一处被检出。
+    /// </summary>
+    private sealed class FetchFixture : IDisposable
+    {
+        internal const string ProducerSha = "89abcdef0123456789abcdef0123456789abcdef";
+
+        private readonly TemporaryDirectory root = new();
+
+        internal FetchFixture(string? deviation)
+        {
+            Repository = Path.Combine(root.Path, "repo");
+            Bin = Path.Combine(root.Path, "bin");
+            UnpackMarker = Path.Combine(root.Path, "unpacked.marker");
+
+            Directory.CreateDirectory(Repository);
+            File.WriteAllText(
+                Path.Combine(Repository, "lean-toolchain"),
+                "leanprover/lean4:v4.31.0\n");
+            var helper = Path.Combine(Repository, "tools", "scripts", "report", "lean-report-input.sh");
+            Directory.CreateDirectory(Path.GetDirectoryName(helper)!);
+            WriteExecutable(
+                helper,
+                "#!/usr/bin/env bash\nprintf 'addr producer %s %s\\n' "
+                    + $"\"{new string('3', 64)}\" \"{new string('4', 64)}\"\n");
+
+            var producer = deviation == "no-producer" ? "" : $"producer_commit_sha={ProducerSha}\n";
+            var runId = deviation == "no-run-id" ? "" : "workflow_run_id=7777\n";
+            var author = deviation == "wrong-author" ? "someone" : "github-actions[bot]";
+            var target = deviation == "wrong-target" ? "dev" : ProducerSha;
+            var uploader = deviation == "wrong-uploader" ? "someone" : "github-actions[bot]";
+            var workflowId = deviation == "wrong-workflow" ? "999" : "42";
+            var runEvent = deviation == "wrong-event" ? "workflow_dispatch" : "schedule";
+            var branch = deviation == "wrong-branch" ? "harness/x" : "dev";
+            var headSha = deviation == "wrong-head-sha" ? new string('b', 40) : ProducerSha;
+            var conclusion = deviation == "failed-run" ? "failure" : "success";
+
+            var payload = Path.Combine(root.Path, "payload");
+            Directory.CreateDirectory(payload);
+            File.WriteAllText(Path.Combine(payload, "lean-build.tgz"), "archive bytes\n");
+            var digest = Convert.ToHexStringLower(
+                System.Security.Cryptography.SHA256.HashData(
+                    File.ReadAllBytes(Path.Combine(payload, "lean-build.tgz"))));
+            File.WriteAllText(
+                Path.Combine(payload, "manifest.txt"),
+                $"toolchain=leanprover/lean4:v4.31.0\nconfig_sha256={new string('4', 64)}\n"
+                    + $"sources_sha256={new string('3', 64)}\narchive_sha256={digest}\n"
+                    + $"archive_bytes=14\n{producer}{runId}");
+
+            Directory.CreateDirectory(Bin);
+            WriteExecutable(
+                Path.Combine(Bin, "gh"),
+                "#!/usr/bin/env bash\n"
+                    + "if [[ \"$1\" == 'release' && \"$2\" == 'download' ]]; then\n"
+                    // --dir 的位置不固定，按名字取它后面那个参数，别数位置。
+                    + "  destination=''\n"
+                    + "  while [[ $# -gt 0 ]]; do\n"
+                    + "    if [[ \"$1\" == '--dir' ]]; then destination=\"$2\"; fi\n"
+                    + "    shift\n"
+                    + "  done\n"
+                    + "  [[ -n \"$destination\" ]] || exit 1\n"
+                    + $"  cp '{payload}'/* \"$destination\"\n"
+                    + "  exit 0\n"
+                    + "fi\n"
+                    + "if [[ \"$1\" == 'api' ]]; then\n"
+                    + "  case \"$2\" in\n"
+                    + $"    */releases/tags/*) printf '{{\"author\":{{\"login\":\"{author}\"}},\"target_commitish\":\"{target}\",\"assets\":[{{\"uploader\":{{\"login\":\"{uploader}\"}}}}]}}\\n' ;;\n"
+                    + $"    */actions/workflows/*) printf '42\\n' ;;\n"
+                    + $"    */actions/runs/*) printf '{{\"workflow_id\":{workflowId},\"event\":\"{runEvent}\",\"head_branch\":\"{branch}\",\"head_sha\":\"{headSha}\",\"conclusion\":\"{conclusion}\"}}\\n' ;;\n"
+                    + "  esac\n"
+                    + "  exit 0\n"
+                    + "fi\n"
+                    + "exit 0\n");
+            WriteExecutable(
+                Path.Combine(Bin, "lake"),
+                "#!/usr/bin/env bash\n"
+                    + $"if [[ \"$1\" == 'unpack' ]]; then printf 'yes\\n' > '{UnpackMarker}'; fi\n"
+                    + "exit 0\n");
+        }
+
+        private string Repository { get; }
+
+        private string Bin { get; }
+
+        private string UnpackMarker { get; }
+
+        internal bool Unpacked => File.Exists(UnpackMarker);
+
+        internal PublishAttempt RunFetch(string script)
+        {
+            var result = BoundedProcessRunner.Run(
+                "/usr/bin/env",
+                [
+                    $"PATH={Bin}:{Environment.GetEnvironmentVariable("PATH")}",
+                    "/bin/bash",
+                    script,
+                    "fetch",
+                    "--repository",
+                    Repository,
+                ],
+                Repository,
+                TimeSpan.FromSeconds(60),
+                256 * 1024);
+
+            return new PublishAttempt(
+                result.ExitCode,
+                Encoding.UTF8.GetString(result.StandardOutput)
+                    + Encoding.UTF8.GetString(result.StandardError));
+        }
+
+        public void Dispose() => root.Dispose();
+
+        private static void WriteExecutable(string path, string contents)
+        {
+            File.WriteAllText(path, contents);
             var chmod = BoundedProcessRunner.Run(
                 "chmod",
                 ["+x", path],
