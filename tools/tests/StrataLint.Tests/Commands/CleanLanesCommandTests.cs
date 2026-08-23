@@ -1,5 +1,4 @@
 using System.Text;
-using System.Text.Json;
 using StrataLint.Cli;
 using StrataLint.Engine;
 
@@ -70,9 +69,11 @@ public sealed partial class CleanLanesCommandTests
         Assert.True(fixture.BranchExists("harness/orphan"));
         var items = ReadItems(result.Output);
         AssertItemProperty(items, "path", lane, "kind", "merged_worktree");
+        AssertItemProperty(items, "path", lane, "action", "would_remove");
         AssertItemProperty(items, "branch", "harness/orphan", "kind", "orphan_branch");
+        AssertItemProperty(items, "branch", "harness/orphan", "action", "would_remove");
         AssertItemProperty(items, "path", judge, "kind", "temp_judge");
-        Assert.Equal(3, Count(result.Output, "\"action\":\"would_remove\""));
+        AssertItemProperty(items, "path", judge, "action", "would_remove");
     }
 
     [Fact]
@@ -89,8 +90,10 @@ public sealed partial class CleanLanesCommandTests
         Assert.True(full.Success, full.Error);
         var fullItems = ReadItems(full.Output);
         AssertItemProperty(fullItems, "branch", "harness/orphan", "kind", "orphan_branch");
+        AssertItemProperty(fullItems, "branch", "harness/orphan", "action", "would_remove");
         AssertItemProperty(fullItems, "path", judge, "kind", "temp_judge");
-        Assert.Equal(3, Count(full.Output, "\"action\":\"would_remove\""));
+        AssertItemProperty(fullItems, "path", judge, "action", "would_remove");
+        AssertItemProperty(fullItems, "path", lane, "action", "would_remove");
 
         var scoped = fixture.Run("--lanes-only", "--force");
 
@@ -105,8 +108,8 @@ public sealed partial class CleanLanesCommandTests
         var scopedItems = ReadItems(scoped.Output);
         AssertItemProperty(scopedItems, "path", lane, "kind", "merged_worktree");
         AssertItemProperty(scopedItems, "path", lane, "action", "removed");
-        Assert.Contains("\"scope\":\"lanes_only\"", scoped.Output, StringComparison.Ordinal);
-        Assert.Contains("\"scope\":\"full\"", full.Output, StringComparison.Ordinal);
+        Assert.Equal("lanes_only", ReadSummary(scoped.Output).GetProperty("scope").GetString());
+        Assert.Equal("full", ReadSummary(full.Output).GetProperty("scope").GetString());
     }
 
     [Fact]
@@ -218,6 +221,7 @@ public sealed partial class CleanLanesCommandTests
         fixture.AddOrphan("agent/prover/not-an-init-branch", merged: true);
         var foreign = fixture.AddForeignTempDirectory("trureturing-foreign");
         var attached = fixture.AddAttachedTempDirectory("trureturing-attached");
+        fixture.SwitchToManagedBranch("harness/current");
 
         var result = fixture.Run("--force");
 
@@ -238,10 +242,8 @@ public sealed partial class CleanLanesCommandTests
         AssertItemProperty(items, "path", unmerged, "reason", "pr_not_merged");
         AssertItemProperty(items, "path", foreign, "reason", "foreign_git_directory");
         AssertItemProperty(items, "path", attached, "reason", "attached_branch");
-        Assert.DoesNotContain(
-            $"\"path\":\"{Escape(fixture.RepositoryRoot)}\",\"action\":\"removed\"",
-            result.Output,
-            StringComparison.Ordinal);
+        AssertItemProperty(items, "path", fixture.RepositoryRoot, "action", "skipped");
+        AssertItemProperty(items, "path", fixture.RepositoryRoot, "reason", "current");
     }
 
     [Fact]
@@ -617,53 +619,6 @@ public sealed partial class CleanLanesCommandTests
                 throw new InvalidOperationException(reason);
         }
     }
-
-    private static int Count(string value, string needle) =>
-        value.Split(needle, StringSplitOptions.None).Length - 1;
-
-    private static IReadOnlyList<JsonElement> ReadItems(string output)
-    {
-        var items = new List<JsonElement>();
-        foreach (var line in output.Split('\n', StringSplitOptions.RemoveEmptyEntries))
-        {
-            using var document = JsonDocument.Parse(line);
-            if (document.RootElement.GetProperty("event").GetString() == "clean_lanes_item")
-            {
-                items.Add(document.RootElement.Clone());
-            }
-        }
-
-        return items;
-    }
-
-    private static void AssertItemProperty(
-        IReadOnlyList<JsonElement> items,
-        string selectorProperty,
-        string selectorValue,
-        string property,
-        string expected)
-    {
-        var item = items.Single(candidate =>
-            candidate.GetProperty(selectorProperty).GetString() == selectorValue);
-        Assert.Equal(expected, item.GetProperty(property).GetString());
-    }
-
-    private static bool ItemMatches(
-        JsonElement item,
-        string path,
-        string action,
-        string reason) =>
-        item.GetProperty("path").GetString() == path
-        && item.GetProperty("action").GetString() == action
-        && item.GetProperty("reason").GetString() == reason;
-
-    private static string ReasonFor(string output, string path) =>
-        ReadItems(output)
-            .Single(item => item.GetProperty("path").GetString() == path)
-            .GetProperty("reason")
-            .GetString()!;
-
-    private static string Escape(string value) => value.Replace("\\", "\\\\", StringComparison.Ordinal);
 
     private sealed partial class CleanLanesFixture : IDisposable
     {

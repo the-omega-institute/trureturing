@@ -1,4 +1,3 @@
-using System.Text.Json;
 using StrataLint.Cli;
 using StrataLint.Engine;
 
@@ -56,19 +55,5 @@ public sealed partial class CleanLanesCommandTests
         Assert.Equal(0, exitCode);
         Assert.Equal(output, console.Output);
         Assert.Equal(error, console.Error);
-    }
-
-    private static JsonElement ReadSummary(string output)
-    {
-        foreach (var line in output.Split('\n', StringSplitOptions.RemoveEmptyEntries))
-        {
-            using var document = JsonDocument.Parse(line);
-            if (document.RootElement.GetProperty("event").GetString() == "clean_lanes_summary")
-            {
-                return document.RootElement.Clone();
-            }
-        }
-
-        throw new InvalidOperationException("clean-lanes output did not contain a summary");
     }
 }
