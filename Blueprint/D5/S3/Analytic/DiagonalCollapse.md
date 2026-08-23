@@ -21,3 +21,4 @@ The pinned library was searched first. It contains the canonical Zeckendorf equi
 ## References
 
 - Truth anchor: `D5/S3/Analytic/DiagonalCollapse.diagonal_partition_collapse`
+- Dependency: [D5/S0/Conventions/WDigits](../../S0/Conventions/WDigits.md)

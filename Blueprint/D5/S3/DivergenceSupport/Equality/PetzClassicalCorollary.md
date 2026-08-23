@@ -21,3 +21,4 @@ The posterior and recovery equivalences are imported exact results. For a permut
 ## References
 
 - Truth anchor: `D5/S3/DivergenceSupport/Equality/PetzClassicalCorollary.zero_defect_equivalences_and_permutation_channel`
+- Dependency: [D5/S3/DivergenceSupport/Equality/PetzRecovery](PetzRecovery.md)

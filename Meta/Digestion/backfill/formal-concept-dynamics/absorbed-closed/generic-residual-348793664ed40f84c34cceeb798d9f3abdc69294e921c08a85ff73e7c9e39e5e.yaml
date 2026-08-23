@@ -13,5 +13,5 @@ receipts:
   scribe:
     - gid: D5/S3/ConceptDynamics/TargetRisk/RefinementTargetRiskMonotonicity.refinement_monotone_target_risk
       definition_sha256: sha256:1e47c3ef56863fc75957aee5ac95f708ec97a7a61071791b7957cf29d7e63f4b
-      emission_sha256: sha256:841dbc239385779dd991842713c2ced818bcf607c6cf9270abfba816f31e695d
+      emission_sha256: sha256:9a6115d4aef10a2afd436638d12be57e53e5a7044dd65d6e8c1d17c159ae0fc3
   unresolved_subitems: []

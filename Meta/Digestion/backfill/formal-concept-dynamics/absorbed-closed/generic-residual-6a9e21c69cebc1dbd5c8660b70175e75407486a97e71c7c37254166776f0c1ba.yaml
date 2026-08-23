@@ -13,5 +13,5 @@ receipts:
   scribe:
     - gid: D5/S3/ConceptDynamics/Experiments/ExperimentRefinementGainMonotone.experiment_refinement_gain_monotone
       definition_sha256: sha256:3e601e41504fddabe36736d271ef86bbb83cf0d7be7b4ef9133f3e3f4de2f2f7
-      emission_sha256: sha256:1867e88c510188cb36471ffd61182838c39fd5dd1455eb1c2a365dfae931ec45
+      emission_sha256: sha256:e3a73c9982c889ac5611639ef19acf80d7b99a469f3c51d402c752ae9d0b8709
   unresolved_subitems: []

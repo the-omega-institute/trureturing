@@ -25,3 +25,4 @@ This formalizes theorem/510.1 of formal-concept-dynamics, atom generic-residual-
 ## References
 
 - Truth anchor: `D5/S3/ConceptDynamics/Transport/MacroInterventionCriterion.macro_intervention_carry_criterion`
+- Dependency: [D5/S3/ConceptDynamics/Transport/FiniteReverseCriterion](FiniteReverseCriterion.md)

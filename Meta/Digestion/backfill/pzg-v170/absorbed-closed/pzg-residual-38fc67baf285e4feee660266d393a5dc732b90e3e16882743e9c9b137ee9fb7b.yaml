@@ -13,5 +13,5 @@ receipts:
   scribe:
     - gid: D5/S1/Deficit/DoubleFaceLength.lambdaPlus_sub_lambdaMinus
       definition_sha256: sha256:c9b06b4e5d19cd3219fc82594b2b036889cea93b346afee8850adc6dc9b1eaee
-      emission_sha256: sha256:b32dab801567c96ae0d89145e655e47694dd480b6ceb65ce233419f0c539bb2d
+      emission_sha256: sha256:cec95155cad7770e10ec8132ade4b954e2bedd35d14946d50305ad85d331ad36
   unresolved_subitems: []

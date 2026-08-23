@@ -13,5 +13,5 @@ receipts:
   scribe:
     - gid: D5/S3/QuantumBounds/ReferenceFrame/ComplexReferenceFrameTaxExactSpan.complex_reference_frame_tax_exact_span
       definition_sha256: sha256:723f64c6fd07eaab0845f34f9f57d5d89258e6b7df539abf3de70db72d3cf998
-      emission_sha256: sha256:148fdd1ebc305652c8271b8609679fea7cff504b23527a5b17dfe7295ea13d40
+      emission_sha256: sha256:e272ce830b849d0a24a213f300683006cc9a2bbcb20a1a56e066c0a86c430c74
   unresolved_subitems: []

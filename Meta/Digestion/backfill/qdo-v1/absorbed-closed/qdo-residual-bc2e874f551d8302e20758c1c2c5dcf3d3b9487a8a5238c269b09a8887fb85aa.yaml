@@ -13,5 +13,5 @@ receipts:
   scribe:
     - gid: D5/S3/Entropy/Submodularity/CommonStateEntropyBound.common_state_entropy_le_mutual_information
       definition_sha256: sha256:1f916c7c21294df5a67e7cc8c33ab3bae3813afa9dc5c7bc8e7d220c9f95830a
-      emission_sha256: sha256:fb3b586c6e66aab99938387132d7e7102cc9bdd4d122d423b5586385de7586e4
+      emission_sha256: sha256:f29bc78b85f154758dad9297ddd7ba246bc4703c908dbe29e10e199f20639bf4
   unresolved_subitems: []

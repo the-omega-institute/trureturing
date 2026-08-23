@@ -13,5 +13,5 @@ receipts:
   scribe:
     - gid: D5/S3/ConceptDynamics/PrecedentTargetCompletion.target_completion_formal_distinction_not_noncircular
       definition_sha256: sha256:45288cc8d4f674f91379c1935a6029889e6cffc4378ee7c18e9c9860fe03a145
-      emission_sha256: sha256:93d50a4b7c512636f3ae77446a569e012bf01fa22251cec24a77ac6c82f412ea
+      emission_sha256: sha256:59a95b9c137ae8ef4ea1ef5796b35b5ec434b909049304731190fc2a05057c0f
   unresolved_subitems: []

@@ -13,5 +13,5 @@ receipts:
   scribe:
     - gid: D5/S3/ObserverMemory/Prediction/CompletionDiagonalNaturality.completion_quotient_diagonal_naturality
       definition_sha256: sha256:0e890ee3c9a0dabec4946a7f4539e0e10a6635ba849423498c6834d0f9636e1e
-      emission_sha256: sha256:09140062c9b50f0b44b2fe939f2b4a68f196ae433ff2e7b518e17c75df84dcc6
+      emission_sha256: sha256:a10657205bfaf611713c5c73570e46ecd3c5e34a60e49b93328c53aa001c225d
   unresolved_subitems: []

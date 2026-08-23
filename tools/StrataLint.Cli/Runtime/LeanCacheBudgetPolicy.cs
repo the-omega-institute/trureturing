@@ -9,8 +9,8 @@ internal static class LeanCacheBudgetPolicy
     /// machine capacity, and it must not be presented as one.
     ///
     /// Domain: every process this budget is passed to, which is more than the build.
-    /// It bounds the `cp -R` that clones the donor cache, `lake exe cache get`,
-    /// `lake exe cache clean`, and — through `CommandBudget` — the one arbitrary command
+    /// It bounds the `cp -R` that clones the donor cache, `lake exe cache get`, and —
+    /// through `CommandBudget` — the one arbitrary command
     /// `LeanCacheEnsureCommand` runs for `worktree with-cache-writer`, which in this
     /// repository is `lake build` from the Makefile and both the `lake build` and the
     /// `lake env lean --run Inspector.lean` that `tools/lean-inspector/inspect.sh`
@@ -58,4 +58,22 @@ internal static class LeanCacheBudgetPolicy
     /// alone — a capacity-derived value that ignores that term is struck by one module
     /// no matter how wide it is.
     internal const int DefaultProvisionBudgetSeconds = 3600;
+
+    /// <summary>
+    /// 归档取回所在 job 的预算上限。取自 `.github/workflows/ci.yml` 的 `lean-inspect`
+    /// job：`timeout-minutes: 45`。**这是那个值的投影，不是一个独立的选择** ——
+    /// `LeanInspectJobBudgetMatchesTheWorkflow` 钉住二者相等，workflow 改了这里就红。
+    /// </summary>
+    internal const int LeanInspectJobBudgetMinutes = 45;
+
+    /// <summary>
+    /// 归档取回**之后**仍必须跑完的工作所占的具名保留：内容层就位后还要生产 canonical
+    /// Lean 报告。取自本仓已有的冷跑读数 —— 归档命中时 `lean-reports` 约 18s
+    /// （记忆 `lean-cache-worth-190x` 的热态读数），向上取整到分钟并留一倍余量。
+    ///
+    /// 它**不是**冷编译那一路的预留：那一路根本不该由本预算兜底，冷编译是小时量级
+    /// （实测 run 32493250519 内容层编译 >62 min），任何 job 内预算都装不下它，
+    /// 故那条路的正解是 #2814 的 fail-closed 门，不是把预算调大。
+    /// </summary>
+    internal const int PostArchiveReserveMinutes = 2;
 }

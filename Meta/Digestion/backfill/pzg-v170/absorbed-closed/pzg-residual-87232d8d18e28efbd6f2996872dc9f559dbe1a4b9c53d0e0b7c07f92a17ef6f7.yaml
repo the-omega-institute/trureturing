@@ -13,5 +13,5 @@ receipts:
   scribe:
     - gid: D5/S1/Eigenstructure/GoldenExponentRays.golden_exponent_rational_ray_iff
       definition_sha256: sha256:6e44020f2f89e0d0ea50c7af575726d5adfca401f6ba5664933c99f3562b3677
-      emission_sha256: sha256:54bc7edb0a03d4532a9fa236c76f95fa34ff394324a71f8a4638c86405100f0c
+      emission_sha256: sha256:9182be98ffb1343d733cc34d9a28fc58b450eb865c4ce08fb6b000bdf6491fc7
   unresolved_subitems: []

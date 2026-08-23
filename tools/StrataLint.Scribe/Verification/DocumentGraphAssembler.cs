@@ -44,8 +44,7 @@ public static class DocumentGraphAssembler
 {
     public static DocumentGraph Assemble(
         IEnumerable<ScribeDocument> documents,
-        DeclarationCatalog? catalog,
-        IReadOnlySet<string>? autoWireDocumentGids = null)
+        DeclarationCatalog? catalog)
     {
         ArgumentNullException.ThrowIfNull(documents);
         var material = documents.ToImmutableArray();
@@ -64,16 +63,12 @@ public static class DocumentGraphAssembler
 
         foreach (var document in material.OrderBy(static item => item.Header.Gid.Value, StringComparer.Ordinal))
         {
-            var assembled = Extract(document);
-            if (autoWireDocumentGids?.Contains(document.Header.Gid.Value) == true)
-            {
-                assembled = assembled
-                    .Concat(ProjectLeanImports(document, catalog, byLeanModule))
-                    .DistinctBy(CanonicalKey, StringComparer.Ordinal)
-                    .OrderBy(RoleOrder)
-                    .ThenBy(CanonicalKey, StringComparer.Ordinal)
-                    .ToImmutableArray();
-            }
+            var assembled = Extract(document)
+                .Concat(ProjectLeanImports(document, catalog, byLeanModule))
+                .DistinctBy(CanonicalKey, StringComparer.Ordinal)
+                .OrderBy(RoleOrder)
+                .ThenBy(CanonicalKey, StringComparer.Ordinal)
+                .ToImmutableArray();
             edges.Add(document.Header.Gid.Value, assembled);
             explicitEdges.Add(document.Header.Gid.Value, document.Edges);
             foreach (var edge in assembled)

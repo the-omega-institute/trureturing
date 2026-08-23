@@ -13,5 +13,5 @@ receipts:
   scribe:
     - gid: D5/S3/ConceptDynamics/Refinement/MultiTargetMinimalSufficiency.multi_target_minimal_sufficiency
       definition_sha256: sha256:919f4e35757b0411cb2caa8c6a52316a24e12865ceec4393f24f55c81f17758e
-      emission_sha256: sha256:45b45e6a1409a18501b99555639742843d6346bfee1229587e0963858a7ce815
+      emission_sha256: sha256:f6af5e6fbf612f33e79a738a08b61c1ba246f2264c74fbbccad86c6c26cb0119
   unresolved_subitems: []

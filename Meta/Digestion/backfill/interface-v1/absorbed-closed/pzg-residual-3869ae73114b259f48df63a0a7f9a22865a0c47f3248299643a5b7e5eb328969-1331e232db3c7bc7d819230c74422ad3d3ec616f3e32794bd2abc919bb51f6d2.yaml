@@ -13,5 +13,5 @@ receipts:
   scribe:
     - gid: D5/S0/Tower/NonPisotVerdict/SubstitutionTowerClause.substitution_tower_clause
       definition_sha256: sha256:bf0b258fc5050fd633b021d3f11aa9a544a116b9984b9600bffa9f0fb1d75a72
-      emission_sha256: sha256:a06af821525e3d8608f9c705a2960d5034e3f3508fa4578e5a154ccf984f639e
+      emission_sha256: sha256:40638498f4da0e2c8404a6333eaddecf9ddc9a384d16dd915abc44986a25e57a
   unresolved_subitems: []

@@ -21,3 +21,4 @@ The proof reuses the general finite capture-count equivalence from CaptureCount 
 ## References
 
 - Truth anchor: `D5/S0/Diagonal/CaptureIntersectionCardinality.capture_intersection_cardinality`
+- Dependency: [D5/S0/Diagonal/CaptureCount](CaptureCount.md)

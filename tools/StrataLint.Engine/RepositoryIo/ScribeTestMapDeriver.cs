@@ -81,6 +81,10 @@ internal static class ScribeTestMapDeriver
         "global.json",
         "lakefile.toml",
         "lean-toolchain",
+        // Skill packages are read by architecture tests that pin each skill's structural
+        // contract; the directory is declared rather than each file so that adding a skill
+        // test does not require editing this deriver.
+        "skills",
         "tools",
         "tools/tests/StrataLint.ArchitectureTests",
         "tools/tests/StrataLint.Scribe.Tests",

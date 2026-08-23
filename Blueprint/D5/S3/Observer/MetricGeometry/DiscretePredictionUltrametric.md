@@ -23,3 +23,4 @@ Loogle found the exact ciSup_sup_eq and mul_max_of_nonneg declarations used in t
 ## References
 
 - Truth anchor: `D5/S3/Observer/MetricGeometry/DiscretePredictionUltrametric.discounted_prediction_distance_strong_triangle`
+- Dependency: [D5/S3/Observer/MetricGeometry/BellmanMaxEquation](BellmanMaxEquation.md)

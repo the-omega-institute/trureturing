@@ -23,3 +23,5 @@ This statement closes only the variational-duality and sign-witness subclaim of 
 ## References
 
 - Truth anchor: `D5/S3/Quantum/Sharpness/SpectralSharpnessDuality.spectral_sharpness_isGreatest_bounded_pairing`
+- Dependency: [D5/S3/Quantum/Sharpness/SpectralPairingCapacity](SpectralPairingCapacity.md)
+- Dependency: [D5/S3/Quantum/Sharpness/SpectralSharpness](SpectralSharpness.md)

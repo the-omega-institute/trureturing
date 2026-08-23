@@ -13,5 +13,5 @@ receipts:
   scribe:
     - gid: D5/S3/Observer/Separation/FiniteObservationRefinementBound.finite_observation_refinement_and_stability_bound
       definition_sha256: sha256:6693801f1f705830978b13058b204185045ba1859a516dd0cb412c522a9c3d86
-      emission_sha256: sha256:f6772b93f267e8dfc90157aed3873d251983f7a0b74b841e06aedbc3a88e6e6b
+      emission_sha256: sha256:71aefd8a7ca7ee7e4ea9c466da16946811c799bfca4ff5100560c2c734fb256b
   unresolved_subitems: []

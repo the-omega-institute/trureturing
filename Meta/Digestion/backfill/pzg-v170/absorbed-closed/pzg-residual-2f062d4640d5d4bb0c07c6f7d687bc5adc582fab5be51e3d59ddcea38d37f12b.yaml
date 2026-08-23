@@ -13,5 +13,5 @@ receipts:
   scribe:
     - gid: D5/S0/Computability/SemanticLayerShift.semantic_layer_shift_bijective
       definition_sha256: sha256:38baa720a0a007b80091f9b9d80a7a985c0b2b19ca9223ffbcb81ae652f09a12
-      emission_sha256: sha256:311e53b0c80e0ee529a91b7d837e5219c4ce4a9650d6047166776300bcd67c02
+      emission_sha256: sha256:9a9096fde871846de4c41d14a65fd3d0ea3e225b0a2bb8841f40a565577c6ad5
   unresolved_subitems: []

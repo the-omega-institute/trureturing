@@ -13,5 +13,5 @@ receipts:
   scribe:
     - gid: D5/S3/Divergence/MeanKernels/BelavkinStaszewskiPath.belavkin_staszewski_path
       definition_sha256: sha256:b56a6356d3386559ff9c13b7ae9a1f7fe43e080c05714520b22029d4d5584407
-      emission_sha256: sha256:60142596420ba5e191a427f5ea218bab2ed3c8ee4cd142dc93449de2e42488e4
+      emission_sha256: sha256:777ce7dc4d105f9cd0b3bb2561d6966ea06cfa2e90ea624c5e4e2c719a16470d
   unresolved_subitems: []

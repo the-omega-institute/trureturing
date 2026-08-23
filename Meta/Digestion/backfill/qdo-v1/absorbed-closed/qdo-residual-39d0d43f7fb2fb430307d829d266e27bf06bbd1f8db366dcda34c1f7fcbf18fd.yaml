@@ -13,5 +13,5 @@ receipts:
   scribe:
     - gid: D5/S3/Entropy/Forgetting/CompletionEntropyMinimality.completion_conditional_entropy_le_of_factorization
       definition_sha256: sha256:791281902e8404646765a60016d2ea84ca9668642d2b9128b1482a91c022d05d
-      emission_sha256: sha256:38f11e22f689feff5947cf7c3813c687485ce8d9c3ba1f756e5f8c880c237cf6
+      emission_sha256: sha256:3e4a98e2fe5af3ba075e5c15bfb9185410b8cfd5cd6defbbee5525ab9968a1a1
   unresolved_subitems: []

@@ -13,5 +13,5 @@ receipts:
   scribe:
     - gid: D5/S3/ObserverMemory/Refinement/PredictionCompletion.observation_refinement_completion
       definition_sha256: sha256:42df95413717581fe496c7ec52bf523e23748ba23caa45e4eac7e819c4d018f9
-      emission_sha256: sha256:69309f8f6783661edef3960345eb712f7edfd6fa2c381243c93fcbfe3ca7d4de
+      emission_sha256: sha256:02549d30221b83830bc64696a75fa754ba2e444863b3fce5564b277df8b39d63
   unresolved_subitems: []

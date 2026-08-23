@@ -13,5 +13,5 @@ receipts:
   scribe:
     - gid: D5/S3/ObserverMemory/Fusion/CompatibleFusionEmbedding.compatible_fusion_embedding
       definition_sha256: sha256:f259620753bc405efc5073eeb2454b6e1b6865ce0ac56a97b2f3fb998b037712
-      emission_sha256: sha256:e9e6cf1fe325c06615b82d7f8fbdbcb3895885c35ab926f97d2f273f309beb9f
+      emission_sha256: sha256:25c0a827097e7fa04ad2c00c9799f0d4984ae314cfeacc651a02b0d571c71c8f
   unresolved_subitems: []

@@ -149,9 +149,8 @@ internal static class TruthReleaseCommand
             tolerateAbsentDocuments: true);
         var graph = DocumentGraphAssembler.Assemble(
             documents,
-            catalog,
-            census.ReceiptFreeDocumentGids);
-        var projection = DocumentGraphProjectionBuilder.Create(
+            catalog);
+        var projection = DocumentGraphExportProjection.Create(
             definitions.Select(definition => new DocumentGraphDocument(
                 definition.RelativePath.Value,
                 definition.Document,

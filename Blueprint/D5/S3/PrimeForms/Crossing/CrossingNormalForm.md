@@ -25,3 +25,4 @@ Repository search found and reused PrimeForms.PropagationLegs.slotDiscriminant. 
 ## References
 
 - Truth anchor: `D5/S3/PrimeForms/Crossing/CrossingNormalForm.crossing_normal_form_unique_minimum`
+- Dependency: [D5/S3/PrimeForms/PropagationLegs](../PropagationLegs.md)

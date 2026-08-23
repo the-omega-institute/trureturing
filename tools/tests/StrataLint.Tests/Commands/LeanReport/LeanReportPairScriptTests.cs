@@ -68,6 +68,101 @@ public sealed class LeanReportPairScriptTests
     }
 
     [Fact]
+    public void CacheEnsureRunsBeforeTheCandidateLakeTreeExists()
+    {
+        using var fixture = new LeanReportPairFixture();
+
+        var result = fixture.Run();
+
+        Assert.True(result.ExitCode == 0, Encoding.UTF8.GetString(result.StandardError));
+        Assert.Equal(["absent"], fixture.CacheEnsureLakeStates);
+        Assert.Equal(1, fixture.ProducerInvocationCount);
+    }
+
+    [Fact]
+    public void FailedCacheEnsurePreservesExitCodeBeforeProducerOrStaging()
+    {
+        using var fixture = new LeanReportPairFixture();
+
+        var result = fixture.Run(cacheEnsureExitCode: 73);
+
+        Assert.Equal(73, result.ExitCode);
+        Assert.Equal(["absent"], fixture.CacheEnsureLakeStates);
+        Assert.Equal(0, fixture.ProducerInvocationCount);
+        Assert.False(fixture.CandidateLakeExists);
+    }
+
+    [Fact]
+    public void FailedCacheEnsureReceiptReachesCallerOnStandardError()
+    {
+        using var fixture = new LeanReportPairFixture();
+
+        var result = fixture.Run(cacheEnsureExitCode: 73);
+
+        Assert.Equal(73, result.ExitCode);
+        Assert.Contains(
+            "LEAN_CACHE {\"status\":\"failed\",\"method\":\"fake\"}",
+            Encoding.UTF8.GetString(result.StandardError),
+            StringComparison.Ordinal);
+        Assert.DoesNotContain(
+            "LEAN_CACHE ",
+            Encoding.UTF8.GetString(result.StandardOutput),
+            StringComparison.Ordinal);
+        Assert.False(fixture.CandidateLogExists);
+    }
+
+    [Fact]
+    public void TermAfterCacheEnsureReceiptPreservesSignalExitCode()
+    {
+        using var fixture = new LeanReportPairFixture();
+
+        var result = fixture.Run(signalPairAfterReceipt: true);
+
+        Assert.Equal(143, result.ExitCode);
+        Assert.Contains(
+            "LEAN_CACHE {\"status\":\"seeded\",\"method\":\"fake\"}",
+            Encoding.UTF8.GetString(result.StandardOutput),
+            StringComparison.Ordinal);
+        Assert.Equal(0, fixture.ProducerInvocationCount);
+        Assert.False(fixture.CandidateLogExists);
+    }
+
+    [Fact]
+    public void CacheEnsureReceiptReachesCallerInsteadOfStagingSidecar()
+    {
+        using var fixture = new LeanReportPairFixture();
+
+        var result = fixture.Run();
+
+        Assert.Equal(0, result.ExitCode);
+        Assert.Contains(
+            "LEAN_CACHE {\"status\":\"seeded\",\"method\":\"fake\"}",
+            Encoding.UTF8.GetString(result.StandardOutput),
+            StringComparison.Ordinal);
+        Assert.DoesNotContain(
+            "LEAN_CACHE ",
+            fixture.ReadCandidateLogText(),
+            StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void MissingCacheEnsureReportsItsExactCandidatePath()
+    {
+        using var fixture = new LeanReportPairFixture();
+        fixture.DeleteCacheEnsure();
+
+        var result = fixture.Run();
+
+        Assert.NotEqual(0, result.ExitCode);
+        Assert.Contains(
+            $"lean-report-pair: cache ensure is absent or not a readable regular file: {fixture.CanonicalCacheEnsurePath}\n",
+            Encoding.UTF8.GetString(result.StandardError),
+            StringComparison.Ordinal);
+        Assert.Equal(0, fixture.ProducerInvocationCount);
+        Assert.False(fixture.CandidateLakeExists);
+    }
+
+    [Fact]
     public void PairScriptPinsPerModuleReuseOff()
     {
         var script = File.ReadAllText(Path.Combine(
@@ -83,24 +178,33 @@ public sealed class LeanReportPairScriptTests
     {
         private readonly TemporaryDirectory temporary = new();
         private readonly string candidateRoot;
-        private readonly string artifacts;
         private readonly string producerDirectory;
         private readonly string producer;
         private readonly string invocationCount;
         private readonly string candidateReport;
         private readonly string metricsLog;
+        private readonly string cacheEnsureLog;
+        private readonly string canonicalCandidateRoot;
 
         internal LeanReportPairFixture()
         {
             candidateRoot = Path.Combine(temporary.Path, "candidate");
-            artifacts = Path.Combine(temporary.Path, "reports");
             producerDirectory = Path.Combine(temporary.Path, "producer");
             producer = Path.Combine(producerDirectory, "inspect.sh");
             invocationCount = Path.Combine(producerDirectory, "invocations.txt");
-            candidateReport = Path.Combine(artifacts, "candidate.json");
+            candidateReport = Path.Combine(
+                candidateRoot, ".lake", "build", "stratalint", "candidate.json");
             metricsLog = Path.Combine(temporary.Path, "measurements.jsonl");
+            cacheEnsureLog = Path.Combine(temporary.Path, "cache-ensure.log");
             InitializeRepository(candidateRoot);
-            Directory.CreateDirectory(artifacts);
+            var physicalRoot = BoundedProcessRunner.Run(
+                "pwd",
+                ["-P"],
+                candidateRoot,
+                TimeSpan.FromSeconds(30),
+                4096);
+            Assert.Equal(0, physicalRoot.ExitCode);
+            canonicalCandidateRoot = Encoding.UTF8.GetString(physicalRoot.StandardOutput).Trim();
             Directory.CreateDirectory(producerDirectory);
             File.WriteAllText(
                 Path.Combine(producerDirectory, "Inspector.lean"),
@@ -112,6 +216,7 @@ public sealed class LeanReportPairScriptTests
                 Path.Combine(candidateRoot, "tools", "lean-inspector", "Inspector.lean"),
                 "def producerFixture : True := by trivial\n",
                 new UTF8Encoding(false));
+            File.WriteAllText(CacheEnsurePath, FakeCacheEnsure, new UTF8Encoding(false));
             var chmod = BoundedProcessRunner.Run(
                 "chmod",
                 ["+x", producer],
@@ -126,7 +231,24 @@ public sealed class LeanReportPairScriptTests
                 ? int.Parse(File.ReadAllText(invocationCount).Trim(), System.Globalization.CultureInfo.InvariantCulture)
                 : 0;
 
-        internal ProcessOutput Run()
+        internal string CacheEnsurePath => Path.Combine(
+            candidateRoot, "tools", "scripts", "worktree", "lean-cache-ensure.sh");
+
+        internal string CanonicalCacheEnsurePath => Path.Combine(
+            canonicalCandidateRoot, "tools", "scripts", "worktree", "lean-cache-ensure.sh");
+
+        internal IReadOnlyList<string> CacheEnsureLakeStates =>
+            File.Exists(cacheEnsureLog) ? File.ReadAllLines(cacheEnsureLog) : [];
+
+        internal bool CandidateLakeExists =>
+            Directory.Exists(Path.Combine(candidateRoot, ".lake"));
+
+        internal bool CandidateLogExists =>
+            Directory.Exists(candidateReport + ".logs");
+
+        internal ProcessOutput Run(
+            int cacheEnsureExitCode = 0,
+            bool signalPairAfterReceipt = false)
         {
             var script = Path.Combine(TestRepositoryLayout.FindRoot(), "tools", "scripts", "lean-report-pair.sh");
             return BoundedProcessRunner.Run(
@@ -134,6 +256,9 @@ public sealed class LeanReportPairScriptTests
                 [
                     $"STRATALINT_REPORT_METRICS_LOG={metricsLog}",
                     $"STRATALINT_SUPERVISOR_ROOT={Path.Combine(temporary.Path, "supervisor")}",
+                    $"STUB_LEAN_CACHE_ENSURE_LOG={cacheEnsureLog}",
+                    $"STUB_LEAN_CACHE_ENSURE_EXIT_CODE={cacheEnsureExitCode}",
+                    $"STUB_LEAN_CACHE_ENSURE_SIGNAL_PARENT={(signalPairAfterReceipt ? 1 : 0)}",
                     "bash",
                     script,
                     "--producer", producer,
@@ -146,6 +271,8 @@ public sealed class LeanReportPairScriptTests
                 1024 * 1024);
         }
 
+        internal void DeleteCacheEnsure() => File.Delete(CacheEnsurePath);
+
         internal void AppendProducerComment() =>
             File.AppendAllText(producer, "\n# producer mutation\n", new UTF8Encoding(false));
 
@@ -155,6 +282,12 @@ public sealed class LeanReportPairScriptTests
         internal IReadOnlyList<JsonElement> ReadMetrics() => File.ReadAllLines(metricsLog)
             .Select(line => JsonDocument.Parse(line).RootElement.Clone())
             .ToArray();
+
+        internal string ReadCandidateLogText() => string.Join(
+            '\n',
+            Directory.EnumerateFiles(candidateReport + ".logs", "*", SearchOption.AllDirectories)
+                .Order(StringComparer.Ordinal)
+                .Select(File.ReadAllText));
 
         public void Dispose() => temporary.Dispose();
 
@@ -197,6 +330,7 @@ public sealed class LeanReportPairScriptTests
             WriteProducerInput(root, CliProjectPath);
             WriteProducerInput(root, EngineProjectPath);
             WriteProducerInput(root, "Directory.Build.props");
+            Directory.CreateDirectory(Path.Combine(root, "tools", "scripts", "worktree"));
         }
 
         private static void WriteProducerInput(string root, string relative)
@@ -211,6 +345,24 @@ public sealed class LeanReportPairScriptTests
             File.WriteAllText(path, contents, new UTF8Encoding(false));
         }
 
+
+        private const string FakeCacheEnsure = """
+            #!/usr/bin/env bash
+            set -euo pipefail
+            root="$(cd "$(dirname "${BASH_SOURCE[0]}")/../../.." && pwd -P)"
+            state=absent
+            [[ ! -e "$root/.lake" ]] || state=present
+            printf '%s\n' "$state" >> "$STUB_LEAN_CACHE_ENSURE_LOG"
+            if [[ "$STUB_LEAN_CACHE_ENSURE_EXIT_CODE" -eq 0 ]]; then
+              printf '%s\n' 'LEAN_CACHE {"status":"seeded","method":"fake"}'
+            else
+              printf '%s\n' 'LEAN_CACHE {"status":"failed","method":"fake"}' >&2
+            fi
+            if [[ "$STUB_LEAN_CACHE_ENSURE_SIGNAL_PARENT" -eq 1 ]]; then
+              kill -TERM "$PPID"
+            fi
+            exit "$STUB_LEAN_CACHE_ENSURE_EXIT_CODE"
+            """;
 
         private const string FakeProducer = """
             #!/usr/bin/env bash

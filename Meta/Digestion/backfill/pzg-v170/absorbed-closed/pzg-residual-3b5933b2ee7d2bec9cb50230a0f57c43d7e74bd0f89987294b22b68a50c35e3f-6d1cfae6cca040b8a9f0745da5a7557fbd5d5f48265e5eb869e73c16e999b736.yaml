@@ -13,5 +13,5 @@ receipts:
   scribe:
     - gid: D5/S3/Constants/Cyclotomy/RealSubfield.real_cyclotomic_generator_adjoin_eq_sqrt_five
       definition_sha256: sha256:6536160c78402ee11fd35a71ee319a9fa8c451db1c190acabc2d1c561ec5788e
-      emission_sha256: sha256:ca68a51b27e840368b8ef8c1d194c63696fad7818fbe8f64bac39489adf44a17
+      emission_sha256: sha256:fc133a9de5e1d7994ce741e563ba8b74135f41520443dec0d8757746a3a7439e
   unresolved_subitems: []

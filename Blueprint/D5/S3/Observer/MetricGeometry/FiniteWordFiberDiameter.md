@@ -23,3 +23,4 @@ Loogle and LeanSearch found no full finite-prefix diameter theorem. The Lean pro
 ## References
 
 - Truth anchor: `D5/S3/Observer/MetricGeometry/FiniteWordFiberDiameter.finite_word_fiber_prediction_diameter`
+- Dependency: [D5/S3/Observer/MetricGeometry/BellmanMaxEquation](BellmanMaxEquation.md)

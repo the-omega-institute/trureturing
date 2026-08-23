@@ -13,5 +13,5 @@ receipts:
   scribe:
     - gid: D5/S0/Diagonal/DistanceProfile.distance_profile_card
       definition_sha256: sha256:a0c9ecb845013bf81a08bd8f55a73ce2de4c3a0126221f2baf0f4d40a8df5625
-      emission_sha256: sha256:7c12d1de9f7453a243f7ef5e622ec4aeb97730f1ea505eda8c4635580595d859
+      emission_sha256: sha256:ca1975ad0e2ff4fdaf7b7ae93833f5cc10acf699c09122710f72ad607eddc101
   unresolved_subitems: []

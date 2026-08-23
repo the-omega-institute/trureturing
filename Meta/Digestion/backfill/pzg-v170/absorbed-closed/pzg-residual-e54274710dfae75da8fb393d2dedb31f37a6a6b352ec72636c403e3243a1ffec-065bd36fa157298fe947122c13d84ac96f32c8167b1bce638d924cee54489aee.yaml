@@ -13,5 +13,5 @@ receipts:
   scribe:
     - gid: D5/S3/Axis/AxisRecurrencePair.axis_recurrence_pair
       definition_sha256: sha256:b5e7942ee57ed80c67976aee24adc1db5894bcb313f06a3daae7dd82211d354a
-      emission_sha256: sha256:546c04bc82541145cc94c8e68c99aaadbc7131ddfb5570183a6d621dfae3d22a
+      emission_sha256: sha256:b613bfe39354bbf5bba1c22ade78df79208be1b45d9675b9917501d9d4844207
   unresolved_subitems: []
