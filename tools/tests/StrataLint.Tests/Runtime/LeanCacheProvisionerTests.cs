@@ -600,7 +600,48 @@ public sealed class LeanCacheProvisionerTests
             Environment.SetEnvironmentVariable(BudgetVariable, previous);
         }
     }
-}
 
-[CollectionDefinition("Lean cache environment", DisableParallelization = true)]
-public sealed class LeanCacheEnvironmentCollection;
+    /// <summary>
+    /// `Provision` 是**新建树**的 API:目标必须在这个边界上不存在,无论有没有 donor。
+    ///
+    /// 这一条此前只写在 donor 分支里,于是「无 donor」那条路进来时目标是否存在无人过问 ——
+    /// 而下游据「这棵 .lake 是本次调用造的」决定可否 overlay 归档。契约不成立,那个结论
+    /// 就是假的。
+    ///
+    /// 不能靠读控制流代替这道门:ensure 在 stamp Mismatch 时会先删掉整个 .lake 再落到
+    /// 同一个 Provision,故「到达这里 ⟹ 调用入口时 .lake 不存在」为假;成立的只是
+    /// 「⟹ **在这个边界上**不存在」,而那要由这一行保证。
+    /// </summary>
+    [Fact]
+    public void ProvisionRefusesAPreExistingTargetEvenWithoutADonor()
+    {
+        using var target = new TemporaryDirectory();
+        WritePins(target.Path);
+        var lake = Path.Combine(target.Path, ".lake");
+        Directory.CreateDirectory(lake);
+        var sentinel = Path.Combine(lake, "sentinel.txt");
+        File.WriteAllText(sentinel, "someone else was here\n");
+        var runner = new RecordingWorktreeProcessRunner();
+        var cloner = new RecordingDirectoryCloner();
+        var cleanups = 0;
+        using var writerGuard = LeanCacheWriterGuard.TryAcquire(lake);
+        Assert.NotNull(writerGuard);
+
+        Assert.ThrowsAny<Exception>(() => LeanCacheProvisioner.Provision(
+            new LeanCacheDonorSelection(null, "fixture has no donor"),
+            target.Path,
+            ReadPins(target.Path),
+            "lake",
+            runner,
+            writerGuard,
+            cloner,
+            LeanCachePublisher.Instance,
+            _ => cleanups++));
+
+        // 拒绝必须发生在**任何副作用之前**:先动手再报错,与不报错一样坏。
+        Assert.Empty(runner.Invocations);
+        Assert.Empty(cloner.Invocations);
+        Assert.Equal(0, cleanups);
+        Assert.Equal("someone else was here\n", File.ReadAllText(sentinel));
+    }
+}

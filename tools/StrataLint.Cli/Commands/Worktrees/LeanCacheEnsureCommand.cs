@@ -294,7 +294,8 @@ internal static partial class LeanCacheEnsureCommand
                     }
                     else
                     {
-                        archive = LeanArchiveAttempt.Skipped("project olean state is not cold");
+                        archive = LeanArchiveAttempt.Skipped(
+                            $"project olean state is {ReceiptWarmth(projectWarmth.State)}");
                     }
 
                     return SuccessWithState(
@@ -502,33 +503,63 @@ internal static partial class LeanCacheEnsureCommand
                     ? selection.ProjectWarmth ?? projectWarmth
                     : projectWarmth;
 
-                // 入口一:没有本机 donor 时,上面那步只补了**依赖层**(`lake exe cache get`),
-                // 内容层仍是空的 —— 新机器、第一棵树、CI 冷启动都落在这里。归档是内容层
-                // 唯一的私有供给,故在此补它。
+                // 内容层此刻若仍是冷的,就补它 —— 无论上一步是 cache get 还是整树 clone。
                 //
-                // 顺序不能反:`.lake` 此前整个不存在,归档只供内容层,得先有 `.lake` 才有
-                // 地方展开。clone 成功那一路已经整树搬过来了,不在此列。
-                if (provisioned.Strategy != "cloned"
-                    && finalProjectWarmth.State == OleanWarmth.Cold)
+                // 【这里曾写 `Strategy != "cloned"`,并断言「clone 那一路已经两层都有」,
+                //   那句话是假的】整树 clone 走的 `SelectDonor` 三参重载传的是
+                //   `requireProjectWarm: false`(`LeanWorktreePins.cs:488`),只有 missing-build
+                //   那条路径传 `true`。所以一个**内容层为冷**的 donor 照样会被整树克隆,
+                //   拿到的是 `.lake` 与依赖层、没有内容层 —— 而我据 `Strategy` 跳过了归档,
+                //   该补的场景不补,冷的仍然冷。评审席指出。
+                //
+                //   正解是**不看策略,看实际热度**:克隆之后重探一次,冷就补。策略是过程,
+                //   热度是结果,判据要挂在结果上。
+                //
+                // 顺序仍不能反:归档只供内容层,得先有 `.lake` 才有地方展开,故它接在
+                // provision 之后。
+                // 此处**不设** `contentRoot.Clear` 那道门,而入口二保留它 —— 两处的目标
+                // 性质不同。
+                //
+                //   到达这里的前提是 `.lake` 在**调用入口时不存在**(`:269` 的
+                //   `Directory.Exists` 与 `:467` 的 `File.Exists` 都已判否),且
+                //   `LeanCacheProvisioner` 发布前还会 `EnsureAbsent(target)`。故现在这棵
+                //   `.lake` 是**本次调用自己造的**,私有于这棵新 worktree;往里面 overlay
+                //   不可能改动 donor。
+                //
+                //   而 `contentRoot.Clear` 守的是「不覆盖**本次调用之前就存在**的内容」
+                //   (#2844 之前这条路上出过一次「为腾位置而删目标内容」的设计,已删)。
+                //   目标不曾预先存在时,那道门语义上是空的 —— 判据要挂在「调用入口时是否
+                //   已存在」,不挂在「此刻是否为空」。
+                //
+                //   【这里曾按 `Strategy != "cloned"` 判,并断言「clone 那一路两层都有」;
+                //     那句话是假的:整树 clone 传 `requireProjectWarm: false`
+                //     (`LeanWorktreePins.cs:488`),冷内容层的 donor 照样会被克隆。改按
+                //     实际热度判之后仍不取 —— 因为 clone 必然把 build 根填满,
+                //     `contentRoot.Clear` 在这条路上结构性地永不成立。评审席判定为本形。〕
+                // clone 会把 donor 的内容层整个搬来,故 provision **之后**的热度可能与之前
+                // 不同,必须重探 —— 但只在 clone 那一路重探。cache-get 只补依赖层,不改
+                // 内容层,provision 前那个读数仍然成立,再探一次是纯冗余
+                // (`OleanEnumerationFailuresAreReportedAsProbeFailures…` 钉住「每个根恰探
+                //  一次」,重复探测会让它红)。
+                var warmthAfterProvision = provisioned.Strategy == "cloned"
+                    ? stateProbe.ProbeOleans(ProjectOleanRoot(lake))
+                    : finalProjectWarmth;
+                if (warmthAfterProvision.State == OleanWarmth.Cold)
                 {
-                    var contentRoot = stateProbe.InspectContentRoot(
-                        Path.Combine(lake, "build"));
-                    archive = contentRoot.Clear
-                        ? LeanArchiveFetch.Run(root, runner, ArchiveBudget)
-                        : LeanArchiveAttempt.Skipped(
-                            contentRoot.Error ?? "content root already exists");
+                    archive = LeanArchiveFetch.Run(root, runner, ArchiveBudget);
                     if (archive.Outcome == LeanArchiveOutcome.Unpacked)
                     {
-                        finalProjectWarmth = stateProbe.ProbeOleans(ProjectOleanRoot(lake));
+                        warmthAfterProvision = stateProbe.ProbeOleans(ProjectOleanRoot(lake));
                     }
                 }
                 else
                 {
+                    // ProbeFailed 不是 Cold。探不到就不取 —— 拿不准的时候不动别人的树。
                     archive = LeanArchiveAttempt.Skipped(
-                        provisioned.Strategy == "cloned"
-                            ? "a local donor supplied both layers"
-                            : "project olean state is not cold");
+                        $"project olean state is {ReceiptWarmth(warmthAfterProvision.State)}");
                 }
+
+                finalProjectWarmth = warmthAfterProvision;
                 return SuccessWithState(
                     SuccessReceipt(
                     provisioned.Strategy == "cloned" ? "seeded" : "fetched",
