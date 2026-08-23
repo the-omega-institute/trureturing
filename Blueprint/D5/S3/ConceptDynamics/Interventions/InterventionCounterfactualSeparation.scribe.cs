@@ -2,13 +2,13 @@ using static StrataLint.Scribe.DefinitionDsl;
 using static StrataLint.Scribe.FormulaDsl;
 using F = StrataLint.Scribe.FormulaDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.ConceptDynamics.Interventions.Hierarchy;
+namespace StrataLint.Scribe.Blueprint.D5.S3.ConceptDynamics.Interventions;
 
 internal sealed class InterventionCounterfactualSeparationDocument
     : IScribeDocumentDefinition
 {
     private const string DeclarationPrefix =
-        "D5/S3/ConceptDynamics/Interventions/Hierarchy/InterventionCounterfactualSeparation.";
+        "D5/S3/ConceptDynamics/Interventions/InterventionCounterfactualSeparation.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Two Boolean causal models can agree on every interventional marginal while "

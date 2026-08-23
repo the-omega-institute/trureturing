@@ -1,6 +1,6 @@
-/- GID: D5/S3/ConceptDynamics/Interventions/Hierarchy/InterventionCounterfactualSeparation
+/- GID: D5/S3/ConceptDynamics/Interventions/InterventionCounterfactualSeparation
    generality: G
-   mirror-B: D5/B/S3/ConceptDynamics/Interventions/Hierarchy/InterventionCounterfactualSeparation
+   mirror-B: D5/B/S3/ConceptDynamics/Interventions/InterventionCounterfactualSeparation
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    digest: Two Boolean structural causal models agree on every interventional marginal but disagree on an exogenous-unit counterfactual. -/
@@ -22,7 +22,7 @@ import Mathlib.Data.Bool.Basic
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
-namespace D5.S3.ConceptDynamics.Interventions.Hierarchy.InterventionCounterfactualSeparation
+namespace D5.S3.ConceptDynamics.Interventions.InterventionCounterfactualSeparation
 
 /-- A deterministic Boolean structural causal model maps an exogenous unit and
 an imposed treatment value to its outcome. -/
@@ -65,4 +65,4 @@ example : CF noEffectModel false false true = false := rfl
 
 #print axioms intervention_strictly_weaker_than_counterfactual
 
-end D5.S3.ConceptDynamics.Interventions.Hierarchy.InterventionCounterfactualSeparation
+end D5.S3.ConceptDynamics.Interventions.InterventionCounterfactualSeparation
