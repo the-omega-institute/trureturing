@@ -150,8 +150,14 @@ case "$VERB" in
     #
     # 【这里曾写「缺省 target_commitish 会跟着默认分支走，tag 指向的东西事后还会变」，
     #   那句话是假的】gh 的 --target 是「Target branch or full commit SHA (default
-    #   [main branch])」，作用于 **automatic tag creation**；tag 一旦建成即不可变，
-    #   事后不漂移。
+    #   [main branch])」，作用于 **automatic tag creation**：已建成的 tag **不会**因
+    #   默认分支之后前进而自动移动。
+    #
+    #   注意别把这条说过头：tag 本身并非无条件不可变。`gh release create --help` 写
+    #   「When release immutability is **enabled** for a repository, Git tags associated
+    #   with a release cannot be modified or deleted」—— 那是个仓库开关，而本仓实测
+    #   release 的 `immutable=false`（#2729 cost 席读数）。此处需要的只是「不会自动
+    #   移动」这条窄命题，它够用，且经核验。
     #
     #   真正的不变量在**创建时刻**：不带 --target 时，tag 建在 gh 执行那一刻默认分支的
     #   tip 上，而那**未必是被打包的那棵树**（dev 每小时前进约 16 个提交，打包与发布之间

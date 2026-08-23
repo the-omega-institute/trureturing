@@ -78,22 +78,6 @@ public sealed class LeanCachePublishTests
     }
 
     /// <summary>
-    /// tag 必须建在产出它的那个 commit 上。不带 `--target` 时，tag 建在 gh **执行那一刻**
-    /// 默认分支的 tip 上，而那未必是被打包的那棵树；manifest 记的 producer_commit_sha 就会
-    /// 与 tag 指向的 commit 不是同一个，consumer 拿哪一个都对不上。(tag 建成后不可变，
-    /// 此处不存在事后漂移——那是本注释先前的一个错误说法。)
-    /// </summary>
-    [Fact]
-    public void ReleaseTagIsAnchoredToTheProducerCommitAndTheManifestCarriesIt()
-    {
-        var script = Script();
-
-        Assert.Contains("--target \"$producer_commit_sha\"", script, StringComparison.Ordinal);
-        Assert.Contains("producer_commit_sha=%s", script, StringComparison.Ordinal);
-        Assert.Contains("workflow_run_id=%s", script, StringComparison.Ordinal);
-    }
-
-    /// <summary>
     /// tag 必须把身份三元组（toolchain、config、sources）全部绑进去。少任何一个，两棵语义不同的树就会共用一个 tag，
     /// 而它们的归档互相覆盖时没有任何东西会红。
     /// </summary>

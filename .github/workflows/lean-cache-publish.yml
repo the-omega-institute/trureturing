@@ -79,10 +79,20 @@ permissions:
 jobs:
   publish:
     name: Publish the Lean build cache
-    # 这里**不设** `if: github.ref == 'refs/heads/dev'`。触发集合只有 schedule，而
-    # schedule 只在默认分支上跑，那个条件恒真 —— 恒真的量不构成判据，它取不到别的值，
-    # 读者却会把它当成一道防线。边界是触发集合本身，由 ContentsWriteWorkflowClosureTests
-    # 钉住；加回任何别的触发器会先让那条测试红，而不是让这里的条件生效。
+    # 这一条防的是**仓库配置漂移**，不是分支选择的 workflow 代码。
+    #
+    #   schedule 跑在「当时的默认分支」上，而默认分支是仓库设置，可以被改。改掉之后
+    #   这个 job 会在一棵不是 dev 的树上发布缓存，而 tag 与 manifest 会把那次产出写成
+    #   正常产物。此条件在那一刻取到 false，job 不执行。
+    #
+    #   **它不是边界。** 边界是触发集合本身（只有 schedule），由
+    #   ContentsWriteWorkflowClosureTests 钉住 —— 一个由分支选出的 workflow 版本可以
+    #   删掉自己的这行条件，故它挡不住那类改动，别把它当防线读。
+    #
+    #   〔本条曾被删过一次：我判「schedule-only ⟹ github.ref 恒为 refs/heads/dev，
+    #     恒真的量不构成判据」。那个「恒」是错的 —— 我把仓库配置排除在状态空间之外了。
+    #     评审席指出后恢复。〕
+    if: github.ref == 'refs/heads/dev'
     # 定时触发下没有 `github.event.workflow_run` 上下文；留着该条件会让 job 永远被跳过。
     # 「不给失败的推送留缓存」由内容地址本身保证：地址取自这一刻 dev 的实际输入，
     # 发布的产物与该地址绑定，消费侧按地址取，取不到就本地补 —— 不存在“发布了坏缓存”。
