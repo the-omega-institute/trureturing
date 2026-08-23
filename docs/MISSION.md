@@ -41,6 +41,10 @@
       "kind": "governance"
     },
     {
+      "source_ref": "D5/X_Frontier/GoldenRatioBase4DfaoMinimality",
+      "kind": "declaration-ready-mathematical-open"
+    },
+    {
       "source_ref": "D5/X_Frontier/GoldenUnitsUFD",
       "kind": "retired",
       "delivery_gids": [

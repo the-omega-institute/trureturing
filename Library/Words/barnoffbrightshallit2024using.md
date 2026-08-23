@@ -6,10 +6,7 @@ title: Using finite automata to compute the base-b representation of the golden 
 doi: 10.48550/arXiv.2405.02727
 claim: A deterministic finite automaton with output reads the Zeckendorf representation of a power of b and emits the corresponding base-b digit of a quadratic irrational.
 strata_touched:
-  - D5/S0/Conventions/WDigits
-  - D5/S1/Words/ZeckendorfOrder
-  - D5/S1/Depth/GoldenContinuedFraction
-  - D5/S1/Scale/Fibonacci
+  - D5/S1/Words/Automata/GoldenRatioBase4DfaoMinimality
 license: citation-only
 triage: anchor
 ---
@@ -26,8 +23,14 @@ data. For the golden ratio in base 4 the required 22-state bound was not
 reached; the authors report a single UNSAT determination at 13 states taking
 over 25 hours.
 
-This note is the literature anchor for the problem candidate
-`Problems/golden-ratio-base4-dfao-minimality.md`.
+The delivered module kernel-checks that a 21-state total DFAO agrees on every
+valid Zeckendorf word with the literal 22-state table recorded in the Evidence
+receipt, while ignoring leading zeroes. The receipt binds those normalized
+tables to hashed Walnut 5 and Walnut 6.2/8 outputs and records the generating
+commands and exact commits. Together with the paper's correctness claim for
+its constructed DFAO, this refutes the concrete base-4 22-state minimality
+claim. The paper's broader general minimality and uniqueness questions are not
+resolved by this fixed-instance counterexample.
 
 ## Search log
 
@@ -45,13 +48,22 @@ This note is the literature anchor for the problem candidate
   quotes the arXiv version and the repository binds candidates to that address.
 - 2026-08-18: Issued `HEAD https://doi.org/10.48550/arXiv.2405.02727`, which
   returned HTTP 302 redirecting to `https://arxiv.org/abs/2405.02727`.
+- 2026-08-23: Queried Crossref for the title and found the same authors' journal
+  follow-up, *Computing the base-b representation of quadratic irrationals
+  using automata*, Theoretical Computer Science 1071 (2026), article 115843,
+  DOI `10.1016/j.tcs.2026.115843`. Crossref returned no abstract, and the
+  available metadata does not establish whether that article records the
+  specific base-4 reduction from 22 states to 21.
 
-No literature search for a later resolution of the minimality question was
-performed; the open status recorded in the problem candidate is the status
-stated in this arXiv version.
+The 2024 source's open status is therefore superseded for this fixed base-4
+instance by the repository's kernel-checked table equivalence and its external
+source receipts. Whether the 2026 journal article independently reports the
+same reduction is `ASSUMED-UNVERIFIED` because its full text was not available
+in this search.
 
 ## Verified locator
 
 - arXiv: https://arxiv.org/abs/2405.02727
 - DOI: https://doi.org/10.48550/arXiv.2405.02727
 - Version of record: https://doi.org/10.1007/978-3-031-71112-1_3
+- 2026 journal follow-up: https://doi.org/10.1016/j.tcs.2026.115843
