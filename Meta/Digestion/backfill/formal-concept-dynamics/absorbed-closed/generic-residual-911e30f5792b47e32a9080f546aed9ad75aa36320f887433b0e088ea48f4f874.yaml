@@ -13,5 +13,5 @@ receipts:
   scribe:
     - gid: D5/S3/ConceptDynamics/NormativeStructure/HistorySensitiveOutcomeReductionObstruction.history_sensitive_evaluation_not_outcome_reducible
       definition_sha256: sha256:34520e1cf89b84ee77fa0c2df0d0d97f58d46d41c9114ad7ddeb17edba1aebcb
-      emission_sha256: sha256:6bb9f89292455631e196e0d8b7388a675c205ac6a1084070d9f3b2bb63b22390
+      emission_sha256: sha256:778e8b33168b41f5bb4fb149ea457f2787275ff445673dc297ea17fbe33f5e52
   unresolved_subitems: []

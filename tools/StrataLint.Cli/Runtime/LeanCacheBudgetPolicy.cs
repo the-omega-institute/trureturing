@@ -51,12 +51,42 @@ internal static class LeanCacheBudgetPolicy
     /// Case: https://github.com/the-omega-institute/trureturing/issues/2535
     /// Owner: repository owner (directed 2026-08-20 as triage while the durable cache
     /// fix proceeds separately on macstudio-4).
-    /// NOT PERMANENT. Exit condition: retire this override once the machine-level D5
-    /// build cache lands, because a lane that clones a complete cache never pays this
-    /// build at all; or replace it with a genuine derivation whose independent variable
-    /// includes the cost of the most expensive single subgraph, not machine capacity
-    /// alone — a capacity-derived value that ignores that term is struck by one module
-    /// no matter how wide it is.
+    /// NOT PERMANENT.
+    ///
+    /// Exit condition, branch one — DISCHARGED 2026-08-23. It read: "retire this
+    /// override once the machine-level D5 build cache lands, because a lane that clones
+    /// a complete cache never pays this build at all". The cache landed (#2729, #2762
+    /// closed; nine content-layer archives published; two automatic archive entries in
+    /// LeanCacheEnsureCommand; the clonefile donor path). Receipt, taken on a lane whose
+    /// `.lake` did not exist at all:
+    ///   LEAN_CACHE {"status":"seeded","method":"clonefile","clonefile_attempts":1,
+    ///               "mathlib_olean_state":"warm","project_olean_state":"warm",
+    ///               "archive_status":"not_attempted"}
+    ///   13 seconds wall clock; 1430 content-layer and 8550 dependency-layer oleans.
+    /// Three concurrent blind codex-cli seats (exit-condition literalism, derivability,
+    /// cadence) read this branch as satisfied, unanimously.
+    ///
+    /// Exit condition, branch two — STRUCTURALLY UNAVAILABLE, not merely unmet. It asked
+    /// for "a genuine derivation whose independent variable includes the cost of the most
+    /// expensive single subgraph, not machine capacity alone". Under the repository's
+    /// capacity-derivation rule a `capacity-derived` value is `C_i = min_j U_{i,j} - R_i`
+    /// with `q_i = floor(C_i / r_i)`; every independent variable there is a capacity or a
+    /// single-task resource, so the most-expensive-subgraph term has nowhere to live, and
+    /// `relation-derived` yields no terminal value at all. The derivability seat reached
+    /// this independently. Do not wait on this branch; it cannot be walked while one value
+    /// spans `cp`, `cache-get`, `cache-clean` and every Lake command.
+    ///
+    /// Exit condition, REPLACED — this is what the case now tracks. Split this single
+    /// wide-domain value into per-command budgets owned by the commands themselves, then
+    /// classify each under exactly one of the three types. Retiring the override by
+    /// deleting the constant is explicitly NOT the discharge: a bare 3600 with no type is
+    /// the fourth form the rule forbids, which is strictly worse than a cased override.
+    /// The value must still clear the measured 1656s of the single most expensive
+    /// subgraph, which is why it remains in the capacity domain and cannot be reclassified
+    /// as an out-of-domain liveness ceiling.
+    ///
+    /// Also still open and unchanged by the cache work: the positive and negative readings
+    /// below are ElonSG-only and ANOTHER MACHINE MUST REMEASURE.
     internal const int DefaultProvisionBudgetSeconds = 3600;
 
     /// <summary>

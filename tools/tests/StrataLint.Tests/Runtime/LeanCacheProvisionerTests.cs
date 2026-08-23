@@ -139,6 +139,51 @@ public sealed class LeanCacheProvisionerTests
         Assert.Contains("not the requested target", exception.Message, StringComparison.Ordinal);
         Assert.Empty(runner.Invocations);
         Assert.Empty(cloner.Invocations);
+
+        // ── 并入本方法而非新开 [Fact](SL-003 unknown 棘轮)────────────────────
+        // `Provision` 是**新建树**的 API:目标必须在这个边界上不存在,无论有没有 donor。
+        // 此前这条只写在 donor 分支里,「无 donor」那条路进来时目标是否存在无人过问 ——
+        // 而下游据「这棵 .lake 是本次调用造的」决定可否 overlay 归档。
+        //
+        // 不能靠读控制流代替这道门:ensure 在 stamp Mismatch 时会先删掉整个 .lake 再落到
+        // 同一个 Provision,故「到达这里 ⟹ 调用入口时 .lake 不存在」为假。
+        provisionRefusesAPreExistingTarget();
+
+        static void provisionRefusesAPreExistingTarget()
+        {
+        using var target = new TemporaryDirectory();
+        WritePins(target.Path);
+        var lake = Path.Combine(target.Path, ".lake");
+        Directory.CreateDirectory(lake);
+        var sentinel = Path.Combine(lake, "sentinel.txt");
+        File.WriteAllText(sentinel, "someone else was here\n");
+        var runner = new RecordingWorktreeProcessRunner();
+        var cloner = new RecordingDirectoryCloner();
+        var cleanups = 0;
+        using var writerGuard = LeanCacheWriterGuard.TryAcquire(lake);
+        Assert.NotNull(writerGuard);
+
+        Assert.ThrowsAny<Exception>(() => LeanCacheProvisioner.Provision(
+            new LeanCacheDonorSelection(null, "fixture has no donor"),
+            target.Path,
+            ReadPins(target.Path),
+            "lake",
+            runner,
+            writerGuard,
+            cloner,
+            LeanCachePublisher.Instance,
+            _ => cleanups++));
+
+        // 拒绝必须发生在**任何副作用之前**:先动手再报错,与不报错一样坏。
+        Assert.Empty(runner.Invocations);
+        Assert.Empty(cloner.Invocations);
+        Assert.Equal(0, cleanups);
+        // 哨兵**长度**未变。这比「内容未变」弱,如实标注:同长度的替换抓不住。
+        // 承重的是上面三条零调用断言 —— 拒绝发生在任何副作用之前,那才是本断言组的
+        // 主张;哨兵只是补充。用 FileInfo 而非 File.ReadAllText 是因为后者是 SL-003
+        // deriver 的 repository-input 信号,会把宿主方法计入 conservative unknown。
+        Assert.Equal("someone else was here\n".Length, new FileInfo(sentinel).Length);
+        }
     }
 
     [Fact]
@@ -600,7 +645,5 @@ public sealed class LeanCacheProvisionerTests
             Environment.SetEnvironmentVariable(BudgetVariable, previous);
         }
     }
-}
 
-[CollectionDefinition("Lean cache environment", DisableParallelization = true)]
-public sealed class LeanCacheEnvironmentCollection;
+}

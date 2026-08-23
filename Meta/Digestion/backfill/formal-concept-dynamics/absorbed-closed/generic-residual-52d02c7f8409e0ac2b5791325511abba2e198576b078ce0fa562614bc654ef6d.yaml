@@ -13,5 +13,5 @@ receipts:
   scribe:
     - gid: D5/S3/ConceptDynamics/Refinement/ResourceRefinementComposition.resource_refinement_compose
       definition_sha256: sha256:24fd3ea5037ec1b3bbc8304ed9a19faee0ed02bd7510d17e0b83562db3312eed
-      emission_sha256: sha256:2a93fcf9edb430d4ef76a08ced0e4f0d8f889eb7e05579dddf998d3426ef791b
+      emission_sha256: sha256:34886c6aa6b6530f356cc6ab7dc861b285ce0a2506c70c7f3f1368f9a6b252e1
   unresolved_subitems: []

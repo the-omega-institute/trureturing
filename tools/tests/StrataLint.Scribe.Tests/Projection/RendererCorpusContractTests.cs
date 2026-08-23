@@ -9,7 +9,7 @@ namespace StrataLint.Scribe.Tests;
 public sealed partial class FormulaCorpusInventoryTests
 {
     private const string CanonicalRendererSha256 =
-        "1aa07c8f69fe6ca6e218989b835215384f6363c523123ee59ba0a7c1c1c0a3db";
+        "a0b1de75daaffa6a8ae71995885744e1be013bbd0696fd02359870623c27b400";
     private const string UpdateCommand = "make -C tools update-renderer-contract";
 
     [Fact]
@@ -406,12 +406,15 @@ public sealed partial class FormulaCorpusInventoryTests
         formulas.Add(new Formula.Power(digits, group));
         formulas.Add(new Formula.Power(digits, sequence));
         formulas.Add(new Formula.Power(digits, word));
+        formulas.Add(new Formula.Power(sequence, group));
         formulas.Add(new Formula.Power(sequence, sequence));
         formulas.Add(new Formula.Power(word, digits));
+        formulas.Add(new Formula.Power(word, group));
         formulas.Add(new Formula.Power(one, x));
         formulas.Add(new Formula.Power(new Formula.Phi(), one));
         formulas.Add(new Formula.Power(new Formula.Phi(), x));
         formulas.Add(new Formula.Power(x, y));
+        formulas.Add(new Formula.LatexGroup([script]));
 
         formulas.Add(new Formula.Subscript(
             new Formula.LatexMacro(FormulaLatexMacro.Phi),

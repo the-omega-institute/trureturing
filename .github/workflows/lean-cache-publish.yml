@@ -38,8 +38,17 @@ name: Lean build cache publication
 #        持续堆积 6–12 个并发 run 挤占 runner 额度；定时后二者都不复存在。
 #     ② `workflow_run` 读不到 `push` 写的 cache（见文件头实测）；`schedule` 跑在
 #        默认分支上，作用域**可能**正常 —— 未测，改完看首个 run 的 cache-hit 即知。
-#   `0 */6 * * *` 是 policy-override（非派生值）：owner=仓库 τ=0 owner，
-#   依据=本次裁决，退出条件=命中率实测数据齐备后重定，案号见 #2634。
+#   `0 */6 * * *` 曾是 policy-override（非派生值），案号 #2634，退出条件为
+#   「命中率实测数据齐备后重定」。**该条件已于 2026-08-23 履行，#2634 已 CLOSED。**
+#   重定的依据不再是「本次裁决」，而是这组实测：在一棵 `.lake` 完全不存在的冷 lane 上
+#   绕开 donor 直取 release，exact 未命中、`prefix` 回落取到约 6 小时前那份
+#   （归档 producer 与当时 dev 相距 108 提交、22 个 `.lean` 变更）：
+#     fetch 5m08s（其中绝大部分是 1.47 GiB 下载与该 lane 首次的 lake 依赖包克隆）；
+#     随后 `make lean` **1m18s**，重编 **19 / 1513** 个模块，`EXIT=0`。
+#   即 6 小时陈旧只值 78 秒补编，而每收紧一档周期就多一份 1.456 GiB 归档。故周期
+#   维持 `0 */6 * * *`。相邻成功运行的实测间隔为 5h08m–7h05m（触发延迟 35–100 分钟），
+#   最长约 7 小时，仍在同一量级。
+#   单样本；按 owner 明示的「较为新、较为热即可，不追求绝对」采一条，未重复采样。
 #
 # 【只许 schedule：手动触发曾在这里，是被拿掉的，不是忘了加】
 #
@@ -77,6 +86,45 @@ permissions:
 # —— 同一内容地址已发布时它 no-op 退出。
 
 jobs:
+  # 认证配额探测(#2814 PR-Q)。**advisory:不改任何 required check,不被任何 job 依赖。**
+  #
+  #   立 CI 侧冷编译门的前置,是知道 base-owned token 做那三次产地核验够不够配额。
+  #   两席都禁止用「5000/hour」这类文档常数代替实测 header —— 故这里只做三次真调用,
+  #   把 `X-RateLimit-*` 原样打进日志,不判任何东西。
+  #
+  #   为什么放在这个 workflow 而不是新建文件:`.github` 在 RepositoryPathPolicy 里是
+  #   **白名单**,新增控制工件要在 `tools/` 下具名登记,而 `tools/` 在 Lean 报告输入闭包
+  #   里 —— 两行常量换一次全量报告重算(2026-08-21 实测 84 分钟)。本 workflow 已登记,
+  #   且**不在**该闭包内(闭包只含 `ci.yml`,见 `lean-report-input.sh:108`),故零连带成本。
+  #
+  #   **已知的作用域限制**:本 job 跑在 `schedule` 事件下,而 C 门要用的核验发生在
+  #   `pull_request_target` 下。两者的配额桶是否同一个,正是本探测要回答的问题之一 ——
+  #   读数里的 `X-RateLimit-Resource` 会说明它是按什么维度计的。**在读到之前不得假定相同。**
+  provenance-quota-probe:
+    name: Provenance metadata quota probe (advisory)
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 5
+    permissions:
+      contents: read
+      actions: read
+    steps:
+      - name: Read the three provenance endpoints and report quota headers
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PROBE_TAG: lean-cache-v1-leanprover-lean4-v4-31-0-48f4d997eea4b051-7dd0b520f77c6fe4
+          PROBE_RUN: "32623880219"
+        run: |
+          set -euo pipefail
+          echo "PROBE release-by-tag"
+          gh api --include "repos/${GITHUB_REPOSITORY}/releases/tags/${PROBE_TAG}" > /dev/null
+          echo "PROBE workflow-by-path"
+          gh api --include "repos/${GITHUB_REPOSITORY}/actions/workflows/lean-cache-publish.yml" > /dev/null
+          echo "PROBE run-by-id"
+          gh api --include "repos/${GITHUB_REPOSITORY}/actions/runs/${PROBE_RUN}" > /dev/null
+          echo "PROBE rate-limit-summary"
+          gh api rate_limit
+
   publish:
     name: Publish the Lean build cache
     # 这一条防的是**仓库配置漂移**，不是分支选择的 workflow 代码。

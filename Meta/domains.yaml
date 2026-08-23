@@ -44,6 +44,9 @@ domains:
   Depth:
     stratum: S1
     definition: Finite-resolution depth combining logarithmic scale, Zeckendorf support size, and quantized phase.
+  Descent:
+    stratum: S1
+    definition: Descending refinement chains of finite self-maps, their stabilization, and conjugacy classification.
   Diagonal:
     stratum: S0
     definition: Diagonal constructions on finite listings, their exact distance-profile and escape counts, and their asymptotic escape rates.
@@ -80,6 +83,9 @@ domains:
   History:
     stratum: S0
     definition: Finite marker and event histories, their append operation, and faithful self-encoding bridges.
+  Ledger:
+    stratum: S1
+    definition: Prime-exponent generation ledgers, their length readings, and the monotonicity of legal generation.
   Midline:
     stratum: S3
     definition: Dual and multiple characterizations of the critical midline sigma equals one half.

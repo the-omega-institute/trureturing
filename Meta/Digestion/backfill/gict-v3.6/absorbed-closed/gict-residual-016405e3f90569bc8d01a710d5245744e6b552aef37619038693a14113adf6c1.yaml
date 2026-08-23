@@ -13,5 +13,5 @@ receipts:
   scribe:
     - gid: D5/S3/PrimeForms/Crossing/ExactPropagation.exact_propagation_positive_cone
       definition_sha256: sha256:67d95a1f6596f03a326fbbac4376878bc75283a1bdd939d4f8f3511fe331754a
-      emission_sha256: sha256:5840da46cca221438f13c33f63ceb3f04db67e766ccbcd81fb6ad2ab5dbaf281
+      emission_sha256: sha256:70a22d9b38019d53429c64d0e6f336f9a73a952e26d42ad31865c1abf54c4b7f
   unresolved_subitems: []

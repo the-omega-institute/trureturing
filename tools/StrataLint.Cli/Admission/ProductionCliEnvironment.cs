@@ -555,7 +555,7 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
         TruthExportCommand.Run(repository, arguments);
 
     public CommandResult CleanLanes(IReadOnlyList<string> arguments) =>
-        CleanLanesCommand.Run(repositoryRoot, arguments);
+        CleanLanesCommand.Run(repositoryRoot, arguments, TimeProvider.System.GetUtcNow());
 
     public CommandResult AppendPerf(IReadOnlyList<string> arguments) =>
         PerfAppendCommand.Run(repositoryRoot, arguments);

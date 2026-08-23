@@ -5,7 +5,7 @@ using StrataLint.Engine;
 
 namespace StrataLint.Tests;
 
-public sealed class TheoristFrontierContractTests
+public sealed partial class TheoristFrontierContractTests
 {
     public static TheoryData<string> HistoricalCandidates => new()
     {

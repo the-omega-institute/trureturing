@@ -13,5 +13,5 @@ receipts:
   scribe:
     - gid: D5/S3/ConceptDynamics/Adjunction/ProcessConceptAdjunction.process_concept_adjunction
       definition_sha256: sha256:6f704ae92c0d64d3a554cd6147cbbd577ad0439c6ed7806108044fbdda90c542
-      emission_sha256: sha256:f934628970af6b9faf805720c6ca3b1abbff4efee6904203dcad23624441fb47
+      emission_sha256: sha256:d52adf205b24493c7208b4a0edeb691864262c17a8e2e173cdf55cab2e14ef67
   unresolved_subitems: []

@@ -13,5 +13,5 @@ receipts:
   scribe:
     - gid: D5/S3/ConceptDynamics/Policy/StrictPolicyPowerGrowth.strict_policy_power_growth
       definition_sha256: sha256:ecf5ff1ad3502be0e4e14148f535f4c2412795817120cd5b8dd39a03f44f4cea
-      emission_sha256: sha256:cd02cb5a23046faa09528981ccde3530370a699def0c6bfff95e94fa87faffce
+      emission_sha256: sha256:86136081b03b1f212b01eaf8e6dd9fee221a1e2d5a17cc3df589deb8a9730180
   unresolved_subitems: []
