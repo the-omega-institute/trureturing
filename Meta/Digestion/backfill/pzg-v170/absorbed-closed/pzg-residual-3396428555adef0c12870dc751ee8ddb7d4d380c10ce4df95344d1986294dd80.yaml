@@ -13,5 +13,5 @@ receipts:
   scribe:
     - gid: D5/S0/Conventions/CanonicalInterchangeability.canonical_interchangeability
       definition_sha256: sha256:3cc0a4dbab069f9e238d60b7b5009ef9fd7aa1288695bfd1db08cd5c3afd844e
-      emission_sha256: sha256:2dda5669da73283d51d29134d698e7706ee2dbd8d3ea3292e440786fc4eb7b8b
+      emission_sha256: sha256:a24e2a81de38bed1fc9ccf03ba8a0811641a4a89c74df8b88a3540ea3b9337fa
   unresolved_subitems: []

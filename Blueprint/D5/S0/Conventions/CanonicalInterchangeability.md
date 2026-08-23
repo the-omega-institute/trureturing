@@ -21,3 +21,4 @@ The first conjunct quantifies over every pair of faithful digit specifications w
 ## References
 
 - Truth anchor: `D5/S0/Conventions/CanonicalInterchangeability.canonical_interchangeability`
+- Dependency: [D5/S0/Conventions/WDigits](WDigits.md)

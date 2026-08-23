@@ -12,6 +12,6 @@ receipts:
       target_sha256: sha256:97286e68157f65215652699b481a20f1ce74e14f1f84d564c1568fcf0ca5c93c
   scribe:
     - gid: D5/S3/Midline/DualCharacterization.midline_dual_characterization
-      definition_sha256: sha256:20c63040e17269d6d1c72cafd3ff129852cc77b98861e0adba5b5a4acf9750d5
-      emission_sha256: sha256:8d51fb6bab32535716628e8415950a065159172dfafe9803edfae018df269bdd
+      definition_sha256: sha256:dac3c5083673aa0c186b3ae47161b9ecf254bdb028827d8753cec9588d488ce5
+      emission_sha256: sha256:7fafaf1249d800ab45c4479eba9a768b1ede47d923a6a35396b4dbdc0fada7bd
   unresolved_subitems: []

@@ -4,11 +4,41 @@
 # 命名空间与 spec A14 的 `E<n>` 发布 tag 严格分开：这些 tag 是构建缓存，不是版本发布。
 # tag 绑定 (toolchain, os, arch, config_sha256, sources_sha256) 五元组；同一元组只发一次。
 #
-# 这个归档**不是权威**：它是一个加速器，永远不进 admission 信任链，
-# 它的存在也永远不能让任何判词从红变绿。消费侧 (`fetch`) 对**依赖层身份**
-# (`toolchain`/`config_sha256`)、归档完整性与摘要一律 fail-closed;唯独 `sources_sha256`
-# 允许回退到同 config 的最近一份,差量交给 `lake build` 补——那是加速器该有的形状,
-# 不是把关。
+# 这个归档**不是权威**：它是一个加速器，不构成独立的 admission 证据。消费侧 (`fetch`)
+# 对**依赖层身份** (`toolchain`/`config_sha256`)、归档完整性与摘要一律 fail-closed;
+# 唯独 `sources_sha256` 允许回退到同 config 的最近一份,差量交给 `lake build` 补——
+# 那是加速器该有的形状,不是把关。
+#
+# 【勘误：这里曾写「永远不进 admission 信任链」，那句话是假的】
+#
+#   三席独立评审（#2729）一致判定它按字面不成立。归档发布的 .olean 会被 consumer 侧的
+#   Lake 当作构建输入复用，canonical Lean 报告又从那个 olean 环境读声明 —— 发布者
+#   **确实位于 admission 下方**。两条本以为能兜底的机制都兜不住：
+#
+#   ① Lake 的增量判定兜不住。`Build/Common.lean:213-223` 只在 depTrace.hash 等于
+#      saved depHash 且输出存在时判 up-to-date；`Build/Module.lean:742-755` **只检查
+#      输出文件是否存在，不比对内容**。故可以留一个与当前 depHash 自洽的 trace，
+#      或在 trace 生成后改 olean 字节，Lake 会直接采用已存在的输出。
+#   ② kernel 复核补不上 source binding。`Inspector.lean:284-292` 以 trustLevel := 0
+#      调 importModules，但 pinned `Environment.lean:2242-2350` 的 import 路径直接把
+#      反序列化的 ModuleData.constants 放进 Kernel.Environment，未调 replay；而且
+#      **无论 trust-0 如何**，一个 kernel-valid 但来自不同源码的 olean 照样通过类型
+#      检查。`inspect.sh:116-131` 又把磁盘上的 source_sha256 当独立 CLI 参数写进报告，
+#      没有证明该 hash 是那份 olean 的原像。
+#
+#   可成立的替代不变量是：**归档不构成独立 admission 证据，且它不引入比现有 dev
+#   cache / report producer 更宽的 writer 集合。** 后半句是有条件的，不是天然成立：
+#   `workflow_dispatch` 曾是那条更宽的 writer 路径（`gh workflow run --ref` 取的是
+#   该分支上的 workflow 版本，故 job 内检查 ref 不构成机器边界），已于 PR #2818 移除，
+#   并由 `ContentsWriteWorkflowClosureTests` 钉住。
+#
+#   已落地（#2729 判决第 2、3 条）：release tag 用 --target producer_commit_sha；
+#   manifest 记 producer_commit_sha 与 workflow_run_id；缺这两个值时 publish 直接拒绝；
+#   workflow 侧显式写出 checkout 取的事件 SHA。
+#
+#   仍未落地（B 步）：**consumer 侧没有任何 provenance 核验** —— 上面这些字段现在
+#   写得出来，但没有人去核它们。**在 consumer 核验落地之前，ensure 不得自动 fetch
+#   本归档** —— 当前也确实没有，手工 target 只作诊断。
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../../.." && pwd -P)"
@@ -38,6 +68,20 @@ while [[ $# -gt 0 ]]; do
 done
 
 [[ -n "$VERB" ]] || usage
+
+# ── 发布者身份 ────────────────────────────────────────────────────────────────
+# 自 PR #2818 起本归档的触发集合只有 `schedule`，即唯一合法发布者是 dev 上的定时
+# CI producer。consumer 侧的 provenance 核验要靠这两个值把资产绑回那次运行，故它们
+# 缺失或形状不对时**拒绝发布**：发不出资产，好过发一个事后无法归属的资产。
+# 这一段刻意早于 address 计算 —— 身份不成立就不必再算别的。
+if [[ "$VERB" == "publish" ]]; then
+  producer_commit_sha="${GITHUB_SHA:-}"
+  workflow_run_id="${GITHUB_RUN_ID:-}"
+  [[ "$producer_commit_sha" =~ ^[0-9a-f]{40}$ ]] \
+    || die "publish needs GITHUB_SHA as a 40-hex producer commit; refusing to publish an unattributable archive"
+  [[ "$workflow_run_id" =~ ^[0-9]+$ ]] \
+    || die "publish needs GITHUB_RUN_ID; refusing to publish an unattributable archive"
+fi
 
 # ── 身份 ──────────────────────────────────────────────────────────────────────
 # 两个哈希来自本仓既有的唯一真源，不另算一套。
@@ -99,10 +143,31 @@ case "$VERB" in
     {
       printf 'archive_sha256=%s\n' "$digest"
       printf 'archive_bytes=%s\n' "$bytes"
+      printf 'producer_commit_sha=%s\n' "$producer_commit_sha"
+      printf 'workflow_run_id=%s\n' "$workflow_run_id"
     } >> "$staged/manifest.txt"
+    # `--target` 把 tag 建在产出它的那个 commit 上。
+    #
+    # 【这里曾写「缺省 target_commitish 会跟着默认分支走，tag 指向的东西事后还会变」，
+    #   那句话是假的】gh 的 --target 是「Target branch or full commit SHA (default
+    #   [main branch])」，作用于 **automatic tag creation**：已建成的 tag **不会**因
+    #   默认分支之后前进而自动移动。
+    #
+    #   注意别把这条说过头：tag 本身并非无条件不可变。`gh release create --help` 写
+    #   「When release immutability is **enabled** for a repository, Git tags associated
+    #   with a release cannot be modified or deleted」—— 那是个仓库开关，而本仓实测
+    #   release 的 `immutable=false`（#2729 cost 席读数）。此处需要的只是「不会自动
+    #   移动」这条窄命题，它够用，且经核验。
+    #
+    #   真正的不变量在**创建时刻**：不带 --target 时，tag 建在 gh 执行那一刻默认分支的
+    #   tip 上，而那**未必是被打包的那棵树**（dev 每小时前进约 16 个提交，打包与发布之间
+    #   隔着一次 lake pack）。于是 manifest 里记的 producer_commit_sha 会与 tag 实际指向的
+    #   commit 不是同一个，consumer 拿哪一个都对不上。--target 消除的是这个错配，
+    #   不是一个并不存在的事后漂移。
     gh release create "$tag" --repo "$REPO" \
+      --target "$producer_commit_sha" \
       --title "Lean build cache ${config_sha256:0:8}/${sources_sha256:0:8} (${os}-${arch})" \
-      --notes "Immutable Lean build cache. Not authoritative: an accelerator only, never admission evidence. Produced from ${toolchain} on ${os}-${arch}." \
+      --notes "Lean build cache produced from ${toolchain} on ${os}-${arch} at ${producer_commit_sha} by run ${workflow_run_id}. An accelerator, not independent admission evidence." \
       "$staged/$asset" "$staged/manifest.txt" >/dev/null
     printf 'LEAN_CACHE_PUBLISH {"status":"published","tag":"%s","bytes":%s,"sha256":"%s"}\n' \
       "$tag" "$bytes" "$digest"
@@ -148,10 +213,110 @@ case "$VERB" in
       [[ "$want" == "$got" ]] \
         || { printf 'LEAN_CACHE_FETCH {"status":"miss","tag":"%s","reason":"%s mismatch"}\n' "$tag" "$field"; exit 1; }
     done
-    ( cd "$repository" && lake unpack "$staged/$asset" >/dev/null )
+    # ── 产地核验 ────────────────────────────────────────────────────────────
+    # 这段是 #2729 判决的 B 步前半。摘要与依赖层身份只证明「字节没坏、层对得上」，
+    # 不证明**是谁产的**：manifest 与 payload 同处一个发布面，有写权者可一起替换而
+    # 保持自洽（`cost` 席实测 release `immutable=false`）。
+    #
+    # 归档的 .olean 会被 Lake 当构建输入复用、canonical 报告从那个环境读声明，故
+    # 发布者位于 admission 下方。三席一致：**任一 provenance 检查不过即判 miss，
+    # 不消费其 olean**。
+    fail_provenance() {
+      printf 'LEAN_CACHE_FETCH {"status":"rejected","tag":"%s","resolved":"%s","stage":"provenance","reason":"%s"}\n' \
+        "$tag" "$resolved" "$1"
+      exit 1
+    }
+    producer_commit_sha="$(sed -n 's/^producer_commit_sha=//p' "$staged/manifest.txt")"
+    archive_run_id="$(sed -n 's/^workflow_run_id=//p' "$staged/manifest.txt")"
+    [[ "$producer_commit_sha" =~ ^[0-9a-f]{40}$ ]] \
+      || fail_provenance "manifest carries no producer commit; archives published before #2833 are not attributable and are refused"
+    [[ "$archive_run_id" =~ ^[0-9]+$ ]] \
+      || fail_provenance "manifest carries no workflow run id"
+
+    # 一次 REST 调用拿齐三样：author、target_commitish、每个 asset 的 uploader。
+    # `gh release view --json` 的 asset 字段里**没有** uploader，故走 api。
+    command -v jq >/dev/null 2>&1 \
+      || fail_provenance "jq is required to read release provenance and is absent"
+    release_json="$(gh api "repos/${REPO}/releases/tags/${resolved}" 2>/dev/null)" \
+      || fail_provenance "release metadata is unreadable"
+    release_author="$(printf '%s' "$release_json" | jq -r '.author.login // ""')"
+    release_target="$(printf '%s' "$release_json" | jq -r '.target_commitish // ""')"
+    [[ "$release_author" == "github-actions[bot]" ]] \
+      || fail_provenance "release author is ${release_author:-<absent>}, not the CI publisher"
+    [[ "$release_target" == "$producer_commit_sha" ]] \
+      || fail_provenance "release target ${release_target:-<absent>} does not match the declared producer commit"
+
+    # 资产必须**恰好**是这两份。多一份就意味着有人往这个 release 里加过东西，而
+    # 「所有 uploader 都对」在多资产下并不排除那种情形。
+    for expected in "$asset" manifest.txt; do
+      count="$(printf '%s' "$release_json" | jq --arg n "$expected" '[.assets[]? | select(.name == $n)] | length')"
+      [[ "$count" == "1" ]] \
+        || fail_provenance "release carries ${count:-<absent>} assets named ${expected}, expected exactly 1"
+    done
+    total_assets="$(printf '%s' "$release_json" | jq '[.assets[]?] | length')"
+    [[ "$total_assets" == "2" ]] \
+      || fail_provenance "release carries ${total_assets:-<absent>} assets, expected exactly 2"
+    # 进程替换里的失败不会被 `set -e` 捕获，故先把结果取进变量并查状态：解析失败
+    # 与「没有 uploader」是两回事，前者必须 fail-closed，不能当成空列表走过去。
+    uploaders="$(printf '%s' "$release_json" | jq -r '[.assets[]?.uploader.login // ""] | .[]')" \
+      || fail_provenance "release asset metadata could not be parsed"
+    uploader_count="$(printf '%s\n' "$uploaders" | grep -c . || true)"
+    [[ "$uploader_count" == "2" ]] \
+      || fail_provenance "release declares ${uploader_count} asset uploaders, expected 2"
+    while IFS= read -r uploader; do
+      [[ "$uploader" == "github-actions[bot]" ]] \
+        || fail_provenance "an asset was uploaded by ${uploader:-<absent>}, not the CI publisher"
+    done <<< "$uploaders"
+
+    # 把**手里的字节**绑到**被验产地的那个资产**上。此前只比 manifest 声明的摘要，而
+    # manifest 与 payload 同处一个发布面；GitHub 自己记的 asset digest 是独立的第二侧。
+    github_digest="$(printf '%s' "$release_json" \
+      | jq -r --arg n "$asset" '.assets[]? | select(.name == $n) | .digest // ""')"
+    [[ "$github_digest" == "sha256:${actual}" ]] \
+      || fail_provenance "archive bytes do not match the digest GitHub recorded for ${asset} (${github_digest:-<absent>})"
+
+    # 发布器的 workflow id **由路径解析**，不写死：写死即第二真源，且换仓或重建
+    # workflow 后失效。两侧都必须先验形状 —— 若两侧同为空串，`==` 会恒真，
+    # 那就是一个空比较冒充判据。
+    publisher_id="$(gh api "repos/${REPO}/actions/workflows/lean-cache-publish.yml" --jq '.id' 2>/dev/null)" \
+      || fail_provenance "publisher workflow is unreadable"
+    [[ "$publisher_id" =~ ^[0-9]+$ ]] \
+      || fail_provenance "publisher workflow id is ${publisher_id:-<absent>}, not numeric"
+    run_json="$(gh api "repos/${REPO}/actions/runs/${archive_run_id}" 2>/dev/null)" \
+      || fail_provenance "declared workflow run ${archive_run_id} is unreadable"
+    run_workflow_id="$(printf '%s' "$run_json" | jq -r '.workflow_id // ""')"
+    [[ "$run_workflow_id" =~ ^[0-9]+$ ]] \
+      || fail_provenance "run ${archive_run_id} declares workflow id ${run_workflow_id:-<absent>}, not numeric"
+    [[ "$run_workflow_id" == "$publisher_id" ]] \
+      || fail_provenance "run ${archive_run_id} workflow_id is ${run_workflow_id}, expected ${publisher_id}"
+    for pair in \
+      "event:schedule" \
+      "head_branch:dev" \
+      "head_sha:${producer_commit_sha}" \
+      "conclusion:success"
+    do
+      field="${pair%%:*}"; want="${pair#*:}"
+      got="$(printf '%s' "$run_json" | jq -r ".${field} // \"\"")"
+      [[ -n "$got" ]] \
+        || fail_provenance "run ${archive_run_id} declares no ${field}"
+      [[ "$got" == "$want" ]] \
+        || fail_provenance "run ${archive_run_id} ${field} is ${got}, expected ${want}"
+    done
+    # `head_branch=dev` + `event=schedule` + 该 run 成功，合起来说明该 commit 当时
+    # 就是默认分支的 tip。**残余**：dev 若被 force-push，历史上的 tip 可能已不在
+    # 当前历史里。此处不另做祖先查询——那要么依赖本机 fetch 状态（会随上次 fetch
+    # 何时发生而变），要么再加一次 API 往返。记为已知残余，不冒充已排除。
+
+    # 解包只有这一个入口，且它在**产地核验之后**。做成具名函数不是修辞：
+    # `VerifiedConsumptionHasASingleEntryPoint` 钉住脚本里 `lake unpack` 恰好出现一次
+    # 且落在此函数体内，故将来任何新分支想解包都必须走这里，不能各写各的。
+    consume_verified_archive() {
+      ( cd "$repository" && lake unpack "$staged/$asset" >/dev/null )
+    }
+    consume_verified_archive
     got_sources="$(sed -n 's/^sources_sha256=//p' "$staged/manifest.txt")"
-    printf 'LEAN_CACHE_FETCH {"status":"unpacked","mode":"%s","tag":"%s","resolved":"%s","fetched_sources_sha256":"%s","sha256":"%s"}\n' \
-      "$mode" "$tag" "$resolved" "$got_sources" "$actual"
+    printf 'LEAN_CACHE_FETCH {"status":"unpacked","mode":"%s","tag":"%s","resolved":"%s","fetched_sources_sha256":"%s","sha256":"%s","producer_commit_sha":"%s","workflow_run_id":"%s"}\n' \
+      "$mode" "$tag" "$resolved" "$got_sources" "$actual" "$producer_commit_sha" "$archive_run_id"
     ;;
 
   *) usage ;;

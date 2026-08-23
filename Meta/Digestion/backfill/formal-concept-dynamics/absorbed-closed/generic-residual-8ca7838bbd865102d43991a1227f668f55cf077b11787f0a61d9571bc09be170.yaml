@@ -1,0 +1,17 @@
+ast_path: 定理/217.1
+fingerprints:
+  raw_sha256: sha256:8ca7838bbd865102d43991a1227f668f55cf077b11787f0a61d9571bc09be170
+  normalized_sha256: sha256:8ca7838bbd865102d43991a1227f668f55cf077b11787f0a61d9571bc09be170
+cas_ref: sha256:8ca7838bbd865102d43991a1227f668f55cf077b11787f0a61d9571bc09be170
+coverage_gids:
+  - D5/S3/ConceptDynamics/Disclosure/ExactTargetForcedLeak.exact_target_forced_leak
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/Disclosure/ExactTargetForcedLeak.exact_target_forced_leak
+      source_sha256: sha256:8ca7838bbd865102d43991a1227f668f55cf077b11787f0a61d9571bc09be170
+      target_sha256: sha256:1909b708b4981229ea6f4683f1a82a6e8084d5d758c8f6135a9e8295648fcd97
+  scribe:
+    - gid: D5/S3/ConceptDynamics/Disclosure/ExactTargetForcedLeak.exact_target_forced_leak
+      definition_sha256: sha256:22f1a05f4216bc18afb8f118a740c30a3c901e6708fb7e15ae6b3cb545be046f
+      emission_sha256: sha256:ff9f9ec8a33862f62de70223566a7eb118907312a1cd3623427b9ef5b008ec70
+  unresolved_subitems: []

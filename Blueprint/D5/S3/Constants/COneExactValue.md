@@ -23,3 +23,4 @@ A checked negative control changes the exact numerator from seven to eight and p
 ## References
 
 - Truth anchor: `D5/S3/Constants/COneExactValue.c_one_exact_value`
+- Dependency: [D5/S3/Constants/SturmianDirichletValue](SturmianDirichletValue.md)

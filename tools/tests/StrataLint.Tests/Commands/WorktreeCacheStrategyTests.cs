@@ -221,6 +221,12 @@ internal sealed class RecordingWorktreeProcessRunner : IWorktreeProcessRunner
 
     internal bool FailLake { get; init; }
 
+    internal bool ThrowCacheGetTimeout { get; init; }
+
+    internal bool FailWrappedLake { get; init; }
+
+    internal Action<string>? DuringWrappedLake { get; init; }
+
     internal bool FailClean { get; init; }
 
     internal bool ThrowClean { get; init; }
@@ -231,13 +237,25 @@ internal sealed class RecordingWorktreeProcessRunner : IWorktreeProcessRunner
 
     internal bool FailWorktreeAdd { get; init; }
 
-    internal bool BlockStampAfterClean { get; init; }
+    internal bool BlockStampAfterCacheGet { get; init; }
 
     internal Action<string>? AfterWorktreeAdd { get; init; }
 
     internal string? BusyRoot { get; init; }
 
     internal bool BusyOnlyAfterCopy { get; init; }
+
+    /// <summary>
+    /// 归档取回的桩。默认**不拦**（返回 null），此时 ensure 会真去跑脚本；测试要观察
+    /// 归档路径就设它。记录调用次数是为了钉住那条机器门：内容层不冷时**一次都不该调**。
+    /// </summary>
+    internal string? ArchiveReceipt { get; init; }
+
+    internal int ArchiveInvocations { get; private set; }
+
+    internal int ArchiveExitCode { get; init; }
+
+    internal Action<string>? AfterArchiveFetch { get; init; }
 
     internal bool CacheGetSawExistingProjection { get; private set; }
 
@@ -271,6 +289,20 @@ internal sealed class RecordingWorktreeProcessRunner : IWorktreeProcessRunner
             throw new IOException("ordinary copy threw");
         }
 
+        if (fileName == "/bin/bash"
+            && arguments.Count >= 2
+            && arguments[0].EndsWith("lean-cache-publish.sh", StringComparison.Ordinal)
+            && arguments[1] == "fetch")
+        {
+            ArchiveInvocations++;
+            // 成功的桩必须**真的落下产物**：只回一句 unpacked 而不造 olean，会让
+            // 「成功后重探热度」这段代码删掉也不红 —— 那样它就只是生产代码，不是契约。
+            AfterArchiveFetch?.Invoke(workingDirectory);
+            return ArchiveReceipt is null
+                ? Failure("archive fetcher is not stubbed for this test")
+                : new ProcessOutput(ArchiveExitCode, Encoding.UTF8.GetBytes(ArchiveReceipt), []);
+        }
+
         if (fileName == "lsof")
         {
             var busy = BusyRoot is not null && (!BusyOnlyAfterCopy || copyCompleted);
@@ -288,6 +320,7 @@ internal sealed class RecordingWorktreeProcessRunner : IWorktreeProcessRunner
                     Path.Combine(workingDirectory, ".lake", "build", "cache.bin"));
                 CacheGetSawExistingProjection |= sawExistingProjection;
                 CacheGetExistingProjectionObservations.Add(sawExistingProjection);
+                if (ThrowCacheGetTimeout) throw new TimeoutException("cache get timed out");
                 if (FailLake) return Failure("cache get failed");
                 var lake = Path.Combine(workingDirectory, ".lake");
                 Directory.CreateDirectory(lake);
@@ -295,6 +328,10 @@ internal sealed class RecordingWorktreeProcessRunner : IWorktreeProcessRunner
                 MathlibProjectionFixture.Write(lake, includeOleans: !OmitMathlibOleans);
                 Directory.CreateDirectory(MathlibCacheFixture.CurrentPath);
                 File.WriteAllText(Path.Combine(MathlibCacheFixture.CurrentPath, "current.ltar"), "current\n");
+                if (BlockStampAfterCacheGet)
+                {
+                    Directory.CreateDirectory(LeanCacheStamp.PathFor(lake));
+                }
                 return Success();
             }
 
@@ -306,13 +343,11 @@ internal sealed class RecordingWorktreeProcessRunner : IWorktreeProcessRunner
                 {
                     if (Path.GetFileName(path) != "current.ltar") File.Delete(path);
                 }
-                if (BlockStampAfterClean)
-                {
-                    Directory.CreateDirectory(LeanCacheStamp.PathFor(Path.Combine(workingDirectory, ".lake")));
-                }
                 return Success();
             }
 
+            DuringWrappedLake?.Invoke(workingDirectory);
+            if (FailWrappedLake) return Failure("wrapped lake command failed");
             return Success();
         }
 

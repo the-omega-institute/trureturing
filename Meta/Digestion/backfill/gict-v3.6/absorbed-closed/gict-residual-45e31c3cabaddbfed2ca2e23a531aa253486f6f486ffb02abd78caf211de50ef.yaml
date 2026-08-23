@@ -13,5 +13,5 @@ receipts:
   scribe:
     - gid: D5/S3/Constants/COneExactValue.c_one_exact_value
       definition_sha256: sha256:22e23f82b3610952d3d2e30f1283689d429e2ee115b186fa4dc701068125baeb
-      emission_sha256: sha256:3dc014bcc83c4fef80def502fdd600ef7058e45c6370b84f762b5cc8845e2b55
+      emission_sha256: sha256:c6bc0f2732257a34196d4ba45d9c04cf2ebcd9106d878e0c83ea0195f0917a31
   unresolved_subitems: []

@@ -1,0 +1,17 @@
+ast_path: 定理/499.1
+fingerprints:
+  raw_sha256: sha256:05e36064ee70d49a776a11e23b98e6b77a5f6f1e88b1ed0cd627778fe8d2de8c
+  normalized_sha256: sha256:05e36064ee70d49a776a11e23b98e6b77a5f6f1e88b1ed0cd627778fe8d2de8c
+cas_ref: sha256:05e36064ee70d49a776a11e23b98e6b77a5f6f1e88b1ed0cd627778fe8d2de8c
+coverage_gids:
+  - D5/S0/Rewriting/Safety/InvariantSafety.invariant_safety
+receipts:
+  coverage:
+    - gid: D5/S0/Rewriting/Safety/InvariantSafety.invariant_safety
+      source_sha256: sha256:05e36064ee70d49a776a11e23b98e6b77a5f6f1e88b1ed0cd627778fe8d2de8c
+      target_sha256: sha256:a2bb93cea0d70f018e1137cbceb61d7a3be72be86be99f21e28baa9259fb5f17
+  scribe:
+    - gid: D5/S0/Rewriting/Safety/InvariantSafety.invariant_safety
+      definition_sha256: sha256:9136e47a7cfd5cc3edb2ecbc1daa3e5af1a5a346739cac6a442646833a99cb81
+      emission_sha256: sha256:0bacb971180723f1871d0c12f32c514d68c69efb31fd4347a95fc2d914dddd6d
+  unresolved_subitems: []

@@ -13,5 +13,5 @@ receipts:
   scribe:
     - gid: D5/S3/ConceptDynamics/StrictRefinementCapability.strict_refinement_capability
       definition_sha256: sha256:14110ba79bd3ade9851e7f19b483c803856f340960d3fb9f65f159999e76aceb
-      emission_sha256: sha256:6134e7d38e45ea95d6fd86083217cbdeb815e33216d8cb33a77aa135dcf7e1e1
+      emission_sha256: sha256:c354d4049c655483c26cc9b4bb487c4d32b09bbecd260101ba7bf17ac87b26df
   unresolved_subitems: []

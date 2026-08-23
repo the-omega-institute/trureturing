@@ -1,0 +1,17 @@
+ast_path: appendix/E.201
+fingerprints:
+  raw_sha256: sha256:14f29f5085fe94287401df89373a14e7d9f7bab87c3ea95143ccff10298e5bc6
+  normalized_sha256: sha256:14f29f5085fe94287401df89373a14e7d9f7bab87c3ea95143ccff10298e5bc6
+cas_ref: sha256:14f29f5085fe94287401df89373a14e7d9f7bab87c3ea95143ccff10298e5bc6
+coverage_gids:
+  - D5/S3/QuantumChannels/ContractionGeometry/PauliTopBoundary.pauli_top_boundary_volume_zero
+receipts:
+  coverage:
+    - gid: D5/S3/QuantumChannels/ContractionGeometry/PauliTopBoundary.pauli_top_boundary_volume_zero
+      source_sha256: sha256:14f29f5085fe94287401df89373a14e7d9f7bab87c3ea95143ccff10298e5bc6
+      target_sha256: sha256:432f01d00ce66ed2547224ab550c0ae619654d695ca6185e58fd00a10846fb0d
+  scribe:
+    - gid: D5/S3/QuantumChannels/ContractionGeometry/PauliTopBoundary.pauli_top_boundary_volume_zero
+      definition_sha256: sha256:56a807cb2421d3fb6023628c1248a05503984c4b824a48711607775043a2bc4a
+      emission_sha256: sha256:b01aa234c4decd1e19acaa04720304a04d1f243571534b5d3e89849aeb1e877c
+  unresolved_subitems: []

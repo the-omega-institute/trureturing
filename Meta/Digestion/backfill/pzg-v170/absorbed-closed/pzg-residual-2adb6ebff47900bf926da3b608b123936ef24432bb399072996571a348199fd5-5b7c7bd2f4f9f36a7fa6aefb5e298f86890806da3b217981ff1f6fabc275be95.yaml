@@ -13,5 +13,5 @@ receipts:
   scribe:
     - gid: D5/S3/Quantum/Sharpness/SpectralSharpnessDuality.spectral_sharpness_isGreatest_bounded_pairing
       definition_sha256: sha256:98dca9b3069f86382d7310062e93b4608665737aa8a96a5628c393eaeedd361f
-      emission_sha256: sha256:ee3d2043b263cfa7add195cffa45d9f4f932102d4dc8bd07550072effa8e96d7
+      emission_sha256: sha256:c4c6f97d05d43056c71c87acb6bf2c6171c2a2dc6fa14de52a6ad7d363ba3f12
   unresolved_subitems: []

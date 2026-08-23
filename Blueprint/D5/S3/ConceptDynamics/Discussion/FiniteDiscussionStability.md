@@ -25,3 +25,4 @@ Repository search supplied ConceptJoinUniversal.Refines and StrictRefinementCapa
 ## References
 
 - Truth anchor: `D5/S3/ConceptDynamics/Discussion/FiniteDiscussionStability.finite_discussion_stability`
+- Dependency: [D5/S3/ConceptDynamics/StrictRefinementCapability](../StrictRefinementCapability.md)

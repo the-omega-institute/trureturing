@@ -13,5 +13,5 @@ receipts:
   scribe:
     - gid: D5/S3/ResourceOrder/OneStepHedgingGain.one_step_hedging_gain
       definition_sha256: sha256:46d488458d30a0227b1e60ace7d20e48e740beb009e17cf6f5b51daa7dbb541e
-      emission_sha256: sha256:ead9d8b308b95063cc767507c1d040947161f689c8ee7dbca4ce1145be6a7006
+      emission_sha256: sha256:28333f441cb7b754f08b8d88529a1abdc3103a81ba767736f4e9ce30410fd048
   unresolved_subitems: []

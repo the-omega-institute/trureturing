@@ -27,3 +27,4 @@ The surrounding source assumes a nonempty carrier and a surjective observation m
 ## References
 
 - Truth anchor: `D5/S3/Observer/Separation/FiniteFutureCongruence.finite_future_maximal_congruence`
+- Dependency: [D5/S1/Dynamics/KnasterTarski](../../../S1/Dynamics/KnasterTarski.md)

@@ -38,3 +38,4 @@ One conjunction: the map has the stated coordinates, it carries the axis state o
 
 - Truth anchor: `D5/S3/Axis/AxisTraceMapForm.axis_trace_map_form_package`
 - Truth anchor: `D5/S3/Axis/AxisTraceMapForm.orbitMap_form`
+- Dependency: [D5/S3/Axis/AxisOrbitMap](AxisOrbitMap.md)

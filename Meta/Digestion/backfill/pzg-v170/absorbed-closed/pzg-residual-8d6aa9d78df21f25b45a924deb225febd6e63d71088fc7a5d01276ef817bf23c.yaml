@@ -13,5 +13,5 @@ receipts:
   scribe:
     - gid: D5/S3/Analytic/DiagonalCollapse.diagonal_partition_collapse
       definition_sha256: sha256:ea90bc22adaa45d733e9c17a060e0db2c50cc7b8e0e11a66f893b4449d3bfd52
-      emission_sha256: sha256:4ddb2c28b6dbecb12118ee868cef79ca46ac367d336266ce6a2d69a5afa15e13
+      emission_sha256: sha256:6dbd17244e9860037cb4430d5fe43f82c98a66357b9e3f3a99c801f05047e54e
   unresolved_subitems: []

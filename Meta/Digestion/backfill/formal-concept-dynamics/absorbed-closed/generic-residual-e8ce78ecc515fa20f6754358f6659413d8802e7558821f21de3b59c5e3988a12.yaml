@@ -13,5 +13,5 @@ receipts:
   scribe:
     - gid: D5/S3/ConceptDynamics/Restoration/RestorationImpliesCompensation.identity_restoration_implies_value_compensation
       definition_sha256: sha256:2628184c6ee6e2be83aec6ef52ad9efacb79bc2cf1c0460fc48d6eb070c9e67d
-      emission_sha256: sha256:145e79bede903e841232a8aac9b524be978f262ec052d12cba9df959e7ba5da9
+      emission_sha256: sha256:623dd90005c7fbf2679f7a8f308713f20633192333f92d5e1a4f63005ca3d405
   unresolved_subitems: []

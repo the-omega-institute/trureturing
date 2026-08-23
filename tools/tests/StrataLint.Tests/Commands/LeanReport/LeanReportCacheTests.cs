@@ -261,8 +261,10 @@ public sealed class LeanReportCacheTests
             var inspectorDir = Path.Combine(Repo, "tools", "lean-inspector");
             var scriptsDir = Path.Combine(Repo, "tools", "scripts");
             var reportDir = Path.Combine(scriptsDir, "report");
+            var worktreeDir = Path.Combine(scriptsDir, "worktree");
             Directory.CreateDirectory(inspectorDir);
             Directory.CreateDirectory(reportDir);
+            Directory.CreateDirectory(worktreeDir);
             Directory.CreateDirectory(Path.Combine(Repo, "D5"));
             Directory.CreateDirectory(bin);
 
@@ -279,6 +281,9 @@ public sealed class LeanReportCacheTests
             WriteExecutable(
                 Path.Combine(reportDir, "report-supervisor.sh"),
                 StubSupervisor);
+            File.WriteAllText(
+                Path.Combine(worktreeDir, "lean-cache-ensure.sh"),
+                StubCacheEnsure);
             CopyWrapper = Path.Combine(bin, "cp");
             WriteExecutable(CopyWrapper, StubCopy);
 
@@ -432,6 +437,12 @@ public sealed class LeanReportCacheTests
                     | UnixFileMode.OtherRead | UnixFileMode.OtherExecute);
         }
 
+
+        private const string StubCacheEnsure = """
+            #!/usr/bin/env bash
+            set -euo pipefail
+            printf '%s\n' 'LEAN_CACHE {"status":"seeded","method":"fake"}' >&2
+            """;
 
         // Records each invocation, writes a byte-stable canned report + sidecar, and
         // exits 0 in well under a second. Mirrors the inspect.sh contract consumed by

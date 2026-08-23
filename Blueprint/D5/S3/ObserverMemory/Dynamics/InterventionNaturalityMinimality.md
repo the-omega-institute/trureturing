@@ -23,3 +23,5 @@ Pinned Mathlib supplies Function.semiconj_iff_comp_eq for converting the singlet
 ## References
 
 - Truth anchor: `D5/S3/ObserverMemory/Dynamics/InterventionNaturalityMinimality.intervention_naturality_minimality`
+- Dependency: [D5/S0/Diagonal/Naturality/CoordinateRestrictionNaturality](../../../S0/Diagonal/Naturality/CoordinateRestrictionNaturality.md)
+- Dependency: [D5/S3/ObserverMemory/Prediction/ControlledBehaviorUniversality](../Prediction/ControlledBehaviorUniversality.md)

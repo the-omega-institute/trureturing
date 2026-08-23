@@ -23,3 +23,4 @@ Loogle found the exact Real.mul_iSup_of_nonneg declaration used to move gamma th
 ## References
 
 - Truth anchor: `D5/S3/Observer/MetricGeometry/BellmanMaxEquation.discounted_prediction_distance_bellman`
+- Dependency: [D5/S3/Observer/MetricGeometry/DiscountedSensorFusion](DiscountedSensorFusion.md)

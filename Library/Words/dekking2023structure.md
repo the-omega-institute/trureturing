@@ -6,7 +6,7 @@ title: The structure of base phi expansions
 doi: 10.48550/arXiv.2305.08349
 claim: Occurrence sequences of negative-position digit prefixes in base-phi expansions are conjecturally Lucas-parameterized sequences drawn from three Sturmian families.
 strata_touched:
-  - D5/X_Frontier/BasePhiNegativePrefixTrident
+  - D5/S1/Words/NegativeExpansions/BasePhiNegativePrefixTridentClassification
   - D5/S1/Words/ZeckendorfOrder
   - D5/S1/Words/ZeckendorfBeattyBridge
   - D5/S1/Words/ReturnWords/GoldenReturnWords

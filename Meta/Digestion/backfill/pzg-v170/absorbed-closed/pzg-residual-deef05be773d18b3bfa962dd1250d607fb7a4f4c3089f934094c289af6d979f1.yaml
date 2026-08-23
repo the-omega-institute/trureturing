@@ -13,5 +13,5 @@ receipts:
   scribe:
     - gid: D5/S3/PrimeForms/Crossing/CrossingNormalForm.crossing_normal_form_unique_minimum
       definition_sha256: sha256:426bd5ca7cd51c77f4b8ccaf934d344eb1cbde8ee5dce113683e1ebc9634ceda
-      emission_sha256: sha256:7568742a001c29148fa843b9a64a4433218ff13ac6728185efc0f31b929af5f6
+      emission_sha256: sha256:070ba28bc44bf7cf30bd81231540ed200c16b693271d45daea3e42a8c098659c
   unresolved_subitems: []

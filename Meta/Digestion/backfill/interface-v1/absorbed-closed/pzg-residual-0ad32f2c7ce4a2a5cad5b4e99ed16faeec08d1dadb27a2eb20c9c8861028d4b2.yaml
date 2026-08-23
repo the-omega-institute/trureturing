@@ -13,5 +13,5 @@ receipts:
   scribe:
     - gid: D5/S0/Diagonal/CaptureIntersectionCardinality.capture_intersection_cardinality
       definition_sha256: sha256:127d36e830486522eeffd3b60875bfbb0392266d23617244f4ceaf370935a631
-      emission_sha256: sha256:d77f168779aa170941949d9299fd6e91e2e9378988c29e15acd70db73d3fd96d
+      emission_sha256: sha256:a9dd22953d8d4482a95a8ff66c6158019a9c2654c58de3f0993a591a44727b33
   unresolved_subitems: []

@@ -113,6 +113,16 @@ internal static class LeanCacheStamp
 
     internal static void Write(string lake, LeanPinSet pins)
     {
+        Write(lake, pins, overwrite: true);
+    }
+
+    internal static void WriteNew(string lake, LeanPinSet pins)
+    {
+        Write(lake, pins, overwrite: false);
+    }
+
+    private static void Write(string lake, LeanPinSet pins, bool overwrite)
+    {
         Directory.CreateDirectory(lake);
         var path = PathFor(lake);
         var temporary = Path.Combine(lake, $".stratalint-lean-cache-stamp.{Path.GetRandomFileName()}.tmp");
@@ -128,7 +138,7 @@ internal static class LeanCacheStamp
                     lake_manifest_base64 = Convert.ToBase64String(pins.LakeManifest),
                 }) + "\n",
                 new UTF8Encoding(false));
-            File.Move(temporary, path, overwrite: true);
+            File.Move(temporary, path, overwrite);
         }
         finally
         {
@@ -434,16 +444,23 @@ internal sealed class LeanCacheDonorSelection : IDisposable
 {
     private LeanCacheGuard? guard;
 
-    internal LeanCacheDonorSelection(string? donor, string? notice, LeanCacheGuard? guard = null)
+    internal LeanCacheDonorSelection(
+        string? donor,
+        string? notice,
+        LeanCacheGuard? guard = null,
+        OleanWarmthInspection? projectWarmth = null)
     {
         Donor = donor;
         Notice = notice;
         this.guard = guard;
+        ProjectWarmth = projectWarmth;
     }
 
     internal string? Donor { get; }
 
     internal string? Notice { get; }
+
+    internal OleanWarmthInspection? ProjectWarmth { get; }
 
     internal LeanCacheGuard? TakeGuard()
     {
@@ -462,18 +479,34 @@ internal static class GitWorktreeInventory
     internal static LeanCacheDonorSelection SelectDonor(
         string repositoryRoot,
         LeanPinSet basePins,
-        IWorktreeProcessRunner runner)
+        IWorktreeProcessRunner runner) =>
+        SelectDonor(
+            repositoryRoot,
+            basePins,
+            runner,
+            FileSystemLeanCacheStateProbe.Instance,
+            requireProjectWarm: false);
+
+    internal static LeanCacheDonorSelection SelectDonor(
+        string repositoryRoot,
+        LeanPinSet basePins,
+        IWorktreeProcessRunner runner,
+        ILeanCacheStateProbe stateProbe,
+        bool requireProjectWarm)
     {
-        var roots = ReadRoots(repositoryRoot, runner);
-        var ordered = new[] { Path.GetFullPath(repositoryRoot) }
-            .Concat(roots)
+        ArgumentNullException.ThrowIfNull(stateProbe);
+        var targetRoot = LeanCacheGuard.PhysicalPath(repositoryRoot);
+        var ordered = ReadRoots(repositoryRoot, runner)
             .Select(LeanCacheGuard.PhysicalPath)
+            .Where(root => !string.Equals(root, targetRoot, StringComparison.Ordinal))
             .Distinct(StringComparer.Ordinal);
         var sawCache = false;
         var sawMismatch = false;
         var sawSymlink = false;
         var sawInvalidStamp = false;
         var sawBusy = false;
+        var sawColdProject = false;
+        var sawProjectProbeFailure = false;
         var unreadable = new List<string>();
 
         foreach (var root in ordered)
@@ -533,13 +566,31 @@ internal static class GitWorktreeInventory
                 continue;
             }
 
-            return new LeanCacheDonorSelection(Path.GetFullPath(root), null, guard);
+            var project = stateProbe.ProbeOleans(
+                Path.Combine(cache, "build", "lib", "lean"));
+            if (requireProjectWarm)
+            {
+                if (!project.IsWarm)
+                {
+                    guard.Dispose();
+                    sawColdProject |= project.State == OleanWarmth.Cold;
+                    sawProjectProbeFailure |= project.State == OleanWarmth.ProbeFailed;
+                    if (project.Error is not null) unreadable.Add($"{root}: {project.Error}");
+                    continue;
+                }
+            }
+
+            return new LeanCacheDonorSelection(Path.GetFullPath(root), null, guard, project);
         }
 
         var notice = sawMismatch
             ? "existing .lake donor pin bytes do not match the requested base"
             : sawInvalidStamp
                 ? $"existing .lake donor producer stamp is unusable ({string.Join("; ", unreadable)})"
+                : sawProjectProbeFailure
+                    ? $"existing .lake donor project warmth could not be enumerated ({string.Join("; ", unreadable)})"
+                : sawColdProject
+                    ? "existing .lake donor has no project olean"
                 : sawBusy
                     ? "existing .lake donor is busy; refusing a non-quiescent copy"
             : sawSymlink

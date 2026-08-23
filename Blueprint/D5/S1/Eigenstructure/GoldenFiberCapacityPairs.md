@@ -23,3 +23,4 @@ This deposit closes only the explicit capacity-pair equalities in source proposi
 ## References
 
 - Truth anchor: `D5/S1/Eigenstructure/GoldenFiberCapacityPairs.golden_fiber_capacity_pairs`
+- Dependency: [D5/S1/Depth/GoldenPowerRounding](../Depth/GoldenPowerRounding.md)

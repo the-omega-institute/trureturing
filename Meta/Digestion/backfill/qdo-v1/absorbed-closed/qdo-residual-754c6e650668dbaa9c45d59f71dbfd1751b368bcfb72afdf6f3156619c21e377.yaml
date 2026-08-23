@@ -13,5 +13,5 @@ receipts:
   scribe:
     - gid: D5/S3/Observer/DynamicProgramming/BellmanContraction.bellman_operator_contracting_unique_fixed_point
       definition_sha256: sha256:567792d5cf888b835712f8f6b54d2f42e91eb9b2e723182222571c85bb36a6e6
-      emission_sha256: sha256:0b8274a3ec827c6b4cd296322436bd79bc83673813b77448e0bedcbd4435df66
+      emission_sha256: sha256:8435c3aa9cea3c0528e08cdc7d124a71b6797c18422cee09afa068bfcdc83a0f
   unresolved_subitems: []
