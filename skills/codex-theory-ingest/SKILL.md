@@ -347,7 +347,8 @@ Commit the theory volume and writer-produced digestion data, then run:
 ```sh
 make preflight BASE=$(git merge-base origin/dev HEAD)
 git push -u origin <branch>
-make pr-open HEAD=<branch> TITLE='<title>' BODY=<body-file>
+make pr-open HEAD=<branch> MESSAGE=<message-file>
+# The message file's first line is the PR title; the rest is the PR body.
 ```
 
 Require preflight and both publication commands to exit 0. Do not push further

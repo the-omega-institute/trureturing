@@ -522,7 +522,8 @@ Push the already reviewed and admitted commit, then use the repository door:
 
 ```sh
 git push -u origin <branch>
-make pr-open HEAD=<branch> TITLE='<title>' BODY=<pr-body-file>
+make pr-open HEAD=<branch> MESSAGE=<message-file>
+# The message file's first line is the PR title; the rest is the PR body.
 ```
 
 The body file is mandatory. It must carry the selection receipt, problem echo,

@@ -185,7 +185,8 @@ After `make deposit` and `make preflight` both exit 0 and Step 7 completes, push
 
 ```sh
 git push -u origin <branch>
-make pr-open HEAD=<branch> TITLE='<title>' [BODY=<file>]
+make pr-open HEAD=<branch> MESSAGE=<message-file>
+# The message file's first line is the PR title; the rest is the PR body.
 ```
 
 The door arms auto-merge. After it opens the pull request, do not push further changes to that branch: the pull request may already have merged, in which case a later successful push does not put that commit on `dev`. Any further change requires a new branch and a new pull request.

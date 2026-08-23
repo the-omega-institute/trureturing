@@ -211,7 +211,7 @@ public sealed partial class MakeWorkflowTests
         var openRecipe = Recipe(makefile, "pr-open");
         var watchRecipe = Recipe(makefile, "pr-watch");
 
-        Assert.Contains("make pr-open HEAD=branch TITLE=t [BODY=file]  Create, arm auto-merge, and wait for required-CI verdict", makefile, StringComparison.Ordinal);
+        Assert.Contains("make pr-open HEAD=branch MESSAGE=file  Create from a message file whose first line is the title, arm auto-merge, and wait for required-CI verdict", makefile, StringComparison.Ordinal);
         Assert.Contains("make pr-watch PR=n                Wait for required-CI verdict on an existing PR", makefile, StringComparison.Ordinal);
         Assert.Single(Regex.Matches(openRecipe, Regex.Escape(PrOpenScriptPath)));
         Assert.Single(Regex.Matches(watchRecipe, Regex.Escape(PrWatchScriptPath)));

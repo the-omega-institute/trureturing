@@ -9,7 +9,7 @@ PR_WATCH_MAX_FAILURES=3
 BOUNDED_OUTPUT=""
 receipt() { printf '%s\n' "$*" >&2; }
 positive_integer() { [[ "$1" =~ ^[1-9][0-9]*$ ]]; }
-usage_open() { receipt "usage: pr.sh open --head HEAD --title TITLE [--body-file FILE] [--timeout-seconds S] [--interval-seconds S]"; }
+usage_open() { receipt "usage: pr.sh open --head HEAD --message-file FILE [--timeout-seconds S] [--interval-seconds S]"; }
 usage_watch() { receipt "usage: pr.sh watch --pr NUMBER [--timeout-seconds S] [--interval-seconds S]"; }
 run_bounded_capture() {
   local step="$1" timeout_seconds="$2"; shift 2
@@ -154,24 +154,30 @@ pr_watch_main() {
   done
 }
 pr_open_main() {
-  local head="" title="" body_file="" url number
+  local head="" message_file="" title="" body_file="" url number rc=0
   local timeout_seconds="$PR_WATCH_TIMEOUT_SECONDS" interval_seconds="$PR_WATCH_INTERVAL_SECONDS"
   while [[ $# -gt 0 ]]; do
     case "$1" in
       --head) [[ $# -ge 2 ]] || { usage_open; return 2; }; head="$2"; shift 2 ;;
-      --title) [[ $# -ge 2 ]] || { usage_open; return 2; }; title="$2"; shift 2 ;;
-      --body-file) [[ $# -ge 2 ]] || { usage_open; return 2; }; body_file="$2"; shift 2 ;;
+      --message-file) [[ $# -ge 2 ]] || { usage_open; return 2; }; message_file="$2"; shift 2 ;;
       --timeout-seconds) [[ $# -ge 2 ]] || { usage_open; return 2; }; timeout_seconds="$2"; shift 2 ;;
       --interval-seconds) [[ $# -ge 2 ]] || { usage_open; return 2; }; interval_seconds="$2"; shift 2 ;;
       *) usage_open; return 2 ;;
     esac
   done
-  [[ -n "$head" && -n "$title" ]] && positive_integer "$timeout_seconds" && positive_integer "$interval_seconds" \
+  [[ -n "$head" && -n "$message_file" ]] && positive_integer "$timeout_seconds" && positive_integer "$interval_seconds" \
     || { usage_open; return 2; }
-  if [[ -n "$body_file" && ! -r "$body_file" ]]; then receipt "pr.sh open: body file is not readable: $body_file"; return 2; fi
-  local args=(pr create --repo "$PR_REPO" --base "$PR_BASE" --head "$head" --title "$title")
-  if [[ -n "$body_file" ]]; then args+=(--body-file "$body_file"); else args+=(--fill-first); fi
-  gh_create "${args[@]}" || return $?
+  if [[ ! -r "$message_file" ]]; then receipt "pr.sh open: message file is not readable: $message_file"; return 2; fi
+  # The message file carries every caller-authored byte, so no title or body ever
+  # crosses a make or shell layer that could expand or drop it.
+  title="$(head -n 1 "$message_file")"
+  if [[ -z "$title" ]]; then receipt "pr.sh open: message file has an empty title line: $message_file"; return 2; fi
+  body_file="$(mktemp "${TMPDIR:-/tmp}/pr-body.XXXXXX")"
+  tail -n +2 "$message_file" | sed '1{/^$/d;}' > "$body_file"
+  local args=(pr create --repo "$PR_REPO" --base "$PR_BASE" --head "$head" --title "$title" --body-file "$body_file")
+  gh_create "${args[@]}" || rc=$?
+  rm -f "$body_file"
+  (( rc == 0 )) || return "$rc"
   url="$(printf '%s\n' "$BOUNDED_OUTPUT" | tail -n 1)"; number="${url##*/}"
   if ! positive_integer "$number"; then receipt "pr.sh open: create returned no pull request number"; return 1; fi
   gh_local auto-merge "$PR_OPEN_TIMEOUT_SECONDS" pr merge "$number" --repo "$PR_REPO" --auto --merge || return $?

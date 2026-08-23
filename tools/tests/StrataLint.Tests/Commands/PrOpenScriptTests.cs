@@ -172,7 +172,7 @@ public sealed class PrOpenScriptTests
     public void PrOpenCreatesArmsAndWatchesInOneForegroundProcessPrintingNumberFirst()
     {
         using var fixture = new PrScriptFixture();
-        var result = fixture.RunOpen("--head", "topic", "--title", "A title", "--interval-seconds", "1", "--timeout-seconds", "5");
+        var result = fixture.RunOpen("--head", "topic", "--message-file", fixture.Message("A title\n\nbody text\n"), "--interval-seconds", "1", "--timeout-seconds", "5");
         Assert.Equal(0, result.ExitCode);
         Assert.StartsWith("42\nPR_WATCH_RESULT pr=42 outcome=green\n", Text(result.StandardOutput), StringComparison.Ordinal);
         Assert.Equal(4, fixture.Invocations.Count);
@@ -184,7 +184,7 @@ public sealed class PrOpenScriptTests
     {
         using var fixture = new PrScriptFixture();
         fixture.SnapshotResponses(Ok(Snapshot("OPEN", Check("engineering", "COMPLETED", "FAILURE"))));
-        var result = fixture.RunOpen("--head", "topic", "--title", "title", "--interval-seconds", "1", "--timeout-seconds", "5");
+        var result = fixture.RunOpen("--head", "topic", "--message-file", fixture.Message("title\n"), "--interval-seconds", "1", "--timeout-seconds", "5");
         Assert.Equal(1, result.ExitCode);
         Assert.StartsWith("42\nPR_WATCH_RESULT pr=42 outcome=red", Text(result.StandardOutput), StringComparison.Ordinal);
     }
@@ -192,7 +192,7 @@ public sealed class PrOpenScriptTests
     public void PrOpenCreateFailureDoesNotCloseAnything()
     {
         using var fixture = new PrScriptFixture { FailStep = "create" };
-        var result = fixture.RunOpen("--head", "topic", "--title", "title");
+        var result = fixture.RunOpen("--head", "topic", "--message-file", fixture.Message("title\n"));
         Assert.NotEqual(0, result.ExitCode);
         Assert.Single(fixture.Invocations);
         Assert.DoesNotContain(fixture.Invocations, IsWatchInvocation);
@@ -201,34 +201,54 @@ public sealed class PrOpenScriptTests
     public void PrOpenAutoMergeFailureIsFatal()
     {
         using var fixture = new PrScriptFixture { FailStep = "merge" };
-        var result = fixture.RunOpen("--head", "topic", "--title", "title");
+        var result = fixture.RunOpen("--head", "topic", "--message-file", fixture.Message("title\n"));
         Assert.NotEqual(0, result.ExitCode);
         Assert.Equal(2, fixture.Invocations.Count);
         Assert.DoesNotContain(fixture.Invocations, IsWatchInvocation);
     }
     [Fact]
-    public void PrOpenRejectsMissingRequiredArgumentsAndUnreadableBody()
+    public void PrOpenRejectsMissingRequiredArgumentsAndUnusableMessageFile()
     {
         using var fixture = new PrScriptFixture();
-        Assert.Equal(2, fixture.RunOpen("--title", "title").ExitCode);
+        Assert.Equal(2, fixture.RunOpen("--message-file", fixture.Message("title\n")).ExitCode);
         Assert.Equal(2, fixture.RunOpen("--head", "branch").ExitCode);
-        Assert.Equal(2, fixture.RunOpen("--head", "branch", "--title", "title", "--body-file", fixture.MissingBody).ExitCode);
+        Assert.Equal(2, fixture.RunOpen("--head", "branch", "--message-file", fixture.MissingMessage).ExitCode);
+        Assert.Equal(2, fixture.RunOpen("--head", "branch", "--message-file", fixture.Message("")).ExitCode);
+        Assert.Equal(2, fixture.RunOpen("--head", "branch", "--message-file", fixture.Message("\n\nbody only\n")).ExitCode);
         Assert.Empty(fixture.Invocations);
     }
     [Fact]
-    public void PrOpenPassesReadableBodyFileToCreate()
+    public void PrOpenSplitsTheMessageFileIntoFirstLineTitleAndRemainingBody()
     {
         using var fixture = new PrScriptFixture();
-        File.WriteAllText(fixture.Body, "body\n", new UTF8Encoding(false));
-        var result = fixture.RunOpen("--head", "topic", "--title", "title", "--body-file", fixture.Body);
+        var result = fixture.RunOpen(
+            "--head", "topic", "--message-file", fixture.Message("a title\n\nfirst body line\n\nsecond body line\n"));
         Assert.Equal(0, result.ExitCode);
-        Assert.Contains($"--body-file {fixture.Body}|token=app-token", fixture.Invocations[0], StringComparison.Ordinal);
+        Assert.Contains("--title a title --body-file ", fixture.Invocations[0], StringComparison.Ordinal);
+        Assert.Equal("first body line\n\nsecond body line\n", fixture.CreatedBody);
+    }
+    [Fact]
+    public void PrOpenPassesShellMetacharactersInTheTitleThroughVerbatim()
+    {
+        using var fixture = new PrScriptFixture();
+        const string title = "pr: make `pr.sh` fail closed on $(shell echo x) and \"quotes\"";
+        var result = fixture.RunOpen("--head", "topic", "--message-file", fixture.Message(title + "\n\nbody\n"));
+        Assert.Equal(0, result.ExitCode);
+        Assert.Contains("--title " + title + " ", fixture.Invocations[0], StringComparison.Ordinal);
+    }
+    [Fact]
+    public void PrOpenSendsAnEmptyBodyWhenTheMessageFileHasOnlyATitle()
+    {
+        using var fixture = new PrScriptFixture();
+        Assert.Equal(0, fixture.RunOpen("--head", "topic", "--message-file", fixture.Message("only a title\n")).ExitCode);
+        Assert.Contains("--title only a title --body-file ", fixture.Invocations[0], StringComparison.Ordinal);
+        Assert.Equal("", fixture.CreatedBody);
     }
     [Fact]
     public void PrOpenFallsBackToLocalGhWhenAppTokenFails()
     {
         using var fixture = new PrScriptFixture { AppTokenFails = true };
-        Assert.Equal(0, fixture.RunOpen("--head", "topic", "--title", "title").ExitCode);
+        Assert.Equal(0, fixture.RunOpen("--head", "topic", "--message-file", fixture.Message("title\n")).ExitCode);
         Assert.EndsWith("|token=none", fixture.Invocations[0], StringComparison.Ordinal);
     }
     [Fact]
@@ -289,8 +309,16 @@ public sealed class PrOpenScriptTests
             RequiredResponses(Ok(Required("engineering")));
             SnapshotResponses(Ok(Snapshot("OPEN", Check("engineering", "COMPLETED", "SUCCESS"))));
         }
-        internal string Body => Path.Combine(temporary.Path, "body.md");
-        internal string MissingBody => Path.Combine(temporary.Path, "missing.md");
+        private int messageCount;
+        internal string MissingMessage => Path.Combine(temporary.Path, "missing.md");
+        internal string Message(string content)
+        {
+            var path = Path.Combine(temporary.Path, $"message{messageCount++}.md");
+            File.WriteAllText(path, content, new UTF8Encoding(false));
+            return path;
+        }
+        internal string CreatedBody =>
+            File.Exists(invocations + ".body") ? File.ReadAllText(invocations + ".body") : "";
         internal string FailStep { get; set; } = "";
         internal bool AppTokenFails { get; set; }
         internal IReadOnlyList<string> Invocations => File.Exists(invocations) ? File.ReadAllLines(invocations) : [];
@@ -350,6 +378,12 @@ public sealed class PrOpenScriptTests
             case " $* " in
               *" pr create "*)
                 [[ "$PR_TEST_FAIL_STEP" != create ]] || exit 41
+                body_file=""; previous=""
+                for argument in "$@"; do
+                  [[ "$previous" != --body-file ]] || body_file="$argument"
+                  previous="$argument"
+                done
+                [[ -z "$body_file" ]] || cp "$body_file" "$PR_TEST_INVOCATIONS.body"
                 printf '%s\n' 'https://github.com/owner/repo/pull/42'
                 ;;
               *" pr merge "*) [[ "$PR_TEST_FAIL_STEP" != merge ]] || exit 42 ;;
