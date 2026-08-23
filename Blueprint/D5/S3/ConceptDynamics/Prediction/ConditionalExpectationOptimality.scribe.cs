@@ -20,9 +20,9 @@ internal sealed class ConditionalExpectationOptimalityDocument : IScribeDocument
         Formula leftError = Seq(target, Sp, Minus, Sp, conditional);
         Formula rightError = Seq(target, Sp, Minus, Sp, composedPredictor);
         Formula leftMeanSquare = new Formula.Power(
-            Call("L2Norm", leftError, measure), Grp(D(2)));
+            Seq(Grp(Call("L2Norm", leftError, measure))), Grp(D(2)));
         Formula rightMeanSquare = new Formula.Power(
-            Call("L2Norm", rightError, measure), Grp(D(2)));
+            Seq(Grp(Call("L2Norm", rightError, measure))), Grp(D(2)));
         Formula universe = Seq(Operatorname, Grp(F.Id("Type")));
 
         Formula statement = Disp(Seq(
