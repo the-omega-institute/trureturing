@@ -77,6 +77,13 @@ public sealed partial class CleanLanesCommandTests
                 true,
                 [new PullRequestInfo(branch, headOid, "MERGED", mergeCommitOid)]);
 
+        internal void RegisterPullRequests(
+            string lookupBranch,
+            params PullRequestInfo[] returnedPullRequests) =>
+            pullRequests[lookupBranch] = new PullRequestProbeOutcome(
+                true,
+                returnedPullRequests);
+
         internal void RegisterClosedPr(string branch, string headOid) =>
             pullRequests[branch] = new PullRequestProbeOutcome(
                 true,
