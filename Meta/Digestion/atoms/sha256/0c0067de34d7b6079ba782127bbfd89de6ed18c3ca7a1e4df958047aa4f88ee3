@@ -1,0 +1,8 @@
+### 本文定理 13.1：双规范修复
+
+I_F 是收缩、单调、幂等的 interior operator；C_F 是扩张、单调、幂等的 closure operator。二者具有完全相同的固定点：
+
+```text
+I_F(R)=R ⇔ R 是 F-congruence ⇔ C_F(R)=R.
+```
+

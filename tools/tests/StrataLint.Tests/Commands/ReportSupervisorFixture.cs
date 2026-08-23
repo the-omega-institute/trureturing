@@ -424,7 +424,7 @@ internal sealed class ReportSupervisorFixture : IDisposable
     public void Dispose() => temporary.Dispose();
 
 
-    private static string FindPerformanceConfiguration()
+    internal static string FindPerformanceConfiguration()
     {
         var targetFrameworkDirectory = new DirectoryInfo(AppContext.BaseDirectory);
         var configuration = targetFrameworkDirectory.Parent?.Name;

@@ -1,0 +1,10 @@
+#### 证明
+
+若 (x,y)∈KA，则对任意 a 和任意后续词 w：
+
+```text
+q(Fw(Fa x)) = q(Faw x) = q(Faw y) = q(Fw(Fa y)),
+```
+
+故 (Fa x,Fa y)∈KA。最大性由对全部行动词的归纳得到。∎
+

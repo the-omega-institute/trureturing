@@ -135,7 +135,11 @@ internal static partial class CoverAtomCommand
 
             var addedReceipts = gids
                 .Where(gid => !existingGids.Contains(gid.Value))
-                .Select(gid => BuildReceipts(target, gid, current))
+                .Select(gid => BuildReceipts(
+                    target,
+                    gid,
+                    current,
+                    verifiedScribeEmissions))
                 .ToImmutableArray();
             var covered = target with
             {
@@ -338,7 +342,8 @@ internal static partial class CoverAtomCommand
     private static (DigestionCoverageReceipt Coverage, DigestionScribeReceipt Scribe) BuildReceipts(
         DigestionLedgerEntry entry,
         Gid gid,
-        RepositorySnapshot snapshot)
+        RepositorySnapshot snapshot,
+        VerifiedScribeEmissions verifiedScribeEmissions)
     {
         if (!snapshot.TryGetFile(gid.Path.Value, out var target))
         {
@@ -346,16 +351,17 @@ internal static partial class CoverAtomCommand
         }
 
         var documentGid = ScribeEmissionAttestation.DocumentGid(gid.Value);
+        if (!verifiedScribeEmissions.TryGet(documentGid, out var verifiedRecord))
+        {
+            throw new InvalidOperationException(
+                $"cover verified Scribe emission is absent: {documentGid} "
+                + "(scribe-emission-missing; partial-closed)");
+        }
+
         var definitionPath = ScribeEmissionAttestation.DefinitionPath(documentGid);
-        var emissionPath = ScribeEmissionAttestation.EmissionPath(documentGid);
         if (!snapshot.TryGetFile(definitionPath, out var definition))
         {
             throw new InvalidOperationException($"cover Scribe definition is absent: {definitionPath}");
-        }
-
-        if (!snapshot.TryGetFile(emissionPath, out var emission))
-        {
-            throw new InvalidOperationException($"cover Scribe emission is absent: {emissionPath}");
         }
 
         var coverage = new DigestionCoverageReceipt(
@@ -365,7 +371,7 @@ internal static partial class CoverAtomCommand
         var scribe = new DigestionScribeReceipt(
             gid.Value,
             DigestionFingerprint.Compute(definition.RawBytes.AsSpan()).RawSha256,
-            DigestionFingerprint.Compute(emission.RawBytes.AsSpan()).RawSha256);
+            verifiedRecord.EmissionSha256);
         return (coverage, scribe);
     }
 

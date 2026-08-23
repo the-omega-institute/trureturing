@@ -1,0 +1,10 @@
+### 推论 9.3：闭合可以极粗
+
+常值接口 q(x)=* 对任何动力学都闭合。因此零信息观察者可以没有 carry，却完全不忠实。必须分开报告：
+
+```text
+dynamic closure;
+state separation;
+target sufficiency.
+```
+
