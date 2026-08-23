@@ -2,7 +2,7 @@ using static StrataLint.Scribe.DefinitionDsl;
 using static StrataLint.Scribe.FormulaDsl;
 using F = StrataLint.Scribe.FormulaDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S1.Deficit;
+namespace StrataLint.Scribe.Blueprint.D5.S1.Deficit.Beatty;
 
 internal sealed class FiberCoordinateBeattyFormsDocument : IScribeDocumentDefinition
 {
@@ -13,7 +13,7 @@ internal sealed class FiberCoordinateBeattyFormsDocument : IScribeDocumentDefini
             Describe.Lean(
                 DescribeId.Create("fiber-coordinate-displacement-forms"),
                 DeclarationHandle.Create(
-                    "D5/S1/Deficit/FiberCoordinateBeattyForms.fiber_coordinates_eq_displacement_forms"),
+                    "D5/S1/Deficit/Beatty/FiberCoordinateBeattyForms.fiber_coordinates_eq_displacement_forms"),
                 H("Both fiber coordinates have exact displacement forms"),
                 StatementSource.FromAuthor(CoordinateForms()),
                 AssessedProvenance.FromRepo(),
@@ -31,7 +31,7 @@ internal sealed class FiberCoordinateBeattyFormsDocument : IScribeDocumentDefini
             Describe.Lean(
                 DescribeId.Create("golden-fiber-membership-equation"),
                 DeclarationHandle.Create(
-                    "D5/S1/Deficit/FiberCoordinateBeattyForms.mem_goldenFiber_iff"),
+                    "D5/S1/Deficit/Beatty/FiberCoordinateBeattyForms.mem_goldenFiber_iff"),
                 H("Fiber membership is exactly the doubled displacement equation"),
                 StatementSource.FromAuthor(MembershipFormula()),
                 AssessedProvenance.FromRepo(),
@@ -48,7 +48,7 @@ internal sealed class FiberCoordinateBeattyFormsDocument : IScribeDocumentDefini
             Describe.Lean(
                 DescribeId.Create("ceiling-start-formula-fails-at-one"),
                 DeclarationHandle.Create(
-                    "D5/S1/Deficit/FiberCoordinateBeattyForms.ceiling_start_formula_fails_at_one"),
+                    "D5/S1/Deficit/Beatty/FiberCoordinateBeattyForms.ceiling_start_formula_fails_at_one"),
                 H("The proposed ceiling start fails at label one"),
                 StatementSource.FromAuthor(CeilingCounterexample()),
                 AssessedProvenance.FromRepo(),

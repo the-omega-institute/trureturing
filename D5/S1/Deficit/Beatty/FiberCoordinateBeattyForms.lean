@@ -1,6 +1,6 @@
-/- GID: D5/S1/Deficit/FiberCoordinateBeattyForms
-   generality: G
-   mirror-B: D5/B/S1/Deficit/FiberCoordinateBeattyForms
+/- GID: D5/S1/Deficit/Beatty/FiberCoordinateBeattyForms
+   generality: I
+   mirror-B: D5/B/S1/Deficit/Beatty/FiberCoordinateBeattyForms
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    digest: The floor and displacement forms of both golden fiber coordinates agree, yielding the
