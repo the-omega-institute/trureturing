@@ -141,7 +141,8 @@ public sealed class CliOutcomeTests
                 descriptor.DisplaySeverity,
                 descriptor.AdmissionEffect,
                 path,
-                "protected-surface change detected (SL-022)")));
+                "protected-surface change detected (SL-022)")),
+            ImmutableArray<Diagnostic>.Empty);
     }
 
     private static AdmissionOutcome Admitted()
