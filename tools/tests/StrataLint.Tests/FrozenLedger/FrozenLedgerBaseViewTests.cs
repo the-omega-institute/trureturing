@@ -96,7 +96,7 @@ public sealed class FrozenLedgerBaseViewTests(ITestOutputHelper output)
         Assert.DoesNotContain("FrozenLedger.ApplyReattest", source, StringComparison.Ordinal);
         Assert.DoesNotContain("FrozenLedger.ApplySupersede", source, StringComparison.Ordinal);
         var preparation = snapshot.Files[RepoPath.CreateKnown(
-            "tools/StrataLint.Cli/Commands/DagLedgerCommandPreparation.cs")].Text;
+            "tools/StrataLint.Cli/Commands/Ledger/DagLedgerCommandPreparation.cs")].Text;
         Assert.DoesNotContain("FrozenLedger.ValidateHistoryPrefix", preparation, StringComparison.Ordinal);
         Assert.DoesNotContain("FrozenLedger.ScanReferences", preparation, StringComparison.Ordinal);
     }

@@ -14,8 +14,8 @@ public sealed class RemoteStateEarlyFeedbackPolicyTests
         {
             ["tools/tests/StrataLint.Tests/Commands/WorktreeCommandTests.cs"] = File.ReadAllText(
                 Path.Combine(RepositoryRoot, "tools/tests/StrataLint.Tests/Commands/WorktreeCommandTests.cs")),
-            ["tools/tests/StrataLint.Tests/Commands/CleanLanesCommandTests.cs"] = File.ReadAllText(
-                Path.Combine(RepositoryRoot, "tools/tests/StrataLint.Tests/Commands/CleanLanesCommandTests.cs")),
+            ["tools/tests/StrataLint.Tests/Commands/CleanLanes/CleanLanesCommandTests.cs"] = File.ReadAllText(
+                Path.Combine(RepositoryRoot, "tools/tests/StrataLint.Tests/Commands/CleanLanes/CleanLanesCommandTests.cs")),
             ["tools/tests/StrataLint.Tests/Digestion/Sources/DigestionSourceConflictMarkerTests.cs"] = File.ReadAllText(
                 Path.Combine(RepositoryRoot, "tools/tests/StrataLint.Tests/Digestion/Sources/DigestionSourceConflictMarkerTests.cs")),
         };
@@ -288,7 +288,7 @@ public sealed class RemoteStateEarlyFeedbackPolicyTests
 
     [Theory]
     [InlineData("tools/tests/StrataLint.Tests/Commands/WorktreeCommandTests.cs")]
-    [InlineData("tools/tests/StrataLint.Tests/Commands/CleanLanesCommandTests.cs")]
+    [InlineData("tools/tests/StrataLint.Tests/Commands/CleanLanes/CleanLanesCommandTests.cs")]
     [InlineData("tools/tests/StrataLint.Tests/Digestion/Sources/DigestionSourceConflictMarkerTests.cs")]
     public void InertRemoteShapedLiteralsInExistingTestsStayGreen(string relativePath)
     {
