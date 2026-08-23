@@ -16,7 +16,7 @@ $$\begin{gathered}0 \le \rho_{\Gamma}(L) \le 1,\\L_{1} \le L_{2} \Rightarrow \rh
 
 A supplement strategy is feasible at budget L when its cost is at most L. Its escape value is the mass assigned to the canonical target-defect relation of the joined base and supplement readout, divided by the positive total mass M0. The budgeted escape rate is the real infimum of these feasible normalized values.
 
-Nonnegative escape mass bounded above by M0 places every normalized feasible value in the unit interval. Nonemptiness and bounded-below hypotheses for the relevant value sets are explicit in the Lean declaration, so the real infima carry no hidden empty-set convention.
+The public weight type requires zero mass for the empty set and nonnegative mass for every set. Escape mass bounded above by M0 then places every normalized feasible value in the unit interval. Nonemptiness and bounded-below hypotheses for the relevant value sets are explicit in the Lean declaration, so the real infima carry no hidden empty-set convention.
 
 When L1 is at most L2, every strategy feasible at L1 is feasible at L2. The larger value set therefore has an infimum no greater than the smaller value set, which gives the asserted antitonicity.
 

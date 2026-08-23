@@ -27,8 +27,10 @@ internal sealed class BudgetedEscapeRateAntitoneDocument : IScribeDocumentDefini
                             + "escape rate is the real infimum of these feasible normalized "
                             + "values.")),
                     Paragraph(Text(
-                        "Nonnegative escape mass bounded above by M0 places every normalized "
-                            + "feasible value in the unit interval. Nonemptiness and "
+                        "The public weight type requires zero mass for the empty set and "
+                            + "nonnegative mass for every set. Escape mass bounded above by M0 "
+                            + "then places every normalized feasible value in the unit interval. "
+                            + "Nonemptiness and "
                             + "bounded-below hypotheses for the relevant value sets are explicit "
                             + "in the Lean declaration, so the real infima carry no hidden empty-"
                             + "set convention.")),
