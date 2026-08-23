@@ -378,7 +378,7 @@ harness 的本质,就是**给各类事定义"这类该怎么处理"**——先�
 - **完整律法**:`docs/develop/spec/golden-ledger-repo-spec.md`(单一 spec,原位演进)
 - **理论源**(只读):`docs/develop/theory/`(PZG–BEDC 内核卷、GICT 卷)
 - **八官宪章**:`agents/{scout,prover,numericist,librarian,adversary,scribe,theorist,gate}.md`
-- **PR 器(一门)**:`make pr-open HEAD=branch TITLE=t [BODY=file]` 一次性建 PR、以 App token 隔离 create、挂 auto-merge。器为 `tools/scripts/pr.sh` 单动词(`update`/BEHIND 追平机器已随 SL-008 逐字节保留一起退役,2026-08-13);有界执行并发结构化收据;无常驻进程、租约、重算链或冲突分类器,需要重复由调用方 shell 循环。
+- **PR 器(一门)**:`pr.sh` 为 `open`/`watch` 双动词;`make pr-open` 在同一有界前台进程内 create → App-token 隔离 → arm auto-merge → 等 required-CI 判词,以可辨退出码返回;`make pr-watch PR=n` 复用同一能力;调用方以一个宿主 background job 同步调用、判绿只认退出码;仍无常驻进程、租约、重算链或冲突分类器。**门只保真「绿/不绿」**:`make` 对任何配方失败一律返回自己的 `2`(2026-08-24 实测:配方 `exit 4`→make 2,`exit 69`→make 2),故 `1`(红)/`4`(CLOSED 未合)/`69`(查询不可用)/`124`(超时)四码只在直调 canonical `tools/scripts/pr.sh watch` 时可辨;经门调用要分辨原因,读 stdout 末行 `PR_WATCH_RESULT ... outcome=`。
 - **多模型对抗共识**:`/sshx` skill(`consensus-rnd:sshx`)——派 codex-cli / nyxid-oracle 隔离工作席做设计/实施/评审(第13/14条的落地机制)。
   - **本仓默认不用 `isolated-token-subagent` 席位;一切席位为 codex-cli + nyxid-oracle(用户 2026-08-15 定)。** skill 自带的派发布局是「每个多席阶段恰好一个 subagent + 一个 nyxid + 其余 codex-cli」;本仓**覆盖该默认**,把那个 subagent 名额也给 codex-cli。这是仓库政策,不是协议违例——记在此处,免得后来者把它当成编排错误去"修正"。skill 的 `WorkerMode` 优先序仍是**载体失败后的回退**规则,不因本条改变:codex-cli 与 nyxid-oracle 皆不可用时,该阶段照常 `abstain`,不得退回 subagent 顶替。
   - **推论(必须一并遵守)**:`tests` 评审席须由**能在 `work_target` 里真跑仓库验证命令**的载体承担,故只能是 codex-cli——nyxid-oracle 不能在工作树里执行命令,其结论中凡涉及"跑过什么"一律须标 `ASSUMED-UNVERIFIED`。

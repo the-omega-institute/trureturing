@@ -42,6 +42,7 @@ public sealed partial class MakeWorkflowTests
     private const string ToolsMakefilePath = "tools/Makefile";
     private const string AdmissionWorkflowPath = ".github/workflows/ci.yml";
     private const string PrOpenScriptPath = "tools/scripts/pr.sh open";
+    private const string PrWatchScriptPath = "tools/scripts/pr.sh watch";
 
     private static readonly string[] RootTargets =
     [
@@ -67,6 +68,7 @@ public sealed partial class MakeWorkflowTests
         "worktree",
         "worktree-clean",
         "pr-open",
+        "pr-watch",
         "preflight",
         "gate",
     ];
