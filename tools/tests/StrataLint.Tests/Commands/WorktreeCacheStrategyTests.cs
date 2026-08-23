@@ -245,6 +245,14 @@ internal sealed class RecordingWorktreeProcessRunner : IWorktreeProcessRunner
 
     internal bool BusyOnlyAfterCopy { get; init; }
 
+    /// <summary>
+    /// 归档取回的桩。默认**不拦**（返回 null），此时 ensure 会真去跑脚本；测试要观察
+    /// 归档路径就设它。记录调用次数是为了钉住那条机器门：内容层不冷时**一次都不该调**。
+    /// </summary>
+    internal string? ArchiveReceipt { get; init; }
+
+    internal int ArchiveInvocations { get; private set; }
+
     internal bool CacheGetSawExistingProjection { get; private set; }
 
     internal List<bool> CacheGetExistingProjectionObservations { get; } = [];
@@ -275,6 +283,17 @@ internal sealed class RecordingWorktreeProcessRunner : IWorktreeProcessRunner
         if (fileName == "cp" && arguments.FirstOrDefault() == "-R" && ThrowCopy)
         {
             throw new IOException("ordinary copy threw");
+        }
+
+        if (fileName == "/bin/bash"
+            && arguments.Count >= 2
+            && arguments[0].EndsWith("lean-cache-publish.sh", StringComparison.Ordinal)
+            && arguments[1] == "fetch")
+        {
+            ArchiveInvocations++;
+            return ArchiveReceipt is null
+                ? Failure("archive fetcher is not stubbed for this test")
+                : new ProcessOutput(0, Encoding.UTF8.GetBytes(ArchiveReceipt), []);
         }
 
         if (fileName == "lsof")
