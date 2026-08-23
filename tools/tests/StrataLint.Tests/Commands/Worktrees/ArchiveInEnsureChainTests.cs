@@ -91,6 +91,91 @@ public sealed partial class LeanCacheEnsureCommandTests
     }
 
     /// <summary>
+    /// 入口一:没有本机 donor 时(新机器、第一棵树、CI 冷启动),`.lake` 整个不存在。
+    /// `lake exe cache get` 只补依赖层,内容层仍空 —— 归档是它唯一的私有供给。
+    ///
+    /// 顺序不能反:归档只供内容层,得先有 `.lake` 才有地方展开,故它接在 provision
+    /// **之后**。
+    /// </summary>
+    [Fact]
+    public void AbsentLakeWithNoDonorFetchesTheArchiveAfterTheDependencyLayer()
+    {
+        using var repository = new TemporaryDirectory();
+        using var sharedCache = new MathlibCacheFixture();
+        InitializeRepository(repository.Path);
+        var target = AddWorktree(repository.Path, "absent-lake-no-donor");
+        WriteFetcher(target);
+        var runner = new RecordingWorktreeProcessRunner
+        {
+            ArchiveReceipt = "LEAN_CACHE_FETCH {\"status\":\"unpacked\",\"mode\":\"exact\"}\n",
+            AfterArchiveFetch = _ =>
+            {
+                var olean = Path.Combine(
+                    target, ".lake", "build", "lib", "lean", "FromArchive.olean");
+                Directory.CreateDirectory(Path.GetDirectoryName(olean)!);
+                File.WriteAllText(olean, "content layer\n");
+            },
+        };
+
+        var receipt = ReadReceipt(WorktreeCommand.Run(
+            repository.Path,
+            ["ensure-cache", "--path", target],
+            runner,
+            new RecordingDirectoryCloner()));
+
+        Assert.Equal(1, runner.ArchiveInvocations);
+        Assert.Equal("unpacked", receipt.GetProperty("archive_status").GetString());
+        Assert.Equal("warm", receipt.GetProperty("project_olean_state").GetString());
+    }
+
+    /// <summary>
+    /// 本机 donor 命中时整树都搬过来了,内容层不缺 —— 此时再取一次归档是纯粹的浪费,
+    /// 而且会在一条已经成功的路径上引入一次可能失败的网络往返。
+    /// </summary>
+    [Fact]
+    public void ALocalDonorMakesTheArchiveUnnecessary()
+    {
+        using var repository = new TemporaryDirectory();
+        InitializeRepository(repository.Path);
+        WriteCache(repository.Path, "warm donor build\n");
+        _ = WriteProjectOlean(repository.Path, "DonorWarm");
+        var donorLake = Path.Combine(repository.Path, ".lake");
+        LeanCacheStamp.Write(donorLake, ReadPins(repository.Path));
+        var target = AddWorktree(repository.Path, "donor-supplies-both");
+        WriteFetcher(target);
+        var runner = new RecordingWorktreeProcessRunner { ArchiveReceipt = "unused" };
+
+        var receipt = ReadReceipt(WorktreeCommand.Run(
+            repository.Path,
+            ["ensure-cache", "--path", target],
+            runner,
+            new RecordingDirectoryCloner()));
+
+        Assert.Equal(0, runner.ArchiveInvocations);
+        Assert.Equal("not_attempted", receipt.GetProperty("archive_status").GetString());
+        Assert.Equal(
+            "a local donor supplied both layers",
+            receipt.GetProperty("archive_skip_reason").GetString());
+    }
+
+    private static void WriteFetcher(string root)
+    {
+        var script = LeanArchiveFetch.ScriptPath(root);
+        Directory.CreateDirectory(Path.GetDirectoryName(script)!);
+        File.WriteAllText(script, "#!/usr/bin/env bash\nexit 0\n");
+    }
+
+    private static JsonElement ReadReceipt(CommandResult result)
+    {
+        Assert.True(result.Success, result.Error);
+        const string prefix = "LEAN_CACHE ";
+        var line = result.Output
+            .Split('\n')
+            .Last(candidate => candidate.StartsWith(prefix, StringComparison.Ordinal));
+        return JsonDocument.Parse(line[prefix.Length..]).RootElement.Clone();
+    }
+
+    /// <summary>
     /// 机器门的**另一半**。蕴含式是「取归档 ⟹ 内容层冷 ∧ build 根未占用」,上面那条只
     /// 钉了「冷」这一半;若不钉「未占用」,删掉 content-root guard 一样不会红。
     ///

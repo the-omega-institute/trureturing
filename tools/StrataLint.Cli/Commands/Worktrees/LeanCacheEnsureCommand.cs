@@ -501,6 +501,34 @@ internal static partial class LeanCacheEnsureCommand
                 var finalProjectWarmth = provisioned.Strategy == "cloned"
                     ? selection.ProjectWarmth ?? projectWarmth
                     : projectWarmth;
+
+                // 入口一:没有本机 donor 时,上面那步只补了**依赖层**(`lake exe cache get`),
+                // 内容层仍是空的 —— 新机器、第一棵树、CI 冷启动都落在这里。归档是内容层
+                // 唯一的私有供给,故在此补它。
+                //
+                // 顺序不能反:`.lake` 此前整个不存在,归档只供内容层,得先有 `.lake` 才有
+                // 地方展开。clone 成功那一路已经整树搬过来了,不在此列。
+                if (provisioned.Strategy != "cloned"
+                    && finalProjectWarmth.State == OleanWarmth.Cold)
+                {
+                    var contentRoot = stateProbe.InspectContentRoot(
+                        Path.Combine(lake, "build"));
+                    archive = contentRoot.Clear
+                        ? LeanArchiveFetch.Run(root, runner, ArchiveBudget)
+                        : LeanArchiveAttempt.Skipped(
+                            contentRoot.Error ?? "content root already exists");
+                    if (archive.Outcome == LeanArchiveOutcome.Unpacked)
+                    {
+                        finalProjectWarmth = stateProbe.ProbeOleans(ProjectOleanRoot(lake));
+                    }
+                }
+                else
+                {
+                    archive = LeanArchiveAttempt.Skipped(
+                        provisioned.Strategy == "cloned"
+                            ? "a local donor supplied both layers"
+                            : "project olean state is not cold");
+                }
                 return SuccessWithState(
                     SuccessReceipt(
                     provisioned.Strategy == "cloned" ? "seeded" : "fetched",
@@ -511,7 +539,8 @@ internal static partial class LeanCacheEnsureCommand
                     JoinReasons(missReason, JoinReasons(selection.Notice, provisioned.Warning)),
                     provisioned.MathlibOleans,
                     stampMiss,
-                    provisioned.Clonefile),
+                    provisioned.Clonefile,
+                    archive),
                     root,
                     finalProjectWarmth,
                     stateProbe,
