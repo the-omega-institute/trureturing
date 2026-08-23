@@ -6,7 +6,7 @@ A projection residual generates the unique minimal closed target completion.
 
 **Theorem 1.1 (The residual line is the unique minimal completion).**
 
-$$\forall k: \operatorname{RCLike}, \forall H: \operatorname{Hilbert}(k), \forall M: \operatorname{ClosedSubspace}(H), \forall x\in H, r = x - P_M(x), M_* = M + \operatorname{span}(\{r\}), \operatorname{Disjoint}(M, \operatorname{span}(\{r\})) \land \operatorname{IsLeast}(M_*, \{N: \operatorname{ClosedSubspace}(H) | M \subseteq N \land x\in N\}) \land (r \neq 0 \Rightarrow \operatorname{dim}(M_*/M) = 1).$$
+$$\forall k: \operatorname{RCLike}, \forall H: \operatorname{Hilbert}(k), \forall M: \operatorname{ClosedSubspace}(H), \forall x\in H, \operatorname{let}(r = x - P_M(x), L_{r} = \operatorname{span}(\{r\}), M_* = M + L_{r})\;\operatorname{Disjoint}(M, L_{r}) \land \operatorname{IsLeast}(\{N: \operatorname{ClosedSubspace}(H) | M \subseteq N \land x\in N\}, M_*) \land (r \neq 0 \Rightarrow \operatorname{dim}(M_*/M) = 1).$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Completion/UniqueMinimalTargetCompletion.unique_minimal_target_completion` (`✓ std3`). ∎
 

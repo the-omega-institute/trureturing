@@ -29,8 +29,9 @@ internal sealed class UniqueMinimalTargetCompletionDocument : IScribeDocumentDef
         Formula subspace = F.Id("M");
         Formula target = F.Id("x");
         Formula residual = F.Id("r");
+        Formula residualLine = new Formula.Subscript(F.Id("L"), residual);
         Formula completion = Seq(subspace, Underscore, Star);
-        Formula line = Call("span", Seq(OpenBrace, residual, CloseBrace));
+        Formula residualLineDefinition = Call("span", Seq(OpenBrace, residual, CloseBrace));
         Formula projection = Seq(F.Id("P"), Underscore, subspace, Open, target, Close);
         Formula quotient = Seq(completion, Slash, subspace);
         Formula candidates = Seq(OpenBrace,
@@ -42,10 +43,13 @@ internal sealed class UniqueMinimalTargetCompletionDocument : IScribeDocumentDef
             Forall, Sp, space, Colon, Sp, Call("Hilbert", scalar), Comma, Sp,
             Forall, Sp, subspace, Colon, Sp, Call("ClosedSubspace", space), Comma, Sp,
             Forall, Sp, target, InMacro, Sp, space, Comma, Sp,
+            Operatorname, Grp(F.Id("let")), Open,
             residual, Sp, Eq, Sp, target, Sp, Minus, Sp, projection, Comma, Sp,
-            completion, Sp, Eq, Sp, subspace, Sp, Plus, Sp, line, Comma, Sp,
-            Call("Disjoint", subspace, line), Sp, Land, Sp,
-            Call("IsLeast", completion, candidates), Sp, Land, Sp,
+            residualLine, Sp, Eq, Sp, residualLineDefinition, Comma, Sp,
+            completion, Sp, Eq, Sp, subspace, Sp, Plus, Sp, residualLine,
+            Close, SemiSpace,
+            Call("Disjoint", subspace, residualLine), Sp, Land, Sp,
+            Call("IsLeast", candidates, completion), Sp, Land, Sp,
             Open, residual, Sp, Neq, Sp, D(0), Sp, Rightarrow, Sp,
             Call("dim", quotient), Sp, Eq, Sp, D(1), Close, Dot));
 
