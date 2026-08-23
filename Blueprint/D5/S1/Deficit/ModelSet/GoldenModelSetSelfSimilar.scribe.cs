@@ -1,6 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S1.Deficit;
+namespace StrataLint.Scribe.Blueprint.D5.S1.Deficit.ModelSet;
 
 internal sealed class GoldenModelSetSelfSimilarDocument : IScribeDocumentDefinition
 {
@@ -12,7 +12,7 @@ internal sealed class GoldenModelSetSelfSimilarDocument : IScribeDocumentDefinit
             Describe.Lean(
                 DescribeId.Create("golden-conjugate-window-has-unit-volume"),
                 DeclarationHandle.Create(
-                    "D5/S1/Deficit/GoldenModelSetSelfSimilar.golden_window_volume"),
+                    "D5/S1/Deficit/ModelSet/GoldenModelSetSelfSimilar.golden_window_volume"),
                 H("The golden conjugate window has unit volume"),
                 StatementSource.FromAuthor(WindowVolumeFormula()),
                 AssessedProvenance.FromRepo(),
@@ -29,7 +29,7 @@ internal sealed class GoldenModelSetSelfSimilarDocument : IScribeDocumentDefinit
             Describe.Lean(
                 DescribeId.Create("golden-beta-range-is-self-similar"),
                 DeclarationHandle.Create(
-                    "D5/S1/Deficit/GoldenModelSetSelfSimilar.golden_model_set_self_similar"),
+                    "D5/S1/Deficit/ModelSet/GoldenModelSetSelfSimilar.golden_model_set_self_similar"),
                 H("The golden beta range is a disjoint self-similar union"),
                 StatementSource.FromAuthor(SelfSimilarityFormula()),
                 AssessedProvenance.FromRepo(),

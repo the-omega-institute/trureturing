@@ -1,6 +1,6 @@
-/- GID: D5/S1/Deficit/GoldenModelSetSelfSimilar
-   generality: G
-   mirror-B: D5/B/S1/Deficit/GoldenModelSetSelfSimilar
+/- GID: D5/S1/Deficit/ModelSet/GoldenModelSetSelfSimilar
+   generality: I
+   mirror-B: D5/B/S1/Deficit/ModelSet/GoldenModelSetSelfSimilar
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    digest: Unit window; disjoint B split. Cut-project, density, window bounds, recovery omitted. -/
