@@ -556,10 +556,12 @@ internal static partial class CoverAtomCommand
 
     private static void RequireNoFindings(DigestionLedgerEvaluation evaluation)
     {
-        if (evaluation.Findings.Length > 0)
+        if (evaluation.HasReceiptIntegrityFailure)
         {
+            var gaps = evaluation.Entries.SelectMany(static entry => entry.Gaps.Select(gap =>
+                $"atom={entry.Entry.AtomId} code={gap.Code} detail={gap.Detail}"));
             throw new InvalidOperationException(
-                "digest status is invalid: " + string.Join("; ", evaluation.Findings));
+                "digest status is invalid: " + string.Join("; ", evaluation.Findings.Concat(gaps)));
         }
     }
 

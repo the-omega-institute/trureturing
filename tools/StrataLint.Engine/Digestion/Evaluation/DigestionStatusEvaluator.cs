@@ -293,7 +293,10 @@ internal static partial class DigestionStatusEvaluator
             if (!Gid.TryParse(gidText, out var gid)
                 || !snapshot.TryGetFile(gid.Path.Value, out var target))
             {
-                gaps.Add(new DigestionGap("target-gid-missing", gidText));
+                gaps.Add(new DigestionGap(
+                    "target-gid-missing",
+                    gidText,
+                    DigestionGapSeverity.NonFatal));
                 continue;
             }
 
@@ -310,7 +313,10 @@ internal static partial class DigestionStatusEvaluator
 
         if (entry.CoverageGids.Length == 0)
         {
-            gaps.Add(new DigestionGap("coverage-gid-missing", entry.AtomId));
+            gaps.Add(new DigestionGap(
+                "coverage-gid-missing",
+                entry.AtomId,
+                DigestionGapSeverity.NonFatal));
         }
 
         var coverage = VerifyCoverageReceipts(
@@ -330,14 +336,20 @@ internal static partial class DigestionStatusEvaluator
         {
             foreach (var subitem in entry.Receipts.UnresolvedSubitems)
             {
-                gaps.Add(new DigestionGap("unresolved-subitem", subitem));
+                gaps.Add(new DigestionGap(
+                    "unresolved-subitem",
+                    subitem,
+                    DigestionGapSeverity.NonFatal));
             }
         }
 
         foreach (var token in genreRegistryCheck.UnregisteredGenres.Where(token =>
                      UnregisteredGenreLocator.MatchesToken(entry.AstPath, token)))
         {
-            gaps.Add(new DigestionGap("unregistered-genre", token));
+            gaps.Add(new DigestionGap(
+                "unregistered-genre",
+                token,
+                DigestionGapSeverity.NonFatal));
         }
 
         // Partial is an aggregate baseline verdict: at least one local predicate failed,
@@ -456,7 +468,10 @@ internal static partial class DigestionStatusEvaluator
         if (!leanReport.Files.TryGetValue(formal.Path, out var module)
             || !string.IsNullOrEmpty(module.Error))
         {
-            gaps.Add(new DigestionGap("target-declaration-missing", gid.Value));
+            gaps.Add(new DigestionGap(
+                "target-declaration-missing",
+                gid.Value,
+                DigestionGapSeverity.NonFatal));
             return false;
         }
 
@@ -471,7 +486,8 @@ internal static partial class DigestionStatusEvaluator
 
         gaps.Add(new DigestionGap(
             matches == 0 ? "target-declaration-missing" : "target-declaration-ambiguous",
-            gid.Value));
+            gid.Value,
+            DigestionGapSeverity.NonFatal));
         return false;
     }
 
@@ -532,7 +548,10 @@ internal static partial class DigestionStatusEvaluator
             if (!byId.TryGetValue(atomId, out var dependency)
                 || dependency.Migration != DigestionMigrationState.Absorbed)
             {
-                item.Gaps.Add(new DigestionGap("chain-migration-incomplete", atomId));
+                item.Gaps.Add(new DigestionGap(
+                    "chain-migration-incomplete",
+                    atomId,
+                    DigestionGapSeverity.NonFatal));
             }
         }
     }
@@ -548,7 +567,10 @@ internal static partial class DigestionStatusEvaluator
             foreach (var target in item.TargetStates.Where(static target =>
                          target.State is TruthState.Open or TruthState.Semantic))
             {
-                item.Gaps.Add(new DigestionGap("lean-state-open", $"{target.Gid}:{target.State}"));
+                item.Gaps.Add(new DigestionGap(
+                    "lean-state-open",
+                    $"{target.Gid}:{target.State}",
+                    DigestionGapSeverity.NonFatal));
             }
 
             return DigestionTruthState.Open;
@@ -565,7 +587,8 @@ internal static partial class DigestionStatusEvaluator
             {
                 item.Gaps.Add(new DigestionGap(
                     "tail-authorization-missing",
-                    string.Join(',', tailGids)));
+                    string.Join(',', tailGids),
+                    DigestionGapSeverity.NonFatal));
                 return DigestionTruthState.Open;
             }
 
@@ -580,7 +603,8 @@ internal static partial class DigestionStatusEvaluator
             {
                 item.Gaps.Add(new DigestionGap(
                     "tail-authorization-invalid",
-                    string.Join(',', tailGids)));
+                    string.Join(',', tailGids),
+                    DigestionGapSeverity.NonFatal));
                 return DigestionTruthState.Open;
             }
 
