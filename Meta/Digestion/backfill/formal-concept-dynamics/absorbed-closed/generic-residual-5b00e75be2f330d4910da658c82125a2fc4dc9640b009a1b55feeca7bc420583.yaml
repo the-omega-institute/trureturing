@@ -13,5 +13,5 @@ receipts:
   scribe:
     - gid: D5/S3/ConceptDynamics/Epistemic/KnowledgeClosureUnderFiberImplication.knowledge_closure_under_fiber_implication
       definition_sha256: sha256:bbfa3fd3994fca1a21168e7fcac1154dc3176b915964e80fc17074f6b53a3999
-      emission_sha256: sha256:95eb07526b8bf275bc45110b81397c0816b4f014ebd0bd3b2dca715665da1a8c
+      emission_sha256: sha256:33e58281cb7180e0cb0298ab316b2bf0958c627613a01976b7413b9ef50678fa
   unresolved_subitems: []

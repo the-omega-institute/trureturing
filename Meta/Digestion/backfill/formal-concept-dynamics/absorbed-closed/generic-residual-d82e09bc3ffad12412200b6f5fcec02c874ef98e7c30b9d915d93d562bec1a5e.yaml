@@ -13,5 +13,5 @@ receipts:
   scribe:
     - gid: D5/S3/ConceptDynamics/InstitutionalCapture/IndependentSourceCaptureLowerBound.independent_source_capture_lower_bound
       definition_sha256: sha256:9e243d1b4e0e62ff9a70056b650ba1fe619b2f7e9a3b31716ce6df02e353132c
-      emission_sha256: sha256:057b77ca1a402dab3bdab4f7b521cb8454a1ec348396e35b7079669ab672f35d
+      emission_sha256: sha256:19fe9b50e7c5d3a2a1e7111fdbca41fd9e7f880ee6564af82b6552355c926b83
   unresolved_subitems: []
