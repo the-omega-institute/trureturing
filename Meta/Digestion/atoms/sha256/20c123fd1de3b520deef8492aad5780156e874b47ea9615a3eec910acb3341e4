@@ -1,0 +1,15 @@
+## 22.3 来源、依赖与作用域
+
+定义来源标签类型：
+
+\[
+\operatorname{Origin}
+:=
+\{\mathsf{Notation},\mathsf{Construction},\mathsf{Deduction},
+\mathsf{Measurement},\mathsf{Calibration},\mathsf{ModelChoice},
+\mathsf{Approximation},\mathsf{Convention},\mathsf{Intervention},
+\mathsf{Imported}\}.
+\]
+
+对代码 \(c\)，定义直接依赖 \(\operatorname{dep}(c)\)、传递闭包 \(\operatorname{Dep}^*(c)\)、适用域 \(\operatorname{Scope}(c)\subseteq X\)、成本 \(\operatorname{Cost}(c)\) 与证书 \(\operatorname{Certificate}(c)\)。
+

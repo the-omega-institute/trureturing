@@ -1,0 +1,52 @@
+# 第三十三部　记录接口与现实阻力
+
+本节只定义知识系统与输入过程之间的接口。
+
+定义输入类型 \(W\)、操作类型 \(I\)、记录类型 \(R\)，记录接口
+
+\[
+A:W\times I\to R,
+\]
+
+理论预测接口
+
+\[
+P:S\times I\to R,
+\]
+
+比较器
+
+\[
+d_R:R\times R\to\Delta.
+\]
+
+定义记录残差：
+
+\[
+\delta(S,w,i):=d_R(P(S,i),A(w,i)).
+\]
+
+定义从 \(S\) 出发的允许重定义族 \(\operatorname{Redef}(S)\)。它可以要求保持历史记录、来源账本、既有输出或指定操作接口。
+
+定义持久操作残差：
+
+\[
+\operatorname{PersistentOps}(S,w)
+:=
+\{i:\forall S'\in\operatorname{Redef}(S),\ \delta(S',w,i)\neq0\}.
+\]
+
+定义现实阻力：
+
+\[
+\boxed{
+\operatorname{Resistance}(S,w)
+:=
+\operatorname{PersistentOps}(S,w).
+}
+\]
+
+这不是把某个形而上断言写入系统，而是把“在指定允许重定义族下仍不能消去的记录不匹配”命名为阻力。改变操作、记录接口、比较器或允许重定义族，阻力也随之改变；该相对性被写入参数。
+
+---
+

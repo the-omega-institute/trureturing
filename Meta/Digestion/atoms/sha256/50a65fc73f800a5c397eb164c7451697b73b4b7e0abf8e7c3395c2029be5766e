@@ -1,0 +1,33 @@
+\[
+\boxed{
+D_T^{\mathrm{pred}}(x,y)
+=
+\sup_{0\le t\le T}
+ d_Z(\pi U_t x,\pi U_t y).
+}
+\]
+
+它不测量微观对象本身的距离，而测量它们对指定观察者未来读数的可区分程度。
+
+其零核就是有限时域预测等价。无限时域版本的零核对应完整未来完成。
+
+该定义解释了一个重要现象：
+
+\[
+\|x-y\|_{\mathrm{raw}}\text{ 很大}
+\quad\text{但}
+\quad
+D_T^{\mathrm{pred}}(x,y)\text{ 很小}.
+\]
+
+高阶相关、巨大图族或复杂历史可以真实存在，却对目标观察者几乎无影响。因此必须区分：
+
+\[
+\begin{aligned}
+\mathsf{CorrelationMass}
+&=\text{系统中存在多少相关结构};\\
+\mathsf{ObserverInfluence}
+&=\text{这些结构改变目标未来读数多少}.
+\end{aligned}
+\]
+

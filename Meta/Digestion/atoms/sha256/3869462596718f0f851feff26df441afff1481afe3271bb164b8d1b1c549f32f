@@ -1,0 +1,26 @@
+## 16.1 第一层：纯集合与函数
+
+建议新增：
+
+```text
+D5/S3/DefinitionEscape/Core/
+  TargetResidual.lean
+  ResidualJoinLaw.lean
+  RedundantDefinition.lean
+  CanonicalTargetCompletion.lean
+```
+
+核心声明：
+
+```lean
+def ResidualPair
+    (q : X → Q) (T : X → Y) (x y : X) : Prop :=
+  q x = q y ∧ T x ≠ T y
+
+theorem residual_join_iff :
+  ResidualPair (fun x => (q x, d x)) T x y ↔
+    ResidualPair q T x y ∧ d x = d y
+```
+
+并形式化充分性—因子化等价、冗余零增益、目标闭包最小性。
+

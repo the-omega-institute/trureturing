@@ -1,0 +1,8 @@
+\[
+\operatorname{PredDefDim}_N(q,\tau)
+=
+\inf\{C(S):\mathcal E_N(q\vee S,\tau)=\varnothing\},
+\]
+
+以及
+

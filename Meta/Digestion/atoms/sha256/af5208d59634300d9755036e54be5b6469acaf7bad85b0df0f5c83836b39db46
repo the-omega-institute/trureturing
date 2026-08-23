@@ -1,0 +1,32 @@
+## 3.4 定义证书
+
+一个可审计定义证书至少包含
+
+\[
+\mathcal C_d=
+(
+\gamma,
+ d,
+ \mathsf{Semantics},
+ \mathsf{Dependencies},
+ \mathsf{TargetFree},
+ \mathsf{Witness},
+ \mathsf{Capture},
+ c(d)
+).
+\]
+
+其中 `Witness` 给出
+
+\[
+q(x)=q(y),
+\qquad
+T(x)\neq T(y),
+\qquad
+d(x)\neq d(y),
+\]
+
+而 `Capture` 给出该定义对整类残差而非单个样本的作用界。
+
+---
+

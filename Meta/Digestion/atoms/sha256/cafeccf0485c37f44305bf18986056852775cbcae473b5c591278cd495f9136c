@@ -1,0 +1,8 @@
+\[
+\Delta(q;T)
+=
+\sup_{q(x)=q(y)}d_Y(Tx,Ty).
+\]
+
+若 \(\Delta(q;T)\le\eta\)，则 \(q\) 在误差 \(\eta\) 内决定目标。
+

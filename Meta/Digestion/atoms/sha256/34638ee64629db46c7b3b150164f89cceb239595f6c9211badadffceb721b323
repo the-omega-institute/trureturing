@@ -1,0 +1,52 @@
+# 第二十七部　研究方法作为定义生成器
+
+定义状态：
+
+\[
+\operatorname{DState}(X):=(\Gamma,\mathcal G,q_\Gamma,\mathcal L).
+\]
+
+定义残差状态：
+
+\[
+\operatorname{RState}(X,T)
+:=(\mathcal E_\Gamma(T),\nu,\operatorname{Classes},\operatorname{Witnesses}).
+\]
+
+定义方法：
+
+\[
+\boxed{
+M_X:
+\operatorname{DState}(X)
+\times
+\operatorname{RState}(X,T)
+\to
+\operatorname{IntDef}(X).
+}
+\]
+
+其输出是带来源、依赖、适用域和证书的新定义节点。定义更新：
+
+\[
+\Gamma_{n+1}:=\Gamma_n\cup\{d_n\},
+\qquad
+d_n:=M_X(S_n,E_n),
+\]
+
+\[
+\mathcal G_{n+1}:=\operatorname{Insert}(\mathcal G_n,d_n),
+\qquad
+E_{n+1}=E_n\cap\ker d_n.
+\]
+
+定义方法轨道：
+
+\[
+\operatorname{Orbit}(M,S_0):=(S_0,S_1,S_2,\ldots).
+\]
+
+科学研究过程由此成为定义状态在残差驱动生成器下的轨道。
+
+---
+

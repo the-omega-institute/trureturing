@@ -1,5 +1,6 @@
 using StrataLint.Engine;
 using StrataLint.Scribe;
+using Trureturing.Truth;
 
 namespace StrataLint.Cli;
 
@@ -61,7 +62,7 @@ internal static class DagRenderCommand
         var leanReportDigest = RawLeanReportArtifact.ContentAddress(
             RawLeanReportArtifact.Write(truth.Snapshot, truth.Report).AsSpan());
         var provenance = new TruthGraphProvenance(
-            TruthGraphSnapshotIdentity.Compute(truth.Snapshot),
+            SnapshotContentDigest.Compute(truth.Snapshot),
             leanReportDigest);
         DocumentGraphExportProjection documentProjection;
         try

@@ -1,0 +1,8 @@
+\[
+T_N(x)
+=
+\bigl(q(x),q(\tau x),\ldots,q(\tau^N x)\bigr).
+\]
+
+定义预测逃逸关系
+

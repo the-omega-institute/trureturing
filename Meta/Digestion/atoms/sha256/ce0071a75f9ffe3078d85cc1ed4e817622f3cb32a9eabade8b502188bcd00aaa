@@ -1,0 +1,12 @@
+## 16.4 第四层：动态完成
+
+```text
+D5/S3/DefinitionEscape/Dynamics/
+  FiniteHorizonResidual.lean
+  EscapeTime.lean
+  PredictiveDefinitionDimension.lean
+  CostHorizonEscapeSurface.lean
+```
+
+与现有 `PredictionCompletion`、`ItineraryCompletion`、`LocalCertificateMinimality` 对接。
+

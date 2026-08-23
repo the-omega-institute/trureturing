@@ -1,0 +1,79 @@
+# 第二十部　最终统一
+
+母文把过程数学压缩为
+
+\[
+\text{CUT}+\text{FLOW}+\text{ADMIT}+\text{ANCHOR}.
+\]
+
+DECT 对这四项给出定义创造版本：
+
+\[
+\boxed{
+\begin{aligned}
+\mathsf{CUT}
+&=\text{候选定义对当前纤维的切割};\\
+\mathsf{FLOW}
+&=\text{残差与定义在动力学、尺度和推理中的传播};\\
+\mathsf{ADMIT}
+&=\text{目标无关、自然、稳定、低成本与可认证约束};\\
+\mathsf{ANCHOR}
+&=\text{具体反例、解析估计、构造或形式化证书}.
+\end{aligned}
+}
+\]
+
+其派生对象为
+
+\[
+\boxed{
+\begin{aligned}
+\mathsf{RESIDUAL}
+&=\ker q\setminus\ker T,\\
+\mathsf{BLIND}
+&=\mathsf{RESIDUAL}\cap K_\Gamma,\\
+\mathsf{INVENTION}
+&=\text{低成本切开 }\mathsf{BLIND}\text{ 的目标无关定义},\\
+\mathsf{COMPLETION}
+&=\mathsf{RESIDUAL}=\varnothing,\\
+\mathsf{APPROXIMATE\ COMPLETION}
+&=\text{残差质量或预测直径趋零},\\
+\mathsf{CREATIVITY}
+&=\mathsf{PRODUCTIVE\ ESCAPE}
++\mathsf{COMPRESSIVE\ RECOVERY}.
+\end{aligned}
+}
+\]
+
+最终判断是：
+
+\[
+\boxed{
+\text{固定语言中的证明搜索，
+只在该语言已经能够分离全部目标逃逸对时才原则上足够。}
+}
+\]
+
+当语言盲核非空时，继续扩大搜索预算不会跨越表示边界。此时真正的数学工作是：找到一个现有全部定义都看不见、但目标必须区分的对象对；从这对对象的结构差异中提取一个目标无关、低成本、可迁移的新坐标；再证明该坐标不仅切开见证，而且把整类不可控残差转化为局部、可组合、可求和的证明对象。
+
+因此：
+
+\[
+\boxed{
+\text{定义不是答案的别名；
+定义是把答案所需的区分结构变成可推理对象的最小接口。}
+}
+\]
+
+而结合 Yu Deng 方法论，进一步得到：
+
+\[
+\boxed{
+\text{最强的新定义往往不是立即忘掉复杂性，
+而是先完整保存复杂性从何而来，
+再证明其中只有一个低维、低影响、可认证的部分能够逃向未来。}
+}
+\]
+
+---
+

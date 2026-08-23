@@ -1,0 +1,55 @@
+# 第三十八部　自封闭与开放修订
+
+定义修订算子
+
+\[
+U:S\times E\to S.
+\]
+
+定义系统对残差 \(e\) 静默，当
+
+\[
+U(S,e)\simeq S.
+\]
+
+定义生产性修订，当更新后原目标残差质量下降。
+
+定义表面消残：只修改比较器、命名或作用域，使新记号下残差为零，而原预测—记录差异未缩小。
+
+定义真正解决：更新后原比较接口下的残差缩小，且历史记录未被删除。
+
+定义自封闭：
+
+\[
+\operatorname{SelfSealed}(S)
+\quad\Longleftrightarrow\quad
+\forall e,\ U(S,e)\simeq S
+\ \vee\ 
+\operatorname{RelabelErase}(S,e).
+\]
+
+定义开放修订：
+
+\[
+\operatorname{RevisionOpen}(S)
+\quad\Longleftrightarrow\quad
+\exists e,\ U(S,e)\not\simeq S
+\ \wedge\ 
+\operatorname{Resolve}(S,e).
+\]
+
+定义科学定义系统结构：
+
+\[
+\operatorname{SciDefSys}(S)
+:=
+(\operatorname{ProvenanceComplete},
+\operatorname{RecordPreserving},
+\operatorname{RevisionOpen},
+\operatorname{CertificateCarrying}).
+\]
+
+这只是一个结构类型；具体制度是否具有这些字段，需要提供对应数据和证书。
+
+---
+
