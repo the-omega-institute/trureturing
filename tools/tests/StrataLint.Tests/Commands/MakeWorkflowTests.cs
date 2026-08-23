@@ -64,6 +64,8 @@ public sealed partial class MakeWorkflowTests
         "deposit",
         "cover",
         "worktree",
+        "worktree-hold",
+        "worktree-release",
         "worktree-clean",
         "pr-open",
         "preflight",

@@ -17,6 +17,8 @@ internal static class WorktreeCommand
     internal const string Usage =
         "USAGE: StrataLint worktree ensure-cache [--path DIR] | "
         + "StrataLint worktree with-cache-writer [--path DIR] -- COMMAND [ARG ...] | "
+        + "StrataLint worktree hold --path DIR [--reason TEXT] | "
+        + "StrataLint worktree release --path DIR | "
         + "StrataLint worktree --branch NAME --path DIR "
         + "[--base REV] [--source REPO_ROOT] [--skip-restore]. "
         + "The .lake cache is materialized by the first Lean command; symlink sharing is forbidden.";
@@ -58,6 +60,16 @@ internal static class WorktreeCommand
         ArgumentNullException.ThrowIfNull(arguments);
         ArgumentNullException.ThrowIfNull(runner);
         ArgumentNullException.ThrowIfNull(cloner);
+        if (arguments.Count > 0
+            && (string.Equals(arguments[0], "hold", StringComparison.Ordinal)
+                || string.Equals(arguments[0], "release", StringComparison.Ordinal)))
+        {
+            return WorktreeHoldCommand.Run(
+                repositoryRoot,
+                arguments,
+                runner,
+                TimeProvider.System.GetUtcNow());
+        }
         if (arguments.Count > 0
             && string.Equals(arguments[0], "ensure-cache", StringComparison.Ordinal))
         {
