@@ -65,7 +65,98 @@ public sealed class ProtectedSurfaceObservationTests
         Assert.Equal(3, rendering.ExitCode);
     }
 
-    private static AdmissionOutcome DecideProtectedSurfaceChange()
+    [Fact]
+    public void ProtectedSurfaceChangeRendersObservationsByRuleIdPathThenMessage()
+    {
+        var seed = Assert.IsType<AdmissionOutcome.ProtectedSurfaceChange>(
+            DecideProtectedSurfaceChange());
+        var protectedChange = new AdmissionOutcome.ProtectedSurfaceChange(
+            seed.ContentCertificate,
+            seed.ChangeSet,
+            seed.Sl022Diagnostics,
+            [
+                new Diagnostic(
+                    RuleId.CreateKnown(28),
+                    "rule pair",
+                    DisplaySeverity.Warning,
+                    AdmissionEffect.Observe,
+                    "same/rule.md",
+                    "same rule message"),
+                new Diagnostic(
+                    RuleId.CreateKnown(3),
+                    "path pair",
+                    DisplaySeverity.Warning,
+                    AdmissionEffect.Observe,
+                    "zeta/path.md",
+                    "path pair message"),
+                new Diagnostic(
+                    RuleId.CreateKnown(3),
+                    "message pair",
+                    DisplaySeverity.Warning,
+                    AdmissionEffect.Observe,
+                    "message/path.md",
+                    "z message"),
+                new Diagnostic(
+                    RuleId.CreateKnown(3),
+                    "rule pair",
+                    DisplaySeverity.Warning,
+                    AdmissionEffect.Observe,
+                    "same/rule.md",
+                    "same rule message"),
+                new Diagnostic(
+                    RuleId.CreateKnown(3),
+                    "message pair",
+                    DisplaySeverity.Warning,
+                    AdmissionEffect.Observe,
+                    "message/path.md",
+                    "a message"),
+                new Diagnostic(
+                    RuleId.CreateKnown(3),
+                    "path pair",
+                    DisplaySeverity.Warning,
+                    AdmissionEffect.Observe,
+                    "alpha/path.md",
+                    "path pair message"),
+            ]);
+
+        var observationLines = Render(protectedChange).Output
+            .Split('\n', StringSplitOptions.RemoveEmptyEntries)
+            .Where(static line => line.StartsWith("OBSERVED ", StringComparison.Ordinal))
+            .ToArray();
+
+        Assert.Equal(
+            [
+                "OBSERVED SL-003 alpha/path.md: path pair message",
+                "OBSERVED SL-003 message/path.md: a message",
+                "OBSERVED SL-003 message/path.md: z message",
+                "OBSERVED SL-003 same/rule.md: same rule message",
+                "OBSERVED SL-003 zeta/path.md: path pair message",
+                "OBSERVED SL-028 same/rule.md: same rule message",
+            ],
+            observationLines);
+    }
+
+    [Fact]
+    public void AdmissionEngineCarriesAllObservationsIntoProtectedSurfaceChange()
+    {
+        var protectedChange = Assert.IsType<AdmissionOutcome.ProtectedSurfaceChange>(
+            DecideProtectedSurfaceChange(includeCapacityObservation: true));
+        var duplicatePath = RuleFixture.DuplicateRightGid + ".lean";
+
+        Assert.Contains(
+            protectedChange.Observations,
+            observation => observation.RuleId == RuleId.CreateKnown(3)
+                && observation.AdmissionEffect is AdmissionEffect.Observe
+                && observation.Path == duplicatePath);
+        Assert.Contains(
+            protectedChange.Observations,
+            observation => observation.RuleId == RuleId.CreateKnown(28)
+                && observation.AdmissionEffect is AdmissionEffect.Observe
+                && observation.Path == duplicatePath);
+    }
+
+    private static AdmissionOutcome DecideProtectedSurfaceChange(
+        bool includeCapacityObservation = false)
     {
         const string protectedPath = ".github/CODEOWNERS";
         var duplicatePath = RuleFixture.DuplicateRightGid + ".lean";
@@ -82,7 +173,11 @@ public sealed class ProtectedSurfaceObservationTests
         fixture.Baseline[protectedPath] = "old owners\n";
         fixture.ForkPoint[protectedPath] = "old owners\n";
         fixture.Files[protectedPath] = "new owners\n";
-        fixture.Files[duplicatePath] += "-- candidate delta\n";
+        fixture.Files[duplicatePath] += includeCapacityObservation
+            ? string.Concat(Enumerable.Repeat(
+                "-- capacity pad\n",
+                RepositoryRules.ArtifactSoftLineLimit))
+            : "-- candidate delta\n";
         var changes = RawChangeSet.Create([protectedPath, duplicatePath]);
         var context = fixture.Build(changes);
         var completed = Assert.IsType<RuleExecutionOutcome.Completed>(
