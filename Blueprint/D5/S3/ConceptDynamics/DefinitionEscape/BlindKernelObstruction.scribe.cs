@@ -20,16 +20,18 @@ internal sealed class BlindKernelObstructionDocument : IScribeDocumentDefinition
                 AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
-                        "The blind kernel is the intersection of the Setoid kernels of all "
-                            + "definitions in the package. The blind residual intersects that "
-                            + "kernel with the canonical defectRelation of the baseline readout "
-                            + "and target; no second target-defect relation is introduced.")),
+                        "The package is viewed as a family indexed by its subtype. The imported "
+                            + "jointKernel and jointReadout are reused directly. The blind "
+                            + "residual is only the named intersection of jointKernel with the "
+                            + "canonical defectRelation; no second kernel, joint readout, or "
+                            + "target-defect relation is introduced.")),
                     Paragraph(Text(
                         "If the residual is empty, adjoining the full pointwise language to the "
-                            + "baseline eliminates the target defect. The remaining exhaustive "
-                            + "alternative is either a sufficient finite selection or the stated "
-                            + "compactification condition: full pointwise sufficiency with no "
-                            + "finite sufficient selection.")),
+                            + "baseline admits a target recovery factor. This uses the accepted "
+                            + "target recovery criterion and the required inhabited-state "
+                            + "hypothesis. The remaining exhaustive alternative is either a "
+                            + "sufficient finite selection or the compactification condition: "
+                            + "full pointwise factorization with no finite sufficient selection.")),
                     Paragraph(Text(
                         "If the residual contains a pair, the baseline and every package "
                             + "definition agree on that pair while the target differs. Hence no "
@@ -63,8 +65,6 @@ internal sealed class BlindKernelObstructionDocument : IScribeDocumentDefinition
             Call("finiteSelectionSufficient", package, baseline, target);
         Formula compactification =
             Call("compactificationRequired", package, baseline, target);
-        Formula fullDefect =
-            Call("defectRelation", Extension(baseline, package), target);
         Formula factorization(Formula family) =>
             Seq(Exists, Sp, recover, Comma, Sp, target, Sp, Eq, Sp,
                 recover, Sp, Circ, Sp, Extension(baseline, family));
@@ -78,7 +78,7 @@ internal sealed class BlindKernelObstructionDocument : IScribeDocumentDefinition
 
         return Disp(Seq(
             Open, residual, Sp, Eq, Sp, Emptyset, Sp, Rightarrow, Sp,
-            Open, fullDefect, Sp, Eq, Sp, Emptyset, Close, Sp, Land, Sp,
+            Open, factorization(package), Close, Sp, Land, Sp,
             Open, finiteSelection, Sp, Lor, Sp, compactification, Close, Close,
             Sp, Land, RowBreak, Grp(),
             Open, Call("Nonempty", residual), Sp, Rightarrow, Sp,
