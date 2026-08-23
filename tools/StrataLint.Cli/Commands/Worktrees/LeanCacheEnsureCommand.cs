@@ -4,7 +4,7 @@ using System.Text.Json.Nodes;
 
 namespace StrataLint.Cli;
 
-internal static class LeanCacheEnsureCommand
+internal static partial class LeanCacheEnsureCommand
 {
     private const string ColdBuildConsentVariable = "STRATALINT_ACCEPT_COLD_BUILD";
 
@@ -255,6 +255,7 @@ internal static class LeanCacheEnsureCommand
         out CacheState? cacheState)
     {
         cacheState = null;
+        var archive = LeanArchiveAttempt.Skipped("not reached");
         var lake = Path.Combine(root, ".lake");
         writerGuard.RequireOwnershipOf(lake);
         string? stampMiss = null;
@@ -272,6 +273,30 @@ internal static class LeanCacheEnsureCommand
                 stampMiss = ReceiptStampMiss(stamp.State);
                 if (stamp.State == LeanCacheStampState.Match)
                 {
+                    // stamp 只表示**依赖层**身份。它 Match 而内容层是冷的，正是 CI 上
+                    // 「dependency cache 命中、project build cache 未命中」的形态：不在这里
+                    // 取内容层，后面的 producer 就会从源码重编（#2814 记的那条缺口）。
+                    //
+                    // 归档只在**内容层确实为冷且 build 根未被占用**时尝试；本机 donor 命中
+                    // 时根本走不到这里。取回失败一律降级为原样返回 present —— 慢，不是错。
+                    if (projectWarmth.State == OleanWarmth.Cold)
+                    {
+                        var contentRoot = stateProbe.InspectContentRoot(
+                            Path.Combine(lake, "build"));
+                        archive = contentRoot.Clear
+                            ? LeanArchiveFetch.Run(root, runner, ArchiveBudget)
+                            : LeanArchiveAttempt.Skipped(
+                                contentRoot.Error ?? "content root already exists");
+                        if (archive.Outcome == LeanArchiveOutcome.Unpacked)
+                        {
+                            projectWarmth = stateProbe.ProbeOleans(ProjectOleanRoot(lake));
+                        }
+                    }
+                    else
+                    {
+                        archive = LeanArchiveAttempt.Skipped("project olean state is not cold");
+                    }
+
                     return SuccessWithState(
                         SuccessReceipt(
                         "present",
@@ -280,7 +305,8 @@ internal static class LeanCacheEnsureCommand
                         method: "none",
                         pins.Sha256,
                         reason: null,
-                        LeanCacheProvisioner.InspectMathlibOleans(lake)),
+                        LeanCacheProvisioner.InspectMathlibOleans(lake),
+                        archive: archive),
                         root,
                         projectWarmth,
                         stateProbe,
@@ -568,111 +594,24 @@ internal static class LeanCacheEnsureCommand
         return result with { Output = RecordCacheState(result.Output, cacheState) };
     }
 
-    private static CommandResult SuccessReceipt(
-        string status,
-        string worktree,
-        string? donor,
-        string method,
-        string? pinSha256,
-        string? reason,
-        MathlibOleanInventory mathlibOleans,
-        string? stampMiss = null,
-        ClonefileReceipt? clonefile = null) =>
-        new(
-            true,
-            RenderReceipt(
-                status,
-                worktree,
-                donor,
-                method,
-                pinSha256,
-                reason,
-                mathlibOleans,
-                stampMiss,
-                clonefile),
-            string.Empty);
-
-    private static CommandResult FailureReceipt(
-        string status,
-        string worktree,
-        string? donor,
-        string method,
-        string? pinSha256,
-        string reason,
-        string? stampMiss = null,
-        ClonefileReceipt? clonefile = null) =>
-        new(
-            false,
-            string.Empty,
-            RenderReceipt(
-                status,
-                worktree,
-                donor,
-                method,
-                pinSha256,
-                reason,
-                MathlibOleanInventory.Unknown,
-                stampMiss,
-                clonefile));
-
-    private static CommandResult RefusedSymlink(string root, string pinSha256) =>
-        FailureReceipt(
-            "refused",
-            root,
-            donor: null,
-            method: "none",
-            pinSha256,
-            reason: ".lake is a symlink; shared Lean caches are forbidden");
-
-    private static bool TryParseWorktreeRoot(
-        string repositoryRoot,
-        IReadOnlyList<string> arguments,
-        out string root)
-    {
-        var path = repositoryRoot;
-        if (arguments.Count != 0)
-        {
-            if (arguments.Count != 2
-                || !string.Equals(arguments[0], "--path", StringComparison.Ordinal)
-                || string.IsNullOrWhiteSpace(arguments[1]))
-            {
-                root = string.Empty;
-                return false;
-            }
-
-            path = arguments[1];
-        }
-
-        root = Path.GetFullPath(path);
-        return true;
-    }
-
-    private static string RenderReceipt(
-        string status,
-        string worktree,
-        string? donor,
-        string method,
-        string? pinSha256,
-        string? reason,
-        MathlibOleanInventory mathlibOleans,
-        string? stampMiss,
-        ClonefileReceipt? clonefile = null) =>
-        "LEAN_CACHE " + JsonSerializer.Serialize(new
-        {
-            status,
-            worktree,
-            donor,
-            method,
-            reason,
-            stamp_miss = stampMiss,
-            pin_sha256 = pinSha256,
-            clonefile_errno = (clonefile ?? ClonefileReceipt.NotRun).LastErrno,
-            clonefile_errnos = (clonefile ?? ClonefileReceipt.NotRun).Errnos,
-            clonefile_attempts = (clonefile ?? ClonefileReceipt.NotRun).Attempts,
-            clonefile_cleanup_error = (clonefile ?? ClonefileReceipt.NotRun).CleanupError,
-            mathlib_missing_olean_files = mathlibOleans.MissingFiles,
-            mathlib_missing_olean_samples = mathlibOleans.MissingSamples,
-        }) + "\n";
+    /// <summary>
+    /// 归档取回的预算。
+    ///
+    /// 【这里曾直接沿用 provision 预算（3600s），那是错的】评审席指出并经亲验：本路径在
+    /// CI 上位于 `lean-inspect` job 内，而该 job 的 `timeout-minutes: 45`（2700s）。
+    /// 一个 3600s 的预算**大于它所在的整个 job**，即归档一旦挂住就能吃光全部预算，
+    /// 把「取不到就降级」变成「job 超时取消」。复用一个值不等于它在这个域里成立 ——
+    /// 我按复用选值，没把**外层容量**放进推导（「量腹而食」）。
+    ///
+    /// 现按 `C_i = min_j U_{i,j} - R_i` 取：唯一适用上限是 job 预算，具名保留是
+    /// 归档之后仍必须跑完的产出工作（Lean 报告生产），故
+    ///   archive ≤ job_budget − post_archive_reserve。
+    /// 两项都取自本仓既有真源，不新立裸数；比值向下取整到分钟。
+    /// </summary>
+    private static TimeSpan ArchiveBudget =>
+        TimeSpan.FromMinutes(
+            LeanCacheBudgetPolicy.LeanInspectJobBudgetMinutes
+                - LeanCacheBudgetPolicy.PostArchiveReserveMinutes);
 
     private static string RecordColdBuildConsent(string receipt)
     {
