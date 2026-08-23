@@ -24,7 +24,8 @@ public sealed partial class CleanLanesCommandTests
         Assert.Equal("harness/hold-porcelain", receipt.GetProperty("branch").GetString());
         var effectiveReason = receipt.GetProperty("effective_reason").GetString()!;
         Assert.Matches(
-            "^held_at_utc=[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}\\.[0-9]{3}Z; reason=fixture session$",
+            "^held_at_utc=[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}\\.[0-9]{3}Z; "
+                + "invocation_id=[0-9a-f]{32}; reason=fixture session$",
             effectiveReason);
         Assert.Contains(
             $"locked {effectiveReason}",

@@ -1,4 +1,5 @@
 using System.Globalization;
+using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
 using StrataLint.Engine;
@@ -148,13 +149,14 @@ internal static class WorktreeHoldCommand
             return Succeeded(options, lane, "already_held", lane.LockReason);
         }
 
-        var effectiveReason = FormatReason(now, options.Reason);
+        var reasonPassedToGit = FormatReason(now, options.Reason);
+        var expectedReason = NormalizeGitLockReason(reasonPassedToGit);
         ProcessOutput result;
         try
         {
             result = runner.Run(
                 "git",
-                ["worktree", "lock", "--reason", effectiveReason, lane.Path],
+                ["worktree", "lock", "--reason", reasonPassedToGit, lane.Path],
                 repositoryRoot,
                 GitTimeout);
         }
@@ -189,14 +191,14 @@ internal static class WorktreeHoldCommand
         var observedLane = ReadLaneAfterSuccessfulMutation(repositoryRoot, lane, runner);
         if (!SameLaneIdentity(lane, observedLane)
             || observedLane!.Locked != true
-            || !string.Equals(observedLane.LockReason, effectiveReason, StringComparison.Ordinal))
+            || !SameGitLockReason(expectedReason, observedLane.LockReason))
         {
             return MutationStateIndeterminate(
                 options,
                 lane,
                 observedLane,
                 "lock",
-                effectiveReason);
+                expectedReason);
         }
 
         return Succeeded(options, observedLane!, "held", observedLane.LockReason);
@@ -508,7 +510,9 @@ internal static class WorktreeHoldCommand
     {
         var effective = "held_at_utc=" + now.UtcDateTime.ToString(
             "yyyy-MM-dd'T'HH:mm:ss.fff'Z'",
-            CultureInfo.InvariantCulture);
+            CultureInfo.InvariantCulture)
+            + "; invocation_id="
+            + Convert.ToHexString(RandomNumberGenerator.GetBytes(16)).ToLowerInvariant();
         if (!string.IsNullOrWhiteSpace(suppliedReason))
         {
             effective += "; reason=" + suppliedReason;
@@ -516,6 +520,25 @@ internal static class WorktreeHoldCommand
 
         return effective;
     }
+
+    private static bool SameGitLockReason(string canonicalExpected, string? observed) =>
+        observed is not null
+        && string.Equals(
+            canonicalExpected,
+            NormalizeGitLockReason(observed),
+            StringComparison.Ordinal);
+
+    private static string NormalizeGitLockReason(string value)
+    {
+        var start = 0;
+        var end = value.Length;
+        while (start < end && IsGitLockReasonBoundaryWhitespace(value[start])) start++;
+        while (end > start && IsGitLockReasonBoundaryWhitespace(value[end - 1])) end--;
+        return start == 0 && end == value.Length ? value : value[start..end];
+    }
+
+    private static bool IsGitLockReasonBoundaryWhitespace(char value) =>
+        value is ' ' or '\t' or '\n' or '\r';
 
     private static CommandResult Succeeded(
         WorktreeHoldOptions options,
