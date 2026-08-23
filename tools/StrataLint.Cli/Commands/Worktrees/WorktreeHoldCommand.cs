@@ -171,6 +171,12 @@ internal static class WorktreeHoldCommand
 
         if (result.ExitCode != 0)
         {
+            var refreshed = ReadLaneAfterFailedMutation(repositoryRoot, lane, runner);
+            if (refreshed?.Locked == true)
+            {
+                return Succeeded(options, refreshed, "already_held", refreshed.LockReason);
+            }
+
             return Refused(
                 "hold",
                 options.Path,
@@ -216,6 +222,12 @@ internal static class WorktreeHoldCommand
 
         if (result.ExitCode != 0)
         {
+            var refreshed = ReadLaneAfterFailedMutation(repositoryRoot, lane, runner);
+            if (refreshed is { Locked: false })
+            {
+                return Succeeded(options, refreshed, "already_released", refreshed.LockReason);
+            }
+
             return Refused(
                 "release",
                 options.Path,
@@ -226,6 +238,39 @@ internal static class WorktreeHoldCommand
         }
 
         return Succeeded(options, lane, "released", lane.LockReason);
+    }
+
+    private static HeldWorktree? ReadLaneAfterFailedMutation(
+        string repositoryRoot,
+        HeldWorktree originalLane,
+        IWorktreeProcessRunner runner)
+    {
+        ProcessOutput inventoryOutput;
+        try
+        {
+            inventoryOutput = runner.Run(
+                "git",
+                ["worktree", "list", "--porcelain", "-z"],
+                repositoryRoot,
+                GitTimeout);
+        }
+        catch (Exception)
+        {
+            return null;
+        }
+
+        if (inventoryOutput.ExitCode != 0) return null;
+
+        try
+        {
+            return ParseInventory(inventoryOutput.StandardOutput).SingleOrDefault(item =>
+                string.Equals(item.Path, originalLane.Path, StringComparison.Ordinal)
+                && string.Equals(item.Branch, originalLane.Branch, StringComparison.Ordinal));
+        }
+        catch (Exception)
+        {
+            return null;
+        }
     }
 
     private static WorktreeHoldOptions ParseArguments(IReadOnlyList<string> arguments)

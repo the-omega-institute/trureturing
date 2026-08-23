@@ -37,13 +37,16 @@ public sealed partial class CleanLanesCommandTests
     {
         using var fixture = new CleanLanesFixture();
         var lane = fixture.AddLandedLane("harness/hold-twice");
+        var runner = fixture.CreateRunner();
 
         var first = WorktreeCommand.Run(
             fixture.RepositoryWorkingDirectory,
-            ["hold", "--path", lane, "--reason", "original holder"]);
+            ["hold", "--path", lane, "--reason", "original holder"],
+            runner);
         var second = WorktreeCommand.Run(
             fixture.RepositoryWorkingDirectory,
-            ["hold", "--path", lane, "--reason", "replacement holder"]);
+            ["hold", "--path", lane, "--reason", "replacement holder"],
+            runner);
 
         Assert.True(first.Success, first.Error);
         Assert.True(second.Success, second.Error);
@@ -53,6 +56,8 @@ public sealed partial class CleanLanesCommandTests
         Assert.Equal(originalReason, repeated.GetProperty("effective_reason").GetString());
         Assert.Contains("reason=original holder", originalReason, StringComparison.Ordinal);
         Assert.DoesNotContain("replacement holder", fixture.WorktreeBlock(lane), StringComparison.Ordinal);
+        Assert.Single(runner.Invocations, invocation =>
+            IsGitMutation(invocation, "lock"));
     }
 
     [Fact]
@@ -61,10 +66,12 @@ public sealed partial class CleanLanesCommandTests
         using var fixture = new CleanLanesFixture();
         var lane = fixture.AddLandedLane("harness/release-unlocked");
         var before = fixture.WorktreeInventory();
+        var runner = fixture.CreateRunner();
 
         var result = WorktreeCommand.Run(
             fixture.RepositoryWorkingDirectory,
-            ["release", "--path", lane]);
+            ["release", "--path", lane],
+            runner);
 
         Assert.True(result.Success, result.Error);
         var receipt = ReadHoldReceipt(result);
@@ -72,6 +79,8 @@ public sealed partial class CleanLanesCommandTests
         Assert.Equal("already_released", receipt.GetProperty("action").GetString());
         Assert.Equal(JsonValueKind.Null, receipt.GetProperty("effective_reason").ValueKind);
         Assert.Equal(before, fixture.WorktreeInventory());
+        Assert.DoesNotContain(runner.Invocations, invocation =>
+            IsGitMutation(invocation, "unlock"));
     }
 
     [Theory]
@@ -213,8 +222,63 @@ public sealed partial class CleanLanesCommandTests
             runner);
 
         Assert.False(result.Success);
-        Assert.Equal(expectedError, ReadHoldReceipt(result).GetProperty("error").GetString());
+        var receipt = ReadHoldReceipt(result);
+        Assert.Equal(expectedError, receipt.GetProperty("error").GetString());
+        Assert.Equal(
+            operation == "release" ? "fixture session" : null,
+            receipt.GetProperty("effective_reason").GetString());
+        Assert.Equal(2, runner.Invocations.Count(IsWorktreeInventory));
         Assert.Equal(before, fixture.WorktreeInventory());
+    }
+
+    [Theory]
+    [InlineData("hold", "lock", "already_held")]
+    [InlineData("release", "unlock", "already_released")]
+    public void GitMutationFailureRereadsInventoryAndAcceptsConcurrentlyAchievedState(
+        string operation,
+        string gitMutation,
+        string expectedAction)
+    {
+        using var fixture = new CleanLanesFixture();
+        var lane = fixture.AddLandedLane($"harness/{operation}-concurrent-idempotence");
+        if (operation == "release") fixture.LockLane(lane);
+        var mutationObserved = false;
+        var runner = fixture.CreateRunner((fileName, arguments, _) =>
+        {
+            if (mutationObserved
+                || fileName != "git"
+                || arguments.Count < 2
+                || arguments[0] != "worktree"
+                || arguments[1] != gitMutation)
+            {
+                return null;
+            }
+
+            mutationObserved = true;
+            if (operation == "hold")
+            {
+                fixture.LockLane(lane);
+            }
+            else
+            {
+                fixture.UnlockLane(lane);
+            }
+
+            return FailedGit($"concurrent invocation already completed {gitMutation}");
+        });
+
+        var result = WorktreeCommand.Run(
+            fixture.RepositoryWorkingDirectory,
+            [operation, "--path", lane],
+            runner);
+
+        Assert.True(result.Success, result.Error);
+        var receipt = ReadHoldReceipt(result);
+        Assert.Equal(expectedAction, receipt.GetProperty("action").GetString());
+        Assert.Equal(
+            operation == "hold" ? "fixture session" : null,
+            receipt.GetProperty("effective_reason").GetString());
+        Assert.Equal(2, runner.Invocations.Count(IsWorktreeInventory));
     }
 
     [Fact]
@@ -232,6 +296,18 @@ public sealed partial class CleanLanesCommandTests
             fixture.RepositoryWorkingDirectory,
             ["hold", "--path", lane, "--reason", "active clean-lanes session"]);
         Assert.True(hold.Success, hold.Error);
+
+        var whileHeldDryRun = fixture.Run();
+        Assert.True(whileHeldDryRun.Success, whileHeldDryRun.Error);
+        Assert.True(Directory.Exists(lane));
+        Assert.True(fixture.WorktreeRegistered(lane));
+        Assert.Equal("locked", ReasonFor(whileHeldDryRun.Output, lane));
+        AssertItemProperty(
+            ReadItems(whileHeldDryRun.Output),
+            "path",
+            lane,
+            "action",
+            "skipped");
 
         var whileHeld = fixture.Run("--force");
         Assert.True(whileHeld.Success, whileHeld.Error);
@@ -267,6 +343,18 @@ public sealed partial class CleanLanesCommandTests
     private static ProcessOutput FailedGit(string message) =>
         new(128, [], System.Text.Encoding.UTF8.GetBytes(message + "\n"));
 
+    private static bool IsWorktreeInventory(WorktreeProcessInvocation invocation) =>
+        invocation.FileName == "git"
+        && invocation.Arguments.SequenceEqual(["worktree", "list", "--porcelain", "-z"]);
+
+    private static bool IsGitMutation(
+        WorktreeProcessInvocation invocation,
+        string mutation) =>
+        invocation.FileName == "git"
+        && invocation.Arguments.Count >= 2
+        && invocation.Arguments[0] == "worktree"
+        && invocation.Arguments[1] == mutation;
+
     private sealed partial class CleanLanesFixture
     {
         internal string AddNonManagedLane(string branch)
@@ -278,6 +366,9 @@ public sealed partial class CleanLanesCommandTests
 
         internal string WorktreeInventory() =>
             Git(repository.Path, "worktree", "list", "--porcelain");
+
+        internal void UnlockLane(string path) =>
+            Git(repository.Path, "worktree", "unlock", path);
 
         internal string WorktreeBlock(string path) =>
             WorktreeInventory()
