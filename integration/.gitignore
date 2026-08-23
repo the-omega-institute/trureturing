@@ -1,0 +1,3 @@
+# The NuGet lock must be generated in CI: a locally-packed Trureturing.Truth content hash cannot
+# match a Linux CI pack, so a committed lock would break the consumer's --locked-mode restore.
+**/packages.lock.json
