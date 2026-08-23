@@ -1,0 +1,15 @@
+## 15. 折扣未来几何的 Bellman 固定点
+
+设 (B,d) 有界，0<λ<1。定义：
+
+```text
+Dλ(x,y) = supn≥0 λⁿ d(q(Fⁿx),q(Fⁿy)).
+```
+
+对有界函数 D 定义 Bellman 算子：
+
+```text
+(TλD)(x,y)
+= max{d(qx,qy), λD(Fx,Fy)}.
+```
+

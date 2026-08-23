@@ -1,0 +1,34 @@
+## 13.1 预测 interior 与遗忘 closure
+
+记 `Eq(X)` 为 X 上全部等价关系按包含排序的完备格。关系越小，分区越细。称 R 为 F-congruence，若：
+
+```text
+(x,y)∈R ⇒ (Fx,Fy)∈R.
+```
+
+定义预测 interior：
+
+```text
+I_F(R) = ⋂n≥0 (Fⁿ×Fⁿ)⁻¹R.
+```
+
+它是包含于 R 的最大 F-congruence；当 R=Kq 时，I_F(Kq)=K∞。
+
+定义遗忘 closure：
+
+```text
+C_F(R) = ⋂{S | R⊆S 且 S 是 F-congruence}.
+```
+
+等价地，先取全部迭代像：
+
+```text
+Orb_F(R) = ⋃n≥0 (Fⁿ×Fⁿ)(R),
+```
+
+再取其反身、对称、传递闭包：
+
+```text
+C_F(R) = EqCl(Orb_F(R)).
+```
+

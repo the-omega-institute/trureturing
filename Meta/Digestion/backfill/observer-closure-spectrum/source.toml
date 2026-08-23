@@ -1,0 +1,5 @@
+source_id = "observer-closure-spectrum"
+path = "docs/develop/theory/OBSERVER_CLOSURE_SPECTRUM.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []
