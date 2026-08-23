@@ -1,0 +1,23 @@
+\[
+\boxed{
+\rho_\Gamma(L)
+=
+\inf_{C(S)\le L}
+\frac{
+\nu(\mathcal E(q\vee S;T))
+}{M_0}.
+}
+\]
+
+显然
+
+\[
+0\le\rho_\Gamma(L)\le1,
+\qquad
+L_1\le L_2
+\Rightarrow
+\rho_\Gamma(L_2)\le\rho_\Gamma(L_1).
+\]
+
+定义不可消除逃逸率
+

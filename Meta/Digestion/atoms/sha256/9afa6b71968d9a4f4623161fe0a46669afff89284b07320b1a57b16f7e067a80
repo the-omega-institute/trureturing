@@ -1,0 +1,30 @@
+## 9.3 近似级联
+
+设第一层闭包误差为 \(\delta\)，第二层映射的 Lipschitz 常数为 \(L\)，第二层自身误差为 \(\eta\)。则组合误差满足
+
+\[
+\boxed{
+E_{13}\le L\delta+\eta.
+}
+\]
+
+该不等式是仓库精确 `CascadeCompletion` 的定量版本，也与
+
+`D5/S3/Observer/Naturality/ApproximateSemiconjugacyError.lean`
+
+及
+
+`D5/S3/Observer/Naturality/IteratedDefectAccumulation.lean`
+
+中的缺陷累积结构一致。
+
+对于非均匀单步缺陷 \(\delta_k\)，若抽象更新为 \(L\)-Lipschitz，则第 \(n\) 步误差由
+
+\[
+\sum_{k=0}^{n-1}L^{n-1-k}\delta_k
+\]
+
+控制。真正困难的部分不是这一外层递推，而是如何从问题结构中构造可求和的 \(\delta_k\)。
+
+---
+

@@ -1,0 +1,15 @@
+\[
+\mathcal J(d)
+=
+\alpha\,\operatorname{Capture}
++\beta\,\operatorname{Transfer}
++\gamma\,\operatorname{ProofGain}
+-\lambda c(d)
+-\mu\,\operatorname{Leakage}
+-\eta\,\operatorname{Instability}
+\]
+
+比较候选，而不是把单一逃逸率误当成完整创造性指标。
+
+---
+

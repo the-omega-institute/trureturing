@@ -1,0 +1,20 @@
+## 11.1 波动动力学：先确定尺度
+
+Yu Deng 与 Zaher Hani 的 `Full derivation of the wave kinetic equation`（arXiv:2104.11204）在特定大盒、弱非线性与动力学时间尺度下，从 NLS 推导波动动力学方程。方法论上的第一条不是先选一个漂亮定义，而是先明确：
+
+\[
+\boxed{
+\text{定义的有效性依赖尺度族，而不是单个固定系统。}
+}
+\]
+
+因此观察者、误差、时间窗和定义深度都应带参数：
+
+\[
+q_\varepsilon,
+\quad
+T(\varepsilon),
+\quad
+\rho_\Gamma(L,T,\varepsilon).
+\]
+

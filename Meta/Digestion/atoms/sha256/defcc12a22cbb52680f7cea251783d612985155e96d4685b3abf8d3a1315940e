@@ -1,0 +1,8 @@
+\[
+\operatorname{Capture}(d\mid q,T)
+=
+\mathcal E(q;T)\cap(\ker d)^c.
+\]
+
+定义 \(d\) 有效，当且仅当它在至少一个逃逸对上取不同值。
+

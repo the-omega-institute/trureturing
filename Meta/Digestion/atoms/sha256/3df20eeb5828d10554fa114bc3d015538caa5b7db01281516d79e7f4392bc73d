@@ -1,0 +1,44 @@
+## 23.1 有类型定义图
+
+定义
+
+\[
+\boxed{
+\mathcal G=(V,E,\tau,\sigma,\omega).
+}
+\]
+
+其中 \(V\) 为节点，\(E\subseteq V\times V\) 为依赖边，\(\tau(v)\) 为节点类型，\(\sigma(v)\) 为内涵定义，\(\omega(v)\) 为版本与状态账本。
+
+对目标节点集 \(A\subseteq V\)，定义依赖切片：
+
+\[
+\operatorname{Slice}_{\mathcal G}(A)
+:=
+\{u:\exists v\in A,\ u\leadsto v\}.
+\]
+
+对共同输入 \(X\) 的节点集 \(U\)，定义联合读数：
+
+\[
+q_U(x):=(\sigma(u)(x))_{u\in U},
+\qquad
+R_U:=\ker q_U=\bigcap_{u\in U}\ker\sigma(u).
+\]
+
+定义科学状态：
+
+\[
+\boxed{
+\operatorname{SciState}(X)
+:=
+(\mathcal G,U,R_U,\mathcal L,\mathcal R),
+}
+\]
+
+其中 \(\mathcal L\) 是来源与版本账本，\(\mathcal R\) 是未决残差账本。
+
+科学状态由此不是一袋最终句子，而是一张正在演化的区分网络及其尚未闭合的纤维。
+
+---
+

@@ -1,0 +1,23 @@
+\[
+m_*(\varepsilon,\eta)
+=
+\min\{m:\operatorname{Defect}^{(m)}_\varepsilon\le\eta\}.
+\]
+
+临界情形可能满足
+
+\[
+ m_*(\varepsilon,\eta)
+\asymp
+|\log\varepsilon|.
+\]
+
+所以真正的完备化可以是：
+
+\[
+\boxed{
+\text{定义深度随分辨率增长，
+但增长率本身受到证明控制。}
+}
+\]
+

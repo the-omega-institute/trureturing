@@ -1,0 +1,24 @@
+\[
+\ker f
+=
+\{(x,y):f(x)=f(y)\}.
+\]
+
+DECT 中，概念首先由其纤维结构而不是值域命名决定。两个函数即使值域完全不同，只要核相同，它们提供的区分能力便相同。
+
+定义细化序：
+
+\[
+q\preceq p
+\quad\Longleftrightarrow\quad
+\ker p\subseteq\ker q.
+\]
+
+它表示 \(p\) 至少保留了 \(q\) 的全部区分。若使用实现像作为值域，则该关系等价于 \(q\) 通过 \(p\) 因子化。
+
+仓库中的
+
+`D5/S3/ConceptDynamics/ConceptJoinUniversal.lean`
+
+已经用函数因子化定义 `Refines`，并证明联合读数是最小公共细化。本文将其解释为定义切割的代数底座。
+

@@ -1,0 +1,11 @@
+## 16.3 第三层：优化与复杂性
+
+```text
+D5/S3/DefinitionEscape/Optimization/
+  CaptureSubmodularity.lean
+  GreedyCapture.lean
+  SetCoverReduction.lean
+```
+
+其中复杂性类本身若暂不引入完整计算复杂性基础设施，可以先形式化集合覆盖实例与定义选择实例之间的双向正确归约。
+

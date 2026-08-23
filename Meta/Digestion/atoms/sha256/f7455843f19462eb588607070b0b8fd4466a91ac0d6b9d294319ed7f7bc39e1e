@@ -1,0 +1,37 @@
+\[
+\ker\operatorname{Flat}_{\times}(\mathcal G)
+=
+\bigcap_{v\in V_X}\ker\sigma(v).
+\]
+
+若后续类型依赖前序值，则定义依赖和压平：
+
+\[
+\operatorname{Flat}_{\Sigma}(\mathcal G)
+:=
+\sum_{z_1:D_1}\sum_{z_2:D_2(z_1)}\cdots
+\sum_{z_n:D_n(z_{<n})}\operatorname{Compat}(z_1,\ldots,z_n).
+\]
+
+因此有限科学工作流在外延上可以压成一个复合或依赖定义。
+
+定义遗忘映射：
+
+\[
+\operatorname{ForgetGraph}:
+\operatorname{SciGraph}\to\operatorname{ExtDef}.
+\]
+
+若两张不同图有相同遗忘像，它们的最终区分相同，但来源、依赖、次序、成本与修订路径仍可不同。故：
+
+\[
+\boxed{
+\begin{aligned}
+\text{有限科学结果的外延}&=\text{一个复合定义};\\
+\text{科学研究的内涵结构}&=\text{不能由复合定义唯一恢复的动态定义图}.
+\end{aligned}
+}
+\]
+
+---
+

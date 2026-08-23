@@ -1,0 +1,9 @@
+## 22.2 定义代码与解释
+
+定义语法类型 \(\operatorname{Code}(X)\) 和解释器：
+
+\[
+\llbracket\cdot\rrbracket_X:
+\operatorname{Code}(X)	o\operatorname{ExtDef}(X).
+\]
+

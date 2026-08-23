@@ -1,0 +1,50 @@
+# 第三十二部　反射残差与元盲核
+
+对版本 \(S_n\)，定义元目标
+
+\[
+T_n^{\mathrm{meta}}:N(S_n)\to Y_n^{\mathrm{meta}},
+\]
+
+以及下一版本对旧节点的自描述读数
+
+\[
+q_{n+1}^{\mathrm{self}}:N(S_n)\to Q_{n+1}^{\mathrm{self}}.
+\]
+
+定义反射残差：
+
+\[
+\boxed{
+E_{n+1}^{\mathrm{reflect}}
+:=
+\ker q_{n+1}^{\mathrm{self}}
+\setminus
+\ker T_n^{\mathrm{meta}}.
+}
+\]
+
+给定元定义语言 \(\Gamma_{n+1}^{\mathrm{meta}}\)，定义反射盲核：
+
+\[
+B_{n+1}^{\mathrm{reflect}}
+:=
+E_{n+1}^{\mathrm{reflect}}
+\cap
+\bigcap_{d\in\Gamma_{n+1}^{\mathrm{meta}}}\ker d.
+\]
+
+定义预算反射逃逸率：
+
+\[
+\rho_{n+1}^{\mathrm{reflect}}(L)
+:=
+\inf_{C(A)\le L}
+\frac{\nu_n(E_{n+1}^{\mathrm{reflect}}\cap\bigcap_{d\in A}\ker d)}
+{\nu_n(E_{n+1}^{\mathrm{reflect}})}.
+\]
+
+“系统对自己了解多少”因而被表示为预算依赖的元逃逸谱，而不是二元自知宣言。
+
+---
+

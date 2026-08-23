@@ -1,0 +1,8 @@
+\[
+\operatorname{CaptureRate}(d\mid S)
+=
+\frac{
+M(S)-M(S\cup\{d\})
+}{c(d)}.
+\]
+

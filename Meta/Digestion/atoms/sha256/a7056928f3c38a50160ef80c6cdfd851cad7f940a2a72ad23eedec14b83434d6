@@ -1,0 +1,13 @@
+## 16.5 第五层：近似闭包
+
+```text
+D5/S3/DefinitionEscape/Approximation/
+  MetricResidual.lean
+  PredictiveInfluence.lean
+  PreparedRetraction.lean
+  EmergentSemigroup.lean
+  ApproximateCascadeDiagonal.lean
+```
+
+先证明纯度量恒等式与三角不等式级联，不直接声称已形式化 Boltzmann 或 WKE 解析估计。
+

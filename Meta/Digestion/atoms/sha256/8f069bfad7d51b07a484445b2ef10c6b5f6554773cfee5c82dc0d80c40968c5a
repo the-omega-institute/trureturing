@@ -1,0 +1,33 @@
+# 第四十三部　停止、继续与重新打开
+
+定义目标闭合：
+
+\[
+\operatorname{Closed}(S,T)
+\Longleftrightarrow
+\mathcal E_S(T)=\varnothing.
+\]
+
+定义近似闭合：
+
+\[
+\operatorname{Closed}_\varepsilon(S,T)
+\Longleftrightarrow
+\Delta(q_S;T)\le\varepsilon.
+\]
+
+定义预算停止：
+
+\[
+\operatorname{Stop}_{L}(S)
+\Longleftrightarrow
+\sup_{c(d)\le L}
+\frac{\operatorname{Gain}(d)}{c(d)}\le\lambda.
+\]
+
+定义方法停止：\(M(S,E_S)=\mathsf{NoProposal}\)。
+
+若对象域、目标、精度、操作族或定义语言改变并产生新残差，定义系统重新打开。定义局部完成是固定 \((X,T,I,\varepsilon)\) 下闭合；定义开放世界序列为这些参数中至少一个持续变化的序列。一个系统可以在每个固定阶段完成，却在扩张序列中反复重新打开。
+
+---
+

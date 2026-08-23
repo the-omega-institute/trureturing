@@ -1,0 +1,12 @@
+\[
+\operatorname{Transfer}(d)
+=
+\sum_{T\in\mathcal T}
+ w_T
+\left[
+M_T(\varnothing)-M_T(\{d\})
+\right].
+\]
+
+只对单个目标有效的定义可能是补丁；跨多个目标、尺度和实例保持捕获能力的定义更可能对应真实结构。
+

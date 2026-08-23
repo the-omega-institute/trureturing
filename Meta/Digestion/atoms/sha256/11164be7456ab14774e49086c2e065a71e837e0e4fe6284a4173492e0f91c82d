@@ -1,0 +1,43 @@
+# 第四十一部　Yu Deng 方法作为元定义生成器
+
+定义证明病理类型：
+
+\[
+\operatorname{Pathology}
+:=
+(\mathsf{FactorizationFailure},
+\mathsf{HistoryEntanglement},
+\mathsf{CombinatorialExplosion},
+\mathsf{CancellationHidden},
+\mathsf{ScaleDivergence},
+\mathsf{LongTimeAccumulation}).
+\]
+
+定义结构类型：
+
+\[
+\operatorname{StructureDef}
+:=
+(\mathsf{Cumulant},\mathsf{ConnectedGraph},\mathsf{Molecule},
+\mathsf{CancellationClass},\mathsf{CuttingForest},\mathsf{HeppTree},
+\mathsf{PreparedState},\mathsf{AdaptiveDepth}).
+\]
+
+定义 Deng 型方法映射：
+
+\[
+\boxed{
+M_{\mathrm{Deng}}:
+\operatorname{Pathology}
+\times\operatorname{ScaleData}
+\times\operatorname{TargetObserver}
+\to\operatorname{StructureDef}.
+}
+\]
+
+典型对应为：因子化失败映向 cumulant，历史纠缠映向 molecule，组合爆炸映向 cutting forest，隐藏抵消映向 cancellation class，尺度发散映向 Hepp tree 与 adaptive depth，长时间累积映向 prepared state 与 restart rule。
+
+这不是唯一性声明，而是把 Yu Deng 系列工作的共同创造模式提升成可研究的方法空间。对该方法自身应用 DECT，可继续询问：哪些证明病理尚未被现有结构字典区分，哪些新图对象只是旧对象的坐标压缩，哪些是方法语言的原语扩展，哪些能跨 kinetic、PDE、SPDE 与组合证明迁移。
+
+---
+

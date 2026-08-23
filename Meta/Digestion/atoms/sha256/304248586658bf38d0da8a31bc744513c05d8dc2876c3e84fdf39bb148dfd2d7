@@ -1,0 +1,49 @@
+# 第三十部　守卫自反
+
+对版本 \(S_n\)，定义代码 \(\ulcorner S_n\urcorner:\operatorname{CodeSys}\)。定义反射更新：
+
+\[
+\boxed{
+S_{n+1}:=\Phi(\ulcorner S_n\urcorner,E_n).
+}
+\]
+
+定义版本先后关系 \(\prec\)。一个自反定义为守卫的，当所有自引用边满足
+
+\[
+S_i\text{ 引用 }S_j\Longrightarrow j<i.
+\]
+
+定义守卫反射塔：
+
+\[
+S_0\xrightarrow{\Phi}S_1\xrightarrow{\Phi}S_2\xrightarrow{\Phi}\cdots.
+\]
+
+该结构与同层无类型表达 \(S=S(S)\) 不同：新版本只把已完成旧版本的代码、记录与残差纳入对象。
+
+定义反射深度：
+
+\[
+\operatorname{RefDepth}(S)
+:=
+\sup\{n:S\text{ 能编码并评价前 }n\text{ 层定义过程}\}.
+\]
+
+定义旧版本节点集合 \(N(S_n)\) 与下一版本描述 \(\operatorname{Desc}_{n+1}\)。未覆盖节点为
+
+\[
+\operatorname{Undesc}_{n+1}
+:=N(S_n)\setminus\operatorname{Dom}(\operatorname{Desc}_{n+1}).
+\]
+
+有限情况下定义自描述覆盖率：
+
+\[
+\operatorname{SelfCov}_{n+1}
+:=1-
+\frac{|\operatorname{Undesc}_{n+1}|}{|N(S_n)|}.
+\]
+
+---
+

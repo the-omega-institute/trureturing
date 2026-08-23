@@ -1,0 +1,10 @@
+ast_path: section/4-4-次模捕获
+fingerprints:
+  raw_sha256: sha256:a6e543906ccabf3f1042582c734316c1aa430deeafbf4c288aa0fb7559e64818
+  normalized_sha256: sha256:a6e543906ccabf3f1042582c734316c1aa430deeafbf4c288aa0fb7559e64818
+cas_ref: sha256:a6e543906ccabf3f1042582c734316c1aa430deeafbf4c288aa0fb7559e64818
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

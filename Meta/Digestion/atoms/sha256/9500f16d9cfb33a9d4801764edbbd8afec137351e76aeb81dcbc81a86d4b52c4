@@ -1,0 +1,88 @@
+## 21.1 定义宇宙
+
+给定类型 \(X\)，定义
+
+\[
+\boxed{
+\operatorname{Def}(X)
+:=
+\sum_{D:\mathcal U}(X\to D).
+}
+\]
+
+元素写作 \(\mathbf d=(D,d)\)，其中 \(d:X\to D\)。它同时覆盖命名、分类、性质、坐标、统计量、不变量、规范代表和未来轨迹。
+
+定义核：
+
+\[
+\ker\mathbf d
+:=
+\{(x,y):d(x)=d(y)\}.
+\]
+
+定义实现像：
+
+\[
+\operatorname{Im}(\mathbf d)
+:=
+\{z:D\mid\exists x,\ d(x)=z\}.
+\]
+
+定义概念等价：
+
+\[
+\mathbf d\simeq_X\mathbf e
+\quad\Longleftrightarrow\quad
+\ker\mathbf d=\ker\mathbf e.
+\]
+
+定义细化：
+
+\[
+\mathbf d\preceq_X\mathbf e
+\quad\Longleftrightarrow\quad
+\ker\mathbf e\subseteq\ker\mathbf d.
+\]
+
+定义元定义宇宙：
+
+\[
+\operatorname{MetaDef}(X)
+:=
+\operatorname{Def}(\operatorname{Def}(X)).
+\]
+
+定义生成器：
+
+\[
+\operatorname{Generator}(X;S)
+:=
+S\to\operatorname{Def}(X).
+\]
+
+定义变换器：
+
+\[
+\operatorname{Transformer}(X,Y)
+:=
+\operatorname{Def}(X)\to\operatorname{Def}(Y).
+\]
+
+给定定义状态与残差状态，定义研究方法：
+
+\[
+\boxed{
+\operatorname{Method}(X)
+:=
+\operatorname{DState}(X)
+\times
+\operatorname{Residual}(X)
+\to
+\operatorname{Def}(X).
+}
+\]
+
+所以“方法”不是对象层的另一个性质，而是定义下一项定义的高阶映射。
+
+---
+

@@ -1,0 +1,23 @@
+\[
+\boxed{
+ d_Z\left(
+S_{\varepsilon,t+s}(m),
+S_{\varepsilon,t}S_{\varepsilon,s}(m)
+\right)
+=
+\delta_{\varepsilon,t}
+\left(U_{\varepsilon,s}s_\varepsilon(m)\right).
+}
+\]
+
+若该缺陷在相关准备类和有限时域上一致趋零，并且 \(S_{\varepsilon,t}\to S_t\)，则极限动力学满足严格半群律。
+
+于是有效半群可以不是有限尺度精确商，而是由预测纤维渐近坍缩涌现：
+
+\[
+\boxed{
+\text{微观动力学不必严格保持准备流形；
+只需在目标预测度量中渐近保持。}
+}
+\]
+

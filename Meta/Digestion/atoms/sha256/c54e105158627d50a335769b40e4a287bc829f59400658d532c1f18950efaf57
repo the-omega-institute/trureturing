@@ -1,0 +1,20 @@
+\[
+\ker p\subseteq\ker q\cap\ker T
+=
+\ker(q\vee T).
+\]
+
+仓库中的
+
+`D5/S3/ConceptDynamics/Completion/TargetClosureOperator.lean`
+
+已经证明该闭包的广延性、单调性和概念等价意义下的幂等性。
+
+但 \(q\vee T\) 只是语义基准，不是定义创造的答案。真正任务是：在禁止语法依赖 \(T\) 的条件下，构造低成本 \(d\)，使
+
+\[
+\ker(q\vee d)\subseteq\ker T.
+\]
+
+---
+

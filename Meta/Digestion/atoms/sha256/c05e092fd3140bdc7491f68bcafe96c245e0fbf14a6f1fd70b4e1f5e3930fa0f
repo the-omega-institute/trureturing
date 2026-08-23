@@ -1,0 +1,14 @@
+\[
+\rho_\Gamma^\infty
+=
+\frac{
+\nu(\mathcal B_\Gamma(q;T))
+}{M_0}.
+\]
+
+在适当可数性与测度连续性条件下，预算趋于无穷时
+
+\[
+\rho_\Gamma(L)\longrightarrow\rho_\Gamma^\infty.
+\]
+

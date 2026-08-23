@@ -1,0 +1,6 @@
+## 11.7 临界 SPDE：定义深度必须增长
+
+Yu Deng 与 Hao Shen 的 `The four-dimensional Anderson model: a case study for critical SPDEs`（arXiv:2607.10105）处理需要任意高阶重整化的临界问题。论文指出必须展开到约 \(|\log\varepsilon|\) 阶，同时面对阶乘多个 pairing、增长的重整化项，并使用截断重整化 parametrix、Hepp trees、多尺度分析和排列求和估计控制高阶余项。
+
+这迫使 DECT 放弃“一个固定有限定义深度适用于所有尺度”的默认假设。定义
+

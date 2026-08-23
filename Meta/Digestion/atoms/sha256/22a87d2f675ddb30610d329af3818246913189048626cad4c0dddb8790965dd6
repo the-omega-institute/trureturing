@@ -1,0 +1,21 @@
+\[
+\boxed{
+\mathcal E(q\vee d;T)
+=
+\mathcal E(q;T)\cap\ker d.
+}
+\]
+
+证明：
+
+\[
+\begin{aligned}
+\mathcal E(q\vee d;T)
+&=\ker(q\vee d)\setminus\ker T\\
+&=(\ker q\cap\ker d)\setminus\ker T\\
+&=(\ker q\setminus\ker T)\cap\ker d.
+\end{aligned}
+\]
+
+这一恒等式是全文的中心。它给出一个完全可审计的定义价值判据：
+

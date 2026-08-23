@@ -1,0 +1,45 @@
+# 第三十四部　事实与客观性
+
+定义观察协议索引范畴 \(\mathcal O\)。每个对象 \(o\) 有读数 \(q_o:X\to Q_o\)，每个态射 \(f:o\to o'\) 有翻译
+
+\[
+Q(f):Q_o\to Q_{o'}.
+\]
+
+定义相容读数条件：
+
+\[
+Q(f)\circ q_o=q_{o'}.
+\]
+
+定义相容记录族 \(r=(r_o)\) 为满足
+
+\[
+Q(f)(r_o)=r_{o'}
+\]
+
+的族。定义相对于协议系统的事实：
+
+\[
+\boxed{
+\operatorname{Fact}_{\mathcal O}
+:=
+\varprojlim_{o\in\mathcal O}Q_o.
+}
+\]
+
+给定性质读数 \(P_o:Q_o\to Z\)，定义客观性为自然性：
+
+\[
+\boxed{
+\operatorname{Objective}_{\mathcal O}(P)
+\quad\Longleftrightarrow\quad
+P_{o'}\circ Q(f)=P_o
+\text{ 对所有 }f.
+}
+\]
+
+若只近似交换，定义客观性缺陷为所有协议翻译上的最大交换缺陷。客观性由此不是定义缺席，而是跨合法定义翻译的相容性。
+
+---
+

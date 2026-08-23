@@ -1,0 +1,16 @@
+## 11.5 硬球到 Boltzmann：完整碰撞历史
+
+`Long time derivation of the Boltzmann equation from hard sphere dynamics`（arXiv:2408.07818）使用长时间 cumulant ansatz，保留相关粒子的完整碰撞历史；核心是证明 cumulant 的 \(L^1\) 小量，并把问题归约为 collision-history molecules 的组合性质，再用 cutting algorithm 处理。
+
+这给出本文最重要的方法论解释：
+
+\[
+\boxed{
+\text{不是先删除高阶关联，
+而是先定义高阶关联的连通历史，
+再证明其目标影响可压缩。}
+}
+\]
+
+累积量把可因子化的平凡部分从高阶矩中剥离；molecule 把真正承载关联的碰撞历史压成组合对象；cutting 把全局复杂对象切成有局部预算的基本块。
+

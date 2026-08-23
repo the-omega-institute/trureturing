@@ -1,0 +1,41 @@
+# 第二十九部　元哲学与层级
+
+定义反射载体算子：
+
+\[
+\boxed{
+\mathfrak R(X):=\operatorname{Method}(X).
+}
+\]
+
+从对象层 \(X_0\) 开始，递归定义：
+
+\[
+X_{n+1}:=\mathfrak R(X_n).
+\]
+
+每层定义
+
+\[
+q_n:X_n\to Q_n,
+\qquad
+T_n:X_n\to Y_n,
+\qquad
+E_n:=\ker q_n\setminus\ker T_n,
+\]
+
+以及
+
+\[
+M_n:
+\operatorname{DState}(X_n)
+\times
+\operatorname{RState}(X_n,T_n)
+\to
+\operatorname{IntDef}(X_n).
+\]
+
+\(X_0\) 是对象空间，\(X_1\) 是研究对象的方法空间，\(X_2\) 是研究方法的方法空间。元哲学被定义为 \(X_2\) 上的 DECT，更高有限层同理。构造中没有指定最高层。
+
+---
+

@@ -1,0 +1,30 @@
+# 第三十七部　解释作为多目标压缩
+
+给定目标族 \(\mathcal T=\{T_j\}_{j\in J}\)，定义共同残差：
+
+\[
+\mathcal E(q;\mathcal T)
+:=
+\bigcup_{j\in J}\mathcal E(q;T_j).
+\]
+
+定义解释记录：
+
+\[
+\operatorname{Explain}(d)
+:=
+(\operatorname{Capture},\operatorname{Compression},
+\operatorname{Transfer},\operatorname{Counterfactual},
+\operatorname{MechanismGraph}).
+\]
+
+定义多目标捕获：
+
+\[
+\operatorname{ExplCapture}(d)
+:=
+\sum_jw_j\nu_j(\mathcal E(q;T_j)\cap(\ker d)^c).
+\]
+
+定义解释压缩：
+
