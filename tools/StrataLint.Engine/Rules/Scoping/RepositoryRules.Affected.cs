@@ -59,8 +59,7 @@ internal static partial class RepositoryRules
         !context.Changes.Paths.IsEmpty;
 
     private static bool AnchorsAffected(RuleEvaluationContext context) =>
-        LeanReportAffected(context)
-        || Changed(context, static path => path == "Library/queries.yaml")
+        Changed(context, static path => path == "Library/queries.yaml")
         || LiteratureReferenceChanged(context);
 
     private static bool LedgerAffected(RuleEvaluationContext context) =>
@@ -122,6 +121,14 @@ internal static partial class RepositoryRules
         FrozenLedgerDeltaPredicate.IsManagedLeanSource(path)
         || FrozenLedgerDeltaPredicate.IsEnvironmentInput(path)
         || FrozenLedgerDeltaPredicate.IsDeltaDefinitionInput(path);
+
+    internal static bool IsLeanClosureFactAffected(
+        RuleEvaluationContext context,
+        RepoPath source) =>
+        LeanImportClosure.RepositoryPaths(context.Lean.Report, source)
+            .Any(path => context.IsBaseFactAffected(path.Value))
+        || context.Changes.Paths.Any(path =>
+            IsLeanReportInput(path.Value) && !IsManagedLeanPath(path.Value));
 
     private static bool TheoristReceiptReferenceChanged(RuleEvaluationContext context)
     {

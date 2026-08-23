@@ -7,15 +7,14 @@ internal sealed record LeanCacheProvisionResult(
     string Strategy,
     string Method,
     string? Warning,
-    MathlibCachePruneOutcome PruneOutcome,
+    MathlibOleanInventory MathlibOleans,
     ClonefileReceipt Clonefile);
 
-internal sealed record MathlibCachePruneOutcome(
-    string Scope,
-    int? DeletedFiles,
-    string CleanStatus)
+internal sealed record MathlibOleanInventory(
+    int? MissingFiles,
+    IReadOnlyList<string> MissingSamples)
 {
-    internal static MathlibCachePruneOutcome NotRun { get; } = new("machine", 0, "not-run");
+    internal static MathlibOleanInventory Unknown { get; } = new(null, []);
 }
 
 internal interface ILeanCachePublisher
@@ -49,15 +48,23 @@ internal static class LeanCacheProvisioner
         PreExisting,
     }
 
-    internal const int DefaultProvisionBudgetSeconds = 1800;
+    /// The value and its policy-override declaration live in
+    /// <see cref="LeanCacheBudgetPolicy"/>. Keeping the declaration beside the constant
+    /// pushed this file past the 800-line limit once dev added to it, and shortening the
+    /// declaration to fit would trade an audited statement for a line count.
+    internal const int DefaultProvisionBudgetSeconds =
+        LeanCacheBudgetPolicy.DefaultProvisionBudgetSeconds;
     private const int MissingOleanSampleLimit = 5;
     private static readonly TimeSpan[] CloneRetryBackoffs =
         [TimeSpan.FromMilliseconds(250), TimeSpan.FromMilliseconds(500),
          TimeSpan.FromMilliseconds(1000), TimeSpan.FromMilliseconds(2000)];
     private static readonly UTF8Encoding StrictUtf8 = new(false, true);
 
-    // Cold provisioning spans package clones plus olean download and extraction. Five minutes
-    // permits useful fail-fast runs; two hours gives that path 4x headroom without an unbounded hang.
+    // Cold provisioning spans package clones plus olean download and extraction. The five
+    // minute floor permits useful fail-fast runs; the two hour ceiling leaves twice the
+    // declared default above without an unbounded hang. (That ratio read 4x while the
+    // default was 1800s; the policy-override above moved the default and this sentence
+    // had to move with it.)
     private static TimeSpan ProvisionBudget
     {
         get
@@ -93,6 +100,28 @@ internal static class LeanCacheProvisioner
             cloner,
             LeanCachePublisher.Instance,
             RemovePartial,
+            wait);
+
+    internal static LeanCacheProvisionResult Provision(
+        LeanCacheDonorSelection selection,
+        string worktreeRoot,
+        LeanPinSet pins,
+        string lakeExecutable,
+        IWorktreeProcessRunner runner,
+        LeanCacheWriterGuard writerGuard,
+        IDirectoryCloner cloner,
+        Action<string> removePartial,
+        Action<TimeSpan>? wait = null) =>
+        Provision(
+            selection,
+            worktreeRoot,
+            pins,
+            lakeExecutable,
+            runner,
+            writerGuard,
+            cloner,
+            LeanCachePublisher.Instance,
+            removePartial,
             wait);
 
     internal static LeanCacheProvisionResult Provision(
@@ -185,24 +214,21 @@ internal static class LeanCacheProvisioner
         LeanPinSet pins,
         string lakeExecutable,
         IWorktreeProcessRunner runner,
-        LeanCacheWriterGuard writerGuard,
-        Func<string, int> countLtarFiles)
+        LeanCacheWriterGuard writerGuard)
     {
-        ArgumentNullException.ThrowIfNull(countLtarFiles);
         writerGuard.RequireOwnershipOf(Path.Combine(worktreeRoot, ".lake"));
-        var pruneOutcome = RunCacheGet(
+        var mathlibOleans = RunCacheGet(
             worktreeRoot,
             pins,
             lakeExecutable,
             runner,
             CacheTreeOwnership.PreExisting,
-            countLtarFiles,
             RemovePartial);
         return new LeanCacheProvisionResult(
             "cache-get",
             "cache-get",
-            "ran the current-pin producer in place; the pin-identity stamp was published only after producer and live completeness verification succeeded",
-            pruneOutcome,
+            "ran the current-pin producer in place; the pin-identity stamp was published after the producer completed",
+            mathlibOleans,
             ClonefileReceipt.NotRun);
     }
 
@@ -319,7 +345,7 @@ internal static class LeanCacheProvisioner
         return null;
     }
 
-    private static DirectoryCloneResult CloneWithRetry(
+    internal static DirectoryCloneResult CloneWithRetry(
         string source,
         string staged,
         IDirectoryCloner cloner,
@@ -381,11 +407,12 @@ internal static class LeanCacheProvisioner
         Action<string> removePartial,
         out string? finalWarning)
     {
+        var mathlibOleans = MathlibOleanInventory.Unknown;
         try
         {
             VerifyPrivateDirectory(staged);
             RemoveCopiedStamp(staged);
-            VerifyMathlibOleans(staged);
+            mathlibOleans = InspectMathlibOleans(staged);
             if (!LeanCacheStamp.Matches(source, pins, out var stampReason)
                 || LeanCacheBusyProbe.IsBusy(donorRoot, runner))
             {
@@ -409,7 +436,7 @@ internal static class LeanCacheProvisioner
             "cloned",
             method,
             warning,
-            MathlibCachePruneOutcome.NotRun,
+            mathlibOleans,
             cloneReceipt);
     }
 
@@ -424,138 +451,73 @@ internal static class LeanCacheProvisioner
     {
         try
         {
-            var pruneOutcome = RunCacheGet(
+            var mathlibOleans = RunCacheGet(
                 worktreeRoot,
                 pins,
                 lakeExecutable,
                 runner,
                 CacheTreeOwnership.CreatedByThisCall,
-                CountLtarFiles,
                 removePartial);
             return new LeanCacheProvisionResult(
                 "cache-get",
                 "cache-get",
-                Join(warning, "used lake exe cache get then lake exe cache clean"),
-                pruneOutcome,
-                cloneReceipt);
-        }
-        catch (MathlibOleanCompletenessException exception)
-        {
-            throw new MathlibOleanCompletenessException(
-                exception.MissingOleanFiles,
-                exception.MissingOleanSamples,
-                Join(warning, $"cache fallback failed ({exception.Message})"),
-                exception.PruneOutcome,
-                exception,
+                Join(warning, "used lake exe cache get"),
+                mathlibOleans,
                 cloneReceipt);
         }
         catch (LeanCacheProvisionException exception)
         {
             throw new LeanCacheProvisionException(
                 Join(warning, $"cache fallback failed ({exception.Message})"),
-                exception.PruneOutcome,
                 exception,
-                cloneReceipt);
+                cloneReceipt,
+                exception.SafeToContinueToBuild);
         }
         catch (Exception exception)
         {
             throw new LeanCacheProvisionException(
                 Join(warning, $"cache fallback failed ({exception.Message})"),
-                MathlibCachePruneOutcome.NotRun,
                 exception,
                 cloneReceipt);
         }
     }
 
-    private static MathlibCachePruneOutcome RunCacheGet(
+    private static MathlibOleanInventory RunCacheGet(
         string worktreeRoot,
         LeanPinSet pins,
         string lakeExecutable,
         IWorktreeProcessRunner runner,
         CacheTreeOwnership ownership,
-        Func<string, int> countLtarFiles,
         Action<string> removePartial)
     {
         var lake = Path.Combine(worktreeRoot, ".lake");
-        var pruneOutcome = MathlibCachePruneOutcome.NotRun;
         try
         {
-            var result = runner.Run(
-                lakeExecutable,
-                ["exe", "cache", "get"],
-                worktreeRoot,
-                ProvisionBudget);
-            if (result.ExitCode != 0)
-            {
-                throw new LeanCacheProvisionException(
-                    $"lake exe cache get failed: {Error(result, "unknown error")}",
-                    pruneOutcome);
-            }
-
-            VerifyPrivateDirectory(lake);
-            VerifyMathlibOleans(lake);
-            var sharedCache = MathlibCacheDirectory(worktreeRoot);
-            var beforeClean = countLtarFiles(sharedCache);
-            pruneOutcome = new MathlibCachePruneOutcome("machine", null, "attempted");
-            ProcessOutput clean;
+            ProcessOutput result;
             try
             {
-                clean = runner.Run(
+                result = runner.Run(
                     lakeExecutable,
-                    ["exe", "cache", "clean"],
+                    ["exe", "cache", "get"],
                     worktreeRoot,
                     ProvisionBudget);
             }
             catch (Exception exception)
             {
-                pruneOutcome = new MathlibCachePruneOutcome("machine", null, "failed");
-                try
-                {
-                    var afterFailedClean = countLtarFiles(sharedCache);
-                    pruneOutcome = pruneOutcome with
-                    {
-                        DeletedFiles = Math.Max(0, beforeClean - afterFailedClean),
-                    };
-                }
-                catch (Exception inventoryException)
-                {
-                    throw new LeanCacheProvisionException(
-                        $"lake exe cache clean failed: {exception.Message}; "
-                        + $"post-clean cache inventory failed: {inventoryException.Message}",
-                        pruneOutcome,
-                        new AggregateException(exception, inventoryException));
-                }
                 throw new LeanCacheProvisionException(
-                    $"lake exe cache clean failed: {exception.Message}",
-                    pruneOutcome,
-                    exception);
+                    $"lake exe cache get failed: {exception.Message}",
+                    exception,
+                    safeToContinueToBuild: true);
             }
-            pruneOutcome = new MathlibCachePruneOutcome(
-                "machine",
-                null,
-                clean.ExitCode == 0 ? "succeeded" : "failed");
-            try
-            {
-                var afterClean = countLtarFiles(sharedCache);
-                pruneOutcome = pruneOutcome with
-                {
-                    DeletedFiles = Math.Max(0, beforeClean - afterClean),
-                };
-            }
-            catch (Exception inventoryException)
+            if (result.ExitCode != 0)
             {
                 throw new LeanCacheProvisionException(
-                    $"lake exe cache clean {pruneOutcome.CleanStatus}; "
-                    + $"post-clean cache inventory failed: {inventoryException.Message}",
-                    pruneOutcome,
-                    inventoryException);
+                    $"lake exe cache get failed: {Error(result, "unknown error")}",
+                    safeToContinueToBuild: true);
             }
-            if (clean.ExitCode != 0)
-            {
-                throw new LeanCacheProvisionException(
-                    $"lake exe cache clean failed: {Error(clean, "unknown error")}",
-                    pruneOutcome);
-            }
+
+            VerifyPrivateDirectory(lake);
+            var mathlibOleans = InspectMathlibOleans(lake);
 
             try
             {
@@ -565,10 +527,9 @@ internal static class LeanCacheProvisioner
             {
                 throw new LeanCacheProvisionException(
                     $"cache producer stamp publication failed: {exception.Message}",
-                    pruneOutcome,
                     exception);
             }
-            return pruneOutcome;
+            return mathlibOleans;
         }
         catch (Exception exception)
         {
@@ -581,51 +542,23 @@ internal static class LeanCacheProvisioner
                 catch (Exception cleanupException)
                 {
                     var aggregate = new AggregateException(exception, cleanupException);
-                    if (exception is MathlibOleanCompletenessException completenessException)
-                    {
-                        throw new MathlibOleanCompletenessException(
-                            completenessException.MissingOleanFiles,
-                            completenessException.MissingOleanSamples,
-                            completenessException.Message,
-                            completenessException.PruneOutcome,
-                            aggregate);
-                    }
                     if (exception is LeanCacheProvisionException provisionException)
                     {
                         throw new LeanCacheProvisionException(
                             provisionException.Message,
-                            provisionException.PruneOutcome,
                             aggregate);
                     }
                     throw new LeanCacheProvisionException(
                         exception.Message,
-                        pruneOutcome,
                         aggregate);
                 }
             }
             if (exception is LeanCacheProvisionException) throw;
             throw new LeanCacheProvisionException(
                 exception.Message,
-                pruneOutcome,
                 exception);
         }
     }
-
-    private static string MathlibCacheDirectory(string worktreeRoot)
-    {
-        var explicitPath = Environment.GetEnvironmentVariable("MATHLIB_CACHE_DIR");
-        if (!string.IsNullOrEmpty(explicitPath)) return Path.GetFullPath(explicitPath);
-        var xdg = Environment.GetEnvironmentVariable("XDG_CACHE_HOME");
-        if (!string.IsNullOrEmpty(xdg)) return Path.GetFullPath(Path.Combine(xdg, "mathlib"));
-        var home = Environment.GetEnvironmentVariable("HOME");
-        return string.IsNullOrEmpty(home)
-            ? Path.Combine(worktreeRoot, ".cache")
-            : Path.Combine(home, ".cache", "mathlib");
-    }
-
-    internal static int CountLtarFiles(string directory) => Directory.Exists(directory)
-        ? Directory.EnumerateFiles(directory, "*.ltar", SearchOption.AllDirectories).Count()
-        : 0;
 
     private static void EnsureAbsent(string target)
     {
@@ -635,7 +568,7 @@ internal static class LeanCacheProvisioner
         }
     }
 
-    private static void VerifyPrivateDirectory(string target)
+    internal static void VerifyPrivateDirectory(string target)
     {
         if (!Directory.Exists(target))
         {
@@ -648,56 +581,44 @@ internal static class LeanCacheProvisioner
         }
     }
 
-    internal static void VerifyMathlibOleans(string lake)
+    internal static MathlibOleanInventory InspectMathlibOleans(string lake)
     {
-        var mathlib = Path.Combine(lake, "packages", "mathlib");
-        var sourceRoot = Path.Combine(mathlib, "Mathlib");
-        if (!Directory.Exists(sourceRoot))
+        try
         {
-            throw new MathlibOleanCompletenessException(
-                null,
-                [],
-                "mathlib olean completeness could not be determined: Mathlib source directory is missing");
-        }
+            var mathlib = Path.Combine(lake, "packages", "mathlib");
+            var sourceRoot = Path.Combine(mathlib, "Mathlib");
+            if (!Directory.Exists(sourceRoot)) return MathlibOleanInventory.Unknown;
 
-        var buildRoot = Path.Combine(mathlib, ".lake", "build", "lib", "lean");
-        var sourceCount = 0;
-        var missingCount = 0;
-        var samples = new List<string>();
-        foreach (var source in Directory.EnumerateFiles(
-            sourceRoot,
-            "*.lean",
-            SearchOption.AllDirectories))
-        {
-            sourceCount++;
-            var relative = Path.GetRelativePath(mathlib, source);
-            var expected = Path.Combine(buildRoot, Path.ChangeExtension(relative, ".olean"));
-            if (File.Exists(expected)) continue;
-
-            missingCount++;
-            if (samples.Count < MissingOleanSampleLimit)
+            var buildRoot = Path.Combine(mathlib, ".lake", "build", "lib", "lean");
+            var sourceCount = 0;
+            var missingCount = 0;
+            var samples = new List<string>();
+            foreach (var source in Directory.EnumerateFiles(
+                sourceRoot,
+                "*.lean",
+                SearchOption.AllDirectories))
             {
-                samples.Add(
-                    Path.ChangeExtension(relative, null)!
-                        .Replace(Path.DirectorySeparatorChar, '/'));
+                sourceCount++;
+                var relative = Path.GetRelativePath(mathlib, source);
+                var expected = Path.Combine(buildRoot, Path.ChangeExtension(relative, ".olean"));
+                if (File.Exists(expected)) continue;
+
+                missingCount++;
+                if (samples.Count < MissingOleanSampleLimit)
+                {
+                    samples.Add(
+                        Path.ChangeExtension(relative, null)!
+                            .Replace(Path.DirectorySeparatorChar, '/'));
+                }
             }
-        }
 
-        if (sourceCount == 0)
-        {
-            throw new MathlibOleanCompletenessException(
-                null,
-                [],
-                "mathlib olean completeness could not be determined: Mathlib source directory contains no Lean files");
+            return sourceCount == 0
+                ? MathlibOleanInventory.Unknown
+                : new MathlibOleanInventory(missingCount, samples);
         }
-
-        if (missingCount != 0)
+        catch
         {
-            throw new MathlibOleanCompletenessException(
-                missingCount,
-                samples,
-                $"mathlib olean cache is incomplete: missing {missingCount} of {sourceCount}; "
-                + $"samples: {string.Join(", ", samples)}");
+            return MathlibOleanInventory.Unknown;
         }
     }
 
@@ -716,19 +637,19 @@ internal static class LeanCacheProvisioner
         }
     }
 
-    private static void RemovePartial(string target)
+    internal static void RemovePartial(string target)
     {
         if (Directory.Exists(target)) Directory.Delete(target, recursive: true);
         else if (File.Exists(target)) File.Delete(target);
     }
 
-    private static string Error(ProcessOutput output, string fallback)
+    internal static string Error(ProcessOutput output, string fallback)
     {
         var error = StrictUtf8.GetString(output.StandardError).Trim();
         return error.Length == 0 ? fallback : error;
     }
 
-    private static string Join(string? first, string? second)
+    internal static string Join(string? first, string? second)
     {
         if (string.IsNullOrWhiteSpace(first)) return second ?? string.Empty;
         if (string.IsNullOrWhiteSpace(second)) return first;

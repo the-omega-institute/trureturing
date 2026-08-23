@@ -23,3 +23,4 @@ The proof reuses the repository's complementary-projection identity. Pinned Math
 ## References
 
 - Truth anchor: `D5/S3/Quantum/Algebra/FiniteLayerProjectionEscape.finite_layer_projection_escape`
+- Dependency: [D5/S3/Quantum/Algebra/OrthogonalProjectionComplement](OrthogonalProjectionComplement.md)

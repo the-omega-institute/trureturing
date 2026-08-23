@@ -23,4 +23,6 @@ The displayed identity is the champion value the ring attains. The package itsel
 - Truth anchor: `D5/S0/Tower/GoldenClauseTwo/ErrataPackage.golden_clause_two_errata_package`
 - Dependency: [D5/S0/Tower/Champions/GoldenPermanentSurvivors](../Champions/GoldenPermanentSurvivors.md)
 - Dependency: [D5/S0/Tower/ErgodicBridge/Golden](../ErgodicBridge/Golden.md)
+- Dependency: [D5/S0/Tower/GoldenChampionPoint](../GoldenChampionPoint.md)
 - Dependency: [D5/S0/Tower/GoldenPeriodicTwelve/EnumerationTwelve](../GoldenPeriodicTwelve/EnumerationTwelve.md)
+- Dependency: [D5/S0/Tower/GoldenSubstitution](../GoldenSubstitution.md)

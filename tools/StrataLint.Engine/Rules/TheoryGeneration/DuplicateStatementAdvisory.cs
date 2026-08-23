@@ -79,10 +79,12 @@ internal static class DuplicateStatementAdvisory
     }
 
     private static HashSet<RepoPath> ChangedLeanModules(RuleEvaluationContext context) =>
-        context.Changes.Paths
-            .Where(path => LeanClosureValidator.IsManagedLean(path.Value)
-                && context.Current.TryGetFile(path.Value, out _))
-            .ToHashSet();
+        context.RuleImplementationChanged
+            ? context.Lean.Report.Files.Keys.ToHashSet()
+            : context.Changes.Paths
+                .Where(path => LeanClosureValidator.IsManagedLean(path.Value)
+                    && context.Current.TryGetFile(path.Value, out _))
+                .ToHashSet();
 
     // A module report carries every constant the module declares, and the census
     // found the colliding ones to be overwhelmingly machine-made: automatic

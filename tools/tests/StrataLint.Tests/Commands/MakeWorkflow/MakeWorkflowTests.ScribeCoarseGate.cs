@@ -18,11 +18,7 @@ public sealed partial class MakeWorkflowTests
         var result = fixture.Run();
 
         Assert.Equal(0, result.ExitCode);
-        Assert.Equal(
-            [
-                $"{fixture.ScribeDll} describe-report --check",
-            ],
-            fixture.Invocations());
+        Assert.Empty(fixture.Invocations());
     }
 
     [Fact]
@@ -37,11 +33,7 @@ public sealed partial class MakeWorkflowTests
         var result = fixture.Run();
 
         Assert.Equal(0, result.ExitCode);
-        Assert.Equal(
-            [
-                $"{fixture.ScribeDll} describe-report --check",
-            ],
-            fixture.Invocations());
+        Assert.Empty(fixture.Invocations());
     }
 
     [Fact]
@@ -55,31 +47,21 @@ public sealed partial class MakeWorkflowTests
         var result = fixture.Run();
 
         Assert.Equal(0, result.ExitCode);
-        Assert.Equal(
-            [
-                $"{fixture.ScribeDll} describe-report --check",
-            ],
-            fixture.Invocations());
+        Assert.Empty(fixture.Invocations());
     }
 
     [Theory]
     [InlineData("Blueprint/D5/Probe.scribe.cs")]
-    [InlineData("Blueprint/D5/Probe.md")]
     [InlineData("D5/Probe.lean")]
     [InlineData("Trureturing.lean")]
     [InlineData("lean-toolchain")]
     [InlineData("lake-manifest.json")]
     [InlineData("lakefile.toml")]
     [InlineData("Library/notes/probe.md")]
-    [InlineData("Golden/Projection/probe.json")]
-    [InlineData("Meta/BACKFILL.yaml")]
     [InlineData("Meta/Digestion/backfill/probe.yaml")]
-    [InlineData("Golden/values-kernels.toml")]
-    [InlineData("Evidence/D5/values.json")]
-    [InlineData("tools/Architecture/BannedSymbols.txt")]
-    [InlineData("tools/StrataLint.Scribe/Emission/Probe.cs")]
+    [InlineData("Problems/probe.md")]
     [UnsupportedOSPlatform("windows")]
-    public void ScribeCoarseGateRunsRequiredChecksWithoutMarkdownFreshness(string changedPath)
+    public void R15DescribeReportRunsForAuthoritativeInputDelta(string changedPath)
     {
         if (OperatingSystem.IsWindows()) return;
 
@@ -91,11 +73,45 @@ public sealed partial class MakeWorkflowTests
         Assert.Equal(0, result.ExitCode);
         Assert.Equal(
             [
-                $"{fixture.ScribeDll} projections --check --report {fixture.Report}",
-                $"{fixture.ScribeDll} emit-values --check",
                 $"{fixture.ScribeDll} describe-report --check",
             ],
             fixture.Invocations());
+    }
+
+    [Fact]
+    [UnsupportedOSPlatform("windows")]
+    public void R15StatementProjectionReplayRunsForGoldenFixtureDelta()
+    {
+        if (OperatingSystem.IsWindows()) return;
+
+        using var fixture = new ScribeCoarseGateFixture();
+        fixture.Change("Golden/Projection/statement-projection-pilot-v1.json");
+
+        var result = fixture.Run();
+
+        Assert.Equal(0, result.ExitCode);
+        Assert.Equal(
+            [$"{fixture.ScribeDll} projections --check --report {fixture.Report}"],
+            fixture.Invocations());
+    }
+
+    [Theory]
+    [InlineData("Blueprint/D5/Probe.md")]
+    [InlineData("Golden/values-kernels.toml")]
+    [InlineData("Evidence/D5/values.json")]
+    [InlineData("notes/r15-unrelated.txt")]
+    [UnsupportedOSPlatform("windows")]
+    public void R15ProjectionFreshnessDoesNotEnterTheContentGate(string changedPath)
+    {
+        if (OperatingSystem.IsWindows()) return;
+
+        using var fixture = new ScribeCoarseGateFixture();
+        fixture.Change(changedPath);
+
+        var result = fixture.Run();
+
+        Assert.Equal(0, result.ExitCode);
+        Assert.Empty(fixture.Invocations());
     }
 
     [Fact]
@@ -113,9 +129,12 @@ public sealed partial class MakeWorkflowTests
         Assert.DoesNotContain(
             fixture.Invocations(),
             invocation => invocation == $"{fixture.ScribeDll} emit --check");
-        Assert.Contains(
-            fixture.Invocations(),
-            invocation => invocation == $"{fixture.ScribeDll} emit-values --check");
+        Assert.Equal(
+            [
+                $"{fixture.ScribeDll} projections --check --report {fixture.Report}",
+                $"{fixture.ScribeDll} describe-report --check",
+            ],
+            fixture.Invocations());
     }
 
     [Theory]

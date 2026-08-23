@@ -18,11 +18,13 @@ internal static partial class RepositoryRules
             foreach (var module in report.Imports.Where(static item => item.StartsWith("D5.", StringComparison.Ordinal)))
             {
                 var target = module.Replace('.', '/') + ".lean";
-                if (!context.Current.TryGetFile(target, out _))
+                var findingAffected = IsLeanClosureFactAffected(context, path)
+                    || context.IsBaseFactAffected(target);
+                if (!context.Current.TryGetFile(target, out _) && findingAffected)
                 {
                     findings.Add(new RuleFinding(path.Value, $"managed import {target} does not exist"));
                 }
-                else if (!ImportAllowed(path.Value, target))
+                else if (!ImportAllowed(path.Value, target) && findingAffected)
                 {
                     findings.Add(new RuleFinding(path.Value, $"stratum closure may not import {target}"));
                 }
@@ -42,7 +44,9 @@ internal static partial class RepositoryRules
                 .Select(static item => item.Name)
                 .Order(StringComparer.Ordinal)
                 .ToArray();
-            if (declarations.Length > 0 && !path.Value.Contains("/X_Frontier/", StringComparison.Ordinal))
+            if (declarations.Length > 0
+                && !path.Value.Contains("/X_Frontier/", StringComparison.Ordinal)
+                && IsLeanClosureFactAffected(context, path))
             {
                 findings.Add(new RuleFinding(
                     path.Value,
@@ -273,6 +277,11 @@ internal static partial class RepositoryRules
                 continue;
             }
 
+            if (!MirrorPairAffected(context, path.Value, header))
+            {
+                continue;
+            }
+
             ValidateMirror(path.Value, "mirror-B", header.MirrorB, "D5/B/", context.Current, findings);
             ValidateMirror(path.Value, "mirror-E", header.MirrorE, "D5/E/", context.Current, findings);
         }
@@ -283,6 +292,7 @@ internal static partial class RepositoryRules
     private static ImmutableArray<RuleFinding> Chronicle(RuleEvaluationContext context) =>
         context.ForkPoint.Files
             .Where(static item => item.Key.Value.StartsWith("Chronicle/", StringComparison.Ordinal))
+            .Where(item => context.IsBaseFactAffected(item.Key.Value))
             .Where(item => !context.Current.TryGetFile(item.Key.Value, out var current)
                 || !current.RawBytes.AsSpan().SequenceEqual(item.Value.RawBytes.AsSpan()))
             .Select(static item => new RuleFinding(item.Key.Value, "tracked Chronicle entries are append-only"))
@@ -290,7 +300,9 @@ internal static partial class RepositoryRules
 
     private static ImmutableArray<RuleFinding> Badges(RuleEvaluationContext context) =>
         context.Current.Files
-            .Where(static item => IsStatusScope(item.Key.Value) && BadgePattern.IsMatch(item.Value.Text))
+            .Where(item => IsStatusScope(item.Key.Value)
+                && context.IsBaseFactAffected(item.Key.Value)
+                && BadgePattern.IsMatch(item.Value.Text))
             .Select(static item => new RuleFinding(item.Key.Value, "hand-written status badge is forbidden"))
             .ToImmutableArray();
 
@@ -298,7 +310,7 @@ internal static partial class RepositoryRules
     {
         try
         {
-            if (Changed(context, static path => path == HeartsAuthorizationLedger.Path)
+            if (context.IsBaseFactAffected(HeartsAuthorizationLedger.Path)
                 && context.Current.TryGetFile(
                     HeartsAuthorizationLedger.Path,
                     out var authorizationFile))
@@ -361,7 +373,8 @@ internal static partial class RepositoryRules
             foreach (var target in ImportClosure(source, imports))
             {
                 if (headers.TryGetValue(target, out var imported)
-                    && imported?.Generality is "I" or "E")
+                    && imported?.Generality is "I" or "E"
+                    && IsLeanClosureFactAffected(context, RepoPath.CreateKnown(source)))
                 {
                     findings.Add(new RuleFinding(
                         source,
@@ -405,6 +418,13 @@ internal static partial class RepositoryRules
 
             var stratum = parts[stratumIndex];
             var domain = parts[stratumIndex + 1];
+            if (!context.IsBaseFactAffected(path.Value)
+                && !context.IsBaseFactAffected("Meta/domains.yaml")
+                && !context.IsBaseFactAffected("Meta/registry.yaml"))
+            {
+                continue;
+            }
+
             var policyDomain = context.Policy.Domains.FirstOrDefault(
                 item => string.Equals(item.Key.Value, domain, StringComparison.Ordinal));
             if (policyDomain.Key is null)
@@ -431,7 +451,13 @@ internal static partial class RepositoryRules
         {
             if (!TryHeader(file.Text, out var header))
             {
-                findings.Add(new RuleFinding(path.Value, "expected the exact six-line header at byte zero"));
+                if (context.IsBaseFactAffected(path.Value))
+                {
+                    findings.Add(new RuleFinding(
+                        path.Value,
+                        "expected the exact six-line header at byte zero"));
+                }
+
                 continue;
             }
 
@@ -442,7 +468,8 @@ internal static partial class RepositoryRules
         foreach (var (path, header) in headers)
         {
             var expected = path.Value[..^5];
-            if (counts[header.Gid] == 1
+            if (context.IsBaseFactAffected(path.Value)
+                && counts[header.Gid] == 1
                 && Gid.TryParse(header.Gid, out _)
                 && !string.Equals(header.Gid, expected, StringComparison.Ordinal))
             {

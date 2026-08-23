@@ -5,6 +5,16 @@ internal static class StrataLintEngineBuildInputs
     private const string ProjectDirectory = "tools/StrataLint.Engine";
     private const string ProjectPath = ProjectDirectory + "/StrataLint.Engine.csproj";
     private const string RulesDirectory = ProjectDirectory + "/Rules";
+    private const string HeartsAuthorizationLedgerPath =
+        ProjectDirectory + "/Authorization/HeartsAuthorizationLedger.cs";
+    private const string FrozenAcceptedEventLoaderPath =
+        ProjectDirectory + "/Ledger/FrozenAcceptedEventLoader.cs";
+    private const string TrustedRevocationReceiptsPath =
+        ProjectDirectory + "/Revocation/TrustedRevocationReceipts.cs";
+    private const string RepositoryPathPolicyPath =
+        ProjectDirectory + "/Coordinates/RepositoryPathPolicy.cs";
+    private const string RepositoryPathPolicyPathsPath =
+        ProjectDirectory + "/Coordinates/RepositoryPathPolicy.Paths.cs";
 
     internal static bool Contains(string path)
     {
@@ -20,15 +30,27 @@ internal static class StrataLintEngineBuildInputs
 
     internal static bool ContainsRuleImplementation(string path)
     {
-        if (path == ProjectPath
-            || path.StartsWith(RulesDirectory + "/", StringComparison.Ordinal)
-                && path.EndsWith(".cs", StringComparison.Ordinal))
+        if (ContainsRuleSource(path))
+        {
+            return true;
+        }
+
+        if (path == HeartsAuthorizationLedgerPath
+            || path == FrozenAcceptedEventLoaderPath
+            || path == TrustedRevocationReceiptsPath
+            || path == RepositoryPathPolicyPath
+            || path == RepositoryPathPolicyPathsPath)
         {
             return true;
         }
 
         return IsInheritedBuildInput(path);
     }
+
+    internal static bool ContainsRuleSource(string path) =>
+        path == ProjectPath
+        || path.StartsWith(RulesDirectory + "/", StringComparison.Ordinal)
+            && path.EndsWith(".cs", StringComparison.Ordinal);
 
     private static bool IsInheritedBuildInput(string path)
     {

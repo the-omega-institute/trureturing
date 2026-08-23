@@ -1,5 +1,11 @@
 trureturing — the last line of the ledger is always the first line of the next round.
 
+The `Blueprint/` Markdown content of this repository is published as a browsable, searchable
+mdBook site at **<https://the-omega-institute.github.io/trureturing-mdbook/>**. That site is a
+derived projection, rebuilt daily from this repository by
+[the-omega-institute/trureturing-mdbook](https://github.com/the-omega-institute/trureturing-mdbook);
+it is not a source of truth and holds no authority over anything here.
+
 GitHub required-check configuration is a human gate and has not been verified by this repository.
 
 Developer commands have one top-level entry point:
@@ -29,9 +35,9 @@ the pinned Lean environment and emits source-bound canonical JSON plus a SHA-256
 sidecar; `check` consumes the candidate report without invoking Lean. Baseline and fork-point
 state remain Git object snapshots used by repository rules.
 
-`worktree` fetches a remote base, compares the exact `lean-toolchain` and
-`lake-manifest.json` bytes, and only then copies `.lake` from a matching worktree.
-On macOS it clones the whole tree with one APFS `clonefile(2)` call, reports and
-falls back to an ordinary copy when clonefile is unavailable, and uses
-`lake exe cache get` when no pinned donor matches. It never shares `.lake` through a symlink and restores locked .NET
-dependencies unless `--skip-restore` is explicit.
+`worktree` fetches a remote base and creates the worktree with no `.lake` directory.
+The canonical Lean wrapper materializes a private cache on demand, using an APFS
+`clonefile(2)` donor copy on macOS when possible and `lake exe cache get` otherwise;
+`make lean-cache-ensure` is an explicit, optional prewarm target. The cache is never
+shared through a symlink, and worktree creation restores locked .NET dependencies
+unless `--skip-restore` is explicit.

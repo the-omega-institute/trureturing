@@ -23,3 +23,4 @@ The inclusion proofs are the frozen separable_isPosSemidef and posSemidef_blockP
 ## References
 
 - Truth anchor: `D5/S3/Resource/CompositeCones/StrictChain.strict_composite_cone_chain_and_block_criterion`
+- Dependency: [D5/S3/Resource/CompositeConeProperness](../CompositeConeProperness.md)

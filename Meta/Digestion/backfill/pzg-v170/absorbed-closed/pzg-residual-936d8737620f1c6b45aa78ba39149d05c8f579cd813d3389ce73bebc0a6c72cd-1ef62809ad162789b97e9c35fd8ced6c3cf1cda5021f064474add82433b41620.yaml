@@ -13,5 +13,5 @@ receipts:
   scribe:
     - gid: D5/S1/Eigenstructure/GoldenFiberCapacityPairs.golden_fiber_capacity_pairs
       definition_sha256: sha256:6540845384d6cceb86009384324cb1a53a953f694d298eee70a2b5ea0ef63c01
-      emission_sha256: sha256:bfc56e3cc03e377bbfd76321eb2b68011bfc029caee7cc18e685175257de7916
+      emission_sha256: sha256:79c60e74c948d627ffdea55d5052e873c594a296efa4bcac2e532bc0b1a357e4
   unresolved_subitems: []

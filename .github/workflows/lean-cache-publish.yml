@@ -1,0 +1,284 @@
+# Lean 构建缓存的发布(#2542 步骤 C 的 producer 侧)。
+#
+# 它**不是** required check：归档是加速器，**不构成独立的 admission 证据**，它的失败
+# 也永不该让 dev 的门变红。
+#
+# 【这里曾写「永不进信任链、永不能让任何判词从红变绿」，那句话是假的】三席独立评审
+# （#2729）判定它按字面不成立：归档发布的 .olean 会被 consumer 侧的 Lake 当作构建输入
+# 复用，canonical 报告又从那个 olean 环境读声明，故**发布者位于 admission 下方**。
+# 详见 tools/scripts/worktree/lean-cache-publish.sh 头部的勘误段。
+#
+# 为什么是独立文件而不是 ci.yml 里的一个 job：
+# 【2026-08-21 实测勘正】本 workflow 原本设计为「不新增构建」：读取 admission 流水线
+# 刚写进 Actions cache 的两级缓存，直接打包发布。**该前提已被实测推翻** ——
+# `workflow_run` 触发的运行**读不到 `push` 事件写入的 cache**：前缀逐字符匹配、
+# cache 就在 `refs/heads/dev`（dev 即 default branch）、写入早于读取一小时以上，
+# 三次运行一致报 `Cache not found`（32453224135 / 32457210655 / 32461241477）。
+# GitHub 文档称 workflow_run 可读 default branch 作用域的 cache，与实测不符；此处以实测为准。
+#
+# 故改为：cache 命中就用（快速路径，若日后作用域问题消失即自动生效），
+# **未命中则自己构建** —— `lake exe cache get` 取 mathlib 走外部 CDN，不受 Actions cache
+# 作用域限制。代价是这个 job 会花十几分钟自行构建；它不在任何 required check 内，慢不阻塞任何人。
+#
+#   1. `lean-report-input.sh:135-140` 把 ci.yml 中 `lean-inspect:` 到 `baseline-admission:`
+#      的**切片文本**折进 Lean 报告的输入闭包，并解析其中的脚本引用。发布脚本若出现在那段里，
+#      改它一行就会让每一份 canonical Lean 报告作废、本地与 CI 全量重算。
+#   2. `Cf10WorkflowSeparatesLeanInspectionFromDotnetAdmission` 禁止 `baseline-admission:`
+#      到文件末尾的切片出现 `.lake` / `elan` / `lake build`。
+#   两段切片首尾相接，覆盖了 ci.yml 中 lean-inspect 之后的全部文本。
+#   3. 加进 ci.yml 会把它推到 922 行，越过 SL-003 的 800 行硬线；第 8 条要的是裂桶，不是抬阈值。
+# 三条一致指向同一个结论：发布是独立关注点，就该住在自己的文件里。
+name: Lean build cache publication
+
+# 【触发形态：2026-08-21 owner 定「做成定时的就行」】
+#   理由（owner 原话）：「反正缓存没那么热，人家本地也更新」——
+#   消费侧本就会用 `lake build` 补差量，故发布不必跟住每一次 dev 推进。
+#   这同时解掉两个此前无解的读数：
+#     ① 触发间隔 5–11 分钟（dev 约 16 提交/小时）< 单次 run 60 分钟 ⇒ 追不平，且会
+#        持续堆积 6–12 个并发 run 挤占 runner 额度；定时后二者都不复存在。
+#     ② `workflow_run` 读不到 `push` 写的 cache（见文件头实测）；`schedule` 跑在
+#        默认分支上，作用域**可能**正常 —— 未测，改完看首个 run 的 cache-hit 即知。
+#   `0 */6 * * *` 是 policy-override（非派生值）：owner=仓库 τ=0 owner，
+#   依据=本次裁决，退出条件=命中率实测数据齐备后重定，案号见 #2634。
+#
+# 【只许 schedule：手动触发曾在这里，是被拿掉的，不是忘了加】
+#
+#   这个归档发布的 .olean 会被 consumer 侧的 Lake 当作构建输入复用，canonical Lean
+#   报告又从那个 olean 环境读声明 —— 即发布者位于 admission 下方。三席独立评审
+#   （#2729）判定：原先文件头那句「永远不进 admission 信任链」按字面不成立。
+#
+#   `workflow_dispatch` 是该信任面上唯一一条**未过 dev push 门**的 writer 路径：
+#   `gh workflow run --ref` 选择的是**那个分支上的 workflow 版本**，所以在 job 内
+#   检查 `github.ref` 不构成机器边界 —— 非 base 版本可以删掉自己的检查。有写权者
+#   因此可在未合并分支改 workflow / publisher / 打包内容后 dispatch，并把结果持久化
+#   到全仓 release namespace。manifest digest 由同一 writer 自报，摘要校验挡不住它。
+#
+#   边界只能是触发集合本身，故这里只留 `schedule`。代价是验证要等下一个 6 小时窗口；
+#   那是这条边界的价钱，不是疏漏。`ContentsWriteWorkflowClosureTests` 钉住此形状：
+#   加回任何手动/推送触发，或出现第二个 `contents: write` 的 workflow，即判红。
+on:
+  schedule:
+    - cron: '0 */6 * * *'
+
+permissions:
+  contents: write
+
+# 【并发形态：定时之后不需要 concurrency 组】
+#
+# 此前这里有一段基于误诊的历史：两个 run 的 `conclusion: cancelled` 被当成并发组取消，
+# 据此连改三轮（`cancel-in-progress: false` → 整体移除 concurrency），取消照旧。
+# 真因是 `timeout-minutes: 45`（GitHub 对超时的 conclusion 也是 `cancelled`，
+# 该字段不区分两者）：32479993734 跑 45m19s、32480023451 跑 45m17s，
+# 都被杀在 `Build when no cache layer was available`。
+#
+# 改定时之后，堆积的前提本身消失了：每 6 小时一次，单次 run 远短于该间隔，
+# 不会出现此前「触发 5–11 分钟 / run 60 分钟 ⇒ 常驻 6–12 个并发」的局面。
+# 故此处**不设** concurrency 组；万一手动触发撞车，由 `publish` 动词的幂等性吸收
+# —— 同一内容地址已发布时它 no-op 退出。
+
+jobs:
+  publish:
+    name: Publish the Lean build cache
+    # 这一条防的是**仓库配置漂移**，不是分支选择的 workflow 代码。
+    #
+    #   schedule 跑在「当时的默认分支」上，而默认分支是仓库设置，可以被改。改掉之后
+    #   这个 job 会在一棵不是 dev 的树上发布缓存，而 tag 与 manifest 会把那次产出写成
+    #   正常产物。此条件在那一刻取到 false，job 不执行。
+    #
+    #   **它不是边界。** 边界是触发集合本身（只有 schedule），由
+    #   ContentsWriteWorkflowClosureTests 钉住 —— 一个由分支选出的 workflow 版本可以
+    #   删掉自己的这行条件，故它挡不住那类改动，别把它当防线读。
+    #
+    #   〔本条曾被删过一次：我判「schedule-only ⟹ github.ref 恒为 refs/heads/dev，
+    #     恒真的量不构成判据」。那个「恒」是错的 —— 我把仓库配置排除在状态空间之外了。
+    #     评审席指出后恢复。〕
+    if: github.ref == 'refs/heads/dev'
+    # 定时触发下没有 `github.event.workflow_run` 上下文；留着该条件会让 job 永远被跳过。
+    # 「不给失败的推送留缓存」由内容地址本身保证：地址取自这一刻 dev 的实际输入，
+    # 发布的产物与该地址绑定，消费侧按地址取，取不到就本地补 —— 不存在“发布了坏缓存”。
+    runs-on: ubuntu-24.04-arm
+    # 【超时形态：2026-08-21 读实际日志后勘正】
+    #   此前两个 run 的 `conclusion: cancelled` 被我误读为「并发组取消」，据此连打三四个
+    #   补丁改 `concurrency`，取消照旧。真因是**这个数字**：GitHub 对 `timeout-minutes`
+    #   到点的 conclusion 就是 `cancelled`，与并发取消在该字段上无法区分。
+    #   读数：32479993734 跑 45分19秒、32480023451 跑 45分17秒，两者都被杀在同一步
+    #   `Build when no cache layer was available`；从零 `lake build` 实测 40 分钟以上，
+    #   加 checkout/toolchain/address/cache-restore 的前置开销即越过 45 分。
+    #   取 120：为上述自建实测留约 3 倍余量（GitHub 该字段上限 360）。
+    #   这是**为取得第一份端到端读数**而放宽，不是终态：真正的修法是让上游 job 把已构建
+    #   的产物交给本 workflow（artifact 跨 run 可读），从而根本不必自建。
+    timeout-minutes: 120
+    # 【为什么检出到 `candidate/` 这个看似多余的子目录】
+    #   `actions/cache` 的缓存标识是 **(key, version)**，version 由 `path` 派生。
+    #   写入侧（admission）必须把候选检出在 `candidate/`（它要同时持有 base 与 candidate
+    #   两棵树），故它存的是 `candidate/.lake/build`；本 workflow 原先在仓根检出、
+    #   读 `.lake/build` —— **key 一字不差，version 不同，两者根本不是同一个 entry**。
+    #   实测佐证：restore-keys 前缀 fallback 也未命中，排除了「只是 sources 漂移」；
+    #   `gh cache list` 显示 entry 确实存在（1424 MiB，refs/heads/dev，每几分钟一份）。
+    #   方向是单向的：admission 无法搬到仓根，只能由本 workflow 对齐它，
+    #   且 path 列表必须**逐字节相同**（含 `~/.cache/mathlib` 一项）。
+    steps:
+      - name: Check out the commit that was published
+        id: checkout-publish
+        uses: actions/checkout@v4
+        with:
+          path: candidate
+          # 显式写出本次运行的事件 SHA。**这不是修复，是把已有行为写明**：
+          # actions/checkout 在缺省下取的就是触发事件的 ref/SHA，schedule 事件下即
+          # github.sha，所以不写 `ref` 也不会检出「更晚的分支 tip」。写出来的理由是
+          # 下游的 producer_commit_sha 直接取自 GITHUB_SHA，让这条绑定在文件里可读、
+          # 可审计，而不必靠读者知道 checkout 的缺省语义（#2729 判决第 2 条）。
+          ref: ${{ github.sha }}
+          # 定时触发下 github.sha 即默认分支 HEAD（dev 当前 tip）；
+          # `github.event.workflow_run.head_sha` 在此事件下为空，留着会检出错误的树。
+          # 剥夺步骤要对 HEAD^1 做烟测，而这里检出的是一个已合入的普通提交，
+          # 不是 merge ref；默认的 fetch-depth: 1 只取一个提交，父提交不可达。
+          fetch-depth: 2
+
+      - name: Strip checkout remote state
+        if: steps.checkout-publish.outcome == 'success'
+        shell: bash
+        env:
+          CHECKOUT_PATH: candidate
+        run: |
+          set -euo pipefail
+          git -C "$CHECKOUT_PATH" remote remove origin
+          git -C "$CHECKOUT_PATH" for-each-ref --format='delete %(refname)' refs/remotes/ |
+            git -C "$CHECKOUT_PATH" update-ref --stdin
+          remote_count="$(git -C "$CHECKOUT_PATH" remote | wc -l)"
+          remote_ref_count="$(git -C "$CHECKOUT_PATH" for-each-ref --format='%(refname)' refs/remotes/ | wc -l)"
+          if [[ "$remote_count" -ne 0 || "$remote_ref_count" -ne 0 ]]; then
+            printf '%s\n' "checkout still exposes remotes or remote-tracking refs" >&2
+            exit 1
+          fi
+          head_sha="$(git -C "$CHECKOUT_PATH" rev-parse HEAD)"
+          base_sha="$(git -C "$CHECKOUT_PATH" rev-parse HEAD^1)"
+          test -n "$head_sha"
+          test -n "$base_sha"
+
+      - name: Install the pinned Lean toolchain
+        shell: bash
+        env:
+          TOOLCHAIN_FILE: ${{ github.workspace }}/candidate/lean-toolchain
+        run: |
+          set -euo pipefail
+          "$GITHUB_WORKSPACE/candidate/tools/scripts/workflow/install-lean-toolchain.sh" \
+            "${TOOLCHAIN_FILE}" --github-path "$GITHUB_PATH"
+
+      - name: Resolve this commit's Lean input addresses
+        id: addr
+        shell: bash
+        run: |
+          set -euo pipefail
+          helper="$GITHUB_WORKSPACE/candidate/tools/scripts/report/lean-report-input.sh"
+          test -x "${helper}"
+          read -r address producer_sha256 sources_sha256 config_sha256 \
+            < <("${helper}" address --repository "$GITHUB_WORKSPACE/candidate")
+          echo "config_sha256=${config_sha256}" >> "$GITHUB_OUTPUT"
+          echo "sources_sha256=${sources_sha256}" >> "$GITHUB_OUTPUT"
+
+      # 复用 admission 流水线刚写进去的两级缓存。命中即无需重建；未命中说明这个地址
+      # 还没有构建产物，此时无可发布，下一步安静记录而不失败。
+      - name: Restore the Lean dependency layer
+        uses: actions/cache/restore@v4
+        with:
+          path: |
+            candidate/.lake/packages
+            candidate/.lake/config
+            candidate/.lake/.stratalint-lean-cache-stamp.json
+            ~/.cache/mathlib
+          key: ${{ runner.os }}-${{ runner.arch }}-lake-deps-v1-${{ steps.addr.outputs.config_sha256 }}
+          restore-keys: |
+            ${{ runner.os }}-${{ runner.arch }}-lake-deps-v1-${{ steps.addr.outputs.config_sha256 }}
+
+      - name: Restore the Lean build layer
+        id: build
+        uses: actions/cache/restore@v4
+        with:
+          path: candidate/.lake/build
+          key: ${{ runner.os }}-${{ runner.arch }}-lake-build-v1-${{ steps.addr.outputs.config_sha256 }}-${{ steps.addr.outputs.sources_sha256 }}
+          # ci.yml 的对应步骤带同样的前缀回退：config 未变时，同一 config 下的任一 build 层
+          # 都是可用的增量起点。首个真实运行漏了这两行，于是 exact key 未命中即判无可发布。
+          restore-keys: |
+            ${{ runner.os }}-${{ runner.arch }}-lake-build-v1-${{ steps.addr.outputs.config_sha256 }}-
+
+      # 缓存未命中时自己构建。`lake exe cache get` 取 mathlib 的 olean 走外部 CDN，
+      # 与 Actions cache 的作用域无关，所以这条路在 workflow_run 下也走得通。
+      - name: Build when no cache layer was available
+        id: selfbuild
+        if: steps.build.outputs.cache-hit != 'true' && steps.build.outputs.cache-matched-key == ''
+        shell: bash
+        working-directory: candidate
+        run: |
+          set -euo pipefail
+          lake exe cache get || printf '%s\n' "mathlib cache get returned nonzero; lake build will fill the gaps"
+          lake build
+          printf 'olean=%s\n' "$(find .lake/build -name '*.olean' | wc -l | tr -d ' ')"
+          echo "built=true" >> "$GITHUB_OUTPUT"
+
+      # 前缀回退可能取到**同一 config 但不同 sources** 的 build 层。直接发布会把内容不符的
+      # 归档挂到当前内容地址下 —— 那是这条链路最危险的失败模式，因为消费者按地址取，
+      # 拿到的字节却不是那个地址该有的。
+      #
+      # 故发布前用 lake 自己判：把归档喂给 `lake build`，**零编译**才说明它与当前源码相符。
+      # 判据只认 `Built`/`Building`/`Compiling` 计数为 0；有任何一项非零即内容不符，不发布。
+      #
+      # 这一步**只守缓存恢复那条路径**：自建路径刚构建完，零编译是恒真的，
+      # 拿恒真的量当判据等于没判（本仓「恒值判据」之诫），故自建时跳过它、直接发布。
+      - name: Verify the restored build matches this commit
+        id: verify
+        if: steps.build.outputs.cache-hit == 'true' || steps.build.outputs.cache-matched-key != ''
+        shell: bash
+        env:
+          BUILD_LOG: ${{ runner.temp }}/verify-build.txt
+        working-directory: candidate
+        run: |
+          set -euo pipefail
+          lake build 2>&1 | tee "${BUILD_LOG}"
+          compiled="$(grep -cE '(Built|Building|Compiling) ' "${BUILD_LOG}" || true)"
+          # 这个计数是**读数,不是门槛**。缓存多半由 restore-keys 前缀命中，
+          # 恢复到的是一份稍旧的构建；`lake build` 随后补齐差量，补完的
+          # `.lake/build` 就是本 commit 的正确产物 —— 这正是「缓存不必很热，
+          # 本地会补」的形态（owner 2026-08-21 定），不是失败。
+          # 旧判据要求 compiled 恰为 0 才发布，等于只接受精确命中；实测因此
+          # 在一次**成功命中且 verify 通过**的 run 里（32505529419，2 分钟跑完）
+          # 仍走了「无产物可发布」分支，仓库继续保持零 release。
+          # 现判据：`lake build` 成功即产物可信。它失败则本步骤在上一行即以
+          # 非零退出（set -o pipefail），matches 不被写出，发布自然跳过。
+          printf 'compiled_targets=%s\n' "${compiled}"
+          echo "matches=true" >> "$GITHUB_OUTPUT"
+
+      - name: Publish the build cache under its content address
+        if: steps.verify.outputs.matches == 'true' || steps.selfbuild.outputs.built == 'true'
+        shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PUBLISH_LOG: ${{ runner.temp }}/publish.txt
+        run: |
+          set -euo pipefail
+          publisher="$GITHUB_WORKSPACE/candidate/tools/scripts/worktree/lean-cache-publish.sh"
+          test -x "${publisher}"
+          date -u '+publish_started_at=%Y-%m-%dT%H:%M:%SZ' | tee "${PUBLISH_LOG}"
+          "${publisher}" publish --repository "$GITHUB_WORKSPACE/candidate" | tee -a "${PUBLISH_LOG}"
+          date -u '+publish_finished_at=%Y-%m-%dT%H:%M:%SZ' | tee -a "${PUBLISH_LOG}"
+          {
+            echo '## Lean build cache'
+            echo
+            echo '```'
+            cat "${PUBLISH_LOG}"
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Record that no build artifacts were available to publish
+        if: steps.verify.outputs.matches != 'true' && steps.selfbuild.outputs.built != 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+          {
+            echo '## Lean build cache: no archive for this address'
+            echo
+            echo 'The build layer for this exact content address is absent from the cache,'
+            echo 'so this run has nothing to republish. Consumers resolve their cache from'
+            echo 'a donor worktree or a local build, as they do for any address that has'
+            echo 'not been published.'
+          } >> "$GITHUB_STEP_SUMMARY"

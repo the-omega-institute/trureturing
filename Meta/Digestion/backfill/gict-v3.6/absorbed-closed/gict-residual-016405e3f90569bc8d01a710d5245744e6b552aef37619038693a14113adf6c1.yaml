@@ -1,0 +1,17 @@
+ast_path: appendix/E.42
+fingerprints:
+  raw_sha256: sha256:016405e3f90569bc8d01a710d5245744e6b552aef37619038693a14113adf6c1
+  normalized_sha256: sha256:016405e3f90569bc8d01a710d5245744e6b552aef37619038693a14113adf6c1
+cas_ref: sha256:016405e3f90569bc8d01a710d5245744e6b552aef37619038693a14113adf6c1
+coverage_gids:
+  - D5/S3/PrimeForms/Crossing/ExactPropagation.exact_propagation_positive_cone
+receipts:
+  coverage:
+    - gid: D5/S3/PrimeForms/Crossing/ExactPropagation.exact_propagation_positive_cone
+      source_sha256: sha256:016405e3f90569bc8d01a710d5245744e6b552aef37619038693a14113adf6c1
+      target_sha256: sha256:f96ef92124ab331bd35c6a48bccab76eee8e05790efd737d28f6a46aab6e4bbc
+  scribe:
+    - gid: D5/S3/PrimeForms/Crossing/ExactPropagation.exact_propagation_positive_cone
+      definition_sha256: sha256:67d95a1f6596f03a326fbbac4376878bc75283a1bdd939d4f8f3511fe331754a
+      emission_sha256: sha256:5840da46cca221438f13c33f63ceb3f04db67e766ccbcd81fb6ad2ab5dbaf281
+  unresolved_subitems: []

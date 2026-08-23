@@ -8,6 +8,80 @@ namespace StrataLint.Tests;
 public sealed partial class ProductionEnvironmentTests
 {
     [Fact]
+    public void DigestStatusUnrelatedDeltaDoesNotReplayHistoricalCoverageReceipt()
+    {
+        var environment = DigestStatusHistoricalCoverageEnvironment(
+            RawChangeSet.Create(["notes/r16-unrelated.txt"]));
+
+        var result = environment.DigestStatus(["--json", "--base", "baseline"]);
+
+        Assert.True(result.Success, result.Error);
+        Assert.DoesNotContain("coverage-receipt-mismatch", result.Output, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void DigestStatusChangedTargetStillValidatesHistoricalCoverageReceipt()
+    {
+        var environment = DigestStatusHistoricalCoverageEnvironment(
+            RawChangeSet.Create(["D5/S0/Carrier/BackfillTarget.lean"]));
+
+        var result = environment.DigestStatus(["--json", "--base", "baseline"]);
+
+        Assert.False(result.Success);
+        Assert.Contains("coverage-receipt-mismatch", result.Error, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void DigestStatusImplementationChangeStillValidatesHistoricalCoverageReceipt()
+    {
+        var environment = DigestStatusHistoricalCoverageEnvironment(
+            RawChangeSet.Create(
+            ["tools/StrataLint.Engine/Digestion/Evaluation/DigestionStatusEvaluator.cs"]));
+
+        var result = environment.DigestStatus(["--json", "--base", "baseline"]);
+
+        Assert.False(result.Success);
+        Assert.Contains("coverage-receipt-mismatch", result.Error, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void DigestStatusWithoutBaseUnrelatedDeltaDoesNotReplayHistoricalCoverageReceipt()
+    {
+        var environment = DigestStatusHistoricalCoverageEnvironment(
+            RawChangeSet.Create(["notes/r17-unrelated-coverage.txt"]));
+
+        var result = environment.DigestStatus(["--json"]);
+
+        Assert.True(result.Success, result.Error);
+        Assert.DoesNotContain("coverage-receipt-mismatch", result.Output, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void DigestStatusWithoutBaseChangedTargetStillValidatesHistoricalCoverageReceipt()
+    {
+        var environment = DigestStatusHistoricalCoverageEnvironment(
+            RawChangeSet.Create(["D5/S0/Carrier/BackfillTarget.lean"]));
+
+        var result = environment.DigestStatus(["--json"]);
+
+        Assert.False(result.Success);
+        Assert.Contains("coverage-receipt-mismatch", result.Error, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void DigestStatusWithoutBaseImplementationChangeStillValidatesHistoricalCoverageReceipt()
+    {
+        var environment = DigestStatusHistoricalCoverageEnvironment(
+            RawChangeSet.Create(
+            ["tools/StrataLint.Engine/Digestion/Evaluation/DigestionStatusEvaluator.cs"]));
+
+        var result = environment.DigestStatus(["--json"]);
+
+        Assert.False(result.Success);
+        Assert.Contains("coverage-receipt-mismatch", result.Error, StringComparison.Ordinal);
+    }
+
+    [Fact]
     public void DigestStatusReportsCasSeenAcrossNormalizedSourceRewrite()
     {
         var fixture = new RuleFixture();
@@ -207,6 +281,55 @@ public sealed partial class ProductionEnvironmentTests
     }
 
     [Fact]
+    public void DigestStatusUnrelatedDeltaDoesNotValidateDiscardedBaselineGenreProjection()
+    {
+        var fixture = new RuleFixture();
+        fixture.AddBackfillTargets();
+        fixture.Baseline[RuleFixture.FixtureBackfillSourcePath] = fixture.Baseline[
+                RuleFixture.FixtureBackfillSourcePath]
+            .Replace(
+                "genre_registry_check = \"no-registry\"",
+                "genre_registry_check = \"invalid-historical-value\"",
+                StringComparison.Ordinal);
+        var environment = DigestStatusEnvironment(
+            fixture,
+            RawChangeSet.Create(["notes/r17-unrelated-genre.txt"]));
+
+        var result = environment.DigestStatus(["--json", "--base", "baseline"]);
+
+        Assert.True(result.Success, result.Error);
+    }
+
+    [Fact]
+    public void DigestStatusChangedSourceMetadataStillValidatesCandidateGenreProjection()
+    {
+        var fixture = CandidateFixtureWithInvalidGenreProjection();
+        var environment = DigestStatusEnvironment(
+            fixture,
+            RawChangeSet.Create([RuleFixture.FixtureBackfillSourcePath]));
+
+        var result = environment.DigestStatus(["--json", "--base", "baseline"]);
+
+        Assert.False(result.Success);
+        Assert.Contains("invalid genre_registry_check", result.Error, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void DigestStatusImplementationChangeStillValidatesCandidateGenreProjection()
+    {
+        var fixture = CandidateFixtureWithInvalidGenreProjection();
+        var environment = DigestStatusEnvironment(
+            fixture,
+            RawChangeSet.Create(
+            ["tools/StrataLint.Engine/Rules/Backfill/BackfillInventoryLoader.Parsing.cs"]));
+
+        var result = environment.DigestStatus(["--json", "--base", "baseline"]);
+
+        Assert.False(result.Success);
+        Assert.Contains("invalid genre_registry_check", result.Error, StringComparison.Ordinal);
+    }
+
+    [Fact]
     public void FormalizeCandidatesDiffDoesNotRequireBaselineGenreProjection()
     {
         var fixture = new RuleFixture();
@@ -240,26 +363,48 @@ public sealed partial class ProductionEnvironmentTests
     }
 
     [Fact]
-    public void DigestStatusFailsClosedWhenProjectedStatusWasHandwrittenIncorrectly()
+    public void R15DigestStatusScopesCommittedProjectedStatusReplayToDeltaAndImplementation()
     {
         var fixture = new RuleFixture();
         fixture.AddBackfillTargets();
         var atom = fixture.Files[RuleFixture.FixtureBackfillAtomPath];
         fixture.Files.Remove(RuleFixture.FixtureBackfillAtomPath);
-        fixture.Files[$"{BackfillInventoryLoader.RootPath}fixture-source/absorbed-closed/fixture-atom.yaml"] = atom;
-        var environment = new ProductionCliEnvironment(
-            "/repo",
-            new FakeRepositoryGateway(
-                RawChangeSet.Create(Array.Empty<string>()),
-                Snapshot(fixture.Files),
-                null),
-            new FakeLeanReportSource(LeanAxiomReport.Create(fixture.Reports)),
-            new FakeScribeEmissionVerifier(VerifiedScribeEmissions.Empty));
+        var statusPath = $"{BackfillInventoryLoader.RootPath}fixture-source/absorbed-closed/fixture-atom.yaml";
+        fixture.Files[statusPath] = atom;
 
-        var result = environment.DigestStatus(Array.Empty<string>());
+        var unrelated = RunDigestStatus(fixture, RawChangeSet.Create(["notes/r15-unrelated.txt"]));
+        var candidate = RunDigestStatus(fixture, RawChangeSet.Create([statusPath]));
+        var implementation = RunDigestStatus(
+            fixture,
+            RawChangeSet.Create(["tools/StrataLint.Engine/Rules/RuleEngine.cs"]));
 
-        Assert.False(result.Success);
-        Assert.Contains("handwritten status", result.Error, StringComparison.Ordinal);
+        Assert.True(unrelated.Success, unrelated.Error);
+        Assert.False(candidate.Success);
+        Assert.Contains("handwritten status", candidate.Error, StringComparison.Ordinal);
+        Assert.False(implementation.Success);
+        Assert.Contains("handwritten status", implementation.Error, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void R15DigestStatusScopesCommittedCasRehashToDeltaAndImplementation()
+    {
+        var fixture = new RuleFixture();
+        fixture.AddBackfillTargets();
+        fixture.Files[RuleFixture.FixtureCasPath] = "tampered committed bytes";
+
+        var unrelated = RunDigestStatus(fixture, RawChangeSet.Create(["notes/r15-unrelated.txt"]));
+        var candidate = RunDigestStatus(
+            fixture,
+            RawChangeSet.Create([RuleFixture.FixtureCasPath]));
+        var implementation = RunDigestStatus(
+            fixture,
+            RawChangeSet.Create(["tools/StrataLint.Engine/Rules/RuleEngine.cs"]));
+
+        Assert.True(unrelated.Success, unrelated.Error);
+        Assert.False(candidate.Success);
+        Assert.Contains("CAS blob hash mismatch", candidate.Error, StringComparison.Ordinal);
+        Assert.False(implementation.Success);
+        Assert.Contains("CAS blob hash mismatch", implementation.Error, StringComparison.Ordinal);
     }
 
     [Fact]
@@ -282,14 +427,85 @@ public sealed partial class ProductionEnvironmentTests
         Assert.Contains("Scribe emission verification failed", result.Error, StringComparison.Ordinal);
     }
 
-    private static ProductionCliEnvironment DigestStatusEnvironment(RuleFixture fixture) => new(
+    private static ProductionCliEnvironment DigestStatusEnvironment(
+        RuleFixture fixture,
+        RawChangeSet? changes = null) => new(
         "/repo",
         new FakeRepositoryGateway(
-            RawChangeSet.Create(Array.Empty<string>()),
+            changes ?? RawChangeSet.Create(Array.Empty<string>()),
             Snapshot(fixture.Files),
             Snapshot(fixture.Baseline)),
         new FakeLeanReportSource(LeanAxiomReport.Create(fixture.Reports)),
         new FakeScribeEmissionVerifier(VerifiedScribeEmissions.Empty));
+
+    private static ProductionCliEnvironment DigestStatusHistoricalCoverageEnvironment(
+        RawChangeSet changes)
+    {
+        const string gid = "D5/S0/Carrier/BackfillTarget";
+        const string targetPath = gid + ".lean";
+        const string absorbedPath =
+            "Meta/Digestion/backfill/fixture-source/absorbed-closed/fixture-atom.yaml";
+        var fixture = new RuleFixture();
+        fixture.AddBackfillTargets();
+        fixture.Baseline[targetPath] = fixture.Files[targetPath];
+        fixture.ForkPoint[targetPath] = fixture.Files[targetPath];
+        var definitionPath = ScribeEmissionAttestation.DefinitionPath(gid);
+        var emissionPath = ScribeEmissionAttestation.EmissionPath(gid);
+        const string definition = "fixture definition\n";
+        const string emission = "# Fixture emission\n";
+        var definitionSha256 = DigestionFingerprint.Compute(
+            Encoding.UTF8.GetBytes(definition)).RawSha256;
+        var emissionSha256 = DigestionFingerprint.Compute(
+            Encoding.UTF8.GetBytes(emission)).RawSha256;
+        var atom = fixture.Files[RuleFixture.FixtureBackfillAtomPath]
+            .Replace(
+                "coverage: []",
+                "coverage:\n"
+                + $"    - gid: {gid}\n"
+                + $"      source_sha256: {RuleFixture.FixtureCasReference}\n"
+                + "      target_sha256: sha256:0000000000000000000000000000000000000000000000000000000000000000",
+                StringComparison.Ordinal)
+            .Replace(
+                "scribe: []",
+                "scribe:\n"
+                + $"    - gid: {gid}\n"
+                + $"      definition_sha256: {definitionSha256}\n"
+                + $"      emission_sha256: {emissionSha256}",
+                StringComparison.Ordinal);
+        foreach (var files in new[] { fixture.Files, fixture.Baseline, fixture.ForkPoint })
+        {
+            files.Remove(RuleFixture.FixtureBackfillAtomPath);
+            files[absorbedPath] = atom;
+            files[definitionPath] = definition;
+            files[emissionPath] = emission;
+        }
+
+        var verified = VerifiedScribeEmissions.Create(
+        [
+            new ScribeEmissionRecord(
+                gid,
+                definitionPath,
+                definitionSha256,
+                emissionPath,
+                emissionSha256),
+        ]);
+        return new ProductionCliEnvironment(
+            "/repo",
+            new FakeRepositoryGateway(
+                changes,
+                Snapshot(fixture.Files),
+                Snapshot(fixture.Baseline)),
+            new FakeLeanReportSource(LeanAxiomReport.Create(fixture.Reports)),
+            new FakeScribeEmissionVerifier(verified));
+    }
+
+    private static CommandResult RunDigestStatus(RuleFixture fixture, RawChangeSet changes) =>
+        new ProductionCliEnvironment(
+            "/repo",
+            new FakeRepositoryGateway(changes, Snapshot(fixture.Files), null),
+            new FakeLeanReportSource(LeanAxiomReport.Create(fixture.Reports)),
+            new FakeScribeEmissionVerifier(VerifiedScribeEmissions.Empty))
+        .DigestStatus(Array.Empty<string>());
 
     private static void DowngradeBaselineGenreMarkerSchema(RuleFixture fixture)
     {
@@ -297,5 +513,18 @@ public sealed partial class ProductionEnvironmentTests
                 RuleFixture.FixtureBackfillSourcePath]
             .Replace("genre_registry_check = \"no-registry\"\n", string.Empty, StringComparison.Ordinal)
             .Replace("unregistered_genres = []\n", string.Empty, StringComparison.Ordinal);
+    }
+
+    private static RuleFixture CandidateFixtureWithInvalidGenreProjection()
+    {
+        var fixture = new RuleFixture();
+        fixture.AddBackfillTargets();
+        fixture.Files[RuleFixture.FixtureBackfillSourcePath] = fixture.Files[
+                RuleFixture.FixtureBackfillSourcePath]
+            .Replace(
+                "genre_registry_check = \"no-registry\"",
+                "genre_registry_check = \"invalid-candidate-value\"",
+                StringComparison.Ordinal);
+        return fixture;
     }
 }

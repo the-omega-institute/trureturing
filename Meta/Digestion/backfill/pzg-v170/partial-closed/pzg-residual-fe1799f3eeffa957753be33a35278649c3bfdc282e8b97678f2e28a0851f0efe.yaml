@@ -12,6 +12,6 @@ receipts:
       target_sha256: sha256:a648838f02c6441cec4904b26c5692f4c7800508a8c6cb1b9b2266f322dd6c0d
   scribe:
     - gid: D5/S3/ArithUnits/HalfFactorial.half_factorial_mod_prime
-      definition_sha256: sha256:c6fe1be4512cb7f037954b8b2eba6f7cf91d541855dfd9b00518df238eb98938
-      emission_sha256: sha256:466041040678ea120c57ac641e7d0e929a803ef1bd9dc09813eb1fad732daf82
+      definition_sha256: sha256:29e1817aa7424f00abd5152f93a05678da9dbe3e373c4595c5a4359fa209ce53
+      emission_sha256: sha256:5d3a58dd0fe7d76bf2d8051aeba34e392e6c7afe7973d73ce4059ee83898b6df
   unresolved_subitems: []

@@ -1,5 +1,6 @@
 using System.Collections.Immutable;
 using System.Text;
+using System.Text.Json;
 using StrataLint.Engine;
 
 namespace StrataLint.Cli;
@@ -38,7 +39,14 @@ internal static class ShowAtomCommand
                 || source.Entries
                     .Skip(entryIndex + 1)
                     .Any(candidate => candidate.AstPath == entry.AstPath);
-            return new CommandResult(true, Render(entry, casBytes, stale), string.Empty);
+            var selfFormalization = FormalizationPointer(entry, snapshot);
+            var parentFormalizations = document.RequireDigestionEntries()
+                .Where(parent => parent.Receipts.ChainAtoms.Contains(entry.AtomId, StringComparer.Ordinal))
+                .OrderBy(static parent => parent.AtomId, StringComparer.Ordinal)
+                .Select(parent => ParentFormalization(parent, snapshot))
+                .ToImmutableArray();
+            return new CommandResult(true, Render(entry, casBytes, stale,
+                selfFormalization, parentFormalizations), string.Empty);
         }
         catch (Exception exception) when (
             exception is FormatException
@@ -96,7 +104,9 @@ internal static class ShowAtomCommand
     private static string Render(
         DigestionLedgerEntry entry,
         ImmutableArray<byte> rawBytes,
-        bool stale)
+        bool stale,
+        FormalizationReceiptPointer selfFormalization,
+        ImmutableArray<FormalizationReceiptPointer> parentFormalizations)
     {
         var rawText = StrictUtf8.GetString(rawBytes.AsSpan());
         var normalizedText = DigestionFingerprint.NormalizeText(rawBytes.AsSpan());
@@ -113,6 +123,58 @@ internal static class ShowAtomCommand
             $"HASH_RECORD raw_sha256={entry.Fingerprints.RawSha256} "
             + $"normalized_sha256={entry.Fingerprints.NormalizedSha256} "
             + $"cas_ref={entry.CasRef} source=ledger");
+        writer.WriteLine("FORMALIZATION_POINTERS");
+        writer.WriteLine(selfFormalization switch
+        {
+            FormalizationReceiptPointer.Available available =>
+                "SELF_FORMALIZATION_POINTER status=available "
+                + $"primary_gid={available.PrimaryGid} "
+                + $"receipt_path={available.ReceiptPath}",
+            FormalizationReceiptPointer.Unavailable unavailable => unavailable.Reason switch
+            {
+                FormalizationReceiptUnavailability.MissingReceipt =>
+                    "SELF_FORMALIZATION_POINTER status=self-without-receipt "
+                    + $"receipt_path={unavailable.ReceiptPath}",
+                FormalizationReceiptUnavailability.UnusableReceipt =>
+                    "SELF_FORMALIZATION_POINTER status=self-receipt-unavailable "
+                    + $"receipt_path={unavailable.ReceiptPath}",
+                _ => throw new InvalidOperationException(
+                    "unknown self formalization receipt unavailability"),
+            },
+            _ => throw new InvalidOperationException("unknown self formalization pointer"),
+        });
+
+        if (parentFormalizations.IsEmpty)
+        {
+            writer.WriteLine("PARENT_FORMALIZATIONS status=no-parent");
+        }
+
+        foreach (var parent in parentFormalizations)
+        {
+            writer.WriteLine(parent switch
+            {
+                FormalizationReceiptPointer.Available available =>
+                    $"PARENT_FORMALIZATION_POINTER parent_atom_id={available.AtomId} "
+                    + "status=available "
+                    + $"primary_gid={available.PrimaryGid} "
+                    + $"receipt_path={available.ReceiptPath}",
+                FormalizationReceiptPointer.Unavailable unavailable => unavailable.Reason switch
+                {
+                    FormalizationReceiptUnavailability.MissingReceipt =>
+                        $"PARENT_FORMALIZATION_POINTER parent_atom_id={unavailable.AtomId} "
+                        + "status=parent-without-receipt "
+                        + $"receipt_path={unavailable.ReceiptPath}",
+                    FormalizationReceiptUnavailability.UnusableReceipt =>
+                        $"PARENT_FORMALIZATION_POINTER parent_atom_id={unavailable.AtomId} "
+                        + "status=parent-receipt-unavailable "
+                        + $"receipt_path={unavailable.ReceiptPath}",
+                    _ => throw new InvalidOperationException(
+                        "unknown parent formalization receipt unavailability"),
+                },
+                _ => throw new InvalidOperationException("unknown parent formalization pointer"),
+            });
+        }
+
         WriteText(writer, "RAW", rawText);
         WriteText(writer, "NORMALIZED", normalizedText);
         return writer.ToString();
@@ -129,6 +191,85 @@ internal static class ShowAtomCommand
         writer.WriteLine($"END_{label}_TEXT");
     }
 
+    private static FormalizationReceiptPointer FormalizationPointer(
+        DigestionLedgerEntry entry,
+        RepositorySnapshot snapshot)
+    {
+        var path = DigestionFormalizationReceipt.PathForAtom(entry.AtomId);
+        if (!snapshot.TryGetFile(path, out _))
+        {
+            return new FormalizationReceiptPointer.Unavailable(
+                entry.AtomId,
+                FormalizationReceiptUnavailability.MissingReceipt,
+                path);
+        }
+
+        var receipt = BoundFormalizationReceipt(entry, snapshot, path);
+        if (receipt is not null)
+        {
+            return new FormalizationReceiptPointer.Available(
+                entry.AtomId,
+                receipt.PrimaryGid,
+                path);
+        }
+
+        return new FormalizationReceiptPointer.Unavailable(
+            entry.AtomId,
+            FormalizationReceiptUnavailability.UnusableReceipt,
+            path);
+    }
+
+    private static DigestionFormalizationReceipt? BoundFormalizationReceipt(
+        DigestionLedgerEntry entry,
+        RepositorySnapshot snapshot,
+        string path)
+    {
+        if (!DigestionFormalizationReceipt.IsCanonicalPath(path))
+        {
+            return null;
+        }
+
+        try
+        {
+            var receipt = DigestionFormalizationReceipt.Load(snapshot, path);
+            if (!string.Equals(receipt.AtomId, entry.AtomId, StringComparison.Ordinal))
+            {
+                return null;
+            }
+
+            if (!string.Equals(receipt.CasRef, entry.CasRef, StringComparison.Ordinal))
+            {
+                return null;
+            }
+
+            if (!string.Equals(
+                    receipt.RawSha256,
+                    entry.Fingerprints.RawSha256,
+                    StringComparison.Ordinal))
+            {
+                return null;
+            }
+
+            return receipt;
+        }
+        catch (FormatException)
+        {
+            return null;
+        }
+        catch (JsonException)
+        {
+            return null;
+        }
+        catch (InvalidOperationException)
+        {
+            return null;
+        }
+    }
+
+    private static FormalizationReceiptPointer ParentFormalization(
+        DigestionLedgerEntry parent,
+        RepositorySnapshot snapshot) => FormalizationPointer(parent, snapshot);
+
     private static RepositorySnapshot Decode(RawRepositorySnapshot raw) =>
         SnapshotDecoder.Decode(raw) switch
         {
@@ -136,4 +277,23 @@ internal static class ShowAtomCommand
             SnapshotDecodeOutcome.InfrastructureFailure failure =>
                 throw new InvalidOperationException(failure.Message),
         };
+
+    private enum FormalizationReceiptUnavailability
+    {
+        MissingReceipt,
+        UnusableReceipt,
+    }
+
+    private abstract record FormalizationReceiptPointer(string AtomId, string ReceiptPath)
+    {
+        internal sealed record Available(
+            string AtomId,
+            string PrimaryGid,
+            string ReceiptPath) : FormalizationReceiptPointer(AtomId, ReceiptPath);
+
+        internal sealed record Unavailable(
+            string AtomId,
+            FormalizationReceiptUnavailability Reason,
+            string ReceiptPath) : FormalizationReceiptPointer(AtomId, ReceiptPath);
+    }
 }

@@ -1,7 +1,22 @@
 using System.Collections.Immutable;
+using System.Reflection;
 using Dunet;
 
 namespace StrataLint.Engine;
+
+internal static class BaseFactImpact
+{
+    internal static bool RuleImplementationChanged(RawChangeSet changes) =>
+        changes.Paths.Any(static path =>
+            StrataLintEngineBuildInputs.ContainsRuleImplementation(path.Value));
+
+    internal static bool IsAffected(
+        RawChangeSet changes,
+        bool ruleImplementationChanged,
+        string path) =>
+        ruleImplementationChanged
+        || changes.Paths.Any(change => string.Equals(change.Value, path, StringComparison.Ordinal));
+}
 
 public sealed record Diagnostic(
     RuleId RuleId,
@@ -18,8 +33,82 @@ public sealed record DeferredRule(RuleId RuleId, CaseId CaseId, string Title);
 
 internal sealed record RuleFinding(string Path, string Message, AdmissionEffect? Effect = null);
 
+internal enum FindingEdgeKind
+{
+    Local,
+    Interaction,
+}
+
+internal sealed record FindingEdgeDescriptor(
+    string Id,
+    Type OwnerType,
+    string MemberName,
+    FindingEdgeKind Kind)
+{
+    internal string DisplayName => $"{OwnerType.FullName}.{MemberName}";
+
+    internal static FindingEdgeDescriptor From(Delegate evaluator, FindingEdgeKind kind) =>
+        From(evaluator.Method, kind);
+
+    internal static FindingEdgeDescriptor From(
+        Type ownerType,
+        string memberName,
+        FindingEdgeKind kind) =>
+        new(
+            FindingEdgeId.For(ownerType, memberName),
+            ownerType,
+            memberName,
+            kind);
+
+    internal static ImmutableArray<FindingEdgeDescriptor> Discover(Type ownerType) =>
+        ownerType
+            .GetMethods(BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic)
+            .Select(method => (method, attribute: method.GetCustomAttribute<FindingEdgeAttribute>()))
+            .Where(static item => item.attribute is not null)
+            .OrderBy(static item => item.method.Name, StringComparer.Ordinal)
+            .Select(static item => From(item.method, item.attribute!.Kind))
+            .ToImmutableArray();
+
+    private static FindingEdgeDescriptor From(MethodInfo method, FindingEdgeKind kind) =>
+        From(method.DeclaringType ?? throw new InvalidOperationException("Finding edge has no declaring type."), method.Name, kind);
+}
+
+[AttributeUsage(AttributeTargets.Method, AllowMultiple = false)]
+internal sealed class FindingEdgeAttribute(FindingEdgeKind kind) : Attribute
+{
+    internal FindingEdgeKind Kind { get; } = kind;
+}
+
+[AttributeUsage(AttributeTargets.Class, AllowMultiple = false)]
+internal sealed class FindingEdgeProviderAttribute(int ruleNumber) : Attribute
+{
+    internal int RuleNumber { get; } = ruleNumber;
+}
+
+internal static class FindingEdgeId
+{
+    internal static string For(Type ownerType, string memberName) =>
+        $"{ownerType.FullName ?? ownerType.Name}.{memberName}";
+}
+
+internal sealed record RegisteredFindingEdge(
+    RuleId RuleId,
+    FindingEdgeDescriptor Edge)
+{
+    internal string DisplayName => $"{RuleId.Value}:{Edge.DisplayName}";
+}
+
+internal sealed record FindingEdgeDefinition(
+    Func<RuleEvaluationContext, ImmutableArray<RuleFinding>> Evaluate,
+    FindingEdgeKind Kind)
+{
+    internal FindingEdgeDescriptor Descriptor => FindingEdgeDescriptor.From(Evaluate, Kind);
+}
+
 internal interface IRepositoryRule
 {
+    ImmutableArray<FindingEdgeDescriptor> FindingEdges => [];
+
     bool AppliesTo(RepositoryFile artifact, RuleApplicabilityContext context);
 
     bool IsAffectedBy(RuleEvaluationContext context) => true;
@@ -114,6 +203,7 @@ internal sealed class RuleEvaluationContext
         Policy = policy;
         Lean = lean;
         Changes = changes;
+        RuleImplementationChanged = BaseFactImpact.RuleImplementationChanged(changes);
         MetaEvaluation = metaEvaluation;
         VerifiedScribeEmissions = verifiedScribeEmissions;
     }
@@ -136,6 +226,13 @@ internal sealed class RuleEvaluationContext
     internal AcceptedLeanClosure Lean { get; }
 
     internal RawChangeSet Changes { get; }
+
+    internal bool RuleImplementationChanged { get; }
+
+    // A base fact is re-evaluated when it is in the candidate delta or when the
+    // implementation closure changed and the new implementation must recheck stored facts.
+    internal bool IsBaseFactAffected(string path) =>
+        BaseFactImpact.IsAffected(Changes, RuleImplementationChanged, path);
 
     internal MetaEvaluationProfile MetaEvaluation { get; }
 
@@ -184,8 +281,17 @@ internal sealed class RepositoryRule(
     Func<RepositoryFile, RuleApplicabilityContext, bool> appliesTo,
     Func<RuleEvaluationContext, ImmutableArray<RuleFinding>> evaluate,
     Func<RuleEvaluationContext, bool>? isAffectedBy = null,
-    Func<RuleEvaluationContext, ImmutableArray<RuleFinding>>? evaluateCandidateDelta = null) : IRepositoryRule
+    Func<RuleEvaluationContext, ImmutableArray<RuleFinding>>? evaluateCandidateDelta = null,
+    ImmutableArray<FindingEdgeDefinition> findingEdges = default) : IRepositoryRule
 {
+    private readonly ImmutableArray<FindingEdgeDefinition> edges =
+        findingEdges.IsDefaultOrEmpty
+            ? [new(evaluate, FindingEdgeKind.Local)]
+            : findingEdges;
+
+    public ImmutableArray<FindingEdgeDescriptor> FindingEdges =>
+        edges.Select(static edge => edge.Descriptor).ToImmutableArray();
+
     public bool AppliesTo(RepositoryFile artifact, RuleApplicabilityContext context) =>
         appliesTo(artifact, context);
 
@@ -197,4 +303,39 @@ internal sealed class RepositoryRule(
 
     public ImmutableArray<RuleFinding> EvaluateCandidateDelta(RuleEvaluationContext context) =>
         (evaluateCandidateDelta ?? evaluate)(context);
+
+    internal static RepositoryRule FromEdges(
+        ImmutableArray<FindingEdgeDefinition> findingEdges,
+        Func<RepositoryFile, RuleApplicabilityContext, bool> appliesTo,
+        Func<RuleEvaluationContext, bool>? isAffectedBy = null) =>
+        new(
+            appliesTo,
+            context => findingEdges
+                .SelectMany(edge => edge.Evaluate(context))
+                .ToImmutableArray(),
+            isAffectedBy,
+            context => findingEdges
+                .SelectMany(edge => edge.Evaluate(context))
+                .ToImmutableArray(),
+            findingEdges);
+
+    internal static RepositoryRule FromDiscoveredEdges(
+        Type ownerType,
+        Func<RepositoryFile, RuleApplicabilityContext, bool> appliesTo,
+        Func<RuleEvaluationContext, bool>? isAffectedBy = null)
+    {
+        var findingEdges = FindingEdgeDescriptor.Discover(ownerType)
+            .Select(edge => new FindingEdgeDefinition(
+                (Func<RuleEvaluationContext, ImmutableArray<RuleFinding>>)ownerType
+                    .GetMethod(edge.MemberName, BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic)!
+                    .CreateDelegate(typeof(Func<RuleEvaluationContext, ImmutableArray<RuleFinding>>)),
+                edge.Kind))
+            .ToImmutableArray();
+        if (findingEdges.IsDefaultOrEmpty)
+        {
+            throw new InvalidOperationException($"Finding-edge provider {ownerType.FullName} has no emit methods.");
+        }
+
+        return FromEdges(findingEdges, appliesTo, isAffectedBy);
+    }
 }

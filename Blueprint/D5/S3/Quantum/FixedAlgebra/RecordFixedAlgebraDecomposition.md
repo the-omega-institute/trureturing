@@ -6,7 +6,7 @@ A finite record fixed algebra decomposes into its matrix blocks.
 
 **Theorem 1.1 (The record fixed algebra is the product of its matrix blocks).**
 
-$$\forall \Lambda, I,\ [\forall alpha, \operatorname{Fintype}(I_alpha)],\ [\forall alpha, \operatorname{DecidableEq}(I_alpha)],\ \operatorname{AlgEquiv}(recordFixedAlgebra(I), (alpha \mapsto \operatorname{M}_{I_alpha}(\mathbb{C})))).$$
+$$\forall \Lambda, I,\ [\forall alpha, \operatorname{Fintype}(I_{alpha})],\ [\forall alpha, \operatorname{DecidableEq}(I_{alpha})],\ \operatorname{AlgEquiv}(recordFixedAlgebra(I), (alpha \mapsto \operatorname{M}_{I_{alpha}}(\mathbb{C})))).$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/FixedAlgebra/RecordFixedAlgebraDecomposition.record_fixed_algebra_decomposition` (`✓ std3`). ∎
 

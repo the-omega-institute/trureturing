@@ -27,7 +27,10 @@
   "frontier_eligibility": [
     {
       "source_ref": "D5/X_Frontier/BasePhiNegativePrefixTrident",
-      "kind": "declaration-ready-mathematical-open"
+      "kind": "retired",
+      "delivery_gids": [
+        "D5/S1/Words/NegativeExpansions/BasePhiNegativePrefixTridentClassification.negative_prefix_trident_classification"
+      ]
     },
     {
       "source_ref": "D5/X_Frontier/D5P001",

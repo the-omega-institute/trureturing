@@ -132,6 +132,7 @@ public sealed partial class ProductionEnvironmentTests
         var currentLean = Assert.IsType<LeanValidationOutcome.Accepted>(
             LeanClosureValidator.Validate(current, currentReport)).Capability;
         var currentStatus = Assert.Single(DigestionStatusEvaluator.Evaluate(
+            DigestionEvaluationScope.FullScan,
             baselineDocument,
             current,
             currentLean,
@@ -169,6 +170,7 @@ public sealed partial class ProductionEnvironmentTests
         var changedLean = Assert.IsType<LeanValidationOutcome.Accepted>(
             LeanClosureValidator.Validate(changedSnapshot, currentReport)).Capability;
         var changedStatus = Assert.Single(DigestionStatusEvaluator.Evaluate(
+            DigestionEvaluationScope.FullScan,
             BackfillInventoryLoader.Load(changedSnapshot),
             changedSnapshot,
             changedLean,
@@ -183,6 +185,9 @@ public sealed partial class ProductionEnvironmentTests
 
 internal sealed class ProjectionReconciliationFailureVerifier : IScribeEmissionVerifier
 {
-    public VerifiedScribeEmissions Verify(RepositorySnapshot snapshot, LeanAxiomReport report) =>
+    public VerifiedScribeEmissions Verify(
+        RepositorySnapshot snapshot,
+        LeanAxiomReport report,
+        RawChangeSet? changes = null) =>
         throw new InvalidDataException("projection fixture/live-report disagreement");
 }

@@ -1,4 +1,5 @@
 using System.Collections.Immutable;
+using System.Reflection;
 using System.Text.Json;
 using Trureturing.Truth;
 
@@ -50,6 +51,22 @@ public sealed class RuleCatalog
 
     public string RootSha256 { get; }
 
+    internal ImmutableArray<RegisteredFindingEdge> FindingEdges =>
+        registrations
+            .SelectMany(registration => registration.Rule.FindingEdges.Select(edge =>
+                new RegisteredFindingEdge(registration.Descriptor.Id, edge)))
+            .Concat(
+                typeof(RuleCatalog).Assembly
+                    .GetTypes()
+                    .Select(type =>
+                        (type, provider: type.GetCustomAttributes<FindingEdgeProviderAttribute>().SingleOrDefault()))
+                    .Where(static item => item.provider is not null)
+                    .SelectMany(static item => FindingEdgeDescriptor.Discover(item.type)
+                        .Select(edge => new RegisteredFindingEdge(
+                            RuleId.CreateKnown(item.provider!.RuleNumber),
+                            edge))))
+            .ToImmutableArray();
+
     internal static RuleCatalog CreateForTesting(ImmutableArray<RuleRegistration> registrations) =>
         new(registrations);
 
@@ -98,8 +115,6 @@ public sealed class RuleCatalog
             var deferred = ImmutableArray.CreateBuilder<DeferredRule>();
             var executed = ImmutableArray.CreateBuilder<RuleId>();
             var skipped = ImmutableArray.CreateBuilder<RuleId>();
-            var ruleImplementationChanged = context.Changes.Paths.Any(static path =>
-                StrataLintEngineBuildInputs.ContainsRuleImplementation(path.Value));
             foreach (var registration in registrations)
             {
                 var descriptor = registration.Descriptor;
@@ -114,7 +129,7 @@ public sealed class RuleCatalog
                     continue;
                 }
 
-                if (!ruleImplementationChanged && !registration.Rule.IsAffectedBy(context))
+                if (!context.RuleImplementationChanged && !registration.Rule.IsAffectedBy(context))
                 {
                     skipped.Add(descriptor.Id);
                     continue;
@@ -126,7 +141,8 @@ public sealed class RuleCatalog
                     diagnostics.AddRange(RepositoryPathPolicy.Evaluate(
                         context.Current,
                         context.Policy,
-                        descriptor));
+                        descriptor,
+                        context.IsBaseFactAffected));
                 }
 
                 diagnostics.AddRange(Stamp(

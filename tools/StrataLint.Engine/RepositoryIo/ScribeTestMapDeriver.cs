@@ -81,11 +81,17 @@ internal static class ScribeTestMapDeriver
         "global.json",
         "lakefile.toml",
         "lean-toolchain",
+        // Skill packages are read by architecture tests that pin each skill's structural
+        // contract; the directory is declared rather than each file so that adding a skill
+        // test does not require editing this deriver.
+        "skills",
         "tools",
         "tools/tests/StrataLint.ArchitectureTests",
         "tools/tests/StrataLint.Scribe.Tests",
         "tools/tests/StrataLint.Tests",
         "tools/tests/StrataLint.Tests/Fixtures/fixture-registry.yaml",
+        // 派发契约测试按 Makefile 的字面内容判断目标与前置，故它是一个声明的读取路径。
+        "Makefile",
     ];
 
     internal static bool IsDeclaredPathAllowed(string path) =>
@@ -486,10 +492,21 @@ internal static class ScribeTestMapDeriver
     private static bool IsAccessorCall(InvocationExpressionSyntax invocation, params string[] names) =>
         invocation.Expression is MemberAccessExpressionSyntax member
         && names.Contains(member.Name.Identifier.ValueText, StringComparer.Ordinal)
+        && !IsTemporaryFileSystemRoot(member.Expression)
         && (member.Expression.ToString().Contains("RepositoryAccessor", StringComparison.Ordinal)
             || member.Expression is IdentifierNameSyntax
             || member.Expression is MemberAccessExpressionSyntax
             || member.Expression is InvocationExpressionSyntax);
+
+    private static bool IsTemporaryFileSystemRoot(ExpressionSyntax receiver)
+    {
+        while (receiver is MemberAccessExpressionSyntax member)
+        {
+            receiver = member.Expression;
+        }
+
+        return receiver is IdentifierNameSyntax { Identifier.ValueText: "TemporaryFileSystem" };
+    }
 
     private static IEnumerable<string> LocalCalls(MethodDeclarationSyntax method) =>
         method.DescendantNodes().OfType<InvocationExpressionSyntax>()

@@ -13,5 +13,5 @@ receipts:
   scribe:
     - gid: D5/S0/Diagonal/EquivariantEscape.equivariant_escaped_card
       definition_sha256: sha256:0c975e40e8f1a2a6ab36c9c321f1181dd64aa604d6ff57d08d98a39a8f93299f
-      emission_sha256: sha256:94054391981d6ece8dd15973e967b52e1ea5853051eb0e2d1f0a05fb5b4ac163
+      emission_sha256: sha256:473b4151ba258a10975a58b8dbe41e08dbeb5a0c4dd1e085a4641b3190938375
   unresolved_subitems: []

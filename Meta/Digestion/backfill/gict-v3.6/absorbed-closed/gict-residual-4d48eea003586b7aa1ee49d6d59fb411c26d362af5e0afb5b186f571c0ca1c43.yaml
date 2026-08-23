@@ -1,0 +1,17 @@
+ast_path: theorem/7.6
+fingerprints:
+  raw_sha256: sha256:4d48eea003586b7aa1ee49d6d59fb411c26d362af5e0afb5b186f571c0ca1c43
+  normalized_sha256: sha256:4d48eea003586b7aa1ee49d6d59fb411c26d362af5e0afb5b186f571c0ca1c43
+cas_ref: sha256:4d48eea003586b7aa1ee49d6d59fb411c26d362af5e0afb5b186f571c0ca1c43
+coverage_gids:
+  - D5/S1/FixedPoints/KleeneStageLimit.inductive_definition_is_supremum_of_stages
+receipts:
+  coverage:
+    - gid: D5/S1/FixedPoints/KleeneStageLimit.inductive_definition_is_supremum_of_stages
+      source_sha256: sha256:4d48eea003586b7aa1ee49d6d59fb411c26d362af5e0afb5b186f571c0ca1c43
+      target_sha256: sha256:9781347a1c3e8c440563190c5e49d7609102e0be28e2d072ccc0031a889e8c4a
+  scribe:
+    - gid: D5/S1/FixedPoints/KleeneStageLimit.inductive_definition_is_supremum_of_stages
+      definition_sha256: sha256:4f52b0b6d8a83f366da8efa16151cfdaf5ecad274de07c47d5bcafe48d5bf0f6
+      emission_sha256: sha256:1133866506300410e526a94ee82d395938b29411c6f4eb2d14aec236940c68e5
+  unresolved_subitems: []

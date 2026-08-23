@@ -25,4 +25,5 @@ The displayed conjunct is coprime additivity; the package also carries the least
 ## References
 
 - Truth anchor: `D5/S3/Axis/MultiplicativeDigitInvariant.lambda_minus_is_a_multiplicative_digit_invariant`
+- Dependency: [D5/S1/Deficit/LambdaMinusAdditive](../../S1/Deficit/LambdaMinusAdditive.md)
 - Dependency: [D5/S3/Axis/LambdaMinusDirichletSeries](LambdaMinusDirichletSeries.md)

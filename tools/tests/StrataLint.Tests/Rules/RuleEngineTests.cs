@@ -126,12 +126,13 @@ public sealed class RuleEngineTests
             red.AddBackfillTargets();
         }
         red.Apply(mutation);
+        var changedPath = RuleFixture.ChangedPathForMutation(mutation);
+        red.Changes.Clear();
+        red.Changes.Add(changedPath);
         var redContext = number switch
         {
-            15 => red.Build(RawChangeSet.Create(
-                ["Evidence/D5/S0/Carrier/Formula.check.json"])),
             20 => red.BuildForRuleCompatibility(),
-            _ => red.Build(),
+            _ => red.Build(RawChangeSet.Create([changedPath])),
         };
         var redResult = RuleCatalog.Default.EvaluateSingle(RuleId.CreateKnown(number), redContext);
 
@@ -154,25 +155,7 @@ public sealed class RuleEngineTests
             fixture.AddBackfillTargets();
         }
         fixture.Apply(mutation);
-        var changedPath = mutation switch
-        {
-            "upward-import" or "sorry" or "file-capacity" or "generality" or "header" or "axiom" =>
-                RuleFixture.RingPath,
-            "mirror" or "badge" => RuleFixture.BlueprintPath,
-            "chronicle" => "Chronicle/2026/07/10-old.md",
-            "heart" => RuleFixture.HeartsPath,
-            "domain" => "D5/S0/Unknown/Bad.lean",
-            "formula" => "Evidence/D5/S0/Carrier/Formula.check.json",
-            "backfill" => RuleFixture.FixtureBackfillSourcePath,
-            "query" => "Library/queries.yaml",
-            "values" => "Evidence/D5/values.result.json",
-            "anomaly" => "Evidence/D5/S0/Carrier/Result.run.json",
-            "future" => "D8/S0/Carrier/Ring.lean",
-            "blueprint-skeleton" or "legacy-scribe" => RuleFixture.BlueprintSourcePath,
-            "delivery-statement-identity" =>
-                "D5/X_Frontier/PrimeNormIrreducibility.lean",
-            _ => throw new ArgumentOutOfRangeException(nameof(mutation)),
-        };
+        var changedPath = RuleFixture.ChangedPathForMutation(mutation);
         fixture.Changes.Clear();
         fixture.Changes.Add(changedPath);
         var context = number == 20
@@ -272,7 +255,8 @@ public sealed class RuleEngineTests
         fixture.Files[path] = "print('split')\n";
 
         var completed = Assert.IsType<RuleExecutionOutcome.Completed>(
-            RuleCatalog.Default.Execute(fixture.BuildForRuleCompatibility()));
+            RuleCatalog.Default.Execute(
+                fixture.Build(RawChangeSet.Create([path]))));
 
         Assert.DoesNotContain(
             completed.Capability.Diagnostics,
@@ -487,12 +471,14 @@ public sealed class RuleEngineTests
         var context = fixture.Build(changes);
         var document = BackfillInventoryLoader.Load(context.Current);
         var evaluation = DigestionStatusEvaluator.Evaluate(
+            DigestionEvaluationScope.ChangedSet,
             document,
             context.Current,
             context.Lean,
             baselineDocument: BackfillInventoryLoader.Load(context.ForkPoint),
             baselineSnapshot: context.ForkPoint,
-            casEvaluation: DigestionCasStore.Evaluate(document, context.Current, changes));
+            casEvaluation: DigestionCasStore.Evaluate(document, context.Current, changes),
+            changes: changes);
 
         Assert.True(BackfillInventoryRule.IsAffectedBy(context));
         Assert.Contains(
@@ -527,11 +513,9 @@ public sealed class RuleEngineTests
     [Fact]
     public void Sl016DerivedStatusIsTheSameWhetherOrNotTheEntryIsInTheCandidateDelta()
     {
-        // A gap that is a property of the tree must be reported no matter which paths this
-        // particular candidate happens to touch. Scoping verification to the delta once made
-        // an unchanged entry report success instead of the verdict its base actually had,
-        // which flipped its derived migration from partial to absorbed and rejected every
-        // pull request that did not happen to touch it (2026-08-17, 34 entries, dev blocked).
+        // Skipping historical receipt replay must reuse the base verdict rather than turn a
+        // partial entry into absorbed. The stale receipt itself is reported only when its
+        // authority input is in the candidate delta.
         const string evidenceGid = "D5/E/values--json";
         var fixture = new RuleFixture();
         fixture.AddValuesProjection();
@@ -558,17 +542,18 @@ public sealed class RuleEngineTests
         // The committed target drifted from the receipt it is hashed against.
         fixture.Files[RuleFixture.ValuesProjectionPath] = baselineTarget + " ";
 
-        var touched = EvidenceDriftGaps(
+        var touched = EvidenceDriftEvaluation(
             fixture,
             RawChangeSet.Create([RuleFixture.ValuesProjectionPath]));
-        var untouched = EvidenceDriftGaps(
+        var untouched = EvidenceDriftEvaluation(
             fixture,
             RawChangeSet.Create(["notes/unrelated.txt"]));
 
-        Assert.Contains("coverage-receipt-mismatch:" + evidenceGid, touched);
-        Assert.Equal(
-            string.Join(" | ", touched),
-            string.Join(" | ", untouched));
+        Assert.Contains(touched.Gaps, gap =>
+            gap.Code == "coverage-receipt-mismatch" && gap.Detail == evidenceGid);
+        Assert.DoesNotContain(untouched.Gaps, static gap => gap.Code == "coverage-receipt-mismatch");
+        Assert.Equal(DigestionMigrationState.Partial, untouched.DerivedStatus.Migration);
+        Assert.Equal(touched.DerivedStatus, untouched.DerivedStatus);
     }
 
     [Fact]
@@ -597,25 +582,22 @@ public sealed class RuleEngineTests
             diagnostic.Message.Contains("handwritten status", StringComparison.Ordinal));
     }
 
-    private static ImmutableArray<string> EvidenceDriftGaps(
+    private static DigestionEntryEvaluation EvidenceDriftEvaluation(
         RuleFixture fixture,
         RawChangeSet changes)
     {
         var context = fixture.Build(changes);
         var document = BackfillInventoryLoader.Load(context.Current);
         var evaluation = DigestionStatusEvaluator.Evaluate(
+            DigestionEvaluationScope.ChangedSet,
             document,
             context.Current,
             context.Lean,
             baselineDocument: BackfillInventoryLoader.Load(context.ForkPoint),
             baselineSnapshot: context.ForkPoint,
-            casEvaluation: DigestionCasStore.Evaluate(document, context.Current, changes));
-        return
-        [
-            .. Assert.Single(evaluation.Entries).Gaps
-                .Select(static gap => gap.Code + ":" + gap.Detail)
-                .Order(StringComparer.Ordinal),
-        ];
+            casEvaluation: DigestionCasStore.Evaluate(document, context.Current, changes),
+            changes: changes);
+        return Assert.Single(evaluation.Entries);
     }
 
     [Fact]
@@ -630,7 +612,9 @@ public sealed class RuleEngineTests
         var forbidden = new RuleFixture();
         forbidden.AddAssumptionImportingStratum();
         var diagnostic = Assert.Single(
-            RuleCatalog.Default.EvaluateSingle(RuleId.CreateKnown(1), forbidden.Build()).Diagnostics);
+            RuleCatalog.Default.EvaluateSingle(
+                RuleId.CreateKnown(1),
+                forbidden.Build(RawChangeSet.Create([RuleFixture.AssumptionDebtPath]))).Diagnostics);
         Assert.Equal(RuleId.CreateKnown(1), diagnostic.RuleId);
         Assert.Equal(RuleFixture.AssumptionDebtPath, diagnostic.Path);
         Assert.Contains("may not import", diagnostic.Message, StringComparison.Ordinal);
@@ -644,7 +628,9 @@ public sealed class RuleEngineTests
             "{\"D5/sample\": {\"status\": \"verified\", \"value\": 123}}\n";
 
         var diagnostic = Assert.Single(
-            RuleCatalog.Default.EvaluateSingle(RuleId.CreateKnown(18), fixture.Build()).Diagnostics);
+            RuleCatalog.Default.EvaluateSingle(
+                RuleId.CreateKnown(18),
+                fixture.Build(RawChangeSet.Create(["Evidence/D5/values.result.json"]))).Diagnostics);
 
         Assert.Equal("canonical values projection must be Evidence/D5/values.json", diagnostic.Message);
     }
@@ -787,7 +773,7 @@ public sealed class RuleEngineTests
 
         var evaluation = RuleCatalog.Default.EvaluateSingle(
             RuleId.CreateKnown(19),
-            fixture.Build());
+            fixture.Build(RawChangeSet.Create([RuleFixture.TowerManifestPath])));
 
         var diagnostic = Assert.Single(evaluation.Diagnostics);
         Assert.Contains(

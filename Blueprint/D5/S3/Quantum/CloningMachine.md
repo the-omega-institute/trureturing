@@ -21,3 +21,4 @@ Expanding that definition and applying the real logarithm quotient laws gives th
 ## References
 
 - Truth anchor: `D5/S3/Quantum/CloningMachine.machine_entropy_closed_form`
+- Dependency: [D5/S3/Quantum/QubitWitnesses](QubitWitnesses.md)

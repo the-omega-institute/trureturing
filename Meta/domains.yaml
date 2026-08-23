@@ -26,6 +26,9 @@ domains:
   Computability:
     stratum: S0
     definition: Partial recursive codes with universal evaluation and the recursion-theoretic fixed points of computable code transformations.
+  ConceptDynamics:
+    stratum: S3
+    definition: Abstract concept readouts, dependent fibers, refinements, joins, and descent uniqueness.
   Constants:
     stratum: S3
     definition: Canonical real constants and registered reference centers used by audited projections.
@@ -83,6 +86,9 @@ domains:
   Naming:
     stratum: S0
     definition: Countable naming systems over uncountable carriers and their dark-side measure.
+  Observation:
+    stratum: S0
+    definition: Finite observation windows over integer walks and the residue readings they admit.
   Observer:
     stratum: S3
     definition: Observer read-write structures on finite windows from the observer-ledger reconstruction - update-defect metrics, window registers, and record conditioning.

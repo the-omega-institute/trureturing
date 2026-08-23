@@ -63,6 +63,25 @@ public sealed class CoverageCommandTests
     }
 
     [Fact]
+    public void CoverageCommandTrustsAcceptedEventShapeWithoutReplayingIt()
+    {
+        using var directory = new TemporaryDirectory();
+        var gateway = new FakeRepositoryGateway(
+            RawChangeSet.Create([]),
+            Snapshot(terminateAcceptedEvent: false),
+            null);
+        var source = new FakeLeanReportSource(LeanAxiomReport.Create(
+            ImmutableDictionary<string, LeanFileReport>.Empty));
+        var environment = new ProductionCliEnvironment(directory.Path, gateway, source);
+        var console = new BufferedConsole();
+
+        var exit = CliApplication.Run(["coverage"], environment, console);
+
+        Assert.True(exit == 0, console.Error);
+        Assert.StartsWith("HARNESS_COVERAGE schema=1\n", console.Output, StringComparison.Ordinal);
+    }
+
+    [Fact]
     public void AcceptedEventWriteGateRejectsMismatchedCandidateEventHash()
     {
         var recordedHash = "sha256:" + new string('e', 64);
@@ -76,6 +95,45 @@ public sealed class CoverageCommandTests
 
         var invalid = Assert.IsType<DagLedgerFilesLoadOutcome.Invalid>(outcome);
         Assert.Contains("event_hash", invalid.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void AcceptedEventWriteGateRejectsCandidateShapeViolation()
+    {
+        var snapshot = Assert.IsType<SnapshotDecodeOutcome.Decoded>(
+            SnapshotDecoder.Decode(Snapshot(terminateAcceptedEvent: false))).Snapshot;
+        var accepted = Assert.Single(
+            snapshot.Files.Values,
+            file => FrozenLedgerChangeClassifier.IsAcceptedEventPath(file.Path.Value));
+
+        var outcome = FrozenAcceptedEventLoader.LoadFiles([accepted]);
+
+        var invalid = Assert.IsType<DagLedgerFilesLoadOutcome.Invalid>(outcome);
+        Assert.Contains("LF-terminated", invalid.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void AcceptedEventImplementationChangeRevalidatesStoredCandidateWithFullWriteGate()
+    {
+        var decoded = Assert.IsType<SnapshotDecodeOutcome.Decoded>(
+            SnapshotDecoder.Decode(Snapshot(terminateAcceptedEvent: false))).Snapshot;
+        var accepted = Assert.Single(
+            decoded.Files.Values,
+            file => FrozenLedgerChangeClassifier.IsAcceptedEventPath(file.Path.Value));
+        var fixture = new RuleFixture();
+        fixture.Files[accepted.Path.Value] = accepted.Text;
+        fixture.Baseline[accepted.Path.Value] = accepted.Text;
+        fixture.ForkPoint[accepted.Path.Value] = accepted.Text;
+
+        var evaluation = RuleCatalog.Default.EvaluateSingle(
+            RuleId.CreateKnown(19),
+            fixture.Build(RawChangeSet.Create(
+                ["tools/StrataLint.Engine/Ledger/FrozenAcceptedEventLoader.cs"])));
+
+        Assert.Contains(evaluation.Diagnostics, diagnostic =>
+            diagnostic.Path == accepted.Path.Value
+            && diagnostic.Message.Contains("accepted-event write gate", StringComparison.OrdinalIgnoreCase)
+            && diagnostic.Message.Contains("LF-terminated", StringComparison.Ordinal));
     }
 
     [Fact]
@@ -95,7 +153,9 @@ public sealed class CoverageCommandTests
             StringComparison.Ordinal);
     }
 
-    private static RawRepositorySnapshot Snapshot(string? recordedHash = null)
+    private static RawRepositorySnapshot Snapshot(
+        string? recordedHash = null,
+        bool terminateAcceptedEvent = true)
     {
         var genesis = FrozenLedgerCanonicalWriter.WriteDagEvent(
             "Genesis",
@@ -112,6 +172,10 @@ public sealed class CoverageCommandTests
             genesis.Hash,
             eventHash,
             StringComparison.Ordinal);
+        if (!terminateAcceptedEvent)
+        {
+            eventBytes = eventBytes.TrimEnd('\n');
+        }
         var files = new Dictionary<string, string>(StringComparer.Ordinal)
         {
             [RuleFixture.WorkflowPath] = """

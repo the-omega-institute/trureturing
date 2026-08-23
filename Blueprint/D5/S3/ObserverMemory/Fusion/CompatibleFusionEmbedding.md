@@ -25,3 +25,4 @@ Pinned Mathlib supplies Quotient.map and Quotient.exact for the quotient argumen
 ## References
 
 - Truth anchor: `D5/S3/ObserverMemory/Fusion/CompatibleFusionEmbedding.compatible_fusion_embedding`
+- Dependency: [D5/S3/ObserverMemory/Prediction/ItineraryCompletion](../Prediction/ItineraryCompletion.md)

@@ -13,5 +13,5 @@ receipts:
   scribe:
     - gid: D5/S3/Weil/ZetaBridge/TwoDimensionalEvaluationNegativeDirection.two_dimensional_evaluation_has_negative_direction
       definition_sha256: sha256:f28870020f8c44c447872f2007f3c3bf8f8c927baa03b4d88534f323954d4397
-      emission_sha256: sha256:5369739a30405892beb038e99ef7d90ba5c2c2148826cdd59a772c19b245eb13
+      emission_sha256: sha256:69e123eb07423433bbbf589fecabacd4632cad025b7dc1b16de41861537e3976
   unresolved_subitems: []

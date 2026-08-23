@@ -13,5 +13,5 @@ receipts:
   scribe:
     - gid: D5/S0/Diagonal/Naturality/QuotientTwistBlindness.quotient_twist_blindness
       definition_sha256: sha256:973eba1668d3da36cc70e926038325e0a2ef4a4482d83c1c600b6ef383928ac5
-      emission_sha256: sha256:058d7bf67220d8d94aa167feb186cc58b65f32d11467fba7f6468c3019621fb7
+      emission_sha256: sha256:f88e2c5d81e8024f020331a126538dd9eb119e342bdee02d97d5634ed6eccc53
   unresolved_subitems: []

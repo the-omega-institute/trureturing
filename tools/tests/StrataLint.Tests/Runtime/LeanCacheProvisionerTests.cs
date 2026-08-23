@@ -1,4 +1,3 @@
-using System.Text.Json;
 using StrataLint.Cli;
 
 namespace StrataLint.Tests;
@@ -9,9 +8,15 @@ public sealed class LeanCacheProvisionerTests
     private const string BudgetVariable = "STRATALINT_LEAN_CACHE_TIMEOUT_SECONDS";
 
     [Fact]
-    public void DefaultBudgetRemainsThirtyMinutes()
+    public void DefaultBudgetIsTheDeclaredOneHourPolicyOverride()
     {
-        AssertCacheGetBudget(null, 1800);
+        // The expected value is written out rather than read from
+        // LeanCacheProvisioner.DefaultProvisionBudgetSeconds on purpose: referencing the
+        // constant would let a future change to the policy value pass silently, whereas a
+        // literal forces whoever changes it to come here and to the declaration beside
+        // that constant. The cost is that this literal and this test's name must be
+        // maintained together with the declaration; that is the intended trade.
+        AssertCacheGetBudget(null, 3600);
     }
 
     [Fact]
@@ -49,14 +54,16 @@ public sealed class LeanCacheProvisionerTests
             var provisioning = runner.Invocations
                 .Where(static call => call.FileName is "cp" or "lake")
                 .ToArray();
-            Assert.Equal(3, provisioning.Length);
+            Assert.Equal(2, provisioning.Length);
             Assert.All(provisioning, static call => Assert.Equal(5400, call.Timeout.TotalSeconds));
-            Assert.DoesNotContain(provisioning, static call => call.Arguments.Contains("-c"));
+            Assert.DoesNotContain(
+                provisioning,
+                static call => call.Arguments.SequenceEqual(["exe", "cache", "clean"]));
         });
     }
 
     [Theory]
-    [InlineData("invalid", 1800)]
+    [InlineData("invalid", 3600)]
     [InlineData("1", 300)]
     [InlineData("9000", 7200)]
     public void ConfiguredBudgetUsesInvariantParsingAndClamps(string raw, int expectedSeconds)
@@ -64,84 +71,8 @@ public sealed class LeanCacheProvisionerTests
         AssertCacheGetBudget(raw, expectedSeconds);
     }
 
-    [Theory]
-    [InlineData(false, false, "succeeded")]
-    [InlineData(true, false, "failed")]
-    [InlineData(false, true, "failed")]
-    public void PostCleanInventoryFailurePreservesTheAuthoritativeCleanState(
-        bool cleanReturnsFailure,
-        bool cleanThrows,
-        string expectedStatus)
-    {
-        using var target = new TemporaryDirectory();
-        using var sharedCache = new MathlibCacheFixture();
-        WritePins(target.Path);
-        var lake = Path.Combine(target.Path, ".lake");
-        MathlibProjectionFixture.Write(lake);
-        var runner = new RecordingWorktreeProcessRunner
-        {
-            FailClean = cleanReturnsFailure,
-            ThrowClean = cleanThrows,
-        };
-        var inventoryCalls = 0;
-        int CountFiles(string _)
-        {
-            inventoryCalls++;
-            if (inventoryCalls == 1) return 2;
-            throw new IOException("post-clean inventory unavailable");
-        }
-        using var writerGuard = LeanCacheWriterGuard.TryAcquire(lake);
-        Assert.NotNull(writerGuard);
-
-        var exception = Assert.Throws<LeanCacheProvisionException>(() =>
-            LeanCacheProvisioner.ReproduceExisting(
-                target.Path,
-                ReadPins(target.Path),
-                "lake",
-                runner,
-                writerGuard,
-                CountFiles));
-
-        Assert.Equal(2, inventoryCalls);
-        Assert.Equal("machine", exception.PruneOutcome.Scope);
-        Assert.Null(exception.PruneOutcome.DeletedFiles);
-        Assert.Equal(expectedStatus, exception.PruneOutcome.CleanStatus);
-    }
-
     [Fact]
-    public void UnknownPostCleanInventoryIsNullInTheCommandReceipt()
-    {
-        using var target = new TemporaryDirectory();
-        using var sharedCache = new MathlibCacheFixture();
-        WritePins(target.Path);
-        MathlibProjectionFixture.Write(Path.Combine(target.Path, ".lake"));
-        var runner = new RecordingWorktreeProcessRunner();
-        var inventoryCalls = 0;
-        int CountFiles(string _)
-        {
-            inventoryCalls++;
-            if (inventoryCalls == 1) return 2;
-            throw new IOException("post-clean inventory unavailable");
-        }
-
-        var result = LeanCacheEnsureCommand.Run(
-            target.Path,
-            [],
-            runner,
-            new RecordingDirectoryCloner(),
-            CountFiles);
-
-        Assert.False(result.Success);
-        Assert.Empty(result.Output);
-        Assert.Equal(2, inventoryCalls);
-        using var receipt = JsonDocument.Parse(result.Error["LEAN_CACHE ".Length..]);
-        Assert.True(receipt.RootElement.TryGetProperty("mathlib_cache_pruned_files", out var prunedFiles));
-        Assert.Equal(JsonValueKind.Null, prunedFiles.ValueKind);
-        Assert.Equal("succeeded", receipt.RootElement.GetProperty("mathlib_cache_clean_status").GetString());
-    }
-
-    [Fact]
-    public void CleanupFailureCannotMaskTheAuthoritativePruneOutcome()
+    public void StampFailureAndCleanupFailurePreserveBothCausesWithoutPruneAccounting()
     {
         using var target = new TemporaryDirectory();
         using var sharedCache = new MathlibCacheFixture();
@@ -149,7 +80,7 @@ public sealed class LeanCacheProvisionerTests
         var lake = Path.Combine(target.Path, ".lake");
         var runner = new RecordingWorktreeProcessRunner
         {
-            BlockStampAfterClean = true,
+            BlockStampAfterCacheGet = true,
         };
         using var writerGuard = LeanCacheWriterGuard.TryAcquire(lake);
         Assert.NotNull(writerGuard);
@@ -166,11 +97,7 @@ public sealed class LeanCacheProvisionerTests
                 LeanCachePublisher.Instance,
                 _ => throw new IOException("partial cache cleanup failed")));
 
-        Assert.Equal("machine", exception.PruneOutcome.Scope);
-        Assert.Equal(1, exception.PruneOutcome.DeletedFiles);
-        Assert.Equal("succeeded", exception.PruneOutcome.CleanStatus);
         var authoritative = Assert.IsType<LeanCacheProvisionException>(exception.InnerException);
-        Assert.Equal(exception.PruneOutcome, authoritative.PruneOutcome);
         var aggregate = Assert.IsType<AggregateException>(authoritative.InnerException);
         Assert.Contains(
             aggregate.InnerExceptions,
@@ -231,8 +158,7 @@ public sealed class LeanCacheProvisionerTests
                 ReadPins(target.Path),
                 "lake",
                 runner,
-                writerGuard,
-                LeanCacheProvisioner.CountLtarFiles));
+                writerGuard));
 
         Assert.Contains("not the requested target", exception.Message, StringComparison.Ordinal);
         Assert.Empty(runner.Invocations);
@@ -298,7 +224,7 @@ public sealed class LeanCacheProvisionerTests
     }
 
     [Fact]
-    public void CompletenessFailureAfterSuccessfulRetryPreservesReceiptAndMissingDetails()
+    public void MissingOleansAfterSuccessfulRetryAreReportedWithoutBlocking()
     {
         string? removedModule = null;
         var cloner = new RecordingDirectoryCloner
@@ -326,15 +252,13 @@ public sealed class LeanCacheProvisionerTests
             },
         };
 
-        var exception = Assert.Throws<MathlibOleanCompletenessException>(() =>
-            ProvisionFromDonor(cloner));
+        var result = ProvisionFromDonor(cloner);
 
         Assert.NotNull(removedModule);
-        Assert.Equal(1, exception.MissingOleanFiles);
-        Assert.Equal([removedModule!], exception.MissingOleanSamples);
-        Assert.Equal(MathlibCachePruneOutcome.NotRun, exception.PruneOutcome);
-        Assert.Equal(2, exception.Clonefile.Attempts);
-        Assert.Equal([5], exception.Clonefile.Errnos);
+        Assert.Equal(1, result.MathlibOleans.MissingFiles);
+        Assert.Equal([removedModule!], result.MathlibOleans.MissingSamples);
+        Assert.Equal(2, result.Clonefile.Attempts);
+        Assert.Equal([5], result.Clonefile.Errnos);
     }
 
     [Fact]

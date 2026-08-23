@@ -46,6 +46,9 @@ internal sealed record DigestionFormalizationReceipt(
 
     internal const string PathSuffix = ".v1.json";
 
+    internal static string PathForAtom(string atomId) =>
+        RootPath + atomId + PathSuffix;
+
     // Shape-only residence check for the closed-world path policy (SL-000): one
     // lowercase atom-id segment between the canonical root and the versioned
     // suffix. Content validity stays with Load; residence classification stays

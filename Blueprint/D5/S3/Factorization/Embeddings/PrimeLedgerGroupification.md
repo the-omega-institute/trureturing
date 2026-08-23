@@ -23,3 +23,4 @@ The library was searched before proving. Finsupp.mapRange constructs both finite
 ## References
 
 - Truth anchor: `D5/S3/Factorization/Embeddings/PrimeLedgerGroupification.prime_ledger_direction_and_groupification`
+- Dependency: [D5/S3/Factorization/PositiveRationalGroup](../PositiveRationalGroup.md)

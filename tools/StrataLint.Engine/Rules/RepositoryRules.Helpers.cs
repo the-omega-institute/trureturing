@@ -75,6 +75,28 @@ internal static partial class RepositoryRules
         return true;
     }
 
+    private static bool MirrorPairAffected(
+        RuleEvaluationContext context,
+        string sourcePath,
+        HeaderData header) =>
+        context.IsBaseFactAffected(sourcePath)
+        || MirrorPathAffected(context, header.MirrorB, "D5/B/")
+        || MirrorPathAffected(context, header.MirrorE, "D5/E/");
+
+    private static bool MirrorPathAffected(
+        RuleEvaluationContext context,
+        string value,
+        string prefix)
+    {
+        if (!value.StartsWith(prefix, StringComparison.Ordinal)
+            || !Gid.TryParse(value, out var gid))
+        {
+            return false;
+        }
+
+        return context.IsBaseFactAffected(gid.Path.Value);
+    }
+
     private static void ValidateMirror(
         string source,
         string label,

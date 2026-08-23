@@ -57,6 +57,27 @@ public static class ScribeEmitter
             tolerateAbsentDocuments: false).ExitCode;
     }
 
+    internal static int Emit(
+        string repositoryRoot,
+        bool check,
+        TextWriter output,
+        TextWriter error,
+        LeanAxiomReport leanReport,
+        IReadOnlyList<DocumentDefinition> definitions)
+    {
+        ArgumentNullException.ThrowIfNull(leanReport);
+        ArgumentNullException.ThrowIfNull(definitions);
+        return Run(
+            repositoryRoot,
+            check,
+            output,
+            error,
+            _ => leanReport,
+            validateRepository: false,
+            tolerateAbsentDocuments: false,
+            suppliedDefinitions: definitions).ExitCode;
+    }
+
     internal static VerifiedScribeEmissions? Verify(
         string repositoryRoot,
         TextWriter error,
@@ -80,7 +101,8 @@ public static class ScribeEmitter
         TextWriter error,
         Func<string, LeanAxiomReport> loadLeanReport,
         bool validateRepository,
-        bool tolerateAbsentDocuments)
+        bool tolerateAbsentDocuments,
+        IReadOnlyList<DocumentDefinition>? suppliedDefinitions = null)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(repositoryRoot);
         ArgumentNullException.ThrowIfNull(output);
@@ -102,10 +124,9 @@ public static class ScribeEmitter
             // that document is a not-yet-materialized protected-surface addition (SL-022 routes its
             // .scribe.cs to Component C), not part of this tree — so it must not be dangling-flagged, read,
             // attested, or counted, which would make the candidate block a tree the baseline admits.
-            // A document whose source IS present stays in scope. Missing or mismatched tracked Markdown
-            // remains a check-mode freshness diagnostic, but the capability is issued from the current
-            // validated render and never from those snapshot bytes.
-            var repositoryDefinitions = DocumentDefinitions.Discover(
+            // A document whose source IS present stays in scope. The capability is issued from the
+            // current validated render and never from tracked reader-snapshot bytes.
+            var repositoryDefinitions = suppliedDefinitions ?? DocumentDefinitions.Discover(
                 typeof(DocumentDefinitions).Assembly,
                 repositoryRoot);
             if (check && !tolerateAbsentDocuments)
@@ -139,7 +160,7 @@ public static class ScribeEmitter
             definitions = definitions
                 .Select(definition => definition.ResolveDeclarations(declarationCatalog))
                 .ToArray();
-            if (tolerateAbsentDocuments && definitions.Length == 0 && !repositoryDefinitions.IsEmpty)
+            if (tolerateAbsentDocuments && definitions.Length == 0 && repositoryDefinitions.Count != 0)
             {
                 // A tree owning zero of this binary's documents is not an older world of this
                 // repository at all (wrong root, gutted checkout): verifying it vacuously would
@@ -173,8 +194,7 @@ public static class ScribeEmitter
                 tolerateAbsentDocuments);
             var graph = DocumentGraphAssembler.Assemble(
                 documents,
-                declarationCatalog,
-                census.ReceiptFreeDocumentGids);
+                declarationCatalog);
             var wired = documents.Count(document => graph.For(document).Length > 0);
             var graphEdges = documents.SelectMany(document => graph.For(document)).ToArray();
             output.WriteLine(
@@ -241,60 +261,34 @@ public static class ScribeEmitter
 
         var attestationBytes = ScribeEmissionAttestation.Write(attestations).ToArray();
 
-        // The tracked Markdown is an optional reader snapshot. Check mode reports freshness for authors,
-        // while the capability below is derived solely from this run's validated canonical renders.
-        var documentDifferences = 0;
         var writes = 0;
-        foreach (var (definition, expected) in rendered)
+        if (!check)
         {
-            var path = Path.Combine(repositoryRoot, definition.RelativePath.Value);
-            var exists = File.Exists(path);
-            var current = exists ? File.ReadAllBytes(path) : [];
-            if (current.AsSpan().SequenceEqual(expected))
+            foreach (var (definition, expected) in rendered)
             {
-                continue;
-            }
+                var path = Path.Combine(repositoryRoot, definition.RelativePath.Value);
+                var current = File.Exists(path) ? File.ReadAllBytes(path) : [];
+                if (current.AsSpan().SequenceEqual(expected))
+                {
+                    continue;
+                }
 
-            if (check)
-            {
-                documentDifferences++;
-                error.WriteLine(exists
-                    ? $"out of date: {definition.RelativePath.Value}: reader snapshot differs from current renderer output; "
-                        + $"run make emit and commit {definition.RelativePath.Value} to refresh it"
-                    : $"out of date: {definition.RelativePath.Value}: reader snapshot missing; "
-                        + $"run make emit and commit {definition.RelativePath.Value} to create it");
-                continue;
+                var parent = Path.GetDirectoryName(path)
+                    ?? throw new InvalidOperationException("Blueprint path has no parent directory.");
+                Directory.CreateDirectory(parent);
+                File.WriteAllBytes(path, expected);
+                writes++;
+                output.WriteLine($"wrote: {definition.RelativePath.Value}");
             }
-
-            var parent = Path.GetDirectoryName(path)
-                ?? throw new InvalidOperationException("Blueprint path has no parent directory.");
-            Directory.CreateDirectory(parent);
-            File.WriteAllBytes(path, expected);
-            writes++;
-            output.WriteLine($"wrote: {definition.RelativePath.Value}");
         }
 
-        // The attestation covers every on-disk Blueprint scribe, including candidate-only documents this
-        // binary cannot render (their .scribe.cs is absent from DocumentDefinitions.All). A candidate that
-        // adds such a document produces an attestation this base binary cannot reproduce byte-for-byte, yet
-        // that is a protected-surface signal (SL-022 routes the new .scribe.cs to Component C), not base-owned
-        // corruption. So an existing attestation diff still fails the emit --check exit code, but must not,
-        // on its own, void the per-document capability for the base-owned documents that verified. The
-        // attestation is FILEMAP run-local and gitignored, so its absence in a clean checkout is not drift.
-        var attestationOutOfDate = false;
-        var attestationPath = Path.Combine(repositoryRoot, ScribeEmissionAttestation.RelativePath);
-        var attestationExists = File.Exists(attestationPath);
-        var currentAttestation = attestationExists
-            ? File.ReadAllBytes(attestationPath)
-            : [];
-        if (!currentAttestation.AsSpan().SequenceEqual(attestationBytes))
+        if (!check)
         {
-            if (check && attestationExists)
-            {
-                attestationOutOfDate = true;
-                error.WriteLine($"out of date: {ScribeEmissionAttestation.RelativePath}");
-            }
-            else if (!check)
+            var attestationPath = Path.Combine(repositoryRoot, ScribeEmissionAttestation.RelativePath);
+            var currentAttestation = File.Exists(attestationPath)
+                ? File.ReadAllBytes(attestationPath)
+                : [];
+            if (!currentAttestation.AsSpan().SequenceEqual(attestationBytes))
             {
                 var parent = Path.GetDirectoryName(attestationPath)
                     ?? throw new InvalidOperationException("Scribe attestation path has no parent directory.");
@@ -304,22 +298,17 @@ public static class ScribeEmitter
             }
         }
 
-        var differences = documentDifferences + (attestationOutOfDate ? 1 : 0);
-        if (check && differences == 0)
+        if (check)
         {
-            output.WriteLine($"checked: {definitions.Count} blueprint(s)");
-            if (attestationExists)
-            {
-                output.WriteLine($"checked: {ScribeEmissionAttestation.RelativePath}");
-            }
+            output.WriteLine($"verified: {definitions.Count} current blueprint render(s)");
         }
-        else if (!check)
+        else
         {
             output.WriteLine($"emitted: {writes} changed blueprint(s)");
         }
 
         return new ScribeEmissionRun(
-            differences == 0 ? 0 : 1,
+            0,
             VerifiedScribeEmissions.Create(
                 attestations,
                 declarationReferences,

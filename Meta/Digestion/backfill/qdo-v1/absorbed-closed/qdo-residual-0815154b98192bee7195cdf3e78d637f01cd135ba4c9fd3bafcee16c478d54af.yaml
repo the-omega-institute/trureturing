@@ -13,5 +13,5 @@ receipts:
   scribe:
     - gid: D5/S3/Quantum/Algebra/FiniteLayerProjectionEscape.finite_layer_projection_escape
       definition_sha256: sha256:0a1092adddd6f26db416b2f007d933f50925e6af792ea201e7b1b0ce21f1b954
-      emission_sha256: sha256:c019cee8873e45130555f01aebcd30bf7cd4a3d8c906af0806b68a28472fdb77
+      emission_sha256: sha256:b2dd1b6a092f0f1a99c5b4c25f2cfff5696e81fc42b914a3e31bd18fdbacafc3
   unresolved_subitems: []

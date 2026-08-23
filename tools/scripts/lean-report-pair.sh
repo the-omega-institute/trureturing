@@ -47,7 +47,9 @@ TMP_ROOT="$(mktemp -d)"
 STAGING_DIRS=()
 cleanup() {
   local directory
-  for directory in "${STAGING_DIRS[@]}"; do rm -rf -- "$directory"; done
+  if [[ ${#STAGING_DIRS[@]} -gt 0 ]]; then
+    for directory in "${STAGING_DIRS[@]}"; do rm -rf -- "$directory"; done
+  fi
   rm -rf -- "$TMP_ROOT"
 }
 trap cleanup EXIT
@@ -370,6 +372,11 @@ prepare_bundle() {
   local sources_sha256="$6"
   local config_sha256="$7"
   local repository_sha256="$8"
+
+  local cache_ensure="${root}/tools/scripts/worktree/lean-cache-ensure.sh"
+  [[ -f "$cache_ensure" && -r "$cache_ensure" ]] \
+    || { echo "lean-report-pair: cache ensure is absent or not a readable regular file: $cache_ensure" >&2; return 2; }
+  "$BASH" "$cache_ensure"
 
   create_staging_output "$live_output"
   local staged_output="$LAST_STAGING_OUTPUT"

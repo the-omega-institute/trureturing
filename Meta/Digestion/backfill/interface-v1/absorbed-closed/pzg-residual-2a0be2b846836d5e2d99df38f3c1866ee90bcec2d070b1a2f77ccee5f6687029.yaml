@@ -13,5 +13,5 @@ receipts:
   scribe:
     - gid: D5/S3/Constants/Midslope/ThreeValueEvaluation.three_value_evaluation
       definition_sha256: sha256:99fae34b6a81413149106e58266d70ad404a28a0c293cf92ec55613a6ddcc0de
-      emission_sha256: sha256:f7cd105aec63baea064cb301840a77d96a4c135fe6ff3d270ddf84c3172d0dad
+      emission_sha256: sha256:78633ab59d0ef391038f68161d7dba28fda7509843d37dfbef37c17e1807f2b5
   unresolved_subitems: []

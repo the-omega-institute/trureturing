@@ -22,12 +22,14 @@ internal static partial class RepositoryRules
         var findings = ImmutableArray.CreateBuilder<RuleFinding>();
         findings.AddRange(markdown
             .Except(scribeSources, StringComparer.Ordinal)
+            .Where(stem => BlueprintStemAffected(context, stem))
             .Order(StringComparer.Ordinal)
             .Select(static stem => new RuleFinding(
                 stem + ".md",
                 "Blueprint markdown has no matching .scribe.cs source")));
         findings.AddRange(scribeSources
             .Except(markdown, StringComparer.Ordinal)
+            .Where(stem => BlueprintStemAffected(context, stem))
             .Where(stem => !IsProtectedCandidateOnlyScribeGrowth(
                 context,
                 stem + ".scribe.cs"))
@@ -37,6 +39,10 @@ internal static partial class RepositoryRules
                 "Blueprint Scribe source has no matching .md projection")));
         return findings.ToImmutable();
     }
+
+    private static bool BlueprintStemAffected(RuleEvaluationContext context, string stem) =>
+        context.IsBaseFactAffected(stem + ".md")
+        || context.IsBaseFactAffected(stem + ".scribe.cs");
 
     private static bool IsProtectedCandidateOnlyScribeGrowth(
         RuleEvaluationContext context,
