@@ -10,9 +10,11 @@ internal sealed class FiniteCoverCountingDocument : IScribeDocumentDefinition
     {
         Formula gamma = Gamma;
         Formula delta = Delta;
+        Formula state = F.Id("X");
         Formula q = F.Id("q");
         Formula target = F.Id("T");
         Formula definition = F.Id("d");
+        Formula nu = F.Id("nu");
         Formula family = Seq(F.Id("d"), Underscore, Grp(F.Id("i")));
         Formula budgetOne = Seq(F.Id("b"), Underscore, Grp(D(1)));
         Formula budgetTwo = Seq(F.Id("b"), Underscore, Grp(D(2)));
@@ -21,10 +23,6 @@ internal sealed class FiniteCoverCountingDocument : IScribeDocumentDefinition
             "intersection",
             residual,
             Call("jointKernel", gamma, family));
-        Formula deltaBlind = Call(
-            "intersection",
-            residual,
-            Call("jointKernel", delta, family));
         Formula cut = Call(
             "intersection",
             residual,
@@ -34,35 +32,45 @@ internal sealed class FiniteCoverCountingDocument : IScribeDocumentDefinition
             Sp, Eq, Sp, residual);
         Formula finiteSufficient = Call(
             "finiteSelectionSufficientOnRange", gamma, family, q, target);
-        Formula marginal = Call(
-            "nu",
-            Call("intersection", gammaBlind,
-                Call("complement", Call("conceptKernel", definition))));
-        Formula largerMarginal = Call(
-            "nu",
-            Call("intersection", deltaBlind,
-                Call("complement", Call("conceptKernel", definition))));
+        Formula finitePremises = new Formula.Logic(
+            Call("Finite", state),
+            FormulaLogicOperator.And,
+            Seq(gammaBlind, Sp, Eq, Sp, Emptyset));
+        Formula finiteClause = new Formula.Logic(
+            finitePremises,
+            FormulaLogicOperator.Implies,
+            finiteSufficient);
+        Formula coverStatement = Disp(Seq(
+            Open, gammaBlind, Sp, Eq, Sp, Emptyset, Close, Sp, Leftrightarrow, Sp,
+            cutsCover, Comma, RowBreak, Grp(), finiteClause, Dot));
+
+        Formula singletonDefinition = Seq(OpenBrace, definition, CloseBrace);
+        Formula gammaWithDefinition = Call("union", gamma, singletonDefinition);
+        Formula deltaWithDefinition = Call("union", delta, singletonDefinition);
+        Formula Capture(Formula set) => Call(
+            "mass", nu, Call("capturedPairs", set, family, q, target));
         Formula marginalPremises = new Formula.Logic(
             Seq(gamma, Sp, Subseteq, Sp, delta),
             FormulaLogicOperator.And,
             Seq(Neg, Open, definition, Sp, InMacro, Sp, delta, Close));
+        Formula marginalConclusion = new Formula.Relation(
+            Seq(Capture(gammaWithDefinition), Sp, Minus, Sp, Capture(gamma)),
+            FormulaRelationOperator.GreaterThanOrEqual,
+            Seq(Capture(deltaWithDefinition), Sp, Minus, Sp, Capture(delta)));
+        Formula marginalStatement = Disp(Seq(
+            new Formula.Logic(
+                marginalPremises,
+                FormulaLogicOperator.Implies,
+                marginalConclusion), Dot));
+
         Formula rateOne = Seq(
             Call("budgetedEscapeRate", budgetOne), Underscore, Grp(F.Id("count")));
         Formula rateTwo = Seq(
             Call("budgetedEscapeRate", budgetTwo), Underscore, Grp(F.Id("count")));
-        Formula baselineNonempty = Call("Nonempty", residual);
-        Formula strategy = F.Id("s");
-        Formula feasibleAtBudgetOne = new Formula.BindMany(
-            FormulaQuantifier.Exists,
-            [new Formula.BoundVariable(
-                FormulaIdentifier.Create("s"),
-                F.Id("Strategy"))],
-            new Formula.Relation(
-                Call("cost", strategy),
-                FormulaRelationOperator.LessThanOrEqual,
-                budgetOne));
-        Formula groupedFeasibleAtBudgetOne = Seq(
-            Open, feasibleAtBudgetOne, Close);
+        Formula positiveBaselineCount = new Formula.Relation(
+            D(0),
+            FormulaRelationOperator.LessThan,
+            Call("ncard", residual));
         Formula budgetOrdered = new Formula.Relation(
             budgetOne,
             FormulaRelationOperator.LessThanOrEqual,
@@ -72,64 +80,66 @@ internal sealed class FiniteCoverCountingDocument : IScribeDocumentDefinition
             FormulaRelationOperator.LessThanOrEqual,
             rateOne);
         Formula countingPremises = new Formula.Logic(
-            new Formula.Logic(
-                baselineNonempty,
-                FormulaLogicOperator.And,
-                groupedFeasibleAtBudgetOne),
+            positiveBaselineCount,
             FormulaLogicOperator.And,
             budgetOrdered);
-        Formula countingClause = new Formula.Logic(
-            countingPremises,
-            FormulaLogicOperator.Implies,
-            countingAntitone);
-        Formula statement = Disp(Seq(
-            Open, gammaBlind, Sp, Eq, Sp, Emptyset, Close, Sp, Leftrightarrow, Sp,
-            cutsCover, Comma, RowBreak, Grp(),
-            Open, gammaBlind, Sp, Eq, Sp, Emptyset, Close, Sp, Rightarrow, Sp,
-            finiteSufficient, Comma, RowBreak, Grp(),
-            Open, marginalPremises, Close, Sp, Rightarrow, Sp,
-            largerMarginal, Sp, Leq, Sp, marginal, Comma, RowBreak, Grp(),
-            countingClause, Dot));
+        Formula countingStatement = Disp(Seq(
+            new Formula.Logic(
+                countingPremises,
+                FormulaLogicOperator.Implies,
+                countingAntitone), Dot));
 
         return DocumentDefinition.Create(ScribeNode.Create(
-            "Finite definition cuts cover residuals with diminishing capture and antitone escape.",
+            "Definition cuts cover residuals; two further CAS laws expose missing premises.",
             H("Finite Cover and Counting"),
-            Blocks(Describe.Lean(
-                DescribeId.Create("finite-cover-counting"),
-                DeclarationHandle.Create(
-                    "D5/S3/ConceptDynamics/DefinitionEscape/FiniteCoverCounting."
-                        + "finite_cover_counting"),
-                H("Finite residual covers control marginal capture and counting escape"),
-                StatementSource.FromAuthor(statement),
-                AssessedProvenance.FromRepo(),
-                Blocks(
-                    Paragraph(Text(
-                        "The state type is finite; it need not be inhabited. Candidate definitions "
-                            + "are indexed by I with a dependent codomain family V : I -> Type and "
-                            + "readouts d_i : X -> V(i). Gamma and Delta are index sets, and the "
-                            + "imported dependent jointKernel is used directly. The supplement in "
-                            + "the counting clause has its own unrelated codomain.")),
-                    Paragraph(Text(
-                        "The first conjunct identifies an empty target defect intersected with the "
-                            + "dependent family joint kernel with coverage by all definition cuts. "
-                            + "Mathlib finite_subset_iUnion extracts a finite subfamily. The second "
-                            + "conjunct constructs recovery only on Set.range of that finite joint "
-                            + "readout, so it also holds for an empty state and empty target; the "
-                            + "stronger whole-codomain recovery requirement is false there.")),
-                    Paragraph(Text(
-                        "For Gamma contained in Delta and a fresh candidate d, every pair blind to "
-                            + "Delta is blind to Gamma. Monotonicity of the parameter nu therefore "
-                            + "makes weighted marginal capture antitone in the accumulated family. "
-                            + "A Boolean witness uses a non-counting point weight of three: negation "
-                            + "removes the weighted pair before identity arrives, so capture falls "
-                            + "strictly and the reversed inequality is false.")),
-                    Paragraph(Text(
-                        "Only the fourth conjunct is specialized to counting. It instantiates the "
-                            + "second conjunct of budgeted_escape_rate_bounds_and_antitone with "
-                            + "finite ncard mass. Its explicit premises require a nonempty baseline "
-                            + "defect and a feasible strategy at the smaller budget. A two-strategy "
-                            + "Boolean probe computes rates one and zero, so reversing the budget "
-                            + "direction produces a false inequality."))),
-                DescribeRole.Theorem))));
+            Blocks(
+                Describe.Lean(
+                    DescribeId.Create("finite-cover-counting"),
+                    DeclarationHandle.Create(
+                        "D5/S3/ConceptDynamics/DefinitionEscape/FiniteCoverCounting."
+                            + "finite_cover_counting"),
+                    H("Cut coverage and finite extraction"),
+                    StatementSource.FromAuthor(coverStatement),
+                    AssessedProvenance.FromRepo(),
+                    Blocks(
+                        Paragraph(Text(
+                            "Candidate definitions are indexed by I with dependent codomains "
+                                + "V(i). The first conjunct is general in X. Only the second "
+                                + "conjunct lists Finite X, exactly where finite_subset_iUnion is "
+                                + "used to extract a finite subfamily.")),
+                        Paragraph(Text(
+                            "finiteSelectionSufficientOnRange is the canonical Refines target "
+                                + "relation against Set.rangeFactorization of the selected joint "
+                                + "readout. The proof reuses inductive_sufficiency_criterion."))),
+                    DescribeRole.Theorem),
+                Describe.Lean(
+                    DescribeId.Create("marginal-capture-law"),
+                    DeclarationHandle.Create(
+                        "D5/S3/ConceptDynamics/DefinitionEscape/FiniteCoverCounting."
+                            + "marginalCaptureLaw"),
+                    H("CAS marginal-capture statement"),
+                    StatementSource.FromAuthor(marginalStatement),
+                    AssessedProvenance.FromRepo(),
+                    Blocks(Paragraph(Text(
+                        "This Prop records the exact DECT section 4.4 difference formula: F(S) is "
+                            + "nu.mass of capturedPairs(S), Gamma is contained in Delta, and d is "
+                            + "fresh for Delta. It is not claimed as a theorem. EscapeWeight has "
+                            + "only zero-empty and nonnegative laws; a checked counterexample shows "
+                            + "that these do not imply the displayed diminishing return."))),
+                    DescribeRole.Definition),
+                Describe.Lean(
+                    DescribeId.Create("counting-escape-antitone-law"),
+                    DeclarationHandle.Create(
+                        "D5/S3/ConceptDynamics/DefinitionEscape/FiniteCoverCounting."
+                            + "countingEscapeAntitoneLaw"),
+                    H("CAS counting escape-rate statement"),
+                    StatementSource.FromAuthor(countingStatement),
+                    AssessedProvenance.FromRepo(),
+                    Blocks(Paragraph(Text(
+                        "This Prop keeps only the source premises: positive baseline counting mass "
+                            + "and b1 <= b2. It is not claimed as a theorem. With no strategy "
+                            + "feasible at b1, the current Real.sInf encoding gives rate(b1)=0, "
+                            + "and a checked example falsifies the displayed direction."))),
+                    DescribeRole.Definition))));
     }
 }
