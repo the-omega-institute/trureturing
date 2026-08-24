@@ -16,8 +16,11 @@ internal static partial class CoverAtomCommand
     {
         var options = ParseAlignArguments(arguments);
         var currentRaw = repository.ReadCurrent();
+        var baselineRaw = repository.ReadRevision(options.BaselineRevision);
         var current = Decode(currentRaw);
+        var baseline = Decode(baselineRaw);
         var document = LoadDocument(current);
+        var baselineDocument = BackfillInventoryLoader.LoadBaseline(baseline);
         var matches = document.RequireDigestionEntries()
             .Where(entry => string.Equals(entry.AtomId, options.AtomId, StringComparison.Ordinal))
             .ToArray();
@@ -56,6 +59,23 @@ internal static partial class CoverAtomCommand
         var report = leanReportSource.Load(current);
         var lean = ValidateLean(current, report);
         var verified = scribeEmissionVerifier.Verify(current, report);
+        var changes = repository.ReadChanges(options.BaselineRevision);
+        var forkDeltaEvaluation = DigestionStatusEvaluator.Evaluate(
+            DigestionEvaluationScope.ChangedSet,
+            document,
+            current,
+            lean,
+            verified,
+            baselineDocument,
+            baselineSnapshot: baseline,
+            changes: changes);
+        var exactRepairIdentities = DigestionReceiptIntegrity.ExactScribeRepairIdentities(
+            forkDeltaEvaluation,
+            options.AtomId,
+            options.Gid);
+        DigestionReceiptIntegrityGuard.RequireNoFailures(
+            forkDeltaEvaluation,
+            exactRepairIdentities);
         var documentGid = ScribeEmissionAttestation.DocumentGid(options.Gid);
         if (!verified.TryGet(documentGid, out var verifiedRecord)
             || !verified.ReferencesDeclaration(options.Gid))
@@ -91,13 +111,41 @@ internal static partial class CoverAtomCommand
             baselineDocument: null,
             validateProjectedStatus: false);
         RequireNoConflictMarkedSources(derived);
-        RequireAlignedScribeReceipt(EvaluationFor(derived, options.AtomId), options.Gid);
+        DigestionReceiptIntegrityGuard.RequireExactScribeRepairComplete(
+            derived,
+            options.AtomId,
+            options.Gid);
         var finalRaw = IngestCommand.ReplaceLedger(
             currentRaw,
             document,
             planned);
         var finalSnapshot = Decode(finalRaw);
         var finalDocument = LoadDocument(finalSnapshot);
+        var ledgerUpdates = IngestCommand.LedgerUpdates(currentRaw, finalRaw);
+        var plannedChanges = DigestionReceiptIntegrityGuard.IncludePlannedPaths(
+            changes,
+            ledgerUpdates.Select(static update => update.Path));
+        var beforePlannedEvaluation = DigestionStatusEvaluator.Evaluate(
+            DigestionEvaluationScope.ChangedSet,
+            document,
+            current,
+            lean,
+            verified,
+            baselineDocument,
+            baselineSnapshot: baseline,
+            changes: plannedChanges);
+        var plannedEvaluation = DigestionStatusEvaluator.Evaluate(
+            DigestionEvaluationScope.ChangedSet,
+            finalDocument,
+            finalSnapshot,
+            lean,
+            verified,
+            baselineDocument,
+            baselineSnapshot: baseline,
+            changes: plannedChanges);
+        DigestionReceiptIntegrityGuard.RequireNoNewFailures(
+            beforePlannedEvaluation,
+            plannedEvaluation);
         var finalEvaluation = DigestionStatusEvaluator.Evaluate(
             DigestionEvaluationScope.FullScan,
             finalDocument,
@@ -106,9 +154,11 @@ internal static partial class CoverAtomCommand
             verified,
             baselineDocument: null);
         RequireNoConflictMarkedSources(finalEvaluation);
-        RequireAlignedScribeReceipt(EvaluationFor(finalEvaluation, options.AtomId), options.Gid);
+        DigestionReceiptIntegrityGuard.RequireExactScribeRepairComplete(
+            finalEvaluation,
+            options.AtomId,
+            options.Gid);
 
-        var ledgerUpdates = IngestCommand.LedgerUpdates(currentRaw, finalRaw);
         var changed = ledgerUpdates.Length > 0;
         IngestCommand.ApplyLedgerUpdatesAtomically(repositoryRoot, currentRaw, ledgerUpdates);
 
@@ -123,32 +173,16 @@ internal static partial class CoverAtomCommand
             string.Empty);
     }
 
-    private static void RequireAlignedScribeReceipt(DigestionEntryEvaluation target, string gid)
-    {
-        var targetGaps = target.Gaps
-            .Where(gap => string.Equals(gap.Detail, gid, StringComparison.Ordinal))
-            .Where(static gap => gap.Code is
-                "scribe-definition-mismatch" or "scribe-emission-mismatch")
-            .ToArray();
-        if (targetGaps.Length == 0)
-        {
-            return;
-        }
-
-        throw new InvalidOperationException(
-            $"align target {target.Entry.AtomId} remains invalid for {gid}: "
-            + string.Join(",", targetGaps.Select(static gap => gap.Code)));
-    }
-
     private static AlignArguments ParseAlignArguments(IReadOnlyList<string> arguments)
     {
-        if (arguments.Count != 4)
+        if (arguments.Count != 6)
         {
             throw AlignUsage();
         }
 
         string? atomId = null;
         string? gid = null;
+        string? baselineRevision = null;
         for (var index = 0; index < arguments.Count; index += 2)
         {
             if (index + 1 >= arguments.Count)
@@ -164,21 +198,26 @@ internal static partial class CoverAtomCommand
                 case "--gid" when gid is null:
                     gid = arguments[index + 1];
                     break;
+                case "--base" when baselineRevision is null:
+                    baselineRevision = arguments[index + 1];
+                    break;
                 default:
                     throw AlignUsage();
             }
         }
 
-        if (string.IsNullOrWhiteSpace(atomId) || string.IsNullOrWhiteSpace(gid))
+        if (string.IsNullOrWhiteSpace(atomId)
+            || string.IsNullOrWhiteSpace(gid)
+            || string.IsNullOrWhiteSpace(baselineRevision))
         {
             throw AlignUsage();
         }
 
-        return new AlignArguments(atomId, gid);
+        return new AlignArguments(atomId, gid, baselineRevision);
     }
 
     private static InvalidOperationException AlignUsage() => new(
-        "USAGE: StrataLint align-scribe-receipt --atom-id ATOM_ID --gid GID");
+        "USAGE: StrataLint align-scribe-receipt --atom-id ATOM_ID --gid GID --base REV");
 
     // align-scribe 刻意容忍同胞条目的状态漂移与 coverage 诊断(既有契约,见 CoverAtomTests
     // AlignScribeReceiptIgnoresSiblingDrift…);唯独源文本含冲突标记时不得写账本。

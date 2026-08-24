@@ -67,7 +67,7 @@ public sealed partial class CoverAtomTests
         File.WriteAllText(outputPath, inputs.Ledger, new UTF8Encoding(false));
 
         var result = CoverWorld.Environment(temporary.Path, inputs, inputs.Files).AlignScribeReceipt(
-            ["--atom-id", atomId, "--gid", gid]);
+            ["--atom-id", atomId, "--gid", gid, "--base", "baseline"]);
 
         Assert.False(result.Success);
         Assert.Contains("ALIGN_SCRIBE_RECEIPT_INVALID", result.Error, StringComparison.Ordinal);
@@ -556,7 +556,7 @@ internal static partial class CoverWorld
     };
 
     internal static string[] AlignArgs(CoverInputs inputs) =>
-        ["--atom-id", DefaultAtomId, "--gid", inputs.Gid];
+        ["--atom-id", DefaultAtomId, "--gid", inputs.Gid, "--base", "baseline"];
 
     internal static ProductionCliEnvironment Environment(
         string repositoryRoot,

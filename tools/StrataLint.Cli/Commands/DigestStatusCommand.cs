@@ -101,7 +101,8 @@ internal static class DigestStatusCommand
                 changes: changes,
                 isBaseFactAffected: IsBaseFactAffected,
                 projectedStatusChanges: changes);
-            if (HasReceiptIntegrityFailure(evaluation))
+            if (evaluation.Findings.Length > 0
+                || DigestionReceiptIntegrity.HasFailure(evaluation))
             {
                 return InvalidEvaluation(evaluation);
             }
@@ -156,7 +157,8 @@ internal static class DigestStatusCommand
             changes: changes,
             isBaseFactAffected: IsBaseFactAffected,
             projectedStatusChanges: changes);
-        if (HasReceiptIntegrityFailure(evaluation))
+        if (evaluation.Findings.Length > 0
+            || DigestionReceiptIntegrity.HasFailure(evaluation))
         {
             throw new InvalidOperationException(InvalidEvaluation(evaluation).Error.TrimEnd());
         }
@@ -455,13 +457,6 @@ internal static class DigestStatusCommand
                 + $"detail={JsonSerializer.Serialize(gap.Detail)}\n")));
         return new CommandResult(false, string.Empty, error);
     }
-
-    private static bool HasReceiptIntegrityFailure(DigestionLedgerEvaluation evaluation) =>
-        evaluation.Findings.Length > 0
-        || evaluation.Entries.Any(static entry => entry.Gaps.Any(static gap => gap.Code is
-            "coverage-receipt-mismatch"
-            or "scribe-definition-mismatch"
-            or "scribe-emission-mismatch"));
 
     private static RepositorySnapshot Decode(RawRepositorySnapshot raw) =>
         SnapshotDecoder.Decode(raw) switch

@@ -3,7 +3,96 @@ using System.Text;
 
 namespace StrataLint.Engine;
 
-internal sealed record DigestionGap(string Code, string Detail);
+internal enum DigestionGapSeverity
+{
+    NonFatal,
+    ReceiptIntegrityFailure,
+}
+
+internal sealed record DigestionGap
+{
+    internal DigestionGap(string code, string detail)
+    {
+        Code = code;
+        Detail = detail;
+        Severity = DigestionReceiptIntegrity.SeverityFor(code);
+    }
+
+    internal string Code { get; }
+
+    internal string Detail { get; }
+
+    internal DigestionGapSeverity Severity { get; }
+}
+
+internal readonly record struct DigestionReceiptIntegrityGapIdentity(
+    string AtomId,
+    string Code,
+    string Detail);
+
+internal static class DigestionReceiptIntegrity
+{
+    private static readonly ImmutableHashSet<string> FatalCodes =
+        ImmutableHashSet.Create(
+            StringComparer.Ordinal,
+            "coverage-receipt-mismatch",
+            "scribe-definition-mismatch",
+            "scribe-emission-mismatch");
+
+    internal static DigestionGapSeverity SeverityFor(string code) =>
+        FatalCodes.Contains(code)
+            ? DigestionGapSeverity.ReceiptIntegrityFailure
+            : DigestionGapSeverity.NonFatal;
+
+    internal static ImmutableArray<DigestionReceiptIntegrityGapIdentity> Identities(
+        DigestionLedgerEvaluation evaluation) =>
+        Gaps(evaluation)
+            .Select(static item => new DigestionReceiptIntegrityGapIdentity(
+                item.Entry.AtomId,
+                item.Gap.Code,
+                item.Gap.Detail))
+            .Distinct()
+            .OrderBy(static identity => identity.AtomId, StringComparer.Ordinal)
+            .ThenBy(static identity => identity.Code, StringComparer.Ordinal)
+            .ThenBy(static identity => identity.Detail, StringComparer.Ordinal)
+            .ToImmutableArray();
+
+    internal static ImmutableArray<string> FailureReasons(DigestionLedgerEvaluation evaluation) =>
+        Identities(evaluation).Select(Render).ToImmutableArray();
+
+    internal static bool HasFailure(DigestionLedgerEvaluation evaluation) =>
+        Identities(evaluation).Length > 0;
+
+    internal static ImmutableArray<string> NewFailureReasons(
+        DigestionLedgerEvaluation before,
+        DigestionLedgerEvaluation candidate)
+    {
+        var baseline = Identities(before).ToHashSet();
+        return Identities(candidate)
+            .Where(identity => !baseline.Contains(identity))
+            .Select(Render)
+            .ToImmutableArray();
+    }
+
+    internal static ImmutableHashSet<DigestionReceiptIntegrityGapIdentity> ExactScribeRepairIdentities(
+        DigestionLedgerEvaluation evaluation,
+        string atomId,
+        string gid) =>
+        Identities(evaluation)
+            .Where(identity => string.Equals(identity.AtomId, atomId, StringComparison.Ordinal)
+                && string.Equals(identity.Detail, gid, StringComparison.Ordinal)
+                && identity.Code is "scribe-definition-mismatch" or "scribe-emission-mismatch")
+            .ToImmutableHashSet();
+
+    internal static string Render(DigestionReceiptIntegrityGapIdentity identity) =>
+        $"{identity.AtomId}:{identity.Code}:{identity.Detail}";
+
+    private static IEnumerable<(DigestionLedgerEntry Entry, DigestionGap Gap)> Gaps(
+        DigestionLedgerEvaluation evaluation) =>
+        evaluation.Entries.SelectMany(static entry => entry.Gaps
+            .Where(static gap => gap.Severity == DigestionGapSeverity.ReceiptIntegrityFailure)
+            .Select(gap => (entry.Entry, gap)));
+}
 
 internal sealed record DigestionEntryEvaluation(
     DigestionLedgerEntry Entry,

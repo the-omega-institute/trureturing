@@ -27,6 +27,7 @@ internal static partial class IngestCommand
             var baseline = Decode(baselineRaw);
             var document = LoadDocument(current);
             var baselineDocument = BackfillInventoryLoader.LoadBaseline(baseline);
+            var changes = repository.ReadChanges(baselineRevision);
             var plan = DigestionIngestor.Plan(document, current, baselineDocument);
             var crossVolumeClearanceGaps = RenderCrossVolumeClearanceGaps(
                 plan.Document,
@@ -44,6 +45,16 @@ internal static partial class IngestCommand
             var report = leanReportSource.Load(current);
             var lean = ValidateLean(plannedSnapshot, report);
             var verifiedScribeEmissions = scribeEmissionVerifier.Verify(plannedSnapshot, report);
+            var forkDeltaEvaluation = DigestionStatusEvaluator.Evaluate(
+                DigestionEvaluationScope.ChangedSet,
+                document,
+                current,
+                lean,
+                verifiedScribeEmissions,
+                baselineDocument,
+                baselineSnapshot: baseline,
+                changes: changes);
+            DigestionReceiptIntegrityGuard.RequireNoFailures(forkDeltaEvaluation);
             var derived = DigestionStatusEvaluator.Evaluate(
                 DigestionEvaluationScope.FullScan,
                 plannedDocument,
@@ -76,6 +87,32 @@ internal static partial class IngestCommand
                 plan.CasObjects);
             var finalSnapshot = Decode(finalRaw);
             var finalDocument = LoadDocument(finalSnapshot);
+            var ledgerUpdates = LedgerUpdates(currentRaw, finalRaw);
+            var plannedChanges = DigestionReceiptIntegrityGuard.IncludePlannedPaths(
+                changes,
+                ledgerUpdates.Select(static update => update.Path)
+                    .Concat(plan.CasObjects.Select(static item => item.RelativePath)));
+            var beforePlannedEvaluation = DigestionStatusEvaluator.Evaluate(
+                DigestionEvaluationScope.ChangedSet,
+                document,
+                current,
+                lean,
+                verifiedScribeEmissions,
+                baselineDocument,
+                baselineSnapshot: baseline,
+                changes: plannedChanges);
+            var plannedEvaluation = DigestionStatusEvaluator.Evaluate(
+                DigestionEvaluationScope.ChangedSet,
+                finalDocument,
+                finalSnapshot,
+                lean,
+                verifiedScribeEmissions,
+                baselineDocument,
+                baselineSnapshot: baseline,
+                changes: plannedChanges);
+            DigestionReceiptIntegrityGuard.RequireNoNewFailures(
+                beforePlannedEvaluation,
+                plannedEvaluation);
             var evaluation = DigestionStatusEvaluator.Evaluate(
                 DigestionEvaluationScope.FullScan,
                 finalDocument,
@@ -93,7 +130,6 @@ internal static partial class IngestCommand
                 lean,
                 verifiedScribeEmissions);
 
-            var ledgerUpdates = LedgerUpdates(currentRaw, finalRaw);
             var changed = ledgerUpdates.Length > 0;
             var openGenres = finalDocument.RequireDigestionSources()
                 .SelectMany(static source => source.GenreRegistryCheck.UnregisteredGenres.Select(token =>

@@ -10,7 +10,8 @@ internal sealed record BackfillInventoryValidationContext(
     AcceptedLeanClosure Lean,
     VerifiedScribeEmissions? VerifiedScribeEmissions,
     RawChangeSet? Changes = null,
-    Func<string, bool>? IsBaseFactAffected = null);
+    Func<string, bool>? IsBaseFactAffected = null,
+    RawChangeSet? CandidateChanges = null);
 
 internal static class BackfillInventoryRule
 {
@@ -88,7 +89,8 @@ internal static class BackfillInventoryRule
                 context.Lean,
                 context.VerifiedScribeEmissions,
                 changes,
-                changes is null ? null : context.IsBaseFactAffected),
+                changes is null ? null : context.IsBaseFactAffected,
+                context.Changes),
             document);
     }
 
@@ -386,11 +388,58 @@ internal static class BackfillInventoryRule
             {
                 findings.Add(new RuleFinding(BackfillPath, observation, AdmissionEffect.Observe));
             }
+
+            var receiptIdentities = DigestionReceiptIntegrity.Identities(evaluation);
+            var blockingReceiptIdentities = context.Changes is not null
+                ? receiptIdentities.ToImmutableHashSet()
+                : CandidateReceiptIntegrityIdentities(context, document);
+            foreach (var identity in receiptIdentities)
+            {
+                findings.Add(new RuleFinding(
+                    BackfillPath,
+                    "receipt integrity failure: " + DigestionReceiptIntegrity.Render(identity),
+                    blockingReceiptIdentities.Contains(identity)
+                        ? AdmissionEffect.Block
+                        : AdmissionEffect.Observe));
+            }
         }
         catch (FormatException exception)
         {
             findings.Add(new RuleFinding(BackfillPath, exception.Message));
         }
+    }
+
+    private static ImmutableHashSet<DigestionReceiptIntegrityGapIdentity>
+        CandidateReceiptIntegrityIdentities(
+            BackfillInventoryValidationContext context,
+            BackfillInventoryDocument document)
+    {
+        if (context.CandidateChanges is null)
+        {
+            return [];
+        }
+
+        bool IsCandidateFactAffected(string path) =>
+            BaseFactImpact.IsAffected(
+                context.CandidateChanges,
+                ruleImplementationChanged: false,
+                path);
+        var evaluation = DigestionStatusEvaluator.Evaluate(
+            DigestionEvaluationScope.ChangedSet,
+            document,
+            context.Current,
+            context.Lean,
+            context.VerifiedScribeEmissions,
+            LoadBaselineDocument(context.Baseline),
+            baselineSnapshot: context.Baseline,
+            casEvaluation: DigestionCasStore.Evaluate(
+                document,
+                context.Current,
+                context.CandidateChanges,
+                IsCandidateFactAffected),
+            changes: context.CandidateChanges,
+            isBaseFactAffected: IsCandidateFactAffected);
+        return DigestionReceiptIntegrity.Identities(evaluation).ToImmutableHashSet();
     }
 
     private static BackfillInventoryDocument LoadBaselineDocument(RepositorySnapshot baseline)

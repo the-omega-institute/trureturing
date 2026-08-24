@@ -58,6 +58,57 @@ public sealed class Sl016ReceiptIntegrityTests
     }
 
     [Fact]
+    public void ReceiptIntegrityDeltaAllowsRepairAndBlocksNewOrWorsenedIdentity()
+    {
+        var clean = ReceiptEvaluation();
+        var existing = ReceiptEvaluation("gid-a");
+        var worsened = ReceiptEvaluation("gid-b");
+
+        Assert.Empty(DigestionReceiptIntegrity.NewFailureReasons(existing, clean));
+        Assert.Equal(
+            "atom-a:coverage-receipt-mismatch:gid-a",
+            Assert.Single(DigestionReceiptIntegrity.NewFailureReasons(clean, existing)));
+        Assert.Equal(
+            "atom-a:coverage-receipt-mismatch:gid-b",
+            Assert.Single(DigestionReceiptIntegrity.NewFailureReasons(existing, worsened)));
+    }
+
+    [Theory]
+    [InlineData("coverage-receipt-missing")]
+    [InlineData("scribe-receipt-missing")]
+    [InlineData("scribe-emission-unverified")]
+    public void LegalMissingAndUnverifiedGapsRemainNonFatal(string code)
+    {
+        Assert.Equal(DigestionGapSeverity.NonFatal, new DigestionGap(code, "gid-a").Severity);
+    }
+
+    [Fact]
+    public void AllLedgerWritersConsumePlannedReceiptIntegrityDeltaBeforeWritingBytes()
+    {
+        var root = TestRepositoryLayout.FindRoot();
+        var writers = new[]
+        {
+            (Path: "tools/StrataLint.Cli/Commands/Digestion/CoverAtomCommand.cs",
+                WriteCall: "IngestCommand.ApplyLedgerUpdatesAtomically("),
+            (Path: "tools/StrataLint.Cli/Commands/Digestion/IngestCommand.cs",
+                WriteCall: "WriteCasObjects("),
+            (Path: "tools/StrataLint.Cli/Commands/Digestion/CoverAtomCommand.AlignScribe.cs",
+                WriteCall: "IngestCommand.ApplyLedgerUpdatesAtomically("),
+        };
+
+        foreach (var writer in writers)
+        {
+            var source = File.ReadAllText(Path.Combine(root, writer.Path));
+            var guard = source.IndexOf(
+                "DigestionReceiptIntegrityGuard.RequireNoNewFailures(",
+                StringComparison.Ordinal);
+            var write = source.IndexOf(writer.WriteCall, StringComparison.Ordinal);
+            Assert.True(guard >= 0, $"{writer.Path} is missing its planned-state receipt guard");
+            Assert.True(write > guard, $"{writer.Path} consumes its planned-state guard after writing");
+        }
+    }
+
+    [Fact]
     public void CliReceiptIntegrityConsumersContainNoPrivateFatalCodeFork()
     {
         var root = TestRepositoryLayout.FindRoot();
@@ -78,6 +129,37 @@ public sealed class Sl016ReceiptIntegrityTests
         "scribe-definition-mismatch",
         "scribe-emission-mismatch",
     ];
+
+    private static DigestionLedgerEvaluation ReceiptEvaluation(string? detail = null)
+    {
+        var status = new DigestionStatus(
+            DigestionMigrationState.Partial,
+            DigestionTruthState.Closed);
+        var entry = new DigestionLedgerEntry(
+            "source-a",
+            "synthetic.md",
+            "synthetic-v1",
+            "atom-a",
+            "synthetic/path",
+            null,
+            new DigestionFingerprints("sha256:synthetic", "sha256:synthetic"),
+            [],
+            new DigestionReceipts([], [], [], [], null),
+            status,
+            "sha256:synthetic");
+        return new DigestionLedgerEvaluation(
+            [
+                new DigestionEntryEvaluation(
+                    entry,
+                    DigestionReceiptAlignment.Seen,
+                    status,
+                    false,
+                    detail is null
+                        ? []
+                        : [new DigestionGap("coverage-receipt-mismatch", detail)]),
+            ],
+            []);
+    }
 
     private static SingleRuleEvaluation EvaluateReceiptIntegrityGap(
         string mismatchCode,

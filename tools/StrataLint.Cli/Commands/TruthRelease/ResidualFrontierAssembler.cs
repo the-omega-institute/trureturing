@@ -26,20 +26,12 @@ internal static class ResidualFrontierAssembler
             lean,
             verifiedScribeEmissions);
         if (evaluation.Findings.Length > 0
-            || evaluation.Entries.Any(static entry => entry.Gaps.Any(static gap => gap.Code is
-                "coverage-receipt-mismatch"
-                or "scribe-definition-mismatch"
-                or "scribe-emission-mismatch")))
+            || DigestionReceiptIntegrity.HasFailure(evaluation))
         {
             throw new InvalidOperationException(
                 "residual frontier evaluation failed: "
                 + string.Join("; ", evaluation.Findings
-                    .Concat(evaluation.Entries.SelectMany(static entry => entry.Gaps
-                        .Where(static gap => gap.Code is
-                            "coverage-receipt-mismatch"
-                            or "scribe-definition-mismatch"
-                            or "scribe-emission-mismatch")
-                        .Select(gap => $"{entry.Entry.AtomId}:{gap.Code}:{gap.Detail}")))));
+                    .Concat(DigestionReceiptIntegrity.FailureReasons(evaluation))));
         }
 
         var summary = DigestResidualSummary.Render(evaluation);

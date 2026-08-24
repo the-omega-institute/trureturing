@@ -105,7 +105,16 @@ internal static partial class CoverAtomCommand
                 baselineDocument,
                 baselineSnapshot: baseline);
             RequireNoFindings(beforeEvaluation);
-
+            var changes = repository.ReadChanges(options.BaselineRevision);
+            var forkDeltaEvaluation = DigestionStatusEvaluator.Evaluate(
+                DigestionEvaluationScope.ChangedSet,
+                document,
+                current,
+                lean,
+                verifiedScribeEmissions,
+                baselineDocument,
+                baselineSnapshot: baseline,
+                changes: changes);
             // Gate ②(b): anti-Goodhart — cover may only deposit a declaration that
             // the baseline ledger did not already bind.
             var baselineGids = BaselineCoverageGids(baselineDocument);
@@ -188,6 +197,28 @@ internal static partial class CoverAtomCommand
                 refreshed);
             var finalSnapshot = Decode(finalRaw);
             var finalDocument = LoadDocument(finalSnapshot);
+            var ledgerUpdates = IngestCommand.LedgerUpdates(currentRaw, finalRaw);
+            var plannedChanges = DigestionReceiptIntegrityGuard.IncludePlannedPaths(
+                changes,
+                ledgerUpdates.Select(static update => update.Path));
+            var beforePlannedEvaluation = DigestionStatusEvaluator.Evaluate(
+                DigestionEvaluationScope.ChangedSet,
+                document,
+                current,
+                lean,
+                verifiedScribeEmissions,
+                baselineDocument,
+                baselineSnapshot: baseline,
+                changes: plannedChanges);
+            var plannedEvaluation = DigestionStatusEvaluator.Evaluate(
+                DigestionEvaluationScope.ChangedSet,
+                finalDocument,
+                finalSnapshot,
+                lean,
+                verifiedScribeEmissions,
+                baselineDocument,
+                baselineSnapshot: baseline,
+                changes: plannedChanges);
             var evaluation = DigestionStatusEvaluator.Evaluate(
                 DigestionEvaluationScope.FullScan,
                 finalDocument,
@@ -270,7 +301,10 @@ internal static partial class CoverAtomCommand
             // still passes signature-match. That is the separate
             // digestion-fidelity-attestation-v1 / multi-model consensus gate, out of
             // scope for this block.
-            var ledgerUpdates = IngestCommand.LedgerUpdates(currentRaw, finalRaw);
+            DigestionReceiptIntegrityGuard.RequireNoFailures(forkDeltaEvaluation);
+            DigestionReceiptIntegrityGuard.RequireNoNewFailures(
+                beforePlannedEvaluation,
+                plannedEvaluation);
             var changed = ledgerUpdates.Length > 0;
             IngestCommand.ApplyLedgerUpdatesAtomically(repositoryRoot, currentRaw, ledgerUpdates);
 
@@ -500,7 +534,7 @@ internal static partial class CoverAtomCommand
         string BaselineRevision,
         string EnvelopePath);
 
-    private sealed record AlignArguments(string AtomId, string Gid);
+    private sealed record AlignArguments(string AtomId, string Gid, string BaselineRevision);
 
     private static CoverArguments ParseArguments(IReadOnlyList<string> arguments)
     {
