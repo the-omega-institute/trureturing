@@ -1,0 +1,24 @@
+### 55.2.5 开放问题 OP5：Pareto 停机与外生序
+
+固定非空有限 \(F=K_n.\operatorname{decision}.\operatorname{feasible}\)、\(K_n.\operatorname{decision}.\operatorname{current}=\operatorname{some}(a_{\mathrm{cur}})\)，以及 Action 上由五维公共坐标诱导的 Pareto 预序 \(\preceq_P\)。取其对称核 \(\sim_P\)，令完整外生规范 \(O_P\) 的 relation 为 \(\preceq_P\)，并按 55.1 构造 \(\operatorname{LinExt}_F(O_P)\)。全部 \(F\) 已要求位于 \(\operatorname{AdmTarget}(O_P.\operatorname{goal})\) 与原声明范围。是否成立
+\[
+\boxed{
+a_{\mathrm{cur}}\text{ 在 }F\text{ 中 Pareto-maximal}
+\Longleftrightarrow
+\exists O^F_\lambda\in\operatorname{LinExt}_F(O_P),\
+\operatorname{OrientedStop}(\operatorname{AdmTarget},\operatorname{InScope}_F,O^F_\lambda,K_n)?
+}
+\]
+是否进一步成立
+\[
+\boxed{
+\bigl(\forall O^F_\lambda\in\operatorname{LinExt}_F(O_P),\
+\operatorname{OrientedStop}(\operatorname{AdmTarget},\operatorname{InScope}_F,O^F_\lambda,K_n)\bigr)
+\Longleftrightarrow
+a_{\mathrm{cur}}\text{ 在 }F\text{ 中为 }\preceq_P\text{-greatest}?
+}
+\]
+不再登记等变唯一选择子问：冻结节点 `D5/S3/ConceptDynamics/DecisionValue/IncomparableRepairCosts.incomparable_repairs_no_unique_choice` 已给出有限二点 Pareto 不可比且成本结构不产生唯一选择；`D5/S3/ConceptDynamics/Attribution/SymmetricEventNoUniqueCulprit.symmetric_event_admits_no_equivariant_culprit` 已证明至少二标签的完全对称事件不存在等变单值选择。此处没有超出二者的新增残差。真残差：maximal/greatest 与对完整 Action 载体 \(\operatorname{OrientationSpec}\) 的存在/全称线性延伸停机之间的两个等价式。
+
+结案判据：在 \(K_n.\operatorname{decision}.\operatorname{feasible}=F\)、current 与范围前件下证明或反驳两个等价式；反驳须提交保持 source/version/scope 的完整 \(O^F_\lambda\) 有限反模型。
+

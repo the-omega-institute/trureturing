@@ -1,0 +1,17 @@
+### 55.2.4 开放问题 OP4：外推证书五项合取的独立性
+
+允许模型类 \(\mathfrak M_{\mathrm{fin}}\) 只含有限可判语义模型：域由有限点集 \(|J|\) 解释，\(\operatorname{strictSubset}(J,J')\Longleftrightarrow |J|\subsetneq|J'|\)，且 \(\operatorname{inNewOnlyDomain}(z,J,J')\Longleftrightarrow z\in|J'|\setminus|J|\)；TruthReceipt 是内容地址、域和版本的记录，\(\operatorname{receiptMatches}\) 当且仅当三字段精确相等；givenPremises 与 transportAssumption 是固定有限前件表和运输表导出的可判真值；预测是有限部分函数，\(\operatorname{predictionDefined}\) 是图定义域成员关系，\(\operatorname{predictionFails}\) 只能在已定义值违反固定验收关系时成立；\(\operatorname{claimOn}\) 与 \(\operatorname{refutes}\) 由同一固定有限真值/评价表导出，refutes 当且仅当该预测值与该 claim 的表中真值冲突。任意赋值这些 Prop 字段的退化模型不在 \(\mathfrak M_{\mathrm{fin}}\)。
+
+把第 54.3 部 Lean \(\operatorname{ValidTransportCert}\) 的五个顶层合取记为 \(C_1\) 严格扩域、\(C_2\) claim-bound 旧域收据、\(C_3\) 保留前件的条件运输、\(C_4\) 新域差上预测全定义、\(C_5\) 含失败与反驳的非真空见证。第 51.3 部展示式只有后四项；严格扩域在 51.4 的 Overreach 展示式出现，五项顶层合取的归属是第 54.3 部接口。令 \(\operatorname{Weak}_j:=\bigwedge_{k\neq j}C_k\)，并分别固定坏报告类型：非严格扩域、错 claim/域/版本收据、前件成立而新域 claim 假、遗漏一个新域差预测、没有预登记失败/反驳见证。是否有
+\[
+\boxed{
+\forall j\in\{1,2,3,4,5\},\
+\exists M_j\in\mathfrak M_{\mathrm{fin}},\quad
+\operatorname{Weak}_j(M_j)\wedge\neg C_j(M_j)
+\wedge\operatorname{Bad}_j(M_j)?
+}
+\]
+真残差：第 54.3 部用五项堵住上述五类坏报告，但尚未在受约束的有限语义模型类中证明每项删除确实放过对应坏报告，而不只是展示任意 Prop 赋值的纯合取独立性。
+
+结案判据：五个删除方向各给出 \(\mathfrak M_{\mathrm{fin}}\) 内可枚举模型并验证对应 \(\operatorname{Bad}_j\)，或证明某项在该模型类公理下由其余四项蕴含并 statement-revise 最小合取。
+
