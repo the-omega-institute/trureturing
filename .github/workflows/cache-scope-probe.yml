@@ -1,0 +1,111 @@
+# 一次性实验:测定 base=integration-** 的 `pull_request_target` run 能否读到该 base 分支
+# 由 push 事件写入的 Actions cache。判据在开跑前写死(见 README 段),跑完即删分支。
+#
+# 这条假设是 mathlib v4.33 升级方案的承重前提:ci.yml 的四个 cache save 全部带
+# `github.ref == 'refs/heads/dev'` 守卫,理由是 pull_request_target 的 token 无
+# cache-write scope(run 31389667812 实测 "cache write denied")。故 v4.33 的新
+# config_sha256 只能由某个 push 事件写入。它能否被 PR 读到,决定整个方案。
+#
+# 本仓已有一条反向案底:workflow_run 触发的运行读不到 push 写入的 cache
+# (32453224135 / 32457210655 / 32461241477 三次一致 `Cache not found`),
+# 且 ci.yml 原注释明写「GitHub 文档称可读 default branch 作用域,与实测不符;以实测为准」。
+# 故本实验以实测为准,不以文档为据。
+#
+# 判据(三项合取,预先写死):
+#   ① control(同 base 分支 push)exact hit=true 且 marker sha256 相符  —— 阳性对照
+#   ② absent(保证不存在的 key)hit != true                            —— 阴性对照
+#   ③ consumer(pull_request_target)exact hit=true 且 marker sha256 相符
+#   ①∧②∧③  ⟹ 假设 verified
+#   ①∧②∧¬③ ⟹ 假设为假,方案 A/B 的共同前提被证伪
+#   ¬①       ⟹ 实验无判别力,不得下任何 scope 结论
+name: cache scope probe
+
+on:
+  push:
+    branches: [integration-ci-cache-scope-tests]
+  pull_request_target:
+    branches: [integration-ci-cache-scope-tests]
+    types: [opened, synchronize, reopened]
+
+permissions:
+  contents: read
+
+jobs:
+  seed:
+    if: github.event_name == 'push'
+    name: Seed cache on base branch push
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 5
+    steps:
+      - name: Materialize marker
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p probe-payload
+          printf '%s' 'M433-SCOPE-PROBE-NONCE-8f3a1c7e2b9d4056' > probe-payload/marker.txt
+          sha256sum probe-payload/marker.txt
+      - name: Save probe cache
+        uses: actions/cache/save@v4
+        with:
+          path: probe-payload
+          key: m433-scope-v1-8f3a1c7e2b9d4056
+
+  control:
+    if: github.event_name == 'push'
+    name: Positive and negative control on the same push
+    needs: seed
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 5
+    steps:
+      - name: Restore the seeded key
+        id: hit
+        uses: actions/cache/restore@v4
+        with:
+          path: probe-payload
+          key: m433-scope-v1-8f3a1c7e2b9d4056
+      - name: Restore a key that cannot exist
+        id: absent
+        uses: actions/cache/restore@v4
+        with:
+          path: probe-absent
+          key: m433-scope-absent-v1-8f3a1c7e2b9d4056
+      - name: Assert controls
+        shell: bash
+        run: |
+          set -euo pipefail
+          printf 'PROBE_CONTROL event=%s ref=%s hit=%s matched=%s absent_hit=%s\n' \
+            "$GITHUB_EVENT_NAME" "$GITHUB_REF" \
+            "${{ steps.hit.outputs.cache-hit }}" \
+            "${{ steps.hit.outputs.cache-matched-key }}" \
+            "${{ steps.absent.outputs.cache-hit }}"
+          test "${{ steps.hit.outputs.cache-hit }}" = "true"
+          test "${{ steps.absent.outputs.cache-hit }}" != "true"
+          sha256sum probe-payload/marker.txt
+          test "$(sha256sum probe-payload/marker.txt | cut -d' ' -f1)" \
+             = "$(printf '%s' 'M433-SCOPE-PROBE-NONCE-8f3a1c7e2b9d4056' | sha256sum | cut -d' ' -f1)"
+
+  consumer:
+    if: github.event_name == 'pull_request_target'
+    name: Read the base branch cache from a pull_request_target run
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 5
+    steps:
+      - name: Restore the seeded key
+        id: hit
+        uses: actions/cache/restore@v4
+        with:
+          path: probe-payload
+          key: m433-scope-v1-8f3a1c7e2b9d4056
+      - name: Report the verdict input
+        shell: bash
+        run: |
+          set -euo pipefail
+          printf 'PROBE_CONSUMER event=%s ref=%s base_ref=%s hit=%s matched=%s\n' \
+            "$GITHUB_EVENT_NAME" "$GITHUB_REF" "${GITHUB_BASE_REF:-}" \
+            "${{ steps.hit.outputs.cache-hit }}" \
+            "${{ steps.hit.outputs.cache-matched-key }}"
+          if [ -f probe-payload/marker.txt ]; then
+            sha256sum probe-payload/marker.txt
+          else
+            printf '%s\n' 'PROBE_CONSUMER marker-absent'
+          fi
