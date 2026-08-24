@@ -6,6 +6,7 @@
    digest: Licensed reports retain transport conditions and expansion reopens completion. -/
 
 import D5.S3.ConceptDynamics.ConceptFiberDecomposition
+import D5.S3.ConceptDynamics.TargetRisk.RefinementRiskCostTradeoff
 import D5.S3.ConceptDynamics.Transport.TransportCertificateValidity
 import Mathlib.Data.Set.Function
 
@@ -29,15 +30,15 @@ import Mathlib.Data.Set.Function
      `ls D5/S3/ConceptDynamics/Transport D5/S3/ConceptDynamics/Completion
      D5/S3/ConceptDynamics/DefinitionEscape` and
      `git grep -n -E '^def |^  def ' -- D5/S3/ConceptDynamics | head -60`
-     found no license or overreach definition. Exact hits `Concept` and the
-     transport-certificate declarations are reused. Exact hit `defectRelation`
-     remains the sole target-confusion relation; no residual, escape, or
-     pair-relation definition is introduced here.
+     found no license or overreach definition. Exact hits `Concept`, the
+     transport-certificate declarations, and the canonical `defectRelation`
+     are imported and reused. Scope restriction changes only its state type;
+     this module introduces no second residual or closure predicate.
    * Pinned-Mathlib shape search
      `rg -n 'def EqOn|theorem ssubset_iff_exists|ssubset_iff_exists'
      .lake/packages/mathlib/Mathlib/Data/Set .lake/packages/mathlib/Mathlib`
-     found `Set.EqOn` and `Set.ssubset_iff_exists`; both are used directly for
-     local agreement and for selecting an operation in the expanded domain. -/
+     found `Set.EqOn` and `Set.ssubset_iff_exists`; they are used directly for
+     tolerance agreement and for selecting an operation in the expanded domain. -/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -45,6 +46,7 @@ set_option relaxedAutoImplicit false
 namespace D5.S3.ConceptDynamics.Transport.OverreachWithoutLicense
 
 open D5.S3.ConceptDynamics.ConceptFiberDecomposition
+open D5.S3.ConceptDynamics.TargetRisk.RefinementRiskCostTradeoff
 open D5.S3.ConceptDynamics.Transport.TransportCertificateValidity
 
 /-- A transport report contains the transported concept, the scope it claims,
@@ -98,13 +100,6 @@ def WithinTolerance
   ∀ operation ∈ operationScope,
     deviation (observed operation) (expected operation) ≤ epsilon
 
-/-- Local completion is pointwise agreement on the operations in scope. This
-uses Mathlib's canonical restricted-equality predicate. -/
-def LocallyClosed
-    {Operation Reading : Type*} (operationScope : Set Operation)
-    (system target : Concept Operation Reading) : Prop :=
-  Set.EqOn system target operationScope
-
 /-- A new operation and an available above-threshold deviation give records
 that remain unchanged and within tolerance on the old scope but fail on the
 expanded scope. -/
@@ -145,34 +140,33 @@ theorem domain_expansion_breaks_tolerance
     simp only [observed, expected, if_pos] at atNewOperation
     exact (not_le_of_gt aboveThreshold) atNewOperation
 
-/-- A strict scope expansion with two distinguishable readings admits a local
-completion on the old scope that is not complete on the claimed scope. -/
-theorem domain_expansion_reopens_local_completion
-    {Operation Reading : Type*} {oldScope claimedScope : Set Operation}
-    (strictExpansion : oldScope ⊂ claimedScope)
-    (distinctReadings : ∃ ordinary exceptional : Reading,
-      ordinary ≠ exceptional) :
-    ∃ system target : Concept Operation Reading,
-      LocallyClosed oldScope system target ∧
-        ¬LocallyClosed claimedScope system target := by
-  classical
-  rcases Set.ssubset_iff_exists.mp strictExpansion with
-    ⟨_, operation, operationInClaimed, operationNotInOld⟩
-  rcases distinctReadings with ⟨ordinary, exceptional, different⟩
-  let system : Concept Operation Reading := fun _ => ordinary
-  let target : Concept Operation Reading := fun current =>
-    if current = operation then exceptional else ordinary
-  refine ⟨system, target, ?_, ?_⟩
-  · intro current currentInOld
-    have currentNeOperation : current ≠ operation := by
-      intro same
-      subst current
-      exact operationNotInOld currentInOld
-    simp [system, target, currentNeOperation]
-  · intro closedOnClaimed
-    have equalAtNew := closedOnClaimed operationInClaimed
-    simp only [system, target, if_pos] at equalAtNew
-    exact different equalAtNew
+/-- Restricting the canonical escape residual to a concrete old and expanded
+scope witnesses `Closed_J(S,T)` without `Closed_J'(S,T)`. -/
+theorem domain_expansion_reopens_completion :
+    ∃ oldScope claimedScope : Set Bool,
+      oldScope ⊂ claimedScope ∧
+        ∃ system target : Concept Bool Bool,
+          defectRelation
+              (fun operation : ↑oldScope => system operation)
+              (fun operation : ↑oldScope => target operation) = ∅ ∧
+            defectRelation
+              (fun operation : ↑claimedScope => system operation)
+              (fun operation : ↑claimedScope => target operation) ≠ ∅ := by
+  refine ⟨{false}, Set.univ, Set.ssubset_iff_exists.mpr ?_,
+    (fun _ => false), id, ?_, ?_⟩
+  · exact ⟨Set.subset_univ _, true, Set.mem_univ true, by simp⟩
+  · ext pair
+    simp only [Set.mem_empty_iff_false, iff_false, defectRelation,
+      Set.mem_setOf_eq]
+    rintro ⟨_, targetDifferent⟩
+    have leftFalse : (pair.1 : Bool) = false := by
+      simpa only [Set.mem_singleton_iff] using pair.1.property
+    have rightFalse : (pair.2 : Bool) = false := by
+      simpa only [Set.mem_singleton_iff] using pair.2.property
+    exact targetDifferent (leftFalse.trans rightFalse.symm)
+  · rw [← Set.nonempty_iff_ne_empty]
+    exact ⟨(⟨false, Set.mem_univ false⟩, ⟨true, Set.mem_univ true⟩),
+      rfl, Bool.false_ne_true⟩
 
 /-- The source clauses in one public package: licensing, unconditionalization,
 condition retention, overreach, the expansion counterexample, reopening local
@@ -228,12 +222,15 @@ theorem overreach_without_license
         Set.EqOn observed expected localScope ∧
           WithinTolerance deviation epsilon localScope observed expected ∧
           ¬WithinTolerance deviation epsilon expandedScope observed expected) ∧
-    (∀ {localScope expandedScope : Set Operation},
-      localScope ⊂ expandedScope ->
-      (∃ ordinary exceptional : Coordinate, ordinary ≠ exceptional) ->
-      ∃ system target : Concept Operation Coordinate,
-        LocallyClosed localScope system target ∧
-          ¬LocallyClosed expandedScope system target) ∧
+    (∃ localScope expandedScope : Set Bool,
+      localScope ⊂ expandedScope ∧
+        ∃ system target : Concept Bool Bool,
+          defectRelation
+              (fun operation : ↑localScope => system operation)
+              (fun operation : ↑localScope => target operation) = ∅ ∧
+            defectRelation
+              (fun operation : ↑expandedScope => system operation)
+              (fun operation : ↑expandedScope => target operation) ≠ ∅) ∧
     (∀ certificate :
         TransportCert Operation Payload (Concept State Coordinate) Address
           ClaimVersion Error oldScope claimedScope,
@@ -258,8 +255,7 @@ theorem overreach_without_license
       unchangedWithin largeDeviation
     exact domain_expansion_breaks_tolerance deviation epsilon strictExpansion
       unchangedWithin largeDeviation
-  · intro localScope expandedScope strictExpansion distinctReadings
-    exact domain_expansion_reopens_local_completion strictExpansion distinctReadings
+  · exact domain_expansion_reopens_completion
   · intro certificate reportedScopeMatches certificateValid
       premisesHold assumptionHolds
     refine ⟨reportedScopeMatches, certificate, certificateValid, ?_⟩
@@ -371,7 +367,7 @@ example :
     exact claimOn
 
 /-- On the finite operation and reading type `Bool`, the records agree on the
-old singleton but both tolerance and local completion fail after expansion. -/
+old singleton but both tolerance and canonical closure fail after expansion. -/
 example :
     let deviation : Bool -> Bool -> Nat := fun left right =>
       if left = right then 0 else 1
@@ -382,9 +378,13 @@ example :
     Set.EqOn observed expected oldScope ∧
       WithinTolerance deviation 0 oldScope observed expected ∧
       ¬WithinTolerance deviation 0 claimedScope observed expected ∧
-      LocallyClosed oldScope observed expected ∧
-      ¬LocallyClosed claimedScope observed expected := by
-  dsimp [WithinTolerance, LocallyClosed, Set.EqOn]
+      defectRelation
+          (fun operation : ↑oldScope => observed operation)
+          (fun operation : ↑oldScope => expected operation) = ∅ ∧
+      defectRelation
+          (fun operation : ↑claimedScope => observed operation)
+          (fun operation : ↑claimedScope => expected operation) ≠ ∅ := by
+  dsimp only [WithinTolerance, Set.EqOn]
   refine ⟨?_, ?_, ?_, ?_, ?_⟩
   · intro operation operationInOld
     simp only [Set.mem_singleton_iff] at operationInOld
@@ -397,13 +397,34 @@ example :
   · intro withinClaimed
     have atTrue := withinClaimed true (Set.mem_univ true)
     simp at atTrue
-  · intro operation operationInOld
-    simp only [Set.mem_singleton_iff] at operationInOld
-    subst operation
-    rfl
-  · intro closedOnClaimed
-    have atTrue := closedOnClaimed (Set.mem_univ true)
-    exact Bool.false_ne_true atTrue
+  · ext pair
+    simp only [Set.mem_empty_iff_false, iff_false, defectRelation,
+      Set.mem_setOf_eq]
+    rintro ⟨_, targetDifferent⟩
+    have leftFalse : (pair.1 : Bool) = false := by
+      simpa only [Set.mem_singleton_iff] using pair.1.property
+    have rightFalse : (pair.2 : Bool) = false := by
+      simpa only [Set.mem_singleton_iff] using pair.2.property
+    exact targetDifferent (leftFalse.trans rightFalse.symm)
+  · rw [← Set.nonempty_iff_ne_empty]
+    exact ⟨(⟨false, Set.mem_univ false⟩, ⟨true, Set.mem_univ true⟩),
+      rfl, Bool.false_ne_true⟩
+
+/-- Positive control: an identity readout leaves no target escape residual on
+either member of the same strict scope expansion. -/
+example :
+    let oldScope : Set Bool := {false}
+    let claimedScope : Set Bool := Set.univ
+    let system : Concept Bool Bool := id
+    let target : Concept Bool Bool := id
+    defectRelation
+        (fun operation : ↑oldScope => system operation)
+        (fun operation : ↑oldScope => target operation) = ∅ ∧
+      defectRelation
+        (fun operation : ↑claimedScope => system operation)
+        (fun operation : ↑claimedScope => target operation) = ∅ := by
+  dsimp only
+  constructor <;> ext pair <;> simp [defectRelation]
 
 #print axioms overreach_without_license
 

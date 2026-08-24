@@ -47,9 +47,10 @@ internal sealed class OverreachWithoutLicenseDocument : IScribeDocumentDefinitio
                             + "the reading space admits an above-epsilon deviation, two records "
                             + "agree and fit on J but fail on J'.")),
                     Paragraph(Text(
-                        "Local completion uses the canonical restricted equality Set.EqOn. Two "
-                            + "distinct readings at the selected new operation give Closed_J(S,T) "
-                            + "and not Closed_J'(S,T), so expansion reopens local completion.")),
+                        "CAS defines Closed_J(S,T) exactly by emptiness of defectRelation after "
+                            + "restricting S and T to J. A concrete two-operation witness has an "
+                            + "empty residual on its old singleton scope and a nonempty residual "
+                            + "on the expanded scope, so expansion reopens local completion.")),
                     Paragraph(Text(
                         "Conversely, when the report's stored scope equals the claimed scope, a "
                             + "valid certificate together "
@@ -60,8 +61,8 @@ internal sealed class OverreachWithoutLicenseDocument : IScribeDocumentDefinitio
                     Paragraph(Text(
                         "Repository type-shape, English and Chinese synonym, and neighboring-module "
                             + "searches found no transport-license or overreach definition. "
-                            + "Concept and Set.EqOn are reused; the canonical defectRelation remains "
-                            + "untouched because no escape-residual relation is needed here."))),
+                            + "Concept, Set.EqOn, and the canonical defectRelation are reused; no "
+                            + "second residual or closure predicate is introduced."))),
                 DescribeRole.Theorem))));
 
     private static Formula Subscript(Formula value, Formula index) =>
@@ -98,7 +99,8 @@ internal sealed class OverreachWithoutLicenseDocument : IScribeDocumentDefinitio
             Exists, Sp, certificate, Comma, Sp,
             validCertificate, Sp, Land, Sp, completeCondition);
         Formula unconditionalDuty = Grp(
-            gammaQ, Sp, Eq, Sp, F.Id("top"), Sp, Land, Sp, licensed,
+            gammaQ, Sp, Eq, Sp, F.Id("top"), Sp, Land, Sp, licensed, Sp, Land, Sp,
+            Call("Holds", gammaQ),
             Sp, Rightarrow, Sp,
             Exists, Sp, certificate, Comma, Sp,
             validCertificate, Sp, Land, Sp, premises, Sp, Land, Sp, assumption);
@@ -115,7 +117,7 @@ internal sealed class OverreachWithoutLicenseDocument : IScribeDocumentDefinitio
             reportScope, Sp, Eq, Sp, claimedScope, Sp, Land, Sp,
             Neg, licensed);
         Formula toleranceCounterexample = ToleranceCounterexample(oldScope, claimedScope);
-        Formula closureCounterexample = ClosureCounterexample(oldScope, claimedScope);
+        Formula closureCounterexample = ClosureCounterexample();
         Formula deconditioning = Grp(
             reportScope, Sp, Eq, Sp, claimedScope, Sp, Land, Sp,
             validCertificate, Sp, Land, Sp, premises, Sp, Land, Sp, assumption,
@@ -161,22 +163,26 @@ internal sealed class OverreachWithoutLicenseDocument : IScribeDocumentDefinitio
             Call("WithinTolerance", deviation, epsilon, claimedScope, system, word));
     }
 
-    private static Formula ClosureCounterexample(
-        Formula oldScope,
-        Formula claimedScope)
+    private static Formula ClosureCounterexample()
     {
-        Formula ordinary = F.Id("a");
-        Formula exceptional = F.Id("b");
+        Formula oldScope = Subscript(F.Id("J"), D(0));
+        Formula claimedScope = Subscript(F.Id("J"), D(1));
         Formula system = F.Id("S");
         Formula target = F.Id("T");
+        Formula oldResidual = Call(
+            "defectRelation",
+            Call("restrict", system, oldScope),
+            Call("restrict", target, oldScope));
+        Formula claimedResidual = Call(
+            "defectRelation",
+            Call("restrict", system, claimedScope),
+            Call("restrict", target, claimedScope));
 
         return Grp(
+            Exists, Sp, oldScope, Comma, Sp, claimedScope, Comma, Sp,
+            system, Comma, Sp, target, Comma, Sp,
             oldScope, Sp, Subset, Sp, claimedScope, Sp, Land, Sp,
-            Open, Exists, Sp, ordinary, Comma, Sp, exceptional, Comma, Sp,
-            ordinary, Sp, Neq, Sp, exceptional, Close,
-            Sp, Rightarrow, Sp,
-            Exists, Sp, system, Comma, Sp, target, Comma, Sp,
-            Call("LocallyClosed", oldScope, system, target), Sp, Land, Sp,
-            Neg, Call("LocallyClosed", claimedScope, system, target));
+            oldResidual, Sp, Eq, Sp, Emptyset, Sp, Land, Sp,
+            claimedResidual, Sp, Neq, Sp, Emptyset);
     }
 }
