@@ -8,15 +8,24 @@ internal static class LeanCacheBudgetPolicy
     /// and not `relation-derived`; it is not a function of vCPU, memory, or any other
     /// machine capacity, and it must not be presented as one.
     ///
-    /// Domain: every process this budget is passed to, which is more than the build.
-    /// It bounds the `cp -R` that clones the donor cache, `lake exe cache get`, and —
-    /// through `CommandBudget` — the one arbitrary command
-    /// `LeanCacheEnsureCommand` runs for `worktree with-cache-writer`, which in this
-    /// repository is `lake build` from the Makefile and both the `lake build` and the
-    /// `lake env lean --run Inspector.lean` that `tools/lean-inspector/inspect.sh`
-    /// passes. A number chosen against the build alone therefore also lengthens how long
-    /// a hung `cp` or a stalled cache fetch is tolerated; that is accepted here as the
-    /// cost of the triage. Deliberately no line numbers: an earlier version of this
+    /// Domain — NARROWED 2026-08-24 (#2535). This value is now sized for exactly one
+    /// consumer and inherited by the others through named accessors that each carry their
+    /// own justification, so the sharing is explicit rather than incidental:
+    ///   LeanCacheProvisioner.LeanCommandBudget   — load-bearing. The one arbitrary command
+    ///       `LeanCacheEnsureCommand` runs for `worktree with-cache-writer`: `lake build`
+    ///       from the Makefile, and both the `lake build` and the
+    ///       `lake env lean --run Inspector.lean` that `tools/lean-inspector/inspect.sh`
+    ///       passes. THIS is what the number is chosen against.
+    ///   LeanCacheProvisioner.DirectoryCopyBudget — the `cp -R` donor clone fallback.
+    ///       Measured 0 occurrences (47 ensure receipts, `clonefile_errno` all null).
+    ///   LeanCacheProvisioner.DependencyFetchBudget — `lake exe cache get`. Reached 3 times,
+    ///       two orders of magnitude below this ceiling (ensure end-to-end 13 seconds).
+    /// The previous text accepted "a hung `cp` is tolerated for the build's budget" as the
+    /// cost of triage. That cost is not removed by the rename — the values are still equal —
+    /// but it is no longer silent: each inheritance states the measurement that justifies it
+    /// and the condition under which it expires. Deriving separate literals for a
+    /// zero-occurrence path would turn one unsourced constant into three, which is the rule's
+    /// fourth form multiplied, not a fix (CLAUDE.md 20-double-prime). Deliberately no line numbers: an earlier version of this
     /// comment carried five line references, and the three that pointed into this file
     /// were copied from the pre-insertion text. Inserting the comment moved each of those
     /// three targets down twelve lines, so all three were false the moment they were
@@ -40,6 +49,20 @@ internal static class LeanCacheBudgetPolicy
     /// count. The slack left under the old ceiling was (1800 - 1656) / 1800 = 8%, and
     /// concurrent load from other drivers on this machine was observed holding CPU idle
     /// at 0% for over 25 minutes, which consumes that slack outright.
+    ///
+    /// Slack — REMEASURED 2026-08-23, and it is now WORSE than the ceiling this value
+    /// replaced. The negative reading below rejected 1800 because its slack over the then
+    /// most-expensive work was (1800-1656)/1800 = 8%, "consumed outright" by concurrent load.
+    /// A full content-layer cold build now measures 3388s on this machine (56m28s, EXIT=0,
+    /// 1571 modules, 2026-08-23) — and that sample was itself taken with two other sessions'
+    /// codex seats running, so the concurrency the old note blamed is already inside it.
+    /// Slack today: (3600-3388)/3600 = 5.9%, BELOW the 8% that failed. Cross-machine:
+    /// `S0/Tower` alone costs 6305s across 81 modules on ubuntu-24.04-arm (run 32493250519),
+    /// which discharges this comment's own ANOTHER MACHINE MUST REMEASURE for the family.
+    /// The work term is also still growing: D5 held 773 `.lean` files on 2026-08-15 and 1575
+    /// on 2026-08-24. Raising the literal a third time (1800 -> 3600 -> ?) would replay the
+    /// same defect with a new number and is deliberately NOT done here; the exit condition
+    /// below is the fix.
     ///
     /// Value: 3600s is a chosen round hour, NOT a derivation. It has to clear the
     /// measured 1656s with room for the contention above, and it is half the ceiling
