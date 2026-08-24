@@ -134,8 +134,7 @@ internal sealed class FiniteCoverCountingDocument : IScribeDocumentDefinition
             FormulaLogicOperator.Implies,
             countingAntitone);
         Formula countingContext = Seq(
-            Typeclass("Finite", state), Comma, Sp,
-            Typeclass("DecidableEq", indexType), Comma, RowBreak,
+            Typeclass("Finite", state), Comma, RowBreak,
             countingWeightDefinition, Comma, RowBreak);
         Formula countingStatement = Disp(Seq(countingContext, countingLaw, Dot));
         Formula packagedCountingClause = Seq(
@@ -175,8 +174,9 @@ internal sealed class FiniteCoverCountingDocument : IScribeDocumentDefinition
                                 + "relation against Set.rangeFactorization of the selected joint "
                                 + "readout. The proof reuses inductive_sufficiency_criterion. The "
                                 + "third conjunct quantifies Finite X locally and is backed by "
-                                + "counting_escape_antitone_law; DecidableEq I is supplied internally "
-                                + "for the Finset implementation."))),
+                                + "counting_escape_antitone_law. finiteSelectionSupplement chooses "
+                                + "classical equality only inside its Finset implementation, so no "
+                                + "public declaration requires DecidableEq I."))),
                     DescribeRole.Theorem),
                 Describe.Lean(
                     DescribeId.Create("marginal-capture-law"),
@@ -212,9 +212,10 @@ internal sealed class FiniteCoverCountingDocument : IScribeDocumentDefinition
                             + "b1 <= b2 gives the displayed antitone direction. Every "
                             + "budgetedEscapeRate occurrence names q, the supplement, T, the summed "
                             + "cost, countingWeight, and its budget. Here countingWeight is the concrete "
-                            + "Lean weight mass(A) = ncard(A), under Finite X and DecidableEq I. The "
-                            + "empty selection proves feasibility at b1, and the generic budget theorem "
-                            + "then gives the non-strict direction rate(b2) <= rate(b1). A constant "
+                            + "Lean weight mass(A) = ncard(A), under Finite X; finite-set membership "
+                            + "equality is chosen internally. The empty selection proves feasibility at "
+                            + "b1, and the generic budget theorem then gives the non-strict direction "
+                            + "rate(b2) <= rate(b1). A constant "
                             + "candidate is an elaborating false neighbor for strict decrease, while "
                             + "an identity candidate gives a strict nontrivial model with rate(1) < "
                             + "rate(0)."))),

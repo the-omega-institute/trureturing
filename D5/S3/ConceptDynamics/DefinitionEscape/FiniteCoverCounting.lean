@@ -3,8 +3,7 @@
    mirror-B: D5/B/S3/ConceptDynamics/DefinitionEscape/FiniteCoverCounting
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: Two finite-cover clauses and counting antitonicity hold; the weak
-   EscapeWeight interface does not imply marginal capture. -/
+   digest: Finite-cover and counting laws hold; marginal capture needs stronger weights. -/
 
 import D5.S3.AnalyticClosure.Budget.BudgetedEscapeRateAntitone
 import D5.S3.ConceptDynamics.DefinitionEscape.BlindKernelObstruction
@@ -245,16 +244,17 @@ def marginalCaptureLaw
 
 /-- A finite CAS selection reveals exactly the coordinates in the selected
 subset. Unselected coordinates carry `none` and add no distinction. -/
-def finiteSelectionSupplement
-    {I X : Type*} {V : I → Type*} [DecidableEq I]
+noncomputable def finiteSelectionSupplement
+    {I X : Type*} {V : I → Type*}
     (Gamma : Set I) (definitions : ∀ i, Concept X (V i)) :
-    Finset Gamma → Concept X (∀ item : Gamma, Option (V item.1)) :=
-  fun selection state item =>
+    Finset Gamma → Concept X (∀ item : Gamma, Option (V item.1)) := by
+  classical
+  exact fun selection state item =>
     if item ∈ selection then some (definitions item.1 state) else none
 
 /-- CAS selection cost `C(S) = sum d in S, c(d)`. -/
 def finiteSelectionCost
-    {I : Type*} [DecidableEq I]
+    {I : Type*}
     (Gamma : Set I) (candidateCost : I → Real) (selection : Finset Gamma) : Real :=
   ∑ item ∈ selection, candidateCost item.1
 
@@ -262,7 +262,7 @@ def finiteSelectionCost
 Nonnegative candidate costs and a nonnegative smaller budget make the empty
 selection feasible. -/
 def countingEscapeAntitoneLaw
-    {I X C Target : Type*} {V : I → Type*} [Finite X] [DecidableEq I]
+    {I X C Target : Type*} {V : I → Type*} [Finite X]
     (Gamma : Set I) (definitions : ∀ i, Concept X (V i))
     (q : Concept X C) (target : Concept X Target)
     (candidateCost : I → Real) (budget1 budget2 : Real) : Prop :=
@@ -283,12 +283,13 @@ def countingEscapeAntitoneLaw
 /-- The CAS counting escape rate is antitone in the budget. The empty finite
 selection witnesses feasibility at the smaller nonnegative budget. -/
 theorem counting_escape_antitone_law
-    {I X C Target : Type*} {V : I → Type*} [Finite X] [DecidableEq I]
+    {I X C Target : Type*} {V : I → Type*} [Finite X]
     (Gamma : Set I) (definitions : ∀ i, Concept X (V i))
     (q : Concept X C) (target : Concept X Target)
     (candidateCost : I → Real) (budget1 budget2 : Real) :
     countingEscapeAntitoneLaw Gamma definitions q target candidateCost
       budget1 budget2 := by
+  classical
   let countingWeight : EscapeWeight (X × X) :=
     { mass := fun set => (set.ncard : Real)
       empty_mass := by simp
@@ -354,13 +355,12 @@ theorem finite_cover_counting
           jointKernel (fun item : Gamma => definitions item.1) = ∅ →
         finiteSelectionSufficientOnRange Gamma definitions q target) ∧
       (∀ finiteX : Finite X,
-        @countingEscapeAntitoneLaw I X C Target V finiteX (Classical.decEq I)
+        @countingEscapeAntitoneLaw I X C Target V finiteX
           Gamma definitions q target candidateCost budget1 budget2) := by
   have coverPackage := finite_cover_laws Gamma definitions q target
   refine ⟨coverPackage.1, coverPackage.2, ?_⟩
   intro finiteX
   letI : Finite X := finiteX
-  letI : DecidableEq I := Classical.decEq I
   exact counting_escape_antitone_law Gamma definitions q target candidateCost
     budget1 budget2
 

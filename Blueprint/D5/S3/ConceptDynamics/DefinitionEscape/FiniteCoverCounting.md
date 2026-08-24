@@ -16,7 +16,7 @@ $$((\operatorname{intersection}\left(\operatorname{defectRelation}\left(q, T\rig
 
 Candidate definitions are indexed by I with dependent codomains V(i). The packaged theorem has no global instances. Its first conjunct is general in X and I. The second retains the explicit Finite X premise used by finite_subset_iUnion to extract a finite subfamily.
 
-finiteSelectionSufficientOnRange is the canonical Refines target relation against Set.rangeFactorization of the selected joint readout. The proof reuses inductive_sufficiency_criterion. The third conjunct quantifies Finite X locally and is backed by counting_escape_antitone_law; DecidableEq I is supplied internally for the Finset implementation.
+finiteSelectionSufficientOnRange is the canonical Refines target relation against Set.rangeFactorization of the selected joint readout. The proof reuses inductive_sufficiency_criterion. The third conjunct quantifies Finite X locally and is backed by counting_escape_antitone_law. finiteSelectionSupplement chooses classical equality only inside its Finset implementation, so no public declaration requires DecidableEq I.
 
 **Definition 1.2 (CAS marginal-capture statement).**
 
@@ -32,7 +32,7 @@ This Prop uses the two CAS definitions directly: residualEscapeMass(S) is M(S) =
 
 **Theorem 1.3 (CAS counting escape-rate theorem).**
 
-$$[\operatorname{Finite}(X)], [\operatorname{DecidableEq}(I)],\\\forall A, \operatorname{mass}\left(countingWeight, A\right) = \operatorname{ncard}\left(A\right),\\\left((\forall d \in I,\; d \in \Gamma \Rightarrow 0 \le \operatorname{c}\left(d\right)) \land \left(0 \le b_{1} \land \left(b_{1} \le b_{2} \land 0 < \operatorname{mass}\left(countingWeight, \operatorname{defectRelation}\left(q, T\right)\right)\right)\right)\right) \Rightarrow \operatorname{budgetedEscapeRate}\left(q, \operatorname{finiteSelectionSupplement}\left(\Gamma, d_{i}\right), T, \operatorname{finiteSelectionCost}\left(\Gamma, c\right), countingWeight, b_{2}\right) \le \operatorname{budgetedEscapeRate}\left(q, \operatorname{finiteSelectionSupplement}\left(\Gamma, d_{i}\right), T, \operatorname{finiteSelectionCost}\left(\Gamma, c\right), countingWeight, b_{1}\right).$$
+$$[\operatorname{Finite}(X)],\\\forall A, \operatorname{mass}\left(countingWeight, A\right) = \operatorname{ncard}\left(A\right),\\\left((\forall d \in I,\; d \in \Gamma \Rightarrow 0 \le \operatorname{c}\left(d\right)) \land \left(0 \le b_{1} \land \left(b_{1} \le b_{2} \land 0 < \operatorname{mass}\left(countingWeight, \operatorname{defectRelation}\left(q, T\right)\right)\right)\right)\right) \Rightarrow \operatorname{budgetedEscapeRate}\left(q, \operatorname{finiteSelectionSupplement}\left(\Gamma, d_{i}\right), T, \operatorname{finiteSelectionCost}\left(\Gamma, c\right), countingWeight, b_{2}\right) \le \operatorname{budgetedEscapeRate}\left(q, \operatorname{finiteSelectionSupplement}\left(\Gamma, d_{i}\right), T, \operatorname{finiteSelectionCost}\left(\Gamma, c\right), countingWeight, b_{1}\right).$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/DefinitionEscape/FiniteCoverCounting.counting_escape_antitone_law` (`✓ std3`). ∎
 
@@ -40,7 +40,7 @@ $$[\operatorname{Finite}(X)], [\operatorname{DecidableEq}(I)],\\\forall A, \oper
 
 *Commentary.*
 
-This Prop uses CAS strategies Finset Gamma, finiteSelectionSupplement, and finiteSelectionCost(S) = sum d in S, c(d). Candidate costs and b1 are nonnegative, so the empty selection has cost zero and is feasible; b1 <= b2 gives the displayed antitone direction. Every budgetedEscapeRate occurrence names q, the supplement, T, the summed cost, countingWeight, and its budget. Here countingWeight is the concrete Lean weight mass(A) = ncard(A), under Finite X and DecidableEq I. The empty selection proves feasibility at b1, and the generic budget theorem then gives the non-strict direction rate(b2) <= rate(b1). A constant candidate is an elaborating false neighbor for strict decrease, while an identity candidate gives a strict nontrivial model with rate(1) < rate(0).
+This Prop uses CAS strategies Finset Gamma, finiteSelectionSupplement, and finiteSelectionCost(S) = sum d in S, c(d). Candidate costs and b1 are nonnegative, so the empty selection has cost zero and is feasible; b1 <= b2 gives the displayed antitone direction. Every budgetedEscapeRate occurrence names q, the supplement, T, the summed cost, countingWeight, and its budget. Here countingWeight is the concrete Lean weight mass(A) = ncard(A), under Finite X; finite-set membership equality is chosen internally. The empty selection proves feasibility at b1, and the generic budget theorem then gives the non-strict direction rate(b2) <= rate(b1). A constant candidate is an elaborating false neighbor for strict decrease, while an identity candidate gives a strict nontrivial model with rate(1) < rate(0).
 
 ## References
 
