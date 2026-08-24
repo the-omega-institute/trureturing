@@ -100,31 +100,6 @@ jobs:
   #   **已知的作用域限制**:本 job 跑在 `schedule` 事件下,而 C 门要用的核验发生在
   #   `pull_request_target` 下。两者的配额桶是否同一个,正是本探测要回答的问题之一 ——
   #   读数里的 `X-RateLimit-Resource` 会说明它是按什么维度计的。**在读到之前不得假定相同。**
-  provenance-quota-probe:
-    name: Provenance metadata quota probe (advisory)
-    runs-on: ubuntu-24.04-arm
-    timeout-minutes: 5
-    permissions:
-      contents: read
-      actions: read
-    steps:
-      - name: Read the three provenance endpoints and report quota headers
-        shell: bash
-        env:
-          GH_TOKEN: ${{ github.token }}
-          PROBE_TAG: lean-cache-v1-leanprover-lean4-v4-31-0-48f4d997eea4b051-7dd0b520f77c6fe4
-          PROBE_RUN: "32623880219"
-        run: |
-          set -euo pipefail
-          echo "PROBE release-by-tag"
-          gh api --include "repos/${GITHUB_REPOSITORY}/releases/tags/${PROBE_TAG}" > /dev/null
-          echo "PROBE workflow-by-path"
-          gh api --include "repos/${GITHUB_REPOSITORY}/actions/workflows/lean-cache-publish.yml" > /dev/null
-          echo "PROBE run-by-id"
-          gh api --include "repos/${GITHUB_REPOSITORY}/actions/runs/${PROBE_RUN}" > /dev/null
-          echo "PROBE rate-limit-summary"
-          gh api rate_limit
-
   publish:
     name: Publish the Lean build cache
     # 这一条防的是**仓库配置漂移**，不是分支选择的 workflow 代码。
