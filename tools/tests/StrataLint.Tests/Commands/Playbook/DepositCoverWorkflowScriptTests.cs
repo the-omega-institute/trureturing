@@ -383,10 +383,8 @@ public sealed partial class DepositCoverWorkflowScriptTests
                 "dotnet:align-scribe-receipt",
             ],
             fixture.CallKinds());
-        Assert.Contains("aligned: covered", File.ReadAllText(
-            Path.Combine(fixture.Root, TransactionFixture.BackfillPath)), StringComparison.Ordinal);
-        Assert.Equal("emission: open\n", File.ReadAllText(
-            Path.Combine(fixture.Root, TransactionFixture.EmissionPath)));
+        Assert.Contains("aligned: covered", fixture.BackfillContents(), StringComparison.Ordinal);
+        Assert.Equal("emission: open\n", fixture.EmissionContents());
         Assert.Empty(fixture.Status());
     }
 
@@ -443,6 +441,10 @@ public sealed partial class DepositCoverWorkflowScriptTests
         internal string Root { get; }
 
         internal string ReceiptPath => Path.Combine(Root, ReceiptRelativePath);
+
+        internal string BackfillContents() => File.ReadAllText(Path.Combine(Root, BackfillPath));
+
+        internal string EmissionContents() => File.ReadAllText(Path.Combine(Root, EmissionPath));
 
         internal void ChangeFormalization()
         {
