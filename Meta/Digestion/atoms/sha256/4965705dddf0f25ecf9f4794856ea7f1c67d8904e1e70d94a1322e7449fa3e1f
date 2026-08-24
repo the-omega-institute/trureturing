@@ -1,0 +1,42 @@
+## 50.5 定向算子与 Hume 边界
+
+给定目的 \(G\)，定义可准入目标集
+
+\[
+\operatorname{AdmTarget}(G) := \{T:\operatorname{Eligible}(T,G)\}.
+\]
+
+定向关系不由 \(G\) 自生，而消费外生只读规范包
+
+\[
+\operatorname{OrientationSpec}_G := (\preceq_G,\operatorname{Source},\operatorname{Version},\operatorname{Scope},\operatorname{PreorderProof}).
+\]
+
+其中 \(\operatorname{PreorderProof}\) 证明 \(\preceq_G\) 在声明范围内为预序。
+
+\[
+D_G:=\operatorname{AdmTarget}(G)\cap\operatorname{Scope}(\operatorname{OrientationSpec}_G),
+\qquad
+\operatorname{PreorderProof}:\operatorname{Preorder}(\preceq_G\!\upharpoonright_{D_G}).
+\]
+
+因此关系在 \(D_G\) 外不提供比较事实；\(\operatorname{Scope}\) 是反身律、传递律与关系闭包的共同前件，不是未消费的元数据。定义定向算子为该规范包的投影
+
+\[
+\boxed{
+\operatorname{Orient}_G(\operatorname{OrientationSpec}_G) := \preceq_G.
+}
+\]
+
+它只在外生且只读的 \(G\) 诱导的可准入集合内排序，不从记录中创造 \(G\)，也不把 \(G\) 改写成事实命题。
+
+本部借用目的—手段区分、需求追溯与变更控制的已知形状，并保留 Hume 边界：从事实相容族到终极目的不存在由本文定义出的无参数规范映射。任何
+
+\[
+\operatorname{Fact}_{\mathcal O}\to G
+\]
+
+都必须显式携带额外规范前件、授权或价值来源。
+
+---
+

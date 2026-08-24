@@ -1,0 +1,22 @@
+## 53.1 裁决六元循环
+
+第 39 部定义
+
+\[
+(\mathsf{Define},\mathsf{Observe},\mathsf{Predict}, \mathsf{Compare},\mathsf{Revise},\mathsf{Reflect}).
+\]
+
+为使其可裁决，本部令 \(\mathsf{Define}\) 先产生带预测、行动或模型分量的有限有类型候选束，再由 \(\mathsf{Commit}\) 把选定对象连同目标、范围、比较器、计划、基线和权重规范封入承诺：
+
+\[
+\mathsf{Define}:\Sigma_n\to\operatorname{CandidateBundle}_n, \qquad \mathsf{Commit}:\operatorname{CandidateBundle}_n\to(K_n,\operatorname{Seal}(K_n)).
+\]
+
+\[
+\boxed{
+\Sigma_n\xrightarrow{\mathsf{Define}}\operatorname{CandidateBundle}_n\xrightarrow{\mathsf{Commit}}K_n\xrightarrow{\mathsf{Observe}}Z_n\xrightarrow{\mathsf{Compare}}\operatorname{Verdict}_n\xrightarrow{\mathsf{Revise}}\Sigma_{n+1}^{-}\xrightarrow{\mathsf{Reflect}}\Sigma_{n+1}.
+}
+\]
+
+并要求 \(\operatorname{CommittedArtifact}_n\subseteq\operatorname{CandidateBundle}_n\)，且 \(\operatorname{Seal}(K_n)\) 保存整个 \(K_n\)、冻结事件号与 \(\operatorname{Dep}^*(K_n)\)，其摘要以这三者为完整输入。故同一冻结号和同一有限子束若带有不同坐标或依赖闭包，也不能复用同一 Seal。该包含关系是 \(\mathsf{Commit}\) 的输出定律，不是下游证明者可另行选择的谓词。这不是删除预测；预测从可随时变化的中间动作变成承诺 \(K_n\) 的冻结字段，且不能在观察 \(Z_n\) 后从表外补入。
+

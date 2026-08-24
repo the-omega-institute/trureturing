@@ -1,0 +1,44 @@
+## 53.2 单轮状态转换
+
+令 \(s_n\) 为第 \(n\) 轮 \(\mathsf{Define}\) 开始前的最后事件号。以 \(s_n\) 的事件前缀而非整轮最终日志接入内涵账本：
+
+\[
+\mathcal L_n:=\mathcal L_{\mathrm{source},\preceq s_n}\sqcup\mathcal L_{\mathrm{role},\preceq s_n}.
+\]
+
+定义轮状态
+
+\[
+\Sigma_n = (S_n,\mathcal F_{s_n},\mathcal L_{\mathrm{source},\preceq s_n}\sqcup\mathcal L_{\mathrm{role},\preceq s_n},\mathcal R_n).
+\]
+
+其中 \(s_n<t_n\le d_n\)：\(s_n\) 固定 Define 输入，\(t_n\) 固定 Commit，\(d_n\) 固定 Compare 所消费的裁决快照。旧轮结算保存 \((K_n,\mathcal L_{\mathrm{role},\preceq d_n})\) 的内容地址；后续只在尾部追加更大事件号，不能把同轮 Define 之后或下一轮事件回填进 \(\Sigma_n\) 或旧裁决。
+
+各步为：
+
+\[
+\mathsf{Define}(\Sigma_n) = \operatorname{CandidateBundle}_n\text{，依据旧残差 }\mathcal R_n\text{ 产生候选与问题版本};
+\]
+
+\[
+\mathsf{Commit}(\operatorname{CandidateBundle}_n) = (K_n,\operatorname{Seal}(K_n));
+\]
+
+\[
+\mathsf{Observe}(w,\operatorname{TestPlan}_n) = Z_n;
+\]
+
+\[
+\mathsf{Compare}(K_n,Z_n) = \operatorname{Verdict}_n;
+\]
+
+\[
+\mathsf{Revise}(S_n,\operatorname{Verdict}_n) = (S_{n+1}^{-},K_{n+1}^{\mathrm{proposal}});
+\]
+
+\[
+\mathsf{Reflect}(S_{n+1}^{-}) = S_{n+1}.
+\]
+
+其中 \(K_{n+1}^{\mathrm{proposal}}\) 尚不是已冻结承诺；下一轮只有在新的 Commit 事件后才获得裁决坐标。
+

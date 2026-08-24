@@ -1,0 +1,56 @@
+## 51.4 越权主张与重新打开
+
+令运输报告 \(q=(c,J',\Gamma_q)\)，其中 \(\Gamma_q\) 是报告保留的条件。定义有许可证报告
+
+\[
+\begin{aligned}
+\operatorname{LicensedReport}(q;J,J')
+\Longleftrightarrow
+\exists\kappa,\ {}
+&\operatorname{ValidTransportCert}
+(\kappa,c;J,J',\operatorname{Version}(c))
+\\
+&\wedge\
+\bigl(\Gamma_q\Longleftrightarrow
+\operatorname{GivenPremises}(\kappa)
+\wedge\kappa.\operatorname{TransportAssumption}\bigr).
+\end{aligned}
+\]
+
+因此无条件报告取 \(\Gamma_q=\top\) 时，必须同时给出全部前件与运输假设的证明；前件未证时，报告只能原样保留该合取作为条件。定义越权普遍化
+
+\[
+\boxed{
+\operatorname{Overreach}(q;J,J')
+\Longleftrightarrow
+J\subsetneq J'
+\ \wedge\ \operatorname{Scope}(c)=J
+\ \wedge\ q\text{ 被报告为覆盖 }J'
+\ \wedge\ \neg\operatorname{LicensedReport}(q;J,J').
+}
+\]
+
+旧域相符
+
+\[
+S\models_{J,\varepsilon}w
+\]
+
+一般不蕴含
+
+\[
+S\models_{J',\varepsilon}w.
+\]
+
+条件反例骨架：只要 \(J'\setminus J\neq\varnothing\) 且记录空间允许在新操作上出现超过 \(\varepsilon\) 的偏差，就可保持 \(J\) 上全部读数不变而使 \(J'\) 上失败。
+
+所以扩域必须重新打开第 43 部的局部完成：
+
+\[
+\boxed{
+\operatorname{Closed}_{J}(S,T)\not\Rightarrow \operatorname{Closed}_{J'}(S,T).
+}
+\]
+
+若有运输证书及其全部前件，才可去条件化；否则只能建立并按原条件报告特定的条件运输定理。
+

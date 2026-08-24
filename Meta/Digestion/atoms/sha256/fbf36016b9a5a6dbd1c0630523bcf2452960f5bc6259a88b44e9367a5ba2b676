@@ -1,0 +1,20 @@
+## 51.5 已知形状与时域特例
+
+本部借用 external validity、transportability、分布迁移和契约作用域的已知形状，不主张首创。DECT 的工作是把它们写成核差、范围化真理记录与可失败证书之间的接口。
+
+第 8 部的时域扩张是本结构的特例。令
+
+\[
+J_N:=\{0,1,\ldots,N\}, \qquad P_{J_N}(x):=(q(\tau^k x))_{k\le N},
+\]
+
+则对 \(N<N'\)，
+
+\[
+\mathcal E_{\mathrm{expand}}(P;J_N,J_{N'}) = \ker T_N\setminus\ker T_{N'}.
+\]
+
+它正是旧时域尚未分离、延长时域后首次暴露的预测逃逸对。
+
+---
+
