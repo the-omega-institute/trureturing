@@ -114,7 +114,8 @@ public sealed class EmitFormalizationReceiptTests
 
         Assert.True(result.Success, result.Error);
         var relativeOut = "Meta/Digestion/formalizations/" + CoverWorld.DefaultAtomId + ".v1.json";
-        using var document = JsonDocument.Parse(File.ReadAllBytes(Path.Combine(temporary.Path, relativeOut)));
+        using var document = JsonDocument.Parse(
+            TemporaryFileSystem.File.ReadAllBytes(Path.Combine(temporary.Path, relativeOut)));
         var root = document.RootElement;
         Assert.Equal(inputs.Gid, root.GetProperty("primary_gid").GetString());
         var extension = Assert.Single(root.GetProperty("hosted_extensions").EnumerateArray());
@@ -147,7 +148,8 @@ public sealed class EmitFormalizationReceiptTests
         Assert.True(result.Success, result.Error);
         var relativeOut = "Meta/Digestion/formalizations/" + CoverWorld.DefaultAtomId + ".v1.json";
         var receipt = DigestionFormalizationReceipt.Load(
-            DigestionTestSupport.Snapshot((relativeOut, File.ReadAllBytes(Path.Combine(temporary.Path, relativeOut)))),
+            DigestionTestSupport.Snapshot((relativeOut,
+                TemporaryFileSystem.File.ReadAllBytes(Path.Combine(temporary.Path, relativeOut)))),
             relativeOut);
         Assert.Equal(inputs.Gid, receipt.PrimaryGid);
         var extension = Assert.Single(receipt.HostedExtensions);
@@ -176,7 +178,8 @@ public sealed class EmitFormalizationReceiptTests
         Assert.True(result.Success, result.Error);
         var relativeOut = "Meta/Digestion/formalizations/" + CoverWorld.DefaultAtomId + ".v1.json";
         var receipt = DigestionFormalizationReceipt.Load(
-            DigestionTestSupport.Snapshot((relativeOut, File.ReadAllBytes(Path.Combine(temporary.Path, relativeOut)))),
+            DigestionTestSupport.Snapshot((relativeOut,
+                TemporaryFileSystem.File.ReadAllBytes(Path.Combine(temporary.Path, relativeOut)))),
             relativeOut);
         Assert.Equal(inputs.Gid, receipt.PrimaryGid);
         var extension = Assert.Single(receipt.HostedExtensions);
@@ -346,5 +349,13 @@ public sealed class EmitFormalizationReceiptTests
                 CoverWorld.Raw(directoryInputs.Files),
                 CoverWorld.Raw(directoryInputs.Baseline)),
             new FakeLeanReportSource(directoryInputs.Report));
+    }
+
+    private static class TemporaryFileSystem
+    {
+        internal static class File
+        {
+            internal static byte[] ReadAllBytes(string path) => System.IO.File.ReadAllBytes(path);
+        }
     }
 }
