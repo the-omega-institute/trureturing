@@ -122,6 +122,69 @@ public sealed partial class ProductionEnvironmentTests
         Assert.Contains("ledger_changed=true", result.Output, StringComparison.Ordinal);
     }
 
+    [Theory]
+    [InlineData("coverage-receipt-mismatch")]
+    [InlineData("scribe-definition-mismatch")]
+    [InlineData("scribe-emission-mismatch")]
+    public void CoverAllowsTouchedBaselineReceiptIntegrityIdentityWhenIdentityIsUnchanged(
+        string mismatchCode)
+    {
+        var inputs = ReceiptIntegrityInputs(
+            CoverSpecForReceiptWriter(),
+            mismatchCode,
+            includeInBaseline: true,
+            touchExistingBadAtom: true);
+        using var temporary = new TemporaryDirectory();
+        DirectoryLedgerTestSupport.Write(temporary.Path, inputs.Files);
+
+        var result = ReceiptIntegrityEnvironment(temporary.Path, inputs)
+            .CoverAtom(CoverArgs(inputs));
+
+        Assert.True(result.Success, result.Error);
+    }
+
+    [Theory]
+    [InlineData("coverage-receipt-mismatch")]
+    [InlineData("scribe-definition-mismatch")]
+    [InlineData("scribe-emission-mismatch")]
+    public void IngestAllowsTouchedBaselineReceiptIntegrityIdentityWhenIdentityIsUnchanged(
+        string mismatchCode)
+    {
+        var inputs = ReceiptIntegrityInputs(
+            CoverSpecForReceiptWriter(),
+            mismatchCode,
+            includeInBaseline: true,
+            touchExistingBadAtom: true);
+        using var temporary = new TemporaryDirectory();
+        DirectoryLedgerTestSupport.Write(temporary.Path, inputs.Files);
+
+        var result = ReceiptIntegrityEnvironment(temporary.Path, inputs)
+            .Ingest(["--base", "baseline"]);
+
+        Assert.True(result.Success, result.Error);
+    }
+
+    [Theory]
+    [InlineData("coverage-receipt-mismatch")]
+    [InlineData("scribe-definition-mismatch")]
+    [InlineData("scribe-emission-mismatch")]
+    public void AlignScribeAllowsTouchedBaselineReceiptIntegrityIdentityWhenIdentityIsUnchanged(
+        string mismatchCode)
+    {
+        var inputs = ReceiptIntegrityInputs(
+            CoverSpecForReceiptWriter(staleTargetReceipt: true),
+            mismatchCode,
+            includeInBaseline: true,
+            touchExistingBadAtom: true);
+        using var temporary = new TemporaryDirectory();
+        DirectoryLedgerTestSupport.Write(temporary.Path, inputs.Files);
+
+        var result = ReceiptIntegrityEnvironment(temporary.Path, inputs).AlignScribeReceipt(
+            ["--atom-id", CoverWorld.DefaultAtomId, "--gid", inputs.Gid, "--base", "baseline"]);
+
+        Assert.True(result.Success, result.Error);
+    }
+
     [Fact]
     public void CoverDoesNotTreatLegalMissingReceiptGapsAsFatal()
     {
@@ -179,17 +242,21 @@ public sealed partial class ProductionEnvironmentTests
     private static CoverInputs ReceiptIntegrityInputs(
         CoverSpec spec,
         string mismatchCode,
-        bool includeInBaseline)
+        bool includeInBaseline,
+        bool touchExistingBadAtom = false)
     {
         var inputs = DirectoryInputs(CoverWorld.Materialize(spec));
-        var candidateDocument = WithReceiptIntegrityMismatch(inputs, inputs.Document, mismatchCode);
+        var baselineMismatchDocument = WithReceiptIntegrityMismatch(inputs, inputs.Document, mismatchCode);
+        var candidateDocument = touchExistingBadAtom
+            ? TouchExistingBadAtom(baselineMismatchDocument)
+            : baselineMismatchDocument;
         var currentFiles = new Dictionary<string, string>(inputs.Files, StringComparer.Ordinal);
         DirectoryLedgerTestSupport.ReplaceWithProjection(currentFiles, candidateDocument);
         var baselineFiles = new Dictionary<string, string>(inputs.Baseline, StringComparer.Ordinal);
         if (includeInBaseline)
         {
             var baselineDocument = LoadReceiptIntegrityDocument(baselineFiles);
-            var sibling = candidateDocument.RequireDigestionEntries().Single(static entry =>
+            var sibling = baselineMismatchDocument.RequireDigestionEntries().Single(static entry =>
                 entry.AtomId == "receipt-integrity-sibling");
             baselineDocument = baselineDocument.WithDigestionSources(
                 baselineDocument.RequireDigestionSources()
@@ -206,6 +273,27 @@ public sealed partial class ProductionEnvironmentTests
             Baseline = baselineFiles,
             Document = candidateDocument,
         };
+    }
+
+    private static BackfillInventoryDocument TouchExistingBadAtom(
+        BackfillInventoryDocument document)
+    {
+        var normalized = "sha256:" + new string('d', 64);
+        return document.WithDigestionSources(
+            document.RequireDigestionSources()
+                .Select(source => source with
+                {
+                    Entries = source.Entries.Select(entry => entry.AtomId == "receipt-integrity-sibling"
+                        ? entry with
+                        {
+                            Fingerprints = entry.Fingerprints with
+                            {
+                                NormalizedSha256 = normalized,
+                            },
+                        }
+                        : entry).ToImmutableArray(),
+                })
+                .ToImmutableArray());
     }
 
     private static BackfillInventoryDocument WithReceiptIntegrityMismatch(

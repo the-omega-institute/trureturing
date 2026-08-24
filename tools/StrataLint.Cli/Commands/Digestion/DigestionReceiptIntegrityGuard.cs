@@ -9,17 +9,29 @@ internal static class DigestionReceiptIntegrityGuard
         DigestionLedgerEvaluation evaluation,
         ImmutableHashSet<DigestionReceiptIntegrityGapIdentity>? allowed = null)
     {
+        var structuralFindings = evaluation.Entries.IsEmpty
+            ? evaluation.Findings.Select(static finding => "evaluator finding: " + finding)
+            : [];
         var failures = DigestionReceiptIntegrity.Identities(evaluation)
             .Where(identity => allowed?.Contains(identity) != true)
             .Select(DigestionReceiptIntegrity.Render)
-            .ToArray();
+            .Concat(structuralFindings);
         ThrowIfAny(failures);
     }
 
     internal static void RequireNoNewFailures(
         DigestionLedgerEvaluation before,
-        DigestionLedgerEvaluation candidate) =>
-        ThrowIfAny(DigestionReceiptIntegrity.NewFailureReasons(before, candidate));
+        DigestionLedgerEvaluation candidate,
+        ImmutableHashSet<DigestionReceiptIntegrityGapIdentity>? allowed = null)
+    {
+        var structuralFindings = candidate.Entries.IsEmpty
+            ? candidate.Findings.Select(static finding => "evaluator finding: " + finding)
+            : [];
+        var newFailures = DigestionReceiptIntegrity.NewFailureIdentities(before, candidate)
+            .Where(identity => allowed?.Contains(identity) != true)
+            .Select(DigestionReceiptIntegrity.Render);
+        ThrowIfAny(newFailures.Concat(structuralFindings));
+    }
 
     internal static void RequireExactScribeRepairComplete(
         DigestionLedgerEvaluation evaluation,

@@ -44,6 +44,25 @@ internal static class DigestionReceiptIntegrity
             ? DigestionGapSeverity.ReceiptIntegrityFailure
             : DigestionGapSeverity.NonFatal;
 
+    // Baseline directory parsing intentionally omits the derived genre projection. For a
+    // fork-point receipt comparison, retain the baseline entries but reuse the candidate's
+    // parsed source metadata; deleted sources cannot contribute a candidate-side delta.
+    internal static BackfillInventoryDocument ForkPointView(
+        BackfillInventoryDocument candidate,
+        BackfillInventoryDocument forkPoint)
+    {
+        var candidateSources = candidate.RequireDigestionSources()
+            .ToDictionary(static source => source.SourceId, StringComparer.Ordinal);
+        return forkPoint.WithDigestionSources(
+            forkPoint.RequireDigestionSources()
+                .Where(source => candidateSources.ContainsKey(source.SourceId))
+                .Select(source => source with
+                {
+                    GenreRegistryProjection = candidateSources[source.SourceId].GenreRegistryProjection,
+                })
+                .ToImmutableArray());
+    }
+
     internal static ImmutableArray<DigestionReceiptIntegrityGapIdentity> Identities(
         DigestionLedgerEvaluation evaluation) =>
         Gaps(evaluation)
@@ -66,11 +85,17 @@ internal static class DigestionReceiptIntegrity
     internal static ImmutableArray<string> NewFailureReasons(
         DigestionLedgerEvaluation before,
         DigestionLedgerEvaluation candidate)
+        => NewFailureIdentities(before, candidate)
+            .Select(Render)
+            .ToImmutableArray();
+
+    internal static ImmutableArray<DigestionReceiptIntegrityGapIdentity> NewFailureIdentities(
+        DigestionLedgerEvaluation before,
+        DigestionLedgerEvaluation candidate)
     {
         var baseline = Identities(before).ToHashSet();
         return Identities(candidate)
             .Where(identity => !baseline.Contains(identity))
-            .Select(Render)
             .ToImmutableArray();
     }
 

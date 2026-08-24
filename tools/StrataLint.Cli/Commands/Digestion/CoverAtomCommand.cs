@@ -115,6 +115,18 @@ internal static partial class CoverAtomCommand
                 baselineDocument,
                 baselineSnapshot: baseline,
                 changes: changes);
+            var forkPointDocument = DigestionReceiptIntegrity.ForkPointView(
+                document,
+                baselineDocument);
+            var forkPointEvaluation = DigestionStatusEvaluator.Evaluate(
+                DigestionEvaluationScope.ChangedSet,
+                forkPointDocument,
+                baseline,
+                lean,
+                verifiedScribeEmissions,
+                forkPointDocument,
+                baselineSnapshot: baseline,
+                changes: changes);
             // Gate ②(b): anti-Goodhart — cover may only deposit a declaration that
             // the baseline ledger did not already bind.
             var baselineGids = BaselineCoverageGids(baselineDocument);
@@ -301,7 +313,9 @@ internal static partial class CoverAtomCommand
             // still passes signature-match. That is the separate
             // digestion-fidelity-attestation-v1 / multi-model consensus gate, out of
             // scope for this block.
-            DigestionReceiptIntegrityGuard.RequireNoFailures(forkDeltaEvaluation);
+            DigestionReceiptIntegrityGuard.RequireNoNewFailures(
+                forkPointEvaluation,
+                forkDeltaEvaluation);
             DigestionReceiptIntegrityGuard.RequireNoNewFailures(
                 beforePlannedEvaluation,
                 plannedEvaluation);

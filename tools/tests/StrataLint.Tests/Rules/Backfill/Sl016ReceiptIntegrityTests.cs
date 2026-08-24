@@ -1,10 +1,47 @@
+using System.Collections.Immutable;
 using System.Text;
+using StrataLint.Cli;
 using StrataLint.Engine;
 
 namespace StrataLint.Tests;
 
 public sealed class Sl016ReceiptIntegrityTests
 {
+    [Fact]
+    public void ReceiptIntegrityGuardRejectsEvaluatorStructuralFindingFromDuplicateAtomId()
+    {
+        var fixture = new RuleFixture();
+        fixture.UseValidDirectoryBackfill();
+        const string duplicatePath =
+            "Meta/Digestion/backfill/delta-v0.1/residual-open/delta-atom.yaml";
+        fixture.Files[duplicatePath] = fixture.Files[
+            "Meta/Digestion/backfill/delta-v0.1/partial-closed/delta-atom.yaml"];
+        fixture.Changes.Clear();
+        fixture.Changes.Add(duplicatePath);
+        var context = fixture.Build();
+        var document = BackfillInventoryLoader.Load(context.Current);
+        var baselineDocument = BackfillInventoryLoader.LoadBaseline(context.Baseline);
+        var evaluation = DigestionStatusEvaluator.Evaluate(
+            DigestionEvaluationScope.ChangedSet,
+            document,
+            context.Current,
+            context.Lean,
+            context.VerifiedScribeEmissions,
+            baselineDocument,
+            baselineSnapshot: context.Baseline,
+            changes: context.Changes);
+
+        Assert.Empty(evaluation.Entries);
+        Assert.Contains(
+            evaluation.Findings,
+            finding => finding.Contains("duplicate atom_id: delta-atom", StringComparison.Ordinal));
+
+        var exception = Assert.Throws<InvalidOperationException>(() =>
+            DigestionReceiptIntegrityGuard.RequireNoFailures(evaluation));
+
+        Assert.Contains("duplicate atom_id", exception.Message, StringComparison.Ordinal);
+    }
+
     [Theory]
     [InlineData("coverage-receipt-mismatch")]
     [InlineData("scribe-definition-mismatch")]
@@ -71,6 +108,19 @@ public sealed class Sl016ReceiptIntegrityTests
         Assert.Equal(
             "atom-a:coverage-receipt-mismatch:gid-b",
             Assert.Single(DigestionReceiptIntegrity.NewFailureReasons(existing, worsened)));
+    }
+
+    [Fact]
+    public void ReceiptIntegrityDeltaBlocksSecondIdentityOnTheSameAtom()
+    {
+        var existing = ReceiptEvaluation("gid-a");
+        var candidate = ReceiptEvaluationWithGaps(
+            new DigestionGap("coverage-receipt-mismatch", "gid-a"),
+            new DigestionGap("scribe-definition-mismatch", "gid-b"));
+
+        Assert.Equal(
+            "atom-a:scribe-definition-mismatch:gid-b",
+            Assert.Single(DigestionReceiptIntegrity.NewFailureReasons(existing, candidate)));
     }
 
     [Theory]
@@ -147,6 +197,13 @@ public sealed class Sl016ReceiptIntegrityTests
     ];
 
     private static DigestionLedgerEvaluation ReceiptEvaluation(string? detail = null)
+        => ReceiptEvaluationWithGaps(
+            detail is null
+                ? Array.Empty<DigestionGap>()
+                : [new DigestionGap("coverage-receipt-mismatch", detail)]);
+
+    private static DigestionLedgerEvaluation ReceiptEvaluationWithGaps(
+        params DigestionGap[] gaps)
     {
         var status = new DigestionStatus(
             DigestionMigrationState.Partial,
@@ -170,9 +227,7 @@ public sealed class Sl016ReceiptIntegrityTests
                     DigestionReceiptAlignment.Seen,
                     status,
                     false,
-                    detail is null
-                        ? []
-                        : [new DigestionGap("coverage-receipt-mismatch", detail)]),
+                    gaps.ToImmutableArray()),
             ],
             []);
     }

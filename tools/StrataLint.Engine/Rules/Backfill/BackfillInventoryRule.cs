@@ -364,6 +364,7 @@ internal static class BackfillInventoryRule
 
         try
         {
+            var baselineDocument = LoadBaselineDocument(context.Baseline);
             var evaluation = DigestionStatusEvaluator.Evaluate(
                 context.Changes is null
                     ? DigestionEvaluationScope.FullScan
@@ -372,7 +373,7 @@ internal static class BackfillInventoryRule
                 context.Current,
                 context.Lean,
                 context.VerifiedScribeEmissions,
-                LoadBaselineDocument(context.Baseline),
+                baselineDocument,
                 baselineSnapshot: context.Baseline,
                 casEvaluation: casEvaluation,
                 changes: context.Changes,
@@ -390,9 +391,25 @@ internal static class BackfillInventoryRule
             }
 
             var receiptIdentities = DigestionReceiptIntegrity.Identities(evaluation);
-            var blockingReceiptIdentities = context.Changes is not null
-                ? receiptIdentities.ToImmutableHashSet()
-                : CandidateReceiptIntegrityIdentities(context, document);
+            var forkPointDocument = DigestionReceiptIntegrity.ForkPointView(
+                document,
+                baselineDocument);
+            var forkPointEvaluation = DigestionStatusEvaluator.Evaluate(
+                context.Changes is null
+                    ? DigestionEvaluationScope.FullScan
+                    : DigestionEvaluationScope.ChangedSet,
+                forkPointDocument,
+                context.Baseline,
+                context.Lean,
+                context.VerifiedScribeEmissions,
+                forkPointDocument,
+                baselineSnapshot: context.Baseline,
+                changes: context.Changes,
+                isBaseFactAffected: context.IsBaseFactAffected);
+            var blockingReceiptIdentities = DigestionReceiptIntegrity.NewFailureIdentities(
+                    forkPointEvaluation,
+                    evaluation)
+                .ToImmutableHashSet();
             foreach (var identity in receiptIdentities)
             {
                 findings.Add(new RuleFinding(
@@ -407,39 +424,6 @@ internal static class BackfillInventoryRule
         {
             findings.Add(new RuleFinding(BackfillPath, exception.Message));
         }
-    }
-
-    private static ImmutableHashSet<DigestionReceiptIntegrityGapIdentity>
-        CandidateReceiptIntegrityIdentities(
-            BackfillInventoryValidationContext context,
-            BackfillInventoryDocument document)
-    {
-        if (context.CandidateChanges is null)
-        {
-            return [];
-        }
-
-        bool IsCandidateFactAffected(string path) =>
-            BaseFactImpact.IsAffected(
-                context.CandidateChanges,
-                ruleImplementationChanged: false,
-                path);
-        var evaluation = DigestionStatusEvaluator.Evaluate(
-            DigestionEvaluationScope.ChangedSet,
-            document,
-            context.Current,
-            context.Lean,
-            context.VerifiedScribeEmissions,
-            LoadBaselineDocument(context.Baseline),
-            baselineSnapshot: context.Baseline,
-            casEvaluation: DigestionCasStore.Evaluate(
-                document,
-                context.Current,
-                context.CandidateChanges,
-                IsCandidateFactAffected),
-            changes: context.CandidateChanges,
-            isBaseFactAffected: IsCandidateFactAffected);
-        return DigestionReceiptIntegrity.Identities(evaluation).ToImmutableHashSet();
     }
 
     private static BackfillInventoryDocument LoadBaselineDocument(RepositorySnapshot baseline)

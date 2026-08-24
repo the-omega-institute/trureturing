@@ -69,11 +69,24 @@ internal static partial class CoverAtomCommand
             baselineDocument,
             baselineSnapshot: baseline,
             changes: changes);
+        var forkPointDocument = DigestionReceiptIntegrity.ForkPointView(
+            document,
+            baselineDocument);
+        var forkPointEvaluation = DigestionStatusEvaluator.Evaluate(
+            DigestionEvaluationScope.ChangedSet,
+            forkPointDocument,
+            baseline,
+            lean,
+            verified,
+            forkPointDocument,
+            baselineSnapshot: baseline,
+            changes: changes);
         var exactRepairIdentities = DigestionReceiptIntegrity.ExactScribeRepairIdentities(
             forkDeltaEvaluation,
             options.AtomId,
             options.Gid);
-        DigestionReceiptIntegrityGuard.RequireNoFailures(
+        DigestionReceiptIntegrityGuard.RequireNoNewFailures(
+            forkPointEvaluation,
             forkDeltaEvaluation,
             exactRepairIdentities);
         var documentGid = ScribeEmissionAttestation.DocumentGid(options.Gid);
