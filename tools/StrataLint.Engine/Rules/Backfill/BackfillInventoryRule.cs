@@ -390,13 +390,37 @@ internal static class BackfillInventoryRule
             // A rule implementation change forces FullScan, which republishes stored gaps.
             // As with the directory-capacity band, baseline membership makes those findings
             // observable while reserving admission failure for identities absent at the base.
-            var baselineReceiptIntegrityGaps = receiptIntegrityGaps.Length == 0
+            var baselineComparableReceiptIntegrityGaps = receiptIntegrityGaps.Length == 0
                 ? new HashSet<ReceiptIntegrityGapIdentity>()
-                : BaselineReceiptIntegrityGaps(baselineDocument, context.Baseline);
+                : BaselineComparableReceiptIntegrityGaps(baselineDocument, context.Baseline);
             foreach (var (entry, gap) in receiptIntegrityGaps)
             {
                 var identity = GapIdentity(entry, gap);
-                if (baselineReceiptIntegrityGaps.Contains(identity))
+                if (gap.Code == "scribe-definition-mismatch")
+                {
+                    // open(issue-2919/scribe-definition-mismatch-baseline-membership): admission
+                    // cannot replay the baseline Scribe verifier. Keep this gap visible without
+                    // making a FullScan self-block; CoverAtom/Ingest still reject it before writes.
+                    findings.Add(new RuleFinding(
+                        BackfillPath,
+                        $"{identity.AtomId}:{identity.Code}:{identity.Detail}",
+                        AdmissionEffect.Observe));
+                    continue;
+                }
+
+                if (gap.Code == "scribe-emission-mismatch")
+                {
+                    // open(issue-2919/scribe-emission-mismatch-baseline-membership): admission
+                    // cannot replay the baseline Scribe verifier. Keep this gap visible without
+                    // making a FullScan self-block; CoverAtom/Ingest still reject it before writes.
+                    findings.Add(new RuleFinding(
+                        BackfillPath,
+                        $"{identity.AtomId}:{identity.Code}:{identity.Detail}",
+                        AdmissionEffect.Observe));
+                    continue;
+                }
+
+                if (baselineComparableReceiptIntegrityGaps.Contains(identity))
                 {
                     findings.Add(new RuleFinding(
                         BackfillPath,
@@ -429,21 +453,18 @@ internal static class BackfillInventoryRule
         DigestionGap gap) =>
         new(entry.AtomId, gap.Code, gap.Detail);
 
-    private static HashSet<ReceiptIntegrityGapIdentity> BaselineReceiptIntegrityGaps(
+    private static HashSet<ReceiptIntegrityGapIdentity> BaselineComparableReceiptIntegrityGaps(
         BackfillInventoryDocument document,
         RepositorySnapshot snapshot)
     {
-        // The only verifier capability in the admission context belongs to the candidate.
-        // Replaying it against baseline bytes can make a candidate Scribe change look like
-        // historical debt, so derive the three receipt-integrity facts from baseline bytes.
+        // Only coverage integrity is independently derivable from each side's snapshot bytes.
+        // The two Scribe codes are intentionally excluded here: their admission behavior is
+        // handled explicitly above, with named open markers and Observe-only effects.
         var gaps = new HashSet<ReceiptIntegrityGapIdentity>();
         foreach (var entry in document.RequireDigestionEntries())
         {
             var coverageReceipts = FirstReceiptByGid(
                 entry.Receipts.Coverage,
-                static receipt => receipt.Gid);
-            var scribeReceipts = FirstReceiptByGid(
-                entry.Receipts.Scribe,
                 static receipt => receipt.Gid);
             foreach (var gid in entry.CoverageGids.Distinct(StringComparer.Ordinal))
             {
@@ -455,32 +476,6 @@ internal static class BackfillInventoryRule
                     gaps.Add(new ReceiptIntegrityGapIdentity(
                         entry.AtomId,
                         "coverage-receipt-mismatch",
-                        gid));
-                }
-
-                if (!scribeReceipts.TryGetValue(gid, out var scribe))
-                {
-                    continue;
-                }
-
-                var documentGid = ScribeEmissionAttestation.DocumentGid(gid);
-                var definitionPath = ScribeEmissionAttestation.DefinitionPath(documentGid);
-                if (snapshot.TryGetFile(definitionPath, out _)
-                    && !SnapshotFileMatches(snapshot, definitionPath, scribe.DefinitionSha256))
-                {
-                    gaps.Add(new ReceiptIntegrityGapIdentity(
-                        entry.AtomId,
-                        "scribe-definition-mismatch",
-                        gid));
-                }
-
-                var emissionPath = ScribeEmissionAttestation.EmissionPath(documentGid);
-                if (snapshot.TryGetFile(emissionPath, out _)
-                    && !SnapshotFileMatches(snapshot, emissionPath, scribe.EmissionSha256))
-                {
-                    gaps.Add(new ReceiptIntegrityGapIdentity(
-                        entry.AtomId,
-                        "scribe-emission-mismatch",
                         gid));
                 }
             }
