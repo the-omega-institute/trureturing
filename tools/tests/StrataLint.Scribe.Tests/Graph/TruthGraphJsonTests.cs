@@ -325,15 +325,20 @@ public sealed class TruthGraphJsonTests
     [Fact]
     public void EmptyAndSingleNodeGraphsRoundTrip()
     {
-        var empty = Build([], new Dictionary<string, LeanFileReport>(StringComparer.Ordinal));
-        var single = Build(
+        var empty = Build(
             [new KeyValuePair<string, string>("Meta/only.txt", "one\n")],
             new Dictionary<string, LeanFileReport>(StringComparer.Ordinal));
+        var single = Build(
+            [new KeyValuePair<string, string>("D5/S0/Carrier/Only.lean", "def only : Nat := 0\n")],
+            new Dictionary<string, LeanFileReport>(StringComparer.Ordinal)
+            {
+                ["D5/S0/Carrier/Only.lean"] = Report(),
+            });
 
         Assert.Empty(TruthGraphJsonReader.Read(TruthGraphJsonWriter.Write(TruthGraphModelBuilder.Create(empty, Provenance)).AsSpan()).Truth.Nodes);
         var node = Assert.Single(TruthGraphJsonReader.Read(TruthGraphJsonWriter.Write(TruthGraphModelBuilder.Create(single, Provenance)).AsSpan()).Truth.Nodes);
-        Assert.Null(node.ModuleName);
-        Assert.Equal("semantic", node.State);
+        Assert.Equal("D5.S0.Carrier.Only", node.ModuleName);
+        Assert.Equal("closed", node.State);
         Assert.Equal(0, node.Depth);
     }
 

@@ -75,7 +75,7 @@ public sealed partial class CoverAtomTests
     }
 
     [Fact]
-    public void AlignScribeReceiptIgnoresSiblingDriftAndPreservesSiblingEntry()
+    public void AlignScribeReceiptRejectsSiblingStatusDriftBeforeWritingLedger()
     {
         var spec = CoverWorld.StaleReceiptSpec() with
         {
@@ -85,14 +85,13 @@ public sealed partial class CoverAtomTests
         var currentFiles = DirectoryLedgerTestSupport.Project(inputs.Files);
         using var temporary = new TemporaryDirectory();
         DirectoryLedgerTestSupport.Write(temporary.Path, currentFiles);
+        var before = DirectoryLedgerTestSupport.Image(BackfillInventoryLoader.LoadRoot(temporary.Path));
         var result = CoverWorld.Environment(temporary.Path, inputs, currentFiles)
             .AlignScribeReceipt(CoverWorld.AlignArgs(inputs));
-
-        Assert.True(result.Success, result.Error);
-        Assert.True(inputs.VerifiedEmissions!.TryGet(
-            inputs.Gid[..inputs.Gid.LastIndexOf('.')], out var verifiedRecord));
-        Assert.Equal(
-            ExpectedAlignedScribeImage(inputs, verifiedRecord),
+        Assert.False(result.Success);
+        Assert.Contains("digest status is invalid", result.Error, StringComparison.Ordinal);
+        Assert.Contains("drifted-sibling", result.Error, StringComparison.Ordinal);
+        Assert.Equal(before,
             DirectoryLedgerTestSupport.Image(BackfillInventoryLoader.LoadRoot(temporary.Path)));
     }
 
@@ -196,7 +195,7 @@ public sealed partial class CoverAtomTests
     }
 
     [Fact]
-    public void CoverRejectsDeclarationAbsentFromLeanReport()
+    public void CoverRejectsDeclarationAbsentFromLeanReportWithoutBlamingTheNonFatalGap()
     {
         var (result, after, before, _) = Execute(new CoverSpec
         {
@@ -204,7 +203,8 @@ public sealed partial class CoverAtomTests
         });
 
         Assert.False(result.Success);
-        Assert.Contains("target-declaration-missing", result.Error, StringComparison.Ordinal);
+        Assert.Contains("coverage-receipt-mismatch", result.Error, StringComparison.Ordinal);
+        Assert.DoesNotContain("target-declaration-missing", result.Error, StringComparison.Ordinal);
         Assert.Equal(before, after);
     }
 
@@ -796,5 +796,4 @@ internal static partial class CoverWorld
             .OrderBy(static extension => extension.Gid, StringComparer.Ordinal)
             .ToImmutableArray();
     }
-
 }

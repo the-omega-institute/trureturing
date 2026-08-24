@@ -15,12 +15,11 @@ public sealed class CoverageLedgerIndexTests
             LeanClosureValidator.Validate(
                 snapshot,
                 LeanAxiomReport.Create(new Dictionary<string, LeanFileReport>()))).Capability;
-        var dag = Assert.IsType<DagBuildOutcome.Accepted>(
-            AcyclicTruthDag.Build(snapshot, lean)).Capability;
+        var states = LeanTruthStates.Resolve(snapshot, lean);
         Assert.True(RepoPath.TryCreate("D5/S0/Carrier/Missing.lean", out var missing));
 
         var exception = Assert.Throws<InvalidOperationException>(() =>
-            CoverageLedgerIndex.FromDag(dag, [missing]));
+            CoverageLedgerIndex.FromStates(states, [missing], snapshot));
 
         Assert.Contains("absent from TruthDAG", exception.Message, StringComparison.Ordinal);
     }

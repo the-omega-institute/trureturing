@@ -92,6 +92,20 @@ public sealed class TruthReleaseCommandTests
         Assert.Empty(Directory.EnumerateFiles(output.Path));
     }
 
+    [Fact]
+    public void ReceiptIntegrityFailureFailsClosedWithoutWritingABundle()
+    {
+        using var fixture = Fixture.Create(receiptIntegrityMismatch: true);
+        using var output = new TemporaryDirectory();
+
+        var (exitCode, console) = Run(fixture, output.Path, GreenTrustArguments());
+
+        Assert.Equal(2, exitCode);
+        Assert.Contains("TRUTH_RELEASE_INVALID", console.Error, StringComparison.Ordinal);
+        Assert.Contains("coverage-receipt-mismatch", console.Error, StringComparison.Ordinal);
+        Assert.Empty(Directory.GetFileSystemEntries(output.Path));
+    }
+
     private static (int ExitCode, BufferedConsole Console) Run(
         Fixture fixture,
         string outputDirectory,
@@ -122,7 +136,7 @@ public sealed class TruthReleaseCommandTests
         "--required-check", "Content-addressed dev baseline admission=success",
     ];
 
-    private static Fixture CreateFixture()
+    private static Fixture CreateFixture(bool receiptIntegrityMismatch = false)
     {
         var repositoryRoot = TestRepositoryLayout.FindRoot();
         var blueprintSourcePath = $"Blueprint/{BlueprintGid}.scribe.cs";
@@ -168,6 +182,10 @@ public sealed class TruthReleaseCommandTests
                 ["D5.S0.Carrier.Dependency"],
                 [Declaration("golden_spectral_marker")]),
         };
+        if (receiptIntegrityMismatch)
+        {
+            AddReceiptIntegrityMismatch(files);
+        }
         var snapshotWithoutLedger = Decode(files);
         var report = LeanAxiomReport.Create(reports);
         var lean = Assert.IsType<LeanValidationOutcome.Accepted>(
@@ -209,7 +227,6 @@ public sealed class TruthReleaseCommandTests
             FrozenContentAddress.Build(
                 snapshotWithoutLedger,
                 lean,
-                dag,
                 realEnvironment,
                 realAttestations)).Capability;
         var ledgerBytes = FrozenLedgerGenerator.GenerateGenesis(
@@ -257,6 +274,45 @@ public sealed class TruthReleaseCommandTests
             sourceTree,
             ledgerView.EventSetRoot(),
             ledgerView.EventCount);
+    }
+
+    private static void AddReceiptIntegrityMismatch(IDictionary<string, string> files)
+    {
+        const string sourcePath = "docs/fixture.md";
+        const string sourceText = "x";
+        var sourceBytes = Encoding.UTF8.GetBytes(sourceText);
+        var fingerprints = DigestionFingerprint.Compute(sourceBytes);
+        var captured = DigestionCasStore.Capture(sourceBytes);
+        var status = new DigestionStatus(
+            DigestionMigrationState.Partial,
+            DigestionTruthState.Closed);
+        var entry = new DigestionLedgerEntry(
+            "fixture-source",
+            sourcePath,
+            AtomizerRegistry.NoAtomizerId,
+            "receipt-mismatch",
+            "manual/fixture",
+            new DigestionBoundary("manual/fixture", 0, sourceBytes.Length),
+            fingerprints,
+            [BlueprintGid + ".golden_spectral_marker"],
+            new DigestionReceipts(
+            [
+                new DigestionCoverageReceipt(
+                    BlueprintGid + ".golden_spectral_marker",
+                    fingerprints.RawSha256,
+                    "sha256:" + new string('0', 64)),
+            ], [], [], [], null),
+            status,
+            captured.Reference);
+        var document = DigestionTestSupport.Document(
+            AtomizerRegistry.NoAtomizerId,
+            [entry],
+            "fixture-source",
+            sourcePath,
+            GenreRegistryCheck.NoGenreRegistry);
+        files[sourcePath] = sourceText;
+        files[captured.RelativePath] = sourceText;
+        DirectoryLedgerTestSupport.ReplaceWithProjection(files, document);
     }
 
     private static LeanDeclaration Declaration(string name) => new(
@@ -358,6 +414,9 @@ public sealed class TruthReleaseCommandTests
         string frozenLedgerHeadHash,
         int frozenLedgerSequence) : IDisposable
     {
+        internal static Fixture Create(bool receiptIntegrityMismatch = false) =>
+            CreateFixture(receiptIntegrityMismatch);
+
         internal ProductionCliEnvironment Environment { get; } = environment;
 
         internal GitRepositoryGateway Gateway { get; } = gateway;

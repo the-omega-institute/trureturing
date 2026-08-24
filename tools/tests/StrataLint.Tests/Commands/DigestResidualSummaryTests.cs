@@ -213,6 +213,9 @@ public sealed class DigestResidualSummaryTests
             DigestionReceiptAlignment.Seen,
             status,
             false,
-            gaps.Select(static gap => new DigestionGap(gap.Code, gap.Detail)).ToImmutableArray());
+            gaps.Select(static gap => new DigestionGap(
+                gap.Code,
+                gap.Detail,
+                DigestionGapSeverity.NonFatal)).ToImmutableArray());
     }
 }

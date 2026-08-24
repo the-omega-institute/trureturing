@@ -70,7 +70,7 @@ internal static class LeanMissingBuildProvisioner
                     "cp",
                     ["-R", source, staged],
                     worktreeRoot,
-                    LeanCacheProvisioner.CommandBudget);
+                    LeanCacheProvisioner.DirectoryCopyBudgetFor(worktreeRoot));
             }
             catch (Exception exception)
             {

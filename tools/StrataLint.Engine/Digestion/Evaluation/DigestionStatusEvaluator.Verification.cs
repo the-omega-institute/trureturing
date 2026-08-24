@@ -15,7 +15,10 @@ internal static partial class DigestionStatusEvaluator
             || !DigestionFingerprint.IsCanonicalSha256(entry.Fingerprints.NormalizedSha256))
         {
             findings.Add($"entry {entry.AtomId} fingerprints must use canonical sha256:<64 lowercase hex>");
-            gaps.Add(new DigestionGap("fingerprint-invalid", entry.AtomId));
+            gaps.Add(new DigestionGap(
+                "fingerprint-invalid",
+                entry.AtomId,
+                DigestionGapSeverity.NonFatal));
             return false;
         }
 
@@ -24,10 +27,16 @@ internal static partial class DigestionStatusEvaluator
             case DigestionReceiptAlignment.Seen:
                 return true;
             case DigestionReceiptAlignment.Stale:
-                gaps.Add(new DigestionGap("stale-receipt-not-deletable", entry.AstPath));
+                gaps.Add(new DigestionGap(
+                    "stale-receipt-not-deletable",
+                    entry.AstPath,
+                    DigestionGapSeverity.NonFatal));
                 return false;
             default:
-                gaps.Add(new DigestionGap("structural-alignment-rejected", entry.AstPath));
+                gaps.Add(new DigestionGap(
+                    "structural-alignment-rejected",
+                    entry.AstPath,
+                    DigestionGapSeverity.NonFatal));
                 return false;
         }
     }
@@ -50,7 +59,10 @@ internal static partial class DigestionStatusEvaluator
         var boundary = entry.Boundary;
         if (boundary is null)
         {
-            gaps.Add(new DigestionGap("boundary-not-reproducible", entry.AstPath));
+            gaps.Add(new DigestionGap(
+                "boundary-not-reproducible",
+                entry.AstPath,
+                DigestionGapSeverity.NonFatal));
             return false;
         }
 
@@ -63,13 +75,19 @@ internal static partial class DigestionStatusEvaluator
             || !DigestionFingerprint.IsCanonicalSha256(entry.Fingerprints.NormalizedSha256))
         {
             findings.Add($"entry {entry.AtomId} fingerprints must use canonical sha256:<64 lowercase hex>");
-            gaps.Add(new DigestionGap("fingerprint-invalid", entry.AtomId));
+            gaps.Add(new DigestionGap(
+                "fingerprint-invalid",
+                entry.AtomId,
+                DigestionGapSeverity.NonFatal));
             return false;
         }
 
         if (!snapshot.TryGetFile(entry.SourcePath, out var source))
         {
-            gaps.Add(new DigestionGap("source-missing", entry.SourcePath));
+            gaps.Add(new DigestionGap(
+                "source-missing",
+                entry.SourcePath,
+                DigestionGapSeverity.NonFatal));
             return false;
         }
 
@@ -79,7 +97,10 @@ internal static partial class DigestionStatusEvaluator
         {
             findings.Add(
                 $"entry {entry.AtomId} byte span is outside {entry.SourcePath}; run make ingest");
-            gaps.Add(new DigestionGap("boundary-span-invalid", boundary.AstPath));
+            gaps.Add(new DigestionGap(
+                "boundary-span-invalid",
+                boundary.AstPath,
+                DigestionGapSeverity.NonFatal));
             return false;
         }
 
@@ -94,7 +115,10 @@ internal static partial class DigestionStatusEvaluator
             findings.Add(
                 $"entry {entry.AtomId} boundary cuts invalid UTF-8 in {entry.SourcePath}; "
                 + "run make ingest");
-            gaps.Add(new DigestionGap("boundary-not-reproducible", boundary.AstPath));
+            gaps.Add(new DigestionGap(
+                "boundary-not-reproducible",
+                boundary.AstPath,
+                DigestionGapSeverity.NonFatal));
             return false;
         }
 
@@ -103,7 +127,10 @@ internal static partial class DigestionStatusEvaluator
             findings.Add(
                 $"entry {entry.AtomId} fingerprint disagrees with its source byte span; "
                 + "run make ingest");
-            gaps.Add(new DigestionGap("boundary-fingerprint-mismatch", boundary.AstPath));
+            gaps.Add(new DigestionGap(
+                "boundary-fingerprint-mismatch",
+                boundary.AstPath,
+                DigestionGapSeverity.NonFatal));
             return false;
         }
 
@@ -128,7 +155,10 @@ internal static partial class DigestionStatusEvaluator
         }
         catch (FormatException exception)
         {
-            gaps.Add(new DigestionGap("boundary-not-reproducible", exception.Message));
+            gaps.Add(new DigestionGap(
+                "boundary-not-reproducible",
+                exception.Message,
+                DigestionGapSeverity.NonFatal));
             return false;
         }
 
@@ -139,14 +169,20 @@ internal static partial class DigestionStatusEvaluator
         }
         catch (FormatException exception)
         {
-            gaps.Add(new DigestionGap("boundary-not-reproducible", exception.Message));
+            gaps.Add(new DigestionGap(
+                "boundary-not-reproducible",
+                exception.Message,
+                DigestionGapSeverity.NonFatal));
             return false;
         }
         if (atom.StartByte != boundary.StartByte
             || atom.EndByte != boundary.EndByte
             || atom.Fingerprints != entry.Fingerprints)
         {
-            gaps.Add(new DigestionGap("boundary-fingerprint-mismatch", boundary.AstPath));
+            gaps.Add(new DigestionGap(
+                "boundary-fingerprint-mismatch",
+                boundary.AstPath,
+                DigestionGapSeverity.NonFatal));
             return false;
         }
 
@@ -166,7 +202,10 @@ internal static partial class DigestionStatusEvaluator
         {
             if (!receipts.TryGetValue(gid, out var receipt))
             {
-                gaps.Add(new DigestionGap("coverage-receipt-missing", gid));
+                gaps.Add(new DigestionGap(
+                    "coverage-receipt-missing",
+                    gid,
+                    DigestionGapSeverity.NonFatal));
                 complete = false;
                 continue;
             }
@@ -184,7 +223,10 @@ internal static partial class DigestionStatusEvaluator
                 || receipt.SourceSha256 != entry.Fingerprints.RawSha256
                 || receipt.TargetSha256 != DigestionFingerprint.Compute(target.RawBytes.AsSpan()).RawSha256)
             {
-                gaps.Add(new DigestionGap("coverage-receipt-mismatch", gid));
+                gaps.Add(new DigestionGap(
+                    "coverage-receipt-mismatch",
+                    gid,
+                    DigestionGapSeverity.ReceiptIntegrityFailure));
                 complete = false;
             }
         }
@@ -213,7 +255,10 @@ internal static partial class DigestionStatusEvaluator
             var hasReceipt = receipts.TryGetValue(gid, out var receipt);
             if (!hasReceipt)
             {
-                gaps.Add(new DigestionGap("scribe-receipt-missing", gid));
+                gaps.Add(new DigestionGap(
+                    "scribe-receipt-missing",
+                    gid,
+                    DigestionGapSeverity.NonFatal));
                 complete = false;
             }
 
@@ -230,12 +275,18 @@ internal static partial class DigestionStatusEvaluator
             ScribeEmissionRecord? verified = null;
             if (verifiedEmissions is null)
             {
-                gaps.Add(new DigestionGap("scribe-emission-unverified", gid));
+                gaps.Add(new DigestionGap(
+                    "scribe-emission-unverified",
+                    gid,
+                    DigestionGapSeverity.NonFatal));
                 complete = false;
             }
             else if (!verifiedEmissions.TryGet(documentGid, out var verifiedRecord))
             {
-                gaps.Add(new DigestionGap("scribe-emission-missing", gid));
+                gaps.Add(new DigestionGap(
+                    "scribe-emission-missing",
+                    gid,
+                    DigestionGapSeverity.NonFatal));
                 complete = false;
             }
             else
@@ -247,13 +298,19 @@ internal static partial class DigestionStatusEvaluator
                 && verifiedEmissions is not null
                 && !verifiedEmissions.ReferencesDeclaration(gid))
             {
-                gaps.Add(new DigestionGap("scribe-declaration-reference-missing", gid));
+                gaps.Add(new DigestionGap(
+                    "scribe-declaration-reference-missing",
+                    gid,
+                    DigestionGapSeverity.NonFatal));
                 complete = false;
             }
 
             if (!snapshot.TryGetFile(definitionPath, out var definition))
             {
-                gaps.Add(new DigestionGap("scribe-definition-missing", gid));
+                gaps.Add(new DigestionGap(
+                    "scribe-definition-missing",
+                    gid,
+                    DigestionGapSeverity.NonFatal));
                 complete = false;
             }
             else if (hasReceipt
@@ -264,7 +321,10 @@ internal static partial class DigestionStatusEvaluator
                     && (verified.DefinitionPath != definitionPath
                         || verified.DefinitionSha256 != receipt.DefinitionSha256)))
             {
-                gaps.Add(new DigestionGap("scribe-definition-mismatch", gid));
+                gaps.Add(new DigestionGap(
+                    "scribe-definition-mismatch",
+                    gid,
+                    DigestionGapSeverity.ReceiptIntegrityFailure));
                 complete = false;
             }
 
@@ -274,7 +334,10 @@ internal static partial class DigestionStatusEvaluator
                 && (verified.EmissionPath != emissionPath
                     || verified.EmissionSha256 != receipt!.EmissionSha256))
             {
-                gaps.Add(new DigestionGap("scribe-emission-mismatch", gid));
+                gaps.Add(new DigestionGap(
+                    "scribe-emission-mismatch",
+                    gid,
+                    DigestionGapSeverity.ReceiptIntegrityFailure));
                 complete = false;
             }
         }

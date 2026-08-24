@@ -23,6 +23,7 @@ governance_documents:
   - "docs/GOVERNANCE.md"
   - "docs/MISSION.md"
   - "docs/develop/spec/golden-ledger-repo-spec.md"
+  - "docs/develop/theory/RELATIVE_NEGATION_INVOLUTIVE_ESCAPE.md"
 agent_files:
   - "CONTEXT.md"
   - "adversary.md"

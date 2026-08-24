@@ -71,8 +71,15 @@ internal static class TheoryCandidatesCommand
                 static entry => entry.SourceRef,
                 static entry => entry.Kind,
                 StringComparer.Ordinal);
-            var classifiedFrontier = truth.Dag.Nodes
-                .Select(node => (Node: node, Classification: ClassifyFrontier(node, eligibility)))
+            var states = LeanTruthStates.Resolve(truth.Snapshot, truth.Lean);
+            var classifiedFrontier = states
+                .OrderBy(static item => item.Key.Value, StringComparer.Ordinal)
+                .Select(item =>
+                {
+                    RepositoryPathPolicy.TryResolve(item.Key, out var gid);
+                    var node = TruthNode.Create(item.Key, gid, item.Value, moduleName: null);
+                    return (Node: node, Classification: ClassifyFrontier(node, eligibility));
+                })
                 .Where(static item => item.Classification is not (
                     FrontierCandidateClassification.OutsideFrontier
                     or FrontierCandidateClassification.NotOpen))
@@ -118,11 +125,11 @@ internal static class TheoryCandidatesCommand
                     IsBaseFactAffected),
                 changes: changes,
                 isBaseFactAffected: IsBaseFactAffected);
-            if (digestion.Findings.Length > 0)
+            if (digestion.HasReceiptIntegrityFailure)
             {
                 throw new InvalidOperationException(
                     "digestion evaluation rejected the current snapshot: "
-                    + string.Join("; ", digestion.Findings));
+                    + string.Join("; ", digestion.ReceiptIntegrityFailureReasons));
             }
 
             var atomCandidates = digestion.Entries
