@@ -1,0 +1,17 @@
+ast_path: corollary/6.7.3
+fingerprints:
+  raw_sha256: sha256:0884d4b02829495d281259a6cad55a844795c69c1ebabda4ff251c5dbad3646b
+  normalized_sha256: sha256:0884d4b02829495d281259a6cad55a844795c69c1ebabda4ff251c5dbad3646b
+cas_ref: sha256:0884d4b02829495d281259a6cad55a844795c69c1ebabda4ff251c5dbad3646b
+coverage_gids:
+  - D5/S0/Rewriting/SinglePointPatch.update_outside_record_preserves_consistency
+receipts:
+  coverage:
+    - gid: D5/S0/Rewriting/SinglePointPatch.update_outside_record_preserves_consistency
+      source_sha256: sha256:0884d4b02829495d281259a6cad55a844795c69c1ebabda4ff251c5dbad3646b
+      target_sha256: sha256:649b34d1f81115071c185e3809893a0f605846954944c08ec18b19f739b341b6
+  scribe:
+    - gid: D5/S0/Rewriting/SinglePointPatch.update_outside_record_preserves_consistency
+      definition_sha256: sha256:131dc84b07e35b014db3508c163b543f51743fa2798ddb05113c77b45c7fe9f0
+      emission_sha256: sha256:ad5da7a1b8ac68821e4c9238434160d7bac70fdfe35cf22f112f483a1b4b27d3
+  unresolved_subitems: []
