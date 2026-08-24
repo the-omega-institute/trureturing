@@ -29,8 +29,10 @@ internal sealed class OverreachWithoutLicenseDocument : IScribeDocumentDefinitio
                     Paragraph(Text(
                         "ValidTransportCert is an abstract predicate parameter here. Its arguments "
                             + "are the certificate, c, the old and claimed scopes, and Version(c). "
-                            + "The separate certificate-validity module owns that predicate and "
-                            + "can be connected without creating a second validity definition.")),
+                            + "LicensedReport requires NontrivialTransportCert: the predicate must "
+                            + "reject at least one input. Together with the accepted certificate "
+                            + "in a license, this excludes both constant interpretations without "
+                            + "creating a second validity definition.")),
                     Paragraph(Text(
                         "A license retains Gamma exactly as GivenPremises(kappa) conjoined with the "
                             + "certificate's transport assumption. Therefore an unconditional "
@@ -50,11 +52,12 @@ internal sealed class OverreachWithoutLicenseDocument : IScribeDocumentDefinitio
                             + "distinct readings at the selected new operation give Closed_J(S,T) "
                             + "and not Closed_J'(S,T), so expansion reopens local completion.")),
                     Paragraph(Text(
-                        "Conversely, when the report's stored scope equals the claimed scope, a valid "
-                            + "certificate together with every given premise and its transport "
-                            + "assumption licenses the report whose retained condition is True. "
-                            + "Without the premise and assumption proofs, the exact conditional "
-                            + "statement remains the only licensed form.")),
+                        "Conversely, when certificate validity is nontrivial and the report's "
+                            + "stored scope equals the claimed scope, a valid certificate together "
+                            + "with every given premise and its transport assumption licenses the "
+                            + "report whose retained condition is True. Without the premise and "
+                            + "assumption proofs, the exact conditional statement remains the only "
+                            + "licensed form.")),
                     Paragraph(Text(
                         "Repository type-shape, English and Chinese synonym, and neighboring-module "
                             + "searches found no transport-license or overreach definition. "
@@ -83,11 +86,15 @@ internal sealed class OverreachWithoutLicenseDocument : IScribeDocumentDefinitio
             Call("Version", c));
         Formula premises = Call("GivenPremises", certificate);
         Formula assumption = Call("TransportAssumption", certificate);
+        Formula nontrivialCertificate = Call(
+            "NontrivialTransportCert",
+            F.Id("ValidTransportCert"));
         Formula completeCondition = Grp(
             gammaQ, Sp, Iff, Sp, premises, Sp, Land, Sp, assumption);
         Formula reportScope = Call("reportedScope", q);
         Formula licenseDefinition = Grp(
             licensed, Sp, Iff, Sp,
+            nontrivialCertificate, Sp, Land, Sp,
             reportScope, Sp, Eq, Sp, claimedScope, Sp, Land, Sp,
             Exists, Sp, certificate, Comma, Sp,
             validCertificate, Sp, Land, Sp, completeCondition);
@@ -111,6 +118,7 @@ internal sealed class OverreachWithoutLicenseDocument : IScribeDocumentDefinitio
         Formula toleranceCounterexample = ToleranceCounterexample(oldScope, claimedScope);
         Formula closureCounterexample = ClosureCounterexample(oldScope, claimedScope);
         Formula deconditioning = Grp(
+            nontrivialCertificate, Sp, Land, Sp,
             reportScope, Sp, Eq, Sp, claimedScope, Sp, Land, Sp,
             validCertificate, Sp, Land, Sp, premises, Sp, Land, Sp, assumption,
             Sp, Rightarrow, Sp,

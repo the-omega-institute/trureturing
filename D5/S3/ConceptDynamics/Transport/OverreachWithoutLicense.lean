@@ -53,10 +53,21 @@ structure TransportReport (Operation State Coordinate : Type*) where
   reportedScope : Set Operation
   condition : Prop
 
-/-- A report is licensed exactly by a valid transport certificate whose full
-premises and transport assumption are retained as the report condition.
-`validTransportCert` is deliberately an abstract parameter: certificate
-validity is owned by the separate certificate-validity module. -/
+/-- An abstract certificate-validity predicate is nontrivial when it rejects at
+least one input. A licensed report supplies an accepted input separately, so
+the two obligations together rule out both constant interpretations. -/
+def NontrivialTransportCert
+    {Operation State Coordinate Certificate Version : Type*}
+    (validTransportCert : Certificate -> Concept State Coordinate ->
+      Set Operation -> Set Operation -> Version -> Prop) : Prop :=
+  ∃ certificate concept oldScope claimedScope certificateVersion,
+    ¬validTransportCert certificate concept oldScope claimedScope
+      certificateVersion
+
+/-- A report is licensed exactly when certificate validity is nontrivial and a
+valid transport certificate retains its full premises and transport assumption
+as the report condition. The separate certificate-validity module owns the
+abstract predicate and can later supply the stronger concrete interpretation. -/
 def LicensedReport
     {Operation State Coordinate Certificate Version : Type*}
     (validTransportCert : Certificate -> Concept State Coordinate ->
@@ -65,12 +76,13 @@ def LicensedReport
     (givenPremises transportAssumption : Certificate -> Prop)
     (q : TransportReport Operation State Coordinate)
     (oldScope claimedScope : Set Operation) : Prop :=
-  q.reportedScope = claimedScope ∧
-    ∃ certificate,
-      validTransportCert certificate q.concept oldScope claimedScope
-          (version q.concept) ∧
-        (q.condition ↔
-          givenPremises certificate ∧ transportAssumption certificate)
+  NontrivialTransportCert validTransportCert ∧
+    q.reportedScope = claimedScope ∧
+      ∃ certificate,
+        validTransportCert certificate q.concept oldScope claimedScope
+            (version q.concept) ∧
+          (q.condition ↔
+            givenPremises certificate ∧ transportAssumption certificate)
 
 /-- Overreach is a strict scope expansion, correctly identifying the concept's
 old scope and the report's claimed scope, without a license for that report. -/
@@ -189,12 +201,13 @@ theorem overreach_without_license
     (oldScope claimedScope : Set Operation) :
     (LicensedReport validTransportCert version givenPremises
         transportAssumption q oldScope claimedScope ↔
-      q.reportedScope = claimedScope ∧
-        ∃ certificate,
-          validTransportCert certificate q.concept oldScope claimedScope
-              (version q.concept) ∧
-            (q.condition ↔ givenPremises certificate ∧
-              transportAssumption certificate)) ∧
+      NontrivialTransportCert validTransportCert ∧
+        q.reportedScope = claimedScope ∧
+          ∃ certificate,
+            validTransportCert certificate q.concept oldScope claimedScope
+                (version q.concept) ∧
+              (q.condition ↔ givenPremises certificate ∧
+                transportAssumption certificate)) ∧
     (LicensedReport validTransportCert version givenPremises
         transportAssumption q oldScope claimedScope ->
       q.condition ->
@@ -235,6 +248,7 @@ theorem overreach_without_license
         LocallyClosed localScope system target ∧
           ¬LocallyClosed expandedScope system target) ∧
     (∀ certificate,
+      NontrivialTransportCert validTransportCert ->
       q.reportedScope = claimedScope ->
       validTransportCert certificate q.concept oldScope claimedScope
         (version q.concept) ->
@@ -244,11 +258,11 @@ theorem overreach_without_license
         transportAssumption { q with condition := True }
         oldScope claimedScope) := by
   refine ⟨Iff.rfl, ?_, ?_, Iff.rfl, ?_, ?_, ?_⟩
-  · rintro ⟨_, certificate, certificateValid, exactCondition⟩ conditionHolds
+  · rintro ⟨_, _, certificate, certificateValid, exactCondition⟩ conditionHolds
     exact ⟨certificate, certificateValid,
       (exactCondition.mp conditionHolds).1,
       (exactCondition.mp conditionHolds).2⟩
-  · rintro ⟨_, certificate, certificateValid, exactCondition⟩
+  · rintro ⟨_, _, certificate, certificateValid, exactCondition⟩
     refine ⟨certificate, certificateValid, exactCondition, ?_⟩
     rintro (premisesMissing | assumptionMissing) conditionHolds
     · exact premisesMissing (exactCondition.mp conditionHolds).1
@@ -259,9 +273,9 @@ theorem overreach_without_license
       unchangedWithin largeDeviation
   · intro localScope expandedScope strictExpansion distinctReadings
     exact domain_expansion_reopens_local_completion strictExpansion distinctReadings
-  · intro certificate reportedScopeMatches certificateValid premisesHold
-      assumptionHolds
-    refine ⟨reportedScopeMatches, certificate, certificateValid, ?_⟩
+  · intro certificate nontrivial reportedScopeMatches certificateValid
+      premisesHold assumptionHolds
+    refine ⟨nontrivial, reportedScopeMatches, certificate, certificateValid, ?_⟩
     simp [premisesHold, assumptionHolds]
 
 /-- Downstream probe: the public package exposes both premise proofs from an
@@ -286,19 +300,45 @@ example
     givenPremises transportAssumption q oldScope claimedScope).2.1
       licensed unconditional
 
-/-- A concrete finite report has a valid certificate and all premises, so its
-unconditional condition is licensed. The same license blocks overreach. -/
+/-- A constantly true certificate predicate cannot license any report. -/
 example :
     let validTransportCert :
         Unit -> Concept Bool Bool -> Set Bool -> Set Bool -> Unit -> Prop :=
       fun _ _ _ _ _ => True
     let q : TransportReport Bool Bool Bool :=
       { concept := id, reportedScope := Set.univ, condition := True }
+    ¬LicensedReport validTransportCert (fun _ => ()) (fun _ => True)
+      (fun _ => True) q {false} Set.univ := by
+  simp [LicensedReport, NontrivialTransportCert]
+
+/-- A concrete finite interpretation accepts one certificate and rejects
+another. Its unconditional report is licensed, and that license blocks
+overreach. -/
+example :
+    let validTransportCert :
+        Bool -> Concept Bool Bool -> Set Bool -> Set Bool -> Unit -> Prop :=
+      fun certificate _ _ _ _ => certificate = true
+    let q : TransportReport Bool Bool Bool :=
+      { concept := id, reportedScope := Set.univ, condition := True }
     LicensedReport validTransportCert (fun _ => ()) (fun _ => True)
         (fun _ => True) q {false} Set.univ ∧
       ¬Overreach (fun _ => {false}) validTransportCert (fun _ => ())
         (fun _ => True) (fun _ => True) q {false} Set.univ := by
-  simp [LicensedReport, Overreach]
+  dsimp
+  have nontrivial :
+      NontrivialTransportCert
+        (fun (certificate : Bool) (_ : Concept Bool Bool) (_ _ : Set Bool)
+          (_ : Unit) => certificate = true) := by
+    exact ⟨false, id, ∅, ∅, (), by simp⟩
+  have licensed :
+      LicensedReport
+        (fun (certificate : Bool) (_ : Concept Bool Bool) (_ _ : Set Bool)
+          (_ : Unit) => certificate = true)
+        (fun _ => ()) (fun _ => True) (fun _ => True)
+        { concept := id, reportedScope := Set.univ, condition := True }
+        {false} Set.univ := by
+    exact ⟨nontrivial, rfl, true, rfl, by simp⟩
+  exact ⟨licensed, fun overreach => overreach.2.2.2 licensed⟩
 
 /-- With the same finite scope expansion but no valid certificate, the report
 is genuinely overreaching; the predicates are therefore not constant. -/
@@ -313,7 +353,7 @@ example :
   dsimp
   refine ⟨Set.ssubset_iff_exists.mpr ?_, rfl, rfl, ?_⟩
   · exact ⟨Set.subset_univ _, true, Set.mem_univ true, by simp⟩
-  · simp [LicensedReport]
+  · simp [LicensedReport, NontrivialTransportCert]
 
 /-- On the finite operation and reading type `Bool`, the records agree on the
 old singleton but both tolerance and local completion fail after expansion. -/
