@@ -4,13 +4,7 @@ using Trureturing.Truth;
 
 namespace StrataLint.Cli;
 
-/// Projects the repository truth DAG to Generated/DAG.md.
-///
-/// The graph is built here rather than in Scribe because only this assembly holds the repository
-/// gateway that produces a RepositorySnapshot; the rendering itself belongs to Scribe, which owns
-/// every other canonical projection. Failures are classified the same way the ledger commands
-/// classify them: an unreadable repository or an unusable Lean report is an environment fault, not
-/// a verdict about the graph.
+/// Projects the repository truth graph to Generated/DAG.md.
 internal static class DagRenderCommand
 {
     internal static CommandResult Run(
@@ -59,6 +53,15 @@ internal static class DagRenderCommand
 
         var output = new StringWriter();
         var error = new StringWriter();
+        TruthDagProjection projection;
+        try
+        {
+            projection = TruthDagProjectionAssembler.Build(truth.Snapshot, truth.Lean);
+        }
+        catch (InvalidOperationException exception)
+        {
+            return Failure("truth projection could not be built", exception);
+        }
         var leanReportDigest = RawLeanReportArtifact.ContentAddress(
             RawLeanReportArtifact.Write(truth.Snapshot, truth.Report).AsSpan());
         var provenance = new TruthGraphProvenance(
@@ -70,7 +73,7 @@ internal static class DagRenderCommand
             documentProjection = DocumentGraphExportProjectionExtensions.AssembleRepository(
                 repositoryRoot,
                 DeclarationCatalog.Create(truth.Report),
-                truth.Dag.Nodes.Select(static node => node.RepoPath.Value).ToHashSet(StringComparer.Ordinal));
+                projection.Nodes.Select(static node => node.RepoPath.Value).ToHashSet(StringComparer.Ordinal));
         }
         catch (Exception exception) when (
             exception is InvalidOperationException
@@ -83,7 +86,7 @@ internal static class DagRenderCommand
         }
         var exit = DagEmitter.Emit(
             repositoryRoot,
-            truth.Dag,
+            projection,
             provenance,
             check,
             output,

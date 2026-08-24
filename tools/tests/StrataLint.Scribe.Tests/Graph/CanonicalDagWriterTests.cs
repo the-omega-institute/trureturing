@@ -223,7 +223,7 @@ public sealed class CanonicalDagWriterTests
                 .SequenceEqual(CanonicalDagWriter.Write(reversed).AsSpan()));
     }
 
-    private static string Render(AcyclicTruthDag dag) =>
+    private static string Render(TruthDagProjection dag) =>
         StrictUtf8.GetString(CanonicalDagWriter.Write(dag).AsSpan());
 
     private static string Fence(string text)
@@ -251,14 +251,14 @@ public sealed class CanonicalDagWriterTests
         return trimmed[..stop];
     }
 
-    private static RepoPath PathOf(AcyclicTruthDag dag, string module) =>
+    private static RepoPath PathOf(TruthDagProjection dag, string module) =>
         dag.Nodes.Single(node => node.RepoPath.Value.EndsWith(
             "/" + module + ".lean",
             StringComparison.Ordinal)).RepoPath;
 
     private static ModuleSpec Module(string name, params string[] imports) => new(name, imports);
 
-    private static AcyclicTruthDag Build(params ModuleSpec[] modules)
+    private static TruthDagProjection Build(params ModuleSpec[] modules)
     {
         var files = modules.ToDictionary(
             static module => "D5/S0/Carrier/" + module.Name + ".lean",
@@ -272,7 +272,7 @@ public sealed class CanonicalDagWriterTests
         return BuildFrom(files, reports);
     }
 
-    private static AcyclicTruthDag BuildFrom(
+    private static TruthDagProjection BuildFrom(
         IReadOnlyDictionary<string, string> files,
         IReadOnlyDictionary<string, LeanFileReport> reports)
     {
@@ -281,8 +281,7 @@ public sealed class CanonicalDagWriterTests
         var snapshot = Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(raw)).Snapshot;
         var closure = Assert.IsType<LeanValidationOutcome.Accepted>(
             LeanClosureValidator.Validate(snapshot, LeanAxiomReport.Create(reports))).Capability;
-        return Assert.IsType<DagBuildOutcome.Accepted>(
-            AcyclicTruthDag.Build(snapshot, closure)).Capability;
+        return TruthDagProjectionAssembler.Build(snapshot, closure);
     }
 
     private static LeanFileReport Report(params string[] imports) =>
