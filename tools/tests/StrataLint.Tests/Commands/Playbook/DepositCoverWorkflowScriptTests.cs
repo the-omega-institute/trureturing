@@ -362,7 +362,7 @@ public sealed partial class DepositCoverWorkflowScriptTests
     }
 
     [Fact]
-    public void CoverReemitsBeforeAndAfterReceiptAlignmentThenCommitsOnce()
+    public void CoverAlignsFromVerifiedEmissionWithoutReemittingThenCommitsOnce()
     {
         if (OperatingSystem.IsWindows()) return;
         using var fixture = new TransactionFixture();
@@ -380,13 +380,13 @@ public sealed partial class DepositCoverWorkflowScriptTests
             [
                 "make:lean-report",
                 "dotnet:cover-atom",
-                "make:emit",
                 "dotnet:align-scribe-receipt",
-                "make:emit",
             ],
             fixture.CallKinds());
         Assert.Contains("aligned: covered", File.ReadAllText(
             Path.Combine(fixture.Root, TransactionFixture.BackfillPath)), StringComparison.Ordinal);
+        Assert.Equal("emission: open\n", File.ReadAllText(
+            Path.Combine(fixture.Root, TransactionFixture.EmissionPath)));
         Assert.Empty(fixture.Status());
     }
 

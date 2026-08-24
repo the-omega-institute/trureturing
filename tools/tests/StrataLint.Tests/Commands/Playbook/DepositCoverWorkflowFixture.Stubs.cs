@@ -138,8 +138,20 @@ public sealed partial class DepositCoverWorkflowScriptTests
                 printf 'atom_id: atom-1\ncoverage: true\naligned: false\n' > Meta/BACKFILL.yaml
                 ;;
               align-scribe-receipt)
-                [[ $(cat Blueprint/D5/S0/Carrier/Probe.md) == 'emission: covered' ]] || {
-                  echo 'ALIGN_SCRIBE_RECEIPT_INVALID emission is stale' >&2
+                gid=''
+                for ((index=1; index<${#parts[@]}; index+=2)); do
+                  case "${parts[index]}" in
+                    --gid) gid=${parts[index+1]} ;;
+                  esac
+                done
+                definition_path="Blueprint/${gid%.*}.scribe.cs"
+                verified_emission=''
+                if [[ -s $definition_path ]] \
+                    && grep -q '^coverage: true$' Meta/BACKFILL.yaml; then
+                  verified_emission='emission: covered'
+                fi
+                [[ $verified_emission == 'emission: covered' ]] || {
+                  echo 'ALIGN_SCRIBE_RECEIPT_INVALID no verified in-process Scribe emission' >&2
                   exit 1
                 }
                 if grep -q '^aligned: covered$' Meta/BACKFILL.yaml; then

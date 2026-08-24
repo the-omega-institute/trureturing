@@ -613,10 +613,8 @@ case "$COMMAND" in
     cleanup_transaction_temporaries
     step lean-report make lean-report
     step cover-atom cover_atom_or_resume
-    step emit-post-cover make emit
     step align-scribe-receipt run_cli \
       align-scribe-receipt --atom-id "$ATOM_ID" --gid "$GID"
-    step emit-post-alignment make emit
     commit_all_if_needed "formalize: cover $ATOM_ID with $GID"
     ;;
   *)
