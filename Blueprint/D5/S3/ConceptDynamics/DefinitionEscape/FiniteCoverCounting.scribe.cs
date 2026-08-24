@@ -138,15 +138,17 @@ internal sealed class FiniteCoverCountingDocument : IScribeDocumentDefinition
             Typeclass("DecidableEq", indexType), Comma, RowBreak,
             countingWeightDefinition, Comma, RowBreak);
         Formula countingStatement = Disp(Seq(countingContext, countingLaw, Dot));
+        Formula packagedCountingClause = Seq(
+            Forall, Sp, F.Id("finiteX"), Sp, Colon, Sp, Call("Finite", state), Comma,
+            RowBreak, countingWeightDefinition, Comma, RowBreak, countingLaw);
         Formula packagedStatement = Disp(Seq(
-            countingContext,
             new Formula.Logic(
                 coverEquivalence,
                 FormulaLogicOperator.And,
                 new Formula.Logic(
                     finiteClause,
                     FormulaLogicOperator.And,
-                    countingLaw)), Dot));
+                    packagedCountingClause)), Dot));
 
         return DocumentDefinition.Create(ScribeNode.Create(
             "The two residual-cover clauses and counting antitonicity are proved; "
@@ -164,15 +166,17 @@ internal sealed class FiniteCoverCountingDocument : IScribeDocumentDefinition
                     Blocks(
                         Paragraph(Text(
                             "Candidate definitions are indexed by I with dependent codomains "
-                                + "V(i). The packaged theorem has the Lean instances Finite X and "
-                                + "DecidableEq I. Its first conjunct is general in X; the second "
-                                + "retains the explicit Finite X premise used by "
-                                + "finite_subset_iUnion to extract a finite subfamily.")),
+                                + "V(i). The packaged theorem has no global instances. Its first "
+                                + "conjunct is general in X and I. The second retains the explicit "
+                                + "Finite X premise used by finite_subset_iUnion to extract a finite "
+                                + "subfamily.")),
                         Paragraph(Text(
                             "finiteSelectionSufficientOnRange is the canonical Refines target "
                                 + "relation against Set.rangeFactorization of the selected joint "
                                 + "readout. The proof reuses inductive_sufficiency_criterion. The "
-                                + "third conjunct is backed by counting_escape_antitone_law."))),
+                                + "third conjunct quantifies Finite X locally and is backed by "
+                                + "counting_escape_antitone_law; DecidableEq I is supplied internally "
+                                + "for the Finset implementation."))),
                     DescribeRole.Theorem),
                 Describe.Lean(
                     DescribeId.Create("marginal-capture-law"),
@@ -210,7 +214,10 @@ internal sealed class FiniteCoverCountingDocument : IScribeDocumentDefinition
                             + "cost, countingWeight, and its budget. Here countingWeight is the concrete "
                             + "Lean weight mass(A) = ncard(A), under Finite X and DecidableEq I. The "
                             + "empty selection proves feasibility at b1, and the generic budget theorem "
-                            + "then gives the result."))),
+                            + "then gives the non-strict direction rate(b2) <= rate(b1). A constant "
+                            + "candidate is an elaborating false neighbor for strict decrease, while "
+                            + "an identity candidate gives a strict nontrivial model with rate(1) < "
+                            + "rate(0)."))),
                     DescribeRole.Theorem))));
     }
 

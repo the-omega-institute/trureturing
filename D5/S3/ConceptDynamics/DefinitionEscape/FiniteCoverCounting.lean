@@ -339,7 +339,7 @@ theorem counting_escape_antitone_law
 
 /-- The two cover laws and the counting escape-rate law, packaged together. -/
 theorem finite_cover_counting
-    {I X C Target : Type*} {V : I → Type*} [Finite X] [DecidableEq I]
+    {I X C Target : Type*} {V : I → Type*}
     (Gamma : Set I) (definitions : ∀ i, Concept X (V i))
     (q : Concept X C) (target : Concept X Target)
     (candidateCost : I → Real) (budget1 budget2 : Real) :
@@ -353,12 +353,16 @@ theorem finite_cover_counting
       (Finite X ∧ defectRelation q target ∩
           jointKernel (fun item : Gamma => definitions item.1) = ∅ →
         finiteSelectionSufficientOnRange Gamma definitions q target) ∧
-      countingEscapeAntitoneLaw Gamma definitions q target candidateCost
-        budget1 budget2 := by
+      (∀ finiteX : Finite X,
+        @countingEscapeAntitoneLaw I X C Target V finiteX (Classical.decEq I)
+          Gamma definitions q target candidateCost budget1 budget2) := by
   have coverPackage := finite_cover_laws Gamma definitions q target
-  exact ⟨coverPackage.1, coverPackage.2,
-    counting_escape_antitone_law Gamma definitions q target candidateCost
-      budget1 budget2⟩
+  refine ⟨coverPackage.1, coverPackage.2, ?_⟩
+  intro finiteX
+  letI : Finite X := finiteX
+  letI : DecidableEq I := Classical.decEq I
+  exact counting_escape_antitone_law Gamma definitions q target candidateCost
+    budget1 budget2
 
 /- This counterexample lives inside the current CAS Lean interface: its weight
 has zero empty mass and nonnegative mass, exactly as `EscapeWeight` requires.
@@ -443,6 +447,225 @@ theorem marginal_capture_law_not_implied_by_escape_weight :
   simp only [Set.empty_union, capturedEscapeMass, emptyResidualMass,
     freshResidualMass, combinedResidualMass, deltaResidualMass] at inequality
   norm_num at inequality
+
+/- A strict version of counting antitonicity is false even when the budget
+strictly grows and admits a nonempty selection: a constant candidate does not
+reduce the nonempty Boolean target defect. -/
+example :
+    let Gamma : Set Unit := Set.univ
+    let definitions : ∀ _ : Unit, Concept Bool Unit := fun _ _ => ()
+    let q : Concept Bool Unit := fun _ => ()
+    let target : Concept Bool Bool := id
+    let candidateCost : Unit → Real := fun _ => 1
+    let countingWeight : EscapeWeight (Bool × Bool) :=
+      { mass := fun set => (set.ncard : Real)
+        empty_mass := by simp
+        mass_nonnegative := fun set => Nat.cast_nonneg set.ncard }
+    let rate := budgetedEscapeRate q
+      (finiteSelectionSupplement Gamma definitions) target
+      (finiteSelectionCost Gamma candidateCost) countingWeight
+    countingEscapeAntitoneLaw Gamma definitions q target candidateCost 0 1 ∧
+      0 < countingWeight.mass (defectRelation q target) ∧
+      ¬rate 1 < rate 0 := by
+  classical
+  let Gamma : Set Unit := Set.univ
+  let definitions : ∀ _ : Unit, Concept Bool Unit := fun _ _ => ()
+  let q : Concept Bool Unit := fun _ => ()
+  let target : Concept Bool Bool := id
+  let candidateCost : Unit → Real := fun _ => 1
+  let countingWeight : EscapeWeight (Bool × Bool) :=
+    { mass := fun set => (set.ncard : Real)
+      empty_mass := by simp
+      mass_nonnegative := fun set => Nat.cast_nonneg set.ncard }
+  let rate := budgetedEscapeRate q
+    (finiteSelectionSupplement Gamma definitions) target
+    (finiteSelectionCost Gamma candidateCost) countingWeight
+  let values := budgetedEscapeValues q
+    (finiteSelectionSupplement Gamma definitions) target
+    (finiteSelectionCost Gamma candidateCost) countingWeight
+  have baselineEq : defectRelation q target =
+      {(false, true), (true, false)} := by
+    ext pair
+    rcases pair with ⟨first, second⟩
+    cases first <;> cases second <;> simp [q, target, defectRelation]
+  have residualEq (selection : Finset Gamma) :
+      defectRelation
+          (conceptJoin q
+            (finiteSelectionSupplement Gamma definitions selection)) target =
+        defectRelation q target := by
+    ext pair
+    constructor
+    · rintro ⟨joinedEqual, targetDifferent⟩
+      exact ⟨congrArg Prod.fst joinedEqual, targetDifferent⟩
+    · rintro ⟨baselineEqual, targetDifferent⟩
+      refine ⟨Prod.ext baselineEqual ?_, targetDifferent⟩
+      funext item
+      change finiteSelectionSupplement Gamma definitions selection pair.1 item =
+        finiteSelectionSupplement Gamma definitions selection pair.2 item
+      simp [finiteSelectionSupplement, definitions]
+  have normalizedEq (selection : Finset Gamma) :
+      countingWeight.mass
+          (defectRelation
+            (conceptJoin q
+              (finiteSelectionSupplement Gamma definitions selection)) target) /
+          countingWeight.mass (defectRelation q target) = 1 := by
+    rw [residualEq selection, baselineEq]
+    norm_num [countingWeight]
+  have valuesEq (budget : Real) (budgetNonnegative : 0 ≤ budget) :
+      values budget = {1} := by
+    ext value
+    constructor
+    · rintro ⟨selection, _feasible, rfl⟩
+      simp [normalizedEq selection]
+    · intro valueMem
+      have valueEq : value = 1 := Set.mem_singleton_iff.mp valueMem
+      subst value
+      refine ⟨∅, ?_, normalizedEq ∅⟩
+      simpa [finiteSelectionCost] using budgetNonnegative
+  have rateEq (budget : Real) (budgetNonnegative : 0 ≤ budget) :
+      rate budget = 1 := by
+    change sInf (values budget) = 1
+    rw [valuesEq budget budgetNonnegative]
+    simp
+  refine ⟨counting_escape_antitone_law Gamma definitions q target candidateCost
+    0 1, ?_, ?_⟩
+  · rw [baselineEq]
+    norm_num [countingWeight]
+  · change ¬rate 1 < rate 0
+    rw [rateEq 1 (by norm_num), rateEq 0 (by norm_num)]
+    norm_num
+
+/- In a strict nontrivial model, the one affordable identity candidate removes
+the nonempty Boolean target defect, so the counting escape rate drops from one
+at budget zero to zero at budget one. -/
+example :
+    let Gamma : Set Unit := Set.univ
+    let definitions : ∀ _ : Unit, Concept Bool Bool := fun _ => id
+    let q : Concept Bool Unit := fun _ => ()
+    let target : Concept Bool Bool := id
+    let candidateCost : Unit → Real := fun _ => 1
+    let countingWeight : EscapeWeight (Bool × Bool) :=
+      { mass := fun set => (set.ncard : Real)
+        empty_mass := by simp
+        mass_nonnegative := fun set => Nat.cast_nonneg set.ncard }
+    let rate := budgetedEscapeRate q
+      (finiteSelectionSupplement Gamma definitions) target
+      (finiteSelectionCost Gamma candidateCost) countingWeight
+    countingEscapeAntitoneLaw Gamma definitions q target candidateCost 0 1 ∧
+      (defectRelation q target).Nonempty ∧ rate 1 < rate 0 := by
+  classical
+  let Gamma : Set Unit := Set.univ
+  let definitions : ∀ _ : Unit, Concept Bool Bool := fun _ => id
+  let q : Concept Bool Unit := fun _ => ()
+  let target : Concept Bool Bool := id
+  let candidateCost : Unit → Real := fun _ => 1
+  let countingWeight : EscapeWeight (Bool × Bool) :=
+    { mass := fun set => (set.ncard : Real)
+      empty_mass := by simp
+      mass_nonnegative := fun set => Nat.cast_nonneg set.ncard }
+  let rate := budgetedEscapeRate q
+    (finiteSelectionSupplement Gamma definitions) target
+    (finiteSelectionCost Gamma candidateCost) countingWeight
+  let values := budgetedEscapeValues q
+    (finiteSelectionSupplement Gamma definitions) target
+    (finiteSelectionCost Gamma candidateCost) countingWeight
+  have baselineEq : defectRelation q target =
+      {(false, true), (true, false)} := by
+    ext pair
+    rcases pair with ⟨first, second⟩
+    cases first <;> cases second <;> simp [q, target, defectRelation]
+  have emptyResidualEq :
+      defectRelation
+          (conceptJoin q
+            (finiteSelectionSupplement Gamma definitions ∅)) target =
+        defectRelation q target := by
+    ext pair
+    constructor
+    · rintro ⟨joinedEqual, targetDifferent⟩
+      exact ⟨congrArg Prod.fst joinedEqual, targetDifferent⟩
+    · rintro ⟨baselineEqual, targetDifferent⟩
+      refine ⟨Prod.ext baselineEqual ?_, targetDifferent⟩
+      funext item
+      change finiteSelectionSupplement Gamma definitions ∅ pair.1 item =
+        finiteSelectionSupplement Gamma definitions ∅ pair.2 item
+      simp [finiteSelectionSupplement]
+  have fullResidualEq :
+      defectRelation
+          (conceptJoin q
+            (finiteSelectionSupplement Gamma definitions Finset.univ)) target =
+        ∅ := by
+    apply Set.eq_empty_iff_forall_notMem.2
+    rintro pair ⟨joinedEqual, targetDifferent⟩
+    have supplementEqual := congrArg Prod.snd joinedEqual
+    let item : Gamma := ⟨(), Set.mem_univ ()⟩
+    have equalAtItem := congrFun supplementEqual item
+    have statesEqual : pair.1 = pair.2 := by
+      change finiteSelectionSupplement Gamma definitions Finset.univ pair.1 item =
+        finiteSelectionSupplement Gamma definitions Finset.univ pair.2 item at equalAtItem
+      simpa [finiteSelectionSupplement, definitions, item] using equalAtItem
+    exact targetDifferent (congrArg target statesEqual)
+  have normalizedEmpty :
+      countingWeight.mass
+          (defectRelation
+            (conceptJoin q
+              (finiteSelectionSupplement Gamma definitions ∅)) target) /
+          countingWeight.mass (defectRelation q target) = 1 := by
+    rw [emptyResidualEq, baselineEq]
+    norm_num [countingWeight]
+  have normalizedFull :
+      countingWeight.mass
+          (defectRelation
+            (conceptJoin q
+              (finiteSelectionSupplement Gamma definitions Finset.univ)) target) /
+          countingWeight.mass (defectRelation q target) = 0 := by
+    rw [fullResidualEq, baselineEq]
+    norm_num [countingWeight]
+  have valuesBddBelow (budget : Real) : BddBelow (values budget) := by
+    refine ⟨0, ?_⟩
+    rintro value ⟨selection, _feasible, rfl⟩
+    exact div_nonneg (countingWeight.mass_nonnegative _)
+      (countingWeight.mass_nonnegative _)
+  have valuesZeroEq : values 0 = {1} := by
+    ext value
+    constructor
+    · rintro ⟨selection, feasible, rfl⟩
+      have cardLeZero : (selection.card : Real) ≤ 0 := by
+        simpa [finiteSelectionCost, candidateCost] using feasible
+      have cardEqZero : selection.card = 0 := by
+        exact_mod_cast le_antisymm cardLeZero (Nat.cast_nonneg selection.card)
+      have selectionEmpty : selection = ∅ := Finset.card_eq_zero.mp cardEqZero
+      subst selection
+      exact Set.mem_singleton_iff.mpr normalizedEmpty
+    · intro valueMem
+      have valueEq : value = 1 := Set.mem_singleton_iff.mp valueMem
+      subst value
+      refine ⟨∅, ?_, ?_⟩
+      · simp [finiteSelectionCost]
+      · exact normalizedEmpty
+  have zeroMemValuesOne : (0 : Real) ∈ values 1 := by
+    refine ⟨Finset.univ, ?_, ?_⟩
+    · simp [finiteSelectionCost, candidateCost, Gamma]
+    · exact normalizedFull
+  have rateZeroEq : rate 0 = 1 := by
+    change sInf (values 0) = 1
+    rw [valuesZeroEq]
+    simp
+  have rateOneEq : rate 1 = 0 := by
+    apply le_antisymm
+    · change sInf (values 1) ≤ 0
+      exact csInf_le (valuesBddBelow 1) zeroMemValuesOne
+    · change 0 ≤ sInf (values 1)
+      refine (le_csInf_iff (valuesBddBelow 1)
+        ⟨0, zeroMemValuesOne⟩).2 ?_
+      rintro value ⟨selection, _feasible, rfl⟩
+      exact div_nonneg (countingWeight.mass_nonnegative _)
+        (countingWeight.mass_nonnegative _)
+  refine ⟨counting_escape_antitone_law Gamma definitions q target candidateCost
+    0 1, ?_, ?_⟩
+  · exact ⟨(false, true), rfl, Bool.false_ne_true⟩
+  · change rate 1 < rate 0
+    rw [rateOneEq, rateZeroEq]
+    norm_num
 
 /- The selected Boolean coordinate has codomain `Bool`, while the other
 candidate has codomain `Unit`; this witnesses the genuinely dependent family
