@@ -1,0 +1,32 @@
+## 49.2 冻结与非预见性
+
+设裁决记录 \(z_n\) 的到达时刻为访问账本中的首次可达时刻
+
+\[
+u_n:=\operatorname{FirstSeen}(z_n).
+\]
+
+定义前视冻结
+
+\[
+\begin{aligned}
+\operatorname{FrozenBefore}(K_n,z_n)
+\Longleftrightarrow{}
+&z_n\in\mathcal F_{d_n}
+\\
+&\wedge\ z_n\notin\mathcal F_{t_n}.
+\end{aligned}
+\]
+
+等价地，\(t_n<u_n\le d_n\)：裁决记录必须在裁决点正向到达，而不是仅仅在冻结点尚未出现；从未被观察的记录不满足此前件。
+
+定义非预见承诺
+
+\[
+\boxed{
+\operatorname{NonAnticipating}(K_n,z_n) \Longleftrightarrow \operatorname{FrozenBefore}(K_n,z_n) \ \wedge\ z_n\not\leadsto K_n.
+}
+\]
+
+若裁决对象是记录集 \(Z_n\)，则要求对所有 \(z\in Z_n\) 成立。时间先后是必要条件但不是充分条件：若未来记录的代理、泄漏摘要或预先可得标签进入依赖闭包，仍违反非预见性。
+

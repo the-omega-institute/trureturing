@@ -1,0 +1,27 @@
+## 53.5 三类合法产出
+
+每轮产出分为：
+
+\[
+\begin{aligned}
+\mathsf{ProspectiveResult}
+&:\operatorname{ScientificGain}_n\text{ 成立};
+\\
+\mathsf{PostdictiveDiscovery}
+&:\operatorname{PostdictiveFit}\text{ 成立但形成 }K_{n+1};
+\\
+\mathsf{Unresolved}
+&:\text{既未改善，也未形成可检验的新承诺}.
+\end{aligned}
+\]
+
+三类都可进入历史账本，但只能第一类记为本轮前瞻科学增益。第二类的价值在于生成下一轮可失败预测；第三类保留失败与残差，防止静默消失。
+
+\[
+\boxed{
+\text{Revise 可以改变下一轮的尺； 不能改变上一轮曾用过哪把尺。}
+}
+\]
+
+---
+

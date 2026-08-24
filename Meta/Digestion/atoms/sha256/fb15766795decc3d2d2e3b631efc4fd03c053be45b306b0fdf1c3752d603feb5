@@ -1,0 +1,26 @@
+## 53.3 原坐标比较与不可回写
+
+定义原坐标原则
+
+\[
+\boxed{
+\operatorname{Verdict}_n = \operatorname{Evaluate}(K_n,Z_n),
+}
+\]
+
+而不是
+
+\[
+\operatorname{Evaluate}(K_{n+1},Z_n).
+\]
+
+若 Revise 修改目标、比较器、范围、权重或基线，则这些修改只进入 \(K_{n+1}^{\mathrm{proposal}}\)。在追加账本、版本不可变与纯评价前件下，得到条件骨架
+
+\[
+\operatorname{Evaluate}(K_n,Z_n) = \operatorname{Evaluate}(\operatorname{Lookup}(n),Z_n)
+\]
+
+对所有后续轮次保持不变。
+
+因此循环允许学习，但不允许让学习结果穿越回本轮冻结点。
+

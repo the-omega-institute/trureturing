@@ -1,0 +1,28 @@
+## 52.1 两个反事实基线
+
+每轮至少登记两个比较对象：
+
+\[
+a_{\varnothing} = \text{什么都不做},
+\]
+
+以及
+
+\[
+a_{\min} = \text{满足本轮充分阈值的最低全生命周期成本替代}.
+\]
+
+定义充分替代集合
+
+\[
+\operatorname{SuffAlt}(K_n) := \{a:\operatorname{MeetsCommitment}(a,K_n)\}.
+\]
+
+若该集合非空且成本下确有最小元，则
+
+\[
+a_{\min} \in \arg\min_{a\in\operatorname{SuffAlt}(K_n)} \operatorname{LifecycleCost}(a).
+\]
+
+最小元的存在不是无条件定理；无限候选、不可比较成本或未达下确界时，只能记录候选前沿。
+
