@@ -95,7 +95,7 @@ public sealed class TruthReleaseCommandTests
     [Fact]
     public void ReceiptIntegrityFailureFailsClosedWithoutWritingABundle()
     {
-        using var fixture = CreateFixture(receiptIntegrityMismatch: true);
+        using var fixture = Fixture.Create(receiptIntegrityMismatch: true);
         using var output = new TemporaryDirectory();
 
         var (exitCode, console) = Run(fixture, output.Path, GreenTrustArguments());
@@ -103,7 +103,7 @@ public sealed class TruthReleaseCommandTests
         Assert.Equal(2, exitCode);
         Assert.Contains("TRUTH_RELEASE_INVALID", console.Error, StringComparison.Ordinal);
         Assert.Contains("coverage-receipt-mismatch", console.Error, StringComparison.Ordinal);
-        Assert.Empty(Directory.EnumerateFiles(output.Path));
+        Assert.Empty(Directory.GetFileSystemEntries(output.Path));
     }
 
     private static (int ExitCode, BufferedConsole Console) Run(
@@ -415,6 +415,9 @@ public sealed class TruthReleaseCommandTests
         string frozenLedgerHeadHash,
         int frozenLedgerSequence) : IDisposable
     {
+        internal static Fixture Create(bool receiptIntegrityMismatch = false) =>
+            CreateFixture(receiptIntegrityMismatch);
+
         internal ProductionCliEnvironment Environment { get; } = environment;
 
         internal GitRepositoryGateway Gateway { get; } = gateway;

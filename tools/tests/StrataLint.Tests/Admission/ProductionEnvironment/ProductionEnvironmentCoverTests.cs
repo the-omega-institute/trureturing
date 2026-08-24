@@ -394,7 +394,7 @@ public sealed partial class ProductionEnvironmentTests
         var inputs = DirectoryInputs(WithSiblingReceiptMismatch(materialized, mismatchCode));
         using var temporary = new TemporaryDirectory();
         DirectoryLedgerTestSupport.Write(temporary.Path, inputs.Files);
-        var before = DirectoryLedgerImage(temporary.Path);
+        var before = DirectoryLedgerTestSupport.Image(temporary.Path);
         var environment = BuildCoverEnvironment(temporary.Path, inputs, inputs.Files);
 
         var result = environment.CoverAtom(CoverArgs(inputs));
@@ -403,7 +403,7 @@ public sealed partial class ProductionEnvironmentTests
         Assert.Contains("digest status is invalid", result.Error, StringComparison.Ordinal);
         Assert.Contains(mismatchCode, result.Error, StringComparison.Ordinal);
         Assert.DoesNotContain("coverage-gid-missing", result.Error, StringComparison.Ordinal);
-        Assert.Equal(before, DirectoryLedgerImage(temporary.Path));
+        Assert.Equal(before, DirectoryLedgerTestSupport.Image(temporary.Path));
     }
 
     [Theory]
@@ -420,7 +420,7 @@ public sealed partial class ProductionEnvironmentTests
         var inputs = DirectoryInputs(WithSiblingReceiptMismatch(materialized, mismatchCode));
         using var temporary = new TemporaryDirectory();
         DirectoryLedgerTestSupport.Write(temporary.Path, inputs.Files);
-        var before = DirectoryLedgerImage(temporary.Path);
+        var before = DirectoryLedgerTestSupport.Image(temporary.Path);
         var environment = BuildCoverEnvironment(temporary.Path, inputs, inputs.Files);
 
         var result = environment.AlignScribeReceipt(CoverWorld.AlignArgs(inputs));
@@ -428,7 +428,7 @@ public sealed partial class ProductionEnvironmentTests
         Assert.False(result.Success);
         Assert.Contains("digest status is invalid", result.Error, StringComparison.Ordinal);
         Assert.Contains(mismatchCode, result.Error, StringComparison.Ordinal);
-        Assert.Equal(before, DirectoryLedgerImage(temporary.Path));
+        Assert.Equal(before, DirectoryLedgerTestSupport.Image(temporary.Path));
     }
 
     [Fact]
@@ -441,7 +441,7 @@ public sealed partial class ProductionEnvironmentTests
         var inputs = DirectoryInputs(WithSiblingDuplicateCoverageReceipt(materialized));
         using var temporary = new TemporaryDirectory();
         DirectoryLedgerTestSupport.Write(temporary.Path, inputs.Files);
-        var before = DirectoryLedgerImage(temporary.Path);
+        var before = DirectoryLedgerTestSupport.Image(temporary.Path);
         var environment = BuildCoverEnvironment(temporary.Path, inputs, inputs.Files);
 
         var result = environment.CoverAtom(CoverArgs(inputs));
@@ -449,7 +449,7 @@ public sealed partial class ProductionEnvironmentTests
         Assert.False(result.Success);
         Assert.Contains("digest status is invalid", result.Error, StringComparison.Ordinal);
         Assert.Contains("duplicate receipt", result.Error, StringComparison.Ordinal);
-        Assert.Equal(before, DirectoryLedgerImage(temporary.Path));
+        Assert.Equal(before, DirectoryLedgerTestSupport.Image(temporary.Path));
     }
 
     [Fact]
@@ -458,13 +458,13 @@ public sealed partial class ProductionEnvironmentTests
         var inputs = DirectoryInputs(CoverWorld.Materialize(new CoverSpec()));
         using var temporary = new TemporaryDirectory();
         DirectoryLedgerTestSupport.Write(temporary.Path, inputs.Files);
-        var before = DirectoryLedgerImage(temporary.Path);
+        var before = DirectoryLedgerTestSupport.Image(temporary.Path);
 
         var first = BuildCoverEnvironment(temporary.Path, inputs, inputs.Files)
             .CoverAtom(CoverArgs(inputs));
 
         Assert.True(first.Success, first.Error);
-        var afterFirst = DirectoryLedgerImage(temporary.Path);
+        var afterFirst = DirectoryLedgerTestSupport.Image(temporary.Path);
         Assert.NotEqual(before, afterFirst);
 
         var replayFiles = FilesWithLedgerFromRoot(inputs.Files, temporary.Path);
@@ -473,7 +473,7 @@ public sealed partial class ProductionEnvironmentTests
 
         Assert.False(second.Success);
         Assert.Contains("already has coverage", second.Error, StringComparison.Ordinal);
-        Assert.Equal(afterFirst, DirectoryLedgerImage(temporary.Path));
+        Assert.Equal(afterFirst, DirectoryLedgerTestSupport.Image(temporary.Path));
     }
 
     private static CoverInputs DirectoryInputs(CoverInputs inputs) => inputs with
@@ -491,21 +491,6 @@ public sealed partial class ProductionEnvironmentTests
             result,
             BackfillInventoryLoader.LoadRoot(repositoryRoot));
         return result;
-    }
-
-    private static string DirectoryLedgerImage(string repositoryRoot)
-    {
-        var root = Path.GetFullPath(repositoryRoot);
-        var paths = Directory.EnumerateFiles(
-                Path.Combine(root, BackfillInventoryLoader.RootPath.Replace('/', Path.DirectorySeparatorChar)),
-                "*",
-                SearchOption.AllDirectories)
-            .Order(StringComparer.Ordinal);
-        return string.Concat(paths.Select(path =>
-            Path.GetRelativePath(root, path).Replace(Path.DirectorySeparatorChar, '/')
-            + "\0"
-            + Convert.ToBase64String(File.ReadAllBytes(path))
-            + "\n"));
     }
 
     private static CoverInputs WithSiblingReceiptMismatch(CoverInputs inputs, string mismatchCode)
