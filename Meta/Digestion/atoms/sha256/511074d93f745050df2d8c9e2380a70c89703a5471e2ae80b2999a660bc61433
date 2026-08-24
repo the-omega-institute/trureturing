@@ -1,0 +1,26 @@
+### 55.2.1 开放问题 OP1：签名充分性
+
+取有限有效历史 \(H=(K,\mathcal L,v_K)\)、\(H'=(K',\mathcal L',v_{K'})\)，记其签名为 \(S(H),S(H')\)。以下四个 atoms 是否逐项成立：
+\[
+\boxed{
+\begin{array}{ll}
+\mathrm{OP1\!\!-NA}:&S(H)=S(H')\wedge\operatorname{SameOut}_{\mathrm{NA}}
+\Rightarrow(\operatorname{NonAnticipating}(K.\operatorname{adjudication},z)
+\leftrightarrow\operatorname{NonAnticipating}(K'.\operatorname{adjudication},z));\\
+\mathrm{OP1\!\!-AJ}:&S(H)=S(H')\wedge\operatorname{SameOut}_{\mathrm{AJ}}
+\Rightarrow(\operatorname{AdmissibleJudge}(\mathcal L,K.\operatorname{adjudication},v_K,r)
+\leftrightarrow\operatorname{AdmissibleJudge}(\mathcal L',K'.\operatorname{adjudication},v_{K'},r));\\
+\mathrm{OP1\!\!-TL}:&S(H_o)=S(H'_o)\wedge S(H_n)=S(H'_n)
+\wedge\operatorname{SameOut}_{\mathrm{TL}}\\
+&\Rightarrow(\operatorname{TargetLaundering}(\operatorname{evaluate},\operatorname{oldK},\operatorname{newK},z,\operatorname{report})
+\leftrightarrow\operatorname{TargetLaundering}(\operatorname{evaluate},\operatorname{oldK}',\operatorname{newK}',z,\operatorname{report}));\\
+\mathrm{OP1\!\!-SG}:&S(H)=S(H')\wedge\operatorname{SameOut}_{\mathrm{SG}}
+\Rightarrow(\operatorname{ScientificGain}(\operatorname{evaluate},K,z,a,b)
+\leftrightarrow\operatorname{ScientificGain}(\operatorname{evaluate},K',z,a,b)).
+\end{array}
+}
+\]
+其中 TL 的 \(H_o,H_n\) 分别承载 old/new commitment 与各自有效账本；单点式按 \(\operatorname{Lift}_Z\) 提升，TL 使用报告族。真残差：第 48—54 部给出了四谓词及其消费者，却未回答该四分量签名在逐项冻结全部非投影读取后是否因子化四个接口。
+
+结案判据：四个具名 atoms 各自获得证明、有限有效反例或 statement-revise；任一反例必须指出翻转的原签名原子与未被签名保存的字段。
+
