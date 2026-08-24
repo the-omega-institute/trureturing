@@ -209,7 +209,7 @@ internal sealed class FinitePartitionAlgebraDualityDocument
 
     private static Formula PointwiseMultiplicationNecessaryFormula() =>
         ExistsWitnessFormula(
-            Apply(Named("Fin"), F.Id("3")),
+            Apply(Named("Fin"), D(3)),
             Named("ContainsConstants"),
             Named("ClosedUnderLinearCombinations"));
 
