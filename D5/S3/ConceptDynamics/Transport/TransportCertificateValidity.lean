@@ -78,22 +78,16 @@ def TruthRecordAt
   {record : TruthRecord Point Payload Address Version Error //
     record.domain = source ∧ record.error = error}
 
-/-- Claims indexed by the scope on which they hold. -/
-def ClaimAt
-    {Point Claim Address Version : Type*}
-    (semantics : ClaimSemantics Point Claim Address Version)
-    (target : Set Point) :=
-  {claim : Claim // semantics.claimOn claim target}
-
 /-- A scope-transport candidate maps a source-scoped, error-indexed truth record
-to a claim that is already scoped to the target domain. -/
+to a bare claim. Target-domain validity is supplied only by a valid certificate
+together with its declared premises and preservation obligations. -/
 def ScopeTransportCandidate
     {Point Payload Claim Address Version Error : Type*}
-    (semantics : ClaimSemantics Point Claim Address Version)
-    (source target : Set Point) (error : Error) :=
+    (_semantics : ClaimSemantics Point Claim Address Version)
+    (source _target : Set Point) (error : Error) :=
   TruthRecordAt (Payload := Payload) (Address := Address) (Version := Version)
       source error →
-    ClaimAt semantics target
+    Claim
 
 /-- Every optional dependency is named inside the assumption object. If transport
 uses selection, intervention consistency, covariate transformation, or loss
@@ -265,6 +259,29 @@ theorem valid_transport_cert_criterion
         Refutes z certificate claim :=
   Iff.rfl
 
+/-- A scope-transport candidate acquires target-domain validity only through the
+conditional clause of a valid certificate, after its premises and preservation
+obligations have been discharged. -/
+theorem scope_transport_candidate_claim_on_of_valid_certificate
+    {Point Payload Claim Address Version Error : Type*}
+    {source target : Set Point} {error : Error}
+    (semantics : ClaimSemantics Point Claim Address Version)
+    (transport :
+      ScopeTransportCandidate (Payload := Payload) (Error := Error)
+        semantics source target error)
+    (record :
+      TruthRecordAt (Payload := Payload) (Address := Address)
+        (Version := Version) source error)
+    (certificate :
+      TransportCert Point Payload Claim Address Version Error source target)
+    (version : Version)
+    (validity :
+      ValidTransportCert semantics certificate (transport record) version)
+    (premises : GivenPremises certificate)
+    (preservation : certificate.transportAssumption.Holds) :
+    ClaimOn semantics (transport record) target :=
+  validity.2.1 ⟨premises, preservation⟩
+
 /-- Failure of any one of the four public conjuncts invalidates the certificate. -/
 theorem valid_transport_cert_fails_if_any_clause_fails
     {Point Payload Claim Address Version Error : Type*}
@@ -402,6 +419,7 @@ example :
 end FiniteWitness
 
 #print axioms valid_transport_cert_criterion
+#print axioms scope_transport_candidate_claim_on_of_valid_certificate
 #print axioms valid_transport_cert_fails_if_any_clause_fails
 #print axioms falsifiable_prediction_failure_is_not_const_false
 
