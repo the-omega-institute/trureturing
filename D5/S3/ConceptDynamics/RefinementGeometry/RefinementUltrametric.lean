@@ -3,7 +3,7 @@
    mirror-B: none(waiver:formal-unit-only)
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: A finite definition history induces an ultrametric by common agreement depth. -/
+   digest: Agreement depth gives a pseudoultrametric; an ultrametric under separation. -/
 
 import D5.S3.ConceptDynamics.ConceptFiberDecomposition
 import Mathlib.Data.Nat.Find

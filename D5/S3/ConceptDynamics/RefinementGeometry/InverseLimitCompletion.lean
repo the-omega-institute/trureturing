@@ -108,8 +108,8 @@ noncomputable def stateEquivInverseLimit
     ((stateThread_bijective_iff_complete_and_separates system).2
       ⟨complete, separates⟩)
 
-/-- Any property of states that is constant on all-stage fibers descends through
-the inverse-limit embedding whenever the tower separates states. -/
+/-- Convenience projection of `SeparatesStates`: all-stage readout agreement
+collapses to equality of states. -/
 theorem all_stage_agreement_eq_of_separates
     {X : Type u} (system : RefinementSystem X)
     (separates : SeparatesStates system)

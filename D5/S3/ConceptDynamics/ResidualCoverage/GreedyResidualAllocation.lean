@@ -126,7 +126,8 @@ theorem greedy_positive_progress
     exact termPositive.trans_le termBound
   exact lt_of_lt_of_le positiveAlternative (greedy.2 alternative inPool)
 
-/-- A cost-effective choice maximizes gain per cost without using division. -/
+/-- Cross-multiplied gain-cost comparison; it reads as gain per cost only when
+the compared costs are positive (zero costs satisfy it vacuously). -/
 def CostEffectiveChoice
     {Definition Residual : Type*} [DecidableEq Definition]
     (residuals : Finset Residual) (weight : Residual → Nat)
