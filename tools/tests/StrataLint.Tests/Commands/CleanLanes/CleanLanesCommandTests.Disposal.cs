@@ -3,159 +3,74 @@ namespace StrataLint.Tests;
 public sealed partial class CleanLanesCommandTests
 {
     [Fact]
-    public void DisposeSkipsGitInventoryWhenRepositoryDirectoryIsConfirmedAbsent()
+    public void DisposeReleasesRemainingOwnedDirectoriesWhenOneWasAlreadyDeleted()
     {
         var fixture = new CleanLanesFixture();
-        var repository = fixture.RepositoryWorkingDirectory;
+        var repository = fixture.OwnedWorkingDirectory(
+            CleanLanesFixture.OwnedDirectory.Repository);
         var ownedDirectories = fixture.OwnedWorkingDirectories;
         Directory.Delete(repository, recursive: true);
-
-        Assert.Equal(
-            CleanLanesFixture.RepositoryDirectoryState.Absent,
-            fixture.ProbeRepositoryDirectory().State);
 
         fixture.Dispose();
 
         Assert.All(ownedDirectories, path => Assert.False(Directory.Exists(path)));
     }
 
-    [Fact]
-    public void DisposeCharacterizesGitStartFailureWhenRepositoryDirectoryExists()
+    [Theory]
+    [InlineData((int)CleanLanesFixture.OwnedDirectory.Temporary)]
+    [InlineData((int)CleanLanesFixture.OwnedDirectory.Worktrees)]
+    [InlineData((int)CleanLanesFixture.OwnedDirectory.Repository)]
+    public void DisposeContinuesAfterAnyOwnedDirectoryReleaseFails(int failingDirectoryValue)
     {
-        if (OperatingSystem.IsWindows()) return;
-
+        var failingDirectory = (CleanLanesFixture.OwnedDirectory)failingDirectoryValue;
         var fixture = new CleanLanesFixture();
-        var repository = fixture.RepositoryWorkingDirectory;
-        var originalMode = File.GetUnixFileMode(repository);
-        Assert.Equal(
-            CleanLanesFixture.RepositoryDirectoryState.Present,
-            fixture.ProbeRepositoryDirectory().State);
-        try
-        {
-            File.SetUnixFileMode(repository, UnixFileMode.None);
-            Assert.True(Directory.Exists(repository));
-
-            Assert.Throws<System.ComponentModel.Win32Exception>(() => fixture.Dispose());
-        }
-        finally
-        {
-            File.SetUnixFileMode(repository, originalMode);
-            fixture.Dispose();
-        }
-    }
-
-    [Fact]
-    public void DisposeDoesNotTreatIndeterminateRepositoryDirectoryProbeAsAbsent()
-    {
-        var fixture = new CleanLanesFixture();
-        var repository = fixture.RepositoryWorkingDirectory;
-        var otherOwnedDirectories = fixture.OwnedWorkingDirectories
-            .Where(path => !string.Equals(path, repository, StringComparison.Ordinal))
-            .ToArray();
-        var failure = new UnauthorizedAccessException("repository parent is not traversable");
-        fixture.SetRepositoryAttributesReader(_ => throw failure);
-        var probe = fixture.ProbeRepositoryDirectory();
-
-        Assert.Equal(CleanLanesFixture.RepositoryDirectoryState.Indeterminate, probe.State);
-        Assert.Same(failure, probe.Failure!.SourceException);
+        var failure = new InvalidOperationException($"cannot release {failingDirectory}");
+        fixture.SetOwnedDirectoryDisposer(failingDirectory, () => throw failure);
 
         try
         {
-            var thrown = Assert.Throws<UnauthorizedAccessException>(() => fixture.Dispose());
+            var thrown = Assert.Throws<InvalidOperationException>(() => fixture.Dispose());
 
             Assert.Same(failure, thrown);
-            Assert.All(otherOwnedDirectories, path => Assert.False(Directory.Exists(path)));
-            Assert.True(Directory.Exists(repository));
+            foreach (var directory in Enum.GetValues<CleanLanesFixture.OwnedDirectory>())
+            {
+                Assert.Equal(
+                    directory == failingDirectory,
+                    Directory.Exists(fixture.OwnedWorkingDirectory(directory)));
+            }
         }
         finally
         {
-            fixture.RestoreRepositoryAttributesReader();
+            fixture.RestoreOwnedDirectoryDisposer(failingDirectory);
             fixture.Dispose();
         }
     }
 
     [Fact]
-    public void DisposeDoesNotTreatRepositoryBelowBrokenParentSymlinkAsAbsent()
-    {
-        if (OperatingSystem.IsWindows()) return;
-
-        using var scratchRoot = new TestScratchRoot();
-        var fixture = new CleanLanesFixture(scratchRoot);
-        var repository = fixture.RepositoryWorkingDirectory;
-        var parkedRoot = scratchRoot.Path + ".parked";
-        var missingTarget = scratchRoot.Path + ".missing";
-        Directory.Move(scratchRoot.Path, parkedRoot);
-        Directory.CreateSymbolicLink(scratchRoot.Path, missingTarget);
-
-        try
-        {
-            var probe = fixture.ProbeRepositoryDirectory();
-
-            Assert.Equal(CleanLanesFixture.RepositoryDirectoryState.Indeterminate, probe.State);
-            var failure = Assert.IsType<DirectoryNotFoundException>(probe.Failure!.SourceException);
-            var thrown = Assert.Throws<DirectoryNotFoundException>(() => fixture.Dispose());
-            Assert.Equal(failure.Message, thrown.Message);
-
-            var parkedRepository = Path.Combine(
-                parkedRoot,
-                Path.GetRelativePath(scratchRoot.Path, repository));
-            Assert.True(Directory.Exists(parkedRepository));
-        }
-        finally
-        {
-            File.Delete(scratchRoot.Path);
-            Directory.Move(parkedRoot, scratchRoot.Path);
-            fixture.Dispose();
-        }
-    }
-
-    [Fact]
-    public void RepositoryDirectoryProbeTreatsBrokenRepositorySymlinkAsIndeterminate()
-    {
-        if (OperatingSystem.IsWindows()) return;
-
-        using var scratchRoot = new TestScratchRoot();
-        var fixture = new CleanLanesFixture(scratchRoot);
-        var repository = fixture.RepositoryWorkingDirectory;
-        var parkedRepository = repository + ".parked";
-        var missingTarget = repository + ".missing";
-        Directory.Move(repository, parkedRepository);
-        Directory.CreateSymbolicLink(repository, missingTarget);
-
-        try
-        {
-            var probe = fixture.ProbeRepositoryDirectory();
-
-            Assert.Equal(CleanLanesFixture.RepositoryDirectoryState.Indeterminate, probe.State);
-            Assert.IsType<IOException>(probe.Failure!.SourceException);
-        }
-        finally
-        {
-            File.Delete(repository);
-            Directory.Move(parkedRepository, repository);
-            fixture.Dispose();
-        }
-    }
-
-    [Fact]
-    public void RepositoryDirectoryProbeTreatsPathTooLongAsIndeterminate()
+    public void DisposeAggregatesOwnedDirectoryFailuresWithoutMaskingTheFirst()
     {
         var fixture = new CleanLanesFixture();
-        var pathTooLong = Path.Combine(
-            fixture.RepositoryWorkingDirectory,
-            new string('a', 8192));
-        fixture.SetRepositoryAttributesReader(_ => File.GetAttributes(pathTooLong));
+        var first = new IOException("temporary directory release failed");
+        var second = new UnauthorizedAccessException("worktree directory release failed");
+        fixture.SetOwnedDirectoryDisposer(
+            CleanLanesFixture.OwnedDirectory.Temporary,
+            () => throw first);
+        fixture.SetOwnedDirectoryDisposer(
+            CleanLanesFixture.OwnedDirectory.Worktrees,
+            () => throw second);
 
         try
         {
-            var probe = fixture.ProbeRepositoryDirectory();
+            var aggregate = Assert.Throws<AggregateException>(() => fixture.Dispose());
 
-            Assert.Equal(CleanLanesFixture.RepositoryDirectoryState.Indeterminate, probe.State);
-            Assert.IsType<PathTooLongException>(probe.Failure!.SourceException);
+            Assert.Equal([first, second], aggregate.InnerExceptions);
+            Assert.False(Directory.Exists(fixture.OwnedWorkingDirectory(
+                CleanLanesFixture.OwnedDirectory.Repository)));
         }
         finally
         {
-            fixture.RestoreRepositoryAttributesReader();
+            fixture.RestoreOwnedDirectoryDisposer(CleanLanesFixture.OwnedDirectory.Temporary);
+            fixture.RestoreOwnedDirectoryDisposer(CleanLanesFixture.OwnedDirectory.Worktrees);
             fixture.Dispose();
         }
     }

@@ -636,54 +636,36 @@ public sealed partial class CleanLanesCommandTests
 
         public void Dispose()
         {
-            var repositoryProbe = ProbeRepositoryDirectory();
-            ExceptionDispatchInfo? repositoryFailure = null;
-            switch (repositoryProbe.State)
-            {
-                case RepositoryDirectoryState.Absent:
-                    break;
-                case RepositoryDirectoryState.Indeterminate:
-                    repositoryFailure = repositoryProbe.Failure;
-                    break;
-                case RepositoryDirectoryState.Present:
-                {
-                    var inventory = BoundedProcessRunner.Run(
-                        "git",
-                        ["worktree", "list", "--porcelain"],
-                        repository.Path,
-                        TimeSpan.FromSeconds(30),
-                        1024 * 1024);
-                    if (inventory.ExitCode == 0)
-                    {
-                        var root = Path.GetFullPath(repository.Path);
-                        var paths = Encoding.UTF8.GetString(inventory.StandardOutput)
-                            .Split('\n', StringSplitOptions.RemoveEmptyEntries)
-                            .Where(static line => line.StartsWith("worktree ", StringComparison.Ordinal))
-                            .Select(static line => line["worktree ".Length..])
-                            .Where(path => !string.Equals(Path.GetFullPath(path), root, StringComparison.Ordinal))
-                            .ToArray();
-                        foreach (var path in paths)
-                        {
-                            BoundedProcessRunner.Run(
-                                "git",
-                                ["worktree", "remove", "--force", path],
-                                repository.Path,
-                                TimeSpan.FromSeconds(30),
-                                1024 * 1024);
-                        }
-                    }
+            var failures = new List<ExceptionDispatchInfo>();
+            CaptureCleanupFailure(disposeTemp, failures);
+            CaptureCleanupFailure(disposeWorktrees, failures);
+            CaptureCleanupFailure(disposeRepository, failures);
 
-                    break;
-                }
-                default:
-                    throw new InvalidOperationException(
-                        $"unknown repository directory state: {repositoryProbe.State}");
+            if (failures.Count == 1)
+            {
+                failures[0].Throw();
             }
 
-            temp.Dispose();
-            worktrees.Dispose();
-            repositoryFailure?.Throw();
-            repository.Dispose();
+            if (failures.Count > 1)
+            {
+                throw new AggregateException(
+                    "multiple owned directories could not be released",
+                    failures.Select(static failure => failure.SourceException));
+            }
+        }
+
+        private static void CaptureCleanupFailure(
+            Action cleanup,
+            ICollection<ExceptionDispatchInfo> failures)
+        {
+            try
+            {
+                cleanup();
+            }
+            catch (Exception exception)
+            {
+                failures.Add(ExceptionDispatchInfo.Capture(exception));
+            }
         }
 
         private string WorktreePath(string branch) =>

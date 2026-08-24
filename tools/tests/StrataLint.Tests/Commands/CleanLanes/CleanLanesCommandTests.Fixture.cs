@@ -1,4 +1,3 @@
-using System.Runtime.ExceptionServices;
 using System.Text;
 using StrataLint.Cli;
 using StrataLint.Engine;
@@ -9,33 +8,30 @@ public sealed partial class CleanLanesCommandTests
 {
     private sealed partial class CleanLanesFixture
     {
-        internal enum RepositoryDirectoryState
+        internal enum OwnedDirectory
         {
-            Absent,
-            Present,
-            Indeterminate,
+            Temporary,
+            Worktrees,
+            Repository,
         }
 
-        internal readonly record struct RepositoryDirectoryProbe(
-            RepositoryDirectoryState State,
-            ExceptionDispatchInfo? Failure = null);
-
-        private readonly TemporaryDirectory repository;
-        private readonly TemporaryDirectory worktrees;
-        private readonly TemporaryDirectory temp;
+        private readonly TemporaryDirectory repository = new();
+        private readonly TemporaryDirectory worktrees = new();
+        private readonly TemporaryDirectory temp = new();
+        private Action disposeRepository;
+        private Action disposeWorktrees;
+        private Action disposeTemp;
         private readonly Dictionary<string, PullRequestProbeOutcome> pullRequests =
             new(StringComparer.Ordinal);
         private readonly Dictionary<string, LaneProcessProbeOutcome> laneProcesses =
             new(StringComparer.Ordinal);
-        private Func<string, FileAttributes> repositoryAttributesReader = File.GetAttributes;
         private DateTimeOffset now;
 
-        internal CleanLanesFixture(TestScratchRoot? scratchRoot = null)
+        internal CleanLanesFixture()
         {
-            var root = scratchRoot ?? TestScratchRoot.Current;
-            repository = new TemporaryDirectory(root);
-            worktrees = new TemporaryDirectory(root);
-            temp = new TemporaryDirectory(root);
+            disposeRepository = repository.Dispose;
+            disposeWorktrees = worktrees.Dispose;
+            disposeTemp = temp.Dispose;
             Git(repository.Path, "init", "--initial-branch=dev");
             Git(repository.Path, "config", "user.email", "stratalint@example.invalid");
             Git(repository.Path, "config", "user.name", "StrataLint Tests");
@@ -55,35 +51,43 @@ public sealed partial class CleanLanesCommandTests
 
         internal string[] OwnedWorkingDirectories => [temp.Path, worktrees.Path, repository.Path];
 
-        internal void SetRepositoryAttributesReader(Func<string, FileAttributes> reader) =>
-            repositoryAttributesReader = reader;
-
-        internal void RestoreRepositoryAttributesReader() =>
-            repositoryAttributesReader = File.GetAttributes;
-
-        internal RepositoryDirectoryProbe ProbeRepositoryDirectory()
+        internal string OwnedWorkingDirectory(OwnedDirectory directory) => directory switch
         {
-            try
+            OwnedDirectory.Temporary => temp.Path,
+            OwnedDirectory.Worktrees => worktrees.Path,
+            OwnedDirectory.Repository => repository.Path,
+            _ => throw new ArgumentOutOfRangeException(nameof(directory), directory, null),
+        };
+
+        internal void SetOwnedDirectoryDisposer(OwnedDirectory directory, Action disposer)
+        {
+            ArgumentNullException.ThrowIfNull(disposer);
+            switch (directory)
             {
-                var attributes = repositoryAttributesReader(repository.Path);
-                return (attributes & FileAttributes.Directory) != 0
-                    ? new RepositoryDirectoryProbe(RepositoryDirectoryState.Present)
-                    : new RepositoryDirectoryProbe(
-                        RepositoryDirectoryState.Indeterminate,
-                        ExceptionDispatchInfo.Capture(new IOException(
-                            $"owned repository path is not a directory: {repository.Path}")));
-            }
-            catch (FileNotFoundException)
-            {
-                return new RepositoryDirectoryProbe(RepositoryDirectoryState.Absent);
-            }
-            catch (Exception exception) when (exception is UnauthorizedAccessException or IOException)
-            {
-                return new RepositoryDirectoryProbe(
-                    RepositoryDirectoryState.Indeterminate,
-                    ExceptionDispatchInfo.Capture(exception));
+                case OwnedDirectory.Temporary:
+                    disposeTemp = disposer;
+                    break;
+                case OwnedDirectory.Worktrees:
+                    disposeWorktrees = disposer;
+                    break;
+                case OwnedDirectory.Repository:
+                    disposeRepository = disposer;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(directory), directory, null);
             }
         }
+
+        internal void RestoreOwnedDirectoryDisposer(OwnedDirectory directory) =>
+            SetOwnedDirectoryDisposer(
+                directory,
+                directory switch
+                {
+                    OwnedDirectory.Temporary => temp.Dispose,
+                    OwnedDirectory.Worktrees => worktrees.Dispose,
+                    OwnedDirectory.Repository => repository.Dispose,
+                    _ => throw new ArgumentOutOfRangeException(nameof(directory), directory, null),
+                });
 
         internal string Head(string path) => Git(path, "rev-parse", "HEAD").Trim();
 
