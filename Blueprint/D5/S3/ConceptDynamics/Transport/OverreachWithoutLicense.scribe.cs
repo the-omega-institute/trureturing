@@ -44,12 +44,16 @@ internal sealed class OverreachWithoutLicenseDocument : IScribeDocumentDefinitio
                             + "license. No certificate validity or premise is inferred from the "
                             + "scope equations.")),
                     Paragraph(Text(
-                        "The source introduces the comparison codomain Delta without declaring an "
-                            + "order, then later uses a supremum, <= epsilon, and above-epsilon "
-                            + "language. The tolerance clause is therefore not a conjunct of this "
-                            + "theorem: supplying an order would add a source-absent premise. A "
-                            + "checked Boolean false neighbor records that old-scope tolerance can "
-                            + "fail after strict expansion without claiming an abstract Delta law.")),
+                        "Section 35 informally assumes that the record space carries a distance, "
+                            + "but it does not declare the comparison and supremum operations on "
+                            + "abstract Delta, or the laws for those operations, that Lean needs "
+                            + "for the later <= epsilon and above-epsilon notation. The tolerance "
+                            + "clause is therefore not a conjunct of this theorem. A checked Boolean "
+                            + "false neighbor records only that old-scope tolerance can fail after "
+                            + "strict expansion. This paragraph and the matching module comment are "
+                            + "human-readable only: they register neither digestion coverage nor an "
+                            + "unresolved subitem. Ingest currently has no path for a newly discovered "
+                            + "unresolved subitem; issue #3066 tracks that machine-registration gap.")),
                     Paragraph(Text(
                         "CAS defines Closed_J(S,T) exactly by emptiness of defectRelation after "
                             + "restricting S and T to J. A concrete two-operation witness has an "

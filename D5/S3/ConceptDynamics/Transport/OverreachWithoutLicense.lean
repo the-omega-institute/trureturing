@@ -90,11 +90,15 @@ def Overreach
     q.reportedScope = claimedScope ∧
     ¬LicensedReport semantics record q oldScope claimedScope
 
-/- CAS tolerance gap: the comparison codomain is introduced only as `Delta`,
-while the later tolerance notation uses a supremum, `≤`, and above-threshold
-language without declaring their structure or laws. No abstract tolerance
+/- CAS tolerance gap: section 35 informally assumes that the record space
+carries a distance, but it does not declare the comparison and supremum
+operations on abstract `Delta`, or the laws for those operations, that Lean
+needs for the later `≤` and above-threshold notation. No abstract tolerance
 predicate or theorem is claimed here. The concrete Boolean false neighbor below
-checks the scope-expansion phenomenon without supplying structure to `Delta`. -/
+checks only the scope-expansion phenomenon. This comment and the matching Scribe
+paragraph are human-readable only: they register neither digestion coverage nor
+an unresolved subitem. Ingest currently has no path for a newly discovered
+unresolved subitem; that machine-registration gap is tracked by issue #3066. -/
 
 /-- Restricting the canonical escape residual to a concrete old and expanded
 scope witnesses `Closed_J(S,T)` without `Closed_J'(S,T)`. -/
@@ -127,7 +131,8 @@ theorem domain_expansion_reopens_completion :
 /-- The source-valid clauses in one public package: licensing,
 unconditionalization, condition retention, overreach, reopening local
 completion, and the licensed route to an unconditional report. The tolerance
-clause is excluded because its abstract comparison codomain is underspecified. -/
+clause is excluded because the source does not provide the operations and laws
+needed to formalize its informal distance-based notation over abstract `Delta`. -/
 theorem overreach_without_license
     {Operation State Coordinate Payload Address ClaimVersion Error : Type*}
     (scope : Concept State Coordinate -> Set Operation)
@@ -536,8 +541,8 @@ theorem false_neighbor_scope_expansion_is_always_overreach :
 
 /-- False neighbor for the unresolved tolerance clause. With the concrete
 Boolean convention that deviation `false` is within tolerance, old-scope
-tolerance need not survive strict expansion. This supplies no abstract order on
-the source's comparison codomain. -/
+tolerance need not survive strict expansion. This does not supply the abstract
+comparison or supremum operations and laws missing from the formal interface. -/
 theorem false_neighbor_tolerance_survives_scope_expansion :
     ¬((∀ operation ∈ FiniteWitness.source,
           FalseNeighborWitness.booleanDeviation
