@@ -27,15 +27,14 @@ internal sealed class OverreachWithoutLicenseDocument : IScribeDocumentDefinitio
                             + "that the stored scope equals the explicit J', so the target domain "
                             + "cannot drift through a free argument.")),
                     Paragraph(Text(
-                        "ValidTransportCert is an abstract predicate parameter here. Its arguments "
-                            + "are the certificate, c, the old and claimed scopes, and Version(c). "
-                            + "LicensedReport requires NontrivialTransportCert: the predicate must "
-                            + "reject at least one input. Together with the accepted certificate "
-                            + "in a license, this excludes both constant interpretations without "
-                            + "creating a second validity definition.")),
+                        "ValidTransportCert is the concrete predicate imported from the transport-"
+                            + "certificate validity module. Its arguments bind the certificate to "
+                            + "the source record r, concept c, old and claimed scopes, and "
+                            + "Version(c); this module introduces no second validity definition.")),
                     Paragraph(Text(
                         "A license retains Gamma exactly as GivenPremises(kappa) conjoined with the "
-                            + "certificate's transport assumption. Therefore an unconditional "
+                            + "certificate's explicit transport-assumption obligations. Therefore "
+                            + "an unconditional "
                             + "licensed report exposes proofs of both conjuncts, while a missing "
                             + "conjunct prevents the condition from being discharged.")),
                     Paragraph(Text(
@@ -52,8 +51,8 @@ internal sealed class OverreachWithoutLicenseDocument : IScribeDocumentDefinitio
                             + "distinct readings at the selected new operation give Closed_J(S,T) "
                             + "and not Closed_J'(S,T), so expansion reopens local completion.")),
                     Paragraph(Text(
-                        "Conversely, when certificate validity is nontrivial and the report's "
-                            + "stored scope equals the claimed scope, a valid certificate together "
+                        "Conversely, when the report's stored scope equals the claimed scope, a "
+                            + "valid certificate together "
                             + "with every given premise and its transport assumption licenses the "
                             + "report whose retained condition is True. Without the premise and "
                             + "assumption proofs, the exact conditional statement remains the only "
@@ -72,6 +71,7 @@ internal sealed class OverreachWithoutLicenseDocument : IScribeDocumentDefinitio
     {
         Formula q = F.Id("q");
         Formula c = F.Id("c");
+        Formula record = F.Id("r");
         Formula oldScope = F.Id("J");
         Formula claimedScope = Seq(F.Id("J"), Apos);
         Formula certificate = Kappa;
@@ -80,21 +80,20 @@ internal sealed class OverreachWithoutLicenseDocument : IScribeDocumentDefinitio
         Formula validCertificate = Call(
             "ValidTransportCert",
             certificate,
+            record,
             c,
             oldScope,
             claimedScope,
             Call("Version", c));
         Formula premises = Call("GivenPremises", certificate);
-        Formula assumption = Call("TransportAssumption", certificate);
-        Formula nontrivialCertificate = Call(
-            "NontrivialTransportCert",
-            F.Id("ValidTransportCert"));
+        Formula assumption = Call(
+            "Holds",
+            Call("TransportAssumption", certificate));
         Formula completeCondition = Grp(
             gammaQ, Sp, Iff, Sp, premises, Sp, Land, Sp, assumption);
         Formula reportScope = Call("reportedScope", q);
         Formula licenseDefinition = Grp(
             licensed, Sp, Iff, Sp,
-            nontrivialCertificate, Sp, Land, Sp,
             reportScope, Sp, Eq, Sp, claimedScope, Sp, Land, Sp,
             Exists, Sp, certificate, Comma, Sp,
             validCertificate, Sp, Land, Sp, completeCondition);
@@ -118,7 +117,6 @@ internal sealed class OverreachWithoutLicenseDocument : IScribeDocumentDefinitio
         Formula toleranceCounterexample = ToleranceCounterexample(oldScope, claimedScope);
         Formula closureCounterexample = ClosureCounterexample(oldScope, claimedScope);
         Formula deconditioning = Grp(
-            nontrivialCertificate, Sp, Land, Sp,
             reportScope, Sp, Eq, Sp, claimedScope, Sp, Land, Sp,
             validCertificate, Sp, Land, Sp, premises, Sp, Land, Sp, assumption,
             Sp, Rightarrow, Sp,

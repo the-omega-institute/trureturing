@@ -6,15 +6,14 @@
    digest: Licensed reports retain transport conditions and expansion reopens completion. -/
 
 import D5.S3.ConceptDynamics.ConceptFiberDecomposition
+import D5.S3.ConceptDynamics.Transport.TransportCertificateValidity
 import Mathlib.Data.Set.Function
 
 /- Library-search audit trail (2026-08-24):
-   * Type-shape search
-     `rg -n --glob '*.lean' '^(structure|def) .*Report|TransportReport|
-     LicensedReport|ValidTransportCert|TransportCert' D5/S3/ConceptDynamics`
-     found `ProvenanceReport` and `ReportProfile`; they carry provenance checks
-     or state-indexed messages, not a concept, claimed scope, and retained
-     transport condition. No transport-license carrier or predicate was found.
+   * Type-shape search found the canonical `TransportCert`, `TruthRecord`,
+     `ClaimSemantics`, and `ValidTransportCert` declarations in the neighboring
+     `TransportCertificateValidity` module. They are imported and reused here;
+     this module defines no second certificate-validity predicate.
    * English synonym search
      `rg -n --glob '*.lean' 'overreach|unauthorized|unlicensed|license|scope|
      domain.*(extend|expan)|reopen|closure|completion' D5/S3/ConceptDynamics`
@@ -30,9 +29,10 @@ import Mathlib.Data.Set.Function
      `ls D5/S3/ConceptDynamics/Transport D5/S3/ConceptDynamics/Completion
      D5/S3/ConceptDynamics/DefinitionEscape` and
      `git grep -n -E '^def |^  def ' -- D5/S3/ConceptDynamics | head -60`
-     found no license or overreach definition. Exact hit `Concept` is reused.
-     Exact hit `defectRelation` remains the sole target-confusion relation; no
-     residual, escape, or pair-relation definition is introduced here.
+     found no license or overreach definition. Exact hits `Concept` and the
+     transport-certificate declarations are reused. Exact hit `defectRelation`
+     remains the sole target-confusion relation; no residual, escape, or
+     pair-relation definition is introduced here.
    * Pinned-Mathlib shape search
      `rg -n 'def EqOn|theorem ssubset_iff_exists|ssubset_iff_exists'
      .lake/packages/mathlib/Mathlib/Data/Set .lake/packages/mathlib/Mathlib`
@@ -45,6 +45,7 @@ set_option relaxedAutoImplicit false
 namespace D5.S3.ConceptDynamics.Transport.OverreachWithoutLicense
 
 open D5.S3.ConceptDynamics.ConceptFiberDecomposition
+open D5.S3.ConceptDynamics.Transport.TransportCertificateValidity
 
 /-- A transport report contains the transported concept, the scope it claims,
 and the condition retained in the report. -/
@@ -53,53 +54,39 @@ structure TransportReport (Operation State Coordinate : Type*) where
   reportedScope : Set Operation
   condition : Prop
 
-/-- An abstract certificate-validity predicate is nontrivial when it rejects at
-least one input. A licensed report supplies an accepted input separately, so
-the two obligations together rule out both constant interpretations. -/
-def NontrivialTransportCert
-    {Operation State Coordinate Certificate Version : Type*}
-    (validTransportCert : Certificate -> Concept State Coordinate ->
-      Set Operation -> Set Operation -> Version -> Prop) : Prop :=
-  ∃ certificate concept oldScope claimedScope certificateVersion,
-    ¬validTransportCert certificate concept oldScope claimedScope
-      certificateVersion
-
-/-- A report is licensed exactly when certificate validity is nontrivial and a
-valid transport certificate retains its full premises and transport assumption
-as the report condition. The separate certificate-validity module owns the
-abstract predicate and can later supply the stronger concrete interpretation. -/
+/-- A report is licensed exactly when a certificate satisfying the canonical
+transport-validity definition retains its full premises and explicit
+preservation obligations as the report condition. -/
 def LicensedReport
-    {Operation State Coordinate Certificate Version : Type*}
-    (validTransportCert : Certificate -> Concept State Coordinate ->
-      Set Operation -> Set Operation -> Version -> Prop)
-    (version : Concept State Coordinate -> Version)
-    (givenPremises transportAssumption : Certificate -> Prop)
+    {Operation State Coordinate Payload Address ClaimVersion Error : Type*}
+    (semantics :
+      ClaimSemantics Operation (Concept State Coordinate) Address ClaimVersion)
+    (record : TruthRecord Operation Payload Address ClaimVersion Error)
     (q : TransportReport Operation State Coordinate)
     (oldScope claimedScope : Set Operation) : Prop :=
-  NontrivialTransportCert validTransportCert ∧
-    q.reportedScope = claimedScope ∧
-      ∃ certificate,
-        validTransportCert certificate q.concept oldScope claimedScope
-            (version q.concept) ∧
-          (q.condition ↔
-            givenPremises certificate ∧ transportAssumption certificate)
+  q.reportedScope = claimedScope ∧
+    ∃ certificate :
+        TransportCert Operation Payload (Concept State Coordinate) Address
+          ClaimVersion Error oldScope claimedScope,
+      ValidTransportCert semantics certificate record q.concept
+          (Version semantics q.concept) ∧
+        (q.condition ↔
+          GivenPremises certificate ∧ certificate.transportAssumption.Holds)
 
 /-- Overreach is a strict scope expansion, correctly identifying the concept's
 old scope and the report's claimed scope, without a license for that report. -/
 def Overreach
-    {Operation State Coordinate Certificate Version : Type*}
+    {Operation State Coordinate Payload Address ClaimVersion Error : Type*}
     (scope : Concept State Coordinate -> Set Operation)
-    (validTransportCert : Certificate -> Concept State Coordinate ->
-      Set Operation -> Set Operation -> Version -> Prop)
-    (version : Concept State Coordinate -> Version)
-    (givenPremises transportAssumption : Certificate -> Prop)
+    (semantics :
+      ClaimSemantics Operation (Concept State Coordinate) Address ClaimVersion)
+    (record : TruthRecord Operation Payload Address ClaimVersion Error)
     (q : TransportReport Operation State Coordinate)
     (oldScope claimedScope : Set Operation) : Prop :=
   oldScope ⊂ claimedScope ∧
     scope q.concept = oldScope ∧
     q.reportedScope = claimedScope ∧
-    ¬LicensedReport validTransportCert version givenPremises
-      transportAssumption q oldScope claimedScope
+    ¬LicensedReport semantics record q oldScope claimedScope
 
 /-- Two records agree within a supplied deviation threshold on every operation
 in a given scope. -/
@@ -191,46 +178,46 @@ theorem domain_expansion_reopens_local_completion
 condition retention, overreach, the expansion counterexample, reopening local
 completion, and the licensed route to an unconditional report. -/
 theorem overreach_without_license
-    {Operation State Coordinate Certificate Version : Type*}
+    {Operation State Coordinate Payload Address ClaimVersion Error : Type*}
     (scope : Concept State Coordinate -> Set Operation)
-    (validTransportCert : Certificate -> Concept State Coordinate ->
-      Set Operation -> Set Operation -> Version -> Prop)
-    (version : Concept State Coordinate -> Version)
-    (givenPremises transportAssumption : Certificate -> Prop)
+    (semantics :
+      ClaimSemantics Operation (Concept State Coordinate) Address ClaimVersion)
+    (record : TruthRecord Operation Payload Address ClaimVersion Error)
     (q : TransportReport Operation State Coordinate)
     (oldScope claimedScope : Set Operation) :
-    (LicensedReport validTransportCert version givenPremises
-        transportAssumption q oldScope claimedScope ↔
-      NontrivialTransportCert validTransportCert ∧
-        q.reportedScope = claimedScope ∧
-          ∃ certificate,
-            validTransportCert certificate q.concept oldScope claimedScope
-                (version q.concept) ∧
-              (q.condition ↔ givenPremises certificate ∧
-                transportAssumption certificate)) ∧
-    (LicensedReport validTransportCert version givenPremises
-        transportAssumption q oldScope claimedScope ->
+    (LicensedReport semantics record q oldScope claimedScope ↔
+      q.reportedScope = claimedScope ∧
+        ∃ certificate :
+            TransportCert Operation Payload (Concept State Coordinate) Address
+              ClaimVersion Error oldScope claimedScope,
+          ValidTransportCert semantics certificate record q.concept
+              (Version semantics q.concept) ∧
+            (q.condition ↔ GivenPremises certificate ∧
+              certificate.transportAssumption.Holds)) ∧
+    (LicensedReport semantics record q oldScope claimedScope ->
       q.condition ->
-      ∃ certificate,
-        validTransportCert certificate q.concept oldScope claimedScope
-            (version q.concept) ∧
-          givenPremises certificate ∧ transportAssumption certificate) ∧
-    (LicensedReport validTransportCert version givenPremises
-        transportAssumption q oldScope claimedScope ->
-      ∃ certificate,
-        validTransportCert certificate q.concept oldScope claimedScope
-            (version q.concept) ∧
-          (q.condition ↔ givenPremises certificate ∧
-            transportAssumption certificate) ∧
-          ((¬givenPremises certificate ∨
-            ¬transportAssumption certificate) -> ¬q.condition)) ∧
-    (Overreach scope validTransportCert version givenPremises
-        transportAssumption q oldScope claimedScope ↔
+      ∃ certificate :
+          TransportCert Operation Payload (Concept State Coordinate) Address
+            ClaimVersion Error oldScope claimedScope,
+        ValidTransportCert semantics certificate record q.concept
+            (Version semantics q.concept) ∧
+          GivenPremises certificate ∧
+          certificate.transportAssumption.Holds) ∧
+    (LicensedReport semantics record q oldScope claimedScope ->
+      ∃ certificate :
+          TransportCert Operation Payload (Concept State Coordinate) Address
+            ClaimVersion Error oldScope claimedScope,
+        ValidTransportCert semantics certificate record q.concept
+            (Version semantics q.concept) ∧
+          (q.condition ↔ GivenPremises certificate ∧
+            certificate.transportAssumption.Holds) ∧
+          ((¬GivenPremises certificate ∨
+            ¬certificate.transportAssumption.Holds) -> ¬q.condition)) ∧
+    (Overreach scope semantics record q oldScope claimedScope ↔
       oldScope ⊂ claimedScope ∧
         scope q.concept = oldScope ∧
         q.reportedScope = claimedScope ∧
-        ¬LicensedReport validTransportCert version givenPremises
-          transportAssumption q oldScope claimedScope) ∧
+        ¬LicensedReport semantics record q oldScope claimedScope) ∧
     (∀ (deviation : Coordinate -> Coordinate -> Nat) (epsilon : Nat)
         {localScope expandedScope : Set Operation},
       localScope ⊂ expandedScope ->
@@ -247,22 +234,22 @@ theorem overreach_without_license
       ∃ system target : Concept Operation Coordinate,
         LocallyClosed localScope system target ∧
           ¬LocallyClosed expandedScope system target) ∧
-    (∀ certificate,
-      NontrivialTransportCert validTransportCert ->
+    (∀ certificate :
+        TransportCert Operation Payload (Concept State Coordinate) Address
+          ClaimVersion Error oldScope claimedScope,
       q.reportedScope = claimedScope ->
-      validTransportCert certificate q.concept oldScope claimedScope
-        (version q.concept) ->
-      givenPremises certificate ->
-      transportAssumption certificate ->
-      LicensedReport validTransportCert version givenPremises
-        transportAssumption { q with condition := True }
+      ValidTransportCert semantics certificate record q.concept
+        (Version semantics q.concept) ->
+      GivenPremises certificate ->
+      certificate.transportAssumption.Holds ->
+      LicensedReport semantics record { q with condition := True }
         oldScope claimedScope) := by
   refine ⟨Iff.rfl, ?_, ?_, Iff.rfl, ?_, ?_, ?_⟩
-  · rintro ⟨_, _, certificate, certificateValid, exactCondition⟩ conditionHolds
+  · rintro ⟨_, certificate, certificateValid, exactCondition⟩ conditionHolds
     exact ⟨certificate, certificateValid,
       (exactCondition.mp conditionHolds).1,
       (exactCondition.mp conditionHolds).2⟩
-  · rintro ⟨_, _, certificate, certificateValid, exactCondition⟩
+  · rintro ⟨_, certificate, certificateValid, exactCondition⟩
     refine ⟨certificate, certificateValid, exactCondition, ?_⟩
     rintro (premisesMissing | assumptionMissing) conditionHolds
     · exact premisesMissing (exactCondition.mp conditionHolds).1
@@ -273,87 +260,115 @@ theorem overreach_without_license
       unchangedWithin largeDeviation
   · intro localScope expandedScope strictExpansion distinctReadings
     exact domain_expansion_reopens_local_completion strictExpansion distinctReadings
-  · intro certificate nontrivial reportedScopeMatches certificateValid
+  · intro certificate reportedScopeMatches certificateValid
       premisesHold assumptionHolds
-    refine ⟨nontrivial, reportedScopeMatches, certificate, certificateValid, ?_⟩
+    refine ⟨reportedScopeMatches, certificate, certificateValid, ?_⟩
     simp [premisesHold, assumptionHolds]
 
 /-- Downstream probe: the public package exposes both premise proofs from an
 unconditional licensed report; they are not proof-local assumptions. -/
 example
-    {Operation State Coordinate Certificate Version : Type*}
+    {Operation State Coordinate Payload Address ClaimVersion Error : Type*}
     (scope : Concept State Coordinate -> Set Operation)
-    (validTransportCert : Certificate -> Concept State Coordinate ->
-      Set Operation -> Set Operation -> Version -> Prop)
-    (version : Concept State Coordinate -> Version)
-    (givenPremises transportAssumption : Certificate -> Prop)
+    (semantics :
+      ClaimSemantics Operation (Concept State Coordinate) Address ClaimVersion)
+    (record : TruthRecord Operation Payload Address ClaimVersion Error)
     (q : TransportReport Operation State Coordinate)
     (oldScope claimedScope : Set Operation)
-    (licensed : LicensedReport validTransportCert version givenPremises
-      transportAssumption q oldScope claimedScope)
+    (licensed : LicensedReport semantics record q oldScope claimedScope)
     (unconditional : q.condition) :
-    ∃ certificate,
-      validTransportCert certificate q.concept oldScope claimedScope
-          (version q.concept) ∧
-        givenPremises certificate ∧ transportAssumption certificate := by
-  exact (overreach_without_license scope validTransportCert version
-    givenPremises transportAssumption q oldScope claimedScope).2.1
+    ∃ certificate :
+        TransportCert Operation Payload (Concept State Coordinate) Address
+          ClaimVersion Error oldScope claimedScope,
+      ValidTransportCert semantics certificate record q.concept
+          (Version semantics q.concept) ∧
+        GivenPremises certificate ∧
+        certificate.transportAssumption.Holds := by
+  exact (overreach_without_license scope semantics record q
+    oldScope claimedScope).2.1
       licensed unconditional
 
-/-- A constantly true certificate predicate cannot license any report. -/
-example :
-    let validTransportCert :
-        Unit -> Concept Bool Bool -> Set Bool -> Set Bool -> Unit -> Prop :=
-      fun _ _ _ _ _ => True
-    let q : TransportReport Bool Bool Bool :=
-      { concept := id, reportedScope := Set.univ, condition := True }
-    ¬LicensedReport validTransportCert (fun _ => ()) (fun _ => True)
-      (fun _ => True) q {false} Set.univ := by
-  simp [LicensedReport, NontrivialTransportCert]
+namespace FiniteLicensedWitness
 
-/-- A concrete finite interpretation accepts one certificate and rejects
-another. Its unconditional report is licensed, and that license blocks
-overreach. -/
+def semantics : ClaimSemantics Bool (Concept Bool Bool) Nat Nat where
+  claimAddress _claim := 11
+  version _claim := 7
+  claimOn _claim domain := domain = FiniteWitness.target
+
+def prediction :
+    FalsifiablePrediction Bool (Concept Bool Bool)
+      FiniteWitness.source FiniteWitness.target where
+  definedAt z := z = true
+  failsAt z := z = true
+  refutes z _claim := z = true
+  nonemptyFailure := by
+    exact ⟨true, FiniteWitness.true_mem_target_difference, rfl, rfl⟩
+
+def certificate :
+    TransportCert Bool Unit (Concept Bool Bool) Nat Nat Nat
+      FiniteWitness.source FiniteWitness.target where
+  receipt := FiniteWitness.receipt
+  transportAssumption := FiniteWitness.assumption
+  falsifiablePrediction := prediction
+
+theorem valid_certificate_for_report :
+    ValidTransportCert semantics certificate FiniteWitness.record id 7 := by
+  refine ⟨?_, ?_, ?_, ?_⟩
+  · simp [ReceiptMatches, ClaimAddress, semantics, certificate,
+      FiniteWitness.receipt, FiniteWitness.record]
+  · simp [GivenPremises, TransportAssumption.Holds, ClaimOn, semantics,
+      certificate, FiniteWitness.assumption]
+  · intro z hz
+    change z ∈ Set.univ ∧ z ∉ ({false} : Set Bool) at hz
+    cases z
+    · exact (hz.2 (by rfl)).elim
+    · rfl
+  · exact ⟨true, FiniteWitness.true_mem_target_difference, rfl, rfl, rfl⟩
+
+def impossibleSemantics : ClaimSemantics Bool (Concept Bool Bool) Nat Nat where
+  claimAddress _claim := 11
+  version _claim := 7
+  claimOn _claim _domain := False
+
+end FiniteLicensedWitness
+
+/-- A concrete certificate satisfying every clause of the canonical validity
+definition licenses an unconditional report, and that license blocks overreach. -/
 example :
-    let validTransportCert :
-        Bool -> Concept Bool Bool -> Set Bool -> Set Bool -> Unit -> Prop :=
-      fun certificate _ _ _ _ => certificate = true
     let q : TransportReport Bool Bool Bool :=
       { concept := id, reportedScope := Set.univ, condition := True }
-    LicensedReport validTransportCert (fun _ => ()) (fun _ => True)
-        (fun _ => True) q {false} Set.univ ∧
-      ¬Overreach (fun _ => {false}) validTransportCert (fun _ => ())
-        (fun _ => True) (fun _ => True) q {false} Set.univ := by
+    LicensedReport FiniteLicensedWitness.semantics FiniteWitness.record
+        q FiniteWitness.source FiniteWitness.target ∧
+      ¬Overreach (fun _ => FiniteWitness.source)
+        FiniteLicensedWitness.semantics FiniteWitness.record
+        q FiniteWitness.source FiniteWitness.target := by
   dsimp
-  have nontrivial :
-      NontrivialTransportCert
-        (fun (certificate : Bool) (_ : Concept Bool Bool) (_ _ : Set Bool)
-          (_ : Unit) => certificate = true) := by
-    exact ⟨false, id, ∅, ∅, (), by simp⟩
   have licensed :
-      LicensedReport
-        (fun (certificate : Bool) (_ : Concept Bool Bool) (_ _ : Set Bool)
-          (_ : Unit) => certificate = true)
-        (fun _ => ()) (fun _ => True) (fun _ => True)
+      LicensedReport FiniteLicensedWitness.semantics FiniteWitness.record
         { concept := id, reportedScope := Set.univ, condition := True }
-        {false} Set.univ := by
-    exact ⟨nontrivial, rfl, true, rfl, by simp⟩
+        FiniteWitness.source FiniteWitness.target := by
+    refine ⟨rfl, FiniteLicensedWitness.certificate,
+      FiniteLicensedWitness.valid_certificate_for_report, ?_⟩
+    simp [GivenPremises, TransportAssumption.Holds,
+      FiniteLicensedWitness.certificate, FiniteWitness.assumption]
   exact ⟨licensed, fun overreach => overreach.2.2.2 licensed⟩
 
-/-- With the same finite scope expansion but no valid certificate, the report
-is genuinely overreaching; the predicates are therefore not constant. -/
+/-- With the same finite scope expansion, semantics that make the transported
+claim false cannot license an unconditional report, so the report overreaches. -/
 example :
-    let validTransportCert :
-        Unit -> Concept Bool Bool -> Set Bool -> Set Bool -> Unit -> Prop :=
-      fun _ _ _ _ _ => False
     let q : TransportReport Bool Bool Bool :=
       { concept := id, reportedScope := Set.univ, condition := True }
-    Overreach (fun _ => {false}) validTransportCert (fun _ => ())
-      (fun _ => True) (fun _ => True) q {false} Set.univ := by
+    Overreach (fun _ => FiniteWitness.source)
+      FiniteLicensedWitness.impossibleSemantics FiniteWitness.record
+      q FiniteWitness.source FiniteWitness.target := by
   dsimp
   refine ⟨Set.ssubset_iff_exists.mpr ?_, rfl, rfl, ?_⟩
-  · exact ⟨Set.subset_univ _, true, Set.mem_univ true, by simp⟩
-  · simp [LicensedReport, NontrivialTransportCert]
+  · exact ⟨Set.subset_univ _, true, Set.mem_univ true,
+      by simp [FiniteWitness.source]⟩
+  · rintro ⟨_, certificate, certificateValid, exactCondition⟩
+    have claimOn := certificateValid.2.1 (exactCondition.mp True.intro)
+    change False at claimOn
+    exact claimOn
 
 /-- On the finite operation and reading type `Bool`, the records agree on the
 old singleton but both tolerance and local completion fail after expansion. -/
