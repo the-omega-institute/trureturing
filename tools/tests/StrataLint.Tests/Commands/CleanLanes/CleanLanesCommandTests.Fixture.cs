@@ -15,9 +15,9 @@ public sealed partial class CleanLanesCommandTests
             Repository,
         }
 
-        private readonly TemporaryDirectory repository = new();
-        private readonly TemporaryDirectory worktrees = new();
-        private readonly TemporaryDirectory temp = new();
+        private readonly TemporaryDirectory repository;
+        private readonly TemporaryDirectory worktrees;
+        private readonly TemporaryDirectory temp;
         private Action disposeRepository;
         private Action disposeWorktrees;
         private Action disposeTemp;
@@ -27,8 +27,12 @@ public sealed partial class CleanLanesCommandTests
             new(StringComparer.Ordinal);
         private DateTimeOffset now;
 
-        internal CleanLanesFixture()
+        internal CleanLanesFixture(TestScratchRoot? scratchRoot = null)
         {
+            var root = scratchRoot ?? TestScratchRoot.Current;
+            repository = new TemporaryDirectory(root);
+            worktrees = new TemporaryDirectory(root);
+            temp = new TemporaryDirectory(root);
             disposeRepository = repository.Dispose;
             disposeWorktrees = worktrees.Dispose;
             disposeTemp = temp.Dispose;
