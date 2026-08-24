@@ -50,10 +50,11 @@ internal sealed class OverreachWithoutLicenseDocument : IScribeDocumentDefinitio
                             + "distinct readings at the selected new operation give Closed_J(S,T) "
                             + "and not Closed_J'(S,T), so expansion reopens local completion.")),
                     Paragraph(Text(
-                        "Conversely, a valid certificate together with every given premise and its "
-                            + "transport assumption licenses the report whose retained condition is "
-                            + "True. Without those proofs, the exact conditional statement remains "
-                            + "the only licensed form.")),
+                        "Conversely, when the report's stored scope equals the claimed scope, a valid "
+                            + "certificate together with every given premise and its transport "
+                            + "assumption licenses the report whose retained condition is True. "
+                            + "Without the premise and assumption proofs, the exact conditional "
+                            + "statement remains the only licensed form.")),
                     Paragraph(Text(
                         "Repository type-shape, English and Chinese synonym, and neighboring-module "
                             + "searches found no transport-license or overreach definition. "
@@ -110,6 +111,7 @@ internal sealed class OverreachWithoutLicenseDocument : IScribeDocumentDefinitio
         Formula toleranceCounterexample = ToleranceCounterexample(oldScope, claimedScope);
         Formula closureCounterexample = ClosureCounterexample(oldScope, claimedScope);
         Formula deconditioning = Grp(
+            reportScope, Sp, Eq, Sp, claimedScope, Sp, Land, Sp,
             validCertificate, Sp, Land, Sp, premises, Sp, Land, Sp, assumption,
             Sp, Rightarrow, Sp,
             Call("LicensedReport", Subscript(q, F.Id("top")), oldScope, claimedScope));
