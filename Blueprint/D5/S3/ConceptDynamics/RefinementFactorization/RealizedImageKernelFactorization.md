@@ -8,7 +8,7 @@ Realized-image factorization is unique exactly under reverse kernel inclusion.
 
 $$\begin{gathered}\forall X, A, B: \operatorname{Type},\\{}q: X \to A, r: X \to B,\\{}(\exists! h: \operatorname{range}(r) \to \operatorname{range}(q), \operatorname{rangeFactorization}(q) = h \circ \operatorname{rangeFactorization}(r)) \Leftrightarrow (\operatorname{ker}(r) \subseteq \operatorname{ker}(q)).\end{gathered}$$
 
-*Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Refinement/RealizedImageKernelFactorization.realized_image_unique_factorization_iff_reverse_kernel` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/RefinementFactorization/RealizedImageKernelFactorization.realized_image_unique_factorization_iff_reverse_kernel` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -22,5 +22,5 @@ Surjectivity of the finer range factorization then forces any two commuting fact
 
 ## References
 
-- Truth anchor: `D5/S3/ConceptDynamics/Refinement/RealizedImageKernelFactorization.realized_image_unique_factorization_iff_reverse_kernel`
-- Dependency: [D5/S3/ConceptDynamics/Refinement/ConceptKernelOrderDuality](ConceptKernelOrderDuality.md)
+- Truth anchor: `D5/S3/ConceptDynamics/RefinementFactorization/RealizedImageKernelFactorization.realized_image_unique_factorization_iff_reverse_kernel`
+- Dependency: [D5/S3/ConceptDynamics/Refinement/ConceptKernelOrderDuality](../Refinement/ConceptKernelOrderDuality.md)

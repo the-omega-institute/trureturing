@@ -2,7 +2,7 @@ using static StrataLint.Scribe.DefinitionDsl;
 using static StrataLint.Scribe.FormulaDsl;
 using F = StrataLint.Scribe.FormulaDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.ConceptDynamics.Refinement;
+namespace StrataLint.Scribe.Blueprint.D5.S3.ConceptDynamics.RefinementFactorization;
 
 internal sealed class RealizedImageKernelFactorizationDocument : IScribeDocumentDefinition
 {
@@ -44,7 +44,7 @@ internal sealed class RealizedImageKernelFactorizationDocument : IScribeDocument
                 Describe.Lean(
                     DescribeId.Create("realized-image-unique-factorization-kernel-criterion"),
                     DeclarationHandle.Create(
-                        "D5/S3/ConceptDynamics/Refinement/"
+                        "D5/S3/ConceptDynamics/RefinementFactorization/"
                             + "RealizedImageKernelFactorization."
                             + "realized_image_unique_factorization_iff_reverse_kernel"),
                     H("Realized-image factorization is the reverse kernel criterion"),

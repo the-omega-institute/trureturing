@@ -1,6 +1,6 @@
-/- GID: D5/S3/ConceptDynamics/Refinement/RealizedImageKernelFactorization
+/- GID: D5/S3/ConceptDynamics/RefinementFactorization/RealizedImageKernelFactorization
    generality: G
-   mirror-B: D5/B/S3/ConceptDynamics/Refinement/RealizedImageKernelFactorization
+   mirror-B: D5/B/S3/ConceptDynamics/RefinementFactorization/RealizedImageKernelFactorization
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    digest: Realized-image factorization is unique exactly under reverse kernel inclusion. -/
@@ -27,7 +27,7 @@ import Mathlib.Data.Set.Image
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
-namespace D5.S3.ConceptDynamics.Refinement.RealizedImageKernelFactorization
+namespace D5.S3.ConceptDynamics.RefinementFactorization.RealizedImageKernelFactorization
 
 open D5.S3.ConceptDynamics.ConceptFiberDecomposition
 open D5.S3.ConceptDynamics.ConceptJoinUniversal
@@ -80,4 +80,4 @@ example : Concept Bool Bool := id
 
 #print axioms realized_image_unique_factorization_iff_reverse_kernel
 
-end D5.S3.ConceptDynamics.Refinement.RealizedImageKernelFactorization
+end D5.S3.ConceptDynamics.RefinementFactorization.RealizedImageKernelFactorization
