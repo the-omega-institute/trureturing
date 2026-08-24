@@ -5389,6 +5389,14 @@ P,Q:\Omega_{\mathrm{obs}}\times\Omega_{\mathrm{next}}\to[0,1].
 \sum_uP(h,u)=\sum_uQ(h,u).
 \]
 取已观察历史 \(h_*\) 及其末记录 \(z_*\)，要求共同边缘质量 \(p_{\mathrm{obs}}(h_*)=q_{\mathrm{obs}}(h_*)>0\)。固定第 54.3 部的 \(\operatorname{evaluate}\)、冻结承诺 \(K\)、被承诺行动 \(a\) 与预登记基线 \(b\)，并要求单记录命题 \(\operatorname{ScientificGain}(\operatorname{evaluate},K,z_*,a,b)\)。令实值损失 \(\operatorname{Loss}_K(-;u)\) 对两联合律绝对可积；在有限空间中这项仍作为显式检查。定义
+\(\Omega_{\mathrm{next}}\) 不直接冒充 \(\operatorname{Evidence}\)：固定全函数 \(\operatorname{nextEvidence}:\Omega_{\mathrm{next}}\to\operatorname{Evidence}\)，并在 OP6 中把同一 evaluator 实例化为 \(\operatorname{evaluate}:\operatorname{Comparator}\to\operatorname{Action}\to\operatorname{Evidence}\to\mathbb R\)。\(\operatorname{Loss}_K\) 不是另一个可选损失，而被唯一规定为
+\[
+\boxed{
+\operatorname{Loss}_K(x;u):=
+\operatorname{evaluate}(K.\operatorname{comparator},x,\operatorname{nextEvidence}(u))\in\mathbb R.
+}
+\]
+因此前件中的 \(\operatorname{ScientificGain}\) 与两个条件期望共用同一 \(\operatorname{evaluate}\) 及 \(K.\operatorname{comparator}\)；绝对可积检查就施于此实值映射，差分也只由它派生：
 \[
 \Delta_K(a,b;u):=\operatorname{Loss}_K(a;u)-\operatorname{Loss}_K(b;u).
 \]
@@ -5433,6 +5441,37 @@ P,Q:\Omega_{\mathrm{obs}}\times\Omega_{\mathrm{next}}\to[0,1].
 }
 \]
 分母明确为 OP1—OP6 六个父问题；一个 OP 即使拆成多个 atoms 也只计一次。评估截止事件为“本批六个 OP 全部消化为有稳定地址的 atoms，且下游首个结案批次完成时”；届时少于四个不扩域存活或少于三个以 kernel 定理/机器反模型结案即判本批预测失败。截止事件之前只记 open，不把未到期冒充成功。任一 OP 的真、假、独立性、复杂度或可识别性均未被预记为结论。
+
+上句的结算语义由以下有限账本状态覆盖。六个父问题的有限、非空稳定地址 atom 集记为 \(A_1,\ldots,A_6\)；六集在全部父 OP 首次完成 atomization 时同时冻结，此后不得增删成员。每个 atom 的状态恰取一值
+\[
+\mathsf{AtomState}:=\{\mathsf{proved},\mathsf{refuted},
+\mathsf{statement\mbox{-}revised},\mathsf{open}\}.
+\]
+每个 atom 以 \(\mathsf{open}\) 为初态，只能原子迁移到其余三个不可再改的终态；\(\mathsf{proved}\) 只由 kernel 定理触发，\(\mathsf{refuted}\) 只由机器核验的反模型触发。\(\mathsf{proved}\)、\(\mathsf{refuted}\) 和 \(\mathsf{open}\) 均保留该 atom 在 55.2 的原陈述与原作用域；任何陈述改写或作用域变更（含扩大）必须且只能记为 \(\mathsf{statement\mbox{-}revised}\)。对账本状态 \(s\)，每个父 OP 的唯一聚合值为
+\[
+\operatorname{Agg}_i(s):=
+\begin{cases}
+\mathsf{open},&\exists\alpha\in A_i,\ s(\alpha)=\mathsf{open};\\
+\mathsf{statement\mbox{-}revised},&\text{否则若存在该状态};\\
+\mathsf{refuted},&\text{否则若存在该状态};\\
+\mathsf{proved},&\text{否则}.
+\end{cases}
+\]
+优先序将任何混合状态映成唯一父级真值：有未决 atom 时父问题仍 open，全部已决时改写优先于反驳，反驳优先于全证成。再定义
+\[
+\operatorname{Survive}_i(s)\Longleftrightarrow
+\forall\alpha\in A_i,\ s(\alpha)\neq\mathsf{statement\mbox{-}revised},
+\qquad
+\operatorname{Closed}_i(s)\Longleftrightarrow
+\operatorname{Agg}_i(s)\in\{\mathsf{proved},\mathsf{refuted}\}.
+\]
+“存活”在 proved/refuted/open 混合中为真，恰在至少一个 atom 改写时为假；“结案”恰在全部 atoms 已由 kernel 定理或机器反模型决定且父聚合值为 proved/refuted 时为真。故每个父 OP 恰落入三个两两互斥且穷尽的账格之一：\(\mathsf{survive\mbox{-}open}\)、\(\mathsf{survive\mbox{-}closed}\)、\(\mathsf{revised}\)。
+
+截止点不再取外部“批次”：atom 状态迁移各自是带唯一 \(\operatorname{EventId}\) 的原子账本事件，令 \(s_{\le e}\) 为事件前缀的状态，并固定
+\[
+e_*:=\min\{e:\#\{i\in\{1,\ldots,6\}:\operatorname{Closed}_i(s_{\le e})\}=3\}.
+\]
+若该集为空则预测仍 \(\mathsf{open}\)；否则只在 \(s_{\le e_*}\) 上计算六个父 OP 的 \(\operatorname{Survive}\) 与 \(\operatorname{Closed}\) 计数并结算。运输批次边界不进入此最小前缀谓词，也不得重编号或重排原子事件；重分组同一 EventId 序列不改变结案账。
 
 ---
 
