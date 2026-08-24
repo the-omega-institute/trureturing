@@ -10,6 +10,7 @@ internal sealed class FiniteCoverCountingDocument : IScribeDocumentDefinition
     {
         Formula gamma = Gamma;
         Formula delta = Delta;
+        Formula indexType = F.Id("I");
         Formula state = F.Id("X");
         Formula q = F.Id("q");
         Formula target = F.Id("T");
@@ -42,9 +43,9 @@ internal sealed class FiniteCoverCountingDocument : IScribeDocumentDefinition
             finitePremises,
             FormulaLogicOperator.Implies,
             finiteSufficient);
-        Formula coverStatement = Disp(Seq(
+        Formula coverEquivalence = Seq(Open,
             Open, gammaBlind, Sp, Eq, Sp, Emptyset, Close, Sp, Leftrightarrow, Sp,
-            cutsCover, Comma, RowBreak, Grp(), finiteClause, Dot));
+            cutsCover, Close);
 
         Formula singletonDefinition = Seq(OpenBrace, definition, CloseBrace);
         Formula gammaWithDefinition = Call("union", gamma, singletonDefinition);
@@ -113,6 +114,11 @@ internal sealed class FiniteCoverCountingDocument : IScribeDocumentDefinition
             rateTwo,
             FormulaRelationOperator.LessThanOrEqual,
             rateOne);
+        Formula countedSet = F.Id("A");
+        Formula countingWeightDefinition = Seq(
+            Forall, Sp, countedSet, Comma, Sp,
+            Call("mass", countingWeight, countedSet), Sp, Eq, Sp,
+            Call("ncard", countedSet));
         Formula countingPremises = new Formula.Logic(
             groupedCandidateCostsNonnegative,
             FormulaLogicOperator.And,
@@ -123,14 +129,28 @@ internal sealed class FiniteCoverCountingDocument : IScribeDocumentDefinition
                     budgetOrdered,
                     FormulaLogicOperator.And,
                     positiveBaselineCount)));
-        Formula countingStatement = Disp(Seq(
+        Formula countingLaw = new Formula.Logic(
+            countingPremises,
+            FormulaLogicOperator.Implies,
+            countingAntitone);
+        Formula countingContext = Seq(
+            Typeclass("Finite", state), Comma, Sp,
+            Typeclass("DecidableEq", indexType), Comma, RowBreak,
+            countingWeightDefinition, Comma, RowBreak);
+        Formula countingStatement = Disp(Seq(countingContext, countingLaw, Dot));
+        Formula packagedStatement = Disp(Seq(
+            countingContext,
             new Formula.Logic(
-                countingPremises,
-                FormulaLogicOperator.Implies,
-                countingAntitone), Dot));
+                coverEquivalence,
+                FormulaLogicOperator.And,
+                new Formula.Logic(
+                    finiteClause,
+                    FormulaLogicOperator.And,
+                    countingLaw)), Dot));
 
         return DocumentDefinition.Create(ScribeNode.Create(
-            "Two residual-cover clauses are proved; two CAS laws remain open.",
+            "The two residual-cover clauses and counting antitonicity are proved; "
+                + "marginal capture needs a stronger weight interface.",
             H("Finite Cover and Counting"),
             Blocks(
                 Describe.Lean(
@@ -138,19 +158,21 @@ internal sealed class FiniteCoverCountingDocument : IScribeDocumentDefinition
                     DeclarationHandle.Create(
                         "D5/S3/ConceptDynamics/DefinitionEscape/FiniteCoverCounting."
                             + "finite_cover_counting"),
-                    H("Cut coverage and finite extraction"),
-                    StatementSource.FromAuthor(coverStatement),
+                    H("Finite cover and counting package"),
+                    StatementSource.FromAuthor(packagedStatement),
                     AssessedProvenance.FromRepo(),
                     Blocks(
                         Paragraph(Text(
                             "Candidate definitions are indexed by I with dependent codomains "
-                                + "V(i). The first conjunct is general in X. Only the second "
-                                + "conjunct lists Finite X, exactly where finite_subset_iUnion is "
-                                + "used to extract a finite subfamily.")),
+                                + "V(i). The packaged theorem has the Lean instances Finite X and "
+                                + "DecidableEq I. Its first conjunct is general in X; the second "
+                                + "retains the explicit Finite X premise used by "
+                                + "finite_subset_iUnion to extract a finite subfamily.")),
                         Paragraph(Text(
                             "finiteSelectionSufficientOnRange is the canonical Refines target "
                                 + "relation against Set.rangeFactorization of the selected joint "
-                                + "readout. The proof reuses inductive_sufficiency_criterion."))),
+                                + "readout. The proof reuses inductive_sufficiency_criterion. The "
+                                + "third conjunct is backed by counting_escape_antitone_law."))),
                     DescribeRole.Theorem),
                 Describe.Lean(
                     DescribeId.Create("marginal-capture-law"),
@@ -164,16 +186,19 @@ internal sealed class FiniteCoverCountingDocument : IScribeDocumentDefinition
                         "This Prop uses the two CAS definitions directly: residualEscapeMass(S) is "
                             + "M(S) = nu.mass(E(q join S; T)), and capturedEscapeMass(S) is "
                             + "F(S) = M(empty) - M(S). Gamma is contained in Delta and d is fresh "
-                            + "for Delta. It is not a theorem: identifying this difference with a "
-                            + "weighted union of cuts needs an additivity law, and proving diminishing "
-                            + "returns needs an appropriate submodularity law absent from EscapeWeight."))),
+                            + "for Delta. The theorem "
+                            + "marginal_capture_law_not_implied_by_escape_weight gives a counterexample "
+                            + "inside this weak Lean interface. Identifying the difference with a "
+                            + "weighted union of cuts needs additivity, and the source's diminishing-"
+                            + "returns argument needs the stronger measure semantics not carried by "
+                            + "EscapeWeight."))),
                     DescribeRole.Definition),
                 Describe.Lean(
                     DescribeId.Create("counting-escape-antitone-law"),
                     DeclarationHandle.Create(
                         "D5/S3/ConceptDynamics/DefinitionEscape/FiniteCoverCounting."
-                            + "countingEscapeAntitoneLaw"),
-                    H("CAS counting escape-rate statement"),
+                            + "counting_escape_antitone_law"),
+                    H("CAS counting escape-rate theorem"),
                     StatementSource.FromAuthor(countingStatement),
                     AssessedProvenance.FromRepo(),
                     Blocks(Paragraph(Text(
@@ -182,8 +207,13 @@ internal sealed class FiniteCoverCountingDocument : IScribeDocumentDefinition
                             + "nonnegative, so the empty selection has cost zero and is feasible; "
                             + "b1 <= b2 gives the displayed antitone direction. Every "
                             + "budgetedEscapeRate occurrence names q, the supplement, T, the summed "
-                            + "cost, countingWeight, and its budget. This declaration is not a theorem "
-                            + "and no counterexample to the CAS strategy model is claimed."))),
-                    DescribeRole.Definition))));
+                            + "cost, countingWeight, and its budget. Here countingWeight is the concrete "
+                            + "Lean weight mass(A) = ncard(A), under Finite X and DecidableEq I. The "
+                            + "empty selection proves feasibility at b1, and the generic budget theorem "
+                            + "then gives the result."))),
+                    DescribeRole.Theorem))));
     }
+
+    private static Formula Typeclass(string name, Formula argument) =>
+        Seq(OpenBracket, Operatorname, Grp(F.Id(name)), Open, argument, Close, CloseBracket);
 }

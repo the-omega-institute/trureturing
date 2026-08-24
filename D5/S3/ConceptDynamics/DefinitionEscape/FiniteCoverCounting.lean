@@ -3,7 +3,8 @@
    mirror-B: D5/B/S3/ConceptDynamics/DefinitionEscape/FiniteCoverCounting
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: Two finite-cover clauses hold; marginal and counting clauses remain open. -/
+   digest: Two finite-cover clauses and counting antitonicity hold; the weak
+   EscapeWeight interface does not imply marginal capture. -/
 
 import D5.S3.AnalyticClosure.Budget.BudgetedEscapeRateAntitone
 import D5.S3.ConceptDynamics.DefinitionEscape.BlindKernelObstruction
@@ -11,18 +12,18 @@ import D5.S3.ConceptDynamics.Refinement.InductiveSufficiency
 import Mathlib.Data.Fintype.EquivFin
 import Mathlib.Data.Set.Finite.Lattice
 
-/- Scope of this module: `finite_cover_counting` packages only the two clauses
-proved below. The marginal clause is retained only as a proposition over the
-CAS definitions
+/- Scope of this module: `finite_cover_counting` packages the two cover clauses
+and the counting clause proved below. The marginal clause is retained as a
+proposition over the CAS definitions
 
   M(S) = nu.mass (defectRelation (conceptJoin q (jointReadout S)) target),
   F(S) = M(empty) - M(S).
 
 `EscapeWeight` has no additivity or submodularity law from which its diminishing
-return could be proved. The counting clause is likewise only a proposition: it
-uses finite subsets of Gamma, summed nonnegative candidate costs, and the empty
-selection at a nonnegative budget. Neither open clause is part of the packaged
-theorem, and this module claims no counterexample to either CAS assertion. -/
+return could be proved. A concrete `EscapeWeight` below refutes the proposition
+at that weak interface; this does not refute the CAS measure semantics. The
+counting clause uses finite subsets of Gamma, summed nonnegative candidate
+costs, and the empty selection at a nonnegative budget, so it is provable. -/
 
 /- Library-search audit trail (2026-08-24):
    * Shape searches `rg -n 'Set \(X × X\)' D5/S3/ConceptDynamics` and
@@ -38,13 +39,13 @@ theorem, and this module claims no counterexample to either CAS assertion. -/
      `BudgetedEscapeRateAntitone.budgeted_escape_rate_bounds_and_antitone`.
      `coveredInputs` unions finite anchor suites of arbitrary inputs and has no
      target residual or definition kernel, so it does not state clause one.
-     The budget theorem ranges over an arbitrary `Strategy`; applying it to the
-     CAS model still requires a faithful finite-subset strategy encoding with
-     summed costs and its canonical empty selection. That encoding is stated
-     below, but no theorem about it is claimed here. The marginal formula is
-     also kept outside the packaged theorem: no equality between the CAS
-     difference `M(empty) - M(S)` and a weighted union of cuts is assumed,
-     because that step needs a mass additivity law absent from `EscapeWeight`.
+     The budget theorem ranges over an arbitrary `Strategy`. The faithful CAS
+     strategy below is `Finset Gamma`, with summed cost and a canonical empty
+     selection. At a nonnegative smaller budget that selection supplies the
+     theorem's nonempty feasible-value premise. The marginal formula remains
+     outside the package: rewriting the CAS difference `M(empty) - M(S)` as a
+     weighted union of cuts needs a mass additivity law absent from
+     `EscapeWeight`.
    * The neighboring `Experiments.experimentGain` is defined through that
      module's separate `targetDefects`, whereas this theory fixes
      `defectRelation` as the target-residual source. It is therefore not used
@@ -92,7 +93,7 @@ def finiteSelectionSufficientOnRange
 
 /-- The two source-valid cover clauses. The cut-cover equivalence is general;
 only finite-subfamily extraction assumes `Finite X`, inside its own premise. -/
-theorem finite_cover_counting
+theorem finite_cover_laws
     {I X C Target : Type*} {V : I → Type*}
     (Gamma : Set I) (definitions : ∀ i, Concept X (V i))
     (q : Concept X C) (target : Concept X Target) :
@@ -259,7 +260,7 @@ def finiteSelectionCost
 
 /-- The CAS counting escape-rate direction on finite subsets of `Gamma`.
 Nonnegative candidate costs and a nonnegative smaller budget make the empty
-selection feasible. This is registered as a proposition, not as a theorem. -/
+selection feasible. -/
 def countingEscapeAntitoneLaw
     {I X C Target : Type*} {V : I → Type*} [Finite X] [DecidableEq I]
     (Gamma : Set I) (definitions : ∀ i, Concept X (V i))
@@ -278,6 +279,170 @@ def countingEscapeAntitoneLaw
       budgetedEscapeRate q
         (finiteSelectionSupplement Gamma definitions) target
         (finiteSelectionCost Gamma candidateCost) countingWeight budget1
+
+/-- The CAS counting escape rate is antitone in the budget. The empty finite
+selection witnesses feasibility at the smaller nonnegative budget. -/
+theorem counting_escape_antitone_law
+    {I X C Target : Type*} {V : I → Type*} [Finite X] [DecidableEq I]
+    (Gamma : Set I) (definitions : ∀ i, Concept X (V i))
+    (q : Concept X C) (target : Concept X Target)
+    (candidateCost : I → Real) (budget1 budget2 : Real) :
+    countingEscapeAntitoneLaw Gamma definitions q target candidateCost
+      budget1 budget2 := by
+  let countingWeight : EscapeWeight (X × X) :=
+    { mass := fun set => (set.ncard : Real)
+      empty_mass := by simp
+      mass_nonnegative := fun set => Nat.cast_nonneg set.ncard }
+  change
+    ((∀ definition ∈ Gamma, 0 ≤ candidateCost definition) ∧
+        0 ≤ budget1 ∧ budget1 ≤ budget2 ∧
+        0 < countingWeight.mass (defectRelation q target)) →
+      budgetedEscapeRate q
+          (finiteSelectionSupplement Gamma definitions) target
+          (finiteSelectionCost Gamma candidateCost) countingWeight budget2 ≤
+        budgetedEscapeRate q
+          (finiteSelectionSupplement Gamma definitions) target
+          (finiteSelectionCost Gamma candidateCost) countingWeight budget1
+  rintro ⟨_candidateCostsNonnegative, budgetOneNonnegative, budgetOrder,
+    baselineMassPositive⟩
+  have escapeAtMostTotal (selection : Finset Gamma) :
+      countingWeight.mass
+          (defectRelation
+            (conceptJoin q
+              (finiteSelectionSupplement Gamma definitions selection)) target) ≤
+        countingWeight.mass (defectRelation q target) := by
+    change
+      ((defectRelation
+        (conceptJoin q
+          (finiteSelectionSupplement Gamma definitions selection)) target).ncard :
+          Real) ≤ (defectRelation q target).ncard
+    exact_mod_cast Set.ncard_le_ncard (by
+      rintro pair pairInDefect
+      exact ⟨congrArg Prod.fst pairInDefect.1, pairInDefect.2⟩)
+  have valuesNonempty :
+      (budgetedEscapeValues q
+        (finiteSelectionSupplement Gamma definitions) target
+        (finiteSelectionCost Gamma candidateCost) countingWeight budget1).Nonempty := by
+    let selection : Finset Gamma := ∅
+    refine ⟨countingWeight.mass
+        (defectRelation
+          (conceptJoin q
+            (finiteSelectionSupplement Gamma definitions selection)) target) /
+          countingWeight.mass (defectRelation q target),
+      selection, ?_, rfl⟩
+    change finiteSelectionCost Gamma candidateCost selection ≤ budget1
+    simpa [finiteSelectionCost, selection] using budgetOneNonnegative
+  exact (budgeted_escape_rate_bounds_and_antitone q
+    (finiteSelectionSupplement Gamma definitions) target
+    (finiteSelectionCost Gamma candidateCost) countingWeight
+    baselineMassPositive escapeAtMostTotal valuesNonempty).2 budgetOrder
+
+/-- The two cover laws and the counting escape-rate law, packaged together. -/
+theorem finite_cover_counting
+    {I X C Target : Type*} {V : I → Type*} [Finite X] [DecidableEq I]
+    (Gamma : Set I) (definitions : ∀ i, Concept X (V i))
+    (q : Concept X C) (target : Concept X Target)
+    (candidateCost : I → Real) (budget1 budget2 : Real) :
+    (defectRelation q target ∩
+          jointKernel (fun item : Gamma => definitions item.1) = ∅ ↔
+        (⋃ definition : Gamma,
+          defectRelation q target ∩
+            (conceptKernel (fun item : Gamma => definitions item.1)
+              definition)ᶜ) =
+          defectRelation q target) ∧
+      (Finite X ∧ defectRelation q target ∩
+          jointKernel (fun item : Gamma => definitions item.1) = ∅ →
+        finiteSelectionSufficientOnRange Gamma definitions q target) ∧
+      countingEscapeAntitoneLaw Gamma definitions q target candidateCost
+        budget1 budget2 := by
+  have coverPackage := finite_cover_laws Gamma definitions q target
+  exact ⟨coverPackage.1, coverPackage.2,
+    counting_escape_antitone_law Gamma definitions q target candidateCost
+      budget1 budget2⟩
+
+/- This counterexample lives inside the current CAS Lean interface: its weight
+has zero empty mass and nonnegative mass, exactly as `EscapeWeight` requires.
+It shows that those two laws do not imply marginal submodularity. The source's
+measure/additive-weight reading is stronger and is not refuted here. -/
+theorem marginal_capture_law_not_implied_by_escape_weight :
+    ∃ nu : EscapeWeight ((Bool × Bool) × (Bool × Bool)),
+      ¬marginalCaptureLaw (∅ : Set Bool) {false}
+        (fun index => if index then Prod.snd else Prod.fst)
+        (fun _ : Bool × Bool => ()) id true nu := by
+  let firstPair : (Bool × Bool) × (Bool × Bool) :=
+    ((false, false), (true, false))
+  let secondPair : (Bool × Bool) × (Bool × Bool) :=
+    ((false, false), (false, true))
+  let nu : EscapeWeight ((Bool × Bool) × (Bool × Bool)) :=
+    { mass := fun set =>
+        @ite Real (secondPair ∈ set ∧ firstPair ∉ set)
+          (Classical.propDecidable _) 1 0
+      empty_mass := by simp
+      mass_nonnegative := by intro set; split_ifs <;> norm_num }
+  refine ⟨nu, ?_⟩
+  intro law
+  have inequality := law ⟨Set.empty_subset _, by simp⟩
+  have emptyResidualMass :
+      residualEscapeMass (∅ : Set Bool)
+        (fun index => if index then Prod.snd else Prod.fst)
+        (fun _ : Bool × Bool => ()) id nu = 0 := by
+    simp [residualEscapeMass, nu, firstPair, secondPair, defectRelation,
+      conceptJoin]
+    intro _secondEqual
+    funext item
+    exact False.elim item.2
+  have freshResidualMass :
+      residualEscapeMass ({true} : Set Bool)
+        (fun index => if index then Prod.snd else Prod.fst)
+        (fun _ : Bool × Bool => ()) id nu = 0 := by
+    simp [residualEscapeMass, nu, firstPair, secondPair, defectRelation,
+      conceptJoin]
+    intro _secondEqual
+    funext item
+    have itemTrue : item.1 = true := Set.mem_singleton_iff.mp item.2
+    simp [jointReadout, itemTrue]
+  have combinedResidualMass :
+      residualEscapeMass (({false} : Set Bool) ∪ {true})
+        (fun index => if index then Prod.snd else Prod.fst)
+        (fun _ : Bool × Bool => ()) id nu = 0 := by
+    simp [residualEscapeMass, nu, firstPair, secondPair, defectRelation,
+      conceptJoin]
+    intro secondEqual
+    let item : { index : Bool //
+        index ∈ (({false} : Set Bool) ∪ {true}) } := ⟨true, by simp⟩
+    have sameAtItem := congrFun secondEqual item
+    simp [jointReadout, item] at sameAtItem
+  have deltaSecondEqual :
+      jointReadout
+          (fun item : ({false} : Set Bool) =>
+            if item.1 then Prod.snd else Prod.fst) (false, false) =
+        jointReadout
+          (fun item : ({false} : Set Bool) =>
+            if item.1 then Prod.snd else Prod.fst) (false, true) := by
+    funext item
+    have itemFalse : item.1 = false := Set.mem_singleton_iff.mp item.2
+    simp [jointReadout, itemFalse]
+  have deltaFirstDifferent :
+      jointReadout
+          (fun item : ({false} : Set Bool) =>
+            if item.1 then Prod.snd else Prod.fst) (false, false) ≠
+        jointReadout
+          (fun item : ({false} : Set Bool) =>
+            if item.1 then Prod.snd else Prod.fst) (true, false) := by
+    intro sameReadout
+    let item : ({false} : Set Bool) := ⟨false, by simp⟩
+    have sameAtItem := congrFun sameReadout item
+    simp [jointReadout, item] at sameAtItem
+  have deltaResidualMass :
+      residualEscapeMass ({false} : Set Bool)
+        (fun index => if index then Prod.snd else Prod.fst)
+        (fun _ : Bool × Bool => ()) id nu = 1 := by
+    simp [residualEscapeMass, nu, firstPair, secondPair, defectRelation,
+      conceptJoin]
+    exact ⟨deltaSecondEqual, deltaFirstDifferent⟩
+  simp only [Set.empty_union, capturedEscapeMass, emptyResidualMass,
+    freshResidualMass, combinedResidualMass, deltaResidualMass] at inequality
+  norm_num at inequality
 
 /- The selected Boolean coordinate has codomain `Bool`, while the other
 candidate has codomain `Unit`; this witnesses the genuinely dependent family
@@ -316,7 +481,7 @@ example :
     have pairEqual : pair.1 = pair.2 := by
       simpa [conceptKernel, definitions, V] using pairInIdentityKernel
     exact pairInDefect.2 (congrArg target pairEqual)
-  have package := finite_cover_counting Gamma definitions q target
+  have package := finite_cover_laws Gamma definitions q target
   exact ⟨baselineNonempty, residualEmpty,
     package.2 ⟨inferInstance, residualEmpty⟩⟩
 
@@ -394,5 +559,7 @@ example :
     exact Bool.false_ne_true (factors extensionEqual)
 
 #print axioms finite_cover_counting
+#print axioms counting_escape_antitone_law
+#print axioms marginal_capture_law_not_implied_by_escape_weight
 
 end D5.S3.ConceptDynamics.DefinitionEscape.FiniteCoverCounting
