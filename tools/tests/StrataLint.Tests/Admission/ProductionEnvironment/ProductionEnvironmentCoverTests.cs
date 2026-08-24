@@ -185,7 +185,7 @@ public sealed partial class ProductionEnvironmentTests
     }
 
     [Fact]
-    public void AlignRepairsScribeReceiptWhilePreservingCoverageMismatchDiagnostic()
+    public void AlignRejectsCoverageReceiptMismatchBeforeWritingLedger()
     {
         var inputs = CoverWorld.Materialize(CoverWorld.StaleReceiptSpec());
         var entry = Assert.Single(
@@ -218,6 +218,7 @@ public sealed partial class ProductionEnvironmentTests
         DirectoryLedgerTestSupport.ReplaceWithProjection(driftedFiles, driftedDocument);
         using var temporary = new TemporaryDirectory();
         DirectoryLedgerTestSupport.Write(temporary.Path, driftedFiles);
+        var before = DirectoryLedgerTestSupport.Image(temporary.Path);
         var console = new BufferedConsole();
 
         var exitCode = CliApplication.Run(
@@ -225,21 +226,10 @@ public sealed partial class ProductionEnvironmentTests
             CoverWorld.Environment(temporary.Path, inputs, driftedFiles),
             console);
 
-        Assert.True(exitCode == 0, $"exit_code={exitCode} stderr={console.Error}");
-        Assert.Equal(string.Empty, console.Error);
-        Assert.Contains("ledger_changed=true", console.Output, StringComparison.Ordinal);
-        var alignedLedger = DirectoryLedgerTestSupport.Image(
-            BackfillInventoryLoader.LoadRoot(temporary.Path));
-        Assert.NotEqual(
-            DirectoryLedgerTestSupport.Image(driftedDocument),
-            alignedLedger);
-        var alignedFiles = FilesWithLedgerFromRoot(driftedFiles, temporary.Path);
-        var status = CoverWorld.Environment(temporary.Path, inputs, alignedFiles)
-            .DigestStatus(Array.Empty<string>());
-        Assert.False(status.Success);
-        Assert.Contains("coverage-receipt-mismatch", status.Error, StringComparison.Ordinal);
-        Assert.DoesNotContain("scribe-definition-mismatch", status.Error, StringComparison.Ordinal);
-        Assert.DoesNotContain("scribe-emission-mismatch", status.Error, StringComparison.Ordinal);
+        Assert.Equal(2, exitCode);
+        Assert.Equal(string.Empty, console.Output);
+        Assert.Contains("coverage-receipt-mismatch", console.Error, StringComparison.Ordinal);
+        Assert.Equal(before, DirectoryLedgerTestSupport.Image(temporary.Path));
     }
 
     [Theory]
@@ -391,19 +381,90 @@ public sealed partial class ProductionEnvironmentTests
         Assert.Equal(inputs.Ledger, File.ReadAllText(outputPath));
     }
 
+    [Theory]
+    [InlineData("coverage-receipt-mismatch")]
+    [InlineData("scribe-definition-mismatch")]
+    [InlineData("scribe-emission-mismatch")]
+    public void CoverAtomRejectsReceiptIntegrityMismatchOnSiblingBeforeWritingLedger(string mismatchCode)
+    {
+        var materialized = CoverWorld.Materialize(new CoverSpec
+        {
+            OtherAtomBinding = ("receipt-gap-sibling", "D5/S0/Carrier/Probe.probe"),
+        });
+        var inputs = DirectoryInputs(WithSiblingReceiptMismatch(materialized, mismatchCode));
+        using var temporary = new TemporaryDirectory();
+        DirectoryLedgerTestSupport.Write(temporary.Path, inputs.Files);
+        var before = DirectoryLedgerTestSupport.Image(temporary.Path);
+        var environment = BuildCoverEnvironment(temporary.Path, inputs, inputs.Files);
+
+        var result = environment.CoverAtom(CoverArgs(inputs));
+
+        Assert.False(result.Success);
+        Assert.Contains("digest status is invalid", result.Error, StringComparison.Ordinal);
+        Assert.Contains(mismatchCode, result.Error, StringComparison.Ordinal);
+        Assert.DoesNotContain("coverage-gid-missing", result.Error, StringComparison.Ordinal);
+        Assert.Equal(before, DirectoryLedgerTestSupport.Image(temporary.Path));
+    }
+
+    [Theory]
+    [InlineData("coverage-receipt-mismatch")]
+    [InlineData("scribe-definition-mismatch")]
+    [InlineData("scribe-emission-mismatch")]
+    public void AlignScribeReceiptRejectsReceiptIntegrityMismatchOnSiblingBeforeWritingLedger(
+        string mismatchCode)
+    {
+        var materialized = CoverWorld.Materialize(CoverWorld.StaleReceiptSpec() with
+        {
+            OtherAtomBinding = ("receipt-gap-sibling", "D5/S0/Carrier/Probe.probe"),
+        });
+        var inputs = DirectoryInputs(WithSiblingReceiptMismatch(materialized, mismatchCode));
+        using var temporary = new TemporaryDirectory();
+        DirectoryLedgerTestSupport.Write(temporary.Path, inputs.Files);
+        var before = DirectoryLedgerTestSupport.Image(temporary.Path);
+        var environment = BuildCoverEnvironment(temporary.Path, inputs, inputs.Files);
+
+        var result = environment.AlignScribeReceipt(CoverWorld.AlignArgs(inputs));
+
+        Assert.False(result.Success);
+        Assert.Contains("digest status is invalid", result.Error, StringComparison.Ordinal);
+        Assert.Contains(mismatchCode, result.Error, StringComparison.Ordinal);
+        Assert.Equal(before, DirectoryLedgerTestSupport.Image(temporary.Path));
+    }
+
+    [Fact]
+    public void CoverAtomRejectsSiblingEvaluationFindingBeforeWritingLedger()
+    {
+        var materialized = CoverWorld.Materialize(new CoverSpec
+        {
+            OtherAtomBinding = ("finding-sibling", "D5/S0/Carrier/Probe.probe"),
+        });
+        var inputs = DirectoryInputs(WithSiblingDuplicateCoverageReceipt(materialized));
+        using var temporary = new TemporaryDirectory();
+        DirectoryLedgerTestSupport.Write(temporary.Path, inputs.Files);
+        var before = DirectoryLedgerTestSupport.Image(temporary.Path);
+        var environment = BuildCoverEnvironment(temporary.Path, inputs, inputs.Files);
+
+        var result = environment.CoverAtom(CoverArgs(inputs));
+
+        Assert.False(result.Success);
+        Assert.Contains("digest status is invalid", result.Error, StringComparison.Ordinal);
+        Assert.Contains("duplicate receipt", result.Error, StringComparison.Ordinal);
+        Assert.Equal(before, DirectoryLedgerTestSupport.Image(temporary.Path));
+    }
+
     [Fact]
     public void CoverAtomReplayIsByteIdenticalAndSecondRunIsRejected()
     {
         var inputs = DirectoryInputs(CoverWorld.Materialize(new CoverSpec()));
         using var temporary = new TemporaryDirectory();
         DirectoryLedgerTestSupport.Write(temporary.Path, inputs.Files);
-        var before = DirectoryLedgerImage(temporary.Path);
+        var before = DirectoryLedgerTestSupport.Image(temporary.Path);
 
         var first = BuildCoverEnvironment(temporary.Path, inputs, inputs.Files)
             .CoverAtom(CoverArgs(inputs));
 
         Assert.True(first.Success, first.Error);
-        var afterFirst = DirectoryLedgerImage(temporary.Path);
+        var afterFirst = DirectoryLedgerTestSupport.Image(temporary.Path);
         Assert.NotEqual(before, afterFirst);
 
         var replayFiles = FilesWithLedgerFromRoot(inputs.Files, temporary.Path);
@@ -412,7 +473,7 @@ public sealed partial class ProductionEnvironmentTests
 
         Assert.False(second.Success);
         Assert.Contains("already has coverage", second.Error, StringComparison.Ordinal);
-        Assert.Equal(afterFirst, DirectoryLedgerImage(temporary.Path));
+        Assert.Equal(afterFirst, DirectoryLedgerTestSupport.Image(temporary.Path));
     }
 
     private static CoverInputs DirectoryInputs(CoverInputs inputs) => inputs with
@@ -432,19 +493,96 @@ public sealed partial class ProductionEnvironmentTests
         return result;
     }
 
-    private static string DirectoryLedgerImage(string repositoryRoot)
+    private static CoverInputs WithSiblingReceiptMismatch(CoverInputs inputs, string mismatchCode)
     {
-        var root = Path.GetFullPath(repositoryRoot);
-        var paths = Directory.EnumerateFiles(
-                Path.Combine(root, BackfillInventoryLoader.RootPath.Replace('/', Path.DirectorySeparatorChar)),
-                "*",
-                SearchOption.AllDirectories)
-            .Order(StringComparer.Ordinal);
-        return string.Concat(paths.Select(path =>
-            Path.GetRelativePath(root, path).Replace(Path.DirectorySeparatorChar, '/')
-            + "\0"
-            + Convert.ToBase64String(File.ReadAllBytes(path))
-            + "\n"));
+        const string siblingAtomId = "receipt-gap-sibling";
+        var documentGid = inputs.Gid[..inputs.Gid.LastIndexOf('.')];
+        Assert.True(inputs.VerifiedEmissions!.TryGet(documentGid, out var verified));
+        var targetPath = documentGid + ".lean";
+        var targetSha256 = DigestionFingerprint.Compute(
+            Encoding.UTF8.GetBytes(inputs.Files[targetPath])).RawSha256;
+        var mismatchSha256 = "sha256:" + new string('c', 64);
+        var document = inputs.Document.WithDigestionSources(
+            inputs.Document.RequireDigestionSources()
+                .Select(source => source with
+                {
+                    Entries = source.Entries.Select(entry => entry.AtomId == siblingAtomId
+                        ? entry with
+                        {
+                            Receipts = entry.Receipts with
+                            {
+                                Coverage =
+                                [
+                                    new DigestionCoverageReceipt(
+                                        inputs.Gid,
+                                        entry.Fingerprints.RawSha256,
+                                        mismatchCode == "coverage-receipt-mismatch"
+                                            ? mismatchSha256
+                                            : targetSha256),
+                                ],
+                                Scribe =
+                                [
+                                    new DigestionScribeReceipt(
+                                        inputs.Gid,
+                                        mismatchCode == "scribe-definition-mismatch"
+                                            ? mismatchSha256
+                                            : verified.DefinitionSha256,
+                                        mismatchCode == "scribe-emission-mismatch"
+                                            ? mismatchSha256
+                                            : verified.EmissionSha256),
+                                ],
+                            },
+                        }
+                        : entry).ToImmutableArray(),
+                })
+                .ToImmutableArray());
+        var files = new Dictionary<string, string>(inputs.Files, StringComparer.Ordinal);
+        DirectoryLedgerTestSupport.ReplaceWithProjection(files, document);
+        return inputs with { Files = files, Document = document };
+    }
+
+    private static CoverInputs WithSiblingDuplicateCoverageReceipt(CoverInputs inputs)
+    {
+        const string siblingAtomId = "finding-sibling";
+        var documentGid = inputs.Gid[..inputs.Gid.LastIndexOf('.')];
+        Assert.True(inputs.VerifiedEmissions!.TryGet(documentGid, out var verified));
+        var targetSha256 = DigestionFingerprint.Compute(
+            Encoding.UTF8.GetBytes(inputs.Files[documentGid + ".lean"])).RawSha256;
+        var document = inputs.Document.WithDigestionSources(
+            inputs.Document.RequireDigestionSources()
+                .Select(source => source with
+                {
+                    Entries = source.Entries.Select(entry => entry.AtomId == siblingAtomId
+                        ? entry with
+                        {
+                            Receipts = entry.Receipts with
+                            {
+                                Coverage =
+                                [
+                                    new DigestionCoverageReceipt(
+                                        inputs.Gid,
+                                        entry.Fingerprints.RawSha256,
+                                        targetSha256),
+                                    new DigestionCoverageReceipt(
+                                        inputs.Gid,
+                                        entry.Fingerprints.RawSha256,
+                                        targetSha256),
+                                ],
+                                Scribe =
+                                [
+                                    new DigestionScribeReceipt(
+                                        inputs.Gid,
+                                        verified.DefinitionSha256,
+                                        verified.EmissionSha256),
+                                ],
+                            },
+                        }
+                        : entry).ToImmutableArray(),
+                })
+                .ToImmutableArray());
+        var files = new Dictionary<string, string>(inputs.Files, StringComparer.Ordinal);
+        DirectoryLedgerTestSupport.ReplaceWithProjection(files, document);
+        return inputs with { Files = files, Document = document };
     }
 
     private static ProductionCliEnvironment BuildCoverEnvironment(
