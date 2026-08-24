@@ -1,12 +1,14 @@
-/- GID: D5/S3/ConceptDynamics/DefinitionEscape/WeightedResidualCoverage
+/- GID: D5/S3/ConceptDynamics/ResidualCoverage/WeightedResidualCoverage
    generality: G
    mirror-B: none(waiver:formal-unit-only)
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: Finite weighted residual capture is a normalized monotone submodular set function with exact and approximate cover boundaries. -/
+   digest: Finite weighted residual capture is monotone submodular with cover boundaries. -/
 
 import Mathlib.Data.Finset.Basic
-import Mathlib.Tactic.Omega
+import Mathlib.Data.Finset.Sum
+import Mathlib.Data.Bool.AllAny
+import Mathlib.Algebra.Order.BigOperators.Group.Finset
 
 /- Library-search audit trail (2026-08-24):
    * DECT identifies finite definition selection with weighted coverage of target
@@ -20,14 +22,14 @@ import Mathlib.Tactic.Omega
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
-namespace D5.S3.ConceptDynamics.DefinitionEscape.WeightedResidualCoverage
+namespace D5.S3.ConceptDynamics.ResidualCoverage.WeightedResidualCoverage
 
 /-- A residual witness is covered when some selected definition separates it. -/
 def CoveredBy
     {Definition Residual : Type*} [DecidableEq Definition]
     (separates : Definition → Residual → Bool)
     (chosen : Finset Definition) (residual : Residual) : Bool :=
-  chosen.any (fun definition => separates definition residual)
+  decide (∃ definition ∈ chosen, separates definition residual = true)
 
 /-- The finite residual universe is covered pointwise. -/
 def ExactCover
@@ -43,7 +45,7 @@ def WeightedGain
     (residuals : Finset Residual) (weight : Residual → Nat)
     (separates : Definition → Residual → Bool)
     (chosen : Finset Definition) : Nat :=
-  ∑ residual in residuals,
+  ∑ residual ∈ residuals,
     if CoveredBy separates chosen residual then weight residual else 0
 
 /-- Total weight left uncovered. -/
@@ -52,7 +54,7 @@ def UncoveredWeight
     (residuals : Finset Residual) (weight : Residual → Nat)
     (separates : Definition → Residual → Bool)
     (chosen : Finset Definition) : Nat :=
-  ∑ residual in residuals,
+  ∑ residual ∈ residuals,
     if CoveredBy separates chosen residual then 0 else weight residual
 
 /-- Marginal weighted capture of one additional definition. -/
@@ -61,7 +63,7 @@ def MarginalGain
     (residuals : Finset Residual) (weight : Residual → Nat)
     (separates : Definition → Residual → Bool)
     (chosen : Finset Definition) (definition : Definition) : Nat :=
-  ∑ residual in residuals,
+  ∑ residual ∈ residuals,
     if (!CoveredBy separates chosen residual) &&
         separates definition residual then
       weight residual
@@ -120,11 +122,11 @@ theorem weightedGain_add_uncoveredWeight
     (chosen : Finset Definition) :
     WeightedGain residuals weight separates chosen +
         UncoveredWeight residuals weight separates chosen =
-      ∑ residual in residuals, weight residual := by
+      ∑ residual ∈ residuals, weight residual := by
   rw [WeightedGain, UncoveredWeight, ← Finset.sum_add_distrib]
   apply Finset.sum_congr rfl
   intro residual inResiduals
-  cases covered : CoveredBy separates chosen residual <;> simp [covered]
+  cases covered : CoveredBy separates chosen residual <;> simp
 
 /-- Weighted capture is monotone under inclusion. -/
 theorem weightedGain_mono
@@ -134,14 +136,15 @@ theorem weightedGain_mono
     {smaller larger : Finset Definition} (subset : smaller ⊆ larger) :
     WeightedGain residuals weight separates smaller ≤
       WeightedGain residuals weight separates larger := by
+  unfold WeightedGain
   apply Finset.sum_le_sum
   intro residual inResiduals
   cases smallerCovered : CoveredBy separates smaller residual with
-  | false => simp [WeightedGain, smallerCovered]
+  | false => simp
   | true =>
       have largerCovered :=
         coveredBy_mono separates subset residual smallerCovered
-      simp [WeightedGain, smallerCovered, largerCovered]
+      simp [largerCovered]
 
 /-- Remaining residual weight is antitone under inclusion. -/
 theorem uncoveredWeight_antitone
@@ -151,14 +154,15 @@ theorem uncoveredWeight_antitone
     {smaller larger : Finset Definition} (subset : smaller ⊆ larger) :
     UncoveredWeight residuals weight separates larger ≤
       UncoveredWeight residuals weight separates smaller := by
+  unfold UncoveredWeight
   apply Finset.sum_le_sum
   intro residual inResiduals
   cases largerCovered : CoveredBy separates larger residual with
-  | true => simp [UncoveredWeight, largerCovered]
+  | true => simp
   | false =>
       have smallerNotCovered :=
         coveredBy_eq_false_of_subset separates subset residual largerCovered
-      simp [UncoveredWeight, largerCovered, smallerNotCovered]
+      simp [smallerNotCovered]
 
 /-- Inserting one definition adds exactly its marginal gain. -/
 theorem weightedGain_insert
@@ -169,13 +173,33 @@ theorem weightedGain_insert
     WeightedGain residuals weight separates (insert definition chosen) =
       WeightedGain residuals weight separates chosen +
         MarginalGain residuals weight separates chosen definition := by
-  rw [WeightedGain, WeightedGain, MarginalGain,
-    ← Finset.sum_add_distrib]
+  unfold WeightedGain MarginalGain
+  rw [← Finset.sum_add_distrib]
   apply Finset.sum_congr rfl
   intro residual inResiduals
+  have insertedCoverage :
+      CoveredBy separates (insert definition chosen) residual =
+        (separates definition residual || CoveredBy separates chosen residual) := by
+    apply Bool.eq_iff_iff.2
+    rw [coveredBy_eq_true_iff, Bool.or_eq_true]
+    constructor
+    · rintro ⟨selected, selectedInInsert, selectedSeparates⟩
+      rcases Finset.mem_insert.mp selectedInInsert with selectedEq | selectedInChosen
+      · subst selected
+        exact Or.inl selectedSeparates
+      · exact Or.inr ((coveredBy_eq_true_iff separates chosen residual).2
+          ⟨selected, selectedInChosen, selectedSeparates⟩)
+    · rintro (definitionSeparates | alreadyCovered)
+      · exact ⟨definition, Finset.mem_insert_self definition chosen,
+          definitionSeparates⟩
+      · rcases (coveredBy_eq_true_iff separates chosen residual).1 alreadyCovered with
+          ⟨selected, selectedInChosen, selectedSeparates⟩
+        exact ⟨selected, Finset.mem_insert_of_mem selectedInChosen,
+          selectedSeparates⟩
+  rw [insertedCoverage]
   cases oldCovered : CoveredBy separates chosen residual <;>
     cases definitionSeparates : separates definition residual <;>
-      simp [CoveredBy, oldCovered, definitionSeparates]
+      simp
 
 /-- Diminishing returns: the same definition cannot capture more after the
 selected set has grown. -/
@@ -187,14 +211,15 @@ theorem marginalGain_antitone
     (definition : Definition) :
     MarginalGain residuals weight separates larger definition ≤
       MarginalGain residuals weight separates smaller definition := by
+  unfold MarginalGain
   apply Finset.sum_le_sum
   intro residual inResiduals
   cases largerCovered : CoveredBy separates larger residual with
-  | true => simp [MarginalGain, largerCovered]
+  | true => simp
   | false =>
       have smallerNotCovered :=
         coveredBy_eq_false_of_subset separates subset residual largerCovered
-      simp [MarginalGain, largerCovered, smallerNotCovered]
+      simp [smallerNotCovered]
 
 /-- Normalized submodularity in four-term form. -/
 theorem weightedGain_submodular_insert
@@ -262,4 +287,4 @@ example :
 #print axioms weightedGain_insert
 #print axioms exactCover_implies_approximate
 
-end D5.S3.ConceptDynamics.DefinitionEscape.WeightedResidualCoverage
+end D5.S3.ConceptDynamics.ResidualCoverage.WeightedResidualCoverage

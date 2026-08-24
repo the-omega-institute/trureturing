@@ -1,13 +1,12 @@
-/- GID: D5/S3/ConceptDynamics/DefinitionEscape/RefinementUltrametric
+/- GID: D5/S3/ConceptDynamics/RefinementGeometry/RefinementUltrametric
    generality: G
    mirror-B: none(waiver:formal-unit-only)
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: A finite definition history induces a canonical ultrametric pseudodistance by common agreement depth. -/
+   digest: A finite definition history induces an ultrametric by common agreement depth. -/
 
 import D5.S3.ConceptDynamics.ConceptFiberDecomposition
 import Mathlib.Data.Nat.Find
-import Mathlib.Tactic.Omega
 
 /- Library-search audit trail (2026-08-23):
    * `FiniteDiscussionStability` bounds the length of effective strict-refinement
@@ -19,7 +18,7 @@ import Mathlib.Tactic.Omega
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
-namespace D5.S3.ConceptDynamics.DefinitionEscape.RefinementUltrametric
+namespace D5.S3.ConceptDynamics.RefinementGeometry.RefinementUltrametric
 
 open D5.S3.ConceptDynamics.ConceptFiberDecomposition
 
@@ -51,7 +50,7 @@ theorem agreesThrough_mono
     (agreement : AgreesThrough Coordinate readout larger x y) :
     AgreesThrough Coordinate readout smaller x y := by
   intro level levelSmall
-  exact agreement level (levelSmall.trans_le depthOrder)
+  exact agreement level (lt_of_lt_of_le levelSmall depthOrder)
 
 /-- Agreement depth is symmetric. -/
 theorem agreesThrough_symm
@@ -108,7 +107,9 @@ theorem agreesThrough_commonDepth
       (commonDepth Coordinate readout horizon x y) x y := by
   classical
   unfold commonDepth
-  exact Nat.findGreatest_spec (Nat.zero_le horizon)
+  exact Nat.findGreatest_spec (P := fun depth =>
+      AgreesThrough Coordinate readout depth x y) (m := 0)
+    (Nat.zero_le horizon)
     (agreesThrough_zero Coordinate readout x y)
 
 /-- Common depth is symmetric. -/
@@ -205,7 +206,7 @@ theorem refinementDistance_ultrametric
   let depthYZ := commonDepth Coordinate readout horizon y z
   let sharedDepth := min depthXY depthYZ
   have sharedLeHorizon : sharedDepth ≤ horizon := by
-    exact (min_le_left depthXY depthYZ).trans
+    exact le_trans (min_le_left depthXY depthYZ)
       (commonDepth_le_horizon Coordinate readout horizon x y)
   have agreementXY : AgreesThrough Coordinate readout sharedDepth x y := by
     apply agreesThrough_mono Coordinate readout (min_le_left depthXY depthYZ)
@@ -265,7 +266,7 @@ private def bitCoordinate : Nat → Type
 
 private def bitReadout : (level : Nat) → Concept Bool (bitCoordinate level)
   | 0 => id
-  | _ => fun _ => ()
+  | _ + 1 => fun _ => ()
 
 private theorem bitReadout_separates :
     SeparatesByHorizon bitCoordinate bitReadout 1 := by
@@ -284,4 +285,4 @@ example :
 #print axioms refinementDistance_ultrametric
 #print axioms refinementDistance_eq_zero_iff_eq
 
-end D5.S3.ConceptDynamics.DefinitionEscape.RefinementUltrametric
+end D5.S3.ConceptDynamics.RefinementGeometry.RefinementUltrametric

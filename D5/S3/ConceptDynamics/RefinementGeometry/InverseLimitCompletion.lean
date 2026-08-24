@@ -1,9 +1,9 @@
-/- GID: D5/S3/ConceptDynamics/DefinitionEscape/InverseLimitCompletion
+/- GID: D5/S3/ConceptDynamics/RefinementGeometry/InverseLimitCompletion
    generality: G
    mirror-B: none(waiver:formal-unit-only)
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: A compatible refinement tower identifies states with its inverse-limit threads exactly under separation and completeness. -/
+   digest: A refinement tower matches states to its threads iff separating and complete. -/
 
 import D5.S3.ConceptDynamics.ConceptFiberDecomposition
 
@@ -21,7 +21,7 @@ set_option relaxedAutoImplicit false
 
 universe u v
 
-namespace D5.S3.ConceptDynamics.DefinitionEscape.InverseLimitCompletion
+namespace D5.S3.ConceptDynamics.RefinementGeometry.InverseLimitCompletion
 
 open D5.S3.ConceptDynamics.ConceptFiberDecomposition
 
@@ -36,7 +36,7 @@ structure RefinementSystem (X : Type u) where
 
 /-- An inverse-limit thread is a coordinate at every level satisfying all
 restriction equations. -/
-structure InverseThread {X : Type u} (system : RefinementSystem X) where
+@[ext] structure InverseThread {X : Type u} (system : RefinementSystem X) where
   value : (level : Nat) → system.Coordinate level
   compatible : ∀ level,
     system.restrict level (value (level + 1)) = value level
@@ -151,4 +151,4 @@ example : ThreadComplete identitySystem := by
 #print axioms stateThread_bijective_iff_complete_and_separates
 #print axioms all_stage_agreement_eq_of_separates
 
-end D5.S3.ConceptDynamics.DefinitionEscape.InverseLimitCompletion
+end D5.S3.ConceptDynamics.RefinementGeometry.InverseLimitCompletion
