@@ -415,9 +415,13 @@ internal sealed class ReportSupervisorFixture : IDisposable
     {
         var path = Path.Combine(Root, name);
         File.WriteAllText(path, contents + "\n", new UTF8Encoding(false));
-        var chmod = BoundedProcessRunner.Run(
-            "chmod", ["+x", path], Root, safetyTimeout, 4096);
-        Assert.Equal(0, chmod.ExitCode);
+        if (!OperatingSystem.IsWindows())
+        {
+            File.SetUnixFileMode(
+                path,
+                UnixFileMode.UserRead | UnixFileMode.UserWrite | UnixFileMode.UserExecute);
+        }
+
         return path;
     }
 

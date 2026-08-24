@@ -98,6 +98,9 @@ public sealed class EchoVerifyCommandTests
             status,
             false,
             residuals.Select(static residual =>
-                new DigestionGap("unresolved-subitem", residual)).ToImmutableArray());
+                new DigestionGap(
+                    "unresolved-subitem",
+                    residual,
+                    DigestionGapSeverity.NonFatal)).ToImmutableArray());
     }
 }

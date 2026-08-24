@@ -1,0 +1,17 @@
+ast_path: 定理/238.2
+fingerprints:
+  raw_sha256: sha256:f42e1ab03b36ffc4da50f81300c22418a9acfe563cc7d686208e65ed0ace298b
+  normalized_sha256: sha256:f42e1ab03b36ffc4da50f81300c22418a9acfe563cc7d686208e65ed0ace298b
+cas_ref: sha256:f42e1ab03b36ffc4da50f81300c22418a9acfe563cc7d686208e65ed0ace298b
+coverage_gids:
+  - D5/S3/ConceptDynamics/Coding/LosslessEncodingCriterion.lossless_iff_injective_on_image
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/Coding/LosslessEncodingCriterion.lossless_iff_injective_on_image
+      source_sha256: sha256:f42e1ab03b36ffc4da50f81300c22418a9acfe563cc7d686208e65ed0ace298b
+      target_sha256: sha256:9e6003e86474ff62852ef260ec3e6336271f2c3d517e8b2b1381fade21262a02
+  scribe:
+    - gid: D5/S3/ConceptDynamics/Coding/LosslessEncodingCriterion.lossless_iff_injective_on_image
+      definition_sha256: sha256:23827de79636e25fcc25921f41a2465e374f7ce5bdd06067d2a3d64a02af24e8
+      emission_sha256: sha256:64e4def0ad4c37c2d472e6dcf1e7b74f20d4f992c83faff94d8d154182fd1b0a
+  unresolved_subitems: []

@@ -104,7 +104,7 @@ internal static partial class CoverAtomCommand
                 verifiedScribeEmissions,
                 baselineDocument,
                 baselineSnapshot: baseline);
-            RequireNoFindings(beforeEvaluation);
+            RequireNoReceiptIntegrityFailure(beforeEvaluation);
 
             // Gate ②(b): anti-Goodhart — cover may only deposit a declaration that
             // the baseline ledger did not already bind.
@@ -163,7 +163,7 @@ internal static partial class CoverAtomCommand
                 baselineDocument,
                 validateProjectedStatus: false,
                 baselineSnapshot: baseline);
-            RequireNoFindings(derived);
+            RequireNoReceiptIntegrityFailure(derived);
 
             var statusByAtomId = derived.Entries.ToDictionary(
                 static item => item.Entry.AtomId,
@@ -196,7 +196,7 @@ internal static partial class CoverAtomCommand
                 verifiedScribeEmissions,
                 baselineDocument,
                 baselineSnapshot: baseline);
-            RequireNoFindings(evaluation);
+            RequireNoReceiptIntegrityFailure(evaluation);
             var backfillObservations = DigestionBackfillValidation.RequireValidBackfill(
                 finalDocument,
                 finalSnapshot,
@@ -554,12 +554,13 @@ internal static partial class CoverAtomCommand
     private static BackfillInventoryDocument LoadDocument(RepositorySnapshot snapshot) =>
         BackfillInventoryLoader.Load(snapshot);
 
-    private static void RequireNoFindings(DigestionLedgerEvaluation evaluation)
+    private static void RequireNoReceiptIntegrityFailure(DigestionLedgerEvaluation evaluation)
     {
-        if (evaluation.Findings.Length > 0)
+        if (evaluation.HasReceiptIntegrityFailure)
         {
             throw new InvalidOperationException(
-                "digest status is invalid: " + string.Join("; ", evaluation.Findings));
+                "digest status is invalid: "
+                + string.Join("; ", evaluation.ReceiptIntegrityFailureReasons));
         }
     }
 
