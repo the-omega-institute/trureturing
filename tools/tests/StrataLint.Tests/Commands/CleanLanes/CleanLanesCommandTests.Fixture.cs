@@ -20,9 +20,9 @@ public sealed partial class CleanLanesCommandTests
             RepositoryDirectoryState State,
             ExceptionDispatchInfo? Failure = null);
 
-        private readonly TemporaryDirectory repository = new();
-        private readonly TemporaryDirectory worktrees = new();
-        private readonly TemporaryDirectory temp = new();
+        private readonly TemporaryDirectory repository;
+        private readonly TemporaryDirectory worktrees;
+        private readonly TemporaryDirectory temp;
         private readonly Dictionary<string, PullRequestProbeOutcome> pullRequests =
             new(StringComparer.Ordinal);
         private readonly Dictionary<string, LaneProcessProbeOutcome> laneProcesses =
@@ -30,8 +30,12 @@ public sealed partial class CleanLanesCommandTests
         private Func<string, FileAttributes> repositoryAttributesReader = File.GetAttributes;
         private DateTimeOffset now;
 
-        internal CleanLanesFixture()
+        internal CleanLanesFixture(TestScratchRoot? scratchRoot = null)
         {
+            var root = scratchRoot ?? TestScratchRoot.Current;
+            repository = new TemporaryDirectory(root);
+            worktrees = new TemporaryDirectory(root);
+            temp = new TemporaryDirectory(root);
             Git(repository.Path, "init", "--initial-branch=dev");
             Git(repository.Path, "config", "user.email", "stratalint@example.invalid");
             Git(repository.Path, "config", "user.name", "StrataLint Tests");
@@ -70,10 +74,6 @@ public sealed partial class CleanLanesCommandTests
                             $"owned repository path is not a directory: {repository.Path}")));
             }
             catch (FileNotFoundException)
-            {
-                return new RepositoryDirectoryProbe(RepositoryDirectoryState.Absent);
-            }
-            catch (DirectoryNotFoundException)
             {
                 return new RepositoryDirectoryProbe(RepositoryDirectoryState.Absent);
             }

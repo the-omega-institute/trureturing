@@ -1,3 +1,4 @@
+using System.Runtime.ExceptionServices;
 using System.Text;
 using StrataLint.Cli;
 using StrataLint.Engine;
@@ -636,12 +637,13 @@ public sealed partial class CleanLanesCommandTests
         public void Dispose()
         {
             var repositoryProbe = ProbeRepositoryDirectory();
+            ExceptionDispatchInfo? repositoryFailure = null;
             switch (repositoryProbe.State)
             {
                 case RepositoryDirectoryState.Absent:
                     break;
                 case RepositoryDirectoryState.Indeterminate:
-                    repositoryProbe.Failure!.Throw();
+                    repositoryFailure = repositoryProbe.Failure;
                     break;
                 case RepositoryDirectoryState.Present:
                 {
@@ -680,6 +682,7 @@ public sealed partial class CleanLanesCommandTests
 
             temp.Dispose();
             worktrees.Dispose();
+            repositoryFailure?.Throw();
             repository.Dispose();
         }
 
