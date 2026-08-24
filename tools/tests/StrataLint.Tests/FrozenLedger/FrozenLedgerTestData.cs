@@ -81,7 +81,7 @@ internal static class FrozenLedgerTestData
         });
 
         return Assert.IsType<FrozenMaterialOutcome.Accepted>(
-            FrozenContentAddress.Build(snapshot, closure, dag, environment, attestations)).Capability;
+            FrozenContentAddress.Build(snapshot, closure, environment, attestations)).Capability;
     }
 
     internal static FrozenMaterialOutcome BuildCatalogOutcome(
@@ -114,7 +114,6 @@ internal static class FrozenLedgerTestData
         return FrozenContentAddress.Build(
             snapshot,
             closure,
-            dag,
             environment,
             Array.Empty<FrozenModuleAttestation>());
     }

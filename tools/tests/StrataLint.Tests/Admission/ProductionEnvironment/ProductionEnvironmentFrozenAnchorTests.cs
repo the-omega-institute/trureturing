@@ -107,11 +107,14 @@ public sealed partial class ProductionEnvironmentTests
             ImmutableHashSet<string>.Empty,
             TrustedFrozenGitReferences.CreateForTrustedAdapter([], []));
         var changes = RawChangeSet.CreateWithKinds([("lean-toolchain", RawChangeKind.Modified)]);
-        var scope = FrozenLedgerAdmissionScope.Create(changes, preparation, dag);
+        var scope = FrozenLedgerAdmissionScope.Create(
+            changes,
+            preparation,
+            LeanTruthStates.Resolve(snapshot, lean),
+            LeanImportAdjacency.Build(snapshot, lean));
         var catalog = DagLedgerCommandPreparation.BuildAdmissionCatalog(
             snapshot,
             lean,
-            dag,
             persistedView,
             scope,
             new FrozenRevisionIdentity(
