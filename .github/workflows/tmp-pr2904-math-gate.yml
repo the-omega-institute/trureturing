@@ -1,0 +1,55 @@
+name: Temporary PR 2904 mathematical gate
+
+on:
+  push:
+    branches:
+      - agent/theorist/finite-package-latent-escape
+
+permissions:
+  contents: read
+
+concurrency:
+  group: temporary-pr-2904-math-gate
+  cancel-in-progress: true
+
+jobs:
+  mathematical-gate:
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: agent/theorist/finite-package-latent-escape
+          fetch-depth: 0
+
+      - name: Install pinned SDK
+        uses: actions/setup-dotnet@v4
+        with:
+          global-json-file: global.json
+
+      - name: Install pinned Lean toolchain
+        shell: bash
+        run: |
+          set -euo pipefail
+          tools/scripts/workflow/install-lean-toolchain.sh lean-toolchain --github-path "$GITHUB_PATH"
+
+      - name: Build new mathematical modules
+        shell: bash
+        run: |
+          set -euo pipefail
+          lake env lean D5/S3/ConceptDynamics/DefinitionEscape/DefinitionKernelGalois.lean
+          lake env lean D5/S3/ConceptDynamics/DefinitionEscape/MultiTargetBlindResidual.lean
+          lake env lean D5/S3/ConceptDynamics/DefinitionEscape/RelativeSemanticDiagonal.lean
+          lake env lean D5/S3/ConceptDynamics/DefinitionEscape/WeightedResidualCoverage.lean
+          lake env lean D5/S3/ConceptDynamics/DefinitionEscape/LatentAdequacyCriterion.lean
+          lake env lean D5/S3/ConceptDynamics/DefinitionEscape/QuestionAlgebraDuality.lean
+          lake env lean D5/S3/ConceptDynamics/DefinitionEscape/MinimalTargetDistillation.lean
+          lake env lean D5/S3/ConceptDynamics/DefinitionEscape/RefinementUltrametric.lean
+          lake env lean D5/S3/ConceptDynamics/DefinitionEscape/InverseLimitCompletion.lean
+          lake env lean D5/S3/ConceptDynamics/Coding/ProductiveDiagonalEscapeCriterion.lean
+
+      - name: Run canonical test gate
+        shell: bash
+        run: |
+          set -euo pipefail
+          make test
