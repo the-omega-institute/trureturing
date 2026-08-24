@@ -84,7 +84,7 @@ theorem finite_cover_counting
           defectRelation q target) ∧
       (blindResidual Gamma q target = ∅ →
         finiteSelectionSufficient Gamma q target) ∧
-      (Gamma ⊆ Delta →
+      (Gamma ⊆ Delta ∧ d ∉ Delta →
         blindKernelReductionMeasure
             (fun set : Set (X × X) => (set.ncard : Real))
             Delta q target d ≤
@@ -181,7 +181,7 @@ theorem finite_cover_counting
         (languageExtension q (fun index => (definitions index).1)) target).2.2.1.mp
         joinedDefectEmpty with ⟨recover, recovery⟩
     exact ⟨n, definitions, recover, recovery⟩
-  · intro gammaSubsetDelta
+  · rintro ⟨gammaSubsetDelta, _dFresh⟩
     unfold blindKernelReductionMeasure
     have capturedSubset :
         blindResidual Delta q target ∩
@@ -304,42 +304,80 @@ example :
   · exact ((blind_kernel_obstruction
       (∅ : Set (Concept Bool Bool)) q target).2 residualNonempty).2.2
 
-/- Adding the identity definition exhausts the two captured ordered Boolean
-pairs, so its next marginal capture is zero while the empty-family marginal is
-strictly positive. -/
+/- The identity definition is fresh relative to the singleton Boolean-negation
+family. Negation already exhausts the two ordered residual pairs, so identity's
+marginal capture strictly decreases from the empty family to that larger
+family. The same strict inequality falsifies the reversed direction. -/
 example :
-    blindKernelReductionMeasure
+    let Gamma : Set (Concept Bool Bool) := ∅
+    let Delta : Set (Concept Bool Bool) := {fun value => !value}
+    let d : Concept Bool Bool := id
+    Gamma ⊆ Delta ∧ d ∉ Delta ∧
+      blindKernelReductionMeasure
         (fun set : Set (Bool × Bool) => (set.ncard : Real))
-        ({(id : Concept Bool Bool)} : Set (Concept Bool Bool)) (fun _ : Bool => ())
-        (id : Concept Bool Bool) (id : Concept Bool Bool) = 0 ∧
-      0 < blindKernelReductionMeasure
+        Delta (fun _ : Bool => ()) (id : Concept Bool Bool) d <
+      blindKernelReductionMeasure
         (fun set : Set (Bool × Bool) => (set.ncard : Real))
-        (∅ : Set (Concept Bool Bool)) (fun _ : Bool => ())
-        (id : Concept Bool Bool) (id : Concept Bool Bool) := by
-  have identityResidualEmpty :
-      blindResidual ({(id : Concept Bool Bool)} : Set (Concept Bool Bool))
+        Gamma (fun _ : Bool => ()) (id : Concept Bool Bool) d ∧
+      ¬blindKernelReductionMeasure
+          (fun set : Set (Bool × Bool) => (set.ncard : Real))
+          Gamma (fun _ : Bool => ()) (id : Concept Bool Bool) d ≤
+        blindKernelReductionMeasure
+          (fun set : Set (Bool × Bool) => (set.ncard : Real))
+          Delta (fun _ : Bool => ()) (id : Concept Bool Bool) d := by
+  dsimp only
+  have identityFresh :
+      (id : Concept Bool Bool) ∉
+        ({fun value : Bool => !value} : Set (Concept Bool Bool)) := by
+    intro identityInDelta
+    have identityEqualsNegation := Set.mem_singleton_iff.mp identityInDelta
+    have falseEqualsTrue := congrFun identityEqualsNegation false
+    simp at falseEqualsTrue
+  have negationResidualEmpty :
+      blindResidual
+        ({fun value : Bool => !value} : Set (Concept Bool Bool))
         (fun _ : Bool => ()) (id : Concept Bool Bool) = ∅ := by
     apply Set.eq_empty_iff_forall_notMem.2
     intro pair pairBlind
-    have pairInIdentityKernel :=
+    have pairInNegationKernel :=
       Set.mem_iInter.1 pairBlind.2
-        (⟨(id : Concept Bool Bool), Set.mem_singleton_iff.mpr rfl⟩ :
-          ({(id : Concept Bool Bool)} : Set (Concept Bool Bool)))
+        (⟨(fun value : Bool => !value), Set.mem_singleton_iff.mpr rfl⟩ :
+          ({fun value : Bool => !value} : Set (Concept Bool Bool)))
+    have negationEqual : (!pair.1) = (!pair.2) := by
+      simpa [conceptKernel] using pairInNegationKernel
     have pairEqual : pair.1 = pair.2 := by
-      simpa [conceptKernel] using pairInIdentityKernel
+      have twiceNegated := congrArg (fun value : Bool => !value) negationEqual
+      simpa using twiceNegated
     exact pairBlind.1.2 pairEqual
-  constructor
-  · rw [blindKernelReductionMeasure, identityResidualEmpty]
+  have largerMarginalZero :
+      blindKernelReductionMeasure
+          (fun set : Set (Bool × Bool) => (set.ncard : Real))
+          ({fun value : Bool => !value} : Set (Concept Bool Bool))
+          (fun _ : Bool => ()) (id : Concept Bool Bool) (id : Concept Bool Bool) = 0 := by
+    rw [blindKernelReductionMeasure, negationResidualEmpty]
     simp
-  · change 0 <
+  have emptyMarginalPositive : 0 <
       ((blindResidual (∅ : Set (Concept Bool Bool))
           (fun _ : Bool => ()) (id : Concept Bool Bool) ∩
         ({pair : Bool × Bool |
           Setoid.ker (id : Concept Bool Bool) pair.1 pair.2} :
-            Set (Bool × Bool))ᶜ).ncard : Real)
+            Set (Bool × Bool))ᶜ).ncard : Real) := by
     exact_mod_cast ((Set.ncard_pos (Set.toFinite _)).2
       ⟨(false, true), by
         simp [blindResidual, defectRelation, jointKernel, conceptKernel]⟩)
+  have strictDecrease :
+      blindKernelReductionMeasure
+          (fun set : Set (Bool × Bool) => (set.ncard : Real))
+          ({fun value : Bool => !value} : Set (Concept Bool Bool))
+          (fun _ : Bool => ()) (id : Concept Bool Bool) (id : Concept Bool Bool) <
+        blindKernelReductionMeasure
+          (fun set : Set (Bool × Bool) => (set.ncard : Real))
+          (∅ : Set (Concept Bool Bool))
+          (fun _ : Bool => ()) (id : Concept Bool Bool) (id : Concept Bool Bool) := by
+    rw [largerMarginalZero]
+    exact emptyMarginalPositive
+  exact ⟨Set.empty_subset _, identityFresh, strictDecrease,
+    not_le_of_gt strictDecrease⟩
 
 /- A zero-cost constant supplement leaves counting escape rate one, while the
 unit-cost identity supplement makes rate one attain zero. Thus the certified

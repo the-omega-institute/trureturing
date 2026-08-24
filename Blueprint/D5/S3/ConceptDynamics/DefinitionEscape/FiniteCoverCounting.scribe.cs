@@ -32,6 +32,10 @@ internal sealed class FiniteCoverCountingDocument : IScribeDocumentDefinition
         Formula largerMarginal = Seq(
             Call("blindKernelReductionMeasure", delta, q, target, definition),
             Underscore, Grp(F.Id("count")));
+        Formula marginalPremises = new Formula.Logic(
+            Seq(gamma, Sp, Subseteq, Sp, delta),
+            FormulaLogicOperator.And,
+            Seq(Neg, Open, definition, Sp, InMacro, Sp, delta, Close));
         Formula rateOne = Seq(
             Call("budgetedEscapeRate", budgetOne), Underscore, Grp(F.Id("count")));
         Formula rateTwo = Seq(
@@ -73,7 +77,7 @@ internal sealed class FiniteCoverCountingDocument : IScribeDocumentDefinition
             cutsCover, Comma, RowBreak, Grp(),
             Open, blind, Sp, Eq, Sp, Emptyset, Close, Sp, Rightarrow, Sp,
             finiteSufficient, Comma, RowBreak, Grp(),
-            gamma, Sp, Subseteq, Sp, delta, Sp, Rightarrow, Sp,
+            Open, marginalPremises, Close, Sp, Rightarrow, Sp,
             largerMarginal, Sp, Leq, Sp, marginal, Comma, RowBreak, Grp(),
             countingClause, Dot));
 
@@ -101,12 +105,14 @@ internal sealed class FiniteCoverCountingDocument : IScribeDocumentDefinition
                             + "the accepted target recovery criterion turns its empty joined "
                             + "defect into finiteSelectionSufficient.")),
                     Paragraph(Text(
-                        "For Gamma contained in Delta, every pair blind to Delta is blind to "
-                            + "Gamma. Set.ncard_le_ncard therefore makes the imported blind-kernel "
-                            + "reduction measure antitone in the accumulated definition family. "
-                            + "A Boolean example makes the inequality strict: identity capture "
-                            + "has positive marginal from the empty family and zero after identity "
-                            + "has already been added.")),
+                        "For Gamma contained in Delta and a candidate d not already in Delta, "
+                            + "every pair blind to Delta is blind to Gamma. Set.ncard_le_ncard "
+                            + "therefore makes the imported blind-kernel reduction measure "
+                            + "antitone in the accumulated definition family. A Boolean example "
+                            + "makes the inequality strict while respecting freshness: identity "
+                            + "is absent from the singleton negation family, but negation has "
+                            + "already exhausted the same residual pairs, so identity capture "
+                            + "falls from positive to zero.")),
                     Paragraph(Text(
                         "The counting escape-rate conjunct is not reproved. It instantiates the "
                             + "second conjunct of budgeted_escape_rate_bounds_and_antitone with "
