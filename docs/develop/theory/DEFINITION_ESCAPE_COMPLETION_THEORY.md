@@ -5436,18 +5436,24 @@ P,Q:\Omega_{\mathrm{obs}}\times\Omega_{\mathrm{next}}\to[0,1].
 &=\text{不预记无地址 atom 数量；按父 OP 去重计数};
 \\
 \operatorname{falsifiable\_prediction}
-&=\text{评估时六个 OP 中至少四个不扩作用域存活，至少三个由 kernel 定理或机器反模型结案}.
+&=\text{在全部冻结 atoms 首次全达终态的账本前缀上，六个 OP 中至少四个不扩作用域存活，至少三个由 kernel 定理或机器反模型结案}.
 \end{aligned}
 }
 \]
-分母明确为 OP1—OP6 六个父问题；一个 OP 即使拆成多个 atoms 也只计一次。评估截止事件为“本批六个 OP 全部消化为有稳定地址的 atoms，且下游首个结案批次完成时”；届时少于四个不扩域存活或少于三个以 kernel 定理/机器反模型结案即判本批预测失败。截止事件之前只记 open，不把未到期冒充成功。任一 OP 的真、假、独立性、复杂度或可识别性均未被预记为结论。
+分母明确为 OP1—OP6 六个父问题；一个 OP 即使拆成多个 atoms 也只计一次。评估截止事件为“全部冻结 atoms 首次全部处于 proved/refuted/statement-revised 终态的账本前缀”，与成功阈值及结案顺序独立；存活数与结案数都只在该前缀上求值。该前缀存在时，少于四个不扩域存活或少于三个以 kernel 定理/机器反模型结案即判本批预测失败；此前只记 open，不把未到期冒充成功。任一 OP 的真、假、独立性、复杂度或可识别性均未被预记为结论。
 
-上句的结算语义由以下有限账本状态覆盖。六个父问题的有限、非空稳定地址 atom 集记为 \(A_1,\ldots,A_6\)；六集在全部父 OP 首次完成 atomization 时同时冻结，此后不得增删成员。每个 atom 的状态恰取一值
+上句的结算语义由以下有限账本状态覆盖。令 \(A\) 为本批全部稳定地址 atoms，六个父问题的有限、非空 atom 集 \(A_1,\ldots,A_6\) 两两不交且构成 \(A\) 的分区；等价地，每个 atom 恰属一个父 OP，并由唯一映射 \(p:A\to\{1,\ldots,6\}\) 记录该归属。六集在全部父 OP 首次完成 atomization 时同时冻结，此后不得增删成员。每个 atom 的状态恰取一值
 \[
 \mathsf{AtomState}:=\{\mathsf{proved},\mathsf{refuted},
 \mathsf{statement\mbox{-}revised},\mathsf{open}\}.
 \]
-每个 atom 以 \(\mathsf{open}\) 为初态，只能原子迁移到其余三个不可再改的终态；\(\mathsf{proved}\) 只由 kernel 定理触发，\(\mathsf{refuted}\) 只由机器核验的反模型触发。\(\mathsf{proved}\)、\(\mathsf{refuted}\) 和 \(\mathsf{open}\) 均保留该 atom 在 55.2 的原陈述与原作用域；任何陈述改写或作用域变更（含扩大）必须且只能记为 \(\mathsf{statement\mbox{-}revised}\)。对账本状态 \(s\)，每个父 OP 的唯一聚合值为
+每个 atom 以 \(\mathsf{open}\) 为初态，只能原子迁移到其余三个不可再改的终态；\(\mathsf{proved}\) 只由 kernel 定理触发，\(\mathsf{refuted}\) 只由机器核验的反模型触发。记
+\[
+\operatorname{Terminal}_s(\alpha)
+\Longleftrightarrow
+s(\alpha)\in\{\mathsf{proved},\mathsf{refuted},\mathsf{statement\mbox{-}revised}\}.
+\]
+\(\mathsf{proved}\)、\(\mathsf{refuted}\) 和 \(\mathsf{open}\) 均保留该 atom 在 55.2 的原陈述与原作用域；任何陈述改写或作用域变更（含扩大）必须且只能记为 \(\mathsf{statement\mbox{-}revised}\)。对账本状态 \(s\)，每个父 OP 的唯一聚合值为
 \[
 \operatorname{Agg}_i(s):=
 \begin{cases}
@@ -5460,18 +5466,27 @@ P,Q:\Omega_{\mathrm{obs}}\times\Omega_{\mathrm{next}}\to[0,1].
 优先序将任何混合状态映成唯一父级真值：有未决 atom 时父问题仍 open，全部已决时改写优先于反驳，反驳优先于全证成。再定义
 \[
 \operatorname{Survive}_i(s)\Longleftrightarrow
-\forall\alpha\in A_i,\ s(\alpha)\neq\mathsf{statement\mbox{-}revised},
+\forall\alpha\in A_i,\quad
+s(\alpha)\in\{\mathsf{proved},\mathsf{refuted}\},
 \qquad
 \operatorname{Closed}_i(s)\Longleftrightarrow
 \operatorname{Agg}_i(s)\in\{\mathsf{proved},\mathsf{refuted}\}.
 \]
-“存活”在 proved/refuted/open 混合中为真，恰在至少一个 atom 改写时为假；“结案”恰在全部 atoms 已由 kernel 定理或机器反模型决定且父聚合值为 proved/refuted 时为真。故每个父 OP 恰落入三个两两互斥且穷尽的账格之一：\(\mathsf{survive\mbox{-}open}\)、\(\mathsf{survive\mbox{-}closed}\)、\(\mathsf{revised}\)。
+“存活”要求该父 OP 的全部 atoms 已由 kernel 定理或机器反模型决定且没有改写；“结案”要求同一终态条件并使父聚合值为 proved/refuted。含任一 open atom 的未决父既不计存活也不计结案。故每个父 OP 恰落入三个两两互斥且穷尽的账格之一：\(\mathsf{pending}\)、\(\mathsf{survive\mbox{-}closed}\)、\(\mathsf{revised}\)。
 
-截止点不再取外部“批次”：atom 状态迁移各自是带唯一 \(\operatorname{EventId}\) 的原子账本事件，令 \(s_{\le e}\) 为事件前缀的状态，并固定
+截止点不再取外部“批次”，也不以成功阈值触发。atom 状态迁移各自是带唯一 \(\operatorname{EventId}\) 的原子账本事件，令 \(s_{\le e}\) 为事件前缀的状态，并固定
 \[
-e_*:=\min\{e:\#\{i\in\{1,\ldots,6\}:\operatorname{Closed}_i(s_{\le e})\}=3\}.
+e_*:=\min\{e:\forall\alpha\in A,\ \operatorname{Terminal}_{s_{\le e}}(\alpha)\}.
 \]
-若该集为空则预测仍 \(\mathsf{open}\)；否则只在 \(s_{\le e_*}\) 上计算六个父 OP 的 \(\operatorname{Survive}\) 与 \(\operatorname{Closed}\) 计数并结算。运输批次边界不进入此最小前缀谓词，也不得重编号或重排原子事件；重分组同一 EventId 序列不改变结案账。
+若该集为空则预测仍 \(\mathsf{open}\)；否则只在 \(s_{\le e_*}\) 上计算六个父 OP 的两个预测半项，并以
+\[
+\boxed{
+\#\{i:\operatorname{Survive}_i(s_{\le e_*})\}\ge 4
+\quad\wedge\quad
+\#\{i:\operatorname{Closed}_i(s_{\le e_*})\}\ge 3
+}
+\]
+为成功判据，否定式为失败判据；结案阈值采用“至少三个”的下界语义。运输批次边界不进入此最小前缀谓词；事件顺序可以改变 \(e_*\) 的事件标识，却不能改变同一终态赋值上的两个计数与判词。特别地，两父 closed、四父 revised 的终局在最后一个 atom 达终态时已有 \(e_*\)，两计数均为 2，故判失败而不再永悬；A1—A3 先 closed、A4—A6 后 revised 的顺序与任何产生同一终态赋值的其他顺序，两计数均为 3，故得到同一失败判词。
 
 ---
 
@@ -5486,7 +5501,7 @@ e_*:=\min\{e:\#\{i\in\{1,\ldots,6\}:\operatorname{Closed}_i(s_{\le e})\}=3\}.
 - 受有限集合、收据、部分预测和真值表一致性约束的外推模型类内五项独立性；
 - 回拉到 Action 并复制 source/version/scope 的完整线性延伸 OrientationSpec，以及 maximal/greatest 两个未决等价式；等变唯一选择不再列 open，归既有冻结 `IncomparableRepairCosts` 与 `SymmetricEventNoUniqueCulprit`；
 - 在完整已观察边缘上一致的 \(\Omega_{\mathrm{obs}}\times\Omega_{\mathrm{next}}\) 双联合律、可积损失与未来条件期望异号问题；
-- 不设无地址 atom 总数；六个 OP 为预测分母，并以 atoms 全消化且首个下游结案批次完成为评估截止事件；
+- 不设无地址 atom 总数；六个 OP 为预测分母，每个 atom 恰属一个父 OP，并只在全部冻结 atoms 首次全达 proved/refuted/statement-revised 终态的账本前缀上按“至少四个存活且至少三个 kernel/机器反模型结案”结算；
 - 本批只提出问题，零新定理主张，整体组合标为 suspected-novel。
 
 后续增订继续严格追加于本节之后。
