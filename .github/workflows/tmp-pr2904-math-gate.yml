@@ -46,16 +46,16 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          lake env lean D5/S3/ConceptDynamics/DefinitionEscape/DefinitionKernelGalois.lean
-          lake env lean D5/S3/ConceptDynamics/DefinitionEscape/MultiTargetBlindResidual.lean
-          lake env lean D5/S3/ConceptDynamics/DefinitionEscape/RelativeSemanticDiagonal.lean
-          lake env lean D5/S3/ConceptDynamics/DefinitionEscape/WeightedResidualCoverage.lean
-          lake env lean D5/S3/ConceptDynamics/DefinitionEscape/LatentAdequacyCriterion.lean
-          lake env lean D5/S3/ConceptDynamics/DefinitionEscape/QuestionAlgebraDuality.lean
-          lake env lean D5/S3/ConceptDynamics/DefinitionEscape/MinimalTargetDistillation.lean
-          lake env lean D5/S3/ConceptDynamics/DefinitionEscape/RefinementUltrametric.lean
-          lake env lean D5/S3/ConceptDynamics/DefinitionEscape/InverseLimitCompletion.lean
-          lake env lean D5/S3/ConceptDynamics/Coding/ProductiveDiagonalEscapeCriterion.lean
+          lake build D5.S3.ConceptDynamics.DefinitionEscape.DefinitionKernelGalois
+          lake build D5.S3.ConceptDynamics.DefinitionEscape.MultiTargetBlindResidual
+          lake build D5.S3.ConceptDynamics.DefinitionEscape.RelativeSemanticDiagonal
+          lake build D5.S3.ConceptDynamics.DefinitionEscape.WeightedResidualCoverage
+          lake build D5.S3.ConceptDynamics.DefinitionEscape.LatentAdequacyCriterion
+          lake build D5.S3.ConceptDynamics.DefinitionEscape.QuestionAlgebraDuality
+          lake build D5.S3.ConceptDynamics.DefinitionEscape.MinimalTargetDistillation
+          lake build D5.S3.ConceptDynamics.DefinitionEscape.RefinementUltrametric
+          lake build D5.S3.ConceptDynamics.DefinitionEscape.InverseLimitCompletion
+          lake build D5.S3.ConceptDynamics.Coding.ProductiveDiagonalEscapeCriterion
 
       - name: Run canonical test gate
         shell: bash
