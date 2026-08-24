@@ -93,7 +93,7 @@ public sealed class TruthDagTests
             [lean] = Report(),
         };
 
-        var dag = BuildAccepted(files, reports);
+        var dag = BuildAcceptedFrom(files, reports);
 
         var node = Assert.Single(dag.Nodes);
         Assert.Equal(lean, node.RepoPath.Value);
@@ -203,7 +203,7 @@ public sealed class TruthDagTests
                 declarations: new[] { Declaration("conditionalResult", "registeredDebt") }),
         };
 
-        var dag = BuildAccepted(files, reports);
+        var dag = BuildAcceptedFrom(files, reports);
 
         Assert.Equal(TruthState.Closed, Node(closed).State);
         Assert.Equal(TruthState.Open, Node(frontier).State);
@@ -236,15 +236,15 @@ public sealed class TruthDagTests
                 module.Imports.Select(ModuleNameFor).ToImmutableArray(),
                 ImmutableArray<LeanDeclaration>.Empty),
             StringComparer.Ordinal);
-        return BuildOutcome(files, reports);
+        return BuildOutcomeFrom(files, reports);
     }
 
-    private static AcyclicTruthDag BuildAccepted(
+    private static AcyclicTruthDag BuildAcceptedFrom(
         IReadOnlyDictionary<string, string> files,
         IReadOnlyDictionary<string, LeanFileReport> reports) =>
-        Assert.IsType<DagBuildOutcome.Accepted>(BuildOutcome(files, reports)).Capability;
+        Assert.IsType<DagBuildOutcome.Accepted>(BuildOutcomeFrom(files, reports)).Capability;
 
-    private static DagBuildOutcome BuildOutcome(
+    private static DagBuildOutcome BuildOutcomeFrom(
         IReadOnlyDictionary<string, string> files,
         IReadOnlyDictionary<string, LeanFileReport> reports)
     {

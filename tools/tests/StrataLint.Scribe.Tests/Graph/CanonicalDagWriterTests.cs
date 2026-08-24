@@ -60,7 +60,7 @@ public sealed class CanonicalDagWriterTests
         // The DAG's domain is the managed Lean closure, so a repository file without a Lean
         // module never reaches the writer at all; the census states zero semantic nodes
         // instead of disclosing a truncation.
-        var dag = Build(
+        var dag = BuildFrom(
             new Dictionary<string, string>(StringComparer.Ordinal)
             {
                 ["D5/S0/Carrier/Delta.lean"] = "def delta : Nat := 0\n",
@@ -99,7 +99,7 @@ public sealed class CanonicalDagWriterTests
     {
         // "A/B.lean" and "A_B.lean" both become "A_B_lean" if the writer just replaces
         // separators; a collision would merge two truth nodes into one graph vertex.
-        var dag = Build(
+        var dag = BuildFrom(
             new Dictionary<string, string>(StringComparer.Ordinal)
             {
                 ["D5/S0/Carrier/A/B.lean"] = "def ab : Nat := 0\n",
@@ -159,7 +159,7 @@ public sealed class CanonicalDagWriterTests
     [Fact]
     public void EveryTruthStateIsRenderedDistinctly()
     {
-        var dag = Build(
+        var dag = BuildFrom(
             new Dictionary<string, string>(StringComparer.Ordinal)
             {
                 ["D5/S0/Carrier/Closed.lean"] = "def closed : Nat := 0\n",
@@ -191,7 +191,7 @@ public sealed class CanonicalDagWriterTests
     {
         // An import of a managed module that is not in the snapshot is a real hole in the
         // graph. Rendering it silently as "no edge" would make the picture look complete.
-        var dag = Build(
+        var dag = BuildFrom(
             new Dictionary<string, string>(StringComparer.Ordinal)
             {
                 ["D5/S0/Carrier/Delta.lean"] = "def delta : Nat := 0\n",
@@ -269,10 +269,10 @@ public sealed class CanonicalDagWriterTests
             static module => Report(
                 module.Imports.Select(static name => "D5.S0.Carrier." + name).ToArray()),
             StringComparer.Ordinal);
-        return Build(files, reports);
+        return BuildFrom(files, reports);
     }
 
-    private static AcyclicTruthDag Build(
+    private static AcyclicTruthDag BuildFrom(
         IReadOnlyDictionary<string, string> files,
         IReadOnlyDictionary<string, LeanFileReport> reports)
     {
