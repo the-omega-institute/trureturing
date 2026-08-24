@@ -2,7 +2,7 @@ using static StrataLint.Scribe.DefinitionDsl;
 using static StrataLint.Scribe.FormulaDsl;
 using F = StrataLint.Scribe.FormulaDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.ConceptDynamics.Interventions;
+namespace StrataLint.Scribe.Blueprint.D5.S3.ConceptDynamics.QueryHierarchy;
 
 internal sealed class QueryKernelHierarchyDocument : IScribeDocumentDefinition
 {
@@ -14,7 +14,7 @@ internal sealed class QueryKernelHierarchyDocument : IScribeDocumentDefinition
             Describe.Lean(
                 DescribeId.Create("query-kernel-chain"),
                 DeclarationHandle.Create(
-                    "D5/S3/ConceptDynamics/Interventions/QueryKernelHierarchy.query_kernel_chain"),
+                    "D5/S3/ConceptDynamics/QueryHierarchy/QueryKernelHierarchy.query_kernel_chain"),
                 H("Query-law kernel chain"),
                 StatementSource.FromAuthor(ChainFormula()),
                 AssessedProvenance.FromRepo(),
@@ -26,7 +26,7 @@ internal sealed class QueryKernelHierarchyDocument : IScribeDocumentDefinition
             Describe.Lean(
                 DescribeId.Create("observation-intervention-counterfactual-kernel-chain"),
                 DeclarationHandle.Create(
-                    "D5/S3/ConceptDynamics/Interventions/QueryKernelHierarchy."
+                    "D5/S3/ConceptDynamics/QueryHierarchy/QueryKernelHierarchy."
                         + "observation_intervention_counterfactual_kernel_chain"),
                 H("Both inclusions can be strict"),
                 StatementSource.FromAuthor(StrictFormula()),

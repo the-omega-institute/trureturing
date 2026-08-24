@@ -1,6 +1,6 @@
-/- GID: D5/S3/ConceptDynamics/Interventions/QueryKernelHierarchy
+/- GID: D5/S3/ConceptDynamics/QueryHierarchy/QueryKernelHierarchy
    generality: G
-   mirror-B: D5/B/S3/ConceptDynamics/Interventions/QueryKernelHierarchy
+   mirror-B: D5/B/S3/ConceptDynamics/QueryHierarchy/QueryKernelHierarchy
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    digest: Query-law collapse maps force the observation, intervention, and counterfactual kernel chain. -/
@@ -20,7 +20,7 @@ import Mathlib.Data.Setoid.Basic
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
-namespace D5.S3.ConceptDynamics.Interventions.QueryKernelHierarchy
+namespace D5.S3.ConceptDynamics.QueryHierarchy.QueryKernelHierarchy
 
 /- The query-law maps themselves are the source primitives; kernels are their
    equality relations, so no new quotient carrier is introduced. -/
@@ -110,4 +110,4 @@ theorem observation_intervention_counterfactual_kernel_chain :
 #print axioms query_kernel_chain
 #print axioms observation_intervention_counterfactual_kernel_chain
 
-end D5.S3.ConceptDynamics.Interventions.QueryKernelHierarchy
+end D5.S3.ConceptDynamics.QueryHierarchy.QueryKernelHierarchy
