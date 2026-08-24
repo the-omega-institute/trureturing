@@ -3,7 +3,16 @@ using System.Text;
 
 namespace StrataLint.Engine;
 
-internal sealed record DigestionGap(string Code, string Detail);
+internal enum DigestionGapSeverity
+{
+    NonFatal,
+    ReceiptIntegrityFailure,
+}
+
+internal sealed record DigestionGap(
+    string Code,
+    string Detail,
+    DigestionGapSeverity Severity);
 
 internal sealed record DigestionEntryEvaluation(
     DigestionLedgerEntry Entry,
@@ -43,6 +52,19 @@ internal sealed record DigestionLedgerEvaluation(
         ObservationalFindings.IsDefault ? [] : ObservationalFindings;
 
     internal int DeletableCount => Entries.Count(static entry => entry.Deletable);
+
+    internal IEnumerable<(DigestionLedgerEntry Entry, DigestionGap Gap)> ReceiptIntegrityGaps =>
+        Entries.SelectMany(static entry => entry.Gaps
+            .Where(static gap => gap.Severity == DigestionGapSeverity.ReceiptIntegrityFailure)
+            .Select(gap => (entry.Entry, gap)));
+
+    internal IEnumerable<string> ReceiptIntegrityFailureReasons =>
+        Findings.Concat(ReceiptIntegrityGaps.Select(static item =>
+            $"{item.Entry.AtomId}:{item.Gap.Code}:{item.Gap.Detail}"));
+
+    internal bool HasReceiptIntegrityFailure =>
+        Findings.Length > 0
+        || ReceiptIntegrityGaps.Any();
 }
 
 internal static class DigestionStatusNames

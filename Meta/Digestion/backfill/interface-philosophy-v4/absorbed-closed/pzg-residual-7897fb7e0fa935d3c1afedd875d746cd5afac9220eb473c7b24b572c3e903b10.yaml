@@ -1,0 +1,17 @@
+ast_path: proposition/8.4
+fingerprints:
+  raw_sha256: sha256:7897fb7e0fa935d3c1afedd875d746cd5afac9220eb473c7b24b572c3e903b10
+  normalized_sha256: sha256:7897fb7e0fa935d3c1afedd875d746cd5afac9220eb473c7b24b572c3e903b10
+cas_ref: sha256:7897fb7e0fa935d3c1afedd875d746cd5afac9220eb473c7b24b572c3e903b10
+coverage_gids:
+  - D5/S0/Naming/ExchangeRateComposition.exchange_rate_composition
+receipts:
+  coverage:
+    - gid: D5/S0/Naming/ExchangeRateComposition.exchange_rate_composition
+      source_sha256: sha256:7897fb7e0fa935d3c1afedd875d746cd5afac9220eb473c7b24b572c3e903b10
+      target_sha256: sha256:8a826cc1cd6077246b49f359a3e2fba669174c8879156917c29a0c670bcdf7f7
+  scribe:
+    - gid: D5/S0/Naming/ExchangeRateComposition.exchange_rate_composition
+      definition_sha256: sha256:b885837060d257d5a8259c77d31dac59298e5159973526a43bd3fccb7611daee
+      emission_sha256: sha256:b2f2a8e8a0c2611b590fc69d763dd6f52cc7f7cf569db4db299da4cc7fe0daae
+  unresolved_subitems: []

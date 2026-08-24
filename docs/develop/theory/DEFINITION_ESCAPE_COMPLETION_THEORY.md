@@ -5179,3 +5179,329 @@ DECT v1.0 回答定义如何切开目标残差；v1.1 回答科学如何成为�
 - 整体组合 suspected-novel、未做系统文献检索的主张边界。
 
 后续增订继续严格追加于本节之后。
+
+---
+
+# 第五十五部　裁决层的边界问题
+
+本部只登记开放问题，不给出证明、反例或新定理。以下对象均引用第 48—54 部的既有对象；除陈述 OP1—OP6 所需的有限投影外，不增加裁决层本体。
+
+## 55.1 最小共用定义
+
+固定第 \(n\) 轮 \(\operatorname{ProspectiveCommitment}\) \(K\)、有限记录集 \(Z\)、有限角色账本 \(\mathcal L\) 与证明
+\[
+v_K:\operatorname{ValidTrace}(\mathcal L,K.\operatorname{adjudication}).
+\]
+第 54.3 部的 \(\operatorname{AdjudicationSnapshot}\) 仍只指 \(K.\operatorname{adjudication}\)。本部唯一新增的派生名为
+\[
+\boxed{
+\begin{aligned}
+&\operatorname{AdjudicationSignature}(K,Z;\mathcal L,v_K)
+:=\Bigl(
+Z\cap K.\operatorname{adjudication}.\operatorname{filtration}.\operatorname{seen}
+  (K.\operatorname{adjudication}.\operatorname{freezeEvent}),\
+Z\cap K.\operatorname{adjudication}.\operatorname{filtration}.\operatorname{seen}
+  (K.\operatorname{adjudication}.\operatorname{decisionEvent}),\
+Z\cap K.\operatorname{adjudication}.\operatorname{evidenceDependencies},
+\\
+&\quad
+\{(e.\operatorname{evidence},e.\operatorname{round},e.\operatorname{role},
+\mathbf 1[e.\operatorname{dependencies}\cap
+K.\operatorname{adjudication}.\operatorname{dependencyClosure}\neq\varnothing]):
+\operatorname{InAdjudicationPrefix}
+(\mathcal L,K.\operatorname{adjudication},v_K,e),\
+e.\operatorname{evidence}\in Z,
+e.\operatorname{role}\in
+\{\mathsf{generate},\mathsf{tune},\mathsf{select},\mathsf{adjudicate}\}\}
+\Bigr).
+\end{aligned}
+}
+\]
+四分量依次为冻结点可见性、裁决点可见性、直接读取 \(\operatorname{evidenceDependencies}\) 的依赖污染，以及**角色存在签名投影**。第四分量只保留消费者所问的角色存在性与“依赖是否触及闭包”这一位；它折叠 \(\operatorname{EventId}\)、\(\operatorname{Time}\)、\(\operatorname{Protocol}\)、具体 \(\operatorname{Deps}\)、事件顺序和重复事件。故它不保存事件多重性，不承载第 48.2、52.5 部 \(\operatorname{ReuseDepth}\) 的复用计数语义，也不得供顺序或复用深度消费者使用。\(\mathsf{replicate}\) 不进入该投影，因为本批四谓词均不读取它。
+
+若 \(S=(S_{\mathrm f},S_{\mathrm d},S_{\mathrm p},S_{\mathrm a})\)，分量遗忘算子只是普通投影：
+\[
+\boxed{
+\pi_{-i}(S):=(S_j)_{j\neq i},
+\qquad
+i\in\{\mathrm f,\mathrm d,\mathrm p,\mathrm a\}.
+}
+\]
+它不补默认值，也不重建被删信息。
+
+第 54.3 部的四个接口都消费单个 \(\operatorname{Evidence}\)，不是记录集。本文统一采用逐点全称提升
+\[
+\boxed{
+\operatorname{Lift}_Z(P):=\forall z\in Z,\ P(z).
+}
+\]
+因此 \(\operatorname{AdmissibleJudge}\) 对每个 \(r\in Z\) 判定；\(\operatorname{NonAnticipating}\) 与 \(\operatorname{ScientificGain}\) 对每个 \(z\in Z\) 判定；\(\operatorname{TargetLaundering}\) 使用显式报告族 \(z\mapsto\operatorname{report}_z\) 后对每个 \(z\in Z\) 判定。以下单点陈述取逐点全称即得到记录集陈述，不把 \(Z\) 偷换成单个证据。
+
+为冻结全部非投影实参，按原接口定义四个 \(\operatorname{SameOut}\) 关系：
+
+- \(\operatorname{SameOut}_{\mathrm{NA}}\) 固定 \(n\)、类型与序结构、同一证据 \(z\)；谓词为 \(\operatorname{NonAnticipating}(K.\operatorname{adjudication},z)\)。
+- \(\operatorname{SameOut}_{\mathrm{AJ}}\) 另固定同一 \(r\)；两侧证明分别具有 \(\operatorname{ValidTrace}(\mathcal L,K.\operatorname{adjudication})\) 的真类型，不要求证明项字面相等；谓词为 \(\operatorname{AdmissibleJudge}(\mathcal L,K.\operatorname{adjudication},v_K,r)\)。
+- \(\operatorname{SameOut}_{\mathrm{TL}}\) 固定同一 \(\operatorname{evaluate}\)、同一 \(z\) 与同一 \(\operatorname{report}\) 对象；对 old/new commitments 分别逐字段固定 adjudication 之外的 \(\operatorname{targetChain}/\operatorname{domain}/\operatorname{epsilon}/\operatorname{conditions}/\operatorname{comparator}/\operatorname{testPlan}/\operatorname{baseline}/\operatorname{weightSpec}/\operatorname{decision}/\operatorname{committedArtifacts}/\operatorname{baselineArtifacts}\)，包含 \(\operatorname{protectedCoordinates}\) 的全部字段。包含律证明只须分别具有正确类型，不要求证明项字面相等。谓词为 \(\operatorname{TargetLaundering}(\operatorname{evaluate},\operatorname{oldK},\operatorname{newK},z,\operatorname{report})\)；report.original/revised/evidence/regradedVerdict/attributedTo/occurredAt 的身份检查仍由原谓词执行，不预先冻结其真值。
+- \(\operatorname{SameOut}_{\mathrm{SG}}\) 固定同一 \(\operatorname{evaluate}\)、行动身份 \(a,b\)，并逐字段固定 adjudication 之外的同一组 commitment 字段，特别是 \(K.\operatorname{committedArtifacts}\)、\(K.\operatorname{baselineArtifacts}\) 与 \(K.\operatorname{comparator}\)；谓词为 \(\operatorname{ScientificGain}(\operatorname{evaluate},K,z,a,b)\)。
+
+所有 \(\operatorname{SameOut}\) 还固定共同的 \(Z\) 和元素身份。允许变化的历史数据只在 adjudication 与账本内，并受相等的完整 \(\operatorname{AdjudicationSignature}\) 约束；若后续接口增加非历史实参，必须显式加入相应 \(\operatorname{SameOut}\)。
+
+再固定第 53.4 部的非空有限可行集 \(F\)、Action 载体上的完整外生规范 \(O_G\)，并要求
+\[
+\forall a\in F,\quad a\in\operatorname{AdmTarget}(O_G.\operatorname{goal})
+\ \wedge\ \operatorname{InScope}(O_G.\operatorname{scope},a).
+\]
+令 \(a\sim_Gb\Longleftrightarrow O_G.\operatorname{relation}(a,b)\wedge O_G.\operatorname{relation}(b,a)\)，在 \(F/{\sim_G}\) 上取延伸原商偏序的线性序 \(\leq_\lambda\)，并回拉到 Action：
+\[
+a\leq^F_\lambda b
+\Longleftrightarrow
+a\in F\wedge b\in F\wedge[a]\leq_\lambda[b].
+\]
+令派生范围为 \(\operatorname{scope}_F=(O_G.\operatorname{scope},F)\)，且 \(\operatorname{InScope}_F(\operatorname{scope}_F,a)\Longleftrightarrow\operatorname{InScope}(O_G.\operatorname{scope},a)\wedge a\in F\)。把回拉关系连同
+\[
+\operatorname{goal}=O_G.\operatorname{goal},\quad
+\operatorname{source}=O_G.\operatorname{source},\quad
+\operatorname{version}=O_G.\operatorname{version},\quad
+\operatorname{scope}=\operatorname{scope}_F
+\]
+及第 54.3 部要求的域、反身与传递见证打包为完整 \(\operatorname{OrientationSpec}\)，记作 \(O^F_\lambda\)。定义
+\[
+\boxed{
+\operatorname{LinExt}_F(O_G):=\{O^F_\lambda:\leq_\lambda
+\text{ 是 }F/{\sim_G}\text{ 上延伸原商偏序的线性序}\}.
+}
+\]
+其元素不是裸关系；来源、版本和原范围由 \(O_G\) 复制，有限范围收窄显式保存在 \(\operatorname{scope}_F\)，观察记录不生成任何定向。
+
+## 55.2 开放问题 OP1—OP6
+
+### 55.2.1 开放问题 OP1：签名充分性
+
+取有限有效历史 \(H=(K,\mathcal L,v_K)\)、\(H'=(K',\mathcal L',v_{K'})\)，记其签名为 \(S(H),S(H')\)。以下四个 atoms 是否逐项成立：
+\[
+\boxed{
+\begin{array}{ll}
+\mathrm{OP1\!\!-NA}:&S(H)=S(H')\wedge\operatorname{SameOut}_{\mathrm{NA}}
+\Rightarrow(\operatorname{NonAnticipating}(K.\operatorname{adjudication},z)
+\leftrightarrow\operatorname{NonAnticipating}(K'.\operatorname{adjudication},z));\\
+\mathrm{OP1\!\!-AJ}:&S(H)=S(H')\wedge\operatorname{SameOut}_{\mathrm{AJ}}
+\Rightarrow(\operatorname{AdmissibleJudge}(\mathcal L,K.\operatorname{adjudication},v_K,r)
+\leftrightarrow\operatorname{AdmissibleJudge}(\mathcal L',K'.\operatorname{adjudication},v_{K'},r));\\
+\mathrm{OP1\!\!-TL}:&S(H_o)=S(H'_o)\wedge S(H_n)=S(H'_n)
+\wedge\operatorname{SameOut}_{\mathrm{TL}}\\
+&\Rightarrow(\operatorname{TargetLaundering}(\operatorname{evaluate},\operatorname{oldK},\operatorname{newK},z,\operatorname{report})
+\leftrightarrow\operatorname{TargetLaundering}(\operatorname{evaluate},\operatorname{oldK}',\operatorname{newK}',z,\operatorname{report}));\\
+\mathrm{OP1\!\!-SG}:&S(H)=S(H')\wedge\operatorname{SameOut}_{\mathrm{SG}}
+\Rightarrow(\operatorname{ScientificGain}(\operatorname{evaluate},K,z,a,b)
+\leftrightarrow\operatorname{ScientificGain}(\operatorname{evaluate},K',z,a,b)).
+\end{array}
+}
+\]
+其中 TL 的 \(H_o,H_n\) 分别承载 old/new commitment 与各自有效账本；单点式按 \(\operatorname{Lift}_Z\) 提升，TL 使用报告族。真残差：第 48—54 部给出了四谓词及其消费者，却未回答该四分量签名在逐项冻结全部非投影读取后是否因子化四个接口。
+
+结案判据：四个具名 atoms 各自获得证明、有限有效反例或 statement-revise；任一反例必须指出翻转的原签名原子与未被签名保存的字段。
+
+### 55.2.2 开放问题 OP2：逐分量必要性
+
+本题的显式前件是：所选 \(\Phi\) 的 OP1 atom 已获肯定答案，等价地存在函数 \(\bar\Phi\) 使 \(\Phi(C)=\bar\Phi(S(H(C)),\operatorname{Out}_\Phi(C))\)；对 TL，\(S(H(C))\) 是 old/new 两签名的有序对。只在此前件下，对每个 \(i\in\{\mathrm f,\mathrm d,\mathrm p,\mathrm a\}\)，是否存在一个 \(\Phi_i\) 与两上下文 \(C_i^+,C_i^-\)，满足
+\[
+\boxed{
+\operatorname{SameOut}_{\Phi_i}(C_i^+,C_i^-),\quad
+\pi_{-i}S(C_i^+)=\pi_{-i}S(C_i^-),\quad
+S_i(C_i^+)\neq S_i(C_i^-),\quad
+\Phi_i(C_i^+)\leftrightarrow\neg\Phi_i(C_i^-)?
+}
+\]
+被删坐标之外的共同 \(Z\)、证据、行动、evaluate、committed/baseline 集、comparator、protected coordinates 与 report 身份均须按 55.1 逐项相同。若 \(\Phi_i=\mathrm{TL}\)，还须指定被消融的是 old 或 new 签名；另一承诺的完整四坐标及被消融承诺的其余三坐标全部相同。本题只有四个坐标方向，不冒充四坐标乘四谓词的十六项矩阵。真残差：在完整签名确实充分的前件下，既有文本仍未证明四个坐标各有不可删除见证。
+
+结案判据：四个方向各交付满足因子化前件、删外全同且被删值确异的有限机器见证；或证明某分量可由其余分量与 SameOut 数据导出并修订最小签名。
+
+### 55.2.3 开放问题 OP3：可判定两面
+
+令 \(N\) 为整个实例的总编码长度，计入图、闭包根、filtration 表、\(Z\)、角色日志、候选/可行/committed/baseline 集、两份承诺、报告、保护坐标、行动和全部字符串字段。模型为确定性 word-RAM，字长 \(\Theta(\log N)\)：对象用 \([0,N)\) 内编号，集合经一次 \(O(N)\) 预处理成为位表，成员查询为 \(O(1)\)；非编号字段采用规范编码，精确相等的总扫描成本计入 \(N\)。Prop 证明字段在运行时擦除，只验证其对应的有限关系，不把证明项相等当作查询。依赖图以邻接表和根集给出，闭包不作可信预计算，而由一次 BFS/DFS 生成；输入若另带闭包位表，须在线性扫描中与生成结果比较。\(\operatorname{ValidTrace}\) 证明不作为可信证书给定，而以全日志扫描和 filtration 成员查询验证。令 \(C_{\mathrm{eval}}\) 为所有实际 evaluator 调用的总成本。在此模型中，四个逐点提升谓词是否均可在
+\[
+\boxed{
+O(N+C_{\mathrm{eval}})
+}
+\]
+时间、\(O(N)\) 空间内判定？
+
+不可判侧固定 Mathlib 的程序编码 \(c:\operatorname{Nat.Partrec.Code}\) 与行为 \(\operatorname{eval}(c)\)，并定义外延语义依赖
+\[
+\operatorname{SemDep}(c,z_*):=B(\operatorname{eval}(c),z_*),
+\]
+其中 \(B\) 对相同行为同值，且有依赖/无依赖两枚 code 见证。对每个 \(c\) 取程序索引语义接口 \(K_c\)，固定 \(z_*\) 在其 decision filtration 可见、在 freeze filtration 不可见，并规定 \(z_*\in K_c.\operatorname{adjudication}.\operatorname{evidenceDependencies}\Longleftrightarrow\operatorname{SemDep}(c,z_*)\)。于是 \(\operatorname{NonAnticipating}(K_c.\operatorname{adjudication},z_*)\) 恰等于 \(\neg\operatorname{SemDep}(c,z_*)\)。已冻结真源 `D5/S0/Computability/ClosureUndecidable.closure_reading_unreachable` 正好排除任何非平凡、行为不变集合的可计算总判定器，故不可判结论应复用该节点，而不重证 Rice 定理。若结案工件要求字面给出多一归约 \(\mathsf{HALT}\leq_m\operatorname{NonAnticipating}\) 的编码函数与双向正确性，则该冻结定理只给非可计算性、不提供这条具体映射，仍需一个新的薄 HALT 桥 atom。
+
+真残差：第 54.3 部只给出 Prop 级接口；上述 RAM 表示下的统一判定器、复杂度证明，以及 \(\operatorname{SemDep}\) 对冻结 Rice 节点的精确实例化或所需 HALT 桥均未给出。
+
+结案判据：交付在上述编码上运行的判定器、\(O(N+C_{\mathrm{eval}})\) 证明与 ValidTrace/闭包核验测试，并交付 `closure_reading_unreachable` 的同层性和非平凡见证实例；若选择 literal-HALT 口径，再交付方向无误的桥。任一义务失败即 statement-revise 输入或归约模型。
+
+### 55.2.4 开放问题 OP4：外推证书五项合取的独立性
+
+允许模型类 \(\mathfrak M_{\mathrm{fin}}\) 只含有限可判语义模型：域由有限点集 \(|J|\) 解释，\(\operatorname{strictSubset}(J,J')\Longleftrightarrow |J|\subsetneq|J'|\)，且 \(\operatorname{inNewOnlyDomain}(z,J,J')\Longleftrightarrow z\in|J'|\setminus|J|\)；TruthReceipt 是内容地址、域和版本的记录，\(\operatorname{receiptMatches}\) 当且仅当三字段精确相等；givenPremises 与 transportAssumption 是固定有限前件表和运输表导出的可判真值；预测是有限部分函数，\(\operatorname{predictionDefined}\) 是图定义域成员关系，\(\operatorname{predictionFails}\) 只能在已定义值违反固定验收关系时成立；\(\operatorname{claimOn}\) 与 \(\operatorname{refutes}\) 由同一固定有限真值/评价表导出，refutes 当且仅当该预测值与该 claim 的表中真值冲突。任意赋值这些 Prop 字段的退化模型不在 \(\mathfrak M_{\mathrm{fin}}\)。
+
+把第 54.3 部 Lean \(\operatorname{ValidTransportCert}\) 的五个顶层合取记为 \(C_1\) 严格扩域、\(C_2\) claim-bound 旧域收据、\(C_3\) 保留前件的条件运输、\(C_4\) 新域差上预测全定义、\(C_5\) 含失败与反驳的非真空见证。第 51.3 部展示式只有后四项；严格扩域在 51.4 的 Overreach 展示式出现，五项顶层合取的归属是第 54.3 部接口。令 \(\operatorname{Weak}_j:=\bigwedge_{k\neq j}C_k\)，并分别固定坏报告类型：非严格扩域、错 claim/域/版本收据、前件成立而新域 claim 假、遗漏一个新域差预测、没有预登记失败/反驳见证。是否有
+\[
+\boxed{
+\forall j\in\{1,2,3,4,5\},\
+\exists M_j\in\mathfrak M_{\mathrm{fin}},\quad
+\operatorname{Weak}_j(M_j)\wedge\neg C_j(M_j)
+\wedge\operatorname{Bad}_j(M_j)?
+}
+\]
+真残差：第 54.3 部用五项堵住上述五类坏报告，但尚未在受约束的有限语义模型类中证明每项删除确实放过对应坏报告，而不只是展示任意 Prop 赋值的纯合取独立性。
+
+结案判据：五个删除方向各给出 \(\mathfrak M_{\mathrm{fin}}\) 内可枚举模型并验证对应 \(\operatorname{Bad}_j\)，或证明某项在该模型类公理下由其余四项蕴含并 statement-revise 最小合取。
+
+### 55.2.5 开放问题 OP5：Pareto 停机与外生序
+
+固定非空有限 \(F=K_n.\operatorname{decision}.\operatorname{feasible}\)、\(K_n.\operatorname{decision}.\operatorname{current}=\operatorname{some}(a_{\mathrm{cur}})\)，以及 Action 上由五维公共坐标诱导的 Pareto 预序 \(\preceq_P\)。取其对称核 \(\sim_P\)，令完整外生规范 \(O_P\) 的 relation 为 \(\preceq_P\)，并按 55.1 构造 \(\operatorname{LinExt}_F(O_P)\)。全部 \(F\) 已要求位于 \(\operatorname{AdmTarget}(O_P.\operatorname{goal})\) 与原声明范围。是否成立
+\[
+\boxed{
+a_{\mathrm{cur}}\text{ 在 }F\text{ 中 Pareto-maximal}
+\Longleftrightarrow
+\exists O^F_\lambda\in\operatorname{LinExt}_F(O_P),\
+\operatorname{OrientedStop}(\operatorname{AdmTarget},\operatorname{InScope}_F,O^F_\lambda,K_n)?
+}
+\]
+是否进一步成立
+\[
+\boxed{
+\bigl(\forall O^F_\lambda\in\operatorname{LinExt}_F(O_P),\
+\operatorname{OrientedStop}(\operatorname{AdmTarget},\operatorname{InScope}_F,O^F_\lambda,K_n)\bigr)
+\Longleftrightarrow
+a_{\mathrm{cur}}\text{ 在 }F\text{ 中为 }\preceq_P\text{-greatest}?
+}
+\]
+不再登记等变唯一选择子问：冻结节点 `D5/S3/ConceptDynamics/DecisionValue/IncomparableRepairCosts.incomparable_repairs_no_unique_choice` 已给出有限二点 Pareto 不可比且成本结构不产生唯一选择；`D5/S3/ConceptDynamics/Attribution/SymmetricEventNoUniqueCulprit.symmetric_event_admits_no_equivariant_culprit` 已证明至少二标签的完全对称事件不存在等变单值选择。此处没有超出二者的新增残差。真残差：maximal/greatest 与对完整 Action 载体 \(\operatorname{OrientationSpec}\) 的存在/全称线性延伸停机之间的两个等价式。
+
+结案判据：在 \(K_n.\operatorname{decision}.\operatorname{feasible}=F\)、current 与范围前件下证明或反驳两个等价式；反驳须提交保持 source/version/scope 的完整 \(O^F_\lambda\) 有限反模型。
+
+### 55.2.6 开放问题 OP6：前瞻改善不蕴含泛化
+
+固定有限观测历史空间 \(\Omega_{\mathrm{obs}}\)、有限下一记录空间 \(\Omega_{\mathrm{next}}\)，以及两条联合概率质量函数
+\[
+P,Q:\Omega_{\mathrm{obs}}\times\Omega_{\mathrm{next}}\to[0,1].
+\]
+它们各自归一化，并在完整已观察 \(\sigma\)-代数上一致；有限情形即
+\[
+\forall h\in\Omega_{\mathrm{obs}},\quad
+\sum_uP(h,u)=\sum_uQ(h,u).
+\]
+取已观察历史 \(h_*\) 及其末记录 \(z_*\)，要求共同边缘质量 \(p_{\mathrm{obs}}(h_*)=q_{\mathrm{obs}}(h_*)>0\)。固定第 54.3 部的 \(\operatorname{evaluate}\)、冻结承诺 \(K\)、被承诺行动 \(a\) 与预登记基线 \(b\)，并要求单记录命题 \(\operatorname{ScientificGain}(\operatorname{evaluate},K,z_*,a,b)\)。令实值损失 \(\operatorname{Loss}_K(-;u)\) 对两联合律绝对可积；在有限空间中这项仍作为显式检查。定义
+\(\Omega_{\mathrm{next}}\) 不直接冒充 \(\operatorname{Evidence}\)：固定全函数 \(\operatorname{nextEvidence}:\Omega_{\mathrm{next}}\to\operatorname{Evidence}\)，并在 OP6 中把同一 evaluator 实例化为 \(\operatorname{evaluate}:\operatorname{Comparator}\to\operatorname{Action}\to\operatorname{Evidence}\to\mathbb R\)。\(\operatorname{Loss}_K\) 不是另一个可选损失，而被唯一规定为
+\[
+\boxed{
+\operatorname{Loss}_K(x;u):=
+\operatorname{evaluate}(K.\operatorname{comparator},x,\operatorname{nextEvidence}(u))\in\mathbb R.
+}
+\]
+因此前件中的 \(\operatorname{ScientificGain}\) 与两个条件期望共用同一 \(\operatorname{evaluate}\) 及 \(K.\operatorname{comparator}\)；绝对可积检查就施于此实值映射，差分也只由它派生：
+\[
+\Delta_K(a,b;u):=\operatorname{Loss}_K(a;u)-\operatorname{Loss}_K(b;u).
+\]
+是否存在上述全部对象，使
+\[
+\boxed{
+\mathbb E_P[\Delta_K(a,b;U)\mid H=h_*]<0
+<
+\mathbb E_Q[\Delta_K(a,b;U)\mid H=h_*]
+}
+\]
+或 \(P,Q\) 互换？
+
+真残差：第 52.4 部拒绝从一次 \(\operatorname{ScientificGain}\) 自动推出长期稳定性，却未给出在全部已观察历史分布不可区分、只允许条件未来核分歧时的有限符号反转见证。
+
+结案判据：给出可枚举的有限联合律，机器核验归一化、全观测边缘相等、\(h_*\) 正质量、ScientificGain、绝对可积与两条件期望异号；或在同一概率模型类中证明不存在并 statement-revise 前件。
+
+可判定性与查询复杂度借用有限图算法、停机不可判定与语义性质归约的已知形状；线性延伸借用 Szpilrajn 型延伸定理；可识别性借用统计决策与相容数据律的已知形状。单项不主张首创；它们与 DECT 裁决、漂白、外推、停机及增益接口的组合标为 suspected-novel，未作系统文献检索。
+
+## 55.3 本批承诺
+
+按第 49 部 \(K_n\) 的字段，本批冻结为
+\[
+\boxed{
+\begin{aligned}
+\operatorname{target\_chain}
+&=\text{GoalArtifact 纯推理产出}\to\text{RDS}\to
+\text{v1.2 裁决层}\to\text{本批边界};
+\\
+\operatorname{scope}
+&=\text{有限/显式模型，排除统计显著性与解析估计};
+\\
+\operatorname{comparator}
+&=\text{六个 OP 各由下游 prove/refute/statement-revise 结案并消化为有稳定地址的 atoms};
+\\
+\operatorname{baseline}
+&=\text{不预记无地址 atom 数量；按父 OP 去重计数};
+\\
+\operatorname{falsifiable\_prediction}
+&=\text{在全部冻结 atoms 首次全达终态的账本前缀上，六个 OP 中至少四个不扩作用域存活，至少三个由 kernel 定理或机器反模型结案}.
+\end{aligned}
+}
+\]
+分母明确为 OP1—OP6 六个父问题；一个 OP 即使拆成多个 atoms 也只计一次。评估截止事件为“全部冻结 atoms 首次全部处于 proved/refuted/statement-revised 终态的账本前缀”，与成功阈值及结案顺序独立；存活数与结案数都只在该前缀上求值。该前缀存在时，少于四个不扩域存活或少于三个以 kernel 定理/机器反模型结案即判本批预测失败；此前只记 open，不把未到期冒充成功。任一 OP 的真、假、独立性、复杂度或可识别性均未被预记为结论。
+
+上句的结算语义由以下有限账本状态覆盖。令 \(A\) 为本批全部稳定地址 atoms，六个父问题的有限、非空 atom 集 \(A_1,\ldots,A_6\) 两两不交且构成 \(A\) 的分区；等价地，每个 atom 恰属一个父 OP，并由唯一映射 \(p:A\to\{1,\ldots,6\}\) 记录该归属。六集在全部父 OP 首次完成 atomization 时同时冻结，此后不得增删成员。每个 atom 的状态恰取一值
+\[
+\mathsf{AtomState}:=\{\mathsf{proved},\mathsf{refuted},
+\mathsf{statement\mbox{-}revised},\mathsf{open}\}.
+\]
+每个 atom 以 \(\mathsf{open}\) 为初态，只能原子迁移到其余三个不可再改的终态；\(\mathsf{proved}\) 只由 kernel 定理触发，\(\mathsf{refuted}\) 只由机器核验的反模型触发。记
+\[
+\operatorname{Terminal}_s(\alpha)
+\Longleftrightarrow
+s(\alpha)\in\{\mathsf{proved},\mathsf{refuted},\mathsf{statement\mbox{-}revised}\}.
+\]
+\(\mathsf{proved}\)、\(\mathsf{refuted}\) 和 \(\mathsf{open}\) 均保留该 atom 在 55.2 的原陈述与原作用域；任何陈述改写或作用域变更（含扩大）必须且只能记为 \(\mathsf{statement\mbox{-}revised}\)。对账本状态 \(s\)，每个父 OP 的唯一聚合值为
+\[
+\operatorname{Agg}_i(s):=
+\begin{cases}
+\mathsf{open},&\exists\alpha\in A_i,\ s(\alpha)=\mathsf{open};\\
+\mathsf{statement\mbox{-}revised},&\text{否则若存在该状态};\\
+\mathsf{refuted},&\text{否则若存在该状态};\\
+\mathsf{proved},&\text{否则}.
+\end{cases}
+\]
+优先序将任何混合状态映成唯一父级真值：有未决 atom 时父问题仍 open，全部已决时改写优先于反驳，反驳优先于全证成。再定义
+\[
+\operatorname{Survive}_i(s)\Longleftrightarrow
+\forall\alpha\in A_i,\quad
+s(\alpha)\in\{\mathsf{proved},\mathsf{refuted}\},
+\qquad
+\operatorname{Closed}_i(s)\Longleftrightarrow
+\operatorname{Agg}_i(s)\in\{\mathsf{proved},\mathsf{refuted}\}.
+\]
+“存活”要求该父 OP 的全部 atoms 已由 kernel 定理或机器反模型决定且没有改写；“结案”要求同一终态条件并使父聚合值为 proved/refuted。含任一 open atom 的未决父既不计存活也不计结案。故每个父 OP 恰落入三个两两互斥且穷尽的账格之一：\(\mathsf{pending}\)、\(\mathsf{survive\mbox{-}closed}\)、\(\mathsf{revised}\)。
+
+截止点不再取外部“批次”，也不以成功阈值触发。atom 状态迁移各自是带唯一 \(\operatorname{EventId}\) 的原子账本事件，令 \(s_{\le e}\) 为事件前缀的状态，并固定
+\[
+e_*:=\min\{e:\forall\alpha\in A,\ \operatorname{Terminal}_{s_{\le e}}(\alpha)\}.
+\]
+若该集为空则预测仍 \(\mathsf{open}\)；否则只在 \(s_{\le e_*}\) 上计算六个父 OP 的两个预测半项，并以
+\[
+\boxed{
+\#\{i:\operatorname{Survive}_i(s_{\le e_*})\}\ge 4
+\quad\wedge\quad
+\#\{i:\operatorname{Closed}_i(s_{\le e_*})\}\ge 3
+}
+\]
+为成功判据，否定式为失败判据；结案阈值采用“至少三个”的下界语义。运输批次边界不进入此最小前缀谓词；事件顺序可以改变 \(e_*\) 的事件标识，却不能改变同一终态赋值上的两个计数与判词。特别地，两父 closed、四父 revised 的终局在最后一个 atom 达终态时已有 \(e_*\)，两计数均为 2，故判失败而不再永悬；A1—A3 先 closed、A4—A6 后 revised 的顺序与任何产生同一终态赋值的其他顺序，两计数均为 3，故得到同一失败判词。
+
+---
+
+# 追加账本增订
+## v1.3 — 2026-08-24
+
+追加存入：
+
+- 从 \(K.\operatorname{adjudication}\) 派生且唯一命名的 \(\operatorname{AdjudicationSignature}\)：冻结/裁决可见性、\(\operatorname{evidenceDependencies}\) 与不保留 ReuseDepth 的角色存在签名投影；
+- 单 Evidence 接口的逐点全称提升、四个原签名与逐字段 \(\operatorname{SameOut}\)，以及以 OP1 因子化为前件的四方向坐标消融；
+- 总编码长度 \(N\) 的 word-RAM/查询模型、显式闭包与 ValidTrace 核验，以及对冻结 `ClosureUndecidable.closure_reading_unreachable` 的复用边界；
+- 受有限集合、收据、部分预测和真值表一致性约束的外推模型类内五项独立性；
+- 回拉到 Action 并复制 source/version/scope 的完整线性延伸 OrientationSpec，以及 maximal/greatest 两个未决等价式；等变唯一选择不再列 open，归既有冻结 `IncomparableRepairCosts` 与 `SymmetricEventNoUniqueCulprit`；
+- 在完整已观察边缘上一致的 \(\Omega_{\mathrm{obs}}\times\Omega_{\mathrm{next}}\) 双联合律、可积损失与未来条件期望异号问题；
+- 不设无地址 atom 总数；六个 OP 为预测分母，每个 atom 恰属一个父 OP，并只在全部冻结 atoms 首次全达 proved/refuted/statement-revised 终态的账本前缀上按“至少四个存活且至少三个 kernel/机器反模型结案”结算；
+- 本批只提出问题，零新定理主张，整体组合标为 suspected-novel。
+
+后续增订继续严格追加于本节之后。

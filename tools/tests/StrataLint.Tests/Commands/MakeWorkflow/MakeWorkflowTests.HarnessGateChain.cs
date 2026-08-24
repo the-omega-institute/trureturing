@@ -271,7 +271,7 @@ public sealed partial class MakeWorkflowTests
         File.WriteAllBytes(gitState, gitStateBefore);
         WriteHarnessGateChainReportPair(candidateRoot);
 
-        WriteHarnessGateChainGitShim(
+        WriteHarnessGateChainForkPointGitShim(
             binDirectory,
             candidateRoot,
             baseTipSha,
@@ -586,7 +586,7 @@ public sealed partial class MakeWorkflowTests
             """);
 
     [System.Runtime.Versioning.UnsupportedOSPlatform("windows")]
-    private static void WriteHarnessGateChainGitShim(
+    private static void WriteHarnessGateChainForkPointGitShim(
         string binDirectory,
         string candidateRoot,
         string baseTipSha,
