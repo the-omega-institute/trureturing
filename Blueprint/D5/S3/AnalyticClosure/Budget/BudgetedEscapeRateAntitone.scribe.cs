@@ -16,15 +16,16 @@ internal sealed class BudgetedEscapeRateAntitoneDocument : IScribeDocumentDefini
                     "D5/S3/AnalyticClosure/Budget/BudgetedEscapeRateAntitone."
                         + "budgeted_escape_rate_bounds_and_antitone"),
                 H("Budgeted escape rates are bounded and antitone"),
-                StatementSource.FromAuthor(BoundsAndAntitoneFormula()),
+                StatementSource.FromAuthor(NormalizationBoundsAndAntitoneFormula()),
                 AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
                         "A supplement strategy is feasible at budget L when its cost is at "
                             + "most L. Its escape value is the mass assigned to the canonical "
                             + "target-defect relation of the joined base and supplement "
-                            + "readout, divided by M0, which is required to equal the positive "
-                            + "mass of the base target-defect relation. The budgeted "
+                            + "readout, divided by the mass M0 of the base target-defect "
+                            + "relation. This denominator is part of the public definition, "
+                            + "not a caller-supplied parameter. The budgeted "
                             + "escape rate is the real infimum of these feasible normalized "
                             + "values.")),
                     Paragraph(Text(
@@ -43,14 +44,32 @@ internal sealed class BudgetedEscapeRateAntitoneDocument : IScribeDocumentDefini
     private static Formula Rate(Formula budget) => Seq(
         Rho, Underscore, Grp(Gamma), Open, budget, Close);
 
-    private static Formula BoundsAndAntitoneFormula()
+    private static Formula NormalizationBoundsAndAntitoneFormula()
     {
         Formula budget = F.Id("L");
         Formula first = Seq(F.Id("L"), Underscore, Grp(D(1)));
         Formula second = Seq(F.Id("L"), Underscore, Grp(D(2)));
+        Formula strategy = GammaLower;
+        Formula baseline = F.Id("base");
+        Formula target = F.Id("target");
+        Formula supplement = Call("supplement", strategy);
+        Formula baselineDefect = Call("defectRelation", baseline, target);
+        Formula supplementedDefect = Call(
+            "defectRelation", Call("conceptJoin", baseline, supplement), target);
+        Formula baselineMass = Seq(F.Id("M"), Underscore, Grp(D(0)));
+        Formula mass = Seq(Mu, Open, supplementedDefect, Close);
+        Formula normalizer = Seq(Mu, Open, baselineDefect, Close);
 
         return Disp(Seq(
             Begin, Grp(F.Id("gathered")),
+            baselineMass, Sp, Eq, Sp, normalizer, Sp, Gt, Sp, D(0), Comma,
+            RowBreak,
+            Rate(budget), Sp, Eq, Sp, Call("sInf", Seq(
+                OpenBrace,
+                Frac, Grp(mass), Grp(normalizer), Sp, Mid, Sp,
+                Call("cost", strategy), Sp, Le, Sp, budget,
+                CloseBrace)), Comma,
+            RowBreak,
             D(0), Sp, Le, Sp, Rate(budget), Sp, Le, Sp, D(1), Comma,
             RowBreak,
             first, Sp, Le, Sp, second, Sp, Rightarrow, Sp,

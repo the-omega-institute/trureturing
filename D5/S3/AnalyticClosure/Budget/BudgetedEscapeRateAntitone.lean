@@ -60,17 +60,17 @@ structure EscapeWeight (Omega : Type*) where
   mass_nonnegative : forall set, 0 <= mass set
 
 /-- Normalized escape-mass values attained by supplements whose cost is at
-most the supplied budget. In the boundedness theorem below, `totalMass` is
-identified with the mass of the base target-defect relation. -/
+most the supplied budget. The normalizer is definitionally the mass of the
+base target-defect relation. -/
 def budgetedEscapeValues
     {X Base Added Target Strategy : Type*}
     (base : Concept X Base) (supplement : Strategy -> Concept X Added)
     (target : Concept X Target) (cost : Strategy -> Real)
-    (weight : EscapeWeight (X × X)) (totalMass budget : Real) : Set Real :=
+    (weight : EscapeWeight (X × X)) (budget : Real) : Set Real :=
   (fun strategy =>
       weight.mass
           (defectRelation (conceptJoin base (supplement strategy)) target) /
-        totalMass) ''
+        weight.mass (defectRelation base target)) ''
     {strategy | cost strategy ≤ budget}
 
 /-- The unavoidable escape rate at a budget is the infimum of the normalized
@@ -79,56 +79,54 @@ noncomputable def budgetedEscapeRate
     {X Base Added Target Strategy : Type*}
     (base : Concept X Base) (supplement : Strategy -> Concept X Added)
     (target : Concept X Target) (cost : Strategy -> Real)
-    (weight : EscapeWeight (X × X)) (totalMass budget : Real) : Real :=
+    (weight : EscapeWeight (X × X)) (budget : Real) : Real :=
   sInf (budgetedEscapeValues
-    base supplement target cost weight totalMass budget)
+    base supplement target cost weight budget)
 
-/-- When total mass is the positive mass of the base target-defect relation
-and every supplemented escape mass is bounded by that baseline, the budgeted
-escape rate lies in the unit interval and is antitone as the feasible budget
-grows. -/
+/-- When the base target-defect relation has positive mass and every
+supplemented escape mass is bounded by that baseline, the budgeted escape rate
+lies in the unit interval and is antitone as the feasible budget grows. -/
 theorem budgeted_escape_rate_bounds_and_antitone
     {X Base Added Target Strategy : Type*}
     (base : Concept X Base) (supplement : Strategy -> Concept X Added)
     (target : Concept X Target) (cost : Strategy -> Real)
-    (weight : EscapeWeight (X × X)) (totalMass : Real)
-    (totalMassIsBaseline :
-      totalMass = weight.mass (defectRelation base target))
-    {budget1 budget2 : Real} (totalMassPositive : 0 < totalMass)
+    (weight : EscapeWeight (X × X))
+    {budget1 budget2 : Real}
+    (baselineMassPositive : 0 < weight.mass (defectRelation base target))
     (escapeAtMostTotal : ∀ strategy,
       weight.mass
           (defectRelation (conceptJoin base (supplement strategy)) target) ≤
-        totalMass)
+        weight.mass (defectRelation base target))
     (valuesNonempty1 : (budgetedEscapeValues
-      base supplement target cost weight totalMass budget1).Nonempty) :
+      base supplement target cost weight budget1).Nonempty) :
     (0 ≤ budgetedEscapeRate
-        base supplement target cost weight totalMass budget1 ∧
+        base supplement target cost weight budget1 ∧
       budgetedEscapeRate
-          base supplement target cost weight totalMass budget1 ≤ 1) ∧
+          base supplement target cost weight budget1 ≤ 1) ∧
       (budget1 ≤ budget2 ->
         budgetedEscapeRate
-            base supplement target cost weight totalMass budget2 ≤
+            base supplement target cost weight budget2 ≤
           budgetedEscapeRate
-            base supplement target cost weight totalMass budget1) := by
-  have totalMassNonnegative : 0 ≤ totalMass := by
-    rw [totalMassIsBaseline]
-    exact weight.mass_nonnegative _
+            base supplement target cost weight budget1) := by
+  have baselineMassNonnegative :
+      0 ≤ weight.mass (defectRelation base target) :=
+    weight.mass_nonnegative _
   have valuesBddBelow (budget : Real) : BddBelow (budgetedEscapeValues
-      base supplement target cost weight totalMass budget) := by
+      base supplement target cost weight budget) := by
     refine ⟨0, ?_⟩
     rintro value ⟨strategy, _, rfl⟩
-    exact div_nonneg (weight.mass_nonnegative _) totalMassNonnegative
+    exact div_nonneg (weight.mass_nonnegative _) baselineMassNonnegative
   constructor
   · constructor
     · rw [budgetedEscapeRate]
       refine (le_csInf_iff (valuesBddBelow budget1) valuesNonempty1).2 ?_
       rintro value ⟨strategy, _, rfl⟩
-      exact div_nonneg (weight.mass_nonnegative _) totalMassNonnegative
+      exact div_nonneg (weight.mass_nonnegative _) baselineMassNonnegative
     · rw [budgetedEscapeRate]
       rcases valuesNonempty1 with ⟨value, valueMem⟩
       refine (csInf_le (valuesBddBelow budget1) valueMem).trans ?_
       rcases valueMem with ⟨strategy, _, rfl⟩
-      exact (div_le_iff₀ totalMassPositive).2 (by
+      exact (div_le_iff₀ baselineMassPositive).2 (by
         simpa only [one_mul] using escapeAtMostTotal strategy)
   · intro budgetOrder
     rw [budgetedEscapeRate, budgetedEscapeRate]
@@ -149,9 +147,9 @@ example :
         empty_mass := by norm_num
         mass_nonnegative := by intro set; positivity }
     let values := budgetedEscapeValues
-      base supplement target cost weight 2
+      base supplement target cost weight
     let rate := budgetedEscapeRate
-      base supplement target cost weight 2
+      base supplement target cost weight
     (defectRelation (conceptJoin base (supplement ())) target).Nonempty ∧
       BddBelow (values 0) ∧ BddBelow (values 1) ∧
       (values 0).Nonempty ∧
@@ -167,9 +165,9 @@ example :
       empty_mass := by norm_num
       mass_nonnegative := by intro set; positivity }
   let values := budgetedEscapeValues
-    base supplement target cost weight 2
+    base supplement target cost weight
   let rate := budgetedEscapeRate
-    base supplement target cost weight 2
+    base supplement target cost weight
   change
     (defectRelation (conceptJoin base (supplement ())) target).Nonempty ∧
       BddBelow (values 0) ∧ BddBelow (values 1) ∧
@@ -193,40 +191,36 @@ example :
     rcases pair with ⟨first, second⟩
     cases first <;> cases second <;>
       simp [base, target, defectRelation]
-  have totalMassIsBaseline :
-      (2 : Real) = weight.mass (defectRelation base target) := by
-    rw [baselineEq]
-    norm_num [weight]
   have escapeAtMostTotal : ∀ strategy,
       weight.mass
           (defectRelation (conceptJoin base (supplement strategy)) target) ≤
-        (2 : Real) := by
+        weight.mass (defectRelation base target) := by
     intro strategy
-    rw [residualEq strategy]
-    norm_num [weight]
+    rw [residualEq strategy, baselineEq]
   have valuesBddBelow : ∀ budget, BddBelow (values budget) := by
     intro budget
     refine ⟨0, ?_⟩
     rintro value ⟨strategy, _, rfl⟩
-    exact div_nonneg (weight.mass_nonnegative _) (by norm_num)
+    exact div_nonneg (weight.mass_nonnegative _) (weight.mass_nonnegative _)
   have valuesNonempty : (values 0).Nonempty := by
     refine ⟨1, (), ?_, ?_⟩
     · norm_num [cost]
     · change weight.mass
-          (defectRelation (conceptJoin base (supplement ())) target) / 2 = 1
-      rw [residualEq ()]
+          (defectRelation (conceptJoin base (supplement ())) target) /
+            weight.mass (defectRelation base target) = 1
+      rw [residualEq (), baselineEq]
       norm_num [weight]
   have package := budgeted_escape_rate_bounds_and_antitone
-    base supplement target cost weight 2
-    totalMassIsBaseline (budget1 := 0) (budget2 := 1) (by norm_num)
+    base supplement target cost weight
+    (budget1 := 0) (budget2 := 1) (by rw [baselineEq]; norm_num [weight])
     escapeAtMostTotal valuesNonempty
   refine ⟨residualNonempty, valuesBddBelow 0, valuesBddBelow 1,
     valuesNonempty, package, ?_⟩
   norm_num [rate, budgetedEscapeRate, values, budgetedEscapeValues, weight,
-    residualEq, cost]
+    residualEq, baselineEq, cost]
 
-/-- Regression probe for baseline normalization: a zero weight and a nonempty
-base defect cannot identify the positive normalizer `1` with baseline mass. -/
+/-- Regression probe for baseline normalization: the public rate takes only a
+budget after its weight, and its denominator is the zero baseline mass here. -/
 example :
     let base : Concept Bool Unit := fun _ => ()
     let target : Concept Bool Bool := id
@@ -234,100 +228,140 @@ example :
       { mass := fun _ => 0
         empty_mass := rfl
         mass_nonnegative := by intro _; norm_num }
-    let totalMass : Real := 1
+    let supplement : Unit -> Concept Bool Unit := fun _ _ => ()
+    let cost : Unit -> Real := fun _ => 0
     (defectRelation base target).Nonempty ∧
-      0 < totalMass ∧
-      totalMass ≠ weight.mass (defectRelation base target) := by
+      weight.mass (defectRelation base target) = 0 ∧
+      budgetedEscapeRate base supplement target cost weight 0 = (0 : Real) := by
+  classical
   let base : Concept Bool Unit := fun _ => ()
   let target : Concept Bool Bool := id
   let weight : EscapeWeight (Bool × Bool) :=
     { mass := fun _ => 0
       empty_mass := rfl
       mass_nonnegative := by intro _; norm_num }
-  let totalMass : Real := 1
-  change (defectRelation base target).Nonempty ∧
-    0 < totalMass ∧ totalMass ≠ weight.mass (defectRelation base target)
-  refine ⟨⟨(false, true), ?_⟩, by norm_num [totalMass], ?_⟩
-  · simp [base, target, defectRelation]
-  · norm_num [totalMass, weight]
+  let supplement : Unit -> Concept Bool Unit := fun _ _ => ()
+  let cost : Unit -> Real := fun _ => 0
+  refine ⟨⟨(false, true), ?_⟩, by norm_num [weight], ?_⟩
+  · simp [defectRelation]
+  · simp [budgetedEscapeRate, budgetedEscapeValues]
 
 /-- If the escape-mass upper bound is removed while every other displayed
-premise holds, the unit upper bound can fail even for a finite counting
-weight. -/
+premise holds, the unit upper bound can fail for a nonmonotone set weight. -/
 example :
-    let base : Concept Bool Unit := fun _ => ()
-    let supplement : Unit -> Concept Bool Unit := fun _ _ => ()
-    let target : Concept Bool Bool := id
+    let base : Concept (Bool × Bool) Unit := fun _ => ()
+    let supplement : Unit -> Concept (Bool × Bool) Bool := fun _ state => state.1
+    let target : Concept (Bool × Bool) (Bool × Bool) := id
     let cost : Unit -> Real := fun _ => 0
-    let weight : EscapeWeight (Bool × Bool) :=
-      { mass := fun set => set.ncard
-        empty_mass := by norm_num
-        mass_nonnegative := by intro set; positivity }
+    let weight : EscapeWeight ((Bool × Bool) × (Bool × Bool)) :=
+      { mass := fun set =>
+          if set = ∅ then 0 else if set = defectRelation base target then 1 else 2
+        empty_mass := by simp
+        mass_nonnegative := by
+          intro set
+          by_cases set = ∅ <;> by_cases set = defectRelation base target <;>
+            simp_all }
     let values := budgetedEscapeValues
-      base supplement target cost weight 1
+      base supplement target cost weight
     let rate := budgetedEscapeRate
-      base supplement target cost weight 1
-    (0 < (1 : Real) ∧
+      base supplement target cost weight
+    (0 < weight.mass (defectRelation base target) ∧
       weight.mass ∅ = 0 ∧
       (∀ set, 0 ≤ weight.mass set) ∧
       BddBelow (values 0) ∧ (values 0).Nonempty) ∧
       ¬rate 0 ≤ 1 := by
   classical
-  let base : Concept Bool Unit := fun _ => ()
-  let supplement : Unit -> Concept Bool Unit := fun _ _ => ()
-  let target : Concept Bool Bool := id
+  let base : Concept (Bool × Bool) Unit := fun _ => ()
+  let supplement : Unit -> Concept (Bool × Bool) Bool := fun _ state => state.1
+  let target : Concept (Bool × Bool) (Bool × Bool) := id
   let cost : Unit -> Real := fun _ => 0
-  let weight : EscapeWeight (Bool × Bool) :=
-    { mass := fun set => set.ncard
-      empty_mass := by norm_num
-      mass_nonnegative := by intro set; positivity }
+  let weight : EscapeWeight ((Bool × Bool) × (Bool × Bool)) :=
+    { mass := fun set =>
+        if set = ∅ then 0 else if set = defectRelation base target then 1 else 2
+      empty_mass := by simp
+      mass_nonnegative := by
+        intro set
+        by_cases set = ∅ <;> by_cases set = defectRelation base target <;>
+          simp_all }
   let values := budgetedEscapeValues
-    base supplement target cost weight 1
+    base supplement target cost weight
   let rate := budgetedEscapeRate
-    base supplement target cost weight 1
-  change
-    (0 < (1 : Real) ∧
-      weight.mass ∅ = 0 ∧
-      (∀ set, 0 ≤ weight.mass set) ∧
-      BddBelow (values 0) ∧ (values 0).Nonempty) ∧
-      ¬rate 0 ≤ 1
-  have residualEq (strategy : Unit) :
-      defectRelation (conceptJoin base (supplement strategy)) target =
-        {(false, true), (true, false)} := by
-    ext pair
-    rcases pair with ⟨first, second⟩
-    cases first <;> cases second <;>
-      simp [base, supplement, target, defectRelation, conceptJoin]
+    base supplement target cost weight
+  have baselineNonempty : (defectRelation base target).Nonempty := by
+    refine ⟨((false, false), (true, false)), ?_⟩
+    simp [base, target, defectRelation]
+  have baselineMass : weight.mass (defectRelation base target) = 1 := by
+    simp [weight, baselineNonempty.ne_empty]
+  have residualNonempty (strategy : Unit) :
+      (defectRelation (conceptJoin base (supplement strategy)) target).Nonempty := by
+    refine ⟨((false, false), (false, true)), ?_⟩
+    simp [base, supplement, target, defectRelation, conceptJoin]
+  have residualNeBaseline (strategy : Unit) :
+      defectRelation (conceptJoin base (supplement strategy)) target ≠
+        defectRelation base target := by
+    intro equality
+    have pairInBaseline :
+        ((false, false), (true, false)) ∈ defectRelation base target := by
+      simp [base, target, defectRelation]
+    have pairInResidual :
+        ((false, false), (true, false)) ∈
+          defectRelation (conceptJoin base (supplement strategy)) target := by
+      rw [equality]
+      exact pairInBaseline
+    simp [base, supplement, target, defectRelation, conceptJoin] at pairInResidual
+  have residualMass (strategy : Unit) :
+      weight.mass
+          (defectRelation (conceptJoin base (supplement strategy)) target) = 2 := by
+    simp [weight, (residualNonempty strategy).ne_empty,
+      residualNeBaseline strategy]
   have valuesBddBelow : BddBelow (values 0) := by
     refine ⟨0, ?_⟩
     rintro value ⟨strategy, _, rfl⟩
-    exact div_nonneg (weight.mass_nonnegative _) (by norm_num)
-  have valuesNonempty : (values 0).Nonempty := by
-    refine ⟨2, (), ?_, ?_⟩
+    exact div_nonneg (weight.mass_nonnegative _) (weight.mass_nonnegative _)
+  have twoMem : (2 : Real) ∈ values 0 := by
+    refine ⟨(), ?_, ?_⟩
     · norm_num [cost]
     · change weight.mass
-          (defectRelation (conceptJoin base (supplement ())) target) / 1 = 2
-      rw [residualEq ()]
-      norm_num [weight]
-  refine ⟨⟨by norm_num, weight.empty_mass, weight.mass_nonnegative,
+          (defectRelation (conceptJoin base (supplement ())) target) /
+            weight.mass (defectRelation base target) = 2
+      rw [residualMass (), baselineMass]
+      norm_num
+  have valuesNonempty : (values 0).Nonempty := ⟨2, twoMem⟩
+  have valuesEq : values 0 = {2} := by
+    ext value
+    constructor
+    · rintro ⟨strategy, _, rfl⟩
+      have strategyEq : strategy = () := Subsingleton.elim _ _
+      subst strategy
+      change weight.mass
+          (defectRelation (conceptJoin base (supplement ())) target) /
+            weight.mass (defectRelation base target) ∈ ({2} : Set Real)
+      rw [residualMass (), baselineMass]
+      norm_num
+    · intro member
+      have valueEq : value = 2 := Set.mem_singleton_iff.mp member
+      subst value
+      exact twoMem
+  refine ⟨⟨by rw [baselineMass]; norm_num, weight.empty_mass, weight.mass_nonnegative,
     valuesBddBelow, valuesNonempty⟩, ?_⟩
-  norm_num [rate, budgetedEscapeRate, values, budgetedEscapeValues, weight,
-    residualEq, cost]
+  change ¬sInf (values 0) ≤ 1
+  rw [valuesEq]
+  norm_num
 
-/-- Counterexample probe: for an empty state space every canonical defect is
-empty, so every admissible weight forces the budgeted escape rate to zero. -/
+/-- For an empty state space every canonical defect is empty, so every
+admissible weight forces the canonically normalized escape rate to zero. -/
 example (weight : EscapeWeight (Empty × Empty)) :
     let base : Concept Empty Unit := fun state => state.elim
     let supplement : Unit -> Concept Empty Unit := fun _ state => state.elim
     let target : Concept Empty Empty := id
     let cost : Unit -> Real := fun _ => 0
-    budgetedEscapeRate base supplement target cost weight 1 0 = 0 := by
+    budgetedEscapeRate base supplement target cost weight 0 = 0 := by
   classical
   let base : Concept Empty Unit := fun state => state.elim
   let supplement : Unit -> Concept Empty Unit := fun _ state => state.elim
   let target : Concept Empty Empty := id
   let cost : Unit -> Real := fun _ => 0
-  change budgetedEscapeRate base supplement target cost weight 1 0 = 0
+  change budgetedEscapeRate base supplement target cost weight 0 = 0
   have defectEmpty (strategy : Unit) :
       defectRelation (conceptJoin base (supplement strategy)) target = ∅ := by
     ext pair
