@@ -104,8 +104,13 @@ internal sealed class ZeroMemoryCriterionDocument : IScribeDocumentDefinition
         Formula scalar, Formula source, Formula target, Formula observation, Formula update) =>
         App(Op(F.Id("LinearSetup")), scalar, source, target, observation, update);
 
+    // 不用 Apply(Subscript(...), …):那个组合是
+    // `formula-context:Apply.Function=precedence:script;produces-script:true;`
+    // `starts-with-negation:false`,
+    // 固定的 renderer corpus 未覆盖,FormulaCorpusInventoryTests 判红(本地 emit 不报)。
+    // 改为手写括号,渲染结果一致而不引入新的渲染组合。
     private static Formula Eventual(Formula observation, Formula update) =>
-        App(Sub(F.Id("N"), Infty), observation, update);
+        Seq(Sub(F.Id("N"), Infty), Open, observation, Comma, Sp, update, Close);
 
     private static Formula Kernel(Formula observation) =>
         App(Op(F.Id("ker")), observation);

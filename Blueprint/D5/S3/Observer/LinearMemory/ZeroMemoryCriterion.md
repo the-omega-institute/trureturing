@@ -6,7 +6,7 @@ The all-future kernel is the maximal invariant part of the current kernel, and i
 
 **Theorem 1.1 (The eventual kernel is currently invisible).**
 
-$$\forall K, V, W, C, T, \operatorname{LinearSetup}\left(K, V, W, C, T\right) \Rightarrow \left(N_{\infty}\right)\left(C, T\right) \subseteq \operatorname{ker}\left(C\right).$$
+$$\forall K, V, W, C, T, \operatorname{LinearSetup}\left(K, V, W, C, T\right) \Rightarrow N_{\infty}(C, T) \subseteq \operatorname{ker}\left(C\right).$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Observer/LinearMemory/ZeroMemoryCriterion.eventualKernel_le_ker` (`✓ std3`). ∎
 
@@ -18,7 +18,7 @@ Membership at iterate zero is exactly membership in the current kernel. Thus eve
 
 **Theorem 1.2 (The eventual kernel is invariant).**
 
-$$\forall x, x \in \left(N_{\infty}\right)\left(C, T\right) \Rightarrow T\left(x\right) \in \left(N_{\infty}\right)\left(C, T\right).$$
+$$\forall x, x \in N_{\infty}(C, T) \Rightarrow T\left(x\right) \in N_{\infty}(C, T).$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Observer/LinearMemory/ZeroMemoryCriterion.eventualKernel_invariant` (`✓ std3`). ∎
 
@@ -30,7 +30,7 @@ Applying the update shifts every required future-kernel test forward by one step
 
 **Theorem 1.3 (The eventual kernel is the maximal invariant invisible submodule).**
 
-$$\forall M, (M \subseteq \operatorname{ker}\left(C\right) \land \operatorname{map}\left(T, M\right) \subseteq M) \Rightarrow M \subseteq \left(N_{\infty}\right)\left(C, T\right).$$
+$$\forall M, (M \subseteq \operatorname{ker}\left(C\right) \land \operatorname{map}\left(T, M\right) \subseteq M) \Rightarrow M \subseteq N_{\infty}(C, T).$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Observer/LinearMemory/ZeroMemoryCriterion.eventualKernel_is_greatest` (`✓ std3`). ∎
 
@@ -42,7 +42,7 @@ For any submodule M contained in the current kernel and preserved by T, inductio
 
 **Theorem 1.4 (The memory quotient is zero exactly at kernel equality).**
 
-$$\operatorname{Subsingleton}\left(N_{0}/N_{\infty}\right) \Leftrightarrow \left(N_{\infty}\right)\left(C, T\right) = \operatorname{ker}\left(C\right).$$
+$$\operatorname{Subsingleton}\left(N_{0}/N_{\infty}\right) \Leftrightarrow N_{\infty}(C, T) = \operatorname{ker}\left(C\right).$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Observer/LinearMemory/ZeroMemoryCriterion.zero_memory_iff_eventualKernel_eq_ker` (`✓ std3`). ∎
 
