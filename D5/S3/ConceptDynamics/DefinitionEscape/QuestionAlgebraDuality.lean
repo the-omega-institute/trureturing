@@ -182,7 +182,7 @@ theorem effective_refinement_iff_question_inclusion
       exact congrArg answer normalizedFineEqual
     have impossible : (true : Bool) = false := by
       simpa [question, coarseDifferent, Ne.symm coarseDifferent] using questionEqual
-    exact Bool.true_ne_false impossible
+    exact Bool.noConfusion impossible
 
 /-- Effective strict refinement is exactly strict growth of the Boolean question
 algebra, witnessed by one newly answerable question. -/

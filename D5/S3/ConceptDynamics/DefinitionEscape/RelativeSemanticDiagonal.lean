@@ -3,7 +3,7 @@
    mirror-B: none(waiver:formal-unit-only)
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: Complete decoder catalogs generate canonical diagonal targets outside both the latent closure and every sublanguage completion. -/
+   digest: Complete decoder catalogs yield diagonal targets outside the latent closure. -/
 
 import D5.S3.ConceptDynamics.DefinitionEscape.DefinitionKernelGalois
 import D5.S3.ConceptDynamics.DefinitionEscape.QuestionAlgebraDuality

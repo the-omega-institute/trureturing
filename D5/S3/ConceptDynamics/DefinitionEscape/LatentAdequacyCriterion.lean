@@ -3,7 +3,7 @@
    mirror-B: none(waiver:formal-unit-only)
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: Target adequacy binds canonical recovery to join strictness without redeclaring target defects. -/
+   digest: Target adequacy binds canonical recovery to join strictness. -/
 
 import D5.S3.ConceptDynamics.Restoration.TargetRecoveryCriterion
 import D5.S3.ConceptDynamics.StrictRefinementCapability

@@ -3,7 +3,7 @@
    mirror-B: none(waiver:formal-unit-only)
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: A diagonal catalog escape is productive exactly when its semantics creates a question unavailable to the current concept. -/
+   digest: A diagonal catalog escape is productive iff it creates a new question. -/
 
 import D5.S0.Diagonal.Lawvere.QualitativeEscape
 import D5.S3.ConceptDynamics.DefinitionEscape.QuestionAlgebraDuality

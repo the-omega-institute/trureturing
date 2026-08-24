@@ -3,7 +3,7 @@
    mirror-B: none(waiver:formal-unit-only)
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: Definition families and indistinguishability relations form a Galois connection whose closure detects primitive and productive escape. -/
+   digest: Family kernels form a Galois connection detecting primitive and productive escape. -/
 
 import D5.S3.ConceptDynamics.DefinitionEscape.BlindKernelObstruction
 import D5.S3.ConceptDynamics.DefinitionEscape.ResidualJoinLaw
@@ -81,13 +81,15 @@ theorem definition_relation_galois
       relation ⊆ jointKernel (fun definition : Gamma => definition.1) := by
   constructor
   · intro invariant pair pairInRelation
-    simp only [jointKernel, conceptKernel, Set.mem_iInter, Set.mem_setOf_eq]
+    apply Set.mem_iInter.2
     intro definition
-    exact invariant definition.1 definition.2 pairInRelation
+    change (definition.1 : X → Output) pair.1 = definition.1 pair.2
+    exact invariant definition.2 pairInRelation
   · intro relationInKernel definition definitionInGamma left right pairInRelation
     have pairInJointKernel := relationInKernel pairInRelation
-    simpa only [jointKernel, conceptKernel, Set.mem_iInter,
-      Set.mem_setOf_eq] using pairInJointKernel ⟨definition, definitionInGamma⟩
+    have pairForDefinition :=
+      Set.mem_iInter.1 pairInJointKernel ⟨definition, definitionInGamma⟩
+    exact pairForDefinition
 
 /-- Enlarging a definition family can only shrink its common kernel. -/
 theorem jointKernel_antitone
@@ -96,18 +98,17 @@ theorem jointKernel_antitone
     jointKernel (fun definition : Delta => definition.1) ⊆
       jointKernel (fun definition : Gamma => definition.1) := by
   intro pair pairInDelta
-  simp only [jointKernel, conceptKernel, Set.mem_iInter,
-    Set.mem_setOf_eq] at pairInDelta ⊢
+  apply Set.mem_iInter.2
   intro definition
-  exact pairInDelta ⟨definition.1, subset definition.2⟩
+  exact Set.mem_iInter.1 pairInDelta
+    ⟨definition.1, subset definition.2⟩
 
 /-- Every current definition belongs to the semantic closure it generates. -/
 theorem definitionClosure_extensive
     {X Output : Type*} (Gamma : Set (Concept X Output)) :
     Gamma ⊆ DefinitionClosure Gamma := by
   intro definition definitionInGamma left right pairInKernel
-  simpa only [jointKernel, conceptKernel, Set.mem_iInter,
-    Set.mem_setOf_eq] using pairInKernel ⟨definition, definitionInGamma⟩
+  exact Set.mem_iInter.1 pairInKernel ⟨definition, definitionInGamma⟩
 
 /-- Semantic closure is monotone in the generating family. -/
 theorem definitionClosure_mono
@@ -127,8 +128,7 @@ theorem jointKernel_definitionClosure
   apply Set.Subset.antisymm
   · exact jointKernel_antitone (definitionClosure_extensive Gamma)
   · intro pair pairInKernel
-    simp only [jointKernel, conceptKernel, Set.mem_iInter,
-      Set.mem_setOf_eq] at pairInKernel ⊢
+    apply Set.mem_iInter.2
     intro definition
     exact definition.2 pairInKernel
 
@@ -138,7 +138,8 @@ theorem definitionClosure_idempotent
     DefinitionClosure (DefinitionClosure Gamma) =
       DefinitionClosure Gamma := by
   unfold DefinitionClosure SemanticClosure
-  rw [jointKernel_definitionClosure]
+  exact congrArg RelationInvariantReadouts
+    (jointKernel_definitionClosure Gamma)
 
 /-- Membership in semantic closure is pointwise constancy on all pairs
 indistinguishable by the complete definition family. -/
@@ -170,10 +171,24 @@ theorem mem_semanticClosure_iff_factors
     target ∈ SemanticClosure Gamma ↔
       Refines target
         (jointReadout (fun definition : Gamma => definition.1)) := by
-  rw [mem_semanticClosure_iff_fiber_constant]
-  simpa only [Refines] using
-    (target_recovery_criterion
-      (jointReadout (fun definition : Gamma => definition.1)) target).1.symm
+  constructor
+  · intro invariant
+    apply (target_recovery_criterion
+      (jointReadout (fun definition : Gamma => definition.1)) target).1.mpr
+    intro left right jointEqual
+    apply (mem_semanticClosure_iff_fiber_constant Gamma target).1 invariant
+    intro definition
+    exact congrFun jointEqual definition
+  · rintro ⟨recover, recovery⟩
+    apply (mem_semanticClosure_iff_fiber_constant Gamma target).2
+    intro left right allEqual
+    have jointEqual :
+        jointReadout (fun definition : Gamma => definition.1) left =
+          jointReadout (fun definition : Gamma => definition.1) right := by
+      funext definition
+      exact allEqual definition
+    rw [recovery]
+    exact congrArg recover jointEqual
 
 /-- Failure of semantic-closure membership has a concrete common-kernel
 witness. -/
@@ -248,8 +263,7 @@ theorem blindResidual_empty_iff_pointwise_separator
     · rintro ⟨pairInDefect, pairInKernel⟩
       rcases separates pairInDefect with ⟨definition, different⟩
       apply different
-      simpa only [jointKernel, conceptKernel, Set.mem_iInter,
-        Set.mem_setOf_eq] using pairInKernel definition
+      exact Set.mem_iInter.1 pairInKernel definition
     · intro impossible
       exact impossible.elim
 
@@ -286,8 +300,7 @@ theorem languageExtension_defect_eq_blindResidual
         jointReadout (fun definition : Gamma => definition.1) pair.1 =
           jointReadout (fun definition : Gamma => definition.1) pair.2 := by
       funext definition
-      simpa only [jointKernel, conceptKernel, Set.mem_iInter,
-        Set.mem_setOf_eq] using pairInKernel definition
+      exact Set.mem_iInter.1 pairInKernel definition
     exact ⟨Prod.ext currentEqual jointEqual, targetDifferent⟩
 
 #print axioms definition_relation_galois

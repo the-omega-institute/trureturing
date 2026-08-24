@@ -3,7 +3,7 @@
    mirror-B: none(waiver:formal-unit-only)
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: Exact target distillation eliminates canonical defects without target-irrelevant over-separation. -/
+   digest: Exact target distillation removes defects without over-separation. -/
 
 import D5.S3.ConceptDynamics.DefinitionEscape.QuestionAlgebraDuality
 
@@ -126,10 +126,10 @@ theorem exact_distillation_iff_effective_birefines
     constructor
     · exact (effective_refines_iff_fiber
         (conceptJoin current target) (conceptJoin current added)).1
-          targetFromCandidate
+          targetFromCandidate (x := x) (y := y)
     · exact (effective_refines_iff_fiber
         (conceptJoin current added) (conceptJoin current target)).1
-          candidateFromTarget
+          candidateFromTarget (x := x) (y := y)
 
 /-- Exact target distillation has exactly the canonical target completion's
 Boolean question algebra. -/
