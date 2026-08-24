@@ -394,16 +394,19 @@ internal static class BackfillInventoryRule
             var forkPointDocument = DigestionReceiptIntegrity.ForkPointView(
                 document,
                 baselineDocument);
+            var forkPointSnapshot = DigestionReceiptIntegrity.ForkPointSnapshotView(
+                context.Current,
+                context.Baseline);
             var forkPointEvaluation = DigestionStatusEvaluator.Evaluate(
                 context.Changes is null
                     ? DigestionEvaluationScope.FullScan
                     : DigestionEvaluationScope.ChangedSet,
                 forkPointDocument,
-                context.Baseline,
+                forkPointSnapshot,
                 context.Lean,
                 context.VerifiedScribeEmissions,
                 forkPointDocument,
-                baselineSnapshot: context.Baseline,
+                baselineSnapshot: forkPointSnapshot,
                 changes: context.Changes,
                 isBaseFactAffected: context.IsBaseFactAffected);
             var blockingReceiptIdentities = DigestionReceiptIntegrity.NewFailureIdentities(

@@ -118,14 +118,17 @@ internal static partial class CoverAtomCommand
             var forkPointDocument = DigestionReceiptIntegrity.ForkPointView(
                 document,
                 baselineDocument);
+            var forkPointSnapshot = DigestionReceiptIntegrity.ForkPointSnapshotView(
+                current,
+                baseline);
             var forkPointEvaluation = DigestionStatusEvaluator.Evaluate(
                 DigestionEvaluationScope.ChangedSet,
                 forkPointDocument,
-                baseline,
+                forkPointSnapshot,
                 lean,
                 verifiedScribeEmissions,
                 forkPointDocument,
-                baselineSnapshot: baseline,
+                baselineSnapshot: forkPointSnapshot,
                 changes: changes);
             // Gate ②(b): anti-Goodhart — cover may only deposit a declaration that
             // the baseline ledger did not already bind.
@@ -240,14 +243,6 @@ internal static partial class CoverAtomCommand
                 baselineDocument,
                 baselineSnapshot: baseline);
             RequireNoFindings(evaluation);
-            var backfillObservations = DigestionBackfillValidation.RequireValidBackfill(
-                finalDocument,
-                finalSnapshot,
-                baseline,
-                LoadPolicy(finalSnapshot),
-                lean,
-                verifiedScribeEmissions);
-
             var finalTarget = EvaluationFor(evaluation, options.AtomId);
             if (target.CoverageGids.Length == 0)
             {
@@ -268,6 +263,14 @@ internal static partial class CoverAtomCommand
                     finalSnapshot,
                     lean);
             }
+
+            var backfillObservations = DigestionBackfillValidation.RequireValidBackfill(
+                finalDocument,
+                finalSnapshot,
+                baseline,
+                LoadPolicy(finalSnapshot),
+                lean,
+                verifiedScribeEmissions);
 
             var receipt = DigestionFormalizationReceipt.LoadTrusted(baseline, options.EnvelopePath);
             RequireEnvelopeBinding(receipt, options, target);

@@ -72,14 +72,17 @@ internal static partial class CoverAtomCommand
         var forkPointDocument = DigestionReceiptIntegrity.ForkPointView(
             document,
             baselineDocument);
+        var forkPointSnapshot = DigestionReceiptIntegrity.ForkPointSnapshotView(
+            current,
+            baseline);
         var forkPointEvaluation = DigestionStatusEvaluator.Evaluate(
             DigestionEvaluationScope.ChangedSet,
             forkPointDocument,
-            baseline,
+            forkPointSnapshot,
             lean,
             verified,
             forkPointDocument,
-            baselineSnapshot: baseline,
+            baselineSnapshot: forkPointSnapshot,
             changes: changes);
         var exactRepairIdentities = DigestionReceiptIntegrity.ExactScribeRepairIdentities(
             forkDeltaEvaluation,

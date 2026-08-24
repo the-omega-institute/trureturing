@@ -57,14 +57,17 @@ internal static partial class IngestCommand
             var forkPointDocument = DigestionReceiptIntegrity.ForkPointView(
                 document,
                 baselineDocument);
+            var forkPointSnapshot = DigestionReceiptIntegrity.ForkPointSnapshotView(
+                current,
+                baseline);
             var forkPointEvaluation = DigestionStatusEvaluator.Evaluate(
                 DigestionEvaluationScope.ChangedSet,
                 forkPointDocument,
-                baseline,
+                forkPointSnapshot,
                 lean,
                 verifiedScribeEmissions,
                 forkPointDocument,
-                baselineSnapshot: baseline,
+                baselineSnapshot: forkPointSnapshot,
                 changes: changes);
             DigestionReceiptIntegrityGuard.RequireNoNewFailures(
                 forkPointEvaluation,

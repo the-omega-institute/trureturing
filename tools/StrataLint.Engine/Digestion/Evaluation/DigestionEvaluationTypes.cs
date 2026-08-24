@@ -63,6 +63,16 @@ internal static class DigestionReceiptIntegrity
                 .ToImmutableArray());
     }
 
+    // Receipt identities must be compared against fork-point bytes without handing the
+    // candidate Lean report paths that no longer exist. Candidate-only paths keep their
+    // current bytes so the snapshot and report still describe the same path topology.
+    internal static RepositorySnapshot ForkPointSnapshotView(
+        RepositorySnapshot candidate,
+        RepositorySnapshot forkPoint) =>
+        RepositorySnapshot.Create(candidate.Files.ToImmutableDictionary(
+            static item => item.Key,
+            item => forkPoint.Files.TryGetValue(item.Key, out var file) ? file : item.Value));
+
     internal static ImmutableArray<DigestionReceiptIntegrityGapIdentity> Identities(
         DigestionLedgerEvaluation evaluation) =>
         Gaps(evaluation)
