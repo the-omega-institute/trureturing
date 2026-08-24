@@ -29,4 +29,5 @@ Boolean examples witness a nonempty residual, redundant zero gain, a blind obstr
 - Truth anchor: `D5/S3/ConceptDynamics/DefinitionEscape/DirectlyProvableLaws.directly_provable_laws`
 - Dependency: [D5/S0/Diagonal/Naturality/NaturalityDefectComposition](../../../S0/Diagonal/Naturality/NaturalityDefectComposition.md)
 - Dependency: [D5/S3/ConceptDynamics/DefinitionEscape/BlindKernelObstruction](BlindKernelObstruction.md)
+- Dependency: [D5/S3/ConceptDynamics/DefinitionEscape/MeasureCapture](MeasureCapture.md)
 - Dependency: [D5/S3/ConceptDynamics/DefinitionEscape/ResidualJoinLaw](ResidualJoinLaw.md)
