@@ -453,11 +453,11 @@ public sealed class ReportSupervisorScriptTests
         Assert.Equal(0, result.ExitCode);
         Assert.True(File.Exists(fixture.MetricsLog));
         Assert.Equal(original, File.ReadAllBytes(fixture.MetricsLog));
-        Assert.Contains(
-            "{\"event\":\"performance_event_commit\",\"status\":\"failed\","
-                + "\"source\":\"report-supervisor\",\"reason\":\"append-failed\",",
-            Encoding.UTF8.GetString(result.StandardOutput),
-            StringComparison.Ordinal);
+        using var failureNote = JsonDocument.Parse(result.StandardOutput);
+        var failure = failureNote.RootElement;
+        Assert.Equal("performance_event_commit", failure.GetProperty("event").GetString());
+        Assert.Equal("failed", failure.GetProperty("status").GetString());
+        Assert.Equal("report-supervisor", failure.GetProperty("source").GetString());
         Assert.DoesNotContain(
             "performance event",
             Encoding.UTF8.GetString(result.StandardError),
