@@ -36,6 +36,38 @@ internal sealed class FiniteCoverCountingDocument : IScribeDocumentDefinition
             Call("budgetedEscapeRate", budgetOne), Underscore, Grp(F.Id("count")));
         Formula rateTwo = Seq(
             Call("budgetedEscapeRate", budgetTwo), Underscore, Grp(F.Id("count")));
+        Formula baselineNonempty = Call("Nonempty", residual);
+        Formula strategy = F.Id("s");
+        Formula feasibleAtBudgetOne = new Formula.BindMany(
+            FormulaQuantifier.Exists,
+            [new Formula.BoundVariable(
+                FormulaIdentifier.Create("s"),
+                F.Id("Strategy"))],
+            new Formula.Relation(
+                Call("cost", strategy),
+                FormulaRelationOperator.LessThanOrEqual,
+                budgetOne));
+        Formula groupedFeasibleAtBudgetOne = Seq(
+            Open, feasibleAtBudgetOne, Close);
+        Formula budgetOrdered = new Formula.Relation(
+            budgetOne,
+            FormulaRelationOperator.LessThanOrEqual,
+            budgetTwo);
+        Formula countingAntitone = new Formula.Relation(
+            rateTwo,
+            FormulaRelationOperator.LessThanOrEqual,
+            rateOne);
+        Formula countingPremises = new Formula.Logic(
+            new Formula.Logic(
+                baselineNonempty,
+                FormulaLogicOperator.And,
+                groupedFeasibleAtBudgetOne),
+            FormulaLogicOperator.And,
+            budgetOrdered);
+        Formula countingClause = new Formula.Logic(
+            countingPremises,
+            FormulaLogicOperator.Implies,
+            countingAntitone);
         Formula statement = Disp(Seq(
             Open, blind, Sp, Eq, Sp, Emptyset, Close, Sp, Leftrightarrow, Sp,
             cutsCover, Comma, RowBreak, Grp(),
@@ -43,8 +75,7 @@ internal sealed class FiniteCoverCountingDocument : IScribeDocumentDefinition
             finiteSufficient, Comma, RowBreak, Grp(),
             gamma, Sp, Subseteq, Sp, delta, Sp, Rightarrow, Sp,
             largerMarginal, Sp, Leq, Sp, marginal, Comma, RowBreak, Grp(),
-            budgetOne, Sp, Leq, Sp, budgetTwo, Sp, Rightarrow, Sp,
-            rateTwo, Sp, Leq, Sp, rateOne, Dot));
+            countingClause, Dot));
 
         return DocumentDefinition.Create(ScribeNode.Create(
             "Finite definition cuts cover residuals with diminishing capture and antitone escape.",
