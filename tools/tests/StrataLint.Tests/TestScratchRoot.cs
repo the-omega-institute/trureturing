@@ -163,7 +163,11 @@ internal sealed class TemporaryDirectory : IDisposable
 {
     private int disposed;
 
-    internal TemporaryDirectory() => Path = TestScratchRoot.Current.CreateDirectory();
+    internal TemporaryDirectory() : this(TestScratchRoot.Current)
+    {
+    }
+
+    internal TemporaryDirectory(TestScratchRoot root) => Path = root.CreateDirectory();
 
     internal string Path { get; }
 

@@ -134,12 +134,20 @@ public sealed class TruthDagTests
     [Fact]
     public void CycleRejectionContainsOnlyAnExactClosedEdgeWitness()
     {
-        var outcome = BuildOutcome(
+        var modules = new[]
+        {
             Module("A", "C"),
             Module("B", "A"),
             Module("C", "B"),
-            Module("D", "C"));
+            Module("D", "C"),
+        };
+        var (snapshot, closure) = ValidatedModuleFixture(modules);
 
+        var states = LeanTruthStates.Resolve(snapshot, closure);
+        var outcome = AcyclicTruthDag.Build(snapshot, closure);
+
+        Assert.Equal(4, states.Count);
+        Assert.All(states.Values, static state => Assert.Equal(TruthState.Closed, state));
         var rejected = Assert.IsType<DagBuildOutcome.Rejected>(outcome);
         Assert.Equal(
             new[] { PathFor("A"), PathFor("B"), PathFor("C"), PathFor("A") },
@@ -203,7 +211,10 @@ public sealed class TruthDagTests
                 declarations: new[] { Declaration("conditionalResult", "registeredDebt") }),
         };
 
-        var dag = BuildAcceptedFrom(files, reports);
+        var (snapshot, closure) = ValidatedFixture(files, reports);
+        var states = LeanTruthStates.Resolve(snapshot, closure);
+        var dag = Assert.IsType<DagBuildOutcome.Accepted>(
+            AcyclicTruthDag.Build(snapshot, closure)).Capability;
 
         Assert.Equal(TruthState.Closed, Node(closed).State);
         Assert.Equal(TruthState.Open, Node(frontier).State);
@@ -213,6 +224,9 @@ public sealed class TruthDagTests
         Assert.Equal(TruthState.Tail, Node(conditional).State);
         Assert.DoesNotContain(dag.Nodes, node => node.RepoPath.Value == semantic);
         Assert.Equal("D5/S0/Carrier/ClosedFact", Node(closed).Gid?.Value);
+        Assert.Equal(dag.Nodes.Length, states.Count);
+        Assert.All(dag.Nodes, node => Assert.Equal(node.State, states[node.RepoPath]));
+        Assert.DoesNotContain(states.Keys, path => path.Value == semantic);
 
         TruthNode Node(string path) => dag.Nodes.Single(node => node.RepoPath.Value == path);
     }
@@ -226,6 +240,13 @@ public sealed class TruthDagTests
 
     private static DagBuildOutcome BuildOutcome(params ModuleSpec[] modules)
     {
+        var (snapshot, closure) = ValidatedModuleFixture(modules);
+        return AcyclicTruthDag.Build(snapshot, closure);
+    }
+
+    private static (RepositorySnapshot Snapshot, AcceptedLeanClosure Closure) ValidatedModuleFixture(
+        params ModuleSpec[] modules)
+    {
         var files = modules.ToDictionary(
             static module => PathFor(module.Name),
             static module => $"def {module.Name.ToLowerInvariant()} : Nat := 0\n",
@@ -236,7 +257,7 @@ public sealed class TruthDagTests
                 module.Imports.Select(ModuleNameFor).ToImmutableArray(),
                 ImmutableArray<LeanDeclaration>.Empty),
             StringComparer.Ordinal);
-        return BuildOutcomeFrom(files, reports);
+        return ValidatedFixture(files, reports);
     }
 
     private static AcyclicTruthDag BuildAcceptedFrom(
@@ -248,12 +269,20 @@ public sealed class TruthDagTests
         IReadOnlyDictionary<string, string> files,
         IReadOnlyDictionary<string, LeanFileReport> reports)
     {
+        var (snapshot, closure) = ValidatedFixture(files, reports);
+        return AcyclicTruthDag.Build(snapshot, closure);
+    }
+
+    private static (RepositorySnapshot Snapshot, AcceptedLeanClosure Closure) ValidatedFixture(
+        IReadOnlyDictionary<string, string> files,
+        IReadOnlyDictionary<string, LeanFileReport> reports)
+    {
         var raw = RawRepositorySnapshot.Create(files.Select(pair => RawRepositoryEntry.FromText(pair.Key, pair.Value)));
         var snapshot = Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(raw)).Snapshot;
         var closure = Assert.IsType<LeanValidationOutcome.Accepted>(
             LeanClosureValidator.Validate(snapshot, LeanAxiomReport.Create(reports))).Capability;
 
-        return AcyclicTruthDag.Build(snapshot, closure);
+        return (snapshot, closure);
     }
 
     private static string PathFor(string module) => $"D5/S0/Carrier/{module}.lean";

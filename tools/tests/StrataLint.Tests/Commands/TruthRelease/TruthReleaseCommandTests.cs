@@ -227,7 +227,6 @@ public sealed class TruthReleaseCommandTests
             FrozenContentAddress.Build(
                 snapshotWithoutLedger,
                 lean,
-                dag,
                 realEnvironment,
                 realAttestations)).Capability;
         var ledgerBytes = FrozenLedgerGenerator.GenerateGenesis(

@@ -375,6 +375,7 @@ public sealed partial class ProductionEnvironmentTests
         fixture.Baseline["Meta/registry.yaml"] = TestRegistry.Canonical;
         fixture.Files["Meta/domains.yaml"] = TestRegistry.Domains;
         fixture.Baseline["Meta/domains.yaml"] = TestRegistry.Domains;
+        AddFrozenLedger(fixture);
         fixture.Files[loopPath] = "def loop : Nat := 0\n";
         fixture.Reports[RuleFixture.RingPath] = new LeanFileReport(
             ImmutableArray.Create("D5.S0.Carrier.Loop"),
@@ -396,15 +397,13 @@ public sealed partial class ProductionEnvironmentTests
         var outcome = CheckWithReports(environment, fixture);
 
         var rejected = Assert.IsType<AdmissionOutcome.RuleRejected>(outcome);
-        var cycle = Assert.Single(
-            rejected.Diagnostics.Where(item => item.RuleId == RuleId.CreateKnown(1)));
         var meta = Assert.Single(
             rejected.Diagnostics.Where(item => item.RuleId == RuleId.CreateKnown(22)));
-        Assert.Equal(RuleId.CreateKnown(1), cycle.RuleId);
-        Assert.Equal(loopPath, cycle.Path);
-        Assert.Equal(
-            $"managed import cycle: {loopPath} -> {RuleFixture.RingPath} -> {loopPath}",
-            cycle.Message);
+        Assert.DoesNotContain(
+            rejected.Diagnostics,
+            item => item.RuleId == RuleId.CreateKnown(1));
+        Assert.NotEmpty(
+            rejected.Diagnostics.Where(item => item.RuleId == RuleId.CreateKnown(8)));
         Assert.Equal(RuleFixture.SyntheticProtectedPath, meta.Path);
     }
 
@@ -562,7 +561,7 @@ public sealed partial class ProductionEnvironmentTests
                     node.RepoPath,
                     FrozenLedgerTestData.GitBlobOid(files[node.RepoPath.Value])));
             return Assert.IsType<FrozenMaterialOutcome.Accepted>(
-                FrozenContentAddress.Build(snapshot, closure, dag, environment, attestations)).Capability;
+                FrozenContentAddress.Build(snapshot, closure, environment, attestations)).Capability;
         }
     }
 }
