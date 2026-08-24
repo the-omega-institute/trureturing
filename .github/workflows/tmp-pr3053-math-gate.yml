@@ -1,0 +1,55 @@
+name: temporary-pr3053-mathematical-gate
+
+on:
+  push:
+    branches:
+      - agent/formal-relative-negation-involutive-escape
+
+permissions:
+  contents: read
+
+jobs:
+  mathematical-gate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - name: Check out candidate branch
+        uses: actions/checkout@v4
+        with:
+          ref: agent/formal-relative-negation-involutive-escape
+          fetch-depth: 0
+
+      - name: Install pinned SDK
+        uses: actions/setup-dotnet@v4
+        with:
+          global-json-file: global.json
+          cache: false
+
+      - name: Install pinned Lean toolchain
+        shell: bash
+        run: |
+          set -euo pipefail
+          tools/scripts/workflow/install-lean-toolchain.sh lean-toolchain --github-path "$GITHUB_PATH"
+
+      - name: Hydrate canonical Lean cache
+        shell: bash
+        run: |
+          set -euo pipefail
+          make lean-cache-ensure
+
+      - name: Build scoped mathematical modules
+        shell: bash
+        run: |
+          set -euo pipefail
+          lake build D5.S3.ConceptDynamics.DefinitionEscape.RelativeComplement
+          lake build D5.S3.ConceptDynamics.DefinitionEscape.InvolutiveNegation
+          lake build D5.S3.ConceptDynamics.DefinitionEscape.OrbitOrientation
+          lake build D5.S3.ConceptDynamics.DefinitionEscape.ComplementFiberLift
+          lake build D5.S3.ConceptDynamics.DefinitionEscape.ComplementSelectorDiagonal
+          lake build D5.S3.ConceptDynamics.DefinitionEscape.InvolutiveBlindResidual
+
+      - name: Run canonical test gate
+        shell: bash
+        run: |
+          set -euo pipefail
+          make test
