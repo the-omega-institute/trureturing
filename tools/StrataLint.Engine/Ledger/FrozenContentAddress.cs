@@ -20,20 +20,20 @@ public static class FrozenContentAddress
     public static FrozenMaterialOutcome Build(
         RepositorySnapshot snapshot,
         AcceptedLeanClosure lean,
-        AcyclicTruthDag dag,
         FrozenEnvironmentAttestation environment,
         IEnumerable<FrozenModuleAttestation> moduleAttestations)
     {
         ArgumentNullException.ThrowIfNull(snapshot);
         ArgumentNullException.ThrowIfNull(lean);
-        ArgumentNullException.ThrowIfNull(dag);
         ArgumentNullException.ThrowIfNull(environment);
         ArgumentNullException.ThrowIfNull(moduleAttestations);
 
         try
         {
             ValidateEnvironment(snapshot, environment);
-            var (openCases, tailRegistrations) = ValidateStateEvidence(snapshot, lean, dag);
+            var states = LeanTruthStates.Resolve(snapshot, lean);
+            var adjacency = LeanImportAdjacency.Build(snapshot, lean);
+            var (openCases, tailRegistrations) = ValidateStateEvidence(snapshot, lean, states);
             var attestations = moduleAttestations.ToArray();
             var byPath = attestations.ToDictionary(static item => item.RepoPath);
             if (byPath.Count != attestations.Length)
@@ -42,26 +42,29 @@ public static class FrozenContentAddress
             }
 
             var materialByPath = new Dictionary<RepoPath, FrozenNodeMaterial>();
-            foreach (var node in dag.TopologicalOrder.Where(static node => node.State is TruthState.Closed))
+            foreach (var path in LeanImportAdjacency.DependenciesFirst(
+                states.Where(static item => item.Value is TruthState.Closed).Select(static item => item.Key),
+                adjacency).Where(path => states.TryGetValue(path, out var state)
+                    && state is TruthState.Closed))
             {
-                if (!byPath.TryGetValue(node.RepoPath, out var attestation))
+                if (!byPath.TryGetValue(path, out var attestation))
                 {
-                    throw new FormatException($"Closed module {node.RepoPath.Value} has no complete attestation material.");
+                    throw new FormatException($"Closed module {path.Value} has no complete attestation material.");
                 }
 
                 materialByPath.Add(
-                    node.RepoPath,
+                    path,
                     BuildNodeMaterial(
                         snapshot,
                         lean,
-                        dag,
+                        adjacency,
                         environment,
-                        node,
+                        path,
                         attestation,
-                        path => materialByPath.TryGetValue(path, out var dependency)
+                        dependencyPath => materialByPath.TryGetValue(dependencyPath, out var dependency)
                             ? dependency.FrozenNodeId
                             : throw new FormatException(
-                                $"Closed module {node.RepoPath.Value} depends on non-frozen {path.Value}.")));
+                                $"Closed module {path.Value} depends on non-frozen {dependencyPath.Value}.")));
             }
 
             var unused = byPath.Keys
@@ -76,13 +79,14 @@ public static class FrozenContentAddress
             }
 
             return new FrozenMaterialOutcome.Accepted(FrozenMaterialCatalog.Create(
-                dag,
                 environment,
+                states.ToImmutableDictionary(),
                 materialByPath.Values
                     .OrderBy(static node => node.RepoPath.Value, StringComparer.Ordinal)
                     .ToImmutableArray(),
                 openCases,
-                tailRegistrations));
+                tailRegistrations,
+                adjacency));
         }
         catch (Exception exception) when (exception is FormatException or ArgumentException)
         {
@@ -93,7 +97,6 @@ public static class FrozenContentAddress
     internal static FrozenMaterialCatalog BuildAdmissionCatalog(
         RepositorySnapshot snapshot,
         AcceptedLeanClosure lean,
-        AcyclicTruthDag dag,
         FrozenEnvironmentAttestation environment,
         IEnumerable<FrozenModuleAttestation> moduleAttestations,
         IReadOnlySet<RepoPath> selectedPaths,
@@ -101,85 +104,87 @@ public static class FrozenContentAddress
     {
         ArgumentNullException.ThrowIfNull(snapshot);
         ArgumentNullException.ThrowIfNull(lean);
-        ArgumentNullException.ThrowIfNull(dag);
         ArgumentNullException.ThrowIfNull(environment);
         ArgumentNullException.ThrowIfNull(moduleAttestations);
         ArgumentNullException.ThrowIfNull(selectedPaths);
         ArgumentNullException.ThrowIfNull(trustedBaseMaterials);
         ValidateEnvironment(snapshot, environment);
+        var states = LeanTruthStates.Resolve(snapshot, lean);
+        var adjacency = LeanImportAdjacency.Build(snapshot, lean);
         var attestations = moduleAttestations.ToDictionary(static item => item.RepoPath);
         var materialByPath = new Dictionary<RepoPath, FrozenNodeMaterial>();
-        foreach (var node in dag.TopologicalOrder.Where(node =>
-            node.State is TruthState.Closed
-            && node.ModuleName is not null
-            && selectedPaths.Contains(node.RepoPath)))
+        foreach (var path in LeanImportAdjacency.DependenciesFirst(selectedPaths, adjacency)
+            .Where(path => states.TryGetValue(path, out var state)
+                && state is TruthState.Closed
+                && selectedPaths.Contains(path)))
         {
-            if (!attestations.TryGetValue(node.RepoPath, out var attestation))
+            if (!attestations.TryGetValue(path, out var attestation))
             {
                 throw new FormatException(
-                    $"Selected Closed module {node.RepoPath.Value} has no attestation material.");
+                    $"Selected Closed module {path.Value} has no attestation material.");
             }
 
             materialByPath.Add(
-                node.RepoPath,
+                path,
                 BuildNodeMaterial(
                     snapshot,
                     lean,
-                    dag,
+                    adjacency,
                     environment,
-                    node,
+                    path,
                     attestation,
-                    path => materialByPath.TryGetValue(path, out var selectedDependency)
+                    dependencyPath => materialByPath.TryGetValue(dependencyPath, out var selectedDependency)
                         ? selectedDependency.FrozenNodeId
-                        : trustedBaseMaterials.TryGetValue(path, out var trustedDependency)
+                        : trustedBaseMaterials.TryGetValue(dependencyPath, out var trustedDependency)
                             ? trustedDependency.FrozenNodeId
                             : throw new FormatException(
-                                $"Selected Closed module {node.RepoPath.Value} depends on unrecorded {path.Value}.")));
+                                $"Selected Closed module {path.Value} depends on unrecorded {dependencyPath.Value}.")));
         }
 
         return FrozenMaterialCatalog.Create(
-            dag,
             environment,
+            states.ToImmutableDictionary(),
             materialByPath.Values
                 .OrderBy(static node => node.RepoPath.Value, StringComparer.Ordinal)
                 .ToImmutableArray(),
             ImmutableDictionary<RepoPath, ImmutableArray<CaseId>>.Empty,
-            ImmutableDictionary<RepoPath, ImmutableArray<string>>.Empty);
+            ImmutableDictionary<RepoPath, ImmutableArray<string>>.Empty,
+            adjacency);
     }
 
     private static FrozenNodeMaterial BuildNodeMaterial(
         RepositorySnapshot snapshot,
         AcceptedLeanClosure lean,
-        AcyclicTruthDag dag,
+        IReadOnlyDictionary<RepoPath, ImmutableArray<RepoPath>> adjacency,
         FrozenEnvironmentAttestation environment,
-        TruthNode node,
+        RepoPath path,
         FrozenModuleAttestation attestation,
         Func<RepoPath, FrozenNodeId> resolveDependency)
     {
-        if (!snapshot.Files.TryGetValue(node.RepoPath, out var source)
-            || !lean.Report.Files.TryGetValue(node.RepoPath, out var report))
+        if (!snapshot.Files.TryGetValue(path, out var source)
+            || !lean.Report.Files.TryGetValue(path, out var report))
         {
             throw new FormatException(
-                $"Closed module {node.RepoPath.Value} has no complete attestation material.");
+                $"Closed module {path.Value} has no complete attestation material.");
         }
 
-        ValidateGitBlobOid(attestation.SourceBlobOid, source.RawBytes.AsSpan(), node.RepoPath.Value);
+        ValidateGitBlobOid(attestation.SourceBlobOid, source.RawBytes.AsSpan(), path.Value);
         if (attestation.BaseCommitOid is not null && !FrozenHashSyntax.IsGitOid(attestation.BaseCommitOid)
             || attestation.BaseTreeOid is not null && !FrozenHashSyntax.IsGitOid(attestation.BaseTreeOid)
             || (attestation.BaseCommitOid is null) != (attestation.BaseTreeOid is null))
         {
             throw new FormatException(
-                $"Closed module {node.RepoPath.Value} has a malformed event-specific Git attestation.");
+                $"Closed module {path.Value} has a malformed event-specific Git attestation.");
         }
 
         var declarationStatementIds = CanonicalStatementWriter.DeclarationStatementIds(
-            node.RepoPath,
+            path,
             report);
         var statement = StatementId.Create(FrozenContentHash.Compute(
             FrozenHashDomains.Statement,
-            CanonicalStatementWriter.WriteModule(node.RepoPath, declarationStatementIds).AsSpan()));
+            CanonicalStatementWriter.WriteModule(path, declarationStatementIds).AsSpan()));
         var witness = ComputeWitnessId(
-            node.RepoPath,
+            path,
             statement,
             report.Imports,
             report.Declarations.SelectMany(static declaration => declaration.Axioms),
@@ -192,13 +197,13 @@ public static class FrozenContentAddress
             .Distinct(StringComparer.Ordinal)
             .Order(StringComparer.Ordinal)
             .ToImmutableArray();
-        var prerequisites = dag.DependenciesOf(node.RepoPath)
+        var prerequisites = adjacency[path]
             .Select(resolveDependency)
             .OrderBy(static id => id.Value, StringComparer.Ordinal)
             .ToImmutableArray();
-        var frozen = ComputeFrozenNodeId(node.RepoPath, statement, witness, prerequisites);
+        var frozen = ComputeFrozenNodeId(path, statement, witness, prerequisites);
         return new FrozenNodeMaterial(
-            node.RepoPath,
+            path,
             declarationStatementIds,
             statement,
             witness,
@@ -247,14 +252,14 @@ public static class FrozenContentAddress
         ImmutableDictionary<RepoPath, ImmutableArray<string>> TailRegistrations) ValidateStateEvidence(
         RepositorySnapshot snapshot,
         AcceptedLeanClosure lean,
-        AcyclicTruthDag dag)
+        IReadOnlyDictionary<RepoPath, TruthState> states)
     {
         var openCases = ImmutableDictionary.CreateBuilder<RepoPath, ImmutableArray<CaseId>>();
         var tailRegistrations = ImmutableDictionary.CreateBuilder<RepoPath, ImmutableArray<string>>();
-        foreach (var node in dag.Nodes.Where(static node => node.ModuleName is not null))
+        foreach (var (path, state) in states.OrderBy(static item => item.Key.Value, StringComparer.Ordinal))
         {
-            var source = snapshot.Files[node.RepoPath];
-            if (node.State is TruthState.Open)
+            var source = snapshot.Files[path];
+            if (state is TruthState.Open)
             {
                 var cases = CaseReferencePattern.Matches(source.Text)
                     .Select(static match => CaseId.TryCreate(match.Value, out var caseId)
@@ -265,19 +270,19 @@ public static class FrozenContentAddress
                     .ToImmutableArray();
                 if (cases.Length == 0)
                 {
-                    throw new FormatException($"Open module {node.RepoPath.Value} has no permanent CaseId reference.");
+                    throw new FormatException($"Open module {path.Value} has no permanent CaseId reference.");
                 }
 
-                openCases.Add(node.RepoPath, cases);
+                openCases.Add(path, cases);
                 continue;
             }
 
-            if (node.State is not TruthState.Tail)
+            if (state is not TruthState.Tail)
             {
                 continue;
             }
 
-            var report = lean.Report.Files[node.RepoPath];
+            var report = lean.Report.Files[path];
             var registrations = report.Imports
                 .Where(static module => module.StartsWith("D5.X_Assumptions.", StringComparison.Ordinal))
                 .Select(static module => module.Replace('.', '/'))
@@ -286,12 +291,12 @@ public static class FrozenContentAddress
                 .Order(StringComparer.Ordinal)
                 .ToImmutableArray();
             if (registrations.Length == 0
-                && node.RepoPath.Value.StartsWith("D5/X_Assumptions/", StringComparison.Ordinal)
+                && path.Value.StartsWith("D5/X_Assumptions/", StringComparison.Ordinal)
                 && snapshot.TryGetFile(RepositoryPathPolicy.AssumptionRegistryPath, out var registry))
             {
-                var gid = node.RepoPath.Value.EndsWith(".lean", StringComparison.Ordinal)
-                    ? node.RepoPath.Value[..^5]
-                    : node.RepoPath.Value;
+                var gid = path.Value.EndsWith(".lean", StringComparison.Ordinal)
+                    ? path.Value[..^5]
+                    : path.Value;
                 if (registry.Text.Contains(gid, StringComparison.Ordinal))
                 {
                     registrations = ImmutableArray.Create(gid);
@@ -301,10 +306,10 @@ public static class FrozenContentAddress
             if (registrations.Length == 0)
             {
                 throw new FormatException(
-                    $"Tail module {node.RepoPath.Value} has no X_Assumptions registration reference.");
+                    $"Tail module {path.Value} has no X_Assumptions registration reference.");
             }
 
-            tailRegistrations.Add(node.RepoPath, registrations);
+            tailRegistrations.Add(path, registrations);
         }
 
         return (openCases.ToImmutable(), tailRegistrations.ToImmutable());

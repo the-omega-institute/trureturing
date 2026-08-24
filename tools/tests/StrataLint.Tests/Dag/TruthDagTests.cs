@@ -53,7 +53,10 @@ public sealed class TruthDagTests
 
         Assert.Equal(
             new[] { PathFor("B"), PathFor("C") },
-            dag.DependentsOf(RepoPathFor("A")).Select(static path => path.Value));
+            dag.Edges
+                .Where(static edge => edge.Dependency.Value == PathFor("A"))
+                .Select(static edge => edge.Dependent.Value)
+                .Order(StringComparer.Ordinal));
         Assert.Equal(
             new[] { PathFor("B"), PathFor("C") },
             dag.DependenciesOf(RepoPathFor("D")).Select(static path => path.Value));
@@ -69,7 +72,32 @@ public sealed class TruthDagTests
             new[] { PathFor("A"), PathFor("Z") },
             dag.TopologicalOrder.Select(static node => node.RepoPath.Value));
         Assert.Empty(dag.DependenciesOf(RepoPathFor("Z")));
-        Assert.Empty(dag.DependentsOf(RepoPathFor("Z")));
+        Assert.DoesNotContain(dag.Edges, static edge =>
+            edge.Dependency.Value == PathFor("Z") || edge.Dependent.Value == PathFor("Z"));
+    }
+
+    [Fact]
+    public void RepositoryFilesWithoutALeanModuleAreOutsideTheDagDomain()
+    {
+        const string lean = "D5/S0/Carrier/A.lean";
+        const string projection = "Blueprint/D5/S0/Carrier/A.md";
+        const string data = "Meta/registry.yaml";
+        var files = new Dictionary<string, string>(StringComparer.Ordinal)
+        {
+            [lean] = "def a : Nat := 0\n",
+            [projection] = "# A\n",
+            [data] = "domains: []\n",
+        };
+        var reports = new Dictionary<string, LeanFileReport>(StringComparer.Ordinal)
+        {
+            [lean] = Report(),
+        };
+
+        var dag = BuildAcceptedFrom(files, reports);
+
+        var node = Assert.Single(dag.Nodes);
+        Assert.Equal(lean, node.RepoPath.Value);
+        Assert.NotNull(node.ModuleName);
     }
 
     [Fact]
@@ -106,12 +134,20 @@ public sealed class TruthDagTests
     [Fact]
     public void CycleRejectionContainsOnlyAnExactClosedEdgeWitness()
     {
-        var outcome = BuildOutcome(
+        var modules = new[]
+        {
             Module("A", "C"),
             Module("B", "A"),
             Module("C", "B"),
-            Module("D", "C"));
+            Module("D", "C"),
+        };
+        var (snapshot, closure) = ValidatedModuleFixture(modules);
 
+        var states = LeanTruthStates.Resolve(snapshot, closure);
+        var outcome = AcyclicTruthDag.Build(snapshot, closure);
+
+        Assert.Equal(4, states.Count);
+        Assert.All(states.Values, static state => Assert.Equal(TruthState.Closed, state));
         var rejected = Assert.IsType<DagBuildOutcome.Rejected>(outcome);
         Assert.Equal(
             new[] { PathFor("A"), PathFor("B"), PathFor("C"), PathFor("A") },
@@ -119,7 +155,7 @@ public sealed class TruthDagTests
     }
 
     [Fact]
-    public void DepthAndDescendantsMatchBruteForceOnAFixedDag()
+    public void DepthMatchesBruteForceOnAFixedDag()
     {
         var dag = BuildAccepted(
             Module("A"),
@@ -134,14 +170,11 @@ public sealed class TruthDagTests
         foreach (var node in dag.Nodes)
         {
             Assert.Equal(BruteForceDepth(node.RepoPath, dag.Edges), dag.Depth(node.RepoPath));
-            Assert.Equal(
-                BruteForceDescendants(node.RepoPath, dag.Edges).Select(static path => path.Value),
-                dag.Descendants(node.RepoPath).Select(static descendant => descendant.RepoPath.Value));
         }
     }
 
     [Fact]
-    public void DerivesFourTruthStatesAndCanonicalGidsOnlyFromRepositoryAndLeanFacts()
+    public void DerivesTruthStatesAndCanonicalGidsOnlyFromRepositoryAndLeanFacts()
     {
         const string closed = "D5/S0/Carrier/ClosedFact.lean";
         const string frontier = "D5/X_Frontier/OpenProblem.lean";
@@ -178,7 +211,10 @@ public sealed class TruthDagTests
                 declarations: new[] { Declaration("conditionalResult", "registeredDebt") }),
         };
 
-        var dag = BuildAccepted(files, reports);
+        var (snapshot, closure) = ValidatedFixture(files, reports);
+        var states = LeanTruthStates.Resolve(snapshot, closure);
+        var dag = Assert.IsType<DagBuildOutcome.Accepted>(
+            AcyclicTruthDag.Build(snapshot, closure)).Capability;
 
         Assert.Equal(TruthState.Closed, Node(closed).State);
         Assert.Equal(TruthState.Open, Node(frontier).State);
@@ -186,65 +222,13 @@ public sealed class TruthDagTests
         Assert.Equal(TruthState.Open, Node(task).State);
         Assert.Equal(TruthState.Tail, Node(debt).State);
         Assert.Equal(TruthState.Tail, Node(conditional).State);
-        Assert.Equal(TruthState.Semantic, Node(semantic).State);
+        Assert.DoesNotContain(dag.Nodes, node => node.RepoPath.Value == semantic);
         Assert.Equal("D5/S0/Carrier/ClosedFact", Node(closed).Gid?.Value);
-        Assert.Equal("D5/B/S0/Carrier/ClosedFact", Node(semantic).Gid?.Value);
+        Assert.Equal(dag.Nodes.Length, states.Count);
+        Assert.All(dag.Nodes, node => Assert.Equal(node.State, states[node.RepoPath]));
+        Assert.DoesNotContain(states.Keys, path => path.Value == semantic);
 
         TruthNode Node(string path) => dag.Nodes.Single(node => node.RepoPath.Value == path);
-    }
-
-    [Fact]
-    public void AnalyzeImpactReturnsSortedInducedEdgesAndFourStateGroups()
-    {
-        const string a = "D5/S0/Carrier/A.lean";
-        const string d = "D5/S0/Carrier/D.lean";
-        const string c = "D5/X_Assumptions/C.lean";
-        const string b = "D5/X_Frontier/B.lean";
-        const string semantic = "Blueprint/D5/S0/Carrier/A.md";
-        var files = new Dictionary<string, string>(StringComparer.Ordinal)
-        {
-            [a] = "def a : Nat := 0\n",
-            [b] = "def b : Nat := 0\n",
-            [c] = "axiom debt : False\n",
-            [d] = "def d : Nat := 0\n",
-            [semantic] = "# A\n",
-        };
-        var reports = new Dictionary<string, LeanFileReport>(StringComparer.Ordinal)
-        {
-            [a] = Report(),
-            [b] = Report(imports: new[] { "D5.S0.Carrier.A" }),
-            [c] = Report(
-                imports: new[] { "D5.S0.Carrier.A" },
-                declarations: new[] { Declaration("debt", "debt", kind: "axiom") }),
-            [d] = Report(imports: new[] { "D5.X_Frontier.B", "D5.X_Assumptions.C" }),
-        };
-        var dag = BuildAccepted(files, reports);
-
-        var impact = dag.AnalyzeImpact(RepoPathForPath(a));
-
-        Assert.Equal(a, impact.Root.Value);
-        Assert.Equal(
-            new[] { a, d, c, b }.Order(StringComparer.Ordinal),
-            impact.AffectedNodes.Select(static node => node.RepoPath.Value));
-        Assert.Equal(
-            impact.AffectedEdges
-                .OrderBy(static edge => edge.Dependency.Value, StringComparer.Ordinal)
-                .ThenBy(static edge => edge.Dependent.Value, StringComparer.Ordinal),
-            impact.AffectedEdges);
-        Assert.Equal(4, impact.AffectedEdges.Length);
-        Assert.Equal(
-            new[] { TruthState.Closed, TruthState.Open, TruthState.Tail, TruthState.Semantic },
-            impact.StateBreakdown.Select(static group => group.State));
-        Assert.Equal(new[] { a, d }, Group(TruthState.Closed));
-        Assert.Equal(new[] { b }, Group(TruthState.Open));
-        Assert.Equal(new[] { c }, Group(TruthState.Tail));
-        Assert.Empty(Group(TruthState.Semantic));
-
-        string[] Group(TruthState state) => impact.StateBreakdown
-            .Single(group => group.State == state)
-            .Nodes
-            .Select(static node => node.RepoPath.Value)
-            .ToArray();
     }
 
     private static ModuleSpec Module(string name, params string[] imports) => new(name, imports);
@@ -256,6 +240,13 @@ public sealed class TruthDagTests
 
     private static DagBuildOutcome BuildOutcome(params ModuleSpec[] modules)
     {
+        var (snapshot, closure) = ValidatedModuleFixture(modules);
+        return AcyclicTruthDag.Build(snapshot, closure);
+    }
+
+    private static (RepositorySnapshot Snapshot, AcceptedLeanClosure Closure) ValidatedModuleFixture(
+        params ModuleSpec[] modules)
+    {
         var files = modules.ToDictionary(
             static module => PathFor(module.Name),
             static module => $"def {module.Name.ToLowerInvariant()} : Nat := 0\n",
@@ -266,15 +257,23 @@ public sealed class TruthDagTests
                 module.Imports.Select(ModuleNameFor).ToImmutableArray(),
                 ImmutableArray<LeanDeclaration>.Empty),
             StringComparer.Ordinal);
-        return BuildOutcome(files, reports);
+        return ValidatedFixture(files, reports);
     }
 
-    private static AcyclicTruthDag BuildAccepted(
+    private static AcyclicTruthDag BuildAcceptedFrom(
         IReadOnlyDictionary<string, string> files,
         IReadOnlyDictionary<string, LeanFileReport> reports) =>
-        Assert.IsType<DagBuildOutcome.Accepted>(BuildOutcome(files, reports)).Capability;
+        Assert.IsType<DagBuildOutcome.Accepted>(BuildOutcomeFrom(files, reports)).Capability;
 
-    private static DagBuildOutcome BuildOutcome(
+    private static DagBuildOutcome BuildOutcomeFrom(
+        IReadOnlyDictionary<string, string> files,
+        IReadOnlyDictionary<string, LeanFileReport> reports)
+    {
+        var (snapshot, closure) = ValidatedFixture(files, reports);
+        return AcyclicTruthDag.Build(snapshot, closure);
+    }
+
+    private static (RepositorySnapshot Snapshot, AcceptedLeanClosure Closure) ValidatedFixture(
         IReadOnlyDictionary<string, string> files,
         IReadOnlyDictionary<string, LeanFileReport> reports)
     {
@@ -283,7 +282,7 @@ public sealed class TruthDagTests
         var closure = Assert.IsType<LeanValidationOutcome.Accepted>(
             LeanClosureValidator.Validate(snapshot, LeanAxiomReport.Create(reports))).Capability;
 
-        return AcyclicTruthDag.Build(snapshot, closure);
+        return (snapshot, closure);
     }
 
     private static string PathFor(string module) => $"D5/S0/Carrier/{module}.lean";
@@ -328,29 +327,6 @@ public sealed class TruthDagTests
         return dependencies.Length == 0
             ? 0
             : 1 + dependencies.Max(dependency => BruteForceDepth(dependency, edges));
-    }
-
-    private static ImmutableArray<RepoPath> BruteForceDescendants(
-        RepoPath node,
-        ImmutableArray<TruthEdge> edges)
-    {
-        var seen = new HashSet<RepoPath>();
-        var queue = new Queue<RepoPath>();
-        queue.Enqueue(node);
-        while (queue.TryDequeue(out var current))
-        {
-            foreach (var dependent in edges
-                .Where(edge => edge.Dependency == current)
-                .Select(static edge => edge.Dependent))
-            {
-                if (seen.Add(dependent))
-                {
-                    queue.Enqueue(dependent);
-                }
-            }
-        }
-
-        return seen.OrderBy(static path => path.Value, StringComparer.Ordinal).ToImmutableArray();
     }
 
     private sealed record ModuleSpec(string Name, IReadOnlyList<string> Imports);

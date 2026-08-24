@@ -7,16 +7,93 @@ public sealed class LeanCacheProvisionerTests
 {
     private const string BudgetVariable = "STRATALINT_LEAN_CACHE_TIMEOUT_SECONDS";
 
+    /// <summary>
+    /// #2535 的收口契约:三个消费点各有具名预算,且**当前同值**。
+    ///
+    /// 钉住「同值」不是为了固化它,恰恰相反 —— 是为了让**分开**成为一个显式动作。
+    /// 注释里写明:`DirectoryCopyBudgetFor` 的继承依据是该路径实测零发生,
+    /// `DependencyFetchBudgetFor` 的依据是它差两个数量级;两者一旦失去依据就须单独收口
+    /// **并带新案号**。若有人直接给某一个换上独立字面量而不走那一步,本测试变红,
+    /// 迫使他要么补案号、要么改这里的断言 —— 两条都是显式的。
+    ///
+    /// 反面即病:若不钉,三个访问器会悄悄分叉成三个无源裸数,
+    /// 即「量腹而食」第四形乘以三,比收口前更差。
+    /// </summary>
     [Fact]
-    public void DefaultBudgetIsTheDeclaredOneHourPolicyOverride()
+    public void ThreeNamedBudgetsExistAndCurrentlyShareTheLoadBearingValue()
     {
-        // The expected value is written out rather than read from
-        // LeanCacheProvisioner.DefaultProvisionBudgetSeconds on purpose: referencing the
-        // constant would let a future change to the policy value pass silently, whereas a
-        // literal forces whoever changes it to come here and to the declaration beside
-        // that constant. The cost is that this literal and this test's name must be
-        // maintained together with the declaration; that is the intended trade.
-        AssertCacheGetBudget(null, 3600);
+        var root = TestRepositoryLayout.FindRoot();
+        var lean = LeanCacheProvisioner.LeanCommandBudgetFor(root);
+        var copy = LeanCacheProvisioner.DirectoryCopyBudgetFor(root);
+        var fetch = LeanCacheProvisioner.DependencyFetchBudgetFor(root);
+
+        // 承重点即派生值本身:从这棵树现数的模块数算出来,再经 clamp。
+        var modules = LeanCacheProvisioner.CountContentModules(root);
+        Assert.True(modules > 0, "数不出 D5 的内容层模块,派生式失去有界工作量项");
+        Assert.Equal(
+            TimeSpan.FromSeconds(Math.Clamp(
+                LeanCacheBudgetPolicy.ProvisionBudgetSecondsFor(modules),
+                LeanCacheProvisioner.MinProvisionBudgetSeconds,
+                LeanCacheProvisioner.MaxProvisionBudgetSeconds)),
+            lean);
+
+        // 另两者继承它。分叉须走注释所述的收口 + 新案号,不得静默发生。
+        Assert.Equal(lean, copy);
+        Assert.Equal(lean, fetch);
+    }
+
+    /// <summary>
+    /// 具名化不得破坏既有的环境旋钮:三个名字都经同一个 clamp 后的取值,
+    /// 故旋钮一动,三者须同时随动。若某个访问器被改成绕开 `ProvisionBudget`
+    /// 直接返回字面量,本测试变红。
+    /// </summary>
+    [Fact]
+    public void AllThreeNamedBudgetsFollowTheClampedEnvironmentOverride()
+    {
+        var previous = Environment.GetEnvironmentVariable(BudgetVariable);
+        try
+        {
+            // 300..7200 之外的值须被 clamp;取一个远超上界的数,三者都应落到 7200。
+            Environment.SetEnvironmentVariable(BudgetVariable, "99999");
+            var clamped = TimeSpan.FromSeconds(7200);
+            var root = TestRepositoryLayout.FindRoot();
+            Assert.Equal(clamped, LeanCacheProvisioner.LeanCommandBudgetFor(root));
+            Assert.Equal(clamped, LeanCacheProvisioner.DirectoryCopyBudgetFor(root));
+            Assert.Equal(clamped, LeanCacheProvisioner.DependencyFetchBudgetFor(root));
+        }
+        finally
+        {
+            Environment.SetEnvironmentVariable(BudgetVariable, previous);
+        }
+    }
+
+    /// <summary>
+    /// 默认预算不再是一个字面量,而是派生值 —— 故本测试也不能再写死一个数。
+    ///
+    /// 原测试(名为 `DefaultBudgetIsTheDeclaredOneHourPolicyOverride`)故意写死 3600,
+    /// 理由是「引用常数会让改动静默通过,字面量逼人来这里改」。**那个意图保留,形式必须变**:
+    /// 现在没有可写死的数,因为预算随仓库的内容层模块数长。
+    ///
+    /// 改钉的是**派生式的三个部件**:每模块秒数、超配系数、clamp 边界。任一被改,
+    /// 本测试的期望值随之变化而实际值也随之变化 —— 那不成其为钉子,故另外直接断言
+    /// 三个部件的取值,使改动仍必须显式经过这里。
+    /// </summary>
+    [Fact]
+    public void DefaultBudgetIsDerivedFromContentModulesNotALiteral()
+    {
+        // 派生式的三个部件被逐个钉住;谁改任一个都得来改这里。
+        Assert.Equal(3, LeanCacheBudgetPolicy.SecondsPerContentModule);
+        Assert.Equal(150, LeanCacheBudgetPolicy.WorkThroughputMarginPercent);
+        Assert.Equal(300, LeanCacheProvisioner.MinProvisionBudgetSeconds);
+        Assert.Equal(7200, LeanCacheProvisioner.MaxProvisionBudgetSeconds);
+
+        // 派生式本身:同输入同值,且随模块数单调增。
+        Assert.Equal(4500, LeanCacheBudgetPolicy.ProvisionBudgetSecondsFor(1000));
+        Assert.Equal(9000, LeanCacheBudgetPolicy.ProvisionBudgetSecondsFor(2000));
+
+        // 零或负的模块数不是「工作免费」,是调用方没数到 D5 —— 必须显式炸,不得算出 0。
+        Assert.Throws<ArgumentOutOfRangeException>(
+            () => LeanCacheBudgetPolicy.ProvisionBudgetSecondsFor(0));
     }
 
     [Fact]
@@ -62,13 +139,37 @@ public sealed class LeanCacheProvisionerTests
         });
     }
 
+    /// <summary>
+    /// 旋钮的解析与 clamp。非法值那一档原本期望 3600(旧默认字面量),现改为期望
+    /// **该树的派生值** —— 非法输入应当落回默认路径,而默认路径现在是派生的。
+    /// </summary>
     [Theory]
-    [InlineData("invalid", 3600)]
     [InlineData("1", 300)]
     [InlineData("9000", 7200)]
     public void ConfiguredBudgetUsesInvariantParsingAndClamps(string raw, int expectedSeconds)
     {
         AssertCacheGetBudget(raw, expectedSeconds);
+    }
+
+    [Fact]
+    public void UnparseableBudgetFallsBackToTheDerivedDefaultNotAStaleLiteral()
+    {
+        var root = TestRepositoryLayout.FindRoot();
+        var modules = LeanCacheProvisioner.CountContentModules(root);
+        Assert.True(modules > 0, "数不出 D5 的内容层模块,派生式失去有界工作量项");
+
+        // 期望值**在测试里独立算**,不调 ProvisionBudgetSecondsFor —— 用被测函数算期望,
+        // 变异掉它时期望与实际会一起变,断言恒真。这正是变异证明当场抓到的失效:
+        // 把派生式退回 `return 3600` 后本测试仍绿,因为两侧都变成了 3600。
+        var expected = Math.Clamp(
+            modules * 3 * 150 / 100,
+            LeanCacheProvisioner.MinProvisionBudgetSeconds,
+            LeanCacheProvisioner.MaxProvisionBudgetSeconds);
+
+        WithBudget("invalid", () =>
+            Assert.Equal(
+                TimeSpan.FromSeconds(expected),
+                LeanCacheProvisioner.LeanCommandBudgetFor(root)));
     }
 
     [Fact]
