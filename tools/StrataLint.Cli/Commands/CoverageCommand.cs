@@ -17,17 +17,10 @@ internal static class CoverageCommand
             var snapshot = Decode(repository.ReadCurrent());
             var policy = LoadPolicy(snapshot);
             var lean = ValidateLean(snapshot, leanReportSource.Load(snapshot));
-            var dag = AcyclicTruthDag.Build(snapshot, lean);
-            if (dag is DagBuildOutcome.Rejected rejected)
-            {
-                throw new InvalidOperationException(
-                    "coverage truth DAG is cyclic: "
-                    + string.Join(" -> ", rejected.Witness.Select(static path => path.Value)));
-            }
-
+            var states = LeanTruthStates.Resolve(snapshot, lean);
             var frozen = LoadFrozenPaths(snapshot);
-            var ledger = CoverageLedgerIndex.FromDag(
-                ((DagBuildOutcome.Accepted)dag).Capability,
+            var ledger = CoverageLedgerIndex.FromStates(
+                states,
                 frozen,
                 snapshot);
             var tower = LoadTower(snapshot);
