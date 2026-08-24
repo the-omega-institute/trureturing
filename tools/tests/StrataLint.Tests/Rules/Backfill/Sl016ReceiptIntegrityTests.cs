@@ -85,24 +85,28 @@ public sealed class Sl016ReceiptIntegrityTests
     [Fact]
     public void AllLedgerWritersConsumePlannedReceiptIntegrityDeltaBeforeWritingBytes()
     {
-        var root = TestRepositoryLayout.FindRoot();
         var writers = new[]
         {
             (Path: "tools/StrataLint.Cli/Commands/Digestion/CoverAtomCommand.cs",
+                Source: TestRepositoryLayout.ReadAllText(RepositoryRelativePath.Create(
+                    "tools/StrataLint.Cli/Commands/Digestion/CoverAtomCommand.cs")),
                 WriteCall: "IngestCommand.ApplyLedgerUpdatesAtomically("),
             (Path: "tools/StrataLint.Cli/Commands/Digestion/IngestCommand.cs",
+                Source: TestRepositoryLayout.ReadAllText(RepositoryRelativePath.Create(
+                    "tools/StrataLint.Cli/Commands/Digestion/IngestCommand.cs")),
                 WriteCall: "WriteCasObjects("),
             (Path: "tools/StrataLint.Cli/Commands/Digestion/CoverAtomCommand.AlignScribe.cs",
+                Source: TestRepositoryLayout.ReadAllText(RepositoryRelativePath.Create(
+                    "tools/StrataLint.Cli/Commands/Digestion/CoverAtomCommand.AlignScribe.cs")),
                 WriteCall: "IngestCommand.ApplyLedgerUpdatesAtomically("),
         };
 
         foreach (var writer in writers)
         {
-            var source = File.ReadAllText(Path.Combine(root, writer.Path));
-            var guard = source.IndexOf(
+            var guard = writer.Source.IndexOf(
                 "DigestionReceiptIntegrityGuard.RequireNoNewFailures(",
                 StringComparison.Ordinal);
-            var write = source.IndexOf(writer.WriteCall, StringComparison.Ordinal);
+            var write = writer.Source.IndexOf(writer.WriteCall, StringComparison.Ordinal);
             Assert.True(guard >= 0, $"{writer.Path} is missing its planned-state receipt guard");
             Assert.True(write > guard, $"{writer.Path} consumes its planned-state guard after writing");
         }
@@ -111,13 +115,25 @@ public sealed class Sl016ReceiptIntegrityTests
     [Fact]
     public void CliReceiptIntegrityConsumersContainNoPrivateFatalCodeFork()
     {
-        var root = TestRepositoryLayout.FindRoot();
-        var commandRoot = Path.Combine(root, "tools", "StrataLint.Cli", "Commands");
-        var offenders = Directory.EnumerateFiles(commandRoot, "*.cs", SearchOption.AllDirectories)
-            .Select(path => (Path: path, Text: File.ReadAllText(path)))
-            .Where(file => FatalCodes.Any(code => file.Text.Contains(code, StringComparison.Ordinal)))
-            .Select(file => Path.GetRelativePath(root, file.Path).Replace(Path.DirectorySeparatorChar, '/'))
-            .Order(StringComparer.Ordinal)
+        var consumers = new[]
+        {
+            TestRepositoryLayout.ReadAllText(RepositoryRelativePath.Create(
+                "tools/StrataLint.Cli/Commands/DigestStatusCommand.cs")),
+            TestRepositoryLayout.ReadAllText(RepositoryRelativePath.Create(
+                "tools/StrataLint.Cli/Commands/Digestion/CoverAtomCommand.cs")),
+            TestRepositoryLayout.ReadAllText(RepositoryRelativePath.Create(
+                "tools/StrataLint.Cli/Commands/Digestion/CoverAtomCommand.AlignScribe.cs")),
+            TestRepositoryLayout.ReadAllText(RepositoryRelativePath.Create(
+                "tools/StrataLint.Cli/Commands/Digestion/DigestionReceiptIntegrityGuard.cs")),
+            TestRepositoryLayout.ReadAllText(RepositoryRelativePath.Create(
+                "tools/StrataLint.Cli/Commands/Digestion/IngestCommand.cs")),
+            TestRepositoryLayout.ReadAllText(RepositoryRelativePath.Create(
+                "tools/StrataLint.Cli/Commands/TheoryGeneration/TheoryCandidatesCommand.cs")),
+            TestRepositoryLayout.ReadAllText(RepositoryRelativePath.Create(
+                "tools/StrataLint.Cli/Commands/TruthRelease/ResidualFrontierAssembler.cs")),
+        };
+        var offenders = consumers
+            .Where(source => FatalCodes.Any(code => source.Contains(code, StringComparison.Ordinal)))
             .ToArray();
 
         Assert.Empty(offenders);

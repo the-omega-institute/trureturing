@@ -103,7 +103,7 @@ public sealed class TruthReleaseCommandTests
         Assert.Equal(2, exitCode);
         Assert.Contains("TRUTH_RELEASE_INVALID", console.Error, StringComparison.Ordinal);
         Assert.Contains("coverage-receipt-mismatch", console.Error, StringComparison.Ordinal);
-        Assert.Empty(Directory.EnumerateFiles(output.Path));
+        Assert.Empty(Directory.GetFiles(output.Path));
     }
 
     private static (int ExitCode, BufferedConsole Console) Run(
@@ -138,7 +138,6 @@ public sealed class TruthReleaseCommandTests
 
     private static Fixture CreateFixture(bool receiptIntegrityMismatch = false)
     {
-        var repositoryRoot = TestRepositoryLayout.FindRoot();
         var blueprintSourcePath = $"Blueprint/{BlueprintGid}.scribe.cs";
         var blueprintProjectionPath = $"Blueprint/{BlueprintGid}.md";
         var formalPath = BlueprintGid + ".lean";
@@ -148,22 +147,19 @@ public sealed class TruthReleaseCommandTests
             ["lean-toolchain"] = Toolchain,
             ["lakefile.toml"] = "[package]\nname = \"fixture\"\n",
             ["lake-manifest.json"] = Manifest,
-            [formalPath] = File.ReadAllText(Path.Combine(repositoryRoot, formalPath), Encoding.UTF8),
+            [formalPath] = TestRepositoryLayout.ReadAllText(RepositoryRelativePath.Create(
+                "D5/S3/Midline/GoldenSpectralMarker.lean")),
             [dependencyPath] = "theorem dependency : True := by trivial\n",
-            [blueprintSourcePath] = File.ReadAllText(
-                Path.Combine(repositoryRoot, blueprintSourcePath), Encoding.UTF8),
-            [blueprintProjectionPath] = File.ReadAllText(
-                Path.Combine(repositoryRoot, blueprintProjectionPath), Encoding.UTF8),
-            ["Golden/Projection/statement-projection-pilot-v1.json"] = File.ReadAllText(
-                Path.Combine(
-                    repositoryRoot,
-                    "Golden/Projection/statement-projection-pilot-v1.json"),
-                Encoding.UTF8),
-            ["Golden/Projection/statement-projection-expansion-v1.json"] = File.ReadAllText(
-                Path.Combine(
-                    repositoryRoot,
-                    "Golden/Projection/statement-projection-expansion-v1.json"),
-                Encoding.UTF8),
+            [blueprintSourcePath] = TestRepositoryLayout.ReadAllText(RepositoryRelativePath.Create(
+                "Blueprint/D5/S3/Midline/GoldenSpectralMarker.scribe.cs")),
+            [blueprintProjectionPath] = TestRepositoryLayout.ReadAllText(RepositoryRelativePath.Create(
+                "Blueprint/D5/S3/Midline/GoldenSpectralMarker.md")),
+            ["Golden/Projection/statement-projection-pilot-v1.json"] =
+                TestRepositoryLayout.ReadAllText(RepositoryRelativePath.Create(
+                    "Golden/Projection/statement-projection-pilot-v1.json")),
+            ["Golden/Projection/statement-projection-expansion-v1.json"] =
+                TestRepositoryLayout.ReadAllText(RepositoryRelativePath.Create(
+                    "Golden/Projection/statement-projection-expansion-v1.json")),
             ["Meta/FILEMAP.toml"] = FileMap(),
             ["Meta/Digestion/backfill/fixture-source/source.toml"] =
                 "source_id = \"fixture-source\"\n"
