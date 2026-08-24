@@ -22,25 +22,27 @@ internal sealed class OverreachWithoutLicenseDocument : IScribeDocumentDefinitio
                 AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
-                        "A transport report stores its concept c, its claimed operation scope "
-                            + "J', and its retained proposition Gamma. LicensedReport also checks "
+                        "A transport report q stores concept(q), its claimed operation scope J', "
+                            + "and its retained proposition condition(q). LicensedReport also checks "
                             + "that the stored scope equals the explicit J', so the target domain "
                             + "cannot drift through a free argument.")),
                     Paragraph(Text(
                         "ValidTransportCert is the concrete predicate imported from the transport-"
                             + "certificate validity module. Its arguments bind the certificate to "
-                            + "the source record r, concept c, old and claimed scopes, and "
-                            + "Version(c); this module introduces no second validity definition.")),
+                            + "the source record r, concept(q), old and claimed scopes, and "
+                            + "Version(concept(q)); this module introduces no second validity "
+                            + "definition.")),
                     Paragraph(Text(
-                        "A license retains Gamma exactly as GivenPremises(kappa) conjoined with the "
-                            + "certificate's explicit transport-assumption obligations. Therefore "
-                            + "an unconditional "
+                        "A license retains condition(q) exactly as GivenPremises(kappa) conjoined "
+                            + "with the certificate's explicit transport-assumption obligations. "
+                            + "Therefore an unconditional "
                             + "licensed report exposes proofs of both conjuncts, while a missing "
                             + "conjunct prevents the condition from being discharged.")),
                     Paragraph(Text(
-                        "Overreach is the conjunction of strict scope expansion, Scope(c)=J, the "
-                            + "report's claim of J', and absence of a license. No certificate "
-                            + "validity or premise is inferred from the scope equations.")),
+                        "Overreach is the conjunction of strict scope expansion, "
+                            + "Scope(concept(q))=J, the report's claim of J', and absence of a "
+                            + "license. No certificate validity or premise is inferred from the "
+                            + "scope equations.")),
                     Paragraph(Text(
                         "For a strict expansion, a new operation is selected with Mathlib's "
                             + "ssubset witness. If unchanged readings remain within epsilon and "
@@ -55,7 +57,7 @@ internal sealed class OverreachWithoutLicenseDocument : IScribeDocumentDefinitio
                         "Conversely, when the report's stored scope equals the claimed scope, a "
                             + "valid certificate together "
                             + "with every given premise and its transport assumption licenses the "
-                            + "report whose retained condition is True. Without the premise and "
+                            + "condition-update q[condition := True]. Without the premise and "
                             + "assumption proofs, the exact conditional statement remains the only "
                             + "licensed form.")),
                     Paragraph(Text(
@@ -68,30 +70,43 @@ internal sealed class OverreachWithoutLicenseDocument : IScribeDocumentDefinitio
     private static Formula Subscript(Formula value, Formula index) =>
         Seq(value, Underscore, Grp(index));
 
+    private static Formula StrictSubset(Formula subset, Formula superset) =>
+        Grp(
+            subset, Sp, Subset, Sp, superset, Sp, Land, Sp,
+            subset, Sp, Neq, Sp, superset);
+
+    private static Formula UpdateCondition(Formula report, Formula condition) =>
+        Seq(
+            report, OpenBracket,
+            Operatorname, Grp(F.Id("condition")), Sp, Colon, Eq, Sp, condition,
+            CloseBracket);
+
     private static Formula TheoremFormula()
     {
         Formula q = F.Id("q");
-        Formula c = F.Id("c");
         Formula record = F.Id("r");
         Formula oldScope = F.Id("J");
         Formula claimedScope = Seq(F.Id("J"), Apos);
         Formula certificate = Kappa;
-        Formula gammaQ = Subscript(Gamma, q);
+        Formula reportConcept = Call("concept", q);
+        Formula reportCondition = Call("condition", q);
+        Formula trueCondition = Seq(Mathrm, Grp(F.Id("True")));
+        Formula deconditionedReport = UpdateCondition(q, trueCondition);
         Formula licensed = Call("LicensedReport", q, oldScope, claimedScope);
         Formula validCertificate = Call(
             "ValidTransportCert",
             certificate,
             record,
-            c,
+            reportConcept,
             oldScope,
             claimedScope,
-            Call("Version", c));
+            Call("Version", reportConcept));
         Formula premises = Call("GivenPremises", certificate);
         Formula assumption = Call(
             "Holds",
             Call("TransportAssumption", certificate));
         Formula completeCondition = Grp(
-            gammaQ, Sp, Iff, Sp, premises, Sp, Land, Sp, assumption);
+            reportCondition, Sp, Iff, Sp, premises, Sp, Land, Sp, assumption);
         Formula reportScope = Call("reportedScope", q);
         Formula licenseDefinition = Grp(
             licensed, Sp, Iff, Sp,
@@ -99,8 +114,7 @@ internal sealed class OverreachWithoutLicenseDocument : IScribeDocumentDefinitio
             Exists, Sp, certificate, Comma, Sp,
             validCertificate, Sp, Land, Sp, completeCondition);
         Formula unconditionalDuty = Grp(
-            gammaQ, Sp, Eq, Sp, F.Id("top"), Sp, Land, Sp, licensed, Sp, Land, Sp,
-            Call("Holds", gammaQ),
+            licensed, Sp, Land, Sp, reportCondition,
             Sp, Rightarrow, Sp,
             Exists, Sp, certificate, Comma, Sp,
             validCertificate, Sp, Land, Sp, premises, Sp, Land, Sp, assumption);
@@ -109,20 +123,21 @@ internal sealed class OverreachWithoutLicenseDocument : IScribeDocumentDefinitio
             Exists, Sp, certificate, Comma, Sp,
             validCertificate, Sp, Land, Sp, completeCondition, Sp, Land, Sp,
             Open, Open, Neg, premises, Sp, Lor, Sp, Neg, assumption, Close,
-            Sp, Rightarrow, Sp, Neg, gammaQ, Close);
+            Sp, Rightarrow, Sp, Neg, reportCondition, Close);
         Formula overreachDefinition = Grp(
             Call("Overreach", q, oldScope, claimedScope), Sp, Iff, Sp,
-            oldScope, Sp, Subset, Sp, claimedScope, Sp, Land, Sp,
-            Call("Scope", c), Sp, Eq, Sp, oldScope, Sp, Land, Sp,
+            StrictSubset(oldScope, claimedScope), Sp, Land, Sp,
+            Call("Scope", reportConcept), Sp, Eq, Sp, oldScope, Sp, Land, Sp,
             reportScope, Sp, Eq, Sp, claimedScope, Sp, Land, Sp,
             Neg, licensed);
         Formula toleranceCounterexample = ToleranceCounterexample(oldScope, claimedScope);
         Formula closureCounterexample = ClosureCounterexample();
         Formula deconditioning = Grp(
+            Forall, Sp, certificate, Comma, Sp,
             reportScope, Sp, Eq, Sp, claimedScope, Sp, Land, Sp,
             validCertificate, Sp, Land, Sp, premises, Sp, Land, Sp, assumption,
             Sp, Rightarrow, Sp,
-            Call("LicensedReport", Subscript(q, F.Id("top")), oldScope, claimedScope));
+            Call("LicensedReport", deconditionedReport, oldScope, claimedScope));
 
         return Disp(Seq(
             Begin, Grp(F.Id("gathered")),
@@ -149,7 +164,7 @@ internal sealed class OverreachWithoutLicenseDocument : IScribeDocumentDefinitio
         Formula word = F.Id("w");
 
         return Grp(
-            oldScope, Sp, Subset, Sp, claimedScope, Sp, Land, Sp,
+            StrictSubset(oldScope, claimedScope), Sp, Land, Sp,
             Open, Forall, Sp, reading, Comma, Sp,
             Call("delta", reading, reading), Sp, Leq, Sp, epsilon, Close,
             Sp, Land, Sp,
@@ -181,7 +196,7 @@ internal sealed class OverreachWithoutLicenseDocument : IScribeDocumentDefinitio
         return Grp(
             Exists, Sp, oldScope, Comma, Sp, claimedScope, Comma, Sp,
             system, Comma, Sp, target, Comma, Sp,
-            oldScope, Sp, Subset, Sp, claimedScope, Sp, Land, Sp,
+            StrictSubset(oldScope, claimedScope), Sp, Land, Sp,
             oldResidual, Sp, Eq, Sp, Emptyset, Sp, Land, Sp,
             claimedResidual, Sp, Neq, Sp, Emptyset);
     }
