@@ -144,6 +144,27 @@ public sealed class LedgerAppendCommandTests
 
         Assert.True(result.Success, result.Error);
         Assert.Contains("appended_freezes=2", result.Output, StringComparison.Ordinal);
+
+        using var dependencyFixture = new LedgerAppendFixture(
+            addSecondClosedModule: false,
+            aImportsB: true,
+            reportBDriftInChangeSet: true);
+        var dependencyPreparation = DagLedgerCommandPreparation.Prepare(
+            dependencyFixture.Root,
+            dependencyFixture.Gateway,
+            dependencyFixture.ReportPath);
+        Assert.Equal(
+            new[] { FrozenLedgerTestData.PathFor("A"), FrozenLedgerTestData.PathFor("B") },
+            dependencyPreparation.Catalog.ClosedNodes.Select(static node => node.RepoPath.Value));
+
+        var dependencyResult = dependencyFixture.Environment.SyncLedger(
+            new[] { "--candidate-lean-report", dependencyFixture.ReportPath });
+        Assert.True(dependencyResult.Success, dependencyResult.Error);
+        Assert.Contains("appended_reattests=2", dependencyResult.Output, StringComparison.Ordinal);
+        Assert.Contains(
+            $"REATTESTED {FrozenLedgerTestData.PathFor("A")}",
+            dependencyResult.Output,
+            StringComparison.Ordinal);
     }
 
     [Fact]
