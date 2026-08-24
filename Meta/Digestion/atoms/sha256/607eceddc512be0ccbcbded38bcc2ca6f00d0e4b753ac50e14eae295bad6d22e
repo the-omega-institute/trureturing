@@ -1,0 +1,39 @@
+### 55.2.6 开放问题 OP6：前瞻改善不蕴含泛化
+
+固定有限观测历史空间 \(\Omega_{\mathrm{obs}}\)、有限下一记录空间 \(\Omega_{\mathrm{next}}\)，以及两条联合概率质量函数
+\[
+P,Q:\Omega_{\mathrm{obs}}\times\Omega_{\mathrm{next}}\to[0,1].
+\]
+它们各自归一化，并在完整已观察 \(\sigma\)-代数上一致；有限情形即
+\[
+\forall h\in\Omega_{\mathrm{obs}},\quad
+\sum_uP(h,u)=\sum_uQ(h,u).
+\]
+取已观察历史 \(h_*\) 及其末记录 \(z_*\)，要求共同边缘质量 \(p_{\mathrm{obs}}(h_*)=q_{\mathrm{obs}}(h_*)>0\)。固定第 54.3 部的 \(\operatorname{evaluate}\)、冻结承诺 \(K\)、被承诺行动 \(a\) 与预登记基线 \(b\)，并要求单记录命题 \(\operatorname{ScientificGain}(\operatorname{evaluate},K,z_*,a,b)\)。令实值损失 \(\operatorname{Loss}_K(-;u)\) 对两联合律绝对可积；在有限空间中这项仍作为显式检查。定义
+\(\Omega_{\mathrm{next}}\) 不直接冒充 \(\operatorname{Evidence}\)：固定全函数 \(\operatorname{nextEvidence}:\Omega_{\mathrm{next}}\to\operatorname{Evidence}\)，并在 OP6 中把同一 evaluator 实例化为 \(\operatorname{evaluate}:\operatorname{Comparator}\to\operatorname{Action}\to\operatorname{Evidence}\to\mathbb R\)。\(\operatorname{Loss}_K\) 不是另一个可选损失，而被唯一规定为
+\[
+\boxed{
+\operatorname{Loss}_K(x;u):=
+\operatorname{evaluate}(K.\operatorname{comparator},x,\operatorname{nextEvidence}(u))\in\mathbb R.
+}
+\]
+因此前件中的 \(\operatorname{ScientificGain}\) 与两个条件期望共用同一 \(\operatorname{evaluate}\) 及 \(K.\operatorname{comparator}\)；绝对可积检查就施于此实值映射，差分也只由它派生：
+\[
+\Delta_K(a,b;u):=\operatorname{Loss}_K(a;u)-\operatorname{Loss}_K(b;u).
+\]
+是否存在上述全部对象，使
+\[
+\boxed{
+\mathbb E_P[\Delta_K(a,b;U)\mid H=h_*]<0
+<
+\mathbb E_Q[\Delta_K(a,b;U)\mid H=h_*]
+}
+\]
+或 \(P,Q\) 互换？
+
+真残差：第 52.4 部拒绝从一次 \(\operatorname{ScientificGain}\) 自动推出长期稳定性，却未给出在全部已观察历史分布不可区分、只允许条件未来核分歧时的有限符号反转见证。
+
+结案判据：给出可枚举的有限联合律，机器核验归一化、全观测边缘相等、\(h_*\) 正质量、ScientificGain、绝对可积与两条件期望异号；或在同一概率模型类中证明不存在并 statement-revise 前件。
+
+可判定性与查询复杂度借用有限图算法、停机不可判定与语义性质归约的已知形状；线性延伸借用 Szpilrajn 型延伸定理；可识别性借用统计决策与相容数据律的已知形状。单项不主张首创；它们与 DECT 裁决、漂白、外推、停机及增益接口的组合标为 suspected-novel，未作系统文献检索。
+
