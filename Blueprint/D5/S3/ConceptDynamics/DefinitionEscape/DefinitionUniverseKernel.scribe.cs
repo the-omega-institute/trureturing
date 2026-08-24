@@ -78,9 +78,72 @@ internal sealed class DefinitionUniverseKernelDocument : IScribeDocumentDefiniti
                             + "concept-kernel order duality only for surjective readouts, where "
                             + "the two notions coincide. Boolean examples witness both a proper "
                             + "refinement and a realized image that omits a coordinate."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("definition-universe-kernel-and-image"),
+                DeclarationHandle.Create(
+                    "D5/S3/ConceptDynamics/DefinitionEscape/DefinitionUniverseKernel."
+                        + "definition_universe_kernel_and_image"),
+                H("Definition packaging determines its kernel and realized image"),
+                StatementSource.FromAuthor(DefinitionUniverseKernelAndImageFormula()),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For each packaged definition on X, the conjunction states exactly its Sigma "
+                        + "codomain-readout form, its pointwise equality kernel, and membership in "
+                        + "its realized image. It adds no surjectivity, refinement, equivalence, "
+                        + "or higher-order constructor claim."))),
                 DescribeRole.Theorem))));
     }
 
+    private static Formula Apply(Formula function, Formula argument) =>
+        Seq(function, Open, argument, Close);
+
     private static Formula Arrow(Formula domain, Formula codomain) =>
         new Formula.TypeArrow(domain, codomain);
+
+    private static Formula DefinitionUniverseKernelAndImageFormula()
+    {
+        Formula universeType =
+            Seq(Operatorname, Grp(F.Id("Type")), Underscore, Grp(F.Id("u")));
+        Formula x = F.Id("X");
+        Formula definition = F.Id("definition");
+        Formula codomain = F.Id("D");
+        Formula readout = F.Id("d");
+        Formula left = F.Id("x");
+        Formula right = F.Id("y");
+        Formula imageValue = F.Id("z");
+        Formula defX = Call("Def", x);
+        Formula codomainProjection = Seq(definition, Dot, D(1));
+        Formula readoutProjection = Seq(definition, Dot, D(2));
+        Formula sigmaPackage = Seq(
+            Sigma, Underscore, Grp(codomain, Colon, Sp, universeType), Sp,
+            Grp(Arrow(x, codomain)));
+        Formula elementShape = Seq(
+            Exists, Sp, codomain, Colon, Sp, universeType, Comma, Sp,
+            readout, Colon, Sp, Arrow(x, codomain), Comma, Sp,
+            definition, Sp, Eq, Sp,
+            Langle, Sp, codomain, Comma, Sp, readout, Rangle);
+        Formula kernelCharacterization = Seq(
+            Forall, Sp, left, Comma, Sp, right, Colon, Sp, x, Comma, Sp,
+            Apply(Call("ker", definition), Seq(left, Comma, Sp, right)),
+            Sp, Leftrightarrow, Sp,
+            Apply(readoutProjection, left), Sp, Eq, Sp,
+            Apply(readoutProjection, right));
+        Formula imageCharacterization = Seq(
+            Forall, Sp, imageValue, Colon, Sp, codomainProjection, Comma, Sp,
+            imageValue, Sp, InMacro, Sp, Call("Im", definition),
+            Sp, Leftrightarrow, Sp,
+            Exists, Sp, left, Colon, Sp, x, Comma, Sp,
+            Apply(readoutProjection, left), Sp, Eq, Sp, imageValue);
+
+        return Disp(Seq(
+            Forall, Sp, x, Colon, Sp, universeType, Comma, Sp,
+            definition, Colon, Sp, defX, Comma, Sp,
+            Open,
+            Open, defX, Sp, Eq, Sp, sigmaPackage, Close, Sp, Land, Sp,
+            Open, elementShape, Close,
+            Close, Sp, Land, RowBreak, Grp(),
+            Open, kernelCharacterization, Close, Sp, Land, RowBreak, Grp(),
+            Open, imageCharacterization, Close, Dot));
+    }
 }

@@ -140,6 +140,21 @@ theorem surjective_definition_refines_iff_refines
   simpa only [DefinitionRefines, definitionKernel, coarseConcept, fineConcept] using
     ((concept_kernel_order_duality X).2.1 coarseConcept fineConcept).symm
 
+/-- The source's definition-universe clauses: Sigma packaging, equality kernel,
+and realized image. -/
+theorem definition_universe_kernel_and_image
+    {X : Type u} (definition : DefinitionUniverse X) :
+    ((DefinitionUniverse X = Sigma (fun D : Type u => X -> D)) ∧
+      ∃ (D : Type u) (d : X -> D), definition = ⟨D, d⟩) ∧
+      (∀ x y : X, definitionKernel definition x y <->
+        definition.2 x = definition.2 y) ∧
+      (∀ z : definition.1, z ∈ definitionImage definition <->
+        ∃ x : X, definition.2 x = z) := by
+  refine ⟨⟨rfl, ⟨definition.1, definition.2, rfl⟩⟩, ?_, ?_⟩
+  · intro x y
+    rfl
+  · exact mem_definition_image_iff definition
+
 /-- With effective coordinate types, kernel equality also agrees with the
 repository's mutual-factorization concept equivalence. -/
 theorem surjective_definition_equivalent_iff_concept_equivalent
@@ -245,5 +260,6 @@ example :
   exact ⟨trueMissing, imageNotUniversal, notSurjective⟩
 
 #print axioms definition_universe_kernel
+#print axioms definition_universe_kernel_and_image
 
 end D5.S3.ConceptDynamics.DefinitionEscape.DefinitionUniverseKernel

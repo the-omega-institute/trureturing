@@ -22,8 +22,21 @@ MetaDef applies the same Sigma construction to Def X. Generators are S-indexed f
 
 The repository's Refines relation is factorization rather than raw kernel inclusion. Separate bridge declarations apply the accepted concept-kernel order duality only for surjective readouts, where the two notions coincide. Boolean examples witness both a proper refinement and a realized image that omits a coordinate.
 
+**Theorem 1.2 (Definition packaging determines its kernel and realized image).**
+
+$$\forall X: \operatorname{Type}_{u}, definition: \operatorname{Def}\left(X\right), ((\operatorname{Def}\left(X\right) = \Sigma_{D: \operatorname{Type}_{u}} {X \to D}) \land (\exists D: \operatorname{Type}_{u}, d: X \to D, definition = \langle D, d\rangle)) \land\\{}(\forall x, y: X, \operatorname{ker}\left(definition\right)(x, y) \Leftrightarrow definition.2(x) = definition.2(y)) \land\\{}(\forall z: definition.1, z \in \operatorname{Im}\left(definition\right) \Leftrightarrow \exists x: X, definition.2(x) = z).$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/DefinitionEscape/DefinitionUniverseKernel.definition_universe_kernel_and_image` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For each packaged definition on X, the conjunction states exactly its Sigma codomain-readout form, its pointwise equality kernel, and membership in its realized image. It adds no surjectivity, refinement, equivalence, or higher-order constructor claim.
+
 ## References
 
 - Truth anchor: `D5/S3/ConceptDynamics/DefinitionEscape/DefinitionUniverseKernel.definition_universe_kernel`
+- Truth anchor: `D5/S3/ConceptDynamics/DefinitionEscape/DefinitionUniverseKernel.definition_universe_kernel_and_image`
 - Dependency: [D5/S3/ConceptDynamics/Interventions/RedundantAppealDefectPersistence](../Interventions/RedundantAppealDefectPersistence.md)
 - Dependency: [D5/S3/ConceptDynamics/Refinement/ConceptKernelOrderDuality](../Refinement/ConceptKernelOrderDuality.md)
