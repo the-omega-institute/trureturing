@@ -1,0 +1,34 @@
+## 49.1 承诺对象
+
+定义第 \(n\) 轮前视承诺
+
+\[
+\boxed{
+K_n = ( \operatorname{TargetChain}_n, \operatorname{Scope}_n, \operatorname{Comparator}_n, \operatorname{TestPlan}_n, \operatorname{Baseline}_n, \operatorname{WeightSpec}_n, \operatorname{CommittedArtifact}_n ).
+}
+\]
+
+其中
+
+\[
+\operatorname{Scope}_n=(J_n,\varepsilon_n,\mathcal C_n)
+\]
+
+承接第 35 部的范围化真理记录；目标来源链指向第 23 部定义图中的目标版本及其全部上游节点；比较器给出同一记录上的判别坐标；检验计划规定记录如何进入裁决；基线规定改善相对于什么计算；权重规范可为空，否则必须携带外生来源、版本和适用范围。
+
+被承诺对象是候选预测、行动或模型分量的有限有类型束
+
+\[
+\operatorname{CommittedArtifact}_n\subseteq_{\mathrm{fin}}\bigl(\operatorname{Prediction}\sqcup\operatorname{Action}\sqcup\operatorname{ModelComponent}\bigr).
+\]
+
+写 \(\operatorname{committed}(K_n,a)\) 表示 \(a\) 属于该冻结对象束。所有被承诺对象进入 \(\operatorname{Dep}^*(K_n)\)；因此它们不能在裁决记录到达后替换而仍沿用同一承诺编号。
+
+承诺的冻结记录为
+
+\[
+\operatorname{Seal}(K_n) = (\operatorname{Digest}(K_n),t_n,\operatorname{Dep}^*(K_n)).
+\]
+
+摘要只用于识别；承诺内容及其依赖闭包仍是承重对象。
+

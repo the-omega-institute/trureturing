@@ -1,0 +1,16 @@
+## 49.5 序贯裁决的已知形状
+
+本部借用 Dawid prequential/序贯预测中“先给出预测，再由随后记录裁决”的已知顺序，也借用预注册中“分析坐标先于结果冻结”的已知形状，不主张首创。
+
+DECT 的新增工作只是把该顺序接入定义来源图、目标版本、作用域和残差账本：
+
+\[
+\boxed{
+K_n \longrightarrow Z_n \longrightarrow \operatorname{Verdict}_n,
+}
+\]
+
+且箭头不得逆接为 \(Z_n\leadsto K_n\)。
+
+---
+

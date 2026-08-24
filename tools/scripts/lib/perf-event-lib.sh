@@ -137,19 +137,47 @@ perf_capture_event() {
     "$disk_json" >> "$spool"
 }
 
+perf_emit_commit_failure() {
+  local source="$1"
+  local reason="$2"
+  local exit_code="$3"
+  if [[ ! "$exit_code" =~ ^[1-9][0-9]*$ ]]; then exit_code=1; fi
+  printf '{"event":"performance_event_commit","status":"failed","source":%s,"reason":%s,"exit_code":%s}\n' \
+    "$(perf_json_quote "$source")" \
+    "$(perf_json_quote "$reason")" \
+    "$exit_code"
+}
+
 perf_flush_events() {
   local root="$1"
   local spool="$2"
+  local source="${3:-perf_flush_events}"
   [[ -n "$spool" && -s "$spool" ]] || return 0
   local project="$root/tools/StrataLint.Cli/StrataLint.Cli.csproj"
   local configuration="${STRATALINT_PERF_CONFIGURATION:-Release}"
   local target=""
-  [[ "$configuration" =~ ^[A-Za-z0-9._-]+$ ]] || return 1
+  local rc=0
+  if [[ ! "$configuration" =~ ^[A-Za-z0-9._-]+$ ]]; then
+    perf_emit_commit_failure "$source" invalid-configuration 1
+    return 1
+  fi
   target="$(dotnet msbuild "$project" \
     -getProperty:TargetPath \
     -property:Configuration="$configuration" \
-    -verbosity:quiet 2>/dev/null)" || return 1
-  [[ -n "$target" && "$target" == /* && -f "$target" ]] || return 1
+    -verbosity:quiet 2>/dev/null)" || {
+      rc=$?
+      perf_emit_commit_failure "$source" target-resolution-failed "$rc"
+      return "$rc"
+    }
+  if [[ -z "$target" || "$target" != /* || ! -f "$target" ]]; then
+    perf_emit_commit_failure "$source" target-unavailable 1
+    return 1
+  fi
   local ledger="${STRATALINT_PERF_LEDGER:-$HOME/.stratalint-perf/events.jsonl}"
-  (cd "$root" && dotnet "$target" perf-append --input "$spool" --ledger "$ledger")
+  (cd "$root" && dotnet "$target" perf-append --input "$spool" --ledger "$ledger") \
+    >/dev/null 2>&1 || {
+      rc=$?
+      perf_emit_commit_failure "$source" append-failed "$rc"
+      return "$rc"
+    }
 }

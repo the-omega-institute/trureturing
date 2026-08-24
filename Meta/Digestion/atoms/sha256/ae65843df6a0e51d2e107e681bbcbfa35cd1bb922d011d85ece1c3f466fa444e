@@ -1,0 +1,56 @@
+## 48.2 同一记录的角色分型
+
+定义证据角色类型
+
+\[
+\operatorname{EvidenceRole} := \{ \mathsf{Generate}, \mathsf{Tune}, \mathsf{Select}, \mathsf{Adjudicate}, \mathsf{Replicate} \}.
+\]
+
+它们分别表示：产生候选、调节候选内部参数、从候选中选择、裁决已冻结承诺、以及在复验协议下重做裁决。\(\mathsf{Replicate}\) 标签本身不证明独立性；若没有新的观察事件与显式协议独立关系，它仍只是证据复用。
+
+同一记录 \(r\) 可以在不同轮次承担不同角色，但每次角色使用必须形成事件
+
+\[
+\operatorname{UseEvent} = (\operatorname{EventId},r,n,\mathsf{role},\operatorname{Deps},\operatorname{Protocol},\operatorname{Time}).
+\]
+
+其中 \(\operatorname{EventId}\) 唯一，\(\operatorname{Deps}\) 记录该次使用触及的直接依赖对象。定义角色账本为有限有序日志；事件号严格递增，并要求轮次与 \(\operatorname{Time}\) 沿事件号不减：
+
+\[
+\mathcal L_{\mathrm{role}} := (e_1,\ldots,e_N), \qquad \operatorname{EventId}(e_i)\neq\operatorname{EventId}(e_j)\ (i\neq j).
+\]
+
+令 \(d_n\) 与 \(\tau_n\) 分别为第 \(n\) 轮裁决事件号与裁决时间，且冻结事件号 \(t_n\le d_n\)。对角色账本与该裁决快照，先定义全日志有效性
+
+\[
+\operatorname{ValidTrace}(\mathcal L_{\mathrm{role}},K_n)
+\Longleftrightarrow
+\forall e\in\mathcal L_{\mathrm{role}},\
+e.\operatorname{evidence}\in\mathcal F_{\operatorname{EventId}(e)}.
+\]
+
+这是角色账本与裁决快照的全日志有效性不变量。只有给出该证明，裁决消费者才可读取角色事件；任一已记录事件与同事件号处的 filtration 错配时，整份快照即被拒绝。
+
+在此有效性前提下，定义裁决前缀
+
+\[
+\begin{aligned}
+\mathcal L_{\mathrm{role},\preceq d_n}
+:=\{e\in\mathcal L_{\mathrm{role}}:\;&
+\operatorname{EventId}(e)\le d_n,\ e.n\le n,
+\\
+&e.\operatorname{Time}\le\tau_n\}.
+\end{aligned}
+\]
+
+该前缀只施加事件号、轮次与时间约束，不再逐事件过滤可见性。账本一致性是裁决前提，错配即拒绝整个快照，不能静默抹去事件后继续裁决。
+
+同内容的重复使用因事件号不同而不被折叠。对同一记录同一轮，角色不是单值函数，而是由该裁决快照导出的集合谓词
+
+\[
+\operatorname{Roles}_{\mathcal L}^{\preceq d_n}(r,n)
+:=\{\rho:\exists e\in\mathcal L_{\mathrm{role},\preceq d_n},\ e.\operatorname{evidence}=r,\ e.n=n,\ e.\mathsf{role}=\rho\}.
+\]
+
+角色不是记录的永久本质；它是记录、轮次、协议和访问时间的关系。一个记录在第 \(n\) 轮用于选择后，不能仅靠重新命名就在同一轮变成未见的裁决记录。账本扩展只允许在尾部追加事件号更大的事件，因此第 \(n+1\) 轮追加不能改变已冻结的 \(\mathcal L_{\mathrm{role},\preceq d_n}\)。
+

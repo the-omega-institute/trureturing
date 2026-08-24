@@ -1,0 +1,61 @@
+## 51.3 范围运输与证书
+
+定义范围运输候选
+
+\[
+\tau_{J,J'}: \operatorname{TruthRecord}_{J,\varepsilon,\mathcal C} \to \operatorname{Claim}_{J'}.
+\]
+
+外推证书至少为
+
+\[
+\boxed{
+\operatorname{TransportCert}_{J\to J'} = ( \operatorname{Receipt}_{J}, \operatorname{TransportAssumption}_{J\to J'}, \operatorname{FalsifiablePrediction}_{J'\setminus J} ).
+}
+\]
+
+其中旧域收据锁定原版本、原记录与原误差，并保存被运输主张的内容地址；运输假设说明哪些结构在域变换下保持；可失败预测必须在 \(J'\setminus J\) 上预登记定义域，并刻画至少一个非空失败事件。
+
+若运输还依赖选择机制、干预一致性、协变量变换或损失稳定性，这些必须进入运输假设，不得藏在“同类情形”一词中。
+
+给定证书 \(\kappa\)、主张 \(c\) 及其版本 \(\nu\)，定义有效外推证书
+
+\[
+\boxed{
+\begin{aligned}
+\operatorname{ValidTransportCert}(\kappa,c;J,J',\nu)
+\Longleftrightarrow{}
+&\operatorname{ReceiptMatches}
+(\kappa.\operatorname{Receipt},\operatorname{ClaimAddress}(c),J,\nu)
+\\
+&\wedge\
+\bigl(
+\operatorname{GivenPremises}(\kappa)
+\wedge\kappa.\operatorname{TransportAssumption}
+\Rightarrow \operatorname{ClaimOn}(c,J')
+\bigr)
+\\
+&\wedge\
+\forall z\in J'\setminus J,\
+\operatorname{PredictionDefined}(\kappa,z)
+\\
+&\wedge\
+\exists z\in J'\setminus J,\
+\operatorname{PredictionDefined}(\kappa,z)
+\wedge\operatorname{PredictionFails}(\kappa,z)
+\wedge\operatorname{Refutes}(z,\kappa,c).
+\end{aligned}
+}
+\]
+
+第一项把收据同时绑定原域、版本和该主张的内容地址；第二项只给出保留明列前件的条件运输；后两项分别要求预测覆盖整个新域差并存在被预先刻画的失败见证。故把 \(\operatorname{PredictionFails}\) 取恒假不再能真空满足证书。定义
+
+\[
+\operatorname{HasValidTransportCert}(c;J,J')
+\Longleftrightarrow
+\exists\kappa,\operatorname{ValidTransportCert}
+(\kappa,c;J,J',\operatorname{Version}(c)).
+\]
+
+这个存在闭包由同一 claim-bound 谓词构造，不接收外部布尔门。仅有三元组数据而不满足此谓词，不构成外推门票。
+
