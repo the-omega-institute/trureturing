@@ -7,9 +7,9 @@
 
 import D5.S3.ConceptDynamics.DefinitionEscape.BlindKernelObstruction
 import D5.S3.ConceptDynamics.DefinitionEscape.ResidualJoinLaw
+import D5.S0.Diagonal.Naturality.NaturalityDefectComposition
 import Mathlib.Data.Fintype.EquivFin
-import Mathlib.MeasureTheory.Measure.Count
-import Mathlib.MeasureTheory.Measure.MeasureSpace
+import Mathlib.Topology.Algebra.InfiniteSum.ENNReal
 import Mathlib.Topology.MetricSpace.Lipschitz
 
 /- Library-search audit trail (2026-08-24):
@@ -26,22 +26,23 @@ import Mathlib.Topology.MetricSpace.Lipschitz
      approximate/cascade/triangle/Lipschitz. Exact repository hits are
      `ResidualJoinLaw.residual_join_law`,
      `TargetRecoveryCriterion.target_recovery_criterion`, and
-     `BlindKernelObstruction.blind_kernel_obstruction`. The first and third are
+     `BlindKernelObstruction.blind_kernel_obstruction`, and
+     `NaturalityDefectComposition.naturality_defect_comp_le`. All four are
      applied directly. The recovery criterion supplies the inhabited branch of
      sufficiency-factorization; only its uncovered empty-state edge is local.
      `RedundantAppealDefectPersistence` proves persistence of nonemptiness, not
-     the source's equality of residual sets. The other searched modules are
-     adjacent specializations rather than the five missing general laws.
-   * Loogle queries for finite ranges, union/intersection cardinality, and
-     Lipschitz distance bounds found `Set.finite_range`,
-     `Finset.card_union_add_card_inter`, and `LipschitzWith.dist_le_mul`.
+     the source's equality of residual sets. The remaining searched modules are
+     adjacent specializations rather than exact packages for clauses 3, 5--8.
+   * Loogle queries for finite ranges, weighted sums, and Lipschitz distance
+     bounds found `Set.finite_range`, `ENNReal.tsum_add`, and
+     `LipschitzWith.dist_le_mul`.
    * LeanSearch natural-language queries for finite point separation, coverage
      submodularity, and Lipschitz error transport found `Set.SeparatesPoints`,
      finite-union cardinality lemmas, `measure_union_add_inter`, and
      `LipschitzWith.dist_le_mul`; none packages this DECT conjunction.
    * Pinned-mathlib searches additionally found `Fintype.equivFin`,
-     `Finset.measurableSet_biUnion`, `MeasureTheory.measure_union_add_inter`,
-     and `Function.iterate_add_apply`. These are reused rather than reproved. -/
+     `ENNReal.tsum_le_tsum`, and `Function.iterate_add_apply`. These are reused
+     rather than reproved. -/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -55,12 +56,15 @@ open D5.S3.ConceptDynamics.Restoration.TargetRecoveryCriterion
 open D5.S3.ConceptDynamics.Faithfulness.JointFaithfulnessLeibnizCriterion
 open D5.S3.ConceptDynamics.DefinitionEscape.BlindKernelObstruction
 open D5.S3.ConceptDynamics.DefinitionEscape.ResidualJoinLaw
-open MeasureTheory
+open D5.S0.Diagonal.Naturality.NaturalityDefectComposition
 
 /-- The nine claims classified by DECT as already direct or one-line: residual
 intersection, sufficiency-factorization, redundant zero gain, blind-kernel
 obstruction, finite compactness, submodular capture, prepared one-step defect,
-semigroup defect, and approximate cascade. -/
+semigroup defect, and approximate cascade. Clause 6 realizes the source's
+weight/count reading through arbitrary nonnegative point weights; an unrestricted
+non-atomic measure reading would need measurable-domain conditions absent from
+the source statement. -/
 theorem directly_provable_laws :
     (forall {X C D Target : Type*} (q : Concept X C) (definition : Concept X D)
       (target : Concept X Target),
@@ -73,25 +77,35 @@ theorem directly_provable_laws :
       (target : Concept X Target),
       Refines definition q →
         defectRelation (conceptJoin q definition) target = defectRelation q target) ∧
-    (forall {X C B Target : Type*} (Gamma : Set (Concept X B))
+    (forall {X C Target Gamma : Type*} {D : Gamma → Type*}
+      (definitions : ∀ gamma, Concept X (D gamma))
       (q : Concept X C) (target : Concept X Target),
-      (blindResidual Gamma q target).Nonempty →
-        ¬finiteSelectionSufficient Gamma q target) ∧
-    (forall {X C B Target : Type*} [Finite X] (Gamma : Set (Concept X B))
+      (blindResidual definitions q target).Nonempty →
+        (∀ (n : Nat) (codes : Fin n → Gamma),
+          ¬∃ recover : (C × (∀ i, D (codes i))) → Target,
+            target = recover ∘
+              languageExtension q (fun i => definitions (codes i))) ∧
+        (∀ Delta : Set Gamma,
+          ¬∃ recover : (C × (∀ code : Delta, D code.1)) → Target,
+            target = recover ∘
+              languageExtension q (fun code : Delta => definitions code.1)) ∧
+        ¬finiteSelectionSufficient definitions q target) ∧
+    (forall {X C Target Gamma : Type*} {D : Gamma → Type*} [Finite X]
+      (definitions : ∀ gamma, Concept X (D gamma))
       (q : Concept X C) (target : Concept X Target),
-      blindResidual Gamma q target = ∅ →
-        ∃ (n : Nat) (definitions : Fin n → Gamma),
+      blindResidual definitions q target = ∅ →
+        ∃ (n : Nat) (codes : Fin n → Gamma),
           defectRelation
-            (languageExtension q (fun i => (definitions i).1)) target = ∅) ∧
-    (forall {Edge Definition : Type*} [MeasurableSpace Edge]
-      [DecidableEq Definition] (measure : Measure Edge) (residual : Set Edge)
-      (cut : Definition → Set Edge), MeasurableSet residual →
-      (forall definition, MeasurableSet (cut definition)) →
-      forall A B : Finset Definition,
-        let captured := fun S : Finset Definition =>
-          residual ∩ ⋃ definition ∈ S, cut definition
-        measure (captured (A ∪ B)) + measure (captured (A ∩ B)) ≤
-          measure (captured A) + measure (captured B)) ∧
+            (languageExtension q (fun i => definitions (codes i))) target = ∅) ∧
+    (forall {Edge Definition : Type*} (weight : Edge → ENNReal)
+      (residual : Set Edge) (cut : Definition → Set Edge)
+      (A B : Set Definition),
+      let captured := fun S : Set Definition =>
+        residual ∩ ⋃ definition ∈ S, cut definition
+      let mass := fun edges : Set Edge =>
+        ∑' edge, edges.indicator weight edge
+      mass (captured (A ∪ B)) + mass (captured (A ∩ B)) ≤
+        mass (captured A) + mass (captured B)) ∧
     (forall {X Z : Type*} [PseudoMetricSpace Z] (projection : X → Z)
       (update : X → X) (prepare : Z → X), Function.RightInverse prepare projection →
       forall x : X,
@@ -99,11 +113,11 @@ theorem directly_provable_laws :
             ((projection ∘ update ∘ prepare) (projection x)) =
           dist (projection (update x))
             (projection (update ((prepare ∘ projection) x)))) ∧
-    (forall {X Z : Type*} [PseudoMetricSpace Z] (projection : X → Z)
-      (evolution : Nat → X → X) (prepare : Z → X),
+    (forall {X Z Time : Type*} [PseudoMetricSpace Z] [Add Time]
+      (projection : X → Z) (evolution : Time → X → X) (prepare : Z → X),
       Function.RightInverse prepare projection →
       (forall t s x, evolution (t + s) x = evolution t (evolution s x)) →
-      forall (t s : Nat) (m : Z),
+      forall (t s : Time) (m : Z),
         dist (projection (evolution (t + s) (prepare m)))
             (projection (evolution t
               (prepare (projection (evolution s (prepare m)))))) =
@@ -136,35 +150,34 @@ theorem directly_provable_laws :
     change definition pair.1 = definition pair.2
     rw [factorization]
     exact congrArg factor sameReadout
-  · intro X C B Target Gamma q target nonemptyResidual
+  · intro X C Target Gamma D definitions q target nonemptyResidual
     rcases nonemptyResidual with ⟨pair, pairInResidual⟩
     letI : Nonempty X := ⟨pair.1⟩
-    exact
-      ((blind_kernel_obstruction Gamma q target).2
-        ⟨pair, pairInResidual⟩).2.2
-  · intro X C B Target finiteX Gamma q target emptyBlindResidual
+    exact (blind_kernel_obstruction definitions q target).2
+      ⟨pair, pairInResidual⟩
+  · intro X C Target Gamma D finiteX definitions q target emptyBlindResidual
     letI : Fintype X := Fintype.ofFinite X
     let DefectPair :=
       {pair : X × X // pair ∈ defectRelation q target}
     letI : Fintype DefectPair := Fintype.ofFinite DefectPair
     classical
     have separated : ∀ pair : DefectPair,
-        ∃ definition : Gamma,
-          definition.1 pair.1.1 ≠ definition.1 pair.1.2 := by
+        ∃ gamma : Gamma,
+          definitions gamma pair.1.1 ≠ definitions gamma pair.1.2 := by
       intro pair
       by_contra noSeparator
       have pairInKernel :
-          pair.1 ∈ jointKernel (fun definition : Gamma => definition.1) := by
+          pair.1 ∈ jointKernel definitions := by
         simp only [jointKernel, conceptKernel, Set.mem_iInter,
           Set.mem_setOf_eq]
-        intro definition
+        intro gamma
         by_contra differentValues
-        exact noSeparator ⟨definition, differentValues⟩
-      have pairInBlind : pair.1 ∈ blindResidual Gamma q target :=
+        exact noSeparator ⟨gamma, differentValues⟩
+      have pairInBlind : pair.1 ∈ blindResidual definitions q target :=
         ⟨pair.2, pairInKernel⟩
       rw [emptyBlindResidual] at pairInBlind
       exact pairInBlind
-    let selected : ∀ pair : DefectPair, Gamma :=
+    let selected : DefectPair → Gamma :=
       fun pair => Classical.choose (separated pair)
     let enumerate : DefectPair ≃ Fin (Fintype.card DefectPair) :=
       Fintype.equivFin DefectPair
@@ -180,55 +193,77 @@ theorem directly_provable_laws :
         congrFun (congrArg Prod.snd extensionDefect.1)
           (enumerate indexedPair)
       have selectedSeparates := Classical.choose_spec (separated indexedPair)
-      exact selectedSeparates (by
-        simpa [languageExtension, conceptJoin, jointReadout, selected,
-          indexedPair] using sameSelectedValues)
+      change
+        definitions (selected (enumerate.symm (enumerate indexedPair))) pair.1 =
+          definitions (selected (enumerate.symm (enumerate indexedPair))) pair.2
+        at sameSelectedValues
+      rw [enumerate.symm_apply_apply] at sameSelectedValues
+      exact selectedSeparates sameSelectedValues
     · exact False.elim
-  · intro Edge Definition measurableEdge decidableDefinition measure residual cut
-      measurableResidual measurableCut A B
-    let captured := fun S : Finset Definition =>
+  · intro Edge Definition weight residual cut A B
+    classical
+    dsimp only
+    let captured := fun S : Set Definition =>
       residual ∩ ⋃ definition ∈ S, cut definition
-    have measurableCaptured (S : Finset Definition) :
-        MeasurableSet (captured S) := by
-      exact measurableResidual.inter
-        (S.measurableSet_biUnion fun definition _ => measurableCut definition)
+    let mass := fun edges : Set Edge =>
+      ∑' edge, edges.indicator weight edge
+    change mass (captured (A ∪ B)) + mass (captured (A ∩ B)) ≤
+      mass (captured A) + mass (captured B)
     have capturedUnion : captured (A ∪ B) = captured A ∪ captured B := by
       ext edge
       simp only [captured, Set.mem_inter_iff, Set.mem_iUnion,
-        Finset.mem_union]
+        Set.mem_union]
       aesop
     have capturedIntersectionSubset :
         captured (A ∩ B) ⊆ captured A ∩ captured B := by
       intro edge edgeCaptured
-      simp only [captured, Set.mem_inter_iff, Set.mem_iUnion,
-        Finset.mem_inter] at edgeCaptured ⊢
+      simp only [captured, Set.mem_inter_iff, Set.mem_iUnion] at edgeCaptured ⊢
       aesop
-    calc
-      measure (captured (A ∪ B)) + measure (captured (A ∩ B)) =
-          measure (captured A ∪ captured B) +
-            measure (captured (A ∩ B)) := by rw [capturedUnion]
-      _ ≤ measure (captured A ∪ captured B) +
-            measure (captured A ∩ captured B) :=
-        add_le_add (le_refl _) (measure_mono capturedIntersectionSubset)
-      _ = measure (captured A) + measure (captured B) :=
-        measure_union_add_inter (captured A) (measurableCaptured B)
+    rw [← ENNReal.tsum_add, ← ENNReal.tsum_add]
+    apply ENNReal.tsum_le_tsum
+    intro edge
+    have unionMembership :
+        edge ∈ captured (A ∪ B) ↔ edge ∈ captured A ∨ edge ∈ captured B := by
+      rw [capturedUnion]
+      exact Set.mem_union edge (captured A) (captured B)
+    by_cases inA : edge ∈ captured A
+    · by_cases inB : edge ∈ captured B
+      · by_cases inIntersection : edge ∈ captured (A ∩ B)
+        · simp [inA, inB, inIntersection, unionMembership]
+        · simp [inA, inB, inIntersection, unionMembership]
+      · have notInIntersection : edge ∉ captured (A ∩ B) := by
+          intro inIntersection
+          exact inB (capturedIntersectionSubset inIntersection).2
+        simp [inA, inB, notInIntersection, unionMembership]
+    · have notInIntersection : edge ∉ captured (A ∩ B) := by
+        intro inIntersection
+        exact inA (capturedIntersectionSubset inIntersection).1
+      by_cases inB : edge ∈ captured B <;>
+        simp [inA, inB, notInIntersection, unionMembership]
   · intro X Z pseudoMetric projection update prepare rightInverse x
     rfl
-  · intro X Z pseudoMetric projection evolution prepare rightInverse semigroup t s m
+  · intro X Z Time pseudoMetric addTime projection evolution prepare rightInverse
+      semigroup t s m
     rw [semigroup t s (prepare m)]
     rfl
   · intro X Y Z pseudoMetricY pseudoMetricZ first second direct K delta eta
       lipschitz x y firstError secondError
+    have compositionBound := naturality_defect_comp_le
+      (projectA := first) (projectB := fun _ : X => y) (projectC := id)
+      (globalF := direct) (localF := second) (globalG := id) (localG := id)
+      K lipschitz x
+    unfold naturalityDefect at compositionBound
+    simp only [Function.comp_apply, id_eq] at compositionBound
     calc
-      dist (second (first x)) (direct x) ≤
-          dist (second (first x)) (second y) +
-            dist (second y) (direct x) := dist_triangle _ _ _
-      _ ≤ K * dist (first x) y + eta :=
-        add_le_add (lipschitz.dist_le_mul (first x) y) secondError
-      _ ≤ K * delta + eta :=
-        add_le_add
-          (mul_le_mul_of_nonneg_left firstError (NNReal.coe_nonneg K))
-          (le_refl eta)
+      dist (second (first x)) (direct x) =
+          dist (direct x) (second (first x)) := dist_comm _ _
+      _ ≤ dist (direct x) (second y) + K * dist y (first x) :=
+        compositionBound
+      _ ≤ eta + K * delta := add_le_add
+        (by simpa only [dist_comm] using secondError)
+        (mul_le_mul_of_nonneg_left
+          (by simpa only [dist_comm] using firstError) (NNReal.coe_nonneg K))
+      _ = K * delta + eta := add_comm _ _
 
 /-- Clause 1 is exercised on a genuinely nonempty joined residual. -/
 example :
@@ -279,69 +314,71 @@ example :
     rfl
   · exact ⟨rfl, Bool.false_ne_true⟩
 
-/-- Clause 4 obstructs finite selection on a concrete blind Boolean pair. -/
+/-- Clause 4 obstructs finite and arbitrary subfamilies on a blind pair. -/
 example :
     (blindResidual
-        {definition : Concept Bool Bool | definition = fun _ => false}
+        (fun _ : Unit => fun _ : Bool => false)
         (fun _ : Bool => ()) (id : Concept Bool Bool)).Nonempty ∧
+      (∀ (n : Nat) (codes : Fin n → Unit),
+        ¬∃ recover : (Unit × (Fin n → Bool)) → Bool,
+          (id : Concept Bool Bool) = recover ∘
+            languageExtension (fun _ : Bool => ())
+              (fun i => (fun _ : Unit => fun _ : Bool => false) (codes i))) ∧
+      (∀ Delta : Set Unit,
+        ¬∃ recover : (Unit × (Delta → Bool)) → Bool,
+          (id : Concept Bool Bool) = recover ∘
+            languageExtension (fun _ : Bool => ())
+              (fun code : Delta =>
+                (fun _ : Unit => fun _ : Bool => false) code.1)) ∧
       ¬finiteSelectionSufficient
-        {definition : Concept Bool Bool | definition = fun _ => false}
+        (fun _ : Unit => fun _ : Bool => false)
         (fun _ : Bool => ()) (id : Concept Bool Bool) := by
   have residual :
       (blindResidual
-        {definition : Concept Bool Bool | definition = fun _ => false}
+        (fun _ : Unit => fun _ : Bool => false)
         (fun _ : Bool => ()) (id : Concept Bool Bool)).Nonempty := by
     refine ⟨(false, true), ⟨rfl, Bool.false_ne_true⟩, ?_⟩
     simp only [jointKernel, conceptKernel, Set.mem_iInter, Set.mem_setOf_eq]
-    rintro ⟨definition, definitionInPackage⟩
-    subst definition
-    rfl
-  exact ⟨residual,
-    ((blind_kernel_obstruction
-      {definition : Concept Bool Bool | definition = fun _ => false}
-      (fun _ : Bool => ()) (id : Concept Bool Bool)).2 residual).2.2⟩
+    intro gamma
+    cases gamma
+    trivial
+  letI : Nonempty Bool := ⟨false⟩
+  exact ⟨residual, (blind_kernel_obstruction
+    (fun _ : Unit => fun _ : Bool => false)
+    (fun _ : Bool => ()) (id : Concept Bool Bool)).2 residual⟩
 
 /-- Clause 5 finitely closes a nonempty baseline defect with the identity
 definition from a singleton package. -/
 example :
     (defectRelation (fun _ : Bool => ())
       (id : Concept Bool Bool)).Nonempty ∧
-    blindResidual
-        {definition : Concept Bool Bool |
-          definition = (id : Concept Bool Bool)}
+    blindResidual (fun _ : Unit => (id : Concept Bool Bool))
         (fun _ : Bool => ()) (id : Concept Bool Bool) = ∅ ∧
     ∃ (n : Nat)
-        (definitions : Fin n →
-          {definition : Concept Bool Bool |
-            definition = (id : Concept Bool Bool)}),
+        (codes : Fin n → Unit),
       defectRelation
         (languageExtension (fun _ : Bool => ())
-          (fun i => (definitions i).1))
+          (fun i => (fun _ : Unit => (id : Concept Bool Bool)) (codes i)))
         (id : Concept Bool Bool) = ∅ := by
   have baselineDefect :
       (defectRelation (fun _ : Bool => ())
         (id : Concept Bool Bool)).Nonempty :=
     ⟨(false, true), rfl, Bool.false_ne_true⟩
   have noBlindPair :
-      blindResidual
-        {definition : Concept Bool Bool |
-          definition = (id : Concept Bool Bool)}
+      blindResidual (fun _ : Unit => (id : Concept Bool Bool))
         (fun _ : Bool => ()) (id : Concept Bool Bool) = ∅ := by
     rw [Set.eq_empty_iff_forall_notMem]
     intro pair pairInBlind
     rcases pairInBlind with ⟨baseline, pairInKernel⟩
     have allDefinitionsEqual :
-        ∀ definition :
-            {definition : Concept Bool Bool |
-              definition = (id : Concept Bool Bool)},
-          definition.1 pair.1 = definition.1 pair.2 := by
+        ∀ gamma : Unit,
+          (id : Concept Bool Bool) pair.1 = id pair.2 := by
       simpa only [jointKernel, conceptKernel, Set.mem_iInter,
         Set.mem_setOf_eq] using pairInKernel
-    have identityEqual := allDefinitionsEqual
-      ⟨id, rfl⟩
+    have identityEqual := allDefinitionsEqual ()
     exact baseline.2 identityEqual
   refine ⟨baselineDefect, noBlindPair, 1,
-    fun _ => ⟨id, rfl⟩, ?_⟩
+    fun _ => (), ?_⟩
   ext pair
   constructor
   · rintro ⟨sameExtension, differentTarget⟩
@@ -351,52 +388,20 @@ example :
       simpa [languageExtension, conceptJoin, jointReadout] using sameIdentity)
   · exact False.elim
 
-/-- Clause 6 is strict for two different definitions whose cuts both cover the
-entire two-point residual. -/
+/-- Clause 6 is strict for two cuts that both cover a positive-weight residual. -/
 example :
+    let weight : Bool → ENNReal := fun _ => 1
     let residual : Set Bool := Set.univ
     let cut : Bool → Set Bool := fun _ => Set.univ
-    let captured := fun S : Finset Bool =>
+    let captured := fun S : Set Bool =>
       residual ∩ ⋃ definition ∈ S, cut definition
-    Measure.count (captured ({false} ∪ {true})) +
-        Measure.count (captured ({false} ∩ {true})) <
-      Measure.count (captured {false}) +
-        Measure.count (captured {true}) := by
-  dsimp only
-  have capturedUnion :
-      Set.univ ∩
-          ⋃ definition ∈ (({false} : Finset Bool) ∪ {true}), Set.univ =
-        (Set.univ : Set Bool) := by
-    ext edge
-    simp
-  have capturedIntersection :
-      Set.univ ∩
-          ⋃ definition ∈ (({false} : Finset Bool) ∩ {true}), Set.univ =
-        (∅ : Set Bool) := by
-    ext edge
-    simp
-  have capturedFalse :
-      Set.univ ∩ ⋃ definition ∈ ({false} : Finset Bool), Set.univ =
-        (Set.univ : Set Bool) := by
-    ext edge
-    simp
-  have capturedTrue :
-      Set.univ ∩ ⋃ definition ∈ ({true} : Finset Bool), Set.univ =
-        (Set.univ : Set Bool) := by
-    ext edge
-    simp
-  rw [capturedUnion, capturedIntersection, capturedFalse, capturedTrue]
-  have boolUniv :
-      (Set.univ : Set Bool) = (↑({false, true} : Finset Bool) : Set Bool) := by
-    ext edge
-    cases edge <;> simp
-  rw [boolUniv]
-  have countBool :
-      Measure.count (↑({false, true} : Finset Bool) : Set Bool) = 2 := by
-    rw [Measure.count_apply_finset]
-    norm_num
-  rw [countBool]
-  norm_num
+    let mass := fun edges : Set Bool =>
+      ∑' edge, edges.indicator weight edge
+    mass (captured ({false} ∪ {true})) +
+      mass (captured ({false} ∩ {true})) <
+      mass (captured {false}) + mass (captured {true}) := by
+  classical
+  norm_num [tsum_fintype, Set.indicator, Set.mem_inter_iff, Set.mem_iUnion]
 
 /-- Clause 7 has a nonzero one-step defect for coordinate preparation followed
 by a coordinate swap. -/
@@ -454,6 +459,214 @@ example :
   dsimp
   refine ⟨LipschitzWith.id, ?_, ?_, ?_⟩ <;>
     norm_num [Real.dist_eq]
+
+/- The following nine declarations are elaborating falsification witnesses, one
+for each conjunct.  Each negates a nearby statement on values that remain in
+the law's intended domain; none relies on an ill-typed term or an out-of-package
+definition. -/
+
+/-- Replacing the residual intersection in clause 1 by a union is false. -/
+theorem false_neighbor_clause1 :
+    ¬defectRelation
+          (conceptJoin (id : Concept Bool Bool) (fun _ : Bool => ()))
+          (id : Concept Bool Bool) =
+        defectRelation (id : Concept Bool Bool) (id : Concept Bool Bool) ∪
+          {pair : Bool × Bool |
+            Setoid.ker (fun _ : Bool => ()) pair.1 pair.2} := by
+  intro falseEquality
+  have pairInUnion :
+      (false, true) ∈
+        defectRelation (id : Concept Bool Bool) (id : Concept Bool Bool) ∪
+          {pair : Bool × Bool |
+            Setoid.ker (fun _ : Bool => ()) pair.1 pair.2} := by
+    exact Or.inr rfl
+  rw [← falseEquality] at pairInUnion
+  exact Bool.false_ne_true (congrArg Prod.fst pairInUnion.1)
+
+/-- Reversing the factorization direction in clause 2 is false. -/
+theorem false_neighbor_clause2 :
+    ¬(defectRelation (fun _ : Bool => ()) (id : Concept Bool Bool) = ∅ ↔
+      Function.FactorsThrough (fun _ : Bool => ()) (id : Concept Bool Bool)) := by
+  intro falseEquivalence
+  have reverseFactorization :
+      Function.FactorsThrough (fun _ : Bool => ())
+        (id : Concept Bool Bool) := by
+    intro left right sameTarget
+    rfl
+  have emptyDefect := falseEquivalence.mpr reverseFactorization
+  have pairInDefect :
+      (false, true) ∈
+        defectRelation (fun _ : Bool => ()) (id : Concept Bool Bool) :=
+    ⟨rfl, Bool.false_ne_true⟩
+  rw [emptyDefect] at pairInDefect
+  exact pairInDefect
+
+/-- Dropping the refinement premise from clause 3 is false. -/
+theorem false_neighbor_clause3 :
+    ¬defectRelation
+          (conceptJoin (fun _ : Bool => ()) (id : Concept Bool Bool))
+          (id : Concept Bool Bool) =
+        defectRelation (fun _ : Bool => ()) (id : Concept Bool Bool) := by
+  intro falseEquality
+  have pairInBaseline :
+      (false, true) ∈
+        defectRelation (fun _ : Bool => ()) (id : Concept Bool Bool) :=
+    ⟨rfl, Bool.false_ne_true⟩
+  rw [← falseEquality] at pairInBaseline
+  exact pairInBaseline.2 (congrArg Prod.snd pairInBaseline.1)
+
+/-- Replacing clause 4's nonempty blind residual by an empty one is false. -/
+theorem false_neighbor_clause4 :
+    ¬(blindResidual (fun _ : Unit => (id : Concept Bool Bool))
+          (fun _ : Bool => ()) (id : Concept Bool Bool) = ∅ →
+        ¬finiteSelectionSufficient
+          (fun _ : Unit => (id : Concept Bool Bool))
+          (fun _ : Bool => ()) (id : Concept Bool Bool)) := by
+  intro falseImplication
+  have emptyBlindResidual :
+      blindResidual (fun _ : Unit => (id : Concept Bool Bool))
+          (fun _ : Bool => ()) (id : Concept Bool Bool) = ∅ := by
+    rw [Set.eq_empty_iff_forall_notMem]
+    rintro pair ⟨baselineDefect, pairInKernel⟩
+    have identityEqual :
+        (id : Concept Bool Bool) pair.1 = id pair.2 := by
+      have allDefinitionsEqual :
+          ∀ gamma : Unit,
+            (id : Concept Bool Bool) pair.1 = id pair.2 := by
+        simpa only [jointKernel, conceptKernel, Set.mem_iInter,
+          Set.mem_setOf_eq] using pairInKernel
+      exact allDefinitionsEqual ()
+    exact baselineDefect.2 identityEqual
+  have finiteSelection :
+      finiteSelectionSufficient
+        (fun _ : Unit => (id : Concept Bool Bool))
+        (fun _ : Bool => ()) (id : Concept Bool Bool) := by
+    refine ⟨1, fun _ => (), fun readout => readout.2 0, ?_⟩
+    funext state
+    rfl
+  exact falseImplication emptyBlindResidual finiteSelection
+
+private def natPointDefinition (code : Nat) : Concept Nat Bool :=
+  fun state => decide (state = code)
+
+/-- Removing the finite-state premise from clause 5 is false: all singleton
+tests separate `Nat`, while every finite selection misses two later states. -/
+theorem false_neighbor_clause5 :
+    ¬(blindResidual natPointDefinition (fun _ : Nat => ())
+          (id : Concept Nat Nat) = ∅ →
+        ∃ (n : Nat) (codes : Fin n → Nat),
+          defectRelation
+            (languageExtension (fun _ : Nat => ())
+              (fun i => natPointDefinition (codes i)))
+            (id : Concept Nat Nat) = ∅) := by
+  intro falseImplication
+  have emptyBlindResidual :
+      blindResidual natPointDefinition (fun _ : Nat => ())
+          (id : Concept Nat Nat) = ∅ := by
+    rw [Set.eq_empty_iff_forall_notMem]
+    rintro pair ⟨baselineDefect, pairInKernel⟩
+    have allDefinitionsEqual :
+        ∀ code : Nat,
+          natPointDefinition code pair.1 = natPointDefinition code pair.2 := by
+      simpa only [jointKernel, conceptKernel, Set.mem_iInter,
+        Set.mem_setOf_eq] using pairInKernel
+    have sameState : pair.2 = pair.1 := by
+      by_contra differentState
+      have pointEquality := allDefinitionsEqual pair.1
+      simp [natPointDefinition, differentState] at pointEquality
+    exact baselineDefect.2 sameState.symm
+  rcases falseImplication emptyBlindResidual with
+    ⟨n, codes, emptyFiniteDefect⟩
+  let bound : Nat := ∑ i, codes i
+  let left := bound + 1
+  let right := bound + 2
+  have code_le_bound (i : Fin n) : codes i ≤ bound := by
+    dsimp only [bound]
+    exact Finset.single_le_sum
+      (fun j _ => Nat.zero_le (codes j)) (Finset.mem_univ i)
+  have left_ne_code (i : Fin n) : left ≠ codes i := by
+    have bounded := code_le_bound i
+    dsimp only [left] at *
+    omega
+  have right_ne_code (i : Fin n) : right ≠ codes i := by
+    have bounded := code_le_bound i
+    dsimp only [right] at *
+    omega
+  have finiteDefect :
+      (left, right) ∈
+        defectRelation
+          (languageExtension (fun _ : Nat => ())
+            (fun i => natPointDefinition (codes i)))
+          (id : Concept Nat Nat) := by
+    constructor
+    · change
+        ((), fun i => natPointDefinition (codes i) left) =
+          ((), fun i => natPointDefinition (codes i) right)
+      apply Prod.ext
+      · rfl
+      · funext i
+        simp [natPointDefinition, left_ne_code i, right_ne_code i]
+    · change left ≠ right
+      dsimp only [left, right]
+      omega
+  rw [emptyFiniteDefect] at finiteDefect
+  exact finiteDefect
+
+/-- Strengthening clause 6's submodular inequality to modular equality is
+false when two different definitions capture the same positive-weight edge. -/
+theorem false_neighbor_clause6 :
+    let weight : Bool → ENNReal := fun _ => 1
+    let residual : Set Bool := Set.univ
+    let cut : Bool → Set Bool := fun _ => Set.univ
+    let captured := fun S : Set Bool =>
+      residual ∩ ⋃ definition ∈ S, cut definition
+    let mass := fun edges : Set Bool =>
+      ∑' edge, edges.indicator weight edge
+    ¬mass (captured ({false} ∪ {true})) +
+        mass (captured ({false} ∩ {true})) =
+      mass (captured {false}) + mass (captured {true}) := by
+  classical
+  norm_num [tsum_fintype, Set.indicator, Set.mem_inter_iff, Set.mem_iUnion]
+
+/-- Strengthening clause 7's identity to say the displayed defect vanishes is
+false for coordinate preparation followed by a swap. -/
+theorem false_neighbor_clause7 :
+    let projection : Real × Real → Real := Prod.fst
+    let update : Real × Real → Real × Real := fun pair => (pair.2, pair.1)
+    let prepare : Real → Real × Real := fun value => (value, 0)
+    ¬dist (projection (update (0, 1)))
+        ((projection ∘ update ∘ prepare) (projection (0, 1))) = 0 := by
+  norm_num [Real.dist_eq]
+
+/-- Dropping clause 8's semigroup law is false, here for an `Int`-indexed
+evolution whose time-two map is deliberately inconsistent with two time-one
+steps. -/
+theorem false_neighbor_clause8 :
+    let projection : Real → Real := id
+    let evolution : Int → Real → Real :=
+      fun time state => if time = 2 then state + 1 else state
+    let prepare : Real → Real := id
+    ¬dist (projection (evolution ((1 : Int) + 1) (prepare 0)))
+          (projection (evolution 1
+            (prepare (projection (evolution 1 (prepare 0)))))) =
+        dist (projection (evolution 1 (evolution 1 (prepare 0))))
+          (projection (evolution 1
+            ((prepare ∘ projection) (evolution 1 (prepare 0))))) := by
+  norm_num [Real.dist_eq]
+
+/-- Deleting the transported second-stage error from clause 9's conclusion is
+false even for the identity Lipschitz map. -/
+theorem false_neighbor_clause9 :
+    ¬(LipschitzWith (1 : NNReal) (id : Real → Real) →
+      dist ((id : Real → Real) 0) 1 ≤ 1 →
+      dist ((id : Real → Real) 1) ((fun _ : Real => 2) 0) ≤ 1 →
+      dist ((id : Real → Real) ((id : Real → Real) 0))
+          ((fun _ : Real => 2) 0) ≤
+        (1 : NNReal) * (1 : Real)) := by
+  intro falseBound
+  have impossible := falseBound LipschitzWith.id
+    (by norm_num [Real.dist_eq]) (by norm_num [Real.dist_eq])
+  norm_num [Real.dist_eq] at impossible
 
 #print axioms directly_provable_laws
 

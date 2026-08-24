@@ -45,7 +45,7 @@ def blindKernelReductionMeasure
     {X C B Target D : Type*} (nu : Set (X × X) → ℝ)
     (Gamma : Set (Concept X B)) (q : Concept X C)
     (target : Concept X Target) (d : Concept X D) : ℝ :=
-  nu (blindResidual Gamma q target ∩
+  nu (blindResidual (fun definition : Gamma => definition.1) q target ∩
     ({pair : X × X | Setoid.ker d pair.1 pair.2} : Set (X × X))ᶜ)
 
 /-- A nonnegative set weight that vanishes on the empty set gives the displayed
@@ -59,17 +59,17 @@ theorem blind_kernel_reduction_measure
     (nu_nonnegative : ∀ set, 0 ≤ nu set)
     (nu_empty : nu ∅ = 0) :
     blindKernelReductionMeasure nu Gamma q target d =
-        nu (blindResidual Gamma q target ∩
+        nu (blindResidual (fun definition : Gamma => definition.1) q target ∩
           ({pair : X × X | Setoid.ker d pair.1 pair.2} : Set (X × X))ᶜ) ∧
       0 ≤ blindKernelReductionMeasure nu Gamma q target d ∧
       (0 < blindKernelReductionMeasure nu Gamma q target d →
         ∃ pair : X × X,
-          pair ∈ blindResidual Gamma q target ∧
+          pair ∈ blindResidual (fun definition : Gamma => definition.1) q target ∧
             d pair.1 ≠ d pair.2) := by
   refine ⟨rfl, nu_nonnegative _, ?_⟩
   intro positive_reduction
   have reduction_nonempty :
-      (blindResidual Gamma q target ∩
+      (blindResidual (fun definition : Gamma => definition.1) q target ∩
         ({pair : X × X | Setoid.ker d pair.1 pair.2} : Set (X × X))ᶜ).Nonempty := by
     by_contra not_nonempty
     rw [Set.not_nonempty_iff_eq_empty] at not_nonempty
@@ -92,7 +92,8 @@ example :
         (∅ : Set (Concept Bool Unit)) (fun _ : Bool => ())
         (id : Concept Bool Bool) (id : Concept Bool Bool) ∧
       ∃ pair : Bool × Bool,
-        pair ∈ blindResidual (∅ : Set (Concept Bool Unit))
+        pair ∈ blindResidual
+          (fun definition : ↥(∅ : Set (Concept Bool Unit)) => definition.1)
           (fun _ : Bool => ()) (id : Concept Bool Bool) ∧
         (id : Concept Bool Bool) pair.1 ≠ id pair.2 := by
   have nu_nonnegative :
@@ -120,14 +121,16 @@ example :
 /-- The same blind residual is nonempty for a constant new definition, but no
 residual pair is separated; consequently its finite counting weight is zero. -/
 example :
-    (blindResidual (∅ : Set (Concept Bool Unit))
+    (blindResidual
+      (fun definition : ↥(∅ : Set (Concept Bool Unit)) => definition.1)
       (fun _ : Bool => ()) (id : Concept Bool Bool)).Nonempty ∧
       blindKernelReductionMeasure
         (fun set : Set (Bool × Bool) => (set.ncard : ℝ))
         (∅ : Set (Concept Bool Unit)) (fun _ : Bool => ())
         (id : Concept Bool Bool) (fun _ : Bool => false) = 0 ∧
       ¬∃ pair : Bool × Bool,
-        pair ∈ blindResidual (∅ : Set (Concept Bool Unit))
+        pair ∈ blindResidual
+          (fun definition : ↥(∅ : Set (Concept Bool Unit)) => definition.1)
           (fun _ : Bool => ()) (id : Concept Bool Bool) ∧
         (fun _ : Bool => false) pair.1 ≠ (fun _ : Bool => false) pair.2 := by
   have nu_nonnegative :
@@ -137,13 +140,15 @@ example :
   have nu_empty : ((∅ : Set (Bool × Bool)).ncard : ℝ) = 0 := by
     simp
   have residual_nonempty :
-      (blindResidual (∅ : Set (Concept Bool Unit))
+      (blindResidual
+        (fun definition : ↥(∅ : Set (Concept Bool Unit)) => definition.1)
         (fun _ : Bool => ()) (id : Concept Bool Bool)).Nonempty := by
     refine ⟨(false, true), ?_⟩
     simp [blindResidual, defectRelation, jointKernel, conceptKernel]
   have no_separated_pair :
       ¬∃ pair : Bool × Bool,
-        pair ∈ blindResidual (∅ : Set (Concept Bool Unit))
+        pair ∈ blindResidual
+          (fun definition : ↥(∅ : Set (Concept Bool Unit)) => definition.1)
           (fun _ : Bool => ()) (id : Concept Bool Bool) ∧
         (fun _ : Bool => false) pair.1 ≠ (fun _ : Bool => false) pair.2 := by
     rintro ⟨pair, _, separated⟩
@@ -170,7 +175,8 @@ example :
       fun set => ((set ∩ {(false, false)}).ncard : ℝ)
     nu {(false, false)} = 1 ∧
       (∃ pair : Bool × Bool,
-        pair ∈ blindResidual (∅ : Set (Concept Bool Unit))
+        pair ∈ blindResidual
+          (fun definition : ↥(∅ : Set (Concept Bool Unit)) => definition.1)
           (fun _ : Bool => ()) (id : Concept Bool Bool) ∧
         (id : Concept Bool Bool) pair.1 ≠ id pair.2) ∧
       blindKernelReductionMeasure nu
@@ -180,7 +186,8 @@ example :
           (∅ : Set (Concept Bool Unit)) (fun _ : Bool => ())
           (id : Concept Bool Bool) (id : Concept Bool Bool) →
         ∃ pair : Bool × Bool,
-          pair ∈ blindResidual (∅ : Set (Concept Bool Unit))
+          pair ∈ blindResidual
+            (fun definition : ↥(∅ : Set (Concept Bool Unit)) => definition.1)
             (fun _ : Bool => ()) (id : Concept Bool Bool) ∧
           (id : Concept Bool Bool) pair.1 ≠ id pair.2) := by
   dsimp only
@@ -193,7 +200,8 @@ example :
     simp [nu]
   have separated :
       ∃ pair : Bool × Bool,
-        pair ∈ blindResidual (∅ : Set (Concept Bool Unit))
+        pair ∈ blindResidual
+          (fun definition : ↥(∅ : Set (Concept Bool Unit)) => definition.1)
           (fun _ : Bool => ()) (id : Concept Bool Bool) ∧
         (id : Concept Bool Bool) pair.1 ≠ id pair.2 := by
     refine ⟨(false, true), ?_, Bool.false_ne_true⟩
