@@ -167,6 +167,15 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
                 scribeEmissionVerifier,
                 forkPoint,
                 candidateLeanReport);
+            if (forkPointVerifiedScribeEmissions is not null
+                && !HaveIdenticalLeanReportInputs(
+                    current,
+                    forkPoint,
+                    frozenLedgerAdmission.LeanReportProducerPaths))
+            {
+                forkPointVerifiedScribeEmissions =
+                    forkPointVerifiedScribeEmissions.MarkReportDerivedEmissionsIncomparable();
+            }
             var evaluation = SnapshotAdmissionCore.Evaluate(
                 current,
                 baseline,
@@ -533,6 +542,34 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
         }
 
         return verifier.Verify(snapshot, report, changes);
+    }
+
+    private static bool HaveIdenticalLeanReportInputs(
+        RepositorySnapshot current,
+        RepositorySnapshot forkPoint,
+        IReadOnlySet<string> leanReportProducerPaths)
+    {
+        ArgumentNullException.ThrowIfNull(current);
+        ArgumentNullException.ThrowIfNull(forkPoint);
+        ArgumentNullException.ThrowIfNull(leanReportProducerPaths);
+        var paths = current.Files.Keys
+            .Concat(forkPoint.Files.Keys)
+            .Select(static path => path.Value)
+            .Where(path => LeanClosureValidator.IsManagedLean(path)
+                || FrozenLedgerDeltaPredicate.IsEnvironmentInput(path)
+                || leanReportProducerPaths.Contains(path))
+            .Distinct(StringComparer.Ordinal);
+        foreach (var path in paths)
+        {
+            if (!current.TryGetFile(path, out var currentFile)
+                || !forkPoint.TryGetFile(path, out var forkPointFile)
+                || !currentFile.RawBytes.AsSpan().SequenceEqual(forkPointFile.RawBytes.AsSpan()))
+            {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     public CommandResult RenderDag(IReadOnlyList<string> arguments) =>

@@ -384,7 +384,9 @@ internal static partial class DigestionStatusEvaluator
                 gaps,
                 findings);
             identities.AddRange(gaps
-                .Where(static gap => gap.Severity == DigestionGapSeverity.ReceiptIntegrityFailure)
+                .Where(gap => gap.Severity == DigestionGapSeverity.ReceiptIntegrityFailure
+                    && (gap.Code != "scribe-emission-mismatch"
+                        || verifiedEmissions?.ReportDerivedEmissionsComparable is not false))
                 .Select(gap => new DigestionReceiptIntegrityGapIdentity(
                     entry.AtomId,
                     gap.Code,
