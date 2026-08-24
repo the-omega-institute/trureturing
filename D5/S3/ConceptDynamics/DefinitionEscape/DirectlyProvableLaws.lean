@@ -6,7 +6,7 @@
    digest: Nine direct DECT laws share one theorem without duplicating canonical primitives. -/
 
 import D5.S3.ConceptDynamics.DefinitionEscape.BlindKernelObstruction
-import D5.S3.ConceptDynamics.DefinitionEscape.MeasureCapture
+import D5.S3.ConceptDynamics.DefinitionCapture.MeasureCapture
 import D5.S3.ConceptDynamics.DefinitionEscape.ResidualJoinLaw
 import D5.S0.Diagonal.Naturality.NaturalityDefectComposition
 import Mathlib.Data.Fintype.EquivFin
@@ -45,7 +45,10 @@ import Mathlib.Topology.MetricSpace.Lipschitz
      finite-union cardinality lemmas, `measure_union_add_inter`, and
      `LipschitzWith.dist_le_mul`; none packages this DECT conjunction.
    * Pinned-mathlib searches additionally found `Fintype.equivFin` and
-     `Function.iterate_add_apply`. These are reused rather than reproved. -/
+     `Function.iterate_add_apply`. These are reused rather than reproved.
+   * Clause 6 uses `CaptureWeight`, whose count, nontrivial point-weight, and
+     finite-measure constructors are compiled in `MeasureCapture`; it does not
+     specialize the source parameter to a measurable-space measure. -/
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
@@ -57,7 +60,7 @@ open D5.S3.ConceptDynamics.TargetRisk.RefinementRiskCostTradeoff
 open D5.S3.ConceptDynamics.Restoration.TargetRecoveryCriterion
 open D5.S3.ConceptDynamics.Faithfulness.JointFaithfulnessLeibnizCriterion
 open D5.S3.ConceptDynamics.DefinitionEscape.BlindKernelObstruction
-open D5.S3.ConceptDynamics.DefinitionEscape.MeasureCapture
+open D5.S3.ConceptDynamics.DefinitionCapture.MeasureCapture
 open D5.S3.ConceptDynamics.DefinitionEscape.ResidualJoinLaw
 open D5.S0.Diagonal.Naturality.NaturalityDefectComposition
 open MeasureTheory
@@ -185,9 +188,8 @@ theorem dependent_blind_kernel_obstruction
 /-- The nine claims classified by DECT as already direct or one-line: residual
 intersection, sufficiency-factorization, redundant zero gain, blind-kernel
 obstruction, finite compactness, submodular capture, prepared one-step defect,
-semigroup defect, and approximate cascade. Clause 6 realizes the source's
-weight, count, or measure parameter as an arbitrary Mathlib measure, with no
-measurability premise on the residual or cuts. -/
+semigroup defect, and approximate cascade. Clause 6 quantifies over the common
+capture-weight interface realized by weight, count, and measure. -/
 theorem directly_provable_laws :
     (forall {X C D Target : Type*} (q : Concept X C) (definition : Concept X D)
       (target : Concept X Target),
@@ -222,13 +224,13 @@ theorem directly_provable_laws :
           defectRelation
             (dependentLanguageExtension q
               (fun i => definitions (codes i))) target = ∅) ∧
-    (forall {Edge Definition : Type*} [MeasurableSpace Edge] (nu : Measure Edge)
+    (forall {Edge Definition : Type*} (nu : CaptureWeight Edge)
       (residual : Set Edge) (cut : Definition → Set Edge)
       (A B : Set Definition),
       let captured := fun S : Set Definition =>
         residual ∩ ⋃ definition ∈ S, cut definition
-      nu (captured (A ∪ B)) + nu (captured (A ∩ B)) ≤
-        nu (captured A) + nu (captured B)) ∧
+      nu.mass (captured (A ∪ B)) + nu.mass (captured (A ∩ B)) ≤
+        nu.mass (captured A) + nu.mass (captured B)) ∧
     (forall {X Z : Type*} [PseudoMetricSpace Z] (projection : X → Z)
       (update : X → X) (prepare : Z → X), Function.RightInverse prepare projection →
       forall x : X,
@@ -323,8 +325,8 @@ theorem directly_provable_laws :
       rw [enumerate.symm_apply_apply] at sameSelectedValues
       exact selectedSeparates sameSelectedValues
     · exact False.elim
-  · intro Edge Definition measurableSpace nu residual cut A B
-    exact measure_capture_submodular nu residual cut A B
+  · intro Edge Definition nu residual cut A B
+    exact capture_weight_submodular nu residual cut A B
   · intro X Z pseudoMetric projection update prepare rightInverse x
     rfl
   · intro X Z Time pseudoMetric addTime projection evolution prepare rightInverse
@@ -698,19 +700,18 @@ theorem false_neighbor_clause5 :
   exact finiteDefect
 
 /-- Strengthening clause 6's submodular inequality to modular equality is
-false when two different definitions capture the same positive-measure set. -/
+false when two definitions capture the same set of positive point weight. -/
 theorem false_neighbor_clause6 :
-    letI : MeasurableSpace Bool := ⊤
-    let nu : Measure Bool := Measure.count
+    let nu : CaptureWeight Bool := nontrivialPointCaptureWeight
     let residual : Set Bool := Set.univ
     let cut : Bool → Set Bool := fun _ => Set.univ
     let captured := fun S : Set Bool =>
       residual ∩ ⋃ definition ∈ S, cut definition
-    ¬nu (captured ({false} ∪ {true})) +
-        nu (captured ({false} ∩ {true})) =
-      nu (captured {false}) + nu (captured {true}) := by
+    ¬nu.mass (captured ({false} ∪ {true})) +
+        nu.mass (captured ({false} ∩ {true})) =
+      nu.mass (captured {false}) + nu.mass (captured {true}) := by
   classical
-  norm_num [Measure.count_apply_finite, Set.iUnion_const,
+  norm_num [nontrivialPointCaptureWeight, Set.iUnion_const,
     Set.mem_inter_iff, Set.mem_iUnion]
 
 /-- Strengthening clause 7's identity to say the displayed defect vanishes is

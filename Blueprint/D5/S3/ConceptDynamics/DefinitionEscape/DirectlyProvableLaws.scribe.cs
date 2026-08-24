@@ -48,12 +48,12 @@ internal sealed class DirectlyProvableLawsDocument : IScribeDocumentDefinition
                     Paragraph(Text(
                         "CAS section 1.2 lets nu be a weight, count, or measure, and section 4.4 "
                             + "asserts submodularity for the resulting capture function. The "
-                            + "sixth conjunct therefore quantifies over an arbitrary Mathlib "
-                            + "Measure on edges and arbitrary residual and cut sets. Its reusable "
-                            + "MeasureCapture proof replaces one set by a same-measure measurable "
-                            + "hull, applies measure_union_add_inter, and uses monotonicity for the "
-                            + "exact residual intersection. No measurability premise or open gap "
-                            + "remains. The seventh conjunct is the "
+                            + "sixth conjunct therefore quantifies over CaptureWeight, the "
+                            + "existing EscapeWeight plus the single union-and-lower-intersection "
+                            + "law used by the proof. Compiled constructors realize real-valued "
+                            + "Set.ncard, a nontrivial point weight, and ENNReal.toReal of a finite "
+                            + "measure, so no branch is selected by the packaged theorem. The "
+                            + "seventh conjunct is the "
                             + "displayed "
                             + "composition identity, the eighth applies the general additive-time "
                             + "semigroup law, and the ninth instantiates the repository theorem "
@@ -61,7 +61,8 @@ internal sealed class DirectlyProvableLawsDocument : IScribeDocumentDefinition
                     Paragraph(Text(
                         "Boolean examples witness a nonempty residual, redundant zero gain, a "
                             + "blind obstruction, and finite closure by one identity definition. "
-                            + "Counting measure gives a strict capture inequality. Coordinate "
+                            + "A positive point weight gives a strict capture inequality. "
+                            + "Coordinate "
                             + "swap on real pairs gives nonzero prepared and semigroup defects, "
                             + "and the real identity map attains the cascade bound. Nine named "
                             + "false-neighbor declarations compile concrete counterexamples to "
@@ -209,19 +210,17 @@ internal sealed class DirectlyProvableLawsDocument : IScribeDocumentDefinition
                 Call("iUnion", Seq(definition, Sp, InMacro, Sp, subset),
                     Call("apply", cut, definition))));
         Formula captureInequality = Seq(
-            Call("apply", nu,
+            Call("mass", nu,
                 Call("apply", captured, Call("union", a, b))), Sp, Plus, Sp,
-            Call("apply", nu,
+            Call("mass", nu,
                 Call("apply", captured, Call("intersection", a, b))), Sp,
             Leq, Sp,
-            Call("apply", nu, Call("apply", captured, a)), Sp, Plus, Sp,
-            Call("apply", nu, Call("apply", captured, b)));
+            Call("mass", nu, Call("apply", captured, a)), Sp, Plus, Sp,
+            Call("mass", nu, Call("apply", captured, b)));
         Formula clause6 = Seq(
             Forall, Sp, edgeType, Comma, Sp, definitionIndex, Colon, Sp,
             type, Comma, Esc,
-            OpenBracket, Call("MeasurableSpace", edgeType), CloseBracket,
-            Comma, Sp,
-            nu, Colon, Sp, Call("Measure", edgeType), Comma, Sp,
+            nu, Colon, Sp, Call("CaptureWeight", edgeType), Comma, Sp,
             residualSet, Colon, Sp, Call("Set", edgeType), Comma, Sp,
             cut, Colon, Sp, Arrow(definitionIndex, Call("Set", edgeType)), Comma, Sp,
             a, Comma, Sp, b, Colon, Sp, Call("Set", definitionIndex), Comma, Esc,
