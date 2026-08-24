@@ -5179,3 +5179,249 @@ DECT v1.0 回答定义如何切开目标残差；v1.1 回答科学如何成为�
 - 整体组合 suspected-novel、未做系统文献检索的主张边界。
 
 后续增订继续严格追加于本节之后。
+
+---
+
+# 第五十五部　裁决层的边界问题
+
+本部只登记开放问题，不给出证明、反例或新定理。以下对象均引用第 48—54 部的既有对象；除陈述 OP1—OP6 所需的有限投影外，不增加裁决层本体。
+
+## 55.1 最小共用定义
+
+固定第 \(n\) 轮承诺 \(K\)、有限裁决记录集 \(Z\)、有限角色账本 \(\mathcal L_{\mathrm{role}}\)，并以 \(\operatorname{ValidTrace}(\mathcal L_{\mathrm{role}},K)\) 为前件。这里不重定义第 54.3 部的同名结构，只取它在 \(Z\) 上的有限裁决切片：
+\[
+\boxed{
+\begin{aligned}
+&\operatorname{AdjudicationSnapshot}(K,Z;\mathcal L_{\mathrm{role}})
+:=\Bigl(
+Z\cap\mathcal F_{t_K},\
+Z\cap\mathcal F_{d_K},\
+\{z\in Z:z\leadsto K\},
+\\
+&\quad
+\{(e.\operatorname{evidence},e.n,e.\mathsf{role},
+\mathbf 1[e.\operatorname{Deps}\cap\operatorname{Dep}^*(K)\neq\varnothing]):
+e\in\mathcal L_{\mathrm{role},\preceq d_K},\
+e.\operatorname{evidence}\in Z,
+\\
+&\hspace{48mm}
+e.\mathsf{role}\in
+\{\mathsf{Generate},\mathsf{Tune},\mathsf{Select},\mathsf{Adjudicate}\}\}
+\Bigr).
+\end{aligned}
+}
+\]
+四分量依次为冻结点可见性、裁决点可见性、依赖污染、裁决前自适应角色前缀。事件号、轮次、时间和依赖闭包仍取自 \(K\) 与有效账本；\(\mathsf{Replicate}\) 不进入切片，因为本批四谓词均不以它为本征输入。
+
+若 \(S=(S_{\mathrm f},S_{\mathrm d},S_{\mathrm p},S_{\mathrm a})\)，分量遗忘算子只是普通投影：
+\[
+\boxed{
+\pi_{-i}(S):=(S_j)_{j\neq i},
+\qquad
+i\in\{\mathrm f,\mathrm d,\mathrm p,\mathrm a\}.
+}
+\]
+它不补默认值，也不重建被删信息。
+
+再固定第 53.4 部的有限可行集 \(F=\operatorname{Feas}_n\) 与外生预序 \(\preceq_G\)，令 \(a\sim_Gb\Longleftrightarrow a\preceq_Gb\wedge b\preceq_Ga\)。其线性延伸族为
+\[
+\boxed{
+\operatorname{LinExt}_{F}(\operatorname{OrientationSpec}_G)
+:=
+\{\preceq_\lambda:
+\preceq_\lambda\text{ 是 }F/{\sim_G}\text{ 上的线性序},\
+[a]\preceq_G[b]\Rightarrow[a]\preceq_\lambda[b]\}.
+}
+\]
+每个延伸沿用原规范的 \(G\)、来源、版本和范围，只补全商上的偏序，因而仍是外生规范，不由观察记录生成。
+
+## 55.2 开放问题 OP1—OP6
+
+### 55.2.1 开放问题 OP1：快照充分性
+
+取两条有限且满足 \(\operatorname{ValidTrace}\) 的裁决历史。固定同一 \(Z\)、同一评价器，并按第 54.3 部各谓词的原签名固定行动、基线、报告等非历史实参；若
+\[
+\operatorname{AdjudicationSnapshot}(K,Z;\mathcal L_{\mathrm{role}})
+=
+\operatorname{AdjudicationSnapshot}(K',Z;\mathcal L'_{\mathrm{role}}),
+\]
+是否必有
+\[
+\boxed{
+\operatorname{NonAnticipating},\
+\operatorname{AdmissibleJudge},\
+\operatorname{TargetLaundering},\
+\operatorname{ScientificGain}
+\quad\text{分别同判}?
+}
+\]
+真残差：第 48—54 部给出了四谓词及其消费者，却未回答这个四分量投影是否为共同充分统计量。
+
+结案判据：逐项证明四个同判式，或给出有限有效反例并把不足的快照陈述修订为可证版本。
+
+### 55.2.2 开放问题 OP2：逐分量必要性
+
+对每个 \(i\in\{\mathrm f,\mathrm d,\mathrm p,\mathrm a\}\)，是否都存在上述四谓词之一 \(\Phi_i\) 及两条有限有效历史 \((K_i^+,\mathcal L_i^+)\)、\((K_i^-,\mathcal L_i^-)\)，使同一 \(Z\)、评价器与其余实参固定，且
+\[
+\boxed{
+\pi_{-i}\operatorname{AdjudicationSnapshot}(K_i^+,Z;\mathcal L_i^+)
+=
+\pi_{-i}\operatorname{AdjudicationSnapshot}(K_i^-,Z;\mathcal L_i^-),
+\qquad
+\Phi_i(K_i^+,\mathcal L_i^+;Z)
+\Longleftrightarrow
+\neg\Phi_i(K_i^-,\mathcal L_i^-;Z)?
+}
+\]
+真残差：既有文本说明各分量怎样被若干谓词消费，却未证明它们在共同接口中逐项不可删除。
+
+结案判据：四个遗忘方向各交付一对有限机器反模型，或证明某分量可由其余分量导出并修订最小快照。
+
+### 55.2.3 开放问题 OP3：可判定两面
+
+若依赖闭包以有限图 \(G=(V,E)\) 显式给出、角色日志长度为 \(|L|\)、其余集合与字段均为有限显式数据、评价器成本为 \(C_{\mathrm{eval}}\)，四谓词是否均可在
+\[
+\boxed{
+O(|V|+|E|+|L|+C_{\mathrm{eval}})
+}
+\]
+时间内判定？反向地，若 \(z\leadsto K\) 被要求等于图灵完备程序的真实语义依赖，判定
+\[
+\boxed{
+\operatorname{NonAnticipating}(K,z)
+}
+\]
+是否可经 \(\mathsf{HALT}\) 归约证明不可判定？
+
+真残差：第 54.3 部只给出 Prop 级接口，未给出显式表示的查询复杂度，也未标定真实语义依赖替代显式闭包后的可判定边界。
+
+结案判据：同时交付线性上界的可执行判定器与正确性证明，以及方向无误的 \(\mathsf{HALT}\) 归约；任一侧失败则修订量词或输入模型。
+
+### 55.2.4 开放问题 OP4：外推证书五项合取的独立性
+
+把 \(\operatorname{ValidTransportCert}\) 的五个顶层前件记为：严格扩域、claim-bound 旧域收据、保留前件的条件运输、新域差上预测全定义、含失败与反驳的非真空见证。删去且只删去第 \(j\) 项后，是否总有通过弱化谓词的有限反例：
+\[
+\boxed{
+\forall j\in\{1,2,3,4,5\},\
+\exists M_j,\
+\bigwedge_{k\neq j}C_k(M_j)\wedge\neg C_j(M_j)?
+}
+\]
+真残差：第 51 部用五项堵住错域、错 claim、丢前件、无覆盖与真空不可失败，却未证明它们逐项逻辑独立。
+
+结案判据：五个删除方向各给出有限反例，或证明某项由其余四项蕴含并修订证书的最小合取。
+
+### 55.2.5 开放问题 OP5：Pareto 停机与外生序
+
+固定非空有限 \(F=\operatorname{Feas}_n\)、当前可行行动 \(a_{\mathrm{cur}}\) 及五维公共坐标诱导的 Pareto 预序，并在同向量等价类上取商。令
+\[
+a\preceq_P b
+\Longleftrightarrow
+b\succeq_{K_n}a,
+\]
+且令本题的 \(\operatorname{OrientationSpec}_G\) 在 \(F/{\sim_v}\) 上声明关系 \(\preceq_P\)；线性补全的选择仍外生。是否成立
+\[
+\boxed{
+a_{\mathrm{cur}}\text{ Pareto-maximal}
+\Longleftrightarrow
+\exists\preceq_\lambda\in\operatorname{LinExt}_{F}
+(\operatorname{OrientationSpec}_G),\
+\operatorname{OrientedStop}_{\preceq_\lambda}(K_n)?
+}
+\]
+是否进一步成立
+\[
+\boxed{
+\forall\preceq_\lambda\in\operatorname{LinExt}_{F}
+(\operatorname{OrientationSpec}_G),\
+\operatorname{OrientedStop}_{\preceq_\lambda}(K_n)
+\Longleftrightarrow
+a_{\mathrm{cur}}\text{ greatest}?
+}
+\]
+最后，是否不存在一个定义在全部非空有限可行偏序上的单值选择器 \(s\)，使
+\[
+\boxed{
+s(F)\in\operatorname{Max}(F),
+\qquad
+s(\sigma F)=\sigma s(F)
+}
+\]
+对每个保序重标号 \(\sigma\) 成立；定义域一旦包含二点反链，等变唯一选择是否已经不可能？
+
+真残差：第 52—53 部只区分 Pareto 前沿与外生定向停止，未回答 maximal、greatest、线性延伸量词与无标签唯一选择的精确关系。
+
+结案判据：证明或反驳两个等价式，并以保序自同构结案选择器问题；否则提交破坏相应量词的有限反模型。
+
+### 55.2.6 开放问题 OP6：前瞻改善不蕴含泛化
+
+是否存在有限证据空间 \(\Omega\)、冻结 \(K\)、已观察且非预见的 \(Z\)、被承诺行动 \(a\)、预登记基线 \(b\)，以及两个数据律 \(P,Q\)，使
+\[
+P(Z)>0,\qquad Q(Z)>0,\qquad
+\operatorname{ScientificGain}(a\mid b;K,Z)
+\]
+成立，而对下一记录 \(Z^+\) 的损失差
+\[
+\Delta^+(a,b)
+:=
+\operatorname{Loss}_{K}(a;Z^+)-\operatorname{Loss}_{K}(b;Z^+)
+\]
+有
+\[
+\boxed{
+\mathbb E_P[\Delta^+(a,b)\mid Z]<0
+<
+\mathbb E_Q[\Delta^+(a,b)\mid Z]
+}
+\]
+或 \(P,Q\) 互换？
+
+真残差：第 52.4 部拒绝从一次 \(\operatorname{ScientificGain}\) 自动推出长期稳定性，却未给出两个相容数据律下未来期望符号反转的可识别性边界。
+
+结案判据：给出逐项可枚举的有限见证并机器核算两条件期望，或证明现有定义排除这种见证并修订问题前件。
+
+可判定性与查询复杂度借用有限图算法、停机不可判定与语义性质归约的已知形状；线性延伸借用 Szpilrajn 型延伸定理；可识别性借用统计决策与相容数据律的已知形状。单项不主张首创；它们与 DECT 裁决、漂白、外推、停机及增益接口的组合标为 suspected-novel，未作系统文献检索。
+
+## 55.3 本批承诺
+
+按第 49 部 \(K_n\) 的字段，本批冻结为
+\[
+\boxed{
+\begin{aligned}
+\operatorname{target\_chain}
+&=\text{GoalArtifact 纯推理产出}\to\text{RDS}\to
+\text{v1.2 裁决层}\to\text{本批边界};
+\\
+\operatorname{scope}
+&=\text{有限/显式模型，排除统计显著性与解析估计};
+\\
+\operatorname{comparator}
+&=\text{每条由下游 prove/refute/statement-revise 结案且消化为 atom};
+\\
+\operatorname{baseline}
+&=\text{不做；只等下游关闭 35 个自然 atoms};
+\\
+\operatorname{falsifiable\_prediction}
+&=\text{至少四条不扩作用域存活，至少三条被 kernel 定理或机器反模型结案}.
+\end{aligned}
+}
+\]
+这不把任一 OP 的真、假、独立性、复杂度或可识别性预记为结论；下游证明、反例或陈述修订才构成结案记录。
+
+---
+
+# 追加账本增订
+## v1.3 — 2026-08-24
+
+追加存入：
+
+- \(K,Z\) 上冻结点可见性、裁决点可见性、依赖污染与裁决前自适应角色前缀的四分量有限切片；
+- 分量遗忘算子与外生定向预序的线性延伸族；
+- OP1 快照充分性与 OP2 逐分量必要性；
+- OP3 显式有限图的线性可判性与真实语义依赖的停机不可判定性；
+- OP4 外推证书五项合取的逐项独立性；
+- OP5 Pareto-maximal、greatest、线性延伸停机与等变唯一选择；
+- OP6 前瞻科学增益与未来泛化不可识别的有限双数据律；
+- 本批只提出问题，零新定理主张，整体组合标为 suspected-novel。
+
+后续增订继续严格追加于本节之后。
