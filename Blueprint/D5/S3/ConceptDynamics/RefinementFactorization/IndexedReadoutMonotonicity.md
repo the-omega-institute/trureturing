@@ -8,7 +8,7 @@ Enlarging a finite index set refines its dependent joint readout and shrinks its
 
 $$J, K \in \operatorname{Finset}\left(I\right), J \subseteq K \Rightarrow \operatorname{Refines}\left(q_{J}, q_{K}\right) \land \operatorname{ker}\left(q_{K}\right) \subseteq \operatorname{ker}\left(q_{J}\right).$$
 
-*Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Refinement/IndexedReadoutMonotonicity.indexed_readout_monotonicity` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/RefinementFactorization/IndexedReadoutMonotonicity.indexed_readout_monotonicity` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -22,6 +22,6 @@ Equality of the K-readouts can be evaluated at every coordinate coming from J. H
 
 ## References
 
-- Truth anchor: `D5/S3/ConceptDynamics/Refinement/IndexedReadoutMonotonicity.indexed_readout_monotonicity`
+- Truth anchor: `D5/S3/ConceptDynamics/RefinementFactorization/IndexedReadoutMonotonicity.indexed_readout_monotonicity`
 - Dependency: [D5/S3/ConceptDynamics/ConceptJoinUniversal](../ConceptJoinUniversal.md)
 - Dependency: [D5/S3/ConceptDynamics/Faithfulness/JointFaithfulnessLeibnizCriterion](../Faithfulness/JointFaithfulnessLeibnizCriterion.md)

@@ -1,6 +1,6 @@
-/- GID: D5/S3/ConceptDynamics/Refinement/IndexedReadoutMonotonicity
+/- GID: D5/S3/ConceptDynamics/RefinementFactorization/IndexedReadoutMonotonicity
    generality: G
-   mirror-B: D5/B/S3/ConceptDynamics/Refinement/IndexedReadoutMonotonicity
+   mirror-B: D5/B/S3/ConceptDynamics/RefinementFactorization/IndexedReadoutMonotonicity
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    digest: Larger finite index sets refine joint readouts and shrink equality kernels. -/
@@ -26,7 +26,7 @@ import Mathlib.Data.Setoid.Basic
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
-namespace D5.S3.ConceptDynamics.Refinement.IndexedReadoutMonotonicity
+namespace D5.S3.ConceptDynamics.RefinementFactorization.IndexedReadoutMonotonicity
 
 open D5.S3.ConceptDynamics.ConceptJoinUniversal
 open D5.S3.ConceptDynamics.Faithfulness.JointFaithfulnessLeibnizCriterion
@@ -56,4 +56,4 @@ theorem indexed_readout_monotonicity
 
 #print axioms indexed_readout_monotonicity
 
-end D5.S3.ConceptDynamics.Refinement.IndexedReadoutMonotonicity
+end D5.S3.ConceptDynamics.RefinementFactorization.IndexedReadoutMonotonicity

@@ -2,7 +2,7 @@ using static StrataLint.Scribe.DefinitionDsl;
 using static StrataLint.Scribe.FormulaDsl;
 using F = StrataLint.Scribe.FormulaDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.ConceptDynamics.Refinement;
+namespace StrataLint.Scribe.Blueprint.D5.S3.ConceptDynamics.RefinementFactorization;
 
 internal sealed class IndexedReadoutMonotonicityDocument : IScribeDocumentDefinition
 {
@@ -14,7 +14,7 @@ internal sealed class IndexedReadoutMonotonicityDocument : IScribeDocumentDefini
             Describe.Lean(
                 DescribeId.Create("larger-index-sets-refine-joint-readouts"),
                 DeclarationHandle.Create(
-                    "D5/S3/ConceptDynamics/Refinement/IndexedReadoutMonotonicity."
+                    "D5/S3/ConceptDynamics/RefinementFactorization/IndexedReadoutMonotonicity."
                         + "indexed_readout_monotonicity"),
                 H("Larger index sets refine joint readouts"),
                 StatementSource.FromAuthor(MonotonicityFormula()),
