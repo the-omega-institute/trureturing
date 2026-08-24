@@ -475,7 +475,8 @@ internal sealed record CoverInputs(
     string Gid,
     string EnvelopePath,
     string Ledger,
-    BackfillInventoryDocument Document);
+    BackfillInventoryDocument Document,
+    VerifiedScribeEmissions? ForkPointVerifiedEmissions = null);
 
 // Declarative fixture for the cover gate matrix. Defaults produce a clean happy
 // path (an open, CAS-backed residual atom whose target declaration is proven

@@ -4,7 +4,10 @@ namespace StrataLint.Engine;
 
 internal static class DigestionFormalizationPrecommitmentValidator
 {
-    private readonly record struct CoverageEdge(string AtomId, string Gid);
+    private readonly record struct CoverageEdge(
+        string AtomId,
+        string Gid,
+        string RawSha256);
 
     internal static ImmutableArray<string> ValidateNewEdges(
         BackfillInventoryDocument baselineDocument,
@@ -17,17 +20,25 @@ internal static class DigestionFormalizationPrecommitmentValidator
         ArgumentNullException.ThrowIfNull(baselineSnapshot);
         ArgumentNullException.ThrowIfNull(candidateReport);
 
-        var baselineEdges = baselineDocument.RequireDigestionEntries()
-            .SelectMany(static entry => entry.CoverageGids.Select(
-                gid => new CoverageEdge(entry.AtomId, gid)))
-            .ToHashSet();
+        var baselineEdges = new HashSet<CoverageEdge>();
+        foreach (var entry in baselineDocument.RequireDigestionEntries())
+        {
+            foreach (var gid in entry.CoverageGids.Distinct(StringComparer.Ordinal))
+            {
+                if (TryCoverageEdge(entry, gid, out var edge))
+                {
+                    baselineEdges.Add(edge);
+                }
+            }
+        }
+
         var findings = ImmutableArray.CreateBuilder<string>();
         foreach (var entry in candidateDocument.RequireDigestionEntries())
         {
             foreach (var gid in entry.CoverageGids.Distinct(StringComparer.Ordinal))
             {
-                var edge = new CoverageEdge(entry.AtomId, gid);
-                if (baselineEdges.Contains(edge))
+                if (TryCoverageEdge(entry, gid, out var edge)
+                    && baselineEdges.Contains(edge))
                 {
                     continue;
                 }
@@ -52,6 +63,27 @@ internal static class DigestionFormalizationPrecommitmentValidator
         }
 
         return findings.ToImmutable();
+    }
+
+    private static bool TryCoverageEdge(
+        DigestionLedgerEntry entry,
+        string gid,
+        out CoverageEdge edge)
+    {
+        var receipts = entry.Receipts.Coverage
+            .Where(receipt => string.Equals(receipt.Gid, gid, StringComparison.Ordinal))
+            .ToArray();
+        if (receipts.Length > 1)
+        {
+            edge = default;
+            return false;
+        }
+
+        var rawSha256 = receipts.Length == 1
+            ? receipts[0].SourceSha256
+            : entry.Fingerprints.RawSha256;
+        edge = new CoverageEdge(entry.AtomId, gid, rawSha256);
+        return true;
     }
 
     internal static void RequireBaseOwnedEdges(

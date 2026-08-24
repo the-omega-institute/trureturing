@@ -59,6 +59,13 @@ internal static partial class CoverAtomCommand
         var report = leanReportSource.Load(current);
         var lean = ValidateLean(current, report);
         var verified = scribeEmissionVerifier.Verify(current, report);
+        var forkPointVerified = scribeEmissionVerifier.Verify(baseline, report);
+        var forkPointReceiptIntegrityIdentities =
+            DigestionStatusEvaluator.EvaluateReceiptIntegrityIdentities(
+                baselineDocument,
+                baseline,
+                forkPointVerified,
+                changes: null);
         var documentGid = ScribeEmissionAttestation.DocumentGid(options.Gid);
         if (!verified.TryGet(documentGid, out var verifiedRecord)
             || !verified.ReferencesDeclaration(options.Gid))
@@ -112,8 +119,7 @@ internal static partial class CoverAtomCommand
         RequireAlignedScribeReceipt(EvaluationFor(finalEvaluation, options.AtomId), options.Gid);
         LedgerWriteReceiptIntegrityGate.RequireNoNewFailures(
             finalEvaluation,
-            baselineDocument,
-            baseline);
+            forkPointReceiptIntegrityIdentities);
 
         var ledgerUpdates = IngestCommand.LedgerUpdates(currentRaw, finalRaw);
         var changed = ledgerUpdates.Length > 0;

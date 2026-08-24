@@ -190,6 +190,88 @@ public sealed class Sl016WakeupTests
     }
 
     [Fact]
+    public void ExistingCoveragePairReboundToNewRawFingerprintRequiresNewPrecommitment()
+    {
+        const string atomPath =
+            "Meta/Digestion/backfill/delta-v0.1/partial-closed/delta-atom.yaml";
+        const string gid = "D5/S0/Carrier/BackfillTarget.protectedTargetFixture";
+        var (fixture, _, receiptProjection) = PreparedDeclarationPairFixture(gid);
+        foreach (var files in new[] { fixture.Files, fixture.Baseline, fixture.ForkPoint })
+        {
+            files[atomPath] = AddCoverageAndReceipts(files[atomPath], gid, receiptProjection);
+        }
+        AddFormalizationPrecommitment(fixture, "delta-atom", gid);
+        var reboundFingerprint = "sha256:" + new string('9', 64);
+        fixture.Files[atomPath] = fixture.Files[atomPath].Replace(
+            RuleFixture.FixtureCasReference,
+            reboundFingerprint,
+            StringComparison.Ordinal);
+        var context = fixture.Build(RawChangeSet.Create([atomPath]));
+
+        var findings = DigestionFormalizationPrecommitmentValidator.ValidateNewEdges(
+            BackfillInventoryLoader.LoadBaseline(context.Baseline),
+            BackfillInventoryLoader.Load(context.Current),
+            context.Baseline,
+            context.Lean.Report);
+
+        Assert.Contains(findings, finding =>
+            finding.Contains(gid, StringComparison.Ordinal)
+            && finding.Contains("formalization receipt fingerprint does not match atom", StringComparison.Ordinal));
+    }
+
+    [Fact]
+    public void ExistingCoveragePairReceiptRebindingCannotReuseEntryFingerprintExemption()
+    {
+        const string atomPath =
+            "Meta/Digestion/backfill/delta-v0.1/partial-closed/delta-atom.yaml";
+        const string gid = "D5/S0/Carrier/BackfillTarget.protectedTargetFixture";
+        var (fixture, _, receiptProjection) = PreparedDeclarationPairFixture(gid);
+        foreach (var files in new[] { fixture.Files, fixture.Baseline, fixture.ForkPoint })
+        {
+            files[atomPath] = AddCoverageAndReceipts(files[atomPath], gid, receiptProjection);
+        }
+
+        var reboundFingerprint = "sha256:" + new string('9', 64);
+        fixture.Files[atomPath] = fixture.Files[atomPath].Replace(
+            $"source_sha256: {RuleFixture.FixtureCasReference}",
+            $"source_sha256: {reboundFingerprint}",
+            StringComparison.Ordinal);
+        var context = fixture.Build(RawChangeSet.Create([atomPath]));
+
+        var findings = DigestionFormalizationPrecommitmentValidator.ValidateNewEdges(
+            BackfillInventoryLoader.LoadBaseline(context.Baseline),
+            BackfillInventoryLoader.Load(context.Current),
+            context.Baseline,
+            context.Lean.Report);
+
+        Assert.Contains(findings, finding =>
+            finding.Contains(gid, StringComparison.Ordinal)
+            && finding.Contains("base-owned formalization precommitment", StringComparison.Ordinal));
+    }
+
+    [Fact]
+    public void ExistingCoveragePairWithSameRawFingerprintKeepsItsExemption()
+    {
+        const string atomPath =
+            "Meta/Digestion/backfill/delta-v0.1/partial-closed/delta-atom.yaml";
+        const string gid = "D5/S0/Carrier/BackfillTarget.protectedTargetFixture";
+        var (fixture, _, receiptProjection) = PreparedDeclarationPairFixture(gid);
+        foreach (var files in new[] { fixture.Files, fixture.Baseline, fixture.ForkPoint })
+        {
+            files[atomPath] = AddCoverageAndReceipts(files[atomPath], gid, receiptProjection);
+        }
+        var context = fixture.Build(RawChangeSet.Create([atomPath]));
+
+        var findings = DigestionFormalizationPrecommitmentValidator.ValidateNewEdges(
+            BackfillInventoryLoader.LoadBaseline(context.Baseline),
+            BackfillInventoryLoader.Load(context.Current),
+            context.Baseline,
+            context.Lean.Report);
+
+        Assert.Empty(findings);
+    }
+
+    [Fact]
     public void ExistingComparableReceiptIntegrityGapProducesNoBlockDuringSl016FullScan()
     {
         var (context, evaluation) = EvaluateReceiptIntegrityGap(
@@ -221,10 +303,15 @@ public sealed class Sl016WakeupTests
     }
 
     [Fact]
-    public void BaselineComparableReceiptIntegrityCodeSetIsExactlyCoverageReceiptMismatch()
+    public void BaselineComparableReceiptIntegrityCodeSetIncludesEveryFatalReceiptMismatch()
     {
         Assert.Equal(
-            new[] { "coverage-receipt-mismatch" },
+            new[]
+            {
+                "coverage-receipt-mismatch",
+                "scribe-definition-mismatch",
+                "scribe-emission-mismatch",
+            },
             BackfillInventoryRule.BaselineComparableReceiptIntegrityCodes.ToArray());
     }
 
@@ -259,7 +346,7 @@ public sealed class Sl016WakeupTests
     [Theory]
     [InlineData("scribe-definition-mismatch")]
     [InlineData("scribe-emission-mismatch")]
-    public void NewScribeReceiptIntegrityGapIsObservedAtSl016Admission(string mismatchCode)
+    public void NewScribeReceiptIntegrityGapIsBlockingAtSl016Admission(string mismatchCode)
     {
         var (_, evaluation) = EvaluateReceiptIntegrityGap(
             mismatchCode,
@@ -268,13 +355,11 @@ public sealed class Sl016WakeupTests
         var diagnostic = Assert.Single(evaluation.Diagnostics, item => item.Message.Contains(
             mismatchCode,
             StringComparison.Ordinal));
-        Assert.Equal(AdmissionEffect.Observe, diagnostic.AdmissionEffect);
-        Assert.DoesNotContain(evaluation.Diagnostics, item =>
-            item.AdmissionEffect == AdmissionEffect.Block);
+        Assert.Equal(AdmissionEffect.Block, diagnostic.AdmissionEffect);
     }
 
     [Fact]
-    public void CandidateScribeVerificationKeepsNewGapObservedAtSl016Admission()
+    public void CandidateScribeVerificationCannotCreateForkPointGapIdentity()
     {
         var (_, evaluation) = EvaluateReceiptIntegrityGap(
             mismatchCode: null,
@@ -290,11 +375,8 @@ public sealed class Sl016WakeupTests
             var diagnostic = Assert.Single(evaluation.Diagnostics, item => item.Message.Contains(
                 mismatchCode,
                 StringComparison.Ordinal));
-            Assert.Equal(AdmissionEffect.Observe, diagnostic.AdmissionEffect);
+            Assert.Equal(AdmissionEffect.Block, diagnostic.AdmissionEffect);
         }
-
-        Assert.DoesNotContain(evaluation.Diagnostics, item =>
-            item.AdmissionEffect == AdmissionEffect.Block);
     }
 
     [Theory]
@@ -383,6 +465,15 @@ public sealed class Sl016WakeupTests
                 emissionPath,
                 candidateEmissionSha256),
         ]);
+        var forkPointVerifiedScribeEmissions = VerifiedScribeEmissions.Create(
+        [
+            new ScribeEmissionRecord(
+                coverageGid,
+                definitionPath,
+                baselineDefinitionSha256,
+                emissionPath,
+                baselineEmissionSha256),
+        ]);
         var changedPaths = gapExistsInBaseline
             ? new[] { "tools/StrataLint.Engine/Rules/Backfill/BackfillInventoryRule.cs" }
             : candidateScribeInputsChanged
@@ -399,7 +490,8 @@ public sealed class Sl016WakeupTests
             };
         var context = fixture.Build(
             RawChangeSet.Create(changedPaths),
-            verifiedScribeEmissions: verifiedScribeEmissions);
+            verifiedScribeEmissions: verifiedScribeEmissions,
+            forkPointVerifiedScribeEmissions: forkPointVerifiedScribeEmissions);
         return (
             context,
             RuleCatalog.Default.EvaluateSingle(RuleId.CreateKnown(16), context));

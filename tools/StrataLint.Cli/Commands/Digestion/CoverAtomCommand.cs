@@ -96,6 +96,13 @@ internal static partial class CoverAtomCommand
             var report = leanReportSource.Load(current);
             var lean = ValidateLean(current, report);
             var verifiedScribeEmissions = scribeEmissionVerifier.Verify(current, report);
+            var forkPointVerifiedScribeEmissions = scribeEmissionVerifier.Verify(baseline, report);
+            var forkPointReceiptIntegrityIdentities =
+                DigestionStatusEvaluator.EvaluateReceiptIntegrityIdentities(
+                baselineDocument,
+                baseline,
+                forkPointVerifiedScribeEmissions,
+                changes: null);
             var beforeEvaluation = DigestionStatusEvaluator.Evaluate(
                 DigestionEvaluationScope.FullScan,
                 document,
@@ -106,8 +113,7 @@ internal static partial class CoverAtomCommand
                 baselineSnapshot: baseline);
             LedgerWriteReceiptIntegrityGate.RequireNoNewFailures(
                 beforeEvaluation,
-                baselineDocument,
-                baseline);
+                forkPointReceiptIntegrityIdentities);
 
             var addedReceipts = gids
                 .Where(gid => !existingGids.Contains(gid.Value))
@@ -147,8 +153,7 @@ internal static partial class CoverAtomCommand
                 baselineSnapshot: baseline);
             LedgerWriteReceiptIntegrityGate.RequireNoNewFailures(
                 derived,
-                baselineDocument,
-                baseline);
+                forkPointReceiptIntegrityIdentities);
 
             var statusByAtomId = derived.Entries.ToDictionary(
                 static item => item.Entry.AtomId,
@@ -183,15 +188,15 @@ internal static partial class CoverAtomCommand
                 baselineSnapshot: baseline);
             LedgerWriteReceiptIntegrityGate.RequireNoNewFailures(
                 evaluation,
-                baselineDocument,
-                baseline);
+                forkPointReceiptIntegrityIdentities);
             var backfillObservations = DigestionBackfillValidation.RequireValidBackfill(
                 finalDocument,
                 finalSnapshot,
                 baseline,
                 LoadPolicy(finalSnapshot),
                 lean,
-                verifiedScribeEmissions);
+                verifiedScribeEmissions,
+                forkPointVerifiedScribeEmissions);
 
             var finalTarget = EvaluationFor(evaluation, options.AtomId);
             if (target.CoverageGids.Length == 0)

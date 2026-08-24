@@ -665,7 +665,9 @@ public sealed partial class ProductionEnvironmentTests
                 CoverWorld.Raw(currentFiles),
                 CoverWorld.Raw(inputs.Baseline)),
             new FakeLeanReportSource(inputs.Report),
-            new FakeScribeEmissionVerifier(inputs.VerifiedEmissions));
+            new FakeScribeEmissionVerifier(
+                inputs.VerifiedEmissions,
+                inputs.ForkPointVerifiedEmissions));
 
     private static void AssertProductionScribeVerifierMaterializesOnlyTheCapturedSnapshot()
     {

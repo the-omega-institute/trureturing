@@ -17,7 +17,8 @@ internal static class SnapshotAdmissionCore
         RawChangeSet changes,
         BootstrapOutcome bootstrap,
         VerifiedScribeEmissions? verifiedScribeEmissions,
-        RepositorySnapshot? forkPoint = null)
+        RepositorySnapshot? forkPoint = null,
+        VerifiedScribeEmissions? forkPointVerifiedScribeEmissions = null)
     {
         try
         {
@@ -64,7 +65,8 @@ internal static class SnapshotAdmissionCore
                     changes,
                     clear.Capability,
                     verifiedScribeEmissions,
-                    forkPoint),
+                    forkPoint,
+                    forkPointVerifiedScribeEmissions),
                 BootstrapOutcome.ProtectedSurfaceVerificationRequired protectedSurfaceVerification =>
                     AdmissionPipeline.EvaluateProtectedSurface(
                         current,
@@ -74,7 +76,8 @@ internal static class SnapshotAdmissionCore
                         changes,
                         protectedSurfaceVerification.ChangeSet,
                         verifiedScribeEmissions,
-                        forkPoint),
+                        forkPoint,
+                        forkPointVerifiedScribeEmissions),
                 _ => throw new InvalidOperationException("unknown bootstrap outcome"),
             };
             if (admission is not AdmissionOutcome.Admitted

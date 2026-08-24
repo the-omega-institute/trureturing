@@ -318,13 +318,19 @@ internal sealed partial class RuleFixture
 
     internal RuleEvaluationContext Build(
         ValidatedPolicy? suppliedPolicy = null,
-        VerifiedScribeEmissions? verifiedScribeEmissions = null) =>
-        Build(RawChangeSet.Create(Changes), suppliedPolicy, verifiedScribeEmissions);
+        VerifiedScribeEmissions? verifiedScribeEmissions = null,
+        VerifiedScribeEmissions? forkPointVerifiedScribeEmissions = null) =>
+        Build(
+            RawChangeSet.Create(Changes),
+            suppliedPolicy,
+            verifiedScribeEmissions,
+            forkPointVerifiedScribeEmissions);
 
     internal RuleEvaluationContext Build(
         RawChangeSet changes,
         ValidatedPolicy? suppliedPolicy = null,
-        VerifiedScribeEmissions? verifiedScribeEmissions = null)
+        VerifiedScribeEmissions? verifiedScribeEmissions = null,
+        VerifiedScribeEmissions? forkPointVerifiedScribeEmissions = null)
     {
         var current = Decode(Files);
         var baseline = Decode(Baseline);
@@ -356,7 +362,8 @@ internal sealed partial class RuleFixture
             changes,
             meta,
             verifiedScribeEmissions,
-            forkPoint);
+            forkPoint,
+            forkPointVerifiedScribeEmissions);
     }
 
     internal RuleEvaluationContext BuildForRuleCompatibility()

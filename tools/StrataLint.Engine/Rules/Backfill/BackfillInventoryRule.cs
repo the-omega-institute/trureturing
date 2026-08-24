@@ -10,18 +10,19 @@ internal sealed record BackfillInventoryValidationContext(
     AcceptedLeanClosure Lean,
     VerifiedScribeEmissions? VerifiedScribeEmissions,
     RawChangeSet? Changes = null,
-    Func<string, bool>? IsBaseFactAffected = null);
+    Func<string, bool>? IsBaseFactAffected = null,
+    VerifiedScribeEmissions? ForkPointVerifiedScribeEmissions = null);
 
 internal static class BackfillInventoryRule
 {
     private const string BackfillPath = BackfillInventoryLoader.RelativePath;
 
-    private readonly record struct ReceiptIntegrityGapIdentity(
-        string AtomId,
-        string Detail);
-
     internal static ImmutableArray<string> BaselineComparableReceiptIntegrityCodes { get; } =
-        ["coverage-receipt-mismatch"];
+    [
+        "coverage-receipt-mismatch",
+        "scribe-definition-mismatch",
+        "scribe-emission-mismatch",
+    ];
 
     private static readonly Regex SourceIdPattern = new(
         "^[a-z0-9]+(?:[.-][a-z0-9]+)*$",
@@ -95,7 +96,8 @@ internal static class BackfillInventoryRule
                 context.Lean,
                 context.VerifiedScribeEmissions,
                 changes,
-                changes is null ? null : context.IsBaseFactAffected),
+                changes is null ? null : context.IsBaseFactAffected,
+                context.ForkPointVerifiedScribeEmissions),
             document);
     }
 
@@ -397,56 +399,29 @@ internal static class BackfillInventoryRule
                 findings.Add(new RuleFinding(BackfillPath, finding));
             }
 
-            var receiptIntegrityGaps = evaluation.ReceiptIntegrityGaps.ToArray();
+            var receiptIntegrityIdentities = DigestionReceiptIntegrity.Identities(evaluation);
             // A rule implementation change forces FullScan, which republishes stored gaps.
-            // As with the directory-capacity band, baseline membership makes those findings
-            // observable while reserving admission failure for identities absent at the base.
-            var baselineComparableReceiptIntegrityGaps = receiptIntegrityGaps.Length == 0
-                ? new HashSet<ReceiptIntegrityGapIdentity>()
-                : BaselineComparableReceiptIntegrityGaps(baselineDocument, context.Baseline);
-            foreach (var (entry, gap) in receiptIntegrityGaps)
+            // Evaluate the old side from its own ledger, bytes, and Scribe capability.
+            // Candidate-only files and emissions are deliberately unavailable here.
+            var forkPointReceiptIntegrityIdentities =
+                DigestionStatusEvaluator.EvaluateReceiptIntegrityIdentities(
+                    baselineDocument,
+                    context.Baseline,
+                    context.ForkPointVerifiedScribeEmissions,
+                    context.Changes);
+            var blockingReceiptIntegrityIdentities =
+                DigestionReceiptIntegrity.NewFailureIdentities(
+                        forkPointReceiptIntegrityIdentities,
+                        evaluation)
+                    .ToHashSet();
+            foreach (var identity in receiptIntegrityIdentities)
             {
-                var identity = GapIdentity(entry, gap);
-                if (gap.Code == "scribe-definition-mismatch")
-                {
-                    // open(issue-2919/scribe-definition-mismatch-baseline-membership): admission
-                    // cannot replay the baseline Scribe verifier. Keep this gap visible without
-                    // making a FullScan self-block; CoverAtom/Ingest still reject it before writes.
-                    findings.Add(new RuleFinding(
-                        BackfillPath,
-                        $"{identity.AtomId}:{gap.Code}:{identity.Detail}",
-                        AdmissionEffect.Observe));
-                    continue;
-                }
-
-                if (gap.Code == "scribe-emission-mismatch")
-                {
-                    // open(issue-2919/scribe-emission-mismatch-baseline-membership): admission
-                    // cannot replay the baseline Scribe verifier. Keep this gap visible without
-                    // making a FullScan self-block; CoverAtom/Ingest still reject it before writes.
-                    findings.Add(new RuleFinding(
-                        BackfillPath,
-                        $"{identity.AtomId}:{gap.Code}:{identity.Detail}",
-                        AdmissionEffect.Observe));
-                    continue;
-                }
-
-                if (BaselineComparableReceiptIntegrityCodes.Contains(
-                        gap.Code,
-                        StringComparer.Ordinal)
-                    && baselineComparableReceiptIntegrityGaps.Contains(identity))
-                {
-                    findings.Add(new RuleFinding(
-                        BackfillPath,
-                        $"{identity.AtomId}:{gap.Code}:{identity.Detail}",
-                        AdmissionEffect.Observe));
-                    continue;
-                }
-
                 findings.Add(new RuleFinding(
                     BackfillPath,
-                    $"{identity.AtomId}:{gap.Code}:{identity.Detail}",
-                    AdmissionEffect.Block));
+                    DigestionReceiptIntegrity.Render(identity),
+                    blockingReceiptIntegrityIdentities.Contains(identity)
+                        ? AdmissionEffect.Block
+                        : AdmissionEffect.Observe));
             }
 
             // 观察项不阻断准入。理论卷入库后尚未消化是账本四态里的 `open`,
@@ -461,61 +436,6 @@ internal static class BackfillInventoryRule
             findings.Add(new RuleFinding(BackfillPath, exception.Message));
         }
     }
-
-    private static ReceiptIntegrityGapIdentity GapIdentity(
-        DigestionLedgerEntry entry,
-        DigestionGap gap) =>
-        new(entry.AtomId, gap.Detail);
-
-    private static HashSet<ReceiptIntegrityGapIdentity> BaselineComparableReceiptIntegrityGaps(
-        BackfillInventoryDocument document,
-        RepositorySnapshot snapshot)
-    {
-        // Only coverage integrity is independently derivable from each side's snapshot bytes.
-        // The two Scribe codes are intentionally excluded here: their admission behavior is
-        // handled explicitly above, with named open markers and Observe-only effects.
-        var gaps = new HashSet<ReceiptIntegrityGapIdentity>();
-        foreach (var entry in document.RequireDigestionEntries())
-        {
-            var coverageReceipts = FirstReceiptByGid(
-                entry.Receipts.Coverage,
-                static receipt => receipt.Gid);
-            foreach (var gid in entry.CoverageGids.Distinct(StringComparer.Ordinal))
-            {
-                if (coverageReceipts.TryGetValue(gid, out var coverage)
-                    && (coverage.SourceSha256 != entry.Fingerprints.RawSha256
-                        || !Gid.TryParse(gid, out var parsedGid)
-                        || !SnapshotFileMatches(snapshot, parsedGid.Path.Value, coverage.TargetSha256)))
-                {
-                    gaps.Add(new ReceiptIntegrityGapIdentity(
-                        entry.AtomId,
-                        gid));
-                }
-            }
-        }
-
-        return gaps;
-    }
-
-    private static Dictionary<string, T> FirstReceiptByGid<T>(
-        IEnumerable<T> receipts,
-        Func<T, string> gid)
-    {
-        var result = new Dictionary<string, T>(StringComparer.Ordinal);
-        foreach (var receipt in receipts)
-        {
-            result.TryAdd(gid(receipt), receipt);
-        }
-
-        return result;
-    }
-
-    private static bool SnapshotFileMatches(
-        RepositorySnapshot snapshot,
-        string path,
-        string expectedSha256) =>
-        snapshot.TryGetFile(path, out var file)
-        && DigestionFingerprint.Compute(file.RawBytes.AsSpan()).RawSha256 == expectedSha256;
 
     private static BackfillInventoryDocument LoadBaselineDocument(RepositorySnapshot baseline)
     {

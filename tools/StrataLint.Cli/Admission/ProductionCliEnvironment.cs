@@ -163,6 +163,10 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
                 current,
                 candidateLeanReport,
                 prepared.Changes);
+            var forkPointVerifiedScribeEmissions = VerifyScribeForAdmission(
+                scribeEmissionVerifier,
+                forkPoint,
+                candidateLeanReport);
             var evaluation = SnapshotAdmissionCore.Evaluate(
                 current,
                 baseline,
@@ -170,7 +174,8 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
                 prepared.Changes,
                 bootstrap,
                 verifiedScribeEmissions,
-                forkPoint);
+                forkPoint,
+                forkPointVerifiedScribeEmissions);
             if (!hasFrozenLedgerDelta)
             {
                 return evaluation.Outcome;

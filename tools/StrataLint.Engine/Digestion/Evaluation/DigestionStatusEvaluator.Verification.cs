@@ -351,6 +351,54 @@ internal static partial class DigestionStatusEvaluator
         return complete;
     }
 
+    internal static ImmutableArray<DigestionReceiptIntegrityGapIdentity>
+        EvaluateReceiptIntegrityIdentities(
+            BackfillInventoryDocument document,
+            RepositorySnapshot snapshot,
+            VerifiedScribeEmissions? verifiedEmissions,
+            RawChangeSet? changes)
+    {
+        ArgumentNullException.ThrowIfNull(document);
+        ArgumentNullException.ThrowIfNull(snapshot);
+        var identities = ImmutableArray.CreateBuilder<DigestionReceiptIntegrityGapIdentity>();
+        foreach (var entry in document.RequireDigestionEntries())
+        {
+            var gaps = new List<DigestionGap>();
+            var findings = ImmutableArray.CreateBuilder<string>();
+            var targets = new Dictionary<string, RepositoryFile>(StringComparer.Ordinal);
+            foreach (var gidText in entry.CoverageGids.Distinct(StringComparer.Ordinal))
+            {
+                if (Gid.TryParse(gidText, out var gid)
+                    && snapshot.TryGetFile(gid.Path.Value, out var target))
+                {
+                    targets.Add(gidText, target);
+                }
+            }
+
+            _ = VerifyCoverageReceipts(entry, targets, changes, gaps, findings);
+            _ = VerifyScribeReceipts(
+                entry,
+                snapshot,
+                verifiedEmissions,
+                changes,
+                gaps,
+                findings);
+            identities.AddRange(gaps
+                .Where(static gap => gap.Severity == DigestionGapSeverity.ReceiptIntegrityFailure)
+                .Select(gap => new DigestionReceiptIntegrityGapIdentity(
+                    entry.AtomId,
+                    gap.Code,
+                    gap.Detail)));
+        }
+
+        return identities
+            .Distinct()
+            .OrderBy(static identity => identity.AtomId, StringComparer.Ordinal)
+            .ThenBy(static identity => identity.Code, StringComparer.Ordinal)
+            .ThenBy(static identity => identity.Detail, StringComparer.Ordinal)
+            .ToImmutableArray();
+    }
+
     private static bool PathChanged(RawChangeSet? changes, string path) =>
         changes is null || changes.Paths.Any(changed => changed.Value == path);
 }

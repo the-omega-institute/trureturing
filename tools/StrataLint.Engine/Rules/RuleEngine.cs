@@ -195,7 +195,8 @@ internal sealed class RuleEvaluationContext
         AcceptedLeanClosure lean,
         RawChangeSet changes,
         MetaEvaluationProfile metaEvaluation,
-        VerifiedScribeEmissions? verifiedScribeEmissions)
+        VerifiedScribeEmissions? verifiedScribeEmissions,
+        VerifiedScribeEmissions? forkPointVerifiedScribeEmissions)
     {
         Current = current;
         Baseline = baseline;
@@ -206,6 +207,7 @@ internal sealed class RuleEvaluationContext
         RuleImplementationChanged = BaseFactImpact.RuleImplementationChanged(changes);
         MetaEvaluation = metaEvaluation;
         VerifiedScribeEmissions = verifiedScribeEmissions;
+        ForkPointVerifiedScribeEmissions = forkPointVerifiedScribeEmissions;
     }
 
     internal RepositorySnapshot Current { get; }
@@ -238,6 +240,8 @@ internal sealed class RuleEvaluationContext
 
     internal VerifiedScribeEmissions? VerifiedScribeEmissions { get; }
 
+    internal VerifiedScribeEmissions? ForkPointVerifiedScribeEmissions { get; }
+
     internal static RuleEvaluationContext Create(
         RepositorySnapshot current,
         RepositorySnapshot baseline,
@@ -246,7 +250,8 @@ internal sealed class RuleEvaluationContext
         RawChangeSet changes,
         MetaClear metaClear,
         VerifiedScribeEmissions? verifiedScribeEmissions = null,
-        RepositorySnapshot? forkPoint = null) =>
+        RepositorySnapshot? forkPoint = null,
+        VerifiedScribeEmissions? forkPointVerifiedScribeEmissions = null) =>
         Create(
             current,
             baseline,
@@ -255,7 +260,8 @@ internal sealed class RuleEvaluationContext
             changes,
             MetaEvaluationProfile.ForClear(metaClear),
             verifiedScribeEmissions,
-            forkPoint);
+            forkPoint,
+            forkPointVerifiedScribeEmissions);
 
     internal static RuleEvaluationContext Create(
         RepositorySnapshot current,
@@ -265,7 +271,8 @@ internal sealed class RuleEvaluationContext
         RawChangeSet changes,
         MetaEvaluationProfile metaEvaluation,
         VerifiedScribeEmissions? verifiedScribeEmissions = null,
-        RepositorySnapshot? forkPoint = null) =>
+        RepositorySnapshot? forkPoint = null,
+        VerifiedScribeEmissions? forkPointVerifiedScribeEmissions = null) =>
         new(
             current,
             baseline,
@@ -274,7 +281,8 @@ internal sealed class RuleEvaluationContext
             lean,
             changes,
             metaEvaluation,
-            verifiedScribeEmissions);
+            verifiedScribeEmissions,
+            forkPointVerifiedScribeEmissions);
 }
 
 internal sealed class RepositoryRule(

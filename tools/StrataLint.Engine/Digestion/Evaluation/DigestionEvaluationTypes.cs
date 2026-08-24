@@ -14,6 +14,41 @@ internal sealed record DigestionGap(
     string Detail,
     DigestionGapSeverity Severity);
 
+internal readonly record struct DigestionReceiptIntegrityGapIdentity(
+    string AtomId,
+    string Code,
+    string Detail);
+
+internal static class DigestionReceiptIntegrity
+{
+    internal static ImmutableArray<DigestionReceiptIntegrityGapIdentity> Identities(
+        DigestionLedgerEvaluation evaluation) =>
+        evaluation.ReceiptIntegrityGaps
+            .Select(static item => new DigestionReceiptIntegrityGapIdentity(
+                item.Entry.AtomId,
+                item.Gap.Code,
+                item.Gap.Detail))
+            .Distinct()
+            .OrderBy(static identity => identity.AtomId, StringComparer.Ordinal)
+            .ThenBy(static identity => identity.Code, StringComparer.Ordinal)
+            .ThenBy(static identity => identity.Detail, StringComparer.Ordinal)
+            .ToImmutableArray();
+
+    internal static ImmutableArray<DigestionReceiptIntegrityGapIdentity> NewFailureIdentities(
+        IEnumerable<DigestionReceiptIntegrityGapIdentity> forkPoint,
+        DigestionLedgerEvaluation candidate)
+    {
+        ArgumentNullException.ThrowIfNull(forkPoint);
+        var baseline = forkPoint.ToHashSet();
+        return Identities(candidate)
+            .Where(identity => !baseline.Contains(identity))
+            .ToImmutableArray();
+    }
+
+    internal static string Render(DigestionReceiptIntegrityGapIdentity identity) =>
+        $"{identity.AtomId}:{identity.Code}:{identity.Detail}";
+}
+
 internal sealed record DigestionEntryEvaluation(
     DigestionLedgerEntry Entry,
     DigestionReceiptAlignment Alignment,
