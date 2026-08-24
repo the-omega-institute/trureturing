@@ -28,7 +28,8 @@ internal static class CoverageCommand
             var frozen = LoadFrozenPaths(snapshot);
             var ledger = CoverageLedgerIndex.FromDag(
                 ((DagBuildOutcome.Accepted)dag).Capability,
-                frozen);
+                frozen,
+                snapshot);
             var tower = LoadTower(snapshot);
             var validatedTower = TowerManifestValidator.Validate(tower, snapshot, RuleCatalog.Default);
             if (validatedTower is TowerValidationOutcome.Rejected invalidTower)
