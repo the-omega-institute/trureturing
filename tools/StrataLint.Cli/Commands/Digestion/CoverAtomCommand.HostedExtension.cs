@@ -12,19 +12,12 @@ internal static partial class CoverAtomCommand
         RepositorySnapshot snapshot,
         AcceptedLeanClosure lean)
     {
-        var dag = AcyclicTruthDag.Build(snapshot, lean) switch
-        {
-            DagBuildOutcome.Accepted accepted => accepted.Capability,
-            DagBuildOutcome.Rejected rejected => throw new InvalidOperationException(
-                "hosted cover truth DAG is cyclic: "
-                + string.Join(" -> ", rejected.Witness.Select(static path => path.Value))),
-        };
-        var nodes = dag.Nodes.ToDictionary(static node => node.RepoPath);
+        var states = LeanTruthStates.Resolve(snapshot, lean);
         foreach (var gidText in addedGids)
         {
             if (!Gid.TryParse(gidText, out var gid)
-                || !nodes.TryGetValue(gid.Path, out var node)
-                || node.State != TruthState.Closed)
+                || !states.TryGetValue(gid.Path, out var state)
+                || state != TruthState.Closed)
             {
                 throw new InvalidOperationException(
                     $"hosted cover GID {gidText} must belong to a Closed Lean module");

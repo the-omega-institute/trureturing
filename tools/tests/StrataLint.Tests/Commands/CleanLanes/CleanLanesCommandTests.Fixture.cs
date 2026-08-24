@@ -8,17 +8,34 @@ public sealed partial class CleanLanesCommandTests
 {
     private sealed partial class CleanLanesFixture
     {
-        private readonly TemporaryDirectory repository = new();
-        private readonly TemporaryDirectory worktrees = new();
-        private readonly TemporaryDirectory temp = new();
+        internal enum OwnedDirectory
+        {
+            Temporary,
+            Worktrees,
+            Repository,
+        }
+
+        private readonly TemporaryDirectory repository;
+        private readonly TemporaryDirectory worktrees;
+        private readonly TemporaryDirectory temp;
+        private Action disposeRepository;
+        private Action disposeWorktrees;
+        private Action disposeTemp;
         private readonly Dictionary<string, PullRequestProbeOutcome> pullRequests =
             new(StringComparer.Ordinal);
         private readonly Dictionary<string, LaneProcessProbeOutcome> laneProcesses =
             new(StringComparer.Ordinal);
         private DateTimeOffset now;
 
-        internal CleanLanesFixture()
+        internal CleanLanesFixture(TestScratchRoot? scratchRoot = null)
         {
+            var root = scratchRoot ?? TestScratchRoot.Current;
+            repository = new TemporaryDirectory(root);
+            worktrees = new TemporaryDirectory(root);
+            temp = new TemporaryDirectory(root);
+            disposeRepository = repository.Dispose;
+            disposeWorktrees = worktrees.Dispose;
+            disposeTemp = temp.Dispose;
             Git(repository.Path, "init", "--initial-branch=dev");
             Git(repository.Path, "config", "user.email", "stratalint@example.invalid");
             Git(repository.Path, "config", "user.name", "StrataLint Tests");
@@ -35,6 +52,46 @@ public sealed partial class CleanLanesCommandTests
             Git(repository.Path, "rev-parse", "--show-toplevel").Trim();
 
         internal string RepositoryWorkingDirectory => repository.Path;
+
+        internal string[] OwnedWorkingDirectories => [temp.Path, worktrees.Path, repository.Path];
+
+        internal string OwnedWorkingDirectory(OwnedDirectory directory) => directory switch
+        {
+            OwnedDirectory.Temporary => temp.Path,
+            OwnedDirectory.Worktrees => worktrees.Path,
+            OwnedDirectory.Repository => repository.Path,
+            _ => throw new ArgumentOutOfRangeException(nameof(directory), directory, null),
+        };
+
+        internal void SetOwnedDirectoryDisposer(OwnedDirectory directory, Action disposer)
+        {
+            ArgumentNullException.ThrowIfNull(disposer);
+            switch (directory)
+            {
+                case OwnedDirectory.Temporary:
+                    disposeTemp = disposer;
+                    break;
+                case OwnedDirectory.Worktrees:
+                    disposeWorktrees = disposer;
+                    break;
+                case OwnedDirectory.Repository:
+                    disposeRepository = disposer;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(directory), directory, null);
+            }
+        }
+
+        internal void RestoreOwnedDirectoryDisposer(OwnedDirectory directory) =>
+            SetOwnedDirectoryDisposer(
+                directory,
+                directory switch
+                {
+                    OwnedDirectory.Temporary => temp.Dispose,
+                    OwnedDirectory.Worktrees => worktrees.Dispose,
+                    OwnedDirectory.Repository => repository.Dispose,
+                    _ => throw new ArgumentOutOfRangeException(nameof(directory), directory, null),
+                });
 
         internal string Head(string path) => Git(path, "rev-parse", "HEAD").Trim();
 
