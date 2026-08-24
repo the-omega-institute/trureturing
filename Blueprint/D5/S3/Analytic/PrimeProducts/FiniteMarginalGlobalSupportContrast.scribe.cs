@@ -45,7 +45,7 @@ internal sealed class FiniteMarginalGlobalSupportContrastDocument
         Formula p = F.Id("p");
         Formula finiteSet = F.Id("S");
         Formula exponents = F.Id("e");
-        Formula primeSet = MathbbGroup("P");
+        Formula primeSet = Seq(Mathbb, Grp(F.Id("P")));
         Formula q = Seq(F.Id("q"), Underscore, Grp(p, Comma, s));
         Formula localLaw = Seq(GammaLower, Underscore, Grp(p, Comma, s));
         Formula globalLaw = Seq(Gamma, Underscore, Grp(s));
@@ -78,7 +78,4 @@ internal sealed class FiniteMarginalGlobalSupportContrastDocument
                 Call("Pr", globalLaw, F.Id("FiniteSupportProfiles")), Eq, D(0), Dot),
         ]));
     }
-
-    private static Formula MathbbGroup(string symbol) =>
-        Seq(Mathbb, Grp(F.Id(symbol)));
 }
