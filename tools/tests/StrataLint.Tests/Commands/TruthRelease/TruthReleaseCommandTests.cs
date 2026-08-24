@@ -190,8 +190,7 @@ public sealed class TruthReleaseCommandTests
         var report = LeanAxiomReport.Create(reports);
         var lean = Assert.IsType<LeanValidationOutcome.Accepted>(
             LeanClosureValidator.Validate(snapshotWithoutLedger, report)).Capability;
-        var dag = Assert.IsType<DagBuildOutcome.Accepted>(
-            AcyclicTruthDag.Build(snapshotWithoutLedger, lean)).Capability;
+        var dag = TruthDagProjectionAssembler.Build(snapshotWithoutLedger, lean);
         var temporary = new TemporaryDirectory();
         var gitRoot = Path.Combine(temporary.Path, "repository");
         Directory.CreateDirectory(gitRoot);

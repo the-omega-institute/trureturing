@@ -43,7 +43,7 @@ public sealed class DependencyDirectionTests
     public void FunctionalTestsReferenceOnlyCliAndEngine()
     {
         Assert.Equal(
-            ["StrataLint", "StrataLint.Engine"],
+            ["StrataLint", "StrataLint.Engine", "StrataLint.Scribe"],
             AssemblyReferencePolicy.ApplicationReferences(
                 typeof(StrataLint.Tests.AdmissionTests).Assembly));
     }

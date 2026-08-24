@@ -62,7 +62,7 @@ internal static class FrozenLedgerTestData
         var snapshot = Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(raw)).Snapshot;
         var closure = Assert.IsType<LeanValidationOutcome.Accepted>(
             LeanClosureValidator.Validate(snapshot, LeanAxiomReport.Create(reports))).Capability;
-        var dag = Assert.IsType<DagBuildOutcome.Accepted>(AcyclicTruthDag.Build(snapshot, closure)).Capability;
+        var dag = TruthDagProjectionAssembler.Build(snapshot, closure);
         var environment = new FrozenEnvironmentAttestation(
             originCommitOid,
             originTreeOid,
@@ -105,7 +105,7 @@ internal static class FrozenLedgerTestData
                 {
                     [path] = report,
                 }))).Capability;
-        var dag = Assert.IsType<DagBuildOutcome.Accepted>(AcyclicTruthDag.Build(snapshot, closure)).Capability;
+        var dag = TruthDagProjectionAssembler.Build(snapshot, closure);
         var environment = new FrozenEnvironmentAttestation(
             GitOid('a'),
             GitOid('b'),

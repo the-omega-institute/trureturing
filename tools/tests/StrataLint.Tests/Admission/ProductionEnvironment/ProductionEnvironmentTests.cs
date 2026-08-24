@@ -477,7 +477,7 @@ public sealed partial class ProductionEnvironmentTests
         });
     }
 
-    private static (RepositorySnapshot Snapshot, AcceptedLeanClosure Lean, AcyclicTruthDag Dag) BuildState(
+    private static (RepositorySnapshot Snapshot, AcceptedLeanClosure Lean, TruthDagProjection Dag) BuildState(
         IReadOnlyDictionary<string, string> files,
         IReadOnlyDictionary<string, LeanFileReport> reports)
     {
@@ -485,8 +485,7 @@ public sealed partial class ProductionEnvironmentTests
             SnapshotDecoder.Decode(Snapshot(files))).Snapshot;
         var lean = Assert.IsType<LeanValidationOutcome.Accepted>(
             LeanClosureValidator.Validate(snapshot, LeanAxiomReport.Create(reports))).Capability;
-        var dag = Assert.IsType<DagBuildOutcome.Accepted>(
-            AcyclicTruthDag.Build(snapshot, lean)).Capability;
+        var dag = TruthDagProjectionAssembler.Build(snapshot, lean);
         return (snapshot, lean, dag);
     }
 
@@ -554,7 +553,7 @@ public sealed partial class ProductionEnvironmentTests
                 SnapshotDecoder.Decode(Snapshot(files))).Snapshot;
             var closure = Assert.IsType<LeanValidationOutcome.Accepted>(
                 LeanClosureValidator.Validate(snapshot, LeanAxiomReport.Create(reports))).Capability;
-            var dag = Assert.IsType<DagBuildOutcome.Accepted>(AcyclicTruthDag.Build(snapshot, closure)).Capability;
+            var dag = TruthDagProjectionAssembler.Build(snapshot, closure);
             var attestations = dag.Nodes
                 .Where(static node => node.State is TruthState.Closed && node.ModuleName is not null)
                 .Select(node => new FrozenModuleAttestation(
