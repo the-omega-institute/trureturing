@@ -3,10 +3,7 @@
    mirror-B: D5/B/S3/ConceptDynamics/Algebra/FinitePartitionAlgebraDuality
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: Partition functions recover every relation without finiteness, while finite unital
-     pointwise algebras recover exactly their indistinguishability blocks, including all six
-     degenerate cases;
-     named counterexamples show finiteness and all three closures are necessary. -/
+   digest: Relations and finite unital pointwise algebras of real functions determine each other. -/
 /- Library-search audit trail (2026-08-25):
    * Repository search for `PullbackAlgebra`, `SemanticClosure`, and
      `RelationInvariantReadouts` found the Prop-valued factorization family in
