@@ -1,0 +1,50 @@
+## 48.3 角色准入与污染闭包
+
+对承诺 \(K_n\) 和记录 \(r\)，以反身传递依赖闭包定义可达关系
+
+\[
+r\leadsto K_n \quad\Longleftrightarrow\quad r\in\operatorname{Dep}^*(K_n).
+\]
+
+令一次角色事件触及承诺闭包，当且仅当其 \(\operatorname{Deps}\) 与 \(\operatorname{Dep}^*(K_n)\) 相交。由账本定义适应性使用谓词
+
+\[
+\operatorname{AdaptiveUse}_{\mathcal L}^{\preceq d_n}(r,K_n)
+\Longleftrightarrow
+\exists e\in\mathcal L_{\mathrm{role},\preceq d_n},\
+e.\operatorname{evidence}=r,\
+e.\mathsf{role}\in\{\mathsf{Generate},\mathsf{Tune},\mathsf{Select}\},\
+e.\operatorname{Deps}\cap\operatorname{Dep}^*(K_n)\neq\varnothing.
+\]
+
+定义第 \(n\) 轮裁决准入
+
+\[
+\boxed{
+\operatorname{AdmissibleJudge}_{\mathcal L}^{\preceq d_n}(r,K_n)
+\Longleftrightarrow
+\mathsf{Adjudicate}\in\operatorname{Roles}_{\mathcal L}^{\preceq d_n}(r,n)
+\ \wedge\ t_n<\operatorname{FirstSeen}(r)
+\ \wedge\ r\not\leadsto K_n
+\ \wedge\ \neg\operatorname{AdaptiveUse}_{\mathcal L}^{\preceq d_n}(r,K_n).
+}
+\]
+
+这里的轮次 \(n\)、冻结点 \(t_n\) 与裁决点 \(d_n\) 都是 \(K_n\) 冻结快照的字段，不是调用者另行传入的自由参数。若 \(\mathcal L'=\mathcal L\mathbin{+\!+}\Delta\) 且 \(\Delta\) 中事件号均大于 \(d_n\)，则上式两侧对 \(\mathcal L\) 与 \(\mathcal L'\) 逐字相同；未来追加 Tune 或 Adjudicate 事件不能翻转旧轮准入。
+
+若 \(r\) 的任何函数、摘要、标签、人工筛选结果或由其训练出的中间对象可达 \(K_n\)，则 \(r\) 属于污染闭包；只隐藏原始记录标识不能恢复准入。
+
+对记录集 \(R\)，定义
+
+\[
+\operatorname{Contam}(R) := \{a:\exists r\in R,\ r\leadsto a\}.
+\]
+
+于是裁决集 \(Z_n\) 的非预见条件可写为
+
+\[
+\operatorname{Contam}(Z_n)\cap\operatorname{Dep}^*(K_n) = \varnothing, \qquad \forall z\in Z_n,\ t_n<\operatorname{FirstSeen}(z).
+\]
+
+该条件是来源图与访问时间条件，不是关于参与者主观记忆的断言。
+

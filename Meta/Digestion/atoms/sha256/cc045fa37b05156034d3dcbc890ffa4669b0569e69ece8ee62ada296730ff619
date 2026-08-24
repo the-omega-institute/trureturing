@@ -1,0 +1,38 @@
+## 53.4 Gain/cost 停止条件的接入
+
+第 43 部的
+
+\[
+\operatorname{Stop}_{L}(S)
+\]
+
+使用 \(\operatorname{Gain}/c\) 标量。本增订给出其裁决层前件：只有在增益坐标、成本口径、风险口径和权重来源已冻结时，该比率才有确定含义。
+
+无来源权重时，\(\operatorname{NoDominatingCandidate}\) 只返回前沿状态，不输出 Stop。若要得到停止判词，必须消费第 50.5 部的外生 \(\operatorname{OrientationSpec}_G\)，或由 \(K_n\) 中已有来源、版本与范围的 \(\operatorname{WeightSpec}_n\) 诱导同类预序。令
+
+\[
+\operatorname{Feas}_n
+:=\operatorname{Candidates}(K_n)\cap\operatorname{SuffAlt}(K_n)
+\]
+
+并令 \(\operatorname{Current}(K_n)\) 为可空的当前行动。空候选束、空可行集或没有当前行动都是合法轮次；只有停止判词才要求存在当前可行行动。对外生关系 \(\preceq_G\) 定义
+
+\[
+\boxed{
+\begin{aligned}
+&\operatorname{OrientedStop}(K_n,\operatorname{OrientationSpec}_G)
+\\
+&\Longleftrightarrow
+\exists a_{\mathrm{cur}},\
+\operatorname{Current}(K_n)=\operatorname{some}(a_{\mathrm{cur}})
+\\
+&\qquad\wedge\ a_{\mathrm{cur}}\in\operatorname{Feas}_n
+\\
+&\qquad\wedge\ \nexists a\in\operatorname{Feas}_n,\
+a_{\mathrm{cur}}\prec_G a.
+\end{aligned}
+}
+\]
+
+这里可行性先于偏好比较，且关系只在规范声明范围与 \(\operatorname{AdmTarget}(G)\) 内求值。于是候选只有 \(a_{\min}=(1,1,0)\)、不做为 \((0,0,0)\) 的反例中，若当前仍是不做，则 \(a_{\mathrm{cur}}\notin\operatorname{Feas}_n\)，不能裁停；纯 Pareto 不可比也只产生 \(\operatorname{NoDominatingCandidate}\)。若当前行动为空或 \(a_{\min}\) 不存在，则记录当前充分替代前沿而不裁停。停止仍是当前承诺、候选集与证据状态下的局部结论；范围扩张、目标变更或新方法出现时按第 43 部重新打开。
+

@@ -1,0 +1,30 @@
+## 52.5 适应性复用、VOI 与 Goodhart 边界
+
+令 \(\mathcal L_{\mathrm{role},\preceq d_n}\) 为第 48 部绑定 \(K_n\) 裁决点的事件前缀，并要求 \(\operatorname{ValidTrace}(\mathcal L_{\mathrm{role}},K_n)\) 的证明。对同一证据在承诺闭包上的反复适应性使用，定义复用深度
+
+\[
+\operatorname{ReuseDepth}(r,K_n)
+:=\left|\left\{
+e\in\mathcal L_{\mathrm{role},\preceq d_n}:
+e.\operatorname{evidence}=r,\
+e.\mathsf{role}\in\{\mathsf{Generate},\mathsf{Tune},\mathsf{Select}\},\
+e.\operatorname{Deps}\cap\operatorname{Dep}^*(K_n)\neq\varnothing
+\right\}\right|\in\mathbb N.
+\]
+
+唯一事件号使内容相同但实际发生多次的适应性使用分别计数；有限前缀保证该深度落在折减函数的自然数定义域。\(\mathsf{Adjudicate}\) 与 \(\mathsf{Replicate}\) 不增加该深度，因为它们不是候选生成、调参或选择动作。
+
+对预先选定的单一坐标或逐坐标，可以登记折减函数
+
+\[
+\delta:\mathbb N\to[0,1], \qquad \operatorname{CreditedGain} = \delta(\operatorname{ReuseDepth})\cdot\operatorname{ObservedGain}.
+\]
+
+但在没有稳定性、隐私、容量或选择机制定理时，\(\delta\) 只是治理账本，不是统计保证；其正确形状标为 open。
+
+本部借用贝叶斯实验设计与 value of information 中“行动价值相对反事实和信息结构计算”的已知形状。若给定先验 \(\pi\)、损失 \(\ell\) 与采样模型，才可定义特定 VOI；本文不在缺少这些前件时声称 Bayes 最优。
+
+本部也借用 Goodhart 定律的警戒形状：一旦得分坐标同时成为自适应优化对象，分数上升不能独立证明目标改善。DECT 的处置不是禁止指标，而是冻结比较器、保留目标账并要求新记录裁决。
+
+---
+
