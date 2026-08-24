@@ -53,7 +53,10 @@ internal static partial class IngestCommand
                 baselineDocument,
                 validateProjectedStatus: false,
                 baselineSnapshot: baseline);
-            RequireNoReceiptIntegrityFailure(derived);
+            LedgerWriteReceiptIntegrityGate.RequireNoNewFailures(
+                derived,
+                baselineDocument,
+                baseline);
 
             var statusByAtomId = derived.Entries.ToDictionary(
                 static item => item.Entry.AtomId,
@@ -84,7 +87,10 @@ internal static partial class IngestCommand
                 verifiedScribeEmissions,
                 baselineDocument,
                 baselineSnapshot: baseline);
-            RequireNoReceiptIntegrityFailure(evaluation);
+            LedgerWriteReceiptIntegrityGate.RequireNoNewFailures(
+                evaluation,
+                baselineDocument,
+                baseline);
             var backfillObservations = DigestionBackfillValidation.RequireValidBackfill(
                 finalDocument,
                 finalSnapshot,
@@ -680,16 +686,6 @@ internal static partial class IngestCommand
             throw new AggregateException(
                 "CAS write failed and rollback was incomplete",
                 new[] { writeFailure }.Concat(rollbackFailures));
-        }
-    }
-
-    private static void RequireNoReceiptIntegrityFailure(DigestionLedgerEvaluation evaluation)
-    {
-        if (evaluation.HasReceiptIntegrityFailure)
-        {
-            throw new InvalidOperationException(
-                "digest status is invalid: "
-                + string.Join("; ", evaluation.ReceiptIntegrityFailureReasons));
         }
     }
 

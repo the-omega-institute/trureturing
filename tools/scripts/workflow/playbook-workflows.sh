@@ -615,7 +615,7 @@ case "$COMMAND" in
     step cover-atom cover_atom_or_resume
     step emit-post-cover make emit
     step align-scribe-receipt run_cli \
-      align-scribe-receipt --atom-id "$ATOM_ID" --gid "$GID"
+      align-scribe-receipt --atom-id "$ATOM_ID" --gid "$GID" --base "$BASE"
     step emit-post-alignment make emit
     commit_all_if_needed "formalize: cover $ATOM_ID with $GID"
     ;;

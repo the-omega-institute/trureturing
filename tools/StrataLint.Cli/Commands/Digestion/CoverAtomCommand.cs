@@ -104,7 +104,10 @@ internal static partial class CoverAtomCommand
                 verifiedScribeEmissions,
                 baselineDocument,
                 baselineSnapshot: baseline);
-            RequireNoReceiptIntegrityFailure(beforeEvaluation);
+            LedgerWriteReceiptIntegrityGate.RequireNoNewFailures(
+                beforeEvaluation,
+                baselineDocument,
+                baseline);
 
             // Gate ②(b): anti-Goodhart — cover may only deposit a declaration that
             // the baseline ledger did not already bind.
@@ -163,7 +166,10 @@ internal static partial class CoverAtomCommand
                 baselineDocument,
                 validateProjectedStatus: false,
                 baselineSnapshot: baseline);
-            RequireNoReceiptIntegrityFailure(derived);
+            LedgerWriteReceiptIntegrityGate.RequireNoNewFailures(
+                derived,
+                baselineDocument,
+                baseline);
 
             var statusByAtomId = derived.Entries.ToDictionary(
                 static item => item.Entry.AtomId,
@@ -196,7 +202,10 @@ internal static partial class CoverAtomCommand
                 verifiedScribeEmissions,
                 baselineDocument,
                 baselineSnapshot: baseline);
-            RequireNoReceiptIntegrityFailure(evaluation);
+            LedgerWriteReceiptIntegrityGate.RequireNoNewFailures(
+                evaluation,
+                baselineDocument,
+                baseline);
             var backfillObservations = DigestionBackfillValidation.RequireValidBackfill(
                 finalDocument,
                 finalSnapshot,
@@ -500,7 +509,7 @@ internal static partial class CoverAtomCommand
         string BaselineRevision,
         string EnvelopePath);
 
-    private sealed record AlignArguments(string AtomId, string Gid);
+    private sealed record AlignArguments(string AtomId, string Gid, string BaselineRevision);
 
     private static CoverArguments ParseArguments(IReadOnlyList<string> arguments)
     {
@@ -553,16 +562,6 @@ internal static partial class CoverAtomCommand
 
     private static BackfillInventoryDocument LoadDocument(RepositorySnapshot snapshot) =>
         BackfillInventoryLoader.Load(snapshot);
-
-    private static void RequireNoReceiptIntegrityFailure(DigestionLedgerEvaluation evaluation)
-    {
-        if (evaluation.HasReceiptIntegrityFailure)
-        {
-            throw new InvalidOperationException(
-                "digest status is invalid: "
-                + string.Join("; ", evaluation.ReceiptIntegrityFailureReasons));
-        }
-    }
 
     private static ValidatedPolicy LoadPolicy(RepositorySnapshot snapshot)
     {

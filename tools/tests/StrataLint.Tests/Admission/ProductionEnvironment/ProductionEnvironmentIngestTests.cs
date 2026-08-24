@@ -326,6 +326,33 @@ public sealed partial class ProductionEnvironmentTests
         Assert.Equal(before, DirectoryLedgerTestSupport.Image(temporary.Path));
     }
 
+    [Theory]
+    [InlineData("coverage-receipt-mismatch")]
+    [InlineData("scribe-definition-mismatch")]
+    [InlineData("scribe-emission-mismatch")]
+    public void IngestAllowsNoOpWhenReceiptIntegrityBacklogExistsAtForkPoint(string mismatchCode)
+    {
+        var materialized = CoverWorld.Materialize(new CoverSpec
+        {
+            OtherAtomBinding = ("receipt-gap-sibling", "D5/S0/Carrier/Probe.sibling"),
+            ReportDeclarations = ImmutableArray.Create("probe", "sibling"),
+        });
+        var inputs = DirectoryInputs(WithReceiptMismatchAtForkPoint(
+            materialized,
+            mismatchCode,
+            byteIdenticalBaseline: true));
+        using var temporary = new TemporaryDirectory();
+        DirectoryLedgerTestSupport.Write(temporary.Path, inputs.Files);
+        var before = DirectoryLedgerTestSupport.Image(temporary.Path);
+        var environment = BuildCoverEnvironment(temporary.Path, inputs, inputs.Files);
+
+        var result = environment.Ingest(["--base", "baseline"]);
+
+        Assert.True(result.Success, result.Error);
+        Assert.Contains("ledger_changed=false", result.Output, StringComparison.Ordinal);
+        Assert.Equal(before, DirectoryLedgerTestSupport.Image(temporary.Path));
+    }
+
     [Fact]
     public void IngestPerformsFirstExtractionForRegisteredEmptySource()
     {
