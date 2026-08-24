@@ -9,6 +9,7 @@ import D5.S3.AnalyticClosure.Budget.BudgetedEscapeRateAntitone
 import D5.S3.ConceptDynamics.DefinitionEscape.BlindKernelObstruction
 import D5.S3.ConceptDynamics.Refinement.InductiveSufficiency
 import Mathlib.Data.Fintype.EquivFin
+import Mathlib.Data.NNReal.Defs
 import Mathlib.Data.Set.Finite.Lattice
 
 /- Scope of this module: `finite_cover_counting` packages the two cover clauses
@@ -21,8 +22,8 @@ proposition over the CAS definitions
 `EscapeWeight` has no additivity or submodularity law from which its diminishing
 return could be proved. A concrete `EscapeWeight` below refutes the proposition
 at that weak interface; this does not refute the CAS measure semantics. The
-counting clause uses finite subsets of Gamma, summed nonnegative candidate
-costs, and the empty selection at a nonnegative budget, so it is provable. -/
+counting clause uses finite subsets of Gamma, arbitrary summed candidate costs,
+and nonnegative-real budgets, so the empty selection is always feasible. -/
 
 /- Library-search audit trail (2026-08-24):
    * Shape searches `rg -n 'Set \(X × X\)' D5/S3/ConceptDynamics` and
@@ -39,9 +40,10 @@ costs, and the empty selection at a nonnegative budget, so it is provable. -/
      `coveredInputs` unions finite anchor suites of arbitrary inputs and has no
      target residual or definition kernel, so it does not state clause one.
      The budget theorem ranges over an arbitrary `Strategy`. The faithful CAS
-     strategy below is `Finset Gamma`, with summed cost and a canonical empty
-     selection. At a nonnegative smaller budget that selection supplies the
-     theorem's nonempty feasible-value premise. The marginal formula remains
+     strategy below is `Finset Gamma`, with arbitrary summed cost and a
+     canonical empty selection. Budgets inhabit `NNReal`, so that selection
+     supplies the theorem's nonempty feasible-value premise without a cost-sign
+     assumption. The marginal formula remains
      outside the package: rewriting the CAS difference `M(empty) - M(S)` as a
      weighted union of cuts needs a mass additivity law absent from
      `EscapeWeight`.
@@ -259,34 +261,35 @@ def finiteSelectionCost
   ∑ item ∈ selection, candidateCost item.1
 
 /-- The CAS counting escape-rate direction on finite subsets of `Gamma`.
-Nonnegative candidate costs and a nonnegative smaller budget make the empty
-selection feasible. -/
+Budgets are nonnegative reals, so the empty selection is feasible without any
+sign restriction on candidate costs. -/
 def countingEscapeAntitoneLaw
-    {I X C Target : Type*} {V : I → Type*} [Finite X]
+    {I X C Target : Type*} {V : I → Type*}
     (Gamma : Set I) (definitions : ∀ i, Concept X (V i))
     (q : Concept X C) (target : Concept X Target)
-    (candidateCost : I → Real) (budget1 budget2 : Real) : Prop :=
+    (candidateCost : I → Real) (budget1 budget2 : NNReal) : Prop :=
   let countingWeight : EscapeWeight (X × X) :=
     { mass := fun set => (set.ncard : Real)
       empty_mass := by simp
       mass_nonnegative := fun set => Nat.cast_nonneg set.ncard }
-  (∀ definition ∈ Gamma, 0 ≤ candidateCost definition) ∧
-      0 ≤ budget1 ∧ budget1 ≤ budget2 ∧
-      0 < countingWeight.mass (defectRelation q target) →
-    budgetedEscapeRate q
-        (finiteSelectionSupplement Gamma definitions) target
-        (finiteSelectionCost Gamma candidateCost) countingWeight budget2 ≤
+  0 < countingWeight.mass (defectRelation q target) →
+    budget1 ≤ budget2 →
       budgetedEscapeRate q
-        (finiteSelectionSupplement Gamma definitions) target
-        (finiteSelectionCost Gamma candidateCost) countingWeight budget1
+          (finiteSelectionSupplement Gamma definitions) target
+          (finiteSelectionCost Gamma candidateCost) countingWeight
+          (budget2 : Real) ≤
+        budgetedEscapeRate q
+          (finiteSelectionSupplement Gamma definitions) target
+          (finiteSelectionCost Gamma candidateCost) countingWeight
+          (budget1 : Real)
 
-/-- The CAS counting escape rate is antitone in the budget. The empty finite
-selection witnesses feasibility at the smaller nonnegative budget. -/
+/-- The CAS counting escape rate is antitone in its nonnegative-real budget.
+The sole CAS premise is positivity of the baseline escape mass. -/
 theorem counting_escape_antitone_law
-    {I X C Target : Type*} {V : I → Type*} [Finite X]
+    {I X C Target : Type*} {V : I → Type*}
     (Gamma : Set I) (definitions : ∀ i, Concept X (V i))
     (q : Concept X C) (target : Concept X Target)
-    (candidateCost : I → Real) (budget1 budget2 : Real) :
+    (candidateCost : I → Real) (budget1 budget2 : NNReal) :
     countingEscapeAntitoneLaw Gamma definitions q target candidateCost
       budget1 budget2 := by
   classical
@@ -295,17 +298,23 @@ theorem counting_escape_antitone_law
       empty_mass := by simp
       mass_nonnegative := fun set => Nat.cast_nonneg set.ncard }
   change
-    ((∀ definition ∈ Gamma, 0 ≤ candidateCost definition) ∧
-        0 ≤ budget1 ∧ budget1 ≤ budget2 ∧
-        0 < countingWeight.mass (defectRelation q target)) →
-      budgetedEscapeRate q
-          (finiteSelectionSupplement Gamma definitions) target
-          (finiteSelectionCost Gamma candidateCost) countingWeight budget2 ≤
+    0 < countingWeight.mass (defectRelation q target) →
+      budget1 ≤ budget2 →
         budgetedEscapeRate q
-          (finiteSelectionSupplement Gamma definitions) target
-          (finiteSelectionCost Gamma candidateCost) countingWeight budget1
-  rintro ⟨_candidateCostsNonnegative, budgetOneNonnegative, budgetOrder,
-    baselineMassPositive⟩
+            (finiteSelectionSupplement Gamma definitions) target
+            (finiteSelectionCost Gamma candidateCost) countingWeight
+            (budget2 : Real) ≤
+          budgetedEscapeRate q
+            (finiteSelectionSupplement Gamma definitions) target
+            (finiteSelectionCost Gamma candidateCost) countingWeight
+            (budget1 : Real)
+  intro baselineMassPositive budgetOrder
+  change 0 < ((defectRelation q target).ncard : Real) at baselineMassPositive
+  have baselineNcardPositive :
+      0 < (defectRelation q target).ncard := by
+    exact_mod_cast baselineMassPositive
+  have baselineFinite : (defectRelation q target).Finite :=
+    Set.finite_of_ncard_pos baselineNcardPositive
   have escapeAtMostTotal (selection : Finset Gamma) :
       countingWeight.mass
           (defectRelation
@@ -319,11 +328,12 @@ theorem counting_escape_antitone_law
           Real) ≤ (defectRelation q target).ncard
     exact_mod_cast Set.ncard_le_ncard (by
       rintro pair pairInDefect
-      exact ⟨congrArg Prod.fst pairInDefect.1, pairInDefect.2⟩)
+      exact ⟨congrArg Prod.fst pairInDefect.1, pairInDefect.2⟩) baselineFinite
   have valuesNonempty :
       (budgetedEscapeValues q
         (finiteSelectionSupplement Gamma definitions) target
-        (finiteSelectionCost Gamma candidateCost) countingWeight budget1).Nonempty := by
+        (finiteSelectionCost Gamma candidateCost) countingWeight
+        (budget1 : Real)).Nonempty := by
     let selection : Finset Gamma := ∅
     refine ⟨countingWeight.mass
         (defectRelation
@@ -331,19 +341,21 @@ theorem counting_escape_antitone_law
             (finiteSelectionSupplement Gamma definitions selection)) target) /
           countingWeight.mass (defectRelation q target),
       selection, ?_, rfl⟩
-    change finiteSelectionCost Gamma candidateCost selection ≤ budget1
-    simpa [finiteSelectionCost, selection] using budgetOneNonnegative
+    change (0 : Real) ≤ (budget1 : Real)
+    exact budget1.coe_nonneg
+  have realBudgetOrder : (budget1 : Real) ≤ (budget2 : Real) := by
+    exact_mod_cast budgetOrder
   exact (budgeted_escape_rate_bounds_and_antitone q
     (finiteSelectionSupplement Gamma definitions) target
     (finiteSelectionCost Gamma candidateCost) countingWeight
-    baselineMassPositive escapeAtMostTotal valuesNonempty).2 budgetOrder
+    baselineMassPositive escapeAtMostTotal valuesNonempty).2 realBudgetOrder
 
 /-- The two cover laws and the counting escape-rate law, packaged together. -/
 theorem finite_cover_counting
     {I X C Target : Type*} {V : I → Type*}
     (Gamma : Set I) (definitions : ∀ i, Concept X (V i))
     (q : Concept X C) (target : Concept X Target)
-    (candidateCost : I → Real) (budget1 budget2 : Real) :
+    (candidateCost : I → Real) (budget1 budget2 : NNReal) :
     (defectRelation q target ∩
           jointKernel (fun item : Gamma => definitions item.1) = ∅ ↔
         (⋃ definition : Gamma,
@@ -354,15 +366,12 @@ theorem finite_cover_counting
       (Finite X ∧ defectRelation q target ∩
           jointKernel (fun item : Gamma => definitions item.1) = ∅ →
         finiteSelectionSufficientOnRange Gamma definitions q target) ∧
-      (∀ finiteX : Finite X,
-        @countingEscapeAntitoneLaw I X C Target V finiteX
-          Gamma definitions q target candidateCost budget1 budget2) := by
+      countingEscapeAntitoneLaw Gamma definitions q target candidateCost
+        budget1 budget2 := by
   have coverPackage := finite_cover_laws Gamma definitions q target
-  refine ⟨coverPackage.1, coverPackage.2, ?_⟩
-  intro finiteX
-  letI : Finite X := finiteX
-  exact counting_escape_antitone_law Gamma definitions q target candidateCost
-    budget1 budget2
+  exact ⟨coverPackage.1, coverPackage.2,
+    counting_escape_antitone_law Gamma definitions q target candidateCost
+      budget1 budget2⟩
 
 /- This counterexample lives inside the current CAS Lean interface: its weight
 has zero empty mass and nonnegative mass, exactly as `EscapeWeight` requires.

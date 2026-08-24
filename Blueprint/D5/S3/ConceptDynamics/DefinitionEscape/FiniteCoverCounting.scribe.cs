@@ -88,24 +88,6 @@ internal sealed class FiniteCoverCountingDocument : IScribeDocumentDefinition
             D(0),
             FormulaRelationOperator.LessThan,
             Call("mass", countingWeight, residual));
-        Formula candidateCostsNonnegative = new Formula.BindMany(
-            FormulaQuantifier.ForAll,
-            [new Formula.BoundVariable(
-                FormulaIdentifier.Create("d"),
-                F.Id("I"))],
-            new Formula.Logic(
-                Seq(definition, Sp, InMacro, Sp, gamma),
-                FormulaLogicOperator.Implies,
-                new Formula.Relation(
-                    D(0),
-                    FormulaRelationOperator.LessThanOrEqual,
-                    Call("c", definition))));
-        Formula budgetOneNonnegative = new Formula.Relation(
-            D(0),
-            FormulaRelationOperator.LessThanOrEqual,
-            budgetOne);
-        Formula groupedCandidateCostsNonnegative = Seq(
-            Open, candidateCostsNonnegative, Close);
         Formula budgetOrdered = new Formula.Relation(
             budgetOne,
             FormulaRelationOperator.LessThanOrEqual,
@@ -119,27 +101,21 @@ internal sealed class FiniteCoverCountingDocument : IScribeDocumentDefinition
             Forall, Sp, countedSet, Comma, Sp,
             Call("mass", countingWeight, countedSet), Sp, Eq, Sp,
             Call("ncard", countedSet));
-        Formula countingPremises = new Formula.Logic(
-            groupedCandidateCostsNonnegative,
-            FormulaLogicOperator.And,
-            new Formula.Logic(
-                budgetOneNonnegative,
-                FormulaLogicOperator.And,
-                new Formula.Logic(
-                    budgetOrdered,
-                    FormulaLogicOperator.And,
-                    positiveBaselineCount)));
         Formula countingLaw = new Formula.Logic(
-            countingPremises,
+            positiveBaselineCount,
             FormulaLogicOperator.Implies,
-            countingAntitone);
+            new Formula.Logic(
+                budgetOrdered,
+                FormulaLogicOperator.Implies,
+                countingAntitone));
+        Formula budgetContext = Seq(
+            budgetOne, Comma, Sp, budgetTwo, Colon, Sp,
+            Operatorname, Grp(F.Id("NNReal")));
         Formula countingContext = Seq(
-            Typeclass("Finite", state), Comma, RowBreak,
+            budgetContext, Comma, RowBreak,
             countingWeightDefinition, Comma, RowBreak);
         Formula countingStatement = Disp(Seq(countingContext, countingLaw, Dot));
-        Formula packagedCountingClause = Seq(
-            Forall, Sp, F.Id("finiteX"), Sp, Colon, Sp, Call("Finite", state), Comma,
-            RowBreak, countingWeightDefinition, Comma, RowBreak, countingLaw);
+        Formula packagedCountingClause = Seq(countingContext, countingLaw);
         Formula packagedStatement = Disp(Seq(
             new Formula.Logic(
                 coverEquivalence,
@@ -173,8 +149,9 @@ internal sealed class FiniteCoverCountingDocument : IScribeDocumentDefinition
                             "finiteSelectionSufficientOnRange is the canonical Refines target "
                                 + "relation against Set.rangeFactorization of the selected joint "
                                 + "readout. The proof reuses inductive_sufficiency_criterion. The "
-                                + "third conjunct quantifies Finite X locally and is backed by "
-                                + "counting_escape_antitone_law. finiteSelectionSupplement chooses "
+                                + "third conjunct is backed directly by "
+                                + "counting_escape_antitone_law, without a finite-X premise. "
+                                + "finiteSelectionSupplement chooses "
                                 + "classical equality only inside its Finset implementation, so no "
                                 + "public declaration requires DecidableEq I."))),
                     DescribeRole.Theorem),
@@ -206,22 +183,23 @@ internal sealed class FiniteCoverCountingDocument : IScribeDocumentDefinition
                     StatementSource.FromAuthor(countingStatement),
                     AssessedProvenance.FromRepo(),
                     Blocks(Paragraph(Text(
-                        "This Prop uses CAS strategies Finset Gamma, finiteSelectionSupplement, and "
-                            + "finiteSelectionCost(S) = sum d in S, c(d). Candidate costs and b1 are "
-                            + "nonnegative, so the empty selection has cost zero and is feasible; "
+                        "This theorem uses CAS strategies Finset Gamma, finiteSelectionSupplement, "
+                            + "and finiteSelectionCost(S) = sum d in S, c(d). Budgets b1 and b2 "
+                            + "inhabit NNReal, while candidate costs remain arbitrary real values. "
+                            + "The empty selection therefore has cost zero and is feasible at b1; "
                             + "b1 <= b2 gives the displayed antitone direction. Every "
                             + "budgetedEscapeRate occurrence names q, the supplement, T, the summed "
                             + "cost, countingWeight, and its budget. Here countingWeight is the concrete "
-                            + "Lean weight mass(A) = ncard(A), under Finite X; finite-set membership "
-                            + "equality is chosen internally. The empty selection proves feasibility at "
-                            + "b1, and the generic budget theorem then gives the non-strict direction "
-                            + "rate(b2) <= rate(b1). A constant "
+                            + "Lean weight mass(A) = ncard(A), with no finiteness assumption on X; "
+                            + "positive baseline mass locally proves that the baseline defect is finite. "
+                            + "Finite-set membership equality is chosen internally. The generic budget "
+                            + "theorem then gives the non-strict direction "
+                            + "rate(b2) <= rate(b1). Thus the sole CAS premise is positive baseline "
+                            + "mass; budget order is the condition of the antitone implication, not an "
+                            + "extra model assumption. A constant "
                             + "candidate is an elaborating false neighbor for strict decrease, while "
                             + "an identity candidate gives a strict nontrivial model with rate(1) < "
                             + "rate(0)."))),
                     DescribeRole.Theorem))));
     }
-
-    private static Formula Typeclass(string name, Formula argument) =>
-        Seq(OpenBracket, Operatorname, Grp(F.Id(name)), Open, argument, Close, CloseBracket);
 }
