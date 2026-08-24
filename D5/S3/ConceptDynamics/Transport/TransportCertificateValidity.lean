@@ -78,16 +78,26 @@ def TruthRecordAt
   {record : TruthRecord Point Payload Address Version Error //
     record.domain = source ∧ record.error = error}
 
+/-- Claims indexed by the semantics under which their target scope is declared.
+This is a classification index only: it carries no proof that the claim holds
+on the target. -/
+structure ClaimAt
+    {Point Claim Address Version : Type*}
+    (semantics : ClaimSemantics Point Claim Address Version)
+    (target : Set Point) where
+  claim : Claim
+
 /-- A scope-transport candidate maps a source-scoped, error-indexed truth record
-to a bare claim. Target-domain validity is supplied only by a valid certificate
-together with its declared premises and preservation obligations. -/
+to a claim whose declared target scope is part of its type. Target-domain truth
+is supplied only by a valid certificate together with its declared premises and
+preservation obligations. -/
 def ScopeTransportCandidate
     {Point Payload Claim Address Version Error : Type*}
-    (_semantics : ClaimSemantics Point Claim Address Version)
-    (source _target : Set Point) (error : Error) :=
+    (semantics : ClaimSemantics Point Claim Address Version)
+    (source target : Set Point) (error : Error) :=
   TruthRecordAt (Payload := Payload) (Address := Address) (Version := Version)
       source error →
-    Claim
+    ClaimAt semantics target
 
 /-- Every optional dependency is named inside the assumption object. If transport
 uses selection, intervention consistency, covariate transformation, or loss
@@ -157,8 +167,10 @@ def ClaimOn
 def ReceiptMatches
     {Point Payload Address Version Error : Type*}
     (receipt : Receipt Point Payload Address Version Error)
+    (record : TruthRecord Point Payload Address Version Error)
     (address : Address) (source : Set Point) (version : Version) : Prop :=
-  receipt.sourceDomain = source ∧
+  receipt.originalRecord = record ∧
+    receipt.sourceDomain = source ∧
     receipt.sourceVersion = version ∧
     receipt.transportedClaimAddress = address
 
@@ -194,18 +206,20 @@ def Refutes
     (claim : Claim) : Prop :=
   certificate.falsifiablePrediction.refutes z claim
 
-/-- A transport certificate is valid exactly when its receipt matches the claim,
-its explicit premises and assumptions conditionally transport the claim, its
-prediction covers the whole target difference, and one preregistered failure
-witness refutes that same claim. -/
+/-- A transport certificate is valid exactly when its receipt matches the actual
+source record and claim, its explicit premises and assumptions conditionally
+transport the claim, its prediction covers the whole target difference, and one
+preregistered failure witness refutes that same claim. -/
 def ValidTransportCert
     {Point Payload Claim Address Version Error : Type*}
     {source target : Set Point}
     (semantics : ClaimSemantics Point Claim Address Version)
     (certificate :
       TransportCert Point Payload Claim Address Version Error source target)
+    (record : TruthRecord Point Payload Address Version Error)
     (claim : Claim) (version : Version) : Prop :=
-  ReceiptMatches certificate.receipt (ClaimAddress semantics claim) source version ∧
+  ReceiptMatches certificate.receipt record
+      (ClaimAddress semantics claim) source version ∧
     ((GivenPremises certificate ∧ certificate.transportAssumption.Holds) →
       ClaimOn semantics claim target) ∧
     (∀ z ∈ target \ source, PredictionDefined certificate z) ∧
@@ -214,15 +228,16 @@ def ValidTransportCert
       PredictionFails certificate z ∧
       Refutes z certificate claim
 
-/-- Existence is closed over the same claim-bound validity predicate and fixes
-the certificate version to the claim's own version. -/
+/-- Existence is closed over the same record- and claim-bound validity predicate
+and fixes the certificate version to the claim's own version. -/
 def HasValidTransportCert
     {Point Payload Claim Address ClaimVersion Error : Type*}
     (semantics : ClaimSemantics Point Claim Address ClaimVersion)
+    (record : TruthRecord Point Payload Address ClaimVersion Error)
     (claim : Claim) (source target : Set Point) : Prop :=
   ∃ certificate :
       TransportCert Point Payload Claim Address ClaimVersion Error source target,
-    ValidTransportCert semantics certificate claim (Version semantics claim)
+    ValidTransportCert semantics certificate record claim (Version semantics claim)
 
 /-- Receipt matching exposes the source coordinates sealed against the original
 record, including its error and transported claim address. -/
@@ -230,15 +245,17 @@ theorem receipt_matches_original_coordinates
     {Point Payload Address Version Error : Type*}
     {source : Set Point} {address : Address} {version : Version}
     (receipt : Receipt Point Payload Address Version Error)
-    (receiptMatch : ReceiptMatches receipt address source version) :
-    receipt.originalRecord.domain = source ∧
+    (record : TruthRecord Point Payload Address Version Error)
+    (receiptMatch : ReceiptMatches receipt record address source version) :
+    receipt.originalRecord = record ∧
+      receipt.originalRecord.domain = source ∧
       receipt.originalRecord.version = version ∧
       receipt.originalRecord.error = receipt.sourceError ∧
       receipt.originalRecord.claimAddress = address := by
   rcases receipt.locksOriginal with ⟨domainLock, versionLock, errorLock, addressLock⟩
-  rcases receiptMatch with ⟨domainMatch, versionMatch, addressMatch⟩
-  exact ⟨domainLock.trans domainMatch, versionLock.trans versionMatch,
-    errorLock, addressLock.trans addressMatch⟩
+  rcases receiptMatch with ⟨recordMatch, domainMatch, versionMatch, addressMatch⟩
+  exact ⟨recordMatch, domainLock.trans domainMatch,
+    versionLock.trans versionMatch, errorLock, addressLock.trans addressMatch⟩
 
 /-- The public packed criterion contains every conjunct of certificate validity. -/
 theorem valid_transport_cert_criterion
@@ -247,9 +264,11 @@ theorem valid_transport_cert_criterion
     (semantics : ClaimSemantics Point Claim Address Version)
     (certificate :
       TransportCert Point Payload Claim Address Version Error source target)
+    (record : TruthRecord Point Payload Address Version Error)
     (claim : Claim) (version : Version) :
-    ValidTransportCert semantics certificate claim version ↔
-      ReceiptMatches certificate.receipt (ClaimAddress semantics claim) source version ∧
+    ValidTransportCert semantics certificate record claim version ↔
+      ReceiptMatches certificate.receipt record
+          (ClaimAddress semantics claim) source version ∧
       ((GivenPremises certificate ∧ certificate.transportAssumption.Holds) →
         ClaimOn semantics claim target) ∧
       (∀ z ∈ target \ source, PredictionDefined certificate z) ∧
@@ -276,10 +295,11 @@ theorem scope_transport_candidate_claim_on_of_valid_certificate
       TransportCert Point Payload Claim Address Version Error source target)
     (version : Version)
     (validity :
-      ValidTransportCert semantics certificate (transport record) version)
+      ValidTransportCert semantics certificate record.val
+        (transport record).claim version)
     (premises : GivenPremises certificate)
     (preservation : certificate.transportAssumption.Holds) :
-    ClaimOn semantics (transport record) target :=
+    ClaimOn semantics (transport record).claim target :=
   validity.2.1 ⟨premises, preservation⟩
 
 /-- Failure of any one of the four public conjuncts invalidates the certificate. -/
@@ -289,9 +309,11 @@ theorem valid_transport_cert_fails_if_any_clause_fails
     (semantics : ClaimSemantics Point Claim Address Version)
     (certificate :
       TransportCert Point Payload Claim Address Version Error source target)
+    (record : TruthRecord Point Payload Address Version Error)
     (claim : Claim) (version : Version)
     (failure :
-      ¬ReceiptMatches certificate.receipt (ClaimAddress semantics claim) source version ∨
+      ¬ReceiptMatches certificate.receipt record
+          (ClaimAddress semantics claim) source version ∨
       ¬((GivenPremises certificate ∧ certificate.transportAssumption.Holds) →
         ClaimOn semantics claim target) ∨
       ¬(∀ z ∈ target \ source, PredictionDefined certificate z) ∨
@@ -299,7 +321,7 @@ theorem valid_transport_cert_fails_if_any_clause_fails
         PredictionDefined certificate z ∧
         PredictionFails certificate z ∧
         Refutes z certificate claim)) :
-    ¬ValidTransportCert semantics certificate claim version := by
+    ¬ValidTransportCert semantics certificate record claim version := by
   rintro ⟨receiptMatch, conditionalTransport, definitionCoverage, refutingFailure⟩
   rcases failure with receiptFailure | conditionalFailure | coverageFailure | witnessFailure
   · exact receiptFailure receiptMatch
@@ -375,30 +397,47 @@ def certificate : TransportCert Bool Unit Bool Nat Nat Nat source target where
   transportAssumption := assumption
   falsifiablePrediction := prediction
 
+def indexedRecord :
+    TruthRecordAt (Payload := Unit) (Address := Nat) (Version := Nat) source 3 :=
+  ⟨record, rfl, rfl⟩
+
+def transport :
+    ScopeTransportCandidate (Payload := Unit) (Error := Nat)
+      semantics source target 3 :=
+  fun _record => ⟨true⟩
+
+theorem valid_certificate_for_record :
+    ValidTransportCert semantics certificate record true 7 := by
+  refine ⟨?_, ?_, ?_, ?_⟩
+  · simp [ReceiptMatches, ClaimAddress, semantics, certificate, receipt]
+  · simp [GivenPremises, TransportAssumption.Holds, ClaimOn, semantics,
+      certificate, assumption, target]
+  · intro z hz
+    change z ∈ Set.univ ∧ z ∉ ({false} : Set Bool) at hz
+    cases z
+    · exact (hz.2 (by rfl)).elim
+    · rfl
+  · exact ⟨true, true_mem_target_difference, rfl, rfl, ⟨rfl, rfl⟩⟩
+
 /-- Positive control: the target difference is nonempty and its concrete failure
 witness both fails and refutes the transported Boolean claim. -/
 example :
-    ValidTransportCert semantics certificate true 7 ∧
+    ValidTransportCert semantics certificate record true 7 ∧
       true ∈ target \ source ∧
       PredictionDefined certificate true ∧
       PredictionFails certificate true ∧
       Refutes true certificate true := by
-  constructor
-  · refine ⟨?_, ?_, ?_, ?_⟩
-    · simp [ReceiptMatches, ClaimAddress, semantics, certificate, receipt]
-    · simp [GivenPremises, TransportAssumption.Holds, ClaimOn, semantics,
-        certificate, assumption, target]
-    · intro z hz
-      change z ∈ Set.univ ∧ z ∉ ({false} : Set Bool) at hz
-      cases z
-      · exact (hz.2 (by rfl)).elim
-      · rfl
-    · refine ⟨true, ?_, ?_, ?_, ?_⟩
-      · exact true_mem_target_difference
-      · rfl
-      · rfl
-      · exact ⟨rfl, rfl⟩
-  · exact ⟨true_mem_target_difference, rfl, rfl, ⟨rfl, rfl⟩⟩
+  exact ⟨valid_certificate_for_record,
+    true_mem_target_difference, rfl, rfl, ⟨rfl, rfl⟩⟩
+
+/-- Positive control: a receipt bound to the transported record and a complete
+certificate expose target truth through the public elimination theorem. -/
+example : ClaimOn semantics (transport indexedRecord).claim target := by
+  exact scope_transport_candidate_claim_on_of_valid_certificate
+    semantics transport indexedRecord certificate 7
+    valid_certificate_for_record
+    (by simp [GivenPremises, certificate, assumption])
+    (by simp [TransportAssumption.Holds, certificate, assumption])
 
 /-- Negative control: full preregistration alone permits a constantly false raw
 failure predicate, so the nonempty-failure field cannot be dropped from the type. -/

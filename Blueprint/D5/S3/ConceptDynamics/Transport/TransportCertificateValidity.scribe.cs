@@ -26,8 +26,12 @@ internal sealed class TransportCertificateValidityDocument : IScribeDocumentDefi
                             + "the target-minus-source domain, so constant-false failure data "
                             + "cannot be packaged as a certificate.")),
                     Paragraph(Text(
-                        "Receipt matching binds the original record's source domain, version, "
-                            + "error, and transported claim content address. The second clause "
+                        "Receipt matching identifies the receipt's original record with the "
+                            + "record actually supplied to transport, then binds its source "
+                            + "domain, version, error, and transported claim content address. "
+                            + "The transport candidate returns a claim whose declared target "
+                            + "scope is a type index, without carrying a ClaimOn proof. The "
+                            + "second clause "
                             + "is conditional: the given premises together with every declared "
                             + "preservation obligation imply that the same claim holds on the "
                             + "target domain.")),
@@ -41,8 +45,9 @@ internal sealed class TransportCertificateValidityDocument : IScribeDocumentDefi
                         "The last two conjuncts require preregistration over the entire new-domain "
                             + "difference and a concrete point where the prediction is defined, "
                             + "fails, and refutes this certificate's transported claim. The "
-                            + "existential closure HasValidTransportCert fixes the version to "
-                            + "Version(c) and calls this same predicate, with no Boolean gate.")),
+                            + "existential closure HasValidTransportCert takes the source record, "
+                            + "fixes the version to Version(c), and calls this same predicate, "
+                            + "with no Boolean gate.")),
                     Paragraph(Text(
                         "This formalizes definition-escape-completion-theory atom "
                             + "generic-residual-1e2a241367ada0b7e8670ff4fdba1b0b420500208eb803"
@@ -70,6 +75,7 @@ internal sealed class TransportCertificateValidityDocument : IScribeDocumentDefi
     private static Formula CriterionFormula()
     {
         Formula claim = F.Id("c");
+        Formula record = F.Id("r");
         Formula source = F.Id("J");
         Formula target = F.Id("Jprime");
         Formula version = F.Id("nu");
@@ -78,9 +84,9 @@ internal sealed class TransportCertificateValidityDocument : IScribeDocumentDefi
         Formula assumption = Seq(Kappa, Dot, F.Id("TransportAssumption"));
         Formula difference = Seq(target, Sp, Setminus, Sp, source);
         Formula valid = Predicate(
-            "ValidTransportCert", Kappa, claim, source, target, version);
+            "ValidTransportCert", Kappa, record, claim, source, target, version);
         Formula receiptMatch = Predicate(
-            "ReceiptMatches", receipt, Predicate("ClaimAddress", claim), source, version);
+            "ReceiptMatches", receipt, record, Predicate("ClaimAddress", claim), source, version);
         Formula conditionalTransport = Seq(
             Open,
             Predicate("GivenPremises", Kappa), Sp, Land, Sp,
