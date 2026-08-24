@@ -635,33 +635,47 @@ public sealed partial class CleanLanesCommandTests
 
         public void Dispose()
         {
-            if (Directory.Exists(repository.Path))
+            var repositoryProbe = ProbeRepositoryDirectory();
+            switch (repositoryProbe.State)
             {
-                var inventory = BoundedProcessRunner.Run(
-                    "git",
-                    ["worktree", "list", "--porcelain"],
-                    repository.Path,
-                    TimeSpan.FromSeconds(30),
-                    1024 * 1024);
-                if (inventory.ExitCode == 0)
+                case RepositoryDirectoryState.Absent:
+                    break;
+                case RepositoryDirectoryState.Indeterminate:
+                    repositoryProbe.Failure!.Throw();
+                    break;
+                case RepositoryDirectoryState.Present:
                 {
-                    var root = Path.GetFullPath(repository.Path);
-                    var paths = Encoding.UTF8.GetString(inventory.StandardOutput)
-                        .Split('\n', StringSplitOptions.RemoveEmptyEntries)
-                        .Where(static line => line.StartsWith("worktree ", StringComparison.Ordinal))
-                        .Select(static line => line["worktree ".Length..])
-                        .Where(path => !string.Equals(Path.GetFullPath(path), root, StringComparison.Ordinal))
-                        .ToArray();
-                    foreach (var path in paths)
+                    var inventory = BoundedProcessRunner.Run(
+                        "git",
+                        ["worktree", "list", "--porcelain"],
+                        repository.Path,
+                        TimeSpan.FromSeconds(30),
+                        1024 * 1024);
+                    if (inventory.ExitCode == 0)
                     {
-                        BoundedProcessRunner.Run(
-                            "git",
-                            ["worktree", "remove", "--force", path],
-                            repository.Path,
-                            TimeSpan.FromSeconds(30),
-                            1024 * 1024);
+                        var root = Path.GetFullPath(repository.Path);
+                        var paths = Encoding.UTF8.GetString(inventory.StandardOutput)
+                            .Split('\n', StringSplitOptions.RemoveEmptyEntries)
+                            .Where(static line => line.StartsWith("worktree ", StringComparison.Ordinal))
+                            .Select(static line => line["worktree ".Length..])
+                            .Where(path => !string.Equals(Path.GetFullPath(path), root, StringComparison.Ordinal))
+                            .ToArray();
+                        foreach (var path in paths)
+                        {
+                            BoundedProcessRunner.Run(
+                                "git",
+                                ["worktree", "remove", "--force", path],
+                                repository.Path,
+                                TimeSpan.FromSeconds(30),
+                                1024 * 1024);
+                        }
                     }
+
+                    break;
                 }
+                default:
+                    throw new InvalidOperationException(
+                        $"unknown repository directory state: {repositoryProbe.State}");
             }
 
             temp.Dispose();

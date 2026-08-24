@@ -1,3 +1,4 @@
+using System.Runtime.ExceptionServices;
 using System.Text;
 using StrataLint.Cli;
 using StrataLint.Engine;
@@ -8,6 +9,17 @@ public sealed partial class CleanLanesCommandTests
 {
     private sealed partial class CleanLanesFixture
     {
+        internal enum RepositoryDirectoryState
+        {
+            Absent,
+            Present,
+            Indeterminate,
+        }
+
+        internal readonly record struct RepositoryDirectoryProbe(
+            RepositoryDirectoryState State,
+            ExceptionDispatchInfo? Failure = null);
+
         private readonly TemporaryDirectory repository = new();
         private readonly TemporaryDirectory worktrees = new();
         private readonly TemporaryDirectory temp = new();
@@ -15,6 +27,7 @@ public sealed partial class CleanLanesCommandTests
             new(StringComparer.Ordinal);
         private readonly Dictionary<string, LaneProcessProbeOutcome> laneProcesses =
             new(StringComparer.Ordinal);
+        private Func<string, FileAttributes> repositoryAttributesReader = File.GetAttributes;
         private DateTimeOffset now;
 
         internal CleanLanesFixture()
@@ -35,6 +48,42 @@ public sealed partial class CleanLanesCommandTests
             Git(repository.Path, "rev-parse", "--show-toplevel").Trim();
 
         internal string RepositoryWorkingDirectory => repository.Path;
+
+        internal string[] OwnedWorkingDirectories => [temp.Path, worktrees.Path, repository.Path];
+
+        internal void SetRepositoryAttributesReader(Func<string, FileAttributes> reader) =>
+            repositoryAttributesReader = reader;
+
+        internal void RestoreRepositoryAttributesReader() =>
+            repositoryAttributesReader = File.GetAttributes;
+
+        internal RepositoryDirectoryProbe ProbeRepositoryDirectory()
+        {
+            try
+            {
+                var attributes = repositoryAttributesReader(repository.Path);
+                return (attributes & FileAttributes.Directory) != 0
+                    ? new RepositoryDirectoryProbe(RepositoryDirectoryState.Present)
+                    : new RepositoryDirectoryProbe(
+                        RepositoryDirectoryState.Indeterminate,
+                        ExceptionDispatchInfo.Capture(new IOException(
+                            $"owned repository path is not a directory: {repository.Path}")));
+            }
+            catch (FileNotFoundException)
+            {
+                return new RepositoryDirectoryProbe(RepositoryDirectoryState.Absent);
+            }
+            catch (DirectoryNotFoundException)
+            {
+                return new RepositoryDirectoryProbe(RepositoryDirectoryState.Absent);
+            }
+            catch (Exception exception) when (exception is UnauthorizedAccessException or IOException)
+            {
+                return new RepositoryDirectoryProbe(
+                    RepositoryDirectoryState.Indeterminate,
+                    ExceptionDispatchInfo.Capture(exception));
+            }
+        }
 
         internal string Head(string path) => Git(path, "rev-parse", "HEAD").Trim();
 
