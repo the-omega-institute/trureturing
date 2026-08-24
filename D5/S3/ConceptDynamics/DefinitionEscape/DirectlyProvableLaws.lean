@@ -27,9 +27,12 @@ import Mathlib.Topology.MetricSpace.Lipschitz
      `ResidualJoinLaw.residual_join_law`,
      `TargetRecoveryCriterion.target_recovery_criterion`, and
      `BlindKernelObstruction.blind_kernel_obstruction`, and
-     `NaturalityDefectComposition.naturality_defect_comp_le`. All four are
-     applied directly. The recovery criterion supplies the inhabited branch of
-     sufficiency-factorization; only its uncovered empty-state edge is local.
+     `NaturalityDefectComposition.naturality_defect_comp_le`. The frozen blind
+     theorem has a shared codomain, so this module proves a dependent-family
+     analogue and definitionally identifies its constant-codomain specialization
+     with the frozen `blindResidual` and `languageExtension`. The recovery
+     criterion supplies the inhabited branch of sufficiency-factorization; only
+     its uncovered empty-state edge is local.
      `RedundantAppealDefectPersistence` proves persistence of nonemptiness, not
      the source's equality of residual sets. The remaining searched modules are
      adjacent specializations rather than exact packages for clauses 3, 5--8.
@@ -58,6 +61,127 @@ open D5.S3.ConceptDynamics.DefinitionEscape.BlindKernelObstruction
 open D5.S3.ConceptDynamics.DefinitionEscape.ResidualJoinLaw
 open D5.S0.Diagonal.Naturality.NaturalityDefectComposition
 
+/-- The dependent-family extension used by clauses 4 and 5.  The frozen
+`languageExtension` is its constant-codomain specialization. -/
+def dependentLanguageExtension {X C I : Type*} {D : I → Type*}
+    (q : Concept X C) (definitions : ∀ i, Concept X (D i)) :
+    Concept X (C × (∀ i, D i)) :=
+  conceptJoin q (jointReadout definitions)
+/-- The dependent-family blind residual uses the canonical target residual and
+the existing dependent `jointKernel`; it does not alter the frozen residual. -/
+def dependentBlindResidual {X C Target Gamma : Type*} {D : Gamma → Type*}
+    (definitions : ∀ gamma, Concept X (D gamma)) (q : Concept X C)
+    (target : Concept X Target) : Set (X × X) :=
+  defectRelation q target ∩ jointKernel definitions
+/-- A finite dependent selection succeeds when the target factors through the
+baseline and the selected, potentially heterogeneous, readouts. -/
+def dependentFiniteSelectionSufficient
+    {X C Target Gamma : Type*} {D : Gamma → Type*}
+    (definitions : ∀ gamma, Concept X (D gamma)) (q : Concept X C)
+    (target : Concept X Target) : Prop :=
+  ∃ (n : Nat) (codes : Fin n → Gamma)
+      (recover : (C × (∀ i, D (codes i))) → Target),
+    target = recover ∘ dependentLanguageExtension q
+      (fun i => definitions (codes i))
+/-- On a shared codomain, the dependent extension is definitionally the frozen
+`languageExtension`. -/
+theorem dependent_language_extension_const_eq {X C B I : Type*}
+    (q : Concept X C) (definitions : I → Concept X B) :
+    dependentLanguageExtension q definitions = languageExtension q definitions :=
+  rfl
+
+/-- On the subtype of a shared-codomain package, the dependent residual is
+definitionally the frozen `blindResidual`. -/
+theorem dependent_blind_residual_const_eq {X C B Target : Type*}
+    (Gamma : Set (Concept X B)) (q : Concept X C)
+    (target : Concept X Target) :
+    dependentBlindResidual (fun definition : Gamma => definition.1) q target =
+      blindResidual Gamma q target :=
+  rfl
+
+/-- The dependent finite-selection predicate also conservatively specializes
+to the frozen shared-codomain predicate. -/
+theorem dependent_finite_selection_const_iff {X C B Target : Type*}
+    (Gamma : Set (Concept X B)) (q : Concept X C)
+    (target : Concept X Target) :
+    dependentFiniteSelectionSufficient
+        (fun definition : Gamma => definition.1) q target ↔
+      finiteSelectionSufficient Gamma q target :=
+  Iff.rfl
+
+/-- A dependent blind pair obstructs every finite selection and every arbitrary
+subfamily.  This is the append-only dependent-family analogue of the nonempty
+branch of the frozen `blind_kernel_obstruction`. -/
+theorem dependent_blind_kernel_obstruction
+    {X C Target Gamma : Type*} {D : Gamma → Type*}
+    (definitions : ∀ gamma, Concept X (D gamma))
+    (q : Concept X C) (target : Concept X Target) :
+    (dependentBlindResidual definitions q target).Nonempty →
+      (∀ (n : Nat) (codes : Fin n → Gamma),
+        ¬∃ recover : (C × (∀ i, D (codes i))) → Target,
+          target = recover ∘ dependentLanguageExtension q
+            (fun i => definitions (codes i))) ∧
+      (∀ Delta : Set Gamma,
+        ¬∃ recover : (C × (∀ code : Delta, D code.1)) → Target,
+          target = recover ∘ dependentLanguageExtension q
+            (fun code : Delta => definitions code.1)) ∧
+      ¬dependentFiniteSelectionSufficient definitions q target := by
+  rintro ⟨pair, pairInResidual⟩
+  letI : Nonempty X := ⟨pair.1⟩
+  rcases pairInResidual with ⟨baselineDefect, pairInKernel⟩
+  have allDefinitionsBlind :
+      ∀ gamma : Gamma,
+        definitions gamma pair.1 = definitions gamma pair.2 := by
+    simpa only [jointKernel, conceptKernel, Set.mem_iInter,
+      Set.mem_setOf_eq] using pairInKernel
+  have finiteObstruction :
+      ∀ (n : Nat) (codes : Fin n → Gamma),
+        ¬∃ recover : (C × (∀ i, D (codes i))) → Target,
+          target = recover ∘ dependentLanguageExtension q
+            (fun i => definitions (codes i)) := by
+    intro n codes
+    have extensionDefect :
+        (defectRelation
+          (dependentLanguageExtension q
+            (fun i => definitions (codes i))) target).Nonempty := by
+      refine ⟨pair, ?_, baselineDefect.2⟩
+      change
+        (q pair.1, fun i => definitions (codes i) pair.1) =
+          (q pair.2, fun i => definitions (codes i) pair.2)
+      apply Prod.ext baselineDefect.1
+      funext i
+      exact allDefinitionsBlind (codes i)
+    exact
+      (target_recovery_criterion
+        (dependentLanguageExtension q
+          (fun i => definitions (codes i))) target).2.2.2.mpr
+          extensionDefect
+  have arbitraryObstruction :
+      ∀ Delta : Set Gamma,
+        ¬∃ recover : (C × (∀ code : Delta, D code.1)) → Target,
+          target = recover ∘ dependentLanguageExtension q
+            (fun code : Delta => definitions code.1) := by
+    intro Delta
+    have extensionDefect :
+        (defectRelation
+          (dependentLanguageExtension q
+            (fun code : Delta => definitions code.1)) target).Nonempty := by
+      refine ⟨pair, ?_, baselineDefect.2⟩
+      change
+        (q pair.1, fun code : Delta => definitions code.1 pair.1) =
+          (q pair.2, fun code : Delta => definitions code.1 pair.2)
+      apply Prod.ext baselineDefect.1
+      funext code
+      exact allDefinitionsBlind code.1
+    exact
+      (target_recovery_criterion
+        (dependentLanguageExtension q
+          (fun code : Delta => definitions code.1)) target).2.2.2.mpr
+          extensionDefect
+  refine ⟨finiteObstruction, arbitraryObstruction, ?_⟩
+  rintro ⟨n, codes, recover, recovery⟩
+  exact finiteObstruction n codes ⟨recover, recovery⟩
+
 /-- The nine claims classified by DECT as already direct or one-line: residual
 intersection, sufficiency-factorization, redundant zero gain, blind-kernel
 obstruction, finite compactness, submodular capture, prepared one-step defect,
@@ -80,23 +204,25 @@ theorem directly_provable_laws :
     (forall {X C Target Gamma : Type*} {D : Gamma → Type*}
       (definitions : ∀ gamma, Concept X (D gamma))
       (q : Concept X C) (target : Concept X Target),
-      (blindResidual definitions q target).Nonempty →
+      (dependentBlindResidual definitions q target).Nonempty →
         (∀ (n : Nat) (codes : Fin n → Gamma),
           ¬∃ recover : (C × (∀ i, D (codes i))) → Target,
             target = recover ∘
-              languageExtension q (fun i => definitions (codes i))) ∧
+              dependentLanguageExtension q (fun i => definitions (codes i))) ∧
         (∀ Delta : Set Gamma,
           ¬∃ recover : (C × (∀ code : Delta, D code.1)) → Target,
             target = recover ∘
-              languageExtension q (fun code : Delta => definitions code.1)) ∧
-        ¬finiteSelectionSufficient definitions q target) ∧
+              dependentLanguageExtension q
+                (fun code : Delta => definitions code.1)) ∧
+        ¬dependentFiniteSelectionSufficient definitions q target) ∧
     (forall {X C Target Gamma : Type*} {D : Gamma → Type*} [Finite X]
       (definitions : ∀ gamma, Concept X (D gamma))
       (q : Concept X C) (target : Concept X Target),
-      blindResidual definitions q target = ∅ →
+      dependentBlindResidual definitions q target = ∅ →
         ∃ (n : Nat) (codes : Fin n → Gamma),
           defectRelation
-            (languageExtension q (fun i => definitions (codes i))) target = ∅) ∧
+            (dependentLanguageExtension q
+              (fun i => definitions (codes i))) target = ∅) ∧
     (forall {Edge Definition : Type*} (weight : Edge → ENNReal)
       (residual : Set Edge) (cut : Definition → Set Edge)
       (A B : Set Definition),
@@ -153,7 +279,7 @@ theorem directly_provable_laws :
   · intro X C Target Gamma D definitions q target nonemptyResidual
     rcases nonemptyResidual with ⟨pair, pairInResidual⟩
     letI : Nonempty X := ⟨pair.1⟩
-    exact (blind_kernel_obstruction definitions q target).2
+    exact dependent_blind_kernel_obstruction definitions q target
       ⟨pair, pairInResidual⟩
   · intro X C Target Gamma D finiteX definitions q target emptyBlindResidual
     letI : Fintype X := Fintype.ofFinite X
@@ -173,7 +299,7 @@ theorem directly_provable_laws :
         intro gamma
         by_contra differentValues
         exact noSeparator ⟨gamma, differentValues⟩
-      have pairInBlind : pair.1 ∈ blindResidual definitions q target :=
+      have pairInBlind : pair.1 ∈ dependentBlindResidual definitions q target :=
         ⟨pair.2, pairInKernel⟩
       rw [emptyBlindResidual] at pairInBlind
       exact pairInBlind
@@ -316,25 +442,25 @@ example :
 
 /-- Clause 4 obstructs finite and arbitrary subfamilies on a blind pair. -/
 example :
-    (blindResidual
+    (dependentBlindResidual
         (fun _ : Unit => fun _ : Bool => false)
         (fun _ : Bool => ()) (id : Concept Bool Bool)).Nonempty ∧
       (∀ (n : Nat) (codes : Fin n → Unit),
         ¬∃ recover : (Unit × (Fin n → Bool)) → Bool,
           (id : Concept Bool Bool) = recover ∘
-            languageExtension (fun _ : Bool => ())
+            dependentLanguageExtension (fun _ : Bool => ())
               (fun i => (fun _ : Unit => fun _ : Bool => false) (codes i))) ∧
       (∀ Delta : Set Unit,
         ¬∃ recover : (Unit × (Delta → Bool)) → Bool,
           (id : Concept Bool Bool) = recover ∘
-            languageExtension (fun _ : Bool => ())
+            dependentLanguageExtension (fun _ : Bool => ())
               (fun code : Delta =>
                 (fun _ : Unit => fun _ : Bool => false) code.1)) ∧
-      ¬finiteSelectionSufficient
+      ¬dependentFiniteSelectionSufficient
         (fun _ : Unit => fun _ : Bool => false)
         (fun _ : Bool => ()) (id : Concept Bool Bool) := by
   have residual :
-      (blindResidual
+      (dependentBlindResidual
         (fun _ : Unit => fun _ : Bool => false)
         (fun _ : Bool => ()) (id : Concept Bool Bool)).Nonempty := by
     refine ⟨(false, true), ⟨rfl, Bool.false_ne_true⟩, ?_⟩
@@ -342,22 +468,21 @@ example :
     intro gamma
     cases gamma
     trivial
-  letI : Nonempty Bool := ⟨false⟩
-  exact ⟨residual, (blind_kernel_obstruction
+  exact ⟨residual, dependent_blind_kernel_obstruction
     (fun _ : Unit => fun _ : Bool => false)
-    (fun _ : Bool => ()) (id : Concept Bool Bool)).2 residual⟩
+    (fun _ : Bool => ()) (id : Concept Bool Bool) residual⟩
 
 /-- Clause 5 finitely closes a nonempty baseline defect with the identity
 definition from a singleton package. -/
 example :
     (defectRelation (fun _ : Bool => ())
       (id : Concept Bool Bool)).Nonempty ∧
-    blindResidual (fun _ : Unit => (id : Concept Bool Bool))
+    dependentBlindResidual (fun _ : Unit => (id : Concept Bool Bool))
         (fun _ : Bool => ()) (id : Concept Bool Bool) = ∅ ∧
     ∃ (n : Nat)
         (codes : Fin n → Unit),
       defectRelation
-        (languageExtension (fun _ : Bool => ())
+        (dependentLanguageExtension (fun _ : Bool => ())
           (fun i => (fun _ : Unit => (id : Concept Bool Bool)) (codes i)))
         (id : Concept Bool Bool) = ∅ := by
   have baselineDefect :
@@ -365,7 +490,7 @@ example :
         (id : Concept Bool Bool)).Nonempty :=
     ⟨(false, true), rfl, Bool.false_ne_true⟩
   have noBlindPair :
-      blindResidual (fun _ : Unit => (id : Concept Bool Bool))
+      dependentBlindResidual (fun _ : Unit => (id : Concept Bool Bool))
         (fun _ : Bool => ()) (id : Concept Bool Bool) = ∅ := by
     rw [Set.eq_empty_iff_forall_notMem]
     intro pair pairInBlind
@@ -385,7 +510,8 @@ example :
     have sameIdentity :=
       congrFun (congrArg Prod.snd sameExtension) (0 : Fin 1)
     exact differentTarget (by
-      simpa [languageExtension, conceptJoin, jointReadout] using sameIdentity)
+      simpa [dependentLanguageExtension, conceptJoin, jointReadout]
+        using sameIdentity)
   · exact False.elim
 
 /-- Clause 6 is strict for two cuts that both cover a positive-weight residual. -/
@@ -517,14 +643,14 @@ theorem false_neighbor_clause3 :
 
 /-- Replacing clause 4's nonempty blind residual by an empty one is false. -/
 theorem false_neighbor_clause4 :
-    ¬(blindResidual (fun _ : Unit => (id : Concept Bool Bool))
+    ¬(dependentBlindResidual (fun _ : Unit => (id : Concept Bool Bool))
           (fun _ : Bool => ()) (id : Concept Bool Bool) = ∅ →
-        ¬finiteSelectionSufficient
+        ¬dependentFiniteSelectionSufficient
           (fun _ : Unit => (id : Concept Bool Bool))
           (fun _ : Bool => ()) (id : Concept Bool Bool)) := by
   intro falseImplication
   have emptyBlindResidual :
-      blindResidual (fun _ : Unit => (id : Concept Bool Bool))
+      dependentBlindResidual (fun _ : Unit => (id : Concept Bool Bool))
           (fun _ : Bool => ()) (id : Concept Bool Bool) = ∅ := by
     rw [Set.eq_empty_iff_forall_notMem]
     rintro pair ⟨baselineDefect, pairInKernel⟩
@@ -538,7 +664,7 @@ theorem false_neighbor_clause4 :
       exact allDefinitionsEqual ()
     exact baselineDefect.2 identityEqual
   have finiteSelection :
-      finiteSelectionSufficient
+      dependentFiniteSelectionSufficient
         (fun _ : Unit => (id : Concept Bool Bool))
         (fun _ : Bool => ()) (id : Concept Bool Bool) := by
     refine ⟨1, fun _ => (), fun readout => readout.2 0, ?_⟩
@@ -552,16 +678,16 @@ private def natPointDefinition (code : Nat) : Concept Nat Bool :=
 /-- Removing the finite-state premise from clause 5 is false: all singleton
 tests separate `Nat`, while every finite selection misses two later states. -/
 theorem false_neighbor_clause5 :
-    ¬(blindResidual natPointDefinition (fun _ : Nat => ())
+    ¬(dependentBlindResidual natPointDefinition (fun _ : Nat => ())
           (id : Concept Nat Nat) = ∅ →
         ∃ (n : Nat) (codes : Fin n → Nat),
           defectRelation
-            (languageExtension (fun _ : Nat => ())
+            (dependentLanguageExtension (fun _ : Nat => ())
               (fun i => natPointDefinition (codes i)))
             (id : Concept Nat Nat) = ∅) := by
   intro falseImplication
   have emptyBlindResidual :
-      blindResidual natPointDefinition (fun _ : Nat => ())
+      dependentBlindResidual natPointDefinition (fun _ : Nat => ())
           (id : Concept Nat Nat) = ∅ := by
     rw [Set.eq_empty_iff_forall_notMem]
     rintro pair ⟨baselineDefect, pairInKernel⟩
@@ -595,7 +721,7 @@ theorem false_neighbor_clause5 :
   have finiteDefect :
       (left, right) ∈
         defectRelation
-          (languageExtension (fun _ : Nat => ())
+          (dependentLanguageExtension (fun _ : Nat => ())
             (fun i => natPointDefinition (codes i)))
           (id : Concept Nat Nat) := by
     constructor

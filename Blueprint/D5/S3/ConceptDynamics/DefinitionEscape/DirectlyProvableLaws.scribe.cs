@@ -7,7 +7,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.ConceptDynamics.DefinitionEscape;
 internal sealed class DirectlyProvableLawsDocument : IScribeDocumentDefinition
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Nine direct DECT laws are packaged without duplicating canonical primitives.",
+        "Nine direct DECT laws are packaged in an append-only dependent-family module.",
         H("Directly Provable DECT Laws"),
         Blocks(
             Describe.Lean(
@@ -30,14 +30,21 @@ internal sealed class DirectlyProvableLawsDocument : IScribeDocumentDefinition
                         "The first conjunct applies residual_join_law. The second uses the same "
                             + "fiber-constancy equivalence packaged by target_recovery_criterion, "
                             + "including the empty-state case without adding an inhabitedness "
-                            + "premise. The fourth applies blind_kernel_obstruction after its "
-                            + "residual witness supplies an inhabited state.")),
+                            + "premise. The fourth uses the new dependent-family obstruction; "
+                            + "its residual witness supplies the inhabited state needed by the "
+                            + "canonical recovery criterion.")),
                     Paragraph(Text(
                         "The canonical defectRelation is the only target residual throughout. "
-                            + "For finite X, each baseline defect pair is assigned a package "
+                            + "Clauses four and five use dependentBlindResidual and "
+                            + "dependentLanguageExtension because package members may have "
+                            + "different codomains. On a constant codomain these are "
+                            + "definitionally equal to the frozen blindResidual and "
+                            + "languageExtension, as proved by the three specialization bridge "
+                            + "theorems. The existing jointKernel and jointReadout remain the "
+                            + "family primitives. For finite X, each baseline defect pair is "
+                            + "assigned a package "
                             + "definition that separates it; enumeration of the finite subtype "
-                            + "then gives a finite sufficient extension. No second residual, "
-                            + "kernel, or joint readout is introduced.")),
+                            + "then gives a finite sufficient extension.")),
                     Paragraph(Text(
                         "Capture uses an arbitrary nonnegative ENNReal point weight: mass is the "
                             + "sum of that weight over the residual edges captured by a set of "
@@ -152,7 +159,7 @@ internal sealed class DirectlyProvableLawsDocument : IScribeDocumentDefinition
             Arrow(Call("Prod", baselineType, finiteValues), targetType), Comma, Esc,
             target, Sp, Eq, Sp,
             Call("comp", recover,
-                Call("languageExtension", q, selectedDefinitions)));
+                Call("dependentLanguageExtension", q, selectedDefinitions)));
         Formula arbitraryDefinitions = Seq(
             Open, code, Sp, Mapsto, Sp,
             Call("apply", definitions, Call("val", code)), Close);
@@ -164,7 +171,7 @@ internal sealed class DirectlyProvableLawsDocument : IScribeDocumentDefinition
             Arrow(Call("Prod", baselineType, arbitraryValues), targetType), Comma, Esc,
             target, Sp, Eq, Sp,
             Call("comp", recover,
-                Call("languageExtension", q, arbitraryDefinitions)));
+                Call("dependentLanguageExtension", q, arbitraryDefinitions)));
         Formula dependentPackageBinders = Seq(
             Forall, Sp, state, Comma, Sp, baselineType, Comma, Sp,
             targetType, Comma, Sp, codeType, Colon, Sp, type, Comma, Esc,
@@ -176,24 +183,26 @@ internal sealed class DirectlyProvableLawsDocument : IScribeDocumentDefinition
             target, Colon, Sp, Call("Concept", state, targetType), Comma, Esc);
         Formula clause4 = Seq(
             dependentPackageBinders,
-            Call("Nonempty", Call("blindResidual", definitions, q, target)), Sp,
+            Call("Nonempty",
+                Call("dependentBlindResidual", definitions, q, target)), Sp,
             Rightarrow, Sp, Open,
             Open, Forall, Sp, n, Colon, Sp, F.Id("Nat"), Comma, Sp,
             codes, Colon, Sp, Arrow(Call("Fin", n), codeType), Comma, Esc,
             finiteRecovery, Close, Sp, Land, Sp,
             Open, Forall, Sp, deltaPackage, Colon, Sp, Call("Set", codeType),
             Comma, Esc, arbitraryRecovery, Close, Sp, Land, Sp,
-            Neg, Call("finiteSelectionSufficient", definitions, q, target), Close);
+            Neg, Call("dependentFiniteSelectionSufficient",
+                definitions, q, target), Close);
 
         Formula clause5 = Seq(
             dependentPackageBinders,
             Open, Call("Finite", state), Sp, Land, Sp,
-            Call("blindResidual", definitions, q, target), Sp, Eq, Sp,
+            Call("dependentBlindResidual", definitions, q, target), Sp, Eq, Sp,
             Emptyset, Close, Sp, Rightarrow, Sp,
             Exists, Sp, n, Colon, Sp, F.Id("Nat"), Comma, Sp,
             codes, Colon, Sp, Arrow(Call("Fin", n), codeType), Comma, Esc,
             Call("defectRelation",
-                Call("languageExtension", q, selectedDefinitions), target),
+                Call("dependentLanguageExtension", q, selectedDefinitions), target),
             Sp, Eq, Sp, Emptyset);
 
         Formula capturedDefinition = Seq(
