@@ -69,6 +69,24 @@ internal sealed class CounterfactualIdentifiabilityCriterionDocument
                         "The two-model fiber witness has identical observable marginals but "
                             + "different counterfactual tables, contradicting that required "
                             + "constancy and ruling out every such recovery map."))),
+                DescribeRole.Lemma),
+            Describe.Lean(
+                DescribeId.Create("empty-values-obstruct-fiber-factorization"),
+                DeclarationHandle.Create(
+                    DeclarationPrefix + "nonempty_value_is_necessary"),
+                H("Empty values obstruct fiber factorization"),
+                StatementSource.FromAuthor(EmptyValueObstructionFormula()),
+                AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text(
+                        "Take the coupling type and value type to be Empty, and take the "
+                            + "observable data type to be Unit. The unique target is constant "
+                            + "on every fiber because there are no couplings.")),
+                    Paragraph(Text(
+                        "A factorization would still require a total map from Unit to Empty. "
+                            + "Evaluating that map at the unique unit value produces an element "
+                            + "of Empty, so no factor exists. This is the concrete obstruction "
+                            + "excluded by the nonempty-value assumption."))),
                 DescribeRole.Lemma))));
 
     private static Formula TypeUniverse() =>
@@ -76,6 +94,9 @@ internal sealed class CounterfactualIdentifiabilityCriterionDocument
 
     private static Formula Arrow(Formula domain, Formula codomain) =>
         new Formula.TypeArrow(domain, codomain);
+
+    private static Formula Typed(Formula value, Formula type) =>
+        Seq(value, Colon, Sp, type);
 
     private static Formula NonemptyInstance(Formula type) =>
         Seq(
@@ -185,6 +206,26 @@ internal sealed class CounterfactualIdentifiabilityCriterionDocument
             Equal(
                 F.Id("CF"),
                 Seq(factor, Sp, Circ, Sp, F.Id("allSingleWorldMarginals"))))));
+    }
+
+    private static Formula EmptyValueObstructionFormula()
+    {
+        Formula empty = Emptyset;
+        Formula unit = F.Id("Unit");
+        Formula marginals = F.Id("marginals");
+        Formula target = F.Id("Q");
+        Formula factor = F.Id("f");
+
+        return Disp(Seq(
+            Begin, Grp(F.Id("gathered")),
+            Typed(marginals, Arrow(empty, unit)), Comma, Sp,
+            Typed(target, Arrow(empty, empty)), Comma, RowBreak, Grp(),
+            Call("FactorsThrough", target, marginals), Sp, Land, RowBreak, Grp(),
+            Neg, Sp, new Formula.BindMany(
+                FormulaQuantifier.Exists,
+                [Bound("f", Arrow(unit, empty))],
+                Equal(target, Seq(factor, Sp, Circ, Sp, marginals))), Dot,
+            End, Grp(F.Id("gathered"))));
     }
 
     private static Formula.BoundVariable Bound(string name, Formula domain) =>

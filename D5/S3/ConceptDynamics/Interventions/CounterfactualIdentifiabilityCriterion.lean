@@ -110,6 +110,20 @@ theorem boolean_counterfactual_not_identifiable :
     ⟨mu, M, N, hM, hN, hDifferent⟩
   exact hDifferent (constantOnFibers mu M N hM hN)
 
+/-- Empty couplings make fiber constancy vacuous, while an inhabited data type cannot
+map into an empty value type. Thus the nonempty-value assumption is necessary. -/
+theorem nonempty_value_is_necessary :
+    let marginals : Empty -> Unit := fun coupling => coupling.elim
+    let Q : Empty -> Empty := fun coupling => coupling.elim
+    Q.FactorsThrough marginals ∧
+      ¬∃ f : Unit -> Empty, Q = f ∘ marginals := by
+  dsimp [Function.FactorsThrough]
+  constructor
+  · intro coupling
+    exact coupling.elim
+  · rintro ⟨factor, _factors⟩
+    exact (factor ()).elim
+
 example :
     noEffectModel ∈ couplingFiber allSingleWorldMarginals
       (allSingleWorldMarginals noEffectModel) :=
@@ -121,5 +135,6 @@ example :
   boolean_counterfactual_not_identifiable
 
 #print axioms counterfactual_identifiable_iff_constant_on_fiber
+#print axioms nonempty_value_is_necessary
 
 end D5.S3.ConceptDynamics.Interventions.CounterfactualIdentifiabilityCriterion

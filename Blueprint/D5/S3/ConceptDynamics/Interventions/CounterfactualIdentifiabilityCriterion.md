@@ -46,9 +46,24 @@ If the complete unit-level counterfactual table could be recovered from all sing
 
 The two-model fiber witness has identical observable marginals but different counterfactual tables, contradicting that required constancy and ruling out every such recovery map.
 
+**Lemma 1.4 (Empty values obstruct fiber factorization).**
+
+$$\begin{gathered}marginals: \emptyset \to Unit, Q: \emptyset \to \emptyset,\\{}\operatorname{FactorsThrough}\left(Q, marginals\right) \land\\{}\neg \exists f \in Unit \to \emptyset,\; Q = f \circ marginals.\end{gathered}$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Interventions/CounterfactualIdentifiabilityCriterion.nonempty_value_is_necessary` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Take the coupling type and value type to be Empty, and take the observable data type to be Unit. The unique target is constant on every fiber because there are no couplings.
+
+A factorization would still require a total map from Unit to Empty. Evaluating that map at the unique unit value produces an element of Empty, so no factor exists. This is the concrete obstruction excluded by the nonempty-value assumption.
+
 ## References
 
 - Truth anchor: `D5/S3/ConceptDynamics/Interventions/CounterfactualIdentifiabilityCriterion.boolean_counterfactual_identifiable_iff_constant_on_coupling_fibers`
 - Truth anchor: `D5/S3/ConceptDynamics/Interventions/CounterfactualIdentifiabilityCriterion.boolean_counterfactual_not_identifiable`
 - Truth anchor: `D5/S3/ConceptDynamics/Interventions/CounterfactualIdentifiabilityCriterion.boolean_counterfactual_varies_on_coupling_fiber`
+- Truth anchor: `D5/S3/ConceptDynamics/Interventions/CounterfactualIdentifiabilityCriterion.nonempty_value_is_necessary`
 - Dependency: [D5/S3/ConceptDynamics/Interventions/InterventionCounterfactualSeparation](InterventionCounterfactualSeparation.md)

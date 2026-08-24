@@ -34,9 +34,24 @@ Conversely, if a candidate readout p is sufficient for every one of those canoni
 
 The state space is assumed nonempty so that canonical target-image factorizations are available. No finiteness assumption is imposed on the state or observation types, and the conclusion includes the zero horizon n = 0.
 
+**Lemma 1.3 (Empty states obstruct zero-window refinement).**
+
+$$\begin{gathered}q: \emptyset \to Unit, F: \emptyset \to \emptyset,\\{}\neg \operatorname{Refines}\left(\operatorname{canonicalTargetReadout}\left(\operatorname{orbitTarget}\left(q, F, 0\right)\right), \operatorname{finiteWindow}\left(q, F, 0\right)\right).\end{gathered}$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Sufficiency/FiniteWindowMinimalSufficiency.nonempty_state_is_necessary` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Take the state type to be Empty, the observation type to be Unit, and the horizon to be zero. The finite-window carrier Fin 1 to Unit is inhabited by the constant unit-valued window.
+
+The corresponding orbit target has empty image because there is no state. A refinement factor would map the inhabited window carrier into that empty target image, which is impossible. This is the obstruction excluded by the nonempty-state assumption.
+
 ## References
 
 - Truth anchor: `D5/S3/ConceptDynamics/Sufficiency/FiniteWindowMinimalSufficiency.descent_composes`
 - Truth anchor: `D5/S3/ConceptDynamics/Sufficiency/FiniteWindowMinimalSufficiency.finite_window_minimal_sufficiency`
+- Truth anchor: `D5/S3/ConceptDynamics/Sufficiency/FiniteWindowMinimalSufficiency.nonempty_state_is_necessary`
 - Dependency: [D5/S3/ConceptDynamics/Refinement/MultiTargetMinimalSufficiency](../Refinement/MultiTargetMinimalSufficiency.md)
 - Dependency: [D5/S3/ConceptDynamics/Sufficiency/UniversalSufficiencyFactorization](UniversalSufficiencyFactorization.md)

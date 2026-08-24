@@ -96,6 +96,19 @@ theorem finite_window_minimal_sufficiency {X O : Type _} [Nonempty X]
     simpa only [targets, finiteWindow] using
       (multi_target_minimal_sufficiency targets p).1.mp rawSufficient
 
+/-- For empty states and unit observations, the zero-horizon window carrier is inhabited
+but the canonical target image is empty, so the required refinement cannot exist. -/
+theorem nonempty_state_is_necessary :
+    let q : Empty -> Unit := fun state => state.elim
+    let F : Empty -> Empty := fun state => state.elim
+    ¬Refines
+      (canonicalTargetReadout (orbitTarget q F 0))
+      (finiteWindow q F 0) := by
+  dsimp [Refines]
+  rintro ⟨factor, _factors⟩
+  rcases (factor (fun _ => ())).property with ⟨state, _value⟩
+  exact state.elim
+
 example :
     forall i : Fin 2,
       Refines
@@ -107,5 +120,6 @@ example :
 
 #print axioms descent_composes
 #print axioms finite_window_minimal_sufficiency
+#print axioms nonempty_state_is_necessary
 
 end D5.S3.ConceptDynamics.Sufficiency.FiniteWindowMinimalSufficiency

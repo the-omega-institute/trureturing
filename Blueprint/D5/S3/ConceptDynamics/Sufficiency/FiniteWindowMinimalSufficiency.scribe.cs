@@ -56,7 +56,25 @@ internal sealed class FiniteWindowMinimalSufficiencyDocument
                             + "factorizations are available. No finiteness assumption is imposed "
                             + "on the state or observation types, and the conclusion includes the "
                             + "zero horizon n = 0."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("empty-states-obstruct-zero-window-refinement"),
+                DeclarationHandle.Create(
+                    DeclarationPrefix + "nonempty_state_is_necessary"),
+                H("Empty states obstruct zero-window refinement"),
+                StatementSource.FromAuthor(EmptyStateObstructionFormula()),
+                AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text(
+                        "Take the state type to be Empty, the observation type to be Unit, and "
+                            + "the horizon to be zero. The finite-window carrier Fin 1 to Unit "
+                            + "is inhabited by the constant unit-valued window.")),
+                    Paragraph(Text(
+                        "The corresponding orbit target has empty image because there is no "
+                            + "state. A refinement factor would map the inhabited window carrier "
+                            + "into that empty target image, which is impossible. This is the "
+                            + "obstruction excluded by the nonempty-state assumption."))),
+                DescribeRole.Lemma))));
 
     private static Formula Arrow(Formula domain, Formula codomain) =>
         new Formula.TypeArrow(domain, codomain);
@@ -138,6 +156,26 @@ internal sealed class FiniteWindowMinimalSufficiencyDocument
             Typed(horizon, naturals), Comma, RowBreak, Grp(),
             Open, componentSufficiency, Close, Sp, Land, RowBreak, Grp(),
             Open, minimality, Close, Dot,
+            End, Grp(F.Id("gathered"))));
+    }
+
+    private static Formula EmptyStateObstructionFormula()
+    {
+        Formula empty = Emptyset;
+        Formula unit = F.Id("Unit");
+        Formula observation = F.Id("q");
+        Formula update = F.Id("F");
+        Formula orbit = Call("orbitTarget", observation, update, D(0));
+        Formula window = Call("finiteWindow", observation, update, D(0));
+
+        return Disp(Seq(
+            Begin, Grp(F.Id("gathered")),
+            Typed(observation, Arrow(empty, unit)), Comma, Sp,
+            Typed(update, Arrow(empty, empty)), Comma, RowBreak, Grp(),
+            Neg, Sp, Call(
+                "Refines",
+                Call("canonicalTargetReadout", orbit),
+                window), Dot,
             End, Grp(F.Id("gathered"))));
     }
 }
