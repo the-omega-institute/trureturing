@@ -27,10 +27,8 @@ public static class CanonicalDagWriter
             .OrderBy(static node => node.RepoPath.Value, StringComparer.Ordinal)
             .ToImmutableArray();
 
-        // The DAG spans every repository file, but only managed Lean modules carry imports and so
-        // only they carry edges; everything else is an isolated vertex. Drawing those would bury
-        // the proof topology (and overrun mermaid) without adding a single relationship, so the
-        // flowchart and the depth listing take the formal nodes and the census states the rest.
+        // The DAG's domain is the managed Lean closure, so every node is formal; the filter is
+        // kept as a fail-closed guard against a node without a module name ever reappearing.
         var formal = nodes
             .Where(static node => node.ModuleName is not null)
             .ToImmutableArray();

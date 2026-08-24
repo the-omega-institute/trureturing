@@ -107,6 +107,7 @@ internal static partial class CoverAtomCommand
             baselineDocument: null);
         RequireNoConflictMarkedSources(finalEvaluation);
         RequireAlignedScribeReceipt(EvaluationFor(finalEvaluation, options.AtomId), options.Gid);
+        RequireNoReceiptIntegrityFailure(finalEvaluation);
 
         var ledgerUpdates = IngestCommand.LedgerUpdates(currentRaw, finalRaw);
         var changed = ledgerUpdates.Length > 0;
@@ -180,8 +181,8 @@ internal static partial class CoverAtomCommand
     private static InvalidOperationException AlignUsage() => new(
         "USAGE: StrataLint align-scribe-receipt --atom-id ATOM_ID --gid GID");
 
-    // align-scribe 刻意容忍同胞条目的状态漂移与 coverage 诊断(既有契约,见 CoverAtomTests
-    // AlignScribeReceiptIgnoresSiblingDrift…);唯独源文本含冲突标记时不得写账本。
+    // align-scribe 只容忍非致命 gap;源文本冲突与其余 receipt-integrity failure
+    // 均不得写账本。
     private static void RequireNoConflictMarkedSources(DigestionLedgerEvaluation evaluation)
     {
         var conflicts = evaluation.Findings

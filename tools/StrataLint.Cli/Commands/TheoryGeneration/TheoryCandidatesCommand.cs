@@ -118,11 +118,11 @@ internal static class TheoryCandidatesCommand
                     IsBaseFactAffected),
                 changes: changes,
                 isBaseFactAffected: IsBaseFactAffected);
-            if (digestion.Findings.Length > 0)
+            if (digestion.HasReceiptIntegrityFailure)
             {
                 throw new InvalidOperationException(
                     "digestion evaluation rejected the current snapshot: "
-                    + string.Join("; ", digestion.Findings));
+                    + string.Join("; ", digestion.ReceiptIntegrityFailureReasons));
             }
 
             var atomCandidates = digestion.Entries

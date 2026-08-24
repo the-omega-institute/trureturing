@@ -138,7 +138,10 @@ public sealed partial class DigestionQuarantineTests
                 entry.ProjectedStatus,
                 false,
                 entry.Receipts.UnresolvedSubitems
-                    .Select(static item => new DigestionGap("unresolved-subitem", item))
+                    .Select(static item => new DigestionGap(
+                        "unresolved-subitem",
+                        item,
+                        DigestionGapSeverity.NonFatal))
                     .ToImmutableArray()))
             .ToImmutableArray();
 

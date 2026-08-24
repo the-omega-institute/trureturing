@@ -22,6 +22,31 @@ public sealed class FrozenContentAddressTests
     }
 
     [Fact]
+    public void ContentAddressBytesArePinnedOnAFixedFixture()
+    {
+        // #3030 phase 1 invariant: shrinking the truth-DAG node domain to managed Lean modules
+        // must not move a single frozen address byte. The fixture snapshot deliberately carries
+        // non-Lean files (lean-toolchain, lakefile.toml, lake-manifest.json), so these literals
+        // span the domain change: they were captured before the shrink and must hold after it.
+        var catalog = BuildCatalog(Module("A"), Module("B", imports: new[] { "A" }));
+
+        var nodes = catalog.ClosedNodes
+            .OrderBy(static node => node.RepoPath.Value, StringComparer.Ordinal)
+            .ToArray();
+        Assert.Equal(2, nodes.Length);
+        var a = nodes[0];
+        var b = nodes[1];
+        Assert.Equal("sha256:2737dabb279d14181efe09f7531e5c4664421bdbc19bbcf8b588f8d71123954c", a.StatementId.Value);
+        Assert.Equal("sha256:0d37e262a8c68df2ebd0e192b50b7167e5b697bb36d6f0c02649ede0e9844d9e", a.WitnessId.Value);
+        Assert.Equal("sha256:e6a10a73d813973ee49f0fa6bbb0ae9d2c3b2c7931a283509c1e3e97df05acde", a.FrozenNodeId.Value);
+        Assert.Equal("sha256:211af3769c4571cac3b50ccaad89160fef4f94e790bc01fdc890d927c6b63112", b.StatementId.Value);
+        Assert.Equal("sha256:6fbd91738bbd18aeb82433e85e57a82611c1bdf456463a51dbcaedfc483a838f", b.WitnessId.Value);
+        Assert.Equal("sha256:7c7584c4367278ce869226f688f6b67bfc072742811497c19f2d7fb197a8c15e", b.FrozenNodeId.Value);
+        var prerequisite = Assert.Single(b.PrerequisiteFrozenNodeIds);
+        Assert.Equal(a.FrozenNodeId.Value, prerequisite.Value);
+    }
+
+    [Fact]
     public void FreezeCarriesDeclarationStatementIdsWithoutCopyingStatementMaterial()
     {
         var catalog = BuildCatalog(Module("A"));

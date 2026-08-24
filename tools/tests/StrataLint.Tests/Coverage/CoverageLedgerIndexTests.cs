@@ -20,7 +20,7 @@ public sealed class CoverageLedgerIndexTests
         Assert.True(RepoPath.TryCreate("D5/S0/Carrier/Missing.lean", out var missing));
 
         var exception = Assert.Throws<InvalidOperationException>(() =>
-            CoverageLedgerIndex.FromDag(dag, [missing]));
+            CoverageLedgerIndex.FromDag(dag, [missing], snapshot));
 
         Assert.Contains("absent from TruthDAG", exception.Message, StringComparison.Ordinal);
     }

@@ -7,7 +7,7 @@ using Trureturing.Truth;
 
 namespace StrataLint.Tests;
 
-public sealed class TheoryCandidatesTests
+public sealed partial class TheoryCandidatesTests
 {
     private const string MathematicalFrontierPath = "D5/X_Frontier/FrontierMathematicalOpen.lean";
     private const string DeclarationReadyFrontierPath = "D5/X_Frontier/Hearts.lean";
