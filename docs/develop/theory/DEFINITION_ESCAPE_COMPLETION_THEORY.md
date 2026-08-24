@@ -3603,3 +3603,1905 @@ DECT 因而从“如何发明一个定义”扩展到“一个知识系统如何
 - 纯定义 Lean 接口草案。
 
 后续增订继续严格追加于本节之后。
+
+---
+
+# 第四十八部　证据滤过与访问角色
+
+## 48.1 版本化证据滤过
+
+第 23 部把科学状态写成带来源账本与残差账本的有类型定义图；第 33 部给出记录接口。为了区分“系统在何时能够访问什么”，定义版本化证据滤过
+
+\[
+\boxed{
+\mathcal F_0 \subseteq \mathcal F_1 \subseteq \cdots \subseteq \mathcal F_n \subseteq \cdots
+}
+\]
+
+令 \(t_n\) 为第 \(n\) 轮承诺冻结事件在访问账本中的序号。\(\mathcal F_k\) 是前 \(k\) 个访问事件所及对象及其反身传递依赖的闭包；特别地，\(\operatorname{Dep}^*(K_n)\subseteq\mathcal F_{t_n}\)。
+
+滤过单调只表示历史可见项不被抹去；它不表示每项证据都可在每个认识论角色中重复使用。删除记录不应被解释为恢复非预见性，因为首次访问事实已经发生并应留在来源账本中。
+
+对任意对象 \(a\)，定义首次可达时刻
+
+\[
+\operatorname{FirstSeen}(a) := \inf\{k:a\in\mathcal F_k\}.
+\]
+
+若该集合为空，则取 \(\infty\)。该时刻由依赖闭包与访问账本决定，不由后来形成的理论自报。
+
+## 48.2 同一记录的角色分型
+
+定义证据角色类型
+
+\[
+\operatorname{EvidenceRole} := \{ \mathsf{Generate}, \mathsf{Tune}, \mathsf{Select}, \mathsf{Adjudicate}, \mathsf{Replicate} \}.
+\]
+
+它们分别表示：产生候选、调节候选内部参数、从候选中选择、裁决已冻结承诺、以及在复验协议下重做裁决。\(\mathsf{Replicate}\) 标签本身不证明独立性；若没有新的观察事件与显式协议独立关系，它仍只是证据复用。
+
+同一记录 \(r\) 可以在不同轮次承担不同角色，但每次角色使用必须形成事件
+
+\[
+\operatorname{UseEvent} = (\operatorname{EventId},r,n,\mathsf{role},\operatorname{Deps},\operatorname{Protocol},\operatorname{Time}).
+\]
+
+其中 \(\operatorname{EventId}\) 唯一，\(\operatorname{Deps}\) 记录该次使用触及的直接依赖对象。定义角色账本为有限有序日志；事件号严格递增，并要求轮次与 \(\operatorname{Time}\) 沿事件号不减：
+
+\[
+\mathcal L_{\mathrm{role}} := (e_1,\ldots,e_N), \qquad \operatorname{EventId}(e_i)\neq\operatorname{EventId}(e_j)\ (i\neq j).
+\]
+
+令 \(d_n\) 与 \(\tau_n\) 分别为第 \(n\) 轮裁决事件号与裁决时间，且冻结事件号 \(t_n\le d_n\)。对角色账本与该裁决快照，先定义全日志有效性
+
+\[
+\operatorname{ValidTrace}(\mathcal L_{\mathrm{role}},K_n)
+\Longleftrightarrow
+\forall e\in\mathcal L_{\mathrm{role}},\
+e.\operatorname{evidence}\in\mathcal F_{\operatorname{EventId}(e)}.
+\]
+
+这是角色账本与裁决快照的全日志有效性不变量。只有给出该证明，裁决消费者才可读取角色事件；任一已记录事件与同事件号处的 filtration 错配时，整份快照即被拒绝。
+
+在此有效性前提下，定义裁决前缀
+
+\[
+\begin{aligned}
+\mathcal L_{\mathrm{role},\preceq d_n}
+:=\{e\in\mathcal L_{\mathrm{role}}:\;&
+\operatorname{EventId}(e)\le d_n,\ e.n\le n,
+\\
+&e.\operatorname{Time}\le\tau_n\}.
+\end{aligned}
+\]
+
+该前缀只施加事件号、轮次与时间约束，不再逐事件过滤可见性。账本一致性是裁决前提，错配即拒绝整个快照，不能静默抹去事件后继续裁决。
+
+同内容的重复使用因事件号不同而不被折叠。对同一记录同一轮，角色不是单值函数，而是由该裁决快照导出的集合谓词
+
+\[
+\operatorname{Roles}_{\mathcal L}^{\preceq d_n}(r,n)
+:=\{\rho:\exists e\in\mathcal L_{\mathrm{role},\preceq d_n},\ e.\operatorname{evidence}=r,\ e.n=n,\ e.\mathsf{role}=\rho\}.
+\]
+
+角色不是记录的永久本质；它是记录、轮次、协议和访问时间的关系。一个记录在第 \(n\) 轮用于选择后，不能仅靠重新命名就在同一轮变成未见的裁决记录。账本扩展只允许在尾部追加事件号更大的事件，因此第 \(n+1\) 轮追加不能改变已冻结的 \(\mathcal L_{\mathrm{role},\preceq d_n}\)。
+
+## 48.3 角色准入与污染闭包
+
+对承诺 \(K_n\) 和记录 \(r\)，以反身传递依赖闭包定义可达关系
+
+\[
+r\leadsto K_n \quad\Longleftrightarrow\quad r\in\operatorname{Dep}^*(K_n).
+\]
+
+令一次角色事件触及承诺闭包，当且仅当其 \(\operatorname{Deps}\) 与 \(\operatorname{Dep}^*(K_n)\) 相交。由账本定义适应性使用谓词
+
+\[
+\operatorname{AdaptiveUse}_{\mathcal L}^{\preceq d_n}(r,K_n)
+\Longleftrightarrow
+\exists e\in\mathcal L_{\mathrm{role},\preceq d_n},\
+e.\operatorname{evidence}=r,\
+e.\mathsf{role}\in\{\mathsf{Generate},\mathsf{Tune},\mathsf{Select}\},\
+e.\operatorname{Deps}\cap\operatorname{Dep}^*(K_n)\neq\varnothing.
+\]
+
+定义第 \(n\) 轮裁决准入
+
+\[
+\boxed{
+\operatorname{AdmissibleJudge}_{\mathcal L}^{\preceq d_n}(r,K_n)
+\Longleftrightarrow
+\mathsf{Adjudicate}\in\operatorname{Roles}_{\mathcal L}^{\preceq d_n}(r,n)
+\ \wedge\ t_n<\operatorname{FirstSeen}(r)
+\ \wedge\ r\not\leadsto K_n
+\ \wedge\ \neg\operatorname{AdaptiveUse}_{\mathcal L}^{\preceq d_n}(r,K_n).
+}
+\]
+
+这里的轮次 \(n\)、冻结点 \(t_n\) 与裁决点 \(d_n\) 都是 \(K_n\) 冻结快照的字段，不是调用者另行传入的自由参数。若 \(\mathcal L'=\mathcal L\mathbin{+\!+}\Delta\) 且 \(\Delta\) 中事件号均大于 \(d_n\)，则上式两侧对 \(\mathcal L\) 与 \(\mathcal L'\) 逐字相同；未来追加 Tune 或 Adjudicate 事件不能翻转旧轮准入。
+
+若 \(r\) 的任何函数、摘要、标签、人工筛选结果或由其训练出的中间对象可达 \(K_n\)，则 \(r\) 属于污染闭包；只隐藏原始记录标识不能恢复准入。
+
+对记录集 \(R\)，定义
+
+\[
+\operatorname{Contam}(R) := \{a:\exists r\in R,\ r\leadsto a\}.
+\]
+
+于是裁决集 \(Z_n\) 的非预见条件可写为
+
+\[
+\operatorname{Contam}(Z_n)\cap\operatorname{Dep}^*(K_n) = \varnothing, \qquad \forall z\in Z_n,\ t_n<\operatorname{FirstSeen}(z).
+\]
+
+该条件是来源图与访问时间条件，不是关于参与者主观记忆的断言。
+
+## 48.4 已知形状与主张边界
+
+本部借用 filtration、数据分割、预注册和 adaptive data analysis 中“访问历史必须进入有效性判断”的已知形状，不主张这些单项构件首创。
+
+本部也对应需求追溯中的双向链：一个裁决结论应能回溯到承诺与记录，一个承诺也应能前向追踪到实际裁决。这里只定义可审计关系；在缺少采样机制、独立性、稳定性或泛化前件时，不推出统计置信界。
+
+\[
+\boxed{
+\text{证据是否可作前瞻裁决，不由文件名决定； 而由首次访问是否晚于冻结点、且是否不可达本轮承诺共同决定。}
+}
+\]
+
+---
+
+# 第四十九部　前视承诺与非预见裁决
+
+## 49.1 承诺对象
+
+定义第 \(n\) 轮前视承诺
+
+\[
+\boxed{
+K_n = ( \operatorname{TargetChain}_n, \operatorname{Scope}_n, \operatorname{Comparator}_n, \operatorname{TestPlan}_n, \operatorname{Baseline}_n, \operatorname{WeightSpec}_n, \operatorname{CommittedArtifact}_n ).
+}
+\]
+
+其中
+
+\[
+\operatorname{Scope}_n=(J_n,\varepsilon_n,\mathcal C_n)
+\]
+
+承接第 35 部的范围化真理记录；目标来源链指向第 23 部定义图中的目标版本及其全部上游节点；比较器给出同一记录上的判别坐标；检验计划规定记录如何进入裁决；基线规定改善相对于什么计算；权重规范可为空，否则必须携带外生来源、版本和适用范围。
+
+被承诺对象是候选预测、行动或模型分量的有限有类型束
+
+\[
+\operatorname{CommittedArtifact}_n\subseteq_{\mathrm{fin}}\bigl(\operatorname{Prediction}\sqcup\operatorname{Action}\sqcup\operatorname{ModelComponent}\bigr).
+\]
+
+写 \(\operatorname{committed}(K_n,a)\) 表示 \(a\) 属于该冻结对象束。所有被承诺对象进入 \(\operatorname{Dep}^*(K_n)\)；因此它们不能在裁决记录到达后替换而仍沿用同一承诺编号。
+
+承诺的冻结记录为
+
+\[
+\operatorname{Seal}(K_n) = (\operatorname{Digest}(K_n),t_n,\operatorname{Dep}^*(K_n)).
+\]
+
+摘要只用于识别；承诺内容及其依赖闭包仍是承重对象。
+
+## 49.2 冻结与非预见性
+
+设裁决记录 \(z_n\) 的到达时刻为访问账本中的首次可达时刻
+
+\[
+u_n:=\operatorname{FirstSeen}(z_n).
+\]
+
+定义前视冻结
+
+\[
+\begin{aligned}
+\operatorname{FrozenBefore}(K_n,z_n)
+\Longleftrightarrow{}
+&z_n\in\mathcal F_{d_n}
+\\
+&\wedge\ z_n\notin\mathcal F_{t_n}.
+\end{aligned}
+\]
+
+等价地，\(t_n<u_n\le d_n\)：裁决记录必须在裁决点正向到达，而不是仅仅在冻结点尚未出现；从未被观察的记录不满足此前件。
+
+定义非预见承诺
+
+\[
+\boxed{
+\operatorname{NonAnticipating}(K_n,z_n) \Longleftrightarrow \operatorname{FrozenBefore}(K_n,z_n) \ \wedge\ z_n\not\leadsto K_n.
+}
+\]
+
+若裁决对象是记录集 \(Z_n\)，则要求对所有 \(z\in Z_n\) 成立。时间先后是必要条件但不是充分条件：若未来记录的代理、泄漏摘要或预先可得标签进入依赖闭包，仍违反非预见性。
+
+## 49.3 回顾拟合
+
+以下 \(\operatorname{Improves}\) 与 \(\operatorname{Loss}\) 中的行动、模型和预测均指 \(K_n\) 已冻结依赖中的版本；任何事后生成版本都必须使用新的承诺标识。
+
+定义回顾拟合标签
+
+\[
+\boxed{
+\operatorname{PostdictiveFit}(a,K_n,Z_n) \Longleftrightarrow \operatorname{Improves}(a;K_n,Z_n) \ \wedge\ \neg\operatorname{NonAnticipating}(K_n,Z_n).
+}
+\]
+
+它不是“无价值”或“错误”的同义词。回顾拟合可以产生候选、解释、压缩、机制猜想和下一轮承诺；它只是不具有本轮前瞻增益的记账资格。
+
+因此必须区分
+
+\[
+\begin{aligned}
+\mathsf{DiscoveryCredit}
+&=\text{从已见记录中形成有用结构};
+\\
+\mathsf{ProspectiveCredit}
+&=\text{在冻结承诺后的新裁决记录上改善}.
+\end{aligned}
+\]
+
+前者可以进入 \(K_{n+1}\)，不得改写为 \(K_n\) 的后验预言。
+
+## 49.4 事后复制定理骨架
+
+设比较器允许逐记录输出，候选类包含对有限裁决集 \(Z_n\) 的查表复制器
+
+\[
+a_{Z_n}(z):=\operatorname{ObservedAnswer}(z).
+\]
+
+并设比较器的逐点损失满足 \(\ell(y,y)=0\)，总损失不含额外复杂度或正则罚项，聚合器把逐点全零映为总体零。若所有 \(z\in Z_n\) 已进入 \(a_{Z_n}\) 的依赖闭包，则
+
+\[
+\boxed{
+\operatorname{Loss}_{K_n}(a_{Z_n};Z_n)=0
+}
+\]
+
+可以由定义展开得到。
+
+但同时
+
+\[
+Z_n\leadsto a_{Z_n}\leadsto K'_n,
+\]
+
+故任何把 \(a_{Z_n}\) 纳入同轮承诺的 \(K'_n\) 都满足
+
+\[
+\neg\operatorname{NonAnticipating}(K'_n,Z_n).
+\]
+
+所以在上述前件下：
+
+\[
+\boxed{
+\text{回顾残差为零不蕴含前瞻增益为正。}
+}
+\]
+
+该骨架不声称所有学习器都能零误差，也不声称回顾拟合不能泛化；泛化需要另给稳定性、容量、采样或独立复验前件。
+
+## 49.5 序贯裁决的已知形状
+
+本部借用 Dawid prequential/序贯预测中“先给出预测，再由随后记录裁决”的已知顺序，也借用预注册中“分析坐标先于结果冻结”的已知形状，不主张首创。
+
+DECT 的新增工作只是把该顺序接入定义来源图、目标版本、作用域和残差账本：
+
+\[
+\boxed{
+K_n \longrightarrow Z_n \longrightarrow \operatorname{Verdict}_n,
+}
+\]
+
+且箭头不得逆接为 \(Z_n\leadsto K_n\)。
+
+---
+
+# 第五十部　目标账、议程残差与漂移守恒
+
+## 50.1 Target、Question 与 Agenda 的类型
+
+承接第 23 部的有类型定义图，定义目标节点
+
+\[
+\operatorname{Target} = ( \operatorname{Carrier}, \operatorname{Readout}, \operatorname{Success}, \operatorname{Scope}, \operatorname{Version}, \operatorname{Origin} ).
+\]
+
+定义问题节点
+
+\[
+\operatorname{Question} = ( \operatorname{TargetRef}, q, \mathcal E(q;T), \operatorname{ClosureRule} ).
+\]
+
+定义议程节点
+
+\[
+\operatorname{Agenda} = ( \operatorname{QuestionSet}, \operatorname{Eligibility}, \operatorname{OrderRule}, \operatorname{Version} ).
+\]
+
+三者不是同义词：目标规定何种结果算成功，问题记录当前表示相对该目标留下的残差，议程规定哪些问题当前可进入选择与排序。
+
+## 50.2 议程残差
+
+给定外生目的 \(G\)，令
+
+\[
+V_G:\operatorname{Agenda}\to Y_G
+\]
+
+表示在目的 \(G\) 下对议程后果的读数，令
+
+\[
+q_A:\operatorname{Agenda}\to Q_A
+\]
+
+表示当前议程语言。定义议程残差
+
+\[
+\boxed{
+\mathcal E_{\mathrm{agenda}}(q_A;G) = \ker(q_A)\setminus\ker(V_G).
+}
+\]
+
+它记录当前议程语言视为相同、但在给定目的 \(G\) 下后果不同的议程对。该残差只在 \(G\) 已给定时有意义；它不从事实记录中自动生成终极目的。
+
+## 50.3 目标变更事件与旧轮守恒
+
+定义目标变更事件
+
+\[
+\operatorname{TargetChange}_n = ( T_n,T_{n+1}, \operatorname{Reason}, \operatorname{Author}, \operatorname{Time}, \operatorname{AffectedRounds} ).
+\]
+
+合法变更产生新版本边
+
+\[
+T_n\longrightarrow T_{n+1},
+\]
+
+而不是把 \(T_n\)、比较器或范围原地替换。定义第 \(n\) 轮结算
+
+\[
+\operatorname{Settle}_n := \operatorname{Evaluate}(K_n,Z_n).
+\]
+
+若账本追加、旧承诺不可变，且后续更新只产生 \(K_{n+1}\)，则对任意 \(m>n\) 有条件骨架
+
+\[
+\boxed{
+\operatorname{Settle}_n^{(m)} = \operatorname{Settle}_n^{(n)}.
+}
+\]
+
+该等式是版本寻址与纯评价的结果；若评价器调用可变外部状态，则必须把该状态版本也纳入 \(K_n\)。
+
+## 50.4 目标漂白
+
+定义受保护坐标
+
+\[
+\operatorname{Protected}(K_n) := (\operatorname{TargetChain}_n,J_n,\varepsilon_n,\mathcal C_n,\operatorname{Comparator}_n,\operatorname{Baseline}_n,\operatorname{WeightSpec}_n).
+\]
+
+定义裁决记录到达后的受保护坐标变更
+
+\[
+\operatorname{PostArrivalProtectedChange}(K_n,K'_n;Z_n) \Longleftrightarrow \operatorname{Arrival}(Z_n)<\operatorname{Time}(K'_n) \ \wedge\ \operatorname{Protected}(K'_n)\neq\operatorname{Protected}(K_n).
+\]
+
+定义冒充归因
+
+\[
+\operatorname{AttributesToOriginalCommitment}(K_n,K'_n;Z_n)
+\Longleftrightarrow
+\operatorname{ReportedAsSuccess}\bigl(\operatorname{Evaluate}(K'_n,Z_n),K_n\bigr).
+\]
+
+目标漂白当且仅当三项同时成立：裁决记录到达后修改至少一个受保护坐标；以新坐标重评旧轮；把该重评结果归因于原承诺 \(K_n\)：
+
+其中重评必须携带实际评价见证
+
+\[
+v'_n=\operatorname{Evaluate}(K'_n,Z_n),
+\]
+
+而不能用一个可任意置真的标签代替。
+
+\[
+\boxed{
+\begin{aligned}
+\operatorname{TargetLaundering}_n(K'_n;Z_n)
+\Longleftrightarrow{}
+&\operatorname{PostArrivalProtectedChange}(K_n,K'_n;Z_n)
+\\
+&\wedge\ \operatorname{RegradesOldRound}(K_n,K'_n;Z_n)
+\\
+&\wedge\ \operatorname{AttributesToOriginalCommitment}(K_n,K'_n;Z_n).
+\end{aligned}
+}
+\]
+
+该判据不要求新旧分数不同。即使篡改后数值恰好相同，只要仍以新坐标重评旧轮并冒充原承诺结算，目标漂白仍成立。
+
+合法目标学习不被禁止；它必须登记为 \(K_{n+1}\) 的来源，而不能消除 \(K_n\) 已经发生的失败。
+
+该定义细化第 38 部的表面消残：目标漂白是通过回写裁决坐标来消残的版本化特例。
+
+## 50.5 定向算子与 Hume 边界
+
+给定目的 \(G\)，定义可准入目标集
+
+\[
+\operatorname{AdmTarget}(G) := \{T:\operatorname{Eligible}(T,G)\}.
+\]
+
+定向关系不由 \(G\) 自生，而消费外生只读规范包
+
+\[
+\operatorname{OrientationSpec}_G := (\preceq_G,\operatorname{Source},\operatorname{Version},\operatorname{Scope},\operatorname{PreorderProof}).
+\]
+
+其中 \(\operatorname{PreorderProof}\) 证明 \(\preceq_G\) 在声明范围内为预序。
+
+\[
+D_G:=\operatorname{AdmTarget}(G)\cap\operatorname{Scope}(\operatorname{OrientationSpec}_G),
+\qquad
+\operatorname{PreorderProof}:\operatorname{Preorder}(\preceq_G\!\upharpoonright_{D_G}).
+\]
+
+因此关系在 \(D_G\) 外不提供比较事实；\(\operatorname{Scope}\) 是反身律、传递律与关系闭包的共同前件，不是未消费的元数据。定义定向算子为该规范包的投影
+
+\[
+\boxed{
+\operatorname{Orient}_G(\operatorname{OrientationSpec}_G) := \preceq_G.
+}
+\]
+
+它只在外生且只读的 \(G\) 诱导的可准入集合内排序，不从记录中创造 \(G\)，也不把 \(G\) 改写成事实命题。
+
+本部借用目的—手段区分、需求追溯与变更控制的已知形状，并保留 Hume 边界：从事实相容族到终极目的不存在由本文定义出的无参数规范映射。任何
+
+\[
+\operatorname{Fact}_{\mathcal O}\to G
+\]
+
+都必须显式携带额外规范前件、授权或价值来源。
+
+---
+
+# 第五十一部　证据管辖域与外推证书
+
+## 51.1 范围化预测读数
+
+第 35 部把真理记录写成 \((J,\varepsilon,\mathcal C)\) 下的预测—观察交换。为研究扩域，设模型空间为 \(\Theta\)，对操作域 \(J\subseteq I\) 定义联合预测读数
+
+\[
+P_J:\Theta\to R^J, \qquad P_J(\theta):=(P(\theta,i))_{i\in J}.
+\]
+
+若 \(J\subseteq J'\)，存在限制映射
+
+\[
+\operatorname{res}_{J',J}:R^{J'}\to R^J
+\]
+
+满足
+
+\[
+P_J = \operatorname{res}_{J',J}\circ P_{J'}.
+\]
+
+因此
+
+\[
+\ker P_{J'} \subseteq \ker P_J.
+\]
+
+## 51.2 扩域逃逸对
+
+定义从 \(J\) 扩张到 \(J'\) 的扩域逃逸关系
+
+\[
+\boxed{
+\mathcal E_{\mathrm{expand}}(P;J,J') := \ker P_J\setminus\ker P_{J'}.
+}
+\]
+
+其元素是旧域内预测完全相同、但在新域中分离的模型对。它精确记录旧证据管辖域没有裁决、扩域后重新出现的区分。
+
+核差恒等式直接给出
+
+\[
+\mathcal E_{\mathrm{expand}}(P;J,J')=\varnothing \Longleftrightarrow \ker P_J\subseteq\ker P_{J'}.
+\]
+
+结合反向包含，可得空逃逸等价于两域在模型区分能力上核相同。该结论只谈预测纤维，不自动给出现实记录上的误差界。
+
+## 51.3 范围运输与证书
+
+定义范围运输候选
+
+\[
+\tau_{J,J'}: \operatorname{TruthRecord}_{J,\varepsilon,\mathcal C} \to \operatorname{Claim}_{J'}.
+\]
+
+外推证书至少为
+
+\[
+\boxed{
+\operatorname{TransportCert}_{J\to J'} = ( \operatorname{Receipt}_{J}, \operatorname{TransportAssumption}_{J\to J'}, \operatorname{FalsifiablePrediction}_{J'\setminus J} ).
+}
+\]
+
+其中旧域收据锁定原版本、原记录与原误差，并保存被运输主张的内容地址；运输假设说明哪些结构在域变换下保持；可失败预测必须在 \(J'\setminus J\) 上预登记定义域，并刻画至少一个非空失败事件。
+
+若运输还依赖选择机制、干预一致性、协变量变换或损失稳定性，这些必须进入运输假设，不得藏在“同类情形”一词中。
+
+给定证书 \(\kappa\)、主张 \(c\) 及其版本 \(\nu\)，定义有效外推证书
+
+\[
+\boxed{
+\begin{aligned}
+\operatorname{ValidTransportCert}(\kappa,c;J,J',\nu)
+\Longleftrightarrow{}
+&\operatorname{ReceiptMatches}
+(\kappa.\operatorname{Receipt},\operatorname{ClaimAddress}(c),J,\nu)
+\\
+&\wedge\
+\bigl(
+\operatorname{GivenPremises}(\kappa)
+\wedge\kappa.\operatorname{TransportAssumption}
+\Rightarrow \operatorname{ClaimOn}(c,J')
+\bigr)
+\\
+&\wedge\
+\forall z\in J'\setminus J,\
+\operatorname{PredictionDefined}(\kappa,z)
+\\
+&\wedge\
+\exists z\in J'\setminus J,\
+\operatorname{PredictionDefined}(\kappa,z)
+\wedge\operatorname{PredictionFails}(\kappa,z)
+\wedge\operatorname{Refutes}(z,\kappa,c).
+\end{aligned}
+}
+\]
+
+第一项把收据同时绑定原域、版本和该主张的内容地址；第二项只给出保留明列前件的条件运输；后两项分别要求预测覆盖整个新域差并存在被预先刻画的失败见证。故把 \(\operatorname{PredictionFails}\) 取恒假不再能真空满足证书。定义
+
+\[
+\operatorname{HasValidTransportCert}(c;J,J')
+\Longleftrightarrow
+\exists\kappa,\operatorname{ValidTransportCert}
+(\kappa,c;J,J',\operatorname{Version}(c)).
+\]
+
+这个存在闭包由同一 claim-bound 谓词构造，不接收外部布尔门。仅有三元组数据而不满足此谓词，不构成外推门票。
+
+## 51.4 越权主张与重新打开
+
+令运输报告 \(q=(c,J',\Gamma_q)\)，其中 \(\Gamma_q\) 是报告保留的条件。定义有许可证报告
+
+\[
+\begin{aligned}
+\operatorname{LicensedReport}(q;J,J')
+\Longleftrightarrow
+\exists\kappa,\ {}
+&\operatorname{ValidTransportCert}
+(\kappa,c;J,J',\operatorname{Version}(c))
+\\
+&\wedge\
+\bigl(\Gamma_q\Longleftrightarrow
+\operatorname{GivenPremises}(\kappa)
+\wedge\kappa.\operatorname{TransportAssumption}\bigr).
+\end{aligned}
+\]
+
+因此无条件报告取 \(\Gamma_q=\top\) 时，必须同时给出全部前件与运输假设的证明；前件未证时，报告只能原样保留该合取作为条件。定义越权普遍化
+
+\[
+\boxed{
+\operatorname{Overreach}(q;J,J')
+\Longleftrightarrow
+J\subsetneq J'
+\ \wedge\ \operatorname{Scope}(c)=J
+\ \wedge\ q\text{ 被报告为覆盖 }J'
+\ \wedge\ \neg\operatorname{LicensedReport}(q;J,J').
+}
+\]
+
+旧域相符
+
+\[
+S\models_{J,\varepsilon}w
+\]
+
+一般不蕴含
+
+\[
+S\models_{J',\varepsilon}w.
+\]
+
+条件反例骨架：只要 \(J'\setminus J\neq\varnothing\) 且记录空间允许在新操作上出现超过 \(\varepsilon\) 的偏差，就可保持 \(J\) 上全部读数不变而使 \(J'\) 上失败。
+
+所以扩域必须重新打开第 43 部的局部完成：
+
+\[
+\boxed{
+\operatorname{Closed}_{J}(S,T)\not\Rightarrow \operatorname{Closed}_{J'}(S,T).
+}
+\]
+
+若有运输证书及其全部前件，才可去条件化；否则只能建立并按原条件报告特定的条件运输定理。
+
+## 51.5 已知形状与时域特例
+
+本部借用 external validity、transportability、分布迁移和契约作用域的已知形状，不主张首创。DECT 的工作是把它们写成核差、范围化真理记录与可失败证书之间的接口。
+
+第 8 部的时域扩张是本结构的特例。令
+
+\[
+J_N:=\{0,1,\ldots,N\}, \qquad P_{J_N}(x):=(q(\tau^k x))_{k\le N},
+\]
+
+则对 \(N<N'\)，
+
+\[
+\mathcal E_{\mathrm{expand}}(P;J_N,J_{N'}) = \ker T_N\setminus\ker T_{N'}.
+\]
+
+它正是旧时域尚未分离、延长时域后首次暴露的预测逃逸对。
+
+---
+
+# 第五十二部　反事实增益账
+
+## 52.1 两个反事实基线
+
+每轮至少登记两个比较对象：
+
+\[
+a_{\varnothing} = \text{什么都不做},
+\]
+
+以及
+
+\[
+a_{\min} = \text{满足本轮充分阈值的最低全生命周期成本替代}.
+\]
+
+定义充分替代集合
+
+\[
+\operatorname{SuffAlt}(K_n) := \{a:\operatorname{MeetsCommitment}(a,K_n)\}.
+\]
+
+若该集合非空且成本下确有最小元，则
+
+\[
+a_{\min} \in \arg\min_{a\in\operatorname{SuffAlt}(K_n)} \operatorname{LifecycleCost}(a).
+\]
+
+最小元的存在不是无条件定理；无限候选、不可比较成本或未达下确界时，只能记录候选前沿。
+
+## 52.2 五维增益向量
+
+对承诺 \(K_n\) 下每个行动 \(a\)，先在同一公共绝对坐标系中定义
+
+\[
+\mathbf v_{K_n}(a) := \bigl(I_n(a),R_n(a),T_n(a),C_n(a),Q_n(a)\bigr).
+\]
+
+五项依次为信息读数、目标残差捕获、迁移读数、全生命周期成本及失败、误用与不可逆风险。每一坐标必须对全部行动共用来源、量纲、估计方法和版本；没有概率模型时，\(I_n\) 可用明确的分划细化或可区分对增量替代，不应冒充 Shannon 或 Bayes 量。
+
+对行动 \(a\) 与基线 \(b\)，定义逐对差分增益账
+
+\[
+\boxed{
+\mathbf G_n(a\mid b) := \Delta_n(a\mid b) := \mathbf v_{K_n}(a)-\mathbf v_{K_n}(b) = ( \Delta I, \Delta R, \Delta T, \Delta C, \Delta Q ).
+}
+\]
+
+在各坐标为加法群的前件下，该定义直接给出
+
+\[
+\Delta_n(a\mid a)=0, \qquad \Delta_n(a\mid b)+\Delta_n(b\mid c)=\Delta_n(a\mid c).
+\]
+
+## 52.3 Pareto 裁决
+
+定义弱支配
+
+\[
+a\succeq_{K_n} b
+\]
+
+当且仅当公共绝对坐标满足
+
+\[
+I_n(a)\ge I_n(b),\ R_n(a)\ge R_n(b),\ T_n(a)\ge T_n(b),\ C_n(a)\le C_n(b),\ Q_n(a)\le Q_n(b).
+\]
+
+至少一项严格时定义严格支配 \(a\succ_{K_n}b\)。
+
+若各坐标关系为预序，则 \(\succeq_{K_n}\) 在行动上为预序。令 \(a\sim_v b\Longleftrightarrow\mathbf v_{K_n}(a)=\mathbf v_{K_n}(b)\)；当各坐标为偏序时，\(\succeq_{K_n}\) 在行动等价类 \(A/{\sim_v}\) 上诱导偏序。不同但同向量的行动在取商前不可宣称反对称。
+
+不被其他候选严格支配的行动构成
+
+\[
+\operatorname{GainFrontier}(K_n).
+\]
+
+相对于当前行动 \(a_0\)，纯 Pareto 账最多给出描述性谓词
+
+\[
+\operatorname{NoDominatingCandidate}(K_n,a_0)
+\Longleftrightarrow
+a_0\in\operatorname{Candidates}(K_n)
+\ \wedge\ \nexists a\in\operatorname{Candidates}(K_n),\ a\succ_{K_n}a_0.
+\]
+
+它要求 \(a_0\) 本身属于当前候选集，并只说明它位于当前候选前沿；不可比候选仍可能满足承诺并带来更高收益，故该谓词不构成停止的充分条件。
+
+没有来源权重时，不把五维账压成单标量。若确需
+
+\[
+U_w(\mathbf G)= w_I\Delta I+w_R\Delta R+w_T\Delta T-w_C\Delta C-w_Q\Delta Q,
+\]
+
+则权重 \(w\) 必须有外生来源、版本和适用范围，并冻结在 \(K_n\) 中。否则标量排名只是未登记的目标变更。
+
+## 52.4 前瞻科学增益
+
+设 \(Z_n\) 是满足第 49 部非预见条件的新裁决记录。定义行动 \(a\) 相对基线 \(b\) 的前瞻改善
+
+\[
+\operatorname{ProspectiveImprove}_n(a\mid b) \Longleftrightarrow \operatorname{Loss}_{K_n}(a;Z_n) < \operatorname{Loss}_{K_n}(b;Z_n).
+\]
+
+定义本轮可计科学增益
+
+\[
+\boxed{
+\begin{aligned}
+\operatorname{ScientificGain}_n(a\mid b)
+\Longleftrightarrow{}
+&\operatorname{committed}(K_n,a)
+\ \wedge\ b\in\operatorname{Baselines}(K_n)
+\\
+&\wedge\ \operatorname{NonAnticipating}(K_n,Z_n)
+\ \wedge\ \operatorname{ProspectiveImprove}_n(a\mid b).
+\end{aligned}
+}
+\]
+
+该定义只给出记账资格，不自动给出显著性、置信度或长期稳定性。若比较器本身是向量，则改善按 \(K_n\) 中预先冻结的偏序判断。
+
+应同时报告
+
+\[
+\mathbf G_n(a\mid a_{\varnothing}) \quad\text{与}\quad \mathbf G_n(a\mid a_{\min}),
+\]
+
+以区分“比不做更好”与“比最便宜充分替代更好”。
+
+## 52.5 适应性复用、VOI 与 Goodhart 边界
+
+令 \(\mathcal L_{\mathrm{role},\preceq d_n}\) 为第 48 部绑定 \(K_n\) 裁决点的事件前缀，并要求 \(\operatorname{ValidTrace}(\mathcal L_{\mathrm{role}},K_n)\) 的证明。对同一证据在承诺闭包上的反复适应性使用，定义复用深度
+
+\[
+\operatorname{ReuseDepth}(r,K_n)
+:=\left|\left\{
+e\in\mathcal L_{\mathrm{role},\preceq d_n}:
+e.\operatorname{evidence}=r,\
+e.\mathsf{role}\in\{\mathsf{Generate},\mathsf{Tune},\mathsf{Select}\},\
+e.\operatorname{Deps}\cap\operatorname{Dep}^*(K_n)\neq\varnothing
+\right\}\right|\in\mathbb N.
+\]
+
+唯一事件号使内容相同但实际发生多次的适应性使用分别计数；有限前缀保证该深度落在折减函数的自然数定义域。\(\mathsf{Adjudicate}\) 与 \(\mathsf{Replicate}\) 不增加该深度，因为它们不是候选生成、调参或选择动作。
+
+对预先选定的单一坐标或逐坐标，可以登记折减函数
+
+\[
+\delta:\mathbb N\to[0,1], \qquad \operatorname{CreditedGain} = \delta(\operatorname{ReuseDepth})\cdot\operatorname{ObservedGain}.
+\]
+
+但在没有稳定性、隐私、容量或选择机制定理时，\(\delta\) 只是治理账本，不是统计保证；其正确形状标为 open。
+
+本部借用贝叶斯实验设计与 value of information 中“行动价值相对反事实和信息结构计算”的已知形状。若给定先验 \(\pi\)、损失 \(\ell\) 与采样模型，才可定义特定 VOI；本文不在缺少这些前件时声称 Bayes 最优。
+
+本部也借用 Goodhart 定律的警戒形状：一旦得分坐标同时成为自适应优化对象，分数上升不能独立证明目标改善。DECT 的处置不是禁止指标，而是冻结比较器、保留目标账并要求新记录裁决。
+
+---
+
+# 第五十三部　科学循环的承诺补型
+
+## 53.1 裁决六元循环
+
+第 39 部定义
+
+\[
+(\mathsf{Define},\mathsf{Observe},\mathsf{Predict}, \mathsf{Compare},\mathsf{Revise},\mathsf{Reflect}).
+\]
+
+为使其可裁决，本部令 \(\mathsf{Define}\) 先产生带预测、行动或模型分量的有限有类型候选束，再由 \(\mathsf{Commit}\) 把选定对象连同目标、范围、比较器、计划、基线和权重规范封入承诺：
+
+\[
+\mathsf{Define}:\Sigma_n\to\operatorname{CandidateBundle}_n, \qquad \mathsf{Commit}:\operatorname{CandidateBundle}_n\to(K_n,\operatorname{Seal}(K_n)).
+\]
+
+\[
+\boxed{
+\Sigma_n\xrightarrow{\mathsf{Define}}\operatorname{CandidateBundle}_n\xrightarrow{\mathsf{Commit}}K_n\xrightarrow{\mathsf{Observe}}Z_n\xrightarrow{\mathsf{Compare}}\operatorname{Verdict}_n\xrightarrow{\mathsf{Revise}}\Sigma_{n+1}^{-}\xrightarrow{\mathsf{Reflect}}\Sigma_{n+1}.
+}
+\]
+
+并要求 \(\operatorname{CommittedArtifact}_n\subseteq\operatorname{CandidateBundle}_n\)，且 \(\operatorname{Seal}(K_n)\) 保存整个 \(K_n\)、冻结事件号与 \(\operatorname{Dep}^*(K_n)\)，其摘要以这三者为完整输入。故同一冻结号和同一有限子束若带有不同坐标或依赖闭包，也不能复用同一 Seal。该包含关系是 \(\mathsf{Commit}\) 的输出定律，不是下游证明者可另行选择的谓词。这不是删除预测；预测从可随时变化的中间动作变成承诺 \(K_n\) 的冻结字段，且不能在观察 \(Z_n\) 后从表外补入。
+
+## 53.2 单轮状态转换
+
+令 \(s_n\) 为第 \(n\) 轮 \(\mathsf{Define}\) 开始前的最后事件号。以 \(s_n\) 的事件前缀而非整轮最终日志接入内涵账本：
+
+\[
+\mathcal L_n:=\mathcal L_{\mathrm{source},\preceq s_n}\sqcup\mathcal L_{\mathrm{role},\preceq s_n}.
+\]
+
+定义轮状态
+
+\[
+\Sigma_n = (S_n,\mathcal F_{s_n},\mathcal L_{\mathrm{source},\preceq s_n}\sqcup\mathcal L_{\mathrm{role},\preceq s_n},\mathcal R_n).
+\]
+
+其中 \(s_n<t_n\le d_n\)：\(s_n\) 固定 Define 输入，\(t_n\) 固定 Commit，\(d_n\) 固定 Compare 所消费的裁决快照。旧轮结算保存 \((K_n,\mathcal L_{\mathrm{role},\preceq d_n})\) 的内容地址；后续只在尾部追加更大事件号，不能把同轮 Define 之后或下一轮事件回填进 \(\Sigma_n\) 或旧裁决。
+
+各步为：
+
+\[
+\mathsf{Define}(\Sigma_n) = \operatorname{CandidateBundle}_n\text{，依据旧残差 }\mathcal R_n\text{ 产生候选与问题版本};
+\]
+
+\[
+\mathsf{Commit}(\operatorname{CandidateBundle}_n) = (K_n,\operatorname{Seal}(K_n));
+\]
+
+\[
+\mathsf{Observe}(w,\operatorname{TestPlan}_n) = Z_n;
+\]
+
+\[
+\mathsf{Compare}(K_n,Z_n) = \operatorname{Verdict}_n;
+\]
+
+\[
+\mathsf{Revise}(S_n,\operatorname{Verdict}_n) = (S_{n+1}^{-},K_{n+1}^{\mathrm{proposal}});
+\]
+
+\[
+\mathsf{Reflect}(S_{n+1}^{-}) = S_{n+1}.
+\]
+
+其中 \(K_{n+1}^{\mathrm{proposal}}\) 尚不是已冻结承诺；下一轮只有在新的 Commit 事件后才获得裁决坐标。
+
+## 53.3 原坐标比较与不可回写
+
+定义原坐标原则
+
+\[
+\boxed{
+\operatorname{Verdict}_n = \operatorname{Evaluate}(K_n,Z_n),
+}
+\]
+
+而不是
+
+\[
+\operatorname{Evaluate}(K_{n+1},Z_n).
+\]
+
+若 Revise 修改目标、比较器、范围、权重或基线，则这些修改只进入 \(K_{n+1}^{\mathrm{proposal}}\)。在追加账本、版本不可变与纯评价前件下，得到条件骨架
+
+\[
+\operatorname{Evaluate}(K_n,Z_n) = \operatorname{Evaluate}(\operatorname{Lookup}(n),Z_n)
+\]
+
+对所有后续轮次保持不变。
+
+因此循环允许学习，但不允许让学习结果穿越回本轮冻结点。
+
+## 53.4 Gain/cost 停止条件的接入
+
+第 43 部的
+
+\[
+\operatorname{Stop}_{L}(S)
+\]
+
+使用 \(\operatorname{Gain}/c\) 标量。本增订给出其裁决层前件：只有在增益坐标、成本口径、风险口径和权重来源已冻结时，该比率才有确定含义。
+
+无来源权重时，\(\operatorname{NoDominatingCandidate}\) 只返回前沿状态，不输出 Stop。若要得到停止判词，必须消费第 50.5 部的外生 \(\operatorname{OrientationSpec}_G\)，或由 \(K_n\) 中已有来源、版本与范围的 \(\operatorname{WeightSpec}_n\) 诱导同类预序。令
+
+\[
+\operatorname{Feas}_n
+:=\operatorname{Candidates}(K_n)\cap\operatorname{SuffAlt}(K_n)
+\]
+
+并令 \(\operatorname{Current}(K_n)\) 为可空的当前行动。空候选束、空可行集或没有当前行动都是合法轮次；只有停止判词才要求存在当前可行行动。对外生关系 \(\preceq_G\) 定义
+
+\[
+\boxed{
+\begin{aligned}
+&\operatorname{OrientedStop}(K_n,\operatorname{OrientationSpec}_G)
+\\
+&\Longleftrightarrow
+\exists a_{\mathrm{cur}},\
+\operatorname{Current}(K_n)=\operatorname{some}(a_{\mathrm{cur}})
+\\
+&\qquad\wedge\ a_{\mathrm{cur}}\in\operatorname{Feas}_n
+\\
+&\qquad\wedge\ \nexists a\in\operatorname{Feas}_n,\
+a_{\mathrm{cur}}\prec_G a.
+\end{aligned}
+}
+\]
+
+这里可行性先于偏好比较，且关系只在规范声明范围与 \(\operatorname{AdmTarget}(G)\) 内求值。于是候选只有 \(a_{\min}=(1,1,0)\)、不做为 \((0,0,0)\) 的反例中，若当前仍是不做，则 \(a_{\mathrm{cur}}\notin\operatorname{Feas}_n\)，不能裁停；纯 Pareto 不可比也只产生 \(\operatorname{NoDominatingCandidate}\)。若当前行动为空或 \(a_{\min}\) 不存在，则记录当前充分替代前沿而不裁停。停止仍是当前承诺、候选集与证据状态下的局部结论；范围扩张、目标变更或新方法出现时按第 43 部重新打开。
+
+## 53.5 三类合法产出
+
+每轮产出分为：
+
+\[
+\begin{aligned}
+\mathsf{ProspectiveResult}
+&:\operatorname{ScientificGain}_n\text{ 成立};
+\\
+\mathsf{PostdictiveDiscovery}
+&:\operatorname{PostdictiveFit}\text{ 成立但形成 }K_{n+1};
+\\
+\mathsf{Unresolved}
+&:\text{既未改善，也未形成可检验的新承诺}.
+\end{aligned}
+\]
+
+三类都可进入历史账本，但只能第一类记为本轮前瞻科学增益。第二类的价值在于生成下一轮可失败预测；第三类保留失败与残差，防止静默消失。
+
+\[
+\boxed{
+\text{Revise 可以改变下一轮的尺； 不能改变上一轮曾用过哪把尺。}
+}
+\]
+
+---
+
+# 第五十四部　接线注记、形式化接口与裁决结算
+
+## 54.1 与既有各部的断链接线
+
+- 第 3 部把泄漏定位为来源性质；第 48—49 部补上记录角色、访问滤过与裁决记录不可达承诺的时间化判据。
+- 第 8 部的时域逃逸由第 51 部取 \(J_N\subset J_{N'}\) 得到，成为证据管辖域扩张的特例。
+- 第 14 部的价值函数只有在权重来源、版本和范围冻结于 \(K_n\) 时才可作标量裁决；否则退回第 52 部公共绝对坐标上的 Pareto 账。
+- 第 22 部的内涵定义保存来源与依赖；第 48 部的有限有序角色日志以带标签分量类型化进入 \(\mathcal L_n\)，角色集合、复用深度与裁决准入均由 \(K_n\) 的事件前缀导出，未来追加不参与旧轮判词。
+- 第 23 部的有类型定义图承载 Target、Question、Agenda 及其版本边；候选预测、行动或模型分量以有限子束从 \(\operatorname{CandidateBundle}_n\) 投影为 \(\operatorname{CommittedArtifact}_n\)，连同包含见证冻结进 \(K_n\)。
+- 第 24 部的实验计划 \(\pi\) 进入 \(K_n\) 的 TestPlan；模型纤维不得与裁决有效性混为一谈。
+- 第 25 部说明压平会遗失来源；故承诺不能只保存最终评分函数，必须保存依赖闭包。
+- 第 26—27 部的对象层与方法层残差继续生成候选，但候选何时可获前瞻信用由裁决层另行决定。
+- 第 33 部的记录接口提供 Observe 与 Predict 的共同载体；第 49 部在两者之间加入不可逆的冻结点。
+- 第 34 部的客观性自然性不替代非预见性；跨协议相容与未见记录裁决是两个独立条件。
+- 第 35 部的 \((J,\varepsilon,\mathcal C)\) 成为承诺范围与外推证书的源域收据；收据还绑定被运输 claim 的内容地址，预测须在非空新域差上有定义与失败见证，未证前件必须保留在报告条件中。
+- 第 38 部的表面消残在第 50 部被细化为三合取目标漂白事件，不以分数是否变化代替保护坐标是否被回写。
+- 第 39 部的六元结构由第 53 部补成带 Commit 的裁决循环；Define 先产有限有类型候选束，Commit 再以输出定律把其中对象与对应 Seal 封入承诺。
+- 第 43 部的 Gain/cost 停止接到第 52 部增益账与第 50.5 部外生定向规范；纯 Pareto 只报告无支配候选，不构成停止充分条件；扩域、改目标或新证据仍触发重新打开。
+
+## 54.2 参照系与新颖性边界
+
+本增订分别借用下列成熟构件的已知形状：
+
+- Dawid prequential/序贯预测的先预测后观察；
+- 预注册的结果前冻结；
+- adaptive data analysis 的适应性访问风险；
+- external validity 与 transportability 的范围运输；
+- 贝叶斯实验设计与 VOI 的反事实行动比较；
+- Goodhart 定律的指标内生化警戒；
+- 需求追溯与变更控制的版本、来源和不可回写账。
+
+本文不主张这些构件单项首创。把证据滤过、前视承诺、目标漂移守恒、外推核差、反事实增益账和递归定义循环合成为一个 DECT 裁决层，当前只标记为
+
+\[
+\boxed{
+\mathsf{suspected\text{-}novel}
+}
+\]
+
+且未做系统文献检索。任何整体新颖性声明在完成系统检索前均为 open。
+
+## 54.3 最小可形式化定义清单
+
+建议下游优先切分以下纯定义或条件骨架：
+
+```lean
+universe u v w
+
+namespace D5.S3.ConceptDynamics.DefinitionEscape.Adjudication
+
+inductive EvidenceRole
+  | generate | tune | select | adjudicate | replicate
+
+structure UseEvent
+    (EventId Evidence Round Artifact Protocol Time : Type u) where
+  eventId : EventId
+  evidence : Evidence
+  round : Round
+  role : EvidenceRole
+  dependencies : Set Artifact
+  protocol : Protocol
+  usedAt : Time
+
+structure EvidenceFiltration
+    (EventId Evidence : Type u) [Preorder EventId] where
+  seen : EventId → Set Evidence
+  monotone : ∀ {i j}, i ≤ j → seen i ⊆ seen j
+
+structure RoleLedger
+    (EventId Evidence Round Artifact Protocol Time : Type u)
+    [LinearOrder EventId] [Preorder Round] [Preorder Time] where
+  events : List (UseEvent EventId Evidence Round Artifact Protocol Time)
+  uniqueEventIds : (events.map fun e => e.eventId).Nodup
+  strictEventOrder :
+    events.Pairwise (fun e e' => e.eventId < e'.eventId)
+  indexRespectsRound : ∀ {e e'}, e ∈ events → e' ∈ events →
+    e.eventId ≤ e'.eventId → e.round ≤ e'.round
+  indexRespectsTime : ∀ {e e'}, e ∈ events → e' ∈ events →
+    e.eventId ≤ e'.eventId → e.usedAt ≤ e'.usedAt
+
+def RolePrefixAtEvent
+    {EventId Evidence Round Artifact Protocol Time : Type u}
+    [LinearOrder EventId] [Preorder Round] [Preorder Time]
+    (L : RoleLedger EventId Evidence Round Artifact Protocol Time)
+    (cutoff : EventId) :
+    Set (UseEvent EventId Evidence Round Artifact Protocol Time) :=
+  {e | e ∈ L.events ∧ e.eventId ≤ cutoff}
+
+def RolePrefixAtRound
+    {EventId Evidence Round Artifact Protocol Time : Type u}
+    [LinearOrder EventId] [Preorder Round] [Preorder Time]
+    (L : RoleLedger EventId Evidence Round Artifact Protocol Time)
+    (n : Round) :
+    Set (UseEvent EventId Evidence Round Artifact Protocol Time) :=
+  {e | e ∈ L.events ∧ e.round ≤ n}
+
+def RolePrefixAtTime
+    {EventId Evidence Round Artifact Protocol Time : Type u}
+    [LinearOrder EventId] [Preorder Round] [Preorder Time]
+    (L : RoleLedger EventId Evidence Round Artifact Protocol Time)
+    (cutoff : Time) :
+    Set (UseEvent EventId Evidence Round Artifact Protocol Time) :=
+  {e | e ∈ L.events ∧ e.usedAt ≤ cutoff}
+
+structure AdjudicationSnapshot
+    (EventId Evidence Round Artifact Time : Type u)
+    [Preorder EventId] [Preorder Time] (n : Round) where
+  freezeEvent : EventId
+  decisionEvent : EventId
+  frozenAt : Time
+  decidedAt : Time
+  freezeBeforeDecision : freezeEvent ≤ decisionEvent
+  timeBeforeDecision : frozenAt ≤ decidedAt
+  filtration : EvidenceFiltration EventId Evidence
+  dependencyClosure : Set Artifact
+  evidenceDependencies : Set Evidence
+
+def AppendOnlyExtension
+    {EventId Evidence Round Artifact Protocol Time : Type u}
+    [LinearOrder EventId] [Preorder Round] [Preorder Time]
+    {n : Round}
+    (old new : RoleLedger EventId Evidence Round Artifact Protocol Time)
+    (K : AdjudicationSnapshot EventId Evidence Round Artifact Time n) : Prop :=
+  ∃ tail, new.events = old.events ++ tail ∧
+    ∀ e, e ∈ tail → K.decisionEvent < e.eventId
+
+def ValidTrace
+    {EventId Evidence Round Artifact Protocol Time : Type u}
+    [LinearOrder EventId] [Preorder Round] [Preorder Time]
+    {n : Round}
+    (L : RoleLedger EventId Evidence Round Artifact Protocol Time)
+    (K : AdjudicationSnapshot EventId Evidence Round Artifact Time n) : Prop :=
+  ∀ e, e ∈ L.events → e.evidence ∈ K.filtration.seen e.eventId
+
+def InAdjudicationPrefix
+    {EventId Evidence Round Artifact Protocol Time : Type u}
+    [LinearOrder EventId] [Preorder Round] [Preorder Time]
+    {n : Round}
+    (L : RoleLedger EventId Evidence Round Artifact Protocol Time)
+    (K : AdjudicationSnapshot EventId Evidence Round Artifact Time n)
+    (_validTrace : ValidTrace L K)
+    (e : UseEvent EventId Evidence Round Artifact Protocol Time) : Prop :=
+  e ∈ RolePrefixAtEvent L K.decisionEvent ∧
+    e ∈ RolePrefixAtRound L n ∧ e ∈ RolePrefixAtTime L K.decidedAt
+
+def RolesAt
+    {EventId Evidence Round Artifact Protocol Time : Type u}
+    [LinearOrder EventId] [Preorder Round] [Preorder Time]
+    {n : Round}
+    (L : RoleLedger EventId Evidence Round Artifact Protocol Time)
+    (K : AdjudicationSnapshot EventId Evidence Round Artifact Time n)
+    (validTrace : ValidTrace L K)
+    (r : Evidence) : Set EvidenceRole :=
+  {ρ | ∃ e, InAdjudicationPrefix L K validTrace e ∧ e.evidence = r ∧
+    e.round = n ∧ e.role = ρ}
+
+def AdaptiveUseInClosure
+    {EventId Evidence Round Artifact Protocol Time : Type u}
+    [LinearOrder EventId] [Preorder Round] [Preorder Time]
+    {n : Round}
+    (L : RoleLedger EventId Evidence Round Artifact Protocol Time)
+    (K : AdjudicationSnapshot EventId Evidence Round Artifact Time n)
+    (validTrace : ValidTrace L K)
+    (r : Evidence) : Prop :=
+  ∃ e, InAdjudicationPrefix L K validTrace e ∧ e.evidence = r ∧
+    (e.role = .generate ∨ e.role = .tune ∨ e.role = .select) ∧
+    Set.Nonempty (e.dependencies ∩ K.dependencyClosure)
+
+def AdmissibleJudge
+    {EventId Evidence Round Artifact Protocol Time : Type u}
+    [LinearOrder EventId] [Preorder Round] [Preorder Time]
+    {n : Round}
+    (L : RoleLedger EventId Evidence Round Artifact Protocol Time)
+    (K : AdjudicationSnapshot EventId Evidence Round Artifact Time n)
+    (validTrace : ValidTrace L K)
+    (r : Evidence) : Prop :=
+  .adjudicate ∈ RolesAt L K validTrace r ∧
+    r ∉ K.filtration.seen K.freezeEvent ∧
+    r ∉ K.evidenceDependencies ∧
+      ¬ AdaptiveUseInClosure L K validTrace r
+
+noncomputable def ReuseDepth
+    {EventId Evidence Round Artifact Protocol Time : Type u}
+    [LinearOrder EventId] [Preorder Round] [Preorder Time]
+    {n : Round}
+    (L : RoleLedger EventId Evidence Round Artifact Protocol Time)
+    (K : AdjudicationSnapshot EventId Evidence Round Artifact Time n)
+    (validTrace : ValidTrace L K)
+    (r : Evidence) : Nat := by
+  classical
+  exact (L.events.filter fun e =>
+    InAdjudicationPrefix L K validTrace e ∧ e.evidence = r ∧
+      (e.role = .generate ∨ e.role = .tune ∨ e.role = .select) ∧
+      Set.Nonempty (e.dependencies ∩ K.dependencyClosure)).length
+
+structure OrientationSpec
+    (Goal Target Source Version Scope : Type u)
+    (AdmTarget : Goal → Set Target)
+    (InScope : Scope → Target → Prop) where
+  goal : Goal
+  relation : Target → Target → Prop
+  source : Source
+  version : Version
+  scope : Scope
+  relationInDeclaredDomain : ∀ {a b}, relation a b →
+    a ∈ AdmTarget goal ∧ b ∈ AdmTarget goal ∧
+      InScope scope a ∧ InScope scope b
+  refl : ∀ a, a ∈ AdmTarget goal → InScope scope a → relation a a
+  trans : ∀ {a b c},
+    a ∈ AdmTarget goal → b ∈ AdmTarget goal → c ∈ AdmTarget goal →
+    InScope scope a → InScope scope b → InScope scope c →
+    relation a b → relation b c → relation a c
+
+structure CandidateBundle (Artifact : Type u) [DecidableEq Artifact] where
+  artifacts : Finset Artifact
+
+structure DecisionSet (Action : Type u) [DecidableEq Action] where
+  candidates : Finset Action
+  feasible : Finset Action
+  current : Option Action
+  feasibleFromCandidates : feasible ⊆ candidates
+
+structure ProspectiveCommitment
+    (EventId Evidence Round Artifact Time TargetChain Domain Epsilon Condition
+      Comparator TestPlan Baseline WeightSpec : Type u)
+    [LinearOrder EventId] [Preorder Time] [DecidableEq Artifact]
+    (n : Round) where
+  adjudication : AdjudicationSnapshot EventId Evidence Round Artifact Time n
+  targetChain : TargetChain
+  domain : Domain
+  epsilon : Epsilon
+  conditions : Condition
+  comparator : Comparator
+  testPlan : TestPlan
+  baseline : Baseline
+  weightSpec : WeightSpec
+  decision : DecisionSet Artifact
+  committedArtifacts : Finset Artifact
+  baselineArtifacts : Finset Artifact
+  committedFromCandidates : committedArtifacts ⊆ decision.candidates
+  baselinesFromCandidates : baselineArtifacts ⊆ decision.candidates
+  committedInClosure : ∀ a, a ∈ committedArtifacts →
+    a ∈ adjudication.dependencyClosure
+
+structure CommitmentSeal
+    (Digest Commitment EventId Artifact : Type u)
+    (digestOf : Commitment → EventId → Set Artifact → Digest)
+    (K : Commitment) (freezeEvent : EventId)
+    (dependencyClosure : Set Artifact) where
+  digest : Digest
+  digestCovers : digest = digestOf K freezeEvent dependencyClosure
+  sealedCommitment : Commitment
+  sealsCommitment : sealedCommitment = K
+  sealedFreezeEvent : EventId
+  sealsFreezeEvent : sealedFreezeEvent = freezeEvent
+  sealedDependencyClosure : Set Artifact
+  sealsDependencyClosure : sealedDependencyClosure = dependencyClosure
+
+structure CommitInterface
+    (RoundState Digest EventId Evidence Round Artifact Time TargetChain Domain
+      Epsilon Condition Comparator TestPlan Baseline WeightSpec : Type u)
+    [LinearOrder EventId] [Preorder Time] [DecidableEq Artifact]
+    (n : Round) where
+  defineStep : RoundState → CandidateBundle Artifact
+  digestOf :
+    ProspectiveCommitment EventId Evidence Round Artifact Time TargetChain Domain
+      Epsilon Condition Comparator TestPlan Baseline WeightSpec n →
+      EventId → Set Artifact → Digest
+  commitStep : (bundle : CandidateBundle Artifact) →
+    Σ K : ProspectiveCommitment EventId Evidence Round Artifact Time
+      TargetChain Domain Epsilon Condition Comparator TestPlan Baseline
+      WeightSpec n,
+      CommitmentSeal Digest
+        (ProspectiveCommitment EventId Evidence Round Artifact Time TargetChain
+          Domain Epsilon Condition Comparator TestPlan Baseline WeightSpec n)
+        EventId Artifact digestOf K K.adjudication.freezeEvent
+          K.adjudication.dependencyClosure
+  candidateBundlePreserved : ∀ bundle,
+    (commitStep bundle).1.decision.candidates = bundle.artifacts
+  committedFromInput : ∀ bundle,
+    (commitStep bundle).1.committedArtifacts ⊆ bundle.artifacts
+
+def NonAnticipating
+    {EventId Evidence Round Artifact Time : Type u}
+    [Preorder EventId] [Preorder Time] {n : Round}
+    (K : AdjudicationSnapshot EventId Evidence Round Artifact Time n)
+    (Z : Evidence) : Prop :=
+  Z ∈ K.filtration.seen K.decisionEvent ∧
+    Z ∉ K.filtration.seen K.freezeEvent ∧ Z ∉ K.evidenceDependencies
+
+structure ProtectedCoordinates
+    (TargetChain Domain Epsilon Condition Comparator Baseline WeightSpec : Type u) where
+  targetChain : TargetChain
+  domain : Domain
+  epsilon : Epsilon
+  conditions : Condition
+  comparator : Comparator
+  baseline : Baseline
+  weightSpec : WeightSpec
+
+def protectedCoordinates
+    {EventId Evidence Round Artifact Time TargetChain Domain Epsilon Condition
+      Comparator TestPlan Baseline WeightSpec : Type u}
+    [LinearOrder EventId] [Preorder Time] [DecidableEq Artifact]
+    {n : Round}
+    (K : ProspectiveCommitment EventId Evidence Round Artifact Time TargetChain
+      Domain Epsilon Condition Comparator TestPlan Baseline WeightSpec n) :
+    ProtectedCoordinates TargetChain Domain Epsilon Condition Comparator
+      Baseline WeightSpec :=
+  { targetChain := K.targetChain
+    domain := K.domain
+    epsilon := K.epsilon
+    conditions := K.conditions
+    comparator := K.comparator
+    baseline := K.baseline
+    weightSpec := K.weightSpec }
+
+structure RegradeReport
+    (Commitment Evidence Verdict Time : Type u)
+    (evaluate : Commitment → Evidence → Verdict) where
+  original : Commitment
+  revised : Commitment
+  evidence : Evidence
+  regradedVerdict : Verdict
+  regradesOldRound : regradedVerdict = evaluate revised evidence
+  attributedTo : Commitment
+  occurredAt : Time
+
+def TargetLaundering
+    {EventId Evidence Round Artifact Time TargetChain Domain Epsilon Condition
+      Comparator TestPlan Baseline WeightSpec Verdict : Type u}
+    [LinearOrder EventId] [Preorder Time] [DecidableEq Artifact]
+    {n : Round}
+    (evaluate :
+      ProspectiveCommitment EventId Evidence Round Artifact Time TargetChain
+        Domain Epsilon Condition Comparator TestPlan Baseline WeightSpec n →
+        Evidence → Verdict)
+    (oldK newK : ProspectiveCommitment EventId Evidence Round Artifact Time
+      TargetChain Domain Epsilon Condition Comparator TestPlan Baseline
+      WeightSpec n)
+    (Z : Evidence)
+    (report : RegradeReport
+      (ProspectiveCommitment EventId Evidence Round Artifact Time TargetChain
+        Domain Epsilon Condition Comparator TestPlan Baseline WeightSpec n)
+      Evidence Verdict Time evaluate) : Prop :=
+  Z ∈ newK.adjudication.filtration.seen newK.adjudication.freezeEvent ∧
+    protectedCoordinates newK ≠ protectedCoordinates oldK ∧
+    report.original = oldK ∧ report.revised = newK ∧
+    report.evidence = Z ∧ report.regradedVerdict = evaluate newK Z ∧
+    report.attributedTo = oldK ∧
+    report.occurredAt = newK.adjudication.frozenAt
+
+def ExpansionEscape
+    {Model : Type u} {ReadoutJ : Type v} {ReadoutJ' : Type w}
+    (PJ : Model → ReadoutJ) (PJ' : Model → ReadoutJ') :
+    Model → Model → Prop :=
+  fun x y => PJ x = PJ y ∧ PJ' x ≠ PJ' y
+
+structure TransportCert
+    (TruthReceipt NewDomainPrediction : Type u) where
+  oldReceipt : TruthReceipt
+  givenPremises : Prop
+  transportAssumption : Prop
+  falsifiablePrediction : NewDomainPrediction
+
+structure TransportReport (Claim Domain : Type u) where
+  claim : Claim
+  reportedDomain : Domain
+  condition : Prop
+
+structure TransportSemantics
+    (TruthReceipt NewDomainPrediction Claim ContentAddress Domain Version
+      NewEvidence : Type u) where
+  claimAddress : Claim → ContentAddress
+  claimScope : Claim → Domain
+  claimVersion : Claim → Version
+  receiptMatches : TruthReceipt → ContentAddress → Domain → Version → Prop
+  strictSubset : Domain → Domain → Prop
+  claimOn : Claim → Domain → Prop
+  inNewOnlyDomain : NewEvidence → Domain → Domain → Prop
+  predictionDefined : NewDomainPrediction → NewEvidence → Prop
+  predictionFails : NewDomainPrediction → NewEvidence → Prop
+  refutes : NewEvidence → TransportCert TruthReceipt NewDomainPrediction →
+    Claim → Prop
+
+def ValidTransportCert
+    {TruthReceipt NewDomainPrediction Claim ContentAddress Domain Version
+      NewEvidence : Type u}
+    (S : TransportSemantics TruthReceipt NewDomainPrediction Claim
+      ContentAddress Domain Version NewEvidence)
+    (cert : TransportCert TruthReceipt NewDomainPrediction) (claim : Claim)
+    (J J' : Domain) (version : Version) : Prop :=
+  S.strictSubset J J' ∧
+    S.receiptMatches cert.oldReceipt (S.claimAddress claim) J version ∧
+    (cert.givenPremises → cert.transportAssumption → S.claimOn claim J') ∧
+    (∀ z, S.inNewOnlyDomain z J J' →
+      S.predictionDefined cert.falsifiablePrediction z) ∧
+    ∃ z, S.inNewOnlyDomain z J J' ∧
+      S.predictionDefined cert.falsifiablePrediction z ∧
+      S.predictionFails cert.falsifiablePrediction z ∧ S.refutes z cert claim
+
+def HasValidTransportCert
+    {TruthReceipt NewDomainPrediction Claim ContentAddress Domain Version
+      NewEvidence : Type u}
+    (S : TransportSemantics TruthReceipt NewDomainPrediction Claim
+      ContentAddress Domain Version NewEvidence)
+    (claim : Claim) (J J' : Domain) : Prop :=
+  ∃ cert, ValidTransportCert S cert claim J J' (S.claimVersion claim)
+
+def Overreach
+    {TruthReceipt NewDomainPrediction Claim ContentAddress Domain Version
+      NewEvidence : Type u}
+    (S : TransportSemantics TruthReceipt NewDomainPrediction Claim
+      ContentAddress Domain Version NewEvidence)
+    (report : TransportReport Claim Domain) (J : Domain) : Prop :=
+  S.strictSubset J report.reportedDomain ∧ S.claimScope report.claim = J ∧
+    ¬ ∃ cert, ValidTransportCert S cert report.claim J report.reportedDomain
+      (S.claimVersion report.claim) ∧
+      (report.condition ↔ cert.givenPremises ∧ cert.transportAssumption)
+
+structure GainVector
+    (Information Residual Transfer Cost Risk : Type u) where
+  information : Information
+  residualCapture : Residual
+  transfer : Transfer
+  lifecycleCost : Cost
+  risk : Risk
+
+def gainDifference
+    {Action Information Residual Transfer Cost Risk : Type u}
+    [Sub Information] [Sub Residual] [Sub Transfer] [Sub Cost] [Sub Risk]
+    (value : Action → GainVector Information Residual Transfer Cost Risk)
+    (a b : Action) : GainVector Information Residual Transfer Cost Risk :=
+  { information := (value a).information - (value b).information
+    residualCapture :=
+      (value a).residualCapture - (value b).residualCapture
+    transfer := (value a).transfer - (value b).transfer
+    lifecycleCost := (value a).lifecycleCost - (value b).lifecycleCost
+    risk := (value a).risk - (value b).risk }
+
+def ParetoWeak
+    {Action Information Residual Transfer Cost Risk : Type u}
+    [LE Information] [LE Residual] [LE Transfer] [LE Cost] [LE Risk]
+    (value : Action → GainVector Information Residual Transfer Cost Risk)
+    (a b : Action) : Prop :=
+  (value b).information ≤ (value a).information ∧
+    (value b).residualCapture ≤ (value a).residualCapture ∧
+    (value b).transfer ≤ (value a).transfer ∧
+    (value a).lifecycleCost ≤ (value b).lifecycleCost ∧
+    (value a).risk ≤ (value b).risk
+
+def ParetoStrict
+    {Action Information Residual Transfer Cost Risk : Type u}
+    [LE Information] [LE Residual] [LE Transfer] [LE Cost] [LE Risk]
+    (value : Action → GainVector Information Residual Transfer Cost Risk)
+    (a b : Action) : Prop :=
+  ParetoWeak value a b ∧ ¬ ParetoWeak value b a
+
+def NoDominatingCandidate
+    {Action Information Residual Transfer Cost Risk : Type u}
+    [DecidableEq Action]
+    [LE Information] [LE Residual] [LE Transfer] [LE Cost] [LE Risk]
+    (value : Action → GainVector Information Residual Transfer Cost Risk)
+    (D : DecisionSet Action) : Prop :=
+  ∃ current, D.current = some current ∧
+    current ∈ D.candidates ∧
+    ¬ ∃ a, a ∈ D.candidates ∧ ParetoStrict value a current
+
+def OrientedStopOnDecisionSet
+    {Goal Action Source Version Scope : Type u}
+    [DecidableEq Action]
+    (AdmTarget : Goal → Set Action) (InScope : Scope → Action → Prop)
+    (O : OrientationSpec Goal Action Source Version Scope AdmTarget InScope)
+    (D : DecisionSet Action) : Prop :=
+  ∃ current, D.current = some current ∧ current ∈ D.feasible ∧
+    (∀ a, a ∈ D.feasible → a ∈ AdmTarget O.goal ∧ InScope O.scope a) ∧
+    ¬ ∃ a, a ∈ D.feasible ∧ O.relation current a ∧
+      ¬ O.relation a current
+
+def OrientedStop
+    {Goal Source Version Scope EventId Evidence Round Action Time TargetChain
+      Domain Epsilon Condition Comparator TestPlan Baseline WeightSpec : Type u}
+    [LinearOrder EventId] [Preorder Time] [DecidableEq Action]
+    (AdmTarget : Goal → Set Action) (InScope : Scope → Action → Prop)
+    (O : OrientationSpec Goal Action Source Version Scope AdmTarget InScope)
+    {n : Round}
+    (K : ProspectiveCommitment EventId Evidence Round Action Time TargetChain
+      Domain Epsilon Condition Comparator TestPlan Baseline WeightSpec n) : Prop :=
+  OrientedStopOnDecisionSet AdmTarget InScope O K.decision
+
+def ScientificGain
+    {EventId Evidence Round Action Time TargetChain Domain Epsilon Condition
+      Comparator TestPlan Baseline WeightSpec : Type u}
+    {Loss : Type v} [LT Loss]
+    [LinearOrder EventId] [Preorder Time] [DecidableEq Action]
+    {n : Round}
+    (evaluate : Comparator → Action → Evidence → Loss)
+    (K : ProspectiveCommitment EventId Evidence Round Action Time TargetChain
+      Domain Epsilon Condition Comparator TestPlan Baseline WeightSpec n)
+    (Z : Evidence) (a b : Action) : Prop :=
+  a ∈ K.committedArtifacts ∧ b ∈ K.baselineArtifacts ∧
+    NonAnticipating K.adjudication Z ∧
+    evaluate K.comparator a Z < evaluate K.comparator b Z
+
+end D5.S3.ConceptDynamics.DefinitionEscape.Adjudication
+```
+
+
+PostdictiveFit 直接由 \(\operatorname{Improves}\wedge\neg\operatorname{NonAnticipating}\) 派生，不另列为原语。
+
+首先应证明或检查：
+
+1. ValidTrace 把每个已记录角色事件绑定到自身事件号处的 filtration，且所有消费者要求该证明，故错配账本不能靠静默过滤事件而通过；AppendOnlyExtension 绑定旧 K 的 decisionEvent，并要求尾部事件号均大于该点，故 InAdjudicationPrefix 的事件号、轮次和时间前缀及其消费者在旧轮逐项不变；
+2. 依赖闭包污染下裁决准入反单调，ReuseDepth 只计裁决前缀内触及闭包的 Generate/Tune/Select；
+3. NonAnticipating 同时要求裁决点已见、冻结点未见且无依赖污染，故从未观察的 Z 不能取得 ScientificGain；查表复制器零回顾损失与非预见失败可同时成立；
+4. CommitInterface 的输出 Seal 以整个 K、冻结事件号与依赖闭包为摘要输入并逐项保存，且 committedArtifacts 是输入 CandidateBundle 的有限子集并进入依赖闭包；
+5. protectedCoordinates 是 ProspectiveCommitment 的直接投影，单改 Condition 必使坐标差成立；RegradeReport 对以新坐标评价旧证据的实际 verdict 等式给出证明，TargetLaundering 合取该等式；
+6. ValidTransportCert 的收据绑定 claim 内容地址，新域差上预测有定义且存在失败见证；Overreach 只能由该谓词的存在闭包解除；
+7. \(J\subseteq J'\) 时 \(\ker P_{J'}\subseteq\ker P_J\)；
+8. 在限制律成立时，扩域逃逸为空当且仅当两域预测核相同；
+9. 五个异型坐标各自为预序时，公共绝对坐标诱导的 Pareto 弱支配在行动上为预序；各坐标为偏序时，按同向量等价取商后为偏序；
+10. 五个异型坐标各自为加法群时，gainDifference 满足自差为零与三点 cocycle；无来源权重时 NoDominatingCandidate 不能推出 Stop；
+11. DecisionSet 允许空候选束、空可行集与空 current；OrientedStop 才要求 current 为某个可行行动，并只消费 K.decision 与声明范围内的外生 OrientationSpec；Revise 只产生下一轮承诺候选时旧轮结算保持不变；
+12. 时域逃逸是 ExpansionEscape 的实例。
+
+涉及概率泛化、显著性、独立复验效力、VOI 最优性和复用折减率的结论必须作为带前件接口，不进入纯定义层的无条件定理。
+
+## 54.4 裁决层的最终结算
+
+DECT v1.0 回答定义如何切开目标残差；v1.1 回答科学如何成为递归定义图。本增订回答递归系统何时有资格把一次改善记为科学进步。
+
+其最小承诺对象为
+
+\[
+\boxed{
+\mathsf{PROGRESS\ CLAIM}_n = ( K_n, \operatorname{CommittedArtifact}_n, Z_n, \operatorname{NonAnticipating}, \operatorname{OriginalCoordinateVerdict}, \mathbf G_n(\cdot\mid a_{\varnothing}), \mathbf G_n(\cdot\mid a_{\min}), \operatorname{ScopeReceipt} ).
+}
+\]
+
+因此：
+
+\[
+\boxed{
+\begin{aligned}
+\mathsf{ADAPTATION}
+&=\text{系统利用已见证据改变下一轮};
+\\
+\mathsf{POSTDICTION}
+&=\text{系统在已见证据上形成回顾改善};
+\\
+\mathsf{PROSPECTIVE\ PROGRESS}
+&=\text{冻结被承诺对象后在新裁决记录上按原坐标改善};
+\\
+\mathsf{LAUNDERING}
+&=\text{到达后改保护坐标、重评旧轮并冒充原承诺};
+\\
+\mathsf{TRANSPORT}
+&=\text{携带有效且可失败的证书把旧域主张送往新域}.
+\end{aligned}
+}
+\]
+
+最终判断是：
+
+\[
+\boxed{
+\text{科学进步不是分数变高； 而是一个来源可追、范围可审、目标不回写的承诺， 在其尚不可达的新记录上经受原坐标裁决后取得改善。}
+}
+\]
+
+---
+
+# 追加账本增订
+## v1.2 — 2026-08-24
+
+追加存入：
+
+- 版本化证据滤过与首次可达时刻；
+- Generate/Tune/Select/Adjudicate/Replicate 五类证据角色；
+- 带唯一事件号的有限有序角色日志、全日志 ValidTrace、事件/轮次/时间前缀、日志导出角色集合、适应性复用深度、污染闭包与裁决准入；
+- 前视承诺 \(K_n\) 的目标来源链、范围、比较器、检验计划、基线、权重规范与被承诺对象；
+- 冻结、非预见性与 PostdictiveFit；
+- 带零自损失、无罚项与保零聚合前件的事后复制骨架；
+- Target、Question、Agenda 的有类型节点；
+- 议程残差 \(\mathcal E_{\mathrm{agenda}}(q_A;G)\)；
+- 目标变更事件、旧轮守恒、实际重评见证与三合取 target laundering；
+- 外生只读目的 \(G\)、外生 \(\operatorname{OrientationSpec}_G\) 与定向算子 \(\operatorname{Orient}_G\)；
+- 范围限制、扩域逃逸对、claim-bound 且非真空可失败的外推证书及其有效性谓词；
+- 无同谓词证书或丢失条件的越权主张与扩域重新打开；
+- 五个异型公共绝对坐标 \(v(a)\) 及其逐对差分增益账；
+- 行动上的 Pareto 预序与按同向量取商后的偏序；
+- 绑定被承诺行动和预登记基线的新记录前瞻科学增益；
+- 适应性证据复用折减的 open 接口；
+- Define 产有限候选束、Commit 以包含定律和覆盖全承诺闭包的 Seal 冻结其对象的有类型裁决循环；
+- 原坐标结算、下一轮修订、可空决策集、描述性 Pareto 前沿与外生定向停止；
+- 与第 3、8、14、22—27、33—35、38—39、43 部的显式接线；
+- canonical 命名空间下的最小可形式化定义与条件骨架；
+- 整体组合 suspected-novel、未做系统文献检索的主张边界。
+
+后续增订继续严格追加于本节之后。
+
+---
+
+# 第五十五部　裁决层的边界问题
+
+本部只登记开放问题，不给出证明、反例或新定理。以下对象均引用第 48—54 部的既有对象；除陈述 OP1—OP6 所需的有限投影外，不增加裁决层本体。
+
+## 55.1 最小共用定义
+
+固定第 \(n\) 轮 \(\operatorname{ProspectiveCommitment}\) \(K\)、有限记录集 \(Z\)、有限角色账本 \(\mathcal L\) 与证明
+\[
+v_K:\operatorname{ValidTrace}(\mathcal L,K.\operatorname{adjudication}).
+\]
+第 54.3 部的 \(\operatorname{AdjudicationSnapshot}\) 仍只指 \(K.\operatorname{adjudication}\)。本部唯一新增的派生名为
+\[
+\boxed{
+\begin{aligned}
+&\operatorname{AdjudicationSignature}(K,Z;\mathcal L,v_K)
+:=\Bigl(
+Z\cap K.\operatorname{adjudication}.\operatorname{filtration}.\operatorname{seen}
+  (K.\operatorname{adjudication}.\operatorname{freezeEvent}),\
+Z\cap K.\operatorname{adjudication}.\operatorname{filtration}.\operatorname{seen}
+  (K.\operatorname{adjudication}.\operatorname{decisionEvent}),\
+Z\cap K.\operatorname{adjudication}.\operatorname{evidenceDependencies},
+\\
+&\quad
+\{(e.\operatorname{evidence},e.\operatorname{round},e.\operatorname{role},
+\mathbf 1[e.\operatorname{dependencies}\cap
+K.\operatorname{adjudication}.\operatorname{dependencyClosure}\neq\varnothing]):
+\operatorname{InAdjudicationPrefix}
+(\mathcal L,K.\operatorname{adjudication},v_K,e),\
+e.\operatorname{evidence}\in Z,
+e.\operatorname{role}\in
+\{\mathsf{generate},\mathsf{tune},\mathsf{select},\mathsf{adjudicate}\}\}
+\Bigr).
+\end{aligned}
+}
+\]
+四分量依次为冻结点可见性、裁决点可见性、直接读取 \(\operatorname{evidenceDependencies}\) 的依赖污染，以及**角色存在签名投影**。第四分量只保留消费者所问的角色存在性与“依赖是否触及闭包”这一位；它折叠 \(\operatorname{EventId}\)、\(\operatorname{Time}\)、\(\operatorname{Protocol}\)、具体 \(\operatorname{Deps}\)、事件顺序和重复事件。故它不保存事件多重性，不承载第 48.2、52.5 部 \(\operatorname{ReuseDepth}\) 的复用计数语义，也不得供顺序或复用深度消费者使用。\(\mathsf{replicate}\) 不进入该投影，因为本批四谓词均不读取它。
+
+若 \(S=(S_{\mathrm f},S_{\mathrm d},S_{\mathrm p},S_{\mathrm a})\)，分量遗忘算子只是普通投影：
+\[
+\boxed{
+\pi_{-i}(S):=(S_j)_{j\neq i},
+\qquad
+i\in\{\mathrm f,\mathrm d,\mathrm p,\mathrm a\}.
+}
+\]
+它不补默认值，也不重建被删信息。
+
+第 54.3 部的四个接口都消费单个 \(\operatorname{Evidence}\)，不是记录集。本文统一采用逐点全称提升
+\[
+\boxed{
+\operatorname{Lift}_Z(P):=\forall z\in Z,\ P(z).
+}
+\]
+因此 \(\operatorname{AdmissibleJudge}\) 对每个 \(r\in Z\) 判定；\(\operatorname{NonAnticipating}\) 与 \(\operatorname{ScientificGain}\) 对每个 \(z\in Z\) 判定；\(\operatorname{TargetLaundering}\) 使用显式报告族 \(z\mapsto\operatorname{report}_z\) 后对每个 \(z\in Z\) 判定。以下单点陈述取逐点全称即得到记录集陈述，不把 \(Z\) 偷换成单个证据。
+
+为冻结全部非投影实参，按原接口定义四个 \(\operatorname{SameOut}\) 关系：
+
+- \(\operatorname{SameOut}_{\mathrm{NA}}\) 固定 \(n\)、类型与序结构、同一证据 \(z\)；谓词为 \(\operatorname{NonAnticipating}(K.\operatorname{adjudication},z)\)。
+- \(\operatorname{SameOut}_{\mathrm{AJ}}\) 另固定同一 \(r\)；两侧证明分别具有 \(\operatorname{ValidTrace}(\mathcal L,K.\operatorname{adjudication})\) 的真类型，不要求证明项字面相等；谓词为 \(\operatorname{AdmissibleJudge}(\mathcal L,K.\operatorname{adjudication},v_K,r)\)。
+- \(\operatorname{SameOut}_{\mathrm{TL}}\) 固定同一 \(\operatorname{evaluate}\)、同一 \(z\) 与同一 \(\operatorname{report}\) 对象；对 old/new commitments 分别逐字段固定 adjudication 之外的 \(\operatorname{targetChain}/\operatorname{domain}/\operatorname{epsilon}/\operatorname{conditions}/\operatorname{comparator}/\operatorname{testPlan}/\operatorname{baseline}/\operatorname{weightSpec}/\operatorname{decision}/\operatorname{committedArtifacts}/\operatorname{baselineArtifacts}\)，包含 \(\operatorname{protectedCoordinates}\) 的全部字段。包含律证明只须分别具有正确类型，不要求证明项字面相等。谓词为 \(\operatorname{TargetLaundering}(\operatorname{evaluate},\operatorname{oldK},\operatorname{newK},z,\operatorname{report})\)；report.original/revised/evidence/regradedVerdict/attributedTo/occurredAt 的身份检查仍由原谓词执行，不预先冻结其真值。
+- \(\operatorname{SameOut}_{\mathrm{SG}}\) 固定同一 \(\operatorname{evaluate}\)、行动身份 \(a,b\)，并逐字段固定 adjudication 之外的同一组 commitment 字段，特别是 \(K.\operatorname{committedArtifacts}\)、\(K.\operatorname{baselineArtifacts}\) 与 \(K.\operatorname{comparator}\)；谓词为 \(\operatorname{ScientificGain}(\operatorname{evaluate},K,z,a,b)\)。
+
+所有 \(\operatorname{SameOut}\) 还固定共同的 \(Z\) 和元素身份。允许变化的历史数据只在 adjudication 与账本内，并受相等的完整 \(\operatorname{AdjudicationSignature}\) 约束；若后续接口增加非历史实参，必须显式加入相应 \(\operatorname{SameOut}\)。
+
+再固定第 53.4 部的非空有限可行集 \(F\)、Action 载体上的完整外生规范 \(O_G\)，并要求
+\[
+\forall a\in F,\quad a\in\operatorname{AdmTarget}(O_G.\operatorname{goal})
+\ \wedge\ \operatorname{InScope}(O_G.\operatorname{scope},a).
+\]
+令 \(a\sim_Gb\Longleftrightarrow O_G.\operatorname{relation}(a,b)\wedge O_G.\operatorname{relation}(b,a)\)，在 \(F/{\sim_G}\) 上取延伸原商偏序的线性序 \(\leq_\lambda\)，并回拉到 Action：
+\[
+a\leq^F_\lambda b
+\Longleftrightarrow
+a\in F\wedge b\in F\wedge[a]\leq_\lambda[b].
+\]
+令派生范围为 \(\operatorname{scope}_F=(O_G.\operatorname{scope},F)\)，且 \(\operatorname{InScope}_F(\operatorname{scope}_F,a)\Longleftrightarrow\operatorname{InScope}(O_G.\operatorname{scope},a)\wedge a\in F\)。把回拉关系连同
+\[
+\operatorname{goal}=O_G.\operatorname{goal},\quad
+\operatorname{source}=O_G.\operatorname{source},\quad
+\operatorname{version}=O_G.\operatorname{version},\quad
+\operatorname{scope}=\operatorname{scope}_F
+\]
+及第 54.3 部要求的域、反身与传递见证打包为完整 \(\operatorname{OrientationSpec}\)，记作 \(O^F_\lambda\)。定义
+\[
+\boxed{
+\operatorname{LinExt}_F(O_G):=\{O^F_\lambda:\leq_\lambda
+\text{ 是 }F/{\sim_G}\text{ 上延伸原商偏序的线性序}\}.
+}
+\]
+其元素不是裸关系；来源、版本和原范围由 \(O_G\) 复制，有限范围收窄显式保存在 \(\operatorname{scope}_F\)，观察记录不生成任何定向。
+
+## 55.2 开放问题 OP1—OP6
+
+### 55.2.1 开放问题 OP1：签名充分性
+
+取有限有效历史 \(H=(K,\mathcal L,v_K)\)、\(H'=(K',\mathcal L',v_{K'})\)，记其签名为 \(S(H),S(H')\)。以下四个 atoms 是否逐项成立：
+\[
+\boxed{
+\begin{array}{ll}
+\mathrm{OP1\!\!-NA}:&S(H)=S(H')\wedge\operatorname{SameOut}_{\mathrm{NA}}
+\Rightarrow(\operatorname{NonAnticipating}(K.\operatorname{adjudication},z)
+\leftrightarrow\operatorname{NonAnticipating}(K'.\operatorname{adjudication},z));\\
+\mathrm{OP1\!\!-AJ}:&S(H)=S(H')\wedge\operatorname{SameOut}_{\mathrm{AJ}}
+\Rightarrow(\operatorname{AdmissibleJudge}(\mathcal L,K.\operatorname{adjudication},v_K,r)
+\leftrightarrow\operatorname{AdmissibleJudge}(\mathcal L',K'.\operatorname{adjudication},v_{K'},r));\\
+\mathrm{OP1\!\!-TL}:&S(H_o)=S(H'_o)\wedge S(H_n)=S(H'_n)
+\wedge\operatorname{SameOut}_{\mathrm{TL}}\\
+&\Rightarrow(\operatorname{TargetLaundering}(\operatorname{evaluate},\operatorname{oldK},\operatorname{newK},z,\operatorname{report})
+\leftrightarrow\operatorname{TargetLaundering}(\operatorname{evaluate},\operatorname{oldK}',\operatorname{newK}',z,\operatorname{report}));\\
+\mathrm{OP1\!\!-SG}:&S(H)=S(H')\wedge\operatorname{SameOut}_{\mathrm{SG}}
+\Rightarrow(\operatorname{ScientificGain}(\operatorname{evaluate},K,z,a,b)
+\leftrightarrow\operatorname{ScientificGain}(\operatorname{evaluate},K',z,a,b)).
+\end{array}
+}
+\]
+其中 TL 的 \(H_o,H_n\) 分别承载 old/new commitment 与各自有效账本；单点式按 \(\operatorname{Lift}_Z\) 提升，TL 使用报告族。真残差：第 48—54 部给出了四谓词及其消费者，却未回答该四分量签名在逐项冻结全部非投影读取后是否因子化四个接口。
+
+结案判据：四个具名 atoms 各自获得证明、有限有效反例或 statement-revise；任一反例必须指出翻转的原签名原子与未被签名保存的字段。
+
+### 55.2.2 开放问题 OP2：逐分量必要性
+
+本题的显式前件是：所选 \(\Phi\) 的 OP1 atom 已获肯定答案，等价地存在函数 \(\bar\Phi\) 使 \(\Phi(C)=\bar\Phi(S(H(C)),\operatorname{Out}_\Phi(C))\)；对 TL，\(S(H(C))\) 是 old/new 两签名的有序对。只在此前件下，对每个 \(i\in\{\mathrm f,\mathrm d,\mathrm p,\mathrm a\}\)，是否存在一个 \(\Phi_i\) 与两上下文 \(C_i^+,C_i^-\)，满足
+\[
+\boxed{
+\operatorname{SameOut}_{\Phi_i}(C_i^+,C_i^-),\quad
+\pi_{-i}S(C_i^+)=\pi_{-i}S(C_i^-),\quad
+S_i(C_i^+)\neq S_i(C_i^-),\quad
+\Phi_i(C_i^+)\leftrightarrow\neg\Phi_i(C_i^-)?
+}
+\]
+被删坐标之外的共同 \(Z\)、证据、行动、evaluate、committed/baseline 集、comparator、protected coordinates 与 report 身份均须按 55.1 逐项相同。若 \(\Phi_i=\mathrm{TL}\)，还须指定被消融的是 old 或 new 签名；另一承诺的完整四坐标及被消融承诺的其余三坐标全部相同。本题只有四个坐标方向，不冒充四坐标乘四谓词的十六项矩阵。真残差：在完整签名确实充分的前件下，既有文本仍未证明四个坐标各有不可删除见证。
+
+结案判据：四个方向各交付满足因子化前件、删外全同且被删值确异的有限机器见证；或证明某分量可由其余分量与 SameOut 数据导出并修订最小签名。
+
+### 55.2.3 开放问题 OP3：可判定两面
+
+令 \(N\) 为整个实例的总编码长度，计入图、闭包根、filtration 表、\(Z\)、角色日志、候选/可行/committed/baseline 集、两份承诺、报告、保护坐标、行动和全部字符串字段。模型为确定性 word-RAM，字长 \(\Theta(\log N)\)：对象用 \([0,N)\) 内编号，集合经一次 \(O(N)\) 预处理成为位表，成员查询为 \(O(1)\)；非编号字段采用规范编码，精确相等的总扫描成本计入 \(N\)。Prop 证明字段在运行时擦除，只验证其对应的有限关系，不把证明项相等当作查询。依赖图以邻接表和根集给出，闭包不作可信预计算，而由一次 BFS/DFS 生成；输入若另带闭包位表，须在线性扫描中与生成结果比较。\(\operatorname{ValidTrace}\) 证明不作为可信证书给定，而以全日志扫描和 filtration 成员查询验证。令 \(C_{\mathrm{eval}}\) 为所有实际 evaluator 调用的总成本。在此模型中，四个逐点提升谓词是否均可在
+\[
+\boxed{
+O(N+C_{\mathrm{eval}})
+}
+\]
+时间、\(O(N)\) 空间内判定？
+
+不可判侧固定 Mathlib 的程序编码 \(c:\operatorname{Nat.Partrec.Code}\) 与行为 \(\operatorname{eval}(c)\)，并定义外延语义依赖
+\[
+\operatorname{SemDep}(c,z_*):=B(\operatorname{eval}(c),z_*),
+\]
+其中 \(B\) 对相同行为同值，且有依赖/无依赖两枚 code 见证。对每个 \(c\) 取程序索引语义接口 \(K_c\)，固定 \(z_*\) 在其 decision filtration 可见、在 freeze filtration 不可见，并规定 \(z_*\in K_c.\operatorname{adjudication}.\operatorname{evidenceDependencies}\Longleftrightarrow\operatorname{SemDep}(c,z_*)\)。于是 \(\operatorname{NonAnticipating}(K_c.\operatorname{adjudication},z_*)\) 恰等于 \(\neg\operatorname{SemDep}(c,z_*)\)。已冻结真源 `D5/S0/Computability/ClosureUndecidable.closure_reading_unreachable` 正好排除任何非平凡、行为不变集合的可计算总判定器，故不可判结论应复用该节点，而不重证 Rice 定理。若结案工件要求字面给出多一归约 \(\mathsf{HALT}\leq_m\operatorname{NonAnticipating}\) 的编码函数与双向正确性，则该冻结定理只给非可计算性、不提供这条具体映射，仍需一个新的薄 HALT 桥 atom。
+
+真残差：第 54.3 部只给出 Prop 级接口；上述 RAM 表示下的统一判定器、复杂度证明，以及 \(\operatorname{SemDep}\) 对冻结 Rice 节点的精确实例化或所需 HALT 桥均未给出。
+
+结案判据：交付在上述编码上运行的判定器、\(O(N+C_{\mathrm{eval}})\) 证明与 ValidTrace/闭包核验测试，并交付 `closure_reading_unreachable` 的同层性和非平凡见证实例；若选择 literal-HALT 口径，再交付方向无误的桥。任一义务失败即 statement-revise 输入或归约模型。
+
+### 55.2.4 开放问题 OP4：外推证书五项合取的独立性
+
+允许模型类 \(\mathfrak M_{\mathrm{fin}}\) 只含有限可判语义模型：域由有限点集 \(|J|\) 解释，\(\operatorname{strictSubset}(J,J')\Longleftrightarrow |J|\subsetneq|J'|\)，且 \(\operatorname{inNewOnlyDomain}(z,J,J')\Longleftrightarrow z\in|J'|\setminus|J|\)；TruthReceipt 是内容地址、域和版本的记录，\(\operatorname{receiptMatches}\) 当且仅当三字段精确相等；givenPremises 与 transportAssumption 是固定有限前件表和运输表导出的可判真值；预测是有限部分函数，\(\operatorname{predictionDefined}\) 是图定义域成员关系，\(\operatorname{predictionFails}\) 只能在已定义值违反固定验收关系时成立；\(\operatorname{claimOn}\) 与 \(\operatorname{refutes}\) 由同一固定有限真值/评价表导出，refutes 当且仅当该预测值与该 claim 的表中真值冲突。任意赋值这些 Prop 字段的退化模型不在 \(\mathfrak M_{\mathrm{fin}}\)。
+
+把第 54.3 部 Lean \(\operatorname{ValidTransportCert}\) 的五个顶层合取记为 \(C_1\) 严格扩域、\(C_2\) claim-bound 旧域收据、\(C_3\) 保留前件的条件运输、\(C_4\) 新域差上预测全定义、\(C_5\) 含失败与反驳的非真空见证。第 51.3 部展示式只有后四项；严格扩域在 51.4 的 Overreach 展示式出现，五项顶层合取的归属是第 54.3 部接口。令 \(\operatorname{Weak}_j:=\bigwedge_{k\neq j}C_k\)，并分别固定坏报告类型：非严格扩域、错 claim/域/版本收据、前件成立而新域 claim 假、遗漏一个新域差预测、没有预登记失败/反驳见证。是否有
+\[
+\boxed{
+\forall j\in\{1,2,3,4,5\},\
+\exists M_j\in\mathfrak M_{\mathrm{fin}},\quad
+\operatorname{Weak}_j(M_j)\wedge\neg C_j(M_j)
+\wedge\operatorname{Bad}_j(M_j)?
+}
+\]
+真残差：第 54.3 部用五项堵住上述五类坏报告，但尚未在受约束的有限语义模型类中证明每项删除确实放过对应坏报告，而不只是展示任意 Prop 赋值的纯合取独立性。
+
+结案判据：五个删除方向各给出 \(\mathfrak M_{\mathrm{fin}}\) 内可枚举模型并验证对应 \(\operatorname{Bad}_j\)，或证明某项在该模型类公理下由其余四项蕴含并 statement-revise 最小合取。
+
+### 55.2.5 开放问题 OP5：Pareto 停机与外生序
+
+固定非空有限 \(F=K_n.\operatorname{decision}.\operatorname{feasible}\)、\(K_n.\operatorname{decision}.\operatorname{current}=\operatorname{some}(a_{\mathrm{cur}})\)，以及 Action 上由五维公共坐标诱导的 Pareto 预序 \(\preceq_P\)。取其对称核 \(\sim_P\)，令完整外生规范 \(O_P\) 的 relation 为 \(\preceq_P\)，并按 55.1 构造 \(\operatorname{LinExt}_F(O_P)\)。全部 \(F\) 已要求位于 \(\operatorname{AdmTarget}(O_P.\operatorname{goal})\) 与原声明范围。是否成立
+\[
+\boxed{
+a_{\mathrm{cur}}\text{ 在 }F\text{ 中 Pareto-maximal}
+\Longleftrightarrow
+\exists O^F_\lambda\in\operatorname{LinExt}_F(O_P),\
+\operatorname{OrientedStop}(\operatorname{AdmTarget},\operatorname{InScope}_F,O^F_\lambda,K_n)?
+}
+\]
+是否进一步成立
+\[
+\boxed{
+\bigl(\forall O^F_\lambda\in\operatorname{LinExt}_F(O_P),\
+\operatorname{OrientedStop}(\operatorname{AdmTarget},\operatorname{InScope}_F,O^F_\lambda,K_n)\bigr)
+\Longleftrightarrow
+a_{\mathrm{cur}}\text{ 在 }F\text{ 中为 }\preceq_P\text{-greatest}?
+}
+\]
+不再登记等变唯一选择子问：冻结节点 `D5/S3/ConceptDynamics/DecisionValue/IncomparableRepairCosts.incomparable_repairs_no_unique_choice` 已给出有限二点 Pareto 不可比且成本结构不产生唯一选择；`D5/S3/ConceptDynamics/Attribution/SymmetricEventNoUniqueCulprit.symmetric_event_admits_no_equivariant_culprit` 已证明至少二标签的完全对称事件不存在等变单值选择。此处没有超出二者的新增残差。真残差：maximal/greatest 与对完整 Action 载体 \(\operatorname{OrientationSpec}\) 的存在/全称线性延伸停机之间的两个等价式。
+
+结案判据：在 \(K_n.\operatorname{decision}.\operatorname{feasible}=F\)、current 与范围前件下证明或反驳两个等价式；反驳须提交保持 source/version/scope 的完整 \(O^F_\lambda\) 有限反模型。
+
+### 55.2.6 开放问题 OP6：前瞻改善不蕴含泛化
+
+固定有限观测历史空间 \(\Omega_{\mathrm{obs}}\)、有限下一记录空间 \(\Omega_{\mathrm{next}}\)，以及两条联合概率质量函数
+\[
+P,Q:\Omega_{\mathrm{obs}}\times\Omega_{\mathrm{next}}\to[0,1].
+\]
+它们各自归一化，并在完整已观察 \(\sigma\)-代数上一致；有限情形即
+\[
+\forall h\in\Omega_{\mathrm{obs}},\quad
+\sum_uP(h,u)=\sum_uQ(h,u).
+\]
+取已观察历史 \(h_*\) 及其末记录 \(z_*\)，要求共同边缘质量 \(p_{\mathrm{obs}}(h_*)=q_{\mathrm{obs}}(h_*)>0\)。固定第 54.3 部的 \(\operatorname{evaluate}\)、冻结承诺 \(K\)、被承诺行动 \(a\) 与预登记基线 \(b\)，并要求单记录命题 \(\operatorname{ScientificGain}(\operatorname{evaluate},K,z_*,a,b)\)。令实值损失 \(\operatorname{Loss}_K(-;u)\) 对两联合律绝对可积；在有限空间中这项仍作为显式检查。定义
+\(\Omega_{\mathrm{next}}\) 不直接冒充 \(\operatorname{Evidence}\)：固定全函数 \(\operatorname{nextEvidence}:\Omega_{\mathrm{next}}\to\operatorname{Evidence}\)，并在 OP6 中把同一 evaluator 实例化为 \(\operatorname{evaluate}:\operatorname{Comparator}\to\operatorname{Action}\to\operatorname{Evidence}\to\mathbb R\)。\(\operatorname{Loss}_K\) 不是另一个可选损失，而被唯一规定为
+\[
+\boxed{
+\operatorname{Loss}_K(x;u):=
+\operatorname{evaluate}(K.\operatorname{comparator},x,\operatorname{nextEvidence}(u))\in\mathbb R.
+}
+\]
+因此前件中的 \(\operatorname{ScientificGain}\) 与两个条件期望共用同一 \(\operatorname{evaluate}\) 及 \(K.\operatorname{comparator}\)；绝对可积检查就施于此实值映射，差分也只由它派生：
+\[
+\Delta_K(a,b;u):=\operatorname{Loss}_K(a;u)-\operatorname{Loss}_K(b;u).
+\]
+是否存在上述全部对象，使
+\[
+\boxed{
+\mathbb E_P[\Delta_K(a,b;U)\mid H=h_*]<0
+<
+\mathbb E_Q[\Delta_K(a,b;U)\mid H=h_*]
+}
+\]
+或 \(P,Q\) 互换？
+
+真残差：第 52.4 部拒绝从一次 \(\operatorname{ScientificGain}\) 自动推出长期稳定性，却未给出在全部已观察历史分布不可区分、只允许条件未来核分歧时的有限符号反转见证。
+
+结案判据：给出可枚举的有限联合律，机器核验归一化、全观测边缘相等、\(h_*\) 正质量、ScientificGain、绝对可积与两条件期望异号；或在同一概率模型类中证明不存在并 statement-revise 前件。
+
+可判定性与查询复杂度借用有限图算法、停机不可判定与语义性质归约的已知形状；线性延伸借用 Szpilrajn 型延伸定理；可识别性借用统计决策与相容数据律的已知形状。单项不主张首创；它们与 DECT 裁决、漂白、外推、停机及增益接口的组合标为 suspected-novel，未作系统文献检索。
+
+## 55.3 本批承诺
+
+按第 49 部 \(K_n\) 的字段，本批冻结为
+\[
+\boxed{
+\begin{aligned}
+\operatorname{target\_chain}
+&=\text{GoalArtifact 纯推理产出}\to\text{RDS}\to
+\text{v1.2 裁决层}\to\text{本批边界};
+\\
+\operatorname{scope}
+&=\text{有限/显式模型，排除统计显著性与解析估计};
+\\
+\operatorname{comparator}
+&=\text{六个 OP 各由下游 prove/refute/statement-revise 结案并消化为有稳定地址的 atoms};
+\\
+\operatorname{baseline}
+&=\text{不预记无地址 atom 数量；按父 OP 去重计数};
+\\
+\operatorname{falsifiable\_prediction}
+&=\text{在全部冻结 atoms 首次全达终态的账本前缀上，六个 OP 中至少四个不扩作用域存活，至少三个由 kernel 定理或机器反模型结案}.
+\end{aligned}
+}
+\]
+分母明确为 OP1—OP6 六个父问题；一个 OP 即使拆成多个 atoms 也只计一次。评估截止事件为“全部冻结 atoms 首次全部处于 proved/refuted/statement-revised 终态的账本前缀”，与成功阈值及结案顺序独立；存活数与结案数都只在该前缀上求值。该前缀存在时，少于四个不扩域存活或少于三个以 kernel 定理/机器反模型结案即判本批预测失败；此前只记 open，不把未到期冒充成功。任一 OP 的真、假、独立性、复杂度或可识别性均未被预记为结论。
+
+上句的结算语义由以下有限账本状态覆盖。令 \(A\) 为本批全部稳定地址 atoms，六个父问题的有限、非空 atom 集 \(A_1,\ldots,A_6\) 两两不交且构成 \(A\) 的分区；等价地，每个 atom 恰属一个父 OP，并由唯一映射 \(p:A\to\{1,\ldots,6\}\) 记录该归属。六集在全部父 OP 首次完成 atomization 时同时冻结，此后不得增删成员。每个 atom 的状态恰取一值
+\[
+\mathsf{AtomState}:=\{\mathsf{proved},\mathsf{refuted},
+\mathsf{statement\mbox{-}revised},\mathsf{open}\}.
+\]
+每个 atom 以 \(\mathsf{open}\) 为初态，只能原子迁移到其余三个不可再改的终态；\(\mathsf{proved}\) 只由 kernel 定理触发，\(\mathsf{refuted}\) 只由机器核验的反模型触发。记
+\[
+\operatorname{Terminal}_s(\alpha)
+\Longleftrightarrow
+s(\alpha)\in\{\mathsf{proved},\mathsf{refuted},\mathsf{statement\mbox{-}revised}\}.
+\]
+\(\mathsf{proved}\)、\(\mathsf{refuted}\) 和 \(\mathsf{open}\) 均保留该 atom 在 55.2 的原陈述与原作用域；任何陈述改写或作用域变更（含扩大）必须且只能记为 \(\mathsf{statement\mbox{-}revised}\)。对账本状态 \(s\)，每个父 OP 的唯一聚合值为
+\[
+\operatorname{Agg}_i(s):=
+\begin{cases}
+\mathsf{open},&\exists\alpha\in A_i,\ s(\alpha)=\mathsf{open};\\
+\mathsf{statement\mbox{-}revised},&\text{否则若存在该状态};\\
+\mathsf{refuted},&\text{否则若存在该状态};\\
+\mathsf{proved},&\text{否则}.
+\end{cases}
+\]
+优先序将任何混合状态映成唯一父级真值：有未决 atom 时父问题仍 open，全部已决时改写优先于反驳，反驳优先于全证成。再定义
+\[
+\operatorname{Survive}_i(s)\Longleftrightarrow
+\forall\alpha\in A_i,\quad
+s(\alpha)\in\{\mathsf{proved},\mathsf{refuted}\},
+\qquad
+\operatorname{Closed}_i(s)\Longleftrightarrow
+\operatorname{Agg}_i(s)\in\{\mathsf{proved},\mathsf{refuted}\}.
+\]
+“存活”要求该父 OP 的全部 atoms 已由 kernel 定理或机器反模型决定且没有改写；“结案”要求同一终态条件并使父聚合值为 proved/refuted。含任一 open atom 的未决父既不计存活也不计结案。故每个父 OP 恰落入三个两两互斥且穷尽的账格之一：\(\mathsf{pending}\)、\(\mathsf{survive\mbox{-}closed}\)、\(\mathsf{revised}\)。
+
+截止点不再取外部“批次”，也不以成功阈值触发。atom 状态迁移各自是带唯一 \(\operatorname{EventId}\) 的原子账本事件，令 \(s_{\le e}\) 为事件前缀的状态，并固定
+\[
+e_*:=\min\{e:\forall\alpha\in A,\ \operatorname{Terminal}_{s_{\le e}}(\alpha)\}.
+\]
+若该集为空则预测仍 \(\mathsf{open}\)；否则只在 \(s_{\le e_*}\) 上计算六个父 OP 的两个预测半项，并以
+\[
+\boxed{
+\#\{i:\operatorname{Survive}_i(s_{\le e_*})\}\ge 4
+\quad\wedge\quad
+\#\{i:\operatorname{Closed}_i(s_{\le e_*})\}\ge 3
+}
+\]
+为成功判据，否定式为失败判据；结案阈值采用“至少三个”的下界语义。运输批次边界不进入此最小前缀谓词；事件顺序可以改变 \(e_*\) 的事件标识，却不能改变同一终态赋值上的两个计数与判词。特别地，两父 closed、四父 revised 的终局在最后一个 atom 达终态时已有 \(e_*\)，两计数均为 2，故判失败而不再永悬；A1—A3 先 closed、A4—A6 后 revised 的顺序与任何产生同一终态赋值的其他顺序，两计数均为 3，故得到同一失败判词。
+
+---
+
+# 追加账本增订
+## v1.3 — 2026-08-24
+
+追加存入：
+
+- 从 \(K.\operatorname{adjudication}\) 派生且唯一命名的 \(\operatorname{AdjudicationSignature}\)：冻结/裁决可见性、\(\operatorname{evidenceDependencies}\) 与不保留 ReuseDepth 的角色存在签名投影；
+- 单 Evidence 接口的逐点全称提升、四个原签名与逐字段 \(\operatorname{SameOut}\)，以及以 OP1 因子化为前件的四方向坐标消融；
+- 总编码长度 \(N\) 的 word-RAM/查询模型、显式闭包与 ValidTrace 核验，以及对冻结 `ClosureUndecidable.closure_reading_unreachable` 的复用边界；
+- 受有限集合、收据、部分预测和真值表一致性约束的外推模型类内五项独立性；
+- 回拉到 Action 并复制 source/version/scope 的完整线性延伸 OrientationSpec，以及 maximal/greatest 两个未决等价式；等变唯一选择不再列 open，归既有冻结 `IncomparableRepairCosts` 与 `SymmetricEventNoUniqueCulprit`；
+- 在完整已观察边缘上一致的 \(\Omega_{\mathrm{obs}}\times\Omega_{\mathrm{next}}\) 双联合律、可积损失与未来条件期望异号问题；
+- 不设无地址 atom 总数；六个 OP 为预测分母，每个 atom 恰属一个父 OP，并只在全部冻结 atoms 首次全达 proved/refuted/statement-revised 终态的账本前缀上按“至少四个存活且至少三个 kernel/机器反模型结案”结算；
+- 本批只提出问题，零新定理主张，整体组合标为 suspected-novel。
+
+后续增订继续严格追加于本节之后。

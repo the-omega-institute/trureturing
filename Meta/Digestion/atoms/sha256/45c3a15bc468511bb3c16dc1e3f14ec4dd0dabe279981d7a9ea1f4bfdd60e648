@@ -1,0 +1,34 @@
+## 52.4 前瞻科学增益
+
+设 \(Z_n\) 是满足第 49 部非预见条件的新裁决记录。定义行动 \(a\) 相对基线 \(b\) 的前瞻改善
+
+\[
+\operatorname{ProspectiveImprove}_n(a\mid b) \Longleftrightarrow \operatorname{Loss}_{K_n}(a;Z_n) < \operatorname{Loss}_{K_n}(b;Z_n).
+\]
+
+定义本轮可计科学增益
+
+\[
+\boxed{
+\begin{aligned}
+\operatorname{ScientificGain}_n(a\mid b)
+\Longleftrightarrow{}
+&\operatorname{committed}(K_n,a)
+\ \wedge\ b\in\operatorname{Baselines}(K_n)
+\\
+&\wedge\ \operatorname{NonAnticipating}(K_n,Z_n)
+\ \wedge\ \operatorname{ProspectiveImprove}_n(a\mid b).
+\end{aligned}
+}
+\]
+
+该定义只给出记账资格，不自动给出显著性、置信度或长期稳定性。若比较器本身是向量，则改善按 \(K_n\) 中预先冻结的偏序判断。
+
+应同时报告
+
+\[
+\mathbf G_n(a\mid a_{\varnothing}) \quad\text{与}\quad \mathbf G_n(a\mid a_{\min}),
+\]
+
+以区分“比不做更好”与“比最便宜充分替代更好”。
+

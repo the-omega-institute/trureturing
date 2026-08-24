@@ -96,7 +96,8 @@ public partial record AdmissionOutcome
         internal ProtectedSurfaceChange(
             AdmissionCertificate contentCertificate,
             MetaChangeSet changeSet,
-            ImmutableArray<Diagnostic> sl022Diagnostics)
+            ImmutableArray<Diagnostic> sl022Diagnostics,
+            ImmutableArray<Diagnostic> observations)
         {
             ContentCertificate = contentCertificate
                 ?? throw new ArgumentNullException(nameof(contentCertificate));
@@ -119,6 +120,7 @@ public partial record AdmissionOutcome
             }
 
             Sl022Diagnostics = sl022Diagnostics;
+            Observations = observations;
         }
 
         public AdmissionCertificate ContentCertificate { get; }
@@ -126,6 +128,8 @@ public partial record AdmissionOutcome
         public MetaChangeSet ChangeSet { get; }
 
         public ImmutableArray<Diagnostic> Sl022Diagnostics { get; }
+
+        public ImmutableArray<Diagnostic> Observations { get; }
     }
 }
 
@@ -167,7 +171,8 @@ internal static class AdmissionEngine
             return new AdmissionOutcome.ProtectedSurfaceChange(
                 certificate,
                 protectedChanges,
-                sl022Diagnostics);
+                sl022Diagnostics,
+                observations);
         }
         catch (ArgumentException exception)
         {

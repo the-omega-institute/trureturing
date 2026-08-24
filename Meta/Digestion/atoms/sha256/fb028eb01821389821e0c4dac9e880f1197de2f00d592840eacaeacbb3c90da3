@@ -1,0 +1,43 @@
+## 52.3 Pareto 裁决
+
+定义弱支配
+
+\[
+a\succeq_{K_n} b
+\]
+
+当且仅当公共绝对坐标满足
+
+\[
+I_n(a)\ge I_n(b),\ R_n(a)\ge R_n(b),\ T_n(a)\ge T_n(b),\ C_n(a)\le C_n(b),\ Q_n(a)\le Q_n(b).
+\]
+
+至少一项严格时定义严格支配 \(a\succ_{K_n}b\)。
+
+若各坐标关系为预序，则 \(\succeq_{K_n}\) 在行动上为预序。令 \(a\sim_v b\Longleftrightarrow\mathbf v_{K_n}(a)=\mathbf v_{K_n}(b)\)；当各坐标为偏序时，\(\succeq_{K_n}\) 在行动等价类 \(A/{\sim_v}\) 上诱导偏序。不同但同向量的行动在取商前不可宣称反对称。
+
+不被其他候选严格支配的行动构成
+
+\[
+\operatorname{GainFrontier}(K_n).
+\]
+
+相对于当前行动 \(a_0\)，纯 Pareto 账最多给出描述性谓词
+
+\[
+\operatorname{NoDominatingCandidate}(K_n,a_0)
+\Longleftrightarrow
+a_0\in\operatorname{Candidates}(K_n)
+\ \wedge\ \nexists a\in\operatorname{Candidates}(K_n),\ a\succ_{K_n}a_0.
+\]
+
+它要求 \(a_0\) 本身属于当前候选集，并只说明它位于当前候选前沿；不可比候选仍可能满足承诺并带来更高收益，故该谓词不构成停止的充分条件。
+
+没有来源权重时，不把五维账压成单标量。若确需
+
+\[
+U_w(\mathbf G)= w_I\Delta I+w_R\Delta R+w_T\Delta T-w_C\Delta C-w_Q\Delta Q,
+\]
+
+则权重 \(w\) 必须有外生来源、版本和适用范围，并冻结在 \(K_n\) 中。否则标量排名只是未登记的目标变更。
+

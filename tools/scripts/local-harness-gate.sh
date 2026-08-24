@@ -123,7 +123,7 @@ finish() {
       printf 'BASE_ADVANCED pinned=%s observed=%s\n' "$BASE_TIP_SHA" "$observed_base" >&2 || true
     fi
   fi
-  perf_flush_events "$CANDIDATE_ROOT" "$PERF_EVENT_SPOOL" >/dev/null 2>&1 || true
+  perf_flush_events "$CANDIDATE_ROOT" "$PERF_EVENT_SPOOL" local-harness-gate 2>/dev/null || true
   cleanup
   printf '[local-gate] timing-summary status=%s exit=%s\n' "$status" "$rc" >&2
   if [[ -n "$timing_payload" ]]; then printf '%s\n' "$timing_payload" >&2; fi

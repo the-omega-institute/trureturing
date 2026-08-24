@@ -1,0 +1,24 @@
+## 52.2 五维增益向量
+
+对承诺 \(K_n\) 下每个行动 \(a\)，先在同一公共绝对坐标系中定义
+
+\[
+\mathbf v_{K_n}(a) := \bigl(I_n(a),R_n(a),T_n(a),C_n(a),Q_n(a)\bigr).
+\]
+
+五项依次为信息读数、目标残差捕获、迁移读数、全生命周期成本及失败、误用与不可逆风险。每一坐标必须对全部行动共用来源、量纲、估计方法和版本；没有概率模型时，\(I_n\) 可用明确的分划细化或可区分对增量替代，不应冒充 Shannon 或 Bayes 量。
+
+对行动 \(a\) 与基线 \(b\)，定义逐对差分增益账
+
+\[
+\boxed{
+\mathbf G_n(a\mid b) := \Delta_n(a\mid b) := \mathbf v_{K_n}(a)-\mathbf v_{K_n}(b) = ( \Delta I, \Delta R, \Delta T, \Delta C, \Delta Q ).
+}
+\]
+
+在各坐标为加法群的前件下，该定义直接给出
+
+\[
+\Delta_n(a\mid a)=0, \qquad \Delta_n(a\mid b)+\Delta_n(b\mid c)=\Delta_n(a\mid c).
+\]
+
