@@ -6,7 +6,7 @@ using StrataLint.Engine;
 namespace StrataLint.Tests;
 
 // Envelope / pre-committed-receipt / declaration-signature gates of the Phase 1
-// cover transaction (spec §4a). Split out of CoverAtomTests.cs to keep that file
+// cover transaction (spec §11.21). Split out of CoverAtomTests.cs to keep that file
 // under the SL-003 800-line artifact cap; kept as a partial of the same class so
 // these tests reuse the shared CoverSpec/CoverWorld fixtures and the private
 // Execute helper. The general cover gate matrix (CAS lock, arg parsing, scribe
@@ -14,7 +14,7 @@ namespace StrataLint.Tests;
 public sealed partial class CoverAtomTests
 {
     [Fact]
-    public void CoverRejectsRepeatedGidsForTheInitialCoverOfAnOpenAtom()
+    public void CoverAcceptsMultipleGidsForTheInitialCoverOfAnOpenAtom()
     {
         const string secondaryModule = "D5/S3/Observer/WindowRegisterCRT";
         const string secondaryGid = secondaryModule + ".window_register_crt_decomposition";
@@ -33,13 +33,48 @@ public sealed partial class CoverAtomTests
                 "--envelope", inputs.EnvelopePath]);
         var (result, after, before) = execution;
 
+        Assert.True(result.Success, result.Error);
+        Assert.NotEqual(before, after);
+        var entry = Assert.Single(
+            execution.AfterDocument.RequireDigestionEntries(),
+            candidate => candidate.AtomId == CoverWorld.DefaultAtomId);
+        Assert.Equal([inputs.Gid, secondaryGid], entry.CoverageGids.ToArray());
+        Assert.Equal([inputs.Gid, secondaryGid],
+            entry.Receipts.Coverage.Select(static receipt => receipt.Gid).ToArray());
+        Assert.Equal([inputs.Gid, secondaryGid],
+            entry.Receipts.Scribe.Select(static receipt => receipt.Gid).ToArray());
+        Assert.Equal(DigestionMigrationState.Absorbed, entry.ProjectedStatus.Migration);
+        Assert.Equal(DigestionTruthState.Closed, entry.ProjectedStatus.Truth);
+    }
+
+    [Fact]
+    public void CoverRejectsInitialMultiGidWhenAnyPairLacksAPrecommitment()
+    {
+        const string secondaryModule = "D5/S3/Observer/WindowRegisterCRT";
+        const string secondaryGid = secondaryModule + ".window_register_crt_decomposition";
+        var spec = new CoverSpec
+        {
+            SecondaryTarget = (secondaryModule, "window_register_crt_decomposition"),
+            IncludeSecondaryPrecommittedSignature = false,
+        };
+        var inputs = spec.Materialize();
+
+        var (result, after, before) = Execute(
+            spec,
+            ["--cover-atom", spec.AtomId,
+                "--gid", inputs.Gid,
+                "--gid", secondaryGid,
+                "--base", "baseline",
+                "--envelope", inputs.EnvelopePath]);
+
         Assert.False(result.Success);
-        Assert.Contains("initial cover requires exactly one --gid", result.Error, StringComparison.Ordinal);
+        Assert.Contains(secondaryGid, result.Error, StringComparison.Ordinal);
+        Assert.Contains("has no base-owned pre-committed signature", result.Error, StringComparison.Ordinal);
         Assert.Equal(before, after);
     }
 
     [Fact]
-    public void CoverRejectsHostedExtensionWhenReceiptPrimaryIsNotAlreadyBound()
+    public void CoverAcceptsASecondaryGidWithoutRepeatingExistingCoverageOrReceiptPrimary()
     {
         const string secondaryModule = "D5/S3/Observer/WindowRegisterCRT";
         const string secondaryDeclaration = "window_register_crt_decomposition";
@@ -63,16 +98,21 @@ public sealed partial class CoverAtomTests
         var execution = Execute(
             spec,
             ["--cover-atom", spec.AtomId,
-                "--gid", inputs.Gid,
                 "--gid", secondaryGid,
                 "--base", "baseline",
                 "--envelope", inputs.EnvelopePath]);
         var (result, after, before) = execution;
 
-        Assert.False(result.Success);
-        Assert.Contains("primary_gid", result.Error, StringComparison.Ordinal);
-        Assert.Contains("existing coverage", result.Error, StringComparison.Ordinal);
-        Assert.Equal(before, after);
+        Assert.True(result.Success, result.Error);
+        Assert.NotEqual(before, after);
+        var entry = Assert.Single(
+            execution.AfterDocument.RequireDigestionEntries(),
+            candidate => candidate.AtomId == CoverWorld.DefaultAtomId);
+        Assert.Equal([inputs.Gid, secondaryGid], entry.CoverageGids.ToArray());
+        Assert.Equal([inputs.Gid, secondaryGid],
+            entry.Receipts.Coverage.Select(static receipt => receipt.Gid).ToArray());
+        Assert.Equal([inputs.Gid, secondaryGid],
+            entry.Receipts.Scribe.Select(static receipt => receipt.Gid).ToArray());
     }
 
     [Fact]
@@ -284,160 +324,6 @@ public sealed partial class CoverAtomTests
     }
 
     [Fact]
-    public void CoverAddsB2ToBothLegacyHostsOfTheSameResidual()
-    {
-        const string primaryModule = "D5/S3/Observer/MeasurementMarginal";
-        const string primaryDeclaration = "copied_record_partial_trace_offDiagonal_eq_zero";
-        const string secondaryModule = "D5/S3/Observer/FiniteForgettingCertificate";
-        const string secondaryDeclaration = "finite_history_certificate";
-        const string residue = "six-state-finite-certificates";
-        var primaryGid = primaryModule + "." + primaryDeclaration;
-        var secondaryGid = secondaryModule + "." + secondaryDeclaration;
-        var existingCoverage = ImmutableArray.Create(
-            "D5/S3/DivergenceSupport/ZeroSupportDefect.dpi_defect_nonneg_zero_support",
-            primaryModule + ".copied_record_partial_trace_eq_address_blocks",
-            primaryGid,
-            "D5/S3/Divergence/DpiDefect.dpi_defect_nonneg");
-        var unresolvedSubitems = ImmutableArray.Create(
-            "know-forgot-two-time-relation",
-            residue,
-            "joint-coherent-reversal-of-all-copies",
-            "multi-copy-erasure-quantifier");
-        var siblingUnresolvedSubitems = ImmutableArray.Create(
-            "know-forgot-two-time-relation",
-            residue,
-            "v2-entropy-monotone-capacity-decrease",
-            "v3-revival-spectrum-diophantine-grading",
-            "multi-copy-erasure-quantifier");
-        var spec = new CoverSpec
-        {
-            ModuleGid = primaryModule,
-            Declaration = primaryDeclaration,
-            InitialCoverage = existingCoverage,
-            InitialUnresolvedSubitems = unresolvedSubitems,
-            Migration = "partial",
-            Truth = "closed",
-            ReportDeclarations = ImmutableArray.Create(
-                "copied_record_partial_trace_eq_address_blocks",
-                primaryDeclaration),
-            SecondaryTarget = (secondaryModule, secondaryDeclaration),
-            HostedSibling = new CoverHostedSiblingSpec(
-                "same-residual-host",
-                primaryGid,
-                existingCoverage.Add(secondaryGid),
-                existingCoverage,
-                siblingUnresolvedSubitems),
-        };
-        var inputs = spec.Materialize();
-
-        var (result, before, after) = ExecuteDirectory(
-            spec,
-            ["--cover-atom", spec.AtomId,
-                "--gid", primaryGid,
-                "--gid", secondaryGid,
-                "--base", "baseline",
-                "--envelope", inputs.EnvelopePath]);
-
-        Assert.True(result.Success, result.Error);
-        var beforeEntries = before.RequireDigestionEntries();
-        var beforeTarget = Assert.Single(beforeEntries, candidate => candidate.AtomId == spec.AtomId);
-        Assert.Equal(existingCoverage.ToArray(), beforeTarget.CoverageGids.ToArray());
-        Assert.Empty(beforeTarget.Receipts.Coverage);
-        Assert.Empty(beforeTarget.Receipts.Scribe);
-        Assert.Equal(unresolvedSubitems.ToArray(), beforeTarget.Receipts.UnresolvedSubitems.ToArray());
-        var beforeSibling = Assert.Single(
-            beforeEntries,
-            candidate => candidate.AtomId == "same-residual-host");
-        Assert.Equal(
-            existingCoverage.Add(secondaryGid).ToArray(),
-            beforeSibling.CoverageGids.ToArray());
-        Assert.Empty(beforeSibling.Receipts.Coverage);
-        Assert.Empty(beforeSibling.Receipts.Scribe);
-        Assert.Equal(
-            siblingUnresolvedSubitems.ToArray(),
-            beforeSibling.Receipts.UnresolvedSubitems.ToArray());
-        var entries = after.RequireDigestionEntries();
-        var target = Assert.Single(entries, candidate => candidate.AtomId == spec.AtomId);
-        var sibling = Assert.Single(entries, candidate => candidate.AtomId == "same-residual-host");
-        Assert.Equal(target.AstPath, sibling.AstPath);
-        Assert.Equal(existingCoverage.Add(secondaryGid).ToArray(), target.CoverageGids.ToArray());
-        Assert.Equal(existingCoverage.Add(secondaryGid).ToArray(), sibling.CoverageGids.ToArray());
-        Assert.Equal(unresolvedSubitems.ToArray(), target.Receipts.UnresolvedSubitems.ToArray());
-        Assert.Equal(
-            siblingUnresolvedSubitems.ToArray(),
-            sibling.Receipts.UnresolvedSubitems.ToArray());
-        Assert.Equal(DigestionMigrationState.Partial, target.ProjectedStatus.Migration);
-        Assert.Equal(DigestionTruthState.Closed, target.ProjectedStatus.Truth);
-        Assert.Equal(DigestionMigrationState.Partial, sibling.ProjectedStatus.Migration);
-        Assert.Equal(DigestionTruthState.Closed, sibling.ProjectedStatus.Truth);
-    }
-
-    [Fact]
-    public void CoverRejectsSharedResidualHostWithoutAFullyMatchingBaseReceipt()
-    {
-        const string primaryModule = "D5/S3/Observer/MeasurementMarginal";
-        const string primaryDeclaration = "copied_record_partial_trace_offDiagonal_eq_zero";
-        const string secondaryModule = "D5/S3/Observer/FiniteForgettingCertificate";
-        const string secondaryDeclaration = "finite_history_certificate";
-        const string residue = "six-state-finite-certificates";
-        var primaryGid = primaryModule + "." + primaryDeclaration;
-        var secondaryGid = secondaryModule + "." + secondaryDeclaration;
-        var canonicalSibling = new CoverHostedSiblingSpec(
-            "same-residual-host",
-            primaryGid,
-            [primaryGid, secondaryGid],
-            [primaryGid],
-            [residue]);
-        var cases = new (CoverHostedSiblingSpec Sibling, string Error)[]
-        {
-            (canonicalSibling with { IncludeReceipt = false }, "receipt is missing"),
-            (canonicalSibling with { ReceiptAtomId = "wrong-host" }, "does not match atom"),
-            (canonicalSibling with { ReceiptPrimaryGid = secondaryGid }, "does not match existing coverage"),
-            (canonicalSibling with
-            {
-                ReceiptCasRef = "sha256:" + new string('a', 64),
-            }, "fingerprint does not match atom"),
-            (canonicalSibling with
-            {
-                ReceiptRawSha256 = "sha256:" + new string('b', 64),
-            }, "fingerprint does not match atom"),
-        };
-
-        foreach (var (sibling, error) in cases)
-        {
-            var spec = new CoverSpec
-            {
-                ModuleGid = primaryModule,
-                Declaration = primaryDeclaration,
-                InitialCoverage = ImmutableArray.Create(primaryGid),
-                InitialDefinitionSha256 = DigestionFingerprint.Compute(
-                    Encoding.UTF8.GetBytes("scribe definition\n")).RawSha256,
-                InitialEmissionSha256 = DigestionFingerprint.Compute(
-                    Encoding.UTF8.GetBytes("# emitted narrative\n")).RawSha256,
-                InitialUnresolvedSubitems = ImmutableArray.Create(residue),
-                Migration = "partial",
-                Truth = "closed",
-                ReportDeclarations = ImmutableArray.Create(primaryDeclaration),
-                SecondaryTarget = (secondaryModule, secondaryDeclaration),
-                HostedSibling = sibling,
-            };
-            var inputs = spec.Materialize();
-
-            var (result, after, before) = Execute(
-                spec,
-                ["--cover-atom", spec.AtomId,
-                    "--gid", primaryGid,
-                    "--gid", secondaryGid,
-                    "--base", "baseline",
-                    "--envelope", inputs.EnvelopePath]);
-
-            Assert.False(result.Success);
-            Assert.Contains(error, result.Error, StringComparison.Ordinal);
-            Assert.Equal(before, after);
-        }
-    }
-
-    [Fact]
     public void CoverAcceptsBaseOwnedDeclarationWhenSignatureMatchesPreCommittedReceipt()
     {
         // Two-phase deposit: the covered declaration's Lean file was already landed
@@ -511,18 +397,18 @@ public sealed partial class CoverAtomTests
     }
 
     [Fact]
-    public void CoverRejectsEnvelopeWhosePrimaryGidDoesNotMatchCoverGid()
+    public void CoverRejectsCoverGidMissingFromTheReceiptPrecommitmentSet()
     {
-        // The receipt pins a different primary declaration GID than the one being
-        // covered: reject rather than bind the atom to an unpinned declaration.
+        // The receipt pins a different declaration set than the GID being covered:
+        // reject rather than create an edge without a pair-specific precommitment.
         var (result, after, before) = Execute(new CoverSpec
         {
             EnvelopePrimaryGid = "D5/S0/Carrier/Probe.other",
         });
 
         Assert.False(result.Success);
-        Assert.Contains("primary_gid", result.Error, StringComparison.Ordinal);
-        Assert.Contains("does not match --gid", result.Error, StringComparison.Ordinal);
+        Assert.Contains("has no base-owned pre-committed signature", result.Error, StringComparison.Ordinal);
+        Assert.Contains("D5/S0/Carrier/Probe.probe", result.Error, StringComparison.Ordinal);
         Assert.Equal(before, after);
     }
 
@@ -555,7 +441,7 @@ public sealed partial class CoverAtomTests
         Assert.Equal(before, after);
     }
 
-    // §4(a) pre-committed signature match (implemented): a declaration whose
+    // §11.21 pre-committed signature match (implemented): a declaration whose
     // current signature diverges from the signature the formalizer pinned before
     // the proof landed is rejected. This is the machine guard against proving a
     // faithful statement and then swapping the theorem body (e.g. to `True`).
@@ -575,7 +461,7 @@ public sealed partial class CoverAtomTests
         Assert.Equal(before, after);
     }
 
-    // §4(a) base-owned receipt (hardening): the pre-committed receipt is only
+    // §11.21 base-owned receipt (hardening): the pre-committed receipt is only
     // authoritative when it is part of the baseline (committed in PR-1). A same-PR
     // (spec A16 hostile-fork) attack that writes BOTH the declaration and a matching
     // receipt in one PR — so the receipt exists only in the candidate, never
@@ -591,7 +477,7 @@ public sealed partial class CoverAtomTests
         Assert.Equal(before, after);
     }
 
-    // §4(a) base-owned receipt (hardening): a co-tampered same-PR swap. The honest
+    // §11.21 base-owned receipt (hardening): a co-tampered same-PR swap. The honest
     // receipt in the baseline pins the real claim (`2 + 2 = 4`); the candidate
     // swaps the deposited declaration to the hollow `True` body AND overwrites the
     // candidate copy of the receipt to pin `True` so a candidate-side signature
@@ -612,7 +498,7 @@ public sealed partial class CoverAtomTests
         Assert.Equal(before, after);
     }
 
-    // §4(a) base-owned receipt (hardening): the legitimate two-phase deposit. The
+    // §11.21 base-owned receipt (hardening): the legitimate two-phase deposit. The
     // receipt was committed in PR-1 and is part of the baseline; PR-2 covers with
     // the deposited declaration's current signature equal to the baseline-pinned
     // signature. Base-owned load reads the pre-committed baseline receipt and
@@ -633,16 +519,16 @@ public sealed partial class CoverAtomTests
         Assert.Equal(DigestionTruthState.Closed, entry.ProjectedStatus.Truth);
     }
 
-    // §4(b) hollow-fidelity attestation is still deferred: signature-match proves
+    // §11.21 hollow-fidelity attestation is still deferred: signature-match proves
     // the deposited declaration equals what was pre-committed, but does NOT prove
     // the pre-committed signature itself is a faithful, non-hollow rendering of the
     // natural-language atom. A hollow pre-commitment (`theorem t : True`) deposited
     // unchanged would pass signature-match. Guarding the pre-commitment's fidelity
     // needs the separate digestion-fidelity-attestation-v1 / multi-model consensus
     // gate, which does not exist yet.
-    [Fact(Skip = "Phase 2 §4(b): needs digestion-fidelity-attestation-v1 receipt "
+    [Fact(Skip = "§11.21 hollow-fidelity open: needs digestion-fidelity-attestation-v1 receipt "
         + "+ /sshx multi-model consensus attesting the pre-committed signature is "
-        + "non-hollow; signature-match (§4a) is implemented and only proves "
+        + "non-hollow; signature-match (§11.21) is implemented and only proves "
         + "deposited == pre-committed")]
     public void CoverRejectsHollowTrueEmissionThatDischargesNothing()
     {
@@ -687,9 +573,7 @@ public sealed partial class CoverAtomTests
         IDictionary<string, string> files,
         IDictionary<string, LeanFileReport> reportFiles)
     {
-        var coverage = spec.InitialCoverage
-            .Concat(spec.HostedSibling?.CurrentCoverage ?? [])
-            .Concat(spec.HostedSibling?.BaselineCoverage ?? []);
+        var coverage = spec.InitialCoverage;
         foreach (var gidText in coverage)
         {
             var gid = Assert.IsType<Gid>(Gid.TryParse(gidText, out var parsed) ? parsed : null);

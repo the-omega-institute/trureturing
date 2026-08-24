@@ -251,30 +251,6 @@ public sealed partial class DepositCoverWorkflowScriptTests
     }
 
     [Fact]
-    public void DepositRejectsAnUnboundButCanonicalHostPrimaryBeforeAppendingSecondaryFreeze()
-    {
-        if (OperatingSystem.IsWindows()) return;
-        using var fixture = new TransactionFixture();
-        fixture.ChangeFormalization();
-        var primaryDeposit = fixture.Run("deposit");
-        Assert.True(primaryDeposit.ExitCode == 0, Diagnostics(primaryDeposit));
-        var primaryCover = fixture.Run("cover");
-        Assert.True(primaryCover.ExitCode == 0, Diagnostics(primaryCover));
-        fixture.WriteHostReceipt(primaryGid: "D5/S0/Carrier/Probe.unbound");
-        fixture.AddSecondaryFormalization();
-
-        var secondary = fixture.Run("deposit", TransactionFixture.SecondaryGid);
-
-        Assert.NotEqual(0, secondary.ExitCode);
-        Assert.Contains(
-            "is not already bound",
-            Encoding.UTF8.GetString(secondary.StandardError),
-            StringComparison.Ordinal);
-        Assert.Equal(1, fixture.FreezeCount(TransactionFixture.LeanPath));
-        Assert.Equal(0, fixture.FreezeCount(TransactionFixture.SecondaryLeanPath));
-    }
-
-    [Fact]
     public void DepositFreezesASecondModuleUnderTheExistingAtomReceiptHost()
     {
         if (OperatingSystem.IsWindows()) return;
@@ -284,10 +260,18 @@ public sealed partial class DepositCoverWorkflowScriptTests
         Assert.True(primary.ExitCode == 0, Diagnostics(primary));
         var receipt = File.ReadAllBytes(fixture.ReceiptPath);
         fixture.AddSecondaryFormalization();
+        fixture.ClearCalls();
 
         var secondary = fixture.Run("deposit", TransactionFixture.SecondaryGid);
 
         Assert.True(secondary.ExitCode == 0, Diagnostics(secondary));
+        Assert.Contains(fixture.Calls(), call => call.StartsWith(
+            "dotnet:emit-formalization-receipt"
+                + $" --atom-id {TransactionFixture.AtomId}"
+                + $" --gid {TransactionFixture.SecondaryGid}",
+            StringComparison.Ordinal));
+        Assert.DoesNotContain(fixture.Calls(), call =>
+            call.Contains("--require-existing-coverage", StringComparison.Ordinal));
         Assert.Equal(1, fixture.FreezeCount(TransactionFixture.LeanPath));
         Assert.Equal(1, fixture.FreezeCount(TransactionFixture.SecondaryLeanPath));
         Assert.NotEqual(receipt, File.ReadAllBytes(fixture.ReceiptPath));
@@ -353,7 +337,6 @@ public sealed partial class DepositCoverWorkflowScriptTests
         Assert.True(cover.ExitCode == 0, Diagnostics(cover));
         Assert.Contains(
             "dotnet:cover-atom --cover-atom atom-1"
-                + $" --gid {TransactionFixture.Gid}"
                 + $" --gid {TransactionFixture.SecondaryGid}"
                 + " --base synthetic-base"
                 + $" --envelope {TransactionFixture.ReceiptRelativePath}",

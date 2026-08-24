@@ -12,10 +12,7 @@ internal static partial class CoverWorld
         bool includeOtherAtom,
         string? tailAuthPath,
         string? tailAuthSha,
-        string? targetSha256 = null,
-        DigestionAtom? hostedAtom = null,
-        string? hostedSourcePath = null,
-        bool useHostedBaselineCoverage = false)
+        string? targetSha256 = null)
     {
         var sources = ImmutableArray.CreateBuilder<DigestionLedgerSource>();
         var entries = ImmutableArray.CreateBuilder<DigestionLedgerEntry>();
@@ -47,9 +44,9 @@ internal static partial class CoverWorld
                 "closed",
                 null,
                 null,
-                null,
-                null,
-                null,
+                targetSha256,
+                spec.InitialDefinitionSha256,
+                spec.InitialEmissionSha256,
                 []));
         }
 
@@ -60,38 +57,6 @@ internal static partial class CoverWorld
             [],
             GenreRegistryProjection.Available(GenreRegistryCheck.Collected([])),
             entries.ToImmutable()));
-
-        if (spec.HostedSibling is { } hostedSibling
-            && hostedAtom is not null
-            && hostedSourcePath is not null)
-        {
-            var hostedCoverage = useHostedBaselineCoverage
-                ? hostedSibling.BaselineCoverage
-                : hostedSibling.CurrentCoverage;
-            sources.Add(new DigestionLedgerSource(
-                "fixture-hosted-source",
-                hostedSourcePath,
-                SyntheticNumberedAtomizer.Id,
-                [],
-                GenreRegistryProjection.Available(GenreRegistryCheck.Collected([])),
-                [
-                    Entry(
-                        "fixture-hosted-source",
-                        hostedSourcePath,
-                        hostedSibling.AtomId,
-                        hostedAtom.AstPath,
-                        hostedAtom.Fingerprints,
-                        hostedCoverage,
-                        "partial",
-                        "closed",
-                        null,
-                        null,
-                        null,
-                        null,
-                        null,
-                        hostedSibling.UnresolvedSubitems),
-                ]));
-        }
 
         return BackfillInventoryDocument.Create(sources.ToImmutable(), []);
     }

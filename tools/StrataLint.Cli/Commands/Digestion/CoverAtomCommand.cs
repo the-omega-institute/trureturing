@@ -15,7 +15,7 @@ namespace StrataLint.Cli;
 // (serialized manual/CI invocation makes it sufficient; an OS file lock for a
 // hard guarantee is deferred).
 //
-// Gate ②(c) (§4a, implemented): cover pins the deposit against a pre-committed
+// Gate ②(c) (§11.21, implemented): cover pins the deposit against a pre-committed
 // digestion-formalization-v1 receipt supplied by --envelope. The receipt is loaded
 // from the BASELINE snapshot (repository.ReadRevision(--base)), never the candidate,
 // so "pre-committed" is a machine invariant rather than an honesty convention: the
@@ -23,11 +23,11 @@ namespace StrataLint.Cli;
 // and a candidate PR cannot fabricate or alter the receipt it is judged against from
 // inside its own diff. Under the admission gate --base is the pull_request_target-
 // fixed baseline (dev), so a receipt introduced by the candidate is not yet in the
-// baseline and the deposit is rejected. The receipt binds atom_id + primary_gid +
-// the atom's content fingerprint (cas_ref/raw_sha256), and the deposited
-// declaration's *current* signature (name_key/kind/type, read from the candidate raw
-// Lean report) must equal the signature the formalizer pinned in the base-owned
-// receipt before the proof landed. This replaces the old file-level newness
+// baseline and the deposit is rejected. The receipt binds atom_id + the ordered
+// registered GID set + the atom's content fingerprint (cas_ref/raw_sha256), and each
+// deposited declaration's *current* signature (name_key/kind/type, read from the
+// candidate raw Lean report) must equal its pin in the base-owned receipt. This
+// replaces the old file-level newness
 // heuristic: no declaration file bytes are compared, so the honest two-phase deposit
 // (declaration frozen/base-owned in PR-1) is still accepted, while a post-proof
 // statement swap is machine-rejected because the deposited signature then diverges
@@ -35,7 +35,7 @@ namespace StrataLint.Cli;
 // candidate copy of the receipt in the same PR (the co-tampered copy is not read).
 //
 // Deferred (recorded, not silent):
-//  - Hollow-fidelity attestation (§4b): signature-match proves deposited ==
+//  - Hollow-fidelity attestation (§11.21 open): signature-match proves deposited ==
 //    pre-committed, but not that the pre-committed signature is itself a faithful,
 //    non-hollow rendering of the natural-language atom. base-ownership does NOT close
 //    this: a hollow pre-commitment landed in PR-1 (both the `theorem t : True`
@@ -105,33 +105,6 @@ internal static partial class CoverAtomCommand
                 baselineDocument,
                 baselineSnapshot: baseline);
             RequireNoReceiptIntegrityFailure(beforeEvaluation);
-
-            // Gate ②(b): anti-Goodhart — cover may only deposit a declaration that
-            // the baseline ledger did not already bind.
-            var baselineGids = BaselineCoverageGids(baselineDocument);
-            if (addedGids.FirstOrDefault(baselineGids.Contains) is { } baselineConflict)
-            {
-                throw new InvalidOperationException(
-                    $"cover GID {baselineConflict} is already bound in the baseline ledger");
-            }
-
-            // Gate ⑤: the old unique GID -> atom rejection remains unchanged except
-            // for legacy duplicate hosts of the same residual. That narrow path is
-            // available only when both atoms have base-owned, fully validated v1
-            // receipts whose primary GIDs are already bound.
-            foreach (var gidText in options.Gids)
-            {
-                foreach (var conflict in FindCrossAtomBindings(sources, options.AtomId, gidText))
-                {
-                    RequireSharedResidualHost(
-                        target,
-                        conflict,
-                        baselineDocument,
-                        baseline,
-                        report,
-                        gidText);
-                }
-            }
 
             var addedReceipts = gids
                 .Where(gid => !existingGids.Contains(gid.Value))
@@ -228,26 +201,21 @@ internal static partial class CoverAtomCommand
 
             var receipt = DigestionFormalizationReceipt.LoadTrusted(baseline, options.EnvelopePath);
             RequireEnvelopeBinding(receipt, options, target);
-            RequireSignatureMatch(
-                receipt,
-                gids.Single(gid => string.Equals(gid.Value, receipt.PrimaryGid, StringComparison.Ordinal)),
-                report);
-            var hostedGids = target.CoverageGids.Length == 0
-                ? []
-                : receipt.HostedExtensions
-                    .Select(static extension => extension.Gid)
-                    .Concat(addedGids)
-                    .Distinct(StringComparer.Ordinal);
-            foreach (var hostedGid in hostedGids)
+            var registered = receipt.RegisteredGids.ToImmutableHashSet(StringComparer.Ordinal);
+            var gidsToVerify = target.CoverageGids
+                .Where(registered.Contains)
+                .Concat(addedGids)
+                .Distinct(StringComparer.Ordinal);
+            foreach (var gidText in gidsToVerify)
             {
-                RequireHostedExtensionSignature(receipt, hostedGid, report);
+                RequireRegisteredSignature(receipt, gidText, report);
             }
 
             // Gate ②(c): base-owned pre-committed formalization receipt +
-            // declaration-signature match (spec §4a). Replaces the old file-level
+            // declaration-signature match (spec §11.21). Replaces the old file-level
             // newness gate. The receipt is loaded from the BASELINE snapshot, so the
             // anti-swap property is now a machine invariant rather than honesty-only:
-            // the formalizer pins the atom's primary declaration signature
+            // the formalizer pins each atom/declaration signature
             // (name_key/kind/type) in a receipt committed to the baseline (PR-1)
             // before the proof lands; cover admits the declaration only when its
             // *current* signature in the candidate raw Lean report equals the
@@ -258,11 +226,12 @@ internal static partial class CoverAtomCommand
             // from the base-owned pin — and, crucially, the candidate cannot launder
             // the swap by co-forging its own copy of the receipt in the same PR, since
             // the co-tampered candidate copy is never read (only the baseline receipt
-            // is). The receipt also binds atom_id + primary_gid + the atom's content
+            // is). The receipt also binds atom_id + registered GIDs + the atom's content
             // fingerprint, so a receipt pinned for one atom cannot cover another
             // (anti-Goodhart).
             //
-            // Deferred (§4b, recorded not silent): base-ownership closes the same-PR
+            // Deferred (§11.21 hollow-fidelity open, recorded not silent):
+            // base-ownership closes the same-PR
             // fabrication/swap, but does NOT attest that the pre-committed signature is
             // itself a faithful, non-hollow rendering of the natural-language atom. A
             // hollow pre-commitment landed together in PR-1 (both the `True`
@@ -308,12 +277,6 @@ internal static partial class CoverAtomCommand
         }
 
         var entry = matches[0];
-        if (entry.CoverageGids.Length == 0 && requestedGids.Length != 1)
-        {
-            throw new InvalidOperationException(
-                $"initial cover requires exactly one --gid for open atom {atomId}");
-        }
-
         if (entry.CoverageGids.Length == 0
             && entry.ProjectedStatus.Truth != DigestionTruthState.Open)
         {
@@ -332,12 +295,6 @@ internal static partial class CoverAtomCommand
 
         return entry;
     }
-
-    private static ImmutableHashSet<string> BaselineCoverageGids(
-        BackfillInventoryDocument baselineDocument) =>
-        baselineDocument.RequireDigestionEntries()
-            .SelectMany(static entry => entry.CoverageGids)
-            .ToImmutableHashSet(StringComparer.Ordinal);
 
     private static (DigestionCoverageReceipt Coverage, DigestionScribeReceipt Scribe) BuildReceipts(
         DigestionLedgerEntry entry,
@@ -423,20 +380,6 @@ internal static partial class CoverAtomCommand
                 $"cover envelope atom_id {receipt.AtomId} does not match --cover-atom {options.AtomId}");
         }
 
-        if (target.CoverageGids.Length > 0
-            && !target.CoverageGids.Contains(receipt.PrimaryGid, StringComparer.Ordinal))
-        {
-            throw new InvalidOperationException(
-                $"cover envelope primary_gid {receipt.PrimaryGid} does not match existing coverage "
-                + $"for atom {options.AtomId}");
-        }
-
-        if (!options.Gids.Contains(receipt.PrimaryGid, StringComparer.Ordinal))
-        {
-            throw new InvalidOperationException(
-                $"cover envelope primary_gid {receipt.PrimaryGid} does not match --gid values");
-        }
-
         if (!string.Equals(receipt.CasRef, target.Fingerprints.RawSha256, StringComparison.Ordinal)
             || !string.Equals(receipt.RawSha256, target.Fingerprints.RawSha256, StringComparison.Ordinal))
         {
@@ -451,6 +394,25 @@ internal static partial class CoverAtomCommand
         Gid gid,
         LeanAxiomReport report) =>
         RequireSignatureMatch(gid, report, receipt.Signature);
+
+    private static void RequireRegisteredSignature(
+        DigestionFormalizationReceipt receipt,
+        string gidText,
+        LeanAxiomReport report)
+    {
+        if (!Gid.TryParse(gidText, out var gid))
+        {
+            throw new InvalidOperationException($"cover receipt GID is invalid: {gidText}");
+        }
+
+        if (string.Equals(gidText, receipt.PrimaryGid, StringComparison.Ordinal))
+        {
+            RequireSignatureMatch(receipt, gid, report);
+            return;
+        }
+
+        RequireHostedExtensionSignature(receipt, gidText, report);
+    }
 
     private static void RequireHostedExtensionSignature(
         DigestionFormalizationReceipt receipt,

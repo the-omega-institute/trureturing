@@ -9,7 +9,7 @@ namespace StrataLint.Tests;
 // declaration to an existing open residual atom by writing coverage_gids +
 // coverage/scribe receipts, all-or-nothing. Every reject path must leave
 // Meta/BACKFILL.yaml byte-unchanged. The envelope / pre-committed-receipt /
-// declaration-signature gates (spec §4a) live in the CoverAtomEnvelopeTests.cs
+// declaration-signature gates (spec §11.21) live in the CoverAtomEnvelopeTests.cs
 // partial (kept there so this file stays under the SL-003 800-line cap).
 public sealed partial class CoverAtomTests
 {
@@ -169,29 +169,53 @@ public sealed partial class CoverAtomTests
     }
 
     [Fact]
-    public void CoverRejectsGidAlreadyBoundInBaselineLedger()
+    public void CoverAcceptsGidAlreadyBoundInBaselineLedger()
     {
-        var (result, after, before, _) = Execute(new CoverSpec
+        var execution = Execute(new CoverSpec
         {
             BaselineCoverageGid = "D5/S0/Carrier/Probe.probe",
+            InitialDefinitionSha256 = DigestionFingerprint.Compute(
+                Encoding.UTF8.GetBytes("scribe definition\n")).RawSha256,
+            InitialEmissionSha256 = DigestionFingerprint.Compute(
+                Encoding.UTF8.GetBytes("# emitted narrative\n")).RawSha256,
         });
+        var (result, after, before) = execution;
 
-        Assert.False(result.Success);
-        Assert.Contains("already bound in the baseline", result.Error, StringComparison.Ordinal);
-        Assert.Equal(before, after);
+        Assert.True(result.Success, result.Error);
+        Assert.NotEqual(before, after);
+        var entry = Assert.Single(
+            execution.AfterDocument.RequireDigestionEntries(),
+            candidate => candidate.AtomId == CoverWorld.DefaultAtomId);
+        Assert.Equal(["D5/S0/Carrier/Probe.probe"], entry.CoverageGids.ToArray());
+        Assert.Single(entry.Receipts.Coverage);
+        Assert.Single(entry.Receipts.Scribe);
     }
 
     [Fact]
-    public void CoverRejectsGidAlreadyBoundToAnotherAtom()
+    public void CoverAcceptsGidAlreadyBoundToAnotherAtomWithIndependentPairReceipts()
     {
-        var (result, after, before, _) = Execute(new CoverSpec
+        const string gid = "D5/S0/Carrier/Probe.probe";
+        var execution = Execute(new CoverSpec
         {
-            OtherAtomBinding = ("sibling-atom", "D5/S0/Carrier/Probe.probe"),
+            OtherAtomBinding = ("sibling-atom", gid),
+            InitialDefinitionSha256 = DigestionFingerprint.Compute(
+                Encoding.UTF8.GetBytes("scribe definition\n")).RawSha256,
+            InitialEmissionSha256 = DigestionFingerprint.Compute(
+                Encoding.UTF8.GetBytes("# emitted narrative\n")).RawSha256,
         });
+        var (result, after, before) = execution;
 
-        Assert.False(result.Success);
-        Assert.Contains("already bound to atom sibling-atom", result.Error, StringComparison.Ordinal);
-        Assert.Equal(before, after);
+        Assert.True(result.Success, result.Error);
+        Assert.NotEqual(before, after);
+        var entries = execution.AfterDocument.RequireDigestionEntries();
+        var target = Assert.Single(entries, candidate => candidate.AtomId == CoverWorld.DefaultAtomId);
+        var sibling = Assert.Single(entries, candidate => candidate.AtomId == "sibling-atom");
+        Assert.Equal([gid], target.CoverageGids.ToArray());
+        Assert.Equal([gid], sibling.CoverageGids.ToArray());
+        Assert.Equal([gid], target.Receipts.Coverage.Select(static receipt => receipt.Gid).ToArray());
+        Assert.Equal([gid], sibling.Receipts.Coverage.Select(static receipt => receipt.Gid).ToArray());
+        Assert.Equal([gid], target.Receipts.Scribe.Select(static receipt => receipt.Gid).ToArray());
+        Assert.Equal([gid], sibling.Receipts.Scribe.Select(static receipt => receipt.Gid).ToArray());
     }
 
     [Fact]
@@ -346,6 +370,25 @@ public sealed partial class CoverAtomTests
     }
 
     [Fact]
+    public void CoverRejectsRepeatedGidWithinOneEntryUpdate()
+    {
+        var spec = new CoverSpec();
+        var inputs = spec.Materialize();
+
+        var (result, after, before, _) = Execute(
+            spec,
+            ["--cover-atom", spec.AtomId,
+                "--gid", inputs.Gid,
+                "--gid", inputs.Gid,
+                "--base", "baseline",
+                "--envelope", inputs.EnvelopePath]);
+
+        Assert.False(result.Success);
+        Assert.Contains("USAGE: StrataLint cover-atom", result.Error, StringComparison.Ordinal);
+        Assert.Equal(before, after);
+    }
+
+    [Fact]
     public void CoverIsUnavailableWithoutScribeVerifier()
     {
         var inputs = new CoverSpec().Materialize();
@@ -433,17 +476,6 @@ internal sealed record CoverInputs(
     string Ledger,
     BackfillInventoryDocument Document);
 
-internal sealed record CoverHostedSiblingSpec(
-    string AtomId,
-    string ReceiptPrimaryGid,
-    ImmutableArray<string> CurrentCoverage,
-    ImmutableArray<string> BaselineCoverage,
-    ImmutableArray<string> UnresolvedSubitems,
-    bool IncludeReceipt = true,
-    string? ReceiptAtomId = null,
-    string? ReceiptCasRef = null,
-    string? ReceiptRawSha256 = null);
-
 // Declarative fixture for the cover gate matrix. Defaults produce a clean happy
 // path (an open, CAS-backed residual atom whose target declaration is proven
 // closed and Scribe-emitted); each gate test flips exactly one field.
@@ -482,12 +514,12 @@ internal sealed record CoverSpec
 
     internal bool VerifyScribe { get; init; } = true;
 
-    // Pre-committed formalization receipt (digestion-formalization-v1, spec §4a).
+    // Pre-committed formalization receipt (digestion-formalization-v1, spec §11.21).
     // Defaults produce a receipt that binds this atom and pins a signature equal to
     // the deposited declaration; each envelope gate test flips exactly one field.
     internal bool IncludeEnvelope { get; init; } = true;
 
-    // Base-owned receipt (§4a hardening): in the honest two-phase deposit the
+    // Base-owned receipt (§11.21 hardening): in the honest two-phase deposit the
     // receipt is committed in PR-1 and is therefore part of the baseline at PR-2.
     // Default true keeps the receipt pre-committed in the baseline. Setting it
     // false models a same-PR (spec A16 hostile-fork) attack where the receipt is
@@ -535,8 +567,6 @@ internal sealed record CoverSpec
 
     internal ImmutableArray<DigestionFormalizationExtension> AdditionalHostedExtensions { get; init; } = [];
 
-    internal CoverHostedSiblingSpec? HostedSibling { get; init; }
-
     internal string Gid => Declaration is null ? ModuleGid : ModuleGid + "." + Declaration;
 
     internal CoverInputs Materialize() => CoverWorld.Materialize(this);
@@ -580,15 +610,6 @@ internal static partial class CoverWorld
             "# Synthetic\n\n**定理 1.1(A)**。cover fixture atom body。\n");
         var atom = Assert.Single(
             AtomizerRegistry.Atomize(SyntheticNumberedAtomizer.Id, sourceBytes, DigestionTestSupport.Rules).Claims);
-        const string hostedSourcePath = "docs/CONTRIBUTING.md";
-        var hostedSourceBytes = Encoding.UTF8.GetBytes(
-            "# Synthetic\n\n**定理 1.1(A)**。hosted sibling atom body。\n");
-        var hostedAtom = spec.HostedSibling is null
-            ? null
-            : Assert.Single(AtomizerRegistry.Atomize(
-                SyntheticNumberedAtomizer.Id,
-                hostedSourceBytes,
-                DigestionTestSupport.Rules).Claims);
         var targetPath = spec.ModuleGid + ".lean";
         var targetBytes = Encoding.UTF8.GetBytes(DigestionTestSupport.Lean(spec.ModuleGid));
         var definition = Encoding.UTF8.GetBytes("scribe definition\n");
@@ -619,10 +640,7 @@ internal static partial class CoverWorld
             includeOtherAtom: true,
             tailAuthPath,
             tailAuthSha,
-            DigestionFingerprint.Compute(targetBytes).RawSha256,
-            hostedAtom,
-            hostedSourcePath,
-            useHostedBaselineCoverage: false);
+            DigestionFingerprint.Compute(targetBytes).RawSha256);
         var ledger = DirectoryLedgerTestSupport.Image(document);
         var envelopePath = "Meta/Digestion/formalizations/" + spec.AtomId + ".v1.json";
         var files = new Dictionary<string, string>(StringComparer.Ordinal)
@@ -636,33 +654,11 @@ internal static partial class CoverWorld
             [ScribeEmissionAttestation.RelativePath] = Encoding.UTF8.GetString(attestation.AsSpan()),
         };
         DirectoryLedgerTestSupport.ReplaceWithProjection(files, document);
-        if (hostedAtom is not null)
-        {
-            files[hostedSourcePath] = Encoding.UTF8.GetString(hostedSourceBytes);
-            var (hostedCasPath, hostedCasBytes) = DigestionTestSupport.CasFile(hostedAtom);
-            files[hostedCasPath] = Encoding.UTF8.GetString(hostedCasBytes);
-        }
         MaterializeSecondaryFiles(spec, files);
         if (spec.IncludeEnvelope)
         {
             files[envelopePath] = Encoding.UTF8.GetString(Envelope(spec, atom).AsSpan());
         }
-        if (spec.HostedSibling is { IncludeReceipt: true } hostedSibling && hostedAtom is not null)
-        {
-            var hostedEnvelopePath = "Meta/Digestion/formalizations/" + hostedSibling.AtomId + ".v1.json";
-            files[hostedEnvelopePath] = Encoding.UTF8.GetString(
-                DigestionFormalizationReceipt.Write(new DigestionFormalizationReceipt(
-                    hostedSibling.ReceiptAtomId ?? hostedSibling.AtomId,
-                    hostedSibling.ReceiptPrimaryGid,
-                    new DigestionFormalizationSignature(
-                        spec.Declaration ?? "probe",
-                        spec.ReportKind,
-                        spec.ReportType),
-                    hostedSibling.ReceiptCasRef ?? hostedAtom.Fingerprints.RawSha256,
-                    hostedSibling.ReceiptRawSha256 ?? hostedAtom.Fingerprints.RawSha256,
-                    HostedExtensions(spec, hostedSibling.ReceiptPrimaryGid))).AsSpan());
-        }
-
         if (spec.IncludeCasBlob)
         {
             var (casPath, casBytes) = DigestionTestSupport.CasFile(atom);
@@ -674,9 +670,6 @@ internal static partial class CoverWorld
             files[tailAuthPath] = Encoding.UTF8.GetString(tailAuthBytes.AsSpan());
         }
 
-        // Ordinary cross-atom gate fixtures remain candidate-only. A hosted sibling
-        // models a legacy duplicate residual and is therefore present in both the
-        // baseline and candidate, with only its candidate coverage extended.
         var baselineCoverage = spec.BaselineCoverageGid is not null
             ? ImmutableArray.Create(spec.BaselineCoverageGid)
             : spec.InitialCoverage;
@@ -686,10 +679,7 @@ internal static partial class CoverWorld
             baselineCoverage,
             includeOtherAtom: false,
             null,
-            null,
-            hostedAtom: hostedAtom,
-            hostedSourcePath: hostedSourcePath,
-            useHostedBaselineCoverage: true);
+            null);
         var baseline = new Dictionary<string, string>(files, StringComparer.Ordinal);
         DirectoryLedgerTestSupport.ReplaceWithProjection(baseline, baselineDocument);
 
@@ -701,7 +691,7 @@ internal static partial class CoverWorld
             baseline.Remove(targetPath);
         }
 
-        // Base-owned receipt (§4a hardening): the receipt is authoritative only
+        // Base-owned receipt (§11.21 hardening): the receipt is authoritative only
         // when it is pre-committed to the baseline. A same-PR attack fabricates the
         // receipt in the candidate only (EnvelopeInBaseline=false) — drop it from
         // the baseline so the base-owned load sees no pre-commitment.

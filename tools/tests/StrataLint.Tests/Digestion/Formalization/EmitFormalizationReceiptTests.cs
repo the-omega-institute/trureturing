@@ -6,7 +6,7 @@ using StrataLint.Engine;
 
 namespace StrataLint.Tests;
 
-// The producer side of the digestion-formalization-v1 pre-commitment (spec §4a):
+// The producer side of the digestion-formalization-v1 pre-commitment (spec §11.21):
 // `emit-formalization-receipt` reads the atom's fingerprint from BACKFILL and the
 // declaration's canonical signature from the raw Lean report, then writes a
 // canonical receipt that the cover transaction consumes via --envelope. These
@@ -123,6 +123,65 @@ public sealed class EmitFormalizationReceiptTests
         Assert.Equal(secondaryDeclaration, signature.GetProperty("name_key").GetString());
         Assert.Equal("theorem", signature.GetProperty("kind").GetString());
         Assert.Equal("True", signature.GetProperty("type").GetString());
+    }
+
+    [Fact]
+    public void EmitCreatesAReceiptWithMultiplePrecommittedGidsBeforeCoverage()
+    {
+        const string secondaryModule = "D5/S3/Observer/WindowRegisterCRT";
+        const string secondaryDeclaration = "window_register_crt_decomposition";
+        var secondaryGid = secondaryModule + "." + secondaryDeclaration;
+        var inputs = CoverWorld.Materialize(new CoverSpec
+        {
+            IncludeEnvelope = false,
+            SecondaryTarget = (secondaryModule, secondaryDeclaration),
+        });
+        using var temporary = new TemporaryDirectory();
+        var environment = BuildEmitEnvironment(temporary.Path, inputs);
+
+        var result = environment.EmitFormalizationReceipt(
+            ["--atom-id", CoverWorld.DefaultAtomId,
+                "--gid", inputs.Gid,
+                "--gid", secondaryGid]);
+
+        Assert.True(result.Success, result.Error);
+        var relativeOut = "Meta/Digestion/formalizations/" + CoverWorld.DefaultAtomId + ".v1.json";
+        var receipt = DigestionFormalizationReceipt.Load(
+            DigestionTestSupport.Snapshot((relativeOut, File.ReadAllBytes(Path.Combine(temporary.Path, relativeOut)))),
+            relativeOut);
+        Assert.Equal(inputs.Gid, receipt.PrimaryGid);
+        var extension = Assert.Single(receipt.HostedExtensions);
+        Assert.Equal(secondaryGid, extension.Gid);
+        Assert.Equal(secondaryDeclaration, extension.Signature.NameKey);
+    }
+
+    [Fact]
+    public void EmitRegistersASecondGidBeforeTheFirstGidIsCovered()
+    {
+        const string secondaryModule = "D5/S3/Observer/WindowRegisterCRT";
+        const string secondaryDeclaration = "window_register_crt_decomposition";
+        var secondaryGid = secondaryModule + "." + secondaryDeclaration;
+        var inputs = CoverWorld.Materialize(new CoverSpec
+        {
+            IncludeEnvelope = true,
+            SecondaryTarget = (secondaryModule, secondaryDeclaration),
+            IncludeSecondaryPrecommittedSignature = false,
+        });
+        using var temporary = new TemporaryDirectory();
+        var environment = BuildEmitEnvironment(temporary.Path, inputs);
+
+        var result = environment.EmitFormalizationReceipt(
+            ["--atom-id", CoverWorld.DefaultAtomId, "--gid", secondaryGid]);
+
+        Assert.True(result.Success, result.Error);
+        var relativeOut = "Meta/Digestion/formalizations/" + CoverWorld.DefaultAtomId + ".v1.json";
+        var receipt = DigestionFormalizationReceipt.Load(
+            DigestionTestSupport.Snapshot((relativeOut, File.ReadAllBytes(Path.Combine(temporary.Path, relativeOut)))),
+            relativeOut);
+        Assert.Equal(inputs.Gid, receipt.PrimaryGid);
+        var extension = Assert.Single(receipt.HostedExtensions);
+        Assert.Equal(secondaryGid, extension.Gid);
+        Assert.Equal(secondaryDeclaration, extension.Signature.NameKey);
     }
 
     [Fact]
