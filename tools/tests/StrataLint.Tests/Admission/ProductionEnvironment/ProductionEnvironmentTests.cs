@@ -660,7 +660,8 @@ internal sealed class FakeRepositoryGateway(
     RawRepositorySnapshot? baseline,
     Func<FrozenLedgerReferenceSet, TrustedFrozenGitReferences>? frozenReferenceValidator = null,
     Func<FrozenRevisionIdentity>? currentRevisionResolver = null,
-    Func<string, RawChangeSet>? changesForBase = null)
+    Func<string, RawChangeSet>? changesForBase = null,
+    RawRepositorySnapshot? forkPoint = null)
     : IRepositoryGateway
 {
     internal int ReadCount { get; private set; }
@@ -680,7 +681,10 @@ internal sealed class FakeRepositoryGateway(
     public AdmissionTopologyOutcome InspectAdmissionTopology() =>
         throw new InvalidOperationException("topology should not be inspected");
 
-    public PreparedRepository Prepare(string? protectedBase) => new("baseline", "baseline", changes);
+    public PreparedRepository Prepare(string? protectedBase) => new(
+        "baseline",
+        forkPoint is null ? "baseline" : "fork",
+        changes);
 
     public FrozenRevisionIdentity ResolveFrozenRevision(string revision)
     {
@@ -710,6 +714,12 @@ internal sealed class FakeRepositoryGateway(
     {
         ReadCount++;
         ReadRevisionCalls.Add(revision);
+        if (string.Equals(revision, "fork", StringComparison.Ordinal))
+        {
+            return WithAtomizerData(
+                forkPoint ?? throw new InvalidOperationException("fork snapshot should not be read"));
+        }
+
         return WithAtomizerData(
             baseline ?? throw new InvalidOperationException("baseline snapshot should not be read"));
     }

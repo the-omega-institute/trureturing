@@ -43,6 +43,8 @@ internal interface IFrozenLedgerAdmissionServices
 {
     IReadOnlySet<string> LeanReportProducerPaths { get; }
 
+    IReadOnlySet<string> ReadLeanReportProducerPaths(RepositorySnapshot snapshot);
+
     FrozenLedgerAdmissionPreparation Prepare(
         RepositorySnapshot current,
         RepositorySnapshot protectedBase,
@@ -168,10 +170,7 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
                 forkPoint,
                 candidateLeanReport);
             if (forkPointVerifiedScribeEmissions is not null
-                && !HaveIdenticalLeanReportInputs(
-                    current,
-                    forkPoint,
-                    frozenLedgerAdmission.LeanReportProducerPaths))
+                && !HaveIdenticalLeanReportInputs(current, forkPoint, frozenLedgerAdmission))
             {
                 forkPointVerifiedScribeEmissions =
                     forkPointVerifiedScribeEmissions.MarkReportDerivedEmissionsIncomparable();
@@ -547,17 +546,25 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
     private static bool HaveIdenticalLeanReportInputs(
         RepositorySnapshot current,
         RepositorySnapshot forkPoint,
-        IReadOnlySet<string> leanReportProducerPaths)
+        IFrozenLedgerAdmissionServices frozenLedgerAdmission)
     {
         ArgumentNullException.ThrowIfNull(current);
         ArgumentNullException.ThrowIfNull(forkPoint);
-        ArgumentNullException.ThrowIfNull(leanReportProducerPaths);
+        ArgumentNullException.ThrowIfNull(frozenLedgerAdmission);
+        var currentProducerPaths = frozenLedgerAdmission.ReadLeanReportProducerPaths(current);
+        var forkPointProducerPaths = frozenLedgerAdmission.ReadLeanReportProducerPaths(forkPoint);
+        if (!currentProducerPaths.SetEquals(forkPointProducerPaths))
+        {
+            return false;
+        }
+
         var paths = current.Files.Keys
             .Concat(forkPoint.Files.Keys)
             .Select(static path => path.Value)
             .Where(path => LeanClosureValidator.IsManagedLean(path)
                 || FrozenLedgerDeltaPredicate.IsEnvironmentInput(path)
-                || leanReportProducerPaths.Contains(path))
+                || currentProducerPaths.Contains(path)
+                || forkPointProducerPaths.Contains(path))
             .Distinct(StringComparer.Ordinal);
         foreach (var path in paths)
         {
