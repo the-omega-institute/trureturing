@@ -63,7 +63,7 @@ internal sealed class NormalizedHiddenAddressConservationDocument
         Formula first = new Formula.Subscript(time, D(0));
         Formula second = new Formula.Subscript(time, D(1));
         Formula reals = Seq(Mathbb, Grp(F.Id("R")));
-        Formula solenoid = new Formula.Subscript(Sigma, Infty);
+        Formula solenoid = Seq(Sigma, Underscore, Grp(Infty));
         Formula hiddenKernel = Seq(Ker, Open, Pi, Close);
         Formula hiddenAtPath = new Formula.Subscript(address, path);
         Formula pathAt = Seq(path, Open, time, Close);

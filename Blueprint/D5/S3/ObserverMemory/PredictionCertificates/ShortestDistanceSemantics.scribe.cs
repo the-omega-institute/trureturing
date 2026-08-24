@@ -70,8 +70,8 @@ internal sealed class ShortestDistanceSemanticsDocument : IScribeDocumentDefinit
             new Formula.Subscript(F.Id("d"), readout),
             Open, first, Comma, Sp, second, Close);
         Formula stableDepth = new Formula.Subscript(F.Id("m"), Star);
-        Formula updateAtDepth = new Formula.Power(update, depth);
-        Formula updateEarlier = new Formula.Power(update, earlier);
+        Formula updateAtDepth = Seq(update, Caret, Grp(depth));
+        Formula updateEarlier = Seq(update, Caret, Grp(earlier));
         Formula firstAtDepth = Applied(readout, Applied(updateAtDepth, first));
         Formula secondAtDepth = Applied(readout, Applied(updateAtDepth, second));
         Formula firstEarlier = Applied(readout, Applied(updateEarlier, first));
