@@ -36,6 +36,12 @@ jobs:
           set -euo pipefail
           tools/scripts/workflow/install-lean-toolchain.sh lean-toolchain --github-path "$GITHUB_PATH"
 
+      - name: Hydrate canonical Lean cache
+        shell: bash
+        run: |
+          set -euo pipefail
+          make lean-cache-ensure
+
       - name: Build new mathematical modules
         shell: bash
         run: |
