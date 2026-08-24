@@ -604,8 +604,6 @@ case "$COMMAND" in
     prepare_formalization_receipt
     freeze_module_if_needed
     install_prepared_formalization_receipt
-    step lean-report-refresh make lean-report
-    step emit-post-receipt make emit
     commit_all_if_needed "formalize: record deposit receipt for $GID"
     ;;
   cover)
