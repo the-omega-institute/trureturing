@@ -8,7 +8,7 @@
 
 ## 0. 共同语义
 
-令 \((X,\mathcal A)\) 为可测对象空间，\(q:X\to Q\) 为现行概念，\(T:X\to Y\) 为目标。正文定理域中的定义语言 \(\Gamma\) 有限或可数，成本与预算满足
+令 \((X,\mathcal A)\) 为可测对象空间，\(q:X\to Q\) 为现行概念，\(T:X\to Y\) 为目标。正文定理域中的定义语言 \(\Gamma\) 有限或可数；本卷各定理默认 \(\Gamma\ne\varnothing\)，而 \(\Gamma=\varnothing\) 时 \(E_\varnothing=E\)，诸定理的退化情形均直接判定。成本与预算满足
 
 \[c:\Gamma\to\mathbb R_{>0},\qquad L\in\mathbb R_{\ge0}.\]
 
