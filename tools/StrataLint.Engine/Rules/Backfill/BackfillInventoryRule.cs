@@ -18,8 +18,10 @@ internal static class BackfillInventoryRule
 
     private readonly record struct ReceiptIntegrityGapIdentity(
         string AtomId,
-        string Code,
         string Detail);
+
+    internal static ImmutableArray<string> BaselineComparableReceiptIntegrityCodes { get; } =
+        ["coverage-receipt-mismatch"];
 
     private static readonly Regex SourceIdPattern = new(
         "^[a-z0-9]+(?:[.-][a-z0-9]+)*$",
@@ -403,7 +405,7 @@ internal static class BackfillInventoryRule
                     // making a FullScan self-block; CoverAtom/Ingest still reject it before writes.
                     findings.Add(new RuleFinding(
                         BackfillPath,
-                        $"{identity.AtomId}:{identity.Code}:{identity.Detail}",
+                        $"{identity.AtomId}:{gap.Code}:{identity.Detail}",
                         AdmissionEffect.Observe));
                     continue;
                 }
@@ -415,23 +417,26 @@ internal static class BackfillInventoryRule
                     // making a FullScan self-block; CoverAtom/Ingest still reject it before writes.
                     findings.Add(new RuleFinding(
                         BackfillPath,
-                        $"{identity.AtomId}:{identity.Code}:{identity.Detail}",
+                        $"{identity.AtomId}:{gap.Code}:{identity.Detail}",
                         AdmissionEffect.Observe));
                     continue;
                 }
 
-                if (baselineComparableReceiptIntegrityGaps.Contains(identity))
+                if (BaselineComparableReceiptIntegrityCodes.Contains(
+                        gap.Code,
+                        StringComparer.Ordinal)
+                    && baselineComparableReceiptIntegrityGaps.Contains(identity))
                 {
                     findings.Add(new RuleFinding(
                         BackfillPath,
-                        $"{identity.AtomId}:{identity.Code}:{identity.Detail}",
+                        $"{identity.AtomId}:{gap.Code}:{identity.Detail}",
                         AdmissionEffect.Observe));
                     continue;
                 }
 
                 findings.Add(new RuleFinding(
                     BackfillPath,
-                    $"{identity.AtomId}:{identity.Code}:{identity.Detail}",
+                    $"{identity.AtomId}:{gap.Code}:{identity.Detail}",
                     AdmissionEffect.Block));
             }
 
@@ -451,7 +456,7 @@ internal static class BackfillInventoryRule
     private static ReceiptIntegrityGapIdentity GapIdentity(
         DigestionLedgerEntry entry,
         DigestionGap gap) =>
-        new(entry.AtomId, gap.Code, gap.Detail);
+        new(entry.AtomId, gap.Detail);
 
     private static HashSet<ReceiptIntegrityGapIdentity> BaselineComparableReceiptIntegrityGaps(
         BackfillInventoryDocument document,
@@ -475,7 +480,6 @@ internal static class BackfillInventoryRule
                 {
                     gaps.Add(new ReceiptIntegrityGapIdentity(
                         entry.AtomId,
-                        "coverage-receipt-mismatch",
                         gid));
                 }
             }
