@@ -33,10 +33,18 @@ public sealed class ReportSupervisorScriptTests
     {
         using var fixture = new ReportSupervisorFixture();
 
-        Assert.Equal(0, fixture.RunWithEnvironment(
-            "scribe-consumer", leanSlot: false, fixture.ScratchWriter, "CI=false").ExitCode);
-        Assert.Equal(0, fixture.RunWithEnvironment(
-            "ingest-consumer", leanSlot: false, fixture.ScratchWriter, "CI=false").ExitCode);
+        var first = fixture.RunWithEnvironment(
+            "scribe-consumer", leanSlot: false, fixture.ScratchWriter, "CI=false");
+        var second = fixture.RunWithEnvironment(
+            "ingest-consumer", leanSlot: false, fixture.ScratchWriter, "CI=false");
+
+        Assert.Equal(0, first.ExitCode);
+        Assert.Equal(0, second.ExitCode);
+        Assert.DoesNotContain(
+            "\"event\":\"performance_event_commit\"",
+            Encoding.UTF8.GetString(first.StandardOutput)
+                + Encoding.UTF8.GetString(second.StandardOutput),
+            StringComparison.Ordinal);
 
         var scratchPaths = File.ReadAllLines(fixture.ScratchRecord);
         Assert.Equal(2, scratchPaths.Length);
@@ -407,7 +415,7 @@ public sealed class ReportSupervisorScriptTests
     }
 
     [Fact]
-    public void MetricsCommitFailureDoesNotChangeWorkerOutcome()
+    public void MetricsCommitFailureIsObservableWithoutChangingWorkerOutcome()
     {
         using var fixture = new ReportSupervisorFixture();
 
@@ -418,6 +426,12 @@ public sealed class ReportSupervisorScriptTests
             $"STRATALINT_REPORT_METRICS_LOG={fixture.Root}");
 
         Assert.Equal(0, result.ExitCode);
+        var stdout = Encoding.UTF8.GetString(result.StandardOutput);
+        Assert.Contains(
+            "{\"event\":\"performance_event_commit\",\"status\":\"failed\","
+                + "\"source\":\"report-supervisor\",\"reason\":\"append-failed\",",
+            stdout,
+            StringComparison.Ordinal);
         Assert.DoesNotContain(
             "performance event",
             Encoding.UTF8.GetString(result.StandardError),
@@ -439,6 +453,11 @@ public sealed class ReportSupervisorScriptTests
         Assert.Equal(0, result.ExitCode);
         Assert.True(File.Exists(fixture.MetricsLog));
         Assert.Equal(original, File.ReadAllBytes(fixture.MetricsLog));
+        using var failureNote = JsonDocument.Parse(result.StandardOutput);
+        var failure = failureNote.RootElement;
+        Assert.Equal("performance_event_commit", failure.GetProperty("event").GetString());
+        Assert.Equal("failed", failure.GetProperty("status").GetString());
+        Assert.Equal("report-supervisor", failure.GetProperty("source").GetString());
         Assert.DoesNotContain(
             "performance event",
             Encoding.UTF8.GetString(result.StandardError),
