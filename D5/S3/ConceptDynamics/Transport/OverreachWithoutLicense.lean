@@ -93,24 +93,24 @@ def Overreach
 /-- Two records agree within a supplied deviation threshold on every operation
 in a given scope. -/
 def WithinTolerance
-    {Operation Reading : Type*}
-    (deviation : Reading -> Reading -> Nat) (epsilon : Nat)
+    {Operation Reading Delta : Type*} [LE Delta]
+    (deviation : Reading × Reading -> Delta) (epsilon : Delta)
     (operationScope : Set Operation)
     (observed expected : Concept Operation Reading) : Prop :=
   ∀ operation ∈ operationScope,
-    deviation (observed operation) (expected operation) ≤ epsilon
+    deviation (observed operation, expected operation) ≤ epsilon
 
 /-- A new operation and an available above-threshold deviation give records
 that remain unchanged and within tolerance on the old scope but fail on the
 expanded scope. -/
 theorem domain_expansion_breaks_tolerance
-    {Operation Reading : Type*}
-    (deviation : Reading -> Reading -> Nat) (epsilon : Nat)
+    {Operation Reading Delta : Type*} [Preorder Delta]
+    (deviation : Reading × Reading -> Delta) (epsilon : Delta)
     {oldScope claimedScope : Set Operation}
     (strictExpansion : oldScope ⊂ claimedScope)
-    (unchangedWithin : ∀ reading, deviation reading reading ≤ epsilon)
+    (unchangedWithin : ∀ reading, deviation (reading, reading) ≤ epsilon)
     (largeDeviation : ∃ ordinary exceptional : Reading,
-      epsilon < deviation ordinary exceptional) :
+      epsilon < deviation (ordinary, exceptional)) :
     ∃ observed expected : Concept Operation Reading,
       Set.EqOn observed expected oldScope ∧
         WithinTolerance deviation epsilon oldScope observed expected ∧
@@ -212,12 +212,13 @@ theorem overreach_without_license
         scope q.concept = oldScope ∧
         q.reportedScope = claimedScope ∧
         ¬LicensedReport semantics record q oldScope claimedScope) ∧
-    (∀ (deviation : Coordinate -> Coordinate -> Nat) (epsilon : Nat)
+    (∀ {Delta : Type} [Preorder Delta]
+        (deviation : Coordinate × Coordinate -> Delta) (epsilon : Delta)
         {localScope expandedScope : Set Operation},
       localScope ⊂ expandedScope ->
-      (∀ reading, deviation reading reading ≤ epsilon) ->
+      (∀ reading, deviation (reading, reading) ≤ epsilon) ->
       (∃ ordinary exceptional : Coordinate,
-        epsilon < deviation ordinary exceptional) ->
+        epsilon < deviation (ordinary, exceptional)) ->
       ∃ observed expected : Concept Operation Coordinate,
         Set.EqOn observed expected localScope ∧
           WithinTolerance deviation epsilon localScope observed expected ∧
@@ -251,7 +252,7 @@ theorem overreach_without_license
     rintro (premisesMissing | assumptionMissing) conditionHolds
     · exact premisesMissing (exactCondition.mp conditionHolds).1
     · exact assumptionMissing (exactCondition.mp conditionHolds).2
-  · intro deviation epsilon localScope expandedScope strictExpansion
+  · intro Delta _ deviation epsilon localScope expandedScope strictExpansion
       unchangedWithin largeDeviation
     exact domain_expansion_breaks_tolerance deviation epsilon strictExpansion
       unchangedWithin largeDeviation
@@ -369,8 +370,8 @@ example :
 /-- On the finite operation and reading type `Bool`, the records agree on the
 old singleton but both tolerance and canonical closure fail after expansion. -/
 example :
-    let deviation : Bool -> Bool -> Nat := fun left right =>
-      if left = right then 0 else 1
+    let deviation : Bool × Bool -> Nat := fun readings =>
+      if readings.1 = readings.2 then 0 else 1
     let oldScope : Set Bool := {false}
     let claimedScope : Set Bool := Set.univ
     let observed : Concept Bool Bool := fun _ => false
@@ -425,6 +426,267 @@ example :
         (fun operation : ↑claimedScope => target operation) = ∅ := by
   dsimp only
   constructor <;> ext pair <;> simp [defectRelation]
+
+namespace FalseNeighborWitness
+
+/-- A valid certificate whose declared premise is false. Its conditional
+transport clause is valid vacuously, but it cannot discharge an unconditional
+report. -/
+def conditionalAssumption : TransportAssumption where
+  givenPremises := False
+  preservedStructures := True
+  usesSelectionMechanism := False
+  selectionMechanismPreserved := False
+  usesInterventionConsistency := False
+  interventionConsistencyPreserved := False
+  usesCovariateTransformation := False
+  covariateTransformationPreserved := False
+  usesLossStability := False
+  lossStabilityPreserved := False
+
+def conditionalCertificate :
+    TransportCert Bool Unit (Concept Bool Bool) Nat Nat Nat
+      FiniteWitness.source FiniteWitness.target where
+  receipt := FiniteWitness.receipt
+  transportAssumption := conditionalAssumption
+  falsifiablePrediction := FiniteLicensedWitness.prediction
+
+theorem valid_conditional_certificate :
+    ValidTransportCert FiniteLicensedWitness.impossibleSemantics
+      conditionalCertificate FiniteWitness.record id 7 := by
+  refine ⟨?_, ?_, ?_, ?_⟩
+  · simp [ReceiptMatches, ClaimAddress,
+      FiniteLicensedWitness.impossibleSemantics, conditionalCertificate,
+      FiniteWitness.receipt, FiniteWitness.record]
+  · simp [GivenPremises, TransportAssumption.Holds, ClaimOn,
+      FiniteLicensedWitness.impossibleSemantics, conditionalCertificate,
+      conditionalAssumption]
+  · intro z hz
+    change z ∈ Set.univ ∧ z ∉ ({false} : Set Bool) at hz
+    cases z
+    · exact (hz.2 (by rfl)).elim
+    · rfl
+  · exact ⟨true, FiniteWitness.true_mem_target_difference, rfl, rfl, rfl⟩
+
+def wrongScopeReport : TransportReport Bool Bool Bool :=
+  { concept := id, reportedScope := FiniteWitness.source, condition := True }
+
+def conditionalReport : TransportReport Bool Bool Bool :=
+  { concept := id, reportedScope := FiniteWitness.target, condition := False }
+
+def unconditionalReport : TransportReport Bool Bool Bool :=
+  { concept := id, reportedScope := FiniteWitness.target, condition := True }
+
+theorem licensed_conditional_report :
+    LicensedReport FiniteLicensedWitness.impossibleSemantics FiniteWitness.record
+      conditionalReport FiniteWitness.source FiniteWitness.target := by
+  refine ⟨rfl, conditionalCertificate, valid_conditional_certificate, ?_⟩
+  simp [conditionalReport, GivenPremises, TransportAssumption.Holds,
+    conditionalCertificate, conditionalAssumption]
+
+theorem licensed_unconditional_report :
+    LicensedReport FiniteLicensedWitness.semantics FiniteWitness.record
+      unconditionalReport FiniteWitness.source FiniteWitness.target := by
+  refine ⟨rfl, FiniteLicensedWitness.certificate,
+    FiniteLicensedWitness.valid_certificate_for_report, ?_⟩
+  simp [unconditionalReport, GivenPremises, TransportAssumption.Holds,
+    FiniteLicensedWitness.certificate, FiniteWitness.assumption]
+
+theorem unconditional_report_not_licensed_by_impossible_semantics :
+    ¬LicensedReport FiniteLicensedWitness.impossibleSemantics FiniteWitness.record
+      unconditionalReport FiniteWitness.source FiniteWitness.target := by
+  rintro ⟨_, certificate, certificateValid, exactCondition⟩
+  have claimOn := certificateValid.2.1 (exactCondition.mp True.intro)
+  change False at claimOn
+  exact claimOn
+
+def booleanDeviation (readings : Bool × Bool) : Bool :=
+  if readings.1 = readings.2 then false else true
+
+def observed : Concept Bool Bool := fun _ => false
+
+def expected : Concept Bool Bool := id
+
+end FalseNeighborWitness
+
+/-- False neighbor for clause 1: certificate data without the report-scope
+equality does not license a report that stores the old scope. -/
+theorem false_neighbor_license_without_reported_scope :
+    ¬((∃ certificate :
+          TransportCert Bool Unit (Concept Bool Bool) Nat Nat Nat
+            FiniteWitness.source FiniteWitness.target,
+        ValidTransportCert FiniteLicensedWitness.semantics certificate
+            FiniteWitness.record FalseNeighborWitness.wrongScopeReport.concept 7 ∧
+          (FalseNeighborWitness.wrongScopeReport.condition ↔
+            GivenPremises certificate ∧ certificate.transportAssumption.Holds)) →
+      LicensedReport FiniteLicensedWitness.semantics FiniteWitness.record
+        FalseNeighborWitness.wrongScopeReport
+        FiniteWitness.source FiniteWitness.target) := by
+  intro weakLicense
+  have certificateData :
+      ∃ certificate :
+          TransportCert Bool Unit (Concept Bool Bool) Nat Nat Nat
+            FiniteWitness.source FiniteWitness.target,
+        ValidTransportCert FiniteLicensedWitness.semantics certificate
+            FiniteWitness.record FalseNeighborWitness.wrongScopeReport.concept 7 ∧
+          (FalseNeighborWitness.wrongScopeReport.condition ↔
+            GivenPremises certificate ∧ certificate.transportAssumption.Holds) := by
+    refine ⟨FiniteLicensedWitness.certificate,
+      FiniteLicensedWitness.valid_certificate_for_report, ?_⟩
+    simp [FalseNeighborWitness.wrongScopeReport, GivenPremises,
+      TransportAssumption.Holds, FiniteLicensedWitness.certificate,
+      FiniteWitness.assumption]
+  have scopeMatch := (weakLicense certificateData).1
+  change FiniteWitness.source = FiniteWitness.target at scopeMatch
+  have trueInSource : true ∈ FiniteWitness.source := by
+    rw [scopeMatch]
+    exact Set.mem_univ true
+  exact FiniteWitness.true_mem_target_difference.2 trueInSource
+
+/-- False neighbor for clause 2: licensing alone does not discharge the
+retained report condition and therefore cannot expose all premise proofs. -/
+theorem false_neighbor_license_elimination_without_condition :
+    ¬(LicensedReport FiniteLicensedWitness.impossibleSemantics
+          FiniteWitness.record FalseNeighborWitness.conditionalReport
+          FiniteWitness.source FiniteWitness.target →
+      ∃ certificate :
+          TransportCert Bool Unit (Concept Bool Bool) Nat Nat Nat
+            FiniteWitness.source FiniteWitness.target,
+        ValidTransportCert FiniteLicensedWitness.impossibleSemantics certificate
+            FiniteWitness.record FalseNeighborWitness.conditionalReport.concept 7 ∧
+          GivenPremises certificate ∧ certificate.transportAssumption.Holds) := by
+  intro weakElimination
+  rcases weakElimination FalseNeighborWitness.licensed_conditional_report with
+    ⟨certificate, certificateValid, premisesHold, assumptionHolds⟩
+  have claimOn := certificateValid.2.1 ⟨premisesHold, assumptionHolds⟩
+  change False at claimOn
+  exact claimOn
+
+/-- False neighbor for clause 3: replacing exact condition retention by the
+one-way implication from obligations to the report condition admits an
+unconditional report with an undischarged premise. -/
+theorem false_neighbor_one_way_condition_retention :
+    ¬((FalseNeighborWitness.unconditionalReport.reportedScope =
+          FiniteWitness.target ∧
+        ∃ certificate :
+            TransportCert Bool Unit (Concept Bool Bool) Nat Nat Nat
+              FiniteWitness.source FiniteWitness.target,
+          ValidTransportCert FiniteLicensedWitness.impossibleSemantics certificate
+              FiniteWitness.record
+              FalseNeighborWitness.unconditionalReport.concept 7 ∧
+            ((GivenPremises certificate ∧ certificate.transportAssumption.Holds) →
+              FalseNeighborWitness.unconditionalReport.condition)) →
+      LicensedReport FiniteLicensedWitness.impossibleSemantics FiniteWitness.record
+        FalseNeighborWitness.unconditionalReport
+        FiniteWitness.source FiniteWitness.target) := by
+  intro weakRetention
+  apply FalseNeighborWitness.unconditional_report_not_licensed_by_impossible_semantics
+  apply weakRetention
+  refine ⟨rfl, FalseNeighborWitness.conditionalCertificate,
+    FalseNeighborWitness.valid_conditional_certificate, ?_⟩
+  intro _
+  trivial
+
+/-- False neighbor for clause 4: strict expansion and the two scope equations
+do not imply overreach when the report is licensed. -/
+theorem false_neighbor_scope_expansion_is_always_overreach :
+    ¬((FiniteWitness.source ⊂ FiniteWitness.target ∧
+          (fun _ : Concept Bool Bool => FiniteWitness.source)
+              FalseNeighborWitness.unconditionalReport.concept =
+            FiniteWitness.source ∧
+          FalseNeighborWitness.unconditionalReport.reportedScope =
+            FiniteWitness.target) →
+      Overreach (fun _ : Concept Bool Bool => FiniteWitness.source)
+        FiniteLicensedWitness.semantics FiniteWitness.record
+        FalseNeighborWitness.unconditionalReport
+        FiniteWitness.source FiniteWitness.target) := by
+  intro weakOverreach
+  have strictExpansion : FiniteWitness.source ⊂ FiniteWitness.target := by
+    refine Set.ssubset_iff_exists.mpr ?_
+    exact ⟨Set.subset_univ _, true, Set.mem_univ true,
+      by simp [FiniteWitness.source]⟩
+  have overreach := weakOverreach ⟨strictExpansion, rfl, rfl⟩
+  exact overreach.2.2.2 FalseNeighborWitness.licensed_unconditional_report
+
+/-- False neighbor for clause 5, using `Bool` rather than `Nat` as the distance
+codomain: tolerance on the old scope need not survive strict expansion. -/
+theorem false_neighbor_tolerance_survives_scope_expansion :
+    ¬(WithinTolerance FalseNeighborWitness.booleanDeviation false
+          FiniteWitness.source FalseNeighborWitness.observed
+          FalseNeighborWitness.expected →
+      WithinTolerance FalseNeighborWitness.booleanDeviation false
+        FiniteWitness.target FalseNeighborWitness.observed
+        FalseNeighborWitness.expected) := by
+  intro weakTolerance
+  have oldTolerance :
+      WithinTolerance FalseNeighborWitness.booleanDeviation false
+        FiniteWitness.source FalseNeighborWitness.observed
+        FalseNeighborWitness.expected := by
+    intro operation operationInOld
+    have operationFalse : operation = false := by
+      simpa [FiniteWitness.source] using operationInOld
+    subst operation
+    simp [FalseNeighborWitness.booleanDeviation, FalseNeighborWitness.observed,
+      FalseNeighborWitness.expected]
+  have expandedTolerance := weakTolerance oldTolerance
+  have atTrue := expandedTolerance true (by simp [FiniteWitness.target])
+  have notAtTrue : ¬(true ≤ false) := by decide
+  exact notAtTrue atTrue
+
+/-- False neighbor for clause 6: emptiness of the canonical defect relation on
+the old scope does not imply emptiness on the expanded scope. -/
+theorem false_neighbor_closure_survives_scope_expansion :
+    ¬(defectRelation
+          (fun operation : ↑FiniteWitness.source =>
+            FalseNeighborWitness.observed operation)
+          (fun operation : ↑FiniteWitness.source =>
+            FalseNeighborWitness.expected operation) = ∅ →
+      defectRelation
+          (fun operation : ↑FiniteWitness.target =>
+            FalseNeighborWitness.observed operation)
+          (fun operation : ↑FiniteWitness.target =>
+            FalseNeighborWitness.expected operation) = ∅) := by
+  intro weakClosure
+  have oldClosed :
+      defectRelation
+          (fun operation : ↑FiniteWitness.source =>
+            FalseNeighborWitness.observed operation)
+          (fun operation : ↑FiniteWitness.source =>
+            FalseNeighborWitness.expected operation) = ∅ := by
+    ext pair
+    simp only [Set.mem_empty_iff_false, iff_false, defectRelation,
+      Set.mem_setOf_eq]
+    rintro ⟨_, targetDifferent⟩
+    have leftFalse : (pair.1 : Bool) = false := by
+      simpa only [FiniteWitness.source, Set.mem_singleton_iff] using
+        pair.1.property
+    have rightFalse : (pair.2 : Bool) = false := by
+      simpa only [FiniteWitness.source, Set.mem_singleton_iff] using
+        pair.2.property
+    exact targetDifferent (leftFalse.trans rightFalse.symm)
+  have expandedClosed := weakClosure oldClosed
+  have reopened :
+      (⟨false, Set.mem_univ false⟩, ⟨true, Set.mem_univ true⟩) ∈
+        defectRelation
+          (fun operation : ↑FiniteWitness.target =>
+            FalseNeighborWitness.observed operation)
+          (fun operation : ↑FiniteWitness.target =>
+            FalseNeighborWitness.expected operation) := by
+    exact ⟨rfl, Bool.false_ne_true⟩
+  rw [expandedClosed] at reopened
+  exact reopened
+
+/-- False neighbor for clause 7: validity alone does not license an
+unconditional report; the premises and preservation obligations are required. -/
+theorem false_neighbor_validity_alone_deconditions_report :
+    ¬(ValidTransportCert FiniteLicensedWitness.impossibleSemantics
+          FalseNeighborWitness.conditionalCertificate FiniteWitness.record id 7 →
+      LicensedReport FiniteLicensedWitness.impossibleSemantics FiniteWitness.record
+        FalseNeighborWitness.unconditionalReport
+        FiniteWitness.source FiniteWitness.target) := by
+  intro weakDeconditioning
+  exact FalseNeighborWitness.unconditional_report_not_licensed_by_impossible_semantics
+    (weakDeconditioning FalseNeighborWitness.valid_conditional_certificate)
 
 #print axioms overreach_without_license
 

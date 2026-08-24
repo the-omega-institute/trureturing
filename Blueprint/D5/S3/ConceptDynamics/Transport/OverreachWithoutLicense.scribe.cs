@@ -44,10 +44,12 @@ internal sealed class OverreachWithoutLicenseDocument : IScribeDocumentDefinitio
                             + "license. No certificate validity or premise is inferred from the "
                             + "scope equations.")),
                     Paragraph(Text(
-                        "For a strict expansion, a new operation is selected with Mathlib's "
-                            + "ssubset witness. If unchanged readings remain within epsilon and "
-                            + "the reading space admits an above-epsilon deviation, two records "
-                            + "agree and fit on J but fail on J'.")),
+                        "For a strict expansion and any preorder-valued comparison codomain Delta, "
+                            + "a new operation is selected with Mathlib's ssubset witness. If "
+                            + "unchanged readings remain within epsilon and the reading space admits "
+                            + "an above-epsilon deviation, two records agree and fit on the local "
+                            + "scope but fail on the expanded scope. No additive, metric-completeness, "
+                            + "or natural-number structure is assumed.")),
                     Paragraph(Text(
                         "CAS defines Closed_J(S,T) exactly by emptiness of defectRelation after "
                             + "restricting S and T to J. A concrete two-operation witness has an "
@@ -69,6 +71,23 @@ internal sealed class OverreachWithoutLicenseDocument : IScribeDocumentDefinitio
 
     private static Formula Subscript(Formula value, Formula index) =>
         Seq(value, Underscore, Grp(index));
+
+    private static Formula Apply(Formula function, params Formula[] arguments)
+    {
+        var separated = new List<Formula>();
+        for (var index = 0; index < arguments.Length; index++)
+        {
+            if (index > 0)
+            {
+                separated.Add(Comma);
+                separated.Add(Sp);
+            }
+
+            separated.Add(arguments[index]);
+        }
+
+        return Seq(function, Open, Seq([.. separated]), Close);
+    }
 
     private static Formula StrictSubset(Formula subset, Formula superset) =>
         Grp(
@@ -114,8 +133,7 @@ internal sealed class OverreachWithoutLicenseDocument : IScribeDocumentDefinitio
             Exists, Sp, certificate, Comma, Sp,
             validCertificate, Sp, Land, Sp, completeCondition);
         Formula unconditionalDuty = Grp(
-            licensed, Sp, Land, Sp, reportCondition,
-            Sp, Rightarrow, Sp,
+            licensed, Sp, Rightarrow, Sp, reportCondition, Sp, Rightarrow, Sp,
             Exists, Sp, certificate, Comma, Sp,
             validCertificate, Sp, Land, Sp, premises, Sp, Land, Sp, assumption);
         Formula retainedCondition = Grp(
@@ -130,13 +148,14 @@ internal sealed class OverreachWithoutLicenseDocument : IScribeDocumentDefinitio
             Call("Scope", reportConcept), Sp, Eq, Sp, oldScope, Sp, Land, Sp,
             reportScope, Sp, Eq, Sp, claimedScope, Sp, Land, Sp,
             Neg, licensed);
-        Formula toleranceCounterexample = ToleranceCounterexample(oldScope, claimedScope);
+        Formula toleranceCounterexample = ToleranceCounterexample();
         Formula closureCounterexample = ClosureCounterexample();
         Formula deconditioning = Grp(
             Forall, Sp, certificate, Comma, Sp,
-            reportScope, Sp, Eq, Sp, claimedScope, Sp, Land, Sp,
-            validCertificate, Sp, Land, Sp, premises, Sp, Land, Sp, assumption,
-            Sp, Rightarrow, Sp,
+            reportScope, Sp, Eq, Sp, claimedScope, Sp, Rightarrow, Sp,
+            validCertificate, Sp, Rightarrow, Sp,
+            premises, Sp, Rightarrow, Sp,
+            assumption, Sp, Rightarrow, Sp,
             Call("LicensedReport", deconditionedReport, oldScope, claimedScope));
 
         return Disp(Seq(
@@ -151,27 +170,42 @@ internal sealed class OverreachWithoutLicenseDocument : IScribeDocumentDefinitio
             End, Grp(F.Id("gathered"))));
     }
 
-    private static Formula ToleranceCounterexample(
-        Formula oldScope,
-        Formula claimedScope)
+    private static Formula ToleranceCounterexample()
     {
         Formula deviation = DeltaLower;
+        Formula codomain = F.Id("Delta");
         Formula epsilon = Varepsilon;
-        Formula reading = F.Id("r");
+        Formula operation = F.Id("I");
+        Formula readingType = F.Id("R");
+        Formula reading = F.Id("x");
         Formula ordinary = F.Id("a");
         Formula exceptional = F.Id("b");
+        Formula oldScope = Subscript(F.Id("J"), D(0));
+        Formula claimedScope = Subscript(F.Id("J"), D(1));
         Formula system = F.Id("S");
         Formula word = F.Id("w");
+        Formula comparisonType = Seq(
+            readingType, Sp, Times, Sp, readingType, Sp, To, Sp, codomain);
+        Formula recordType = Seq(operation, Sp, To, Sp, readingType);
 
         return Grp(
-            StrictSubset(oldScope, claimedScope), Sp, Land, Sp,
-            Open, Forall, Sp, reading, Comma, Sp,
-            Call("delta", reading, reading), Sp, Leq, Sp, epsilon, Close,
-            Sp, Land, Sp,
-            Open, Exists, Sp, ordinary, Comma, Sp, exceptional, Comma, Sp,
-            epsilon, Sp, Lt, Sp, Call("delta", ordinary, exceptional), Close,
+            Forall, Sp, codomain, Colon, Sp, Operatorname, Grp(F.Id("Type")), Comma, Sp,
+            OpenBracket, Operatorname, Grp(F.Id("Preorder")),
+            Open, codomain, Close, CloseBracket, Comma, Esc,
+            deviation, Colon, Sp, comparisonType, Comma, Sp,
+            epsilon, Colon, Sp, codomain, Comma, Esc,
+            oldScope, Comma, Sp, claimedScope, Colon, Sp,
+            Call("Set", operation), Comma, RowBreak, Grp(),
+            StrictSubset(oldScope, claimedScope),
             Sp, Rightarrow, Sp,
-            Exists, Sp, system, Comma, Sp, word, Comma, Sp,
+            Open, Forall, Sp, reading, Colon, Sp, readingType, Comma, Sp,
+            Apply(deviation, reading, reading), Sp, Leq, Sp, epsilon, Close,
+            Sp, Rightarrow, Sp,
+            Open, Exists, Sp, ordinary, Comma, Sp, exceptional,
+            Colon, Sp, readingType, Comma, Sp,
+            epsilon, Sp, Lt, Sp, Apply(deviation, ordinary, exceptional), Close,
+            Sp, Rightarrow, Sp,
+            Exists, Sp, system, Comma, Sp, word, Colon, Sp, recordType, Comma, Sp,
             Call("EqOn", system, word, oldScope), Sp, Land, Sp,
             Call("WithinTolerance", deviation, epsilon, oldScope, system, word),
             Sp, Land, Sp, Neg,
