@@ -131,21 +131,21 @@ internal sealed class FinitePartitionAlgebraDualityDocument
 
     private static Formula RealNumbers() => F.Id("R");
 
-    private static Formula Named(string name) =>
-        Seq(Operatorname, Grp(F.Id(name)));
+    private static Formula Named(Formula name) =>
+        Seq(Operatorname, Grp(name));
 
     private static Formula RelationRoundTripFormula()
     {
         Formula stateType = F.Id("X");
         Formula relation = F.Id("R");
         Formula roundTrip = Apply(
-            Named("Indistinguishable"),
-            Apply(Named("partitionAlgebra"), relation));
+            Named(F.Id("Indistinguishable")),
+            Apply(Named(F.Id("partitionAlgebra")), relation));
 
         return Disp(Seq(
             Begin, Grp(F.Id("gathered")),
             Forall, Sp, stateType, Colon, Sp, TypeUniverse(), Comma, Sp,
-            Typed(relation, Apply(Named("Setoid"), stateType)), Comma, RowBreak, Grp(),
+            Typed(relation, Apply(Named(F.Id("Setoid")), stateType)), Comma, RowBreak, Grp(),
             roundTrip, Sp, Eq, Sp, relation, Dot,
             End, Grp(F.Id("gathered"))));
     }
@@ -155,16 +155,16 @@ internal sealed class FinitePartitionAlgebraDualityDocument
         Formula stateType = F.Id("X");
         Formula algebra = F.Id("A");
         Formula roundTrip = Apply(
-            Named("partitionAlgebra"),
-            Apply(Named("indistinguishabilitySetoid"), algebra));
+            Named(F.Id("partitionAlgebra")),
+            Apply(Named(F.Id("indistinguishabilitySetoid")), algebra));
 
         return Disp(Seq(
             Begin, Grp(F.Id("gathered")),
             Forall, Sp, stateType, Colon, Sp, TypeUniverse(), Comma, Sp,
-            Named("Fintype"), Sp, stateType, Comma, RowBreak, Grp(),
+            Named(F.Id("Fintype")), Sp, stateType, Comma, RowBreak, Grp(),
             Typed(
                 algebra,
-                Apply(Named("Subalgebra"), RealNumbers(), Arrow(stateType, RealNumbers()))),
+                Apply(Named(F.Id("Subalgebra")), RealNumbers(), Arrow(stateType, RealNumbers()))),
             Comma, RowBreak, Grp(),
             roundTrip, Sp, Eq, Sp, algebra, Dot,
             End, Grp(F.Id("gathered"))));
@@ -172,10 +172,10 @@ internal sealed class FinitePartitionAlgebraDualityDocument
 
     private static Formula FinitenessNecessaryFormula()
     {
-        Formula algebra = Named("eventuallyConstantAlgebra");
+        Formula algebra = Named(F.Id("eventuallyConstantAlgebra"));
         Formula roundTrip = Apply(
-            Named("partitionAlgebra"),
-            Apply(Named("indistinguishabilitySetoid"), algebra));
+            Named(F.Id("partitionAlgebra")),
+            Apply(Named(F.Id("indistinguishabilitySetoid")), algebra));
 
         return Disp(Seq(roundTrip, Sp, Neq, Sp, algebra, Dot));
     }
@@ -187,13 +187,13 @@ internal sealed class FinitePartitionAlgebraDualityDocument
     {
         Formula algebra = F.Id("A");
         Formula roundTrip = Apply(
-            Named("RelationInvariantFunctions"),
-            Apply(Named("Indistinguishable"), algebra));
+            Named(F.Id("RelationInvariantFunctions")),
+            Apply(Named(F.Id("Indistinguishable")), algebra));
 
         return Disp(Seq(
             Begin, Grp(F.Id("gathered")),
             Exists, Sp,
-            Typed(algebra, Apply(Named("Set"), Arrow(stateType, RealNumbers()))),
+            Typed(algebra, Apply(Named(F.Id("Set")), Arrow(stateType, RealNumbers()))),
             Comma, RowBreak, Grp(),
             Apply(firstClosure, algebra), Sp, Land, Sp,
             Apply(secondClosure, algebra), Sp, Land, RowBreak, Grp(),
@@ -204,30 +204,30 @@ internal sealed class FinitePartitionAlgebraDualityDocument
     private static Formula LinearCombinationsNecessaryFormula() =>
         ExistsWitnessFormula(
             F.Id("Bool"),
-            Named("ContainsConstants"),
-            Named("ClosedUnderPointwiseMultiplication"));
+            Named(F.Id("ContainsConstants")),
+            Named(F.Id("ClosedUnderPointwiseMultiplication")));
 
     private static Formula PointwiseMultiplicationNecessaryFormula() =>
         ExistsWitnessFormula(
-            Apply(Named("Fin"), D(3)),
-            Named("ContainsConstants"),
-            Named("ClosedUnderLinearCombinations"));
+            Apply(Named(F.Id("Fin")), D(3)),
+            Named(F.Id("ContainsConstants")),
+            Named(F.Id("ClosedUnderLinearCombinations")));
 
     private static Formula ConstantsNecessaryFormula()
     {
         Formula algebra = F.Id("A");
         Formula boolType = F.Id("Bool");
         Formula roundTrip = Apply(
-            Named("RelationInvariantFunctions"),
-            Apply(Named("Indistinguishable"), algebra));
+            Named(F.Id("RelationInvariantFunctions")),
+            Apply(Named(F.Id("Indistinguishable")), algebra));
 
         return Disp(Seq(
             Begin, Grp(F.Id("gathered")),
             Exists, Sp,
-            Typed(algebra, Apply(Named("Set"), Arrow(boolType, RealNumbers()))),
+            Typed(algebra, Apply(Named(F.Id("Set")), Arrow(boolType, RealNumbers()))),
             Comma, RowBreak, Grp(),
-            Apply(Named("ClosedUnderLinearCombinations"), algebra), Sp, Land, Sp,
-            Apply(Named("ClosedUnderPointwiseMultiplication"), algebra), Sp, Land, RowBreak,
+            Apply(Named(F.Id("ClosedUnderLinearCombinations")), algebra), Sp, Land, Sp,
+            Apply(Named(F.Id("ClosedUnderPointwiseMultiplication")), algebra), Sp, Land, RowBreak,
             Grp(),
             roundTrip, Sp, Neq, Sp, algebra, Dot,
             End, Grp(F.Id("gathered"))));
